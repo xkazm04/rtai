@@ -245,7 +245,7 @@ NEXT (iteration 4 close, in order):
    band (done, opt-in) helps capped cops at 48; the riot helmet needs its own noir cue.
 5. Wall splats (needs wall/prop edges in the view); the blood pool as an SDF ring, not discs.
 6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
-7. A low-end GPU number for the pass (noir_cost.tscn on an iGPU) - only a 4090 is measured.
+7. (done 00:53) the low-end number: on the AMD Radeon iGPU (--gpu-index 1) at 1080p, noir 6.61 ms vs D4 8.17 ms GPU.
 - (00:44) rain streak LOD: `rain_far` 0.5 keeps half the streak columns at 32 px/m (same zoom ramp as the
   splashes), full from 48 px/m. 48 is identical. `rainlod-compare.png`.
 - REVERTED (00:47) the noir riot helmet: noir_helmet_1 (45 s; the D4 helmet beside the finished noir cap
@@ -267,3 +267,6 @@ NEXT (iteration 4 close, in order):
   Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, evidence/showcase-final-64-crop.png,
   masters night/noir/show-final/*.mp4, evidence/ladder.png (16 rows). NEXT: see the list above
   (iteration 4 close).
+- (00:53) noir pass cost on the integrated GPU: `noir_cost.tscn --gpu-index 1` (AMD Radeon(TM) Graphics) at
+  1920x1080, 48 px/m riot junction: GPU noir 6.61 ms vs D4 8.17 ms; CPU render 0.24 ms both. A 4090 re-run:
+  0.90 vs 1.09 ms. Noir is cheaper on both GPUs because it replaces the D4 print pass. evidence/noir-cost-1080p-igpu.json.
