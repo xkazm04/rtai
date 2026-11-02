@@ -35,6 +35,9 @@ const KERB_SHADOWS: Array[Rect2] = [
 	Rect2(-4.0, -20.0, 0.18, 14.4),
 	Rect2(-4.0, 5.6, 0.18, 14.4),
 ]
+const NEIGHBOURS: Array[String] = [
+	"building_osha", "building_tall", "building_union_hall", "building_helipad"
+]
 const ROOF_M: float = 8.4
 const SHADOW_M: float = 1.1
 
@@ -54,22 +57,23 @@ func _init() -> void:
 func _ground() -> void:
 	_tile("road_intersection_tone", Vector2.ZERO)
 	for k: int in [-1, 1]:
-		for r: int in [1, 2]:
+		for r: int in [1, 2, 3]:
 			_tile("road_straight_tone_b", Vector2(k * r * 8, 0) * PX)
 			_tile("road_straight_v_tone_b", Vector2(0, k * r * 8) * PX)
 		for j: int in [-1, 1]:
-			for r: int in [1, 2]:
-				for q: int in [1, 2]:
+			for r: int in [1, 2, 3]:
+				for q: int in [1, 2, 3]:
 					_tile("sidewalk_tone", Vector2(k * r * 8, j * q * 8) * PX)
 	for roof: String in LANDMARKS:
-		_shadow(LANDMARKS[roof] * PX)
-		var s: Sprite2D = Sprite2D.new()
-		s.texture = load(ROOFS + roof + ".png") as Texture2D
-		s.scale = Vector2.ONE * ROOF_M * PX / s.texture.get_width()
-		s.position = LANDMARKS[roof] * PX
-		s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		_world.add_child(s)
-		_roofs[roof] = s
+		_roofs[roof] = _roof(roof, LANDMARKS[roof])
+	# the blocks filled like the mock's: D4 neighbours 0.4 m (an alley) beyond each landmark
+	var idx: int = 0
+	for roof: String in LANDMARKS:
+		var at: Vector2 = LANDMARKS[roof]
+		for d: Vector2 in [Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]:
+			@warning_ignore("return_value_discarded")
+			_roof(NEIGHBOURS[idx % NEIGHBOURS.size()], at + d * at.sign() * (ROOF_M + 0.4))
+			idx += 1
 	_kerb_shadows()
 	_corners = D5HeroKerbs.corners(_world, PX)
 	for spot: Array in PROP_SPOTS:
@@ -88,6 +92,17 @@ func _soul_material() -> Material:
 	mat.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
 	mat.set_shader_parameter("ghost", 1.0)
 	return mat
+
+
+func _roof(roof: String, at: Vector2) -> Sprite2D:
+	_shadow(at * PX)
+	var s: Sprite2D = Sprite2D.new()
+	s.texture = load(ROOFS + roof + ".png") as Texture2D
+	s.scale = Vector2.ONE * ROOF_M * PX / s.texture.get_width()
+	s.position = at * PX
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_world.add_child(s)
+	return s
 
 
 func _prop(spot: Array) -> void:

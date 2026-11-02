@@ -11,7 +11,7 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h28, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h29, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -42,7 +42,9 @@ tick count, no RNG.
 1. **Building depth.** The mock's roofs cast hatched shadows and show a parapet wall; ours were flat squares.
    `look_d5_shadow.gdshader` (world-locked, hand-wobbled pen strokes) closes most of it in the hero scene. Next:
    the city lane places one shadow quad per building, offset from `look_d5.params.json` `shadow.offset_m`.
-2. **Street life.** CLOSED in the hero scene (iteration 2, `item4b_street_life.png`, round h20): a parked cruiser and
+2. **Street life.** (Iteration 2 also fills the blocks like the mock: 12 D4 neighbour roofs at the locked 80 px/m,
+   0.4 m alleys, each with the D5-tier cast shadow, h29; neighbours stay D4 in both tiers, only the 4 landmarks swap.)
+   CLOSED in the hero scene (iteration 2, `item4b_street_life.png`, round h20): a parked cruiser and
    sedan, cop 2's muzzle flash + tracer + casings, an ink splat, and the teal soul trail (1 new Codex D5 soul sheet).
    Vehicles/FX are the d4-production lane's raw D4 sheets, keyed into masters `borrowed/` and loaded by
    `d5_hero.gd -- --borrow=<dir>`; nothing is installed. Next: when the vehicles/fx lanes install their sprites,
