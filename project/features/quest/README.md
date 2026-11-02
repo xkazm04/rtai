@@ -24,3 +24,7 @@ Packages land in PoF's `games/gtai/quests/<id>/quest.json` and are copied into `
   setter, and pays through it. Time is ticks; the runtime draws no random numbers.
   `QuestWorld` is the port: the real systems implement it at integration, tests use
   `tests/support/stub_quest_world.gd`.
+- **Lines** (`QuestLinePlayer`): a beat's `lineIds` queue as subtitles (typed out, then held);
+  `when` lines are barks that fire once, the first active tick their conditions hold, and cut
+  the queue. Timing reads the package's source text, so the replay hash ignores the locale;
+  `subtitle()` resolves the words and speaker names through `QuestText`.

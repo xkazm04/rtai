@@ -22,6 +22,7 @@ var phone: Vector2 = Vector2.ZERO
 var granted_unlocks: Array[String] = []
 ## Evidence: "<tick> <what>" lines, oldest first.
 var timeline: Array[String] = []
+var lines: QuestLinePlayer
 var pkg: QuestPackage
 var _world: QuestWorld
 var _events: EventBus
@@ -34,6 +35,7 @@ func _init(p_pkg: QuestPackage, world: QuestWorld, events: EventBus, rules: Ques
 	_world = world
 	_events = events
 	_rules = rules
+	lines = QuestLinePlayer.new(pkg, rules)
 
 
 ## The phone rings at the first beat's location (its marker's `phone` spot); a first beat with
@@ -71,6 +73,7 @@ func step(tick: int) -> void:
 				start()
 		State.ACTIVE:
 			_step_active()
+	lines.step(tick, beat_index, _world, state == State.ACTIVE)
 
 
 func state_name() -> String:
@@ -89,6 +92,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(active_ticks)
 	out.put_32(heat_clamps)
 	out.put_utf8_string(String(fail_reason))
+	lines.write_state(out)
 
 
 func _answering() -> bool:
@@ -134,6 +138,7 @@ func _begin_beat(i: int) -> void:
 	if beat.handler == QuestRules.Handler.ENTER_VEHICLE:
 		vehicle_tag = beat.target
 	objective = QuestObjective.start(beat, _world, _rules)
+	lines.play_beat(beat)
 	_log("beat %d %s (%s)" % [i, beat.id, beat.verb])
 
 
