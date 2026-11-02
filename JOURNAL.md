@@ -494,3 +494,15 @@ NEXT:
   (`after_blood2`), same read as the FX splat burst and the characters' sticker rim. `work/blood_ab32.png`
   (before | rim | rim + solid). Commit 6e36609. Scorch / oil stay rimless on purpose (burn and oil are dark on
   dark by nature).
+- 00:36 MILESTONE lamp post (n-d5 journal 23:18: "reads as a spoon lying on the pavement at 48-64 px/m"). The old
+  sprite had an in-line oval head = the spoon bowl; the target draws a dark round base, a thin arm, a crook and a
+  ROUND head. `tools/lamp_redraw.py` (procedural, no AI pixels, same 256 x 40 footprint): ink base disc with a wash
+  glint, cream arm with ink outline, a crook, a paper head (lit lamp = paper disc) with a 5 px ink ring - a first
+  12 px head with a 3 px ring nearly vanished on the cream kerb at 32 (`after_lampp`), r 14 / ring 5 kept
+  (`after_lampp2`). City `before_lampp|after_lampp2/city-*` (`work/lampp_ab2.png`, `lampp_ab32.png` 4x): reads as a
+  street lamp at 32 and 48. Commit 3c65886. City README doctrine line updated (signal lamps no longer vermilion).
+- 00:38 n-d5 request (journal item 3: "d**1.8 mid-tone lift on the D4 roof set, OSHA paper 26 -> 38 %") is covered
+  by iteration 3's roof lift c133a77 (they measured the base roofs on their branch). Texture paper share
+  (lum > 0.75), base | mine (c133a77) | base with d**1.8: OSHA 0.49 | 0.62 | 0.60, tall 0.44 | 0.59 | 0.56,
+  HQ 0.46 | 0.60 | 0.57. d**1.8 lifts the mean more (0.72 vs 0.66) only because it also greys the ink, which the
+  D4 read needs. No change.
