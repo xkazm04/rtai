@@ -31,6 +31,7 @@ tick count, no RNG.
 | `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
 | `item5c_rivet_expressions.png`, `item5c_king_expressions.png` | iteration 3: Rivet (neutral, angry, hurt, hopeful) and King (neutral, wary, furious, smug) dialogue expressions at 512, 128 and 64 px beside the accepted portraits |
 | `item15_local9.png` | iteration 3: the D5 LOCAL 9 union hall roof beside the mural (the mock's landmark), D4 vs D4+D5 at 32 and 48 (h60) |
+| `night_iter3_summary.png` | ONE SCREEN for the morning: iteration 2 end (h38) vs iteration 3 end (h60) at 32/48/64, the mock, the 128 kill-cam, the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
