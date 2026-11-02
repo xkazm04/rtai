@@ -140,6 +140,65 @@
         }
       ],
       "wired": false
+    },
+    {
+      "doc": "The next wave of a combat encounter began. encounter is the place id the encounter is held at (a quest location), wave counts from 1. Quest bark tag wave-start.",
+      "emitter": "features/combat",
+      "name": "wave_started",
+      "params": [
+        {
+          "name": "encounter",
+          "type": "StringName"
+        },
+        {
+          "name": "wave",
+          "type": "int"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "A boss stepped into the fight (boss is its character data id). Quest bark tag boss-intro.",
+      "emitter": "features/combat",
+      "name": "boss_engaged",
+      "params": [
+        {
+          "name": "boss",
+          "type": "StringName"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "An attack aimed at Rivet began its tell (wind-up, charge whine); weapon is its data id. Quest bark tag robo-tazer-charge (weapon robo-tazer).",
+      "emitter": "features/combat",
+      "name": "attack_telegraphed",
+      "params": [
+        {
+          "name": "weapon",
+          "type": "StringName"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "Rivet took a hit (Rivet only, never every actor: ARC-07); weapon is the data id of what hit him. Quest bark tag robo-tazer-hit (weapon robo-tazer).",
+      "emitter": "features/combat",
+      "name": "player_hit",
+      "params": [
+        {
+          "name": "weapon",
+          "type": "StringName"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "The voices in Rivet's head spiked (madness). Quest bark tag static-whisper-burst.",
+      "emitter": "features/characters",
+      "name": "whispers_spiked",
+      "params": [],
+      "wired": false
     }
   ]
 }

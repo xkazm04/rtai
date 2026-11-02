@@ -95,3 +95,21 @@ func _step_until_idle() -> void:
 	_step(1)
 	while _runner.lines.busy() and _tick < 10000:
 		_step(1)
+
+
+func test_a_bark_listed_in_a_beat_is_armed_from_that_beat_on() -> void:
+	var world: StubQuestWorld = StubQuestWorld.new(QuestFixture.cc_places())
+	world.wanted = 2
+	var pkg: QuestPackage = QuestFixture.cc_load().package
+	var runner: QuestRunner = QuestRunner.new(pkg, world, _bus, QuestRules.shipped())
+	runner.offer()
+	assert_eq(runner.lines.armed_barks(), 2, "beat 0's two barks only")
+	_bus.whispers_spiked.emit()
+	runner.step(1)
+	runner.step(2)
+	var shown: Array[String] = []
+	for s: QuestLinePlayer.Shown in runner.lines.shown:
+		shown.append(s.line_id)
+	assert_true(shown.has("rivet-my-hands"))
+	assert_false(shown.has("rivet-buildings-talk"), "beat 2's whisper bark waits for beat 2")
+	runner.facts.detach()

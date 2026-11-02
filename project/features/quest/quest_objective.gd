@@ -1,14 +1,20 @@
 class_name QuestObjective
 extends RefCounted
-## One beat's objective while it runs (the spike's quest_verbs start/check, on ticks). start()
-## readies the world (parks the job's vehicle, spawns the target); check() runs once per tick
-## and answers RUNNING, DONE or a fail code from quest_rules.json `fail_rules`.
+## One beat's objective while it runs (the spike's quest_verbs start/check, on ticks, grown for
+## collect-call's evade/answer/meet/fight/sabotage). start() readies the world (parks the job's
+## vehicle, spawns the target, starts the place's encounter); check() runs once per tick and
+## answers RUNNING, DONE or a fail code from quest_rules.json `fail_rules`.
+## arrived_hot is a gate, not a failure: answer, meet and a payphone evade wait for wanted 0.
 
 const RUNNING: StringName = &""
 const DONE: StringName = &"done"
 
 var beat: QuestBeat
 var ticks: int = 0
+## The payphone at the objective's place is ringing (answer, or evade once cold).
+var ringing: bool = false
+## A gated objective was held back because Rivet was hot (Patch dropped the call).
+var refused_hot: bool = false
 var _marker: QuestPlaces.Marker = null
 var _rules: QuestRules
 
@@ -25,19 +31,23 @@ static func start(p_beat: QuestBeat, world: QuestWorld, rules: QuestRules) -> Qu
 			world.place_vehicle(p_beat.target)
 		QuestRules.Handler.KILL, QuestRules.Handler.ESCORT:
 			world.spawn_actor(p_beat.target)
+		QuestRules.Handler.FIGHT, QuestRules.Handler.SABOTAGE:
+			world.start_encounter(p_beat.location)
 	return o
 
 
 ## Where the objective marker points, or Vector2.INF when there is nothing to point at.
 func marker_position(world: QuestWorld) -> Vector2:
+	if ringing:
+		return _marker.phone
 	match beat.handler:
-		QuestRules.Handler.REACH, QuestRules.Handler.ESCORT:
-			return _marker.at
 		QuestRules.Handler.KILL:
 			return (
 				Vector2.INF if world.actor_dead(beat.target) else world.actor_position(beat.target)
 			)
-	return Vector2.INF
+		QuestRules.Handler.ENTER_VEHICLE, QuestRules.Handler.TIMER, QuestRules.Handler.EVADE:
+			return Vector2.INF
+	return _marker.at
 
 
 func check(world: QuestWorld, pkg: QuestPackage) -> StringName:
@@ -51,7 +61,57 @@ func check(world: QuestWorld, pkg: QuestPackage) -> StringName:
 			return _check_kill(world, pkg)
 		QuestRules.Handler.TIMER:
 			return DONE if ticks >= beat.length_ticks else RUNNING
-	return _check_escort(world, pkg)
+		QuestRules.Handler.ESCORT:
+			return _check_escort(world, pkg)
+	return _check_contract_verb(world, pkg)
+
+
+## evade, answer, meet, fight, sabotage.
+func _check_contract_verb(world: QuestWorld, pkg: QuestPackage) -> StringName:
+	match beat.handler:
+		QuestRules.Handler.EVADE:
+			return _check_evade(world)
+		QuestRules.Handler.ANSWER:
+			ringing = not _hot_gated(world, pkg)
+			return DONE if ringing and _answered(world) else RUNNING
+		QuestRules.Handler.MEET:
+			var there: bool = _arrived(world.focus_position())
+			return DONE if there and not _hot_gated(world, pkg) else RUNNING
+		QuestRules.Handler.FIGHT:
+			return DONE if world.encounter_cleared(beat.location) else RUNNING
+	return _check_sabotage(world)
+
+
+## Done at wanted 0; at a place with a payphone it then rings and must be answered.
+func _check_evade(world: QuestWorld) -> StringName:
+	if world.wanted_level() > 0:
+		return RUNNING
+	if not _marker.has_phone:
+		return DONE
+	ringing = true
+	return DONE if _answered(world) else RUNNING
+
+
+## The encounter first, then an interact at the marker on foot (the torch).
+func _check_sabotage(world: QuestWorld) -> StringName:
+	if not world.encounter_cleared(beat.location):
+		return RUNNING
+	var at_marker: bool = _arrived(world.focus_position()) and not world.in_vehicle()
+	return DONE if at_marker and world.interact_pressed() else RUNNING
+
+
+## True while the package's arrived_hot rule holds Rivet back (and remembers that it did).
+func _hot_gated(world: QuestWorld, pkg: QuestPackage) -> bool:
+	var gated: bool = pkg.has_fail(&"arrived_hot") and world.wanted_level() > 0
+	refused_hot = refused_hot or gated
+	return gated
+
+
+func _answered(world: QuestWorld) -> bool:
+	if world.in_vehicle():
+		return false
+	var near: float = world.focus_position().distance_to(_marker.phone)
+	return near < _rules.tuning["answer_radius_m"] and world.interact_pressed()
 
 
 func _check_kill(world: QuestWorld, pkg: QuestPackage) -> StringName:

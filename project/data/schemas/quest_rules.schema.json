@@ -1,15 +1,84 @@
 {
-  "$id": "gtai.quest-rules/1",
+  "$id": "gtai.quest-rules/2",
   "additionalProperties": false,
   "properties": {
+    "conditions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "enum": [
+              "soul",
+              "madness",
+              "weapon",
+              "heat"
+            ]
+          },
+          "pattern": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "values": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9-]*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
+    },
+    "event_tags": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fact": {
+            "pattern": "^[a-z_]+(:[a-z0-9_-]+)?$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "fact",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
     },
     "fail_rules": {
       "items": {
         "additionalProperties": false,
         "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
           "groups": {
             "items": {
               "items": {
@@ -28,37 +97,23 @@
               "rivet_wasted",
               "car_destroyed",
               "target_escapes",
-              "timer_expired"
+              "timer_expired",
+              "arrived_hot"
             ]
           }
         },
         "required": [
           "id",
-          "groups"
+          "groups",
+          "doc"
         ],
         "type": "object"
       },
       "minItems": 1,
       "type": "array"
     },
-    "madness_bands": {
-      "items": {
-        "pattern": "^[a-z][a-z0-9_]*$",
-        "type": "string"
-      },
-      "minItems": 1,
-      "type": "array"
-    },
     "schema": {
-      "const": "gtai.quest-rules/1"
-    },
-    "souls": {
-      "items": {
-        "pattern": "^[a-z][a-z0-9_]*$",
-        "type": "string"
-      },
-      "minItems": 1,
-      "type": "array"
+      "const": "gtai.quest-rules/2"
     },
     "tuning": {
       "additionalProperties": false,
@@ -68,6 +123,10 @@
           "type": "number"
         },
         "escape_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "event_window_s": {
           "minimum": 0,
           "type": "number"
         },
@@ -96,6 +155,7 @@
         "answer_radius_m",
         "escape_m",
         "survive_default_s",
+        "event_window_s",
         "line_type_cps",
         "line_hold_s",
         "line_min_s",
@@ -107,23 +167,38 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
           "handler": {
             "enum": [
               "reach",
               "enter_vehicle",
               "kill",
               "timer",
-              "escort"
+              "escort",
+              "evade",
+              "answer",
+              "meet",
+              "fight",
+              "sabotage"
             ]
           },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "needs_encounter": {
+            "type": "boolean"
+          },
           "needs_location": {
             "type": "boolean"
           },
           "needs_target": {
+            "type": "boolean"
+          },
+          "waits_for_lines": {
             "type": "boolean"
           }
         },
@@ -131,7 +206,10 @@
           "id",
           "handler",
           "needs_target",
-          "needs_location"
+          "needs_location",
+          "needs_encounter",
+          "waits_for_lines",
+          "doc"
         ],
         "type": "object"
       },
@@ -144,8 +222,8 @@
     "doc",
     "verbs",
     "fail_rules",
-    "souls",
-    "madness_bands",
+    "conditions",
+    "event_tags",
     "tuning"
   ],
   "type": "object"

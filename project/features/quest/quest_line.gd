@@ -30,8 +30,8 @@ func typed_chars(ticks: int, rules: QuestRules) -> int:
 	return mini(floori(shown + SimClock.EPSILON), text.length())
 
 
-func holds(soul: String, madness: String, heat: int) -> bool:
+func holds(facts: QuestFacts) -> bool:
 	for c: QuestCondition in conditions:
-		if not c.holds(soul, madness, heat):
+		if not c.holds(facts):
 			return false
 	return true

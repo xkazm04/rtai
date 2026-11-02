@@ -2,9 +2,11 @@ class_name QuestRunner
 extends RefCounted
 ## Plays one QuestPackage on the fixed tick (the spike's quest_runner, without main.gd):
 ##   INACTIVE -> offered (the job's payphone rings) -> ACTIVE (beat i) -> SUCCEEDED | FAILED.
-## Answering the phone (interact in range, on foot) or start() begins the contract and emits
-## Events.contract_started; the last beat done pays, records the unlocks and emits
-## contract_completed. While active, wanted is capped at the package's heatPeak every tick.
+## A contract whose first place has a payphone rings; answering it (interact in range, on foot)
+## or start() begins it. One whose first place has none (it picks up from the last scene) begins
+## on offer. Starting emits Events.contract_started; the last beat done pays, records the
+## unlocks and emits contract_completed. While active, wanted is capped at heatPeak every tick.
+## Barks read QuestFacts, which listens to the bus only while the contract is active.
 ## Deterministic: no frame delta, no RNG draws; time is the tick count (SIM-01).
 
 enum State { INACTIVE, OFFERED, ACTIVE, SUCCEEDED, FAILED }
@@ -23,11 +25,15 @@ var granted_unlocks: Array[String] = []
 ## Evidence: "<tick> <what>" lines, oldest first.
 var timeline: Array[String] = []
 var lines: QuestLinePlayer
+var facts: QuestFacts
 var pkg: QuestPackage
 var _world: QuestWorld
 var _events: EventBus
 var _rules: QuestRules
 var _tick: int = 0
+var _was_ringing: bool = false
+var _was_refused: bool = false
+var _held_for_lines: bool = false
 
 
 func _init(p_pkg: QuestPackage, world: QuestWorld, events: EventBus, rules: QuestRules) -> void:
@@ -36,24 +42,26 @@ func _init(p_pkg: QuestPackage, world: QuestWorld, events: EventBus, rules: Ques
 	_events = events
 	_rules = rules
 	lines = QuestLinePlayer.new(pkg, rules)
+	facts = QuestFacts.new(rules.seconds_to_ticks(rules.tuning["event_window_s"]))
 
 
-## The phone rings at the first beat's location (its marker's `phone` spot); a first beat with
-## no location rings where Rivet stands. The job's vehicle is parked before it rings.
+## The phone rings at the first beat's place when its marker has one; otherwise the contract
+## begins at once. The job's vehicle is parked first.
 func offer() -> void:
 	if state != State.INACTIVE:
 		return
-	var first: QuestBeat = pkg.beats[0]
-	var places: QuestPlaces = _world.places()
-	if places.markers.has(first.location):
-		phone = places.markers[first.location].phone
-	else:
-		phone = _world.focus_position()
 	for beat: QuestBeat in pkg.beats:
 		if beat.handler == QuestRules.Handler.ENTER_VEHICLE:
 			_use_vehicle(beat.target)
 			break
+	var first: QuestBeat = pkg.beats[0]
+	var places: QuestPlaces = _world.places()
 	_go(State.OFFERED)
+	if places.markers.has(first.location) and places.markers[first.location].has_phone:
+		phone = places.markers[first.location].phone
+	else:
+		_log("no payphone at '%s': begins on offer" % first.location)
+		start()
 
 
 ## Answering the phone; also the scripted start for tests and debug.
@@ -61,19 +69,21 @@ func start() -> void:
 	if state != State.OFFERED:
 		return
 	_go(State.ACTIVE)
+	facts.attach(_events, _world)
 	_events.contract_started.emit(pkg.id)
 	_begin_beat(0)
 
 
 func step(tick: int) -> void:
 	_tick = tick
+	facts.begin_tick(tick, _world)
 	match state:
 		State.OFFERED:
 			if _answering():
 				start()
 		State.ACTIVE:
 			_step_active()
-	lines.step(tick, beat_index, _world, state == State.ACTIVE)
+	lines.step(tick, beat_index, facts, state == State.ACTIVE)
 
 
 func state_name() -> String:
@@ -93,6 +103,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(heat_clamps)
 	out.put_utf8_string(String(fail_reason))
 	lines.write_state(out)
+	facts.write_state(out)
 
 
 func _answering() -> bool:
@@ -106,17 +117,41 @@ func _step_active() -> void:
 		_log("heat clamp %d -> %d" % [_world.wanted_level(), pkg.heat_peak])
 		_world.cap_wanted(pkg.heat_peak)
 		heat_clamps += 1
-	var result: StringName = objective.check(_world, pkg)
+	var result: StringName = _hold_for_lines(objective.check(_world, pkg))
+	_log_objective_changes()
 	if result == QuestObjective.RUNNING:
 		result = _global_fail()
 	if result == QuestObjective.DONE:
 		_log("beat %s done" % objective.beat.id)
+		facts.note("quest:%s_done" % objective.beat.verb)
 		if beat_index + 1 < pkg.beats.size():
 			_begin_beat(beat_index + 1)
 		else:
 			_succeed()
 	elif result != QuestObjective.RUNNING:
 		_fail(result)
+
+
+## A verb that waits for its lines (meet: the meeting is the conversation) holds DONE until
+## the line player is idle.
+func _hold_for_lines(result: StringName) -> StringName:
+	if result != QuestObjective.DONE or not _rules.verbs[objective.beat.verb].waits_for_lines:
+		return result
+	if not lines.busy():
+		return result
+	if not _held_for_lines:
+		_held_for_lines = true
+		_log("%s: arrived, waiting for the lines" % objective.beat.id)
+	return QuestObjective.RUNNING
+
+
+func _log_objective_changes() -> void:
+	if objective.ringing != _was_ringing:
+		_was_ringing = objective.ringing
+		_log("payphone %s" % ("ringing" if _was_ringing else "silent (hot)"))
+	if objective.refused_hot and not _was_refused:
+		_was_refused = true
+		_log("%s: held back, Rivet is hot" % objective.beat.id)
 
 
 ## Quest-wide fail states, not tied to the beat's verb.
@@ -138,6 +173,9 @@ func _begin_beat(i: int) -> void:
 	if beat.handler == QuestRules.Handler.ENTER_VEHICLE:
 		vehicle_tag = beat.target
 	objective = QuestObjective.start(beat, _world, _rules)
+	_was_ringing = false
+	_was_refused = false
+	_held_for_lines = false
 	lines.play_beat(beat)
 	_log("beat %d %s (%s)" % [i, beat.id, beat.verb])
 
@@ -152,11 +190,13 @@ func _succeed() -> void:
 	_world.pay(pkg.reward_cash)
 	granted_unlocks = pkg.unlocks.duplicate()
 	_log("reward: cash +%d, unlocks %s" % [pkg.reward_cash, granted_unlocks])
+	facts.detach()
 	_events.contract_completed.emit(pkg.id)
 
 
 func _fail(code: StringName) -> void:
 	fail_reason = code
+	facts.detach()
 	_go(State.FAILED)
 	_log("failed: %s" % code)
 

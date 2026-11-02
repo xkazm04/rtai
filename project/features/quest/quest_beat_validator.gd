@@ -1,9 +1,12 @@
 class_name QuestBeatValidator
 extends RefCounted
 ## gtai.quest/1 beat checks: a known objective verb, its target and location resolved in the
-## world's places, a positive durationS where present, and lineIds that exist in the package.
+## world's places (and the place's encounter for fight/sabotage), a positive durationS where
+## present, and lineIds that exist in the package. Sums the encounters the beats will run.
 
 var used_line_ids: Dictionary[String, bool] = {}
+var encounter_enemies: int = 0
+var encounter_waves: int = 0
 var _rules: QuestRules
 var _places: QuestPlaces
 var _report: QuestReport
@@ -55,8 +58,17 @@ func _objective(o: Dictionary, at: String) -> void:
 	var verb: QuestVerb = _rules.verbs[verb_name]
 	if verb.needs_target:
 		_target(o.get("target"), verb, at + ".target")
-	if verb.needs_location and not _places.markers.has(str(o.get("location", ""))):
-		_report.error(at + ".location", "'%s' is not a marker" % o.get("location", ""))
+	var location: String = str(o.get("location", ""))
+	if verb.needs_location and not _places.markers.has(location):
+		_report.error(at + ".location", "'%s' is not a marker" % location)
+	if verb.needs_encounter:
+		if _places.encounters.has(location):
+			encounter_enemies += _places.encounters[location].enemies
+			encounter_waves += _places.encounters[location].waves
+		else:
+			_report.error(
+				at + ".location", "'%s' holds no encounter for '%s'" % [location, verb.id]
+			)
 	if o.has("durationS") and QuestJson.num(o["durationS"], 0.0) <= 0.0:
 		_report.error(at + ".durationS", "must be a number > 0 (omit it for untimed verbs)")
 

@@ -1,5 +1,5 @@
 class_name QuestBot
-extends RefCounted
+extends QuestDriver
 ## Plays the `_selftest` fixture headless through the stub world, one action per tick, the way
 ## the spike's quest_selftest did, but moving instead of teleporting: walk to the ringing phone
 ## and answer it, wait for each beat's lines, swap to Hauler and back (the soul bark), walk to
@@ -19,6 +19,14 @@ var _swapped: bool = false
 func _init(world: StubQuestWorld, system: QuestSystem) -> void:
 	_world = world
 	_system = system
+
+
+func stubbed() -> Array[String]:
+	return [
+		"movement: Rivet walks and drives in straight lines on the spike's yard map (no city)",
+		"heat: the hit-and-run is the bot setting wanted 4 once (no police feature)",
+		"souls: the Hauler swap is the bot setting the stub's soul (no soul feature)",
+	]
 
 
 func done() -> bool:

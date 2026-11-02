@@ -95,6 +95,31 @@ func test_vehicle_exited() -> void:
 	_check("vehicle_exited", "[12]")
 
 
+func test_wave_started() -> void:
+	_bus.wave_started.emit(&"Dock 9 bonded storage", 2)
+	_check("wave_started", '["Dock 9 bonded storage",2]')
+
+
+func test_boss_engaged() -> void:
+	_bus.boss_engaged.emit(&"quartermaster-mertz")
+	_check("boss_engaged", '["quartermaster-mertz"]')
+
+
+func test_attack_telegraphed() -> void:
+	_bus.attack_telegraphed.emit(&"robo-tazer")
+	_check("attack_telegraphed", '["robo-tazer"]')
+
+
+func test_player_hit() -> void:
+	_bus.player_hit.emit(&"robo-tazer")
+	_check("player_hit", '["robo-tazer"]')
+
+
+func test_whispers_spiked() -> void:
+	_bus.whispers_spiked.emit()
+	_check("whispers_spiked", "[]")
+
+
 ## The declared params match events.json, and the one emit arrived with its tick and payload.
 func _check(signal_name: String, payload_json: String) -> void:
 	var expected: Array[String] = []
