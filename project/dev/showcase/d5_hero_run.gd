@@ -27,6 +27,13 @@ const PROP_SPOTS: Array[Array] = [
 	["traffic_cone", 10.9, -2.9, 0.5, 0.5, 0.0],
 	["traffic_cone", 12.2, 1.6, 0.5, 0.5, 0.0],
 ]
+## kerb shadow strips in metres (the pavement blocks' street-side edges facing down-right)
+const KERB_SHADOWS: Array[Rect2] = [
+	Rect2(-20.0, -4.0, 16.0, 0.18),
+	Rect2(4.0, -4.0, 16.0, 0.18),
+	Rect2(-4.0, -20.0, 0.18, 16.0),
+	Rect2(-4.0, 4.0, 0.18, 16.0),
+]
 const ROOF_M: float = 8.4
 const SHADOW_M: float = 1.1
 
@@ -61,6 +68,7 @@ func _ground() -> void:
 		s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		_world.add_child(s)
 		_roofs[roof] = s
+	_kerb_shadows()
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
@@ -111,6 +119,24 @@ func _shadow(at: Vector2) -> void:
 			Vector2(h, h)
 		]
 	)
+	_add_shadow(poly, at)
+
+
+## Kerb shadows (gap 4): the raised kerb casts a thin hatched strip onto the street on the sides
+## facing away from the light (down-right), the mock's kerb line. "d5" tier only, like _shadow.
+func _kerb_shadows() -> void:
+	for r: Rect2 in KERB_SHADOWS:
+		var poly: Polygon2D = Polygon2D.new()
+		var a: Vector2 = r.position * PX
+		var b: Vector2 = r.end * PX
+		poly.polygon = PackedVector2Array([a, Vector2(b.x, a.y), b, Vector2(a.x, b.y)])
+		_add_shadow(poly, Vector2.ZERO)
+		var mat: ShaderMaterial = poly.material
+		mat.set_shader_parameter("tint", 0.55)
+		mat.set_shader_parameter("stroke", 0.6)
+
+
+func _add_shadow(poly: Polygon2D, at: Vector2) -> void:
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = load("res://assets/shaders/look_d5_shadow.gdshader") as Shader
 	poly.material = mat

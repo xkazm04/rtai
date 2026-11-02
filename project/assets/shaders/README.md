@@ -30,8 +30,8 @@ exactly D4 (0 changed px, measured).
 | File | Layer | What it does |
 |---|---|---|
 | `look_d5_part.gdshader` | the D5 character tier (`features/characters/rig_detail.gd`) | prints the D5 part art (`features/characters/art/d5/<char>/`) as one overlay sprite per part over the untouched D4 part, alpha = zoom fade (56 -> 64 px/m). Lavender-grey steel ramp (D4 wash ink, not a hue), hatch re-drawn at screen resolution in part space, rust only where it survives mip 3 (no speckle), an off-register vermilion plate; a form shade: a hatched band inside each part's lower-right edge and a cream lit rim on its upper-left, lit in SCREEN space (the roofs' and cast shadows' light) via the UV derivatives, so a rotating limb keeps the world's light |
-| `look_d5.gdshader` | over the `look_d4` world print, under the actors | ink-pressure hatch in the mid wash (in patches, never on the charcoal street), fibrous paper tooth, off-register ink ghost and vermilion pass; `amount` from the zoom |
-| `look_d5_shadow.gdshader` | a building's cast-shadow quad on the world layer, under the look_d4 print | light ink tint + world-locked, hand-wobbled pen strokes (the mock's hatched building shadows); a proposal for the city lane |
+| `look_d5.gdshader` | over the `look_d4` world print, under the actors | ink-pressure hatch in the mid wash (in patches), a sparse darker street hatch (full at 64 px/m, `street_hatch_car` 40% at 48), an isotropic paper-tooth mottle, off-register ink ghost and vermilion pass; `amount` from the zoom |
+| `look_d5_shadow.gdshader` | a building's cast-shadow quad on the world layer, under the look_d4 print | light ink tint + world-locked, hand-wobbled pen strokes (the mock's hatched building shadows); also thin kerb shadows (0.18 m, tint 0.55, stroke 0.6) on the street side of kerbs facing down-right; a proposal for the city lane |
 | `look_d5.params.json` | (data for the visual-engine lane) | `world` uniforms, `zoom_amount` stops (32 px/m: 0, 48: 0.35, 64: 1), `part` defaults, the tier zooms, `shadow` |
 
 - The D5 part set is silhouette-locked to the D4 set (same names, sizes, pivots, alpha), so the tier never moves an

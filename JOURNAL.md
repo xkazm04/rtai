@@ -94,3 +94,5 @@ NEXT:
   h23 = h22 pixel-identical (determinism). Unit 146/0 at a40ac96. Boards: item4 (h23), item4c, ladder +2 rows.
 - 22:37 MILESTONE gap 3: look_d5 street hatch at 40% for the 48 px/m car camera (street_hatch_car); h24 vs h23:
   0 px at 32/64, street median unchanged, street HF +3%. Kept. Hero evidence frames now h24.
+- 22:40 MILESTONE gap 4 (part): kerb shadow strips in the hero scene (look_d5_shadow, 0.18 m, tint 0.55). h25 (0.32 m,
+  bold strokes) REJECTED: read as a hazard stripe. Kept h26; hero evidence frames now h26.
