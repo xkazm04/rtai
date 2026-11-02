@@ -132,6 +132,9 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		dx = ax / d;
 		dy = ay / d;
 	}
+	// move along the flow field (WLD-09); aim and shoot straight at the target
+	double mx = dx, my = dy;
+	if (d > FF_NEAR_M) flow_dir(x, y, mx, my);
 	double spd = d > 7.0 ? 3.4 : 0.0;
 	t2_[i] -= dt;
 	t1_[i] -= dt;
@@ -143,8 +146,8 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		t2_[i] = 0.8 + rnd() * 1.6;
 		t1_[i] = 0.25;
 	}
-	x += dx * spd * dt;
-	y += dy * spd * dt;
+	x += mx * spd * dt;
+	y += my * spd * dt;
 	if (tier_[i] == 0) {
 		cx_ = x;
 		cy_ = y;
@@ -155,8 +158,8 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 	}
 	px_[i] = x;
 	py_[i] = y;
-	hx_[i] = dx;
-	hy_[i] = dy;
+	hx_[i] = mx;
+	hy_[i] = my;
 	v_[i] = spd;
 	phase_[i] += spd * dt;
 }

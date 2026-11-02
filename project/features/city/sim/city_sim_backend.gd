@@ -25,3 +25,7 @@ extends RefCounted
 @abstract func set_render(mms: Array[RID], clips: PackedInt32Array) -> void
 @abstract func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void
 @abstract func get_render_counts() -> PackedInt32Array
+## Police flow field (WLD-09): SimConst.FS_LEN ints (computes, cells reached, last/max us).
+@abstract func flow_stats() -> PackedInt32Array
+## Flow-field distance in cells from (x, y) to the pursuit target, or -1.
+@abstract func flow_dist(x: float, y: float) -> int

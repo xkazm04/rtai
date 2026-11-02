@@ -35,6 +35,13 @@ void CityCore::init(int64_t seed) {
 	cells_.assign((size_t)W * W, 0);
 	owner_.assign((size_t)TW * TW, 0);
 	std::memset(counters_, 0, sizeof(counters_));
+	ff_dist_.assign((size_t)FF_W * FF_W, (uint16_t)FF_UNREACHED);
+	ff_queue_.assign((size_t)FF_W * FF_W, 0);
+	ff_valid_ = false;
+	ff_ox_ = ff_oy_ = ff_tx_ = ff_ty_ = 0;
+	map_version_ = ff_map_version_ = 0;
+	ff_ticks_ = 0;
+	std::memset(ff_stats_, 0, sizeof(ff_stats_));
 }
 
 void CityCore::set_radii(double ra, double rb, double riot) {
@@ -49,6 +56,7 @@ double CityCore::rnd() {
 }
 
 void CityCore::stamp_chunk(int cx, int cy, const uint8_t *tile_codes, const uint8_t *cell_codes) {
+	map_version_ += 1;
 	for (int ly = 0; ly < CHUNK_TILES; ly++) {
 		size_t row = (size_t)(cy * CHUNK_TILES + ly) * TW + (size_t)cx * CHUNK_TILES;
 		std::memcpy(&tiles_[row], tile_codes + ly * CHUNK_TILES, CHUNK_TILES);
@@ -59,6 +67,7 @@ void CityCore::stamp_chunk(int cx, int cy, const uint8_t *tile_codes, const uint
 }
 
 void CityCore::clear_chunk(int cx, int cy) {
+	map_version_ += 1;
 	for (int ly = 0; ly < CHUNK_TILES; ly++) {
 		size_t row = (size_t)(cy * CHUNK_TILES + ly) * TW + (size_t)cx * CHUNK_TILES;
 		std::memset(&tiles_[row], 0, CHUNK_TILES);

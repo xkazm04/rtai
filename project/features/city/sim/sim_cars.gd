@@ -14,10 +14,10 @@ var _hy: float = 0.0
 var _vv: float = 0.0
 
 
-func _init(state: CitySimState, hash_grid: CitySimHash) -> void:
+func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> void:
 	_s = state
 	_h = hash_grid
-	_r = CitySimCarRoute.new(state)
+	_r = CitySimCarRoute.new(state, flow)
 
 
 func car(i: int, dt: float, tgx: float, tgy: float) -> void:

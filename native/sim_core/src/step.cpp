@@ -19,6 +19,7 @@ void CityCore::step(double dt, double camx, double camy, double tgx, double tgy)
 		tier_pass_one(i, camx, camy);
 	}
 	build_hash(camx, camy);
+	flow_update(tgx, tgy);
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0) continue;
 		int k = kind_[i];

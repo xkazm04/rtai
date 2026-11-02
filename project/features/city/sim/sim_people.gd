@@ -6,6 +6,7 @@ extends RefCounted
 var _s: CitySimState
 var _h: CitySimHash
 var _solid: CitySimSolid
+var _flow: CitySimFlow
 var _dx: float = 0.0
 var _dy: float = 0.0
 var _spd: float = 0.0
@@ -13,9 +14,10 @@ var _x: float = 0.0
 var _y: float = 0.0
 
 
-func _init(state: CitySimState, hash_grid: CitySimHash) -> void:
+func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> void:
 	_s = state
 	_h = hash_grid
+	_flow = flow
 	_solid = CitySimSolid.new(state)
 
 
@@ -54,6 +56,12 @@ func cop(i: int, dt: float, tgx: float, tgy: float) -> void:
 	if d > 0.001:
 		_dx = ax / d
 		_dy = ay / d
+	# move along the flow field (WLD-09); aim and shoot straight at the target
+	var mx: float = _dx
+	var my: float = _dy
+	if d > SimConst.FF_NEAR_M and _flow.dir(x, y):
+		mx = _flow.dx
+		my = _flow.dy
 	_spd = 3.4 if d > 7.0 else 0.0
 	_s.t2[i] -= dt
 	_s.t1[i] -= dt
@@ -65,6 +73,8 @@ func cop(i: int, dt: float, tgx: float, tgy: float) -> void:
 		_s.fire(x + fx / l * 0.8, y + fy / l * 0.8, fx / l * 38.0, fy / l * 38.0, 1.5)
 		_s.t2[i] = 0.8 + _s.rnd() * 1.6
 		_s.t1[i] = 0.25
+	_dx = mx
+	_dy = my
 	_move(i, x, y, dt)
 
 

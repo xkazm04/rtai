@@ -93,5 +93,15 @@ func get_render_counts() -> PackedInt32Array:
 	return c if c is PackedInt32Array else PackedInt32Array()
 
 
+func flow_stats() -> PackedInt32Array:
+	var s: Variant = _call(&"flow_stats", [])
+	return s if s is PackedInt32Array else PackedInt32Array()
+
+
+func flow_dist(x: float, y: float) -> int:
+	var d: Variant = _call(&"flow_dist", [x, y])
+	return d if d is int else -1
+
+
 func _call(method: StringName, args: Array) -> Variant:
 	return _o.callv(method, args) if _o != null else null

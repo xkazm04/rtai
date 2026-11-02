@@ -74,17 +74,7 @@ int CityCore::car_pick(const Car &c, double icx, double icy, double tgx, double 
 	}
 	int pick = -1;
 	if (c.is_p) {
-		double best = 1e30;
-		for (int k = 0; k < 3; k++) {
-			if (!ok[k]) continue;
-			double ex = icx + DX[cand[k]] * 16.0 - tgx;
-			double ey = icy + DY[cand[k]] * 16.0 - tgy;
-			double e2 = ex * ex + ey * ey;
-			if (e2 < best) {
-				best = e2;
-				pick = cand[k];
-			}
-		}
+		pick = car_pursuit_pick(cand, ok, icx, icy, tgx, tgy);
 	} else if (sumw > 0.0) {
 		double r = rnd() * sumw;
 		for (int k = 0; k < 3; k++) {
@@ -95,6 +85,30 @@ int CityCore::car_pick(const Car &c, double icx, double icy, double tgx, double 
 		}
 	}
 	return pick < 0 ? (d + 2) % 4 : pick;
+}
+
+// Police: the open exit with the shortest flow-field distance at its far end; exits the field
+// does not cover rank after every covered one, by straight-line distance; ties keep the first.
+int CityCore::car_pursuit_pick(const int *cand, const bool *ok, double icx, double icy, double tgx,
+		double tgy) const {
+	int pick = -1, best_rank = 2, best_f = 0;
+	double best_e2 = 0.0;
+	for (int k = 0; k < 3; k++) {
+		if (!ok[k]) continue;
+		double ex = icx + DX[cand[k]] * 16.0, ey = icy + DY[cand[k]] * 16.0;
+		int f = flow_dist(ex, ey);
+		double e2 = (ex - tgx) * (ex - tgx) + (ey - tgy) * (ey - tgy);
+		int rank = f >= 0 ? 0 : 1;
+		bool better = pick < 0 || rank < best_rank ||
+				(rank == best_rank && (rank == 0 ? f < best_f : e2 < best_e2));
+		if (better) {
+			pick = cand[k];
+			best_rank = rank;
+			best_f = f;
+			best_e2 = e2;
+		}
+	}
+	return pick;
 }
 
 // Turn onto the next lane once past the turn line; release the junction 13 m after it.

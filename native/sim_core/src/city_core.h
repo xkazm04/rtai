@@ -41,6 +41,11 @@ public:
 
 	// snapshot.cpp
 	std::vector<double> snapshot() const;
+
+	// flow.cpp: the police flow field (WLD-09). Distance in cells to the target, or -1.
+	int flow_dist(double x, double y) const;
+	bool flow_dir(double x, double y, double &dx, double &dy) const;
+	const int32_t *flow_stats() const { return ff_stats_; }
 	const int32_t *counters() const { return counters_; }
 
 private:
@@ -62,6 +67,15 @@ private:
 	int hgx_ = 0, hgy_ = 0;
 	int32_t counters_[CN_COUNT] = {};
 	std::vector<int32_t> clips_;
+
+	// flow field (flow.cpp); map_version_ bumps on every stamp / clear (world.cpp)
+	std::vector<uint16_t> ff_dist_;
+	std::vector<int32_t> ff_queue_;
+	int ff_ox_ = 0, ff_oy_ = 0, ff_tx_ = 0, ff_ty_ = 0;
+	bool ff_valid_ = false;
+	uint32_t map_version_ = 0, ff_map_version_ = 0;
+	int64_t ff_ticks_ = 0;
+	int32_t ff_stats_[FS_LEN] = {};
 
 	double cx_ = 0.0, cy_ = 0.0;  // contact scratch position (crowd / solid)
 	int qbuf_[CAP];
@@ -91,6 +105,8 @@ private:
 	void car(int i, double dt, double tgx, double tgy);  // car_route.cpp
 	void car_plan(Car &c, double tgx, double tgy);    // car_route.cpp
 	int car_pick(const Car &c, double icx, double icy, double tgx, double tgy);
+	int car_pursuit_pick(const int *cand, const bool *ok, double icx, double icy, double tgx,
+			double tgy) const;
 	void car_follow(Car &c);                          // car_route.cpp
 	void car_reserve(Car &c);                         // car_route.cpp
 	void car_steer(Car &c, double dt);                // car_drive.cpp
@@ -101,6 +117,11 @@ private:
 	bool projectile_sub(int k, double &x, double &y, double h);
 	void scare(double x, double y);                   // projectiles.cpp
 	int frame_of(int i, int &cell) const;             // render.cpp
+	bool police_alive() const;                        // flow.cpp
+	int map_cell(int gx, int gy) const;               // flow.cpp
+	void flow_update(double tgx, double tgy);         // flow.cpp
+	void flow_build(int tx, int ty);                  // flow.cpp
+	int local_dist(int lx, int ly) const;             // flow.cpp
 };
 
 }  // namespace gtai::sim

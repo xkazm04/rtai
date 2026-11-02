@@ -113,6 +113,15 @@ PackedInt32Array CitySim::get_render_counts() const {
 	return out;
 }
 
+PackedInt32Array CitySim::flow_stats() const {
+	PackedInt32Array out;
+	out.resize(sim::FS_LEN);
+	for (int k = 0; k < sim::FS_LEN; k++) out.set(k, core_->flow_stats()[k]);
+	return out;
+}
+
+int CitySim::flow_dist(double x, double y) const { return core_->flow_dist(x, y); }
+
 void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("init", "seed"), &CitySim::init);
 	ClassDB::bind_method(D_METHOD("set_radii", "ra", "rb", "riot"), &CitySim::set_radii);
@@ -130,4 +139,6 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips"), &CitySim::set_render);
 	ClassDB::bind_method(D_METHOD("write_render", "vx0", "vy0", "vx1", "vy1"), &CitySim::write_render);
 	ClassDB::bind_method(D_METHOD("get_render_counts"), &CitySim::get_render_counts);
+	ClassDB::bind_method(D_METHOD("flow_stats"), &CitySim::flow_stats);
+	ClassDB::bind_method(D_METHOD("flow_dist", "x", "y"), &CitySim::flow_dist);
 }

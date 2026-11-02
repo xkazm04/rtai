@@ -39,6 +39,8 @@ public:
 	void set_render(const Array &mms, const PackedInt32Array &clips);
 	void write_render(double vx0, double vy0, double vx1, double vy1);
 	PackedInt32Array get_render_counts() const;
+	PackedInt32Array flow_stats() const;
+	int flow_dist(double x, double y) const;
 
 protected:
 	static void _bind_methods();
