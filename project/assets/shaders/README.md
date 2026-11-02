@@ -30,16 +30,20 @@ exactly D4 (0 changed px, measured).
 | File | Layer | What it does |
 |---|---|---|
 | `look_d5_part.gdshader` | the D5 character tier (`features/characters/rig_detail.gd`) | prints the D5 part art (`features/characters/art/d5/<char>/`) as one overlay sprite per part over the untouched D4 part, alpha = zoom fade (56 -> 64 px/m). Lavender-grey steel ramp (D4 wash ink, not a hue), hatch re-drawn at screen resolution in part space, rust only where it survives mip 3 (no speckle), an off-register vermilion plate; a form shade: a hatched band inside each part's lower-right edge and a cream lit rim on its upper-left, lit in SCREEN space (the roofs' and cast shadows' light) via the UV derivatives, so a rotating limb keeps the world's light |
-| `look_d5.gdshader` | over the `look_d4` world print, under the actors | ink-pressure hatch in the mid wash (in patches), a sparse darker street hatch (full at 64 px/m, `street_hatch_car` 40% at 48), an isotropic paper-tooth mottle, off-register ink ghost and vermilion pass; `amount` from the zoom |
+| `look_d5.gdshader` | over the `look_d4` world print, under the actors | ink-pressure hatch in the mid wash (in patches), a sparse darker street hatch (full at 64 px/m, `street_hatch_car` 40% at 48), an isotropic paper-tooth mottle, off-register ink ghost and vermilion pass, and the AGED PAPER (`age`: low-chroma pixels warm toward the mock's sepia, street 78,67,70 / paper 245,221,193 at 64 px/m; `age_floor` = the same warmth below the D5 zoom, default 0, a proposal for the D4 profile); `amount` from the zoom |
 | `look_d5_shadow.gdshader` | a building's cast-shadow quad on the world layer, under the look_d4 print | light ink tint + world-locked, hand-wobbled pen strokes (the mock's hatched building shadows); also thin kerb shadows (0.18 m, tint 0.55, stroke 0.6) on the street side of kerbs facing down-right; a proposal for the city lane |
 | `look_d5_soul.gdshader` | the teal souls on the actor layer (a proposal for the fx lane; used by dev/showcase/d5_hero_run.gd) | snaps the drawn soul to two teal inks + the cream rim + paper grain (soft ramps), faded in with the D5 tier (`amount`, 56 -> 64 px/m) because at 32 px/m the snap busies the minified art; replaces look_d4_item's ghost dot screen, which dissolves a drawn soul at 64 px/m |
-| `look_d5.params.json` | (data for the visual-engine lane) | `world` uniforms, `zoom_amount` stops (32 px/m: 0, 48: 0.35, 64: 1), `part` defaults, the tier zooms, `shadow` |
+| `look_d5.params.json` | (data for the visual-engine lane) | `world` uniforms, `zoom_amount` stops (32 px/m: 0, 48: 0.35, 64: 1), `part` defaults, the tier zooms, `shadow` (`offset_m` is placement data, the rest are uniforms: `tests/unit/test_look_d5_params.gd` checks it) |
 
 - The D5 part set is silhouette-locked to the D4 set (same names, sizes, pivots, alpha), so the tier never moves an
   outline or the sticker halo. Both D5 layers only re-print ink and vermilion that D4 already put there; the colour
   doctrine is unchanged.
 - Rust prints as dried rust (vermilion toward ink); pure vermilion only where it is coherent at mip 5 (the collar,
   a cop's plate), so the collar stays Rivet's signature. Parts with a palette swap keep their D4 print.
+- No D5 shader hashes noise on screen pixels: grain is locked to the world (`w`), the part (part space) or the soul
+  sprite. A screen-locked hash re-rolls on every camera move or walk step (`look_d4` line 96 still does: -93% pan
+  swim when world-locked, measured with `dev/showcase/d5_pan.gd`).
+- Zoom-tied warmth drifts while zooming (paper dE 2.8 from 32 to 48 px/m, 7.6 to 64); `age_floor` 1 removes it.
 - D5 parts sample with mipmaps (`TEXTURE_FILTER_LINEAR_WITH_MIPMAPS`). The project default (linear, no mips) turns
   the detailed art into speckle at 0.2 screen px per part px.
 - Evidence: `gtai-masters/night/d5-close/` (`item1_gate.png`, `item3_roofs_gate.png`, `item4_hero_vs_targets.png`,
