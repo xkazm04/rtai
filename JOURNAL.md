@@ -63,3 +63,5 @@ NEXT:
    draws hatch-only sheets, and look_d5_part re-draws them as screen-res strokes where the mask is set.
 4. King/boss rigs: no rig parts in the project yet; the D5 portrait exists (characters/art/d5/portraits/king.png).
 5. Owner review: portraits marked store-safe; D5 rust/vermilion budget on Rivet (739 pure px at 96 px/m).
+- 22:09 selftest colour count at 48 px/m varies run to run on the same commit (65, then 73; 71 at f2c7654): noise
+  of the windowed selftest, not a regression (the D5 tier is off below 54 px/m and the city references no D5 file).

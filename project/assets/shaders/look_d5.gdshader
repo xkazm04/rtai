@@ -18,6 +18,7 @@ uniform float hatch = 0.45;        // second hatch family strength in the wash s
 uniform float hatch_period = 6.0;  // screen px between strokes
 uniform float wash_lo = 0.22;      // the hatch lives in the wash between these densities
 uniform float wash_hi = 0.55;      // (the charcoal street sits above wash_hi and stays a calm field)
+uniform float street_hatch = 0.55; // sparse darker strokes on the charcoal street (64 px/m+ only)
 uniform float grain = 0.5;         // paper tooth strength
 uniform vec2 ink_mis = vec2(1.0, 1.0);
 uniform float ink_ghost = 0.22;    // strength of the off-register ink ghost
@@ -66,6 +67,10 @@ void fragment() {
 		float patch = smoothstep(0.42, 0.72, vnoise(w * 0.018 + 7.0));   // hand pressure comes and goes in patches
 		float h = strokes(w, -0.62, mix(0.16, 0.34, smoothstep(0.3, 0.6, d))) * wash * patch * hatch;
 		if (!is_verm) o = mix(o, INK, h * amount);
+		// the street (dark wash): sparse, darker pen strokes, only at full amount (64 px/m+), the mock's hatched asphalt
+		float street = smoothstep(wash_hi + 0.05, wash_hi + 0.15, d) * (1.0 - smoothstep(0.88, 0.95, d));
+		float hs = strokes(w + vec2(3.0, 0.0), 0.785, 0.16) * street * patch * street_hatch;
+		if (!is_verm) o = mix(o, INK, hs * smoothstep(0.7, 1.0, amount));
 		// off-register ink ghost: ink that should be a pixel away, printed faintly here (only onto lighter ink)
 		float dg = dens(texture(screen_tex, uv - ink_mis * tx).rgb);
 		o = mix(o, INK, max(dg - d - 0.35, 0.0) * ink_ghost * amount);
