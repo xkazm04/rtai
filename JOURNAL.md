@@ -239,3 +239,32 @@ NEXT:
   membrane) -> per-roof lift 2.6: paper 32% (= D4), L 0.431. The hero swaps neighbours that have D5 art and puts the
   union hall beside the mural (h59 parse error first: String(Variant) under warnings-as-errors hung the launcher
   to its timeout; fixed with a typed var). h60 = hero frames + item4 board. Board evidence/item15_local9.png.
+- 00:01 gates: evidence tool (--no-parity --no-bench) ALL PASS at 5922a3d: lint 13/13, unit 149/0, scenarios 8/0, selftest ok (34 untracked evidence PNGs moved aside and restored).
+
+## Summary (iteration 3, 23:09 -> 00:01)
+- Images: 4 Codex (d5_decals, d5_rivet_expressions, d5_king_expressions, d5_roof_union_hall; ledger 27 -> 31,
+  masters gen/ledger.tsv), 0 rejected for camera breaks. One cell honestly renamed (King "commanding" -> "wary").
+- Kept: look_d5 aged paper (`age`, the mock's sepia at D5 zoom), `age_floor` proposal (off), finer/darker cast-shadow
+  hatch, D5 street decals (stencil fist, STRIKE, chalk robot, scorch), D5 landmark roofs lifted to D4 tone (d**1.8),
+  D5 LOCAL 9 union hall (d**2.6) beside the mural, wall-side crates, the 128 px/m kill-cam, Rivet + King dialogue
+  expressions, part/soul grain locked to the sprite, test_look_d5_params.gd, the car-camera pan shimmer scene.
+- Measured: doctrine dE after the warmth, Rivet dL with the full stack, zoom colour drift (paper dE 7.6 from 32 to
+  64 tied to zoom; <= 0.6 with age_floor), pan swim (D5 adds 0; look_d4's screen grain = 93% of the pan swim).
+- Rejected/reverted: denser flat shadow (h41), barrel_cluster (vermilion), D4->mauve steel (owner A/B only: -61%
+  contrast), roof lift 2.2 (grime lost), softer pavement joints (look_d4 re-inks them), D4 roof lift (proposal only).
+- Shared files touched: none (steam/ai-provenance append-only, art_src/d5.manifest.json).
+
+NEXT:
+1. Visual-engine lane: switch `world.age_floor` to 1 (or move the AGE gains into look_d4's palette): the gameplay
+   frame then matches the mock's sepia (item12) and the zoom colour drift disappears. Wire look_d5 `amount` from
+   zoom_amount in the city (still dev/showcase only).
+2. Visual-engine lane: look_d4.gdshader:96 `hash(floor(FRAGCOORD.xy))` -> `hash(floor(w))` (-93% pan swim), and the
+   same in look_d4_item (grain + the ghost halftone `dots(px, ...)`).
+3. d4-production lane: the d**1.8 mid-tone lift on the D4 roof set (item14: OSHA paper 26% -> 38%); the remaining
+   ink mass is the thick hatched roof border ring.
+4. City lane: adopt the D5 decals (`city/art/d5/decals/`), the D5 landmark + union-hall roofs, kerb corners and
+   kerb/building shadow quads (the hero scene is the reference); the lamp post reads as a spoon; pavement joints are
+   weighted by look_d4's print thresholds, not the tile.
+5. HUD lane: dialogue/phone UI can use `characters/art/d5/portraits/{rivet,cop,king}.png` + rivet_/king_ expressions
+   (at 64 px only angry/furious and the tilts read).
+6. Owner: Rivet steel (item9), age_floor (item12), store-safe marks on portraits/expressions/loading art.
