@@ -198,11 +198,11 @@ NEXT:
   the shot (KILL_CAM_M 6.6,-1.9) only at zoom 4; 32/64/96 0 px vs h50. D4 vs D4+D5 at 128 beside the concept:
   evidence/item13_killcam128.png; this is where D5 reads closest to the concept (part rust, hatch and form shade all
   survive at ~2.5x minification). hero-d4/d4d5-128ppm.png added.
-- 23:37 gates: evidence tool (--no-parity --no-bench) ALL PASS at e0abd08 (lint 13/13, unit 146/0, scenarios 8/0,
+- 23:33 gates: evidence tool (--no-parity --no-bench) ALL PASS at e0abd08 (lint 13/13, unit 146/0, scenarios 8/0,
   selftest ok); 30 untracked evidence PNGs moved aside and restored.
   FRICTION: run_unit.mjs without GODOT_BIN exported prints "exit -1 ... (146 passed)" = a stale count, not a run.
-- 23:38 MEASURED zoom colour drift of the aged paper: paper dE 2.8 (32->48) / 7.6 (32->64), street 2.0 / 4.7; with
+- 23:34 MEASURED zoom colour drift of the aged paper: paper dE 2.8 (32->48) / 7.6 (32->64), street 2.0 / 4.7; with
   age_floor 1: <= 0.6. Recommendation (gap 1): the visual-engine lane switches age_floor on.
-- 23:40 MILESTONE test_look_d5_params.gd (836a1a5): keys are uniforms (planted typo caught), zoom blend 0 at 32 +
+- 23:35 MILESTONE test_look_d5_params.gd (836a1a5): keys are uniforms (planted typo caught), zoom blend 0 at 32 +
   monotone, age_floor off. Found while writing it: shadow.offset_m is placement data, allowlisted. Unit 149/0.
 - README: gap list after iteration 3 (7 items, next step each).

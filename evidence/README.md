@@ -56,6 +56,32 @@ tick count, no RNG.
 - **Kill-cam at 128 px/m** (`item13_killcam128.png`, f9f956f): framed on the shot; the D5 tier's closest read of the
   concept (rust, hatch, inked joints, two-ink souls).
 - Hero evidence frames are now h53 (= h50 at 32-96, plus 128).
+- **Zoom colour drift, measured**: the zoom-tied warmth moves the paper by dE 2.8 (32 -> 48, the foot/car switch)
+  and 7.6 (32 -> 64), the street by 2.0 / 4.7; with `age_floor` 1: <= 0.6. Hence gap 1's recommendation.
+- New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom
+  blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08; unit 149/0
+  at 836a1a5.
+
+## Gap list after iteration 3 (what still separates in-engine from d4h2_mock and the concept, next step each)
+1. **Gameplay-zoom colour.** The mock (= the 32 px/m frame) is warm sepia; ours is cool grey at 32 and warms only
+   with the D5 zoom. Zoom-tied warmth also DRIFTS while the camera zooms: paper dE 2.8 on the foot (32) <-> car (48)
+   switch and 7.6 from 32 to 64 (street 2.0 / 4.7); with `age_floor` 1 the drift is <= 0.6 everywhere
+   (`item12_age_floor_32.png`). Next: the visual-engine lane + owner switch `world.age_floor` to 1 (or move the
+   gains into look_d4's palette). Recommended.
+2. **D4 roofs are ink-heavy.** Mock roofs: mean L ~0.59, 44% paper. D4 neighbour roofs at 32 px/m: 0.498, 28%.
+   The D5 landmarks are now at D4 parity (bar 0.439 / 25%) after the d**1.8 lift. Next (d4-production / city):
+   the same mid-tone density lift (`build_roofs.py` LIFT) on the D4 roof set, gated against the grime/detail loss
+   seen at 2.2.
+3. **Pavement grid.** Ours: a hard white slab grid with black joints; the mock: soft, irregular slab joints. Next:
+   city lane's pavement tile (the D5 sidewalk tile helped only marginally).
+4. **Lamp post** reads as a spoon lying on the pavement (mock: kerb base + curved arm + round head). City props.
+5. **Parapets / building height.** The mock's roofs read as raised slabs; ours rely on the cast-shadow hatch (now a
+   proper hatched shadow, h42). Next: a parapet wall face on the south/east roof edges (roof art or a quad).
+6. **Rivet's steel** is light lavender (D4 contrast parity) vs the concept's dark mauve: owner choice
+   (`item9_steel_owner_ab.png`: mauve costs 61% body contrast; the cream rim still carries the silhouette).
+7. **Up close D5 works**: at 96-128 px/m (kill-cam, `item13_killcam128.png`) the part rust, hatch, form shade and the
+   two-ink souls read like the concept. Not yet in-engine: King/boss rigs (no parts), the dialogue/phone UI for the
+   D5 portraits (HUD lane).
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
