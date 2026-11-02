@@ -132,3 +132,13 @@ NEXT:
   (0 placeholders). parity PASS earlier at the same code. bench.json stale (see above). Session ends here.
 NEXT (morning, first thing): on an idle box run the full `node tools/evidence/run.mjs` so bench.json is current
 (`build/export/windows-bench/` now exists in this worktree); then the NEXT list above.
+
+## 2026-11-02 22:29 iteration 2, BUILD (raise the weakest item)
+- Picked: HUD frames (only a Python composite mock existed). Built `dev/showcase/hud_overlay.gd` + `city_frame.gd
+  --hud=0.5,0.4`: the frames in-engine over the real city at 32/48 px/m with sample digits (digits only, no UI words).
+- In-engine finding: the bare cream frames melt into the cream pavement (cash + wanted panels at the top sit on the
+  pavement in focus 0), and the README text area (x 130) overlapped the banknote glyph (ends x ~165).
+- Fix: `tools/hud_plate.py` - a 5 px ink rim + 8,10 px charcoal drop shadow on the 6 frames (pips untouched), README
+  sizes/offsets (+7 frame px) and text area x 185. Probe RIM 7 was too heavy (ate the torn-paper edge), 5 kept.
+  Before/after: `after_hud|after_hud2/city-*-hud{50,40}.png`; ladder rows appended. Kept: reads better.
+- MILESTONE HUD in-engine. Note for the HUD owner: UI scale 0.4 at 1280 x 800 reads and leaves more street.
