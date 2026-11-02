@@ -1,0 +1,53 @@
+{
+  "_doc": "D5 'Inked Grime' parameter proposal for the visual-engine lane (d5-close, 2026-11-02). world = look_d5.gdshader uniforms (a layer over the look_d4 world print, under the actors; set world_px like look_d4). zoom_amount = [zoom, amount] stops (zoom 1.0 = 32 px/m), linear between stops, clamped: drive the layer's `amount` from the camera zoom. part = look_d5_part.gdshader defaults (the D5 character tier, RigDetail: on at tier_on_zoom, full at tier_full_zoom, off below tier_off_zoom).",
+  "part": {
+    "grime": 0.1,
+    "hatch_hi": 0.7,
+    "hatch_lo": 0.5,
+    "hatch_period": 3.6,
+    "ink_at": 0.74,
+    "mis_k": 0.55,
+    "mis_px": 2.0,
+    "rust_lod": 3.0,
+    "verm_gate": 48.0
+  },
+  "schema": "gtai.look-d5-params/1",
+  "tier_full_zoom": 2.0,
+  "tier_off_zoom": 1.6875,
+  "tier_on_zoom": 1.75,
+  "world": {
+    "grain": 0.5,
+    "hatch": 0.45,
+    "hatch_period": 6.0,
+    "ink_ghost": 0.22,
+    "ink_mis": [
+      1.0,
+      1.0
+    ],
+    "verm_ghost": 0.65,
+    "verm_mis": [
+      -2.0,
+      1.0
+    ],
+    "wash_hi": 0.55,
+    "wash_lo": 0.22
+  },
+  "zoom_amount": [
+    [
+      1.0,
+      0.0
+    ],
+    [
+      1.5,
+      0.35
+    ],
+    [
+      2.0,
+      1.0
+    ],
+    [
+      3.0,
+      1.0
+    ]
+  ]
+}
