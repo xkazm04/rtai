@@ -137,8 +137,8 @@ NEXT (iteration 3 / morning):
   right sheet). Clearly better: real blast with a vermilion core, cloud smoke, shards, crackle, splat with a
   cream rim. First pass (`after/`) REJECTED in part: the linear dither fade turned splats/smoke into grey
   stipple and the casing drew 1.6 m long -> added `fade_from` + casing 0.5 m (`after2/`). 0 frames rejected for
-  camera (engine camera, straight down). Art note for d4-production: smoke cells read cream/paper, not the
-  charcoal the doc wants ("smoke: charcoal puffs") - a darker smoke row would read better on the cream crossings.
+  camera (engine camera, straight down). (Corrected 23:07: the smoke row of the sheet IS grey + hatched; it reads
+  cream in the frame because smoke is lit and sits next to the blast light - correct behaviour, no art ask.)
 - MILESTONE D5 overlay plug-in (94f6e44). With n-d5 157dec8's look_d5.gdshader + params copied in for the
   capture: same-tick mean diff vs the placeholder: auto 48 px/m 0.00 (pure D4 at gameplay zoom holds), 56: 6.56,
   64: 12.33. 08-d5-overlay/ab-auto-64ppm.png: the overlay gives the sparse street hatch, paper tooth and
@@ -187,8 +187,8 @@ NEXT (iteration 5 / morning, in order):
 5. Gameplay wiring still BLOCKED on positional events (shot_fired / bullet_hit / exploded with a world pos)
    in events.json (shared file, owner OK). With them: FxSystem.spawn + CameraRig.kick + LightLayer.add.
    The camera already follows vehicle_entered / vehicle_exited.
-6. d4-production asks: traffic_light.png lamps (vermilion in the world); a charcoal smoke row (smoke cells read
-   cream); optionally a vermilion-free tracer (it is emissive and fine as is).
+6. d4-production ask: traffic_light.png lamps (vermilion in the world). (The smoke row is fine: see the 23:07
+   correction.)
 7. Lights on the Deck: cap fires at 8-16 or a smaller radius if the Deck shows the same fill cost.
 - MILESTONE final bench 23:00-23:04 (fd1703f, CPU 7 % / GPU 10 % before): PASSES - p99 3.78 ms, 1% low 155 fps,
   worst swap 32 ms, 0 frames > 50 ms (49 > 25 ms, all vsync/present). Riot rig 0.457 ms per tick, p99 0.501

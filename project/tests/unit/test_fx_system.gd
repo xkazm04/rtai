@@ -142,3 +142,20 @@ func test_emissive_kinds_go_to_the_glow_twin() -> void:
 	var blast: float = fx.kinds[&"explosion"]["count"]
 	assert_eq(fx.alive(), int(smoke), "smoke is lit: it stays under the lights")
 	assert_eq(fx.glow.alive(), int(blast), "the blast draws above the lights")
+
+
+func test_every_sheet_block_stays_inside_the_grid() -> void:
+	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FxSystem.TABLE))
+	var grid: Dictionary = d["atlas"]
+	var cols: float = grid["cols"]
+	var rows: float = grid["rows"]
+	for row: Dictionary in d["kinds"]:
+		if not row.has("atlas"):
+			continue
+		var a: Dictionary = row["atlas"]
+		var cells: Array = a["cells"]
+		var first: float = cells[0]
+		var n: float = cells[1]
+		var kid: String = row["id"]
+		assert_gt(n, 0.0, kid)
+		assert_lte(first + n, cols * rows, "%s cells inside the %dx%d sheet" % [kid, cols, rows])
