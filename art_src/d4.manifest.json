@@ -1,0 +1,307 @@
+{
+ "_doc": "D4 masters (GIT-06 tier 1) for F-08/F-09. The files live outside git at C:/Users/kazda/kiro/gtai-masters/d4/ (gen/out = raw Codex sheets, gen/_prompts = prompts, gen/refs = layout templates and references, tools = build scripts). prompt_ref values in steam/ai-provenance point here as art_src/d4.manifest.json#<sheet>.",
+ "masters": {
+  "d4_roofs_1": {
+   "file": "masters:d4/gen/out/d4_roofs_1.png",
+   "sha256": "700ca9db69572763ade957dda8c1f80b31f960e37315db972bf725b734ae2ecb",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_1.txt",
+   "prompt_sha256": "15efe8c08abf565321a75c9911325c81b18470eeb4f62b59ea4567dd75ea7d50",
+   "layout_template": "masters:d4/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_roofs_2": {
+   "file": "masters:d4/gen/out/d4_roofs_2.png",
+   "sha256": "db249fb3076d7b06e2c5fab24f689b1fccb2e72d2b126b2243c0090ebd9dc28c",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_2.txt",
+   "prompt_sha256": "4c287a43d9ef9f89c598797a704de31f2bb329380ca54c1454006a69ff054dd3",
+   "layout_template": "masters:d4/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_roofs_3": {
+   "file": "masters:d4/gen/out/d4_roofs_3.png",
+   "sha256": "05954cd551dd8f392eb647a18439da06ede4a6456daef573216394493eaf3957",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_3.txt",
+   "prompt_sha256": "c94389505f35dc65e375449a746f5dbaf79c3ee686f4e5b673bf11d6d4849400",
+   "layout_template": "masters:d4/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_roofs_4": {
+   "file": "masters:d4/gen/out/d4_roofs_4.png",
+   "sha256": "7ada10dc35b843ae20c1341611b2beac291c0cca5ae80b5789bbf8703c1aec8a",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_4.txt",
+   "prompt_sha256": "3413523e7169b7746538d9d7722863cf28de404ed57f1fe1a01a4696d9edbe6b",
+   "layout_template": "masters:d4/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_roofs_5": {
+   "file": "masters:d4/gen/out/d4_roofs_5.png",
+   "sha256": "28bee8597e2b320802ab7ba440e635407141a514d7026256ecf1cabdc3e1f269",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_5.txt",
+   "prompt_sha256": "b724b76fa81aea1d3962ba1e72cfac48d686709f1f41a005033f3e6a477b98b8",
+   "layout_template": "masters:d4/gen/refs/t_roofs_long.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_roofs_6": {
+   "file": "masters:d4/gen/out/d4_roofs_6.png",
+   "sha256": "81f142585c5a17ed374c85b42c5828c4d6fcc6d6bf67440461768654f4490771",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/roofs_6.txt",
+   "prompt_sha256": "6cfb8dc4dc0f39e850d827d7b9b1151b7fe645291cbd1cc228dd33fd6d5a9f3a",
+   "layout_template": "masters:d4/gen/refs/t_roofs_long.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_props_1": {
+   "file": "masters:d4/gen/out/d4_props_1.png",
+   "sha256": "fe20d9024c53449ac38320f38586ff8988a67aa92feae67b7c80e68a0e9d408b",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/props_1.txt",
+   "prompt_sha256": "d9e4540a8db4b8152939c60bdbb42bcae3def960750810c0d6acae6551452c33",
+   "layout_template": "masters:d4/gen/refs/t_props_1.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_props_2": {
+   "file": "masters:d4/gen/out/d4_props_2.png",
+   "sha256": "4b06130616ad7fe75e654309a482deba2febbe0c87f4ead2dcae46b229706cd0",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/props_2.txt",
+   "prompt_sha256": "ce626cad30db0cdc470422a08dbfa304e3e51a3e490f8bea6a4c2d3f37498512",
+   "layout_template": "masters:d4/gen/refs/t_props_2.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_ground_asphalt": {
+   "file": "masters:d4/gen/out/d4_ground_asphalt.png",
+   "sha256": "93e21d01429b34034383bb9bcc0777e79a44a28f65810ce2b8f845c4d877f6d6",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/ground_asphalt.txt",
+   "prompt_sha256": "4138899dc924f8ba1d203a7d957f3a11d773b0f520ab945bc36f66e5ac097c74",
+   "layout_template": "masters:d4/gen/refs/t_ground.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_ground_paving": {
+   "file": "masters:d4/gen/out/d4_ground_paving.png",
+   "sha256": "065d1b05f87b37a1f54b802931805f367d055d7aedf6aa58a76a1aee474293ad",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/ground_paving.txt",
+   "prompt_sha256": "f4f2a0a724b201a00eaaaaad7b8a2860de9f6774b1740c509df811638777819c",
+   "layout_template": "masters:d4/gen/refs/t_ground.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_rivet_head": {
+   "file": "masters:d4/gen/out/d4_rivet_head.png",
+   "sha256": "b30dc8e2adaa8bf73a7f167152bc890e88289a4ce8ca0badfa30c05a11fef1fd",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/rivet_head.txt",
+   "prompt_sha256": "02cd60b0fd93fed4989f84ab5c78785c1ec4f0d0dadaafec4cf4cddfe57b16f4",
+   "layout_template": "masters:d4/gen/refs/rivet_head.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4_rivet.jpg (D4 Rivet sample, Codex)",
+    "own: gtai-spike/cutout/codex/v2/ref_turnaround.png (Rivet turnaround)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_rivet_legs": {
+   "file": "masters:d4/gen/out/d4_rivet_legs.png",
+   "sha256": "346b2cf68e4941c404eae917076fcbd38ff35589858ebe2790ca274766c06f89",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/rivet_legs.txt",
+   "prompt_sha256": "561e134996927e9234b77d848fb4c27e77bc964cb4c0e03c95d5fb79e27f848d",
+   "layout_template": "masters:d4/gen/refs/rivet_legs.png",
+   "references": [
+    "own master: d4_rivet_head",
+    "own: gtai-spike/cutout/codex/v2/ref_turnaround.png (Rivet turnaround)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_rivet_arms": {
+   "file": "masters:d4/gen/out/d4_rivet_arms.png",
+   "sha256": "70d08c34c94f0304a0df55223ab0ca4229d73d5dbf69a26056a37a625dde4be0",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/rivet_arms.txt",
+   "prompt_sha256": "42c037397cc131329477cd0001e4f3fa873a484b54b0ca6e9de0df7646de4c18",
+   "layout_template": "masters:d4/gen/refs/rivet_arms.png",
+   "references": [
+    "own master: d4_rivet_head",
+    "own: gtai-spike/cutout/codex/v2/ref_turnaround.png (Rivet turnaround)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_rivet_hands": {
+   "file": "masters:d4/gen/out/d4_rivet_hands.png",
+   "sha256": "2261f833dfc5caf4f76e7d799204c603bb3f0b9744a61971ccbe8ac1a12dee8e",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/rivet_hands.txt",
+   "prompt_sha256": "32bac64ca88fdc4054615cc4c46e597c18b5081986417e8d6715fcee190344a3",
+   "layout_template": "masters:d4/gen/refs/rivet_hands.png",
+   "references": [
+    "own master: d4_rivet_head",
+    "own: gtai-spike/cutout/codex/v2/ref_turnaround.png (Rivet turnaround)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4_cop_a": {
+   "file": "masters:d4/gen/out/d4_cop_a.png",
+   "sha256": "a097cb8326f4ac397d8ca70c6e006396cad4291568b343d8634e576becaa1199",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/cop_a.txt",
+   "prompt_sha256": "3c48c9d1e7f603bb80be3c200d11133581ae9c4d01df8b46ba8a9b3510e23a3f",
+   "layout_template": "masters:d4/gen/refs/t_cop_a.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_rivet_head"
+   ],
+   "seed": null
+  },
+  "d4_cop_b": {
+   "file": "masters:d4/gen/out/d4_cop_b.png",
+   "sha256": "12de8670d1386cd3a3695139d56ffb4e5bf5d36494695ddc4eee646b6c4266e5",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/cop_b.txt",
+   "prompt_sha256": "ee2bbc67b76fa9b452b6670fafb3bb9572fdb7fc346605be4422c687cec70231",
+   "layout_template": "masters:d4/gen/refs/t_cop_b.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_cop_a"
+   ],
+   "seed": null
+  },
+  "d4_cop_c": {
+   "file": "masters:d4/gen/out/d4_cop_c.png",
+   "sha256": "b186a5accab5b5ed8196fd530d9ed0280a4fdfd0244811ac3327c82417de4835",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/cop_c.txt",
+   "prompt_sha256": "ca08cc1c51ce820dca75456792a298e993d3ad38b70898201c123c1a0a809ac2",
+   "layout_template": "masters:d4/gen/refs/t_cop_c.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_cop_a"
+   ],
+   "seed": null
+  },
+  "d4_ped_a": {
+   "file": "masters:d4/gen/out/d4_ped_a.png",
+   "sha256": "3b1419f9aa1ba700458bab27513b05912c2babd7b2431393f74f6ab4e93ab471",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/ped_a.txt",
+   "prompt_sha256": "3a473435d994aa49a6ec147e45bcfa120fd0ddac339a5bd4cd379cc72e221ee2",
+   "layout_template": "masters:d4/gen/refs/t_ped_a.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_rivet_head"
+   ],
+   "seed": null
+  },
+  "d4_ped_b": {
+   "file": "masters:d4/gen/out/d4_ped_b.png",
+   "sha256": "96e91ff9a660bed58b42252f271eca294f30113f706fa7f6d14663571d622864",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/ped_b.txt",
+   "prompt_sha256": "78874ae75a4ec123e48665e1de5e86f981a7197157ccf58c776f041df92d4443",
+   "layout_template": "masters:d4/gen/refs/t_ped_b.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_ped_a"
+   ],
+   "seed": null
+  },
+  "d4_ped_c": {
+   "file": "masters:d4/gen/out/d4_ped_c.png",
+   "sha256": "f98b66c09881d02d507347b819b5dd4672a9119101b48509d672b3efdbc84dec",
+   "tool": "codex-image",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:d4/gen/_prompts/ped_c.txt",
+   "prompt_sha256": "51b0b8c4cb6bc01ae1bc66254677dac278e181865f2a239b9241849eb005b109",
+   "layout_template": "masters:d4/gen/refs/t_ped_c.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)",
+    "own master: d4_ped_a"
+   ],
+   "seed": null
+  }
+ }
+}
