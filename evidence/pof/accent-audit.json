@@ -63,26 +63,26 @@
     {
       "hit_flash": {
         "teal": 0,
-        "vermilion": 3052
+        "vermilion": 3056
       },
       "kind": "cop",
       "look": 5,
       "off_doctrine": false,
       "tag": "patrol",
       "teal": 0,
-      "vermilion": 29276
+      "vermilion": 29308
     },
     {
       "hit_flash": {
         "teal": 0,
-        "vermilion": 2676
+        "vermilion": 2680
       },
       "kind": "cop",
       "look": 6,
       "off_doctrine": false,
       "tag": "riot",
       "teal": 0,
-      "vermilion": 24744
+      "vermilion": 24716
     },
     {
       "hit_flash": {
@@ -144,9 +144,9 @@
     {
       "frame": {
         "teal": 4,
-        "vermilion": 9704
+        "vermilion": 9744
       },
-      "frame_share": 0.00948046875,
+      "frame_share": 0.00951953125,
       "full_rigs_by_kind": {
         "cop": {
           "teal": 0,
@@ -158,13 +158,13 @@
         },
         "rivet": {
           "teal": 4,
-          "vermilion": 172
+          "vermilion": 176
         }
       },
       "layers": {
         "actors": {
           "teal": 4,
-          "vermilion": 9704
+          "vermilion": 9744
         },
         "fx": {
           "teal": 0,
@@ -185,9 +185,9 @@
     {
       "frame": {
         "teal": 0,
-        "vermilion": 2540
+        "vermilion": 2536
       },
-      "frame_share": 0.00248046875,
+      "frame_share": 0.0024765625,
       "full_rigs_by_kind": {
         "cop": {
           "teal": 0,
@@ -199,13 +199,13 @@
         },
         "rivet": {
           "teal": 0,
-          "vermilion": 304
+          "vermilion": 296
         }
       },
       "layers": {
         "actors": {
           "teal": 0,
-          "vermilion": 2540
+          "vermilion": 2536
         },
         "fx": {
           "teal": 0,
