@@ -121,3 +121,27 @@ NEXT:
 - 23:03 MILESTONE: look_d5_soul.gdshader (soul print: two teal inks + cream rim + grain). h34 hard snap speckled at
   32 px/m (HF 0.0659 vs drawn 0.0613); h35 soft ramps still +6% -> the print rides the D5 tier fade (h37): 0 px vs
   drawn at 32/48, full print at 64/96. Hero default `--soul=d5`. Hero frames now h37.
+- 23:04 gates: evidence tool ALL PASS at 68e85b4 (lint 13/13, unit 146/0, scenarios 8/0, selftest ok).
+
+## Summary (iteration 2)
+- Images: 2 Codex (d5_souls, d5_loading_rivet); ledger total 27. 0 rejected for camera breaks.
+- Kept: hero street life (borrowed D4 vehicles/FX/decals + D5 souls), filled blocks, kerb shadows, rounded kerb corners,
+  look_d5_part form shade (steel + vermilion), uniform-flow derivatives, look_d5 street hatch at 48, look_d5_soul,
+  the D5 loading illustration, GPU cost + shimmer measured.
+- Rejected/reverted: 9 px darkened form shade (contrast), ghost dot print for souls, bold 0.32 m kerb shadow (hazard
+  stripe), lit_k 0.75 (no effect), cream mural fist (evaluated, no change), hard soul snap at 32 px/m.
+- Open miss: cast vs street dL at 64 px/m 0.167 vs D4 0.170 (under one grey level) since the vermilion form shade.
+- Shared files touched: none new this iteration (steam/ai-provenance append-only, art_src/d5.manifest.json).
+
+NEXT:
+1. Visual-engine lane: read look_d5.params.json (new: part.shade_px/shade_k/lit_k/verm_shade, world.street_hatch_car);
+   drive look_d5 `amount` from zoom_amount in the city (still only wired in dev/showcase).
+2. City lane: city_textures id 10 `curb_corner_tone` has no art; `dev/showcase/d5_hero_kerbs.gd` is the geometry
+   (1.6 m quarter circle, ink kerb arc) and `_kerb_shadows` the 0.18 m look_d5_shadow strips. Fill blocks with
+   neighbour roofs (0.4 m alleys) as in the hero scene; the pavement slab grid should curve at the arc.
+3. FX lane: adopt `look_d5_soul.gdshader` (tier-faded) instead of look_d4_item's ghost dot screen for souls; the D5
+   soul sheet is in masters gen/out/d5_souls.png (keyed cells in borrowed/).
+4. When vehicles/fx/decals install their sprites, point D5HeroExtras at res:// and drop `--borrow`.
+5. Recover the 0.003 dL at 64 px/m (e.g. verm_shade 0.5, or a lighter STEEL_HI) if the owner wants D5 >= D4 strictly.
+6. Owner review: the loading illustration and portraits (store-safe marks), Rivet's lavender steel vs the concept's
+   darker mauve (we keep it light for contrast on the charcoal street).
