@@ -69,3 +69,4 @@ NEXT:
   unreferenced frame rounds (484 MB -> 237 MB); kept every round cited in the ladder / README.
 - UNMEASURED: motion shimmer (walk + zoom tween) of the D5 tier, and the GPU cost of the overlays + look_d5 layer.
   Both are in evidence/README.md with the next step.
+- 22:14 MILESTONE tier-fade sweep (d5_sweep.gd): 0 up to 55 px/m, monotone ramp to 0.066 at 64+: no pop.

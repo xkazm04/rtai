@@ -55,8 +55,9 @@ tick count, no RNG.
    and hand `zoom_amount` to the visual-engine lane's profile table.
 
 ## Not measured tonight (unmeasured is not zero)
-- Motion shimmer of the D5 tier while walking and during a 48 -> 64 px/m zoom tween: only still frames were
-  measured (0 px at the switch). Next: a zoom-sweep plus walk-cycle frame series, with frame-to-frame diff of the
-  Rivet crop.
+- Motion shimmer of the D5 tier during a WALK: unmeasured. (The zoom tween IS measured: `dev/showcase/d5_sweep.gd`,
+  mean |D5 - D4| over Rivet per zoom = 0 at 51/53/55, 0.003 at 57, 0.022 at 59, 0.046 at 61, 0.064 at 63, then
+  0.066 / 0.066 at 65 / 67 px/m: a monotone fade with no step = no pop.) Next: a walk-cycle frame series with a
+  frame-to-frame diff of the Rivet crop at 64 px/m.
 - GPU cost of the D5 overlays (+1 sprite per part on up to 16 rigs) and the look_d5 layer: no bench run (no native
   build here). Next: `node tools/bench/run.mjs` with the D5 tier forced on.
