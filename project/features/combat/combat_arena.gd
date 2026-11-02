@@ -5,6 +5,8 @@ extends RefCounted
 ## Events.actor_killed). Per-tick outputs (kills_now, tazer_hit_now) feed the stage's cues.
 ## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
 
+const SPAWN_SPREAD_M: float = 2.5
+
 var tuning: CombatTuning
 var rivet: Fighter
 var hostiles: Array[Fighter] = []
@@ -38,8 +40,12 @@ func _init(p_tuning: CombatTuning, events: EventBus, rng: RandomNumberGenerator)
 	rivet.radius_m = tuning.rivet["radius_m"]
 
 
+## A contractor near `at` (spread up to SPAWN_SPREAD_M, so a wave pours in, not a queue).
 func spawn_guard(at: Vector2) -> Fighter:
-	var g: Fighter = Fighter.make(Fighter.Kind.GUARD, _next_id, at, tuning.human["hp"])
+	var spread: Vector2 = Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0))
+	var g: Fighter = Fighter.make(
+		Fighter.Kind.GUARD, _next_id, at + spread * SPAWN_SPREAD_M, tuning.human["hp"]
+	)
 	_next_id += 1
 	g.radius_m = tuning.human["radius_m"]
 	g.weapon = &"assault-rifle"
@@ -51,6 +57,7 @@ func spawn_guard(at: Vector2) -> Fighter:
 ## The quartermaster: a human (1 hp) behind cover except in the Robo-tazer's vent window.
 func spawn_boss(at: Vector2) -> Fighter:
 	boss = spawn_guard(at)
+	boss.pos = at
 	boss.kind = Fighter.Kind.BOSS
 	boss.weapon = &"robo-tazer"
 	boss_anchor = at

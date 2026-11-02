@@ -10,7 +10,7 @@
   },
   "doc": "The stage quest 1 (collect-call) plays on, in metres (y down): where Rivet starts and how hot, where he can hide, the police patrols that see him while he is hot, Dock 9 (spawn points, the six waves: 48 contractors in five, then the quartermaster alone), the TUCK-IN crate stack and the metal the Robo-tazer arcs through, and what the Toner Room lines do (line_hooks). Placeholder layout until the city hosts the quest.",
   "dock": {
-    "spawn_gap_s": 0.6,
+    "spawn_gap_s": 0.25,
     "wave_gap_s": 2
   },
   "hide_spots": {

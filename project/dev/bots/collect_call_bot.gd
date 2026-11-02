@@ -7,12 +7,16 @@ extends RefCounted
 ## nail him in his vent window, torch the crates, try the Harbor Road phone while hot (Patch
 ## refuses), hide in a skip until heat 0, then answer it and get paid.
 
-const STAND_M: float = 0.4
+const STAND_M: float = 0.05
 const MEET_ORDER: Array[String] = ["Juno", "Brass", "Dr. Kilohm", "Don Fax"]
 const DOCK_HOLD: Vector2 = Vector2(100.0, 2.0)
-const BOSS_STANDOFF: Vector2 = Vector2(112.0, 10.0)
-const AIM_M: float = 22.0
+const BOSS_STANDOFF: Vector2 = Vector2(96.0, -6.0)
+const AIM_M: float = 14.0
 const HOME: String = "Harbor Road"
+## Where Rivet stands to use a phone or talk to an ally (inside the 1.7 m reach).
+const AT_PHONE: Vector2 = Vector2(0.0, 1.1)
+const AT_ALLY: Vector2 = Vector2(0.0, 1.6)
+const LINGER_TICKS: int = 120
 
 var phase: String = "start"
 ## false plants the scenario's fault: the bot never tries the Harbor Road phone while hot.
@@ -75,7 +79,7 @@ func _hide(spot: String) -> void:
 func _answer(phone: String) -> void:
 	if _stage.router.connected(phone):
 		return
-	if _go(_stage.layout.phones[phone]) and _stage.router.ringing(phone):
+	if _go(_stage.layout.phones[phone] + AT_PHONE) and _stage.router.ringing(phone):
 		_stage.intent.interact = true
 
 
@@ -85,7 +89,7 @@ func _meet(runner: QuestRunner) -> void:
 	for tag: String in MEET_ORDER:
 		if not runner.objective.met.has(tag):
 			var at: Vector2 = _stage.layout.places.actors[tag].at
-			if _go(at + Vector2(0.0, 1.2)):
+			if _go(at + AT_ALLY):
 				_stage.intent.interact = true
 			return
 
@@ -121,10 +125,13 @@ func _boss() -> void:
 		_stage.intent.interact = true
 
 
+## Watches the crates catch for a moment, listens to Patch's refusal, then hides till cool.
 func _walk_home() -> void:
 	var phone: Vector2 = _stage.layout.phones[HOME]
+	if _stage.burn_ticks < LINGER_TICKS or _stage.refusal_left > 0:
+		return
 	if not refused and tries_hot_phone:
-		if _go(phone):
+		if _go(phone + AT_PHONE):
 			_stage.intent.interact = true
 			refused = _stage.heat.level > 0
 		return
