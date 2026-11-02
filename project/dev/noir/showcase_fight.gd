@@ -9,7 +9,10 @@ extends Node
 ##     res://dev/noir/showcase_fight.tscn -- --out=<dir> [--zoom=1.5] [--ink] [--d4]
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--zoom", "--ink", "--d4"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--zoom", "--ink", "--d4", "--noir-parts"]
+## --noir-parts: the cop rigs wear the noir part redraws (same sizes, same alpha, same pivots).
+const NOIR_COP: String = "res://features/characters/art/noir/cop/"
+const NOIR_COP_PARTS: PackedStringArray = ["torso", "head_cap", "forearm_pistol"]
 const END: int = 660
 const LIT: float = 0.25
 
@@ -17,6 +20,7 @@ var _out: String = "user://noir"
 var _zoom: float = 1.5
 var _ink: bool = false
 var _d4: bool = false
+var _noir_parts: bool = false
 var _frame: int = 0
 var _t: int = 0
 var _hold: int = 0
@@ -57,6 +61,8 @@ func _ready() -> void:
 	_view.actor_layer().add_child(_blood)
 	_view.actor_layer().add_child(_rigs)
 	_view.actor_layer().add_child(_flash)
+	if _noir_parts:
+		_wear_noir_parts()
 	_rigs.setup(_world.context())
 	add_child(_impact)
 	_impact.hide_on_flash = [_view, _view.noir]
@@ -86,6 +92,8 @@ func _args() -> bool:
 			_zoom = v.to_float()
 		elif flag == "--d4":
 			_d4 = true
+		elif flag == "--noir-parts":
+			_noir_parts = true
 		else:
 			_ink = true
 	return true
@@ -139,6 +147,15 @@ func _cue(cue: Array) -> void:
 			Events.actor_killed.emit(NoirFightScript.RIVET, id, &"melee")
 			for k: int in [1, 2, 4, 7, 30]:
 				_heroes[_frame + k] = "kill%d" % id
+
+
+## Fills the shared cop part cache with the noir redraws before the showcase rigs are built.
+func _wear_noir_parts() -> void:
+	var lib: PartLibrary = PartLibrary.of("cop")
+	for part: String in NOIR_COP_PARTS:
+		var t: Texture2D = load(NOIR_COP + part + ".png") as Texture2D
+		if t != null:
+			lib.textures[part] = t
 
 
 func _on_hit_stop(ticks: int) -> void:
