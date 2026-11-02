@@ -241,3 +241,9 @@ NEXT:
   box; see iteration-1 note); textures only changed, no new texture count in the city table.
 - 23:12 pickups re-shot on the quiet paving (`after_k4/`): iteration-1 tokens -> iteration-2 family, ladder row
   `after_k|after_k4`. All 11 tokens read at 32 px/m on paving and asphalt (item pass).
+- 23:14 hijack board re-shot (`now_x/hijack-*`): teal overlays still register on the stroked intact cars; damage
+  states carry no overlay by design. Note: build_corner.py (iteration 1) takes the SHIPPED sidewalk_tone as its paving
+  source, so a re-run keeps the new light joints.
+- Session end for iteration 2. Branch n-d4, HEAD after this entry; tree clean; masters + tools in
+  `gtai-masters/night/d4-production/` (tools added tonight: hud_plate, props_stroke, prov_rev, damage_soot (rejected),
+  damage_marks, paving_joints, paving_slabs (rejected), track_imprint, cop_accent (probe)).
