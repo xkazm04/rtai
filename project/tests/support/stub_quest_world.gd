@@ -31,6 +31,8 @@ var wrecked: Dictionary[String, bool] = {}
 var actor_at: Dictionary[String, Vector2] = {}
 var killed: Dictionary[String, bool] = {}
 var calls: Array[String] = []
+## When set, every wanted change goes out as Events.wanted_changed (the police setter, ARC-08).
+var events: EventBus = null
 var _places: QuestPlaces
 
 
@@ -66,7 +68,16 @@ func wanted_level() -> int:
 
 func cap_wanted(level: int) -> void:
 	calls.append("cap_wanted %d" % level)
-	wanted = mini(wanted, level)
+	set_wanted(mini(wanted, level))
+
+
+## The one wanted setter of the stub (ARC-08): emits when a bus is attached.
+func set_wanted(level: int) -> void:
+	if level == wanted:
+		return
+	wanted = level
+	if events != null:
+		events.wanted_changed.emit(level)
 
 
 func pay(amount: int) -> void:

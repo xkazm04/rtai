@@ -38,4 +38,6 @@ Packages land in PoF's `games/gtai/quests/<id>/quest.json` and are copied into `
 Tests: `tests/unit/test_quest_*.gd` (loader, rules, text, runner, objectives, lines) and the
 scenario `tests/scenarios/scenario_quest_selftest.gd`, which plays the spike's `_selftest`
 fixture headless to completion through `QuestBot` and the stub world, twice (bit-identical)
-plus a planted fault, and leaves `quest-selftest.json` in the evidence directory.
+plus a planted fault, and leaves `quest-selftest.json` in the evidence directory; and
+`scenario_quest_collect_call.gd`, which plays the shipped `res://quests/collect-call/` the same
+way through `CollectCallScript`, whose `stubbed()` names every world system it stands in for.
