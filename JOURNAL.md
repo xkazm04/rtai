@@ -329,3 +329,11 @@ NEXT (iteration 7 / morning, in order):
   solid diamond reads as one more vermilion blob. Less vermilion area, so less pop on charcoal; not yet
   seen on cream pavement. OWNER CALL: to ship it, set `"fill_token": "paper", "core": 0.5` on the
   objective row (one line). 0 frames rejected.
+- Tried: skip the arm z_index sets when unchanged. Rig bench A/B 3 pairs: within noise both ways
+  (avg 0.302/0.303/0.293 old vs 0.297/0.292/0.303 new at 50 people) -> REVERTED, not committed.
+- Probe (throwaway, deleted): one cop drive = 28.1 us (debug, headless): RigGait 10.7, RigPose 14.9
+  (RigArm.solve x2 = 12.0, i.e. 6 us per arm). A Sprite2D.transform set costs 0.19 us and a
+  global_transform read + global_position write 0.31 us: the engine calls are NOT the cost, the GDScript
+  arithmetic is (Vector3 IK, lerps, the end-on cell checks). For the characters owner: the remaining
+  ~0.04 ms to the 0.3 ms target is a native RigArm/RigGait (or ~1 fewer drive per tick, e.g. 3 full
+  ranks), not GDScript micro-tuning.
