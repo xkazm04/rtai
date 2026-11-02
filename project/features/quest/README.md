@@ -17,3 +17,10 @@ Packages land in PoF's `games/gtai/quests/<id>/quest.json` and are copied into `
   things with, resolved by the world. The quest never invents a position.
 - **Text** (`QuestText`): symbolic keys (LOC-01) through `tr()`, the `@joke` overlay (LOC-06),
   and the package English as the fallback until the PO pipeline extracts quest text.
+- **Runtime** (`QuestSystem`, `QuestRunner`, `QuestObjective`, `QuestWorld`): a `WorldSystem`
+  that steps one contract on the fixed tick: offered (the payphone rings at the first beat's
+  location) -> active (beat i) -> succeeded or failed. It emits `contract_started` and
+  `contract_completed` through the injected bus, caps wanted at `heatPeak` through the world's
+  setter, and pays through it. Time is ticks; the runtime draws no random numbers.
+  `QuestWorld` is the port: the real systems implement it at integration, tests use
+  `tests/support/stub_quest_world.gd`.

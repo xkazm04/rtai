@@ -95,7 +95,7 @@
     },
     {
       "doc": "A contract (mission) started.",
-      "emitter": "features/missions",
+      "emitter": "features/quest",
       "name": "contract_started",
       "params": [
         {
@@ -103,11 +103,11 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "A contract (mission) was completed.",
-      "emitter": "features/missions",
+      "emitter": "features/quest",
       "name": "contract_completed",
       "params": [
         {
@@ -115,7 +115,7 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "Rivet entered a vehicle (runtime vehicle id).",
