@@ -43,3 +43,23 @@
   untracked evidence/*.png have to be moved aside for the run.
 - 21:56 look_d5_shadow.gdshader: hand-hatched cast shadow (world-locked wobble, pressure, broken strokes).
 - 21:57 peds D5 (gap 6b) in progress.
+- 22:00 D5 peds (3 sheets, 0 rejected; -6% contrast on cream pavement at 64 px/m, kept). D5 sidewalk tile (seamless
+  by a spliced D4 border; marginal gain). look_d5 tooth: the anisotropic fibres read as rain -> isotropic mottle.
+- 22:05 hero scene shoots 96 px/m kill-cam; evidence/hero-d4d5-96ppm.png is the night's showcase frame.
+
+## Summary (iteration 1)
+- Images: 25 Codex (ledger: masters night/d5-close/gen/ledger.tsv). 0 rejected for camera breaks. In-engine
+  rejections/reverts: vermilion fist mural (re-inked), 4 bold Rivet re-inks (reverted), the street hatch (r7),
+  the fibre tooth (rain), the texture-swap tier (replaced by overlays).
+- Gates: lint 13/13, unit 146/0, scenarios 8/0, evidence tool PASS (parity/bench not run: no native build here).
+
+NEXT:
+1. Visual-engine lane: read `project/assets/shaders/look_d5.params.json`. Drive look_d5's `amount` from zoom_amount
+   and put the look_d5 layer over look_d4 in the city (it is only wired in dev/showcase today).
+2. City lane: place a `look_d5_shadow` quad per building (offset 1.1 m down-right); decide on the D5 landmark roofs
+   (`features/city/art/d5/roofs/`) and the D5 sidewalk tile. Nothing in the city uses them yet: data
+   (city_textures.json) is not touched.
+3. The D5 in-part hatch still mips away at 64 px/m (bold re-ink did not help). Try a hatch MASK channel: Codex
+   draws hatch-only sheets, and look_d5_part re-draws them as screen-res strokes where the mask is set.
+4. King/boss rigs: no rig parts in the project yet; the D5 portrait exists (characters/art/d5/portraits/king.png).
+5. Owner review: portraits marked store-safe; D5 rust/vermilion budget on Rivet (739 pure px at 96 px/m).

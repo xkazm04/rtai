@@ -31,11 +31,14 @@ exactly D4 (0 changed px, measured).
 |---|---|---|
 | `look_d5_part.gdshader` | the D5 character tier (`features/characters/rig_detail.gd`) | prints the D5 part art (`features/characters/art/d5/<char>/`) as one overlay sprite per part over the untouched D4 part, alpha = zoom fade (56 -> 64 px/m). Lavender-grey steel ramp (D4 wash ink, not a hue), hatch re-drawn at screen resolution in part space, rust only where it survives mip 3 (no speckle), an off-register vermilion plate |
 | `look_d5.gdshader` | over the `look_d4` world print, under the actors | ink-pressure hatch in the mid wash (in patches, never on the charcoal street), fibrous paper tooth, off-register ink ghost and vermilion pass; `amount` from the zoom |
-| `look_d5.params.json` | (data for the visual-engine lane) | `world` uniforms, `zoom_amount` stops (32 px/m: 0, 48: 0.35, 64: 1), `part` defaults and the tier zooms |
+| `look_d5_shadow.gdshader` | a building's cast-shadow quad on the world layer, under the look_d4 print | light ink tint + world-locked, hand-wobbled pen strokes (the mock's hatched building shadows); a proposal for the city lane |
+| `look_d5.params.json` | (data for the visual-engine lane) | `world` uniforms, `zoom_amount` stops (32 px/m: 0, 48: 0.35, 64: 1), `part` defaults, the tier zooms, `shadow` |
 
 - The D5 part set is silhouette-locked to the D4 set (same names, sizes, pivots, alpha), so the tier never moves an
   outline or the sticker halo. Both D5 layers only re-print ink and vermilion that D4 already put there; the colour
   doctrine is unchanged.
+- Rust prints as dried rust (vermilion toward ink); pure vermilion only where it is coherent at mip 5 (the collar,
+  a cop's plate), so the collar stays Rivet's signature. Parts with a palette swap keep their D4 print.
 - D5 parts sample with mipmaps (`TEXTURE_FILTER_LINEAR_WITH_MIPMAPS`). The project default (linear, no mips) turns
   the detailed art into speckle at 0.2 screen px per part px.
 - Evidence: `gtai-masters/night/d5-close/` (`item1_gate.png`, `item3_roofs_gate.png`, `item4_hero_vs_targets.png`,

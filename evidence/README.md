@@ -11,7 +11,7 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction, before / after, at 32, 48 and 64 px/m |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction, before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Measurements
@@ -25,30 +25,31 @@ tick count, no RNG.
   but stay well above the street.
 - Rust vs collar: Rivet's pure-vermilion px at 96 px/m 1614 -> 739 after the dried-rust print (the collar stays
   pure). D5 cops keep 95% of their pure vermilion at 64 px/m (4334 -> 4122 px in the fight crop).
-- Codex: 21 images (4 Rivet sheets, 4 roofs, 3 portraits generated twice by a duplicate job, 3 cop sheets, 4 bold
-  Rivet re-inks); 0 rejected for camera breaks. In-engine rejections: the vermilion fist mural (re-inked) and the
+- Codex: 25 images (4 Rivet sheets, 4 roofs, 3 portraits generated twice by a duplicate job, 3 cop sheets, 4 bold
+  Rivet re-inks, 3 ped sheets, 1 sidewalk tile; masters `gen/ledger.tsv` has 25 lines); 0 rejected for camera breaks. In-engine rejections: the vermilion fist mural (re-inked) and the
   4 bold re-inks (reverted: no hatch gain at 64 px/m, the larger rust diluted the collar).
 - Gates at f2c7654 (`node tools/evidence/run.mjs --no-parity --no-bench`): lint, unit 146/0, scenarios 8/0, selftest
   all PASS. Parity and bench were not run here (the native GDExtension is not built in this worktree).
 
 ## Gap list: in-engine vs `d4h2_mock.jpg` and the concept (next step for each)
-1. **Building depth.** The mock's roofs cast hatched shadows and show a parapet wall; ours are flat squares. The
-   hatched cast shadow in `d5_hero_run.gd` closes most of it, but its strokes are mechanical. Next: a world-locked
-   wobbly hatch for cast shadows in look_d4/look_d5 (the city lane places a shadow quad per building).
+1. **Building depth.** The mock's roofs cast hatched shadows and show a parapet wall; ours were flat squares.
+   `look_d5_shadow.gdshader` (world-locked, hand-wobbled pen strokes) closes most of it in the hero scene. Next:
+   the city lane places one shadow quad per building, offset from `look_d5.params.json` `shadow.offset_m`.
 2. **Street life.** The mock has cars, a hydrant, cones, a dumpster and the teal soul trail; the hero scene is empty.
    Next: put the existing D4 props, a parked cruiser and the ghost trail into the hero scene (assets exist).
 3. **Asphalt texture.** The mock's street is cross-hatched; ours is a calm flat charcoal. That was kept on purpose:
    characters read on it, and the first look_d5 street hatch (r7) read as rain and was reverted. Next: test a very
    sparse wobbly hatch only at 64 px/m+, gated on the Rivet dL staying at or above 0.17.
-4. **Pavement scale.** Our paving reads as big clean bathroom tiles; the mock's slabs are smaller, hatched and
-   kerbed with rounded corners. Next: a D5 paving / kerb-corner pass (Codex, layout template from `t_ground`).
+4. **Pavement.** Ours reads as clean tiles; the mock's slabs are worn, hatched and kerbed with rounded corners.
+   A D5 sidewalk tile (`city/art/d5/ground/`, seamless via a spliced D4 border) helps only marginally at 64 px/m.
+   Next: kerb-corner pieces and curb tiles in D5; that is where the mock's look comes from.
 5. **Rivet vs the concept.** The concept's identity (visor, ID badge, posture) is a front view, and our camera
    only sees the top. Up close the D5 tier now carries the lavender steel, rust, ink and misregistration, but the
    in-part hatch mostly mips away at 64 px/m (parts are drawn ~5x minified). Next: re-generate the D5 sheets with
    coarser, bolder hatch (strokes 3x thicker) so it survives 0.2 screen px per part px; and the portraits carry the
    face.
-6. **Peds have no D5 tier.** Rivet and cops now do (cops: d439969). Next: D5 restyles of `ped_a/b/c` with
-   `slice_d5.py` (add `ped` to its CHARS table): 3 images, RigDetail picks them up by folder.
-7. **The world print layer is subtle.** look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene
+6. **The whole slice cast now has a D5 tier** (Rivet, cops, peds). The ped costs 6% contrast on cream pavement at
+   64 px/m (0.373 -> 0.351). Next: King and the boss cast need rig parts first (they exist only in the spike).
+7. **The world print layer is subtle** (its fibre tooth read as rain and was replaced by an isotropic mottle). look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene
    there is little mid wash, so its main visible effect is grain. Next: tune it on a roof-heavy frame at 64 px/m,
    and hand `zoom_amount` to the visual-engine lane's profile table.
