@@ -1,0 +1,110 @@
+{
+  "achievements": [
+    {
+      "block": "story",
+      "desc": {
+        "english": "Finish your last shift at Plant 9."
+      },
+      "hidden": false,
+      "icon": {
+        "brief": "A factory time card punched clean through, centred, warm riso inks."
+      },
+      "id": "ACH_CLOCKED_OUT",
+      "missable": false,
+      "name": {
+        "english": "Clocked Out"
+      },
+      "source": "canon:clock-out",
+      "stat": null,
+      "trigger": {
+        "do": [
+          {
+            "op": "unlock"
+          }
+        ],
+        "on": "tutorial_completed"
+      }
+    },
+    {
+      "block": "soul",
+      "desc": {
+        "english": "Let one of the voices from your old line take the wheel."
+      },
+      "hidden": false,
+      "icon": {
+        "brief": "Two overlapping robot silhouettes, one solid and one dotted, centred."
+      },
+      "id": "ACH_SOUL_1_FIRST_SHIFT",
+      "missable": false,
+      "name": {
+        "english": "Second Shift"
+      },
+      "source": "canon:souls",
+      "stat": null,
+      "trigger": {
+        "do": [
+          {
+            "op": "unlock"
+          }
+        ],
+        "on": "soul_swapped",
+        "where": [
+          {
+            "eq": 1,
+            "param": "soul_index"
+          }
+        ]
+      }
+    },
+    {
+      "block": "absurd",
+      "desc": {
+        "english": "Borrow 25 vehicles without filling in a single form."
+      },
+      "hidden": false,
+      "icon": {
+        "brief": "A car key on a tangled ring of 25 keys, centred, no text."
+      },
+      "id": "ACH_UNSCHEDULED_TEST_DRIVE",
+      "missable": false,
+      "name": {
+        "english": "Unscheduled Test Drive"
+      },
+      "source": "canon:vehicles",
+      "stat": {
+        "goal": 25,
+        "id": "STAT_CARS_BORROWED"
+      },
+      "trigger": {
+        "do": [
+          {
+            "by": 1,
+            "op": "stat_inc",
+            "stat": "STAT_CARS_BORROWED"
+          }
+        ],
+        "on": "vehicle_hijacked",
+        "unlock_when": {
+          "stat_gte": {
+            "stat": "STAT_CARS_BORROWED",
+            "value": 25
+          }
+        }
+      }
+    }
+  ],
+  "languages": [
+    "english"
+  ],
+  "schema": "gtai.achievements/1",
+  "stats": [
+    {
+      "default": 0,
+      "desc": "Vehicles taken that were not Rivet's own.",
+      "id": "STAT_CARS_BORROWED",
+      "max": 25,
+      "min": 0,
+      "type": "int"
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "appId": null,
+  "artifacts": [
+    {
+      "artifact": "Partner account, NDA + SDA, bank, tax, ID selfie",
+      "due": "T-26w",
+      "id": "M01",
+      "owner": "H",
+      "path": "manifest.json",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "App fee receipt + App ID",
+      "due": "T-24w",
+      "id": "M02",
+      "owner": "H",
+      "path": "manifest.json#appId",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Title memo + trademark clearance",
+      "due": "T-20w",
+      "id": "M03",
+      "owner": "H+L",
+      "path": "legal/title-memo.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Logo master + library logo",
+      "due": "T-20w",
+      "id": "M04",
+      "owner": "C",
+      "path": "store/logo/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Capsule set (7 images per the asset table)",
+      "due": "T-16w",
+      "id": "M05",
+      "owner": "C",
+      "path": "store/capsules/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Shortcut + app icons",
+      "due": "T-16w",
+      "id": "M06",
+      "owner": "C",
+      "path": "store/icons/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Screenshots + all-ages.txt list",
+      "due": "T-14w, refresh T-6w",
+      "id": "M07",
+      "owner": "C",
+      "path": "store/screenshots/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Gameplay trailer + gore-trimmed DE variant",
+      "due": "T-14w / T-6w",
+      "id": "M08",
+      "owner": "H+C",
+      "path": "store/trailers/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Short description, About, description images",
+      "due": "T-16w",
+      "id": "M09",
+      "owner": "C",
+      "path": "store/text/en.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Tags, accessibility answers, controller declaration",
+      "due": "T-16w / T-6w",
+      "id": "M10",
+      "owner": "H",
+      "path": "store/basic-info.json",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Language matrix (interface/audio/subtitles)",
+      "due": "T-8w",
+      "id": "M11",
+      "owner": "H",
+      "path": "store/languages.json",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "System requirements + benchmark reference",
+      "due": "T-8w",
+      "id": "M12",
+      "owner": "C",
+      "path": "store/sysreq.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Content disclosure sheet",
+      "due": "T-8w, per build",
+      "id": "M13",
+      "owner": "C",
+      "path": "content/disclosure-sheet.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Satire memo",
+      "due": "T-8w",
+      "id": "M14",
+      "owner": "H+C",
+      "path": "content/satire-memo.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Content survey answers (saved copy)",
+      "due": "T-6w",
+      "id": "M15",
+      "owner": "H",
+      "path": "content/survey.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "AI disclosure text + provenance log",
+      "due": "continuous; final T-6w",
+      "id": "M16",
+      "owner": "C+H",
+      "path": "content/ai-disclosure.md, ai-provenance/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Achievements JSON, CSVs, icons, stats table",
+      "due": "T-8w",
+      "id": "M17",
+      "owner": "C (upload H)",
+      "path": "achievements/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Rich Presence token file",
+      "due": "T-8w",
+      "id": "M18",
+      "owner": "C",
+      "path": "richpresence/<lang>.txt",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "SteamPipe scripts (app_build_<APPID>.vdf, depot_build_<ID>.vdf, upload.ps1)",
+      "due": "T-8w",
+      "id": "M19",
+      "owner": "C",
+      "path": "build/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Depots, launch options, branches record",
+      "due": "T-6w",
+      "id": "M20",
+      "owner": "H",
+      "path": "build/config.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Default Steam Input config",
+      "due": "T-6w",
+      "id": "M21",
+      "owner": "C+H",
+      "path": "input/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "THIRD_PARTY_NOTICES.md + credits",
+      "due": "T-8w",
+      "id": "M22",
+      "owner": "C",
+      "path": "generated at export",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Privacy policy (own site URL)",
+      "due": "T-8w",
+      "id": "M23",
+      "owner": "H",
+      "path": "legal/privacy.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Deck test report",
+      "due": "T-6w, T-2w",
+      "id": "M24",
+      "owner": "H",
+      "path": "qa/deck-<date>.md",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Price table + launch discount",
+      "due": "T-4w",
+      "id": "M25",
+      "owner": "H",
+      "path": "store/pricing.json",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Event art, launch post, patch-notes template",
+      "due": "T-1w",
+      "id": "M26",
+      "owner": "C",
+      "path": "store/events/",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    },
+    {
+      "artifact": "Demo App ID + demo build (if Next Fest)",
+      "due": "Fest -3w (-5w for press preview)",
+      "id": "M27",
+      "owner": "H+C",
+      "path": "manifest.json#demoAppId",
+      "sha256": null,
+      "spec": "STANDARDS.md section 18",
+      "status": "todo"
+    }
+  ],
+  "demoAppId": null,
+  "note": "REL-01. Paths are relative to steam/. Owner: H = owner, C = agent/pipeline, L = counsel. T = release day. sha256 is null until the artifact exists.",
+  "schema": "gtai.steam-manifest/1",
+  "title": "RTAI: Uprising"
+}

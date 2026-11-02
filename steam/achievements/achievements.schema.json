@@ -1,0 +1,266 @@
+{
+  "$defs": {
+    "localized": {
+      "additionalProperties": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "required": [
+        "english"
+      ],
+      "type": "object"
+    },
+    "statId": {
+      "pattern": "^STAT_[A-Z0-9_]{3,40}$",
+      "type": "string"
+    }
+  },
+  "$id": "gtai.achievements/1",
+  "additionalProperties": false,
+  "properties": {
+    "achievements": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "block": {
+            "enum": [
+              "story",
+              "soul",
+              "absurd",
+              "mastery",
+              "meta"
+            ]
+          },
+          "desc": {
+            "$ref": "#/$defs/localized"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "icon": {
+            "additionalProperties": false,
+            "properties": {
+              "brief": {
+                "minLength": 10,
+                "type": "string"
+              }
+            },
+            "required": [
+              "brief"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "pattern": "^ACH_[A-Z0-9_]{3,44}$",
+            "type": "string"
+          },
+          "missable": {
+            "type": "boolean"
+          },
+          "name": {
+            "$ref": "#/$defs/localized"
+          },
+          "retry": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "source": {
+            "pattern": "^(canon|entity):[a-z0-9][a-z0-9_.-]*$",
+            "type": "string"
+          },
+          "stat": {
+            "additionalProperties": false,
+            "properties": {
+              "goal": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "id": {
+                "$ref": "#/$defs/statId"
+              }
+            },
+            "required": [
+              "id",
+              "goal"
+            ],
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "trigger": {
+            "additionalProperties": false,
+            "properties": {
+              "do": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "by": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "flag": {
+                      "pattern": "^[a-z][a-z0-9_]*$",
+                      "type": "string"
+                    },
+                    "op": {
+                      "enum": [
+                        "stat_inc",
+                        "flag",
+                        "unlock"
+                      ]
+                    },
+                    "stat": {
+                      "$ref": "#/$defs/statId"
+                    }
+                  },
+                  "required": [
+                    "op"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "on": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              },
+              "unlock_when": {
+                "additionalProperties": false,
+                "properties": {
+                  "flag_all": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "stat_gte": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "stat": {
+                        "$ref": "#/$defs/statId"
+                      },
+                      "value": {
+                        "minimum": 1,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "stat",
+                      "value"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              "where": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "eq": {
+                      "type": [
+                        "integer",
+                        "string",
+                        "boolean"
+                      ]
+                    },
+                    "gte": {
+                      "type": "integer"
+                    },
+                    "in": {
+                      "minItems": 1,
+                      "type": "array"
+                    },
+                    "param": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "param"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "on",
+              "do"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "block",
+          "name",
+          "desc",
+          "hidden",
+          "stat",
+          "trigger",
+          "missable",
+          "icon",
+          "source"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "languages": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.achievements/1"
+    },
+    "stats": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "default": {
+            "type": "integer"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/$defs/statId"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "min": {
+            "type": "integer"
+          },
+          "type": {
+            "enum": [
+              "int"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "min",
+          "max",
+          "default"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "languages",
+    "stats",
+    "achievements"
+  ],
+  "type": "object"
+}

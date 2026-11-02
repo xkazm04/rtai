@@ -1,0 +1,34 @@
+{
+  "cap": 40,
+  "schema": "gtai.events/1",
+  "signals": [
+    {
+      "doc": "Rivet finished the Clock-Out tutorial.",
+      "emitter": "features/missions (planned)",
+      "name": "tutorial_completed",
+      "params": []
+    },
+    {
+      "doc": "Rivet became one of the voices from its old line.",
+      "emitter": "features/characters (planned)",
+      "name": "soul_swapped",
+      "params": [
+        {
+          "name": "soul_index",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "doc": "Rivet took a vehicle that was not its own.",
+      "emitter": "features/vehicles (planned)",
+      "name": "vehicle_hijacked",
+      "params": [
+        {
+          "name": "vehicle_kind",
+          "type": "StringName"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+; RTAI: Uprising (internal id gtai). STANDARDS section 22 step 6.
+; Setting names verified against the 4.7.2 binary on 2026-11-02 (docs/decisions.md).
+
+config_version=5
+
+[application]
+
+config/name="RTAI: Uprising"
+config/description="Robot Theft A.I."
+config/features=PackedStringArray("4.7")
+config/use_custom_user_dir=true
+config/custom_user_dir_name="RTAI Uprising"
+run/main_scene="res://boot/main.tscn"
+
+[autoload]
+
+Log="*res://core/log/log.gd"
+LaunchArgs="*res://boot/launch_args.gd"
+Events="*res://core/events/events.gd"
+Game="*res://boot/game.gd"
+Data="*res://core/data/data.gd"
+Save="*res://core/save/save.gd"
+Platform="*res://core/platform/platform.gd"
+
+[debug]
+
+gdscript/warnings/directory_rules={
+"res://addons": 0
+}
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/unsafe_property_access=2
+gdscript/warnings/unsafe_method_access=2
+gdscript/warnings/unsafe_cast=2
+gdscript/warnings/unsafe_call_argument=2
+gdscript/warnings/inference_on_variant=2
+gdscript/warnings/return_value_discarded=2
+gdscript/warnings/unused_variable=2
+gdscript/warnings/unused_parameter=2
+gdscript/warnings/shadowed_variable=2
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=800
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[importer_defaults]
+
+texture={
+"compress/mode": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": false,
+"process/fix_alpha_border": true
+}
+
+[physics]
+
+common/physics_ticks_per_second=60
+common/max_physics_steps_per_frame=4
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+rendering_device/driver.windows="d3d12"
+textures/canvas_textures/default_texture_filter=1

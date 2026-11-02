@@ -1,0 +1,3 @@
+# assets/shaders
+
+Shared shaders.

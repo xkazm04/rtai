@@ -1,0 +1,67 @@
+{
+  "achievements": [
+    {
+      "id": "ACH_CLOCKED_OUT",
+      "trigger": {
+        "do": [
+          {
+            "op": "unlock"
+          }
+        ],
+        "on": "tutorial_completed"
+      }
+    },
+    {
+      "id": "ACH_SOUL_1_FIRST_SHIFT",
+      "trigger": {
+        "do": [
+          {
+            "op": "unlock"
+          }
+        ],
+        "on": "soul_swapped",
+        "where": [
+          {
+            "eq": 1,
+            "param": "soul_index"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ACH_UNSCHEDULED_TEST_DRIVE",
+      "stat": {
+        "goal": 25,
+        "id": "STAT_CARS_BORROWED"
+      },
+      "trigger": {
+        "do": [
+          {
+            "by": 1,
+            "op": "stat_inc",
+            "stat": "STAT_CARS_BORROWED"
+          }
+        ],
+        "on": "vehicle_hijacked",
+        "unlock_when": {
+          "stat_gte": {
+            "stat": "STAT_CARS_BORROWED",
+            "value": 25
+          }
+        }
+      }
+    }
+  ],
+  "generatedBy": "tools/achievements/gen.mjs",
+  "schema": "gtai.achievements-runtime/1",
+  "sourceSha256": "5253d712a45d046d2b24bbc6b7363313682e5eef76d9cd27e0265823dadc1fc1",
+  "stats": [
+    {
+      "default": 0,
+      "id": "STAT_CARS_BORROWED",
+      "max": 25,
+      "min": 0,
+      "type": "int"
+    }
+  ]
+}
