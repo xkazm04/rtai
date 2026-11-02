@@ -66,3 +66,10 @@
 - FRICTION: under the world pass (look_d4) at 32 px/m the Sobel ink edges fill the glyphs in (dark grey tokens);
   in the item pass (look_d4_item) they read cleanly. Evidence `after_k/pickups-{32,48,64}ppm.png` + `-2x` crops
   (dev/showcase/parts_board_run.gd --page=pickups). **REQUEST visual-engine:** draw pickups in the item pass.
+
+## 22:05 MILESTONE HUD frames (work order 5, HUD)
+- 1 Codex sheet d4n_hud, 9 elements, 0 rejected: cash panel, wanted panel + 3 pips, ammo ticket, soul card idle /
+  active (teal), memo frame. `features/hud/art/` + README (socket centres, text areas, UI scale 0.5).
+- Evidence: no HUD scene exists, so the frames are shown as a **Python composite mock** over the in-engine
+  selftest frames (`after_h/hud-mock-{32,48}ppm.png`), labelled as such. Not an in-engine HUD.
+- Gates: lint 13/13, unit 142/142, scenarios rc 0 (after parts + pickups).
