@@ -10,8 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h60, iteration 3) / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h64, iteration 4 = h60 + the roof ink foot; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h69, iteration 4) / the concept |
+| `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h69, iteration 4 = h60 + the roof ink foot + form-shade 0.26; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -69,6 +70,9 @@ tick count, no RNG.
 - **Phone close-up in-engine** (`item19_phone.png`, 05a7b45): a D5 phone frame (1 Codex image, front-view UI art,
   keyed so the screen is a hole: `features/menus/art/d5/phone_frame.png`); `d5_hero.gd -- --phone=cop_alarmed`
   puts the portrait behind the screen with a placeholder call strip.
+- **Rivet contrast parity in both poses** (`item1c_shade_k.png`, a6b9020): form-shade coverage 0.42 -> 0.26: fixed-mask
+  dL at 64 px/m hero pose 0.151 -> 0.164 (D4 0.161), showcase pose 0.166 -> 0.176 (D4 0.168); 0 px at 32-56; walk
+  shimmer HF 1.029 -> 1.024. The joint shade still reads.
 - REVERTED: bolder part pen lines (h65, ink_at 0.66 / grime 0.05): Rivet dL 0.151 -> 0.138 at 64 px/m, noisier, not
   closer to the concept. FOUND: in the hero pose Rivet's D5 dL at 64 is 0.151 vs D4 0.161 (the 0.1693/0.1695 parity
   is the showcase pose); above D4 at 96.
