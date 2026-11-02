@@ -201,3 +201,23 @@ NEXT:
 - NOT DONE, by choice: quest_fight's silhouette flash (its placeholder view draws the ground and the actors
   on one node, so it can't be keyed; it stays a black flash). No Codex round this session (0 images, 0
   rejected): a parts round can't be assembled and evidenced on the rig in the time left.
+- (00:30) splash LOD: NoirLook.update reads the active Camera2D zoom (no city_view change); params
+  `splash_zoom` [1.0, 1.5]: no rings at 32 px/m, full from 48 px/m (`lod-before-after.png`).
+- MILESTONE (00:29) image route for noir parts, first images of this lane: Codex image_gen, one at a
+  time, no limit hit. noir_cop_1 (52 s): the D4 cop torso / cap head / pistol forearm at 2.5x on green as
+  the layout template -> ink masses, white rim line, brush highlights, a white badge on the cap; top-down
+  kept (0 rejected). Sliced back with the ORIGINAL part alpha (exact silhouettes and pivots,
+  tools/slice_noir.py) into `features/characters/art/noir/cop/`. Hook: `showcase_fight --noir-parts`
+  fills PartLibrary.of("cop").textures before the showcase rigs are built (no feature code change).
+  Honest: a small gain (the pass already printed cops as ink + rim); the cap badge is the new cop cue at
+  64 px/m; the torso highlights vanish at game scale. `parts-before-after.png`, ladder row 14.
+- MILESTONE (00:33) the long coat: noir_coat_1 (52 s, 0 rejected): the noir torso + a grey guide polygon
+  -> two coat flaps with a vent, ink + white folds. tools/slice_coat.py cuts by the polygon.
+  `dev/noir/noir_coats.gd` hangs it from each cop's torso back (z under the torso and its halo, own halo
+  rim), damped spring on TICK_DT: sideways velocity, turning and hit shove swing it, speed stretches it.
+  `showcase_fight --coat`. Evidence coat-v1/ (frames + showcase-noir-64-coat.mp4), `coat-motion-strip.png`
+  (4 clip frames 0.3 s apart: the tail trails cop A as he walks and turns), ladder row 15.
+  Honest: subtle at 64 px/m, a dark flap behind a dark figure; no unit test for the spring (dev code); the
+  dead cop's coat is not visible under the sprawl in f322.
+  Images this session: 2 generated, 0 rejected; provenance: 4 lines (3 cop parts + coat) in
+  steam/ai-provenance/2026-11.jsonl. Leonardo 0 tokens.
