@@ -572,3 +572,9 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   (generator), RigVariant slots for the 5 new ped parts (characters), soul portraits in a real HUD (HUD owner).
 - Open owner calls: cop uniform, blood ink (now with a cream rim) vs vermilion.
 - Branch n-d4, tree clean after this entry; nothing pushed or merged; scratch worktree removed.
+- 00:47 MILESTONE FX debris + sparks. Per-effect crops of the 48 px/m FX frame (`work/fx_small48.png`): spark burst =
+  thin pale strokes (near invisible), debris = pale grey chunks; the rest read. `build_fx.py`: sparks
+  bolden(grow 3, ink 3.5), debris outline() (round 3.5 px ink ring). Fresh scratch worktree at n-visual 76b0b31
+  (detached, no merge; removed after): shipped atlas vs new in the same build,
+  `fx_engine_sd_before|fx_engine_sd_after/fx-{32,48,64}ppm-1-fx.png`, crops `work/sd_ab.png`: debris clearly crisper,
+  sparks a small gain (drawn tiny + fade-dithered by the FX table: REQUEST 14 applies). Commit f7ad91a.
