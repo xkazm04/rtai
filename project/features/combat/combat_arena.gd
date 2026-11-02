@@ -23,6 +23,7 @@ var kills: int = 0
 var kills_now: int = 0
 var kill_weapon: StringName = &""
 var tazer_hits: int = 0
+var rifles_grabbed: int = 0
 var tazer_hit_now: bool = false
 ## The last bursts' arc paths (VFX), newest last.
 var burst_arcs: Array = []
@@ -94,6 +95,7 @@ func grab_rifle(reach: float) -> bool:
 			rifle_drops.remove_at(i)
 			rivet.weapon = &"assault-rifle"
 			rifle_ammo = tuning.weapon(&"assault-rifle").magazine
+			rifles_grabbed += 1
 			return true
 	return false
 

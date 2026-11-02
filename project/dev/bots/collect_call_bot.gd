@@ -23,6 +23,8 @@ var phase: String = "start"
 var tries_hot_phone: bool = true
 var refused: bool = false
 var grabbed: bool = false
+## Walking to a dropped rifle (kept until it is in hand, even when the next wave comes).
+var fetching: bool = false
 var _stage: CollectCallStage
 var _system: QuestSystem
 
@@ -97,17 +99,14 @@ func _meet(runner: QuestRunner) -> void:
 func _fight() -> void:
 	var arena: CombatArena = _stage.arena
 	var wave: int = _stage.layout.waves.current
-	if (
-		not grabbed
-		and wave >= 2
-		and arena.hostiles_alive() == 0
-		and not arena.rifle_drops.is_empty()
-	):
-		if _go(arena.rifle_drops[0]):
+	var lull: bool = arena.hostiles_alive() == 0 and wave >= 2
+	if not grabbed and not arena.rifle_drops.is_empty() and (fetching or lull):
+		fetching = true
+		if _go(_nearest(arena.rifle_drops)):
 			_stage.intent.interact = true
 			grabbed = true
-		return
-	_walk(DOCK_HOLD)
+	else:
+		_walk(DOCK_HOLD)
 	_shoot_nearest()
 
 
@@ -139,6 +138,14 @@ func _walk_home() -> void:
 		_hide("harbor-skip")
 		return
 	_answer(HOME)
+
+
+func _nearest(points: Array[Vector2]) -> Vector2:
+	var best: Vector2 = points[0]
+	for p: Vector2 in points:
+		if p.distance_to(_stage.arena.rivet.pos) < best.distance_to(_stage.arena.rivet.pos):
+			best = p
+	return best
 
 
 func _shoot_nearest() -> void:
