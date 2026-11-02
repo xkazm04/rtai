@@ -8,7 +8,7 @@
       "id": "objective",
       "rim_px": 2,
       "shape": "diamond",
-      "size_px": 18,
+      "size_px": 22,
       "token": "vermilion",
       "use": "objective"
     },
@@ -19,7 +19,7 @@
       "id": "pickup",
       "rim_px": 2,
       "shape": "ring",
-      "size_px": 14,
+      "size_px": 18,
       "token": "vermilion",
       "use": "pickup"
     },
@@ -30,15 +30,15 @@
       "id": "soul",
       "rim_px": 2,
       "shape": "ring",
-      "size_px": 16,
+      "size_px": 20,
       "token": "teal",
       "use": "soul"
     }
   ],
   "pointer": {
     "margin_px": 28,
-    "rim_px": 2,
-    "size_px": 22,
+    "rim_px": 3,
+    "size_px": 34,
     "token": "vermilion"
   },
   "schema": "gtai.world-markers/1"
