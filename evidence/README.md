@@ -124,7 +124,8 @@ tick count, no RNG.
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
-## Gap list after iteration 3 (what still separates in-engine from d4h2_mock and the concept, next step each)
+## Gap list after iteration 4 (what still separates in-engine from d4h2_mock and the concept, next step each)
+Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
 1. **Gameplay-zoom colour.** The mock (= the 32 px/m frame) is warm sepia; ours is cool grey at 32 and warms only
    with the D5 zoom. Zoom-tied warmth also DRIFTS while the camera zooms: paper dE 2.8 on the foot (32) <-> car (48)
    switch and 7.6 from 32 to 64 (street 2.0 / 4.7); with `age_floor` 1 the drift is <= 0.6 everywhere
@@ -158,6 +159,16 @@ tick count, no RNG.
    with a static King (`item18_arena.png`) in-engine. Still missing: a King RIG (the sprite is one static plan view;
    the characters lane needs King parts on the rig layout) and a King print ramp (look_d5_part's ramp is Rivet-tuned);
    the real dialogue/phone UI (HUD lane: mipmapped or pre-scaled portraits).
+9. **King is a static sprite.** `king_top.png` is one plan view (desaturated to the cast's steel); a boss fight needs
+   King PARTS on the rig layout (characters lane: the layout-template technique that made the Rivet D5 parts, with
+   `king_top.png` + the turnaround as identity refs) and a King-tuned part print (look_d5_part's ramp washes his
+   steel to white, a7).
+10. **Shadow `zoom` and the city.** look_d5_shadow now needs the camera zoom (strokes ~10 screen px above 64 px/m)
+    and takes a sprite's alpha (character shadows). Next (visual-engine / city lanes): set `zoom` from the camera
+    wherever the shadow quads land; decide whether bosses (and cars) get a hatched cast shadow like King's.
+11. **Arena floor = one asset.** `king_arena.png` is a single 12 m floor; a real arena needs its walls/edges and
+    spawn doors in the same hand (city lane), and the crown stencil must stay dimmed (cream under the cast swallows
+    the sticker rim, a1).
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
