@@ -25,20 +25,47 @@ func _ready() -> void:
 	_post.layer = 1
 	add_child(_world)
 	add_child(_post)
+	if page == "corner":
+		_corner_page()
+		return
 	for y: int in range(-2, 3):
 		var road: bool = page == "extras" or y == 0 or y == -1
 		var tile: String = "road_straight_tone_b" if road else "sidewalk_tone"
 		for x: int in range(-4, 4):
 			_tile(tile, Vector2(x * 8 + 4, y * 8) * PX)
+	_post_pass()
+	if page == "extras":
+		_place_extras()
+	else:
+		_place_table()
+
+
+func _post_pass() -> void:
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
 	rect.material = _look
 	_post.add_child(rect)
-	if page == "extras":
-		_place_extras()
-	else:
-		_place_table()
+
+
+## The kerb corner (pavement top-left) at the centre, joined by a horizontal kerb on its left,
+## a vertical kerb (the straight turned -90 degrees) above it and pavement above-left.
+func _corner_page() -> void:
+	for j: int in range(-2, 3):
+		for i: int in range(-3, 3):
+			var tile: String = "road_straight_tone_b"
+			var rot: float = 0.0
+			if i < 0 and j < 0:
+				tile = "sidewalk_tone"
+			elif i < 0 and j == 0:
+				tile = "curb_straight_tone"
+			elif i == 0 and j < 0:
+				tile = "curb_straight_tone_c"
+				rot = -PI * 0.5
+			elif i == 0 and j == 0:
+				tile = "curb_corner_tone"
+			_tile(tile, Vector2(i * 8, j * 8) * PX, rot)
+	_post_pass()
 
 
 func shoot() -> int:
@@ -56,8 +83,9 @@ func shoot() -> int:
 	return 0 if ok else 1
 
 
-func _tile(tile: String, at: Vector2) -> void:
+func _tile(tile: String, at: Vector2, rot: float = 0.0) -> void:
 	var s: Sprite2D = Sprite2D.new()
+	s.rotation = rot
 	s.texture = load(GROUND + tile + ".png") as Texture2D
 	s.scale = Vector2.ONE * 8.0 * PX / s.texture.get_width()
 	s.position = at

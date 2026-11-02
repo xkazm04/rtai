@@ -20,3 +20,15 @@
   `features/city/art/vehicles/traffic_atlas.png` (2x4 cells of 6.4x3.2 m, order in that README) as the RL_CARS
   texture with `variant -> cell` UVs; `traffic_atlas_hijack.png` for the hijacked state; damage states need a
   state hook. Car shadows can keep the blob or use the atlas alpha.
+
+## 21:45 MILESTONE decals, kerb corner, FX atlas (work order 2 part, 3)
+- Decals: 1 Codex sheet (d4n_decals), 16 cells, 0 rejected. 11 table decals (54-64) wired; dynamic: blood_s/m/l,
+  scorch, scorch_b (not in the table, README in `features/city/art/decals/`). Puddle interior = translucent ink.
+- Kerb corner (id 10): code only (`build_corner.py`: the curb() bands of build_ground along a rounded distance
+  field). **City table placeholders now 0** (was 22). Evidence: `after_d/corner-{32,48,64}ppm.png` (joins both
+  straights seamlessly), `after_d/table-*`.
+- FX: 1 Codex sheet (d4n_fx), 32 cells, **1 rejected** (the casing: a cylinder with a side face). Atlas
+  `features/fx/art/fx_atlas.png` 8x4 x 256 px, layout in that README. Ink splat burst got a cream sticker rim
+  (ink on charcoal disappears otherwise).
+- Running count: 5 Codex images, 1 cell rejected of 79.
+- **REQUEST visual-engine / FX owner:** no FX system draws `fx_atlas.png` yet; no decal system spawns blood/scorch.

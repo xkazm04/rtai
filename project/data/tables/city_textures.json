@@ -1,5 +1,5 @@
 {
-  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision, so it must not change with the art. art is the res:// path of the shipped D4 texture (lane B, F-08: ground, roofs, props); null draws a flat placeholder (decals 54-64 and the rounded kerb corner 10 have no D4 art yet). Vehicles 44-53: night lane d4-production, features/city/art/vehicles/ (nose to +x, README there). solid: props and parked vehicles that block the 1 m cell map.",
+  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision, so it must not change with the art. art is the res:// path of the shipped D4 texture (lane B, F-08: ground, roofs, props); null draws a flat placeholder (none left). Vehicles 44-53, decals 54-64 and the kerb corner 10: night lane d4-production (features/city/art/vehicles/, decals/, ground/curb_corner_tone.png; READMEs there). solid: props and parked vehicles that block the 1 m cell map.",
   "schema": "gtai.city-textures/1",
   "textures": [
     {
@@ -113,7 +113,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/curb_corner_tone.png",
       "class": "ground",
       "id": 10,
       "name": "curb_corner_tone",
@@ -597,7 +597,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/cracks.png",
       "class": "decal",
       "id": 54,
       "name": "cracks",
@@ -608,7 +608,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/manhole.png",
       "class": "decal",
       "id": 55,
       "name": "manhole",
@@ -619,7 +619,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/oil_stain.png",
       "class": "decal",
       "id": 56,
       "name": "oil_stain",
@@ -630,7 +630,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/drain_grate.png",
       "class": "decal",
       "id": 57,
       "name": "drain_grate",
@@ -641,7 +641,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/puddle.png",
       "class": "decal",
       "id": 58,
       "name": "puddle",
@@ -652,7 +652,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/oil_slick.png",
       "class": "decal",
       "id": 59,
       "name": "oil_slick",
@@ -663,7 +663,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/stop_line.png",
       "class": "decal",
       "id": 60,
       "name": "stop_line",
@@ -674,7 +674,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/road_arrow.png",
       "class": "decal",
       "id": 61,
       "name": "road_arrow",
@@ -685,7 +685,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/skid_marks.png",
       "class": "decal",
       "id": 62,
       "name": "skid_marks",
@@ -696,7 +696,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/glass_shards.png",
       "class": "decal",
       "id": 63,
       "name": "glass_shards",
@@ -707,7 +707,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/decals/tank_tracks.png",
       "class": "decal",
       "id": 64,
       "name": "tank_tracks",

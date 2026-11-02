@@ -437,6 +437,34 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_decals": {
+   "file": "masters:night/d4-production/gen/out/d4n_decals.png",
+   "sha256": "a3e449076ae333f673fceff4e9c94db8d6a1a1da5e4abb880c5ddd8017b0edb6",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/decals.txt",
+   "prompt_sha256": "8f416006f2eec954a30f87c8a01e89bda1908b9bcf2dd67ded3d52b13e7d116c",
+   "layout_template": "masters:night/d4-production/gen/refs/t_decals.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4n_fx": {
+   "file": "masters:night/d4-production/gen/out/d4n_fx.png",
+   "sha256": "20b9d1dba5aa84ca17dc7f2babb72bc6571c92399a1890e920761730544279c7",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/fx.txt",
+   "prompt_sha256": "180c814d894d87dce3d879001be6b96b74a792b5eda5ad1866c8e4362e28ef4d",
+   "layout_template": "masters:night/d4-production/gen/refs/t_fx.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }
