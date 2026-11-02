@@ -425,3 +425,4 @@ NEXT (iteration 9 / morning, in order):
   FRAGCOORD reads it only as `FRAGCOORD.xy + world_px` and declares world_px (comments ignored). Planted
   the old fx_ink dither line -> fails "fx_ink.gdshader: FRAGCOORD without + world_px". When n-d5's
   look_d5 merges, this test judges it before any frame is rendered.
+- Evidence at dfa61d9 (HEAD): lint 13/13, unit 201, scenarios 8, parity PASS, selftest PASS (goldens 10/10, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied to evidence/pof. Session end ~01:03: tree clean, no processes of mine running, /tmp + Temp scratch deleted; masters frames 15-20 kept as evidence.
