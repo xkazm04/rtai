@@ -159,3 +159,8 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   all beside the old set in-engine (`probe_tok/`): weapon (pistol; the wrench + pistol glyph was busy), ammo, armor,
   keycard replaced; health kept (already reads); SMG, wrench, ammo box unused. Before/after `after_k2|after_k3`.
   The 11 tokens are now one solid-silhouette family; the item-pass request to visual-engine still stands.
+- 22:55 REVERTED (never installed): damage-state soot wash (`tools/damage_soot.py`, mask = |dN - base| blurred).
+  The Codex damage states are re-drawn, not registered pixel for pixel, so the mask covers most of the body and the
+  wash prints as airbrush blotches (van_d2 grey all over): worse, against the "no airbrush" doctrine. Peek
+  `work/dmg_soot_peek.png`. d1 stays subtle at 48 px/m (fine pen cracks); a real fix is a damage overlay drawn as
+  bold ink (a crumple + crack decal set aligned per car) or smoke FX from the FX atlas on damaged cars (FX owner).
