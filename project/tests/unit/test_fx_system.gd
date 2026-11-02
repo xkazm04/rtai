@@ -172,3 +172,15 @@ func test_ground_kinds_go_to_the_ground_twin() -> void:
 	var chips: int = fx.kinds[&"impact"]["count"]
 	assert_eq(fx.ground.alive(), splat)
 	assert_eq(fx.alive(), chips)
+
+
+func test_a_frame_without_a_tick_or_spawn_skips_and_a_spawn_still_draws() -> void:
+	var fx: FxSystem = autofree(FxSystem.new())
+	var count: int = fx.kinds[&"impact"]["count"]
+	assert_true(fx.spawn(&"impact", Vector2.ZERO, 0.0, 5))
+	fx.step(5)
+	fx.step(5)
+	assert_eq(fx.last_us, 0, "no tick, no spawn: nothing rewritten")
+	assert_true(fx.spawn(&"impact", Vector2.ONE, 0.0, 5))
+	fx.step(5)
+	assert_eq(fx.alive(), count * 2, "a spawn inside the same tick still draws")

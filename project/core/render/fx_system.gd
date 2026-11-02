@@ -35,6 +35,8 @@ var _pool: FxPool = null
 var _mm: MultiMesh = MultiMesh.new()
 var _node: MultiMeshInstance2D = MultiMeshInstance2D.new()
 var _serial: int = 0
+## Something spawned since the last write: the MultiMesh must be rewritten even without a tick.
+var _dirty: bool = true
 var _last_tick: int = -1
 var _atlas_path: String = ""
 var _atlas_grid: Vector2 = Vector2.ONE
@@ -81,6 +83,7 @@ func spawn(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> bool:
 		dropped += 1
 		return false
 	spawned_this_frame += 1
+	_dirty = true
 	var spread_deg: float = k["spread_deg"]
 	var spread: float = deg_to_rad(spread_deg)
 	var speed: float = k["speed_mps"]
@@ -99,12 +102,18 @@ func spawn(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> bool:
 	return true
 
 
-## Advances the particles to sim tick `tick` and draws them; call once a frame.
+## Advances the particles to sim tick `tick` and draws them; call once a frame. Everything a
+## particle shows is a function of the tick, so a frame with no tick and no spawn keeps the
+## MultiMesh as it is (the per-instance rewrite cost +0.35 ms a frame in the riot at ~1000 fps).
 func step(tick: int) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var steps: int = clampi(tick - _last_tick, 0, MAX_STEPS) if _last_tick >= 0 else 0
+	if tick == _last_tick and not _dirty:
+		last_us = 0
+		return
 	_last_tick = tick
 	_pool.step(steps, tick, _mm)
+	_dirty = false
 	spawned_this_frame = 0
 	last_us = Time.get_ticks_usec() - t0
 
