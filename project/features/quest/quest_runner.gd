@@ -107,6 +107,9 @@ func _step_active() -> void:
 		_world.cap_wanted(pkg.heat_peak)
 		heat_clamps += 1
 	var result: StringName = objective.check(_world, pkg)
+	for tag: String in objective.newly_met:
+		_log("met %s" % tag)
+	result = QuestJobLines.gate(objective, lines, _world.places(), result)
 	if result == QuestObjective.RUNNING:
 		result = _global_fail()
 	if result == QuestObjective.DONE:
@@ -138,7 +141,7 @@ func _begin_beat(i: int) -> void:
 	if beat.handler == QuestRules.Handler.ENTER_VEHICLE:
 		vehicle_tag = beat.target
 	objective = QuestObjective.start(beat, _world, _rules)
-	lines.play_beat(beat)
+	QuestJobLines.begin(beat, lines, _world.places())
 	_log("beat %d %s (%s)" % [i, beat.id, beat.verb])
 
 

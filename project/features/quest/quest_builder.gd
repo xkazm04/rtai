@@ -52,6 +52,10 @@ static func _beat(b: Dictionary, quest_id: String, rules: QuestRules) -> QuestBe
 	beat.target = str(o.get("target", ""))
 	beat.location = str(o.get("location", ""))
 	beat.line_ids = QuestJson.strings(b["lineIds"])
+	if beat.handler == QuestRules.Handler.MEET:
+		beat.targets = QuestBeat.split_targets(beat.target)
+	if beat.handler == QuestRules.Handler.EVADE:
+		beat.then_answer = QuestBeat.names_answer(beat.target, rules.answer_words)
 	if beat.handler == QuestRules.Handler.TIMER:
 		beat.length_ticks = rules.seconds_to_ticks(_timer_seconds(o, beat.target, rules))
 	return beat

@@ -1,9 +1,10 @@
 class_name QuestCondition
 extends RefCounted
-## One bark `when` tag of a gtai.quest/1 line: `soul:hauler`, `madness:choir`, `heat:>=3`.
+## One bark `when` tag of a gtai.quest/1 line: `soul:hauler`, `madness:choir`, `heat:>=3`,
+## `weapon:gloria`, or a bare cue the world raises (`wave-start`, `static-whisper-burst`).
 ## parse() never fails silently: a malformed tag comes back with error set. A line's tags are ANDed.
 
-enum Kind { SOUL, MADNESS, HEAT }
+enum Kind { SOUL, MADNESS, HEAT, CUE, WEAPON }
 enum Op { EQ, GE, LE, GT, LT }
 
 const OPS: Dictionary[String, Op] = {
@@ -22,7 +23,8 @@ static func parse(tag: String, rules: QuestRules) -> QuestCondition:
 	var c: QuestCondition = QuestCondition.new()
 	var kv: PackedStringArray = tag.split(":", true, 1)
 	if kv.size() != 2:
-		c.error = "no ':' in '%s'" % tag
+		c.kind = Kind.CUE
+		c._expect_name(tag, rules.cues, "cue (or no ':')")
 		return c
 	match kv[0]:
 		"soul":
@@ -34,19 +36,35 @@ static func parse(tag: String, rules: QuestRules) -> QuestCondition:
 		"heat":
 			c.kind = Kind.HEAT
 			c._parse_heat(kv[1])
+		"weapon":
+			c.kind = Kind.WEAPON
+			c._expect_name(kv[1], rules.weapons, "weapon")
 		_:
-			c.error = "unknown condition '%s' (known: soul, madness, heat)" % kv[0]
+			c.error = "unknown condition '%s' (known: soul, madness, heat, weapon)" % kv[0]
 	return c
 
 
 ## soul is the name of the soul in control, madness the band name, heat the wanted level.
+## Cue and weapon tags need the world: they never hold here (holds_in).
 func holds(soul: String, madness: String, heat: int) -> bool:
 	match kind:
 		Kind.SOUL:
 			return soul == value
 		Kind.MADNESS:
 			return madness == value
+		Kind.CUE, Kind.WEAPON:
+			return false
 	return compare(heat)
+
+
+## The tag against the world this tick.
+func holds_in(world: QuestWorld) -> bool:
+	match kind:
+		Kind.CUE:
+			return world.cue_raised(value)
+		Kind.WEAPON:
+			return world.weapon_name() == value
+	return holds(world.soul_name(), world.madness_band(), world.wanted_level())
 
 
 ## The heat test against `level`.

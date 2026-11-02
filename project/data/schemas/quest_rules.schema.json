@@ -2,6 +2,22 @@
   "$id": "gtai.quest-rules/1",
   "additionalProperties": false,
   "properties": {
+    "answer_words": {
+      "items": {
+        "pattern": "^[a-z]+$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "cues": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -113,7 +129,12 @@
               "enter_vehicle",
               "kill",
               "timer",
-              "escort"
+              "escort",
+              "evade",
+              "answer",
+              "meet",
+              "fight",
+              "sabotage"
             ]
           },
           "id": {
@@ -137,6 +158,14 @@
       },
       "minItems": 1,
       "type": "array"
+    },
+    "weapons": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
     }
   },
   "required": [
@@ -146,7 +175,10 @@
     "fail_rules",
     "souls",
     "madness_bands",
-    "tuning"
+    "tuning",
+    "cues",
+    "weapons",
+    "answer_words"
   ],
   "type": "object"
 }

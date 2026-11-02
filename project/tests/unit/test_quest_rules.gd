@@ -6,7 +6,8 @@ extends GutTest
 func test_shipped_table_loads() -> void:
 	var rules: QuestRules = QuestRules.shipped()
 	assert_true(rules.ok(), str(rules.errors()))
-	assert_eq(rules.verbs.size(), 9)
+	assert_eq(rules.verbs.size(), 14)
+	assert_eq(rules.verbs["meet"].handler, QuestRules.Handler.MEET)
 	assert_eq(rules.verbs["steal"].handler, QuestRules.Handler.ENTER_VEHICLE)
 	assert_true(rules.verbs["escort"].needs_target and rules.verbs["escort"].needs_location)
 	assert_eq(rules.souls[1], "hauler")
@@ -58,11 +59,24 @@ func test_conditions_parse_and_hold() -> void:
 func test_bad_conditions_say_why() -> void:
 	var rules: QuestRules = QuestRules.shipped()
 	var cases: Dictionary[String, String] = {
-		"wave-start": "no ':'",
+		"wave-begins": "unknown cue",
 		"soul:toaster": "unknown soul",
 		"madness:mild": "unknown madness band",
 		"heat:lots": "bad heat test",
-		"weapon:gloria": "unknown condition 'weapon'",
+		"weapon:spoon": "unknown weapon",
+		"mood:sad": "unknown condition 'mood'",
 	}
 	for tag: String in cases:
 		assert_string_contains(QuestCondition.parse(tag, rules).error, cases[tag], tag)
+
+
+func test_cue_and_weapon_tags_hold_against_the_world() -> void:
+	var rules: QuestRules = QuestRules.shipped()
+	var cue: QuestCondition = QuestCondition.parse("wave-start", rules)
+	var gloria: QuestCondition = QuestCondition.parse("weapon:gloria", rules)
+	assert_eq([cue.error, gloria.error], ["", ""])
+	assert_eq([cue.kind, gloria.kind], [QuestCondition.Kind.CUE, QuestCondition.Kind.WEAPON])
+	var world: StubQuestWorld = StubQuestWorld.new(QuestFixture.places())
+	assert_false(cue.holds_in(world), "the stub raises no cues")
+	assert_false(cue.holds("rivet", "lucid", 0), "a cue never holds without the world")
+	assert_false(gloria.holds_in(world), "the stub holds no weapon")

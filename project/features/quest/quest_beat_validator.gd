@@ -53,8 +53,16 @@ func _objective(o: Dictionary, at: String) -> void:
 		)
 		return
 	var verb: QuestVerb = _rules.verbs[verb_name]
-	if verb.needs_target:
+	if verb.handler == QuestRules.Handler.MEET:
+		_meet_targets(o.get("target"), at + ".target")
+	elif verb.needs_target:
 		_target(o.get("target"), verb, at + ".target")
+	var then_answer: bool = (
+		verb.handler == QuestRules.Handler.EVADE
+		and QuestBeat.names_answer(str(o.get("target", "")), _rules.answer_words)
+	)
+	if then_answer and not _places.markers.has(str(o.get("location", ""))):
+		_report.error(at + ".location", "an evade that ends at a payphone needs a marker")
 	if verb.needs_location and not _places.markers.has(str(o.get("location", ""))):
 		_report.error(at + ".location", "'%s' is not a marker" % o.get("location", ""))
 	if o.has("durationS") and QuestJson.num(o["durationS"], 0.0) <= 0.0:
@@ -70,3 +78,13 @@ func _target(raw: Variant, verb: QuestVerb, at: String) -> void:
 		_report.error(at, "'%s' is not a vehicle in the places table" % tag)
 	elif not verb.target_is_vehicle() and not _places.actors.has(tag):
 		_report.error(at, "'%s' is not an actor in the places table" % tag)
+
+
+## A meet target lists actors: every name must be an actor in the places table.
+func _meet_targets(raw: Variant, at: String) -> void:
+	var names: Array[String] = QuestBeat.split_targets(str(raw) if raw is String else "")
+	if names.is_empty():
+		_report.error(at, "'meet' needs a list of actor tags")
+	for tag: String in names:
+		if not _places.actors.has(tag):
+			_report.error(at, "'%s' is not an actor in the places table" % tag)

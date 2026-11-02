@@ -5,7 +5,7 @@ extends RefCounted
 ## which fail-state words it can detect, the bark condition vocabulary and the line timing.
 ## A bad table yields errors() and no rules, never a half-built object.
 
-enum Handler { REACH, ENTER_VEHICLE, KILL, TIMER, ESCORT }
+enum Handler { REACH, ENTER_VEHICLE, KILL, TIMER, ESCORT, EVADE, ANSWER, MEET, FIGHT, SABOTAGE }
 
 const SCHEMA: String = "gtai.quest-rules/1"
 const PATH: String = "res://data/tables/quest_rules.json"
@@ -15,6 +15,11 @@ const HANDLERS: Dictionary[String, Handler] = {
 	"kill": Handler.KILL,
 	"timer": Handler.TIMER,
 	"escort": Handler.ESCORT,
+	"evade": Handler.EVADE,
+	"answer": Handler.ANSWER,
+	"meet": Handler.MEET,
+	"fight": Handler.FIGHT,
+	"sabotage": Handler.SABOTAGE,
 }
 const TUNING_KEYS: PackedStringArray = [
 	"answer_radius_m",
@@ -33,6 +38,11 @@ var verbs: Dictionary[String, QuestVerb] = {}
 var fail_rules: Array[QuestFailRule] = []
 var souls: Array[String] = []
 var madness_bands: Array[String] = []
+## Bare bark tags the world raises (QuestWorld.cue_raised), and the `weapon:<id>` names.
+var cues: Array[String] = []
+var weapons: Array[String] = []
+## Words in an evade beat's target that mean "then answer the payphone" (QuestBeat.then_answer).
+var answer_words: Array[String] = []
 var tuning: Dictionary[String, float] = {}
 var _errors: Array[String] = []
 
@@ -86,6 +96,9 @@ func _read(raw: Dictionary) -> void:
 	_read_fail_rules(raw.get("fail_rules"))
 	souls = _names(raw.get("souls"), "souls")
 	madness_bands = _names(raw.get("madness_bands"), "madness_bands")
+	cues = _names(raw.get("cues"), "cues")
+	weapons = _names(raw.get("weapons"), "weapons")
+	answer_words = _names(raw.get("answer_words"), "answer_words")
 	var t: Variant = raw.get("tuning")
 	if not t is Dictionary:
 		_errors.append("quest_rules.tuning: missing")

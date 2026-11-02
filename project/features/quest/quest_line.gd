@@ -35,3 +35,10 @@ func holds(soul: String, madness: String, heat: int) -> bool:
 		if not c.holds(soul, madness, heat):
 			return false
 	return true
+
+
+func holds_in(world: QuestWorld) -> bool:
+	for c: QuestCondition in conditions:
+		if not c.holds_in(world):
+			return false
+	return true

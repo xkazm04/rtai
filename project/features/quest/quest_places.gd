@@ -22,6 +22,8 @@ class Actor:
 	var kind: StringName = &"cop"
 	var ally: bool = false
 	var hp: float = 1.0
+	## The package character this actor voices (a meet beat plays their lines when met).
+	var speaker: String = ""
 
 
 var markers: Dictionary[String, Marker] = {}
@@ -76,6 +78,7 @@ func _read_actors(raw: Variant) -> void:
 		a.kind = StringName(str(row.get("kind", "cop")))
 		a.ally = row.get("side", "hostile") == "ally"
 		a.hp = _num(row.get("hp", 1.0), "actors.%s.hp" % tag)
+		a.speaker = str(row.get("speaker", ""))
 		actors[tag] = a
 
 

@@ -9,6 +9,13 @@ const DONE: StringName = &"done"
 
 var beat: QuestBeat
 var ticks: int = 0
+## Job verbs (QuestJobObjective): the step reached, and the meet beat's actors met so far.
+var phase: int = 0
+var met: Array[String] = []
+## Met since the runner last looked (it plays their lines).
+var newly_met: Array[String] = []
+## A phone beat's call lines have been queued (QuestJobLines).
+var call_played: bool = false
 var _marker: QuestPlaces.Marker = null
 var _rules: QuestRules
 
@@ -25,6 +32,8 @@ static func start(p_beat: QuestBeat, world: QuestWorld, rules: QuestRules) -> Qu
 			world.place_vehicle(p_beat.target)
 		QuestRules.Handler.KILL, QuestRules.Handler.ESCORT:
 			world.spawn_actor(p_beat.target)
+		_:
+			QuestJobObjective.start(o, world)
 	return o
 
 
@@ -32,6 +41,12 @@ static func start(p_beat: QuestBeat, world: QuestWorld, rules: QuestRules) -> Qu
 func marker_position(world: QuestWorld) -> Vector2:
 	match beat.handler:
 		QuestRules.Handler.REACH, QuestRules.Handler.ESCORT:
+			return _marker.at
+		QuestRules.Handler.EVADE:
+			return _marker.phone if phase > 0 else Vector2.INF
+		QuestRules.Handler.ANSWER:
+			return _marker.phone
+		QuestRules.Handler.MEET, QuestRules.Handler.FIGHT, QuestRules.Handler.SABOTAGE:
 			return _marker.at
 		QuestRules.Handler.KILL:
 			return (
@@ -51,7 +66,9 @@ func check(world: QuestWorld, pkg: QuestPackage) -> StringName:
 			return _check_kill(world, pkg)
 		QuestRules.Handler.TIMER:
 			return DONE if ticks >= beat.length_ticks else RUNNING
-	return _check_escort(world, pkg)
+		QuestRules.Handler.ESCORT:
+			return _check_escort(world, pkg)
+	return QuestJobObjective.check(self, world, _rules.tuning["answer_radius_m"])
 
 
 func _check_kill(world: QuestWorld, pkg: QuestPackage) -> StringName:
@@ -73,3 +90,8 @@ func _check_escort(world: QuestWorld, pkg: QuestPackage) -> StringName:
 
 func _arrived(at: Vector2) -> bool:
 	return at.distance_to(_marker.at) <= _marker.radius_m
+
+
+## Inside the beat's marker (job verbs).
+func arrived(at: Vector2) -> bool:
+	return _marker != null and _arrived(at)
