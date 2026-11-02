@@ -23,8 +23,8 @@
     },
     "harbor-skip": {
       "at": [
-        66,
-        40
+        84,
+        34
       ],
       "r": 1.2
     }
@@ -105,16 +105,21 @@
       "mps": 2,
       "route": [
         [
-          84,
-          26
+          100,
+          20
         ],
         [
-          100,
-          26
+          118,
+          20
         ]
       ]
     }
   ],
+  "payphones": [
+    "Factory Row corner",
+    "Harbor Road"
+  ],
+  "refusal_s": 7,
   "rivet_start": [
     -3,
     2

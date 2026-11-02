@@ -65,10 +65,11 @@ func busy() -> bool:
 	return current != null or not _queue.is_empty()
 
 
-## One tick. Barks are armed only while the contract is active.
-func step(tick: int, beat_index: int, world: QuestWorld, active: bool) -> void:
+## One tick. Barks are armed only while the contract is active; `bark_beat` is the beat whose
+## scoped barks may fire (-1: beat_index).
+func step(tick: int, beat_index: int, world: QuestWorld, active: bool, bark_beat: int = -1) -> void:
 	if active:
-		_fire_barks(world, beat_index)
+		_fire_barks(world, bark_beat if bark_beat >= 0 else beat_index)
 	if current != null:
 		current_ticks += 1
 		if current_ticks >= _current_length:

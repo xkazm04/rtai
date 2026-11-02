@@ -65,15 +65,20 @@ func start() -> void:
 	_begin_beat(0)
 
 
+## The tick's barks belong to the beat that was running when the tick began, so a cue that
+## also ends its beat (the crates catch fire) still voices that beat's bark.
 func step(tick: int) -> void:
 	_tick = tick
+	var was_active: bool = state == State.ACTIVE
+	var acting: int = beat_index
 	match state:
 		State.OFFERED:
 			if _answering():
 				start()
 		State.ACTIVE:
 			_step_active()
-	lines.step(tick, beat_index, _world, state == State.ACTIVE)
+	var active: bool = was_active or state == State.ACTIVE
+	lines.step(tick, beat_index, _world, active, acting if was_active else beat_index)
 
 
 func state_name() -> String:

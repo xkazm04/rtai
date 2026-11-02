@@ -28,6 +28,7 @@ var spawned: int = 0
 ## The wave that began on the last step (the wave-start cue), or -1.
 var began: int = -1
 var _encounter: String = ""
+var _started: int = -1
 var _timer: int = 0
 var _spawn_gap: int = 36
 var _wave_gap: int = 120
@@ -63,7 +64,7 @@ func start(encounter: String) -> void:
 	current = _next_wave(-1)
 	spawned = 0
 	_timer = 0
-	began = current
+	_started = current
 
 
 func running() -> bool:
@@ -76,7 +77,8 @@ func cleared(encounter: String) -> bool:
 
 ## One tick, given how many hostiles still stand. Returns the spawn due now, or null.
 func step(alive: int) -> Spawn:
-	began = -1
+	began = _started
+	_started = -1
 	if current < 0:
 		return null
 	var w: Wave = waves[current]

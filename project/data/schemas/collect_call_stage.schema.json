@@ -126,6 +126,18 @@
       },
       "type": "array"
     },
+    "payphones": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "refusal_s": {
+      "minimum": 0,
+      "type": "number"
+    },
     "rivet_start": {
       "items": {
         "type": "number"
@@ -224,7 +236,9 @@
     "crates",
     "metal",
     "tape_bill",
-    "line_hooks"
+    "line_hooks",
+    "payphones",
+    "refusal_s"
   ],
   "type": "object"
 }
