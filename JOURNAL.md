@@ -347,3 +347,9 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   0 px at 32/48/64/96/128). The King shadow (0.7 m down-right, world layer under the print, d5 tier) gives the boss
   height like the roofs' cast shadows; d4 tier 0 px; d5 changed px 9129 at 64. Ladder +1 row (a8 | a9).
 - 00:45 gates: evidence tool (--no-parity --no-bench) ALL PASS at 5e9533f (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 42 untracked evidence PNGs moved aside and restored.
+- 00:48 MILESTONE item 1 quality: form-shade coverage shade_k 0.42 -> 0.26 (look_d5_part + params json). Fixed-mask
+  Rivet vs street dL at 64 px/m: HERO pose 0.151 -> 0.164 (D4 0.161; 0.34 gave 0.158), SHOWCASE pose 0.166 -> 0.176
+  (D4 0.168; the 23:05 parity had drifted to 0.166 with the later grain locks); 96: 0.183 -> 0.189 (D4 0.177).
+  0 px at 32/48/54/56 (r40 vs r42). Walk shimmer D5/D4 total 1.084 -> 1.076, HF 1.029 -> 1.024. By eye the joint
+  form shade still reads; the cop's vermilion shade hatch at 96 is a little lighter, still visible. Board
+  evidence/item1c_shade_k.png; hero evidence frames = h69 (h66 + this); ladder +1 row.

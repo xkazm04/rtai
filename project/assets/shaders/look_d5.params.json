@@ -12,7 +12,7 @@
     "plate_lod": 5.0,
     "rust_dry": 0.42,
     "rust_lod": 3.0,
-    "shade_k": 0.42,
+    "shade_k": 0.26,
     "shade_px": 8.0,
     "verm_gate": 48.0,
     "verm_shade": 0.7
