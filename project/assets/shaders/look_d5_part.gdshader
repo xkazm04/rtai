@@ -29,6 +29,7 @@ uniform float rust_dry = 0.42;     // rust prints as vermilion mixed this far to
 uniform float rust_lod = 3.0;      // mip level the rust must survive at (kills isolated specks: no shimmer)
 uniform float shade_px = 8.0;     // width of the hatched shadow band on each part's lower-right edge, screen px
 uniform float shade_k = 0.42;     // stroke coverage in that band (0 = off)
+uniform float verm_shade = 0.7;   // the form-shade hatch also over vermilion plates (cop bodies, the collar)
 uniform float lit_k = 0.55;       // cream lit rim on the upper-left edge (keeps the part's mean tone vs the street)
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
@@ -69,6 +70,13 @@ float strokes(vec2 q, float ang, float cov) {
 
 void fragment() {
 	vec4 c = COLOR;
+	// form shadow: a hatched band inside the part's lower-right edge in SCREEN space (the world's light, as the
+	// roofs and cast shadows), found by stepping the alpha toward the light's far side (derivatives taken here, in
+	// uniform control flow, before any discard or branch)
+	vec2 off_s = (dFdx(UV) + dFdy(UV)) * shade_px * 0.7071;
+	float far = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s).a);
+	float near = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s * 0.5).a);
+	float shade = clamp(far * 0.6 + near * 0.4, 0.0, 1.0);
 	if (c.a < 0.04) discard;
 	vec2 g_px = floor(FRAGCOORD.xy);
 	float g = 1.0 - 0.06 * hash(g_px);
@@ -88,6 +96,7 @@ void fragment() {
 			bool plate = red_lead(textureLod(TEXTURE, UV, plate_lod).rgb) > verm_gate * 0.6;
 			o = plate ? VERM : mix(VERM, INK, rust_dry);
 			o = d > 0.72 ? mix(o, INK, 0.55) : o;
+			o = mix(o, INK, strokes(q, 0.785, shade * shade_k * verm_shade));
 		} else {
 			o = mix(CREAM, STEEL_HI, smoothstep(0.08, 0.16, d));
 			o = mix(o, STEEL_MID, smoothstep(0.42, 0.50, d));
@@ -95,15 +104,9 @@ void fragment() {
 			float ink = smoothstep(ink_at, ink_at + 0.06, d);
 			ink = max(ink, strokes(q, 0.785, smoothstep(hatch_lo, hatch_lo + 0.25, d) * 0.36) * step(hatch_lo, d));
 			ink = max(ink, strokes(q, 2.356, smoothstep(hatch_hi, hatch_hi + 0.2, d) * 0.34) * step(hatch_hi, d));
-			// form shadow: a hatched band inside the part's lower-right edge in SCREEN space (the world's light,
-			// as the roofs and cast shadows), found by stepping the alpha toward the light's far side
-			vec2 off_s = (dFdx(UV) + dFdy(UV)) * shade_px * 0.7071;
-			float far = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s).a);
-			float near = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s * 0.5).a);
-			float shade = clamp(far * 0.6 + near * 0.4, 0.0, 1.0);
 			float lit = 1.0 - step(alpha_cut, texture(TEXTURE, UV - off_s * 0.45).a);
 			o = mix(o, CREAM, lit * (1.0 - shade) * lit_k * (1.0 - smoothstep(0.5, 0.7, d)));
-			o = mix(o, STEEL_MID, shade * 0.25);
+			o = mix(o, STEEL_MID, shade * 0.12);
 			ink = max(ink, strokes(q, 0.785, shade * shade_k));
 			o = mix(o, INK, ink);
 			// the off-register plate: vermilion that should be under a nearby edge, printed here

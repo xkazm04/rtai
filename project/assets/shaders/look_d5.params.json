@@ -14,7 +14,8 @@
     "rust_lod": 3.0,
     "shade_k": 0.42,
     "shade_px": 8.0,
-    "verm_gate": 48.0
+    "verm_gate": 48.0,
+    "verm_shade": 0.7
   },
   "schema": "gtai.look-d5-params/1",
   "shadow": {

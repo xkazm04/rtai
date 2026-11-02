@@ -101,3 +101,8 @@ NEXT:
 - 22:44 MILESTONE item 4: blocks filled with 12 D4 neighbour roofs (0.4 m alleys, cast shadows) + ground extended to
   +-28 m (h29). FRICTION again: a duplicate `var n` parse error = the launcher hangs/does nothing (exit 0!) - the
   shoot script greps SCRIPT ERROR, so watch for it. Item 4 board + hero frames now h29.
+- 22:50 gates: evidence tool (--no-parity --no-bench) ALL PASS at 0c1c17a: lint 13/13, unit 146/0, scenarios 8/0,
+  selftest ok (19 untracked evidence files moved aside for the run and restored).
+- 22:58 MILESTONE: form shade over vermilion plates (verm_shade 0.7) + derivatives moved to uniform control flow.
+  Fixed-mask dL at 64: D4 0.170 / D5 0.167 = marginal MISS (0.003 < 1 grey level), documented, kept for the visible
+  gain on the cops. lit_k 0.75 had no effect (reverted). Hero frames now h31.
