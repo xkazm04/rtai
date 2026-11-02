@@ -190,3 +190,13 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   protected by the 6 px interior margin): borders now the same thin grey (`after_sw2/`). Small ink "+" marks remain at
   grey-slab corners (print-pass edge response), accepted. Gates after the first paving commit: lint, unit 142/142,
   scenarios 8/8, parity, selftest (0 placeholders) all PASS.
+- 23:05 MILESTONE dynamic decals from the spare d4n_dmg marks: `bullet_holes_s` (1.2 m), `bullet_holes_m` (1.6 m),
+  `gouge` (1.6 m), `oil_splash` (1.2 m) in `features/city/art/decals/` (README rows, provenance). New board page
+  `--page=decals` (every decal PNG on the road, `after_dd/decals-{32,48,64}ppm.png`). First sizes (0.8 / 1.2 m) made
+  the holes vanish at 32 px/m; raised. FRICTION: new PNGs imported with mipmaps OFF by default (the 3 cash tiers too,
+  committed that way at 22:44) -> fixed to match the folder; all my art folders now 0 mipmap-off imports.
+- 23:07 REVERTED probe: grey paving slabs lerped 40 % to cream (`tools/paving_slabs.py`) to kill the "+" dots at their
+  corners: no visible change (`probe_slab/`, `work/slab_ab.png`); the dots are the print pass on the slab corners.
+  Not shipped.
+- Codex tonight: **19 images** (15 iteration 1 + cash, tokens2, dmg in iteration 2; one at a time, no limit hit).
+  Iteration 2 cells: 24, **1 rejected** (folded-bill cash token). Night total 137 cells, 3 rejected.
