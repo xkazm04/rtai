@@ -158,3 +158,5 @@ The exported bench after items 4-6 (`evidence/bench-*-contended.json`) failed (p
 72 ms, one 3.6 s frame), but it ran at 99 % CPU with the n-d4 lane's own bench, two scenario runs and an
 image job on the same machine; every hitch is `present`-attributed with about 0.3 ms of game + render
 CPU. It is **not a valid measurement** either way: re-run on an idle machine, A/B against `ad2078b`.
+A re-run once that bench finished passed the hard limits (p99 4.22 ms, 1% low 111 fps, worst swap
+4.5 ms) with the machine still at 83-96 % CPU from other work (`evidence/bench-*-rerun.json`).
