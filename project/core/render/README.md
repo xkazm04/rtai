@@ -240,6 +240,7 @@ Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 
 | Markers | a few `_draw` polygons a frame | code path |
 | Chunk bands | 20 canvas items per chunk (was 8): see DEVIATION §20-draw | exported bench after item 1: p99 2.61 ms |
 | Rig pass skip on no-tick frames | rig p50 0 ms, p99 0.559 ms (unchanged: tick frames) | exported bench after item 7a |
+| Rig LOD tiers 4 full / 4 half / 8 quarter (was 6 / 10 / 0) | rig avg -21 % (0.39 -> 0.31 ms), p99 0.55-0.71 -> 0.40-0.57 ms, headless debug ; exported release riot: 0.457 -> 0.338 ms per tick, p99 0.501 -> 0.387 ms per frame (target 0.3: not met) | `rig_bench.gd`, 3 interleaved pairs (`evidence/rig-quarter`); `evidence/bench-*-quarter.json` |
 
 The exported bench after items 4-6 (`evidence/bench-*-contended.json`) failed (p99 6.09 ms, worst swap
 72 ms, one 3.6 s frame), but it ran at 99 % CPU with the n-d4 lane's own bench, two scenario runs and an

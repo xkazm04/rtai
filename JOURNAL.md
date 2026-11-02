@@ -291,3 +291,32 @@ NEXT (iteration 7 / morning, in order):
   (render-only skip + docs); the next evidence run should be at HEAD.
 - 00:12 evidence at ad0223e (HEAD code): lint 13/13, unit 196, scenarios 8, parity PASS, selftest PASS. Copied to evidence/pof.
 - Session end: tree clean, no processes of mine running, /tmp scratch deleted; masters frames kept as evidence.
+
+## 2026-11-03 iteration 8 BUILD (00:03 -> )
+- Read JOURNAL, git log. n-d4 / n-d5 still unmerged here; main unchanged since iteration 7. All 7 brief
+  items evidenced; weakest number = rig p99 (0.455 ms per tick release vs 0.3 target). Working that.
+- FINDING: a plain quarter-rate pose (drive(4 * TICK_DT) every 4th tick) is UNSTABLE: the facing spring
+  (k 260, semi-implicit Euler) has an eigenvalue of magnitude > 1 at h = 1/15 s (det = 1 - 2 sqrt(k) h =
+  -1.15). Measured: face_w 2765, facing off by 2.2 rad after 30 steps. Half rate (h = 1/30) is stable.
+- MILESTONE quarter-rate rig LOD (8d79b38): ranks 0-3 full, 4-7 half, 8-15 quarter (drives per tick
+  11 -> 8). The 3 springs (facing, shove, twist) moved to `features/characters/rig_springs.gd` and
+  sub-step any step longer than 2 ticks; full and half rate are bit-identical to before (same Euler
+  step). test_rig_rates 3/3: tiers; quarter-rate turn settles (and FAILS with sub-stepping off - the
+  test catches the blow-up); quarter vs a full-rate twin over 240 ticks with a 1.2 rad turn: facing
+  lag <= 0.111 rad, planted feet <= 6.1 px (0.19 m).
+  Rig bench headless DEBUG, 3 interleaved pairs (consts flipped 6/16 <-> 4/8): avg 0.386/0.386/0.395
+  -> 0.312/0.303/0.298 ms (50 people), p99 0.64/0.57/0.65 -> 0.57/0.44/0.40; 200 people avg 0.39-0.40
+  -> 0.32, p99 0.55-0.71 -> 0.45-0.53. -21 % avg (expected -27 % from drives; selection is fixed cost).
+  evidence/rig-quarter/rig-bench-{old,new}-{1,2,3}.json.
+- Frames 15-rig-quarter/ (masters): `rig_showcase -- --motion` (new rig_motion_run.gd): Rivet + 15
+  walking peds ranked by distance, 24 consecutive ticks at 32 and 48 px/m, old (6 full / 10 half) and
+  new. outer-*ppm-old-left-new-right.png = the quarter-rate band, 8 consecutive ticks: no broken or
+  popping poses, feet and arms read the same as the half-rate ones. Stills cannot judge 15 Hz judder:
+  motion-*ppm-old-top-new-bottom.gif (20 fps playback, 3x slow) is for the owner's eye. 0 frames
+  rejected for camera (engine captures). The 1 m ped spacing overlaps bodies - good enough to judge
+  poses, not pretty.
+- MILESTONE exported release bench at 8d79b38 (00:2x, CPU 12 % before, 2 other Godot processes on the
+  machine - other lanes): PASSES section 20 - p99 2.55 ms, 1% low 214 fps, worst swap 6.7 ms, 2 frames
+  > 50 ms (both `present`, 0 unexplained). Riot rig 0.338 ms per tick (iteration 4: 0.457, iteration 6:
+  0.455) = -26 %; rig p99 per frame 0.387 ms (was 0.501). The 0.3 ms TARGET IS STILL NOT MET (about one
+  drive per tick short: ~34 us per drive). evidence/bench-*-quarter.json, bench-quarter.txt.
