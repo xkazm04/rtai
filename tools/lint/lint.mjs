@@ -2,11 +2,13 @@
 // The lint job (TST-04 job 1): every check runs; exit 1 if any fails.
 //   node tools/lint/lint.mjs [--json]
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { PROJECT, ROOT, ownGdFiles, readJson, rel, run, walk } from '../lib/repo.mjs';
 import { checkAll as styleChecks } from '../style/check_gd.mjs';
+import { check as constantsCheck } from '../gen_constants/gen.mjs';
+import { validate } from '../lib/mini_schema.mjs';
 
 const tool = (name, cmd, args) => {
   const res = run(cmd, args, { cwd: ROOT });
@@ -64,6 +66,24 @@ function eventsRegistry() {
   return { name: 'events-registry', ok: !issues.length, issues };
 }
 
+/** DAT-03: every data/tables/<name>.json has data/schemas/<name>.schema.json and passes it. */
+function dataTables() {
+  const issues = [];
+  for (const table of walk(join(PROJECT, 'data', 'tables'), (n) => n.endsWith('.json'))) {
+    const base = basename(table, '.json');
+    const schemaPath = join(PROJECT, 'data', 'schemas', `${base}.schema.json`);
+    let schema;
+    try {
+      schema = readJson(schemaPath);
+    } catch {
+      issues.push(`${rel(table)}: no schema at ${rel(schemaPath)}`);
+      continue;
+    }
+    for (const e of validate(schema, readJson(table))) issues.push(`${rel(table)}: ${e}`);
+  }
+  return { name: 'data-tables', ok: !issues.length, issues };
+}
+
 /** ARC-02: at most seven autoloads; an eighth needs a decisions.md line and this cap raised. */
 export const AUTOLOAD_CAP = 7;
 function autoloadBudget() {
@@ -86,6 +106,8 @@ export function runLint() {
     jsonCanonical(),
     eventsRegistry(),
     autoloadBudget(),
+    dataTables(),
+    constantsCheck(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
   ];
