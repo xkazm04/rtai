@@ -449,3 +449,17 @@ NEXT:
   `before_soul|after_soul/city-*-hud{40,50}.png` (`work/soul_ab.png`): reads at UI 0.4. prov.py: d4n_souls master +
   8 lines (keeps logged dates now). Commit 5f1fc28.
   Note for the HUD owner: portraits are 220 x 350 at 2x, offset ((card_w - 220) / 2, 40) card px.
+- 00:19 GATES at 0fe05ce (car grime + souls): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
+  parity bit-exact (mutation caught at step 629), selftest 65 art textures, 0 placeholders.
+- 00:23 MILESTONE FX atlas seen in the real FX system for the first time. visual-engine (`n-visual`) wired
+  `data/tables/fx.json` to read `features/fx/art/fx_atlas.png`, but their branch does not ship the atlas, so it drew
+  analytic placeholders. Scratch worktree `gtai-wt/scratch-d4fx` = n-visual detached (NO merge, no branch moved)
+  + my atlas + my baked chunks / native bin copied in; their `dev/selftest/fx_showcase.tscn` (seed 91, fixed fps):
+  `fx_engine_before|fx_engine_after/fx-{32,48,64}ppm-1-fx.png` (`work/fxe_ab_48.png`, `fxe_64_stack.png`). The
+  layout matches their atlas blocks: explosion (ink comic burst + vermilion core), debris, impact, smoke, crackle,
+  muzzle all read. Weakest: the ink splat (a ground FX, printed by look_d4) showed as a dark smear - its 5 px square
+  rim is 0.45 screen px at 32 px/m (1.8 m per 256 px cell). `build_fx.py rim()`: round distance-field rim, specks
+  < 40 px and sub-0.5 alpha fringes dropped (they left ghost rings); r 6 probed (rim eaten by the edge ink, grey),
+  **r 11 kept**: cream-rimmed ink stickers at 48/64, a visible mottled splat at 32 (`work/splat_engine_ab2.png`:
+  5 px | r 6 | r 11). Commit ac8fda9.
+  For the Director: n-visual + n-d4 merged = the FX draw this atlas; nothing to change on their side.
