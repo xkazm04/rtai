@@ -113,3 +113,5 @@ NEXT:
   a cream D5 fist (wash base 0.0) would be 0.006 = no figure. Kept the D5 mural as is. Eye impression was wrong.
 - 22:55 street decals borrowed from d4-production's raw decal sheet (manhole, drain grate, skid marks, oil stain;
   the green puddle skipped: unkeyable). h32 had the grate under the soul trail -> moved (h33). Hero frames now h33.
+- 22:58 MILESTONE item 5b: D5 loading illustration (Codex 1 image, 0 rejected, ledger 27) installed at
+  features/menus/art/d5/loading_rivet.png + provenance + manifest. Store-safe (owner review pending).

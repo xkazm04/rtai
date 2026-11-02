@@ -17,10 +17,27 @@ tick count, no RNG.
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
 | `item4e_kerb_corners.png` | rounded kerb corners at 32 (and 48 x2), h26 vs h28 |
 | `item6_cop_shade.png` | cop at 96 px/m: D5 tier without / with the form shade on vermilion plates |
+| `item5b_loading.png` | the D5 loading illustration at 960 and 480 px wide |
 | `item4c_souls_print.png` | the D5 souls at 64 px/m: world print / look_d4_item ghost print (rejected) / as drawn (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
 | `ladder.png` | the night's iterations, including the reverted ones |
+
+## Iteration 2 (22:14 -> 23:4x) in one screen
+- Best frame now: `hero-d4d5-<ppm>ppm.png` = round h33 (item4 board `item4_hero_vs_targets.png`): blocks filled with
+  D4 neighbour roofs, rounded kerb corners + kerb shadows, a parked cruiser/sedan, the shot (flash, tracer,
+  casings), ink splat, manhole/grate/skids/oil, the D5 teal soul trail, and the form-shaded D5 cast.
+- Shader: look_d5_part form shade (steel and vermilion plates), derivatives moved to uniform flow; look_d5 street
+  hatch at 40% for the 48 px/m car camera. Params in look_d5.params.json (`shade_px`, `shade_k`, `lit_k`,
+  `verm_shade`, `street_hatch_car`).
+- Measured (was unmeasured): GPU cost of the D5 tier (`d5-cost.json`), walk shimmer re-run after each shader change.
+- Rejected this iteration: 9 px form shade with steel darkening (contrast), look_d4_item ghost print for the souls
+  (dot mesh), 0.32 m bold kerb shadow (hazard stripe), brighter lit rim (no effect), a cream mural fist (would kill the
+  figure/ground). Codex: 1 soul sheet + 1 loading illustration; 0 rejected (ledger total 27).
+- Item 5b: a D5 LOADING illustration (`item5b_loading.png`, installed at `features/menus/art/d5/loading_rivet.png`,
+  1920x1081): Rivet on a wet crosswalk under an ink union-fist mural, the teal souls rising, a cruiser; vermilion only
+  on the collar, rust and the light bar; the left third left calm for loading text. Marked store-safe (owner review).
+- Open miss: cast vs street dL at 64 px/m is 0.167 vs D4 0.170 since the vermilion form shade (under 1 grey level).
 
 ## Measurements
 - D5 stack vs D4, same pose, changed pixels: **0** at 32, 48, 54 and 56 px/m (the tier fades in from 56 to 64 px/m;
