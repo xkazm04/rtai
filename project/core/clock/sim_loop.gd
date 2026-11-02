@@ -30,6 +30,10 @@ func start_recording() -> void:
 	_timeline.attach(_ctx.events, _ctx.clock.tick)
 
 
+func is_recording() -> bool:
+	return _recording != null
+
+
 ## Seals and returns the recording (ticks, final hash, timeline) and stops recording.
 func finish_recording() -> ReplayLog:
 	var log: ReplayLog = _recording

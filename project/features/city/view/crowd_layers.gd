@@ -1,0 +1,89 @@
+class_name CrowdLayers
+extends RefCounted
+## The five MultiMesh layers the bubble sim writes into (WLD-04): people, people shadows, cars,
+## car shadows, bullets, drawn car shadows -> people shadows -> cars -> people -> bullets. One
+## quad mesh, 2D transforms, per-instance colour and custom data. Placeholder art (a soft blob
+## for people, a flat body for cars) until the character and vehicle art lands (F-09).
+
+const DRAW_ORDER: Array[int] = [3, 1, 2, 0, 4]
+
+var multimeshes: Array[MultiMesh] = []
+var nodes: Array[MultiMeshInstance2D] = []
+
+
+func _init() -> void:
+	var quad: ArrayMesh = _quad()
+	var blob: Texture2D = _blob()
+	var body: Texture2D = _body()
+	for k: int in SimConst.RL_COUNT:
+		var mm: MultiMesh = MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_2D
+		mm.use_colors = true
+		mm.use_custom_data = true
+		mm.mesh = quad
+		mm.instance_count = SimConst.PCAP if k == SimConst.RL_BULLETS else SimConst.CAP
+		mm.visible_instance_count = 0
+		mm.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
+		var node: MultiMeshInstance2D = MultiMeshInstance2D.new()
+		node.multimesh = mm
+		node.texture = body if k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS else blob
+		node.z_index = 2
+		multimeshes.append(mm)
+		nodes.append(node)
+
+
+func rids() -> Array[RID]:
+	var out: Array[RID] = []
+	for mm: MultiMesh in multimeshes:
+		out.append(mm.get_rid())
+	return out
+
+
+## Placeholder clip table: every variant and clip is one frame at cell 0.
+static func placeholder_clips() -> PackedInt32Array:
+	var clips: Array[int] = []
+	for v: int in SimConst.CLIP_VARIANTS * SimConst.CLIPS:
+		clips.append_array([0, 1, 1])
+	return PackedInt32Array(clips)
+
+
+func attach(parent: Node) -> void:
+	for k: int in DRAW_ORDER:
+		parent.add_child(nodes[k])
+
+
+static func _quad() -> ArrayMesh:
+	var arr: Array = []
+	@warning_ignore("return_value_discarded")
+	arr.resize(Mesh.ARRAY_MAX)
+	var h: float = 0.5
+	arr[Mesh.ARRAY_VERTEX] = PackedVector2Array(
+		[Vector2(-h, -h), Vector2(h, -h), Vector2(h, h), Vector2(-h, h)]
+	)
+	arr[Mesh.ARRAY_TEX_UV] = PackedVector2Array(
+		[Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]
+	)
+	arr[Mesh.ARRAY_INDEX] = PackedInt32Array([0, 1, 2, 0, 2, 3])
+	var mesh: ArrayMesh = ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	return mesh
+
+
+static func _blob() -> Texture2D:
+	var tex: GradientTexture2D = GradientTexture2D.new()
+	tex.width = 32
+	tex.height = 32
+	tex.fill = GradientTexture2D.FILL_RADIAL
+	tex.fill_from = Vector2(0.5, 0.5)
+	tex.fill_to = Vector2(1.0, 0.5)
+	var g: Gradient = Gradient.new()
+	g.set_color(0, Color(1, 1, 1, 1))
+	g.set_color(1, Color(1, 1, 1, 0))
+	tex.gradient = g
+	return tex
+
+
+static func _body() -> Texture2D:
+	var img: Image = Image.create_empty(8, 4, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0.85, 0.85, 0.9))
+	return ImageTexture.create_from_image(img)

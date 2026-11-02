@@ -5,7 +5,8 @@ extends Node
 ## node reaches up the tree or into /root. _process() is the one place a raw frame delta enters
 ## the game, and it goes straight into SimClock.advance() (SIM-01).
 ## `-- --seed=<n>` sets the master seed; `-- --replay=<file>` re-runs a recorded log headless,
-## compares it (SIM-05) and quits 0 when identical, 1 when it diverged.
+## compares it (SIM-05) and quits 0 when identical, 1 when it diverged; `-- --record=<file>`
+## records this run and writes the log when the world leaves the tree.
 
 const DEFAULT_SEED: int = 1
 
@@ -28,11 +29,33 @@ func _ready() -> void:
 			get_tree().quit(2)
 			return
 	start(Events, Data, replay.master_seed if replay != null else _seed_from_args())
-	# Feature systems are registered here, before any replay runs (F-06 onwards).
+	_register_features(replay == null)
+	if LaunchArgs.has("--record") and replay == null:
+		_loop.start_recording()
 	if replay != null:
 		var divergence: String = verify_replay(replay)
 		Log.info("replay", divergence if divergence != "" else "identical")
 		get_tree().quit(0 if divergence == "" else 1)
+
+
+## Every feature system, in a fixed order, before any replay runs. Views only when drawing.
+func _register_features(with_views: bool) -> void:
+	var city: CitySystem = CitySystem.new()
+	add_system(city)
+	if with_views and DisplayServer.get_name() != "headless":
+		var view: CityView = CityView.new()
+		add_child(view)
+		view.setup(city)
+
+
+func _exit_tree() -> void:
+	if LaunchArgs.has("--record") and _loop != null and _loop.is_recording():
+		var log: ReplayLog = _loop.finish_recording()
+		var err: Error = log.save(LaunchArgs.value("--record"))
+		Log.info(
+			"replay",
+			"recorded %d ticks to %s (%d)" % [log.ticks, LaunchArgs.value("--record"), err]
+		)
 
 
 ## The single raw-delta choke point (SIM-01): consumers read ctx.clock, never `delta`.

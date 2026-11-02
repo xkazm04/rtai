@@ -32,8 +32,8 @@ func _init(p_seed: int, texture_table: Dictionary) -> void:
 
 ## Loads the authored district + texture table from data/tables (DAT-02).
 static func from_tables(district_path: String, textures_path: String) -> CityGen:
-	var district: Dictionary = _read_json(district_path)
-	var textures: Dictionary = _read_json(textures_path)
+	var district: Dictionary = read_json(district_path)
+	var textures: Dictionary = read_json(textures_path)
 	if district.is_empty() or textures.is_empty():
 		return null
 	var p_seed: float = district.get("seed", 1.0)
@@ -66,7 +66,7 @@ func gen_chunk(cx: int, cy: int) -> CityChunk:
 	return b.finish()
 
 
-static func _read_json(path: String) -> Dictionary:
+static func read_json(path: String) -> Dictionary:
 	var parser: JSON = JSON.new()
 	if parser.parse(FileAccess.get_file_as_string(path)) != OK or not parser.data is Dictionary:
 		return {}
