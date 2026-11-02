@@ -581,3 +581,21 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
 - 00:52 GATES at eb0c2c0 (HEAD incl. f7ad91a): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
   parity bit-exact, selftest 0 placeholders. Add f7ad91a (FX debris / sparks) to the NEXT revert list above.
   Scratch worktree removed again; `git worktree list` shows only the lane worktrees. Tree clean after this entry.
+
+## 2026-11-03 00:50 iteration 6, BUILD (raise the weakest item; stop 02:20)
+- Read: journal, log, iteration-4 city sheet beside the target. n-visual still draws moving traffic as grey boxes
+  (request 1 open). Biggest remaining gap in MY scope: the asphalt covers about half of every frame and prints as one
+  flat wash (frame std 1.1 vs the target's 14). The shipped asphalt is one value band (lum 83-87), so look_d4 (asphalt
+  density about 0.75 = the dark step) cannot show any grain.
+- 01:20 MILESTONE asphalt aggregate. `tools/asphalt_grain.py` (procedural, asphalt pixels only, 2 px off markings,
+  cracks and kerb; seeded per file). Probes in-engine, city_frame 32/48 (`work/ag1_ab.png`, `ag2_zoom.png`,
+  `ag3_zoom.png`):
+  v1 dark/pale +/-20: invisible (stays inside the dark step).
+  v2 +/-45: dark specks cross line_ink + Sobel -> black pixel pepper (digital noise); rejected.
+  v3 pale-only +40, 7 %: grey aggregate stipple, calm; uniform.
+  v4 pale +46, 10 %, clumped by a 24 px mottle: worn patches and calmer areas like the target's asphalt. **Kept.**
+  Checked in a scratch MERGE of n-visual b8ecb19 + n-d4 (their world-locked paper tooth, `git merge --no-commit`,
+  only JOURNAL.md conflicts): `merged_ag0|merged_ag3|merged_ag4/city-*` (`work/ag34_merged.png`): no clash with their
+  tooth. In-lane before/after `before_ag|after_ag/city-*` + boards `corner|decals` at 32/48/64
+  (`work/ag_corner64.png`): no tile seams (corner and straights grain alike). 11 provenance lines. Commit 20bb95b.
+  Ladder rows 3.
