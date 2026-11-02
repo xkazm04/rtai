@@ -346,3 +346,4 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   a Sprite2D with it is a character-shaped shadow while Polygon2D quads sample white = unchanged (hero h67 vs h66:
   0 px at 32/48/64/96/128). The King shadow (0.7 m down-right, world layer under the print, d5 tier) gives the boss
   height like the roofs' cast shadows; d4 tier 0 px; d5 changed px 9129 at 64. Ladder +1 row (a8 | a9).
+- 00:45 gates: evidence tool (--no-parity --no-bench) ALL PASS at 5e9533f (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 42 untracked evidence PNGs moved aside and restored.
