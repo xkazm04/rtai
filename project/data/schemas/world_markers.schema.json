@@ -20,8 +20,17 @@
             "minimum": 0,
             "type": "integer"
           },
+          "core": {
+            "maximum": 0.9,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
+            "type": "string"
+          },
+          "fill_token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
           "id": {

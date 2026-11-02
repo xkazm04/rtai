@@ -41,3 +41,13 @@ func test_the_pointer_pins_inside_the_edge_only_off_screen() -> void:
 	assert_almost_eq(at.y, 400.0, 0.01)
 	m.move(m.objective, Vector2(640, -9000))
 	assert_almost_eq(m.pointer_at(Transform2D(), SCREEN).y, margin, 0.01)
+
+
+func test_fill_and_core_inks_obey_the_doctrine() -> void:
+	var pal: PaletteTokens = PaletteTokens.shared()
+	assert_true(WorldMarkers.on_doctrine(pal, &"paper", {"use": "objective"}), "paper anywhere")
+	assert_true(WorldMarkers.on_doctrine(pal, &"vermilion", {"use": "objective"}))
+	assert_false(WorldMarkers.on_doctrine(pal, &"teal", {"use": "objective"}), "teal = the dead")
+	var m: WorldMarkers = autofree(WorldMarkers.new())
+	var k: Dictionary = m.kinds[&"objective"]
+	assert_true(k.has("core") and k.has("core_color"), "every kind gets a core (0 = none)")

@@ -22,6 +22,14 @@ static func draw(ci: CanvasItem, shape: StringName, at: Vector2, dims: Vector2, 
 	_rimmed(ci, _diamond(at, size * 0.5), rim, col)
 
 
+## The shape's bare fill (no rims) at `size`: a marker's core in a second ink.
+static func fill(ci: CanvasItem, shape: StringName, at: Vector2, size: float, col: Color) -> void:
+	if shape == &"ring":
+		ci.draw_circle(at, size * 0.5, col, true, -1.0, true)
+		return
+	ci.draw_colored_polygon(_diamond(at, size * 0.5), col)
+
+
 ## A chevron at `at` pointing along `dir`.
 static func arrow(ci: CanvasItem, at: Vector2, dir: Vector2, dims: Vector2, col: Color) -> void:
 	var size: float = dims.x

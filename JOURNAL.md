@@ -320,3 +320,12 @@ NEXT (iteration 7 / morning, in order):
   > 50 ms (both `present`, 0 unexplained). Riot rig 0.338 ms per tick (iteration 4: 0.457, iteration 6:
   0.455) = -26 %; rig p99 per frame 0.387 ms (was 0.501). The 0.3 ms TARGET IS STILL NOT MET (about one
   drive per tick short: ~34 us per drive). evidence/bench-*-quarter.json, bench-quarter.txt.
+- MILESTONE objective option as data (owner call from iteration 6): world_markers.json kinds take an
+  optional `fill_token` (the body's ink) and `core` (a core of the token's ink at core x size); both
+  inks pass the doctrine check at load (`WorldMarkers.on_doctrine`, unit test). Shipped default
+  UNCHANGED (solid vermilion diamond). Frames 16-objective-core/ (city_selftest --markers --fx-moment,
+  which now also puts an objective on screen): crops-before-left-after-right.png, 32 (top) and 48 px/m.
+  My read: the paper diamond + vermilion core reads as UI beside the riot's vermilion cop bodies; the
+  solid diamond reads as one more vermilion blob. Less vermilion area, so less pop on charcoal; not yet
+  seen on cream pavement. OWNER CALL: to ship it, set `"fill_token": "paper", "core": 0.5` on the
+  objective row (one line). 0 frames rejected.

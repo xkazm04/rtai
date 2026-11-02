@@ -7,7 +7,7 @@ extends Node
 ##   godot --path project res://dev/selftest/city_selftest.tscn -- --out=<dir>
 ## [--grade=night] (a lights.json grade) [--fx-moment] (after settling, wait for the first frame
 ## with an emissive FX alive, e.g. a muzzle star, so the lights and flashes are in the frame)
-## [--markers] (a pickup and a soul on screen, the objective off screen: the pointer).
+## [--markers] (a pickup, a soul and an objective on screen; the pointed objective off screen).
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--grade", "--fx-moment", "--markers"]
 const FX_WAIT_FRAMES: int = 240
@@ -80,6 +80,8 @@ func _place_markers() -> void:
 	m.add(&"pickup", (JUNCTION + Vector2(4.0, 3.0)) * px)
 	@warning_ignore("return_value_discarded")
 	m.add(&"soul", (JUNCTION + Vector2(-5.0, -2.0)) * px)
+	@warning_ignore("return_value_discarded")
+	m.add(&"objective", (JUNCTION + Vector2(3.0, -4.0)) * px)
 	m.objective = m.add(&"objective", (JUNCTION + Vector2(60.0, 20.0)) * px)
 
 

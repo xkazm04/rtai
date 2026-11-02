@@ -29,10 +29,13 @@ func _init() -> void:
 	for row: Dictionary in d["kinds"]:
 		var k: Dictionary = row.duplicate()
 		var token: StringName = StringName(str(row["token"]))
-		var accent: bool = pal.accent_uses.has(token)
-		if accent and not pal.accent_uses[token].has(str(row["use"])):
+		var fill: StringName = StringName(str(row.get("fill_token", token)))
+		if not on_doctrine(pal, token, row) or not on_doctrine(pal, fill, row):
 			continue
-		k["color"] = pal.color(token)
+		k["color"] = pal.color(fill)
+		k["core_color"] = pal.color(token)
+		var core: float = row.get("core", 0.0)
+		k["core"] = core
 		kinds[StringName(str(row["id"]))] = k
 	var ptr: Dictionary = d["pointer"]
 	pointer = ptr.duplicate()
@@ -101,7 +104,12 @@ func _draw() -> void:
 		var size: float = k["size_px"]
 		var rim: float = k["rim_px"]
 		var col: Color = k["color"]
-		MarkerShapes.draw(self, StringName(str(k["shape"])), at, Vector2(size, rim) * px, col)
+		var shape: StringName = StringName(str(k["shape"]))
+		MarkerShapes.draw(self, shape, at, Vector2(size, rim) * px, col)
+		var core: float = k["core"]
+		var core_col: Color = k["core_color"]
+		if core > 0.0:
+			MarkerShapes.fill(self, shape, at, size * core * px, core_col)
 	var screen: Vector2 = get_viewport_rect().size
 	var at_screen: Vector2 = pointer_at(xf, screen)
 	if at_screen == Vector2.INF:
@@ -112,6 +120,11 @@ func _draw() -> void:
 	var col_p: Color = pointer["color"]
 	var dims: Vector2 = Vector2(size_p, rim_p) * px
 	MarkerShapes.arrow(self, xf.affine_inverse() * at_screen, dir, dims, col_p)
+
+
+## An accent ink only where palette.json allows it for the kind's `use`.
+static func on_doctrine(pal: PaletteTokens, token: StringName, row: Dictionary) -> bool:
+	return not pal.accent_uses.has(token) or pal.accent_uses[token].has(str(row["use"]))
 
 
 func _bob(k: Dictionary) -> float:

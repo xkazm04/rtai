@@ -1,5 +1,5 @@
 {
-  "doc": "World-UI markers on the world_ui canvas's world_markers band (core/render/README.md): a few shapes drawn in palette inks at a constant screen size at every zoom (size_px, rim_px: an ink outline, then a paper sticker rim like the characters'), bobbing on the 60 Hz tick (bob_px over bob_ticks; 0 = still; reduced motion stops it). use: the palette.json accent use it stands for (the colour doctrine: accents only on what matters). The pointer is the objective arrow pinned inside the screen edge (margin_px) when the marked objective is off screen.",
+  "doc": "World-UI markers on the world_ui canvas's world_markers band (core/render/README.md): a few shapes drawn in palette inks at a constant screen size at every zoom (size_px, rim_px: an ink outline, then a paper sticker rim like the characters'), optional fill_token (the body's ink, default = token) with a core of the token's ink at core x size (0 = none), bobbing on the 60 Hz tick (bob_px over bob_ticks; 0 = still; reduced motion stops it). use: the palette.json accent use it stands for (the colour doctrine: accents only on what matters). The pointer is the objective arrow pinned inside the screen edge (margin_px) when the marked objective is off screen.",
   "kinds": [
     {
       "bob_px": 3,
