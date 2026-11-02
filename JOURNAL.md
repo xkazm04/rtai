@@ -103,6 +103,8 @@ NEXT:
   shoot script greps SCRIPT ERROR, so watch for it. Item 4 board + hero frames now h29.
 - 22:50 gates: evidence tool (--no-parity --no-bench) ALL PASS at 0c1c17a: lint 13/13, unit 146/0, scenarios 8/0,
   selftest ok (19 untracked evidence files moved aside for the run and restored).
-- 22:58 MILESTONE: form shade over vermilion plates (verm_shade 0.7) + derivatives moved to uniform control flow.
+- 22:52 MILESTONE: form shade over vermilion plates (verm_shade 0.7) + derivatives moved to uniform control flow.
   Fixed-mask dL at 64: D4 0.170 / D5 0.167 = marginal MISS (0.003 < 1 grey level), documented, kept for the visible
   gain on the cops. lit_k 0.75 had no effect (reverted). Hero frames now h31.
+- 22:56 re-measured on 187b58d: unit 146/0; walk shimmer HF 1.022; GPU cost (high-baseline state) D4 0.209 /
+  parts 0.273 / +world 0.338-0.357 ms. evidence/d5-cost.json = cost5.

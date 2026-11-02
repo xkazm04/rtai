@@ -103,4 +103,6 @@ tick count, no RNG.
   d3d12, 1280x800, median GPU ms: D4 **0.083**, + D5 part overlays **0.137** (+0.054), + look_d5 world layer
   **0.158** (+0.075 total). Render CPU 0.127 -> 0.256 ms (the overlay sprites double the canvas items). Runs 2 and 3
   agree to 0.001 ms; run 1 read a higher baseline (0.208 / 0.270 / 0.335 = +0.127) and is kept as the spread.
-  Not measured: a min-spec GPU, and the GDScript cost of RigDetail's per-frame material updates (not in render CPU).
+  Re-run after the form shade (187b58d, runs cost4/cost5, `d5-cost.json` = cost5), in the high-baseline state:
+  D4 0.209, + parts 0.273 (+0.064; was 0.270 before the shade's 3 extra taps), + world 0.338-0.357. Walk shimmer
+  re-run (walk3): D5/D4 high-frequency 1.022. Not measured: a min-spec GPU, and the GDScript cost of RigDetail's per-frame material updates (not in render CPU).
