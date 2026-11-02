@@ -64,6 +64,8 @@ func apply(u: Dictionary) -> void:
 ## Per frame: the camera's world offset in screen px and the rain phase (sim ticks).
 func update(world_px: Vector2, rain_phase: float) -> void:
 	_mat.set_shader_parameter(&"world_px", world_px)
+	var cam: Camera2D = get_viewport().get_camera_2d() if is_inside_tree() else null
+	_mat.set_shader_parameter(&"zoom", cam.zoom.x if cam != null else 1.0)
 	_mat.set_shader_parameter(&"rain_phase", fixed_phase if fixed_phase >= 0.0 else rain_phase)
 
 

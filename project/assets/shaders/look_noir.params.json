@@ -19,6 +19,10 @@
     "rim_lo": 0.02,
     "soft": 0.025,
     "splash": 0.3,
+    "splash_zoom": [
+      1.0,
+      1.5
+    ],
     "stroke_period": 3.0,
     "teal": 0.0,
     "thresh": 0.46,
