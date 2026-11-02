@@ -20,11 +20,11 @@
       "ppm": 48
     },
     {
-      "far": 0.0,
+      "far": 0.00009375,
       "file": "look-d4-32ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0,
+      "mean": 0.0133541666666667,
       "ok": true,
       "ppm": 32
     },
@@ -33,25 +33,25 @@
       "file": "look-d4-48ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0,
+      "mean": 0.00331770833333333,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.0,
+      "far": 0.00021875,
       "file": "look-d4-64ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0,
+      "mean": 0.0507760416666667,
       "ok": true,
       "ppm": 64
     },
     {
-      "far": 0.0,
+      "far": 0.000046875,
       "file": "look-d5-48ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.0,
+      "mean": 0.01615625,
       "ok": true,
       "ppm": 48
     },
@@ -60,7 +60,7 @@
       "file": "look-d5-64ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.0,
+      "mean": 0.0001875,
       "ok": true,
       "ppm": 64
     },
@@ -69,16 +69,16 @@
       "file": "look-auto-48ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.0,
+      "mean": 0.000494791666666667,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.0,
+      "far": 0.0001875,
       "file": "look-auto-56ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.0,
+      "mean": 0.0288177083333333,
       "ok": true,
       "ppm": 56
     },
@@ -87,7 +87,7 @@
       "file": "look-auto-64ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.0,
+      "mean": 0.00659375,
       "ok": true,
       "ppm": 64
     }

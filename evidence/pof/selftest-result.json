@@ -21,8 +21,8 @@
       "emissive_fx_alive": 0,
       "file": "selftest-48ppm.png",
       "height": 800,
-      "lights_active": 0,
-      "mean_luminance": 0.312580206738656,
+      "lights_active": 1,
+      "mean_luminance": 0.312665672089982,
       "ok": true,
       "ppm": 48,
       "visible_actors": 81,
@@ -40,8 +40,8 @@
   "gpu": "NVIDIA GeForce RTX 4090",
   "ok": true,
   "placeholders": 22,
-  "prewarm_ms": 31.169,
+  "prewarm_ms": 30.722,
   "schema": "gtai.selftest/1",
   "texture_failures": [],
-  "texture_load_ms": 78.616
+  "texture_load_ms": 74.804
 }

@@ -420,3 +420,4 @@ NEXT (iteration 9 / morning, in order):
    look_d5 (its vnoise must hash `FRAGCOORD + world_px`, never FRAGCOORD alone: world_lock.gd catches it).
 4. Gameplay FX wiring still waits on positional events (explosions, melee crackle); smoke has no source.
 5. D5 overlay GPU at 64 px/m (+0.9-1.5 ms): half-res SubViewport once look_d5 is merged.
+- Evidence at 4738565 (HEAD code): lint 13/13, unit 200, scenarios 8, parity PASS, selftest PASS (goldens 10/10 worst 0.05, accent gate: no new offenders, world lock 0.00 % at 32 / 48 / 64). Copied to evidence/pof.
