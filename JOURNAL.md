@@ -10,3 +10,21 @@
   sizes and parts.json as art/rivet/, and their alpha is the D4 alpha (silhouette lock) so the 64 px/m switch can
   only change the inside of a part, never its outline or the sticker halo -> no shimmer at the switch by
   construction. The swap is a texture + material swap per sprite (no new nodes).
+- 21:16 MILESTONE item 1: 4/4 D5 Rivet sheets accepted (0 rejected; layout and plan view held). slice_d5.py cuts
+  the D5 sheet with the D4 sheet's geometry (stretch within 2.3%) and gives each part the D4 alpha.
+- FRICTION: the project's default canvas filter is linear WITHOUT mips, so the detailed D5 art aliased into speckle
+  (r1-r3). Fixed by sampling the D5 parts with mipmaps. Also, an early "steel lift" edit silently failed to apply
+  (string mismatch); caught at 21:33 when a measurement did not move. Lesson: verify edits by measurement.
+- 21:20 a texture swap at 64 px/m popped the tone and moved the outline by 1 px (switch56_panel.png). Replaced by
+  OVERLAY sprites faded 56 -> 64 px/m: 0 changed px at 32/48/54/56 (measured).
+- 21:33 MILESTONE item 1 gate: D5 at 64 px/m reads closer to the concept (lavender steel, rust, ink, off-register
+  vermilion), and Rivet vs street dL is 0.192 vs D4 0.174.
+- 21:25 MILESTONE item 2: look_d5.gdshader world layer + look_d5.params.json. REVERTED the first tuning (r7: the
+  street hatch read as rain and hurt the dark field the characters sit on); the hatch now lives only in the mid wash.
+- 21:30 MILESTONE item 3: 4 D5 landmark roofs (Codex, 0 rejected). REVERTED the vermilion fist mural: at 48 px/m
+  it competed with the cops (7.2% vermilion) -> re-inked to wash + thin off-register edge (0.43%).
+- 21:35 MILESTONE item 4: hero junction scene (d5_hero.gd), cam on the mural corner, + hatched cast-shadow
+  proposal. Gap list in evidence/README.md.
+- Shared files touched (minimal): docs/decisions.md (2 DECISION lines), features/characters/character_rigs.gd
+  (+4 lines: the tier hook), cut_rig.gd (+is_tinted, +on_tint call), steam/ai-provenance (append-only).
+- 21:37 item 5: portraits started (Rivet accepted).
