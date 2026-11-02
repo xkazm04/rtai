@@ -285,3 +285,8 @@ NEXT (iteration 7 / morning, in order):
   indexed writes per particle cost about what 3 native RS calls do. Frames 13-fx-buffer/. The p99 lever for
   FX is native (or fewer live particles: splats 5 x 240 ticks), not a GDScript buffer. README per-pass table
   updated with the feed A/B and this.
+- 00:05 LightLayer gets the FX no-tick skip (rewrite only when the tick moved or a light was added / moved /
+  removed). light_showcase before/after pixel-identical 12/12 (14-light-skip/). Gain unmeasured (the
+  showcase is all tick frames). Unit 196, lint 13/13. Evidence at 29cb86f is two commits behind this
+  (render-only skip + docs); the next evidence run should be at HEAD.
+- Session end: tree clean, no processes of mine running, /tmp scratch deleted; masters frames kept as evidence.
