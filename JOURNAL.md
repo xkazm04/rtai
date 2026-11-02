@@ -367,3 +367,9 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   hero's ink foot (d5 tier) so the 64 px/m frame reads as a chop-shop yard in a city block, not a floor in a void.
   d5 = a12 0 px (gdformat-only change, deterministic). Rivet |dL| at 64 0.133 -> 0.143 (the shade_k change). Boards
   item18_arena.png and night_iter4_summary.png rebuilt (a13 / h69 / h70); ladder +1 row.
+- 00:56 EVALUATED, NO CHANGE (gap 3 pavement): mock pavement under LOCAL 9 median L 0.776 vs ours (D4, 32 px/m) 0.878:
+  ours is not darker; the difference is the joint layout/weight (a tile question for the city lane). The D5 strip
+  is dominated by the roof cast shadow (median 0.331) so it is not comparable. No experiment run.
+- 00:56 RE-MEASURED item 1 switch on the final shaders (sweep2, d5_sweep.gd, 51-67 px/m): |D5 tier - D4| mean 0 at
+  51/53/55, then 0.0002 / 0.0009 / 0.0019 / 0.0027 / 0.0030 / 0.0032 (iteration 1: 0.0001 ... 0.0030): monotone, no
+  pop. Walk shimmer (walk5) HF 1.024.
