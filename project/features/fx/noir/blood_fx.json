@@ -1,0 +1,85 @@
+{
+  "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14).",
+  "budget": {
+    "max_decals": 160,
+    "max_drops": 320,
+    "max_pools": 16
+  },
+  "colour": {
+    "blood": [
+      0.64,
+      0.02,
+      0.035
+    ],
+    "blood_dark": [
+      0.46,
+      0.0,
+      0.03
+    ],
+    "sheen": [
+      0.95,
+      0.94,
+      0.91
+    ]
+  },
+  "decal": {
+    "fade_after_ticks": 3600,
+    "fade_ticks": 7200,
+    "lobes": 9,
+    "min_alpha": 0.0
+  },
+  "hits": {
+    "kill": {
+      "cone_deg": 34.0,
+      "drop_px": [
+        1.2,
+        3.6
+      ],
+      "drops": 56,
+      "pool": true,
+      "speed_px": [
+        4.0,
+        16.0
+      ],
+      "splat_px": [
+        3.0,
+        9.0
+      ]
+    },
+    "player_hit": {
+      "cone_deg": 50.0,
+      "drop_px": [
+        0.8,
+        2.2
+      ],
+      "drops": 14,
+      "pool": false,
+      "speed_px": [
+        2.0,
+        6.0
+      ],
+      "splat_px": [
+        1.5,
+        4.0
+      ]
+    }
+  },
+  "physics": {
+    "drag": 0.86,
+    "land_speed_px": 0.6,
+    "life_ticks": [
+      10,
+      26
+    ],
+    "trail": 0.55
+  },
+  "pool": {
+    "delay_ticks": 20,
+    "grow_ticks": 420,
+    "radius_px": [
+      4.0,
+      22.0
+    ]
+  },
+  "schema": "gtai.noir-blood/1"
+}

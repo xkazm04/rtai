@@ -24,3 +24,19 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
   Honest read of v4: streets AND pavements both print black (kerb lines remain); roof tile grid is lost
   (roofs print as flat paper); people pop white; Rivet reads (claw, visor) but his collar is now black.
   Colour doctrine: no colour except the protected blood red and the teal plate (none on screen yet).
+- MILESTONE blood + impact frames (work order 3) and hit-stop (part of 4):
+  `features/fx/noir/blood_fx.gd` + `blood_fx.json` (`gtai.noir-blood/1`): pooled droplets (max 320)
+  thrown in a cone along killer -> victim, landing as ink-blot splats; a pool under each kill that
+  spreads over 420 ticks with a white wet sheen; decals persist 60 s then fade over 120 s; pools have
+  their own ring (16) so droplet splats never evict them (v1 bug, caught in frames, fixed + unit test).
+  Scatter is a counter hash (no RNG stream, no sim state). `impact_frame.gd` +
+  `look_noir_impact.gdshader`: a 3-tick comic beat on kills - inverted panel (blood stays red), paper
+  with a speed-line burst, white flash with ink silhouettes. `noir_combat_fx.gd` listens to the REAL
+  `Events.actor_killed` / `player_hit` and emits `hit_stop(ticks)` (impact.hit_stop_ticks 5 in params).
+  Evidence `fight-v4/`: `dev/noir/blood_clip.tscn` recorded with the movie maker (fixed 60 fps) ->
+  fight-48.mp4 / fight-64.mp4 (~10 s) + hero frames f050 (inverted), f051, f060, f176, f300, f600.
+  FRICTION: draw_colored_polygon triangulation failed on hashed star blobs (4276 errors in v3); blots
+  are now discs (core + lobes) - 0 errors, and they read rounder.
+  HONEST: the "cops" in the clip are fixed points (no bodies) in the riot crowd; the kills go through
+  the real events, but the city scene has no CombatArena. Wall splats are not done (no wall data in the
+  city view). The world hit-stop holds the sim; the rigs keep their pose (that is the held panel).

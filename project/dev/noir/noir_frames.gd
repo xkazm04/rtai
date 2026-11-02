@@ -1,3 +1,4 @@
+class_name NoirFrames
 extends Node
 ## D-Noir A/B frames (lane noir): the real World + CitySystem + CityView, the same seed and the
 ## same moments, printed in D4 and in D-Noir back to back, at 32, 48 and 64 px/m, for three
@@ -50,25 +51,36 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	_world = World.new()
-	_world.start(Events, Data, MASTER_SEED)
-	add_child(_world)
-	_city = CitySystem.new(true)
-	_world.add_system(_city)
-	_city.steer_by_input = false
-	_city.focus = JUNCTION
-	_city.target = JUNCTION
+	var built: Array = build_city(self)
+	_world = built[0]
+	_view = built[1]
+	_city = built[2]
+	_view.noir.fixed_phase = RAIN_PHASE
+	_characters = built[3]
+
+
+## The junction riot city (seed 91) under `host`, the noir pass on: [World, CityView,
+## CitySystem, CityCharacters]. Shared with the fight clip.
+static func build_city(host: Node) -> Array:
+	var world: World = World.new()
+	world.start(Events, Data, MASTER_SEED)
+	host.add_child(world)
+	var city: CitySystem = CitySystem.new(true)
+	world.add_system(city)
+	city.steer_by_input = false
+	city.focus = JUNCTION
+	city.target = JUNCTION
 	var t: CityTargets = CityTargets.riot(110, 16)
 	t.cars = 40
 	t.police_cars = 4
-	_city.spawner.targets = t
-	_city.spawner.riot_c = JUNCTION
-	_view = CityView.new()
-	add_child(_view)
-	_view.setup(_city)
-	_view.set_noir(true)
-	_view.noir.fixed_phase = RAIN_PHASE
-	_characters = CityCharacters.new(_city, _view, _world.context())
+	city.spawner.targets = t
+	city.spawner.riot_c = JUNCTION
+	var view: CityView = CityView.new()
+	host.add_child(view)
+	view.setup(city)
+	view.set_noir(true)
+	var chars: CityCharacters = CityCharacters.new(city, view, world.context())
+	return [world, view, city, chars]
 
 
 func _scene(scene: String, focus: Vector2) -> int:
