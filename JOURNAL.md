@@ -540,3 +540,10 @@ NEXT:
 - Owner decisions still open: cop uniform (n-visual has a cream-cop torso option now), blood ink vs vermilion
   (blood is ink with a cream rim now, consistent with the FX splat).
 - If more time: Hauler's portrait is the smallest (wide body fit by width); the idle ink portraits are pale.
+- 00:41 MILESTONE soul portraits refined (NEXT item from the summary). `slice_souls.py`: fit by height, a wide body
+  may overflow the 220 px portrait area by up to 40 px with a 12 px alpha fade at the cut (Hauler was the smallest
+  portrait: scale 0.555 -> 0.681); idle ink ramp (lum - 0.36) / 0.40 (was 0.30 / 0.50: read pale). Board
+  `work/souls_peek3.png` (v1 vs v2), `souls_peek4.png` (final); in-engine `after_soul|after_soul2/city-*-hud{40,50}`
+  (`work/soul2_ab.png`). 8 provenance lines. Commit 480ef6b.
+- 00:42 props board re-read at 64 px/m (`after_lampp/props-64ppm.png`): no other prop misreads (street sign is a
+  small pole + edge-on plate, acceptable straight down).
