@@ -587,7 +587,7 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   (request 1 open). Biggest remaining gap in MY scope: the asphalt covers about half of every frame and prints as one
   flat wash (frame std 1.1 vs the target's 14). The shipped asphalt is one value band (lum 83-87), so look_d4 (asphalt
   density about 0.75 = the dark step) cannot show any grain.
-- 01:20 MILESTONE asphalt aggregate. `tools/asphalt_grain.py` (procedural, asphalt pixels only, 2 px off markings,
+- 00:57 MILESTONE asphalt aggregate. `tools/asphalt_grain.py` (procedural, asphalt pixels only, 2 px off markings,
   cracks and kerb; seeded per file). Probes in-engine, city_frame 32/48 (`work/ag1_ab.png`, `ag2_zoom.png`,
   `ag3_zoom.png`):
   v1 dark/pale +/-20: invisible (stays inside the dark step).
