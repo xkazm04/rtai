@@ -15,8 +15,12 @@ Every file has a line in `steam/ai-provenance/2026-11.jsonl`.
   `district.gd` does) needs no change.
 - **Road variants:** `<tile>_tone`, `_tone_b`, `_tone_c`; every variant's outer band is the same flat base wash, so
   any variant joins any other. The spike picks one per tile with `(ix + 2 * iy) mod 3`.
-- **Colour doctrine:** the world is ink, wash and paper. Vermilion only on the signal lamps, the explosive barrels,
-  the barricade, the police barrier and the cone. No teal.
+- **Colour doctrine:** the world is ink, wash and paper. Vermilion only on the explosive barrels, the barricade, the
+  police barrier and the cone (the signal lamps are ink and paper since night iteration 4: one lit paper disc, two
+  unlit ink - the accent audit flagged them). No teal.
+- **lamp_post.png** (night iteration 4) is procedural, no AI pixels: the old in-line oval head read as a spoon at
+  48-64 px/m; redrawn in the target's construction (dark round base, thin arm, a crook, a round paper head with a
+  heavy ink ring) by `masters:night/d4-production/tools/lamp_redraw.py`, same 256 x 40 footprint.
 - **Shader:** these assets are authored for `assets/shaders/look_d4.gdshader` (the tone budget). The pen work is in
   the art; the shader does not add it.
 
