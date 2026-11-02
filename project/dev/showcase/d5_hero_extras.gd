@@ -10,6 +10,10 @@ extends RefCounted
 const SPOTS: Array[Array] = [
 	["cruiser", 13.2, 2.3, 4.8, -18.0],
 	["sedan_dark", 2.9, -10.2, 4.6, 90.0],
+	["manhole", -6.5, 1.8, 1.25, 0.0],
+	["drain_grate", 12.9, -3.45, 1.5, 0.0],
+	["skid_marks", 8.0, 3.2, 6.0, -8.0],
+	["oil_stain", 2.4, -7.4, 1.4, 0.0],
 	["splat", 1.7, 0.5, 1.5, 20.0],
 	["casing", 9.3, -0.2, 0.22, 35.0],
 	["casing", 9.0, 0.3, 0.22, 110.0],

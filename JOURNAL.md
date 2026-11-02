@@ -108,6 +108,8 @@ NEXT:
   gain on the cops. lit_k 0.75 had no effect (reverted). Hero frames now h31.
 - 22:56 re-measured on 187b58d: unit 146/0; walk shimmer HF 1.022; GPU cost (high-baseline state) D4 0.209 /
   parts 0.273 / +world 0.338-0.357 ms. evidence/d5-cost.json = cost5.
-- 22:59 EVALUATED, NO CHANGE: at 64 px/m the D4 mural looked like a stronger fist than the D5 grey-wash fist. Measured
+- 22:54 EVALUATED, NO CHANGE: at 64 px/m the D4 mural looked like a stronger fist than the D5 grey-wash fist. Measured
   fist vs a ring around it (D5 fist mask): D4 -0.052, D5 -0.234 (a dark figure on a lighter ground, the strongest);
   a cream D5 fist (wash base 0.0) would be 0.006 = no figure. Kept the D5 mural as is. Eye impression was wrong.
+- 22:55 street decals borrowed from d4-production's raw decal sheet (manhole, drain grate, skid marks, oil stain;
+  the green puddle skipped: unkeyable). h32 had the grate under the soul trail -> moved (h33). Hero frames now h33.
