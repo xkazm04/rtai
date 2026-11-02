@@ -242,7 +242,7 @@ NEXT:
 - 00:01 gates: evidence tool (--no-parity --no-bench) ALL PASS at 5922a3d: lint 13/13, unit 149/0, scenarios 8/0, selftest ok (34 untracked evidence PNGs moved aside and restored).
 
 ## Summary (iteration 3, 23:09 -> 00:01)
-- Images: 4 Codex (d5_decals, d5_rivet_expressions, d5_king_expressions, d5_roof_union_hall; ledger 27 -> 31,
+- Images: 5 Codex (d5_decals, d5_rivet_expressions, d5_king_expressions, d5_roof_union_hall, d5_finisher_drone after the summary; ledger 27 -> 32,
   masters gen/ledger.tsv), 0 rejected for camera breaks. One cell honestly renamed (King "commanding" -> "wary").
 - Kept: look_d5 aged paper (`age`, the mock's sepia at D5 zoom), `age_floor` proposal (off), finer/darker cast-shadow
   hatch, D5 street decals (stencil fist, STRIKE, chalk robot, scorch), D5 landmark roofs lifted to D4 tone (d**1.8),
@@ -268,3 +268,5 @@ NEXT:
 5. HUD lane: dialogue/phone UI can use `characters/art/d5/portraits/{rivet,cop,king}.png` + rivet_/king_ expressions
    (at 64 px only angry/furious and the tilts read).
 6. Owner: Rivet steel (item9), age_floor (item12), store-safe marks on portraits/expressions/loading art.
+- 00:04 Codex: 1 D5 finisher splash (Rivet's claw crushing a police drone, 78 s), 0 rejected; ledger 32. Installed
+  features/combat/art/d5/finisher_drone.png (1920x1081) + provenance; not wired (combat lane). Board item5d_finisher.png.
