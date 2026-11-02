@@ -1,3 +1,4 @@
+# gdlint: disable=max-public-methods
 class_name CitySimRef
 extends CitySimBackend
 ## The permanent GDScript reference of the bubble sim (NAT-06), ported from the cityscale spike's
@@ -34,11 +35,13 @@ func set_radii(ra: float, rb: float, riot: float) -> void:
 
 
 func stamp_chunk(cx: int, cy: int, tiles: PackedByteArray, cells: PackedByteArray) -> void:
-	_copy_chunk(cx, cy, tiles, cells)
+	SimArrays.copy_chunk(_s, cx, cy, tiles, cells)
 
 
 func clear_chunk(cx: int, cy: int) -> void:
-	_copy_chunk(cx, cy, CityChunk.zeros(CityChunk.TILES), CityChunk.zeros(CityChunk.CELLS))
+	SimArrays.copy_chunk(
+		_s, cx, cy, CityChunk.zeros(CityChunk.TILES), CityChunk.zeros(CityChunk.CELLS)
+	)
 
 
 func cell_at(x: float, y: float) -> int:
@@ -125,6 +128,18 @@ func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 	_render.write(vx0, vy0, vx1, vy1)
 
 
+func set_rig_slots(slots: PackedInt32Array) -> void:
+	_render.set_rig_slots(slots)
+
+
+func set_person_px(px: float) -> void:
+	_render.person_px = px
+
+
+func get_variants() -> PackedByteArray:
+	return _s.variant.duplicate()
+
+
 func get_render_counts() -> PackedInt32Array:
 	return _render.counts.duplicate()
 
@@ -180,18 +195,3 @@ func _count() -> void:
 		c[SimConst.CN_PROJ] += _s.qalive[k]
 	for j: int in 8:
 		_s.counters[j] = c[j]
-
-
-func _copy_chunk(cx: int, cy: int, tiles: PackedByteArray, cells: PackedByteArray) -> void:
-	_s.map_version += 1
-	var nt: int = SimConst.CHUNK_TILES
-	var nc: int = SimConst.CHUNK_CELLS
-	for ly: int in nt:
-		for lx: int in nt:
-			_s.tiles[(cy * nt + ly) * SimConst.TW + cx * nt + lx] = tiles[ly * nt + lx]
-	var base: int = cy * nc * SimConst.W + cx * nc
-	for ly: int in nc:
-		var row: int = base + ly * SimConst.W
-		var src: int = ly * nc
-		for lx: int in nc:
-			_s.cells[row + lx] = cells[src + lx]

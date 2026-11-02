@@ -39,6 +39,9 @@ public:
 	void set_render(const Array &mms, const PackedInt32Array &clips);
 	void write_render(double vx0, double vy0, double vx1, double vy1);
 	PackedInt32Array get_render_counts() const;
+	void set_rig_slots(const PackedInt32Array &slots);
+	void set_person_px(double px);
+	PackedByteArray get_variants() const;
 	PackedInt32Array flow_stats() const;
 	int flow_dist(double x, double y) const;
 

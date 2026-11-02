@@ -14,6 +14,8 @@ const INK: Color = Color(0.09, 0.075, 0.106, 1.0)
 const BULLET: Color = Color(1.0, 0.85, 0.4, 1.0)
 
 var counts: PackedInt32Array = SimArrays.i32(SimConst.RL_COUNT, 0)
+var person_px: float = S_PED
+var _rigged: PackedByteArray = SimArrays.u8(SimConst.CAP)
 var _s: CitySimState
 var _mms: Array[RID] = []
 var _clips: PackedInt32Array = PackedInt32Array()
@@ -22,6 +24,13 @@ var _layers: Array[Array] = []
 
 func _init(state: CitySimState) -> void:
 	_s = state
+
+
+func set_rig_slots(slots: PackedInt32Array) -> void:
+	_rigged.fill(0)
+	for slot: int in slots:
+		if slot >= 0 and slot < SimConst.CAP:
+			_rigged[slot] = 1
 
 
 func setup(mms: Array[RID], clips: PackedInt32Array) -> void:
@@ -52,8 +61,9 @@ func write(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 				pos + Vector2(2, 3)
 			)
 			_tint(SimConst.RL_PED_SHADOWS, Color(INK, 0.3), 0)
-			_put(SimConst.RL_PEDS, h, Vector2(S_PED, S_PED), pos)
-			_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i))
+			if _rigged[i] == 0:
+				_put(SimConst.RL_PEDS, h, Vector2(person_px, person_px), pos)
+				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i))
 		else:
 			_put(SimConst.RL_CARS, h, Vector2(CAR_L, CAR_W), pos)
 			_tint(SimConst.RL_CARS, Color.WHITE, _s.variant[i])

@@ -50,7 +50,7 @@ function runScenario(sc, mode, secs, outDir) {
 
 const DETAIL = ['p99CpuMs', 'low1Fps', 'worstSwapMs', 'worstFrameMs', 'visibleAvg', 'visibleMax',
   'actorsAvg', 'simStepMsPerTick', 'streamSpawnMsPerTick', 'hitches25', 'hitchesOver50', 'over50.unexplained',
-  'avgFrameMs'];
+  'avgFrameMs', 'rigMsP50', 'rigMsP99', 'rigMsPerTick', 'fullRigsMax'];
 const round3 = (v) => Math.round(v * 1000) / 1000;
 
 /** Worst case over every run and scenario, plus per-scenario detail (worst over runs). */
@@ -123,7 +123,8 @@ export function runBench(outDir, { headless = false, secs = 60, runs = 3 } = {})
     + `worst frame ${m.worstFrameMs} ms; hitches >25 ms ${m.hitches25}, >50 ms ${m.hitchesOver50} `
     + `(unexplained ${m['over50.unexplained']}, outside ${m['over50.outside']}, present `
     + `${m['over50.present']}); vsync-on drive >25 ms: ${m['drive48vsync.hitches25']}; visible avg `
-    + `${m['drive.visibleAvg']} / ${m['drive48.visibleAvg']} / ${m['riot.visibleAvg']} (drive/drive48/riot)`
+    + `${m['drive.visibleAvg']} / ${m['drive48.visibleAvg']} / ${m['riot.visibleAvg']} (drive/drive48/riot); `
+    + `rigs p50 ${m['riot.rigMsP50']} / p99 ${m['riot.rigMsP99']} ms per frame (riot, up to ${m['riot.fullRigsMax']})`
     + (misses.length ? `; MISSES ${misses.map(([k]) => k).join(', ')}` : '')
     + (failures ? `; ${failures} chunk failures` : '');
   return { ok: !misses.length && !failures, summary, metrics: m, artifacts };

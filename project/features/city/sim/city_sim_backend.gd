@@ -1,3 +1,4 @@
+# gdlint: disable=max-public-methods
 @abstract class_name CitySimBackend
 extends RefCounted
 ## The bubble sim's one interface, met by the native CitySim (CitySimNative wraps the
@@ -25,6 +26,12 @@ extends RefCounted
 @abstract func set_render(mms: Array[RID], clips: PackedInt32Array) -> void
 @abstract func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void
 @abstract func get_render_counts() -> PackedInt32Array
+## Render only (never sim state): slots drawn by a full cutout rig skip their atlas body.
+@abstract func set_rig_slots(slots: PackedInt32Array) -> void
+## Render only: the person quad's size in world px (the baked crowd atlas cell).
+@abstract func set_person_px(px: float) -> void
+## Render only: the art variant (crowd look) of every slot.
+@abstract func get_variants() -> PackedByteArray
 ## Police flow field (WLD-09): SimConst.FS_LEN ints (computes, cells reached, last/max us).
 @abstract func flow_stats() -> PackedInt32Array
 ## Flow-field distance in cells from (x, y) to the pursuit target, or -1.

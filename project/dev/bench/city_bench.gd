@@ -27,6 +27,8 @@ var _args: Dictionary[String, String] = {
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
+var _characters: CityCharacters = null
+var _rig_ticks: int = 0
 var _stats: BenchStats = BenchStats.new()
 var _last_us: int = 0
 var _moves: int = 0
@@ -55,6 +57,9 @@ func _ready() -> void:
 	_view.zoom = _args["--zoom"].to_float()
 	add_child(_view)
 	_view.setup(_city)
+	_characters = CityCharacters.new(_city, _view, world.context())
+	_characters.rivet_on_foot = _args["--scenario"] == "riot"
+	await _characters.bake()
 	var prewarm_us: int = await _view.prewarm()
 	printerr("city_bench: prewarm %.1f ms" % (prewarm_us / 1000.0))
 	add_child(world)
@@ -75,6 +80,9 @@ func _process(_delta: float) -> void:
 	var counts: PackedInt32Array = _city.sim.get_counters()
 	var live: int = counts[0] + counts[1] + counts[2] + counts[3]
 	_stats.add(ms, _city.take_stats(), swapped, Vector2i(live, _view.visible_actors))
+	var stepped: int = _characters.rigs.ticks_stepped
+	_stats.add_rig(_characters.rigs.last_us, stepped - _rig_ticks, _characters.rigs.full_count())
+	_rig_ticks = stepped
 	if _world.context().clock.tick() >= _args["--secs"].to_float() * SimClock.TICK_RATE:
 		_finish()
 
