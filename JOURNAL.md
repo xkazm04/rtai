@@ -400,7 +400,7 @@ NEXT:
 - If visual-engine adds building shadows / warmer wash: re-shoot city_frame and re-judge the roof lift (it was tuned
   against the current tone steps).
 - Fold the masters ground tools into build_ground.py (REQUEST 13) before anyone re-bakes the ground.
-- 00:05 REVERTED probe: props contrast S-curve (`tools/props_contrast.py`, gain 1.6 on unsaturated px, vermilion
+- 23:58 REVERTED probe: props contrast S-curve (`tools/props_contrast.py`, gain 1.6 on unsaturated px, vermilion
   kept). On the road the props pop more, but on the PAVEMENT (where props live) the lightened kiosk, vending machine,
   crates and newsstand melt into the cream paving; the mid-grey fills are what separate them from it
   (`work/pc_ab32.png`, `probe_pc/`). Worse where it matters: not shipped.
