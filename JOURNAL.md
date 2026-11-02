@@ -195,3 +195,4 @@ NEXT (iteration 5 / morning, in order):
   (idle HEAD run: 0.474 / 0.511): in the release build the selection decimation is only -2..-4 %; the 0.3 ms
   target is NOT met. evidence/bench-*-final.json, evidence/bench-final-iter4.txt.
 - Evidence 23:06 at 05531f3: lint 13/13, unit 183, scenarios 8, parity PASS, selftest PASS (goldens 10/10 worst 0.74; crowd 6/6 on doctrine). Copied to evidence/pof/.
+- 23:08 real boot path smoke (windowed, --quit-after 600): --look=auto / d5 / off all exit 0, 0 script errors (World + CityView with the emissive canvas, overlay hook and camera events). Scratch cleaned (Temp probe dirs, masters bless/check dirs); no plugged n-d4 / n-d5 files left in the tree. Session end.
