@@ -161,3 +161,8 @@ NEXT:
   (d4 frames 0 px vs h38). Doctrine dE (tools/doctrine_de.py): verm-street 78.0 -> 74.6, teal-street 56.5 -> 57.5,
   paper-street dL 58.2 -> 59.4 at 64. Board evidence/item7_paper_age.png; hero frames now h40; ladder +1 row.
   FRICTION: shoot.sh needs `--borrow=C:/.../borrowed/` as arg 3 for the hero, or street life is missing.
+- 23:16 MILESTONE: look_d5_shadow finer/darker hatch (5645ece). h40 stripes (hazard-stripe read) -> h41 period 4.5 /
+  tint 0.42: printed FLAT by look_d4 (REJECTED) -> h42 period 5 / tint 0.36 / cov 0.42 kept: band mean L 0.441 ->
+  0.381, stripe energy 0.202 -> 0.193 at 64 (0.269 -> 0.244 at 32). Board evidence/item8_shadow_hatch.png; hero = h42.
+- 23:18 re-check after the aged paper (showcase r22 vs r21, full d5 stack, the d4/d5p tier mask): Rivet vs street dL
+  0.166 -> 0.170 at 64, 0.183 -> 0.187 at 96 (street L 0.286 -> 0.282); d5 @32 0 px. No readability cost.
