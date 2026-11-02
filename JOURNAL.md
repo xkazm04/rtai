@@ -547,3 +547,11 @@ NEXT:
   (`work/soul2_ab.png`). 8 provenance lines. Commit 480ef6b.
 - 00:42 props board re-read at 64 px/m (`after_lampp/props-64ppm.png`): no other prop misreads (street sign is a
   small pole + edge-on plate, acceptable straight down).
+- 00:42 GATES at ca10764 (incl. the refined souls): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 0 placeholders.
+- 00:43 MILESTONE damage-state grime (a continuity gap my own 54bf23f opened: an intact car was grimy, its d1/d2
+  states clean - a damaged car read cleaner). `veh_grime.py` now seeds by the base car name (sedan_d1 -> sedan;
+  one scale per vehicle across states, so the dirt registers: `work/grime_dmg_peek.png`); applied to the 18 SHIPPED
+  damage states (work/vehicles holds pre-marks copies - caught by a cmp before use). The marks stay on top (grime
+  only touches light paint). Extras board `before_grd|after_grd/extras-{32,48,64}ppm.png` (`work/grd_ab_64.png`).
+  18 provenance lines. Commit 1a78f7b.
