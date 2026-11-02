@@ -5,7 +5,8 @@ extends RefCounted
 ## sprite per part, printed by look_d5_part.gdshader ON TOP of the untouched D4 part. The D5
 ## parts have the D4 file names, sizes, pivots and alpha (silhouette lock) and the overlay's
 ## alpha is the zoom fade (`amount`, 0 at ON_ZOOM -> 1 at FULL_ZOOM), so the switch itself
-## changes no pixel and nothing ever moves an outline or the sticker halo.
+## changes no pixel and nothing ever moves an outline or the sticker halo. Parts printed with a
+## palette swap (a cop's vermilion head) keep their D4 print: the overlay would undo the swap.
 ## Overlays are made once per rig on first use, then only shown / hidden. Render-side only.
 
 const ON_ZOOM: float = 1.75
@@ -63,7 +64,7 @@ static func sync(rig: CutRig) -> void:
 	var over: Array = _over.get(id, [])
 	for i: int in over.size():
 		var o: Sprite2D = over[i]
-		o.visible = want
+		o.visible = want and rig.sprite_swaps[i] == 0
 		var src: Texture2D = rig.sprites[i].texture
 		if want and o.get_meta(&"src") != src:
 			_point(o, rig, src)

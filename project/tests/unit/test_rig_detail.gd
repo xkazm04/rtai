@@ -59,3 +59,18 @@ func test_tier_adds_overlays_and_keeps_the_d4_parts() -> void:
 	assert_false(RigDetail.is_on(rig))
 	var o0: Sprite2D = rig.sprites[0].get_node(NodePath(String(RigDetail.OVERLAY)))
 	assert_false(o0.visible, "overlays hidden at 32 px/m")
+
+
+func test_palette_swapped_parts_keep_the_d4_print() -> void:
+	if not RigDetail.has_d5("cop"):
+		pass_test("no D5 cop set installed")
+		return
+	@warning_ignore("return_value_discarded")
+	_rigs.feed.put(1, 2, BodyPlan.Kind.COP, Vector2(32.0, 0.0), Vector2.ZERO)
+	_rigs.zoom = 2.0
+	_rigs.step_ticks(1)
+	var cop: CutRig = _rigs.rig_for(2)
+	assert_true(RigDetail.is_on(cop))
+	for i: int in cop.sprites.size():
+		var o: Sprite2D = cop.sprites[i].get_node(NodePath(String(RigDetail.OVERLAY)))
+		assert_eq(o.visible, cop.sprite_swaps[i] == 0, "overlay %d" % i)
