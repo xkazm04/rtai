@@ -1,0 +1,8 @@
+{
+  "chunks": 16,
+  "doc": "The authored district the city chunks are baked from (AST-12). The generator is procedural: this row is its whole input besides the texture table. Changing seed or chunks re-bakes every chunk and the golden hash list.",
+  "id": "district_01",
+  "name_key": "DISTRICT_01_NAME",
+  "schema": "gtai.city-district/1",
+  "seed": 1
+}

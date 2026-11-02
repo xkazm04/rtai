@@ -1,0 +1,151 @@
+class_name TilePainter
+extends RefCounted
+## Paints one 8 m tile into a ChunkBuild: draw commands, cell codes and spawn densities. Returns
+## the tile code. Junction (3 x 3 per period), street segments, plaza blocks and building blocks.
+
+const PERIOD: int = CityGen.PERIOD
+const T_TRAFFIC_LIGHT: int = 35
+const PLAZA_PROPS: Array[int] = [28, 33, 26, 24, 32, 29, 38]
+const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
+
+var _kerb: KerbDresser = KerbDresser.new()
+
+
+func paint(g: CityGen, b: ChunkBuild, ti: int, tj: int) -> int:
+	var mx: int = ti % PERIOD
+	var my: int = tj % PERIOD
+	if mx <= 2 and my <= 2:
+		return _junction(g, b, Vector2i(ti, tj))
+	if mx <= 2 or my <= 2:
+		return _street(g, b, Vector2i(ti, tj), my <= 2)
+	if g.rnd(floori(float(ti) / PERIOD), floori(float(tj) / PERIOD), 0, 5) < 0.12:
+		return _plaza(g, b, Vector2i(ti, tj))
+	return _block(g, b, Vector2i(ti, tj))
+
+
+static func origin(t: Vector2i) -> Vector2:
+	return Vector2(t.x * SimConst.TILE_M, t.y * SimConst.TILE_M)
+
+
+static func local_index(t: Vector2i) -> int:
+	var n: int = SimConst.CHUNK_TILES
+	return (t.y % n) * n + (t.x % n)
+
+
+func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
+	var mx: int = t.x % PERIOD
+	var my: int = t.y % PERIOD
+	var o: Vector2 = origin(t)
+	var c: Vector2 = o + Vector2(4.0, 4.0)
+	var v3: int = int(g.rnd(t.x, t.y, 0, 1) * 3.0)
+	if mx == 1 or my == 1:
+		var tex: int = 6 if mx == my else (3 + v3 if mx == 1 else v3)
+		b.add(ChunkBuild.L_GROUND, tex, c, 0.0)
+		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_LANE)
+		if mx == my:
+			b.chunk.dens_car[local_index(t)] = 0
+			return SimConst.T_INTER
+		return SimConst.T_ROAD_V if mx == 1 else SimConst.T_ROAD_H
+	# rounded kerb corner: sidewalk in the corner that touches the block diagonal
+	var rot: float = CORNER_ROT[(mx >> 1) + 2 * (my >> 1)]
+	b.add(ChunkBuild.L_GROUND, 10, c, deg_to_rad(rot))
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_PARK)
+	var s: Vector2 = Vector2(o.x if mx == 0 else o.x + 5.0, o.y if my == 0 else o.y + 5.0)
+	b.stamp(Rect2(s, Vector2(3, 3)), SimConst.C_WALK)
+	b.add(ChunkBuild.L_PROP, T_TRAFFIC_LIGHT, s + Vector2(1.5, 1.5), deg_to_rad(rot + 45.0), true)
+	b.chunk.dens_ped[local_index(t)] = int(90 * b.district)
+	return SimConst.T_CORNER
+
+
+func _street(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> int:
+	var m: int = (t.y if horiz else t.x) % PERIOD
+	var o: Vector2 = origin(t)
+	var c: Vector2 = o + Vector2(4.0, 4.0)
+	var v3: int = int(g.rnd(t.x, t.y, 0, 1) * 3.0)
+	if m == 1:
+		b.add(ChunkBuild.L_GROUND, v3 if horiz else 3 + v3, c, 0.0)
+		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_LANE)
+		b.chunk.dens_car[local_index(t)] = 200
+		_kerb.road_decals(g, b, t, horiz)
+		return SimConst.T_ROAD_H if horiz else SimConst.T_ROAD_V
+	var rotd: float = (0.0 if m == 0 else 180.0) if horiz else (270.0 if m == 0 else 90.0)
+	var rot: float = deg_to_rad(rotd)
+	b.add(ChunkBuild.L_GROUND, 7 + v3, c, rot)
+	# rotate each cell centre back into the rot-0 frame: sidewalk where v < 3
+	for yy: int in 8:
+		for xx: int in 8:
+			var p: Vector2 = KerbDresser.quarter_turn(Vector2(xx + 0.5 - 4.0, yy + 0.5 - 4.0), -rot)
+			var code: int = SimConst.C_WALK if p.y + 4.0 < 3.0 else SimConst.C_PARK
+			b.set_cell(int(o.x) + xx, int(o.y) + yy, code)
+	_kerb.dress(g, b, t, rot, horiz)
+	b.chunk.dens_ped[local_index(t)] = int(clampf(140.0 * b.district, 0, 255))
+	return SimConst.T_CURB
+
+
+func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
+	var o: Vector2 = origin(t)
+	b.add(ChunkBuild.L_GROUND, 13, o + Vector2(4.0, 4.0), 0.0)
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
+	b.chunk.dens_ped[local_index(t)] = int(255 * b.district)
+	for k: int in 2:
+		if g.rnd(t.x, t.y, k, 21) < 0.55:
+			var tex: int = PLAZA_PROPS[int(g.rnd(t.x, t.y, k, 22) * PLAZA_PROPS.size())]
+			var p: Vector2 = Vector2(
+				o.x + 1.5 + 5.0 * g.rnd(t.x, t.y, k, 23), o.y + 1.5 + 5.0 * g.rnd(t.x, t.y, k, 24)
+			)
+			var rot: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, k, 25) * 4.0))
+			_kerb.prop(g, b, tex, p, rot)
+	return SimConst.T_PLAZA
+
+
+## Roofs: a parapet edge toward the street on the block perimeter, plain roof inside; one 8.4 m
+## building per tile, or a 16.4 m one over two tiles (placed from the left tile of the pair).
+func _block(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
+	var mx: int = t.x % PERIOD
+	var my: int = t.y % PERIOD
+	var o: Vector2 = origin(t)
+	var c: Vector2 = o + Vector2(4.0, 4.0)
+	var edge: float = _edge(mx, my)
+	if edge >= 0.0:
+		b.add(ChunkBuild.L_GROUND, 11, c, deg_to_rad(edge))
+	else:
+		b.add(ChunkBuild.L_GROUND, 12, c, 0.0)
+	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
+	if _empty_interior(g, t) or ((mx == 4 or mx == 6) and _long_at(g, Vector2i(t.x - 1, t.y))):
+		return SimConst.T_BLOCK
+	if (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3:
+		var tex: int = 22 + int(g.rnd(t.x, t.y, 0, 33) * 2.0)
+		var rot: float = PI if g.rnd(t.x, t.y, 0, 34) < 0.5 else 0.0
+		b.add(ChunkBuild.L_ROOF, tex, Vector2(c.x + 4.0, c.y), rot, true)
+	else:
+		var tex: int = 14 + int(g.rnd(t.x, t.y, 0, 33) * 8.0)
+		var rot: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 34) * 4.0))
+		b.add(ChunkBuild.L_ROOF, tex, c, rot, true)
+	return SimConst.T_BLOCK
+
+
+static func _edge(mx: int, my: int) -> float:
+	if my == 3:
+		return 0.0
+	if my == 7:
+		return 180.0
+	if mx == 3:
+		return 270.0
+	return 90.0 if mx == 7 else -1.0
+
+
+static func _empty_interior(g: CityGen, t: Vector2i) -> bool:
+	var mx: int = t.x % PERIOD
+	var my: int = t.y % PERIOD
+	var interior: bool = mx >= 4 and mx <= 6 and my >= 4 and my <= 6
+	return interior and g.rnd(t.x, t.y, 0, 31) < 0.45
+
+
+## Whether tile t starts a long (two-tile) building, so its right neighbour stays empty.
+static func _long_at(g: CityGen, t: Vector2i) -> bool:
+	var mx: int = t.x % PERIOD
+	if g.rnd(floori(float(t.x) / PERIOD), floori(float(t.y) / PERIOD), 0, 5) < 0.12:
+		return false
+	if _empty_interior(g, t):
+		return false
+	return (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3

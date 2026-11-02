@@ -1,0 +1,721 @@
+{
+  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision. art is the res:// path once the art lane (F-08) lands a shipped texture; null draws a flat placeholder. solid: props and parked vehicles that block the 1 m cell map.",
+  "schema": "gtai.city-textures/1",
+  "textures": [
+    {
+      "art": null,
+      "class": "ground",
+      "id": 0,
+      "name": "road_straight_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 1,
+      "name": "road_straight_tone_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 2,
+      "name": "road_straight_tone_c",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 3,
+      "name": "road_straight_v_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 4,
+      "name": "road_straight_v_tone_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 5,
+      "name": "road_straight_v_tone_c",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 6,
+      "name": "road_intersection_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 7,
+      "name": "curb_straight_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 8,
+      "name": "curb_straight_tone_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 9,
+      "name": "curb_straight_tone_c",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 10,
+      "name": "curb_corner_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 11,
+      "name": "roof_edge_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 12,
+      "name": "roof_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "ground",
+      "id": 13,
+      "name": "sidewalk_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 14,
+      "name": "building_bar",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 15,
+      "name": "building_helipad",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 16,
+      "name": "building_hq",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 17,
+      "name": "building_mural",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 18,
+      "name": "building_osha",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 19,
+      "name": "building_pension_bank",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 20,
+      "name": "building_tall",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 21,
+      "name": "building_union_hall",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 22,
+      "name": "building_long",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "building",
+      "id": 23,
+      "name": "building_warehouse",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 24,
+      "name": "lamp_post",
+      "size_m": [
+        3.2,
+        0.5
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 25,
+      "name": "fire_hydrant",
+      "size_m": [
+        0.5,
+        0.5
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 26,
+      "name": "trash_can",
+      "size_m": [
+        0.7,
+        0.7
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 27,
+      "name": "mailbox",
+      "size_m": [
+        0.7,
+        0.6
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 28,
+      "name": "bench",
+      "size_m": [
+        1.9,
+        0.7
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 29,
+      "name": "newsstand",
+      "size_m": [
+        2.4,
+        1.8
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 30,
+      "name": "payphone",
+      "size_m": [
+        1.3,
+        1.3
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 31,
+      "name": "bus_stop",
+      "size_m": [
+        3.2,
+        1.5
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 32,
+      "name": "vending_machine",
+      "size_m": [
+        1.2,
+        1.3
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 33,
+      "name": "planter",
+      "size_m": [
+        2,
+        1.1
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 34,
+      "name": "dumpster",
+      "size_m": [
+        2.2,
+        1.5
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 35,
+      "name": "traffic_light",
+      "size_m": [
+        3.2,
+        0.6
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 36,
+      "name": "street_sign",
+      "size_m": [
+        0.5,
+        0.5
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 37,
+      "name": "bollard",
+      "size_m": [
+        0.4,
+        0.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 38,
+      "name": "barrel_cluster",
+      "size_m": [
+        2,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 39,
+      "name": "crate_stack",
+      "size_m": [
+        3,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 40,
+      "name": "fire_escape",
+      "size_m": [
+        4.2,
+        1.8
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 41,
+      "name": "traffic_cone",
+      "size_m": [
+        0.5,
+        0.5
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 42,
+      "name": "police_barrier",
+      "size_m": [
+        0.8,
+        2.2
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "prop",
+      "id": 43,
+      "name": "barricade",
+      "size_m": [
+        0.9,
+        2
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 44,
+      "name": "sedan",
+      "size_m": [
+        4.9,
+        2.15
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 45,
+      "name": "sedan_b",
+      "size_m": [
+        4.7,
+        2.1
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 46,
+      "name": "sedan_c",
+      "size_m": [
+        5,
+        2.15
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 47,
+      "name": "taxi",
+      "size_m": [
+        5.1,
+        2.15
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 48,
+      "name": "van",
+      "size_m": [
+        5.8,
+        2.7
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 49,
+      "name": "pickup",
+      "size_m": [
+        5.7,
+        2.4
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 50,
+      "name": "car_wreck",
+      "size_m": [
+        4.8,
+        2.7
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 51,
+      "name": "bus",
+      "size_m": [
+        11.1,
+        2.9
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 52,
+      "name": "ambulance",
+      "size_m": [
+        5.8,
+        2.7
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "vehicle",
+      "id": 53,
+      "name": "police_cruiser",
+      "size_m": [
+        5.6,
+        2.25
+      ],
+      "solid": true
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 54,
+      "name": "cracks",
+      "size_m": [
+        4,
+        4
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 55,
+      "name": "manhole",
+      "size_m": [
+        1.25,
+        1.25
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 56,
+      "name": "oil_stain",
+      "size_m": [
+        2,
+        2
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 57,
+      "name": "drain_grate",
+      "size_m": [
+        1.5,
+        1
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 58,
+      "name": "puddle",
+      "size_m": [
+        3,
+        2
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 59,
+      "name": "oil_slick",
+      "size_m": [
+        4,
+        2
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 60,
+      "name": "stop_line",
+      "size_m": [
+        5,
+        0.5
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 61,
+      "name": "road_arrow",
+      "size_m": [
+        4,
+        2
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 62,
+      "name": "skid_marks",
+      "size_m": [
+        6,
+        3
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 63,
+      "name": "glass_shards",
+      "size_m": [
+        3,
+        3
+      ],
+      "solid": false
+    },
+    {
+      "art": null,
+      "class": "decal",
+      "id": 64,
+      "name": "tank_tracks",
+      "size_m": [
+        6,
+        3.5
+      ],
+      "solid": false
+    }
+  ]
+}

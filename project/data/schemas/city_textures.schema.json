@@ -1,0 +1,72 @@
+{
+  "$id": "gtai.city-textures/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.city-textures/1"
+    },
+    "textures": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "class": {
+            "enum": [
+              "ground",
+              "building",
+              "prop",
+              "vehicle",
+              "decal"
+            ]
+          },
+          "id": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "name": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "size_m": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "solid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "class",
+          "size_m",
+          "solid",
+          "art"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "textures"
+  ],
+  "type": "object"
+}
