@@ -270,3 +270,23 @@ NEXT:
   _b (4 -> 1), _c (2 -> 1). Hatch stains and grey slabs kept (they carry the hatch character).
   Before/after `before_cm|after_cm/city-*`: calmer pavement, the dots are gone, people and props read better. Kept.
   Commit 724e5d9.
+- 23:22 MILESTONE clean road paint. In the junction (selftest frame) the crosswalk bars carried ~10 % asphalt wear
+  blobs that print as ink dots (a leopard zebra), and my widened lanes ~4 %. The target's paint is clean cream.
+  `tools/marking_wear.py`: dark blobs fully inside the paint (incl. their anti-aliased rim; runs reaching the paint
+  border = cracks / edge notches stay) filled with the paint cream, re-specked at 0.6 % (1-2 px). 11 tiles (all
+  road + curb + intersection). Iterations, all looked at: v1 treated the paving slabs as paint (joints split the
+  pavement into < 40 000 px pieces; fixed by closing before sizing); v2 left the big blobs (a 1-px restriction line,
+  removed); v3 left grey rings (fill threshold now cream - 18). Before/after `before_wr|after_wr/selftest-*`
+  (junction crops `work/wr_ab_{32,48}.png`). Kept. Commit 08231f6. Note: the selftest crowd is not frame-identical
+  between runs (the ground is what is compared).
+- 23:24 REVERTED probe: grey paving slabs lerped 60 % to cream to break the 8 m repeat on wide plazas
+  (`probe_slab3/`, `work/slab3_ab.png`): the print pass steps them to nearly the same grey; no visible gain. The real
+  fix for plaza repetition is 2-3 sidewalk variants + a generator pick (REQUEST 10 below).
+- 23:30 MILESTONE roofs toward paper. Measured in-engine: roof / pavement luminance 0.54 (city-1) - 0.60 (city-2);
+  the target's roofs are 0.88 of its pavement ("dark streets against cream pavements AND roofs"). The roof art's
+  wash greys (lum 0.3-0.8) print as the light / mid wash, so roofs read mid-grey. `tools/roof_lift.py`: wash greys
+  lifted 70 % toward each roof's own paper cream (ink below lum 0.22 kept, full lift from 0.50). Probe s 0.5 changed
+  the texture mean by only +0.035 (the ink dominates), s 0.7 / lo 0.22 kept: in-engine 0.61-0.67, hatch and ink
+  detail intact, glass panes lose their grey (accepted). All 17 roofs (10 district + 7 generic) for one set.
+  Before/after `after_wr|probe_roof/city-{1-48,2-32}ppm.png` (+ target crop `work/roof_ab.png`), board
+  `before_rl|after_rl/roofs-{32,48,64}ppm.png`. Kept. Commit c133a77. Originals `work/roofs_orig3/`.
