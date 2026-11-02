@@ -8,3 +8,6 @@ holds only manifests that record them.
 - **Manifest format:** one `<set>.manifest.json` per art set: `{file, sha256, tool, model, date,
   prompt_ref, seed}` per master, so a game-ready file in `project/` can be traced to its master.
 - Game-ready exports go to `project/` through LFS; provenance lines go to `steam/ai-provenance/`.
+- **D4 art (F-08, F-09):** `C:/Users/kazda/kiro/gtai-masters/d4/` (raw Codex sheets in `gen/out/`, prompts in
+  `gen/_prompts/`, layout templates and references in `gen/refs/`, build scripts in `tools/`, crop-test evidence in
+  `evidence/`). Manifest: [`d4.manifest.json`](d4.manifest.json). No backup yet (owner).
