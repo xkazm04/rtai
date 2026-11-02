@@ -194,7 +194,7 @@ NEXT:
   32 with 1.0 (params restored after, git clean): street 78,67,70 / paper 248,223,195 (mock 78,67,68 / 246,223,195),
   paper-street dL 60.6 (= mock), verm-street dE 74.8 (mock 62.6). Board evidence/item12_age_floor_32.png. Proposal
   for the visual-engine lane + owner (it changes the D4 gameplay frame, not mine to switch on).
-- 23:34 MILESTONE: 128 px/m kill-cam in the hero scene (f9f956f). h52 used the hero camera and cut Rivet -> h53 frames
+- 23:32 MILESTONE: 128 px/m kill-cam in the hero scene (f9f956f). h52 used the hero camera and cut Rivet -> h53 frames
   the shot (KILL_CAM_M 6.6,-1.9) only at zoom 4; 32/64/96 0 px vs h50. D4 vs D4+D5 at 128 beside the concept:
   evidence/item13_killcam128.png; this is where D5 reads closest to the concept (part rust, hatch and form shade all
   survive at ~2.5x minification). hero-d4/d4d5-128ppm.png added.
