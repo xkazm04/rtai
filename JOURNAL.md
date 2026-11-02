@@ -325,3 +325,37 @@ NEXT:
   Traffic atlases rebuilt (build_traffic.py from the new intact cars). Hijack overlays still register
   (`now_x|after_gl/hijack-48ppm.png`). Before/after `before_gl|after_gl/table-*`, `after_pd|after_gl/city-*`:
   bolder car silhouettes, closer to the target. Kept. Commit 3fb53b0.
+- 23:45 MILESTONE kerb ticks. On the cream kerb the 1.25 m INK joint ticks read as a railway ladder at 32 px/m
+  (`after_gl/city-1-32ppm.png`); `tools/kerb_ticks.py` redraws them inside the kerb band in the 128 joint grey (ink
+  edges kept). Before/after `after_gl|after_tk/city-1-32ppm.png`. Kept. Commit 21f6ec9.
+- 23:50 GATES at 21f6ec9 (every iteration-3 art commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught), selftest 0 placeholders. bench not re-run (textures only, no new
+  texture ids; shared box, see iteration 1).
+
+## 23:50 SUMMARY iteration 3 (raise the weakest items; every change before/after in-engine, 32 + 48, boards at 64)
+Sheet: `masters:night/d4-production/night_iter3_summary.png` (end of iteration 2 | now, 3 city foci + junction,
+target below). Ladder rows appended for every item.
+1. Road markings bold cream (8/6 px -> 20/18 px): they printed as dark lines at 32 px/m. Biggest single gain.
+2. Paving calmed: 13 of 19 repeated crack squiggles gone, the in-texture "+" crosses removed (iteration-2 note
+   corrected: they were in the art, not the print pass).
+3. Road paint wear: zebra + lanes lose the dense specks that printed as ink dots.
+4. Roofs lifted toward paper (in-engine roof/pavement 0.54-0.60 -> 0.61-0.67; target 0.88).
+5. Kerb is a cream stone top with ink edges (was a dark hatched band, "pipe with bolts"); ticks thin grey.
+6. Pavement laid as 2 m slabs (was 1 m graph paper); the 2 x 1 running bond probed and rejected (brick wall).
+7. Road arrow + stop line paint cleaned.
+8. Near-black car glass on the 9 intact vehicles + traffic atlases (damage states keep pale crazed glass).
+- Reverted / not shipped: grey-slab lightening (no visible change through the print pass), running bond.
+- Codex images this iteration: **0** (all eight items were value / layout fixes on existing art, measured against
+  the target). Night total stays 19 images, 137 cells, 3 rejected.
+- Tools added (masters, outside git): lane_bold, paving_calm, marking_wear, roof_lift, kerb_cream, kerb_ticks,
+  paving_bond, paint_decal_clean, glass_ink; build_corner gained KERB_CREAM + an output arg.
+
+## REQUESTS (iteration 3 additions; the iteration 1 + 2 lists still stand)
+10. generator owner: 2-3 sidewalk variants + a pick (as the road `_b/_c`) - one 8 m pavement tile repeats on wide
+    plazas (grey slabs, stains, the 3 cracks) and no art-side tweak can hide a single-tile repeat.
+11. visual-engine: buildings cast no shadow on the pavement; the target's hatched building shadow band (south/east)
+    is the largest remaining difference in the frame after tonight's ground work.
+12. visual-engine: the paper / asphalt temperature - the target is a warm sepia print, ours prints the asphalt
+    lilac-grey (shader tint, not the texture: the tile is 88,82,82).
+13. F-08 / ground owner: a re-run of build_ground.py would undo iteration 3 (markings, kerb, slabs, wear) - the
+    masters tools above are the recipe; better to fold them into build_ground.py.
