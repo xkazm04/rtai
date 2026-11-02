@@ -10,6 +10,10 @@ const R_DRAW: float = 190.0
 const BUDGET_US: int = 1500
 const ITEMS: int = 8
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
+## AST-03: the world art carries mipmaps and is drawn below 1:1.
+const MIPMAP_FILTER: RenderingServer.CanvasItemTextureFilter = (
+	RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+)
 
 var frame_us: int = 0
 var frame_cmds: int = 0
@@ -102,6 +106,7 @@ func _take_items() -> Array:
 		)
 		RenderingServer.canvas_item_set_parent(item, _parent)
 		RenderingServer.canvas_item_set_z_index(item, 0 if q < 4 else 1)
+		RenderingServer.canvas_item_set_default_texture_filter(item, MIPMAP_FILTER)
 		items.append(item)
 	return items
 

@@ -504,6 +504,66 @@
       ],
       "doc": "MultiMesh layers written by write_render().",
       "name": "render"
+    },
+    {
+      "constants": [
+        {
+          "doc": "field window side, cells (metres)",
+          "name": "FF_W",
+          "type": "int",
+          "value": 160
+        },
+        {
+          "doc": "recompute every N ticks if target cell or map changed",
+          "name": "FF_EVERY",
+          "type": "int",
+          "value": 15
+        },
+        {
+          "doc": "distance of a cell the BFS did not reach",
+          "name": "FF_UNREACHED",
+          "type": "int",
+          "value": 65535
+        },
+        {
+          "doc": "cops closer than this to the target steer straight at it",
+          "name": "FF_NEAR_M",
+          "type": "float",
+          "value": 10
+        },
+        {
+          "doc": "flow_stats(): fields computed so far",
+          "name": "FS_COMPUTES",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "flow_stats(): cells reached by the last field",
+          "name": "FS_REACHED",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "flow_stats(): last compute, us (not sim state)",
+          "name": "FS_LAST_US",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "flow_stats(): worst compute, us (not sim state)",
+          "name": "FS_MAX_US",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "flow_stats() length",
+          "name": "FS_LEN",
+          "type": "int",
+          "value": 4
+        }
+      ],
+      "doc": "Police flow field (WLD-09): integer BFS over 1 m cells in a window centred on the target.",
+      "name": "flow"
     }
   ],
   "schema": "gtai.sim-constants/1"

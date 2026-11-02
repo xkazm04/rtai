@@ -67,6 +67,38 @@ Run run(int64_t seed, int steps) {
 	return r;
 }
 
+// Chunk (2, 2) all sidewalk with a solid wall at x 300..302 over the whole chunk except the
+// 8 m gap at y 320..327. A cop west of the wall must route through the gap to a target east of
+// it (WLD-09 flow field); straight-line steering would pin it against the wall.
+struct Chase {
+	int detour, computes;
+	double final_dist;
+};
+
+Chase chase() {
+	auto s = std::make_unique<CityCore>();
+	s->init(7);
+	std::vector<uint8_t> tiles(CHUNK_TILES * CHUNK_TILES, T_PLAZA);
+	std::vector<uint8_t> cells(CHUNK_CELLS * CHUNK_CELLS, C_WALK);
+	for (int ly = 0; ly < CHUNK_CELLS; ly++) {
+		if (ly >= 64 && ly < 72) continue;
+		for (int lx = 44; lx < 47; lx++) cells[ly * CHUNK_CELLS + lx] = C_BUILD;
+	}
+	s->stamp_chunk(2, 2, tiles.data(), cells.data());
+	int cop = spawn(*s, K_COP, 290.5, 290.5, 3.4, -1, 0.0);
+	s->step(1.0 / 60.0, 305.0, 300.0, 315.5, 290.5);
+	Chase r{s->flow_dist(290.5, 290.5), 0, 1e9};
+	for (int t = 0; t < 3000; t++) s->step(1.0 / 60.0, 305.0, 300.0, 315.5, 290.5);
+	std::vector<double> snap = s->snapshot();
+	for (size_t k = 0; k + SNAP_STRIDE <= snap.size(); k += SNAP_STRIDE) {
+		if (snap[k] != (double)cop) continue;
+		double dx = snap[k + 4] - 315.5, dy = snap[k + 5] - 290.5;
+		r.final_dist = std::sqrt(dx * dx + dy * dy);
+	}
+	r.computes = s->flow_stats()[FS_COMPUTES];
+	return r;
+}
+
 }  // namespace
 
 int main() {
@@ -79,6 +111,12 @@ int main() {
 	check(a.car_x1 >= 0.0 && std::fabs(a.car_x1 - a.car_x0) > 5.0, "the car drove along its lane");
 	check(a.counters[CN_PEDS] + a.counters[CN_COPS] >= 1, "people are counted");
 	check(a.counters[CN_TIER_A] + a.counters[CN_TIER_B] > 0, "every live actor has a tier");
+	Chase f = chase();
+	check(f.detour > 40, "flow field: the route around the wall is longer than the straight line");
+	check(f.final_dist < 9.0, "flow field: the cop reached the target through the gap");
+	check(f.computes >= 1, "flow field: computed at least once");
+	std::printf("flow: detour %d cells, final distance %.2f m, %d fields\n", f.detour, f.final_dist,
+			f.computes);
 	std::printf("sim_core tests: %d failed\n", failures);
 	return failures;
 }

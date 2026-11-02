@@ -10,7 +10,7 @@ import os
 
 CORE = [
     "world", "spawn", "step", "hash", "people", "contact",
-    "car_route", "car_drive", "car_hit", "projectiles", "render", "snapshot",
+    "car_route", "car_drive", "car_hit", "projectiles", "render", "snapshot", "flow",
 ]
 
 env = SConscript("godot-cpp/SConstruct", {"api_version": "4.7"})

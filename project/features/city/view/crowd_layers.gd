@@ -2,10 +2,14 @@ class_name CrowdLayers
 extends RefCounted
 ## The five MultiMesh layers the bubble sim writes into (WLD-04): people, people shadows, cars,
 ## car shadows, bullets, drawn car shadows -> people shadows -> cars -> people -> bullets. One
-## quad mesh, 2D transforms, per-instance colour and custom data. Placeholder art (a soft blob
-## for people, a flat body for cars) until the character and vehicle art lands (F-09).
+## quad mesh, 2D transforms, per-instance colour and custom data. Placeholder art in the D4 inks
+## (a paper disc with an ink rim for people, a steel body for cars, soft ink blobs for shadows)
+## until the character atlas and vehicle art land (F-09).
 
 const DRAW_ORDER: Array[int] = [3, 1, 2, 0, 4]
+const INK: Color = Color(0.09, 0.075, 0.106)
+const PAPER: Color = Color(0.949, 0.91, 0.835)
+const STEEL: Color = Color(0.561, 0.533, 0.506)
 
 var multimeshes: Array[MultiMesh] = []
 var nodes: Array[MultiMeshInstance2D] = []
@@ -15,6 +19,7 @@ func _init() -> void:
 	var quad: ArrayMesh = _quad()
 	var blob: Texture2D = _blob()
 	var body: Texture2D = _body()
+	var figure: Texture2D = _figure()
 	for k: int in SimConst.RL_COUNT:
 		var mm: MultiMesh = MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_2D
@@ -27,6 +32,8 @@ func _init() -> void:
 		var node: MultiMeshInstance2D = MultiMeshInstance2D.new()
 		node.multimesh = mm
 		node.texture = body if k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS else blob
+		if k == SimConst.RL_PEDS:
+			node.texture = figure
 		node.z_index = 2
 		multimeshes.append(mm)
 		nodes.append(node)
@@ -83,7 +90,24 @@ static func _blob() -> Texture2D:
 	return tex
 
 
+## A car body inset in its quad (the quad is the spike's 6.4 x 3.2 m atlas cell; a car ~4.9 x 2.15).
 static func _body() -> Texture2D:
-	var img: Image = Image.create_empty(8, 4, false, Image.FORMAT_RGBA8)
-	img.fill(Color(0.85, 0.85, 0.9))
+	var img: Image = Image.create_empty(64, 32, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	img.fill_rect(Rect2i(7, 5, 50, 22), INK)
+	img.fill_rect(Rect2i(9, 7, 46, 18), STEEL)
+	return ImageTexture.create_from_image(img)
+
+
+## A person: a small paper disc with an ink rim, centred in the 3.84 m atlas cell (~0.7 m wide).
+static func _figure() -> Texture2D:
+	var img: Image = Image.create_empty(64, 64, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for y: int in 64:
+		for x: int in 64:
+			var d: float = Vector2(x + 0.5 - 32.0, y + 0.5 - 32.0).length()
+			if d < 4.5:
+				img.set_pixel(x, y, PAPER)
+			elif d < 6.0:
+				img.set_pixel(x, y, INK)
 	return ImageTexture.create_from_image(img)

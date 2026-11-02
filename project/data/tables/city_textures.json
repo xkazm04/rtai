@@ -1,9 +1,9 @@
 {
-  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision. art is the res:// path once the art lane (F-08) lands a shipped texture; null draws a flat placeholder. solid: props and parked vehicles that block the 1 m cell map.",
+  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision, so it must not change with the art. art is the res:// path of the shipped D4 texture (lane B, F-08: ground, roofs, props); null draws a flat placeholder: the vehicles (44-53) and decals (54-64) have no D4 art yet, and neither has the rounded kerb corner (10). solid: props and parked vehicles that block the 1 m cell map.",
   "schema": "gtai.city-textures/1",
   "textures": [
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_tone.png",
       "class": "ground",
       "id": 0,
       "name": "road_straight_tone",
@@ -14,7 +14,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_tone_b.png",
       "class": "ground",
       "id": 1,
       "name": "road_straight_tone_b",
@@ -25,7 +25,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_tone_c.png",
       "class": "ground",
       "id": 2,
       "name": "road_straight_tone_c",
@@ -36,7 +36,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_v_tone.png",
       "class": "ground",
       "id": 3,
       "name": "road_straight_v_tone",
@@ -47,7 +47,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_v_tone_b.png",
       "class": "ground",
       "id": 4,
       "name": "road_straight_v_tone_b",
@@ -58,7 +58,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_straight_v_tone_c.png",
       "class": "ground",
       "id": 5,
       "name": "road_straight_v_tone_c",
@@ -69,7 +69,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/road_intersection_tone.png",
       "class": "ground",
       "id": 6,
       "name": "road_intersection_tone",
@@ -80,7 +80,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/curb_straight_tone.png",
       "class": "ground",
       "id": 7,
       "name": "curb_straight_tone",
@@ -91,7 +91,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/curb_straight_tone_b.png",
       "class": "ground",
       "id": 8,
       "name": "curb_straight_tone_b",
@@ -102,7 +102,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/curb_straight_tone_c.png",
       "class": "ground",
       "id": 9,
       "name": "curb_straight_tone_c",
@@ -124,7 +124,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/roof_edge_tone.png",
       "class": "ground",
       "id": 11,
       "name": "roof_edge_tone",
@@ -135,7 +135,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/roof_tone.png",
       "class": "ground",
       "id": 12,
       "name": "roof_tone",
@@ -146,7 +146,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/ground/sidewalk_tone.png",
       "class": "ground",
       "id": 13,
       "name": "sidewalk_tone",
@@ -157,7 +157,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_bar.png",
       "class": "building",
       "id": 14,
       "name": "building_bar",
@@ -168,7 +168,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_helipad.png",
       "class": "building",
       "id": 15,
       "name": "building_helipad",
@@ -179,7 +179,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_hq.png",
       "class": "building",
       "id": 16,
       "name": "building_hq",
@@ -190,7 +190,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_mural.png",
       "class": "building",
       "id": 17,
       "name": "building_mural",
@@ -201,7 +201,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_osha.png",
       "class": "building",
       "id": 18,
       "name": "building_osha",
@@ -212,7 +212,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_pension_bank.png",
       "class": "building",
       "id": 19,
       "name": "building_pension_bank",
@@ -223,7 +223,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_tall.png",
       "class": "building",
       "id": 20,
       "name": "building_tall",
@@ -234,7 +234,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_union_hall.png",
       "class": "building",
       "id": 21,
       "name": "building_union_hall",
@@ -245,7 +245,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_long.png",
       "class": "building",
       "id": 22,
       "name": "building_long",
@@ -256,7 +256,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/roofs/building_warehouse.png",
       "class": "building",
       "id": 23,
       "name": "building_warehouse",
@@ -267,7 +267,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/lamp_post.png",
       "class": "prop",
       "id": 24,
       "name": "lamp_post",
@@ -278,7 +278,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/fire_hydrant.png",
       "class": "prop",
       "id": 25,
       "name": "fire_hydrant",
@@ -289,7 +289,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/trash_can.png",
       "class": "prop",
       "id": 26,
       "name": "trash_can",
@@ -300,7 +300,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/mailbox.png",
       "class": "prop",
       "id": 27,
       "name": "mailbox",
@@ -311,7 +311,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/bench.png",
       "class": "prop",
       "id": 28,
       "name": "bench",
@@ -322,7 +322,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/newsstand.png",
       "class": "prop",
       "id": 29,
       "name": "newsstand",
@@ -333,7 +333,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/payphone.png",
       "class": "prop",
       "id": 30,
       "name": "payphone",
@@ -344,7 +344,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/bus_stop.png",
       "class": "prop",
       "id": 31,
       "name": "bus_stop",
@@ -355,7 +355,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/vending_machine.png",
       "class": "prop",
       "id": 32,
       "name": "vending_machine",
@@ -366,7 +366,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/planter.png",
       "class": "prop",
       "id": 33,
       "name": "planter",
@@ -377,7 +377,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/dumpster.png",
       "class": "prop",
       "id": 34,
       "name": "dumpster",
@@ -388,7 +388,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/traffic_light.png",
       "class": "prop",
       "id": 35,
       "name": "traffic_light",
@@ -399,7 +399,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/street_sign.png",
       "class": "prop",
       "id": 36,
       "name": "street_sign",
@@ -410,7 +410,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/bollard.png",
       "class": "prop",
       "id": 37,
       "name": "bollard",
@@ -421,7 +421,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/barrel_cluster.png",
       "class": "prop",
       "id": 38,
       "name": "barrel_cluster",
@@ -432,7 +432,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/crate_stack.png",
       "class": "prop",
       "id": 39,
       "name": "crate_stack",
@@ -443,7 +443,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/fire_escape.png",
       "class": "prop",
       "id": 40,
       "name": "fire_escape",
@@ -454,7 +454,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/traffic_cone.png",
       "class": "prop",
       "id": 41,
       "name": "traffic_cone",
@@ -465,7 +465,7 @@
       "solid": false
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/police_barrier.png",
       "class": "prop",
       "id": 42,
       "name": "police_barrier",
@@ -476,7 +476,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/props/barricade.png",
       "class": "prop",
       "id": 43,
       "name": "barricade",

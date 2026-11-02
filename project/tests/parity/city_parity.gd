@@ -85,12 +85,15 @@ static func _compare(x: PackedFloat64Array, y: PackedFloat64Array) -> float:
 	return worst
 
 
+## Nudges every live rioter's riot centre by about an ulp: any rioter outside its circle then
+## steers a hair differently, which must show up in the next snapshot check.
 static func _plant(sim: CitySimBackend) -> void:
 	var snap: PackedFloat64Array = sim.snapshot()
-	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE, SimConst.SNAP_STRIDE):
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE:
+			return
 		if int(snap[r + 2]) == SimConst.M_RIOT:
 			sim.set_riot_centre(int(snap[r]), RIOT.x + 1e-9, RIOT.y)
-			return
 
 
 func _report(

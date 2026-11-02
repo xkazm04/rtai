@@ -7,8 +7,9 @@ extends CitySimBackend
 
 var _s: CitySimState = CitySimState.new()
 var _h: CitySimHash = CitySimHash.new(_s)
-var _people: CitySimPeople = CitySimPeople.new(_s, _h)
-var _cars: CitySimCars = CitySimCars.new(_s, _h)
+var _flow: CitySimFlow = CitySimFlow.new(_s)
+var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow)
+var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow)
 var _shots: CitySimShots = CitySimShots.new(_s, _h)
 var _render: CitySimRender = CitySimRender.new(_s)
 
@@ -23,6 +24,7 @@ func backend_name() -> StringName:
 
 func init(seed_value: int) -> void:
 	_s.init(seed_value)
+	_flow.reset()
 
 
 func set_radii(ra: float, rb: float, riot: float) -> void:
@@ -64,6 +66,7 @@ func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_s.time += dt
 	_tier(dt, camx, camy)
 	_h.build(camx, camy)
+	_flow.update(tgx, tgy)
 	for i: int in SimConst.CAP:
 		if _s.alive[i] == 0:
 			continue
@@ -126,6 +129,14 @@ func get_render_counts() -> PackedInt32Array:
 	return _render.counts.duplicate()
 
 
+func flow_stats() -> PackedInt32Array:
+	return _flow.stats.duplicate()
+
+
+func flow_dist(x: float, y: float) -> int:
+	return _flow.dist(x, y)
+
+
 ## Despawns dead bodies after 8 s (or at once in tier B) and re-tiers everyone by distance.
 func _tier(dt: float, camx: float, camy: float) -> void:
 	var ra2: float = _s.ra * _s.ra
@@ -172,6 +183,7 @@ func _count() -> void:
 
 
 func _copy_chunk(cx: int, cy: int, tiles: PackedByteArray, cells: PackedByteArray) -> void:
+	_s.map_version += 1
 	var nt: int = SimConst.CHUNK_TILES
 	var nc: int = SimConst.CHUNK_CELLS
 	for ly: int in nt:

@@ -11,10 +11,12 @@ var d: int = 0
 var ddx: float = 0.0
 var ddy: float = 0.0
 var _s: CitySimState
+var _flow: CitySimFlow
 
 
-func _init(state: CitySimState) -> void:
+func _init(state: CitySimState, flow: CitySimFlow) -> void:
 	_s = state
+	_flow = flow
 
 
 func begin(i: int) -> void:
@@ -102,20 +104,28 @@ func _pick(i: int, icx: float, icy: float, tgx: float, tgy: float) -> int:
 	return pick if pick >= 0 else (d + 2) % 4
 
 
-## Police: the open exit whose far end is nearest the target. p = [icx, icy, tgx, tgy].
+## Police: the open exit with the shortest flow-field distance at its far end; exits the
+## field does not cover rank after every covered one, by straight-line distance; ties keep the
+## first. p = [icx, icy, tgx, tgy].
 func _nearest(cand: Array[int], ok: Array[bool], p: Array[float]) -> int:
-	var best: float = 1e30
 	var pick: int = -1
+	var best_rank: int = 2
+	var best_f: int = 0
+	var best_e2: float = 0.0
 	for c: int in 3:
 		if not ok[c]:
 			continue
-		var nd: int = cand[c]
-		var ex: float = p[0] + CitySimState.DX[nd] * 16.0 - p[2]
-		var ey: float = p[1] + CitySimState.DY[nd] * 16.0 - p[3]
-		var e2: float = ex * ex + ey * ey
-		if e2 < best:
-			best = e2
-			pick = nd
+		var ex: float = p[0] + CitySimState.DX[cand[c]] * 16.0
+		var ey: float = p[1] + CitySimState.DY[cand[c]] * 16.0
+		var f: int = _flow.dist(ex, ey)
+		var e2: float = (ex - p[2]) * (ex - p[2]) + (ey - p[3]) * (ey - p[3])
+		var rank: int = 0 if f >= 0 else 1
+		var tie: bool = rank == best_rank and (f < best_f if rank == 0 else e2 < best_e2)
+		if pick < 0 or rank < best_rank or tie:
+			pick = cand[c]
+			best_rank = rank
+			best_f = f
+			best_e2 = e2
 	return pick
 
 
