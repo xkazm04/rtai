@@ -28,3 +28,9 @@
 - Shared files touched (minimal): docs/decisions.md (2 DECISION lines), features/characters/character_rigs.gd
   (+4 lines: the tier hook), cut_rig.gd (+is_tinted, +on_tint call), steam/ai-provenance (append-only).
 - 21:37 item 5: portraits started (Rivet accepted).
+- 21:42 FRICTION: a portrait chain started with a shell `&` looked dead (ps showed no codex) but ran, in parallel
+  with the tracked re-launch: each portrait was generated twice (ledger 21:37-21:40), which briefly broke "one codex
+  at a time". The installed files are the last writes, reviewed in item5_portraits.png. Cost: 3 extra images. Only
+  use run_in_background from now on; check with `tasklist`, not ps.
+- 21:41 MILESTONE item 5: 3/3 portraits accepted (0 rejected), installed at characters/art/d5/portraits (512 px).
+- 21:42 hero scene + props (h9). Gap-6 cop D5 sheets + gap-5 bold Rivet re-ink queued (7 images).
