@@ -2,92 +2,92 @@
   "blessed": false,
   "frames": [
     {
-      "far": 0.00265625,
+      "far": 0.0030625,
       "file": "look-d1-32ppm.png",
       "found": true,
       "look": "d1",
-      "mean": 0.216932291666667,
+      "mean": 0.247729166666667,
       "ok": true,
       "ppm": 32
     },
     {
-      "far": 0.007234375,
+      "far": 0.00809375,
       "file": "look-d1-48ppm.png",
       "found": true,
       "look": "d1",
-      "mean": 0.651453125,
+      "mean": 0.715052083333333,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.0056875,
+      "far": 0.007328125,
       "file": "look-d4-32ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.504739583333333,
+      "mean": 0.65475,
       "ok": true,
       "ppm": 32
     },
     {
-      "far": 0.005234375,
+      "far": 0.006328125,
       "file": "look-d4-48ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.452817708333333,
+      "mean": 0.549078125,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.00078125,
+      "far": 0.009734375,
       "file": "look-d4-64ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0744947916666667,
+      "mean": 0.8096875,
       "ok": true,
       "ppm": 64
     },
     {
-      "far": 0.00515625,
+      "far": 0.00528125,
       "file": "look-d5-48ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.582328125,
+      "mean": 0.660098958333333,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.00075,
+      "far": 0.00175,
       "file": "look-d5-64ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.0779947916666667,
+      "mean": 0.284010416666667,
       "ok": true,
       "ppm": 64
     },
     {
-      "far": 0.00759375,
+      "far": 0.008421875,
       "file": "look-auto-48ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.737203125,
+      "mean": 0.845942708333333,
       "ok": true,
       "ppm": 48
     },
     {
-      "far": 0.001125,
+      "far": 0.00225,
       "file": "look-auto-56ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.11775,
+      "mean": 0.24203125,
       "ok": true,
       "ppm": 56
     },
     {
-      "far": 0.0,
+      "far": 0.000015625,
       "file": "look-auto-64ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.000713541666666667,
+      "mean": 0.139901041666667,
       "ok": true,
       "ppm": 64
     }
