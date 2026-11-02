@@ -134,3 +134,38 @@ NEXT:
   NEXT (in order): see the NEXT list above. Top: make the ink-people print (crowd + rigs + Rivet's lit core)
   the --look=noir default if the owner picks it from evidence/people-ink-compare.png; light the claw tips;
   a real-bodies showcase (2 cop rigs at a junction in rain, 48 and 64 px/m clips); measure the noir pass cost.
+
+## 2026-11-02/03 iteration 4 (BUILD), 23:48-01:18
+
+- 23:48 Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null -> no Leonardo.
+  No Codex round planned this session (code + evidence first). Disk 219 GB free.
+- MILESTONE (00:05) work order 5, the showcase with REAL bodies: `dev/noir/showcase_fight.tscn` +
+  `dev/noir/fight_script.gd` (NoirFightScript, deterministic beats on a live-tick clock that does
+  not advance while the world is held). Rivet + two cop cutout RIGS (own CharacterRigs on the city's
+  actor layer, stepped by the world clock, so the hit-stop freezes the bodies = the held panel) at the
+  junction in rain; the city around them is the real city with a thin street crowd (12 peds, 0 cars:
+  show-v1 had a car drive through the fight). Cops close in and fire (MuzzleFlash starbursts at
+  CutRig.muzzle_local(), the noir threshold +0.25 for the lit tick); Rivet dashes, punches (combo 3),
+  rolls clear of cop B's fire, dashes, punches. The kills go through the REAL Events.actor_killed /
+  player_hit -> NoirCombatFx (blood spurt along the hit, spreading pools, impact frame, hit-stop 5);
+  the victim gets the HIT clip (shove + twist) + DEAD (sprawl) + a 6 m/s knockback slide.
+  `--d4` shoots the same fight in D4. Unit test `test_noir_showcase.gd` (2 kills, A then B; same cues
+  every run). Evidence `show-v3/`: showcase-noir-48.mp4, showcase-noir-64.mp4, showcase-d4-48.mp4
+  (11.2 s each, movie maker 60 fps) + 15 hero frames per run + `showcase-compare.png`
+  (D4 48 | noir 48 | noir 64 at the opening, a shot, the kill flash, the inverted panel, the aftermath).
+- MILESTONE (00:05) the comic impact frame fixed: show-v1 showed mode 3 (paper + speed lines) blanking
+  the fighters to nothing. New mode 4, the silhouette flash: ImpactFrame hides `hide_on_flash` (the
+  world canvas + the noir pass) for that tick and sets the clear colour to a green key; the shader
+  prints every non-key pixel as ink. Result (show-v2/v3): the two fighters as solid ink silhouettes
+  on white paper inside the speed-line burst, the blood still red - the brief's "silhouette inverted"
+  beat. Default sequence is now [4, 4, 1]. Blood moved under the actor layer (z -1) so it survives the
+  flash. Unit test: the flash hides then restores.
+  HONEST: in `--d4` the flash prints all black (the D4 print layer is not in the hide list; the beat is
+  a noir-only feature). quest_fight.gd has no hide list, so there mode 4 is a black flash (red blood
+  only) - not re-shot.
+  Honest read of the showcase (show-v3/showcase-compare.png): the kill beats read as comic panels and
+  blood is the only colour on screen. BUT the cops lost their threat read: in D4 they pop vermilion,
+  in noir they are white figures the same value as Rivet (shape only: cap + gun). At the punch Rivet's
+  claw overlaps the cop (REACH 1.6 m), so the hit itself is one white knot at 48 px/m. Rain at 48 px/m
+  is busy around small figures. Rivet bleeds red on player_hit (a robot: oil/sparks would be truer;
+  kept, as the doctrine is "violence in red").
