@@ -326,3 +326,8 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   2.8 m read SMALLER than Rivet -> a5 3.6 m dominates; a6 camera centred on the arena. Frame vermilion at 64 px/m
   0.49% -> 1.52% (96: 1.12 -> 3.20%), all on the cape and hem: King is the threat (doctrine OK). Rivet |dL| unchanged
   (0.133). Board evidence/item18_arena.png (rebuilt from a6); ladder +1 row.
+- 00:36 REVERTED (a7): King through look_d5_part as a tier-faded overlay (like RigDetail). At 96 px/m the steel
+  maps to near-white (the art's mid lavender reads as low density on the Rivet-tuned ramp: the form is lost), the
+  megaphone's copper rust prints as pure vermilion, the cream rim prints as a dashed hatch. 0 px at 32/48 (tier).
+  Worse than as drawn; scene restored to a6 (git clean). A King print needs its own ramp (or King parts drawn to the
+  Rivet sheets' tone range). Ladder +1 row (a6 | a7).
