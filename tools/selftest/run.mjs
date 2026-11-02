@@ -63,7 +63,8 @@ export function runAccentAudit(outDir, out) {
   const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
   const { debt, fresh } = judgeAccents(offenders, debtRows);
   const verdict = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
-  const paid = debtRows.filter((d) => !debt.some((x) => x.includes(`(debt ${d.id},`))).map((d) => d.id);
+  const paid = debtRows.filter((d) => !offenders.some((o) => o.startsWith(`${d.ppm} px/m ${d.accent} on ${d.layer}:`)))
+    .map((d) => d.id);
   return { ok: fresh.length === 0, frames, offenders,
     summary: `accent pixels ${share}${crowd}; ${verdict}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
       + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') };
