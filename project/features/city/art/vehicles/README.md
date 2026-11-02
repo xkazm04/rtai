@@ -9,7 +9,7 @@ Import: lossless, mipmaps on (AST-01/03). Masters + prompts: `art_src/d4.manifes
 |---|---|---|
 | `sedan`, `sedan_b`, `sedan_c`, `taxi`, `police_cruiser`, `van`, `pickup`, `ambulance`, `bus` | 44-49, 51-53 | intact |
 | `car_wreck` | 50 | the burnt sedan wreck |
-| `<vehicle>_d1`, `<vehicle>_d2` | (not in the table yet) | damage states: d1 = crumpled front corner + cracked glass, d2 = bonnet buckled, glass shattered |
+| `<vehicle>_d1`, `<vehicle>_d2` | (not in the table yet) | damage states: d1 = crumpled front corner + cracked glass, d2 = bonnet buckled, glass shattered; plus bold ink marks (iteration 2, master `d4n_dmg`) so they read at 32-48 px/m: d1 star crack on the windscreen + 3 bullet holes, d2 shattered crack + 5 holes + a scorched nose |
 | `van_wreck`, `cruiser_wreck`, `pickup_wreck` | (not in the table yet) | burnt wrecks of those bodies |
 | `hijack_<vehicle>` | (overlay) | the Gearbox hijacked state: a teal plate (dashed rim + glass), drawn **on top of** the same-name vehicle at the same transform. Civilian bodies only (sedans, taxi, van, pickup). |
 | `traffic_atlas.png` | (moving traffic) | 1024 x 1024, 2 x 4 cells of 512 x 256 = **6.4 x 3.2 m** (the `sim_render` `CAR_L x CAR_W` quad), car centred: cell `i` at `(i % 2, i / 2)`, order `sedan, sedan_b, sedan_c, taxi, police_cruiser, van, pickup, ambulance` |
