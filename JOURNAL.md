@@ -349,3 +349,11 @@ NEXT (iteration 7 / morning, in order):
   leaves the objective diamond as the only vermilion SHAPE; but cops lose salience as threats at 32
   px/m (a red dot instead of a red body). OWNER CALL (with the objective call above, they are one
   decision): to ship it, add `p.torso_swap = 2` to HumanPlan.cop(). Not shipped. 0 frames rejected.
+- MILESTONE accent audit GATES the selftest (7222102 + fix): `data/tables/accent_debt.json`
+  (gtai.accent-debt/1, schema) lists known debt as accent + layer + ppm <= max_px with source and owner
+  (one row: traffic_light_lamps <= 240 px at 32 px/m, d4-production). tools/selftest/run.mjs
+  `judgeAccents`: an unlisted offender, one above max_px, or an off-doctrine crowd look fails the
+  selftest; a row no longer seen is reported for deletion. Checked: real run PASS ("known debt: 216 px");
+  planted max_px 100 -> ok=false "NEW off-doctrine: 32 px/m vermilion on world: 216 px"; node cases for
+  other ppm / teal / crowd looks all fresh. (First planted run printed the row as "no longer seen" too:
+  fixed - only rows with no offender at their key are reported.)
