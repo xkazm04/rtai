@@ -211,7 +211,8 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
    grey slabs. 5 ground tiles; roads untouched.
 6. Dynamic decals: bullet holes x2, gouge, oil splash; board pages `props`, `decals`.
 - Reverted / not shipped: damage soot wash (airbrush blotches), slab lightening (no effect).
-- Summary sheet: `masters:night/d4-production/night_iter2_summary.png` (iteration-1 end vs now vs target), ladder rows
+- Summary sheets: `masters:night/d4-production/night_iter2_summary.png` (iteration-1 end vs now vs target),
+  `target_compare_iter2.png` (target crops vs in-engine crops, iteration 1 and 2); ladder rows
   appended for every item. Gates at 23:02 (after paving): lint, unit 142/142, scenarios 8/8, parity, selftest PASS.
 
 ## REQUESTS (iteration 2 additions; iteration 1 list above still stands)
