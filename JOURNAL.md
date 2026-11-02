@@ -92,12 +92,23 @@ NEXT (iteration 3 / morning):
 3. Wire gameplay: positional events (shot_fired, bullet_hit, exploded at a world pos) -> FxSystem +
    LightLayer + CameraRig.kick; vehicle_entered/exited -> rig.set_mode(car/on_foot). Needs events.json
    (shared file, owner OK).
-4. D5 params from the d5-close lane into look_profiles.json `d5`, then re-bless the goldens with
-   before/after frames; the riso D1 pass if the owner still wants D1 as a live profile.
+4. D5 integration after the merge (n-d5 61bc0f7 ships `look_d5.gdshader` = an OVERLAY pass over the
+   look_d4 print + `assets/shaders/look_d5.params.json` gtai.look-d5-params/1 with zoom_amount stops
+   32:0 / 48:0.35 / 64:1, plus a part tier at zoom 1.75-2.0 and look_d5_shadow). That differs from my
+   placeholder `d5` row (a re-tuned look_d4 blended 48->64, weight 0 at 48). Plan: add an `overlay`
+   block to look_profiles (shader id + uniforms from their params file + amount stops) and a `d5_overlay`
+   render band on the `print` canvas; keep `d4` as the base, retire my placeholder d5 world row, decide
+   with the owner whether 48 px/m gets 0.35 of D5 (their stop) or none (gameplay zoom = pure D4, the
+   brief). Re-bless goldens with before/after frames. D1 as a live profile only if the owner wants it.
 5. Accent audit: full rigs are split by kind now; split the atlas crowd too (per-variant instance colour
    or a second capture with cop variants masked); make it gating once the traffic light is redrawn.
 6. Lights GPU cost on an idle GPU + the Deck; the night grade needs the owner's eye (frames 04b).
-7. FX sheet from d4-production -> replace the analytic shapes (texture + frames per kind).
+7. FX sheet landed on n-d4 (`features/fx/art/fx_atlas.png`, 8x4 cells of 256 px, README has the cell
+   map: muzzle_1-3, tracer, impact_1-2, debris_1-2 / expl_1-8 / smoke_1-4, shock_1-4 / splat_1-4,
+   spark_1-2, casing, flash_ring). After the merge: give fx.json rows `atlas_cells` [first, count] and a
+   frame rate, switch fx_ink.gdshader to sample the atlas by INSTANCE_CUSTOM (cell, frame), keep the
+   analytic shapes as the fallback. Their muzzle cores are vermilion: re-run the accent audit (fx layer
+   allows vermilion) and check it stays rare.
 - 22:13 evidence run (`node tools/evidence/run.mjs --no-bench`, commit 82d4036): lint PASS, unit 171 PASS,
   scenarios 8 PASS, parity PASS (bit-exact, mutation caught), selftest PASS (goldens 10/10 worst 0.00;
   accent 0.95 % / 0.95 % / 0.26 %, 1 off-doctrine world source = traffic_light.png). Copied to evidence/pof/.
