@@ -35,7 +35,7 @@ tick count, no RNG.
 | `night_iter3_summary.png` | ONE SCREEN for the morning: iteration 2 end (h38) vs iteration 3 end (h60) at 32/48/64, the mock, the 128 kill-cam, the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
-## Iteration 3 (23:09 -> ) in one screen
+## Iteration 3 (23:09 -> 00:10) in one screen (`night_iter3_summary.png`)
 - **Aged paper** (`item7_paper_age.png`, f871411): the mock is a warm sepia print, ours was a cool violet-grey. look_d5
   `age` warms only the low-chroma print, scaled by the D5 world amount. Medians at 64 px/m: street 76,70,78 ->
   **79,68,70** (mock 78,67,68), paper 231,222,204 -> **245,221,193** (mock 246,223,195). 0 px change at 32 px/m.
@@ -64,11 +64,21 @@ tick count, no RNG.
   mural, where the mock has its LOCAL 9 roof; 1 Codex roof edit, 0 rejected, per-roof lift 2.6: paper 32% = D4).
 - **Rivet dialogue expressions** (`item5c_rivet_expressions.png`): 1 Codex sheet, 0 rejected, 4 x 512 px in
   `characters/art/d5/portraits/rivet_<expr>.png`; store-safe (owner review). At 64 px only angry and the tilts read.
+  King: `king_{neutral,wary,furious,smug}.png` (1 sheet, 0 rejected; the cell prompted "commanding" shows a sideways
+  glance and is named "wary"; cut to the template square so no gutter shows).
+- **Finisher panels** (`item5d_finisher.png`): 2 Codex D5 comic splash panels for the finisher moment, machines only
+  (a police drone crushed, the light bar ripped off an empty cruiser), 1920 px in `features/combat/art/d5/`; not
+  wired (combat lane).
+- **Pan shimmer + screen-locked grain** (gap 7): the look_d5 world layer adds no swim on a 48 px/m camera pan; 93% of
+  the pan swim comes from look_d4's screen-hashed grain (one-token fix for the visual-engine lane). The D5 part and
+  soul shaders now hash their grain in sprite space.
+- Codex this iteration: 6 images (decals, Rivet and King expressions, LOCAL 9 roof, 2 finisher panels), 0 rejected
+  for camera breaks; ledger total 33.
 - **Zoom colour drift, measured**: the zoom-tied warmth moves the paper by dE 2.8 (32 -> 48, the foot/car switch)
   and 7.6 (32 -> 64), the street by 2.0 / 4.7; with `age_floor` 1: <= 0.6. Hence gap 1's recommendation.
 - New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom
-  blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08; unit 149/0
-  at 836a1a5.
+  blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
+  5922a3d (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); later commits are art + docs only.
 
 ## Gap list after iteration 3 (what still separates in-engine from d4h2_mock and the concept, next step each)
 1. **Gameplay-zoom colour.** The mock (= the 32 px/m frame) is warm sepia; ours is cool grey at 32 and warms only
