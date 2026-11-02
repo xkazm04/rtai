@@ -371,3 +371,32 @@ target below). Ladder rows appended for every item.
   the asphalt base; open cracks keep their ink (the grime stays). 5 road tiles (road_straight_v_tone_c has no closed
   patch). Before/after `after_hud3|after_pt/city-0-{32,48}ppm.png`: the patches fade to faint stains; the road reads
   like the target's clean asphalt with cracks. Kept. Commit cee3247.
+- 23:53 checked at 64 px/m (`now3/table-64ppm.png`, `props-64ppm.png`): bold markings, dark glass and the 2 m slabs
+  hold up close; nothing crude.
+- 23:55 MILESTONE grey slabs out. Inside 2 m slabs the grey 1 m "replaced slab" squares read as missing-tile boxes
+  and were the most visible 8 m repeat marker on the plaza (city-2 left half: a regular grid of grey boxes).
+  `tools/slab_grey_out.py`: each grey cell replaced by its partner cell in the same 2 m slab (same rows, so the kept
+  joints line up), its old border on the partner's side cleaned, kept joints redrawn. sidewalk (2), curb_c (1).
+  Before/after `after_pt|after_go/city-2-32ppm.png`, `city-0-48ppm`. Kept. Commit e83f9ed. README recipe updated
+  (`features/city/art/README.md`: the 9 ground passes in order, so a build_ground re-bake does not silently undo them).
+- FRICTION: I edited the README while run.mjs ran -> unit-tests marked FAIL ("tree changed during run"), 142/142
+  passed. Re-ran on a clean tree: green. Never touch the tree while the gates run (as with renders, iteration 1).
+- 23:57 GATES at 2069509 (HEAD, every iteration-3 commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught), selftest 0 placeholders. bench not re-run (textures only).
+- Final iteration-3 sheet: `masters:night/d4-production/night_iter3_summary.png` (end of iteration 2 | end of
+  iteration 3 on 4 city frames, target below). Ladder `ladder.png` has a row per item (24 300 px tall now).
+- Codex this iteration: 0 images (all items were measured value/layout fixes). Night: 19 images, 137 cells,
+  3 rejected. Iteration-3 probes reverted: grey-slab lightening, running bond, flat-roof lift.
+- 12. (numbers) visual-engine: shader WASH = (0.40, 0.37, 0.41) prints the asphalt 79,73,81 (lilac); the target's
+  asphalt is 88,76,77 and its paper 197,173,152 (warm sepia), ours 223,214,197. A warmer WASH/CREAM is a shader call.
+
+NEXT:
+- Owner review first: iteration 3 changed the whole ground read (markings, kerb, 2 m slabs, calm paving, soft
+  patches, no grey slabs) + roofs lifted + dark glass. Every change is its own commit, revert per commit if one is
+  not wanted (571460b, 724e5d9, 08231f6, c133a77, 84a1a2f, b787142, e01bbb1, 3fb53b0, 21f6ec9, cee3247, e83f9ed).
+- Owner decisions still open: cop uniform vermilion vs ink + accent (iteration 2), blood ink vs vermilion (iteration 1).
+- If the generator gets sidewalk variants (REQUEST 10): rot90 / rot180 of sidewalk_tone keep the 2 m joint grid
+  (768 = 4 x 192) and are a free first pair of variants.
+- If visual-engine adds building shadows / warmer wash: re-shoot city_frame and re-judge the roof lift (it was tuned
+  against the current tone steps).
+- Fold the masters ground tools into build_ground.py (REQUEST 13) before anyone re-bakes the ground.
