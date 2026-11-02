@@ -31,7 +31,7 @@ tick count, no RNG.
 | `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
 | `item5c_rivet_expressions.png`, `item5c_king_expressions.png` | iteration 3: Rivet (neutral, angry, hurt, hopeful) and King (neutral, wary, furious, smug) dialogue expressions at 512, 128 and 64 px beside the accepted portraits |
 | `item15_local9.png` | iteration 3: the D5 LOCAL 9 union hall roof beside the mural (the mock's landmark), D4 vs D4+D5 at 32 and 48 (h60) |
-| `item5d_finisher.png` | iteration 3: the two D5 finisher splash panels (`features/combat/art/d5/finisher_{drone,lightbar}.png`) at 960 and 480 px |
+| `item5d_finisher.png` | iteration 3: the two D5 finisher splash panels (`features/combat/art/d5/finisher_{drone,lightbar,k9}.png`; k9 in-game only) |
 | `night_iter3_summary.png` | ONE SCREEN for the morning: iteration 2 end (h38) vs iteration 3 end (h60) at 32/48/64, the mock, the 128 kill-cam, the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -66,14 +66,14 @@ tick count, no RNG.
   `characters/art/d5/portraits/rivet_<expr>.png`; store-safe (owner review). At 64 px only angry and the tilts read.
   King: `king_{neutral,wary,furious,smug}.png` (1 sheet, 0 rejected; the cell prompted "commanding" shows a sideways
   glance and is named "wary"; cut to the template square so no gutter shows).
-- **Finisher panels** (`item5d_finisher.png`): 2 Codex D5 comic splash panels for the finisher moment, machines only
+- **Finisher panels** (`item5d_finisher.png`): 3 Codex D5 comic splash panels (k9: in-game only, not store-safe) for the finisher moment, machines only
   (a police drone crushed, the light bar ripped off an empty cruiser), 1920 px in `features/combat/art/d5/`; not
   wired (combat lane).
 - **Pan shimmer + screen-locked grain** (gap 7): the look_d5 world layer adds no swim on a 48 px/m camera pan; 93% of
   the pan swim comes from look_d4's screen-hashed grain (one-token fix for the visual-engine lane). The D5 part and
   soul shaders now hash their grain in sprite space.
-- Codex this iteration: 6 images (decals, Rivet and King expressions, LOCAL 9 roof, 2 finisher panels), 0 rejected
-  for camera breaks; ledger total 33.
+- Codex this iteration: 7 images (decals, Rivet and King expressions, LOCAL 9 roof, 3 finisher panels), 0 rejected
+  for camera breaks; ledger total 34.
 - **Zoom colour drift, measured**: the zoom-tied warmth moves the paper by dE 2.8 (32 -> 48, the foot/car switch)
   and 7.6 (32 -> 64), the street by 2.0 / 4.7; with `age_floor` 1: <= 0.6. Hence gap 1's recommendation.
 - New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom
