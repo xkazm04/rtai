@@ -210,3 +210,7 @@ NEXT:
   copies of the 4 D4 neighbour roofs (originals restored byte-for-byte, git clean, re-imported), round h54d4lift:
   OSHA at 32 px/m L 0.482 -> 0.538, paper 26% -> 38% (mock 44-49%); top-left neighbour 0.425 -> 0.477. Remaining ink
   mass = the roofs' thick hatched border ring. Board evidence/item14_d4_roof_lift_proposal.png.
+- 23:38 REVERTED: softened D5 pavement joints (gap 3; density above 0.5 compressed x0.35 in the D5 sidewalk tile),
+  h55 vs h53: dark px in the 64 px/m pavement strip 25.3% -> 23.9% only; the look_d4 print re-inks the joints. No
+  visible gain; tile restored byte-identical (git clean). The joint weight has to be fixed in look_d4's print
+  thresholds or in a thinner-jointed tile (city lane).
