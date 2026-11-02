@@ -16,6 +16,7 @@ const REACH: float = 1.9
 const STAND_OFF: float = 4.5
 const KNOCK: float = 6.0
 const KNOCK_DECAY: float = 0.88
+const SNAP: float = 0.5
 const PUNCH_TICKS: int = 12
 const ROLL_TICKS: int = 27
 ## tick -> the cop who fires; HITS are the rounds that land on Rivet.
@@ -99,7 +100,10 @@ func _kill(victim: int, cues: Array[Array]) -> void:
 	if victim < 0:
 		return
 	dead[victim] = true
-	_knock[victim] = (pos[victim] - pos[RIVET]).normalized() * KNOCK
+	var away: Vector2 = (pos[victim] - pos[RIVET]).normalized()
+	# The hit lands as a gap: the silhouettes separate on the kill tick (two shapes in the beat).
+	pos[victim] += away * SNAP
+	_knock[victim] = away * KNOCK
 	cues.append(["kill", victim])
 
 
