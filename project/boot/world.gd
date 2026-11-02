@@ -12,6 +12,11 @@ const DEFAULT_SEED: int = 1
 
 var _ctx: WorldContext = null
 var _loop: SimLoop = null
+var _hitches: HitchRecorder = null
+var _frame_probes: Array[Callable] = []
+var _last_us: int = 0
+var _loop_ms: float = 0.0
+var _prewarming: bool = false
 
 
 ## The one place a WorldContext is assembled. Tests call it with fresh instances or fakes.
@@ -46,9 +51,13 @@ func _register_features(with_views: bool) -> void:
 		var view: CityView = CityView.new()
 		add_child(view)
 		view.setup(city)
+		add_frame_probe(func() -> float: return view.chunks.frame_us / 1000.0)
+		_prewarm(view)
 
 
 func _exit_tree() -> void:
+	if _hitches != null:
+		_hitches.stop()
 	if LaunchArgs.has("--record") and _loop != null and _loop.is_recording():
 		var log: ReplayLog = _loop.finish_recording()
 		var err: Error = log.save(LaunchArgs.value("--record"))
@@ -58,10 +67,31 @@ func _exit_tree() -> void:
 		)
 
 
+## TEL-03: the hitch recorder runs whenever a World is in the tree (every build).
+func _enter_tree() -> void:
+	_hitches = HitchRecorder.new()
+	_hitches.start(get_viewport().get_viewport_rid(), _current_tick)
+
+
 ## The single raw-delta choke point (SIM-01): consumers read ctx.clock, never `delta`.
+## Also times each frame for the hitch log (wall time between frames, our work in it).
 func _process(delta: float) -> void:
-	if _loop != null:
+	var now: int = Time.get_ticks_usec()
+	if _hitches != null and _last_us > 0:
+		_hitches.frame((now - _last_us) / 1000.0, _loop_ms + _probe_ms())
+	_last_us = now
+	if _loop != null and not _prewarming:
 		_loop.frame(delta)
+	_loop_ms = (Time.get_ticks_usec() - now) / 1000.0
+
+
+## A per-frame cost (ms) of a view or another node, added to the hitch log's game time.
+func add_frame_probe(probe: Callable) -> void:
+	_frame_probes.append(probe)
+
+
+func hitches() -> HitchRecorder:
+	return _hitches
 
 
 ## Builds the context (the autoloads in the game, fakes in tests) and an empty sim loop.
@@ -93,3 +123,24 @@ func verify_replay(log: ReplayLog) -> String:
 func _seed_from_args() -> int:
 	var raw: String = LaunchArgs.value("--seed")
 	return raw.to_int() if raw.is_valid_int() else DEFAULT_SEED
+
+
+func _current_tick() -> int:
+	return _ctx.clock.tick() if _ctx != null else -1
+
+
+func _probe_ms() -> float:
+	var ms: float = 0.0
+	for probe: Callable in _frame_probes:
+		var v: float = probe.call()
+		ms += v
+	return ms
+
+
+## The loading screen (WLD-07): the sim waits while the view compiles its pipelines and uploads
+## every texture, so the first gameplay frames carry no first-use cost.
+func _prewarm(view: CityView) -> void:
+	_prewarming = true
+	var us: int = await view.prewarm()
+	_prewarming = false
+	Log.info("world", "prewarm %.1f ms" % (us / 1000.0))
