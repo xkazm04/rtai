@@ -221,3 +221,28 @@ NEXT:
   dead cop's coat is not visible under the sprawl in f322.
   Images this session: 2 generated, 0 rejected; provenance: 4 lines (3 cop parts + coat) in
   steam/ai-provenance/2026-11.jsonl. Leonardo 0 tokens.
+- (00:40) noir_cop_2 (50 s, 0 rejected): an edit of noir_cop_1, only the cap changed, adding a white checkered
+  hat band. At 48 px/m it prints as a light ring on the cap, where the badge alone was a dot (`band-compare.png`).
+  Mild gain. Cop B wears the riot helmet (look 6), so his head is unchanged. Opt-in (--noir-parts).
+- (00:42) Final showcase clips re-recorded with `--coat --noir-parts`: masters night/noir/show-final/
+  showcase-noir-48.mp4, showcase-noir-64.mp4, showcase-d4-48.mp4 (11.3 s, 60 fps) +
+  evidence/showcase-hero.png (D4 48 | noir 48 | noir 64: a shot, the silhouette flash, the held panel,
+  the aftermath) + evidence/showcase-final-64-crop.png. Ladder: 16 rows.
+  Images this session: 3 generated (noir_cop_1, noir_coat_1, noir_cop_2), 0 rejected, no limit hit;
+  provenance: 5 lines. Masters: ~400 MB in night/noir (trimmed superseded show-v1/v2/v3/v6 and the
+  old clips; NOTE ladder row 10 now uses the teal-before-after composite, as show-v3 was deleted).
+
+NEXT (iteration 4 close, in order):
+1. Owner pick from evidence/showcase-hero.png + the show-final clips: is the noir kill beat (silhouette flash
+   -> held comic panel) the comic language they want? If yes, port the hide-list flash to the real
+   game host (CityView needs a "world canvas" handle; quest 1's placeholder view can't be keyed).
+2. The rain at 32 px/m: the splash rings now have a zoom LOD (off at 32), but the streaks are still
+   screen-sized and busy around small figures (ladder row 13). Try a streak-density LOD with the same zoom uniform.
+3. Noir characters (item 2): extend the noir cop redraw to every cop part (pelvis, arms, legs, the riot helmet) and Rivet,
+   then move noir parts + the coat from the dev hook into the rig (a noir art_dir per plan, the coat as a CutRig part).
+4. Speed of the cop read at 32/48 px/m: cops and peds are both ink-with-rim or paper; try a thicker white
+   sticker rim on COP kind only (needs a per-plan halo material, PartMaterials key). The checkered cap
+   band (done, opt-in) helps capped cops at 48; the riot helmet needs its own noir cue.
+5. Wall splats (needs wall/prop edges in the view); the blood pool as an SDF ring, not discs.
+6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+7. A low-end GPU number for the pass (noir_cost.tscn on an iGPU) - only a 4090 is measured.
