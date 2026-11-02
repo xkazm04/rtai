@@ -82,3 +82,10 @@ NEXT:
   lane's RAW sheets (read-only, not installed: their lane owns vehicles/fx), and the D5 soul trail. Rejected the grey
   sedan (vermilion tail lights = doctrine noise). Rounds h18 (flash hidden under the cop, souls small) -> h19 -> h20.
   Board: evidence/item4b_street_life.png (before h17 / after h20 at 32/48/64 + mock + concept).
+- 22:27 MILESTONE: GPU cost measured (fae2c24, d5_cost.gd): 16 full rigs at 64 px/m, RTX 4090: D4 0.083 ms,
+  +parts 0.137, +world 0.158 (runs 2-3); run 1 read 0.208/0.270/0.335 (kept as the spread).
+  FRICTION: a parse error in a -s-loaded run script hangs the launcher (null node, no quit) until timeout: run new
+  dev scenes with a short timeout first.
+- 22:40 MILESTONE item 1 quality: look_d5_part form shade (screen-lit hatched lower-right band + cream lit rim).
+  Rounds r14 (7 px, timid), r15 (9 px + STEEL_LO: dL 0.156 < D4 0.170 -> REJECTED), r16 kept (dL 0.170 = D4 at 64,
+  0.189 at 96; 0 px at 32-56). Walk shimmer re-measured with tools/shimmer.py: 0.988 -> 1.018 high-frequency.

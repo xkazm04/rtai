@@ -12,6 +12,7 @@ tick count, no RNG.
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
 | `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction, before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
 | `ladder.png` | the night's iterations, including the reverted ones |
@@ -52,7 +53,11 @@ tick count, no RNG.
    only sees the top. Up close the D5 tier now carries the lavender steel, rust, ink and misregistration, but the
    in-part hatch mostly mips away at 64 px/m (parts are drawn ~5x minified). Next: re-generate the D5 sheets with
    coarser, bolder hatch (strokes 3x thicker) so it survives 0.2 screen px per part px; and the portraits carry the
-   face.
+   face. Iteration 2 (`item1b_form_shade.png`): instead of more art, look_d5_part now draws a screen-lit FORM SHADE
+   (hatched lower-right band + cream upper-left lit rim per part): the joints read as volumes, like the concept's
+   shading. Tried 3 settings: 7 px (too timid), 9 px + steel darkening (dL 0.156 < D4 0.170: rejected), 8 px with a
+   lighter base: dL **0.170** at 64 (= D4; it was 0.180) and **0.189** at 96 (D4 0.181). 0 px change at 32-56 px/m.
+   Walk shimmer (tools/shimmer.py, same metric both runs): D5/D4 high-frequency change 0.988 -> 1.018.
 6. **The whole slice cast now has a D5 tier** (Rivet, cops, peds). The ped costs 6% contrast on cream pavement at
    64 px/m (0.373 -> 0.351). Next: King and the boss cast need rig parts first (they exist only in the spike).
 7. **The world print layer is subtle** (its fibre tooth read as rain and was replaced by an isotropic mottle). look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene

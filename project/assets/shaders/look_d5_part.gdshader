@@ -27,6 +27,9 @@ uniform float ink_at = 0.74;       // density above which the (mip-softened) pen
 uniform float plate_lod = 5.0;     // mip level at which a vermilion PLATE (the collar) is still vermilion
 uniform float rust_dry = 0.42;     // rust prints as vermilion mixed this far toward ink
 uniform float rust_lod = 3.0;      // mip level the rust must survive at (kills isolated specks: no shimmer)
+uniform float shade_px = 8.0;     // width of the hatched shadow band on each part's lower-right edge, screen px
+uniform float shade_k = 0.42;     // stroke coverage in that band (0 = off)
+uniform float lit_k = 0.55;       // cream lit rim on the upper-left edge (keeps the part's mean tone vs the street)
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
@@ -92,6 +95,16 @@ void fragment() {
 			float ink = smoothstep(ink_at, ink_at + 0.06, d);
 			ink = max(ink, strokes(q, 0.785, smoothstep(hatch_lo, hatch_lo + 0.25, d) * 0.36) * step(hatch_lo, d));
 			ink = max(ink, strokes(q, 2.356, smoothstep(hatch_hi, hatch_hi + 0.2, d) * 0.34) * step(hatch_hi, d));
+			// form shadow: a hatched band inside the part's lower-right edge in SCREEN space (the world's light,
+			// as the roofs and cast shadows), found by stepping the alpha toward the light's far side
+			vec2 off_s = (dFdx(UV) + dFdy(UV)) * shade_px * 0.7071;
+			float far = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s).a);
+			float near = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s * 0.5).a);
+			float shade = clamp(far * 0.6 + near * 0.4, 0.0, 1.0);
+			float lit = 1.0 - step(alpha_cut, texture(TEXTURE, UV - off_s * 0.45).a);
+			o = mix(o, CREAM, lit * (1.0 - shade) * lit_k * (1.0 - smoothstep(0.5, 0.7, d)));
+			o = mix(o, STEEL_MID, shade * 0.25);
+			ink = max(ink, strokes(q, 0.785, shade * shade_k));
 			o = mix(o, INK, ink);
 			// the off-register plate: vermilion that should be under a nearby edge, printed here
 			vec2 off = TEXTURE_PIXEL_SIZE * (mis_px / max(px_scale, 0.02)) * vec2(0.8, -0.6);
