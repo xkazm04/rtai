@@ -10,8 +10,11 @@ extends Node2D
 
 const MAX_FULL: int = 16
 ## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step
-## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true).
-const FULL_RATE: int = 6
+## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true); past HALF_RATE,
+## every 4th tick with four times the step (LOD 0c, RigSprings sub-steps the springs). The rig
+## still moves to its sim position every frame; only the limbs pose at 30 / 15 Hz.
+const FULL_RATE: int = 4
+const HALF_RATE: int = 8
 const RADIUS_M: float = 14.0
 ## The nearest-N selection (a GDScript scan of the whole feed, ~0.1 ms in a riot) runs every
 ## SELECT_EVERY calls; between, the kept rigs only find their rows again (a native find).
@@ -73,11 +76,17 @@ func step_ticks(steps: int) -> void:
 	for _k: int in steps:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
-			if _rank[actor] < FULL_RATE:
-				_by_actor[actor].drive(SimClock.TICK_DT)
-			elif (ticks_stepped + actor) % 2 == 0:
-				_by_actor[actor].drive(SimClock.TICK_DT * 2.0)
+			var every: int = rate_of(_rank[actor])
+			if (ticks_stepped + actor) % every == 0:
+				_by_actor[actor].drive(SimClock.TICK_DT * every)
 	last_us = Time.get_ticks_usec() - t0
+
+
+## Ticks between pose steps for the rig at nearest-rank r: 1 (full), 2 (half) or 4 (quarter).
+static func rate_of(r: int) -> int:
+	if r < FULL_RATE:
+		return 1
+	return 2 if r < HALF_RATE else 4
 
 
 func full_row(i: int) -> bool:

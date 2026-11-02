@@ -1,20 +1,16 @@
 class_name RigPose
 extends RefCounted
-## The upper body: torso twist against the pelvis with the stride, a twist spring kicked by hits,
-## shoulder sway and a run lean, the head looking toward the aim, and the clip envelopes (roll
-## tuck, death sprawl, punch lean). Then both arms (RigArm).
-
-const TWIST_K: float = 90.0
+## The upper body: torso twist against the pelvis with the stride plus the twist spring (stepped in
+## RigSprings, kicked by hits), shoulder sway and a run lean, the head looking toward the aim, and
+## the clip envelopes (roll tuck, death sprawl, punch lean). Then both arms (RigArm).
 
 
-static func step(rig: CutRig, dt: float) -> void:
+static func step(rig: CutRig) -> void:
 	var p: BodyPlan = rig.plan
 	var walk01: float = clampf(rig.speed_now / CutRig.WALK_SPEED, 0.0, 1.0)
 	walk01 *= (0.0 if rig.dead else 1.0) * (1.0 - rig.c_tuck)
 	var ph: float = TAU * rig.phase
 	var tw_amp: float = lerpf(0.07, 0.13, rig.run_blend) * walk01
-	rig.twist_v += (-TWIST_K * rig.twist - 2.0 * sqrt(TWIST_K) * rig.twist_v) * dt
-	rig.twist += rig.twist_v * dt
 	rig.torso.rotation = tw_amp * sin(ph) + rig.twist + 0.32 * rig.c_reach
 	rig.pelvis.rotation = -0.55 * tw_amp * sin(ph) + rig.twist * 0.4
 	_body(rig, walk01, ph)

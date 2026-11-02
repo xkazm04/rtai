@@ -123,15 +123,10 @@ func drive(dt: float) -> void:
 	t_alive += dt
 	speed_now = vel_in.length()
 	clips.sample(self, dt)
-	if not dead:
-		var dfa: float = wrapf(face_to - facing, -PI, PI)
-		face_w += (turn_k * dfa - 2.0 * sqrt(turn_k) * face_w) * dt
-		facing += face_w * dt
+	RigSprings.step(self, dt)
 	rotation = facing
-	shove_v += (-120.0 * shove - 2.0 * sqrt(120.0) * shove_v) * dt
-	shove += shove_v * dt
 	RigGait.step(self, dt)
-	RigPose.step(self, dt)
+	RigPose.step(self)
 	if hose != null:
 		RigHose.step(self, dt)
 	if absf(PartMaterials.view_px - _last_px) > 0.002:
