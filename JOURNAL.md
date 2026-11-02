@@ -200,3 +200,29 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   Not shipped.
 - Codex tonight: **19 images** (15 iteration 1 + cash, tokens2, dmg in iteration 2; one at a time, no limit hit).
   Iteration 2 cells: 24, **1 rejected** (folded-bill cash token). Night total 137 cells, 3 rejected.
+
+## 23:10 SUMMARY iteration 2 (raise the weakest items; all with before/after in-engine at 32/48, 64 on boards)
+1. HUD in-engine (was a Python mock): `dev/showcase/hud_overlay.gd` + `city_frame --hud=`; frames plated (ink rim +
+   shadow) because they melted into the cream pavement; cash text area fixed. UI scale 0.4 suggested.
+2. Props: the vehicles' inner ink stroke on all 20 F-08 props (bolder on the paving, neutral on the road).
+3. Pickups: one solid-silhouette token family; cash, weapon (pistol), ammo, armor, keycard redrawn; 3 cash tiers.
+4. Vehicle damage states read at 32-48 px/m: bold ink crack / holes / scorch stamped (registered) on 18 d1/d2.
+5. Quiet paving: slab joints thin mid-grey instead of a black grid (the largest gap vs the target frame), incl. the
+   grey slabs. 5 ground tiles; roads untouched.
+6. Dynamic decals: bullet holes x2, gouge, oil splash; board pages `props`, `decals`.
+- Reverted / not shipped: damage soot wash (airbrush blotches), slab lightening (no effect).
+- Summary sheet: `masters:night/d4-production/night_iter2_summary.png` (iteration-1 end vs now vs target), ladder rows
+  appended for every item. Gates at 23:02 (after paving): lint, unit 142/142, scenarios 8/8, parity, selftest PASS.
+
+## REQUESTS (iteration 2 additions; iteration 1 list above still stands)
+6. ground / F-08 owner: build_ground.py joint colour -> 140,132,128 at 2 px (else a re-bake brings the black grid back).
+7. visual-engine: the print pass inks a "+" at grey-slab corners and at dense line crossings; a slightly higher edge
+   threshold for low-contrast cream-on-cream edges would clean the paving further.
+8. HUD owner: frames are plated now (+7 px offsets in the README); 0.4 UI scale at 1280 x 800 reads.
+9. FX / decal owner: dynamic decals now include bullet_holes_s/m, gouge, oil_splash (README sizes).
+
+NEXT:
+- Owner review of the paving change first (biggest visual change of the night; revert = commits 0e96cb6 + its fix).
+- If traffic gets the atlas: re-shoot city_frame and compare parked vs moving cars.
+- Font: the HUD digits use Godot's default font; a D4 hand-inked display font (OFL, owner OK) is the next HUD step.
+- Unused masters for later: d4n_tokens2 SMG / wrench / ammo box, d4n_cash cash_b/c/d, d4n_casing cells 2-4.
