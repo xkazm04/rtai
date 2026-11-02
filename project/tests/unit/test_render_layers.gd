@@ -3,10 +3,18 @@ extends GutTest
 ## real city scene (World + CitySystem + CityView + the characters) draws only on its layers.
 
 var _layers: RenderLayers
+## Built once: a second CityTextures threaded load in one headless process can race the dummy
+## renderer (a null texture in texture_2d_initialize, seen once in 3 runs).
+var _view: CityView
 
 
 func before_all() -> void:
 	_layers = RenderLayers.shared()
+	_view = _city_scene()
+
+
+func after_all() -> void:
+	_view.get_parent().free()
 
 
 func test_the_table_loads_with_every_band_on_a_declared_canvas() -> void:
@@ -56,7 +64,7 @@ func test_the_stack_is_in_the_documented_order() -> void:
 
 
 func test_the_city_scene_uses_only_declared_layers() -> void:
-	var view: CityView = _city_scene()
+	var view: CityView = _view
 	var bad: Array[String] = _layers.audit(view)
 	assert_eq(bad.size(), 0, "\n".join(bad))
 	assert_eq(view.actor_layer().layer, RenderLayers.canvas(&"actors"))
@@ -64,7 +72,7 @@ func test_the_city_scene_uses_only_declared_layers() -> void:
 
 
 func test_the_audit_catches_an_undeclared_layer() -> void:
-	var view: CityView = _city_scene()
+	var view: CityView = _view
 	var stray: Node2D = Node2D.new()
 	stray.z_index = 7
 	view.actor_layer().add_child(stray)
@@ -72,12 +80,15 @@ func test_the_audit_catches_an_undeclared_layer() -> void:
 	rogue.layer = 64
 	view.add_child(rogue)
 	assert_eq(_layers.audit(view).size(), 2)
+	stray.free()
+	rogue.free()
+	assert_eq(_layers.audit(view).size(), 0)
 
 
 func _city_scene() -> CityView:
 	var world: World = World.new()
 	world.start(Events, Data, 7)
-	add_child_autofree(world)
+	add_child(world)
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
 	var view: CityView = CityView.new()

@@ -53,4 +53,5 @@
   Decision: crackle = paper bolts, not teal (teal = the dead only). BLOCKED for gameplay wiring: no
   positional shot/hit/explosion events in Events (needs an events.json change = shared file + owner).
 - Gates at 21:50: lint 13/13, scenarios 8/8, unit 166/166 on rerun. FRICTION: the first unit run had
-  1 failure (165/166) that did not reproduce; test not identified yet (rerunning with GUT output).
+  1 failure (165/166): test_render_layers built CityView twice; the 2nd CityTextures threaded load can
+  race the headless dummy renderer (null texture). Fixed: build the scene once in before_all (3/3 clean).
