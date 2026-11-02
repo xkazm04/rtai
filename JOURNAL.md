@@ -48,3 +48,15 @@
 - **REQUEST generator owner:** the generator only picks ids 14-23; to use the generic roofs append table rows
   (65+, size 8.4) and widen the pick (golden hashes will move: AST-12 re-bake).
 - Street furniture: all 20 props are already D4 (F-08); nothing on old art found in the table.
+
+## 21:50 MILESTONE 5 new pedestrian parts (work order 4, part 2)
+- 1 Codex edit of the shipped d4 `ped_a` sheet (anchor kept = scale lock), 5 cells, 0 rejected:
+  `torso_hoodie` (solid ink), `torso_overalls` (grey wash + ink straps), `head_cap`, `head_bald`, `head_beanie`.
+  Sliced with the d4 slice_chars method (`slice_ped_d.py`), mid greys snapped to print density 0.39, entries merged
+  into `ped/parts.json` (sizes/pivots from joints()).
+- Evidence: `before_p|after_p/parts-{32,48,64}ppm.png` (dev/showcase/parts_board_run.gd: torso+head+halo printed
+  through PartMaterials on pavement and asphalt; looks 5-8 are the new combos).
+- **REQUEST characters owner:** `RigVariant.crowd()` has 8 fixed slots (= SimConst.CLIP_VARIANTS). Suggested:
+  slot 3 jacket-hat -> hoodie-cap (`head_cap`, `torso_hoodie`), slot 7 coat-hair -> overalls-bald
+  (`head_bald`, `torso_overalls`); or raise CLIP_VARIANTS to 10-12 for hoodie-beanie and overalls-cap too.
+  The rig pool's prewarm must list the new parts.

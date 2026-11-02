@@ -525,6 +525,21 @@
     "own: rtai features/city/art/roofs/building_tall.png (approved D4 roof, style anchor)"
    ],
    "seed": null
+  },
+  "d4n_ped_d": {
+   "file": "masters:night/d4-production/gen/out/d4n_ped_d.png",
+   "sha256": "66d86569c0d8413d507244bc62e7833656cf268d403f9d86e8da00b4deeb3e83",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/ped_d.txt",
+   "prompt_sha256": "dfecb6163f5d7d9a804ba4f9432ccea26cc65dac80ed41d0600c844e0b51bade",
+   "layout_template": "masters:night/d4-production/gen/refs/ped_a_sheet.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own master: d4_ped_a (edit target, scale lock)"
+   ],
+   "seed": null
   }
  }
 }
