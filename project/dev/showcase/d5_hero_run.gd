@@ -26,6 +26,9 @@ const PROP_SPOTS: Array[Array] = [
 	["traffic_cone", 10.6, 1.4, 0.5, 0.5, 0.0],
 	["traffic_cone", 10.9, -2.9, 0.5, 0.5, 0.0],
 	["traffic_cone", 12.2, 1.6, 0.5, 0.5, 0.0],
+	# the mock's wall-side crates (barrel_cluster prints vermilion = doctrine noise, not used)
+	["crate_stack", -10.8, -4.8, 2.1, 1.4, 0.0],
+	["crate_stack", 7.8, 4.8, 2.1, 1.4, 0.0],
 ]
 ## kerb shadow strips in metres (the pavement blocks' street-side edges facing down-right),
 ## stopping where D5HeroKerbs rounds the corner (radius 1.6 m)

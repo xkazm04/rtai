@@ -166,3 +166,6 @@ NEXT:
   0.381, stripe energy 0.202 -> 0.193 at 64 (0.269 -> 0.244 at 32). Board evidence/item8_shadow_hatch.png; hero = h42.
 - 23:15 re-check after the aged paper (showcase r22 vs r21, full d5 stack, the d4/d5p tier mask): Rivet vs street dL
   0.166 -> 0.170 at 64, 0.183 -> 0.187 at 96 (street L 0.286 -> 0.282); d5 @32 0 px. No readability cost.
+- 23:18 hero wall-side crate stacks (h44). h43 barrel_cluster REJECTED: the project's barrels print vermilion
+  (doctrine noise beside the cops; the mock's are grey). Pure-vermilion px h42 -> h44 unchanged. Hero frames = h44
+  (d4 and d4d5 both refreshed).
