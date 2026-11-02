@@ -311,3 +311,17 @@ NEXT:
   touch firmer than 140). sidewalk_tone + curb_straight x3, corner rebuilt from it (build_corner + lane_bold +
   marking_wear). Bugs caught on the peeks: horizontal joints first filled from beside themselves (no change), and
   crossings on kept lines left dots. Before/after `after_kb|probe_g2/city-*`, `corner-*`. Commit b787142.
+- 23:41 MILESTONE clean paint decals. road_arrow + stop_line carried diagonal hatch wear inside the cream that
+  printed as a dark wavy stroke at 32 px/m (city-0 arrows). `tools/paint_decal_clean.py`: inside the alpha mask
+  eroded 5 px (3 for the stop line; the ink outline stays) px darker than cream - 18 take the cream (15 % residue).
+  Before/after `probe_g2|after_pd/city-0-32ppm.png`, board `after_pd/decals-*`: clean solid arrows. Commit e01bbb1.
+  Gates at b787142 (2 m slabs): run.mjs --no-bench rc 0 (lint, unit 142/142, scenarios 8/8, parity, selftest).
+- 23:44 MILESTONE dark glass. Target compare (`work/cars_vs.png`): the target's cars carry near-black glass, ours
+  hatched dark grey that mipmaps to a pale wash at 32-48 px/m (the taxi read all cream). `tools/glass_ink.py` on the
+  9 intact vehicles: areas inside the body (alpha eroded 6 px, so the outer stroke stays) with a 3 px local mean
+  below lum 0.42, opened 2 px (thin seams excluded), saturated px (light bar) excluded, pulled 60 % to ink. The
+  cruiser's black panels go darker too (its black-and-white read gets stronger), sedan_c's hatched roof reads black.
+  Damage states untouched on purpose: pale crazed glass, so their ink cracks stay visible (intact = dark glass).
+  Traffic atlases rebuilt (build_traffic.py from the new intact cars). Hijack overlays still register
+  (`now_x|after_gl/hijack-48ppm.png`). Before/after `before_gl|after_gl/table-*`, `after_pd|after_gl/city-*`:
+  bolder car silhouettes, closer to the target. Kept. Commit 3fb53b0.
