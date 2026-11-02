@@ -363,3 +363,7 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   at 96/128 the building, kerb and King shadows read as pen hatch, not hazard stripes. Still world-locked (no pan
   swim); the period re-lays only while the zoom changes. The hero/arena scenes set it per tier. Hero frames 96/128
   = h70; arena 128 = a11. Ladder +1 row. (d5_hero_run.gd is 239 lines: over the ~200 guide, under the 300 stop.)
+- 00:55 MILESTONE: the arena yard (a13): 4 D4 roofs left/right of the floor (0.6 m asphalt, 0.4 m alleys) with the
+  hero's ink foot (d5 tier) so the 64 px/m frame reads as a chop-shop yard in a city block, not a floor in a void.
+  d5 = a12 0 px (gdformat-only change, deterministic). Rivet |dL| at 64 0.133 -> 0.143 (the shade_k change). Boards
+  item18_arena.png and night_iter4_summary.png rebuilt (a13 / h69 / h70); ladder +1 row.

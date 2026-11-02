@@ -17,7 +17,14 @@ const KING_M: Vector2 = Vector2(-2.7, -2.5)
 const KING_W_M: float = 3.6
 const KING_SHADOW_M: float = 0.7
 
+## D4 roofs ringing the yard (left and right of the floor, 0.6 m of asphalt between)
+const YARD_ROOFS: Array[String] = [
+	"building_warehouse", "building_tall", "building_osha", "building_long"
+]
+const ROOF_M: float = 8.4
+
 var _shadow_node: Sprite2D = null
+var _feet: Array[Node2D] = []
 
 
 func _init() -> void:
@@ -45,6 +52,7 @@ func _ground() -> void:
 	s.scale = Vector2.ONE * ARENA_M * PX / s.texture.get_width()
 	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_world.add_child(s)
+	_yard()
 	var king: Sprite2D = Sprite2D.new()
 	king.texture = load(KING) as Texture2D
 	king.scale = Vector2.ONE * KING_W_M * PX / king.texture.get_width()
@@ -71,7 +79,30 @@ func _king_shadow(king: Sprite2D) -> void:
 	_shadow_node = sh
 
 
+## The chop shop sits in a city block: D4 roofs left and right, with the hero scene's ink foot
+## (D5HeroParapets, "d5" tier) on their street-facing edges.
+func _yard() -> void:
+	var at: Array[Vector2] = []
+	var k: int = 0
+	for sx: float in [-1.0, 1.0]:
+		for sy: float in [-1.0, 1.0]:
+			var c: Vector2 = Vector2(
+				sx * (ARENA_M * 0.5 + 0.6 + ROOF_M * 0.5), sy * (ROOF_M * 0.5 + 0.2)
+			)
+			var r: Sprite2D = Sprite2D.new()
+			r.texture = load("res://features/city/art/roofs/%s.png" % YARD_ROOFS[k]) as Texture2D
+			r.scale = Vector2.ONE * ROOF_M * PX / r.texture.get_width()
+			r.position = c * PX
+			r.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			_world.add_child(r)
+			at.append(c)
+			k += 1
+	_feet = D5HeroParapets.place(_world, PX, at, ROOF_M)
+
+
 func _tier(tier: String) -> void:
+	for n: Node2D in _feet:
+		n.visible = tier == "d5"
 	if _shadow_node != null:
 		_shadow_node.visible = tier == "d5"
 		(_shadow_node.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
