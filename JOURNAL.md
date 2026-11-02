@@ -191,3 +191,13 @@ NEXT:
   (hit_stop_ticks 5 -> 8). Evidence show-v7 (clips 48/64 noir + d4, 11.3 s), ladder row 11.
   FRICTION: 297a63f was committed with test_blood_fx failing (it counted panel ticks as flash frames;
   my && chain ended in `tail`). Fixed in 0fd7880; 177 unit tests pass.
+- MILESTONE (00:22) rain secondary motion: splash rings in look_noir (`splash` 0.45, `splash_cell` 28 px,
+  `splash_period` 36 ticks): one landing per cell per cycle at a new hashed spot, a ring growing over 7
+  ticks, white on ink and ink on paper; it lands on the figures too (rain on shoulders). Render only (rain_phase).
+  v1 rings were faint grey 1 px circles; v2 is a slightly thicker, slower fade. Honest read: subtle in a
+  still (`splash-before-after.png`), it reads as rain hitting puddles; it is mechanical (perfect circles).
+  The long coat is NOT done: no coat part exists on the rigs.
+  Clips re-recorded with splashes: show-v8/showcase-noir-48.mp4, -64.mp4 (the D4 clip moved from show-v7).
+- NOT DONE, by choice: quest_fight's silhouette flash (its placeholder view draws the ground and the actors
+  on one node, so it can't be keyed; it stays a black flash). No Codex round this session (0 images, 0
+  rejected): a parts round can't be assembled and evidenced on the rig in the time left.
