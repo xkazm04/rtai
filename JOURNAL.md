@@ -170,3 +170,18 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   holes, d2 shattered crack + 5 holes + scorched nose. Holes moved back to x 0.28 so they miss the cruiser light bar.
   Before/after `now_v|after_dm/extras-{32,48,64}ppm.png`: at 32 px/m every d1/d2 is now distinct from intact.
   Unused marks (scratch, dent, smudge) kept in `work/dmg/` for a dynamic decal set.
+- 23:00 MILESTONE quiet paving (biggest gap vs the target frame, found by putting city-0 beside d4h2_mock).
+  The sidewalk slab joints (4 px of 88,82,82 every 96 px) print as a heavy black grid through the world pass, so the
+  pavement read as bathroom tiles and fought the people and props; the target's paving is quiet with thin joints.
+  `tools/paving_joints.py` redraws only thin joint lines inside the paving interior (same colour is the asphalt, so:
+  joint colour AND thin AND next to cream AND 6 px clear of the kerb, tile borders inside) as a 2 px centre line
+  (mod 96 in {95, 0}, so tiles still join at seams). 5 tiles: sidewalk_tone, curb_straight_tone{,_b,_c},
+  curb_corner_tone. Road tiles untouched (the first pass would have whitened ~2000 px of lane edges per road tile;
+  caught on the counts, not shipped). Iterations, all looked at: v1 kerb ticks erased (fixed: paving interior mask);
+  2x2 dark crossings left (fixed: wider cream reach); in-engine the crossings still printed as ink dots at 118 grey
+  (gap at crossings did not help: line ends print too) -> tone probe 118 / 140 / 160 (`work/joint_tones.png`):
+  **140 kept** (grid visible, dots nearly gone; 160 loses the grid). Left: faint dots at the 8 m tile seams and short
+  dark joint stubs at the kerb (read as joints meeting the kerb).
+  Before/after: `after_hud2|after_pr_city` vs `after_sw/city-*`, `after_pr|after_sw/props-*`, `after_sw/corner-*`.
+  **For the F-08 / ground owner:** build_ground.py would regenerate the dark joints; set its joint colour to
+  140,132,128 and 2 px if the ground is ever re-baked. Revert = this one commit.
