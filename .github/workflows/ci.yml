@@ -1,0 +1,85 @@
+# STANDARDS TST-04: lint, import, tests, native matrix, Windows export + PCK audit, on every push.
+# Never needs a Steam client, never writes steam_appid.txt, never sees the publisher key (TST-07).
+# Not yet run remotely: the repo has no GitHub remote at bootstrap (2026-11-02).
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: pip install "gdtoolkit==$(sed -n '/^\[gdtoolkit\]/,/^\[/s/^version = "\(.*\)"/\1/p' versions.toml)"
+      - run: node tools/lint/lint.mjs
+
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: ./.github/actions/setup-godot
+      - run: '"$GODOT_BIN" --headless --path project --import'
+      - name: load every script (import exits 0 even when scripts fail to compile)
+        run: '"$GODOT_BIN" --headless --path project -s res://tests/load_all.gd'
+      - name: reimport-clean check
+        run: test -z "$(git status --porcelain)" || { git status --porcelain; exit 1; }
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: ./.github/actions/setup-godot
+      - run: node tools/tests/run_unit.mjs
+      - run: '"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd'
+
+  native:
+    # Stub until the native port lands native/SConstruct (NAT-05: MSVC debug/release +
+    # Linux ASan/UBSan parity). DEVIATION TST-04 in docs/decisions.md.
+    if: hashFiles('native/SConstruct') != ''
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "native matrix not implemented" && exit 1
+
+  export:
+    # Stub until the first export ticket lands tools/pck_audit (EXP-04/05).
+    runs-on: windows-latest
+    steps:
+      - run: echo "::warning::Windows export + PCK audit not implemented yet (DEVIATION TST-04)"
+
+  evidence:
+    # Writes pof.godot-evidence/1 for this commit and keeps it as a build artifact.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: pip install "gdtoolkit==$(sed -n '/^\[gdtoolkit\]/,/^\[/s/^version = "\(.*\)"/\1/p' versions.toml)"
+      - uses: ./.github/actions/setup-godot
+      - run: node tools/evidence/run.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ github.sha }}
+          path: build/evidence/

@@ -1,0 +1,17 @@
+name: setup-godot
+description: Fetch the Godot build pinned in versions.toml, verify its SHA-512, export GODOT_BIN.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -euo pipefail
+        URL=$(sed -n 's/^linux_url = "\(.*\)"/\1/p' versions.toml)
+        SHA=$(sed -n 's/^linux_sha512 = "\(.*\)"/\1/p' versions.toml)
+        curl -fsSL "$URL" -o "$RUNNER_TEMP/godot.zip"
+        echo "$SHA  $RUNNER_TEMP/godot.zip" | sha512sum -c -
+        unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+        BIN="$RUNNER_TEMP/godot/$(basename "$URL" .zip)"
+        chmod +x "$BIN"
+        "$BIN" --version
+        echo "GODOT_BIN=$BIN" >> "$GITHUB_ENV"
