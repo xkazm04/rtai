@@ -421,3 +421,21 @@ NEXT:
 - 00:03 no-op probe: patch_soft with the tile border as a wall (`edge` arg) to catch outlines running off the tile;
   it finds no new outline px. The strong outline left in city-2 at 48 px/m is road_straight_v_tone_c's hatched
   crack edge (part of the grime), not a patch. Nothing installed.
+
+## 2026-11-03 00:04 iteration 4, BUILD (raise the weakest item; stop 01:33)
+- Read: journal, log, iteration-3 sheet vs target. Source roofs checked 1:1 beside the target's roofs
+  (`masters:work/i4_roof_vs.png`): the art itself matches the target style; their grey in-engine is the print pass
+  (cast-shadow hatch prints as solid grey blocks), not a texture fix. FX atlas re-checked: splat cells are alpha 0
+  outside the ink (the cream seen in a flat preview is transparent RGB), fine.
+- 00:08 REVERTED probe: asphalt patches cleared further (`tools/patch_clear.py` from `work/patch_orig`: outline
+  ring 85 % + interior hatch 70 % to the asphalt). In-engine (`probe_fr|probe_pt4/city-0-48ppm.png`,
+  `work/pt4_zoom.png`) the boxes were already faint at HEAD; the change is barely visible. Not shipped.
+- 00:11 MILESTONE D5 ink grime on the cars (the brief: push toward D5 where it survives, up close). The intact cars
+  read factory-clean at 48-64 px/m. `tools/veh_grime.py`: on the light paint (lum > 0.55, unsaturated, inside the
+  stroke) an ink stipple gathered in low-frequency dirt patches, weighted to the body edge (sills, bumpers), a 10 %
+  dirt wash near the edge, 3 thin scratches; deterministic per file. v1 (6 scratches, 6 % interior stipple) read as
+  hair and dust at 64; v2 (3 scratches, 3 %) kept. In-engine `before_gr|after_gr|after_gr2/table-{32,48,64}ppm.png`
+  (`work/gr2_ab_64z.png`), city `probe_fr|after_gr_city/` (`work/gr_city32.png`, `gr_city48.png`): invisible at 32,
+  light edge wear at 48, lived-in at 64; silhouettes and the cruiser's vermilion bar untouched. Damage states and
+  wrecks untouched (they already carry the d4n_dmg marks). Traffic atlases rebuilt. 11 provenance lines
+  (prov_rev.py now stamps today's date). Commit 54bf23f. Revert = that commit if the owner wants clean cars.
