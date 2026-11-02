@@ -224,3 +224,6 @@ NEXT:
 - 23:42 same pattern in my look_d5_part (6% screen grain on parts) -> locked to part space (5522ce5). Walk shimmer same
   session: D5/D4 total 1.084 -> 1.077, HF 1.029 -> 1.026. Hero h56: 0 px at 32/48 and in the d4 tier; grain pattern
   only at 64+ (mean L equal to 4 decimals). Hero frames = h56.
+- 23:43 look_d5_soul grain locked to the sprite (fwidth-sized cells; derivative before the discard). h57 vs h56: 0 px
+  at 32/48, teal px/mean unchanged at 64-128. Motion benefit NOT separately measured (same pattern as the part fix).
+  All D5 shaders are now free of screen-locked noise (grep FRAGCOORD: only look_d5's world coordinate w). Hero = h57.
