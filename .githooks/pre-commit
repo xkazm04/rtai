@@ -1,0 +1,4 @@
+#!/bin/sh
+# STANDARDS GDS-04: gdformat + gdlint (and the rest of the lint job) before every commit.
+# Enable once per clone: git config core.hooksPath .githooks
+exec node tools/lint/lint.mjs
