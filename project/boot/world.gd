@@ -1,37 +1,72 @@
 class_name World
 extends Node
-## Composition root (ARC-04): builds the WorldContext once and hands it down to every system
-## through setup(). Nothing below this node reaches up the tree or into /root.
+## Composition root (ARC-04): builds the WorldContext once (events, data, the 60 Hz clock and the
+## per-system RNG registry) and hands it down to every system through setup(). Nothing below this
+## node reaches up the tree or into /root. _process() is the one place a raw frame delta enters
+## the game, and it goes straight into SimClock.advance() (SIM-01).
+## `-- --seed=<n>` sets the master seed; `-- --replay=<file>` re-runs a recorded log headless,
+## compares it (SIM-05) and quits 0 when identical, 1 when it diverged.
+
+const DEFAULT_SEED: int = 1
 
 var _ctx: WorldContext = null
-var _systems: Array[WorldSystem] = []
+var _loop: SimLoop = null
 
 
 ## The one place a WorldContext is assembled. Tests call it with fresh instances or fakes.
-static func build_context(events: EventBus, data: DataStore) -> WorldContext:
-	return WorldContext.new(events, data)
+static func build_context(events: EventBus, data: DataStore, master_seed: int) -> WorldContext:
+	return WorldContext.new(events, data, SimClock.new(), RngRegistry.new(master_seed))
 
 
 func _ready() -> void:
-	if _ctx == null:
-		start(Events, Data)
+	if _ctx != null:
+		return
+	var replay: ReplayLog = null
+	if LaunchArgs.has("--replay"):
+		replay = ReplayLog.load_file(LaunchArgs.value("--replay"))
+		if replay == null:
+			get_tree().quit(2)
+			return
+	start(Events, Data, replay.master_seed if replay != null else _seed_from_args())
+	# Feature systems are registered here, before any replay runs (F-06 onwards).
+	if replay != null:
+		var divergence: String = verify_replay(replay)
+		Log.info("replay", divergence if divergence != "" else "identical")
+		get_tree().quit(0 if divergence == "" else 1)
 
 
-## Builds the context from the given bus and data (the autoloads in the game, fakes in tests).
-func start(events: EventBus, data: DataStore) -> void:
-	_ctx = build_context(events, data)
-	_systems.clear()
+## The single raw-delta choke point (SIM-01): consumers read ctx.clock, never `delta`.
+func _process(delta: float) -> void:
+	if _loop != null:
+		_loop.frame(delta)
 
 
-## Registers a system and calls down into it with the context (ARC-05).
+## Builds the context (the autoloads in the game, fakes in tests) and an empty sim loop.
+func start(events: EventBus, data: DataStore, master_seed: int) -> void:
+	_ctx = build_context(events, data, master_seed)
+	_loop = SimLoop.new(_ctx)
+	events.set_tick_source(_ctx.clock.tick)
+
+
+## Registers a system: calls down into it with the context (ARC-05), then steps it every tick.
 func add_system(system: WorldSystem) -> void:
-	_systems.append(system)
 	system.setup(_ctx)
+	_loop.add_system(system)
 
 
 func context() -> WorldContext:
 	return _ctx
 
 
-func system_count() -> int:
-	return _systems.size()
+func loop() -> SimLoop:
+	return _loop
+
+
+## Replays `log` on this freshly started world; "" when bit-identical, else the divergence.
+func verify_replay(log: ReplayLog) -> String:
+	return log.first_divergence(_loop.replay(log))
+
+
+func _seed_from_args() -> int:
+	var raw: String = LaunchArgs.value("--seed")
+	return raw.to_int() if raw.is_valid_int() else DEFAULT_SEED

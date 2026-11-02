@@ -10,10 +10,20 @@ export const FUNC_MAX_LINES = 40;
 
 const STEAM_FILE = 'project/core/platform/backends/steam_backend.gd';
 const LOG_FILE = 'project/core/log/log.gd';
+const RNG_DIR = 'project/core/rng/';
+const CLOCK_DIR = 'project/core/clock/';
+const DELTA_CHOKE = 'project/boot/world.gd';
 const BANNED = [
   { re: /(^|[^.\w])(print|prints|printt|print_rich)\(/, why: 'bare print: use Log (GDS-08)', allow: [LOG_FILE] },
   { re: /(^|[^.\w])printerr\(/, why: 'printerr outside Log/test runners (GDS-08)', allow: [LOG_FILE, 'project/tests/'] },
-  { re: /(^|[^.\w])(randf|randi|randf_range|randi_range|randfn|seed|randomize)\(/, why: 'global RNG: own a seeded RandomNumberGenerator (SIM-02)' },
+  { re: /(^|[^.\w])(randf|randi|randf_range|randi_range|randfn|seed|randomize|rand_from_seed)\(/, why: 'global RNG: take a stream from ctx.rng (SIM-02)' },
+  { re: /\.(shuffle|pick_random)\(/, why: 'shuffle()/pick_random() use the global RNG: draw from a ctx.rng stream (SIM-02)' },
+  { re: /\.randomize\(/, why: 'randomize() seeds from the clock: streams are seeded by RngRegistry (SIM-02)' },
+  { re: /\bRandomNumberGenerator\.new\(/, why: 'RNG built outside the registry: use ctx.rng.stream(name) (SIM-02)', allow: [RNG_DIR] },
+  // SIM-01 raw-delta audit: SimClock.advance() (fed only by World._process) is the one choke point.
+  // A non-underscore delta param is a used one (unused_parameter is an error), so it is a read.
+  { re: /^func\s+_(physics_)?process\(\s*[a-zA-Z]\w*\s*:/, why: 'reads the raw frame delta: use ctx.clock (TICK_DT, frame_delta()) (SIM-01)', allow: [DELTA_CHOKE] },
+  { re: /\bget_(physics_)?process_delta_time\(/, why: 'reads the raw frame delta: use ctx.clock (SIM-01)', allow: [CLOCK_DIR] },
   { re: /\b(str_to_var|bytes_to_var_with_objects|ConfigFile)\b|get_var\(\s*true|store_var\([^)]*,\s*true/, why: 'object-instantiating parser on data (SEC-02)' },
 ];
 

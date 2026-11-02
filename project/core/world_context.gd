@@ -6,8 +6,12 @@ extends RefCounted
 
 var events: EventBus
 var data: DataStore
+var clock: SimClock
+var rng: RngRegistry
 
 
-func _init(p_events: EventBus, p_data: DataStore) -> void:
+func _init(p_events: EventBus, p_data: DataStore, p_clock: SimClock, p_rng: RngRegistry) -> void:
 	events = p_events
 	data = p_data
+	clock = p_clock
+	rng = p_rng

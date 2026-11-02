@@ -57,7 +57,7 @@ func clear() -> void:
 ## Bound args arrive last, so the signal name is the final element.
 func _record(...args: Array) -> void:
 	var signal_name: StringName = args.pop_back()
-	var tick: int = _tick_source.call()
+	var tick: int = _tick_source.call() if _tick_source.is_valid() else -1
 	_lines.append("%d %s %s" % [tick, signal_name, JSON.stringify(args, "", false, true)])
 	if _capacity > 0 and _lines.size() > _capacity:
 		_lines.remove_at(0)

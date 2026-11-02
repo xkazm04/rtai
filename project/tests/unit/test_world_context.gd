@@ -21,16 +21,18 @@ class ProbeSystem:
 func test_build_context_holds_what_it_was_given() -> void:
 	var bus: EventBus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
-	var ctx: WorldContext = World.build_context(bus, data)
+	var ctx: WorldContext = World.build_context(bus, data, 42)
 	assert_same(ctx.events, bus)
 	assert_same(ctx.data, data)
+	assert_eq(ctx.rng.master_seed(), 42)
+	assert_eq(ctx.clock.tick(), 0)
 
 
 func test_every_system_gets_the_same_context_once() -> void:
 	var world: World = autofree(World.new())
 	var bus: EventBus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
-	world.start(bus, data)
+	world.start(bus, data, 1)
 	var ctx: WorldContext = world.context()
 	var first: ProbeSystem = ProbeSystem.new()
 	var second: ProbeSystem = ProbeSystem.new()
@@ -39,14 +41,15 @@ func test_every_system_gets_the_same_context_once() -> void:
 	assert_same(first.got, ctx)
 	assert_same(second.got, ctx)
 	assert_eq([first.setups, second.setups], [1, 1])
-	assert_eq(world.system_count(), 2)
+	world.loop().step()
+	assert_eq(ctx.clock.tick(), 1, "both systems stepped on one tick")
 
 
 func test_a_system_signals_up_through_the_injected_bus() -> void:
 	var world: World = autofree(World.new())
 	var bus: EventBus = autofree(EventBus.new())
 	var data: DataStore = autofree(DataStore.new())
-	world.start(bus, data)
+	world.start(bus, data, 1)
 	var ctx: WorldContext = world.context()
 	var system: ProbeSystem = ProbeSystem.new()
 	world.add_system(system)
