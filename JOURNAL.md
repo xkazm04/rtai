@@ -404,3 +404,14 @@ NEXT:
   kept). On the road the props pop more, but on the PAVEMENT (where props live) the lightened kiosk, vending machine,
   crates and newsstand melt into the cream paving; the mid-grey fills are what separate them from it
   (`work/pc_ab32.png`, `probe_pc/`). Worse where it matters: not shipped.
+- 00:00 MILESTONE flat roofs cream with seams (follow-up to the 23:55 revert). `tools/flatroof_seams.py`: the roof
+  membrane (lum >= 0.58) 60 % toward the roof paper, the hatched seam bands + ink (lum < 0.50) 35 % toward ink,
+  roof_edge parapet rows 0-72 kept. First thresholds (0.60 / 0.64) cut through the membrane band (0.6-0.7) and
+  speckled it; 0.50 / 0.58 kept. In-engine (`after_go|probe_fr/city-1-{32,48}ppm.png`, `work/fr_ab.png`): cream
+  roofs with dark structure, distinct from the 2 m pavement grid (the plain lift read as plaza). **Judgment call,
+  owner review**: revert = 032f96c. README recipe updated.
+- 00:01 GATES at 032f96c (HEAD): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity
+  bit-exact (mutation caught), selftest 0 placeholders.
+- Owner review sheet for iteration 3 only: `masters:night/d4-production/ladder_iter3.png` (23 rows: before | after |
+  target per item, in commit order; add 032f96c to the NEXT revert list above).
+- Session end for iteration 3 (stop time 00:41). Branch n-d4, tree clean after this entry; nothing pushed or merged.
