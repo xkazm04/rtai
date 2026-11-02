@@ -142,3 +142,9 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   sizes/offsets (+7 frame px) and text area x 185. Probe RIM 7 was too heavy (ate the torn-paper edge), 5 kept.
   Before/after: `after_hud|after_hud2/city-*-hud{50,40}.png`; ladder rows appended. Kept: reads better.
 - MILESTONE HUD in-engine. Note for the HUD owner: UI scale 0.4 at 1280 x 800 reads and leaves more street.
+- 22:40 MILESTONE props stroke (NEXT item from iteration 1). New board page `--page=props` (every table prop on road
+  and pavement). `tools/props_stroke.py`: the vehicles' inner ink stroke at 4 px (3 px for textures < 64 px) on all
+  20 F-08 props (80 px/m). Before/after `before_pr|after_pr/props-{32,48,64}ppm.png` + in-city
+  `after_hud2` vs `after_pr_city` (city-0): bolder silhouettes on the paving (newsstand, vending, barrier, bollard now
+  an ink ring, sign); on the charcoal road the stroke is invisible (ink on ink), neutral in the city frame. Kept.
+  Originals: `masters:night/d4-production/work/props_orig/`.
