@@ -578,3 +578,6 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   (detached, no merge; removed after): shipped atlas vs new in the same build,
   `fx_engine_sd_before|fx_engine_sd_after/fx-{32,48,64}ppm-1-fx.png`, crops `work/sd_ab.png`: debris clearly crisper,
   sparks a small gain (drawn tiny + fade-dithered by the FX table: REQUEST 14 applies). Commit f7ad91a.
+- 00:52 GATES at eb0c2c0 (HEAD incl. f7ad91a): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
+  parity bit-exact, selftest 0 placeholders. Add f7ad91a (FX debris / sparks) to the NEXT revert list above.
+  Scratch worktree removed again; `git worktree list` shows only the lane worktrees. Tree clean after this entry.
