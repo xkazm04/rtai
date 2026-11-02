@@ -3,13 +3,11 @@ extends Node2D
 ## Draws the city: a camera on the CitySystem's focus, the resident chunks (ChunkView, time
 ## sliced) and the actors (one write_render() per frame into CrowdLayers). Reads no frame delta
 ## (SIM-01): everything it shows is sim state. Render only; never needed headless or in replay.
-## Layers, bottom up: the world (this node's canvas: ground, decals, shadows, props, roofs) on
-## canvas layer 0; the D4 print pass (look_d4, reads the world through the screen texture) on
-## LOOK_LAYER; the actors (look_d4_item) on ACTOR_LAYER, following the camera.
+## Layers come from the render stack table (core/render/README.md): the world (this node's
+## canvas: ground, decals, shadows, props, roofs), the D4 print pass (look_d4, reads the world
+## through the screen texture) on the `print` canvas, the actors (look_d4_item) on `actors`.
 
 const VIEW_MARGIN_M: float = 4.0
-const LOOK_LAYER: int = 1
-const ACTOR_LAYER: int = 2
 const LOOK_SHADER: String = "res://assets/shaders/look_d4.gdshader"
 const ITEM_SHADER: String = "res://assets/shaders/look_d4_item.gdshader"
 
@@ -90,7 +88,7 @@ func _place_camera(focus: Vector2) -> void:
 
 func _build_layers() -> void:
 	var look: CanvasLayer = CanvasLayer.new()
-	look.layer = LOOK_LAYER
+	look.layer = RenderLayers.canvas(&"print")
 	var look_shader: Shader = load(LOOK_SHADER)
 	_look_mat.shader = look_shader
 	_look_rect.material = _look_mat
@@ -100,7 +98,7 @@ func _build_layers() -> void:
 	add_child(look)
 	var actors: CanvasLayer = CanvasLayer.new()
 	_actors = actors
-	actors.layer = ACTOR_LAYER
+	actors.layer = RenderLayers.canvas(&"actors")
 	actors.follow_viewport_enabled = true
 	var item_shader: Shader = load(ITEM_SHADER)
 	_item_mat.shader = item_shader

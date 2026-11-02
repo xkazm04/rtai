@@ -1,14 +1,23 @@
 class_name ChunkView
 extends RefCounted
 ## Draws resident chunks (WLD-02 stage 2): one chunk at a time, nearest first, its draw list
-## recorded into 8 pooled RenderingServer canvas items (4 ground + 4 overlay, one per 64 m
-## quadrant so off-screen quadrants cull), time-sliced to BUDGET_US per frame. Items are cleared
+## recorded into pooled RenderingServer canvas items, one per world render layer (ground,
+## ground_decals, building_shadows, props, roofs: core/render/README.md) per 64 m quadrant so
+## off-screen quadrants cull, time-sliced to BUDGET_US per frame. Items are cleared
 ## and pooled, never freed mid-run (pooling cut the worst swap frame 6.1 -> 1.8 ms in the spike,
 ## WLD-05). Render only: the sim's residency is CityResidency.
 
 const R_DRAW: float = 190.0
 const BUDGET_US: int = 1500
-const ITEMS: int = 8
+## The world canvas bands a chunk draws into, bottom up; a command's band comes from its class.
+const BANDS: Array[StringName] = [
+	&"ground", &"ground_decals", &"building_shadows", &"props", &"roofs"
+]
+const BAND_OF_CLASS: Dictionary[String, int] = {
+	"ground": 0, "decal": 1, "prop": 3, "vehicle": 3, "building": 4
+}
+const SHADOW_BAND: int = 2
+const ITEMS: int = 4 * 5
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
 ## AST-03: the world art carries mipmaps and is drawn below 1:1.
 const MIPMAP_FILTER: RenderingServer.CanvasItemTextureFilter = (
@@ -26,11 +35,16 @@ var _drawn: Dictionary[Vector2i, Array] = {}
 var _pool: Array[RID] = []
 var _active: Vector2i = Vector2i(-1, -1)
 var _k: int = 0
+var _band_of: PackedByteArray = PackedByteArray()
 
 
 func _init(parent: RID, textures: CityTextures) -> void:
 	_parent = parent
 	_tex = textures
+	for cls: String in textures.classes:
+		var band: int = BAND_OF_CLASS.get(cls, 3)
+		@warning_ignore("return_value_discarded")
+		_band_of.append(band)
 
 
 func update(focus: Vector2, res: CityResidency) -> void:
@@ -82,7 +96,7 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		var pos: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1])
 		var shadow: bool = chunk.xf[o + 3] > 0.5
 		var q: int = (1 if pos.x - origin.x >= 64.0 else 0) + (2 if pos.y - origin.y >= 64.0 else 0)
-		var item: RID = items[q + (4 if t > 13 or shadow else 0)]
+		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
 		RenderingServer.canvas_item_add_set_transform(
 			item, Transform2D(chunk.xf[o + 2], pos * SimConst.PX_PER_M)
@@ -105,7 +119,7 @@ func _take_items() -> Array:
 			_pool.pop_back() if not _pool.is_empty() else RenderingServer.canvas_item_create()
 		)
 		RenderingServer.canvas_item_set_parent(item, _parent)
-		RenderingServer.canvas_item_set_z_index(item, 0 if q < 4 else 1)
+		RenderingServer.canvas_item_set_z_index(item, RenderLayers.z(BANDS[q >> 2]))
 		RenderingServer.canvas_item_set_default_texture_filter(item, MIPMAP_FILTER)
 		items.append(item)
 	return items

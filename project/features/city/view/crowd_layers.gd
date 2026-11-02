@@ -7,6 +7,9 @@ extends RefCounted
 ## until the character atlas and vehicle art land (F-09).
 
 const DRAW_ORDER: Array[int] = [3, 1, 2, 0, 4]
+## Each sim render layer's band in the render stack (data/tables/render_layers.json): shadows
+## under people, people under vehicles, projectiles in the fx band.
+const BAND: Array[StringName] = [&"actors", &"actor_shadows", &"vehicles", &"actor_shadows", &"fx"]
 const INK: Color = Color(0.09, 0.075, 0.106)
 const PAPER: Color = Color(0.949, 0.91, 0.835)
 const STEEL: Color = Color(0.561, 0.533, 0.506)
@@ -34,7 +37,7 @@ func _init() -> void:
 		node.texture = body if k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS else blob
 		if k == SimConst.RL_PEDS:
 			node.texture = figure
-		node.z_index = 2
+		node.z_index = RenderLayers.z(BAND[k])
 		multimeshes.append(mm)
 		nodes.append(node)
 

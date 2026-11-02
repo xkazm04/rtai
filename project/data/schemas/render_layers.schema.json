@@ -1,0 +1,110 @@
+{
+  "$id": "gtai.render-layers/1",
+  "additionalProperties": false,
+  "properties": {
+    "canvases": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "layer": {
+            "maximum": 128,
+            "minimum": -128,
+            "type": "integer"
+          },
+          "print": {
+            "enum": [
+              "world",
+              "item",
+              "pass",
+              "none"
+            ]
+          },
+          "space": {
+            "enum": [
+              "camera",
+              "follow",
+              "screen"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "layer",
+          "space",
+          "print",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "layers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "canvas": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "drawn_by": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "reserved"
+            ]
+          },
+          "z": {
+            "maximum": 4000,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "canvas",
+          "z",
+          "status",
+          "drawn_by",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.render-layers/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "canvases",
+    "layers"
+  ],
+  "type": "object"
+}
