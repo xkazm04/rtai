@@ -38,3 +38,13 @@ func test_the_budget_evicts_timed_and_refuses_held_lights() -> void:
 func test_an_unknown_kind_is_refused() -> void:
 	var lights: LightLayer = autofree(LightLayer.new())
 	assert_eq(lights.add(&"laser", Vector2.ZERO, 0.0, 0), -1)
+
+
+func test_a_light_added_inside_the_same_tick_still_draws() -> void:
+	var l: LightLayer = autofree(LightLayer.new())
+	var kind: StringName = l.kinds.keys()[0]
+	l.step(3, Vector2.ZERO)
+	assert_eq(l.active, 0)
+	assert_gte(l.add(kind, Vector2.ZERO, 0.0, 3), 0)
+	l.step(3, Vector2.ZERO)
+	assert_eq(l.active, 1, "added inside tick 3: rewritten anyway")

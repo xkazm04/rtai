@@ -21,6 +21,9 @@ var _node: MultiMeshInstance2D = MultiMeshInstance2D.new()
 var _grade: ColorRect = ColorRect.new()
 var _mat: ShaderMaterial = ShaderMaterial.new()
 var _pool: LightPool = null
+var _last_tick: int = -1
+## A light was added, moved or removed since the last write.
+var _dirty: bool = true
 
 
 func _init() -> void:
@@ -66,24 +69,31 @@ func add(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> int:
 		dropped += 1
 		return -1
 	_pool.set_light(h, kind, Transform2D(angle, pos_px), tick, int(life))
+	_dirty = true
 	return h
 
 
 func remove(handle: int) -> void:
 	_pool.free_light(handle)
+	_dirty = true
 
 
 ## Moves a held light (headlights follow their car).
 func move(handle: int, pos_px: Vector2, angle: float) -> void:
 	_pool.move(handle, Transform2D(angle, pos_px))
+	_dirty = true
 
 
-## Fades and expires lights at sim tick `tick`, follows the camera, writes the MultiMesh.
+## Fades and expires lights at sim tick `tick`, follows the camera, writes the MultiMesh (only
+## when the tick moved or a light changed: fades and flicker are functions of the tick).
 func step(tick: int, world_px: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
 	_node.transform = get_viewport().get_canvas_transform() if is_inside_tree() else Transform2D()
 	_mat.set_shader_parameter(&"world_px", world_px)
-	active = _pool.write(_mm, kinds, tick)
+	if tick != _last_tick or _dirty:
+		active = _pool.write(_mm, kinds, tick)
+		_last_tick = tick
+		_dirty = false
 	last_us = Time.get_ticks_usec() - t0
 
 
