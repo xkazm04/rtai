@@ -22,8 +22,8 @@ uniform float mis_px = 2.0;       // off-register vermilion plate offset, screen
 uniform float mis_k = 0.55;       // strength of the off-register plate
 uniform float verm_gate = 48.0;   // r - max(g,b) (0..255) above which a pixel is vermilion
 uniform float alpha_cut = 0.45;
-uniform float grime = 0.10;
-uniform float ink_at = 0.74;       // density above which the art's (mip-softened) pen lines print solid ink        // dry-brush grime blotches
+uniform float grime = 0.10;        // dry-brush grime blotches
+uniform float ink_at = 0.74;       // density above which the (mip-softened) pen lines print solid ink
 uniform float rust_lod = 3.0;      // mip level the rust must survive at (kills isolated specks: no shimmer)
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
@@ -31,9 +31,9 @@ const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
-const vec3 STEEL_HI = vec3(0.780, 0.745, 0.780);
-const vec3 STEEL_MID = vec3(0.560, 0.520, 0.585);
-const vec3 STEEL_LO = vec3(0.330, 0.295, 0.355);
+const vec3 STEEL_HI = vec3(0.900, 0.865, 0.875);
+const vec3 STEEL_MID = vec3(0.740, 0.700, 0.760);
+const vec3 STEEL_LO = vec3(0.420, 0.385, 0.450);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
