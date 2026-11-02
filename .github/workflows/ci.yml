@@ -111,8 +111,9 @@ jobs:
       - run: pip install "gdtoolkit==$(sed -n '/^\[gdtoolkit\]/,/^\[/s/^version = "\(.*\)"/\1/p' versions.toml)"
       - uses: ./.github/actions/setup-godot
       # Parity runs in the Windows native job and the bench needs Windows + a display, so this
-      # Linux job writes lint, unit-tests and scenario-tests only (the others stay stale, not faked).
-      - run: node tools/evidence/run.mjs --no-parity --no-bench
+      # Linux job writes lint, unit-tests and scenario-tests only (the others stay stale, not faked);
+      # the render selftest needs a display.
+      - run: node tools/evidence/run.mjs --no-parity --no-bench --no-selftest
       - uses: actions/upload-artifact@v4
         if: always()
         with:

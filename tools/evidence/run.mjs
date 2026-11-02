@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Evidence writer: runs lint, the unit tests, the scenario suite, the parity gate and the city
-// bench, and writes the PoF wire contract pof.godot-evidence/1 to
-// build/evidence/{lint,unit-tests,scenario-tests,parity,bench}.json.
+// Evidence writer: runs lint, the unit tests, the scenario suite, the parity gate, the render
+// selftest and the city bench, and writes the PoF wire contract pof.godot-evidence/1 to
+// build/evidence/{lint,unit-tests,scenario-tests,parity,selftest,bench}.json.
 //   node tools/evidence/run.mjs [--allow-dirty] [--no-parity] [--no-bench] [--bench-headless]
-// --no-parity / --no-bench skip a kind (its file is not rewritten, so PoF sees it stale or absent,
-// never a fake pass): for runners without the native library or a display.
+//                               [--no-selftest]
+// --no-parity / --no-bench / --no-selftest skip a kind (its file is not rewritten, so PoF sees
+// it stale or absent, never a fake pass): for runners without the native library or a display.
 // Commit first: the evidence names HEAD, and PoF treats evidence from another commit as stale.
 // A dirty tree is refused (the evidence would describe code that is not HEAD) unless
 // --allow-dirty, which says so in every summary. A run that dirties the tree (import churn)
@@ -17,10 +18,11 @@ import { runUnit } from '../tests/run_unit.mjs';
 import { runScenarios } from '../tests/run_scenarios.mjs';
 import { runParity } from '../tests/run_parity.mjs';
 import { runBench } from '../bench/run.mjs';
+import { runSelftest } from '../selftest/run.mjs';
 import { makeEnvelope } from './envelope.mjs';
 
 const OUT = join(ROOT, 'build', 'evidence');
-const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless'];
+const FLAGS = ['--allow-dirty', '--no-parity', '--no-bench', '--bench-headless', '--no-selftest'];
 const allowDirty = process.argv.includes('--allow-dirty');
 const unknown = process.argv.slice(2).filter((a) => !FLAGS.includes(a));
 
@@ -86,6 +88,7 @@ function laterKinds(version) {
   if (!version) return [['scenario-tests', missing('scenario-tests')], ['parity', missing('parity')]];
   const out = [['scenario-tests', runScenarios(OUT)]];
   if (!process.argv.includes('--no-parity')) out.push(['parity', runParity(OUT)]);
+  if (!process.argv.includes('--no-selftest')) out.push(['selftest', runSelftest(OUT)]);
   if (!process.argv.includes('--no-bench')) {
     out.push(['bench', runBench(OUT, { headless: process.argv.includes('--bench-headless') })]);
   }
