@@ -58,7 +58,9 @@ func _golden(look: StringName, ppm: int) -> Dictionary:
 		await get_tree().process_frame
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
-	var fname: String = "%s-%dppm.png" % [look, ppm]
+	# a look an overlay covers (d5-close's look_d5 present) has its own goldens (-ov)
+	var ov: String = "-ov" if LookProfiles.shared().overlay_base(look) != &"" else ""
+	var fname: String = "%s-%dppm%s.png" % [look, ppm, ov]
 	@warning_ignore("return_value_discarded")
 	img.save_png(_out.path_join("look-" + fname))
 	img.resize(GOLDEN_SIZE.x, GOLDEN_SIZE.y, Image.INTERPOLATE_BILINEAR)

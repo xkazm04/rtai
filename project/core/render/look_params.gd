@@ -17,10 +17,10 @@ static func from_row(row: Dictionary) -> LookParams:
 	p.parts_flat_below = row.get("parts_flat_below", 0.13)
 	var w: Dictionary = row["world"]
 	for k: String in w:
-		p.world[StringName(k)] = _value(w[k])
+		p.world[StringName(k)] = uniform_value(w[k])
 	var it: Dictionary = row["item"]
 	for k: String in it:
-		p.item[StringName(k)] = _value(it[k])
+		p.item[StringName(k)] = uniform_value(it[k])
 	return p
 
 
@@ -69,7 +69,8 @@ func equals(other: LookParams) -> bool:
 	)
 
 
-static func _value(v: Variant) -> Variant:
+## A JSON value as a shader uniform: 2- and 3-arrays become vectors, numbers floats.
+static func uniform_value(v: Variant) -> Variant:
 	if v is Array:
 		var a: Array = v
 		var f: PackedFloat32Array = PackedFloat32Array(a)

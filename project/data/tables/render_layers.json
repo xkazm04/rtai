@@ -94,6 +94,14 @@
       "z": 0
     },
     {
+      "canvas": "print",
+      "doc": "print layers over the D4 print (BackBufferCopy + full rect): the D5 Inked Grime overlay, ramped by zoom, hidden at amount 0",
+      "drawn_by": "LookOverlay (look_profiles.json overlays; draws once look_d5.gdshader is present)",
+      "id": "print_overlay",
+      "status": "live",
+      "z": 100
+    },
+    {
       "canvas": "actors",
       "doc": "people and vehicle drop shadows (flat ink tint)",
       "drawn_by": "CrowdLayers shadows",

@@ -12,7 +12,7 @@ model. The stack is declared once as data, bottom up. A **canvas** is a Godot `C
 | canvas (layer) | print pass | layer bands (z) | drawn by |
 |---|---|---|---|
 | `world` (0, camera space) | read by `look_d4` | `ground` 0, `ground_decals` 1, `building_shadows` 2, `props` 3, `roofs` 4 | `ChunkView` (one canvas item per band per 64 m quadrant) |
-| `print` (1, screen) | is the pass | `print_pass` 0 | `CityView` look rect |
+| `print` (1, screen) | is the pass | `print_pass` 0, `print_overlay` 100 | `CityView` look rect, `LookOverlay` |
 | `actors` (2, follows the camera) | `look_d4_item` | `actor_shadows` 0, `actors` 100, `vehicles` 200, `roof_occluders` 300 (reserved), `fx` 400 | `CrowdLayers`, `CharacterRigs`, the FX system |
 | `light` (3, follows) | none (additive) | `lights` 0 (reserved) | the 2D light layer |
 | `world_ui` (4, follows) | none | `world_markers` 0 (reserved) | markers, the objective pointer |
@@ -70,6 +70,24 @@ on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look chan
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
 
+### Print overlays: where D5 plugs in (`look_overlay.gd`, `look_profiles.json` `overlays`)
+
+The d5-close lane builds D5 "Inked Grime" as a **second print layer over the untouched D4 print**
+(`assets/shaders/look_d5.gdshader` + `look_d5.params.json`), not as re-tuned D4 uniforms. An
+`overlays` row names the shader, its params file and key (`world`), the `base` profile under it
+(`d4`), the looks it ramps by zoom (`zoom_looks`: `auto`) or pins at full (`full_looks`: `d5`) and
+the `amount_ppm` stops (48 px/m: 0, 64 px/m: 1). A row is **live only when both files exist**
+(`LookProfiles.overlays`): then `auto` and `d5` resolve to `d4`, and `CityView` puts one
+`LookOverlay` (a viewport `BackBufferCopy` + a full-rect `ColorRect`) on the `print_overlay` band
+and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero cost at 32 and
+48 px/m). Without the files the placeholder `d5` row and the d4 -> d5 uniform blend stay in use,
+so this branch renders exactly as before. The gameplay-zoom amount is one number: the brief says
+pure D4 at 48 px/m (0, shipped); d5-close proposes 0.35 there (an owner call).
+
+Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov.png`), so the
+overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
+(the `-ov` files are new; the d1/d4 goldens must still pass untouched).
+
 ## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
 
 Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #17131B, `ink_2` charcoal, `wash`, `steel`) and the two
@@ -124,8 +142,15 @@ Particles advance on the sim tick (`CityView` calls `fx.step(tick)`), spread by 
 serial (no RNG stream), and fade by a hard 2 px dither, never a soft alpha ramp.
 
 Shapes are **placeholders** drawn analytically by `fx_ink.gdshader` (disc, streak, burst, splat,
-bolt with an ink rim) until d4-production delivers the FX sheet; the swap is a texture + frame table
-per kind. Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
+bolt with an ink rim) while the FX sheet is absent. **The sheet plugs in as data**: `fx.json`
+`atlas` names it (`res://features/fx/art/fx_atlas.png`, the d4-production 8 x 4 grid of 256 px
+cells) and each kind's `atlas` block picks `cells` [first, count] with a `mode` (`pick`: one
+cell by the particle seed; `anim`: a cell every `frame_ticks`, or spread over the life, holding
+the last) and overrides any row field (`count`, `size_m`, `speed_mps`, `grow`, `drag`). When the
+texture exists (`FxSystem.atlas_live`) the instance custom `.z` carries cell + 1 and the shader
+samples the sheet with mipmaps, cut at alpha 0.5 and faded by the same dither; the cell keeps its
+own inks (vermilion only in the muzzle cores and the blast, which the fx band allows). `casing` and
+`spark` are sheet-first kinds (an ink streak / paper burst without it). Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
 Frames: `gtai-masters/night/visual-engine/05-fx` (`dev/selftest/fx_showcase.gd`); step cost 48 us
 with 43 particles alive.
 

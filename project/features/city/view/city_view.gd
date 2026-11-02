@@ -46,6 +46,7 @@ var _look_rect: ColorRect = ColorRect.new()
 var _look_mat: ShaderMaterial = ShaderMaterial.new()
 var _item_mat: ShaderMaterial = ShaderMaterial.new()
 var _actors: CanvasLayer = null
+var _overlays: Array[LookOverlay] = []
 
 
 func setup(city: CitySystem) -> void:
@@ -120,6 +121,9 @@ func _place_camera(focus: Vector2) -> void:
 	camera.position = focus * SimConst.PX_PER_M + offset
 	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)
+	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
+	for o: LookOverlay in _overlays:
+		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
 	lights.step(tick, world_px)
 	fx.step(tick)
 
@@ -133,6 +137,10 @@ func _build_layers() -> void:
 	_look_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_look_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	look.add_child(_look_rect)
+	for row: Dictionary in LookProfiles.shared().overlays:
+		var o: LookOverlay = LookOverlay.create(row)
+		_overlays.append(o)
+		look.add_child(o)
 	add_child(look)
 	var actors: CanvasLayer = CanvasLayer.new()
 	_actors = actors

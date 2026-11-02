@@ -10,6 +10,77 @@
       "minLength": 1,
       "type": "string"
     },
+    "overlays": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_ppm": {
+            "items": {
+              "items": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "base": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "full_looks": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "params": {
+            "pattern": "^res://.+\\.json$",
+            "type": "string"
+          },
+          "params_key": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "shader": {
+            "pattern": "^res://.+\\.gdshader$",
+            "type": "string"
+          },
+          "zoom_looks": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "shader",
+          "params",
+          "params_key",
+          "base",
+          "zoom_looks",
+          "full_looks",
+          "amount_ppm"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
     "profiles": {
       "items": {
         "additionalProperties": false,

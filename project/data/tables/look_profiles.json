@@ -1,6 +1,32 @@
 {
   "default": "auto",
   "doc": "Look profiles: every print-pass parameter of the D4 world pass (look_d4.gdshader: world), the item pass (look_d4_item.gdshader: item) and the cutout part print (parts_flat_below: below this many screen px per part px Rivet's limbs, collar and core print as flat stickers). zoom_blend is the default look (--look=auto): profile `from` up to start_ppm, blending to profile `to` at full_ppm and above. --look=<id> pins one profile; --look=off draws the raw art. core/render/README.md.",
+  "overlays": [
+    {
+      "amount_ppm": [
+        [
+          48,
+          0
+        ],
+        [
+          64,
+          1
+        ]
+      ],
+      "base": "d4",
+      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm keeps the brief's pure D4 at gameplay zoom (48 px/m: 0); d5-close proposes 0.35 at 48 px/m (their zoom_amount stop 1.5) - an owner call, one number here.",
+      "full_looks": [
+        "d5"
+      ],
+      "id": "d5_world",
+      "params": "res://assets/shaders/look_d5.params.json",
+      "params_key": "world",
+      "shader": "res://assets/shaders/look_d5.gdshader",
+      "zoom_looks": [
+        "auto"
+      ]
+    }
+  ],
   "profiles": [
     {
       "doc": "D1 Riso Refined, approximated on the D4 pass: flat ink fills, no grime, no misregistration, almost no hatching, clean outlines. The riso dot-screen shader itself is not ported (the safe backup lives in the spike as look=fine).",

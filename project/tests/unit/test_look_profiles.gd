@@ -5,8 +5,13 @@ extends GutTest
 var _looks: LookProfiles
 
 
+## The table without its overlays: the base blend is tested here whether or not d5-close's
+## look_d5 is in the tree (test_look_overlay covers the overlay path).
 func before_all() -> void:
-	_looks = LookProfiles.shared()
+	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LookProfiles.TABLE))
+	@warning_ignore("return_value_discarded")
+	d.erase("overlays")
+	_looks = LookProfiles.from_json(JSON.stringify(d))
 
 
 func test_the_table_has_the_three_directions_and_the_blend() -> void:

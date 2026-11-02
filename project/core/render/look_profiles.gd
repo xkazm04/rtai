@@ -19,6 +19,10 @@ var blend_to: StringName = &"d4"
 var start_ppm: float = 48.0
 var full_ppm: float = 64.0
 var profiles: Dictionary[StringName, LookParams] = {}
+## The `overlays` rows whose shader and params files exist (LookOverlay draws them). While one
+## is present, its zoom_looks / full_looks ids resolve to its `base` profile: the overlay carries
+## the D5 detail over the untouched D4 print instead of the placeholder d5 row.
+var overlays: Array[Dictionary] = []
 
 
 static func shared() -> LookProfiles:
@@ -47,6 +51,12 @@ static func from_json(text: String) -> LookProfiles:
 	for row: Dictionary in d["profiles"]:
 		var pid: String = row["id"]
 		out.profiles[StringName(pid)] = LookParams.from_row(row)
+	var ov: Array = d.get("overlays", [])
+	for row: Dictionary in ov:
+		var shader: String = row["shader"]
+		var params: String = row["params"]
+		if ResourceLoader.exists(shader) and FileAccess.file_exists(params):
+			out.overlays.append(row)
 	return out
 
 
@@ -68,11 +78,25 @@ func resolve(id: StringName, ppm: float) -> LookParams:
 		var off: LookParams = profiles[blend_from].duplicate_params()
 		off.printed = false
 		return off
+	var base: StringName = overlay_base(id)
+	if base != &"" and profiles.has(base):
+		return profiles[base]
 	if profiles.has(id):
 		return profiles[id]
 	if id != AUTO and default_id != AUTO and profiles.has(default_id):
 		return profiles[default_id]
 	return LookParams.lerp_params(profiles[blend_from], profiles[blend_to], blend_weight(ppm))
+
+
+## The base profile a present overlay puts under `id` (&"" = no overlay covers `id`).
+func overlay_base(id: StringName) -> StringName:
+	for row: Dictionary in overlays:
+		var zoomed: Array = row["zoom_looks"]
+		var full: Array = row["full_looks"]
+		if zoomed.has(String(id)) or full.has(String(id)):
+			var b: String = row["base"]
+			return StringName(b)
+	return &""
 
 
 ## 0 at or below start_ppm, 1 at or above full_ppm, smooth between (no visible step on a zoom).
