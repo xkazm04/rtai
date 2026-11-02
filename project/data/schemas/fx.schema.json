@@ -1,0 +1,115 @@
+{
+  "$id": "gtai.fx/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kinds": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "drag": {
+            "maximum": 60,
+            "minimum": 0,
+            "type": "number"
+          },
+          "grow": {
+            "maximum": 16,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "life_ticks": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "light": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
+          "shape": {
+            "enum": [
+              "disc",
+              "streak",
+              "burst",
+              "splat",
+              "bolt"
+            ]
+          },
+          "size_m": {
+            "maximum": 16,
+            "minimum": 0.01,
+            "type": "number"
+          },
+          "speed_mps": {
+            "maximum": 200,
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_deg": {
+            "maximum": 360,
+            "minimum": 0,
+            "type": "number"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "shape",
+          "token",
+          "count",
+          "life_ticks",
+          "size_m",
+          "speed_mps",
+          "spread_deg",
+          "grow",
+          "drag",
+          "light",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "max_particles": {
+      "maximum": 8192,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "max_spawns_per_frame": {
+      "maximum": 1024,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.fx/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "max_particles",
+    "max_spawns_per_frame",
+    "kinds"
+  ],
+  "type": "object"
+}

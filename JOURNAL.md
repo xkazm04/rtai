@@ -46,3 +46,11 @@
   (FRICTION: the d5 lane renders on the same GPU at the same time).
   BLOCKED-ish: no positional shot/explosion events exist in Events; lights are API + dev driver only.
 - DEVIATION logged: chunks now 20 canvas items (5 bands x 4 quadrants) vs the §20 "8 per chunk" row.
+- MILESTONE item 5: FX system. `data/tables/fx.json` (gtai.fx/1, 8 kinds), `core/render/fx_system.gd` +
+  `fx_pool.gd`, `assets/shaders/fx_ink.gdshader` (analytic placeholder shapes). CityView owns `fx` on the
+  fx band, steps it on the sim tick, links fx lights into the LightLayer. test_fx_system 4/4 (budgets,
+  tick expiry, determinism). Frames 05-fx at 32/48/64 (0 rejected). Step 48 us for 43 particles.
+  Decision: crackle = paper bolts, not teal (teal = the dead only). BLOCKED for gameplay wiring: no
+  positional shot/hit/explosion events in Events (needs an events.json change = shared file + owner).
+- Gates at 21:50: lint 13/13, scenarios 8/8, unit 166/166 on rerun. FRICTION: the first unit run had
+  1 failure (165/166) that did not reproduce; test not identified yet (rerunning with GUT output).

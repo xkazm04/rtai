@@ -111,3 +111,20 @@ Cost (`light_showcase.gd` -> `light-cost.json`, 48 px/m): CPU `step()` 70-168 us
 (GDScript loop). GPU: **not reliably measured** - four runs gave deltas of +1.32, +0.05, +0.09 and
 -0.87 ms because another lane was rendering on the same GPU. Re-measure on an idle GPU (and the Deck)
 before raising `max_lights`; fill rate is the risk (each fire is a 336 px quad at 48 px/m).
+
+## The FX system (`fx_system.gd`, `fx_pool.gd`, `fx_ink.gdshader`, `data/tables/fx.json`)
+
+Eight kinds as data: `muzzle`, `tracer`, `impact`, `explosion`, `smoke`, `debris`, `ink_splat` (blood
+is ink) and `crackle` (the electroshock melee: paper bolts; teal stays the dead's). Each row sets the
+shape, palette token, particle count, life in ticks, size, speed, spread, drag, growth and an optional
+light kind (`muzzle` -> `muzzle_flash`, `explosion` -> `explosion`) that `FxSystem` adds to the
+`LightLayer`. One pooled MultiMesh (`max_particles` 512) on the `fx` band of the actors canvas, a
+per-frame spawn budget (`max_spawns_per_frame` 24); over either budget a spawn is dropped and counted.
+Particles advance on the sim tick (`CityView` calls `fx.step(tick)`), spread by a hash of the spawn
+serial (no RNG stream), and fade by a hard 2 px dither, never a soft alpha ramp.
+
+Shapes are **placeholders** drawn analytically by `fx_ink.gdshader` (disc, streak, burst, splat,
+bolt with an ink rim) until d4-production delivers the FX sheet; the swap is a texture + frame table
+per kind. Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
+Frames: `gtai-masters/night/visual-engine/05-fx` (`dev/selftest/fx_showcase.gd`); step cost 48 us
+with 43 particles alive.
