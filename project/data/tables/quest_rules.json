@@ -1,0 +1,165 @@
+{
+  "doc": "How the quest runtime (features/quest) plays a gtai.quest/1 package: which objective verbs it handles and how, which fail-state words it can detect (the first rule whose every keyword group matches wins; a group is any of its words), the condition vocabulary of bark `when` tags, and the timing. Ported from the spike quest runtime (evolve quest-runtime f2fa88f). Souls and madness bands follow pitch.md (provisional until canon lands in this repo).",
+  "fail_rules": [
+    {
+      "groups": [
+        [
+          "escort",
+          "ally",
+          "steward"
+        ],
+        [
+          "die",
+          "dies",
+          "killed",
+          "destroyed",
+          "wasted",
+          "scrapped"
+        ]
+      ],
+      "id": "escort_dies"
+    },
+    {
+      "groups": [
+        [
+          "rivet",
+          "wasted",
+          "scrapped",
+          "player"
+        ],
+        [
+          "wasted",
+          "scrapped",
+          "dies",
+          "die",
+          "killed",
+          "destroyed"
+        ]
+      ],
+      "id": "rivet_wasted"
+    },
+    {
+      "groups": [
+        [
+          "car",
+          "sedan",
+          "vehicle",
+          "van",
+          "truck",
+          "ride"
+        ],
+        [
+          "destroyed",
+          "wrecked",
+          "totalled",
+          "totaled",
+          "burns"
+        ]
+      ],
+      "id": "car_destroyed"
+    },
+    {
+      "groups": [
+        [
+          "escape",
+          "escapes",
+          "flees",
+          "away",
+          "gets away"
+        ]
+      ],
+      "id": "target_escapes"
+    },
+    {
+      "groups": [
+        [
+          "timer",
+          "time",
+          "expired",
+          "late",
+          "clock"
+        ]
+      ],
+      "id": "timer_expired"
+    }
+  ],
+  "madness_bands": [
+    "lucid",
+    "crowded",
+    "choir",
+    "chorus"
+  ],
+  "schema": "gtai.quest-rules/1",
+  "souls": [
+    "rivet",
+    "hauler",
+    "gearbox",
+    "sentry",
+    "mop"
+  ],
+  "tuning": {
+    "answer_radius_m": 1.7,
+    "escape_m": 45,
+    "line_hold_s": 1.4,
+    "line_max_s": 9,
+    "line_min_s": 2.2,
+    "line_type_cps": 45,
+    "survive_default_s": 20
+  },
+  "verbs": [
+    {
+      "handler": "reach",
+      "id": "go_to",
+      "needs_location": true,
+      "needs_target": false
+    },
+    {
+      "handler": "reach",
+      "id": "deliver",
+      "needs_location": true,
+      "needs_target": false
+    },
+    {
+      "handler": "enter_vehicle",
+      "id": "steal",
+      "needs_location": false,
+      "needs_target": true
+    },
+    {
+      "handler": "enter_vehicle",
+      "id": "hijack",
+      "needs_location": false,
+      "needs_target": true
+    },
+    {
+      "handler": "kill",
+      "id": "assassinate",
+      "needs_location": false,
+      "needs_target": true
+    },
+    {
+      "handler": "kill",
+      "id": "kill",
+      "needs_location": false,
+      "needs_target": true
+    },
+    {
+      "handler": "timer",
+      "id": "survive",
+      "needs_location": false,
+      "needs_target": false
+    },
+    {
+      "handler": "timer",
+      "id": "defend",
+      "needs_location": false,
+      "needs_target": false
+    },
+    {
+      "handler": "escort",
+      "id": "escort",
+      "needs_location": true,
+      "needs_target": true
+    }
+  ]
+}

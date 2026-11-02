@@ -1,0 +1,152 @@
+{
+  "$id": "gtai.quest-rules/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fail_rules": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "groups": {
+            "items": {
+              "items": {
+                "pattern": "^[a-z][a-z ]*$",
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "id": {
+            "enum": [
+              "escort_dies",
+              "rivet_wasted",
+              "car_destroyed",
+              "target_escapes",
+              "timer_expired"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "groups"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "madness_bands": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.quest-rules/1"
+    },
+    "souls": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "tuning": {
+      "additionalProperties": false,
+      "properties": {
+        "answer_radius_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "escape_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "line_hold_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "line_max_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "line_min_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "line_type_cps": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "survive_default_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "answer_radius_m",
+        "escape_m",
+        "survive_default_s",
+        "line_type_cps",
+        "line_hold_s",
+        "line_min_s",
+        "line_max_s"
+      ],
+      "type": "object"
+    },
+    "verbs": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "handler": {
+            "enum": [
+              "reach",
+              "enter_vehicle",
+              "kill",
+              "timer",
+              "escort"
+            ]
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "needs_location": {
+            "type": "boolean"
+          },
+          "needs_target": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "handler",
+          "needs_target",
+          "needs_location"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "verbs",
+    "fail_rules",
+    "souls",
+    "madness_bands",
+    "tuning"
+  ],
+  "type": "object"
+}
