@@ -281,9 +281,9 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
 ## Iteration 4 (2026-11-03, BUILD, 00:11 -> )
 - 00:12 read journal/log/README gap list; 34 Codex images used (~16 left). All 5 items evidenced; weakest visible
   gap in my scope: gap 5 (roofs read flat vs the mock's raised slabs).
-- 00:14 mock LOCAL 9 south edge profile (column median L): cream lip 0.85 -> solid ink foot 0.13-0.21 (~1.6x the
+- 00:13 mock LOCAL 9 south edge profile (column median L): cream lip 0.85 -> solid ink foot 0.13-0.21 (~1.6x the
   lip width) -> hatch 0.46-0.58 -> pavement 0.75. Ours h60: lip 0.85 -> a 6 px roof outline 0.08-0.15 -> hatch.
-- 00:25 MILESTONE gap 5: D5HeroParapets (67c4b77), a 0.22 m ink core outside the roofs' street-facing south/east
+- 00:16 MILESTONE gap 5: D5HeroParapets (67c4b77), a 0.22 m ink core outside the roofs' street-facing south/east
   edges (d5 tier). h61 (core on every edge, + an inner hatched parapet shadow on the roof): ink at 32 px/m
   23.5% -> 25.1% (mock 13.9%), the alleys printed as a black grid -> h62 street-facing edges only (24.6%) -> h63/h64
   inner shadow dropped (invisible over the roof art's own border hatch; 1.7% px / +0.5 pp ink at 32): 24.1%.
