@@ -185,9 +185,9 @@
     {
       "frame": {
         "teal": 0,
-        "vermilion": 2544
+        "vermilion": 2540
       },
-      "frame_share": 0.002484375,
+      "frame_share": 0.00248046875,
       "full_rigs_by_kind": {
         "cop": {
           "teal": 0,
@@ -195,7 +195,7 @@
         },
         "ped": {
           "teal": 0,
-          "vermilion": 4
+          "vermilion": 0
         },
         "rivet": {
           "teal": 0,
@@ -205,7 +205,7 @@
       "layers": {
         "actors": {
           "teal": 0,
-          "vermilion": 2544
+          "vermilion": 2540
         },
         "fx": {
           "teal": 0,
