@@ -79,6 +79,10 @@
   1% low 111 fps (> 45), worst swap 4.5 ms (< 50), 4 frames > 50 ms all `present`; rig p99 1.24 ms.
   CPU load sampled right after: 83-96 % (docker, launchers, other lanes), so it is NOT comparable with
   the 2.61 ms run after item 1; the rig number rose with unchanged rig code = load. evidence/bench-*-rerun.json.
+- Accent audit now splits the full rigs by kind (22:10): peds 0 vermilion at 32/48/64 px/m; Rivet
+  168-304 px vermilion (collar) + 4 px teal (torch tip) - both allowed; cops 0 / 0 / 2028 px (no cop in
+  the 16 nearest at 32/48 in this scene). The rest of the 0.95 % is the atlas crowd (not split: one
+  MultiMesh). Real boot path smoke-tested windowed: `--look=d5` and `--look=auto` exit 0, no script errors.
 
 NEXT (iteration 3 / morning):
 1. FIRST: bench on an idle machine (no other lane benching), A/B `ad2078b` vs `n-visual` HEAD, 3 runs.
@@ -90,7 +94,7 @@ NEXT (iteration 3 / morning):
    (shared file, owner OK).
 4. D5 params from the d5-close lane into look_profiles.json `d5`, then re-bless the goldens with
    before/after frames; the riso D1 pass if the owner still wants D1 as a live profile.
-5. Accent audit: split `actors` into cops / peds / Rivet (hide rigs by kind) so a vermilion ped shows up;
-   make it gating once the traffic light is redrawn.
+5. Accent audit: full rigs are split by kind now; split the atlas crowd too (per-variant instance colour
+   or a second capture with cop variants masked); make it gating once the traffic light is redrawn.
 6. Lights GPU cost on an idle GPU + the Deck; the night grade needs the owner's eye (frames 04b).
 7. FX sheet from d4-production -> replace the analytic shapes (texture + frames per kind).

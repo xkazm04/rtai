@@ -3,7 +3,9 @@ extends "res://dev/selftest/city_selftest.gd"
 ## --fixed-fps 60, then, with the tree paused (the same sim state), one capture per render layer
 ## hidden. Accent pixels (PaletteTokens gates) are reported per frame and per layer: `world` is
 ## absolute (the actors canvas hidden), the actor bands are what hiding them removes. Any accent
-## on a layer the palette table does not allow it on is an offender. Writes accent-audit.json.
+## on a layer the palette table does not allow it on is an offender. The full rigs are also split by
+## body kind (Rivet / cop / pedestrian) so a vermilion pedestrian is its own number. Writes
+## accent-audit.json.
 ##   godot --fixed-fps 60 --path project res://dev/selftest/accent_audit.tscn -- --out=<dir>
 
 const PPMS: Array[int] = [32, 48, 64]
@@ -45,6 +47,7 @@ func _audit(ppm: int) -> Dictionary:
 	layers["actors"] = _pair(full - await _count(people, ""))
 	layers["vehicles"] = _pair(full - await _count([_view.crowd.nodes[SimConst.RL_CARS]], ""))
 	layers["fx"] = _pair(full - await _count([_view.crowd.nodes[SimConst.RL_BULLETS]], ""))
+	var by_kind: Dictionary = await _by_kind(full)
 	var offenders: Array[String] = []
 	for layer: String in layers:
 		var c: Dictionary = layers[layer]
@@ -60,8 +63,30 @@ func _audit(ppm: int) -> Dictionary:
 		"frame": _pair(full),
 		"frame_share": float(full.x + full.y) / float(px),
 		"layers": layers,
+		"full_rigs_by_kind": by_kind,
 		"offenders": offenders,
 	}
+
+
+## What hiding each body kind's full rigs removes from the frame's accents.
+func _by_kind(full: Vector2i) -> Dictionary:
+	var out: Dictionary = {}
+	for kind: BodyPlan.Kind in [BodyPlan.Kind.RIVET, BodyPlan.Kind.COP, BodyPlan.Kind.PED]:
+		var key: String = BodyPlan.Kind.find_key(kind)
+		out[key.to_lower()] = _pair(full - await _count(_rigs_of(kind), ""))
+	return out
+
+
+## The full rigs of one body kind on screen now (the atlas crowd is one MultiMesh: not split).
+func _rigs_of(kind: BodyPlan.Kind) -> Array[CanvasItem]:
+	var out: Array[CanvasItem] = []
+	var rigs: CharacterRigs = _characters.rigs
+	for i: int in rigs.feed.count:
+		if rigs.full_row(i) and rigs.feed.kinds[i] == kind:
+			var rig: CutRig = rigs.rig_for(rigs.feed.ids[i])
+			if rig != null:
+				out.append(rig)
+	return out
 
 
 ## Hides `hide`, draws one frame, counts the accents, shows them again.

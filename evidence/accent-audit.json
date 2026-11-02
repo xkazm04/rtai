@@ -6,6 +6,20 @@
         "vermilion": 9692
       },
       "frame_share": 0.00946484375,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 0,
+          "vermilion": 168
+        }
+      },
       "layers": {
         "actors": {
           "teal": 0,
@@ -35,6 +49,20 @@
         "vermilion": 9704
       },
       "frame_share": 0.00948046875,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 4,
+          "vermilion": 172
+        }
+      },
       "layers": {
         "actors": {
           "teal": 4,
@@ -62,6 +90,20 @@
         "vermilion": 2672
       },
       "frame_share": 0.002609375,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 2028
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 0,
+          "vermilion": 304
+        }
+      },
       "layers": {
         "actors": {
           "teal": 0,
