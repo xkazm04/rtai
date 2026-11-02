@@ -11,10 +11,11 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h26, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h28, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
+| `item4e_kerb_corners.png` | rounded kerb corners at 32 (and 48 x2), h26 vs h28 |
 | `item4c_souls_print.png` | the D5 souls at 64 px/m: world print / look_d4_item ghost print (rejected) / as drawn (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
@@ -61,7 +62,11 @@ tick count, no RNG.
    Next: kerb-corner pieces and curb tiles in D5; that is where the mock's look comes from. Iteration 2
    (`item4d_kerb_shadow.png`): a thin look_d5_shadow strip (0.18 m) on the street side of every kerb facing
    down-right gives the pavement a raised edge (h26). A 0.32 m strip with bold strokes (h25) read as a hazard stripe
-   and was rejected. Still missing: the mock's ROUNDED kerb corners (needs tile art from the city lane).
+   and was rejected. Rounded kerb corners (`item4e_kerb_corners.png`, h28): `D5HeroKerbs` cuts each junction corner
+   to a 1.6 m quarter circle (asphalt-tone fill + ink kerb arc, printed by the world pass like the tiles); the kerb
+   shadow stops at the arc and the hydrant moved onto the pavement (it is in both tiers). Next: the city lane owns
+   corner tiles; this is the geometry to copy. The pavement grid still ends abruptly at the arc (no curved slab
+   joints).
 5. **Rivet vs the concept.** The concept's identity (visor, ID badge, posture) is a front view, and our camera
    only sees the top. Up close the D5 tier now carries the lavender steel, rust, ink and misregistration, but the
    in-part hatch mostly mips away at 64 px/m (parts are drawn ~5x minified). Next: re-generate the D5 sheets with

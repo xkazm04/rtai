@@ -18,7 +18,7 @@ const PROPS: String = "res://features/city/art/props/"
 ## prop -> [x m, y m, w m, h m, rotation deg] (sizes from city_textures.json)
 const PROP_SPOTS: Array[Array] = [
 	["dumpster", 7.2, -4.9, 2.2, 1.5, 0.0],
-	["fire_hydrant", 4.6, -4.6, 0.5, 0.5, 0.0],
+	["fire_hydrant", 5.0, -5.1, 0.5, 0.5, 0.0],
 	["payphone", 12.6, -4.7, 1.3, 1.3, 0.0],
 	["trash_can", 10.4, -4.8, 0.7, 0.7, 0.0],
 	["lamp_post", 4.7, -8.0, 3.2, 0.5, 90.0],
@@ -27,12 +27,13 @@ const PROP_SPOTS: Array[Array] = [
 	["traffic_cone", 10.9, -2.9, 0.5, 0.5, 0.0],
 	["traffic_cone", 12.2, 1.6, 0.5, 0.5, 0.0],
 ]
-## kerb shadow strips in metres (the pavement blocks' street-side edges facing down-right)
+## kerb shadow strips in metres (the pavement blocks' street-side edges facing down-right),
+## stopping where D5HeroKerbs rounds the corner (radius 1.6 m)
 const KERB_SHADOWS: Array[Rect2] = [
-	Rect2(-20.0, -4.0, 16.0, 0.18),
-	Rect2(4.0, -4.0, 16.0, 0.18),
-	Rect2(-4.0, -20.0, 0.18, 16.0),
-	Rect2(-4.0, 4.0, 0.18, 16.0),
+	Rect2(-20.0, -4.0, 14.4, 0.18),
+	Rect2(5.6, -4.0, 14.4, 0.18),
+	Rect2(-4.0, -20.0, 0.18, 14.4),
+	Rect2(-4.0, 5.6, 0.18, 14.4),
 ]
 const ROOF_M: float = 8.4
 const SHADOW_M: float = 1.1
@@ -42,6 +43,7 @@ var borrow_dir: String = ""
 var soul_print: bool = false
 var _roofs: Dictionary[String, Sprite2D] = {}
 var _shadows: Array[Polygon2D] = []
+var _corners: Array[Node2D] = []
 
 
 func _init() -> void:
@@ -69,6 +71,7 @@ func _ground() -> void:
 		_world.add_child(s)
 		_roofs[roof] = s
 	_kerb_shadows()
+	_corners = D5HeroKerbs.corners(_world, PX)
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
@@ -173,6 +176,8 @@ func _tier(tier: String) -> void:
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
+	for c: Node2D in _corners:
+		c.visible = tier == "d5"
 	var walk: Texture2D = (
 		load((D5_GROUND if tier == "d5" else GROUND) + "sidewalk_tone.png") as Texture2D
 	)

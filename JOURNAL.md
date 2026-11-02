@@ -96,3 +96,5 @@ NEXT:
   0 px at 32/64, street median unchanged, street HF +3%. Kept. Hero evidence frames now h24.
 - 22:40 MILESTONE gap 4 (part): kerb shadow strips in the hero scene (look_d5_shadow, 0.18 m, tint 0.55). h25 (0.32 m,
   bold strokes) REJECTED: read as a hazard stripe. Kept h26; hero evidence frames now h26.
+- 22:45 MILESTONE gap 4: rounded kerb corners (d5_hero_kerbs.gd, procedural, d5 tier). h27 had the hydrant on the
+  arc and the kerb shadow running into the cut corner -> h28 fixed. Scenarios 8/0 at 92eb0e5. Hero frames now h28.
