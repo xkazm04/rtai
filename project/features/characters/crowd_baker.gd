@@ -45,8 +45,8 @@ func _make_stage() -> void:
 	_vp.size = Vector2i(CrowdAtlas.LOOKS * cell, cell)
 	_vp.transparent_bg = true
 	_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	_vp.canvas_transform = Transform2D.IDENTITY.scaled(Vector2.ONE * CrowdAtlas.BAKE_ZOOM)
 	add_child(_vp)
+	_vp.canvas_transform = Transform2D.IDENTITY.scaled(Vector2.ONE * CrowdAtlas.BAKE_ZOOM)
 	for look: int in CrowdAtlas.LOOKS:
 		var v: RigVariant = RigVariant.crowd(look)
 		var rig: CutRig = CutRig.new()
