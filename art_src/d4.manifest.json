@@ -392,6 +392,51 @@
     "own master: d4_ped_a"
    ],
    "seed": null
+  },
+  "d4n_veh_a": {
+   "file": "masters:night/d4-production/gen/out/d4n_veh_a.png",
+   "sha256": "f094c39a9333fbfe16cfe33ded11a4ac9f7cfd6552106fcf3910e9f09b5ec71c",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/veh_a.txt",
+   "prompt_sha256": "61360c8a58fba9ed89daeb1d2b116d7b445afb32cd732aebe5ec29b437075935",
+   "layout_template": "masters:night/d4-production/gen/refs/t_veh_a.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4n_veh_b": {
+   "file": "masters:night/d4-production/gen/out/d4n_veh_b.png",
+   "sha256": "c68ca117f0a9fe4384631783664e9a95de9fa60c53aa969588d3618c01209fcc",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/veh_b.txt",
+   "prompt_sha256": "daf88aa9bbcc33ac05ed0269c708a5ed04beab067055920963e5a1e9ba5ee92a",
+   "layout_template": "masters:night/d4-production/gen/refs/t_veh_b.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
+  },
+  "d4n_veh_c": {
+   "file": "masters:night/d4-production/gen/out/d4n_veh_c.png",
+   "sha256": "005a995b311af9b77ab8eb20cae8270fb5e49b4698e7e2c5860affaa028bc0b1",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/veh_c.txt",
+   "prompt_sha256": "7c621982eccf218fa3a35e41184222f57804e9154fcc536321336d421b07bbec",
+   "layout_template": "masters:night/d4-production/gen/refs/t_veh_c.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }

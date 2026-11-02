@@ -1,5 +1,5 @@
 {
-  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision, so it must not change with the art. art is the res:// path of the shipped D4 texture (lane B, F-08: ground, roofs, props); null draws a flat placeholder: the vehicles (44-53) and decals (54-64) have no D4 art yet, and neither has the rounded kerb corner (10). solid: props and parked vehicles that block the 1 m cell map.",
+  "doc": "The city draw-list texture table. id is what chunk files store (never renumber, EXP-03). size_m is the drawn size in metres (from the cityscale spike art at its px/m); the generator uses it for prop collision, so it must not change with the art. art is the res:// path of the shipped D4 texture (lane B, F-08: ground, roofs, props); null draws a flat placeholder (decals 54-64 and the rounded kerb corner 10 have no D4 art yet). Vehicles 44-53: night lane d4-production, features/city/art/vehicles/ (nose to +x, README there). solid: props and parked vehicles that block the 1 m cell map.",
   "schema": "gtai.city-textures/1",
   "textures": [
     {
@@ -487,7 +487,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/sedan.png",
       "class": "vehicle",
       "id": 44,
       "name": "sedan",
@@ -498,7 +498,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/sedan_b.png",
       "class": "vehicle",
       "id": 45,
       "name": "sedan_b",
@@ -509,7 +509,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/sedan_c.png",
       "class": "vehicle",
       "id": 46,
       "name": "sedan_c",
@@ -520,7 +520,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/taxi.png",
       "class": "vehicle",
       "id": 47,
       "name": "taxi",
@@ -531,7 +531,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/van.png",
       "class": "vehicle",
       "id": 48,
       "name": "van",
@@ -542,7 +542,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/pickup.png",
       "class": "vehicle",
       "id": 49,
       "name": "pickup",
@@ -553,7 +553,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/car_wreck.png",
       "class": "vehicle",
       "id": 50,
       "name": "car_wreck",
@@ -564,7 +564,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/bus.png",
       "class": "vehicle",
       "id": 51,
       "name": "bus",
@@ -575,7 +575,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/ambulance.png",
       "class": "vehicle",
       "id": 52,
       "name": "ambulance",
@@ -586,7 +586,7 @@
       "solid": true
     },
     {
-      "art": null,
+      "art": "res://features/city/art/vehicles/police_cruiser.png",
       "class": "vehicle",
       "id": 53,
       "name": "police_cruiser",

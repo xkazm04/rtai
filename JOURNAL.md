@@ -1,0 +1,22 @@
+# JOURNAL - night lane d4-production (branch n-d4)
+
+## 2026-11-02 21:09 iteration 1, BUILD
+- Read: AGENTS, manifest, shaders README, city_textures.json. State: vehicles 44-53, decals 54-64 and the
+  kerb corner (10) are `art: null` (flat placeholder). Moving traffic uses the procedural `_body()` steel
+  quad in `features/city/view/crowd_layers.gd` (rendering code, not my scope): parked vehicles take the
+  table art; traffic needs a visual-engine change (request below once the atlas exists).
+- Session stops 22:39 at the latest: plan = vehicles sheet (Codex) -> slice -> table -> before/after selftest.
+
+## 21:30 MILESTONE vehicles (work order 1)
+- 3 Codex sheets (d4n_veh_a/b/c), 31 cells, **0 rejected** (all straight down, nose +x). Build:
+  `masters:night/d4-production/tools/build_vehicles.py` (key, fill enclosed key holes, one scale per vehicle across
+  its damage states, letterbox to the table footprint, re-ink, vermilion only on the cruiser light bar,
+  wrecks burnt darker), `build_traffic.py` (atlas), procedural teal hijack overlays.
+- Wired ids 44-53 in `city_textures.json` (ids/footprints unchanged). Placeholders 22 -> 12.
+- Evidence: `gtai-masters/night/d4-production/before_v|after_v/table-{32,48,64}ppm.png`, `extras-*` (damage
+  states, wrecks), `selftest-*` (unchanged: the junction shows only moving traffic).
+- Dev evidence rig added: `project/dev/showcase/asset_board.gd` (+ `_run`), `--page=table|extras`.
+- **REQUEST visual-engine:** moving traffic still draws `crowd_layers.gd _body()` (steel quad). Wire
+  `features/city/art/vehicles/traffic_atlas.png` (2x4 cells of 6.4x3.2 m, order in that README) as the RL_CARS
+  texture with `variant -> cell` UVs; `traffic_atlas_hijack.png` for the hijacked state; damage states need a
+  state hook. Car shadows can keep the blob or use the atlas alpha.
