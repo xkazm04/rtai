@@ -378,3 +378,10 @@ NEXT (iteration 7 / morning, in order):
   OPEN: look_d4_item and print_part (actors, cars) hash FRAGCOORD for their tooth too (0.6 % of the
   frame differs after a pan with the actors shown, all on actors / cars); needs an object- or
   world-locked coordinate in those shaders.
+- MILESTONE the item + part prints world-locked too: look_d4_item (traffic, atlas crowd, ghosts) and
+  print_part (full rigs: tooth, shadow dots) take `world_px` (CityView sets the item material;
+  `PartMaterials.set_world_px` from CityCharacters._before_render every frame, before the no-tick skip:
+  the camera moves between ticks; CityView.world_px is now a member). world_lock with the actors shown
+  (paused, so they hold still): before 0.20 / 0.41 / 0.57 % (32 / 48 / 64), item only 0.16 / 0.35 / 0.59,
+  item + part 0.00 / 0.00 / 0.04 %. The check now judges the whole frame by default (`--world-only`
+  keeps the world-pass view); planted 43 / 37 / 45 %. city_view.gd is 202 lines (soft 200).

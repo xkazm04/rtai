@@ -6,6 +6,7 @@ shader_type canvas_item;
 // ghost = 1: everything prints on the teal plate (the dead only).
 
 uniform float ghost = 0.0;
+uniform vec2 world_px = vec2(0.0);  // the camera's world offset in screen px: tooth and ghost dots locked to the world
 uniform float shadow_k = 0.62;     // drop-shadow ink tint per unit alpha
 uniform vec3 steel_out = vec3(0.640, 0.600, 0.630);   // the flat wash value steel prints at
 
@@ -24,7 +25,7 @@ float dots(vec2 frag, float cov, float ang) {
 
 void fragment() {
 	vec4 c = COLOR;
-	vec2 px = FRAGCOORD.xy;
+	vec2 px = FRAGCOORD.xy + world_px;
 	float g = 1.0 - 0.06 * hash(floor(px));
 	if (c.a < 0.02) discard;
 	if (ghost > 0.5) {

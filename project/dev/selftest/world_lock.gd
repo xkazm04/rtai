@@ -1,12 +1,13 @@
 extends "res://dev/selftest/city_selftest.gd"
-## World lock of the world print pass (look_d4's tooth, grime and hatch): the selftest
-## junction settles at 32 / 48 / 64 px/m, the tree pauses (the sim and the rigs hold still), and
-## the camera pans by PAN_M (a whole number of screen px at every zoom) with the actors canvas
-## hidden. With world_px fed every frame the world moves rigidly: frame B equals frame A shifted
-## by the pan, so the share of differing pixels in the overlap is ~0. A screen-locked print
-## would swim (planted with --plant-unlocked: world_px held at its pre-pan value). Writes
+## World lock of every print pass (look_d4's tooth, grime and hatch; the item and part tooth and
+## dots, all on world_px): the selftest junction settles at 32 / 48 / 64 px/m, the tree pauses
+## (the sim and the rigs hold still), and the camera pans by PAN_M (a whole number of screen px at
+## every zoom). With world_px fed every frame the picture moves rigidly: frame B equals frame A
+## shifted by the pan, so the share of differing pixels in the overlap is ~0. A screen-locked
+## print would swim (planted with --plant-unlocked: world_px held at its pre-pan value). Writes
 ## world-lock.json (gtai.world-lock/1).
 ##   godot --path project res://dev/selftest/world_lock.tscn -- --out=<dir> [--plant-unlocked]
+##   [--world-only]
 
 const PPMS: Array[int] = [32, 48, 64]
 const PAN_M: Vector2 = Vector2(1.25, 0.75)
@@ -16,12 +17,16 @@ const MAX_SHARE: float = 0.005
 const STRIDE: int = 2
 
 var _plant: bool = false
+## --world-only hides the actors canvas (the world pass alone); by default the whole frame.
+var _actors: bool = true
 
 
 func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
 		if arg == "--plant-unlocked":
 			_plant = true
+		elif arg == "--world-only":
+			_actors = false
 		elif arg.begins_with("--out="):
 			_out = arg.substr(6)
 		else:
@@ -49,7 +54,7 @@ func _check(ppm: int) -> Dictionary:
 	for i: int in SETTLE_FRAMES:
 		await get_tree().process_frame
 	get_tree().paused = true
-	_view.actor_layer().visible = false  # the world only: the actor prints are their own item
+	_view.actor_layer().visible = _actors
 	var a: Image = await _grab()
 	var held: Variant = _print_mat().get_shader_parameter(&"world_px")
 	_city.focus = JUNCTION + PAN_M

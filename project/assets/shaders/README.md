@@ -15,8 +15,9 @@ The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
   (`(cam.position * cam.zoom.x).round() - viewport_size / 2`), so the grime, hatch and paper tooth are locked
   to the world. Every per-pixel noise in the world pass hashes `w = FRAGCOORD.xy + world_px`, never `FRAGCOORD`
   alone (the paper tooth did until 2026-11-03 and swam on pans). Checked in the selftest evidence by
-  `dev/selftest/world_lock.gd` (pan the paused junction; the world must move rigidly). The item shaders
-  (`look_d4_item`, `print_part`) still hash `FRAGCOORD` for their tooth: actors and cars, open.
+  `dev/selftest/world_lock.gd` (pan the paused junction; the whole frame must move rigidly). The item
+  (`look_d4_item`, CityView sets it) and part (`print_part`, `PartMaterials.set_world_px` every frame) shaders
+  take the same `world_px` for their tooth, shadow dots and ghost dots.
 - The pen work comes from the D4 art (`features/city/art/`), not from the shader. The colour doctrine
   (vermilion = threat, hazard, pickup, Rivet's collar; teal = the dead, the torch tip) lives in the assets.
 - Cutout characters keep their own part print (`print_part`, ported with the rig in F-09); the cream sticker rim is

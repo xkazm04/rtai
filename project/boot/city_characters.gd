@@ -54,6 +54,7 @@ func bake() -> void:
 ## 60 Hz, or a second frame inside one tick) the feed, the pose and the rig slots are all
 ## unchanged, so the whole rig pass is skipped (lane A measured rig p99 0.57 ms against 0.3).
 func _before_render(focus: Vector2) -> void:
+	PartMaterials.set_world_px(_view.world_px)  # every frame: the camera moves between ticks
 	var steps: int = clampi(_clock.tick() - _last_tick, 0, CharacterRigs.MAX_STEPS)
 	if steps == 0 and _primed and is_equal_approx(rigs.zoom, _view.zoom):
 		rigs.last_us = 0

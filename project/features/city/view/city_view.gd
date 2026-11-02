@@ -38,6 +38,8 @@ var clock: SimClock = null
 ## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
 ## frame (eased zoom, look-ahead, shake); null keeps `zoom` as set (selftests, goldens, benches).
 var rig: CameraRig = null
+## The camera's world offset in screen px this frame (every print shader's world lock).
+var world_px: Vector2 = Vector2.ZERO
 ## The followed body's velocity (m/s) for the rig's look-ahead.
 var follow_vel_mps: Vector2 = Vector2.ZERO
 var textures: CityTextures = null
@@ -126,8 +128,9 @@ func _place_camera(focus: Vector2) -> void:
 	camera.position = focus * SimConst.PX_PER_M + offset
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
-	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
+	world_px = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)
+	_item_mat.set_shader_parameter(&"world_px", world_px)
 	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
 	for o: LookOverlay in _overlays:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
