@@ -175,3 +175,9 @@ NEXT:
   fails the D4-parity gate by 61%. Temporary shader edits reverted (git clean). Board evidence/item9_steel_owner_ab.png.
 - 23:18 NOTE (city/d4-production lanes): lamp_post reads as a spoon lying on the pavement at 48-64 px/m (the mock's
   lamp is a kerb base + curved arm + round head). Not D5 scope; on the gap list.
+- 23:22 Codex: 1 D5 street decal sheet (d5_decals, 2x2 layout template + hero_48 + concept; 188 s). 0 rejected (flat
+  marks; STRIKE spelled right; cream + ink only). Ledger total 28.
+- 23:24 MILESTONE: D5 big street decals (300c1f7): union-fist stencil 2.8 m, STRIKE 4.4 m, chalk robot 2.4 m, scorch
+  2.2 m at 96 px/m in features/city/art/d5/decals/, placed by dev/showcase/d5_hero_decals.gd (d5 tier). h45 had the
+  chalk cramped between crosswalks -> h46 moved into the open lane by the fight. h46 vs h44: verm and teal px
+  identical at 32-96, 1.1% of frame changed at 32. Board evidence/item10_street_decals.png. Hero frames = h46.
