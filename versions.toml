@@ -30,9 +30,10 @@ path = "project/addons/gut"
 version = "24"
 
 [godot_cpp]
-# Placeholder (NAT-04): submodule added with the native port ticket, tag written to
-# native/GODOT_CPP_VERSION. Never a floating master.
-tag = "TODO"
+# NAT-04: git submodule native/godot-cpp pinned to this commit (also in native/GODOT_CPP_VERSION).
+# godot-cpp has no godot-4.7 tag yet; this is master of 2026-10-30, proven by the spike with
+# api_version=4.7. Never a floating master; move to the 4.7 tag once it is published.
+commit = "e103d348c4b2d8df7b819126d855e19381cb9a87"
 api_version = "4.7"
 
 [godotsteam]

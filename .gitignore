@@ -10,6 +10,11 @@ native/**/bin/
 *.obj
 .sconsign.dblite
 *.pdb
+# Native build output (NAT-05): SCons object dirs, the standalone test exe, MSVC link by-products.
+/native/build/
+*.lib
+*.exp
+*.ilk
 steam_appid.txt
 *.tmp
 # Local tool output and scratch
@@ -17,3 +22,4 @@ node_modules/
 __pycache__/
 .DS_Store
 Thumbs.db
+project/data/generated/city/

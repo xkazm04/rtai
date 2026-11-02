@@ -1,0 +1,15 @@
+; The native bubble sim (NAT-10): built from native/ with SCons into project/native/bin/ (git-ignored).
+; One library per platform; each export ships only the matching one.
+
+[configuration]
+
+entry_symbol = "gtai_sim_init"
+compatibility_minimum = "4.7"
+reloadable = false
+
+[libraries]
+
+windows.debug.x86_64 = "res://native/bin/gtai_sim.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://native/bin/gtai_sim.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "res://native/bin/libgtai_sim.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "res://native/bin/libgtai_sim.linux.template_release.x86_64.so"
