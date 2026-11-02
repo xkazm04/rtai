@@ -439,3 +439,13 @@ NEXT:
   light edge wear at 48, lived-in at 64; silhouettes and the cruiser's vermilion bar untouched. Damage states and
   wrecks untouched (they already carry the d4n_dmg marks). Traffic atlases rebuilt. 11 provenance lines
   (prov_rev.py now stamps today's date). Commit 54bf23f. Revert = that commit if the owner wants clean cars.
+- 00:17 MILESTONE soul portraits (HUD soul cards were empty frames). Codex `d4n_souls` (image 20 of the night;
+  template = 4 portrait guides, style ref = the D5 concept's teal soul ghosts), 4 busts, **0 rejected** (front-on is
+  right for a HUD portrait; the straight-down rule is for world art). Gearbox (driver cap, steering wheel, worried),
+  Sentry (dome, one lens eye), Hauler (huge shoulders, sleepy smile), Mop (drone cluster, brush). `tools/slice_souls.py`:
+  key by RGB distance + un-mix, fit 220 x 350 inside the inner frame line; first cut left the smoke LILAC (un-mix
+  drift) and overlapped the frame -> recoloured to a pure deep-teal / teal / cream ramp and shrunk. `_idle` = ink
+  ramp (teal only on the active card, HUD README). Dev HudOverlay draws Gearbox active + Sentry idle. In-engine
+  `before_soul|after_soul/city-*-hud{40,50}.png` (`work/soul_ab.png`): reads at UI 0.4. prov.py: d4n_souls master +
+  8 lines (keeps logged dates now). Commit 5f1fc28.
+  Note for the HUD owner: portraits are 220 x 350 at 2x, offset ((card_w - 220) / 2, 40) card px.
