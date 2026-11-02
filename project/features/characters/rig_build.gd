@@ -23,7 +23,7 @@ static func build(rig: CutRig) -> void:
 	)
 	rig.pelvis_spr = _part(rig, p.pelvis_part, core, true, -1)
 	_attach(rig.pelvis, rig.pelvis_spr, p.pelvis_z)
-	rig.torso_spr = _part(rig, p.torso_part, core, true, -1)
+	rig.torso_spr = _part(rig, p.torso_part, core, true, p.torso_swap)
 	_attach(rig.torso, rig.torso_spr, p.torso_z)
 	if p.has_collar():
 		rig.collar_spr = _part(rig, p.collar_part, PartMaterials.PartKind.COLLAR, true, -1)

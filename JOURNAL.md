@@ -337,3 +337,15 @@ NEXT (iteration 7 / morning, in order):
   arithmetic is (Vector3 IK, lerps, the end-on cell checks). For the characters owner: the remaining
   ~0.04 ms to the 0.3 ms target is a native RigArm/RigGait (or ~1 fewer drive per tick, e.g. 3 full
   ranks), not GDScript micro-tuning.
+- Evidence at 3aa7005 (203239d): lint 13/13, unit 200, scenarios 8, parity PASS, selftest PASS (goldens
+  10/10 worst 1.10 - was 0.85: the quarter-rate rigs pose differently, within the threshold; accent
+  0.95 / 0.95 / 0.25 %; 1 off-doctrine world source = traffic_light.png 216 px, unchanged).
+- MILESTONE cop accent option: `BodyPlan.torso_swap` (print_part `swap` on the torso; -1 = none, the
+  default for every plan, so nothing changes). Frames 17-cop-accent/ with HumanPlan.cop() torso_swap = 2
+  (vermilion -> cream) for the capture only: the cop becomes a cream sticker body with the vermilion
+  cap / helmet (head_swap 4), as in the d4h2 mock. Accent audit: frame vermilion 0.95 % -> 0.56 % at 32
+  and 48 px/m, 0.25 -> 0.18 % at 64; crowd atlas patrol 29276 -> 20344 px, riot 24744 -> 15484
+  (evidence/accent-audit-cop-cream.json). My read: closer to the mock and to "accents rarely", and it
+  leaves the objective diamond as the only vermilion SHAPE; but cops lose salience as threats at 32
+  px/m (a red dot instead of a red body). OWNER CALL (with the objective call above, they are one
+  decision): to ship it, add `p.torso_swap = 2` to HumanPlan.cop(). Not shipped. 0 frames rejected.
