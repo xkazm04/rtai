@@ -1,0 +1,29 @@
+{
+  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead; vermilion prints as a solid ink mass (verm_value).",
+  "frame": {
+    "amount": 1.0,
+    "band": 0.07,
+    "blood": 1.0,
+    "crush": 0.36,
+    "edge_ink": 0.0,
+    "grain": 0.06,
+    "light_dir": [
+      -0.6,
+      -0.8
+    ],
+    "rain": 0.4,
+    "rain_len": 22.0,
+    "rain_slant": 0.18,
+    "rim": 1.0,
+    "rim_hi": 0.06,
+    "rim_lo": 0.02,
+    "soft": 0.025,
+    "stroke_period": 3.0,
+    "teal": 1.0,
+    "thresh": 0.46,
+    "verm_value": 0.0,
+    "vignette": 0.35
+  },
+  "keep_d4": false,
+  "schema": "gtai.look-noir-params/1"
+}

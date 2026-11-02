@@ -1,7 +1,7 @@
 extends Node
 ## LaunchArgs autoload: user args after `--`. Unknown args fail loudly (TST-03).
 
-const KNOWN_FLAGS: PackedStringArray = ["--seed", "--replay", "--record", "--devtools"]
+const KNOWN_FLAGS: PackedStringArray = ["--seed", "--replay", "--record", "--devtools", "--look"]
 
 var _values: Dictionary[String, String] = {}
 var _unknown: Array[String] = []
