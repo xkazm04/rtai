@@ -331,3 +331,9 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   megaphone's copper rust prints as pure vermilion, the cream rim prints as a dashed hatch. 0 px at 32/48 (tier).
   Worse than as drawn; scene restored to a6 (git clean). A King print needs its own ramp (or King parts drawn to the
   Rivet sheets' tone range). Ladder +1 row (a6 | a7).
+- 00:39 Codex: 1 D5 phone frame (front-view UI art, chroma-green layout template + concept, 59 s), 0 rejected
+  (flat green screen, vermilion only on the hazard tape). Ledger 38.
+- 00:40 MILESTONE (05a7b45): the PHONE close-up venue in-engine: phone_frame.png (keyed, the screen is a hole;
+  install_king_top.py generalised, the King re-key is byte-identical) and `d5_hero.gd -- --phone=cop_alarmed`
+  (portrait behind the screen + a placeholder call strip). ph1 = ph2 0 px; regression: dlg2 = dlg3 0 px, h64 = h66
+  0 px at 32/64/128. Board evidence/item19_phone.png; ladder +1 row.
