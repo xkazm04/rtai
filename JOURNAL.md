@@ -236,3 +236,8 @@ NEXT:
   about half the vermilion, but the shoulders overlap into one central vermilion blob from above (reads as a bullseye).
   Mixed; the doctrine lists cops as a vermilion case. **Owner: full vermilion uniform (now) or an ink uniform with a
   small vermilion accent (cap band / armband, would need a redraw, not this recolour)?** Cop torso restored.
+- 23:12 GATES at 10a529a (after every iteration-2 art commit incl. tank_tracks): `run.mjs --no-bench` rc 0: lint 13/13,
+  unit 142/142, scenarios 8/8, parity bit-exact (mutation caught), selftest 0 placeholders. bench not re-run (shared
+  box; see iteration-1 note); textures only changed, no new texture count in the city table.
+- 23:12 pickups re-shot on the quiet paving (`after_k4/`): iteration-1 tokens -> iteration-2 family, ladder row
+  `after_k|after_k4`. All 11 tokens read at 32 px/m on paving and asphalt (item pass).
