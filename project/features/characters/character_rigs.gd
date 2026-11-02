@@ -13,6 +13,9 @@ const MAX_FULL: int = 16
 ## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true).
 const FULL_RATE: int = 6
 const RADIUS_M: float = 14.0
+## The nearest-N selection (a GDScript scan of the whole feed, ~0.1 ms in a riot) runs every
+## SELECT_EVERY calls; between, the kept rigs only find their rows again (a native find).
+const SELECT_EVERY: int = 4
 const PX_PER_M: float = 32.0
 const MAX_STEPS: int = 4
 const PREWARM: Dictionary[int, int] = {
@@ -34,6 +37,7 @@ var _pool: RigPool = RigPool.new()
 var _by_actor: Dictionary[int, CutRig] = {}
 var _full: PackedByteArray = PackedByteArray()
 var _rank: Dictionary[int, int] = {}
+var _select_in: int = 0
 
 
 func setup(ctx: WorldContext) -> void:
@@ -106,6 +110,10 @@ func baked_cell(i: int, t: float) -> int:
 
 
 func _assign() -> void:
+	_select_in -= 1
+	if _select_in > 0 and _remap():
+		return
+	_select_in = SELECT_EVERY
 	var chosen: PackedInt32Array = RigSelect.nearest(feed, focus, RADIUS_M * PX_PER_M, MAX_FULL)
 	@warning_ignore("return_value_discarded")
 	_full.resize(feed.count)
@@ -127,6 +135,21 @@ func _assign() -> void:
 		if not _by_actor.has(actor):
 			_by_actor[actor] = _acquire(i)
 		RigInput.apply(_by_actor[actor], feed, i)
+
+
+## Between selections the feed is rebuilt (rows move): each kept rig finds its row by actor id
+## and takes its input. False when a kept actor left the feed (the caller then reselects).
+func _remap() -> bool:
+	@warning_ignore("return_value_discarded")
+	_full.resize(feed.count)
+	_full.fill(0)
+	for actor: int in _by_actor:
+		var i: int = feed.ids.find(actor)
+		if i < 0 or i >= feed.count:
+			return false
+		_full[i] = 1
+		RigInput.apply(_by_actor[actor], feed, i)
+	return true
 
 
 func _acquire(i: int) -> CutRig:
