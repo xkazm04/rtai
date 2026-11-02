@@ -392,3 +392,9 @@ NEXT (iteration 7 / morning, in order):
   Old -> new mean diffs 0.86 .. 1.88. Looked at them (20-golden-rebless/d4-old-left-new-right.png,
   crop-64-light.png): same junction, rig poses differ, and the one new shape at 64 px/m is a muzzle
   light cone (hatched paper) + muzzle star from the FX feed - expected. 0 rejected.
+- The last screen-locked noise: fx_ink's fade dither (`hash(FRAGCOORD / 2)`) - a fading ink splat (240
+  ticks on the ground twin) or smoke dissolved through a screen-fixed pattern while the camera panned.
+  FxSystem.step(tick, world_px) sets it on all three twins (CityView passes its world_px). world_lock
+  full frame at 64 px/m: 0.03 % -> 0.00 % (32 / 48 already 0.00). Goldens 10/10, worst 0.05 (the
+  dither moved under the junction's muzzle stars), not re-blessed. Every print shader in the game now
+  hashes world coordinates: look_d4, look_d4_item, print_part, fx_ink, light_ink.

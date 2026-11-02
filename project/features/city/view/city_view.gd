@@ -135,9 +135,9 @@ func _place_camera(focus: Vector2) -> void:
 	for o: LookOverlay in _overlays:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
 	lights.step(tick, world_px)
-	fx.step(tick)
-	fx.glow.step(tick)
-	fx.ground.step(tick)
+	fx.step(tick, world_px)
+	fx.glow.step(tick, world_px)
+	fx.ground.step(tick, world_px)
 	markers.step(tick)
 
 

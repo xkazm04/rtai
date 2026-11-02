@@ -7,6 +7,7 @@ shader_type canvas_item;
 
 uniform sampler2D atlas : source_color, filter_linear_mipmap, repeat_disable;
 uniform vec2 grid = vec2(1.0);
+uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px: the fade dither is world-locked
 
 varying vec4 custom;
 
@@ -45,7 +46,7 @@ vec4 sheet(float cell_plus1, vec2 uv, float keep) {
 }
 
 void fragment() {
-	float keep = step(hash(floor(FRAGCOORD.xy / 2.0)), COLOR.a);
+	float keep = step(hash(floor((FRAGCOORD.xy + world_px) / 2.0)), COLOR.a);
 	if (custom.z > 0.5) {
 		COLOR = sheet(custom.z, UV, keep);
 	} else {

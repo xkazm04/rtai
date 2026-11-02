@@ -40,6 +40,7 @@ var _dirty: bool = true
 var _last_tick: int = -1
 var _atlas_path: String = ""
 var _atlas_grid: Vector2 = Vector2.ONE
+var _world_px: Vector2 = Vector2.ZERO
 
 
 func _init() -> void:
@@ -105,7 +106,11 @@ func spawn(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> bool:
 ## Advances the particles to sim tick `tick` and draws them; call once a frame. Everything a
 ## particle shows is a function of the tick, so a frame with no tick and no spawn keeps the
 ## MultiMesh as it is (the per-instance rewrite cost +0.35 ms a frame in the riot at ~1000 fps).
-func step(tick: int) -> void:
+## world_px (the camera's world offset in screen px) locks the fade dither to the world.
+func step(tick: int, world_px: Vector2 = Vector2.ZERO) -> void:
+	if world_px != _world_px:
+		_world_px = world_px
+		(_node.material as ShaderMaterial).set_shader_parameter(&"world_px", world_px)
 	var t0: int = Time.get_ticks_usec()
 	var steps: int = clampi(tick - _last_tick, 0, MAX_STEPS) if _last_tick >= 0 else 0
 	if tick == _last_tick and not _dirty:
