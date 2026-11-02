@@ -46,6 +46,51 @@
    "sha256": "406b3d4d6a5d4eb1a2cabb603aeaf5874d836673ea293ae2aa02243044faed42",
    "tool": "codex-image"
   },
+  "d5_ped_a": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_ped_a.png",
+   "layout_template": "masters:night/d5-close/gen/refs/ped_a.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/ped_d5.txt",
+   "prompt_sha256": "eb85e264e7f7dc3fbcc498e2aeed59a576d811c3d3ab87fdfa85a2f3bd449f79",
+   "references": [
+    "own master: d4/chars/sheets/ped_a.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "0ca3881aabd4fcd24e9bfdd98c96dc46f771a3f255a69c09c0efb08886710077",
+   "tool": "codex-image"
+  },
+  "d5_ped_b": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_ped_b.png",
+   "layout_template": "masters:night/d5-close/gen/refs/ped_b.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/ped_d5.txt",
+   "prompt_sha256": "eb85e264e7f7dc3fbcc498e2aeed59a576d811c3d3ab87fdfa85a2f3bd449f79",
+   "references": [
+    "own master: d4/chars/sheets/ped_b.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "ace9caf28b6f7959cf113704b109b53cb89874f76842f1ad2426433940e1a5b5",
+   "tool": "codex-image"
+  },
+  "d5_ped_c": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_ped_c.png",
+   "layout_template": "masters:night/d5-close/gen/refs/ped_c.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/ped_d5.txt",
+   "prompt_sha256": "eb85e264e7f7dc3fbcc498e2aeed59a576d811c3d3ab87fdfa85a2f3bd449f79",
+   "references": [
+    "own master: d4/chars/sheets/ped_c.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "e7c640cb111b855bc6b6224e473d670b78b7bbafb04a8c4f2707171532aa289f",
+   "tool": "codex-image"
+  },
   "d5_portrait_cop": {
    "date": "2026-11-02",
    "file": "masters:night/d5-close/gen/out/d5_portrait_cop.png",
