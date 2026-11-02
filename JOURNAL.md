@@ -53,3 +53,33 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
   and hp bar are teal (the noir doctrine keeps teal for the dead only - the placeholder's colour, not
   the pass's; noted for the noir parts). quest-v1 (camera on Rivet) had the fight off-frame; v2
   frames between Rivet and the nearest guard but loses Rivet when they are > 26 m apart.
+- REVERTED (two experiments, not committed):
+  1. `look_noir_crowd.gdshader`: the baked crowd atlas printed as ink silhouettes with a lit-side white
+     rim (the brief's "black masses with white rim"). The material was applied to the RL_PEDS MultiMesh
+     (confirmed by a log line), but the frames were pixel-identical (crowd-ink-v2/): the people on screen
+     at the junction are not drawn through that node's material the way I assumed. I ran out of time to
+     trace it, so I reverted it.
+  2. Quest 1's HUD lifted above the noir pass (quest-v3/): the rain left the bark box, but the HUD then
+     prints D4 vermilion (heat pips, speaker name), which breaks the noir doctrine. That is worse, so I
+     reverted it. The real fix is a noir HUD palette (Ink tokens), not a layer move.
+- Evidence summary for the morning: `evidence/NOIR.md` (+ ladder.png, showcase-d4-vs-noir.png and
+  the gate JSONs, all untracked in the worktree). Gates at 81dca0e: lint, 173 unit, 8 scenarios, parity
+  and selftest all PASS.
+- Image generation: Leonardo balance is 0. No Codex image_gen was run this session (0 images, 0 rejected),
+  so there are no provenance lines to add.
+
+NEXT:
+1. Item 2, the noir characters (the weakest item): first find out how the city draws the crowd atlas
+   (CrowdLayers / CitySimRender write_render: which node and material the people actually use), then
+   retry the ink-silhouette + lit-rim print for the crowd, and do the same for the full rigs through
+   `part_materials.gd` (a noir part print). Rivet's collar and claw need a rim, not a flat black. If
+   that is not enough, run a Codex round (the layout-template technique) for noir Rivet / cop / ped parts on
+   the same rig.
+2. The showcase with real bodies: put 2 cop rigs at the clip's COPS points (or run the junction fight
+   from a CombatArena), and record 48 and 64 px/m clips of 10-20 s.
+3. Wall splats (needs wall/prop edges in the view), and the pool shape (discs read as blots; a
+   spreading pool could be an SDF ring).
+4. Noir HUD palette (Ink tokens without vermilion) for quest 1's view; then lift the HUD above the pass.
+5. Measure the noir pass cost (bench with --look=noir) before anyone calls it free.
+6. Knockback poses held as panels: the hit-stop holds the world, but the victims are not posed yet
+   (the city crowd has no knockback clip). The long coat / rain secondary motion is not started.
