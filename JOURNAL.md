@@ -194,3 +194,4 @@ NEXT (iteration 5 / morning, in order):
   worst swap 32 ms, 0 frames > 50 ms (49 > 25 ms, all vsync/present). Riot rig 0.457 ms per tick, p99 0.501
   (idle HEAD run: 0.474 / 0.511): in the release build the selection decimation is only -2..-4 %; the 0.3 ms
   target is NOT met. evidence/bench-*-final.json, evidence/bench-final-iter4.txt.
+- Evidence 23:06 at 05531f3: lint 13/13, unit 183, scenarios 8, parity PASS, selftest PASS (goldens 10/10 worst 0.74; crowd 6/6 on doctrine). Copied to evidence/pof/.
