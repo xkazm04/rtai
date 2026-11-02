@@ -8,9 +8,9 @@ tick count, no RNG.
 | File | What |
 |---|---|
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
-| `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
+| `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and 96 (h38) / the concept |
 | `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h38, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
@@ -18,22 +18,22 @@ tick count, no RNG.
 | `item4e_kerb_corners.png` | rounded kerb corners at 32 (and 48 x2), h26 vs h28 |
 | `item6_cop_shade.png` | cop at 96 px/m: D5 tier without / with the form shade on vermilion plates |
 | `item5b_loading.png` | the D5 loading illustration at 960 and 480 px wide |
-| `item4c_souls_print.png` | the D5 souls at 64 px/m: world print / look_d4_item ghost print (rejected) / as drawn (kept) |
+| `item4c_souls_print.png` | the D5 souls at 64 px/m: ghost print (rejected) / as drawn / look_d5_soul hard snap / look_d5_soul soft + tier fade (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
-## Iteration 2 (22:14 -> 23:4x) in one screen
+## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
   D4 neighbour roofs, rounded kerb corners + kerb shadows, a parked cruiser/sedan, the shot (flash, tracer,
   casings), ink splat, manhole/grate/skids/oil, the D5 teal soul trail, and the form-shaded D5 cast.
 - Shader: look_d5_part form shade (steel and vermilion plates), derivatives moved to uniform flow; look_d5 street
-  hatch at 40% for the 48 px/m car camera. Params in look_d5.params.json (`shade_px`, `shade_k`, `lit_k`,
+  hatch at 40% for the 48 px/m car camera; look_d5_soul (new, tier-faded soul print). Params in look_d5.params.json (`shade_px`, `shade_k`, `lit_k`,
   `verm_shade`, `street_hatch_car`).
 - Measured (was unmeasured): GPU cost of the D5 tier (`d5-cost.json`), walk shimmer re-run after each shader change.
 - Rejected this iteration: 9 px form shade with steel darkening (contrast), look_d4_item ghost print for the souls
   (dot mesh), 0.32 m bold kerb shadow (hazard stripe), brighter lit rim (no effect), a cream mural fist (would kill the
-  figure/ground). Codex: 1 soul sheet + 1 loading illustration; 0 rejected (ledger total 27).
+  figure/ground), a hard-snap soul print (speckles at 32 px/m), an inner kerb joint arc (floats). Codex: 1 soul sheet + 1 loading illustration; 0 rejected (ledger total 27).
 - Item 5b: a D5 LOADING illustration (`item5b_loading.png`, installed at `features/menus/art/d5/loading_rivet.png`,
   1920x1081): Rivet on a wet crosswalk under an ink union-fist mural, the teal souls rising, a cruiser; vermilion only
   on the collar, rust and the light bar; the left third left calm for loading text. Marked store-safe (owner review).
