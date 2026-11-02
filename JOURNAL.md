@@ -78,11 +78,19 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
   less busy. But the silhouettes are blobby (the atlas alpha includes the sticker halo, so limbs merge),
   and the 16 near full rigs stay white, so the foreground and the crowd do not match. It is not the default.
 
+- REVERTED (23:42): a `noir` uniform in `features/characters/print_part.gdshader` + `PartMaterials.set_noir()`
+  (the body prints as one ink mass, and the cream halo stays the white rim). The materials were confirmed set
+  (8 shared mats, noir 1.0 logged), but the near full rigs still printed cream in crowd-ink-v6. A
+  modulate diagnostic was inconclusive (a blue modulate darkens cream by itself). Suspects: the rigs
+  redraw only on sim ticks while the A/B shots are paused, or a branch of print_part I did not reach. The
+  change touched the characters feature (outside my file scope), so I reverted it rather than leave it half-proven.
+
 NEXT:
 1. Item 2, the noir characters (the weakest item): wire look_noir_crowd into --look=noir properly
    (CityCharacters sets the atlas material after bake; noir needs a hook there), bake the atlas without
    the halo in noir (so limbs stay legible), and give the full rigs the same ink + lit rim through
-   `part_materials.gd` (a noir part print), so the near and far people match. Rivet's collar and claw need a rim, not a flat black. If
+   `part_materials.gd` (a noir part print), so the near and far people match. Start by testing the
+   print_part `noir` uniform with the world RUNNING (no pause) and a plain frame grab, before any A/B. Rivet's collar and claw need a rim, not a flat black. If
    that is not enough, run a Codex round (the layout-template technique) for noir Rivet / cop / ped parts on
    the same rig.
 2. The showcase with real bodies: put 2 cop rigs at the clip's COPS points (or run the junction fight
