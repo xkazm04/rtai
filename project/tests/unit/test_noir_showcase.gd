@@ -52,3 +52,37 @@ func test_held_panel_follows_the_sequence() -> void:
 	assert_true(impact.active(), "the panel holds 8 ticks after the 3 flash ticks")
 	impact.step_ticks(1)
 	assert_false(impact.active())
+
+
+func test_coat_swings_within_bounds_then_settles() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var data: DataStore = autofree(DataStore.new())
+	var rigs: CharacterRigs = CharacterRigs.new()
+	add_child_autofree(rigs)
+	rigs.setup(World.build_context(bus, data, 7))
+	var cop: int = 101
+	var i: int = rigs.feed.put(0, cop, BodyPlan.Kind.COP, Vector2.ZERO, Vector2(0.0, 120.0))
+	rigs.feed.face[i] = 0.0
+	var coats: NoirCoats = NoirCoats.new()
+	var ids: PackedInt32Array = PackedInt32Array([cop])
+	var peak: float = 0.0
+	for t: int in 60:
+		rigs.step_ticks(1)
+		coats.step(rigs, ids)
+		peak = maxf(peak, absf(_coat(rigs, cop).rotation))
+	assert_gt(peak, 0.05, "sideways motion swings the coat")
+	assert_lte(peak, NoirCoats.MAX_ANGLE)
+	rigs.feed.vel[i] = Vector2.ZERO
+	for t: int in 400:
+		rigs.step_ticks(1)
+		coats.step(rigs, ids)
+	assert_almost_eq(_coat(rigs, cop).rotation, 0.0, 0.02, "at rest it hangs straight")
+
+
+func _coat(rigs: CharacterRigs, id: int) -> Sprite2D:
+	var torso: Node2D = rigs.rig_for(id).torso
+	for c: Node in torso.get_children():
+		if c is Sprite2D and (c as Sprite2D).texture != null:
+			if (c as Sprite2D).texture.resource_path.ends_with("coat_tail.png"):
+				return c as Sprite2D
+	return null
