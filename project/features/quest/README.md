@@ -28,3 +28,8 @@ Packages land in PoF's `games/gtai/quests/<id>/quest.json` and are copied into `
   `when` lines are barks that fire once, the first active tick their conditions hold, and cut
   the queue. Timing reads the package's source text, so the replay hash ignores the locale;
   `subtitle()` resolves the words and speaker names through `QuestText`.
+
+Tests: `tests/unit/test_quest_*.gd` (loader, rules, text, runner, objectives, lines) and the
+scenario `tests/scenarios/scenario_quest_selftest.gd`, which plays the spike's `_selftest`
+fixture headless to completion through `QuestBot` and the stub world, twice (bit-identical)
+plus a planted fault, and leaves `quest-selftest.json` in the evidence directory.
