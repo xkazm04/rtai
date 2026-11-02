@@ -206,7 +206,7 @@ NEXT:
 - 23:35 MILESTONE test_look_d5_params.gd (836a1a5): keys are uniforms (planted typo caught), zoom blend 0 at 32 +
   monotone, age_floor off. Found while writing it: shadow.offset_m is placement data, allowlisted. Unit 149/0.
 - README: gap list after iteration 3 (7 items, next step each).
-- 23:39 PROPOSAL evidence for gap 2 (d4-production lane, no D4 art changed): the d**1.8 lift applied to temporary
+- 23:36 PROPOSAL evidence for gap 2 (d4-production lane, no D4 art changed): the d**1.8 lift applied to temporary
   copies of the 4 D4 neighbour roofs (originals restored byte-for-byte, git clean, re-imported), round h54d4lift:
   OSHA at 32 px/m L 0.482 -> 0.538, paper 26% -> 38% (mock 44-49%); top-left neighbour 0.425 -> 0.477. Remaining ink
   mass = the roofs' thick hatched border ring. Board evidence/item14_d4_roof_lift_proposal.png.
