@@ -231,3 +231,6 @@ NEXT:
   MILESTONE item 5c: rivet_{neutral,angry,hurt,hopeful}.png (512 px) installed + provenance + manifest. Identity held,
   cream visor, no gore (hurt = dent + torn cable). At 64 px only angry (V slit) and the head tilts separate them.
   Board evidence/item5c_rivet_expressions.png.
+- 23:49 Codex: 1 King expression sheet (87 s), 0 rejected; ledger 30. Installed king_{neutral,wary,furious,smug}.png.
+  HONEST NAMING: the cell prompted "commanding" (megaphone raised) shows a sideways glance -> named "wary".
+  install_expressions.py generalised (rivet re-install byte-identical). Board evidence/item5c_king_expressions.png.

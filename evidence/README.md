@@ -29,7 +29,7 @@ tick count, no RNG.
 | `item12_age_floor_32.png` | iteration 3, PROPOSAL: aged paper at 32 px/m (`age_floor`, default off) vs now vs the mock |
 | `item13_killcam128.png` | iteration 3: the 128 px/m kill-cam, D4 vs D4+D5, beside the concept |
 | `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
-| `item5c_rivet_expressions.png` | iteration 3: Rivet dialogue expressions (neutral, angry, hurt, hopeful) at 512, 128 and 64 px beside the accepted portrait |
+| `item5c_rivet_expressions.png`, `item5c_king_expressions.png` | iteration 3: Rivet (neutral, angry, hurt, hopeful) and King (neutral, wary, furious, smug) dialogue expressions at 512, 128 and 64 px beside the accepted portraits |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
