@@ -1,0 +1,257 @@
+{
+ "torso": {
+  "size": [
+   164,
+   288
+  ],
+  "sheet": "sheets/cop_a.png",
+  "cell": 1,
+  "scale": 0.9966,
+  "pivot_a": [
+   142.0,
+   143.5
+  ],
+  "pivot_b": [
+   20.0,
+   143.0
+  ]
+ },
+ "head_cap": {
+  "size": [
+   147,
+   134
+  ],
+  "sheet": "sheets/cop_a.png",
+  "cell": 2,
+  "scale": 0.9966,
+  "pivot_a": [
+   66.0,
+   67.0
+  ],
+  "pivot_b": [
+   80.0,
+   66.5
+  ]
+ },
+ "head_helmet": {
+  "size": [
+   136,
+   134
+  ],
+  "sheet": "sheets/cop_a.png",
+  "cell": 3,
+  "scale": 0.9966,
+  "pivot_a": [
+   66.0,
+   66.0
+  ],
+  "pivot_b": [
+   68.0,
+   66.0
+  ]
+ },
+ "pelvis": {
+  "size": [
+   106,
+   174
+  ],
+  "sheet": "sheets/cop_a.png",
+  "cell": 4,
+  "scale": 0.9966,
+  "pivot_a": [
+   88.0,
+   86.0
+  ],
+  "pivot_b": [
+   18.0,
+   85.5
+  ]
+ },
+ "shield": {
+  "size": [
+   126,
+   256
+  ],
+  "sheet": "sheets/cop_a.png",
+  "cell": 5,
+  "scale": 0.9966,
+  "pivot_a": [
+   109.0,
+   128.0
+  ],
+  "pivot_b": [
+   17.0,
+   123.7
+  ]
+ },
+ "upperarm": {
+  "size": [
+   158,
+   93
+  ],
+  "sheet": "sheets/cop_b.png",
+  "cell": 1,
+  "scale": 0.9931,
+  "pivot_a": [
+   46.0,
+   46.0
+  ],
+  "pivot_b": [
+   120.0,
+   46.0
+  ]
+ },
+ "forearm": {
+  "size": [
+   177,
+   88
+  ],
+  "sheet": "sheets/cop_b.png",
+  "cell": 2,
+  "scale": 0.9931,
+  "pivot_a": [
+   44.0,
+   44.0
+  ],
+  "pivot_b": [
+   135.0,
+   42.5
+  ]
+ },
+ "thigh": {
+  "size": [
+   166,
+   94
+  ],
+  "sheet": "sheets/cop_b.png",
+  "cell": 3,
+  "scale": 0.9931,
+  "pivot_a": [
+   48.0,
+   47.0
+  ],
+  "pivot_b": [
+   126.0,
+   47.0
+  ]
+ },
+ "shin": {
+  "size": [
+   158,
+   87
+  ],
+  "sheet": "sheets/cop_b.png",
+  "cell": 4,
+  "scale": 0.9931,
+  "pivot_a": [
+   44.0,
+   43.5
+  ],
+  "pivot_b": [
+   122.0,
+   43.5
+  ]
+ },
+ "foot_flat": {
+  "size": [
+   140,
+   72
+  ],
+  "sheet": "sheets/cop_b.png",
+  "cell": 5,
+  "scale": 0.9931,
+  "pivot_a": [
+   36.0,
+   35.5
+  ],
+  "pivot_b": [
+   102.0,
+   35.5
+  ]
+ },
+ "forearm_pistol": {
+  "size": [
+   286,
+   94
+  ],
+  "sheet": "sheets/cop_c.png",
+  "cell": 1,
+  "scale": 0.9965,
+  "pivot_a": [
+   46.0,
+   46.5
+  ],
+  "pivot_b": [
+   266.0,
+   45.5
+  ]
+ },
+ "foot_toeoff": {
+  "size": [
+   120,
+   74
+  ],
+  "sheet": "sheets/cop_c.png",
+  "cell": 2,
+  "scale": 0.9965,
+  "pivot_a": [
+   36.0,
+   37.0
+  ],
+  "pivot_b": [
+   82.0,
+   37.0
+  ]
+ },
+ "upperarm_endon": {
+  "size": [
+   92,
+   92
+  ],
+  "sheet": "sheets/cop_c.png",
+  "cell": 3,
+  "scale": 0.9965,
+  "pivot_a": [
+   46.0,
+   46.0
+  ],
+  "pivot_b": [
+   46.0,
+   46.0
+  ]
+ },
+ "forearm_endon": {
+  "size": [
+   90,
+   91
+  ],
+  "sheet": "sheets/cop_c.png",
+  "cell": 4,
+  "scale": 0.9965,
+  "pivot_a": [
+   46.0,
+   45.0
+  ],
+  "pivot_b": [
+   44.0,
+   45.0
+  ]
+ },
+ "baton": {
+  "size": [
+   176,
+   43
+  ],
+  "sheet": "sheets/cop_c.png",
+  "cell": 5,
+  "scale": 0.9965,
+  "pivot_a": [
+   21.0,
+   21.5
+  ],
+  "pivot_b": [
+   156.0,
+   21.5
+  ]
+ }
+}
