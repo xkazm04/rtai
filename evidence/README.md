@@ -11,7 +11,7 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h37, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h38, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -24,7 +24,7 @@ tick count, no RNG.
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 2 (22:14 -> 23:4x) in one screen
-- Best frame now: `hero-d4d5-<ppm>ppm.png` = round h37 (h33 + the soul print) (item4 board `item4_hero_vs_targets.png`): blocks filled with
+- Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
   D4 neighbour roofs, rounded kerb corners + kerb shadows, a parked cruiser/sedan, the shot (flash, tracer,
   casings), ink splat, manhole/grate/skids/oil, the D5 teal soul trail, and the form-shaded D5 cast.
 - Shader: look_d5_part form shade (steel and vermilion plates), derivatives moved to uniform flow; look_d5 street
