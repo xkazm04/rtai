@@ -1,5 +1,5 @@
 extends Node
-## Main scene root. The composition root (world.gd, ARC-04) lands with the first feature port.
+## Main scene root. Its World child (boot/world.gd) is the composition root (ARC-04).
 
 
 func _ready() -> void:

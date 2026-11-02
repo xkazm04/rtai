@@ -87,7 +87,7 @@ export function checkAll(files = ownGdFiles()) {
   return [size, banned, steam, gitFmt];
 }
 
-if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/').replace(/^\/?/, '/')}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const checks = checkAll();
   for (const c of checks) {
     console.log(`${c.ok ? 'ok  ' : 'FAIL'} ${c.name}`);

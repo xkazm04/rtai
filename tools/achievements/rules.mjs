@@ -2,12 +2,19 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { validate } from '../lib/mini_schema.mjs';
-import { ROOT, ownGdFiles, readJson } from '../lib/repo.mjs';
+import { ROOT, ownGdFiles, readJson, rel } from '../lib/repo.mjs';
+import { stripComment } from '../style/check_gd.mjs';
 
-// DEVIATION ACH-04 (docs/decisions.md): until the first gameplay port there is no emit site
-// and no canon in this repo, so a dead trigger and an unresolved source only warn.
+// DEVIATION ACH-04 (docs/decisions.md): a trigger on a signal events.json still marks
+// `wired: false` (planned, no emitter yet) only warns; on a wired signal the emitter-wiring
+// check below guarantees an emit site, so it cannot be dead. No canon in this repo yet, so an
+// unresolved source only warns.
 export const DEAD_TRIGGER_IS_ERROR = false;
 export const UNRESOLVED_SOURCE_IS_ERROR = false;
+
+// Emit sites in these trees never count as wiring: a test or dev cheat emitting a signal does
+// not make the game emit it.
+const NON_PRODUCTION = ['project/tests/', 'project/dev/'];
 
 const BLOCK_BANDS = { story: [10, 12], soul: [8, 10], absurd: [8, 10], mastery: [3, 4], meta: [1, 2] };
 const MISSABLE_BLOCKS = ['absurd', 'mastery'];
@@ -16,14 +23,51 @@ const wordlist = (name) =>
   readFileSync(join(ROOT, 'tools', 'achievements', 'wordlists', name), 'utf8')
     .split('\n').map((l) => l.trim().toLowerCase()).filter((l) => l && !l.startsWith('#'));
 
-function emitSites() {
-  const sites = new Set();
-  for (const file of ownGdFiles()) {
-    for (const m of readFileSync(file, 'utf8').matchAll(/Events\.([a-z0-9_]+)\.emit\(/g)) {
-      sites.add(m[1]);
+/**
+ * Production emit sites per signal: Map<name, repo-relative paths>. Matches the autoload
+ * (`Events.x.emit(`) and the injected bus (`ctx.events.x.emit(`, `_events.x.emit(`).
+ */
+export function emitSites(files = ownGdFiles()) {
+  const sites = new Map();
+  for (const file of files) {
+    const path = rel(file);
+    if (NON_PRODUCTION.some((p) => path.startsWith(p))) continue;
+    const code = readFileSync(file, 'utf8').split('\n').map(stripComment).join('\n');
+    for (const m of code.matchAll(/\b_?[Ee]vents\.([a-z0-9_]+)\.emit\(/g)) {
+      if (!sites.has(m[1])) sites.set(m[1], []);
+      sites.get(m[1]).push(path);
     }
   }
   return sites;
+}
+
+/**
+ * Emitter wiring (ARC-06 + ACH-04), read from events.json: a `wired` signal has at least one
+ * production emit site and all of them sit under project/<emitter>/; a planned one has none.
+ * Emits of names events.json does not list are errors too.
+ */
+export function emitterWiring(events, sites) {
+  const errors = [];
+  const warnings = [];
+  const listed = new Set(events.signals.map((s) => s.name));
+  for (const sig of events.signals) {
+    const at = sites.get(sig.name) ?? [];
+    const home = `project/${sig.emitter.replace(/\/$/, '')}/`;
+    if (sig.wired && !at.length) errors.push(`${sig.name}: wired in events.json but no emit site`);
+    if (sig.wired) {
+      for (const p of at.filter((x) => !x.startsWith(home))) {
+        errors.push(`${sig.name}: emitted from ${p}, outside its declared emitter ${home}`);
+      }
+    }
+    if (!sig.wired && at.length) {
+      errors.push(`${sig.name}: emitted from ${at.join(', ')} but events.json says wired: false`);
+    }
+    if (!sig.wired) warnings.push(`${sig.name}: planned, no emitter yet (${home})`);
+  }
+  for (const [name, at] of sites) {
+    if (!listed.has(name)) errors.push(`${name}: emitted from ${at.join(', ')}, not in events.json`);
+  }
+  return { errors, warnings };
 }
 
 export function checkAll(doc, schema, events) {
@@ -32,7 +76,9 @@ export function checkAll(doc, schema, events) {
   if (errors.length) return { errors, warnings };
   const stats = new Map(doc.stats.map((s) => [s.id, s]));
   const signals = new Map(events.signals.map((s) => [s.name, s]));
-  const sites = emitSites();
+  const wiring = emitterWiring(events, emitSites());
+  errors.push(...wiring.errors);
+  warnings.push(...wiring.warnings);
   const banned = [...wordlist('profanity.txt'), ...wordlist('brands.txt')];
   const seen = new Set();
   for (const id of [...doc.stats.map((s) => s.id), ...doc.achievements.map((a) => a.id)]) {
@@ -45,8 +91,9 @@ export function checkAll(doc, schema, events) {
     checkTrigger(ach, signals, stats, err);
     checkStat(ach, stats, err);
     checkAllAges(ach, banned, err);
-    if (!sites.has(ach.trigger.on)) {
-      const msg = `${ach.id}: dead trigger, no Events.${ach.trigger.on}.emit( site in project/`;
+    const sig = signals.get(ach.trigger.on);
+    if (sig && !sig.wired) {
+      const msg = `${ach.id}: dead trigger, ${sig.name} is not wired yet (events.json)`;
       (DEAD_TRIGGER_IS_ERROR ? errors : warnings).push(msg);
     }
     const unresolved = `${ach.id}: source ${ach.source} not resolved (no canon in this repo yet)`;

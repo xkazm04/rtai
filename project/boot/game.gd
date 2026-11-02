@@ -12,3 +12,4 @@ func reset_all() -> void:
 	Log.reset()
 	Data.reset()
 	Save.reset()
+	Events.reset()

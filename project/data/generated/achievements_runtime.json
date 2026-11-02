@@ -23,7 +23,7 @@
         "where": [
           {
             "eq": 1,
-            "param": "soul_index"
+            "param": "to"
           }
         ]
       }
@@ -54,7 +54,7 @@
   ],
   "generatedBy": "tools/achievements/gen.mjs",
   "schema": "gtai.achievements-runtime/1",
-  "sourceSha256": "5253d712a45d046d2b24bbc6b7363313682e5eef76d9cd27e0265823dadc1fc1",
+  "sourceSha256": "d7b2c5c4a8dd3866235423514a009afe2d3ef9c2dc2d63ea2e9847fbb9fdce7c",
   "stats": [
     {
       "default": 0,

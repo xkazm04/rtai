@@ -32,16 +32,47 @@ function jsonCanonical() {
   return { name: 'json-canonical', ok: !issues.length, issues };
 }
 
+/** `signal name(a: int, b: StringName)` -> {name: 'a:int,b:StringName'} from events.gd. */
+export function declaredSignals(src) {
+  const out = {};
+  for (const m of src.matchAll(/^signal\s+(\w+)\s*(?:\(([^)]*)\))?/gm)) {
+    const params = (m[2] ?? '').split(',').map((p) => p.trim()).filter(Boolean);
+    out[m[1]] = params.map((p) => p.replace(/\s+/g, '')).join(',');
+  }
+  return out;
+}
+
 function eventsRegistry() {
   const reg = readJson(join(PROJECT, 'data', 'schemas', 'events.json'));
-  const src = readFileSync(join(PROJECT, 'core', 'events', 'events.gd'), 'utf8');
-  const declared = [...src.matchAll(/^signal\s+(\w+)/gm)].map((m) => m[1]).sort();
-  const listed = reg.signals.map((s) => s.name).sort();
+  const declared = declaredSignals(readFileSync(join(PROJECT, 'core', 'events', 'events.gd'), 'utf8'));
   const issues = [];
-  for (const s of declared) if (!listed.includes(s)) issues.push(`signal ${s} missing from events.json`);
-  for (const s of listed) if (!declared.includes(s)) issues.push(`events.json lists ${s}, not declared in Events`);
-  if (declared.length > reg.cap) issues.push(`${declared.length} signals > cap ${reg.cap} (ARC-06)`);
+  for (const s of Object.keys(declared)) {
+    if (!reg.signals.some((r) => r.name === s)) issues.push(`signal ${s} missing from events.json`);
+  }
+  for (const sig of reg.signals) {
+    const listed = sig.params.map((p) => `${p.name}:${p.type}`).join(',');
+    if (!(sig.name in declared)) issues.push(`events.json lists ${sig.name}, not declared in Events`);
+    else if (declared[sig.name] !== listed) {
+      issues.push(`${sig.name}: Events declares (${declared[sig.name]}), events.json says (${listed})`);
+    }
+    if (!sig.emitter || !sig.doc || typeof sig.wired !== 'boolean') {
+      issues.push(`${sig.name}: needs emitter, doc and a boolean wired (ARC-06)`);
+    }
+  }
+  const count = Object.keys(declared).length;
+  if (count > reg.cap) issues.push(`${count} signals > cap ${reg.cap} (ARC-06)`);
   return { name: 'events-registry', ok: !issues.length, issues };
+}
+
+/** ARC-02: at most seven autoloads; an eighth needs a decisions.md line and this cap raised. */
+export const AUTOLOAD_CAP = 7;
+function autoloadBudget() {
+  const text = readFileSync(join(PROJECT, 'project.godot'), 'utf8');
+  const section = /^\[autoload\]\n([\s\S]*?)(?=^\[|(?![\s\S]))/m.exec(text)?.[1] ?? '';
+  const names = section.split('\n').filter((l) => /^\w+=/.test(l)).map((l) => l.split('=')[0]);
+  const ok = names.length <= AUTOLOAD_CAP;
+  const issues = ok ? [] : [`${names.length} autoloads (${names.join(', ')}) > ${AUTOLOAD_CAP} (ARC-02)`];
+  return { name: 'autoload-budget', ok, issues };
 }
 
 export function runLint() {
@@ -54,6 +85,7 @@ export function runLint() {
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
+    autoloadBudget(),
     tool('achievements-validate', node, [gen, 'validate']),
     tool('achievements-drift', node, [gen, '--check']),
   ];

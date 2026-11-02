@@ -7,7 +7,7 @@ Every persisted or generated format names its schema and version (DAT-07).
 | `gtai.achievements/1` | `steam/achievements/achievements.json` (+ `.schema.json`) | humans/agents | `tools/achievements/gen.mjs` |
 | `gtai.achievements-runtime/1` | `project/data/generated/achievements_runtime.json` | gen.mjs (GENERATED) | AchievementTracker (planned) |
 | `gtai.achievements-mirror/1` | `user://device/achievements_mirror.json` | `AchievementMirror` | `NullBackend`, later SteamBackend replay |
-| `gtai.events/1` | `project/data/schemas/events.json` | humans/agents | gen.mjs, lint `events-registry` |
+| `gtai.events/1` | `project/data/schemas/events.json` (name, emitter, `wired`, typed params; param names are the tracker contract) | humans/agents | gen.mjs emitter wiring, lint `events-registry`, `test_events_contract.gd` |
 | `gtai.steam-manifest/1` | `steam/manifest.json` | humans/agents | release checklist |
 | `pof.godot-evidence/1` | `build/evidence/<kind>.json` (git-ignored) | `tools/evidence/run.mjs` | PoF `readEvidence` |
 

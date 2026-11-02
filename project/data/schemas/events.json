@@ -1,34 +1,145 @@
 {
   "cap": 40,
+  "doc": "ARC-06 registry of every Events signal. Param names are the achievements contract: the tracker maps emitted args to a dictionary by these names (ACH-03 where.param). wired=false means no emit site may exist yet; wired=true means one must exist under project/<emitter>/ and nowhere else outside tests/ and dev/.",
   "schema": "gtai.events/1",
   "signals": [
     {
       "doc": "Rivet finished the Clock-Out tutorial.",
-      "emitter": "features/missions (planned)",
+      "emitter": "features/missions",
       "name": "tutorial_completed",
-      "params": []
+      "params": [],
+      "wired": false
     },
     {
-      "doc": "Rivet became one of the voices from its old line.",
-      "emitter": "features/characters (planned)",
+      "doc": "Control passed from soul `from` to soul `to` (soul roster indices; ACH_SOUL_<n> matches to == n).",
+      "emitter": "features/characters",
       "name": "soul_swapped",
       "params": [
         {
-          "name": "soul_index",
+          "name": "from",
+          "type": "int"
+        },
+        {
+          "name": "to",
           "type": "int"
         }
-      ]
+      ],
+      "wired": false
     },
     {
       "doc": "Rivet took a vehicle that was not its own.",
-      "emitter": "features/vehicles (planned)",
+      "emitter": "features/vehicles",
       "name": "vehicle_hijacked",
       "params": [
         {
           "name": "vehicle_kind",
           "type": "StringName"
         }
-      ]
+      ],
+      "wired": false
+    },
+    {
+      "contract": "The full payload (killer, victim, kind) is decided BEFORE the damage chokepoint applies the lethal hit, and the chokepoint is the only emitter. Spike bug: evolve moves.gd:119 set death_kind after _damage(), so the kill log saw the default kind.",
+      "doc": "An actor died. Ids are runtime actor ids (the bubble sim slot or hero id), never data ids.",
+      "emitter": "features/combat",
+      "name": "actor_killed",
+      "params": [
+        {
+          "name": "killer_id",
+          "type": "int"
+        },
+        {
+          "name": "victim_id",
+          "type": "int"
+        },
+        {
+          "name": "kind",
+          "type": "StringName",
+          "values": [
+            "blown",
+            "burned",
+            "shot",
+            "stamped"
+          ]
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "The wanted level changed (ARC-08: emitted only by the one wanted setter).",
+      "emitter": "features/police",
+      "name": "wanted_changed",
+      "params": [
+        {
+          "name": "level",
+          "type": "int"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "Rivet's cash changed (ARC-08: emitted only by the one cash setter). amount is the new total; delta is signed.",
+      "emitter": "features/economy",
+      "name": "cash_changed",
+      "params": [
+        {
+          "name": "amount",
+          "type": "int"
+        },
+        {
+          "name": "delta",
+          "type": "int"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "A contract (mission) started.",
+      "emitter": "features/missions",
+      "name": "contract_started",
+      "params": [
+        {
+          "name": "id",
+          "type": "StringName"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "A contract (mission) was completed.",
+      "emitter": "features/missions",
+      "name": "contract_completed",
+      "params": [
+        {
+          "name": "id",
+          "type": "StringName"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "Rivet entered a vehicle (runtime vehicle id).",
+      "emitter": "features/vehicles",
+      "name": "vehicle_entered",
+      "params": [
+        {
+          "name": "vehicle_id",
+          "type": "int"
+        }
+      ],
+      "wired": false
+    },
+    {
+      "doc": "Rivet left a vehicle (runtime vehicle id).",
+      "emitter": "features/vehicles",
+      "name": "vehicle_exited",
+      "params": [
+        {
+          "name": "vehicle_id",
+          "type": "int"
+        }
+      ],
+      "wired": false
     }
   ]
 }

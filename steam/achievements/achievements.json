@@ -51,7 +51,7 @@
         "where": [
           {
             "eq": 1,
-            "param": "soul_index"
+            "param": "to"
           }
         ]
       }
