@@ -70,3 +70,4 @@ NEXT:
 - UNMEASURED: motion shimmer (walk + zoom tween) of the D5 tier, and the GPU cost of the overlays + look_d5 layer.
   Both are in evidence/README.md with the next step.
 - 22:14 MILESTONE tier-fade sweep (d5_sweep.gd): 0 up to 55 px/m, monotone ramp to 0.066 at 64+: no pop.
+- 22:16 MILESTONE walk shimmer (d5_walk.gd): D5/D4 frame-to-frame change 1.06 total, 0.97 high-frequency = no shimmer. Still unmeasured: GPU cost.

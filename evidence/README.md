@@ -54,10 +54,11 @@ tick count, no RNG.
    there is little mid wash, so its main visible effect is grain. Next: tune it on a roof-heavy frame at 64 px/m,
    and hand `zoom_amount` to the visual-engine lane's profile table.
 
-## Not measured tonight (unmeasured is not zero)
-- Motion shimmer of the D5 tier during a WALK: unmeasured. (The zoom tween IS measured: `dev/showcase/d5_sweep.gd`,
-  mean |D5 - D4| over Rivet per zoom = 0 at 51/53/55, 0.003 at 57, 0.022 at 59, 0.046 at 61, 0.064 at 63, then
-  0.066 / 0.066 at 65 / 67 px/m: a monotone fade with no step = no pop.) Next: a walk-cycle frame series with a
-  frame-to-frame diff of the Rivet crop at 64 px/m.
+## Motion, and what is still unmeasured (unmeasured is not zero)
+- Motion shimmer, MEASURED after all: `dev/showcase/d5_walk.gd` walks Rivet 40 ticks at 64 px/m and shoots each
+  tick as D4 and as D5 from the same pose (a crop following him; both carry the same look_d5 world layer). Frame-to-
+  frame change D5/D4 = 1.06 total, 0.97 for the high-frequency part: the D5 tier adds no shimmer. The zoom tween:
+  `dev/showcase/d5_sweep.gd`, mean |D5 - D4| over Rivet = 0 at 51/53/55 px/m, then 0.003 / 0.022 / 0.046 / 0.064 /
+  0.066 / 0.066 at 57-67 px/m: a monotone fade, no pop.
 - GPU cost of the D5 overlays (+1 sprite per part on up to 16 rigs) and the look_d5 layer: no bench run (no native
   build here). Next: `node tools/bench/run.mjs` with the D5 tier forced on.
