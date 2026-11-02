@@ -1,0 +1,230 @@
+{
+  "$id": "gtai.collect-call-stage/1",
+  "additionalProperties": false,
+  "properties": {
+    "crates": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "type": "array"
+        },
+        "count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "label": {
+          "type": "string"
+        },
+        "torch_reach_m": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "at",
+        "count",
+        "label",
+        "torch_reach_m"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dock": {
+      "additionalProperties": false,
+      "properties": {
+        "spawn_gap_s": {
+          "type": "number"
+        },
+        "wave_gap_s": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "spawn_gap_s",
+        "wave_gap_s"
+      ],
+      "type": "object"
+    },
+    "hide_spots": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "r": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "at",
+          "r"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "line_hooks": {
+      "additionalProperties": {
+        "enum": [
+          "give_gloria",
+          "cash_under_phone",
+          "repair",
+          "whisper"
+        ]
+      },
+      "type": "object"
+    },
+    "metal": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "patrols": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "mps": {
+            "type": "number"
+          },
+          "route": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "type": "array"
+            },
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "mps",
+          "route"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "rivet_start": {
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.collect-call-stage/1"
+    },
+    "spawn_points": {
+      "additionalProperties": {
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "type": "array"
+      },
+      "type": "object"
+    },
+    "start_heat": {
+      "maximum": 3,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "tape_bill": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "waves": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "boss": {
+            "type": "string"
+          },
+          "count": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "encounter": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^w[0-9]+$",
+            "type": "string"
+          },
+          "spawns": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "encounter",
+          "count",
+          "spawns"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "whispers": {
+      "additionalProperties": false,
+      "properties": {
+        "every_s": {
+          "type": "number"
+        },
+        "first_s": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "every_s",
+        "first_s"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rivet_start",
+    "start_heat",
+    "hide_spots",
+    "patrols",
+    "whispers",
+    "dock",
+    "spawn_points",
+    "waves",
+    "crates",
+    "metal",
+    "tape_bill",
+    "line_hooks"
+  ],
+  "type": "object"
+}
