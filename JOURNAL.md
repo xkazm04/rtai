@@ -130,7 +130,7 @@ NEXT:
   the D5 loading illustration, GPU cost + shimmer measured.
 - Rejected/reverted: 9 px darkened form shade (contrast), ghost dot print for souls, bold 0.32 m kerb shadow (hazard
   stripe), lit_k 0.75 (no effect), cream mural fist (evaluated, no change), hard soul snap at 32 px/m.
-- Open miss: cast vs street dL at 64 px/m 0.167 vs D4 0.170 (under one grey level) since the vermilion form shade.
+- The dL miss was closed after this summary (23:07, r21: STEEL_HI +0.015 -> 0.1693 vs D4 0.1695).
 - Shared files touched: none new this iteration (steam/ai-provenance append-only, art_src/d5.manifest.json).
 
 NEXT:
@@ -142,6 +142,9 @@ NEXT:
 3. FX lane: adopt `look_d5_soul.gdshader` (tier-faded) instead of look_d4_item's ghost dot screen for souls; the D5
    soul sheet is in masters gen/out/d5_souls.png (keyed cells in borrowed/).
 4. When vehicles/fx/decals install their sprites, point D5HeroExtras at res:// and drop `--borrow`.
-5. Recover the 0.003 dL at 64 px/m (e.g. verm_shade 0.5, or a lighter STEEL_HI) if the owner wants D5 >= D4 strictly.
+5. (done 23:07: STEEL_HI +0.015 restored dL parity at 64 px/m.) Next on Rivet: the in-part hatch still mostly mips
+   away; the form shade carries the volume now.
 6. Owner review: the loading illustration and portraits (store-safe marks), Rivet's lavender steel vs the concept's
    darker mauve (we keep it light for contrast on the charcoal street).
+- 23:07 MILESTONE: dL parity restored at 64 px/m (r21, STEEL_HI +0.015: 0.1693 vs D4 0.1695); verm_shade 0.5 (r20)
+  moved it only 0.0006 and was not kept. 0 px at 32-56.

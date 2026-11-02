@@ -37,7 +37,9 @@ tick count, no RNG.
 - Item 5b: a D5 LOADING illustration (`item5b_loading.png`, installed at `features/menus/art/d5/loading_rivet.png`,
   1920x1081): Rivet on a wet crosswalk under an ink union-fist mural, the teal souls rising, a cruiser; vermilion only
   on the collar, rust and the light bar; the left third left calm for loading text. Marked store-safe (owner review).
-- Open miss: cast vs street dL at 64 px/m is 0.167 vs D4 0.170 since the vermilion form shade (under 1 grey level).
+- The dL miss is CLOSED: STEEL_HI +0.015 (r21): cast vs street dL at 64 px/m D5 0.1693 vs D4 0.1695 (parity), 96: 0.190
+  vs 0.181; 0 px at 32-56. (verm_shade 0.5 was tried first and moved it only 0.0006: the loss came from the
+  derivative fix, not the vermilion hatch.)
 
 ## Measurements
 - D5 stack vs D4, same pose, changed pixels: **0** at 32, 48, 54 and 56 px/m (the tier fades in from 56 to 64 px/m;
@@ -103,7 +105,8 @@ tick count, no RNG.
    i.e. undefined). Pure vermilion px in the hero frame 8104 -> 7892 at 64 px/m, 14516 -> 14229 at 96 (h29 vs h31; cops stay vermilion); 0 px change
    at 32-56 px/m on the character tier. Cast vs street dL on a FIXED mask at 64 px/m: D4 0.170, D5 0.167 (r18/r19):
    a marginal MISS of 0.003 (under one 8-bit grey level; 0.002 of it is the derivative fix). At 96: D5 0.187 vs D4
-   0.181. A brighter lit rim (lit_k 0.75) did not move it (reverted).
+   0.181. A brighter lit rim (lit_k 0.75) did not move it (reverted). Closed by a +0.015 STEEL_HI lift (r21: 0.1693 vs
+   D4 0.1695 at 64, 0.190 at 96).
 6. **The whole slice cast now has a D5 tier** (Rivet, cops, peds). The ped costs 6% contrast on cream pavement at
    64 px/m (0.373 -> 0.351). Next: King and the boss cast need rig parts first (they exist only in the spike).
 7. **The world print layer is subtle** (its fibre tooth read as rain and was replaced by an isotropic mottle). look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene

@@ -37,7 +37,7 @@ const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
-const vec3 STEEL_HI = vec3(0.900, 0.865, 0.875);
+const vec3 STEEL_HI = vec3(0.915, 0.880, 0.890);
 const vec3 STEEL_MID = vec3(0.740, 0.700, 0.760);
 const vec3 STEEL_LO = vec3(0.420, 0.385, 0.450);
 
