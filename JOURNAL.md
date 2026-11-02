@@ -196,3 +196,26 @@ NEXT (iteration 5 / morning, in order):
   target is NOT met. evidence/bench-*-final.json, evidence/bench-final-iter4.txt.
 - Evidence 23:06 at 05531f3: lint 13/13, unit 183, scenarios 8, parity PASS, selftest PASS (goldens 10/10 worst 0.74; crowd 6/6 on doctrine). Copied to evidence/pof/.
 - 23:08 real boot path smoke (windowed, --quit-after 600): --look=auto / d5 / off all exit 0, 0 script errors (World + CityView with the emissive canvas, overlay hook and camera events). Scratch cleaned (Temp probe dirs, masters bless/check dirs); no plugged n-d4 / n-d5 files left in the tree. Session end.
+
+## 2026-11-02 iteration 6 BUILD (23:08 -> 00:38)
+- Read JOURNAL, git log, events.json. main gained 11 commits (quest 1); n-d4 / n-d5 still unmerged here.
+  F-04 still has no positional shot/hit events, BUT CitySim already has projectiles (the riot shoots):
+  the snapshot the rigs take every tick frame carries [1000 + slot, x, y] projectile records.
+- MILESTONE FX wired to the riot (65762d3), no events.json change: `data/tables/fx_triggers.json`
+  (gtai.fx-triggers/1: cue -> fx kinds + shake + shake_near_m), `core/render/fx_triggers.gd`
+  (fire(), listen(Events) for player_hit -> sparks + `hit` shake), `features/city/view/city_fx_feed.gd`
+  (snapshot diff: new projectile = shot -> muzzle + casing + muzzle light + gunfire shake within 6 m;
+  vanished = projectile_end -> impact chips; person turned M_DEAD = death -> ink splat). Selftest
+  junction: 11 shots / 9 ends / 9 deaths / 0 dropped. Tests test_fx_triggers 5/5.
+- Frames 10-fx-feed/: before (feed off) vs after. REJECTED my first placement: the splat on the `fx`
+  band drew OVER the dead bodies' torsos (crops-48ppm.png). Fix: fx.json `ground` flag -> a ground twin
+  FxSystem on the world canvas's ground_decals band (printed by look_d4 like a decal, under bodies,
+  shadows, roofs): crops2-48ppm.png - the ink spreads from under the body. Subtle on charcoal (black
+  ink blood on a dark street, as the doctrine wants); it will read strongly on cream pavement. 0 frames
+  rejected for camera (engine captures, straight down).
+- BUG found and fixed (characters glue, my earlier file): CityCharacters._fill_feed stepped the
+  snapshot by 14 floats into the projectile records (3 floats each) and could read misaligned junk as
+  a person (a phantom rig) whenever qx < 1000 and int(qy) in {0, 2}. It now breaks at the first one.
+- Gates 23:17: lint 13/13, unit 190/190, scenarios 8/8.
+- FRICTION: `export GODOT_BIN` does not persist across Bash calls; run_unit.mjs without it printed the
+  stale "189 passed" from the last junit file with exit -1 - read the exit codes, not just the count.
