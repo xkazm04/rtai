@@ -6,7 +6,8 @@ under the world pass the Sobel ink edges fill the glyphs in (tested, `masters:ni
 
 | File | Accent |
 |---|---|
-| `cash` | vermilion strap |
+| `cash` | vermilion strap (iteration 2: one solid ink banknote + strap; the first busy grey bundle went muddy at 32 px/m) |
+| `cash_coins`, `cash_bundle`, `cash_bag` | value tiers small / medium (vermilion strap) / large; optional |
 | `health` | vermilion cross |
 | `armor` | ink shield, cream chevron |
 | `ammo` | vermilion bullet tips |
@@ -15,4 +16,4 @@ under the world pass the Sobel ink edges fill the glyphs in (tested, `masters:ni
 | `weapon` | ink wrench + pistol |
 | `soul` | **teal** ring and wisp (the dead only) |
 
-Master `art_src/d4.manifest.json#d4n_pickups`. No pickup system draws them yet.
+Masters `art_src/d4.manifest.json#d4n_pickups`, `#d4n_cash` (cash + tiers). Evidence `after_k` -> `after_k2`. No pickup system draws them yet.

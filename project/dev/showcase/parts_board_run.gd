@@ -93,7 +93,7 @@ func _pickups() -> void:
 		for y: float in [-1.6, 1.6]:
 			var spr: Sprite2D = Sprite2D.new()
 			spr.texture = t
-			spr.position = Vector2(-7.0 + k * 2.0, y) * PX
+			spr.position = Vector2(-11.5 + k * 1.6, y) * PX
 			spr.scale = Vector2.ONE * PICKUP_M * PX / t.get_width()
 			spr.material = item
 			spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
