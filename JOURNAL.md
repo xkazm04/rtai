@@ -111,3 +111,20 @@ NEXT:
 - Apply the bold inner stroke test to props (F-08 art) at 32 px/m against target_compare; keep only if it reads better.
 - A HUD scene would let the frames be judged in-engine (now only a composite mock).
 - Fill more FX: shotgun shell + casing scatter are in `gen/out/d4n_casing.png` (unused cells 2-4).
+
+## 22:00 GATES
+- `tools/evidence/run.mjs` (after the native build): lint PASS, unit 142/142 PASS, parity PASS (bit for bit, mutation
+  caught), selftest PASS (65 art textures, **0 placeholders**). scenario-tests FAILED once: rig_stress 200 people
+  p50 1.022 ms > 1.0 ms while my asset board rendered at the same time; re-run alone: **8/8 PASS**, p50 0.467 ms.
+  FRICTION: contention, not a regression; never render while gates run.
+- bench FAILED first: `build/export/windows-bench/` did not exist in this fresh worktree (the runner does not
+  create it). Created it (git-ignored) and re-ran the bench alone (result below).
+- bench (exported release, 3 x 4 scenarios x 60 s, shared box at ~48 % CPU from other processes):
+  run 1 (lane table) p99 8.92 ms, 1% low 48 fps, worst swap 126 ms: MISS p99 + swap.
+  A/B (base ad2078b table, same box) p99 5.90 ms, 1% low 95 fps, worst swap 91 ms: MISS swap.
+  run 2 (lane table) **p99 2.85 ms, 1% low 85 fps, worst swap 31 ms: PASS** (rc 0).
+  Reading: the misses track machine load (the base table misses worst swap too); no reproducible regression from
+  the 22 new textures. Still worth watching: every vehicle/decal id is now its own texture (the placeholders shared
+  one per class), i.e. more 2D batch breaks; an atlas for vehicles + decals would remove that (visual-engine).
+  `build/evidence/bench.json` is from the full run (export dir missing) -> stale FAIL; the passing standalone runs
+  are in the bench runner's own output. Re-run `node tools/evidence/run.mjs` on an idle box in the morning.
