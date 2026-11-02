@@ -20,7 +20,7 @@ Import: lossless, mipmaps on (AST-01/03). Masters + prompts: `art_src/d4.manifes
 - **Not wired yet** (rendering code, the visual-engine lane): the traffic MultiMesh still draws the steel placeholder
   quad of `crowd_layers.gd` `_body()`; the atlas above is laid out for it (`variant -> cell`). Damage states and
   hijack overlays need a state hook in the car draw.
-- **Wear (night iteration 4, D5 push up close):** the 9 intact cars and both traffic atlases carry an ink-only grime
+- **Wear (night iteration 4, D5 push up close):** the 9 intact cars, their 18 damage states (same seed per car, so the dirt registers across states) and both traffic atlases carry an ink-only grime
   pass (edge-weighted stipple in dirt patches + 3 thin scratches on the light paint; `veh_grime.py` in the lane
   masters). Invisible at 32 px/m, light wear at 48, reads as lived-in at 64. A re-run of `build_vehicles.py` drops
   it (re-apply `glass_ink.py` then `veh_grime.py`, then `build_traffic.py`).
