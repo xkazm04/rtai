@@ -555,3 +555,20 @@ NEXT:
   damage states (work/vehicles holds pre-marks copies - caught by a cmp before use). The marks stay on top (grime
   only touches light paint). Extras board `before_grd|after_grd/extras-{32,48,64}ppm.png` (`work/grd_ab_64.png`).
   18 provenance lines. Commit 1a78f7b.
+- 00:46 hijack overlays re-checked over the grimed cars (`masters:now4_hijack/hijack-{32,48,64}ppm.png`): teal glass +
+  dashed rim still register.
+- 00:50 GATES at 37d64ff (HEAD, every iteration-4 commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught at step 629), selftest 65 art textures, 0 placeholders.
+  bench not re-run (textures only, no new texture ids).
+- Sheets final: `night_iter4_summary.png` (10 items), `night_iter4_city.png`; ladder 33 418 px tall.
+- Codex night total unchanged since the summary: 20 images, 141 cells, 3 rejected (iteration 4: 1 image, 0 rejected).
+
+NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary where they differ):
+- Owner review: iteration-4 commits each revert alone: 54bf23f + 1a78f7b (car grime, intact + damage states; revert
+  both together), 5f1fc28 + 480ef6b (soul portraits), ac8fda9 + 773d5cb (FX splat rim, bold crackle), 0fa27c3
+  (signal lamps), 6e36609 (blood decals), 3c65886 (lamp post).
+- Director at merge: JOURNAL.md is the only n-d4 / n-visual conflict; then delete accent_debt row traffic_light_lamps.
+- Still blocked on code owners: traffic atlas wiring (visual-engine), generic roof pick + sidewalk variants
+  (generator), RigVariant slots for the 5 new ped parts (characters), soul portraits in a real HUD (HUD owner).
+- Open owner calls: cop uniform, blood ink (now with a cream rim) vs vermilion.
+- Branch n-d4, tree clean after this entry; nothing pushed or merged; scratch worktree removed.
