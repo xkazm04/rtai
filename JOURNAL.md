@@ -219,3 +219,63 @@ NEXT (iteration 5 / morning, in order):
 - Gates 23:17: lint 13/13, unit 190/190, scenarios 8/8.
 - FRICTION: `export GODOT_BIN` does not persist across Bash calls; run_unit.mjs without it printed the
   stale "189 passed" from the last junit file with exit -1 - read the exit codes, not just the count.
+- Exported bench with the feed (65762d3 build, 23:18-23:30, CPU 5 % before, but the n-noir / n-d5
+  lanes rendered on the same GPU from 23:13 / 23:41): PASSES section 20 - p99 4.63 ms, 1% low 140 fps,
+  worst swap 25.7 ms, 2 frames > 50 ms (1 `present`, 0 unexplained); riot rig 0.455 ms per tick
+  (unchanged vs 0.457). Note the bench ran 3 x 4 x 60 s (tool default) where iteration 4 used 30 s.
+  evidence/bench-*-fxfeed.json, bench-fxfeed.txt.
+- MILESTONE FX cost found and cut (9f8c83e): riot avg frame 0.67 -> 1.07 ms with the feed. Interleaved A/B
+  (debug binary windowed, 3 pairs x 20 s, new `city_bench -- --fx-feed=off`): +0.35 ms per frame, 3/3.
+  Cause: FxPool rewrote every live particle (3 RS calls + dict lookups each) on EVERY frame, tick or not
+  (splats live 240 ticks x 5). Fix: no tick and no spawn = keep the MultiMesh. Re-A/B: +0.07 ms (median
+  0.696 / 0.764), p99 CPU +0.15 ms. evidence/fxfeed-ab, fxfeed-ab2. All 3 `on` runs of the 2nd A/B had a
+  ~32 ms worst frame (0/3 off): `present` stalls with pipelines 0, with 2 other lanes on the GPU; the
+  1st A/B had them in `off` runs too. Not attributed, not claimed clean.
+- MILESTONE world-UI markers (0eb053f + rim fix): `world_markers.json` (gtai.world-markers/1),
+  `core/render/world_markers.gd` + `marker_shapes.gd`, CityView.markers on a world_ui canvas (band now live).
+  Objective = vermilion diamond, pickup = vermilion ring, soul = teal ring, constant screen size,
+  ink + paper sticker rim, tick bob; the objective pointer pins inside the screen edge. A kind whose
+  accent is not allowed for its `use` does not load (doctrine at load). test_world_markers 3/3.
+  Frames 11-markers-night/: day + night grade at the first muzzle moment (`--fx-moment --markers
+  --grade=night`). REJECTED in part: the 22 px pointer lost against the riot's vermilion cops and its
+  scaled-polygon rim sat lopsided -> 34 px + outlined rim (pointer-abc.png: left/middle rejected, right
+  kept). OWNER CALL: with ~30 vermilion cops on screen a vermilion objective competes; the doctrine gives
+  objectives and cops the same ink - consider a shape language (the diamond + pointer only for
+  objectives) or a paper objective with a vermilion core.
+- MILESTONE prewarm (29cb86f): the loading-screen prewarm now draws one particle of every FX kind on
+  all three FX canvases + one light, then FxSystem.clear() - fx_ink / light_ink were first bound on the
+  riot's first shot. Prewarm 30.5 ms (31.0 before), same cues, no leftover (12-prewarm/centre-32.png).
+- FRICTION x2: (1) a new class_name is not in the global class cache until an `--import`; a windowed
+  bench that fails to parse never quits - my first A/B loop timed out 3 x 150 s (killed my own PIDs
+  37276 / 46192 only). (2) A Variant `.duplicate()` and a discarded `append()` are parse errors (warnings
+  as errors) that gdlint does not see: run run_unit.mjs (load_all) after every GDScript change.
+  (3) I copied stale build/selftest/*.json over evidence/pof and restored them from git at once; the
+  fresh ones are in build/evidence/.
+- Evidence at 29cb86f (8282183): lint 13/13, unit 195, scenarios 8, parity bit-exact + mutation caught,
+  selftest PASS (goldens 10/10 worst 0.85; accent 0.95 / 0.95 / 0.25 %; crowd 6/6 on doctrine; 1 off-
+  doctrine world source = traffic_light.png 216 px, unchanged, still not redrawn on n-d4).
+- Boot path smoke (windowed, --quit-after 600): --look=auto / d5 / off exit 0, 0 script errors.
+- Ladder: rows 10 (fx feed, off | on) and 11 (markers, day | night) added (ladder.png 1280 x 5226).
+  Frames rejected for camera: 0 (all engine captures, straight down). Approaches rejected: 2 (splat on
+  the fx band over the bodies; the 22 px / lopsided pointer). No AI images generated (no codex), so no
+  provenance lines.
+
+NEXT (iteration 7 / morning, in order):
+1. After the Director merges n-d4 / n-d5: FX sheet and look_d5 go live with no code change. Re-bless only
+   the 5 `-ov` look goldens (blessed with n-d5 157dec8; n-d5 has since changed look_d5: f871411 aged
+   paper, 5645ece shadow) and look at them; run fx_showcase + accent_audit (the sheet's muzzle cores are
+   vermilion, the fx band allows it).
+2. Owner calls: overlay amount at 48 px/m (0 shipped vs 0.35); objective vs cop vermilion (above); the
+   night grade (#6E6878) and its look with real muzzle lights (11-markers-night/night/).
+3. Rig p99 still above 0.3 ms (0.455 ms per tick release): RigPose.step 55 % + RigGait.step 37 % of
+   CutRig.drive. Arithmetic: 6 full + 10 half = 11 drives per tick; the target needs about 7 (e.g. 4 full +
+   12 quarter rate) or a native pose. Characters owner + a motion strip to judge 15 Hz rigs at 14 m.
+4. FX per-tick cost: FxPool still does 3 RS calls per particle per tick; one multimesh_set_buffer per
+   twin (like CitySimRender) would cut the remaining +0.15 ms p99. LightLayer.step rewrites every frame
+   too (<= 32 lights, cheap) - same skip if it ever shows.
+5. Explosions / crackle / smoke still have no source (no grenades, no melee in CitySim): fire them via
+   FxTriggers.fire from whatever system lands them, or a `sim` cue if CitySim grows them.
+6. traffic_light.png lamps (d4-production) - the one off-doctrine world source; then make the accent
+   audit gating.
+7. Quest 1 on main has objectives: after the merge, point its objective at CityView.markers (objective =
+   the handle) - the markers API is ready.
