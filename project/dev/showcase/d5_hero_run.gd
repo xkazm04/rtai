@@ -14,8 +14,10 @@ const LANDMARKS: Dictionary[String, Vector2] = {
 	"building_pension_bank": Vector2(9.7, 9.7),
 }
 const ROOF_M: float = 8.4
+const SHADOW_M: float = 1.1
 
 var _roofs: Dictionary[String, Sprite2D] = {}
+var _shadows: Array[Polygon2D] = []
 
 
 func _init() -> void:
@@ -34,6 +36,7 @@ func _ground() -> void:
 				for q: int in [1, 2]:
 					_tile("sidewalk_tone", Vector2(k * r * 8, j * q * 8) * PX)
 	for roof: String in LANDMARKS:
+		_shadow(LANDMARKS[roof] * PX)
 		var s: Sprite2D = Sprite2D.new()
 		s.texture = load(ROOFS + roof + ".png") as Texture2D
 		s.scale = Vector2.ONE * ROOF_M * PX / s.texture.get_width()
@@ -41,6 +44,40 @@ func _ground() -> void:
 		s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		_world.add_child(s)
 		_roofs[roof] = s
+
+
+## A cast shadow down-right of a roof (the mock's depth cue): a flat ink tint that look_d4
+## prints as its dark wash step + hatch. Proposal for the city lane; only the "d5" tier shows it.
+func _shadow(at: Vector2) -> void:
+	var h: float = ROOF_M * 0.5 * PX
+	var o: float = SHADOW_M * PX
+	var poly: Polygon2D = Polygon2D.new()
+	poly.polygon = PackedVector2Array(
+		[
+			Vector2(h, -h + o),
+			Vector2(h + o, -h + o),
+			Vector2(h + o, h + o),
+			Vector2(-h + o, h + o),
+			Vector2(-h + o, h),
+			Vector2(h, h)
+		]
+	)
+	poly.texture = _hatch_tex()
+	poly.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	poly.position = at
+	poly.visible = false
+	_world.add_child(poly)
+	_shadows.append(poly)
+
+
+## A 48 px tile of diagonal pen strokes over a light ink tint (the mock's hatched shadow).
+static func _hatch_tex() -> ImageTexture:
+	var img: Image = Image.create(48, 48, false, Image.FORMAT_RGBA8)
+	for y: int in 48:
+		for x: int in 48:
+			var line: bool = (x + y) % 8 < 3
+			img.set_pixel(x, y, Color(0.09, 0.075, 0.106, 0.85 if line else 0.32))
+	return ImageTexture.create_from_image(img)
 
 
 ## Rivet on the junction's north-east corner under the fist mural, facing two cops closing in.
@@ -68,5 +105,7 @@ func _pose(t: int) -> void:
 
 func _tier(tier: String) -> void:
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
+	for p: Polygon2D in _shadows:
+		p.visible = tier == "d5"
 	for roof: String in _roofs:
 		_roofs[roof].texture = load(dir + roof + ".png") as Texture2D
