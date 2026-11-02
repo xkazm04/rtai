@@ -506,3 +506,37 @@ NEXT:
   (lum > 0.75), base | mine (c133a77) | base with d**1.8: OSHA 0.49 | 0.62 | 0.60, tall 0.44 | 0.59 | 0.56,
   HQ 0.46 | 0.60 | 0.57. d**1.8 lifts the mean more (0.72 vs 0.66) only because it also greys the ink, which the
   D4 read needs. No change.
+- 00:38 GATES at e3f3b34 (every iteration-4 art commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught at step 629), selftest 65 art textures, 0 placeholders.
+  bench not re-run (textures only, no new texture ids; the 8 soul PNGs are HUD-only).
+
+## 00:43 SUMMARY iteration 4 (raise the weakest items; every change before/after in-engine)
+Sheets: `masters:night/d4-production/night_iter4_summary.png` (8 items, before | after crops) and
+`night_iter4_city.png` (end of iteration 3 vs HEAD art on 4 city frames). Ladder rows appended for every item.
+1. D5 ink grime on the 9 intact cars + traffic atlases (invisible at 32, lived-in at 64). 54bf23f
+2. Soul portraits for the HUD soul cards (Gearbox, Sentry, Hauler, Mop; teal ghosts in the D5 concept style + ink
+   idle versions); dev HUD overlay draws them. 5f1fc28
+3. FX atlas checked in the REAL visual-engine FX system (scratch worktree, no merge): layout fits their atlas
+   blocks, everything reads; the splat got a round 11 px cream sticker rim (ac8fda9) and the electroshock bold
+   bolts (773d5cb).
+4. Traffic light lamps in ink and paper - clears the visual-engine accent-audit debt row owned by this lane. 0fa27c3
+5. Blood decals: flat ink + cream sticker rim (were faint grey smudges on the asphalt). 6e36609
+6. Lamp post redrawn in the target's construction (the n-d5 lane's "spoon" note). 3c65886
+7. Merge dry-run n-d4 into n-visual: only JOURNAL.md conflicts; merged renders cohesive.
+- Reverted / not shipped: asphalt patch clearing (no visible gain), props grime (props too small, noise).
+- Answered: n-d5's roof-lift ask is covered by c133a77 (numbers above).
+- Codex this iteration: **1 image** (d4n_souls, 4 cells, 0 rejected). Night total: 20 images, 141 cells, 3 rejected.
+- Tools added (masters): veh_grime, patch_clear (probe), slice_souls, lamp_paper, decal_rim, lamp_redraw;
+  build_fx gained rim() (round) + bolden(); prov.py keeps logged dates + d4n_souls; prov_rev stamps today.
+
+NEXT:
+- Owner review: iteration-4 commits each revert alone (54bf23f grime, 5f1fc28 souls, ac8fda9 + 773d5cb FX,
+  0fa27c3 lamps, 6e36609 blood, 3c65886 lamp post). Iteration 3's list (above) still stands.
+- Director, at merge: JOURNAL.md is the only n-d4 / n-visual conflict; after the merge delete visual-engine's
+  `accent_debt.json` row `traffic_light_lamps` (fixed by 0fa27c3) and re-run their accent audit.
+- visual-engine: wire `traffic_atlas.png` for moving traffic (the most visible placeholder left in the merged
+  frame); crackle fade_from; debris / impact sizes (REQUEST 14).
+- HUD owner: soul portraits 220 x 350 at 2x, offset ((card_w - 220) / 2, 40) card px; teal only on the active card.
+- Owner decisions still open: cop uniform (n-visual has a cream-cop torso option now), blood ink vs vermilion
+  (blood is ink with a cream rim now, consistent with the FX splat).
+- If more time: Hauler's portrait is the smallest (wide body fit by width); the idle ink portraits are pale.
