@@ -6,7 +6,7 @@ Master: `art_src/d4.manifest.json#d4n_decals`.
 
 | File | Table id | Notes |
 |---|---|---|
-| `cracks`, `manhole`, `oil_stain`, `drain_grate`, `puddle`, `oil_slick`, `stop_line`, `road_arrow`, `skid_marks`, `glass_shards`, `tank_tracks` | 54-64 | baked by the generator; `road_arrow` points to **+x** (rot 0 = along the lane) |
+| `cracks`, `manhole`, `oil_stain`, `drain_grate`, `puddle`, `oil_slick`, `stop_line`, `road_arrow`, `skid_marks`, `glass_shards`, `tank_tracks` | 54-64 | baked by the generator; `road_arrow` points to **+x** (rot 0 = along the lane); `tank_tracks` is the tread IMPRINT (ink grooves), not the tread |
 | `blood_s` (0.8 m), `blood_m` (1.6 m), `blood_l` (3 m) | (dynamic) | ink blood splats, black ink (never red), 64 / 128 / 240 px square |
 | `scorch`, `scorch_b` | (dynamic) | blast scorch marks, 3 m (240 px square) |
 | `bullet_holes_s` (1.2 m), `bullet_holes_m` (1.6 m) | (dynamic) | gunfire impact clusters (3 / 5 holes), ink dots with cream rims; master `#d4n_dmg` |
