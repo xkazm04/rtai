@@ -1,0 +1,18 @@
+{
+  "schema": "gtai.questMarkers/1",
+  "note": "Named places and tagged actors the quest runtime resolves. A gtai.quest/1 package names locations and targets in words (objective.location / objective.target); this table turns each word into a spot in the yard, in metres (yard origin, +x east, +y south). 'phone' = where Patch's payphone stands when the marker is a quest's first location (default: on the marker). 'r' = arrival radius in metres. Vehicles are placed on the one drivable sedan (main.gd car); actors spawn as robots: 'side' hostile = team 1 with AI, ally = team 0 following Rivet.",
+  "markers": {
+    "loading-bay-3": { "at": [4.5, 8.8], "r": 1.8, "phone": [11.0, 10.5] },
+    "yard-gate": { "at": [37.0, 12.5], "r": 3.0 },
+    "yard-centre": { "at": [22.0, 12.5], "r": 2.5 },
+    "forklift-bay": { "at": [22.0, 21.0], "r": 2.0 },
+    "yard-payphone": { "at": [11.0, 10.5], "r": 1.7 }
+  },
+  "vehicles": {
+    "valet-sedan": { "at": [5.0, 21.8], "heading": 0.0 }
+  },
+  "actors": {
+    "bowler-suit": { "at": [24.0, 13.3], "kind": "suit", "side": "hostile", "hp": 2.0 },
+    "union-steward": { "at": [8.0, 16.0], "kind": "cop", "side": "ally", "hp": 4.0 }
+  }
+}

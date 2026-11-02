@@ -2,21 +2,25 @@ extends SceneTree
 ## Scenario runner (TST-03): runs every res://tests/scenarios/scenario_*.gd headless.
 ## Exits non-zero on any failure or on any unknown user argument (the engine ignores them).
 ## A scenario that compiles but logs any engine or script error fails too (ErrorCounter).
-## Usage: godot --headless --path project -s res://tests/run_scenarios.gd [-- --filter=<text>]
+## --evidence-dir=<abs dir> lets scenarios leave detail files (Scenario.write_evidence).
+## Usage: godot --headless --path project -s res://tests/run_scenarios.gd
+##   [-- --filter=<text>] [--evidence-dir=<dir>]
 
 const SCENARIO_DIR: String = "res://tests/scenarios"
-const KNOWN_FLAGS: PackedStringArray = ["--filter"]
+const KNOWN_FLAGS: PackedStringArray = ["--filter", "--evidence-dir"]
 
 
 func _initialize() -> void:
-	var filter: String = ""
+	var values: Dictionary[String, String] = {}
 	for arg: String in OS.get_cmdline_user_args():
 		var flag: String = arg.get_slice("=", 0)
 		if not KNOWN_FLAGS.has(flag):
 			printerr("run_scenarios: unknown argument %s" % arg)
 			quit(2)
 			return
-		filter = arg.substr(flag.length() + 1)
+		values[flag] = arg.substr(flag.length() + 1)
+	var filter: String = values.get("--filter", "")
+	Scenario.evidence_dir = values.get("--evidence-dir", "")
 	quit(_run_all(filter))
 
 

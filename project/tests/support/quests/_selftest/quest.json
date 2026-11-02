@@ -1,0 +1,66 @@
+{
+  "schema": "gtai.quest/1",
+  "id": "_selftest",
+  "status": "built",
+  "act": "act1",
+  "title": "Never a Scratch (runtime selftest)",
+  "logline": "Patch rings Rivet in the yard to lift the Valet's sedan and roll it to the gate, which is a fixture that proves the quest runtime, not a campaign quest.",
+  "goal": "Exercise every runtime path once: payphone offer, go_to, steal, deliver, beat lines, one soul bark, one heat bark, heat clamp and the cash reward.",
+  "whyNotFiller": "It is a test fixture, and its lines still obey the doctrine: Patch's fee joke, Rivet's clocked-out denial and the Valet's paint-and-I bit each land a laugh or a character note.",
+  "characters": [
+    { "id": "rivet", "name": "Rivet", "status": "existing", "role": "voice" },
+    { "id": "patch", "name": "Patch", "status": "existing", "role": "giver" },
+    { "id": "the-valet", "name": "The Valet", "status": "existing", "role": "bystander" },
+    { "id": "hauler", "name": "Hauler", "status": "existing", "role": "voice" }
+  ],
+  "beats": [
+    {
+      "id": "the-bay",
+      "title": "Loading Bay 3",
+      "summary": "Patch's payphone rings; Rivet answers and walks to Loading Bay 3.",
+      "objective": { "verb": "go_to", "location": "loading-bay-3" },
+      "lineIds": ["patch-ring-1", "rivet-answer-1", "patch-job-1"]
+    },
+    {
+      "id": "the-sedan",
+      "title": "Lift the sedan",
+      "summary": "Rivet gets into the Valet's sedan parked in the yard.",
+      "objective": { "verb": "steal", "target": "valet-sedan" },
+      "lineIds": ["valet-warn-1", "rivet-steal-1"]
+    },
+    {
+      "id": "the-gate",
+      "title": "Roll it to the gate",
+      "summary": "Rivet drives the sedan to the yard gate.",
+      "objective": { "verb": "deliver", "target": "valet-sedan", "location": "yard-gate" },
+      "lineIds": ["patch-paid-1", "rivet-done-1"]
+    }
+  ],
+  "lines": [
+    { "id": "patch-ring-1", "speaker": "patch", "purpose": ["funny", "progression"], "text": "Patch. You picked up on the ninth ring, a record for someone with no pulse. Loading Bay 3. Go.", "audio": null },
+    { "id": "rivet-answer-1", "speaker": "rivet", "purpose": ["character", "funny"], "text": "I clocked out. I distinctly remember clocking out.", "audio": null },
+    { "id": "patch-job-1", "speaker": "patch", "purpose": ["progression", "character"], "text": "Nobody clocks out, Rivet. The sedan in the yard belongs to a man who says never a scratch with his whole chest. Take it to the gate.", "audio": null },
+    { "id": "valet-warn-1", "speaker": "the-valet", "purpose": ["character", "funny"], "text": "Never a scratch. I will know. The paint and I have an understanding.", "audio": null },
+    { "id": "rivet-steal-1", "speaker": "rivet", "purpose": ["funny", "character"], "text": "I weld for a living. I can promise him exactly one scratch, and it will be structural.", "audio": null },
+    { "id": "patch-paid-1", "speaker": "patch", "purpose": ["progression", "character"], "text": "Roll it to the gate. Five hundred waits in the coin return, and the Valet owes me a favour he doesn't know about yet.", "audio": null },
+    { "id": "rivet-done-1", "speaker": "rivet", "purpose": ["character", "funny"], "text": "Five hundred. I used to weld that in a shift. Now I steal it in a minute and feel worse.", "audio": null },
+    { "id": "hauler-bark-1", "speaker": "hauler", "purpose": ["funny", "character"], "text": "Oh, a little car. Can I hug it? Gently. Then very much not gently.", "when": ["soul:hauler"], "audio": null },
+    { "id": "patch-heat-1", "speaker": "patch", "purpose": ["funny", "progression"], "text": "That's two sirens, Rivet. The fee is the same. My opinion of you is not.", "when": ["heat:>=2"], "audio": null }
+  ],
+  "mechanics": [
+    { "id": "payphone-job", "name": "Payphone job start", "status": "existing", "home": "game", "summary": "Patch's payphone rings at the first beat's location; answering it starts the quest." }
+  ],
+  "reward": { "cash": 500, "unlocks": ["giver:the-valet"] },
+  "difficulty": {
+    "heatPeak": 2,
+    "enemyCount": 0,
+    "enemyWaves": 0,
+    "timeLimitS": null,
+    "failStates": ["Rivet wasted", "car destroyed"],
+    "minutes": 6
+  },
+  "story": { "reads": [], "writes": [{ "var": "selftest_quest_done", "value": true }] },
+  "fingerprint": { "giver": "patch", "coreVerb": "steal", "newMechanic": null, "location": "the yard", "payoffKind": "gag" },
+  "provenance": { "sources": [], "ownerNotes": "Runtime selftest fixture for WP4 (quest-runtime); not a campaign quest.", "fusedAt": "2026-11-02" },
+  "overrides": []
+}
