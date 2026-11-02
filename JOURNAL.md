@@ -60,3 +60,9 @@
   slot 3 jacket-hat -> hoodie-cap (`head_cap`, `torso_hoodie`), slot 7 coat-hair -> overalls-bald
   (`head_bald`, `torso_overalls`); or raise CLIP_VARIANTS to 10-12 for hoodie-beanie and overalls-cap too.
   The rig pool's prewarm must list the new parts.
+
+## 22:00 MILESTONE pickup tokens (work order 5, pickups)
+- 1 Codex sheet d4n_pickups, 8 tokens, 0 rejected. `assets/pickups/*.png` 128 px, README with the accent table.
+- FRICTION: under the world pass (look_d4) at 32 px/m the Sobel ink edges fill the glyphs in (dark grey tokens);
+  in the item pass (look_d4_item) they read cleanly. Evidence `after_k/pickups-{32,48,64}ppm.png` + `-2x` crops
+  (dev/showcase/parts_board_run.gd --page=pickups). **REQUEST visual-engine:** draw pickups in the item pass.

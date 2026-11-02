@@ -1,5 +1,7 @@
 class_name PartsBoardRun
 extends Node
+## Ped look board and pickup board (--page=pickups: every token at 1.2 m in the item pass, as
+## the game draws pickups above the world print).
 ## Ped look board (night lane d4-production evidence): torso + head combinations of the ped
 ## parts printed through the real print_part materials at the rig scale (CutRig.SC), with the
 ## cream halo under the torso as the rig draws it at gameplay zoom, on D4 pavement (top row) and
@@ -10,6 +12,8 @@ const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
 const ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const HALO_SCALE: float = 1.22
+const PICKUP_DIR: String = "res://assets/pickups/"
+const PICKUP_M: float = 1.2
 const LOOKS: Array[PackedStringArray] = [
 	["torso", "head_hat"],
 	["torso_jacket", "head_hair"],
@@ -43,9 +47,31 @@ func _ready() -> void:
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
 	rect.material = _look
 	_post.add_child(rect)
+	if page == "pickups":
+		_pickups()
+		return
 	for k: int in LOOKS.size():
 		for y: float in [-1.6, 1.6]:
 			_person(LOOKS[k], Vector2(-7.0 + k * 2.0, y) * PX)
+
+
+func _pickups() -> void:
+	var item: ShaderMaterial = ShaderMaterial.new()
+	item.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
+	var k: int = 0
+	for f: String in DirAccess.get_files_at(PICKUP_DIR):
+		if not f.ends_with(".png"):
+			continue
+		var t: Texture2D = load(PICKUP_DIR + f) as Texture2D
+		for y: float in [-1.6, 1.6]:
+			var spr: Sprite2D = Sprite2D.new()
+			spr.texture = t
+			spr.position = Vector2(-7.0 + k * 2.0, y) * PX
+			spr.scale = Vector2.ONE * PICKUP_M * PX / t.get_width()
+			spr.material = item
+			spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			_actors.add_child(spr)
+		k += 1
 
 
 func shoot() -> int:
@@ -61,7 +87,7 @@ func shoot() -> int:
 			await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		var img: Image = get_viewport().get_texture().get_image()
-		var file: String = out_dir.path_join("parts-%dppm.png" % roundi(z * PX))
+		var file: String = out_dir.path_join("%s-%dppm.png" % [page, roundi(z * PX)])
 		ok = img != null and img.save_png(file) == OK and ok
 	return 0 if ok else 1
 

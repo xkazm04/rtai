@@ -12,7 +12,6 @@ const EXTRA_DIR: String = "res://features/city/art/vehicles/"
 const ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const SETTLE_FRAMES: int = 8
 const LANE_Y: Array[float] = [-2.0, 2.0]
-const PICKUP_DIR: String = "res://assets/pickups/"
 const ROOF_DIR: String = "res://features/city/art/roofs/"
 ## Shipped district roofs mixed with the generic block roofs (roof_*), 4 x 3 at a 9 m pitch.
 const ROOFS: Array[String] = [
@@ -47,9 +46,6 @@ func _ready() -> void:
 		return
 	if page == "roofs":
 		_roofs_page()
-		return
-	if page == "pickups":
-		_pickups_page()
 		return
 	for y: int in range(-2, 3):
 		var road: bool = page == "extras" or y == 0 or y == -1
@@ -102,22 +98,6 @@ func _roofs_page() -> void:
 		var t: Texture2D = load(path) as Texture2D
 		var at: Vector2 = Vector2(-13.5 + (k % 4) * 9.0, -9.0 + (k / 4) * 9.0)
 		_sprite(t, at * PX, Vector2(8.4, 8.4) * PX)
-	_post_pass()
-
-
-## Every pickup token at 1 m, a row on pavement and a row on the charcoal road.
-func _pickups_page() -> void:
-	for i: int in range(-3, 3):
-		_tile("sidewalk_tone", Vector2(i * 8 + 4, -4) * PX)
-		_tile("road_straight_tone_b", Vector2(i * 8 + 4, 4) * PX)
-	var k: int = 0
-	for f: String in DirAccess.get_files_at(PICKUP_DIR):
-		if not f.ends_with(".png"):
-			continue
-		var t: Texture2D = load(PICKUP_DIR + f) as Texture2D
-		for y: float in [-2.0, 2.0]:
-			_sprite(t, Vector2(-7.0 + k * 2.0, y) * PX, Vector2.ONE * PX)
-		k += 1
 	_post_pass()
 
 

@@ -540,6 +540,20 @@
     "own master: d4_ped_a (edit target, scale lock)"
    ],
    "seed": null
+  },
+  "d4n_pickups": {
+   "file": "masters:night/d4-production/gen/out/d4n_pickups.png",
+   "sha256": "6e23808b36536ca4c757905c79549c7a63357353d498c3761e88808695da8d23",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/pickups.txt",
+   "prompt_sha256": "7f898afb92948e050560e400efddb08f564f2e52f1cfd56334fff3cb90d49767",
+   "layout_template": "masters:night/d4-production/gen/refs/t_pickups.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }
