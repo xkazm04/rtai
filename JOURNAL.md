@@ -398,3 +398,25 @@ NEXT (iteration 7 / morning, in order):
   full frame at 64 px/m: 0.03 % -> 0.00 % (32 / 48 already 0.00). Goldens 10/10, worst 0.05 (the
   dither moved under the junction's muzzle stars), not re-blessed. Every print shader in the game now
   hashes world coordinates: look_d4, look_d4_item, print_part, fx_ink, light_ink.
+- MILESTONE final release bench at b8ecb19 (00:47-00:54, CPU 10 % before): PASSES section 20 - p99 3.14 ms,
+  1% low 208 fps, worst swap 32 ms, 0 frames > 50 ms (45 > 25 ms, all present / vsync). Riot rig 0.334 ms
+  per tick (last run p99 0.377 ms per frame; the summary's 0.483 is the worst of the 3 runs). Target 0.3
+  still not met. evidence/bench-*-iter8.json, bench-iter8.txt.
+- Ladder rows 15-19 added (ladder.png 1280 x 7366). Frames rejected for camera: 0 (all engine captures,
+  straight down). Approaches rejected: 1 (the arm z_index guard: no measurable gain). No AI images (no
+  codex), so no provenance lines.
+
+NEXT (iteration 9 / morning, in order):
+1. Owner calls, now with frames: (a) objective = solid vermilion (shipped) or paper + vermilion core
+   (16-objective-core, one data line); (b) cop = vermilion body (shipped) or cream body + vermilion cap
+   (17-cop-accent, `p.torso_swap = 2` in HumanPlan.cop(); accent 0.95 -> 0.56 %). They are one decision:
+   with cream cops the vermilion objective needs no core. (c) 15 Hz limbs on ranks 8-15 at 32 / 48 px/m:
+   watch 15-rig-quarter/motion-*-old-top-new-bottom.gif (stills cannot judge judder).
+2. Rig 0.334 ms per tick vs 0.3: a native RigArm + RigGait (drive = 28 us debug, all GDScript math;
+   engine calls ~0.2 us) or 3 full ranks. Characters owner.
+3. After the n-d4 / n-d5 merge: look_d5 + FX sheet go live; re-bless the 5 `-ov` goldens and look; the
+   accent gate will then judge the new art (traffic_light_lamps debt row: delete it when n-d4 redraws the
+   lamps - the gate reports a debt row it no longer sees). Check the world lock still holds with
+   look_d5 (its vnoise must hash `FRAGCOORD + world_px`, never FRAGCOORD alone: world_lock.gd catches it).
+4. Gameplay FX wiring still waits on positional events (explosions, melee crackle); smoke has no source.
+5. D5 overlay GPU at 64 px/m (+0.9-1.5 ms): half-res SubViewport once look_d5 is merged.
