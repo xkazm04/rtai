@@ -11,7 +11,7 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h60, iteration 3) / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h60, iteration 3; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h64, iteration 4 = h60 + the roof ink foot; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -33,7 +33,41 @@ tick count, no RNG.
 | `item15_local9.png` | iteration 3: the D5 LOCAL 9 union hall roof beside the mural (the mock's landmark), D4 vs D4+D5 at 32 and 48 (h60) |
 | `item5d_finisher.png` | iteration 3: the two D5 finisher splash panels (`features/combat/art/d5/finisher_{drone,lightbar,k9}.png`; k9 in-game only) |
 | `night_iter3_summary.png` | ONE SCREEN for the morning: iteration 2 end (h38) vs iteration 3 end (h60) at 32/48/64, the mock, the 128 kill-cam, the concept |
+| `item16_parapets.png` | iteration 4: the roof "ink foot" (raised-slab read) vs the mock's LOCAL 9 edge, h60 vs h64 at 32/48/64 |
+| `item5c_cop_expressions.png` | iteration 4: cop dialogue expressions (neutral, shouting, alarmed, suspicious) at 512/128/64 px |
+| `item17_dialogue.png` | iteration 4: the D5 dialogue panel IN-ENGINE over the hero junction at 32/48 px/m + the mipmap A/B |
+| `item18_arena.png` | iteration 4: the D5 boss arena (King's chop-shop floor + a plan-view King sprite) at 32/48/64/96, D4 tier, the rejected cream crown (a1), the concept |
+| `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: hero h64 at 48/64, the arena at 64, the dialogue panel, mock, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
+
+## Iteration 4 (00:11 -> ) in one screen (`night_iter4_summary.png`)
+- **Roof ink foot** (gap 5, `item16_parapets.png`, 67c4b77): the mock draws each roof as a raised slab: cream lip ->
+  a solid ink band ~1.6x the lip wide -> the hatched cast shadow (LOCAL 9 south edge, column-median L 0.85 / 0.13-0.21
+  / 0.46-0.58). Ours had lip -> a 6 px outline -> hatch. `D5HeroParapets` adds a 0.22 m ink core outside the
+  street-facing south/east roof edges (d5 tier): lip 9 px / ink 15 px at 48 px/m = the mock's ratio. Rejected on the
+  way: the core in the 0.4 m alleys (h61: the blocks print as a black grid) and an inner hatched parapet shadow on the
+  roof (h62: invisible over the roof art's own border hatch). Cost: ink share at 32 px/m 23.5% -> 24.1% (mock 13.9%;
+  the excess is the roofs, gap 2). d4 tier 0 px; h63 = h64 0 px (deterministic).
+- **Cop expressions** (`item5c_cop_expressions.png`): 1 Codex sheet, 0 rejected; `cop_{neutral,shouting,alarmed,
+  suspicious}.png`. The visor hides the face in all four; at 64 px the hand (shouting) and crossed arms (suspicious)
+  read best. Store-safe (owner review). The Rivet / King / cop expression set is complete.
+- **Dialogue close-up in-engine** (gap 8, `item17_dialogue.png`, 78956ae): `d5_hero.gd -- --dialogue=rivet_angry,
+  cop_shouting` puts two 200 px D5 portraits on a cream ink-bordered panel over the 32/48 px/m frame (placeholder ink
+  bars, no strings: the HUD lane owns the text). FOUND: the portraits imported without mipmaps and aliased at 2.56x
+  minification; mipmaps on: mean abs error vs a Lanczos 200 px reference 6.8 -> 4.6 (Rivet), 7.2 -> 5.1 (cop). The
+  mipped panel is softer; a pre-scaled 256 px set would be crisper (HUD lane).
+- **Boss arena at 64 px/m** (`item18_arena.png`, bac376c + 66a4734): King's chop-shop floor (1 Codex image on a layout
+  template, 12 m at 104 px/m, `features/city/art/d5/arena/king_arena.png`) and a plan-view King sprite proposal
+  (1 Codex image on a chroma-green template, `features/characters/art/d5/king/king_top.png`; no King rig exists).
+  `d5_showcase.gd -- --arena`. The raw cream crown stencil swallowed Rivet's cream rim (a1: |dL| 0.077 vs ~0.15 on
+  the street) -> dimmed x0.6 (`tools/build_arena.py`): 0.134. King at 2.8 m read smaller than Rivet -> 3.6 m.
+  REVERTED: King through look_d5_part (a7: the Rivet-tuned ramp maps his steel to near-white, copper rust to pure
+  vermilion). Frame vermilion at 64 px/m 0.49% -> 1.52% with King (his cape: the threat).
+- REVERTED: bolder part pen lines (h65, ink_at 0.66 / grime 0.05): Rivet dL 0.151 -> 0.138 at 64 px/m, noisier, not
+  closer to the concept. FOUND: in the hero pose Rivet's D5 dL at 64 is 0.151 vs D4 0.161 (the 0.1693/0.1695 parity
+  is the showcase pose); above D4 at 96.
+- Codex this iteration: 3 images (cop expressions, arena floor, King top view), 0 rejected for camera breaks
+  (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger total 37.
 
 ## Iteration 3 (23:09 -> 00:10) in one screen (`night_iter3_summary.png`)
 - **Aged paper** (`item7_paper_age.png`, f871411): the mock is a warm sepia print, ours was a cool violet-grey. look_d5
@@ -96,8 +130,9 @@ tick count, no RNG.
    tile's joints (h55): the look_d4 print re-inks them (dark px 25.3% -> 23.9%), reverted. The joint weight lives in
    look_d4's print thresholds or needs a thinner-jointed tile.
 4. **Lamp post** reads as a spoon lying on the pavement (mock: kerb base + curved arm + round head). City props.
-5. **Parapets / building height.** The mock's roofs read as raised slabs; ours rely on the cast-shadow hatch (now a
-   proper hatched shadow, h42). Next: a parapet wall face on the south/east roof edges (roof art or a quad).
+5. **Parapets / building height.** The mock's roofs read as raised slabs. Iteration 4: the hero scene's ink foot
+   (`D5HeroParapets`, `item16_parapets.png`) gives the lip -> ink -> hatch profile of the mock. Next (city lane): put
+   the 0.22 m ink core in the roof/shadow quads of the city (street-facing south/east edges only, not the alleys).
 6. **Rivet's steel** is light lavender (D4 contrast parity) vs the concept's dark mauve: owner choice
    (`item9_steel_owner_ab.png`: mauve costs 61% body contrast; the cream rim still carries the silhouette).
 7. **Screen-locked grain in look_d4 (found iteration 3, not mine to change).** `look_d4.gdshader:96` hashes its 5%
@@ -109,8 +144,10 @@ tick count, no RNG.
    moving items, vehicles and ghosts): lock them to the sprite (as look_d5_part / look_d5_soul now do, 5522ce5 and
    the soul fix). The D5 shaders have no screen-locked noise left.
 8. **Up close D5 works**: at 96-128 px/m (kill-cam, `item13_killcam128.png`) the part rust, hatch, form shade and the
-   two-ink souls read like the concept. Not yet in-engine: King/boss rigs (no parts), the dialogue/phone UI for the
-   D5 portraits (HUD lane).
+   two-ink souls read like the concept. Iteration 4 put the dialogue panel (`item17_dialogue.png`) and a boss arena
+   with a static King (`item18_arena.png`) in-engine. Still missing: a King RIG (the sprite is one static plan view;
+   the characters lane needs King parts on the rig layout) and a King print ramp (look_d5_part's ramp is Rivet-tuned);
+   the real dialogue/phone UI (HUD lane: mipmapped or pre-scaled portraits).
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
