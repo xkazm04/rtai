@@ -1,0 +1,510 @@
+{
+  "doc": "NAT-08: the one source for numbers shared by the GDScript reference sim and the native C++ sim. tools/gen_constants/gen.mjs writes project/features/city/sim/sim_constants.gd and native/sim_core/src/sim_constants.h; lint fails on drift. Floats must be exactly representable (NAT-07).",
+  "groups": [
+    {
+      "constants": [
+        {
+          "doc": "actor slots",
+          "name": "CAP",
+          "type": "int",
+          "value": 512
+        },
+        {
+          "doc": "projectile slots",
+          "name": "PCAP",
+          "type": "int",
+          "value": 256
+        },
+        {
+          "doc": "cell map width (1 m cells)",
+          "name": "W",
+          "type": "int",
+          "value": 2048
+        },
+        {
+          "doc": "tile map width (8 m tiles)",
+          "name": "TW",
+          "type": "int",
+          "value": 256
+        },
+        {
+          "doc": "spatial hash window, cells per side",
+          "name": "HW",
+          "type": "int",
+          "value": 80
+        },
+        {
+          "doc": "spatial hash cell, metres",
+          "name": "HC",
+          "type": "float",
+          "value": 4
+        },
+        {
+          "doc": "metres per tile",
+          "name": "TILE_M",
+          "type": "float",
+          "value": 8
+        },
+        {
+          "doc": "metres per chunk",
+          "name": "CHUNK_M",
+          "type": "float",
+          "value": 128
+        },
+        {
+          "doc": "tiles per chunk side",
+          "name": "CHUNK_TILES",
+          "type": "int",
+          "value": 16
+        },
+        {
+          "doc": "cells per chunk side",
+          "name": "CHUNK_CELLS",
+          "type": "int",
+          "value": 128
+        },
+        {
+          "doc": "chunks per city side",
+          "name": "CITY_CHUNKS",
+          "type": "int",
+          "value": 16
+        }
+      ],
+      "doc": "Slot capacities and grids.",
+      "name": "capacity"
+    },
+    {
+      "constants": [
+        {
+          "doc": "pedestrian or rioter",
+          "name": "K_PED",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "traffic car",
+          "name": "K_CAR",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "cop on foot",
+          "name": "K_COP",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "police car",
+          "name": "K_PCAR",
+          "type": "int",
+          "value": 3
+        }
+      ],
+      "doc": "Actor kinds.",
+      "name": "kinds"
+    },
+    {
+      "constants": [
+        {
+          "doc": "walking",
+          "name": "M_WALK",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "fleeing",
+          "name": "M_FLEE",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "dead (body slides, then despawns)",
+          "name": "M_DEAD",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "rioting",
+          "name": "M_RIOT",
+          "type": "int",
+          "value": 3
+        }
+      ],
+      "doc": "Person modes.",
+      "name": "modes"
+    },
+    {
+      "constants": [
+        {
+          "doc": "kept in tier A (ARC-11 promotion)",
+          "name": "F_PROMOTED",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "crossing a road",
+          "name": "F_CROSSING",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "returns to the riot",
+          "name": "F_RIOTER",
+          "type": "int",
+          "value": 4
+        }
+      ],
+      "doc": "Actor flag bits.",
+      "name": "flags"
+    },
+    {
+      "constants": [
+        {
+          "doc": "not loaded",
+          "name": "T_VOID",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "road east-west",
+          "name": "T_ROAD_H",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "road north-south",
+          "name": "T_ROAD_V",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "junction",
+          "name": "T_INTER",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "kerb",
+          "name": "T_CURB",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "kerb corner",
+          "name": "T_CORNER",
+          "type": "int",
+          "value": 5
+        },
+        {
+          "doc": "building block",
+          "name": "T_BLOCK",
+          "type": "int",
+          "value": 6
+        },
+        {
+          "doc": "plaza",
+          "name": "T_PLAZA",
+          "type": "int",
+          "value": 7
+        }
+      ],
+      "doc": "Tile codes (8 m).",
+      "name": "tiles"
+    },
+    {
+      "constants": [
+        {
+          "doc": "not loaded: solid",
+          "name": "C_VOID",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "driving asphalt",
+          "name": "C_LANE",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "kerb-side asphalt",
+          "name": "C_PARK",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "sidewalk or plaza",
+          "name": "C_WALK",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "building (solid)",
+          "name": "C_BUILD",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "prop or parked car (solid)",
+          "name": "C_PROP",
+          "type": "int",
+          "value": 5
+        }
+      ],
+      "doc": "Cell codes (1 m).",
+      "name": "cells"
+    },
+    {
+      "constants": [
+        {
+          "doc": "live peds",
+          "name": "CN_PEDS",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "live cars",
+          "name": "CN_CARS",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "live cops",
+          "name": "CN_COPS",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "live police cars",
+          "name": "CN_PCARS",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "tier A actors",
+          "name": "CN_TIER_A",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "tier B actors",
+          "name": "CN_TIER_B",
+          "type": "int",
+          "value": 5
+        },
+        {
+          "doc": "live projectiles",
+          "name": "CN_PROJ",
+          "type": "int",
+          "value": 6
+        },
+        {
+          "doc": "dead bodies",
+          "name": "CN_DEAD",
+          "type": "int",
+          "value": 7
+        },
+        {
+          "doc": "despawns so far",
+          "name": "CN_DESPAWNED",
+          "type": "int",
+          "value": 8
+        },
+        {
+          "doc": "kills so far",
+          "name": "CN_KILLED",
+          "type": "int",
+          "value": 9
+        },
+        {
+          "doc": "counter count",
+          "name": "CN_COUNT",
+          "type": "int",
+          "value": 10
+        }
+      ],
+      "doc": "get_counters() indices.",
+      "name": "counters"
+    },
+    {
+      "constants": [
+        {
+          "doc": "kind",
+          "name": "SP_KIND",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "x m",
+          "name": "SP_X",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "y m",
+          "name": "SP_Y",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "heading x",
+          "name": "SP_DX",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "heading y",
+          "name": "SP_DY",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "art variant",
+          "name": "SP_VARIANT",
+          "type": "int",
+          "value": 5
+        },
+        {
+          "doc": "flag bits",
+          "name": "SP_FLAGS",
+          "type": "int",
+          "value": 6
+        },
+        {
+          "doc": "max speed m/s",
+          "name": "SP_VMAX",
+          "type": "int",
+          "value": 7
+        },
+        {
+          "doc": "lane coordinate m",
+          "name": "SP_LANE",
+          "type": "int",
+          "value": 8
+        },
+        {
+          "doc": "lane direction 0..3 (E S W N)",
+          "name": "SP_DIR",
+          "type": "int",
+          "value": 9
+        },
+        {
+          "doc": "spec length",
+          "name": "SP_LEN",
+          "type": "int",
+          "value": 10
+        }
+      ],
+      "doc": "spawn(spec) layout: one PackedFloat64Array per actor (a rare call, NAT-02).",
+      "name": "spawn"
+    },
+    {
+      "constants": [
+        {
+          "doc": "floats per live actor",
+          "name": "SNAP_STRIDE",
+          "type": "int",
+          "value": 14
+        },
+        {
+          "doc": "floats per live projectile",
+          "name": "SNAP_PROJ_STRIDE",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "projectile record id base",
+          "name": "SNAP_PROJ_BASE",
+          "type": "int",
+          "value": 1000
+        }
+      ],
+      "doc": "snapshot() record layout.",
+      "name": "snapshot"
+    },
+    {
+      "constants": [
+        {
+          "doc": "multiplier",
+          "name": "LCG_MUL",
+          "type": "int",
+          "value": 1664525
+        },
+        {
+          "doc": "increment",
+          "name": "LCG_ADD",
+          "type": "int",
+          "value": 1013904223
+        }
+      ],
+      "doc": "The sim LCG (32-bit, identical in both runtimes).",
+      "name": "rng"
+    },
+    {
+      "constants": [
+        {
+          "doc": "people",
+          "name": "RL_PEDS",
+          "type": "int",
+          "value": 0
+        },
+        {
+          "doc": "people shadows",
+          "name": "RL_PED_SHADOWS",
+          "type": "int",
+          "value": 1
+        },
+        {
+          "doc": "cars",
+          "name": "RL_CARS",
+          "type": "int",
+          "value": 2
+        },
+        {
+          "doc": "car shadows",
+          "name": "RL_CAR_SHADOWS",
+          "type": "int",
+          "value": 3
+        },
+        {
+          "doc": "projectiles",
+          "name": "RL_BULLETS",
+          "type": "int",
+          "value": 4
+        },
+        {
+          "doc": "layers",
+          "name": "RL_COUNT",
+          "type": "int",
+          "value": 5
+        },
+        {
+          "doc": "floats per instance (2D transform + colour + custom)",
+          "name": "RL_STRIDE",
+          "type": "int",
+          "value": 16
+        },
+        {
+          "doc": "person art variants in the clip table",
+          "name": "CLIP_VARIANTS",
+          "type": "int",
+          "value": 8
+        },
+        {
+          "doc": "clips per variant: idle walk flee hit death shoot",
+          "name": "CLIPS",
+          "type": "int",
+          "value": 6
+        },
+        {
+          "doc": "world pixels per metre at zoom 1",
+          "name": "PX_PER_M",
+          "type": "float",
+          "value": 32
+        }
+      ],
+      "doc": "MultiMesh layers written by write_render().",
+      "name": "render"
+    }
+  ],
+  "schema": "gtai.sim-constants/1"
+}

@@ -1,1 +1,2 @@
-TODO: godot-cpp tag for api_version=4.7, set when the native port adds the submodule (NAT-04).
+e103d348c4b2d8df7b819126d855e19381cb9a87
+# godot-cpp master of 2026-10-30 (no godot-4.7 tag exists yet); built with api_version=4.7 (NAT-04).

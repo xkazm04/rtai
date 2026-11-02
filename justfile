@@ -21,8 +21,17 @@ evidence:
 import:
     {{godot}} --headless --path project --import
 
+native target="template_debug":
+    cd native && scons platform=windows arch=x86_64 target={{target}}
+
 parity:
-    @echo "parity: lands with the native port (NAT-06)" && exit 1
+    node tools/tests/run_parity.mjs
+
+bake:
+    {{godot}} --headless --path project -s res://dev/bake_city.gd
+
+bench *args="":
+    node tools/bench/run.mjs {{args}}
 
 export:
     @echo "export: lands with the first export ticket (EXP-04)" && exit 1

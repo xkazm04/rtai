@@ -15,7 +15,7 @@ const CLOCK_DIR = 'project/core/clock/';
 const DELTA_CHOKE = 'project/boot/world.gd';
 const BANNED = [
   { re: /(^|[^.\w])(print|prints|printt|print_rich)\(/, why: 'bare print: use Log (GDS-08)', allow: [LOG_FILE] },
-  { re: /(^|[^.\w])printerr\(/, why: 'printerr outside Log/test runners (GDS-08)', allow: [LOG_FILE, 'project/tests/'] },
+  { re: /(^|[^.\w])printerr\(/, why: 'printerr outside Log/test and dev runners (GDS-08)', allow: [LOG_FILE, 'project/tests/', 'project/dev/'] },
   { re: /(^|[^.\w])(randf|randi|randf_range|randi_range|randfn|seed|randomize|rand_from_seed)\(/, why: 'global RNG: take a stream from ctx.rng (SIM-02)' },
   { re: /\.(shuffle|pick_random)\(/, why: 'shuffle()/pick_random() use the global RNG: draw from a ctx.rng stream (SIM-02)' },
   { re: /\.randomize\(/, why: 'randomize() seeds from the clock: streams are seeded by RngRegistry (SIM-02)' },

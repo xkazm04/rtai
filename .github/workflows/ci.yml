@@ -48,17 +48,46 @@ jobs:
       - run: '"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd'
 
   native:
-    # Stub until the native port lands native/SConstruct (NAT-05: MSVC debug/release +
-    # Linux ASan/UBSan parity). DEVIATION TST-04 in docs/decisions.md.
-    # hashFiles() is not allowed in a job-level `if`, so the stub decides inside a step.
+    # NAT-05 / NAT-06: MSVC template_debug + template_release, the standalone sim_core tests, then
+    # the parity gate (native CitySim vs the GDScript reference, bit-identical) on Windows.
+    # DEVIATION NAT-05 (docs/decisions.md): the Linux debug build under ASan/UBSan is not in CI yet.
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: native matrix (stub until native/SConstruct exists)
+        with:
+          submodules: recursive
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install scons
+      - name: build the GDExtension (debug + release) and the standalone core tests
+        working-directory: native
         shell: bash
         run: |
-          if [ -f native/SConstruct ]; then echo "native matrix not implemented" && exit 1; fi
-          echo "::warning::no native/SConstruct yet; the native matrix is skipped (DEVIATION TST-04)"
+          scons platform=windows arch=x86_64 target=template_debug
+          scons platform=windows arch=x86_64 target=template_release
+          scons platform=windows arch=x86_64 tests
+      - name: sim_core standalone tests
+        shell: bash
+        run: native/build/tests/sim_core_tests.exe
+      - name: fetch the pinned Godot (Windows)
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL=$(sed -n 's/^windows_url = "\(.*\)"/\1/p' versions.toml)
+          SHA=$(sed -n 's/^windows_sha512 = "\(.*\)"/\1/p' versions.toml)
+          curl -fsSL "$URL" -o "$RUNNER_TEMP/godot.zip"
+          echo "$SHA  $RUNNER_TEMP/godot.zip" | sha512sum -c -
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          BIN=$(ls "$RUNNER_TEMP"/godot/*_console.exe)
+          "$BIN" --version
+          echo "GODOT_BIN=$BIN" >> "$GITHUB_ENV"
+      - name: parity gate (native vs GDScript reference)
+        shell: bash
+        run: |
+          "$GODOT_BIN" --headless --path project --import
+          "$GODOT_BIN" --headless --path project -s res://tests/parity/run_parity.gd
 
   export:
     # Stub until the first export ticket lands tools/pck_audit (EXP-04/05).
@@ -81,7 +110,9 @@ jobs:
           node-version: "24"
       - run: pip install "gdtoolkit==$(sed -n '/^\[gdtoolkit\]/,/^\[/s/^version = "\(.*\)"/\1/p' versions.toml)"
       - uses: ./.github/actions/setup-godot
-      - run: node tools/evidence/run.mjs
+      # Parity runs in the Windows native job and the bench needs Windows + a display, so this
+      # Linux job writes lint, unit-tests and scenario-tests only (the others stay stale, not faked).
+      - run: node tools/evidence/run.mjs --no-parity --no-bench
       - uses: actions/upload-artifact@v4
         if: always()
         with:

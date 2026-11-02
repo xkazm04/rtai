@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+# The gtai_sim GDExtension (NAT-03..05). SCons only.
+#   scons platform=windows arch=x86_64 target=template_debug     -> project/native/bin/gtai_sim.windows.template_debug.x86_64.dll
+#   scons platform=windows arch=x86_64 target=template_release
+#   scons platform=windows arch=x86_64 tests                     -> build/tests/sim_core_tests(.exe), plain C++ (no godot)
+# godot-cpp is the submodule pinned in GODOT_CPP_VERSION, built for api_version 4.7 (NAT-04).
+# The sim core is compiled with strict floating point (NAT-07): /fp:strict on MSVC,
+# -ffp-contract=off on gcc/clang, so no FMA contraction can make it differ from GDScript.
+import os
+
+CORE = [
+    "world", "spawn", "step", "hash", "people", "contact",
+    "car_route", "car_drive", "car_hit", "projectiles", "render", "snapshot",
+]
+
+env = SConscript("godot-cpp/SConstruct", {"api_version": "4.7"})
+
+
+def strict_fp(e, msvc):
+    if msvc:
+        e.Append(CCFLAGS=["/fp:strict"])
+    else:
+        e.Append(CCFLAGS=["-ffp-contract=off"])
+
+
+msvc = env.get("is_msvc", False)
+
+core_env = env.Clone()
+core_env.Append(CPPPATH=["sim_core/src/"])
+strict_fp(core_env, msvc)
+variant = "{}.{}.{}".format(env["platform"], env["target"], env["arch"])
+core_objs = [
+    core_env.SharedObject("build/{}/core/{}".format(variant, n), "sim_core/src/{}.cpp".format(n))
+    for n in CORE
+]
+
+bind_env = env.Clone()
+bind_env.Append(CPPPATH=["sim_core/src/", "binding/"])
+bind_objs = [
+    bind_env.SharedObject("build/{}/binding/{}".format(variant, n), "binding/{}.cpp".format(n))
+    for n in ["city_sim", "register_types"]
+]
+
+lib = env.SharedLibrary(
+    "../project/native/bin/gtai_sim{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+    source=core_objs + bind_objs,
+)
+Default(lib)
+
+# Standalone core tests: a clean toolchain environment, no godot-cpp, no godot types.
+test_env = Environment(ENV=os.environ, TARGET_ARCH="x86_64") if os.name == "nt" else Environment(ENV=os.environ)
+test_msvc = "msvc" in test_env["TOOLS"]
+test_env.Append(CPPPATH=["sim_core/src/"])
+if test_msvc:
+    test_env.Append(CXXFLAGS=["/std:c++17", "/EHsc", "/O2", "/W3"])
+else:
+    test_env.Append(CXXFLAGS=["-std=c++17", "-O2", "-Wall"])
+strict_fp(test_env, test_msvc)
+test_objs = [
+    test_env.Object("build/tests/core/{}".format(n), "sim_core/src/{}.cpp".format(n)) for n in CORE
+]
+test_objs.append(test_env.Object("build/tests/test_core", "sim_core/tests/test_core.cpp"))
+tests = test_env.Program("build/tests/sim_core_tests", test_objs)
+Alias("tests", tests)
