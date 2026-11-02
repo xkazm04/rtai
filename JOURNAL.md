@@ -226,3 +226,12 @@ NEXT:
 - If traffic gets the atlas: re-shoot city_frame and compare parked vs moving cars.
 - Font: the HUD digits use Godot's default font; a D4 hand-inked display font (OFL, owner OK) is the next HUD step.
 - Unused masters for later: d4n_tokens2 SMG / wrench / ammo box, d4n_cash cash_b/c/d, d4n_casing cells 2-4.
+- 23:07 MILESTONE tank_tracks decal: it drew the TREAD (cream link plates) and read as railway rails on the road;
+  recoloured to the imprint (ink, alpha from luminance: plates = deep grooves) (`tools/track_imprint.py`).
+  Before/after `after_dd|after_tt/decals-*`. Kept.
+- 23:10 PROBE, NOT SHIPPED (owner decision): cop vermilion. The cop art is 38 % vermilion torso + 43 % upper arms, so a
+  riot frame is dozens of vermilion bodies; the target's cop is ink and cream with vermilion only on the muzzle flash.
+  Probe `tools/cop_accent.py`: torso vermilion -> ink-navy uniform, upper arms kept (`probe_cop/`, `work/cop_ab.png`):
+  about half the vermilion, but the shoulders overlap into one central vermilion blob from above (reads as a bullseye).
+  Mixed; the doctrine lists cops as a vermilion case. **Owner: full vermilion uniform (now) or an ink uniform with a
+  small vermilion accent (cap band / armband, would need a redraw, not this recolour)?** Cop torso restored.
