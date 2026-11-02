@@ -78,7 +78,7 @@ void fragment() {
 	float near = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s * 0.5).a);
 	float shade = clamp(far * 0.6 + near * 0.4, 0.0, 1.0);
 	if (c.a < 0.04) discard;
-	vec2 g_px = floor(FRAGCOORD.xy);
+	vec2 g_px = floor(UV / TEXTURE_PIXEL_SIZE * px_scale);   // paper grain locked to the part, never to the screen (no swim)
 	float g = 1.0 - 0.06 * hash(g_px);
 	if (c.a < alpha_cut || amount < 0.004) {
 		discard;   // an overlay: the D4 part under it prints the edge, the halo and the shadow
