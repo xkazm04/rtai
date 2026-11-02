@@ -9,7 +9,7 @@ shader_type canvas_item;
 //    art's cream sticker rim turned to a white rim - danger reads by value and shape, not hue
 //  - blood (deep arterial red, g/r low) is a protected channel: it survives the pass as BLOOD, the one colour
 //  - teal (the dead) survives as a flat teal plate; everything else is black and white
-//  - rain: sparse world-locked streaks, white over ink and ink over paper; paper fibre grain on the whites
+//  - rain: sparse world-locked streaks and landing splash rings, white over ink and ink over paper; paper fibre grain on the whites
 // world_px: the camera's world offset in screen px (set every frame); rain_phase: advances with the sim tick.
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
@@ -29,6 +29,9 @@ uniform float edge_ink = 0.9;      // ink outline on bright-side edges
 uniform float rain = 0.55;         // rain streak density 0..1
 uniform float rain_len = 22.0;     // streak length in px
 uniform float rain_slant = 0.18;   // x drift per px of fall
+uniform float splash = 0.0;        // share of splash cells with a drop landing each cycle (0 = off)
+uniform float splash_cell = 28.0;  // splash cell size in screen px (one landing spot per cell per cycle)
+uniform float splash_period = 36.0; // rain_phase ticks per cycle; a splash ring lives 7 of them
 uniform float grain = 0.06;        // paper fibre on the whites
 uniform float vignette = 0.35;     // ink pulled in from the frame edges (a panel border feeling)
 uniform float verm_value = 0.0;    // the value the vermilion plate prints at: 0 = a solid ink mass, 1 = paper
@@ -80,6 +83,19 @@ float rain_mask(vec2 w) {
 	return on * step(seg, 0.25) * line;
 }
 
+// a drop landing: a ring that grows and fades over 7 ticks, at a new spot of its cell every cycle
+float splash_mask(vec2 w) {
+	vec2 cell = floor(w / splash_cell);
+	float t = rain_phase / splash_period + hash(cell + 5.5);
+	float cyc = floor(t);
+	float age = fract(t) * splash_period;
+	float on = step(1.0 - splash, hash(cell + cyc * 1.37 + 31.7));
+	vec2 c = (cell + 0.25 + 0.5 * vec2(hash(cell + cyc + 3.1), hash(cell + cyc + 9.4))) * splash_cell;
+	float rad = 1.2 + age * 0.8;
+	float ring = 1.0 - smoothstep(0.7, 1.5, abs(length(w - c) - rad));
+	return on * step(age, 7.0) * ring * (1.0 - age / 12.0);
+}
+
 void fragment() {
 	vec2 uv = SCREEN_UV;
 	vec2 tx = SCREEN_PIXEL_SIZE;
@@ -111,6 +127,7 @@ void fragment() {
 	// rain: white over ink, ink over paper
 	float rm = rain_mask(w);
 	paper = mix(paper, 1.0 - paper, rm * 0.85);
+	paper = mix(paper, 1.0 - paper, splash_mask(w) * step(0.001, splash));
 	vec3 col = mix(INK, PAPER * (1.0 - grain * vnoise(w * 0.7) - grain * 0.5 * hash(floor(w))), paper);
 	// vignette: ink in from the edges
 	vec2 q = uv * 2.0 - 1.0;
