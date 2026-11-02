@@ -12,6 +12,8 @@ const DRIVE_M_PER_TICK: float = 12.0 / SimClock.TICK_RATE
 const ESCORT_M_PER_TICK: float = 3.0 / SimClock.TICK_RATE
 const ENTER_RANGE_M: float = 2.5
 const PLAYER_ID: int = 1
+## The reach of a payphone pick-up (as quest_rules.json answer_radius_m).
+const ANSWER_RANGE_M: float = 1.7
 
 var rivet: Vector2 = Vector2.ZERO
 var driving: String = ""
@@ -26,6 +28,10 @@ var weapon: String = "none"
 ## Encounters the quest started, in order, and the ones a test (or script) has cleared.
 var encounters_started: Array[String] = []
 var cleared: Dictionary[String, bool] = {}
+## Payphones the quest put a call on, calls answered, and places sabotaged (by place).
+var rung: Dictionary[String, bool] = {}
+var answered: Dictionary[String, bool] = {}
+var sabotaged: Dictionary[String, bool] = {}
 var vehicle_at: Dictionary[String, Vector2] = {}
 var wrecked: Dictionary[String, bool] = {}
 var actor_at: Dictionary[String, Vector2] = {}
@@ -150,3 +156,25 @@ func start_encounter(place: String) -> void:
 
 func encounter_cleared(place: String) -> bool:
 	return cleared.get(place, false)
+
+
+## The stub router: a rung phone connects on an interact press on foot within reach of it.
+func ring_phone(place: String) -> void:
+	calls.append("ring %s" % place)
+	rung[place] = true
+
+
+func phone_answered(place: String) -> bool:
+	if not answered.get(place, false) and rung.get(place, false):
+		var near: bool = rivet.distance_to(_places.markers[place].phone) < ANSWER_RANGE_M
+		answered[place] = near and driving == "" and interact_pressed()
+	return answered.get(place, false)
+
+
+## The stub sabotage: an interact press on foot inside the place's marker.
+func sabotage_done(place: String) -> bool:
+	if not sabotaged.get(place, false):
+		var m: QuestPlaces.Marker = _places.markers[place]
+		var inside: bool = rivet.distance_to(m.at) <= m.radius_m
+		sabotaged[place] = inside and driving == "" and interact_pressed()
+	return sabotaged.get(place, false)

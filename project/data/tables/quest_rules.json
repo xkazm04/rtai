@@ -282,7 +282,7 @@
       "waits_for_lines": false
     },
     {
-      "doc": "Lose the heat: done at wanted 0. When the location's marker has a payphone, it then rings and Rivet must answer it on foot. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "doc": "Lose the heat: done at wanted 0. When the location's marker has a payphone, the world's payphone router then rings it and Rivet must answer it on foot; that call holds the beat's lines until it connects, and the beat ends once they have played. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
       "handler": "evade",
       "id": "evade",
       "needs_encounter": false,
@@ -291,16 +291,16 @@
       "waits_for_lines": false
     },
     {
-      "doc": "Answer the payphone at the location's marker on foot (it rings only at wanted 0 when arrived_hot is a fail state). objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "doc": "Answer the payphone at the location's marker on foot: the world's payphone router rings it (only at wanted 0 when arrived_hot is a fail state) and connects the pick-up. The beat's lines are the call: they play once it connects, and the beat ends once they have played. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
       "handler": "answer",
       "id": "answer",
       "needs_encounter": false,
       "needs_location": true,
       "needs_target": false,
-      "waits_for_lines": false
+      "waits_for_lines": true
     },
     {
-      "doc": "Reach the location (at wanted 0 when arrived_hot is a fail state); done once the beat's lines have played. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "doc": "Meet the people at the location (at wanted 0 when arrived_hot is a fail state): each actor in the world's places whose speaker voices one of the beat's lines is met with an interact press in reach, and their lines play when they are met; where no actor voices them, a cold arrival is the meeting. Done once the beat's lines have played. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
       "handler": "meet",
       "id": "meet",
       "needs_encounter": false,

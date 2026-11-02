@@ -1,0 +1,54 @@
+{
+  "$id": "gtai.payphone-router/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "refuse_line": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "type": "string"
+        },
+        "key": {
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "type": "string"
+        },
+        "speaker": {
+          "pattern": "^[a-z][a-z-]*$",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "approved"
+          ]
+        },
+        "text": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "key",
+        "speaker",
+        "status",
+        "text"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.payphone-router/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "refuse_line"
+  ],
+  "type": "object"
+}

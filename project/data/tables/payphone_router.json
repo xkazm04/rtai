@@ -1,0 +1,11 @@
+{
+  "doc": "The payphone job router (quest collect-call mechanic `payphone-job-router`). refuse_line is what Patch says to a hot caller. DRAFT: the package has no refusal line, so this one was written in the night lane against voices/patch.md and waits for the owner and the PoF voice council (status draft).",
+  "refuse_line": {
+    "id": "patch-refuse-hot",
+    "key": "PAYPHONE__PATCH__REFUSE_HOT",
+    "speaker": "patch",
+    "status": "draft",
+    "text": "Gooood evening, you've reached Patch! Patch hears sirens on your line. Patch only connects calm customers. Press one to hang up and cool off. Press two to hang up and cool off faster. Goodbye-ee!"
+  },
+  "schema": "gtai.payphone-router/1"
+}

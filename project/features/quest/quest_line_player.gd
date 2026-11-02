@@ -39,14 +39,25 @@ func _init(pkg: QuestPackage, rules: QuestRules) -> void:
 			_armed.append(bark)
 
 
-## A beat's spoken lines join the queue; its barks are armed and wait for their conditions.
-func play_beat(beat: QuestBeat) -> void:
+## A beat's barks are armed and wait for their conditions; its spoken lines join the queue,
+## except a `held` speaker's (a meet: each ally speaks when met) or, with `hold_all`, every one
+## (a call: its lines wait until it connects). Held lines come later through play_spoken().
+func play_beat(beat: QuestBeat, held: Array[String] = [], hold_all: bool = false) -> void:
 	for line_id: String in beat.line_ids:
 		var line: QuestLine = _pkg.line(line_id)
-		if not line.is_bark():
+		if line.is_bark():
+			if not _armed.has(line) and not _fired(line.id):
+				_armed.append(line)
+		elif not hold_all and not held.has(line.speaker):
 			_queue.append(line)
-		elif not _armed.has(line) and not _fired(line.id):
-			_armed.append(line)
+
+
+## The beat's spoken lines of `speaker` ("" for every speaker) join the queue, in beat order.
+func play_spoken(beat: QuestBeat, speaker: String = "") -> void:
+	for line_id: String in beat.line_ids:
+		var line: QuestLine = _pkg.line(line_id)
+		if not line.is_bark() and (speaker == "" or line.speaker == speaker):
+			_queue.append(line)
 
 
 func armed_barks() -> int:

@@ -1,6 +1,6 @@
 {
   "schema": "gtai.questMarkers/1",
-  "note": "STUB places for collect-call (F-12b): the city lane has not placed Factory Row, the Toner Room or Dock 9 yet, so this test-only table puts each location the package names (keyed by its own words) on a straight-line stub map, in metres. 'phone' = a payphone stands there. 'encounters' = the combat the world runs there for fight/sabotage (the package's 5 waves of 48 contractors, then Quartermaster Mertz).",
+  "note": "STUB places for collect-call (F-12b), kept for the quest runtime unit tests (the real play uses data/tables/collect_call_places.json): this test-only table puts each location the package names (keyed by its own words) on a straight-line stub map, in metres. 'phone' = a payphone stands there. 'encounters' = the combat the world runs there for fight/sabotage (the package's 5 waves of 48 contractors, then Quartermaster Mertz).",
   "markers": {
     "Factory Row alleys": { "at": [0.0, 0.0], "r": 3.0 },
     "Factory Row corner": { "at": [24.0, 0.0], "r": 2.0, "phone": [24.0, 1.0] },

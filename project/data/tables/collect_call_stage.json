@@ -1,0 +1,217 @@
+{
+  "crates": {
+    "at": [
+      112,
+      -13
+    ],
+    "count": 40,
+    "label": "PROJECT TUCK-IN",
+    "torch_reach_m": 3
+  },
+  "doc": "The stage quest 1 (collect-call) plays on, in metres (y down): where Rivet starts and how hot, where he can hide, the police patrols that see him while he is hot, Dock 9 (spawn points, the six waves: 48 contractors in five, then the quartermaster alone), the TUCK-IN crate stack and the metal the Robo-tazer arcs through, and what the Toner Room lines do (line_hooks). Placeholder layout until the city hosts the quest.",
+  "dock": {
+    "spawn_gap_s": 0.25,
+    "wave_gap_s": 2
+  },
+  "hide_spots": {
+    "dumpster": {
+      "at": [
+        0,
+        0
+      ],
+      "r": 1.2
+    },
+    "harbor-skip": {
+      "at": [
+        84,
+        34
+      ],
+      "r": 1.2
+    }
+  },
+  "line_hooks": {
+    "brass-gloria": "give_gloria",
+    "fax-confirm-receipt": "cash_under_phone",
+    "juno-load-bearing": "repair",
+    "kilohm-accents": "whisper"
+  },
+  "metal": [
+    [
+      108,
+      -13
+    ],
+    [
+      110,
+      -13
+    ],
+    [
+      112,
+      -13
+    ],
+    [
+      114,
+      -13
+    ],
+    [
+      116,
+      -13
+    ],
+    [
+      106,
+      -10
+    ],
+    [
+      118,
+      -10
+    ],
+    [
+      100,
+      -15
+    ],
+    [
+      104,
+      -15
+    ],
+    [
+      108,
+      -15
+    ]
+  ],
+  "patrols": [
+    {
+      "id": "cop-alley",
+      "mps": 2,
+      "route": [
+        [
+          -7,
+          -7
+        ],
+        [
+          7,
+          -7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          -7,
+          7
+        ]
+      ]
+    },
+    {
+      "id": "cop-harbor",
+      "mps": 2,
+      "route": [
+        [
+          100,
+          20
+        ],
+        [
+          118,
+          20
+        ]
+      ]
+    }
+  ],
+  "payphones": [
+    "Factory Row corner",
+    "Harbor Road"
+  ],
+  "refusal_s": 7,
+  "rivet_start": [
+    -3,
+    2
+  ],
+  "schema": "gtai.collect-call-stage/1",
+  "spawn_points": {
+    "catwalk-north": [
+      96,
+      -15
+    ],
+    "catwalk-south": [
+      104,
+      15
+    ],
+    "gate-east": [
+      117,
+      8
+    ],
+    "gate-west": [
+      84,
+      -8
+    ],
+    "truck": [
+      84,
+      12
+    ],
+    "vault-cage": [
+      112,
+      -9
+    ]
+  },
+  "start_heat": 2,
+  "tape_bill": 150,
+  "waves": [
+    {
+      "count": 6,
+      "encounter": "Dock 9 bonded storage",
+      "id": "w1",
+      "spawns": [
+        "gate-west",
+        "gate-east"
+      ]
+    },
+    {
+      "count": 8,
+      "encounter": "Dock 9 bonded storage",
+      "id": "w2",
+      "spawns": [
+        "gate-west",
+        "gate-east"
+      ]
+    },
+    {
+      "count": 10,
+      "encounter": "Dock 9 bonded storage",
+      "id": "w3",
+      "spawns": [
+        "catwalk-north",
+        "catwalk-south"
+      ]
+    },
+    {
+      "count": 11,
+      "encounter": "Dock 9 bonded storage",
+      "id": "w4",
+      "spawns": [
+        "gate-west",
+        "catwalk-north",
+        "gate-east",
+        "catwalk-south"
+      ]
+    },
+    {
+      "count": 13,
+      "encounter": "Dock 9 bonded storage",
+      "id": "w5",
+      "spawns": [
+        "truck"
+      ]
+    },
+    {
+      "boss": "quartermaster-mertz",
+      "count": 1,
+      "encounter": "Dock 9 vault cage",
+      "id": "w6",
+      "spawns": [
+        "vault-cage"
+      ]
+    }
+  ],
+  "whispers": {
+    "every_s": 7,
+    "first_s": 1.5
+  }
+}

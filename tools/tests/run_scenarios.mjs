@@ -27,6 +27,7 @@ function questMetrics(file, prefix) {
     Ticks: q.ticks,
     BeatsReached: q.beatsReached,
     LinesShown: (q.linesShown ?? []).length,
+    CashPaid: q.cash ?? 0,
     ChecksPassed: checks.filter(Boolean).length,
     ChecksTotal: checks.length,
     Stubbed: (q.stubbed ?? []).length,

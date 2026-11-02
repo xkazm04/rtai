@@ -1,0 +1,34 @@
+{
+  "$id": "gtai.heat/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "drain_s_per_level": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "max_level": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.heat/1"
+    },
+    "sight_m": {
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "max_level",
+    "drain_s_per_level",
+    "sight_m"
+  ],
+  "type": "object"
+}

@@ -34,6 +34,7 @@ var _tick: int = 0
 var _was_ringing: bool = false
 var _was_refused: bool = false
 var _held_for_lines: bool = false
+var _call_released: bool = false
 
 
 func _init(p_pkg: QuestPackage, world: QuestWorld, events: EventBus, rules: QuestRules) -> void:
@@ -117,7 +118,7 @@ func _step_active() -> void:
 		_log("heat clamp %d -> %d" % [_world.wanted_level(), pkg.heat_peak])
 		_world.cap_wanted(pkg.heat_peak)
 		heat_clamps += 1
-	var result: StringName = _hold_for_lines(objective.check(_world, pkg))
+	var result: StringName = _hold_for_lines(_release_lines(objective.check(_world, pkg)))
 	_log_objective_changes()
 	if result == QuestObjective.RUNNING:
 		result = _global_fail()
@@ -132,10 +133,25 @@ func _step_active() -> void:
 		_fail(result)
 
 
-## A verb that waits for its lines (meet: the meeting is the conversation) holds DONE until
-## the line player is idle.
+## Held lines join the queue as their moment comes: each ally's once Rivet meets them, a call's
+## once it connects (that tick's DONE then waits for them in _hold_for_lines).
+func _release_lines(result: StringName) -> StringName:
+	for tag: String in objective.newly_met:
+		_log("met %s" % tag)
+		lines.play_spoken(objective.beat, _world.places().actors[tag].speaker)
+	objective.newly_met.clear()
+	if objective.connected and not _call_released:
+		_call_released = true
+		_log("%s: call connected" % objective.beat.id)
+		lines.play_spoken(objective.beat)
+	return result
+
+
+## A verb that waits for its lines (meet: the meeting is the conversation) and a call (the beat
+## ends when the call does) hold DONE until the line player is idle.
 func _hold_for_lines(result: StringName) -> StringName:
-	if result != QuestObjective.DONE or not _rules.verbs[objective.beat.verb].waits_for_lines:
+	var waits: bool = _rules.verbs[objective.beat.verb].waits_for_lines or objective.is_call()
+	if result != QuestObjective.DONE or not waits:
 		return result
 	if not lines.busy():
 		return result
@@ -148,7 +164,8 @@ func _hold_for_lines(result: StringName) -> StringName:
 func _log_objective_changes() -> void:
 	if objective.ringing != _was_ringing:
 		_was_ringing = objective.ringing
-		_log("payphone %s" % ("ringing" if _was_ringing else "silent (hot)"))
+		var quiet: String = "answered" if objective.connected else "silent (hot)"
+		_log("payphone %s" % ("ringing" if _was_ringing else quiet))
 	if objective.refused_hot and not _was_refused:
 		_was_refused = true
 		_log("%s: held back, Rivet is hot" % objective.beat.id)
@@ -172,11 +189,12 @@ func _begin_beat(i: int) -> void:
 	var beat: QuestBeat = pkg.beats[i]
 	if beat.handler == QuestRules.Handler.ENTER_VEHICLE:
 		vehicle_tag = beat.target
-	objective = QuestObjective.start(beat, _world, _rules)
+	objective = QuestObjective.start(beat, _world, _rules, pkg)
 	_was_ringing = false
 	_was_refused = false
 	_held_for_lines = false
-	lines.play_beat(beat)
+	_call_released = false
+	lines.play_beat(beat, objective.held_speakers, objective.is_call())
 	_log("beat %d %s (%s)" % [i, beat.id, beat.verb])
 
 

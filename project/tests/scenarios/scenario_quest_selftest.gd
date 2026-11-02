@@ -14,7 +14,7 @@ func run(_tree: SceneTree) -> String:
 		QuestPlay.selftest(true), QuestPlay.selftest(true), QuestPlay.selftest(false)
 	]
 	var verdict: QuestVerdict = QuestVerdict.judge(
-		plays[0], plays[1], plays[2], "phone never answered"
+		plays[0], plays[1], [plays[2]] as Array[QuestRecord], ["phone never answered"]
 	)
 	var write_error: String = write_evidence(EVIDENCE_FILE, verdict.evidence(QuestFixture.ID))
 	Log.info("scenario", verdict.summary(QuestFixture.ID))

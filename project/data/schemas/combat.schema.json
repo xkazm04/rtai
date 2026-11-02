@@ -1,0 +1,272 @@
+{
+  "$id": "gtai.combat/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "human": {
+      "additionalProperties": false,
+      "properties": {
+        "engage_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "hp": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "radius_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "walk_mps": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "hp",
+        "radius_m",
+        "walk_mps",
+        "engage_m"
+      ],
+      "type": "object"
+    },
+    "rivet": {
+      "additionalProperties": false,
+      "properties": {
+        "hp": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "near_death_frac": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "radius_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "repair_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "repair_per_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "walk_mps": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "hp",
+        "radius_m",
+        "walk_mps",
+        "repair_delay_s",
+        "repair_per_s",
+        "near_death_frac"
+      ],
+      "type": "object"
+    },
+    "robo_tazer": {
+      "additionalProperties": false,
+      "properties": {
+        "ball_life_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "ball_radius_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "ball_speed_mps": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "chain_hops": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "chain_radius_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "charge_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "damage": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "first_delay_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "homing_deg_per_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "metal_sense_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "strafe_mps": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "vent_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "ball_life_s",
+        "ball_radius_m",
+        "ball_speed_mps",
+        "chain_hops",
+        "chain_radius_m",
+        "charge_s",
+        "damage",
+        "first_delay_s",
+        "homing_deg_per_s",
+        "metal_sense_m",
+        "strafe_mps",
+        "vent_s"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.combat/1"
+    },
+    "weapons": {
+      "additionalProperties": false,
+      "properties": {
+        "assault-rifle": {
+          "additionalProperties": false,
+          "properties": {
+            "burst": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "burst_gap_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "cooldown_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "damage": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "damage_vs_rivet": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "magazine": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "range_m": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "speed_mps": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "spread_deg": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "burst",
+            "burst_gap_s",
+            "cooldown_s",
+            "damage",
+            "damage_vs_rivet",
+            "magazine",
+            "range_m",
+            "speed_mps",
+            "spread_deg"
+          ],
+          "type": "object"
+        },
+        "gloria": {
+          "additionalProperties": false,
+          "properties": {
+            "burst": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "burst_gap_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "cooldown_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "damage": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "damage_vs_rivet": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "magazine": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "range_m": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "speed_mps": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "spread_deg": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "burst",
+            "burst_gap_s",
+            "cooldown_s",
+            "damage",
+            "damage_vs_rivet",
+            "magazine",
+            "range_m",
+            "speed_mps",
+            "spread_deg"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "gloria",
+        "assault-rifle"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rivet",
+    "human",
+    "weapons",
+    "robo_tazer"
+  ],
+  "type": "object"
+}

@@ -1,10 +1,12 @@
+# gdlint: disable=max-public-methods
 @abstract class_name QuestWorld
 extends RefCounted
 ## The quest runtime's port onto the world (LAY-05): everything a quest reads or asks for, and
 ## nothing else. The composition root injects an implementation backed by the real systems
 ## (player, vehicles, police, economy, souls); tests inject a stub. Positions are metres.
 ## Shared state changes only through the owning feature's one setter (ARC-08): the quest asks
-## (cap_wanted, pay), it never writes a field.
+## (cap_wanted, pay), it never writes a field. (The port is the whole contract surface, 23
+## methods; hence the gdlint max-public-methods disable above.)
 
 ## The named places and things this world resolves (gtai.questMarkers/1).
 @abstract func places() -> QuestPlaces
@@ -59,3 +61,14 @@ extends RefCounted
 
 ## True once every enemy of the encounter at `place`, its boss included, is down.
 @abstract func encounter_cleared(place: String) -> bool
+
+## Puts the job's call on the payphone at `place` (once per beat). The world's payphone router
+## rings it when it can: Patch's router rings only at wanted 0 and refuses a hot pick-up.
+@abstract func ring_phone(place: String) -> void
+
+## True once Rivet picked up the ringing payphone at `place` on foot and the call connected.
+@abstract func phone_answered(place: String) -> bool
+
+## True once the sabotage target at `place` is done. The world owns the act (the torch, a
+## charge); the quest only asks, after the place's encounter is cleared.
+@abstract func sabotage_done(place: String) -> bool

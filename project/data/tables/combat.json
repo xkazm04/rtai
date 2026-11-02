@@ -1,0 +1,56 @@
+{
+  "doc": "Combat tuning for quest collect-call (mechanics assault-rifle, robo-tazer; Gloria from the Toner Room). Owner doctrine: humans die to one hit and their bullets are weak; two Robo-tazer hits nearly kill Rivet (2 x damage leaves under near_death_frac of hp, never 0). Seconds and metres; the sim converts to 60 Hz ticks.",
+  "human": {
+    "engage_m": 12,
+    "hp": 1,
+    "radius_m": 0.45,
+    "walk_mps": 3
+  },
+  "rivet": {
+    "hp": 100,
+    "near_death_frac": 0.15,
+    "radius_m": 0.6,
+    "repair_delay_s": 3,
+    "repair_per_s": 10,
+    "walk_mps": 4.5
+  },
+  "robo_tazer": {
+    "ball_life_s": 8,
+    "ball_radius_m": 0.6,
+    "ball_speed_mps": 4.5,
+    "chain_hops": 4,
+    "chain_radius_m": 3,
+    "charge_s": 1.5,
+    "damage": 46,
+    "first_delay_s": 1.2,
+    "homing_deg_per_s": 18,
+    "metal_sense_m": 14,
+    "strafe_mps": 1.2,
+    "vent_s": 2
+  },
+  "schema": "gtai.combat/1",
+  "weapons": {
+    "assault-rifle": {
+      "burst": 4,
+      "burst_gap_s": 0.09,
+      "cooldown_s": 1.4,
+      "damage": 1,
+      "damage_vs_rivet": 0.6,
+      "magazine": 30,
+      "range_m": 16,
+      "speed_mps": 30,
+      "spread_deg": 8
+    },
+    "gloria": {
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 0.4,
+      "damage": 1,
+      "damage_vs_rivet": 0,
+      "magazine": 0,
+      "range_m": 26,
+      "speed_mps": 45,
+      "spread_deg": 0
+    }
+  }
+}

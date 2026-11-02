@@ -2,13 +2,15 @@ class_name QuestFixture
 extends RefCounted
 ## The quest-runtime test fixtures: the spike's `_selftest` gtai.quest/1 package (evolve
 ## quest-runtime f2fa88f, verbatim) and the yard places table it names; the shipped collect-call
-## package (res://quests/, copied verbatim from PoF) with its STUB places; mutation helpers.
+## package (res://quests/, copied verbatim from PoF) with its STUB places (the runtime's unit
+## tests) and with quest 1's stage places (data/tables, what the real play uses); mutation helpers.
 
 const ROOT: String = "res://tests/support/quests"
 const ID: String = "_selftest"
 const PLACES: String = "res://tests/support/quests/places.json"
 const CC_ID: String = "collect-call"
 const CC_PLACES: String = "res://tests/support/quests/collect_call_places.json"
+const STAGE_PLACES: String = "res://data/tables/collect_call_places.json"
 
 
 static func places() -> QuestPlaces:
@@ -21,6 +23,14 @@ static func cc_places() -> QuestPlaces:
 
 static func cc_load() -> QuestLoader.Result:
 	return QuestLoader.load_package(CC_ID, QuestRules.shipped(), cc_places())
+
+
+static func stage_places() -> QuestPlaces:
+	return QuestPlaces.from_json_text(FileAccess.get_file_as_string(STAGE_PLACES))
+
+
+static func stage_load() -> QuestLoader.Result:
+	return QuestLoader.load_package(CC_ID, QuestRules.shipped(), stage_places())
 
 
 ## A fresh deep copy of the fixture's quest.json, to mutate.

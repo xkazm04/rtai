@@ -1,7 +1,9 @@
 extends GutTest
 ## collect-call's verbs, one handler each (F-12b): evade (with and without a payphone), answer
 ## and meet gated by arrived_hot, meet waiting for its lines, fight and sabotage on the world's
-## encounters; and a contract whose first place has no payphone begins on offer.
+## encounters; and a contract whose first place has no payphone begins on offer. A call (answer,
+## or evade at a payphone place) holds its lines until it connects and ends when they have played
+## (quest 1's behaviour, int-q1).
 
 var _bus: EventBus
 var _world: StubQuestWorld
@@ -53,10 +55,13 @@ func test_answer_rings_only_when_cold() -> void:
 	_world.wanted = 0
 	_world.interact = true
 	_step(runner, 1)
-	assert_eq(runner.beat_index, 2)
+	assert_eq(runner.beat_index, 1, "connected: the call's four lines play first")
+	assert_true(runner.timeline.any(func(l: String) -> bool: return l.ends_with("call connected")))
 	assert_true(
 		runner.timeline.any(func(l: String) -> bool: return l.ends_with("payphone ringing"))
 	)
+	_step_until_idle(runner)
+	assert_eq(runner.beat_index, 2)
 
 
 func test_meet_needs_cold_arrival_and_waits_for_the_conversation() -> void:
@@ -105,6 +110,8 @@ func test_evade_at_a_payphone_place_ends_with_the_answer() -> void:
 	_world.rivet = Vector2(120.0, -28.0)
 	_world.interact = true
 	_step(runner, 1)
+	assert_eq(runner.state, QuestRunner.State.ACTIVE, "the call's lines first")
+	_step_until_idle(runner)
 	assert_eq(runner.state, QuestRunner.State.SUCCEEDED)
 	assert_eq(_world.cash, 1500)
 
@@ -145,6 +152,12 @@ func _at_beat(i: int) -> QuestRunner:
 
 func _runner() -> QuestRunner:
 	return QuestRunner.new(QuestFixture.cc_load().package, _world, _bus, QuestRules.shipped())
+
+
+func _step_until_idle(runner: QuestRunner) -> void:
+	while runner.lines.busy() and _tick < 20000:
+		_step(runner, 1)
+	_step(runner, 1)
 
 
 func _step(runner: QuestRunner, ticks: int) -> void:

@@ -1,0 +1,136 @@
+{
+  "$id": "gtai.questMarkers/1",
+  "additionalProperties": false,
+  "properties": {
+    "actors": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "hp": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "kind": {
+            "pattern": "^[a-z][a-z_]*$",
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "ally",
+              "hostile"
+            ]
+          },
+          "speaker": {
+            "pattern": "^[a-z][a-z-]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "encounters": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "boss": {
+            "pattern": "^[a-z][a-z-]*$",
+            "type": "string"
+          },
+          "enemies": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "waves": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "waves",
+          "enemies"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "markers": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "phone": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "r": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.questMarkers/1"
+    },
+    "vehicles": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "heading": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "markers",
+    "vehicles",
+    "actors",
+    "encounters"
+  ],
+  "type": "object"
+}

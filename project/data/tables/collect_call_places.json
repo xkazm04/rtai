@@ -1,0 +1,106 @@
+{
+  "actors": {
+    "Brass": {
+      "at": [
+        44,
+        18
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "gunsmith"
+    },
+    "Don Fax": {
+      "at": [
+        44,
+        25
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "don-fax"
+    },
+    "Dr. Kilohm": {
+      "at": [
+        48,
+        20
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "scientist"
+    },
+    "Juno": {
+      "at": [
+        40,
+        20
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "nurse"
+    }
+  },
+  "doc": "Quest 1 collect-call: the words its gtai.quest/1 package names places and people with, resolved to the stage (metres, y down). 'phone' = a payphone stands there (so an evade there ends with the call). Actors carry the package speaker they voice: a meet beat's allies are the actors voicing its lines. 'encounters' = the combat the stage runs there for fight/sabotage (collect_call_stage.json waves: 6+8+10+11+13 contractors, then Mertz).",
+  "encounters": {
+    "Dock 9 bonded storage": {
+      "enemies": 48,
+      "waves": 5
+    },
+    "Dock 9 vault cage": {
+      "boss": "quartermaster-mertz",
+      "enemies": 1,
+      "waves": 1
+    }
+  },
+  "markers": {
+    "Dock 9 bonded storage": {
+      "at": [
+        100,
+        0
+      ],
+      "r": 16
+    },
+    "Dock 9 vault cage": {
+      "at": [
+        112,
+        -6
+      ],
+      "r": 3
+    },
+    "Factory Row alleys": {
+      "at": [
+        0,
+        0
+      ],
+      "r": 3
+    },
+    "Factory Row corner": {
+      "at": [
+        16,
+        -6
+      ],
+      "phone": [
+        16,
+        -6
+      ],
+      "r": 2
+    },
+    "Harbor Road": {
+      "at": [
+        92,
+        30
+      ],
+      "phone": [
+        92,
+        30
+      ],
+      "r": 2
+    },
+    "The Toner Room": {
+      "at": [
+        44,
+        22
+      ],
+      "r": 7
+    }
+  },
+  "schema": "gtai.questMarkers/1",
+  "vehicles": {}
+}

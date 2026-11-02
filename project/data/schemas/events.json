@@ -63,7 +63,7 @@
           ]
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "The wanted level changed (ARC-08: emitted only by the one wanted setter).",
@@ -75,7 +75,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "Rivet's cash changed (ARC-08: emitted only by the one cash setter). amount is the new total; delta is signed.",
@@ -91,7 +91,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "A contract (mission) started.",
@@ -155,7 +155,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "A boss stepped into the fight (boss is its character data id). Quest bark tag boss-intro.",
@@ -167,7 +167,7 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "An attack aimed at Rivet began its tell (wind-up, charge whine); weapon is its data id. Quest bark tag robo-tazer-charge (weapon robo-tazer).",
@@ -179,7 +179,7 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "Rivet took a hit (Rivet only, never every actor: ARC-07); weapon is the data id of what hit him. Quest bark tag robo-tazer-hit (weapon robo-tazer).",
@@ -191,14 +191,14 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
-      "doc": "The voices in Rivet's head spiked (madness). Quest bark tag static-whisper-burst.",
-      "emitter": "features/characters",
+      "doc": "The voices in Rivet's head spiked (madness). Quest bark tag static-whisper-burst. Until a madness system exists in features/characters, quest 1's stage raises it (hiding, the Robo-tazer hit, the fire, Kilohm's scan).",
+      "emitter": "boot/collect_call",
       "name": "whispers_spiked",
       "params": [],
-      "wired": false
+      "wired": true
     }
   ]
 }
