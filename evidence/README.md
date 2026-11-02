@@ -13,6 +13,7 @@ tick count, no RNG.
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
 | `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h23, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
+| `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4c_souls_print.png` | the D5 souls at 64 px/m: world print / look_d4_item ghost print (rejected) / as drawn (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
@@ -51,7 +52,9 @@ tick count, no RNG.
    instead of the dot screen, at least from 48 px/m up.
 3. **Asphalt texture.** The mock's street is cross-hatched. A dense street hatch (r7) read as rain and was
    reverted; a sparse, patchy, darker one now prints from 64 px/m only (596e172; character dL vs surround 0.091 ->
-   0.095, 0 px change at 32/48). Next: decide whether 48 px/m (car camera) gets a lighter version.
+   0.095, 0 px change at 32/48). Iteration 2 (`item2b_street48.png`, h23 vs h24): the car camera (48 px/m) now
+   prints 40% of it (`street_hatch_car`): street median 0.286 unchanged, street high-frequency energy 0.0505 ->
+   0.0520 (+3%), 0 px change at 32 and 64. Next: owner eye on a moving car frame (unmeasured in motion at 48).
 4. **Pavement.** Ours reads as clean tiles; the mock's slabs are worn, hatched and kerbed with rounded corners.
    A D5 sidewalk tile (`city/art/d5/ground/`, seamless via a spliced D4 border) helps only marginally at 64 px/m.
    Next: kerb-corner pieces and curb tiles in D5; that is where the mock's look comes from.
