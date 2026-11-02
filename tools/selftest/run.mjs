@@ -28,6 +28,22 @@ export function runLookGolden(outDir, out) {
       + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };
 }
 
+/** The colour-doctrine audit (dev/selftest/accent_audit.gd): reported, not gating (offenders are
+ *  usually assets for the art lanes). { frames, offenders, summary }. */
+export function runAccentAudit(outDir, out) {
+  rmSync(join(outDir, 'accent-audit.json'), { force: true });
+  run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`],
+    { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, 'accent-audit.json');
+  if (!existsSync(file)) return { frames: [], offenders: [], summary: 'accent audit: no result' };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const offenders = frames.flatMap((f) => f.offenders.map((o) => `${f.ppm} px/m ${o}`));
+  const share = frames.map((f) => `${f.ppm}: ${(f.frame_share * 100).toFixed(2)} %`).join(', ');
+  return { frames, offenders,
+    summary: `accent pixels ${share}; ${offenders.length ? `off-doctrine: ${offenders.join('; ')}` : 'no off-doctrine accents'}` };
+}
+
 export function runSelftest(outDir) {
   mkdirSync(outDir, { recursive: true });
   const out = outDir.replace(/\\/g, '/');
@@ -47,16 +63,20 @@ export function runSelftest(outDir) {
   const detail = frames.map((f) => `${f.ppm} px/m ${f.ok ? 'ok' : `FAIL (${f.why})`}, ${f.visible_actors} actors, `
     + `${f.distinct_colours} colours`).join('; ');
   const gold = runLookGolden(outDir, out);
+  const accents = runAccentAudit(outDir, out);
   const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
-    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}`;
+    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}`;
   const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
     placeholders: r.placeholders, prewarmMs: r.prewarm_ms, textureLoadMs: r.texture_load_ms };
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
+  for (const f of accents.frames) metrics[`accentShare${f.ppm}ppm`] = f.frame_share;
+  metrics.accentOffenders = accents.offenders.length;
   const ok = cityOk && gold.ok;
   const all = [...frames, ...gold.frames];
   const goldPngs = gold.frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
   return { ok, counts: { passed: all.filter((f) => f.ok).length, failed: all.filter((f) => !f.ok).length, skipped: 0 },
-    summary, metrics, artifacts: [...pngs, RESULT_NAME, ...goldPngs, ...(gold.frames.length ? [GOLDEN_NAME] : [])] };
+    summary, metrics, artifacts: [...pngs, RESULT_NAME, ...goldPngs, ...(gold.frames.length ? [GOLDEN_NAME] : []),
+      ...(accents.frames.length ? ['accent-audit.json'] : [])] };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

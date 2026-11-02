@@ -1,0 +1,91 @@
+{
+  "frames": [
+    {
+      "frame": {
+        "teal": 0,
+        "vermilion": 9692
+      },
+      "frame_share": 0.00946484375,
+      "layers": {
+        "actors": {
+          "teal": 0,
+          "vermilion": 9476
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 216
+        }
+      },
+      "offenders": [
+        "vermilion on world: 216 px"
+      ],
+      "ppm": 32
+    },
+    {
+      "frame": {
+        "teal": 4,
+        "vermilion": 9704
+      },
+      "frame_share": 0.00948046875,
+      "layers": {
+        "actors": {
+          "teal": 4,
+          "vermilion": 9704
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 0
+        }
+      },
+      "offenders": [],
+      "ppm": 48
+    },
+    {
+      "frame": {
+        "teal": 0,
+        "vermilion": 2672
+      },
+      "frame_share": 0.002609375,
+      "layers": {
+        "actors": {
+          "teal": 0,
+          "vermilion": 2672
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 0
+        }
+      },
+      "offenders": [],
+      "ppm": 64
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ok": false,
+  "schema": "gtai.accent-audit/1",
+  "stride": 2
+}

@@ -69,3 +69,19 @@ not import them). Pass: mean abs diff <= 4/255 and <= 2 % of pixels off by more 
 on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look change with
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
+
+## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
+
+Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #17131B, `ink_2` charcoal, `wash`, `steel`) and the two
+accent inks: **vermilion** #E8502A (threat, cop, danger cue, pickup, objective, Rivet's collar, hit
+flash) and **teal** #1FB5A8 (souls, the dead, the torch tip). Each accent lists the render layers it may
+appear on: never `world` (ground, decals, shadows, props, roofs); a pickup or hazard in the world is
+drawn on `fx` or `world_markers`. `classify()` uses the look_d4 plate gates, so "is this pixel an
+accent" means exactly what the print pass means by it.
+
+`dev/selftest/accent_audit.gd` (in the `selftest` evidence via `tools/selftest/run.mjs`, reported but not
+gating) renders the junction at 32 / 48 / 64 px/m, pauses the tree and captures once per hidden layer:
+`world` is absolute (the actors canvas hidden), the actor bands are what hiding them removes. Any accent
+on a layer the table does not allow is listed as an offender. First run (2026-11-02): 0.95 % of the
+frame vermilion at 32 and 48 px/m (all of it actors: the cops), 0.26 % at 64; one offender, 216 px of
+vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an asset for d4-production).
