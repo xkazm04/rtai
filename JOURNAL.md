@@ -36,3 +36,13 @@
   Crop: gtai-masters/night/visual-engine/03-accents/world-offender-crop.png.
   Also noted: CityTextures.PLACEHOLDER["prop"] is a warm orange (0.75,0.45,0.3) - below the gate today
   (r-max(g,b) = 0.30 < 0.31) but one tweak from printing vermilion; no placeholder prop on screen now.
+- MILESTONE item 4: 2D lighting. `data/tables/lights.json` (gtai.lights/1: 5 kinds, day/night grades,
+  max_lights 32), `core/render/light_layer.gd` + `light_pool.gd`, `assets/shaders/light_ink.gdshader`.
+  CityView owns a LightLayer stepped on the sim clock (CityCharacters sets view.clock). render_layers:
+  `light` canvas -> screen space with bands grade 0 / lights 100. Test test_light_layer 4/4.
+  Frames: 04-lights (stipple edges: read as halftone glow - REPLACED), 04b-lights-hatch (hatched band
+  edges: read as drawn rings - kept). 0 frames rejected (all straight down).
+  Cost: CPU step 70-168 us. GPU NOT reliably measured: deltas +1.32/+0.05/+0.09/-0.87 ms across 4 runs
+  (FRICTION: the d5 lane renders on the same GPU at the same time).
+  BLOCKED-ish: no positional shot/explosion events exist in Events; lights are API + dev driver only.
+- DEVIATION logged: chunks now 20 canvas items (5 bands x 4 quadrants) vs the §20 "8 per chunk" row.

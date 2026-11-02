@@ -85,3 +85,29 @@ gating) renders the junction at 32 / 48 / 64 px/m, pauses the tree and captures 
 on a layer the table does not allow is listed as an offender. First run (2026-11-02): 0.95 % of the
 frame vermilion at 32 and 48 px/m (all of it actors: the cops), 0.26 % at 64; one offender, 216 px of
 vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an asset for d4-production).
+
+## The 2D light model (`light_layer.gd`, `light_pool.gd`, `light_ink.gdshader`, `data/tables/lights.json`)
+
+The `light` canvas (screen space, above the actors, below the world UI) holds two bands:
+
+- `grade` (z 0): a full-screen multiply rect, the time-of-day grade. `day` is white (a no-op, the D4
+  baseline); `night` (#6E6878) pushes the whole print toward the charcoal for later acts.
+- `lights` (z 100): one MultiMesh of additive quads, `max_lights` (32) per frame. `light_ink.gdshader`
+  cuts each light's radial (or cone) falloff into `steps` flat bands and draws every band edge as
+  world-locked 45-degree pen hatching, so a light prints as a drawn patch of paper (or vermilion for
+  danger: the blast's rim, fire, the siren) over the charcoal, never a soft 3D bloom. The first version
+  used a random 2 px stipple; it read as a halftone glow and was replaced (frames `04-lights` vs
+  `04b-lights-hatch` in `gtai-masters/night/visual-engine`).
+
+Kinds: `muzzle_flash` (paper fan, 4 ticks), `explosion` (paper core, vermilion rim, 36 ticks),
+`headlight` (paper cone, held), `siren` (vermilion / paper strobe at 2.5 Hz, held: red and blue are
+off-doctrine and teal is the dead's), `fire` (vermilion flicker, held). Lights live on the 60 Hz tick:
+`add(kind, pos_px, angle, tick)`, `move()`, `remove()`, and `CityView` calls `step(tick, world_px)` every
+frame. When the budget is full a timed light evicts the oldest timed light; a held light is refused
+(`dropped` counts both). Nothing emits lights from gameplay yet: there are no positional shot /
+explosion events in the F-04 registry; `dev/selftest/light_showcase.gd` places the demo set.
+
+Cost (`light_showcase.gd` -> `light-cost.json`, 48 px/m): CPU `step()` 70-168 us for 32-64 lights
+(GDScript loop). GPU: **not reliably measured** - four runs gave deltas of +1.32, +0.05, +0.09 and
+-0.87 ms because another lane was rendering on the same GPU. Re-measure on an idle GPU (and the Deck)
+before raising `max_lights`; fill rate is the risk (each fire is a 336 px quad at 48 px/m).

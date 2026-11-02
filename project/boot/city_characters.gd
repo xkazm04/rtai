@@ -28,6 +28,7 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	_city = city
 	_view = view
 	_clock = ctx.clock
+	view.clock = ctx.clock
 	_last_tick = _clock.tick()
 	_rivet_prev = city.target
 	rigs.z_index = RenderLayers.z(&"actors")

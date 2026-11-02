@@ -42,6 +42,7 @@ func test_the_stack_is_in_the_documented_order() -> void:
 		&"vehicles",
 		&"roof_occluders",
 		&"fx",
+		&"grade",
 		&"lights",
 		&"world_markers",
 		&"hud"

@@ -24,6 +24,10 @@ var look_params: LookParams = null
 var camera: Camera2D = Camera2D.new()
 var chunks: ChunkView = null
 var crowd: CrowdLayers = CrowdLayers.new()
+## The 2D lights and the time-of-day grade (core/render/light_layer.gd), stepped on `clock`.
+var lights: LightLayer = LightLayer.new()
+## The sim clock the lights fade on (the composition root sets it; null = tick 0).
+var clock: SimClock = null
 var textures: CityTextures = null
 var visible_actors: int = 0
 ## Called with the focus (m) each frame right before the actors are written (the composition
@@ -103,6 +107,7 @@ func _place_camera(focus: Vector2) -> void:
 	camera.position = focus * SimConst.PX_PER_M
 	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)
+	lights.step(clock.tick() if clock != null else 0, world_px)
 
 
 func _build_layers() -> void:
@@ -123,6 +128,7 @@ func _build_layers() -> void:
 	_item_mat.shader = item_shader
 	add_child(actors)
 	crowd.attach(actors)
+	add_child(lights)
 
 
 ## The canvas layer the actors draw on (above the print pass); characters attach here.

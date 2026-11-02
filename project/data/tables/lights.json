@@ -1,0 +1,77 @@
+{
+  "doc": "The 2D light model (core/render/README.md). A light is a pooled additive quad on the `light` canvas whose radial falloff is cut into `steps` flat bands with world-locked 45-degree hatching at each band edge, so it prints as paper (or an accent ink) over the charcoal streets, never as a soft 3D glow. token / alt_token are palette.json ids (alt: the strobe alternates on flicker_hz). cone_deg 0 = radial, else a cone along the light rotation. life_ticks 0 = held until removed (headlights, fire, sirens), else fades out over that many 60 Hz sim ticks. grades multiply the screen before the lights add (day = no-op). max_lights is the per-frame budget: beyond it the oldest timed light is dropped.",
+  "grades": [
+    {
+      "doc": "the D4 baseline: no grading",
+      "id": "day",
+      "multiply": "#FFFFFF"
+    },
+    {
+      "doc": "later acts: the print pushed toward the charcoal; lights cut paper back out of it",
+      "id": "night",
+      "multiply": "#6E6878"
+    }
+  ],
+  "kinds": [
+    {
+      "cone_deg": 70,
+      "doc": "a gun firing: a short paper fan along the barrel",
+      "flicker_hz": 0,
+      "id": "muzzle_flash",
+      "intensity": 0.9,
+      "life_ticks": 4,
+      "radius_m": 1.6,
+      "steps": 2,
+      "token": "paper"
+    },
+    {
+      "alt_token": "vermilion",
+      "cone_deg": 0,
+      "doc": "a blast: paper core, the outer band on the vermilion plate (danger)",
+      "flicker_hz": 0,
+      "id": "explosion",
+      "intensity": 0.75,
+      "life_ticks": 36,
+      "radius_m": 6,
+      "steps": 3,
+      "token": "paper"
+    },
+    {
+      "cone_deg": 34,
+      "doc": "a vehicle headlight cone",
+      "flicker_hz": 0,
+      "id": "headlight",
+      "intensity": 0.55,
+      "life_ticks": 0,
+      "radius_m": 9,
+      "steps": 3,
+      "token": "paper"
+    },
+    {
+      "alt_token": "paper",
+      "cone_deg": 0,
+      "doc": "the police strobe: vermilion / paper (red and blue are off-doctrine; teal is the dead)",
+      "flicker_hz": 2.5,
+      "id": "siren",
+      "intensity": 0.45,
+      "life_ticks": 0,
+      "radius_m": 5,
+      "steps": 2,
+      "token": "vermilion"
+    },
+    {
+      "alt_token": "paper",
+      "cone_deg": 0,
+      "doc": "burning wreck or barrel: a flickering vermilion core",
+      "flicker_hz": 7,
+      "id": "fire",
+      "intensity": 0.5,
+      "life_ticks": 0,
+      "radius_m": 3.5,
+      "steps": 3,
+      "token": "vermilion"
+    }
+  ],
+  "max_lights": 32,
+  "schema": "gtai.lights/1"
+}

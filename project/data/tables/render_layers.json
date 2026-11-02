@@ -22,11 +22,11 @@
       "space": "follow"
     },
     {
-      "doc": "the additive 2D light layer (muzzle, explosions, headlights, siren, fire)",
+      "doc": "the night grade (a full-screen multiply) then the additive 2D lights (LightLayer follows the camera itself)",
       "id": "light",
       "layer": 3,
       "print": "none",
-      "space": "follow"
+      "space": "screen"
     },
     {
       "doc": "markers and the objective pointer, in world space",
@@ -135,11 +135,19 @@
     },
     {
       "canvas": "light",
-      "doc": "additive light sprites",
-      "drawn_by": "none yet",
-      "id": "lights",
-      "status": "reserved",
+      "doc": "the time-of-day grade (multiply; day = white)",
+      "drawn_by": "LightLayer grade rect",
+      "id": "grade",
+      "status": "live",
       "z": 0
+    },
+    {
+      "canvas": "light",
+      "doc": "additive light sprites",
+      "drawn_by": "LightLayer",
+      "id": "lights",
+      "status": "live",
+      "z": 100
     },
     {
       "canvas": "world_ui",

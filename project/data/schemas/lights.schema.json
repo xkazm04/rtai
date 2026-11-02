@@ -1,0 +1,120 @@
+{
+  "$id": "gtai.lights/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "grades": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "multiply": {
+            "pattern": "^#[0-9A-F]{6}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "multiply",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "kinds": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "alt_token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "cone_deg": {
+            "maximum": 180,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "flicker_hz": {
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "intensity": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "life_ticks": {
+            "maximum": 3600,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "radius_m": {
+            "maximum": 64,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          "steps": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "token",
+          "radius_m",
+          "intensity",
+          "steps",
+          "cone_deg",
+          "life_ticks",
+          "flicker_hz",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "max_lights": {
+      "maximum": 1024,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.lights/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "max_lights",
+    "kinds",
+    "grades"
+  ],
+  "type": "object"
+}
