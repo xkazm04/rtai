@@ -127,3 +127,10 @@ NEXT:
   + ladder.png (6 rows) + showcase-d4-vs-noir.png + crowd-ink-compare.png + the gate JSONs. It is not
   committed (the PNGs are 2-4 MB; the Director decides). Masters are about 220 MB in night/noir (mp4 + png).
   Images: 0 generated, 0 rejected (Leonardo 0 tokens; no Codex round tonight).
+- 23:47 Session close. Gates at b0e7fba (`run.mjs --no-bench --allow-dirty`, the only dirty path being the untracked
+  evidence/ folder): lint, 173 unit, 8 scenarios, parity and selftest all PASS. Ladder: 7 rows
+  (masters/night/noir/ladder.png, copied to evidence/). Masters were trimmed to 155 MB (superseded fight-v1..v3 and
+  the quest-v1/v3 clips deleted). No processes left running.
+  NEXT (in order): see the NEXT list above. Top: make the ink-people print (crowd + rigs + Rivet's lit core)
+  the --look=noir default if the owner picks it from evidence/people-ink-compare.png; light the claw tips;
+  a real-bodies showcase (2 cop rigs at a junction in rain, 48 and 64 px/m clips); measure the noir pass cost.
