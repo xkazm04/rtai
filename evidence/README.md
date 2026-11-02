@@ -39,6 +39,8 @@ tick count, no RNG.
 | `item17_dialogue.png` | iteration 4: the D5 dialogue panel IN-ENGINE over the hero junction at 32/48 px/m + the mipmap A/B |
 | `item18_arena.png` | iteration 4: the D5 boss arena (King's chop-shop floor + a plan-view King sprite) at 32/48/64/96, D4 tier, the rejected cream crown (a1), the concept |
 | `item19_phone.png` | iteration 4: the D5 phone close-up in-engine (cop_alarmed behind the keyed phone screen) at 32/48 + the raw frame |
+| `item5e_boss_intro.png` | iteration 4: the D5 boss intro card (King on his turntable; `features/combat/art/d5/boss_intro_king.png`, not wired) |
+| `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a13) |
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -76,8 +78,16 @@ tick count, no RNG.
 - REVERTED: bolder part pen lines (h65, ink_at 0.66 / grime 0.05): Rivet dL 0.151 -> 0.138 at 64 px/m, noisier, not
   closer to the concept. FOUND: in the hero pose Rivet's D5 dL at 64 is 0.151 vs D4 0.161 (the 0.1693/0.1695 parity
   is the showcase pose); above D4 at 96.
-- Codex this iteration: 4 images (cop expressions, arena floor, King top view, phone frame), 0 rejected for camera
-  breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger total 38.
+- **Boss intro card** (`item5e_boss_intro.png`): 1 Codex panel, King on his turntable, left third calm for the name;
+  1920 px in `features/combat/art/d5/` (not wired: `Events.boss_engaged`). The crown stencil printed vermilion,
+  outside the prompt's vermilion list (King's mark; owner review).
+- **Arena polish**: King's hatched cast shadow (look_d5_shadow now takes a sprite's alpha; hero 0 px), shadow strokes
+  kept ~10 screen px above 64 px/m (`zoom` uniform; 0 px at 32-64), the 128 px/m boss kill-cam (the closest frame to
+  the concept tonight), and D4 yard roofs with the ink foot around the floor (a13).
+- Re-measured on the final shaders: tier-fade sweep 0 at 51-55 px/m then monotone (no pop); walk shimmer HF 1.024.
+- Codex this iteration: 5 images (cop expressions, arena floor, King top view, phone frame, boss intro card), 0
+  rejected for camera breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger
+  total 39.
 
 ## Iteration 3 (23:09 -> 00:10) in one screen (`night_iter3_summary.png`)
 - **Aged paper** (`item7_paper_age.png`, f871411): the mock is a warm sepia print, ours was a cool violet-grey. look_d5
