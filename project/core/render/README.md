@@ -37,3 +37,35 @@ Changes this made to the picture (2026-11-02, frames in `gtai-masters/night/visu
 moving cars now draw **above** people (they were below), the full rigs draw in the people band
 (they were under the MultiMesh crowd and the cars), and decals draw under building shadows,
 which draw under props, which draw under roofs (the chunk overlay used to draw them in list order).
+
+## Look profiles (`look_profiles.gd`, `look_params.gd`, `data/tables/look_profiles.json`)
+
+Every print-pass parameter lives in one table, one row per art direction:
+
+- `world`: every `look_d4.gdshader` uniform except `world_px` (ink steps, wash strengths, line and
+  edge thresholds, hatch onset and pen period, grime, grit, the vermilion / teal plates and their
+  misregistration shifts);
+- `item`: the `look_d4_item.gdshader` uniforms (`shadow_k`, `steel_out`);
+- `parts_flat_below`: the cutout part print's flat-sticker threshold (`PartMaterials.set_flat_below`).
+
+| id | what |
+|---|---|
+| `d4` | Ink and Hatch, the target (the F-08 + f08b tuning, unchanged) |
+| `d5` | Inked Grime, for up close: more grime and grit, more hatching at a wider pen, lower edge thresholds, stronger misregistration. Placeholder values until the d5-close lane delivers |
+| `d1` | Riso Refined approximated on the D4 pass (flat fills, no grime, no misregistration, almost no hatching). The riso dot screen itself is not ported |
+| `auto` (default) | the zoom blend: `d4` up to 48 px/m, smoothstep to `d5` at 64 px/m and above |
+| `off` | the raw art, no print pass |
+
+`CityView.look_id` picks one (`-- --look=<id>` at boot); every frame `_update_look()` resolves it at
+the current px/m and pushes uniforms only when the result changed (a held zoom costs one dictionary
+compare). A new direction is a new row; a new shader parameter is a new key in every row (the schema
+requires all of them).
+
+**Golden frames** (`dev/selftest/look_golden.gd`, part of `node tools/selftest/run.mjs` and so of the
+`selftest` evidence): the selftest junction (seed 91) under `--fixed-fps 60`, so each frame is one
+sim tick and the picture is deterministic; `d1` at 32/48, `d4` at 32/48/64, `d5` at 48/64, `auto` at
+48/56/64, downscaled to 320x200 and diffed against `tests/golden/look/` (`.gdignore`d, so Godot does
+not import them). Pass: mean abs diff <= 4/255 and <= 2 % of pixels off by more than 48/255. Two runs
+on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look change with
+`godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
+and put the before/after frames in the commit message's evidence.

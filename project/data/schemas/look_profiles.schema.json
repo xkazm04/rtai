@@ -1,0 +1,229 @@
+{
+  "$id": "gtai.look-profiles/1",
+  "additionalProperties": false,
+  "properties": {
+    "default": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "type": "string"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profiles": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "item": {
+            "additionalProperties": false,
+            "properties": {
+              "shadow_k": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "steel_out": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 3,
+                "type": "array"
+              }
+            },
+            "required": [
+              "shadow_k",
+              "steel_out"
+            ],
+            "type": "object"
+          },
+          "parts_flat_below": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "print": {
+            "type": "boolean"
+          },
+          "world": {
+            "additionalProperties": false,
+            "properties": {
+              "edge_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "edge_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "grime": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "grit": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "hatch_on": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "hatch_period": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "line_ink": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_mid": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "teal": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "teal_shift": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "verm": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "verm_shift": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "wash_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "wash_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "wash_mid": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              }
+            },
+            "required": [
+              "grime",
+              "step_lo",
+              "step_mid",
+              "step_hi",
+              "wash_lo",
+              "wash_mid",
+              "wash_hi",
+              "line_ink",
+              "edge_lo",
+              "edge_hi",
+              "hatch_on",
+              "hatch_period",
+              "grit",
+              "verm",
+              "teal",
+              "verm_shift",
+              "teal_shift"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "print",
+          "world",
+          "item",
+          "parts_flat_below"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.look-profiles/1"
+    },
+    "zoom_blend": {
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "full_ppm": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "start_ppm": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "to": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "start_ppm",
+        "full_ppm"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "default",
+    "zoom_blend",
+    "profiles"
+  ],
+  "type": "object"
+}

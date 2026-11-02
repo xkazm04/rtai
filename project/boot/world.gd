@@ -49,6 +49,8 @@ func _register_features(with_views: bool) -> void:
 	add_system(city)
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
+		if LaunchArgs.has("--look"):
+			view.look_id = StringName(LaunchArgs.value("--look"))
 		add_child(view)
 		view.setup(city)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)

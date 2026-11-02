@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Render selftest (the `selftest` evidence): renders the city in the D4 look at 32 and 48 px/m,
-// windowed (headless renders nothing), and sanity-checks the frames (dev/selftest/city_selftest.gd).
+// windowed (headless renders nothing), and sanity-checks the frames (dev/selftest/city_selftest.gd);
+// then the look golden frames (dev/selftest/look_golden.gd, --fixed-fps 60): every look profile at
+// 32 / 48 / 64 px/m diffed against tests/golden/look.
 //   node tools/selftest/run.mjs
 import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,6 +10,23 @@ import { pathToFileURL } from 'node:url';
 import { ROOT, godotBin, run } from '../lib/repo.mjs';
 
 export const RESULT_NAME = 'selftest-result.json';
+export const GOLDEN_NAME = 'look-golden-result.json';
+
+/** The look golden frames: { ok, frames, summary }; frames is [] when it did not run. */
+export function runLookGolden(outDir, out) {
+  rmSync(join(outDir, GOLDEN_NAME), { force: true });
+  const res = run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/look_golden.tscn', '--',
+    `--out=${out}`], { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, GOLDEN_NAME);
+  if (!existsSync(file)) return { ok: false, frames: [], summary: `look goldens: no result (exit ${res.status})` };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const worst = Math.max(0, ...frames.map((f) => f.mean ?? 255));
+  const bad = frames.filter((f) => !f.ok).map((f) => `${f.look}@${f.ppm}`);
+  return { ok: res.status === 0 && r.ok === true && frames.length > 0, frames,
+    summary: `look goldens ${frames.length - bad.length}/${frames.length} within mean ${r.max_mean} (worst ${worst.toFixed(2)})`
+      + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };
+}
 
 export function runSelftest(outDir) {
   mkdirSync(outDir, { recursive: true });
@@ -24,16 +43,20 @@ export function runSelftest(outDir) {
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const pngs = frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
-  const ok = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
+  const cityOk = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
   const detail = frames.map((f) => `${f.ppm} px/m ${f.ok ? 'ok' : `FAIL (${f.why})`}, ${f.visible_actors} actors, `
     + `${f.distinct_colours} colours`).join('; ');
-  const summary = `selftest: D4 city frames ${ok ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
-    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms`;
-  const metrics = { artLoaded: r.art_loaded, placeholders: r.placeholders, prewarmMs: r.prewarm_ms,
-    textureLoadMs: r.texture_load_ms };
+  const gold = runLookGolden(outDir, out);
+  const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
+    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}`;
+  const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
+    placeholders: r.placeholders, prewarmMs: r.prewarm_ms, textureLoadMs: r.texture_load_ms };
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
-  return { ok, counts: { passed: frames.filter((f) => f.ok).length, failed: frames.filter((f) => !f.ok).length, skipped: 0 },
-    summary, metrics, artifacts: [...pngs, RESULT_NAME] };
+  const ok = cityOk && gold.ok;
+  const all = [...frames, ...gold.frames];
+  const goldPngs = gold.frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
+  return { ok, counts: { passed: all.filter((f) => f.ok).length, failed: all.filter((f) => !f.ok).length, skipped: 0 },
+    summary, metrics, artifacts: [...pngs, RESULT_NAME, ...goldPngs, ...(gold.frames.length ? [GOLDEN_NAME] : [])] };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

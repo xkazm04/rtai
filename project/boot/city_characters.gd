@@ -60,6 +60,8 @@ func _before_render(focus: Vector2) -> void:
 		return
 	_primed = true
 	_fill_feed(focus)
+	if _view.look_params != null:
+		PartMaterials.set_flat_below(_view.look_params.parts_flat_below)
 	rigs.focus = focus * SimConst.PX_PER_M
 	rigs.zoom = _view.zoom
 	_last_tick = _clock.tick()

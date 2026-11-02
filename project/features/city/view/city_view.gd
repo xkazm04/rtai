@@ -16,6 +16,11 @@ var zoom: float = 1.5
 ## The D4 print pass (the default look); false draws the raw art (A/B, crop tests).
 var look_enabled: bool = true:
 	set = set_look_enabled
+## The look profile (data/tables/look_profiles.json): `auto` (D4 at gameplay zoom blending to D5
+## at arena zoom), a profile id, or `off`. `-- --look=<id>` sets it at boot.
+var look_id: StringName = LookProfiles.shared().default_id
+## The look in use this frame (resolved from look_id at the current px/m).
+var look_params: LookParams = null
 var camera: Camera2D = Camera2D.new()
 var chunks: ChunkView = null
 var crowd: CrowdLayers = CrowdLayers.new()
@@ -47,9 +52,22 @@ func setup(city: CitySystem) -> void:
 
 func set_look_enabled(on: bool) -> void:
 	look_enabled = on
-	_look_rect.visible = on
+	var printed: bool = on and (look_params == null or look_params.printed)
+	_look_rect.visible = printed
 	for node: MultiMeshInstance2D in crowd.nodes:
-		node.material = _item_mat if on else null
+		node.material = _item_mat if printed else null
+
+
+## Resolves look_id at the current zoom; pushes the uniforms only when the look changed.
+func _update_look() -> void:
+	var p: LookParams = LookProfiles.shared().resolve(look_id, zoom * SimConst.PX_PER_M)
+	if p == look_params or p.equals(look_params):
+		return
+	var was_printed: bool = look_params == null or look_params.printed
+	look_params = p
+	p.apply(_look_mat, _item_mat)
+	if was_printed != p.printed:
+		set_look_enabled(look_enabled)
 
 
 ## The loading-screen prewarm (WLD-07): every texture, every actor layer and both shaders drawn
@@ -81,6 +99,7 @@ func _process(_delta: float) -> void:
 ## Camera on the focus; world_px locks the print pass's grime and hatch to the world.
 func _place_camera(focus: Vector2) -> void:
 	camera.zoom = Vector2.ONE * zoom
+	_update_look()
 	camera.position = focus * SimConst.PX_PER_M
 	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)

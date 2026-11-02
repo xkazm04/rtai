@@ -6,6 +6,7 @@ shader_type canvas_item;
 //  - the art's own ink lines (density above line_ink) print as solid ink, so drawn hatching survives the budget
 //  - hatching is added only in the deepest shadows; a wobbly Sobel edge inks object outlines
 //  - vermilion and teal are flat plates, slightly off-register (the colour doctrine lives in the assets)
+// Every uniform below except world_px is a look-profile parameter (data/tables/look_profiles.json, core/render).
 // world_px: the camera's world offset in screen px (set every frame), so grime and hatch are locked to the world.
 // Use: a full-rect ColorRect on a CanvasLayer between the world and the actors; the actor / fx / HUD layers above it
 // use look_d4_item.gdshader. Defaults are the F-08 tuning + the f08b charcoal-street retune (crop gates at 32 and 48 px/m, 2026-11-02).
@@ -25,6 +26,7 @@ uniform float line_ink = 0.90;     // density above which the art's own lines pr
 uniform float edge_lo = 0.13;      // Sobel ink-outline thresholds (luminance gradient)
 uniform float edge_hi = 0.32;
 uniform float hatch_on = 0.86;     // deep-shadow hatching starts at this density
+uniform float hatch_period = 4.0;  // pen-stroke spacing in screen px (D5 widens it up close)
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
@@ -84,8 +86,8 @@ void fragment() {
 	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
 	col = mix(col, mix(CREAM, WASH, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
 	col = mix(col, mix(WASH, INK, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
-	float ink = strokes(w, 0.785, 4.0, smoothstep(hatch_on - 0.02, 0.95, d) * 0.36);
-	ink = max(ink, strokes(w, 2.356, 4.0, smoothstep(0.93, 0.99, d) * 0.30));
+	float ink = strokes(w, 0.785, hatch_period, smoothstep(hatch_on - 0.02, 0.95, d) * 0.36);
+	ink = max(ink, strokes(w, 2.356, hatch_period, smoothstep(0.93, 0.99, d) * 0.30));
 	ink = max(ink, smoothstep(line_ink, line_ink + 0.06, d));
 	float e = sobel(uv, tx);
 	ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)));
