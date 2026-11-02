@@ -40,10 +40,12 @@ func test_same_hits_same_blood() -> void:
 
 func test_impact_beat_is_one_to_three_frames() -> void:
 	var f: ImpactFrame = ImpactFrame.new()
+	assert_between(f.sequence.size(), 1, 3, "the flash is 1-3 frames")
+	assert_between(f.panel_ticks, 0, 12, "then the held panel, at most 0.2 s")
 	f.fire(Vector2(0.5, 0.5))
 	var frames: int = 0
-	while f.active() and frames < 10:
+	while f.active() and frames < 30:
 		frames += 1
 		f.step_ticks(1)
-	assert_between(frames, 1, 3)
+	assert_eq(frames, f.sequence.size() + f.panel_ticks)
 	f.free()
