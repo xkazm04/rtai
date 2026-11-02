@@ -222,7 +222,7 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
 9. FX / decal owner: dynamic decals now include bullet_holes_s/m, gouge, oil_splash (README sizes).
 
 NEXT:
-- Owner review of the paving change first (biggest visual change of the night; revert = commits 0e96cb6 + its fix).
+- Owner review of the paving change first (biggest visual change of the night; revert = commits 0e96cb6 + 1629128).
 - If traffic gets the atlas: re-shoot city_frame and compare parked vs moving cars.
 - Font: the HUD digits use Godot's default font; a D4 hand-inked display font (OFL, owner OK) is the next HUD step.
 - Unused masters for later: d4n_tokens2 SMG / wrench / ammo box, d4n_cash cash_b/c/d, d4n_casing cells 2-4.
