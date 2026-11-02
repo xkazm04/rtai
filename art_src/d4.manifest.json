@@ -626,6 +626,20 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_souls": {
+   "file": "masters:night/d4-production/gen/out/d4n_souls.png",
+   "sha256": "3960b5a2dd05dcb1decd3f1c8691d61fc4d72ac1051bfb4c4d890a5aa73ea38c",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/souls.txt",
+   "prompt_sha256": "2cadd7dc86ad3773c9846e6c6da12549bd67129de6642a4df6a76a0958e34c57",
+   "layout_template": "masters:night/d4-production/gen/refs/t_souls.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Inked Grime concept: the teal soul ghosts)"
+   ],
+   "seed": null
   }
  }
 }

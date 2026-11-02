@@ -39,8 +39,19 @@ func build(scale_ui: float) -> void:
 	_frame("ammo_ticket", a_pos)
 	_text("17 / 90", a_pos + (PLATE + Vector2(160.0, 90.0)) * ui_scale, 110)
 	var card: Vector2 = _size("soul_card_active")
-	_frame("soul_card_active", view - Vector2(MARGIN, MARGIN) - card)
-	_frame("soul_card", view - Vector2(MARGIN * 1.5 + card.x, MARGIN) - _size("soul_card"))
+	var c_pos: Vector2 = view - Vector2(MARGIN, MARGIN) - card
+	_frame("soul_card_active", c_pos)
+	_portrait("soul_gearbox", c_pos, "soul_card_active")
+	var i_pos: Vector2 = view - Vector2(MARGIN * 1.5 + card.x, MARGIN) - _size("soul_card")
+	_frame("soul_card", i_pos)
+	_portrait("soul_sentry_idle", i_pos, "soul_card")
+
+
+## A soul portrait (220 x 350 at 2x) centred across the card, 40 card px from its top (HUD README).
+func _portrait(name: String, card_pos: Vector2, card: String) -> void:
+	var tex: Texture2D = load(ART + name + ".png") as Texture2D
+	var off: Vector2 = Vector2((_size(card).x / ui_scale - tex.get_width()) * 0.5, 40.0)
+	_rect(tex, card_pos + off * ui_scale, ui_scale)
 
 
 func _size(name: String) -> Vector2:
