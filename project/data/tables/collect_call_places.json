@@ -1,0 +1,95 @@
+{
+  "actors": {
+    "Brass": {
+      "at": [
+        44,
+        18
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "gunsmith"
+    },
+    "Don Fax": {
+      "at": [
+        44,
+        25
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "don-fax"
+    },
+    "Dr. Kilohm": {
+      "at": [
+        48,
+        20
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "scientist"
+    },
+    "Juno": {
+      "at": [
+        40,
+        20
+      ],
+      "kind": "robot",
+      "side": "ally",
+      "speaker": "nurse"
+    }
+  },
+  "doc": "Quest 1 collect-call: the words its gtai.quest/1 package names places and people with, resolved to the stage (metres, y down). Actors that a meet beat lists carry the package speaker they voice.",
+  "markers": {
+    "Dock 9 bonded storage": {
+      "at": [
+        100,
+        0
+      ],
+      "r": 16
+    },
+    "Dock 9 vault cage": {
+      "at": [
+        112,
+        -6
+      ],
+      "r": 3
+    },
+    "Factory Row alleys": {
+      "at": [
+        0,
+        0
+      ],
+      "r": 3
+    },
+    "Factory Row corner": {
+      "at": [
+        16,
+        -6
+      ],
+      "phone": [
+        16,
+        -6
+      ],
+      "r": 2
+    },
+    "Harbor Road": {
+      "at": [
+        74,
+        44
+      ],
+      "phone": [
+        74,
+        44
+      ],
+      "r": 2
+    },
+    "The Toner Room": {
+      "at": [
+        44,
+        22
+      ],
+      "r": 7
+    }
+  },
+  "schema": "gtai.questMarkers/1",
+  "vehicles": {}
+}

@@ -1,0 +1,110 @@
+{
+  "$id": "gtai.questMarkers/1",
+  "additionalProperties": false,
+  "properties": {
+    "actors": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "hp": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "kind": {
+            "pattern": "^[a-z][a-z_]*$",
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "ally",
+              "hostile"
+            ]
+          },
+          "speaker": {
+            "pattern": "^[a-z][a-z-]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "markers": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "phone": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "r": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.questMarkers/1"
+    },
+    "vehicles": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          },
+          "heading": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "at"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "markers",
+    "vehicles",
+    "actors"
+  ],
+  "type": "object"
+}
