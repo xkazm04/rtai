@@ -87,3 +87,27 @@
 - 21:55 vehicles iteration 2: side-by-side with the target (`night/d4-production/target_compare.png`) showed the
   target's cars carry a far bolder outer outline. Added a 5 px inner ink stroke (texture px at 80 px/m; ~3 px at
   48, ~2 px at 32), footprints unchanged, all 39 vehicle files + atlases rebuilt. Before/after: `after_v|after_v2`.
+
+## 22:00 SUMMARY iteration 1
+- Codex: **15 images** (one at a time, no rate limit hit), 113 cells, **2 rejected** (FX casing standing upright;
+  roof g1-left laundry in side view), both replaced. Masters + prompts + tools: `gtai-masters/night/d4-production/`
+  (`gen/`, `tools/`, `work/`), ladder `ladder.png`, target crops `target_compare.png`.
+- City texture table: placeholders 22 -> **0** (vehicles 44-53, decals 54-64, kerb corner 10).
+- Native CitySim built in this worktree (`scons` debug + release) so parity/bench can run; build output is ignored.
+- FRICTION (not mine, for the generator owner): text-bearing district roofs are drawn rotated, so `HQ` reads upside
+  down in `after_v2/city-1-32ppm.png` (roof rotation in tile_painter). Suggest rot 0 for roofs with lettering.
+
+## REQUESTS for the Director to relay
+1. visual-engine: moving traffic -> `features/city/art/vehicles/traffic_atlas.png` (2x4 cells, 6.4x3.2 m, README);
+   hijacked state -> `traffic_atlas_hijack.png`; damage states `<car>_d1/_d2` need a state hook.
+2. visual-engine: draw pickups (`assets/pickups/`) and FX (`features/fx/art/fx_atlas.png`) in the item pass.
+3. characters owner: RigVariant slots for the new ped parts (hoodie, overalls, cap, bald, beanie), see 21:50.
+4. generator owner: table rows + pick range for the 7 generic roofs (`roof_*`) and the dynamic decals.
+5. owner: blood is ink per the brief; the target frame paints it vermilion. Decide.
+
+NEXT:
+- If traffic gets wired, re-shoot `dev/showcase/city_frame.tscn` (before = `after_v2`) and tune car values against
+  the moving-car item pass (steel_out) so parked and moving cars match.
+- Apply the bold inner stroke test to props (F-08 art) at 32 px/m against target_compare; keep only if it reads better.
+- A HUD scene would let the frames be judged in-engine (now only a composite mock).
+- Fill more FX: shotgun shell + casing scatter are in `gen/out/d4n_casing.png` (unused cells 2-4).
