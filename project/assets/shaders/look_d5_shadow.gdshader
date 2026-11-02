@@ -4,10 +4,10 @@ shader_type canvas_item;
 // strokes), the hatched building shadows of d4h2_mock.jpg. The D4 print then inks it like any drawn hatch.
 // Used by dev/showcase/d5_hero_run.gd; params in look_d5.params.json ("shadow").
 
-uniform float period = 6.0;    // world px between strokes (0.19 m)
-uniform float tint = 0.30;     // ink alpha between the strokes
+uniform float period = 5.0;    // world px between strokes (0.16 m)
+uniform float tint = 0.36;     // ink alpha between the strokes
 uniform float stroke = 0.85;   // ink alpha of a stroke
-uniform float cov = 0.40;      // stroke width as a fraction of the period
+uniform float cov = 0.42;      // stroke width as a fraction of the period
 
 varying vec2 w;
 

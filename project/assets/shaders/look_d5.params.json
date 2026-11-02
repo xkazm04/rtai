@@ -19,11 +19,11 @@
   },
   "schema": "gtai.look-d5-params/1",
   "shadow": {
-    "cov": 0.4,
+    "cov": 0.42,
     "offset_m": 1.1,
-    "period": 6.0,
+    "period": 5.0,
     "stroke": 0.85,
-    "tint": 0.3
+    "tint": 0.36
   },
   "tier_full_zoom": 2.0,
   "tier_off_zoom": 1.6875,
