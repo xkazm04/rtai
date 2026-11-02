@@ -478,3 +478,19 @@ NEXT:
 14. visual-engine: crackle `fade_from` 0 -> ~0.5 (it dithers from its first tick, the bold bolts speckle at 64);
     debris 1.2 m / impact 0.9 m are specks at 32 px/m - 1.6 / 1.3 m would read (the art is bold enough at that size).
 15. Director: the n-d4 / n-visual merge conflicts only in JOURNAL.md (keep both, e.g. move one to docs/journals/).
+- 00:29 MILESTONE traffic light lamps in ink and paper. visual-engine's new accent audit (`n-visual`
+  `data/tables/accent_debt.json`) carries ONE debt row, owned by this lane: `traffic_light.png` lit lamps painted
+  vermilion (216 px at 32 px/m in the selftest junction; vermilion is for threats). `tools/lamp_paper.py`: the lamp
+  nearest the pole = lit paper disc, the other two unlit ink discs with a cream glint, edge px blended by their
+  vermilion share; 0 vermilion px left. Props board `before_lamp|after_lamp/props-{32,48,64}ppm.png`
+  (`work/lamp_ab48.png`). Commit 0fa27c3. **For the Director:** after merging n-d4 + n-visual, delete the
+  `traffic_light_lamps` row (the audit treats a row as debt to delete when fixed). Scan of all city art: the
+  remaining accents are on doctrine (explosive barrels, police barrier / barricade / cone, cruiser light bar,
+  hijack teal).
+- 00:31 MILESTONE blood decals read on the asphalt. Decals board at 32 px/m: blood_s/m/l (dynamic) printed as faint
+  grey smudges on the charcoal (hatched ink interior -> mid grey; no rim). `tools/decal_rim.py`: ink shrunk inward
+  by rim + 2 px (the first cut clipped the rim at the texture border), specks dropped, round cream rim (4 / 6 / 6 px
+  at 80 px/m). Rim alone (probe `after_blood`) read as lace around a grey blot; **solid flat ink + rim** kept
+  (`after_blood2`), same read as the FX splat burst and the characters' sticker rim. `work/blood_ab32.png`
+  (before | rim | rim + solid). Commit 6e36609. Scorch / oil stay rimless on purpose (burn and oil are dark on
+  dark by nature).
