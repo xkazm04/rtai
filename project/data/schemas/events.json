@@ -75,7 +75,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "Rivet's cash changed (ARC-08: emitted only by the one cash setter). amount is the new total; delta is signed.",
@@ -91,7 +91,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "A contract (mission) started.",

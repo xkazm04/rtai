@@ -1,0 +1,7 @@
+{
+  "doc": "Heat (wanted) in Act 1 (quest collect-call mechanic `heat`): 0 to max_level; one level drains per drain_s_per_level seconds out of every human sight (sight_m); being seen restarts the count.",
+  "drain_s_per_level": 6,
+  "max_level": 3,
+  "schema": "gtai.heat/1",
+  "sight_m": 10
+}
