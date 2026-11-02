@@ -118,3 +118,6 @@ NEXT:
 - 22:59 gap 7: world layer on/off on the roof-heavy hero (h33nw = zoom_amount zeroed via a temporary params edit,
   restored, git diff clean): |diff| 0.013 at 64, roof HF -5% (ink ghost softens), the mural wash gains hatch. Kept.
   Item 1 gate board rebuilt from r19 (D4 vs D5 tier at 32/48: 0 px). Deleted frame scratch cost1, h30, r17, r17b.
+- 23:03 MILESTONE: look_d5_soul.gdshader (soul print: two teal inks + cream rim + grain). h34 hard snap speckled at
+  32 px/m (HF 0.0659 vs drawn 0.0613); h35 soft ramps still +6% -> the print rides the D5 tier fade (h37): 0 px vs
+  drawn at 32/48, full print at 64/96. Hero default `--soul=d5`. Hero frames now h37.

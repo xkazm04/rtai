@@ -11,7 +11,7 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h33, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h37, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -24,7 +24,7 @@ tick count, no RNG.
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 2 (22:14 -> 23:4x) in one screen
-- Best frame now: `hero-d4d5-<ppm>ppm.png` = round h33 (item4 board `item4_hero_vs_targets.png`): blocks filled with
+- Best frame now: `hero-d4d5-<ppm>ppm.png` = round h37 (h33 + the soul print) (item4 board `item4_hero_vs_targets.png`): blocks filled with
   D4 neighbour roofs, rounded kerb corners + kerb shadows, a parked cruiser/sedan, the shot (flash, tracer,
   casings), ink splat, manhole/grate/skids/oil, the D5 teal soul trail, and the form-shaded D5 cast.
 - Shader: look_d5_part form shade (steel and vermilion plates), derivatives moved to uniform flow; look_d5 street
@@ -69,9 +69,11 @@ tick count, no RNG.
    point D5HeroExtras at `res://` and drop `--borrow`; the D5 soul sheet goes to whoever owns the soul VFX.
    **Soul print finding (`item4c_souls_print.png`):** through the world print (look_d4) the pale teal souls lose their
    fill (cream bodies); through the game's ghost print (`look_d4_item` `ghost = 1`) they dissolve into a teal dot mesh
-   at 64 px/m; drawn as-is on the actor layer they match the mock's soul trail. The hero scene now shows them as drawn
-   (`--soul-print` = the A/B). Next (fx/visual-engine lane): a ghost print that keeps a flat pale-teal fill + teal ink
-   instead of the dot screen, at least from 48 px/m up.
+   at 64 px/m; drawn as-is on the actor layer they match the mock's soul trail. Then `look_d5_soul.gdshader` (h37,
+   the hero default; `--soul=<d5|raw|ghost>` keeps the A/B): snaps the art to two teal inks + the cream rim + grain.
+   Crisper at 64 px/m, but at 32 px/m the snap busied the minified art (fine-detail energy 0.0613 drawn / 0.0659 hard
+   snap h34 / 0.0650 soft h35), so it rides the D5 tier fade (`amount`, 56 -> 64 px/m): 0 px vs the art as drawn at
+   32 and 48, the full print at 64 and 96. Next (fx lane): adopt look_d5_soul (or its idea) instead of the dot screen.
 3. **Asphalt texture.** The mock's street is cross-hatched. A dense street hatch (r7) read as rain and was
    reverted; a sparse, patchy, darker one now prints from 64 px/m only (596e172; character dL vs surround 0.091 ->
    0.095, 0 px change at 32/48). Iteration 2 (`item2b_street48.png`, h23 vs h24): the car camera (48 px/m) now

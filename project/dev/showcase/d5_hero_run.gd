@@ -43,7 +43,8 @@ const SHADOW_M: float = 1.1
 
 ## optional: a folder of keyed street-life sprites (D5HeroExtras); "" = none
 var borrow_dir: String = ""
-var soul_print: bool = false
+var soul_mode: String = "d5"
+var _soul_mat: Material = null
 var _roofs: Dictionary[String, Sprite2D] = {}
 var _shadows: Array[Polygon2D] = []
 var _corners: Array[Node2D] = []
@@ -79,18 +80,22 @@ func _ground() -> void:
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
-		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, _actors, _soul_material())
+		_soul_mat = _soul_material()
+		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, _actors, _soul_mat)
 		Log.info("dev", "d5_hero: %d borrowed sprites" % n)
 
 
-## The souls show the D5 art as drawn (it holds the mock's soul trail); soul_print = the
-## game's ghost print (look_d4_item ghost = 1): a dot mesh at 64 px/m (h21, rejected).
+## How the souls print: "d5" = look_d5_soul (default), "raw" = the D5 art as drawn (h22),
+## "ghost" = the game's look_d4_item ghost print, a dot mesh at 64 px/m (h21, rejected).
 func _soul_material() -> Material:
-	if not soul_print:
+	if soul_mode == "raw":
 		return null
 	var mat: ShaderMaterial = ShaderMaterial.new()
-	mat.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
-	mat.set_shader_parameter("ghost", 1.0)
+	if soul_mode == "ghost":
+		mat.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
+		mat.set_shader_parameter("ghost", 1.0)
+	else:
+		mat.shader = load("res://assets/shaders/look_d5_soul.gdshader") as Shader
 	return mat
 
 
@@ -188,6 +193,9 @@ func _pose(t: int) -> void:
 
 
 func _tier(tier: String) -> void:
+	var sm: ShaderMaterial = _soul_mat as ShaderMaterial
+	if sm != null and soul_mode == "d5":  # the soul print rides the D5 tier fade (56 -> 64 px/m)
+		sm.set_shader_parameter("amount", clampf((_rigs.zoom * PX - 56.0) / 8.0, 0.0, 1.0))
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
