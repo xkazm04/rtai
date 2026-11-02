@@ -233,6 +233,18 @@ sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, golden
 Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 -> 46.0 -> 48.0 px/m at
 9-tick steps; explosion shake offset 5.3 px).
 
+## World lock (every print pass on `world_px`)
+
+`CityView` computes `world_px` (the camera's world offset in screen px, after zoom ease, look-ahead and shake)
+once a frame and hands it to every print shader: `look_d4` (its material), `look_d4_item` (the item
+material), `light_ink` (`LightLayer.step`), `fx_ink` (`FxSystem.step` on all three twins) and `print_part`
+(`PartMaterials.set_world_px`, from `CityCharacters._before_render` before its no-tick skip). Every per-pixel
+hash reads `FRAGCOORD.xy + world_px`, so the paper tooth, grime, hatch, dot screens and fade dither move
+with the world and never swim on a pan. Two checks: `test_shader_world_lock` (unit: no bare `FRAGCOORD` in any
+`.gdshader`) and `dev/selftest/world_lock.gd` (in the selftest evidence: pan the paused junction by whole px
+at 32 / 48 / 64 px/m; the frame must move rigidly, max 0.5 % of the overlap differing; 0.00 % on
+2026-11-03, 0.60 / 0.23 / 0.52 % before the fix, 43 / 37 / 45 % with `--plant-unlocked`).
+
 ## Per-pass cost (2026-11-02, RTX 4090 / 7800X3D, debug editor binary unless noted)
 
 | Pass | Cost | How measured |
