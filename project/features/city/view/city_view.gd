@@ -23,11 +23,15 @@ var chunks: ChunkView = null
 var crowd: CrowdLayers = CrowdLayers.new()
 var textures: CityTextures = null
 var visible_actors: int = 0
+## Called with the focus (m) each frame right before the actors are written (the composition
+## root hooks the characters in here: rig selection, the rig slots the crowd layer skips).
+var before_render: Callable = Callable()
 var warming: bool = false
 var _city: CitySystem = null
 var _look_rect: ColorRect = ColorRect.new()
 var _look_mat: ShaderMaterial = ShaderMaterial.new()
 var _item_mat: ShaderMaterial = ShaderMaterial.new()
+var _actors: CanvasLayer = null
 
 
 func setup(city: CitySystem) -> void:
@@ -69,6 +73,8 @@ func _process(_delta: float) -> void:
 	chunks.update(focus, _city.residency)
 	var half: Vector2 = get_viewport_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
 	half += Vector2.ONE * VIEW_MARGIN_M
+	if before_render.is_valid():
+		before_render.call(focus)
 	_city.sim.write_render(focus.x - half.x, focus.y - half.y, focus.x + half.x, focus.y + half.y)
 	var counts: PackedInt32Array = _city.sim.get_render_counts()
 	visible_actors = counts[SimConst.RL_PEDS] + counts[SimConst.RL_CARS] if counts.size() > 2 else 0
@@ -93,12 +99,18 @@ func _build_layers() -> void:
 	look.add_child(_look_rect)
 	add_child(look)
 	var actors: CanvasLayer = CanvasLayer.new()
+	_actors = actors
 	actors.layer = ACTOR_LAYER
 	actors.follow_viewport_enabled = true
 	var item_shader: Shader = load(ITEM_SHADER)
 	_item_mat.shader = item_shader
 	add_child(actors)
 	crowd.attach(actors)
+
+
+## The canvas layer the actors draw on (above the print pass); characters attach here.
+func actor_layer() -> CanvasLayer:
+	return _actors
 
 
 func _exit_tree() -> void:

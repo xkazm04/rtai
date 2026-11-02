@@ -113,6 +113,18 @@ PackedInt32Array CitySim::get_render_counts() const {
 	return out;
 }
 
+// Render only: rigged actors skip their atlas body; the person quad size; art variants per slot.
+void CitySim::set_rig_slots(const PackedInt32Array &slots) { core_->set_rig_slots(slots.ptr(), (int)slots.size()); }
+
+void CitySim::set_person_px(double px) { core_->set_person_px((float)px); }
+
+PackedByteArray CitySim::get_variants() const {
+	PackedByteArray out;
+	out.resize(sim::CAP);
+	for (int i = 0; i < sim::CAP; i++) out.set(i, core_->variant_of(i));
+	return out;
+}
+
 PackedInt32Array CitySim::flow_stats() const {
 	PackedInt32Array out;
 	out.resize(sim::FS_LEN);
@@ -140,5 +152,8 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("write_render", "vx0", "vy0", "vx1", "vy1"), &CitySim::write_render);
 	ClassDB::bind_method(D_METHOD("get_render_counts"), &CitySim::get_render_counts);
 	ClassDB::bind_method(D_METHOD("flow_stats"), &CitySim::flow_stats);
+	ClassDB::bind_method(D_METHOD("set_rig_slots", "slots"), &CitySim::set_rig_slots);
+	ClassDB::bind_method(D_METHOD("set_person_px", "px"), &CitySim::set_person_px);
+	ClassDB::bind_method(D_METHOD("get_variants"), &CitySim::get_variants);
 	ClassDB::bind_method(D_METHOD("flow_dist", "x", "y"), &CitySim::flow_dist);
 }

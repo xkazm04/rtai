@@ -23,6 +23,13 @@ const float BULLET[4] = {1.0f, 0.85f, 0.4f, 1.0f};
 
 void CityCore::set_clips(const int32_t *clip_table, int n) { clips_.assign(clip_table, clip_table + n); }
 
+void CityCore::set_rig_slots(const int32_t *slots, int n) {
+	for (int i = 0; i < CAP; i++) rigged_[i] = 0;
+	for (int k = 0; k < n; k++) {
+		if (slots[k] >= 0 && slots[k] < CAP) rigged_[slots[k]] = 1;
+	}
+}
+
 // Clip (idle walk flee hit death shoot) and atlas cell for a person.
 int CityCore::frame_of(int i, int &cell) const {
 	int k = kind_[i], m = mode_[i], cl = 1, f = 0;
@@ -44,8 +51,8 @@ int CityCore::frame_of(int i, int &cell) const {
 
 void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float *const *bufs,
 		int32_t *counts) const {
-	const float PXM = (float)PX_PER_M, S = 122.88f, SH = 25.6f, CL = 204.8f, CW = 102.4f;
-	int np = 0, nc = 0, nb = 0;
+	const float PXM = (float)PX_PER_M, S = person_px_, SH = 25.6f, CL = 204.8f, CW = 102.4f;
+	int np = 0, nps = 0, nc = 0, nb = 0;
 	bool people = clips_.size() >= (size_t)(CLIP_VARIANTS * CLIPS * 3);
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0) continue;
@@ -59,7 +66,9 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 			int cell = 0;
 			frame_of(i, cell);
 			const float sh[8] = {SH, 0.0f, 0.0f, X + 2.0f, 0.0f, SH, 0.0f, Y + 3.0f};
-			put(bufs[RL_PED_SHADOWS] + np * RL_STRIDE, sh, INK_PED, 0.0f);
+			put(bufs[RL_PED_SHADOWS] + nps * RL_STRIDE, sh, INK_PED, 0.0f);
+			nps++;
+			if (rigged_[i]) continue;  // drawn by its cutout rig
 			const float body[8] = {dx * S, -dy * S, 0.0f, X, dy * S, dx * S, 0.0f, Y};
 			put(bufs[RL_PEDS] + np * RL_STRIDE, body, WHITE, (float)cell);
 			np++;
@@ -79,7 +88,7 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 		put(bufs[RL_BULLETS] + nb * RL_STRIDE, xf, BULLET, 0.0f);
 		nb++;
 	}
-	const int32_t ns[RL_COUNT] = {np, np, nc, nc, nb};
+	const int32_t ns[RL_COUNT] = {np, nps, nc, nc, nb};
 	for (int k = 0; k < RL_COUNT; k++) counts[k] = ns[k];
 }
 

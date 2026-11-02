@@ -1,3 +1,4 @@
+# gdlint: disable=max-public-methods
 class_name CitySimNative
 extends CitySimBackend
 ## Adapter over the native CitySim (GDExtension, native/binding). The class is looked up by name,
@@ -101,6 +102,19 @@ func flow_stats() -> PackedInt32Array:
 func flow_dist(x: float, y: float) -> int:
 	var d: Variant = _call(&"flow_dist", [x, y])
 	return d if d is int else -1
+
+
+func set_rig_slots(slots: PackedInt32Array) -> void:
+	_call(&"set_rig_slots", [slots])
+
+
+func set_person_px(px: float) -> void:
+	_call(&"set_person_px", [px])
+
+
+func get_variants() -> PackedByteArray:
+	var v: Variant = _call(&"get_variants", [])
+	return v if v is PackedByteArray else PackedByteArray()
 
 
 func _call(method: StringName, args: Array) -> Variant:

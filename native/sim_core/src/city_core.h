@@ -36,6 +36,11 @@ public:
 	// render.cpp. clips: CLIP_VARIANTS * CLIPS * 3 ints [start count fps]. bufs: RL_COUNT
 	// buffers sized CAP (PCAP for bullets) * RL_STRIDE floats; counts receives the instances.
 	void set_clips(const int32_t *clip_table, int n);
+	// Render only (never sim state): actors drawn by a full cutout rig skip their atlas body;
+	// the person quad's world-px size matches the baked crowd atlas cell.
+	void set_rig_slots(const int32_t *slots, int n);
+	void set_person_px(float px) { person_px_ = px; }
+	uint8_t variant_of(int i) const { return (i >= 0 && i < CAP) ? variant_[i] : 0; }
 	void fill_render(double vx0, double vy0, double vx1, double vy1, float *const *bufs,
 			int32_t *counts) const;
 
@@ -67,6 +72,8 @@ private:
 	int hgx_ = 0, hgy_ = 0;
 	int32_t counters_[CN_COUNT] = {};
 	std::vector<int32_t> clips_;
+	uint8_t rigged_[CAP] = {};
+	float person_px_ = 122.88f;
 
 	// flow field (flow.cpp); map_version_ bumps on every stamp / clear (world.cpp)
 	std::vector<uint16_t> ff_dist_;
