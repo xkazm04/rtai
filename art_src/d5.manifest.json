@@ -226,6 +226,20 @@
    "sha256": "e7c640cb111b855bc6b6224e473d670b78b7bbafb04a8c4f2707171532aa289f",
    "tool": "codex-image"
   },
+  "d5_phone": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_phone.png",
+   "layout_template": "masters:night/d5-close/gen/refs/phone_layout.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/phone_d5.txt",
+   "prompt_sha256": "5f07db586d4ea93cb3fdd37f13db5bec0a189bd28b8790ed4a64eb0eed9e9a7f",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "e75c52667aedd3b2daa7b95370e18e25a371cad92e1faca379db7ada86e51275",
+   "tool": "codex-image"
+  },
   "d5_portrait_cop": {
    "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_portrait_cop.png",

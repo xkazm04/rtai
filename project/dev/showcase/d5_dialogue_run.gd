@@ -5,6 +5,8 @@ extends D5HeroRun
 ## real UI size over a cream panel. The text is placeholder ink bars, not strings (the HUD lane
 ## owns the dialogue UI and its Loc keys). Shows whether the expressions read at UI size over the
 ## gameplay frame. Launch: d5_hero.gd -- --dialogue=<left>,<right> (portrait file names).
+## --phone=<portrait> instead shows the phone close-up: the D5 phone frame (menus/art/d5/) with
+## the portrait behind its keyed screen and a placeholder call strip.
 
 const PORTRAITS: String = "res://features/characters/art/d5/portraits/"
 const PAPER: Color = Color(0.949, 0.910, 0.835)
@@ -15,8 +17,14 @@ const MARGIN: float = 28.0
 ## placeholder "text" lines: fraction of the text column each bar fills
 const LINES: Array[float] = [0.92, 0.78, 0.55]
 
+const PHONE: String = "res://features/menus/art/d5/phone_frame.png"
+## the keyed screen hole as fractions of the frame (tools/install_king_top.py prints them)
+const SCREEN: Rect2 = Rect2(0.127, 0.1383, 0.75, 0.7064)
+const PHONE_H: float = 600.0
+
 var left_name: String = "rivet_angry"
 var right_name: String = "cop_shouting"
+var phone_name: String = ""
 
 
 func _init() -> void:
@@ -30,6 +38,9 @@ func _ready() -> void:
 	ui.layer = 20
 	add_child(ui)
 	var view: Vector2 = get_viewport().get_visible_rect().size
+	if phone_name != "":
+		_phone(ui, view)
+		return
 	var top: float = view.y - MARGIN - PANEL_H
 	ui.add_child(_box(Rect2(MARGIN, top, view.x - MARGIN * 2.0, PANEL_H), 4))
 	var p: float = PORTRAIT_PX
@@ -72,3 +83,31 @@ func _portrait(file: String, r: Rect2) -> Panel:
 	tex.size = r.size
 	frame.add_child(tex)
 	return frame
+
+
+func _phone(ui: CanvasLayer, view: Vector2) -> void:
+	var frame: TextureRect = TextureRect.new()
+	frame.texture = load(PHONE) as Texture2D
+	var aspect: float = float(frame.texture.get_width()) / frame.texture.get_height()
+	var size: Vector2 = Vector2(PHONE_H * aspect, PHONE_H)
+	var at: Vector2 = Vector2(view.x - MARGIN - size.x, view.y - MARGIN - size.y)
+	var screen: Rect2 = Rect2(at + SCREEN.position * size, SCREEN.size * size)
+	var pic: Panel = _portrait(phone_name, screen)
+	(pic.get_theme_stylebox(&"panel") as StyleBoxFlat).shadow_size = 0
+	ui.add_child(pic)
+	var strip: ColorRect = ColorRect.new()
+	strip.color = PAPER
+	strip.position = Vector2(screen.position.x, screen.end.y - 74.0)
+	strip.size = Vector2(screen.size.x, 74.0)
+	ui.add_child(strip)
+	for i: int in 2:
+		var bar: ColorRect = ColorRect.new()
+		bar.color = INK
+		bar.position = strip.position + Vector2(18.0, 18.0 + i * 26.0)
+		bar.size = Vector2((screen.size.x - 36.0) * (0.8 - i * 0.3), 9.0)
+		ui.add_child(bar)
+	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	frame.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	frame.position = at
+	frame.size = size
+	ui.add_child(frame)
