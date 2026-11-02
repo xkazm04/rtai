@@ -290,7 +290,7 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   Edge profile at 48 now lip 0.85 (9 px) -> ink 0.08 (15 px) -> hatch: the mock's ratio (1.7 vs 1.6).
   d4 tier 0 px; h64 = h63 0 px at every zoom (deterministic). Cost: +0.6 pp ink at 32 (our ink excess is the roofs,
   gap 2). Board evidence/item16_parapets.png; hero frames = h64; ladder +1 row.
-- 00:24 REVERTED (h65): bolder pen lines + less grime on the D5 parts (ink_at 0.74 -> 0.66, grime 0.10 -> 0.05).
+- 00:19 REVERTED (h65): bolder pen lines + less grime on the D5 parts (ink_at 0.74 -> 0.66, grime 0.10 -> 0.05).
   Fixed-mask (h64 tier footprint) at 64 px/m: D5 dL 0.151 -> 0.138 (D4 0.161), HF 0.126 -> 0.132, ink 32% -> 37%;
   at 96: dL 0.181 -> 0.170. By eye heavier but not closer to the concept (its weight is the dark mauve volume,
   the owner's steel call, item9). Shader restored (git clean).
