@@ -59,6 +59,7 @@ var _roofs: Dictionary[String, Sprite2D] = {}
 var _d5_neighbours: Array[Sprite2D] = []
 var _shadows: Array[Polygon2D] = []
 var _corners: Array[Node2D] = []
+var _roof_at: Array[Vector2] = []
 
 
 func _init() -> void:
@@ -97,6 +98,7 @@ func _ground() -> void:
 	_kerb_shadows()
 	_corners = D5HeroKerbs.corners(_world, PX)
 	_corners.append_array(D5HeroDecals.place(_world, PX))  # d5-tier world additions
+	_corners.append_array(D5HeroParapets.place(_world, PX, _roof_at, ROOF_M))
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
@@ -121,6 +123,7 @@ func _soul_material() -> Material:
 
 func _roof(roof: String, at: Vector2) -> Sprite2D:
 	_shadow(at * PX)
+	_roof_at.append(at)
 	var s: Sprite2D = Sprite2D.new()
 	s.texture = load(ROOFS + roof + ".png") as Texture2D
 	s.scale = Vector2.ONE * ROOF_M * PX / s.texture.get_width()
