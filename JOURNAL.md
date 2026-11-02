@@ -185,3 +185,8 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   Before/after: `after_hud2|after_pr_city` vs `after_sw/city-*`, `after_pr|after_sw/props-*`, `after_sw/corner-*`.
   **For the F-08 / ground owner:** build_ground.py would regenerate the dark joints; set its joint colour to
   140,132,128 and 2 px if the ground is ever re-baked. Revert = this one commit.
+- 23:00 paving follow-up: with the grid quiet, the darker grey slabs kept 4 px black borders and read as UI boxes
+  (`after_sw/city-2-48ppm.png`). Paving threshold 0.7 -> 0.6 (grey slabs are lum 0.65-0.70; asphalt 0.33; kerb still
+  protected by the 6 px interior margin): borders now the same thin grey (`after_sw2/`). Small ink "+" marks remain at
+  grey-slab corners (print-pass edge response), accepted. Gates after the first paving commit: lint, unit 142/142,
+  scenarios 8/8, parity, selftest (0 placeholders) all PASS.
