@@ -46,7 +46,7 @@ func _audit(ppm: int) -> Dictionary:
 	var people: Array[CanvasItem] = [_view.crowd.nodes[SimConst.RL_PEDS], _characters.rigs]
 	layers["actors"] = _pair(full - await _count(people, ""))
 	layers["vehicles"] = _pair(full - await _count([_view.crowd.nodes[SimConst.RL_CARS]], ""))
-	var fx: Array[CanvasItem] = [_view.crowd.nodes[SimConst.RL_BULLETS], _view.fx]
+	var fx: Array[CanvasItem] = [_view.crowd.nodes[SimConst.RL_BULLETS], _view.fx, _view.fx.glow]
 	layers["fx"] = _pair(full - await _count(fx, ""))
 	var by_kind: Dictionary = await _by_kind(full)
 	var offenders: Array[String] = []

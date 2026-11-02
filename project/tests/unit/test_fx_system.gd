@@ -129,3 +129,16 @@ func test_a_missing_sheet_keeps_the_placeholder_row() -> void:
 	var count: float = fx.kinds[&"boom"]["count"]
 	assert_eq(count, 10.0)
 	assert_false(fx.kinds[&"boom"].has("cell0"))
+
+
+func test_emissive_kinds_go_to_the_glow_twin() -> void:
+	var fx: FxSystem = autofree(FxSystem.new())
+	fx.glow = autofree(FxSystem.new())
+	assert_true(fx.spawn(&"explosion", Vector2.ZERO, 0.0, 0))
+	assert_true(fx.spawn(&"smoke", Vector2.ZERO, 0.0, 0))
+	fx.step(0)
+	fx.glow.step(0)
+	var smoke: float = fx.kinds[&"smoke"]["count"]
+	var blast: float = fx.kinds[&"explosion"]["count"]
+	assert_eq(fx.alive(), int(smoke), "smoke is lit: it stays under the lights")
+	assert_eq(fx.glow.alive(), int(blast), "the blast draws above the lights")

@@ -29,9 +29,16 @@
       "space": "screen"
     },
     {
+      "doc": "emissive FX above the lights: a muzzle star or a blast is not lit by its own light (the additive paper would lift its vermilion core to a peach glow)",
+      "id": "emissive",
+      "layer": 4,
+      "print": "none",
+      "space": "follow"
+    },
+    {
       "doc": "markers and the objective pointer, in world space",
       "id": "world_ui",
-      "layer": 4,
+      "layer": 5,
       "print": "none",
       "space": "follow"
     },
@@ -156,6 +163,14 @@
       "id": "lights",
       "status": "live",
       "z": 100
+    },
+    {
+      "canvas": "emissive",
+      "doc": "fx kinds with emissive: true (muzzle, tracer, explosion, spark, crackle)",
+      "drawn_by": "FxSystem glow (CityView)",
+      "id": "fx_emissive",
+      "status": "live",
+      "z": 0
     },
     {
       "canvas": "world_ui",

@@ -22,6 +22,9 @@ var lights: LightLayer = null
 var dropped: int = 0
 var spawned_this_frame: int = 0
 var last_us: int = 0
+## The emissive twin (CityView puts it on the `emissive` canvas, above the lights): spawn()
+## forwards `emissive` kinds to it. null = everything draws here.
+var glow: FxSystem = null
 ## True when the FX sheet loaded: kinds use their `atlas` blocks.
 var atlas_live: bool = false
 
@@ -66,6 +69,8 @@ func spawn(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> bool:
 	if not kinds.has(kind):
 		return false
 	var k: Dictionary = kinds[kind]
+	if glow != null and k.get("emissive", false):
+		return glow.spawn(kind, pos_px, angle, tick)
 	var count: int = k["count"]
 	if spawned_this_frame >= max_spawns_per_frame or _pool.alive + count > _pool.capacity():
 		dropped += 1

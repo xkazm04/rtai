@@ -109,6 +109,9 @@
             "minimum": 0,
             "type": "number"
           },
+          "emissive": {
+            "type": "boolean"
+          },
           "fade_from": {
             "maximum": 0.99,
             "minimum": 0,
@@ -174,7 +177,8 @@
           "drag",
           "light",
           "doc",
-          "fade_from"
+          "fade_from",
+          "emissive"
         ],
         "type": "object"
       },

@@ -126,6 +126,7 @@ func _place_camera(focus: Vector2) -> void:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
 	lights.step(tick, world_px)
 	fx.step(tick)
+	fx.glow.step(tick)
 
 
 func _build_layers() -> void:
@@ -153,6 +154,14 @@ func _build_layers() -> void:
 	actors.add_child(fx)
 	fx.lights = lights
 	add_child(lights)
+	var emissive: CanvasLayer = CanvasLayer.new()
+	emissive.layer = RenderLayers.canvas(&"emissive")
+	emissive.follow_viewport_enabled = true
+	fx.glow = FxSystem.new()
+	fx.glow.z_index = RenderLayers.z(&"fx_emissive")
+	fx.glow.lights = lights
+	emissive.add_child(fx.glow)
+	add_child(emissive)
 
 
 ## The canvas layer the actors draw on (above the print pass); characters attach here.

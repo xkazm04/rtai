@@ -41,7 +41,11 @@ func _ready() -> void:
 	printerr(
 		(
 			"fx_showcase: alive %d dropped %d step %d us"
-			% [_view.fx.alive(), _view.fx.dropped, _view.fx.last_us]
+			% [
+				_view.fx.alive() + _view.fx.glow.alive(),
+				_view.fx.dropped + _view.fx.glow.dropped,
+				_view.fx.last_us + _view.fx.glow.last_us
+			]
 		)
 	)
 	get_tree().quit(0)
@@ -62,6 +66,7 @@ func _play(now: int) -> void:
 				@warning_ignore("return_value_discarded")
 				_view.fx.spawn(KINDS[i], at, TAU * i / KINDS.size(), t)
 		_view.fx.step(t)
+		_view.fx.glow.step(t)
 
 
 func _shot(file: String) -> void:

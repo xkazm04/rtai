@@ -14,8 +14,9 @@ model. The stack is declared once as data, bottom up. A **canvas** is a Godot `C
 | `world` (0, camera space) | read by `look_d4` | `ground` 0, `ground_decals` 1, `building_shadows` 2, `props` 3, `roofs` 4 | `ChunkView` (one canvas item per band per 64 m quadrant) |
 | `print` (1, screen) | is the pass | `print_pass` 0, `print_overlay` 100 | `CityView` look rect, `LookOverlay` |
 | `actors` (2, follows the camera) | `look_d4_item` | `actor_shadows` 0, `actors` 100, `vehicles` 200, `roof_occluders` 300 (reserved), `fx` 400 | `CrowdLayers`, `CharacterRigs`, the FX system |
-| `light` (3, follows) | none (additive) | `lights` 0 (reserved) | the 2D light layer |
-| `world_ui` (4, follows) | none | `world_markers` 0 (reserved) | markers, the objective pointer |
+| `light` (3, screen) | none (additive) | `grade` 0, `lights` 100 | `LightLayer` |
+| `emissive` (4, follows) | none | `fx_emissive` 0 | the FX glow twin (emissive kinds) |
+| `world_ui` (5, follows) | none | `world_markers` 0 (reserved) | markers, the objective pointer |
 | `hud` (10, screen) | none | `hud` 0 (reserved) | `features/hud` |
 
 Rules:
@@ -157,6 +158,14 @@ texture exists (`FxSystem.atlas_live`) the instance custom `.z` carries cell + 1
 samples the sheet with mipmaps, cut at alpha 0.5 and faded by the same dither; the cell keeps its
 own inks (vermilion only in the muzzle cores and the blast, which the fx band allows). `casing` and
 `spark` are sheet-first kinds (an ink streak / paper burst without it). Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
+
+**Emissive kinds draw above the lights.** `muzzle`, `tracer`, `explosion`, `spark` and `crackle` have
+`emissive: true`: `FxSystem.spawn` forwards them to `glow`, a twin FxSystem that `CityView` puts on the
+`fx_emissive` band of the `emissive` canvas (layer 4, above `light` 3; `world_ui` moved to 5). A flash is
+not lit by its own light: under the additive paper light the sheet's vermilion blast core printed peach
+(only 73 % of its warm pixels passed the vermilion gate at 64 px/m), above it 96 % (frames
+`gtai-masters/night/visual-engine/07-fx-atlas/ab3-{48,64}ppm.png`). Smoke, debris, impacts, splats and
+casings stay lit (and take the night grade). Each twin has its own budgets.
 Frames: `gtai-masters/night/visual-engine/05-fx` (`dev/selftest/fx_showcase.gd`); step cost 48 us
 with 43 particles alive.
 
