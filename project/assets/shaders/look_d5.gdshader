@@ -25,10 +25,14 @@ uniform vec2 ink_mis = vec2(1.0, 1.0);
 uniform float ink_ghost = 0.22;    // strength of the off-register ink ghost
 uniform vec2 verm_mis = vec2(-2.0, 1.0);
 uniform float verm_ghost = 0.65;   // strength of the off-register vermilion pass
+uniform float age = 0.0;           // aged paper: warms the neutral print toward the mock's sepia (0 = off)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
+// aged-paper gains, dark end and light end (d4h2_mock.jpg medians: street 78,67,68 / paper 246,223,195)
+const vec3 AGE_DARK = vec3(1.03, 0.955, 0.87);
+const vec3 AGE_LIGHT = vec3(1.065, 1.0, 0.955);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -84,6 +88,11 @@ void fragment() {
 		float tooth = (fib - 0.25) * grain * amount;
 		o = mix(o, CREAM, clamp(tooth * d * 0.35, 0.0, 1.0));
 		o = mix(o, INK, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
+		// aged paper: only the neutral print warms (vermilion, teal and every pickup colour keep their hue)
+		float chroma = max(o.r, max(o.g, o.b)) - min(o.r, min(o.g, o.b));
+		float neutral = 1.0 - smoothstep(0.12, 0.22, chroma);
+		vec3 aged = clamp(o * mix(AGE_DARK, AGE_LIGHT, dot(o, vec3(0.299, 0.587, 0.114))), 0.0, 1.0);
+		o = mix(o, aged, age * amount * neutral);
 		COLOR = vec4(o, 1.0);
 	}
 }
