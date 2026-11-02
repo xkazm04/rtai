@@ -19,6 +19,10 @@ func test_rates_by_rank() -> void:
 	assert_eq(CharacterRigs.rate_of(CharacterRigs.FULL_RATE), 2)
 	assert_eq(CharacterRigs.rate_of(CharacterRigs.HALF_RATE), QUARTER)
 	assert_eq(CharacterRigs.rate_of(CharacterRigs.MAX_FULL - 1), QUARTER)
+	assert_eq(CharacterRigs.rate_of(CharacterRigs.MAX_FULL - 1, 1.5), QUARTER, "48 px/m (car)")
+	assert_eq(
+		CharacterRigs.rate_of(CharacterRigs.MAX_FULL - 1, 2.0), 2, "64 px/m arena: no quarter"
+	)
 
 
 func test_quarter_rate_turn_is_stable() -> void:

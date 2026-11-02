@@ -15,6 +15,9 @@ const MAX_FULL: int = 16
 ## still moves to its sim position every frame; only the limbs pose at 30 / 15 Hz.
 const FULL_RATE: int = 4
 const HALF_RATE: int = 8
+## At arena zoom (64 px/m, zoom 2) the rigs are twice the size and nearly all on screen, while an
+## arena holds few people: no quarter tier there (ranks past HALF_RATE pose at half rate).
+const ARENA_ZOOM: float = 1.9
 const RADIUS_M: float = 14.0
 ## The nearest-N selection (a GDScript scan of the whole feed, ~0.1 ms in a riot) runs every
 ## SELECT_EVERY calls; between, the kept rigs only find their rows again (a native find).
@@ -76,17 +79,18 @@ func step_ticks(steps: int) -> void:
 	for _k: int in steps:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
-			var every: int = rate_of(_rank[actor])
+			var every: int = rate_of(_rank[actor], zoom)
 			if (ticks_stepped + actor) % every == 0:
 				_by_actor[actor].drive(SimClock.TICK_DT * every)
 	last_us = Time.get_ticks_usec() - t0
 
 
-## Ticks between pose steps for the rig at nearest-rank r: 1 (full), 2 (half) or 4 (quarter).
-static func rate_of(r: int) -> int:
+## Ticks between pose steps for the rig at nearest-rank r: 1 (full), 2 (half) or 4 (quarter; half
+## at arena zoom).
+static func rate_of(r: int, view_zoom: float = 1.0) -> int:
 	if r < FULL_RATE:
 		return 1
-	return 2 if r < HALF_RATE else 4
+	return 2 if r < HALF_RATE or view_zoom >= ARENA_ZOOM else 4
 
 
 func full_row(i: int) -> bool:

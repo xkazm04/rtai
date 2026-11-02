@@ -1,11 +1,12 @@
 extends RigShowcaseRun
 ## LOD motion strip: Rivet and 15 walking pedestrians on the pavement, ranked by distance (the
 ## centre ones full rate, then half, the outer ones quarter rate), captured on STRIP consecutive
-## ticks at 32 and 48 px/m. Writes <out>/motion-<ppm>.png: one row per tick, the pavement
+## ticks at 32, 48 and 64 px/m. Writes <out>/motion-<ppm>.png: one row per tick, the pavement
 ## band (x -8.5 .. 8.5 m, y -4.3 .. -1.3 m), 2x nearest. Windowed only (needs a GPU).
 ## Launch: rig_showcase.gd -- --motion.
 
 const STRIP: int = 24
+const MOTION_ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const PEDS: int = 15
 const BAND_LO: Vector2 = Vector2(-8.5, -4.3)
 const BAND_SIZE: Vector2 = Vector2(17.0, 3.0)
@@ -13,7 +14,7 @@ const BAND_SIZE: Vector2 = Vector2(17.0, 3.0)
 
 func shoot() -> int:
 	var ok: bool = DirAccess.make_dir_recursive_absolute(out_dir) == OK
-	for z: float in ZOOMS:
+	for z: float in MOTION_ZOOMS:
 		_frame(z)
 		_cast()
 		for t: int in SETTLE_TICKS:

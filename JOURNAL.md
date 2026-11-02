@@ -357,3 +357,10 @@ NEXT (iteration 7 / morning, in order):
   planted max_px 100 -> ok=false "NEW off-doctrine: 32 px/m vermilion on world: 216 px"; node cases for
   other ppm / teal / crowd looks all fresh. (First planted run printed the row as "no longer seen" too:
   fixed - only rows with no offender at their key are reported.)
+- MILESTONE no quarter tier at arena zoom: `CharacterRigs.ARENA_ZOOM` 1.9 - at 64 px/m ranks past
+  HALF_RATE pose at half rate (the rigs are 2x the size and nearly all on screen; arenas hold few
+  people). rate_of(r, zoom), unit-tested. Frames 18-rig-arena/ (rig_showcase -- --motion, now 32 / 48 /
+  64 px/m): 32 and 48 px/m pixel-identical before/after (0 px changed), 64 px/m changed (754k px over
+  24 ticks): outer-64-before-left-after-right.png shows the outer peds holding a pose for 4 ticks
+  before vs 2 after; motion-64ppm-before-top-after-bottom.gif for the owner. Bench unaffected (riot and
+  drives run at 32 / 48 px/m). 0 frames rejected.
