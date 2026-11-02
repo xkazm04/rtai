@@ -26,6 +26,8 @@ var focus: Vector2 = START
 var target: Vector2 = START
 ## Set focus from outside (a bench or a cutscene) instead of the input axes.
 var steer_by_input: bool = true
+## Microseconds spent since the last take_stats(): [residency, spawner, sim step, ticks].
+var stats_us: PackedInt64Array = PackedInt64Array([0, 0, 0, 0])
 var _filled: bool = false
 var _prefer_native: bool = true
 
@@ -51,11 +53,18 @@ func step(_tick: int, input: TickInput) -> void:
 		var axis: Vector2 = Vector2(input.move_x, input.move_y) / TickInput.AXIS_MAX
 		focus += axis * FOCUS_SPEED * SimClock.TICK_DT
 		target = focus
+	var t0: int = Time.get_ticks_usec()
 	residency.update(focus)
+	var t1: int = Time.get_ticks_usec()
 	@warning_ignore("return_value_discarded")
 	spawner.tick(focus, not _filled)
 	_filled = true
+	var t2: int = Time.get_ticks_usec()
 	sim.step(SimClock.TICK_DT, focus.x, focus.y, target.x, target.y)
+	stats_us[0] += t1 - t0
+	stats_us[1] += t2 - t1
+	stats_us[2] += Time.get_ticks_usec() - t2
+	stats_us[3] += 1
 
 
 func write_state(out: StreamPeerBuffer) -> void:
@@ -66,3 +75,10 @@ func write_state(out: StreamPeerBuffer) -> void:
 	assert(err == OK)
 	for key: Vector2i in residency.resident_keys():
 		out.put_32(key.x * 1000 + key.y)
+
+
+## The timing accumulated since the last call, then zeroed (bench and dev overlay).
+func take_stats() -> PackedInt64Array:
+	var out: PackedInt64Array = stats_us.duplicate()
+	stats_us.fill(0)
+	return out

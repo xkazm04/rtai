@@ -18,14 +18,12 @@ var _city: CitySystem = null
 func setup(city: CitySystem) -> void:
 	_city = city
 	add_child(camera)
+	if is_inside_tree():
+		camera.make_current()
 	crowd.attach(self)
 	var textures: CityTextures = CityTextures.new(CityGen.read_json(CitySystem.TEXTURES))
 	chunks = ChunkView.new(get_canvas_item(), textures)
 	city.sim.set_render(crowd.rids(), CrowdLayers.placeholder_clips())
-
-
-func _ready() -> void:
-	camera.make_current()
 
 
 func _process(_delta: float) -> void:

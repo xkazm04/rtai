@@ -68,6 +68,15 @@ func adopt(key: Vector2i, chunk: CityChunk) -> void:
 	stamped += 1
 
 
+## Forces one chunk out (a bench churn): the next update() stamps it again.
+func evict(key: Vector2i) -> void:
+	if _resident.has(key):
+		_sim.clear_chunk(key.x, key.y)
+		@warning_ignore("return_value_discarded")
+		_resident.erase(key)
+		dropped += 1
+
+
 func is_resident(key: Vector2i) -> bool:
 	return _resident.has(key)
 
