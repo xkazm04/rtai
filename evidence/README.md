@@ -28,6 +28,7 @@ tick count, no RNG.
 | `item11_roof_lift.png` | iteration 3: D5 roofs lifted toward the mock's cream: D4 / as built / 1.4 / 1.8 (kept) / 2.2 at 32 px/m (supersedes item3 for tone) |
 | `item12_age_floor_32.png` | iteration 3, PROPOSAL: aged paper at 32 px/m (`age_floor`, default off) vs now vs the mock |
 | `item13_killcam128.png` | iteration 3: the 128 px/m kill-cam, D4 vs D4+D5, beside the concept |
+| `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
@@ -71,7 +72,8 @@ tick count, no RNG.
 2. **D4 roofs are ink-heavy.** Mock roofs: mean L ~0.59, 44% paper. D4 neighbour roofs at 32 px/m: 0.498, 28%.
    The D5 landmarks are now at D4 parity (bar 0.439 / 25%) after the d**1.8 lift. Next (d4-production / city):
    the same mid-tone density lift (`build_roofs.py` LIFT) on the D4 roof set, gated against the grime/detail loss
-   seen at 2.2.
+   seen at 2.2. Tried on temporary copies (`item14_d4_roof_lift_proposal.png`, nothing committed): OSHA 0.482 ->
+   0.538 L, paper 26% -> 38%. What is left is the roofs' thick hatched border ring (roof art).
 3. **Pavement grid.** Ours: a hard white slab grid with black joints; the mock: soft, irregular slab joints. Next:
    city lane's pavement tile (the D5 sidewalk tile helped only marginally).
 4. **Lamp post** reads as a spoon lying on the pavement (mock: kerb base + curved arm + round head). City props.
