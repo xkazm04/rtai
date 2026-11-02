@@ -50,6 +50,7 @@ with build_ground.py alone undoes them; fold them in, or re-run them in this ord
 | 6 | `paving_bond.py 128 286 grid2` | sidewalk (y_end 768), curb x3 | 2 m slabs: every other joint line removed, kept joints 128 grey |
 | 7 | `build_corner.py` (KERB_CREAM) then 3 + 4 | curb_corner | rebuilt from the processed sidewalk so it matches the straights row for row |
 | 8 | `patch_soft.py 0.5` | road_straight x3, road_straight_v x2 | closed asphalt-patch outlines 50 % toward the base (cracks keep ink) |
+| 9 | `slab_grey_out.py` | sidewalk, curb_c (y_end 288) | the grey 1 m replaced-slab squares replaced by their 2 m slab partner cell |
 
 Roofs (`roofs/*.png`, all 17): `roof_lift.py 0.7 0.22 0.5` (wash greys toward the roof paper, ink kept). The flat
 roof ground tiles (roof_tone, roof_edge_tone) are deliberately NOT lifted: through the print pass they jump from
