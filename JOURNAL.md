@@ -40,3 +40,16 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
   HONEST: the "cops" in the clip are fixed points (no bodies) in the riot crowd; the kills go through
   the real events, but the city scene has no CombatArena. Wall splats are not done (no wall data in the
   city view). The world hit-stop holds the sim; the rigs keep their pose (that is the held panel).
+- MILESTONE real fight wiring + muzzle flash (work order 4, part): `dev/noir/quest_fight.tscn` plays
+  quest 1 (collect-call, its bot, seed default) drawn by CollectCallView (placeholder ink) under the
+  noir pass; NoirCombatFx is bound to the play's own EventBus (`CollectCallPlay.bus()`, a 3-line
+  accessor added to dev/bots/collect_call_play.gd), so the blood comes from CombatArena.damage's
+  real `actor_killed` (15 kills in 900 live frames). `features/fx/noir/muzzle_flash.gd`: a white
+  ink-rimmed starburst per new round for 2 ticks, and the noir threshold drops for the fire tick
+  (the frame "lights"). Hit-stop holds the play 5 ticks per kill. Evidence `quest-v2/`:
+  quest-fight-48.mp4 (15 s) + strip.png + 4 hero frames.
+  HONEST: weak evidence for the look - the guards are placeholder rings that print dark on black and
+  nearly vanish; the HUD sits under the noir pass (rain over the bark box); Rivet's placeholder eyes
+  and hp bar are teal (the noir doctrine keeps teal for the dead only - the placeholder's colour, not
+  the pass's; noted for the noir parts). quest-v1 (camera on Rivet) had the fight off-frame; v2
+  frames between Rivet and the nearest guard but loses Rivet when they are > 26 m apart.

@@ -16,6 +16,8 @@ var locate: Callable = Callable()
 var player_id: int = 0
 ## Maps a world px position to screen uv for the impact burst (Callable(px) -> Vector2).
 var to_screen_uv: Callable = Callable()
+## World px per metre of the canvas the blood draws on (the city 32, quest 1's view 48).
+var px_per_m: float = SimConst.PX_PER_M
 var kills: int = 0
 var hits: int = 0
 var _stop_ticks: int = 5
@@ -39,7 +41,7 @@ func _on_actor_killed(killer_id: int, victim_id: int, _kind: StringName) -> void
 		return
 	var from: Vector2 = _where(killer_id)
 	var dir: Vector2 = (at - from) if from != Vector2.INF else Vector2.RIGHT
-	var px: Vector2 = at * SimConst.PX_PER_M
+	var px: Vector2 = at * px_per_m
 	kills += 1
 	if blood != null:
 		blood.splash(px, dir.normalized(), "kill")
@@ -56,7 +58,7 @@ func _on_player_hit(_weapon: StringName) -> void:
 	if at == Vector2.INF or blood == null:
 		return
 	hits += 1
-	blood.splash(at * SimConst.PX_PER_M, Vector2.from_angle(hits * 2.4), "player_hit")
+	blood.splash(at * px_per_m, Vector2.from_angle(hits * 2.4), "player_hit")
 
 
 func _where(id: int) -> Vector2:
