@@ -279,3 +279,9 @@ NEXT (iteration 7 / morning, in order):
    audit gating.
 7. Quest 1 on main has objectives: after the merge, point its objective at CityView.markers (objective =
    the handle) - the markers API is ready.
+- 00:00 Tried NEXT 4 (FX as one multimesh_set_buffer per pool): REVERTED. fx_showcase (bit-identical run to
+  run: before vs before2 diff None) changed with it (probably my 2D transform row layout, or the unhidden
+  ground twin) and the step got slower in its one sample (136 -> 192 us for 147 particles): 16 GDScript
+  indexed writes per particle cost about what 3 native RS calls do. Frames 13-fx-buffer/. The p99 lever for
+  FX is native (or fewer live particles: splats 5 x 240 ticks), not a GDScript buffer. README per-pass table
+  updated with the feed A/B and this.

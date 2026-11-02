@@ -235,7 +235,9 @@ Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
 | D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |
 | Lights `step()` | 30-168 us CPU for 32-64 lights; GPU +0.29 .. +1.35 ms for 32 fires (interleaved, 3 runs, shared GPU) | `light_showcase.gd` |
-| FX `step()` | 48 us CPU for 43 live particles | `fx_showcase.gd` |
+| FX `step()` | 48 us CPU for 43 live particles; 135 us for 147 (3 twins). Skipped on frames with no tick and no spawn. A single-buffer upload (16 GDScript writes per particle) measured slower (192 us) and changed the picture: reverted | `fx_showcase.gd` |
+| FX feed in the riot (shots, ends, deaths -> FX + lights) | avg frame +0.07 ms, p99 CPU +0.15 ms (was +0.35 ms avg before the no-tick skip) | `city_bench -- --fx-feed=off` A/B, 3 interleaved pairs x 20 s |
+| Markers | a few `_draw` polygons a frame | code path |
 | Chunk bands | 20 canvas items per chunk (was 8): see DEVIATION §20-draw | exported bench after item 1: p99 2.61 ms |
 | Rig pass skip on no-tick frames | rig p50 0 ms, p99 0.559 ms (unchanged: tick frames) | exported bench after item 7a |
 
