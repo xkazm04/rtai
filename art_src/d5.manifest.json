@@ -1,8 +1,23 @@
 {
  "_doc": "D5 \"Inked Grime\" masters (GIT-06 tier 1) from the d5-close night lane. Files live outside git at C:/Users/kazda/kiro/gtai-masters/night/d5-close/ (gen/out raw Codex sheets, gen/_prompts prompts, gen/refs edit targets and references, tools build scripts).",
  "masters": {
+  "d5_arena_king": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_arena_king.png",
+   "layout_template": "masters:night/d5-close/gen/refs/arena_layout.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/arena_d5.txt",
+   "prompt_sha256": "5f25896eca58559e94254e5a7d1ec65d8f24aec98b90583ab6f2cf02dd9a3806",
+   "references": [
+    "own: masters night/d5-close/gen/refs/hero_48.png (in-engine hero frame, line weight / view reference)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "c88a144e0c042ede55a608bc39f284a729aae1ac367c84b468c65b3ee3dbace0",
+   "tool": "codex-image"
+  },
   "d5_cop_a": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_cop_a.png",
    "layout_template": "masters:night/d5-close/gen/refs/cop_a.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -17,7 +32,7 @@
    "tool": "codex-image"
   },
   "d5_cop_b": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_cop_b.png",
    "layout_template": "masters:night/d5-close/gen/refs/cop_b.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -32,7 +47,7 @@
    "tool": "codex-image"
   },
   "d5_cop_c": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_cop_c.png",
    "layout_template": "masters:night/d5-close/gen/refs/cop_c.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -47,7 +62,7 @@
    "tool": "codex-image"
   },
   "d5_cop_expressions": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_cop_expressions.png",
    "layout_template": "masters:night/d5-close/gen/refs/expr_layout.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -62,7 +77,7 @@
    "tool": "codex-image"
   },
   "d5_decals": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_decals.png",
    "layout_template": "masters:night/d5-close/gen/refs/decal_layout.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -77,7 +92,7 @@
    "tool": "codex-image"
   },
   "d5_finisher_drone": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_finisher_drone.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -92,7 +107,7 @@
    "tool": "codex-image"
   },
   "d5_finisher_k9": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_finisher_k9.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -107,7 +122,7 @@
    "tool": "codex-image"
   },
   "d5_finisher_lightbar": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_finisher_lightbar.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -122,7 +137,7 @@
    "tool": "codex-image"
   },
   "d5_king_expressions": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_king_expressions.png",
    "layout_template": "masters:night/d5-close/gen/refs/expr_layout.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -137,7 +152,7 @@
    "tool": "codex-image"
   },
   "d5_loading_rivet": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_loading_rivet.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -152,7 +167,7 @@
    "tool": "codex-image"
   },
   "d5_ped_a": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_ped_a.png",
    "layout_template": "masters:night/d5-close/gen/refs/ped_a.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -167,7 +182,7 @@
    "tool": "codex-image"
   },
   "d5_ped_b": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_ped_b.png",
    "layout_template": "masters:night/d5-close/gen/refs/ped_b.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -182,7 +197,7 @@
    "tool": "codex-image"
   },
   "d5_ped_c": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_ped_c.png",
    "layout_template": "masters:night/d5-close/gen/refs/ped_c.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -197,7 +212,7 @@
    "tool": "codex-image"
   },
   "d5_portrait_cop": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_portrait_cop.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -212,7 +227,7 @@
    "tool": "codex-image"
   },
   "d5_portrait_king": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_portrait_king.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -227,7 +242,7 @@
    "tool": "codex-image"
   },
   "d5_portrait_rivet": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_portrait_rivet.png",
    "layout_template": null,
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -241,7 +256,7 @@
    "tool": "codex-image"
   },
   "d5_rivet_arms": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_rivet_arms.png",
    "layout_template": "masters:night/d5-close/gen/refs/rivet_arms.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -256,7 +271,7 @@
    "tool": "codex-image"
   },
   "d5_rivet_expressions": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_rivet_expressions.png",
    "layout_template": "masters:night/d5-close/gen/refs/expr_layout.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -271,7 +286,7 @@
    "tool": "codex-image"
   },
   "d5_rivet_hands": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_rivet_hands.png",
    "layout_template": "masters:night/d5-close/gen/refs/rivet_hands.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -286,7 +301,7 @@
    "tool": "codex-image"
   },
   "d5_rivet_head": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_rivet_head.png",
    "layout_template": "masters:night/d5-close/gen/refs/rivet_head.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -301,7 +316,7 @@
    "tool": "codex-image"
   },
   "d5_rivet_legs": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_rivet_legs.png",
    "layout_template": "masters:night/d5-close/gen/refs/rivet_legs.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -316,7 +331,7 @@
    "tool": "codex-image"
   },
   "d5_roof_bar": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_bar.png",
    "layout_template": "masters:night/d5-close/gen/refs/roof_bar.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -331,7 +346,7 @@
    "tool": "codex-image"
   },
   "d5_roof_hq": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_hq.png",
    "layout_template": "masters:night/d5-close/gen/refs/roof_hq.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -346,7 +361,7 @@
    "tool": "codex-image"
   },
   "d5_roof_mural": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_mural.png",
    "layout_template": "masters:night/d5-close/gen/refs/roof_mural.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -361,7 +376,7 @@
    "tool": "codex-image"
   },
   "d5_roof_pension_bank": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_pension_bank.png",
    "layout_template": "masters:night/d5-close/gen/refs/roof_pension_bank.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -376,7 +391,7 @@
    "tool": "codex-image"
   },
   "d5_roof_union_hall": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_union_hall.png",
    "layout_template": "masters:night/d5-close/gen/refs/roof_union_hall.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -391,7 +406,7 @@
    "tool": "codex-image"
   },
   "d5_sidewalk": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_sidewalk.png",
    "layout_template": "masters:night/d5-close/gen/refs/sidewalk_d4.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
@@ -406,7 +421,7 @@
    "tool": "codex-image"
   },
   "d5_souls": {
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_souls.png",
    "layout_template": "masters:night/d5-close/gen/refs/soul_layout.png",
    "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
