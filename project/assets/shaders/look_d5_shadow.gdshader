@@ -3,6 +3,8 @@ shader_type canvas_item;
 // look_d4 print, as a light ink tint plus world-locked hand-drawn pen strokes (wobble, ink pressure, broken
 // strokes), the hatched building shadows of d4h2_mock.jpg. The D4 print then inks it like any drawn hatch.
 // Used by dev/showcase/d5_hero_run.gd; params in look_d5.params.json ("shadow").
+// On a Sprite2D the shadow takes the sprite's alpha (a character's cast shadow); a Polygon2D samples the default
+// white texture, so building/kerb quads are unchanged.
 
 uniform float period = 5.0;    // world px between strokes (0.16 m)
 uniform float tint = 0.36;     // ink alpha between the strokes
@@ -32,5 +34,5 @@ void fragment() {
 	float gap = step(0.2, vnoise(vec2(along * 0.06, row * 4.3)));
 	float f = abs(fract(across / period) - 0.5) * 2.0;
 	float line = (1.0 - smoothstep(cov * press - 0.15, cov * press + 0.15, f)) * gap;
-	COLOR = vec4(0.090, 0.075, 0.106, mix(tint, stroke, line));
+	COLOR = vec4(0.090, 0.075, 0.106, mix(tint, stroke, line) * texture(TEXTURE, UV).a);
 }

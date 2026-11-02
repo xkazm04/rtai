@@ -337,8 +337,12 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   install_king_top.py generalised, the King re-key is byte-identical) and `d5_hero.gd -- --phone=cop_alarmed`
   (portrait behind the screen + a placeholder call strip). ph1 = ph2 0 px; regression: dlg2 = dlg3 0 px, h64 = h66
   0 px at 32/64/128. Board evidence/item19_phone.png; ladder +1 row.
-- 00:44 MILESTONE: King's steel desaturated (a8). Measured at 96 px/m: King steel max-min 42 (a saturated mauve, L 153)
+- 00:42 MILESTONE: King's steel desaturated (a8). Measured at 96 px/m: King steel max-min 42 (a saturated mauve, L 153)
   vs Rivet's printed steel 9 (L 189). install_king_top.py DESAT 0.35 on everything not vermilion: King 15, L kept
   (the boss stays darker/heavier than Rivet), frame vermilion 3.40% -> 3.29% at 96 (cape and hem kept). By eye the
   crown ring loses its gold and keeps its outline. Consistent with the doctrine and the owner's steel A/B (item9).
   item18 board rebuilt from a8; ladder +1 row.
+- 00:46 MILESTONE: King casts a hatched shadow (a9): look_d5_shadow now multiplies its alpha by the texture alpha, so
+  a Sprite2D with it is a character-shaped shadow while Polygon2D quads sample white = unchanged (hero h67 vs h66:
+  0 px at 32/48/64/96/128). The King shadow (0.7 m down-right, world layer under the print, d5 tier) gives the boss
+  height like the roofs' cast shadows; d4 tier 0 px; d5 changed px 9129 at 64. Ladder +1 row (a8 | a9).

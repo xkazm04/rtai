@@ -14,6 +14,9 @@ const KING: String = "res://features/characters/art/d5/king/king_top.png"
 const KING_M: Vector2 = Vector2(-2.7, -2.5)
 ## arm-disc to arm-disc width (the turnaround: 1.6x Rivet's bulk; 2.8 m read smaller than Rivet, a4)
 const KING_W_M: float = 3.6
+const KING_SHADOW_M: float = 0.7
+
+var _shadow_node: Sprite2D = null
 
 
 func _init() -> void:
@@ -43,6 +46,27 @@ func _ground() -> void:
 	king.rotation = (Vector2(-0.4, 0.8) - KING_M).angle() + PI * 0.5
 	king.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_actors.add_child(king)
+	_king_shadow(king)
+
+
+## King is 2.6 m tall: a hatched cast shadow down-right (the roofs' light), on the world layer under
+## the print, so look_d4 inks it like the building shadows. "d5" tier only.
+func _king_shadow(king: Sprite2D) -> void:
+	var sh: Sprite2D = Sprite2D.new()
+	sh.texture = king.texture
+	sh.scale = king.scale
+	sh.rotation = king.rotation
+	sh.position = king.position + Vector2.ONE * KING_SHADOW_M * PX
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/look_d5_shadow.gdshader") as Shader
+	sh.material = mat
+	_world.add_child(sh)
+	_shadow_node = sh
+
+
+func _tier(tier: String) -> void:
+	if _shadow_node != null:
+		_shadow_node.visible = tier == "d5"
 
 
 ## Rivet on the turntable's hazard ring, the cops closing from the open floor.
