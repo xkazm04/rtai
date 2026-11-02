@@ -1,4 +1,5 @@
 # STANDARDS GDS-03/GDS-04, gdtoolkit 4.5.0 key names (gdlint --dump-default-config).
+# excluded_directories match bare directory NAMES (os.walk), never paths.
 # gdlint has no function-length rule: tools/style/check_gd.mjs enforces 40 lines per function.
 class-definitions-order:
 - tools
@@ -26,9 +27,8 @@ enum-element-name: '[A-Z][A-Z0-9]*(_[A-Z0-9]+)*'
 enum-name: ([A-Z][a-z0-9]*)+
 excluded_directories: !!set
   .git: null
-  project/addons: null
   .godot: null
-  project/.godot: null
+  addons: null
   build: null
 expression-not-assigned: null
 function-argument-name: _?[a-z][a-z0-9]*(_[a-z0-9]+)*
