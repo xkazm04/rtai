@@ -30,6 +30,8 @@ const PROP_SPOTS: Array[Array] = [
 const ROOF_M: float = 8.4
 const SHADOW_M: float = 1.1
 
+## optional: a folder of keyed street-life sprites (D5HeroExtras); "" = none
+var borrow_dir: String = ""
 var _roofs: Dictionary[String, Sprite2D] = {}
 var _shadows: Array[Polygon2D] = []
 
@@ -60,6 +62,8 @@ func _ground() -> void:
 		_roofs[roof] = s
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
+	if borrow_dir != "":
+		Log.info("dev", "d5_hero: %d borrowed sprites" % D5HeroExtras.place(_world, borrow_dir, PX))
 
 
 func _prop(spot: Array) -> void:
