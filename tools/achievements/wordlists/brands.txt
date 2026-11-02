@@ -1,0 +1,19 @@
+# All-ages / trade-dress lint (ACH-04, LEG-02): real brands, franchises and marks that must
+# never appear on a Steam-facing surface. One lowercase term per line; extend freely.
+gta
+grand theft auto
+rockstar
+take two
+liberty city
+vice city
+los santos
+san andreas
+coca cola
+pepsi
+tesla
+ford
+toyota
+mcdonalds
+pentagon force protection
+department of defense
+dod

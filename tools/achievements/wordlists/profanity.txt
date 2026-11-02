@@ -1,0 +1,18 @@
+# All-ages lint (ACH-04, LOC-07): profanity lives only in the game, never on Steam surfaces.
+# One lowercase term per line; whole-word match. Extend from a maintained list before release.
+fuck
+fucking
+shit
+bitch
+bastard
+asshole
+damn
+crap
+piss
+dick
+cock
+cunt
+slut
+whore
+gore
+blood

@@ -1,0 +1,93 @@
+{
+  "$id": "pof.godot-evidence/1",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "builtAt": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$",
+      "type": "string"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "counts": {
+      "additionalProperties": false,
+      "properties": {
+        "failed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "passed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "skipped": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "passed",
+        "failed",
+        "skipped"
+      ],
+      "type": "object"
+    },
+    "gameId": {
+      "const": "gtai"
+    },
+    "godotVersion": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "lint",
+        "unit-tests",
+        "scenario-tests",
+        "parity",
+        "selftest",
+        "bench",
+        "export-audit",
+        "achievements"
+      ]
+    },
+    "metrics": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "type": "object"
+    },
+    "schema": {
+      "const": "pof.godot-evidence/1"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "summary": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "gameId",
+    "commit",
+    "builtAt",
+    "godotVersion",
+    "status",
+    "summary"
+  ],
+  "type": "object"
+}
