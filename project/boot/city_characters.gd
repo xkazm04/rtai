@@ -13,6 +13,9 @@ const FEED_RADIUS_M: float = CharacterRigs.RADIUS_M + 4.0
 ## Rivet stands at the city's target (on foot); false while Rivet is in a car.
 var rivet_on_foot: bool = true
 var rigs: CharacterRigs = CharacterRigs.new()
+## Frames where no sim tick passed and the rig pass was skipped (bench evidence).
+var skipped_frames: int = 0
+var _primed: bool = false
 var _city: CitySystem
 var _view: CityView
 var _clock: SimClock
@@ -27,6 +30,7 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	_clock = ctx.clock
 	_last_tick = _clock.tick()
 	_rivet_prev = city.target
+	rigs.z_index = RenderLayers.z(&"actors")
 	view.actor_layer().add_child(rigs)
 	rigs.setup(ctx)
 	rigs.set_process(false)
@@ -45,11 +49,19 @@ func bake() -> void:
 	_city.sim.set_person_px(CrowdAtlas.cell_world_px())
 
 
+## The rigs only move on a sim tick: on a frame where no tick passed (a display faster than
+## 60 Hz, or a second frame inside one tick) the feed, the pose and the rig slots are all
+## unchanged, so the whole rig pass is skipped (lane A measured rig p99 0.57 ms against 0.3).
 func _before_render(focus: Vector2) -> void:
+	var steps: int = clampi(_clock.tick() - _last_tick, 0, CharacterRigs.MAX_STEPS)
+	if steps == 0 and _primed and is_equal_approx(rigs.zoom, _view.zoom):
+		rigs.last_us = 0
+		skipped_frames += 1
+		return
+	_primed = true
 	_fill_feed(focus)
 	rigs.focus = focus * SimConst.PX_PER_M
 	rigs.zoom = _view.zoom
-	var steps: int = clampi(_clock.tick() - _last_tick, 0, CharacterRigs.MAX_STEPS)
 	_last_tick = _clock.tick()
 	rigs.step_ticks(steps)
 	_slots.clear()
