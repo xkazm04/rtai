@@ -297,3 +297,13 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   FOUND: in the HERO pose Rivet's D5 dL at 64 is 0.151 vs D4 0.161 (-6%); the parity measured at 23:05 (0.1693 vs
   0.1695) is the showcase pose. At 96 the hero pose is above D4 (0.181 vs 0.178). Logged, not tuned (pose-dependent,
   within the form shade's lower-right band on the aiming arm).
+- 00:22 Codex: 1 cop expression sheet (2x2 layout + accepted cop portrait + concept, 93 s), 0 rejected; ledger 35.
+  MILESTONE (5a1c9aa): cop_{neutral,shouting,alarmed,suspicious}.png (512 px, 0.056 inset: no gutter). Visor hides
+  the face in all four; at 64 px shouting (hand) and suspicious (crossed arms) separate best. Store-safe (owner).
+  Board evidence/item5c_cop_expressions.png. Provenance dated 2026-11-03 (provenance.py DATE updated).
+- 00:24 MILESTONE gap 8 (78956ae): D5DialogueRun, the dialogue close-up venue IN-ENGINE (hero junction at
+  32/48 px/m + a cream ink-bordered panel, rivet_angry + cop_shouting at 200 px, placeholder ink bars, no strings).
+  FOUND + fixed: the D5 portraits imported WITHOUT mipmaps -> aliasing at 512 -> 200 px (dotted hatch, stepped
+  collar). Mipmaps on (16 .import): mean abs error vs a Lanczos 200 px reference 6.8 -> 4.6 (rivet), 7.2 -> 5.1
+  (cop). By eye the no-mip frame is punchier but breaks up; the mipped one is softer. Next (HUD lane): ship a
+  pre-scaled 256 px portrait set for crispness. Board evidence/item17_dialogue.png; ladder +1 row.
