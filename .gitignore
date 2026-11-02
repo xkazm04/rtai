@@ -1,0 +1,19 @@
+# STANDARDS GIT-04 + section 22 step 3.
+.godot/
+*.translation
+export_credentials.cfg
+# Anchored: steam/build/ holds tracked SteamPipe scripts (REL M19).
+/build/
+*.pck
+project/native/bin/
+native/**/bin/
+*.obj
+.sconsign.dblite
+*.pdb
+steam_appid.txt
+*.tmp
+# Local tool output and scratch
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db

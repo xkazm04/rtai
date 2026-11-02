@@ -1,0 +1,50 @@
+# STANDARDS GIT-02/GIT-03. Committed before any content or asset.
+# One pattern per line: git ignores extra patterns on a line (the compact form in STANDARDS s22 does not work as written).
+* text=auto eol=lf
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.import text eol=lf
+*.uid text eol=lf
+*.gdshader text eol=lf
+*.cfg text eol=lf
+*.godot text eol=lf
+*.gdextension text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.po text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.mjs text eol=lf
+*.txt text eol=lf
+justfile text eol=lf
+gdlintrc text eol=lf
+gdformatrc text eol=lf
+.editorconfig text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gdignore text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.glb filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.ttf filter=lfs diff=lfs merge=lfs -text
+*.otf filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.res binary
+*.scn binary
+*.pck binary
+*.dll binary
+*.so binary
+*.pdb binary
