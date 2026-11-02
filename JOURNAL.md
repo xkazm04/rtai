@@ -277,3 +277,16 @@ NEXT (addendum): 7. Combat lane: flash `features/combat/art/d5/finisher_drone.pn
 - 00:10 Codex: 3rd finisher (torch cuts a police robot K9), 0 rejected; ledger 34. Installed finisher_k9.png, IN-GAME ONLY (not store-safe: robot dog may read as animal harm; owner). FRICTION: gen.sh's limit grep matched '429' inside a token count (104292): false positive, checked the log.
 NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
 - 00:11 FINAL (iteration 3 end): evidence tool ALL PASS at cd7a854 = HEAD before this line (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 36 evidence PNGs in place; tree clean. NEXT 1-8 above.
+
+## Iteration 4 (2026-11-03, BUILD, 00:11 -> )
+- 00:12 read journal/log/README gap list; 34 Codex images used (~16 left). All 5 items evidenced; weakest visible
+  gap in my scope: gap 5 (roofs read flat vs the mock's raised slabs).
+- 00:14 mock LOCAL 9 south edge profile (column median L): cream lip 0.85 -> solid ink foot 0.13-0.21 (~1.6x the
+  lip width) -> hatch 0.46-0.58 -> pavement 0.75. Ours h60: lip 0.85 -> a 6 px roof outline 0.08-0.15 -> hatch.
+- 00:25 MILESTONE gap 5: D5HeroParapets (67c4b77), a 0.22 m ink core outside the roofs' street-facing south/east
+  edges (d5 tier). h61 (core on every edge, + an inner hatched parapet shadow on the roof): ink at 32 px/m
+  23.5% -> 25.1% (mock 13.9%), the alleys printed as a black grid -> h62 street-facing edges only (24.6%) -> h63/h64
+  inner shadow dropped (invisible over the roof art's own border hatch; 1.7% px / +0.5 pp ink at 32): 24.1%.
+  Edge profile at 48 now lip 0.85 (9 px) -> ink 0.08 (15 px) -> hatch: the mock's ratio (1.7 vs 1.6).
+  d4 tier 0 px; h64 = h63 0 px at every zoom (deterministic). Cost: +0.6 pp ink at 32 (our ink excess is the roofs,
+  gap 2). Board evidence/item16_parapets.png; hero frames = h64; ladder +1 row.
