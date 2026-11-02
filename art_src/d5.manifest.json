@@ -60,6 +60,66 @@
    "seed": null,
    "sha256": "a74ab704414ec861c737ffd9b5bc2f209b6aac2764a8fedc606e858a73867098",
    "tool": "codex-image"
+  },
+  "d5_roof_bar": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_roof_bar.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_bar.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_bar.txt",
+   "prompt_sha256": "ad0eaffaa912d2fe7c8e5b51e23569faa80fd8b84c40c7a4dda21ede7cc68bf9",
+   "references": [
+    "own: project/features/city/art/roofs/building_bar.png (D4 roof, edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "1df1e4f8c70c7c1870533b3537fb9497e0af08b66c7611f4041a046283204cc4",
+   "tool": "codex-image"
+  },
+  "d5_roof_hq": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_roof_hq.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_hq.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_hq.txt",
+   "prompt_sha256": "ad0eaffaa912d2fe7c8e5b51e23569faa80fd8b84c40c7a4dda21ede7cc68bf9",
+   "references": [
+    "own: project/features/city/art/roofs/building_hq.png (D4 roof, edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "35457af5bb02084efdec94ea7f17c437682db7d7a9ad6419309f75252bedfe84",
+   "tool": "codex-image"
+  },
+  "d5_roof_mural": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_roof_mural.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_mural.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_mural.txt",
+   "prompt_sha256": "dda2bd61244c5fea66e86848eaa72eb65e6a6024974defd5f66d740a7ebd3ad1",
+   "references": [
+    "own: project/features/city/art/roofs/building_mural.png (D4 roof, edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "9de0d3842623002ed050eb36fc8452094a6502b26d0e67d99cb6797018ef0715",
+   "tool": "codex-image"
+  },
+  "d5_roof_pension_bank": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_roof_pension_bank.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_pension_bank.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_pension_bank.txt",
+   "prompt_sha256": "ad0eaffaa912d2fe7c8e5b51e23569faa80fd8b84c40c7a4dda21ede7cc68bf9",
+   "references": [
+    "own: project/features/city/art/roofs/building_pension_bank.png (D4 roof, edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "1e66d88b721870487fc2f95867e6a6cd244f34ff4f95e8b52e5f75e6c54787ec",
+   "tool": "codex-image"
   }
  }
 }
