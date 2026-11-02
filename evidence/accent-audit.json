@@ -1,4 +1,102 @@
 {
+  "crowd_atlas_by_look": [
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 820
+      },
+      "kind": "ped",
+      "look": 0,
+      "off_doctrine": false,
+      "tag": "coat-hat",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 684
+      },
+      "kind": "ped",
+      "look": 1,
+      "off_doctrine": false,
+      "tag": "jacket-hair",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 808
+      },
+      "kind": "ped",
+      "look": 2,
+      "off_doctrine": false,
+      "tag": "coat-hood",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 820
+      },
+      "kind": "ped",
+      "look": 3,
+      "off_doctrine": false,
+      "tag": "jacket-hat",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 680
+      },
+      "kind": "ped",
+      "look": 4,
+      "off_doctrine": false,
+      "tag": "vest-hair",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 3052
+      },
+      "kind": "cop",
+      "look": 5,
+      "off_doctrine": false,
+      "tag": "patrol",
+      "teal": 0,
+      "vermilion": 29276
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 2676
+      },
+      "kind": "cop",
+      "look": 6,
+      "off_doctrine": false,
+      "tag": "riot",
+      "teal": 0,
+      "vermilion": 24744
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 676
+      },
+      "kind": "ped",
+      "look": 7,
+      "off_doctrine": false,
+      "tag": "coat-hair",
+      "teal": 0,
+      "vermilion": 0
+    }
+  ],
   "frames": [
     {
       "frame": {
@@ -87,17 +185,17 @@
     {
       "frame": {
         "teal": 0,
-        "vermilion": 2672
+        "vermilion": 2544
       },
-      "frame_share": 0.002609375,
+      "frame_share": 0.002484375,
       "full_rigs_by_kind": {
         "cop": {
           "teal": 0,
-          "vermilion": 2028
+          "vermilion": 1896
         },
         "ped": {
           "teal": 0,
-          "vermilion": 0
+          "vermilion": 4
         },
         "rivet": {
           "teal": 0,
@@ -107,7 +205,7 @@
       "layers": {
         "actors": {
           "teal": 0,
-          "vermilion": 2672
+          "vermilion": 2544
         },
         "fx": {
           "teal": 0,
