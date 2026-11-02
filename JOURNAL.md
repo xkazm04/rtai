@@ -246,3 +246,12 @@ NEXT (iteration 4 close, in order):
 5. Wall splats (needs wall/prop edges in the view); the blood pool as an SDF ring, not discs.
 6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
 7. A low-end GPU number for the pass (noir_cost.tscn on an iGPU) - only a 4090 is measured.
+- (00:44) rain streak LOD: `rain_far` 0.5 keeps half the streak columns at 32 px/m (same zoom ramp as the
+  splashes), full from 48 px/m. 48 is identical. `rainlod-compare.png`.
+- REVERTED (00:47) the noir riot helmet: noir_helmet_1 (45 s; the D4 helmet beside the finished noir cap
+  as a style reference) gave an ink shell with a white visor crescent + ridge line, top-down, so it was
+  usable as an image. But in-engine at 64 px/m it read WORSE: the D4 helmet's bold white visor bar became a
+  thin line and the crescent was lost under the rim (`evidence/helmet-rejected-zoom.png`, left = kept D4
+  print). Removed, never committed. Images this session: 4 generated, 0 rejected as images, 1 reverted in-engine.
+  Lesson for the next parts round: at 32-64 px/m only bold, wide white shapes survive the part print and
+  the noir threshold; thin lines (ridges, torso highlights) vanish.
