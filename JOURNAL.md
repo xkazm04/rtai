@@ -359,3 +359,8 @@ target below). Ladder rows appended for every item.
     lilac-grey (shader tint, not the texture: the tile is 88,82,82).
 13. F-08 / ground owner: a re-run of build_ground.py would undo iteration 3 (markings, kerb, slabs, wear) - the
     masters tools above are the recipe; better to fold them into build_ground.py.
+- 23:55 REVERTED probe: the flat-roof ground tiles (roof_tone, roof_edge_tone) lifted toward the roof paper
+  (`tools/roof_lift.py` gained a paper arg). The print pass's tone steps leave no middle: s 0.3 prints the same grey
+  (in-engine 179.6 vs 176.6), s 0.6 jumps to pavement paper (214.8 vs pavement 218.2) and the flat roofs read as
+  plazas next to the street (`work/rt3_ab.png`: original | 0.3 | 0.6). The grey flat roof stays: it separates
+  building from pavement. A middle value needs a shader step (visual-engine) or a hatch-based roof redraw.
