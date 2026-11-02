@@ -118,6 +118,16 @@ func step(tick: int) -> void:
 	last_us = Time.get_ticks_usec() - t0
 
 
+## Drops every particle here and in the twins (the loading-screen prewarm sample, a scene cut).
+func clear() -> void:
+	_pool.alive = 0
+	_mm.visible_instance_count = 0
+	_dirty = true
+	for twin: FxSystem in [glow, ground]:
+		if twin != null:
+			twin.clear()
+
+
 static func _hash01(n: int) -> float:
 	var x: int = (n * 0x45D9F3B) & 0x7FFFFFFF
 	x = ((x ^ (x >> 16)) * 0x45D9F3B) & 0x7FFFFFFF

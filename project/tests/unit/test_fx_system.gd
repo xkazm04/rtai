@@ -184,3 +184,15 @@ func test_a_frame_without_a_tick_or_spawn_skips_and_a_spawn_still_draws() -> voi
 	assert_true(fx.spawn(&"impact", Vector2.ONE, 0.0, 5))
 	fx.step(5)
 	assert_eq(fx.alive(), count * 2, "a spawn inside the same tick still draws")
+
+
+func test_clear_drops_every_particle_in_the_twins_too() -> void:
+	var fx: FxSystem = autofree(FxSystem.new())
+	fx.ground = autofree(FxSystem.new())
+	fx.glow = autofree(FxSystem.new())
+	for kind: StringName in fx.kinds:
+		@warning_ignore("return_value_discarded")
+		fx.spawn(kind, Vector2.ZERO, 0.0, 0)
+	assert_gt(fx.alive() + fx.ground.alive() + fx.glow.alive(), 0)
+	fx.clear()
+	assert_eq(fx.alive() + fx.ground.alive() + fx.glow.alive(), 0)
