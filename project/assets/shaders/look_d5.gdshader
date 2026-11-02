@@ -3,7 +3,7 @@ shader_type canvas_item;
 // already-printed D4 frame and adds what the Rivet concept has and D4 does not:
 //  - ink pressure: the wash steps get a second, world-locked pen hatch whose stroke weight wanders (heavier
 //    in the darks), so flat washes read as drawn, not filled
-//  - paper grain: a fibrous, world-locked tooth that lifts ink a little and darkens paper a little
+//  - paper grain: a mottled, world-locked tooth that lifts ink a little and darkens paper a little
 //  - misregistration: the ink plate prints a faint ghost shifted by ink_mis px, and the vermilion plate a second
 //    pass shifted by verm_mis px (the concept's off-register red edges)
 // Everything is scaled by `amount` = the zoom blend (look_d5.params.json "zoom_amount": none at 32 px/m, so the
@@ -72,8 +72,8 @@ void fragment() {
 		// off-register vermilion pass
 		float vg = vden(texture(screen_tex, uv - verm_mis * tx).rgb);
 		o = mix(o, VERM, vg * (is_verm ? 0.0 : 1.0) * verm_ghost * amount * (1.0 - smoothstep(0.85, 0.95, d)));
-		// paper tooth: fibres along one axis + a fine stipple
-		float fib = vnoise(vec2(w.x * 0.9, w.y * 0.12)) * vnoise(w * 0.33);
+		// paper tooth: an isotropic dry-brush mottle
+		float fib = vnoise(w * 0.07) * vnoise(w * 0.45 + 3.1);   // isotropic mottle (anisotropic fibres read as rain)
 		float tooth = (fib - 0.25) * grain * amount;
 		o = mix(o, CREAM, clamp(tooth * d * 0.35, 0.0, 1.0));
 		o = mix(o, INK, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
