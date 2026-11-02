@@ -385,3 +385,10 @@ NEXT (iteration 7 / morning, in order):
   (paused, so they hold still): before 0.20 / 0.41 / 0.57 % (32 / 48 / 64), item only 0.16 / 0.35 / 0.59,
   item + part 0.00 / 0.00 / 0.04 %. The check now judges the whole frame by default (`--world-only`
   keeps the world-pass view); planted 43 / 37 / 45 %. city_view.gd is 202 lines (soft 200).
+- Evidence at aa4fa2a: lint 13/13, unit 200, scenarios 8, parity PASS, selftest PASS incl. the new gates
+  (accent: no new offenders, known debt 216 px; world lock 0.00 / 0.00 / 0.03 %); goldens 10/10 but worst
+  1.88 of 4 (drift: the tooth moved, the rig LOD, the FX feed's muzzle lights since 58e6416).
+- RE-BLESSED the 10 non-overlay look goldens (the 5 `-ov` ones untouched: they need n-d5's look_d5).
+  Old -> new mean diffs 0.86 .. 1.88. Looked at them (20-golden-rebless/d4-old-left-new-right.png,
+  crop-64-light.png): same junction, rig poses differ, and the one new shape at 64 px/m is a muzzle
+  light cone (hatched paper) + muzzle star from the FX feed - expected. 0 rejected.
