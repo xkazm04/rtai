@@ -9,6 +9,9 @@ const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
 const LOD_BELOW: float = 0.13
 const LIMB_FILL: float = 0.40
+## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
+const NOIR_KEEP: float = 0.97
+const NOIR_KEEP_CORE: float = 0.80
 
 static var view_px: float = 0.1
 ## D-Noir (lane noir): 1 prints every body part as an ink mass inside the cream halo rim.
@@ -31,6 +34,8 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 		m.set_shader_parameter("tint", 1.0 if tint else 0.0)
 		m.set_shader_parameter("swap", swap)
 		m.set_shader_parameter("noir", noir)
+		# D-Noir: Rivet's core (visor and chest plate) keeps its light art as paper: his hero read.
+		m.set_shader_parameter("noir_keep", NOIR_KEEP_CORE if kind == PartKind.CORE else NOIR_KEEP)
 		_apply_view(m, kind)
 		_mats[key] = m
 	return _mats[key]
