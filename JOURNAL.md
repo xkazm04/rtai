@@ -214,3 +214,13 @@ NEXT:
   h55 vs h53: dark px in the 64 px/m pavement strip 25.3% -> 23.9% only; the look_d4 print re-inks the joints. No
   visible gain; tile restored byte-identical (git clean). The joint weight has to be fixed in look_d4's print
   thresholds or in a thinner-jointed tile (city lane).
+- 23:42 MILESTONE car-camera pan shimmer MEASURED (ecf5621, d5_pan.gd: hero junction at 48 px/m, camera panning 7.3 m/s
+  = 5.84 px/tick, world-locked 480x320 crop, 40 ticks, with / without look_d5): frame change 0.00709 (D4) vs
+  0.00696 (D5): the D5 world layer adds no swim (closes gap 3's "unmeasured in motion at 48").
+  FOUND (visual-engine / d4 lane, NOT changed by me): look_d4.gdshader:96 multiplies the print by a 5% grain hashed
+  on SCREEN pixels (hash(floor(FRAGCOORD.xy))), so on every camera move the static world re-rolls its grain: TV-static
+  swim. Temporary edit to hash(floor(w)) (world-locked; reverted, git clean): pan frame change 0.00709 -> 0.00049
+  (-93%), changed px/frame 10140 -> 991. One-token fix for that lane.
+- 23:42 same pattern in my look_d5_part (6% screen grain on parts) -> locked to part space (5522ce5). Walk shimmer same
+  session: D5/D4 total 1.084 -> 1.077, HF 1.029 -> 1.026. Hero h56: 0 px at 32/48 and in the d4 tier; grain pattern
+  only at 64+ (mean L equal to 4 decimals). Hero frames = h56.

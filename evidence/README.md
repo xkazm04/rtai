@@ -83,7 +83,12 @@ tick count, no RNG.
    proper hatched shadow, h42). Next: a parapet wall face on the south/east roof edges (roof art or a quad).
 6. **Rivet's steel** is light lavender (D4 contrast parity) vs the concept's dark mauve: owner choice
    (`item9_steel_owner_ab.png`: mauve costs 61% body contrast; the cream rim still carries the silhouette).
-7. **Up close D5 works**: at 96-128 px/m (kill-cam, `item13_killcam128.png`) the part rust, hatch, form shade and the
+7. **Screen-locked grain in look_d4 (found iteration 3, not mine to change).** `look_d4.gdshader:96` hashes its 5%
+   print grain on screen pixels, so every camera move re-rolls the grain over the static world (TV-static swim).
+   Car-camera pan test (`dev/showcase/d5_pan.gd`, 48 px/m, world-locked crop): frame change 0.00709 per tick; with
+   the grain hashed on the world coordinate `w` (temporary edit, reverted) 0.00049 (-93%). The look_d5 layer adds 0
+   (0.00696 vs 0.00709). Next (visual-engine lane): `hash(floor(FRAGCOORD.xy))` -> `hash(floor(w))`.
+8. **Up close D5 works**: at 96-128 px/m (kill-cam, `item13_killcam128.png`) the part rust, hatch, form shade and the
    two-ink souls read like the concept. Not yet in-engine: King/boss rigs (no parts), the dialogue/phone UI for the
    D5 portraits (HUD lane).
 
