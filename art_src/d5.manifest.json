@@ -61,6 +61,21 @@
    "sha256": "d15557feab15446579bc1fd3ddc602a24dcddca95c8d5da9eefb10dcc1e5b094",
    "tool": "codex-image"
   },
+  "d5_king_expressions": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_king_expressions.png",
+   "layout_template": "masters:night/d5-close/gen/refs/expr_layout.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/king_expressions.txt",
+   "prompt_sha256": "24810b061ee041cf07ace3f0f234631aa6d8bb5dc0ae2af73b41d4f47cacad45",
+   "references": [
+    "own: project/features/characters/art/d5/portraits/king.png (accepted D5 portrait, identity reference)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "c999122a5bde1c83a6f59594b4085e3fab8e5b8033d28b3a8158b47bfcea4f57",
+   "tool": "codex-image"
+  },
   "d5_loading_rivet": {
    "date": "2026-11-02",
    "file": "masters:night/d5-close/gen/out/d5_loading_rivet.png",
