@@ -33,7 +33,8 @@ uniform float splash = 0.0;        // share of splash cells with a drop landing 
 uniform float splash_cell = 28.0;  // splash cell size in screen px (one landing spot per cell per cycle)
 uniform float splash_period = 36.0; // rain_phase ticks per cycle; a splash ring lives 7 of them
 uniform float zoom = 1.5;          // the camera zoom (1 = 32 px/m), set by NoirLook.update
-uniform vec2 splash_zoom = vec2(1.0, 1.5); // splash LOD: none at or below x, full from y (small figures at 32 px/m)
+uniform vec2 splash_zoom = vec2(1.0, 1.5);
+uniform float rain_far = 1.0;      // the rain density kept at 32 px/m (zoom 1), full from 48 px/m // splash LOD: none at or below x, full from y (small figures at 32 px/m)
 uniform float grain = 0.06;        // paper fibre on the whites
 uniform float vignette = 0.35;     // ink pulled in from the frame edges (a panel border feeling)
 uniform float verm_value = 0.0;    // the value the vermilion plate prints at: 0 = a solid ink mass, 1 = paper
@@ -127,7 +128,8 @@ void fragment() {
 	float dark = 1.0 - smoothstep(thresh - 0.02, thresh + 0.06, v);
 	paper *= 1.0 - smoothstep(0.18, 0.40, e) * (1.0 - dark) * edge_ink;
 	// rain: white over ink, ink over paper
-	float rm = rain_mask(w);
+	float rain_lod = mix(rain_far, 1.0, smoothstep(splash_zoom.x, splash_zoom.y, zoom));
+	float rm = rain_mask(w) * step(hash(vec2(floor((w.x - w.y * rain_slant) / 3.0), 11.0)), rain_lod);
 	paper = mix(paper, 1.0 - paper, rm * 0.85);
 	float splash_lod = smoothstep(splash_zoom.x, splash_zoom.y, zoom);
 	paper = mix(paper, 1.0 - paper, splash_mask(w) * step(0.001, splash) * splash_lod);
