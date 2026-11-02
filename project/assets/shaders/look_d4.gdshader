@@ -8,20 +8,20 @@ shader_type canvas_item;
 //  - vermilion and teal are flat plates, slightly off-register (the colour doctrine lives in the assets)
 // world_px: the camera's world offset in screen px (set every frame), so grime and hatch are locked to the world.
 // Use: a full-rect ColorRect on a CanvasLayer between the world and the actors; the actor / fx / HUD layers above it
-// use look_d4_item.gdshader. Defaults are the F-08 tuning (crop gates at 32 and 48 px/m, 2026-11-02).
+// use look_d4_item.gdshader. Defaults are the F-08 tuning + the f08b charcoal-street retune (crop gates at 32 and 48 px/m, 2026-11-02).
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
 uniform vec2 world_px = vec2(0.0);
 uniform vec2 verm_shift = vec2(2.0, -1.0);
 uniform vec2 teal_shift = vec2(-1.0, 2.0);
-uniform float grime = 0.30;        // 0..1: low-frequency wash blotches (1 = the study's full grime)
+uniform float grime = 0.15;        // 0..1: low-frequency wash blotches (1 = the study's full grime)
 uniform float step_lo = 0.19;      // ink density where the light wash starts
 uniform float step_mid = 0.45;     // ... the mid wash
-uniform float step_hi = 0.84;      // ... the dark wash
+uniform float step_hi = 0.68;      // ... the dark wash
 uniform float wash_lo = 0.30;      // wash strengths (0 = paper, 1 = the wash ink)
 uniform float wash_mid = 0.90;
 uniform float wash_hi = 0.30;      // the dark step mixes the wash ink toward INK by this
-uniform float line_ink = 0.86;     // density above which the art's own lines print as solid ink
+uniform float line_ink = 0.90;     // density above which the art's own lines print as solid ink
 uniform float edge_lo = 0.13;      // Sobel ink-outline thresholds (luminance gradient)
 uniform float edge_hi = 0.32;
 uniform float hatch_on = 0.86;     // deep-shadow hatching starts at this density

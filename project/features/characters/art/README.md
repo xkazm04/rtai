@@ -19,3 +19,6 @@ prompts are masters (`art_src/d4.manifest.json`).
   vermilion armour plate and shoulder pads. Civilians carry no colour.
 - **Gameplay scale:** at 32 px/m the rig's sticker LOD prints each part as one flat value with an ink outline
   (the D1 `print_part` rule, ported with the rig); the D4 art shows from about 48 px/m up.
+- **Part print:** `features/characters/print_part.gdshader` (ported ahead of the rig, f08b) prints the parts; its D4
+  flat-tint mode (default on) turns mid tones into a flat wash and limb cream into a light wash, so the limbs separate
+  from paper pavement at 48 px/m. Evidence: `gtai-masters/d4/evidence/f08b/rivet-2x-48ppm.png`.
