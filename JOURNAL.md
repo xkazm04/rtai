@@ -247,3 +247,26 @@ NEXT:
 - Session end for iteration 2. Branch n-d4, HEAD after this entry; tree clean; masters + tools in
   `gtai-masters/night/d4-production/` (tools added tonight: hud_plate, props_stroke, prov_rev, damage_soot (rejected),
   damage_marks, paving_joints, paving_slabs (rejected), track_imprint, cop_accent (probe)).
+
+## 2026-11-02 23:11 iteration 3, BUILD (raise the weakest item)
+- Re-read the journal, git log; put the latest city frame (`after_sw2/city-0-32ppm`) beside d4h2_mock again.
+- 23:15 MILESTONE bold road markings (the biggest gap left vs the target). The tiles paint the lane dashes and edge
+  lines cream, but only 8 px / 6 px wide (8 / 6 cm at 96 px/m): at 32 px/m the print pass inks both edges of a
+  2-3 px band, so the markings printed as DARK lines (`before_ln/city-0-32ppm.png`). The target's dashes are bold
+  cream. `tools/lane_bold.py`: every thin cream component (thickness <= 10 px, area >= 200; pavement, kerb top strip
+  within 30 px of the pavement and the crosswalk bars excluded) grown by a 6 px disk inside the asphalt wash only
+  (crack ink, lum < 65, runs through the paint), a +-1 px wobbly edge, re-worn with asphalt specks (seeded per
+  file, tool-side). Dashes 8 -> 20 px, edge lines 6 -> 18 px. 10 tiles: road_straight{,_b,_c}, road_straight_v{..},
+  curb_straight{..}, curb_corner. Intersection untouched (its crosswalk bars are already bold).
+  First pass also widened the kerb's thin cream top strip (looked messy, caught in `work/lanes_peek.png`, fixed).
+  Before/after `before_ln|after_ln/city-*-{32,48}ppm.png`: markings now read cream at 32 and 48 px/m, as the target.
+  Kept. Commit 571460b. Gates at 571460b: `run.mjs --no-bench` rc 0 (lint 13/13, unit 142/142, scenarios 8/8,
+  parity bit-exact, selftest 0 placeholders).
+- 23:18 MILESTONE calm paving. Correction of an iteration-2 note: the "+" ink dots at the grey-slab corners are NOT
+  the print pass, they are drawn in the texture (4 px dark joint crosses the joint script did not reach). And the 8 m
+  tile repeat printed its crack squiggles as a regular grid of identical cracks along every street.
+  `tools/paving_calm.py`: removed 13 of 19 cracks (slab content copied from a clean slab of the same tile) and
+  redrew the 5 crosses as the thin 140-grey joint. sidewalk_tone (8 -> 3 cracks), curb_straight (5 -> 1),
+  _b (4 -> 1), _c (2 -> 1). Hatch stains and grey slabs kept (they carry the hatch character).
+  Before/after `before_cm|after_cm/city-*`: calmer pavement, the dots are gone, people and props read better. Kept.
+  Commit 724e5d9.
