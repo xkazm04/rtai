@@ -1,11 +1,12 @@
 class_name D5ArenaRun
 extends D5ShowcaseRun
 ## d5-close evidence (the D5 "boss arena" venue, 64 px/m): Rivet versus two cops on King's
-## chop-shop arena floor (features/city/art/d5/arena/king_arena.png, 12 m at 104 px/m), ringed by
-## D4 asphalt, at 32, 48, 64 and 96 px/m in the usual tiers ("d4" = the same floor without the
-## look_d5 print or the D5 character tier). No King rig exists yet: King is a STATIC plan-view
-## sprite proposal (characters/art/d5/king/king_top.png, drawn as is on the actor layer, every
-## tier) facing Rivet across the turntable. Deterministic: fixed cast, clip ticks, no RNG.
+## chop-shop arena floor (features/city/art/d5/arena/king_arena.png, 12 m at 104 px/m), in
+## plain asphalt, at 32, 48, 64, 96 and 128 px/m (the boss kill-cam) in the usual tiers ("d4" =
+## the same floor without the look_d5 print or the D5 character tier). No King rig exists yet:
+## King is a STATIC plan-view sprite proposal (characters/art/d5/king/king_top.png, drawn as is
+## on the actor layer, every tier) facing Rivet across the turntable. Deterministic: fixed
+## cast, fixed clip ticks, no RNG.
 
 const ARENA: String = "res://features/city/art/d5/arena/king_arena.png"
 const ARENA_M: float = 12.0
@@ -20,8 +21,14 @@ var _shadow_node: Sprite2D = null
 
 
 func _init() -> void:
-	zooms = [1.0, 1.5, 2.0, 3.0]
+	zooms = [1.0, 1.5, 2.0, 3.0, 4.0]
 	cam = CAM_M * PX
+
+
+## 128 px/m = the boss kill-cam, framed between King and Rivet; the other zooms frame the arena
+func _frame_at(z: float) -> void:
+	cam = (KING_M.lerp(Vector2(-0.4, 0.8), 0.5) if z >= 4.0 else CAM_M) * PX
+	super._frame_at(z)
 
 
 ## the arena sits in plain asphalt (lane-marked road tiles read as a grid around it, round a2)

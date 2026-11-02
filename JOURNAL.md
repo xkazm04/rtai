@@ -353,3 +353,8 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   0 px at 32/48/54/56 (r40 vs r42). Walk shimmer D5/D4 total 1.084 -> 1.076, HF 1.029 -> 1.024. By eye the joint
   form shade still reads; the cop's vermilion shade hatch at 96 is a little lighter, still visible. Board
   evidence/item1c_shade_k.png; hero evidence frames = h69 (h66 + this); ladder +1 row.
+- 00:50 MILESTONE: the arena's 128 px/m BOSS KILL-CAM (a10), framed between King and Rivet: the closest frame of the
+  night to the concept (King's riveted steel, crown ring, inked cape folds, Rivet's rust and hatch, the worn crown
+  stencil). Honest note: at 128 the shadow hatch (period 0.16 m in world space) is coarse and stripy, the same as the
+  building shadows at that zoom; next: scale look_d5_shadow's period with zoom above 96 px/m. Frames
+  evidence/arena-d4d5-{64,128}ppm.png; ladder +1 row.
