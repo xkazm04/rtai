@@ -50,11 +50,15 @@ jobs:
   native:
     # Stub until the native port lands native/SConstruct (NAT-05: MSVC debug/release +
     # Linux ASan/UBSan parity). DEVIATION TST-04 in docs/decisions.md.
-    if: hashFiles('native/SConstruct') != ''
+    # hashFiles() is not allowed in a job-level `if`, so the stub decides inside a step.
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo "native matrix not implemented" && exit 1
+      - name: native matrix (stub until native/SConstruct exists)
+        shell: bash
+        run: |
+          if [ -f native/SConstruct ]; then echo "native matrix not implemented" && exit 1; fi
+          echo "::warning::no native/SConstruct yet; the native matrix is skipped (DEVIATION TST-04)"
 
   export:
     # Stub until the first export ticket lands tools/pck_audit (EXP-04/05).
