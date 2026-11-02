@@ -85,6 +85,12 @@ and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero
 so this branch renders exactly as before. The gameplay-zoom amount is one number: the brief says
 pure D4 at 48 px/m (0, shipped); d5-close proposes 0.35 there (an owner call).
 
+Cost (`dev/selftest/overlay_cost.gd`, 16 interleaved blocks of 30 frames, `d4` vs `auto` at 64 px/m, n-d5
+157dec8's look_d5 copied in): **+0.90, +1.15, +1.51 ms GPU** (1280x800, RTX 4090, shared GPU), CPU flat.
+Paid only at arena zoom (hidden at 32 and 48 px/m). It is a full-viewport BackBufferCopy plus a
+noise-heavy fragment pass; before it ships on the Deck it needs a cheaper shader (fewer vnoise taps) or
+a half-resolution pass - a note for the d5-close lane.
+
 Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov.png`), so the
 overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
 (the `-ov` files are new; the d1/d4 goldens must still pass untouched).
@@ -193,6 +199,7 @@ Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 
 | Pass | Cost | How measured |
 |---|---|---|
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
+| D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |
 | Lights `step()` | 30-168 us CPU for 32-64 lights; GPU +0.29 .. +1.35 ms for 32 fires (interleaved, 3 runs, shared GPU) | `light_showcase.gd` |
 | FX `step()` | 48 us CPU for 43 live particles | `fx_showcase.gd` |
 | Chunk bands | 20 canvas items per chunk (was 8): see DEVIATION §20-draw | exported bench after item 1: p99 2.61 ms |
