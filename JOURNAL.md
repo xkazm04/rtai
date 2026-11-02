@@ -154,9 +154,9 @@ NEXT:
 - 23:08 iteration 2 end: tree clean (21 untracked evidence PNGs by design), last gate run ALL PASS at e8e128c (later commits are docs only). NEXT above stands.
 
 ## Iteration 3 (2026-11-02, BUILD, 23:09 -> )
-- 23:12 read journal/log/evidence. Weakest visible gap vs d4h2_mock now: colour temperature. Mock medians street
+- 23:09 read journal/log/evidence. Weakest visible gap vs d4h2_mock now: colour temperature. Mock medians street
   78,67,68 / paper 246,223,195; ours 76,70,78 / 231,222,204 (cool violet-grey vs warm sepia).
-- 23:20 MILESTONE: look_d5 `age` (aged paper, f871411): low-chroma print warms by an L-interpolated gain, x amount.
+- 23:12 MILESTONE: look_d5 `age` (aged paper, f871411): low-chroma print warms by an L-interpolated gain, x amount.
   h40 at 64: street 79,68,70 / paper 245,221,193 (= mock). 0 px vs h38 at 32 (d4 and d5 tiers), deterministic
   (d4 frames 0 px vs h38). Doctrine dE (tools/doctrine_de.py): verm-street 78.0 -> 74.6, teal-street 56.5 -> 57.5,
   paper-street dL 58.2 -> 59.4 at 64. Board evidence/item7_paper_age.png; hero frames now h40; ladder +1 row.
