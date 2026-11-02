@@ -21,7 +21,25 @@ tick count, no RNG.
 | `item4c_souls_print.png` | the D5 souls at 64 px/m: ghost print (rejected) / as drawn / look_d5_soul hard snap / look_d5_soul soft + tier fade (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
+| `item7_paper_age.png` | iteration 3: look_d5 aged paper, h38 vs h40 at 32/48/64 + mock + concept |
+| `item8_shadow_hatch.png` | iteration 3: building cast-shadow hatch h40 (stripes) / h41 (flat, rejected) / h42 (kept), 64 and 32 |
+| `item9_steel_owner_ab.png` | iteration 3, OWNER CHOICE: Rivet steel lavender (kept) / halfway / concept mauve at 64 and 96 + concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
+
+## Iteration 3 (23:09 -> ) in one screen
+- **Aged paper** (`item7_paper_age.png`, f871411): the mock is a warm sepia print, ours was a cool violet-grey. look_d5
+  `age` warms only the low-chroma print, scaled by the D5 world amount. Medians at 64 px/m: street 76,70,78 ->
+  **79,68,70** (mock 78,67,68), paper 231,222,204 -> **245,221,193** (mock 246,223,195). 0 px change at 32 px/m.
+  Doctrine CIELAB dE (`tools/doctrine_de.py`): vermilion vs street 78.0 -> 74.6, teal vs street 56.5 -> 57.5. Rivet
+  vs street dL (full stack) 0.166 -> 0.170 at 64 (the warm street is a hair darker).
+- **Cast-shadow hatch** (`item8_shadow_hatch.png`, 5645ece): the 0.19 m bold strokes read as a hazard stripe at 64;
+  period 5 / tint 0.36 / cov 0.42 reads as a hatched shadow (band L 0.441 -> 0.381, stripe energy -4% at 64, -9%
+  at 32). A denser try (h41) was printed flat by look_d4 and rejected.
+- Hero: wall-side crate stacks (h44); the project's `barrel_cluster` was rejected (it prints vermilion barrels).
+- **Owner choice** (`item9_steel_owner_ab.png`): the concept's mauve steel is closer to the concept by eye and
+  still reads (the cream rim carries the silhouette), but body vs street dL drops 0.166 -> 0.065 at 64 px/m
+  (halfway: 0.115). Kept lavender (D4 parity: 0.168). Nothing committed for the A/B.
+- Hero evidence frames are now h44.
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
