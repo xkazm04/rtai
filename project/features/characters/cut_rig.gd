@@ -152,8 +152,13 @@ func set_tint(on: bool) -> void:
 	for i: int in sprites.size():
 		var kind: PartMaterials.PartKind = sprite_kinds[i] as PartMaterials.PartKind
 		sprites[i].material = PartMaterials.get_mat(kind, on, sprite_swaps[i])
+	RigDetail.on_tint(self, on)
 	if hose != null:
 		hose.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, on, 0)
+
+
+func is_tinted() -> bool:
+	return _tint
 
 
 func snap_facing(a: float) -> void:
