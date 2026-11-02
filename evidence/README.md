@@ -26,6 +26,8 @@ tick count, no RNG.
 | `item9_steel_owner_ab.png` | iteration 3, OWNER CHOICE: Rivet steel lavender (kept) / halfway / concept mauve at 64 and 96 + concept |
 | `item10_street_decals.png` | iteration 3: D5 big street decals (stencil fist, STRIKE, chalk robot, scorch), h44 vs h46 at 32/48/64 + raw sheet + mock |
 | `item11_roof_lift.png` | iteration 3: D5 roofs lifted toward the mock's cream: D4 / as built / 1.4 / 1.8 (kept) / 2.2 at 32 px/m (supersedes item3 for tone) |
+| `item12_age_floor_32.png` | iteration 3, PROPOSAL: aged paper at 32 px/m (`age_floor`, default off) vs now vs the mock |
+| `item13_killcam128.png` | iteration 3: the 128 px/m kill-cam, D4 vs D4+D5, beside the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
@@ -47,7 +49,13 @@ tick count, no RNG.
 - **D5 roofs lifted** (`item11_roof_lift.png`, 2edef89): the D5 roofs were DARKER than D4 and further from the mock
   (mock roof L ~0.59 / 44% paper; D4 bar 0.457 / 26%; D5 bar 0.381 / 16%). A mid-tone density lift (d**1.8; ink,
   vermilion and the fist untouched) brings the bar to 0.439 / 25%, the mural to 0.471 (D4 0.501), grime kept.
-- Hero evidence frames are now h50.
+- **Gameplay-zoom warmth, a proposal** (`item12_age_floor_32.png`, 9c98937): with the warmth only at D5 zoom, the
+  32 px/m frame stays cool grey while the mock (which IS the gameplay frame) is sepia. `world.age_floor` (default 0,
+  off: 0 px change) puts the aged paper at every zoom: at 32 px/m street 78,67,70 / paper 248,223,195 (mock
+  78,67,68 / 246,223,195), paper-street dL 60.6 (= mock). The visual-engine lane and the owner decide.
+- **Kill-cam at 128 px/m** (`item13_killcam128.png`, f9f956f): framed on the shot; the D5 tier's closest read of the
+  concept (rust, hatch, inked joints, two-ink souls).
+- Hero evidence frames are now h53 (= h50 at 32-96, plus 128).
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
