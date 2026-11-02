@@ -234,3 +234,8 @@ NEXT:
 - 23:49 Codex: 1 King expression sheet (87 s), 0 rejected; ledger 30. Installed king_{neutral,wary,furious,smug}.png.
   HONEST NAMING: the cell prompted "commanding" (megaphone raised) shows a sideways glance -> named "wary".
   install_expressions.py generalised (rivet re-install byte-identical). Board evidence/item5c_king_expressions.png.
+- 00:00 Codex: 1 D5 union hall roof (LOCAL 9, the mock's landmark), 0 rejected; ledger 31. MILESTONE (commit above):
+  built like the landmarks; at 1.8 it was DARKER than D4 (L 0.402 vs 0.501, ink 58% vs 42%: the art hatches the whole
+  membrane) -> per-roof lift 2.6: paper 32% (= D4), L 0.431. The hero swaps neighbours that have D5 art and puts the
+  union hall beside the mural (h59 parse error first: String(Variant) under warnings-as-errors hung the launcher
+  to its timeout; fixed with a typed var). h60 = hero frames + item4 board. Board evidence/item15_local9.png.

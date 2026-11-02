@@ -10,8 +10,8 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h53, iteration 3) / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h53, iteration 3; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h60, iteration 3) / the concept |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h60, iteration 3; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -30,6 +30,7 @@ tick count, no RNG.
 | `item13_killcam128.png` | iteration 3: the 128 px/m kill-cam, D4 vs D4+D5, beside the concept |
 | `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
 | `item5c_rivet_expressions.png`, `item5c_king_expressions.png` | iteration 3: Rivet (neutral, angry, hurt, hopeful) and King (neutral, wary, furious, smug) dialogue expressions at 512, 128 and 64 px beside the accepted portraits |
+| `item15_local9.png` | iteration 3: the D5 LOCAL 9 union hall roof beside the mural (the mock's landmark), D4 vs D4+D5 at 32 and 48 (h60) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
@@ -57,7 +58,8 @@ tick count, no RNG.
   78,67,68 / 246,223,195), paper-street dL 60.6 (= mock). The visual-engine lane and the owner decide.
 - **Kill-cam at 128 px/m** (`item13_killcam128.png`, f9f956f): framed on the shot; the D5 tier's closest read of the
   concept (rust, hatch, inked joints, two-ink souls).
-- Hero evidence frames are now h57 (h53 + part/soul grain locked to the sprite; 0 px at 32/48).
+- Hero evidence frames are now h60 (h53 + part/soul grain locked to the sprite + the D5 LOCAL 9 union hall beside the
+  mural, where the mock has its LOCAL 9 roof; 1 Codex roof edit, 0 rejected, per-roof lift 2.6: paper 32% = D4).
 - **Rivet dialogue expressions** (`item5c_rivet_expressions.png`): 1 Codex sheet, 0 rejected, 4 x 512 px in
   `characters/art/d5/portraits/rivet_<expr>.png`; store-safe (owner review). At 64 px only angry and the tilts read.
 - **Zoom colour drift, measured**: the zoom-tied warmth moves the paper by dE 2.8 (32 -> 48, the foot/car switch)
