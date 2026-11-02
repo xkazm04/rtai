@@ -6,7 +6,16 @@ extends "res://dev/selftest/city_selftest.gd"
 
 const PPMS: Array[int] = [32, 48, 64]
 const KINDS: Array[StringName] = [
-	&"muzzle", &"tracer", &"impact", &"explosion", &"smoke", &"debris", &"ink_splat", &"crackle"
+	&"muzzle",
+	&"tracer",
+	&"impact",
+	&"explosion",
+	&"smoke",
+	&"debris",
+	&"ink_splat",
+	&"crackle",
+	&"casing",
+	&"spark"
 ]
 
 

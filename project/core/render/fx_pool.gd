@@ -64,13 +64,30 @@ func step(steps: int, tick: int, mm: MultiMesh) -> void:
 		var grow: float = k["grow"]
 		var size: float = size_m * PX_PER_M * (1.0 + grow * age * SimClock.TICK_DT) * 0.5
 		var col: Color = k["color"]
-		col.a = 1.0 - float(age) / life
+		var fade_from: float = k.get("fade_from", 0.0)
+		col.a = clampf((1.0 - float(age) / life) / (1.0 - fade_from), 0.0, 1.0)
 		mm.set_instance_transform_2d(i, Transform2D(rot[i], Vector2.ONE * size, 0.0, pos[i]))
 		mm.set_instance_color(i, col)
 		var shape: float = k["shape_id"]
-		mm.set_instance_custom_data(i, Color(shape, seed_of[i], 0.0, 0.0))
+		mm.set_instance_custom_data(i, Color(shape, seed_of[i], cell(k, age, seed_of[i]), 0.0))
 		i += 1
 	mm.visible_instance_count = alive
+
+
+## The FX sheet cell + 1 a particle of kind `k` draws at `age` ticks (0 = the analytic shape):
+## "pick" holds one cell chosen by the seed, "anim" steps a cell every `frame_ticks` (or spreads
+## the cells over the life) and holds the last one.
+static func cell(k: Dictionary, age: int, s: float) -> float:
+	if not k.has("cell0"):
+		return 0.0
+	var first: float = k["cell0"]
+	var n: float = k["cell_n"]
+	var f: float = floorf(s * n)
+	if k["anim"]:
+		var life: float = k["life_ticks"]
+		var ft: float = k.get("frame_ticks", life / n)
+		f = floorf(age / ft)
+	return first + clampf(f, 0.0, n - 1.0) + 1.0
 
 
 func _swap_out(i: int) -> void:

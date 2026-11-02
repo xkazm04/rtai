@@ -5,6 +5,8 @@ extends Node2D
 ## MultiMesh on the `fx` band of the actors canvas (world px). spawn() is budgeted per frame and
 ## per pool; particles advance on the 60 Hz sim tick (step(tick)), never on a frame delta, and
 ## spread by a hash of the spawn serial (no RNG stream: render only, replay untouched).
+## With the d4-production FX sheet present (fx.json `atlas`), kinds draw atlas cells ("pick" a
+## cell by seed or "anim" through them); without it the analytic placeholder shapes draw.
 
 const TABLE: String = "res://data/tables/fx.json"
 const SHADER: String = "res://assets/shaders/fx_ink.gdshader"
@@ -20,12 +22,16 @@ var lights: LightLayer = null
 var dropped: int = 0
 var spawned_this_frame: int = 0
 var last_us: int = 0
+## True when the FX sheet loaded: kinds use their `atlas` blocks.
+var atlas_live: bool = false
 
 var _pool: FxPool = null
 var _mm: MultiMesh = MultiMesh.new()
 var _node: MultiMeshInstance2D = MultiMeshInstance2D.new()
 var _serial: int = 0
 var _last_tick: int = -1
+var _atlas_path: String = ""
+var _atlas_grid: Vector2 = Vector2.ONE
 
 
 func _init() -> void:
@@ -43,6 +49,9 @@ func _init() -> void:
 	_node.multimesh = _mm
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = load(SHADER)
+	if atlas_live:
+		mat.set_shader_parameter(&"atlas", load(_atlas_path))
+		mat.set_shader_parameter(&"grid", _atlas_grid)
 	_node.material = mat
 	add_child(_node)
 
@@ -103,9 +112,20 @@ func _load(text: String) -> int:
 	var d: Dictionary = parser.data
 	var spf: float = d["max_spawns_per_frame"]
 	max_spawns_per_frame = int(spf)
+	var atlas: Dictionary = d.get("atlas", {})
+	_load_atlas(atlas)
 	var pal: PaletteTokens = PaletteTokens.shared()
 	for row: Dictionary in d["kinds"]:
 		var k: Dictionary = row.duplicate()
+		if atlas_live and row.has("atlas"):
+			var a: Dictionary = row["atlas"]
+			k.merge(a, true)
+			var cells: Array = a["cells"]
+			var first: float = cells[0]
+			var n: float = cells[1]
+			k["cell0"] = first
+			k["cell_n"] = n
+			k["anim"] = a["mode"] == "anim"
 		var token: String = row["token"]
 		var shape: String = row["shape"]
 		k["color"] = pal.color(StringName(token))
@@ -114,3 +134,16 @@ func _load(text: String) -> int:
 		kinds[StringName(kid)] = k
 	var cap: float = d["max_particles"]
 	return int(cap)
+
+
+func _load_atlas(a: Dictionary) -> void:
+	if a.is_empty():
+		return
+	var path: String = a["path"]
+	if not ResourceLoader.exists(path):
+		return
+	var cols: float = a["cols"]
+	var rows: float = a["rows"]
+	_atlas_path = path
+	_atlas_grid = Vector2(cols, rows)
+	atlas_live = true

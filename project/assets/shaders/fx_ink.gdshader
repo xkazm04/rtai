@@ -2,7 +2,11 @@ shader_type canvas_item;
 // Placeholder FX sprites (core/render/README.md, data/tables/fx.json) drawn analytically per MultiMesh instance
 // until d4-production delivers the FX sheet. Flat palette inks, hard edges, an ink rim: they print like the item
 // pass (no gradients). INSTANCE_CUSTOM.x = shape (0 disc, 1 streak, 2 burst, 3 splat, 4 bolt), .y = a per-particle
-// seed. COLOR = the token ink with alpha = the fade (cut to a dither, never a soft alpha ramp).
+// seed, .z = the FX sheet cell + 1 (0 = draw the analytic shape). COLOR = the token ink with alpha = the fade (cut to
+// a dither, never a soft alpha ramp). A sheet cell keeps its own inks and is cut at alpha 0.5 (no soft edge).
+
+uniform sampler2D atlas : source_color, filter_linear_mipmap, repeat_disable;
+uniform vec2 grid = vec2(1.0);
 
 varying vec4 custom;
 
@@ -33,13 +37,23 @@ float shape_mask(vec2 p, int shape, float seed) {
 	return step(r, 0.8);   // disc
 }
 
+vec4 sheet(float cell_plus1, vec2 uv, float keep) {
+	float c = floor(cell_plus1 - 0.5);
+	vec2 cell = vec2(mod(c, grid.x), floor(c / grid.x));
+	vec4 tex = texture(atlas, (cell + clamp(uv, vec2(0.004), vec2(0.996))) / grid);
+	return vec4(tex.rgb, step(0.5, tex.a) * keep);
+}
+
 void fragment() {
-	vec2 p = UV * 2.0 - 1.0;
-	int shape = int(custom.x + 0.5);
-	float m = shape_mask(p, shape, custom.y);
-	float inner = shape_mask(p * 1.18, shape, custom.y);
 	float keep = step(hash(floor(FRAGCOORD.xy / 2.0)), COLOR.a);
-	vec3 ink = vec3(0.090, 0.075, 0.106);
-	vec3 col = mix(ink, COLOR.rgb, inner);
-	COLOR = vec4(col, m * keep);
+	if (custom.z > 0.5) {
+		COLOR = sheet(custom.z, UV, keep);
+	} else {
+		vec2 p = UV * 2.0 - 1.0;
+		int shape = int(custom.x + 0.5);
+		float m = shape_mask(p, shape, custom.y);
+		float inner = shape_mask(p * 1.18, shape, custom.y);
+		vec3 ink = vec3(0.090, 0.075, 0.106);
+		COLOR = vec4(mix(ink, COLOR.rgb, inner), m * keep);
+	}
 }

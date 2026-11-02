@@ -2,6 +2,36 @@
   "$id": "gtai.fx/1",
   "additionalProperties": false,
   "properties": {
+    "atlas": {
+      "additionalProperties": false,
+      "properties": {
+        "cols": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "pattern": "^res://.+\\.png$",
+          "type": "string"
+        },
+        "rows": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "cols",
+        "rows",
+        "doc"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -10,6 +40,61 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "atlas": {
+            "additionalProperties": false,
+            "properties": {
+              "cells": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "count": {
+                "maximum": 64,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "drag": {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "number"
+              },
+              "frame_ticks": {
+                "maximum": 600,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "grow": {
+                "maximum": 16,
+                "minimum": 0,
+                "type": "number"
+              },
+              "mode": {
+                "enum": [
+                  "anim",
+                  "pick"
+                ]
+              },
+              "size_m": {
+                "maximum": 16,
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "speed_mps": {
+                "maximum": 200,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "required": [
+              "cells",
+              "mode"
+            ],
+            "type": "object"
+          },
           "count": {
             "maximum": 64,
             "minimum": 1,
@@ -21,6 +106,11 @@
           },
           "drag": {
             "maximum": 60,
+            "minimum": 0,
+            "type": "number"
+          },
+          "fade_from": {
+            "maximum": 0.99,
             "minimum": 0,
             "type": "number"
           },
@@ -83,7 +173,8 @@
           "grow",
           "drag",
           "light",
-          "doc"
+          "doc",
+          "fade_from"
         ],
         "type": "object"
       },
