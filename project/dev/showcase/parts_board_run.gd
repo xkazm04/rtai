@@ -14,6 +14,7 @@ const ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const HALO_SCALE: float = 1.22
 const PICKUP_DIR: String = "res://assets/pickups/"
 const PICKUP_M: float = 1.2
+const ITEM_SHADER: String = "res://assets/shaders/look_d4_item.gdshader"
 const LOOKS: Array[PackedStringArray] = [
 	["torso", "head_hat"],
 	["torso_jacket", "head_hair"],
@@ -50,14 +51,40 @@ func _ready() -> void:
 	if page == "pickups":
 		_pickups()
 		return
+	if page == "fx":
+		_fx()
+		return
 	for k: int in LOOKS.size():
 		for y: float in [-1.6, 1.6]:
 			_person(LOOKS[k], Vector2(-7.0 + k * 2.0, y) * PX)
 
 
-func _pickups() -> void:
+## The FX atlas: all 32 cells (8 x 4, 256 px = 3.2 m) in the item pass, rows 0-1 on pavement,
+## rows 2-3 on asphalt, at a 4 x 3 m pitch.
+func _fx() -> void:
+	var item: ShaderMaterial = _item_mat()
+	var atlas: Texture2D = load("res://features/fx/art/fx_atlas.png") as Texture2D
+	for k: int in 32:
+		var cell: AtlasTexture = AtlasTexture.new()
+		cell.atlas = atlas
+		cell.region = Rect2((k % 8) * 256, (k / 8) * 256, 256, 256)
+		var spr: Sprite2D = Sprite2D.new()
+		spr.texture = cell
+		spr.position = Vector2(-14.0 + (k % 8) * 4.0, -6.0 + (k / 8) * 3.0 + (k / 16) * 1.0) * PX
+		spr.scale = Vector2.ONE * 3.2 * PX / 256.0
+		spr.material = item
+		spr.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		_actors.add_child(spr)
+
+
+func _item_mat() -> ShaderMaterial:
 	var item: ShaderMaterial = ShaderMaterial.new()
-	item.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
+	item.shader = load(ITEM_SHADER) as Shader
+	return item
+
+
+func _pickups() -> void:
+	var item: ShaderMaterial = _item_mat()
 	var k: int = 0
 	for f: String in DirAccess.get_files_at(PICKUP_DIR):
 		if not f.ends_with(".png"):

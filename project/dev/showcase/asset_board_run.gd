@@ -48,12 +48,12 @@ func _ready() -> void:
 		_roofs_page()
 		return
 	for y: int in range(-2, 3):
-		var road: bool = page == "extras" or y == 0 or y == -1
+		var road: bool = page in ["extras", "hijack"] or y == 0 or y == -1
 		var tile: String = "road_straight_tone_b" if road else "sidewalk_tone"
 		for x: int in range(-4, 4):
 			_tile(tile, Vector2(x * 8 + 4, y * 8) * PX)
 	_post_pass()
-	if page == "extras":
+	if page == "extras" or page == "hijack":
 		_place_extras()
 	else:
 		_place_table()
@@ -158,6 +158,9 @@ func _place_extras() -> void:
 		var t: Texture2D = load(EXTRA_DIR + f) as Texture2D
 		var at: Vector2 = Vector2(-15.5 + (k % 6) * 6.2, -11.0 + (k / 6) * 3.2)
 		_sprite(t, at * PX, Vector2(t.get_size()) * PX / 80.0)
+		var hijack: String = EXTRA_DIR + "hijack_" + f
+		if page == "hijack" and ResourceLoader.exists(hijack):
+			_sprite(load(hijack) as Texture2D, at * PX, Vector2(t.get_size()) * PX / 80.0)
 		k += 1
 
 

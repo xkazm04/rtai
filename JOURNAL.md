@@ -73,3 +73,12 @@
 - Evidence: no HUD scene exists, so the frames are shown as a **Python composite mock** over the in-engine
   selftest frames (`after_h/hud-mock-{32,48}ppm.png`), labelled as such. Not an in-engine HUD.
 - Gates: lint 13/13, unit 142/142, scenarios rc 0 (after parts + pickups).
+
+## 22:15 raise quality: evidence gaps closed (FX, hijack, in-city)
+- `dev/showcase/city_frame.tscn`: the real World + CitySystem + CityView, 3 fixed street foci, 32/48 px/m.
+  Before (base table, 22 placeholders) vs after (0): `before_city|after_city/city-{0,1,2}-{32,48}ppm.png`.
+  In the city now: D4 parked cars, drain grates, oil stain, manholes, lane arrows. The one placeholder left on
+  screen is MOVING traffic (code, see the traffic-atlas request).
+- `--page=fx` (atlas in the item pass) and `--page=hijack` (teal overlays over the cars): `after_x/`.
+- `ladder.png` (night/d4-production) has a row per item: before | after | target crop.
+- Note for the owner: the target frame paints the blood splat VERMILION; the brief asked for ink, I kept ink.

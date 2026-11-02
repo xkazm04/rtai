@@ -17,7 +17,7 @@ func _initialize() -> void:
 			printerr("asset_board: unknown argument %s" % arg)
 			quit(2)
 			return
-	var run: String = "parts_board" if page in ["parts", "pickups"] else "asset_board"
+	var run: String = "parts_board" if page in ["parts", "pickups", "fx"] else "asset_board"
 	var path: String = "res://dev/showcase/%s_run.gd" % run
 	var script: GDScript = load(path)
 	var node: Node = script.new()
