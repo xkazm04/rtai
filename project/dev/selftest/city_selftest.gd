@@ -16,6 +16,7 @@ var _out: String = "user://selftest"
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
+var _characters: CityCharacters = null
 
 
 func _ready() -> void:
@@ -27,6 +28,7 @@ func _ready() -> void:
 			return
 		_out = arg.substr(flag.length() + 1)
 	_build()
+	await _characters.bake()
 	var warm_us: int = await _view.prewarm()
 	var frames: Array[Dictionary] = []
 	for zoom: float in ZOOMS:
@@ -51,6 +53,7 @@ func _build() -> void:
 	_view = CityView.new()
 	add_child(_view)
 	_view.setup(_city)
+	_characters = CityCharacters.new(_city, _view, _world.context())
 
 
 func _capture(zoom: float) -> Dictionary:

@@ -51,8 +51,10 @@ func _register_features(with_views: bool) -> void:
 		var view: CityView = CityView.new()
 		add_child(view)
 		view.setup(city)
+		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
 		add_frame_probe(func() -> float: return view.chunks.frame_us / 1000.0)
-		_prewarm(view)
+		add_frame_probe(func() -> float: return characters.rigs.last_us / 1000.0)
+		_prewarm(view, characters)
 
 
 func _exit_tree() -> void:
@@ -139,8 +141,9 @@ func _probe_ms() -> float:
 
 ## The loading screen (WLD-07): the sim waits while the view compiles its pipelines and uploads
 ## every texture, so the first gameplay frames carry no first-use cost.
-func _prewarm(view: CityView) -> void:
+func _prewarm(view: CityView, characters: CityCharacters) -> void:
 	_prewarming = true
+	await characters.bake()
 	var us: int = await view.prewarm()
 	_prewarming = false
 	Log.info("world", "prewarm %.1f ms" % (us / 1000.0))

@@ -14,6 +14,10 @@ var swap: PackedByteArray = PackedByteArray()
 var actors: PackedInt32Array = PackedInt32Array()
 var visible: PackedInt32Array = PackedInt32Array()
 var frames: int = 0
+var rig_ms: PackedFloat64Array = PackedFloat64Array()
+var _rig_us: int = 0
+var _rig_ticks: int = 0
+var _rigs_max: int = 0
 var _ticks: int = 0
 var _sim_us: int = 0
 var _stream_us: int = 0
@@ -34,6 +38,17 @@ func add(ms: float, city_us: PackedInt64Array, swapped: bool, counts: Vector2i) 
 	actors.append(counts.x)
 	visible.append(counts.y)
 	@warning_ignore_restore("return_value_discarded")
+
+
+## The cutout rigs' frame cost (selection + pose steps) and how many ticks it stepped.
+func add_rig(us: int, ticks: int, full: int) -> void:
+	if frames <= WARMUP_FRAMES:
+		return
+	_rig_us += us
+	_rig_ticks += ticks
+	_rigs_max = maxi(_rigs_max, full)
+	@warning_ignore("return_value_discarded")
+	rig_ms.append(us / 1000.0)
 
 
 func metrics() -> Dictionary[String, float]:
@@ -59,6 +74,10 @@ func metrics() -> Dictionary[String, float]:
 		"visibleAvg": _mean_i(visible),
 		"visibleMax": float(_max_i(visible)),
 		"framesMeasured": float(n),
+		"rigMsP50": _pct(rig_ms, 0.5),
+		"rigMsP99": _pct(rig_ms, 0.99),
+		"rigMsPerTick": _rig_us / 1000.0 / maxi(1, _rig_ticks),
+		"fullRigsMax": float(_rigs_max),
 		"swapFrames": float(_count(swap)),
 	}
 
@@ -78,6 +97,14 @@ static func _mean(a: PackedFloat64Array) -> float:
 	for v: float in a:
 		s += v
 	return s / maxi(1, a.size())
+
+
+static func _pct(a: PackedFloat64Array, q: float) -> float:
+	if a.is_empty():
+		return 0.0
+	var s: PackedFloat64Array = a.duplicate()
+	s.sort()
+	return s[mini(s.size() - 1, floori(s.size() * q))]
 
 
 static func _max(a: PackedFloat64Array) -> float:
