@@ -169,3 +169,25 @@ NEXT:
   claw overlaps the cop (REACH 1.6 m), so the hit itself is one white knot at 48 px/m. Rain at 48 px/m
   is busy around small figures. Rivet bleeds red on player_hit (a robot: oil/sparks would be truer;
   kept, as the doctrine is "violence in red").
+- 00:07 FIX the doctrine: Rivet's prod tip printed teal (the only teal on screen; the souls are not drawn
+  yet). Params `teal` 0.0; the dead must draw above the pass (layer > 10) to keep theirs. Before/after
+  `teal-before-after-64.png`, ladder row 10. CORRECTION to my 00:05 read: at 64 px/m the cops DO read as
+  ink masses with a white rim (paper badge bar + gun hand) and Rivet as the lit paper figure (crop
+  `cop-crop-noir64.png`); the loss vs D4 is speed of read (value + shape, not hue), not the read itself.
+- MILESTONE (00:06) noir pass cost, measured: `dev/noir/noir_cost.tscn` (the riot junction, alternating
+  120-frame blocks D4 / noir, RenderingServer viewport GPU/CPU time). 1920x1080, RTX 4090: noir 0.85 ms
+  (48 px/m) / 0.75 ms (64 px/m) GPU vs D4 1.44 ms; CPU render ~0.2 ms both. Noir REPLACES the D4 print pass
+  (keep_d4 false). One GPU only; a low-end number is still unmeasured. JSONs in masters + evidence/.
+  FRICTION: two hangs of 5 min each - a GDScript warning-as-error in a dev scene leaves the window open
+  forever and the piped stdout is lost on kill. Fix: `--headless --quit-after 60` first, it prints the parse error.
+- (00:10) showcase `--d4` binds no impact frame (it printed the silhouette flash as all black); punch
+  REACH 1.9 m (the claw still touches the cop at 48 px/m).
+- REJECTED for the fight: the ink-people mode (`--ink`, show-ink/): on black asphalt the ink figures
+  vanish into the ground, leaving only a thin rim. It works on paper ground only, so it is not the default.
+- MILESTONE (00:19) the knockback held as a comic panel: after the sequence, ImpactFrame holds
+  `panel_ticks` 8 with the frame boxed as a comic panel (paper gutters, ink border; half 0.36 x 0.38 uv,
+  clamped so a gutter shows on every side - v6 touched the screen edge on a corner kill). The showcase
+  starts its hit-stop AFTER the 3 flash ticks, so the held pose is the HIT shove, not the wind-up
+  (hit_stop_ticks 5 -> 8). Evidence show-v7 (clips 48/64 noir + d4, 11.3 s), ladder row 11.
+  FRICTION: 297a63f was committed with test_blood_fx failing (it counted panel ticks as flash frames;
+  my && chain ended in `tail`). Fixed in 0fd7880; 177 unit tests pass.
