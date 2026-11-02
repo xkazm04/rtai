@@ -4,6 +4,7 @@ extends SceneTree
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/d5_hero.gd
 ##        -- --out=<dir>   (default: <repo>/build/evidence/frames-d5-hero)
 ##           --borrow=<dir> (optional: keyed street-life sprites, see D5HeroExtras)
+##           --soul-print   (souls through the look_d4_item ghost print instead of as drawn)
 
 
 func _initialize() -> void:
@@ -11,8 +12,11 @@ func _initialize() -> void:
 		"../build/evidence/frames-d5-hero"
 	)
 	var borrow: String = ""
+	var soul_print: bool = false
 	for arg: String in OS.get_cmdline_user_args():
-		if arg.begins_with("--borrow="):
+		if arg == "--soul-print":
+			soul_print = true
+		elif arg.begins_with("--borrow="):
 			borrow = arg.substr(9)
 		elif arg.begins_with("--out="):
 			out = arg.substr(6)
@@ -24,6 +28,7 @@ func _initialize() -> void:
 	var node: Node = script.new()
 	node.set("out_dir", out)
 	node.set("borrow_dir", borrow)
+	node.set("soul_print", soul_print)
 	root.add_child(node)
 	_run(node)
 

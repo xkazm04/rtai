@@ -24,10 +24,18 @@ const SHOT_FROM: Vector2 = Vector2(7.25, -1.6)
 const SHOT_TO: Vector2 = Vector2(4.8, -2.4)
 
 
-static func place(parent: Node, dir: String, px: float) -> int:
+## souls go to soul_parent (the actor layer, above the world print) with soul_mat;
+## the rest to parent
+static func place(
+	parent: Node, dir: String, px: float, soul_parent: Node, soul_mat: Material
+) -> int:
 	var placed: int = 0
 	for spot: Array in SPOTS:
-		placed += _put(parent, dir, spot, px)
+		var name: String = spot[0]
+		if name.begins_with("soul"):
+			placed += _put(soul_parent, dir, spot, px, soul_mat)
+		else:
+			placed += _put(parent, dir, spot, px)
 	var d: Vector2 = (SHOT_TO - SHOT_FROM).normalized()
 	var deg: float = rad_to_deg(d.angle())
 	var flash: Vector2 = SHOT_FROM + d * 0.5
@@ -37,7 +45,7 @@ static func place(parent: Node, dir: String, px: float) -> int:
 	return placed
 
 
-static func _put(parent: Node, dir: String, spot: Array, px: float) -> int:
+static func _put(parent: Node, dir: String, spot: Array, px: float, mat: Material = null) -> int:
 	var name: String = spot[0]
 	var path: String = dir.path_join(name + ".png")
 	if not FileAccess.file_exists(path):
@@ -58,5 +66,6 @@ static func _put(parent: Node, dir: String, spot: Array, px: float) -> int:
 	s.position = Vector2(x, y) * px
 	s.rotation_degrees = deg
 	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	s.material = mat
 	parent.add_child(s)
 	return 1

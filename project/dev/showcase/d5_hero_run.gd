@@ -32,6 +32,7 @@ const SHADOW_M: float = 1.1
 
 ## optional: a folder of keyed street-life sprites (D5HeroExtras); "" = none
 var borrow_dir: String = ""
+var soul_print: bool = false
 var _roofs: Dictionary[String, Sprite2D] = {}
 var _shadows: Array[Polygon2D] = []
 
@@ -63,7 +64,19 @@ func _ground() -> void:
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
-		Log.info("dev", "d5_hero: %d borrowed sprites" % D5HeroExtras.place(_world, borrow_dir, PX))
+		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, _actors, _soul_material())
+		Log.info("dev", "d5_hero: %d borrowed sprites" % n)
+
+
+## The souls show the D5 art as drawn (it holds the mock's soul trail); soul_print = the
+## game's ghost print (look_d4_item ghost = 1): a dot mesh at 64 px/m (h21, rejected).
+func _soul_material() -> Material:
+	if not soul_print:
+		return null
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/look_d4_item.gdshader") as Shader
+	mat.set_shader_parameter("ghost", 1.0)
+	return mat
 
 
 func _prop(spot: Array) -> void:

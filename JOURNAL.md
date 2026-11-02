@@ -89,3 +89,6 @@ NEXT:
 - 22:40 MILESTONE item 1 quality: look_d5_part form shade (screen-lit hatched lower-right band + cream lit rim).
   Rounds r14 (7 px, timid), r15 (9 px + STEEL_LO: dL 0.156 < D4 0.170 -> REJECTED), r16 kept (dL 0.170 = D4 at 64,
   0.189 at 96; 0 px at 32-56). Walk shimmer re-measured with tools/shimmer.py: 0.988 -> 1.018 high-frequency.
+- 22:45 MILESTONE souls print A/B (h20 world print: teal fill lost; h21 look_d4_item ghost=1: dot mesh, REJECTED;
+  h22 as drawn on the actor layer: matches the mock) -> as drawn is the hero default, `--soul-print` keeps the A/B.
+  h23 = h22 pixel-identical (determinism). Unit 146/0 at a40ac96. Boards: item4 (h23), item4c, ladder +2 rows.

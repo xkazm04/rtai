@@ -11,8 +11,9 @@ tick count, no RNG.
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction, before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h23, iteration 2), before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
+| `item4c_souls_print.png` | the D5 souls at 64 px/m: world print / look_d4_item ghost print (rejected) / as drawn (kept) |
 | `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
 | `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
 | `ladder.png` | the night's iterations, including the reverted ones |
@@ -43,6 +44,11 @@ tick count, no RNG.
    Vehicles/FX are the d4-production lane's raw D4 sheets, keyed into masters `borrowed/` and loaded by
    `d5_hero.gd -- --borrow=<dir>`; nothing is installed. Next: when the vehicles/fx lanes install their sprites,
    point D5HeroExtras at `res://` and drop `--borrow`; the D5 soul sheet goes to whoever owns the soul VFX.
+   **Soul print finding (`item4c_souls_print.png`):** through the world print (look_d4) the pale teal souls lose their
+   fill (cream bodies); through the game's ghost print (`look_d4_item` `ghost = 1`) they dissolve into a teal dot mesh
+   at 64 px/m; drawn as-is on the actor layer they match the mock's soul trail. The hero scene now shows them as drawn
+   (`--soul-print` = the A/B). Next (fx/visual-engine lane): a ghost print that keeps a flat pale-teal fill + teal ink
+   instead of the dot screen, at least from 48 px/m up.
 3. **Asphalt texture.** The mock's street is cross-hatched. A dense street hatch (r7) read as rain and was
    reverted; a sparse, patchy, darker one now prints from 64 px/m only (596e172; character dL vs surround 0.091 ->
    0.095, 0 px change at 32/48). Next: decide whether 48 px/m (car camera) gets a lighter version.
