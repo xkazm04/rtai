@@ -78,7 +78,7 @@ tick count, no RNG.
   and 7.6 (32 -> 64), the street by 2.0 / 4.7; with `age_floor` 1: <= 0.6. Hence gap 1's recommendation.
 - New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
-  5922a3d (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); later commits are art + docs only.
+  5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
 ## Gap list after iteration 3 (what still separates in-engine from d4h2_mock and the concept, next step each)
 1. **Gameplay-zoom colour.** The mock (= the 32 px/m frame) is warm sepia; ours is cool grey at 32 and warms only

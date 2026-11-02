@@ -273,3 +273,4 @@ NEXT:
 NEXT (addendum): 7. Combat lane: flash `features/combat/art/d5/finisher_drone.png` full-screen for ~1 s on a finisher
 (the D5 "finisher" venue); more panels (cop baton, King) follow the same prompt (gen/_prompts/finisher_d5.txt).
 - 00:06 Codex: 2nd finisher panel (light bar off an empty cruiser), 0 rejected; ledger 33. Installed finisher_lightbar.png; board item5d_finisher.png shows both.
+- 00:07 FINAL gates: evidence tool (--no-parity --no-bench) ALL PASS at 8d3a860 (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 36 untracked evidence PNGs restored. Parity/bench not run (no native build in this worktree). NEXT above (1-7) stands.
