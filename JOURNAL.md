@@ -181,3 +181,10 @@ NEXT:
   2.2 m at 96 px/m in features/city/art/d5/decals/, placed by dev/showcase/d5_hero_decals.gd (d5 tier). h45 had the
   chalk cramped between crosswalks -> h46 moved into the open lane by the fight. h46 vs h44: verm and teal px
   identical at 32-96, 1.1% of frame changed at 32. Board evidence/item10_street_decals.png. Hero frames = h46.
+- 23:25 gates at 300c1f7: unit 146/0, scenarios 8/0 (exit 0).
+- 23:28 MILESTONE: D5 landmark roofs lifted (2edef89). FOUND: vs d4h2_mock the D5 roofs went the WRONG way in tone
+  (mock roof L ~0.59 / 44% paper; D4 bar 0.457 / 26%; D5 bar 0.381 / 16%). build_roofs.py gained a mid-tone density
+  lift (d' = d**LIFT; ink, vermilion, the mural fist untouched; LIFT 1.0 rebuilds byte-identical). h47 1.4 timid,
+  h48 1.8 KEPT (bar 0.439 / 25%, mural 0.471 / 28%: D4 tone parity with the grime kept), h49 2.2 lost the grime.
+  h50 = h48 (0 px). Board evidence/item11_roof_lift.png. item3_roofs_gate.png is the iteration-1 build (superseded).
+  Hero frames = h50.

@@ -24,6 +24,8 @@ tick count, no RNG.
 | `item7_paper_age.png` | iteration 3: look_d5 aged paper, h38 vs h40 at 32/48/64 + mock + concept |
 | `item8_shadow_hatch.png` | iteration 3: building cast-shadow hatch h40 (stripes) / h41 (flat, rejected) / h42 (kept), 64 and 32 |
 | `item9_steel_owner_ab.png` | iteration 3, OWNER CHOICE: Rivet steel lavender (kept) / halfway / concept mauve at 64 and 96 + concept |
+| `item10_street_decals.png` | iteration 3: D5 big street decals (stencil fist, STRIKE, chalk robot, scorch), h44 vs h46 at 32/48/64 + raw sheet + mock |
+| `item11_roof_lift.png` | iteration 3: D5 roofs lifted toward the mock's cream: D4 / as built / 1.4 / 1.8 (kept) / 2.2 at 32 px/m (supersedes item3 for tone) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
@@ -39,7 +41,13 @@ tick count, no RNG.
 - **Owner choice** (`item9_steel_owner_ab.png`): the concept's mauve steel is closer to the concept by eye and
   still reads (the cream rim carries the silhouette), but body vs street dL drops 0.166 -> 0.065 at 64 px/m
   (halfway: 0.115). Kept lavender (D4 parity: 0.168). Nothing committed for the A/B.
-- Hero evidence frames are now h44.
+- **D5 street decals** (`item10_street_decals.png`, 300c1f7): 1 Codex sheet (0 rejected) -> 4 big decals at 96 px/m
+  in `features/city/art/d5/decals/`: a stencilled union fist, STRIKE road paint, a chalk robot outline, a scorch.
+  The large-surface D5 the brief asks for; they echo the mural roof. Vermilion/teal px identical at 32-96 px/m.
+- **D5 roofs lifted** (`item11_roof_lift.png`, 2edef89): the D5 roofs were DARKER than D4 and further from the mock
+  (mock roof L ~0.59 / 44% paper; D4 bar 0.457 / 26%; D5 bar 0.381 / 16%). A mid-tone density lift (d**1.8; ink,
+  vermilion and the fist untouched) brings the bar to 0.439 / 25%, the mural to 0.471 (D4 0.501), grime kept.
+- Hero evidence frames are now h50.
 
 ## Iteration 2 (22:14 -> 23:10) in one screen
 - Best frame now: `hero-d4d5-<ppm>ppm.png` = round h38 (h33 + the soul print + the steel lift) (item4 board `item4_hero_vs_targets.png`): blocks filled with
