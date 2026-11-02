@@ -319,3 +319,10 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   grid). D5 print vs D4 tier at 64: warm, grainy floor vs cool flat grey (closer to the concept). No vermilion or teal
   in the floor (doctrine). Board evidence/item18_arena.png; ladder +1 row.
 - 00:31 gates at bac376c: lint 13/13, unit 149/0, scenarios 8/0 (exit 0).
+- 00:33 Codex: 1 plan-view King sprite (chroma-green layout template + King turnaround TOP view + concept, 76 s),
+  0 rejected (overhead held: crown ring on the head top, shoulders, cape behind; the megaphone bell shows a little
+  interior = mild oblique, noted). Ledger 37. Keyed by tools/install_king_top.py (640 px).
+- 00:35 MILESTONE (66a4734): King in the arena (static sprite proposal, drawn as is on the actor layer): a4 at
+  2.8 m read SMALLER than Rivet -> a5 3.6 m dominates; a6 camera centred on the arena. Frame vermilion at 64 px/m
+  0.49% -> 1.52% (96: 1.12 -> 3.20%), all on the cape and hem: King is the threat (doctrine OK). Rivet |dL| unchanged
+  (0.133). Board evidence/item18_arena.png (rebuilt from a6); ladder +1 row.
