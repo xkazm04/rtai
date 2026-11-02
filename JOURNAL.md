@@ -290,3 +290,13 @@ NEXT:
   detail intact, glass panes lose their grey (accepted). All 17 roofs (10 district + 7 generic) for one set.
   Before/after `after_wr|probe_roof/city-{1-48,2-32}ppm.png` (+ target crop `work/roof_ab.png`), board
   `before_rl|after_rl/roofs-{32,48,64}ppm.png`. Kept. Commit c133a77. Originals `work/roofs_orig3/`.
+- 23:34 MILESTONE cream kerb. The straight kerb was a 13 px hatched "face" band + ink line + 7 px cream top + ink
+  line: at 32 px/m a dark band with joint ticks, reading as a pipe with bolts. From straight above a kerb is its cream
+  stone top; the target draws a cream band with an ink edge and the hatched gutter shadow on the road.
+  `tools/kerb_cream.py` (straight x3): rows 286-287 ink, 288-307 kerb cream (the face hatch and the middle line
+  gone), 308-309 ink and the gutter hatch kept, the 1.25 m joint ticks run through. Corner: `build_corner.py` gained
+  KERB_CREAM (same rows at the seam, checked column by column) and is rebuilt from the calmed pavement, then
+  lane_bold + marking_wear as the straights. Before/after `before_kb|after_kb/city-*`, `corner-{32,48,64}ppm.png`:
+  the road edge is a cream kerb + dark gutter shadow, closer to the target; the corner joins both straights. Kept.
+  Commit 84a1a2f. Gates at 16df2e5 (roof lift): run.mjs --no-bench rc 0 (lint, unit 142/142, scenarios 8/8, parity,
+  selftest 0 placeholders).
