@@ -465,6 +465,66 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_roofs_g1": {
+   "file": "masters:night/d4-production/gen/out/d4n_roofs_g1.png",
+   "sha256": "1baef3289a44972704289475cf440d4165d627b887c7d5826a3b59f432ffd98b",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/roofs_g1.txt",
+   "prompt_sha256": "5ad675ec0a61914817bc417d2bfdfe641c6fc2238c46ed694fea62502d865d62",
+   "layout_template": "masters:night/d4-production/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: rtai features/city/art/roofs/building_tall.png (approved D4 roof, style anchor)"
+   ],
+   "seed": null
+  },
+  "d4n_roofs_g2": {
+   "file": "masters:night/d4-production/gen/out/d4n_roofs_g2.png",
+   "sha256": "7581efc532d79a95ea0926d3e186b9df49034965d9132ef774648fbd54cd9fe6",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/roofs_g2.txt",
+   "prompt_sha256": "9592c28334582ae3830639bd528b38017dce077c64db80b99333be85d02eddda",
+   "layout_template": "masters:night/d4-production/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: rtai features/city/art/roofs/building_tall.png (approved D4 roof, style anchor)"
+   ],
+   "seed": null
+  },
+  "d4n_roofs_g3": {
+   "file": "masters:night/d4-production/gen/out/d4n_roofs_g3.png",
+   "sha256": "76672ec2e134ff9df99252299afea3aad50c13711e67acbc32a47ef79b815d74",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/roofs_g3.txt",
+   "prompt_sha256": "e1b17cbf040878b7e4fe6dcaa463e8ceff3fcfea2816cb9e7ec6a7155589814f",
+   "layout_template": "masters:night/d4-production/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: rtai features/city/art/roofs/building_tall.png (approved D4 roof, style anchor)"
+   ],
+   "seed": null
+  },
+  "d4n_roofs_g4": {
+   "file": "masters:night/d4-production/gen/out/d4n_roofs_g4.png",
+   "sha256": "d6d95f0cfb1ceb9b8e1ec7cecb9d2a63d0b5bde65c95de7d32aad190082a9d05",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/roofs_g4.txt",
+   "prompt_sha256": "4f3c7a9467a662e96540ab17eb70e5b4ccde495a33f573a4898fe918a1be0e80",
+   "layout_template": "masters:night/d4-production/gen/refs/t_roofs_sq.png",
+   "references": [
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: rtai features/city/art/roofs/building_tall.png (approved D4 roof, style anchor)"
+   ],
+   "seed": null
   }
  }
 }

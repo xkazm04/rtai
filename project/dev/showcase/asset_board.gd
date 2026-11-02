@@ -2,7 +2,7 @@ extends SceneTree
 ## D4 asset board launcher (windowed, d3d12): loads AssetBoardRun at run time (a -s main script
 ## must not name global classes at parse time) and writes the frames to --out.
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/asset_board.gd
-##        -- --out=<dir> [--page=table|extras]
+##        -- --out=<dir> [--page=table|extras|corner|roofs|pickups|parts]
 
 
 func _initialize() -> void:
@@ -17,7 +17,9 @@ func _initialize() -> void:
 			printerr("asset_board: unknown argument %s" % arg)
 			quit(2)
 			return
-	var script: GDScript = load("res://dev/showcase/asset_board_run.gd")
+	var run: String = "parts_board" if page == "parts" else "asset_board"
+	var path: String = "res://dev/showcase/%s_run.gd" % run
+	var script: GDScript = load(path)
 	var node: Node = script.new()
 	node.set("out_dir", out)
 	node.set("page", page)

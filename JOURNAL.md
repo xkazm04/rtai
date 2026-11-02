@@ -40,3 +40,11 @@
   Probes: d 0.38 (too subtle), d 0.60 (prints solid ink = same as the jacket, rejected for variety), 0.39 kept.
 - Evidence: `before_c|after_c2/rig-{32,48}ppm*.png`, crowd atlas rows 0/2/3 (`work/peek_atlas3.png`).
 - Affects looks 0 coat-hat, 2 coat-hood, 3 jacket-hat (hat brim), 7 coat-hair. Cops unchanged.
+
+## 21:40 MILESTONE generic roofs (work order 2, roofs)
+- 4 Codex sheets d4n_roofs_g1..g4 (2 roofs each), style anchor = shipped building_tall.png. **1 of 8 rejected**
+  (g1 left: laundry hanging in side view). 7 shipped: `features/city/art/roofs/roof_*.png`.
+- Evidence: `after_r/roofs-{32,48,64}ppm.png` (new roofs interleaved with the district set through look_d4).
+- **REQUEST generator owner:** the generator only picks ids 14-23; to use the generic roofs append table rows
+  (65+, size 8.4) and widen the pick (golden hashes will move: AST-12 re-bake).
+- Street furniture: all 20 props are already D4 (F-08); nothing on old art found in the table.
