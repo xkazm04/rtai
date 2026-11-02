@@ -463,3 +463,18 @@ NEXT:
   **r 11 kept**: cream-rimmed ink stickers at 48/64, a visible mottled splat at 32 (`work/splat_engine_ab2.png`:
   5 px | r 6 | r 11). Commit ac8fda9.
   For the Director: n-visual + n-d4 merged = the FX draw this atlas; nothing to change on their side.
+- 00:25 MILESTONE bold electroshock. In the FX system at 32 px/m the crackle (1.6 m per cell) was a pale ghost:
+  ~12 px bolts = 2 screen px. `build_fx.py bolden()`: cream bolt mask grown 4 px + a round 4.5 px ink outline.
+  `fx_engine_rim11|fx_engine_shock/fx-{32,48,64}ppm-1-fx.png` (`work/shock_engine_ab.png`): crisp cream bolts at
+  32/48. At 64 the bolts speckle - that is the FX fade dither (crackle `fade_from 0` = it dithers from its first
+  tick), not the art. Commit 773d5cb.
+- 00:29 Merge dry-run for the Director: in the detached scratch worktree at n-visual 15fd526,
+  `git merge --no-commit n-d4` -> the ONLY conflict is `JOURNAL.md` (add/add, both lanes keep one at the root).
+  Rendered the merged tree (my art + their renderer): `masters:night/d4-production/merged_fx/fx-*` (their
+  fx_showcase: my ground, my FX atlas, their lights) and `merged_city/city-*-hud40.png` (my city_frame + HUD):
+  cohesive, placeholders=0 in the texture table. The most visible placeholder left in the merged frame is still
+  MOVING TRAFFIC (grey boxes; request 1 - `traffic_atlas.png` is ready). Merge aborted, scratch tree clean.
+## REQUESTS (iteration 4)
+14. visual-engine: crackle `fade_from` 0 -> ~0.5 (it dithers from its first tick, the bold bolts speckle at 64);
+    debris 1.2 m / impact 0.9 m are specks at 32 px/m - 1.6 / 1.3 m would read (the art is bold enough at that size).
+15. Director: the n-d4 / n-visual merge conflicts only in JOURNAL.md (keep both, e.g. move one to docs/journals/).
