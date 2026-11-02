@@ -49,6 +49,8 @@ const SHADOW_M: float = 1.1
 
 ## optional: a folder of keyed street-life sprites (D5HeroExtras); "" = none
 var borrow_dir: String = ""
+## the camera below the kill-cam zoom (world px); D5PanRun moves it
+var hero_cam: Vector2 = HERO_CAM_M * PX
 var soul_mode: String = "d5"
 var _soul_mat: Material = null
 var _roofs: Dictionary[String, Sprite2D] = {}
@@ -62,7 +64,7 @@ func _init() -> void:
 
 
 func _frame_at(z: float) -> void:
-	cam = (KILL_CAM_M if z >= 4.0 else HERO_CAM_M) * PX
+	cam = KILL_CAM_M * PX if z >= 4.0 else hero_cam
 	super._frame_at(z)
 
 
