@@ -115,3 +115,46 @@ NEXT (iteration 3 / morning):
   Ladder: gtai-masters/night/visual-engine/ladder.png (00 baseline .. 06 camera). Frames rejected tonight: 0
   (every capture is the straight-down engine camera); 1 approach reverted: the stipple light edges (04).
   AI assets generated: none (no codex image_gen this session), so no provenance lines.
+
+## 2026-11-02 iteration 4 BUILD (22:12 -> 23:42)
+- 22:13 machine at 19 % CPU: started the idle bench of HEAD (3 runs x 30 s) first (NEXT 1).
+- Plug-in work while it runs (no Godot runs during the bench):
+  - FX sheet as data: `fx.json` `atlas` (path, 8 x 4) + per-kind `atlas` blocks (cells, pick/anim,
+    frame_ticks, overrides); `FxSystem.atlas_live` only when the texture exists; `fx_ink` samples
+    the sheet by instance custom `.z` = cell + 1, alpha cut 0.5 + the fade dither. New kinds `casing`,
+    `spark`. Tests: cell pick/anim/hold, a present sheet overrides the row, a missing one does not.
+  - D5 overlay as data: `look_profiles.json` `overlays` (d5_world -> look_d5.gdshader + params
+    `world`, base d4, auto ramps 48:0 -> 64:1, d5 pins 1), `core/render/look_overlay.gd`
+    (BackBufferCopy + ColorRect on the new `print_overlay` band, hidden at amount 0), CityView feeds
+    amount + world_px each frame. Live only when d5-close's files are in the tree. Goldens for an
+    overlaid look are `-ov` files.
+- MILESTONE bench idle HEAD (c761d7c, 22:13-22:21, CPU 19 % before): PASSES - p99 3.14 ms, 1% low 199 fps,
+  worst swap 32 ms, 0 frames > 50 ms; riot rig p50 0 / p99 0.558 ms, 0.474 ms per tick. evidence/bench-*-idle.json.
+  Caveat: fx.json was edited within a minute of the export (fx is not spawned in the bench; no effect expected).
+  No A/B vs ad2078b done (the machine got contended again from 22:40, see below).
+- MILESTONE FX sheet plug-in (267722f). Frames with n-d4's fx_atlas.png copied in for the capture only
+  (`gtai-masters/.../plug.sh fx in|out`, never committed): 07-fx-atlas/ab2-{32,48,64}ppm.png (left placeholder,
+  right sheet). Clearly better: real blast with a vermilion core, cloud smoke, shards, crackle, splat with a
+  cream rim. First pass (`after/`) REJECTED in part: the linear dither fade turned splats/smoke into grey
+  stipple and the casing drew 1.6 m long -> added `fade_from` + casing 0.5 m (`after2/`). 0 frames rejected for
+  camera (engine camera, straight down). Art note for d4-production: smoke cells read cream/paper, not the
+  charcoal the doc wants ("smoke: charcoal puffs") - a darker smoke row would read better on the cream crossings.
+- MILESTONE D5 overlay plug-in (94f6e44). With n-d5 157dec8's look_d5.gdshader + params copied in for the
+  capture: same-tick mean diff vs the placeholder: auto 48 px/m 0.00 (pure D4 at gameplay zoom holds), 56: 6.56,
+  64: 12.33. 08-d5-overlay/ab-auto-64ppm.png: the overlay gives the sparse street hatch, paper tooth and
+  off-register ghosts of the mock; the placeholder d5 row was just darker grime. Kept. -ov goldens blessed with
+  that copy (5 files); d1/d4 goldens byte-identical; without the files goldens 10/10 worst 0.00.
+- Rig (151a079): selection every 4th call + native re-find. Interleaved headless A/B (riot 20 s, rig ms per
+  tick): every=1 0.566 / 0.603 vs every=4 0.527 / 0.504 (-12 %). Target 0.3 ms still NOT met. Drive profile
+  (headless debug, per CutRig.drive ~34 us): RigPose.step 18.6 us (55 %), RigGait.step 12.5 us (37 %), clips 0.9,
+  facing 0.5, hose+view 1.6. That is where the next win is (characters owner): per-part transform writes in
+  GDScript; candidates: a cheaper pose for rank >= FULL_RATE (no secondary motion), or the pose in native.
+- FRICTION: the exported bench after the rig change (22:30-22:39) ran while other lanes started Godot (22:40
+  processes seen, CPU 31 %): p99 5.04 ms, 1% low 73, one unexplained > 50 ms frame -> exit 1. Recorded as
+  CONTENDED/INVALID (evidence/bench-*-select4-contended.json), neither a pass nor a regression.
+- Camera (b9ebf33): CameraRig.listen(Events, clock): vehicle_entered -> car 48, vehicle_exited -> on_foot 32.
+  Shared file boot/world.gd +1 line. Nothing emits these in the city yet.
+- Accent audit (52d966c): the atlas crowd split per look at the source; HIT clip frame 0 is a full vermilion flash
+  (danger cue) counted apart. 6/6 pedestrian looks 0 vermilion outside it; cops 24.7-29.3k texels.
+  crop: 03-accents/iter4/ped-hit-cells.png. FRICTION: a parse error in a windowed selftest scene never quits
+  (I killed my own PID 46452); run.mjs has a 180 s timeout so the evidence run would not hang forever.
