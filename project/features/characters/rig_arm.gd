@@ -21,7 +21,10 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 	var flat: Vector2 = h2 - s2
 	if Vector3(flat.x, flat.y, tgt.z).length() > l1 + l2:
 		h2 = s2 + flat.normalized() * minf(flat.length(), l1 + l2)
-	var fore_draw: float = _place(rig, s, PackedVector2Array([s2, e2, h2]), aim_arm)
+	side.j_shoulder = s2
+	side.j_elbow = e2
+	side.j_hand = h2
+	var fore_draw: float = _place(rig, s, aim_arm)
 	_hand(rig, side, fore_draw)
 	var behind: bool = h2.x < sh.x - 40.0
 	side.upper.z_index = p.arm_below if behind else p.arm_above
@@ -61,24 +64,24 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 
 
 ## Places both segments (end-on cells when foreshortened); returns the forearm's drawn length.
-## joints = shoulder, elbow, hand (rig-local part px).
-static func _place(rig: CutRig, s: int, joints: PackedVector2Array, aim_arm: bool) -> float:
+## Uses the side's shoulder, elbow and hand joints (rig-local part px).
+static func _place(rig: CutRig, s: int, aim_arm: bool) -> float:
 	var p: BodyPlan = rig.plan
 	var side: RigLimbs = rig.sides[s]
-	var s2: Vector2 = joints[0]
-	var e2: Vector2 = joints[1]
-	var h2: Vector2 = joints[2]
+	var s2: Vector2 = side.j_shoulder
+	var e2: Vector2 = side.j_elbow
+	var h2: Vector2 = side.j_hand
 	var fore_cell: String = p.gun_cell if aim_arm and p.gun_cell != "" else p.fore_part[s]
 	var d2: float = p.fore_draw[s]
 	if not p.has_endon():
-		rig.set_part_tex(side.fore, fore_cell)
+		_cell(rig, side.fore, fore_cell, 1, side)
 		RigGait.place(side.upper, s2, e2, p.upper_draw)
 		RigGait.place(side.fore, e2, h2, d2)
 		return d2
 	var end1: bool = e2.distance_to(s2) / p.upper_len < p.endon_below and not aim_arm
 	var end2: bool = h2.distance_to(e2) / p.fore_len[s] < p.endon_below and not aim_arm
-	rig.set_part_tex(side.upper, p.endon_upper[s] if end1 else p.upper_part[s])
-	rig.set_part_tex(side.fore, p.endon_fore[s] if end2 else fore_cell)
+	_cell(rig, side.upper, p.endon_upper[s] if end1 else p.upper_part[s], 0, side)
+	_cell(rig, side.fore, p.endon_fore[s] if end2 else fore_cell, 1, side)
 	RigGait.place(side.upper, s2, e2, p.endon_upper_len if end1 else p.upper_draw)
 	if end2:
 		d2 = p.endon_fore_len
@@ -102,8 +105,24 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
 			cell = p.hand_pistol
 		elif rig.c_reach > 0.5:
 			cell = p.hand_closed
-		rig.set_part_tex(side.hand, cell)
+		_cell(rig, side.hand, cell, 2, side)
 	if side.shield != null:
 		side.shield.scale = Vector2(1.0 / maxf(fs, 0.3), 1.0)
 		side.shield.rotation = -side.fore.rotation
 		side.shield.visible = rig.variant.shield and rig.c_sprawl < 0.5
+
+
+## Swaps a part's cell only when it changes (which: 0 upper, 1 fore, 2 hand).
+static func _cell(rig: CutRig, spr: Sprite2D, cell: String, which: int, side: RigLimbs) -> void:
+	var now: String = (
+		side.upper_cell if which == 0 else (side.fore_cell if which == 1 else side.hand_cell)
+	)
+	if now == cell:
+		return
+	if which == 0:
+		side.upper_cell = cell
+	elif which == 1:
+		side.fore_cell = cell
+	else:
+		side.hand_cell = cell
+	rig.set_part_tex(spr, cell)

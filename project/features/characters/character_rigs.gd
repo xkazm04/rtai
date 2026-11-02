@@ -9,6 +9,9 @@ extends Node2D
 ## and draw rows where full_row(i) is false from the atlas (cell: baked_cell(i, t)).
 
 const MAX_FULL: int = 16
+## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step
+## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true).
+const FULL_RATE: int = 6
 const RADIUS_M: float = 14.0
 const PX_PER_M: float = 32.0
 const MAX_STEPS: int = 4
@@ -30,6 +33,7 @@ var _last_tick: int = 0
 var _pool: RigPool = RigPool.new()
 var _by_actor: Dictionary[int, CutRig] = {}
 var _full: PackedByteArray = PackedByteArray()
+var _rank: Dictionary[int, int] = {}
 
 
 func setup(ctx: WorldContext) -> void:
@@ -63,9 +67,12 @@ func step_ticks(steps: int) -> void:
 	PartMaterials.set_view(zoom)
 	_assign()
 	for _k: int in steps:
+		ticks_stepped += 1
 		for actor: int in _by_actor:
-			_by_actor[actor].drive(SimClock.TICK_DT)
-	ticks_stepped += steps
+			if _rank[actor] < FULL_RATE:
+				_by_actor[actor].drive(SimClock.TICK_DT)
+			elif (ticks_stepped + actor) % 2 == 0:
+				_by_actor[actor].drive(SimClock.TICK_DT * 2.0)
 	last_us = Time.get_ticks_usec() - t0
 
 
@@ -104,8 +111,11 @@ func _assign() -> void:
 	_full.resize(feed.count)
 	_full.fill(0)
 	var keep: Dictionary[int, int] = {}
-	for i: int in chosen:
+	_rank.clear()
+	for r: int in chosen.size():
+		var i: int = chosen[r]
 		keep[feed.ids[i]] = i
+		_rank[feed.ids[i]] = r
 		_full[i] = 1
 	for actor: int in _by_actor.keys():
 		if not keep.has(actor):

@@ -55,7 +55,7 @@ static func crowd(index: int) -> RigVariant:
 ## A stable look for an actor id with no RNG draw (rigs are render-side: they must never move a
 ## replay-hashed stream). Cops pick from the cop looks, everyone else from the pedestrians.
 static func crowd_index_for(actor_id: int, body: BodyPlan.Kind) -> int:
-	var h: int = RngRegistry.fnv1a32(str(actor_id))
+	var h: int = ((actor_id * 2654435761) >> 13) & 0x7FFFFFFF
 	if body == BodyPlan.Kind.COP:
 		return 5 + h % 2
 	var peds: PackedInt32Array = PackedInt32Array([0, 1, 2, 3, 4, 7])

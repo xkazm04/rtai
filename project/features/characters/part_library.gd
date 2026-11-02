@@ -5,34 +5,42 @@ extends RefCounted
 
 const ART_ROOT: String = "res://features/characters/art/"
 
-static var _tex: Dictionary[String, Texture2D] = {}
 static var _metas: Dictionary[String, PartLibrary] = {}
 
+var folder: String = ""
+var textures: Dictionary[String, Texture2D] = {}
 var sizes: Dictionary[String, Vector2] = {}
 var pivots_a: Dictionary[String, Vector2] = {}
 var pivots_b: Dictionary[String, Vector2] = {}
 
 
-static func of(folder: String) -> PartLibrary:
-	if not _metas.has(folder):
+static func of(dir: String) -> PartLibrary:
+	if not _metas.has(dir):
 		var lib: PartLibrary = PartLibrary.new()
-		lib._load(ART_ROOT + folder + "/parts.json")
-		_metas[folder] = lib
-	return _metas[folder]
+		lib.folder = dir
+		lib._load(ART_ROOT + dir + "/parts.json")
+		_metas[dir] = lib
+	return _metas[dir]
 
 
-static func texture(folder: String, part: String) -> Texture2D:
-	var path: String = ART_ROOT + folder + "/" + part + ".png"
-	if not _tex.has(path):
-		_tex[path] = load(path) as Texture2D
-	return _tex[path]
+static func texture(p_folder: String, part: String) -> Texture2D:
+	return of(p_folder).tex(part)
+
+
+## The part's texture, loaded once; hot paths call this on a held PartLibrary (no path building).
+func tex(part: String) -> Texture2D:
+	var t: Texture2D = textures.get(part, null)
+	if t == null:
+		t = load(ART_ROOT + folder + "/" + part + ".png") as Texture2D
+		textures[part] = t
+	return t
 
 
 ## The joint the part rotates about, or its centre when the slicer measured none.
-func pivot(part: String, tex: Texture2D) -> Vector2:
+func pivot(part: String, t: Texture2D) -> Vector2:
 	if pivots_a.has(part):
 		return pivots_a[part]
-	return tex.get_size() * 0.5
+	return t.get_size() * 0.5
 
 
 ## Cap-to-cap length of a limb part (pivot_b.x - pivot_a.x), 0 when unmeasured.

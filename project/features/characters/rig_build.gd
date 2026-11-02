@@ -44,14 +44,14 @@ static func build(rig: CutRig) -> void:
 
 ## Swaps a part's texture and pivot; body parts stay centred; limb halos follow their part.
 static func set_tex(rig: CutRig, spr: Sprite2D, part: String) -> void:
-	var t: Texture2D = PartLibrary.texture(rig.plan.art_dir, part)
+	var t: Texture2D = rig.lib.tex(part)
 	if spr.texture == t:
 		return
 	spr.texture = t
 	var centred: bool = spr == rig.head_spr or spr == rig.torso_spr or spr == rig.pelvis_spr
 	var pv: Vector2 = t.get_size() * 0.5
 	if not centred:
-		pv = PartLibrary.of(rig.plan.art_dir).pivot(part, t)
+		pv = rig.lib.pivot(part, t)
 	spr.offset = -pv
 	var holder: Node = spr.get_parent() if centred else spr
 	for c: Node in holder.get_children():

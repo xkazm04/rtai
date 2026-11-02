@@ -17,6 +17,7 @@ const STRIDE_RUN: float = 92.0
 const COLLAR_K: float = 0.22
 
 var plan: BodyPlan = null
+var lib: PartLibrary = null
 var variant: RigVariant = null
 var actor_id: int = -1
 var clips: RigClips = RigClips.new()
@@ -47,6 +48,9 @@ var speed_now: float = 0.0
 var t_alive: float = 0.0
 var shove: Vector2 = Vector2.ZERO
 var shove_v: Vector2 = Vector2.ZERO
+## The rig's global transform and its inverse, cached once per pose step (hot path).
+var xf: Transform2D = Transform2D.IDENTITY
+var xf_inv: Transform2D = Transform2D.IDENTITY
 
 var body: Node2D = null
 var torso: Node2D = null
@@ -73,6 +77,7 @@ var _last_px: float = -1.0
 ## Builds the parts once; a pooled rig then only changes variant (apply_variant).
 func setup(p_plan: BodyPlan, p_variant: RigVariant) -> void:
 	plan = p_plan
+	lib = PartLibrary.of(p_plan.art_dir)
 	variant = p_variant
 	scale = Vector2.ONE * SC * plan.size_k
 	RigBuild.build(self)

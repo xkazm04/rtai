@@ -29,6 +29,7 @@ static func plan_of(kind: BodyPlan.Kind) -> BodyPlan:
 ## Builds n rigs of a plan up front. Returns the milliseconds it took (evidence for the budget).
 func prewarm(kind: BodyPlan.Kind, n: int) -> float:
 	var t0: int = Time.get_ticks_usec()
+	_preload(plan_of(kind))
 	for _i: int in n:
 		var rig: CutRig = _build(kind)
 		_free_list(kind).append(rig)
@@ -63,6 +64,14 @@ func free_count(kind: BodyPlan.Kind) -> int:
 
 func built_count(kind: BodyPlan.Kind) -> int:
 	return _built.get(kind, 0)
+
+
+## Loads every cell a plan or its looks can show, so no texture loads from disk in play.
+func _preload(p: BodyPlan) -> void:
+	var lib: PartLibrary = PartLibrary.of(p.art_dir)
+	for part: String in lib.sizes:
+		@warning_ignore("return_value_discarded")
+		lib.tex(part)
 
 
 func _build(kind: BodyPlan.Kind) -> CutRig:

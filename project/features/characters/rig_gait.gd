@@ -17,15 +17,19 @@ static func step(rig: CutRig, dt: float) -> void:
 	var moving: bool = spd > 6.0 and not rig.dead and rig.c_tuck < 0.3
 	if moving:
 		rig.phase += spd * dt / stride
+	rig.xf = rig.global_transform
+	rig.xf_inv = rig.xf.affine_inverse()
+	var foot_fwd: Vector2 = rig.fwd() * p.foot_fwd * CutRig.SC
 	for s: int in 2:
 		var side: RigLimbs = rig.sides[s]
-		var hw: Vector2 = rig.hip_world(s)
+		var hl: Vector2 = rig.hip_local(s)
+		var hw: Vector2 = rig.xf * hl
 		if moving:
 			_swing(rig, side, s, hw, stride)
 		else:
-			_stand(rig, side, rig.sides[1 - s], hw + rig.fwd() * p.foot_fwd * CutRig.SC, dt)
+			_stand(rig, side, rig.sides[1 - s], hw + foot_fwd, dt)
 		_clip_feet(rig, side, s, hw, dt)
-		_solve_leg(rig, side, s)
+		_solve_leg(rig, side, s, hl)
 
 
 static func _swing(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, stride: float) -> void:
@@ -71,22 +75,21 @@ static func _stand(rig: CutRig, side: RigLimbs, other: RigLimbs, rest: Vector2, 
 
 static func _clip_feet(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, dt: float) -> void:
 	if rig.c_sprawl > 0.0:
-		var spread: Vector2 = rig.global_transform * Vector2(-210, rig.plan.side_sign(s) * 230)
+		var spread: Vector2 = rig.xf * Vector2(-210, rig.plan.side_sign(s) * 230)
 		side.foot_w = side.foot_w.lerp(spread, minf(rig.c_sprawl * dt * 8.0, 1.0))
 		side.lift = 0.0
 	if rig.c_tuck > 0.0:
 		side.foot_w = side.foot_w.lerp(hw, minf(rig.c_tuck, 1.0))
 
 
-static func _solve_leg(rig: CutRig, side: RigLimbs, s: int) -> void:
+static func _solve_leg(rig: CutRig, side: RigLimbs, s: int, hl: Vector2) -> void:
 	var p: BodyPlan = rig.plan
-	var fl: Vector2 = rig.to_local(side.foot_w)
+	var fl: Vector2 = rig.xf_inv * side.foot_w
 	var lift: float = side.lift
 	if s == BodyPlan.R and rig.c_kick > 0.0:
 		var reach: Vector2 = Vector2(p.thigh_len + p.shin_len, 0) * 0.95
 		fl = fl.lerp(rig.hip_local(BodyPlan.R) + reach, rig.c_kick)
 		lift = maxf(lift, 0.5 * rig.c_kick)
-	var hl: Vector2 = rig.hip_local(s)
 	var hz: float = p.hip_z * (1.0 - 0.75 * rig.c_sprawl) * (1.0 - 0.35 * rig.c_tuck)
 	var pole: Vector3 = Vector3(1.0, p.side_sign(s) * 0.25, 0.0)
 	var hip3: Vector3 = Vector3(hl.x, hl.y, hz)
@@ -96,11 +99,13 @@ static func _solve_leg(rig: CutRig, side: RigLimbs, s: int) -> void:
 	var knee: Vector2 = Vector2(knee3.x, knee3.y)
 	place(side.thigh, hl, knee, p.thigh_draw)
 	place(side.shin, knee, fl, p.shin_draw)
-	side.foot.position = fl
-	side.foot.rotation = p.side_sign(s) * 0.8 * rig.c_sprawl
+	var fs: float = 1.0 + 0.08 * lift
+	side.foot.transform = Transform2D(p.side_sign(s) * 0.8 * rig.c_sprawl, Vector2(fs, fs), 0.0, fl)
 	if p.has_toeoff():
-		rig.set_part_tex(side.foot, p.foot_toeoff[s] if lift > 0.12 else p.foot_part[s])
-	side.foot.scale = Vector2.ONE * (1.0 + 0.08 * lift)
+		var cell: String = p.foot_toeoff[s] if lift > 0.12 else p.foot_part[s]
+		if cell != side.foot_cell:
+			side.foot_cell = cell
+			rig.set_part_tex(side.foot, cell)
 
 
 ## Two-bone IK in 3D: the joint between root and target, bent toward the pole.
@@ -118,6 +123,5 @@ static func ik3(root: Vector3, target: Vector3, l1: float, l2: float, pole: Vect
 ## A rigid part from joint a to joint b, stretched along x to the drawn length.
 static func place(spr: Sprite2D, a: Vector2, b: Vector2, native_len: float) -> void:
 	var d: Vector2 = b - a
-	spr.position = a
-	spr.rotation = d.angle()
-	spr.scale = Vector2(clampf(d.length() / maxf(native_len, 1.0), 0.14, 1.8), 1.0)
+	var sx: float = clampf(d.length() / maxf(native_len, 1.0), 0.14, 1.8)
+	spr.transform = Transform2D(d.angle(), Vector2(sx, 1.0), 0.0, a)

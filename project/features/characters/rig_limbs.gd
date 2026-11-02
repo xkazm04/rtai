@@ -17,6 +17,14 @@ var stepping: bool = false
 var timed: bool = false
 var step_t: float = 0.0
 var lift: float = 0.0
+## The cells shown now, so a part's texture is swapped only when its cell changes.
+var foot_cell: String = ""
+var upper_cell: String = ""
+var fore_cell: String = ""
+var hand_cell: String = ""
+var j_shoulder: Vector2 = Vector2.ZERO
+var j_elbow: Vector2 = Vector2.ZERO
+var j_hand: Vector2 = Vector2.ZERO
 
 
 func plant(at: Vector2) -> void:
