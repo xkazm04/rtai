@@ -3,7 +3,9 @@ extends RefCounted
 ## The words a quest package names places and things with, resolved to the world
 ## (gtai.questMarkers/1, the spike's markers table). A beat's `location` is a marker, an
 ## enter-vehicle `target` a vehicle tag, a kill/escort `target` an actor tag. Positions are metres.
-## The world supplies this table (QuestWorld.places()); the quest never invents a position.
+## A marker may stand a payphone (`phone`), and a place may hold a combat encounter
+## (`encounters`, run by the world for fight/sabotage). The world supplies this table
+## (QuestWorld.places()); the quest never invents a position.
 
 const SCHEMA: String = "gtai.questMarkers/1"
 
@@ -12,8 +14,10 @@ class Marker:
 	extends RefCounted
 	var at: Vector2 = Vector2.ZERO
 	var radius_m: float = 2.0
-	## Where the job's payphone stands when this marker is a quest's first location.
+	## Where the payphone stands (the marker itself when `phone` is absent).
 	var phone: Vector2 = Vector2.ZERO
+	## True when the table puts a payphone here (`phone` present).
+	var has_phone: bool = false
 
 
 class Actor:
@@ -24,10 +28,19 @@ class Actor:
 	var hp: float = 1.0
 
 
+class Encounter:
+	extends RefCounted
+	var waves: int = 1
+	var enemies: int = 1
+	## Character id of the encounter's boss, "" for none.
+	var boss: String = ""
+
+
 var markers: Dictionary[String, Marker] = {}
 var vehicles: Dictionary[String, Vector2] = {}
 var vehicle_headings: Dictionary[String, float] = {}
 var actors: Dictionary[String, Actor] = {}
+var encounters: Dictionary[String, Encounter] = {}
 var _errors: Array[String] = []
 
 
@@ -40,6 +53,7 @@ static func from_json_text(text: String) -> QuestPlaces:
 	places._read_markers(raw.get("markers"))
 	places._read_vehicles(raw.get("vehicles"))
 	places._read_actors(raw.get("actors"))
+	places._read_encounters(raw.get("encounters", {}))
 	return places
 
 
@@ -58,6 +72,7 @@ func _read_markers(raw: Variant) -> void:
 		m.at = _vec(row.get("at"), "markers.%s.at" % tag)
 		m.radius_m = _num(row.get("r", 2.0), "markers.%s.r" % tag)
 		m.phone = _vec(row.get("phone", row.get("at")), "markers.%s.phone" % tag)
+		m.has_phone = row.has("phone")
 		markers[tag] = m
 
 
@@ -77,6 +92,18 @@ func _read_actors(raw: Variant) -> void:
 		a.ally = row.get("side", "hostile") == "ally"
 		a.hp = _num(row.get("hp", 1.0), "actors.%s.hp" % tag)
 		actors[tag] = a
+
+
+func _read_encounters(raw: Variant) -> void:
+	for tag: String in _rows(raw, "encounters"):
+		var row: Dictionary = _row(raw, tag)
+		var e: Encounter = Encounter.new()
+		e.waves = roundi(_num(row.get("waves", 1), "encounters.%s.waves" % tag))
+		e.enemies = roundi(_num(row.get("enemies", 1), "encounters.%s.enemies" % tag))
+		e.boss = str(row.get("boss", ""))
+		if not markers.has(tag):
+			_errors.append("places.encounters.%s: not a marker" % tag)
+		encounters[tag] = e
 
 
 ## The tags of a section whose every row is an object, in sorted order.

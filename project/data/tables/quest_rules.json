@@ -1,7 +1,87 @@
 {
-  "doc": "How the quest runtime (features/quest) plays a gtai.quest/1 package: which objective verbs it handles and how, which fail-state words it can detect (the first rule whose every keyword group matches wins; a group is any of its words), the condition vocabulary of bark `when` tags, and the timing. Ported from the spike quest runtime (evolve quest-runtime f2fa88f). Souls and madness bands follow pitch.md (provisional until canon lands in this repo).",
+  "conditions": [
+    {
+      "doc": "`soul:<name>`: the soul in control.",
+      "id": "soul",
+      "values": [
+        "rivet",
+        "hauler",
+        "gearbox",
+        "sentry",
+        "mop"
+      ]
+    },
+    {
+      "doc": "`madness:<band>`: the current madness band.",
+      "id": "madness",
+      "values": [
+        "lucid",
+        "crowded",
+        "choir",
+        "chorus"
+      ]
+    },
+    {
+      "doc": "`weapon:<id>`: the weapon in Rivet's hands (none = unarmed).",
+      "id": "weapon",
+      "values": [
+        "gloria",
+        "assault-rifle",
+        "none"
+      ]
+    },
+    {
+      "doc": "`heat:<op><N>`: the wanted level against N (op one of >= <= > < == =, default ==).",
+      "id": "heat",
+      "pattern": "^(>=|<=|>|<|==|=)?(\\d+)$"
+    }
+  ],
+  "doc": "The quest runtime vocabulary (features/quest): every objective verb it plays and how, the fail-state keyword rules it can detect (the first rule whose every keyword group matches as whole words wins), the bark condition kinds (state conditions `kind:value`) and event tags (a bare tag that holds for event_window_s after a typed Events signal). PoF reads this table to guard what the quest council may emit (docs/data-contracts.md). Souls, madness bands and weapons follow pitch.md (provisional until canon lands in this repo).",
+  "event_tags": [
+    {
+      "doc": "Events.actor_killed with killer_id = Rivet.",
+      "fact": "actor_killed:by_player",
+      "id": "kill"
+    },
+    {
+      "doc": "Events.wanted_changed to a lower level.",
+      "fact": "wanted_changed:falling",
+      "id": "heat-dropping"
+    },
+    {
+      "doc": "Events.wave_started: a combat encounter wave began.",
+      "fact": "wave_started",
+      "id": "wave-start"
+    },
+    {
+      "doc": "Events.boss_engaged: a boss stepped in.",
+      "fact": "boss_engaged",
+      "id": "boss-intro"
+    },
+    {
+      "doc": "Events.attack_telegraphed with weapon robo-tazer.",
+      "fact": "attack_telegraphed:robo-tazer",
+      "id": "robo-tazer-charge"
+    },
+    {
+      "doc": "Events.player_hit with weapon robo-tazer.",
+      "fact": "player_hit:robo-tazer",
+      "id": "robo-tazer-hit"
+    },
+    {
+      "doc": "Events.whispers_spiked: the voices in Rivet's head spiked.",
+      "fact": "whispers_spiked",
+      "id": "static-whisper-burst"
+    },
+    {
+      "doc": "The contract's own sabotage objective completed.",
+      "fact": "quest:sabotage_done",
+      "id": "crates-burning"
+    }
+  ],
   "fail_rules": [
     {
+      "doc": "The escorted ally died.",
       "groups": [
         [
           "escort",
@@ -20,6 +100,7 @@
       "id": "escort_dies"
     },
     {
+      "doc": "Rivet died: the contract fails (respawn and checkpoints belong to the save layer).",
       "groups": [
         [
           "rivet",
@@ -39,6 +120,7 @@
       "id": "rivet_wasted"
     },
     {
+      "doc": "The job vehicle was wrecked.",
       "groups": [
         [
           "car",
@@ -59,6 +141,7 @@
       "id": "car_destroyed"
     },
     {
+      "doc": "The kill target got further than escape_m from Rivet.",
       "groups": [
         [
           "escape",
@@ -71,6 +154,7 @@
       "id": "target_escapes"
     },
     {
+      "doc": "difficulty.timeLimitS ran out.",
       "groups": [
         [
           "timer",
@@ -81,25 +165,34 @@
         ]
       ],
       "id": "timer_expired"
+    },
+    {
+      "doc": "A gate, not a failure: answer, meet and a payphone evade complete only at wanted 0 (Patch drops a hot caller), and the contract goes on.",
+      "groups": [
+        [
+          "heat",
+          "hot"
+        ],
+        [
+          "above",
+          "hot",
+          "while"
+        ],
+        [
+          "answers",
+          "answer",
+          "arrives",
+          "arrive"
+        ]
+      ],
+      "id": "arrived_hot"
     }
   ],
-  "madness_bands": [
-    "lucid",
-    "crowded",
-    "choir",
-    "chorus"
-  ],
-  "schema": "gtai.quest-rules/1",
-  "souls": [
-    "rivet",
-    "hauler",
-    "gearbox",
-    "sentry",
-    "mop"
-  ],
+  "schema": "gtai.quest-rules/2",
   "tuning": {
     "answer_radius_m": 1.7,
     "escape_m": 45,
+    "event_window_s": 2,
     "line_hold_s": 1.4,
     "line_max_s": 9,
     "line_min_s": 2.2,
@@ -108,58 +201,130 @@
   },
   "verbs": [
     {
+      "doc": "Reach the location marker (on foot or driving). objective.location names a place marker.",
       "handler": "reach",
       "id": "go_to",
+      "needs_encounter": false,
       "needs_location": true,
-      "needs_target": false
+      "needs_target": false,
+      "waits_for_lines": false
     },
     {
+      "doc": "Bring Rivet (or the vehicle he drives) to the location marker. objective.location names a place marker.",
       "handler": "reach",
       "id": "deliver",
+      "needs_encounter": false,
       "needs_location": true,
-      "needs_target": false
+      "needs_target": false,
+      "waits_for_lines": false
     },
     {
+      "doc": "Get into the target vehicle. objective.target names a tag the world resolves (places.vehicles / places.actors).",
       "handler": "enter_vehicle",
       "id": "steal",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": true
+      "needs_target": true,
+      "waits_for_lines": false
     },
     {
+      "doc": "Get into the target vehicle. objective.target names a tag the world resolves (places.vehicles / places.actors).",
       "handler": "enter_vehicle",
       "id": "hijack",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": true
+      "needs_target": true,
+      "waits_for_lines": false
     },
     {
+      "doc": "Kill the target actor; it escapes past escape_m when target_escapes is a fail state. objective.target names a tag the world resolves (places.vehicles / places.actors).",
       "handler": "kill",
       "id": "assassinate",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": true
+      "needs_target": true,
+      "waits_for_lines": false
     },
     {
+      "doc": "Kill the target actor. objective.target names a tag the world resolves (places.vehicles / places.actors).",
       "handler": "kill",
       "id": "kill",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": true
+      "needs_target": true,
+      "waits_for_lines": false
     },
     {
+      "doc": "Last objective.durationS seconds (legacy: a \"<N>s\" target, else survive_default_s).",
       "handler": "timer",
       "id": "survive",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": false
+      "needs_target": false,
+      "waits_for_lines": false
     },
     {
+      "doc": "Hold for objective.durationS seconds (as survive).",
       "handler": "timer",
       "id": "defend",
+      "needs_encounter": false,
       "needs_location": false,
-      "needs_target": false
+      "needs_target": false,
+      "waits_for_lines": false
     },
     {
+      "doc": "The target ally follows Rivet to the location marker; escort_dies fails it. objective.target names a tag the world resolves (places.vehicles / places.actors). objective.location names a place marker.",
       "handler": "escort",
       "id": "escort",
+      "needs_encounter": false,
       "needs_location": true,
-      "needs_target": true
+      "needs_target": true,
+      "waits_for_lines": false
+    },
+    {
+      "doc": "Lose the heat: done at wanted 0. When the location's marker has a payphone, it then rings and Rivet must answer it on foot. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "handler": "evade",
+      "id": "evade",
+      "needs_encounter": false,
+      "needs_location": true,
+      "needs_target": false,
+      "waits_for_lines": false
+    },
+    {
+      "doc": "Answer the payphone at the location's marker on foot (it rings only at wanted 0 when arrived_hot is a fail state). objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "handler": "answer",
+      "id": "answer",
+      "needs_encounter": false,
+      "needs_location": true,
+      "needs_target": false,
+      "waits_for_lines": false
+    },
+    {
+      "doc": "Reach the location (at wanted 0 when arrived_hot is a fail state); done once the beat's lines have played. objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "handler": "meet",
+      "id": "meet",
+      "needs_encounter": false,
+      "needs_location": true,
+      "needs_target": false,
+      "waits_for_lines": true
+    },
+    {
+      "doc": "Clear the combat encounter the world holds at the location (places.encounters). objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "handler": "fight",
+      "id": "fight",
+      "needs_encounter": true,
+      "needs_location": true,
+      "needs_target": false,
+      "waits_for_lines": false
+    },
+    {
+      "doc": "Clear the location's encounter, then interact at its marker on foot (torch, plant, smash). objective.target is prose for the player and the art pass; the handler does not read it. objective.location names a place marker.",
+      "handler": "sabotage",
+      "id": "sabotage",
+      "needs_encounter": true,
+      "needs_location": true,
+      "needs_target": false,
+      "waits_for_lines": false
     }
   ]
 }

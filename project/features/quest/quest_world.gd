@@ -47,3 +47,15 @@ extends RefCounted
 
 ## Steers an escorted ally toward `to` for this tick.
 @abstract func escort_toward(tag: String, to: Vector2) -> void
+
+## Rivet's runtime actor id (Events.actor_killed.killer_id when he made the kill).
+@abstract func player_id() -> int
+
+## The weapon in Rivet's hands (quest_rules.json `weapon` values; `none` = unarmed).
+@abstract func weapon_name() -> String
+
+## Starts the combat encounter held at `place` (places.encounters): waves, enemies, a boss.
+@abstract func start_encounter(place: String) -> void
+
+## True once every enemy of the encounter at `place`, its boss included, is down.
+@abstract func encounter_cleared(place: String) -> bool

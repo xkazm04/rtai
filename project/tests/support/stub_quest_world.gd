@@ -1,13 +1,17 @@
+# gdlint: disable=max-public-methods
 class_name StubQuestWorld
 extends QuestWorld
 ## A minimal world for quest tests (F-12: the city is integrated later). Rivet is a point that
 ## walks or drives in a straight line, vehicles and actors sit at their places, and every outcome
 ## the quest asks about is a field a test sets. Movement is per tick, never per frame.
+## (It implements the whole QuestWorld port plus two movement helpers, hence the gdlint
+## max-public-methods disable above.)
 
 const WALK_M_PER_TICK: float = 4.0 / SimClock.TICK_RATE
 const DRIVE_M_PER_TICK: float = 12.0 / SimClock.TICK_RATE
 const ESCORT_M_PER_TICK: float = 3.0 / SimClock.TICK_RATE
 const ENTER_RANGE_M: float = 2.5
+const PLAYER_ID: int = 1
 
 var rivet: Vector2 = Vector2.ZERO
 var driving: String = ""
@@ -18,6 +22,10 @@ var wanted: int = 0
 var cash: int = 0
 var soul: String = "rivet"
 var madness: String = "lucid"
+var weapon: String = "none"
+## Encounters the quest started, in order, and the ones a test (or script) has cleared.
+var encounters_started: Array[String] = []
+var cleared: Dictionary[String, bool] = {}
 var vehicle_at: Dictionary[String, Vector2] = {}
 var wrecked: Dictionary[String, bool] = {}
 var actor_at: Dictionary[String, Vector2] = {}
@@ -114,3 +122,20 @@ func enter(tag: String) -> bool:
 	if vehicle_at.has(tag) and rivet.distance_to(vehicle_at[tag]) <= ENTER_RANGE_M:
 		driving = tag
 	return driving == tag
+
+
+func player_id() -> int:
+	return PLAYER_ID
+
+
+func weapon_name() -> String:
+	return weapon
+
+
+func start_encounter(place: String) -> void:
+	calls.append("encounter %s" % place)
+	encounters_started.append(place)
+
+
+func encounter_cleared(place: String) -> bool:
+	return cleared.get(place, false)

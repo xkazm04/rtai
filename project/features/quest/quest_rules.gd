@@ -1,13 +1,14 @@
 class_name QuestRules
 extends RefCounted
 ## The quest runtime's own table (DAT-01, DAT-05): res://data/tables/quest_rules.json
-## (gtai.quest-rules/1), read once into typed fields. Which objective verbs the runtime handles,
-## which fail-state words it can detect, the bark condition vocabulary and the line timing.
+## (gtai.quest-rules/2), read once into typed fields: the objective verbs the runtime plays,
+## the fail-state words it can detect, the bark vocabulary (state conditions and event tags) and
+## the timing. PoF reads the same file to guard what the council emits (docs/data-contracts.md).
 ## A bad table yields errors() and no rules, never a half-built object.
 
-enum Handler { REACH, ENTER_VEHICLE, KILL, TIMER, ESCORT }
+enum Handler { REACH, ENTER_VEHICLE, KILL, TIMER, ESCORT, EVADE, ANSWER, MEET, FIGHT, SABOTAGE }
 
-const SCHEMA: String = "gtai.quest-rules/1"
+const SCHEMA: String = "gtai.quest-rules/2"
 const PATH: String = "res://data/tables/quest_rules.json"
 const HANDLERS: Dictionary[String, Handler] = {
 	"reach": Handler.REACH,
@@ -15,11 +16,17 @@ const HANDLERS: Dictionary[String, Handler] = {
 	"kill": Handler.KILL,
 	"timer": Handler.TIMER,
 	"escort": Handler.ESCORT,
+	"evade": Handler.EVADE,
+	"answer": Handler.ANSWER,
+	"meet": Handler.MEET,
+	"fight": Handler.FIGHT,
+	"sabotage": Handler.SABOTAGE,
 }
 const TUNING_KEYS: PackedStringArray = [
 	"answer_radius_m",
 	"escape_m",
 	"survive_default_s",
+	"event_window_s",
 	"line_type_cps",
 	"line_hold_s",
 	"line_min_s",
@@ -33,6 +40,11 @@ var verbs: Dictionary[String, QuestVerb] = {}
 var fail_rules: Array[QuestFailRule] = []
 var souls: Array[String] = []
 var madness_bands: Array[String] = []
+var weapons: Array[String] = []
+## `heat:` test grammar (op, N), from the table's heat condition.
+var heat_pattern: String = ""
+## Bare bark tag -> the fact QuestFacts records for it (`kill` -> `actor_killed:by_player`).
+var event_tags: Dictionary[String, String] = {}
 var tuning: Dictionary[String, float] = {}
 var _errors: Array[String] = []
 
@@ -84,8 +96,8 @@ func _read(raw: Dictionary) -> void:
 		return
 	_read_verbs(raw.get("verbs"))
 	_read_fail_rules(raw.get("fail_rules"))
-	souls = _names(raw.get("souls"), "souls")
-	madness_bands = _names(raw.get("madness_bands"), "madness_bands")
+	_read_conditions(raw.get("conditions"))
+	_read_event_tags(raw.get("event_tags"))
 	var t: Variant = raw.get("tuning")
 	if not t is Dictionary:
 		_errors.append("quest_rules.tuning: missing")
@@ -125,7 +137,44 @@ func _read_fail_rules(raw: Variant) -> void:
 		fail_rules.append(rule)
 
 
-func _names(raw: Variant, key: String) -> Array[String]:
+func _read_conditions(raw: Variant) -> void:
+	for row: Dictionary in _rows(raw, "conditions"):
+		var values: Array[String] = QuestJson.strings(row.get("values"))
+		match str(row.get("id")):
+			"soul":
+				souls = values
+			"madness":
+				madness_bands = values
+			"weapon":
+				weapons = values
+			"heat":
+				heat_pattern = str(row.get("pattern", ""))
+	if souls.is_empty() or madness_bands.is_empty() or weapons.is_empty() or heat_pattern == "":
+		_errors.append(
+			"quest_rules.conditions: needs soul, madness, weapon values and a heat pattern"
+		)
+
+
+func _read_event_tags(raw: Variant) -> void:
+	for row: Dictionary in _rows(raw, "event_tags"):
+		var tag: String = str(row.get("id", ""))
+		var fact: String = str(row.get("fact", ""))
+		if not QuestFacts.SOURCES.has(fact.get_slice(":", 0)):
+			_errors.append("quest_rules.event_tags.%s: no Events source for '%s'" % [tag, fact])
+			continue
+		event_tags[tag] = fact
+
+
+func _rows(raw: Variant, key: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
 	if not raw is Array:
 		_errors.append("quest_rules.%s: missing" % key)
-	return QuestJson.strings(raw)
+		return out
+	var rows: Array = raw
+	for row: Variant in rows:
+		if row is Dictionary:
+			var d: Dictionary = row
+			out.append(d)
+		else:
+			_errors.append("quest_rules.%s: bad row %s" % [key, JSON.stringify(row)])
+	return out

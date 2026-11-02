@@ -35,6 +35,7 @@ func check(p: Dictionary, folder_id: String, places: QuestPlaces) -> QuestReport
 			_report.warn("lines.%s" % line_id, "in no beat's lineIds and not a bark: never plays")
 	_reward(p.get("reward"))
 	_difficulty(p.get("difficulty"))
+	_encounters(p.get("difficulty"), beats)
 	_story(p.get("story"))
 	return _report
 
@@ -120,6 +121,23 @@ func _difficulty(raw: Variant) -> void:
 			_report.warn("difficulty.failStates", "'%s' is unmapped: never detected" % word)
 		elif code == &"timer_expired" and limit == null:
 			_report.warn("difficulty.failStates", "'%s' needs a timer, timeLimitS is null" % word)
+
+
+## The world's encounters should add up to the package's enemyCount and enemyWaves.
+func _encounters(raw: Variant, beats: QuestBeatValidator) -> void:
+	if not raw is Dictionary or beats.encounter_waves == 0:
+		return
+	var d: Dictionary = raw
+	var count: int = roundi(QuestJson.num(d.get("enemyCount"), -1.0))
+	var waves: int = roundi(QuestJson.num(d.get("enemyWaves"), -1.0))
+	if count != beats.encounter_enemies or waves != beats.encounter_waves:
+		_report.warn(
+			"difficulty",
+			(
+				"enemyCount %d / enemyWaves %d, but the places' encounters hold %d / %d"
+				% [count, waves, beats.encounter_enemies, beats.encounter_waves]
+			)
+		)
 
 
 func _story(raw: Variant) -> void:

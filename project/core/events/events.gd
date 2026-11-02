@@ -19,6 +19,16 @@ signal contract_started(id: StringName)
 signal contract_completed(id: StringName)
 signal vehicle_entered(vehicle_id: int)
 signal vehicle_exited(vehicle_id: int)
+## The next wave of a combat encounter began (encounter = its place id, wave from 1).
+signal wave_started(encounter: StringName, wave: int)
+## A boss stepped into the fight (boss = its character id).
+signal boss_engaged(boss: StringName)
+## An attack aimed at Rivet began its tell (wind-up, charge whine).
+signal attack_telegraphed(weapon: StringName)
+## Rivet took a hit. Rivet only, never every actor (ARC-07).
+signal player_hit(weapon: StringName)
+## The voices in Rivet's head spiked (madness).
+signal whispers_spiked
 @warning_ignore_restore("unused_signal")
 
 const DEBUG_LOG_SIZE: int = 256

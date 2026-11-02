@@ -2,8 +2,9 @@ class_name QuestLinePlayer
 extends RefCounted
 ## Quest lines as data (the spike's quest_lines, on ticks): a beat's lineIds queue as
 ## speaker-tagged subtitles, each typed out and then held. Lines with `when` conditions are
-## barks: armed for the whole active contract, each fires once, the first tick all of its
-## conditions hold, and cuts the queue (never the line on screen). Timing reads the package's
+## barks: each fires once, the first active tick all of its conditions hold (QuestFacts), and
+## cuts the queue (never the line on screen). A bark listed in a beat's lineIds is armed from
+## that beat on; a bark in no beat is armed for the whole contract. Timing reads the package's
 ## source text, so the sim (and its replay hash) does not depend on the player's locale.
 
 
@@ -29,15 +30,23 @@ var _current_length: int = 0
 func _init(pkg: QuestPackage, rules: QuestRules) -> void:
 	_pkg = pkg
 	_rules = rules
-	_armed = pkg.barks()
+	var in_beats: Dictionary[String, bool] = {}
+	for beat: QuestBeat in pkg.beats:
+		for line_id: String in beat.line_ids:
+			in_beats[line_id] = true
+	for bark: QuestLine in pkg.barks():
+		if not in_beats.has(bark.id):
+			_armed.append(bark)
 
 
-## A beat's spoken lines join the queue; a bark listed in a beat still waits for its conditions.
+## A beat's spoken lines join the queue; its barks are armed and wait for their conditions.
 func play_beat(beat: QuestBeat) -> void:
 	for line_id: String in beat.line_ids:
 		var line: QuestLine = _pkg.line(line_id)
 		if not line.is_bark():
 			_queue.append(line)
+		elif not _armed.has(line) and not _fired(line.id):
+			_armed.append(line)
 
 
 func armed_barks() -> int:
@@ -49,9 +58,9 @@ func busy() -> bool:
 
 
 ## One tick. Barks are armed only while the contract is active.
-func step(tick: int, beat_index: int, world: QuestWorld, active: bool) -> void:
+func step(tick: int, beat_index: int, facts: QuestFacts, active: bool) -> void:
 	if active:
-		_fire_barks(world)
+		_fire_barks(facts)
 	if current != null:
 		current_ticks += 1
 		if current_ticks >= _current_length:
@@ -84,10 +93,17 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(shown.size())
 
 
-func _fire_barks(world: QuestWorld) -> void:
+func _fired(line_id: String) -> bool:
+	for s: Shown in shown:
+		if s.line_id == line_id:
+			return true
+	return _queue.any(func(l: QuestLine) -> bool: return l.id == line_id)
+
+
+func _fire_barks(facts: QuestFacts) -> void:
 	var fired: int = 0
 	for line: QuestLine in _armed.duplicate():
-		if line.holds(world.soul_name(), world.madness_band(), world.wanted_level()):
+		if line.holds(facts):
 			_armed.erase(line)
 			if _queue.insert(fired, line) == OK:
 				fired += 1
