@@ -33,3 +33,24 @@ RGBA8 with mipmaps (x 4/3), one district's unique textures:
 The Codex masters carry about 84 px/m of real detail for roofs (a 706 px roof of 8.4 m) and about 59 px/m for the
 asphalt swatches (118 px/m for the 4 m pavement swatches). So the 64-96 px/m arm of F-13 is fed natively; a
 128 px/m arm would be an upscale of these masters, not new detail.
+
+## Post-processing after build_ground.py (night 2026-11-02, lane d4-production)
+
+The shipped ground tiles are build_ground.py output **plus** these code-only passes (masters tools in
+`gtai-masters/night/d4-production/tools/`, each logged per file in `steam/ai-provenance/2026-11.jsonl`). A re-bake
+with build_ground.py alone undoes them; fold them in, or re-run them in this order:
+
+| Order | Tool | Tiles | What |
+|---|---|---|---|
+| 1 | `paving_joints.py` | sidewalk, curb x3, curb_corner | slab joints 2 px of 140,132,128 (were a 4 px black grid) |
+| 2 | `paving_calm.py` | sidewalk, curb x3 | 13 of 19 repeated crack squiggles and the dark "+" joint crosses removed |
+| 3 | `lane_bold.py 6` | road_straight x3, road_straight_v x3, curb x3 | thin cream markings grown to 20 px (dashes) / 18 px (edge lines) |
+| 4 | `marking_wear.py 0.006` | all road + curb + intersection | wear specks inside the paint filled, 0.6 % fine wear kept |
+| 5 | `kerb_cream.py`, `kerb_ticks.py` | curb x3 | the kerb is one cream stone top (rows 288-307) with ink edges, ticks 128 grey |
+| 6 | `paving_bond.py 128 286 grid2` | sidewalk (y_end 768), curb x3 | 2 m slabs: every other joint line removed, kept joints 128 grey |
+| 7 | `build_corner.py` (KERB_CREAM) then 3 + 4 | curb_corner | rebuilt from the processed sidewalk so it matches the straights row for row |
+| 8 | `patch_soft.py 0.5` | road_straight x3, road_straight_v x2 | closed asphalt-patch outlines 50 % toward the base (cracks keep ink) |
+
+Roofs (`roofs/*.png`, all 17): `roof_lift.py 0.7 0.22 0.5` (wash greys toward the roof paper, ink kept). The flat
+roof ground tiles (roof_tone, roof_edge_tone) are deliberately NOT lifted: through the print pass they jump from
+grey straight to pavement paper.
