@@ -51,7 +51,12 @@ jobs:
     # NAT-05 / NAT-06: MSVC template_debug + template_release, the standalone sim_core tests, then
     # the parity gate (native CitySim vs the GDScript reference, bit-identical) on Windows.
     # DEVIATION NAT-05 (docs/decisions.md): the Linux debug build under ASan/UBSan is not in CI yet.
+    # The SCons cache (godot-cpp's SConstruct calls CacheDir($SCONS_CACHE), which covers every
+    # object, ours included) is restored by actions/cache: keyed on the godot-cpp submodule SHA and
+    # the SConstruct hash; the run id suffix always saves a fresh cache, restore-keys reuse the last.
     runs-on: windows-latest
+    env:
+      SCONS_CACHE: ${{ github.workspace }}/.scons-cache
     steps:
       - uses: actions/checkout@v4
         with:
@@ -61,13 +66,24 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install scons
+      - name: godot-cpp submodule SHA (cache key)
+        id: cpp
+        shell: bash
+        run: echo "sha=$(git -C native/godot-cpp rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: .scons-cache
+          key: scons-${{ runner.os }}-${{ steps.cpp.outputs.sha }}-${{ hashFiles('native/SConstruct') }}-${{ github.run_id }}
+          restore-keys: |
+            scons-${{ runner.os }}-${{ steps.cpp.outputs.sha }}-${{ hashFiles('native/SConstruct') }}-
+            scons-${{ runner.os }}-${{ steps.cpp.outputs.sha }}-
       - name: build the GDExtension (debug + release) and the standalone core tests
         working-directory: native
         shell: bash
         run: |
-          scons platform=windows arch=x86_64 target=template_debug
-          scons platform=windows arch=x86_64 target=template_release
-          scons platform=windows arch=x86_64 tests
+          scons -j4 platform=windows arch=x86_64 target=template_debug
+          scons -j4 platform=windows arch=x86_64 target=template_release
+          scons -j4 platform=windows arch=x86_64 tests
       - name: sim_core standalone tests
         shell: bash
         run: native/build/tests/sim_core_tests.exe
