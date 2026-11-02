@@ -71,3 +71,14 @@ NEXT:
   Both are in evidence/README.md with the next step.
 - 22:14 MILESTONE tier-fade sweep (d5_sweep.gd): 0 up to 55 px/m, monotone ramp to 0.066 at 64+: no pop.
 - 22:16 MILESTONE walk shimmer (d5_walk.gd): D5/D4 frame-to-frame change 1.06 total, 0.97 high-frequency = no shimmer. Still unmeasured: GPU cost.
+
+## Iteration 2 (2026-11-02, BUILD, 22:14 -> )
+- 22:14 read journal/log. All 5 items evidenced in iter 1; picking the weakest: item 4's hero frame was empty street
+  next to the mock (gap 2).
+- 22:17 Codex: 1 D5 soul sheet (d5_souls: 4 robot souls + 4 vapour wisps, teal only, layout template + mock soul
+  trail crop + concept). 0 rejected (plan view held). Ledger total 26.
+- 22:19 MILESTONE gap 2: hero scene street life (387e9fa). D5HeroExtras loads keyed sprites from masters
+  borrowed/ via `--borrow=`: a cruiser + a dark sedan + muzzle flash/tracer/casings/ink splat from the d4-production
+  lane's RAW sheets (read-only, not installed: their lane owns vehicles/fx), and the D5 soul trail. Rejected the grey
+  sedan (vermilion tail lights = doctrine noise). Rounds h18 (flash hidden under the cop, souls small) -> h19 -> h20.
+  Board: evidence/item4b_street_life.png (before h17 / after h20 at 32/48/64 + mock + concept).

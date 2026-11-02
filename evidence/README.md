@@ -12,6 +12,8 @@ tick count, no RNG.
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
 | `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction, before / after, at 32, 48, 64 and 96 px/m (the night's showcase: `hero-d4d5-96ppm.png`) |
+| `item4b_street_life.png` | hero junction before (iter 1) / after street life (iter 2) at 32, 48, 64 + mock + concept |
+| `d5-cost.json` | GPU/CPU render cost of the D5 tier, 16 full rigs at 64 px/m (tracked) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Measurements
@@ -35,8 +37,11 @@ tick count, no RNG.
 1. **Building depth.** The mock's roofs cast hatched shadows and show a parapet wall; ours were flat squares.
    `look_d5_shadow.gdshader` (world-locked, hand-wobbled pen strokes) closes most of it in the hero scene. Next:
    the city lane places one shadow quad per building, offset from `look_d5.params.json` `shadow.offset_m`.
-2. **Street life.** The mock has cars, a hydrant, cones, a dumpster and the teal soul trail; the hero scene is empty.
-   Next: put the existing D4 props, a parked cruiser and the ghost trail into the hero scene (assets exist).
+2. **Street life.** CLOSED in the hero scene (iteration 2, `item4b_street_life.png`, round h20): a parked cruiser and
+   sedan, cop 2's muzzle flash + tracer + casings, an ink splat, and the teal soul trail (1 new Codex D5 soul sheet).
+   Vehicles/FX are the d4-production lane's raw D4 sheets, keyed into masters `borrowed/` and loaded by
+   `d5_hero.gd -- --borrow=<dir>`; nothing is installed. Next: when the vehicles/fx lanes install their sprites,
+   point D5HeroExtras at `res://` and drop `--borrow`; the D5 soul sheet goes to whoever owns the soul VFX.
 3. **Asphalt texture.** The mock's street is cross-hatched. A dense street hatch (r7) read as rain and was
    reverted; a sparse, patchy, darker one now prints from 64 px/m only (596e172; character dL vs surround 0.091 ->
    0.095, 0 px change at 32/48). Next: decide whether 48 px/m (car camera) gets a lighter version.
@@ -60,5 +65,10 @@ tick count, no RNG.
   frame change D5/D4 = 1.06 total, 0.97 for the high-frequency part: the D5 tier adds no shimmer. The zoom tween:
   `dev/showcase/d5_sweep.gd`, mean |D5 - D4| over Rivet = 0 at 51/53/55 px/m, then 0.003 / 0.022 / 0.046 / 0.064 /
   0.066 / 0.066 at 57-67 px/m: a monotone fade, no pop.
-- GPU cost of the D5 overlays (+1 sprite per part on up to 16 rigs) and the look_d5 layer: no bench run (no native
-  build here). Next: `node tools/bench/run.mjs` with the D5 tier forced on.
+- GPU cost, MEASURED (iteration 2): `dev/showcase/d5_cost.gd` puts 16 full rigs (CharacterRigs.MAX_FULL: Rivet,
+  7 cops, 8 peds) on screen at 64 px/m, walking, vsync off, 240 frames per tier after 30 warm-up frames, and reads the
+  viewport's measured render time (`d5-cost.json`, frames `cost-<tier>.png` in masters `frames/cost3`). RTX 4090,
+  d3d12, 1280x800, median GPU ms: D4 **0.083**, + D5 part overlays **0.137** (+0.054), + look_d5 world layer
+  **0.158** (+0.075 total). Render CPU 0.127 -> 0.256 ms (the overlay sprites double the canvas items). Runs 2 and 3
+  agree to 0.001 ms; run 1 read a higher baseline (0.208 / 0.270 / 0.335 = +0.127) and is kept as the spread.
+  Not measured: a min-spec GPU, and the GDScript cost of RigDetail's per-frame material updates (not in render CPU).
