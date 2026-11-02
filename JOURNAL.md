@@ -415,9 +415,9 @@ NEXT:
 - Owner review sheet for iteration 3 only: `masters:night/d4-production/ladder_iter3.png` (23 rows: before | after |
   target per item, in commit order; add 032f96c to the NEXT revert list above).
 - Session end for iteration 3 (stop time 00:41). Branch n-d4, tree clean after this entry; nothing pushed or merged.
-- 00:04 `night_iter3_summary.png` rebuilt from the final frames (`probe_fr/` = HEAD 032f96c): end of iteration 2
+- 00:02 `night_iter3_summary.png` rebuilt from the final frames (`probe_fr/` = HEAD 032f96c): end of iteration 2
   vs end of iteration 3 on 4 city frames + target. Checked city-2 at 48 px/m: the pavement is the 2 m grid
   (96 screen px), the 1 m look was a misread. Lane masters dir 852 MB (evidence + backups kept for revert).
-- 00:07 no-op probe: patch_soft with the tile border as a wall (`edge` arg) to catch outlines running off the tile;
+- 00:03 no-op probe: patch_soft with the tile border as a wall (`edge` arg) to catch outlines running off the tile;
   it finds no new outline px. The strong outline left in city-2 at 48 px/m is road_straight_v_tone_c's hatched
   crack edge (part of the grime), not a patch. Nothing installed.
