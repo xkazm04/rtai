@@ -9,7 +9,9 @@ extends Node
 ##     res://dev/noir/showcase_fight.tscn -- --out=<dir> [--zoom=1.5] [--ink] [--d4]
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--zoom", "--ink", "--d4", "--noir-parts"]
+const KNOWN_FLAGS: PackedStringArray = [
+	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat"
+]
 ## --noir-parts: the cop rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const NOIR_COP: String = "res://features/characters/art/noir/cop/"
 const NOIR_COP_PARTS: PackedStringArray = ["torso", "head_cap", "forearm_pistol"]
@@ -21,6 +23,7 @@ var _zoom: float = 1.5
 var _ink: bool = false
 var _d4: bool = false
 var _noir_parts: bool = false
+var _coats: NoirCoats = null
 var _frame: int = 0
 var _t: int = 0
 var _hold: int = 0
@@ -94,6 +97,8 @@ func _args() -> bool:
 			_d4 = true
 		elif flag == "--noir-parts":
 			_noir_parts = true
+		elif flag == "--coat":
+			_coats = NoirCoats.new()
 		else:
 			_ink = true
 	return true
@@ -119,6 +124,8 @@ func _process(_delta: float) -> void:
 		_t += 1
 		for cue: Array in _fight.step(_t, _rigs.feed):
 			_cue(cue)
+		if _coats != null:
+			_coats.step(_rigs, PackedInt32Array([NoirFightScript.COP_A, NoirFightScript.COP_B]))
 	if not _d4:
 		_view.noir.apply({"thresh": _thresh + (LIT if _flash.lit() else 0.0)})
 	var opening: bool = _t == 40 and not held
