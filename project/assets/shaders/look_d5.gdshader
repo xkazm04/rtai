@@ -26,6 +26,7 @@ uniform float ink_ghost = 0.22;    // strength of the off-register ink ghost
 uniform vec2 verm_mis = vec2(-2.0, 1.0);
 uniform float verm_ghost = 0.65;   // strength of the off-register vermilion pass
 uniform float age = 0.0;           // aged paper: warms the neutral print toward the mock's sepia (0 = off)
+uniform float age_floor = 0.0;     // aged paper below the D5 zoom (32 px/m too): a proposal for the D4 profile, 0 = off
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -61,7 +62,7 @@ void fragment() {
 	vec2 tx = SCREEN_PIXEL_SIZE;
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec3 c = texture(screen_tex, uv).rgb;
-	if (amount < 0.004) {
+	if (amount < 0.004 && age_floor < 0.004) {
 		COLOR = vec4(c, 1.0);
 	} else {
 		float d = dens(c);
@@ -92,7 +93,7 @@ void fragment() {
 		float chroma = max(o.r, max(o.g, o.b)) - min(o.r, min(o.g, o.b));
 		float neutral = 1.0 - smoothstep(0.12, 0.22, chroma);
 		vec3 aged = clamp(o * mix(AGE_DARK, AGE_LIGHT, dot(o, vec3(0.299, 0.587, 0.114))), 0.0, 1.0);
-		o = mix(o, aged, age * amount * neutral);
+		o = mix(o, aged, max(age * amount, age_floor) * neutral);
 		COLOR = vec4(o, 1.0);
 	}
 }
