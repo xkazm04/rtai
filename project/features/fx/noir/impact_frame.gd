@@ -7,8 +7,17 @@ extends CanvasLayer
 
 const SHADER: String = "res://assets/shaders/look_noir_impact.gdshader"
 const LAYER: int = 11
+## Mode 4 (the silhouette flash): the world and the noir pass are hidden for that tick and the
+## clear colour is this key, so every non-key pixel is an actor (or blood) and prints as ink.
+const KEY: Color = Color(0.0, 1.0, 0.0)
+const SILHOUETTE: int = 4
 
 var sequence: PackedInt32Array = PackedInt32Array([1, 3, 2])
+## What mode 4 hides (the world canvas, the noir pass); empty = mode 4 inks the whole frame.
+var hide_on_flash: Array[Node] = []
+var _shown: Dictionary[Node, bool] = {}
+var _clear: Color = Color.BLACK
+var _keyed: bool = false
 var _left: int = 0
 var _rect: ColorRect = ColorRect.new()
 var _mat: ShaderMaterial = ShaderMaterial.new()
@@ -36,6 +45,10 @@ func _init() -> void:
 func fire(screen_uv: Vector2) -> void:
 	_left = sequence.size()
 	_mat.set_shader_parameter(&"center", screen_uv)
+	if not _keyed:
+		_shown.clear()
+		for n: Node in hide_on_flash:
+			_shown[n] = n.get(&"visible")
 	_show()
 
 
@@ -59,3 +72,16 @@ func _show() -> void:
 		_mat.set_shader_parameter(&"aspect", view.x / maxf(view.y, 1.0))
 		var k: int = sequence.size() - _left
 		_mat.set_shader_parameter(&"mode", sequence[k])
+	var flash: bool = _left > 0 and sequence[sequence.size() - _left] == SILHOUETTE
+	_key(flash and not hide_on_flash.is_empty())
+
+
+func _key(on: bool) -> void:
+	if on == _keyed:
+		return
+	_keyed = on
+	if on:
+		_clear = RenderingServer.get_default_clear_color()
+	RenderingServer.set_default_clear_color(KEY if on else _clear)
+	for n: Node in _shown:
+		n.set(&"visible", false if on else _shown[n])

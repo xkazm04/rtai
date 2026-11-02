@@ -48,8 +48,10 @@ func _ready() -> void:
 	_world = built[0]
 	_view = built[1]
 	_view.zoom = _zoom
-	_view.add_child(_blood)
+	_blood.z_index = -1
+	_view.actor_layer().add_child(_blood)
 	add_child(_impact)
+	_impact.hide_on_flash = [_view, _view.noir]
 	add_child(_fx)
 	_fx.player_id = RIVET
 	_fx.locate = _locate
