@@ -16,6 +16,21 @@
    "sha256": "c88a144e0c042ede55a608bc39f284a729aae1ac367c84b468c65b3ee3dbace0",
    "tool": "codex-image"
   },
+  "d5_boss_intro_king": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_boss_intro_king.png",
+   "layout_template": "masters:night/d5-close/gen/refs/concept.jpg",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/boss_intro_king.txt",
+   "prompt_sha256": "e852476daed73cd5633db8c135bd94ff3ddaa231e25865daf98d06c9d5b8a6e4",
+   "references": [
+    "own: project/features/characters/art/d5/portraits/king.png (accepted D5 portrait, identity reference)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "8a026e53b94e5c3ab9c620dc589031827dbd79bbf9a9ccd471c3ecc33115f61d",
+   "tool": "codex-image"
+  },
   "d5_cop_a": {
    "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_cop_a.png",

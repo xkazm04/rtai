@@ -373,3 +373,7 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
 - 00:56 RE-MEASURED item 1 switch on the final shaders (sweep2, d5_sweep.gd, 51-67 px/m): |D5 tier - D4| mean 0 at
   51/53/55, then 0.0002 / 0.0009 / 0.0019 / 0.0027 / 0.0030 / 0.0032 (iteration 1: 0.0001 ... 0.0030): monotone, no
   pop. Walk shimmer (walk5) HF 1.024.
+- 00:58 Codex: 1 D5 boss intro card (King on his turntable, 71 s), 0 rejected; ledger 39. Installed
+  features/combat/art/d5/boss_intro_king.png (1920 px) + provenance; not wired (combat/HUD lane: Events.boss_engaged,
+  quest_rules 'boss-intro'). HONEST: the crown stencil printed vermilion, outside the prompt's vermilion list (King's
+  mark; kept, owner review). Board evidence/item5e_boss_intro.png.
