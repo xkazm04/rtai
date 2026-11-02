@@ -8,6 +8,10 @@ const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
 const CHURN_TICKS: int = 180
 const RING: Array[Vector2i] = [Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(0, -1)]
 
+const DENSE_RA: float = 45.0
+const DENSE_RB: float = 80.0
+const DENSE_R_MIN: float = 36.0
+
 var scenario: String = "drive"
 var route: BenchRoute = BenchRoute.new()
 var _city: CitySystem
@@ -24,6 +28,12 @@ func _init(city: CitySystem, p_scenario: String) -> void:
 		_city.focus = RIOT
 	else:
 		_city.spawner.targets = CityTargets.street(300, 90, 10)
+		if scenario == "drive_dense":
+			# the in-car 48 px/m view is 40 x 25 m: the same 400 actors in a tighter bubble
+			# (4x the density), still spawned off screen
+			_city.sim.set_radii(DENSE_RA, DENSE_RB, CitySystem.RIOT_R)
+			_city.spawner.rb = DENSE_RB
+			_city.spawner.r_min = DENSE_R_MIN
 		_city.focus = route.at(0.0)[0]
 	_city.target = _city.focus
 

@@ -12,14 +12,15 @@ import { ROOT, godotBin, run } from '../lib/repo.mjs';
 // Hard limits that fail the job (section 20); worstFrameMs has none (TEL-03 records > 25 ms).
 export const LIMITS = { p99CpuMs: 7, low1Fps: 45, worstSwapMs: 50 };
 // drive = the crowded-drive stress case (9.6 px/m, ~50 actors on screen); drive48 = the same lap
-// at the in-car gameplay camera (48 px/m, the owner's decision); riot = 400 actors on foot.
+// at the in-car gameplay camera (48 px/m, the owner's decision) with the 400 actors in a tighter
+// bubble so the 40 x 25 m view is crowded; riot = 400 actors on foot.
 const SCENARIOS = [
   { name: 'drive', scenario: 'drive', zoom: '0.3' },
-  { name: 'drive48', scenario: 'drive', zoom: '1.5' },
+  { name: 'drive48', scenario: 'drive_dense', zoom: '1.5' },
   { name: 'riot', scenario: 'riot', zoom: '1.0' },
   // the as-shipped presentation (vsync on): the stress runs above present uncapped with vsync
   // off, where DXGI blocks on the swap chain in ~32 ms trios (attributed `present`).
-  { name: 'drive48vsync', scenario: 'drive', zoom: '1.5', vsync: 'enabled' },
+  { name: 'drive48vsync', scenario: 'drive_dense', zoom: '1.5', vsync: 'enabled' },
 ];
 const EXE = join(ROOT, 'build', 'export', 'windows-bench', 'RTAI-bench.exe');
 const NATIVE_DLL = join(ROOT, 'project', 'native', 'bin', 'gtai_sim.windows.template_release.x86_64.dll');
