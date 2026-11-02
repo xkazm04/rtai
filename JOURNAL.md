@@ -255,3 +255,15 @@ NEXT (iteration 4 close, in order):
   print). Removed, never committed. Images this session: 4 generated, 0 rejected as images, 1 reverted in-engine.
   Lesson for the next parts round: at 32-64 px/m only bold, wide white shapes survive the part print and
   the noir threshold; thin lines (ridges, torso highlights) vanish.
+- (00:47) the kill snaps the victim 0.5 m away on the kill tick: in the silhouette flash Rivet and the cop
+  are two shapes with a gap, where before they were one knot (`evidence/snap-compare.png`, a modest gain).
+  The final clips were re-recorded at af6d3e2 (show-final/, --coat --noir-parts), along with the hero
+  sheet, the final crop and the ladder.
+- 00:51 Session close. Gates at af6d3e2 (`run.mjs --no-bench --allow-dirty`, the only dirty path is the
+  untracked evidence/ folder): lint (13 checks), 178 unit, 8 scenarios, parity (1200 steps, mutation
+  caught) and selftest all PASS. No processes left running (no Godot, no codex). Masters: ~415 MB in
+  night/noir. Images: 4 Codex (cop parts, coat, cap band, helmet), 0 rejected as images, the helmet
+  reverted in-engine. Leonardo 0 tokens. Provenance: 5 lines.
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, evidence/showcase-final-64-crop.png,
+  masters night/noir/show-final/*.mp4, evidence/ladder.png (16 rows). NEXT: see the list above
+  (iteration 4 close).
