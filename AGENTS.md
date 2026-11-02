@@ -22,6 +22,8 @@ Set `GODOT_BIN` to the Godot 4.7.2 console binary first (see `versions.toml`).
 | `node tools/tests/run_parity.mjs` | `just parity` | NAT-06 gate: native vs GDScript reference, 1200 steps exact + a planted mutation caught |
 | `"$GODOT_BIN" --headless --path project -s res://dev/bake_city.gd [-- --check]` | `just bake` | bakes the 256 GTCH chunks (git-ignored) + the golden hash list; `--check` = AST-12 |
 | `node tools/bench/run.mjs [--headless]` | `just bench` | exports `windows-bench`, runs the crowded drive + 400-actor riot, judges section 20 |
+| `"$GODOT_BIN" --headless --path project -s res://dev/bench/rig_bench.gd -- --out=build/evidence/rig-bench.json` | | F-09b rig stress at 50 and 200 people (16 full rigs, the rest baked), judges the section 20 rig cost |
+| `"$GODOT_BIN" --rendering-driver d3d12 --path project -s res://dev/showcase/rig_showcase.gd` | | Rivet, cops and peds at 32 and 48 px/m with `look_d4` + the baked crowd atlas -> `build/evidence/frames/` (needs a GPU) |
 | `node tools/evidence/run.mjs [--no-parity] [--no-bench] [--bench-headless]` | | also writes `scenario-tests`, `parity`, `bench` evidence |
 | (stub) | `just export`, `just audit` | land with the first export ticket |
 

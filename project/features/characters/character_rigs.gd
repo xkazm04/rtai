@@ -1,0 +1,141 @@
+class_name CharacterRigs
+extends Node2D
+## The characters view: full cutout rigs for the nearest MAX_FULL people within RADIUS_M of the
+## focus (LOD 0), the baked crowd atlas for everyone else (LOD 1, drawn by the city's MultiMesh
+## people layer). Render-side: it reads the 60 Hz tick from ctx.clock and steps each full rig
+## once per sim tick with TICK_DT (never a frame delta), draws no RNG stream, writes no state.
+## Integration (lane A): setup(ctx) once at load (prewarms the pools), fill `feed` every tick,
+## set `focus` (world px) and `zoom`, give the people layer `atlas` + CrowdAtlas.clip_table(),
+## and draw rows where full_row(i) is false from the atlas (cell: baked_cell(i, t)).
+
+const MAX_FULL: int = 16
+## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step
+## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true).
+const FULL_RATE: int = 6
+const RADIUS_M: float = 14.0
+const PX_PER_M: float = 32.0
+const MAX_STEPS: int = 4
+const PREWARM: Dictionary[int, int] = {
+	BodyPlan.Kind.RIVET: 1, BodyPlan.Kind.COP: MAX_FULL, BodyPlan.Kind.PED: MAX_FULL
+}
+
+var feed: RigFeed = RigFeed.new(512)
+var focus: Vector2 = Vector2.ZERO
+var zoom: float = 1.0
+var atlas: CrowdAtlas = CrowdAtlas.new()
+var prewarm_ms: float = 0.0
+## Per-frame cost of the rig work (selection + pose steps), for the section 20 rig budget.
+var last_us: int = 0
+var ticks_stepped: int = 0
+
+var _clock: SimClock = null
+var _last_tick: int = 0
+var _pool: RigPool = RigPool.new()
+var _by_actor: Dictionary[int, CutRig] = {}
+var _full: PackedByteArray = PackedByteArray()
+var _rank: Dictionary[int, int] = {}
+
+
+func setup(ctx: WorldContext) -> void:
+	_clock = ctx.clock
+	_last_tick = _clock.tick()
+	add_child(_pool)
+	for kind: int in PREWARM:
+		prewarm_ms += _pool.prewarm(kind as BodyPlan.Kind, PREWARM[kind])
+	Log.info("characters", "prewarmed %d rigs in %.1f ms" % [rig_count(), prewarm_ms])
+
+
+## Bakes the crowd atlas (await at load; a no-op headless).
+func bake_crowd() -> void:
+	var baker: CrowdBaker = CrowdBaker.new()
+	add_child(baker)
+	await baker.bake(atlas)
+	baker.queue_free()
+
+
+func _process(_delta: float) -> void:
+	if _clock == null:
+		return
+	var steps: int = clampi(_clock.tick() - _last_tick, 0, MAX_STEPS)
+	_last_tick = _clock.tick()
+	step_ticks(steps)
+
+
+## Selection, then `steps` fixed pose steps for every full rig. Tests and benches call it directly.
+func step_ticks(steps: int) -> void:
+	var t0: int = Time.get_ticks_usec()
+	PartMaterials.set_view(zoom)
+	_assign()
+	for _k: int in steps:
+		ticks_stepped += 1
+		for actor: int in _by_actor:
+			if _rank[actor] < FULL_RATE:
+				_by_actor[actor].drive(SimClock.TICK_DT)
+			elif (ticks_stepped + actor) % 2 == 0:
+				_by_actor[actor].drive(SimClock.TICK_DT * 2.0)
+	last_us = Time.get_ticks_usec() - t0
+
+
+func full_row(i: int) -> bool:
+	return i < _full.size() and _full[i] == 1
+
+
+func full_count() -> int:
+	return _by_actor.size()
+
+
+func rig_count() -> int:
+	var n: int = 0
+	for kind: int in PREWARM:
+		n += _pool.built_count(kind as BodyPlan.Kind)
+	return n
+
+
+func pool() -> RigPool:
+	return _pool
+
+
+func rig_for(actor_id: int) -> CutRig:
+	return _by_actor.get(actor_id, null)
+
+
+## The atlas cell of a row drawn by the crowd layer, at clip time t (s).
+func baked_cell(i: int, t: float) -> int:
+	var c: CrowdAtlas.Clip = CrowdAtlas.clip_of(feed, i)
+	return CrowdAtlas.cell_for(feed.look_of(i), c, t)
+
+
+func _assign() -> void:
+	var chosen: PackedInt32Array = RigSelect.nearest(feed, focus, RADIUS_M * PX_PER_M, MAX_FULL)
+	@warning_ignore("return_value_discarded")
+	_full.resize(feed.count)
+	_full.fill(0)
+	var keep: Dictionary[int, int] = {}
+	_rank.clear()
+	for r: int in chosen.size():
+		var i: int = chosen[r]
+		keep[feed.ids[i]] = i
+		_rank[feed.ids[i]] = r
+		_full[i] = 1
+	for actor: int in _by_actor.keys():
+		if not keep.has(actor):
+			_pool.release(_by_actor[actor])
+			@warning_ignore("return_value_discarded")
+			_by_actor.erase(actor)
+	for actor: int in keep:
+		var i: int = keep[actor]
+		if not _by_actor.has(actor):
+			_by_actor[actor] = _acquire(i)
+		RigInput.apply(_by_actor[actor], feed, i)
+
+
+func _acquire(i: int) -> CutRig:
+	var kind: BodyPlan.Kind = feed.kinds[i] as BodyPlan.Kind
+	var look: RigVariant = RigVariant.rivet()
+	if kind != BodyPlan.Kind.RIVET:
+		look = RigVariant.crowd(feed.look_of(i))
+		if look.kind != kind:  # a look of another body plan: fall back to the actor's own pick
+			look = RigVariant.crowd(RigVariant.crowd_index_for(feed.ids[i], kind))
+	var rig: CutRig = _pool.acquire(kind, look, feed.pos[i], feed.face[i])
+	rig.actor_id = feed.ids[i]
+	return rig

@@ -1,0 +1,76 @@
+extends GutTest
+## F-09b: the body plans resolve against the committed D4 parts, and every part a plan or a look
+## can ask for exists (a missing part would only show up as a blank limb in play).
+
+
+func test_rivet_plan_is_the_cutout_lanes() -> void:
+	var p: BodyPlan = RivetPlan.build()
+	assert_eq(p.kind, BodyPlan.Kind.RIVET)
+	assert_almost_eq(p.thigh_len, 166.0, 0.01)
+	assert_almost_eq(p.upper_len, 159.0, 0.01)
+	assert_true(p.has_collar() and p.has_hand() and p.has_hose() and p.has_endon())
+	assert_eq(p.gun_arm, BodyPlan.L, "the claw holds the gun")
+
+
+func test_human_plans_come_from_parts_json() -> void:
+	for p: BodyPlan in [HumanPlan.cop(), HumanPlan.ped()]:
+		assert_gt(p.thigh_len, 100.0, "%s thigh" % p.name)
+		assert_gt(p.shin_len, 100.0, "%s shin" % p.name)
+		assert_gt(p.shoulder[BodyPlan.R].y, 40.0, "%s shoulder span" % p.name)
+		assert_almost_eq(p.thigh_len, p.thigh_draw * HumanPlan.LEG_K, 0.01)
+		assert_false(p.limb_lod, "flat human limbs keep their own print")
+	assert_eq(HumanPlan.cop().shield_part, "shield")
+	assert_false(HumanPlan.ped().ready_stance, "civilians' arms hang")
+
+
+func test_every_part_a_plan_or_look_uses_exists() -> void:
+	var missing: PackedStringArray = PackedStringArray()
+	for kind: BodyPlan.Kind in [BodyPlan.Kind.RIVET, BodyPlan.Kind.COP, BodyPlan.Kind.PED]:
+		var p: BodyPlan = RigPool.plan_of(kind)
+		for part: String in _parts(p):
+			if not ResourceLoader.exists(PartLibrary.ART_ROOT + p.art_dir + "/" + part + ".png"):
+				@warning_ignore("return_value_discarded")
+				missing.append("%s/%s" % [p.art_dir, part])
+	for look: int in RigVariant.CROWD_COUNT:
+		var v: RigVariant = RigVariant.crowd(look)
+		var dir: String = RigPool.plan_of(v.kind).art_dir
+		for part: String in [v.head, v.torso]:
+			if not ResourceLoader.exists(PartLibrary.ART_ROOT + dir + "/" + part + ".png"):
+				@warning_ignore("return_value_discarded")
+				missing.append("look %d: %s/%s" % [look, dir, part])
+	assert_eq(missing, PackedStringArray(), "missing parts")
+
+
+func test_crowd_looks_split_cops_and_peds() -> void:
+	for id: int in 200:
+		var cop: int = RigVariant.crowd_index_for(id, BodyPlan.Kind.COP)
+		var ped: int = RigVariant.crowd_index_for(id, BodyPlan.Kind.PED)
+		assert_eq(RigVariant.crowd(cop).kind, BodyPlan.Kind.COP)
+		assert_eq(RigVariant.crowd(ped).kind, BodyPlan.Kind.PED)
+	assert_true(RigVariant.crowd(6).shield, "riot carries the shield")
+	assert_false(RigVariant.crowd(5).shield, "patrol does not")
+
+
+func _parts(p: BodyPlan) -> PackedStringArray:
+	var out: PackedStringArray = PackedStringArray([p.torso_part, p.head_part, p.pelvis_part])
+	out.append_array(p.thigh_part)
+	out.append_array(p.shin_part)
+	out.append_array(p.foot_part)
+	out.append_array(p.foot_toeoff)
+	out.append_array(p.upper_part)
+	out.append_array(p.fore_part)
+	out.append_array(p.endon_upper)
+	out.append_array(p.endon_fore)
+	for extra: String in [
+		p.collar_part,
+		p.hand_open,
+		p.hand_closed,
+		p.hand_pistol,
+		p.gun_cell,
+		p.shield_part,
+		p.hose_tex
+	]:
+		if extra != "":
+			@warning_ignore("return_value_discarded")
+			out.append(extra)
+	return out
