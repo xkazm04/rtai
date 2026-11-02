@@ -242,7 +242,7 @@ NEXT:
 - 00:01 gates: evidence tool (--no-parity --no-bench) ALL PASS at 5922a3d: lint 13/13, unit 149/0, scenarios 8/0, selftest ok (34 untracked evidence PNGs moved aside and restored).
 
 ## Summary (iteration 3, 23:09 -> 00:01)
-- Images: 5 Codex (d5_decals, d5_rivet_expressions, d5_king_expressions, d5_roof_union_hall, d5_finisher_drone after the summary; ledger 27 -> 32,
+- Images: 6 Codex (d5_decals, d5_rivet_expressions, d5_king_expressions, d5_roof_union_hall, d5_finisher_drone + d5_finisher_lightbar after the summary = 6; ledger 27 -> 33,
   masters gen/ledger.tsv), 0 rejected for camera breaks. One cell honestly renamed (King "commanding" -> "wary").
 - Kept: look_d5 aged paper (`age`, the mock's sepia at D5 zoom), `age_floor` proposal (off), finer/darker cast-shadow
   hatch, D5 street decals (stencil fist, STRIKE, chalk robot, scorch), D5 landmark roofs lifted to D4 tone (d**1.8),
@@ -272,3 +272,4 @@ NEXT:
   features/combat/art/d5/finisher_drone.png (1920x1081) + provenance; not wired (combat lane). Board item5d_finisher.png.
 NEXT (addendum): 7. Combat lane: flash `features/combat/art/d5/finisher_drone.png` full-screen for ~1 s on a finisher
 (the D5 "finisher" venue); more panels (cop baton, King) follow the same prompt (gen/_prompts/finisher_d5.txt).
+- 00:06 Codex: 2nd finisher panel (light bar off an empty cruiser), 0 rejected; ledger 33. Installed finisher_lightbar.png; board item5d_finisher.png shows both.
