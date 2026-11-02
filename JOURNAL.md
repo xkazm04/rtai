@@ -188,3 +188,9 @@ NEXT:
   h48 1.8 KEPT (bar 0.439 / 25%, mural 0.471 / 28%: D4 tone parity with the grime kept), h49 2.2 lost the grime.
   h50 = h48 (0 px). Board evidence/item11_roof_lift.png. item3_roofs_gate.png is the iteration-1 build (superseded).
   Hero frames = h50.
+- 23:32 item4 board rebuilt from h50 (mock / 32 / 48 / 64 / 96 / concept). Side by side the biggest remaining gap is
+  AT 32 px/m: cool grey vs the mock's warm sepia (and ink-heavy D4 roofs + a hard pavement grid: D4 lanes).
+- 23:33 MILESTONE: look_d5 `age_floor` (9c98937), default 0 = off (h51 = h50, 0 px in every tier/zoom). A/B h51af at
+  32 with 1.0 (params restored after, git clean): street 78,67,70 / paper 248,223,195 (mock 78,67,68 / 246,223,195),
+  paper-street dL 60.6 (= mock), verm-street dE 74.8 (mock 62.6). Board evidence/item12_age_floor_32.png. Proposal
+  for the visual-engine lane + owner (it changes the D4 gameplay frame, not mine to switch on).
