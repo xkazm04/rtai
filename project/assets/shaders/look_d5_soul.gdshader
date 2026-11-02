@@ -19,6 +19,10 @@ float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.545
 
 void fragment() {
 	vec4 c = COLOR;
+	// grain cells of ~1 screen px locked to the sprite (a screen-locked hash swims as the soul drifts); the
+	// derivative is taken here, before the discard, in uniform control flow
+	vec2 tex = UV / TEXTURE_PIXEL_SIZE;
+	vec2 cell = floor(tex / max(fwidth(tex), vec2(0.001)));
 	if (amount > 0.0 && c.a < 0.04) discard;
 	float lum = dot(c.rgb, vec3(0.299, 0.587, 0.114));
 	float sat = max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b));
@@ -26,7 +30,7 @@ void fragment() {
 	vec3 o = mix(TEAL_PALE, TEAL, smoothstep(0.68, 0.54, lum));   // the body: the art's mid tones a step down
 	o = mix(o, CREAM, smoothstep(rim_sat, rim_sat * 0.5, sat) * smoothstep(0.66, 0.76, lum));
 	o = mix(o, TEAL_INK, smoothstep(ink_at + 0.08, ink_at - 0.08, lum));
-	float g = 1.0 - 0.07 * hash(floor(FRAGCOORD.xy));
+	float g = 1.0 - 0.07 * hash(cell);
 	float a = mix(c.a, smoothstep(0.04, 0.5, c.a), amount);
 	COLOR = vec4(mix(c.rgb, o * g, amount), a * fade);
 }
