@@ -1,0 +1,65 @@
+{
+ "_doc": "D5 \"Inked Grime\" masters (GIT-06 tier 1) from the d5-close night lane. Files live outside git at C:/Users/kazda/kiro/gtai-masters/night/d5-close/ (gen/out raw Codex sheets, gen/_prompts prompts, gen/refs edit targets and references, tools build scripts).",
+ "masters": {
+  "d5_rivet_arms": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_rivet_arms.png",
+   "layout_template": "masters:night/d5-close/gen/refs/rivet_arms.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/rivet_arms.txt",
+   "prompt_sha256": "6843c813d7468c15756a5cfc6c84f118b1d2d9b583b15742c99bfb1d4db653d0",
+   "references": [
+    "own master: d4 parts-v2/rivet_arms.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "7c678d039c9f7be989f229f464fbd666df6cbae40d563cbc37667e42b1cb85db",
+   "tool": "codex-image"
+  },
+  "d5_rivet_hands": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_rivet_hands.png",
+   "layout_template": "masters:night/d5-close/gen/refs/rivet_hands.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/rivet_hands.txt",
+   "prompt_sha256": "219ae7a596f9e05324ce4ef1b5a733d71f36596664f29246f2f05c59e63f18b5",
+   "references": [
+    "own master: d4 parts-v2/rivet_hands.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "173b5f0d634a25a0f8f4d4ff7097fcf47499ef5715ed6099539ffa5c61f9587c",
+   "tool": "codex-image"
+  },
+  "d5_rivet_head": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_rivet_head.png",
+   "layout_template": "masters:night/d5-close/gen/refs/rivet_head.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/rivet_head.txt",
+   "prompt_sha256": "24a6946b509d64b1289398e21959be502431c4240c9082451c26ef8745509683",
+   "references": [
+    "own master: d4 parts-v2/rivet_head.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "ec3c4a980e1a5664a35bd052655916ae5c70dc161cca0938db6af57e9b0fb6dc",
+   "tool": "codex-image"
+  },
+  "d5_rivet_legs": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_rivet_legs.png",
+   "layout_template": "masters:night/d5-close/gen/refs/rivet_legs.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/rivet_legs.txt",
+   "prompt_sha256": "0405b309f1edfa87867c60d0b6cb82643272a1393d8c00011f99606ebc0e98ec",
+   "references": [
+    "own master: d4 parts-v2/rivet_legs.png (edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "a74ab704414ec861c737ffd9b5bc2f209b6aac2764a8fedc606e858a73867098",
+   "tool": "codex-image"
+  }
+ }
+}
