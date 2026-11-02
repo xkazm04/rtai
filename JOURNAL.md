@@ -166,12 +166,12 @@ NEXT:
   0.381, stripe energy 0.202 -> 0.193 at 64 (0.269 -> 0.244 at 32). Board evidence/item8_shadow_hatch.png; hero = h42.
 - 23:15 re-check after the aged paper (showcase r22 vs r21, full d5 stack, the d4/d5p tier mask): Rivet vs street dL
   0.166 -> 0.170 at 64, 0.183 -> 0.187 at 96 (street L 0.286 -> 0.282); d5 @32 0 px. No readability cost.
-- 23:18 hero wall-side crate stacks (h44). h43 barrel_cluster REJECTED: the project's barrels print vermilion
+- 23:16 hero wall-side crate stacks (h44). h43 barrel_cluster REJECTED: the project's barrels print vermilion
   (doctrine noise beside the cops; the mock's are grey). Pure-vermilion px h42 -> h44 unchanged. Hero frames = h44
   (d4 and d4d5 both refreshed).
-- 23:24 OWNER A/B (no change kept): Rivet steel lavender (kept) / halfway / concept mauve (concept body medians
+- 23:18 OWNER A/B (no change kept): Rivet steel lavender (kept) / halfway / concept mauve (concept body medians
   ~116,86,118 light, 68,41,83 mid). Rivet body vs street dL at 64/96: 0.166/0.183 / 0.115/0.129 / 0.065/0.075 (D4
   0.168/0.178). By eye mauve still reads (the cream rim does the silhouette) and is closer to the concept, but it
   fails the D4-parity gate by 61%. Temporary shader edits reverted (git clean). Board evidence/item9_steel_owner_ab.png.
-- 23:24 NOTE (city/d4-production lanes): lamp_post reads as a spoon lying on the pavement at 48-64 px/m (the mock's
+- 23:18 NOTE (city/d4-production lanes): lamp_post reads as a spoon lying on the pavement at 48-64 px/m (the mock's
   lamp is a kerb base + curved arm + round head). Not D5 scope; on the gap list.
