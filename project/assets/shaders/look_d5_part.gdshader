@@ -24,6 +24,8 @@ uniform float verm_gate = 48.0;   // r - max(g,b) (0..255) above which a pixel i
 uniform float alpha_cut = 0.45;
 uniform float grime = 0.10;        // dry-brush grime blotches
 uniform float ink_at = 0.74;       // density above which the (mip-softened) pen lines print solid ink
+uniform float plate_lod = 5.0;     // mip level at which a vermilion PLATE (the collar) is still vermilion
+uniform float rust_dry = 0.42;     // rust prints as vermilion mixed this far toward ink
 uniform float rust_lod = 3.0;      // mip level the rust must survive at (kills isolated specks: no shimmer)
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
@@ -78,7 +80,11 @@ void fragment() {
 		if (teal) {
 			o = TEAL;
 		} else if (red_lead(s) > verm_gate && red_lead(textureLod(TEXTURE, UV, rust_lod).rgb) > verm_gate * 0.6) {
-			o = d > 0.72 ? mix(VERM, INK, 0.55) : VERM;
+			// pure vermilion only where it is coherent at a coarse mip (the hazard collar = Rivet's signature);
+			// rust streaks print as dried rust, a vermilion-ink mix, so they never compete with the collar
+			bool plate = red_lead(textureLod(TEXTURE, UV, plate_lod).rgb) > verm_gate * 0.6;
+			o = plate ? VERM : mix(VERM, INK, rust_dry);
+			o = d > 0.72 ? mix(o, INK, 0.55) : o;
 		} else {
 			o = mix(CREAM, STEEL_HI, smoothstep(0.08, 0.16, d));
 			o = mix(o, STEEL_MID, smoothstep(0.42, 0.50, d));
