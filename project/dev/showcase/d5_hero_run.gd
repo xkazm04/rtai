@@ -80,6 +80,7 @@ func _ground() -> void:
 			idx += 1
 	_kerb_shadows()
 	_corners = D5HeroKerbs.corners(_world, PX)
+	_corners.append_array(D5HeroDecals.place(_world, PX))  # d5-tier world additions
 	for spot: Array in PROP_SPOTS:
 		_prop(spot)
 	if borrow_dir != "":
