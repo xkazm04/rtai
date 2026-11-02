@@ -40,8 +40,13 @@ export function runAccentAudit(outDir, out) {
   const frames = r.frames ?? [];
   const offenders = frames.flatMap((f) => f.offenders.map((o) => `${f.ppm} px/m ${o}`));
   const share = frames.map((f) => `${f.ppm}: ${(f.frame_share * 100).toFixed(2)} %`).join(', ');
+  // the atlas crowd split at the source: a pedestrian look with vermilion outside its hit flash
+  const looks = r.crowd_atlas_by_look ?? [];
+  for (const l of looks.filter((x) => x.off_doctrine)) offenders.push(`crowd look ${l.look} (${l.tag}) ${l.vermilion} vermilion texels`);
+  const crowd = looks.length ? `; crowd atlas ${looks.filter((x) => x.kind === 'ped' && !x.off_doctrine).length}/`
+    + `${looks.filter((x) => x.kind === 'ped').length} pedestrian looks on doctrine` : '';
   return { frames, offenders,
-    summary: `accent pixels ${share}; ${offenders.length ? `off-doctrine: ${offenders.join('; ')}` : 'no off-doctrine accents'}` };
+    summary: `accent pixels ${share}${crowd}; ${offenders.length ? `off-doctrine: ${offenders.join('; ')}` : 'no off-doctrine accents'}` };
 }
 
 export function runSelftest(outDir) {

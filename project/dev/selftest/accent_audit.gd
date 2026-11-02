@@ -46,7 +46,8 @@ func _audit(ppm: int) -> Dictionary:
 	var people: Array[CanvasItem] = [_view.crowd.nodes[SimConst.RL_PEDS], _characters.rigs]
 	layers["actors"] = _pair(full - await _count(people, ""))
 	layers["vehicles"] = _pair(full - await _count([_view.crowd.nodes[SimConst.RL_CARS]], ""))
-	layers["fx"] = _pair(full - await _count([_view.crowd.nodes[SimConst.RL_BULLETS]], ""))
+	var fx: Array[CanvasItem] = [_view.crowd.nodes[SimConst.RL_BULLETS], _view.fx]
+	layers["fx"] = _pair(full - await _count(fx, ""))
 	var by_kind: Dictionary = await _by_kind(full)
 	var offenders: Array[String] = []
 	for layer: String in layers:
@@ -104,6 +105,39 @@ func _count(hide: Array[CanvasItem], save_as: String) -> Vector2i:
 	return _palette.count_accents(img, STRIDE)
 
 
+## The atlas crowd is one MultiMesh, so its accents are split here at the source: the baked
+## atlas texels of each look (one row of CrowdAtlas cells), classified like a frame (raw texels,
+## before the item print). The HIT clip's vermilion flash is a danger cue (counted apart); a
+## pedestrian look with vermilion anywhere else is an off-doctrine source.
+func _atlas_by_look() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var tex: Texture2D = _characters.rigs.atlas.texture
+	if tex == null:
+		return out
+	var img: Image = tex.get_image()
+	@warning_ignore("return_value_discarded")
+	img.save_png(_out.path_join("crowd-atlas.png"))
+	var c: int = CrowdAtlas.CELL_PX
+	for look: int in CrowdAtlas.rows():
+		var row: Image = img.get_region(Rect2i(0, look * c, CrowdAtlas.cols() * c, c))
+		var v: RigVariant = RigVariant.crowd(look)
+		var n: Vector2i = _palette.count_accents(row, STRIDE)
+		var hit_x: int = CrowdAtlas.CLIP_FIRST[CrowdAtlas.Clip.HIT] * c
+		var hit_w: int = CrowdAtlas.FRAMES[CrowdAtlas.Clip.HIT] * c
+		var hit: Vector2i = _palette.count_accents(
+			img.get_region(Rect2i(hit_x, look * c, hit_w, c)), STRIDE
+		)
+		var cell: Dictionary = _pair(n - hit)
+		cell["hit_flash"] = _pair(hit)
+		cell["look"] = look
+		cell["tag"] = v.tag
+		var kind: String = BodyPlan.Kind.find_key(v.kind)
+		cell["kind"] = kind.to_lower()
+		cell["off_doctrine"] = v.kind == BodyPlan.Kind.PED and n.x - hit.x > 0
+		out.append(cell)
+	return out
+
+
 static func _pair(v: Vector2i) -> Dictionary:
 	return {"vermilion": maxi(v.x, 0), "teal": maxi(v.y, 0)}
 
@@ -118,6 +152,7 @@ func _write(rows: Array[Dictionary]) -> void:
 		"ok": offenders == 0,
 		"stride": STRIDE,
 		"frames": rows,
+		"crowd_atlas_by_look": _atlas_by_look(),
 		"gpu": RenderingServer.get_video_adapter_name(),
 	}
 	var f: FileAccess = FileAccess.open(_out.path_join("accent-audit.json"), FileAccess.WRITE)

@@ -104,6 +104,12 @@ on a layer the table does not allow is listed as an offender. First run (2026-11
 frame vermilion at 32 and 48 px/m (all of it actors: the cops), 0.26 % at 64; one offender, 216 px of
 vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an asset for d4-production).
 
+The atlas crowd is one MultiMesh, so it is split **at the source** (`crowd_atlas_by_look`): each look's row of
+the baked crowd atlas is classified texel by texel (raw, before the item print), with the HIT clip counted
+apart (`hit_flash`: its first frame is a full vermilion flash, a danger cue). A pedestrian look with
+vermilion outside the flash is an offender. 2026-11-02: all 6 pedestrian looks 0 (676-830 texels each in
+the hit flash only), cops 24.7k-29.3k (+2.7-3.1k flash). The `fx` band now also hides the FxSystem.
+
 ## The 2D light model (`light_layer.gd`, `light_pool.gd`, `light_ink.gdshader`, `data/tables/lights.json`)
 
 The `light` canvas (screen space, above the actors, below the world UI) holds two bands:
