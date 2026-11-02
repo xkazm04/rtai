@@ -358,3 +358,8 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   stencil). Honest note: at 128 the shadow hatch (period 0.16 m in world space) is coarse and stripy, the same as the
   building shadows at that zoom; next: scale look_d5_shadow's period with zoom above 96 px/m. Frames
   evidence/arena-d4d5-{64,128}ppm.png; ladder +1 row.
+- 00:52 MILESTONE: look_d5_shadow `zoom` uniform: above 64 px/m the world period shrinks (period / max(1, zoom/2)) so
+  strokes stay ~10 screen px apart instead of 15-20 px stripes. 0 px at 32/48/64 (hero h69 vs h70, arena a10 vs a11);
+  at 96/128 the building, kerb and King shadows read as pen hatch, not hazard stripes. Still world-locked (no pan
+  swim); the period re-lays only while the zoom changes. The hero/arena scenes set it per tier. Hero frames 96/128
+  = h70; arena 128 = a11. Ladder +1 row. (d5_hero_run.gd is 239 lines: over the ~200 guide, under the 300 stop.)

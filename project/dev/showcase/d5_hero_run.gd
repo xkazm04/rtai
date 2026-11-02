@@ -222,6 +222,7 @@ func _tier(tier: String) -> void:
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
+		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
 	for c: Node2D in _corners:
 		c.visible = tier == "d5"
 	var walk: Texture2D = (

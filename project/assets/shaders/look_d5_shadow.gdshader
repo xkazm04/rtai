@@ -10,6 +10,8 @@ uniform float period = 5.0;    // world px between strokes (0.16 m)
 uniform float tint = 0.36;     // ink alpha between the strokes
 uniform float stroke = 0.85;   // ink alpha of a stroke
 uniform float cov = 0.42;      // stroke width as a fraction of the period
+uniform float zoom = 1.0;      // camera zoom (1 = 32 px/m): above 2 (64 px/m) the world period shrinks so the
+                               // strokes stay ~10 screen px apart (at 128 px/m they read as coarse stripes)
 
 varying vec2 w;
 
@@ -29,10 +31,11 @@ void fragment() {
 	vec2 dir = vec2(0.7071, 0.7071);
 	float along = dot(w, vec2(-dir.y, dir.x));
 	float across = dot(w, dir) + (vnoise(vec2(along * 0.05, 1.7)) - 0.5) * 2.2;
-	float row = floor(across / period);
+	float per = period / max(1.0, zoom * 0.5);
+	float row = floor(across / per);
 	float press = 0.6 + 0.8 * vnoise(vec2(along * 0.03, row * 1.9));
 	float gap = step(0.2, vnoise(vec2(along * 0.06, row * 4.3)));
-	float f = abs(fract(across / period) - 0.5) * 2.0;
+	float f = abs(fract(across / per) - 0.5) * 2.0;
 	float line = (1.0 - smoothstep(cov * press - 0.15, cov * press + 0.15, f)) * gap;
 	COLOR = vec4(0.090, 0.075, 0.106, mix(tint, stroke, line) * texture(TEXTURE, UV).a);
 }

@@ -74,6 +74,7 @@ func _king_shadow(king: Sprite2D) -> void:
 func _tier(tier: String) -> void:
 	if _shadow_node != null:
 		_shadow_node.visible = tier == "d5"
+		(_shadow_node.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
 
 
 ## Rivet on the turntable's hazard ring, the cops closing from the open floor.
