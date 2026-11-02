@@ -158,3 +158,39 @@ NEXT (iteration 3 / morning):
   (danger cue) counted apart. 6/6 pedestrian looks 0 vermilion outside it; cops 24.7-29.3k texels.
   crop: 03-accents/iter4/ped-hit-cells.png. FRICTION: a parse error in a windowed selftest scene never quits
   (I killed my own PID 46452); run.mjs has a 180 s timeout so the evidence run would not hang forever.
+- Evidence 22:51 at 9765862 (f4c53b1): lint 13/13, unit 182, scenarios 8, parity bit-exact + mutation caught,
+  selftest: goldens 10/10 (worst 0.74), accent 0.95 / 0.95 / 0.25 %, crowd atlas 6/6 ped looks on doctrine,
+  1 off-doctrine world source (traffic_light.png, 216 px at 32 px/m, unchanged).
+- MILESTONE emissive FX (0b60126): the additive paper light lifted the sheet's vermilion blast core to peach
+  (73-84 % of warm px in the vermilion gate) -> emissive kinds (muzzle, tracer, explosion, spark, crackle) draw on
+  a new `emissive` canvas (layer 4) above the lights via an FxSystem glow twin; world_ui -> 5. 91-96 % in the gate.
+  Frames 07-fx-atlas/ab3-{48,64}ppm.png. Ladder rows 07, 08, 09 added (ladder.png now 1280 x 4370).
+- MILESTONE GPU costs, finally with numbers (interleaved blocks, median, 3 runs each, shared GPU 10-33 %):
+  lights full budget (32 fires) +0.29 / +1.13 / +1.35 ms; D5 overlay at 64 px/m +0.90 / +1.15 / +1.51 ms
+  (0 at 32/48). Both are fill-rate bound. evidence/light-cost/, evidence/overlay-cost/.
+- Frames rejected tonight (iteration 4): 0 for camera (all engine captures straight down); 1 approach
+  partly rejected and redone: the linear fx fade (grey stipple) -> fade_from. No AI images generated (no codex
+  image_gen this session), so no provenance lines.
+
+NEXT (iteration 5 / morning, in order):
+1. After the Director merges n-d4 and n-d5: the FX sheet and look_d5 go live with no code change. Then
+   (a) run look_golden: the -ov goldens were blessed with n-d5 157dec8 - if look_d5 changed after that, re-bless
+   the 5 -ov files only and look at them; (b) run fx_showcase + accent_audit; (c) delete my placeholder `d5`
+   profile row only if the owner agrees the overlay replaces it (it is unused once the overlay is live).
+2. Owner call: amount at 48 px/m = 0 (shipped, the brief) or 0.35 (d5-close's stop). One number in
+   look_profiles.json `overlays[0].amount_ppm`.
+3. D5 overlay GPU (+0.9-1.5 ms at 64 px/m on a 4090): ask d5-close for a cheaper look_d5 (fewer vnoise taps)
+   or render it at half resolution in a SubViewport; measure on the Deck.
+4. Rig p99 still above 0.3 ms: RigPose.step 55 % + RigGait.step 37 % of CutRig.drive (~34 us each). Candidates
+   for the characters owner: a cheaper pose for ranks >= FULL_RATE (no secondary motion), quarter rate for
+   ranks >= 10, or the pose in native. Selection decimation (151a079) gave -12 %.
+5. Gameplay wiring still BLOCKED on positional events (shot_fired / bullet_hit / exploded with a world pos)
+   in events.json (shared file, owner OK). With them: FxSystem.spawn + CameraRig.kick + LightLayer.add.
+   The camera already follows vehicle_entered / vehicle_exited.
+6. d4-production asks: traffic_light.png lamps (vermilion in the world); a charcoal smoke row (smoke cells read
+   cream); optionally a vermilion-free tracer (it is emissive and fine as is).
+7. Lights on the Deck: cap fires at 8-16 or a smaller radius if the Deck shows the same fill cost.
+- MILESTONE final bench 23:00-23:04 (fd1703f, CPU 7 % / GPU 10 % before): PASSES - p99 3.78 ms, 1% low 155 fps,
+  worst swap 32 ms, 0 frames > 50 ms (49 > 25 ms, all vsync/present). Riot rig 0.457 ms per tick, p99 0.501
+  (idle HEAD run: 0.474 / 0.511): in the release build the selection decimation is only -2..-4 %; the 0.3 ms
+  target is NOT met. evidence/bench-*-final.json, evidence/bench-final-iter4.txt.
