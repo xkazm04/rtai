@@ -15,6 +15,11 @@ uniform float line_inner = 0.10;   // the burst's clear radius (screen heights)
 uniform float flash_cut = 0.2;     // mode 2: luminance under which a pixel stays ink
 uniform float aspect = 1.7778;
 uniform vec3 key = vec3(0.0, 1.0, 0.0);
+// the held panel (after the sequence): the kill framed as a comic panel, paper gutters outside
+uniform float panel = 0.0;
+uniform vec2 panel_center = vec2(0.5);
+uniform vec2 panel_half = vec2(0.36, 0.38);
+uniform float panel_line = 0.006;
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -45,5 +50,10 @@ void fragment() {
 	float burst = on * smoothstep(r0, r0 + 0.08, length(d)) * lines * step(0.5, hash(k + 3.0) + 0.3);
 	vec3 line_col = (mode == 1 || mode >= 3) ? INK : PAPER;
 	col = mix(col, line_col, burst * float(mode > 0));
-	COLOR = vec4(col, float(mode > 0));
+	vec2 q = abs(SCREEN_UV - panel_center) - panel_half;
+	float outside = step(0.0, max(q.x, q.y));
+	float border = step(-panel_line, max(q.x, q.y)) * (1.0 - outside);
+	vec3 framed = mix(mix(c, INK, border), PAPER, outside);
+	col = mix(col, framed, panel);
+	COLOR = vec4(col, max(float(mode > 0), panel));
 }

@@ -20,6 +20,9 @@ var _d4: bool = false
 var _frame: int = 0
 var _t: int = 0
 var _hold: int = 0
+## The hit-stop starts after the flash ticks, so the held pose is the knockback, not the wind-up.
+var _hold_in: int = 0
+var _hold_len: int = 0
 var _live: bool = false
 var _heroes: Dictionary[int, String] = {}
 var _thresh: float = 0.46
@@ -64,7 +67,7 @@ func _ready() -> void:
 	# D4 has no comic beat: --d4 keeps the blood and the hit-stop, not the impact frames.
 	_fx.bind(Events, _blood, null if _d4 else _impact)
 	@warning_ignore("return_value_discarded")
-	_fx.hit_stop.connect(func(t: int) -> void: _hold = t)
+	_fx.hit_stop.connect(_on_hit_stop)
 	await chars.bake()
 	await _view.prewarm()
 	_live = true
@@ -92,6 +95,9 @@ func _process(_delta: float) -> void:
 	if not _live:
 		return
 	_frame += 1
+	if _hold_in > 0:
+		_hold_in -= 1
+		_hold = _hold_len if _hold_in == 0 else _hold
 	var held: bool = _hold > 0
 	_world.process_mode = Node.PROCESS_MODE_DISABLED if held else Node.PROCESS_MODE_INHERIT
 	_hold = maxi(_hold - 1, 0)
@@ -131,8 +137,16 @@ func _cue(cue: Array) -> void:
 			Events.player_hit.emit(&"pistol")
 		"kill":
 			Events.actor_killed.emit(NoirFightScript.RIVET, id, &"melee")
-			for k: int in [1, 2, 4, 30]:
+			for k: int in [1, 2, 4, 7, 30]:
 				_heroes[_frame + k] = "kill%d" % id
+
+
+func _on_hit_stop(ticks: int) -> void:
+	if _d4:
+		_hold = ticks
+	else:
+		_hold_in = _impact.sequence.size()
+		_hold_len = ticks
 
 
 func _save(f: int, tag: String) -> void:

@@ -13,6 +13,10 @@ const KEY: Color = Color(0.0, 1.0, 0.0)
 const SILHOUETTE: int = 4
 
 var sequence: PackedInt32Array = PackedInt32Array([1, 3, 2])
+## After the sequence: the held panel, this many ticks (a comic panel border around the kill).
+var panel_ticks: int = 0
+## The panel's half size in screen uv.
+var panel_half: Vector2 = Vector2(0.36, 0.38)
 ## What mode 4 hides (the world canvas, the noir pass); empty = mode 4 inks the whole frame.
 var hide_on_flash: Array[Node] = []
 var _shown: Dictionary[Node, bool] = {}
@@ -38,13 +42,23 @@ func _init() -> void:
 		var seq: Array = u.get("sequence", [])
 		if not seq.is_empty():
 			sequence = PackedInt32Array(seq)
+		panel_ticks = u.get("panel_ticks", panel_ticks)
+		var half: Array = u.get("panel_half", [])
+		if half.size() == 2:
+			var hx: float = half[0]
+			var hy: float = half[1]
+			panel_half = Vector2(hx, hy)
 
 
 ## Starts the beat (shown this frame: call step_ticks before fire() each tick), the burst
 ## centred on `screen_uv`.
 func fire(screen_uv: Vector2) -> void:
-	_left = sequence.size()
+	_left = sequence.size() + panel_ticks
 	_mat.set_shader_parameter(&"center", screen_uv)
+	var gutter: Vector2 = panel_half + Vector2(0.03, 0.04)
+	var c: Vector2 = screen_uv.clamp(gutter, Vector2.ONE - gutter)
+	_mat.set_shader_parameter(&"panel_center", c)
+	_mat.set_shader_parameter(&"panel_half", panel_half)
 	if not _keyed:
 		_shown.clear()
 		for n: Node in hide_on_flash:
@@ -70,9 +84,11 @@ func _show() -> void:
 			_rect.get_viewport_rect().size if _rect.is_inside_tree() else Vector2(16, 9)
 		)
 		_mat.set_shader_parameter(&"aspect", view.x / maxf(view.y, 1.0))
-		var k: int = sequence.size() - _left
-		_mat.set_shader_parameter(&"mode", sequence[k])
-	var flash: bool = _left > 0 and sequence[sequence.size() - _left] == SILHOUETTE
+		var k: int = sequence.size() + panel_ticks - _left
+		_mat.set_shader_parameter(&"mode", sequence[k] if k < sequence.size() else 0)
+		_mat.set_shader_parameter(&"panel", 1.0 if k >= sequence.size() else 0.0)
+	var k_now: int = sequence.size() + panel_ticks - _left
+	var flash: bool = _left > 0 and k_now < sequence.size() and sequence[k_now] == SILHOUETTE
 	_key(flash and not hide_on_flash.is_empty())
 
 

@@ -29,6 +29,7 @@ func test_silhouette_flash_hides_then_restores() -> void:
 	var impact: ImpactFrame = ImpactFrame.new()
 	add_child_autofree(impact)
 	impact.sequence = PackedInt32Array([4, 1])
+	impact.panel_ticks = 0
 	var world: Node2D = Node2D.new()
 	add_child_autofree(world)
 	impact.hide_on_flash = [world]
@@ -39,3 +40,15 @@ func test_silhouette_flash_hides_then_restores() -> void:
 	impact.step_ticks(1)
 	assert_false(impact.active())
 	assert_true(world.visible)
+
+
+func test_held_panel_follows_the_sequence() -> void:
+	var impact: ImpactFrame = ImpactFrame.new()
+	add_child_autofree(impact)
+	impact.sequence = PackedInt32Array([4, 4, 1])
+	impact.panel_ticks = 8
+	impact.fire(Vector2(0.9, 0.1))
+	impact.step_ticks(10)
+	assert_true(impact.active(), "the panel holds 8 ticks after the 3 flash ticks")
+	impact.step_ticks(1)
+	assert_false(impact.active())
