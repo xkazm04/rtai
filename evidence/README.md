@@ -75,7 +75,9 @@ tick count, no RNG.
    seen at 2.2. Tried on temporary copies (`item14_d4_roof_lift_proposal.png`, nothing committed): OSHA 0.482 ->
    0.538 L, paper 26% -> 38%. What is left is the roofs' thick hatched border ring (roof art).
 3. **Pavement grid.** Ours: a hard white slab grid with black joints; the mock: soft, irregular slab joints. Next:
-   city lane's pavement tile (the D5 sidewalk tile helped only marginally).
+   city lane's pavement tile (the D5 sidewalk tile helped only marginally). Iteration 3 tried softening the D5
+   tile's joints (h55): the look_d4 print re-inks them (dark px 25.3% -> 23.9%), reverted. The joint weight lives in
+   look_d4's print thresholds or needs a thinner-jointed tile.
 4. **Lamp post** reads as a spoon lying on the pavement (mock: kerb base + curved arm + round head). City props.
 5. **Parapets / building height.** The mock's roofs read as raised slabs; ours rely on the cast-shadow hatch (now a
    proper hatched shadow, h42). Next: a parapet wall face on the south/east roof edges (roof art or a quad).
