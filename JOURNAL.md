@@ -148,3 +148,10 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   `after_hud2` vs `after_pr_city` (city-0): bolder silhouettes on the paving (newsstand, vending, barrier, bollard now
   an ink ring, sign); on the charcoal road the stroke is invisible (ink on ink), neutral in the city frame. Kept.
   Originals: `masters:night/d4-production/work/props_orig/`.
+- 22:44 MILESTONE cash token. In the 32 px/m item-pass board the old cash token (grey banknote bundle, hatched) was
+  the muddiest glyph. Codex `d4n_cash` (image 16 of the night; refs: template, the d4n_pickups sheet as anchor, the
+  target frame): 4 cash redesigns + 4 value tiers, all solid ink silhouettes. **1 of 8 rejected** (folded bill reads
+  as an envelope). Probe of all candidates in-engine (`probe_cash/`), picked cell 1 (one ink note + vermilion strap)
+  as `cash.png`; tiers `cash_coins`, `cash_bundle`, `cash_bag` added (optional). Before/after `after_k|after_k2`.
+  Provenance: 4 new lines (cash) + 20 props + 6 HUD frames (`tools/prov_rev.py`: the file's last line + new sha + edit).
+  Board pitch 2.0 -> 1.6 m so 15 tokens fit (dev only).
