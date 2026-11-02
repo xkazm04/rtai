@@ -98,3 +98,9 @@ NEXT (iteration 3 / morning):
    or a second capture with cop variants masked); make it gating once the traffic light is redrawn.
 6. Lights GPU cost on an idle GPU + the Deck; the night grade needs the owner's eye (frames 04b).
 7. FX sheet from d4-production -> replace the analytic shapes (texture + frames per kind).
+- 22:13 evidence run (`node tools/evidence/run.mjs --no-bench`, commit 82d4036): lint PASS, unit 171 PASS,
+  scenarios 8 PASS, parity PASS (bit-exact, mutation caught), selftest PASS (goldens 10/10 worst 0.00;
+  accent 0.95 % / 0.95 % / 0.26 %, 1 off-doctrine world source = traffic_light.png). Copied to evidence/pof/.
+  Ladder: gtai-masters/night/visual-engine/ladder.png (00 baseline .. 06 camera). Frames rejected tonight: 0
+  (every capture is the straight-down engine camera); 1 approach reverted: the stipple light edges (04).
+  AI assets generated: none (no codex image_gen this session), so no provenance lines.

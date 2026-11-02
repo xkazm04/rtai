@@ -1,0 +1,314 @@
+{
+  "barksMissing": [],
+  "beatsReached": 6,
+  "cash": 1500,
+  "checks": {
+    "allBarksFired": true,
+    "allBeatLinesShown": true,
+    "allBeatsReached": true,
+    "cashPaid": true,
+    "contractCompletedOnce": true,
+    "contractStartedOnce": true,
+    "heatClamped": true,
+    "loaded": true,
+    "succeeded": true,
+    "unlocksGranted": true
+  },
+  "engineVersion": "4.7.2-stable (official)",
+  "events": [
+    "0 wanted_changed [2]",
+    "0 contract_started [\"collect-call\"]",
+    "350 whispers_spiked []",
+    "756 wanted_changed [1]",
+    "876 wanted_changed [0]",
+    "1841 whispers_spiked []",
+    "6497 wanted_changed [3]",
+    "6498 wave_started [\"Dock 9 bonded storage\",1]",
+    "6528 actor_killed [1,101,\"shot\"]",
+    "6558 actor_killed [1,102,\"shot\"]",
+    "6588 actor_killed [1,103,\"shot\"]",
+    "6618 actor_killed [1,104,\"shot\"]",
+    "6648 actor_killed [1,105,\"shot\"]",
+    "6678 actor_killed [1,106,\"shot\"]",
+    "6708 actor_killed [1,107,\"shot\"]",
+    "6738 actor_killed [1,108,\"shot\"]",
+    "6739 wave_started [\"Dock 9 bonded storage\",2]",
+    "6769 actor_killed [1,109,\"shot\"]",
+    "6799 actor_killed [1,110,\"shot\"]",
+    "6829 actor_killed [1,111,\"shot\"]",
+    "6859 actor_killed [1,112,\"shot\"]",
+    "6889 actor_killed [1,113,\"shot\"]",
+    "6919 actor_killed [1,114,\"shot\"]",
+    "6949 actor_killed [1,115,\"shot\"]",
+    "6979 actor_killed [1,116,\"shot\"]",
+    "7009 actor_killed [1,117,\"shot\"]",
+    "7010 wanted_changed [4]",
+    "7010 wanted_changed [3]",
+    "7011 wave_started [\"Dock 9 bonded storage\",3]",
+    "7041 actor_killed [1,118,\"shot\"]",
+    "7071 actor_killed [1,119,\"shot\"]",
+    "7101 actor_killed [1,120,\"shot\"]",
+    "7131 actor_killed [1,121,\"shot\"]",
+    "7161 actor_killed [1,122,\"shot\"]",
+    "7191 actor_killed [1,123,\"shot\"]",
+    "7221 actor_killed [1,124,\"shot\"]",
+    "7251 actor_killed [1,125,\"shot\"]",
+    "7281 actor_killed [1,126,\"shot\"]",
+    "7311 actor_killed [1,127,\"shot\"]",
+    "7312 wave_started [\"Dock 9 bonded storage\",4]",
+    "7342 actor_killed [1,128,\"shot\"]",
+    "7372 actor_killed [1,129,\"shot\"]",
+    "7402 actor_killed [1,130,\"shot\"]",
+    "7432 actor_killed [1,131,\"shot\"]",
+    "7462 actor_killed [1,132,\"shot\"]",
+    "7492 actor_killed [1,133,\"shot\"]",
+    "7522 actor_killed [1,134,\"shot\"]",
+    "7552 actor_killed [1,135,\"shot\"]",
+    "7582 actor_killed [1,136,\"shot\"]",
+    "7612 actor_killed [1,137,\"shot\"]",
+    "7613 wave_started [\"Dock 9 bonded storage\",5]",
+    "7643 actor_killed [1,138,\"shot\"]",
+    "7673 actor_killed [1,139,\"shot\"]",
+    "7703 actor_killed [1,140,\"shot\"]",
+    "7733 actor_killed [1,141,\"shot\"]",
+    "7763 actor_killed [1,142,\"shot\"]",
+    "7793 actor_killed [1,143,\"shot\"]",
+    "7823 actor_killed [1,144,\"shot\"]",
+    "7853 actor_killed [1,145,\"shot\"]",
+    "7883 actor_killed [1,146,\"shot\"]",
+    "7913 actor_killed [1,147,\"shot\"]",
+    "7943 actor_killed [1,148,\"shot\"]",
+    "8185 boss_engaged [\"quartermaster-mertz\"]",
+    "8470 attack_telegraphed [\"robo-tazer\"]",
+    "8731 player_hit [\"robo-tazer\"]",
+    "8731 whispers_spiked []",
+    "8972 actor_killed [1,900,\"shot\"]",
+    "8975 whispers_spiked []",
+    "9096 wanted_changed [2]",
+    "9216 wanted_changed [1]",
+    "9336 wanted_changed [0]",
+    "10227 contract_completed [\"collect-call\"]"
+  ],
+  "finalState": "succeeded",
+  "heatClamps": 1,
+  "linesMissing": [],
+  "linesShown": [
+    {
+      "bark": false,
+      "beat": 0,
+      "id": "rivet-line-stopped",
+      "speaker": "rivet",
+      "tick": 0
+    },
+    {
+      "bark": true,
+      "beat": 0,
+      "id": "rivet-my-hands",
+      "speaker": "rivet",
+      "tick": 350
+    },
+    {
+      "bark": true,
+      "beat": 0,
+      "id": "rivet-third-person",
+      "speaker": "rivet",
+      "tick": 756
+    },
+    {
+      "bark": false,
+      "beat": 1,
+      "id": "patch-collect-call",
+      "speaker": "patch",
+      "tick": 1094
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "rivet-who-is-this",
+      "speaker": "rivet",
+      "tick": 1445
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "fax-slow-motion",
+      "speaker": "don-fax",
+      "tick": 1763
+    },
+    {
+      "bark": true,
+      "beat": 2,
+      "id": "rivet-buildings-talk",
+      "speaker": "rivet",
+      "tick": 2121
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "fax-statistically",
+      "speaker": "don-fax",
+      "tick": 2384
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "juno-load-bearing",
+      "speaker": "nurse",
+      "tick": 2788
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "juno-real-name",
+      "speaker": "nurse",
+      "tick": 3114
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "brass-gloria",
+      "speaker": "gunsmith",
+      "tick": 3445
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "brass-someday",
+      "speaker": "gunsmith",
+      "tick": 3803
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "kilohm-accents",
+      "speaker": "scientist",
+      "tick": 4175
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "kilohm-come-to-me",
+      "speaker": "scientist",
+      "tick": 4525
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "fax-dock-brief",
+      "speaker": "don-fax",
+      "tick": 4817
+    },
+    {
+      "bark": true,
+      "beat": 3,
+      "id": "guard-who-do-we-call",
+      "speaker": "dock-guard",
+      "tick": 6498
+    },
+    {
+      "bark": true,
+      "beat": 3,
+      "id": "rivet-sorry-not-sorry",
+      "speaker": "rivet",
+      "tick": 6698
+    },
+    {
+      "bark": true,
+      "beat": 4,
+      "id": "mertz-inventory",
+      "speaker": "quartermaster-mertz",
+      "tick": 8185
+    },
+    {
+      "bark": true,
+      "beat": 4,
+      "id": "mertz-appliances",
+      "speaker": "quartermaster-mertz",
+      "tick": 8470
+    },
+    {
+      "bark": true,
+      "beat": 4,
+      "id": "rivet-everybody-screamed",
+      "speaker": "rivet",
+      "tick": 8731
+    },
+    {
+      "bark": true,
+      "beat": 5,
+      "id": "rivet-feels-good",
+      "speaker": "rivet",
+      "tick": 8975
+    },
+    {
+      "bark": false,
+      "beat": 5,
+      "id": "fax-confirm-receipt",
+      "speaker": "don-fax",
+      "tick": 9246
+    },
+    {
+      "bark": false,
+      "beat": 5,
+      "id": "rivet-i-have-a-job",
+      "speaker": "rivet",
+      "tick": 9592
+    }
+  ],
+  "loadErrors": [],
+  "loadWarnings": [],
+  "pass": true,
+  "planted": {
+    "caughtBy": "succeeded",
+    "fault": "the crates are never torched"
+  },
+  "problem": "",
+  "quest": "collect-call",
+  "schema": "gtai.quest-selftest/1",
+  "secondPlayIdentical": true,
+  "simStep": "fixed 60 Hz ticks",
+  "stateHash": "13c86378ccbb7f741f548cdf31a14b16614017771f1d8c70a33e610aa5d02158",
+  "stubbed": [
+    "heat (police): starts at 2 as the factory left it, drains one level per 2 s lying low, rises to 3 at Dock 9 (and a 4 the quest clamps); every change is Events.wanted_changed",
+    "payphones: a payphone is the place's `phone` point; answering is a scripted interact",
+    "madness: whisper bursts are scripted Events.whispers_spiked (b1, b3, the tazer hit, the fire)",
+    "combat (Dock 9): 5 scripted waves (Events.wave_started) of 8/9/10/10/11 contractors, one downed every 0.5 s by scripted fire (Events.actor_killed, killer Rivet, kind shot)",
+    "boss (Mertz): scripted Events.boss_engaged, attack_telegraphed and player_hit (robo-tazer), then one kill; no damage model, Rivet never dies",
+    "weapon: Brass's Gloria handover is the stub equipping `gloria` as the dock beat starts",
+    "torch: the sabotage is a scripted interact at the vault marker",
+    "movement: Rivet walks in straight lines on a stub map (tests/support/quests/collect_call_places.json); no city, collisions or vehicles",
+    "narrative-only: Juno's repair, the Toner Room safehouse and the payout under the phone are lines, not simulated"
+  ],
+  "ticks": 10228,
+  "timeline": [
+    "0 -> offered",
+    "0 no payphone at 'Factory Row alleys': begins on offer",
+    "0 -> active",
+    "0 beat 0 b1-dumpster (evade)",
+    "876 beat b1-dumpster done",
+    "876 beat 1 b2-payphone (answer)",
+    "877 payphone ringing",
+    "1230 beat b2-payphone done",
+    "1230 beat 2 b3-toner-room (meet)",
+    "1803 b3-toner-room: arrived, waiting for the lines",
+    "5296 beat b3-toner-room done",
+    "5296 beat 3 b4-dock (fight)",
+    "7010 heat clamp 4 -> 3",
+    "7944 beat b4-dock done",
+    "7944 beat 4 b5-quartermaster (sabotage)",
+    "8975 beat b5-quartermaster done",
+    "8975 beat 5 b6-hot-walk (evade)",
+    "9336 payphone ringing",
+    "10227 beat b6-hot-walk done",
+    "10227 -> succeeded",
+    "10227 reward: cash +1500, unlocks [\"weapon:gloria-nail-gun\", \"weapon:assault-rifle-pickup\", \"safehouse:toner-room\", \"system:payphone-jobs\", \"system:heat\"]"
+  ],
+  "unlocks": [
+    "weapon:gloria-nail-gun",
+    "weapon:assault-rifle-pickup",
+    "safehouse:toner-room",
+    "system:payphone-jobs",
+    "system:heat"
+  ],
+  "world": "tests/support/stub_quest_world.gd (stub; the city is integrated later)"
+}
