@@ -17,8 +17,13 @@ Set `GODOT_BIN` to the Godot 4.7.2 console binary first (see `versions.toml`).
 | `"$GODOT_BIN" --headless --path project -s res://tests/run_scenarios.gd` | `just scenarios` | scenario suite (incl. the 60 s replay); exits non-zero on failure, any script error, or unknown args |
 | `"$GODOT_BIN" --headless --path project -- --replay=<file>` | | re-runs a `gtai.replay/1` log; exit 0 identical, 1 diverged, 2 unreadable (SIM-05) |
 | `node tools/achievements/gen.mjs validate\|emit\|--check` | `just ach` | achievements schema + ACH-04 rules; emits `AchIds` and runtime JSON |
-| `node tools/evidence/run.mjs` | `just evidence` | lint + unit tests, then writes `build/evidence/{lint,unit-tests}.json` (`pof.godot-evidence/1`) |
-| (stub) | `just parity`, `just export`, `just audit` | land with the native port and the first export ticket |
+| `node tools/evidence/run.mjs` | `just evidence` | lint, unit, scenarios, parity, bench; writes `build/evidence/<kind>.json` (`pof.godot-evidence/1`) |
+| `cd native && scons platform=windows arch=x86_64 target=template_debug` (and `template_release`, `tests`) | `just native` | builds the CitySim GDExtension (+ `scons tests`: the standalone core tests); then `--import` once so Godot registers it |
+| `node tools/tests/run_parity.mjs` | `just parity` | NAT-06 gate: native vs GDScript reference, 1200 steps exact + a planted mutation caught |
+| `"$GODOT_BIN" --headless --path project -s res://dev/bake_city.gd [-- --check]` | `just bake` | bakes the 256 GTCH chunks (git-ignored) + the golden hash list; `--check` = AST-12 |
+| `node tools/bench/run.mjs [--headless]` | `just bench` | exports `windows-bench`, runs the crowded drive + 400-actor riot, judges section 20 |
+| `node tools/evidence/run.mjs [--no-parity] [--no-bench] [--bench-headless]` | | also writes `scenario-tests`, `parity`, `bench` evidence |
+| (stub) | `just export`, `just audit` | land with the first export ticket |
 
 Install the pre-commit hook once per clone: `git config core.hooksPath .githooks`.
 

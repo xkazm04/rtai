@@ -38,3 +38,19 @@
 - **Not yet.** Sim maths limited to operations that round identically in GDScript and C++
   (NAT-07) lands with the native port (F-06), as do `WorkerThreadPool` merges (SIM-06) and seeds
   stored with generated output (SIM-07).
+
+## The city (landed in F-06)
+
+- **The real world replays.** `World._ready` registers `CitySystem` before the replay branch, so
+  `-- --replay=<file>` checks streaming, spawning, traffic and the bubble sim
+  (`-- --record=<file>` writes a log). `scenario_city_replay` proves 20 s of a bot-steered city
+  replays bit-identically on the native backend and on the GDScript reference.
+- **Streaming cannot change the sim.** `CityResidency` decides which chunks the sim holds as a
+  pure function of the focus, once per tick, nearest first with key tie-breaks; a chunk not yet
+  read by a worker is loaded synchronously. Drawing (`ChunkView`) is time-sliced and wall-clock
+  dependent, but it never touches sim state.
+- **Parity (NAT-06).** `tests/parity/run_parity.gd`: native vs reference, 1200 steps, 40 exact
+  snapshot checks, plus a planted ulp-sized nudge that must be caught. The native core is built
+  with `/fp:strict` / `-ffp-contract=off` and uses only + - * / sqrt floor on doubles (NAT-07).
+- **Generator determinism (AST-12).** Quarter-turn rotations are exact (no libm sin/cos), so the
+  golden hash list holds across platforms; `scenario_city_bake` bakes twice and compares.
