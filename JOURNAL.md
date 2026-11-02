@@ -115,3 +115,6 @@ NEXT:
   the green puddle skipped: unkeyable). h32 had the grate under the soul trail -> moved (h33). Hero frames now h33.
 - 22:58 MILESTONE item 5b: D5 loading illustration (Codex 1 image, 0 rejected, ledger 27) installed at
   features/menus/art/d5/loading_rivet.png + provenance + manifest. Store-safe (owner review pending).
+- 22:59 gap 7: world layer on/off on the roof-heavy hero (h33nw = zoom_amount zeroed via a temporary params edit,
+  restored, git diff clean): |diff| 0.013 at 64, roof HF -5% (ink ghost softens), the mural wash gains hatch. Kept.
+  Item 1 gate board rebuilt from r19 (D4 vs D5 tier at 32/48: 0 px). Deleted frame scratch cost1, h30, r17, r17b.

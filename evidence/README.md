@@ -105,8 +105,11 @@ tick count, no RNG.
 6. **The whole slice cast now has a D5 tier** (Rivet, cops, peds). The ped costs 6% contrast on cream pavement at
    64 px/m (0.373 -> 0.351). Next: King and the boss cast need rig parts first (they exist only in the spike).
 7. **The world print layer is subtle** (its fibre tooth read as rain and was replaced by an isotropic mottle). look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene
-   there is little mid wash, so its main visible effect is grain. Next: tune it on a roof-heavy frame at 64 px/m,
-   and hand `zoom_amount` to the visual-engine lane's profile table.
+   there is little mid wash, so its main visible effect is grain. Iteration 2, on the roof-heavy hero frame (h33 vs
+   h33nw = the same scene with zoom_amount zeroed, roof crop): mean |diff| 0.004 / 0.013 / 0.012 at 48 / 64 / 96,
+   mean L -0.003, and the roofs' fine-detail energy DROPS 5% (0.140 -> 0.134 at 64: the off-register ink ghost
+   softens the edges) while the mural's grey wash gains a pen hatch. Judged neutral-to-positive by eye on an
+   already busy surface; kept. Next: hand `zoom_amount` to the visual-engine lane's profile table.
 
 ## Motion, and what is still unmeasured (unmeasured is not zero)
 - Motion shimmer, MEASURED after all: `dev/showcase/d5_walk.gd` walks Rivet 40 ticks at 64 px/m and shoots each
