@@ -95,5 +95,6 @@ void fragment() {
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
 	col = mix(col, INK, ink);
 	col = mix(col, INK, step(0.985, hash(floor(w))) * 0.5 * grit);
-	COLOR = vec4(col * (1.0 - 0.05 * hash(floor(FRAGCOORD.xy))), 1.0);
+	// paper tooth, world-locked like the grime (was hash(FRAGCOORD): a screen-door that swam on pans)
+	COLOR = vec4(col * (1.0 - 0.05 * hash(floor(w) + vec2(17.0, 31.0))), 1.0);
 }

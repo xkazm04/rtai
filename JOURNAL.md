@@ -364,3 +364,17 @@ NEXT (iteration 7 / morning, in order):
   24 ticks): outer-64-before-left-after-right.png shows the outer peds holding a pose for 4 ticks
   before vs 2 after; motion-64ppm-before-top-after-bottom.gif for the owner. Bench unaffected (riot and
   drives run at 32 / 48 px/m). 0 frames rejected.
+- BUG FOUND + FIXED (the brief's "make sure world_px is fed every frame", now tested): look_d4's paper
+  tooth was `hash(floor(FRAGCOORD.xy))` - screen-locked, so a 5 % per-pixel speckle sat still on the
+  screen while the world slid under it (a screen-door on cream ground, roofs, crosswalks when the camera
+  pans). Now `hash(floor(w) + offset)` with w = FRAGCOORD + world_px (offset so it does not correlate
+  with the grit hash). NEW `dev/selftest/world_lock.gd` (+ tscn): the paused junction, actors canvas
+  hidden, panned by 1.25 x 0.75 m (whole px at every zoom); B must equal A shifted. World-only share of
+  differing pixels (RGB sum > 24): before 0.60 / 0.23 / 0.52 % (32 / 48 / 64 px/m), after 0.00 / 0.00 /
+  0.11 %; planted (`--plant-unlocked`: world_px held, view disabled) 25 / 18 / 33 % -> the check bites.
+  (My first plant did nothing: CityView rewrites world_px every frame - fixed by disabling the view.)
+  Gating in the selftest evidence (tools/selftest/run.mjs runWorldLock, max 0.5 %). Look goldens still
+  10/10, worst 1.64 (was 1.10): the tooth moved; NOT re-blessed. Frames + masks 19-world-lock/.
+  OPEN: look_d4_item and print_part (actors, cars) hash FRAGCOORD for their tooth too (0.6 % of the
+  frame differs after a pan with the actors shown, all on actors / cars); needs an object- or
+  world-locked coordinate in those shaders.

@@ -70,6 +70,21 @@ export function runAccentAudit(outDir, out) {
       + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') };
 }
 
+/** The print pass's world lock (dev/selftest/world_lock.gd): the paused junction panned by a whole
+ *  number of px at 32 / 48 / 64 px/m must move rigidly (world_px fed every frame). Gating. */
+export function runWorldLock(outDir, out) {
+  rmSync(join(outDir, 'world-lock.json'), { force: true });
+  run(godotBin(), ['--path', 'project', 'res://dev/selftest/world_lock.tscn', '--', `--out=${out}`],
+    { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, 'world-lock.json');
+  if (!existsSync(file)) return { ok: false, frames: [], summary: 'world lock: no result' };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const detail = frames.map((f) => `${f.ppm}: ${(f.differing_share * 100).toFixed(2)} %`).join(', ');
+  return { ok: r.ok === true && frames.length > 0, frames,
+    summary: `world lock ${r.ok ? 'holds' : 'SWIMS'} (${detail} of the overlap differs after a pan, max ${r.max_share * 100} %)` };
+}
+
 export function runSelftest(outDir) {
   mkdirSync(outDir, { recursive: true });
   const out = outDir.replace(/\\/g, '/');
@@ -90,20 +105,22 @@ export function runSelftest(outDir) {
     + `${f.distinct_colours} colours`).join('; ');
   const gold = runLookGolden(outDir, out);
   const accents = runAccentAudit(outDir, out);
+  const lock = runWorldLock(outDir, out);
   const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
-    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}`;
+    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}; ${lock.summary}`;
   const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
     placeholders: r.placeholders, prewarmMs: r.prewarm_ms, textureLoadMs: r.texture_load_ms };
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
   for (const f of accents.frames) metrics[`accentShare${f.ppm}ppm`] = f.frame_share;
   metrics.accentOffenders = accents.offenders.length;
   metrics.accentNewOffenders = accents.ok ? 0 : Math.max(1, accents.offenders.length);
-  const ok = cityOk && gold.ok && accents.ok;
+  for (const f of lock.frames) metrics[`worldLockShare${f.ppm}ppm`] = f.differing_share;
+  const ok = cityOk && gold.ok && accents.ok && lock.ok;
   const all = [...frames, ...gold.frames];
   const goldPngs = gold.frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
   return { ok, counts: { passed: all.filter((f) => f.ok).length, failed: all.filter((f) => !f.ok).length, skipped: 0 },
     summary, metrics, artifacts: [...pngs, RESULT_NAME, ...goldPngs, ...(gold.frames.length ? [GOLDEN_NAME] : []),
-      ...(accents.frames.length ? ['accent-audit.json'] : [])] };
+      ...(accents.frames.length ? ['accent-audit.json'] : []), ...(lock.frames.length ? ['world-lock.json'] : [])] };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
