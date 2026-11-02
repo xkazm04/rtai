@@ -85,7 +85,23 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
   redraw only on sim ticks while the A/B shots are paused, or a branch of print_part I did not reach. The
   change touched the characters feature (outside my file scope), so I reverted it rather than leave it half-proven.
 
+- MILESTONE (23:45, the reverted rig attempt fixed): the rig noir print works. The bug was mine:
+  `noir_keep` 0.86 kept every source pixel above that luminance as paper, and the art's cream body is about
+  0.91, so the bodies stayed cream. At 0.97 every body part prints as ink inside the cream halo (the white
+  rim). The world is also no longer paused for the shots in this mode (the rigs redraw on ticks).
+  SHARED FILES (characters feature, minimal, default OFF): `print_part.gdshader` +`noir`/`noir_keep`
+  uniforms (one line in the fragment); `part_materials.gd` +`static var noir`, `set_noir()`. Only
+  `noir_frames.tscn -- --crowd=ink` switches it on. Evidence `rig-ink-v2/` + `compare.png` (D4 /
+  noir v4 / ink crowd / ink everyone).
+  Honest read: the most noir frame of the night - every person is one black mass carved by a white rim,
+  near and far consistent, and the junction reads clean. BUT Rivet now reads only by his claw
+  silhouette: the visor and hero read are gone, and he is the same value as the cops. The brief wants the
+  visor kept: a noir Rivet needs paper "light" on the visor/claw (noir parts or a per-part keep mask).
+
 NEXT:
+0. Rivet's hero read in the ink-people mode: keep the visor and the claw tips as paper (a per-part keep
+   flag in PartMaterials, e.g. the COLLAR/CORE kinds, or noir parts from a Codex round), then make
+   ink people the --look=noir default if the owner likes rig-ink-v2/compare.png.
 1. Item 2, the noir characters (the weakest item): wire look_noir_crowd into --look=noir properly
    (CityCharacters sets the atlas material after bake; noir needs a hook there), bake the atlas without
    the halo in noir (so limbs stay legible), and give the full rigs the same ink + lit rim through

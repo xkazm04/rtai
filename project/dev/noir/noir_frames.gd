@@ -42,6 +42,9 @@ func _ready() -> void:
 		else:
 			_only = arg.substr(flag.length() + 1)
 	_ok(DirAccess.make_dir_recursive_absolute(_out) == OK)
+	# The rigs redraw on sim ticks only: with --crowd=ink the noir part print is on for the whole
+	# run and the world is NOT paused for the shots (the pair is then a few ticks apart).
+	PartMaterials.set_noir(_crowd_ink)
 	_build()
 	await _characters.bake()
 	await _view.prewarm()
@@ -96,7 +99,8 @@ func _scene(scene: String, focus: Vector2) -> int:
 		_world.process_mode = Node.PROCESS_MODE_INHERIT
 		for i: int in SETTLE_FRAMES:
 			await get_tree().process_frame
-		_world.process_mode = Node.PROCESS_MODE_DISABLED
+		if not _crowd_ink:
+			_world.process_mode = Node.PROCESS_MODE_DISABLED
 		var ppm: int = roundi(zoom * SimConst.PX_PER_M)
 		for look: String in ["d4", "noir"]:
 			_view.set_noir(look == "noir")

@@ -11,6 +11,8 @@ const LOD_BELOW: float = 0.13
 const LIMB_FILL: float = 0.40
 
 static var view_px: float = 0.1
+## D-Noir (lane noir): 1 prints every body part as an ink mass inside the cream halo rim.
+static var noir: float = 0.0
 static var _shader: Shader = null
 static var _mats: Dictionary[int, ShaderMaterial] = {}
 
@@ -28,6 +30,7 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 		m.set_shader_parameter("is_limb", 1.0 if kind == PartKind.LIMB else 0.0)
 		m.set_shader_parameter("tint", 1.0 if tint else 0.0)
 		m.set_shader_parameter("swap", swap)
+		m.set_shader_parameter("noir", noir)
 		_apply_view(m, kind)
 		_mats[key] = m
 	return _mats[key]
@@ -42,6 +45,13 @@ static func set_view(zoom: float) -> void:
 	for key: int in _mats:
 		@warning_ignore("integer_division")
 		_apply_view(_mats[key], (key / 100) as PartKind)
+
+
+## D-Noir: switches the ink-mass body print on every shared part material (render only).
+static func set_noir(on: bool) -> void:
+	noir = 1.0 if on else 0.0
+	for key: int in _mats:
+		_mats[key].set_shader_parameter("noir", noir)
 
 
 static func material_count() -> int:
