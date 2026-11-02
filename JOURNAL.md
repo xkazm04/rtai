@@ -128,3 +128,7 @@ NEXT:
   one per class), i.e. more 2D batch breaks; an atlas for vehicles + decals would remove that (visual-engine).
   `build/evidence/bench.json` is from the full run (export dir missing) -> stale FAIL; the passing standalone runs
   are in the bench runner's own output. Re-run `node tools/evidence/run.mjs` on an idle box in the morning.
+- 22:28 `run.mjs --no-parity --no-bench` at HEAD: lint PASS, unit 142/142, **scenarios 8/8**, selftest PASS
+  (0 placeholders). parity PASS earlier at the same code. bench.json stale (see above). Session ends here.
+NEXT (morning, first thing): on an idle box run the full `node tools/evidence/run.mjs` so bench.json is current
+(`build/export/windows-bench/` now exists in this worktree); then the NEXT list above.
