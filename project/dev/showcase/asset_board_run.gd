@@ -48,12 +48,13 @@ func _ready() -> void:
 		_roofs_page()
 		return
 	for y: int in range(-2, 3):
-		var road: bool = page in ["extras", "hijack"] or y == 0 or y == -1
+		var all_road: bool = page in ["extras", "hijack"] or (page == "decals" and y < 2)
+		var road: bool = all_road or y == 0 or y == -1
 		var tile: String = "road_straight_tone_b" if road else "sidewalk_tone"
 		for x: int in range(-4, 4):
 			_tile(tile, Vector2(x * 8 + 4, y * 8) * PX)
 	_post_pass()
-	if page == "extras" or page == "hijack":
+	if page in ["extras", "hijack", "decals"]:
 		_place_extras()
 	elif page == "props":
 		_place_props()
@@ -171,12 +172,13 @@ func _place_props() -> void:
 
 ## Every extra PNG (damage, wrecks) in name order, a grid of 6 columns at a 6.2 x 3.2 m pitch.
 func _place_extras() -> void:
-	var names: PackedStringArray = DirAccess.get_files_at(EXTRA_DIR)
+	var dir: String = "res://features/city/art/decals/" if page == "decals" else EXTRA_DIR
+	var names: PackedStringArray = DirAccess.get_files_at(dir)
 	var k: int = 0
 	for f: String in names:
 		if not f.ends_with(".png") or f.begins_with("hijack_") or f.begins_with("traffic_"):
 			continue
-		var t: Texture2D = load(EXTRA_DIR + f) as Texture2D
+		var t: Texture2D = load(dir + f) as Texture2D
 		var at: Vector2 = Vector2(-15.5 + (k % 6) * 6.2, -11.0 + (k / 6) * 3.2)
 		_sprite(t, at * PX, Vector2(t.get_size()) * PX / 80.0)
 		var hijack: String = EXTRA_DIR + "hijack_" + f
