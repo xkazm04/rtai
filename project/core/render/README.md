@@ -143,3 +143,18 @@ sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, golden
 `world_px` is computed after the offset, every frame, so the print grain stays locked to the world.
 Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 -> 46.0 -> 48.0 px/m at
 9-tick steps; explosion shake offset 5.3 px).
+
+## Per-pass cost (2026-11-02, RTX 4090 / 7800X3D, debug editor binary unless noted)
+
+| Pass | Cost | How measured |
+|---|---|---|
+| Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
+| Lights `step()` | 70-168 us CPU for 32-64 lights; GPU **not reliably measured** (shared GPU) | `light_showcase.gd` |
+| FX `step()` | 48 us CPU for 43 live particles | `fx_showcase.gd` |
+| Chunk bands | 20 canvas items per chunk (was 8): see DEVIATION §20-draw | exported bench after item 1: p99 2.61 ms |
+| Rig pass skip on no-tick frames | rig p50 0 ms, p99 0.559 ms (unchanged: tick frames) | exported bench after item 7a |
+
+The exported bench after items 4-6 (`evidence/bench-*-contended.json`) failed (p99 6.09 ms, worst swap
+72 ms, one 3.6 s frame), but it ran at 99 % CPU with the n-d4 lane's own bench, two scenario runs and an
+image job on the same machine; every hitch is `present`-attributed with about 0.3 ms of game + render
+CPU. It is **not a valid measurement** either way: re-run on an idle machine, A/B against `ad2078b`.

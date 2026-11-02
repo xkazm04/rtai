@@ -62,3 +62,31 @@
   13/13, unit 171/171, scenarios 8/8, selftest goldens 10/10 (worst 0.00).
   Not wired: nothing calls set_mode on car enter/exit or kick() on hits yet (vehicle_entered/exited
   events exist in Events but the city has no player vehicle flow; hits have no positional events).
+
+### Offender list for d4-production (colour doctrine)
+- `project/features/city/art/props/traffic_light.png`: 3 red lamps print on the vermilion plate in the
+  world (216 px at 32 px/m; crop `gtai-masters/night/visual-engine/03-accents/world-offender-crop.png`).
+  Wanted: lamps in ink / paper (or one lit lamp as paper), no vermilion.
+- FX sheet wanted (placeholders are analytic now): muzzle star, tracer streak, impact chips, explosion
+  puffs (4-6 frames), smoke puffs, debris shards, ink splats (3 variants), melee crackle bolt (paper).
+  Fit: one atlas per kind, frames of equal size, palette inks only, ink rim; straight-down view.
+- Item 7 bench after items 1-6 (22:00): FAILED - p99 6.09 ms, 1% low 124, worst swap 72 ms, a 3.6 s frame,
+  rig p99 0.98. INVALID run: CPU at 99 %, the n-d4 lane's RTAI-bench (drive48vsync) ran at the same time,
+  plus 2 headless scenario runs, codex exec, playwright, a rust gate. All hitches `present` with ~0.3 ms
+  game+render CPU; drive (which hardly touches my code) went 1.10 -> 5.48 ms p99. Not claimed green, not
+  claimed as a regression: unmeasured. evidence/bench-*-contended.json (and the earlier -rigfix.json).
+
+NEXT (iteration 3 / morning):
+1. FIRST: bench on an idle machine (no other lane benching), A/B `ad2078b` vs `n-visual` HEAD, 3 runs.
+   If the 20-item chunk split costs, merge ground+decals and props+roofs (12 items) per the DEVIATION.
+2. Rig p99 (0.56 ms tick frames vs 0.3 target): profile CutRig.drive vs _assign/RigInput; candidate:
+   quarter-rate for ranks >= 10 (characters scope: coordinate with its owner).
+3. Wire gameplay: positional events (shot_fired, bullet_hit, exploded at a world pos) -> FxSystem +
+   LightLayer + CameraRig.kick; vehicle_entered/exited -> rig.set_mode(car/on_foot). Needs events.json
+   (shared file, owner OK).
+4. D5 params from the d5-close lane into look_profiles.json `d5`, then re-bless the goldens with
+   before/after frames; the riso D1 pass if the owner still wants D1 as a live profile.
+5. Accent audit: split `actors` into cops / peds / Rivet (hide rigs by kind) so a vermilion ped shows up;
+   make it gating once the traffic light is redrawn.
+6. Lights GPU cost on an idle GPU + the Deck; the night grade needs the owner's eye (frames 04b).
+7. FX sheet from d4-production -> replace the analytic shapes (texture + frames per kind).
