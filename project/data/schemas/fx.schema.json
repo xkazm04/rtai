@@ -117,6 +117,9 @@
             "minimum": 0,
             "type": "number"
           },
+          "ground": {
+            "type": "boolean"
+          },
           "grow": {
             "maximum": 16,
             "minimum": 0,
@@ -178,7 +181,8 @@
           "light",
           "doc",
           "fade_from",
-          "emissive"
+          "emissive",
+          "ground"
         ],
         "type": "object"
       },

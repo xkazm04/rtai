@@ -1,0 +1,47 @@
+{
+  "doc": "What fires the FX, the lights and the camera kicks (core/render/README.md). `sim` cues are read render-side from the sim snapshot (features/city/view/city_fx_feed.gd: a projectile slot appears = shot, disappears = projectile_end, a person turns dead = death), so they need no event and change no sim state. `event` cues follow an F-04 Events signal by name. fx: fx.json kinds spawned at the cue (the angle is the shot heading; projectile_end throws back, death uses the body heading). shake: a camera.json shake id (\"\" = none). shake_near_m: only cues within this many metres of the camera focus kick it (0 = always).",
+  "schema": "gtai.fx-triggers/1",
+  "triggers": [
+    {
+      "cue": "sim",
+      "doc": "a round leaves a gun: the paper star at the mouth and a spent casing",
+      "fx": [
+        "muzzle",
+        "casing"
+      ],
+      "id": "shot",
+      "shake": "gunfire",
+      "shake_near_m": 6
+    },
+    {
+      "cue": "sim",
+      "doc": "a round stops (a wall, a car, a body or its range): ink chips thrown back",
+      "fx": [
+        "impact"
+      ],
+      "id": "projectile_end",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "sim",
+      "doc": "a person dies: an ink splat under the body",
+      "fx": [
+        "ink_splat"
+      ],
+      "id": "death",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "event",
+      "doc": "Rivet takes a hit (Events.player_hit): sparks off the chassis and the hit shake",
+      "fx": [
+        "spark"
+      ],
+      "id": "player_hit",
+      "shake": "hit",
+      "shake_near_m": 0
+    }
+  ]
+}

@@ -56,6 +56,8 @@ func _register_features(with_views: bool) -> void:
 		view.rig.listen(Events, _ctx.clock)
 		add_child(view)
 		view.setup(city)
+		var rivet_px: Callable = func() -> Vector2: return city.target * SimConst.PX_PER_M
+		view.fx_triggers.listen(Events, _ctx.clock, rivet_px)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
 		add_frame_probe(func() -> float: return view.chunks.frame_us / 1000.0)
 		add_frame_probe(func() -> float: return characters.rigs.last_us / 1000.0)

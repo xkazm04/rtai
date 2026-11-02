@@ -77,17 +77,17 @@ func _before_render(focus: Vector2) -> void:
 ## One row per live person within FEED_RADIUS_M of the focus, then Rivet.
 func _fill_feed(focus: Vector2) -> void:
 	var snap: PackedFloat64Array = _city.sim.snapshot()
+	_view.fx_feed.observe(snap, _clock.tick())
 	var variants: PackedByteArray = _city.sim.get_variants()
 	var feed: RigFeed = rigs.feed
 	feed.count = 0
 	var r2: float = FEED_RADIUS_M * FEED_RADIUS_M
 	var aim: Vector2 = _city.target * SimConst.PX_PER_M
 	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if snap[r] >= SimConst.SNAP_PROJ_BASE:
+			break  # projectile records (stride 3) follow every actor: not people
 		var kind: int = int(snap[r + 1])
-		if (
-			snap[r] >= SimConst.SNAP_PROJ_BASE
-			or (kind != SimConst.K_PED and kind != SimConst.K_COP)
-		):
+		if kind != SimConst.K_PED and kind != SimConst.K_COP:
 			continue
 		var p: Vector2 = Vector2(snap[r + 4], snap[r + 5])
 		if p.distance_squared_to(focus) > r2:

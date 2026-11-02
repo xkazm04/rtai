@@ -86,6 +86,8 @@ func _finish(frames: Array[Dictionary], warm_us: int) -> void:
 		"art_loaded": _view.textures.art_loaded,
 		"placeholders": _view.textures.placeholders,
 		"texture_failures": _view.textures.failures,
+		"fx_cues": _view.fx_triggers.fired,
+		"fx_dropped": _view.fx.dropped + _view.fx.glow.dropped + _view.fx.ground.dropped,
 		"backend": String(_city.sim.backend_name()),
 		"gpu": RenderingServer.get_video_adapter_name(),
 		"debug_build": OS.is_debug_build(),

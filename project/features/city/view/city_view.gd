@@ -28,6 +28,9 @@ var crowd: CrowdLayers = CrowdLayers.new()
 var lights: LightLayer = LightLayer.new()
 ## The pooled FX on the actors canvas's fx band (core/render/fx_system.gd).
 var fx: FxSystem = FxSystem.new()
+## FX cues as data (core/render/fx_triggers.gd) and the sim-snapshot reader that fires them.
+var fx_triggers: FxTriggers = FxTriggers.new()
+var fx_feed: CityFxFeed = CityFxFeed.new(fx_triggers)
 ## The sim clock the lights fade on (the composition root sets it; null = tick 0).
 var clock: SimClock = null
 ## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
@@ -119,6 +122,8 @@ func _place_camera(focus: Vector2) -> void:
 	camera.zoom = Vector2.ONE * zoom
 	_update_look()
 	camera.position = focus * SimConst.PX_PER_M + offset
+	fx_triggers.rig = rig
+	fx_triggers.focus_px = focus * SimConst.PX_PER_M
 	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)
 	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
@@ -127,6 +132,7 @@ func _place_camera(focus: Vector2) -> void:
 	lights.step(tick, world_px)
 	fx.step(tick)
 	fx.glow.step(tick)
+	fx.ground.step(tick)
 
 
 func _build_layers() -> void:
@@ -151,9 +157,20 @@ func _build_layers() -> void:
 	_item_mat.shader = item_shader
 	add_child(actors)
 	crowd.attach(actors)
+	_build_fx(actors)
+
+
+## The FX on the actors' fx band, its ground twin on the world canvas (decals band) and its
+## emissive twin above the lights; all three link their lights into the light layer.
+func _build_fx(actors: CanvasLayer) -> void:
 	actors.add_child(fx)
 	fx.lights = lights
+	fx_triggers.fx = fx
 	add_child(lights)
+	fx.ground = FxSystem.new()
+	fx.ground.z_index = RenderLayers.z(&"ground_decals")
+	fx.ground.lights = lights
+	add_child(fx.ground)
 	var emissive: CanvasLayer = CanvasLayer.new()
 	emissive.layer = RenderLayers.canvas(&"emissive")
 	emissive.follow_viewport_enabled = true

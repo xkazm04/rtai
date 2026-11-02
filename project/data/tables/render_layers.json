@@ -62,8 +62,8 @@
     },
     {
       "canvas": "world",
-      "doc": "oil, skid marks, blood ink, cracks (decal class)",
-      "drawn_by": "ChunkView decal items",
+      "doc": "oil, skid marks, blood ink, cracks (decal class); the FX that lie on the street",
+      "drawn_by": "ChunkView decal items + FxSystem ground twin (ink splats, casings)",
       "id": "ground_decals",
       "status": "live",
       "z": 1

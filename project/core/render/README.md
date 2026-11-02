@@ -167,7 +167,7 @@ the last) and overrides any row field (`count`, `size_m`, `speed_mps`, `grow`, `
 texture exists (`FxSystem.atlas_live`) the instance custom `.z` carries cell + 1 and the shader
 samples the sheet with mipmaps, cut at alpha 0.5 and faded by the same dither; the cell keeps its
 own inks (vermilion only in the muzzle cores and the blast, which the fx band allows). `casing` and
-`spark` are sheet-first kinds (an ink streak / paper burst without it). Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
+`spark` are sheet-first kinds (an ink streak / paper burst without it).
 
 **Emissive kinds draw above the lights.** `muzzle`, `tracer`, `explosion`, `spark` and `crackle` have
 `emissive: true`: `FxSystem.spawn` forwards them to `glow`, a twin FxSystem that `CityView` puts on the
@@ -178,6 +178,29 @@ not lit by its own light: under the additive paper light the sheet's vermilion b
 casings stay lit (and take the night grade). Each twin has its own budgets.
 Frames: `gtai-masters/night/visual-engine/05-fx` (`dev/selftest/fx_showcase.gd`); step cost 48 us
 with 43 particles alive.
+
+**Ground kinds lie on the street.** `ink_splat` and `casing` have `ground: true`: `FxSystem.spawn`
+forwards them to `ground`, a twin on the **world** canvas's `ground_decals` band, so the print pass
+inks them like a decal and they draw under the bodies, the shadows, the props and the roofs (on the
+`fx` band a splat covered the dead body's torso: `10-fx-feed/crops-48ppm.png` vs `crops2-48ppm.png`).
+
+### What fires the FX (`fx_triggers.gd`, `data/tables/fx_triggers.json`, `features/city/view/city_fx_feed.gd`)
+
+A cue row names the fx kinds to spawn and an optional camera shake (`shake_near_m`: only cues that
+close to the focus kick it, so a riot two blocks away does not shake the screen). Two sources:
+
+- **`sim` cues, read from the sim** by `CityFxFeed`, which diffs the snapshot the rigs already take
+  (no second native call): a projectile slot that appears is a `shot` (fired one observe later at
+  its first position, once its heading is known: muzzle star + casing + the muzzle light + the
+  `gunfire` shake when near), one that vanishes is a `projectile_end` (impact chips thrown back
+  along the heading), a person whose mode turns dead is a `death` (an ink splat under the body).
+  The first observe only primes. Render only: nothing is written back, so parity and replay are
+  untouched, and no positional F-04 event was needed for the riot.
+- **`event` cues** follow an Events signal: `player_hit` (sparks on Rivet + the `hit` shake).
+
+The selftest junction (seed 91, 180 ticks) fires 11 shots, 9 ends, 9 deaths, 0 dropped
+(`fx_cues` in its result JSON). Explosions, crackle and smoke have no sim source yet (no grenades,
+no melee in CitySim): they stay API (`FxTriggers.fire`) until a system emits them.
 
 ## Camera feel (`camera_rig.gd`, `data/tables/camera.json`)
 

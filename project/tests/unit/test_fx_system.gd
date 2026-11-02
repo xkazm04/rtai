@@ -159,3 +159,16 @@ func test_every_sheet_block_stays_inside_the_grid() -> void:
 		var kid: String = row["id"]
 		assert_gt(n, 0.0, kid)
 		assert_lte(first + n, cols * rows, "%s cells inside the %dx%d sheet" % [kid, cols, rows])
+
+
+func test_ground_kinds_go_to_the_ground_twin() -> void:
+	var fx: FxSystem = autofree(FxSystem.new())
+	fx.ground = autofree(FxSystem.new())
+	assert_true(fx.spawn(&"ink_splat", Vector2.ZERO, 0.0, 0))
+	assert_true(fx.spawn(&"impact", Vector2.ZERO, 0.0, 0))
+	fx.step(0)
+	fx.ground.step(0)
+	var splat: int = fx.kinds[&"ink_splat"]["count"]
+	var chips: int = fx.kinds[&"impact"]["count"]
+	assert_eq(fx.ground.alive(), splat)
+	assert_eq(fx.alive(), chips)
