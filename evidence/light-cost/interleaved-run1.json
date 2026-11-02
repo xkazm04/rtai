@@ -1,0 +1,15 @@
+{
+  "blocks": 16,
+  "cpu_render_ms_full_budget": 0.225433349609375,
+  "cpu_render_ms_no_lights": 0.224999979138374,
+  "dropped": 0,
+  "frames_per_block": 30,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "gpu_ms_delta": 0.284966468811035,
+  "gpu_ms_full_budget": 3.16880011558533,
+  "gpu_ms_no_lights": 2.88383364677429,
+  "light_step_us": 29,
+  "lights": 32,
+  "ppm": 48,
+  "schema": "gtai.light-cost/1"
+}

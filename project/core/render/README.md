@@ -133,9 +133,13 @@ frame. When the budget is full a timed light evicts the oldest timed light; a he
 explosion events in the F-04 registry; `dev/selftest/light_showcase.gd` places the demo set.
 
 Cost (`light_showcase.gd` -> `light-cost.json`, 48 px/m): CPU `step()` 70-168 us for 32-64 lights
-(GDScript loop). GPU: **not reliably measured** - four runs gave deltas of +1.32, +0.05, +0.09 and
--0.87 ms because another lane was rendering on the same GPU. Re-measure on an idle GPU (and the Deck)
-before raising `max_lights`; fill rate is the risk (each fire is a 336 px quad at 48 px/m).
+(GDScript loop). GPU: two long back-to-back runs (no lights, then 32) gave -1.40 .. +1.32 ms (clock /
+power-state drift and other lanes on the GPU). Since 2026-11-02 23:00 the probe interleaves 16 blocks of
+30 frames (lights hidden / shown) and takes the median block: **+0.29, +1.13, +1.35 ms** GPU for the
+full budget of 32 overlapping fires (1280x800, RTX 4090, GPU ~12-33 % busy with other lanes). Positive
+in every run, still noisy: read it as "up to ~1.4 ms at the worst case". Fill rate is the cost (each fire
+is a 336 px quad at 48 px/m): do not raise `max_lights`; for the Deck, measure there and expect to cap
+fires at 8-16 or shrink their radius.
 
 ## The FX system (`fx_system.gd`, `fx_pool.gd`, `fx_ink.gdshader`, `data/tables/fx.json`)
 
@@ -189,7 +193,7 @@ Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 
 | Pass | Cost | How measured |
 |---|---|---|
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
-| Lights `step()` | 70-168 us CPU for 32-64 lights; GPU **not reliably measured** (shared GPU) | `light_showcase.gd` |
+| Lights `step()` | 30-168 us CPU for 32-64 lights; GPU +0.29 .. +1.35 ms for 32 fires (interleaved, 3 runs, shared GPU) | `light_showcase.gd` |
 | FX `step()` | 48 us CPU for 43 live particles | `fx_showcase.gd` |
 | Chunk bands | 20 canvas items per chunk (was 8): see DEVIATION §20-draw | exported bench after item 1: p99 2.61 ms |
 | Rig pass skip on no-tick frames | rig p50 0 ms, p99 0.559 ms (unchanged: tick frames) | exported bench after item 7a |

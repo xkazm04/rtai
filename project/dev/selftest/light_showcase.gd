@@ -6,7 +6,9 @@ extends "res://dev/selftest/city_selftest.gd"
 ##   godot --fixed-fps 60 --path project res://dev/selftest/light_showcase.tscn -- --out=<dir>
 
 const PPMS: Array[int] = [32, 48, 64]
-const COST_FRAMES: int = 120
+const COST_FRAMES: int = 30
+## Interleaved measurement blocks (even = lights hidden, odd = shown).
+const BLOCKS: int = 16
 
 
 func _ready() -> void:
@@ -79,7 +81,6 @@ func _cost() -> Dictionary:
 	_view.zoom = 1.5
 	var vp: RID = get_viewport().get_viewport_rid()
 	RenderingServer.viewport_set_measure_render_time(vp, true)
-	var none: Vector2 = await _measure(vp)
 	var c: Vector2 = JUNCTION * SimConst.PX_PER_M
 	for i: int in _view.lights.max_lights:
 		var at: Vector2 = (
@@ -87,7 +88,18 @@ func _cost() -> Dictionary:
 		)
 		@warning_ignore("return_value_discarded")
 		_view.lights.add(&"fire", at, 0.0, 0)
-	var full: Vector2 = await _measure(vp)
+	# interleaved blocks (lights hidden / shown), median of the block means: GPU clock and
+	# power-state drift between two long runs swamped the delta (four runs: -0.87 .. +1.32 ms)
+	var off: Array[Vector2] = []
+	var on: Array[Vector2] = []
+	for b: int in BLOCKS:
+		_view.lights.visible = b % 2 == 1
+		await RenderingServer.frame_post_draw
+		var m: Vector2 = await _measure(vp)
+		(on if b % 2 == 1 else off).append(m)
+	_view.lights.visible = true
+	var none: Vector2 = _median(off)
+	var full: Vector2 = _median(on)
 	return {
 		"schema": "gtai.light-cost/1",
 		"ppm": 48,
@@ -96,11 +108,24 @@ func _cost() -> Dictionary:
 		"gpu_ms_no_lights": none.x,
 		"gpu_ms_full_budget": full.x,
 		"gpu_ms_delta": full.x - none.x,
+		"blocks": BLOCKS,
+		"frames_per_block": COST_FRAMES,
 		"cpu_render_ms_no_lights": none.y,
 		"cpu_render_ms_full_budget": full.y,
 		"light_step_us": _view.lights.last_us,
 		"gpu": RenderingServer.get_video_adapter_name(),
 	}
+
+
+static func _median(v: Array[Vector2]) -> Vector2:
+	var xs: Array[float] = []
+	var ys: Array[float] = []
+	for p: Vector2 in v:
+		xs.append(p.x)
+		ys.append(p.y)
+	xs.sort()
+	ys.sort()
+	return Vector2(xs[xs.size() / 2], ys[ys.size() / 2])
 
 
 ## Mean (GPU, CPU) render ms over COST_FRAMES frames.
