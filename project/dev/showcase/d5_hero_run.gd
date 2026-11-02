@@ -6,6 +6,7 @@ extends D5ShowcaseRun
 ## (features/city/art/d5/roofs/). Deterministic: fixed cast, fixed clip ticks, no RNG.
 
 const ROOFS: String = "res://features/city/art/roofs/"
+const D5_GROUND: String = "res://features/city/art/d5/ground/"
 const ROOFS_D5: String = "res://features/city/art/d5/roofs/"
 const LANDMARKS: Dictionary[String, Vector2] = {
 	"building_mural": Vector2(9.7, -9.7),
@@ -129,5 +130,12 @@ func _tier(tier: String) -> void:
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
+	var walk: Texture2D = (
+		load((D5_GROUND if tier == "d5" else GROUND) + "sidewalk_tone.png") as Texture2D
+	)
+	for n: Node in _world.get_children():
+		var spr: Sprite2D = n as Sprite2D
+		if spr != null and spr.texture.resource_path.ends_with("/sidewalk_tone.png"):
+			spr.texture = walk
 	for roof: String in _roofs:
 		_roofs[roof].texture = load(dir + roof + ".png") as Texture2D
