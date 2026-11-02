@@ -55,3 +55,10 @@
 - Gates at 21:50: lint 13/13, scenarios 8/8, unit 166/166 on rerun. FRICTION: the first unit run had
   1 failure (165/166): test_render_layers built CityView twice; the 2nd CityTextures threaded load can
   race the headless dummy renderer (null texture). Fixed: build the scene once in before_all (3/3 clean).
+- MILESTONE item 6: camera feel. `data/tables/camera.json` (gtai.camera/1: modes 32/48/64, zoom ease 36
+  ticks, car look-ahead, 4 shakes, 3 hit-stops, reduced_motion scales), `core/render/camera_rig.gd`.
+  CityView.rig (World sets it, snapped to car = the current 48 px/m boot view; shared file boot/world.gd
+  +2 lines). test_camera_rig 5/5. Frames 06-camera (ease 32->35->40.7->46->48 px/m). Gates 21:56: lint
+  13/13, unit 171/171, scenarios 8/8, selftest goldens 10/10 (worst 0.00).
+  Not wired: nothing calls set_mode on car enter/exit or kick() on hits yet (vehicle_entered/exited
+  events exist in Events but the city has no player vehicle flow; hits have no positional events).

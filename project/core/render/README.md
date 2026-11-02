@@ -128,3 +128,18 @@ bolt with an ink rim) until d4-production delivers the FX sheet; the swap is a t
 per kind. Not wired to gameplay yet: the F-04 registry has no positional shot / hit / explosion events.
 Frames: `gtai-masters/night/visual-engine/05-fx` (`dev/selftest/fx_showcase.gd`); step cost 48 us
 with 43 particles alive.
+
+## Camera feel (`camera_rig.gd`, `data/tables/camera.json`)
+
+Modes `on_foot` 32, `car` 48, `arena` 64 px/m; `set_mode(id, tick)` eases the zoom over
+`zoom_ease_ticks` (36) with a smoothstep, `snap(id)` jumps (boot, cuts). In a car the camera leads the
+velocity (`look_ahead_m_per_mps` 0.35, capped at 7 m, eased 6 % a tick). Shakes by id (`gunfire`, `hit`,
+`explosion`, `crash`: amplitude in screen px, linear decay over ticks, a tick-phase wobble, no RNG);
+the strongest shake in progress wins. Hit-stops by id (`melee_hit` 4, `kill` 6, `boss_hit` 8 ticks):
+the camera only reports them (`hitstop_ticks`); freezing is the sim loop's job. `reduced_motion` zeroes
+shake and hit-stop, halves the look-ahead and stretches the zoom ease 1.5x (wire it to the settings
+feature when it lands). `CityView.rig` drives `zoom` and the camera offset every frame when set (the game
+sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, goldens and benches rely on.
+`world_px` is computed after the offset, every frame, so the print grain stays locked to the world.
+Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 -> 46.0 -> 48.0 px/m at
+9-tick steps; explosion shake offset 5.3 px).

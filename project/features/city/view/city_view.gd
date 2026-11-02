@@ -30,6 +30,11 @@ var lights: LightLayer = LightLayer.new()
 var fx: FxSystem = FxSystem.new()
 ## The sim clock the lights fade on (the composition root sets it; null = tick 0).
 var clock: SimClock = null
+## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
+## frame (eased zoom, look-ahead, shake); null keeps `zoom` as set (selftests, goldens, benches).
+var rig: CameraRig = null
+## The followed body's velocity (m/s) for the rig's look-ahead.
+var follow_vel_mps: Vector2 = Vector2.ZERO
 var textures: CityTextures = null
 var visible_actors: int = 0
 ## Called with the focus (m) each frame right before the actors are written (the composition
@@ -104,12 +109,17 @@ func _process(_delta: float) -> void:
 
 ## Camera on the focus; world_px locks the print pass's grime and hatch to the world.
 func _place_camera(focus: Vector2) -> void:
+	var tick: int = clock.tick() if clock != null else 0
+	var offset: Vector2 = Vector2.ZERO
+	if rig != null:
+		rig.step(tick, follow_vel_mps)
+		zoom = rig.ppm() / SimConst.PX_PER_M
+		offset = rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = Vector2.ONE * zoom
 	_update_look()
-	camera.position = focus * SimConst.PX_PER_M
+	camera.position = focus * SimConst.PX_PER_M + offset
 	var world_px: Vector2 = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_look_mat.set_shader_parameter(&"world_px", world_px)
-	var tick: int = clock.tick() if clock != null else 0
 	lights.step(tick, world_px)
 	fx.step(tick)
 

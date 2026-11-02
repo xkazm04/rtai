@@ -51,6 +51,8 @@ func _register_features(with_views: bool) -> void:
 		var view: CityView = CityView.new()
 		if LaunchArgs.has("--look"):
 			view.look_id = StringName(LaunchArgs.value("--look"))
+		view.rig = CameraRig.new()
+		view.rig.snap(&"car")
 		add_child(view)
 		view.setup(city)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
