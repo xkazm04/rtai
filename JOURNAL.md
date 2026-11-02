@@ -300,3 +300,14 @@ NEXT:
   the road edge is a cream kerb + dark gutter shadow, closer to the target; the corner joins both straights. Kept.
   Commit 84a1a2f. Gates at 16df2e5 (roof lift): run.mjs --no-bench rc 0 (lint, unit 142/142, scenarios 8/8, parity,
   selftest 0 placeholders).
+- 23:39 MILESTONE 2 m slabs. With the cracks and crosses calmed, the pavement still read as graph paper at 32 px/m
+  (a 1 m joint grid = a line every 32 screen px); the target lays large slabs. `tools/paving_bond.py`: two layouts
+  probed in-engine on the same frames (`work/pave3_{2_32,0_48}.png`: 1 m grid | bond | 2 m):
+  (a) 2 x 1 m running bond (alternate verticals dropped per row): along the kerb at 48 it looks like the target's
+  long slabs, but on the wide plaza at 32 it reads as a BRICK WALL -> rejected; (b) 2 m square slabs (every other
+  joint line both ways dropped; the gap takes the paving 3 px inside the slab so the grain continues; crossings
+  dropped only when both lines go; the dark joint stubs at the kerb go with their joint): calmest, people and props
+  read best, closest to the target's large slabs -> **kept**. Kept joints redrawn at 128 grey (fewer lines, so a
+  touch firmer than 140). sidewalk_tone + curb_straight x3, corner rebuilt from it (build_corner + lane_bold +
+  marking_wear). Bugs caught on the peeks: horizontal joints first filled from beside themselves (no change), and
+  crossings on kept lines left dots. Before/after `after_kb|probe_g2/city-*`, `corner-*`. Commit b787142.
