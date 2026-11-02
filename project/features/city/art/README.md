@@ -53,5 +53,5 @@ with build_ground.py alone undoes them; fold them in, or re-run them in this ord
 | 9 | `slab_grey_out.py` | sidewalk, curb_c (y_end 288) | the grey 1 m replaced-slab squares replaced by their 2 m slab partner cell |
 
 Roofs (`roofs/*.png`, all 17): `roof_lift.py 0.7 0.22 0.5` (wash greys toward the roof paper, ink kept). The flat
-roof ground tiles (roof_tone, roof_edge_tone) are deliberately NOT lifted: through the print pass they jump from
-grey straight to pavement paper.
+roof ground tiles (roof_tone, roof_edge_tone) take `flatroof_seams.py 0.6 0.35 0.50 0.58 [73]` instead (membrane
+toward paper, seams toward ink; the edge tile's parapet rows 0-72 kept): a plain lift prints them as pavement.
