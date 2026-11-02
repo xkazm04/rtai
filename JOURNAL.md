@@ -377,3 +377,30 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   features/combat/art/d5/boss_intro_king.png (1920 px) + provenance; not wired (combat/HUD lane: Events.boss_engaged,
   quest_rules 'boss-intro'). HONEST: the crown stencil printed vermilion, outside the prompt's vermilion list (King's
   mark; kept, owner review). Board evidence/item5e_boss_intro.png.
+- 00:59 gates: evidence tool (--no-parity --no-bench) ALL PASS at 23fb4af (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok); 46 untracked evidence PNGs moved aside and restored. Parity/bench not run (no native build here).
+
+## Summary (iteration 4, 00:11 -> 00:59)
+- Images: 5 Codex (cop expressions, King arena floor, plan-view King, phone frame, boss intro card); ledger 34 -> 39
+  (masters gen/ledger.tsv). 0 rejected for camera breaks (notes: edge-band crates / the megaphone bell show a hint of
+  side; the boss card's crown stencil is vermilion).
+- Kept: roof ink foot (raised-slab read, gap 5), cop expressions, the dialogue panel and phone close-up IN-ENGINE
+  (portraits now mipmapped), the boss arena at 64 px/m (floor + crown dimmed + King sprite desaturated + King's
+  hatched shadow + yard roofs) and its 128 px/m boss kill-cam, look_d5_shadow sprite alpha + zoom-capped strokes,
+  form-shade coverage 0.26 (Rivet contrast parity in both poses), the boss intro card.
+- Rejected/reverted: ink core in the alleys (black grid), inner parapet shadow (invisible), bolder part pen lines
+  (h65), the cream crown under the cast (a1), King through look_d5_part (a7), King at 2.8 m (too small).
+- Evaluated, no change: pavement darkness vs the mock (not darker; joint layout = city lane).
+- Shared files touched: none (steam/ai-provenance append-only, art_src/d5.manifest.json, my D5 shaders/params).
+
+NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
+9. Characters lane: King PARTS on the rig layout (layout-template technique; refs king_top.png + the turnaround),
+   then a King-tuned part print (look_d5_part's ramp washes King's steel to white, a7).
+10. Visual-engine / city: set look_d5_shadow `zoom` from the camera; put the 0.22 m roof ink foot (D5HeroParapets)
+    on street-facing south/east roof edges in the city, not the alleys; decide on character/boss cast shadows.
+11. HUD lane: dialogue/phone UI from item17/item19 (portraits mipmapped; a pre-scaled 256 px set would be crisper);
+    the phone frame is features/menus/art/d5/phone_frame.png (screen = alpha hole, fractions in d5_dialogue_run.gd).
+12. Combat lane: boss_intro_king.png on Events.boss_engaged (left third for the name); finishers as NEXT 7.
+13. City lane: King's arena needs walls/doors in the same hand; keep its crown stencil dimmed (a1).
+14. Owner: King steel (desaturated like Rivet's lavender, item9 logic), the boss card's vermilion crown, store-safe
+    marks on the cop expressions, phone frame and boss card.
