@@ -24,6 +24,7 @@ var _tick: int = 0
 var _look_m: Vector2 = Vector2.ZERO
 var _shake_id: StringName = &""
 var _shake_tick: int = -100000
+var _clock: SimClock = null
 
 
 func _init() -> void:
@@ -53,6 +54,20 @@ func set_mode(id: StringName, tick: int) -> void:
 	mode = id
 	_from_ppm = _ppm
 	_ease_start = tick
+
+
+## Follows the F-04 vehicle events on `bus` (the Events autoload): entering a vehicle eases to
+## `car`, leaving it to `on_foot`, at the tick `clock` reads when the event fires.
+func listen(bus: EventBus, clock: SimClock) -> void:
+	_clock = clock
+	@warning_ignore("return_value_discarded")
+	bus.vehicle_entered.connect(_on_vehicle.bind(&"car"))
+	@warning_ignore("return_value_discarded")
+	bus.vehicle_exited.connect(_on_vehicle.bind(&"on_foot"))
+
+
+func _on_vehicle(_vehicle_id: int, id: StringName) -> void:
+	set_mode(id, _clock.tick() if _clock != null else 0)
 
 
 ## Jumps to mode `id` with no ease (boot, a cut).

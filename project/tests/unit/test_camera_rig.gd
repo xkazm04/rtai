@@ -53,3 +53,14 @@ func test_reduced_motion_drops_shake_and_hitstop() -> void:
 	rig.step(2, Vector2.ZERO)
 	assert_eq(rig.offset_px(32.0), Vector2.ZERO)
 	assert_eq(rig.hitstop_ticks(&"melee_hit"), 0)
+
+
+func test_vehicle_events_switch_the_mode() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var rig: CameraRig = CameraRig.new()
+	rig.snap(&"car")
+	rig.listen(bus, null)
+	bus.vehicle_exited.emit(3)
+	assert_eq(rig.mode, &"on_foot")
+	bus.vehicle_entered.emit(3)
+	assert_eq(rig.mode, &"car")

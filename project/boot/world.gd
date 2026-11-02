@@ -53,6 +53,7 @@ func _register_features(with_views: bool) -> void:
 			view.look_id = StringName(LaunchArgs.value("--look"))
 		view.rig = CameraRig.new()
 		view.rig.snap(&"car")
+		view.rig.listen(Events, _ctx.clock)
 		add_child(view)
 		view.setup(city)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
