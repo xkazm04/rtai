@@ -55,6 +55,8 @@ func _ready() -> void:
 	_post_pass()
 	if page == "extras" or page == "hijack":
 		_place_extras()
+	elif page == "props":
+		_place_props()
 	else:
 		_place_table()
 
@@ -146,6 +148,25 @@ func _place_table() -> void:
 		var y: float = LANE_Y[lane] if lane < 2 else -10.0 + (lane - 2) * 4.0
 		_sprite(tex.textures[i], Vector2(x[lane] + w * 0.5, y) * PX, tex.size_px[i])
 		x[lane] += w + 0.8
+
+
+## The prop rows in two halves (by table order), each on the road and on the pavement, table size.
+func _place_props() -> void:
+	var table: Dictionary = CityGen.read_json(CitySystem.TEXTURES)
+	var tex: CityTextures = CityTextures.new(table)
+	var rows: Array = table["textures"]
+	var x: Array[float] = [-12.0, -12.0]
+	var k: int = 0
+	for i: int in rows.size():
+		var row: Dictionary = rows[i]
+		if row["class"] != "prop":
+			continue
+		var half: int = 0 if k < 10 else 1
+		var w: float = tex.size_px[i].x / PX
+		for y: float in [[-6.5, 5.2], [-2.5, 7.4]][half]:
+			_sprite(tex.textures[i], Vector2(x[half] + w * 0.5, y) * PX, tex.size_px[i])
+		x[half] += w + 0.5
+		k += 1
 
 
 ## Every extra PNG (damage, wrecks) in name order, a grid of 6 columns at a 6.2 x 3.2 m pitch.
