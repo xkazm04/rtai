@@ -1,5 +1,5 @@
 {
-  "_doc": "D5 'Inked Grime' parameter proposal for the visual-engine lane (d5-close, 2026-11-02). world = look_d5.gdshader uniforms (a layer over the look_d4 world print, under the actors; set world_px like look_d4). zoom_amount = [zoom, amount] stops (zoom 1.0 = 32 px/m), linear between stops, clamped: drive the layer's `amount` from the camera zoom. part = look_d5_part.gdshader defaults (the D5 character tier, RigDetail: on at tier_on_zoom, full at tier_full_zoom, off below tier_off_zoom).",
+  "_doc": "D5 'Inked Grime' parameter proposal for the visual-engine lane (d5-close, 2026-11-02). world = look_d5.gdshader uniforms (a layer over the look_d4 world print, under the actors; set world_px like look_d4). zoom_amount = [zoom, amount] stops (zoom 1.0 = 32 px/m), linear between stops, clamped: drive the layer's `amount` from the camera zoom. shadow = look_d5_shadow.gdshader uniforms + the cast offset in metres (down-right). part = look_d5_part.gdshader defaults (the D5 character tier, RigDetail: on at tier_on_zoom, full at tier_full_zoom, off below tier_off_zoom).",
   "part": {
     "grime": 0.1,
     "hatch_hi": 0.7,
@@ -14,6 +14,13 @@
     "verm_gate": 48.0
   },
   "schema": "gtai.look-d5-params/1",
+  "shadow": {
+    "cov": 0.4,
+    "offset_m": 1.1,
+    "period": 6.0,
+    "stroke": 0.85,
+    "tint": 0.3
+  },
   "tier_full_zoom": 2.0,
   "tier_off_zoom": 1.6875,
   "tier_on_zoom": 1.75,

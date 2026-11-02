@@ -93,22 +93,13 @@ func _shadow(at: Vector2) -> void:
 			Vector2(h, h)
 		]
 	)
-	poly.texture = _hatch_tex()
-	poly.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load("res://assets/shaders/look_d5_shadow.gdshader") as Shader
+	poly.material = mat
 	poly.position = at
 	poly.visible = false
 	_world.add_child(poly)
 	_shadows.append(poly)
-
-
-## A 48 px tile of diagonal pen strokes over a light ink tint (the mock's hatched shadow).
-static func _hatch_tex() -> ImageTexture:
-	var img: Image = Image.create(48, 48, false, Image.FORMAT_RGBA8)
-	for y: int in 48:
-		for x: int in 48:
-			var line: bool = (x + y) % 8 < 3
-			img.set_pixel(x, y, Color(0.09, 0.075, 0.106, 0.85 if line else 0.32))
-	return ImageTexture.create_from_image(img)
 
 
 ## Rivet on the junction's north-east corner under the fist mural, facing two cops closing in.
