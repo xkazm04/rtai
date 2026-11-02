@@ -101,3 +101,8 @@ NEXT:
 5. Measure the noir pass cost (bench with --look=noir) before anyone calls it free.
 6. Knockback poses held as panels: the hit-stop holds the world, but the victims are not posed yet
    (the city crowd has no knockback clip). The long coat / rain secondary motion is not started.
+- 23:43 Final gates at c5829e2 (`run.mjs --no-bench --allow-dirty`; the only dirty path is the untracked
+  evidence/ folder): lint, 173 unit, 8 scenarios, parity and selftest all PASS. evidence/ = NOIR.md
+  + ladder.png (6 rows) + showcase-d4-vs-noir.png + crowd-ink-compare.png + the gate JSONs. It is not
+  committed (the PNGs are 2-4 MB; the Director decides). Masters are about 220 MB in night/noir (mp4 + png).
+  Images: 0 generated, 0 rejected (Leonardo 0 tokens; no Codex round tonight).
