@@ -29,6 +29,7 @@ tick count, no RNG.
 | `item12_age_floor_32.png` | iteration 3, PROPOSAL: aged paper at 32 px/m (`age_floor`, default off) vs now vs the mock |
 | `item13_killcam128.png` | iteration 3: the 128 px/m kill-cam, D4 vs D4+D5, beside the concept |
 | `item14_d4_roof_lift_proposal.png` | iteration 3, PROPOSAL for d4-production: the D5 roof lift (d**1.8) on the D4 neighbour roofs at 32 px/m vs now vs the mock |
+| `item5c_rivet_expressions.png` | iteration 3: Rivet dialogue expressions (neutral, angry, hurt, hopeful) at 512, 128 and 64 px beside the accepted portrait |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 3 (23:09 -> ) in one screen
@@ -56,7 +57,9 @@ tick count, no RNG.
   78,67,68 / 246,223,195), paper-street dL 60.6 (= mock). The visual-engine lane and the owner decide.
 - **Kill-cam at 128 px/m** (`item13_killcam128.png`, f9f956f): framed on the shot; the D5 tier's closest read of the
   concept (rust, hatch, inked joints, two-ink souls).
-- Hero evidence frames are now h53 (= h50 at 32-96, plus 128).
+- Hero evidence frames are now h57 (h53 + part/soul grain locked to the sprite; 0 px at 32/48).
+- **Rivet dialogue expressions** (`item5c_rivet_expressions.png`): 1 Codex sheet, 0 rejected, 4 x 512 px in
+  `characters/art/d5/portraits/rivet_<expr>.png`; store-safe (owner review). At 64 px only angry and the tilts read.
 - **Zoom colour drift, measured**: the zoom-tied warmth moves the paper by dE 2.8 (32 -> 48, the foot/car switch)
   and 7.6 (32 -> 64), the street by 2.0 / 4.7; with `age_floor` 1: <= 0.6. Hence gap 1's recommendation.
 - New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom

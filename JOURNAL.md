@@ -227,3 +227,7 @@ NEXT:
 - 23:43 look_d5_soul grain locked to the sprite (fwidth-sized cells; derivative before the discard). h57 vs h56: 0 px
   at 32/48, teal px/mean unchanged at 64-128. Motion benefit NOT separately measured (same pattern as the part fix).
   All D5 shaders are now free of screen-locked noise (grep FRAGCOORD: only look_d5's world coordinate w). Hero = h57.
+- 23:47 Codex: 1 Rivet expression sheet (2x2 layout + accepted portrait + concept, 93 s), 0 rejected. Ledger 29.
+  MILESTONE item 5c: rivet_{neutral,angry,hurt,hopeful}.png (512 px) installed + provenance + manifest. Identity held,
+  cream visor, no gore (hurt = dent + torn cable). At 64 px only angry (V slit) and the head tilts separate them.
+  Board evidence/item5c_rivet_expressions.png.
