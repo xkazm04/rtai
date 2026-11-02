@@ -7,6 +7,7 @@ tick count, no RNG.
 
 | File | What |
 |---|---|
+| `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 |
 | `item3_roofs_gate.png` | the 4 landmark roofs, D4 vs D5, at 32 and 48 px/m |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 48 and 64 / the concept |
@@ -22,8 +23,13 @@ tick count, no RNG.
   doctrine fix; bar 0.60%, HQ 0.26%, pension bank 0.48%.
 - Roof mean luminance at 32 px/m: mural 0.497 -> 0.429, bar 0.449 -> 0.401 (street 0.287). D5 roofs are darker
   but stay well above the street.
-- Codex: 11 images (4 Rivet sheets, 4 roofs, 3 portraits); 0 rejected for camera breaks. One in-engine rejection:
-  the vermilion fist mural (re-inked).
+- Rust vs collar: Rivet's pure-vermilion px at 96 px/m 1614 -> 739 after the dried-rust print (the collar stays
+  pure). D5 cops keep 95% of their pure vermilion at 64 px/m (4334 -> 4122 px in the fight crop).
+- Codex: 21 images (4 Rivet sheets, 4 roofs, 3 portraits generated twice by a duplicate job, 3 cop sheets, 4 bold
+  Rivet re-inks); 0 rejected for camera breaks. In-engine rejections: the vermilion fist mural (re-inked) and the
+  4 bold re-inks (reverted: no hatch gain at 64 px/m, the larger rust diluted the collar).
+- Gates at f2c7654 (`node tools/evidence/run.mjs --no-parity --no-bench`): lint, unit 146/0, scenarios 8/0, selftest
+  all PASS. Parity and bench were not run here (the native GDExtension is not built in this worktree).
 
 ## Gap list: in-engine vs `d4h2_mock.jpg` and the concept (next step for each)
 1. **Building depth.** The mock's roofs cast hatched shadows and show a parapet wall; ours are flat squares. The
@@ -41,8 +47,8 @@ tick count, no RNG.
    in-part hatch mostly mips away at 64 px/m (parts are drawn ~5x minified). Next: re-generate the D5 sheets with
    coarser, bolder hatch (strokes 3x thicker) so it survives 0.2 screen px per part px; and the portraits carry the
    face.
-6. **Cops and peds have no D5 tier.** Only Rivet has a D5 part set. Next: D5 restyles of `d4_cop_a/b/c` with the
-   same slicer (`slice_d5.py`): 3 images, RigDetail picks them up by folder automatically.
+6. **Peds have no D5 tier.** Rivet and cops now do (cops: d439969). Next: D5 restyles of `ped_a/b/c` with
+   `slice_d5.py` (add `ped` to its CHARS table): 3 images, RigDetail picks them up by folder.
 7. **The world print layer is subtle.** look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene
    there is little mid wash, so its main visible effect is grain. Next: tune it on a roof-heavy frame at 64 px/m,
    and hand `zoom_amount` to the visual-engine lane's profile table.
