@@ -6,7 +6,7 @@ extends Node
 ## while one moment is shot in both looks, so the pair is the same frame. Windowed only.
 ## Usage: godot --path project res://dev/noir/noir_frames.tscn -- --out=<dir>
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd"]
 const MASTER_SEED: int = 91
 const JUNCTION: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
 const SCENES: Dictionary[String, Vector2] = {
@@ -16,10 +16,12 @@ const SCENES: Dictionary[String, Vector2] = {
 }
 const ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const SETTLE_FRAMES: int = 90
+const CROWD_SHADER: String = "res://assets/shaders/look_noir_crowd.gdshader"
 const RAIN_PHASE: float = 37.0
 
 var _out: String = "user://noir"
 var _only: String = ""
+var _crowd_ink: bool = false
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -35,6 +37,8 @@ func _ready() -> void:
 			return
 		if flag == "--out":
 			_out = arg.substr(flag.length() + 1)
+		elif flag == "--crowd":
+			_crowd_ink = arg.ends_with("=ink")
 		else:
 			_only = arg.substr(flag.length() + 1)
 	_ok(DirAccess.make_dir_recursive_absolute(_out) == OK)
@@ -96,6 +100,8 @@ func _scene(scene: String, focus: Vector2) -> int:
 		var ppm: int = roundi(zoom * SimConst.PX_PER_M)
 		for look: String in ["d4", "noir"]:
 			_view.set_noir(look == "noir")
+			if _crowd_ink:
+				_ink_crowd()
 			for i: int in 3:
 				await get_tree().process_frame
 			await RenderingServer.frame_post_draw
@@ -109,3 +115,17 @@ func _scene(scene: String, focus: Vector2) -> int:
 func _ok(cond: bool) -> void:
 	if not cond:
 		printerr("noir_frames: cannot create %s" % _out)
+
+
+## Experiment (--crowd=ink): the baked crowd as ink silhouettes with a lit-side white rim.
+func _ink_crowd() -> void:
+	var people: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_PEDS]
+	var old: ShaderMaterial = people.material as ShaderMaterial
+	var m: ShaderMaterial = ShaderMaterial.new()
+	m.shader = load(CROWD_SHADER) as Shader
+	m.set_shader_parameter(&"cols", old.get_shader_parameter(&"cols"))
+	m.set_shader_parameter(&"rows", old.get_shader_parameter(&"rows"))
+	people.material = m
+	printerr(
+		"noir_frames: crowd shader %s (was %s)" % [m.shader.resource_path, old.shader.resource_path]
+	)

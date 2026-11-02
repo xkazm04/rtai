@@ -68,11 +68,21 @@ Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-
 - Image generation: Leonardo balance is 0. No Codex image_gen was run this session (0 images, 0 rejected),
   so there are no provenance lines to add.
 
+- MILESTONE (retry of reverted experiment 1, 23:40): `assets/shaders/look_noir_crowd.gdshader` WORKS when it
+  is applied right before each capture (the first try probably raced the first render; a modulate=red
+  diagnostic proved RL_PEDS is the atlas crowd, while the near people are full rigs). Opt-in dev flag only:
+  `noir_frames.tscn -- --crowd=ink`. The atlas crowd prints as solid ink silhouettes carved by a white
+  lit-side rim (7 atlas texels; 1 texel was sub-pixel on screen, crowd-ink-v3). Evidence:
+  `crowd-ink-v4/compare.png` (v4 vs ink crowd, junction 48 / street 32).
+  Honest read: on the paper pavements it is the noir silhouette the brief asks for, and the frame is much
+  less busy. But the silhouettes are blobby (the atlas alpha includes the sticker halo, so limbs merge),
+  and the 16 near full rigs stay white, so the foreground and the crowd do not match. It is not the default.
+
 NEXT:
-1. Item 2, the noir characters (the weakest item): first find out how the city draws the crowd atlas
-   (CrowdLayers / CitySimRender write_render: which node and material the people actually use), then
-   retry the ink-silhouette + lit-rim print for the crowd, and do the same for the full rigs through
-   `part_materials.gd` (a noir part print). Rivet's collar and claw need a rim, not a flat black. If
+1. Item 2, the noir characters (the weakest item): wire look_noir_crowd into --look=noir properly
+   (CityCharacters sets the atlas material after bake; noir needs a hook there), bake the atlas without
+   the halo in noir (so limbs stay legible), and give the full rigs the same ink + lit rim through
+   `part_materials.gd` (a noir part print), so the near and far people match. Rivet's collar and claw need a rim, not a flat black. If
    that is not enough, run a Codex round (the layout-template technique) for noir Rivet / cop / ped parts on
    the same rig.
 2. The showcase with real bodies: put 2 cop rigs at the clip's COPS points (or run the junction fight
