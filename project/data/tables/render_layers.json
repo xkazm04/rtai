@@ -175,9 +175,9 @@
     {
       "canvas": "world_ui",
       "doc": "markers, the objective pointer",
-      "drawn_by": "none yet",
+      "drawn_by": "WorldMarkers (CityView.markers, world_markers.json)",
       "id": "world_markers",
-      "status": "reserved",
+      "status": "live",
       "z": 0
     },
     {

@@ -16,7 +16,7 @@ model. The stack is declared once as data, bottom up. A **canvas** is a Godot `C
 | `actors` (2, follows the camera) | `look_d4_item` | `actor_shadows` 0, `actors` 100, `vehicles` 200, `roof_occluders` 300 (reserved), `fx` 400 | `CrowdLayers`, `CharacterRigs`, the FX system |
 | `light` (3, screen) | none (additive) | `grade` 0, `lights` 100 | `LightLayer` |
 | `emissive` (4, follows) | none | `fx_emissive` 0 | the FX glow twin (emissive kinds) |
-| `world_ui` (5, follows) | none | `world_markers` 0 (reserved) | markers, the objective pointer |
+| `world_ui` (5, follows) | none | `world_markers` 0 | `WorldMarkers` (markers, the objective pointer) |
 | `hud` (10, screen) | none | `hud` 0 (reserved) | `features/hud` |
 
 Rules:
@@ -201,6 +201,17 @@ close to the focus kick it, so a riot two blocks away does not shake the screen)
 The selftest junction (seed 91, 180 ticks) fires 11 shots, 9 ends, 9 deaths, 0 dropped
 (`fx_cues` in its result JSON). Explosions, crackle and smoke have no sim source yet (no grenades,
 no melee in CitySim): they stay API (`FxTriggers.fire`) until a system emits them.
+
+## World-UI markers (`world_markers.gd`, `marker_shapes.gd`, `data/tables/world_markers.json`)
+
+`CityView.markers` sits on the `world_markers` band of the `world_ui` canvas (above the lights,
+unprinted). `add(kind, pos_px)` returns a handle (`move`, `remove`); `objective = handle` makes the
+pointer follow it. Kinds are data: `objective` (vermilion diamond), `pickup` (vermilion ring),
+`soul` (teal ring), each with an ink outline and a paper sticker rim like the characters', drawn at a
+constant **screen** size at every zoom (32 / 48 / 64 px/m) and bobbing on the sim tick (still under
+reduced motion). The pointer is a vermilion chevron pinned `margin_px` inside the screen edge along
+the ray from the screen centre while the objective is off screen. The doctrine is enforced at load:
+a kind whose token is an accent ink not allowed for its `use` (palette.json `uses`) is dropped.
 
 ## Camera feel (`camera_rig.gd`, `data/tables/camera.json`)
 

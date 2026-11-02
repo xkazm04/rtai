@@ -77,7 +77,8 @@ func _before_render(focus: Vector2) -> void:
 ## One row per live person within FEED_RADIUS_M of the focus, then Rivet.
 func _fill_feed(focus: Vector2) -> void:
 	var snap: PackedFloat64Array = _city.sim.snapshot()
-	_view.fx_feed.observe(snap, _clock.tick())
+	if _view.fx_feed != null:
+		_view.fx_feed.observe(snap, _clock.tick())
 	var variants: PackedByteArray = _city.sim.get_variants()
 	var feed: RigFeed = rigs.feed
 	feed.count = 0

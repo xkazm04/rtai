@@ -3,10 +3,10 @@ extends Node
 ## logs every frame. Headless (the editor binary with --fixed-fps 60: one tick per frame, CPU
 ## only) or as an exported build (windowed, vsync off, uncapped). Writes gtai.bench/1 JSON.
 ## Usage: <godot|exe> [--headless --fixed-fps 60] [--path project] res://dev/bench/city_bench.tscn
-##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path>
+##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path> [--fx-feed=off]
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--scenario", "--secs", "--zoom", "--out", "--label", "--vsync"
+	"--scenario", "--secs", "--zoom", "--out", "--label", "--vsync", "--fx-feed"
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -22,7 +22,8 @@ var _args: Dictionary[String, String] = {
 	"--zoom": "0.4",
 	"--out": "user://bench.json",
 	"--label": "",
-	"--vsync": "disabled"
+	"--vsync": "disabled",
+	"--fx-feed": "on"
 }
 var _world: World = null
 var _city: CitySystem = null
@@ -57,6 +58,8 @@ func _ready() -> void:
 	_view.zoom = _args["--zoom"].to_float()
 	add_child(_view)
 	_view.setup(_city)
+	if _args["--fx-feed"] == "off":
+		_view.fx_feed = null
 	_characters = CityCharacters.new(_city, _view, world.context())
 	_characters.rivet_on_foot = _args["--scenario"] == "riot"
 	await _characters.bake()

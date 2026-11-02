@@ -31,6 +31,8 @@ var fx: FxSystem = FxSystem.new()
 ## FX cues as data (core/render/fx_triggers.gd) and the sim-snapshot reader that fires them.
 var fx_triggers: FxTriggers = FxTriggers.new()
 var fx_feed: CityFxFeed = CityFxFeed.new(fx_triggers)
+## Objective / pickup / soul markers and the objective pointer on the world_ui canvas.
+var markers: WorldMarkers = WorldMarkers.new()
 ## The sim clock the lights fade on (the composition root sets it; null = tick 0).
 var clock: SimClock = null
 ## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
@@ -133,6 +135,7 @@ func _place_camera(focus: Vector2) -> void:
 	fx.step(tick)
 	fx.glow.step(tick)
 	fx.ground.step(tick)
+	markers.step(tick)
 
 
 func _build_layers() -> void:
@@ -179,6 +182,11 @@ func _build_fx(actors: CanvasLayer) -> void:
 	fx.glow.lights = lights
 	emissive.add_child(fx.glow)
 	add_child(emissive)
+	var world_ui: CanvasLayer = CanvasLayer.new()
+	world_ui.layer = RenderLayers.canvas(&"world_ui")
+	world_ui.follow_viewport_enabled = true
+	world_ui.add_child(markers)
+	add_child(world_ui)
 
 
 ## The canvas layer the actors draw on (above the print pass); characters attach here.
