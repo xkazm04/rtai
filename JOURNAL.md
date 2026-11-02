@@ -275,3 +275,4 @@ NEXT (addendum): 7. Combat lane: flash `features/combat/art/d5/finisher_drone.pn
 - 00:06 Codex: 2nd finisher panel (light bar off an empty cruiser), 0 rejected; ledger 33. Installed finisher_lightbar.png; board item5d_finisher.png shows both.
 - 00:07 FINAL gates: evidence tool (--no-parity --no-bench) ALL PASS at 8d3a860 (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 36 untracked evidence PNGs restored. Parity/bench not run (no native build in this worktree). NEXT above (1-7) stands.
 - 00:10 Codex: 3rd finisher (torch cuts a police robot K9), 0 rejected; ledger 34. Installed finisher_k9.png, IN-GAME ONLY (not store-safe: robot dog may read as animal harm; owner). FRICTION: gen.sh's limit grep matched '429' inside a token count (104292): false positive, checked the log.
+NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).

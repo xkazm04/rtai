@@ -67,7 +67,7 @@ tick count, no RNG.
   King: `king_{neutral,wary,furious,smug}.png` (1 sheet, 0 rejected; the cell prompted "commanding" shows a sideways
   glance and is named "wary"; cut to the template square so no gutter shows).
 - **Finisher panels** (`item5d_finisher.png`): 3 Codex D5 comic splash panels (k9: in-game only, not store-safe) for the finisher moment, machines only
-  (a police drone crushed, the light bar ripped off an empty cruiser), 1920 px in `features/combat/art/d5/`; not
+  (a police drone crushed, the light bar ripped off an empty cruiser, a police robot K9 cut by the torch), 1920 px in `features/combat/art/d5/`; not
   wired (combat lane).
 - **Pan shimmer + screen-locked grain** (gap 7): the look_d5 world layer adds no swim on a 48 px/m camera pan; 93% of
   the pan swim comes from look_d4's screen-hashed grain (one-token fix for the visual-engine lane). The D5 part and
