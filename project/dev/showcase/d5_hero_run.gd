@@ -42,6 +42,9 @@ const NEIGHBOURS: Array[String] = [
 	"building_osha", "building_tall", "building_union_hall", "building_helipad"
 ]
 const ROOF_M: float = 8.4
+## the 128 px/m kill-cam frames the shot: Rivet (4.8, -2.4), cop 2 (8.6, -0.9), the soul trail
+const KILL_CAM_M: Vector2 = Vector2(6.6, -1.9)
+const HERO_CAM_M: Vector2 = Vector2(5.6, -4.2)
 const SHADOW_M: float = 1.1
 
 ## optional: a folder of keyed street-life sprites (D5HeroExtras); "" = none
@@ -54,8 +57,13 @@ var _corners: Array[Node2D] = []
 
 
 func _init() -> void:
-	zooms = [1.0, 1.5, 2.0, 3.0]
-	cam = Vector2(5.6, -4.2) * PX
+	zooms = [1.0, 1.5, 2.0, 3.0, 4.0]
+	cam = HERO_CAM_M * PX
+
+
+func _frame_at(z: float) -> void:
+	cam = (KILL_CAM_M if z >= 4.0 else HERO_CAM_M) * PX
+	super._frame_at(z)
 
 
 func _ground() -> void:
