@@ -155,3 +155,7 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   as `cash.png`; tiers `cash_coins`, `cash_bundle`, `cash_bag` added (optional). Before/after `after_k|after_k2`.
   Provenance: 4 new lines (cash) + 20 props + 6 HUD frames (`tools/prov_rev.py`: the file's last line + new sha + edit).
   Board pitch 2.0 -> 1.6 m so 15 tokens fit (dev only).
+- 22:48 MILESTONE token family. Codex `d4n_tokens2` (image 17; anchor = d4n_cash), 8 cells, **0 rejected**. Probed
+  all beside the old set in-engine (`probe_tok/`): weapon (pistol; the wrench + pistol glyph was busy), ammo, armor,
+  keycard replaced; health kept (already reads); SMG, wrench, ammo box unused. Before/after `after_k2|after_k3`.
+  The 11 tokens are now one solid-silhouette family; the item-pass request to visual-engine still stands.
