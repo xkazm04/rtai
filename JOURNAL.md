@@ -151,3 +151,4 @@ NEXT:
 - 23:06 hero final round h38 (steel lift; 0 px vs h37 at 32/48); item4 board + hero frames = h38.
 - 23:07 gates ALL PASS at e8e128c. Ped contrast on pavement re-measured: 64 px/m D4 0.411 / D5 0.422 (was 0.408 before the form shade); 96: 0.409 / 0.406.
 - 23:08 REVERTED: an inner kerb-stone joint arc at the rounded corners (h39) floats (the straight kerbs have no matching joint) and crosses the hydrant. Worse; reverted.
+- 23:08 iteration 2 end: tree clean (21 untracked evidence PNGs by design), last gate run ALL PASS at e8e128c (later commits are docs only). NEXT above stands.
