@@ -164,3 +164,9 @@ NEXT (morning, first thing): on an idle box run the full `node tools/evidence/ru
   wash prints as airbrush blotches (van_d2 grey all over): worse, against the "no airbrush" doctrine. Peek
   `work/dmg_soot_peek.png`. d1 stays subtle at 48 px/m (fine pen cracks); a real fix is a damage overlay drawn as
   bold ink (a crumple + crack decal set aligned per car) or smoke FX from the FX atlas on damaged cars (FX owner).
+- 22:52 MILESTONE damage states read. Codex `d4n_dmg` (image 18): 8 bold ink damage marks, **0 rejected**.
+  `tools/damage_marks.py` stamps them on the 18 shipped d1/d2 (registered by construction: windscreen found on the
+  intact car; marks clipped inside the outer stroke; rotation from a crc32 of the name, no RNG): d1 star crack + 3
+  holes, d2 shattered crack + 5 holes + scorched nose. Holes moved back to x 0.28 so they miss the cruiser light bar.
+  Before/after `now_v|after_dm/extras-{32,48,64}ppm.png`: at 32 px/m every d1/d2 is now distinct from intact.
+  Unused marks (scratch, dent, smudge) kept in `work/dmg/` for a dynamic decal set.
