@@ -84,3 +84,6 @@
 - Note for the owner: the target frame paints the blood splat VERMILION; the brief asked for ink, I kept ink.
 - 21:45 glass_shards decal: scatter scaled to 70 % inside its 3 m footprint (the full-size pile read as paper confetti). Before/after: `after_d|after_g/table-48ppm.png`.
 - 21:50 FX atlas cell (6,3) filled: a casing redrawn LYING FLAT (master d4n_casing, 4 cells, 0 rejected; the mouth shows as a small ellipse, accepted). Own scale, documented in the FX README. Evidence `after_x2/fx-*`.
+- 21:55 vehicles iteration 2: side-by-side with the target (`night/d4-production/target_compare.png`) showed the
+  target's cars carry a far bolder outer outline. Added a 5 px inner ink stroke (texture px at 80 px/m; ~3 px at
+  48, ~2 px at 32), footprints unchanged, all 39 vehicle files + atlases rebuilt. Before/after: `after_v|after_v2`.
