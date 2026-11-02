@@ -307,3 +307,15 @@ NEXT (addendum): 8. Owner: store use of finisher_k9.png (marked in-game only).
   collar). Mipmaps on (16 .import): mean abs error vs a Lanczos 200 px reference 6.8 -> 4.6 (rivet), 7.2 -> 5.1
   (cop). By eye the no-mip frame is punchier but breaks up; the mipped one is softer. Next (HUD lane): ship a
   pre-scaled 256 px portrait set for crispness. Board evidence/item17_dialogue.png; ladder +1 row.
+- 00:27 Codex: 1 D5 boss-arena floor (King's chop shop: 12 m square, layout template = 1.5 m scrap band, open
+  floor, 6 m turntable + a 1 m scale anchor; hero_48 + concept refs; 88 s), 0 rejected (plan view held; a few
+  edge-band crates show a hint of side face, edge clutter only, noted). Ledger 36. FRICTION again: gen.sh's limit
+  grep matched '429' inside an exec file name: false positive, checked.
+- 00:29 MILESTONE (bac376c): king_arena.png (1254 px = 104 px/m >= F-13's 96) + D5ArenaRun (d5_showcase.gd --arena):
+  the D5 arena venue in-engine, Rivet vs 2 cops on the turntable at 32/48/64/96 px/m. a1 REJECTED: the raw cream
+  crown stencil swallowed Rivet's cream rim (ground ring 44% cream, Rivet |dL| 0.077 at 64 vs ~0.15 on the street)
+  -> tools/build_arena.py dims the crown x0.6 under a soft mask (DIM 1.0 = the raw file byte-identical): a2 |dL|
+  0.134, the crown still reads as worn paint; a3 = plain asphalt around the arena (lane-marked road tiles read as a
+  grid). D5 print vs D4 tier at 64: warm, grainy floor vs cool flat grey (closer to the concept). No vermilion or teal
+  in the floor (doctrine). Board evidence/item18_arena.png; ladder +1 row.
+- 00:31 gates at bac376c: lint 13/13, unit 149/0, scenarios 8/0 (exit 0).
