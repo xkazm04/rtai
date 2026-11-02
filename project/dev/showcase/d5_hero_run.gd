@@ -35,7 +35,7 @@ var _shadows: Array[Polygon2D] = []
 
 
 func _init() -> void:
-	zooms = [1.0, 1.5, 2.0]
+	zooms = [1.0, 1.5, 2.0, 3.0]
 	cam = Vector2(5.6, -4.2) * PX
 
 
