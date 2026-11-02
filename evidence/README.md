@@ -37,9 +37,9 @@ tick count, no RNG.
    the city lane places one shadow quad per building, offset from `look_d5.params.json` `shadow.offset_m`.
 2. **Street life.** The mock has cars, a hydrant, cones, a dumpster and the teal soul trail; the hero scene is empty.
    Next: put the existing D4 props, a parked cruiser and the ghost trail into the hero scene (assets exist).
-3. **Asphalt texture.** The mock's street is cross-hatched; ours is a calm flat charcoal. That was kept on purpose:
-   characters read on it, and the first look_d5 street hatch (r7) read as rain and was reverted. Next: test a very
-   sparse wobbly hatch only at 64 px/m+, gated on the Rivet dL staying at or above 0.17.
+3. **Asphalt texture.** The mock's street is cross-hatched. A dense street hatch (r7) read as rain and was
+   reverted; a sparse, patchy, darker one now prints from 64 px/m only (596e172; character dL vs surround 0.091 ->
+   0.095, 0 px change at 32/48). Next: decide whether 48 px/m (car camera) gets a lighter version.
 4. **Pavement.** Ours reads as clean tiles; the mock's slabs are worn, hatched and kerbed with rounded corners.
    A D5 sidewalk tile (`city/art/d5/ground/`, seamless via a spliced D4 border) helps only marginally at 64 px/m.
    Next: kerb-corner pieces and curb tiles in D5; that is where the mock's look comes from.
@@ -53,3 +53,10 @@ tick count, no RNG.
 7. **The world print layer is subtle** (its fibre tooth read as rain and was replaced by an isotropic mottle). look_d5 adds paper tooth, ink ghosts and a mid-wash hatch; on this scene
    there is little mid wash, so its main visible effect is grain. Next: tune it on a roof-heavy frame at 64 px/m,
    and hand `zoom_amount` to the visual-engine lane's profile table.
+
+## Not measured tonight (unmeasured is not zero)
+- Motion shimmer of the D5 tier while walking and during a 48 -> 64 px/m zoom tween: only still frames were
+  measured (0 px at the switch). Next: a zoom-sweep plus walk-cycle frame series, with frame-to-frame diff of the
+  Rivet crop.
+- GPU cost of the D5 overlays (+1 sprite per part on up to 16 rigs) and the look_d5 layer: no bench run (no native
+  build here). Next: `node tools/bench/run.mjs` with the D5 tier forced on.

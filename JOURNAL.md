@@ -65,3 +65,7 @@ NEXT:
 5. Owner review: portraits marked store-safe; D5 rust/vermilion budget on Rivet (739 pure px at 96 px/m).
 - 22:09 selftest colour count at 48 px/m varies run to run on the same commit (65, then 73; 71 at f2c7654): noise
   of the windowed selftest, not a regression (the D5 tier is off below 54 px/m and the city references no D5 file).
+- 22:10 look_d5 sparse street hatch at 64 px/m+ (kept: dL 0.091 -> 0.095). Final panels from h17. Deleted 16
+  unreferenced frame rounds (484 MB -> 237 MB); kept every round cited in the ladder / README.
+- UNMEASURED: motion shimmer (walk + zoom tween) of the D5 tier, and the GPU cost of the overlays + look_d5 layer.
+  Both are in evidence/README.md with the next step.
