@@ -151,6 +151,21 @@
    "sha256": "c999122a5bde1c83a6f59594b4085e3fab8e5b8033d28b3a8158b47bfcea4f57",
    "tool": "codex-image"
   },
+  "d5_king_top": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_king_top.png",
+   "layout_template": "masters:night/d5-close/gen/refs/king_top_layout.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/king_top_d5.txt",
+   "prompt_sha256": "a69be39e81ea91102c7a5f70eed3ef603360738b80fae2028e7a8d99e6b9c287",
+   "references": [
+    "own: masters night/d5-close/gen/refs/king_turnaround.png (King turnaround, its TOP view = the game camera)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "4ff6165b0f6980c27512ea387893a2ff3f1632e3d98d9cdbf984f7a5a62a2344",
+   "tool": "codex-image"
+  },
   "d5_loading_rivet": {
    "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_loading_rivet.png",

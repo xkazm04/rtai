@@ -3,12 +3,17 @@ extends D5ShowcaseRun
 ## d5-close evidence (the D5 "boss arena" venue, 64 px/m): Rivet versus two cops on King's
 ## chop-shop arena floor (features/city/art/d5/arena/king_arena.png, 12 m at 104 px/m), ringed by
 ## D4 asphalt, at 32, 48, 64 and 96 px/m in the usual tiers ("d4" = the same floor without the
-## look_d5 print or the D5 character tier). No King rig exists yet: the arena is shown with the
-## street cast. Deterministic: fixed cast, fixed clip ticks, no RNG.
+## look_d5 print or the D5 character tier). No King rig exists yet: King is a STATIC plan-view
+## sprite proposal (characters/art/d5/king/king_top.png, drawn as is on the actor layer, every
+## tier) facing Rivet across the turntable. Deterministic: fixed cast, clip ticks, no RNG.
 
 const ARENA: String = "res://features/city/art/d5/arena/king_arena.png"
 const ARENA_M: float = 12.0
-const CAM_M: Vector2 = Vector2(1.2, 0.4)
+const CAM_M: Vector2 = Vector2(0.3, 0.0)
+const KING: String = "res://features/characters/art/d5/king/king_top.png"
+const KING_M: Vector2 = Vector2(-2.7, -2.5)
+## arm-disc to arm-disc width (the turnaround: 1.6x Rivet's bulk; 2.8 m read smaller than Rivet, a4)
+const KING_W_M: float = 3.6
 
 
 func _init() -> void:
@@ -30,6 +35,14 @@ func _ground() -> void:
 	s.scale = Vector2.ONE * ARENA_M * PX / s.texture.get_width()
 	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_world.add_child(s)
+	var king: Sprite2D = Sprite2D.new()
+	king.texture = load(KING) as Texture2D
+	king.scale = Vector2.ONE * KING_W_M * PX / king.texture.get_width()
+	king.position = KING_M * PX
+	# the sprite faces up the image: turn it toward Rivet's spot
+	king.rotation = (Vector2(-0.4, 0.8) - KING_M).angle() + PI * 0.5
+	king.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_actors.add_child(king)
 
 
 ## Rivet on the turntable's hazard ring, the cops closing from the open floor.
