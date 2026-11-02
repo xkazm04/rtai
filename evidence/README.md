@@ -87,7 +87,10 @@ tick count, no RNG.
    print grain on screen pixels, so every camera move re-rolls the grain over the static world (TV-static swim).
    Car-camera pan test (`dev/showcase/d5_pan.gd`, 48 px/m, world-locked crop): frame change 0.00709 per tick; with
    the grain hashed on the world coordinate `w` (temporary edit, reverted) 0.00049 (-93%). The look_d5 layer adds 0
-   (0.00696 vs 0.00709). Next (visual-engine lane): `hash(floor(FRAGCOORD.xy))` -> `hash(floor(w))`.
+   (0.00696 vs 0.00709). Next (visual-engine lane): `hash(floor(FRAGCOORD.xy))` -> `hash(floor(w))`. The same
+   pattern is in `look_d4_item.gdshader:28` (6% grain) and its ghost halftone `dots(px, ...)` (screen-locked dots on
+   moving items, vehicles and ghosts): lock them to the sprite (as look_d5_part / look_d5_soul now do, 5522ce5 and
+   the soul fix). The D5 shaders have no screen-locked noise left.
 8. **Up close D5 works**: at 96-128 px/m (kill-cam, `item13_killcam128.png`) the part rust, hatch, form shade and the
    two-ink souls read like the concept. Not yet in-engine: King/boss rigs (no parts), the dialogue/phone UI for the
    D5 portraits (HUD lane).
