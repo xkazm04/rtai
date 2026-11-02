@@ -1,5 +1,5 @@
 {
-  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead; vermilion prints as a solid ink mass (verm_value). impact = the comic impact frame on a kill (look_noir_impact.gdshader): sequence = one mode per tick (1 inverted panel, 2 white flash with ink silhouettes, 3 paper with the speed-line burst, 4 the silhouette flash: the host hides the world and the noir pass, so the actors print as solid ink on paper with the burst; without a host hide list mode 4 is a black flash); hit_stop_ticks = how long the sim holds the knockback pose.",
+  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead (teal 0: no teal survives the print, because the only teal on screen was Rivet's claw tip; the dead must draw above the pass, layer > 10, to keep theirs); vermilion prints as a solid ink mass (verm_value). impact = the comic impact frame on a kill (look_noir_impact.gdshader): sequence = one mode per tick (1 inverted panel, 2 white flash with ink silhouettes, 3 paper with the speed-line burst, 4 the silhouette flash: the host hides the world and the noir pass, so the actors print as solid ink on paper with the burst; without a host hide list mode 4 is a black flash); hit_stop_ticks = how long the sim holds the knockback pose.",
   "frame": {
     "amount": 1.0,
     "band": 0.07,
@@ -19,7 +19,7 @@
     "rim_lo": 0.02,
     "soft": 0.025,
     "stroke_period": 3.0,
-    "teal": 1.0,
+    "teal": 0.0,
     "thresh": 0.46,
     "verm_value": 0.0,
     "vignette": 0.35
