@@ -186,7 +186,7 @@ NEXT:
   (mock roof L ~0.59 / 44% paper; D4 bar 0.457 / 26%; D5 bar 0.381 / 16%). build_roofs.py gained a mid-tone density
   lift (d' = d**LIFT; ink, vermilion, the mural fist untouched; LIFT 1.0 rebuilds byte-identical). h47 1.4 timid,
   h48 1.8 KEPT (bar 0.439 / 25%, mural 0.471 / 28%: D4 tone parity with the grime kept), h49 2.2 lost the grime.
-  h50 = h48 (0 px). Board evidence/item11_roof_lift.png. item3_roofs_gate.png is the iteration-1 build (superseded).
+  h50 = h48 (0 px). Board evidence/item11_roof_lift.png. item3_roofs_gate.png rebuilt from h57 at 23:47.
   Hero frames = h50.
 - 23:29 item4 board rebuilt from h50 (mock / 32 / 48 / 64 / 96 / concept). Side by side the biggest remaining gap is
   AT 32 px/m: cool grey vs the mock's warm sepia (and ink-heavy D4 roofs + a hard pavement grid: D4 lanes).
