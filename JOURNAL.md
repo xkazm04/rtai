@@ -364,3 +364,10 @@ target below). Ladder rows appended for every item.
   (in-engine 179.6 vs 176.6), s 0.6 jumps to pavement paper (214.8 vs pavement 218.2) and the flat roofs read as
   plazas next to the street (`work/rt3_ab.png`: original | 0.3 | 0.6). The grey flat roof stays: it separates
   building from pavement. A middle value needs a shader step (visual-engine) or a hatch-based roof redraw.
+- 23:50 HUD re-shot over the iteration-3 ground (`after_hud3/city-*-hud40.png`): frames still plated and readable.
+- 23:52 MILESTONE soft asphalt patches. With the paint clean, the closed patch outlines (0.5-2 m, 1-2 per road tile)
+  repeated every 8 m and printed as empty ink boxes (`after_hud3/city-0-32ppm.png`). `tools/patch_soft.py`: ink px
+  bordering a CLOSED interior (the dashes count as walls, so the trench in tile b is found too) lerped 50 % toward
+  the asphalt base; open cracks keep their ink (the grime stays). 5 road tiles (road_straight_v_tone_c has no closed
+  patch). Before/after `after_hud3|after_pt/city-0-{32,48}ppm.png`: the patches fade to faint stains; the road reads
+  like the target's clean asphalt with cracks. Kept. Commit cee3247.
