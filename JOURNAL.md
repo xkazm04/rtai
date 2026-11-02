@@ -270,3 +270,5 @@ NEXT:
 6. Owner: Rivet steel (item9), age_floor (item12), store-safe marks on portraits/expressions/loading art.
 - 00:04 Codex: 1 D5 finisher splash (Rivet's claw crushing a police drone, 78 s), 0 rejected; ledger 32. Installed
   features/combat/art/d5/finisher_drone.png (1920x1081) + provenance; not wired (combat lane). Board item5d_finisher.png.
+NEXT (addendum): 7. Combat lane: flash `features/combat/art/d5/finisher_drone.png` full-screen for ~1 s on a finisher
+(the D5 "finisher" venue); more panels (cop baton, King) follow the same prompt (gen/_prompts/finisher_d5.txt).
