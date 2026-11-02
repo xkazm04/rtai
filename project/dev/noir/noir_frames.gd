@@ -67,8 +67,8 @@ func _build() -> void:
 
 
 ## The junction riot city (seed 91) under `host`, the noir pass on: [World, CityView,
-## CitySystem, CityCharacters]. Shared with the fight clip.
-static func build_city(host: Node) -> Array:
+## CitySystem, CityCharacters]. Shared with the fight clips; `targets` overrides the riot crowd.
+static func build_city(host: Node, targets: CityTargets = null) -> Array:
 	var world: World = World.new()
 	world.start(Events, Data, MASTER_SEED)
 	host.add_child(world)
@@ -77,9 +77,11 @@ static func build_city(host: Node) -> Array:
 	city.steer_by_input = false
 	city.focus = JUNCTION
 	city.target = JUNCTION
-	var t: CityTargets = CityTargets.riot(110, 16)
-	t.cars = 40
-	t.police_cars = 4
+	var t: CityTargets = targets
+	if t == null:
+		t = CityTargets.riot(110, 16)
+		t.cars = 40
+		t.police_cars = 4
 	city.spawner.targets = t
 	city.spawner.riot_c = JUNCTION
 	var view: CityView = CityView.new()
