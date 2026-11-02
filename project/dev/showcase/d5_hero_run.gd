@@ -38,8 +38,9 @@ const KERB_SHADOWS: Array[Rect2] = [
 	Rect2(-4.0, -20.0, 0.18, 14.4),
 	Rect2(-4.0, 5.6, 0.18, 14.4),
 ]
+## the LOCAL 9 union hall first: it lands beside the mural, where the mock has its LOCAL 9 roof
 const NEIGHBOURS: Array[String] = [
-	"building_osha", "building_tall", "building_union_hall", "building_helipad"
+	"building_union_hall", "building_tall", "building_osha", "building_helipad"
 ]
 const ROOF_M: float = 8.4
 ## the 128 px/m kill-cam frames the shot: Rivet (4.8, -2.4), cop 2 (8.6, -0.9), the soul trail
@@ -54,6 +55,8 @@ var hero_cam: Vector2 = HERO_CAM_M * PX
 var soul_mode: String = "d5"
 var _soul_mat: Material = null
 var _roofs: Dictionary[String, Sprite2D] = {}
+## neighbour roofs that have D5 art (the LOCAL 9 union hall): swapped with the landmarks
+var _d5_neighbours: Array[Sprite2D] = []
 var _shadows: Array[Polygon2D] = []
 var _corners: Array[Node2D] = []
 
@@ -85,8 +88,11 @@ func _ground() -> void:
 	for roof: String in LANDMARKS:
 		var at: Vector2 = LANDMARKS[roof]
 		for d: Vector2 in [Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]:
-			@warning_ignore("return_value_discarded")
-			_roof(NEIGHBOURS[idx % NEIGHBOURS.size()], at + d * at.sign() * (ROOF_M + 0.4))
+			var name: String = NEIGHBOURS[idx % NEIGHBOURS.size()]
+			var nb: Sprite2D = _roof(name, at + d * at.sign() * (ROOF_M + 0.4))
+			if ResourceLoader.exists(ROOFS_D5 + name + ".png"):
+				nb.set_meta(&"roof", name)
+				_d5_neighbours.append(nb)
 			idx += 1
 	_kerb_shadows()
 	_corners = D5HeroKerbs.corners(_world, PX)
@@ -224,3 +230,6 @@ func _tier(tier: String) -> void:
 			spr.texture = walk
 	for roof: String in _roofs:
 		_roofs[roof].texture = load(dir + roof + ".png") as Texture2D
+	for nb: Sprite2D in _d5_neighbours:
+		var nb_name: String = nb.get_meta(&"roof")
+		nb.texture = load(dir + nb_name + ".png") as Texture2D

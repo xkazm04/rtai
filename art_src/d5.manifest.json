@@ -315,6 +315,21 @@
    "sha256": "1e66d88b721870487fc2f95867e6a6cd244f34ff4f95e8b52e5f75e6c54787ec",
    "tool": "codex-image"
   },
+  "d5_roof_union_hall": {
+   "date": "2026-11-02",
+   "file": "masters:night/d5-close/gen/out/d5_roof_union_hall.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_union_hall.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_union_hall.txt",
+   "prompt_sha256": "734edd003856032980eb43ba2aeb0e01b93f07f742721479f9488afb7b29c4ba",
+   "references": [
+    "own: project/features/city/art/roofs/building_union_hall.png (D4 roof, edit target)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "ced7dc74afc0e4e0447e3da5fb866f722fba7297914e40d6bf832c443fb8770f",
+   "tool": "codex-image"
+  },
   "d5_sidewalk": {
    "date": "2026-11-02",
    "file": "masters:night/d5-close/gen/out/d5_sidewalk.png",
