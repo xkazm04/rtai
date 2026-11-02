@@ -289,4 +289,5 @@ NEXT (iteration 7 / morning, in order):
   removed). light_showcase before/after pixel-identical 12/12 (14-light-skip/). Gain unmeasured (the
   showcase is all tick frames). Unit 196, lint 13/13. Evidence at 29cb86f is two commits behind this
   (render-only skip + docs); the next evidence run should be at HEAD.
+- 00:12 evidence at ad0223e (HEAD code): lint 13/13, unit 196, scenarios 8, parity PASS, selftest PASS. Copied to evidence/pof.
 - Session end: tree clean, no processes of mine running, /tmp scratch deleted; masters frames kept as evidence.
