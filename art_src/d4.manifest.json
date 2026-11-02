@@ -597,6 +597,21 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_tokens2": {
+   "file": "masters:night/d4-production/gen/out/d4n_tokens2.png",
+   "sha256": "cf5f3da5afa67ef3758bd406a0f798d6be4892175218f0d9f1c45f80d36897a8",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-02",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/tokens2.txt",
+   "prompt_sha256": "edba7883b0ffd8d1f4c408d6b12dca420a7d0445cda2ee0d04806d5783be398c",
+   "layout_template": "masters:night/d4-production/gen/refs/t_tokens2.png",
+   "references": [
+    "own master: d4n_cash (style anchor, token construction)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }
