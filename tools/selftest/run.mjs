@@ -28,14 +28,29 @@ export function runLookGolden(outDir, out) {
       + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };
 }
 
-/** The colour-doctrine audit (dev/selftest/accent_audit.gd): reported, not gating (offenders are
- *  usually assets for the art lanes). { frames, offenders, summary }. */
+/** Splits audit offenders into tolerated debt (data/tables/accent_debt.json: accent + layer + ppm
+ *  up to max_px) and new offenders. Strings come from accent_audit.gd: "<accent> on <layer>: <n> px",
+ *  prefixed here with "<ppm> px/m "; anything else (crowd looks) is never debt. */
+export function judgeAccents(offenders, debtRows) {
+  const debt = [];
+  const fresh = [];
+  for (const o of offenders) {
+    const m = /^(\d+) px\/m (\w+) on (\w+): (\d+) px$/.exec(o);
+    const row = m && debtRows.find((d) => d.ppm === Number(m[1]) && d.accent === m[2] && d.layer === m[3]);
+    if (row && Number(m[4]) <= row.max_px) debt.push(`${o} (debt ${row.id}, <= ${row.max_px}, ${row.owner})`);
+    else fresh.push(o);
+  }
+  return { debt, fresh };
+}
+
+/** The colour-doctrine audit (dev/selftest/accent_audit.gd). Gating: an offender not covered by
+ *  accent_debt.json (or above its max_px) fails the selftest. { ok, frames, offenders, summary }. */
 export function runAccentAudit(outDir, out) {
   rmSync(join(outDir, 'accent-audit.json'), { force: true });
   run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`],
     { cwd: ROOT, timeout: 180000 });
   const file = join(outDir, 'accent-audit.json');
-  if (!existsSync(file)) return { frames: [], offenders: [], summary: 'accent audit: no result' };
+  if (!existsSync(file)) return { ok: false, frames: [], offenders: [], summary: 'accent audit: no result' };
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const offenders = frames.flatMap((f) => f.offenders.map((o) => `${f.ppm} px/m ${o}`));
@@ -45,8 +60,13 @@ export function runAccentAudit(outDir, out) {
   for (const l of looks.filter((x) => x.off_doctrine)) offenders.push(`crowd look ${l.look} (${l.tag}) ${l.vermilion} vermilion texels`);
   const crowd = looks.length ? `; crowd atlas ${looks.filter((x) => x.kind === 'ped' && !x.off_doctrine).length}/`
     + `${looks.filter((x) => x.kind === 'ped').length} pedestrian looks on doctrine` : '';
-  return { frames, offenders,
-    summary: `accent pixels ${share}${crowd}; ${offenders.length ? `off-doctrine: ${offenders.join('; ')}` : 'no off-doctrine accents'}` };
+  const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
+  const { debt, fresh } = judgeAccents(offenders, debtRows);
+  const verdict = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
+  const paid = debtRows.filter((d) => !debt.some((x) => x.includes(`(debt ${d.id},`))).map((d) => d.id);
+  return { ok: fresh.length === 0, frames, offenders,
+    summary: `accent pixels ${share}${crowd}; ${verdict}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
+      + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') };
 }
 
 export function runSelftest(outDir) {
@@ -76,7 +96,8 @@ export function runSelftest(outDir) {
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
   for (const f of accents.frames) metrics[`accentShare${f.ppm}ppm`] = f.frame_share;
   metrics.accentOffenders = accents.offenders.length;
-  const ok = cityOk && gold.ok;
+  metrics.accentNewOffenders = accents.ok ? 0 : Math.max(1, accents.offenders.length);
+  const ok = cityOk && gold.ok && accents.ok;
   const all = [...frames, ...gold.frames];
   const goldPngs = gold.frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
   return { ok, counts: { passed: all.filter((f) => f.ok).length, failed: all.filter((f) => !f.ok).length, skipped: 0 },

@@ -1,0 +1,16 @@
+{
+  "doc": "Known colour-doctrine debt the accent audit (dev/selftest/accent_audit.gd) tolerates: an accent ink on a layer palette.json does not allow it on, up to max_px at ppm px/m in the selftest junction (seed 91). Any offender not listed here, or above its max_px, fails the selftest evidence (tools/selftest/run.mjs). A row is debt, not a permission: it names the source and the lane that pays it off, and is deleted when the source is fixed.",
+  "rows": [
+    {
+      "accent": "vermilion",
+      "doc": "216 px measured 2026-11-02 .. 03; redraw the lamps in ink and paper (a lit lamp is a paper disc), then delete this row",
+      "id": "traffic_light_lamps",
+      "layer": "world",
+      "max_px": 240,
+      "owner": "d4-production",
+      "ppm": 32,
+      "source": "features/city/art props traffic_light.png (lit lamps painted vermilion)"
+    }
+  ],
+  "schema": "gtai.accent-debt/1"
+}

@@ -104,12 +104,17 @@ appear on: never `world` (ground, decals, shadows, props, roofs); a pickup or ha
 drawn on `fx` or `world_markers`. `classify()` uses the look_d4 plate gates, so "is this pixel an
 accent" means exactly what the print pass means by it.
 
-`dev/selftest/accent_audit.gd` (in the `selftest` evidence via `tools/selftest/run.mjs`, reported but not
-gating) renders the junction at 32 / 48 / 64 px/m, pauses the tree and captures once per hidden layer:
+`dev/selftest/accent_audit.gd` (in the `selftest` evidence via `tools/selftest/run.mjs`, **gating** since
+2026-11-03: see the debt table below) renders the junction at 32 / 48 / 64 px/m, pauses the tree and captures once per hidden layer:
 `world` is absolute (the actors canvas hidden), the actor bands are what hiding them removes. Any accent
 on a layer the table does not allow is listed as an offender. First run (2026-11-02): 0.95 % of the
 frame vermilion at 32 and 48 px/m (all of it actors: the cops), 0.26 % at 64; one offender, 216 px of
 vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an asset for d4-production).
+
+**Gate.** `data/tables/accent_debt.json` (gtai.accent-debt/1) lists known debt: accent + layer + ppm up to
+`max_px`, with the source and the lane that pays it off. An offender not in the table, or above its
+`max_px`, or any off-doctrine crowd look fails the selftest evidence; a debt row no longer seen is
+reported for deletion. Today: one row, `traffic_light_lamps` (<= 240 px at 32 px/m, d4-production).
 
 The atlas crowd is one MultiMesh, so it is split **at the source** (`crowd_atlas_by_look`): each look's row of
 the baked crowd atlas is classified texel by texel (raw, before the item print), with the HIT clip counted
