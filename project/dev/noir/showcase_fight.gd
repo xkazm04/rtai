@@ -12,7 +12,7 @@ extends Node
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes", "--at"
+	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes", "--at", "--cars"
 ]
 ## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
@@ -23,6 +23,9 @@ var _ink: bool = false
 var _d4: bool = false
 var _noir_parts: bool = false
 var _at: Vector2 = NoirFrames.JUNCTION
+## --cars=<n>: traffic cars around the fight (their headlights light the street). NOT for the hero:
+## the sim's cars do not see the scripted fighters and drive through them.
+var _cars: int = 0
 var _coats: NoirCoats = null
 var _frame: int = 0
 var _t: int = 0
@@ -51,7 +54,7 @@ func _ready() -> void:
 	if DirAccess.make_dir_recursive_absolute(_out) != OK:
 		printerr("showcase_fight: cannot create %s" % _out)
 	PartMaterials.set_noir(_ink)
-	var built: Array = NoirFrames.build_city(self, CityTargets.street(12, 0, 0))
+	var built: Array = NoirFrames.build_city(self, CityTargets.street(12, _cars, 0))
 	_world = built[0]
 	_view = built[1]
 	_view.zoom = _zoom
@@ -101,6 +104,8 @@ func _args() -> bool:
 			_d4 = true
 		elif flag == "--noir-parts":
 			_noir_parts = true
+		elif flag == "--cars":
+			_cars = v.to_int()
 		elif flag == "--at":
 			_at = Vector2(v.get_slice(",", 0).to_float(), v.get_slice(",", 1).to_float())
 		elif flag == "--coat":
