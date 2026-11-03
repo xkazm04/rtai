@@ -338,3 +338,4 @@ atlas; d5-combat blood names; vehicles cruiser accents).
   under project/, tools/ or native/ since bba930d and the tree is clean, so the code gates of record stand
   for HEAD. I made no code change and did not re-run any gates (identical code; that would only load
   another lane's bench). The 17:12 NEXT stands unchanged: item 0 is one idle full-gate bench after the run.
+- MILESTONE 17:19 (iter 52) the pre-commit hook ran lint on 9ccc7af: all 13 checks pass over 333 GDScript files.
