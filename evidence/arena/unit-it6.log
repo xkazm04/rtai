@@ -1,0 +1,2 @@
+unit-tests: gut exit 1; 207 failing (362 passed, 207 failed, 0 skipped)
+unit exit 1
