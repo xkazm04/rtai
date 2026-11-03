@@ -1295,8 +1295,9 @@ night_iter7_summary.png and the iteration-7 order.
   dark left (parapet outlines). A "violet-grey membrane" impression by eye did not survive the measurement (mid px
   median 174,154,138 vs mock 165,146,127): not a gap, README corrected. A pavement-speckle lead was dropped: by eye the
   pavements already match (cream, faint joints); my crops for it were badly placed, numbers not used.
-- 05:36 CHECKED by eye the v9 plates not seen in a frame yet (work/i9/v9_plates_b.png: hq, osha, tall, pension bank):
+- 05:33 CHECKED by eye the v9 plates not seen in a frame yet (work/i9/v9_plates_b.png: hq, osha, tall, pension bank):
   the masks hold (props, signs, the tall roof's penthouse rim cream; membranes toned). At plate resolution the blotches
   read close to camouflage; in-engine the print softens them, and at 96 px/m (work/i9/v9_96crop.png) the membrane is
   tan under the hatch, the fist's cream blotches read as peeling mural paint. Kept. Tree checked after the plate build.
-- 05:37 Board evidence/night_iter9_summary.png (mock / committed / v8 / v9 at 32; v9 48, 64; arena 128 a32v9; concept).
+- 05:33 Board evidence/night_iter9_summary.png (mock / committed / v8 / v9 at 32; v9 48, 64; arena 128 a32v9; concept).
+- 05:34 FIX: two journal times above had been written ahead of the clock (05:36 / 05:37 at 05:33); corrected.
