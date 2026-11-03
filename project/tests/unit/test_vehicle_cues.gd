@@ -55,6 +55,17 @@ func test_wreck_fires_the_explosion_and_a_crash() -> void:
 	assert_eq(" ".join(PackedStringArray(_got)), "car_wreck crash")
 
 
+func test_a_wreck_keeps_smoking() -> void:
+	var c: VehicleCues = _cues()
+	var b: VehicleBody = _car()
+	var cars: Array[VehicleBody] = [b]
+	b.hp_lost = 100.0
+	b.state = VehicleBody.State.WRECK
+	for t: int in VehicleCues.SMOKE_GAP * 3:
+		c.observe(cars, null, 0, t)
+	assert_eq(_n(c, &"wreck_smoke"), 3)
+
+
 func test_slide_at_speed_screeches_once() -> void:
 	var c: VehicleCues = _cues()
 	var b: VehicleBody = _car()
@@ -79,7 +90,9 @@ func test_a_parked_car_does_not_screech_and_rams_honk_at_most_every_gap() -> voi
 
 func test_every_cue_has_a_trigger_row() -> void:
 	var t: FxTriggers = FxTriggers.new()
-	for id: StringName in [&"crash", &"hit_metal", &"car_wreck", &"tyre_screech", &"horn"]:
+	for id: StringName in [
+		&"crash", &"hit_metal", &"car_wreck", &"tyre_screech", &"horn", &"wreck_smoke"
+	]:
 		assert_true(t.rows.has(id), "fx_triggers row %s" % id)
 		var row: Dictionary = t.rows.get(id, {})
 		var cue: String = row.get("cue", "")

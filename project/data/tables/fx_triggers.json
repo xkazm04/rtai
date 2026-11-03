@@ -120,6 +120,17 @@
       "id": "horn",
       "shake": "",
       "shake_near_m": 0
+    },
+    {
+      "cue": "vehicles",
+      "doc": "a wreck keeps smoking while it stays (VehicleCues, every 75 ticks per wreck): smoke only, no shake",
+      "fx": [
+        "smoke"
+      ],
+      "hitstop": "",
+      "id": "wreck_smoke",
+      "shake": "",
+      "shake_near_m": 0
     }
   ]
 }

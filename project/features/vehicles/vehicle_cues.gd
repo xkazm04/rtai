@@ -6,12 +6,16 @@ extends RefCounted
 ## above SCREECH_V = `tyre_screech`, a traffic car it rammed = `horn`. Render only: the sink is
 ## FxTriggers.fire (the view's), nothing is written back, no RNG; the cue memory is not sim state,
 ## so replay and parity never see it. Each car has a COOLDOWN between impact cues (a scrape along
-## a wall is one crash, not one per tick).
+## a wall is one crash, not one per tick). A wreck keeps smoking (`wreck_smoke`) until it goes.
 
 const CRASH_HP: float = 8.0
 const SCREECH_V: float = 7.0
 const COOLDOWN: int = 12
 const HORN_GAP: int = 45
+## A wreck smokes (`wreck_smoke`) every SMOKE_GAP ticks for as long as it stays.
+const SMOKE_GAP: int = 75
+## The smoke rises from the engine bay, this far ahead of the centre (the wreck art stays readable).
+const NOSE_M: float = 1.7
 
 ## Callable(id: StringName, pos_px: Vector2, angle: float, tick: int); invalid = count only.
 var sink: Callable = Callable()
@@ -37,6 +41,8 @@ func observe(cars: Array[VehicleBody], driving: VehicleBody, rammed: int, tick: 
 		if lost > 0.0 and (wrecked or tick >= _quiet_until.get(b.id, 0)):
 			_fire(&"crash" if lost >= CRASH_HP or wrecked else &"hit_metal", b, tick)
 			_quiet_until[b.id] = tick + COOLDOWN
+		if b.state == VehicleBody.State.WRECK and not wrecked and (tick + b.id) % SMOKE_GAP == 0:
+			_fire(&"wreck_smoke", b, tick, b.head * NOSE_M)
 		if b == driving and b.sliding and not _slide.get(b.id, false) and b.speed() > SCREECH_V:
 			_fire(&"tyre_screech", b, tick)
 		_lost[b.id] = b.hp_lost
@@ -47,7 +53,7 @@ func observe(cars: Array[VehicleBody], driving: VehicleBody, rammed: int, tick: 
 		_horn_until = tick + HORN_GAP
 
 
-func _fire(id: StringName, b: VehicleBody, tick: int) -> void:
+func _fire(id: StringName, b: VehicleBody, tick: int, off: Vector2 = Vector2.ZERO) -> void:
 	fired[id] = fired.get(id, 0) + 1
 	if sink.is_valid():
-		sink.call(id, b.pos * SimConst.PX_PER_M, b.vel.angle(), tick)
+		sink.call(id, (b.pos + off) * SimConst.PX_PER_M, b.vel.angle(), tick)
