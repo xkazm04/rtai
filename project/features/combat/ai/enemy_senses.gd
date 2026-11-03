@@ -69,7 +69,7 @@ static func detour(from: Vector2, to: Vector2, radius: float, cover: Array[Rect2
 			g.position, Vector2(g.end.x, g.position.y), g.end, Vector2(g.position.x, g.end.y)
 		]
 		for c: Vector2 in corners:
-			if _segment_hits_rect(from, c, r.grow(radius * 0.5)):
+			if _segment_hits_rect(from, c, r):
 				continue
 			var cost: float = from.distance_to(c) + c.distance_to(to)
 			if cost < best_cost:
