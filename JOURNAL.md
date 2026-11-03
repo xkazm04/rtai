@@ -323,3 +323,26 @@ bosses we resolve in future."
   gives `blocked`, which the shared 5.0 line would have made a shove. A class without run_mps is a load error.
   Unit 336/0, lint 13/13. FRICTION: GUT's assert_eq on a Dictionary value needs `str()` (Variant subtype
   warning), and `erase()` needs `@warning_ignore`. A first run caught both through load_all, before any test ran.
+
+### 16:36 - 16:42 (iteration 44): v7, the delayed sprawl is KEPT (commit 3a06ffa)
+- rig_clips: `DOWN_DELAY_S = 0.12`. A knocked-down body stays upright while the knock slide opens a gap, then
+  sprawls. Drawing only: no sim, parity or golden change.
+- Judged on the same seed 91 / tick 560 / 48 px/m crop as v3-v6 (`v7/delay-v2-vs-v7-48ppm.png`).
+  - Before (v2): black sprawl limbs across Rivet's left side. After (v7): a compact upright figure at his shoulder,
+    and Rivet reads clean. **Better; kept.** This is the first of 5 tries (v3-v7) that helps.
+  - Ticks 500/760 are identical (`v7/delay-v2-vs-v7-t500-t760.png`).
+- Clip re-shot on 3a06ffa: `v7/bodies-v7-after-32ppm.mp4` (16.5 s, 5 knockdowns) and `v7/bodies-v7-before-after-32ppm.mp4`.
+  frames.json entry 0 now points at it; a new entry 1 holds the v7 crop (15 entries). The ladder gains a v7 row. Frames
+  looked at: 4 stills + 1 clip frame, all top-down, **0 rejected**.
+- FRICTION: without `--resolution 1920x1080` the clip scene renders 1280x800, which does not compare with v2. The first v7 render was redone.
+- Gates on 3a06ffa: lint 13/13, unit 336/0, scenarios 12/0 standalone (CONTENDED: the clip render ran alongside).
+  Not re-run: parity (no sim change) and run.mjs.
+- The remaining overlap: the upright faller still touches Rivet's shoulder for about 0.12 s. OWNER QUESTION
+  (replaces the 16:35 one): acceptable, or should the sprawl art shrink (d5-cast)?
+
+### NEXT (replaces the 16:35 list)
+1. Owner review of the v7 clip and crop; if the shoulder touch is not OK, ask d5-cast for a shorter sprawl (DO NOT retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Re-run the section 20 bench and scenario_city_chase on an idle machine.
+4. Get-up grace (about 0.5 s with no re-tackle) and Rivet's recovery cost: ask the owner from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
