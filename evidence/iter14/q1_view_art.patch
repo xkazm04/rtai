@@ -142,19 +142,51 @@ index f3cc7e2..7030090 100644
 +	draw_texture_rect(_tex[name], r, false, tint)
 +	draw_set_transform(Vector2.ZERO)
 diff --git a/project/boot/collect_call/view/fx_view.gd b/project/boot/collect_call/view/fx_view.gd
-index 7c04f05..8cf3a85 100644
+index 7c04f05..0e38877 100644
 --- a/project/boot/collect_call/view/fx_view.gd
 +++ b/project/boot/collect_call/view/fx_view.gd
-@@ -7,6 +7,8 @@ extends Node2D
+@@ -1,12 +1,15 @@
+ class_name FxView
+ extends Node2D
+ ## Quest 1's effects as flat placeholder ink: nails and rifle rounds in flight, dropped rifles,
+-## the Robo-tazer's arc ball (a fat cream ball in a vermilion halo with a zigzag tether back to
++## the Robo-tazer's arc ball (the inked fx_arcball loop with an ink + cream zigzag tether back to
+ ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
+ 
  var stage: CollectCallStage
  var _whisper_ticks: int = 0
  var _arc_ticks: int = 0
 +var _fire_tex: Texture2D = null
 +var _atlas: Texture2D = null
++var _ball_tex: Texture2D = null
  var _arc_seen: int = 0
  
  
-@@ -72,39 +74,31 @@ func _whispers() -> void:
+@@ -33,16 +36,14 @@ func _draw() -> void:
+ 
+ func _ball(b: ArcBall) -> void:
+ 	var tick: int = stage.tick
+-	Ink.zigzag(self, b.muzzle, b.pos, 10, tick / 3, Ink.VERMILION)
++	Ink.zigzag(self, b.muzzle, b.pos, 10, tick / 3, Ink.INK)
+ 	Ink.zigzag(self, b.muzzle, b.pos, 10, tick / 3 + 5, Ink.CREAM)
+-	var r: float = 0.6 * Ink.PX_PER_M
+-	draw_circle(Ink.px(b.pos), r * 1.9, Color(Ink.VERMILION, 0.35))
+-	draw_arc(Ink.px(b.pos), r * 1.5, 0.0, TAU, 32, Ink.VERMILION, 5.0, true)
+-	draw_circle(Ink.px(b.pos), r, Ink.CREAM)
+-	for k: int in 4:
+-		var a: float = float(tick) * 0.3 + k * 1.57
+-		var tip: Vector2 = b.pos + Vector2.from_angle(a) * 0.55
+-		Ink.zigzag(self, b.pos, tip, 3, tick + k, Ink.VERMILION)
++	if _ball_tex == null:
++		_ball_tex = load("res://features/fx/art/fx_arcball.png") as Texture2D
++	# 4-frame loop, 4 ticks a frame; the vermilion danger ring sits at ~1.15 m, the old halo
++	var src: Rect2 = Rect2(float((tick / 4) % 4) * 256.0, 0.0, 256.0, 256.0)
++	var size: Vector2 = Vector2.ONE * 2.8 * Ink.PX_PER_M
++	draw_texture_rect_region(_ball_tex, Rect2(Ink.px(b.pos) - size * 0.5, size), src)
+ 
+ 
+ func _arcs(arena: CombatArena) -> void:
+@@ -72,39 +73,31 @@ func _whispers() -> void:
  		draw_arc(Ink.px(at), r, 0.0, TAU, 24, Color(Ink.TEAL, 0.8), 2.0, true)
  
  

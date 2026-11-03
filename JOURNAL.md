@@ -1298,3 +1298,15 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   `project/`): rc 0, all 5 PASS, chase max 147 us (`evidence/iter14/gates-f35fa5d.txt`). Reading: a one-frame CPU
   spike from contention; since the green d14de52 run only the Toner Room PNG changed in `project/`. Owner note: the
   chase budget test is load-sensitive.
+- 04:46 MILESTONE quest 1's Robo-tazer arc ball inked (it was the last vector placeholder in beat 5: a soft airbrushed
+  vermilion halo, smooth vermilion + cream tether lines). Codex `d4n_arcball` (template `refs/t_arcball.png`: 4 guide
+  discs on green; style ref `refs/ref_fx_style.png` = crops of the approved fx_atlas cells): **1 image, 4 frames,
+  0 rejected** (flat, straight down, each over its guide). `masters:tools/slice_arcball.py` -> `features/fx/art/
+  fx_arcball.png` (4 x 256 px cells, one scale; README section, mipmaps on like the atlas). Quest view patch:
+  `fx_view._ball()` draws the loop (4 ticks a frame) at 2.8 m so the ring sits where the old halo was (a first 2.15 m
+  cut read smaller than the old ball, `after_q1ab/`); the tether is ink + cream (vermilion stays on the ring = the
+  danger). Quest grabber `after_q1kb|after_q1ab2|after_q1ab3/05-*.png` (ab3 = with the committed mipmapped import,
+  0 px differ from ab2), crop `work/fx14/q1ab2.png`: an inked FX that matches the sheet, the same danger read. Manifest
+  `d4n_arcball`, provenance line, ladder2 row. Commit fc6501c. Patch +217 / -121 (4 view files, gdformat + gdlint clean,
+  `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`; unit in scratch-q1 **166/166**.
+  Codex night total: **29 images, 194 cells, 7 rejected**; no limit hit (70 s).
