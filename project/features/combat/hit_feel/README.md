@@ -29,3 +29,19 @@ knock = dir * weapon.knockback_mps * feel.knock_scale(hit_class)
 - **Reaction** is `none|flinch|stagger|knockdown` with a length in sim ticks; not emitted for a
   lethal hit (the kill beat owns that). `enemy-ai` plays the animation; this module never does.
 - **Flash** is per target id, fading linearly over `flash_ticks`.
+
+## HitLink: the one-line hookup for a CombatArena
+
+```gdscript
+var link: HitLink = HitLink.make(arena, HitFeel.shipped(rig), WeaponTable.shipped())
+view.cast_view.hit_link = link          # impact star (flash) + drawn flinch (lean)
+# each sim tick, after arena.step():
+link.step()                             # knockback slides the victims, decaying x0.82 a tick
+if link.hold > 0:
+    clock.hold(link.hold)               # the kill hit-stop the hit asked for
+    link.hold = 0
+```
+
+`HitLink` listens to `CombatArena.struck` and `HitFeel.reaction`. In the D5 print the flash is an
+inked impact star (cream, ink rim; Rivet's rim is vermilion = danger), not a tint. Reference
+scene: `dev/gunplay/pistol_fight.tscn` (`-- --armored` for non-lethal hits).
