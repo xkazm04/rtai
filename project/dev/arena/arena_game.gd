@@ -5,7 +5,8 @@ extends Node
 ## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
 ## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
 ## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
-## --clean hides the dev HUD (clips of the game only).
+## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
+## area at boot (a station's capture; like the T teleport, a dev run that does not replay).
 
 const TUNE_TICK: int = 300
 
@@ -67,6 +68,9 @@ func _open(args: ArenaArgs) -> void:
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
 	add_child(session.world)
+	for a: ArenaPlan.Area in session.plan.areas:
+		if a.id == args.text("--start"):
+			teleport(a)
 
 
 ## Quest 1's view on the arena's floor; on the city its CityView and baked characters as well.
