@@ -29,9 +29,10 @@ func begin() -> void:
 
 
 ## Six hull points against solid cells: push out along the shallowest axis, bounce the normal
-## velocity, hurt the body by the normal speed it lost.
+## velocity; the body is hurt once per tick by the worst normal speed it hit with.
 func hull(b: VehicleBody, world: VehicleWorld) -> void:
 	var right: Vector2 = Vector2(-b.head.y, b.head.x)
+	var worst: float = 0.0
 	for p: int in 6:
 		var f: float = HALF_L if p < 2 else (-HALF_L if p < 4 else 0.0)
 		var s: float = HALF_W if (p % 2) == 0 else -HALF_W
@@ -43,8 +44,10 @@ func hull(b: VehicleBody, world: VehicleWorld) -> void:
 		var vn: float = b.vel.dot(n)
 		if vn < 0.0:
 			b.vel -= n * vn * (1.0 + WALL_E)
-			@warning_ignore("return_value_discarded")
-			_rules.hurt(b, -vn * (1.0 + WALL_E))
+			worst = maxf(worst, -vn)
+	if worst > 0.0:
+		@warning_ignore("return_value_discarded")
+		_rules.hurt(b, worst)
 
 
 ## Against every sim car near b: separate, exchange the impulse, record the traffic car's dv.

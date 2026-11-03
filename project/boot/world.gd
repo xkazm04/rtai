@@ -11,6 +11,8 @@ extends Node
 
 const DEFAULT_SEED: int = 1
 
+## The player's cars (features/vehicles): try_enter / exit for missions and the slice.
+var vehicles: VehicleService = null
 var _ctx: WorldContext = null
 var _loop: SimLoop = null
 var _hitches: HitchRecorder = null
@@ -48,6 +50,10 @@ func _ready() -> void:
 func _register_features(with_views: bool) -> void:
 	var city: CitySystem = CitySystem.new()
 	add_system(city)
+	vehicles = VehicleService.new()
+	add_system(vehicles)
+	var vworld: CityVehicleWorld = CityVehicleWorld.new(city)
+	vehicles.world = vworld
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
 		if LaunchArgs.has("--look"):
@@ -63,6 +69,8 @@ func _register_features(with_views: bool) -> void:
 		view.fx_triggers.player_id = CityCharacters.RIVET_ID
 		view.fx_triggers.listen(Events, _ctx.clock, rivet_px)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
+		vworld.characters = characters
+		view.actor_layer().add_child(CityVehicleWorld.make_view(vehicles, view))
 		add_frame_probe(func() -> float: return view.chunks.frame_us / 1000.0)
 		add_frame_probe(func() -> float: return characters.rigs.last_us / 1000.0)
 		_prewarm(view, characters)

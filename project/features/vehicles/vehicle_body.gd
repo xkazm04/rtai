@@ -14,6 +14,7 @@ const STEER_FULL_V: float = 6.0
 const STEER_HIGH_FADE: float = 0.35
 const HANDBRAKE_YAW: float = 1.35
 const HANDBRAKE_DECEL: float = 6.0
+const GRIP_YAW: float = 0.85
 
 var id: int = 0
 var profile: VehicleProfile = null
@@ -93,6 +94,11 @@ func _turn(vf: float, steer: float, handbrake: bool, dt: float) -> void:
 	var high: float = maxf(0.0, a / profile.vmax - 0.6) / 0.4
 	shape *= 1.0 - STEER_HIGH_FADE * minf(1.0, high)
 	var yaw: float = steer * profile.steer_rate * shape * (HANDBRAKE_YAW if handbrake else 1.0)
+	if not handbrake and a > 1.0:
+		# grip-limited yaw: v * yaw stays under GRIP_YAW * grip, so a full-lock turn at speed
+		# carves a wide arc instead of spinning; the handbrake is the way to rotate hard
+		var cap: float = GRIP_YAW * profile.grip / a
+		yaw = clampf(yaw, -cap, cap)
 	if vf < 0.0:
 		yaw = -yaw
 	var s: float = yaw * dt

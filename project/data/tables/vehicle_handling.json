@@ -4,7 +4,7 @@
     "d2_at": 65,
     "dv_min": 3,
     "hp": 100,
-    "per_dv": 6,
+    "per_dv": 3.5,
     "wreck_s": 45
   },
   "doc": "Player-car handling per archetype (arcade top-down model, features/vehicles VehicleBody). Speeds m/s, accelerations m/s^2, steer_rate rad/s at full lock, grip = lateral friction acceleration, drift_at = lateral slip m/s above which slide_grip applies, handbrake_grip = grip multiplier with the handbrake held. mass kg (impulse split). damage: hp per car, dv_min = closing speed (m/s) under which an impact does no damage, per_dv hp per m/s above it, d1_at / d2_at = hp lost at the two damage states, then a wreck at hp; wrecks stay wreck_s seconds. kill_at = speed (m/s) above which a car kills a person it hits (below: knockdown).",
@@ -20,7 +20,7 @@
       "id": "ambulance",
       "mass": 2600,
       "reverse_max": 5,
-      "slide_grip": 5.5,
+      "slide_grip": 8.5,
       "steer_rate": 1.9,
       "vmax": 24
     },
@@ -34,7 +34,7 @@
       "id": "hatchback",
       "mass": 1100,
       "reverse_max": 6,
-      "slide_grip": 6.5,
+      "slide_grip": 10.5,
       "steer_rate": 2.9,
       "vmax": 26
     },
@@ -48,7 +48,7 @@
       "id": "pickup",
       "mass": 2000,
       "reverse_max": 5.5,
-      "slide_grip": 6,
+      "slide_grip": 9.5,
       "steer_rate": 2.2,
       "vmax": 26
     },
@@ -62,7 +62,7 @@
       "id": "police_cruiser",
       "mass": 1700,
       "reverse_max": 7,
-      "slide_grip": 7,
+      "slide_grip": 11,
       "steer_rate": 2.6,
       "vmax": 34
     },
@@ -76,7 +76,7 @@
       "id": "sedan",
       "mass": 1450,
       "reverse_max": 6,
-      "slide_grip": 6.5,
+      "slide_grip": 10,
       "steer_rate": 2.5,
       "vmax": 28
     },
@@ -90,7 +90,7 @@
       "id": "taxi",
       "mass": 1500,
       "reverse_max": 6,
-      "slide_grip": 6.5,
+      "slide_grip": 10,
       "steer_rate": 2.5,
       "vmax": 28
     },
@@ -104,7 +104,7 @@
       "id": "van",
       "mass": 2400,
       "reverse_max": 5,
-      "slide_grip": 5,
+      "slide_grip": 8,
       "steer_rate": 1.8,
       "vmax": 23
     }
