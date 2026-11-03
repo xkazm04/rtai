@@ -105,7 +105,7 @@ func _process(_delta: float) -> void:
 		return
 	var focus: Vector2 = _city.focus
 	_place_camera(focus)
-	chunks.update(focus, _city.residency)
+	chunks.update(focus, _city.residency, zoom)
 	var half: Vector2 = get_viewport_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
 	half += Vector2.ONE * VIEW_MARGIN_M
 	if before_render.is_valid():

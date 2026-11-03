@@ -39,6 +39,7 @@ var _band_of: PackedByteArray = PackedByteArray()
 ## The building_shadows band's material and per-texture extra cast offset (CastShadows).
 var _shadow_mat: ShaderMaterial = null
 var _shadow_extra: PackedVector2Array = PackedVector2Array()
+var _shadow_zoom: float = 1.0
 
 
 func _init(parent: RID, textures: CityTextures) -> void:
@@ -53,8 +54,12 @@ func _init(parent: RID, textures: CityTextures) -> void:
 	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M)
 
 
-func update(focus: Vector2, res: CityResidency) -> void:
+## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.
+func update(focus: Vector2, res: CityResidency, zoom: float = 1.0) -> void:
 	var t0: int = Time.get_ticks_usec()
+	if _shadow_mat != null and zoom != _shadow_zoom:
+		_shadow_zoom = zoom
+		_shadow_mat.set_shader_parameter(&"zoom", zoom)
 	frame_cmds = 0
 	frame_swapped = false
 	for key: Vector2i in _drawn.keys():
