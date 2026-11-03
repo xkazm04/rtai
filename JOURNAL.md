@@ -502,6 +502,13 @@ NEXT (iteration 6 close, in order):
   48) and evidence/showcase-hero.png rebuilt from it. Flash meter: noir 32 / 48 / 64 all 2 per second max.
   The 32 px/m cut (evidence/show-32-final3-vs-final4.png, aftermath f322): at the on-foot zoom the body
   stains are barely visible (a few px); the ground pools and spatter carry the blood there.
+- (02:58) Flash meter + WCAG red-flash test (masters tools/flash_check.py: saturated red = R/(R+G+B) >= 0.8,
+  value (R-G-B)*320, a transition > 20, counted per quarter-screen window like the luminance flashes).
+  Results: show-final4 noir 48 / 64, D4 48, quest-v7, wall-v1 64, safe-v3 (flashes off): 0 red flashes.
+  HONEST: the 0 is about area, not colour: blood pixels peak at 142 (the threshold is 20), but blood covers
+  about 1.6% of any quarter-screen window (the peak window value is 2.3). Blood spurts never cover the area
+  WCAG counts; a full-screen red beat would be caught, a local one would not. Self-review of tonight's diff:
+  one stale comment fixed (ImpactFrame: the calm border is paper); nothing else found.
 NEXT (iteration 8 close, in order):
 1. Owner picks from evidence/showcase-hero.png (re-shot, show-final4) + masters night/noir/show-final4/*.mp4:
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
