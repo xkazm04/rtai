@@ -84,3 +84,12 @@ only in JOURNAL.md and the 11 look goldens, which whoever merges last re-blesses
 - Note to vehicles: a non-lethal car strike sets M_FLEE after a 1 m shove. M_DOWN (lie
   `down_s`, get up, flee from the hit point) now exists in both sims if they want a car knockdown to
   look like a tackle. It is their call.
+
+## 16:20 re-check (d-bodies @ 05dd380, `git merge-tree` against each lane tip)
+- d-slice: JOURNAL.md, collect_call_stage.gd (as before; resolution unchanged).
+- d-vehicles: JOURNAL.md, SConstruct, the two GENERATED constant files, city_parity.gd. sim_constants.json
+  auto-merges (their OBST_MAX / F_PASSING + my BD_RUN_IN doc): re-run `node tools/gen_constants/gen.mjs`, take both
+  sides in city_parity.gd (my spec line is `s[SimConst.BD_RUN_IN] = 3.2`), rebuild native, run parity.
+- d-cast, d-city, d-combat: JOURNAL.md + the 11 look goldens (re-bless once on the merged tree).
+- d-save, d-audio: JOURNAL.md only.
+- bodies.json is new in this branch; its schema changed today (per-class `run_mps`, no `tackle_mps`); no other lane reads it.
