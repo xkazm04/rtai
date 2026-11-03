@@ -381,3 +381,10 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   Owner frames t1-vs-hero-48ppm and hero-d5-64ppm-ab rebuilt from heroBarB; A/B at frames/cruiser-hero-navybar-ab.png
   (named in the cruiser-art-ab note; frames.json stays 15). Vermilion left in that scene = cones and the striped
   barrier (danger cues, doctrine-allowed) and Rivet's collar.
+- 15:55 MERGE CHECK for the Director (git merge-tree, read-only, d-cast 59d8ef1 against each day lane's head):
+  d-city 2b2fa98, d-combat e086c85, d-bodies d80ff0b, d-vehicles 9c2d071, d-slice 36eab8f, d-audio 2642226:
+  0 code conflicts with any of them. Conflicts = JOURNAL.md (every lane: keep both) + look goldens (d-city 16,
+  d-combat 11, d-bodies 11): re-bless ONCE on the fully merged tree (recipe above). d-bodies touches
+  characters/ code (crowd_atlas.gd, rig_clips/feed/input) and merges cleanly with d-cast's art and plan changes.
+  d-city's REQUEST 3 (cruiser accents -> vehicles) is done here: the brief gives police art to d5-cast and d-vehicles
+  changes no art (their damage pick custom.y 0/1/2 selects the cruiser cells this lane recoloured: intact, d1, d2).
