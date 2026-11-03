@@ -63,6 +63,9 @@ uniform float beam_len = 0.0;      // 0 = no headlights
 uniform float beam_w = 26.0;
 uniform float beam_spread = 0.38;
 uniform float beam_lift = 0.0;
+uniform float car_ink = 0.0;       // 1 = a moving car prints as an ink mass with a white edge (its body: car_len x car_half_w behind the nose)
+uniform float car_len = 140.0;     // px at 32 px/m
+uniform float car_half_w = 30.0;
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -158,6 +161,16 @@ void fragment() {
 		float reach = beam_len * ls * (1.0 + 0.18 * (vnoise(w * 0.05) - 0.5)) + 0.001;
 		beam = max(beam, cone * (1.0 - smoothstep(0.3, 1.0, length(cd) / reach)));
 	}
+	// the car bodies: signed distance to each body box (screen px); < 0 inside
+	float car_d = 1e5;
+	for (int i = 0; i < 12; i++) {
+		if (i >= car_count) { break; }
+		vec2 cd = sp - cars[i].xy / SCREEN_PIXEL_SIZE;
+		vec2 ch = cars[i].zw;
+		vec2 q = vec2(-dot(cd, ch) - car_len * ls * 0.5, dot(cd, vec2(-ch.y, ch.x)));
+		vec2 e = abs(q) - vec2(car_len * ls * 0.5, car_half_w * ls);
+		car_d = min(car_d, length(max(e, 0.0)) + min(max(e.x, e.y), 0.0));
+	}
 	v += (lamp_lift * lit + beam_lift * beam) * step(lamp_gate, v);
 	// threshold: crushed ink, the stroke band, paper
 	float paper = smoothstep(thresh - soft, thresh + soft, v);
@@ -181,6 +194,10 @@ void fragment() {
 	paper = max(paper, r);
 	float dark = 1.0 - smoothstep(thresh - 0.02, thresh + 0.06, v);
 	paper *= 1.0 - smoothstep(0.18, 0.40, e) * (1.0 - dark) * edge_ink;
+	// a car: ink body, a hard white edge one and a half px wide
+	float in_car = (1.0 - smoothstep(-0.5, 0.5, car_d)) * car_ink;
+	paper = mix(paper, 0.0, in_car);
+	paper = max(paper, (1.0 - smoothstep(1.0, 2.0, abs(car_d + 0.5))) * car_ink);
 	// rain: white over ink, ink over paper
 	float rain_lod = mix(rain_far, 1.0, smoothstep(splash_zoom.x, splash_zoom.y, zoom));
 	float rm = rain_mask(w) * step(hash(vec2(floor((w.x - w.y * rain_slant) / 3.0), 11.0)), rain_lod);
