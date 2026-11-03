@@ -28,6 +28,7 @@ uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
 uniform float dark_soft = 0.10;   // proposal: how far lighter than its neighbours a pixel may be and still take edge ink
+uniform float lo_soft = 0.03;      // proposal (iteration 9): half-width of the light-wash step (0.03 = look_d4's flat step)
 uniform float paper_hi = 0.0;     // proposal (iteration 9): sources lighter than cream print a lighter paper (the mock's paper reaches L 0.90+; ours stops at CREAM)
 uniform float street_edge = 1.0;  // proposal: 1 = no edge ink on pixels in the dark wash step (paint on asphalt prints unoutlined, as in the mock)
 
@@ -84,7 +85,7 @@ void fragment() {
 	float g = ((vnoise(w * 0.035) - 0.5) * 0.22 + (vnoise(w * 0.11) - 0.5) * 0.10) * grime;
 	float t = clamp(d + g, 0.0, 1.0);
 	vec3 col = mix(CREAM, PAPER_HI, paper_hi * (1.0 - smoothstep(0.0, 0.05, t)));
-	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
+	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - lo_soft, step_lo + lo_soft, t));
 	col = mix(col, mix(CREAM, WASH, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
 	col = mix(col, mix(WASH, INK, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
 	float ink = strokes(w, 0.785, 4.0, smoothstep(hatch_on - 0.02, 0.95, d) * 0.36);
