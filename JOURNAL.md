@@ -118,3 +118,11 @@ NEXT:
   cream cap meets the cream sticker rim, so the blue mass per cop is smaller at 32. Every cop is still its own blue blob
   (navy body + blue-hi shoulders), so the gate holds. Back to navy heads = git revert 90bb8f6 34acc56.
 - Scratch worktree gtai-wt/scratch-cast-merge removed after the trial merge (its commit was never on a branch).
+- ANSWER to d5-city's "REQUEST 1 -> d5-cast" (their JOURNAL): cop rig parts are cop_blue / cop_blue_hi in both tiers with
+  0 vermilion px (gate r - max(g,b) > 40), and the crowd atlas bakes from the rig at load, so its patrol/riot looks follow.
+  At merge their accent_debt rows cop_vermilion_32/48/64 can be deleted (the selftest will report them paid).
+- QUESTION for the owner (new): the cop portraits keep their black glossy visor helmets while the rig cops now wear T1's
+  cream domes. A portrait close-up is a different shot (visor down), so I left them; say if they should match.
+- FIX found by a full cop/police art audit (34 files): the D5 riot helmet still carried 118 vermilion px (rust flecks in
+  the crescent; t1_helmet lacked the red-fleck greying t1_cap has). Greyed: cop + police art vermilion now 0 px in all 34
+  files (gate r - max(g,b) > 40). (1-6 teal-gate px per D4 part are anti-aliased alpha-edge pixels, not printed teal.)
