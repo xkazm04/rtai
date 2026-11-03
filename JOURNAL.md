@@ -1099,3 +1099,12 @@ NEXT addendum (iteration 16): figure shadows cost +0.8 ms on the iGPU in the jun
 NEXT (final for iteration 16, replaces the addendum): 1-5 of the 06:5x NEXT list stand, with item 2 (crowd
   casting) now cheaper to retry: the nearest-body loop is gone, so 48 bodies cost 48 quads of taps, not 48 x 48
   loop iterations; re-measure before adopting. Item 4 (per-light directions) is now one uniform per body.
+- TRIED / REVERTED (07:03-07:04) crowd casting again on the index version (NEXT 2 retry, the same change as 06:53):
+  junction riot iGPU 1080p, 2 runs: noir 14.72 / 14.82 ms vs 12.43 / 12.46 without figure shadows (**+2.3 ms**,
+  vs +0.45 ms for the 16 rigs alone, vs +6.9 ms with the loop). Still too dear for one effect on the iGPU;
+  reverted (files back to a8ea30d, re-imported). Files: evidence/cost-figures-crowd48-index-junction-igpu-
+  {a,b}-NOT-adopted.json. The remaining cost is the taps over 48 overlapping quads (each ~4x the body's area) and
+  the full-crowd silhouette render; a crowd shadow should rather be one baked blob per atlas cell, drawn by the
+  crowd MultiMesh itself (a second instance layer under the people), not swept per frame.
+- (07:05) Stop (iteration 16). Last code commit a8ea30d, gates PASS at a8ea30d; working tree clean except the
+  untracked evidence/ folder. No process of mine running.
