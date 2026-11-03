@@ -799,3 +799,34 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
 - 02:24 generator patch: the 16 m warehouse roof (id 23) also turned 180 degrees at random, printing its painted "7"
   as an "L" (`after_pl/city-2-32ppm`, right edge). It now stays upright too (`after_pl2/`, crop `work/wh_ab.png`).
   `generator_art_pick.patch` re-exported (lint clean, applies on main), code reverted, re-baked, `--check` matches.
+- 02:36 GATES at 42ee60f (HEAD): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity
+  bit-exact (mutation caught at step 629), selftest 72 art textures, 0 placeholders. Copied to `evidence/iter8/`.
+  Deleted my superseded scratch: `probe_tr2/` (dense probe), `work/roofhatch/` (rejected hatch probe).
+
+## 02:36 SUMMARY iteration 8 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter8_summary.png` (= `evidence/iter8/`). Ladder rows "i8 ...".
+1. Moving traffic, the most visible placeholder left in the merged slice (grey steel boxes): traffic atlas re-laid
+   out so cell = sim car art id, + a grey-paint sedan (id 7); wiring patch for visual-engine (two variants: before /
+   after n-visual), checked on n-visual + n-d4 (accent gate clean). 59e1448
+2. Traffic damage atlases d1 / d2 in the same layout, read at 32 / 48 in a probe; need a sim damage hook. 205ae1f
+3. Generic roofs in the texture table (65-71; they were never in the city). 5186edf
+4. Generator patch `generator_art_pick.patch`: generic roofs on 70 % of square blocks, no neighbour repeats,
+   lettered roofs + the warehouse upright (no more upside-down "HQ" / "7"), plaza paving quarter turns (breaks
+   the 8 m crack/stain repeat). Golden hash list included; applies on main and n-visual + n-d4.
+- Rejected / not shipped: roof-membrane ink hatch (hatched coping and signs, not the membrane; our roofs are already
+  hatched, it dissolves at 32 px/m - a print-pass matter).
+- Codex this iteration: **0 images** (all procedural / re-packing). Night total stays 26 images, 170 cells,
+  7 rejected.
+
+NEXT (session end, iteration 8):
+- Director: REQUEST 18 (visual-engine) - apply `evidence/iter8/traffic_atlas_wiring_after_n-visual.patch` after
+  merging n-d4 + n-visual (or `traffic_atlas_wiring.patch` without n-visual); expect the goldens to need the
+  post-merge re-bless anyway (n-visual recipe step 2). REQUEST 19 (city/generator) - apply
+  `evidence/iter8/generator_art_pick.patch` (moves the AST-12 golden list; included).
+- Damage / hijack for moving traffic: atlases ready (`traffic_atlas_d1/_d2/_hijack.png`), the sim needs a per-car
+  state (no F_ flag for it yet) and the car draw a texture swap - code owners.
+- Owner calls still open: cop uniform vermilion share in riots, blood ink vs vermilion, teal robot eyes (quest 1).
+- Earlier NEXT lists (iterations 1-6) still stand where not superseded (q1_view_art.patch, RigVariant slots for the
+  new ped parts, accent_debt traffic_light_lamps row delete after merge, plaza sidewalk variants = now partly the
+  quarter turns).
+- Branch n-d4, nothing pushed or merged. Worktree `scratch-q1` kept (quest patch); `scratch-tr` removed.
