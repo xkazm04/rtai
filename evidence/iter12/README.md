@@ -23,7 +23,7 @@
   (`hud_view._ink_digits`, baseline-placed, cap 0.92 of the old font size), and Rivet drawn from `cast_rivet.png` (a
   capture of the real Rivet rig) instead of the "R" boxes, and the patrol cops from `cast_cop.png` (the cop rig) instead
   of the "C" discs, and Rivet's hide-spot peek from `cast_rivet_peek.png` (was a teal-eyed "R" box). 4 view files,
-  +190 / -109 (incl. the HP bar in ink instead of teal), gdformat +
+  +191 / -110 (incl. the HP bar in ink instead of teal), gdformat +
   gdlint clean, `git apply --check` clean on main 721fbbb, unit tests 166/166 there with it. Needs n-d4 merged
   first (it loads n-d4 art).
   Frames (quest 1's own grabber, seeded): `masters:night/d4-production/before_q1h|after_q1h/0*.png`, crop

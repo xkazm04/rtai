@@ -1156,7 +1156,7 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - Owner review (each reverts alone): 7f517e6 (tank tracks), 72301db (bollard), 36ce71b + 200d8e4 (HUD numeral strip +
   dev overlay; revert together), dd1f68c + 6e8689e + aeb69f3 (quest 1 cast captures: Rivet, patrol cop, Rivet peek;
   only drawn by the quest patch). Originals in `masters:backup_tt/`, `backup_bl/`.
-- Director: REQUEST 16 = `evidence/iter12/q1_view_art.patch` (+190 / -109; the iteration-6 places/cast/HUD art plus the
+- Director: REQUEST 16 = `evidence/iter12/q1_view_art.patch` (+191 / -110; the iteration-6 places/cast/HUD art plus the
   inked cash counter, Rivet, the patrol cops, Rivet's hide-spot peek and an ink HP bar). Order: merge n-d4 into main (no conflict),
   then `git apply` it; dry-run results in the 04:06 CHECK line. REQUEST 19 / 21 unchanged (`evidence/iter10/`),
   REQUEST 22 (visual-engine, optional): aquatint on paving.
@@ -1170,6 +1170,6 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - Codex: 2 images this iteration (0 rejected); night total 28 images, 190 cells, 7 rejected; no limit hit.
 - Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (quest patch applied + art copies); other scratch
   worktrees removed; my Godot runs all finished.
-- 04:08 (patch only) quest 1's HP bar over Rivet was filled TEAL (teal = the dead); now ink on the cream bar, one line
-  in `cast_view._hp_bar()`. Frames `after_q1p2|after_q1hp/04-dock-wave.png`, crop `work/q1hp_ab.png`. Patch +190 / -109,
+- 04:07 (patch only) quest 1's HP bar over Rivet was filled TEAL (teal = the dead); now ink on the cream bar, one line
+  in `cast_view._hp_bar()`. Frames `after_q1p2|after_q1hp/04-dock-wave.png`, crop `work/q1hp_ab.png`. Patch +191 / -110,
   `git apply --check` clean on main + n-d4. Ladder row "i12g". (The whisper rings stay teal: they are the souls.)
