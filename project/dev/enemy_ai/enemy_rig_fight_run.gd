@@ -5,9 +5,20 @@ extends SceneTree
 ##   -s res://dev/enemy_ai/enemy_rig_fight_run.gd -- --out=<dir> [--squad=patrol_cop,robot_thug]
 ##   [--seconds=20] [--seed=31] [--every=2] [--hp=400] [--human=1] [--fire_m=12] [--rivet_x=-5]
 ##   [--spots=x:y,x:y (metres, one per squad id; default the east column)]
+##   [--aim_lead=0.8 (override enemies.json squad.aim_lead for an A/B clip)]
 
 const KEYS: Array[String] = [
-	"out", "squad", "seconds", "seed", "every", "hp", "human", "fire_m", "rivet_x", "spots"
+	"out",
+	"squad",
+	"seconds",
+	"seed",
+	"every",
+	"hp",
+	"human",
+	"fire_m",
+	"rivet_x",
+	"spots",
+	"aim_lead"
 ]
 
 
@@ -44,6 +55,9 @@ func _setup(node: Node, args: Dictionary[String, String]) -> void:
 			at.append(Vector2(float(xy.get_slice(":", 0)), float(xy.get_slice(":", 1))))
 		layout.call("place", pit, ids, at)
 	pit.set("rivet_hp", float(_a(args, "hp", "400")))
+	if args.has("aim_lead"):
+		var roster: Object = pit.get("roster")
+		roster.set("aim_lead", float(args["aim_lead"]))
 	var dummy_script: GDScript = load("res://features/combat/ai/pit_dummy.gd")
 	var dummy: Object = dummy_script.new(2, pit.get("rivet_pos"))  # PitDummy.Mode.FIGHT
 	dummy.set("fire_m", float(_a(args, "fire_m", "12")))
