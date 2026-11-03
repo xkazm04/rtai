@@ -56,7 +56,7 @@ func _top_left() -> void:
 	for i: int in stage.heat.max_level:
 		var pip: Rect2 = Rect2(MARGIN + 110 + i * 46, MARGIN + 52, 38, 38)
 		var lit: bool = i < stage.heat.level
-		draw_texture_rect(_art("wanted_pip_full" if lit else "wanted_pip_empty"), pip, false)
+		draw_texture_rect(_art("wanted_pip_police" if lit else "wanted_pip_empty"), pip, false)
 
 
 func _top_right(screen: Vector2) -> void:
@@ -82,7 +82,7 @@ func _refusal() -> PackedStringArray:
 func _subtitle(screen: Vector2, who: String, words: String) -> void:
 	var box: Rect2 = Rect2(MARGIN * 4, screen.y - MARGIN - 236, screen.x - MARGIN * 8, 236)
 	_panel(box)
-	_say(box.position + Vector2(24, 58), who.to_upper(), NAME_SIZE, Ink.VERMILION)
+	_say(box.position + Vector2(24, 58), who.to_upper(), NAME_SIZE, Ink.INK)
 	var font: Font = ThemeDB.fallback_font
 	var at: Vector2 = box.position + Vector2(24, 100)
 	draw_multiline_string(font, at, words, 0, box.size.x - 48, TEXT_SIZE, 4, Ink.INK)

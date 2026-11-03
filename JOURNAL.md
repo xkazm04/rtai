@@ -42,3 +42,18 @@
   hit the hash (exact or refused). Scenario: the b4-dock save round-trips through a file,
   resumes to b4-dock, a tampered tape is refused. Title card shows Continue when a save exists.
   Unit 335/335.
+- MILESTONE 10:45 clip + doctrine:
+  - clip: `masters/day-d5/slice-play/quest1-input-run-32ppm.mp4` (32 s, 30 fps, 1280 px; 12 s of
+    the opening + 20 s of the Dock 9 fight), recorded windowed (d3d12) from boot/quest1.tscn
+    with CollectCallInputDriver sending input events (a scripted pad, NOT a human). 960 frames
+    looked at by sampling (title, 120, 600, 800, paid): 0 camera breaks rejected.
+  - cops off vermilion in quest 1: cast_cop.png recoloured to cop_blue 3A4766 (d-city's WIP token
+    value, hard-coded until palette.json lands); wanted pips -> new wanted_pip_police.png in
+    cop_blue_hi 4F86E0; subtitle speaker names ink (vermilion is not for names). Before/after
+    at ticks 240 and 7000, 32 and 48 px/m: masters/day-d5/slice-play/{before,after}{32,48}/.
+  - NOT changed: Rivet's draw size in quest 1 (cast_rivet.png is a capture of the rig at true
+    scale: body ~0.9 m, arm span 3.1 m). The rig proportions are d5-cast's; see REQUEST 2.
+- REQUEST 2 -> d5-cast: when Rivet's rig is resized (owner verdict 1), quest 1's
+  `features/quest/art/collect_call/cast_rivet.png` + `cast_rivet_peek.png` need re-capturing
+  (dev/showcase/rivet_sprite.gd, 120 px/m) and `CastView.RIVET_SIZE` updating; tell me the new
+  rig scale and I will re-capture, or do it in your lane.

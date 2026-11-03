@@ -2,7 +2,7 @@ class_name CastView
 extends Node2D
 ## Quest 1's people as flat placeholder ink, each with its initial on its body: Rivet (cream,
 ## teal eye slits, vermilion collar), the Toner Room robots (Juno, Brass, Dr. Kilohm, Don Fax)
-## once the quest brings them on, the vermilion humans (patrol cops while Rivet is hot, the
+## once the quest brings them on, the humans (patrol cops in cop blue while Rivet is hot, the
 ## dock contractors), and Quartermaster Mertz in his own silhouette: wide black uniform, a
 ## flat garrison cap, the battery backpack and its cable to the Robo-tazer.
 

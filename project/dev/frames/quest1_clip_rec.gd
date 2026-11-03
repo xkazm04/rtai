@@ -11,6 +11,8 @@ const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
 var out_dir: String = ""
 var px_per_m: float = 32.0
 var every: int = 2
+## Stills mode: only these ticks (even) are saved, as still_<tick>_<ppm>.png; no clip.
+var stills: Array[int] = []
 var _game: Quest1Game
 var _driver: CollectCallInputDriver = null
 var _frame: int = 0
@@ -41,6 +43,12 @@ func _run() -> void:
 			_driver.act()
 			s.step()
 		var beat: String = s.beat_id()
+		if not stills.is_empty():
+			if stills.has(s.tick()):
+				await _save("still_%d_%d" % [s.tick(), px_per_m])
+			if s.tick() > stills.max():
+				break
+			continue
 		if _keep(beat):
 			await _save("clip_%05d" % _frame)
 			_frame += 1
