@@ -110,3 +110,20 @@ NEXT (iteration 2), in order:
   goldens 11/11 (worst 0.40), block 5/5 (worst 0.93), no re-bless needed (stains/pop move < the tolerance).
   LESSON: never edit the tree while evidence/run.mjs runs.
 - 11:37 bench.lock taken (d5-combat); bench run.mjs --secs=30 --runs=2 in the background.
+- BENCH (release export windows-bench, CONTENDED, 11:37-11:40, lock held + released): run.mjs --secs=30 --runs=2
+  finished and JUDGED: **MISSES p99CpuMs**: p99 7.676 ms (riot), 1% low 78 fps, worst frame 76.5 ms, hitches >25 ms 55,
+  >50 ms 1. At 11:06 the same riot was p99 4.86 ms / 165 fps. Attribution: the riot hitches are cause `present`
+  (render_gpu 0.09 ms, render_cpu 0.7 ms, draw 26-45 ms waiting on present) = the shared GPU (7 lanes). My new nodes
+  measured: CorpseStains 12.9 us a step (debug, city riot, 14 deaths); MuzzlePop = one textured quad on a lit tick.
+  CORRECTION of iteration 1: city_bench only drops the FX feed under --fx-feed=off; the bench riot runs the blood.
+  Evidence: evidence/d5-combat/bench/iter2/. Owner/Director: re-bench on a quiet machine before trusting the miss.
+- MILESTONE 0f08bd1: quest 1's dead guards soak (CorpseStains.step_bodies with CombatArena's dead; 64 nodes: quest
+  bodies never despawn, 49 by the payout; the 16-node ring recycled the on-screen guards' stains: first grab showed
+  1 dot on 4 bodies, fixed). Grabber: 49 soaked, 0 missed. Before = the same grab with the view file reverted (patch).
+  Still: in a pile of bodies a kill may soak a neighbour (nearest dead within 1.5 m).
+- Item 5 audit: the electroshock crackle (robo-tazer on Rivet -> crackle + sparks + his oil) already fires
+  (iteration 1); Rivet's real kills are `shot` (CombatArena), so a melee crackle has no trigger in the real game.
+  Hit-stop length (camera.json) and knockback (sim) are not my files: REQUEST 3 stands.
+- CLIP: masters clip-it2-stains-pop-{48,64}ppm.mp4 (15 s, --fixed-fps 60, every 2nd frame), strip
+  frames/clip-it2-64-strip.png. 15 deaths, 13 soaked, 2 missed. VISIBLE GAP: orphan pools (bodies despawn at 8 s,
+  pools stay minutes) - next item.
