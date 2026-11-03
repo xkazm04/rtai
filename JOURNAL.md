@@ -445,3 +445,9 @@ NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (
   collar now stands out more against drier rust. dL 0.1709 -> 0.1692 (D4 0.161). 0 px at 32/48 and in the d4 tier.
   Board evidence/item1d_rust_dry.png; hero frames = h73; ladder +1 row.
 - 01:12 walk shimmer on the final part shader (walk6): D5/D4 total 1.078, HF 1.026 (walk5 1.076 / 1.024): no shimmer.
+- 01:13 FINAL gates: evidence tool (--no-parity --no-bench) ALL PASS at 3ff8c4c (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok); 48 untracked evidence PNGs restored. Boards item4 + night_iter4_summary rebuilt from h73 (arena a13
+  predates the rust change: 485 px at 64 in the hero, a re-shoot would move the arena Rivet by the same amount).
+NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, in order: (a) age_floor (gameplay-zoom
+  warmth), (b) Rivet/King steel (world lavender vs close-up mauve rule), (c) store-safe marks (portraits, expressions,
+  loading, phone, boss card; k9 in-game only), (d) the boss card's vermilion crown.
