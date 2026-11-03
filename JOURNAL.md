@@ -134,3 +134,16 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
   Provenance lines for the 6 derived tiles + road_box_plain + dash_eraser (the latter two lacked them).
   evidence/d5-city/12-open-roads/. Ladder refreshed (masters ladder.png, evidence ladder-iter3.png).
 - CORRECTION: kerb to kerb is ~16.75-17 m of asphalt (measured), not 18 m as written above.
+- MILESTONE 8209a4e plaza dressing: 3 fixed slots + 0.8 m jitter at 60% (was 2 random at 55%), list
+  drops barrel_cluster (vermilion) and the lamp (a spoon lying on open paving). GENERATOR 6. Modest gain;
+  T1 has no plazas (12% plaza share is a possible owner question). evidence/d5-city/14-plaza/.
+- MILESTONE bench 11:50 (lock taken + released, CONTENDED, short 1 x 30 s): p99 5.47 ms, 1% low 127 fps,
+  worst swap 10.7 ms; exit 1 on 2 unexplained >50 ms hitches (contended GPU, not re-run idle). D5 cost
+  per pass at 64 px/m (16 rigs, GPU median): d4 0.068 -> +part overlays 0.269 -> +look_d5 world 0.447 ->
+  +rig shadows 0.611 ms (total +0.54 ms). evidence/d5-city/13-bench/README.md. FRICTION: bench export
+  failed until build/export/windows-bench/ existed (fresh worktree).
+- FRICTION selftest: the block site's 64 px/m frame showed 4900 px cop vermilion (crowd moved with the
+  generator) over the 3000 debt bound -> bound 6000 with the re-measure in the row (10cc4d8). Still d5-cast's.
+- MILESTONE evidence at 10cc4d8 (--no-bench): lint, unit 335, scenarios 8, parity, selftest all PASS ->
+  evidence/d5-city/evidence-10cc4d8/. Masters: ladder.png + frames.json (15) at after-final/ (8209a4e);
+  drive frame drive/drive-final.720.png. 0 camera-break rejects; 1 change rejected by eye (D5 lamp).
