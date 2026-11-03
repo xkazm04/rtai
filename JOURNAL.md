@@ -659,3 +659,16 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
 - 02:33 boards from h91: item4_hero_vs_targets.png, night_iter6_summary.png (tools/boards_i6.py), evidence/
   hero-d4d5-*ppm.png = h91 (hero-d4-* unchanged, byte identical); ladder +1 row; README rows + section.
 - 02:34 (timestamps of the three entries above corrected to the clock; they were first written ahead of it.)
+- 02:36 MILESTONE (h92b -> h92c; 72d2221, 55f54b8): bold centre dashes. Mock dashes ~0.4 m wide (18 px at its ~45
+  px/m); ours 0.08 m (rows 380-388 of the 96 px/m tile), 2.7 px at 32 px/m. build_road.py `dash_px` (default 0: the
+  old tiles rebuild byte-identically, checked) widens them about their centre with the paint median, wear bites
+  kept. h92a 24 px: reads but lighter than the mock; h92b 36 px (0.375 m): the mock's read, BUT pure cream dashes
+  merge with a cop's cream sticker rim where he stands on the line (48 px/m crop: rim p90 L 0.892 vs dash 0.871, dL
+  0.021). h92c `dash_tone` 0.84: the dash prints as a light wash, dL 0.159 at 32 / 0.141 at 48; by eye still the
+  mock's road graphic. KEPT h92c. d4 tier 0 px, Rivet crops 0 px; h92b changed 5-6 vermilion px (one column of the
+  police barrier's stripe edge where the dash meets it). Provenance: 2 correction lines per step (new sha).
+  Frame (d5, h86 -> h92c): 32 px/m L 0.410 -> 0.425, px darker than 0.2 0.231 -> 0.218, HF 0.071 -> 0.071.
+  OPEN (owner, pre-existing in D4 and in the mock): the zebra bars are the same cream as the actors' rim; Rivet's arm
+  over the crossing touches them. Not changed (the mock's zebra is cream); a toned zebra would be the same fix.
+- 02:38 boards from h92c (item4, night_iter6_summary, NEW item25_road_dashes.png), evidence/hero-d4d5-*ppm.png =
+  h92c (d4 frames unchanged); ladder +1 row; README rows + section.
