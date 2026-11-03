@@ -232,6 +232,8 @@ func _tier(tier: String) -> void:
 		var spr: Sprite2D = n as Sprite2D
 		if spr != null and spr.texture.resource_path.ends_with("/sidewalk_tone.png"):
 			spr.texture = walk
+		elif spr != null and spr.texture.resource_path == PROPS + "lamp_post.png":
+			spr.visible = tier != "d5"  # the D5 lamp (D5HeroDecals) replaces it
 	for roof: String in _roofs:
 		_roofs[roof].texture = load(dir + roof + ".png") as Texture2D
 	for nb: Sprite2D in _d5_neighbours:

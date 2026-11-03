@@ -4,14 +4,17 @@ extends RefCounted
 ## "large world surfaces" where hand-drawn grime survives at gameplay zoom: a stencilled union fist,
 ## STRIKE road paint, a chalk robot outline and a scorch mark. Laid on the world layer, so the world
 ## print (look_d4 + look_d5) prints them like the tiles. A proposal for the city lane; dev evidence.
+## Iteration 4 adds the D5 plan-view lamp post (props/), its arm over the street like the mock's
+## (the D4 lamp read as a spoon lying on the pavement; D5HeroRun hides it in the "d5" tier).
 
-const DIR: String = "res://features/city/art/d5/decals/"
-## decal -> [x m, y m, length m along the art's long axis, rotation deg]
+const DIR: String = "res://features/city/art/d5/"
+## art (under DIR) -> [x m, y m, length m along the art's long axis, rotation deg]
 const SPOTS: Array[Array] = [
-	["union_fist_stencil", -1.0, -9.3, 2.8, 0.0],
-	["strike_paint", 0.0, -6.2, 4.4, 0.0],
-	["chalk_robot", 6.2, 1.2, 2.4, 80.0],
-	["scorch", 14.2, -1.6, 2.2, 0.0],
+	["decals/union_fist_stencil", -1.0, -9.3, 2.8, 0.0],
+	["decals/strike_paint", 0.0, -6.2, 4.4, 0.0],
+	["decals/chalk_robot", 6.2, 1.2, 2.4, 80.0],
+	["decals/scorch", 14.2, -1.6, 2.2, 0.0],
+	["props/lamp_post", 3.2, -6.8, 3.2, 180.0],
 ]
 
 

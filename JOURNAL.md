@@ -404,3 +404,10 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
 13. City lane: King's arena needs walls/doors in the same hand; keep its crown stencil dimmed (a1).
 14. Owner: King steel (desaturated like Rivet's lavender, item9 logic), the boss card's vermilion crown, store-safe
     marks on the cop expressions, phone frame and boss card.
+- 01:02 Codex: 1 D5 plan-view lamp post (chroma-green layout template: base disc, curved arm, head disc; hero_48 + concept;
+  65 s), 0 rejected (overhead held, no colour). Ledger 40.
+- 01:03 MILESTONE gap 4 (lamp): features/city/art/d5/props/lamp_post.png placed by D5HeroDecals (d5 tier) on the
+  kerb at (3.2, -6.8) m with the arm over the street like the mock; the D4 lamp (the "spoon lying on the pavement")
+  is hidden in the d5 tier. h71 vs h70: d4 tier 0 px at every zoom; d5 changed px 2059 / 4399 / 7440 / 13065 at
+  32/48/64/96 (0 at the 128 kill-cam, off frame). Honest: printed, the head reads a little like a gear ring.
+  Board evidence/item20_lamp.png; hero frames = h71; ladder +1 row.
