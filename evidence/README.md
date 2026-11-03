@@ -56,6 +56,7 @@ tick count, no RNG.
 | `item28_cracks_up_close.png` | iteration 6: the road cracks at 128 / 96 / 48 px/m: h86 bold / h92c thinned, clean zebra (faint up close) / h97 the original cracks and zebra wear fading back in from 56 to 96 px/m, + the concept |
 | `item29_thin_print_proposal.png` | iteration 6, PROPOSAL for the visual-engine lane: `look_d5_print` (look_d4 with edge ink on the dark side only) vs look_d4 at 32 px/m, D4 and D4+D5 tiers, + the mock and a x2 crop |
 | `item30_thin_print_roof.png` | iteration 6: the mural roof at 32 px/m: look_d4 / look_d5_print / look_d5_print + plate lines at gamma 0.45 (the mock's diagonal hatch AND a light tone) / the mock's LOCAL 9 roof |
+| `item31_all_proposals_32.png` | iteration 6, FOR THE MORNING: 32 px/m h86 / h98b (committed) / h98b + every open proposal (look_d5_print, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45; not committed) / the mock |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -207,6 +208,13 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
 - New test `tests/unit/test_look_d5_params.gd`: every params key is a real uniform (a planted typo fails), the zoom
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
+
+## All proposals together (`item31_all_proposals_32.png`, not committed)
+The committed iteration-6 frame plus every open proposal (look_d5_print as the world print, `age_floor` and
+`grain_floor` at 1.0, the D5 roof plates' lines at gamma 0.45, union hall 0.65) at 32 px/m. Whole frame L / px
+darker than 0.35 / median RGB: h86 0.410 / 0.682 / 76,70,79; h98b 0.425 / 0.652 / 77,71,79; all proposals **0.472 /
+0.556 / 87,75,76**; mock 0.488 / 0.509 / 96,84,83. By eye it is the closest frame to the mock tonight. Adopting it
+is the visual-engine lane's and the owner's call (NEXT 21, 26).
 
 ## Gap list after iteration 6 (in-engine h98b vs `d4h2_mock.jpg` and the concept; next step each)
 What changed: the GROUND now prints like the mock's at 32/48 px/m (faint slab joints, clean zebra, no repeating

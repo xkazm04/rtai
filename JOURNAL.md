@@ -802,3 +802,8 @@ NEXT (addendum): 26. Visual-engine lane: A/B look_d5_print (dark-side edges) as 
 - 03:06 MEASURED readability under look_d5_print (street band at 32 px/m, h101 -> h101thin): street L 0.294 = 0.294,
   sticker rim vs street dL 0.575 -> 0.576, vermilion dE 76.6 -> 76.7, teal dE 41.3 -> 41.4 (both tiers): the actor
   read is untouched (actors print on their own layer; the street keeps its tone).
+- 03:07 PROPOSAL FRAME (h103all, nothing committed; params + roofs restored byte-identically, tree clean): h98b +
+  D5_PRINT=thin + age_floor 1 + grain_floor 1 + D5 roof lines gamma 0.45 (union hall 0.65). 32 px/m whole frame L /
+  dark / median RGB: h86 0.410 / 0.682 / 76,70,79 -> h98b 0.425 / 0.652 / 77,71,79 -> h103all 0.472 / 0.556 /
+  87,75,76 (mock 0.488 / 0.509 / 96,84,83). By eye the closest frame to the mock tonight. Board
+  evidence/item31_all_proposals_32.png; README section; ladder row.
