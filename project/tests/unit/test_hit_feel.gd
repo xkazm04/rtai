@@ -41,3 +41,13 @@ func test_with_a_rig_a_kill_stops_and_reduced_motion_does_not() -> void:
 	assert_gt(feel.land(1, &"light", Vector2.RIGHT, true, 1000), 0)
 	rig.reduced_motion = true
 	assert_eq(feel.land(2, &"light", Vector2.RIGHT, true, 5000), 0)
+
+
+func test_beat_mode_holds_the_kill_longer() -> void:
+	var rig: CameraRig = CameraRig.new()
+	var feel: HitFeel = HitFeel.shipped(rig)
+	var plain: int = feel.land(1, &"light", Vector2.RIGHT, true, 1000)
+	feel.beat_mode = true
+	var beat: int = feel.land(2, &"light", Vector2.RIGHT, true, 5000)
+	assert_eq(plain, 6)
+	assert_eq(beat, 8)

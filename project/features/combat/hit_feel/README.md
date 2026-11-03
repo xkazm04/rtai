@@ -22,6 +22,8 @@ knock = dir * weapon.knockback_mps * feel.knock_scale(hit_class)
 
 - **Hit-stop** names a `camera.json` hit-stop id; a lethal hit uses `kill_hitstop` instead. The
   rig returns 0 under reduced motion and inside its cooldown, so rapid fire never stutters.
+  Set `beat_mode = true` during a scripted kill beat: a lethal hit then uses `beat_kill_hitstop`
+  (`boss_hit`, 8 ticks instead of 6; d5-combat REQUEST 3).
 - **Shake** names a `camera.json` shake id; the rig keeps the stronger shake in progress and scales
   it to 0 under reduced motion (the shake budget).
 - **Reaction** is `none|flinch|stagger|knockdown` with a length in sim ticks; not emitted for a

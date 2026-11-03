@@ -1,4 +1,5 @@
 {
+  "beat_kill_hitstop": "boss_hit",
   "classes": [
     {
       "doc": "Pistol, machine pistol, nails: a flash and a flinch, no stop (rate of fire would stutter).",
@@ -71,7 +72,7 @@
       "stagger_ticks": 12
     }
   ],
-  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays.",
+  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6).",
   "kill_hitstop": "kill",
   "schema": "gtai.hit_feel/1"
 }

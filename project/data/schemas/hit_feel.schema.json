@@ -2,6 +2,9 @@
   "$id": "gtai.hit_feel/1",
   "additionalProperties": false,
   "properties": {
+    "beat_kill_hitstop": {
+      "type": "string"
+    },
     "classes": {
       "items": {
         "additionalProperties": false,
@@ -68,6 +71,7 @@
     }
   },
   "required": [
+    "beat_kill_hitstop",
     "classes",
     "doc",
     "kill_hitstop",

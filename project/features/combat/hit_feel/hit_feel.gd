@@ -11,6 +11,9 @@ const TABLE: String = "res://data/tables/hit_feel.json"
 const SCHEMA: String = "gtai.hit_feel/1"
 
 var kill_hitstop: StringName = &"kill"
+## A scripted kill beat holds the kill longer (d5-combat REQUEST 3: 6 -> 8 ticks).
+var beat_kill_hitstop: StringName = &"boss_hit"
+var beat_mode: bool = false
 var _rows: Dictionary[StringName, Dictionary] = {}
 var _flash_until: Dictionary[int, int] = {}
 var _flash_len: Dictionary[int, int] = {}
@@ -23,6 +26,7 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 	hf._rig = rig
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	hf.kill_hitstop = StringName(t.text(t.raw, "kill_hitstop"))
+	hf.beat_kill_hitstop = StringName(t.text(t.raw, "beat_kill_hitstop"))
 	for row: Variant in t.array(t.raw, "classes"):
 		var r: Dictionary = row if row is Dictionary else {}
 		hf._rows[StringName(t.text(r, "id"))] = {
@@ -65,7 +69,8 @@ func land(target_id: int, hit_class: StringName, dir: Vector2, lethal: bool, tic
 	var shake: StringName = row["shake"]
 	if shake != &"":
 		_rig.kick(shake, tick)
-	var stop: StringName = kill_hitstop if lethal else row["hitstop"]
+	var lethal_stop: StringName = beat_kill_hitstop if beat_mode else kill_hitstop
+	var stop: StringName = lethal_stop if lethal else row["hitstop"]
 	return _rig.hitstop(stop, tick) if stop != &"" else 0
 
 
