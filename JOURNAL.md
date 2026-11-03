@@ -220,3 +220,13 @@ NEXT (iteration 3, in order):
 - Day totals so far: 157 frames captured, 63 rejected (20 input race, 21 roof walk, 22 smoke too
   heavy), 0 camera breaks. No AI images (no provenance lines).
 - 12:17 REQUEST 4 (custom.y atlas pick) still not in d-city (checked its shaders): NEXT 2 stands.
+- 12:19 NEXT 1 scoped (not started: it does not fit safely before 12:50): cars do not use the
+  per-slot `t1` timer (only people do), so a "blocked by an obstacle for 3 s" count needs no new
+  state array; the go-around itself = a temporary lane offset to the oncoming lane while
+  f < 12 m and the oncoming lane is clear (hash query), back once past. It has to respect the
+  junction reservation (`_r.reserve`) and stay identical in car_drive.cpp / sim_cars.gd; parity
+  then needs an obstacle in a lane with a car behind it (the current parity list puts points
+  9 m ahead of cars, so it already exercises the trigger).
+- Session end 12:20: tree clean, no Godot process of mine left, scratch worktree removed, bench
+  lock released at 12:10. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png,
+  carnage-20s-48ppm.mp4, clip-carnage-sheet.png).
