@@ -748,3 +748,28 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   about one third white.
   Flash meter: 32 = 2/s, 48 = 2/s (was 3 in lamp-show3: the lit cone keeps the quarter window bright through the
   kill beat), 64 = 3/s (the budget's own maximum, unchanged), 0 red. Ladder row 31 (31 rows).
+- (04:09) Leonardo probe: apiSubscriptionTokens 0, apiPaidTokens null - no Leonardo tonight (key not printed).
+- FRICTION (04:10-04:20) the first oil recording hung for the full 600 s timeout: typed-GDScript parse errors
+  (`.get()` on a Variant, a Variant passed as String) that lint (gdformat/gdlint) does not catch, so the scene
+  never loaded and never quit. Lesson: one short windowed run grepping SCRIPT ERROR before any recording.
+  The partial 2.4 GB avi deleted.
+- MILESTONE (04:28) Rivet is a robot, so he does not bleed red (e30b736). Colour doctrine: red is human blood
+  only. blood_fx.json gains `fluids.oil` (ink ground colours, `flight` white = sparks in the air, `case_px` 1.5 =
+  an ink casing so the white sparks read on paper too, its own `trail` 2.2) and `player` {fluid oil, hit kind
+  robot_hit: 26 sparks over a 160 deg fan, 8-16 px/tick}. NoirCombatFx.make_player_fx() builds a second BloodFx
+  for that fluid; player_hit and the player's drip trail go to it, and the robot gets no red stains (stepped by
+  NoirCombatFx, so it holds with the hit-stop). Wired into the showcase and quest_fight (quest 1 has 0 player hits,
+  so it shows nothing there). Unit test: a player_hit makes 0 red droplets, 0 stains on the robot, > 0 sparks.
+  Tuning, all A/B at 64 px/m on the same video frames (masters night/noir/oil-v1..v3/ab/): v1 (white drops, 80
+  deg) = sparks invisible on Rivet's paper body; v2 (+ ink casing, longer streak) = visible but like rain dashes;
+  v3 (160 deg fan, faster) = a fan of cased streaks, kept.
+  Evidence: evidence/oil-before-after-64.png, -48.png (before carpass-v3 | after oilcar, video frames 135 / 137 =
+  hit 1, 252 = the trail after hit 2, 690 = aftermath). Read: the hit now reads as metal (a white spark fan), and
+  the only red in the frame is the cops' blood - the doctrine holds. Costs: the oil on black asphalt is nearly
+  invisible except as small white-ringed dots (the dark-on-dark rim), so "Rivet is hurt" is told by the spark burst
+  alone (no lasting mark on him); the sparks clutter his body for ~0.3 s at 64 px/m. Soul swaps to a human body
+  would need `player` per body (today it is one setting).
+- MILESTONE (04:33) final street showcase = car pass + oil: masters night/noir/oilcar/{32,48,64}/ (clips + hero
+  frames); evidence/showcase-hero-car.png rebuilt from it (the D4 column is the lamp-show/d4 run: no car, red drips).
+  Flash meter 32 = 2/s, 48 = 2/s, 64 = 3/s (budget max), 0 red. Ladder row 32 (32 rows). Superseded scratch
+  deleted (oil-v1..v3 hero pngs); masters night/noir 1.8 GB.
