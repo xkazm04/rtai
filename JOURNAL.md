@@ -254,3 +254,28 @@ NEXT:
 6. The city block clip (owner decision 1: tuned in the arena, holds in the city): the pit fight's
    brains on the generated city (dev/showcase/city_fight.gd is the closest host).
 7. Robot hit tint note for d5-cast/gunplay (vermilion flash on enemy hits).
+
+## Iteration 4 (22:34-23:18), BUILD: suppression, the long sample clip, the arena station format
+- 22:34 answers.json re-read: nothing new for enemy-ai. Common brief re-read: test isolation
+  (APPDATA=gtai-eve/appdata/enemy-ai) applied to every gate run from now on.
+- MILESTONE 458fcde (brief work order 2, the "suppress" state; NEXT 5 of iteration 3):
+  features/combat/ai/enemy_suppress.gd. A Rivet nail that has flown past a human enemy within
+  0.6 m without hitting makes it flinch away from the nail (flinch_tick/flinch_dir on the agent,
+  pose &"flinch"); during WINDUP/FIRE the flinch breaks the tell for 14 ticks (pit.stun: the aim
+  line drops, the token goes back). Robots and a front-facing shield never flinch; 45-tick
+  refractory. The rig fight shoves the rig sideways on a flinch (CutRig.hit, no tint, no blood),
+  so a miss reads unlike a hit. Registry rules applied (agent-behaviour-authoring: reactions to
+  the player's pressure must be visible and give the player a reward window; deterministic, no
+  RNG). Unit tests test_enemy_suppress.gd 5/5 (near miss flinches away, a flinch breaks the
+  tell, a hit is not a flinch, robots never, refractory).
+- e01b895: scenario_enemy_pit judges suppression + planted fault plant_no_flinch:
+  suppress {told, flinches 1, tells_broken 1, nail_hits 0, shots 0 in 25 ticks}; planted
+  {tells_broken 0} -> caught. Decision line in docs/decisions.md.
+- fc1844b (arena lane REQUEST 3, cross-session message): arena_stations/enemy-ai.json in the
+  e-arena format (gtai.arena-station/1, "area": "pit", "name", no "script" because EnemyPit and
+  PitLayout do not extend ArenaHook). DEVIATION: this branch's lint maps tables to
+  <basename>.schema.json, so project/data/schemas/enemy-ai.schema.json stays as a verbatim
+  copy of e-arena's arena_station.schema.json (an orphan after the merge; delete then). Arena
+  lane told. Night-run item: an ArenaHook for the pit (setup builds EnemyPit; step drives it
+  from stage.arena.rivet.pos).
+- Gates: lint 13/13; unit 558/558 (run_unit.mjs, 22:45); enemy scenarios 2/2.
