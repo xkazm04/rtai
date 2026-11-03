@@ -1405,3 +1405,7 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
 - 04:57 CHECKED, no change: the burst's chained arcs (vermilion + cream zigzags, `fx_view._arcs`). A local probe holding
   the last burst on (`probe_q1ba/`) changed 0 px in beats 05-07: the seeded bot never fires a burst, so there is no
   frame to judge a change by - left as is (no unevidenced edits). scratch-q1 back to the patch (checked equal).
+- 04:58 Summary sheet now 11 rows (+ whisper rings). Final NEXT (04:54) stands, with: REQUEST 16's patch now also inks
+  the whisper rings (+223 / -122; unit 166/166; applies on main and on main + n-d4 + n-visual as of 04:52 - the
+  whisper change is inside fx_view.gd, which n-visual does not touch). Quest 1 code left as is: the burst arcs (never
+  fired by the seeded bot), rifle / nail lines, the words (font).
