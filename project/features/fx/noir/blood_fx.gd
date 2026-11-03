@@ -12,6 +12,10 @@ var tick: int = 0
 var p: Dictionary = {}
 var drops: int = 0
 var decals: int = 0
+## Optional Callable(px: Vector2) -> bool, true inside a wall/building: a droplet that flies into
+## one stops at the wall and smears along it (a wall splat) instead of landing beyond it.
+var solid: Callable = Callable()
+var wall_hits: int = 0
 var _pos: PackedVector2Array = PackedVector2Array()
 var _vel: PackedVector2Array = PackedVector2Array()
 var _size: PackedFloat32Array = PackedFloat32Array()
@@ -112,7 +116,7 @@ func step_ticks(n: int) -> void:
 	for _t: int in n:
 		tick += 1
 		for i: int in _pos.size():
-			if _life[i] <= 0:
+			if _life[i] <= 0 or (solid.is_valid() and _hit_wall(i)):
 				continue
 			_pos[i] += _vel[i]
 			_vel[i] *= drag
@@ -123,6 +127,23 @@ func step_ticks(n: int) -> void:
 				var d: int = _add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
 				_d_dir[d] = _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0)
 	queue_redraw()
+
+
+## A droplet into a wall: two splats at the contact smeared both ways along the wall, sized
+## by the impact speed. False when the droplet flies free this tick.
+func _hit_wall(i: int) -> bool:
+	var nrm: Vector2 = BloodMarks.wall_normal(solid, _pos[i], _vel[i])
+	if nrm == Vector2.ZERO:
+		return false
+	var at: Vector2 = BloodMarks.contact(solid, _pos[i], _vel[i])
+	var r: float = _size[i] * (2.2 + _vel[i].length() / 2.5)
+	for sgn: float in [1.0, -1.0]:
+		var d: int = _add_decal(at + nrm * r * 0.3, r, 0)
+		_d_dir[d] = nrm.orthogonal() * sgn
+	_life[i] = 0
+	drops -= 1
+	wall_hits += 1
+	return true
 
 
 func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:

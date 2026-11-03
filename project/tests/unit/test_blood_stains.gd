@@ -32,3 +32,16 @@ func test_stains_are_pooled() -> void:
 	assert_eq(total, 48, "the stain pool (stain.max_stains) evicts the oldest")
 	assert_eq(stains.count(39), 5)
 	stains.free()
+
+
+func test_a_spray_into_a_wall_splats_on_the_wall() -> void:
+	var blood: BloodFx = BloodFx.new()
+	blood.solid = func(px: Vector2) -> bool: return px.x > 40.0
+	blood.splash(Vector2.ZERO, Vector2.RIGHT, "kill")
+	blood.step_ticks(60)
+	assert_gt(blood.wall_hits, 10, "a kill sprayed at a wall 1.25 m away hits it")
+	var at: Vector2 = BloodMarks.contact(blood.solid, Vector2(38, 0), Vector2(8, 0))
+	assert_true(at.x <= 40.0, "the splat sits on the free side of the wall")
+	var n: Vector2 = BloodMarks.wall_normal(blood.solid, Vector2(38, 0), Vector2(8, 3))
+	assert_eq(n, Vector2.LEFT, "the wall faces back at the spray")
+	blood.free()

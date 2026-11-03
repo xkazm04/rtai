@@ -52,6 +52,29 @@ static func splat(ci: CanvasItem, at: Vector2, r: float, dir: Vector2, c: Color)
 		)
 
 
+## Where a droplet moving `v` from `at` meets a wall (`solid`: Callable(px) -> bool): the
+## wall's outward normal (axis-aligned, as the city's 1 m cells are), or ZERO when it flies free.
+static func wall_normal(solid: Callable, at: Vector2, v: Vector2) -> Vector2:
+	if not solid.call(at + v):
+		return Vector2.ZERO
+	if v.x != 0.0 and solid.call(at + Vector2(v.x, 0.0)):
+		return Vector2(-signf(v.x), 0.0)
+	if v.y != 0.0 and solid.call(at + Vector2(0.0, v.y)):
+		return Vector2(0.0, -signf(v.y))
+	return -v.normalized()
+
+
+## The last free point on the way from `at` to `at + v` (4 sub-steps).
+static func contact(solid: Callable, at: Vector2, v: Vector2) -> Vector2:
+	var free: Vector2 = at
+	for k: int in range(1, 5):
+		var q: Vector2 = at + v * (k / 4.0)
+		if solid.call(q):
+			break
+		free = q
+	return free
+
+
 ## The pool outline: radius r wobbled by three low-frequency waves (min 0.66 r, so the polygon
 ## stays star-shaped and simple), pushed out up to |flow| on the side facing flow.
 static func ring(at: Vector2, r: float, flow: Vector2, s: float) -> PackedVector2Array:
