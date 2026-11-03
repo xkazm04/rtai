@@ -414,3 +414,13 @@ NEXT (night run; supersedes iteration 5 items 1 and 3, the rest stand):
   not re-run after this commit: dev-only file, no sim or test code touched since the 23:19 green
   run. The two Godot processes still alive (PIDs 33868, 39464) are not this session's; all my
   runs were under `timeout` and exited. NEXT stands as written above (item 2: the --acc knob next).
+
+## Iteration 7 (BUILD, session start 23:24, freeze 23:30)
+- 23:25 Read JOURNAL tail and answers.json: only enemy-ai-1 answered (21:45, keep A as a
+  placeholder; re-ask only with the full D5 chain clip). Nothing new to apply. Six minutes to
+  freeze, so no code change this session: starting the --acc knob and leaving it half-done and
+  un-gated would be worse than landing nothing. Tree clean at b611a13 before this entry; last
+  green gates are iteration 6's 23:19 run (lint 13/13, unit 560/560, scenarios 21/21).
+NEXT (night run, unchanged from iteration 6 close): item 2 first: the --acc knob on
+  aim_lead_ab.gd (scale the accuracy-by-range curve) and an aim_lock_ticks sweep, salted at read
+  0.7, since --shooters showed volume, not damage; then the iteration 4 items 2-7.
