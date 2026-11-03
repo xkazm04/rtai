@@ -21,6 +21,13 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 | 21 | characters | `iter10/rig_variant_new_looks.patch` | crowd slots 3 and 7 use the hoodie / cap and overalls / bald parts |
 | 23 | visual-engine | `iter14/fx_fade.patch` | fx.json `muzzle` + `crackle` `fade_from` 0 -> 0.6: the flash prints as a solid inked star and the bolts as solid ink instead of dither fragments (REQUEST 14 + 23) |
 
+## Merge notes
+
+- n-d4 merges into main and into n-visual with `JOURNAL.md` the only conflict (both lanes keep one at the root).
+- After merging n-visual + n-d4, n-visual's look / block goldens must be re-blessed: they were blessed without n-d4's
+  art, so all 16 move (`iter14/merged-n-visual-41ee996-gates.txt`: worst mean 20.44; everything else in that run
+  passes, incl. the accent gate). Their unit suite passes on the merged tree (221/221).
+
 ## Optional requests to visual-engine (owner's eye)
 
 - 20: the target's speckled slabs would come from the print pass grit, not texture specks.
