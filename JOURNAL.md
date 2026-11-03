@@ -801,3 +801,13 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   step 6/6): the "$1,500 taped under" envelope prints as a paper-white box with ink tape on the black street -
   the pickup already reads by value (white pops on black); its vermilion tape prints as ink lines, which is
   fine there. No change. evidence/pickup-cash-48.png (crop), masters cash-v0/. Rivet's bot stands next to it.
+- FRICTION (04:44-04:52) the same mistake twice: the NoirFluid refactor was recorded without the short windowed
+  check, a typed-GDScript parse error (`p["colour"]` is a Variant) left the scene running, and the stopped
+  background task did NOT take its children with it: Godot (38044 + 54368) and then rec_show's ffmpeg (47376) kept
+  running and held the 1.6 GB avi. Killed by PID (my own processes only, checked by command line), scratch
+  deleted, 0 Godot / ffmpeg processes left. Rule for the next session: windowed run first, always; after a
+  TaskStop, list Godot/ffmpeg by command line.
+- REFACTOR (04:54, f26c133) a fluid's look (colours, flight colour, casing, streak) moves to
+  `features/fx/noir/noir_fluid.gd` (NoirFluid); blood_fx.gd 240 -> 233 lines (the commit message says 234).
+  Re-recorded the street showcase at 48 px/m: 23/23 hero frames pixel-identical to oilcar/48 (the mp4 has the same
+  byte size); 199 unit pass. blood_fx.gd is still over the ~200 soft target (under the 300 hard stop).
