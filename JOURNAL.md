@@ -1188,12 +1188,12 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - 04:12 Session end for iteration 12: tree at HEAD art (the skid probe reverted and re-imported), gates last run at 297bd42 (only journal / evidence docs since), all my Godot runs finished, scratch worktrees removed except `scratch-q1`. The final NEXT above ("NEXT (final, iteration 12)") stands; also: `ladder.png` is 1720 x 65534 px, start a `ladder2.png` next iteration (PIL's size guard).
 
 ## 2026-11-03 04:13 iteration 14, BUILD (raise the weakest item; stop 05:43)
-- 04:20 Re-read: journal, log, merged i10 / i12 frames vs the target at 32 / 48 / 64. Road crack repeats in the merged
+- 04:14 Re-read: journal, log, merged i10 / i12 frames vs the target at 32 / 48 / 64. Road crack repeats in the merged
   frames are the variant pick (generator patch v2, REQUEST 19), roof_tone / props / decals / pickups already handled.
   The weakest thing left on screen in the MERGED slice (n-visual draws my FX atlas): the ink blood splat under every
   body read as a cluster of cream-ringed bubbles ("frog spawn") at 48 / 64 px/m - iteration 4's 11 px rim went round
   every droplet.
-- 05:02 MILESTONE ink blood splat = one ink pool with one cream sticker edge. `masters:tools/splat_sticker.py` re-cuts
+- 04:21 MILESTONE ink blood splat = one ink pool with one cream sticker edge. `masters:tools/splat_sticker.py` re-cuts
   the 4 splat cells from the master exactly as build_fx.py does (no rim), bridges the droplets into the body with ink
   (closing 14 px, holes filled; the cut's pale edge pixels painted solid ink - they printed as rings), then a round
   cream edge around that one silhouette (far droplets an own 8 px edge). Only fx_atlas row 3 cells 0-3 change.
@@ -1208,3 +1208,9 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   README row 3, provenance line (new sha, iteration-14 edit appended). Original in `masters:backup_fx14/`.
   Ladder: **`ladder2.png` started** (ladder.py takes `LADDER=`; ladder.png is at PIL's size guard), rows "i14 ink
   splat fx 32/48/64, city 64". Commit 165ae0f. 0 Codex. Blood is still ink (owner question unchanged).
+- 04:22 REJECTED, NOT SHIPPED: the same sticker on the dynamic blood decals (`tools/blood_sticker.py`, blood_s/m/l,
+  `work/fx14/blood_ab.png`): the shipped decals already have big ink and thin 4-6 px rims (not bubbly), and bridging
+  fused their splatter streaks into a blob. No clear gain, and no system draws them yet. Originals untouched.
+- 04:23 GATES at d14de52: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+  selftest 72 art textures, 0 placeholders (`evidence/iter14/gates-d14de52.txt`). Note: the 04:14 / 04:21 lines were
+  first written with guessed clock times (05:xx); corrected from `date`.
