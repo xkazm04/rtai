@@ -8,6 +8,7 @@ extends RefCounted
 var _mix: Dictionary = {}
 var _duck: float = 0.0  # 0 = open, 1 = fully ducked
 var _base_db: Dictionary[StringName, float] = {}
+var _user_db: Dictionary[StringName, float] = {}
 
 
 func _init(mix: Dictionary) -> void:
@@ -40,13 +41,30 @@ func step_duck(want: bool, frame_s: float) -> void:
 	var release: float = duck.get("duck_release_s", 0.6)
 	var rate: float = frame_s / (attack if want else release)
 	_duck = clampf(_duck + (rate if want else -rate), 0.0, 1.0)
-	var db: Dictionary = duck.get("duck_db", {})
 	for id: String in duck.get("buses", []):
-		var bus: StringName = StringName(id)
-		var idx: int = AudioServer.get_bus_index(bus)
-		if idx >= 0 and _base_db.has(bus):
-			var cut: float = db.get(id, 0.0)
-			AudioServer.set_bus_volume_db(idx, _base_db[bus] + cut * _duck)
+		_apply(StringName(id))
+
+
+## A player's own level for `bus` (0..1, a settings slider), on top of the table level and the duck.
+func set_user_gain(bus: StringName, linear: float) -> void:
+	_user_db[bus] = linear_to_db(clampf(linear, 0.0001, 1.0))
+	_apply(bus)
+
+
+## The bus level = table level + the player's gain + the duck's share (if the bus is ducked).
+func _apply(bus: StringName) -> void:
+	var idx: int = AudioServer.get_bus_index(bus)
+	if idx < 0 or not _base_db.has(bus):
+		return
+	var duck: Dictionary = _mix.get("duck", {})
+	var cuts: Dictionary = duck.get("duck_db", {})
+	var ducked: Array = duck.get("buses", [])
+	var cut: float = 0.0
+	if ducked.has(String(bus)):
+		var depth: float = cuts.get(String(bus), 0.0)
+		cut = depth * _duck
+	var user: float = _user_db.get(bus, 0.0)
+	AudioServer.set_bus_volume_db(idx, _base_db[bus] + user + cut)
 
 
 func duck_amount() -> float:

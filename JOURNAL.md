@@ -131,3 +131,5 @@ NEXT:
   prints the share of energy above 4 kHz: 25 m shot -46 dB vs -20..-31 dB for the close ones, but the probe draws a random take per shot, so that is consistent with
   the filter, not a clean A/B. The riot clip (riot_mix5, -20.2 LUFS, peak -1.4) did not change in loudness or in its >4 kHz level (-28.1 LU both): few cues land
   beyond 22 m there. Not heard by a human.
+- MILESTONE per-bus player volume: `AudioBuses.set_user_gain(bus, 0..1)` (unit-tested: -6 dB at 0.5, ducking stacks on top, 1.0 restores). The pause card only has a master
+  slider (PlayerSettings): REQUEST 5 -> slice-play, optional: music / sfx / voice sliders call `StageAudio.service.buses.set_user_gain(...)`.

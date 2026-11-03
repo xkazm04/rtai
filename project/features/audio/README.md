@@ -21,6 +21,11 @@ game (FX cues, `Events`, the quest line player) and never writes the sim, so rep
 * A new sound: add the files `assets/audio/sfx/<sound>_01..NN.wav` and a row in `audio_cues.json`.
 * Quest voice: set the line's `audio` to `res://assets/audio/voice/<line id>.ogg`; `tools/audio/` makes the files.
 
+## Settings sliders
+
+`service.buses.set_user_gain(&"music", 0.5)` (0..1) scales one bus on top of the table level and the voice duck (buses: sfx, voice, music, ui; the pause card's
+master volume is `PlayerSettings`, which writes the AudioServer's Master). Positional sfx beyond `far_m` run on the muffled `sfx_far` bus.
+
 ## What fires what (`audio_hooks.gd`)
 
 | Source | Cue |

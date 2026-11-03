@@ -99,3 +99,18 @@ func test_distant_sfx_go_through_the_muffling_bus() -> void:
 	assert_eq(s.bus_in_use(&"shot_gloria"), AudioService.FAR_BUS, "40 m: muffled")
 	assert_true(AudioServer.get_bus_index(AudioService.FAR_BUS) >= 0)
 	assert_gt(AudioServer.get_bus_effect_count(AudioServer.get_bus_index(AudioService.FAR_BUS)), 0)
+
+
+func test_a_player_volume_scales_one_bus_and_survives_the_duck() -> void:
+	var s: AudioService = _service()
+	var idx: int = AudioServer.get_bus_index(&"music")
+	var base: float = AudioServer.get_bus_volume_db(idx)
+	s.buses.set_user_gain(&"music", 0.5)
+	assert_almost_eq(AudioServer.get_bus_volume_db(idx), base - 6.02, 0.05)
+	s.buses.step_duck(true, 10.0)
+	assert_lt(
+		AudioServer.get_bus_volume_db(idx), base - 6.02 - 8.0, "ducked on top of the player's gain"
+	)
+	s.buses.step_duck(false, 100.0)
+	s.buses.set_user_gain(&"music", 1.0)
+	assert_almost_eq(AudioServer.get_bus_volume_db(idx), base, 0.05)
