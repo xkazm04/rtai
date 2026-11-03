@@ -19,6 +19,7 @@ visible at 1280 x 800 and still reads; 0.5 is the upper bound.
 | `soul_card`, `soul_card_active` | ~295 x 430 | portrait area inset ~28 px; the active card has the teal border |
 | `soul_<id>`, `soul_<id>_idle` | 220 x 350 | soul portraits (`gearbox`, `sentry`, `hauler`, `mop`, the pitch's working names): draw at the card's scale, centred across the card, 40 card px from its top. Teal = the active card; `_idle` is the same portrait in ink for an idle / locked card |
 | `memo_frame` | 672 x 322 | mission memo / pager text; tape strip across the top |
+| `hud_digits` | 1792 x 160 | hand-inked numeral strip: 16 cells of 112 x 160 in the order `0123456789$/x+-:`, cap height 120 px centred in the cell (baseline at y 140), ink 17131B with a thin cream rim; advances in strip px: digits 70 (tabular), `$` 70, `/` 58, `x` 74, `+` 66, `-` 62, `:` 36, space 30 |
 
 Soul portraits (night iteration 4): master `art_src/d4.manifest.json#d4n_souls`, styled on the D5 concept's teal soul
 ghosts (`ref-4-rivet-concept.jpg`); front-on busts, the lower edge dissolving into smoke at the card's foot. The
@@ -29,3 +30,9 @@ Quest 1's HUD (`boot/collect_call/view/hud_view.gd` on main, night iteration 6):
 (420 x 104 px at 1080p, text from x 112), `wanted_pip_full` / `_empty` as the heat pips (38 px), and `memo_frame` as
 a **9-slice** (source margin 44 frame px, drawn at 0.5) for the beat panel and the subtitle box (grown to 236 px tall
 so three lines clear the torn edge). Patch and frames: lane masters `q1_view_art.patch`, `before_q1/` vs `after_q1p/`.
+
+Numerals (night iteration 12): `hud_digits.png`, master `art_src/d4.manifest.json#d4n_digits` (Codex, sign-painter
+condensed caps matched to the world's "LOCAL 9" lettering). No font is bundled, so the counters are drawn from this
+strip (own art; no font licence needed for digits). A real HUD can wrap it as a Godot image font or draw one
+`AtlasTexture` per glyph (as the dev overlay does: cap height = 0.92 of the old Label font size). Words still need a
+font (AST-10, owner OK). Evidence: `masters:night/d4-production/before_i12h|after_i12h2/city-*-hud{40,50}.png`.

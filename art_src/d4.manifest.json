@@ -714,6 +714,22 @@
     "own: rtai features/city/art/props/newsstand.png + dumpster.png + trash_can.png (approved D4 props, style anchor)"
    ],
    "seed": null
+  },
+  "d4n_digits": {
+   "file": "masters:night/d4-production/gen/out/d4n_digits.png",
+   "sha256": "2c12d2e563d59449d513f0356ed3485e8690a955aca69ffd4250f38ec88232f6",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/digits.txt",
+   "prompt_sha256": "30ca32dd494b84e0e61114589db9801bb99269a21974ac46d5eae04ff807d6ef",
+   "layout_template": "masters:night/d4-production/gen/refs/t_digits.png (grey guide characters set in Windows Bahnschrift Bold Condensed for position and identity only; every glyph is redrawn by the image model)",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg ('LOCAL 9' roof lettering crop)",
+    "own: project/features/city/art/roofs/building_union_hall.png (sign lettering crop)",
+    "own: project/features/hud/art/cash_frame.png"
+   ],
+   "seed": null
   }
  }
 }
