@@ -4,7 +4,6 @@
       "id": "vermilion",
       "layers": [
         "actors",
-        "vehicles",
         "fx",
         "world_markers",
         "hud"
@@ -12,7 +11,6 @@
       "token": "vermilion",
       "uses": [
         "threat",
-        "cop",
         "danger_cue",
         "pickup",
         "objective",
@@ -34,10 +32,54 @@
         "the_dead",
         "torch_tip"
       ]
+    },
+    {
+      "id": "blood",
+      "layers": [
+        "world",
+        "actors",
+        "fx"
+      ],
+      "token": "blood",
+      "uses": [
+        "blood",
+        "spurt",
+        "pool",
+        "drip",
+        "splat",
+        "wound"
+      ]
+    },
+    {
+      "id": "cop_blue",
+      "layers": [
+        "actors",
+        "vehicles"
+      ],
+      "token": "cop_blue",
+      "uses": [
+        "cop_uniform",
+        "cruiser_body"
+      ]
+    },
+    {
+      "id": "cop_blue_hi",
+      "layers": [
+        "actors",
+        "vehicles"
+      ],
+      "token": "cop_blue_hi",
+      "uses": [
+        "cop_badge",
+        "light_bar"
+      ]
     }
   ],
-  "doc": "The colour doctrine as tokens (D4 Ink and Hatch). The world is a black-and-white baseline: ink, paper and the charcoal / wash greys. Two accent inks appear rarely and only on their allowed uses. look_d4 and look_d4_item print paper / wash / ink from these tokens (look_profiles.json tones; print_part still carries its own constants); PaletteTokens.classify() uses the gates below, which mirror look_d4 plates(): a pixel is vermilion when r - max(g, b) >= verm_gate, teal when min(g, b) - r >= teal_gate (0..1 channels). dev/selftest/accent_audit.gd counts accent pixels per render layer against these.",
+  "doc": "The colour doctrine as tokens (D4 Ink and Hatch, D5 Inked Grime on top). The world is a black-and-white baseline: ink, paper and the charcoal / wash greys. Accent inks appear rarely and only on their allowed uses and layers: blood (the one saturated red: violence only), cop blue (an ink navy at the charcoal's value; cop_blue_hi for badges and light bars), vermilion (danger cues, objectives, the pickups that matter, Rivet's hazard collar; no longer cops or cruisers: that is debt, accent_debt.json) and teal (the souls, the dead). look_d4 and look_d4_item print paper / wash / ink from these tokens (look_profiles.json tones); PaletteTokens.classify() uses the gates below, in this order: blood when r >= blood_r and max(g, b) / r < blood_gr (look_noir blood_mask), vermilion when r - max(g, b) >= verm_gate, teal when min(g, b) - r >= teal_gate, cop blue when b - max(r, g) >= blue_gate (0..1 channels). dev/selftest/accent_audit.gd counts accent pixels per render layer and per body kind against these.",
   "gates": {
+    "blood_gr": 0.18,
+    "blood_r": 0.3,
+    "blue_gate": 0.08,
     "teal_gate": 0.26,
     "verm_gate": 0.31
   },
@@ -89,6 +131,30 @@
       "doc": "the dead's ink",
       "hex": "#1FB5A8",
       "id": "teal",
+      "role": "accent"
+    },
+    {
+      "doc": "blood, the one saturated red (noir's protected deep arterial red, look_noir BLOOD): spurts, pools, drips, splats, wounds. Never a threat or UI colour.",
+      "hex": "#A30509",
+      "id": "blood",
+      "role": "accent"
+    },
+    {
+      "doc": "blood in its own shadow: a pool's body, a dried splat (look_noir BLOOD_DARK). Classifies as blood.",
+      "hex": "#540005",
+      "id": "blood_dark",
+      "role": "accent"
+    },
+    {
+      "doc": "the police ink: a desaturated navy at the charcoal's value (luma 0.28 vs ink_2 0.29), so the black-and-white read survives; uniforms and cruiser body accents. Replaces vermilion on cops (owner, 2026-11-03).",
+      "hex": "#3A4766",
+      "id": "cop_blue",
+      "role": "accent"
+    },
+    {
+      "doc": "the brighter police blue, for small marks only: cap badge, light bar.",
+      "hex": "#4F86E0",
+      "id": "cop_blue_hi",
       "role": "accent"
     }
   ]

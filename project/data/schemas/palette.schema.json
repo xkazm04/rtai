@@ -49,6 +49,21 @@
     "gates": {
       "additionalProperties": false,
       "properties": {
+        "blood_gr": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blood_r": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blue_gate": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "teal_gate": {
           "maximum": 1,
           "minimum": 0,
@@ -62,7 +77,10 @@
       },
       "required": [
         "verm_gate",
-        "teal_gate"
+        "teal_gate",
+        "blood_r",
+        "blood_gr",
+        "blue_gate"
       ],
       "type": "object"
     },

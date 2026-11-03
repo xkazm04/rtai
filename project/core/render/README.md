@@ -177,9 +177,26 @@ material and leaves a layer someone else re-materialed (the baked crowd atlas) a
 
 ## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
 
-Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #1B1517, `ink_2` charcoal, `wash` #6C6161, `steel`) and the two
-accent inks: **vermilion** #E8502A (threat, cop, danger cue, pickup, objective, Rivet's collar, hit
-flash) and **teal** #1FB5A8 (souls, the dead, the torch tip). Each accent lists the render layers it may
+Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #1B1517, `ink_2` charcoal, `wash` #6C6161, `steel`) and the
+accent inks (updated 2026-11-03, the owner's verdicts 5 and 6):
+
+| token | hex | uses | layers |
+|---|---|---|---|
+| `blood` / `blood_dark` | #A30509 / #540005 | blood only: spurts, pools, drips, splats, wounds (noir's protected arterial red) | `world`, `actors`, `fx` |
+| `cop_blue` | #3A4766 | cop uniforms, cruiser body accents: an ink navy at the charcoal's value (luma 0.28 vs `ink_2` 0.29) | `actors`, `vehicles` |
+| `cop_blue_hi` | #4F86E0 | small marks only: cap badge, light bar | `actors`, `vehicles` |
+| `vermilion` | #E8502A | threat, danger cue, pickup, objective, Rivet's collar, hit flash (**no longer cops or cruisers**) | `actors`, `fx`, `world_markers`, `hud` |
+| `teal` | #1FB5A8 | souls, the dead, the torch tip | `actors`, `fx`, `world_markers`, `hud` |
+
+`classify()` order: blood (r >= `blood_r` 0.30 and max(g, b) < `blood_gr` 0.18 x r: look_noir's
+blood_mask; deep red also passes the vermilion gate, so blood is tested first) -> vermilion -> teal ->
+cop blue (b - max(r, g) >= `blue_gate` 0.08). `count_inks()` returns all five classes.
+The prints keep them as **gated plates, not nearest-ink candidates** (so a mid grey never snaps to navy):
+`look_d4_item` prints a blood pixel as BLOOD / BLOOD_DARK by value and a blue one as COP_BLUE / COP_BLUE_HI
+(nearest); `look_d4` has a `blood` plate (a profile key, 1 in every row): deep red in the world (a pool
+on `ground_decals`) keeps its red under the washes and the edge ink still rims it. Every look golden at
+both sites was bit-identical after the change (no art crossed the new gates). The characters' own
+`print_part.gdshader` (d5-cast) needs the same two gates before blue cop parts print blue. Each accent lists the render layers it may
 appear on: never `world` (ground, decals, shadows, props, roofs); a pickup or hazard in the world is
 drawn on `fx` or `world_markers`. `classify()` uses the look_d4 plate gates, so "is this pixel an
 accent" means exactly what the print pass means by it.
@@ -194,7 +211,10 @@ vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an
 **Gate.** `data/tables/accent_debt.json` (gtai.accent-debt/1) lists known debt: accent + layer + ppm up to
 `max_px`, with the source and the lane that pays it off. An offender not in the table, or above its
 `max_px`, or any off-doctrine crowd look fails the selftest evidence; a debt row no longer seen is
-reported for deletion. Today: no rows. `traffic_light_lamps` (216 px at 32 px/m) was paid off on
+reported for deletion. Today (2026-11-03): `cop_vermilion_32/48/64` (layer `cop`: the actors' vermilion
+that is not Rivet's, at least the cops' full rigs; junction 9412 / 9660 / 2060 px, block 10580 / 6964 /
+2744 px; owner d5-cast; the cop crowd-atlas looks patrol 29.3k / riot 24.7k texels are listed in the summary).
+A cruiser's vermilion is now an offender on `vehicles` (none at either site today). `traffic_light_lamps` (216 px at 32 px/m) was paid off on
 2026-11-03 in code, by the rule below, not by a redraw.
 
 **The world print carries no accent plate (2026-11-03).** palette.json allows neither accent on `world`,

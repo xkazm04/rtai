@@ -133,6 +133,11 @@
                 "minimum": -8,
                 "type": "number"
               },
+              "blood": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
               "edge_hi": {
                 "maximum": 16,
                 "minimum": -8,
@@ -228,6 +233,8 @@
               }
             },
             "required": [
+              "aquatint",
+              "blood",
               "edge_hi",
               "edge_lo",
               "grime",
@@ -235,7 +242,6 @@
               "hatch_on",
               "hatch_period",
               "line_ink",
-              "aquatint",
               "step_hi",
               "step_lo",
               "step_mid",

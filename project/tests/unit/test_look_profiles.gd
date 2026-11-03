@@ -110,9 +110,26 @@ func test_the_print_shaders_declare_every_tone_uniform() -> void:
 func test_the_world_print_has_no_accent_plate_where_the_palette_forbids_it() -> void:
 	var looks: LookProfiles = LookProfiles.shared()
 	var pal: PaletteTokens = PaletteTokens.shared()
-	var plates: Dictionary[StringName, StringName] = {&"verm": &"vermilion", &"teal": &"teal"}
+	var plates: Dictionary[StringName, StringName] = {
+		&"verm": &"vermilion", &"teal": &"teal", &"blood": &"blood"
+	}
 	for id: StringName in looks.profiles:
 		for plate: StringName in plates:
 			if not pal.allowed(plates[plate], &"world"):
 				var amount: float = looks.profiles[id].world[plate]
 				assert_eq(amount, 0.0, "%s world %s" % [id, plate])
+
+
+func test_blood_keeps_its_plate_in_the_world_print() -> void:
+	# owner verdict 5 (2026-11-03): noir's red blood in every direction (pools lie on the street)
+	assert_true(PaletteTokens.shared().allowed(&"blood", &"world"))
+	for id: StringName in _looks.profiles:
+		var amount: float = _looks.profiles[id].world[&"blood"]
+		assert_eq(amount, 1.0, String(id))
+
+
+func test_noir_is_an_opt_in_row_never_in_the_zoom_blend() -> void:
+	assert_true(_looks.has(&"noir"))
+	assert_ne(_looks.blend_from, &"noir")
+	assert_ne(_looks.blend_to, &"noir")
+	assert_true(_looks.resolve(&"noir", 64.0).equals(_looks.profiles[&"noir"]))

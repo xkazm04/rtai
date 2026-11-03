@@ -43,6 +43,7 @@
       "print": true,
       "world": {
         "aquatint": 0,
+        "blood": 1,
         "edge_hi": 0.36,
         "edge_lo": 0.16,
         "grime": 0,
@@ -83,6 +84,7 @@
       "print": true,
       "world": {
         "aquatint": 0.18,
+        "blood": 1,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
         "grime": 0.15,
@@ -123,6 +125,7 @@
       "print": true,
       "world": {
         "aquatint": 0.26,
+        "blood": 1,
         "edge_hi": 0.26,
         "edge_lo": 0.09,
         "grime": 0.45,
@@ -146,6 +149,47 @@
         "wash_hi": 0.4,
         "wash_lo": 0.34,
         "wash_mid": 0.92
+      }
+    },
+    {
+      "doc": "D-Noir, the opt-in special-mission look for mid / late game (owner, 2026-11-03): not the core style, never in `auto`. This row is the D4 print under it (the noir pass reads the D4 frame when look_noir.params.json keep_d4 is true); the noir pass itself is NoirLook (features/fx/noir, assets/shaders/look_noir.gdshader + look_noir.params.json), switched on by --look=noir. The D5 overlay stays off under it (CityView.overlay_look).",
+      "id": "noir",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0.18,
+        "blood": 1,
+        "edge_hi": 0.32,
+        "edge_lo": 0.13,
+        "grime": 0.15,
+        "grit": 0.35,
+        "hatch_on": 0.86,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "teal": 0,
+        "teal_shift": [
+          -1,
+          2
+        ],
+        "verm": 0,
+        "verm_shift": [
+          2,
+          -1
+        ],
+        "wash_hi": 0.3,
+        "wash_lo": 0.3,
+        "wash_mid": 0.9
       }
     }
   ],

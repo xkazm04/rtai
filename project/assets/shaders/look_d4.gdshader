@@ -6,6 +6,8 @@ shader_type canvas_item;
 //  - the art's own ink lines (density above line_ink) print as solid ink, so drawn hatching survives the budget
 //  - hatching is added only in the deepest shadows; a wobbly Sobel edge inks object outlines
 //  - vermilion and teal are flat plates, slightly off-register (the colour doctrine lives in the assets)
+//  - blood (palette.json `blood`, deep arterial red: r >= 0.30, max(g, b) / r < 0.18) is a protected plate: it
+//    keeps its red (BLOOD / BLOOD_DARK by its value) under the washes, the edge ink still rims it (2026-11-03)
 // Every uniform below except world_px is a look-profile parameter (data/tables/look_profiles.json, core/render).
 // world_px: the camera's world offset in screen px (set every frame), so grime and hatch are locked to the world.
 // Use: a full-rect ColorRect on a CanvasLayer between the world and the actors; the actor / fx / HUD layers above it
@@ -33,6 +35,7 @@ uniform float aquatint = 0.0;     // ink grain inside the washes, its density se
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
+uniform float blood = 1.0;         // the protected blood plate (0 = blood prints as its ink density)
 // the output inks: palette.json tokens paper / wash / ink via look_profiles.json `tones`
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
 uniform vec3 wash_tone = vec3(0.400, 0.372, 0.408);
@@ -40,6 +43,8 @@ uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
+const vec3 BLOOD = vec3(0.639, 0.020, 0.035);
+const vec3 BLOOD_DARK = vec3(0.329, 0.000, 0.020);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -53,6 +58,12 @@ float vnoise(vec2 p) {
 	vec2 i = floor(p), f = fract(p);
 	f = f * f * (3.0 - 2.0 * f);
 	return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+}
+
+// the blood plate's mask (look_noir blood_mask with palette.json's blood_r / blood_gr as centres)
+float blood_mask(vec3 c) {
+	float gr = max(c.g, c.b) / max(c.r, 0.001);
+	return smoothstep(0.28, 0.32, c.r) * (1.0 - smoothstep(0.16, 0.20, gr));
 }
 
 // x = ink density, y = vermilion density, z = teal density
@@ -86,7 +97,8 @@ void fragment() {
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec2 uv = SCREEN_UV;
 	vec2 tx = SCREEN_PIXEL_SIZE;
-	vec3 p0 = plates(texture(screen_tex, uv).rgb);
+	vec3 src = texture(screen_tex, uv).rgb;
+	vec3 p0 = plates(src);
 	float vden = plates(texture(screen_tex, uv + verm_shift * tx).rgb).y;
 	float tden = plates(texture(screen_tex, uv + teal_shift * tx).rgb).z;
 	float d = p0.x;
@@ -121,6 +133,10 @@ void fragment() {
 		col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
 	}
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
+	if (blood > 0.0) {
+		float bm = blood_mask(src) * blood;
+		col = mix(col, mix(BLOOD_DARK, BLOOD, smoothstep(0.35, 0.6, src.r)), bm);
+	}
 	col = mix(col, ink_tone, ink);
 	col = mix(col, ink_tone, step(0.985, hash(floor(w))) * 0.5 * grit);
 	// paper tooth, world-locked like the grime (was hash(FRAGCOORD): a screen-door that swam on pans)

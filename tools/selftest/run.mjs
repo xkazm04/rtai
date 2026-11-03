@@ -68,7 +68,8 @@ export function runAccentAudit(outDir0, out0, site = 'junction') {
   const looks = r.crowd_atlas_by_look ?? [];
   for (const l of looks.filter((x) => x.off_doctrine)) offenders.push(`crowd look ${l.look} (${l.tag}) ${l.vermilion} vermilion texels`);
   const crowd = looks.length ? `; crowd atlas ${looks.filter((x) => x.kind === 'ped' && !x.off_doctrine).length}/`
-    + `${looks.filter((x) => x.kind === 'ped').length} pedestrian looks on doctrine` : '';
+    + `${looks.filter((x) => x.kind === 'ped').length} pedestrian looks on doctrine`
+    + `, cop looks still vermilion (debt, cops go cop_blue): ${looks.filter((x) => x.kind === 'cop' && x.vermilion > 0).map((x) => `${x.tag} ${x.vermilion}`).join(', ') || 'none'}` : '';
   const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
   const { debt, fresh } = judgeAccents(offenders, debtRows);
   const verdict = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
