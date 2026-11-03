@@ -54,6 +54,9 @@ func _ready() -> void:
 			_fx_moment = _fx_moment or flag == "--fx-moment"
 			_markers = _markers or flag == "--markers"
 	_build()
+	# Fixed sim time (this scene only; the golden scenes run under --fixed-fps 60): the World
+	# never reads the wall-clock delta; _step() feeds one TICK_DT per rendered frame.
+	_world.set_process(false)
 	await _characters.bake()
 	var warm_us: int = await _view.prewarm()
 	var frames: Array[Dictionary] = []
@@ -77,9 +80,6 @@ func _build() -> void:
 	_world = World.new()
 	_world.start(Events, Data, MASTER_SEED)
 	add_child(_world)
-	# Fixed sim time: the World never reads the wall-clock frame delta here; _step() feeds it
-	# exactly one TICK_DT per rendered frame, so each capture lands on the same sim tick.
-	_world.set_process(false)
 	_city = CitySystem.new(true)
 	_world.add_system(_city)
 	_city.steer_by_input = false
