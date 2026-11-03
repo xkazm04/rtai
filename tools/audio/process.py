@@ -107,12 +107,27 @@ def voice(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
         log.append({"file": f.name, "status": "OK", "out": dst.name, "dur": round(len(n) / SR, 2), "lufs": lufs, "peak_db": round(db(float(np.abs(n).max())), 1)})
 
 
+def music(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
+    (out / "music").mkdir(parents=True, exist_ok=True)
+    for f in sorted(raw.glob("*.mp3")):
+        a = decode(f)
+        stinger = "stinger" in f.stem
+        b = fade(trim(a, -50.0).copy(), 20.0) if stinger else loopify(a.copy(), 0.5)
+        peak = float(np.abs(b).max())
+        b = b * (10 ** ((-3.0 if stinger else -6.0) / 20) / peak)
+        # stereo is not kept: mono keeps the radio in the same positional chain as everything else
+        write_ogg(out / "music" / (f.stem + ".ogg"), b)
+        log.append({"file": f.name, "status": "OK", "out": f.stem + ".ogg", "dur": round(len(b) / SR, 2), "peak_db": round(db(float(np.abs(b).max())), 1), "rms_db": round(db(float(np.sqrt((b ** 2).mean()))), 1)})
+
+
 def main() -> None:
     raw, vraw, out, report = map(pathlib.Path, sys.argv[1:5])
     (out / "sfx").mkdir(parents=True, exist_ok=True); (out / "voice").mkdir(parents=True, exist_ok=True)
-    s: list = []; v: list = []
+    s: list = []; v: list = []; m: list = []
     sfx(raw, out, s); voice(vraw, out, v)
-    report.write_text(json.dumps({"sfx": s, "voice": v, "targets": {"sfx_peak_db": -3, "loop_peak_db": -6, "voice_lufs": -18, "voice_tp_db": -2}}, indent=1))
+    mraw = raw.parent / "music"
+    if mraw.exists(): music(mraw, out, m)
+    report.write_text(json.dumps({"sfx": s, "voice": v, "music": m, "targets": {"sfx_peak_db": -3, "loop_peak_db": -6, "voice_lufs": -18, "voice_tp_db": -2}}, indent=1))
     print("sfx ok", sum(r["status"] == "OK" for r in s), "rejected", sum(r["status"] == "REJECT" for r in s))
     print("voice ok", sum(r["status"] == "OK" for r in v), "rejected", sum(r["status"] == "REJECT" for r in v))
     for r in s + v:

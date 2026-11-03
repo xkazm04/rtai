@@ -25,6 +25,9 @@ static func attach(
 	a.service.listener_fn = rivet_m
 	a.add_child(a.hooks)
 	a.hooks.attach(a.service, bus, func() -> int: return stage.tick, rivet_m)
+	var radio: CarRadio = CarRadio.new()
+	a.add_child(radio)
+	radio.listen(bus)
 	a.add_child(a.voice)
 	a.voice.bind(a.service, system)
 	return a

@@ -21,4 +21,7 @@ static func attach(
 	service.add_child(hooks)
 	hooks.attach(service, ctx.events, ctx.clock.tick, func() -> Vector2: return city.target)
 	service.loops.set_on(&"city_ambience", true)
+	var radio: CarRadio = CarRadio.new()
+	service.add_child(radio)
+	radio.listen(ctx.events)
 	return service
