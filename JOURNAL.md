@@ -212,3 +212,17 @@ vehicles: cruiser accents cop_blue).
   unit 335/335 but the kind FAILED on "tree changed during run" (I wrote evidence/README.md mid-run).
   Re-stamp on a clean tree at the end.
 - BLOCKED 12:50-13:00 bench: lock held by vehicles (12:38) then slice-play (12:53). Waiting.
+- MILESTONE 13:03-13:10 (iteration 4, uncommitted at session end) T1-scale 2 x 2 roof: one Codex plate
+  (layout template at 80 px/m, refs T1 + concept) over the block's 2 x 2 interior on 35% of blocks.
+  Committed 2b2fa98 in iteration 5 after gates. evidence/d5-city/22-big-roof/ (1 reject: rotated 180).
+- NOTE 13:04 bench overlay cost at 32/48/64 px/m committed 61dd3c4 (evidence/d5-city/21-overlay-cost).
+
+## 2026-11-03 iteration 5 (15:40 - 17:00)
+
+- MILESTONE 2b2fa98 2 x 2 roof gated + committed: lint 13/13, unit 335, bake --check, scenarios 8
+  (replay unchanged), selftest PASS (goldens 11/11 worst 0.78, block 5/5, world lock 0 %).
+- MILESTONE plate B (GENERATOR 11): Codex roof_2x2_b on layout template B (machine room, skylight strip,
+  3.5 m tank, three fans in a row). Raw output pink-grey + a brown door -> masters tools/fit_roof.py
+  transfers plate A's tone/tint (luma histogram match + A's luma->RGB LUT). 50/50 pick per block (salt
+  62), upright only. city_frame focus 8 = block (9, 6). evidence/d5-city/23-big-roof-b/. Codex used: 2.
+- FRICTION: first focus-8 pick was a plaza block (plaza check runs before the big-roof rows).
