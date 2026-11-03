@@ -62,3 +62,29 @@
 - Tests: 340 unit tests green incl. 15 new audio ones (tests/unit/test_audio.gd, test_audio_hooks.gd); scenarios 8/8, replay identical; evidence/run.mjs
   --no-bench green (lint, unit, scenarios, parity, selftest). NOT run: bench (lane rule: shared GPU; the audio service adds no per-frame GPU work).
   Pool cost not measured under the bench; the service does one array walk per cue and is capped at 4 starts per frame.
+
+### FRICTION flaky unit test (not audio)
+- `tests/unit/test_noir_shadows.gd::test_only_shadow_commands_with_a_length_are_swept` fails intermittently ("Parameter "t" is null", an engine
+  texture error) in 2 of 5 full unit runs here (it passed alone and in 3 other full runs; the 340 tests are green otherwise). Not in my lane's files;
+  looks like a GPU/Windows contention or import-order flake. Whoever owns the noir tests should look.
+
+### MILESTONE final state of iteration 1 (HEAD f1210a0 + this entry)
+- Pan/distance: a recorded probe (dev/audio/audio_pan.tscn, tools/audio/pan_check.py) showed the first audio space (32 px/m, strength 0.7) panned only
+  +-2 dB at 14 m; widened to 64 px/m, strength 1.0 -> +-6.3 dB at 14 m, +-9.5 dB at 25-45 m, level -19.0 dB at 5 m / -29.9 dB at 45 m. Godot's 2D pan
+  depends on the viewport width, so wider windows pan less.
+- All four clips (evidence/mix/*.mp4 + *_cues.json + mix_levels.md) were re-recorded on the final assets and mix: riot -20.4 LUFS / -2.3 dBFS,
+  quest opening -17.4 / -3.0, quest fight -19.8 / -2.5, vehicle/radio demo tour -17.3 / -1.0. Frames I looked at: 4, camera breaks: 0 rejected.
+- Gates at f1210a0: lint 13/13, scenarios 8/8, parity exact + planted mutation caught, selftest + look goldens 11/11 unchanged (audio adds no pixels),
+  unit 340 (1 flake above). Bench NOT run (lane rule; audio has no GPU work).
+- masters: C:\Users\kazda\kiro\gtai-masters\day-d5\audio\ (raw takes + gen/voice/music logs, clips with raw AVI, spec/ spectrogram sheets,
+  frames.json, ladder.png). Repo evidence: evidence/audio_report.json (QC), evidence/sfx_map.json, evidence/mix/.
+
+NEXT:
+1. Wire quest 1 for real: slice-play calls `StageAudio.attach(...)` in the playable quest scene and takes REQUEST 1 (line timing from voice_lengths.json,
+   every voiced line outlasts its subtitle 2.2x on average: 272 s of speech vs 121 s of subtitles). Until then voices queue FIFO (max 2 waiting).
+2. A human has to LISTEN: every SFX, the 23 voices (casting in tools/audio/casting.json), the 3 radio loops. I only have numbers and spectrograms.
+   Likely weak spots: pistol takes 02-04 (long tails), footsteps (a 4-step clip replayed, not per-step), nailgun takes 02/03 (mostly tail), Patch's phone filter.
+3. Vehicles lane: emit vehicle_entered/exited, fire horn/crash/tyre_screech/hit_metal through FxTriggers.fire (REQUEST 2); input action for CarRadio.next().
+4. d5-combat/boss work: a boss telegraph cue exists (attack_telegraphed -> servo whine at 0.7 pitch); real boss/robo-tazer charge sounds are still a placeholder.
+5. Mix: the riot is ~3 LU under the voiced quest; no occlusion or distance low-pass (Godot's 2D player has none); settings sliders (a volume per bus) not built.
+6. POF-GAP 1-3 stand (audio-gen refuses every request; no tts; no music). Ask the PoF lane: raw-prompt opt-out, a length guard, tts + music kinds.
