@@ -7,31 +7,24 @@ extends SceneTree
 ##           --soul=<d5|raw|ghost> (how the souls print, see D5HeroRun._soul_material)
 ##           --dialogue=<left>,<right> (D5DialogueRun: a dialogue panel with these portraits)
 ##           --phone=<portrait> (D5DialogueRun: the D5 phone close-up with this portrait)
+##           --cam=<x>,<y> (metres: camera below the kill-cam zoom; 0,9.7 = the south roofs)
+
+const KEYS: PackedStringArray = ["soul", "borrow", "dialogue", "phone", "cam", "out"]
 
 
 func _initialize() -> void:
-	var out: String = ProjectSettings.globalize_path("res://").path_join(
-		"../build/evidence/frames-d5-hero"
+	var a: Dictionary[String, String] = _args()
+	if a.has("?"):
+		printerr("d5_hero: unknown argument %s" % a["?"])
+		quit(2)
+		return
+	var out: String = _arg(
+		a,
+		"out",
+		ProjectSettings.globalize_path("res://").path_join("../build/evidence/frames-d5-hero")
 	)
-	var borrow: String = ""
-	var soul_mode: String = "d5"
-	var dialogue: PackedStringArray = PackedStringArray()
-	var phone: String = ""
-	for arg: String in OS.get_cmdline_user_args():
-		if arg.begins_with("--soul="):
-			soul_mode = arg.substr(7)
-		elif arg.begins_with("--borrow="):
-			borrow = arg.substr(9)
-		elif arg.begins_with("--dialogue="):
-			dialogue = arg.substr(11).split(",")
-		elif arg.begins_with("--phone="):
-			phone = arg.substr(8)
-		elif arg.begins_with("--out="):
-			out = arg.substr(6)
-		else:
-			printerr("d5_hero: unknown argument %s" % arg)
-			quit(2)
-			return
+	var dialogue: PackedStringArray = _arg(a, "dialogue", "").split(",", false)
+	var phone: String = _arg(a, "phone", "")
 	var ui: bool = dialogue.size() == 2 or phone != ""
 	var run: String = "d5_dialogue_run.gd" if ui else "d5_hero_run.gd"
 	var script: GDScript = load("res://dev/showcase/" + run)
@@ -42,10 +35,29 @@ func _initialize() -> void:
 	if ui:
 		node.set("phone_name", phone)
 	node.set("out_dir", out)
-	node.set("borrow_dir", borrow)
-	node.set("soul_mode", soul_mode)
+	node.set("borrow_dir", _arg(a, "borrow", ""))
+	node.set("soul_mode", _arg(a, "soul", "d5"))
+	var cam: PackedStringArray = _arg(a, "cam", "").split(",", false)
+	if cam.size() == 2:
+		node.set("hero_cam", Vector2(cam[0].to_float(), cam[1].to_float()) * 32.0)
 	root.add_child(node)
 	_run(node)
+
+
+func _arg(a: Dictionary[String, String], key: String, fallback: String) -> String:
+	return a[key] if a.has(key) else fallback
+
+
+## --key=value user args by KEYS; an unknown one lands under "?"
+func _args() -> Dictionary[String, String]:
+	var a: Dictionary[String, String] = {}
+	for arg: String in OS.get_cmdline_user_args():
+		var key: String = arg.trim_prefix("--").get_slice("=", 0)
+		if not arg.begins_with("--") or not arg.contains("=") or not KEYS.has(key):
+			a["?"] = arg
+			return a
+		a[key] = arg.substr(arg.find("=") + 1)
+	return a
 
 
 func _run(node: Node) -> void:

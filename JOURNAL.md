@@ -483,3 +483,17 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   (D4 0.530 / 0.35 / 0.40 / 0.123); at 48 the diagonal membrane hatch reads like the mock's. d4 tier 0 px (h77).
   Crops work/i5/uh_ab32.png, uh_ab48.png. (The D5 crops include the D5-tier cast-shadow/ink-foot ring, so the ink
   share stays above D4 by construction.)
+- 01:33 / 01:35 Codex: d5_roof_pension_bank_b (100 s) and d5_roof_hq_b (95 s), 0 rejected (plan view, layout and
+  lettering held; HQ's vermilion plate is a little heavier than the others: owner). Ledger 46. Images tonight: 46.
+- 01:40 MILESTONE: pension bank + HQ on the b plate. They are mostly off frame in the hero shot, so d5_hero.gd gained
+  `--cam=<x>,<y>` (metres; s2b = 0,9.7 frames the two south roofs) and d5_showcase_run skips the Rivet crop when
+  Rivet is off frame (was an exit 1 on a 0-px image). Determinism: s3 = s2b and h80 = h79, 0 px in every file.
+  At 32 px/m (roof interior): HQ D4 0.473/0.29/0.48/0.126, old D5 0.459/0.27/0.48/0.133, b 0.502/0.39/0.44/0.119;
+  PENSION D4 0.520/0.32/0.42/0.127, old 0.506/0.34/0.43/0.140, b 0.555/0.47/0.39/0.124 (L / paper / ink / HF).
+  d4 tier 0 px. Crops work/i5/south_ab32.png. All five D5 landmark roofs are now on the pen-hatch plate.
+- (timestamps above 01:30-01:38 were written ahead of the clock; the ledger times are the true ones: mural_b 01:19,
+  bar_b 01:26, union_hall_b 01:29.)
+- 01:44 FRICTION: the first --cam edit broke lint (line length; _initialize 42 > 40 lines) and then the typed parser
+  (split() on a Variant from Dictionary.get). d5_hero.gd now parses --key=value into a typed dict (_args/_arg,
+  unknown key -> exit 2, checked). Re-verified: h81 = h80 and s4 = s3 (0 px, all files), the dialogue path runs
+  (dlg4, exit 0). gdformat wrote CRLF on Windows: normalised to LF before staging.

@@ -108,6 +108,8 @@ func _save_d5(name: String, z: float) -> bool:
 	var r: Rect2i = Rect2i(Vector2i(at - size * 0.5), Vector2i(size)).intersection(
 		Rect2i(Vector2i.ZERO, img.get_size())
 	)
+	if r.size.x <= 0 or r.size.y <= 0:
+		return ok  # Rivet is off frame (a --cam shot): the full frame only
 	var crop: Image = img.get_region(r)
 	var k: int = maxi(1, roundi(360.0 / maxf(1.0, float(r.size.y))))
 	crop.resize(r.size.x * k, r.size.y * k, Image.INTERPOLATE_NEAREST)
