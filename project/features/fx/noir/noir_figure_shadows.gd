@@ -10,7 +10,7 @@ extends Node2D
 const CAST_BIT: int = 1 << 19
 const SHADER: String = "res://assets/shaders/look_noir_figure.gdshader"
 ## Screen px between two taps of the sweep.
-const STEP_PX: float = 2.0
+const STEP_PX: float = 4.0
 ## Bodies the shader tapers (look_noir_figure.gdshader MAX_BODIES).
 const MAX_BODIES: int = 16
 
