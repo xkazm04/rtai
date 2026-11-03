@@ -91,10 +91,11 @@ func test_standing_still_makes_no_step() -> void:
 func test_a_run_over_is_a_thud_and_a_kill_adds_the_death() -> void:
 	var bus: EventBus = EventBus.new()
 	add_child_autofree(bus)
-	bus.add_user_signal(
-		"pedestrian_struck",
-		[{"name": "victim_id", "type": TYPE_INT}, {"name": "killed", "type": TYPE_BOOL}]
-	)
+	if not bus.has_signal(&"pedestrian_struck"):  # the vehicles lane declares it once merged
+		bus.add_user_signal(
+			"pedestrian_struck",
+			[{"name": "victim_id", "type": TYPE_INT}, {"name": "killed", "type": TYPE_BOOL}]
+		)
 	var hooks: AudioHooks = AudioHooks.new()
 	_service.add_child(hooks)
 	hooks.attach(_service, bus, func() -> int: return _tick, func() -> Vector2: return Vector2.ZERO)
