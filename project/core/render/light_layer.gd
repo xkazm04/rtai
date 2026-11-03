@@ -49,6 +49,7 @@ func _init() -> void:
 	var pal: PaletteTokens = PaletteTokens.shared()
 	gm.set_shader_parameter(&"verm_gate", pal.verm_gate)
 	gm.set_shader_parameter(&"teal_gate", pal.teal_gate)
+	gm.set_shader_parameter(&"blue_gate", pal.blue_gate)
 	_grade.material = gm
 	_grade.visible = false
 	add_child(_grade)

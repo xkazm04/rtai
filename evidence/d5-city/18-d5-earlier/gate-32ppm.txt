@@ -1,0 +1,16 @@
+readability gate at 32/48 px/m: mean |grad| (edge energy) on the roof crop, ink share (L<60), paper vs T1 (239,219,194)
+city-1-32ppm auto {"edge": 51.02, "ink_share": 0.2867, "paper": [230, 220, 202], "paper_dE_T1": 12.5}
+city-1-32ppm ramp50 {"edge": 49.35, "ink_share": 0.2955, "paper": [232, 215, 192], "paper_dE_T1": 8.6}
+city-1-32ppm d5 {"edge": 48.39, "ink_share": 0.3087, "paper": [234, 210, 182], "paper_dE_T1": 15.6}
+city-1-48ppm auto {"edge": 47.96, "ink_share": 0.2513, "paper": [231, 221, 203], "paper_dE_T1": 12.5}
+city-1-48ppm ramp50 {"edge": 46.08, "ink_share": 0.2647, "paper": [234, 214, 188], "paper_dE_T1": 9.5}
+city-1-48ppm d5 {"edge": 45.95, "ink_share": 0.2772, "paper": [235, 212, 183], "paper_dE_T1": 13.8}
+city-2-32ppm auto {"edge": 31.14, "ink_share": 0.1162, "paper": [232, 223, 205], "paper_dE_T1": 13.1}
+city-2-32ppm ramp50 {"edge": 30.22, "ink_share": 0.1253, "paper": [235, 218, 194], "paper_dE_T1": 4.2}
+city-2-32ppm d5 {"edge": 30.48, "ink_share": 0.1479, "paper": [238, 214, 184], "paper_dE_T1": 10.9}
+city-4-32ppm auto {"edge": 26.05, "ink_share": 0.1035, "paper": [234, 224, 206], "paper_dE_T1": 14.0}
+city-4-32ppm ramp50 {"edge": 25.32, "ink_share": 0.1145, "paper": [236, 219, 195], "paper_dE_T1": 2.9}
+city-4-32ppm d5 {"edge": 26.15, "ink_share": 0.1454, "paper": [239, 215, 185], "paper_dE_T1": 9.8}
+city-2-48ppm auto {"edge": 22.42, "ink_share": 0.0782, "paper": [234, 224, 206], "paper_dE_T1": 14.1}
+city-2-48ppm ramp50 {"edge": 21.93, "ink_share": 0.0922, "paper": [239, 218, 191], "paper_dE_T1": 3.3}
+city-2-48ppm d5 {"edge": 22.81, "ink_share": 0.1178, "paper": [240, 216, 186], "paper_dE_T1": 8.7}

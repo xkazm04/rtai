@@ -19,6 +19,8 @@ var textures: Array[Texture2D] = []
 var size_px: Array[Vector2] = []
 ## The table class of each id (ground, building, prop, vehicle, decal): picks its render layer.
 var classes: Array[String] = []
+## the table `name` per id (cast_shadows.json `by_name`)
+var names: Array[String] = []
 var placeholders: int = 0
 var art_loaded: int = 0
 var load_us: int = 0
@@ -35,9 +37,10 @@ func _init(texture_table: Dictionary) -> void:
 		var h: float = size_m[1]
 		size_px.append(Vector2(w, h) * SimConst.PX_PER_M)
 		classes.append(str(row["class"]))
+		names.append(str(row.get("name", "")))
 		var art: Variant = row.get("art")
 		var path: String = art if art is String else ""
-		if path != "" and ResourceLoader.load_threaded_request(path, "Texture2D", true) != OK:
+		if path != "" and ResourceLoader.load_threaded_request(path, "Texture2D", false) != OK:
 			failures.append("%s: load request refused" % path)
 			path = ""
 		paths.append(path)

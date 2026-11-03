@@ -96,3 +96,11 @@ func test_no_light_flashes_more_than_three_times_a_second() -> void:
 	lights._load(JSON.stringify({"kinds": [row], "max_flash_hz": 3}))
 	var clamped: float = lights.kinds[&"strobe"]["flicker_hz"]
 	assert_eq(clamped, 3.0)
+
+
+func test_the_siren_strobes_cop_blue_not_vermilion() -> void:
+	# owner verdict 6 (2026-11-03): no vermilion on cops; the light bar is cop_blue_hi
+	var lights: LightLayer = autofree(LightLayer.new())
+	var siren: Dictionary = lights.kinds[&"siren"]
+	var c: Color = siren["color"]
+	assert_eq(PaletteTokens.shared().classify(c), 4)

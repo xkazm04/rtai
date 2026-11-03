@@ -13,7 +13,10 @@
           "accent": {
             "enum": [
               "vermilion",
-              "teal"
+              "teal",
+              "blood",
+              "cop_blue",
+              "cop_blue_hi"
             ]
           },
           "doc": {

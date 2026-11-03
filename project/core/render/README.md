@@ -92,7 +92,14 @@ The `building_shadows` band is the height cue. The generator bakes every buildin
 shadow as the silhouette offset a short way down-right (0.25 m buildings, 0.18 m the rest, ChunkBuild.add);
 ChunkView draws those commands with ONE material on that band and adds the rest of the cast distance per
 texture class (`offset_m - baked_offset_m`: buildings 1.1 m, the d5-close lane's proposal), so a longer
-shadow needs no re-bake. The material is `shader` (n-d5's `look_d5_shadow`) when that file is in the tree,
+shadow needs no re-bake. `by_name` (2026-11-03) overrides the class length per texture `name`: the d5-close hero
+scene's D5HeroPropShadow lengths (dumpster / crates / vending 0.45 m, payphone 0.4, planter / mailbox 0.3,
+hydrant / bin / barrier 0.25, bench 0.2) and parked cars 0.4 m by class (was 0.18 m): the car and prop
+shadows read as T1's hatched lift at 32 px/m (`evidence/d5-city/03-prop-shadows/`). `parapet_core_m` (0.22 m):
+ChunkView draws every building's silhouette again in solid ink that far down-right on a sixth per-quadrant item
+(z = building_shadows + 1, no material, printed by look_d4), so an ink band runs along the roof's down-right edges
+where they face open ground; a neighbour roof covers it on inner edges (n-d5's D5HeroParapets, the target frame's
+raised slab; `evidence/d5-city/05-parapets/`). The material is `shader` (n-d5's `look_d5_shadow`) when that file is in the tree,
 else `cast_shadow.gdshader` (this lane's placeholder, the same uniforms, the wobble and gaps on the grime
 lattice): a light ink tint plus world-locked 45-degree pen strokes that the look_d4 print inks. Roofs sit
 on the band above, so a shadow only shows where it leaves its block: a 1.1 m hatched band on the pavement
@@ -124,13 +131,16 @@ The d5-close lane builds D5 "Inked Grime" as a **second print layer over the unt
 (`assets/shaders/look_d5.gdshader` + `look_d5.params.json`), not as re-tuned D4 uniforms. An
 `overlays` row names the shader, its params file and key (`world`), the `base` profile under it
 (`d4`), the looks it ramps by zoom (`zoom_looks`: `auto`) or pins at full (`full_looks`: `d5`) and
-the `amount_ppm` stops (48 px/m: 0, 64 px/m: 1). A row is **live only when both files exist**
+the `amount_ppm` stops (32 px/m: 0.5, 48 px/m: 0.75, 64 px/m: 1). A row is **live only when both files exist**
 (`LookProfiles.overlays`): then `auto` and `d5` resolve to `d4`, and `CityView` puts one
 `LookOverlay` (a viewport `BackBufferCopy` + a full-rect `ColorRect`) on the `print_overlay` band
-and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero cost at 32 and
-48 px/m). Without the files the placeholder `d5` row and the d4 -> d5 uniform blend stay in use,
-so this branch renders exactly as before. The gameplay-zoom amount is one number: the brief says
-pure D4 at 48 px/m (0, shipped); d5-close proposes 0.35 there (an owner call).
+and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero cost). Without the files the placeholder `d5` row and the d4 -> d5 uniform blend stay in use,
+so this branch renders exactly as before. The gameplay-zoom amount: D4-only at 32/48 px/m until
+2026-11-03, when the owner named D5 the direction to chase; d5-city then put 0.5 at 32 px/m and
+0.75 at 48 with a pixel-snapped camera (`CityView.snap_px`: no swim under a pan) after a
+readability gate against D4 (edge energy 96-98 % of D4, paper within dE 3-10 of T1 vs 12-14;
+evidence/d5-city/17-snap-cam, 18-d5-earlier). The overlay now costs at every zoom (about 0.18 ms
+GPU at 64 px/m, contended).
 
 Cost (`dev/selftest/overlay_cost.gd`, 16 interleaved blocks of 30 frames, `d4` vs `auto` at 64 px/m, n-d5
 157dec8's look_d5 copied in): **+0.90, +1.15, +1.51 ms GPU** (1280x800, RTX 4090, shared GPU), CPU flat.
@@ -177,9 +187,26 @@ material and leaves a layer someone else re-materialed (the baked crowd atlas) a
 
 ## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
 
-Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #1B1517, `ink_2` charcoal, `wash` #6C6161, `steel`) and the two
-accent inks: **vermilion** #E8502A (threat, cop, danger cue, pickup, objective, Rivet's collar, hit
-flash) and **teal** #1FB5A8 (souls, the dead, the torch tip). Each accent lists the render layers it may
+Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #1B1517, `ink_2` charcoal, `wash` #6C6161, `steel`) and the
+accent inks (updated 2026-11-03, the owner's verdicts 5 and 6):
+
+| token | hex | uses | layers |
+|---|---|---|---|
+| `blood` / `blood_dark` | #A30509 / #540005 | blood only: spurts, pools, drips, splats, wounds (noir's protected arterial red) | `world`, `actors`, `fx` |
+| `cop_blue` | #3A4766 | cop uniforms, cruiser body accents: an ink navy at the charcoal's value (luma 0.28 vs `ink_2` 0.29) | `actors`, `vehicles` |
+| `cop_blue_hi` | #4F86E0 | small marks only: cap badge, light bar | `actors`, `vehicles` |
+| `vermilion` | #E8502A | threat, danger cue, pickup, objective, Rivet's collar, hit flash (**no longer cops or cruisers**) | `actors`, `fx`, `world_markers`, `hud` |
+| `teal` | #1FB5A8 | souls, the dead, the torch tip | `actors`, `fx`, `world_markers`, `hud` |
+
+`classify()` order: blood (r >= `blood_r` 0.30 and max(g, b) < `blood_gr` 0.18 x r: look_noir's
+blood_mask; deep red also passes the vermilion gate, so blood is tested first) -> vermilion -> teal ->
+cop blue (b - max(r, g) >= `blue_gate` 0.08). `count_inks()` returns all five classes.
+The prints keep them as **gated plates, not nearest-ink candidates** (so a mid grey never snaps to navy):
+`look_d4_item` prints a blood pixel as BLOOD / BLOOD_DARK by value and a blue one as COP_BLUE / COP_BLUE_HI
+(nearest); `look_d4` has a `blood` plate (a profile key, 1 in every row): deep red in the world (a pool
+on `ground_decals`) keeps its red under the washes and the edge ink still rims it. Every look golden at
+both sites was bit-identical after the change (no art crossed the new gates). The characters' own
+`print_part.gdshader` (d5-cast) needs the same two gates before blue cop parts print blue. Each accent lists the render layers it may
 appear on: never `world` (ground, decals, shadows, props, roofs); a pickup or hazard in the world is
 drawn on `fx` or `world_markers`. `classify()` uses the look_d4 plate gates, so "is this pixel an
 accent" means exactly what the print pass means by it.
@@ -194,7 +221,10 @@ vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an
 **Gate.** `data/tables/accent_debt.json` (gtai.accent-debt/1) lists known debt: accent + layer + ppm up to
 `max_px`, with the source and the lane that pays it off. An offender not in the table, or above its
 `max_px`, or any off-doctrine crowd look fails the selftest evidence; a debt row no longer seen is
-reported for deletion. Today: no rows. `traffic_light_lamps` (216 px at 32 px/m) was paid off on
+reported for deletion. Today (2026-11-03): `cop_vermilion_32/48/64` (layer `cop`: the actors' vermilion
+that is not Rivet's, at least the cops' full rigs; junction 9412 / 9660 / 2060 px, block 10580 / 6964 /
+2744 px; owner d5-cast; the cop crowd-atlas looks patrol 29.3k / riot 24.7k texels are listed in the summary).
+A cruiser's vermilion is now an offender on `vehicles` (none at either site today). `traffic_light_lamps` (216 px at 32 px/m) was paid off on
 2026-11-03 in code, by the rule below, not by a redraw.
 
 **The world print carries no accent plate (2026-11-03).** palette.json allows neither accent on `world`,
@@ -234,13 +264,13 @@ The `light` canvas (screen space, above the actors, below the world UI) holds tw
 - `lights` (z 100): one MultiMesh of additive quads, `max_lights` (32) per frame. `light_ink.gdshader`
   cuts each light's radial (or cone) falloff into `steps` flat bands and draws every band edge as
   world-locked 45-degree pen hatching, so a light prints as a drawn patch of paper (or vermilion for
-  danger: the blast's rim, fire, the siren) over the charcoal, never a soft 3D bloom. The first version
+  danger: the blast's rim, fire; cop_blue_hi for the siren) over the charcoal, never a soft 3D bloom. The first version
   used a random 2 px stipple; it read as a halftone glow and was replaced (frames `04-lights` vs
   `04b-lights-hatch` in `gtai-masters/night/visual-engine`).
 
 Kinds: `muzzle_flash` (paper fan, 4 ticks), `explosion` (paper core, vermilion rim, 36 ticks),
-`headlight` (paper cone, held), `siren` (vermilion / paper strobe at 2.5 Hz, held: red and blue are
-off-doctrine and teal is the dead's), `fire` (vermilion / paper flicker at 2.5 Hz, held; it was 7 Hz =
+`headlight` (paper cone, held), `siren` (cop_blue_hi / paper strobe at 2.5 Hz, held; vermilion until 2026-11-03, when cops went
+blue; the night grade keeps cop blue like the other accents, `blue_gate`), `fire` (vermilion / paper flicker at 2.5 Hz, held; it was 7 Hz =
 7 saturated-red flashes a second). Photosensitivity: `max_flash_hz` 3 (WCAG 2.3.1 / Harding) and
 `LightLayer.MAX_FLASH_HZ` cap every alternating kind at load (a faster row is clamped with a warning). Lights live on the 60 Hz tick:
 `add(kind, pos_px, angle, tick)`, `move()`, `remove()`, and `CityView` calls `step(tick, world_px)` every

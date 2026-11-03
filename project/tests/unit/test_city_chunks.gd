@@ -15,7 +15,8 @@ func before_all() -> void:
 func test_tables_load() -> void:
 	assert_not_null(_gen)
 	assert_eq(_gen.district_id, "district_01")
-	assert_eq(_gen.sizes.size(), 72)
+	var why: String = "72 box, 73 zebra, 74 dash_eraser, 75-77 story paint, 78-80 2x2, 81 long"
+	assert_eq(_gen.sizes.size(), 82, why)
 
 
 func test_generation_is_deterministic() -> void:
@@ -58,3 +59,22 @@ func test_corruption_and_mismatch_are_refused() -> void:
 	old.encode_u16(4, 99)
 	assert_null(ChunkCodec.decode(old, Vector2i(3, 7), why), "unknown format version")
 	assert_null(ChunkCodec.decode(PackedByteArray([1, 2, 3]), Vector2i(3, 7), why), "truncated")
+
+
+func test_a_junction_has_a_plain_box_and_four_approach_zebras() -> void:
+	# T1: no crossing ring round the centre tile; zebras on the approaches, against the box
+	var chunk: CityChunk = _gen.gen_chunk(4, 4)
+	var box: int = 0
+	var zebras: int = 0
+	var erasers: int = 0
+	for i: int in chunk.command_count():
+		if chunk.tex[i] == TilePainter.T_BOX:
+			box += 1
+		elif chunk.tex[i] == TilePainter.T_ZEBRA:
+			zebras += 1
+		elif chunk.tex[i] == TilePainter.T_DASH_ERASER:
+			erasers += 1
+		assert_ne(chunk.tex[i], 6, "the ringed intersection tile is not placed")
+	assert_gt(box, 0)
+	assert_eq(zebras, 4 * box)
+	assert_eq(erasers, 8 * box, "no dashes on any approach arm")

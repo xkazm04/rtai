@@ -1,0 +1,12 @@
+{
+  "blocks": 16,
+  "cpu_render_ms_delta": -0.0231666266918182,
+  "frames_per_block": 30,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "gpu_ms_delta": 0.274733245372772,
+  "gpu_ms_overlay_off": 0.52976667881012,
+  "gpu_ms_overlay_on": 0.804499924182892,
+  "live_overlays": 1,
+  "ppm": 48.0,
+  "schema": "gtai.overlay-cost/1"
+}

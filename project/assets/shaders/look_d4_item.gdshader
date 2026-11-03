@@ -4,6 +4,9 @@ shader_type canvas_item;
 // Every opaque pixel snaps to the nearest D4 ink; steel prints as one flat wash value (never a dot screen, so a moving
 // car matches the parked ones under the world pass); translucent ink (drop shadows) prints as a flat ink tint.
 // ghost = 1: everything prints on the teal plate (the dead only).
+// Blood and cop blue (palette.json, 2026-11-03) are gated plates, not nearest-ink candidates, so a mid grey
+// never snaps to navy: blood when r >= BLOOD_R and max(g, b) < BLOOD_GR * r (look_noir blood_mask), cop
+// blue when b - max(r, g) >= BLUE_GATE; the gates mirror palette.json `gates`.
 
 uniform float ghost = 0.0;
 uniform vec2 world_px = vec2(0.0);  // the camera's world offset in screen px: tooth and ghost dots locked to the world
@@ -22,6 +25,13 @@ const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
 const vec3 STEEL = vec3(0.561, 0.533, 0.506);
+const vec3 BLOOD = vec3(0.639, 0.020, 0.035);
+const vec3 BLOOD_DARK = vec3(0.329, 0.000, 0.020);
+const vec3 COP_BLUE = vec3(0.227, 0.278, 0.400);
+const vec3 COP_BLUE_HI = vec3(0.310, 0.525, 0.878);
+const float BLOOD_R = 0.30;
+const float BLOOD_GR = 0.18;
+const float BLUE_GATE = 0.08;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -49,6 +59,11 @@ void fragment() {
 		else discard;
 	} else if (c.a < 0.75) {
 		COLOR = vec4(ink_tone, c.a * shadow_k);
+	} else if (c.r >= BLOOD_R && max(c.g, c.b) < BLOOD_GR * c.r) {
+		COLOR = vec4(mix(BLOOD_DARK, BLOOD, step(0.48, c.r)) * g, 1.0);
+	} else if (c.b - max(c.r, c.g) >= BLUE_GATE) {
+		float hi = step(distance(c.rgb, COP_BLUE_HI), distance(c.rgb, COP_BLUE));
+		COLOR = vec4(mix(COP_BLUE, COP_BLUE_HI, hi) * g, 1.0);
 	} else {
 		vec3 col = c.rgb;
 		vec3 o = paper_tone;

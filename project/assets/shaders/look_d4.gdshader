@@ -6,6 +6,8 @@ shader_type canvas_item;
 //  - the art's own ink lines (density above line_ink) print as solid ink, so drawn hatching survives the budget
 //  - hatching is added only in the deepest shadows; a wobbly Sobel edge inks object outlines
 //  - vermilion and teal are flat plates, slightly off-register (the colour doctrine lives in the assets)
+//  - blood (palette.json `blood`, deep arterial red: r >= 0.30, max(g, b) / r < 0.18) is a protected plate: it
+//    keeps its red (BLOOD / BLOOD_DARK by its value) under the washes, the edge ink still rims it (2026-11-03)
 // Every uniform below except world_px is a look-profile parameter (data/tables/look_profiles.json, core/render).
 // world_px: the camera's world offset in screen px (set every frame), so grime and hatch are locked to the world.
 // Use: a full-rect ColorRect on a CanvasLayer between the world and the actors; the actor / fx / HUD layers above it
@@ -33,6 +35,12 @@ uniform float aquatint = 0.0;     // ink grain inside the washes, its density se
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
+uniform float blood = 1.0;         // the protected blood plate (0 = blood prints as its ink density)
+// d5-close's look_d5_print changes ("package v9"), ported as keys whose d4 values are the old print exactly:
+uniform float paper_hi = 0.0;      // sources lighter than cream print a lighter paper (the mock's lit tops)
+uniform float lo_soft = 0.03;      // half-width of the light-wash step (0.03 = the flat step)
+uniform float edge_dark = 0.0;     // 1 = Sobel ink only on the dark side of an edge (thin lines stay thin)
+uniform float street_edge = 0.0;   // 1 = no edge ink inside the dark wash step (paint on asphalt unoutlined)
 // the output inks: palette.json tokens paper / wash / ink via look_profiles.json `tones`
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
 uniform vec3 wash_tone = vec3(0.400, 0.372, 0.408);
@@ -40,6 +48,10 @@ uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
+const vec3 BLOOD = vec3(0.639, 0.020, 0.035);
+const vec3 BLOOD_DARK = vec3(0.329, 0.000, 0.020);
+const vec3 PAPER_HI = vec3(0.985, 0.955, 0.895);
+const float DARK_SOFT = 0.10;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -53,6 +65,12 @@ float vnoise(vec2 p) {
 	vec2 i = floor(p), f = fract(p);
 	f = f * f * (3.0 - 2.0 * f);
 	return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+}
+
+// the blood plate's mask (look_noir blood_mask with palette.json's blood_r / blood_gr as centres)
+float blood_mask(vec3 c) {
+	float gr = max(c.g, c.b) / max(c.r, 0.001);
+	return smoothstep(0.28, 0.32, c.r) * (1.0 - smoothstep(0.16, 0.20, gr));
 }
 
 // x = ink density, y = vermilion density, z = teal density
@@ -86,14 +104,15 @@ void fragment() {
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec2 uv = SCREEN_UV;
 	vec2 tx = SCREEN_PIXEL_SIZE;
-	vec3 p0 = plates(texture(screen_tex, uv).rgb);
+	vec3 src = texture(screen_tex, uv).rgb;
+	vec3 p0 = plates(src);
 	float vden = plates(texture(screen_tex, uv + verm_shift * tx).rgb).y;
 	float tden = plates(texture(screen_tex, uv + teal_shift * tx).rgb).z;
 	float d = p0.x;
 	float gn = (tnoise(w * 0.035) - 0.5) * 0.22 + (tnoise(w * 0.11 + 61.0) - 0.5) * 0.10;
 	float t = clamp(d + gn * grime, 0.0, 1.0);
-	vec3 col = paper_tone;
-	col = mix(col, mix(paper_tone, wash_tone, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
+	vec3 col = mix(paper_tone, PAPER_HI, paper_hi * (1.0 - smoothstep(0.0, 0.05, t)));
+	col = mix(col, mix(paper_tone, wash_tone, wash_lo), smoothstep(step_lo - lo_soft, step_lo + lo_soft, t));
 	col = mix(col, mix(paper_tone, wash_tone, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
 	col = mix(col, mix(wash_tone, ink_tone, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
 	// aquatint: the grime blotches set the density of 1 px ink grains inside the washes (the grime above
@@ -115,12 +134,26 @@ void fragment() {
 	}
 	float e = sobel(uv, tx);
 	if (e > edge_lo) {
-		ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)));
+		float keep = 1.0;
+		if (edge_dark > 0.0) {
+			float l4 = 0.25 * (lum3(uv + vec2(tx.x, 0.0)) + lum3(uv - vec2(tx.x, 0.0))
+				+ lum3(uv + vec2(0.0, tx.y)) + lum3(uv - vec2(0.0, tx.y)));
+			keep = mix(1.0, 1.0 - smoothstep(0.0, DARK_SOFT, lum3(uv) - l4), edge_dark);
+		}
+		if (street_edge > 0.0) {
+			float street = smoothstep(step_hi - 0.03, step_hi + 0.03, t) * (1.0 - smoothstep(line_ink - 0.08, line_ink, d));
+			keep *= 1.0 - street_edge * street;
+		}
+		ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)) * keep);
 	}
 	if (vden > 0.20) {
 		col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
 	}
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
+	if (blood > 0.0) {
+		float bm = blood_mask(src) * blood;
+		col = mix(col, mix(BLOOD_DARK, BLOOD, smoothstep(0.35, 0.6, src.r)), bm);
+	}
 	col = mix(col, ink_tone, ink);
 	col = mix(col, ink_tone, step(0.985, hash(floor(w))) * 0.5 * grit);
 	// paper tooth, world-locked like the grime (was hash(FRAGCOORD): a screen-door that swam on pans)

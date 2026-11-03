@@ -3,7 +3,7 @@
   "schema": "gtai.city-textures/1",
   "textures": [
     {
-      "art": "res://features/city/art/ground/road_straight_tone.png",
+      "art": "res://features/city/art/ground/road_straight_tone_open.png",
       "class": "ground",
       "id": 0,
       "name": "road_straight_tone",
@@ -14,7 +14,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/road_straight_tone_b.png",
+      "art": "res://features/city/art/ground/road_straight_tone_b_open.png",
       "class": "ground",
       "id": 1,
       "name": "road_straight_tone_b",
@@ -25,7 +25,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/road_straight_tone_c.png",
+      "art": "res://features/city/art/ground/road_straight_tone_c_open.png",
       "class": "ground",
       "id": 2,
       "name": "road_straight_tone_c",
@@ -36,7 +36,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/road_straight_v_tone.png",
+      "art": "res://features/city/art/ground/road_straight_v_tone_open.png",
       "class": "ground",
       "id": 3,
       "name": "road_straight_v_tone",
@@ -47,7 +47,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/road_straight_v_tone_b.png",
+      "art": "res://features/city/art/ground/road_straight_v_tone_b_open.png",
       "class": "ground",
       "id": 4,
       "name": "road_straight_v_tone_b",
@@ -58,7 +58,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/ground/road_straight_v_tone_c.png",
+      "art": "res://features/city/art/ground/road_straight_v_tone_c_open.png",
       "class": "ground",
       "id": 5,
       "name": "road_straight_v_tone_c",
@@ -157,7 +157,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/roofs/building_bar.png",
+      "art": "res://features/city/art/d5/roofs/building_bar.png",
       "class": "building",
       "id": 14,
       "name": "building_bar",
@@ -179,7 +179,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_hq.png",
+      "art": "res://features/city/art/d5/roofs/building_hq.png",
       "class": "building",
       "id": 16,
       "name": "building_hq",
@@ -190,7 +190,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_mural.png",
+      "art": "res://features/city/art/d5/roofs/building_mural.png",
       "class": "building",
       "id": 17,
       "name": "building_mural",
@@ -201,7 +201,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_osha.png",
+      "art": "res://features/city/art/d5/roofs/building_osha.png",
       "class": "building",
       "id": 18,
       "name": "building_osha",
@@ -212,7 +212,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_pension_bank.png",
+      "art": "res://features/city/art/d5/roofs/building_pension_bank.png",
       "class": "building",
       "id": 19,
       "name": "building_pension_bank",
@@ -223,7 +223,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_tall.png",
+      "art": "res://features/city/art/d5/roofs/building_tall.png",
       "class": "building",
       "id": 20,
       "name": "building_tall",
@@ -234,7 +234,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_union_hall.png",
+      "art": "res://features/city/art/d5/roofs/building_union_hall.png",
       "class": "building",
       "id": 21,
       "name": "building_union_hall",
@@ -267,13 +267,13 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/props/lamp_post.png",
+      "art": "res://features/city/art/d5/props/lamp_post_ink.png",
       "class": "prop",
       "id": 24,
       "name": "lamp_post",
       "size_m": [
         3.2,
-        0.5
+        0.66
       ],
       "solid": false
     },
@@ -790,6 +790,116 @@
       "name": "roof_charging",
       "size_m": [
         8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/ground/road_box_plain.png",
+      "class": "ground",
+      "id": 72,
+      "name": "road_box_plain",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/decals/zebra.png",
+      "class": "decal",
+      "id": 73,
+      "name": "zebra",
+      "size_m": [
+        17,
+        2.4
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/decals/dash_eraser.png",
+      "class": "decal",
+      "id": 74,
+      "name": "dash_eraser",
+      "size_m": [
+        4,
+        0.6
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/strike_paint.png",
+      "class": "decal",
+      "id": 75,
+      "name": "strike_paint",
+      "size_m": [
+        3,
+        0.97
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/union_fist_stencil.png",
+      "class": "decal",
+      "id": 76,
+      "name": "union_fist_stencil",
+      "size_m": [
+        2.6,
+        2.55
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/chalk_robot.png",
+      "class": "decal",
+      "id": 77,
+      "name": "chalk_robot",
+      "size_m": [
+        1.74,
+        2.4
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_block_2x2.png",
+      "class": "building",
+      "id": 78,
+      "name": "building_block_2x2",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_block_2x2_b.png",
+      "class": "building",
+      "id": 79,
+      "name": "building_block_2x2_b",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_block_2x2_c.png",
+      "class": "building",
+      "id": 80,
+      "name": "building_block_2x2_c",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_long_t1.png",
+      "class": "building",
+      "id": 81,
+      "name": "building_long_t1",
+      "size_m": [
+        16.4,
         8.4
       ],
       "solid": true

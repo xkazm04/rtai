@@ -17,8 +17,14 @@ const BAND_OF_CLASS: Dictionary[String, int] = {
 	"ground": 0, "decal": 1, "prop": 3, "vehicle": 3, "building": 4
 }
 const SHADOW_BAND: int = 2
-const ITEMS: int = 4 * 5
+## The parapet ink core (n-d5's D5HeroParapets): each building's silhouette again in solid ink,
+## offset cast_shadows.json parapet_core_m down-right, just above the hatched shadow (z + 1): it
+## shows as an ink band along the down-right edges that face open ground (a neighbour roof, on
+## the roofs band, covers it on the inner edges).
+const CORE_BAND: int = 5
+const ITEMS: int = 4 * 6
 const SHADOW: Color = Color(0.09, 0.075, 0.106, 0.45)
+const CORE: Color = Color(0.09, 0.075, 0.106, 1.0)
 ## AST-03: the world art carries mipmaps and is drawn below 1:1.
 const MIPMAP_FILTER: RenderingServer.CanvasItemTextureFilter = (
 	RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -40,6 +46,10 @@ var _band_of: PackedByteArray = PackedByteArray()
 var _shadow_mat: ShaderMaterial = null
 var _shadow_extra: PackedVector2Array = PackedVector2Array()
 var _shadow_zoom: float = 1.0
+## the parapet core's offset from the baked building shadow command (px); _core_on = drawn
+var _core_px: Vector2 = Vector2.ZERO
+var _core_on: bool = false
+var _is_building: Array[bool] = []
 
 
 func _init(parent: RID, textures: CityTextures) -> void:
@@ -49,9 +59,12 @@ func _init(parent: RID, textures: CityTextures) -> void:
 		var band: int = BAND_OF_CLASS.get(cls, 3)
 		@warning_ignore("return_value_discarded")
 		_band_of.append(band)
+		_is_building.append(cls == "building")
 	var casts: CastShadows = CastShadows.load_table()
 	_shadow_mat = casts.material()
-	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M)
+	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M, textures.names)
+	_core_on = casts.parapet_core_m > 0.0
+	_core_px = Vector2.ONE * (casts.parapet_core_m - casts.baked_m(&"building")) * SimConst.PX_PER_M
 
 
 ## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.
@@ -114,12 +127,25 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		RenderingServer.canvas_item_add_texture_rect(
 			item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
 		)
+		if shadow and _core_on and _is_building[t]:
+			var core_item: RID = items[q + 4 * CORE_BAND]
+			_core(core_item, t, chunk.xf[o + 2], pos * SimConst.PX_PER_M)
 		_k += 1
 		frame_cmds += 1
 		if (_k & 31) == 0 and Time.get_ticks_usec() - t0 > BUDGET_US:
 			return
 	activated += 1
 	_active = Vector2i(-1, -1)
+
+
+## A shadow command's building silhouette in solid ink at the parapet core offset (`at`: the
+## shadow command's position in px, which carries the baked offset).
+func _core(item: RID, t: int, rot: float, at: Vector2) -> void:
+	var sz: Vector2 = _tex.size_px[t]
+	RenderingServer.canvas_item_add_set_transform(item, Transform2D(rot, at + _core_px))
+	RenderingServer.canvas_item_add_texture_rect(
+		item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, CORE
+	)
 
 
 func _take_items() -> Array:
@@ -129,7 +155,13 @@ func _take_items() -> Array:
 			_pool.pop_back() if not _pool.is_empty() else RenderingServer.canvas_item_create()
 		)
 		RenderingServer.canvas_item_set_parent(item, _parent)
-		RenderingServer.canvas_item_set_z_index(item, RenderLayers.z(BANDS[q >> 2]))
+		var band: int = q >> 2
+		var z: int = (
+			RenderLayers.z(BANDS[band])
+			if band < CORE_BAND
+			else RenderLayers.z(&"building_shadows") + 1
+		)
+		RenderingServer.canvas_item_set_z_index(item, z)
 		RenderingServer.canvas_item_set_default_texture_filter(item, MIPMAP_FILTER)
 		var shadow_band: bool = (q >> 2) == SHADOW_BAND and _shadow_mat != null
 		RenderingServer.canvas_item_set_material(

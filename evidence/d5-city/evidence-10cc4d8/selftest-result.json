@@ -1,0 +1,51 @@
+{
+  "art_loaded": 75,
+  "backend": "native",
+  "debug_build": true,
+  "frames": [
+    {
+      "distinct_colours": 89,
+      "emissive_fx_alive": 0,
+      "file": "selftest-32ppm.png",
+      "height": 800,
+      "lights_active": 0,
+      "mean_luminance": 0.416260353205467,
+      "ok": true,
+      "ppm": 32,
+      "sim_tick": 90,
+      "visible_actors": 101,
+      "why": "",
+      "width": 1280
+    },
+    {
+      "distinct_colours": 87,
+      "emissive_fx_alive": 0,
+      "file": "selftest-48ppm.png",
+      "height": 800,
+      "lights_active": 0,
+      "mean_luminance": 0.342099833221356,
+      "ok": true,
+      "ppm": 48,
+      "sim_tick": 180,
+      "visible_actors": 86,
+      "why": "",
+      "width": 1280
+    }
+  ],
+  "fx_cues": {
+    "death": 6,
+    "player_hit": 0,
+    "player_hit_robo_tazer": 0,
+    "projectile_end": 5,
+    "rivet_kill": 0,
+    "shot": 8
+  },
+  "fx_dropped": 0,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ok": true,
+  "placeholders": 0,
+  "prewarm_ms": 30.195,
+  "schema": "gtai.selftest/1",
+  "texture_failures": [],
+  "texture_load_ms": 118.989
+}

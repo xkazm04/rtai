@@ -133,6 +133,16 @@
                 "minimum": -8,
                 "type": "number"
               },
+              "blood": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "edge_dark": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
               "edge_hi": {
                 "maximum": 16,
                 "minimum": -8,
@@ -168,6 +178,16 @@
                 "minimum": -8,
                 "type": "number"
               },
+              "lo_soft": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "paper_hi": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
               "step_hi": {
                 "maximum": 16,
                 "minimum": -8,
@@ -181,6 +201,11 @@
               "step_mid": {
                 "maximum": 16,
                 "minimum": -8,
+                "type": "number"
+              },
+              "street_edge": {
+                "maximum": 1,
+                "minimum": 0,
                 "type": "number"
               },
               "teal": {
@@ -228,6 +253,9 @@
               }
             },
             "required": [
+              "aquatint",
+              "blood",
+              "edge_dark",
               "edge_hi",
               "edge_lo",
               "grime",
@@ -235,10 +263,12 @@
               "hatch_on",
               "hatch_period",
               "line_ink",
-              "aquatint",
+              "lo_soft",
+              "paper_hi",
               "step_hi",
               "step_lo",
               "step_mid",
+              "street_edge",
               "teal",
               "teal_shift",
               "verm",

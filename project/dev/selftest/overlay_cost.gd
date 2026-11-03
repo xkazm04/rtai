@@ -4,14 +4,20 @@ extends "res://dev/selftest/city_selftest.gd"
 ## and `auto` (overlay at amount 1, same d4 base), median block GPU / CPU render ms. Reports
 ## live_overlays 0 when no overlay shader is in the tree. Windowed only. Usage:
 ##   godot --fixed-fps 60 --path project res://dev/selftest/overlay_cost.tscn -- --out=<dir>
+##   [--ppm=<px/m>] (default 64; `auto` then runs the amount_ppm ramp's amount at that zoom)
 
 const FRAMES: int = 30
 const BLOCKS: int = 16
 const PPM: float = 64.0
 
+var _ppm: float = PPM
+
 
 func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--ppm="):
+			_ppm = arg.substr(6).to_float()
+			continue
 		if not arg.begins_with("--out="):
 			get_tree().quit(2)
 			return
@@ -20,7 +26,7 @@ func _ready() -> void:
 	await _characters.bake()
 	@warning_ignore("return_value_discarded")
 	await _view.prewarm()
-	_view.zoom = PPM / SimConst.PX_PER_M
+	_view.zoom = _ppm / SimConst.PX_PER_M
 	for i: int in SETTLE_FRAMES:
 		await get_tree().process_frame
 	var vp: RID = get_viewport().get_viewport_rid()
@@ -44,7 +50,7 @@ func _ready() -> void:
 func _write(off: Vector2, on: Vector2) -> void:
 	var res: Dictionary = {
 		"schema": "gtai.overlay-cost/1",
-		"ppm": PPM,
+		"ppm": _ppm,
 		"live_overlays": LookProfiles.shared().overlays.size(),
 		"gpu_ms_overlay_off": off.x,
 		"gpu_ms_overlay_on": on.x,

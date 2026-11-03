@@ -5,8 +5,12 @@
     {
       "amount_ppm": [
         [
+          32,
+          0.5
+        ],
+        [
           48,
-          0
+          0.75
         ],
         [
           64,
@@ -14,7 +18,7 @@
         ]
       ],
       "base": "d4",
-      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm keeps the brief's pure D4 at gameplay zoom (48 px/m: 0); d5-close proposes 0.35 at 48 px/m (their zoom_amount stop 1.5) - an owner call, one number here.",
+      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm: 0.5 at 32 px/m, 0.75 at 48, 1 at 64 (d5-city 2026-11-03: the owner chose D5; gated against D4 at 32 px/m with the pixel-snapped camera; was 0 up to 48 px/m).",
       "full_looks": [
         "d5"
       ],
@@ -43,6 +47,8 @@
       "print": true,
       "world": {
         "aquatint": 0,
+        "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.36,
         "edge_lo": 0.16,
         "grime": 0,
@@ -50,9 +56,12 @@
         "hatch_on": 0.94,
         "hatch_period": 4,
         "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           0,
@@ -83,6 +92,8 @@
       "print": true,
       "world": {
         "aquatint": 0.18,
+        "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
         "grime": 0.15,
@@ -90,9 +101,12 @@
         "hatch_on": 0.86,
         "hatch_period": 4,
         "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           -1,
@@ -123,6 +137,8 @@
       "print": true,
       "world": {
         "aquatint": 0.26,
+        "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.26,
         "edge_lo": 0.09,
         "grime": 0.45,
@@ -130,9 +146,12 @@
         "hatch_on": 0.74,
         "hatch_period": 5,
         "line_ink": 0.84,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.64,
         "step_lo": 0.17,
         "step_mid": 0.42,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           -2,
@@ -146,6 +165,96 @@
         "wash_hi": 0.4,
         "wash_lo": 0.34,
         "wash_mid": 0.92
+      }
+    },
+    {
+      "doc": "D-Noir, the opt-in special-mission look for mid / late game (owner, 2026-11-03): not the core style, never in `auto`. This row is the D4 print under it (the noir pass reads the D4 frame when look_noir.params.json keep_d4 is true); the noir pass itself is NoirLook (features/fx/noir, assets/shaders/look_noir.gdshader + look_noir.params.json), switched on by --look=noir. The D5 overlay stays off under it (CityView.overlay_look).",
+      "id": "noir",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0.18,
+        "blood": 1,
+        "edge_dark": 0,
+        "edge_hi": 0.32,
+        "edge_lo": 0.13,
+        "grime": 0.15,
+        "grit": 0.35,
+        "hatch_on": 0.86,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "street_edge": 0,
+        "teal": 0,
+        "teal_shift": [
+          -1,
+          2
+        ],
+        "verm": 0,
+        "verm_shift": [
+          2,
+          -1
+        ],
+        "wash_hi": 0.3,
+        "wash_lo": 0.3,
+        "wash_mid": 0.9
+      }
+    },
+    {
+      "doc": "D5 city print (d5-city, 2026-11-03): d4 + d5-close's 'package v9' print changes (look_d5_print ported into look_d4 as keys): edge ink on the dark side only (thin pen lines stay thin), no edge ink on paint inside the dark street wash, lit paper above cream. A candidate for the gameplay zoom; --look=d5c pins it.",
+      "id": "d5c",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0.18,
+        "blood": 1,
+        "edge_dark": 1,
+        "edge_hi": 0.32,
+        "edge_lo": 0.13,
+        "grime": 0.15,
+        "grit": 0.35,
+        "hatch_on": 0.86,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 1,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "street_edge": 1,
+        "teal": 0,
+        "teal_shift": [
+          -1,
+          2
+        ],
+        "verm": 0,
+        "verm_shift": [
+          2,
+          -1
+        ],
+        "wash_hi": 0.3,
+        "wash_lo": 0.3,
+        "wash_mid": 0.9
       }
     }
   ],
