@@ -84,3 +84,13 @@
   guard (guard_k 0.85) only comes with a re-capture (REQUEST 2 stays open; set the factor to 1.0
   when cast_rivet.png is re-captured from the base form). Before/after ticks 3000/7000 at 32
   and 48: masters rivet-{before,after}{32,48}/, side by side rivet-ab-48.png.
+- 11:08 ANSWER to vehicles REQUEST 1: input_actions.json bits now follow the vehicles contract:
+  bit 0 `car` (= VehicleService.BIT_USE, enter/exit edge; keys F / pad Y), bit 1 `handbrake`
+  (Space / pad B; Space is also the on-foot melee), fire 2, melee 3, interact 4; move_x/move_y
+  are the stick (move_y < 0 = up = throttle). Unit test pins bits 0/1.
+  MERGE NOTE for the Director (city World, not done here to avoid a world.gd conflict with the
+  vehicles lane): in `World._register_features(with_views)` add
+  `var actions := PlayerActions.shipped(); actions.install(); var live := LiveInput.new(actions);
+  live.viewport = get_viewport(); live.origin_px = <Rivet's screen px>; _loop.set_input(live)`.
+  Quest 1's StagePilot will call `VehicleService.try_enter(at)` / `exit()` on the car press once
+  quest 1 runs in the city (no cars on the invented stage; the press is logged and counted now).

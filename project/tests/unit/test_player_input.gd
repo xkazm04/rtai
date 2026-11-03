@@ -86,3 +86,9 @@ func test_pad_use_stops_the_mouse_aim_and_mouse_motion_restores_it() -> void:
 	assert_false(live.mouse_aims)
 	live.note_event(InputEventMouseMotion.new())
 	assert_true(live.mouse_aims)
+
+
+func test_vehicle_bits_match_the_vehicles_contract() -> void:
+	var a: PlayerActions = _actions()
+	assert_eq(a.bit(&"car"), 0, "VehicleService.BIT_USE")
+	assert_eq(a.bit(&"handbrake"), 1, "VehicleService.BIT_HANDBRAKE")
