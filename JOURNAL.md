@@ -830,7 +830,7 @@ NEXT (session end, iteration 8):
   new ped parts, accent_debt traffic_light_lamps row delete after merge, plaza sidewalk variants = now partly the
   quarter turns).
 - Branch n-d4, nothing pushed or merged. Worktree `scratch-q1` kept (quest patch); `scratch-tr` removed.
-- 02:29 hijacked state seen in moving traffic for the first time: wiring patch + texture swapped to
+- 02:27 hijacked state seen in moving traffic for the first time: wiring patch + texture swapped to
   `traffic_atlas_hijack.png` for one probe (reverted): `probe_tr_hj/` vs `after_tr_dense/`, `work/hj_ab48.png`. The teal
   plate (glass + dashed rim) reads strongly at 48 px/m; in play only the hijacked car would carry it (needs the same
   per-car state hook as damage). No art change. Ladder row.
