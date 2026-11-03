@@ -1,0 +1,73 @@
+{
+  "beds_db": {
+    "boss_loop": -52.0000534057617,
+    "city_ambience": -22.0,
+    "crowd_roar": -17.3985290527344
+  },
+  "cops_near": 100,
+  "dropped": {
+    "death:cooldown": 98,
+    "death:far": 4,
+    "death:voices": 165,
+    "projectile_end:cooldown": 219,
+    "projectile_end:far": 151,
+    "projectile_end:voices": 430,
+    "shot:cooldown": 258,
+    "shot:voices": 610
+  },
+  "engine_pitch_per_second": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.84,
+    0.93,
+    1.03,
+    1.13,
+    1.23,
+    1.32,
+    1.42,
+    1.52,
+    1.53,
+    1.53,
+    1.53,
+    1.4,
+    1.24,
+    1.09,
+    0.93,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77,
+    0.77
+  ],
+  "frames": 1800,
+  "fx_fired": {
+    "death": 373,
+    "player_hit": 0,
+    "player_hit_robo_tazer": 0,
+    "projectile_end": 1002,
+    "rivet_kill": 0,
+    "shot": 1066
+  },
+  "max_projectiles": 71,
+  "played": {
+    "boss_stinger": 1,
+    "car_wreck": 1,
+    "crash": 1,
+    "death": 106,
+    "footstep": 20,
+    "horn": 1,
+    "projectile_end": 202,
+    "servo": 2,
+    "shot": 198,
+    "tyre_screech": 1,
+    "ui_confirm": 1
+  }
+}

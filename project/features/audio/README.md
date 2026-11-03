@@ -34,7 +34,9 @@ master volume is `PlayerSettings`, which writes the AudioServer's Master). Posit
 | `wave_started` / `attack_telegraphed` (`robo-tazer` = `tazer_charge`) / `boss_engaged` | `crowd_panic` / `attack_telegraphed` or `tazer_charge` / `boss_stinger` |
 | `player_hit` (+ `robo-tazer`) | `player_hit` (+ `player_hit_robo_tazer`) |
 | `cash_changed` (delta > 0) / `contract_started` / `contract_completed` | `cash_ding` / `objective_ping` / `ui_confirm` (bus `ui`) |
-| `wanted_changed` / `vehicle_entered`..`exited` | `siren_loop` / `engine_loop` + radio |
+| `wanted_changed` / `vehicle_entered`..`exited` | `siren_loop` / `engine_loop` (pitch follows the car's speed, `engine_*` in `audio_mix.json`) + radio |
+| `boss_engaged` / `contract_completed` | `boss_stinger` then the `boss_loop` bed (music bus) / bed off |
+| FX sink id `car_wreck` (vehicles lane explosion) | `car_wreck` (3 takes) |
 | vehicles lane, once merged: `pedestrian_struck` / `vehicle_hijacked` | `hit_flesh` (+ `death`) / `hit_metal` |
 | FX trigger sink (riot) | `shot`, `projectile_end`, `death`, `player_hit`, `rivet_kill` (= `kill_punch`) |
 | API only: `ui_click`, `ui_back` | `service.cue(&"ui_click", Vector2.ZERO, tick)` |

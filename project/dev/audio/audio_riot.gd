@@ -12,20 +12,28 @@ const KNOWN: PackedStringArray = ["--seconds", "--report", "--demo"]
 ## --demo: a scripted tour of the sounds nothing fires yet (second -> what), see _demo().
 const DEMO_AT: Dictionary = {
 	5: "enter",
-	9: "horn",
-	11: "screech",
-	13: "crash",
-	15: "next",
-	21: "wanted",
-	25: "exit",
-	26: "sting"
+	8: "horn",
+	10: "screech",
+	12: "crash",
+	14: "next",
+	16: "wreck",
+	18: "wanted",
+	21: "exit",
+	22: "boss",
+	28: "sting"
 }
+## --demo drive: the driven "car" circles at DRIVE_R_M, its speed ramping up to DRIVE_TOP_MPS
+## (second 5 -> 13), held, then braking to a stop (16 -> 21): the engine pitch follows it.
+const DRIVE_R_M: float = 30.0
+const DRIVE_TOP_MPS: float = 24.0
 
 var _frames: int = 60 * 30
 var _report: String = ""
 var _n: int = 0
 var _max_proj: int = 0
 var _demo_on: bool = false
+var _angle: float = 0.0
+var _engine_log: Array[float] = []
 var _city: CitySystem = null
 var _audio: AudioService = null
 var _view: CityView = null
@@ -69,16 +77,28 @@ func _process(_delta: float) -> void:
 		return
 	_n += 1
 	var t: float = _n / 60.0
-	_city.target = RIOT + Vector2(cos(t * 0.3), sin(t * 0.3)) * 6.0
+	if _demo_on and t >= 5.0 and t < 21.0:
+		_angle += _drive_mps(t) / DRIVE_R_M / 60.0
+		_city.target = RIOT + Vector2(cos(_angle), sin(_angle)) * DRIVE_R_M
+	else:
+		_city.target = RIOT + Vector2(cos(t * 0.3), sin(t * 0.3)) * 6.0
 	_city.focus = _city.target
 	var second: int = floori(_n / 60.0)
 	if _demo_on and _n % 60 == 0 and DEMO_AT.has(second):
 		var what: String = DEMO_AT[second]
 		_demo(what)
+	if _demo_on and _n % 60 == 0:
+		_engine_log.append(snappedf(_audio.loops.pitch(&"engine_loop"), 0.01))
 	if _n % 30 == 0:
 		_max_proj = maxi(_max_proj, _projectiles())
 	if _n >= _frames:
 		_done()
+
+
+func _drive_mps(t: float) -> float:
+	var up: float = clampf((t - 5.0) / 8.0, 0.0, 1.0)
+	var down: float = clampf((21.0 - t) / 5.0, 0.0, 1.0)
+	return DRIVE_TOP_MPS * minf(up, down)
 
 
 func _demo(what: String) -> void:
@@ -90,12 +110,17 @@ func _demo(what: String) -> void:
 		Events.vehicle_exited.emit(1)
 	elif what == "wanted":
 		Events.wanted_changed.emit(3)
+	elif what == "boss":
+		Events.boss_engaged.emit(&"quartermaster-mertz")
 	elif what == "sting":
 		Events.contract_completed.emit(&"collect-call")
 	elif what == "next":
 		_radio().next()
 	else:
-		var id: StringName = {"horn": &"horn", "screech": &"tyre_screech", "crash": &"crash"}[what]
+		var ids: Dictionary = {
+			"horn": &"horn", "screech": &"tyre_screech", "crash": &"crash", "wreck": &"car_wreck"
+		}
+		var id: StringName = ids[what]
 		_view.fx_triggers.fire(id, at, 0.0, tick)
 
 
@@ -113,9 +138,11 @@ func _done() -> void:
 		"beds_db":
 		{
 			"crowd_roar": _audio.loops.level_db(&"crowd_roar"),
-			"city_ambience": _audio.loops.level_db(&"city_ambience")
+			"city_ambience": _audio.loops.level_db(&"city_ambience"),
+			"boss_loop": _audio.loops.level_db(&"boss_loop")
 		},
 		"dropped": _audio.dropped,
+		"engine_pitch_per_second": _engine_log,
 		"fx_fired": _view.fx_triggers.fired,
 		"cops_near": _cops_within(20.0),
 		"max_projectiles": _max_proj,

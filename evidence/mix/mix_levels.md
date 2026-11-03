@@ -36,3 +36,13 @@ Same mix tables, new assets: one footstep per stride (8 single-step takes), the 
 quest stage (-3 dB trim). riot 25 s: -20.4 LUFS, peak -1.4 dBFS, LRA 1.8. quest opening 45 s: -17.5 LUFS, peak -3.5 dBFS, LRA 2.2 (7 of the bot's lines started,
 2 voice drops in 45 s). quest fight 30 s: -19.2 LUFS, peak -1.0 dBFS, LRA 7.6 (39 body hits, 37 kill punches, 28 steps, 54 shots). Measured, not heard.
 Voice vs the quest timeline over the whole quest: see JOURNAL (6 of 23 lines dropped, `dev/audio/line_timeline.tscn`).
+
+## Iteration 4: demo tour 4 (`riot_demo_mix4.mp4`, replaces riot_demo_mix2; `audio_riot.tscn --demo`, 800 px, contended GPU)
+
+New: the engine pitch follows the driven car (the demo "car" circles at 30 m radius, speed ramping 0 -> 24 m/s over seconds 5-13, held, braking
+16-21; logged engine pitch scale per second: 0.84, 0.93, 1.03, 1.13, 1.23, 1.32, 1.42, 1.52, 1.53 ... 1.40, 1.24, 1.09, 0.93, 0.77 = engine_pitch_idle 0.75 ..
+engine_pitch_top 1.6 in audio_mix.json), `car_wreck` explosion (second 16), the boss stinger + boss loop (second 22, off with the contract at 28: the loop
+fades in over ~2.3 s and out the same). Tour: 5 enter (engine + radio 1), 8 horn, 10 screech, 12 crash, 14 radio next, 16 wreck, 18 wanted 3 (siren), 21 exit,
+22 boss, 28 contract_completed (radio stinger, boss loop off). -18.1 LUFS, true peak -0.9 dBFS, LRA 3.9 LU. Per-second RMS (dBFS): bed -15..-13.5, wreck second -10.6,
+boss second range -12.9..-11.8 (the boss loop sits ~1-2 dB above the riot bed, under the shots). Frame at 12 s looked at: straight down, 0 rejected.
+Measured, not heard.
