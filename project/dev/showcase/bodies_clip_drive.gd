@@ -46,7 +46,8 @@ func step(tick: int, _input: TickInput) -> void:
 	_city.focus = _city.target
 
 
-## Finds a walkable band (sidewalk, kerb-side or lane: nothing solid) 50 m long near the start, puts Rivet on it and plants the crowds.
+## Finds a walkable band (sidewalk, kerb-side or lane: nothing solid) 50 m long near the
+## start, puts Rivet on it and plants the crowds.
 func _plant() -> void:
 	for dy: int in range(-64, 65):
 		for dx: int in range(-64, 65, 2):

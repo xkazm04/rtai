@@ -4,7 +4,8 @@ extends Node
 ## Rivet walks east (1.4 m/s) through a standing crowd that parts, stops, then sprints (6 m/s)
 ## into a second group: knockdowns, slides, get-ups, flight. --before = his body off (the game
 ## before features/bodies: he walks through everyone). Windowed only. Usage:
-##   godot --rendering-driver d3d12 --path project res://dev/showcase/bodies_clip.tscn -- --out=<dir>
+##   godot --rendering-driver d3d12 --path project res://dev/showcase/bodies_clip.tscn
+##     -- --out=<dir>
 ##   [--before] [--zoom=<z>] [--every=<n>] (clip frame every n ticks, 0 = stills only)
 
 const MASTER_SEED: int = 91
