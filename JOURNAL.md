@@ -198,3 +198,9 @@ green at 971a118.
   merge. Corpse stains' dark spots follow (same json). Frames: masters frames/pool-dark-t900-{32,48,64,128}ppm-pair.png
   (same run, same --zooms). At 128 the bright meniscus rim over a dark body reads deeper and wetter; at 32 the pools
   still read red on asphalt. Camera breaks: 0 of 8.
+- GATES at 1a7174f (evidence/run.mjs --no-bench, 12:38): lint 13/13, unit 348/0, scenarios 8/8, parity exact,
+  selftest PASS (look goldens 11/11 worst 0.49, block 5/5 worst 0.94): the darker pool body needs no re-bless.
+- CLIP: masters clip-it3-pools-{48,64}ppm.mp4 (seed 91, ticks 300-1200, --fixed-fps 60, every 2nd frame = 15 s real
+  time); strip frames/clip-it3-64-strip.png (+ repo evidence/d5-combat/). 16 deaths, 15 aimed, 14 soaked, 2 missed.
+  Camera breaks: 0. Deleted the 1.3 GB PNG scratch after encoding. frames.json (15): the t900 48/64 hero frames now
+  show iteration 3 (before = iteration 1), 128 kill-cam frame added, clip-it3 replaces clip-it2 (as its before).

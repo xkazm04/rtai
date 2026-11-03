@@ -1,23 +1,23 @@
 [
  {
-  "file": "frames/fight-noir-t900-48ppm.png",
-  "title": "Real city riot, 15 s in: noir's blood as the D4/D5 default (48 px/m)",
+  "file": "frames/fight-noir-t900-48ppm-it3.png",
+  "title": "Real city riot, 15 s in: the default D4/D5 blood as of iteration 3 (48 px/m)",
   "source": "game-city",
   "branch": "d-combat",
   "look": "auto (D4->D5)",
   "ppm": 48,
-  "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools.",
-  "before": "frames/fight-ink-t900-48ppm.png"
+  "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools. ITERATION 3 (1a7174f): liquid pool edge (56-point ring, wet scallop, rounded run) and the doctrine blood_dark #540005 pool body; 'before' = the same seed-91 moment at iteration 1.",
+  "before": "frames/fight-noir-t900-48ppm.png"
  },
  {
-  "file": "frames/fight-noir-t900-64ppm.png",
-  "title": "Same moment at arena zoom (64 px/m): pools with ink keyline, grain, sheen",
+  "file": "frames/fight-noir-t900-64ppm-it3.png",
+  "title": "Same moment at arena zoom (64 px/m): the default D4/D5 blood as of iteration 3 (64 px/m)",
   "source": "game-city",
   "branch": "d-combat",
   "look": "auto (D4->D5)",
   "ppm": 64,
-  "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat).",
-  "before": "frames/fight-ink-t900-64ppm.png"
+  "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat). ITERATION 3 (1a7174f): liquid pool edge (56-point ring, wet scallop, rounded run) and the doctrine blood_dark #540005 pool body; 'before' = the same seed-91 moment at iteration 1.",
+  "before": "frames/fight-noir-t900-64ppm.png"
  },
  {
   "source": "game-city",
@@ -30,14 +30,14 @@
   "note": "CorpseStains (13c4f9d), city_fight.tscn seed 91 tick 480: every human kill soaks its body (7/7 deaths, 0 missed); the stains slide with the body and leave with it at the 8 s despawn. Before = --no-stains in the same deterministic run. 32 px/m pair: frames/stains-t480-32ppm-pair.png."
  },
  {
+  "file": "frames/walker-fade-t480-64ppm-pair.png",
+  "title": "Rivet on a corpse (64 px/m): the soak no longer prints on the robot",
   "source": "game-city",
   "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "file": "frames/stains-after-t480-48ppm.png",
-  "before": "frames/stains-before-t480-48ppm.png",
-  "ppm": 48,
-  "title": "Blood on the dead at 48 px/m (in a car)",
-  "note": "Same moment as the 64 px/m frame. Riot-cheap: each body is drawn once, then only moved and scaled."
+  "look": "d4d5",
+  "ppm": 64,
+  "before": "raw/walker/fight-before-noir-t480-64ppm.png",
+  "note": "Real city riot, seed 91, t480; Rivet moved onto the nearest soaked body (city_fight --dev=rivet-on-dead). Left = before (red stain dots on his chassis: the corpse soak drew over him), right = after (the soak fades while he stands on the body; robots never bleed). Also at 32/48: frames/walker-fade-t480-{32,48}ppm-pair.png. Commit 6370b54."
  },
  {
   "source": "game-city",
@@ -50,14 +50,14 @@
   "note": "MuzzlePop (3464242): a shot near the camera throws a stepped 3-band pool of paper light, 5 m, for exactly one sim tick, over the ground, the print and the bodies. Photosensitivity: at most 1 per 20 ticks AND inside the kill beat's shared flash budget (~1 a second in a riot); none under reduced motion. Before = the same frozen tick with the pop hidden."
  },
  {
+  "file": "frames/fight-noir-t900-128ppm-it3.png",
+  "title": "Kill-cam zoom (128 px/m), iteration 3: liquid pools in blood_dark with a bright meniscus rim",
   "source": "game-city",
   "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "file": "frames/pop-after-48ppm.png",
-  "before": "frames/pop-before-48ppm.png",
-  "ppm": 48,
-  "title": "Muzzle pop at 48 px/m",
-  "note": "Same frozen moment (the 3rd pop of the riot, cop firing at a rioter right of Rivet). 32 px/m: frames/pop-3-32ppm-pair.png."
+  "look": "d4d5",
+  "ppm": 128,
+  "before": "raw/pool/fight-before-noir-t900-128ppm.png",
+  "note": "Same riot, same tick (seed 91, t900, identical --zooms). Before: 28-point ring (straight chords, pointed run), body #750008. After: 56 points + wet-edge scallop + rounded run lobe (9671d9e), body = doctrine blood_dark #540005 (1a7174f). Step pairs: frames/pool-edge-t900-*-pair.png, frames/pool-dark-t900-*-pair.png. Cost net lower (settled redraw 6 ticks): 294 vs 369 us/frame back to back, debug, CONTENDED."
  },
  {
   "file": "frames/pop-strength-ab-64ppm.png",
@@ -69,14 +69,14 @@
   "note": "Same frozen tick (3rd pop of the riot), city_fight --pop-shots=3 --pop-strength=<s>. At 0.45 the ink lines lift to grey (the black-and-white read weakens); 0.32 kept. Data: blood_fx.json game.muzzle_pop.strength."
  },
  {
-  "file": "clip-it2-stains-pop-64ppm.mp4",
-  "title": "15 s riot clip at 64 px/m, real time: blood + stains on the dead + muzzle pops",
+  "file": "clip-it3-pools-64ppm.mp4",
+  "title": "15 s riot clip at 64 px/m, real time, iteration 3: liquid pools in blood_dark, stains, muzzle pop",
   "source": "game-city",
   "branch": "d-combat",
   "look": "auto (D4->D5)",
   "ppm": 64,
-  "note": "city_fight --clip=150,900 --fixed-fps 60 (one tick a frame, every 2nd frame kept: half the 1-tick pops fall between kept frames). 15 deaths, 13 bodies soaked, 2 missed (body left the rig feed before its kill resolved). 48 px/m twin: clip-it2-stains-pop-48ppm.mp4; strip: frames/clip-it2-64-strip.png. Visible gap: pools outlive their bodies (the sim despawns the dead after 8 s).",
-  "before": "clip-blood-noir-64ppm.mp4"
+  "note": "city_fight seed 91, ticks 300-1200, --fixed-fps 60, every 2nd frame (30 fps). 16 deaths, 15 sprayed along the killing round, 14 bodies soaked. 48 px/m: clip-it3-pools-48ppm.mp4. Strip: frames/clip-it3-64-strip.png. Before = the iteration 2 clip (same seed, same ticks).",
+  "before": "clip-it2-stains-pop-64ppm.mp4"
  },
  {
   "file": "frames/quest1-stains-04-crop.png",
