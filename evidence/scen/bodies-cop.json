@@ -7,10 +7,10 @@
     "worst_rivet": 0.0000200462341308771
   },
   "planted": {
-    "down_ticks": 8,
+    "down_ticks": 6,
     "fled": false,
-    "knocks": 8,
+    "knocks": 6,
     "resumed": true,
-    "worst_rivet": 0.0000214171409607111
+    "worst_rivet": 0.0000316095352173029
   }
 }

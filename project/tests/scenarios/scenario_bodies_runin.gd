@@ -1,13 +1,14 @@
 extends Scenario
-## features/bodies, the other direction: a human RUNNING into Rivet (4.5 m/s, faster than the
+## features/bodies, the other direction: a human RUNNING into Rivet (5.5 m/s, faster than the
 ## tackle speed) is `blocked` by the table (human -> rivet_base run), so the human takes the whole
 ## overlap and steps aside: Rivet, standing still, is not moved and never overlapped. Planted fault
 ## (TST-05): the run-in rule off in the spec, so the mass split shoves Rivet back.
 
-const RUN_MPS: float = 4.5
+const RUN_MPS: float = 5.5
 const TOL: float = 0.02
-## Glancing contacts after the runner steps aside are walk shoves (the mass split): a few cm.
-const MAX_PUSH_M: float = 0.15
+## Glancing contacts after the runner steps aside are walk shoves (the mass split). Measured
+## 0.09 m at tackle_mps 3.2 and 0.20 m at 5.0 (slower glances are walks now); rule off: 0.60 m.
+const MAX_PUSH_M: float = 0.3
 
 
 func run(_tree: SceneTree) -> String:

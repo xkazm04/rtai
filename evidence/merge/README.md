@@ -43,9 +43,16 @@ only in JOURNAL.md and the 11 look goldens, which whoever merges last re-blesses
     scenarios in one process: deterministic, no leak between scenarios. An earlier copy of
     `quest1-walkin.json` was stale (left by the planted run in the same evidence folder).
     Caught and replaced.
+- **Re-probed at 13:10 at the pilot's real walk, 4.5 m/s (combat.json rivet `walk_mps`)**:
+  - with the old `tackle_mps` 3.2: the walk knocks down all 5 peds
+    (`quest1-walkin-4.5mps-tackle3.2-before.json`);
+  - with the new 5.0 (this branch): walk 0 knockdowns, overlap 0.023 m (drawn pos, under 1 px at
+    32 px/m), progress 35.4 / 36 m; sprint 6 m/s: 5 knockdowns (`quest1-walkin-4.5mps-tackle5.json`).
+  - The probe file (`scenario_quest1_walkin.gd.txt`) now walks at 4.5 m/s. A sprint in quest 1 needs
+    REQUEST 3 (slice-play), faster than 5.0 m/s.
 - To keep the probe as a live test after the merge, copy `scenario_quest1_walkin.gd.txt` to
-  `project/tests/scenarios/scenario_quest1_walkin.gd`. It needs a verdict: walk overlap < 0.02 m,
-  0 knockdowns; run, at least 1 knockdown.
+  `project/tests/scenarios/scenario_quest1_walkin.gd`. It needs a verdict: walk (4.5 m/s) overlap < 0.03 m,
+  0 knockdowns; run (6 m/s), at least 1 knockdown.
 
 ## d-bodies x d-vehicles
 
@@ -68,7 +75,7 @@ only in JOURNAL.md and the 11 look goldens, which whoever merges last re-blesses
     and the planted mutation is caught at step 629.
   - All 15 scenarios pass, including vehicle carnage, drive (replay identical) and yield,
     replay_60s, city_replay, the 4 bodies scenarios and rig_stress.
-  - Measured at 13:50. scenario_vehicle_drive, with an `actor_knocked_down` counter added in scratch
+  - Measured at 13:00. scenario_vehicle_drive, with an `actor_knocked_down` counter added in scratch
     only: **0 body knockdowns with line 4 and 0 without it** (struck 1, replay identical, both runs).
     The car's own hit takes people before the 0.42 m body at its centre reaches them, so this run does
     NOT show the line is needed. Keep it anyway: it is the stated contract (no Rivet body while

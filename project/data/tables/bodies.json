@@ -185,5 +185,5 @@
     }
   ],
   "schema": "gtai.bodies/1",
-  "tackle_mps": 3.2
+  "tackle_mps": 5
 }

@@ -12,7 +12,7 @@ a neutral `blocked` rule until the owner designs them later in the story.
   Rivet's radius is read from here, **never from his sprite**: `d5-cast` rescales the art, the body
   stays 0.42 m ("only slightly larger than a human": 1.2x the human radius, so two humans side by
   side are 1.4 m and Rivet plus a human 0.77 m).
-- `tackle_mps` (3.2): a contact whose closing speed (the attacker's velocity along the line to the
+- `tackle_mps` (5.0, was 3.2 until 2026-11-03 13:20: Rivet's quest walk is 4.5 m/s and must shove): a contact whose closing speed (the attacker's velocity along the line to the
   defender) is above this is a run (a tackle), else a walk.
 - `rules`: attacker x defender -> `walk` and `run` results (`shove`, `stagger`, `knockdown`,
   `blocked`), `knockback_m`, `down_s`, `can_hurt` (false everywhere today: a tackle that kills

@@ -3,7 +3,7 @@ extends Scenario
 ## then sprints east from his start through standing city peds placed on his own free path.
 ## Measures the drawn Rivet (stage arena pos) against every live city person on every tick.
 
-const WALK_MPS: float = 1.4
+const WALK_MPS: float = 4.5
 const RUN_MPS: float = 6.0
 const TICKS: int = 8 * SimClock.TICK_RATE
 

@@ -10,6 +10,8 @@ const TOL: float = 0.02
 const WALK: Vector2 = Vector2(1.4, 0.0)
 const TICKS: int = 14 * SimClock.TICK_RATE
 const MIN_PROGRESS: float = 0.6
+## Rivet's top walk in quest 1 (combat.json rivet walk_mps): still a walk, so still no knockdown.
+const QUEST_WALK_MPS: float = 4.5
 
 
 func run(_tree: SceneTree) -> String:
@@ -18,6 +20,9 @@ func run(_tree: SceneTree) -> String:
 		return ok_run["error"]
 	var zero_r: Dictionary = _walk(true, false)
 	var off: Dictionary = _walk(false, true)
+	var quest: Dictionary = _walk(false, false, QUEST_WALK_MPS)
+	if quest["knocks"] != 0 or quest["worst_rivet"] > TOL:
+		return "the quest walk (%.1f m/s) tackled or overlapped: %s" % [QUEST_WALK_MPS, quest]
 	var summary: String = (
 		(
 			"crowd walk: worst Rivet overlap %.4f m (tol %.2f), people-people %.3f m, "
@@ -37,7 +42,12 @@ func run(_tree: SceneTree) -> String:
 	Log.info("scenario", summary)
 	var err: String = write_evidence(
 		"bodies-crowd.json",
-		{"after": ok_run, "planted_radius_zero": zero_r, "before_body_off": off}
+		{
+			"after": ok_run,
+			"planted_radius_zero": zero_r,
+			"before_body_off": off,
+			"quest_walk_4_5": quest,
+		}
 	)
 	return err if err != "" else _judge(ok_run, zero_r, off, summary)
 
@@ -61,7 +71,7 @@ static func _free() -> float:
 	return WALK.x * TICKS / SimClock.TICK_RATE
 
 
-func _walk(radius_zero: bool, body_off: bool) -> Dictionary:
+func _walk(radius_zero: bool, body_off: bool, mps: float = WALK.x) -> Dictionary:
 	var st: BodiesStage = BodiesStage.new()
 	var err: String = st.setup(26.0)
 	if err != "":
@@ -74,7 +84,7 @@ func _walk(radius_zero: bool, body_off: bool) -> Dictionary:
 			st.stand(st.band + Vector2(6.0 + col * 2.5, row * 0.9))
 	var x0: float = st.body.pos.x
 	for t: int in TICKS:
-		st.tick(WALK)
+		st.tick(Vector2(mps, 0.0))
 	return {
 		"backend": String(st.sim.backend_name()),
 		"worst_rivet": st.worst_rivet,
