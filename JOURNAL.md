@@ -1553,3 +1553,9 @@ NEXT (final, iteration 10; 38-40 above, 35-37, 31-34, 27-30 stand):
 42. d5-close / visual-engine: re-measure the night's motion claims sub-pixel (D5_SUBPX=1) where they matter: the walk
     (rigs move sub-pixel already, so d5_walk holds), the pan (item32, item44-46 shadows).
 Morning reading order: night_iter10_summary.png -> item53 -> item50 / item50b -> item52 -> item51, then iteration 9's.
+- 06:44 TESTED for NEXT 41's fallback (imports flipped, re-imported, restored with git checkout + --import, tree
+  checked): the ruled roof overlays (roofs/rule/, item42) WITH mipmaps, thin print. Sub-px mural pan residual / flip
+  0.0445 / 0.145 -> 0.0368 / 0.127 (thin print without the rules 0.0273 / 0.091). Static 32 px/m roof area (fixed
+  mask): |L - blur1| 0.0952 -> 0.0849 (mock 0.0935: away), mid 0.085 -> 0.073, L 0.700 -> 0.710; 48: 0.1037 -> 0.0954.
+  By eye (masters work/i10/rule_mip.png): the rule is fainter, still visible. A partial trade, not a fix: the
+  world-camera snap (NEXT 41) is the fix; rule overlays keep their import. Scratch i10rl0 / i10rl1 / s10trm deleted.
