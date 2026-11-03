@@ -22,6 +22,9 @@ var cars: Array[VehicleBody] = []
 var driving: VehicleBody = null
 ## The sim traffic this service rammed or soul-hijacked (render states, damage).
 var traffic: VehicleTraffic = null
+## Microseconds the last step() took, and the worst so far (bench evidence; not sim state).
+var last_us: int = 0
+var max_us: int = 0
 var _contacts: VehicleContacts = null
 var _events: EventBus = null
 var _next_id: int = 1
@@ -92,6 +95,13 @@ func soul_hijack_traffic(slot: int) -> void:
 
 
 func step(_tick: int, input: TickInput) -> void:
+	var t0: int = Time.get_ticks_usec()
+	_step(input)
+	last_us = Time.get_ticks_usec() - t0
+	max_us = maxi(max_us, last_us)
+
+
+func _step(input: TickInput) -> void:
 	world.refresh()
 	var use: bool = input.is_pressed(BIT_USE)
 	if use and not _use_was:

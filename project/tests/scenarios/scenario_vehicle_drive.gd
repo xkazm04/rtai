@@ -63,14 +63,19 @@ func run(_tree: SceneTree) -> String:
 	world.loop().start_recording()
 	var trace: Array[Dictionary] = []
 	var car: VehicleBody = svc.cars[0]
+	var total_us: int = 0
 	for t: int in TICKS:
 		world.loop().step()
+		total_us += svc.last_us
 		trace.append(_row(t, car))
 	var log: ReplayLog = world.loop().finish_recording()
 	var reason: String = _judge(trace, struck, svc)
 	if reason == "":
 		reason = _hijack(svc, w[4] as CitySystem, hijacks)
 	var summary: Dictionary = _summary(trace, struck.size(), hijacks)
+	summary["service_us_avg"] = float(total_us) / TICKS
+	summary["service_us_max"] = svc.max_us
+	summary["timing"] = "CONTENDED (shared machine, headless, native sim)"
 	_free(w)
 	if reason == "":
 		var again: Array[Object] = _world(MASTER_SEED)

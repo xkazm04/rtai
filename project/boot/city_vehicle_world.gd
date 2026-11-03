@@ -11,14 +11,17 @@ const DRIVER_VMAX: float = 1.4
 var characters: CityCharacters = null
 var _city: CitySystem
 var _snap: PackedFloat64Array = PackedFloat64Array()
+var _stale: bool = true
+var _recs: Array[int] = []
 
 
 func _init(city: CitySystem) -> void:
 	_city = city
 
 
+## Marks the cached snapshot stale; the next query takes one (a tick with no query takes none).
 func refresh() -> void:
-	_snap = _city.sim.snapshot()
+	_stale = true
 
 
 func cars_near(at: Vector2, radius: float) -> PackedFloat64Array:
@@ -68,7 +71,7 @@ func solid(x: float, y: float) -> bool:
 
 func take_car(slot: int) -> void:
 	_city.sim.kill(slot)
-	refresh()
+	_stale = true
 
 
 func eject_driver(at: Vector2, away: Vector2, art: int) -> void:
@@ -117,9 +120,13 @@ func player_pos() -> Vector2:
 
 ## Record offsets of every live actor in the cached snapshot (projectiles excluded).
 func _records() -> Array[int]:
-	var out: Array[int] = []
+	if not _stale:
+		return _recs
+	_snap = _city.sim.snapshot()
+	_stale = false
+	_recs.clear()
 	for r: int in range(0, _snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
 		if _snap[r] >= SimConst.SNAP_PROJ_BASE:
 			break
-		out.append(r)
-	return out
+		_recs.append(r)
+	return _recs

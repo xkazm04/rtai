@@ -11,7 +11,7 @@ const CAR_STRIDE: int = 8
 const PERSON_STRIDE: int = 4
 
 
-## Called once per tick before any query (a subclass caches its snapshot here).
+## Called once per tick before any query (a subclass drops its cached snapshot here).
 func refresh() -> void:
 	pass
 
