@@ -741,3 +741,8 @@ NEXT (iteration 6; NEXT 1-19 of iterations 3-5 still stand):
   into alpha ~1 at every zoom, i.e. "always full": I read the numbers as that, which is the comparison wanted.)
   Provenance +3 lines. Boards item28_cracks_up_close.png, item4 + night_iter6_summary from h96; evidence/
   hero-d4d5-*ppm.png = h96 (hero-d4-* unchanged); ladder +1 row.
+- 02:54 MILESTONE (h97, fff3ff6): the crosswalk's wear holes fade back in up close too (the intersection overlay =
+  every changed px, build_cracks.py `all`; the road overlays rebuild byte-identically with the default rule). h97 vs
+  h96: 0 px at 32/48 in both tiers, d4 0 px everywhere; d5 1964 / 2864 / 3078 px at 64 / 96 / 128 = the zebra's worn
+  holes as in h86 at the kill-cam. Boards (item4, night_iter6_summary, item28) and evidence/hero-d4d5-*ppm.png = h97.
+  The pavement joints stay light at every zoom (the mock's faint joint up close too).
