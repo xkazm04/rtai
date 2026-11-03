@@ -1,0 +1,120 @@
+{
+  "lines": [
+    {
+      "id": "rivet-line-stopped",
+      "in": 1,
+      "out": 865
+    },
+    {
+      "id": "rivet-third-person",
+      "in": 865,
+      "out": 1597
+    },
+    {
+      "id": "rivet-my-hands",
+      "in": 1597,
+      "out": 2191
+    },
+    {
+      "id": "patch-collect-call",
+      "in": 2191,
+      "out": 3019
+    },
+    {
+      "id": "rivet-who-is-this",
+      "in": 3019,
+      "out": 3781
+    },
+    {
+      "id": "fax-slow-motion",
+      "in": 3781,
+      "out": 4555
+    },
+    {
+      "id": "fax-statistically",
+      "in": 4555,
+      "out": 5563
+    },
+    {
+      "id": "juno-load-bearing",
+      "in": 6042,
+      "out": 6756
+    },
+    {
+      "id": "juno-real-name",
+      "in": 6756,
+      "out": 7422
+    },
+    {
+      "id": "brass-gloria",
+      "in": 7482,
+      "out": 8712
+    },
+    {
+      "id": "brass-someday",
+      "in": 8712,
+      "out": 9762
+    },
+    {
+      "id": "kilohm-accents",
+      "in": 9823,
+      "out": 10717
+    },
+    {
+      "id": "rivet-buildings-talk",
+      "in": 10717,
+      "out": 11401
+    },
+    {
+      "id": "kilohm-come-to-me",
+      "in": 11401,
+      "out": 12049
+    },
+    {
+      "id": "fax-dock-brief",
+      "in": 12135,
+      "out": 13287
+    },
+    {
+      "id": "guard-who-do-we-call",
+      "in": 13902,
+      "out": 14166
+    },
+    {
+      "id": "rivet-sorry-not-sorry",
+      "in": 14166,
+      "out": 14586
+    },
+    {
+      "id": "mertz-inventory",
+      "in": 16187,
+      "out": 16733
+    },
+    {
+      "id": "rivet-everybody-screamed",
+      "in": 16733,
+      "out": 17159
+    },
+    {
+      "id": "rivet-feels-good",
+      "in": 17159,
+      "out": 17753
+    },
+    {
+      "id": "mertz-appliances",
+      "in": 17753,
+      "out": 18239
+    },
+    {
+      "id": "fax-confirm-receipt",
+      "in": 18273,
+      "out": 19125
+    },
+    {
+      "id": "rivet-i-have-a-job",
+      "in": 19125,
+      "out": 19779
+    }
+  ],
+  "ticks": 19781
+}
