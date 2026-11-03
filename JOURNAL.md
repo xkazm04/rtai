@@ -818,3 +818,25 @@ NEXT (iteration 12 / morning, in order):
   zoom feed, bit-identical at <= 64 px/m): lint 13/13, unit 214, scenarios 8, parity PASS, selftest PASS
   (junction 10/10 + block 3/3 worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to
   evidence/pof. Session end: tree clean, no Godot of mine running, my /tmp scratch deleted.
+
+## Iteration 12 (04:04 - , BUILD)
+
+Weakest point picked: item 4's night grade - the one look piece still on a raw hex and never looked at
+since iteration 6 ("needs the owner's eye"). A flat multiply by #6E6878 (B > R): after iteration 11's
+warm re-tone it cast lavender over the warm paper / charcoal, flattened the paper-street contrast and
+dimmed the vermilion / teal below the palette gates along with everything else (before frames: block
+and junction at 32 / 48, the light showcase at 32 / 48 / 64).
+- MILESTONE (c31559a) grade_ink.gdshader: the grade rect reads the screen and re-prints luminance as
+  paper_level * l^gamma, hue kept; accent pixels (palette gates) keep accent_keep of their value. Grades
+  are lights.json rows (paper_level / gamma / accent_keep; schema updated); night 0.58 / 1.5 / 0.85; day
+  is the identity and HIDES the rect (the old day drew a white multiply over the whole screen every frame;
+  that saving is unmeasured). Look: paper -> warm grey, streets -> near ink, cops' vermilion holds = noir
+  spot colour; the lights (hatched paper / vermilion bands) read harder on the near-ink street.
+  Day print: selftest goldens 10/10 + block 3/3 worst 0.00, accents unchanged, world lock 0.00 % x3.
+  Unit 216 (+2: day hides / night shows the rect with the row's uniforms; night darkens paper and
+  hardens the paper / street ratio). light_showcase now also measures `gpu_ms_night_grade_delta`
+  (interleaved day / night blocks): RTX 4090 +0.04 ms; 2-CU iGPU 1280x800 +0.46 / +0.46 ms (2 runs) =
+  the screen copy + one pass, night only, inside the Deck's 25 ms. evidence/light-cost/night-grade/.
+  Frames 37-night/ (cmp-block-*, cmp-junction-*, cmp-lights-32/48/64); ladder 37 / 37b / 37c.
+  Rejected: 0 frames (all engine captures, straight down). The lavender car quad in the night frames
+  is the car placeholder's own colour (traffic atlas lands with n-d4), not the grade.
