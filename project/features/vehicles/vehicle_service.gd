@@ -3,10 +3,8 @@ extends WorldSystem
 ## The player's cars (ARC-04 sim system on the 60 Hz tick): enter a parked car, hijack an occupied
 ## sim car (its driver is thrown out), drive it with the VehicleBody handling, crash it (damage
 ## states, then a wreck that stays wreck_s seconds), run people over, and get out again.
-## API for the other lanes: try_enter(at) / exit() / driving / soul_hijack_traffic(slot).
-## Input: TickInput bit BIT_USE toggles enter/exit (edge), BIT_HANDBRAKE holds the handbrake,
-## move_y < 0 is throttle, move_x steers. Emits vehicle_entered / vehicle_exited /
-## vehicle_hijacked / pedestrian_struck through ctx.events only.
+## API: try_enter(at) / exit() / driving / soul_hijack_traffic(slot); README.md has the input bits,
+## the Events and the render cues (`cues`, VehicleCues).
 
 const BIT_USE: int = 0
 const BIT_HANDBRAKE: int = 1
@@ -22,6 +20,8 @@ var cars: Array[VehicleBody] = []
 var driving: VehicleBody = null
 ## The sim traffic this service rammed or soul-hijacked (render states, damage).
 var traffic: VehicleTraffic = null
+## Render cues (crash, wreck, screech, horn) read off the cars after each step.
+var cues: VehicleCues = VehicleCues.new()
 var last_us: int = 0  ## the last step() in us, and max_us the worst (bench only, not sim state)
 var max_us: int = 0
 var _contacts: VehicleContacts = null
@@ -98,9 +98,10 @@ func soul_hijack(vehicle_id: int) -> void:
 			b.state = rules.state_for(b.hp_lost, true)
 
 
-func step(_tick: int, input: TickInput) -> void:
+func step(tick: int, input: TickInput) -> void:
 	var t0: int = Time.get_ticks_usec()
 	_step(input)
+	cues.observe(cars, driving, _contacts.traffic_hits.size(), tick)
 	last_us = Time.get_ticks_usec() - t0
 	max_us = maxi(max_us, last_us)
 
@@ -126,7 +127,8 @@ func _step(input: TickInput) -> void:
 	_age_wrecks()
 	for slot: int in traffic.settle(_contacts.traffic_hits, _contacts.traffic_art, world):
 		traffic.take(slot, world, self)
-	_emit_struck()
+	for k: int in range(0, _contacts.struck.size(), 2):
+		_events.pedestrian_struck.emit(_contacts.struck[k], _contacts.struck[k + 1] == 1)
 	if driving != null:
 		world.set_focus(driving.pos, true)
 		if driving.state == VehicleBody.State.WRECK:
@@ -193,8 +195,3 @@ func _age_wrecks() -> void:
 			b.wreck_t += SimClock.TICK_DT
 			if b.wreck_t > rules.wreck_s:
 				cars.remove_at(k)
-
-
-func _emit_struck() -> void:
-	for k: int in range(0, _contacts.struck.size(), 2):
-		_events.pedestrian_struck.emit(_contacts.struck[k], _contacts.struck[k + 1] == 1)

@@ -53,6 +53,7 @@ func run(_tree: SceneTree) -> String:
 	var reason: String = _judge(svc, hijacks)
 	var summary: Dictionary = {"hijacked": hijacks, "states": states}
 	summary["player_hp_lost"] = svc.cars[0].hp_lost if not svc.cars.is_empty() else -1.0
+	summary["cues"] = svc.cues.fired
 	_free(w)
 	if reason == "":
 		var again: Array[Object] = _world(MASTER_SEED)
@@ -76,6 +77,8 @@ static func _judge(svc: VehicleService, hijacks: Array[StringName]) -> String:
 		return "the rammer took no damage"
 	if rammed.state < VehicleBody.State.D2 or rammed.state == VehicleBody.State.HIJACKED:
 		return "the rammed sedan is %d, not D2 or a wreck" % rammed.state
+	if svc.cues.fired.get(&"crash", 0) < 1:
+		return "three rams fired no crash cue: %s" % str(svc.cues.fired)
 	return ""
 
 

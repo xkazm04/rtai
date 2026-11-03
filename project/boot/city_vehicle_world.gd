@@ -111,6 +111,7 @@ static func make_view(svc: VehicleService, view: CityView) -> VehicleView:
 	var v: VehicleView = VehicleView.new()
 	var nodes: Array[MultiMeshInstance2D] = view.crowd.nodes
 	v.setup(svc, tex, nodes[SimConst.RL_CARS], nodes[SimConst.RL_CAR_SHADOWS])
+	svc.cues.sink = view.fx_triggers.fire
 	return v
 
 

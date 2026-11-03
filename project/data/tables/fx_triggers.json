@@ -1,5 +1,5 @@
 {
-  "doc": "What fires the FX, the lights and the camera kicks (core/render/README.md). `sim` cues are read render-side from the sim snapshot (features/city/view/city_fx_feed.gd: a projectile slot appears = shot, disappears = projectile_end, a person turns dead = death), so they need no event and change no sim state. `event` cues follow an F-04 Events signal by name. fx: fx.json kinds spawned at the cue (the angle is the shot heading; projectile_end throws back, death uses the body heading). shake: a camera.json shake id (\"\" = none). shake_near_m: only cues within this many metres of the camera focus kick it (0 = always). hitstop: a camera.json hitstop id (\"\" = none): the game holds still that many ticks (SimClock.hold, none under reduced motion, cooled down by hitstop_cooldown_ticks). A row player_hit_<weapon> (dashes as underscores) fires after player_hit when that weapon hit Rivet.",
+  "doc": "What fires the FX, the lights and the camera kicks (core/render/README.md). `sim` cues are read render-side from the sim snapshot (features/city/view/city_fx_feed.gd: a projectile slot appears = shot, disappears = projectile_end, a person turns dead = death), so they need no event and change no sim state. `event` cues follow an F-04 Events signal by name. `vehicles` cues are read off the service cars after each step (features/vehicles/vehicle_cues.gd: hp lost, a wreck, a slide, a ram). fx: fx.json kinds spawned at the cue (the angle is the shot heading; projectile_end throws back, death uses the body heading). shake: a camera.json shake id (\"\" = none). shake_near_m: only cues within this many metres of the camera focus kick it (0 = always). hitstop: a camera.json hitstop id (\"\" = none): the game holds still that many ticks (SimClock.hold, none under reduced motion, cooled down by hitstop_cooldown_ticks). A row player_hit_<weapon> (dashes as underscores) fires after player_hit when that weapon hit Rivet.",
   "schema": "gtai.fx-triggers/1",
   "triggers": [
     {
@@ -64,6 +64,60 @@
       ],
       "hitstop": "",
       "id": "player_hit_robo_tazer",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "vehicles",
+      "doc": "a car takes a hard hit (8+ hp in one tick: a ram, a wall at speed; VehicleCues): sparks and debris off the body, the crash shake near the camera",
+      "fx": [
+        "spark",
+        "debris"
+      ],
+      "hitstop": "",
+      "id": "crash",
+      "shake": "crash",
+      "shake_near_m": 14
+    },
+    {
+      "cue": "vehicles",
+      "doc": "a light knock (under 8 hp; VehicleCues): a spark, no shake (the audio lane's metal hit)",
+      "fx": [
+        "spark"
+      ],
+      "hitstop": "",
+      "id": "hit_metal",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "vehicles",
+      "doc": "a car is wrecked (VehicleCues): the explosion, smoke and debris, the explosion shake",
+      "fx": [
+        "explosion",
+        "smoke",
+        "debris"
+      ],
+      "hitstop": "",
+      "id": "car_wreck",
+      "shake": "explosion",
+      "shake_near_m": 20
+    },
+    {
+      "cue": "vehicles",
+      "doc": "the driven car starts a slide above 7 m/s (VehicleCues): audio only",
+      "fx": [],
+      "hitstop": "",
+      "id": "tyre_screech",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "vehicles",
+      "doc": "traffic the driven car rammed leans on the horn (VehicleCues, at most every 45 ticks): audio only",
+      "fx": [],
+      "hitstop": "",
+      "id": "horn",
       "shake": "",
       "shake_near_m": 0
     }

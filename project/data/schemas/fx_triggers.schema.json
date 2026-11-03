@@ -16,7 +16,8 @@
           "cue": {
             "enum": [
               "sim",
-              "event"
+              "event",
+              "vehicles"
             ]
           },
           "doc": {
