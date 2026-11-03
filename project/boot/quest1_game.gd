@@ -59,6 +59,7 @@ func start(cp: Checkpoint = null) -> void:
 	if DisplayServer.get_name() != "headless":
 		view = CollectCallView.new()
 		view.px_per_m = px_per_m
+		view.objective_view = ObjectiveView.new()
 		view.bind(session.stage, session.port, session.system)
 		add_child(view)
 		session.live.viewport = get_viewport()

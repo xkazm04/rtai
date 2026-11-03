@@ -27,18 +27,14 @@ func run(tree: SceneTree) -> String:
 	var driver: CollectCallInputDriver = CollectCallInputDriver.new(s.stage, s.system)
 	var beats: Array[String] = []
 	var saves: Array[Checkpoint] = []
-	while not driver.done() and s.tick() < TIMEOUT_TICKS:
-		driver.act()
-		s.step()
-		var cp: Checkpoint = s.poll_checkpoint()
-		if cp != null:
-			saves.append(cp)
-		if beats.is_empty() or beats[-1] != s.beat_id():
-			beats.append(s.beat_id())
-	driver.release()
+	var hints: Array[StringName] = []
+	_play(s, driver, beats, saves, hints)
 	var log: ReplayLog = s.world.loop().finish_recording()
 	var out: Dictionary = _evidence(s, driver, beats, log)
 	var reason: String = _verdict(s, log, out)
+	out["hints"] = hints
+	if reason == "" and hints.size() < 10:
+		reason = "the objective hints covered only %d prompts: %s" % [hints.size(), hints]
 	out["checkpoints"] = saves.map(func(c: Checkpoint) -> String: return "%s@%d" % [c.beat, c.tick])
 	if reason == "":
 		reason = _check_checkpoint(saves, out)
@@ -47,6 +43,28 @@ func run(tree: SceneTree) -> String:
 	Log.info("scenario", "quest1 input: %s" % JSON.stringify(out))
 	game.free()
 	return reason if reason != "" else write_error
+
+
+## Drives the run to the end, noting beats, beat checkpoints and objective prompts seen.
+func _play(
+	s: Quest1Session,
+	driver: CollectCallInputDriver,
+	beats: Array[String],
+	saves: Array[Checkpoint],
+	hints: Array[StringName]
+) -> void:
+	while not driver.done() and s.tick() < TIMEOUT_TICKS:
+		driver.act()
+		s.step()
+		var hint: StringName = ObjectiveHint.of(s.stage, s.system).key
+		if hint != &"" and not hints.has(hint):
+			hints.append(hint)
+		var cp: Checkpoint = s.poll_checkpoint()
+		if cp != null:
+			saves.append(cp)
+		if beats.is_empty() or beats[-1] != s.beat_id():
+			beats.append(s.beat_id())
+	driver.release()
 
 
 func _verdict(s: Quest1Session, log: ReplayLog, out: Dictionary) -> String:

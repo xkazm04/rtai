@@ -8,6 +8,8 @@ var stage_view: StageView = StageView.new()
 var cast_view: CastView = CastView.new()
 var fx_view: FxView = FxView.new()
 var hud_view: HudView = HudView.new()
+## The slice's objective prompt and pointer (off unless the caller turns it on).
+var objective_view: ObjectiveView = null
 ## Where the camera looks, in metres; Vector2.INF follows Rivet.
 var focus: Vector2 = Vector2.INF
 ## Draw through the visual engine (core/render/print_stage.gd: camera, print pass, layers, world
@@ -36,6 +38,11 @@ func _ready() -> void:
 	layer.layer = RenderLayers.canvas(&"hud")
 	add_child(layer)
 	layer.add_child(hud_view)
+	if objective_view != null:
+		objective_view.stage = _stage
+		objective_view.system = hud_view.system
+		objective_view.px_per_m = px_per_m
+		layer.add_child(objective_view)
 	if not printed:
 		for v: Node2D in [stage_view, fx_view, cast_view]:
 			add_child(v)

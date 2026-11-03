@@ -57,3 +57,8 @@
   `features/quest/art/collect_call/cast_rivet.png` + `cast_rivet_peek.png` need re-capturing
   (dev/showcase/rivet_sprite.gd, 120 px/m) and `CastView.RIVET_SIZE` updating; tell me the new
   rig scale and I will re-capture, or do it in your lane.
+- MILESTONE 10:50 guidance for a first-time player: ObjectiveHint (boot/collect_call) gives a
+  goal point + prompt per beat state with the bound keys read from the InputMap; ObjectiveView
+  draws the prompt strip under the beat panel and a vermilion ring (on screen) or edge arrow
+  (off screen) at the goal. The input scenario asserts >= 10 distinct prompts (11 seen).
+  Frames: masters/day-d5/slice-play/hints32/ (ticks 60..10400, 32 px/m).
