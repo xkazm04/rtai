@@ -63,3 +63,4 @@ NEXT:
   flecks (D5 rust on shield/pelvis/forearms, D4 edge tint) -> their grey value. Cop vermilion px now 0 in D4 and D5
   (gate r - max(g,b) > 40). Found by looking at the noir A/B junction frame (d4 side). Noir still switches (ink masses,
   no blue leak). Goldens re-blessed (the check passed unblessed at mean <= 0.027). Unit 326/326.
+- EVIDENCE final (clean tree, HEAD 1848411, 11:0x): lint, unit 326/326, scenarios 8/8, parity exact, selftest goldens PASS (--no-bench). Owner frames rebuilt from the final renders (15, masters frames.json + ladder.png).
