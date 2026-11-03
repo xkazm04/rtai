@@ -2,11 +2,11 @@
   "schema": "pof.godot-evidence/1",
   "kind": "selftest",
   "gameId": "gtai",
-  "commit": "dfa61d9286520cfab573b5c441fb8b3fd96d42e5",
-  "builtAt": "2026-11-02T23:59:02.049Z",
+  "commit": "a4f61ad9b39eda861a6acb91a582649d4ed4bb3a",
+  "builtAt": "2026-11-03T01:04:00.323Z",
   "godotVersion": "4.7.2.stable.official.ed1daf0bf",
   "status": "pass",
-  "summary": "selftest: D4 city frames rendered (32 px/m ok, 103 actors, 79 colours; 48 px/m ok, 81 actors, 75 colours); 43 art textures, 22 placeholders, prewarm 31 ms; look goldens 10/10 within mean 4 (worst 0.05); accent pixels 32: 0.95 %, 48: 0.95 %, 64: 0.25 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; known debt: 32 px/m vermilion on world: 216 px (debt traffic_light_lamps, <= 240, d4-production); world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %)",
+  "summary": "selftest: D4 city frames rendered (32 px/m ok, 103 actors, 75 colours; 48 px/m ok, 81 actors, 75 colours); 43 art textures, 22 placeholders, prewarm 30 ms; look goldens 10/10 within mean 4 (worst 0.05); accent pixels 32: 0.95 %, 48: 0.95 %, 64: 0.25 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; known debt: 32 px/m vermilion on world: 216 px (debt traffic_light_lamps, <= 240, d4-production); world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %)",
   "counts": {
     "passed": 12,
     "failed": 0,
@@ -17,8 +17,8 @@
     "lookGoldenOk": 1,
     "artLoaded": 43,
     "placeholders": 22,
-    "prewarmMs": 31.389,
-    "textureLoadMs": 80.735,
+    "prewarmMs": 30.313,
+    "textureLoadMs": 80.854,
     "visibleActors32ppm": 103,
     "visibleActors48ppm": 81,
     "accentShare32ppm": 0.00946484375,
@@ -27,8 +27,8 @@
     "accentOffenders": 1,
     "accentNewOffenders": 0,
     "worldLockShare32ppm": 0,
-    "worldLockShare48ppm": 0.00000888304581875033,
-    "worldLockShare64ppm": 0.00000459018801410106
+    "worldLockShare48ppm": 0,
+    "worldLockShare64ppm": 0
   },
   "artifacts": [
     "selftest-32ppm.png",

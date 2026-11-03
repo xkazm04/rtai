@@ -561,3 +561,6 @@ NEXT (iteration 10 / morning, in order):
   (crops-before-after-after2.png: placeholder | pads | car shadows), ladder rows 23 / 23b (1280 x 9078).
   0 frames rejected for camera. Still open from NEXT 2: damage / hijack states need a sim state in
   custom.y; the cop rig drawn over a car at 32 px/m (rigs vs vehicles band) - check after the merge.
+- Evidence at a4f61ad (HEAD code, 02:04): lint 13/13, unit 202, scenarios 8, parity PASS, selftest PASS
+  (goldens 10/10 worst 0.05, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied
+  to evidence/pof. No bench this session on the branch (the trial-merge bench is in evidence/trial-merge).
