@@ -898,3 +898,15 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   0.517; 128 0.337 / 0.599 -> 0.343 / 0.588. Rivet crop: 64 0.352 -> 0.351, 96 0.335 -> 0.339, 128 0.342 -> 0.346.
   By eye: at 64 the floor and the OSHA roof a touch warmer and more open, at 128 almost identical (lines are wide
   there; halos are off at 96+). The package costs the D5 close-ups nothing. Board evidence/item36_arena_all_proposals.png.
+- 03:39 REJECTED (h111wh15, nothing committed; print shader, roofs and params restored from copies, project/ clean):
+  look_d5_print wash_hi 0.30 -> 0.15 on top of the h109all package, to close the whole-frame tone gap. Whole frame at
+  32 px/m went to L 0.479 / dark 0.508 / median 97,84,85 (mock 0.488 / 0.516 / 94,83,82), a near match, BUT the
+  street goes LIGHTER than the mock: street band median L 0.288 -> 0.332, mock 0.290 (west road 80,70,72; east
+  80,69,71; same band method; my first single-patch mock sample of 0.345 was a light patch, not the street).
+  Readability drops: rim vs street dL 0.610 -> 0.566, vermilion dE 77.5 -> 75.8, teal dE 57.6 -> 55.0. Wrong lever.
+- 03:39 FOUND (the morning's key number): the h109all package already matches the mock per TONE CLASS at 32 px/m:
+  street-tone share / median L 0.46 / 0.288 (mock 0.45 / 0.290), paper 0.32 / 0.856 (mock 0.33 / 0.867), solid ink
+  < 0.18 share 0.14 (mock 0.12). Committed h106: street 0.46 / 0.294, paper 0.28, ink 0.20. So what the package
+  fixes is ink weight (thin print) and paper share (lighter roofs), and the street needs no change. The remaining
+  whole-frame L gap (0.462 vs 0.488) sits in the mid-tones and a paper 0.011 darker (age_floor's warm tint).
+  Crops masters work/i7/washhi_ab.png; ladder row.
