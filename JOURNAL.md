@@ -723,3 +723,23 @@ by the item list (all 7 items are evidenced): the world print's inks. Measured, 
   not ink (grain-m12-x2 / m12/); (2) the same grain from the sin hash() - diagonal streaks at 35 % cover
   (cmp1x-d4-48ppm.png), fixed by reading the lattice at texel centres. Ladder 30 / 30b / 30c (rejected).
   Owner's eye: at 32 px/m the lots' diagonal hatching is a little less crisp on the grain.
+- MILESTONE (c31574a) colour doctrine BY CONSTRUCTION in the world print: moved the accent audit off the
+  junction (scratch copies of city_selftest / accent_audit with the camera 32 m into the block, never
+  committed, deleted) - a plaza with props. barrel_cluster.png prints 2 vermilion barrels per cluster:
+  world vermilion 4324 / 5632 / 3916 px at 32 / 48 / 64 px/m = 20x the traffic-light debt, invisible to
+  the junction-only audit. palette.json already allows neither accent on `world`, so every profile's
+  world `verm` / `teal` -> 0: a red prop prints as its ink density (barrels = cream discs in an ink rim,
+  the lamps = paper discs - what the debt row asked d4-production for). After: 0 / 0 / 0 at the block;
+  junction: only the 32 px/m frames move (mean 0.02, the lamps), every other look frame bit-identical
+  (actors / cars / FX print accents in their own passes; actor vermilion unchanged 0.93-0.95 %).
+  accent_debt.json rows: none (n-d4 0fa27c3 redrew the lamps too - consistent). New test ties every
+  profile's world plates to palette.json's layer rule; PLANTED d4 verm 0.5 -> 1 failure, restored.
+  Frames 31-block/ (before, + audit/), 32-world-no-accent/ (barrels-48ppm.png, traffic-light-32ppm-x2.png).
+- For d4-production (asset note, no longer a doctrine break): barrel_cluster.png's red barrels now print
+  as cream; if the barrels are meant as an explosive hazard, that is a gameplay object -> a world_markers
+  danger cue or an actor, not a red prop texture. The plaza's 1 m ink grid is n-d4's (a1874f7 already).
+- MILESTONE (753b94c) LookOverlay hands the overlay ink_tone / paper_tone (palette); look_d5-tones.patch
+  for n-d5 (applies AFTER look_d5-early-outs-lattice.patch; built and checked on n-d5's file): plugged
+  capture <= 2 levels on ~5 % of px at 64 px/m, 48 bit-identical. 33-d5-tones/. D5 at 64 px/m over the
+  warm aquatint print looks right (the Rivet concept's warm grime). Ladder 32, 33.
+- Merge check (03:30, merge-tree): n-d4 / n-d5 / n-noir still conflict on JOURNAL.md only.
