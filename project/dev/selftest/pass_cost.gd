@@ -1,15 +1,19 @@
 extends "res://dev/selftest/city_selftest.gd"
 ## Per-pass GPU cost (core/render/README.md "Per-pass costs"): the selftest junction riot at one
 ## zoom, cycling BLOCKS rounds of FRAMES-frame blocks through configs that each switch ONE pass
-## off (`full` = everything on). Reports the median block GPU / CPU render ms per config and the
-## delta to `full` = that pass's cost. Run it on the low-end GPU too (`--gpu-index 1`) and at the
+## off (`full` = everything on; `no_actors` = the whole actors canvas, `no_rigs` / `no_peds` /
+## `no_cars` = its parts: the full rigs, the atlas crowd + shadows, the moving cars + shadows).
+## Reports the median block GPU / CPU render ms per config and the delta to `full` = that
+## pass's cost. Run it on the low-end GPU too (`--gpu-index 1`) and at the
 ## Deck's 1280x800 (`--resolution 1280x800`). Windowed only. Usage:
 ##   godot --fixed-fps 60 [--gpu-index N] [--resolution WxH] --path project
 ##     res://dev/selftest/pass_cost.tscn -- --out=<dir> [--ppm=48] [--tag=<name>]
 
 const FRAMES: int = 30
 const BLOCKS: int = 8
-const CONFIGS: PackedStringArray = ["full", "no_print", "no_actors", "no_lights", "no_fx"]
+const CONFIGS: PackedStringArray = [
+	"full", "no_print", "no_actors", "no_rigs", "no_peds", "no_cars", "no_lights", "no_fx"
+]
 
 var _ppm: float = 48.0
 var _tag: String = "pass-cost"
@@ -65,6 +69,12 @@ func _measure() -> Dictionary:
 func _set_config(c: String) -> void:
 	_view.set_look_enabled(c != "no_print")
 	_view.actor_layer().visible = c != "no_actors"
+	_characters.rigs.visible = c != "no_rigs"
+	var nodes: Array[MultiMeshInstance2D] = _view.crowd.nodes
+	nodes[SimConst.RL_PEDS].visible = c != "no_peds"
+	nodes[SimConst.RL_PED_SHADOWS].visible = c != "no_peds"
+	nodes[SimConst.RL_CARS].visible = c != "no_cars"
+	nodes[SimConst.RL_CAR_SHADOWS].visible = c != "no_cars"
 	_view.lights.visible = c != "no_lights"
 	var fx_on: bool = c != "no_fx"
 	_view.fx.visible = fx_on

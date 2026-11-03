@@ -1,0 +1,12 @@
+{
+  "blocks": 16,
+  "cpu_render_ms_delta": -0.0224667191505432,
+  "frames_per_block": 30,
+  "gpu": "AMD Radeon(TM) Graphics",
+  "gpu_ms_delta": 2.55873489379883,
+  "gpu_ms_overlay_off": 5.8110990524292,
+  "gpu_ms_overlay_on": 8.36983394622803,
+  "live_overlays": 1,
+  "ppm": 64.0,
+  "schema": "gtai.overlay-cost/1"
+}
