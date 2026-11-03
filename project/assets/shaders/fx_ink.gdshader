@@ -54,6 +54,12 @@ void fragment() {
 		int shape = int(custom.x + 0.5);
 		float m = shape_mask(p, shape, custom.y);
 		float inner = shape_mask(p * 1.18, shape, custom.y);
+		if (shape == 4) {   // bolt: a thin zigzag has no room for the scaled rim; ink band around a paper core
+			float d = abs(p.y - (abs(fract(p.x * 2.5 + custom.y) - 0.5) * 0.8 - 0.2));
+			float span = step(abs(p.x), 0.95);
+			m = step(d, 0.17) * span;
+			inner = step(d, 0.07) * span;
+		}
 		vec3 ink = vec3(0.090, 0.075, 0.106);
 		COLOR = vec4(mix(ink, COLOR.rgb, inner), m * keep);
 	}

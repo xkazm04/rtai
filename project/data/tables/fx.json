@@ -217,7 +217,7 @@
       "life_ticks": 8,
       "light": "",
       "shape": "bolt",
-      "size_m": 0.8,
+      "size_m": 1.4,
       "speed_mps": 0,
       "spread_deg": 360,
       "token": "paper"
