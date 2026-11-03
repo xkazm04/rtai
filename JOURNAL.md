@@ -236,3 +236,14 @@ NEXT (iteration 49 end):
   Unit test with a user-signal stand-in; 358 unit tests pass, lint 13/13. Provenance +3. Not tried on the real bodies lane (needs the merge), not heard by a human.
 - RETIRED tools/audio/build_tables.py (exits with a message; it would clobber the hand-edited tables).
 - 16:48 MERGE CHECK d-audio 32f33af + d-bodies (scratch worktree, deleted; the one conflict was JOURNAL.md / docs, took ours): **367 unit tests pass** with the real `actor_knocked_down` signal (the test used the real declaration, not the stand-in).
+- GATES at a14dd64 (`node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched during the run): lint 13/13, unit 358 passed, scenarios 8/8, parity exact + planted mutation caught at step 629, selftest + look goldens 11/11 unchanged. Bench NOT run (lane rule).
+  ElevenLabs after 11:45: SFX only; this iteration 2 x 20 s fire takes + 3 body_fall takes, ~300-500 credits (not read back). Lane total ~4.6k of 25k; voice characters spent after 11:45: 0.
+  Masters: frames.json now 12 entries (+ fire wrecks frame, fire spectrogram).
+
+NEXT (iteration 50 end):
+1. Director at merge: apply `evidence/requests/quest1_game_audio.patch` (still applies clean on d-slice 36eab8f), the `radio_next` input row (REQUEST 6), decide REQUEST 1 (line timing: 6-7 of 23 lines lost),
+   and split combat's blood block out of `_ready` in collect_call_view.gd (gd-size).
+2. A human must LISTEN: every SFX (new: fire_crackle x2, body_fall x3, blood_*, car_wreck, boss_loop), the 23 TEMP voices (PoF Voice room replaces them), the 3 radio loops. Numbers + spectrograms only so far.
+3. Hot clip: vehicles_fire.mp4 true peak -1.1 dBFS when two booms + crashes stack (car_wreck cooldown is now 8 ticks); if it clips on a device, lower `car_wreck` gain_db -1 -> -3.
+4. Not done: positional cruiser sirens, tyre screech as a loop, per-surface footsteps, settings slider UI.
+5. POF-GAP 1-3 stand (audio-gen wrapper > 450 chars; no tts; no music kind).
