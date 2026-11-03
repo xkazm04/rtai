@@ -174,3 +174,37 @@ NEXT (iteration 4; depth before breadth, the Hauler is the one finished power):
 4. Victims: stomp/ram on the cast rigs (cop, robot thug from e-enemy) with their hit reactions; robots get
    sparks/oil (fx.json `spark`), humans blood. Hit-stop in the playable view (hold the session's sim N frames).
 5. A real stomp sound (cue row with the audio lane) instead of the temp `crash` id.
+
+## 2026-11-03 iteration 4 (22:37-23:22), BUILD
+
+- 22:37 read JOURNAL, git log, answers.json: nothing new for this lane (ghost-powers-1/2 = default placeholder).
+  Owner 21:25 still binds: depth before breadth, the full hit chain. Picked NEXT 4 (impact in the playable view).
+- MILESTONE dbf8c71 + 1218455: the stomp landing has its IMPACT in the playable game: `HaulerKick`
+  (features/souls) holds the sim clock for stomp_hitstop (camera.json boss_hit, 8 ticks; SimClock.hold = wall
+  time only, every tick unchanged, replay identical) and shakes the camera by stomp_shake (crash, 7 px, 14 ticks)
+  once per stomp. With no CameraRig (quest 1 today) a private rig does the shake maths only (no zoom, no
+  look-ahead), returned as a world-px offset through `CityView.kick_px` / `PrintStage.kick_px` (both added to
+  the camera offset INSIDE the print lock, zero by default = bit-identical goldens). With a host rig it kicks
+  that rig instead (stomp tick moved onto the clock's timebase). Works on the city (quest 1, the city block)
+  and the printed floor (the arena's pit and pad: e-arena's ArenaGame uses CollectCallView + StagePilot, so
+  after the merge the Hauler, its marks and this kick are live on the pad with no arena change).
+  Shared-file changes (minimal, recorded): city_view.gd +kick_px (3 lines), print_stage.gd +kick_px (3 lines),
+  collect_call_stage.gd +clock = ctx.clock (read only, 3 lines), collect_call_view.gd _hauler_kick on both paths.
+  Reduced motion: the private rig takes fx_view.reduced_motion (camera.json reduced scales).
+- Unit test_hauler_kick 3/3; planted stomp_hitstop "no_such_stop" caught (2 of 3 fail,
+  evidence/ghost-powers/planted-stomp-hitstop-unknown.txt). Unit 566/566, scenarios 20/20 (unit-iter4.txt,
+  scenarios-iter4.txt; private APPDATA). Lint 13/13 every commit.
+- Clips (bound input, real quest view, 60 fps): clips/quest-hauler-kick/quest-hauler-kick-32ppm.mp4 and
+  clips/quest-hauler-kick-48/quest-hauler-kick-48ppm.mp4: 1 activation, 2 stomps, 3 kills, 18 held frames,
+  2 kicks. Looked at the frames: landing frame jumps (shake), 9 frames frozen on the crack + thrown guards,
+  13 frames of world-locked shake (crosswalk moves, HUD stays), settled. quest_hauler_rec now renders one
+  frame per held tick (it steps ticks by hand, so it honours clock.held()).
+- Arena lane note (e-arena 92e467e: pad parks real cars; ArenaHook for lane code): hauler_pad lane_mark was an
+  8x8 dark square over the crowd ring -> now a thin 0.3x8 m start line at (-15.5,24) (1551105). Replied.
+  FRICTION: a Gearbox ArenaHook cannot land on e-powers tonight: ArenaHook exists only on e-arena, and a script
+  extending a missing class fails every parse. It lands in the night run after the 00:00 merge.
+- REQUEST 3 -> (d5-combat owner / night run): quest 1 on the CITY path has no CombatBlood (only the printed path
+  calls _ready_blood), so stomp and ram kills on the city block do not bleed. Mount CombatBlood on
+  city_view.actor_layer() with city_view.world_px. Not done here (known open on main, not this lane's file).
+- Registry applied (realtime-combat-semantics / combat-pacing): the impact is render feel only (hit-stop holds
+  wall time, never the sim's tick math), one stop per stomp with the camera.json cooldown, scaled by reduced motion.
