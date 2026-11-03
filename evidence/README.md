@@ -36,8 +36,9 @@ Written for the Director and the owner. Every row points at a board in this fold
 (`item43`, a colour-doctrine call) and halftone `dots_k` (`item47`), both up close only.
 **Open**: the gap list after iteration 9 stands (paper-area mid-tones, parapet line weight, the light-wash spread);
 each needs new plates, so Codex budget (50/50 used tonight). Parity MEASURED at 8aa9774 (iteration 18, native built in the worktree): native == GDScript bit for bit over 1200
-steps, planted mutation caught at step 629; lint 13/13, unit 152/0, scenarios 8/0, selftest ok (backend native). Bench not run
-(needs the windows-bench export).
+steps, planted mutation caught at step 629; lint 13/13, unit 152/0, scenarios 8/0, selftest ok (backend native). Bench MEASURED
+at 4b61ff4 (exported release, 3 runs x 4 scenarios x 60 s): PASS, p99 2.796 ms, 1% low 295 fps, worst swap 16.5 ms,
+0 hitches > 50 ms; rigs p99 0.528 ms (riot). The bench tool needs `build/export/windows-bench/` to exist first (journal NEXT 51).
 
 | File | What |
 |---|---|

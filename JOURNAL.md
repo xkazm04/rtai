@@ -1760,3 +1760,31 @@ NEXT (iteration 16; 43-49 stand, earlier lists stand):
   project/native/bin/gtai_sim.windows.template_debug.x86_64.dll, git-ignored). `--import` exit 0, 0 error lines.
   `scons tests` builds; native/build/tests/sim_core_tests.exe: "sim_core tests: 0 failed". Log in masters
   night/d5-close/i18_native_build.log. Next: the full evidence run including parity.
+- 07:34 GATES at 8aa9774 (`run.mjs --no-bench`): ALL PASS - lint 13/13 over 196 files, unit 152/0, scenarios 8/0,
+  PARITY PASS (native == GDScript bit for bit over 1200 steps, 40 snapshot checks, 3547 floats; planted mutation
+  caught at step 629), selftest ok on backend native (32 px/m 103 actors, 48 px/m 81 actors, same counts as on the
+  GDScript fallback in iterations 13-15). Looked at selftest-32ppm.png: straight-down D4 junction, nothing broken.
+  Merge-sheet line "parity not run" replaced (4b61ff4).
+- 07:35 built template_release (1m27s) for the bench export.
+- 07:36 FRICTION: bench FAILED before measuring: "Prepare Template: The given export path doesn't exist". 
+  tools/bench/run.mjs prepare() exports to ../build/export/windows-bench/ but never creates the folder. Shared
+  tooling, not this lane's scope, so not patched: created the git-ignored folder by hand and re-ran.
+- 07:49 GATES at 4b61ff4 (`run.mjs --no-parity`): ALL PASS incl. BENCH (exported release build, windowed, 3 runs x 4
+  scenarios x 60 s, box at ~15% load): p99 CPU 2.796 ms (limit 7), 1% low 295 fps (limit 45), worst swap 16.5 ms
+  (limit 50), worst frame 33.1 ms, hitches > 25 ms 20, > 50 ms 0; rigs p50 0.108 / p99 0.528 ms per frame (riot, up
+  to 16 full rigs). So all six evidence kinds in build/evidence are now from this branch's build (lint, unit,
+  scenarios, parity, selftest at 4b61ff4/8aa9774; parity at 8aa9774 - only docs changed since). 104 evidence PNGs
+  moved aside twice (masters work/i18_aside, i18_aside2) and restored 104.
+- No visual change, so no frames and no ladder row. Shared files touched: none. AI assets: none new.
+
+## Summary (iteration 18, STABILIZE)
+- Evidence refreshed to the current build, and the two kinds that were never measured on n-d5 now are: parity
+  PASS (bit-exact, mutation caught), bench PASS (exported release, all section 20 limits met). Lint/unit/scenarios/
+  selftest PASS. No code changed. Images: 0 (50 of ~50).
+
+NEXT (iteration 18; 43-50 stand, earlier lists stand):
+51. Director (shared tooling): tools/bench/run.mjs prepare() should `mkdirSync(dirname(EXE), { recursive: true })`
+    before `--export-release`; on a fresh clone the bench fails with "export path doesn't exist" and writes a
+    bench.json "fail" that measured nothing.
+52. Morning merge: parity and bench were measured on n-d5 itself (native built locally, git-ignored), so this branch's
+    D5 work is shown not to touch the sim (parity exact) or the section 20 budget (bench pass).
