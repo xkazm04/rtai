@@ -1607,5 +1607,26 @@ night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png -> item46
   look_d5_ui series 0.066 / 0.055 / 0.044). Smaller gain than the rigs: slow drift, no look_d4 print in that scene,
   and the strokes keep the world angle (translation-only anchor, by design: the light's diagonal must not turn with
   King). Frame looked at (work/i11_king_shadow.png). The arena's King shadow left world-locked (static there).
-- 07:05 MEASURED the walk at 128 px/m (d5_walk --zoom=4.0): in-shadow flip 0.615 world -> 0.177 rig (none 0.130 /
+- 07:03 MEASURED the walk at 128 px/m (d5_walk --zoom=4.0): in-shadow flip 0.615 world -> 0.177 rig (none 0.130 /
   0.154 by mask), change 0.151 -> 0.061. Frames looked at (work/i11_walk128.png). Ladder row; evidence README lines.
+- 07:04 CORRECTION: the 128 px/m entry was first stamped 07:05, ahead of the clock (07:03); fixed here. The
+  ladder row label still says 07:05 (left as is, noted).
+
+## Summary (iteration 11)
+- MILESTONE: rig shadow strokes rig-locked (67c27a6, default; D5_RIG_SHADOW_LOCK=world = old). The world-locked
+  hatch of item46b crawled under every walking shadow; in-shadow flip 0.436 -> 0.184 at 64 px/m, 0.615 -> 0.177 at
+  128 (no shadow ~0.13-0.15). Stills unchanged in density (stroke phase only). look_d5_shadow `anchor` uniform,
+  default 0: building / prop / kerb shadows 0 px.
+- NEXT 42 closed for the shadows and the walk: the sub-pixel camera adds nothing to the rig shadow; prop shadows
+  +0.013 flip in their pixels at 48 px/m (mean change equal); the D5 part tier's walk claim holds (+4%).
+- Tools: d5_walk D5_WALK_FOLLOW=1 / D5_WALK_SHADOW=1; d5_king_move --shadow=world|rig. Showcase frames
+  evidence/hero-d4d5-* and arena-d4d5-64/128 refreshed from the default (i11he / i11ae).
+- Images: 0 (50 of ~50 used). Shared files touched: none. AI assets: none new.
+
+NEXT (iteration 11; 38-42 of iteration 10 stand, 42 closed for shadows / walk; earlier lists stand):
+43. Characters lane: any game-side character cast shadow drawn with hatch strokes must anchor them to the character
+    (look_d5_shadow `anchor` = the rig's position, one material per rig; D5RigShadow is the reference). A moving
+    boss sprite (King) takes its position each frame; translation only, the hatch keeps the light's angle.
+44. d5-close: the prop shadows' +0.013 in-shadow flip under a sub-pixel camera goes away with NEXT 41's snapped
+    camera; re-measure there before tuning the stroke edge.
+Morning reading order: item54_rig_shadow_lock.png -> night_iter10_summary.png -> item53 -> item50 / item50b -> item52.
