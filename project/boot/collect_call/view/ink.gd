@@ -9,7 +9,9 @@ const CREAM: Color = Color("#F2E8D5")
 const INK: Color = Color("#17131B")
 const VERMILION: Color = Color("#E8502A")
 const TEAL: Color = Color("#1FB5A8")
-const WASH: Color = Color(0.090, 0.075, 0.106, 0.12)
+## A zone floor: 30 % ink over cream = density ~0.33, the D4 print's first wash step (lighter
+## tints print as paper: core/render/README.md "What a flat tint prints as").
+const WASH: Color = Color(0.090, 0.075, 0.106, 0.30)
 const LINE_PX: float = 3.0
 
 

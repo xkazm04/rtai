@@ -52,6 +52,7 @@ func _ready() -> void:
 		printerr("quest_fight: cannot create %s" % _out)
 	_play = CollectCallPlay.begin()
 	_view.bind(_play.stage, _play.port, _play.system)
+	_view.printed = false  # the noir pass replaces the D4 print
 	add_child(_view)
 	# The HUD prints above the noir pass and the comic beat (no rain or threshold over the text).
 	(_view.hud_view.get_parent() as CanvasLayer).layer = ImpactFrame.LAYER + 1

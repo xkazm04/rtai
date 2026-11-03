@@ -33,10 +33,10 @@ func _zones() -> void:
 	_tiled(Rect2(-9, -9, 18, 18), "dock_floor", 8.0)
 	_floor(Rect2(-9, -9, 18, 18), Color(0, 0, 0, 0), "FACTORY ROW")
 	var toner: Vector2 = l.marker("The Toner Room").at
-	_floor(Rect2(toner - Vector2(9, 7), Vector2(18, 14)), Color(Ink.INK, 0.22), "THE TONER ROOM")
+	_floor(Rect2(toner - Vector2(9, 7), Vector2(18, 14)), Ink.WASH, "THE TONER ROOM")
 	_tiled(Rect2(toner - Vector2(9, 7), Vector2(18, 14)), "basement_floor", 4.0)
 	var dock: Vector2 = l.marker("Dock 9 bonded storage").at
-	_floor(Rect2(dock - Vector2(18, 18), Vector2(38, 36)), Color(Ink.INK, 0.08), "DOCK 9")
+	_floor(Rect2(dock - Vector2(18, 18), Vector2(38, 36)), Ink.WASH, "DOCK 9")
 	_tiled(Rect2(dock - Vector2(18, 18), Vector2(38, 36)), "dock_floor", 8.0)
 	for y: float in [-15.0, 15.0]:
 		_tiled(Rect2(dock.x - 12, y - 0.6, 26.0, 1.2), "catwalk", 4.0, 1.2)
