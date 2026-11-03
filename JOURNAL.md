@@ -65,3 +65,7 @@ NEXT (iteration 2):
 8. Other lanes: write arena_stations/<lane>.json (format: features/arena/README.md). Knob keys
    are "<table>.<json path>"; live apply covers input_actions.move.* and combat weapons /
    rivet / human so far.
+- MILESTONE 21:23: course station recording: `ArenaCourseBot` + `scenario_arena_course` (course
+  time 15.5 s, turn peak 720 deg/s, replay identical, planted no-stick fault caught);
+  `--bot=course` in the scene; frame `arena-course-32.png`. FRICTION: arena walls are drawn but
+  do not collide yet (NEXT 3).

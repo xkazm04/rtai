@@ -1,0 +1,17 @@
+{
+  "course_time_s": 15.4833333333333,
+  "damage_taken": 0.0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 0,
+  "ticks": 929,
+  "top_speed_mps": 4.50004577636719,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.000173715082
+}

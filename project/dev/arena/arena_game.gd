@@ -34,6 +34,8 @@ func _ready() -> void:
 	session = ArenaSession.open(Events, Data)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "course":
+		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	add_child(session.world)
 	view = CollectCallView.new()
 	view.px_per_m = px_per_m
