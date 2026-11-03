@@ -921,3 +921,8 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   street and readability unchanged (rim dL 0.610, verm 77.5, teal 57.6). Not worth it. The mid-tone gap is in the
   art (the mock's roofs carry soft grey shading at its resolution), not in the step width. Metric script masters
   work/i7/cls.py (per-class shares + the readability band).
+- 03:43 MILESTONE: look_d5.params.json gains the iteration-7 proposal groups the visual-engine lane can read: "print"
+  (look_d5_print: dark_soft 0.10) and "halo" (look_d5_halo: cut 0.3, line_px 1.0, shadow_a 0.4, shadow_m 0.09 m =
+  placement, not a uniform), + the adoption note in _doc (with age_floor/grain_floor 1.0 and the roof plates at line
+  gamma 0.45). test_look_d5_params.gd checks both groups against the real shader uniforms: unit 149/0. Only the
+  "world" group is read by the dev scenes, so no frame changes.
