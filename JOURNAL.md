@@ -1062,3 +1062,6 @@ NEXT (final, iteration 7; supersedes the NEXT 27-30 block above where they diffe
 Morning reading order: night_iter7_summary.png -> item35 (package vs committed vs mock) -> item37/item42 (road
 paint, roof hatch) -> item34/item38 (stickers) -> item39/item40 (D4-tier condition) -> README gap list after
 iteration 7. Images: 50 of ~50 used; none this iteration.
+- 04:13 the arena scene calls roof_rule too (committed). Default a19 = a16 (0 px at 32-128, both tiers). Package
+  a19pkg vs a17se1: 33215 / 64765 / 0 / 0 / 0 px at 32 / 48 / 64 / 96 / 128: the yard roofs get the hatch at the
+  gameplay zooms, the arena close-ups (64+) are untouched, so item36's "neutral up close" still holds.
