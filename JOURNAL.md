@@ -186,3 +186,28 @@ NEXT (iteration 2, in order):
   wanted: actor_killed(RIVET_ID, slot, &"run_over") from your chokepoint on
   Events.pedestrian_struck(slot, killed=true) (quest facts, kill hit-stop, heat), plus `run_over`
   in the kind values.
+- 12:10 `node tools/evidence/run.mjs` at 75ee599 under the bench lock (vehicles, 11:54 - 12:10,
+  released): lint PASS 13/13, unit PASS 356, scenarios PASS 11 (incl. vehicle_drive replay
+  identical, vehicle_carnage, vehicle_yield), parity PASS (exact, 1200 steps, obstacles in,
+  mutation caught at 629), selftest PASS (look goldens 11/11 worst 0.00, block goldens 5/5, world
+  lock 0.00 %). bench FAIL on one rule only: over50.unexplained = 1 (one >50 ms hitch nobody
+  explains), CONTENDED (six other lanes on the GPU); p99 6.37 ms, 1 % low 88 fps, rigs p99 0.76 ms.
+  The bench World has no VehicleService; my only change on its path is a loop over 0 obstacles in
+  car_desired_speed. Copied to evidence/vehicles/it2/ (+ vehicle-drive/-carnage/-yield.json).
+- 12:14 yield pair at 48 px/m (--car-zoom): yield48-v1 vs yield48-blind-v1 (the shoved car lays
+  tyre marks: parked cars hold the handbrake). frames.json 15 entries, ladder.png 1280 x 8442.
+  Captured 16 more (8 + 8), rejected 0, camera breaks 0.
+
+NEXT (iteration 3, in order):
+1. Traffic stuck behind a stopped service car waits forever (no going around): give a waiting
+   tier-A car a lane change or a creep-past after ~3 s (native + twin + parity), or let wrecks
+   leave the lane sooner. Measure with scenario_vehicle_yield (add a "time queued" metric).
+2. REQUEST 4 (d5-city, custom.y atlas pick) is still open after two iterations: D1 / hijacked
+   traffic still looks intact. If d5-city cannot take it, ask the Director whether vehicles may
+   ship it in the car cell shader (three samplers + floor(INSTANCE_CUSTOM.y + 0.5)).
+3. Audio: the cue ids are in; after the merge, check the audio sink hears crash / tyre_screech /
+   horn / hit_metal (d-audio FxTriggers.sink) and record a clip with sound.
+4. Horn from queued traffic (VehicleCues + cars_near: a stopped car behind a service car honks).
+5. Explosion art: car_wreck uses the D4 explosion kind (small starburst + light halo); ask
+   d5-combat whether a D5 inked fireball / burning wreck sprite fits their FX sheet.
+6. Full-length bench (3 x 60 s) once the machine is quiet; a drive48 variant with VehicleService.

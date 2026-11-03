@@ -1,0 +1,24 @@
+{
+  "blind": {
+    "at": [
+      339.812408447266,
+      268.666656494141
+    ],
+    "cars_alive": 40,
+    "hp_lost": 46.1968061923981,
+    "rear_ends": 4,
+    "ticks_near": 2400
+  },
+  "result": "pass",
+  "ticks": 2400,
+  "yield": {
+    "at": [
+      292.0,
+      270.0
+    ],
+    "cars_alive": 40,
+    "hp_lost": 0.0,
+    "rear_ends": 0,
+    "ticks_near": 2400
+  }
+}
