@@ -345,9 +345,9 @@ NEXT:
 - 12:39 Continue frames (masters cont_before/ vs cont_after/, 32 px/m, from a real tick-7000
   Dock 9 checkpoint written by the game through `--save`): before = frame 1 a cream void with
   the props floating (street in by frame 6); after = the whole street at frame 1 (16 chunk
-  passes). The fill is VERIFIED in a frame now. (The capture lock-check: vehicles took
-  bench.lock during the cont_before run? no: d5-combat held it 12:32-12:37 while my first
-  --save stills run rendered (~40 s); I rendered nothing more until it was released.)
+  passes). The fill is VERIFIED in a frame now. FRICTION: d5-combat took bench.lock while my
+  ~40 s `--save` stills run was already rendering (12:32); I rendered nothing more until it
+  was released (12:37). The Continue captures ran with no lock held by anyone.
 - Seen but not chased: a bright radial glow on Rivet in the tick-7000 stills after 42a304d
   (absent at 8400). The light layer's add/remove looks right; most likely a gameplay light (the
   scripted pad shocks there). UNVERIFIED.
