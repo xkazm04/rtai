@@ -117,3 +117,12 @@ NEXT:
 - REQUEST 3 (revised, exact) -> slice-play: in boot/quest1_game.gd after `add_child(view)` (non-headless branch): `StageAudio.attach(self, session.stage, session.system, Events, Quest1Session.MASTER_SEED)`.
 - REQUEST 4 -> vehicles: emit something for a car-vs-car / car-vs-wall crash with a closing speed (or call `FxTriggers.fire(&"crash", pos_px, 0.0, tick)`), and for a
   hard drift (tyre_screech) and a horn key; audio has the sounds (crash, tyre_screech, horn, hit_metal), nothing triggers them in your branch.
+- MILESTONE (11:50) quest stage: StageAudio now turns on the night bed (-3 dB) and passes Rivet's actor id to the hooks, so each of his kills punches (`rivet_kill`)
+  in the quest too (the riot's FX sink already did). Quest fight clip: 37 kill punches / 39 body hits in 30 s: dense; the punch cue has cooldown 6 ticks + 2 voices.
+- MILESTONE riot roar: `crowd_roar` (generated, loop, 2 takes, both kept, take 1 shipped) = RiotBed: counts the gun / death / body-hit cues the service started per
+  frame, smooths (rise 1.5 s, fall 4 s), sets the bed between -18 and 0 dB trim (audio_mix.json riot_bed_*). First gain (-16 dB) was inaudible: the riot clip stayed at
+  -20.4 LUFS; at -7 dB the bed sits ~4 dB under the mix (bed ~ -24 dBFS vs the -20 LUFS clip) and moves the clip to -20.2 LUFS. Measured the bed level
+  in the headless smoke (report beds_db). A bed that moves with the fight is not heard yet by a human.
+- Clips this iteration (all contended GPU, D3D12, movie maker, 960 px): riot_mix4 -20.2 LUFS / -1.5 dBFS; q1_opening_mix3 -17.5 / -3.5; q1_fight_mix3 -19.2 / -1.0.
+  Frames looked at: 5 (riot, fight, opening, + earlier), camera breaks 0. frames.json + ladder.png in masters updated.
+- Credits: ElevenLabs used by this iteration: ~74,117 after the first 17 takes; plus boss/tazer (6 takes) and crowd_roar (2 takes of 8 s): lane total ~3.5k of 25k.
