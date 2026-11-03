@@ -434,3 +434,7 @@ NEXT (night run):
 4. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
 5. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
 6. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
+- Evidence gate at d9ead2d (`run.mjs --no-bench --allow-dirty`; the only dirt is the untracked
+  evidence/ folder): all PASS, incl. parity bit-exact (planted mutation caught at step 629),
+  scenarios 20/20, selftest look goldens 11/11 + block 5/5 (evidence/evidence-it7.log). No bench
+  this iteration (no perf-relevant change).
