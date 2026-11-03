@@ -1666,3 +1666,24 @@ NEXT (iteration 12; 43-44 of iteration 11 stand, earlier lists stand):
 46. d5-close, next session with Codex budget: the gap list after iteration 9 (paper-area mid-tones, parapet line
     weight, light-wash spread) needs new roof plates; judge on masters work/i9/roofcls.py, same mask.
 - 07:10 CORRECTION: the merge sheet and its journal entry were first stamped 07:10, ahead of the clock (07:07); fixed.
+
+## Iteration 13 (2026-11-03, BUILD, 07:10 -> freeze 07:30), no image budget (50/50), short session
+- 07:10 read JOURNAL (iteration 12 summary, NEXT 45-46), git log. No render round fits and no Codex budget.
+  Found a drift risk in the merge sheet's main claim: the D5 tier zoom stops live twice, as RigDetail constants
+  (ON 1.75 / OFF 1.6875 / FULL 2.0, the ones the game uses) and in look_d5.params.json (the ones the visual-engine
+  lane reads). No test tied them together, so an edit to either one could quietly break the "48 px/m stays D4,
+  no shimmer at the switch" gate.
+- 07:11 MILESTONE (a322823): test_look_d5_params.gd +1 test: params tier_* = RigDetail constants; off < on <= full
+  (hysteresis); off > 1.5 (the car camera never shows the tier); the overlay amount is 0 at the switch. MEASURED the
+  test with a planted mutation (tier_on_zoom 1.75 -> 1.8 in the JSON): unit 149 / 1 failing; then restored, tree clean.
+- 07:12 GATES (iteration 13): evidence tool (--no-parity --no-bench) ALL PASS at a322823 (lint 13/13 over 195 files,
+  unit 150/0, scenarios 8/0, selftest ok: 32 px/m 103 actors, 48 px/m 81 actors); 104 untracked evidence PNGs moved
+  aside (masters work/i13_aside, removed) and restored 104. No visual change, so no frames and no ladder row.
+
+## Summary (iteration 13)
+- One test that pins the D5 tier zoom stops to the code (it fails when they drift; checked by mutation). Images: 0
+  (50 of ~50). Shared files touched: none. AI assets: none new.
+
+NEXT (iteration 13; 43-46 stand, earlier lists stand):
+47. visual-engine lane, when it adopts the look-profile zoom blend: read the tier stops from look_d5.params.json and
+    drop RigDetail's constants (or keep the new test as the guard). Edit both together until then.
