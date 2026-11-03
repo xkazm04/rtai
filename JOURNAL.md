@@ -203,3 +203,17 @@ NEXT:
   patrol cop's hit reaction IS its death (DEATH shoved along the blow + blood); hp NOT changed.
   For the sample the run takes --spots (PitLayout.place: a staged, hot spawn) so the thug reaches
   Rivet and the cop gets its tell and shot off.
+- Clip d (staged: cop at 9,-6, thug at 1,3, Rivet at -5,0, fire_m 10; pre-lunge code): the chain
+  reads on the rigs: the cop's vermilion aim line from the muzzle, warm tracers, the thug's windup
+  arc beside Rivet with white sparks and oil on every nail, the cop's death with blood and pool.
+  But the thug died mid-windup again (swings 0, Rivet damage 0, 7 nails 7 hits, cop 4 shots 0
+  hits). Clip runs b/c were wasted on a spots-order slip (spots follow the squad order: cop first).
+- FINDING -> FIX 8a71359 (weakest item: melee threat): in scenario_enemy_pit the robot thug landed
+  0 swings in its archetype run: at 2.4 m/s it never closes on a kiting shooter. The claw now
+  LUNGES (weapon data lunge_m 3, lunge_mps 9, optional fields in the schema): the windup may start
+  up to reach + lunge_m away; after it the thug dashes along the LOCKED aim (EnemyMotor.dash: no
+  easing, cover still stops it) to 70 % of its reach, then swings. A sidestep after the lock is
+  missed (unit test: 2.6 m sidestep -> 0 hits; a standing Rivet is caught). Registry rule applied
+  (agent-behaviour-authoring / combat telegraphs): commit to the telegraphed line, never home in
+  after the lock. scenario_enemy_pit thug run now: swings 1, hits 0 (the scripted Rivet dodges it).
+  enemy units 16/16, enemy scenarios 2/2, lint 13/13.
