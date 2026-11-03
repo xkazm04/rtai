@@ -76,3 +76,13 @@ NEXT:
   caught 24k px of warm paper/ink greys per portrait: rejected, never shipped. Dialogue frame re-shot (d5_hero
   --dialogue=rivet,cop_shouting): panel armour (62,88,137) -> (60,76,112), vermilion 95 -> 0. Provenance re-hashed.
   Frames: masters frames/portraits-cop-ab.png (top orig, bottom now) + portraits-cop-3way.png (orig | iter1 | now).
+- MILESTONE riot cop helmet to T1: T1's cops (zoomed crop) are dark figures with a big CREAM helmet dome, cream hands and a
+  cream sticker rim, with no orange on them at all. Ours had a navy dome + cream stripe. Now inverted (recolor_cops.t1_helmet,
+  both tiers, from orig): cream dome in its ink rim, the stripe in cop navy, the D5 scratches as darker hatch. Patrol cap
+  unchanged (navy + cop_blue_hi badge), so riot (pale dome) and patrol (navy cap) now read apart. Same-scene A/B
+  (d5_hero --borrow, hero1 vs heroHelmB): the ONLY changed region at 32/48/64/128 is the riot helmet; helmet luma
+  107 -> 168, 0 vermilion. evidence/d5-cast/cop-helmet-t1.json. Look goldens pass unblessed (11/11 worst 0.47,
+  block 5/5 worst 0.20), so no re-bless (less merge churn with d-city's goldens).
+  The real-city city_frame A/B (helmA/helmB, --police=4) showed NO helmet change: the riot cops there are atlas cells
+  with the shield over the head at 32, and the run differs by a few crowd-sim pixels between runs (one cop -> ped cell;
+  not this change). Rejected as evidence for this item (0 helmets visible); the hero A/B is the proof.
