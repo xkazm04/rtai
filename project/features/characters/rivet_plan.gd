@@ -2,14 +2,29 @@ class_name RivetPlan
 extends RefCounted
 ## Rivet's body plan: the cutout lane's RIVET2 numbers (tuned against the bind sheet), unchanged
 ## for the D4 parts, which were drawn to the same layout templates (anchor torso 297 px).
+## Scale (d5-cast, 2026-11-03): the owner's verdict "Rivet is too massive"; in the concept he is
+## only slightly larger than a human. A FORM is a [size_k, guard_k] profile: size_k scales the
+## whole figure, guard_k pulls the ready (guard) hands toward the chest. Only BASE is built today;
+## the later bulky ghost form adds its own row here (and needs no new rig code).
+
+const FORM_BASE: StringName = &"base"
+## The pre-2026-11-03 numbers (2.5 x 2.6 m footprint, 2.0x a cop's length); kept for A/B frames.
+const FORM_NIGHT: StringName = &"night"
+const FORMS: Dictionary[StringName, Vector2] = {
+	FORM_BASE: Vector2(1.0, 0.85),
+	FORM_NIGHT: Vector2(1.3, 1.0),
+}
+## Which form RigPool builds; a dev scene may flip it before the pool's first build.
+static var form: StringName = FORM_BASE
 
 
-static func build() -> BodyPlan:
+static func build(p_form: StringName = &"") -> BodyPlan:
+	var f: Vector2 = FORMS.get(form if p_form == &"" else p_form, FORMS[FORM_BASE])
 	var p: BodyPlan = BodyPlan.new()
 	p.kind = BodyPlan.Kind.RIVET
 	p.name = "rivet"
 	p.art_dir = "rivet"
-	p.size_k = 1.3
+	p.size_k = f.x
 	p.torso_pos = Vector2(-20, 0)
 	p.head_part = "helmet"
 	p.head_pos = Vector2(12, 0)
@@ -18,7 +33,7 @@ static func build() -> BodyPlan:
 	p.hip_y = 78.0
 	p.hip_z = 250.0
 	_legs(p)
-	_arms(p)
+	_arms(p, f.y)
 	p.hand_open = "claw_open"
 	p.hand_closed = "claw_closed"
 	p.hand_pistol = "claw_pistol"
@@ -40,7 +55,7 @@ static func _legs(p: BodyPlan) -> void:
 	p.foot_toeoff = PackedStringArray(["l_foot_toeoff", "r_foot_toeoff"])
 
 
-static func _arms(p: BodyPlan) -> void:
+static func _arms(p: BodyPlan, guard_k: float) -> void:
 	p.shoulder = [Vector3(-6, -158, 0), Vector3(-6, 158, 0)]
 	p.upper_part = PackedStringArray(["l_upperarm", "r_upperarm"])
 	p.upper_len = 159.0
@@ -53,5 +68,6 @@ static func _arms(p: BodyPlan) -> void:
 	p.endon_fore_len = 37.0
 	p.endon_upper = PackedStringArray(["l_upperarm_endon", "r_upperarm_endon"])
 	p.endon_fore = PackedStringArray(["l_forearm_endon", "r_forearm_endon"])
-	p.hand_ready = [Vector3(300, -205, -30), Vector3(285, 205, -30)]
+	var g: Vector3 = Vector3(guard_k, lerpf(1.0, guard_k, 0.5), 1.0)
+	p.hand_ready = [Vector3(300, -205, -30) * g, Vector3(285, 205, -30) * g]
 	p.hand_relax = [Vector3(60, -180, -300), Vector3(60, 180, -300)]
