@@ -324,3 +324,18 @@ NEXT (iteration 4 close, in order):
   masters night/noir/show-final2/ (showcase-noir-48.mp4, -64.mp4, showcase-d4-48.mp4, 11.3 s, 60 fps) +
   evidence/showcase-hero.png (D4 48 | noir 48 | noir 64: shot, silhouette flash, held panel, aftermath;
   the previous sheet is evidence/showcase-hero-v1.png). evidence/NOIR.md updated. Masters trimmed to ~580 MB.
+- (01:36) Gates at b3c3d1f (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty):
+  lint (13), 180 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS.
+- MILESTONE/NOT ADOPTED (01:37) noir peds: noir_ped_1 (62 s, 0 rejected): 10 ped parts (hat head, hair
+  head, jacket torso, shirt torso, pelvis, upperarm, forearm, thigh, shin, foot) as trench-coat ink masses
+  with a thick white rim, the hat as a fedora seen from above with a white band. Sliced into
+  art/noir/ped/ (10 provenance lines). `dev/noir/noir_parts.gd` (NoirParts.wear) is now the shared hook;
+  `noir_frames -- --noir-parts` wears cop + rivet + ped, the showcase only cop + rivet (its frames are
+  pixel-identical to show-final2 after the refactor). Evidence: masters ped-before-after.png (street
+  noir crops at 64 / 48 / 32 px/m, ped-v0 vs ped-v1; also evidence/).
+  CAVEAT: noir_frames is NOT tick-exact between runs (the crowd positions differ), so this pair is the
+  same seed and moment, not the same pixels.
+  Honest read: at 48 px/m the crowd becomes the brief's ink masses carved by a white rim, and Rivet stays
+  the one lit figure. BUT the cops lose their main noir cue (they were the dark masses among white peds;
+  now everyone except Rivet is dark), and at 32 px/m a dense crowd turns into a busy mesh of rims. So it
+  is opt-in only, not in the showcase.
