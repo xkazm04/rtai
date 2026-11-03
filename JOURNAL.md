@@ -505,7 +505,7 @@ NEXT:
   merged tree; if it holds, bisect the cop ring shader (704570f), Rivet hunch (062939d, 8118692), look_d5_part.
   A bench worktree needs build/export/windows-bench/ created first.
 
-## Iteration 48 (16:42-16:55, BUILD, short: freeze 17:00)
+## Iteration 48 (from 16:42, BUILD, short: freeze 17:00)
 - 16:43 bench.lock held by d5-city (16:40, fresh) -> GPU bench skipped (rule). The 3+3 A/B is still owed.
 - PERF LEAD narrowed from the existing data and code, nothing re-measured (evidence/d5-cast/gpu-bench-ab.json):
   - The rig update is NOT the riot gap. Riot rigMsP99 is d-cast 0.895 / 0.862 vs main 0.849 / 0.537 ms. The main
@@ -517,13 +517,19 @@ NEXT:
   - RivetPlan.build() runs once per pool kind (rig_pool.gd:21), and KingPlan is not on the game path. No per-frame cost.
   - That leaves (a) the print_part.gdshader extra cop-blue branch, a GPU fragment cost that reaches "CPU frame"
     only through a sync/stall, or (b) contention noise (2 pairs, other lanes on the GPU). Bisect order for the next
-    session: print_part.gdshader alone (704570f), then the material change, on an uncontended 3+3.
+    session: print_part.gdshader alone, then the material change, on an uncontended 3+3. Both landed in 7b4965d.
+    CORRECTION (16:46): earlier NEXT lines name 704570f as "the cop ring shader". It is PNG art only (cop head_cap /
+    head_helmet), so it cannot cost CPU. Drop it from the bisect.
+  - 16:46 bisect ready (masters day-d5/d5-cast/perf-bisect/, outside git): A-revert-print_part-copblue.patch (the
+    cop-blue branch + teal guard + uniforms) and B-revert-cop-head_swap.patch (restores head_swap = 4). Both pass
+    `git apply --check` on HEAD. Apply one per scratch worktree and bench the riot against plain d-cast.
+- 16:43 the lock was re-taken by slice-play, so no bench before the freeze.
 - No code changed this iteration. Gates unchanged since 8dbf7f4 (lint/unit/scenarios/parity/goldens green).
 
-## Final status at 16:55 (iteration 48) and NEXT
+## Status at 16:44 (iteration 48) and NEXT
 - Items 1-5 evidenced (see iteration 47). Owner frames: masters day-d5/d5-cast/frames.json (15) + ladder.png.
 NEXT:
 - Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
 - PERF: the riot p99 CPU gap is open (~1.5 ms over 2 contended pairs, every run under the 7 ms limit). The rig update
-  is ruled out (see above). Run a 3+3 UNCONTENDED A/B. If the gap holds, revert print_part.gdshader's cop-blue branch alone in a scratch
-  worktree and re-bench. The bench worktree needs build/export/windows-bench/ created first.
+  is ruled out (see above). Run a 3+3 UNCONTENDED A/B. If the gap holds, bench the patches in perf-bisect/ (A, then B)
+  in scratch worktrees. The bench worktree needs build/export/windows-bench/ created first.
