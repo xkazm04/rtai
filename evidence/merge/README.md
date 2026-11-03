@@ -68,8 +68,12 @@ only in JOURNAL.md and the 11 look goldens, which whoever merges last re-blesses
     and the planted mutation is caught at step 629.
   - All 15 scenarios pass, including vehicle carnage, drive (replay identical) and yield,
     replay_60s, city_replay, the 4 bodies scenarios and rig_stress.
-  - Not measured: how many body knockdowns a drive makes without line 4. The fix is from reading the
-    code, not from a failing run.
+  - Measured at 13:50. scenario_vehicle_drive, with an `actor_knocked_down` counter added in scratch
+    only: **0 body knockdowns with line 4 and 0 without it** (struck 1, replay identical, both runs).
+    The car's own hit takes people before the 0.42 m body at its centre reaches them, so this run does
+    NOT show the line is needed. Keep it anyway: it is the stated contract (no Rivet body while
+    driving) and costs nothing. The case it guards (a person under the car's centre at a closing
+    speed above 3.2 m/s and below the 30 m/s teleport guard) is not shown.
 - Note to vehicles: a non-lethal car strike sets M_FLEE after a 1 m shove. M_DOWN (lie
   `down_s`, get up, flee from the hit point) now exists in both sims if they want a car knockdown to
   look like a tackle. It is their call.
