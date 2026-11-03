@@ -36,6 +36,7 @@ const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
 const vec3 WASH = vec3(0.400, 0.372, 0.408);
+const vec3 PAPER_HI = vec3(0.985, 0.955, 0.895);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
