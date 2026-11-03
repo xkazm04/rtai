@@ -451,3 +451,15 @@ NEXT (night run): unchanged from iteration 8. Item 2: add the --acc knob to aim_
   an aim_lock_ticks sweep, salted at read 0.7. Then the iteration 4 items 2-7. Then the
   enemy-ai-1 re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash, tracer,
   Rivet hit reaction).
+
+## Iteration 10 (STABILIZE, session start 23:33, report 23:40)
+- 23:33 Read the JOURNAL tail and answers.json: still only enemy-ai-1 (keep A as a placeholder;
+  re-ask only with the full D5 chain clip). Nothing new to apply. Tree clean at c770245; no
+  project/ change since f9366b9 (dev-only), so iteration 9's 23:32 gates (lint 13/13, unit
+  560/560 on re-run, scenarios 21/21, all CONTENDED) still describe this build, and the 15
+  frames.json entries still match it. Seven minutes to report: no code change, no re-run.
+NEXT (night run): unchanged from iteration 9. Item 2: add the --acc knob to aim_lead_ab.gd plus
+  an aim_lock_ticks sweep, salted at read 0.7. Then the iteration 4 items 2-7 (ArenaHook, real
+  weapons, the robot plan, the flinch duck, the city block clip, the robot hit tint note). Then
+  the enemy-ai-1 re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash,
+  tracer, Rivet hit reaction).
