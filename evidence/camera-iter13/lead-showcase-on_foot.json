@@ -1,0 +1,38 @@
+[
+  {
+    "driven_ticks": 0,
+    "file": "lead-000.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 32.0
+  },
+  {
+    "driven_ticks": 30,
+    "file": "lead-030.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 32.0
+  },
+  {
+    "driven_ticks": 60,
+    "file": "lead-060.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 32.0
+  },
+  {
+    "driven_ticks": 150,
+    "file": "lead-150.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 32.0
+  }
+]

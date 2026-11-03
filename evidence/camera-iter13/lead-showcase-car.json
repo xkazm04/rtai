@@ -1,0 +1,50 @@
+[
+  {
+    "driven_ticks": 0,
+    "file": "lead-000.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 30,
+    "file": "lead-030.png",
+    "lead_m": [
+      4.13211107254028,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 60,
+    "file": "lead-060.png",
+    "lead_m": [
+      4.77777719497681,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 150,
+    "file": "lead-150.png",
+    "lead_m": [
+      4.93362474441528,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "hitstop_ticks_per_frame": [
+      268,
+      268,
+      268,
+      268,
+      268,
+      269,
+      270
+    ],
+    "stops": 1
+  }
+]

@@ -924,3 +924,55 @@ NEXT (iteration 13 / morning, in order):
   selftest PASS (junction 11/11 + block 5/5 goldens worst 0.00, accents clean at both, world lock
   0.00 % x3). Copied to evidence/pof. Bench: the contended run at 56d23e7 above (owed idle, NEXT 2).
   Session end: tree clean, no Godot of mine running, my /tmp scratch deleted.
+## Iteration 13 (04:52 - , BUILD)
+
+- 04:53 tasklist: no Godot process running on the machine -> the idle bench owed from iteration 12 runs first.
+- 04:57:36 two other-lane Godot runs started 14 s after my bench (dev/noir/showcase_fight.tscn d3d12, and
+  a headless tests/load_all.gd) -> this bench is CONTENDED too (recorded as such when it lands).
+- FOUND (item 6, weakest item): half of camera feel was dead in the real game. `CityView.follow_vel_mps`
+  (the look-ahead input) was declared and never set by anything, so the car look-ahead never moved the
+  camera outside the unit test; `CameraRig.hitstop_ticks()` had no consumer, so no hit-stop ever held.
+- Checked main (721fbbb): features/combat/combat_arena.gd emits actor_killed (killer_id, victim, &"shot")
+  and player_hit(&"robo-tazer") - real emitters for the hit-stop cues once merged (my branch has no
+  combat feature; the arena's player id must be handed to FxTriggers.player_id where its view is built).
+- Bench at 4d83199 (05:01-05:05, exported release, 3 x 4 scenarios x 60 s): PASS - p99 2.81 ms, 1% low
+  209 fps, worst swap 32.3 ms, worst frame 48.2 ms, 0 frames > 50 ms; riot rigs p99 0.448 ms per frame.
+  CONTENDED (other-lane Godot runs from 04:57:36; 4 Godot processes listed at 05:05). Vs iteration 11
+  (2.75 / 0.432) and iteration 12's contended 3.25 / 0.653: iteration 12's jump was the contention, not
+  the night code (the day path cost is within run-to-run noise). An idle run is still not had: other
+  lanes keep a Godot running. evidence/bench-*-iter13-contended.json, bench-iter13-contended.txt.
+- MILESTONE (7dcb210) camera feel wired in the game path:
+  - Look-ahead: CameraRig.follow(tick, focus) differences the focus between the ticks it sees
+    (frames with no new tick lead nothing; > 90 m/s = a jump, leads nothing); CityView calls it instead
+    of the dead follow_vel_mps (removed). Whatever moves CitySystem.focus feeds it (the input free
+    camera today, a car / cutscene later).
+  - Hit-stop: fx_triggers.json rows take `hitstop` (schema updated): player_hit -> rivet_hit (3 ticks,
+    new camera.json row), new event cue rivet_kill = Events.actor_killed with killer_id = Rivet's id
+    -> kill (6). CameraRig.hitstop(id, tick): 0 under reduced motion / inside hitstop_cooldown_ticks 20
+    (new camera.json key). FxTriggers holds the clock: SimClock.hold(seconds) (core/clock, shared:
+    +14 lines) withholds that much clamped frame time from the accumulator - no tick changes content,
+    SimLoop.replay steps ticks directly, headless has no views. World sets fx_triggers.player_id =
+    CityCharacters.RIVET_ID (boot/world.gd, shared: +1 line).
+  - Unit 228 (+7, test_hit_stop.gd). Lint 13/13. Scenarios 8/8 (replay_60s identical).
+  - Frames (dev/selftest/lead_showcase.tscn: junction seed 91, focus driven east 15 m/s, pickup ring =
+    focus, --fixed-fps 60): car 48 px/m BEFORE (HEAD city_view swapped in for the run, then restored)
+    lead 0 m at ticks 30 / 60 / 150; AFTER 4.13 / 4.78 / 4.93 m (cap 5.25 m at 15 m/s; the capture
+    frame itself does not move the focus, so one zero-velocity tick takes 6 % off). LOOKED at: Rivet
+    sits left of centre with the road ahead open; on foot 32 px/m before = after (look_ahead 0 by data).
+    gtai-masters/night/visual-engine/41-lead/cmp-lead-{car,on_foot}.png; ladder 41 / 41b.
+  - In-engine hit-stop: ticks read at successive process_frame starts around Events.player_hit:
+    [268, 268, 268, 268, 268, 269, 270] = exactly 3 frames held (process_frame fires before the
+    frame's _process), stops 1. evidence/camera-iter13/lead-showcase-*.json.
+  - Rejected: 0 frames (engine captures, straight down); one run re-done (on_foot pass forgot --mode).
+- Selftest at 7dcb210 (05:15-05:2x): PASS - junction goldens 11/11 + block 5/5 worst 0.00 (no rig in the
+  selftests, as designed: nothing moved), accents clean at both, world lock 0.00 % x3.
+- MILESTONE (2a50244) the arena zoom has a trigger: CameraRig.listen also follows Events.boss_engaged ->
+  `arena` (64 px/m) and contract_completed -> `on_foot` (main's combat arena emits boss_engaged).
+  dev/selftest/arena_showcase.tscn (Events emitted like the game, rig wired like World): ease 32.1 /
+  38.0 / 49.3 / 60.0 / 64.0 px/m every 9 ticks, the auto look's D5 weight 0 / 0 / 0.02 / 0.84 / 1.00, at
+  the junction AND the block. LOOKED at both strips and the 64 px/m block frame (Rivet's collar, D5
+  cracks + grime, straight down). Before (7dcb210's rig swapped in, then restored): stays on_foot 32 px/m.
+  Observation for the owner: the D4 -> D5 blend lands inside ~15 ticks of the 36-tick ease (49 -> 60
+  px/m is where look_profiles' smoothstep sits), so the grime arrives late and fast; a gentler
+  start_ppm (e.g. 40) would spread it - not changed (it also moves the auto goldens at 48 / 56).
+  Frames 42-arena/strip-arena-{junction,block}.png; ladder 42. Unit 229 (+1). Rejected: 0 frames.
