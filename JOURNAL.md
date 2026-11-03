@@ -203,3 +203,34 @@
 - Registry applied (motion-quality-gating): responsiveness numbers are sim-true, and the
   display latency is named unmeasured. The clips use the real state machine (PlayerMotion,
   MeleeCombo), not a hand-keyed animation.
+- 21:53 MILESTONE 8dc9aa4: `RivetD5Post` (dev/rivet_motion) puts the look_d5 print over the
+  combo and course clips, using D5ShowcaseRun's recipe. That commit also carries the member-order
+  lint fix; the earlier D5 commit was blocked by the pre-commit lint, so everything landed
+  together. Finding: look_d5.params zoom_amount is 0 at 32 px/m, 0.35 at 48 and 1.0 at 64. At
+  32 px/m a "D5" clip is pixel-identical to D4 (the encoded files matched byte for byte, so
+  they were deleted, not published). At 48 the print only warms the paper. Most of what makes
+  D5 is the venue and floor art (D5ArenaRun: king_arena.png, D5 roofs), not the overlay.
+  Clip: `combo-claw-impact-d5-48ppm.mp4`. frames.json: 15 entries.
+- Gates at the end of the session: lint 13/13 (500 files). Unit 556/556 and scenarios exit 0
+  at 25a1efc (the later commits are dev-scene only, plus the station JSON and lint mapping,
+  which lint covers). Evidence/parity/bench were not run this iteration. The bench was skipped
+  on purpose: no runtime path changed, since PlayerMotion is not wired into the game.
+- NEXT (iteration 3), under the owner's 21:25 direction (depth, the full hit chain, real rigs, D5):
+  1. answers.json first.
+  2. The sample clip (20-40 s, 32 px/m, plus 48), all in one scene:
+     - Rivet on the arena floor (D5 venue art: e-arena's floor once merged, else D5ArenaRun's
+       king_arena.png);
+     - he walks, strafes, sprints into a ped (the tackle knockdown), rolls, then claw-combos a
+       patrol cop to death.
+     - Merge the motion course and the combo clip into one runner (PlayerMotion + MeleeCombo).
+  3. The full hit chain on the claw:
+     - blood on the human: CombatBlood fed a death or hit cue at the landing tick (see
+       `features/fx/combat_blood.gd` listen()/FxTriggers.cued);
+     - the stagger in the direction of the hit (CutRig.hit already shoves; scale it per hit);
+     - a non-red flash (REQUEST 1);
+     - a sound hook: Events/audio cue `melee_hit`, if audio_cues has one; else a REQUEST to audio.
+  4. Wire HitFeel when it is on this branch: add `hit_class` per `rivet_melee.json` hit
+     (claw_3 = heavy); until then the clip constants HITSTOP_TICKS/SHAKE_PX stand in.
+  5. The tackle animation: Rivet's shoulder-lead pose above 5 m/s (c_lean with a sprint lean),
+     plus a sprint lean in RigPose. The sprint currently reads only through cadence and stride.
+  6. Only then: the baton and the katana (deferred by the 21:25 direction).
