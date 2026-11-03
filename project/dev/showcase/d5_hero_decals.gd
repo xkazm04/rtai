@@ -10,8 +10,10 @@ extends RefCounted
 const DIR: String = "res://features/city/art/d5/"
 ## art (under DIR) -> [x m, y m, length m along the art's long axis, rotation deg]
 const SPOTS: Array[Array] = [
-	["decals/union_fist_stencil", -1.0, -9.3, 2.8, 0.0],
-	["decals/strike_paint", 0.0, -6.2, 4.4, 0.0],
+	# iteration 7: road paint inside the west lane (dashes at x 0, lane x -3.5..-0.2),
+	# not on the centre line, where a bold dash showed between the letters (paint on paint)
+	["decals/union_fist_stencil", -1.85, -9.3, 2.6, 0.0],
+	["decals/strike_paint", -1.85, -6.2, 3.0, 0.0],
 	["decals/chalk_robot", 6.2, 1.2, 2.4, 80.0],
 	["decals/scorch", 14.2, -1.6, 2.2, 0.0],
 	["props/lamp_post", 3.2, -6.8, 3.2, 180.0],
