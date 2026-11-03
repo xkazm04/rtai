@@ -730,3 +730,30 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   cc3b37c, index README. The full frame sets stay in masters. Shared-scope note: `evidence/` is a new top-level folder
   (the Director may move it to `docs/` or drop it at merge).
 - 01:47 GATES at 6b954ad (HEAD incl. evidence/): run.mjs --no-bench rc 0, all 5 PASS (lint 13/13, unit 142, scenarios 8, parity bit-exact, selftest 0 placeholders). Session end for iteration 6; tree clean after this entry.
+
+## 2026-11-03 01:45 iteration 8, BUILD (raise the weakest item; stop 03:15)
+- Read JOURNAL, git log, n-visual's trial-merge evidence (`masters:night/visual-engine/21-trial-merge/`).
+  Weakest visible thing in the merged slice: **moving traffic is still grey steel boxes** (crowd_layers `_body()`);
+  my iteration-1 traffic atlas was never wired (REQUEST 1 since 21:30).
+- 01:58 MILESTONE moving traffic in D4 (asset + a ready wiring patch). Found: the sim already writes the car's art
+  id into custom.x (sim_render + native render.cpp), ids 0-7 civilian, 8 police - my 2 x 4 atlas order (police at
+  4, no cell 8) did not match. Re-laid out `traffic_atlas(.png|_hijack.png)` 3 x 3 so **cell = art id** (no lookup
+  table): sedan, sedan_b, sedan_c, taxi, van, pickup, ambulance, **sedan_grey** (new, id 7: the sedan in a mid-wash
+  paint + 3 px cream sticker rim - traffic was all white cars; procedural, no new AI pixels), police_cruiser.
+  `tools/build_traffic9.py` re-slices the committed atlases (keeps the glass + grime passes).
+  Wiring = rendering code (visual-engine's), so NOT committed: `masters:night/d4-production/traffic_atlas_wiring.patch`
+  (main / n-d4: crowd_layers + city_view + a 15-line cell shader) and `traffic_atlas_wiring_after_n-visual.patch`
+  (crowd_layers + shader only; n-visual's set_look_enabled already keeps non-item materials). Found by rendering:
+  the first try drew the whole atlas in every car - city_view replaces every crowd material with the item pass; the
+  cars now keep their atlas material, as the baked crowd does.
+  Evidence (all through look_d4, the real CityView + native sim): `before_tr|after_tr/selftest-{32,48}ppm` (the two grey
+  boxes -> a sedan_c westbound, nose left, and a sedan_b eastbound; drop shadows land), crops `work/tr_crop.png`;
+  dense traffic `after_tr_dense/` (90 cars: ambulance, taxi, van queue in lane, vertical roads too); ids 7 + 8 forced
+  for one probe (`probe_tr78/city-0-48ppm`: grey sedan reads on the asphalt thanks to the rim, cruiser vermilion on
+  the light bar only; spawner edit reverted). Merged check: scratch worktree `scratch-tr` = n-visual + n-d4 + the
+  after-n-visual patch: selftest render OK, 0 placeholders, **accent gate: no new offenders** (the cruiser bar is on
+  doctrine), world lock 0.00 %; goldens 0/10 = the known post-merge re-bless (n-visual recipe step 2). Ladder rows
+  added. `city_frame.gd` gained `--cars/--police/--settle`. Commit 59e1448. 0 Codex images.
+## REQUESTS (iteration 8)
+18. visual-engine (via the Director): apply `traffic_atlas_wiring_after_n-visual.patch` after merging n-d4 (or
+    `traffic_atlas_wiring.patch` if n-visual is not merged). Damage states / hijack overlay still need a state hook.
