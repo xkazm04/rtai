@@ -14,7 +14,7 @@ var every: int = 2
 ## Stills mode: only these ticks (even) are saved, as still_<tick>_<ppm>.png; no clip.
 var stills: Array[int] = []
 ## Where the game writes its beat checkpoints ("" = none); with press_continue the run presses
-## Continue on the title and saves continue_f1 / continue_f6 (the first frames after it).
+## Continue on the title and saves continue_f1 .. continue_f6 (the first frames after it).
 var save_path: String = ""
 var press_continue: bool = false
 var _game: Quest1Game
@@ -84,10 +84,10 @@ func _continue_frames() -> void:
 	_game.card.continue_pressed.emit()
 	_game.session.world.set_process(false)
 	await _save("continue_f1")
-	for i: int in 5:  # one tick per frame, as the game steps
+	for i: int in 5:  # one tick per frame, as the game steps; every frame kept (the warm-up spans 3)
 		_game.session.step()
 		await get_tree().process_frame
-	await _save("continue_f6")
+		await _save("continue_f%d" % (i + 2))
 	Log.info(
 		"clip", "continue at tick %d, beat %s" % [_game.session.tick(), _game.session.beat_id()]
 	)

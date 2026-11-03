@@ -4,6 +4,9 @@ extends Node2D
 ## space under a Camera2D that follows Rivet (or a focus the caller sets), the HUD in screen
 ## space. Placeholder ink only (no cutout parts yet). Reads the sim, never writes it.
 
+## Above the HUD and the title card while the view warms its pipelines (_prewarm_covered).
+const COVER_LAYER: int = 90
+
 var stage_view: StageView = StageView.new()
 var cast_view: CastView = CastView.new()
 var fx_view: FxView = FxView.new()
@@ -86,9 +89,25 @@ func _ready_on_city() -> void:
 		city_view.actor_layer().add_child(v)
 	# pipelines warmed with the camera where Rivet stands now (a Continue or Retry starts
 	# mid-street), and that street drawn at once instead of over many budgeted frames
-	@warning_ignore("return_value_discarded")
-	city_view.prewarm()
+	_prewarm_covered()
 	Log.info("quest1", "street filled in %d chunk passes" % fill_street())
+
+
+## ViewPrewarm draws a light and every FX kind on Rivet for a few frames so the pipelines compile;
+## the free-roam World hides that behind its loading screen (WLD-07). Here a paper sheet covers
+## those frames instead (they still render underneath), so Start shows no flash on Rivet.
+func _prewarm_covered() -> void:
+	var cover: CanvasLayer = CanvasLayer.new()
+	cover.layer = COVER_LAYER
+	var sheet: ColorRect = ColorRect.new()
+	sheet.color = Ink.CREAM
+	sheet.set_anchors_preset(Control.PRESET_FULL_RECT)
+	sheet.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cover.add_child(sheet)
+	add_child(cover)
+	@warning_ignore("return_value_discarded")
+	await city_view.prewarm()
+	cover.queue_free()
 
 
 ## Draws every resident chunk around the city focus now: the chunk view streams under a per-frame
