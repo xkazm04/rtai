@@ -18,6 +18,7 @@ var _view: CollectCallView = CollectCallView.new()
 var _noir: NoirLook = NoirLook.new()
 var _blood: BloodFx = BloodFx.new()
 var _flash: MuzzleFlash = MuzzleFlash.new()
+var _stains: BloodStains = BloodStains.new()
 var _impact: ImpactFrame = ImpactFrame.new()
 var _fx: NoirCombatFx = NoirCombatFx.new()
 var _live: int = -1
@@ -43,6 +44,7 @@ func _ready() -> void:
 	add_child(_view)
 	_view.add_child(_blood)
 	_view.add_child(_flash)
+	_view.add_child(_stains)
 	_flash.budget = _impact.budget
 	for n: Node in [_noir, _impact, _fx]:
 		add_child(n)
@@ -50,6 +52,7 @@ func _ready() -> void:
 	_fx.player_id = _play.stage.arena.rivet.id
 	_fx.locate = _locate
 	_fx.to_screen_uv = _to_uv
+	_fx.set_stains(_stains)
 	_fx.bind(_play.bus(), _blood, _impact)
 	@warning_ignore("return_value_discarded")
 	_fx.hit_stop.connect(func(t: int) -> void: _hold = t)
@@ -69,6 +72,7 @@ func _process(_delta: float) -> void:
 	_live += 1
 	_impact.step_ticks(1)
 	_flash.step_ticks(1)
+	_stains.step_ticks(1)
 	if _hold > 0:
 		_hold -= 1
 	else:

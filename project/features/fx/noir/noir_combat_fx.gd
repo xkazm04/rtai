@@ -11,6 +11,8 @@ signal hit_stop(ticks: int)
 
 var blood: BloodFx = null
 var impact: ImpactFrame = null
+## Blood on the bodies (optional; set_stains hands it the px locate).
+var stains: BloodStains = null
 var locate: Callable = Callable()
 ## The player's actor id (player_hit has no victim id).
 var player_id: int = 0
@@ -50,6 +52,8 @@ func _on_actor_killed(killer_id: int, victim_id: int, _kind: StringName) -> void
 	kills += 1
 	if blood != null:
 		blood.splash(px, dir.normalized(), "kill")
+	if stains != null:
+		stains.mark(victim_id, dir, "kill")
 	if impact != null and not impact.can_fire():
 		return
 	if impact != null:
@@ -66,9 +70,19 @@ func _on_player_hit(_weapon: StringName) -> void:
 		return
 	hits += 1
 	blood.splash(at * px_per_m, Vector2.from_angle(hits * 2.4), "player_hit")
+	if stains != null:
+		stains.mark(player_id, Vector2.from_angle(hits * 2.4), "player_hit")
 	_bleed[player_id] = blood.p["drip"]["bleed_ticks"]
 	_drip_at[player_id] = at * px_per_m
 	_drip_t[player_id] = 0
+
+
+## Puts blood on the bodies too: `s` follows each body through this node's locate (in px).
+func set_stains(s: BloodStains) -> void:
+	stains = s
+	s.locate = func(id: int) -> Vector2:
+		var at: Vector2 = _where(id)
+		return at if at == Vector2.INF else at * px_per_m
 
 
 ## Advances the drip trails on the fixed tick (the host calls it with the blood's step).

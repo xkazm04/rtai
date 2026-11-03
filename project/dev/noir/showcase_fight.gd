@@ -36,6 +36,7 @@ var _rigs: CharacterRigs = CharacterRigs.new()
 var _fight: NoirFightScript = NoirFightScript.new()
 var _blood: BloodFx = BloodFx.new()
 var _flash: MuzzleFlash = MuzzleFlash.new()
+var _stains: BloodStains = BloodStains.new()
 var _impact: ImpactFrame = ImpactFrame.new()
 var _fx: NoirCombatFx = NoirCombatFx.new()
 
@@ -59,6 +60,7 @@ func _ready() -> void:
 	_view.actor_layer().add_child(_blood)
 	_view.actor_layer().add_child(_rigs)
 	_view.actor_layer().add_child(_flash)
+	_view.actor_layer().add_child(_stains)
 	_flash.budget = _impact.budget
 	if _noir_parts:
 		_wear_noir_parts()
@@ -69,6 +71,7 @@ func _ready() -> void:
 	_fx.player_id = NoirFightScript.RIVET
 	_fx.locate = func(id: int) -> Vector2: return _fight.origin + _fight.pos.get(id, Vector2.INF)
 	_fx.to_screen_uv = _to_uv
+	_fx.set_stains(_stains)
 	# D4 has no comic beat: --d4 keeps the blood and the hit-stop, not the impact frames.
 	_fx.bind(Events, _blood, null if _d4 else _impact)
 	@warning_ignore("return_value_discarded")
@@ -118,6 +121,7 @@ func _process(_delta: float) -> void:
 	_impact.step_ticks(1)
 	_blood.step_ticks(1)
 	_flash.step_ticks(1)
+	_stains.step_ticks(1)
 	if not held:
 		_fx.step_ticks(1)
 		_t += 1

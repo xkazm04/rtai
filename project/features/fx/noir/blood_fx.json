@@ -1,5 +1,5 @@
 {
-  "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14). Splats are teardrops along the drop's travel with satellite drops ahead (blood_marks.gd); a pool is a wobbly wet edge run out along the hit (pool.run) with a bright red meniscus rim around the dark body and a white sheen arc. drip = a wounded fighter (player_hit) bleeds for bleed_ticks: one drop every every_px px moved (stretched along the move), one every still_ticks while standing.",
+  "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14). Splats are teardrops along the drop's travel with satellite drops ahead (blood_marks.gd); a pool is a wobbly wet edge run out along the hit (pool.run) with a bright red meniscus rim around the dark body and a white sheen arc. stain = blood ON the bodies (blood_stains.gd, drawn above the rigs, following each body): spots per hit kind, radius r_px, scattered spread_px around a point exit_px toward the exit side of the hit, growing over grow_ticks; max_stains is the pool. drip = a wounded fighter (player_hit) bleeds for bleed_ticks: one drop every every_px px moved (stretched along the move), one every still_ticks while standing.",
   "budget": {
     "max_decals": 160,
     "max_drops": 320,
@@ -90,5 +90,27 @@
     ],
     "run": 0.6
   },
-  "schema": "gtai.noir-blood/1"
+  "schema": "gtai.noir-blood/1",
+  "stain": {
+    "grow_ticks": 24,
+    "kill": {
+      "exit_px": 4.0,
+      "r_px": [
+        1.6,
+        3.6
+      ],
+      "spots": 5,
+      "spread_px": 4.0
+    },
+    "max_stains": 48,
+    "player_hit": {
+      "exit_px": 2.0,
+      "r_px": [
+        1.0,
+        2.0
+      ],
+      "spots": 2,
+      "spread_px": 3.0
+    }
+  }
 }
