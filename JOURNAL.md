@@ -167,3 +167,55 @@ NEXT (iteration 3):
 6. The course on the city block: the course walls sit on the street; consider a city-only
    placement per station (decisions: rejected for now) once a station needs it.
 7. Low cover stopping shots: ask only with a clip once the hit chain exists (ArenaWalls.SOLID).
+
+## Iteration 3 (22:02-22:47), BUILD
+
+- 22:02 answers.json re-read: no new answers for arena (arena-1 C, arena-2 A, both "placeholder,
+  re-ask only with a real-time clip in the final look"). Rules applied: the 21:25 direction (depth
+  before breadth; no numbers-only asks). This iteration is the merge plumbing every lane's part of
+  the 00:00 vertical sample needs to land in the arena without editing the arena's files.
+- Read the other lanes' JOURNAL requests to arena: enemy-ai REQUEST 1 (one shared station schema),
+  gunplay REQUEST 3/4 (35 m lane off screen; a GunHand hook in ArenaStage), rivet-motion REQUEST 1
+  (a metal dummy kind; array-row tuning keys by index).
+- MILESTONE `e53bbf4` station hooks: a station row's `"script"` names a res://features/ script
+  that extends `ArenaHook` (setup, step after the stage, write_state into the replay hash,
+  telemetry folded into the session JSON under the station id, attach_view, tune). Built and
+  stepped in station-file order. `ArenaTickHook` is the template. Hook-only stations need no lists
+  (only id, name, area required); lane ids may hold a hyphen. This answers gunplay REQUEST 4
+  without the arena naming GunHand (a class not on this branch): gunplay ships
+  `features/gunplay/arena_gun_hook.gd` whose setup() does
+  `stage.arena.gun = GunHand.make(...)` and whose attach_view() wires HitFeel to the view's camera.
+- MILESTONE `1ae3479` knobs address array rows by index (`rivet_melee.claw.hits.0.windup_ticks`),
+  save writes into arrays, and a knob the arena does not apply itself goes to the lanes' hooks
+  (`ArenaHook.tune`), so each lane makes its own knobs live.
+- MILESTONE `8b330c0` merge rehearsal `dev/arena/stations_check.gd`: loads a folder of every
+  lane's station files together, builds every hook, resolves every knob. Run at 22:28 on
+  arena + enemy-ai + rivet-motion + ghost-powers + gunplay's draft
+  (`gtai-masters/eve/arena/merge-rehearsal/report.json`): 9 stations from 4 lanes load; tables
+  powers, weapons, rivet_motion, rivet_melee are not in this tree (they resolve after the merge);
+  ONE real problem: enemy-ai.json is skipped (schema id `gtai.arena_station/1` with an underscore,
+  `kind` instead of `area`, no `name`). The panel also no longer raises a JSON parse error for a
+  missing table (that would have failed every scenario after the merge).
+- FRICTION: a `-s` SceneTree tool cannot statically name a class that uses an autoload (Log):
+  "Identifier not found: Log" at compile time. The tool is now a thin runner that `load()`s
+  `stations_report.gd` at run time (the run_scenarios pattern).
+- FRICTION: unit 192 to 245 failures twice, all in test_save_slots (+2 test_noir_shadows):
+  user:// shared with the other lanes' concurrent runs. The 22:31 run was clean: 558/558.
+- Gates at 8b330c0: lint 13/13 (510 files), unit 558/558 (`evidence/arena/unit-it3c.log`),
+  arena scenarios 4/4 at e53bbf4 (`evidence/arena/scenarios-it3.log`, goldens unmoved: no
+  shipped station has a script or a metal spawn).
+- REQUEST 3 -> enemy-ai: your `arena_stations/enemy-ai.json` is skipped by the arena (and fails
+  lint at the merge). Exact fix: `"schema": "gtai.arena-station/1"`, rename the row's `"kind":
+  "pit"` to `"area": "pit"`, add `"name": "Enemy pit"`; keep `doc` and `script`. Drop your
+  `enemy-ai.schema.json` (the lint maps the folder to arena_station.schema.json). `script` must
+  name a script that `extends ArenaHook` (EnemyPit does not): add a small
+  `features/combat/ai/enemy_pit_hook.gd` that builds EnemyPit in setup(), drives it in step()
+  (rivet_pos from `stage.arena.rivet.pos`) and returns `stats` from telemetry(). With your
+  station declaring pit enemies, ArenaPit stands down by itself (bb6eb35).
+- REQUEST 4 -> gunplay: REQUEST 4 is answered by hooks, not a line in ArenaStage. In your
+  station row add `"script": "res://features/gunplay/arena_gun_hook.gd"`; that hook's setup() sets
+  `stage.arena.gun = GunHand.make(WeaponTable.shipped(), &"pistol", ctx.rng.stream(&"gunplay"))`
+  and connects `stage.arena.struck`; attach_view(view) finds the CameraRig. Your 84 `weapons.*`
+  knobs become live through `tune()`. Re-bless the arena replays then (a new RNG stream).
+- REQUEST 5 -> rivet-motion, ghost-powers: same route for your knobs (`tune()` in a hook) and
+  your scripted dev scenes; the metal dummy kind is `"kind": "metal"` (next commit).
