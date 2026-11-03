@@ -940,3 +940,35 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   scenarios 8/8 (rc 0; the "8 resources still in use at exit" line is also in the HEAD gate log) with it applied.
   Code reverted. Applies on main and n-visual once n-d4 (the parts) is merged. Ladder rows.
 21. characters owner (via the Director): apply `evidence/iter10/rig_variant_new_looks.patch` after merging n-d4.
+- 03:01 GATES at 123e170 (HEAD): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact
+  (mutation caught at step 629), selftest 72 art textures, 0 placeholders (`evidence/iter10/gates-123e170.txt`).
+  Bench not re-run: only ground pixels changed (same sizes, same texture ids); last bench PASS at 38136e8.
+
+## 03:02 SUMMARY iteration 10 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter10_summary.png` (= `evidence/iter10/`, 10 rows). Ladder rows "i10 ...".
+1. Pavement joints inked: 3 px of 64 grey (was a pale 2 px 128 hairline); the target inks its paving. 4 weights
+   probed in-engine, 64 x 3 the only one that stays one solid line at 32 and 48. Owner review (it partly reverses the
+   iteration-2 "quiet paving" call). 3ebf21a
+2. Junction zebras redrawn: no corner "+/L/T" glyphs, no ink wear pepper, 9 thin stripes a side at the target's
+   rhythm (a 6-stripe first try was off the target, corrected after the side-by-side). 5b3ce9c + 95d22f1
+3. Merged check n-visual + n-d4 + generator patch: joints and zebras hold under n-visual's print pass; unit 206/206
+   there; **REQUEST 18 superseded** (n-visual wired the traffic atlas itself).
+4. Generator patch v2 (patch only): street / kerb variants cycle so neighbours never repeat (the twin hatched kerb
+   crack at 64 px/m). Supersedes the iteration-8 generator patch.
+5. Crowd slot patch (patch only): the iteration-1 hoodie / overalls / cap / bald ped parts reach the crowd.
+- Rejected / not shipped: paper grain on the paving (texture specks print as rings or stipple: a print-pass job).
+- Checked, no change: pickups on the inked paving, the kerb corner board, the cruiser (already the target's two-tone).
+- Codex this iteration: **0 images**. Night total unchanged: 26 images, 170 cells, 7 rejected.
+
+NEXT (session end, iteration 10):
+- Owner review: 3ebf21a (inked paving joints, a judgment call; reverts alone), 5b3ce9c + 95d22f1 (zebras, revert
+  together). Originals in `masters:backup_pj/`, `backup_zb/`.
+- Director: REQUEST 19 now = `evidence/iter10/generator_art_pick_v2.patch` (not the iteration-8 one); REQUEST 21 =
+  `evidence/iter10/rig_variant_new_looks.patch` (characters owner, after the n-d4 merge); REQUEST 18 dropped.
+  JOURNAL.md stays the only n-d4 / n-visual merge conflict.
+- Owner questions: a bundled HUD / lettering font (none is bundled; the HUD draws the default sans; AST-10 needs a
+  licence line + owner OK); cop uniform, blood ink vs vermilion, teal robot eyes (still open).
+- Visual-engine (REQUEST 20, optional): the target's speckled slabs would come from the print pass (`grit`).
+- Still blocked on code owners: damage / hijack texture swap for moving traffic (atlases ready), soul portraits in a
+  real HUD, q1_view_art.patch after the merge.
+- Branch n-d4, nothing pushed or merged. Worktree `scratch-q1` kept (quest patch); my other scratch worktrees removed.
