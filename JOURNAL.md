@@ -840,3 +840,32 @@ and junction at 32 / 48, the light showcase at 32 / 48 / 64).
   Frames 37-night/ (cmp-block-*, cmp-junction-*, cmp-lights-32/48/64); ladder 37 / 37b / 37c.
   Rejected: 0 frames (all engine captures, straight down). The lavender car quad in the night frames
   is the car placeholder's own colour (traffic atlas lands with n-d4), not the grade.
+- Measured (palette gates on the frames, python over 37-night/): pixels passing the vermilion gate at
+  night, BEFORE (multiply) 0 in every frame (block / junction 32 / 48, light showcase 32 / 48 / 64) - the
+  old night erased the doctrine accents (cops / threats indistinguishable); AFTER block 9980 / 7616,
+  junction 8853 / 6154, showcase 9221 / 9438 / 2523 vs day 9455 / 9639 / 2547 = 97-99 % kept.
+- MILESTONE (fe63853) night golden: look_golden SITE_CASES rows take a grade column; block-d4-48ppm-night
+  (LOOKED at before blessing). The 3 existing block goldens re-blessed byte-identical. Selftest: junction
+  10/10, block 4/4 worst 0.00, world lock 0.00 % x3.
+- MILESTONE (09a1962) car lights at night (item 4's headlights / siren, until now only in the showcase):
+  features/city/view/city_headlights.gd reads the snapshot CityFxFeed already gets (once per sim tick, no
+  extra sim call); lights.json `car_lights` (schema updated): on `night` the 6 cars nearest the focus
+  within 40 m hold 2 headlight cones at the nose corners, police cars a siren; day returns after one
+  check once released. Directions checked in frame: right-hand traffic (eastbound south lane, westbound
+  north lane; the block's southbound car in the west lane) - all cones point ahead of the nose.
+  Cost 38 us per tick at night, 0 work by day (editor build, headless scratch probe, 400-actor snapshot
+  with 57 cars; scratch deleted). Unit 219 (+3). Junction night golden d4-48ppm-night (cars lit; LOOKED at);
+  the block night golden did not move (its one car drives south, cones below the frame - checked in the
+  frame, not assumed). Frames 38-car-lights/ (32 + 48 at both sites); ladder 38 / 38b. Siren on a police
+  car not seen in a frame (no police car near either site): unit-tested only.
+- MILESTONE (f8863d8) street lamps at night: features/city/view/city_prop_lights.gd + lights.json
+  `prop_lights` / kind `street_lamp` (4.5 m paper pool, 2 bands, intensity 0.38). The lamp head = the
+  oval at 83 % of lamp_post.png's width -> at_m [1.05, 0] in the sprite frame; heads read once per
+  resident chunk from its draw commands (baked shadow commands skipped), cached until the chunk leaves;
+  8 nearest within 32 m, re-picked when the focus moved 2 m. max_lights 32 -> 40 (18 car + 8 lamps held,
+  timed keep 14). Frames 39-street-lamps/: the block's 4 kerb lamps light pools on the pavement edge,
+  each centred on its head (checked in frame); the junction has traffic-light posts, no lamp posts, so
+  it is unchanged. Block night golden re-blessed (only the pools moved, mean 4.49 before; LOOKED at),
+  other block goldens byte-identical. Unit 220 (+1). Cost (editor build, headless scratch on the
+  generated city, deleted): first pick 123 us (reads 9 chunks), then 5.9 us mean per frame at 20 m/s,
+  worst 212 us (a new chunk entering the radius). Day: one check per frame.
