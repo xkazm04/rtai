@@ -68,7 +68,9 @@ func _resume(game: Quest1Game, saved: Dictionary[String, Dictionary], log: Dicti
 	var census: Array[String] = SaveKit.census(slots.root)
 	if census != ["auto_a/state.sav", "auto_b/state.sav", "meta.json"]:
 		return "files on disk: %s" % [census]
+	var started_ms: int = Time.get_ticks_msec()
 	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
+	log["load_1_ms_contended"] = Time.get_ticks_msec() - started_ms
 	var s: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
 	if s == null or out.point != STOP_POINT:
 		return "load 1 landed on '%s'" % out.point
