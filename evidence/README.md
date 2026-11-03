@@ -274,7 +274,9 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    the mock is at 32 px/m, the art-direction camera; ours 253-262 px = 7.9-8.2 m); the mock's frame is 941 px = 29.4 m
    tall, our dev frames 800 px = 25 m, so the same road takes more of ours. (A 1672x941 render does not test it: the
    project's stretch mode keeps the vertical world extent and scaled px/m by ~1.18; discarded.) At a 1080p window
-   the game shows 34 m at 32 px/m, so in play the road share sits nearer the mock's and about 0.024 is off-road tone (roof outlines and the building shadow strips, see 9.2).
+   the game shows 34 m at 32 px/m, so in play the road share sits nearer the mock's. The mock CROPPED to our 1280x800 framing (masters
+   work/i9/mock_1280x800.png): L 0.475 / street 0.49 / paper 0.31 / ink 0.11 / mid 0.10 vs v9 0.457 / 0.50 / 0.29 /
+   0.11 / 0.11: at equal framing the L gap is 0.018 (not 0.031), all of it paper tone (9.4) and about 0.024 is off-road tone (roof outlines and the building shadow strips, see 9.2).
    The committed frame (h149st) has road share 0.571 by this mask (its darker print joins pavements' edges into it).
 4. **Paper highlights** (`item49`, in package v9): the print capped paper at CREAM (L 0.898); the mock's lit tops
    reach 0.90+ (0.128 of its off-road px, ours 0). look_d5_print `paper_hi` 1.0 prints sources lighter than cream

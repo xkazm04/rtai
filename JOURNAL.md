@@ -1348,7 +1348,7 @@ NEXT (iteration 9; 31-34 of iteration 8 and 27-30 of iteration 7 stand):
 35. Visual-engine lane + owner: package v9 (night_iter9_summary.png, item48). If look_d5_print is adopted, rebuild the
     7 D5 plates with the README 9.1 command and commit them in the same change (the thin print and the v9 plates go
     together; v9 plates under look_d4 darken the frame).
-36. City lane: the road share (README 9.3): our junction gives the road 0.43 of a 32 px/m frame vs the mock's 0.37;
+36. (CORRECTED, see the 05:58 entry: same road width; the mock frame is taller. At equal framing v9 is L 0.457 vs 0.475.)
     half the remaining L gap. Check the road width / block size against the mock before tuning any more tone.
 37. Next plates (if the Codex budget returns): lighter outer parapet outlines, judged on the fixed roof mask
     (masters work/i9/roofcls.py); a D5 plate for warehouse / long / helipad drawn as such (not derived: README 9.1).
@@ -1406,3 +1406,4 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   engine args; i9big): the project's stretch mode keeps the vertical world extent, so px/m scaled by ~1.18 (roads
   286-298 px): not a 32 px/m frame, discarded and deleted. NEXT 36 is therefore: compare at equal view height (or
   crop the mock to 800 px tall) before anyone tunes road width; at a 1080p window the game shows 34 m at 32 px/m.
+- 05:58 MEASURED the mock at OUR framing (its 1280x800 crop, junction at our x): L 0.475 / street 0.49 / paper 0.31 / ink 0.11 / mid 0.10 vs v9 (i9ph1) 0.457 / 0.50 / 0.29 / 0.11 / 0.11: the L gap at equal framing is 0.018, all paper tone (README 9.3, 9.4). night_iter9_summary.png gained the line.
