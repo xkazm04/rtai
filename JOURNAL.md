@@ -1079,3 +1079,23 @@ NEXT addendum (iteration 16): figure shadows cost +0.8 ms on the iGPU in the jun
   can cast: draw ONE quad per body cluster (or a tile list) so overlapping quads stop re-running the nearest loop,
   and pass the body index per quad (vertex colour, as NoirShadows packs its sweep) so the shader needs no loop
   at all. That also makes per-light directions cheap (one sweep per quad).
+- PERF (06:59-07:01, a8ea30d) the addendum's first half: each figure-shadow quad carries its body index in the
+  modulate colour (r = k / 255, read in vertex() into a varying, as NoirShadows packs its sweep), so the shader
+  samples one body per quad - no nearest-body loop, and overlapping quads no longer pick the wrong body.
+  Junction riot, iGPU 1080p, 2 runs: noir 12.91 / 12.87 ms vs 12.43 / 12.46 without figure shadows
+  (**+0.45 ms**, from +0.8). noir_frames vs step-4 frames: at most 918 px (the overlaps), D4 0 px
+  (evidence/figure-shadows-loop-vs-index-junction48.png). Showcase 48 re-recorded at a8ea30d (masters
+  figshadow-v12/48; at most 487 px per hero frame vs v10) -> evidence/showcase-figure-shadows-48.mp4.
+- (07:05) Gates at a8ea30d (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line.
+- Session close (iteration 16). Code commits: acb6633 (figure shadows), 126878b (per-body quads + half-size
+  silhouette + --cost meter), 8f1c748 (the city's rigs cast under --look=noir), e1ffaeb (tap every 4 px),
+  a8ea30d (body index per quad). Reverted, not committed: per-light directions, crowd casting (+6.9 ms).
+  Images 0 generated, 0 rejected; Leonardo not probed (nothing to generate); provenance +0. Ladder 36 rows.
+  Masters night/noir ~2.4 GB (scratch v3/v4/v6/v8/v9/v11, figcity-v2, figlight-v1 deleted). Shared files
+  touched: none (the city wiring goes through NoirLook). No process of mine running.
+  Morning entry points: evidence/figure-shadows-before-after.png, figure-shadows-city-street-64.png,
+  figure-shadows-city-junction-48-mixed.png, NOIR.md iteration-16 paragraph.
+NEXT (final for iteration 16, replaces the addendum): 1-5 of the 06:5x NEXT list stand, with item 2 (crowd
+  casting) now cheaper to retry: the nearest-body loop is gone, so 48 bodies cost 48 quads of taps, not 48 x 48
+  loop iterations; re-measure before adopting. Item 4 (per-light directions) is now one uniform per body.
