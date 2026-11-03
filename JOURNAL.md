@@ -1224,3 +1224,4 @@ night_iter7_summary.png and the iteration-7 order.
   evidence/item46b_rig_shadow_nogroup.png; ladder row. Showcase frames from h149st / a29st; night_iter8_summary
   rebuilt from h149st / h150all / a30all (D5_FRINGE=1 D5_DOTS=1 package_shot.sh). NEXT 33 updated. Scratch deleted:
   h148all, a26all, cost8nogroup (superseded).
+- 05:06 FINAL gates (iteration 8): evidence tool (--no-parity --no-bench) ALL PASS at 3f5af2e (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 84 untracked evidence PNGs moved aside and restored; tree clean. Parity/bench not run (no native build in this worktree).
