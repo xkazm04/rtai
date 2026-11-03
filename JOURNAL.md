@@ -410,3 +410,35 @@
      shoots.
 - 23:05 Unit re-run on a clean tree at 24851db: 569/569, and the tree stayed clean. Session ends
   here (stop by 23:16). Everything is committed.
+
+## Iteration 5 (23:06-23:30, BUILD, short session)
+- 23:06 answers.json re-read: 10 answers, nothing new for this lane (rivet-motion-1 A and
+  rivet-motion-2 B were applied earlier).
+- MILESTONE 8d88b8b: the electro baton's finisher arcs through metal.
+  - `MeleeShock.chain_path(pos, metal, first, hops, radius_m)` is now the shared static arc
+    walk. `MeleeShock.chain()` calls it with the shock's own hops and radius, so its behaviour
+    is unchanged and test_melee_shock still passes.
+  - `MeleeTable.chain_for(hit, pos, metal, first)`: a landed weapon hit with chain_hops > 0
+    on a metal body hops metal-to-metal within the weapon's chain_radius_m. A human struck
+    first never arcs, and hits 1 and 2 (chain_hops 0) never arc.
+  - Tests (in test_melee_weapons): against the station's metal line at x 6/8/10/14 with a
+    radius of 2.5, the finisher hits 6, 8 and 10 and stops short of 14. Planted fault: with
+    chain_radius_m set to 0 the baton does not arc, and the test catches it.
+  - Not wired into the arena hub or combo_clip yet (no frame yet; logic only).
+- FRICTION: `pos.append()` in a test is a discarded-return warning, so the script failed to
+  parse. The unit runner showed "560 passed" plus a script error, not a failure count. Read
+  build/test-results/unit-tests.log when the passed count drops.
+- Gates at 8d88b8b: lint 13/13 (506 files), unit 571/571, scenarios 19/19. No evidence or
+  bench run: the change is logic only, with no runtime path, goldens or parity touched.
+- NEXT (night run), carried from iteration 4 with one item closed:
+  1. answers.json first.
+  2. Weapon art for the katana and the baton (codex image_gen, with provenance). Then ASK
+     rivet-motion-3: a clip per weapon against the dummy line, in the D5 look.
+  3. The chainsaw (a hold mode on MeleeCombo: damage ticks, move_mult about 0.5, hit-stop on
+     contact) and the plasma sword (a timed block that deflects bullets; needs gunplay
+     projectiles).
+  4. Wire chain_for into the arena hub and combo_clip `--weapon=electro_baton`: the finisher
+     on the first metal dummy zaps 6/8/10 with arc lines (reuse the shock's arc draw), then
+     record the clip.
+  5. Still open: the vermilion hit flash (REQUEST 1 -> gunplay HitFeel); a Rivet contact beat
+     on the tackle; a longer reel with the shock and a cop that shoots.
