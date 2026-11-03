@@ -11,7 +11,7 @@
   - `features/hud/art/hud_digits.png`: a hand-inked numeral strip (`0123456789$/x+-:`) in the world's sign-painter
     caps, Codex `d4n_digits` (1 image, 0 rejected). The dev HUD overlay draws its counters from it instead of the
     default sans (36ce71b). The HUD README documents the cells and advances. Words still need a font (owner, AST-10).
-- `gates-31a948f.txt`, `gates-0276ab4.txt` (final, incl. the quest cast captures; + the quest patch's unit run):
+- `gates-31a948f.txt`, `gates-0276ab4.txt` (+ the quest patch's unit run), `gates-297bd42.txt` (final):
   `node tools/evidence/run.mjs --no-bench`, all PASS.
 - Merged check (scratch worktree, n-visual 928ed15 + n-d4 31a948f, `merge --no-commit`): only JOURNAL.md conflicts;
   unit tests there 214 passed, 0 failed (n-visual suite incl. the accent audit); frames

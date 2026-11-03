@@ -1173,3 +1173,9 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - 04:07 (patch only) quest 1's HP bar over Rivet was filled TEAL (teal = the dead); now ink on the cream bar, one line
   in `cast_view._hp_bar()`. Frames `after_q1p2|after_q1hp/04-dock-wave.png`, crop `work/q1hp_ab.png`. Patch +191 / -110,
   `git apply --check` clean on main + n-d4. Ladder row "i12g". (The whisper rings stay teal: they are the souls.)
+- 04:09 CHECK (git only) the quest patch with n-visual in the merge as well: scratch = main 721fbbb + n-d4 (temp commit)
+  + `merge --no-commit n-visual` (JOURNAL.md the only conflict): `git apply --check` clean. Scratch removed. Honest
+  note: the throwaway scratch commit was made with `--no-verify` (detached, never on a branch, gone with the
+  worktree); not repeated.
+- 04:09 GATES at 297bd42 (final for iteration 12): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
+  parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter12/gates-297bd42.txt`).
