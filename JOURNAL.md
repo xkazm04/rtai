@@ -1542,3 +1542,11 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   arm outline - a wider halo on paving is the code-side option. The bald head part has a small gloss arc (only
   worn with patch 21's overalls look; flatten like the iteration-14 pip if it shows at 64).
 - Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` (bench.json stale; another lane was rendering 05:25).
+- 05:37 CHECKED, no change: ped heads - the bald head's gloss and the hair's shine are thin pen arcs (the same class
+  as the ammo-ticket bullet's highlight, accepted in iteration 14), not a 3D ball like the old pip
+  (`work/i16/heads.png`). Rivet's limb outlines (13-19 part px) match the peds' new 14 px, so the hero is not
+  out-inked by the crowd.
+- 05:38 REJECTED, NOT SHIPPED: car_wreck pale bare-metal patches toned to ash (lum 118). Merged scratch, the wreck is
+  static so the crop is same-scene: `after_i16sl2_st|probe_i16wr_st/selftest-32ppm.png`, `work/i16/wreck_ab.png`:
+  n-visual's print already prints the patch as a mid wash (no white splat there - it was n-d4 alone's look), and
+  the ash version barely differs. Scratch restored (cmp equal). 0 Codex.
