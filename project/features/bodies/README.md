@@ -37,6 +37,9 @@ The bubble sim (GDScript reference `features/city/sim/sim_body.gd` and native
    normal, lies `down_s`, then a ped flees (`M_FLEE` from where it was hit, or back to the riot if it
    was a rioter) and a cop resumes. Downed people are not scared by gunfire (they stay down), can
    still be shot and run over, and draw the `hit` clip's last frame.
+   A person RUNNING into the body (its own closing speed above the tackle speed) follows the
+   table's human -> rivet_base run result: `blocked` sets `BD_RUN_IN`, and the person takes the whole
+   overlap (a fleeing ped cannot shove Rivet).
 3. After all actors moved, the body is pushed out of everything it still overlaps (two passes),
    then out of solid cells. `body_result()` returns the resolved position and the knockdowns
    `(slot, x, y)`; `RivetBody.take` writes Rivet back and emits `Events.actor_knocked_down`.
@@ -68,5 +71,7 @@ in the arena yet). A robot or big-boss fighter needs its own class in `ArenaBodi
   and into a robot (`blocked`, no overlap); planted faults: tackle off, the robot row removed.
 - `tests/scenarios/scenario_bodies_cop.gd`: a tackled cop lies 1.4 s and resumes as a cop (never
   flees); planted fault: down_s 0.
+- `tests/scenarios/scenario_bodies_runin.gd`: a 4.5 m/s ped into a standing Rivet moves him
+  0.09 m (rule off: 0.61 m, the planted fault).
 - `dev/bench/bodies_cost.gd`: native riot step with the body on vs off (CONTENDED, within noise).
 - `tests/parity/city_parity.gd` drives the body through the riot (walk and sprint legs): exact.
