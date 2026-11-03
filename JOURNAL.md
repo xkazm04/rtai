@@ -498,3 +498,14 @@ NEXT (after the 17:00 freeze / next session, in order):
 - NEXT: unchanged from iteration 46 (fire half 2 after splitting out `vehicle_burn.gd`; frame the
   fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; a drive48 bench variant with
   VehicleService).
+
+## Iteration 50 (17:03-17:10, STABILIZE)
+- Wrote REPORT.md, the lane report for 17:30: what works, the gates at eb7d066 (it6), merge notes
+  (use d-vehicles' native DLL; the city_chase contention flake), open REQUESTS 1-10, and the gaps.
+- I did not re-run the gates. The code is unchanged since e341b25 and was gated green at eb7d066 in
+  iteration 49; the only commits since then are docs.
+- No Godot process of mine is running. The bench lock is held by d5-city, not by me, and I did not touch it.
+  0 frames, 0 rejected, no AI images, no provenance lines.
+- NEXT: (post-day) fire half 2 after splitting out `vehicle_burn.gd` (Rivet takes fire damage,
+  wreck-to-wreck spread); frame the fire kill once d5-combat's blood is merged; a `burned` kill kind
+  (REQUEST 10); consumers for REQUEST 1/2/3/4; a drive48 bench variant that includes VehicleService.
