@@ -28,6 +28,10 @@ const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
 const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
 ## cast_rivet_peek.png: a round cut of the same capture (plate + hazard collar) for the hide spots.
 const RIVET_PEEK: Vector2 = Vector2(1.03, 1.03)
+## The captures above are of the night rig (RivetPlan size_k 1.3); the owner's verdict made the
+## base form size_k 1.1 (d5-cast, 2026-11-03), so they draw at 1.1 / 1.3 until re-captured
+## (then set this to 1.0). The arm guard (guard_k 0.85) only changes with a re-capture.
+const RIVET_FORM_K: float = 1.1 / 1.3
 ## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
 const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
 const ALLY_ART: Dictionary[String, String] = {
@@ -64,9 +68,9 @@ func _draw() -> void:
 func _rivet(r: Fighter) -> void:
 	var at: Vector2 = r.pos
 	if stage.hidden_in != "":
-		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK, Vector2.UP)
+		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK * RIVET_FORM_K, Vector2.UP)
 		return
-	_sprite("rivet", at, RIVET_SIZE, r.facing)
+	_sprite("rivet", at, RIVET_SIZE * RIVET_FORM_K, r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
 
 

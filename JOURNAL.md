@@ -79,3 +79,8 @@
 - FRICTION: dev/frames/quest1_clip exits 0 even when a script fails to compile (one still was
   rendered from a broken objective_hint.gd before I caught it in the scenario); always run the
   input scenario first. Re-rendered the affected still.
+- 11:03 Rivet in quest 1 drawn at d5-cast's base form scale: CastView.RIVET_FORM_K = 1.1/1.3
+  (their RivetPlan FORMS base size_k 1.1 vs the night 1.3 the capture was taken at). The arm
+  guard (guard_k 0.85) only comes with a re-capture (REQUEST 2 stays open; set the factor to 1.0
+  when cast_rivet.png is re-captured from the base form). Before/after ticks 3000/7000 at 32
+  and 48: masters rivet-{before,after}{32,48}/, side by side rivet-ab-48.png.
