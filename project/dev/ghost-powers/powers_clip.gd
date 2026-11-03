@@ -26,6 +26,8 @@ var _ring: PowersRing = null
 ## --look=<scaled|bulked> overrides powers.json hauler.look (ASK ghost-powers-2 A/B frames).
 var _look: StringName = &""
 var _cops: bool = false
+## The sound hook as it fired (the clip is silent): "id@tick".
+var _cues: PackedStringArray = PackedStringArray()
 ## Rendered frames (a hit-stop renders frames without a tick) and frames still held.
 var _frame: int = 0
 var _held: int = 0
@@ -45,6 +47,8 @@ func _ready() -> void:
 	city.spawner.targets = CityTargets.street(60, 10, 0)
 	_drive = PowersClipDrive.new(city, START, _before)
 	_drive.cops = _cops
+	@warning_ignore("return_value_discarded")
+	_drive.hauler.cued.connect(_on_cue)
 	_world.add_system(_drive)
 	_view = CityView.new()
 	add_child(_view)
@@ -72,6 +76,11 @@ func _ready() -> void:
 	get_tree().quit(0 if ok else 1)
 
 
+func _on_cue(id: StringName, _at: Vector2, tick: int) -> void:
+	@warning_ignore("return_value_discarded")
+	_cues.append("%s@%d" % [id, tick])
+
+
 func _add_ring() -> void:
 	_ring = PowersRing.new()
 	_ring.hauler = _drive.hauler
@@ -93,6 +102,7 @@ func _numbers() -> bool:
 		"activations": _drive.powers.uses.get(&"hauler", 0),
 		"stomps": h.form.stomps,
 		"stomp_hitstop_frames": hitstop_frames,
+		"cues": _cues,
 	}
 	printerr("powers_clip: %s" % r)
 	var f: FileAccess = FileAccess.open(
