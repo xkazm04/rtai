@@ -69,3 +69,12 @@ the clip goes quiet after the wreck). Frames at 3, 9, 13 s looked at: straight d
 Second run on the vehicles lane's plain route (`--route`: enter the sedan, full throttle through a pedestrian, S-bend, handbrake slide; 12 s, report only, no clip,
 `vehicles_merge_route_cues.json`): the sink heard `tyre_screech` 1, and the `pedestrian_struck` Event gave 1 body thud + 1 death (the pedestrian was killed); engine pitch 0.99 -> 1.60 at
 28 m/s top speed -> 0.75 at rest (all four vehicle sounds now covered against real cars; the hijack slam is the `hit_metal` of the carnage run). Not heard.
+
+## Iteration 4: are the voice lines intelligible in the real mix? (`tools/audio/mix_intelligibility.py`, evidence/mix/slice_q1_intelligibility.json)
+
+Whisper (base.en, local) transcribes the audio of `slice_q1_audio.mp4` (150 s of the real slice) and each line the line player asked for is matched against the transcript (best word-window
+difflib ratio): **8 of the 20 requested lines come through clearly (>= 0.78: rivet-line-stopped, rivet-my-hands, fax-slow-motion, fax-statistically, rivet-buildings-talk, guard-who-do-we-call,
+mertz-inventory, mertz-appliances), 3 are partial (0.36-0.52), 9 are not in the audio (<= 0.21)**. That matches the voice-queue loss (7 drops; the voices alone run 272 s against 121 s of subtitles),
+not a masking problem: the same lines read back clean in isolation (mean WER 2.9%, evidence/voice_stt.json) and the clip's mix has the voice -2 dB under sfx +3 dB with a 9 dB music duck.
+The lost lines include **the Patch call itself (`patch-collect-call`, 0.16)**, a line the quest opens on. This is REQUEST 1 (slice-play): until the line timing follows the voice length, a third to a half of the
+voiced lines never play. A read-back, not a listening test.
