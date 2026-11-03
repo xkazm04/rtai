@@ -450,3 +450,19 @@ bosses we resolve in future."
 3. Full-length bench (3 x 60 s) and scenario_city_chase on an IDLE machine, to compare riot rig p99 with the 0.407 ms morning figure.
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:23 - 17:25 (iteration 51, STABILIZE): final verify before the 17:30 report, no change
+- HEAD 2508c45 differs from the last gated code commit b7fb4f9 only in JOURNAL.md (`git diff --stat`), so the iteration 47 gates
+  still stand (lint 13/13, unit 337/0, scenarios 12/12, parity exact, replay identical, rig_stress green CONTENDED) and the
+  iteration 50 section 20 bench (short, CONTENDED, PASS, riot rigs p99 0.463 ms) is on this exact code.
+- No re-run: 7 minutes to the report is too short for the full gate set, and nothing changed to re-gate. No Godot process of mine
+  running; `bench.lock` absent (not taken this iteration). frames.json (15 entries) unchanged.
+- Untracked evidence/clip/ (about 60 MB of mp4/png, mirrored in gtai-masters/day-d5/collisions/) and evidence/scen/quest-*.json
+  (not this lane's files) deliberately left uncommitted.
+
+### NEXT
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Full-length bench (3 x 60 s) and scenario_city_chase on an IDLE machine, to compare riot rig p99 with the 0.407 ms morning figure.
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
