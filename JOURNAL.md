@@ -120,3 +120,8 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
   evidence/d5-city/11-road-width-mock/ (labelled concept). Narrowing is sim data (cells, traffic lanes,
   PERIOD 8 = 3 street tiles), touches vehicles/slice-play: not done unilaterally.
 - BLOCKED 11:37 bench: bench.lock held by d5-combat (fresh). Skipped.
+- REJECTED 11:50 D5 lamp post in the city (row 24 -> art/d5/props/lamp_post.png, 3.2 x 0.66 m): richer
+  at 64 px/m (bolted base, pipe arm), but at 32 px/m the light grey pipe washes out on the paving where
+  the D4 lamp's black pole + ball base read bold (T1's lamps are dark poles). Reverted (table untouched).
+  evidence/d5-city/rejected/rejected-d5-lamp-{32,64}ppm.png. Retry only as a darker-inked variant or a
+  zoom-tiered swap (D5 art from 48 px/m up).
