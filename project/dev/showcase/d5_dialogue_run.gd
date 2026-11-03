@@ -7,6 +7,9 @@ extends D5HeroRun
 ## gameplay frame. Launch: d5_hero.gd -- --dialogue=<left>,<right> (portrait file names).
 ## --phone=<portrait> instead shows the phone close-up: the D5 phone frame (menus/art/d5/) with
 ## the portrait behind its keyed screen and a placeholder call strip.
+## Dev A/B (iteration 10): D5_UI=sharp draws the portraits and the phone frame through look_d5_ui
+## (D5_UI_SHARP overrides its unsharp amount, default 0.5); D5_UI_PX = the portrait size
+## (default 200; 270 = a 1080p panel).
 
 const PORTRAITS: String = "res://features/characters/art/d5/portraits/"
 const PAPER: Color = Color(0.949, 0.910, 0.835)
@@ -21,6 +24,7 @@ const PHONE: String = "res://features/menus/art/d5/phone_frame.png"
 ## the keyed screen hole as fractions of the frame (tools/install_king_top.py prints them)
 const SCREEN: Rect2 = Rect2(0.127, 0.1383, 0.75, 0.7064)
 const PHONE_H: float = 600.0
+const UI_SHADER: String = "res://assets/shaders/look_d5_ui.gdshader"
 
 var left_name: String = "rivet_angry"
 var right_name: String = "cop_shouting"
@@ -43,7 +47,8 @@ func _ready() -> void:
 		return
 	var top: float = view.y - MARGIN - PANEL_H
 	ui.add_child(_box(Rect2(MARGIN, top, view.x - MARGIN * 2.0, PANEL_H), 4))
-	var p: float = PORTRAIT_PX
+	var p: float = OS.get_environment("D5_UI_PX").to_float()
+	p = p if p > 0.0 else PORTRAIT_PX
 	var y: float = top - p * 0.22
 	ui.add_child(_portrait(left_name, Rect2(MARGIN + 16.0, y, p, p)))
 	ui.add_child(_portrait(right_name, Rect2(view.x - MARGIN - 16.0 - p, y, p, p)))
@@ -79,6 +84,7 @@ func _portrait(file: String, r: Rect2) -> Panel:
 	tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	tex.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_ui_print(tex)
 	tex.position = Vector2(4.0, 4.0)
 	tex.size = r.size
 	frame.add_child(tex)
@@ -108,6 +114,17 @@ func _phone(ui: CanvasLayer, view: Vector2) -> void:
 		ui.add_child(bar)
 	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	frame.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_ui_print(frame)
 	frame.position = at
 	frame.size = size
 	ui.add_child(frame)
+
+
+func _ui_print(node: CanvasItem) -> void:
+	if OS.get_environment("D5_UI") != "sharp":
+		return
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load(UI_SHADER) as Shader
+	if OS.get_environment("D5_UI_SHARP") != "":
+		mat.set_shader_parameter(&"sharp", OS.get_environment("D5_UI_SHARP").to_float())
+	node.material = mat
