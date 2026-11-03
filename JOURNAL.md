@@ -579,3 +579,8 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
 19. Owner: HQ's vermilion plate on "HQ" is heavier than the other signs; keep or thin.
 - 02:07 FINAL gates (iteration 5): evidence tool (--no-parity --no-bench) ALL PASS at dd3f0f5 (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 50 untracked evidence PNGs moved aside and restored.
 - 02:08 item4_hero_vs_targets.png rebuilt from h85 (all boards and evidence frames now on one state: h85 / s4 / a15). evidence/README.md: iteration 5 section, table rows, gap 2 updated.
+- 02:09 MILESTONE (h86): the mural's vermilion misprint no longer prints on the laundry line under the fist (the
+  rim stops 10 px above the fist's bottom; the clothesline outlines touched the dilated fill). d4 tier 0 px; d5
+  changed 127 / 292 px at 32 / 64, all on the cloth tops. Vermilion share of the roof 0.68% -> 0.65%. Crop
+  evidence/item21b_misprint_laundry.png. MISTAKE: I deleted frames/h85 while cleaning (boards cited it); the boards
+  (item4, night_iter5_summary) and evidence/hero-*ppm.png are re-made from h86 (= h85 + this fix), README updated.
