@@ -36,6 +36,8 @@ var press_left: bool = false
 ## The player (bound input) when set; null for the bot, which writes intent itself.
 var pilot: StagePilot = null
 var tick: int = 0
+## The last quest line StageLines acted on.
+var last_line: String = ""
 ## The city's walk cells Rivet collides with, and the city whose bubble follows him (both null
 ## on the invented arena).
 var cells: StageCells = null
@@ -44,7 +46,6 @@ var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
 var _cued: Dictionary[String, bool] = {}
 var _events: EventBus
-var _last_line: String = ""
 
 
 func _init(p_layout: StageLayout) -> void:
@@ -73,7 +74,7 @@ func setup(ctx: WorldContext) -> void:
 func step(p_tick: int, tick_input: TickInput) -> void:
 	tick = p_tick
 	whisper_now = false
-	_line_hooks()
+	StageLines.apply(self, _current_line())
 	if pilot != null:
 		pilot.drive(self, tick_input)
 	_move()
@@ -203,6 +204,13 @@ func _emit_events() -> void:
 		_events.whispers_spiked.emit()
 
 
+## The quest line on screen ("" for none).
+func _current_line() -> String:
+	if _quest != null and _quest.runner != null and _quest.runner.lines.current != null:
+		return _quest.runner.lines.current.id
+	return ""
+
+
 func _beat_id() -> String:
 	if _quest == null or _quest.runner == null or _quest.runner.current_beat() == null:
 		return ""
@@ -226,30 +234,3 @@ func _respawn() -> void:
 	arena.rivet.pos = layout.marker("The Toner Room").at
 	hidden_in = ""
 	Log.info("stage", "Rivet destroyed: respawn at the Toner Room (tape bill %d)" % deaths)
-
-
-func _line_hooks() -> void:
-	var line: String = ""
-	if _quest != null and _quest.runner != null and _quest.runner.lines.current != null:
-		line = _quest.runner.lines.current.id
-	if line == _last_line:
-		return
-	_last_line = line
-	match layout.line_hooks.get(line, ""):
-		"give_gloria":
-			arena.rivet.weapon = &"gloria"
-		"repair":
-			arena.rivet.hp = arena.rivet.max_hp
-		"whisper":
-			whisper_now = true
-		"cash_under_phone":
-			cash_phone = _nearest_phone()
-
-
-func _nearest_phone() -> String:
-	var best: String = ""
-	for phone: String in layout.phones:
-		var d: float = layout.phones[phone].distance_to(arena.rivet.pos)
-		if best == "" or d < layout.phones[best].distance_to(arena.rivet.pos):
-			best = phone
-	return best
