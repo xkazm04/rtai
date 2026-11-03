@@ -655,6 +655,22 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_q1cast2": {
+   "file": "masters:night/d4-production/gen/out/d4n_q1cast2.png",
+   "sha256": "41f7500f443cbd38e1a14e16e9e6690e6a1a496262c4291e0b5f9292149ffaab",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/q1cast2.txt",
+   "prompt_sha256": "e7a90dfad956dbfe3e0b31d8ccde62fe9311b92fdf81966da6da0849c782b58b",
+   "layout_template": "masters:night/d4-production/gen/refs/t_q1cast.png",
+   "references": [
+    "own: crop of pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target characters, style anchor)",
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)",
+    "own: rtai quests/collect-call/quest.json designNotes (owner-approved character designs)"
+   ],
+   "seed": null
   }
  }
 }
