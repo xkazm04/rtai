@@ -31,6 +31,11 @@ uniform float shade_px = 8.0;     // width of the hatched shadow band on each pa
 uniform float shade_k = 0.26;     // stroke coverage in that band (0 = off)
 uniform float verm_shade = 0.7;   // the form-shade hatch also over vermilion plates (cop bodies, the collar)
 uniform float lit_k = 0.55;       // cream lit rim on the upper-left edge (keeps the part's mean tone vs the street)
+uniform float fringe_k = 0.0;    // OPTION (owner A/B, iteration 8): the concept's off-register vermilion along each
+                                  // part's down-right edge, inside the outline, broken like a misprint (0 = off)
+uniform float fringe_art = 22.0;  // that band's depth in PART px (the art's outline is drawn in part px too)
+uniform vec2 fringe_fade = vec2(0.2, 0.3); // px_scale where it starts / is full (64 -> 96 px/m: busy at 64)
+uniform float fringe_dry = 0.2;   // the misprint's vermilion mixed this far toward ink (the collar stays the purest)
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
@@ -77,6 +82,10 @@ void fragment() {
 	float far = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s).a);
 	float near = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_s * 0.5).a);
 	float shade = clamp(far * 0.6 + near * 0.4, 0.0, 1.0);
+	// the misprint shifts in PRINT space (screen down-right, as the shade band) but its depth is in part px
+	vec2 dir_s = dFdx(UV) + dFdy(UV);
+	vec2 off_f = dir_s / max(length(dir_s / TEXTURE_PIXEL_SIZE), 1e-4) * fringe_art;
+	float fringe = 1.0 - step(alpha_cut, texture(TEXTURE, UV + off_f).a);
 	if (c.a < 0.04) discard;
 	vec2 g_px = floor(UV / TEXTURE_PIXEL_SIZE * px_scale);   // paper grain locked to the part, never to the screen (no swim)
 	float g = 1.0 - 0.06 * hash(g_px);
@@ -115,6 +124,9 @@ void fragment() {
 			float a2 = texture(TEXTURE, UV + off).a;
 			float rv = smoothstep(verm_gate, verm_gate + 30.0, red_lead(s2)) * step(0.5, a2);
 			o = mix(o, VERM, rv * mis_k * (1.0 - ink));
+			float fk = fringe_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale);
+			float brk = smoothstep(0.30, 0.45, vnoise(q * vec2(0.22, 0.31) + 7.0));   // the misprint drops out
+			o = mix(o, mix(VERM, INK, fringe_dry), fringe * brk * fk * (1.0 - ink));
 			// paper grime: blotchy dry-brush in part space
 			float gr = vnoise(q * 0.35) * vnoise(q * 1.7 + 3.0);
 			o = mix(o, INK, smoothstep(0.48, 0.66, gr) * grime);
