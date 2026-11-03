@@ -646,3 +646,15 @@ NEXT (iteration 8 close, in order):
   on the four corner pavements): evidence/show-32-final5-vs-final6.png. So evidence/showcase-hero.png (48/64)
   stands as it is. The four posts in the junction's corners are traffic signals, not `lamp_post`, so they
   throw no pool. Flash meter show-final6 noir 32 / 48 / 64: 2 per second max, 0 red.
+- (03:46) REFACTOR (NEXT item 6, aa0621a): blood_fx.gd 250 -> 215 lines; its static helpers (counter hash,
+  colour from data, zero-filled packed pools) move to `features/fx/noir/noir_pack.gd` (NoirPack). 197 unit
+  pass; the junction showcase re-recorded at 48 px/m: all 23 hero frames pixel-identical to show-final6.
+- MILESTONE (03:47) cars as ink masses (9fa045b): `car_ink` 1 prints each moving car's body (`car_len` 140 x
+  2 * `car_half_w` 30 px at 32 px/m, behind the headlight nose, from the same NoirHeadlights data) as solid ink
+  with a 1.5 px white edge. A/B same tick: masters night/noir/carink-v1/ab-junction-48.png, ab-street-48.png,
+  ab-street-32.png (left beam-v5, right car_ink); evidence/car-ink-junction-48.png, car-ink-street-32.png.
+  Ladder row 30 (30 rows). Read: a modest gain - the car becomes a dark hulk behind its own light, so the cone
+  and the pools (and Rivet) are the brightest things, not the car box; matches "cops = ink masses". Costs: the
+  body is an exact rectangle sized to tonight's placeholder car art (real car art will need its size from the
+  art table), and it paints over whatever stands on its footprint (at 32 px/m a ped brushing the car loses a
+  sliver). 197 unit pass.
