@@ -15,6 +15,8 @@ const RUN_SPEED: float = 160.0
 const STRIDE_WALK: float = 54.0
 const STRIDE_RUN: float = 92.0
 const COLLAR_K: float = 0.22
+## The sticker rim (cream halo under each part), as a fraction of its old width (0.5 = halved).
+const RIM_K: float = 0.5
 
 var plan: BodyPlan = null
 var lib: PartLibrary = null
@@ -200,6 +202,6 @@ func _on_view(px: float) -> void:
 	for i: int in halos.size():
 		halos[i].visible = hk > 0.01
 		if halo_limb[i] == 1:
-			halos[i].scale = Vector2(1.0 + 0.04 * hk, 1.0 + 0.45 * hk)
+			halos[i].scale = Vector2(1.0 + 0.04 * RIM_K * hk, 1.0 + 0.45 * RIM_K * hk)
 		else:
-			halos[i].scale = Vector2.ONE * (1.0 + 0.22 * hk)
+			halos[i].scale = Vector2.ONE * (1.0 + 0.22 * RIM_K * hk)
