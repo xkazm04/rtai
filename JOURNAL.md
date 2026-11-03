@@ -690,7 +690,7 @@ NEXT (iteration 10, in order):
   measured 2 only because there the inverted frame stays mostly paper. So: a pass by design, with no margin
   where the ground is lit. NEXT item 3 corrected: if a margin is wanted, the inverted mode could keep lit
   pools paper (or the beat skip mode 1 over lit ground); not changed tonight.
-- REVERTED (03:53) lamp_gate 0.05 -> 0.01 (to let the asphalt catch the pools): no visible change (masters
+- REVERTED (03:51) lamp_gate 0.05 -> 0.01 (to let the asphalt catch the pools): no visible change (masters
   night/noir/gate-v1/ab-street-48.png, ab-street-32.png, ab-junction-48.png). The gate is not why the pools stop
   at the kerb: the cones light the asphalt fine at full lift, but the kerb lies in a pool's falloff (the pools
   are centred on the pavement), where the lift is too small to cross the threshold. A geometry question (pool

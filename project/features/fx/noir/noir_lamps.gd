@@ -7,8 +7,8 @@ extends RefCounted
 const MAX_LAMPS: int = 8
 const PROP: String = "lamp_post"
 ## The lamp art is the arm seen from above, the head (the light) at its +x end: the pool centres
-## under the head, over the kerb, not on the post's base (nor on a roof behind it).
-const HEAD_M: float = 1.0
+## out along the arm (2.2 m: the light reaches the kerb and the road edge), not on the post's base.
+const HEAD_M: float = 2.2
 
 var tex_id: int = -1
 var _cache: Dictionary[Vector2i, PackedVector2Array] = {}
