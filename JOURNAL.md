@@ -325,3 +325,9 @@ NEXT (after the 18:00 sync), in order:
   FxTriggers.cued field (core/render, shared with kill_beat + muzzle_pop + city_fight): a small API change for
   the next session, not 25 min before the freeze.
 - 16:37 session end: tree clean after this commit; no Godot process of mine running; bench.lock (d5-cast's) untouched.
+- 16:40 (iter 45, 20 min to freeze): no new code this close to the freeze. Housekeeping only:
+  masters frames.json checked: 15 entries, 0 missing files (file + before). Deleted my 1.3 GB clipraw/ (900 PNGs of
+  clip-noir, already encoded into clip-blood-noir-{48,64}ppm.mp4) and 2 empty scratch dirs (beat48/, clipraw2/).
+  Masters folder now 681 MB; C: 234 GB free. Kept raw/ (frames.json points into it) and beatclip/ (beat stills).
+- NEXT: unchanged from the list above (owner picks first; then the car-hit slide via a FxTriggers.cued field).
+- 16:41 session end: tree clean after this commit; gates last green at 5a6e21b (docs-only commits since).
