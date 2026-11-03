@@ -702,8 +702,8 @@ Sheet: `masters:night/d4-production/night_iter6_summary.png` (8 rows, before | a
 - Evidence rig: `dev/showcase/quest_board_run.gd` (`asset_board.gd --page=quest`, look_d4 at 32/48/64).
 - Reverted / not shipped: dark asphalt specks (pepper), wheel-scuff arcs on the dock floor (tiling tell), 0.25 m cage
   mesh (solid hatch), arc ball with the atlas crackle (lost its danger ring), downed bodies in vermilion at 1.5x.
-- Codex this iteration: **7 images** (q1, q1cast, q1cast2, fire, q1down, props2 + 0 retries beyond q1cast2), 29 cells,
-  **4 rejected** (q1cast: 4 front views). Night total: **27 images, 170 cells, 7 rejected**. No usage limit hit.
+- Codex this iteration: **6 images** (q1, q1cast, q1cast2, fire, q1down, props2), 29 cells,
+  **4 rejected** (q1cast: 4 front views). Night total: **26 images, 170 cells, 7 rejected**. No usage limit hit.
 
 NEXT (session end, iteration 6):
 - Owner review: iteration-6 commits each revert alone: 20bb95b (asphalt), d365cba (pavement), 153d91d + 6034c96 +
