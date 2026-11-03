@@ -222,3 +222,13 @@ NEXT:
   it still dies a beat before the swing (swings 0: 7 nails, 7 hits, 6 hp; a race the scripted
   Rivet wins at 100 % close-range accuracy). Kept as rig_fight_lunge_race_32ppm.mp4. Clip f
   stages the thug 4.6 m out (inside reach + lunge at once) so the windup -> lunge -> swing reads.
+- Clip f (thug staged 4.6 m out, i.e. inside reach + lunge at once): windup arc -> lunge -> swing
+  (the arm thrown out) -> the scripted Rivet had stepped off the line: swings 1, hits 0; then the
+  thug dies (7 nails, 7 hits). The cop: 2 shots, 0 hits. rig_fight_lunge_32ppm.mp4 (10 s, 30 fps
+  real time) is the lane's lead clip; frames.json rewritten: 7 rig entries first, 5 debug-draw
+  entries kept and marked superseded (12 total). Stats copied to evidence/enemy-ai/rig-fight-*.json.
+- SEEN on the rigs (not fixed, not mine): a nail hit tints the whole robot rig vermilion-orange for
+  a few frames (CutRig's hit tint, PartMaterials). Vermilion is reserved for danger; a hit flash
+  on an enemy is arguably not danger. Note for d5-cast / gunplay (hit-feel owner).
+- GATES at the lunge commit (8a71359 + docs): lint 13/13; unit 553/553 (run_unit.mjs); scenarios
+  21/21 (full suite, 22:24); enemy units 16/16.
