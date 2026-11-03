@@ -14,10 +14,14 @@ const GRADE_SHADER: String = "res://assets/shaders/grade_ink.gdshader"
 const MAX_FLASH_HZ: float = 3.0
 ## A grade row's shader uniforms (lights.json `grades`).
 const GRADE_KEYS: Array[StringName] = [&"paper_level", &"gamma", &"accent_keep"]
+## Below this page age the grade rect does not draw for it.
+const AGE_EPS: float = 0.004
 
 var kinds: Dictionary[StringName, Dictionary] = {}
 var grades: Dictionary[StringName, Dictionary] = {}
 var grade: StringName = &"day"
+## The page age (0..1) the grade rect warms the neutral print by (set_page_age).
+var page_age: float = 0.0
 var max_lights: int = 64
 var active: int = 0
 var dropped: int = 0
@@ -71,7 +75,26 @@ func set_grade(id: StringName) -> void:
 	var mat: ShaderMaterial = _grade.material
 	for key: StringName in GRADE_KEYS:
 		mat.set_shader_parameter(key, row.get(String(key), 1.0 if key != &"accent_keep" else 0.0))
-	_grade.visible = not is_identity(row)
+	_grade.visible = _grade_draws()
+
+
+## The D5 aged paper over the whole page (LookOverlay.page_age_of: the world, the actors, the
+## vehicles and the FX age together, so a cream body never reads cool on warmed paper). 0 with
+## the day grade keeps the rect hidden; below AGE_EPS counts as 0.
+func set_page_age(a: float) -> void:
+	var v: float = clampf(a, 0.0, 1.0)
+	v = v if v > AGE_EPS else 0.0
+	if is_equal_approx(v, page_age):
+		return
+	page_age = v
+	var mat: ShaderMaterial = _grade.material
+	mat.set_shader_parameter(&"age", page_age)
+	_grade.visible = _grade_draws()
+
+
+func _grade_draws() -> bool:
+	var row: Dictionary = grades.get(grade, {})
+	return not is_identity(row) or page_age > AGE_EPS
 
 
 ## True when a grade row leaves the print untouched (the rect stays hidden).

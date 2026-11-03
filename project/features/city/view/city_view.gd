@@ -140,6 +140,7 @@ func _place_camera(focus: Vector2) -> void:
 	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
 	for o: LookOverlay in _overlays:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
+	lights.set_page_age(LookOverlay.page_age_of(_overlays))
 	lights.step(tick, world_px)
 	fx.step(tick, world_px)
 	fx.glow.step(tick, world_px)

@@ -4,11 +4,18 @@ extends Control
 ## a BackBufferCopy of the printed frame + a full-rect ColorRect with the overlay shader (the
 ## d5-close lane's look_d5 "Inked Grime"), on the `print_overlay` band of the `print` canvas,
 ## under the actors. Its `amount` comes from the look id and the zoom (amount_ppm stops); at
-## amount 0 it is hidden, so the gameplay frame pays nothing. Render only.
+## amount 0 it is hidden, so the gameplay frame pays nothing. The params' aged paper (`age`,
+## `age_floor`) is NOT printed here: it is the page's (page_age -> LightLayer.set_page_age), so the
+## actors above this layer age with the world. Render only.
 
 var spec: Dictionary = {}
 var amount: float = 0.0
 var stops: PackedVector2Array = PackedVector2Array()
+## The params' aged paper: `age` scales with the amount, `age_floor` holds below the ramp.
+var age: float = 0.0
+var age_floor: float = 0.0
+## The look id has this overlay (full_looks / zoom_looks), whatever the zoom.
+var active: bool = false
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
 
@@ -83,6 +90,9 @@ static func ramp_stops(rows: Array) -> PackedVector2Array:
 ## Per frame: the amount for `id` at `ppm`, and world_px (grain and hatch locked to the world).
 func update(id: StringName, ppm: float, world_px: Vector2) -> void:
 	amount = amount_for(spec, stops, id, ppm)
+	var full: Array = spec["full_looks"]
+	var zoomed: Array = spec["zoom_looks"]
+	active = full.has(String(id)) or zoomed.has(String(id))
 	visible = amount > 0.001
 	if visible:
 		_mat.set_shader_parameter(&"amount", amount)
@@ -98,4 +108,26 @@ func _apply_params() -> void:
 	var key: String = spec["params_key"]
 	var u: Dictionary = d.get(key, {})
 	for k: String in u:
+		if k == "age":  # the page's (page_age), not this layer's
+			age = u[k]
+			continue
+		if k == "age_floor":
+			age_floor = u[k]
+			continue
 		_mat.set_shader_parameter(StringName(k), LookParams.uniform_value(u[k]))
+	_mat.set_shader_parameter(&"age", 0.0)
+	_mat.set_shader_parameter(&"age_floor", 0.0)
+
+
+## This overlay's aged paper for the whole page after update(): age x amount, at least age_floor
+## while the look has the overlay; 0 for a look without it (off, d1).
+func page_age() -> float:
+	return maxf(age * amount, age_floor) if active else 0.0
+
+
+## The strongest page age of `overlays` (what a view hands LightLayer.set_page_age each frame).
+static func page_age_of(overlays: Array[LookOverlay]) -> float:
+	var a: float = 0.0
+	for o: LookOverlay in overlays:
+		a = maxf(a, o.page_age())
+	return a

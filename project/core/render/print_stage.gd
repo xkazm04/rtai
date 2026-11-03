@@ -91,6 +91,7 @@ func place(focus_m: Vector2) -> void:
 	_look_mat.set_shader_parameter(&"world_px", world_px)
 	for o: LookOverlay in _overlays:
 		o.update(look_id, zoom * SimConst.PX_PER_M, world_px)
+	lights.set_page_age(LookOverlay.page_age_of(_overlays))
 	lights.step(tick, world_px)
 	fx.step(tick, world_px)
 	fx.glow.step(tick, world_px)
