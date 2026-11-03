@@ -1354,3 +1354,23 @@ NEXT (iteration 9; 31-34 of iteration 8 and 27-30 of iteration 7 stand):
     (masters work/i9/roofcls.py); a D5 plate for warehouse / long / helipad drawn as such (not derived: README 9.1).
 Morning reading order: night_iter9_summary.png -> item48 -> night_iter8_summary.png -> item46 / item44 -> item43 /
 item47 (owner A/B) -> night_iter7_summary.png.
+- 05:43 MEASURED the off-road tone (masters work/i9/paperbins.py): our off-road PAPER is darker, mean L 0.819 vs the
+  mock's 0.859. Bins (share of off-road px, L .70-.75 / .75-.80 / .80-.85 / .85-.90 / .90+): mock 0.034 0.049 0.107
+  0.188 0.128; v9 (i9mot) 0.135 0.018 0.086 0.237 0.000. Two causes: (1) the print caps paper at CREAM (L 0.898),
+  while the mock's lit tops reach 0.90+; (2) our light-wash step prints at L ~0.75 and is common.
+- 05:45 NEW OPTION (1b1cc5f; default 0, no-op): look_d5_print paper_hi = sources lighter than cream (ink
+  density t < 0.05: parapet caps, sign plates, stencils, car roofs, the chalk outline) print PAPER_HI (0.985, 0.955,
+  0.895) instead of CREAM; and a dev switch D5_PRINT_SET=<uniform>=<v>,... for look_d5_print uniforms
+  (d5_hero_halo_ink.gd dev_switches). FRICTION/MISTAKE: the first commit's const insert matched nothing, so the
+  shader did not compile under D5_PRINT=thin (three rounds came back identical and wrong in every pixel; the
+  SHADER ERROR line was hidden by my own "| tail -1"). Fixed in the next commit; the broken rounds were deleted. Since
+  then I read the full shoot output.
+- 05:47 KEPT in package v9 (package_shot.sh exports D5_PRINT_SET=paper_hi=1 unless set; D5_PRINT_SET= turns it
+  off): i9ph1 vs i9mot: the 0.90+ bin 0.000 -> 0.044 (mock 0.128), frame L 0.455 -> 0.457, paper median L 0.848 ->
+  0.852 (mock 0.867), mid 0.11 = 0.11. Actors: 0 changed px on any rig at 128 (hero and arena change maps; the rim
+  metric of cls.py cannot see the rim itself, so I checked the maps); pan 48 px/m junction 0.00049 = 0.00049 and roof
+  0 = 0. By eye: subtle, caps and sign plates a touch whiter, as in the mock. params JSON print.paper_hi 1.0
+  (_doc updated for the v9 plates); unit 149/0. REJECTED beside it: wash_lo 0.30 -> 0.22 (i9wl22): mid 0.11 -> 0.08,
+  undoes item48.
+- 05:50 Board evidence/item49_paper_hi.png; night_iter9_summary.png, hero-pkg9-* and arena-pkg9-* rebuilt from the
+  final v9 (i9ph1, a35v9 = + fringe + dots); ladder row. i9v9c = i9ph1 and i9v9off = i9mot (0 px, deleted).

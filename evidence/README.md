@@ -273,7 +273,13 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    gives 0.470: about 0.015 of the gap is LAYOUT (our roads take more of the frame: a city-lane / camera-framing
    question, not the look) and about 0.024 is off-road tone (roof outlines and the building shadow strips, see 9.2).
    The committed frame (h149st) has road share 0.571 by this mask (its darker print joins pavements' edges into it).
-4. Items 1, 3-7 of iteration 8 stand.
+4. **Paper highlights** (`item49`, in package v9): the print capped paper at CREAM (L 0.898); the mock's lit tops
+   reach 0.90+ (0.128 of its off-road px, ours 0). look_d5_print `paper_hi` 1.0 prints sources lighter than cream
+   lighter: 0.90+ bin 0 -> 0.044, paper median L 0.848 -> 0.852 (mock 0.867), mid and actors unchanged, no pan swim.
+   Still open: our light-wash step (L ~0.75) holds 0.135 of the off-road px vs the mock's 0.034, but lightening it
+   (wash_lo 0.22) costs the mid-tones (0.11 -> 0.08). Next: a light-wash step that keeps a soft ramp instead of one
+   flat level, judged on these bins (masters work/i9/paperbins.py).
+5. Items 1, 3-7 of iteration 8 stand.
 
 ## Gap list after iteration 8 (in-engine h139rs committed / h140all with every proposal, vs `d4h2_mock.jpg` and the concept)
 Iteration 8 had no image budget. It worked where the remaining differences were visible by eye rather than in the
