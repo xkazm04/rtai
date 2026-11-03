@@ -9,6 +9,17 @@ places, patrols, phones and crates cleared and no QuestSystem.
 - `ArenaStations` reads every `data/tables/arena_stations/*.json` (one file per lane, all under
   `data/schemas/arena_station.schema.json`; the lint maps that folder to that schema). A lane
   adds a station by adding its file: id, name, area, spawns, props, tuning keys, measures.
+  Only id, name and area are required; the lists are optional.
+- Station hooks: a station row's `"script": "res://features/<lane>/<hook>.gd"` names an
+  `ArenaHook` (copy `arena_tick_hook.gd`). The stage builds it after setup and calls `setup`,
+  `step` (every tick, after the stage), `write_state` (replay hash), `telemetry` (folded into the
+  session JSON under the station id), `attach_view` (the dev view) and `tune` (the live panel's
+  knobs for that lane's tables). A lane wires its weapon, enemies or power without editing the
+  arena's files. Paths outside res://features/ or scripts that do not extend ArenaHook are dropped.
+- Tuning keys address array rows by index: `rivet_melee.claw.hits.0.windup_ticks`.
+- Merge rehearsal: `godot --headless --path project -s res://dev/arena/stations_check.gd --
+  --dir=<folder of every lane's station files> --out=<report.json>` loads them together, builds
+  every hook and resolves every knob; exit 1 on a skipped file, a broken hook or a bad knob path.
 - `ArenaTargets`: hit-reporting dummies (static / strafe / approach) inside the CombatArena.
 - `ArenaTelemetry`: shots, hits, hit rate, time to kill per dummy, damage taken, input-to-motion
   latency (sim ticks), peak turn rate, top speed, knockdowns -> `gtai.arena-telemetry/1`.
