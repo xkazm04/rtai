@@ -211,3 +211,12 @@ NEXT (iteration 3, in order):
 5. Explosion art: car_wreck uses the D4 explosion kind (small starburst + light halo); ask
    d5-combat whether a D5 inked fireball / burning wreck sprite fits their FX sheet.
 6. Full-length bench (3 x 60 s) once the machine is quiet; a drive48 variant with VehicleService.
+- MILESTONE 12:15 b952920 wrecks keep smoking (`wreck_smoke` cue, fx smoke, every 75 ticks per
+  wreck, 1.7 m ahead of the centre). Iterated in-engine on the same tick 900: every 40 ticks at the
+  centre hid the wreck art (carnage-v6, REJECTED 11 frames, deleted); every 75 at the centre still
+  covered the bodies (carnage-v7, REJECTED 11, deleted); nose offset keeps the dented rear halves
+  readable (carnage-v8, kept). Unit 357, scenarios 11/11 at b952920. frames.json 15 (aftermath
+  pair carnage-v4/900 -> carnage-v8/900), ladder 1280 x 8042.
+- Day totals so far: 157 frames captured, 63 rejected (20 input race, 21 roof walk, 22 smoke too
+  heavy), 0 camera breaks. No AI images (no provenance lines).
+- 12:17 REQUEST 4 (custom.y atlas pick) still not in d-city (checked its shaders): NEXT 2 stands.
