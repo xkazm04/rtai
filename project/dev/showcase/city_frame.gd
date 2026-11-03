@@ -9,6 +9,8 @@ extends Node
 ##   [--cars=<n>] [--police=<n>] [--settle=<frames>]  traffic targets (24, 2), frames per shot (60).
 ##   [--zooms=<z>,...]  zooms to shoot (1 = 32 px/m; default 1,1.5; 2 = 64 px/m).
 ##   [--look=<id>]  the look profile (default `auto`); [--foci=<i>,...] which FOCI to shoot.
+##   [--pan=<frames>]  after each shot, pans east at PAN_MPS for that many frames, one PNG each,
+##   plus city-<i>-<ppm>-pan.json (camera screen px per frame); [--nosnap] the sub-pixel camera.
 ##   Run with --fixed-fps 60 for a deterministic frame (one sim tick per rendered frame).
 
 const MASTER_SEED: int = 91
@@ -24,6 +26,8 @@ const FOCI: Array[Vector2] = [
 ]
 const ZOOMS: Array[float] = [1.0, 1.5]
 const SETTLE_FRAMES: int = 60
+## the pan speed (m/s): a slow car, a non-integer px step per frame at every zoom
+const PAN_MPS: float = 7.3
 
 var _out: String = "user://city_frame"
 var _city: CitySystem = null
@@ -36,6 +40,8 @@ var _settle: int = SETTLE_FRAMES
 var _zooms: Array[float] = ZOOMS.duplicate()
 var _look: StringName = &""
 var _foci: Array[int] = [0, 1, 2]
+var _pan: int = 0
+var _snap: bool = true
 
 
 func _ready() -> void:
@@ -58,6 +64,7 @@ func _ready() -> void:
 	_view.setup(_city)
 	if _look != &"":
 		_view.look_id = _look
+	_view.snap_px = _snap
 	var characters: CityCharacters = CityCharacters.new(_city, _view, world.context())
 	await characters.bake()
 	await _view.prewarm()
@@ -89,6 +96,10 @@ func _parse_args() -> bool:
 			_foci.clear()
 			for v: String in arg.substr(7).split(","):
 				_foci.append(v.to_int())
+		elif arg.begins_with("--pan="):
+			_pan = arg.substr(6).to_int()
+		elif arg == "--nosnap":
+			_snap = false
 		elif arg.begins_with("--zooms="):
 			_zooms.clear()
 			for v: String in arg.substr(8).split(","):
@@ -111,6 +122,8 @@ func _capture(i: int, zoom: float) -> bool:
 		await get_tree().process_frame
 	var file: String = "city-%d-%dppm" % [i, roundi(zoom * SimConst.PX_PER_M)]
 	var ok: bool = await _save(file)
+	if _pan > 0:
+		ok = await _shoot_pan(file) and ok
 	for s: float in _hud_scales:
 		if _hud == null:
 			_hud = HudOverlay.new()
@@ -121,6 +134,24 @@ func _capture(i: int, zoom: float) -> bool:
 		ok = await _save("%s-hud%d" % [file, roundi(s * 100.0)]) and ok
 		_hud.visible = false
 	return ok
+
+
+## Pans east one tick per frame; the world under a pixel-snapped camera moves by whole px.
+func _shoot_pan(file: String) -> bool:
+	var ok: bool = true
+	var cams: Array = []
+	var start: Vector2 = _city.focus
+	for f: int in _pan:
+		_set_focus(start + Vector2(PAN_MPS * SimClock.TICK_DT * (f + 1), 0.0))
+		await get_tree().process_frame
+		ok = await _save("%s-pan-%02d" % [file, f]) and ok
+		var c: Vector2 = _view.camera.position * _view.zoom
+		cams.append([c.x, c.y])
+	_set_focus(start)
+	var fa: FileAccess = FileAccess.open(_out.path_join(file + "-pan.json"), FileAccess.WRITE)
+	if fa == null:
+		return false
+	return fa.store_string(JSON.stringify({"cam_px": cams, "snap": _snap})) and ok
 
 
 func _save(file: String) -> bool:

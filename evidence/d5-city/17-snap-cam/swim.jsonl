@@ -1,0 +1,5 @@
+{"dir": "snap", "crop": [120, 20, 200, 740], "frac": false, "pairs": 19, "mean_abs_diff": 0.021, "flip_share_gt24": 0.0}
+{"dir": "nosnap", "crop": [120, 20, 200, 740], "frac": false, "pairs": 19, "mean_abs_diff": 6.903, "flip_share_gt24": 0.08219}
+{"dir": "d5-snap", "crop": [120, 20, 200, 740], "frac": false, "pairs": 19, "mean_abs_diff": 0.02, "flip_share_gt24": 0.0}
+{"dir": "d5-nosnap", "crop": [120, 20, 200, 740], "frac": false, "pairs": 19, "mean_abs_diff": 6.638, "flip_share_gt24": 0.07841}
+{"dir": "nosnap", "crop": [120, 20, 200, 740], "frac": true, "pairs": 19, "mean_abs_diff": 8.602, "flip_share_gt24": 0.11272}

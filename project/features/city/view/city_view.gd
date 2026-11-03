@@ -38,6 +38,10 @@ var clock: SimClock = null
 ## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
 ## frame (eased zoom, look-ahead, shake); null keeps `zoom` as set (selftests, goldens, benches).
 var rig: CameraRig = null
+## Pixel-snapped camera: the camera sits on whole screen px, so a pan moves the world art by whole
+## px (no bilinear swim of the hatching and pen lines) in step with the print's rounded world_px.
+## False is the old sub-pixel camera (A/B: dev/showcase/city_frame.gd --pan --nosnap).
+var snap_px: bool = true
 ## The camera's world offset in screen px this frame (every print shader's world lock).
 var world_px: Vector2 = Vector2.ZERO
 var textures: CityTextures = null
@@ -154,7 +158,8 @@ func _place_camera(focus: Vector2) -> void:
 		offset = rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = Vector2.ONE * zoom
 	_update_look()
-	camera.position = focus * SimConst.PX_PER_M + offset
+	var cam: Vector2 = focus * SimConst.PX_PER_M + offset
+	camera.position = (cam * zoom).round() / zoom if snap_px else cam
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
 	world_px = _print_px() - get_viewport_rect().size * 0.5
