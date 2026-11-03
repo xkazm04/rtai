@@ -867,3 +867,11 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   0.00049 = 0.00049, HF change 0.000538 = 0.000538, changed px/tick 991.6 vs 991.4: no added flicker. Board
   evidence/item34_halo_ink.png (the mock crop is at its own scale: its stickers are drawn larger and with a thicker
   rim than ours at 32 px/m). Ladder row. For the characters lane: the same pass in rig_build.gd _halo.
+- 03:31 MILESTONE (493eb43, PROPOSAL option): look_d5_halo's soft drop shadow down-right (D5_HALO_SHADOW=1: 0.09 m
+  offset, blur 0.4 x offset, ink 0.4; the same light as the buildings' cast shadows), drawn by the same ring sprite
+  (z below every halo, so a character's own halos cover it). Refactor check: h108ink = h107ink, 0 px at 32-96.
+  h108ink -> h108sh: 661 / 1669 / 3046 px at 32 / 48 / 64 (0 at 96+: halos off). Shadow at 32 px/m: street L 0.282
+  -> 0.226 (a rough mock sample under its baton cop: open asphalt 0.345 vs under-right 0.285, the same ~0.06 step),
+  cream ground 0.83 -> 0.62. By eye at 48: the cops and Rivet's arms sit on a soft shadow like the mock's stickers.
+  Not measured in motion separately (same sprite as the ring, which adds 0; the shadow is a soft alpha). Board
+  evidence/item34_halo_ink.png rebuilt with three columns + the mock; ladder row replaced (03:31).
