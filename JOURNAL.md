@@ -313,3 +313,17 @@ NEXT (night run, after the 00:00 merge), in order:
   runs `--check-only` and the unit gate.
 
 NEXT (night run, after the 00:00 merge): unchanged from iteration 6, item 1 now has a patch to start from.
+
+## Iteration 8 (23:30-23:40, STABILIZE, past freeze)
+- answers.json re-read 23:30: nothing new for ghost-powers (ghost-powers-1 A / -2 B stay placeholders per the
+  owner's 21:25 rule). Tree clean at 0748482; no code change since iteration 6's green gates (lint 13/13,
+  unit 570/570 run alone, scenarios 20/20). frames.json present. No new features (freeze); nothing to fix.
+- The lint gate re-runs through the pre-commit hook on this commit.
+
+NEXT (night run, after the 00:00 merge): unchanged from iteration 6/7:
+1. Apply evidence/ghost-powers/request4-per-worktree-scratch.patch (REQUEST 4), `--check-only`, unit gate.
+2. Tank on Rivet's real rig in the playable view + victims with hit reactions; re-ask ghost-powers-1/2 with a
+   real-time D5 clip.
+3. Gearbox ArenaHook on gearbox_pad (residue_s 2 via station data).
+4. Hauler in the arena pit (`--start=pit`).
+5. Bench the city-path blood (riot scene) when bench.lock is free.
