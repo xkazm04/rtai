@@ -380,3 +380,31 @@ NEXT (iteration 6 / night run):
 3. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
 4. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
 5. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
+
+## Iteration 6 (23:18, BUILD; freeze 23:30, a 12-minute session)
+- answers.json re-read at 23:18: gunplay-3 answered **A** (owner 22:55, "tight burst on the told
+  line", an owner pick on real clips). A was the default and is already in the table
+  (enemy_fire.lock_spread_scale = 0.3), so no data change and no golden moves. Recorded in
+  docs/decisions.md. gunplay-1 and gunplay-2 remain placeholders (owner 21:25 / Director 21:45:
+  re-ask only with a clip in the final look).
+- Director notes carried from the gunplay-3 stills (night run work, not started in 12 minutes):
+  (a) at 32 px/m the pistol in the claw barely reads: a weapon silhouette scale/contrast pass on the
+  held gun (coordinate with rivet-motion, which owns the arm/claw pose: REQUEST 9 -> rivet-motion,
+  the held-weapon socket should allow a per-weapon display scale from weapons.json);
+  (b) live contractors clump with corpses into one blob: the living must stay readable
+  (REQUEST 10 -> d5-combat/enemy-ai: corpses desaturate/darken or settle under the living; gunplay
+  can add a hit-flash-free "alive" rim if asked).
+- No code changed this iteration; no gate re-run (the last run, iteration 5 at ab24bca: lint 13/13,
+  scenarios 20/20, unit 555/568 with all 13 in the shared-scratch test_save_slots collision).
+  No Godot processes of mine running.
+
+NEXT (night run):
+1. Carry the table's area behaviours onto CombatArena (the quest/city fight): flamethrower cone +
+   burn DoT + fire patch, rocket splash + knockdown, electro chain + stun, through GunHand reusing
+   features/combat/weapons/impact.gd and sweep.gd; then pistol_fight --weapon=<each> clips at 32
+   and 48 px/m.
+2. The held weapon reads at 32 px/m (Director note a; REQUEST 9).
+3. The living read apart from corpses (Director note b; REQUEST 10).
+4. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
+5. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
+6. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
