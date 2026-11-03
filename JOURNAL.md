@@ -534,5 +534,9 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   square layout template, so the plate would stretch 2x on x (anisotropic pen lines), and Codex dropped the
   corrugated ribs (it stops reading as a warehouse). Not installed; manifest REJECTED. Lesson: pad non-square
   roofs to a square template, never resize. Ledger 50. Images tonight: 50: generation done for the night.
-- 02:04 boards: night_iter5_summary.png from h85 + a15; evidence/hero-d4d5-*ppm.png = h85 (the d4 frames are
+- 02:02 boards: night_iter5_summary.png from h85 + a15; evidence/hero-d4d5-*ppm.png = h85 (the d4 frames are
   unchanged since h81, 0 px). README: OSHA/tall + the tone-vs-lines finding.
+- 02:02 RE-CHECKED readability with the iteration-5 roofs (h85 vs h73, d5 tier): every changed px lies inside a roof
+  rectangle (32 px/m: rows 0-361 and 706-800; the street band 361-706 and every actor 0 px; 1 stray px at 48). The
+  pan-swim test (d5_pan.gd) crops kerb/pavement/street only, so roof swim is NOT measured (open; the roofs are
+  mipmapped world sprites like the D4 ones).
