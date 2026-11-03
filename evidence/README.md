@@ -10,6 +10,7 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 | `iter8/` | moving-traffic atlas, damage / hijack atlases, generic roofs; generator patch v1 (superseded by `iter10/`); traffic wiring patches (superseded: n-visual wired traffic itself); gates, bench PASS at 38136e8 |
 | `iter10/` | inked paving joints, plaza flags, junction zebras; **generator patch v2**, **crowd slot patch**; gates, bench at 56b9b72 |
 | `iter12/` | tank tracks, bollard, HUD numeral strip; quest 1 view patch (superseded by `iter14/`); gates at 297bd42 |
+| `iter16/` | morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch: green) and its board vs the target; pedestrian sleeve variants + **rig sleeves patch** (supersedes 21); gates at 767ee6c |
 | `iter14/` | ink splat sticker (FX), Toner Room floor, inked arc ball, flat heat pip; **quest 1 view patch (final)**; muzzle + crackle fade patch for visual-engine; summary sheet; gates at 4477108 |
 
 ## Patches for code owners (apply after merging n-d4; none is committed as code)
@@ -18,7 +19,7 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 |---|---|---|---|
 | 16 | quest 1 | `iter14/q1_view_art.patch` | 4 view files: places (+ Factory Row concrete, Harbor Road pavement + kerb), cast (incl. Rivet, patrol cops, Rivet's hide-spot peek from rig captures), HUD frames + inked cash counter, ink HP bar, the inked arc ball loop, inked whisper rings. Dry run (04:36, before the arc ball; with it unit 166/166 in scratch-q1): main 721fbbb + n-d4 merges with no conflict, the patch applies, lint 13/13, unit 166/166, scenarios 8/8; also applies with n-visual merged in |
 | 19 | city / generator | `iter10/generator_art_pick_v2.patch` | generic roofs in the pick, no neighbour repeats, upright lettered roofs, plaza quarter turns, street variants cycle; moves the AST-12 golden list (included) |
-| 21 | characters | `iter10/rig_variant_new_looks.patch` | crowd slots 3 and 7 use the hoodie / cap and overalls / bald parts |
+| 21 | characters | `iter16/rig_sleeves_and_looks.patch` (supersedes `iter10/rig_variant_new_looks.patch`) | crowd slots 3 and 7 use the hoodie / cap and overalls / bald parts, and jacket / hoodie looks wear the `_dark` sleeves, overalls `_grey` (`RigVariant.sleeve` + 4 lines in `RigArm._cell`): the crowd stops reading as clones at 32 / 48 px/m |
 | 23 | visual-engine | `iter14/fx_fade.patch` | fx.json `muzzle` + `crackle` `fade_from` 0 -> 0.6: the flash prints as a solid inked star and the bolts as solid ink instead of dither fragments (REQUEST 14 + 23) |
 
 ## Merge notes

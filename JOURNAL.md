@@ -1444,3 +1444,28 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   turn to mush" on the character) and `features/characters/art/README.md` ("no hatching on the characters") rule it
   out, and 48 shows exactly that grit. Kept as an OWNER QUESTION: hatch Rivet's limbs for the 64 px/m boss arenas
   only? (variant `masters:work/i16/rivet_g4/`, originals `backup_rivet16/`). scratch-m16 restored. 0 Codex.
+- 05:14 CHECK morning merge dry run: scratch-m16 + `git apply` of REQUEST 19 (generator v2), 21 (crowd looks) and 23
+  (fx fade) - all `--check` clean on n-visual 41ee996 + n-d4 - re-baked: bake `--check` matches (patch 19's golden),
+  lint 13/13 (220 files), unit 221/221, scenarios 8/8, selftest + city_frame 0 placeholders
+  (`evidence/iter16/morning-merge-gates.txt`). Board n-d4 alone | morning merge | target at 32 / 48 / 64:
+  `masters:night_iter16_morning.png` (= `evidence/iter16/night_iter16_morning.jpg`): with patch 19 the roofs are
+  upright and varied ("LOCAL 9 UNION", "OSHA") like the target. Commit 3145798.
+- 05:15 Found on that board: the riot crowd reads as clones at 32 / 48 even with patch 21 - the six looks only swap
+  head + torso, and the shared CREAM SLEEVES are the widest top-down shapes (`work/i16/crowd48_zoom.png`).
+- 05:18 MILESTONE pedestrian sleeve variants. `masters:tools/ped_sleeves.py`: `upperarm`, `forearm`,
+  `upperarm_endon`, `forearm_endon` + `_dark` (lum 48, prints ink) / `_grey` (lum 150, prints the mid wash); hands
+  kept cream (the forearm's shape past the cuff; end-on, the fist disc - a first cut had it inverted, caught on the
+  board `work/i16/endon.png`). Same size + pivots (parts.json entries copied). Code for the characters owner:
+  `evidence/iter16/rig_sleeves_and_looks.patch` = REQUEST 21's looks + `RigVariant.sleeve` + 4 lines in
+  `RigArm._cell` (jacket, hoodie `_dark`; overalls `_grey`; coats + vest cream); SUPERSEDES
+  `iter10/rig_variant_new_looks.patch`. In-engine on the morning tree, same seeded scenes:
+  `morning_i16_st|after_i16sl2_st/selftest-{32,48}ppm.png`, `morning_i16|after_i16sl2/city-*-{32,48,64}ppm.png`,
+  crops `work/i16/sleeves_ab32z2.png`, `sleeves_ab48.png`, `sleeves_pave48.png`: ink-sleeved people with the cream
+  sticker rim among the cream ones - distinct people at 32 and 48, the cops' vermilion stands out more, and on the
+  cream paving the dark looks print as bold ink figures (the cream-on-cream weakness gone for them). First probe had
+  the new imports without mipmaps (Godot default); fixed to the README's "lossless with mipmaps", re-shot
+  (`after_i16sl2*`, same read). 8 provenance lines (derived from the f08 parts), characters art README, ladder2 rows
+  "i16 crowd sleeves". Commit 767ee6c. Unused on n-d4 alone until the patch lands. 0 Codex.
+- 05:22 GATES at 767ee6c: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+  selftest 72 art textures, 0 placeholders (`evidence/iter16/gates-767ee6c.txt`). Morning tree + the sleeves patch
+  (instead of 21): lint 13/13, unit 221/221, scenarios 8/8.

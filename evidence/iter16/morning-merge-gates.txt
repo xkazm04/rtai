@@ -16,3 +16,7 @@ Not run here: n-visual's look / block golden selftest (needs the post-merge re-b
 
 Frames: masters night/d4-production/morning_i16/, morning_i16_st/; board night_iter16_morning.png
 (= evidence/iter16/night_iter16_morning.jpg): n-d4 alone | morning merge | target d4h2_mock, 32 / 48 / 64 px/m.
+
++ evidence/iter16/rig_sleeves_and_looks.patch instead of REQUEST 21's patch (it contains 21's looks + the sleeves),
+  with n-d4 767ee6c's sleeve art: lint 13/13 (220 files), unit 221/221, scenarios 8/8, selftest + city_frame
+  0 placeholders. Frames: masters after_i16sl2/, after_i16sl2_st/ (before = morning_i16*/).
