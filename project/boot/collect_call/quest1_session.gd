@@ -80,6 +80,9 @@ func _add_city() -> void:
 	city.focus = stage.layout.rivet_start
 	city.target = city.focus
 	world.add_system(city)
+	# the chunks around Rivet resident before tick 0, so the first frame after Start has a street
+	# (live, replay and resume all open here, so the run stays deterministic)
+	city.residency.update(city.focus)
 	city.spawner.targets = CityTargets.street(CITY_PEDS, 0, 0)
 
 
