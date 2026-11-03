@@ -5,6 +5,11 @@ extends RefCounted
 ## melee arm, hands-up, roll tuck and death sprawl; solved as a 3D two-bone chain. A strongly
 ## foreshortened segment swaps to its end-on cell; the gun arm swaps to its pistol cell.
 
+## rivet-motion: the sprint arm pump. At the sprint top (RigPose.sprint01 = 1, Rivet only) the
+## counter-swing grows by SPRINT_PUMP and the hands pull in toward the body by SPRINT_TUCK.
+const SPRINT_PUMP: float = 0.5
+const SPRINT_TUCK: float = 0.35
+
 
 static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 	var p: BodyPlan = rig.plan
@@ -47,7 +52,10 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 	if not p.ready_stance:
 		hang = 1.0
 	var tgt: Vector3 = p.hand_ready[s].lerp(p.hand_relax[s], hang)
-	tgt.x += sin(ph) * -sgn * lerpf(70.0, 150.0, rig.run_blend) * walk01
+	var sprint: float = RigPose.sprint01(rig) * walk01
+	var pump: float = 1.0 + SPRINT_PUMP * sprint
+	tgt.x += sin(ph) * -sgn * lerpf(70.0, 150.0, rig.run_blend) * walk01 * pump
+	tgt.y = lerpf(tgt.y, sh.y * 0.6, SPRINT_TUCK * sprint)
 	if rig.sides[s].shield != null and rig.sides[s].shield.visible:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.8, sh.y * 0.35, -20.0), 0.85)
 	if rig.aiming and aim_arm:
