@@ -3,9 +3,9 @@
 - `night_iter10_summary.png`: before | after | target crop, same deterministic scenes through look_d4 (city_frame
   seed 91 for the paving rows, the render selftest for the junction rows, the asset board for the kerb corner).
   The last row is a REJECTED probe (paper grain on the paving), not shipped.
-- Shipped: pavement joints inked (3ebf21a; 3 px of 64 grey on sidewalk, curb x3, curb corner), junction zebras
+- Shipped: pavement joints inked (3ebf21a; 3 px of 64 grey on curb x3, curb corner; the plaza tile inks only its 4 m joints, a1874f7), junction zebras
   redrawn (5b3ce9c, then 95d22f1: 9 clean thin stripes a side, no corner glyphs, no ink wear pepper).
-- `gates-c4dfe4a.txt`, `gates-123e170.txt` (final art + patches): `node tools/evidence/run.mjs --no-bench`, all PASS.
+- `gates-c4dfe4a.txt`, `gates-123e170.txt`, `gates-cc9633c.txt` (final, incl. the plaza): `node tools/evidence/run.mjs --no-bench`, all PASS.
 - Full frame sets: `gtai-masters/night/d4-production/{before,after}_pj`, `{before,after}_pjc`, `zb_{before,z6,z7,z9}`,
   `probe_pj64w2|64w3`, `probe_pgc`; ladder rows "i10 ...".
 - `generator_art_pick_v2.patch` (SUPERSEDES `evidence/iter8/generator_art_pick.patch`): the iteration-8 art pick

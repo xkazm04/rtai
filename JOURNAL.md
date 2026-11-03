@@ -980,3 +980,7 @@ NEXT (session end, iteration 10):
   side-by-side hid the 1 px ink lines at 32 and made the plaza look grey-only; the 1:1 crop is what I judged.) Quarter
   turns in the generator patch keep it (lines on the edges and at the centre). Provenance, README row 10b, ladder rows.
   Commit a1874f7 (owner review with 3ebf21a).
+- 03:05 GATES at cc9633c (HEAD incl. the plaza): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders. Summary sheet now 11 rows (+ plaza).
+  NEXT as at 03:02, plus: owner review a1874f7 together with 3ebf21a (revert a1874f7 alone = the plaza back to the
+  2 m ink grid; revert both = the old grey joints).
