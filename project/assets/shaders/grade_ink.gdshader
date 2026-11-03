@@ -17,8 +17,11 @@ uniform float accent_keep = 0.0;  // 0..1: how much of an accent pixel escapes t
 uniform float verm_gate = 0.31;   // palette.json gates (PaletteTokens.classify)
 uniform float teal_gate = 0.26;
 uniform float age = 0.0;          // 0..1 aged paper over the whole printed page (0 = off)
-uniform vec3 age_dark = vec3(1.03, 0.955, 0.87);   // look_d5 AGE_DARK / AGE_LIGHT (d4h2_mock.jpg medians)
-uniform vec3 age_light = vec3(1.065, 1.0, 0.955);
+// per-channel gains at luma 0 / 1, solved so the D4 print's street (86,76,77, luma 0.31) and paper
+// (235,225,207, luma 0.89) land on d4h2_mock.jpg's medians (81,71,72) / (243,218,188); look_d5's own
+// AGE_DARK / AGE_LIGHT (1.03,0.955,0.87 / 1.065,1,0.955) left the street too red (89,74,69)
+uniform vec3 age_dark = vec3(0.892, 0.915, 0.950);
+uniform vec3 age_light = vec3(1.052, 0.976, 0.903);
 
 void fragment() {
 	vec3 c = texture(screen_tex, SCREEN_UV).rgb;
