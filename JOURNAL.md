@@ -466,3 +466,15 @@ bosses we resolve in future."
 3. Full-length bench (3 x 60 s) and scenario_city_chase on an IDLE machine, to compare riot rig p99 with the 0.407 ms morning figure.
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:30 - 17:35 (iteration 52, REPORT): REPORT.md written
+- REPORT.md: what works (13 claims, each with an evidence path or command), what does not, blockers (bench lock about 27 min; godot-cpp
+  submodule about 10 min; REQUEST 3 open since about 13:00), relayed requests, merge notes, next steps. Every cited path checked to exist.
+- No code change; the final code commit is still b7fb4f9. The iteration 47 gates and the iteration 50 bench (short, CONTENDED) describe the tree.
+
+### NEXT
+1. Owner review of the v7 clip/crop (shoulder touch about 0.12 s OK, or d5-cast shortens the sprawl; do not retry v3-v6).
+2. REQUEST 3 (slice-play sprint > 5.0 m/s); then arena knockback as a slide over ticks.
+3. Full bench (3 x 60 s) and scenario_city_chase on an idle machine.
+4. Get-up grace and Rivet's recovery cost: owner call.
+5. At the merge: re-bless look goldens once on the merged tree; regenerate constants with d-vehicles; rebuild both DLLs.
