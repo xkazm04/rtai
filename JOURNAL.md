@@ -1001,3 +1001,30 @@ NEXT (iteration 13 / morning, in order):
     1.50 -> 0.67 (6), 1.21 -> 0.54 (10) = the large-scale print swim halved. Same-tick before/after
     frames differ in 85 % of pixels (the grain sits elsewhere; the fix applies). Kept (measured better,
     not worse). gtai-masters/.../43-zoom-swim/ (crops, residual maps, swim_metric.py / .txt); ladder 43.
+- Selftest at f3d6fc1 (zoom anchor): PASS, goldens 11/11 + 5/5 worst 0.00 (bit-identical: no rig),
+  accents clean, world lock 0.00 % x3.
+- Skipped on purpose: a `--reduced-motion` launch flag (QA path until a settings feature exists). It
+  needs boot/launch_args.gd KNOWN_FLAGS, a line n-noir also changed (identically, adding --look): my
+  edit would turn that clean merge into a conflict. After the merge: KNOWN_FLAGS + 2 lines in World
+  (view.rig.reduced_motion / view.markers.reduced_motion).
+- FOUND (integration): main's quest 1 (boot/collect_call/view/) draws with its own `Ink` constants (ink
+  #17131B, not palette tokens), its own fixed Camera2D at 48 px/m and its own FX drawing: none of the
+  visual engine (layers, print, rig, FX, lights, doctrine audit) reaches the first real gameplay.
+- MILESTONE (d5ac536) PrintStage (core/render/print_stage.gd, 144 lines): the engine as one node for
+  any non-city view - camera + rig + zoom-anchored world_px, D4 print + D5 overlays by look and zoom,
+  the actors canvas + item print, lights, the 3 FX twins, world-UI markers, all on declared layers.
+  CityView untouched (it composes the same pieces; moving it onto PrintStage after the merge avoids a
+  conflict with n-noir's city_view hunks). Unit 234 (+4). README "Plugging a view in".
+  Demo (dev/selftest/print_stage_demo.tscn, quest-1 placeholder shapes): off vs d4 at 32 / 48, auto 64.
+  LOOKED at: concrete takes wash + grime, the dark lane hatches, crates ink; the world's vermilion
+  barrel prints cream (no accent plate in the world) and the actor threat keeps vermilion. 44-print-stage/.
+- PROOF on main's real quest 1 (my scratch worktree scratch-visual-q1 = n-visual + main, removed after;
+  NOT committed anywhere): CollectCallView onto PrintStage = 47-line patch (its 48 px/m drawing scaled
+  by 32/48 into world px, stage zoom 1.5; stage_view on `ground`, cast_view / fx_view on the actors
+  canvas with the item print, HUD on the `hud` canvas). Quest 1's own frame grabber, same 9 shots
+  (ticks 261 .. 11435), before / after. LOOKED at 4: works mechanically (paper tooth, bolder Sobel ink,
+  accents held on guards / flames / Rivet's collar + eye, HUD unprinted), BUT the quest's 12 % WASH zone
+  floors fall under the first D4 wash step and flatten to paper (Factory Row / Dock 9 lose their zone
+  read) - worse for zone readability: the placeholder tints need >= the wash step (or real ground art)
+  before this ships. Patch + frames: gtai-masters/night/visual-engine/45-quest1/
+  (collect_call_view-on-print_stage.patch, cmp-quest1.png); ladder 45.
