@@ -24,6 +24,12 @@ func _process(_delta: float) -> void:
 	_worker.poll()
 
 
+## Quit (SAV-08): the write in flight and the pending one finish before the window closes.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		flush()
+
+
 ## Points the engine at another profile folder (tests, --profile). Flushes first.
 func use_root(root: String) -> void:
 	flush()
