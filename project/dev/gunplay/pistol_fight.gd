@@ -8,6 +8,7 @@ extends Node
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
 ##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
 ##        [--ppm=48]  [--dodge]  (a scripted player strafes across each locked aim line)
+##        [--dodge-away]  (as --dodge, the side away from the other gunners)
 ##        [--weapon=machine_pistol]  (any weapons.json row on the same chain; pistol by default)
 
 const SKIP_PER_FRAME: int = 600
@@ -39,6 +40,8 @@ var _armored_hp: float = 0.0
 ## Enemy rounds that landed on Rivet (the rest of GuardTell.rounds missed or were dodged).
 var _rivet_hits: int = 0
 var _dodge: bool = false
+## --dodge-away: the strafe side moves away from the other live gunners (not alternating).
+var _away: bool = false
 ## --spread=<k>: overrides the table's lock_spread_scale (GuardTell.spread_scale); <0 keeps it.
 var _spread: float = -1.0
 var _gun_id: StringName = &"pistol"  # --weapon=<id>: Rivet's weapons.json row
@@ -93,6 +96,9 @@ func _parse_args() -> bool:
 			_armored_hp = 1.0
 		elif arg == "--dodge":
 			_dodge = true
+		elif arg == "--dodge-away":
+			_dodge = true
+			_away = true
 		elif arg == "--one-slot":
 			_one_slot = true
 		elif arg.begins_with("--ppm="):
@@ -170,13 +176,25 @@ func _strafe() -> void:
 		if h.alive() and h.tell_left == arena.guard_tell.lock_ticks - 1:
 			# a strafe already running keeps its side (flipping walks back into the first line)
 			if _strafe_left <= 0:
-				_strafe_dir = h.facing.orthogonal() * (1.0 if _dodges % 2 == 0 else -1.0)
+				_strafe_dir = h.facing.orthogonal() * _side(h)
 				_dodges += 1
 			_strafe_left = arena.guard_tell.lock_ticks + STRAFE_AFTER
 	if _strafe_left > 0 and arena.rivet.alive():
 		_strafe_left -= 1
 		_play.stage.intent.move_to = Vector2.INF
 		_play.stage.intent.move_by = _strafe_dir * STRAFE_MPS * SimClock.TICK_DT
+
+
+## The strafe side across `h`'s line: alternating, or (--dodge-away) away from the other gunners.
+func _side(h: Fighter) -> float:
+	if not _away:
+		return 1.0 if _dodges % 2 == 0 else -1.0
+	var arena: CombatArena = _play.stage.arena
+	var pull: float = 0.0
+	for o: Fighter in arena.hostiles:
+		if o != h and o.alive():
+			pull += h.facing.orthogonal().dot((o.pos - arena.rivet.pos).normalized())
+	return -1.0 if pull > 0.0 else 1.0
 
 
 ## Between Rivet and the nearest live hostile, so the fight is in frame.
