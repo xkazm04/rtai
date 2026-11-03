@@ -4,6 +4,8 @@ extends RefCounted
 ## RigSprings, kicked by hits), shoulder sway and a run lean, the head looking toward the aim, and
 ## the clip envelopes (roll tuck, death sprawl, punch lean). Then both arms (RigArm).
 
+const SPRINT_LEAN_PX: float = 30.0
+
 
 static func step(rig: CutRig) -> void:
 	var p: BodyPlan = rig.plan
@@ -24,11 +26,19 @@ static func step(rig: CutRig) -> void:
 static func _body(rig: CutRig, walk01: float, ph: float) -> void:
 	var sway: float = lerpf(9.0, 6.0, rig.run_blend) * walk01 * cos(ph)
 	var bob: float = 1.0 + (0.018 + 0.02 * rig.run_blend) * walk01 * absf(sin(ph))
-	var lean: float = 22.0 * rig.run_blend * walk01 + 40.0 * rig.c_lean
+	var lean: float = 22.0 * rig.run_blend * walk01 + 40.0 * rig.c_lean + _sprint_lean(rig)
 	var at: Vector2 = Vector2(lean - 25.0 * rig.c_sprawl, sway) + rig.shove
 	var tuck: Vector2 = Vector2(1.0 - 0.34 * rig.c_tuck, 1.0 - 0.22 * rig.c_tuck)
 	var sc: Vector2 = Vector2(bob, bob) * tuck * (1.0 + 0.06 * rig.c_sprawl)
 	rig.body.transform = Transform2D(0.25 * rig.c_sprawl, sc, 0.0, at)
+
+
+## rivet-motion: a plan with a sprint stride also leans into the sprint (the body ahead of the
+## hips) from the run speed (5 m/s) to the sprint top (6.2 m/s); 0 for everyone else.
+static func _sprint_lean(rig: CutRig) -> float:
+	if rig.plan.sprint_stride <= 0.0:
+		return 0.0
+	return SPRINT_LEAN_PX * smoothstep(CutRig.RUN_SPEED, RigGait.SPRINT_SPEED, rig.speed_now)
 
 
 static func _head(rig: CutRig, p: BodyPlan) -> void:
