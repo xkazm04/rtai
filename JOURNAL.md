@@ -155,3 +155,8 @@ d-slice. Loc keys when the PO table lands. If slice-play wants quit-save off whi
 NEXT: Director applies patches 0001..0005 after merging d-save and d-slice. Loc keys for the notices
 when the PO table lands. If late-game loads get slow (>1 s re-simulation), move the replay behind a
 loading frame.
+- MILESTONE full gates on d-save at bb539db: `node tools/evidence/run.mjs --no-bench` PASS: lint 13/13,
+  unit 370, scenarios 9/9 (incl. replay_60s, autosave_resume), parity exact (planted mutation caught at
+  step 629), selftest look goldens 11/11. Bench not run (no render/sim change on d-save; no lock).
+  FRICTION `/tmp/ev.log` is shared by every lane on this machine; my first tail read another lane's
+  (d-vehicles) results. Use a path under the lane cwd for logs.
