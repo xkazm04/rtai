@@ -973,3 +973,8 @@ NEXT addendum: find a view where a building sweep shows (a block edge onto a pla
   phone-v1 (0 px). Quest 1's view does not draw the city chunks, so the cast shadows do not reach the real quest
   yet - no regression, no gain. NEXT: the shadows need the quest view (or the composition root's CityView under
   --look=noir) to show in play.
+- (06:01) Not filmed: the composition root's CityView under `--look=noir` gets the cast shadows through the same
+  NoirLook.light_street path as noir_frames (no host code needed), but no frame tool films the city game with
+  the noir look (collect_call_frames = quest 1, the selftest is shared and D4-only); left for NEXT.
+- (06:01) Stop (iteration 14). Last code commit 65c7bc3, gates PASS at 2eaa99b, docs after that. No process of
+  mine running; working tree clean except the untracked evidence/ folder (by design).
