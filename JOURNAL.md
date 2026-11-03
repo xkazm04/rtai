@@ -142,3 +142,5 @@ NEXT (iteration 2 end):
 3. After merge with d-vehicles: re-record the demo tour with real vehicle events (pedestrian_struck thud, hijack slam are unit-tested only).
 4. Boss/tazer: tazer_charge is stretched by pitch 0.8 to the 1.5 s wind-up; the boss_stinger has one take; no boss music loop (a /v1/music call ~300 credits would do it).
 5. Bench: never run by this lane (no GPU work); the pool is capped at 24 players / 4 starts per frame, the RiotBed does a 6-key lookup per frame.
+- GATES at the NEXT commit (clean evidence run, `node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched during the run): lint 13/13, unit 350 passed, scenarios 8/8,
+  parity exact + planted mutation caught, selftest + look goldens unchanged. Bench NOT run (lane rule; contended GPU, audio has no GPU work). Earlier run's unit "FAIL" was only my journal commit mid-run.
