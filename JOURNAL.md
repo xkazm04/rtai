@@ -497,3 +497,23 @@
 - NEXT (night run): same list as in iteration 6 (weapon art, then the ASK rivet-motion-3 with a D5-look clip;
   the baton arc on metal dummies in combo_clip_run after splitting it, since it is 216 lines; then the chainsaw
   and the plasma sword; the HitFeel REQUEST 1; wiring PlayerMotion into the game so display latency can be measured).
+
+## Iteration 8 (23:22-23:30, BUILD, eight minutes before freeze)
+- answers.json re-read at 23:22: still only rivet-motion-1 (A) and rivet-motion-2 (B, placeholder),
+  both already applied. No new asks were filed: rivet-motion-3 waits for a clip in the D5 look.
+- Decision: no code change this session. The next item (split the 216-line combo_clip_run.gd
+  into a ComboClipTargets helper, then the baton arc on metal dummies) needs a gdformat/gdlint
+  pass and a headless check, and that does not fit in eight minutes before freeze. Branch state
+  is unchanged since c5f56e5. The gates at f5a31e9 hold: lint 13/13, unit 574/574 (test_save_slots
+  16/16 alone), scenarios 19/19.
+- NEXT (night run), in order:
+  1. answers.json first.
+  2. Split combo_clip_run.gd (216 lines) into ComboClipTargets, then add metal dummies and the
+     `--weapon=electro_baton` finisher arc (MeleeTable.chain_for plus the shock's arc draw).
+  3. Weapon art for the katana and the baton (codex image_gen plus provenance). Then ASK
+     rivet-motion-3 with a D5-look clip per weapon against the dummy line.
+  4. The chainsaw (a hold mode on MeleeCombo) and the plasma sword (a timed block that deflects
+     gunplay projectiles).
+  5. Wire PlayerMotion into the game so display latency can be measured (it is UNMEASURED in
+     FEEL-NUMBERS.md). Then: REQUEST 1 -> gunplay HitFeel for the vermilion hit flash, and the
+     tackle contact beat.
