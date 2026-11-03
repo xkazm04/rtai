@@ -475,3 +475,11 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   0.494, paper 0.27 -> 0.39, ink 0.47 -> 0.46, HF 0.132 -> 0.128 (D4 0.460 / 0.24 / 0.49 / 0.122); the diagonal
   membrane hatch survives at 32 on this roof. d4 tier 0 px; d5 changed 49064 / 26403 / 0 px at 32/48/64 (the bar is
   off frame at 64). Crops work/i5/bar_ab32.png.
+- 01:29 Codex: d5_roof_union_hall_b (roof_sign_b.txt), 96 s, 0 rejected (LOCAL 9 / UNION spelled right, layout on
+  the D4 union hall). Ledger 44.
+- 01:38 MILESTONE (h78): union hall on the b plate. h77 (gamma 0.7) printed black speckle at 32 (ink 0.47, HF 0.152);
+  h78 with gamma 1.0 (this plate is densely hatched already; now the script default `union_hall:1.0`, rebuild
+  byte-identical): union hall at 32 px/m L 0.469 -> 0.518, paper 0.37 -> 0.43, ink 0.52 -> 0.45, HF 0.154 -> 0.144
+  (D4 0.530 / 0.35 / 0.40 / 0.123); at 48 the diagonal membrane hatch reads like the mock's. d4 tier 0 px (h77).
+  Crops work/i5/uh_ab32.png, uh_ab48.png. (The D5 crops include the D5-tier cast-shadow/ink-foot ring, so the ink
+  share stays above D4 by construction.)
