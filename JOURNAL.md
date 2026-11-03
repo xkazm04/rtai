@@ -321,3 +321,16 @@ NEXT (the night run, from the merged main):
 4. rivet-motion's data: metal dummies to kind `metal`, 2 m spacing (message sent 22:45).
 5. Camera lead (48 px/m off-screen, arena-2) if no lane owns it after the merge.
 6. Dummies read as dummies (cardboard / steel plate art) once the rigs are in.
+- MILESTONE `cb99029` `--rigs` (dev flag, off by default): ArenaRigs fills a CharacterRigs feed
+  every frame from the CombatArena (Rivet = RIVET rig, hostiles and dummies = COP rigs, DEAD|DOWN
+  on death) on the print stage's actor layer and hides CastView. The scale check came out clean:
+  the print stage is in SimConst px (32/m), so the feed is metres x 32 and needs no extra scale.
+  Clip `clips/arena-range-rigs-32ppm-15s.mp4` (+ sheet, 8 frames checked) and still
+  `frames/arena-range-rigs-32.png`: the first arena frames with real characters, range bot
+  31 shots / 12 hits. Gaps: no hit reaction or death pose (a killed dummy's rig vanishes), and
+  every hostile is a cop. NEXT 2 is now: make --rigs the default once enemy-ai's reaction feed
+  and rivet-motion's Rivet plan are merged, add the robot / contractor plans and a death pose,
+  then re-run the arena scenarios (render only, so replays must not move).
+- rivet-motion applied the three notes (`b03f575` on e-motion: metal kind, 2 m spacing, crowd in
+  the course). It copied arena_station.schema.json verbatim from ab3d26d, so I leave that schema
+  unchanged until the merge.
