@@ -1655,3 +1655,12 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
 - 06:15 scratch-v2 (iteration 16's morning stack on a103850; superseded by scratch-v3) removed. n-visual moved again
   to d8925e2 (2 docs commits after ce0db12, no code) - the ce0db12 dry run holds.
 - 06:15 Summary sheet `masters:night/d4-production/night_iter18_summary.png` (= `evidence/iter18/night_iter18_summary.jpg`).
+- 06:20 MILESTONE (small) two outline ticks left beside lane dashes by the patch removal (tone_b: a hook at a dash
+  end; v_tone: a sliver along a dash; patch_clear2 kept everything within 1 px of paint) replaced by the tile's own
+  asphalt (`masters:tools/tick_mend.py`, ink px only, feathered, paint untouched). Tile 1:1 A/B
+  `evidence/iter18/dash_ticks_ab.png`; in-engine n-d4 `after_i18pc|after_i18tk/` - no regression. The ink notches
+  inside a few dashes stay (sub-pixel at 32 px/m). 2 provenance lines, README step 12 note. 0 Codex.
+- 06:20 FINDING: `city_frame` is NOT pixel-identical run to run with the same art (a repeat render `after_i18tk_r2/`
+  differs by up to 27 k px at city-0 32 - the moving crowd and traffic). So the "% px differ" figures in the 06:09
+  entry include run noise; the same-scene visual boards are the evidence, not the counts. The quest grabber and
+  fx_showcase (`--fixed-fps 60`) are the deterministic scenes.
