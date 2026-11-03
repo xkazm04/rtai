@@ -43,3 +43,21 @@ func test_a_tapped_semi_gun_refires_when_ready() -> void:
 		arena.step(i + 1)
 	assert_gt(fired, 1, "a held, tapped trigger keeps firing")
 	assert_lte(fired, 60 / arena.gun.trigger.spec.interval_ticks + 1, "never past the cadence")
+
+
+func test_a_non_lethal_hit_leans_the_figure_then_eases_back() -> void:
+	var arena: CombatArena = _arena()
+	var link: HitLink = HitLink.make(arena, HitFeel.shipped(CameraRig.new()), WeaponTable.shipped())
+	var guard: Fighter = arena.spawn_guard(Vector2(10.0, 0.0))
+	guard.cooldown = 999
+	guard.hp = 3.0
+	guard.max_hp = 3.0
+	assert_true(arena.rivet_fire(guard.pos))
+	var leaned: float = 0.0
+	for i: int in 40:
+		arena.step(1000 + i)
+		link.step()
+		leaned = maxf(leaned, link.lean(guard).x)
+	assert_true(guard.alive())
+	assert_gt(leaned, 0.1, "the struck figure leans along the shot")
+	assert_eq(link.lean(guard), Vector2.ZERO, "and is upright again")

@@ -8,6 +8,9 @@ extends RefCounted
 ## Knockback decays by this factor each tick (about 0.15 s to a stop at 60 Hz).
 const KNOCK_DECAY: float = 0.82
 const KNOCK_STOP_MPS: float = 0.05
+## The drawn flinch (until enemy-ai animates HitFeel.reaction): the figure leans this far along
+## the hit, easing back over the reaction's ticks. View only; the sim position does not move.
+const LEAN_M: float = 0.3
 
 var feel: HitFeel
 ## Hit-stop ticks owed to the caller (it holds the play, then sets this back to 0).
@@ -17,6 +20,10 @@ var kills: int = 0
 var _arena: CombatArena
 var _table: WeaponTable
 var _knock: Dictionary[Fighter, Vector2] = {}
+## The reaction in progress per target id: its end tick, direction and length.
+var _react_end: Dictionary[int, int] = {}
+var _react_dir: Dictionary[int, Vector2] = {}
+var _react_len: Dictionary[int, int] = {}
 
 
 static func make(arena: CombatArena, p_feel: HitFeel, table: WeaponTable) -> HitLink:
@@ -26,6 +33,8 @@ static func make(arena: CombatArena, p_feel: HitFeel, table: WeaponTable) -> Hit
 	link._table = table
 	@warning_ignore("return_value_discarded")
 	arena.struck.connect(link._on_struck)
+	@warning_ignore("return_value_discarded")
+	p_feel.reaction.connect(link._on_reaction)
 	return link
 
 
@@ -45,6 +54,21 @@ func step() -> void:
 ## The victim's flash now (1 on the hit, fading to 0).
 func flash(f: Fighter) -> float:
 	return feel.flash(f.id, _arena.tick)
+
+
+## The drawn flinch offset for `f` now (metres, zero when no reaction is running).
+func lean(f: Fighter) -> Vector2:
+	var end: int = _react_end.get(f.id, -1)
+	if _arena.tick >= end:
+		return Vector2.ZERO
+	var k: float = float(end - _arena.tick) / float(maxi(_react_len[f.id], 1))
+	return _react_dir[f.id] * LEAN_M * k
+
+
+func _on_reaction(target_id: int, _kind: StringName, dir: Vector2, ticks: int) -> void:
+	_react_end[target_id] = _arena.tick + ticks
+	_react_dir[target_id] = dir.normalized()
+	_react_len[target_id] = ticks
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
