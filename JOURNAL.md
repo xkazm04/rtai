@@ -1922,3 +1922,19 @@ NEXT (final, iteration 27): the iteration-21 final NEXT stands (morning order: m
 `git apply` REQUEST 16 / 19 / 21 / 23, re-bake, re-bless n-visual's look / block goldens; JOURNAL.md is the only
 conflict). Gates incl. bench green at 31f8c4c. Owner decision still open: cop vermilion (23:10 entry). Nothing pushed
 or merged. Tree clean at the commit below.
+
+## 2026-11-03 07:45 iteration 28, STABILIZE (past freeze; report 08:15)
+- 07:45 Read JOURNAL (iteration 27 final NEXT), git log. Tree clean at 45e4478. Content diff vs the gated commit
+  31f8c4c: JOURNAL.md, evidence/README.md, evidence/iter27/ only (no code, data or art). 2 Godot processes running
+  (PIDs 26792 / 8840, not mine, untouched).
+- 07:46-07:48 CHECK at 45e4478 (fast re-confirm, bench and parity not re-run; nothing they measure has changed since
+  31f8c4c): lint 13/13 over 176 files (4 s), unit 142 passed / 0 failed (9 s), scenarios 8 ran / 0 failed, exit 0
+  (replay_60s final cbeb734ff9b97c41). The scenario run prints the engine-exit "12 ObjectDB instances leaked /
+  8 resources still in use" warning; the exit code is 0 and the suite counts it clean. Not new from this lane, not
+  chased past freeze.
+- No art, data or code changed. Codex: 0 images; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 28): the iteration-21 final NEXT stands (morning order: merge n-d4, merge n-visual,
+`git apply` REQUEST 16 / 19 / 21 / 23, re-bake, re-bless n-visual's look / block goldens; JOURNAL.md is the only
+conflict). Full gates incl. bench green at 31f8c4c; lint / unit / scenarios re-confirmed green at 45e4478. Owner
+decision still open: cop vermilion (23:10 entry). Nothing pushed or merged. Session end; tree clean at the commit below.
