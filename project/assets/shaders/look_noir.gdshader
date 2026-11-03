@@ -151,7 +151,8 @@ void fragment() {
 		vec2 ch = cars[i].zw;
 		float along = dot(cd, ch);
 		float across = abs(dot(cd, vec2(-ch.y, ch.x)));
-		float bw = beam_w * ls + along * beam_spread;
+		// a brush edge: the cone's width wobbles along its length (world-locked, so it does not crawl)
+		float bw = (beam_w * ls + along * beam_spread) * (1.0 + 0.16 * (vnoise(w * 0.045 + float(i) * 7.1) - 0.5));
 		float cone = step(0.0, along) * (1.0 - smoothstep(0.8, 1.0, across / max(bw, 0.001)));
 		// the throw ends in a ragged arc, not a straight cut
 		float reach = beam_len * ls * (1.0 + 0.18 * (vnoise(w * 0.05) - 0.5)) + 0.001;
