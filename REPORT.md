@@ -8,9 +8,9 @@ raw/). A copy of frames.json, the ladder and the strips is in `evidence/d5-comba
 Every performance number here is **CONTENDED** (7 lanes, one GPU).
 
 ## Summary
-- 55 commits on `d-combat` at the last report edit (17:15, that edit included). The code froze at **5a6e21b**
+- 58 commits on `d-combat` with the final report edit (17:33, iteration 56) included. The code froze at **5a6e21b**
   (116 files, +2697/-52 against main). Only journal, evidence and report commits came after it
-  (`git log 5a6e21b..HEAD -- project/ tools/ native/` is empty, checked 17:15).
+  (`git log 5a6e21b..HEAD -- project/ tools/ native/` is empty, re-checked 17:31).
 - **Gates at the freeze** (evidence/run.mjs --no-bench, 16:40; unit re-run on a clean tree):
   - lint 13/13;
   - unit 352/0;
@@ -69,6 +69,21 @@ Every performance number here is **CONTENDED** (7 lanes, one GPU).
      reduced motion.
    - Strength A/B: `frames/pop-strength-ab-64ppm.png` (0.32 is the default).
 
+## What blocked me, and for how long
+- **The bench lock (no single block, but recurring).** Other lanes held `bench.lock` at 11:16 and 12:06 (vehicles),
+  at 12:24 (collisions), and through most of 16:40-17:30. I benched 3 times (11:37, 15:41-15:57 and 16:43-16:57).
+  Every number is CONTENDED, so the bench cannot judge the riot cost today (see Summary).
+- **Hit-stop and knockback: blocked by file ownership all day.** `camera.json` and the sim are not my files.
+  This is REQUEST 3.
+- **No Codex image generation was needed.** I hit no usage limit.
+- **13:12-15:41 (about 2.5 h):** there are no commits and no journal entries. No lane session ran in that window, and
+  the journal does not say why.
+- **Friction, minutes each:**
+  - warning-as-error parse failures (`float()` on a Variant, twice);
+  - CRLF from Python writes;
+  - a dirty-tree refusal by evidence/run.mjs when a log was under evidence/;
+  - `city_fight.gd` reaching the 300-line hard stop.
+
 ## Owner picks waiting (the 18:00 sync)
 1. `--blood` default (noir proposed) versus the ink fallback.
 2. `--kill-beat` mode (off, panel, flash or both).
@@ -97,3 +112,11 @@ Every performance number here is **CONTENDED** (7 lanes, one GPU).
 - `core/render/fx_triggers.gd`: signal `cued`.
 - `core/render/README.md`.
 - `docs/decisions.md`: the junction golden re-bless (aa1661d) and the fx pool body.
+
+## Next steps
+1. The owner's picks above (one flag or one `blood_fx.json` key each).
+2. Re-bench on an idle machine: `node tools/bench/run.mjs`, keeping the per-scenario riot JSON.
+3. Car-hit pool lead: add a death-speed field to `FxTriggers.cued`. That file is shared (core/render).
+4. REQUEST 3: kill hit-stop 6 -> 8 ticks under a beat mode. Wire a hit-stop into quest 1 once it gets a player entry.
+5. REQUEST 4 -> d5-city: `city_textures.gd` threaded load can return null headless (the unit flake).
+6. Move code out of `dev/showcase/city_fight.gd` (300 lines) before the next dev switch.

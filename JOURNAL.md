@@ -433,3 +433,12 @@ NEXT (after the 18:00 sync), in order:
   game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
   machine; REQUEST 3 (kill hit-stop under a beat mode); REQUEST 4 -> d5-city (city_textures threaded load null headless).
 - 17:22 session end: tree clean after this commit.
+
+## Iteration 56 (17:30-17:58, REPORT)
+- 17:31 checked every evidence path REPORT.md cites under the masters (22 files plus the pool-lead pairs): all exist.
+  `git log 5a6e21b..HEAD -- project/ tools/ native/` is still empty: no code change since the freeze.
+- REPORT.md: added "What blocked me, and for how long" (bench lock contention, hit-stop ownership, the 13:12-15:41
+  commit gap, minor friction) and "Next steps". The commit count is now 58, counting this commit (report + journal
+  in one commit). No gates re-run (docs only); no Godot process started; bench.lock untouched.
+- NEXT: the owner picks at 18:00 (--blood, --kill-beat, muzzle pop, pool body colour, pool_radius_px); re-bench idle;
+  car-hit slide via FxTriggers.cued death speed; REQUEST 3; REQUEST 4 -> d5-city; split city_fight.gd (300 lines).
