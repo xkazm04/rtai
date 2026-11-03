@@ -433,3 +433,19 @@ NEXT (iteration 6 close, in order):
   fire ticks and kill 101), safety-calm-beat-48.png (calm beat v1 ink border vs v3 paper border), clips
   safe-v2/showcase-noir-48-budget.mp4, safe-v3/showcase-noir-48-flashes-off.mp4 (both also in evidence/
   as PNG sheets). Not yet: a settings-menu toggle (core/settings is a README only; the param is the hook).
+- (02:12) quest_fight re-measured with the budget: quest-v5/quest-fight-48-budget.mp4 = 2 flashes max in any
+  second (quest-v4 before: 3), 16 kills. Note: quest_fight logs "36 resources still in use at exit" at
+  quit (seen at befeb57 already, before the stains; dev host only, not investigated).
+- MILESTONE (02:15) blood on the bodies (NEXT item 5, half): `features/fx/noir/blood_stains.gd`
+  (BloodStains, above the rigs, z 20): a kill soaks the victim's torso with 5 hashed teardrop stains
+  toward the exit side of the hit, a player hit leaves 2 small spots; each stain follows its body via
+  NoirCombatFx.set_stains (the px locate), grows over 24 ticks; data `stain` in blood_fx.json, pooled
+  (max_stains 48). Wired in showcase_fight and quest_fight. +2 unit tests (190 pass), lint clean.
+  Evidence: masters night/noir/stain-before-after-64.png (crops of both dead cops and Rivet, left
+  show-final3, right stain-v1), stain-before-after-48.png (top before safe-v2, bottom after), clips
+  stain-v1/showcase-noir-48.mp4 / -64.mp4. Ladder rows 23 (flash budget) and 24 (stains), 24 rows.
+  Honest read: modest but right - the dead cops' torsos now carry a red soak, so the body itself shows
+  the wound (before, the blood was all on the ground beside it); Rivet's two spots are small (2 px at
+  48 px/m) and read as dots. Wall splats still need wall edges in the view (not done).
+  FRICTION: an earlier Python edit wrote CRLF into 5 noir files, and a later multi-line replace then
+  silently missed (caught by the line count); files normalised to LF, edits now assert their match.
