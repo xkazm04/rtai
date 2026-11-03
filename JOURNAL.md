@@ -633,3 +633,25 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
     cast_view.gd, about +60 / -35 lines, compiles warnings-as-errors) or an equivalent once n-d4 is merged; then drop
     the placeholder labels that the art now carries (TUCK-IN, the cash box) per the GDS-08 deviation's re-check.
 17. quest 1 owner: the quest view has no look_d4 pass (raw art at its own zoom); the D4 read is the board's.
+- 01:21 GATES at 11928d4: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+  selftest 65 art textures, 0 placeholders.
+- 01:23 MILESTONE fire FX seen from above. Quest 1's `fx_view._fire()` drew side-view flame tongues rising up the
+  screen (a camera break in a top-down game). Codex d4n_fire (7 cells, **0 rejected**): 4-frame flicker loop (cream
+  core, vermilion tongues licking outward, ink rim), 2 ember scatters, a wide crate/car fire. `features/fx/art/
+  fx_fire.png` 4 x 2 cells, ONE scale, centroid-centred (the loop registers), README section. Quest grabber
+  `after_q1f|after_q1h/06-crates-burning` (`work/q1fire_ab.png`), look_d4 board `after_q1board4/`. Commits 1ac7ff0,
+  b57a535.
+- 01:26 quest 1 HUD takes the existing D4 HUD frames (no new art): cash_frame, wanted pips as the heat pips, memo_frame
+  as a 9-slice for the beat panel and the subtitles. Fixed by looking: the weapon word sat on the torn edge, the
+  speaker name under the tape, the third subtitle line on the bottom edge (box 200 -> 236 px). HUD README. f89a5f4.
+- 01:29 MILESTONE knocked-out guard + Mertz (Codex d4n_q1down, 2 cells, 0 rejected; the fallen hats are drawn a
+  little oblique - accepted, noted). First in-view try (`after_q1j`): the bodies DOMINATED the fight and their
+  vermilion vests broke the doctrine (a knocked-out guard is no threat). Fixed: vermilion re-inked to the mid wash
+  (`build_q1cast.py quiet()`), drawn 1x at alpha 0.8 (`after_q1k`, `work/q1down_ab2.png`): the live threat reads
+  first again. Commit dc9a895.
+- 01:31 `q1_view_art.patch` final: stage_view + cast_view + fx_view + hud_view (+124 / -77), gdformat + gdlint clean,
+  compiles warnings-as-errors, quest 1's frame grabber renders all 9 beats (`after_q1k/`, final before/after sheet
+  `work/q1_final_ab.png`). Left as placeholders on purpose: Rivet ("R" box: the D4 Rivet rig belongs to characters /
+  n-visual F-14), the patrol cops ("C": the cop rig), the arc ball and whisper rings (FX code).
+- Codex this iteration so far: 5 images (q1, q1cast, q1cast2, fire, q1down), 26 cells, 4 rejected.
+  Night: 25 images, 167 cells, 7 rejected.
