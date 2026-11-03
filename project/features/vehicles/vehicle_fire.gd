@@ -11,9 +11,9 @@ extends Node2D
 const SHEET: String = "res://features/fx/art/fx_fire.png"
 const CELL_PX: float = 256.0
 const CELL_M: float = 2.5
-const BURN_S: float = 24.0
+const BURN_S: float = VehicleContacts.BURN_S
 const FADE_S: float = 6.0
-const NOSE_M: float = 1.5
+const NOSE_M: float = VehicleContacts.NOSE_M
 const FLAME_SCALE: float = 1.0
 const EMBER_SCALE: float = 1.3
 ## Flame loop frames per second.

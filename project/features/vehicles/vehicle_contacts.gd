@@ -3,13 +3,18 @@ extends RefCounted
 ## Contacts of one service car per tick: the hull against solid cells (push out, bounce, damage
 ## from the speed lost), against sim traffic and other service cars (three circles per car, the
 ## mass-based impulse of VehicleDamage), and against people in the footprint (a kill above
-## kill_at, else a knockdown). Results land in the public lists for the service to emit.
+## kill_at, else a knockdown), and a burning wreck's fire against the people standing in it (a
+## kill). Results land in the public lists for the service to emit.
 
 const HALF_L: float = 2.3
 const HALF_W: float = 0.95
 const CIRCLE_OFF: float = 1.25
 const CIRCLE_R: float = 1.05
 const WALL_E: float = 0.2
+## A wreck burns BURN_S seconds; its fire sits NOSE_M ahead of the centre and kills within FIRE_R.
+const BURN_S: float = 24.0
+const NOSE_M: float = 1.5
+const FIRE_R: float = 1.2
 
 ## Sim slots this tick: people struck [slot, killed 0/1] pairs, and traffic speed changes.
 var struck: PackedInt32Array = PackedInt32Array()
@@ -113,6 +118,22 @@ func people(b: VehicleBody, world: VehicleWorld) -> void:
 		var killed: bool = world.strike_person(slot, b.vel, v > _rules.kill_at)
 		struck.append_array([slot, 1 if killed else 0])
 		b.vel *= 0.93
+
+
+## People standing in a burning wreck's fire die in it (struck at zero speed, killed).
+func burn(b: VehicleBody, world: VehicleWorld) -> void:
+	if b.state != VehicleBody.State.WRECK or b.wreck_t >= BURN_S:
+		return
+	var at: Vector2 = b.pos + b.head * NOSE_M
+	var recs: PackedFloat64Array = world.people_near(at, FIRE_R)
+	for r: int in range(0, recs.size(), VehicleWorld.PERSON_STRIDE):
+		if recs[r + 3] > 0.5:
+			continue
+		if Vector2(recs[r + 1], recs[r + 2]).distance_to(at) >= FIRE_R:
+			continue
+		var slot: int = int(recs[r])
+		if world.strike_person(slot, Vector2.ZERO, true):
+			struck.append_array([slot, 1])
 
 
 ## The three hull circles (nose, waist, tail) of up to OBST_MAX / 3 cars as x, y pairs: what

@@ -3,8 +3,7 @@ extends WorldSystem
 ## The player's cars (ARC-04 sim system on the 60 Hz tick): enter a parked car, hijack an occupied
 ## sim car (its driver is thrown out), drive it with the VehicleBody handling, crash it (damage
 ## states, then a wreck that stays wreck_s seconds), run people over, and get out again.
-## API: try_enter(at) / exit() / driving / soul_hijack_traffic(slot); README.md has the input bits,
-## the Events and the render cues (`cues`, VehicleCues).
+## API: try_enter(at) / exit() / driving / soul_hijack_traffic(slot); README.md has the rest.
 
 const BIT_USE: int = 0
 const BIT_HANDBRAKE: int = 1
@@ -151,6 +150,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 ## A standing car (parked, a wreck) still meets traffic: it is shoved and both cars take damage.
 func _collide(b: VehicleBody) -> void:
 	_contacts.traffic(b, world)
+	_contacts.burn(b, world)
 	if b.speed() < 0.05 and b != driving:
 		return
 	_contacts.hull(b, world)

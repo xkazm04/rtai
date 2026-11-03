@@ -181,3 +181,15 @@ func test_a_reused_traffic_slot_starts_a_fresh_damage_book() -> void:
 	var fresh: float = _svc.traffic.lost_of(9)
 	assert_gt(fresh, 0.0)
 	assert_lt(fresh, first, "a new (heavier) car in slot 9: its own damage, not added to the old")
+
+
+func test_a_burning_wreck_kills_whoever_stands_in_its_fire() -> void:
+	var car: VehicleBody = _svc.spawn_parked(&"sedan", Vector2(0, 0), Vector2.RIGHT)
+	car.state = VehicleBody.State.WRECK
+	_w.people = PackedFloat64Array([7, 1.5, 0.4, 0, 8, 4.0, 0.0, 0])
+	_svc.step(0, TickInput.new())
+	assert_signal_emitted_with_parameters(_bus, "pedestrian_struck", [7, true])
+	assert_signal_emit_count(_bus, "pedestrian_struck", 1, "the one at 4 m is outside the fire")
+	car.wreck_t = VehicleContacts.BURN_S
+	_svc.step(1, TickInput.new())
+	assert_signal_emit_count(_bus, "pedestrian_struck", 1, "a burnt-out wreck kills nobody")
