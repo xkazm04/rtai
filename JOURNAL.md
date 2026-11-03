@@ -423,3 +423,18 @@ NEXT:
   the old draw_k frame; Start frame 1 pair (start_before / start_after) in place of the second
   Dock 9 stencil frame. ladder.png + 2 rows. Deleted 3.6 GB of clip PNG scratch (v1, v2) and
   v4's frames except 0-2.
+- CORRECTION 16:26 (my error, 140cf98 REVERTED in 3db4792): the lock-gated frames
+  (masters warm_before/ vs warm_after/, continue_f1..f6, sheet warm-ab-sheet.png) show the
+  pipeline warm-up frames 1-3 were ALREADY clean; the light pool on Rivet appears at frames 4-6,
+  once the ticks run, with or without the cover. The cover only replaced 3 street frames with
+  cream (worse), so I reverted it. The --continue capture of frames 1-6 (dev tool) stays.
+- 16:30 second hypothesis REJECTED in a frame: ViewPrewarm spawns every FX kind and the
+  `explosion` kind adds its own 36-tick light that the warm-up never removes. Detaching
+  fx.lights during the warm spawn (view_prewarm.gd, d5-city's file, never committed) did NOT
+  remove the pool (masters warm_fix/, crop rivet-base/glow_fix_f5_crop.png). Reverted.
+- UNRESOLVED, what is known: a banded light pool (~6 m radius at 32 px/m) on Rivet from tick 1,
+  still there at tick 4, gone by tick 120 (clip v4 frame 60); Rivet's sprite reads washed out
+  under it. Light-bearing FX are only `muzzle` (shot cue, muzzle_flash 4 ticks, 1.6 m) and
+  `explosion`. Best untested guess: a held `siren` light (5 m, life 0) placed at Rivet before
+  the stage police cars move off. Next step: log LightLayer.add(kind) calls for ticks 0-4 in a
+  headless run of quest1.tscn.
