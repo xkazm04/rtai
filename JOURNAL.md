@@ -44,13 +44,24 @@ perception latency beyond the alert reaction time.
   run writes (all lanes' Godot runs share one user:// for this project name). FRICTION, not
   this lane's code (no save code touched); re-run alone on a quiet machine.
 - Evidence: gtai-masters/eve/enemy-ai/ (2 clips, 5 stills, frames.json).
+- MILESTONE 3023c4a: hit stagger. enemies.json `stagger_s` (patrol 0.45, riot 0.3, SWAT 0.35,
+  gunner 0.25, thug 0 = shrugs), a hit that does not kill cancels the windup and returns the
+  token; `EnemyPit.stun(e, ticks)` is the hook for the electroshock (melee lane). pose() adds
+  `stagger`. tests/unit/test_enemy_ai.gd 6/6 (table, accuracy curve, token cap, stagger, robot
+  shrugs hit + tackle, riot shield front vs back). scenario_enemy_pit still green.
+- FRICTION test_save_slots: also 16/16 failing when selected on its own
+  (`-gconfig= -gdir=res://tests/unit -gselect=test_save_slots`), and its scratch dir
+  %APPDATA%/RTAI Uprising/test_save is shared by every worktree (custom_user_dir_name); another
+  lane wrote test_page_age_params.json there in the same minute (21:22), so "alone" was not
+  alone. This lane touches no save code. REQUEST 2 -> Director/int: check test_save_slots on
+  main on a quiet machine; if it is the shared dir, give tests a per-worktree scratch dir.
 
 NEXT:
 1. Re-read answers.json (enemy-ai-1).
 2. PitDummy reaction delay (react N ticks after the tell starts, not at the lock), then
    measure lock 0.12/0.2/0.3 s; maybe an ASK on the tell timing with clips.
-3. Hit reactions and stagger: a hit during WINDUP interrupts (stagger_s per archetype); robots
-   shrug off. Wire the tackle (EnemyPit.knock) to the bodies lane's knockdown.
+3. Stagger is in (3023c4a); still to do: wire the tackle (EnemyPit.knock) to the bodies
+   lane's knockdown result, and a clip showing a stagger cancelling a windup.
 4. Waves: data rows in enemies.json (or waves table), spawner in the pit, clip of waves 1-3 +
    damage per wave -> ASK difficulty curve (brief item 6).
 5. The cutout rig: map pose() to rig clips (d5-cast rig); readable at 32 px/m.
