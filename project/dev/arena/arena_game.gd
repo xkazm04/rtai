@@ -79,6 +79,8 @@ func _add_view() -> void:
 		view.city_view.clock = session.world.context().clock
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
+	for hook: ArenaHook in session.stage.hooks:
+		hook.attach_view(view)
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 		_characters.rivet_on_foot = false

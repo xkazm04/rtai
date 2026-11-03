@@ -39,6 +39,8 @@ var spawns: Array[Spawn] = []
 var props: Array[Prop] = []
 var knobs: Array[Knob] = []
 var measures: Array[String] = []
+## The lane's ArenaHook script (res://features/...gd), or "" (ArenaHook.make).
+var script_path: String = ""
 
 
 static func from_row(t: DataTable, row: Dictionary, p_lane: String) -> ArenaStation:
@@ -47,7 +49,8 @@ static func from_row(t: DataTable, row: Dictionary, p_lane: String) -> ArenaStat
 	s.name = t.text(row, "name")
 	s.area = t.text(row, "area")
 	s.lane = p_lane
-	for v: Variant in t.array(row, "spawns"):
+	s.script_path = t.text(row, "script") if row.has("script") else ""
+	for v: Variant in _list(t, row, "spawns"):
 		var d: Dictionary = v if v is Dictionary else {}
 		var sp: Spawn = Spawn.new()
 		sp.id = t.text(d, "id")
@@ -57,14 +60,14 @@ static func from_row(t: DataTable, row: Dictionary, p_lane: String) -> ArenaStat
 		sp.speed_mps = t.num(d, "speed_mps")
 		sp.span_m = t.num(d, "span_m")
 		s.spawns.append(sp)
-	for v: Variant in t.array(row, "props"):
+	for v: Variant in _list(t, row, "props"):
 		var d: Dictionary = v if v is Dictionary else {}
 		var p: Prop = Prop.new()
 		p.kind = t.text(d, "kind")
 		p.at = t.vec(d, "at")
 		p.size = t.vec(d, "size")
 		s.props.append(p)
-	for v: Variant in t.array(row, "tuning"):
+	for v: Variant in _list(t, row, "tuning"):
 		var d: Dictionary = v if v is Dictionary else {}
 		var k: Knob = Knob.new()
 		k.key = t.text(d, "key")
@@ -72,6 +75,11 @@ static func from_row(t: DataTable, row: Dictionary, p_lane: String) -> ArenaStat
 		k.max_value = t.num(d, "max")
 		k.step = t.num(d, "step")
 		s.knobs.append(k)
-	for v: Variant in t.array(row, "measures"):
+	for v: Variant in _list(t, row, "measures"):
 		s.measures.append(str(v))
 	return s
+
+
+## A station's lists are optional (a hook-only station has none); present, they must be arrays.
+static func _list(t: DataTable, row: Dictionary, key: String) -> Array:
+	return t.array(row, key) if row.has(key) else []

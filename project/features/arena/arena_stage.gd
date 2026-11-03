@@ -15,6 +15,8 @@ var telemetry: ArenaTelemetry = ArenaTelemetry.new()
 var walls: ArenaWalls
 var pit: ArenaPit
 var dodges: ArenaDodges = ArenaDodges.new()
+## Other lanes' code, from their stations' `script` (ArenaHook), in station-file order.
+var hooks: Array[ArenaHook] = []
 var _shots_before: int = 0
 
 
@@ -56,6 +58,11 @@ func setup(ctx: WorldContext) -> void:
 				targets.add(arena, sp, plan.base, id)
 				id += 1
 	targets.step(0)
+	for s: ArenaStation in stations.stations:
+		var hook: ArenaHook = ArenaHook.make(s)
+		if hook != null:
+			hooks.append(hook)
+			hook.setup(self, ctx)
 
 
 func step(p_tick: int, tick_input: TickInput) -> void:
@@ -79,6 +86,8 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	var lost: float = hp - arena.rivet.hp if arena.rivet.alive() else hp
 	telemetry.sample(p_tick, stick, arena.rivet.pos.distance_to(from), facing, lost)
 	_shots_before = shots_fired
+	for hook: ArenaHook in hooks:
+		hook.step(self, p_tick)
 
 
 func write_state(out: StreamPeerBuffer) -> void:
@@ -86,6 +95,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(targets.total_hits())
 	out.put_32(pit.kills)
 	out.put_32(pit.wave)
+	for hook: ArenaHook in hooks:
+		hook.write_state(out)
 
 
 ## Rivet and every standing hostile keep out of the arena's walls and cover.
@@ -123,4 +134,9 @@ func _respawn() -> void:
 
 
 func telemetry_dict() -> Dictionary:
-	return telemetry.to_dict(targets.ttk_s)
+	var out: Dictionary = telemetry.to_dict(targets.ttk_s)
+	for hook: ArenaHook in hooks:
+		var extra: Dictionary = hook.telemetry()
+		if not extra.is_empty():
+			out[hook.station.id] = extra
+	return out
