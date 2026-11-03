@@ -57,10 +57,7 @@ func _ready() -> void:
 	chars.rivet_on_foot = false
 	_stage()
 	_blood.z_index = -1
-	_view.actor_layer().add_child(_blood)
-	_view.actor_layer().add_child(_rigs)
-	_view.actor_layer().add_child(_flash)
-	_view.actor_layer().add_child(_stains)
+	_add_actors()
 	_flash.budget = _impact.budget
 	if _a.noir_parts:
 		_wear_noir_parts()
@@ -150,6 +147,16 @@ func _cue(cue: Array) -> void:
 			Events.actor_killed.emit(NoirFightScript.RIVET, id, &"melee")
 			for k: int in [1, 2, 4, 7, 30]:
 				_heroes[_frame + k] = "kill%d" % id
+
+
+## The rigs and their fx on the city's actor layer (the noir figure shadows unless --d4).
+func _add_actors() -> void:
+	var layer: CanvasLayer = _view.actor_layer()
+	for node: Node in [_blood, _rigs, _flash, _stains]:
+		layer.add_child(node)
+	if _a.figure_shadows and not _a.d4:
+		@warning_ignore("return_value_discarded")
+		NoirFigureShadows.attach(layer, _view.noir.params, _rigs)
 
 
 ## The fight, the city's focus and its camera at _a.at (the junction unless --at).

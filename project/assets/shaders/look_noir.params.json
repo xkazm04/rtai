@@ -1,5 +1,5 @@
 {
-  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead (teal 0: no teal survives the print, because the only teal on screen was Rivet's claw tip; the dead must draw above the pass, layer > 10, to keep theirs); vermilion prints as a solid ink mass (verm_value). impact = the comic impact frame on a kill (look_noir_impact.gdshader): sequence = one mode per tick (1 inverted panel, 2 white flash with ink silhouettes, 3 paper with the speed-line burst, 4 the silhouette flash: the host hides the world and the noir pass, so the actors print as solid ink on paper with the burst; without a host hide list mode 4 is a black flash); hit_stop_ticks = how long the sim holds the knockback pose; panel_ticks = after the sequence, the held pose framed as a comic panel (paper gutters, an ink border) of half size panel_half (screen uv) around the kill. safety.flashes = false is the flashes-off accessibility mode (FlashBudget: with it on, the kill beat and the muzzle light share one budget of 3 flashes per second (the WCAG 2.3.1 limit), the light at most 1 a second and never in the room a kill beat needs; off = no flash at all, the kill beat is the calm panel: ink border, no gutters, the hit-stop kept). Muzzle light: flash_r / flash_lift = the hard-edged pool of light around a muzzle on the fire tick (the host sets flash and flash_uv). shadows = NoirShadows: every shadowed draw command (props, parked cars, roof blocks) also casts a long hard shadow, its silhouette swept away from light_dir by len_m per texture class (by_name overrides; lamp arms 0 because a lamp prints white in its own pool), stamped at value (0.1: just over lamp_gate, so a lamp pool still lifts it) into the world canvas above the ground and under every prop and roof.",
+  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead (teal 0: no teal survives the print, because the only teal on screen was Rivet's claw tip; the dead must draw above the pass, layer > 10, to keep theirs); vermilion prints as a solid ink mass (verm_value). impact = the comic impact frame on a kill (look_noir_impact.gdshader): sequence = one mode per tick (1 inverted panel, 2 white flash with ink silhouettes, 3 paper with the speed-line burst, 4 the silhouette flash: the host hides the world and the noir pass, so the actors print as solid ink on paper with the burst; without a host hide list mode 4 is a black flash); hit_stop_ticks = how long the sim holds the knockback pose; panel_ticks = after the sequence, the held pose framed as a comic panel (paper gutters, an ink border) of half size panel_half (screen uv) around the kill. safety.flashes = false is the flashes-off accessibility mode (FlashBudget: with it on, the kill beat and the muzzle light share one budget of 3 flashes per second (the WCAG 2.3.1 limit), the light at most 1 a second and never in the room a kill beat needs; off = no flash at all, the kill beat is the calm panel: ink border, no gutters, the hit-stop kept). Muzzle light: flash_r / flash_lift = the hard-edged pool of light around a muzzle on the fire tick (the host sets flash and flash_uv). shadows = NoirShadows: every shadowed draw command (props, parked cars, roof blocks) also casts a long hard shadow, its silhouette swept away from light_dir by len_m per texture class (by_name overrides; lamp arms 0 because a lamp prints white in its own pool), stamped at value (0.1: just over lamp_gate, so a lamp pool still lifts it) into the world canvas above the ground and under every prop and roof. shadows.figures = NoirFigureShadows: the rigs rendered alone into a SubViewport (a cull-mask bit) and their silhouette swept the same way, tapered about each body's centre (narrow legs, full shoulders, a small head; reach_m = a body's own radius) and printed at value 0.03 (under lamp_gate: stays ink inside a lamp pool or a headlight cone, and no dark-on-dark rim on the asphalt) under the blood and the rigs; the dead cast none; len_m 0 = off.",
   "frame": {
     "amount": 1.0,
     "band": 0.07,
@@ -58,10 +58,19 @@
     ]
   },
   "keep_d4": false,
+  "safety": {
+    "flashes": true
+  },
+  "schema": "gtai.look-noir-params/1",
   "shadows": {
     "by_name": {
       "lamp_post": 0.0,
       "traffic_light": 0.0
+    },
+    "figures": {
+      "len_m": 1.2,
+      "reach_m": 1.0,
+      "value": 0.03
     },
     "len_m": {
       "building": 3.0,
@@ -69,9 +78,5 @@
       "vehicle": 0.8
     },
     "value": 0.1
-  },
-  "safety": {
-    "flashes": true
-  },
-  "schema": "gtai.look-noir-params/1"
+  }
 }
