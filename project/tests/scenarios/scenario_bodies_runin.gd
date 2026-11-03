@@ -1,14 +1,16 @@
 extends Scenario
-## features/bodies, the other direction: a human RUNNING into Rivet (5.5 m/s, faster than the
-## human run_mps) is `blocked` by the table (human -> rivet_base run), so the human takes the whole
-## overlap and steps aside: Rivet, standing still, is not moved and never overlapped. Planted fault
+## features/bodies, the other direction: a human RUNNING into Rivet (4.5 m/s, the crowd's flee and
+## riot speed, above the human run_mps 3.2; a single shared 5.0 line made it a shoving walk) is
+## `blocked` by the table (human -> rivet_base run), so the human takes the whole overlap and steps
+## aside: Rivet, standing still, is not moved and never overlapped. Planted fault
 ## (TST-05): the run-in rule off in the spec, so the mass split shoves Rivet back.
 
-const RUN_MPS: float = 5.5
+const RUN_MPS: float = 4.5
 const TOL: float = 0.02
 ## Glancing contacts after the runner steps aside are walk shoves (the mass split). Measured
 ## 0.09 m with one 3.2 line, 0.20 m with one shared 5.0 line (4.5 m/s runners were walkers),
-## 0.066 m with the per-class human run_mps 3.2 (since 16:00); rule off: 0.60 m.
+## 0.066 m with the per-class human run_mps 3.2 (5.5 m/s runner), 0.093 m at the real 4.5 m/s;
+## rule off (= what the shared 5.0 line did to a 4.5 m/s runner): 0.61 m.
 const MAX_PUSH_M: float = 0.15
 
 

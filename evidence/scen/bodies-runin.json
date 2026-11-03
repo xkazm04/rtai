@@ -2,13 +2,13 @@
   "planted": {
     "knocks": 0,
     "met": true,
-    "rivet_pushed_m": 0.601465165615082,
-    "worst_rivet": 0.000022311210632342
+    "rivet_pushed_m": 0.608469307422638,
+    "worst_rivet": 0.0000238013267517267
   },
   "run_in": {
     "knocks": 0,
     "met": true,
-    "rivet_pushed_m": 0.0660490989685059,
-    "worst_rivet": 0.0000172448158264338
+    "rivet_pushed_m": 0.0928480625152588,
+    "worst_rivet": 0.0000168871879577814
   }
 }
