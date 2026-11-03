@@ -157,3 +157,7 @@ NEXT:
 - CHECK noir still switches with the T1 cop heads (dev/noir/noir_frames.tscn, masters renders/noir3): junction-noir
   32/48/64 = 0 blue, 0 teal, 0 vermilion px; cops print as ink masses like everyone. Owner kill-cam frame swapped to
   city_frame focus 1 (city-0 at 128 has a crowd ped standing on Rivet): before night 1.3 | after base 1.1, same street.
+- 11:37 provenance audit: all 91 latest d5-cast rows hash-match their files. Session end for iteration 3.
+NEXT: unchanged from the NEXT block above (owner picks: cop heads cream vs navy, shoulders A/B, King's cape, portrait
+helmets; merge d-city before/with d-cast and re-bless the goldens once; after d5-city REQUEST 3, shoot a parked + moving
+cruiser in city_frame; KingPlan into the boss ticket).
