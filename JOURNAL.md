@@ -1007,3 +1007,8 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
     (hk - 0.01) / 0.29); bake the same ring into the crowd atlas; owner decides rim_px (item38).
 30. Next Codex budget: roof plates with a soft mid-grey shading layer under the pen hatch (the last per-class gap,
     mid-tones 0.08 vs 0.11), plates for the helipad / warehouse / long roofs, and King's rig parts.
+- 04:00 scratch deleted (numbers in the entries above): frames/swh_ctl, swh_ink, swh_inkf, h112af06, h113ss10, h118ds20, h119d4l6, h116rim0, pan13pkg(R); ~330 MB; disk 223 GB free.
+- 04:01 REJECTED (h120sht22; look_d5_shadow restored from git, roofs + params restored, project/ clean): a lighter
+  building cast shadow between the strokes (tint 0.36 -> 0.22), testing whether the mock's extra mid-tone share sits
+  in its hatched shadows. 56338 px changed at 32; per class: paper 0.32 -> 0.35 (mock 0.33), mid 0.08 -> 0.06 (mock
+  0.11), street 0.49 -> 0.48, ink 0.11: the gaps print as paper, not mid. Mid-tones stay an art item (NEXT 30).
