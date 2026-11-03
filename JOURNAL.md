@@ -386,3 +386,19 @@ bosses we resolve in future."
 3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52: lock held by d5-combat).
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:00 - 17:04 (iteration 47, STABILIZE): gates refreshed on HEAD, bench skipped again
+- Bench skipped: `bench.lock` taken by d5-city at 17:00:19 (fresh). No number taken; the section 20 bench stays unmeasured on this branch's final tree.
+- Evidence run on e967745 (`run.mjs --no-bench --allow-dirty`, 2 min 11 s, CONTENDED): lint 13/13 over 347 files,
+  unit 337/0, scenarios 12/12 (incl. the 60 s replay, identical), parity exact (1200 steps, 3532 floats, mutation caught at 629),
+  selftest look goldens 11/11 (worst 0.00), block goldens 5/5. Log: `gtai-masters/day-d5/collisions/gates-it47.log`.
+  The "dirty tree" tag is the 3 untracked pre-existing evidence files, not code.
+- frames.json: 15 entries, 0 missing files; ladder.png unchanged since 16:39. No new frames (no visual change since v7).
+- No code change. Two Godot processes are on the machine (PIDs 12316, 58308); neither is mine (my run exited 0).
+
+### NEXT (unchanged from iteration 44-46)
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52 and 17:00: lock held).
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
