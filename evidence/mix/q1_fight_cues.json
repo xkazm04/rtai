@@ -1,10 +1,10 @@
 {
   "beat": "fight",
   "dropped": {
-    "footsteps:cooldown": 433,
-    "footsteps:voices": 38,
+    "footsteps:cooldown": 434,
+    "footsteps:voices": 37,
     "hit_flesh:cooldown": 2,
-    "shot_assault_rifle:voices": 6
+    "shot_assault_rifle:voices": 7
   },
   "frames": 1800,
   "missing": [],
@@ -14,7 +14,7 @@
     "hit_flesh": 39,
     "projectile_end": 19,
     "servo": 2,
-    "shot_assault_rifle": 25,
+    "shot_assault_rifle": 24,
     "shot_gloria": 30
   },
   "voice_drops": 0,

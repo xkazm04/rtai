@@ -11,7 +11,7 @@ def dump(path: pathlib.Path, obj: dict) -> None:
 
 # id, doc, sound, takes, bus, gain_db, pitch, jitter, max_m, cooldown_ticks, max_voices, priority, loop
 CUES = [
-    ("shot", "a round leaves a gun in the riot (CitySim projectile feed, no weapon id): 9mm pistol", "pistol_shot", 4, "sfx", -6, 1.0, 0.07, 60, 2, 6, 2, False),
+    ("shot", "a round leaves a gun in the riot (CitySim projectile feed, no weapon id): 9mm pistol", "pistol_shot", 4, "sfx", -3, 1.0, 0.07, 60, 2, 6, 2, False),
     ("shot_gloria", "Gloria the nail gun fires (quest stage)", "nailgun_shot", 3, "sfx", -5, 1.0, 0.05, 55, 3, 4, 3, False),
     ("shot_assault_rifle", "a contractor's assault rifle fires (quest stage)", "rifle_shot", 3, "sfx", -4, 1.0, 0.05, 70, 2, 6, 3, False),
     ("projectile_end", "a round stops against a wall, car or its range", "impact_concrete", 1, "sfx", -9, 1.0, 0.1, 45, 2, 5, 1, False),
