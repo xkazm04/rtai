@@ -969,3 +969,7 @@ NEXT addendum: find a view where a building sweep shows (a block edge onto a pla
   GPU + ~0.03 ms CPU; most of the +0.3 ms is the prop sweeps (or the extra layer itself). Default left at 3.0
   (a building sweep may show at block edges elsewhere in the city; not checked). Files:
   evidence/cost-shadows-nobuild-igpu-{a,b}.json.
+- (06:00) Quest 1 check (`quest_fight --phone`, --write-movie, masters phone-v2/): f120 and f600 byte-identical to
+  phone-v1 (0 px). Quest 1's view does not draw the city chunks, so the cast shadows do not reach the real quest
+  yet - no regression, no gain. NEXT: the shadows need the quest view (or the composition root's CityView under
+  --look=noir) to show in play.
