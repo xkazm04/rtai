@@ -83,13 +83,13 @@ func set_noir(on: bool) -> void:
 		add_child(noir)
 	if noir != null:
 		noir.visible = on
-		_look_rect.visible = look_enabled and (not on or noir.keep_d4)
+		set_look_enabled(look_enabled)
 
 
 func set_look_enabled(on: bool) -> void:
 	look_enabled = on
 	var printed: bool = on and (look_params == null or look_params.printed)
-	_look_rect.visible = printed
+	_look_rect.visible = printed and (noir == null or not noir.visible or noir.keep_d4)
 	crowd.apply_print(_item_mat, printed)
 
 
