@@ -228,10 +228,12 @@ What still separates us, largest first:
    `D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65`), look_d5_halo line + shadow. Next: visual-engine lane +
    owner decide on `item35`; if the print is adopted, d5-close rebuilds the roof plates at 0.45 (one command) and the
    characters lane moves the halo pass into rig_build.gd `_halo`.
-2. **Mid-tones and paper warmth**: the whole frame is still L 0.462 vs 0.488, the rest of the gap sits in the
-   mid-tones and a paper 0.011 darker than the mock's (age_floor's warm tint). Lifting the street is the WRONG lever
-   (rejected h111wh15: street 0.332 vs mock 0.290, readability down). Next: an `age_floor` 0.8 or a cream-side-only
-   age tint, A/B at 32 against the per-class numbers above.
+2. **Mid-tones**: the whole frame is still L 0.462 vs 0.488. Colour is matched (paper median 244,220,192 vs the
+   mock's 245,222,195; street 80,69,71 vs 81,70,71, with `age_floor` 1.0; 0.6 was worse, h112af06). What is left is
+   the mid-tone share (L 0.42-0.70): 0.08 vs the mock's 0.11 (h106 0.05): the print posterizes into paper / wash /
+   ink steps where the mock keeps soft greys. Lifting the street is the WRONG lever (rejected h111wh15: street 0.332
+   vs mock 0.290, readability down). Next (visual-engine): a softer mid wash step in look_d5_print (wider
+   smoothstep on step_mid), A/B at 32 against these per-class numbers.
 3. **Roof texture on the D4 neighbours**: the D5 plates show the mock's fine diagonal hatch under the thin print,
    but the D4 neighbour roofs (and the helipad, the arena's warehouse/long roofs) have no D5 plate. Next: Codex plates
    on the square-padded template (budget), or the d4-production lane's D4 set under the thin print.

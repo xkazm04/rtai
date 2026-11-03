@@ -910,3 +910,8 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   fixes is ink weight (thin print) and paper share (lighter roofs), and the street needs no change. The remaining
   whole-frame L gap (0.462 vs 0.488) sits in the mid-tones and a paper 0.011 darker (age_floor's warm tint).
   Crops masters work/i7/washhi_ab.png; ladder row.
+- 03:41 REJECTED (h112af06; params + roofs restored, project/ clean): age_floor 0.6 instead of 1.0 in the package.
+  Per class at 32 px/m (whole-frame medians): paper colour h109all 244,220,192 = the mock's 245,222,195 to within 3;
+  0.6 gives 238,220,196 (cooler) and paper L 0.855 (no lift); street 80,69,71 (mock 81,70,71) -> 79,69,74. So
+  age_floor 1.0 is right and the paper L gap (0.856 vs 0.867) is not the tint. The remaining class gap is the
+  MID-TONE share: L 0.42-0.70 px 0.08 (h109all) vs 0.11 (mock), h106 0.05. Gap 2 in the README corrected.
