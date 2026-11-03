@@ -483,3 +483,7 @@
      bullets; needs gunplay projectiles).
   5. Still open: the vermilion hit flash (REQUEST 1 -> gunplay HitFeel); a Rivet contact beat
      on the tackle; a longer reel with the shock and a cop that shoots.
+- 23:20 Re-ran test_save_slots alone: 16/16 pass. The "Could not create directory ...blocker"
+  line is the blocker test's expected error. So the earlier red was cross-lane contention on
+  the shared user dir, as suspected. Unit at f5a31e9 counts as green (558 + 16). Session ends
+  here; everything is committed.
