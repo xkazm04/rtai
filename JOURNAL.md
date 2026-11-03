@@ -79,3 +79,57 @@ NEXT (iteration 2):
 8. Other lanes: write arena_stations/<lane>.json (format: features/arena/README.md). Knob keys
    are "<table>.<json path>"; live apply covers input_actions.move.* and combat weapons /
    rivet / human so far.
+
+## Iteration 2 (21:26 - ), BUILD
+
+answers.json at 21:26: nothing for arena. Re-read 21:40: arena-1 C and arena-2 A answered by
+the owner's 21:25 direction ("not judgeable in this state ... keep your default as a placeholder,
+stop tuning on numbers; re-ask only with a real-time clip in the final look"). Applied: arena-1 C
+(teleport key) stays as built; arena-2 A (camera aim look-ahead) stays a placeholder for the
+camera owner, nothing built. Read common.md "Owner direction 21:25": depth before breadth, real
+characters and the full hit chain, asks only with real-time clips in the D5 look, one 20-40 s
+clip per lane at 32 px/m for the 00:00 vertical sample.
+- ASK arena-3 (does low cover stop shots?) written at 21:39 and WITHDRAWN at 21:40: a still plus
+  numbers, which the 21:25 direction rules out. Built as data (ArenaWalls.SOLID) so the answer is
+  a one-line change when it is asked with a clip.
+
+- MILESTONE 21:41 `b26737d`: the pit station (data in arena_stations/arena.json): north wall
+  with two 4 m doors, low cover (crates), high cover, a hut with a door, 5 enemy spawns.
+  `ArenaWalls`: solid props push bodies out and stop shots both ways (culled before the
+  CombatArena steps, so features/combat is untouched). `ArenaPit`: placeholder waves (arena.json
+  "pit": first 2, +1 per wave, max 5, 2.5 s gap) of real GuardBrain contractors; Rivet's death
+  respawns him at the hub and resets the pit. `ArenaDodges`: enemy shots that came within 1.5 m
+  and went past. Telemetry + HUD: pit wave, kills, dodges, deaths. The course bot's path now goes
+  round the corridor's lower wall (walls collide). `ArenaPitBot` + `scenario_arena_pit`.
+- FRICTION 21:35: the first pit bot reacted in one tick and killed every 1 hp guard from beyond
+  their engage_m 12 (gloria 26 m) before their first burst: 0 damage, 0 dodges, nothing
+  measured. The bot now holds fire until 13 m and waits 60 ticks (1 s, a human acquire time).
+  Result: two waves in 12.4 s, 4.2 damage, 5 dodges, 2 enemy shots stopped by cover. Logged
+  as a MEASURE in decisions.md for gunplay / enemy-ai: at shipped numbers guards never threaten.
+- FRICTION: the guard spawned inside the hut never left it (GuardBrain walks straight at Rivet,
+  no pathing). Moved that spawn outside (pit_se). Enemy pathing is enemy-ai's.
+- FRICTION: unit 550/551 on the first run: test_save_slots could not mkdir under user:// (the
+  user dir is shared by every lane's worktree). Re-run 551/551 (`evidence/arena/unit-it2-rerun.log`).
+- MILESTONE 21:43 `9678130`: cover in the game's ink: crate rows (city crate_stack, one crate
+  repeated) for low cover, the city dumpster (2.2 x 1.5 m) for high cover, street cones on the
+  course. Frame `arena-pit-props-32.png` (before: `arena-pit-32.png`), checked.
+- 21:45 clip `clips/arena-pit-32ppm-25s.mp4` (fixed-fps 60, 1500 frames): waves 1-4, 9 kills,
+  8 dodges, 4.8 damage taken. 9-frame sheet checked: camera follows, no breaks, blood red.
+- MILESTONE 21:49 `6645106`: city proving block `--arena=city`: the stations laid at the
+  generated city's junction (524, 524), StageCells collision + the city bubble + 120 people +
+  CityView + baked characters; spawns in a building dropped (none at this junction: plazas NE and
+  NW, a building SW). Frame `arena-city-range-32.png` checked. `scenario_arena_city`: range bot
+  12/31 hits in 15 s, Rivet never inside a building, replay identical; planted fault = Rivet
+  dropped inside the SW building must stay in with collision off (cells AND follow cut).
+- FRICTION: my first city fault (walk into a block with stage.cells off) never entered a
+  building: features/bodies' follow also keeps Rivet out of buildings. Good for the game, wrong
+  for the test; replaced by the drop-in check.
+- Gates at 1c4cae4: lint 13/13 (505 files), unit 551/551 (rerun), scenarios 23/23
+  (`evidence/arena/scenarios-it2.log`).
+- frames.json: 11 entries (pit clip, pit props before/after, city block added).
+- Shared files touched: none this iteration.
+- REQUEST 1 -> enemy-ai: the pit station's `enemy` spawns (arena_stations/arena.json, pit) and
+  `stage.pit` are yours to replace with your wave spawner; set arena.json pit.first_wave to the
+  value you need, or I disable ArenaPit when your station file declares its own enemy spawns.
+- REQUEST 2 -> gunplay / enemy-ai: at shipped combat.json the guards (1 hp, engage 12 m) die
+  before their first burst against any player faster than ~1 s per target (decisions MEASURE).
