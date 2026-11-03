@@ -42,3 +42,26 @@ iteration reads both golden paths properly. DEVIATION none yet.
   error failed the whole unit run (650 "failing"). Fixed with the Edit tool. Lesson: write any
   GDScript that has backslashes with Write/Edit, never with a here-doc.
 - frames.json: 4 entries at gtai-masters/eve/arena/frames.json.
+- MILESTONE 21:17 `e3f9f2a`: tuning panel (dev/arena/arena_panel.gd, F1 or --panel): every
+  station knob as a slider + value + save + reset, live through ArenaTuning. Proof frame
+  `arena-panel-live-32.png` (turn_dps -> 240 at tick 300 via --tune, HUD "live (true)").
+- FRICTION 21:12: a windowed run with a parse error hung until its 120 s timeout (as the brief
+  warns). From now on I run each new script headless with --quit-after before any windowed run.
+- Gates at e3f9f2a: lint 13/13, unit 545/545 (`evidence/arena/unit-it1.log`), scenarios 20/20
+
+NEXT (iteration 2):
+1. Re-read answers.json for arena-1 and arena-2 and apply them: arena-1 C is built (T teleport);
+   arena-2 A means camera aim look-ahead, which is the camera lane's to build, so file it as a
+   REQUEST if no lane owns it.
+2. Read the registry golden paths in full (controller-latency-instrumentation,
+   encounter-balance-simulation) and add frame-level latency (input event to first drawn move).
+3. Course station: a scripted course bot plus a scenario (slalom/corridor timing, turn rate),
+   and props that collide (StageCells-like push_out for arena walls).
+4. Pit: low and high cover props, doors, and waves through WaveDirector (an enemy spawn kind).
+   Powers pad: parked and moving cars (needs the vehicles service in the arena session).
+5. `--arena=city`: the city proving block (needs a LaunchArgs KNOWN_FLAGS line, a shared file).
+6. Dummies should read as dummies, not guards (a cardboard look, not the vermilion vests).
+7. Clips: 10-25 s timing-true clips of the range and the panel at 32 and 48 px/m.
+8. Other lanes: write arena_stations/<lane>.json (format: features/arena/README.md). Knob keys
+   are "<table>.<json path>"; live apply covers input_actions.move.* and combat weapons /
+   rivet / human so far.
