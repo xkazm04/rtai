@@ -533,3 +533,20 @@ NEXT:
 - PERF: the riot p99 CPU gap is open (~1.5 ms over 2 contended pairs, every run under the 7 ms limit). The rig update
   is ruled out (see above). Run a 3+3 UNCONTENDED A/B. If the gap holds, bench the patches in perf-bisect/ (A, then B)
   in scratch worktrees. The bench worktree needs build/export/windows-bench/ created first.
+
+## Iteration 49 (16:45-16:52, BUILD, short: freeze 17:00)
+- 16:46 bench.lock held by d5-combat (16:43, fresh) -> GPU bench skipped (rule). The 3+3 A/B is still owed.
+- 16:47 owner page check: masters day-d5/d5-cast/frames.json has 15 entries, every `file`/`before` exists, every
+  required key present; ladder.png (16:15) present. Nothing to fix.
+- 16:49 PERF LEAD, static read only (nothing measured): the print_part.gdshader cop-blue branch (7b4965d) is one
+  extra `else if` after the vermilion test: a subtract, a max, two compares and a select per fragment, no texture
+  fetch. At the riot bench zoom (0.4) a figure covers a few dozen pixels, so this is unlikely to explain a ~1.5 ms
+  CPU p99 gap. Contention noise is now the leading explanation, but it stays UNMEASURED until the uncontended 3+3.
+- No code changed. Gates unchanged since 8dbf7f4.
+
+## Status at 16:52 (iteration 49) and NEXT
+- Items 1-5 evidenced (see iteration 47). Owner frames: masters day-d5/d5-cast/frames.json (15, verified) + ladder.png.
+NEXT:
+- Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
+- PERF: run the 3+3 UNCONTENDED riot A/B (d-cast vs main). Only if the gap holds, bench perf-bisect/ patch A
+  (print_part cop-blue revert) then B (head_swap = 4) in scratch worktrees (create build/export/windows-bench/ first).
