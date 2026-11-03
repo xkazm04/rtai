@@ -206,7 +206,7 @@ func _ppm_mode(ppm: float) -> void:
 	for id: StringName in _rig.modes:
 		var mode_ppm: float = _rig.modes[id]["ppm"]
 		if is_equal_approx(mode_ppm, ppm):
-			_rig.set_mode(id, 0)
+			_rig.snap(id)
 
 
 ## Between Rivet and the nearest live hostile, so the fight is in frame.
