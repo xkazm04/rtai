@@ -509,8 +509,19 @@ NEXT (iteration 6 close, in order):
   about 1.6% of any quarter-screen window (the peak window value is 2.3). Blood spurts never cover the area
   WCAG counts; a full-screen red beat would be caught, a local one would not. Self-review of tonight's diff:
   one stale comment fixed (ImpactFrame: the calm border is paper); nothing else found.
+- MILESTONE (02:59) a calmer on-foot frame (the weakest zoom per the ladder): look_noir rim_lo 0.02 -> 0.06,
+  rim_hi 0.06 -> 0.14 (9aa5986). The dark-on-dark rim caught faint ground detail (cracks, puddle outlines) and
+  printed it as white double lines - the busiest part of the 32 px/m street. A/B with noir_frames
+  `--fixed-fps 60` (tick-exact): masters night/noir/rim-v1/ (base vs hi, junction + street at 32 / 48 / 64;
+  ab-street-32.png also as evidence/rim-street-32.png, ab-junction-64.png, crop-junction-32.png). Read: a clear
+  gain on the 32 street (the cracks drop to dim grey); the actors' rims are strong edges and do not change
+  (junction crops at 32 and 64 look the same on the figures); some puddle/planter outlines go dimmer too.
+  Kept. 191 unit pass. The final showcase re-shot again with it: masters night/noir/show-final5/ (noir 32 /
+  48 / 64; the D4 48 clip and frames copied from show-final4, as the D4 run never reads look_noir) and
+  evidence/showcase-hero.png rebuilt (show-final4's sheet kept as evidence/showcase-hero-v4.png). Flash meter
+  on show-final5 noir 32 / 48 / 64: 2 per second max, 0 red. Ladder row 27 (27 rows).
 NEXT (iteration 8 close, in order):
-1. Owner picks from evidence/showcase-hero.png (re-shot, show-final4) + masters night/noir/show-final4/*.mp4:
+1. Owner picks from evidence/showcase-hero.png (re-shot, show-final5) + masters night/noir/show-final5/*.mp4:
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
        1 light a second under the shared flash budget); (b) value roles: cops = ink among paper peds (default)
        vs ink peds + paper cops (evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png);
