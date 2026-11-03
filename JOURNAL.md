@@ -372,3 +372,20 @@ NEXT (after the 18:00 sync), in order:
   Code HEAD stays 5a6e21b, gates green there (16:40). No Godot process of mine; bench.lock not touched.
 - NEXT: unchanged (owner picks: --blood, --kill-beat, muzzle pop, pool body colour, pool size via blood_fx.json
   game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field; re-bench idle; REQUEST 3).
+
+## Iteration 50 (17:01-17:30, STABILIZE)
+- 17:02 REPORT.md fact-check against git and the masters raw files. Two fixes:
+  (a) commit count 51 -> 53 (this commit included). The +2749/-52 was the whole branch; the freeze code 5a6e21b is
+  116 files, +2697/-52 against main;
+  (b) the riot p99 series ended in "12.71". That is the iter5 OVERALL p99 (all 4 scenarios, 3 runs, from
+  raw/bench-iter5.log), not the riot. The kept iter5 riot JSON (1 of 3 runs) is p99 7.88 ms, 1% low 102 fps,
+  1 hitch >25 ms, 0 >50 ms. The report now keeps those two apart and does not attribute the overall misses to
+  a scenario (the per-scenario split was not kept). The series is six runs, not five.
+- Checked: every frame and clip the report cites exists in masters; frames.json has 15 entries and 0 missing files;
+  evidence/d5-combat/frames.json and ladder.png are identical to the masters copies (same LFS oid). No project/
+  change since 5a6e21b, so the gates stay green as of 16:40.
+- bench.lock is present (not mine): untouched. 6 Godot PIDs are running, none of them mine.
+- NEXT: the owner picks (--blood, --kill-beat, muzzle pop, pool body colour, pool size via blood_fx.json
+  game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
+  machine and keep the per-scenario aggregate; REQUEST 3 (kill hit-stop 8 under a beat mode).
+- 17:05 session end: tree clean after this commit.
