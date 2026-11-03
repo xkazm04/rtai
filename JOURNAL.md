@@ -339,3 +339,8 @@ NEXT (after the 18:00 sync), in order:
   changed during run": my JOURNAL append mid-run, again), scenarios 8/8 (the chase timing flake did not recur),
   parity exact, selftest PASS (look goldens 11/11 worst 0.74, block goldens 5/5 worst 0.97). Unit re-run on a
   clean tree below.
+- Unit re-run on a clean tree (16:43): 352 passed, 0 failed, no tree change. => every gate green at the freeze
+  (code HEAD 5a6e21b; only journal commits after it).
+- NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
+  blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field).
+- 16:43 session end: tree clean after this commit; no Godot process of mine running; bench.lock (not mine) untouched.
