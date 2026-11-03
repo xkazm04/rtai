@@ -142,3 +142,8 @@ NEXT:
 - 11:16 dev/frames/quest1_clip now exits 1 when any engine/script error is logged during a
   capture (tests/support ErrorCounter as a Logger); clean run 0, planted push_error -> 1
   ("10 engine/script error(s)"), plant reverted. Closes NEXT 6 / the FRICTION above.
+- END of iteration 1 (real clock 11:13; the 11:12/11:16 stamps above were again written ahead,
+  real ~11:10-11:11). Since the exe build (0a8fda3) only test and dev code changed (excluded
+  from the export), so build/export/windows/RTAI.exe is current. No Godot process of mine runs.
+  NEXT 6 is done; NEXT 1-5 stand as written above (1 = a human run of the exe; 2 = quest 1 in
+  the real city with collisions, the largest gap against the brief).
