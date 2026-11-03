@@ -444,3 +444,4 @@ NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (
   pure gate (a 0.42 mix has red lead ~88 > 70, a 0.55 mix ~68), the collar plates print VERM unchanged; by eye the
   collar now stands out more against drier rust. dL 0.1709 -> 0.1692 (D4 0.161). 0 px at 32/48 and in the d4 tier.
   Board evidence/item1d_rust_dry.png; hero frames = h73; ladder +1 row.
+- 01:12 walk shimmer on the final part shader (walk6): D5/D4 total 1.078, HF 1.026 (walk5 1.076 / 1.024): no shimmer.
