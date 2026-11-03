@@ -279,3 +279,18 @@ NEXT:
   lane told. Night-run item: an ArenaHook for the pit (setup builds EnemyPit; step drives it
   from stage.arena.rivet.pos).
 - Gates: lint 13/13; unit 558/558 (run_unit.mjs, 22:45); enemy scenarios 2/2.
+- Clip h (22:47, suppression code, pre-lead): rig_fight_three_pairs_flinch_32ppm.mp4, 24 s at
+  30 fps real time, three cop + thug pairs staged at three depths (spots 9:-6,-1:2.5,16:5,15:-3,
+  19:-10,19:9, fire_m 10): kills 6, nails 25 / hits 21, flinches 3, tells broken 1, cops 14
+  shots 0 hits, thug 1 swing 0 hits, Rivet damage 0. Looked at the frames: the chain reads (blue
+  cops, blood + pool on a death, robot sparks + oil field, aim lines, windup arc).
+- FINDING -> FIX 09b59b1 (weakest item now: the threat at range): cops hit a strafing Rivet 0
+  times out of 14 (scenario archetype run: 0 of 22). The aim locked 0.2 s before the shot on where
+  he stood, and the pistol round flies 18 m/s, so any steady strafe made him immune. Guns now
+  LEAD while they track (enemies.json squad.aim_lead 0.8 of his travel over the lock plus the
+  round's flight); after the lock the aim is still frozen, so a change of course dodges. Registry
+  rule (combat telegraphs / agent-behaviour-authoring: the dodge must be a read-and-react act, not
+  a passive state). Unit tests test_enemy_aim_lead.gd 2/2 (lead hits a steady strafe more than
+  0.2 better than no lead; a reversal at the lock halves the hits or better). Pit scenario:
+  dodge 0.0, stand 0.5, lock off 0.053 (still caught). FRICTION: python on Windows wrote CRLF
+  into the JSON (json-canonical failed); re-emitted via tools/lib/canonical_json.mjs.
