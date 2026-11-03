@@ -160,3 +160,27 @@ NEXT (iteration 3), in order:
 NEXT (iteration 3): the NEXT list above stands (owner picks; quiet-machine bench; REQUEST 4 blood_dark; orphan
 pools; stains over Rivet; REQUEST 3). Session stopped 12:16 with a clean tree at the commit after 2b8145a; all gates
 green at 971a118.
+
+## Iteration 3 (12:16-13:46)
+
+- 12:16 read JOURNAL, git log. NEXT list: owner picks (owner away), quiet bench (machine contended), REQUEST 4,
+  orphan pools, stains over Rivet, REQUEST 3. Started with the stains-over-Rivet bug (my files only).
+- MILESTONE 6370b54: a corpse's soak fades while Rivet stands on the body (CorpseStains.walkers: Rivet from the rig
+  feed in the city, arena.rivet in quest 1; smoothstep 0.4-0.9 m). Before: red stain dots printed on Rivet's chassis
+  (robots never bleed). New dev switch city_fight --dev=rivet-on-dead[,no-walker-fade] (A/B, same seed 91 run, t480).
+  Frames: masters frames/walker-fade-t480-{32,48,64}ppm-pair.png (raw/walker/). Camera breaks: 0 of 6.
+  Unit 348/0, lint 13/13. Stains step 34-38 us (debug, CONTENDED; it was 12.9 us at iter 2 on a quieter machine,
+  the change adds one Rivet compare per soak).
+- FINDING: no shipped path emits Events.actor_killed / player_hit in the city (only quest 1's bot-driven CombatArena
+  and dev scenes), and quest 1 has no player entry yet: the real city's combat FX are the sim cues (shot,
+  projectile_end, death). Quest 1 has no hit-stop at all (FxTriggers lives in the city view only). Rigs step on
+  TICK_DT, so a SimClock.hold does hold the pose. Humans have 1 hp and the tazer chain only hops metal: "blood on a
+  non-lethal human hit" still has no trigger today.
+- 12:24 bench.lock held by `collisions` (12:17, fresh): bench skipped, retry later.
+- MILESTONE 9671d9e: pools print as liquid at the kill-cam: BloodMarks.ring 28 -> 56 points + a 13th-harmonic
+  wet-edge scallop + a broad rounded run lobe ((0.5+0.5 cos)^2; the cos^2 lobe ran to a point). Before at 128 px/m:
+  straight chords, cut-paper capes. Cost: settled pools redraw every 6 ticks (was 4; growth 0.04 px/tick): city_fight
+  seed 91 -> t900, back to back: 28 pts/4 ticks 369 us/frame, 56 pts/4 ticks ~420, 56 pts/6 ticks 293-294 (debug,
+  CONTENDED; an earlier 28-pt run read 270: the machine drifts ~100 us run to run). Frames (same run, identical
+  --zooms 1,1.5,2,4): masters frames/pool-edge-t900-{32,48,64,128}ppm-pair.png (changed px 5.7k/10.8k/19k/27k).
+  Camera breaks: 0 of 8. frames.json: walker + pool pairs replace stains-48 and pop-48 (kept at 15); ladder +2 rows.
