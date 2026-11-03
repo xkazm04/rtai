@@ -1254,3 +1254,4 @@ NEXT (iteration 15 / morning, in order):
   53-crackle-rim/cmp-{car,on_foot}.png, ladder 53 (1280 x 26626).
 - Session end (06:57): tree clean, my scratch worktrees (trial14, trial14b, tazer14) removed, no Godot of
   mine running. Ladder rows 48-53 this iteration.
+- Evidence at 02b4c04 (06:58-07:00, --no-bench, all PASS: lint 13/13, unit 245, scenarios 8, parity, selftest 11/11 + 5/5 worst 0.00, world lock 0.00 % x3). Copied to evidence/pof.
