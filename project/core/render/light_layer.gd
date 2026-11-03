@@ -10,6 +10,8 @@ extends CanvasLayer
 const TABLE: String = "res://data/tables/lights.json"
 const SHADER: String = "res://assets/shaders/light_ink.gdshader"
 const GRADE_SHADER: String = "res://assets/shaders/grade_ink.gdshader"
+## Photosensitivity: at most 3 flashes a second (WCAG 2.3.1, Harding), whatever the table says.
+const MAX_FLASH_HZ: float = 3.0
 ## A grade row's shader uniforms (lights.json `grades`).
 const GRADE_KEYS: Array[StringName] = [&"paper_level", &"gamma", &"accent_keep"]
 
@@ -126,8 +128,14 @@ func _load(text: String) -> void:
 	var cap: float = d.get("max_lights", 64)
 	max_lights = int(cap)
 	var pal: PaletteTokens = PaletteTokens.shared()
+	var flash_cap: float = d.get("max_flash_hz", MAX_FLASH_HZ)
+	flash_cap = minf(flash_cap, MAX_FLASH_HZ)
 	for row: Dictionary in d.get("kinds", []):
 		var k: Dictionary = row.duplicate()
+		var hz: float = row["flicker_hz"]
+		if hz > flash_cap:
+			Log.warn("lights", "%s flickers %.1f Hz > %.1f: clamped" % [row["id"], hz, flash_cap])
+			k["flicker_hz"] = flash_cap
 		var token: String = row["token"]
 		var alt: String = row.get("alt_token", token)
 		k["color"] = pal.color(StringName(token))

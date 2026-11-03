@@ -214,7 +214,9 @@ The `light` canvas (screen space, above the actors, below the world UI) holds tw
 
 Kinds: `muzzle_flash` (paper fan, 4 ticks), `explosion` (paper core, vermilion rim, 36 ticks),
 `headlight` (paper cone, held), `siren` (vermilion / paper strobe at 2.5 Hz, held: red and blue are
-off-doctrine and teal is the dead's), `fire` (vermilion flicker, held). Lights live on the 60 Hz tick:
+off-doctrine and teal is the dead's), `fire` (vermilion / paper flicker at 2.5 Hz, held; it was 7 Hz =
+7 saturated-red flashes a second). Photosensitivity: `max_flash_hz` 3 (WCAG 2.3.1 / Harding) and
+`LightLayer.MAX_FLASH_HZ` cap every alternating kind at load (a faster row is clamped with a warning). Lights live on the 60 Hz tick:
 `add(kind, pos_px, angle, tick)`, `move()`, `remove()`, and `CityView` calls `step(tick, world_px)` every
 frame. When the budget is full a timed light evicts the oldest timed light; a held light is refused
 (`dropped` counts both). The riot's shots light their muzzle through the FX feed (fx_triggers.json);

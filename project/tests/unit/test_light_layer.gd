@@ -84,3 +84,15 @@ func _grade_rect(lights: LightLayer) -> ColorRect:
 		if c is ColorRect:
 			return c
 	return null
+
+
+func test_no_light_flashes_more_than_three_times_a_second() -> void:
+	var lights: LightLayer = autofree(LightLayer.new())
+	for k: StringName in lights.kinds:
+		var hz: float = lights.kinds[k]["flicker_hz"]
+		assert_lte(hz, LightLayer.MAX_FLASH_HZ, String(k))
+	var row: Dictionary = {"id": "strobe", "token": "vermilion", "alt_token": "paper"}
+	row["flicker_hz"] = 7.0
+	lights._load(JSON.stringify({"kinds": [row], "max_flash_hz": 3}))
+	var clamped: float = lights.kinds[&"strobe"]["flicker_hz"]
+	assert_eq(clamped, 3.0)

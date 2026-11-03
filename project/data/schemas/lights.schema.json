@@ -168,6 +168,11 @@
       "minItems": 1,
       "type": "array"
     },
+    "max_flash_hz": {
+      "maximum": 3,
+      "minimum": 0.5,
+      "type": "number"
+    },
     "max_lights": {
       "maximum": 1024,
       "minimum": 1,
@@ -248,7 +253,8 @@
     "kinds",
     "grades",
     "car_lights",
-    "prop_lights"
+    "prop_lights",
+    "max_flash_hz"
   ],
   "type": "object"
 }
