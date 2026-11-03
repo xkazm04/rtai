@@ -45,21 +45,21 @@ func _init() -> void:
 	var max_decals: int = budget["max_decals"]
 	_pools = budget["max_pools"]
 	decals = max_decals
-	_pos = _pv(max_drops)
-	_vel = _pv(max_drops)
-	_size = _pf(max_drops)
-	_life = _pi(max_drops)
-	_d_pos = _pv(max_decals)
-	_d_r0 = _pf(max_decals)
-	_d_r1 = _pf(max_decals)
-	_d_born = _pi(max_decals)
-	_d_grow = _pi(max_decals)
-	_d_seed = _pi(max_decals)
-	_d_dir = _pv(max_decals)
+	_pos = NoirPack.vec2s(max_drops)
+	_vel = NoirPack.vec2s(max_drops)
+	_size = NoirPack.floats(max_drops)
+	_life = NoirPack.ints(max_drops)
+	_d_pos = NoirPack.vec2s(max_decals)
+	_d_r0 = NoirPack.floats(max_decals)
+	_d_r1 = NoirPack.floats(max_decals)
+	_d_born = NoirPack.ints(max_decals)
+	_d_grow = NoirPack.ints(max_decals)
+	_d_seed = NoirPack.ints(max_decals)
+	_d_dir = NoirPack.vec2s(max_decals)
 	var c: Dictionary = p["colour"]
-	_blood = _col(c["blood"])
-	_dark = _col(c["blood_dark"])
-	_sheen = _col(c["sheen"])
+	_blood = NoirPack.rgb(c["blood"])
+	_dark = NoirPack.rgb(c["blood_dark"])
+	_sheen = NoirPack.rgb(c["sheen"])
 
 
 ## A hit at `at` (px) travelling along `dir`: hit kind `kind` from the `hits` table.
@@ -205,7 +205,7 @@ func _draw() -> void:
 
 func _rand() -> float:
 	_k += 1
-	return _hash(tick * 7919 + _k * 104729)
+	return NoirPack.hash01(tick * 7919 + _k * 104729)
 
 
 func _range(v: Variant) -> float:
@@ -213,38 +213,3 @@ func _range(v: Variant) -> float:
 	var lo: float = r[0]
 	var hi: float = r[1]
 	return lerpf(lo, hi, _rand())
-
-
-static func _hash(i: int) -> float:
-	var x: int = (i * 1103515245 + 12345) & 0x7fffffff
-	x = ((x >> 13) ^ x) * 1274126177 & 0x7fffffff
-	return float(x % 100003) / 100003.0
-
-
-static func _col(v: Variant) -> Color:
-	var a: Array = v
-	var r: float = a[0]
-	var g: float = a[1]
-	var b: float = a[2]
-	return Color(r, g, b)
-
-
-static func _pv(n: int) -> PackedVector2Array:
-	var out: PackedVector2Array = PackedVector2Array()
-	@warning_ignore("return_value_discarded")
-	out.resize(n)
-	return out
-
-
-static func _pf(n: int) -> PackedFloat32Array:
-	var out: PackedFloat32Array = PackedFloat32Array()
-	@warning_ignore("return_value_discarded")
-	out.resize(n)
-	return out
-
-
-static func _pi(n: int) -> PackedInt32Array:
-	var out: PackedInt32Array = PackedInt32Array()
-	@warning_ignore("return_value_discarded")
-	out.resize(n)
-	return out
