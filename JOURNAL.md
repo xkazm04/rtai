@@ -475,3 +475,13 @@ NEXT (night run): unchanged from iteration 10. Item 2: add the --acc knob to aim
   weapons, the robot plan, the flinch duck, the city block clip, the robot hit tint note). Then
   the enemy-ai-1 re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash,
   tracer, Rivet hit reaction).
+
+## Iteration 12 (REPORT, session start 23:40)
+- 23:40 Read the JOURNAL and answers.json: still only enemy-ai-1 (A, placeholder). Nothing new.
+- MILESTONE: REPORT.md written (what works with evidence paths, what does not, blockers, requests,
+  next steps). Every cited path (project files, evidence/enemy-ai/*, gtai-masters/eve/enemy-ai/*)
+  and every cited commit checked to exist at 23:41; frames.json has 15 entries. No code change,
+  no gate re-run (nothing under project/ changed since iteration 9's green 23:32 gates).
+NEXT (night run): REPORT.md "Next steps" 1-5: real pistol and claw in place of PitDummy, then
+  re-ask enemy-ai-1 with a final-look clip; the ArenaHook + ArenaRigs._put; the --acc and
+  aim_lock_ticks sweep; the robot plan and flinch duck; the city-block clip and tackle knockdown.
