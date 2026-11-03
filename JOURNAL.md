@@ -497,3 +497,6 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   (split() on a Variant from Dictionary.get). d5_hero.gd now parses --key=value into a typed dict (_args/_arg,
   unknown key -> exit 2, checked). Re-verified: h81 = h80 and s4 = s3 (0 px, all files), the dialogue path runs
   (dlg4, exit 0). gdformat wrote CRLF on Windows: normalised to LF before staging.
+- 01:50 boards: item3_roofs_gate.png rebuilt from h81 + s4 (D4 vs D5 at 32/48, south roofs, the per-roof numbers);
+  NEW night_iter5_summary.png (mock, hero 32/48/64/128 h81, arena a14, concept); evidence/hero-d4(d5)-*ppm.png =
+  h81 (they were byte copies of h73). README: the D5 roofs paragraph. Arena a14 is unaffected (no landmark roofs).
