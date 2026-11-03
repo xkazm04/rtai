@@ -23,6 +23,8 @@ func run(_tree: SceneTree) -> String:
 		"planted_robot_base": _haul_robot(t, false),
 		"stomp": _stomp(t.hauler),
 		"planted_stomp_r0": _stomp(_with(t.hauler, "stomp_radius_m", 0.0)),
+		"stomp_city": _stomp_city(t, true),
+		"planted_no_pulse": _stomp_city(t, false),
 		"gearbox": _gearbox(t.gearbox),
 		"planted_no_turn": _gearbox(_with(t.gearbox, "turn_dps", 0.0)),
 	}
@@ -38,6 +40,9 @@ func _judge(r: Dictionary) -> String:
 		return "hauler vs robot: %s / planted %s" % [r["robot"], r["planted_robot_base"]]
 	if r["stomp"]["hits"] != RING or r["planted_stomp_r0"]["hits"] != 0:
 		return "stomp: %s / planted %s" % [r["stomp"], r["planted_stomp_r0"]]
+	var sc: Dictionary = r["stomp_city"]
+	if sc["knocks"] != RING or sc["outside_down"] != 0 or r["planted_no_pulse"]["knocks"] != 0:
+		return "stomp in the city sim: %s / planted %s" % [sc, r["planted_no_pulse"]]
 	if not r["gearbox"]["crashed"] or r["planted_no_turn"]["crashed"]:
 		return "gearbox: %s / planted %s" % [r["gearbox"], r["planted_no_turn"]]
 	return ""
@@ -96,6 +101,38 @@ func _stomp(tuning: Dictionary) -> Dictionary:
 		pts.push_back(Vector2.from_angle(TAU * i / RING) * 2.0)
 	var bodies: PackedVector2Array = PackedVector2Array(pts)
 	return {"hits": h.stomp(Vector2.ZERO, bodies).size()}
+
+
+## The stomp as a pulse in the real city sim: a ring of RING standing people around the tank
+## (1.1-1.5 m) is floored, two people 6 m out are not. Planted: no pulse set (0 knockdowns).
+func _stomp_city(t: PowerTable, pulse: bool) -> Dictionary:
+	var st: BodiesStage = BodiesStage.new()
+	if st.setup(20.0) != "":
+		return {"knocks": -1}
+	var at: Vector2 = st.band + Vector2(10.0, 0.0)
+	st.body.pos = at
+	var offs: Array[Vector2] = [
+		Vector2(1.5, 0),
+		Vector2(-1.5, 0),
+		Vector2(0.8, 0.8),
+		Vector2(-0.8, 0.8),
+		Vector2(0.8, -0.8),
+		Vector2(-0.8, -0.8),
+	]
+	for o: Vector2 in offs:
+		@warning_ignore("return_value_discarded")
+		st.stand(at + o)
+	var far: Array[int] = [st.stand(at + Vector2(6.0, 0)), st.stand(at + Vector2(-6.0, 0))]
+	var h: HaulerForm = _rig(t, true)
+	if pulse:
+		st.body.pulse = HaulerCity.pulse_of(h)
+	for i: int in SimClock.TICK_RATE:
+		st.tick(Vector2.ZERO)
+	var outside_down: int = 0
+	for slot: int in far:
+		var p: PackedFloat64Array = st.person(slot)
+		outside_down += 1 if not p.is_empty() and int(p[1]) == SimConst.M_DOWN else 0
+	return {"knocks": st.knocks.size(), "outside_down": outside_down}
 
 
 func _gearbox(tuning: Dictionary) -> Dictionary:
