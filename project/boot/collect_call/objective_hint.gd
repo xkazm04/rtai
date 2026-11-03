@@ -28,14 +28,7 @@ static func of(stage: CollectCallStage, system: QuestSystem) -> ObjectiveHint:
 	var l: StageLayout = stage.layout
 	match beat.id:
 		"b1-dumpster":
-			if stage.hidden_in == "":
-				h._mark(
-					l.hide_at["dumpster"],
-					&"SLICE__HINT_HIDE",
-					"Walk [move] to the dumpster, hide: [use]"
-				)
-			else:
-				h._mark(Vector2.INF, &"SLICE__HINT_STAY", "Stay hidden. Let the sirens pass.")
+			h._dumpster(stage)
 		"b2-payphone":
 			h._mark(
 				l.phones["Factory Row corner"], &"SLICE__HINT_PHONE", "Answer the payphone: [use]"
@@ -72,7 +65,8 @@ static func with_keys(prompt: String, pad: bool = false) -> String:
 		move.append(key_name(StringName("move_" + dir)))
 	var move_label: String = "L-stick" if pad else " ".join(PackedStringArray(move))
 	var out: String = prompt.replace("[move]", "[%s]" % move_label)
-	for action: String in ["use", "fire", "melee"]:
+	out = out.replace("[aim]", "[R-stick]" if pad else "[mouse]")
+	for action: String in ["use", "fire", "melee", "pause"]:
 		var id: StringName = &"interact" if action == "use" else StringName(action)
 		out = out.replace("[%s]" % action, "[%s]" % (pad_name(id) if pad else key_name(id)))
 	return out
@@ -113,6 +107,15 @@ func _mark(at: Vector2, k: StringName, english: String) -> void:
 	text = english
 
 
+## The first minute: walk and hide, then (while the sirens pass) the pause key.
+func _dumpster(stage: CollectCallStage) -> void:
+	if stage.hidden_in == "":
+		var at: Vector2 = stage.layout.hide_at["dumpster"]
+		_mark(at, &"SLICE__HINT_HIDE", "Walk [move] to the dumpster, hide: [use]")
+	else:
+		_mark(Vector2.INF, &"SLICE__HINT_STAY", "Stay hidden. Let the sirens pass. [pause] pauses.")
+
+
 func _meet(stage: CollectCallStage, runner: QuestRunner) -> void:
 	if runner.lines.busy():
 		_mark(Vector2.INF, &"SLICE__HINT_LISTEN", "Listen.")
@@ -128,7 +131,7 @@ func _meet(stage: CollectCallStage, runner: QuestRunner) -> void:
 
 func _dock(stage: CollectCallStage) -> void:
 	var dock: Vector2 = stage.layout.marker("Dock 9 bonded storage").at
-	_mark(dock, &"SLICE__HINT_FIGHT", "Hold Dock 9: aim, [fire] to shoot, [melee] to shock")
+	_mark(dock, &"SLICE__HINT_FIGHT", "Hold Dock 9: aim [aim], [fire] to shoot, [melee] to shock")
 	var arena: CombatArena = stage.arena
 	if not arena.rifle_drops.is_empty() and arena.rivet.weapon != &"assault-rifle":
 		_mark(arena.rifle_drops[0], &"SLICE__HINT_RIFLE", "Grab the rifle: [use]")

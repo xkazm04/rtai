@@ -40,3 +40,9 @@ func test_small_stick_drift_does_not_switch() -> void:
 	drift.axis_value = 0.1
 	live.note_event(drift)
 	assert_false(live.pad_last)
+
+
+func test_aim_and_pause_are_taught_per_device() -> void:
+	var prompt: String = "aim [aim], [pause] pauses"
+	assert_eq(ObjectiveHint.with_keys(prompt), "aim [mouse], [Escape] pauses")
+	assert_eq(ObjectiveHint.with_keys(prompt, true), "aim [R-stick], [Start] pauses")
