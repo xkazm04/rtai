@@ -77,3 +77,8 @@
   reference (one MultiMesh per texture).
 - NOTE -> d5-city: a soft white halo sits on the junction at the city start in on-foot -> car frames
   (frames-v2/050, carnage-v2/034); it is not from vehicles (no vehicles FX/light exists).
+- MILESTONE 10:58 traffic shoves standing cars / wrecks (no more driving through them),
+  `soul_hijack(vehicle_id)` for service cars, impact spin from off-centre hits (lever = the
+  touching circle; capped 4 rad/s, bled 5 rad/s2; in the replay state). Unit 343 + 1, scenarios green.
+- Bench: lock held by d5-combat 10:55 -> skipped the bench this iteration (and `just bench` does not
+  include vehicles anyway: city_bench builds its own World).

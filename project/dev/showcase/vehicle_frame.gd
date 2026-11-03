@@ -6,7 +6,7 @@ extends Node
 ## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
 ## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
-##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage]
+##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage] [--soul]
 
 const MASTER_SEED: int = 31
 const SHOTS: Dictionary[int, String] = {
@@ -37,6 +37,7 @@ var _out: String = "user://vehicle_frame"
 var _clip: bool = false
 var _look: StringName = &""
 var _carnage: bool = false
+var _soul: bool = false
 var _shots: Dictionary[int, String] = SHOTS
 var _world: World = null
 var _svc: VehicleService = null
@@ -70,6 +71,8 @@ func _process(_delta: float) -> void:
 	if _world == null or _busy:
 		return
 	var tick: int = _world.context().clock.tick()
+	if _soul and _svc.driving != null and not _svc.driving.soul_hijacked:
+		_svc.soul_hijack(_svc.driving.id)  # Gearbox's ability, once it lands, sets this
 	var last: int = CLIP_TICKS if _clip else _shots.keys().max()
 	if tick > last + 2:
 		printerr("vehicle_frame: done at tick %d, cars %d" % [tick, _svc.cars.size()])
@@ -105,6 +108,8 @@ func _parse_args() -> bool:
 			_out = arg.substr(6)
 		elif arg == "--clip":
 			_clip = true
+		elif arg == "--soul":
+			_soul = true
 		elif arg == "--scene=carnage":
 			_carnage = true
 			_shots = CARNAGE_SHOTS
