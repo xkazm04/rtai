@@ -1438,3 +1438,12 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   on the BASELINE's best shift): trilinear 6.09 -> look_d5_ui 4.77. Rule from item50 + 50b: on a mipmapped texture
   look_d5_ui beats trilinear at every scale tried (0.39, 0.53, 0.74, 0.83x); a non-mipmapped texture at >= 0.6x is
   best left linear. README row updated.
+- 06:14 REJECTED (reverted, never committed): look_d5_part `rgss` = the part art sampled as look_d5_ui does
+  (4 rotated-grid taps one mip finer than trilinear, alpha kept trilinear), aimed at gap 5 ("the in-part hatch mips
+  away at 64 px/m"). 0 px at 32 / 48 (the overlay is off there). Rig footprint (px that rgss changes, dilated +
+  closed) at 64 / 96 / 128, rgss 0 / 0.5 / 1: fine detail (|L - blur1|) 0.0941 / 0.0964 / 0.1004, 0.1129 / 0.1162 /
+  0.1201, 0.1011 / 0.1031 / 0.1074; ink share 0.353 / 0.368 / 0.382 at 64; rig L 0.444 / 0.440 / 0.436 (darker vs the
+  dark street). Walk (d5_walk, shader default flipped temporarily, restored, diff checked) D5/D4 HF at 64: 1.026 /
+  1.044 / 1.068, at 96 (rgss 1): 1.131 -> 1.178; baselines reproduced exactly. By eye at 64 the joints and collar
+  edges show a few more drawn lines: a modest gain for +4% shimmer and less rig contrast. Not proposed, so
+  not kept as an option either. README part row records it. Scratch: i10r0/r5/r1, a10r0/r1, w10r* (deleted below).
