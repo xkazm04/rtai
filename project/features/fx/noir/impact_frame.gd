@@ -14,7 +14,7 @@ const SILHOUETTE: int = 4
 ## A new beat at most once per BEAT_GAP ticks (1 s); kills inside the gap keep their blood but
 ## get no beat. Photosensitivity: the full beat also spends from `budget` (shared with the muzzle
 ## light); when the budget is spent or flashes are off, the beat is the CALM one: no flash, the
-## held pose framed by an ink border only (no paper gutters), the hit-stop unchanged.
+## held pose framed by a thin paper border only (no paper gutters), the hit-stop unchanged.
 const BEAT_GAP: int = 60
 
 var sequence: PackedInt32Array = PackedInt32Array([1, 3, 2])
