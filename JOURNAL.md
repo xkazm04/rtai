@@ -146,3 +146,15 @@ NEXT (iteration 3, depth-first on the pistol):
    Rivet's sidestep, Rivet's shot, hit flash and hit-stop, the cop's flinch and death, blood.
    20-40 s at 32 px/m, --fixed-fps 60.
 5. Only then the second weapon.
+- MILESTONE 1223920: NEXT 1 started. `GunHand` (features/combat/weapons/gun_hand.gd) bridges
+  the weapon table into `CombatArena`. Shared quest file touched minimally: `CombatArena.gun`
+  (null by default; when set, `rivet_fire` goes through it, and `step()` settles the trigger).
+  Unit test_gun_hand covers semi on the press edge and one pistol round dropping a guard.
+  Quest scenarios 4/4 and autosave 2/2 (the bound-input hash) unchanged.
+- MILESTONE (next commit): `CombatArena.struck(victim, dir, lethal, weapon)` is emitted after
+  each landed round. A test proves the lethal pistol round reaches `HitFeel.land` and returns
+  the kill hit-stop (6 ticks) once. Quest scenarios 4/4 again.
+- NEXT for iteration 3 (updated): NEXT 1 is done on the combat side. What is left: the arena
+  wiring (needs REQUEST 4: `ArenaStage` sets `arena.combat.gun = GunHand.make(...)` and connects
+  `struck` to `HitFeel.land` with the view's CameraRig), the victim flash and knockback in
+  CastView/Fighter, then the pistol art (NEXT 3) and the full-chain clip (NEXT 4).
