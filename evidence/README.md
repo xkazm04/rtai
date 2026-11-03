@@ -5,6 +5,37 @@ PNGs in this folder are left untracked (16 MB; the same files are in masters). M
 Godot 4.7.2 on d3d12 from `dev/showcase/d5_showcase.gd` / `d5_hero.gd`. They are deterministic: fixed cast, fixed
 tick count, no RNG.
 
+## Morning merge sheet (iteration 12, 07:10): what `n-d5` turns on, what it only proposes
+Written for the Director and the owner. Every row points at a board in this folder; the numbers are in the journal.
+**On by default when merged** (all D5 work sits above 48 px/m or on large surfaces; 32 px/m keeps D4's read):
+- D5 Rivet / cop / pedestrian parts tier on the same rigs (`look_d5_part`; on at zoom 1.75, full at 2.0, off below 1.6875 =
+  56 / 64 / 54 px/m, the gap is the hysteresis against switch shimmer): `item1_gate.png`, `item1c_shade_k.png`,
+  `item6_cop_shade.png`.
+- `look_d5` world layer (ink-pressure hatch, paper age and grain, misregistration; amount by zoom):
+  `item7_paper_age.png`, `item2b_street48.png`.
+- D5 landmark roofs (union-fist mural, bar, HQ, pension bank + neighbours) and big street decals:
+  `item3_roofs_gate.png`, `item10_street_decals.png`; D5 ground tiles (joints, crosswalk, dashes, kerb): `item22`-`item25`.
+- Cast shadows as pen strokes (`look_d5_shadow`): buildings, kerbs, props / cars, rigs up close, the rig strokes
+  rig-locked (`item54_rig_shadow_lock.png`). Souls through `look_d5_soul` (`item4c_souls_print.png`).
+- Boss arena (King) and the showcase: `hero-d4d5-<ppm>ppm.png`, `arena-d4d5-{64,128}ppm.png`,
+  `item4_hero_vs_targets.png` (beside the mock and the concept).
+- Close-up art: portraits, expressions, finishers, loading illustration (`item5_portraits.png`, `item5b_loading.png`;
+  provenance logged). Store-safe marks are the lane's, OWNER REVIEW PENDING; `finisher_k9.png` is in-game only.
+**Proposals, default OFF, for another lane** (one switch each, in `assets/shaders/look_d5.params.json`):
+- visual-engine: `look_d5_print` instead of look_d4 + `world.age_floor` / `grain_floor` 1.0 + `print.paper_hi` =
+  "package v9" (`hero-pkg9-*`, `night_iter8_summary.png`, gap list 9). Adopt together, with the v9 roof plates
+  (one command, gap list 9.1). The biggest step toward the mock at 32 px/m; under a sub-pixel world camera its
+  pans flip more pixels (`item53`), a pixel-snapped camera makes it 0 (NEXT 41).
+- characters: `look_d5_halo` (ink line outside the sticker rim + drop shadow, `item34_halo_ink.png`).
+- HUD: `look_d5_ui` on the mipmapped portraits / phone (`item50_ui_sharp.png`); NOT on full-screen cards (`item50b`).
+- d4-production: the D5 roof lift and heavier lines on the D4 neighbour roofs (`item14`, `item40`).
+- city: one mipmap rule for D5 plates (`item51_mip_audit.png`).
+**Owner choices (A/B boards; no default changes without a yes)**: Rivet steel lavender (kept) vs the concept's mauve
+(`item9`); zebra cream vs toned (`item27`); sticker rim +1 px (`item38`); the concept's vermilion misprint `fringe_k`
+(`item43`, a colour-doctrine call) and halftone `dots_k` (`item47`), both up close only.
+**Open**: the gap list after iteration 9 stands (paper-area mid-tones, parapet line weight, the light-wash spread);
+each needs new plates, so Codex budget (50/50 used tonight). Parity and bench were not run in this worktree (no native build).
+
 | File | What |
 |---|---|
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
