@@ -1337,3 +1337,27 @@ NEXT (iteration 27, for the morning; same as iteration 25):
   4. Iteration-18 07:10 items 3-5.
 
   Later: `noir` as a row in look_profiles.json.
+
+## Iteration 28 (08:06-08:09, STABILIZE, past freeze: no features)
+- (08:06) Branch tips: main 721fbbb is unchanged and n-visual 8d4750d is unchanged. **n-d4 moved e6dcac5 -> 0e733b6 and
+  n-d5 a55382e -> a3875a8. Both changed JOURNAL.md only**, so the merge picture is unchanged from iteration 27 (see
+  evidence/MERGE-noir.md and evidence/merge-noir-city_view.patch).
+- (08:07) Gates at 1d152e0 (project/ and tools/ identical to 641d2b1):
+  - lint: 13/13 over 243 files, exit 0.
+  - unit: 206/0/0, exit 0.
+  - scenarios: 8 ran, 0 failed, exit 0. replay_60s final cbeb734ff9b97c41, unchanged.
+
+  Logs are in evidence/gates-1d152e0-*.log. Disk: C: 267G free.
+- Leonardo probed (08:08): apiSubscriptionTokens 0, apiPaidTokens null. Images: 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine is running. evidence/ is still
+  untracked (by design).
+NEXT (iteration 28, final for the night; same as iteration 27):
+  1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and apply
+     evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 against masters
+     crowdshadow-v1/before/ (expected identical), and run test_render_layers with noir on.
+  2. Owner picks from evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21
+     clips.
+  3. Find the crowd-shadow root cause (atlas dump), then re-apply 01409e4.
+  4. Iteration-18 07:10 items 3-5.
+
+  Later: `noir` as a row in look_profiles.json.
