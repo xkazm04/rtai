@@ -671,7 +671,7 @@ NEXT (iteration 10, in order):
 2. Traffic in a fight (evidence/cars-through-fight-NOT-adopted.png): the best image of the night, blocked by
    the sim's cars not seeing the scripted fighters. Either a scripted car in fight_script (dev) or the fighters
    as sim obstacles (sim scope, not this lane).
-3. Flash margin (see 03:55): the street showcase is at 3 flashes/s at 48 px/m (the limit, as FlashBudget allows) - the inverted
+3. Flash margin (see 03:50): the street showcase is at 3 flashes/s at 48 px/m (the limit, as FlashBudget allows) - the inverted
    panel flips the lit pools to ink. Options: keep lit pools paper in the inverted panel, or count the lit
    area in FlashBudget. The junction showcase stays at 2.
 4. The muzzle pool's radius still scales by zoom in canvas px (~11% larger on screen than flash_r says at a
@@ -681,7 +681,7 @@ NEXT (iteration 10, in order):
    unmeasured on a quiet GPU (CPU 0.064 ms/frame measured). Traffic signals could cast small pools too.
 6. Carried over: noir parts + coat into the rigs (art_dir per plan), BloodStains / BloodFx.solid into the real
    game hosts, the noir HUD in the composition root under --look=noir, a settings toggle for safety.flashes.
-- (03:55) NEXT item 3 looked at (no code change): which flashes make the street showcase's 3/s at 48 px/m.
+- (03:50) NEXT item 3 looked at (no code change): which flashes make the street showcase's 3/s at 48 px/m.
   The worst window is the bottom-left quarter (window 12), video frames 177-206 (masters night/noir/
   flash-street-48-frames176-206.png: 176, 177, 178, 194-199, 206): 177 the muzzle light's pool (up) / 178
   (down) = 1; then the kill beat: 195 silhouette flash (up), 197 the inverted panel turns the lit pool to ink
