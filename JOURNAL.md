@@ -814,3 +814,7 @@ NEXT (iteration 12 / morning, in order):
    vs the world's 27,21,23: invisible today, drifts if the palette moves).
 5. Traffic states (unchanged): sim custom.y (intact / d1 / d2 / hijacked) -> CrowdLayers picks n-d4's atlas.
 6. Rig 0.43 ms p99 per frame in the riot (bench at c89365e) vs the 0.3 target: native RigArm / RigGait.
+- Evidence at c57bef5 (HEAD code, 04:02-04:1x, --no-bench; the bench at c89365e above predates only the
+  zoom feed, bit-identical at <= 64 px/m): lint 13/13, unit 214, scenarios 8, parity PASS, selftest PASS
+  (junction 10/10 + block 3/3 worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to
+  evidence/pof. Session end: tree clean, no Godot of mine running, my /tmp scratch deleted.
