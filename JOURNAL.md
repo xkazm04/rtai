@@ -497,6 +497,12 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   (split() on a Variant from Dictionary.get). d5_hero.gd now parses --key=value into a typed dict (_args/_arg,
   unknown key -> exit 2, checked). Re-verified: h81 = h80 and s4 = s3 (0 px, all files), the dialogue path runs
   (dlg4, exit 0). gdformat wrote CRLF on Windows: normalised to LF before staging.
-- 01:50 boards: item3_roofs_gate.png rebuilt from h81 + s4 (D4 vs D5 at 32/48, south roofs, the per-roof numbers);
+- 01:41 boards: item3_roofs_gate.png rebuilt from h81 + s4 (D4 vs D5 at 32/48, south roofs, the per-roof numbers);
   NEW night_iter5_summary.png (mock, hero 32/48/64/128 h81, arena a14, concept); evidence/hero-d4(d5)-*ppm.png =
   h81 (they were byte copies of h73). README: the D5 roofs paragraph. Arena a14 is unaffected (no landmark roofs).
+- 01:43 REJECTED (experiment, reverted): a coarse ruled membrane hatch composited into the b roofs (period 12 art px
+  = ~4 screen px at 32 px/m, hand-wobbled, broken strokes, ink 0.45, light membrane only, parapet clean;
+  build_roofs.py D5_ROOF_RULE, default 0 = off). h82/s5 vs h81/s4 at 32: HF +0.006-0.008 on 4 roofs, but paper
+  drops 0.08-0.13 (mural 0.44 -> 0.36: away from the mock) and the UNION HALL moires with its own hatch (L 0.518 ->
+  0.433, ink 0.45 -> 0.53). By eye it prints as a grey screen tone, not pen lines. Rebuilt with RULE 0: tree clean
+  (installed roofs = h81). Crops work/i5/rule_ab.png. The texture gap stays (needs coarser hatching in the ART).
