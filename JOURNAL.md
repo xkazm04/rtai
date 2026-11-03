@@ -150,3 +150,9 @@ NEXT (iteration 3), in order:
 - GATES at 971a118 (evidence/run.mjs --no-bench, 12:1x): lint 13/13, unit 347/0, scenarios 8/8, parity exact (1200 steps,
   mutation caught), selftest PASS (look goldens 11/11, block 5/5). Bench: judged at 11:40, MISS p99 (CONTENDED, above).
 - EVIDENCE gap closed: kill beat real-time at 48 px/m (brief item 4 wanted 48 and 64): masters beat-{flash,panel,both}-48ppm-realtime.mp4 + frames/beat-modes-48ppm-realtime-strip.png (--fixed-fps 60, --beat-frames=60). 12:06 bench.lock held by vehicles (12 min): repeat bench skipped.
+- BENCH repeat (12:10-12:14, lock held + released, CONTENDED), code 9892177 (= 971a118 + docs): riot p99 15.175 ms,
+  1% low 34 fps, hitches >25 ms 136 (riot 38, all `present` but 1 unexplained). MISSES p99CpuMs, low1Fps,
+  over50.unexplained. Same riot p99 across today: 4.86 (11:06) -> 7.68 (11:40) -> 15.18 (12:14) with no
+  hot-path change between the last two (stain tuning data only): the swing is the shared GPU, not the FX. The
+  bench is NOT a valid judge on this machine today; re-bench at the 18:00 sync on an idle machine.
+  Evidence: evidence/d5-combat/bench/iter2b/.
