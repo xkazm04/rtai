@@ -764,3 +764,11 @@ NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade
   -> 0.648 / 0.50 / 0.23 / 0.095 (mock roof 0.594 / 0.36 / 0.25 / 0.163). The tone overshoots the mock, the props'
   hatch shading disappears, and HF does not move: iteration 5's conclusion stands (the roof texture gap needs a
   look_d4 roof print, NEXT 17). Crop masters work/i6/mural_gamma.png; ladder row.
+- 03:00 FINAL gates (iteration 6 end): evidence tool (--no-parity --no-bench) ALL PASS at 1df4bae (lint 13/13 over 190
+  files, unit 149/0, scenarios 8/0, selftest ok); 59 untracked evidence PNGs moved aside and restored; tree clean.
+  Parity/bench not run (no native build in this worktree). Scratch deleted: frames/sw96on, sw96off (zoom sweep,
+  numbers above), h91b (= h91); disk 226 GB free. Frame rounds the boards cite: h86, h87c/d, h88, h90, h91, h92b/c,
+  h94, h94g10, h94both, h95zt, h96, h97, h98b; pans pan7c/d, pan8*, pan9*, pan10.
+NEXT (final, iteration 6): NEXT 1-25 stand. Morning reading order: evidence/night_iter6_summary.png (h86 vs h98b at
+  32/48 + mock + concept), item4_hero_vs_targets.png, the gap list after iteration 6 in evidence/README.md, then the
+  owner A/Bs item26 (age_floor + grain_floor) and item27 (toned zebra). Images: 50 of ~50 used; none this iteration.
