@@ -1247,3 +1247,6 @@ night_iter7_summary.png and the iteration-7 order.
   sweep), so the soft ramp prints as the same stroke switch. My 05:11 suggestion to the characters lane ("soften the
   edge") is therefore withdrawn: the lever would have to be in the print, not the shadow. Scratch deleted: walk11_*,
   walk12_*, h155soft.
+- 05:12 session close (cap 05:45): tree clean; the last code commit (da44a1a) passed the full gate run at 5d16b85 (later
+  commits are docs only, each passed the pre-commit lint). Nothing half-done or uncommitted. NEXT: the iteration-8 NEXT
+  31-34 + reading order above (31 amended), on top of iteration 7's 27-30. Images: 50 of ~50 used; none this iteration.
