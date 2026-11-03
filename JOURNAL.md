@@ -1201,3 +1201,27 @@ NEXT (iteration 20): 1. Owner picks (carried). 2. Crowd shadows: dump the baked 
   check the per-cell alpha for suspect (a). Then do the per-person dump for (b)/(c) (iteration 19). Fix at the
   cause, re-apply look_noir_crowd_shadow (01409e4) and re-shoot noir_frames street 48. Items 3-5 of the
   iteration-18 07:10 list stand.
+
+## Iteration 21 (07:30-07:42, STABILIZE, past freeze: no features)
+- (07:31) Gates at 4761ffa (`run.mjs --no-bench --allow-dirty`; the only dirty path is the untracked evidence/):
+  lint (13 checks, 243 files), 206 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest
+  (D4 32 px/m 78 colours, 48 px/m 65) all PASS. JSONs -> evidence/gates-4761ffa/ and evidence/. project/ + tools/
+  at HEAD = 641d2b1 exactly (`git diff 641d2b1 HEAD -- project tools` empty).
+- (07:36) Determinism re-check at HEAD: street showcase 48 (`--coat --noir-parts --at=501,523 --car-pass`, masters
+  stab21/48) **mp4 + 23/23 hero frames byte-identical to figshadow-v12/48** (= evidence/showcase-figure-shadows-48.mp4).
+- FRICTION (07:32-07:35) I first passed `--zoom=48` / `--zoom=64`: `--zoom` is the zoom factor (1.0 = 32 px/m,
+  1.5 = 48, 2.0 = 64), so the run rendered at 1536 px/m and the frames were named `show-noir-1536ppm-*`. Caught
+  because the 48 ppm frames were "missing", deleted, re-shot with 1.5 / 2.0. tools/rec_show.sh's argument is a zoom factor, not px/m.
+- (07:38) Evidence refreshed to the current build: evidence/showcase-hero-current.png (D4 48 | noir 48 | noir 64,
+  fire tick / silhouette flash / held panel / aftermath; looked at: 12/12 panels top-down, 0 rejected, red the only
+  colour in the noir columns), clips masters stab21/{48,64,d4}/. evidence/ladder.png was stale (05:25, 34 rows) ->
+  replaced by the masters ladder (37 rows). evidence/NOIR.md: title, gates line (4761ffa), the current-build sheet,
+  an iteration-18 NOT-adopted note (crowd ink blobs), ladder count. Every file NOIR.md names resolves (checked by script).
+  The standard noir_frames at the current tree are masters crowdshadow-v1/before/ (shot at 641d2b1 = HEAD's tree).
+- Leonardo probed (07:40): apiSubscriptionTokens 0, apiPaidTokens none. Images 0 generated, 0 rejected;
+  provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 21, for the morning): 1. Owner picks: start at evidence/NOIR.md -> showcase-hero-current.png,
+  then showcase-hero-car.png / showcase-hero-street.png and the stab21 clips. 2. Crowd shadows: dump the baked atlas
+  (dev script, iteration 20) to test suspect (a), then (b)/(c) (iteration 19), fix at the cause, re-apply
+  look_noir_crowd_shadow (01409e4). 3-5 of the iteration-18 07:10 list stand (junction prop/shadow mask channel,
+  per-light directions, showcase_fight.gd 227 lines -> setup helper).
