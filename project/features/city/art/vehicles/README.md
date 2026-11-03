@@ -16,7 +16,7 @@ Import: lossless, mipmaps on (AST-01/03). Masters + prompts: `art_src/d4.manifes
 | `traffic_atlas_hijack.png` | (moving traffic) | the same cells with the teal hijack plate composited (cruiser and ambulance stay plain) |
 | `traffic_atlas_d1.png`, `traffic_atlas_d2.png` | (moving traffic) | the damage states in the same 3 x 3 layout (cell = art id; id 7 = the sedan damage sprite in the grey paint), registered to the intact cells (max diff 0), so a damage hook only swaps the texture per car |
 
-- **Colour doctrine:** ink, wash and paper only. Vermilion only on the police light bar (tail lights neutralised).
+- **Colour doctrine:** ink, wash and paper only; the police light bar is `cop_blue_hi` with its shaded half `cop_blue` (2026-11-03, d5-cast: no vermilion on cops or cruisers; the cruiser sprites and the atlas cell 8 in all four atlases). Tail lights neutralised.
   Teal only in the hijack overlays (the soul's colour). Damage is ink, never red.
 - **Wiring** (rendering code, the visual-engine lane; not in this branch): the traffic MultiMesh still draws the steel
   placeholder quad of `crowd_layers.gd` `_body()`. A ready patch is in the lane masters,

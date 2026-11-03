@@ -86,3 +86,9 @@ NEXT:
   The real-city city_frame A/B (helmA/helmB, --police=4) showed NO helmet change: the riot cops there are atlas cells
   with the shield over the head at 32, and the run differs by a few crowd-sim pixels between runs (one cop -> ped cell;
   not this change). Rejected as evidence for this item (0 helmets visible); the hero A/B is the proof.
+- FOUND + FIXED: moving police cruisers still had a VERMILION light bar in the real game (city_frame city-2 at 128 px/m).
+  Moving traffic draws from traffic_atlas*.png cell 8, not police_cruiser*.png, and iteration 1 only recoloured the sprites.
+  Cell 8 recoloured in all four atlases (intact, d1, d2, hijack; recolor_cops.atlas_cells(), originals in masters
+  orig/vehicles_atlas/): 1179-1306 px each, 0 px outside cell 8, 0 vermilion left. cruiser_wreck / car_wreck: 0 vermilion.
+  CAVEAT on this branch alone: main's look_d4_item has no blue plate, so a moving cruiser's blue bar prints as nearest-ink
+  TEAL here; d-city's look_d4_item (f0cedb3) adds the cop-blue plate. MERGE ORDER: d-city with d-cast (trial merge below).
