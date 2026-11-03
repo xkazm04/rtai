@@ -134,3 +134,55 @@
   No save code differs from baf2e80. Gates at session end: lint 13/13; unit = everything except
   this flake (it passed alone at 21:25); scenarios exit 0 (a692b60); parity exact and look goldens
   11/11 unblessed (0287cec evidence run). Session ends 21:35.
+
+## Iteration 2 (21:27-22:12), BUILD
+- 21:27 Read: JOURNAL, git log, answers.json (rivet-motion-2 not yet answered at start).
+- MILESTONE 9d92fe4, sprint + dodge roll as data: `PlayerMotion` (features/player) over
+  TopDownMover, `data/tables/rivet_motion.json` (+ schema). Sprint is a held key (owner C19):
+  6.2 m/s, above the 5.0 m/s tackle line (bodies.json rivet run_mps). While sprinting the facing
+  follows the walk at 320 dps, and the speed only rises once the stick is within
+  min_forward_dot 0.4 of the facing. Roll: 3.2 m in 22 ticks on an ease-out curve (exact
+  distance), i-frames on ticks 2-14, 10 recovery ticks with the stick x0.35, 8 cooldown ticks.
+  test_player_motion 6/6, with two planted faults (sprint at walk speed misses the line;
+  i-frames past the roll are a table error).
+  Shared-file change: input_actions.json gained `sprint` (bit 5: Shift, pad L3) and `roll`
+  (bit 6: Ctrl, pad B; B is also handbrake, and the context decides, like Space for
+  melee/handbrake). Not wired into quest 1's StagePilot, so its replay hash and goldens are
+  untouched; the arena plugs PlayerMotion in.
+- MILESTONE 25a1efc: RivetPlan GAIT_SCALE 1.3 (ASK rivet-motion-2 default B) and SPRINT_STRIDE
+  0.2 (BodyPlan.sprint_stride, RigGait: the stride keeps growing from 5 m/s up to 6.2 m/s).
+  RigClips.roll(duration) now takes the sim's roll length, so the tuck lasts 367 ms, not the
+  spike's 450 ms.
+- MILESTONE 964f52e: motion course dev scene (`dev/rivet_motion/motion_course.gd`). The real
+  PlayerMotion runs a scripted course: a strafe box around an aim mark, sprints both ways, rolls
+  out of a sprint and from a stand. A state label and an ink i-frame ring are on screen. Clips:
+  `gtai-masters/eve/rivet-motion/clips/motion-course-{32,48}ppm.mp4` (12.8 s, --fixed-fps 60),
+  plus the sheet `motion-course-48ppm-sheet.png`.
+- Feel numbers (sim-true on the 60 Hz tick; `dev/rivet_motion/motion_probe.gd`;
+  evidence/rivet-motion/motion-probe.json):
+
+  | | top | to 90 % | stop distance | stop time | 180-degree turn |
+  |---|---|---|---|---|---|
+  | walk | 4.5 m/s | 150 ms | 0.22 m | 117 ms | 250 ms |
+  | sprint | 6.2 m/s | 350 ms | 0.43 m | 167 ms | 550 ms |
+
+  - Roll: 367 ms, 233 ms of i-frames, 667 ms lockout (roll + recovery + cooldown).
+  - Input to motion: Rivet moves on the press tick (0 ticks of sim latency). The display latency
+    (sample to presented frame) is NOT measured.
+- MILESTONE b750f1b: `arena_stations/rivet-motion.json`, two stations. `rivet_motion_course`
+  (16 tunables, a tackle crowd patch) and `rivet_melee_line` (3 human dummies 1.2 m apart, 3
+  metal dummies 2 m apart plus a far one for the chain, every claw/shock tunable). It validates
+  against e-arena's `gtai.arena-station/1`. The schema and the lint mapping are byte-identical
+  copies of e-arena a2467d8 (lane field `rivet_motion`: that schema's pattern has no hyphen).
+  REQUEST 1 -> arena: a metal dummy kind (the shock's chain needs to know metal; kind `enemy`
+  is used until then); and array-row tuning keys by index (`rivet_melee.claw.hits.0.windup_ticks`).
+- Gates at 25a1efc + course: lint 13/13, unit 556/556, scenarios exit 0.
+- 21:46 ANSWER rivet-motion-2 = B (1.3), already applied in 25a1efc. Owner direction 21:25
+  (binding): "not judgeable in this state ... the visual impression is the key". Depth before
+  breadth: the full hit chain in the D5 look on real rigs, asks only with real-time clips in
+  the final look. Consequences for this lane:
+  - melee weapons (baton, katana) are deferred, because they are breadth;
+  - the claw combo becomes the one finished melee move: windup, hit-stop, a non-red flash,
+    shake, knockback, the cop's flinch/stagger/knockdown/death, blood, the sound hook;
+  - plus Rivet's locomotion, in one 20-40 s clip at 32 px/m, in D5.
+  The robot thug rig is not on this branch (enemy-ai's?): REQUEST 2 -> enemy-ai.
