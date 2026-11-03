@@ -424,3 +424,14 @@ NEXT (night run; supersedes iteration 5 items 1 and 3, the rest stand):
 NEXT (night run, unchanged from iteration 6 close): item 2 first: the --acc knob on
   aim_lead_ab.gd (scale the accuracy-by-range curve) and an aim_lock_ticks sweep, salted at read
   0.7, since --shooters showed volume, not damage; then the iteration 4 items 2-7.
+
+## Iteration 8 (BUILD, session start 23:25, freeze 23:30)
+- 23:25 Read the JOURNAL tail and answers.json: only enemy-ai-1 is answered (21:45, keep A as a
+  placeholder). Nothing new to apply. The freeze is five minutes away, so this session makes no
+  code change (same reasoning as iteration 7). Tree clean at 63da9a0; the last green gates are
+  still iteration 6's 23:19 run (lint 13/13, unit 560/560, scenarios 21/21).
+NEXT (night run): unchanged. Item 2: add the --acc knob to aim_lead_ab.gd plus an aim_lock_ticks
+  sweep, salted at read 0.7. Then the iteration 4 items 2-7: ArenaHook, real weapons, the robot
+  plan, the flinch duck, the city block clip and the robot hit tint note. Then the enemy-ai-1
+  re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash, tracer, Rivet hit
+  reaction).
