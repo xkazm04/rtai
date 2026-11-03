@@ -1637,3 +1637,13 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   64 `asphalt_patches_zoom64.jpg` (no seams). The road now reads calm like the target's; nothing got worse.
   7 provenance lines appended, city art README step 12, ladder2 rows "i18 asphalt ...". Originals
   `masters:backup_ground18/`. road_straight_v_tone_c had no patch (unchanged). 0 Codex.
+- 06:10 GATES at 8e5856b (after the asphalt tiles): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios
+  8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter18/gates-8e5856b.txt`).
+- 06:12 CHECK morning stack on n-visual's new tip ce0db12 (the D5 aged paper on the whole page): main + n-d4 7a35d1b
+  + ce0db12 (JOURNAL.md the only conflict) + patches 16 / 19 / 21 / 23 (all clean), re-baked: lint 13/13 (265),
+  unit **266/266**, scenarios 8/8, city_selftest ok / 0 placeholders. Worktree `scratch-v3` (dangling e011f35, patches
+  uncommitted). Board `evidence/iter18/morning_i18_board.jpg` (vs a103850 + 643996e, and the target): the asphalt
+  patches are gone under the aged paper, nothing in this lane's art regressed. `evidence/iter18/morning-stack-gates.txt`.
+- 06:12 LOOKED, no change: the merged paving at 64 shows grey cloud blotches that are not in the tile (n-d4 alone is
+  clean cream, `masters:work/i18/paving64.png`) - n-visual's aquatint, REQUEST 22 as before. Oil vs blood decals:
+  the blood splats carry the cream rim and the oil does not, so they stay apart (`work/i18/decals.png`).

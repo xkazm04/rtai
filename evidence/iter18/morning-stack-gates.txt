@@ -1,0 +1,9 @@
+Morning stack dry run, iteration 18 (06:12:55)
+tree: main + n-d4 7a35d1b (merge-tree, tmp commit 190f3ba) + n-visual ce0db12 (JOURNAL.md the only conflict) = e011f35 (dangling scratch commit, worktree scratch-v3)
+patches applied in order: iter14/q1_view_art.patch, iter10/generator_art_pick_v2.patch, iter16/rig_sleeves_and_looks.patch, iter14/fx_fade.patch - all clean
+native bin copied from scratch-v2 (native/ unchanged main..n-d4 and a103850..ce0db12); --import, bake_city: wrote 256 chunks
+lint: all 13 checks pass over 265 GDScript files
+unit-tests: 266 passed, 0 failed, 0 skipped (GUT, headless)
+run_scenarios: 8 ran, 0 failed
+city_selftest (windowed d3d12): ok true, placeholders 0, 72 art textures (n-visual's look/block goldens not part of this scene)
+frames: masters night/d4-production/morning_i18/ (city_frame 32/48/64), morning_i18_st/ (junction)
