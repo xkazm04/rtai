@@ -691,3 +691,7 @@ NEXT (iteration 11 / morning, in order):
   floor path was live (auto 48 px/m differs from D4 on 21 % of px). Frames 28-d5-guards/. Not timed (the
   floors are proposals, default off). NOTE for the owner: if grain_floor ships, the D5 overlay's screen copy
   + tooth cost moves to every zoom (~+1 ms on the iGPU before this patch; measure with overlay_cost).
+- Evidence at 6f5e9d7 (HEAD code, 03:15): lint 13/13, unit 207, scenarios 8, parity PASS, selftest PASS
+  (goldens 10/10 worst 0.09, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied to
+  evidence/pof. Session end: tree clean, no Godot of mine running, my /tmp scratch deleted; masters frames
+  24-28 kept as evidence, ladder.png 1280 x 11646 (rows 24, 24b, 24c, 25, 25b, 26).
