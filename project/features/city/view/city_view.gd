@@ -74,7 +74,8 @@ func set_look_enabled(on: bool) -> void:
 	var printed: bool = on and (look_params == null or look_params.printed)
 	_look_rect.visible = printed
 	for node: MultiMeshInstance2D in crowd.nodes:
-		node.material = _item_mat if printed else null
+		if node.material == null or node.material == _item_mat:  # not the baked crowd's own
+			node.material = _item_mat if printed else null
 
 
 ## Resolves look_id at the current zoom; pushes the uniforms only when the look changed.

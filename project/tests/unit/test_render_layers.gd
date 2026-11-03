@@ -97,3 +97,18 @@ func _city_scene() -> CityView:
 	@warning_ignore("return_value_discarded")
 	CityCharacters.new(city, view, world.context())
 	return view
+
+
+func test_look_toggle_keeps_a_layer_material_it_did_not_set() -> void:
+	var people: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_PEDS]
+	var cars: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_CARS]
+	var saved: Material = people.material
+	var atlas: ShaderMaterial = ShaderMaterial.new()
+	people.material = atlas  # what CityCharacters.bake does with the crowd atlas material
+	_view.set_look_enabled(false)
+	assert_eq(people.material, atlas, "--look=off must not drop the crowd atlas material")
+	assert_null(cars.material)
+	_view.set_look_enabled(true)
+	assert_eq(people.material, atlas)
+	assert_not_null(cars.material)
+	people.material = saved
