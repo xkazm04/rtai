@@ -746,3 +746,9 @@ NEXT (iteration 6; NEXT 1-19 of iterations 3-5 still stand):
   h96: 0 px at 32/48 in both tiers, d4 0 px everywhere; d5 1964 / 2864 / 3078 px at 64 / 96 / 128 = the zebra's worn
   holes as in h86 at the kill-cam. Boards (item4, night_iter6_summary, item28) and evidence/hero-d4d5-*ppm.png = h97.
   The pavement joints stay light at every zoom (the mock's faint joint up close too).
+- 02:55 gates: evidence tool (--no-parity --no-bench) ALL PASS at 0d045fa (lint 13/13 over 190 files, unit 149/0,
+  scenarios 8/0, selftest ok); 59 untracked evidence PNGs moved aside and restored. Ladder +1 row (zebra at 128).
+NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade (D5HeroGround: original crack and
+  wear pixels as a world-locked overlay, alpha 0 at 56 px/m -> 1 at 96) is how the thin-at-gameplay / grime-up-close
+  ground should ship; or a texture with hand-made mip levels (mip 0 = bold cracks, mip 1+ = thin), if the importer
+  allows it.
