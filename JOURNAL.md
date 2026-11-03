@@ -797,3 +797,7 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   px/m (masters gloss-v1/ab-64.png, video frames 252 / 400 / 690): the glints are about one pixel and the
   pass's dark-on-dark rim already rings each oil drop white. The trail of oil after hit 2 does read as a dotted
   line of small white rings (both versions). Restored with `git checkout`.
+- (04:46) Pickup doctrine check (`quest_fight --cash`, fast-forwards to the cash taped under the phone, quest
+  step 6/6): the "$1,500 taped under" envelope prints as a paper-white box with ink tape on the black street -
+  the pickup already reads by value (white pops on black); its vermilion tape prints as ink lines, which is
+  fine there. No change. evidence/pickup-cash-48.png (crop), masters cash-v0/. Rivet's bot stands next to it.
