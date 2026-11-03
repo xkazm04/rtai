@@ -14,6 +14,8 @@ const WARM: int = 420
 var _out: String = ""
 var _ppm: float = 32.0
 var _game: Quest1Game
+var _frame: int = 0
+var _held_frames: int = 0
 
 
 func _ready() -> void:
@@ -51,13 +53,25 @@ func _run() -> void:
 		_stick(0.9 if t >= 90 and t < 170 else 0.0)
 		Input.flush_buffered_events()
 		s.step()
-		await _save("f_%04d" % t)
+		await _save()
+		await _hold(s.world.context().clock)
 	var h: HaulerStage = stage.pilot.hauler
-	Log.info(
-		"quest_hauler",
-		(
-			"activations %d stomps %d stomp_hits %d ram_hits %d kills %d"
-			% [h.activations, h.form.stomps, h.stomp_hits, h.ram_hits, stage.arena.kills]
+	(
+		Log
+		. info(
+			"quest_hauler",
+			(
+				"activations %d stomps %d stomp_hits %d ram_hits %d kills %d held_frames %d kicks %d"
+				% [
+					h.activations,
+					h.form.stomps,
+					h.stomp_hits,
+					h.ram_hits,
+					stage.arena.kills,
+					_held_frames,
+					_game.view.hauler_kick.kicks,
+				]
+			)
 		)
 	)
 
@@ -83,8 +97,18 @@ func _settle() -> void:
 		await get_tree().process_frame
 
 
-func _save(stem: String) -> void:
+## The view's hit-stop held the clock (HaulerKick): one rendered frame per held tick, no sim step.
+func _hold(clock: SimClock) -> void:
+	while clock.held() > 0.0:
+		@warning_ignore("return_value_discarded")
+		clock.advance(SimClock.TICK_DT)
+		_held_frames += 1
+		await _save()
+
+
+func _save() -> void:
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
 	@warning_ignore("return_value_discarded")
-	img.save_png(_out.path_join(stem + ".png"))
+	img.save_png(_out.path_join("f_%04d.png" % _frame))
+	_frame += 1
