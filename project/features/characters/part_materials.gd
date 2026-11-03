@@ -11,11 +11,12 @@ const LOD_BELOW: float = 0.13
 const LIMB_FILL: float = 0.40
 
 static var view_px: float = 0.1
+static var _shader: Shader = null
+static var _mats: Dictionary[int, ShaderMaterial] = {}
+
 ## The live flat-sticker threshold (the look profile's parts_flat_below; LOD_BELOW by default).
 static var flat_below: float = LOD_BELOW
 static var world_px: Vector2 = Vector2.ZERO
-static var _shader: Shader = null
-static var _mats: Dictionary[int, ShaderMaterial] = {}
 
 
 static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
@@ -55,6 +56,10 @@ static func set_view(zoom: float) -> void:
 		_apply_view(_mats[key], (key / 100) as PartKind)
 
 
+static func material_count() -> int:
+	return _mats.size()
+
+
 ## Called every frame by the host: the camera's world offset in screen px, so the part tooth and
 ## shadow dots stay locked to the world while the camera pans.
 static func set_world_px(px: Vector2) -> void:
@@ -63,10 +68,6 @@ static func set_world_px(px: Vector2) -> void:
 	world_px = px
 	for key: int in _mats:
 		_mats[key].set_shader_parameter("world_px", px)
-
-
-static func material_count() -> int:
-	return _mats.size()
 
 
 static func _apply_view(m: ShaderMaterial, kind: PartKind) -> void:

@@ -129,7 +129,6 @@ func _place_camera(focus: Vector2) -> void:
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
 	world_px = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
-	_look_mat.set_shader_parameter(&"world_px", world_px)
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
 	for o: LookOverlay in _overlays:
@@ -139,6 +138,7 @@ func _place_camera(focus: Vector2) -> void:
 	fx.glow.step(tick, world_px)
 	fx.ground.step(tick, world_px)
 	markers.step(tick)
+	_look_mat.set_shader_parameter(&"world_px", world_px)
 
 
 func _build_layers() -> void:
