@@ -1339,3 +1339,13 @@ NEXT (morning): unchanged from iteration 16 - 1 Director merge + one golden re-b
 calls; 3 hard-fail on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native
 RigArm / RigGait).
 - Session end 07:22: tree clean after commit, no Godot of mine running, no scratch.
+
+## Iteration 18 (07:18-07:21, BUILD, 12 min to freeze)
+- Gate re-check at HEAD 8b9f996 (code unchanged since the evidence commit cfc9e2c; only README/journal
+  since): lint 13/13 pass over 221 files, unit 247 passed / 0 failed, scenarios 8 ran / 0 failed (exit 0,
+  replay_60s final cbeb734ff9b97c41). evidence/pof stays at cfc9e2c and is still valid for this tree.
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no visual change -> no
+  ladder row. No new work started: every remaining NEXT item needs the merge, an owner call or native work.
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:21: tree clean after commit, no Godot of mine running, scratch log removed.
