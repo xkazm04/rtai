@@ -5,6 +5,8 @@ extends SceneTree
 ## then gives the look_d5_ui / trilinear ratio of the frame-to-frame change (extra = shimmer).
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/d5_king_move.gd
 ##        -- --out=<dir> [--ppm=<px per m>] (default 64) [--sharp=<k>] (look_d5_ui sharp)
+##           [--shadow=world|rig] (iteration 11: King's look_d5_shadow cast shadow, strokes world-
+##           or rig-locked; the crop follows King, so a world lock shows as stroke crawl)
 
 const KING: String = "res://features/characters/art/d5/king/king_top.png"
 const UI_SHADER: String = "res://assets/shaders/look_d5_ui.gdshader"
@@ -13,6 +15,11 @@ const ASPHALT: Color = Color(0.31, 0.27, 0.28)
 const FRAMES: int = 40
 const STEP: Vector2 = Vector2(0.37, 0.21)  # screen px per frame
 const TURN: float = 0.004  # rad per frame
+const SHADOW_SHADER: String = "res://assets/shaders/look_d5_shadow.gdshader"
+const SHADOW_M: float = 0.6
+
+var _shadow: Sprite2D = null
+var _shadow_lock: String = ""
 
 
 func _initialize() -> void:
@@ -26,6 +33,8 @@ func _initialize() -> void:
 			ppm = arg.substr(6).to_float()
 		elif arg.begins_with("--sharp="):
 			sharp = arg.substr(8).to_float()
+		elif arg.begins_with("--shadow="):
+			_shadow_lock = arg.substr(9)
 		else:
 			printerr("d5_king_move: unknown argument %s" % arg)
 			quit(2)
@@ -43,6 +52,7 @@ func _shoot(out: String, ppm: float, sharp: float) -> void:
 	king.texture = load(KING) as Texture2D
 	king.scale = Vector2.ONE * KING_W_M * ppm / king.texture.get_width()
 	king.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_make_shadow(king)
 	root.add_child(king)
 	var mat: ShaderMaterial = ShaderMaterial.new()
 	mat.shader = load(UI_SHADER) as Shader
@@ -54,6 +64,7 @@ func _shoot(out: String, ppm: float, sharp: float) -> void:
 	for t: int in FRAMES:
 		king.position = start + STEP * t
 		king.rotation = 0.6 + TURN * t
+		_place_shadow(king, ppm)
 		for ui: bool in [false, true]:
 			king.material = mat if ui else null
 			await process_frame
@@ -65,3 +76,24 @@ func _shoot(out: String, ppm: float, sharp: float) -> void:
 				err = img.get_region(Rect2i(at, Vector2i(box, box))).save_png(out.path_join(name))
 	printerr("d5_king_move: exit %d" % err)
 	quit(err)
+
+
+func _make_shadow(king: Sprite2D) -> void:
+	if _shadow_lock == "":
+		return
+	_shadow = Sprite2D.new()
+	_shadow.texture = king.texture
+	_shadow.scale = king.scale
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load(SHADOW_SHADER) as Shader
+	_shadow.material = mat
+	root.add_child(_shadow)
+
+
+func _place_shadow(king: Sprite2D, ppm: float) -> void:
+	if _shadow == null:
+		return
+	_shadow.position = king.position + Vector2.ONE * SHADOW_M * ppm * 0.7071
+	_shadow.rotation = king.rotation
+	var at: Vector2 = king.position if _shadow_lock == "rig" else Vector2.ZERO
+	(_shadow.material as ShaderMaterial).set_shader_parameter(&"anchor", at)
