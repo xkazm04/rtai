@@ -247,3 +247,77 @@ NEXT (iteration 4 / the night run from the merged main):
 5. Powers pad with VehicleSystem in ArenaSession (ghost-powers' gearbox_pad spawns `car`; the
    arena does not spawn cars yet: ArenaStage only places `target`/`metal`).
 6. Low cover stopping shots: ask only with a full-chain clip (ArenaWalls.SOLID is the one value).
+
+## Iteration 4 (22:35-23:20), BUILD
+
+- 22:35 answers.json re-read: nothing new for arena (arena-1 C, arena-2 A stand as placeholders).
+  Rules applied: owner direction 21:25 (depth before breadth, the arena is the stage of the 00:00
+  sample, no numbers-only asks). So no new ask this iteration. The arena's job tonight is that every
+  lane's part of the sample lands on its floor at the merge.
+- MILESTONE `92e467e` powers pad cars: a station spawn of kind `"car"` parks a real
+  VehicleService car (`ArenaCars`, a VehicleWorld with no traffic and no solids; on-foot entry
+  off because quest 1's stage has no driving seat). It draws in the city's traffic print by state
+  (intact, d1, d2, the teal soul-hijacked plate, the burnt wreck) with the ink shadow.
+  `ArenaStage.cars()` / `.vehicles` are what a power hook picks from, and telemetry gains `cars`
+  (total, hijacked, damaged, wrecked). The service is added only when a station brings a car, so
+  the shipped arena's replays do not move. The same commit (message omits it): an `"enemy"` spawn
+  outside the pit is a moving dummy with its motion (ghost-powers' robot line,
+  rivet-motion's melee line), where before it was dropped. Unit `test_arena_cars` (3 tests).
+- MILESTONE `36ce3e1` `--start=<area id>` stands Rivet in an area at boot (station captures).
+- Frames: `gtai-masters/eve/arena/frames/arena-pad-cars-bots-32.png` (ghost-powers' file copied
+  in: two parked sedans, the Hauler and Gearbox robot lines moving),
+  `arena-hub-merged-32.png` (all four lanes' files: rivet-motion's melee line runs off the 8 m hub
+  onto the void and its dummies overlap).
+- Merge rehearsal it4 (`gtai-masters/eve/arena/merge-rehearsal/it4/`): arena + enemy-ai (its
+  REQUEST 3 fix applied in its worktree at 22:45, not yet committed there; no hook scripts tonight)
+  + rivet-motion + ghost-powers = 9 stations, 0 problems. Tables not in this tree: powers,
+  rivet_motion, rivet_melee, melee_weapons.
+- FRICTION: JOURNAL REQUESTs were not being read by the other lanes in time. From 22:45 I sent
+  direct cross-session messages instead: to enemy-ai (the REQUEST 3 exact fix, which landed within
+  minutes), ghost-powers (cars, the hook route for Gearbox, the 8 x 8 lane_mark that draws a dark
+  box over the crowd ring), and rivet-motion (metal kind, spacing, crowd off the slab).
+- Gates: lint 13/13 (513 files), arena unit 25/25, scenarios 24/24 at 36ce3e1
+  (`evidence/arena/scenarios-it4.log`).
+- Shared files touched: none.
+- MILESTONE `1ef2408` the hub widened to 18 x 10 m (x -3..15), so rivet-motion's melee line
+  stands on floor at the merge; area names draw over the props, 2.2 m in, so a wall no longer hides
+  PIT. Frames: `arena-hub-merged-wide-32.png` (before: `arena-hub-merged-32.png`),
+  `arena-pit-label-32.png`.
+- Merged-stations scenario run: all four lanes' station files copied into the tree (removed
+  afterwards, never staged), full suite 24/24 with replays identical, car service included
+  (`gtai-masters/eve/arena/merge-rehearsal/it4/scenarios-all-stations.log`).
+- Clip `gtai-masters/eve/arena/clips/arena-pad-32ppm-10s.mp4` (+ `pad32_sheet.png`, 6 frames
+  checked): the pad with ghost-powers' file, cars parked, robot lines moving. frames.json updated
+  (14 entries; the weaker range-48, range-hud and course-32 stills were dropped).
+- Peer replies: enemy-ai fixed its station file (`fc1844b` on e-enemy: schema id, area, names,
+  no script lines). It keeps `data/schemas/enemy-ai.schema.json` as a byte copy of
+  arena_station.schema.json because its own lint maps per file; after the merge that copy is
+  an orphan the Director can delete. ghost-powers moved its hauler_pad lane_mark to a thin start
+  line (`1551105`). The Hauler needs no ArenaHook: it rides on StagePilot.hauler (Q / LB) and
+  CollectCallView draws the morph, the crack, the hit-stop and the shake. Gearbox's ArenaHook comes
+  in the night run (ArenaHook is not on e-powers).
+- Not started, on purpose (time box): the arena's fighters on the animated cast rigs. CastView
+  (shared with quest 1) draws Rivet as a captured still and the hostiles as quest-1 guard sprites.
+  The view mixes Ink's 48 px/m with the sim's 32 px/m, and the animated Rivet (rivet-motion) and
+  the enemy rigs with hit reactions (enemy-ai) are on other branches. Half of it at the freeze
+  would be worse than none.
+- Gates at ab3d26d: lint 13/13 (513 files), unit 562/562 (`evidence/arena/unit-it4.log`, private
+  APPDATA), scenarios 24/24 (`evidence/arena/scenarios-it4.log`, at 36ce3e1; later commits are a
+  data rect, label drawing and docs, so the merged-stations run after them is the newer record).
+
+NEXT (the night run, from the merged main):
+1. Re-read answers.json. Run `stations_check.gd` on the merged tree (exit 0 expected; enemy-ai,
+   rivet-motion and ghost-powers were green in the it4 rehearsal), then the arena scenarios.
+2. The arena's fighters on the cast rigs (the owner's rule 3): an ArenaRigs node on the
+   CollectCallView actor layer that fills a CharacterRigs `feed` every frame from
+   `stage.arena.rivet`, `stage.arena.hostiles` and `stage.targets` (RigFeed.put(i, id, kind,
+   pos * SimConst.PX_PER_M, vel); face, aim, flags DEAD / AIMING / DOWN), plus a CastView flag
+   (`rigs_drawn`) so CastView skips the sprites it replaces. Use rivet-motion's Rivet plan and
+   enemy-ai's reaction feed (HitFeel.reaction) once merged. Template: `dev/showcase/d5_arena_run.gd`.
+   Check the Ink 48 px/m vs SimConst 32 px/m scale first.
+3. Gearbox's ArenaHook (ghost-powers night item) picks from `stage.cars()`; the pad needs a
+   scripted pad bot (Q Hauler stomp into the robot line, G Gearbox into the strafers) for a
+   replaying clip and scenario.
+4. rivet-motion's data: metal dummies to kind `metal`, 2 m spacing (message sent 22:45).
+5. Camera lead (48 px/m off-screen, arena-2) if no lane owns it after the merge.
+6. Dummies read as dummies (cardboard / steel plate art) once the rigs are in.
