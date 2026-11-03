@@ -671,6 +671,20 @@
     "own: rtai quests/collect-call/quest.json designNotes (owner-approved character designs)"
    ],
    "seed": null
+  },
+  "d4n_fire": {
+   "file": "masters:night/d4-production/gen/out/d4n_fire.png",
+   "sha256": "8d806ae1a975bcabc8075ed06a2138df43e15239b32e52ad8a7d89ffcfe9d292",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/fire.txt",
+   "prompt_sha256": "5ef3d6c08a97c341fe74b6d3c142d42b3cdd47974901d6ef5d54aafbefacc3bf",
+   "layout_template": "masters:night/d4-production/gen/refs/t_fire.png",
+   "references": [
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }

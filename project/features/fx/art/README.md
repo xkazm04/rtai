@@ -20,3 +20,18 @@ atlas) was rendered with this sheet in a scratch worktree (`dev/selftest/fx_show
 `masters:night/d4-production/fx_engine_before` (their analytic placeholders) | `fx_engine_after` (this atlas) |
 `fx_engine_rim11` (the thicker splat rim). The explosion, debris, impact, smoke, crackle and muzzle all read; the
 cell layout matches their `atlas` blocks.
+
+## `fx_fire.png`: fire seen from above (night iteration 6)
+
+1024 x 512, **4 columns x 2 rows of 256 px cells, 2.5 m per cell** (102.4 px/m), one scale for every cell; each
+sprite is centred on its alpha centroid, so the loop registers. A fire seen straight down is a ragged blob: a cream
+core, flat vermilion tongues licking OUTWARD, an ink rim, soot curls. It never rises up the screen (quest 1's
+placeholder drew side-view flame tongues, a camera break). Vermilion = danger. Master: `art_src/d4.manifest.json#d4n_fire`.
+
+| Row | Cells |
+|---|---|
+| 0 | `fire_1` .. `fire_4`: one flicker loop (about 5 ticks per frame; offset the phase per instance) |
+| 1 | `embers_1`, `embers_2` (alternate about every 8 ticks), `fire_wide` (cells 2-3, 5 x 2.5 m: a fire along a row of crates or a car) |
+
+Quest 1 uses it for the burning TUCK-IN stack (`fx_view._fire()`): `fire_wide` at 2x over the stack + three loop
+fires at 1.3x; see `features/quest/art/collect_call/README.md` and the lane masters' `q1_view_art.patch`.
