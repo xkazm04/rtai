@@ -316,3 +316,7 @@ NEXT (iteration 5):
    player strafes with the move stick while aiming (twin-stick). Capture a TickInput-driven dodge
    (stage.pilot with a scripted TickInput) so the clip shows the real mover's acceleration.
 4. Then the machine pistol on the same D5 chain (GunHand with &"machine_pistol"), same clip.
+- Gates at 7347bad (end of iteration 4): lint 13/13; scenarios 20/20 (evidence/scenarios-it4b.log);
+  unit 567/567 at 8bb66ea + test_guard_tell 4/4 at 5068f67 (later commits are docs and a dev-scene
+  arg split, re-run: same 9/36). One-slot clip landed: gtai-masters/eve/gunplay/pistol_fight_one_slot/.
+  Godot processes of mine: none left running.
