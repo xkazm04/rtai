@@ -79,6 +79,13 @@ runs the look goldens and the accent gate at BOTH (block: d4 32 / 48 + auto 64, 
 `tests/golden/look/block-*.png`, results in `<out>/block/`). Why: the junction alone never saw a prop's
 vermilion (the plaza barrels, 4324 px) nor a roof or its shadow. Debt rows stay junction-measured.
 
+The live frame (`city_selftest.tscn` itself, not a golden) is also on a fixed sim tick:
+`city_selftest._ready` turns the World's `_process` off and `_step()` feeds exactly one
+`SimClock.TICK_DT` per rendered frame, so the 32 px/m capture is tick 90 and the 48 px/m capture tick
+180 (`sim_tick` in the result JSON). Keep that switch in `_ready` only: the golden / accent / world-lock
+scenes extend `city_selftest`, call `_build()` but never `_step()`, and rely on `--fixed-fps 60`
+instead; moving it into `_build()` freezes their sim at tick 0 and moves every golden.
+
 ### Cast shadows (`cast_shadows.gd`, `data/tables/cast_shadows.json`)
 
 The `building_shadows` band is the height cue. The generator bakes every building / prop / parked-car

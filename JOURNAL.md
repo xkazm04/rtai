@@ -1328,3 +1328,14 @@ NEXT (morning): iteration 15's list stands minus item 4 (done). In order: 1 Dire
 re-bless after it; 2 the owner calls; 3 hard-fail on unknown args (owner call); 5 idle bench, rig p99
 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:17: tree clean, no Godot of mine running (the 2 Godot processes in tasklist, PIDs 32704 / 44860, are not mine; left alone), no scratch. Remaining NEXT items need the merge, owner calls or native work - none fits before the 07:30 freeze.
+
+## Iteration 17 (07:17-07:22, BUILD, 13 min to freeze)
+- MILESTONE (docs): `project/core/render/README.md` "Selftest sites" now documents iteration 16's fixed-tick
+  live frame (`_ready` switch, ticks 90 / 180, `sim_tick` in the JSON) and why the switch must not move
+  into the shared `_build()` (approach rejected in iteration 16). Checked against city_selftest.gd lines
+  58-59 / 133 / 139. Lint 13/13 pass. Docs only: no frame change, no evidence re-run needed.
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no Godot started.
+NEXT (morning): unchanged from iteration 16 - 1 Director merge + one golden re-bless after it; 2 the owner
+calls; 3 hard-fail on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native
+RigArm / RigGait).
+- Session end 07:22: tree clean after commit, no Godot of mine running, no scratch.
