@@ -281,3 +281,13 @@ NEXT (night run, after the 00:00 merge), in order:
    (set residue_s 2 on the pad only, via the station data, once the hook reads per-station tuning).
 4. The Hauler on the arena: `--start=pit` (the pit's waves are hostiles; the pad bots are dummies).
 5. Bench the city-path blood (riot scene) when bench.lock is free.
+
+## Iteration 6 (23:18-23:30, BUILD, 12 min before freeze)
+- answers.json re-read 23:18: nothing new for ghost-powers (ghost-powers-1/2 stay "not judgeable; re-ask only with
+  a real-time clip in the final look"). Defaults stay as placeholders. frames.json present (15 entries).
+- Too short a window for a feature: NEXT item 1 only. The unit gate re-run (evidence/ghost-powers/unit-iter6.log)
+  to see whether the test_save_slots collision (iteration 5 FRICTION) clears when the other lanes are not at their
+  gates. Root cause confirmed by reading: tests/support/save_kit.gd `const SCRATCH = "user://test_save"` and
+  test_save_facade.gd `user://test_save/facade` are fixed paths in the project's shared user:// dir, so every
+  worktree of gtai writes the same folder. Not changed here (not this lane's file, and it is freeze time);
+  REQUEST 4 stands: derive the scratch dir per worktree (e.g. hash of ProjectSettings.globalize_path("res://")).
