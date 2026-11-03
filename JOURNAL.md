@@ -902,3 +902,17 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   `work/zb9_ab{32,48}.png` (before | 6 | 9 | target): 9 matches the target, still reads at 32. Commit 95d22f1
   (supersedes 5b3ce9c's look; revert both together). Tool docstring corrected. Ladder rows "i10b".
 - 02:52 `evidence/iter10/`: summary sheet (7 rows incl. the rejected grain), gates at c4dfe4a, README.
+- 02:53 CHECK pickups on the inked paving (`asset_board --page=pickups`): `after_k4|after_k5/pickups-*`,
+  `work/k5_ab32.png`, `k5_road48.png`: all 11 tokens still read at 32 / 48 (a token row sitting on a joint line keeps
+  its cream disc + ink rim). No change.
+- 02:54 MERGED CHECK (scratch worktree `scratch-m10` = n-visual e79c19f + n-d4 1784ad2, `merge --no-commit`, JOURNAL
+  conflict only, + `generator_art_pick.patch`, re-baked: `bake_city --check` matches the golden in the patch).
+  **Found: REQUEST 18 is superseded** - n-visual wired the traffic atlas itself (7bfb6b9 "moving traffic plugs n-d4's
+  traffic_atlas, grid read from the atlas size"), and my iteration-8 wiring patches no longer apply on n-visual (they
+  conflict in crowd_layers.gd). Not needed: in the merged frames moving traffic draws my atlas cars.
+  Frames `merged_i10/city-*-{32,48,64}ppm.png`, `merged_i10_st/selftest-*`: under n-visual's print pass the inked
+  joints read as ink, at the same weight as the cracks and the kerb; the 9-stripe zebras read like the target's.
+  Selftest 72 art textures, 0 placeholders. Ladder rows "i10 merged".
+- 02:56 merged tree unit tests (`run_unit.mjs` in scratch-m10): **206 passed, 0 failed** (n-visual's suite incl. the
+  accent audit; no new offenders from the joints or zebras). Scratch worktree removed (`git worktree list` = lane
+  worktrees + scratch-q1).
