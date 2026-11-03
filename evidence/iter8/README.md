@@ -7,7 +7,7 @@
   id) - for main / n-d4 without n-visual (crowd_layers + city_view + `traffic_atlas.gdshader`).
 - `traffic_atlas_wiring_after_n-visual.patch`: the same after n-visual is merged (crowd_layers + shader only).
 - `generator_art_pick.patch`: the generator picks the generic roofs (table rows 65-71) for 70 % of square blocks,
-  landmarks for 30 %, no neighbour repeats, lettered roofs upright; plaza paving gets a quarter turn per tile (breaks
+  landmarks for 30 %, no neighbour repeats, lettered roofs and the warehouse (its painted 7) upright; plaza paving gets a quarter turn per tile (breaks
   the 8 m repeat of its cracks and stains; `work/pl_crop.png`); includes the new AST-12 golden hash list. Applies on
   main and on n-visual + n-d4 (the roof-only version's golden matched `bake_city --check` there).
 - `gates-eceb6b3.txt`: `node tools/evidence/run.mjs --no-bench` at eceb6b3, all PASS.

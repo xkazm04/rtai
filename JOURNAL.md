@@ -796,3 +796,6 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   `after_tr_dense/` (same seed, same cars), sheets `work/dmg_ab{32,48}.png` - d1 (star crack + holes) and d2 (shattered
   + scorched nose) both read at 32 and 48. The sim has no per-car damage state yet (`F_` flags: promoted, crossing,
   rioter only), so the hook is code (visual-engine / city). Commit 205ae1f. Ladder rows.
+- 02:27 generator patch: the 16 m warehouse roof (id 23) also turned 180 degrees at random, printing its painted "7"
+  as an "L" (`after_pl/city-2-32ppm`, right edge). It now stays upright too (`after_pl2/`, crop `work/wh_ab.png`).
+  `generator_art_pick.patch` re-exported (lint clean, applies on main), code reverted, re-baked, `--check` matches.
