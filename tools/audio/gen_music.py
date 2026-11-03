@@ -6,6 +6,7 @@ TRACKS = [
     ("radio_loop_1", 20000, "dusty late-night radio jazz, muted trumpet over brushed drums and upright bass, warm and a little sad, mellow 85 bpm, instrumental, loops cleanly"),
     ("radio_loop_2", 20000, "gritty industrial synth groove, steady 110 bpm, heavy analog bass pulse and clanking percussion, tense city night drive, instrumental, loops cleanly"),
     ("radio_loop_3", 20000, "tinny fast garage-punk instrumental, distorted guitar riff and shouty drums, 150 bpm, lo-fi AM radio feel, instrumental, loops cleanly"),
+    ("boss_loop", 24000, "tense boss-fight instrumental, driving 120 bpm, heavy distorted bass pulse, industrial metal percussion and a dark brooding synth drone, relentless, no melody lead, instrumental, loops cleanly"),
     ("radio_stinger", 3000, "short dramatic brass and timpani sting, one big hit then a quick decay, comic noir"),
 ]
 out = pathlib.Path(sys.argv[1]); out.mkdir(parents=True, exist_ok=True)

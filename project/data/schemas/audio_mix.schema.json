@@ -72,6 +72,26 @@
       ],
       "type": "object"
     },
+    "engine_pitch_idle": {
+      "maximum": 4,
+      "minimum": 0.25,
+      "type": "number"
+    },
+    "engine_pitch_top": {
+      "maximum": 4,
+      "minimum": 0.25,
+      "type": "number"
+    },
+    "engine_smooth": {
+      "maximum": 1,
+      "minimum": 0.01,
+      "type": "number"
+    },
+    "engine_top_mps": {
+      "maximum": 200,
+      "minimum": 1,
+      "type": "number"
+    },
     "far_lowpass_hz": {
       "maximum": 20000,
       "minimum": 200,
@@ -178,7 +198,11 @@
     "riot_bed_quiet_db",
     "riot_bed_loud_db",
     "riot_bed_rise_s",
-    "riot_bed_fall_s"
+    "riot_bed_fall_s",
+    "engine_pitch_idle",
+    "engine_pitch_top",
+    "engine_top_mps",
+    "engine_smooth"
   ],
   "type": "object"
 }

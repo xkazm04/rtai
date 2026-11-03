@@ -38,6 +38,18 @@ func set_on(id: StringName, on: bool, trim_db: float = 0.0) -> void:
 	_target_db[id] = (cue.gain_db + trim_db) if on else SILENT_DB
 
 
+## Plays bed `id` at `scale` times its natural pitch (the engine follows the car's speed).
+func set_pitch(id: StringName, scale: float) -> void:
+	var p: AudioStreamPlayer = _players.get(id)
+	if p != null:
+		p.pitch_scale = clampf(scale, 0.25, 4.0)
+
+
+func pitch(id: StringName) -> float:
+	var p: AudioStreamPlayer = _players.get(id)
+	return p.pitch_scale if p != null else 1.0
+
+
 ## The bed's current level in dB (SILENT_DB when it has no player yet).
 func level_db(id: StringName) -> float:
 	var p: AudioStreamPlayer = _players.get(id)

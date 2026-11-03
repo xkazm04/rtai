@@ -33,6 +33,7 @@ SPECS = [
   ("boss_stinger", "sfx", 2.5, False, 3, "ominous boss reveal hit, deep sub boom with a metallic industrial scrape and a low dissonant swell, cinematic, no melody, no voices"),
   ("tazer_charge", "sfx", 1.2, False, 3, "electric weapon charging up, rising capacitor whine with crackling sparks building to a ready zap, sci-fi, no music, no voices"),
   ("crowd_roar", "ambient", 8.0, True, 2, "large angry crowd shouting and roaring in a city plaza, chaotic and distant, steady swell, seamless loop, no intelligible words, no music"),
+  ("car_wreck", "sfx", 2.5, False, 3, "car exploding, a heavy fuel-tank fireball boom with twisting metal and a rolling low rumble that fades, one explosion, no music, no voices"),
   ("city_ambience", "ambient", 8.0, True, 1, "night city street ambience, distant traffic, faint wind, occasional far-away siren, seamless loop, no music, no voices"),
 ]
 

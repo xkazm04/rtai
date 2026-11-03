@@ -22,6 +22,8 @@ var rivet_id: int = -1
 var steps: int = 0
 ## The riot's roar bed (WorldAudio turns it on; the quest stage has no crowd).
 var riot_bed: RiotBed = null
+## The driven car's speed as heard (smoothed m/s), for the engine pitch.
+var speed_mps: float = 0.0
 var _tick: Callable = Callable()
 var _at: Callable = Callable()
 var _last_at: Vector2 = Vector2.INF
@@ -38,7 +40,7 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	@warning_ignore("return_value_discarded")
 	bus.attack_telegraphed.connect(_on_telegraph)
 	@warning_ignore("return_value_discarded")
-	bus.boss_engaged.connect(func(_boss: StringName) -> void: _flat_if(true, &"boss_stinger"))
+	bus.boss_engaged.connect(_on_boss)
 	@warning_ignore("return_value_discarded")
 	bus.player_hit.connect(_on_player_hit)
 	@warning_ignore("return_value_discarded")
@@ -56,7 +58,7 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	@warning_ignore("return_value_discarded")
 	bus.contract_started.connect(func(_id: StringName) -> void: _flat_if(true, &"objective_ping"))
 	@warning_ignore("return_value_discarded")
-	bus.contract_completed.connect(func(_id: StringName) -> void: _flat_if(true, &"ui_confirm"))
+	bus.contract_completed.connect(_on_completed)
 	_connect_vehicles(bus)
 
 
@@ -68,6 +70,18 @@ func _connect_vehicles(bus: EventBus) -> void:
 	if bus.has_signal(&"vehicle_hijacked"):
 		@warning_ignore("return_value_discarded")
 		bus.connect(&"vehicle_hijacked", func(_kind: StringName) -> void: _cue(&"hit_metal"))
+
+
+## The boss stinger, then the boss loop under the fight (it ends with the contract, like the
+## arena camera).
+func _on_boss(_boss: StringName) -> void:
+	_flat_if(true, &"boss_stinger")
+	service.loops.set_on(&"boss_loop", true)
+
+
+func _on_completed(_id: StringName) -> void:
+	_flat_if(true, &"ui_confirm")
+	service.loops.set_on(&"boss_loop", false)
 
 
 func _flat_if(when: bool, id: StringName) -> void:
@@ -112,6 +126,7 @@ func _on_wanted(level: int) -> void:
 
 func _set_driving(on: bool) -> void:
 	_driving = on
+	speed_mps = 0.0
 	service.loops.set_on(&"engine_loop", on)
 
 
@@ -124,10 +139,23 @@ func _process(_delta: float) -> void:
 		return
 	var here: Vector2 = _at.call()
 	if _driving:
-		_last_at = here
+		drive_to(here, frame_s)
 	else:
 		walk_to(here, frame_s)
 	kill_pending = false
+
+
+## Driving: the engine bed's pitch follows the car's speed (position change per rendered frame,
+## smoothed).
+func drive_to(here: Vector2, frame_s: float) -> void:
+	var mps: float = 0.0 if _last_at == Vector2.INF else here.distance_to(_last_at) / frame_s
+	_last_at = here
+	var k: float = clampf(service.tables.mix_float("engine_smooth", 0.12), 0.01, 1.0)
+	speed_mps = lerpf(speed_mps, mps, k)
+	var top: float = maxf(service.tables.mix_float("engine_top_mps", 26.0), 1.0)
+	var lo: float = service.tables.mix_float("engine_pitch_idle", 0.75)
+	var hi: float = service.tables.mix_float("engine_pitch_top", 1.6)
+	service.loops.set_pitch(&"engine_loop", lerpf(lo, hi, clampf(speed_mps / top, 0.0, 1.0)))
 
 
 ## Rivet moved from the last frame's position to `here` in `frame_s`: step when a stride is walked.
