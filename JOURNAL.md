@@ -342,3 +342,15 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
 - NOTE d-city bf43a68 ramps the WORLD's D5 overlay in from 32 px/m (0.5 at 32, 1 at 64). The characters' D5 part tier
   (RigDetail, 56 -> 64 px/m) is left as is: below 56 most people are D4 atlas cells (only the 16 nearest are full rigs),
   so a part ramp from 32 would split the crowd into two tiers, and the D5 part grime is sub-pixel at 32. Owner call.
+- 13:00-13:20 TRIAL MERGE 3 (scratch worktree gtai-wt/scratch-cast-merge3, detached, removed after; its commit never on a
+  branch): d-city 00ebb7c + d-cast 3bb490f + masters look_d4-cop-blue-plate.patch. Conflicts ONLY JOURNAL.md and the 16
+  look goldens (took d-city's). The plate patch still applies. Merged evidence (--no-bench --no-parity): lint 13/13,
+  unit 336/336, scenarios 8/8; selftest FAIL on goldens only (7/11 worst-pass 2.32, OFF d4@64 d5@48 d5@64 auto@56;
+  block 4/5, OFF auto@64-night): the expected drift from cops + Rivet over d-city's re-blessed goldens; "no new
+  off-doctrine accents"; "debt rows no longer seen (delete them): cop_vermilion_32/48/64"; world lock holds.
+  -> MERGE RECIPE for the Director: merge d-city, then d-cast (JOURNAL: keep both; goldens: either side), apply the
+  plate patch, delete accent_debt rows cop_vermilion_32/48/64, then look_golden --bless (junction + block) ONCE with a
+  decisions line, and re-run the selftest unblessed.
+  Real-city preview (city_frame seed 91 --police=4): renders merge3/, owner frame frames/merged-preview-city0-32-64.png
+  (d-city's D5 world ramp from 32 + blue cops + hunched Rivet; at 64 Rivet stands clear and reads). It replaced the
+  city0-48ppm-ab frame (its after showed the iteration-1 Rivet). frames.json still 15, all files present.
