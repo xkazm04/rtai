@@ -1118,3 +1118,6 @@ NEXT (iteration 14 / morning, in order):
 - Final at 72b7845 (05:53): unit 236/236, scenarios 8/8 (the last commit touched a dev scene + README only;
   full evidence at 7e3eb68 above). Session end: tree clean, no Godot of mine running, my /tmp scratch and
   scratch worktrees deleted.
+- (05:56) test_render_layers: CityView's zoom anchor unit-tested on the real city view (no rig: world_px =
+  camera x zoom, the goldens' contract; with a rig easing 32 -> 48 the centre's print holds within 1 px;
+  it would jump ~7.3k px without the fix). Unit 237/237.

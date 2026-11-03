@@ -130,3 +130,31 @@ func test_traffic_cell_is_the_sim_car_quad_at_80_px_per_m() -> void:
 	var m: Vector2 = Vector2(CitySimRender.CAR_L, CitySimRender.CAR_W) / SimConst.PX_PER_M
 	var px: Vector2i = Vector2i((m * 80.0).round())
 	assert_eq(CrowdLayers.TRAFFIC_CELL_PX, px, "n-d4's atlas cells are the 6.4 x 3.2 m car quad")
+
+
+func test_the_city_print_stays_on_the_centre_through_a_rig_zoom() -> void:
+	var view: CityView = _view
+	var keep_clock: SimClock = view.clock
+	var keep_zoom: float = view.zoom
+	var focus: Vector2 = Vector2(456.0, 428.0)
+	var half: Vector2 = view.get_viewport_rect().size * 0.5
+	view._place_camera(focus)
+	var plain: Vector2 = (view.camera.position * view.zoom).round() - half
+	assert_eq(view.world_px, plain, "no rig: world_px is the camera at the zoom (goldens)")
+	var clock: SimClock = SimClock.new()
+	view.clock = clock
+	view.rig = CameraRig.new()
+	view._place_camera(focus)
+	var before: Vector2 = view.world_px + half
+	view.rig.set_mode(&"car", clock.tick())
+	for i: int in 40:
+		clock.complete_tick()
+		view._place_camera(focus)
+	assert_eq(view.zoom, 1.5)
+	assert_almost_eq((view.world_px + half).x, before.x, 1.0, "the centre's print holds")
+	view.rig = null
+	view.clock = keep_clock
+	view.zoom = keep_zoom
+	view._print_off = Vector2.ZERO
+	view._print_zoom = -1.0
+	view._place_camera(focus)
