@@ -1,5 +1,5 @@
 diff --git a/project/boot/collect_call/view/cast_view.gd b/project/boot/collect_call/view/cast_view.gd
-index f3cc7e2..0aef35e 100644
+index f3cc7e2..7030090 100644
 --- a/project/boot/collect_call/view/cast_view.gd
 +++ b/project/boot/collect_call/view/cast_view.gd
 @@ -16,8 +16,27 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
@@ -118,9 +118,16 @@ index f3cc7e2..0aef35e 100644
  	var gun_root: Vector2 = at + dir * 0.9
  	var muzzle: Vector2 = at + dir * 2.1
  	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
-@@ -133,3 +114,15 @@ func _hp_bar(at: Vector2, frac: float) -> void:
+@@ -128,8 +109,21 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
+ 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+ 
+ 
++## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.
+ func _hp_bar(at: Vector2, frac: float) -> void:
+ 	var r: Rect2 = Rect2(Ink.px(at) - Vector2(30, 4), Vector2(60, 8))
  	draw_rect(r, Ink.CREAM, true)
- 	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
+-	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
++	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.INK, true)
  	draw_rect(r, Ink.INK, false, 2.0)
 +
 +
