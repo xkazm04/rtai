@@ -338,5 +338,141 @@
    76.0,
    76.0
   ]
+ },
+ "upperarm_dark": {
+  "size": [
+   155,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm.png",
+  "cell": 1,
+  "scale": 1.0,
+  "pivot_a": [
+   42.0,
+   42.5
+  ],
+  "pivot_b": [
+   118.0,
+   41.5
+  ]
+ },
+ "forearm_dark": {
+  "size": [
+   185,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from forearm.png",
+  "cell": 2,
+  "scale": 1.0,
+  "pivot_a": [
+   43.0,
+   42.5
+  ],
+  "pivot_b": [
+   148.0,
+   42.0
+  ]
+ },
+ "upperarm_endon_dark": {
+  "size": [
+   77,
+   77
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm_endon.png",
+  "cell": 2,
+  "scale": 1.0047,
+  "pivot_a": [
+   39.0,
+   37.5
+  ],
+  "pivot_b": [
+   37.0,
+   37.5
+  ]
+ },
+ "forearm_endon_dark": {
+  "size": [
+   79,
+   78
+  ],
+  "sheet": "code:ped_sleeves.py from forearm_endon.png",
+  "cell": 3,
+  "scale": 1.0047,
+  "pivot_a": [
+   40.0,
+   38.0
+  ],
+  "pivot_b": [
+   38.0,
+   38.0
+  ]
+ },
+ "upperarm_grey": {
+  "size": [
+   155,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm.png",
+  "cell": 1,
+  "scale": 1.0,
+  "pivot_a": [
+   42.0,
+   42.5
+  ],
+  "pivot_b": [
+   118.0,
+   41.5
+  ]
+ },
+ "forearm_grey": {
+  "size": [
+   185,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from forearm.png",
+  "cell": 2,
+  "scale": 1.0,
+  "pivot_a": [
+   43.0,
+   42.5
+  ],
+  "pivot_b": [
+   148.0,
+   42.0
+  ]
+ },
+ "upperarm_endon_grey": {
+  "size": [
+   77,
+   77
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm_endon.png",
+  "cell": 2,
+  "scale": 1.0047,
+  "pivot_a": [
+   39.0,
+   37.5
+  ],
+  "pivot_b": [
+   37.0,
+   37.5
+  ]
+ },
+ "forearm_endon_grey": {
+  "size": [
+   79,
+   78
+  ],
+  "sheet": "code:ped_sleeves.py from forearm_endon.png",
+  "cell": 3,
+  "scale": 1.0047,
+  "pivot_a": [
+   40.0,
+   38.0
+  ],
+  "pivot_b": [
+   38.0,
+   38.0
+  ]
  }
 }
