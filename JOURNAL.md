@@ -304,3 +304,15 @@ atlas; d5-combat blood names; vehicles cruiser accents).
 - BLOCKED 16:54 (iter 48) idle re-bench: lock still held by d5-combat (written 16:43, < 20 min); skipped.
   Six minutes to freeze: no code change started (nothing could be evidenced before 17:00). Tree clean at
   1a017d6. The 16:47 NEXT stands unchanged: item 0 = idle re-bench at the branch head after the run.
+- MILESTONE 17:09 (iter 49) re-bench at 7a8c8b1 (code = 1e7caef), lock 17:00:19-17:09:20, CONTENDED:
+  ran the full 3-pass gate under a 540 s timeout, which was too short (export + 12 min); pass 3 was
+  killed in `drive`, pass 1's JSON overwritten. Pass 2 is complete: worst p99 CPU 4.54 ms (drive),
+  drive48 2.78, riot 2.06, 1% low 132 fps, worst swap 14.4 ms: inside every section 20 limit. The
+  16:42 FAIL (drive48 8.37 / riot 8.71) on identical code was machine load. evidence/d5-city/29-bench-stabilize/.
+- FRICTION 17:09 the full bench gate needs ~14 min wall; give it a >= 900 s timeout next time.
+## NEXT (17:10, final; supersedes the 16:47 NEXT on item 0 only)
+0. One idle full-gate bench (`node tools/bench/run.mjs`, 3 x 4 x 60 s, ~14 min, timeout >= 900 s) to
+   turn "pass 2 inside limits, contended" into a gate verdict. Bench evidence: 24-bench-end (16:00 PASS
+   at 61e9222), 28-bench-final (16:42 FAIL, load), 29-bench-stabilize (17:05 pass 2 inside limits).
+1-4 unchanged (owner calls on road width / plazas / roof coarseness; more T1 long plates; overlay
+   32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
