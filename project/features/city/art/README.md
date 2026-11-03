@@ -56,6 +56,7 @@ with build_ground.py alone undoes them; fold them in, or re-run them in this ord
 | 8 | `patch_soft.py 0.5` | road_straight x3, road_straight_v x2 | closed asphalt-patch outlines 50 % toward the base (cracks keep ink) |
 | 9 | `slab_grey_out.py` | sidewalk, curb_c (y_end 288) | the grey 1 m replaced-slab squares replaced by their 2 m slab partner cell |
 | 10 | `paving_ink.py 64 3 [286 [286]]` | sidewalk, curb x3 (y_end 286), curb_corner (y_end, x_end 286) | the kept 2 m joints as 3 px ink 64,60,58 (a 2 px grey joint mipmaps to a pale hairline; 2 px ink breaks up at 32 px/m, 4 px prints a black window grid) |
+| 11 | `zebra_redraw.py 6 48` | road_intersection (after 3 + 4; run 4 again only on the old tile) | the junction zebras: old stripes removed + re-grained, 6 clean 0.5 m stripes a side, corners asphalt |
 
 Roofs (`roofs/*.png`, all 17): `roof_lift.py 0.7 0.22 0.5` (wash greys toward the roof paper, ink kept). The flat
 roof ground tiles (roof_tone, roof_edge_tone) take `flatroof_seams.py 0.6 0.35 0.50 0.58 [73]` instead (membrane
