@@ -15,6 +15,10 @@ const SPOTS: Array[Array] = [
 	["decals/chalk_robot", 6.2, 1.2, 2.4, 80.0],
 	["decals/scorch", 14.2, -1.6, 2.2, 0.0],
 	["props/lamp_post", 3.2, -6.8, 3.2, 180.0],
+	# iteration 6: lamps at the vertical road's block corners, staggered like the mock's three
+	# (none on the NW corner: its head would sit on STRIKE and the fist stencil)
+	["props/lamp_post", -3.2, 6.8, 3.2, 0.0],
+	["props/lamp_post", 3.2, 8.2, 3.2, 180.0],
 ]
 
 
