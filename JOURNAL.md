@@ -1287,7 +1287,8 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
 3. (partly done 07:06, 971ba37) unknown launch args: the main scene (boot.gd) now Log.warns each one. A
    quit(2) was rejected: city_selftest / city_bench build a World with their own flags, so World must
    not reject them; whether the shipped game should hard-fail on a typo is an owner call.
-4. Idle bench still not had; rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
+4. city_selftest live frame at a fixed sim tick (cause above, iteration 15 FRICTION).
+5. Idle bench still not had; rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
 - Evidence at d07f1d5 (07:03-07:05, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity bit-exact
   + mutation caught at 629, selftest 11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
   Copied to evidence/pof. Session end: tree clean, no Godot of mine running, no scratch.
@@ -1297,6 +1298,9 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
   the selftest builds World directly (boot.gd is not in it). CHECKED: across the last 12 evidence commits the
   48 px/m count flips 75 / 77 / 81 with no code cause (e.g. 5acfb14 81, b9b8781 75, 7a77816 81, f09a541 75)
   -> pre-existing variance in the live (non-golden) frame. FRICTION: the colour count is not a stable
-  number; the goldens (fixed seed, worst 0.00) are the real gate. Later: pin the live frame's tick or
-  drop the colour count from the summary.
+  number; the goldens (fixed seed, worst 0.00) are the real gate. CAUSE (read, not yet tested):
+  city_selftest.gd _build() adds a live World whose _process feeds the real frame delta into SimClock, and
+  _capture() waits SETTLE_FRAMES frames, so the sim tick at capture depends on wall-clock time (prewarm /
+  GPU load). Fix later: stop the selftest World's _process and step SimClock a fixed number of ticks
+  before each capture (changes the selftest frames' content - re-look at them), or drop the colour count.
   Session end 07:09: tree clean, no Godot of mine running, no scratch worktrees.
