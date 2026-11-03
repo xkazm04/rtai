@@ -1201,8 +1201,9 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
 - Shared files touched: none. Scope: look_d5* shaders + params JSON, dev/showcase, evidence/, masters tools.
 
 NEXT (iteration 8; NEXT 27-30 of iteration 7 still stand):
-31. Owner: two A/B options for the up-close tier, item43 (fringe) and item47 (dots); taken together they are the
-    concept's print look. If yes: set part.fringe_k / dots_k to 1.0 in look_d5.params.json and the shader defaults.
+31. Owner: two A/B options for the up-close tier, item43 / item43b (fringe, cool steel only) and item47 (dots);
+    taken together they are the concept's print look. If yes: set part.fringe_k / dots_k to 1.0 in
+    look_d5.params.json and the shader defaults. Reproduce: D5_FRINGE=1 D5_DOTS=1 package_shot.sh <round> [arena].
 32. City lane: prop shadows (D5HeroPropShadow recipe: the silhouette offset for boxes, a capsule for props on flat
     plates, tint 0.5) and the pavement clutter density of the mock (item45).
 33. Characters lane: rig cast shadows (D5RigShadow recipe: world-locked look_d5_shadow strokes only, tint 0 /
@@ -1231,3 +1232,6 @@ night_iter7_summary.png and the iteration-7 order.
   0.017 / 0.018; concept body 0.039). Default h154 = h149st (0 px, deleted); package + options h153all vs h150all
   0 / 0 / 0 / 2065 / 3495 px. Board evidence/item43b_fringe_steel_only.png; night_iter8_summary rebuilt from h149st /
   h153all / a31all. Deleted (superseded; the boards were built before): h150all, a30all, h154.
+- 05:10 FINAL gates (iteration 8, after the fringe fix): evidence tool (--no-parity --no-bench) ALL PASS at 5d16b85
+  (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 85 untracked evidence PNGs moved aside and
+  restored; tree clean. NEXT 31 updated (item43b). The iteration-8 NEXT (31-34) and reading order above stand.
