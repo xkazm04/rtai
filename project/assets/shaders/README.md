@@ -50,6 +50,8 @@ exactly D4 (0 changed px, measured).
   (the mock's even diagonal membrane hatch, lower-right cast hatch, no grey wash blotches: those printed as
   camouflage). At 32 px/m the roofs sit at the mock's tone (mural L 0.593 / paper 0.44 vs mock 0.589 / 0.41; D4 0.516
   / 0.27); the hatch prints as tone at 32-48 and as lines from 64. The mural fist is a light ink wash with its own
-  ink line re-printed vermilion 3 px down-right. Build: masters `tools/build_roofs.py` (board `item21_mural_pen.png`).
+  ink line re-printed vermilion 3 px down-right. OSHA and tall have D5 plates too (the boss arena's yard and the hero's
+  neighbours swap them in the d5 tier). Tone and visible hatch lines do not both survive 32 px/m through look_d4 (a bold
+  hatch plate was tried and rejected). Build: masters `tools/build_roofs.py` (board `item21_mural_pen.png`).
 - Evidence: `gtai-masters/night/d5-close/` (`item1_gate.png`, `item3_roofs_gate.png`, `item4_hero_vs_targets.png`,
   `ladder.png`); scenes `dev/showcase/d5_showcase.gd` (A/B tiers) and `dev/showcase/d5_hero.gd` (junction hero shot).

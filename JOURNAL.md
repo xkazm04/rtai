@@ -530,3 +530,9 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   -> 0.44 (HF 0.120 both); tall 0.385 -> 0.471, 0.24 -> 0.36, 0.60 -> 0.50 (HF 0.134 -> 0.129). By eye the wash
   blotches are gone and the hatch reads as pen lines. evidence/arena-d4d5-{64,128}ppm.png = a15; ladder +1 row.
   .import files for the 2 new PNGs made from the bar's [params] (Godot filled uid/path on --import).
+- 02:01 Codex: d5_roof_warehouse_b (105 s). REJECTED (my template error): the 1312x672 warehouse was squashed into the
+  square layout template, so the plate would stretch 2x on x (anisotropic pen lines), and Codex dropped the
+  corrugated ribs (it stops reading as a warehouse). Not installed; manifest REJECTED. Lesson: pad non-square
+  roofs to a square template, never resize. Ledger 50. Images tonight: 50: generation done for the night.
+- 02:04 boards: night_iter5_summary.png from h85 + a15; evidence/hero-d4d5-*ppm.png = h85 (the d4 frames are
+  unchanged since h81, 0 px). README: OSHA/tall + the tone-vs-lines finding.
