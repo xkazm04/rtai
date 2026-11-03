@@ -1406,10 +1406,10 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   the last burst on (`probe_q1ba/`) changed 0 px in beats 05-07: the seeded bot never fires a burst, so there is no
   frame to judge a change by - left as is (no unevidenced edits). scratch-q1 back to the patch (checked equal).
 - 04:58 Summary sheet now 11 rows (+ whisper rings). Final NEXT (04:54) stands, with: REQUEST 16's patch now also inks
-  the whisper rings (+223 / -122; unit 166/166; applies on main, and - re-checked at 04:59 with the final patch - on
+  the whisper rings (+223 / -122; unit 166/166; applies on main, and - re-checked at 04:58 with the final patch - on
   main + n-d4 + n-visual 56d23e7: `git apply --check` clean). Quest 1 code left as is: the burst arcs (never
   fired by the seeded bot), rifle / nail lines, the words (font).
-- 04:59 CHECK (git only) final quest patch on main + n-d4 + n-visual: the main + n-d4 merge built with plumbing
+- 04:58 CHECK (git only) final quest patch on main + n-d4 + n-visual: the main + n-d4 merge built with plumbing
   (`git merge-tree --write-tree` + `git commit-tree`, a dangling commit 7a44b94, no hooks skipped, never on a branch),
   a scratch worktree at it, `merge --no-commit n-visual` (JOURNAL.md the only conflict), `git apply --check` clean.
   (My 04:58 line first claimed n-visual does not touch fx_view.gd without checking; corrected above.) Scratch removed.
