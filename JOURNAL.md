@@ -1559,3 +1559,16 @@ Morning reading order: night_iter10_summary.png -> item53 -> item50 / item50b ->
   mask): |L - blur1| 0.0952 -> 0.0849 (mock 0.0935: away), mid 0.085 -> 0.073, L 0.700 -> 0.710; 48: 0.1037 -> 0.0954.
   By eye (masters work/i10/rule_mip.png): the rule is fainter, still visible. A partial trade, not a fix: the
   world-camera snap (NEXT 41) is the fix; rule overlays keep their import. Scratch i10rl0 / i10rl1 / s10trm deleted.
+- 06:44 NOT DONE (scoped out, 46 min before the freeze): an in-game (city_view) sub-pixel pan. The game camera's
+  sub-pixel placement is from READING the code (city_view.gd:86, no snap setting in project.godot), not from a
+  measured game frame; the popping itself is measured in the dev scenes with the same look_d4 shader. NEXT 41 asks
+  for the in-game re-run.
+- 06:44 session close (freeze 07:30): tree clean, every change committed; last code commit efce369 (D5_SUBPX dev
+  switch) passed the full gate run at 4bd9b76; later commits are docs only (each passed the pre-commit lint).
+  Images this iteration: 0 (50 of ~50 used tonight). Shared files touched: none. AI assets: none new (no provenance
+  lines). Kept rounds (masters frames/): i10r0 (committed baseline), a10k0 / a10k00 / a10k05 (King), i10u0 / i10u_def /
+  i10u0_270 / i10u_s0.5_270 (dialogue), i10p0 / i10p5 (phone), i10c_* (cards).
+NEXT: 41 (snap the world camera, then the thin print), 38 (portraits through look_d5_ui), 39 (King sharp 0), 40 (mip
+rule for D5 plates), 42 (re-measure motion claims sub-pixel), on top of 35-37 (iteration 9), 31-34, 27-30.
+Morning reading order: night_iter10_summary.png -> item53 -> item50 / item50b -> item52 -> item51, then
+night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47.
