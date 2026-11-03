@@ -119,3 +119,13 @@
 - NEXT (first thing in iteration 2): answers.json -> apply rivet-motion-1/2. Then the order is
   the shock rig pose + clip, sprint + roll (PlayerMotion), the arena station file, then melee
   weapons (baton, katana).
+- 21:22 ANSWER rivet-motion-1 = A (T2 ratio 0.72), at 19:57Z. It was already the default in
+  code (5dc151c), so nothing to switch. Owner note: the lineup frame's labels were the reverse of
+  the option keys. My mistake: the frame read "A day | B mild | C T2" while the ASK keyed
+  A = T2. Relabelled the frame to the ASK keys at 21:23. Lesson: generate frame labels from the
+  ASK's own keys. Owner follow-up: "if he still reads too large, propose a lower guard pose
+  next". That becomes a candidate rivet-motion-3 (a lower guard, hand_z) if the stride does not
+  fix the read.
+- Unit on f053e6f: every failure is in `test_save_slots` (13 tests, 358 asserts in its
+  1000-write loop, plus a save_kit index error from the same collision). It's the shared
+  user-dir collision noted above; all other suites pass.
