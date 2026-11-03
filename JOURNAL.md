@@ -546,3 +546,21 @@ NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at 
   NOTE call sites in quest1_game.gd; 3) car press -> VehicleService, free-roam Rivet via
   TopDownMover (re-bless the 60 s golden); 4) places as rooms; 5) re-capture guard/cast sprites
   at 1x from final rigs; 6) the one-frame warm-up particle burst on Continue/Start f1.
+
+## Iteration 51 (17:13, STABILIZE)
+- 17:13 bench.lock free; took it as slice-play, re-rendered the quest 1 input clip on the exe build
+  (ebe1dd6): windowed `quest1_clip --ppm=32`, rc 0, "paid +1500 at tick 11242", no script errors
+  (log evidence/slice-play/clip-v5.log). Lock released 17:19:43. CONTENDED machine.
+- Clip v5: masters quest1-city-input-run-32ppm-v5.mp4 (960 frames, 32 s, 32 px/m), sheet
+  clip32v5_sheet.png: all 15 sampled frames looked at, straight down, 0 rejected. Frames 1/3/6
+  cropped round Rivet (clip32v5_f1-6_crop.png, also in evidence/slice-play/): NO light pool, so
+  ebe1dd6 is VERIFIED on the Start path too (iteration 50 verified Continue).
+- frames.json entry 1 is now v5 (before = v4); the light-fix entry no longer says the clip predates it.
+  Deleted 2.6 GB of clip PNG scratch (kept beat_*.png + title.png). No Godot process of mine running.
+- Code unchanged since ebe1dd6; gates stand as evidenced in iteration 50 (lint 13/13, unit 359,
+  scenarios 10/10); exe-built-at.txt = ebe1dd6 matches HEAD's code.
+NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at ebe1dd6);
+  2) merge d-cast with/before d-slice; the autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
+  6) the one-frame warm-up particle burst on Continue/Start f1.

@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] quest1: city cells: 2 chunks in 11 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 77.5 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9032
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] quest1: paid +1500 at tick 11242
+[INFO] clip: saved 960 clip frames at 32 px/m, tick 11242
+WARNING: 279 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 47 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+rc=0
