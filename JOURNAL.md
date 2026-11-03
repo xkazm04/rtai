@@ -1220,8 +1220,8 @@ NEXT (iteration 15 / morning, in order):
      once more (48-trial14 / 51-age-gains are the expected frames);
    - quest 1: apply 49-quest1-v2/quest1-on-print_stage-v3.patch AFTER n-noir (it touches n-noir's
      dev/noir/quest_fight.gd; README.txt there). listen() waits for quest 1 running on World's SimClock;
-   - move CityView onto PrintStage; `--reduced-motion` launch flag (KNOWN_FLAGS + World); n-d4's FX sheet
-     crackle on Rivet at 32 px/m (unreadable, 46-tazer).
+   - move CityView onto PrintStage; `--reduced-motion` launch flag (KNOWN_FLAGS + World); (done 06:56,
+     3de7eca: n-d4's sheet crackle gets an ink rim and reads on Rivet - re-check it once the sheet is live).
 2. Owner calls (rendered, one number each): age_floor 1 = the mock's sepia over the whole page at gameplay
    zoom (+0.3-0.6 ms iGPU at 48 px/m, 50-age-floor) vs iteration 11's zero-cost paper hex; grain_floor needs
    the whole D5 overlay drawn at gameplay zoom (~+2 ms iGPU) - not wired; the D4 -> D5 ramp start (48 px/m
@@ -1242,3 +1242,15 @@ NEXT (iteration 15 / morning, in order):
 - Evidence at 06db11e (06:48-06:50, --no-bench, all PASS): lint 13/13, unit 242, scenarios 8, parity
   bit-exact + mutation caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock
   0.00 % x3). Copied to evidence/pof.
+- MILESTONE (3de7eca) the sheet crackle reads on Rivet: fx.json atlas rows take an optional `rim` (cell
+  widths, schema 0..0.2) -> FxPool.custom_of() custom .w -> fx_ink's sheet path inks the texels within
+  `rim` of the cell's silhouette (8 taps, only where the cell is clear). crackle rim 0.04 (~2 px at
+  32 px/m). Frames (scratch scratch-visual-tazer14 = n-visual + n-d4's real 1.1 MB sheet, removed after;
+  lead_showcase held Robo-tazer hit): 48 px/m before a faint cream star lost on Rivet's cream / after an
+  ink-ringed burst; 32 px/m before nothing readable / after a dark jagged ring round the collar (reads as
+  a hit, small, a bit cog-like - for d4-production: a bolder shock cell would beat it). Vermilion collar
+  intact. Re-shot with the final custom_of() refactor: byte-identical. Unit 245 (+3; headless cannot read
+  MultiMesh custom data back, so the test checks custom_of()). Branch goldens 11/11 + 5/5 worst 0.00.
+  53-crackle-rim/cmp-{car,on_foot}.png, ladder 53 (1280 x 26626).
+- Session end (06:57): tree clean, my scratch worktrees (trial14, trial14b, tazer14) removed, no Godot of
+  mine running. Ladder rows 48-53 this iteration.
