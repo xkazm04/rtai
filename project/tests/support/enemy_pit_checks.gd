@@ -55,7 +55,36 @@ static func panic() -> Dictionary:
 	return out
 
 
+## A cop in its tell; Rivet's nail passes 0.55 m to its side: the flinch must break the windup.
+static func suppress(plant: bool) -> Dictionary:
+	var pit: EnemyPit = PitLayout.build(29, false)
+	PitLayout.place(pit, [&"patrol_cop"], PackedVector2Array([pit.rivet_pos + Vector2(8.0, 0.0)]))
+	pit.plant_no_flinch = plant
+	pit.rivet_hp = 100000.0
+	var cop: EnemyAgent = pit.agents[0]
+	var told: bool = false
+	for _t: int in 600:
+		pit.step()
+		told = cop.state == EnemyAgent.State.WINDUP
+		if told:
+			break
+	var to: Vector2 = cop.pos - pit.rivet_pos
+	pit.rivet_fire((to + to.orthogonal().normalized() * 0.55).normalized())
+	for _t: int in 25:
+		pit.step()
+	var keys: Array[String] = ["flinches", "tells_broken", "nail_hits", "shots"]
+	var out: Dictionary = {"told": told, "alive": cop.alive()}
+	for k: String in keys:
+		out[k] = pit.stats[k]
+	return out
+
+
 static func judge(ev: Dictionary) -> String:
+	var sup: Dictionary = ev["suppress"]
+	if not sup["told"] or sup["tells_broken"] != 1.0 or sup["nail_hits"] != 0.0:
+		return "a near miss did not break the cop's tell: %s" % sup
+	if ev["planted_no_flinch"]["tells_broken"] != 0.0:
+		return "planted fault (no flinch) not caught: %s" % ev["planted_no_flinch"]
 	for id: String in ev["archetypes"]:
 		var r: Dictionary = ev["archetypes"][id]
 		if r["tells"] < 1.0:

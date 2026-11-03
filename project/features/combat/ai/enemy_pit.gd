@@ -25,6 +25,7 @@ var stats: Dictionary[String, float] = {}
 ## Planted faults (TST-05) the scenario flips to prove its judges bite.
 var plant_no_squad: bool = false
 var plant_no_lock: bool = false
+var plant_no_flinch: bool = false
 var _rng: RandomNumberGenerator
 var _events: EventBus
 var _next_id: int = 1
@@ -231,7 +232,8 @@ func _advance(s: Shot) -> bool:
 			stats["nail_hits"] += 1.0
 			hurt(e, s.damage, s.vel)
 			return true
-	EnemySuppress.near_miss(self, s, from)
+	if not plant_no_flinch:
+		EnemySuppress.near_miss(self, s, from)
 	return s.spent()
 
 

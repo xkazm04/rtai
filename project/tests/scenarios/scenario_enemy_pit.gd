@@ -3,8 +3,9 @@ extends Scenario
 ## cap holds (never more than max_shooters winding up or firing); telegraphs are dodgeable (a
 ## dummy that reads tells takes far fewer hits than one that stands); flankers spread round
 ## Rivet; cover users hide between bursts; patrol cops panic when the squad falls, robots never;
-## the same seed replays to the same digest. Planted faults (TST-05): the squad cap off and the
-## aim lock off must each fail their judge.
+## a near miss flinches a cop out of its tell (suppression); the same seed replays to the same
+## digest. Planted faults (TST-05): the squad cap off, the aim lock off and the flinch off must
+## each fail their judge.
 
 ## The dummy nails only inside this range, so every archetype gets to show its attack.
 const FIGHT_M: float = 10.0
@@ -22,6 +23,8 @@ func run(_tree: SceneTree) -> String:
 	ev["flank"] = EnemyPitChecks.flank_spread()
 	ev["cover"] = EnemyPitChecks.cover_hidden()
 	ev["panic"] = EnemyPitChecks.panic()
+	ev["suppress"] = EnemyPitChecks.suppress(false)
+	ev["planted_no_flinch"] = EnemyPitChecks.suppress(true)
 	ev["determinism"] = _determinism()
 	Log.info("scenario", "enemy pit: %s" % ev)
 	var err: String = write_evidence("enemy-pit.json", ev)
