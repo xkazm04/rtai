@@ -334,3 +334,8 @@ NEXT (the night run, from the merged main):
 - rivet-motion applied the three notes (`b03f575` on e-motion: metal kind, 2 m spacing, crowd in
   the course). It copied arena_station.schema.json verbatim from ab3d26d, so I leave that schema
   unchanged until the merge.
+- MILESTONE `--rigs` second pass: the rig radius is centred 7 m ahead of Rivet's aim. The blank
+  rings were not deaths: CharacterRigs poses full rigs only within 14 m of its focus and leaves
+  the rest to the crowd atlas, which the arena lacks. A struck fighter plays the rig's HIT flinch
+  away from Rivet. Clip re-captured (same path, sheet checked). REQUEST 6 -> d5-cast (night run):
+  a per-host RADIUS_M on CharacterRigs, so a small arena can pose every fighter on screen.
