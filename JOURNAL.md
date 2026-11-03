@@ -276,3 +276,21 @@ NEXT (iteration 3, in order):
   At 12:10 the same gate gave p99 6.37 ms. The only vehicles change on the bench path is
   car_pass's early-outs per car (no obstacles in the bench World, so no hash query): not a
   verdict either way; re-run when the machine is quiet. Copied to evidence/vehicles/it3/.
+- MILESTONE 12:57 d243679 rammed D1 and soul-hijacked sim traffic now SHOW their state (interim
+  answer to REQUEST 4, inside features/vehicles): VehicleView lays the D1 / hijacked atlas cell
+  over every sim car in VehicleTraffic.state at the sim's own car transform (CitySimRender: x axis
+  head * CAR_L, y axis left normal * CAR_W, custom.x = variant). The city's write_render reads the
+  same tick's state with no interpolation, so the overlay sits exactly on the crowd layer's car (no
+  ghost edge at 48 px/m). One cars_near pass per frame, only while the book is non-empty.
+  Frames: carnage-v9 vs carnage-v8 (same ticks): 260 the rammed sedan shows cracked glass and
+  dents, 900 a second D1 car beside the wreck. Other diffs between v8 and v9 are light flicker
+  (034 the halo moves) and the 060/360/660 full-frame diffs: not from this change (render-only,
+  sim identical). Unit 359, vehicle scenarios 3/3. When d5-city's shader pick lands, the overlay
+  draws the same cell twice (harmless; remove it then).
+- 13:02 dev capture `--soul-traffic` (soul_hijack_traffic on every civilian car within 60 m at
+  tick 30): soultraffic48-v1, the queued sedans and the van carry the teal plate, and the overlay
+  follows the passing car through its turn (540). Brief item 5 now has traffic evidence, not
+  only Rivet's own taxi.
+- frames.json 15 (+D1 traffic pair, +soul traffic; dropped the noir carnage frame and the
+  carnage-v2 450 frame), ladder 1280 x 7964. Frames this iteration: 72 captured (10 yield48-v2
+  rejected: scene parked on a junction; 62 kept), 0 camera breaks.
