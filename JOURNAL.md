@@ -75,3 +75,6 @@ NEXT (iteration 2):
   1280x720 --write-movie <x>.avi --quit-after 900 --path project res://dev/arena/arena.tscn --
   --bot=range --ppm=32`. Any lane can capture its station the same way. frames.json: 7 entries.
 - answers.json re-read 21:22: no answers yet to arena-1 or arena-2.
+- 21:26: course clip `clips/arena-course-48ppm-16s.mp4` (sheet checked; the walls do not collide
+  yet). frames.json now has 8 entries. Still missing: range at 48 px/m and course at 32 px/m as
+  clips (stills exist).
