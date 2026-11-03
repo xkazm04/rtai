@@ -932,3 +932,25 @@ NEXT (iteration 12 close, in order):
   evidence/figure-shadows-streak-NOT-adopted.png (f322 and the held panel f175, before | after). Files removed.
   The right route is a real silhouette: rigs rendered into a SubViewport (or the parts drawn a second time in
   black) and swept like NoirShadows - not done tonight.
+- (05:58) Gates at 2eaa99b (code 65c7bc3; `run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios,
+  parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line.
+- Session close (iteration 14). Code commits: 05d405a (cast shadows), 0854fab (one quad per caster + cost
+  tool), 6cc391a (BloodDecals), 65c7bc3 (NoirShowcaseArgs). Images 0 generated, 0 rejected; Leonardo not probed
+  (nothing to generate); provenance +0. Ladder 34 rows. Masters night/noir ~2.0 GB (shadow-v1 scratch deleted).
+  No process of mine running. Shared files touched: none (city_view.gd / chunk_view.gd untouched; the shadows
+  hook through NoirLook). Morning entry points: evidence/cast-shadows-before-after.png, NOIR.md iteration-14
+  paragraph, cost-shadows-quad-*.json.
+NEXT (iteration 14 close, in order):
+1. Owner picks (unchanged from iteration 12): the hero (showcase-hero-car.png vs the lamp street vs the
+   junction), Rivet's oil instead of blood, the value roles / noir Rivet parts. New: the cast shadows' lengths
+   (params `shadows.len_m`; building 3.0 m makes long masses on the roofs - a taste call).
+2. Figure shadows done properly: render the rigs into a SubViewport (or draw the parts a second time in black)
+   and sweep that silhouette like NoirShadows, away from the car / the nearest lamp. Two cheaper routes failed
+   tonight (CanvasGroup: z-indexed parts escape it; drawn streaks: read as planks).
+3. Cast shadows: the lamp pools wash props out, so a prop inside a pool loses both itself and its shadow (by
+   design, value 0.1); a shadow straddling a pool's edge leaves a fragment. A prop-preserving lamp lift
+   (lift only the ground, not prop ink) would fix both - needs a prop mask in the pass.
+4. Carried over: NoirCue into the real quest view (owner OK), soul swaps need `player` per body, the car as art
+   (car_len / car_half_w from the sprite), noir parts + coat into the rigs, BloodStains / BloodFx.solid in the
+   game hosts, the noir HUD in the composition root, a settings toggle for safety.flashes, the flash margin.
+5. showcase_fight.gd is 213 lines (soft ~200): the hero-frame saving (_save, _to_uv) could move out next.
