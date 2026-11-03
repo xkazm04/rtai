@@ -2,7 +2,8 @@ extends SceneTree
 ## Headless A/B of squad.aim_lead over many seeds: the three-pairs staging of the rig fight clips,
 ## the human-like PitDummy (react 15 ticks, reads 70 % of tells, 4 deg aim error), no render.
 ## Usage: <godot> --headless --path project -s res://dev/enemy_ai/aim_lead_ab.gd
-##   -- [--seeds=20] [--seconds=25] [--read=0.7 (tells read)] [--salt=1|0] [--out=<json>]
+##   -- [--seeds=20] [--seconds=25] [--read=0.7 (tells read)] [--salt=1|0] [--shooters=<n>]
+##   [--out=<json>]
 
 const SPOTS: Array[Vector2] = [
 	Vector2(9, -6),
@@ -16,6 +17,7 @@ const LEADS: Array[float] = [0.0, 0.8]
 
 var _read: float = 0.7
 var _salt: bool = true
+var _shooters: int = -1
 
 
 func _initialize() -> void:
@@ -32,6 +34,8 @@ func _initialize() -> void:
 				seconds = float(val)
 			"read":
 				_read = float(val)
+			"shooters":
+				_shooters = int(val)
 			"salt":
 				_salt = val != "0"
 			"out":
@@ -45,19 +49,25 @@ func _initialize() -> void:
 		"seeds": seeds,
 		"seconds": seconds,
 		"read": _read,
-		"read_salt_by_seed": _salt
+		"read_salt_by_seed": _salt,
+		"shooters": _shooters,
 	}
 	for lead: float in LEADS:
 		report["lead_%.1f" % lead] = _sum(lead, seeds, roundi(seconds * 60.0))
 	var text: String = JSON.stringify(report, "  ", true)
 	printerr(text)
-	if out != "":
-		var f: FileAccess = FileAccess.open(out, FileAccess.WRITE)
-		if f != null:
-			@warning_ignore("return_value_discarded")
-			f.store_string(text + "\n")
-			f.close()
+	_write(out, text)
 	quit(0)
+
+
+func _write(out: String, text: String) -> void:
+	if out == "":
+		return
+	var f: FileAccess = FileAccess.open(out, FileAccess.WRITE)
+	if f != null:
+		@warning_ignore("return_value_discarded")
+		f.store_string(text + "\n")
+		f.close()
 
 
 func _sum(lead: float, seeds: int, ticks: int) -> Dictionary:
@@ -90,6 +100,8 @@ func _fight(seed: int, lead: float, ticks: int) -> Object:
 	pit.set("rivet_hp", 400.0)
 	var roster: Object = pit.get("roster")
 	roster.set("aim_lead", lead)
+	if _shooters > 0:
+		roster.set("max_shooters", _shooters)
 	var dummy: Object = (load("res://features/combat/ai/pit_dummy.gd") as GDScript).new(
 		2, pit.get("rivet_pos")
 	)

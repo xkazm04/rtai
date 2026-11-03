@@ -401,3 +401,10 @@ NEXT (night run; supersedes iteration 5 items 1 and 3, the rest stand):
    against pit_waves' targets, then one clip per candidate.
 3. Iteration 4 NEXT items 2-7 (ArenaHook, real weapons, robot plan, flinch duck, city block
    clip, robot hit tint note).
+- 23:22 NEXT item 2 started: aim_lead_ab.gd --shooters=<n> (overrides squad.max_shooters; default
+  2 from enemies.json). Salted, read 0.7, 3 cops + 3 thugs, damage per 25 s fight (lead 0 / 0.8):
+  shooters 1 = 10.9 / 17.0 (shots 246/234, hit 9.4 % / 12.8 %); 2 = 13.6 / 15.9; 3 = 14.4 / 19.0
+  (shots 312/409). Shooters move volume, not much damage: the tell read still caps the hit rate
+  near 10 %. So pressure at range for a 70 % reader needs the accuracy curve or a shorter
+  tell-to-lock window (aim_lock_ticks), not more shooters. --acc knob is still open (item 2).
+  evidence/enemy-ai/aim_lead_ab_salted_shooters{1,3}.json. Lint 13/13 after the change.
