@@ -52,6 +52,13 @@ slides along, like a wall), so a sustained sprint cannot push a robot along (a m
 drive it at about 2 m/s); `stagger` / `knockdown` push the defender clear and report the rule's
 knockback for the caller's state.
 
+## Quest 1's arena: `ArenaBodies`
+
+`boot/collect_call/collect_call_stage.gd` calls `ArenaBodies.resolve(arena, rivet_vel)` after
+`arena.step`: Rivet against every live hostile through `BodyContact`. Every arena hostile today is a
+human (guards, quartermaster Mertz): a walk shoves, a run knocks back `knockback_m` (no lying state
+in the arena yet). A robot or big-boss fighter needs its own class in `ArenaBodies.class_of`.
+
 ## Proof
 
 - `tests/scenarios/scenario_bodies_crowd.gd`: a walk through 15 standing peds; worst Rivet overlap
@@ -59,4 +66,7 @@ knockback for the caller's state.
   body off.
 - `tests/scenarios/scenario_bodies_tackle.gd`: a sprint into a human (knockdown, slide, get-up, flee)
   and into a robot (`blocked`, no overlap); planted faults: tackle off, the robot row removed.
+- `tests/scenarios/scenario_bodies_cop.gd`: a tackled cop lies 1.4 s and resumes as a cop (never
+  flees); planted fault: down_s 0.
+- `dev/bench/bodies_cost.gd`: native riot step with the body on vs off (CONTENDED, within noise).
 - `tests/parity/city_parity.gd` drives the body through the riot (walk and sprint legs): exact.

@@ -78,6 +78,21 @@ bosses we resolve in future."
   - 16 stills looked at, 0 rejected (all straight down).
   - Masters: gtai-masters/day-d5/collisions/ (frames.json, ladder.png, mp4s).
 
+### MILESTONE: quest 1 arena, cops, cost (commits after 53b1ca4)
+- `ArenaBodies` (features/bodies): Rivet vs every live CombatArena hostile after `arena.step`
+  (quest 1's stage). SHARED: `boot/collect_call/collect_call_stage.gd`, 3 lines. Every arena hostile
+  today is a human: a walk shoves; a run knocks the hostile back 1.6 m (the arena has no lying-down state;
+  the combat lane owns that). Quest scenarios are unchanged (11436 / 2388 ticks). 2 unit tests.
+- scenario_bodies_cop: a sprinted-into cop is knocked down once, lies 84 ticks (1.4 s), resumes
+  as a cop (M_WALK) and never flees; overlap 0.00002 m. Planted fault: with down_s 0 the cop is re-tackled every
+  tick (8 knockdowns), which fails the verdict, so it is caught.
+- Body cost, CONTENDED (dev/bench/bodies_cost.gd: native, 300-person riot, 400 tier-A, Rivet
+  sprinting circles, 23 knockdowns), 1800 steps x 2 runs:
+  - p50: 0.072 vs 0.077 ms off, and 0.063 vs 0.065 ms.
+  - p99: 0.303 vs 0.301 ms, and 0.289 vs 0.289 ms.
+  - Within noise. FRICTION: `-s` scripts log "Identifier not found: Log"
+    compile errors from depended scripts (no autoloads under -s). The measured classes ran.
+
 ### Knowledge rules applied (ai-registry game-production)
 - mass-based-arcade-collision:
   - Applied: the inverse-mass overlap split (the position repair); a closing-speed threshold that keeps ordinary bumping free;
