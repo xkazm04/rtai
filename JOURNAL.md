@@ -1408,3 +1408,19 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   crop the mock to 800 px tall) before anyone tunes road width; at a 1080p window the game shows 34 m at 32 px/m.
 - 05:58 MEASURED the mock at OUR framing (its 1280x800 crop, junction at our x): L 0.475 / street 0.49 / paper 0.31 / ink 0.11 / mid 0.10 vs v9 (i9ph1) 0.457 / 0.50 / 0.29 / 0.11 / 0.11: the L gap at equal framing is 0.018, all paper tone (README 9.3, 9.4). night_iter9_summary.png gained the line.
 - 05:59 night_iter9_summary.png rebuilt with the equal-framing mock line (its first text edit failed silently; checked the crop, re-inserted). Tree clean; the last code commit passed the gates at f1bc6e2 (later commits are docs only, each passed the pre-commit lint). NEXT 35 / 36 (corrected) / 37 and the reading order of the 05:57 entry stand.
+
+## Iteration 10 (06:00 -> cap 07:30), BUILD, no images (50/50 used)
+- 06:00 Read journal, git log, gap lists. The world tone package has had 4 iterations; the weakest item by eye is
+  item 5 (portraits): item17 found the 512 px portraits soft at a 200 px panel (trilinear between mip 1 and 2) and
+  NEXT 11 proposed a pre-scaled set. A pre-scaled set fits one UI scale only (the UI scales with the window), so
+  a shader instead.
+- 06:05 MILESTONE item50 (285351a): look_d5_ui.gdshader (proposal, HUD lane): 4 rotated-grid taps one mip finer
+  than the footprint + unsharp `sharp` 0.5 vs the next mip. Dev switch D5_UI=sharp / D5_UI_SHARP / D5_UI_PX in
+  d5_dialogue_run.gd. Measured (masters work/i10/uierr.py, mean abs error vs PIL Lanczos of the source at the panel
+  size, rivet_angry / cop_shouting): 200 px mipmaps 4.82 / 5.16, sharp 0 2.92 / 3.15, 0.5 2.53 / 2.66, 1.0 2.79 /
+  2.82; 270 px 4.95 / 5.24, 2.69 / 2.82, 2.82 / 2.75, 3.96 / 3.84 (1.0 overshoots). 0.5 = the default. Phone close-up
+  (cop_alarmed): only the phone rect changes, no fringe at the frame's alpha edge, screws and pen lines crisper.
+  MISTAKES: (1) first version multiplied by COLOR, which in a Godot 4 fragment already holds the texture sample
+  (err 41: everything squared darker); fixed with a vertex varying for the modulate. (2) my first 270 px crops ran
+  past the 800 px window (error 13.7 was the crop, not the filter); re-measured on the rows inside the window.
+  Board evidence/item50_ui_sharp.png (looked at: reference / mipmaps / sharp at 2x, phone 1x); ladder row.
