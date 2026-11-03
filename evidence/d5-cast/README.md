@@ -13,3 +13,10 @@ The gate numbers live here; the frames (15, labelled) are in
 
 Frames sources: `dev/showcase/city_frame.tscn` (real World + CityView, seed 91), `d5_hero.gd`
 (H2 scene; souls now off), `king_showcase.gd [--rivet-form=night]` (lineup + King on the rig).
+
+Iteration 3 (2026-11-03, 11:00-11:35):
+- `cop-helmet-t1.json`, `cop-cap-t1.json`: T1's cream cop heads (riot helmet, patrol cap), same-scene A/B numbers.
+- `cop-gate.json` `t1heads/*`: the city gate re-measured with the cream heads (every cop still a blue blob).
+- `cruiser-atlas-print.json`: the moving cruiser's light bar (traffic atlas cell 8) through each item shader:
+  d-cast alone -> teal, merged with d-city -> cop blue. Merge d-city before or with d-cast.
+- `cruiser-world-print.json`: parked cruisers through the look_d4 world pass print ~37 % teal (d5-city REQUEST 3).

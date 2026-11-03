@@ -138,3 +138,16 @@ NEXT:
 - EVIDENCE run at dee7dab: lint, unit 326/326, scenarios 8/8, parity exact, selftest goldens 11/11 (worst 0.92) + 5/5
   PASS, but the run reports FAIL on its tree-changed guard: I appended to JOURNAL.md mid-run (FRICTION: never edit the
   tree during an evidence run). Re-run below on a clean tree.
+- EVIDENCE (clean tree, HEAD 07182f0, 11:32): lint, unit 326/326, scenarios 8/8, parity 1200 steps exact, selftest look
+  goldens 11/11 (worst 0.92) + block 5/5 PASS (--no-bench; bench not run: colour/texture-only changes, unmeasured).
+- cop-gate.json t1heads/*: city-0 32 px/m 15 blue blobs / 2393 px, 48 px/m 13 / 2864 px; vermilion = Rivet's collar only.
+- Frames: masters frames.json (15) + ladder.png rebuilt: lineups re-shot with today's cops (lineup3-*), hero frames
+  heroCapB, city frames capB, cop heads A/B (OWNER CHOICE), cruiser sprites + atlas cell A/B, portraits navy A/B.
+
+NEXT:
+- Owner picks at 18:00: (1) cop heads cream (T1, shipped) vs navy (revert 90bb8f6 34acc56); (2) shoulders A (shipped) vs B;
+  (3) King's portrait cape vermilion; (4) cop portraits' black visor helmets vs the rig's cream domes.
+- Merge order: d-city before/with d-cast (moving cruiser bars). Goldens conflict both ways: re-bless once on the merged tree.
+- After d5-city REQUEST 3 lands: shoot a city_frame with a parked AND a moving cruiser on screen (no current frame has one;
+  traffic timing varies per run: --police=16 did not bring one into frame) and check both bars print cop blue.
+- King into the game when the boss ticket lands (KingPlan ready); ghost form = a new RivetPlan.FORMS row.
