@@ -1165,3 +1165,13 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   junction crop; the pan launcher takes no --borrow, so no parked cars: the first try passed it and exited, re-shot):
   committed pan17 d5 0.00732 (pan10, iteration 6: 0.00739); package pan17pkg 0.00049 (= pan14sh). The prop shadows'
   hatch is world-locked like the building shadows: no added swim.
+- 04:58 gap 6 (cone shadow): the cone sprite is a flat square base plate with the cone on top, so its silhouette copy
+  printed a box. D5HeroPropShadow.ROUND: a hatched capsule (Polygon2D, look_d5_shadow) from the prop's centre
+  0.55 m down-right, radius 0.15 m, under the plate. Two broken rounds on the way, deleted: h146cone (typed-GDScript
+  warnings as errors: float(Variant), the PackedVector2Array append/resize return values; the hero script failed to
+  compile, every frame wrong; shoot.sh still printed "exit 0", so I now diff every round before reading it) and the
+  first h147cone (identical counts for a different length = the capsule never drew: the name fallback overwrote the
+  key before the ROUND lookup; fixed). h147cone vs h141rs: 291 / 592 / 1027 / 1079 / 1800 px at 32-128. By eye: at
+  64 the capsule reads as the cone's height; at 32 it is a small hatched dash beside the cone (the plate covers its
+  root), not worse than the box. Board evidence/item44b_cone_shadow.png (h125 none / h141rs box / h147cone capsule, 32
+  x4 and 64 x2, + the mock's cone). Unit 149/0.
