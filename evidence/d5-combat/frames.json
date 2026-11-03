@@ -1,0 +1,125 @@
+[
+  {
+    "file": "frames/fight-noir-t900-48ppm.png",
+    "title": "Real city riot, 15 s in: noir's blood as the D4/D5 default (48 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools.",
+    "before": "frames/fight-ink-t900-48ppm.png"
+  },
+  {
+    "file": "frames/fight-noir-t900-64ppm.png",
+    "title": "Same moment at arena zoom (64 px/m): pools with ink keyline, grain, sheen",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat).",
+    "before": "frames/fight-ink-t900-64ppm.png"
+  },
+  {
+    "file": "frames/fight-noir-t900-32ppm.png",
+    "title": "Same moment on foot (32 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 32,
+    "note": "At 32 px/m the blood still reads as the one saturated red.",
+    "before": "frames/fight-ink-t900-32ppm.png"
+  },
+  {
+    "file": "frames/fight-noir-t480-48ppm.png",
+    "title": "8 s in: fresh directional spurts (48 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "Spurts thrown along the shot, teardrop splats with satellites ahead.",
+    "before": "frames/fight-ink-t480-48ppm.png"
+  },
+  {
+    "file": "frames/fight-oil-after-noir-t420-64ppm.png",
+    "title": "Rivet's oil now reads on asphalt (64 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "Rivet hit every 2 s (dev --hit-rivet=120, wired as the game wires player_hit). Before: black flecks lost in the asphalt grime. After: black drops with a thin cream rim (D4 ink-with-cream-rim rule) + an oil leak trail where he walks. Still no red on the robot.",
+    "before": "frames/fight-oil-before-noir-t420-64ppm.png"
+  },
+  {
+    "file": "frames/fight-oil-after-noir-t420-48ppm.png",
+    "title": "Rivet's oil at 48 px/m",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "",
+    "before": "frames/fight-oil-before-noir-t420-48ppm.png"
+  },
+  {
+    "file": "frames/beat-both-48ppm-f00.png",
+    "title": "Kill beat A/B: silhouette on speed lines (--kill-beat=flash|both)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "Rivet's kill (dev stand-in: riot deaths within 8 m credited to him). World + print hidden one beat: actors solid ink, blood stays red. Default is OFF. Shared flash budget: <=3 flashes/s; 0 with --reduced-motion (calm border only)."
+  },
+  {
+    "file": "frames/beat-panel-64ppm-f01.png",
+    "title": "Kill beat A/B: the held comic panel (--kill-beat=panel|both) at 64 px/m",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "The kill framed in a panel with paper gutters for impact.panel_ticks."
+  },
+  {
+    "file": "frames/beat-modes-contact.png",
+    "title": "All kill-beat modes at 48 and 64 px/m (rows: flash48, flash64, panel48, panel64, both48, both64)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
+  },
+  {
+    "file": "frames/quest1-04-dock-wave.png",
+    "title": "Quest 1's real CombatArena kills bleed (48 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "collect_call frame grabber (CollectCallView via PrintStage): Events.actor_killed -> blood under the dead guards (bottom right)."
+  },
+  {
+    "file": "frames/quest1-06-crates-burning.png",
+    "title": "Quest 1 boss fight: blood from the dock waves",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": ""
+  },
+  {
+    "file": "clip-blood-noir-48ppm.mp4",
+    "title": "15 s riot clip at 48 px/m (blood + Rivet's oil)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "--fixed-fps 60: one sim tick per frame, real time, 30 fps output."
+  },
+  {
+    "file": "clip-blood-noir-64ppm.mp4",
+    "title": "15 s riot clip at 64 px/m",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": ""
+  }
+]

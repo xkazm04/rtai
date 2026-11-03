@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] frames: 01-monologue at tick 261 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/01-monologue.png (0)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] frames: 02-collect-call at tick 1292 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/02-collect-call.png (0)
+[INFO] frames: 03-toner-room at tick 3819 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/03-toner-room.png (0)
+[INFO] frames: 04-dock-wave at tick 8152 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/04-dock-wave.png (0)
+[INFO] frames: 05-mertz-telegraph at tick 9115 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/05-mertz-telegraph.png (0)
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] frames: 06-crates-burning at tick 9498 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/06-crates-burning.png (0)
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] frames: 07-payphone-refusal at tick 10299 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/07-payphone-refusal.png (0)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] frames: 08-payout-call at tick 11088 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/08-payout-call.png (0)
+[INFO] frames: 09-payout at tick 11435 -> C:/Users/kazda/kiro/gtai-wt/d-combat/evidence/d5-combat/quest1/09-payout.png (0)
+[INFO] frames: saved 9 of 9: ["01-monologue tick 261", "02-collect-call tick 1292", "03-toner-room tick 3819", "04-dock-wave tick 8152", "05-mertz-telegraph tick 9115", "06-crates-burning tick 9498", "07-payphone-refusal tick 10299", "08-payout-call tick 11088", "09-payout tick 11435"]
+WARNING: 219 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 32 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
