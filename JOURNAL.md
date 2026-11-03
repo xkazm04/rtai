@@ -892,3 +892,6 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   (same seed) `zb_before|zb_z6|zb_z7/selftest-{32,48}ppm.png`, crops `work/zb_ab{32,48}.png`: bold and clean at both,
   peds read on the stripes. 64 px/m: no fixed junction shot exists (selftest = 32/48). Provenance line, README row 11,
   ladder rows. Commit 5b3ce9c. Original in `masters:backup_zb/`. 0 Codex.
+- 02:49 CHECK kerb corner board (`asset_board --page=corner`) before/after the joint ink: `before_pjc|after_pjc/
+  corner-{32,48,64}ppm.png`, `work/pjc_ab48.png`: the inked joints run cleanly into the rounded kerb; no stubs on
+  the kerb stone, curb straights and corner join row for row. Ladder rows. Tree restored to HEAD art afterwards.
