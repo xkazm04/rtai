@@ -1424,3 +1424,12 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   (err 41: everything squared darker); fixed with a vertex varying for the modulate. (2) my first 270 px crops ran
   past the 800 px window (error 13.7 was the crop, not the filter); re-measured on the rows inside the window.
   Board evidence/item50_ui_sharp.png (looked at: reference / mipmaps / sharp at 2x, phone 1x); ladder row.
+- 06:25 item50b (negative result, kept as a guard): do the 1920x1081 D5 cards (finishers, boss intro, loading; no
+  mipmaps; no scene draws them yet) need look_d5_ui too? New dev scene dev/showcase/d5_card.gd (one card covering the
+  window, --ui). At 1280x800 (0.74x), error vs Lanczos finisher_drone / loading_rivet: linear no mips (as imported)
+  3.00 / 2.28, look_d5_ui no mips 6.01 / 4.46 (worse: without mips its unsharp subtracts a point sample = a blur),
+  trilinear with mips 6.99 / 5.43, look_d5_ui + mips 3.31 / 2.68. Keep the cards as imported; the shader is for the
+  0.3-0.5x portraits only (README row says so). The mipmap import change was a temporary test: .import files
+  restored and re-imported, tree checked. MISTAKES: d5_card's first run drew the card magnified (size set before
+  the tree; fixed with a full-rect anchor) and its first version did not parse (discarded return value). Board
+  evidence/item50b_cards.png (looked at).
