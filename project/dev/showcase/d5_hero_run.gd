@@ -235,7 +235,8 @@ func _tier(tier: String) -> void:
 		_look.shader = load("res://assets/shaders/look_d5_print.gdshader") as Shader
 	if OS.get_environment("D5_HALO") == "ink":  # dev A/B: an ink line outside the sticker rim
 		var w: String = OS.get_environment("D5_HALO_PX")
-		D5HeroHaloInk.apply(self, 1.0 if w.is_empty() else w.to_float())
+		var sh: float = OS.get_environment("D5_HALO_SHADOW").to_float() * 0.09 * PX * _rigs.zoom
+		D5HeroHaloInk.apply(self, 1.0 if w.is_empty() else w.to_float(), sh)
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)

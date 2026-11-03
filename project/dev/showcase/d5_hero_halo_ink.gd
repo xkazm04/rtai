@@ -8,17 +8,23 @@ extends RefCounted
 const SHADER: String = "res://assets/shaders/look_d5_halo.gdshader"
 const RING: StringName = &"halo_ink"
 
+static var _mat: ShaderMaterial = null
 
-## Adds the rings once (idempotent).
-static func apply(root: Node, line_px: float) -> void:
+
+## Adds the rings once (idempotent); shadow_px = the drop shadow offset in screen px (0 = none).
+static func apply(root: Node, line_px: float, shadow_px: float) -> void:
 	var halos: Array[Sprite2D] = []
 	_collect(root, halos)
 	var low: int = 4096  # RenderingServer.CANVAS_ITEM_Z_MAX
 	for h: Sprite2D in halos:
 		low = mini(low, _abs_z(h))
-	var mat: ShaderMaterial = ShaderMaterial.new()
-	mat.shader = load(SHADER) as Shader
-	mat.set_shader_parameter("line_px", line_px)
+	if _mat == null:
+		_mat = ShaderMaterial.new()
+		_mat.shader = load(SHADER) as Shader
+	_mat.set_shader_parameter("line_px", line_px)
+	_mat.set_shader_parameter("shadow_px", Vector2.ONE * shadow_px)
+	_mat.set_shader_parameter("shadow_blur", maxf(1.0, shadow_px * 0.4))
+	_mat.set_shader_parameter("shadow_a", 0.4 if shadow_px > 0.0 else 0.0)
 	for h: Sprite2D in halos:
 		if h.has_node(NodePath(RING)):
 			continue
@@ -27,7 +33,7 @@ static func apply(root: Node, line_px: float) -> void:
 		r.texture = h.texture
 		r.centered = h.centered
 		r.offset = h.offset
-		r.material = mat
+		r.material = _mat
 		r.z_as_relative = false
 		r.z_index = low - 1
 		h.add_child(r)
