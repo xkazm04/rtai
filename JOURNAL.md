@@ -19,3 +19,6 @@
   untouched, glints kept). 0 Codex images used: a recolour keeps the "great" D5 portraits exactly. evidence/portraits-cop-ab.png.
   Rivet/King portraits: busts, no scale issue. QUESTION for owner: King's portrait cape is vermilion (doctrine: vermilion =
   danger/objectives/collar); left as is.
+- MILESTONE look goldens re-blessed (junction 11 + block 5): the evidence selftest failed d4@64, d5@48/64, auto@56/64 and
+  block auto@64-night, all from the cop blue + Rivet scale (crowd and street unchanged in the A/B). look_golden --bless,
+  then a check run: bit-identical (mean 0.00 on all 11). Lint/unit/scenarios/parity green (evidence run, --no-bench).
