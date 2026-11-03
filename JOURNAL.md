@@ -541,3 +541,12 @@ NEXT (after the 17:00 freeze / next session, in order):
 - NEXT: unchanged from iteration 50 (post-day: fire half 2 after splitting out `vehicle_burn.gd`;
   frame the fire kill once d5-combat's blood is merged; a `burned` kill kind (REQUEST 10); consumers
   for REQUEST 1-4; a drive48 bench variant with VehicleService). Merge with d-vehicles' native DLL.
+
+## Iteration 54 (17:30-17:36, REPORT)
+- Rewrote REPORT.md: per-claim evidence paths (all checked to exist), a blocked-time section, next steps.
+  Corrected two claims while checking: bench-short-contended.json is the failed 10:16 export (the 11:19
+  short bench PASS lives only in this JOURNAL), and VehicleService.step averages 51-224 us over the runs
+  (80.4 us at it6, CONTENDED), not the 40-80 us the old report said. No code, no Godot run, no bench lock,
+  0 frames, 0 rejected, no AI images, no provenance lines.
+- NEXT: (post-day) merge with the d-vehicles DLL and re-run parity and scenarios; REQUEST 1 live input; consumers
+  for REQUEST 2-4; fire half 2 after splitting out vehicle_burn.gd; a drive48 bench variant with VehicleService.
