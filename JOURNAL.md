@@ -357,3 +357,16 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
 - rig_footprint now also measures King (KingPlan, Rivet's look): King 2.33 x 2.84 m vs Rivet 1.90 x 2.05 m (1.7x the
   area; about the night Rivet the owner called too massive). Kept: a boss in a 64 px/m arena. OWNER QUESTION: smaller
   King = KingPlan.SIZE_K (1.3 -> 1.2 gives ~2.15 x 2.6 m by proportion, unmeasured).
+
+## 2026-11-03 iteration 46 (BUILD, 15:40-17:00)
+- 15:40 start. Items 1-5 evidenced (see above). Gap since 13:20: no lane activity on this branch (last commit 13:08).
+- MILESTONE 294e6b5 King size option for the owner's question: KingPlan.build(size_k = SIZE_K), king_showcase
+  --king-size=<k>, rig_footprint row king_1_2. Measured: King 1.3 (shipped) 2.33 x 2.84 m, King 1.2 2.15 x 2.62 m,
+  Rivet 1.90 x 2.05, night Rivet 2.50 x 2.62. Same-scene frames (renders kingsize-1.3/, kingsize-1.2/): only King's
+  region differs (2306 / 10904 / 38267 px at 32 / 64 / 128); all straight down, 0 rejected. At 1.2 King still reads
+  as the boss beside Rivet. Shipped value unchanged; OWNER CHOICE = KingPlan.SIZE_K 1.2. Owner frame
+  frames/king-size-option.png replaces king-rig-128ppm.png (frames.json still 15; ladder rebuilt; build_frames.py updated).
+- Rig bench (F-09b, headless = CPU only, debug build, CONTENDED), d-cast HEAD 44bf93d at 15:43, lock held by d5-cast:
+  50 people rigMsAvg 0.366 (p99 0.647), 200 people 0.342 (p99 0.529), full rigs max 16, pool grown 0. Older uncontended
+  rig-quarter "new" runs (another day, main) were ~0.30 at 50. Same-session A/B against main 089400e was set up
+  (scratch worktree gtai-wt/scratch-cast-bench) but d5-combat took the bench lock at 15:42 -> skipped (rule).
