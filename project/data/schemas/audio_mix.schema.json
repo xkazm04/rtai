@@ -77,6 +77,11 @@
       "minimum": 0,
       "type": "number"
     },
+    "footstep_stride_m": {
+      "maximum": 3,
+      "minimum": 0.3,
+      "type": "number"
+    },
     "loudness": {
       "additionalProperties": {
         "type": "number"
@@ -129,6 +134,7 @@
     "duck",
     "loudness",
     "footstep_speed_mps",
+    "footstep_stride_m",
     "servo_chance",
     "master_limiter_db"
   ],

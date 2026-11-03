@@ -167,18 +167,18 @@
     },
     {
       "bus": "sfx",
-      "cooldown_ticks": 100,
-      "doc": "Rivet walking on concrete (four steps, replayed while he moves)",
-      "gain_db": -12,
-      "id": "footsteps",
+      "cooldown_ticks": 8,
+      "doc": "one of Rivet's steps on concrete (one per stride while he walks; 8 single-step takes cut from two generated runs)",
+      "gain_db": -13,
+      "id": "footstep",
       "loop": false,
       "max_m": 0,
-      "max_voices": 1,
+      "max_voices": 2,
       "pitch": 1,
-      "pitch_jitter": 0.04,
+      "pitch_jitter": 0.06,
       "priority": 1,
-      "sound": "footsteps",
-      "takes": 2
+      "sound": "footstep",
+      "takes": 8
     },
     {
       "bus": "sfx",

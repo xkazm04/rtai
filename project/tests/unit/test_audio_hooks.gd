@@ -67,3 +67,45 @@ func test_a_voice_line_queues_behind_the_one_speaking() -> void:
 	assert_true(_service.voice.speak("b", s))
 	assert_eq(_service.voice.line_id, "a", "b waits, it does not cut a")
 	assert_false(_service.voice.speak("c", null))
+
+
+func test_a_step_comes_every_stride_not_every_frame() -> void:
+	_service.frame_s = 1.0 / 60.0
+	_hooks.walk_to(Vector2.ZERO, _service.frame_s)
+	var x: float = 0.0
+	for i: int in 120:
+		x += 0.04
+		_tick += 1
+		_hooks.walk_to(Vector2(x, 0.0), _service.frame_s)
+	assert_between(_hooks.steps, 3, 5, "4.8 m at 2.4 m/s with a 1.15 m stride = 4 steps")
+
+
+func test_standing_still_makes_no_step() -> void:
+	_service.frame_s = 1.0 / 60.0
+	for i: int in 60:
+		_tick += 1
+		_hooks.walk_to(Vector2(0.001 * i, 0.0), _service.frame_s)
+	assert_eq(_hooks.steps, 0)
+
+
+func test_a_run_over_is_a_thud_and_a_kill_adds_the_death() -> void:
+	var bus: EventBus = EventBus.new()
+	add_child_autofree(bus)
+	bus.add_user_signal(
+		"pedestrian_struck",
+		[{"name": "victim_id", "type": TYPE_INT}, {"name": "killed", "type": TYPE_BOOL}]
+	)
+	var hooks: AudioHooks = AudioHooks.new()
+	_service.add_child(hooks)
+	hooks.attach(_service, bus, func() -> int: return _tick, func() -> Vector2: return Vector2.ZERO)
+	@warning_ignore("return_value_discarded")
+	bus.emit_signal("pedestrian_struck", 5, false)
+	var thud: int = _service.played.get(&"hit_flesh", 0)
+	var death: int = _service.played.get(&"death", 0)
+	assert_eq(thud, 1)
+	assert_eq(death, 0)
+	_tick += 50
+	@warning_ignore("return_value_discarded")
+	bus.emit_signal("pedestrian_struck", 6, true)
+	death = _service.played.get(&"death", 0)
+	assert_eq(death, 1)

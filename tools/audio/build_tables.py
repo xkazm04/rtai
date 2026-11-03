@@ -5,8 +5,19 @@ import pathlib
 P = pathlib.Path("project/data")
 
 
+def canon(o):
+    """Integral floats as ints (the repo's canonical JSON writes 3, not 3.0)."""
+    if isinstance(o, float) and o == int(o):
+        return int(o)
+    if isinstance(o, dict):
+        return {k: canon(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [canon(v) for v in o]
+    return o
+
+
 def dump(path: pathlib.Path, obj: dict) -> None:
-    path.write_text(json.dumps(obj, indent=2, sort_keys=True, ensure_ascii=False) + "\n", newline="\n", encoding="utf-8")
+    path.write_text(json.dumps(canon(obj), indent=2, sort_keys=True, ensure_ascii=False) + "\n", newline="\n", encoding="utf-8")
 
 
 # id, doc, sound, takes, bus, gain_db, pitch, jitter, max_m, cooldown_ticks, max_voices, priority, loop
@@ -22,7 +33,7 @@ CUES = [
     ("player_hit_robo_tazer", "the Robo-tazer arc lands on Rivet: the electroshock crackle", "shock_crackle", 2, "sfx", -1, 1.0, 0.04, 0, 10, 2, 5, False),
     ("attack_telegraphed", "a boss weapon winds up (the charge whine)", "servo_whine", 2, "sfx", -4, 0.7, 0.06, 0, 30, 2, 4, False),
     ("servo", "Rivet's joints, layered over his steps now and then", "servo_whine", 2, "sfx", -16, 1.2, 0.1, 0, 60, 1, 1, False),
-    ("footsteps", "Rivet walking on concrete (four steps, replayed while he moves)", "footsteps", 2, "sfx", -12, 1.0, 0.04, 0, 100, 1, 1, False),
+    ("footstep", "one of Rivet's steps on concrete (one per stride while he walks; 8 single-step takes cut from two generated runs)", "footstep", 8, "sfx", -13, 1.0, 0.06, 0, 8, 2, 1, False),
     ("crowd_panic", "a crowd screams and scatters", "crowd_panic", 2, "sfx", -10, 1.0, 0.05, 60, 240, 2, 2, False),
     ("horn", "a car horn (vehicles lane)", "horn", 2, "sfx", -8, 1.0, 0.06, 60, 20, 3, 2, False),
     ("crash", "a car crash (vehicles lane)", "crash", 2, "sfx", -3, 1.0, 0.06, 70, 20, 3, 4, False),
@@ -49,7 +60,7 @@ MIX_DOC = (
     "attenuation: AudioStreamPlayer2D attenuation exponent. panning_strength: 0..1 stereo spread for the top-down camera. duck: "
     "while a voice line plays, these buses drop by duck_db over duck_attack_s and recover over duck_release_s (rendered frames, "
     "not ticks). loudness: the targets the files were normalised to (tools/audio/process.py). footstep_speed_mps: Rivet's speed "
-    "above which footsteps play. servo_chance: odds a footstep run also gets Rivet's servo whine."
+    "above which footsteps play; footstep_stride_m: metres walked per step. servo_chance: odds a step also gets Rivet's servo whine."
 )
 
 dump(P / "tables/audio_cues.json", {"schema": "gtai.audio-cues/1", "doc": CUES_DOC, "cues": [dict(zip(KEYS, c)) for c in CUES]})
@@ -64,7 +75,7 @@ dump(P / "tables/audio_mix.json", {
     "voice_cap_per_frame": 4, "pool_size": 24, "m_to_px": 64.0, "attenuation": 1.6, "panning_strength": 1.0,
     "duck": {"buses": ["music", "sfx"], "duck_db": {"music": -9.0, "sfx": -3.0}, "duck_attack_s": 0.12, "duck_release_s": 0.6},
     "loudness": {"sfx_peak_db": -3.0, "loop_peak_db": -6.0, "voice_lufs": -18.0, "voice_true_peak_db": -2.0},
-    "footstep_speed_mps": 0.6, "servo_chance": 0.35, "master_limiter_db": -1.0,
+    "footstep_speed_mps": 0.6, "footstep_stride_m": 1.15, "servo_chance": 0.12, "master_limiter_db": -1.0,
 })
 
 
@@ -86,7 +97,7 @@ dump(P / "schemas/audio_cues.schema.json", {
                 "max_voices": num(1, 16, "integer"), "priority": num(0, 9, "integer"), "loop": {"type": "boolean"}}}}}})
 dump(P / "schemas/audio_mix.schema.json", {
     "$id": "gtai.audio-mix/1", "additionalProperties": False, "type": "object",
-    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "servo_chance", "master_limiter_db"],
+    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "footstep_stride_m", "servo_chance", "master_limiter_db"],
     "properties": {
         "doc": {"minLength": 1, "type": "string"}, "schema": {"const": "gtai.audio-mix/1"},
         "buses": {"minItems": 1, "type": "array", "items": {
@@ -99,4 +110,4 @@ dump(P / "schemas/audio_mix.schema.json", {
                                 "duck_db": {"additionalProperties": {"type": "number"}, "type": "object"},
                                 "duck_attack_s": num(0.01, 5), "duck_release_s": num(0.01, 10)}},
         "loudness": {"additionalProperties": {"type": "number"}, "type": "object"},
-        "footstep_speed_mps": num(0, 10), "servo_chance": num(0, 1), "master_limiter_db": num(-20, 0)}})
+        "footstep_speed_mps": num(0, 10), "footstep_stride_m": num(0.3, 3), "servo_chance": num(0, 1), "master_limiter_db": num(-20, 0)}})

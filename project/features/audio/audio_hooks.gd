@@ -4,8 +4,10 @@ extends Node
 ## `fx_cues` true = the FX trigger sink already voices player_hit (the riot:
 ## core/render/fx_triggers.gd fires it with a position), so this does not double it. Cue ids it
 ## fires: crowd_panic (wave_started), attack_telegraphed, player_hit / player_hit_robo_tazer (only
-## without fx_cues), footsteps + servo (Rivet walking), and the loops siren_loop (wanted_changed)
-## and engine_loop (vehicle_entered / vehicle_exited).
+## without fx_cues), footstep + servo (Rivet walking, one step per stride), and the loops
+## siren_loop (wanted_changed) and engine_loop (vehicle_entered / vehicle_exited).
+## With the vehicles lane merged: a run-over (pedestrian_struck) is a thud, a hijack
+## (vehicle_hijacked) a door slam.
 
 const WALK_MAX_MPS: float = 8.0
 const SIREN_TRIM_DB_PER_STAR: float = 1.5
@@ -14,10 +16,13 @@ var service: AudioService
 var fx_cues: bool = false
 ## True for the frame an actor_killed was heard: the stage feed voices a body hit, not a wall hit.
 var kill_pending: bool = false
+## Steps walked so far (heard or not: a busy pool may drop one).
+var steps: int = 0
 var _tick: Callable = Callable()
 var _at: Callable = Callable()
 var _last_at: Vector2 = Vector2.INF
 var _driving: bool = false
+var _stride_m: float = 0.0
 
 
 func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable) -> void:
@@ -38,6 +43,23 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	bus.vehicle_entered.connect(func(_id: int) -> void: _set_driving(true))
 	@warning_ignore("return_value_discarded")
 	bus.vehicle_exited.connect(func(_id: int) -> void: _set_driving(false))
+	_connect_vehicles(bus)
+
+
+## The vehicles lane's Events (pedestrian_struck, vehicle_hijacked) exist once that lane is merged.
+func _connect_vehicles(bus: EventBus) -> void:
+	if bus.has_signal(&"pedestrian_struck"):
+		@warning_ignore("return_value_discarded")
+		bus.connect(&"pedestrian_struck", _on_struck)
+	if bus.has_signal(&"vehicle_hijacked"):
+		@warning_ignore("return_value_discarded")
+		bus.connect(&"vehicle_hijacked", func(_kind: StringName) -> void: _cue(&"hit_metal"))
+
+
+func _on_struck(_victim: int, killed: bool) -> void:
+	_cue(&"hit_flesh")
+	if killed:
+		_cue(&"death")
 
 
 func _cue(id: StringName) -> void:
@@ -63,24 +85,40 @@ func _set_driving(on: bool) -> void:
 	service.loops.set_on(&"engine_loop", on)
 
 
-## Footsteps while Rivet moves on foot at walking pace; now and then his servo whines too.
+## One step per stride while Rivet moves on foot at walking pace; now and then his servo whines too.
 func _process(_delta: float) -> void:
 	var frame_s: float = service.frame_s
 	if not _at.is_valid() or frame_s <= 0.0:
 		return
 	var here: Vector2 = _at.call()
-	if _last_at != Vector2.INF and not _driving:
-		var speed: float = here.distance_to(_last_at) / frame_s
-		var min_mps: float = service.tables.mix_float("footstep_speed_mps", 0.6)
-		if speed > min_mps and speed < WALK_MAX_MPS:
-			_walk()
-	_last_at = here
+	if _driving:
+		_last_at = here
+	else:
+		walk_to(here, frame_s)
 	kill_pending = false
 
 
-func _walk() -> void:
-	if service.cue(&"footsteps", _last_at, _now()):
-		if service.dice.unit() < service.tables.mix_float("servo_chance", 0.35):
+## Rivet moved from the last frame's position to `here` in `frame_s`: step when a stride is walked.
+func walk_to(here: Vector2, frame_s: float) -> void:
+	var prev: Vector2 = _last_at
+	_last_at = here
+	if prev == Vector2.INF:
+		return
+	var moved: float = here.distance_to(prev)
+	var min_mps: float = service.tables.mix_float("footstep_speed_mps", 0.6)
+	if moved / frame_s <= min_mps or moved / frame_s >= WALK_MAX_MPS:
+		_stride_m = 0.0
+		return
+	_stride_m += moved
+	if _stride_m >= service.tables.mix_float("footstep_stride_m", 1.15):
+		_stride_m = 0.0
+		_step()
+
+
+func _step() -> void:
+	steps += 1
+	if service.cue(&"footstep", _last_at, _now()):
+		if service.dice.unit() < service.tables.mix_float("servo_chance", 0.12):
 			_cue(&"servo")
 
 
