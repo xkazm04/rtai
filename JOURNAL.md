@@ -421,3 +421,15 @@ NEXT (after the 18:00 sync), in order:
   game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
   machine; REQUEST 3 (kill hit-stop under a beat mode); REQUEST 4 -> d5-city (city_textures threaded load null headless).
 - 17:15 session end: tree clean after this commit.
+
+## Iteration 55 (17:20-17:30, STABILIZE)
+- 17:20 re-check: `git log 5a6e21b..HEAD -- project/ tools/ native/` is still empty (no code change since the freeze).
+  Fresh gates at 7e1f034: lint 13/13 over 345 files; scenarios headless exit 0 (17:20:51-17:21:07; the exit-time
+  ObjectDB leak / resources-in-use lines are engine shutdown noise, the runner still exits 0). Unit and evidence were
+  not re-run this iteration; their last pass (unit 352/0, evidence --no-bench PASS) is 17:09-17:12 on the same code.
+- `git rev-list --count main..HEAD` = 56 before this commit (REPORT.md cites 55 "at the last report edit"; it is
+  unchanged because only journal commits followed). bench.lock absent; I took no bench. No Godot process left running.
+- NEXT: the owner picks (--blood, --kill-beat, muzzle pop, pool body colour, pool size via blood_fx.json
+  game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
+  machine; REQUEST 3 (kill hit-stop under a beat mode); REQUEST 4 -> d5-city (city_textures threaded load null headless).
+- 17:22 session end: tree clean after this commit.
