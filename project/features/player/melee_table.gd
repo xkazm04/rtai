@@ -64,13 +64,18 @@ static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
 	return m
 
 
-## The ids in melee_weapons.json, sorted (the panel's weapon list).
+## The ids in melee_weapons.json, sorted alphabetically (the panel's weapon list). Sorted as
+## Strings: StringName order is by interned pointer, so it depends on what was interned first.
 static func weapon_ids() -> Array[StringName]:
 	var t: DataTable = DataTable.open(WEAPONS, WEAPONS_SCHEMA)
-	var out: Array[StringName] = []
+	var keys: PackedStringArray = PackedStringArray()
 	for key: Variant in t.object(t.raw, "weapons").keys():
-		out.append(StringName(str(key)))
-	out.sort()
+		@warning_ignore("return_value_discarded")
+		keys.append(str(key))
+	keys.sort()
+	var out: Array[StringName] = []
+	for key: String in keys:
+		out.append(StringName(key))
 	return out
 
 
