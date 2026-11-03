@@ -587,3 +587,25 @@ NEXT (iteration 10 / morning, in order):
   at both resolutions: it stays NEXT 3's target. README per-pass table updated. Session end 02:10: tree
   clean, scratch worktree removed, my temp files deleted, no processes of mine running (the two Godot
   processes on the machine are the noir lane's movie capture).
+
+## Iteration 10 (02:10 - , BUILD)
+
+- MILESTONE (02:40, 7bfb6b9) NEXT 2's streak DIAGNOSED and the traffic plug-in RE-APPLIED. Root cause:
+  n-d4 re-laid traffic_atlas.png out 3 x 3 (1536 x 768, cell = sim car art id: 0-7 civilian, 8 police)
+  at 01:49 (59e1448); my 746c765 (02:02) hard-coded the old 2 x 4 grid, so every car sampled across cell
+  borders: the "steel streak" was the next row's car sliver, the sliced taxi above it the same bug, and
+  "civilians in the cruiser's livery" was cell 4 of a 2 x 4 read of a 3 x 3 image. Fix: the grid is read
+  from the texture size (CrowdLayers.traffic_grid: whole 512 x 256 cells, >= 9 so cell 8 exists; else the
+  steel quad + Log.warn) - a future re-layout cannot silently mis-address it again. No variant map needed:
+  n-d4's cells ARE the art ids. The look-toggle unit test assumed the unplugged state (assert_null on the
+  car material) and would have failed after the n-d4 merge: now branches on crowd.car_print. Unit 203.
+  Evidence (capture only, atlas copied in via plug.sh traffic in/out, never committed):
+  24-traffic-3x3/crops-2x4-vs-3x3-32ppm.png (same frame, same region: sliced taxi + streak -> whole
+  cars); probe-police/ (CAR_ART forced to 8 in scratch, reverted - the black-and-white cruiser with the
+  vermilion light bar, doctrine-correct, seen at 48 px/m); after/ = the 10 golden frames plugged. Accent
+  gate clean (no new offenders; 0.95 / 0.96 / 0.25 %; known debt 216 px), world lock 0.00 % x3, goldens
+  move (worst mean 3.23, 5 over far) = re-bless after the merge. Unplugged: goldens 10/10 (worst 0.05).
+  64 px/m: n-d4's grime stipple and dark hatched glass survive the item print's snap (no softer snap
+  needed). Ladder rows 24 / 24b / 24c (placeholder | plugged; 1280 x 10362). 0 frames rejected for
+  camera (engine captures, straight down). Still open: damage / hijack states need a sim state in
+  custom.y (n-d4 ships traffic_atlas_hijack.png + _d1/_d2 bodies).
