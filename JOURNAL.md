@@ -1179,3 +1179,9 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   worktree); not repeated.
 - 04:09 GATES at 297bd42 (final for iteration 12): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
   parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter12/gates-297bd42.txt`).
+- 04:13 REJECTED, NOT SHIPPED: skid marks gap fill (`tools/skid_fill.py`: the hatch kept, its transparent gaps raised to
+  alpha 0.5 inside the stroke band, 2291 px). City frames `before_i12s_city|probe_i12sf_city/city-1-{32,48,64}ppm.png`,
+  crops `work/skf_ab.png`: no visible gain at 48 / 64, slightly more speckled at 32. Reverted; the original skid art stays.
+- 04:13 CHECK n-d4-alone roofs at 32 (`work/roofband_check.png`): the "HQ" roof still prints rotated ("OH") without the
+  generator patch - REQUEST 19 (`evidence/iter10/generator_art_pick_v2.patch`) fixes it; the flat-roof membrane stays
+  paper-clean (adding hatch was rejected in iteration 8: it prints solid grey at 32).
