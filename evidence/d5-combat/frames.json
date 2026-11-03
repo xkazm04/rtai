@@ -98,13 +98,14 @@
   "before": "frames/fight-oil-before-noir-t420-64ppm.png"
  },
  {
-  "file": "frames/beat-panel-64ppm-f01.png",
-  "title": "Kill beat A/B: the held comic panel (--kill-beat=panel|both) at 64 px/m",
+  "file": "frames/pool-dark-t900-64ppm-pair.png",
+  "title": "Owner pick: pool body #750008 (left) vs doctrine blood_dark #540005 (right, now default), 64 px/m",
   "source": "game-city",
   "branch": "d-combat",
-  "look": "auto (D4->D5)",
+  "look": "d4d5",
   "ppm": 64,
-  "note": "The kill framed in a panel with paper gutters for impact.panel_ticks."
+  "before": "raw/pool/fight-after-noir-t900-64ppm.png",
+  "note": "Same riot moment (seed 91, t900). The doctrine body (d5-city palette blood_dark) under the bright blood rim reads deeper and wetter; the D4/D5 game uses it now (030eb10), noir keeps #750008 (its blood gate prints #540005 black: frames/noir-pool-dark-check.png). 32/48/128: frames/pool-dark-t900-*-pair.png. (The kill-beat panel still frame moved out of this list; frames/beat-modes-contact.png shows every mode.)"
  },
  {
   "file": "frames/beat-modes-contact.png",
