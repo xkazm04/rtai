@@ -49,3 +49,7 @@ NEXT:
 - ASK ghost-powers-2 (tank look: A scaled+teal, B bulked short-arm from existing parts, C new art), default B: a
   plain scale-up keeps the long arms the owner disliked on base Rivet. NEXT step 1 should build B as a FORMS-like
   plan override (arm lengths) so A/B/C is one flag.
+- 21:23 FRICTION/REQUEST 1 -> autosave owner (or the Director): `project.godot` has `use_custom_user_dir=true`, so all
+  seven worktrees share one `user://`; `test_save_slots.gd` (user://test_save) fails 1-136 asserts per run while
+  other lanes run the suite. Every failure in this lane's evidence run (549/557) is in that one file. Suggest a
+  per-checkout test dir (e.g. `user://test_save_<hash of res:// path>`). Not changed here (outside lane scope).
