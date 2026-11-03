@@ -22,3 +22,7 @@
 - MILESTONE look goldens re-blessed (junction 11 + block 5): the evidence selftest failed d4@64, d5@48/64, auto@56/64 and
   block auto@64-night, all from the cop blue + Rivet scale (crowd and street unchanged in the A/B). look_golden --bless,
   then a check run: bit-identical (mean 0.00 on all 11). Lint/unit/scenarios/parity green (evidence run, --no-bench).
+- MILESTONE item 5 King on the cutout rig: KingPlan (Rivet's rig, art_dir king, size_k 1.2, no hose). 1 Codex image
+  (masters king/gen/out/king_parts_1.png, 121 s, layout held on the first try), sliced with Rivet's alpha, megaphone keyed
+  wider. Frames: evidence/king/king-{32,64,128}ppm.png (dev scene, D5 tier on). Unit test: every King part exists.
+  Codex images used today: 1 of ~25.
