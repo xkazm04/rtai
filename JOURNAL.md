@@ -155,3 +155,22 @@ NEXT (iteration 3; owner 21:25: depth before breadth, the Hauler is the one fini
   a StagePilot it is live on the pad with Q / melee; the pad's `hauler_pad` station spawns are in
   arena_stations/ghost-powers.json. Draw `HaulerMarks.draw(...)` and `HaulerLook.sprite_k/tint` (or HaulerLook.apply
   on the rig) in the arena view the way cast_view.gd does.
+- 22:33 e22dc149: quest 1's view kicks the city camera rig on a stomp (stomp_shake) once per stomp. HONEST: a no-op
+  today, the quest's CityView has no CameraRig (only World and the dev clip build one); measured 0 px camera
+  motion round the landing. Giving quest 1 a rig changes its camera feel for every lane: not done here.
+- 22:35 48 px/m quest clip (`--ppm=48`): clips/quest-hauler-48/. The tank in quest 1 is Rivet's capture grown,
+  so it keeps the long arms (the bulked look and the slam pose are rig-only). frames.json 15 entries.
+- Gates at iter 3: lint 13/13 every commit; unit 563/563 (private APPDATA, evidence/ghost-powers/unit-iter3.txt);
+  scenarios 20/20 (scenarios-iter3.txt, at 76196c4). No bench: the bot paths are untouched; the power costs
+  only when a player presses Q (a few vector ops per tick, one texture draw).
+
+NEXT (iteration 4; depth before breadth, the Hauler is the one finished power):
+1. Re-read answers.json. Re-ask nothing until the Hauler has the full hit chain in the final look.
+2. When the arena lands on main (00:00 merge): check ArenaStage drives Rivet through StagePilot (then Q is
+   live on the pad); draw HaulerMarks + the morph in the arena view (REQUEST 2 -> arena); give the arena view a
+   CameraRig kick on the stomp if it has one.
+3. The tank in quest 1 / the arena on Rivet's RIG (when rivet-motion puts the rig in the quest view): HaulerLook.apply
+   with the slam pose instead of the scaled capture; then the bulked arms show in the playable game too.
+4. Victims: stomp/ram on the cast rigs (cop, robot thug from e-enemy) with their hit reactions; robots get
+   sparks/oil (fx.json `spark`), humans blood. Hit-stop in the playable view (hold the session's sim N frames).
+5. A real stomp sound (cue row with the audio lane) instead of the temp `crash` id.

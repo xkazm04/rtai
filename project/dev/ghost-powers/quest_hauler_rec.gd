@@ -4,7 +4,7 @@ extends Node
 ## near ring), the left stick (the tank rams east through the outer ring) and a second stomp, one
 ## tick per frame, a PNG every tick. Dev-only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/quest_hauler_rec.tscn
-##     -- --out=<abs dir>
+##     -- --out=<abs dir> [--ppm=<32|48>]
 
 const RING: int = 6
 const END_TICK: int = 330
@@ -12,6 +12,7 @@ const END_TICK: int = 330
 const WARM: int = 420
 
 var _out: String = ""
+var _ppm: float = 32.0
 var _game: Quest1Game
 
 
@@ -19,9 +20,11 @@ func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--out="):
 			_out = arg.substr(6)
+		elif arg.begins_with("--ppm="):
+			_ppm = arg.substr(6).to_float()
 	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
 	_game = scene.instantiate() as Quest1Game
-	_game.px_per_m = 32.0
+	_game.px_per_m = _ppm
 	_game.settings_path = ""
 	add_child(_game)
 	await _settle()
