@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/selftest/pass_cost.gd" id="1_pcost"]
+
+[node name="PassCost" type="Node"]
+script = ExtResource("1_pcost")

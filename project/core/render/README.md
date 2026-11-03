@@ -247,8 +247,17 @@ at 32 / 48 / 64 px/m; the frame must move rigidly, max 0.5 % of the overlap diff
 
 ## Per-pass cost (2026-11-02, RTX 4090 / 7800X3D, debug editor binary unless noted)
 
+`dev/selftest/pass_cost.gd` measures the GPU cost of each pass in the real riot frame: interleaved
+blocks that switch ONE pass off (print, actors, lights, FX) against `full`; run it with
+`--gpu-index 1` (the 7800X3D's iGPU, the low-end proxy) and `--resolution 1280x800` (the Deck).
+Shader rule from it: a noise term whose mask is exactly 0 on most pixels sits behind an `if` on that
+mask (look_d4: 2 value-noise calls on a typical pixel instead of 9). Check that frames stay
+bit-identical (render look_golden with the old and the new shader and diff the full-res PNGs).
+
 | Pass | Cost | How measured |
 |---|---|---|
+| D4 world print (`look_d4`), low-end GPU | AMD Radeon iGPU (2 CU, below a Steam Deck), 48 px/m riot, 1280x800: 2.76-2.92 ms of a 6.06-6.12 ms frame before; 1.21-1.76 of 4.66-4.94 ms after the early-outs (3 interleaved pairs, bit-identical frames). 1920x1080: 5.31 -> 3.76 ms (1 run). Actors (rigs + crowd + FX) 2.0-2.3 ms, lights 0.26 ms, FX ~0 | `pass_cost.gd --gpu-index 1` (`evidence/pass-cost`) |
+| D4 world print, RTX 4090 | 0.39 ms of 0.86 ms at 1280x800, 0.85 of 1.49 at 1080p (before); after-runs were contended (other lanes on the GPU): judge on the iGPU | `pass_cost.gd` |
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
 | D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |
 | Lights `step()` | 30-168 us CPU for 32-64 lights; GPU +0.29 .. +1.35 ms for 32 fires (interleaved, 3 runs, shared GPU) | `light_showcase.gd` |

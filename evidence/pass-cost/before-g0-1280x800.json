@@ -1,0 +1,35 @@
+{
+  "blocks": 8,
+  "configs": {
+    "full": {
+      "cpu_render_ms": 0.23933333158493,
+      "gpu_ms": 0.859399974346161,
+      "gpu_ms_saved": 0.0
+    },
+    "no_actors": {
+      "cpu_render_ms": 0.156766667962074,
+      "gpu_ms": 0.640733480453491,
+      "gpu_ms_saved": 0.21866649389267
+    },
+    "no_fx": {
+      "cpu_render_ms": 0.235699981451035,
+      "gpu_ms": 0.933800101280212,
+      "gpu_ms_saved": -0.0744001269340515
+    },
+    "no_lights": {
+      "cpu_render_ms": 0.247933357954025,
+      "gpu_ms": 0.770299971103668,
+      "gpu_ms_saved": 0.0891000032424927
+    },
+    "no_print": {
+      "cpu_render_ms": 0.273933380842209,
+      "gpu_ms": 0.467766672372818,
+      "gpu_ms_saved": 0.391633301973343
+    }
+  },
+  "frames_per_block": 30,
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ppm": 48.0,
+  "resolution": "1280x800",
+  "schema": "gtai.pass-cost/1"
+}

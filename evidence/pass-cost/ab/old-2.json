@@ -1,0 +1,36 @@
+{
+  "blocks": 8,
+  "canvas": "1280x800",
+  "configs": {
+    "full": {
+      "cpu_render_ms": 0.227066665887833,
+      "gpu_ms": 6.06406688690186,
+      "gpu_ms_saved": 0.0
+    },
+    "no_actors": {
+      "cpu_render_ms": 0.142500013113022,
+      "gpu_ms": 3.89506673812866,
+      "gpu_ms_saved": 2.16900014877319
+    },
+    "no_fx": {
+      "cpu_render_ms": 0.230966657400131,
+      "gpu_ms": 6.18733310699463,
+      "gpu_ms_saved": -0.123266220092773
+    },
+    "no_lights": {
+      "cpu_render_ms": 0.231300011277199,
+      "gpu_ms": 5.94379997253418,
+      "gpu_ms_saved": 0.120266914367676
+    },
+    "no_print": {
+      "cpu_render_ms": 0.227266684174538,
+      "gpu_ms": 3.14146661758423,
+      "gpu_ms_saved": 2.92260026931763
+    }
+  },
+  "frames_per_block": 30,
+  "gpu": "AMD Radeon(TM) Graphics",
+  "ppm": 48.0,
+  "resolution": "1280x800",
+  "schema": "gtai.pass-cost/1"
+}

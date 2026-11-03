@@ -86,12 +86,22 @@ void fragment() {
 	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
 	col = mix(col, mix(CREAM, WASH, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
 	col = mix(col, mix(WASH, INK, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
-	float ink = strokes(w, 0.785, hatch_period, smoothstep(hatch_on - 0.02, 0.95, d) * 0.36);
-	ink = max(ink, strokes(w, 2.356, hatch_period, smoothstep(0.93, 0.99, d) * 0.30));
-	ink = max(ink, smoothstep(line_ink, line_ink + 0.06, d));
+	// Early-outs (bit-identical): each noise term below is skipped where its mask is exactly 0, so a
+	// typical pixel pays 2 value-noise calls (the grime) instead of 9 (the low-end GPU cost, README).
+	float ink = smoothstep(line_ink, line_ink + 0.06, d);
+	if (d > hatch_on - 0.02) {
+		ink = max(ink, strokes(w, 0.785, hatch_period, smoothstep(hatch_on - 0.02, 0.95, d) * 0.36));
+	}
+	if (d > 0.93) {
+		ink = max(ink, strokes(w, 2.356, hatch_period, smoothstep(0.93, 0.99, d) * 0.30));
+	}
 	float e = sobel(uv, tx);
-	ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)));
-	col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
+	if (e > edge_lo) {
+		ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)));
+	}
+	if (vden > 0.20) {
+		col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
+	}
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
 	col = mix(col, INK, ink);
 	col = mix(col, INK, step(0.985, hash(floor(w))) * 0.5 * grit);
