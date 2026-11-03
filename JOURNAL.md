@@ -123,3 +123,35 @@ NEXT (iteration 3; owner 21:25: depth before breadth, the Hauler is the one fini
   frame). Next: stamp the D5 ground crack art (or bake one stomp crack sprite) instead of polylines. The headline
   clip (hauler-slam) predates the crack; the crack stills are in clips/hauler-crack/.
 - 48 px/m slam clip added (clips/hauler-slam/hauler-slam-48ppm.mp4); frames.json has 14 entries.
+
+## 2026-11-03 iteration 3 (22:01-22:46), BUILD
+
+- 22:01 read JOURNAL, git log, answers.json (nothing new for this lane since 21:25: both asks = default placeholder).
+  common.md 22:20 adds the private APPDATA rule for test isolation (my REQUEST 1 is answered that way); used it.
+- MILESTONE de00e45: the stomp crack is the D5 road crack art. `tools/souls/bake_stomp_crack.py` cuts the forked,
+  hatched crack out of road_intersection_tone_cracks.png (connected ink components, specks dropped), doubles it at
+  180 deg round the fork, bolds the strokes (max filter 3) and draws them in deep ink with a chipped paper edge;
+  drawn 1.3x so the branches reach the 4 m stomp radius. FRICTION: the first two bakes were invisible at 32 px/m
+  (1 px dark-on-dark lines) and a windowed run does NOT re-import a changed PNG: always `--headless --import` first.
+- MILESTONE 76196c4: the Hauler is PLAYABLE. `HaulerStage` (features/souls) on `StagePilot.hauler`: Q / LB
+  transforms, the stick steers the tank (momentum, turn limit), melee arms the stomp (no jab while the tank is
+  on), the stomp and the ram hurt and throw the stage's guards (powers.json stomp_damage 1, ram_damage 1).
+  Every bound pilot gets one (quest 1 exe, and the arena when its stage composes a StagePilot). Unit
+  test_hauler_stage 3/3; planted stomp_damage 0 caught (evidence/ghost-powers/planted-stomp-damage-0.txt).
+  Scenarios 20/20 after the change (evidence/ghost-powers/scenarios-iter3.txt; replay_60s unmoved: the bot has
+  no pilot).
+- MILESTONE 45fea6b: it shows in quest 1's view: Rivet's capture grows (HaulerLook.sprite_k) and tints teal by the
+  morph, swells on the wind-up; the shock ring + D5 crack drawn where it landed (`HaulerMarks`, moved out of the
+  dev clip into features/souls; the city clip uses it too).
+- Clip (bound input only, real quest view, 32 px/m, 60 fps): gtai-masters/eve/ghost-powers/clips/quest-hauler/
+  quest-hauler-32ppm.mp4: 1 activation, 2 stomps, 3 guards killed. City crack clip: clips/hauler-crack2/.
+  frames.json: 15 entries, the quest clip first.
+- Registry applied (realtime-combat-semantics): the tank's melee press is re-purposed, not added (one button =
+  one verb per form); the stomp keeps its 0.3 s telegraph and 2.5 s cooldown.
+- Honest gaps: quest 1 draws Rivet as a capture, so the tank in the exe has no slam pose (the rig pose exists in
+  the city clip only); no hit-stop/shake in quest 1's view yet; the guards are quest placeholders, not cast rigs;
+  no robot victims (no robot rig on this branch), so no sparks/oil yet.
+- REQUEST 2 -> arena: the Hauler rides on `StagePilot.hauler` (built by default). If ArenaStage drives Rivet through
+  a StagePilot it is live on the pad with Q / melee; the pad's `hauler_pad` station spawns are in
+  arena_stations/ghost-powers.json. Draw `HaulerMarks.draw(...)` and `HaulerLook.sprite_k/tint` (or HaulerLook.apply
+  on the rig) in the arena view the way cast_view.gd does.
