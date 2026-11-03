@@ -16,6 +16,8 @@ const TELEPORT_MPS: float = 30.0
 ## A tackle speed no body reaches: the rule's run result is not a knockdown.
 const NEVER_MPS: float = 1.0e9
 
+## The class he steps as: CLASS on foot, `rivet_ghost` while the Hauler soul is on (features/souls).
+var body_class: StringName = CLASS
 ## False while Rivet is in a car: the sim then has no player body.
 var on: bool = true
 var table: BodyTable = null
@@ -47,16 +49,16 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	s[SimConst.BD_VX] = vel.x
 	s[SimConst.BD_VY] = vel.y
 	s[SimConst.BD_ON] = 1.0 if on else 0.0
-	s[SimConst.BD_R] = table.radius(CLASS)
+	s[SimConst.BD_R] = table.radius(body_class)
 	s[SimConst.BD_RP] = table.radius(PERSON)
-	s[SimConst.BD_SHARE] = table.share(CLASS, PERSON)
-	var r: BodyRule = table.rule(CLASS, PERSON)
+	s[SimConst.BD_SHARE] = table.share(body_class, PERSON)
+	var r: BodyRule = table.rule(body_class, PERSON)
 	var knock: bool = r != null and r.run == &"knockdown"
-	s[SimConst.BD_TACKLE] = table.run_mps(CLASS) if knock else NEVER_MPS
+	s[SimConst.BD_TACKLE] = table.run_mps(body_class) if knock else NEVER_MPS
 	s[SimConst.BD_KNOCK] = sqrt(2.0 * SLIDE_DECEL * r.knockback_m) if knock else 0.0
 	s[SimConst.BD_DOWN] = r.down_s if knock else 0.0
 	s[SimConst.BD_FLEE] = table.flee_s
-	var back: BodyRule = table.rule(PERSON, CLASS)
+	var back: BodyRule = table.rule(PERSON, body_class)
 	var blocked: bool = back != null and back.run == &"blocked"
 	s[SimConst.BD_RUN_IN] = table.run_mps(PERSON) if blocked else 0.0
 	pos = want

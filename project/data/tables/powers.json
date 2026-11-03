@@ -1,0 +1,60 @@
+{
+  "doc": "Ghost powers (features/souls/README.md): each row is one soul's power. Activation costs madness_cost on the Madness meter (pitch section 5; a stub: it rises on use, decays at madness.decay_per_s, and a power whose cost would pass madness.max is refused). A power runs duration_s, then cools down cooldown_s; only one power runs at a time. interrupt_on lists the reasons that end it early (hit, stunned, car, knocked_down). bark_on/bark_off are voice line ids (audio lands later). action is the InputMap action in input_actions.json. hauler and gearbox hold each soul's own tuning.",
+  "gearbox": {
+    "crash_mps": 6,
+    "doc": "Gearbox: remote-hijack a car in view. The soft lock takes the nearest car within lock_radius_m of the reticle and range_m of Rivet; the car then drives at drive_mps toward the reticle, turning at most turn_dps, and wrecks on a contact above crash_mps. Rivet stays on foot and steers (his move is scaled by rivet_move_k while linked): the cost.",
+    "drive_mps": 14,
+    "lock_radius_m": 3,
+    "range_m": 22,
+    "rivet_move_k": 0.35,
+    "turn_dps": 140
+  },
+  "hauler": {
+    "accel_mps2": 9,
+    "body_class": "rivet_ghost",
+    "doc": "Hauler: Rivet becomes the bulky ghost tank (body class body_class, bodies.json). morph_s is the readable grow/shrink; the tank moves at most top_mps, accelerates at accel_mps2 (momentum: no instant stop) and turns at most turn_dps. Ram: above ram_mps a contact knocks down humans and robots (the tackle matrix) and damages a car by ram_car_damage. Stomp: a radial shockwave of stomp_radius_m, knockdown inside stomp_knock_m, stun stomp_stun_s, every stomp_cooldown_s.",
+    "morph_s": 0.4,
+    "ram_car_damage": 40,
+    "ram_mps": 3,
+    "stomp_cooldown_s": 2.5,
+    "stomp_knock_m": 2.2,
+    "stomp_radius_m": 4,
+    "stomp_stun_s": 1.2,
+    "top_mps": 4.2,
+    "turn_dps": 220
+  },
+  "madness": {
+    "decay_per_s": 2,
+    "max": 100
+  },
+  "rows": [
+    {
+      "action": "power_gearbox",
+      "bark_off": "soul_gearbox_off",
+      "bark_on": "soul_gearbox_on",
+      "cooldown_s": 12,
+      "duration_s": 6,
+      "id": "gearbox",
+      "interrupt_on": [
+        "car",
+        "hit",
+        "knocked_down",
+        "stunned"
+      ],
+      "madness_cost": 15
+    },
+    {
+      "action": "power_hauler",
+      "bark_off": "soul_hauler_off",
+      "bark_on": "soul_hauler_on",
+      "cooldown_s": 20,
+      "duration_s": 8,
+      "id": "hauler",
+      "interrupt_on": [
+        "car"
+      ],
+      "madness_cost": 25
+    }
+  ],
+  "schema": "gtai.powers/1"
+}

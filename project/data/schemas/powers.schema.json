@@ -1,0 +1,233 @@
+{
+  "$id": "gtai.powers/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "gearbox": {
+      "additionalProperties": false,
+      "properties": {
+        "crash_mps": {
+          "maximum": 50,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "drive_mps": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "number"
+        },
+        "lock_radius_m": {
+          "maximum": 20,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "range_m": {
+          "maximum": 200,
+          "minimum": 1,
+          "type": "number"
+        },
+        "rivet_move_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "turn_dps": {
+          "maximum": 1000,
+          "minimum": 10,
+          "type": "number"
+        }
+      },
+      "required": [
+        "crash_mps",
+        "doc",
+        "drive_mps",
+        "lock_radius_m",
+        "range_m",
+        "rivet_move_k",
+        "turn_dps"
+      ],
+      "type": "object"
+    },
+    "hauler": {
+      "additionalProperties": false,
+      "properties": {
+        "accel_mps2": {
+          "maximum": 100,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "body_class": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "morph_s": {
+          "maximum": 3,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "ram_car_damage": {
+          "maximum": 1000,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ram_mps": {
+          "maximum": 50,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "stomp_cooldown_s": {
+          "maximum": 60,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "stomp_knock_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "stomp_radius_m": {
+          "maximum": 30,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "stomp_stun_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "top_mps": {
+          "maximum": 50,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "turn_dps": {
+          "maximum": 2000,
+          "minimum": 10,
+          "type": "number"
+        }
+      },
+      "required": [
+        "accel_mps2",
+        "body_class",
+        "doc",
+        "morph_s",
+        "ram_car_damage",
+        "ram_mps",
+        "stomp_cooldown_s",
+        "stomp_knock_m",
+        "stomp_radius_m",
+        "stomp_stun_s",
+        "top_mps",
+        "turn_dps"
+      ],
+      "type": "object"
+    },
+    "madness": {
+      "additionalProperties": false,
+      "properties": {
+        "decay_per_s": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "max": {
+          "maximum": 1000,
+          "minimum": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "decay_per_s",
+        "max"
+      ],
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "bark_off": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "bark_on": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "cooldown_s": {
+            "maximum": 600,
+            "minimum": 0,
+            "type": "number"
+          },
+          "duration_s": {
+            "maximum": 600,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "interrupt_on": {
+            "items": {
+              "enum": [
+                "car",
+                "hit",
+                "knocked_down",
+                "stunned"
+              ]
+            },
+            "type": "array"
+          },
+          "madness_cost": {
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "action",
+          "bark_off",
+          "bark_on",
+          "cooldown_s",
+          "duration_s",
+          "id",
+          "interrupt_on",
+          "madness_cost"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "enum": [
+        "gtai.powers/1"
+      ]
+    }
+  },
+  "required": [
+    "doc",
+    "gearbox",
+    "hauler",
+    "madness",
+    "rows",
+    "schema"
+  ],
+  "type": "object"
+}

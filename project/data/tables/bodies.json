@@ -25,12 +25,12 @@
       "run_mps": 5
     },
     {
-      "doc": "Reserved: the bulky ghost form, later in the story. No rules yet; nothing uses it.",
+      "doc": "Rivet as the Hauler ghost tank (features/souls, powers.json hauler): 0.9 m, 600 kg. Its run line is 3.0 m/s (the tank's ram_mps), so a ram knocks down humans AND robots; bosses still block.",
       "id": "rivet_ghost",
       "mass_kg": 600,
       "radius_m": 0.9,
-      "reserved": true,
-      "run_mps": 5
+      "reserved": false,
+      "run_mps": 3
     },
     {
       "doc": "A robot body. Neutral blocked rule until the owner designs robots.",
@@ -66,6 +66,15 @@
       "attacker": "boss",
       "can_hurt": false,
       "defender": "rivet_base",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "boss",
+      "can_hurt": false,
+      "defender": "rivet_ghost",
       "down_s": 0,
       "knockback_m": 0,
       "run": "blocked",
@@ -110,6 +119,15 @@
     {
       "attacker": "human",
       "can_hurt": false,
+      "defender": "rivet_ghost",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "shove"
+    },
+    {
+      "attacker": "human",
+      "can_hurt": false,
       "defender": "robot",
       "down_s": 0,
       "knockback_m": 0,
@@ -146,11 +164,65 @@
     {
       "attacker": "rivet_base",
       "can_hurt": false,
+      "defender": "rivet_ghost",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "rivet_base",
+      "can_hurt": false,
       "defender": "robot",
       "down_s": 0,
       "knockback_m": 0,
       "run": "blocked",
       "walk": "blocked"
+    },
+    {
+      "attacker": "rivet_ghost",
+      "can_hurt": false,
+      "defender": "boss",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "rivet_ghost",
+      "can_hurt": false,
+      "defender": "human",
+      "down_s": 1.8,
+      "knockback_m": 2.4,
+      "run": "knockdown",
+      "walk": "stagger"
+    },
+    {
+      "attacker": "rivet_ghost",
+      "can_hurt": false,
+      "defender": "rivet_base",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "rivet_ghost",
+      "can_hurt": false,
+      "defender": "rivet_ghost",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "rivet_ghost",
+      "can_hurt": false,
+      "defender": "robot",
+      "down_s": 1.2,
+      "knockback_m": 1.6,
+      "run": "knockdown",
+      "walk": "shove"
     },
     {
       "attacker": "robot",
@@ -174,6 +246,15 @@
       "attacker": "robot",
       "can_hurt": false,
       "defender": "rivet_base",
+      "down_s": 0,
+      "knockback_m": 0,
+      "run": "blocked",
+      "walk": "blocked"
+    },
+    {
+      "attacker": "robot",
+      "can_hurt": false,
+      "defender": "rivet_ghost",
       "down_s": 0,
       "knockback_m": 0,
       "run": "blocked",

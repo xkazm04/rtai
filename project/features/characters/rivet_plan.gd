@@ -14,10 +14,13 @@ const FORM_BASE: StringName = &"base"
 const FORM_NIGHT: StringName = &"night"
 ## The open guard (hands level and forward): King's stance, a boss squares up.
 const FORM_OPEN: StringName = &"open"
+## The Hauler ghost tank (features/souls): 2.6 = base 1.2 x (0.9 / 0.42), the rivet_ghost radius.
+const FORM_HAULER: StringName = &"hauler"
 const FORMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(1.2, 0.7, -250.0),
 	FORM_OPEN: Vector3(1.1, 0.85, -30.0),
 	FORM_NIGHT: Vector3(1.3, 1.0, -30.0),
+	FORM_HAULER: Vector3(2.6, 1.0, -30.0),
 }
 ## Which form RigPool builds; a dev scene may flip it before the pool's first build.
 static var form: StringName = FORM_BASE
