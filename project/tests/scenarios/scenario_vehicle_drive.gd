@@ -125,18 +125,17 @@ static func _judge(trace: Array[Dictionary], struck: Array[int], svc: VehicleSer
 	return ""
 
 
-## On foot again: a taxi pulls up beside Rivet; walk up to it and take it.
+## On foot again: a taxi stands on Rivet's far side from the sedan; walk up to it and take it.
 static func _hijack(svc: VehicleService, city: CitySystem, hijacks: Array[StringName]) -> String:
-	var p: Vector2 = svc.world.player_pos() + Vector2(0, -3.0)
+	var me: Vector2 = svc.world.player_pos()
+	var away: Vector2 = (me - svc.cars[0].pos).normalized()
+	var p: Vector2 = me + away * 4.0
+	var spec: Array = [SimConst.K_CAR, p.x, p.y, away.y, -away.x, 3, 0, 0.0, p.y, 0]
 	@warning_ignore("return_value_discarded")
-	city.sim.spawn(PackedFloat64Array([SimConst.K_CAR, p.x, p.y, 1, 0, 3, 0, 8.0, p.y, 0]))
+	city.sim.spawn(PackedFloat64Array(spec))
 	svc.world.refresh()
-	var recs: PackedFloat64Array = svc.world.cars_near(svc.world.player_pos(), 10.0)
-	if recs.is_empty():
-		return "no traffic car to hijack"
-	var at: Vector2 = Vector2(recs[2], recs[3]) + Vector2(recs[5], -recs[4]) * 1.5
 	var before: int = svc.cars.size()
-	if svc.try_enter(at) < 0 or svc.cars.size() != before + 1 or hijacks.is_empty():
+	if svc.try_enter(p + away * 1.5) < 0 or svc.cars.size() != before + 1 or hijacks.is_empty():
 		return "hijack failed"
 	return ""
 

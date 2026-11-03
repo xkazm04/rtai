@@ -1,7 +1,7 @@
 class_name VehicleContacts
 extends RefCounted
 ## Contacts of one service car per tick: the hull against solid cells (push out, bounce, damage
-## from the speed lost), against sim traffic and other service cars (two circles per car, the
+## from the speed lost), against sim traffic and other service cars (three circles per car, the
 ## mass-based impulse of VehicleDamage), and against people in the footprint (a kill above
 ## kill_at, else a knockdown). Results land in the public lists for the service to emit.
 
@@ -105,15 +105,16 @@ func people(b: VehicleBody, world: VehicleWorld) -> void:
 		b.vel *= 0.93
 
 
-## The contact normal (unit, from a to b) when the two cars' circle pairs overlap, else zero.
+## The contact normal (unit, from a to b) when the cars' circle chains (nose, waist, tail)
+## overlap, else zero.
 ## Separates a by the deepest overlap.
 func _overlap(pa: Vector2, ha: Vector2, pb: Vector2, hb: Vector2) -> Vector2:
 	var best: float = 0.0
 	var n: Vector2 = Vector2.ZERO
-	for i: int in 2:
-		var ca: Vector2 = pa + ha * (CIRCLE_OFF if i == 0 else -CIRCLE_OFF)
-		for j: int in 2:
-			var cb: Vector2 = pb + hb * (CIRCLE_OFF if j == 0 else -CIRCLE_OFF)
+	for i: int in 3:
+		var ca: Vector2 = pa + ha * CIRCLE_OFF * (1 - i)
+		for j: int in 3:
+			var cb: Vector2 = pb + hb * CIRCLE_OFF * (1 - j)
 			var d: Vector2 = cb - ca
 			var l: float = d.length()
 			var depth: float = 2.0 * CIRCLE_R - l

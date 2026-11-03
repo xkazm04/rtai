@@ -15,6 +15,11 @@ const STEER_HIGH_FADE: float = 0.35
 const HANDBRAKE_YAW: float = 1.35
 const HANDBRAKE_DECEL: float = 6.0
 const GRIP_YAW: float = 0.85
+## Slip-restoring yaw (rad/s per unit of lateral/forward ratio): the nose follows the velocity
+## off the handbrake, so a slide ends instead of persisting. Drift leaves at DRIFT_EXIT x drift_at
+## (hysteresis: no flicker at the threshold).
+const RESTORE: float = 2.2
+const DRIFT_EXIT: float = 0.6
 
 var id: int = 0
 var profile: VehicleProfile = null
@@ -51,7 +56,8 @@ func step(dt: float, throttle: float, steer: float, handbrake: bool) -> void:
 	var vl: float = vel.dot(right)
 	vf = _longitudinal(vf, throttle, handbrake, dt)
 	slip = vl
-	sliding = handbrake or absf(vl) > profile.drift_at
+	var exit_at: float = profile.drift_at * (DRIFT_EXIT if sliding else 1.0)
+	sliding = handbrake or absf(vl) > exit_at
 	var g: float = profile.slide_grip if sliding else profile.grip
 	if handbrake:
 		g = minf(g, profile.grip * profile.handbrake_grip)
@@ -59,6 +65,8 @@ func step(dt: float, throttle: float, steer: float, handbrake: bool) -> void:
 	vl -= bleed if vl > 0.0 else -bleed
 	vel = head * vf + right * vl
 	_turn(vf, steer, handbrake, dt)
+	if not handbrake and absf(vf) > 1.0:
+		_rotate(clampf(RESTORE * vl / vf, -RESTORE, RESTORE) * dt)
 	pos += vel * dt
 
 
@@ -101,7 +109,11 @@ func _turn(vf: float, steer: float, handbrake: bool, dt: float) -> void:
 		yaw = clampf(yaw, -cap, cap)
 	if vf < 0.0:
 		yaw = -yaw
-	var s: float = yaw * dt
+	_rotate(yaw * dt)
+
+
+## Rotates the heading by s (the sine of the step angle), renormalised.
+func _rotate(s: float) -> void:
 	if absf(s) < 1e-12:
 		return
 	var c: float = sqrt(maxf(0.0, 1.0 - s * s))
