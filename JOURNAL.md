@@ -430,3 +430,23 @@ bosses we resolve in future."
 3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52, 17:00, 17:03 and 17:04: lock held).
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:10 - 17:14 (iteration 50, STABILIZE): section 20 bench MEASURED on the final tree
+- MILESTONE: `bench.lock` was free at 17:10:54 (no file). Took it as `collisions`, ran `node tools/bench/run.mjs --runs=1 --secs=20`
+  (exported release build, windowed, d3d12, native backend, 4 scenarios x 20 s), released the lock at 17:12:30 (verified gone).
+  SHORT run (1 x 20 s, not the default 3 x 60 s) and CONTENDED (four other Godot processes on the machine, not mine).
+- Result, judged by run.mjs, exit 0 = PASS on every section 20 hard limit:
+  p99 CPU 2.579 ms (limit 7), 1% low 199 fps (limit 45), worst swap 4.36 ms (limit 50), worst frame 41.77 ms;
+  hitches >25 ms 14, >50 ms 0 (unexplained 0); vsync-on drive48 >25 ms: 12; visible avg 36.5 / 9.1 / 305.5 (drive/drive48/riot);
+  riot rigs p50 0 / p99 0.463 ms per frame (up to 16 full rigs). The 0.463 ms is CONTENDED and short; this morning's 0.407 ms was idle,
+  so the +0.056 ms is not attributable to bodies from this run alone.
+- Evidence: `gtai-masters/day-d5/collisions/bench-it50.log` and `bench-it50/bench-{drive,drive48,riot,drive48vsync}.json`.
+- HEAD differs from the last gated code commit b7fb4f9 only in JOURNAL.md; the iteration 47 gates still stand
+  (lint 13/13, unit 337/0, scenarios 12/12, parity exact, replay identical, rig_stress green CONTENDED). No code change, no new frames.
+
+### NEXT
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Full-length bench (3 x 60 s) and scenario_city_chase on an IDLE machine, to compare riot rig p99 with the 0.407 ms morning figure.
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
