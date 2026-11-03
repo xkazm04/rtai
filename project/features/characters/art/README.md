@@ -15,6 +15,8 @@ prompts are masters (`art_src/d4.manifest.json`).
   shoulder). `parts.json` holds each part's size and joint pivots as measured by the slicer.
 - **Orientation:** limbs face +x with the joint on the left; body parts are rotated so their front is +x.
 - **Import:** Lossless with mipmaps (drawn far below 1:1).
+- **Arm outline:** the ped arm parts carry a 14 px ink outline (inside the alpha edge, footprint unchanged) - the
+  painted ~7 px printed under 1 px at 32 px/m, so cream sleeves vanished on cream paving (iteration 16).
 - **Sleeves (crowd variety):** the arm parts dominate a pedestrian's top-down silhouette, so with one cream
   sleeve for every look the crowd read as clones at 32 / 48 px/m. `<arm part>_dark` / `_grey` (same size and pivots,
   `parts.json`) are picked by a look's `sleeve` suffix - the code lands with `evidence/iter16/rig_sleeves_and_looks.patch`
