@@ -1,19 +1,19 @@
 {
-  "doc": "enemy-ai stations for the arena: the pit waves and the 00:00 sample fight on the cast rigs. The arena lane reads these; until it lands, res://dev/enemy_ai/enemy_pit_view.tscn (debug draw) and res://dev/enemy_ai/enemy_rig_fight_run.gd (cast rigs, D5 look) run them.",
+  "doc": "enemy-ai stations for the arena: the pit waves and the 00:00 sample fight on the cast rigs. No ArenaHook script tonight (EnemyPit and PitLayout do not extend ArenaHook; a hook is a night-run item): until then res://dev/enemy_ai/enemy_pit_view.tscn (debug draw) and res://dev/enemy_ai/enemy_rig_fight_run.gd (cast rigs, D5 look) run them.",
   "lane": "enemy-ai",
-  "schema": "gtai.arena_station/1",
+  "schema": "gtai.arena-station/1",
   "stations": [
     {
-      "doc": "The open pit with cover: the wave spawner runs waves.json-style rows from enemies.json against Rivet.",
+      "area": "pit",
+      "doc": "The open pit with cover: the wave spawner (features/combat/ai/wave_run.gd) runs enemy_waves.json curves of enemies.json archetypes against Rivet.",
       "id": "enemy_pit",
-      "kind": "pit",
-      "script": "res://features/combat/ai/enemy_pit.gd"
+      "name": "Enemy pit"
     },
     {
-      "doc": "The owner's 00:00 sample, enemy half: a patrol cop (pistol, aim-line tell) and a robot thug (claw: windup, lunge along the locked aim, swing), already alert, staged by PitLayout.place: Rivet at (-5, 0) m, patrol_cop at (9, -6), robot_thug at (-1, 2.5). Run on the cast rigs: enemy_rig_fight_run.gd -- --spots=9:-6,-1:2.5 --fire_m=10.",
+      "area": "pit",
+      "doc": "The owner's 00:00 sample, enemy half: a patrol cop (pistol, aim-line tell, flinches on a near miss) and a robot thug (claw: windup, lunge along the locked aim, swing), already alert, staged by PitLayout.place: Rivet at (-5, 0) m, patrol_cop at (9, -6), robot_thug at (-1, 2.5). Run on the cast rigs: enemy_rig_fight_run.gd -- --spots=9:-6,-1:2.5 --fire_m=10.",
       "id": "enemy_sample",
-      "kind": "pit",
-      "script": "res://features/combat/ai/pit_layout.gd"
+      "name": "Enemy sample"
     }
   ]
 }
