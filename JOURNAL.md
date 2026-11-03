@@ -184,3 +184,11 @@ green at 971a118.
   CONTENDED; an earlier 28-pt run read 270: the machine drifts ~100 us run to run). Frames (same run, identical
   --zooms 1,1.5,2,4): masters frames/pool-edge-t900-{32,48,64,128}ppm-pair.png (changed px 5.7k/10.8k/19k/27k).
   Camera breaks: 0 of 8. frames.json: walker + pool pairs replace stains-48 and pop-48 (kept at 15); ladder +2 rows.
+- GATES at ff5d3da (evidence/run.mjs --no-bench, 12:30): lint 13/13, unit 348/0, scenarios 8/8, parity exact (1200
+  steps, mutation caught at 629), selftest PASS (look goldens 11/11 worst 0.44, block 5/5 worst 0.96): the liquid pool
+  ring and the walker fade stay inside the golden tolerance, no re-bless.
+- BENCH iter3 (12:32-12:36, lock taken + released, CONTENDED), code ff5d3da: release export, 2 runs x 4 x 30 s.
+  Riot (400 actors, blood on): avg 2.26 ms, p99 9.87 ms, 1% low 45 fps, hitches >25 ms 58 ALL `present` (render_gpu
+  0.17 ms, game 0.01 ms), >50 ms 0. Overall JUDGE: MISSES p99CpuMs + over50.unexplained (the 2 unexplained >50 ms
+  are in the drive scenarios, not the riot). Riot p99 across today: 4.86 / 7.68 / 15.18 / 9.87 ms: the shared GPU.
+  Evidence: evidence/d5-combat/bench/iter3/.
