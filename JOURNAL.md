@@ -1225,3 +1225,25 @@ NEXT (iteration 21, for the morning): 1. Owner picks: start at evidence/NOIR.md 
   (dev script, iteration 20) to test suspect (a), then (b)/(c) (iteration 19), fix at the cause, re-apply
   look_noir_crowd_shadow (01409e4). 3-5 of the iteration-18 07:10 list stand (junction prop/shadow mask channel,
   per-light directions, showcase_fight.gd 227 lines -> setup helper).
+
+## Iteration 22 (07:39-07:50, STABILIZE, past freeze: no features)
+- (07:41) Merge-readiness check, read-only (`git merge-tree --write-tree`; no branch, worktree or main touched).
+  The tips were n-noir adf9afa, main 721fbbb, n-visual d1d1578, n-d4 31f8c4c and n-d5 4b61ff4. **main: clean**
+  (no commits past the base). n-d4 / n-d5: only `JOURNAL.md` conflicts (add/add). **n-visual:** JOURNAL.md, plus a text conflict
+  in `project/boot/launch_args.gd` (both added `--look`; take n-visual's superset). There is also a **semantic clash
+  git does not flag**: n-visual's `_update_look()` -> `set_look_enabled()` sets `_look_rect.visible = printed` and
+  so re-shows the D4 world print under the noir pass (`keep_d4` false). Proposed one-line fix in the merged
+  `set_look_enabled`: `_look_rect.visible = printed and (noir == null or not noir.visible or noir.keep_d4)`.
+  It is unverified in engine. Verify after the merge with the noir_frames junction 48 vs masters crowdshadow-v1/before/.
+  Also on n-visual, `--look=noir` resolves as an unknown profile id -> the default (harmless while hidden).
+  `part_materials.gd` / `print_part.gdshader` auto-merge on disjoint lines. Written up in evidence/MERGE-noir.md
+  (linked from NOIR.md).
+- FRICTION: a fix for the clash cannot land on n-noir. The code it patches exists only on n-visual, and a scratch
+  merge worktree would need the bake + native build + import (too long for this window). So the fix is a written proposal.
+- (07:42) Leonardo probed: apiSubscriptionTokens 0, apiPaidTokens null. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. project/ + tools/ unchanged since 641d2b1 (the gate PASS at 4761ffa stands).
+  Shared files touched: none. No process of mine running.
+NEXT (iteration 22, for the morning): 1. Director: merge per evidence/MERGE-noir.md, apply the set_look_enabled
+  line if n-visual lands first, and re-shoot junction 48 to confirm. 2. Owner picks: evidence/NOIR.md ->
+  showcase-hero-current.png. 3. The crowd-shadow root cause (atlas dump, iteration 20) and items 3-5 of the
+  iteration-18 07:10 list stand. Later: make `noir` a row in look_profiles.json.
