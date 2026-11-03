@@ -5,6 +5,7 @@
       "far": 0.0,
       "file": "look-block-d4-32ppm.png",
       "found": true,
+      "grade": "day",
       "look": "d4",
       "mean": 0.0,
       "ok": true,
@@ -14,6 +15,7 @@
       "far": 0.0,
       "file": "look-block-d4-48ppm.png",
       "found": true,
+      "grade": "day",
       "look": "d4",
       "mean": 0.0,
       "ok": true,
@@ -23,10 +25,21 @@
       "far": 0.0,
       "file": "look-block-auto-64ppm.png",
       "found": true,
+      "grade": "day",
       "look": "auto",
       "mean": 0.0,
       "ok": true,
       "ppm": 64
+    },
+    {
+      "far": 0.0,
+      "file": "look-block-d4-48ppm-night.png",
+      "found": true,
+      "grade": "night",
+      "look": "d4",
+      "mean": 0.0,
+      "ok": true,
+      "ppm": 48
     }
   ],
   "gpu": "NVIDIA GeForce RTX 4090",

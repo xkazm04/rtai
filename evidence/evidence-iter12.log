@@ -1,0 +1,13 @@
+PASS lint: lint: all 13 checks pass over 212 GDScript files
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\lint.json
+PASS unit-tests: unit-tests: 220 passed, 0 failed, 0 skipped (GUT, headless)
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\unit-tests.json
+PASS scenario-tests: scenario-tests: 8 passed (headless)
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\scenario-tests.json
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3547 floats); planted mutation caught at step 629
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\parity.json
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 103 actors, 79 colours; 48 px/m ok, 81 actors, 81 colours); 43 art textures, 22 placeholders, prewarm 29 ms; look goldens 11/11 within mean 4 (worst 0.00); accent pixels 32: 0.93 %, 48: 0.95 %, 64: 0.25 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; block goldens 4/4 within mean 4 (worst 0.00); block accent pixels 32: 1.05 %, 48: 0.70 %, 64: 0.31 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %)
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\selftest.json
+PASS bench: bench (exported release build, windowed, 3 consecutive runs x 4 scenarios x 60 s): p99 3.253 ms, 1% low 219 fps, worst swap 14.25 ms, worst frame 48.321 ms; hitches >25 ms 111, >50 ms 0 (unexplained 0, outside 0, present 0); vsync-on drive >25 ms: 14; visible avg 48.252 / 8 / 274.591 (drive/drive48/riot); rigs p50 0 / p99 0.653 ms per frame (riot, up to 16)
+     -> C:\Users\kazda\kiro\gtai-wt\n-visual\build\evidence\bench.json
+evidence: commit 56d23e7127f9451779d63f450261eef774c358b0, godot 4.7.2.stable.official.ed1daf0bf

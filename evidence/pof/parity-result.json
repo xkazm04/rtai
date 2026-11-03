@@ -35,7 +35,7 @@
   "planted_first_mismatch_step": 629,
   "planted_mutation_caught": true,
   "snapshot_floats": 3547,
-  "step_ms_a": 2.67743083333333,
-  "step_ms_b": 0.0290083333333333,
+  "step_ms_a": 2.638155,
+  "step_ms_b": 0.02822,
   "steps": 1200
 }
