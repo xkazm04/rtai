@@ -236,3 +236,8 @@ NEXT (iteration 5 / the night run after the 00:00 merge):
 5. Victims with reactions: the quest guards -> cast rigs (enemy-ai's EnemyRigFeed: flinch, knockdown, death);
    robots get sparks/oil from CombatBlood (robots never bleed). A real stomp sound (audio cue row).
 6. Bench the city-path blood (riot scene) when bench.lock is free.
+- 23:10 checked e-arena (36ce3e1): the pad's "enemy" spawns are range DUMMIES (ArenaStage._dummy), not
+  arena.hostiles, so HaulerStage's stomp/ram will NOT hit the hauler_pad bots after the merge; the pit's waves
+  ARE hostiles (ArenaPit spawn_guard), so the Hauler works in the pit today. NEXT 2 refined: either capture the
+  Hauler in the pit (`--start=pit`), or a ghost-powers ArenaHook that spawns the pad bots as real guards
+  (arena.spawn_guard at the station's points) instead of dummies. answers.json re-read 23:10: nothing new.
