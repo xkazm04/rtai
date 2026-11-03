@@ -1388,3 +1388,15 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:36: tree clean after commit, no scratch.
+
+## Iteration 23 (07:35-07:37, STABILIZE, past freeze)
+- No features, no code change: `git diff 8bd2ec0 HEAD -- project tools native` is empty, so evidence/pof at
+  8bd2ec0 (all PASS) still describes this build; not re-run (it would only move the stamp onto a
+  journal-only commit).
+- Gates re-checked at HEAD 03d79cd beyond iteration 22's lint: unit 247 passed / 0 failed; scenarios 8 ran /
+  0 failed (city replay 1200 ticks 20 checkpoints identical, replay_60s final cbeb734ff9b97c41).
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no visual change -> no
+  ladder row. Godot runs were mine and exited; scratch logs removed.
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:37: tree clean after commit, no scratch.
