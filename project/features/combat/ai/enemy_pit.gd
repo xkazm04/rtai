@@ -44,7 +44,9 @@ func _init(p_roster: EnemyRoster, rng: RandomNumberGenerator, events: EventBus =
 		"kills",
 		"max_attackers",
 		"nails",
-		"nail_hits"
+		"nail_hits",
+		"flinches",
+		"tells_broken"
 	]:
 		stats[k] = 0.0
 
@@ -229,6 +231,7 @@ func _advance(s: Shot) -> bool:
 			stats["nail_hits"] += 1.0
 			hurt(e, s.damage, s.vel)
 			return true
+	EnemySuppress.near_miss(self, s, from)
 	return s.spent()
 
 

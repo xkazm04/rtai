@@ -35,6 +35,9 @@ var hurt_dir: Vector2 = Vector2.RIGHT
 ## The tick of the last shot or swing (the rig's SHOOT recoil or swing clip).
 var shot_tick: int = -1000
 var died_tick: int = -1
+## The last near-miss flinch (EnemySuppress) and the way it ducked: away from the nail.
+var flinch_tick: int = -1000
+var flinch_dir: Vector2 = Vector2.ZERO
 ## The pit's cover boxes (shared, read-only here): the motor paths round them.
 var cover_ref: Array[Rect2] = []
 ## The group this enemy fights with (a pit wave): morale counts only its own fallen.
@@ -96,6 +99,8 @@ func pose(now: int) -> StringName:
 		State.STAGGER:
 			p = &"stagger"
 	var hurt: bool = now - hurt_tick < HURT_TICKS and state != State.DEAD
+	if not hurt and EnemySuppress.flinching(self, now):
+		return &"flinch"
 	return &"hit" if hurt and state != State.DOWN and state != State.STAGGER else p
 
 

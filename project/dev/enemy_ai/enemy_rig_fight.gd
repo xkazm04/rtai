@@ -15,6 +15,8 @@ const HOLD_FRAMES: int = 3
 const SHAKE_TICKS: int = 8
 const SHAKE_PX: float = 5.0
 const CAM_EASE: float = 0.06
+## A near-miss flinch shoves the rig sideways (no tint, no blood: it must not read as a hit).
+const FLINCH_SHOVE: float = 70.0
 
 var pit: EnemyPit = null
 var dummy: PitDummy = null
@@ -138,9 +140,12 @@ func _feed_rows() -> void:
 		n += 1
 
 
-## Blood on a hurt human, sparks on a hurt robot, sparks on Rivet when he is hit (+ a shake).
+## A flinch shove on a near miss, blood on a hurt human, sparks on a hurt robot, sparks on
+## Rivet when he is hit (+ a shake).
 func _impacts() -> void:
 	for e: EnemyAgent in pit.agents:
+		if e.flinch_tick == pit.tick and _rig_of(e.id) != null:
+			_rig_of(e.id).hit(e.flinch_dir, FLINCH_SHOVE)
 		if e.hurt_tick != pit.tick:
 			continue
 		var at: Vector2 = e.pos * PX
