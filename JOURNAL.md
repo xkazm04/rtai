@@ -296,3 +296,8 @@ NEXT (iteration 57 end): unchanged from iteration 52 (Director: apply `evidence/
 - Lint re-run on this tree: 13/13 over 353 GDScript files. Nothing changed since a14dd64 (gates green there; six-tip merge check at eb2dc3f: 463 unit, 13 scenarios). No new audio code, no ElevenLabs calls (lane total ~4.6k of 25k; voice characters after 11:45: 0).
 
 NEXT (iteration 58 end): unchanged from iteration 52 (Director: apply `evidence/requests/quest1_game_audio.patch`, the `radio_next` input row, `_ready_blood()` at the slice/combat merge; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops; hot clip vehicles_fire.mp4 -> lower `car_wreck` gain_db if it clips).
+
+## 2026-11-03 iteration 59 (REPORT, started 17:30)
+- Wrote REPORT.md (what works with evidence paths, what does not, blockers, next steps). Evidence paths checked to exist; lint 13/13 over 353 GDScript files at 17:30. No new audio code, no ElevenLabs calls (lane total ~4.6k of 25k; voice characters after 11:45: 0).
+
+NEXT (iteration 59 end): unchanged from iteration 52; see REPORT.md section 4 (Director applies quest1_game_audio.patch + radio_next row + `_ready_blood()`; slice-play decides line timing; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops).
