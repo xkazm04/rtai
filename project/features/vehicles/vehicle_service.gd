@@ -22,8 +22,7 @@ var cars: Array[VehicleBody] = []
 var driving: VehicleBody = null
 ## The sim traffic this service rammed or soul-hijacked (render states, damage).
 var traffic: VehicleTraffic = null
-## Microseconds the last step() took, and the worst so far (bench evidence; not sim state).
-var last_us: int = 0
+var last_us: int = 0  ## the last step() in us, and max_us the worst (bench only, not sim state)
 var max_us: int = 0
 var _contacts: VehicleContacts = null
 var _events: EventBus = null
@@ -39,13 +38,10 @@ func setup(ctx: WorldContext) -> void:
 	traffic = VehicleTraffic.new(rules)
 
 
-func profile(kind: StringName) -> VehicleProfile:
-	return profiles.get(kind, profiles.get(&"sedan"))
-
-
 ## An empty car parked at `at` (missions and tests place them).
 func spawn_parked(kind: StringName, at: Vector2, head: Vector2, art: int = 0) -> VehicleBody:
-	var b: VehicleBody = VehicleBody.new(_next_id, profile(kind), at, head)
+	var p: VehicleProfile = profiles.get(kind, profiles.get(&"sedan"))
+	var b: VehicleBody = VehicleBody.new(_next_id, p, at, head)
 	b.art = art
 	_next_id += 1
 	cars.append(b)
@@ -94,6 +90,14 @@ func soul_hijack_traffic(slot: int) -> void:
 	traffic.soul_hijack(slot, world)
 
 
+## The same for a service car (parked or driven): the teal plate shows while it is undamaged.
+func soul_hijack(vehicle_id: int) -> void:
+	for b: VehicleBody in cars:
+		if b.id == vehicle_id:
+			b.soul_hijacked = true
+			b.state = rules.state_for(b.hp_lost, true)
+
+
 func step(_tick: int, input: TickInput) -> void:
 	var t0: int = Time.get_ticks_usec()
 	_step(input)
@@ -121,7 +125,7 @@ func _step(input: TickInput) -> void:
 		_collide(b)
 	_age_wrecks()
 	for slot: int in traffic.settle(_contacts.traffic_hits, world):
-		_take_traffic(slot)
+		traffic.take(slot, world, self)
 	_emit_struck()
 	if driving != null:
 		world.set_focus(driving.pos, true)
@@ -139,11 +143,12 @@ func write_state(out: StreamPeerBuffer) -> void:
 		out.put_32(b.state)
 
 
+## A standing car (parked, a wreck) still meets traffic: it is shoved and both cars take damage.
 func _collide(b: VehicleBody) -> void:
+	_contacts.traffic(b, world)
 	if b.speed() < 0.05 and b != driving:
 		return
 	_contacts.hull(b, world)
-	_contacts.traffic(b, world)
 	_contacts.people(b, world)
 	for o: VehicleBody in cars:
 		if o != b:
@@ -179,24 +184,6 @@ func _hijack(at: Vector2) -> VehicleBody:
 	)
 	_events.vehicle_hijacked.emit(kind)
 	return b
-
-
-## A rammed traffic car at D2 or worse leaves the sim as a service body coasting to a stop.
-func _take_traffic(slot: int) -> void:
-	var recs: PackedFloat64Array = world.cars_near(world.player_pos(), 1e6)
-	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
-		if int(recs[r]) != slot:
-			continue
-		var art: int = int(recs[r + 7])
-		var kind: StringName = VehicleProfile.archetype_of_variant(art, recs[r + 1] > 0.5)
-		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
-		var b: VehicleBody = spawn_parked(kind, Vector2(recs[r + 2], recs[r + 3]), head, art)
-		b.vel = head * recs[r + 6] * 0.5
-		b.hp_lost = traffic.lost_of(slot)
-		b.state = rules.state_for(b.hp_lost, false)
-		break
-	traffic.forget(slot, world)
-	world.take_car(slot)
 
 
 func _age_wrecks() -> void:

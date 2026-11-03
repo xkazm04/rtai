@@ -50,3 +50,21 @@ func forget(slot: int, world: VehicleWorld) -> void:
 	state.erase(slot)
 	@warning_ignore("return_value_discarded")
 	_lost.erase(slot)
+
+
+## A rammed traffic car at D2 or worse leaves the sim as a service body coasting to a stop.
+func take(slot: int, world: VehicleWorld, svc: VehicleService) -> void:
+	var recs: PackedFloat64Array = world.cars_near(world.player_pos(), 1e6)
+	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		if int(recs[r]) != slot:
+			continue
+		var art: int = int(recs[r + 7])
+		var kind: StringName = VehicleProfile.archetype_of_variant(art, recs[r + 1] > 0.5)
+		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
+		var b: VehicleBody = svc.spawn_parked(kind, Vector2(recs[r + 2], recs[r + 3]), head, art)
+		b.vel = head * recs[r + 6] * 0.5
+		b.hp_lost = lost_of(slot)
+		b.state = _rules.state_for(b.hp_lost, false)
+		break
+	forget(slot, world)
+	world.take_car(slot)

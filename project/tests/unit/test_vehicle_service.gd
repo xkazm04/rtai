@@ -131,3 +131,20 @@ func test_ramming_traffic_damages_then_disables_it() -> void:
 func test_soul_hijack_marks_traffic() -> void:
 	_svc.soul_hijack_traffic(4)
 	assert_eq(_w.states[4], VehicleBody.State.HIJACKED)
+
+
+func test_soul_hijack_marks_a_service_car_until_damaged() -> void:
+	var car: VehicleBody = _svc.spawn_parked(&"taxi", Vector2.ZERO, Vector2.RIGHT, 3)
+	_svc.soul_hijack(car.id)
+	assert_eq(car.state, VehicleBody.State.HIJACKED)
+	@warning_ignore("return_value_discarded")
+	_svc.rules.hurt(car, 15.0)
+	assert_eq(car.state, VehicleBody.State.D1, "damage shows over the plate")
+
+
+func test_traffic_shoves_a_parked_car() -> void:
+	var car: VehicleBody = _svc.spawn_parked(&"hatchback", Vector2(0, 0), Vector2.RIGHT)
+	_w.cars = PackedFloat64Array([5, 0, -3.4, 0.0, 1.0, 0.0, 14.0, 4])
+	_svc.step(0, TickInput.new())
+	assert_gt(car.vel.x, 1.0, "the van rear-ending it pushed it forward")
+	assert_gt(car.hp_lost, 0.0)
