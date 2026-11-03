@@ -966,3 +966,7 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   roofs' bold outlines and pipes print thin: the D4 art was drawn for look_d4's fattening print. So look_d5_print
   needs the D5 plates (or heavier D4 roof lines, d4-production) to keep the mock's ink weight; with them (D5 tier)
   ink is 0.11 vs 0.12. Board evidence/item39_d4tier_package.png. Gap list item 1 amended.
+- 03:58 REJECTED (h118ds20; shader back to HEAD, roofs + params restored, project/ clean): dark_soft 0.10 -> 0.20 to
+  give the D4 tier its ink back. D4 tier solid ink 0.07 -> 0.07 (no change: the extra edge ink lands as grey, not
+  solid), paper 0.32 -> 0.29, L 0.475 -> 0.458; D5 tier paper 0.32 -> 0.29, L 0.468 -> 0.452. Worse on both tiers.
+  The D4-tier condition stays an art fix (D5 plates or heavier D4 roof lines).
