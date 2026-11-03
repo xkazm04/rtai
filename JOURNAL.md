@@ -847,7 +847,7 @@ NEXT (session end, iteration 8):
 NEXT (final, iteration 8; supersedes the 02:26 NEXT where they differ): as listed at 02:26, plus - the grey sedan
 fix (c24d769) and the hijack probe change no request. Codex: 0 images this iteration (night total 26 images, 170
 cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or merged.
-- 02:33 CHECK (no change): the wiring patch's traffic shader is prewarmed - `view_prewarm.gd` draws one instance in
+- 02:32 CHECK (no change): the wiring patch's traffic shader is prewarmed - `view_prewarm.gd` draws one instance in
   every actor layer with that node's own material, and the car nodes keep the traffic material. Selftest prewarm with
   the patch 27 ms vs 31 ms without (n-d4); 63 ms on the merged n-visual + n-d4 tree (n-visual's extra passes).
   Session end for iteration 8: all my Godot runs finished (each under `timeout`), scratch worktree removed, tree
