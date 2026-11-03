@@ -62,7 +62,7 @@ tick count, no RNG.
 | `item32_print_world_grain.png` | iteration 7: the look_d5_print proposal's paper grain moved to world pixels; 48 px/m car pan (40 ticks) stills + change maps: look_d4 / print with screen grain / print with world grain, junction (0.00739 / 0.00814 / 0.00049) and mural roof (0.00975 / 0.01075 / 0.00000) |
 | `item33_strike_lane.png` | iteration 7: STRIKE and the fist stencil inside the west lane instead of across the centre line (gap 7), h105 vs h106 at 48 and 32 px/m |
 | `item34_halo_ink.png` | iteration 7, PROPOSAL for the characters lane: the thin ink line outside the cream sticker rim (look_d5_halo, D5_HALO=ink), h106 vs h107ink at 32 px/m x3 + the mock's stickers (at the mock's own scale) |
-| `item35_all_proposals_iter7.png` | iteration 7, FOR THE MORNING (supersedes item31): committed h106 vs h106 + every open proposal (look_d5_print with world grain + street_edge, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45, look_d5_halo line + shadow; h115se1, not committed) at 32/48/64 + the mock + the concept |
+| `item35_all_proposals_iter7.png` | iteration 7, FOR THE MORNING (supersedes item31): committed h106 vs h106 + every open proposal (look_d5_print with world grain + street_edge, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45, look_d5_halo line + shadow, the ruled roof hatch overlays; h124rf, not default) at 32/48/64 + the mock + the concept |
 | `item36_arena_all_proposals.png` | iteration 7: the boss arena up close, committed (a16 = a15) vs every open proposal (a16all) at 64 and 128 px/m + the concept: no regression where D5 lives |
 | `item37_street_edge.png` | iteration 7: look_d5_print `street_edge` (no edge ink on the dark wash step: road paint without ink rings, as in the mock), h109all vs h115se1 at 32 px/m x3 + the mock, and the arena at 64/128 (a16all vs a17se1) |
 | `item38_rim_owner_ab.png` | iteration 7, OWNER A/B: the sticker rim as the rig draws it vs +1 px cream (look_d5_halo `rim_px`, D5_HALO_RIM=1; both with the outer ink line + shadow) at 32 x3 and 48, + the mock's stickers. Not in the package |
@@ -70,7 +70,7 @@ tick count, no RNG.
 | `item40_d4_roof_lines.png` | iteration 7, PROPOSAL for d4-production: the D4 roofs with heavier lines (k 1.0) under the package, D4 tier 32 px/m x2: h106 / package / package + heavier lines (solid ink 0.13 / 0.07 / 0.11, mock 0.12) |
 | `item41_roof_rule_option.png` | iteration 7, OPTION (not in the package): the ruled roof hatch under the thin print: the mock's diagonal membrane hatch at 32 px/m, but mechanical at 64 (across the OSHA sign plate). Needs a membrane mask + a zoom fade |
 | `item42_roof_rule_fade.png` | iteration 7 (kept, in the package): the ruled roof hatch as zoom-fading overlays (`features/city/art/d5/roofs/rule/`, on with the thin print, gone at 64 px/m), h117pkg vs h124rf at 32 x2 and 48 + the mock roof |
-| `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h115se1 at 32 px/m, the mock, h115se1 at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
+| `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)

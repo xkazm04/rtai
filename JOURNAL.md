@@ -1045,3 +1045,4 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
   derived from the AI plates). package_shot.sh now shows it (D5_PRINT=thin turns it on). Board
   evidence/item42_roof_rule_fade.png; ladder row. The overlay lum mask comes from the committed plates (gamma 0.7),
   the baked h122rule5 from the gamma 0.45 build, so the two differ (80088 / 58684 px at 32 / 48).
+- 04:11 boards item35 + night_iter7_summary rebuilt from h124rf (the package incl. the roof hatch overlays: 32 px/m L 0.459, dark 0.572, paper 0.30, ink 0.11, mid 0.09).
