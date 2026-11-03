@@ -23,7 +23,6 @@ var _fx: NoirCombatFx = NoirCombatFx.new()
 var _live: int = -1
 var _hold: int = 0
 var _shots_seen: Dictionary[Shot, bool] = {}
-var _thresh: float = 0.46
 
 
 func _ready() -> void:
@@ -42,8 +41,6 @@ func _ready() -> void:
 	_view.add_child(_flash)
 	for n: Node in [_noir, _impact, _fx]:
 		add_child(n)
-	var frame: Dictionary = _noir.params["frame"]
-	_thresh = frame["thresh"]
 	_fx.px_per_m = Ink.PX_PER_M
 	_fx.player_id = _play.stage.arena.rivet.id
 	_fx.locate = _locate
@@ -75,7 +72,10 @@ func _process(_delta: float) -> void:
 		_fx.step_ticks(1)
 	_new_shots()
 	_view.focus = _frame_focus()
-	_noir.apply({"thresh": _thresh + (0.25 if _flash.lit() else 0.0)})
+	var light: Dictionary = {"flash": 1.0 if _flash.lit() else 0.0}
+	if _flash.lit():
+		light["flash_uv"] = _to_uv(_flash.lit_at())
+	_noir.apply(light)
 	_noir.update(_view.get_viewport().get_canvas_transform().origin * -1.0, float(_live))
 	if HEROES.has(_live):
 		_save.call_deferred(_live)
