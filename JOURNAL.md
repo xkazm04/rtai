@@ -1255,3 +1255,9 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - 04:33 Summary sheet `masters:night/d4-production/night_iter14_summary.png` (= `evidence/iter14/`, 8 rows: ink splat
   FX 32 / 48 / 64 + city 64, Toner Room floor, Factory Row floor, Harbor Road kerb, REJECTED dock wear), before |
   after | target crop. Tool `masters:tools/summary_i14.py`.
+- 04:36 CHECK morning merge order with the iteration-14 quest patch: scratch = main 721fbbb + `merge --no-commit n-d4`
+  (no conflict) + `evidence/iter14/q1_view_art.patch` (applies): lint 13/13 over 214 files, unit **166/166**,
+  scenarios **8 ran, 0 failed** (replay_60s final cbeb734ff9b97c41, as in iteration 12). Quest frames
+  `merged_q1_i14/` = `after_q1kb/` except the dumpster (01) and the Harbor Road kerb (09): the merged tree draws
+  n-d4's calmed, inked curb tile (scratch-q1 still held main's older one with the crack repeats;
+  `work/fx14/m14q_09.png`) - better. Scratch removed.
