@@ -402,3 +402,19 @@ bosses we resolve in future."
 3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52 and 17:00: lock held).
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:03 - 17:08 (iteration 48, STABILIZE): verify only, no change
+- Bench skipped a third time: `bench.lock` held by d5-city since 17:00:19 (3 min old, under the 20 min stale rule). The section 20 bench is UNMEASURED on this branch's final tree.
+- HEAD af6dfca differs from the last gated code commit b7fb4f9 only in JOURNAL.md, so the iteration 47 gates still describe the tree:
+  lint 13/13, unit 337/0, scenarios 12/0, parity exact, replay identical (60 s: 3600 ticks, final cbeb734ff9b97c41; city replay 20/20 checkpoints).
+- scenario_rig_stress is green inside that scenario run. CONTENDED numbers from `build/evidence/scenario-tests.log`: 50 people rig p99 0.981 ms,
+  200 people rig p99 1.25 ms (max 22.8 ms, a single spike), 16 full rigs max, pool grown 0. Not comparable to the 0.407 ms idle figure from this morning.
+- Untracked `evidence/clip/` and `evidence/scen/quest-*.json` left uncommitted on purpose (see iteration 46).
+- No Godot processes running on the machine. No code change, no new frames.
+
+### NEXT (unchanged from iteration 44-47)
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52, 17:00 and 17:03: lock held).
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
