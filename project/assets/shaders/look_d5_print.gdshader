@@ -5,7 +5,9 @@ shader_type canvas_item;
 // never both (iteration 5), and fine shadow hatch prints as stripes (iteration 6). Inking only where the pixel is no
 // lighter than its 4 neighbours keeps thin lines thin and puts object outlines on the object.
 // Second change (iteration 7): the 5% paper grain is hashed on world pixels w, not FRAGCOORD (look_d4 re-rolls it on
-// every camera move: pan swim). Everything else is look_d4 verbatim (keep in sync). Dev A/B: D5_PRINT=thin.
+// every camera move: pan swim). Third (iteration 7): no edge ink on pixels already in the dark wash step
+// (street_edge), so cream paint on asphalt prints without an ink ring, as in the mock. Everything else is look_d4
+// verbatim (keep in sync). Dev A/B: D5_PRINT=thin.
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
 uniform vec2 world_px = vec2(0.0);
@@ -26,6 +28,7 @@ uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
 uniform float dark_soft = 0.10;   // proposal: how far lighter than its neighbours a pixel may be and still take edge ink
+uniform float street_edge = 1.0;  // proposal: 1 = no edge ink on pixels in the dark wash step (paint on asphalt prints unoutlined, as in the mock)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -88,7 +91,8 @@ void fragment() {
 	float e = sobel(uv, tx);
 	float l4 = 0.25 * (lum3(uv + vec2(tx.x, 0.0)) + lum3(uv - vec2(tx.x, 0.0)) + lum3(uv + vec2(0.0, tx.y)) + lum3(uv - vec2(0.0, tx.y)));
 	float dark_side = 1.0 - smoothstep(0.0, dark_soft, lum3(uv) - l4);   // 1 on the dark side of an edge, 0 on the light side
-	ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)) * dark_side);
+	float street = smoothstep(step_hi - 0.03, step_hi + 0.03, t) * (1.0 - smoothstep(line_ink - 0.08, line_ink, d));
+	ink = max(ink, smoothstep(edge_lo + 0.12 * vnoise(w * 0.2), edge_hi, e) * (0.75 + 0.25 * vnoise(w * 0.5)) * dark_side * (1.0 - street_edge * street));
 	col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
 	col = mix(col, INK, ink);

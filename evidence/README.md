@@ -64,6 +64,7 @@ tick count, no RNG.
 | `item34_halo_ink.png` | iteration 7, PROPOSAL for the characters lane: the thin ink line outside the cream sticker rim (look_d5_halo, D5_HALO=ink), h106 vs h107ink at 32 px/m x3 + the mock's stickers (at the mock's own scale) |
 | `item35_all_proposals_iter7.png` | iteration 7, FOR THE MORNING (supersedes item31): committed h106 vs h106 + every open proposal (look_d5_print with world grain, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45, look_d5_halo line + shadow; h109all, not committed) at 32/48/64 + the mock + the concept |
 | `item36_arena_all_proposals.png` | iteration 7: the boss arena up close, committed (a16 = a15) vs every open proposal (a16all) at 64 and 128 px/m + the concept: no regression where D5 lives |
+| `item37_street_edge.png` | iteration 7: look_d5_print `street_edge` (no edge ink on the dark wash step: road paint without ink rings, as in the mock), h109all vs h115se1 at 32 px/m x3 + the mock, and the arena at 64/128 (a16all vs a17se1) |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h109all at 32 px/m, the mock, h109all at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 

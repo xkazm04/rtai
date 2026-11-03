@@ -24,7 +24,8 @@
     "verm_shade": 0.7
   },
   "print": {
-    "dark_soft": 0.1
+    "dark_soft": 0.1,
+    "street_edge": 1.0
   },
   "schema": "gtai.look-d5-params/1",
   "shadow": {

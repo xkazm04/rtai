@@ -936,3 +936,14 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   h107ink at 32/48/64 (0 px). The same check the brief asks of the D5 tier switch, now applied to my proposal; I
   had claimed "halos are off at 96+, 0 px" without looking at the zooms in between.
 - 03:47 board evidence/night_iter7_summary.png (h98b / h106 / h109all at 32, mock, h109all 48, a16all 128, concept + the per-class table); README row.
+- 03:50 MILESTONE (proposal print, street_edge 1.0): the remaining solid-ink excess (0.14 vs the mock's 0.12) sat in the
+  road band (ink share 0.114 vs 0.068; ink-density map masters work/i7/inkmap.png): the dark-side edge ink rings
+  every cream dash and zebra bar on its asphalt side, and the mock paints its markings with no ring. look_d5_print
+  gains street_edge: no edge ink on pixels already in the dark wash step (but not on solid ink). h109all -> h115se1
+  (same package), 32 px/m: solid ink 0.14 -> 0.11 (mock 0.12), street share 0.46 -> 0.49 (mock 0.45; the rings
+  become street), L 0.462 -> 0.468, paper unchanged, rim dL / verm / teal 0.610 / 77.5 / 57.6 unchanged. By eye: the
+  crossing prints like the mock's (cream bars straight on asphalt); car, kerb, roof edges, shadow bands and the mural
+  keep their lines (48 px/m x2 check). Arena (a16all -> a17se1): ink 0.136 -> 0.115 at 64, 0.127 -> 0.118 at 128,
+  the turntable rim, hazard stripes and King's sprite keep their lines. Pan: pan15se / pan15seR = pan12thin /
+  pan12thinR (0.00049 / 0.00000). Params JSON print.street_edge 1.0; unit 149/0. Board evidence/item37_street_edge.png;
+  ladder row. (item29-32 and h109all/item35 were shot without it; h115se1 is the package's frame from here.)
