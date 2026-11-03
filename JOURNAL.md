@@ -218,3 +218,10 @@ NEXT (iteration 49 end):
 3. tools/audio/build_tables.py is stale: edit the JSON tables directly, or back-port car_wreck / boss_loop / Gloria -1 / the `layer` field first.
 4. Not done: positional cruiser sirens, tyre screech as a loop (the vehicles lane fires a one-shot at slide start and does not publish the slide state), per-surface footsteps, a settings slider UI for music / sfx / voice.
 5. POF-GAP 1-3 stand (audio-gen prompt wrapper > 450 chars; no tts; no music kind). POF-GAP 2 is closed by pof-voice's Voice room when it lands.
+
+## 2026-11-03 iteration 50 (BUILD, started 16:03)
+- MILESTONE (16:12) burning wrecks were silent: the vehicles lane's VehicleFire (a wreck burns 24 s, fading over the last 6) has no event, only the `car_wreck` FX at the explosion.
+  New cue `fire_crackle` (2 takes, ElevenLabs sound-generation direct, 20 s each, SFX credits only, ~100-200; POF-GAP 1 unchanged; no voice characters), started as the `layer` of `car_wreck`:
+  positional at the wreck, 19.6 s, RMS -24.9 dBFS (the beds sit at -18..-20), peak -1.0..-2.4 after a tanh soft limit at -3, 0.25 s fade in, 5 s fade out. QC by hand: 2 of 2 kept, 0 rejected;
+  per-second RMS steady within 4 dB for 15 s (no explosion, no voices), peaky crackle (spectrogram evidence/spectro/fire_crackle_0{1,2}.png: broadband pops over a steady bed, fade at the end).
+  Unit test `test_a_car_wreck_also_starts_its_fire_bed` (357 tests pass; the run printed `import exit 3221225477` with 0 failed: an import crash on a contended machine, not a test failure), lint 13/13. Provenance +2 lines. Not heard by a human; not yet recorded on the real vehicles lane (it is in its own branch: the clip needs the merge).

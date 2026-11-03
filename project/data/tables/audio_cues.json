@@ -428,6 +428,7 @@
       "doc": "a car turned wreck and exploded (vehicles lane car_wreck, fired with a crash)",
       "gain_db": -1,
       "id": "car_wreck",
+      "layer": "fire_crackle",
       "loop": false,
       "max_m": 90,
       "max_voices": 2,
@@ -481,6 +482,21 @@
       "priority": 3,
       "sound": "blood_spurt",
       "takes": 1
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 30,
+      "doc": "a wreck burns (layered under car_wreck; the vehicles lane's VehicleFire burns 24 s, fading over the last 6): a crackling bed that fades with it",
+      "gain_db": -5,
+      "id": "fire_crackle",
+      "loop": false,
+      "max_m": 40,
+      "max_voices": 3,
+      "pitch": 1,
+      "pitch_jitter": 0.03,
+      "priority": 2,
+      "sound": "fire_crackle",
+      "takes": 2
     }
   ],
   "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest).",

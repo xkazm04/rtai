@@ -36,7 +36,7 @@ master volume is `PlayerSettings`, which writes the AudioServer's Master). Posit
 | `cash_changed` (delta > 0) / `contract_started` / `contract_completed` | `cash_ding` / `objective_ping` / `ui_confirm` (bus `ui`) |
 | `wanted_changed` / `vehicle_entered`..`exited` | `siren_loop` / `engine_loop` (pitch follows the car's speed, `engine_*` in `audio_mix.json`) + radio |
 | `boss_engaged` / `contract_completed` | `boss_stinger` then the `boss_loop` bed (music bus) / bed off |
-| FX sink id `car_wreck` (vehicles lane explosion) | `car_wreck` (3 takes) |
+| FX sink id `car_wreck` (vehicles lane explosion) | `car_wreck` (3 takes) + its layer `fire_crackle` (19.6 s positional bed, fades out over the last 5 s like the wreck's 24 s fire) |
 | vehicles lane, once merged: `pedestrian_struck` / `vehicle_hijacked` | `hit_flesh` (+ `death`) / `hit_metal` |
 | FX trigger sink (riot) | `shot`, `projectile_end`, `death`, `player_hit`, `rivet_kill` (= `kill_punch`) |
 | API only: `ui_click`, `ui_back` | `service.cue(&"ui_click", Vector2.ZERO, tick)` |

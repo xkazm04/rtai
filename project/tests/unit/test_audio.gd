@@ -124,3 +124,11 @@ func test_a_death_also_starts_its_blood_layer() -> void:
 	assert_true(s.cue(&"rivet_kill", Vector2.ZERO, 100))
 	var spurt: int = s.played.get(&"blood_spurt", 0)
 	assert_eq(spurt, 1)
+
+
+func test_a_car_wreck_also_starts_its_fire_bed() -> void:
+	var s: AudioService = _service()
+	assert_true(s.cue(&"car_wreck", Vector2.ZERO, 100))
+	var fire: int = s.played.get(&"fire_crackle", 0)
+	assert_eq(fire, 1, "the burning wreck's crackle starts with the explosion")
+	assert_eq(s.bank.missing.size(), 0, "both fire takes load")
