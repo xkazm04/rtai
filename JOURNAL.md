@@ -1052,3 +1052,13 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   and 0.5. Manifest `d4n_digits`, provenance line, ladder rows "i12 HUD numerals". Commit 36ce71b.
   Words (labels) still need a font: owner question unchanged (AST-10). Codex night total: 27 images, 186 cells,
   7 rejected.
+- 03:46 GATES at 31a948f (HEAD, every iteration-12 commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught at step 629), selftest 72 art textures, 0 placeholders
+  (`evidence/iter12/gates-31a948f.txt`). Bench not re-run: one decal + one prop changed pixels (same sizes, ids), the
+  HUD strip is dev-overlay only.
+- 03:48 MERGED CHECK (scratch worktree `scratch-m12` = n-visual 928ed15 + n-d4 31a948f, `merge --no-commit`): JOURNAL.md
+  the only conflict. Frames `merged_i12/city-*-{32,48,64}ppm(-hud50)`, `merged_i12_dec/decals-*`: the inked HUD
+  counters and the chevron tracks hold under n-visual's passes (`work/tt12_merged.png`). Unit tests on the merged tree
+  **214 passed, 0 failed** (n-visual's suite incl. the accent audit). Scratch removed.
+- Not done, noted: quest 1's HUD (`hud_view.gd`, quest owner) prints cash with a thousands comma, which the strip
+  lacks; a `,` glyph and a patch would bring it over. Left for a later iteration / the quest owner.
