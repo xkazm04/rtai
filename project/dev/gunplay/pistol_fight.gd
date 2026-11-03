@@ -22,6 +22,8 @@ var _rig: CameraRig = CameraRig.new()
 var _live: int = -1
 var _hold: int = 0
 var _holds: int = 0
+## Rounds fired before the live part began (the first HIT_SHOTS live shots save a still too).
+var _shots_at_live: int = 0
 ## Live frames on which a round landed (the first HIT_SHOTS also save a still: the impact star).
 var _hit_frames: PackedInt32Array = PackedInt32Array()
 
@@ -61,6 +63,7 @@ func _process(_delta: float) -> void:
 			if _play.stage.arena.hostiles_alive() > 0:
 				_live = 0
 				_hold = 0
+				_shots_at_live = _play.stage.arena.gun.shots_fired
 				break
 		return
 	_live += 1
@@ -77,8 +80,12 @@ func _process(_delta: float) -> void:
 
 func _tick() -> void:
 	var hits_before: int = _link.hits
+	var shots_before: int = _play.stage.arena.gun.shots_fired
 	_play.tick_once()
 	_link.step()
+	var shots_now: int = _play.stage.arena.gun.shots_fired
+	if _live >= 0 and shots_now > shots_before and shots_now - _shots_at_live <= HIT_SHOTS:
+		_save.call_deferred(_live)
 	if _live >= 0 and _link.hits > hits_before:
 		@warning_ignore("return_value_discarded")
 		_hit_frames.append(_live)

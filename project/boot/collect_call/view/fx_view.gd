@@ -5,6 +5,8 @@ extends Node2D
 ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
 
 const TRACER_TAIL_M: float = 2.5
+## A table gun's muzzle flash holds this many ticks after the trigger breaks.
+const MUZZLE_TICKS: int = 2
 
 var stage: CollectCallStage
 ## Whisper rings hold still (no growth, no spin) when set (the settings flag).
@@ -33,6 +35,8 @@ func _draw() -> void:
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
+	if arena.gun != null:
+		_muzzle(arena.rivet, arena.gun)
 	for b: ArcBall in arena.balls:
 		_ball(b)
 	_arcs(arena)
@@ -48,6 +52,24 @@ func _tracer(s: Shot) -> void:
 	draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 9.0)
 	draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), Ink.CREAM, 4.0)
 	draw_circle(Ink.px(s.pos), 5.0, Ink.CREAM)
+
+
+## Lane gunplay: the muzzle flash, a small cream star in an ink rim off the claw for the first
+## MUZZLE_TICKS ticks after a round leaves (the trigger's cooldown has just been set).
+func _muzzle(r: Fighter, gun: GunHand) -> void:
+	var t: Trigger = gun.trigger
+	if gun.shots_fired == 0 or t.cooldown < t.spec.interval_ticks - MUZZLE_TICKS:
+		return
+	var at: Vector2 = r.pos + r.facing.normalized() * (r.radius_m + 0.5)
+	var pts: PackedVector2Array = PackedVector2Array()
+	@warning_ignore("return_value_discarded")
+	pts.resize(11)
+	for i: int in 10:
+		var k: float = 0.55 if i % 2 == 0 else 0.2
+		pts[i] = Ink.px(at + Vector2.from_angle(r.facing.angle() + TAU * i / 10.0) * k)
+	pts[10] = pts[0]
+	draw_colored_polygon(pts.slice(0, 10), Ink.CREAM)
+	draw_polyline(pts, Ink.INK, 2.5, true)
 
 
 func _ball(b: ArcBall) -> void:
