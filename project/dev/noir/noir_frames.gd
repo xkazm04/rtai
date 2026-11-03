@@ -6,7 +6,7 @@ extends Node
 ## while one moment is shot in both looks, so the pair is the same frame. Windowed only.
 ## Usage: godot --path project res://dev/noir/noir_frames.tscn -- --out=<dir>
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd", "--noir-parts"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd", "--noir-parts", "--verm"]
 const MASTER_SEED: int = 91
 const JUNCTION: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
 const SCENES: Dictionary[String, Vector2] = {
@@ -22,6 +22,8 @@ const RAIN_PHASE: float = 37.0
 var _out: String = "user://noir"
 var _only: String = ""
 var _crowd_ink: bool = false
+## --verm=<v>: the vermilion plate (the cops) prints at value v (params default 0 = ink).
+var _verm: float = -1.0
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -39,6 +41,8 @@ func _ready() -> void:
 			_out = arg.substr(flag.length() + 1)
 		elif flag == "--crowd":
 			_crowd_ink = arg.ends_with("=ink")
+		elif flag == "--verm":
+			_verm = arg.substr(flag.length() + 1).to_float()
 		elif flag == "--noir-parts":
 			# includes the noir peds (an experiment: they cost the cops their value cue)
 			var worn: int = NoirParts.wear(PackedStringArray(["cop", "rivet", "ped"]))
@@ -110,6 +114,8 @@ func _scene(scene: String, focus: Vector2) -> int:
 		var ppm: int = roundi(zoom * SimConst.PX_PER_M)
 		for look: String in ["d4", "noir"]:
 			_view.set_noir(look == "noir")
+			if _verm >= 0.0 and look == "noir":
+				_view.noir.apply({"verm_value": _verm})
 			if _crowd_ink:
 				_ink_crowd()
 			for i: int in 3:
