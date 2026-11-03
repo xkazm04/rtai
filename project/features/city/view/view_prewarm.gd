@@ -38,9 +38,21 @@ func run() -> int:
 
 
 func _warm_fx(centre: Vector2, tick: int) -> int:
+	# an fx kind's own light (the explosion's, via the glow twin, lives 36 ticks) would outlive
+	# the warm-up and glow on the player for the first ticks of play; the one light added
+	# below still warms the light pipeline
+	var systems: Array[FxSystem] = [_view.fx, _view.fx.glow, _view.fx.ground]
+	var held: Array[LightLayer] = []
+	for sys: FxSystem in systems:
+		held.append(sys.lights if sys != null else null)
+		if sys != null:
+			sys.lights = null
 	for kind: StringName in _view.fx.kinds:
 		@warning_ignore("return_value_discarded")
 		_view.fx.spawn(kind, centre, 0.0, tick)
+	for i: int in systems.size():
+		if systems[i] != null:
+			systems[i].lights = held[i]
 	var light: int = -1
 	for kind: StringName in _view.lights.kinds:
 		light = _view.lights.add(kind, centre, 0.0, tick)
