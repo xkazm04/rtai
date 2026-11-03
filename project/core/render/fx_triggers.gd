@@ -13,6 +13,8 @@ var rows: Dictionary[StringName, Dictionary] = {}
 ## Cues fired per id since boot (evidence and tests).
 var fired: Dictionary[StringName, int] = {}
 var fx: FxSystem = null
+## Called with (id, pos_px, tick) for every cue fired, table row or not (features/audio).
+var sink: Callable = Callable()
 var rig: CameraRig = null
 ## The camera focus in world px (shake_near_m is measured from it).
 var focus_px: Vector2 = Vector2.ZERO
@@ -37,6 +39,8 @@ func _init() -> void:
 
 ## Fires cue `id` at `pos_px` (world px) along `angle` on sim tick `tick`.
 func fire(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
+	if sink.is_valid():
+		sink.call(id, pos_px, tick)
 	var row: Dictionary = rows.get(id, {})
 	if row.is_empty():
 		return

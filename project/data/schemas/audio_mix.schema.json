@@ -1,0 +1,130 @@
+{
+  "$id": "gtai.audio-mix/1",
+  "additionalProperties": false,
+  "properties": {
+    "attenuation": {
+      "maximum": 8,
+      "minimum": 0.1,
+      "type": "number"
+    },
+    "buses": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "volume_db": {
+            "maximum": 12,
+            "minimum": -80,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "parent",
+          "volume_db"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "duck": {
+      "additionalProperties": false,
+      "properties": {
+        "buses": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "duck_attack_s": {
+          "maximum": 5,
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "duck_db": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        },
+        "duck_release_s": {
+          "maximum": 10,
+          "minimum": 0.01,
+          "type": "number"
+        }
+      },
+      "required": [
+        "buses",
+        "duck_db",
+        "duck_attack_s",
+        "duck_release_s"
+      ],
+      "type": "object"
+    },
+    "footstep_speed_mps": {
+      "maximum": 10,
+      "minimum": 0,
+      "type": "number"
+    },
+    "loudness": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "type": "object"
+    },
+    "m_to_px": {
+      "maximum": 128,
+      "minimum": 1,
+      "type": "number"
+    },
+    "panning_strength": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "pool_size": {
+      "maximum": 64,
+      "minimum": 4,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.audio-mix/1"
+    },
+    "servo_chance": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "voice_cap_per_frame": {
+      "maximum": 32,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "buses",
+    "voice_cap_per_frame",
+    "pool_size",
+    "m_to_px",
+    "attenuation",
+    "panning_strength",
+    "duck",
+    "loudness",
+    "footstep_speed_mps",
+    "servo_chance"
+  ],
+  "type": "object"
+}

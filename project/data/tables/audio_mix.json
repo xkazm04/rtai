@@ -1,0 +1,51 @@
+{
+  "attenuation": 1.6,
+  "buses": [
+    {
+      "id": "sfx",
+      "parent": "",
+      "volume_db": 0
+    },
+    {
+      "id": "voice",
+      "parent": "",
+      "volume_db": 2
+    },
+    {
+      "id": "music",
+      "parent": "",
+      "volume_db": -8
+    },
+    {
+      "id": "ui",
+      "parent": "",
+      "volume_db": -4
+    }
+  ],
+  "doc": "The mix as data (features/audio/audio_buses.gd builds the buses at boot, no default_bus_layout.tres). buses: id, parent bus id ('' = Master), volume_db. voice_cap_per_frame: most new positional voices started in one rendered frame (a riot frame can ask for dozens). pool_size: AudioStreamPlayer2D voices. m_to_px: audio-space pixels per metre (cue max_m scales by it). attenuation: AudioStreamPlayer2D attenuation exponent. panning_strength: 0..1 stereo spread for the top-down camera. duck: while a voice line plays, these buses drop by duck_db over duck_attack_s and recover over duck_release_s (rendered frames, not ticks). loudness: the targets the files were normalised to (tools/audio/process.py). footstep_speed_mps: Rivet's speed above which footsteps play. servo_chance: odds a footstep run also gets Rivet's servo whine.",
+  "duck": {
+    "buses": [
+      "music",
+      "sfx"
+    ],
+    "duck_attack_s": 0.12,
+    "duck_db": {
+      "music": -9,
+      "sfx": -3
+    },
+    "duck_release_s": 0.6
+  },
+  "footstep_speed_mps": 0.6,
+  "loudness": {
+    "loop_peak_db": -6,
+    "sfx_peak_db": -3,
+    "voice_lufs": -18,
+    "voice_true_peak_db": -2
+  },
+  "m_to_px": 32,
+  "panning_strength": 0.7,
+  "pool_size": 24,
+  "schema": "gtai.audio-mix/1",
+  "servo_chance": 0.35,
+  "voice_cap_per_frame": 4
+}
