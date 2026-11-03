@@ -1011,11 +1011,11 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
 - 03:27 re-check on n-visual 0b34727 (it moved since the merged check): both iteration-10 patches apply; merge n-d4 into it conflicts in JOURNAL.md only. Scratch removed. Tree clean after this entry.
 
 ## 2026-11-03 03:27 iteration 12, BUILD (raise the weakest item; stop 04:57)
-- 03:30 Re-read: merged i10 frames vs the target, props contact sheet (`work/i12_props_sheet.png`), decal sheet
+- 03:29 Re-read: merged i10 frames vs the target, props contact sheet (`work/i12_props_sheet.png`), decal sheet
   (`work/i12_decals_sheet.png`), road + curb tiles (`work/i12_roads.png`, `i12_curbs.png`). Texel density of all 72
   table rows measured: ground 96, everything else 80 px/m, none soft by density. The repeated big kerb crack in
   `merged_i10/city-0-48ppm.png` is the curb variant pick (generator patch v2 cycles it), not art.
-- 03:40 MILESTONE tank_tracks redrawn (the weakest decal on the HEAD decals board `before_i12d/decals-48ppm.png`: two
+- 03:33 MILESTONE tank_tracks redrawn (the weakest decal on the HEAD decals board `before_i12d/decals-48ppm.png`: two
   short soft "film strips" with a grey halo, no edge, no tread read). `tools/track_redraw.py`, procedural, no AI image:
   two 0.6 m bands 2.5 m apart, wobbly ink edges, chevron grooves, pressed-asphalt fill, ragged faded ends; same
   480 x 280 / id 64. Probes in-engine (decals board, look_d4): a = 0.3 m / 6 px faint (`work/tt12_peek.png`);
@@ -1025,7 +1025,7 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   overwritten by c by my copy slip, b's 32 crop survives in `tt12_abc.png`). Provenance: a new line,
   tool `code:track_redraw.py`, no image model (it replaces the Codex tread). README note, ladder rows "i12 tank tracks".
   Original in `masters:backup_tt/`. Commit 7f517e6. 0 Codex.
-- 03:50 REJECTED, NOT SHIPPED: skid_marks redraw (`tools/skid_redraw.py`, two 0.3 m dry-brush rubber streaks 1.5 m
+- 03:35 REJECTED, NOT SHIPPED: skid_marks redraw (`tools/skid_redraw.py`, two 0.3 m dry-brush rubber streaks 1.5 m
   apart, procedural). City frames (`city_frame --zooms=1,1.5,2`, city-1 has the skid decal) `before_i12s_city|
   probe_i12s_city/city-1-{32,48,64}ppm.png`, crops `work/sk12_ab.png`: the original hatched streaks are wider, read
   better at 32 and are more "ink and hatch" at 64; mine thins into the asphalt. Original kept (`backup_sk/`), tree
