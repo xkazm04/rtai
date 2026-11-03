@@ -1,5 +1,5 @@
 diff --git a/project/assets/shaders/look_d5.gdshader b/project/assets/shaders/look_d5.gdshader
-index a580b4d..f60b3fe 100644
+index a7017c3..6e61de0 100644
 --- a/project/assets/shaders/look_d5.gdshader
 +++ b/project/assets/shaders/look_d5.gdshader
 @@ -12,6 +12,8 @@ shader_type canvas_item;
@@ -11,7 +11,7 @@ index a580b4d..f60b3fe 100644
  uniform vec2 world_px = vec2(0.0);
  uniform float amount = 1.0;
  uniform float hatch = 0.45;        // second hatch family strength in the wash steps
-@@ -35,12 +37,11 @@ const vec3 INK = vec3(0.090, 0.075, 0.106);
+@@ -36,12 +38,11 @@ const vec3 INK = vec3(0.090, 0.075, 0.106);
  const vec3 AGE_DARK = vec3(1.03, 0.955, 0.87);
  const vec3 AGE_LIGHT = vec3(1.065, 1.0, 0.955);
  
@@ -27,7 +27,7 @@ index a580b4d..f60b3fe 100644
  }
  
  float dens(vec3 c) { return clamp((0.93 - dot(c, vec3(0.299, 0.587, 0.114))) * 1.2, 0.0, 1.0); }
-@@ -70,20 +71,31 @@ void fragment() {
+@@ -71,20 +72,32 @@ void fragment() {
  		vec3 o = c;
  		// ink pressure: a second family over the mid and dark wash (never on paper, never on solid ink)
  		float wash = smoothstep(wash_lo, wash_lo + 0.12, d) * (1.0 - smoothstep(wash_hi, wash_hi + 0.1, d));
@@ -39,8 +39,9 @@ index a580b4d..f60b3fe 100644
 -		float hs = strokes(w + vec2(3.0, 0.0), 0.785, 0.16) * street * patch * street_hatch;
 -		float hz = mix(street_hatch_car * smoothstep(0.2, 0.35, amount), 1.0, smoothstep(0.7, 1.0, amount));
 -		if (!is_verm) o = mix(o, INK, hs * hz);
-+		// early-outs (bit-identical): the noise behind a mask that is exactly 0 is not evaluated
-+		if (!is_verm && (wash > 0.0 || street > 0.0)) {
++		// early-outs (bit-identical): the noise behind a mask that is exactly 0 is not evaluated; amount 0
++		// (only the age / grain floors live, below the D5 zoom) skips the strokes and both ghosts
++		if (!is_verm && amount > 0.0 && (wash > 0.0 || street > 0.0)) {
 +			float patch = smoothstep(0.42, 0.72, vnoise(w * 0.018 + 7.0));   // hand pressure comes and goes in patches
 +			if (wash > 0.0) {
 +				float h = strokes(w, -0.62, mix(0.16, 0.34, smoothstep(0.3, 0.6, d))) * wash * patch * hatch;
@@ -56,17 +57,17 @@ index a580b4d..f60b3fe 100644
  		// off-register ink ghost: ink that should be a pixel away, printed faintly here (only onto lighter ink)
 -		float dg = dens(texture(screen_tex, uv - ink_mis * tx).rgb);
 -		o = mix(o, INK, max(dg - d - 0.35, 0.0) * ink_ghost * amount);
-+		if (d < 0.66) {
++		if (amount > 0.0 && d < 0.66) {
 +			float dg = dens(texture(screen_tex, uv - ink_mis * tx).rgb);
 +			o = mix(o, INK, max(dg - d - 0.35, 0.0) * ink_ghost * amount);
 +		}
  		// off-register vermilion pass
 -		float vg = vden(texture(screen_tex, uv - verm_mis * tx).rgb);
 -		o = mix(o, VERM, vg * (is_verm ? 0.0 : 1.0) * verm_ghost * amount * (1.0 - smoothstep(0.85, 0.95, d)));
-+		if (!is_verm && d < 0.95) {
++		if (!is_verm && amount > 0.0 && d < 0.95) {
 +			float vg = vden(texture(screen_tex, uv - verm_mis * tx).rgb);
 +			o = mix(o, VERM, vg * verm_ghost * amount * (1.0 - smoothstep(0.85, 0.95, d)));
 +		}
  		// paper tooth: an isotropic dry-brush mottle
  		float fib = vnoise(w * 0.07) * vnoise(w * 0.45 + 3.1);   // isotropic mottle (anisotropic fibres read as rain)
- 		float tooth = (fib - 0.25) * grain * amount;
+ 		float tooth = (fib - 0.25) * max(grain * amount, grain_floor);

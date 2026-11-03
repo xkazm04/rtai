@@ -682,3 +682,12 @@ NEXT (iteration 11 / morning, in order):
 5. Owner calls (frames ready, unchanged): objective solid vermilion vs paper + core (16); cop vermilion
    body vs cream body + cap (17); 15 Hz outer rigs (15); overlay amount at 48 px/m.
 6. Rig 0.37 ms per tick (contended bench) vs 0.3: native RigArm / RigGait (characters owner).
+- 03:04 the look_d5 patch REBASED on n-d5 5f0c13b (its f9f07fb grain_floor proposal broke the old context):
+  evidence/pass-cost/look_d5-early-outs-lattice.patch now = early-outs + lattice + `amount > 0` guards on the
+  strokes and both ghosts. Why the guards: with a floor live (age_floor / grain_floor below the D5 zoom,
+  amount 0) the overlay runs everywhere at 32 / 48 px/m, and the strokes + 2 ghost fetches were computed
+  only to be multiplied by 0. Checked bit-identical where it matters: n-d5's shader plugged in with
+  grain_floor forced to 0.3 (scratch), guarded vs unguarded = 0 px differ in all 10 look frames, and the
+  floor path was live (auto 48 px/m differs from D4 on 21 % of px). Frames 28-d5-guards/. Not timed (the
+  floors are proposals, default off). NOTE for the owner: if grain_floor ships, the D5 overlay's screen copy
+  + tooth cost moves to every zoom (~+1 ms on the iGPU before this patch; measure with overlay_cost).
