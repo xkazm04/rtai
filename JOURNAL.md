@@ -632,3 +632,16 @@ NEXT (iteration 10 / morning, in order):
   and d1 frames are untouched (mean 0.00). Patch: evidence/pass-cost/look_d5-early-outs-lattice.patch
   (early-outs + lattice in one, `git apply --check` OK on n-d5). Needs the owner's eye for the moved
   hatch patches; the -ov goldens are re-blessed after the merge anyway. Ladder 26.
+- Evidence at 0d4175d (02:42, e79c19f): lint 13/13, unit 206, scenarios 8, parity PASS, selftest PASS
+  (goldens 10/10 worst 0.09, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied
+  to evidence/pof. Bench started 02:44.
+- NOTE for the Director: n-d4's README offers `traffic_atlas_wiring*.patch` (lane masters) for the same
+  quad. Do NOT apply it on top of 7bfb6b9 - this branch already wires the atlas (through the item print,
+  grid from the texture size); applying both would double-wire CrowdLayers.
+- Bench at e79c19f (02:44-02:56, release export, 3 runs x 4 scenarios, another lane's Godot running = contended):
+  PASSES section 20 - p99 2.83 ms (iter 8: 3.14), 1% low 238 fps (208), worst swap 32.5 ms, worst frame
+  49.6 ms, 0 frames > 50 ms; >25 ms 106 summed (iter 8: 45) - every hitch in the last run's lists has cause
+  `present` (render GPU <= 2.6 ms, draw ~29 ms = waiting on the swap), none game / render / pipeline, so
+  read as the shared display, not the lattice or the traffic plug (the plug is not live on this branch
+  anyway). Riot rig 0.372 ms per tick (iter 8: 0.334; also contended). evidence/bench-*-iter10.json,
+  bench-iter10.txt.
