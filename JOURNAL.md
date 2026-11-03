@@ -584,3 +584,4 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
   changed 127 / 292 px at 32 / 64, all on the cloth tops. Vermilion share of the roof 0.68% -> 0.65%. Crop
   evidence/item21b_misprint_laundry.png. MISTAKE: I deleted frames/h85 while cleaning (boards cited it); the boards
   (item4, night_iter5_summary) and evidence/hero-*ppm.png are re-made from h86 (= h85 + this fix), README updated.
+- 02:10 checked by eye at 48 px/m: HQ and pension b plates print clean (s4), no defects; ladder +1 row (h85 vs h86, HQ/pension at 48).
