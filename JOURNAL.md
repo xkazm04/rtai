@@ -653,3 +653,5 @@ NEXT (iteration 10 / morning, in order):
   Shader kept as 27-print-masks/look_d4-all-lattice-rejected.gdshader; jsons in evidence/pass-cost/hash-ab.
 - test: the traffic cell (512 x 256 px) is pinned to the sim's car quad at 80 px/m (CitySimRender CAR_L /
   CAR_W); planted 512 x 240 -> 3 failing tests, restored. Unit 207.
+- 03:03 the lattice at 1080p on the iGPU (2 runs): frame 5.29 / 5.40 ms (was 5.72 / 5.79), print 2.60 / 2.70
+  (3.07 / 3.18, -15 %), rigs 0.56 / 0.67. README per-pass row updated. evidence/pass-cost/hash-ab/lattice-1080-*.
