@@ -467,3 +467,15 @@ per REQUEST 7; 2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: G
 NEXT (night run): unchanged from iteration 6's list (1: gates on the merged tree, unit alone per REQUEST 7;
 2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot; 4: the 48 px/m
 vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it; 5: dummies' own look).
+
+## Iteration 9 (STABILIZE, 23:30-23:31, past freeze)
+- 23:30 answers.json re-read: no new answer to an arena ask (arena-1 C and arena-2 A stay placeholders per the
+  owner's 21:25 rule). gunplay-3 A (owner pick 22:55) belongs to the gunplay lane; nothing for the arena to apply.
+- Worktree clean. Lint re-run on the branch head: 13/13 pass over 515 GDScript files
+  (`evidence/arena/lint-it9.log`). No code since a08445f, so unit 569/569 alone and scenarios 24/24 of
+  iteration 6 stand; not re-run (10 minutes to report, a contended unit run would not be a run of record).
+- No bugs fixed this iteration: none found open on the arena's own files.
+
+NEXT (night run): unchanged from iteration 6's list (1: gates on the merged tree, unit alone per REQUEST 7;
+2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot; 4: the 48 px/m
+vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it; 5: dummies' own look).
