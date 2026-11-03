@@ -326,7 +326,7 @@ NEXT (iteration 4 close, in order):
   the previous sheet is evidence/showcase-hero-v1.png). evidence/NOIR.md updated. Masters trimmed to ~580 MB.
 - (01:36) Gates at b3c3d1f (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty):
   lint (13), 180 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS.
-- MILESTONE/NOT ADOPTED (01:37) noir peds: noir_ped_1 (62 s, 0 rejected): 10 ped parts (hat head, hair
+- MILESTONE/NOT ADOPTED (01:36) noir peds: noir_ped_1 (62 s, 0 rejected): 10 ped parts (hat head, hair
   head, jacket torso, shirt torso, pelvis, upperarm, forearm, thigh, shin, foot) as trench-coat ink masses
   with a thick white rim, the hat as a fedora seen from above with a white band. Sliced into
   art/noir/ped/ (10 provenance lines). `dev/noir/noir_parts.gd` (NoirParts.wear) is now the shared hook;
@@ -339,9 +339,25 @@ NEXT (iteration 4 close, in order):
   the one lit figure. BUT the cops lose their main noir cue (they were the dark masses among white peds;
   now everyone except Rivet is dark), and at 32 px/m a dense crowd turns into a busy mesh of rims. So it
   is opt-in only, not in the showcase.
-- EXPERIMENT (01:41) the cop read with ink peds: `noir_frames -- --noir-parts --verm=1` (the vermilion
+- EXPERIMENT (01:38) the cop read with ink peds: `noir_frames -- --noir-parts --verm=1` (the vermilion
   plate prints as paper; the crowd cops carry it through the rig palette swap). Evidence
   evidence/ped-cop-read.png (street + junction 48 px/m: D4 peds | ink peds | ink peds + paper cops) and
   ped-cop-read-zoom.png. Read: the crowd cop pops again as the one bright torso among dark passers-by,
   but the white cap band is lost and cops and Rivet are now both the bright figures (Rivet keeps his ink
   core + visor U). An owner choice of value roles, not adopted: params keep verm_value 0, showcase unchanged.
+- MILESTONE (01:44) the muzzle lights the scene (work order 4): look_noir `flash`, `flash_uv`, `flash_r`
+  115 px (at 32 px/m, x zoom), `flash_lift` 0.3: on the fire tick a pool around the muzzle is lifted to
+  paper (the darkest ink, under 0.4 crush, stays ink); MuzzleFlash.lit_at(); the showcase sets it on the
+  lit tick and saves that tick as a "lit" hero frame (the old "shot" heroes were the tick AFTER, so the
+  old light never showed in any still). Before (flash-v0, a temporary uncommitted patch restoring the old
+  thresh +0.25) shows almost nothing; v1 a hard round pool (reads as a spotlight disc); v2 a ragged brush
+  edge (angle waves + fibre noise). Kept v2. Evidence masters flash-before-after-48.png (v0 | v1, two
+  shots), flash-v2/f230-3way.png (v0 | v1 | v2); ladder row 20.
+  Honest read: the strongest new comic beat of the session - the shooter is a solid black silhouette with
+  the white starburst inside a burst of light, one frame per round. Risk: a big white strobe (6 rounds in
+  11 s here) needs a photosensitivity check before it ships. quest_fight still uses the old lift.
+- (01:47) Final showcase re-shot: masters night/noir/show-final3/ (noir 48 / 64, D4 48; 11.3 s, 60 fps)
+  + evidence/showcase-hero.png (rows: the fire tick, the silhouette flash, the held panel, the aftermath).
+  show-final2 clips deleted (frames kept for the before/afters). Ladder 20 rows. NOIR.md updated.
+  Images this session: 3 Codex (noir_rivet_1, noir_rivet_limbs_1, noir_ped_1), 0 rejected, no limit
+  hit; Leonardo 0 tokens. Provenance this session: 29 lines (19 Rivet + 10 ped).
