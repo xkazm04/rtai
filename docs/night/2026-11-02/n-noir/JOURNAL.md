@@ -1,0 +1,1368 @@
+# JOURNAL - lane noir (D-Noir: high-contrast noir comic, selective colour)
+
+Branch `n-noir`, worktree `gtai-wt/n-noir`. Evidence: `C:\Users\kazda\kiro\gtai-masters\night\noir\`.
+
+## 2026-11-02 iteration 2 (BUILD), 22:41-00:11
+
+- 22:41 No JOURNAL from iteration 1 in this worktree; starting fresh from main 721fbbb.
+- FRICTION: the worktree had no native sim DLL and no baked city (both git-ignored). Copied
+  `project/native/bin/*.dll` and `project/data/generated/city/` from the n-visual worktree (build
+  output, not committed).
+- Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null -> no Leonardo tonight.
+- Shared files touched (minimal): `boot/launch_args.gd` (+`--look` in KNOWN_FLAGS),
+  `features/city/view/city_view.gd` (+`noir` var, `set_noir()`, 2 lines in `_place_camera`).
+- MILESTONE look_noir: `assets/shaders/look_noir.gdshader` + `look_noir.params.json`
+  (`gtai.look-noir-params/1`, one `frame` table of uniforms, same shape as look_d5.params.json) +
+  `features/fx/noir/noir_look.gd` (CanvasLayer 10, over world AND actors). `--look=noir` switches it on.
+  Frames: `dev/noir/noir_frames.tscn` shoots junction / street / roofs at 32/48/64 px/m in D4 and noir
+  back to back with the world paused (same frame). Iterations (all in masters/night/noir):
+  - look-v1: Sobel ink on lit edges + rim everywhere -> embossed double lines, too busy. Rejected.
+  - look-v2: rim only dark-on-dark, no edge ink; cops/collar printed as paper (white blobs). Threats lost.
+  - look-v3: vermilion prints as a solid ink mass (verm_value 0): cops = black mass + white sticker rim.
+  - look-v3raw / v4: `keep_d4 false` (the noir pass reads the raw art, not the D4 print): the D4
+    pavement hatching disappears, big black masses, much more stark. v4 = all scenes. Chosen.
+  Honest read of v4: streets AND pavements both print black (kerb lines remain); roof tile grid is lost
+  (roofs print as flat paper); people pop white; Rivet reads (claw, visor) but his collar is now black.
+  Colour doctrine: no colour except the protected blood red and the teal plate (none on screen yet).
+- MILESTONE blood + impact frames (work order 3) and hit-stop (part of 4):
+  `features/fx/noir/blood_fx.gd` + `blood_fx.json` (`gtai.noir-blood/1`): pooled droplets (max 320)
+  thrown in a cone along killer -> victim, landing as ink-blot splats; a pool under each kill that
+  spreads over 420 ticks with a white wet sheen; decals persist 60 s then fade over 120 s; pools have
+  their own ring (16) so droplet splats never evict them (v1 bug, caught in frames, fixed + unit test).
+  Scatter is a counter hash (no RNG stream, no sim state). `impact_frame.gd` +
+  `look_noir_impact.gdshader`: a 3-tick comic beat on kills - inverted panel (blood stays red), paper
+  with a speed-line burst, white flash with ink silhouettes. `noir_combat_fx.gd` listens to the REAL
+  `Events.actor_killed` / `player_hit` and emits `hit_stop(ticks)` (impact.hit_stop_ticks 5 in params).
+  Evidence `fight-v4/`: `dev/noir/blood_clip.tscn` recorded with the movie maker (fixed 60 fps) ->
+  fight-48.mp4 / fight-64.mp4 (~10 s) + hero frames f050 (inverted), f051, f060, f176, f300, f600.
+  FRICTION: draw_colored_polygon triangulation failed on hashed star blobs (4276 errors in v3); blots
+  are now discs (core + lobes) - 0 errors, and they read rounder.
+  HONEST: the "cops" in the clip are fixed points (no bodies) in the riot crowd; the kills go through
+  the real events, but the city scene has no CombatArena. Wall splats are not done (no wall data in the
+  city view). The world hit-stop holds the sim; the rigs keep their pose (that is the held panel).
+- MILESTONE real fight wiring + muzzle flash (work order 4, part): `dev/noir/quest_fight.tscn` plays
+  quest 1 (collect-call, its bot, seed default) drawn by CollectCallView (placeholder ink) under the
+  noir pass; NoirCombatFx is bound to the play's own EventBus (`CollectCallPlay.bus()`, a 3-line
+  accessor added to dev/bots/collect_call_play.gd), so the blood comes from CombatArena.damage's
+  real `actor_killed` (15 kills in 900 live frames). `features/fx/noir/muzzle_flash.gd`: a white
+  ink-rimmed starburst per new round for 2 ticks, and the noir threshold drops for the fire tick
+  (the frame "lights"). Hit-stop holds the play 5 ticks per kill. Evidence `quest-v2/`:
+  quest-fight-48.mp4 (15 s) + strip.png + 4 hero frames.
+  HONEST: weak evidence for the look - the guards are placeholder rings that print dark on black and
+  nearly vanish; the HUD sits under the noir pass (rain over the bark box); Rivet's placeholder eyes
+  and hp bar are teal (the noir doctrine keeps teal for the dead only - the placeholder's colour, not
+  the pass's; noted for the noir parts). quest-v1 (camera on Rivet) had the fight off-frame; v2
+  frames between Rivet and the nearest guard but loses Rivet when they are > 26 m apart.
+- REVERTED (two experiments, not committed):
+  1. `look_noir_crowd.gdshader`: the baked crowd atlas printed as ink silhouettes with a lit-side white
+     rim (the brief's "black masses with white rim"). The material was applied to the RL_PEDS MultiMesh
+     (confirmed by a log line), but the frames were pixel-identical (crowd-ink-v2/): the people on screen
+     at the junction are not drawn through that node's material the way I assumed. I ran out of time to
+     trace it, so I reverted it.
+  2. Quest 1's HUD lifted above the noir pass (quest-v3/): the rain left the bark box, but the HUD then
+     prints D4 vermilion (heat pips, speaker name), which breaks the noir doctrine. That is worse, so I
+     reverted it. The real fix is a noir HUD palette (Ink tokens), not a layer move.
+- Evidence summary for the morning: `evidence/NOIR.md` (+ ladder.png, showcase-d4-vs-noir.png and
+  the gate JSONs, all untracked in the worktree). Gates at 81dca0e: lint, 173 unit, 8 scenarios, parity
+  and selftest all PASS.
+- Image generation: Leonardo balance is 0. No Codex image_gen was run this session (0 images, 0 rejected),
+  so there are no provenance lines to add.
+
+- MILESTONE (retry of reverted experiment 1, 23:40): `assets/shaders/look_noir_crowd.gdshader` WORKS when it
+  is applied right before each capture (the first try probably raced the first render; a modulate=red
+  diagnostic proved RL_PEDS is the atlas crowd, while the near people are full rigs). Opt-in dev flag only:
+  `noir_frames.tscn -- --crowd=ink`. The atlas crowd prints as solid ink silhouettes carved by a white
+  lit-side rim (7 atlas texels; 1 texel was sub-pixel on screen, crowd-ink-v3). Evidence:
+  `crowd-ink-v4/compare.png` (v4 vs ink crowd, junction 48 / street 32).
+  Honest read: on the paper pavements it is the noir silhouette the brief asks for, and the frame is much
+  less busy. But the silhouettes are blobby (the atlas alpha includes the sticker halo, so limbs merge),
+  and the 16 near full rigs stay white, so the foreground and the crowd do not match. It is not the default.
+
+- REVERTED (23:42): a `noir` uniform in `features/characters/print_part.gdshader` + `PartMaterials.set_noir()`
+  (the body prints as one ink mass, and the cream halo stays the white rim). The materials were confirmed set
+  (8 shared mats, noir 1.0 logged), but the near full rigs still printed cream in crowd-ink-v6. A
+  modulate diagnostic was inconclusive (a blue modulate darkens cream by itself). Suspects: the rigs
+  redraw only on sim ticks while the A/B shots are paused, or a branch of print_part I did not reach. The
+  change touched the characters feature (outside my file scope), so I reverted it rather than leave it half-proven.
+
+- MILESTONE (23:45, the reverted rig attempt fixed): the rig noir print works. The bug was mine:
+  `noir_keep` 0.86 kept every source pixel above that luminance as paper, and the art's cream body is about
+  0.91, so the bodies stayed cream. At 0.97 every body part prints as ink inside the cream halo (the white
+  rim). The world is also no longer paused for the shots in this mode (the rigs redraw on ticks).
+  SHARED FILES (characters feature, minimal, default OFF): `print_part.gdshader` +`noir`/`noir_keep`
+  uniforms (one line in the fragment); `part_materials.gd` +`static var noir`, `set_noir()`. Only
+  `noir_frames.tscn -- --crowd=ink` switches it on. Evidence `rig-ink-v2/` + `compare.png` (D4 /
+  noir v4 / ink crowd / ink everyone).
+  Honest read: the most noir frame of the night - every person is one black mass carved by a white rim,
+  near and far consistent, and the junction reads clean. BUT Rivet now reads only by his claw
+  silhouette: the visor and hero read are gone, and he is the same value as the cops. The brief wants the
+  visor kept: a noir Rivet needs paper "light" on the visor/claw (noir parts or a per-part keep mask).
+
+- MILESTONE (23:46): Rivet's hero read in the ink-people mode. `PartMaterials` sets `noir_keep` per kind:
+  CORE (Rivet-only: the visor / chest plate) 0.80, all else 0.97. Rivet is now the one lit figure (his
+  visor plate prints as paper) among the ink masses, with the claw as a silhouette (`rig-ink-v3/`). The claw
+  tips are not lit yet.
+
+NEXT:
+0. (partly done: the core is lit) Rivet's hero read in the ink-people mode: keep the visor and the claw tips as paper (a per-part keep
+   flag in PartMaterials, e.g. the COLLAR/CORE kinds, or noir parts from a Codex round), then make
+   ink people the --look=noir default if the owner likes rig-ink-v2/compare.png.
+1. Item 2, the noir characters (the weakest item): wire look_noir_crowd into --look=noir properly
+   (CityCharacters sets the atlas material after bake; noir needs a hook there), bake the atlas without
+   the halo in noir (so limbs stay legible), and give the full rigs the same ink + lit rim through
+   `part_materials.gd` (a noir part print), so the near and far people match. Start by testing the
+   print_part `noir` uniform with the world RUNNING (no pause) and a plain frame grab, before any A/B. Rivet's collar and claw need a rim, not a flat black. If
+   that is not enough, run a Codex round (the layout-template technique) for noir Rivet / cop / ped parts on
+   the same rig.
+2. The showcase with real bodies: put 2 cop rigs at the clip's COPS points (or run the junction fight
+   from a CombatArena), and record 48 and 64 px/m clips of 10-20 s.
+3. Wall splats (needs wall/prop edges in the view), and the pool shape (discs read as blots; a
+   spreading pool could be an SDF ring).
+4. Noir HUD palette (Ink tokens without vermilion) for quest 1's view; then lift the HUD above the pass.
+5. Measure the noir pass cost (bench with --look=noir) before anyone calls it free.
+6. Knockback poses held as panels: the hit-stop holds the world, but the victims are not posed yet
+   (the city crowd has no knockback clip). The long coat / rain secondary motion is not started.
+- 23:43 Final gates at c5829e2 (`run.mjs --no-bench --allow-dirty`; the only dirty path is the untracked
+  evidence/ folder): lint, 173 unit, 8 scenarios, parity and selftest all PASS. evidence/ = NOIR.md
+  + ladder.png (6 rows) + showcase-d4-vs-noir.png + crowd-ink-compare.png + the gate JSONs. It is not
+  committed (the PNGs are 2-4 MB; the Director decides). Masters are about 220 MB in night/noir (mp4 + png).
+  Images: 0 generated, 0 rejected (Leonardo 0 tokens; no Codex round tonight).
+- 23:47 Session close. Gates at b0e7fba (`run.mjs --no-bench --allow-dirty`, the only dirty path being the untracked
+  evidence/ folder): lint, 173 unit, 8 scenarios, parity and selftest all PASS. Ladder: 7 rows
+  (masters/night/noir/ladder.png, copied to evidence/). Masters were trimmed to 155 MB (superseded fight-v1..v3 and
+  the quest-v1/v3 clips deleted). No processes left running.
+  NEXT (in order): see the NEXT list above. Top: make the ink-people print (crowd + rigs + Rivet's lit core)
+  the --look=noir default if the owner picks it from evidence/people-ink-compare.png; light the claw tips;
+  a real-bodies showcase (2 cop rigs at a junction in rain, 48 and 64 px/m clips); measure the noir pass cost.
+
+## 2026-11-02/03 iteration 4 (BUILD), 23:48-01:18
+
+- 23:48 Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null -> no Leonardo.
+  No Codex round planned this session (code + evidence first). Disk 219 GB free.
+- MILESTONE (00:05) work order 5, the showcase with REAL bodies: `dev/noir/showcase_fight.tscn` +
+  `dev/noir/fight_script.gd` (NoirFightScript, deterministic beats on a live-tick clock that does
+  not advance while the world is held). Rivet + two cop cutout RIGS (own CharacterRigs on the city's
+  actor layer, stepped by the world clock, so the hit-stop freezes the bodies = the held panel) at the
+  junction in rain; the city around them is the real city with a thin street crowd (12 peds, 0 cars:
+  show-v1 had a car drive through the fight). Cops close in and fire (MuzzleFlash starbursts at
+  CutRig.muzzle_local(), the noir threshold +0.25 for the lit tick); Rivet dashes, punches (combo 3),
+  rolls clear of cop B's fire, dashes, punches. The kills go through the REAL Events.actor_killed /
+  player_hit -> NoirCombatFx (blood spurt along the hit, spreading pools, impact frame, hit-stop 5);
+  the victim gets the HIT clip (shove + twist) + DEAD (sprawl) + a 6 m/s knockback slide.
+  `--d4` shoots the same fight in D4. Unit test `test_noir_showcase.gd` (2 kills, A then B; same cues
+  every run). Evidence `show-v3/`: showcase-noir-48.mp4, showcase-noir-64.mp4, showcase-d4-48.mp4
+  (11.2 s each, movie maker 60 fps) + 15 hero frames per run + `showcase-compare.png`
+  (D4 48 | noir 48 | noir 64 at the opening, a shot, the kill flash, the inverted panel, the aftermath).
+- MILESTONE (00:05) the comic impact frame fixed: show-v1 showed mode 3 (paper + speed lines) blanking
+  the fighters to nothing. New mode 4, the silhouette flash: ImpactFrame hides `hide_on_flash` (the
+  world canvas + the noir pass) for that tick and sets the clear colour to a green key; the shader
+  prints every non-key pixel as ink. Result (show-v2/v3): the two fighters as solid ink silhouettes
+  on white paper inside the speed-line burst, the blood still red - the brief's "silhouette inverted"
+  beat. Default sequence is now [4, 4, 1]. Blood moved under the actor layer (z -1) so it survives the
+  flash. Unit test: the flash hides then restores.
+  HONEST: in `--d4` the flash prints all black (the D4 print layer is not in the hide list; the beat is
+  a noir-only feature). quest_fight.gd has no hide list, so there mode 4 is a black flash (red blood
+  only) - not re-shot.
+  Honest read of the showcase (show-v3/showcase-compare.png): the kill beats read as comic panels and
+  blood is the only colour on screen. BUT the cops lost their threat read: in D4 they pop vermilion,
+  in noir they are white figures the same value as Rivet (shape only: cap + gun). At the punch Rivet's
+  claw overlaps the cop (REACH 1.6 m), so the hit itself is one white knot at 48 px/m. Rain at 48 px/m
+  is busy around small figures. Rivet bleeds red on player_hit (a robot: oil/sparks would be truer;
+  kept, as the doctrine is "violence in red").
+- 00:07 FIX the doctrine: Rivet's prod tip printed teal (the only teal on screen; the souls are not drawn
+  yet). Params `teal` 0.0; the dead must draw above the pass (layer > 10) to keep theirs. Before/after
+  `teal-before-after-64.png`, ladder row 10. CORRECTION to my 00:05 read: at 64 px/m the cops DO read as
+  ink masses with a white rim (paper badge bar + gun hand) and Rivet as the lit paper figure (crop
+  `cop-crop-noir64.png`); the loss vs D4 is speed of read (value + shape, not hue), not the read itself.
+- MILESTONE (00:06) noir pass cost, measured: `dev/noir/noir_cost.tscn` (the riot junction, alternating
+  120-frame blocks D4 / noir, RenderingServer viewport GPU/CPU time). 1920x1080, RTX 4090: noir 0.85 ms
+  (48 px/m) / 0.75 ms (64 px/m) GPU vs D4 1.44 ms; CPU render ~0.2 ms both. Noir REPLACES the D4 print pass
+  (keep_d4 false). One GPU only; a low-end number is still unmeasured. JSONs in masters + evidence/.
+  FRICTION: two hangs of 5 min each - a GDScript warning-as-error in a dev scene leaves the window open
+  forever and the piped stdout is lost on kill. Fix: `--headless --quit-after 60` first, it prints the parse error.
+- (00:10) showcase `--d4` binds no impact frame (it printed the silhouette flash as all black); punch
+  REACH 1.9 m (the claw still touches the cop at 48 px/m).
+- REJECTED for the fight: the ink-people mode (`--ink`, show-ink/): on black asphalt the ink figures
+  vanish into the ground, leaving only a thin rim. It works on paper ground only, so it is not the default.
+- MILESTONE (00:19) the knockback held as a comic panel: after the sequence, ImpactFrame holds
+  `panel_ticks` 8 with the frame boxed as a comic panel (paper gutters, ink border; half 0.36 x 0.38 uv,
+  clamped so a gutter shows on every side - v6 touched the screen edge on a corner kill). The showcase
+  starts its hit-stop AFTER the 3 flash ticks, so the held pose is the HIT shove, not the wind-up
+  (hit_stop_ticks 5 -> 8). Evidence show-v7 (clips 48/64 noir + d4, 11.3 s), ladder row 11.
+  FRICTION: 297a63f was committed with test_blood_fx failing (it counted panel ticks as flash frames;
+  my && chain ended in `tail`). Fixed in 0fd7880; 177 unit tests pass.
+- MILESTONE (00:22) rain secondary motion: splash rings in look_noir (`splash` 0.45, `splash_cell` 28 px,
+  `splash_period` 36 ticks): one landing per cell per cycle at a new hashed spot, a ring growing over 7
+  ticks, white on ink and ink on paper; it lands on the figures too (rain on shoulders). Render only (rain_phase).
+  v1 rings were faint grey 1 px circles; v2 is a slightly thicker, slower fade. Honest read: subtle in a
+  still (`splash-before-after.png`), it reads as rain hitting puddles; it is mechanical (perfect circles).
+  The long coat is NOT done: no coat part exists on the rigs.
+  Clips re-recorded with splashes: show-v8/showcase-noir-48.mp4, -64.mp4 (the D4 clip moved from show-v7).
+- NOT DONE, by choice: quest_fight's silhouette flash (its placeholder view draws the ground and the actors
+  on one node, so it can't be keyed; it stays a black flash). No Codex round this session (0 images, 0
+  rejected): a parts round can't be assembled and evidenced on the rig in the time left.
+- (00:30) splash LOD: NoirLook.update reads the active Camera2D zoom (no city_view change); params
+  `splash_zoom` [1.0, 1.5]: no rings at 32 px/m, full from 48 px/m (`lod-before-after.png`).
+- MILESTONE (00:29) image route for noir parts, first images of this lane: Codex image_gen, one at a
+  time, no limit hit. noir_cop_1 (52 s): the D4 cop torso / cap head / pistol forearm at 2.5x on green as
+  the layout template -> ink masses, white rim line, brush highlights, a white badge on the cap; top-down
+  kept (0 rejected). Sliced back with the ORIGINAL part alpha (exact silhouettes and pivots,
+  tools/slice_noir.py) into `features/characters/art/noir/cop/`. Hook: `showcase_fight --noir-parts`
+  fills PartLibrary.of("cop").textures before the showcase rigs are built (no feature code change).
+  Honest: a small gain (the pass already printed cops as ink + rim); the cap badge is the new cop cue at
+  64 px/m; the torso highlights vanish at game scale. `parts-before-after.png`, ladder row 14.
+- MILESTONE (00:33) the long coat: noir_coat_1 (52 s, 0 rejected): the noir torso + a grey guide polygon
+  -> two coat flaps with a vent, ink + white folds. tools/slice_coat.py cuts by the polygon.
+  `dev/noir/noir_coats.gd` hangs it from each cop's torso back (z under the torso and its halo, own halo
+  rim), damped spring on TICK_DT: sideways velocity, turning and hit shove swing it, speed stretches it.
+  `showcase_fight --coat`. Evidence coat-v1/ (frames + showcase-noir-64-coat.mp4), `coat-motion-strip.png`
+  (4 clip frames 0.3 s apart: the tail trails cop A as he walks and turns), ladder row 15.
+  Honest: subtle at 64 px/m, a dark flap behind a dark figure; no unit test for the spring (dev code); the
+  dead cop's coat is not visible under the sprawl in f322.
+  Images this session: 2 generated, 0 rejected; provenance: 4 lines (3 cop parts + coat) in
+  steam/ai-provenance/2026-11.jsonl. Leonardo 0 tokens.
+- (00:40) noir_cop_2 (50 s, 0 rejected): an edit of noir_cop_1, only the cap changed, adding a white checkered
+  hat band. At 48 px/m it prints as a light ring on the cap, where the badge alone was a dot (`band-compare.png`).
+  Mild gain. Cop B wears the riot helmet (look 6), so his head is unchanged. Opt-in (--noir-parts).
+- (00:42) Final showcase clips re-recorded with `--coat --noir-parts`: masters night/noir/show-final/
+  showcase-noir-48.mp4, showcase-noir-64.mp4, showcase-d4-48.mp4 (11.3 s, 60 fps) +
+  evidence/showcase-hero.png (D4 48 | noir 48 | noir 64: a shot, the silhouette flash, the held panel,
+  the aftermath) + evidence/showcase-final-64-crop.png. Ladder: 16 rows.
+  Images this session: 3 generated (noir_cop_1, noir_coat_1, noir_cop_2), 0 rejected, no limit hit;
+  provenance: 5 lines. Masters: ~400 MB in night/noir (trimmed superseded show-v1/v2/v3/v6 and the
+  old clips; NOTE ladder row 10 now uses the teal-before-after composite, as show-v3 was deleted).
+
+NEXT (iteration 4 close, in order):
+1. Owner pick from evidence/showcase-hero.png + the show-final clips: is the noir kill beat (silhouette flash
+   -> held comic panel) the comic language they want? If yes, port the hide-list flash to the real
+   game host (CityView needs a "world canvas" handle; quest 1's placeholder view can't be keyed).
+2. The rain at 32 px/m: the splash rings now have a zoom LOD (off at 32), but the streaks are still
+   screen-sized and busy around small figures (ladder row 13). Try a streak-density LOD with the same zoom uniform.
+3. Noir characters (item 2): extend the noir cop redraw to every cop part (pelvis, arms, legs, the riot helmet) and Rivet,
+   then move noir parts + the coat from the dev hook into the rig (a noir art_dir per plan, the coat as a CutRig part).
+4. Speed of the cop read at 32/48 px/m: cops and peds are both ink-with-rim or paper; try a thicker white
+   sticker rim on COP kind only (needs a per-plan halo material, PartMaterials key). The checkered cap
+   band (done, opt-in) helps capped cops at 48; the riot helmet needs its own noir cue.
+5. Wall splats (needs wall/prop edges in the view); the blood pool as an SDF ring, not discs.
+6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+7. (done 00:53) the low-end number: on the AMD Radeon iGPU (--gpu-index 1) at 1080p, noir 6.61 ms vs D4 8.17 ms GPU.
+- (00:44) rain streak LOD: `rain_far` 0.5 keeps half the streak columns at 32 px/m (same zoom ramp as the
+  splashes), full from 48 px/m. 48 is identical. `rainlod-compare.png`.
+- REVERTED (00:47) the noir riot helmet: noir_helmet_1 (45 s; the D4 helmet beside the finished noir cap
+  as a style reference) gave an ink shell with a white visor crescent + ridge line, top-down, so it was
+  usable as an image. But in-engine at 64 px/m it read WORSE: the D4 helmet's bold white visor bar became a
+  thin line and the crescent was lost under the rim (`evidence/helmet-rejected-zoom.png`, left = kept D4
+  print). Removed, never committed. Images this session: 4 generated, 0 rejected as images, 1 reverted in-engine.
+  Lesson for the next parts round: at 32-64 px/m only bold, wide white shapes survive the part print and
+  the noir threshold; thin lines (ridges, torso highlights) vanish.
+- (00:47) the kill snaps the victim 0.5 m away on the kill tick: in the silhouette flash Rivet and the cop
+  are two shapes with a gap, where before they were one knot (`evidence/snap-compare.png`, a modest gain).
+  The final clips were re-recorded at af6d3e2 (show-final/, --coat --noir-parts), along with the hero
+  sheet, the final crop and the ladder.
+- 00:51 Session close. Gates at af6d3e2 (`run.mjs --no-bench --allow-dirty`, the only dirty path is the
+  untracked evidence/ folder): lint (13 checks), 178 unit, 8 scenarios, parity (1200 steps, mutation
+  caught) and selftest all PASS. No processes left running (no Godot, no codex). Masters: ~415 MB in
+  night/noir. Images: 4 Codex (cop parts, coat, cap band, helmet), 0 rejected as images, the helmet
+  reverted in-engine. Leonardo 0 tokens. Provenance: 5 lines.
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, evidence/showcase-final-64-crop.png,
+  masters night/noir/show-final/*.mp4, evidence/ladder.png (16 rows). NEXT: see the list above
+  (iteration 4 close).
+- (00:53) noir pass cost on the integrated GPU: `noir_cost.tscn --gpu-index 1` (AMD Radeon(TM) Graphics) at
+  1920x1080, 48 px/m riot junction: GPU noir 6.61 ms vs D4 8.17 ms; CPU render 0.24 ms both. A 4090 re-run:
+  0.90 vs 1.09 ms. Noir is cheaper on both GPUs because it replaces the D4 print pass. evidence/noir-cost-1080p-igpu.json.
+
+## 2026-11-03 iteration 6 (BUILD), 00:52-02:22
+
+- 00:53 Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null -> Codex only. Disk 217 GB free.
+- MILESTONE (01:07) noir Rivet (work order 2, the weakest item: Rivet had no noir redraw). Two Codex
+  layout-template edits, one at a time, no limit hit (the gen.sh "limit=429" flag on the 2nd was a false
+  positive: a file size of 1429015 bytes in the log): noir_rivet_1 (84 s; helmet, collar, torso, pelvis,
+  claw_closed, prod forearm at 1.85x) and noir_rivet_limbs_1 (61 s; upperarm, forearm, claw_open,
+  claw_pistol, thigh, shin, foot, foot_toeoff at 1.5x). Prompt: hard chiaroscuro (top-left half lit paper,
+  lower-right a solid ink mass), and per the helmet lesson only BOLD WIDE white shapes: the visor U thick,
+  the collar as wide black/white hazard stripes. Both top-down, 0 rejected. New tool
+  masters:night/noir/tools/make_template.py (D4 parts pasted at a scale, rows, box json); sliced with
+  slice_noir.py (original part alpha, so pivots and silhouettes are exact). l_/r_ D4 limbs are the SAME
+  image (diffed), so one redraw serves both sides. 19 pngs in features/characters/art/noir/rivet/,
+  19 provenance lines. `--noir-parts` now wears every png under art/noir/<kind>/ (ResourceLoader.list_directory).
+  FRICTION: a typed `const Dictionary[String, PackedStringArray]` iterated in _ready crashed Godot 4.7.2
+  (signal 11, no script error); plain consts fixed it, then the scan replaced them.
+  Evidence: masters night/noir/rivet-before-after.png (Rivet crops f040, rows 32 / 48 / 64 px/m, left
+  before = show-final / rivet-v0-32, right after = rivet-v2), clips rivet-v2/showcase-noir-32/48/64.mp4.
+  The rerun after the refactor is pixel-identical (3 frames diffed).
+  Honest read: a MODEST gain. At all three zooms the helmet prints as an ink plate with the white visor U
+  (before: a paper square); from 48 px/m the collar shows black/white hazard stripes (before: one ink ring) -
+  the brief's B/W collar. The limbs barely change: the redraw is mostly lit white, and the part print
+  (print_part, D4 limb wash; the sticker LOD at 32 px/m) keeps them paper with ink outlines, so only the
+  joint hubs go black. At 48 the torso is a little busier (black blots between the white plates). Kept, opt-in.
+- MILESTONE (01:21) blood marks (work order 3, "blood as the star"): new `features/fx/noir/blood_marks.gd`
+  (static, stateless). Landed droplets are teardrops stretched along their travel (elongation from the
+  landing speed) with 3 satellite drops flung ahead and 4 small lobes, so a spray on the ground shows
+  which way the hit went. A kill's pool is a star-shaped wobbly polygon (3 hashed low-frequency waves,
+  min 0.66 r so it never self-crosses: no triangulation errors, 0 in the logs) run out along the hit
+  (`pool.run` 0.6 in blood_fx.json), a dark body inside a bright red meniscus rim with a white sheen arc.
+  `decal.lobes` removed from the JSON (unused). Unit test: the edge wobbles, stays star-shaped, runs
+  along the hit. 179 unit pass, lint clean. Evidence: masters night/noir/blood-before-after.png (kill
+  crops at 64 and 48, before = rivet-v2, after = blood-v2), blood-v2/blood-32-compare.png, clips
+  blood-v2/showcase-noir-32/48/64.mp4. Ladder rows 17 (Rivet) and 18 (blood), 18 rows now.
+  Honest read: a clear gain at 48/64 - it reads as spatter and a wet pool, not as round ink blots; at
+  32 px/m it is a bit more fragmented but still directional.
+  FRICTION: a parse error (new class_name not yet in the global cache) hung the movie recording for
+  10 min again; fixed by `--import` + a `--headless --quit-after 60` check BEFORE every record. The 2
+  Godot processes running pass_cost.tscn at 01:15 are the visual-engine lane's (not touched).
+- MILESTONE (01:26) drips: `player_hit` starts a bleed (`drip` table in blood_fx.json: bleed_ticks 360,
+  one drop per every_px 9 px moved, stretched along the move; one per still_ticks 45 standing).
+  NoirCombatFx.step_ticks(n) on the fixed tick (all three noir hosts call it). Unit test (a 6 m walk
+  leaves 15-25 drips, the wound stops). Evidence masters blood-v3/drip-crops.png (left before, right
+  after): a dotted red trail follows Rivet's dash and roll after the hit. The drips advance the scatter
+  hash counter, so later splashes differ in detail run to run of DIFFERENT code (same code = identical).
+- (01:30) FIX: blood_clip logged 2 "triangulation failed" - small pool rings far from the origin (city px
+  ~4000) lose float precision in the triangulator (a probe: 2 of 6400 rings failed, both r=1). The ring is
+  now built at the origin and placed with draw_set_transform; < 3 px is a disc. 0 errors in all three
+  hosts; the showcase frames are pixel-identical before/after the fix.
+- (01:28) Final showcase re-shot with everything (`--coat --noir-parts`, blood marks, drips):
+  masters night/noir/show-final2/ (showcase-noir-48.mp4, -64.mp4, showcase-d4-48.mp4, 11.3 s, 60 fps) +
+  evidence/showcase-hero.png (D4 48 | noir 48 | noir 64: shot, silhouette flash, held panel, aftermath;
+  the previous sheet is evidence/showcase-hero-v1.png). evidence/NOIR.md updated. Masters trimmed to ~580 MB.
+- (01:36) Gates at b3c3d1f (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty):
+  lint (13), 180 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS.
+- MILESTONE/NOT ADOPTED (01:36) noir peds: noir_ped_1 (62 s, 0 rejected): 10 ped parts (hat head, hair
+  head, jacket torso, shirt torso, pelvis, upperarm, forearm, thigh, shin, foot) as trench-coat ink masses
+  with a thick white rim, the hat as a fedora seen from above with a white band. Sliced into
+  art/noir/ped/ (10 provenance lines). `dev/noir/noir_parts.gd` (NoirParts.wear) is now the shared hook;
+  `noir_frames -- --noir-parts` wears cop + rivet + ped, the showcase only cop + rivet (its frames are
+  pixel-identical to show-final2 after the refactor). Evidence: masters ped-before-after.png (street
+  noir crops at 64 / 48 / 32 px/m, ped-v0 vs ped-v1; also evidence/).
+  CAVEAT: noir_frames is NOT tick-exact between runs (the crowd positions differ), so this pair is the
+  same seed and moment, not the same pixels.
+  Honest read: at 48 px/m the crowd becomes the brief's ink masses carved by a white rim, and Rivet stays
+  the one lit figure. BUT the cops lose their main noir cue (they were the dark masses among white peds;
+  now everyone except Rivet is dark), and at 32 px/m a dense crowd turns into a busy mesh of rims. So it
+  is opt-in only, not in the showcase.
+- EXPERIMENT (01:38) the cop read with ink peds: `noir_frames -- --noir-parts --verm=1` (the vermilion
+  plate prints as paper; the crowd cops carry it through the rig palette swap). Evidence
+  evidence/ped-cop-read.png (street + junction 48 px/m: D4 peds | ink peds | ink peds + paper cops) and
+  ped-cop-read-zoom.png. Read: the crowd cop pops again as the one bright torso among dark passers-by,
+  but the white cap band is lost and cops and Rivet are now both the bright figures (Rivet keeps his ink
+  core + visor U). An owner choice of value roles, not adopted: params keep verm_value 0, showcase unchanged.
+- MILESTONE (01:44) the muzzle lights the scene (work order 4): look_noir `flash`, `flash_uv`, `flash_r`
+  115 px (at 32 px/m, x zoom), `flash_lift` 0.3: on the fire tick a pool around the muzzle is lifted to
+  paper (the darkest ink, under 0.4 crush, stays ink); MuzzleFlash.lit_at(); the showcase sets it on the
+  lit tick and saves that tick as a "lit" hero frame (the old "shot" heroes were the tick AFTER, so the
+  old light never showed in any still). Before (flash-v0, a temporary uncommitted patch restoring the old
+  thresh +0.25) shows almost nothing; v1 a hard round pool (reads as a spotlight disc); v2 a ragged brush
+  edge (angle waves + fibre noise). Kept v2. Evidence masters flash-before-after-48.png (v0 | v1, two
+  shots), flash-v2/f230-3way.png (v0 | v1 | v2); ladder row 20.
+  Honest read: the strongest new comic beat of the session - the shooter is a solid black silhouette with
+  the white starburst inside a burst of light, one frame per round. Risk: a big white strobe (6 rounds in
+  11 s here) needs a photosensitivity check before it ships. quest_fight still uses the old lift.
+- (01:47) Final showcase re-shot: masters night/noir/show-final3/ (noir 48 / 64, D4 48; 11.3 s, 60 fps)
+  + evidence/showcase-hero.png (rows: the fire tick, the silhouette flash, the held panel, the aftermath).
+  show-final2 clips deleted (frames kept for the before/afters). Ladder 20 rows. NOIR.md updated.
+  Images this session: 3 Codex (noir_rivet_1, noir_rivet_limbs_1, noir_ped_1), 0 rejected, no limit
+  hit; Leonardo 0 tokens. Provenance this session: 29 lines (19 Rivet + 10 ped).
+- (01:50) The muzzle light at 32 / 48 / 64 px/m (show-final3 f230, evidence/flash-32-48-64.png): the pool
+  scales with the zoom and reads the same at all three. +1 unit test (one tick of light, at the muzzle):
+  181 unit pass. quest_fight ported to the light pool (headless clean, NOT re-shot).
+
+NEXT (iteration 6 close, in order):
+1. Owner picks from evidence/showcase-hero.png + masters night/noir/show-final3/*.mp4:
+   (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light;
+   (b) value roles: cops = ink among paper peds (default) vs ink peds + paper cops (`noir_frames --noir-parts
+       --verm=1`, evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png).
+2. Photosensitivity: (done 01:53) the muzzle light is capped at one lit frame per 0.33 s (LIT_GAP 20 ticks,
+   unit-tested) and (done 01:54) the kill beat at one per second (ImpactFrame.BEAT_GAP 60; kills inside
+   the gap keep their blood, no flash, no hit-stop). Still to do: an accessibility toggle (flashes off),
+   reviewed against a real guideline, before anything ships. blood_clip's kills may now skip a beat.
+3. Rivet's noir limbs read as paper (the redraw is mostly lit white, and at 32 px/m the sticker LOD ignores
+   the art for limbs and core). If the owner wants a darker Rivet: a limbs round with more ink mass, or a
+   noir limb_wash in print_part.
+4. Move noir parts + the coat from the dev hook (NoirParts.wear) into the rigs: a noir art_dir per plan,
+   the coat as a CutRig part.
+5. Wall splats (still needs wall/prop edges in the view); blood marks on the bodies themselves.
+6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+7. Make noir_frames tick-exact between runs (step the world by ticks, not frames) so ped/crowd A/Bs are
+   the same pixels. (quest_fight re-shot with the muzzle light at 01:57: done.)
+- (01:53) Gates at 180c78a (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint
+  (13), 181 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS (the run
+  before it flagged unit-tests only because I edited JOURNAL.md during it). Gate JSONs copied to evidence/.
+  Then the photosensitivity guard (LIT_GAP 20 ticks) + its test: 182 unit pass, showcase pixel-identical.
+- (01:54) Photosensitivity guard on the kill beat too (BEAT_GAP 60 ticks) + test: 183 unit pass; the
+  showcase kill frames are pixel-identical (its kills are 124 ticks apart).
+- (01:55) Gates at 9062ecf (`run.mjs --no-bench --allow-dirty`): lint (13), 183 unit, 8 scenarios, parity
+  (1200 steps, mutation caught), selftest all PASS; JSONs in evidence/.
+- (01:57) quest_fight re-shot with the muzzle light: masters night/noir/quest-v4/quest-fight-48.mp4 (15 s,
+  16 kills through the real CombatArena events) + evidence/quest-lit-strip.png (frames 193 / 194 / 550 of the
+  clip, found as one-frame brightness bumps: Rivet's nail-gun rounds light a ragged pool around him). The
+  kill beats show as 8-9 frame bright runs; the spacing in this clip is >= 1 s, so the cap did not bite.
+- 01:57 Session close (iteration 6). Head after this entry; last code commit 9062ecf, all gates PASS there.
+  This session: noir Rivet parts (modest gain: visor U, B/W collar), blood marks (directional spatter,
+  wet-edged pools; clear gain), drips, the muzzle's one-frame pool of light (the strongest new beat),
+  photosensitivity caps on the light and the kill beat, noir peds (not adopted: they cost the cop read),
+  the cop-read value-role experiment, final showcase re-shot (show-final3). Images: 3 Codex, 0 rejected,
+  no limit hit; Leonardo 0 tokens; provenance +29 lines. Ladder 22 rows (masters + evidence/). Masters
+  ~720 MB in night/noir. No process of mine left running (the Godot processes at 01:57 are the n-d5 and
+  visual-engine lanes'; codex-windows-sandbox-service is Codex's own service).
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final3/*.mp4,
+  evidence/ladder.png. NEXT: the list above (iteration 6 close).
+
+## 2026-11-03 iteration 8 (BUILD), 01:58-03:28
+
+- 01:58 Read JOURNAL + git log (head df54a58). No iteration 7 entry in this journal. Leonardo probe (key not
+  printed): apiSubscriptionTokens 0, apiPaidTokens null -> Codex only, if any images.
+- MILESTONE (02:07) photosensitivity, measured (NEXT item 2). New tool (outside git, masters
+  night/noir/tools/flash_check.py, `python -I flash_check.py <clip>`): an approximation of the WCAG 2.x
+  2.3.1 general-flash test - linear relative luminance averaged over sliding quarter-screen windows,
+  transitions of >= 0.1 with the darker side < 0.8, a flash = a pair of opposite transitions, worst
+  count in any 1 s. LENIENT on small local flashes (its windows are bigger than WCAG's ~10-degree area)
+  and it has no red-flash test, so it is a smoke test, not a certification.
+  BEFORE: show-final3 noir 48 = 3 flashes in one second (frames 177-222: light, beat, light) - AT the
+  limit with zero margin; quest-v4 = 3 too; D4 = 0. The two separate caps (light 3/s, beat 1/s) could
+  add up past 3 together. (A first version of the tool double-counted; fixed before these numbers.)
+  FIX: `features/fx/noir/flash_budget.gd` (FlashBudget): ONE budget shared by the kill beat (cost 2)
+  and the muzzle light (cost 1), 3 per 60 ticks, and the light only spends when a beat would still fit
+  (safe-v1 showed a round just before a kill otherwise turned that kill's beat calm - fixed in befeb57).
+  Net: at most 1 light + 1 beat a second. The light now lights 1 round a second (was up to 3): in the
+  showcase 3 of 6 rounds light (f064, f150, f230), f104/f194/f270 do not - a visible cost.
+  Flashes-off mode: params `safety.flashes` (ships true) / `--flashes=off` in showcase_fight and
+  quest_fight: no muzzle light, and the kill beat is the CALM one (no white flash, no gutters, the
+  hit-stop kept, the held pose framed by a thin PAPER border - v1's ink border vanished on black).
+  AFTER: safe-v2 (default) = 2 flashes max in any second, 2 full-frame flashes (the two kills); safe-v3
+  (flashes off) = 0. 188 unit pass (+5: test_flash_budget.gd), lint clean.
+  Evidence: masters night/noir/safety-before-after-48.png (rows before / budget / flashes off, cols the
+  fire ticks and kill 101), safety-calm-beat-48.png (calm beat v1 ink border vs v3 paper border), clips
+  safe-v2/showcase-noir-48-budget.mp4, safe-v3/showcase-noir-48-flashes-off.mp4 (both also in evidence/
+  as PNG sheets). Not yet: a settings-menu toggle (core/settings is a README only; the param is the hook).
+- (02:12) quest_fight re-measured with the budget: quest-v5/quest-fight-48-budget.mp4 = 2 flashes max in any
+  second (quest-v4 before: 3), 16 kills. Note: quest_fight logs "36 resources still in use at exit" at
+  quit (seen at befeb57 already, before the stains; dev host only, not investigated).
+- MILESTONE (02:15) blood on the bodies (NEXT item 5, half): `features/fx/noir/blood_stains.gd`
+  (BloodStains, above the rigs, z 20): a kill soaks the victim's torso with 5 hashed teardrop stains
+  toward the exit side of the hit, a player hit leaves 2 small spots; each stain follows its body via
+  NoirCombatFx.set_stains (the px locate), grows over 24 ticks; data `stain` in blood_fx.json, pooled
+  (max_stains 48). Wired in showcase_fight and quest_fight. +2 unit tests (190 pass), lint clean.
+  Evidence: masters night/noir/stain-before-after-64.png (crops of both dead cops and Rivet, left
+  show-final3, right stain-v1), stain-before-after-48.png (top before safe-v2, bottom after), clips
+  stain-v1/showcase-noir-48.mp4 / -64.mp4. Ladder rows 23 (flash budget) and 24 (stains), 24 rows.
+  Honest read: modest but right - the dead cops' torsos now carry a red soak, so the body itself shows
+  the wound (before, the blood was all on the ground beside it); Rivet's two spots are small (2 px at
+  48 px/m) and read as dots. Wall splats still need wall edges in the view (not done).
+  FRICTION: an earlier Python edit wrote CRLF into 5 noir files, and a later multi-line replace then
+  silently missed (caught by the line count); files normalised to LF, edits now assert their match.
+- MILESTONE (02:30) wall splats (the brief's last missing blood item; NEXT item 5 now done in a first
+  form): BloodFx.solid = Callable(px) -> bool (the host's wall test). A droplet that would fly into a
+  solid cell stops at the last free point and leaves two splats there, sized by the impact speed and
+  stretched both ways along the wall (axis-aligned normal: the city's 1 m cells), so a spray ends in a
+  hard red line at the edge. The hosts use the sim's cells (`cell_at >= C_BUILD`: buildings AND props /
+  parked cars count as walls; void does not). `blood_clip --wall` stages the first kill 1.2 m short of
+  the nearest solid cell along the kill line (`--wall=nosplat` = the same staging, walls ignored = the
+  before). 39 droplets hit the wall. +1 unit test (191 pass), lint clean.
+  v1 (r = size * (1.4 + v/5)) read as a few dots along the edge - too small; v2 (r = size * (2.2 + v/2.5),
+  full stretch, nudged off the wall) reads as a smear line. Kept v2.
+  Evidence: masters night/noir/wall-crops-64.png (64 px/m crops: before | v1 | v2),
+  wall-before-after-48/64.png (v1 full frames), wall-v2/48 + wall-v2/ frames, clip wall-v1/wall-fight-48.mp4
+  / -64.mp4 (v1); evidence/wall-crops-64.png, evidence/wall-48-f300.png. Ladder row 25.
+  Honest read: correct and readable at 48/64 as "the blood hit something and stopped", but top-down
+  hides the wall face, so it is a line, not a splash running down a wall; the before (spatter over the
+  roof of the block) was more spectacular and physically wrong. The block it hits here is a hatched
+  solid on the pavement (a building or a prop - the test does not tell them apart). The showcase kills
+  are > 4 m from any wall, so the showcase does not show it (it is wired there; frames re-shot to check
+  nothing else moved). FRICTION: the first showcase re-record with the wall test hung for 10 min (no
+  frames); killed by PID (my own processes only); a headless check found no script error; re-recording.
+- (02:37) Gates at 572a4a2 (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13),
+  191 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+  Showcase re-shot at 572a4a2 (show-v10, 48 px/m): all 23 hero frames pixel-identical to stain-v1 (the wall
+  test changes nothing there). evidence/NOIR.md updated for iteration 8.
+- (02:37) NEXT item 7 (noir_frames tick-exact) needs no code: `--fixed-fps 60` makes every frame one tick;
+  two runs of `noir_frames --scenes=street` were pixel-identical in all 6 frames (masters tick-exact/a, b).
+  Usage line added to the script header. Older ped A/Bs (ped-v0/v1) were shot without it (not re-shot).
+- (02:41) Final showcase re-shot at b6797ea+: masters night/noir/show-final4/ (noir 48 / 64, D4 48; 11.3 s, 60 fps,
+  `--coat --noir-parts`) + evidence/showcase-hero.png rebuilt with masters tools/hero.py (the previous sheet is
+  evidence/showcase-hero-v3.png). Flash meter on show-final4 noir 48 and 64: 2 flashes max in any second
+  (show-final3: 3). Rows: f230 (lit under the budget), f169 silhouette flash, f175 held panel, f322 aftermath
+  (now with the stains). The hero rows use f169 for the silhouette flash: the kill fires on f168 and the heroes
+  are saved at kill +1 / +2 / +4 / +7, so f168 + f169 are the two silhouette ticks and f170 the inverted panel,
+  exactly the params' [4, 4, 1] (checked; an earlier note of mine here called it a one-frame bug - wrong).
+  Masters trimmed (my own superseded scratch) to ~950 MB. Images this session: 0 (no generation needed);
+  Leonardo 0 tokens; provenance +0.
+- MILESTONE (02:46) NEXT item 5 (noir HUD), in the dev host: quest_fight lifts the HUD's CanvasLayer to
+  ImpactFrame.LAYER + 1 (above the noir pass and the comic beat) - v6 showed that this exposes the HUD's D4
+  vermilion (heat pips, speaker name, weapon), against this direction's no-orange rule - so v7 adds
+  `assets/shaders/look_noir_hud.gdshader` on HudView: colours near the vermilion key print as ink (blood
+  and teal untouched). Evidence: masters night/noir/hud-noir-3way.png (also evidence/: v5 under the pass |
+  v6 lifted | v7 lifted + noir print), hud-before-after-f300/f600.png, clip quest-v7/quest-fight-48.mp4
+  (flash meter 2/s). Ladder row 26 (26 rows). Honest read: a clear gain - the text is clean, the heat pips
+  read as solid ink vs cream; the speaker name loses its accent (still upper case). The boxes stay D4 cream,
+  not pure paper. Only in the dev host; the shared HudView / CollectCallView are not touched.
+- (02:48) Gates at afdb64f (after the HUD commit; `run.mjs --no-bench --allow-dirty`): lint (13), 191 unit, 8
+  scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+- (02:49) TUNE the hit spots on Rivet: stain.player_hit r_px 1.0-2.0 -> 1.8-3.0 (3450469). Evidence
+  masters night/noir/stain-rivet-64.png (64 px/m crop, f322, left before / right after; also evidence/):
+  reads as a wound on his chest instead of two specks. show-final4 re-shot with it (noir 48 / 64 / 32, D4
+  48) and evidence/showcase-hero.png rebuilt from it. Flash meter: noir 32 / 48 / 64 all 2 per second max.
+  The 32 px/m cut (evidence/show-32-final3-vs-final4.png, aftermath f322): at the on-foot zoom the body
+  stains are barely visible (a few px); the ground pools and spatter carry the blood there.
+- (02:53) Flash meter + WCAG red-flash test (masters tools/flash_check.py: saturated red = R/(R+G+B) >= 0.8,
+  value (R-G-B)*320, a transition > 20, counted per quarter-screen window like the luminance flashes).
+  Results: show-final4 noir 48 / 64, D4 48, quest-v7, wall-v1 64, safe-v3 (flashes off): 0 red flashes.
+  HONEST: the 0 is about area, not colour: blood pixels peak at 142 (the threshold is 20), but blood covers
+  about 1.6% of any quarter-screen window (the peak window value is 2.3). Blood spurts never cover the area
+  WCAG counts; a full-screen red beat would be caught, a local one would not. Self-review of tonight's diff:
+  one stale comment fixed (ImpactFrame: the calm border is paper); nothing else found.
+- MILESTONE (02:59) a calmer on-foot frame (the weakest zoom per the ladder): look_noir rim_lo 0.02 -> 0.06,
+  rim_hi 0.06 -> 0.14 (9aa5986). The dark-on-dark rim caught faint ground detail (cracks, puddle outlines) and
+  printed it as white double lines - the busiest part of the 32 px/m street. A/B with noir_frames
+  `--fixed-fps 60` (tick-exact): masters night/noir/rim-v1/ (base vs hi, junction + street at 32 / 48 / 64;
+  ab-street-32.png also as evidence/rim-street-32.png, ab-junction-64.png, crop-junction-32.png). Read: a clear
+  gain on the 32 street (the cracks drop to dim grey); the actors' rims are strong edges and do not change
+  (junction crops at 32 and 64 look the same on the figures); some puddle/planter outlines go dimmer too.
+  Kept. 191 unit pass. The final showcase re-shot again with it: masters night/noir/show-final5/ (noir 32 /
+  48 / 64; the D4 48 clip and frames copied from show-final4, as the D4 run never reads look_noir) and
+  evidence/showcase-hero.png rebuilt (show-final4's sheet kept as evidence/showcase-hero-v4.png). Flash meter
+  on show-final5 noir 32 / 48 / 64: 2 per second max, 0 red. Ladder row 27 (27 rows).
+- (02:59) Gates at b0bac00 (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13),
+  191 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+- 03:00 Session close (iteration 8). Last code commit 9aa5986 (rim tune); gates PASS at b0bac00.
+  This session: photosensitivity measured and fixed (a flash meter with the WCAG luminance + red tests; the
+  showcase was AT 3 flashes/s, now 2 with one shared FlashBudget; a flashes-off mode with a calm beat = 0),
+  blood on the bodies (stains following each body; Rivet's hit spots tuned up), wall splats (sprays stop at
+  the sim's solid cells and smear along the edge), quest 1's HUD lifted above the pass and printed B/W,
+  noir_frames tick-exact via --fixed-fps 60, a calmer 32 px/m street (rim tune), final showcase re-shot twice
+  (show-final5 is current) + hero sheet rebuilt. Images: 0 generated, 0 rejected; Leonardo 0 tokens;
+  provenance +0. Ladder 27 rows (masters + evidence/). Masters ~1.1 GB in night/noir. No process of mine left
+  running (the two Godot run_scenarios processes at 02:59 are another lane's; untouched).
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final5/*.mp4,
+  evidence/safety-before-after-48.png, evidence/ladder.png.
+- (03:00) The rim tune checked on the third scene too (roofs at 32 / 48 / 64, tick-exact; params restored with
+  `git checkout` after the temporary base run - tree clean): masters rim-v1/ab-roofs-32.png, ab-roofs-48.png
+  (also evidence/rim-roofs-32.png). The paper rooftops do not change (the rim only acts dark-on-dark); the
+  street strip at the edge gets calmer, as on the street. Neutral to positive: kept.
+NEXT (iteration 8 close, in order):
+1. Owner picks from evidence/showcase-hero.png (re-shot, show-final5) + masters night/noir/show-final5/*.mp4:
+   (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
+       1 light a second under the shared flash budget); (b) value roles: cops = ink among paper peds (default)
+       vs ink peds + paper cops (evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png);
+       (d) whether Rivet stays the lit paper figure (his limbs) or gets more ink mass (a limbs round).
+2. Photosensitivity: a real check before shipping (the flash meter in masters tools/flash_check.py is a
+   smoke test: lenient on small flashes, no red-flash test); a settings-menu toggle for `safety.flashes`
+   once core/settings exists (today it is a README only).
+3. Move noir parts + the coat from the dev hook (NoirParts.wear) into the rigs: a noir art_dir per plan,
+   the coat as a CutRig part. Wire BloodStains / BloodFx.solid into the real game hosts with the look.
+4. Wall splats are a line on the edge (top-down hides the wall face); a vertical run-down smear on the
+   building's lit face would need the facade in view (the D4 roofs have no facades).
+5. The noir HUD (done in quest_fight, 02:46) belongs in the look profile: when --look=noir is the game's
+   look, the composition root should lift the HUD and set look_noir_hud (today: the dev host only).
+6. blood_fx.gd is 250 lines (over the ~200 guide, under the 300 stop): split the droplet pool out if it grows.
+
+## 2026-11-03 iteration 10 (BUILD), 03:01-
+
+- 03:02 Read JOURNAL + git log. Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null
+  -> no Leonardo. No image generation planned this session. Disk C: 226 GB free.
+- Weakest point picked from the hero sheet: the noir world is a uniform black street with thin white lines;
+  the brief's "big black shadow masses carved by white light" only happens on the one muzzle frame.
+- MILESTONE (03:14) street light (2d0c56a): `features/fx/noir/noir_lamps.gd` (NoirLamps) reads the city's
+  `lamp_post` props from the resident chunks' draw lists (each chunk scanned once; the offset shadow copy
+  - xf[3] = 1 - skipped, an early bug: every lamp came in twice), centres the pool under the arm's head
+  (HEAD_M 1.0 along the prop's rotation; the art's head is its +x end) and NoirLook.light_street hands up
+  to 8 (screen px, nearest the focus) to look_noir: `lamps[8]`, `lamp_count`, data `lamp_r` 190 (px at 32
+  px/m, ~5.9 m), `lamp_lift` 0.45, `lamp_core` 0.45, `lamp_gate` 0.05 (values under it stay ink in the
+  light: the cops' ink masses). The lift falls off from core to rim through the threshold band, so a pool's
+  edge prints as pen strokes. Shared file: city_view.gd +1 line (`noir.light_street(...)` in
+  _place_camera). +5 unit tests (196 pass), lint clean.
+  A/B tick-exact (noir_frames --fixed-fps 60): masters night/noir/lamp-v1/ (base = lamp_r 0, lamp = v1 pool
+  on the post, v3 = under the head, lift 0.45 = kept; ab-<scene>-<ppm>.png = before | v1 | v3, all 3 scenes
+  at 32/48/64), evidence/lamp-street-48.png, lamp-street-32.png, lamp-roofs-32.png. Ladder row 28.
+  Iterations: v1 (pool on the post, lift 0.35, gate 0.144) lit the pavement and spilled onto the roof
+  behind the post; v2 (gate 0.05) = no visible change (asphalt is darker than the gate matters for); v3
+  (under the head, lift 0.45) moves the pools to the kerb. Kept v3.
+  Honest read: the biggest step towards the brief's "black masses carved by white light" since look-v4 -
+  the street now has a rhythm of white pools along both pavements (16 m apart, the city's spacing), the
+  falloff hatches, a cop in a pool is a solid black silhouette, white peds keep their ink outline. Costs:
+  the asphalt barely lights (pools stop at the kerb: reads as "light on the sidewalk"); where a pool falls
+  on an already-paper area (roofs scene) it washes out the D4 grid dots; the junction (the showcase spot)
+  has NO lamp within reach (nearest heads ~19-24 m away), so the hero frames do not change.
+  FRICTION: city_view.gd was CRLF in the working tree (index LF); a scripted edit missed - normalised.
+  FRICTION: one `ladder.py` row pointed at rim-v1/hi/, which the iteration 8 trim emptied; row 27's after
+  now uses lamp-v1/base (the same code as 9aa5986: lamp_r 0 = no lift).
+- MILESTONE (03:30) headlights + a placement fix (ba739a2). `features/fx/noir/noir_headlights.gd`
+  (NoirHeadlights, static, render only): every live traffic / police car in the sim snapshot (kind [1],
+  mode [2] not M_DEAD, x y [4..5], unit heading hx hy [6..7]) throws a cone of white ahead of its nose (centre
+  + heading * 2 m); up to 12 nearest the focus. look_noir `cars[12]`, `car_count`, data `beam_len` 300,
+  `beam_w` 18, `beam_spread` 0.2, `beam_lift` 0.5; the throw ends in a ragged arc (v1 = a hard straight cut).
+  v1 cones were ~9 m wide (spread 0.38): too much; narrowed in v2.
+  FIX (a bug in my 03:14 lamp commit, found because the v2/v3 cones did not sit on any car): the lights were
+  placed in canvas px, but the project's base viewport is 1280x800 with canvas_items stretch, so at a
+  1280x720 window the canvas view is 1422x800 and canvas px != screen px. A printed car record vs the D4 frame
+  showed the cone ~1.5 m off its car; the lamp pools were off by up to ~2 m, so the 03:14 "pool under the
+  head" read was confounded. Lamps and cars now go in as screen uv (the muzzle light's mapping, which was
+  right), sizes scale by zoom * window / view (`view_h`). Checked: at 32 px/m (beam-v4/cmp32.png, D4 above,
+  noir below, same tick) every cone starts at a car's nose and the pools sit on the D4 lamp posts.
+  `light_street(city, focus, zoom)` (CityView's one call changed). +2 unit tests (197 pass), lint clean.
+  Evidence: masters night/noir/beam-v4/ (all 3 scenes at 32/48/64; ab-<scene>-<ppm>.png = before | after),
+  evidence/light-street-48.png, light-street-32.png, light-junction-48.png (replacing the mis-placed
+  lamp-*.png of 03:14). Ladder row 28 now = before vs beam-v4.
+  Honest read: the street at 48 px/m reads as a noir street - pools on both pavements, a hard white wedge
+  ahead of every car, silhouettes inside. The junction (no lamps in reach) now gets light from the riot's
+  cars. Costs: the cone edges are perfectly straight (a vector look next to the ragged pools); a car prints
+  as a flat paper box, so box + cone read as one shape; more white area makes the 32 px/m frame lighter
+  overall (less "black mass" at the on-foot zoom).
+- MILESTONE (03:32) the showcase under the street light: showcase `--at=<x>,<y>` (b1ca607) stages the same
+  fight at (501, 523), the street west of the junction with a lamp above the fight. Re-shot after the fix:
+  masters night/noir/lamp-show2/ (noir 32 / 48 / 64 clips + frames; D4 48 in lamp-show/d4, the D4 run is
+  unaffected) and evidence/showcase-hero-street.png (D4 48 | noir 48 | noir 64: fire tick, silhouette flash,
+  held panel, aftermath). Ladder row 29 (junction vs lit street aftermath). Flash meter: 32 = 2/s, 48 = 3/s
+  (the WCAG limit, still a pass; the junction showcase is 2/s - the lit pools make one quarter window count
+  one more transition around the kill beat), 64 = 2/s; 0 red flashes. The lamp-show/ (03:12) set is the
+  mis-placed one; superseded.
+  Read: this is the stronger hero - the fight on black asphalt between two white pools, red the only colour.
+  The junction showcase (show-final5, evidence/showcase-hero.png) stays the brief's spec'd scene.
+- (03:33) Gates at 7195d2c (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13), 197
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+  evidence/NOIR.md updated for iteration 10. Masters: my superseded light scratch deleted (lamp-show 48/64/32,
+  beam-v1..v3, lamp-v1 lamp/v3); night/noir ~1.2 GB.
+- (03:45) Cost of the lights (`noir_cost`, junction riot, 1920x1080, RTX 4090, zoom 1.5; light_street now skips
+  while the pass is hidden and records `light_us`; noir_cost reports `noir_light_cpu_ms`):
+  CPU: light_street = **0.064 ms / frame** (the lamp lookup + one extra sim snapshot copy), measured.
+  GPU: NOT resolved. Four alternating runs (lights off / on / off / on): D4 2.65 / 1.47 / 1.97 / 1.50 ms, noir
+  1.57 / 1.30 / 2.33 / 1.66 ms - the run-to-run noise (other lanes share this GPU tonight) is bigger than the
+  lights' cost, so the honest statement is "below ~0.5 ms at 1080p on this GPU, not measured more precisely".
+  The per-pixel loops are 8 lamps + 12 cars with a value-noise call each; a quiet-machine re-measure (or the
+  iGPU, `--gpu-index 1`) is the next step. Files: evidence/noir-cost-1080p-z1.5-lights.json, -z1.0-lights.json,
+  masters night/noir/cost-*.json.
+- (03:38) TUNE the cones' brush edge (c04dae9): width wobbles 16% along the cone (world-locked value noise), so
+  the edge is a hand-inked line, not a ruler. Small gain. masters beam-v5/edge-*.png (v4 above, v5 below;
+  also evidence/light-cone-edge-48.png).
+- TRIED / NOT ADOPTED (03:41) traffic in the showcase: `--cars=<n>` (efd6435). 6 cars never reached the
+  street in 11 s (spawns are >= 105 m out; the clip was byte-identical); 40 cars do pass. The cone sweeping
+  under Rivet is the best noir image of the night (evidence/cars-through-fight-NOT-adopted.png, 9.0 s), but
+  the sim's cars do not see the scripted fighters: at --at=501,523 a car's roof ran over a dead cop's legs,
+  at --at=501,520.5 a car drove straight through Rivet and the body (the same evidence image, 9.5 / 10.0 s).
+  A camera-break-class defect, so not in the hero. Needs the fighters as sim obstacles (or a scripted car).
+  Masters cars-show2/ (clip + strip). Flag kept, with the caveat in its doc line.
+- (03:45) The junction showcase re-shot with the lights: masters night/noir/show-final6/ (noir 32 / 48 / 64 at
+  efd6435; D4 48 copied from show-final5, the D4 run never reads look_noir). Checked frame by frame against
+  show-final5: all 48 and 64 px/m hero frames are pixel-identical (no lamp or car within reach of the
+  junction view; the showcase has 0 cars), only the 32 px/m frames change (lamp pools from off-screen posts
+  on the four corner pavements): evidence/show-32-final5-vs-final6.png. So evidence/showcase-hero.png (48/64)
+  stands as it is. The four posts in the junction's corners are traffic signals, not `lamp_post`, so they
+  throw no pool. Flash meter show-final6 noir 32 / 48 / 64: 2 per second max, 0 red.
+- (03:46) REFACTOR (NEXT item 6, aa0621a): blood_fx.gd 250 -> 215 lines; its static helpers (counter hash,
+  colour from data, zero-filled packed pools) move to `features/fx/noir/noir_pack.gd` (NoirPack). 197 unit
+  pass; the junction showcase re-recorded at 48 px/m: all 23 hero frames pixel-identical to show-final6.
+- MILESTONE (03:47) cars as ink masses (9fa045b): `car_ink` 1 prints each moving car's body (`car_len` 140 x
+  2 * `car_half_w` 30 px at 32 px/m, behind the headlight nose, from the same NoirHeadlights data) as solid ink
+  with a 1.5 px white edge. A/B same tick: masters night/noir/carink-v1/ab-junction-48.png, ab-street-48.png,
+  ab-street-32.png (left beam-v5, right car_ink); evidence/car-ink-junction-48.png, car-ink-street-32.png.
+  Ladder row 30 (30 rows). Read: a modest gain - the car becomes a dark hulk behind its own light, so the cone
+  and the pools (and Rivet) are the brightest things, not the car box; matches "cops = ink masses". Costs: the
+  body is an exact rectangle sized to tonight's placeholder car art (real car art will need its size from the
+  art table), and it paints over whatever stands on its footprint (at 32 px/m a ped brushing the car loses a
+  sliver). 197 unit pass.
+- (03:48) Gates at f3689ac (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13), 197
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/. Note: the
+  selftest's D4 48 px/m colour count read 71 (80 at 7195d2c); the noir code is not in that path (no NoirLook
+  in the selftest's CityView: light_street never runs) and the crowd is live - not investigated further.
+  evidence/NOIR.md updated (iteration 10 section, gates line, 30 ladder rows).
+  Images this session: 0 generated, 0 rejected; Leonardo 0 tokens; provenance +0.
+NEXT (iteration 10, in order):
+1. Owner picks: the street-light showcase (evidence/showcase-hero-street.png, masters lamp-show2/*.mp4) vs the
+   junction one (showcase-hero.png, show-final6/); plus the iteration-8 open choices (value roles, noir Rivet
+   parts, Rivet's ink mass).
+2. Traffic in a fight (evidence/cars-through-fight-NOT-adopted.png): the best image of the night, blocked by
+   the sim's cars not seeing the scripted fighters. Either a scripted car in fight_script (dev) or the fighters
+   as sim obstacles (sim scope, not this lane).
+3. Flash margin (see 03:50): the street showcase is at 3 flashes/s at 48 px/m (the limit, as FlashBudget allows) - the inverted
+   panel flips the lit pools to ink. Options: keep lit pools paper in the inverted panel, or count the lit
+   area in FlashBudget. The junction showcase stays at 2.
+4. The muzzle pool's radius still scales by zoom in canvas px (~11% larger on screen than flash_r says at a
+   1280x720 window); move it to `ls` with flash_r * 1/0.9 to keep the look (cosmetic, re-shoot the heroes).
+5. Lights: the asphalt barely lights (pools stop at the kerb), car bodies are placeholder-sized rectangles
+   (car_len / car_half_w should come from the car art table once real cars exist), the lights' GPU cost is
+   unmeasured on a quiet GPU (CPU 0.064 ms/frame measured). Traffic signals could cast small pools too.
+6. Carried over: noir parts + coat into the rigs (art_dir per plan), BloodStains / BloodFx.solid into the real
+   game hosts, the noir HUD in the composition root under --look=noir, a settings toggle for safety.flashes.
+- (03:50) NEXT item 3 looked at (no code change): which flashes make the street showcase's 3/s at 48 px/m.
+  The worst window is the bottom-left quarter (window 12), video frames 177-206 (masters night/noir/
+  flash-street-48-frames176-206.png: 176, 177, 178, 194-199, 206): 177 the muzzle light's pool (up) / 178
+  (down) = 1; then the kill beat: 195 silhouette flash (up), 197 the inverted panel turns the lit pool to ink
+  (down), 198 the panel's paper gutter (up), 206 back to the scene (down) = 2. That is exactly FlashBudget's
+  own accounting (a kill beat costs 2, the light 1, at most 3 a second = the WCAG 2.3.1 limit): the junction
+  measured 2 only because there the inverted frame stays mostly paper. So: a pass by design, with no margin
+  where the ground is lit. NEXT item 3 corrected: if a margin is wanted, the inverted mode could keep lit
+  pools paper (or the beat skip mode 1 over lit ground); not changed tonight.
+- REVERTED (03:51) lamp_gate 0.05 -> 0.01 (to let the asphalt catch the pools): no visible change (masters
+  night/noir/gate-v1/ab-street-48.png, ab-street-32.png, ab-junction-48.png). The gate is not why the pools stop
+  at the kerb: the cones light the asphalt fine at full lift, but the kerb lies in a pool's falloff (the pools
+  are centred on the pavement), where the lift is too small to cross the threshold. A geometry question (pool
+  radius / centre / core), left in NEXT item 5. Params restored with `git checkout`.
+- TRIED (03:52) lamp_core 0.6 with the pools 2.2 m out (geo-v1): bigger, flatter pools, ink share 62% at 48 px/m.
+  Too much white for little gain; not kept.
+- MILESTONE (03:53) pool geometry (32e1bc0): the pool centres 2.2 m out along the lamp arm (was 1.0), core
+  kept 0.45 (geo-v2). The light now reaches the kerb line and bites into the road edge with hatching, which
+  answers most of "the pools stop at the kerb". Ink share (pixels < 100 of 255) street 48: 70% -> 65%,
+  street 32: 58% -> 55%. A/B 3-way: masters night/noir/geo-v2/ab3-street-48.png, ab3-street-32.png,
+  ab3-roofs-32.png (current | v1 | v2). 197 unit pass.
+  Street showcase re-shot: masters lamp-show3/ (noir 32 / 48 / 64) + evidence/showcase-hero-street.png rebuilt;
+  ladder row 29 now uses lamp-show3 (lamp-show2 deleted: superseded). Flash meter: 32 = 2/s, 48 = 3/s, 64 = 3/s
+  (64 rose from 2: the same mechanism as 03:50, the inverted panel over a lit pool; the budget's own maximum,
+  a pass); 0 red. The junction showcase at 48 px/m re-recorded and diffed: 23/23 frames pixel-identical to
+  show-final6, so evidence/showcase-hero.png stands (its 32 px/m frames will differ slightly; not re-shot).
+- (03:57) Gates at acb72b3 (`run.mjs --no-bench --allow-dirty`): lint (13), 197 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/ (selftest D4 colours 76 / 73: the
+  count moves run to run). evidence/NOIR.md: gates line, the honest comparison gains the street-light note.
+- 03:57 Session close (iteration 10). Last code commit 32e1bc0; gates PASS at acb72b3. This session: street
+  light (lamp posts -> pools of paper, from the city's own props), headlights (sim cars -> white cones), cars as
+  ink masses, a placement bug found and fixed (canvas px vs screen px under canvas_items stretch), the pools moved
+  out over the kerb, the showcase staged under a street lamp (`--at`), traffic in the fight tried and not
+  adopted, the street showcase's 3 flashes/s explained (the budget's own maximum), blood_fx.gd split (NoirPack),
+  lights' CPU cost measured (0.064 ms), GPU cost not resolvable tonight (noise). Images: 0 generated, 0 rejected;
+  Leonardo 0 tokens; provenance +0. Ladder 30 rows. Masters night/noir ~1.2 GB. No process of mine running.
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero-street.png + masters lamp-show3/*.mp4,
+  evidence/showcase-hero.png + show-final6/*.mp4, evidence/light-street-48.png, evidence/ladder.png.
+NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly answered by 32e1bc0; the
+  junction showcase (show-final6) re-shot at 32 px/m after it (03:58; flash meter in the next line); 48 / 64 verified unchanged.
+  show-final6 noir 32 re-shot at a62cc7c: flash meter 2 per second max; evidence/show-32-final5-vs-final6.png rebuilt from it.
+
+## Iteration 12 (BUILD, 03:59 -> stop by 05:29)
+- (03:59) Read JOURNAL + git log. Took NEXT item 2 (traffic in a fight) with the dev-side answer: a scripted car.
+- MILESTONE (04:02) showcase `--car-pass` (2e5b5b4): `dev/noir/noir_car_pass.gd` (NoirCarPass) brakes a car in
+  along a straight line (18 m over 96 live ticks, constant deceleration, from off-screen left) and parks it with its
+  nose at (-8.5, +3.0) m from the fight, aimed at (0, +1): the south lane, angled into the fight, its headlight
+  cone across cop B and toward Rivet. It freezes with the hit-stop (live-tick clock). Unit test: the car's body
+  keeps > 2 m from every fighter over the whole fight. `NoirLook.extra_cars` (world-metre noses, lit before the
+  sim's cars) is the only shared-code change. The car is noir-only (no sprite: car_ink draws the body), so the D4
+  run has no car - the D4 column of the comparison is car-less.
+- (04:04) The first take showed the parked car as a plain ink rectangle with a white edge (reads as a crate / a UI
+  box). TUNE (e823bcf) `car_glass` 1: rounded corners (0.45 of the half width), a white windscreen band (tapered)
+  and a rear window. A/B/C same tick: masters night/noir/carpass-v3/ab3-glass-48.png (box | glass | glass +
+  rounded), evidence/car-glass-48.png. Clear gain: it reads as a car from above. Applies to the sim's cars too
+  (car_ink): every traffic car in the noir pass now has glass.
+- MILESTONE (04:08) the street showcase with the car, re-shot at 32 / 48 / 64 px/m: masters night/noir/carpass-v3/
+  (clips showcase-noir-{32,48,64}.mp4 + hero frames, `--coat --noir-parts --at=501,523 --car-pass`), hero sheet
+  evidence/showcase-hero-car.png (D4 48 from lamp-show/d4 | noir 48 | noir 64: fire tick, silhouette flash, held
+  panel, aftermath). Looked at every hero frame (0 rejected). Read: the best version of the hero so far - cop B
+  fires and falls INSIDE the cone as a solid ink silhouette (64 px/m f151, f299), his blood lands red on the white
+  cone, and the parked car's dark hulk anchors the left of the frame; the inverted panel turns the cone black
+  (a strong graphic beat). Costs: the muzzle light's pool merges with the cone on cop B's shots (one big white
+  shape at 48 px/m f230); the car is a shader shape, not art; the cone is long enough that the 48 px/m frame is
+  about one third white.
+  Flash meter: 32 = 2/s, 48 = 2/s (was 3 in lamp-show3: the lit cone keeps the quarter window bright through the
+  kill beat), 64 = 3/s (the budget's own maximum, unchanged), 0 red. Ladder row 31 (31 rows).
+- (04:09) Leonardo probe: apiSubscriptionTokens 0, apiPaidTokens null - no Leonardo tonight (key not printed).
+- FRICTION (04:10-04:20) the first oil recording hung for the full 600 s timeout: typed-GDScript parse errors
+  (`.get()` on a Variant, a Variant passed as String) that lint (gdformat/gdlint) does not catch, so the scene
+  never loaded and never quit. Lesson: one short windowed run grepping SCRIPT ERROR before any recording.
+  The partial 2.4 GB avi deleted.
+- MILESTONE (04:28) Rivet is a robot, so he does not bleed red (e30b736). Colour doctrine: red is human blood
+  only. blood_fx.json gains `fluids.oil` (ink ground colours, `flight` white = sparks in the air, `case_px` 1.5 =
+  an ink casing so the white sparks read on paper too, its own `trail` 2.2) and `player` {fluid oil, hit kind
+  robot_hit: 26 sparks over a 160 deg fan, 8-16 px/tick}. NoirCombatFx.make_player_fx() builds a second BloodFx
+  for that fluid; player_hit and the player's drip trail go to it, and the robot gets no red stains (stepped by
+  NoirCombatFx, so it holds with the hit-stop). Wired into the showcase and quest_fight (quest 1 has 0 player hits,
+  so it shows nothing there). Unit test: a player_hit makes 0 red droplets, 0 stains on the robot, > 0 sparks.
+  Tuning, all A/B at 64 px/m on the same video frames (masters night/noir/oil-v1..v3/ab/): v1 (white drops, 80
+  deg) = sparks invisible on Rivet's paper body; v2 (+ ink casing, longer streak) = visible but like rain dashes;
+  v3 (160 deg fan, faster) = a fan of cased streaks, kept.
+  Evidence: evidence/oil-before-after-64.png, -48.png (before carpass-v3 | after oilcar, video frames 135 / 137 =
+  hit 1, 252 = the trail after hit 2, 690 = aftermath). Read: the hit now reads as metal (a white spark fan), and
+  the only red in the frame is the cops' blood - the doctrine holds. Costs: the oil on black asphalt is nearly
+  invisible except as small white-ringed dots (the dark-on-dark rim), so "Rivet is hurt" is told by the spark burst
+  alone (no lasting mark on him); the sparks clutter his body for ~0.3 s at 64 px/m. Soul swaps to a human body
+  would need `player` per body (today it is one setting).
+- MILESTONE (04:33) final street showcase = car pass + oil: masters night/noir/oilcar/{32,48,64}/ (clips + hero
+  frames); evidence/showcase-hero-car.png rebuilt from it (the D4 column is the lamp-show/d4 run: no car, red drips).
+  Flash meter 32 = 2/s, 48 = 2/s, 64 = 3/s (budget max), 0 red. Ladder row 32 (32 rows). Superseded scratch
+  deleted (oil-v1..v3 hero pngs); masters night/noir 1.8 GB.
+- (04:35) Gates at 14662ea (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest (D4 78 / 80 colours) all PASS; JSONs copied into evidence/.
+- (04:36) The D4 column of evidence/showcase-hero-car.png re-shot with current code (masters oilcar/d4/, `--d4
+  --car-pass`: the car is noir-only so D4 has none; Rivet's oil shows in D4 too as black specks - the robot rule
+  holds in both looks). Also evidence/showcase-32-car.png (the car showcase at 32 px/m: the car reads as a car,
+  the cone carries the fight).
+- DECIDED NOT (04:37) NEXT item 3, flash margin: a 2-per-second budget (a short beat without the inverted tick
+  when a muzzle light was spent in the last second) would cost both showcase kills their inverted panel (each
+  comes < 1 s after a light). The 3/s at 64 px/m is the budget's own maximum and a WCAG pass; left as an owner
+  choice.
+- MILESTONE (04:39) objective cue by value, not hue (28fd24d). Checked quest 1's ringing payphone under the
+  noir pass for the first time (`quest_fight --phone`: fast-forwards to the first ringing phone and frames it):
+  the D4 vermilion ring arcs print as ink with a faint white rim - the objective barely reads (masters
+  phone-v0/). `features/fx/noir/noir_cue.gd` (NoirCue) draws the same ring geometry over it as bold white arcs
+  in an ink casing, pulsing on the stage's tick; dev host wiring only (the shared quest view is untouched).
+  A/B same tick 48 px/m: evidence/objective-cue-48.png (crop), masters phone-v1/ab-f120.png. Clear gain: the cue
+  pops white on the black street. Artifact: each arc carries a thin white echo line (the pass's dark-on-dark rim
+  at the casing's outer edge, visible when zoomed; reads like a comic vibration line at game scale). Quest 1's
+  view is fixed at 48 px/m, so no 32 / 64 frames. Still vermilion-as-ink in noir: the "$1,500 taped under"
+  cash cue and the phone's handset (not changed). Ladder row 33 (33 rows).
+- REVERTED (04:42) oil gloss (a white glint on each oil splat, radius 0.4 x the splat): no visible change at 64
+  px/m (masters gloss-v1/ab-64.png, video frames 252 / 400 / 690): the glints are about one pixel and the
+  pass's dark-on-dark rim already rings each oil drop white. The trail of oil after hit 2 does read as a dotted
+  line of small white rings (both versions). Restored with `git checkout`.
+- (04:46) Pickup doctrine check (`quest_fight --cash`, fast-forwards to the cash taped under the phone, quest
+  step 6/6): the "$1,500 taped under" envelope prints as a paper-white box with ink tape on the black street -
+  the pickup already reads by value (white pops on black); its vermilion tape prints as ink lines, which is
+  fine there. No change. evidence/pickup-cash-48.png (crop), masters cash-v0/. Rivet's bot stands next to it.
+- FRICTION (04:44-04:52) the same mistake twice: the NoirFluid refactor was recorded without the short windowed
+  check, a typed-GDScript parse error (`p["colour"]` is a Variant) left the scene running, and the stopped
+  background task did NOT take its children with it: Godot (38044 + 54368) and then rec_show's ffmpeg (47376) kept
+  running and held the 1.6 GB avi. Killed by PID (my own processes only, checked by command line), scratch
+  deleted, 0 Godot / ffmpeg processes left. Rule for the next session: windowed run first, always; after a
+  TaskStop, list Godot/ffmpeg by command line.
+- REFACTOR (04:54, f26c133) a fluid's look (colours, flight colour, casing, streak) moves to
+  `features/fx/noir/noir_fluid.gd` (NoirFluid); blood_fx.gd 240 -> 233 lines (the commit message says 234).
+  Re-recorded the street showcase at 48 px/m: 23/23 hero frames pixel-identical to oilcar/48 (the mp4 has the same
+  byte size); 199 unit pass. blood_fx.gd is still over the ~200 soft target (under the 300 hard stop).
+- (04:56) Gates at f26c133 (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest (D4 78 / 80 colours) all PASS; JSONs in evidence/. NOIR.md updated
+  (iteration 12 paragraph, 4 new table rows, gates line, 33 ladder rows).
+- TRIED / REVERTED (04:57-05:01) NEXT item 4, the muzzle pool sized in screen px (`flash_r * zoom`): moved it to
+  the lamps' world scale (`ls`, flash_r 115 -> 128 to keep the look; view_h also set in update()). At 1280x720 the
+  deterministic recording changed only the 3 lit frames by 144-284 edge pixels (as intended). At 1920x1080
+  (scaled to 720, f064) the muzzle pool AND the lamp pools came out LARGER relative to the frame than at 720,
+  so the `ls` scale the lamps already use is not resolution-independent either (view_h from
+  get_visible_rect() is probably not the canvas height at 1080p; not checked). Not proven, so reverted
+  (`git checkout`); evidence/flash-res-720-vs-1080-NOT-adopted.png. Lesson: frames saved without
+  --write-movie land on timing-dependent ticks - only movie runs give same-tick A/B.
+  Two Godot processes running at 05:01 are the d5-close lane's (n-d5 worktree), not mine; left alone.
+- 05:02 Session close (iteration 12). Last code commit f26c133; gates PASS at f26c133. This session: a scripted
+  police car brakes in and parks with its headlights on the fight (--car-pass; NEXT item 2's dev answer), ink cars
+  got glass + rounded corners, Rivet throws white sparks + black oil instead of red (red = human blood only),
+  the objective cue in noir (quest 1's ringing phone in white cased arcs), the cash pickup checked (reads
+  already), blood_fx.gd's fluid look split out (NoirFluid). Tried and reverted: oil gloss (invisible), the
+  muzzle pool's world scale (unproven at 1080p). Decided not: the 2/s flash margin. Images: 0 generated, 0
+  rejected; Leonardo 0 tokens; provenance +0. Ladder 33 rows. Masters night/noir 1.8 GB. No process of mine
+  running. Morning entry points: evidence/NOIR.md, evidence/showcase-hero-car.png + masters
+  oilcar/{32,48,64}/*.mp4, evidence/oil-before-after-64.png, evidence/objective-cue-48.png.
+NEXT (iteration 12 close, in order):
+1. Owner picks: the hero (car street showcase `showcase-hero-car.png` vs the lamp-only street vs the junction),
+   Rivet's oil instead of blood (one `player` row in blood_fx.json; set fluid "" to restore red), and the
+   iteration-8 open choices (value roles, noir Rivet parts, Rivet's ink mass).
+2. DONE at 05:06 (5143f55), see the CORRECTION entry: the lights are resolution-independent at 720 / 1080.
+   Left: the ragged-edge noise of the pools is sampled in screen px (FRAGCOORD), so the edge wobble is finer at
+   1080 - cosmetic.
+3. The car is a shader shape (no sprite): fine in noir, absent in D4. Real car art's size should drive
+   car_len / car_half_w; the scripted car could also open a door for cop B (fight_script choreography).
+4. Doctrine follow-ups: NoirCue into the real quest view under --look=noir (shared code: needs the owner's OK);
+   the phone handset and other vermilion props still print as ink; soul swaps need `player` per body.
+5. blood_fx.gd is 233 lines (soft target ~200): the decal ring could move out next.
+6. Carried over: noir parts + coat into the rigs, BloodStains / BloodFx.solid into the real game hosts, the noir
+   HUD in the composition root under --look=noir, a settings toggle for safety.flashes, the flash margin (3/s at
+   64 px/m over lit ground; an owner choice, see 04:37).
+- CORRECTION + MILESTONE (05:03-05:06) the 04:57-05:01 entry was wrong about the lamps. Checked the stretch
+  settings (base 1280x800, canvas_items, expand: the visible rect is 1422x800 at both 1280x720 and 1920x1080,
+  so view_h 800 holds) and re-ran with --write-movie only (masters res-chk/): with the current code the lamp
+  pools and the cones are the SAME size relative to the frame at 720 and 1080; only the muzzle pool shrank at
+  1080 (to about 2/3, the zoom-only screen-px radius), a confirmed bug. The earlier "larger at 1080" read came
+  from comparing mismatched frames. Re-applied the fix (5143f55: radius flash_r * ls, flash_r 115 -> 128; the
+  view_h line in update() dropped, not needed): 4-way before/after x 720/1080 at f064 (cop A's muzzle light):
+  evidence/flash-res-720-vs-1080.png (the NOT-adopted file deleted). After: the pool is the same size at both
+  sizes; at 720 the change is the 3 lit frames' ragged edge only (144-284 px), so the oilcar hero clips stand
+  and are not re-shot. 199 unit pass. NEXT item 2 (resolution independence) is done by this; item 4 of the
+  iteration-10 NEXT too.
+- 05:07 Gates at 5143f55 (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + a muzzle-light row.
+  Final state of iteration 12: last code commit 5143f55, 0 processes of mine running, images 0 / rejected 0 /
+  Leonardo 0 tokens / provenance +0. NEXT list above stands (item 2 done).
+- (05:09) NoirCue unit test (2 tests: shows where/when asked; the pulse follows the caller's tick, back after one
+  30-tick period): 201 unit pass, lint 13 pass. The arc radius moved into `radius(k)` (same expression; not
+  re-rendered, so pixel identity is assumed, not shown).
+- 05:10 Stop. Last commits: 5143f55 (code + gates PASS), then the NoirCue test. No process of mine running.
+
+## Iteration 14 (BUILD, 05:09 - , stop by 06:39)
+- (05:10) Read JOURNAL, git log, NOIR.md. Leonardo probe skipped this session: no image generation planned
+  (the work is engine-side); images 0.
+- Choice: the weakest standard scene is the roofs (`look-v4/roofs-noir-48ppm.png`: a flat white field of grid
+  and rain - nothing of the "big black shadow masses carved by white light" the brief asks for). The street and
+  junction already have the light (lamps, cones) carving the black.
+- MILESTONE (05:12-05:24, 05d405a) **long cast shadows**: `features/fx/noir/noir_shadows.gd` (NoirShadows). Every
+  shadowed draw command of the resident chunks (the D4 offset-shadow copies: kerb props, parked cars, the roof
+  blocks) also casts a long hard shadow - its own silhouette swept away from `light_dir` by `len_m` per texture
+  class (look_noir.params.json new table `shadows`: building 3.0, prop 1.0, vehicle 0.8; `by_name` lamp_post 0,
+  traffic_light 0), printed flat at `value` 0.1 by `look_noir_shadow.gdshader`. Drawn in the world canvas (z 1,
+  draw index -1000: above the ground, under every prop and roof), created lazily by NoirLook.light_street
+  (no change to city_view.gd or chunk_view.gd), hidden with the look (so the D4 frames are byte-identical:
+  0 changed px in all 9 D4 frames). Unit test (2): lengths by name/class; only shadow commands with a length
+  are swept.
+  Evidence (noir_frames --fixed-fps 60, same tick, masters night/noir/shadow-v2/{before,after}):
+  evidence/cast-shadows-before-after.png (roofs 32/48, street 32/48/64). Read: **roofs - clear gain**, each
+  roof unit / barrel cluster now stands on a long ink shadow, the white field gets black masses and depth.
+  **Street - modest** (most shadows fall on asphalt that is black already; the pavement props and building
+  corners gain a hard shadow). **Junction - neutral** (all asphalt; 0 changed px at 64).
+  v1 had the lamp arms casting too: caster-less black blobs (the lamp prints white in its own pool), fixed by
+  `by_name` 0 (v2).
+- TRIED / NOT ADOPTED (05:25) shadow value 0.03 (under lamp_gate, so shadows stay ink inside lamp pools): props
+  inside a pool print white, so their shadows became caster-less black brackets (bus stops, benches) - worse.
+  evidence/cast-shadows-value-0.03-NOT-adopted.png. Kept 0.1: a lamp pool lifts the shadow away with the prop.
+  Left: a shadow that straddles a pool's edge leaves a small fragment (roofs 32 px/m, one diamond).
+- COST + FIX (05:28-05:38, 0854fab). Measured the stamp version first (noir_cost gains `--scene=roofs` and
+  `--shadows`: blocks alternate noir without / with the shadows; RTX 4090, 1920x1080): 61,855 stamps over 14
+  chunks, chunk record **2.1-2.5 ms in one frame** (a hitch, over ChunkView's own 1.5 ms slice), CPU render
+  0.17 -> 0.34 ms; GPU in the noise. Rewrote it as ONE quad per caster (the region runs past the texture so
+  uv = texture uv; the shader takes the max alpha along the sweep; the sweep + tap count travel in the modulate
+  colour). FRICTION: first try showed almost no shadows - Godot 4's fragment COLOR is already multiplied by the
+  texture, so the packing has to go through a varying from vertex(); found with a UV debug frame.
+  After: **1,972 quads, record 0.22-0.32 ms, CPU render +0.06 ms**, GPU 4090 +0.02 ms (z1) / +0.10 ms (z2) (in the
+  noise); AMD iGPU (`--gpu-index 1`, z1.5) 9.78 -> 10.10 ms (+0.32). Frames vs the stamp version: <= 361 px
+  differ per frame (edge anti-aliasing: max alpha vs stacked stamps), 0 at street 48/64. Files:
+  evidence/cost-shadows-stamps-roofs-z*.json, cost-shadows-quad-roofs-z*.json. Ladder row 34 (34 rows).
+- (05:41) Street showcase re-recorded with the shadows (masters night/noir/shadowshow/48, same flags as oilcar:
+  `--coat --noir-parts --at=501,523 --car-pass`): ~3,100 px change per frame, one small shadow beside the
+  newsstand - the street fight's ground is asphalt and lamp pools, so the hero (showcase-hero-car.png) is NOT
+  re-built; the clip there is the current state.
+- (05:43) Gates at 0854fab (`run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/. NOIR.md: iteration 14 paragraph, a
+  cast-shadow row, 34 ladder rows.
+- REFACTOR (05:44, 6cc391a) NEXT item 5: the decal rings move from blood_fx.gd to
+  `features/fx/noir/blood_decals.gd` (BloodDecals); blood_fx.gd 233 -> 185 lines (under the ~200 target). The
+  per-decal seed was never read, so it is dropped, but its scatter draw is kept (the sequence is unchanged).
+  Street showcase 48 px/m re-recorded: 23/23 hero frames AND the mp4 byte-identical to shadowshow/48; 203 unit.
+- REFACTOR (05:48, 65c7bc3) the showcase's launch flags move to `dev/noir/showcase_args.gd`
+  (NoirShowcaseArgs); showcase_fight.gd 252 -> 213 lines (still over ~200, under the 300 stop). `--flashes`
+  overrides the params only when given, as before (the first draft always set it - caught by reading
+  FlashBudget, fixed before the run). 48 px/m frames + mp4 byte-identical; `--d4 --flashes=off` runs (23
+  frames, exit 0); 203 unit.
+- TRIED / REVERTED (05:50) long actor shadows via a CanvasGroup around the rigs (its shader sweeping the
+  group's own silhouette): nothing showed. The rig parts set their own z_index (arms, hose, sprites) and a
+  CanvasGroup only captures children at its own z, so the parts draw outside the group.
+  evidence/actor-shadows-canvasgroup-NOT-adopted.png. Files removed.
+- TRIED / REVERTED (05:52-05:54) figure shadows as tapered ink streaks (opt-in `--figure-shadows`): v1 (every
+  figure, away from the car) put white-rimmed capsules on the asphalt, read as objects; v2 (only figures
+  standing in the car's cone, away from the nose, clipped at the beam's reach): inside the cone it reads as a
+  shadow, but as a straight-edged black plank fixed to the body, and part of it still runs past the visible cone
+  (the cone fades before beam_len) onto dark ground where the pass rims it. Not convincing:
+  evidence/figure-shadows-streak-NOT-adopted.png (f322 and the held panel f175, before | after). Files removed.
+  The right route is a real silhouette: rigs rendered into a SubViewport (or the parts drawn a second time in
+  black) and swept like NoirShadows - not done tonight.
+- (05:56) Gates at 2eaa99b (code 65c7bc3; `run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios,
+  parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line.
+- Session close (iteration 14). Code commits: 05d405a (cast shadows), 0854fab (one quad per caster + cost
+  tool), 6cc391a (BloodDecals), 65c7bc3 (NoirShowcaseArgs). Images 0 generated, 0 rejected; Leonardo not probed
+  (nothing to generate); provenance +0. Ladder 34 rows. Masters night/noir ~2.0 GB (shadow-v1 scratch deleted).
+  No process of mine running. Shared files touched: none (city_view.gd / chunk_view.gd untouched; the shadows
+  hook through NoirLook). Morning entry points: evidence/cast-shadows-before-after.png, NOIR.md iteration-14
+  paragraph, cost-shadows-quad-*.json.
+NEXT (iteration 14 close, in order):
+1. Owner picks (unchanged from iteration 12): the hero (showcase-hero-car.png vs the lamp street vs the
+   junction), Rivet's oil instead of blood, the value roles / noir Rivet parts. New: the cast shadows' lengths
+   (params `shadows.len_m`; building 3.0 m makes long masses on the roofs - a taste call).
+2. Figure shadows done properly: render the rigs into a SubViewport (or draw the parts a second time in black)
+   and sweep that silhouette like NoirShadows, away from the car / the nearest lamp. Two cheaper routes failed
+   tonight (CanvasGroup: z-indexed parts escape it; drawn streaks: read as planks).
+3. Cast shadows: the lamp pools wash props out, so a prop inside a pool loses both itself and its shadow (by
+   design, value 0.1); a shadow straddling a pool's edge leaves a fragment. A prop-preserving lamp lift
+   (lift only the ground, not prop ink) would fix both - needs a prop mask in the pass.
+4. Carried over: NoirCue into the real quest view (owner OK), soul swaps need `player` per body, the car as art
+   (car_len / car_half_w from the sprite), noir parts + coat into the rigs, BloodStains / BloodFx.solid in the
+   game hosts, the noir HUD in the composition root, a settings toggle for safety.flashes, the flash margin.
+5. showcase_fight.gd is 213 lines (soft ~200): the hero-frame saving (_save, _to_uv) could move out next.
+- (05:57) Owner reference for NEXT item 1 (shadow length): roof blocks (`len_m.building`) at 2.0 m instead of
+  3.0 m (masters shadow-len2/, not committed): evidence/cast-shadows-length-option.png (none | 2.0 | 3.0).
+  Measured against the same code at 3.0 (shadow-v4): all 9 noir frames byte-identical but 1 px. So **the
+  building sweeps show nowhere in the standard frames** (the 8.4 m blocks tile edge to edge, so a block's sweep
+  lands under its neighbours' art); every visible cast shadow tonight is a PROP's (barrel clusters, crates,
+  newsstands: `len_m.prop` 1.0). CORRECTION to the 05:12 entry and NOIR.md: "roof blocks" / "building corners"
+  there are props. The building quads are still drawn (fill cost included in the measured +0.32 ms iGPU).
+NEXT addendum: find a view where a building sweep shows (a block edge onto a plaza or pavement); if none, set
+  `len_m.building` 0 and re-measure the GPU cost.
+- (05:59) Measured the addendum instead of guessing: `len_m.building` 0 (not committed), AMD iGPU, roofs, 1080p,
+  z1.5, 2 runs: noir without / with shadows 9.80 -> 10.09 ms (+0.29) both runs, 1,047 quads, CPU render +0.03 ms
+  - vs +0.32 ms / 1,972 quads / +0.07 ms with the building sweeps. So the invisible building sweeps cost ~0.03 ms
+  GPU + ~0.03 ms CPU; most of the +0.3 ms is the prop sweeps (or the extra layer itself). Default left at 3.0
+  (a building sweep may show at block edges elsewhere in the city; not checked). Files:
+  evidence/cost-shadows-nobuild-igpu-{a,b}.json.
+- (06:00) Quest 1 check (`quest_fight --phone`, --write-movie, masters phone-v2/): f120 and f600 byte-identical to
+  phone-v1 (0 px). Quest 1's view does not draw the city chunks, so the cast shadows do not reach the real quest
+  yet - no regression, no gain. NEXT: the shadows need the quest view (or the composition root's CityView under
+  --look=noir) to show in play.
+- (06:01) Not filmed: the composition root's CityView under `--look=noir` gets the cast shadows through the same
+  NoirLook.light_street path as noir_frames (no host code needed), but no frame tool films the city game with
+  the noir look (collect_call_frames = quest 1, the selftest is shared and D4-only); left for NEXT.
+- (06:01) Stop (iteration 14). Last code commit 65c7bc3, gates PASS at 2eaa99b, docs after that. No process of
+  mine running; working tree clean except the untracked evidence/ folder (by design).
+
+## Iteration 16 (BUILD, 06:01 - , stop by 07:30)
+- (06:02) Read JOURNAL, git log. No iteration-15 entry (that slot did not run in this lane). Leonardo not probed:
+  no image generation planned (engine work); images 0. Picked NEXT item 2 (figure shadows done properly).
+- MILESTONE (06:04-06:27, acb6633) **figure shadows**: `features/fx/noir/noir_figure_shadows.gd` (NoirFigureShadows)
+  + `assets/shaders/look_noir_figure.gdshader`. The rigs carry a cull-mask bit (`visibility_layer`, bit 19, set on
+  the caster subtree and on every node added under it later); a SubViewport (own empty World2D) is attached to the
+  actor CanvasLayer's canvas (`viewport_attach_canvas`) with the layer's transform each frame, so it renders the
+  rigs alone. The node draws that texture in screen px (its transform undoes the layer's), z -2 (under the blood
+  and the rigs). Params `shadows.figures` {len_m 1.2, reach_m 1.0, value 0.03}; showcase only (`--no-figure-shadows`
+  for the before frames). Unit test (3): params, the bit on casters + later children only, the dead cast none.
+  Steps (all street showcase 48 px/m, same flags as shadowshow, movie maker, same ticks):
+  v3 straight sweep of the silhouette: a top-down body swept through its height is a PARALLELOGRAM - read as boxes
+  (NOT adopted, evidence/figure-shadows-straight-sweep-NOT-adopted.png). v4 taper: each tap samples the silhouette
+  scaled about the nearest body's centre (legs 0.35 -> shoulders 1.0 -> head 0.5): reads as figures, but the
+  magnified sampling picked up a NEIGHBOUR's pixels (a ghost blob beside cop A; found with a diff mask). v5 a reach
+  clamp (a sample > reach from the centre is another body's): fixed. v5 (0.1) vs v5b (0.03): at 0.1 the noir
+  pass's dark-on-dark rim outlines every shadow on the asphalt (reads as puddle edges); 0.03 drops them and stays
+  ink inside the headlight cone (under lamp_gate) - adopted (evidence/figure-shadows-value-before-0.1-0.03.png).
+  v6: a dead cop lying in the cone still cast a standing figure - the dead now drop the bit (no shadow).
+  Read: **a real gain in the light** - the cop in the car's headlight cone stands on a hard ink figure cut into the
+  white beam (32 / 48 / 64 px/m, evidence/figure-shadows-before-after.png); **nothing on the asphalt** (black on
+  black, by design). One global light direction (the cast shadows' light_dir), not away from the car: in this shot
+  the car is to the left, so the shadow falls down-right, roughly but not exactly away from the beam.
+  FRICTION: the first record hung (parse error in the new class: `.get()` on a Variant) - 10 min of a growing AVI
+  until I looked; killed by PID (Godot x2, then rec_show's ffmpeg). The journal's own rule (headless check BEFORE
+  every record) was skipped once; followed on every later run. A second slip: one cost run went out with a
+  parse error too (invalid numbers, discarded, re-run).
+- COST + FIX (06:28-06:41, 126878b). Showcase `--cost` (dev/noir/gpu_meter.gd NoirGpuMeter: the mean viewport
+  render time of the root and the silhouette viewport), 1920x1080, zoom 1.5, real time, 676 frames.
+  First draft (full-screen sweep rect): AMD iGPU root 11.75 -> 20.52 / 20.60 ms (**+8.8 ms**, 2 runs); 4090
+  0.99/1.06 -> 2.05/1.68 ms. Fix 1: one quad per standing body (its reach + sweep): iGPU root +0.09..0.15 ms,
+  silhouette viewport 0.39 ms. Fix 2: the silhouette viewport at half size (`res_scale` 0.5): 0.19 ms (2 runs:
+  0.188, 0.192). **Final: ~+0.33 ms on the iGPU** (root 11.88/11.87/11.93 vs 11.74/11.75 without + 0.19), the 4090
+  in the noise (1.3-2.2 ms either way, run to run). Frames: per-body quads within 6 px of full-screen; half size
+  within 419 edge px per frame (no visible change at 2x crop). Refactor-only re-record (meter merge,
+  _light_flash split): mp4 byte-identical. showcase_fight.gd 230 lines (soft ~200, under 300).
+- Evidence: masters night/noir/figshadow-v10/{32,48,64} (final), figshadow-v7/{32,64}-before, shadowshow/48
+  (before 48), figshadow-notes/ (the rejected steps); scratch v3/v4/v6/v8/v9 deleted. Ladder row 35 (35 rows).
+  evidence/: figure-shadows-before-after.png, showcase-figure-shadows-48.mp4, NOIR.md iteration-16 paragraph + row.
+- (06:45) Gates at 126878b (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + iteration-16 row.
+- MILESTONE (06:46-06:49, 8f1c748) **figure shadows in the game**: NoirLook (on its first light_street with the
+  cast shadows) attaches NoirFigureShadows to the city actor layer's CharacterRigs (CityCharacters' rigs) unless a
+  host already put its own there (the showcase), and hides it with the look. No city / boot code touched.
+  noir_frames (--fixed-fps 60, default 1280x800; my first shot at --resolution 1280x720 did not match the
+  shadow-v4 base - re-shot): all 9 D4 frames **0 px** changed; noir frames 3-14k px. Showcase 48 mp4
+  byte-identical to figshadow-v10. Read: **street - a gain** (64 px/m: a cop in the headlight cone between two
+  cars casts an ink figure into the beam; a ped on the cream pavement casts a black mass;
+  evidence/figure-shadows-city-street-64.png, ladder row 36). **Junction riot - mixed**: the 16 nearest people
+  are full rigs and cast, their shadows merge into murky masses with faint outlines on the asphalt (the junction
+  asphalt is not as dark as the street's), and the baked-atlas crowd beyond them casts nothing - an inconsistency
+  a player could notice in a lamp pool (evidence/figure-shadows-city-junction-48-mixed.png). Kept on (the doctrine
+  wants black masses carved by light, and the gain is in the light); `shadows.figures.len_m` 0 turns it off.
+NEXT (iteration 16 close, in order):
+1. Owner picks (carried): the hero (showcase-hero-car.png vs the lamp street vs the junction), Rivet's oil, the
+   value roles / noir Rivet parts, the cast-shadow lengths. New: figure shadows on in the game (the junction riot
+   is mixed, see 06:46) - keep, or showcase-only (`len_m` 0 in the params, the showcase host passes its own).
+2. Figure shadows for the baked-atlas crowd: cast the people MultiMeshInstance2D too (the same bit) and feed the
+   taper the crowd's centres from the sim snapshot (MAX_BODIES 16 -> ~48; the shader's nearest loop runs only
+   inside the per-body quads). Without centres the reach clamp drops them, which is why they cast nothing now.
+3. Junction asphalt outlines: the shadow (0.03) against the junction asphalt crosses the pass's dark-on-dark rim
+   band; a shadow-aware rim (a mask channel) or a darker junction asphalt print would fix it. Same root cause as
+   the cast-shadow lamp fragments (NEXT 3 of iteration 14): the pass needs a prop / shadow mask.
+4. Per-light directions: a figure in a headlight cone should cast away from the car, in a lamp pool away from the
+   lamp. One global light_dir tonight; NoirLook knows the car noses and the lamps, so the shader could take the
+   nearest light per body.
+5. Carried over from iteration 14: NoirCue into the real quest view, soul swaps need `player` per body, the car as
+   art, noir parts + coat into the rigs, BloodStains / BloodFx.solid in the game hosts, the noir HUD in the
+   composition root, a settings toggle for safety.flashes, the flash margin. showcase_fight.gd is 230 lines
+   (soft ~200): _save / _to_uv could move out.
+- (06:50) Gates at 8f1c748 (`run.mjs --no-bench --allow-dirty`): lint (13), 8 scenarios, parity (1200 steps,
+  mutation caught at 629), selftest PASS; unit 206 passed, 0 failed, but the step is marked FAIL by the runner's
+  "tree changed during run" guard - my own JOURNAL.md append landed mid-run (no code changed). Re-run at the end.
+- TRIED / REVERTED (06:50-06:52) NEXT item 4, per-light directions: each body casts away from its nearest light
+  within 8 m (NoirLook fed the lamp and car-nose uv; per-body sweeps in the shader, the nearest body chosen by the
+  distance to its sweep segment). Physically right - cop B's shadow ran along the beam, away from the car - but the
+  cop stands at the cone's far end, so the shadow fell past the lit ground onto black: a small notch instead of
+  the ink figure in the beam. Worse to the eye in the one shot that shows it, so reverted (files back to 8f1c748):
+  evidence/figure-shadows-per-light-NOT-adopted.png (before | global | per-light). Worth trying again where a body
+  stands mid-beam or mid-pool (the light's direction then puts the shadow on lit ground).
+- TRIED / REVERTED (06:53-06:55) NEXT 2, the baked crowd casts too: NoirLook cast the people MultiMesh as well and
+  fed the taper the live people's centres from the sim snapshot (MAX_BODIES 16 -> 48). Visually it fixes the
+  inconsistency (every ped on the cream pavement gets a black blot; at 32 px/m the blots in dense groups merge),
+  but the junction riot on the AMD iGPU (noir_cost, 1080p, z1.5): noir 12.46 ms without figure shadows -> 19.40 ms
+  (**+6.9 ms**). Reverted. evidence/figure-shadows-crowd-casting-street32-NOT-adopted.png,
+  cost-figures-crowd48-junction-igpu-NOT-adopted.json.
+- COST (06:55-06:57) the committed city version measured for the first time (the showcase's +0.33 ms had 3
+  bodies): junction riot, 16 casting rigs, iGPU 1080p: noir 12.46 / 12.43 ms without -> 13.82 / 13.95 ms with
+  (**+1.4 ms**, 2 runs each). Fix (e1ffaeb): a tap every 4 screen px, not 2 -> 13.24 ms (+0.8 ms, 1 run); noir
+  frames within 2.5k px of step 2, no visible change at 64 px/m (evidence/figure-shadows-step2-vs-step4-
+  junction64.png). Files: evidence/cost-figures-{off-junction-igpu-a,-b,rigs16-junction-igpu-a,-b,step4-
+  junction-igpu}.json. Still the most expensive noir layer per body; the remaining cost is the per-fragment
+  nearest-body loop over 16 bodies in overlapping quads plus the silhouette viewport.
+- (06:57) Showcase 48 re-recorded at e1ffaeb (masters figshadow-v11/48) -> evidence/showcase-figure-shadows-48.mp4.
+- (07:01) Gates at e1ffaeb (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + the city cost.
+NEXT addendum (iteration 16): figure shadows cost +0.8 ms on the iGPU in the junction riot. Before the baked crowd
+  can cast: draw ONE quad per body cluster (or a tile list) so overlapping quads stop re-running the nearest loop,
+  and pass the body index per quad (vertex colour, as NoirShadows packs its sweep) so the shader needs no loop
+  at all. That also makes per-light directions cheap (one sweep per quad).
+- PERF (06:59-07:01, a8ea30d) the addendum's first half: each figure-shadow quad carries its body index in the
+  modulate colour (r = k / 255, read in vertex() into a varying, as NoirShadows packs its sweep), so the shader
+  samples one body per quad - no nearest-body loop, and overlapping quads no longer pick the wrong body.
+  Junction riot, iGPU 1080p, 2 runs: noir 12.91 / 12.87 ms vs 12.43 / 12.46 without figure shadows
+  (**+0.45 ms**, from +0.8). noir_frames vs step-4 frames: at most 918 px (the overlaps), D4 0 px
+  (evidence/figure-shadows-loop-vs-index-junction48.png). Showcase 48 re-recorded at a8ea30d (masters
+  figshadow-v12/48; at most 487 px per hero frame vs v10) -> evidence/showcase-figure-shadows-48.mp4.
+- (07:05) Gates at a8ea30d (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line.
+- Session close (iteration 16). Code commits: acb6633 (figure shadows), 126878b (per-body quads + half-size
+  silhouette + --cost meter), 8f1c748 (the city's rigs cast under --look=noir), e1ffaeb (tap every 4 px),
+  a8ea30d (body index per quad). Reverted, not committed: per-light directions, crowd casting (+6.9 ms).
+  Images 0 generated, 0 rejected; Leonardo not probed (nothing to generate); provenance +0. Ladder 36 rows.
+  Masters night/noir ~2.4 GB (scratch v3/v4/v6/v8/v9/v11, figcity-v2, figlight-v1 deleted). Shared files
+  touched: none (the city wiring goes through NoirLook). No process of mine running.
+  Morning entry points: evidence/figure-shadows-before-after.png, figure-shadows-city-street-64.png,
+  figure-shadows-city-junction-48-mixed.png, NOIR.md iteration-16 paragraph.
+NEXT (final for iteration 16, replaces the addendum): 1-5 of the 06:5x NEXT list stand, with item 2 (crowd
+  casting) now cheaper to retry: the nearest-body loop is gone, so 48 bodies cost 48 quads of taps, not 48 x 48
+  loop iterations; re-measure before adopting. Item 4 (per-light directions) is now one uniform per body.
+- TRIED / REVERTED (07:03-07:04) crowd casting again on the index version (NEXT 2 retry, the same change as 06:53):
+  junction riot iGPU 1080p, 2 runs: noir 14.72 / 14.82 ms vs 12.43 / 12.46 without figure shadows (**+2.3 ms**,
+  vs +0.45 ms for the 16 rigs alone, vs +6.9 ms with the loop). Still too dear for one effect on the iGPU;
+  reverted (files back to a8ea30d, re-imported). Files: evidence/cost-figures-crowd48-index-junction-igpu-
+  {a,b}-NOT-adopted.json. The remaining cost is the taps over 48 overlapping quads (each ~4x the body's area) and
+  the full-crowd silhouette render; a crowd shadow should rather be one baked blob per atlas cell, drawn by the
+  crowd MultiMesh itself (a second instance layer under the people), not swept per frame.
+- (07:05) Stop (iteration 16). Last code commit a8ea30d, gates PASS at a8ea30d; working tree clean except the
+  untracked evidence/ folder. No process of mine running.
+
+## Iteration 18 (07:05-07:30, BUILD; freeze 07:30)
+- (07:05) Read JOURNAL tail + git log. 25 min to the freeze: too short for the crowd blob-shadow layer (needs a
+  cost measurement + frames + gates), so NEXT 5's small hygiene item instead. Leonardo not probed (nothing to
+  generate); images 0 generated, 0 rejected; provenance +0.
+- REFACTOR (07:06-07:09, 641d2b1) the showcase's hero-frame saving and world -> screen uv mapping move to
+  `dev/noir/showcase_shots.gd` (NoirShowcaseShots, static); showcase_fight.gd 235 -> 227 lines (soft ~200, still
+  over; under 300). Check: street showcase 48 re-recorded with v12's flags (`--coat --noir-parts --at=501,523
+  --car-pass`, masters scratch shots-v1/48): **23/23 hero frames and the mp4 byte-identical to figshadow-v12/48**.
+  Scratch deleted.
+- FRICTION (07:07) my first check recorded the default (junction) fight and compared it to v12 (the street):
+  every frame "differed" (~390k px). Not a regression - the wrong flags. Rule: the v10/v11/v12 showcase sets are
+  the street fight (`--coat --noir-parts --at=501,523 --car-pass`); write the flags next to every masters set.
+- (07:10) Gates at 641d2b1 (`run.mjs --no-bench --allow-dirty`, journal untouched during the run): lint (13), 206
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in
+  evidence/gates-641d2b1/; NOIR.md gates line updated.
+NEXT (iteration 18 close; the iteration-16 list 1-5 stands):
+1. Owner picks (carried; see the iteration-16 NEXT item 1).
+2. Crowd shadows the cheap way: one baked shadow blob per atlas cell, drawn by the crowd MultiMesh as a second
+   instance layer under the people (no per-frame sweep). Budget target: under +0.3 ms on the iGPU junction riot
+   (per-frame casting cost +2.3 ms, reverted 07:04).
+3. Junction asphalt outlines / lamp fragments: the pass needs a prop / shadow mask channel.
+4. Per-light directions: retry only where a body stands mid-beam or mid-pool.
+5. showcase_fight.gd 227 lines: _add_player_fluid / _wear_noir_parts / _solid could go into a setup helper.
+- TRIED / REVERTED (07:11-07:17, 01409e4 reverted by d6daee0) NEXT 2 the cheapest way: the crowd ALREADY draws a
+  soft ink shadow blob per person (CrowdLayers RL_PED_SHADOWS, 25.6 px, ink 0.3, offset (2,3) px). NoirLook put one
+  ShaderMaterial on that layer (`assets/shaders/look_noir_crowd_shadow.gdshader`: alpha cut 0.4 -> value 0.03,
+  quad stretched x1.8 away from frame.light_dir), no extra draw. First version broke D4 (it set the layer's
+  material to null when the look was off; the crowd layers carry the D4 item material) - fixed by restoring the
+  previous material: D4 18/18 noir_frames byte-identical. Noir: on the asphalt the grey ghost rims around peds
+  mostly go (a doctrine plus), at lit edges the peds get hard blots (street 32 is the best row) - BUT at street
+  48 a blob with **no body above it** prints as a hard ink teardrop on the lit pavement (before: the soft blob
+  printed as nothing). Worse to the eye -> reverted; project/ tree back to 641d2b1 exactly (empty diff), so the
+  641d2b1 gate PASS stands. Evidence: evidence/crowd-shadow-before-after-NOT-adopted.png (rows: junction 32/48/64,
+  street 32/48/64; row 5 = the body-less blot; the revert message says the file without the suffix),
+  masters crowdshadow-v1/{before,after}/, ladder row 37 (marked NOT ADOPTED; 37 rows). Cost not measured (no
+  extra draw, but unmeasured is not zero).
+  Lead for whoever retries: find WHO owns the body-less blob first - sim_render writes RL_PED_SHADOWS for every
+  person before the `_rigged` check, so a rigged slot whose rig is not drawn (or a person hidden for another
+  reason) still casts. Fix there (skip the blob when no body is drawn), then re-apply the material.
+- Selftest colour count: run.mjs at 01409e4 reported 48 px/m 67 colours (80 at 641d2b1); two reruns at 01409e4
+  gave 80 / 80 (32 px/m 78 / 77) - real-time run-to-run noise, not the change.
+- (07:18) Close (iteration 18). Code commits: 641d2b1 (showcase frame-saving split, byte-identical), 01409e4 +
+  revert d6daee0 (crowd ink blobs). Gates PASS at 641d2b1 (= the current project tree). Images 0 generated, 0
+  rejected; Leonardo not probed; provenance +0. Shared files touched: none. Masters scratch shots-v1, st1, st2
+  deleted. No process of mine running.
+NEXT (iteration 18 final, replaces the 07:10 list's item 2): 2. Crowd shadows: fix the body-less blob at the
+  source (sim_render: no RL_PED_SHADOWS instance when no body is drawn for that person - check the rigged slots
+  and hidden people), then re-apply look_noir_crowd_shadow (in git history at 01409e4) and re-shoot noir_frames
+  street 48. Items 1, 3, 4, 5 of the 07:10 list stand.
+- (07:19) Lead, read-only: `features/city/sim/sim_render.gd` write() puts an RL_PED_SHADOWS blob for every alive
+  ped/cop in view BEFORE the `_rigged[i]` check, so a rigged slot casts a blob whether or not CharacterRigs
+  draws a body there (and cars' passengers / hidden slots, if any, too). Prime suspect for the body-less blot: a
+  rigged slot with no drawn rig (e.g. the player slot, or a rig culled by CharacterRigs). The native CitySim
+  mirrors this writer (NAT-06 parity), so a sim-side fix must land in both and pass `just parity`; a render-side
+  alternative is to have NoirLook skip only the rigged slots (they already cast NoirFigureShadows).
+
+## Iteration 19 (07:18-07:30, BUILD, 12 min window before freeze)
+- (07:22) Read-only follow-up on the body-less blob lead (no code change, no frame). The 07:19 "rigged slot with
+  no drawn rig" suspect is WEAKER than written: `boot/city_characters.gd` `_before_render` only passes slots for
+  which `rigs.full_row(i)` is true (and never Rivet), i.e. slots CharacterRigs does draw as a full rig that
+  frame. Rivet is not in the sim's ped/cop kinds' rigged list either. So the remaining suspects, unverified:
+  (a) a crowd atlas cell that is blank / near-transparent for some clip frame (down / dying / a walk frame), so
+  RL_PEDS draws an empty quad above a real blob; (b) a one-frame order gap - a person dropping out of the
+  full-row set while its rig is already hidden; (c) a ped whose atlas sprite is drawn offset from (2,3) px so
+  the stretched blob lands on open pavement. How to tell them apart next time: dump `_frame_cell(i)` + `_rigged`
+  for the people inside the street-48 crop (row 5 of evidence/crowd-shadow-before-after-NOT-adopted.png) and
+  check those atlas cells' alpha. Cheapest render-side fix regardless of cause: in look_noir_crowd_shadow, only
+  print the hard ink where the crowd's people layer has ink above it (needs the people layer as a texture -
+  not free) - so prefer fixing the cause.
+- (07:24) Close (iteration 19). Code commits: none (journal only). Gates: not re-run; project/ tree unchanged
+  since 641d2b1 (gate PASS there stands). Images 0 generated, 0 rejected; Leonardo not probed (no generation
+  planned in a 12 min window); provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 19): 1. Owner picks (carried). 2. Crowd shadows: first identify the body-less blob with the
+  dump above (suspects a/b/c), then fix at the cause and re-apply look_noir_crowd_shadow (01409e4). Items 3-5
+  of the iteration-18 07:10 list stand (junction prop/shadow mask channel, per-light directions,
+  showcase_fight.gd 227 lines -> setup helper).
+
+## Iteration 20 (07:20-07:30, BUILD, 10 min window before freeze)
+- (07:24) Read-only check of suspect (a), the blank atlas cell. The crowd atlas only exists at runtime:
+  `features/characters/crowd_atlas.gd` holds `texture` from CrowdBaker on the GPU, and no atlas PNG exists in
+  build/evidence/frames or the masters. So the per-cell alpha cannot be checked offline. The layout is fixed:
+  25 cells per look (idle 1, walk 8, flee 8, hit 2, death 4, shoot 2), 128 px cells baked at 48 px/m. The
+  cheapest test next time is a dev-only dump: after CrowdBaker bakes, `texture.get_image().save_png()` into
+  build/evidence/, then count the opaque pixels per cell with Python. Any cell near zero confirms (a). This
+  adds no code to a release path (dev/ only). Not done: it would not fit in the window with a GPU run.
+- (07:26) Close (iteration 20). Code commits: none (journal only). Gates: not re-run; the project/ tree is
+  unchanged since 641d2b1 (PASS there stands). Images 0 generated, 0 rejected; Leonardo not probed;
+  provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 20): 1. Owner picks (carried). 2. Crowd shadows: dump the baked atlas (dev script, above) and
+  check the per-cell alpha for suspect (a). Then do the per-person dump for (b)/(c) (iteration 19). Fix at the
+  cause, re-apply look_noir_crowd_shadow (01409e4) and re-shoot noir_frames street 48. Items 3-5 of the
+  iteration-18 07:10 list stand.
+
+## Iteration 21 (07:30-07:42, STABILIZE, past freeze: no features)
+- (07:31) Gates at 4761ffa (`run.mjs --no-bench --allow-dirty`; the only dirty path is the untracked evidence/):
+  lint (13 checks, 243 files), 206 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest
+  (D4 32 px/m 78 colours, 48 px/m 65) all PASS. JSONs -> evidence/gates-4761ffa/ and evidence/. project/ + tools/
+  at HEAD = 641d2b1 exactly (`git diff 641d2b1 HEAD -- project tools` empty).
+- (07:36) Determinism re-check at HEAD: street showcase 48 (`--coat --noir-parts --at=501,523 --car-pass`, masters
+  stab21/48) **mp4 + 23/23 hero frames byte-identical to figshadow-v12/48** (= evidence/showcase-figure-shadows-48.mp4).
+- FRICTION (07:32-07:35) I first passed `--zoom=48` / `--zoom=64`: `--zoom` is the zoom factor (1.0 = 32 px/m,
+  1.5 = 48, 2.0 = 64), so the run rendered at 1536 px/m and the frames were named `show-noir-1536ppm-*`. Caught
+  because the 48 ppm frames were "missing", deleted, re-shot with 1.5 / 2.0. tools/rec_show.sh's argument is a zoom factor, not px/m.
+- (07:38) Evidence refreshed to the current build: evidence/showcase-hero-current.png (D4 48 | noir 48 | noir 64,
+  fire tick / silhouette flash / held panel / aftermath; looked at: 12/12 panels top-down, 0 rejected, red the only
+  colour in the noir columns), clips masters stab21/{48,64,d4}/. evidence/ladder.png was stale (05:25, 34 rows) ->
+  replaced by the masters ladder (37 rows). evidence/NOIR.md: title, gates line (4761ffa), the current-build sheet,
+  an iteration-18 NOT-adopted note (crowd ink blobs), ladder count. Every file NOIR.md names resolves (checked by script).
+  The standard noir_frames at the current tree are masters crowdshadow-v1/before/ (shot at 641d2b1 = HEAD's tree).
+- Leonardo probed (07:40): apiSubscriptionTokens 0, apiPaidTokens none. Images 0 generated, 0 rejected;
+  provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 21, for the morning): 1. Owner picks: start at evidence/NOIR.md -> showcase-hero-current.png,
+  then showcase-hero-car.png / showcase-hero-street.png and the stab21 clips. 2. Crowd shadows: dump the baked atlas
+  (dev script, iteration 20) to test suspect (a), then (b)/(c) (iteration 19), fix at the cause, re-apply
+  look_noir_crowd_shadow (01409e4). 3-5 of the iteration-18 07:10 list stand (junction prop/shadow mask channel,
+  per-light directions, showcase_fight.gd 227 lines -> setup helper).
+
+## Iteration 22 (07:39-07:50, STABILIZE, past freeze: no features)
+- (07:41) Merge-readiness check, read-only (`git merge-tree --write-tree`; no branch, worktree or main touched).
+  The tips were n-noir adf9afa, main 721fbbb, n-visual d1d1578, n-d4 31f8c4c and n-d5 4b61ff4. **main: clean**
+  (no commits past the base). n-d4 / n-d5: only `JOURNAL.md` conflicts (add/add). **n-visual:** JOURNAL.md, plus a text conflict
+  in `project/boot/launch_args.gd` (both added `--look`; take n-visual's superset). There is also a **semantic clash
+  git does not flag**: n-visual's `_update_look()` -> `set_look_enabled()` sets `_look_rect.visible = printed` and
+  so re-shows the D4 world print under the noir pass (`keep_d4` false). Proposed one-line fix in the merged
+  `set_look_enabled`: `_look_rect.visible = printed and (noir == null or not noir.visible or noir.keep_d4)`.
+  It is unverified in engine. Verify after the merge with the noir_frames junction 48 vs masters crowdshadow-v1/before/.
+  Also on n-visual, `--look=noir` resolves as an unknown profile id -> the default (harmless while hidden).
+  `part_materials.gd` / `print_part.gdshader` auto-merge on disjoint lines. Written up in evidence/MERGE-noir.md
+  (linked from NOIR.md).
+- FRICTION: a fix for the clash cannot land on n-noir. The code it patches exists only on n-visual, and a scratch
+  merge worktree would need the bake + native build + import (too long for this window). So the fix is a written proposal.
+- (07:42) Leonardo probed: apiSubscriptionTokens 0, apiPaidTokens null. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. project/ + tools/ unchanged since 641d2b1 (the gate PASS at 4761ffa stands).
+  Shared files touched: none. No process of mine running.
+NEXT (iteration 22, for the morning): 1. Director: merge per evidence/MERGE-noir.md, apply the set_look_enabled
+  line if n-visual lands first, and re-shoot junction 48 to confirm. 2. Owner picks: evidence/NOIR.md ->
+  showcase-hero-current.png. 3. The crowd-shadow root cause (atlas dump, iteration 20) and items 3-5 of the
+  iteration-18 07:10 list stand. Later: make `noir` a row in look_profiles.json.
+
+## Iteration 23 (07:43-07:55, STABILIZE, past freeze: no features)
+- (07:44) Branch tips re-read: main 721fbbb, n-d4 31f8c4c and n-d5 4b61ff4 are unchanged. **n-visual moved d1d1578 -> 0ea52b9 (a journal
+  entry only).** Merge-tree into n-noir HEAD: same result as iteration 22 (main clean; d4/d5 only JOURNAL.md;
+  n-visual JOURNAL.md + launch_args.gd text conflict).
+- (07:47) **Correction to iteration 22: the city_view clash is latent, not on the `--look=noir` path.** Read in the
+  merged file (merge-tree blob) plus n-visual's look_profiles.gd/json. The first `_update_look()` does not call
+  `set_look_enabled()` (`was_printed` starts true). Only `resolve(&"off")` yields `printed = false`, and
+  `--look=noir` is an unknown id that resolves to the printed default. In the merged `setup()`, set_look_enabled
+  runs before set_noir. No n-noir dev script calls set_look_enabled. So the noir frames should merge unchanged.
+  The clash fires only on an explicit set_look_enabled while noir is on (n-visual's pass_cost.gd, test_render_layers.gd)
+  or with `--look=off`. Exact patch: evidence/merge-noir-city_view.patch (set_look_enabled gains the noir guard;
+  set_noir delegates to set_look_enabled). The patched merged file passes gdformat --check + gdlint (239 lines). Not
+  run in engine. evidence/MERGE-noir.md updated. Scratch build/merge-scratch deleted.
+- (07:52) Gates at ed7ffc0 (project/ + tools/ = 641d2b1): lint 13/13 over 243 files, unit 206/0/0, scenarios
+  8 ran 0 failed (exit 0; replay_60s final cbeb734ff9b97c41). Logs: evidence/gates-ed7ffc0-*.log. The ObjectDB-leak
+  warning at scenario exit is pre-existing and not a failure.
+- FRICTION: my first combined gate command printed `tail`'s exit status as the scenario exit. I re-ran the scenarios alone to get the real code (0).
+- Leonardo probed (07:45): apiSubscriptionTokens 0, apiPaidTokens None. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine running.
+NEXT (iteration 23, for the morning): 1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and
+  apply evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 vs masters crowdshadow-v1/before/
+  (expected identical), and run test_render_layers with noir on. 2. Owner picks: evidence/NOIR.md ->
+  showcase-hero-current.png. 3. Crowd-shadow root cause (atlas dump, iteration 20). Items 3-5 of the iteration-18
+  07:10 list stand. Later: `noir` as a row in look_profiles.json.
+
+## Iteration 24 (07:46-07:50, STABILIZE, past freeze: no features)
+- (07:46) Branch tips: main 721fbbb, n-visual 0ea52b9 and n-d5 4b61ff4 are unchanged. **n-d4 moved 31f8c4c -> 02e21c1**
+  (JOURNAL.md and its evidence/ only; no project/ paths). Merge-tree into n-noir HEAD 7aa4da2 gives the same picture as
+  iteration 23. main: clean. n-d4 / n-d5: only JOURNAL.md (add/add). n-visual: JOURNAL.md, plus the
+  launch_args.gd text conflict. city_view.gd auto-merges, and the latent set_look_enabled clash stands (patch in
+  evidence/merge-noir-city_view.patch). evidence/MERGE-noir.md now carries this re-check line.
+- (07:47) Gates at 7aa4da2 (project/ + tools/ are identical to 641d2b1): lint 13/13 over 243 files (exit 0), unit 206/0/0
+  (exit 0), scenarios 8 ran 0 failed (exit 0; replay_60s final cbeb734ff9b97c41, the same as iteration 23). Logs:
+  evidence/gates-7aa4da2-*.log. The "resources still in use at exit" warning is pre-existing and not a failure.
+  The NOIR.md gates line was updated.
+- Leonardo probed (07:47): apiSubscriptionTokens 0, apiPaidTokens None. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine running.
+NEXT (iteration 24, for the morning; unchanged in substance): 1. Director: merge per evidence/MERGE-noir.md. Take
+  n-visual's launch_args.gd and apply evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 vs
+  masters crowdshadow-v1/before/ (expected identical) and run test_render_layers with noir on. 2. Owner picks:
+  evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21 clips. 3. Crowd-shadow
+  root cause (dump the baked atlas, suspects a/b/c from iteration 19), then re-apply 01409e4. 4. The iteration-18
+  07:10 items 3-5 (junction prop/shadow mask channel, per-light shadow directions, split showcase_fight.gd 227 lines).
+  Later: `noir` as a row in look_profiles.json.
+
+## Iteration 25 (07:48-07:51, STABILIZE, past freeze: no features)
+- (07:48) Branch tips: main 721fbbb, n-visual 0ea52b9 and n-d5 4b61ff4 are unchanged. **n-d4 moved 02e21c1 -> 2471640**
+  (+13 lines in JOURNAL.md only). Merge-tree of n-d4 into n-noir HEAD 50d5eb2: JOURNAL.md add/add conflict;
+  steam/ai-provenance/2026-11.jsonl auto-merges. The merge picture is unchanged from iteration 24 (see evidence/MERGE-noir.md).
+- (07:49) Gates at 50d5eb2 (no change in project/ or tools/ since 641d2b1): lint 13/13 over 243 files (exit 0), unit
+  206/0/0 (exit 0), scenarios 8 ran, 0 failed (exit 0; replay_60s final cbeb734ff9b97c41, unchanged). Logs:
+  evidence/gates-50d5eb2-*.log. Disk: C: 267G free.
+- Leonardo probed (07:49): apiSubscriptionTokens 0, apiPaidTokens None. Images: 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine is running.
+NEXT (iteration 25, for the morning; same as iteration 24): 1. Director: merge per evidence/MERGE-noir.md. Take
+  n-visual's launch_args.gd and apply evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 against
+  masters crowdshadow-v1/before/ (expected identical), and run test_render_layers with noir on. 2. Owner picks from
+  evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21 clips. 3. Find the
+  crowd-shadow root cause (atlas dump), then re-apply 01409e4. 4. Iteration-18 07:10 items 3-5. Later: `noir` as a row
+  in look_profiles.json.
+
+## Iteration 27 (07:55-07:59, STABILIZE, past freeze: no features)
+- (07:55) No iteration-26 entry exists in this journal, so 26 left no record. Branch tips: main 721fbbb is unchanged.
+  **n-visual moved 0ea52b9 -> 8d4750d, n-d4 2471640 -> e6dcac5, n-d5 4b61ff4 -> a55382e.** All three changed only
+  JOURNAL.md, plus evidence/README.md on n-d5. None touched project/ paths. Merge-tree into n-noir HEAD ad88a39 shows
+  the same picture as iteration 25:
+  - main: clean.
+  - n-d4 and n-d5: a JOURNAL.md add/add conflict only.
+  - n-visual: JOURNAL.md, plus the launch_args.gd text conflict. city_view.gd auto-merges; the latent set_look_enabled
+    clash stands (patch in evidence/merge-noir-city_view.patch).
+- (07:56) Gates at ad88a39 (project/ and tools/ identical to 641d2b1):
+  - lint: 13/13 over 243 files, exit 0.
+  - unit: 206/0/0, exit 0.
+  - scenarios: 8 ran, 0 failed, exit 0. replay_60s final cbeb734ff9b97c41, unchanged.
+
+  Logs are in evidence/gates-ad88a39-*.log. The "resources still in use at exit" warning was already there and is
+  not a failure. Disk: C: 267G free.
+- Leonardo probed (07:57): apiSubscriptionTokens 0, apiPaidTokens null. Images: 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine is running.
+NEXT (iteration 27, for the morning; same as iteration 25):
+  1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and apply
+     evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 against masters
+     crowdshadow-v1/before/ (expected identical), and run test_render_layers with noir on.
+  2. Owner picks from evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21
+     clips.
+  3. Find the crowd-shadow root cause (atlas dump), then re-apply 01409e4.
+  4. Iteration-18 07:10 items 3-5.
+
+  Later: `noir` as a row in look_profiles.json.
+
+## Iteration 28 (08:06-08:09, STABILIZE, past freeze: no features)
+- (08:06) Branch tips: main 721fbbb is unchanged and n-visual 8d4750d is unchanged. **n-d4 moved e6dcac5 -> 0e733b6 and
+  n-d5 a55382e -> a3875a8. Both changed JOURNAL.md only**, so the merge picture is unchanged from iteration 27 (see
+  evidence/MERGE-noir.md and evidence/merge-noir-city_view.patch).
+- (08:07) Gates at 1d152e0 (project/ and tools/ identical to 641d2b1):
+  - lint: 13/13 over 243 files, exit 0.
+  - unit: 206/0/0, exit 0.
+  - scenarios: 8 ran, 0 failed, exit 0. replay_60s final cbeb734ff9b97c41, unchanged.
+
+  Logs are in evidence/gates-1d152e0-*.log. Disk: C: 267G free.
+- Leonardo probed (08:08): apiSubscriptionTokens 0, apiPaidTokens null. Images: 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine is running. evidence/ is still
+  untracked (by design).
+NEXT (iteration 28, final for the night; same as iteration 27):
+  1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and apply
+     evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 against masters
+     crowdshadow-v1/before/ (expected identical), and run test_render_layers with noir on.
+  2. Owner picks from evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21
+     clips.
+  3. Find the crowd-shadow root cause (atlas dump), then re-apply 01409e4.
+  4. Iteration-18 07:10 items 3-5.
+
+  Later: `noir` as a row in look_profiles.json.
+
+## Iteration 29 (08:15-08:17, REPORT, nothing built)
+- (08:16) MILESTONE: REPORT.md written in the lane cwd. It covers what works (each claim with an evidence path), what does not or was not adopted, blockers and time lost (Leonardo 0 tokens all night; about 58 min of hung recordings; the merge fix can only land on n-visual), the merge steps, and next steps. Every cited path was checked by script: all exist (evidence/ in this worktree, `M/` = gtai-masters/night/noir).
+- Images: 0 generated this iteration (night total: 7 Codex, 0 rejected, 1 reverted in-engine); provenance +0. Gates last run at 1d152e0, PASS (project/ unchanged since 641d2b1). Code commits: none. Shared files touched: none. No process of mine is running.
+NEXT (for the morning): read REPORT.md, then follow its "Next steps" 1-5 (owner pick from evidence/showcase-hero-current.png; merge per evidence/MERGE-noir.md + patch; crowd-shadow root cause; mask channel; move the coat and noir parts into the game's rigs).

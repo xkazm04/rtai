@@ -34,6 +34,8 @@ uniform float limb_wash = 0.24;  // D4: the ink tint a limb's cream prints at (f
 uniform float limb_lod = 0.0;     // 1 on limb parts: at gameplay scale a 4-6 px rod of cream + outline prints as
                                   // broken lines, so limbs print SOLID INK there (the old pack sprites' trick)   // 1 = a solid cream silhouette (the readability halo under the body core)
 
+uniform float noir = 0.0;        // D-Noir (lane noir): 1 = the body prints as one ink mass inside the halo rim
+uniform float noir_keep = 0.97;   // D-Noir: source luminance above which a body pixel stays paper (visor glints)
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM  = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL  = vec3(0.122, 0.710, 0.659);
@@ -105,6 +107,7 @@ void fragment() {
 		else if (swap == 3 && o == CREAM) o = VERM;
 		else if (swap == 4 && o == INK) o = VERM;
 		if (tint > 0.5 && o != INK) o = VERM;
+		if (noir > 0.5) o = dot(c.rgb, vec3(0.299, 0.587, 0.114)) > noir_keep ? CREAM : INK;
 		COLOR = vec4(o * g, 1.0);
 	}
 }

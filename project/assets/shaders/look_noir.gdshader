@@ -1,0 +1,228 @@
+shader_type canvas_item;
+// D-Noir: the high-contrast noir comic print pass (a parallel direction to D4; lane `noir`, 2026-11-02).
+// A full-screen pass over EVERYTHING (the D4-printed world and the actors), reading the frame through the
+// screen texture. Params are data: look_noir.params.json `frame` (core: one table of uniforms).
+//  - value is thresholded to pure ink / pure paper; blacks below `crush` are crushed to solid ink
+//  - the narrow mid band prints as diagonal pen strokes, never as a flat grey (grey used sparingly)
+//  - dark-on-dark silhouette edges that face the light print as a WHITE rim (carved by the light)
+//  - the vermilion plate (D4 threats, cops, Rivet's collar) prints at verm_value (ink): a black mass with the
+//    art's cream sticker rim turned to a white rim - danger reads by value and shape, not hue
+//  - blood (deep arterial red, g/r low) is a protected channel: it survives the pass as BLOOD, the one colour
+//  - teal (the dead) survives as a flat teal plate; everything else is black and white
+//  - rain: sparse world-locked streaks and landing splash rings, white over ink and ink over paper; paper fibre grain on the whites
+// world_px: the camera's world offset in screen px (set every frame); rain_phase: advances with the sim tick.
+
+uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
+uniform vec2 world_px = vec2(0.0);
+uniform float rain_phase = 0.0;
+uniform float amount = 1.0;        // 0 = the input frame, 1 = full noir
+uniform float thresh = 0.46;       // luminance under which a pixel prints as ink
+uniform float soft = 0.025;        // half-width of the ink/paper edge (anti-aliasing only)
+uniform float crush = 0.30;        // luminance under which everything is solid ink (no strokes, no rim)
+uniform float band = 0.07;         // the mid band (thresh +- band) prints as pen strokes
+uniform float stroke_period = 3.0;
+uniform float rim = 1.0;           // white rim on dark silhouette edges facing the light
+uniform float rim_lo = 0.035;      // luminance gradient where the rim starts / is full
+uniform float rim_hi = 0.10;
+uniform vec2 light_dir = vec2(-0.6, -0.8);  // where the light comes FROM (screen space, y down)
+uniform float edge_ink = 0.9;      // ink outline on bright-side edges
+uniform float rain = 0.55;         // rain streak density 0..1
+uniform float rain_len = 22.0;     // streak length in px
+uniform float rain_slant = 0.18;   // x drift per px of fall
+uniform float splash = 0.0;        // share of splash cells with a drop landing each cycle (0 = off)
+uniform float splash_cell = 28.0;  // splash cell size in screen px (one landing spot per cell per cycle)
+uniform float splash_period = 36.0; // rain_phase ticks per cycle; a splash ring lives 7 of them
+uniform float zoom = 1.5;          // the camera zoom (1 = 32 px/m), set by NoirLook.update
+uniform vec2 splash_zoom = vec2(1.0, 1.5);
+uniform float rain_far = 1.0;      // the rain density kept at 32 px/m (zoom 1), full from 48 px/m // splash LOD: none at or below x, full from y (small figures at 32 px/m)
+uniform float grain = 0.06;        // paper fibre on the whites
+uniform float vignette = 0.35;     // ink pulled in from the frame edges (a panel border feeling)
+uniform float verm_value = 0.0;    // the value the vermilion plate prints at: 0 = a solid ink mass, 1 = paper
+uniform float blood = 1.0;         // the protected red channel
+uniform float teal = 1.0;
+// muzzle light: on the fire tick the host sets flash 1 and flash_uv; a hard-edged pool of light of
+// flash_r world px (at 32 px/m; scaled by zoom and the window like the lamps) lifts the value by flash_lift, so the shooter's ground prints paper
+uniform vec2 flash_uv = vec2(0.5);
+uniform float flash = 0.0;
+uniform float flash_r = 140.0;
+uniform float flash_lift = 0.3;
+// street light: the host hands in up to 8 lamp posts in screen uv (NoirLamps); each lights a pool of lamp_r px
+// (at 32 px/m, scaled by zoom) whose lift falls off from lamp_core to the rim, so the falloff prints as pen strokes
+uniform float view_h = 800.0;      // the canvas view's height in canvas px (NoirLook): sizes below scale by zoom * window / view
+uniform vec2 lamps[8];
+uniform int lamp_count = 0;
+uniform float lamp_r = 0.0;        // 0 = no street light
+uniform float lamp_lift = 0.0;
+uniform float lamp_core = 0.45;
+uniform float lamp_gate = 0.144;   // values under this stay ink in the light (the ink masses: cops, deep shadow)
+// headlights: up to 12 cars (NoirHeadlights: xy = the nose in screen uv, zw = the heading) throw a cone of white
+// beam_len px long (at 32 px/m, scaled by zoom), beam_w px wide at the nose, opening by beam_spread per px
+uniform vec4 cars[12];
+uniform int car_count = 0;
+uniform float beam_len = 0.0;      // 0 = no headlights
+uniform float beam_w = 26.0;
+uniform float beam_spread = 0.38;
+uniform float beam_lift = 0.0;
+uniform float car_ink = 0.0;       // 1 = a moving car prints as an ink mass with a white edge (its body: car_len x car_half_w behind the nose)
+uniform float car_len = 140.0;     // px at 32 px/m
+uniform float car_half_w = 30.0;
+uniform float car_glass = 0.0;     // 1 = the windscreen and the rear window print as white bands across the ink body
+
+const vec3 PAPER = vec3(0.945, 0.937, 0.910);
+const vec3 INK = vec3(0.027, 0.027, 0.035);
+const vec3 BLOOD = vec3(0.640, 0.020, 0.035);
+const vec3 BLOOD_DARK = vec3(0.330, 0.000, 0.020);
+const vec3 TEAL = vec3(0.122, 0.710, 0.659);
+
+float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+
+float vnoise(vec2 p) {
+	vec2 i = floor(p), f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+	return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y);
+}
+
+float lum(vec3 c) { return dot(c, vec3(0.299, 0.587, 0.114)); }
+
+// deep arterial red: strong red, almost no green or blue (D4 vermilion has g/r ~ 0.35 and is NOT blood)
+float blood_mask(vec3 c) {
+	float gr = max(c.g, c.b) / max(c.r, 0.001);
+	return smoothstep(0.30, 0.42, c.r) * (1.0 - smoothstep(0.14, 0.22, gr));
+}
+
+float verm_mask(vec3 c) {
+	return clamp((c.r - max(c.g, c.b) - 0.12) * 2.6, 0.0, 1.0) * (1.0 - blood_mask(c));
+}
+
+float teal_mask(vec3 c) { return clamp((min(c.g, c.b) - c.r - 0.08) * 2.8, 0.0, 1.0); }
+
+// the value the threshold reads: vermilion lifted to paper, blood and teal handled as plates
+float value_of(vec3 c) {
+	return mix(lum(c), verm_value, verm_mask(c));
+}
+
+float value_at(vec2 uv) { return value_of(texture(screen_tex, uv).rgb); }
+
+float rain_mask(vec2 w) {
+	float x = w.x - w.y * rain_slant;
+	float col = floor(x / 3.0);
+	float on = step(1.0 - rain * 0.35, hash(vec2(col, 7.3)));
+	float y = w.y + rain_phase * (9.0 + 5.0 * hash(vec2(col, 1.1)));
+	float seg = fract(y / (rain_len * 4.0) + hash(vec2(col, 3.7)));
+	float line = 1.0 - smoothstep(0.35, 0.9, abs(fract(x / 3.0) - 0.5) * 2.0);
+	return on * step(seg, 0.25) * line;
+}
+
+// a drop landing: a ring that grows and fades over 7 ticks, at a new spot of its cell every cycle
+float splash_mask(vec2 w) {
+	vec2 cell = floor(w / splash_cell);
+	float t = rain_phase / splash_period + hash(cell + 5.5);
+	float cyc = floor(t);
+	float age = fract(t) * splash_period;
+	float on = step(1.0 - splash, hash(cell + cyc * 1.37 + 31.7));
+	vec2 c = (cell + 0.25 + 0.5 * vec2(hash(cell + cyc + 3.1), hash(cell + cyc + 9.4))) * splash_cell;
+	float rad = 1.2 + age * 0.8;
+	float ring = 1.0 - smoothstep(0.7, 1.5, abs(length(w - c) - rad));
+	return on * step(age, 7.0) * ring * (1.0 - age / 12.0);
+}
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	vec2 tx = SCREEN_PIXEL_SIZE;
+	vec2 w = FRAGCOORD.xy + world_px;
+	vec3 src = texture(screen_tex, uv).rgb;
+	float v = value_of(src);
+	float ls = zoom / (SCREEN_PIXEL_SIZE.y * view_h);  // screen px per world px at 32 px/m
+	vec2 fv = (uv - flash_uv) / SCREEN_PIXEL_SIZE;
+	// a ragged brush edge: the radius wobbles with the angle and a little fibre noise
+	float fa = atan(fv.y, fv.x);
+	float fw = 1.0 + 0.10 * sin(fa * 7.0 + 1.3) + 0.06 * sin(fa * 13.0) + 0.12 * (vnoise(w * 0.09) - 0.5);
+	float fd = length(fv) / (flash_r * ls * fw);
+	v += flash * flash_lift * (1.0 - smoothstep(0.82, 1.0, fd)) * step(crush * 0.4, v);
+	vec2 sp = uv / SCREEN_PIXEL_SIZE;  // screen px, y down
+	float lit = 0.0;
+	for (int i = 0; i < 8; i++) {
+		if (i >= lamp_count) { break; }
+		vec2 ld = sp - lamps[i] / SCREEN_PIXEL_SIZE;
+		float la = atan(ld.y, ld.x) + float(i) * 2.1;
+		float lw = 1.0 + 0.07 * sin(la * 5.0) + 0.05 * sin(la * 11.0 + 0.7) + 0.08 * (vnoise(w * 0.07) - 0.5);
+		lit = max(lit, 1.0 - smoothstep(lamp_core, 1.0, length(ld) / (lamp_r * ls * lw + 0.001)));
+	}
+	float beam = 0.0;
+	for (int i = 0; i < 12; i++) {
+		if (i >= car_count) { break; }
+		vec2 cd = sp - cars[i].xy / SCREEN_PIXEL_SIZE;
+		vec2 ch = cars[i].zw;
+		float along = dot(cd, ch);
+		float across = abs(dot(cd, vec2(-ch.y, ch.x)));
+		// a brush edge: the cone's width wobbles along its length (world-locked, so it does not crawl)
+		float bw = (beam_w * ls + along * beam_spread) * (1.0 + 0.16 * (vnoise(w * 0.045 + float(i) * 7.1) - 0.5));
+		float cone = step(0.0, along) * (1.0 - smoothstep(0.8, 1.0, across / max(bw, 0.001)));
+		// the throw ends in a ragged arc, not a straight cut
+		float reach = beam_len * ls * (1.0 + 0.18 * (vnoise(w * 0.05) - 0.5)) + 0.001;
+		beam = max(beam, cone * (1.0 - smoothstep(0.3, 1.0, length(cd) / reach)));
+	}
+	// the car bodies: signed distance to each body box (screen px); < 0 inside
+	float car_d = 1e5;
+	float glass = 0.0;
+	for (int i = 0; i < 12; i++) {
+		if (i >= car_count) { break; }
+		vec2 cd = sp - cars[i].xy / SCREEN_PIXEL_SIZE;
+		vec2 ch = cars[i].zw;
+		vec2 q = vec2(-dot(cd, ch) - car_len * ls * 0.5, dot(cd, vec2(-ch.y, ch.x)));
+		// a rounded box: the corners are a car's, not a crate's
+		float cr = car_half_w * ls * 0.45 * car_glass;
+		vec2 e = abs(q) - vec2(car_len * ls * 0.5, car_half_w * ls) + cr;
+		car_d = min(car_d, length(max(e, 0.0)) + min(max(e.x, e.y), 0.0) - cr);
+		// glass: 0 at the nose .. 1 at the tail; the windscreen is wider than the rear window
+		float gx = q.x / (car_len * ls) + 0.5;
+		float gy = abs(q.y) / (car_half_w * ls);
+		float ws = step(0.25, gx) * step(gx, 0.36) * step(gy, 0.80 - (gx - 0.25) * 0.9);
+		float rw = step(0.80, gx) * step(gx, 0.87) * step(gy, 0.66);
+		glass = max(glass, max(ws, rw));
+	}
+	v += (lamp_lift * lit + beam_lift * beam) * step(lamp_gate, v);
+	// threshold: crushed ink, the stroke band, paper
+	float paper = smoothstep(thresh - soft, thresh + soft, v);
+	float in_band = 1.0 - smoothstep(band * 0.6, band, abs(v - thresh));
+	float st = abs(fract((w.x + w.y) / stroke_period) - 0.5) * 2.0;
+	float cov = clamp((v - (thresh - band)) / (2.0 * band), 0.0, 1.0);
+	paper = mix(paper, step(1.0 - cov, st), in_band);
+	paper *= step(crush, v);
+	// gradient of the value: ink outlines on lit edges, a white rim on dark-on-dark edges facing the light
+	float vr = value_at(uv + vec2(tx.x, 0.0));
+	float vl = value_at(uv - vec2(tx.x, 0.0));
+	float vd = value_at(uv + vec2(0.0, tx.y));
+	float vu = value_at(uv - vec2(0.0, tx.y));
+	vec2 g = vec2(vr - vl, vd - vu);
+	float e = length(g);
+	float facing = clamp(dot(normalize(g + vec2(1e-5)), normalize(light_dir)), 0.0, 1.0);
+	// the rim only where BOTH sides are ink (a dark silhouette on a dark ground), so lit shapes keep one line
+	float nb_max = max(max(vr, vl), max(vd, vu));
+	float dark_dark = 1.0 - smoothstep(thresh - 0.04, thresh + 0.02, nb_max);
+	float r = smoothstep(rim_lo, rim_hi, e) * dark_dark * (0.25 + 0.75 * facing) * rim;
+	paper = max(paper, r);
+	float dark = 1.0 - smoothstep(thresh - 0.02, thresh + 0.06, v);
+	paper *= 1.0 - smoothstep(0.18, 0.40, e) * (1.0 - dark) * edge_ink;
+	// a car: ink body, a hard white edge one and a half px wide
+	float in_car = (1.0 - smoothstep(-0.5, 0.5, car_d)) * car_ink;
+	paper = mix(paper, 0.0, in_car);
+	paper = max(paper, (1.0 - smoothstep(1.0, 2.0, abs(car_d + 0.5))) * car_ink);
+	paper = max(paper, glass * in_car * car_glass);
+	// rain: white over ink, ink over paper
+	float rain_lod = mix(rain_far, 1.0, smoothstep(splash_zoom.x, splash_zoom.y, zoom));
+	float rm = rain_mask(w) * step(hash(vec2(floor((w.x - w.y * rain_slant) / 3.0), 11.0)), rain_lod);
+	paper = mix(paper, 1.0 - paper, rm * 0.85);
+	float splash_lod = smoothstep(splash_zoom.x, splash_zoom.y, zoom);
+	paper = mix(paper, 1.0 - paper, splash_mask(w) * step(0.001, splash) * splash_lod);
+	vec3 col = mix(INK, PAPER * (1.0 - grain * vnoise(w * 0.7) - grain * 0.5 * hash(floor(w))), paper);
+	// vignette: ink in from the edges
+	vec2 q = uv * 2.0 - 1.0;
+	col *= 1.0 - vignette * smoothstep(0.55, 1.25, length(q * vec2(0.85, 1.0)));
+	// protected plates: teal (the dead), then blood (the one colour) - blood darkens in its own shadow
+	col = mix(col, TEAL, smoothstep(0.30, 0.45, teal_mask(src)) * teal);
+	float b = blood_mask(src);
+	vec3 bc = mix(BLOOD_DARK, BLOOD, smoothstep(0.35, 0.6, src.r));
+	col = mix(col, bc, smoothstep(0.25, 0.6, b) * blood);
+	COLOR = vec4(mix(src, col, amount), 1.0);
+}

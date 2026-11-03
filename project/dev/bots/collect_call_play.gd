@@ -64,6 +64,11 @@ static func play(
 	return p
 
 
+## The play's own event bus (render-side listeners: the noir lane's combat FX).
+func bus() -> EventBus:
+	return _bus
+
+
 func running() -> bool:
 	return bot != null and not bot.done() and ticks < TIMEOUT_TICKS
 

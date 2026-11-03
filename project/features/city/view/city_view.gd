@@ -48,6 +48,8 @@ var visible_actors: int = 0
 ## root hooks the characters in here: rig selection, the rig slots the crowd layer skips).
 var before_render: Callable = Callable()
 var warming: bool = false
+## D-Noir (lane noir): the noir print pass over world + actors when --look=noir (or set_noir()).
+var noir: NoirLook = null
 var _city: CitySystem = null
 var _look_rect: ColorRect = ColorRect.new()
 var _look_mat: ShaderMaterial = ShaderMaterial.new()
@@ -71,6 +73,17 @@ func setup(city: CitySystem) -> void:
 	prop_lights = CityPropLights.new(lights, tex_table)
 	city.sim.set_render(crowd.rids(), CrowdLayers.placeholder_clips())
 	set_look_enabled(look_enabled)
+	set_noir(NoirLook.requested())
+
+
+## Switches the D-Noir pass on or off (render only; A/B against D4).
+func set_noir(on: bool) -> void:
+	if on and noir == null:
+		noir = NoirLook.new()
+		add_child(noir)
+	if noir != null:
+		noir.visible = on
+		_look_rect.visible = look_enabled and (not on or noir.keep_d4)
 
 
 func set_look_enabled(on: bool) -> void:
@@ -147,6 +160,9 @@ func _place_camera(focus: Vector2) -> void:
 	fx.ground.step(tick, world_px)
 	markers.step(tick)
 	_look_mat.set_shader_parameter(&"world_px", world_px)
+	if noir != null:
+		noir.update(world_px, float(Engine.get_physics_frames()))
+		noir.light_street(_city, focus, zoom)
 
 
 ## The print coordinate of the screen centre. A point X prints at X * zoom, so a rig zoom ease

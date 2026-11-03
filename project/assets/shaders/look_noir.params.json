@@ -1,0 +1,83 @@
+{
+  "_doc": "D-Noir (lane noir, 2026-11-02): the high-contrast noir comic look, switchable with --look=noir. One table of uniforms, same shape as look_d5.params.json: frame = look_noir.gdshader uniforms (a full-screen pass over the D4-printed world AND the actors, top of the stack; set world_px like look_d4 and rain_phase from the sim tick). keep_d4 = the D4 world print stays under it (true) or the noir pass reads the raw art (false). Colour doctrine: black and white; blood is the one colour (protected red channel); teal only for the dead (teal 0: no teal survives the print, because the only teal on screen was Rivet's claw tip; the dead must draw above the pass, layer > 10, to keep theirs); vermilion prints as a solid ink mass (verm_value). impact = the comic impact frame on a kill (look_noir_impact.gdshader): sequence = one mode per tick (1 inverted panel, 2 white flash with ink silhouettes, 3 paper with the speed-line burst, 4 the silhouette flash: the host hides the world and the noir pass, so the actors print as solid ink on paper with the burst; without a host hide list mode 4 is a black flash); hit_stop_ticks = how long the sim holds the knockback pose; panel_ticks = after the sequence, the held pose framed as a comic panel (paper gutters, an ink border) of half size panel_half (screen uv) around the kill. safety.flashes = false is the flashes-off accessibility mode (FlashBudget: with it on, the kill beat and the muzzle light share one budget of 3 flashes per second (the WCAG 2.3.1 limit), the light at most 1 a second and never in the room a kill beat needs; off = no flash at all, the kill beat is the calm panel: ink border, no gutters, the hit-stop kept). Muzzle light: flash_r / flash_lift = the hard-edged pool of light around a muzzle on the fire tick (the host sets flash and flash_uv). shadows = NoirShadows: every shadowed draw command (props, parked cars, roof blocks) also casts a long hard shadow, its silhouette swept away from light_dir by len_m per texture class (by_name overrides; lamp arms 0 because a lamp prints white in its own pool), stamped at value (0.1: just over lamp_gate, so a lamp pool still lifts it) into the world canvas above the ground and under every prop and roof. shadows.figures = NoirFigureShadows: the rigs rendered alone into a SubViewport (a cull-mask bit) and their silhouette swept the same way, tapered about each body's centre (narrow legs, full shoulders, a small head; reach_m = a body's own radius) and printed at value 0.03 (under lamp_gate: stays ink inside a lamp pool or a headlight cone, and no dark-on-dark rim on the asphalt) under the blood and the rigs; the dead cast none; len_m 0 = off.",
+  "frame": {
+    "amount": 1.0,
+    "band": 0.07,
+    "beam_len": 300.0,
+    "beam_lift": 0.5,
+    "beam_spread": 0.2,
+    "beam_w": 18.0,
+    "blood": 1.0,
+    "car_glass": 1.0,
+    "car_half_w": 30.0,
+    "car_ink": 1.0,
+    "car_len": 140.0,
+    "crush": 0.36,
+    "edge_ink": 0.0,
+    "flash_lift": 0.3,
+    "flash_r": 128.0,
+    "grain": 0.06,
+    "lamp_core": 0.45,
+    "lamp_gate": 0.05,
+    "lamp_lift": 0.45,
+    "lamp_r": 190.0,
+    "light_dir": [
+      -0.6,
+      -0.8
+    ],
+    "rain": 0.4,
+    "rain_far": 0.5,
+    "rain_len": 22.0,
+    "rain_slant": 0.18,
+    "rim": 1.0,
+    "rim_hi": 0.14,
+    "rim_lo": 0.06,
+    "soft": 0.025,
+    "splash": 0.3,
+    "splash_zoom": [
+      1.0,
+      1.5
+    ],
+    "stroke_period": 3.0,
+    "teal": 0.0,
+    "thresh": 0.46,
+    "verm_value": 0.0,
+    "vignette": 0.35
+  },
+  "impact": {
+    "hit_stop_ticks": 8,
+    "panel_half": [
+      0.36,
+      0.38
+    ],
+    "panel_ticks": 8,
+    "sequence": [
+      4,
+      4,
+      1
+    ]
+  },
+  "keep_d4": false,
+  "safety": {
+    "flashes": true
+  },
+  "schema": "gtai.look-noir-params/1",
+  "shadows": {
+    "by_name": {
+      "lamp_post": 0.0,
+      "traffic_light": 0.0
+    },
+    "figures": {
+      "len_m": 1.2,
+      "reach_m": 1.0,
+      "res_scale": 0.5,
+      "value": 0.03
+    },
+    "len_m": {
+      "building": 3.0,
+      "prop": 1.0,
+      "vehicle": 0.8
+    },
+    "value": 0.1
+  }
+}
