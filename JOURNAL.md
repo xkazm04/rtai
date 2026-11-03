@@ -234,7 +234,7 @@ NEXT (iteration 3, in order):
 ## Iteration 3 (12:18 - 13:48, BUILD)
 
 - 12:19 read: journal, git log. Bench lock held by `collisions` (12:17), not needed yet.
-- MILESTONE 12:36 dfb5f81 traffic passes a stopped service car (NEXT 1): a tier-A civilian car
+- MILESTONE 12:27 dfb5f81 traffic passes a stopped service car (NEXT 1): a tier-A civilian car
   that stood 2.5 s behind an obstacle point in its own lane, mid-block (no junction planned), with
   the oncoming lane clear (no obstacle; no car from 8 m behind to 36 m ahead, hash query r=6),
   sets the new per-slot flag F_PASSING (8, sim_constants.json, regenerated) and steers to the
@@ -251,7 +251,7 @@ NEXT (iteration 3, in order):
   tools/gen_constants/sim_constants.json (+ generated sim_constants.h/.gd), native/SConstruct (CORE
   list), city_parity.gd (OBST_EVERY). MERGE NOTE: another lane adding a flag constant would collide
   on bit 8.
-- 12:41 526151b dev capture: the yield scene parked on a junction crosswalk (seed 31), where the
+- 12:33 526151b dev capture: the yield scene parked on a junction crosswalk (seed 31), where the
   pass does not fire by design (mid-block only): 10 frames yield48-v2 REJECTED (scene, not camera)
   and deleted. Now parks 24 m into the straight like the scenario, Rivet on the kerb; shots at
   300..720. Captured pass48-v1 / pass32-v1 (real game) and nopass48-v1 / nopass32-v1 (same scene,
