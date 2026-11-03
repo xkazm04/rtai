@@ -16,8 +16,27 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
 	"Don Fax": Vector2(1.8, 1.1),
 }
 
+const ART: String = "res://features/quest/art/collect_call/cast_"
+## The art is fitted to the gameplay footprints; drawn at these factors the silhouettes carry the
+## visual mass of the placeholder boxes (a thin IV-pole robot at 0.8 m read as a speck).
+const CAST_DRAW: float = 1.5
+const GUARD_DRAW: float = 1.7
+## Knocked-out bodies stay quiet (the placeholder drew them as faint discs).
+const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
+## cast_rivet.png: the real Rivet rig (idle, facing -y) captured at 120 px/m, body at the centre;
+## drawn at true scale (372 x 468 px = 3.1 x 3.9 m, arms included).
+const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
+## cast_rivet_peek.png: a round cut of the same capture (plate + hazard collar) for the hide spots.
+const RIVET_PEEK: Vector2 = Vector2(1.03, 1.03)
+## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
+const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
+const ALLY_ART: Dictionary[String, String] = {
+	"Juno": "juno", "Brass": "brass", "Dr. Kilohm": "kilohm", "Don Fax": "don_fax"
+}
+
 var stage: CollectCallStage
 var port: CollectCallWorld
+var _tex: Dictionary[String, Texture2D] = {}
 
 
 func _process(_delta: float) -> void:
@@ -31,78 +50,40 @@ func _draw() -> void:
 		_ally(tag, stage.layout.places.actors[tag].at)
 	if stage.heat.level > 0:
 		for p: Vector2 in stage.patrol_pos:
-			_human(p, "C", Vector2.DOWN)
+			_sprite("cop", p, COP_SIZE, Vector2.DOWN)
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS:
 			_mertz(h)
 		elif h.alive():
-			_human(h.pos, "G", h.facing)
+			_sprite("dock_guard", h.pos, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
 		else:
-			Ink.disc(self, h.pos, 0.3, Color(Ink.INK, 0.35))
+			_sprite("guard_down", h.pos, Vector2(1.6, 1.6), h.facing, DOWN_FADE)
 	_rivet(stage.arena.rivet)
 
 
 func _rivet(r: Fighter) -> void:
 	var at: Vector2 = r.pos
 	if stage.hidden_in != "":
-		Ink.box(self, at + Vector2(0.0, -0.75), Vector2(0.9, 0.6), Ink.CREAM)
-		_eyes(at + Vector2(0.0, -0.85))
-		Ink.initial(self, at + Vector2(0.0, -0.58), "R", Ink.INK, 0.28)
+		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK, Vector2.UP)
 		return
-	var hand: Vector2 = at + Vector2(0.45, 0.0)
-	var arm: Vector2 = r.facing.normalized() * 0.9
-	draw_line(Ink.px(hand), Ink.px(hand + arm), Ink.INK, 5.0)
-	draw_circle(Ink.px(hand + arm), 4.0, Ink.TEAL)
-	Ink.box(self, at + Vector2(0.0, 0.15), Vector2(1.0, 1.1), Ink.CREAM)
-	Ink.box(self, at + Vector2(0.0, -0.55), Vector2(0.9, 0.6), Ink.CREAM)
-	var collar_a: Vector2 = Ink.px(at + Vector2(-0.5, -0.2))
-	draw_line(collar_a, Ink.px(at + Vector2(0.5, -0.2)), Ink.VERMILION, 6.0)
-	_eyes(at + Vector2(0.0, -0.6))
-	Ink.initial(self, at + Vector2(0.0, 0.2), "R", Ink.INK, 0.5)
+	_sprite("rivet", at, RIVET_SIZE, r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
-
-
-func _eyes(at: Vector2) -> void:
-	var c: Vector2 = Ink.px(at)
-	draw_rect(Rect2(c + Vector2(-14, -4), Vector2(28, 8)), Ink.INK, true)
-	draw_rect(Rect2(c + Vector2(-11, -2), Vector2(8, 4)), Ink.TEAL, true)
-	draw_rect(Rect2(c + Vector2(3, -2), Vector2(8, 4)), Ink.TEAL, true)
 
 
 func _ally(tag: String, at: Vector2) -> void:
 	var size: Vector2 = ALLY_SIZE.get(tag, Vector2.ONE)
-	var dark: bool = tag == "Brass"
-	Ink.box(self, at, size, Ink.INK if dark else Ink.CREAM)
-	_eyes(at + Vector2(0.0, -size.y * 0.3))
-	var letter: String = ALLY_LETTER.get(tag, "?")
-	Ink.initial(
-		self, at + Vector2(0.0, size.y * 0.15), letter, Ink.CREAM if dark else Ink.INK, 0.45
-	)
-	if tag == "Don Fax":
-		draw_circle(Ink.px(at + Vector2(0.6, 0.3)), 5.0, Ink.VERMILION)
+	var art: String = ALLY_ART.get(tag, "juno")
+	_sprite(art, at, size * CAST_DRAW, Vector2.UP)
 	Ink.label(self, at + Vector2(0.0, size.y * 0.5 + 0.45), tag, 18, Ink.INK)
-
-
-func _human(at: Vector2, letter: String, facing: Vector2) -> void:
-	draw_line(Ink.px(at), Ink.px(at + facing.normalized() * 0.9), Ink.INK, 5.0)
-	Ink.disc(self, at, 0.45, Ink.VERMILION, letter)
-	draw_arc(Ink.px(at), 0.32 * Ink.PX_PER_M, 0.3, 2.8, 12, Ink.CREAM, 3.0, true)
 
 
 func _mertz(m: Fighter) -> void:
 	var at: Vector2 = m.pos
 	if not m.alive():
-		Ink.box(self, at + Vector2(0.0, 0.3), Vector2(1.9, 0.9), Color(Ink.INK, 0.6))
-		Ink.label(self, at + Vector2(0.0, 1.3), "shorted out", 16, Ink.INK)
+		_sprite("mertz_down", at, Vector2(2.6, 2.4) * CAST_DRAW, Vector2.UP, DOWN_FADE)
 		return
-	Ink.box(self, at + Vector2(0.0, -0.95), Vector2(1.2, 0.7), Ink.INK)
-	Ink.box(self, at, Vector2(1.9, 1.5), Ink.INK)
-	Ink.box(self, at + Vector2(0.0, -0.95), Vector2(1.0, 0.25), Ink.CREAM)
-	for i: int in 3:
-		var bar: Vector2 = Ink.px(at + Vector2(-0.75 + i * 0.25, -0.5))
-		draw_rect(Rect2(bar, Vector2(9, 5)), Ink.CREAM, true)
-	Ink.initial(self, at + Vector2(0.15, 0.15), "M", Ink.CREAM, 0.6)
 	var dir: Vector2 = m.facing.normalized()
+	_sprite("mertz", at, Vector2(1.9, 2.0) * CAST_DRAW, dir)
 	var gun_root: Vector2 = at + dir * 0.9
 	var muzzle: Vector2 = at + dir * 2.1
 	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
@@ -128,8 +109,21 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
 
 
+## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.
 func _hp_bar(at: Vector2, frac: float) -> void:
 	var r: Rect2 = Rect2(Ink.px(at) - Vector2(30, 4), Vector2(60, 8))
 	draw_rect(r, Ink.CREAM, true)
-	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
+	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.INK, true)
 	draw_rect(r, Ink.INK, false, 2.0)
+
+
+## A cast sprite (drawn facing -y) centred on `at`, turned to `facing`.
+func _sprite(
+	name: String, at: Vector2, size: Vector2, facing: Vector2, tint: Color = Color.WHITE
+) -> void:
+	if not _tex.has(name):
+		_tex[name] = load(ART + name + ".png") as Texture2D
+	draw_set_transform(Ink.px(at), facing.angle() + PI * 0.5)
+	var r: Rect2 = Rect2(-size * 0.5 * Ink.PX_PER_M, size * Ink.PX_PER_M)
+	draw_texture_rect(_tex[name], r, false, tint)
+	draw_set_transform(Vector2.ZERO)
