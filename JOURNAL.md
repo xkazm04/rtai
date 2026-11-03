@@ -301,3 +301,6 @@ atlas; d5-combat blood names; vehicles cruiser accents).
   Since bba930d (unit 335, scenarios 8, parity, selftest PASS) only evidence/ and JOURNAL.md changed,
   so the code gates of record still apply to HEAD. Bench lock still held by d5-combat (16:43, < 20 min):
   the idle re-bench stays item 0 of the 16:47 NEXT. No code changes this iteration; lane frozen for 17:00.
+- BLOCKED 16:54 (iter 48) idle re-bench: lock still held by d5-combat (written 16:43, < 20 min); skipped.
+  Six minutes to freeze: no code change started (nothing could be evidenced before 17:00). Tree clean at
+  1a017d6. The 16:47 NEXT stands unchanged: item 0 = idle re-bench at the branch head after the run.
