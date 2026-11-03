@@ -158,3 +158,11 @@ NEXT (iteration 3, depth-first on the pistol):
   wiring (needs REQUEST 4: `ArenaStage` sets `arena.combat.gun = GunHand.make(...)` and connects
   `struck` to `HitFeel.land` with the view's CameraRig), the victim flash and knockback in
   CastView/Fighter, then the pistol art (NEXT 3) and the full-chain clip (NEXT 4).
+- FINDING 21:56: Rivet's D5 rig already holds a pistol. `rivet_plan.gd` sets
+  `hand_pistol = "claw_pistol"`, `rig_arm.gd` swaps the gun arm to that cell when armed, and
+  the art is `features/characters/art/d5/rivet/{claw_pistol,pistol}.png` (d5-cast). The cop has
+  `forearm_pistol`. So NEXT 3 is not "make art from zero". Use these cells. The pistol inside
+  claw_pistol is a plain black bar, so a designed top-down prop is a candidate to replace it.
+  A Codex image_gen job for that prop ran at 21:55 in gtai-spike/gunplay-pistol/ (style ref:
+  the d5-cast Rivet frame). It is not integrated. If it is kept, add a provenance line and
+  REQUEST rivet-motion/d5-cast to repaint the claw_pistol cell, A/B in the full-chain clip.
