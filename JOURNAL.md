@@ -948,3 +948,11 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   pan12thinR (0.00049 / 0.00000). Params JSON print.street_edge 1.0; unit 149/0. Board evidence/item37_street_edge.png;
   ladder row. (item29-32 and h109all/item35 were shot without it; h115se1 is the package's frame from here.)
 - 03:51 boards item35_all_proposals_iter7.png and night_iter7_summary.png rebuilt from h115se1 (+ a17se1 for the arena kill-cam); gap list numbers updated (L 0.468, ink 0.11).
+- 03:54 OWNER A/B (3963ef1, option default 0): look_d5_halo rim_px, extra cream rim width inside the ink ring (cream =
+  print_part's halo cream x its mean grain 0.97), for the mock's relatively thicker rim (~4 px on a ~45 px cop vs
+  our ~2 px on ~30 px at 32 px/m, by eye on x3 crops). First try did not compile (the uniform line was not inserted,
+  my match string missed): those two rounds were deleted and re-shot. h116rim0 = h110sh (0 px at 32/48/64: the
+  option off changes nothing); rim0 -> rim1 (D5_HALO_RIM=1): 1186 / 1925 / 2626 px at 32 / 48 / 64. By eye: bolder
+  sticker read, closer to the mock's chunky rim, the ink line still separates; but more cream mass around every
+  actor (busier at 48 where cops stand close to Rivet). A taste call, so not in the package. Board
+  evidence/item38_rim_owner_ab.png; ladder row.
