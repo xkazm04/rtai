@@ -154,3 +154,6 @@ NEXT:
 - REJECTED (not committed): a darker T1 dome (0.82 x paper instead of 0.94) to part the cop's head from the cream sticker
   rim on the sidewalk at 32. Same-scene hero A/B: d4-32 4 px changed, d4-48 10 px (the D4 part print snaps the dome to
   paper at gameplay zoom), d5-64/128 only ~15 luma darker. No gain where it was meant to help; art reverted, DOME_K = 0.94.
+- CHECK noir still switches with the T1 cop heads (dev/noir/noir_frames.tscn, masters renders/noir3): junction-noir
+  32/48/64 = 0 blue, 0 teal, 0 vermilion px; cops print as ink masses like everyone. Owner kill-cam frame swapped to
+  city_frame focus 1 (city-0 at 128 has a crowd ped standing on Rivet): before night 1.3 | after base 1.1, same street.
