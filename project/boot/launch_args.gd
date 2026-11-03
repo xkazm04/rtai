@@ -1,5 +1,6 @@
 extends Node
-## LaunchArgs autoload: user args after `--`. Unknown args fail loudly (TST-03).
+## LaunchArgs autoload: user args after `--`. Unknown ones are kept for unknown(); the main scene
+## (boot/boot.gd) warns about each, so a misspelt flag is not silently ignored.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--seed", "--replay", "--record", "--devtools", "--look", "--reduced-motion"
