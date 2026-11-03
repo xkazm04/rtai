@@ -469,10 +469,10 @@ NEXT (iteration 6 close, in order):
   are > 4 m from any wall, so the showcase does not show it (it is wired there; frames re-shot to check
   nothing else moved). FRICTION: the first showcase re-record with the wall test hung for 10 min (no
   frames); killed by PID (my own processes only); a headless check found no script error; re-recording.
-- (02:44) Gates at 572a4a2 (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13),
+- (02:37) Gates at 572a4a2 (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13),
   191 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
   Showcase re-shot at 572a4a2 (show-v10, 48 px/m): all 23 hero frames pixel-identical to stain-v1 (the wall
   test changes nothing there). evidence/NOIR.md updated for iteration 8.
-- (02:45) NEXT item 7 (noir_frames tick-exact) needs no code: `--fixed-fps 60` makes every frame one tick;
+- (02:37) NEXT item 7 (noir_frames tick-exact) needs no code: `--fixed-fps 60` makes every frame one tick;
   two runs of `noir_frames --scenes=street` were pixel-identical in all 6 frames (masters tick-exact/a, b).
   Usage line added to the script header. Older ped A/Bs (ped-v0/v1) were shot without it (not re-shot).
