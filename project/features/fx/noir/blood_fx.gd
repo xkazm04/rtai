@@ -20,17 +20,7 @@ var _pos: PackedVector2Array = PackedVector2Array()
 var _vel: PackedVector2Array = PackedVector2Array()
 var _size: PackedFloat32Array = PackedFloat32Array()
 var _life: PackedInt32Array = PackedInt32Array()
-var _d_pos: PackedVector2Array = PackedVector2Array()
-var _d_r0: PackedFloat32Array = PackedFloat32Array()
-var _d_r1: PackedFloat32Array = PackedFloat32Array()
-var _d_born: PackedInt32Array = PackedInt32Array()
-var _d_grow: PackedInt32Array = PackedInt32Array()
-var _d_seed: PackedInt32Array = PackedInt32Array()
-## Per decal: the travel direction at landing (length = elongation), or a pool's flow.
-var _d_dir: PackedVector2Array = PackedVector2Array()
-var _d_next: int = 0
-var _p_next: int = 0
-var _pools: int = 16
+var _ring: BloodDecals = null
 var _n: int = 0
 var _k: int = 0
 ## What is drawn: blood, or another fluid (use_fluid).
@@ -42,19 +32,13 @@ func _init() -> void:
 	var budget: Dictionary = p["budget"]
 	var max_drops: int = budget["max_drops"]
 	var max_decals: int = budget["max_decals"]
-	_pools = budget["max_pools"]
+	var max_pools: int = budget["max_pools"]
 	decals = max_decals
+	_ring = BloodDecals.new(max_decals, max_pools)
 	_pos = NoirPack.vec2s(max_drops)
 	_vel = NoirPack.vec2s(max_drops)
 	_size = NoirPack.floats(max_drops)
 	_life = NoirPack.ints(max_drops)
-	_d_pos = NoirPack.vec2s(max_decals)
-	_d_r0 = NoirPack.floats(max_decals)
-	_d_r1 = NoirPack.floats(max_decals)
-	_d_born = NoirPack.ints(max_decals)
-	_d_grow = NoirPack.ints(max_decals)
-	_d_seed = NoirPack.ints(max_decals)
-	_d_dir = NoirPack.vec2s(max_decals)
 	var colour: Dictionary = p["colour"]
 	_fluid = NoirFluid.from(colour)
 
@@ -82,7 +66,7 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var sp: float = _range(h["speed_px"]) * (0.6 + 0.4 * _rand())
 		_spawn_drop(at + Vector2(_rand() - 0.5, _rand() - 0.5) * 3.0, Vector2.from_angle(a) * sp, h)
 	var hit: int = _add_decal(at, _range(h["splat_px"]) * 1.4, 0)
-	_d_dir[hit] = dir.normalized() * 0.5
+	_ring.set_dir(hit, dir.normalized() * 0.5)
 	if h["pool"]:
 		var pool: Dictionary = p["pool"]
 		var r: Array = pool["radius_px"]
@@ -92,29 +76,23 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var r1: float = r[1]
 		var run: float = pool.get("run", 0.0)
 		var i: int = _add_decal(at + dir.normalized() * 4.0, r1, grow, r0, delay)
-		_d_dir[i] = dir.normalized() * run
+		_ring.set_dir(i, dir.normalized() * run)
 
 
 ## One drip from a wounded fighter at `at` (px), stretched along `move` (px per tick, may be zero).
 func drip(at: Vector2, move: Vector2) -> void:
 	var i: int = _add_decal(at, _range(p["drip"]["splat_px"]), 0)
-	_d_dir[i] = move.normalized() * clampf(move.length() / 3.0, 0.0, 0.8)
+	_ring.set_dir(i, move.normalized() * clampf(move.length() / 3.0, 0.0, 0.8))
 
 
 ## Decals on the ground now (splats + pools; capped by the budget).
 func live_decals() -> int:
-	var n: int = 0
-	for r: float in _d_r1:
-		n += 1 if r > 0.0 else 0
-	return n
+	return _ring.live()
 
 
 ## True when a pool decal sits within `r` px of `at` (tests, evidence).
 func has_pool_at(at: Vector2, r: float) -> bool:
-	for i: int in range(_d_pos.size() - _pools, _d_pos.size()):
-		if _d_r1[i] > 0.0 and _d_pos[i].distance_to(at) <= r:
-			return true
-	return false
+	return _ring.has_pool_at(at, r)
 
 
 func step_ticks(n: int) -> void:
@@ -133,7 +111,7 @@ func step_ticks(n: int) -> void:
 				_life[i] = 0
 				drops -= 1
 				var d: int = _add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
-				_d_dir[d] = _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0)
+				_ring.set_dir(d, _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0))
 	queue_redraw()
 
 
@@ -147,7 +125,7 @@ func _hit_wall(i: int) -> bool:
 	var r: float = _size[i] * (2.2 + _vel[i].length() / 2.5)
 	for sgn: float in [1.0, -1.0]:
 		var d: int = _add_decal(at + nrm * r * 0.3, r, 0)
-		_d_dir[d] = nrm.orthogonal() * sgn
+		_ring.set_dir(d, nrm.orthogonal() * sgn)
 	_life[i] = 0
 	drops -= 1
 	wall_hits += 1
@@ -168,44 +146,18 @@ func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:
 			return
 
 
-## A decal of radius r1 (grows from r0 over `grow` ticks after `delay`). Splats and pools have
-## their own rings (pools: the last max_pools slots), so droplets never evict a kill's pool.
+## A decal of radius r1 (grows from r0 over `grow` ticks after `delay`), in BloodDecals' rings.
+## One scatter draw per decal (its old per-decal seed), so the scatter sequence is unchanged.
 func _add_decal(at: Vector2, r1: float, grow: int, r0: float = -1.0, delay: int = 0) -> int:
-	var splats: int = _d_pos.size() - _pools
-	var i: int = _d_next
-	if grow > 0:
-		i = splats + _p_next
-		_p_next = (_p_next + 1) % _pools
-	else:
-		_d_next = (_d_next + 1) % splats
-	_d_pos[i] = at
-	_d_r1[i] = r1
-	_d_r0[i] = r1 if r0 < 0.0 else r0
-	_d_born[i] = tick + delay
-	_d_grow[i] = grow
-	_d_seed[i] = int(_rand() * 100000.0)
-	_d_dir[i] = Vector2.ZERO
+	var i: int = _ring.add(at, r1, grow, r0, tick + delay)
+	@warning_ignore("return_value_discarded")
+	_rand()
 	return i
 
 
 func _draw() -> void:
 	var dc: Dictionary = p["decal"]
-	var after: int = dc["fade_after_ticks"]
-	var fade: int = dc["fade_ticks"]
-	for i: int in decals:
-		var age: int = tick - _d_born[i]
-		if age < 0 or _d_r1[i] <= 0.0:
-			continue
-		var g: float = 1.0 if _d_grow[i] == 0 else clampf(float(age) / _d_grow[i], 0.0, 1.0)
-		var r: float = lerpf(_d_r0[i], _d_r1[i], 1.0 - pow(1.0 - g, 2.0))
-		var a: float = 1.0 - clampf(float(age - after) / fade, 0.0, 1.0)
-		if _d_grow[i] > 0:
-			var cols: PackedColorArray = [
-				Color(_fluid.dark, a), Color(_fluid.ground, a), Color(_fluid.sheen, a * 0.9)
-			]
-			BloodMarks.pool(self, _d_pos[i], r, _d_dir[i], cols)
-		else:
-			BloodMarks.splat(self, _d_pos[i], r, _d_dir[i], Color(_fluid.ground, a))
+	_ring.draw(self, tick, decals, _fluid, dc)
 	var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
 	for i: int in _pos.size():
 		if _life[i] > 0 and _fluid.case_px > 0.0:
