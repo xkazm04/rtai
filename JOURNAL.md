@@ -1564,3 +1564,21 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   n-visual + patches 16 / 19 / 21 / 23) - merge clean but JOURNAL.md, patches apply, re-baked: lint 13/13, unit
   **260/260**, scenarios 8/8, parity exact; selftest only the goldens (re-bless); doctrine clean. scratch-full removed,
   `scratch-v2` kept (that stack, uncommitted). `evidence/iter16/morning-full-stack-gates.txt`.
+- 05:44 LOOKED at the junction on the final stack (`masters:v2_st/selftest-32ppm.png`): inked crowd with cream rims,
+  cops the vermilion threats, Rivet's collar the only other vermilion, no placeholder. No new weakest art item found
+  that is in this lane's scope; what is left vs the target is code-side (roof parapets / lift = n-d5 + visual-engine
+  proposals, the aquatint blotches on paving at 64 = REQUEST 22, the cream halo on paving).
+
+NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
+- Owner review (each reverts alone): 767ee6c (sleeve parts; inert without patch 21), 97558d7 (arm outline 14 px,
+  live on n-d4; originals `masters:backup_arms16/`). Iteration-14 list stands (165ae0f, d6317ee, fc6501c, 62923f7).
+- Director, morning order (dry-run green at 05:42 on n-visual a103850, `evidence/iter16/morning-full-stack-gates.txt`):
+  merge n-d4 into main, merge n-visual, then `git apply` REQUEST 16 `iter14/q1_view_art.patch`, 19
+  `iter10/generator_art_pick_v2.patch`, 21 `iter16/rig_sleeves_and_looks.patch` (supersedes iter10's), 23
+  `iter14/fx_fade.patch`; re-bake; re-bless n-visual's look / block goldens. JOURNAL.md is the only conflict.
+- Owner questions: hatch Rivet's limbs for 64 px/m arenas only?; HUD / lettering font; cop uniform vermilion share;
+  blood ink vs vermilion; teal robot eyes; REQUEST 24 (in-world souls: n-d5's D5 set or a D4 set from this lane).
+- Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` (bench.json stale; other lanes were rendering).
+- Worktrees: `scratch-q1` (quest patch applied), `scratch-v2` (the full morning stack, uncommitted; delete when
+  done). Dangling commit c9167f9 (main + n-d4, plumbing) is unreferenced except by scratch-v2. Nothing pushed or
+  merged. Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
