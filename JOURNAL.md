@@ -1602,6 +1602,6 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   `scratch-q1` (main + quest patch, final), `scratch-v2` (full morning stack on n-visual a103850, uncommitted);
   scratch-m16 / scratch-full removed. My Godot runs all finished (the Godot processes running now are other
   lanes'). Bench not run all iteration (box never idle). 0 Codex images. Nothing pushed or merged.
-- 05:48 CHECK (git only) n-visual moved to aa21983 (crackle rim fix, fx.json touched): main + n-d4 (c9167f9) merged
+- 05:47 CHECK (git only) n-visual moved to aa21983 (crackle rim fix, fx.json touched): main + n-d4 (c9167f9) merged
   with aa21983 - JOURNAL.md the only conflict - and all four patches (16, 19, 21 sleeves, 23 fx fade) apply in
   order on that tree (a temp index; nothing written). Gates not re-run on it (the 05:42 run on a103850 stands).
