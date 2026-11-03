@@ -480,4 +480,5 @@ NEXT: unchanged from iteration 46 (owner choices 1-6, merge recipe, re-bless gol
   For the merge, the scratch-merge recipe is: merge-tree --write-tree + commit-tree, then checkout --detach.
 - Gate on the MERGED preview (renders copclose-merge4, d-city crowd + d-cast cops): saturated-blue blobs >= 12 px
   merged within 40 px -> 7 blue clusters of 158-423 px at 32 px/m, one per cop figure in view; at 48, 4 clusters
-  (526-628 px). Every cop stays a distinct blue mark among the black/cream crowd after the merge.
+  of 809 / 647 / 542 / 216 px for 3 cops in view (the downed cop in the blood at the bottom-left splits in two).
+  CORRECTION: the first version of this line gave unmeasured 48 px/m numbers; these are computed. Every cop stays a distinct blue mark among the black/cream crowd after the merge.
