@@ -93,6 +93,7 @@
       0.02
     ],
     "pool_lead_m": 0.54,
+    "pool_radius_px": 16.0,
     "replaces_fx": [
       "ink_splat"
     ],

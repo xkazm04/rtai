@@ -184,6 +184,8 @@ func hit_robot(pos_px: Vector2) -> void:
 func _pool_from_game() -> void:
 	var lead_m: float = _game.get("pool_lead_m", 0.125)
 	_slide_px = lead_m * SimConst.PX_PER_M
+	if NoirLook.requested():  # owner 2026-11-03: the D4/D5 game's pool is 16 px, noir keeps 22
+		return
 	var pool_r1: float = _game.get("pool_radius_px", 0.0)
 	blood.pool_r1_px = pool_r1
 
