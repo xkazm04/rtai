@@ -1156,3 +1156,14 @@ NEXT (iteration 14 / morning, in order):
   6.58 -> 7.12, 6.70 -> 7.17 ms; the light canvas' share 0.09 / -0.10 -> 0.59 / 0.55 ms => the page age
   pass is ~+0.5 ms at arena zoom only, 0 at gameplay zoom. evidence/page-age-cost/. Docs: both READMEs
   (ce0db12).
+- Merged build (scratch + a84bd39): lint 13/13 over 323 files, unit 309/309, scenarios 8/8 (replay_60s
+  identical). n-noir's city_view hunk lands after my zoom-anchored world_px and reads that member:
+  consistent. merge-tree after my decisions.md line (06:12): still JOURNAL.md-only conflicts vs n-d4 / n-d5 /
+  n-noir, main clean.
+- Known limit (README, 7b0c...): lights, the 5 emissive FX kinds (all `paper`) and markers draw above the
+  grade rect, so they are not aged (a paper flash prints D4 cream on the aged page at 64 px/m).
+- Quest 1 patch v2 (49-quest1-v2/quest1-on-print_stage-v2.patch, 78 lines, applies on the merged tree and on
+  main): the 45-quest1 PrintStage move + every zone floor on Ink.WASH at 30 % (Factory Row 0.12, Toner Room
+  0.22 - only 0.06 inside the first wash edge, it would mottle - and Dock 9 0.08 -> 0.30 = density ~0.33,
+  the first wash). NOT wired: print_stage.listen() - quest 1 steps its own stage.tick with no SimClock, so
+  the rig / hit-stop need World's clock (after the merge).
