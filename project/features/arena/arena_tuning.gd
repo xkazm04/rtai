@@ -120,7 +120,11 @@ static func _apply_weapon(w: CombatTuning.Weapon, field: String, v: float) -> bo
 
 func _table(table: String) -> Dictionary:
 	if not _tables.has(table):
-		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(TABLES % table))
+		var path: String = TABLES % table
+		var text: String = (
+			FileAccess.get_file_as_string(path) if FileAccess.file_exists(path) else ""
+		)
+		var parsed: Variant = JSON.parse_string(text) if not text.is_empty() else null
 		_tables[table] = parsed if parsed is Dictionary else {}
 	return _tables[table]
 
