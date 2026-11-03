@@ -108,6 +108,10 @@
           "minimum": 0.1,
           "type": "number"
         },
+        "stomp_hitstop": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
         "stomp_knock_m": {
           "maximum": 20,
           "minimum": 0,
@@ -117,6 +121,10 @@
           "maximum": 30,
           "minimum": 0.5,
           "type": "number"
+        },
+        "stomp_shake": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
         },
         "stomp_stun_s": {
           "maximum": 10,
@@ -150,8 +158,10 @@
         "ram_car_damage",
         "ram_mps",
         "stomp_cooldown_s",
+        "stomp_hitstop",
         "stomp_knock_m",
         "stomp_radius_m",
+        "stomp_shake",
         "stomp_stun_s",
         "stomp_windup_s",
         "top_mps",
