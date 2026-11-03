@@ -432,3 +432,10 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
   selftest ok; the selftest colour count varies run to run as noted at 22:09); 47 untracked evidence PNGs restored.
 NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (features/city/art/d5/props/lamp_post.png,
   arm over the street from the kerb) replaces the D4 'spoon' (hero d5 tier, item20). Images tonight: 41 of ~50.
+- 01:10 MEASURED item 1 "closer to the concept" (first numeric try; Rivet's largest tier-footprint blob in h72 vs the
+  concept's Rivet scaled to the 96 px/m height, teal ghosts and cream paper masked out):
+  red-lead share (rust + collar, r - max(g,b) > 40): concept 0.079 / D4 0.030 (64) 0.031 (96) / D5 0.097 / 0.106: D5 is
+  closer (it overshoots by ~0.02-0.03). Ink share: concept 0.391 / D4 0.389 / 0.343 / D5 0.348 / 0.330: about level.
+  Mean L: concept 0.274 / D4 0.460 / 0.477 / D5 0.449 / 0.471: both far (the lavender steel, owner choice item9).
+  HF is not comparable (our mask includes the cream sticker rim and outline). Supports the eye judgement on rust and
+  print, not on tone.

@@ -87,6 +87,9 @@ tick count, no RNG.
   the concept tonight), and D4 yard roofs with the ink foot around the floor (a13).
 - **D5 lamp post** (`item20_lamp.png`, 934233c): the D4 'spoon' replaced in the hero's d5 tier by a plan-view lamp,
   arm over the street like the mock (d4 tier 0 px).
+- **Item 1 gate, numerically (first try)**: Rivet (h72) vs the concept's Rivet scaled to the same height: rust/collar
+  red-lead share concept 0.079, D4 0.030, D5 0.097 (64) / 0.106 (96) = D5 closer; ink share about level (0.39 / 0.39 /
+  0.35); mean L concept 0.274 vs ours ~0.46 (the lavender steel, owner choice). Texture HF not comparable (rim).
 - Re-measured on the final shaders: tier-fade sweep 0 at 51-55 px/m then monotone (no pop); walk shimmer HF 1.024.
 - Codex this iteration: 7 images (cop expressions, arena floor, King top view, phone frame, boss intro card, lamp
   post + its redo), 0 rejected for camera breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger
