@@ -10,6 +10,8 @@ const PLACES: String = "res://data/tables/collect_call_places.json"
 ## Where the stage sits on the generated city (gtai.collect-call-city/1).
 const CITY: String = "res://data/tables/collect_call_city.json"
 const CITY_SCHEMA: String = "gtai.collect-call-city/1"
+## The spawn point the Robo-tazer's metal is laid out around (Mertz's post at the vault cage).
+const METAL_ANCHOR: String = "vault-cage"
 
 
 class Patrol:
@@ -133,9 +135,12 @@ func _read_crates(t: DataTable, raw: Dictionary) -> void:
 	crates_label = t.text(c, "label")
 	torch_reach_m = t.num(c, "torch_reach_m")
 	var points: Array = t.array(raw, "metal")
+	# the metal keeps its true offsets around Mertz's post (squashed, a post sat on the ball's
+	# path and the Robo-tazer homed into it every time)
+	var post: Vector2 = t.vec(t.object(raw, "spawn_points"), METAL_ANCHOR)
 	var out: Array[Vector2] = []
 	for i: int in points.size():
-		out.append(w(t.vec({"p": points[i]}, "p")))
+		out.append(w(post) + t.vec({"p": points[i]}, "p") - post)
 	metal = PackedVector2Array(out)
 
 

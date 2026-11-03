@@ -24,7 +24,6 @@ func _init(stage: CollectCallStage, system: QuestSystem) -> void:
 	_stage = stage
 	bot = CollectCallBot.new(stage, system)
 	bot.stand_m = STAND_M
-	bot.waits_for_hit = stage.cells == null
 
 
 func done() -> bool:

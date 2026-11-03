@@ -24,9 +24,6 @@ var phase: String = "start"
 ## How near a goal counts as there (the input driver's thumb arrives less exactly than a direct
 ## move_to; every reach it stands in for is 1.1 m or more).
 var stand_m: float = STAND_M
-## Waits for one Robo-tazer hit before nailing Mertz in his vent window (false on the city: the
-## street's squashed vault puts the metal inside the ball's chain reach, so it bursts short).
-var waits_for_hit: bool = true
 ## false plants the scenario's fault: the bot never tries the Harbor Road phone while hot.
 var tries_hot_phone: bool = true
 ## false plants the other fault: the bot never torches the crates (the quest cannot finish).
@@ -129,7 +126,7 @@ func _boss() -> void:
 		return
 	if arena.boss.alive():
 		_walk(_stage.layout.w(BOSS_STANDOFF))
-		if arena.boss.exposed and (arena.tazer_hits >= 1 or not waits_for_hit):
+		if arena.boss.exposed and arena.tazer_hits >= 1:
 			_stage.intent.fire_at = arena.boss.pos
 		return
 	if not _stage.crates_burning and _go(_stage.layout.crates_at + Vector2(0.0, 2.0)):
