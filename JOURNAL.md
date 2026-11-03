@@ -277,3 +277,4 @@ Branch d-city at the commit after bba930d; all gates PASS at bba930d. The bench 
 4. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13).
 Codex: 4 images used today by this lane (of ~30). REQUESTS 1-4 still stand (d5-cast cop_blue rigs and
 atlas; d5-combat blood names; vehicles cruiser accents).
+- BLOCKED 16:38 final re-bench: lock held by d5-cast (16:36, < 20 min); skipped. Bench of record = 16:00 at 61e9222.
