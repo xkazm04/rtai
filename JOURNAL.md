@@ -167,8 +167,9 @@ Branch d-city at the commit after 750c089; gates PASS at 750c089 (evidence/d5-ci
 2. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13); Codex budget
    untouched (0 of ~30 images used today by this lane).
 3. (done de53c3f: lane arrows removed.)
-4. Corner traffic lights sit diagonal (rot + 45) and read a bit like spoons at 32 px/m; T1 has corner
-   lamp posts. Try axis-aligned or the inked lamp at corners.
+4. Corner traffic lights: axis-aligned TRIED 12:22 and REVERTED (two corners then point their heads
+   away from the junction; evidence/d5-city/rejected/rejected-axis-traffic-lights-32ppm.png). Next try:
+   the inked D5 lamp at the corners as T1 has (its head over the crossing), traffic lights kept diagonal.
 5. Pixel-snapped world camera, then package v9's edge_dark with shadows that carry their own ink.
 6. Bench idle at the end of the day if the lock allows (this run was contended, 1 x 30 s).
 REQUESTS 1-4 above still stand (d5-cast: cop rigs/atlas to cop_blue; d5-combat: blood palette names;
