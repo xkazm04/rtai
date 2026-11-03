@@ -1114,3 +1114,14 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   Board evidence/night_iter8_summary.png. Per class at 32 px/m with THIS board's classes (paper L > 0.70, mid
   0.42-0.70, ink L < 0.15; not iteration 7's ink class): mock L 0.494 / paper 0.336 / mid 0.104 / ink 0.080;
   h106 0.423 / 0.286 / 0.048 / 0.176; h135cl 0.419 / 0.280 / 0.049 / 0.180; h138all 0.460 / 0.311 / 0.081 / 0.097.
+- 04:39 MILESTONE (rig shadows commit): hatched cast shadows for the rigs up close. Found by eye in a21all: King casts a
+  hatched shadow but Rivet and the cops float at 128 (their halos, and with them the look_d5_halo drop shadow, are
+  gone from ~96 px/m); the concept grounds Rivet with a stippled shadow. New dev/showcase/d5_rig_shadow.gd
+  (CanvasGroup on the world layer: each frame mirrors every visible rig part sprite, not halos / D5 overlays,
+  0.45 m down-right) + assets/shaders/look_d5_shadow_group.gdshader (the merged alpha printed as look_d5_shadow's
+  pen hatch: no seams where parts overlap). d5 tier, fades in 56 -> 64 px/m; D5_RIG_SHADOW=0 off. h135cl -> h139rs:
+  0 / 0 / 6210 / 13965 / 27195 px at 32-128, d4 tier 0; arena a20 -> a22rs: 0 / 0 / 9666 / 23665 / 20886. Sweep
+  54-64 px/m (temporary zoom list, restored, tree checked; D5_RIG_SHADOW=0 as control): strength per area 0 / 0 /
+  130 / 876 / 2716 / 3555, monotone (the look_d4 print quantizes the low alphas, so most of the ramp lands 60-62).
+  Package + fringe at 64 (h140all): the hatch sits with the soft halo shadow, actors still pop. Board
+  evidence/item46_rig_shadows.png; ladder row. Proposal for the characters lane.
