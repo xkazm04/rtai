@@ -14,7 +14,6 @@ const KNOWN_FLAGS: PackedStringArray = [
 ]
 ## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
-const LIT: float = 0.25
 
 var _out: String = "user://noir"
 var _zoom: float = 1.5
@@ -30,7 +29,6 @@ var _hold_in: int = 0
 var _hold_len: int = 0
 var _live: bool = false
 var _heroes: Dictionary[int, String] = {}
-var _thresh: float = 0.46
 var _world: World = null
 var _view: CityView = null
 var _rigs: CharacterRigs = CharacterRigs.new()
@@ -53,8 +51,6 @@ func _ready() -> void:
 	_view = built[1]
 	_view.zoom = _zoom
 	_view.set_noir(not _d4)
-	var frame: Dictionary = _view.noir.params.get("frame", {})
-	_thresh = frame.get("thresh", _thresh)
 	var chars: CityCharacters = built[3]
 	chars.rivet_on_foot = false
 	_fight.origin = NoirFrames.JUNCTION
@@ -126,7 +122,11 @@ func _process(_delta: float) -> void:
 		if _coats != null:
 			_coats.step(_rigs, PackedInt32Array([NoirFightScript.COP_A, NoirFightScript.COP_B]))
 	if not _d4:
-		_view.noir.apply({"thresh": _thresh + (LIT if _flash.lit() else 0.0)})
+		var lit: bool = _flash.lit()
+		var light: Dictionary = {"flash": 1.0 if lit else 0.0}
+		if lit:
+			light["flash_uv"] = _to_uv(_flash.lit_at())
+		_view.noir.apply(light)
 	var opening: bool = _t == 40 and not held
 	if _heroes.has(_frame) or opening:
 		_save.call_deferred(_frame, _heroes.get(_frame, "beat"))
@@ -146,6 +146,7 @@ func _cue(cue: Array) -> void:
 					(_fight.origin + _fight.pos[NoirFightScript.RIVET]) * SimConst.PX_PER_M
 				)
 				_flash.fire(at, target - at)
+				_heroes[_frame] = "lit"
 				_heroes[_frame + 1] = "shot"
 		"hit":
 			Events.player_hit.emit(&"pistol")

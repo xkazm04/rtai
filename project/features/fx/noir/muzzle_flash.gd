@@ -14,6 +14,7 @@ var _at: PackedVector2Array = PackedVector2Array()
 var _dir: PackedVector2Array = PackedVector2Array()
 var _age: PackedInt32Array = PackedInt32Array()
 var _lit: bool = false
+var _lit_at: Vector2 = Vector2.ZERO
 
 
 func fire(at_px: Vector2, dir: Vector2) -> void:
@@ -26,12 +27,18 @@ func fire(at_px: Vector2, dir: Vector2) -> void:
 	@warning_ignore("return_value_discarded")
 	_age.append(0)
 	_lit = true
+	_lit_at = at_px
 	queue_redraw()
 
 
 ## True on the tick a round was fired (one frame of light).
 func lit() -> bool:
 	return _lit
+
+
+## Where the last round lit the scene (world px).
+func lit_at() -> Vector2:
+	return _lit_at
 
 
 func step_ticks(n: int) -> void:

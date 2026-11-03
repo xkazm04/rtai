@@ -40,6 +40,12 @@ uniform float vignette = 0.35;     // ink pulled in from the frame edges (a pane
 uniform float verm_value = 0.0;    // the value the vermilion plate prints at: 0 = a solid ink mass, 1 = paper
 uniform float blood = 1.0;         // the protected red channel
 uniform float teal = 1.0;
+// muzzle light: on the fire tick the host sets flash 1 and flash_uv; a hard-edged pool of light of
+// flash_r px (at 32 px/m, scaled by zoom) lifts the value by flash_lift, so the shooter's ground prints paper
+uniform vec2 flash_uv = vec2(0.5);
+uniform float flash = 0.0;
+uniform float flash_r = 140.0;
+uniform float flash_lift = 0.3;
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -105,6 +111,12 @@ void fragment() {
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec3 src = texture(screen_tex, uv).rgb;
 	float v = value_of(src);
+	vec2 fv = (uv - flash_uv) / SCREEN_PIXEL_SIZE;
+	// a ragged brush edge: the radius wobbles with the angle and a little fibre noise
+	float fa = atan(fv.y, fv.x);
+	float fw = 1.0 + 0.10 * sin(fa * 7.0 + 1.3) + 0.06 * sin(fa * 13.0) + 0.12 * (vnoise(w * 0.09) - 0.5);
+	float fd = length(fv) / (flash_r * zoom * fw);
+	v += flash * flash_lift * (1.0 - smoothstep(0.82, 1.0, fd)) * step(crush * 0.4, v);
 	// threshold: crushed ink, the stroke band, paper
 	float paper = smoothstep(thresh - soft, thresh + soft, v);
 	float in_band = 1.0 - smoothstep(band * 0.6, band, abs(v - thresh));
