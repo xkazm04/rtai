@@ -468,3 +468,10 @@ NEXT (night run):
   CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m in the D5
   look; the held gun scale via REQUEST 9; the living read apart from corpses, REQUEST 10; re-ask
   gunplay-2 only with the full tell chain clip in the final look).
+
+## Iteration 11 (23:40, REPORT)
+- answers.json re-read at 23:40: nothing new for gunplay (1, 2 placeholders; 3 = A applied).
+- MILESTONE: REPORT.md written. Every cited evidence path was checked (frames.json 15/15 exist; the
+  logs, the clips and the station draft exist). No code change; the gates of record are iteration 7's.
+- NEXT (night run): REPORT.md "Next steps". Item 1 first: area behaviours on CombatArena via GunHand
+  + impact.gd/sweep.gd, then per-weapon D5 clips at 32/48 px/m and a gunplay-1 re-ask.
