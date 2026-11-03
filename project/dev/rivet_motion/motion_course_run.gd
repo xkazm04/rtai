@@ -28,7 +28,10 @@ const COURSE: Array[Array] = [
 	[1.0, Vector2.ZERO, "", true],
 ]
 
+## true: the D5 world print over look_d4 (the game's look); false: look_d4 alone (the before).
+var d5: bool = true
 var zoom: float = 1.0
+var _d5: ShaderMaterial = null
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
@@ -75,6 +78,8 @@ func _ready() -> void:
 	_world.transform = xf
 	_actors.transform = xf
 	_look.set_shader_parameter("world_px", -view * 0.5)
+	if d5:
+		_d5 = RivetD5Post.attach(_post, zoom, -view * 0.5)
 
 
 ## Plays the course once; returns the exit code.
