@@ -1619,3 +1619,21 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   for the lamp). Re-audit: 0 missing, 0 stale. Every PNG also has a committed `.import`. 0 Codex.
 - 05:53 Box idle for the first time tonight (no Godot running): `node tools/bench/run.mjs` started at 05:52:56
   (log `masters:work/bench_i18.txt`). Meanwhile, python only: asphalt patch probe (below).
+- 06:05 BENCH (n-d4 643996e, `node tools/bench/run.mjs`, 05:52:56-06:05:17) rc 0: p99 2.453 ms, 1 % low 156 fps,
+  worst frame 45.1 ms, hitches >25 ms 170, >50 ms 0 (unexplained 0); visible avg 47.5 / 7.9 / 273.5
+  (drive / drive48 / riot); rigs p50 0.106 / p99 0.571 ms. NOT a clean idle run: two other lanes' Godot processes
+  (~300 MB each) started during it. `evidence/iter18/bench-643996e.txt`; raw per-scenario json in `build/bench/`.
+- 06:10 MILESTONE asphalt patches removed (road x5 + curb_b / curb_c tiles). Weakest left on the morning board:
+  the closed asphalt-patch boxes (1-2 per 8 m tile, the same shapes every tile) - n-visual's print turns them
+  back into dark stamped squares at 48-64 px/m (`night_iter16_morning` city-2 64); the target's asphalt has none.
+  Iteration 4's clearing was judged on n-d4 alone (already faint there) and reverted; on the merged print it is
+  not faint. New `masters:tools/patch_clear2.py`: masks from the pre-patch_soft originals (`work/patch_orig/`),
+  the fill = the CURRENT tile's own asphalt from a shifted copy (keeps the iteration-6 grain, no flat holes),
+  feathered; the curb tiles' patches (never softened) with `y_min 336` (paving + kerb untouched) and
+  `tools/gutter_mend.py 424` (the outline crossing curb_b's hatched gutter, mended from a hatch-aligned shift).
+  Cracks, the oil blot, paint, kerb and paving untouched. Same-scene in-engine (city_frame, 32 / 48 / 64):
+  merged morning stack (scratch-v2) `before_i18pc|probe_i18pc/` (0.4-4.6 % px differ), n-d4 alone
+  `after_i16ol|after_i18pc/` (0.1-2.9 %). Boards `evidence/iter18/asphalt_patches_{merged,nd4}_ab.jpg`, 1:1 at
+  64 `asphalt_patches_zoom64.jpg` (no seams). The road now reads calm like the target's; nothing got worse.
+  7 provenance lines appended, city art README step 12, ladder2 rows "i18 asphalt ...". Originals
+  `masters:backup_ground18/`. road_straight_v_tone_c had no patch (unchanged). 0 Codex.
