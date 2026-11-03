@@ -5,7 +5,9 @@ extends Node2D
 ## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked; a wreck draws its d2
 ## cell in ink-darkened paint) plus a car-shaped ink shadow and tyre marks (VehicleSkids). Reads
 ## the service each frame and writes nothing back (render only; never sim state). Size and cell
-## rules = CitySimRender cars.
+## rules = CitySimRender cars. Sim traffic the service rammed to D1 or soul-hijacked keeps driving
+## in the sim, drawn by the crowd layer with its intact art: the view lays the D1 / hijacked cell
+## over it at the same transform (until the city's car shader picks art by custom.y itself).
 
 const CAR_L: float = 204.8
 const CAR_W: float = 102.4
@@ -87,6 +89,7 @@ func _process(_delta: float) -> void:
 		counts[k] += 1
 		_put(_shadow, ns, xf.translated(SHADOW_OFF), SHADOW, b)
 		ns += 1
+	_marked_traffic(counts)
 	for k: int in _bodies.size():
 		_bodies[k].visible_instance_count = counts[k]
 	_shadow.visible_instance_count = ns
@@ -96,3 +99,26 @@ static func _put(mm: MultiMesh, i: int, xf: Transform2D, c: Color, b: VehicleBod
 	mm.set_instance_transform_2d(i, xf)
 	mm.set_instance_color(i, c)
 	mm.set_instance_custom_data(i, Color(float(b.art), float(b.state), 0.0, 0.0))
+
+
+## Overlays for the marked sim traffic (VehicleTraffic.state D1 / HIJACKED), at the sim's own
+## car transform (CitySimRender: x axis head * CAR_L, y axis its left normal * CAR_W).
+func _marked_traffic(counts: PackedInt32Array) -> void:
+	var book: VehicleTraffic = service.traffic
+	if book == null or book.state.is_empty():
+		return
+	var recs: PackedFloat64Array = service.world.cars_near(service.world.player_pos(), 1e6)
+	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		var st: int = book.state.get(int(recs[r]), VehicleBody.State.INTACT)
+		if st != VehicleBody.State.D1 and st != VehicleBody.State.HIJACKED:
+			continue
+		if counts[st] >= CAP:
+			continue
+		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
+		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3]) * SimConst.PX_PER_M
+		var xf: Transform2D = Transform2D(head * CAR_L, Vector2(-head.y, head.x) * CAR_W, at)
+		var mm: MultiMesh = _bodies[st]
+		mm.set_instance_transform_2d(counts[st], xf)
+		mm.set_instance_color(counts[st], Color.WHITE)
+		mm.set_instance_custom_data(counts[st], Color(recs[r + 7], float(st), 0.0, 0.0))
+		counts[st] += 1
