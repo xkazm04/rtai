@@ -170,3 +170,10 @@ NEXT:
   BodyPlan.Kind is only RIVET, COP, PED: the robot thug needs a ROBOT kind (KingPlan-based,
   smaller) in features/characters; that file is the d5-cast/rivet-motion area: ask in a
   REQUEST or add a minimal kind with a JOURNAL note.
+- MILESTONE (22:00): EnemyRigFeed (features/combat/ai/enemy_rig_feed.gd): pit enemies -> RigFeed
+  rows, ready for CharacterRigs/RigInput. Flags: GUN_OUT for ranged (not in panic/down), AIMING
+  in WINDUP/FIRE, FLEE, DOWN, DEAD; clips: DEATH on died_tick, HIT (arg = blow angle) on
+  hurt_tick, SHOOT or PUNCH (swing) on the new shot_tick. Robots use the COP kind for now.
+  tests/unit/test_enemy_rig_feed.gd 3/3; enemy units 13/13; enemy scenarios green; lint 13/13.
+  Not yet rendered: NEXT 2 is now "a dev scene that hosts CharacterRigs and feeds it from
+  EnemyRigFeed + Rivet's row, at 32 px/m in the D5 look, real-time clip".
