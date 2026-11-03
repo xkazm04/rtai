@@ -58,3 +58,20 @@ func test_a_wreck_explodes() -> void:
 	assert_true(_service.cue(&"car_wreck", Vector2(3.0, 0.0), 1000))
 	var wrecks: int = _service.played.get(&"car_wreck", 0)
 	assert_eq(wrecks, 1)
+
+
+func test_the_radio_action_changes_the_station_only_while_driving() -> void:
+	var radio: CarRadio = CarRadio.new()
+	add_child_autofree(radio)
+	InputMap.add_action(CarRadio.ACTION)
+	var press: InputEventAction = InputEventAction.new()
+	press.action = CarRadio.ACTION
+	press.pressed = true
+	radio._unhandled_input(press)
+	assert_eq(radio.station, 0, "radio off: the key does nothing")
+	radio.power(true)
+	radio._unhandled_input(press)
+	assert_eq(radio.station, 1)
+	InputMap.erase_action(CarRadio.ACTION)
+	radio._unhandled_input(press)
+	assert_eq(radio.station, 1, "no action in the InputMap: no error, no change")

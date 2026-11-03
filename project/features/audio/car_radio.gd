@@ -2,12 +2,15 @@ class_name CarRadio
 extends Node
 ## The car radio stub (data/tables/audio_radio.json): a few looping stations on the `radio` bus, a
 ## band-pass so they sound like a dashboard speaker, and a one-shot stinger. It switches on while
-## Rivet drives (Events.vehicle_entered / vehicle_exited); next() flips the station (an input action
-## lands with the vehicles lane). Placeholder music; the owner picks the real playlist later.
+## Rivet drives (Events.vehicle_entered / vehicle_exited); next() flips the station, and so does the
+## `radio_next` input action while the radio is on (the action is a row of the input table
+## data/tables/input_actions.json, slice-play's: without the row nothing listens). Placeholder
+## music; the owner picks the real playlist later.
 
 const TABLE: String = "res://data/tables/audio_radio.json"
 const DIR: String = "res://assets/audio/music/"
 const BUS: StringName = &"radio"
+const ACTION: StringName = &"radio_next"
 
 var stations: Array[Dictionary] = []
 var station: int = 0
@@ -39,6 +42,11 @@ func listen(bus: EventBus) -> void:
 	bus.vehicle_exited.connect(func(_id: int) -> void: power(false))
 	@warning_ignore("return_value_discarded")
 	bus.contract_completed.connect(func(_id: StringName) -> void: sting())
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if on and InputMap.has_action(ACTION) and event.is_action_pressed(ACTION):
+		next()
 
 
 func power(want: bool) -> void:

@@ -11,7 +11,7 @@ game (FX cues, `Events`, the quest line player) and never writes the sim, so rep
 | Buses | `audio_buses.gd` | sfx / voice / music / ui / radio built at boot from the mix table; voice ducks music and sfx |
 | Loops | `audio_loops.gd` | engine, siren, city beds with fades |
 | Voice | `voice_channel.gd`, `quest_voice.gd` | one line at a time (FIFO), played when the line player shows a line; the path is the line's `audio` field in the quest package |
-| Radio | `car_radio.gd` | 3 loops + a stinger on the band-limited `radio` bus; on while driving |
+| Radio | `car_radio.gd` | 3 loops + a stinger on the band-limited `radio` bus; on while driving; the `radio_next` input action (a row in `data/tables/input_actions.json`, see `evidence/requests/input_actions_radio_next.txt`) changes the station |
 | Hooks | `audio_hooks.gd`, `world_audio.gd`, `stage_audio.gd` | Events -> cues, the FX trigger sink (riot), the shot feed (quest stage) |
 
 ## Playing a sound from another lane
