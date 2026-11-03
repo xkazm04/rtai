@@ -972,3 +972,11 @@ NEXT (session end, iteration 10):
 - Still blocked on code owners: damage / hijack texture swap for moving traffic (atlases ready), soul portraits in a
   real HUD, q1_view_art.patch after the merge.
 - Branch n-d4, nothing pushed or merged. Worktree `scratch-q1` kept (quest patch); my other scratch worktrees removed.
+- 03:03 MILESTONE plaza re-weighed (follow-up to 3ebf21a). In the merged 32 px/m frame the wide plaza (sidewalk_tone
+  only) read as graph paper: one uniform 2 m ink grid over 16 m. `paving_ink.py --period=384` on the pre-ink sidewalk:
+  only the 4 m joints are ink, the 2 m joints stay the old grey, so the plaza gets 4 m flags with a sub-joint and the
+  kerbside pavements (curb tiles) keep their 2 m ink. `before_rv|after_pl4/city-*-{32,48,64}ppm.png`, 1:1 crops
+  `work/pl4_11b.png` (before) vs `work/pl4_11.png` (after): calmer, a scale hierarchy, still ink. (A downscaled
+  side-by-side hid the 1 px ink lines at 32 and made the plaza look grey-only; the 1:1 crop is what I judged.) Quarter
+  turns in the generator patch keep it (lines on the edges and at the centre). Provenance, README row 10b, ladder rows.
+  Commit a1874f7 (owner review with 3ebf21a).
