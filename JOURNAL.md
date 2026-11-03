@@ -52,3 +52,18 @@
   is not in `just evidence`; run it by hand.
 - FRICTION `-s` SceneTree scripts cannot name autoloads (Save, Log) at compile time; the writer loads its
   loop script at run time instead.
+- FRICTION the 1,000-save unit test took 82 s through a thread per save on the contended machine
+  (it passed); it now calls `SaveWorker.write_now` (the same `_run` the thread executes): 14 s. The
+  threaded path stays covered by the coalescing/burst tests and the crash test.
+- MILESTONE full gates at 544fb5c: `node tools/evidence/run.mjs --no-bench` PASS: lint 13/13, unit 364,
+  scenarios 9/9 (incl. replay_60s, autosave_resume), parity exact, selftest look goldens unchanged.
+  Bench not run (nothing in the render/sim path changed; no lock taken).
+
+NEXT: (1) slice-play wires `Save` into Quest1Session/title card (names above); at merge replace
+`Quest1Session.poll_checkpoint` with `QuestAutosaver.poll` and use `Quest1Session.resume` as `accept`.
+(2) Re-run `scenario_autosave_resume` against Quest1Session once both branches are merged so the
+"bound-input" path is covered. (3) Quit-time autosave (SAV-08): the session may call
+`Save.autosave("quit", ...)` with the same snapshot; the engine already flushes on close.
+(4) Loc: add SAVE__NOTICE_FELL_BACK / SAVE__NOTICE_NONE_READABLE to the string table when Loc lands.
+(5) Long resumes re-simulate on the main thread inside `accept`; if a late-game load takes >1 s, move
+the replay behind a loading frame (the engine already returns the Outcome synchronously).

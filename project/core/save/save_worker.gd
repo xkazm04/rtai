@@ -85,6 +85,11 @@ func _collect() -> void:
 		_start(_take_pending())
 
 
+## The write itself, on the calling thread (what the worker thread runs; tests, tools).
+func write_now(request: Dictionary) -> Result:
+	return _run(request)
+
+
 func _run(request: Dictionary) -> Result:
 	var out: Result = Result.new()
 	out.point = str(request.get("point", ""))

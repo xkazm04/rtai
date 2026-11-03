@@ -177,8 +177,10 @@ func test_requests_during_a_write_coalesce_into_one_pending() -> void:
 func test_a_thousand_alternating_autosaves_leave_exactly_two_slot_files() -> void:
 	var worker: SaveWorker = SaveWorker.new(slots)
 	for n: int in 1000:
-		worker.submit({"point": "p", "body": _body(n), "meta": {"quest": "q"}})
-		worker.flush()
+		var r: SaveWorker.Result = worker.write_now(
+			{"point": "p", "body": _body(n), "meta": {"quest": "q"}}
+		)
+		assert_eq(r.error, OK)
 	var files: Array[String] = SaveKit.census(slots.root)
 	assert_eq(files, ["auto_a/state.sav", "auto_b/state.sav", "meta.json"] as Array[String])
 	var out: SaveLoader.Outcome = _load()
