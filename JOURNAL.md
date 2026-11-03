@@ -295,3 +295,18 @@ NEXT (iteration 4 close, in order):
   the brief's B/W collar. The limbs barely change: the redraw is mostly lit white, and the part print
   (print_part, D4 limb wash; the sticker LOD at 32 px/m) keeps them paper with ink outlines, so only the
   joint hubs go black. At 48 the torso is a little busier (black blots between the white plates). Kept, opt-in.
+- MILESTONE (01:21) blood marks (work order 3, "blood as the star"): new `features/fx/noir/blood_marks.gd`
+  (static, stateless). Landed droplets are teardrops stretched along their travel (elongation from the
+  landing speed) with 3 satellite drops flung ahead and 4 small lobes, so a spray on the ground shows
+  which way the hit went. A kill's pool is a star-shaped wobbly polygon (3 hashed low-frequency waves,
+  min 0.66 r so it never self-crosses: no triangulation errors, 0 in the logs) run out along the hit
+  (`pool.run` 0.6 in blood_fx.json), a dark body inside a bright red meniscus rim with a white sheen arc.
+  `decal.lobes` removed from the JSON (unused). Unit test: the edge wobbles, stays star-shaped, runs
+  along the hit. 179 unit pass, lint clean. Evidence: masters night/noir/blood-before-after.png (kill
+  crops at 64 and 48, before = rivet-v2, after = blood-v2), blood-v2/blood-32-compare.png, clips
+  blood-v2/showcase-noir-32/48/64.mp4. Ladder rows 17 (Rivet) and 18 (blood), 18 rows now.
+  Honest read: a clear gain at 48/64 - it reads as spatter and a wet pool, not as round ink blots; at
+  32 px/m it is a bit more fragmented but still directional.
+  FRICTION: a parse error (new class_name not yet in the global cache) hung the movie recording for
+  10 min again; fixed by `--import` + a `--headless --quit-after 60` check BEFORE every record. The 2
+  Godot processes running pass_cost.tscn at 01:15 are the visual-engine lane's (not touched).
