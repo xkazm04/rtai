@@ -1031,3 +1031,12 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   better at 32 and are more "ink and hatch" at 64; mine thins into the asphalt. Original kept (`backup_sk/`), tree
   back at HEAD art. Ladder row "i12 skid REJECTED". (The grey box in city-1-48 is the unwired moving-traffic
   placeholder on n-d4 alone; n-visual draws the atlas there.)
+- 03:37 MILESTONE (small) bollard. On the props board the bollard was the only prop without a read at 48 / 64 px/m
+  (a plain grey coin). `tools/bollard_cap.py`, procedural: ink rim, paper top, thin ink cap ring. v1 (dark domed cap)
+  printed as an ink blob at 32 px/m - rejected; v2 (paper cap, thin ring) kept: same pale coin at 32, a capped post at
+  48 / 64. Frames `before_i12b|after_i12b (v1)|after_i12b2 (v2)/props-{32,48,64}ppm.png`, crops `work/bl12_abc.png`.
+  A marginal gain, honest: at 32 it is about level with the old one. Provenance line (code, no image model), ladder
+  rows "i12 bollard". Original in `backup_bl/`. Commit 72301db. 0 Codex.
+- 03:37 CHECKED, no change: FX board at HEAD (`now_i12_fx/fx-48ppm.png`, every cell reads), the vehicle set
+  (`work/i12_veh_sheet.png`: 9 cars x intact / d1 / d2, 4 wrecks, 6 hijack overlays, all bold, cruiser vermilion on the
+  bar only), roof values vs the target (ours 0.61-0.71 mean lum, target roofs 0.58-0.61; no lift needed).
