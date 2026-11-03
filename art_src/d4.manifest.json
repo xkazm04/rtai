@@ -700,6 +700,20 @@
     "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)"
    ],
    "seed": null
+  },
+  "d4n_props2": {
+   "file": "masters:night/d4-production/gen/out/d4n_props2.png",
+   "sha256": "8a38f0d23167e3f262cc66873a38d3447c9151e057142cbe2cb7845ecc6cb002",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/props2.txt",
+   "prompt_sha256": "c43b372f14724561e51899c58fcd1135fe652033c1d252155502131c86937d22",
+   "layout_template": "masters:night/d4-production/gen/refs/t_props2.png",
+   "references": [
+    "own: rtai features/city/art/props/newsstand.png + dumpster.png + trash_can.png (approved D4 props, style anchor)"
+   ],
+   "seed": null
   }
  }
 }
