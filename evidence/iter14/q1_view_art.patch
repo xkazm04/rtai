@@ -142,7 +142,7 @@ index f3cc7e2..7030090 100644
 +	draw_texture_rect(_tex[name], r, false, tint)
 +	draw_set_transform(Vector2.ZERO)
 diff --git a/project/boot/collect_call/view/fx_view.gd b/project/boot/collect_call/view/fx_view.gd
-index 7c04f05..0e38877 100644
+index 7c04f05..8ad84fc 100644
 --- a/project/boot/collect_call/view/fx_view.gd
 +++ b/project/boot/collect_call/view/fx_view.gd
 @@ -1,12 +1,15 @@
@@ -186,8 +186,17 @@ index 7c04f05..0e38877 100644
  
  
  func _arcs(arena: CombatArena) -> void:
-@@ -72,39 +73,31 @@ func _whispers() -> void:
- 		draw_arc(Ink.px(at), r, 0.0, TAU, 24, Color(Ink.TEAL, 0.8), 2.0, true)
+@@ -69,42 +70,39 @@ func _whispers() -> void:
+ 	var at: Vector2 = stage.arena.rivet.pos + Vector2(0.0, -0.6)
+ 	for k: int in 3:
+ 		var r: float = (0.9 + k * 0.45 + (45 - _whisper_ticks) * 0.02) * Ink.PX_PER_M
+-		draw_arc(Ink.px(at), r, 0.0, TAU, 24, Color(Ink.TEAL, 0.8), 2.0, true)
++		# radio static: broken inked dashes (ink under teal), the gaps shifting per ring and tick
++		for d: int in 9:
++			var a0: float = TAU * d / 9.0 + k * 0.4 + float(stage.tick / 4) * 0.25
++			var span: float = 0.42 + 0.18 * sin(float(d * 7 + k * 3))
++			draw_arc(Ink.px(at), r, a0, a0 + span, 6, Ink.INK, 6.0, true)
++			draw_arc(Ink.px(at), r, a0, a0 + span, 6, Ink.TEAL, 3.0, true)
  
  
 -## Flames stand over the whole stack: vermilion tongues with cream cores and an ink rim,

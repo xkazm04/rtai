@@ -1394,3 +1394,11 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
 - Codex: 1 image this iteration (0 rejected); night total 29 images, 194 cells, 7 rejected; no limit hit.
 - Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (final quest patch applied, art = n-d4 HEAD);
   all other scratch worktrees removed; my Godot runs all finished.
+- 04:56 MILESTONE (patch only, quest 1 view code) whisper rings inked. The teal "voices" rings were three thin 2 px
+  vector circles. They fire at the ignite / tazer hit / while hidden and last 45 ticks, so no grabber beat shows them:
+  judged with a LOCAL probe (the 45-tick countdown held on, never in the patch) `probe_q1wh|probe_q1wh2/04-*.png`,
+  crop `work/fx14/whisper_ab.png`. Now: 9 broken dashes per ring (radio static), ink 6 px under teal 3 px, the gaps
+  shifting per ring and every 4 ticks - inked like the world, still teal (the souls' voices, on doctrine). Normal
+  grabber frames unchanged (0 px differ on 01 / 04 / 06 / 09 vs `after_q1pip/`). Patch +223 / -122 (fx_view.gd 108
+  lines; gdformat + gdlint clean; `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`;
+  unit in scratch-q1 **166/166**. Ladder2 row. 0 Codex.
