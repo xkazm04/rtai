@@ -12,6 +12,7 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 | `iter12/` | tank tracks, bollard, HUD numeral strip; quest 1 view patch (superseded by `iter14/`); gates at 297bd42 |
 | `iter16/` | summary sheet `night_iter16_summary.jpg`; morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch: green) and its board vs the target; pedestrian sleeve variants + **rig sleeves patch** (supersedes 21); gates at 767ee6c |
 | `iter14/` | ink splat sticker (FX), Toner Room floor, inked arc ball, flat heat pip; **quest 1 view patch (final)**; muzzle + crackle fade patch for visual-engine; summary sheet; gates at 4477108 |
+| `iter27/` | STABILIZE: full gates incl. bench at 31f8c4c (art identical to d2d56a6; all 6 PASS) |
 
 ## Patches for code owners (apply after merging n-d4; none is committed as code)
 
@@ -51,4 +52,3 @@ quest 1 design notes (shipped as ink).
 
 29 images, 194 cells, 7 rejected (camera breaks / front views), no usage limit hit (iteration 16: 0 images). Every AI asset has a line in
 `steam/ai-provenance/2026-11.jsonl`; procedural redraws carry a `code:` tool line.
-| `iter27/` | STABILIZE: full gates incl. bench at 31f8c4c (art identical to d2d56a6; all 6 PASS) |
