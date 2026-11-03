@@ -7,8 +7,9 @@ extends Node
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/noir/quest_fight.tscn
 ##     -- --out=<dir> [--flashes=off]  (off = the flashes-off accessibility mode)
 ## --phone: fast-forward to the first ringing payphone instead (the objective cue), framed on it.
+## --cash: fast-forward to the cash taped under a phone (the pickup), framed on it.
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes", "--phone"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes", "--phone", "--cash"]
 const SKIP_PER_FRAME: int = 600
 const HUD_SHADER: String = "res://assets/shaders/look_noir_hud.gdshader"
 const LIVE_FRAMES: int = 900
@@ -28,7 +29,8 @@ var _hold: int = 0
 var _shots_seen: Dictionary[Shot, bool] = {}
 ## --phone: the ringing payphone the camera holds on ("" = the fight).
 var _phone: String = ""
-var _want_phone: bool = false
+## "--phone" / "--cash": what to fast-forward to ("" = the first fight).
+var _want: String = ""
 ## --phone: the objective cue in the noir style (white arcs in an ink casing) over the D4 ring.
 var _cue: NoirCue = null
 
@@ -41,8 +43,8 @@ func _ready() -> void:
 			return
 		if flag == "--out":
 			_out = arg.substr(6)
-		elif flag == "--phone":
-			_want_phone = true
+		elif flag == "--phone" or flag == "--cash":
+			_want = flag
 		else:
 			_impact.budget.enabled = arg != "--flashes=off"
 	var made: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
@@ -131,8 +133,11 @@ func _ring_cue() -> void:
 
 ## True once the part to film has begun: the first fight, or with --phone the first ringing phone.
 func _started() -> bool:
-	if not _want_phone:
+	if _want.is_empty():
 		return _play.stage.arena.hostiles_alive() > 0
+	if _want == "--cash":
+		_phone = _play.stage.cash_phone
+		return not _phone.is_empty()
 	for phone: String in _play.stage.layout.phones:
 		if _play.stage.router.ringing(phone):
 			_phone = phone
