@@ -230,3 +230,32 @@ NEXT (iteration 3, in order):
 - Session end 12:20: tree clean, no Godot process of mine left, scratch worktree removed, bench
   lock released at 12:10. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png,
   carnage-20s-48ppm.mp4, clip-carnage-sheet.png).
+
+## Iteration 3 (12:18 - 13:48, BUILD)
+
+- 12:19 read: journal, git log. Bench lock held by `collisions` (12:17), not needed yet.
+- MILESTONE 12:36 dfb5f81 traffic passes a stopped service car (NEXT 1): a tier-A civilian car
+  that stood 2.5 s behind an obstacle point in its own lane, mid-block (no junction planned), with
+  the oncoming lane clear (no obstacle; no car from 8 m behind to 36 m ahead, hash query r=6),
+  sets the new per-slot flag F_PASSING (8, sim_constants.json, regenerated) and steers to the
+  oncoming lane line until every obstacle is 7 m behind; standing 6 s while passing aborts. Native
+  car_pass.cpp (+ Car::ln, the per-step lane line car_steer reads) and GDScript twin
+  CitySimCarPass (sim_cars.gd stays 194 lines). Native rebuild 29 s, sim_core tests 0 failed.
+  Parity: obstacles now re-placed every 300 steps (was 40) so cars stand long enough to pull out;
+  EXACT over 1200 steps, 6 pass starts counted with a temporary log (removed), mutation caught at
+  629. scenario_vehicle_yield: new metrics queued_s / passed / first_pass_s and a MIN_PASSED 2
+  assert. Same scenario with passing disabled (temporary native build, PASS_WAIT_S 1e9): queued
+  80.5 s, passed 0 (the new assert FAILS it: the gate can fail); with passing: queued 13.6 s,
+  passed 3 of 3, first at 9.25 s, rear-ends 0. Gates: lint 13/13, unit 357, scenarios 11/11.
+  decisions.md line "traffic passes stopped service cars". Shared files touched (minimal):
+  tools/gen_constants/sim_constants.json (+ generated sim_constants.h/.gd), native/SConstruct (CORE
+  list), city_parity.gd (OBST_EVERY). MERGE NOTE: another lane adding a flag constant would collide
+  on bit 8.
+- 12:41 526151b dev capture: the yield scene parked on a junction crosswalk (seed 31), where the
+  pass does not fire by design (mid-block only): 10 frames yield48-v2 REJECTED (scene, not camera)
+  and deleted. Now parks 24 m into the straight like the scenario, Rivet on the kerb; shots at
+  300..720. Captured pass48-v1 / pass32-v1 (real game) and nopass48-v1 / nopass32-v1 (same scene,
+  temporary no-pass DLL; debug DLL rebuilt with 2.5 afterwards, release untouched). 40 frames,
+  0 rejected, 0 camera breaks. Pair: 540 at 48 (three queue vs one past), 420 at 32 (pulling out).
+- frames.json 15 (added the two pass pairs; dropped the on-foot frame and the 32 px/m yield pair,
+  which the 48 one covers), ladder.png 1280 x 7564, now rebuilt by masters/.../ladder.py.
