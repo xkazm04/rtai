@@ -35,6 +35,9 @@ var max_steps: int = MAX_STEPS
 ## Frames stepped and the CPU microseconds spent (steps + redraws) since boot: the riot average.
 var frames: int = 0
 var spent_us: int = 0
+## Where the player is (px), for the oil trail after a hit: Callable() -> Vector2 (INF = unknown).
+var player_px: Callable = Callable()
+var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
 var _game: Dictionary = {}
 var _deaths: Array[Vector4] = []
@@ -64,6 +67,8 @@ func _init() -> void:
 	blood.settled_every = settled
 	if oil != null:
 		oil.settled_every = settled
+	var drip: Dictionary = blood.p.get("drip", {})
+	leak = OilLeak.new(drip)
 	_mat.shader = load(SHADER)
 	_mat.set_shader_parameter(&"grime_tex", GrimeLattice.texture())
 	for fx: BloodFx in [blood, oil]:
@@ -102,6 +107,9 @@ func attach(triggers: FxTriggers) -> void:
 func listen(bus: EventBus, locate: Callable, player: int) -> void:
 	_locate = locate
 	_player = player
+	player_px = func() -> Vector2:
+		var at: Vector2 = _locate.call(_player)
+		return at if at == Vector2.INF else at * SimConst.PX_PER_M
 	@warning_ignore("return_value_discarded")
 	bus.actor_killed.connect(_on_killed)
 	@warning_ignore("return_value_discarded")
@@ -154,6 +162,7 @@ func hit_robot(pos_px: Vector2) -> void:
 	var player: Dictionary = blood.p.get("player", {})
 	var kind: String = player.get("hit", "robot_hit")
 	fx.splash(pos_px, Vector2.from_angle(hits * 2.4), kind)
+	leak.start()
 
 
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).
@@ -174,6 +183,9 @@ func step(tick: int, world_px: Vector2) -> void:
 		blood.step_ticks(n)
 		if oil != null:
 			oil.step_ticks(n)
+		if player_px.is_valid():
+			var at: Vector2 = player_px.call()
+			leak.step(n, at, oil if oil != null else blood)
 	for m: BloodSplatMesh in _meshes:
 		m.update(world_px, blood.tick)
 	last_us = Time.get_ticks_usec() - t0

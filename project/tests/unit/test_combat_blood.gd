@@ -95,3 +95,15 @@ func test_quest_events_bleed_guards_and_oil_rivet() -> void:
 	assert_eq(b.hits, 1)
 	assert_true(b.blood.has_pool_at(Vector2(8, 5) * SimConst.PX_PER_M, 16.0))
 	bus.free()
+
+
+func test_a_hit_robot_leaves_an_oil_trail_where_it_walks() -> void:
+	var b: CombatBlood = _blood("noir")
+	var at: Array[Vector2] = [Vector2(320, 320)]
+	b.player_px = func() -> Vector2: return at[0]
+	b.hit_robot(at[0])
+	for t: int in range(1, 120):
+		at[0] += Vector2(1.5, 0.0)
+		b.step(t, Vector2.ZERO)
+	assert_gt(b.leak.drips, 5, "a drop every few px walked")
+	assert_eq(b.blood.live_decals(), 0, "the trail is oil, not blood")

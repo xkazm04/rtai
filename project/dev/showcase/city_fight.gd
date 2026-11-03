@@ -6,6 +6,8 @@ extends Node
 ## flag (-- --blood=noir|ink|both). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/city_fight.tscn --
 ##   --blood=<mode> --out=<dir> [--at=<tick>,...] [--zooms=1,1.5,2] [--focus=<i>] [--tag=<name>]
+##   [--hit-rivet=<ticks>]  Rivet takes a Robo-tazer hit (Events.player_hit) every <ticks>, wired
+##   as boot/world.gd wires the game (fx_triggers.listen): sparks, crackle, his oil.
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -16,6 +18,8 @@ var _at: Array[int] = [600, 1200]
 var _zooms: Array[float] = [1.0, 1.5, 2.0]
 var _focus: int = 0
 var _tag: String = ""
+var _hit_every: int = 0
+var _last_hit: int = 0
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -44,10 +48,14 @@ func _ready() -> void:
 	_chars = CityCharacters.new(_city, _view, _world.context())
 	await _chars.bake()
 	await _view.prewarm()
+	var rivet_px: Callable = func() -> Vector2: return _city.target * SimConst.PX_PER_M
+	_view.fx_triggers.player_id = CityCharacters.RIVET_ID
+	_view.fx_triggers.listen(Events, _world.context().clock, rivet_px)
 	var ok: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
 	for tick: int in _at:
 		while _world.context().clock.tick() < tick:
 			await get_tree().process_frame
+			_maybe_hit()
 		ok = await _shoot(tick) and ok
 	printerr(_summary())
 	get_tree().quit(0 if ok else 1)
@@ -67,6 +75,13 @@ func _shoot(tick: int) -> bool:
 		ok = img != null and img.save_png(_out.path_join(file)) == OK and ok
 	Engine.time_scale = 1.0
 	return ok
+
+
+func _maybe_hit() -> void:
+	var now: int = _world.context().clock.tick()
+	if _hit_every > 0 and now - _last_hit >= _hit_every:
+		_last_hit = now
+		Events.player_hit.emit(&"robo-tazer")
 
 
 func _summary() -> String:
@@ -105,6 +120,8 @@ func _parse_args() -> bool:
 				_zooms.append(v.to_float())
 		elif arg.begins_with("--focus="):
 			_focus = arg.substr(8).to_int()
+		elif arg.begins_with("--hit-rivet="):
+			_hit_every = arg.substr(12).to_int()
 		elif arg.begins_with("--tag="):
 			_tag = "-" + arg.substr(6)
 		elif not arg.begins_with("--blood="):

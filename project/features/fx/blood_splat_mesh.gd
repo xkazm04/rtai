@@ -10,8 +10,8 @@ extends MultiMeshInstance2D
 
 const SHADER: String = "res://assets/shaders/fx_blood_splat.gdshader"
 ## The quad in splat radii: the satellites run up to ~5.2 r ahead, the core and lobes ~1 r round.
-const QUAD_MIN: Vector2 = Vector2(-1.2, -1.3)
-const QUAD_MAX: Vector2 = Vector2(5.6, 1.3)
+const QUAD_MIN: Vector2 = Vector2(-1.5, -1.6)
+const QUAD_MAX: Vector2 = Vector2(5.9, 1.6)
 const STRIDE: int = 16
 
 ## Instances written since boot (evidence: the buffer is touched only when splats land).
@@ -51,6 +51,12 @@ func set_fade(after: int, fade: int, min_alpha: float) -> void:
 	_mat.set_shader_parameter(&"fade_after", float(after))
 	_mat.set_shader_parameter(&"fade_ticks", float(maxi(fade, 1)))
 	_mat.set_shader_parameter(&"min_alpha", min_alpha)
+
+
+## A rim `w` splat radii wide in `tone` round each splat (oil's cream rim); 0 = none.
+func set_halo(w: float, tone: Color) -> void:
+	_mat.set_shader_parameter(&"halo", w)
+	_mat.set_shader_parameter(&"halo_tone", Vector3(tone.r, tone.g, tone.b))
 
 
 ## The print grain's world lock (CityView.world_px) and the tick the fade reads.

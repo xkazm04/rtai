@@ -80,6 +80,7 @@ func use_splat_mesh() -> BloodSplatMesh:
 		_ring.mesh.set_fade(after, fade, floor_a)
 		add_child(_ring.mesh)
 	_ring.mesh.colour = _fluid.ground
+	_ring.mesh.set_halo(_fluid.halo, _fluid.halo_tone)
 	return _ring.mesh
 
 

@@ -15,6 +15,10 @@ uniform float tick = 0.0;
 uniform float fade_after = 3600.0;
 uniform float fade_ticks = 7200.0;
 uniform float min_alpha = 0.0;
+// a cream rim `halo` radii wide round each splat (oil: black on asphalt reads only with it, the D4
+// ink-with-cream-rim rule); 0 = none (blood)
+uniform float halo = 0.0;
+uniform vec3 halo_tone = vec3(0.93, 0.9, 0.82);
 
 varying vec2 lp;
 varying vec3 cus;
@@ -49,11 +53,16 @@ void fragment() {
 	}
 	float aa = max(fwidth(d), 1e-4);
 	float cover = 1.0 - smoothstep(-aa * 0.5, aa * 0.5, d);
+	float rim = 1.0 - smoothstep(-aa * 0.5, aa * 0.5, d - halo);
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec3 c = COLOR.rgb;
 	float lum = dot(c, vec3(0.299, 0.587, 0.114));
 	float hg = texture(grime_tex, (floor(w) + 0.5) / 128.0).r;
 	c = mix(c, ink_tone, step(hg, grain * smoothstep(0.55, 0.10, lum)) * 0.55);
 	c *= 1.0 - 0.06 * hash(floor(w) + vec2(17.0, 31.0));
+	if (halo > 0.0) {
+		c = mix(halo_tone, c, cover);
+		cover = rim;
+	}
 	COLOR = vec4(c, COLOR.a * cover * fade);
 }

@@ -17,6 +17,7 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 	view.actor_layer().add_child(glue.blood)
 	glue.blood.attach(view.fx_triggers)
 	glue.blood.solid = glue._solid
+	glue.blood.player_px = func() -> Vector2: return city.target * SimConst.PX_PER_M
 	view.add_child(glue)
 	return glue
 
