@@ -161,3 +161,11 @@ NEXT:
 NEXT: unchanged from the NEXT block above (owner picks: cop heads cream vs navy, shoulders A/B, King's cape, portrait
 helmets; merge d-city before/with d-cast and re-bless the goldens once; after d5-city REQUEST 3, shoot a parked + moving
 cruiser in city_frame; KingPlan into the boss ticket).
+- CORRECTION (my own error, 11:45): REQUEST 3's "parked cruisers print ~37 % teal" used look_d4's DEFAULT teal uniform.
+  look_profiles.json sets world teal = 0 (and verm = 0) in d1/d4/d5, so in the real game a parked cruiser's blue bar prints
+  as grey ink: REQUEST 1's original ask (a cop-blue plate in the world pass) is the real need; the teal-exclusion half of
+  REQUEST 3 only matters for scenes that keep the default uniform. Proof that it does happen there: the D5 hero scene with
+  a blue-bar borrowed cruiser prints the bar teal (157 px) on d-cast AND on a second trial merge with d-city (cfabdcb)
+  (renders/cruiser-hero48-3way.png: night vermilion | d-cast | merged). So the owner's hero frames keep the night's
+  vermilion borrowed cruiser (masters night/d5-close/borrowed, dev-only sprite; mine at day-d5/d5-cast/borrowed/ is ready
+  for when the plate lands). evidence/d5-cast/cruiser-world-print.json carries the correction; decisions line fixed.

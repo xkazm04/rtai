@@ -19,4 +19,5 @@ Iteration 3 (2026-11-03, 11:00-11:35):
 - `cop-gate.json` `t1heads/*`: the city gate re-measured with the cream heads (every cop still a blue blob).
 - `cruiser-atlas-print.json`: the moving cruiser's light bar (traffic atlas cell 8) through each item shader:
   d-cast alone -> teal, merged with d-city -> cop blue. Merge d-city before or with d-cast.
-- `cruiser-world-print.json`: parked cruisers through the look_d4 world pass print ~37 % teal (d5-city REQUEST 3).
+- `cruiser-world-print.json`: parked cruisers through the look_d4 world pass: grey in the real game (profiles' world teal = 0);
+  ~37 % teal only under the shader's default teal uniform (dev scenes such as the D5 hero). See its CORRECTION.
