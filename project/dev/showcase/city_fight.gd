@@ -90,6 +90,13 @@ func _print_pops() -> void:
 		var pp: MuzzlePop = _chars.blood.pop
 		printerr("city_fight: pops=%d held=%d at %s" % [pp.pops, pp.held, pp.pop_ticks])
 		printerr("city_fight: pop px %s focus %s" % [pp.pop_at, _view.fx_triggers.focus_px])
+	var st: CorpseStains = _chars.blood.stains
+	printerr(
+		(
+			"city_fight: stains avg_us_per_step=%.1f steps=%d"
+			% [float(st.spent_us) / maxi(st.steps, 1), st.steps]
+		)
+	)
 
 
 func _shoot(tick: int) -> bool:

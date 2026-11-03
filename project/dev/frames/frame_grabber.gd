@@ -52,6 +52,9 @@ func _grab(shot: FrameShot) -> void:
 	var path: String = out_dir.path_join("%s.png" % shot.name)
 	var err: Error = image.save_png(path)
 	Log.info("frames", "%s at tick %d -> %s (%d)" % [shot.name, _play.ticks, path, err])
+	if _view.stains != null:
+		var st: CorpseStains = _view.stains
+		Log.info("frames", "stains soaked %d missed %d on %d" % [st.soaked, st.missed, st.active()])
 	_saved.append("%s tick %d" % [shot.name, _play.ticks])
 	_next += 1
 	_busy = false

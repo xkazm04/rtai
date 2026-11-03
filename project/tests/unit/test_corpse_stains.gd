@@ -57,3 +57,13 @@ func test_set_ground_recolours_the_splats() -> void:
 	fx.set_ground(Color(0.5, 0.0, 0.0))
 	assert_eq(mesh.colour, Color(0.5, 0.0, 0.0))
 	fx.free()
+
+
+func test_any_host_can_hand_its_dead_as_a_map() -> void:
+	var stains: CorpseStains = CorpseStains.new(2)
+	var dead: Dictionary[int, Vector2] = {42: Vector2(320, 64)}
+	stains.on_bled(Vector2(322, 66), Vector2.DOWN)
+	stains.step_bodies(5, dead)
+	assert_eq(stains.soaked, 1, "quest 1's dead guard (id 42) is soaked")
+	assert_eq((stains.get_child(0) as Node2D).position, Vector2(320, 64))
+	stains.free()

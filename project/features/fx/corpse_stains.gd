@@ -1,13 +1,14 @@
 class_name CorpseStains
 extends Node2D
-## Blood on the dead of the city (lane d5-combat; noir's BloodStains, made riot-cheap): each kill
-## the combat blood sprays (CombatBlood.bled) soaks the nearest fresh body of the rig feed with
-## red stains, a little toward the exit side of the round. One cached node per body: its stains
-## are drawn ONCE, then only its transform follows the sliding body and its scale grows the soak
-## (no per-tick redraw: noir's per-tick _draw was ~13 circles a stain). A body that leaves the
-## feed's dead rows (despawned after 8 s, or its slot reused) takes its stains with it. On
-## the actors band, each body's node SOAK_Z above it (a rig's parts stay under +30:
-## body_plan arm_above 10), so the stains lie on the dead; printed with the blood's material.
+## Blood on the dead (lane d5-combat; noir's BloodStains, made riot-cheap), in the city and in
+## quest 1: each kill the combat blood sprays (CombatBlood.bled) soaks the nearest fresh body
+## (the city's rig feed, or any host's id -> px map) with red stains, a little toward the exit
+## side of the round. One cached node per body: its stains are drawn ONCE, then only its
+## transform follows the sliding body and its scale grows the soak (no per-tick redraw: noir's
+## per-tick _draw was ~13 circles a stain). A body that leaves the dead (despawned after 8 s,
+## or its slot reused) takes its stains with it. On the actors band, each body's node SOAK_Z
+## above it (a rig's parts stay under +30: body_plan arm_above 10), so the stains lie on the
+## dead; printed with the blood's material.
 ## Data: blood_fx.json stain.<row>. Counter-hash scatter, stepped on the sim tick. Render only.
 
 const MATCH_M: float = 1.5
@@ -19,6 +20,9 @@ var row: String = "corpse"
 ## Bodies soaked so far, and deaths that never found their body (evidence).
 var soaked: int = 0
 var missed: int = 0
+## CPU microseconds spent in step since boot, and the steps (the riot budget, STANDARDS 20).
+var spent_us: int = 0
+var steps: int = 0
 var _p: Dictionary = {}
 var _grow: int = 24
 var _blood: Color = Color(0.64, 0.02, 0.035)
@@ -73,11 +77,20 @@ func on_bled(pos_px: Vector2, dir: Vector2) -> void:
 
 ## Advances to sim tick `tick` against `feed` (the city's RigFeed: dead rows carry Flag.DEAD).
 func step(tick: int, feed: RigFeed) -> void:
-	_tick = tick
+	var t0: int = Time.get_ticks_usec()
 	var dead: Dictionary[int, Vector2] = {}
 	for i: int in feed.count:
-		if feed.has_flag(i, RigFeed.Flag.DEAD):
+		if (feed.flags[i] & RigFeed.Flag.DEAD) != 0:
 			dead[feed.ids[i]] = feed.pos[i]
+	step_bodies(tick, dead)
+	spent_us += Time.get_ticks_usec() - t0
+	steps += 1
+
+
+## Advances to sim tick `tick` against `dead`: body id -> where it lies (px). Any host (the
+## city's rig feed, quest 1's CombatArena) hands its dead this way.
+func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
+	_tick = tick
 	_match(dead)
 	for s: Soak in _soaks:
 		if s.slot < 0:
