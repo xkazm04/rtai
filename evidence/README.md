@@ -55,6 +55,7 @@ tick count, no RNG.
 | `item27_zebra_owner_ab.png` | iteration 6, OWNER A/B: the zebra cream (committed) vs toned x0.84 like the dashes (h95zt, not committed), Rivet over the crossing at 32/48/64 |
 | `item28_cracks_up_close.png` | iteration 6: the road cracks at 128 / 96 / 48 px/m: h86 bold / h92c thinned, clean zebra (faint up close) / h97 the original cracks and zebra wear fading back in from 56 to 96 px/m, + the concept |
 | `item29_thin_print_proposal.png` | iteration 6, PROPOSAL for the visual-engine lane: `look_d5_print` (look_d4 with edge ink on the dark side only) vs look_d4 at 32 px/m, D4 and D4+D5 tiers, + the mock and a x2 crop |
+| `item30_thin_print_roof.png` | iteration 6: the mural roof at 32 px/m: look_d4 / look_d5_print / look_d5_print + plate lines at gamma 0.45 (the mock's diagonal hatch AND a light tone) / the mock's LOCAL 9 roof |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -223,7 +224,9 @@ cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 
    0.531 / 0.29 / 0.39 -> 0.595 / 0.34 / 0.29 (L / paper / ink; mock roof 0.594 / 0.36 / 0.25); on a 48 px/m pan ink
    flips -58 to -70%. HF does not rise (0.111): thin lines, not more lines. Next (visual-engine): adopt or reject it
    for look_d4; if adopted, the D5 roof plates need their line weight retuned (they were lifted for the fattening
-   print and go too light: mural 0.603 -> 0.667). One D4 neighbour
+   print and go too light: mural 0.603 -> 0.667). Retune shown (`item30`, not committed): plate lines gamma 0.7 ->
+   0.45 under the thin print, mural L 0.643 / paper 0.44 / ink 0.24 / HF 0.093 -> 0.105: the first frame tonight where
+   a roof shows the mock's fine diagonal hatch AND a light tone at 32 px/m. One D4 neighbour
    (helipad) and the arena's warehouse/long roofs have no D5 plate yet (Codex, square-padded template).
 3. **The ground tiles are D5-tier only.** The 4 print-aware tiles (`features/city/art/d5/ground/`) are swapped in
    by the hero scene alone; the city and the D4 tier still print the black slab grid. Next (city / d4-production

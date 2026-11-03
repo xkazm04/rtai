@@ -793,3 +793,9 @@ NEXT (final, iteration 6): NEXT 1-25 stand. Morning reading order: evidence/nigh
 NEXT (addendum): 26. Visual-engine lane: A/B look_d5_print (dark-side edges) as the look_d4 print; it is the
   closest single change to the mock's 32 px/m tone tonight (D4 tier frame L 0.487 vs mock 0.488). Fix the screen
   grain first (more paper). If adopted, d5-close retunes the D5 roof line weight (build_roofs.py gamma) under it.
+- 03:06 FOUND (h102thin; roofs restored byte-identically, tree clean): under look_d5_print the D5 mural with heavier
+  plate lines (b gamma 0.7 -> 0.45) gives at 32 px/m L 0.643 / paper 0.44 / ink 0.24 / HF 0.105 (look_d4 now: 0.603
+  / 0.45 / 0.32 / 0.093; mock roof 0.594 / 0.36 / 0.25 / 0.163). By eye the mock's fine diagonal membrane hatch shows
+  across the roof while the tone stays light: the first time tonight a roof holds hatch AND tone (iteration 5's
+  "tone OR lines" was the print, not the art). Not committed (depends on the print being adopted). Board
+  evidence/item30_thin_print_roof.png; README gap 2; ladder row. NEXT 26 holds: print first, then the plate gamma.
