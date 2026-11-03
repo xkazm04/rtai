@@ -44,8 +44,8 @@ func _ready() -> void:
 	for i: int in 2:
 		var plan: BodyPlan = RivetPlan.build()
 		plan.hip_follow = 0.0 if i == 0 and stride_k <= 0.0 else 1.0
-		if stride_k > 0.0 and i == 1:
-			plan.gait_scale = stride_k
+		if stride_k > 0.0:
+			plan.gait_scale = stride_k if i == 1 else 1.0
 		var rig: CutRig = CutRig.new()
 		_actors.add_child(rig)
 		rig.setup(plan, RigVariant.rivet())

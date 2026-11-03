@@ -35,6 +35,10 @@ const ARMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
 }
+## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
+## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.
+const GAIT_SCALE: float = 1.3
+const SPRINT_STRIDE: float = 0.2
 ## Which form RigPool builds; a dev scene may flip it before the pool's first build.
 static var form: StringName = FORM_BASE
 
@@ -67,6 +71,8 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	p.hose_tex = "hose"
 	p.hose_from = Vector2(-95, 70)
 	p.hip_follow = 1.0
+	p.gait_scale = GAIT_SCALE
+	p.sprint_stride = SPRINT_STRIDE
 	return p
 
 

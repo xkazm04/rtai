@@ -32,6 +32,8 @@ var punch_len: float = PUNCH_S
 var strike_t: float = -1.0
 var strike_ph: Vector3 = Vector3.ZERO
 var roll_t: float = 0.0
+## The running roll's length (rivet-motion: PlayerMotion's roll_ticks); the spike's 0.45 s default.
+var roll_len: float = ROLL_S
 var death_t: float = -1.0
 var death_amount: float = 1.0
 var recoil: float = 0.0
@@ -67,8 +69,9 @@ func strike(rig: CutRig, windup_s: float, active_s: float, recovery_s: float, ar
 	rig.strike_arm = arm
 
 
-func roll() -> void:
-	roll_t = ROLL_S
+func roll(duration_s: float = ROLL_S) -> void:
+	roll_len = maxf(duration_s, 0.05)
+	roll_t = roll_len
 
 
 ## blown = an explosion death: a wider sprawl.
@@ -119,7 +122,9 @@ func sample(rig: CutRig, dt: float) -> void:
 			strike_t = -1.0
 			rig.strike_arm = -1
 	rig.c_lean = 0.6 * rig.c_reach
-	rig.c_tuck = clampf(sin(PI * (1.0 - roll_t / ROLL_S)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
+	rig.c_tuck = (
+		clampf(sin(PI * (1.0 - roll_t / roll_len)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
+	)
 	rig.c_recoil = recoil
 	rig.c_hands_up = move_toward(rig.c_hands_up, 0.85 if fleeing else 0.0, dt * 4.0)
 	rig.set_tint(hit_t > HIT_TINT_FROM)
