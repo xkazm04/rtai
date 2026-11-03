@@ -8,7 +8,7 @@
     "point": "as-b4-dock",
     "tick": 5669
   },
-  "load_1_ms_contended": 751,
+  "load_1_ms_contended": 740,
   "load_2": {
     "beat": "b3-toner-room",
     "tick": 2421
@@ -16,6 +16,11 @@
   "load_2_after_corrupting_newest": {
     "notice": "A save was damaged. Loaded the last good one.",
     "point": "as-b3-toner-room"
+  },
+  "quit_save": {
+    "beat": "b3-toner-room",
+    "hash": "c121ca2f28ee418918b8ec8cca72d71d89ad4c1d09cb3b47c49bb4d48ca80b2e",
+    "tick": 2466
   },
   "saved": {
     "as-b2-payphone": {

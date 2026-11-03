@@ -108,3 +108,20 @@ the quit-time autosave ("quit" point) with slice-play.
 
 NEXT: unchanged from iteration 3 (Director applies the three patches after merging d-save + d-slice;
 Loc keys when the string table lands; the "quit" autosave point with slice-play).
+
+## 2026-11-03 iteration 5 (BUILD) - trial merge refreshed on d-slice 70513ab; quit autosave
+- MILESTONE d-slice moved 38 commits since the last trial (to 70513ab). Merged d-save + d-slice into
+  the scratch trial branch `d-save-trial` (2ba28ca; only JOURNAL.md conflicted, kept ours). Gates on
+  the merged tree: lint 13/13, unit 386, scenarios 12/12 (autosave_input hashes identical to iteration 3:
+  b2 tick 768, b3 tick 2421, b4 tick 5669, load 740 ms CONTENDED), so the three patches still hold.
+- MILESTONE quit point (SAV-08 "quit"): patch 0004 (`evidence/autosave/patches/0004-...`, trial commit
+  96fa79d). `Quest1Autosave.save_now(point)`, `Quest1Game.save_on_quit()` called from
+  WM_CLOSE_REQUEST (writes the snapshot of this tick, then `Save.flush()`; skipped when the run is
+  ended or failed, those have their own saves). The bound-input scenario now closes mid-beat on a
+  Continue-resumed session (+45 ticks), drops the world and loads: point "quit", same tick (2466) and
+  state hash. Patch 0004 needs 0001..0003 first (same files).
+- No shared file changed on d-save in this iteration (evidence + patch only). No bench, no lock.
+
+NEXT: Director applies patches 0001..0004 (or cherry-picks `d-save-trial`) after merging d-save and
+d-slice. Loc keys when the PO table lands. If slice-play wants quit-save off while paused/in a cutscene,
+`save_on_quit()` is the one place.

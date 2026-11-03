@@ -6,7 +6,7 @@
     "branch": "d-save-trial (d-save + d-slice merged)",
     "look": "n/a",
     "ppm": 0,
-    "note": "Quest 1 on the generated city, played through simulated InputEvents -> InputMap -> LiveInput (CollectCallInputDriver). Three autosave points write the two slots; world dropped; load re-simulates 5,669 ticks to the saved hash in 751 ms (CONTENDED). Newest slot flipped: falls back to as-b3-toner-room with the notice; the title card's Continue button then opens a session on that beat with autosave on. Patch to apply after merging d-save and d-slice: evidence/autosave/patches/ in the d-save worktree. No pixels: the save engine has no visuals."
+    "note": "Quest 1 on the generated city, played through simulated InputEvents -> InputMap -> LiveInput (CollectCallInputDriver). Three autosave points write the two slots; world dropped; load re-simulates 5,669 ticks to the saved hash in 751 ms (CONTENDED). Newest slot flipped: falls back to as-b3-toner-room with the notice; the title card's Continue button then opens a session on that beat with autosave on. Also: closing the window mid-beat writes a 'quit' autosave (b3, tick 2466) and the next load lands on that very tick and hash. Re-verified 2026-11-03 12:40 on d-save + d-slice 70513ab (trial 96fa79d): lint 13/13, unit 386, scenarios 12/12. Patches (0001..0004) to apply after merging d-save and d-slice: evidence/autosave/patches/ in the d-save worktree. No pixels: the save engine has no visuals."
   },
   {
     "file": "load-after-corruption.log",
