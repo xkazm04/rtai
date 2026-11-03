@@ -28,6 +28,11 @@ static func create(row: Dictionary) -> LookOverlay:
 	var path: String = row["shader"]
 	o._mat.shader = load(path)
 	o._mat.set_shader_parameter(&"grime_tex", GrimeLattice.texture())  # used if it declares it
+	# the palette's print inks, like the world print's tones (used if the overlay declares them)
+	var ink: Color = PaletteTokens.shared().color(&"ink")
+	var paper: Color = PaletteTokens.shared().color(&"paper")
+	o._mat.set_shader_parameter(&"ink_tone", Vector3(ink.r, ink.g, ink.b))
+	o._mat.set_shader_parameter(&"paper_tone", Vector3(paper.r, paper.g, paper.b))
 	rect.material = o._mat
 	o.add_child(rect)
 	var ramp: Array = row["amount_ppm"]

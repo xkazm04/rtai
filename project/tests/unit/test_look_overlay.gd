@@ -72,3 +72,15 @@ func test_the_shipped_row_points_at_the_d5_close_files() -> void:
 	var base: String = row["base"]
 	assert_eq(shader, "res://assets/shaders/look_d5.gdshader")
 	assert_eq(base, "d4")
+
+
+func test_the_overlay_gets_the_palette_print_inks() -> void:
+	var o: LookOverlay = autofree(LookOverlay.create(ROW))
+	var mat: ShaderMaterial = null
+	for c: Node in o.get_children():
+		if c is ColorRect:
+			mat = (c as ColorRect).material
+	assert_not_null(mat)
+	var ink: Color = PaletteTokens.shared().color(&"ink")
+	var got: Vector3 = mat.get_shader_parameter(&"ink_tone")
+	assert_eq(got, Vector3(ink.r, ink.g, ink.b))
