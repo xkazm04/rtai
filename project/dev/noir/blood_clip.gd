@@ -81,6 +81,7 @@ func _process(_delta: float) -> void:
 		else:
 			Events.player_hit.emit(&"baton")
 	_blood.step_ticks(1)
+	_fx.step_ticks(1)
 	if HEROES.has(_frame):
 		_save.call_deferred(_frame)
 	if _frame >= END:

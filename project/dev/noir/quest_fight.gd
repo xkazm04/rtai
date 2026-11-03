@@ -72,6 +72,7 @@ func _process(_delta: float) -> void:
 	else:
 		_play.tick_once()
 		_blood.step_ticks(1)
+		_fx.step_ticks(1)
 	_new_shots()
 	_view.focus = _frame_focus()
 	_noir.apply({"thresh": _thresh + (0.25 if _flash.lit() else 0.0)})

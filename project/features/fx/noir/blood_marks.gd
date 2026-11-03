@@ -14,9 +14,16 @@ const LOBES: int = 4
 static func pool(
 	ci: CanvasItem, at: Vector2, r: float, flow: Vector2, cols: PackedColorArray
 ) -> void:
+	if r < 3.0:
+		ci.draw_circle(at, r, cols[0])
+		return
+	# built around the origin and placed by the transform: far from it (city px in the
+	# thousands) the triangulator loses precision on small rings
 	var s: float = seed_of(at)
-	ci.draw_colored_polygon(ring(at, r * RIM, flow, s), cols[1])
-	ci.draw_colored_polygon(ring(at, r, flow, s), cols[0])
+	ci.draw_set_transform(at)
+	ci.draw_colored_polygon(ring(Vector2.ZERO, r * RIM, flow, s), cols[1])
+	ci.draw_colored_polygon(ring(Vector2.ZERO, r, flow, s), cols[0])
+	ci.draw_set_transform(Vector2.ZERO)
 	if r > 6.0:
 		var c: Vector2 = at + Vector2(-0.3, -0.35) * r
 		ci.draw_arc(c, r * 0.32, PI * 1.02, PI * 1.48, 8, cols[2], maxf(1.0, r * 0.07))
