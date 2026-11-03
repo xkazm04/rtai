@@ -204,3 +204,8 @@ NEXT (iteration 4 end):
 - FRICTION: tools/audio/build_tables.py is STALE (it lacks car_wreck / boss_loop and has Gloria at -5 instead of the tuned -1): running it clobbers hand edits. The tables are edited as JSON now; do not regenerate.
 - 15:52 clip evidence/mix/riot_mix6.mp4 (25 s, 960 px, replaces riot_mix5; D3D12 movie maker, CONTENDED GPU, not timed): **-19.9 LUFS, true peak -2.2 dBFS, LRA 1.8** (riot_mix5 was -20.2 / -1.4): the blood layer moves the mix +0.3 LU.
   Headless report (evidence/mix/riot_cues_blood.json, 25 s): 88 deaths started, 44 blood splats started (44 more dropped by the 3-voice cap: the riot saturates it), 110 shots, 38 steps. Frame at 12 s looked at: straight down, 0 camera breaks rejected.
+- 16:20 FOUR-WAY MERGE CHECK (scratch worktree, deleted): d-audio a744d47 + d-slice 69ee1cd + d-vehicles + d-combat + the quest1_game_audio.patch (applies clean): **457 unit tests pass, 13 scenarios ran / 0 failed**.
+  Conflicts: JOURNAL.md (every lane's own file, took ours) and, NOT audio's: **d-slice vs d-combat in project/boot/collect_call/view/collect_call_view.gd** (both add vars after `print_stage` and both extend `_ready`).
+  Keeping both sides compiles and passes the tests, but lint gd-size then FAILS: `func _ready is 43 lines > 40` (slice's city branch + combat's blood block). For the Director: move combat's blood block
+  (the `if _stage != null and _stage.events() != null:` part) into its own function, e.g. `_ready_blood()`. Nothing in audio's files conflicts with any other lane.
+- Masters: frames.json now 10 entries (riot with the blood layers, blood spectrograms).
