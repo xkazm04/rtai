@@ -19,7 +19,7 @@
       "bus": "sfx",
       "cooldown_ticks": 3,
       "doc": "Gloria the nail gun fires (quest stage)",
-      "gain_db": -5,
+      "gain_db": -1,
       "id": "shot_gloria",
       "loop": false,
       "max_m": 55,
