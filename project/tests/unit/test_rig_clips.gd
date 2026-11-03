@@ -62,6 +62,19 @@ func test_hit_shoves_and_flashes() -> void:
 	assert_lt(_rig.shove.length(), 5.0, "the shove springs back")
 
 
+func test_knockdown_stays_upright_then_sprawls_and_rises() -> void:
+	_rig.clips.down = true
+	_tick(0.1)
+	assert_eq(_rig.clips.down_amt, 0.0, "upright while the knock slide opens a gap")
+	_tick(0.5)
+	assert_almost_eq(_rig.c_sprawl, RigClips.DOWN_SPRAWL, 0.001)
+	assert_true(_rig.dead)
+	_rig.clips.down = false
+	_tick(0.6)
+	assert_eq(_rig.clips.down_amt, 0.0, "back up")
+	assert_false(_rig.dead)
+
+
 func _tick(seconds: float) -> void:
 	for _k: int in roundi(seconds / SimClock.TICK_DT):
 		_rig.drive(SimClock.TICK_DT)
