@@ -1806,3 +1806,10 @@ NEXT (final, iteration 20; the iteration-18 final NEXT stands, no art changed th
   `masters:backup_decals21/`. Provenance line (new sha256), README row. Commit cbde379. 0 Codex.
 - 06:53 FRICTION (again): `run.mjs` refuses a dirty tree, and writing its log into `evidence/` dirties it. Log goes
   to /tmp first, then is copied in.
+- 06:54 GATES at d2d56a6 (`run.mjs --no-bench`, log via /tmp) rc 0: lint 13/13, unit 142/142, scenarios 8/8, parity
+  bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter21/gates-d2d56a6.txt`).
+- 06:55 CHECK on the morning stack (scratch-v3, n-visual's page grade + aquatint): oil_stain copied in (cmp equal),
+  re-imported, city_frame 32 / 48 / 64 (`masters:morning_i21/` vs `morning_i18b/`): same gain as on n-d4 alone
+  (`evidence/iter21/oil_morning_stack_ab.jpg`). Ladder2 rows "i21 oil_stain 32 / 48" appended.
+- 06:55 LOOKED, no change: `scorch` / `scorch_b` vs `blood_m` (`masters:work/scorch_look_i21.png`): the scorch is a
+  hatched radial burn with no rim, the blood a rimmed splat - they stay apart at 32.
