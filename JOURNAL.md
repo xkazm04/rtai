@@ -166,3 +166,20 @@ NEXT (iteration 2 end):
   `CarRadio.next()` needs an input action (the radio only starts on vehicle_entered; no way to change station yet).
 - FRICTION: my shell's cwd drifted between worktrees several times (a `cd ../d-vehicles` in one command leaves the primary dir changed): always `git -C`/absolute paths. Python on Windows resolves bash `/tmp/..` and `/c/..` differently from bash
   (a write to `/tmp/stt/x` went to %LOCALAPPDATA%\Temp, `/c/...` args need `cygpath -m`): I lost two runs to it. No debris was left outside the repo and masters.
+- MEASURED (12:47) which lines the voice queue loses, on this branch's own quest scene with the bot (dev/audio/audio_beat.tscn, movie maker so audio time = frame time, 185 s, 22 of the 23 lines requested):
+  **6 dropped: rivet-third-person, rivet-who-is-this, juno-load-bearing, brass-gloria, kilohm-accents, rivet-buildings-talk** (exactly the 6 my offline simulation predicted), 16 spoke; VoiceChannel now keeps `dropped_ids`.
+  In the slice's scripted-pad clip: 7 of 20 dropped, and a Whisper read-back of that clip's mix finds 8 lines clear (tools/audio/mix_intelligibility.py, evidence/mix/slice_q1_intelligibility.json).
+  TRIED AND REJECTED (offline simulation on the measured line timeline + voice_lengths.json): a priority drop policy (keep lines tagged `progression`, drop the others first) = 11 of 12 progression lines spoken, same as drop-oldest, and
+  the lines start later (mean 9.8 s late vs 8.7); a longer backlog (3-4) trades drops for 22-23 s lateness. Only the line timing (REQUEST 1) fixes this; no audio-side policy does.
+- NEW: the `radio_next` input action (CarRadio listens while the radio is on; needs the row in data/tables/input_actions.json: REQUEST 6, text in evidence/requests/input_actions_radio_next.txt, R + joypad button 5).
+- GATES at 0d95243 (`node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched): lint 13/13, unit 355 passed, scenarios 8/8, parity exact + planted mutation caught at step 629, selftest + look goldens unchanged (audio adds no pixels).
+  Bench NOT run (lane rule: contended GPU; the audio service has no GPU work). Cost of the pool is unmeasured under the bench.
+
+NEXT (iteration 4 end):
+1. Slice-play must APPLY `evidence/requests/quest1_game_audio.patch` (the slice is silent without it), decide REQUEST 1 (line timing: 6-7 of 23 lines are lost; `line_type_cps` ~15 / `line_max_s` ~22 or max(text time, voice_s + 0.4 s) from
+   data/tables/voice_lengths.json), add the `radio_next` row (REQUEST 6). REQUEST 5 (music / sfx / voice sliders in the pause card: `StageAudio.service.buses.set_user_gain`) is optional.
+2. A human must LISTEN: all SFX (new: car_wreck, boss_loop), the 23 TEMP voices (casting in tools/audio/casting.json; the PoF Voice room replaces them), the radio loops. Still numbers, spectrograms and a Whisper read-back only.
+3. After the merge of d-vehicles + d-audio + d-slice: re-run the three scratch scenes in evidence/requests/*.gd.txt (copy to project/dev/audio/ as .gd + a .tscn) on the merged main; the slice clip must keep its -19.5 LUFS.
+4. Boss: the loop ends with `contract_completed`; when the combat lane emits a boss-defeated event (or the arena does), stop it there. Still no real boss/tazer SFX beyond the generated charge and stinger.
+5. Not done: positional siren from cruisers (the siren is one bed by wanted level), tyre screech as a loop while sliding (it is a one-shot at the slide's start), per-surface footsteps, a settings slider UI.
+6. POF-GAP 1-3 stand (audio-gen: prompt wrapper pushes every request past ElevenLabs' 450-char limit; no tts kind; no music kind). The pof-voice lane's Voice room closes POF-GAP 2.
