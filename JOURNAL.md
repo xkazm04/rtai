@@ -445,3 +445,14 @@ NEXT (night run):
   Branch head stays 3d692a6 with all gates green (iteration 7 evidence gate all PASS).
 - NEXT (night run): unchanged from iteration 7's list, item 1 first (area behaviours on
   CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m).
+
+## Iteration 9 (23:30, STABILIZE; report 23:40)
+- answers.json re-read at 23:30: nothing new for gunplay (1, 2 placeholders; 3 = A applied).
+- No code since 948aa53 (iterations 7-8 were docs only), so the iteration 7 gates still describe
+  the head: lint 13/13, unit 569/569, scenarios 20/20, evidence gate all PASS with parity bit-exact.
+  No re-run in a 10-minute window; nothing to fix.
+- Evidence check: gtai-masters/eve/gunplay/frames.json has 15 entries and every file exists.
+- No Godot processes of mine running. No bench taken.
+- NEXT (night run): unchanged from iteration 7's list, item 1 first (area behaviours on
+  CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m; the held
+  gun scale via REQUEST 9; the living read apart from corpses, REQUEST 10).
