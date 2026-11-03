@@ -793,3 +793,7 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   at the casing's outer edge, visible when zoomed; reads like a comic vibration line at game scale). Quest 1's
   view is fixed at 48 px/m, so no 32 / 64 frames. Still vermilion-as-ink in noir: the "$1,500 taped under"
   cash cue and the phone's handset (not changed). Ladder row 33 (33 rows).
+- REVERTED (04:42) oil gloss (a white glint on each oil splat, radius 0.4 x the splat): no visible change at 64
+  px/m (masters gloss-v1/ab-64.png, video frames 252 / 400 / 690): the glints are about one pixel and the
+  pass's dark-on-dark rim already rings each oil drop white. The trail of oil after hit 2 does read as a dotted
+  line of small white rings (both versions). Restored with `git checkout`.
