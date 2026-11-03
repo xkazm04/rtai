@@ -12,6 +12,9 @@ extends Node
 ##   (Events.actor_killed with his id), so the rivet_kill cue and the kill beat fire in the riot.
 ##   [--beat-frames=<n>]  from the first kill beat, saves <n> consecutive frames at the first
 ##   --zooms zoom (beat-<mode>-<ppm>-fNN.png) and quits; pair with -- --kill-beat=<mode>.
+##   [--clip=<from>,<frames>]  saves every 2nd frame from tick <from> for <frames> frames at the
+##   first --zooms zoom (clip-<mode>-<ppm>-NNNN.png, 30 fps); run with --fixed-fps 60 so each
+##   frame is one sim tick and the clip plays in real time.
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -26,6 +29,7 @@ var _hit_every: int = 0
 var _last_hit: int = 0
 var _kill_m: float = 0.0
 var _beat_frames: int = 0
+var _clip: Vector2i = Vector2i.ZERO
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -55,13 +59,10 @@ func _ready() -> void:
 	await _chars.bake()
 	await _view.prewarm()
 	_wire()
-	if _beat_frames > 0:
-		@warning_ignore("return_value_discarded")
-		DirAccess.make_dir_recursive_absolute(_out)
-		_view.zoom = _zooms[0]
-		var ok_beat: bool = await _shoot_beat()
+	if _clip.y > 0 or _beat_frames > 0:
+		var ok_dev: bool = await _shoot_dev()
 		printerr(_summary())
-		get_tree().quit(0 if ok_beat else 1)
+		get_tree().quit(0 if ok_dev else 1)
 		return
 	var ok: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
 	for tick: int in _at:
@@ -102,6 +103,34 @@ func _on_cue(id: StringName, pos_px: Vector2, _angle: float, _tick: int) -> void
 	var rivet: Vector2 = _city.target * SimConst.PX_PER_M
 	if id == &"death" and _kill_m > 0.0 and pos_px.distance_to(rivet) <= _kill_m * 32.0:
 		Events.actor_killed.emit(CityCharacters.RIVET_ID, 0, &"melee")
+
+
+## The dev captures (a clip or a kill beat) at the first --zooms zoom.
+func _shoot_dev() -> bool:
+	@warning_ignore("return_value_discarded")
+	DirAccess.make_dir_recursive_absolute(_out)
+	_view.zoom = _zooms[0]
+	if _clip.y > 0:
+		return await _shoot_clip()
+	return await _shoot_beat()
+
+
+## Every 2nd frame from tick _clip.x, _clip.y frames: the fight as a 30 fps clip.
+func _shoot_clip() -> bool:
+	while _world.context().clock.tick() < _clip.x:
+		await get_tree().process_frame
+		_maybe_hit()
+	var ppm: int = roundi(_zooms[0] * SimConst.PX_PER_M)
+	var mode: String = _chars.blood.blood.mode
+	var ok: bool = true
+	for f: int in _clip.y:
+		await RenderingServer.frame_post_draw
+		_maybe_hit()
+		if f % 2 == 0:
+			var img: Image = get_viewport().get_texture().get_image()
+			var file: String = "clip%s-%s-%dppm-%04d.png" % [_tag, mode, ppm, f / 2]
+			ok = img != null and img.save_png(_out.path_join(file)) == OK and ok
+	return ok
 
 
 ## Waits for the first beat, then saves _beat_frames frames in a row (the beat as a clip).
@@ -171,6 +200,9 @@ func _parse_args() -> bool:
 			_hit_every = arg.substr(12).to_int()
 		elif arg.begins_with("--rivet-kills="):
 			_kill_m = arg.substr(14).to_float()
+		elif arg.begins_with("--clip="):
+			var v: PackedStringArray = arg.substr(7).split(",")
+			_clip = Vector2i(v[0].to_int(), v[1].to_int() if v.size() > 1 else 600)
 		elif arg.begins_with("--beat-frames="):
 			_beat_frames = arg.substr(14).to_int()
 		elif arg.begins_with("--tag="):
