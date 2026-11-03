@@ -1,0 +1,100 @@
+{
+  "blessed": false,
+  "frames": [
+    {
+      "far": 0.014328125,
+      "file": "look-d1-32ppm.png",
+      "found": true,
+      "look": "d1",
+      "mean": 1.55413541666667,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.021625,
+      "file": "look-d1-48ppm.png",
+      "found": true,
+      "look": "d1",
+      "mean": 2.22627604166667,
+      "ok": false,
+      "ppm": 48
+    },
+    {
+      "far": 0.013984375,
+      "file": "look-d4-32ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 1.53497395833333,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.026625,
+      "file": "look-d4-48ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 2.80494270833333,
+      "ok": false,
+      "ppm": 48
+    },
+    {
+      "far": 0.00021875,
+      "file": "look-d4-64ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 0.0507760416666667,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.01665625,
+      "file": "look-d5-48ppm.png",
+      "found": true,
+      "look": "d5",
+      "mean": 1.80595833333333,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.015484375,
+      "file": "look-d5-64ppm.png",
+      "found": true,
+      "look": "d5",
+      "mean": 1.71607291666667,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.0264375,
+      "file": "look-auto-48ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 2.373,
+      "ok": false,
+      "ppm": 48
+    },
+    {
+      "far": 0.026296875,
+      "file": "look-auto-56ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 2.41256770833333,
+      "ok": false,
+      "ppm": 56
+    },
+    {
+      "far": 0.03009375,
+      "file": "look-auto-64ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 3.23250520833333,
+      "ok": false,
+      "ppm": 64
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "max_far": 0.02,
+  "max_mean": 4.0,
+  "ok": false,
+  "schema": "gtai.look-golden/1"
+}

@@ -13,9 +13,21 @@ const BAND: Array[StringName] = [&"actors", &"actor_shadows", &"vehicles", &"act
 const INK: Color = Color(0.09, 0.075, 0.106)
 const PAPER: Color = Color(0.949, 0.91, 0.835)
 const STEEL: Color = Color(0.561, 0.533, 0.506)
+## Moving traffic art (night lane d4-production): cells of 6.4 x 3.2 m at 80 px/m (512 x 256 px),
+## cell = the sim car art id (custom.x: CitySpawner CAR_ART 0-7, ART_POLICE_CAR 8), nose to +x.
+## The grid is read from the texture size, so a re-laid-out atlas cannot silently mis-address it.
+## Live only when the file is in the tree and holds every art id; else the steel quad.
+const TRAFFIC_ATLAS: String = "res://features/city/art/vehicles/traffic_atlas.png"
+const TRAFFIC_CELL_PX: Vector2i = Vector2i(512, 256)
+const CELL_SHADER: String = "res://features/characters/crowd_atlas.gdshader"
 
 var multimeshes: Array[MultiMesh] = []
 var nodes: Array[MultiMeshInstance2D] = []
+## The cars' item print (the look's item shader + the atlas cells); null = no traffic atlas.
+var car_print: ShaderMaterial = null
+## The traffic atlas grid (cols, rows); (0, 0) = not plugged.
+var traffic_cells: Vector2i = Vector2i.ZERO
+var _car_plain: ShaderMaterial = null
 
 
 func _init() -> void:
@@ -40,6 +52,53 @@ func _init() -> void:
 		node.z_index = RenderLayers.z(BAND[k])
 		multimeshes.append(mm)
 		nodes.append(node)
+	_plug_traffic()
+
+
+func _plug_traffic() -> void:
+	if not ResourceLoader.exists(TRAFFIC_ATLAS):
+		return
+	var atlas: Texture2D = load(TRAFFIC_ATLAS) as Texture2D
+	if atlas == null:  # e.g. an LFS pointer instead of the PNG: keep the steel quad
+		return
+	var cells: Vector2i = traffic_grid(Vector2i(atlas.get_width(), atlas.get_height()))
+	if cells == Vector2i.ZERO:
+		var dims: Array[int] = [atlas.get_width(), atlas.get_height()]
+		Log.warn("render", "traffic atlas %dx%d: not a grid of every car art id" % dims)
+		return
+	traffic_cells = cells
+	nodes[SimConst.RL_CARS].texture = atlas
+	nodes[SimConst.RL_CAR_SHADOWS].texture = atlas  # same cell (custom.x), tinted ink: car-shaped
+	_car_plain = ShaderMaterial.new()
+	_car_plain.shader = load(CELL_SHADER) as Shader
+	_car_plain.set_shader_parameter("cols", cells.x)
+	_car_plain.set_shader_parameter("rows", cells.y)
+	car_print = ShaderMaterial.new()
+
+
+## The atlas grid for a texture of `size` px: whole 512 x 256 cells holding at least every car art
+## id (0 .. CitySpawner.ART_POLICE_CAR); else (0, 0).
+static func traffic_grid(size: Vector2i) -> Vector2i:
+	if size.x % TRAFFIC_CELL_PX.x != 0 or size.y % TRAFFIC_CELL_PX.y != 0:
+		return Vector2i.ZERO
+	var cells: Vector2i = size / TRAFFIC_CELL_PX
+	if cells.x * cells.y <= CitySpawner.ART_POLICE_CAR:
+		return Vector2i.ZERO
+	return cells
+
+
+## The print on every layer this class draws (CityView.set_look_enabled). A layer someone else
+## re-materialed (the baked crowd atlas on the people layer) is left alone.
+func apply_print(item: ShaderMaterial, printed: bool) -> void:
+	for k: int in nodes.size():
+		var node: MultiMeshInstance2D = nodes[k]
+		var car: bool = k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS
+		if car and car_print != null:
+			car_print.shader = item.shader
+			car_print.set_shader_parameter("cells", traffic_cells)
+			node.material = car_print if printed else _car_plain
+		elif node.material == null or node.material == item:
+			node.material = item if printed else null
 
 
 func rids() -> Array[RID]:

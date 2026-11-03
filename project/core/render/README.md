@@ -95,6 +95,20 @@ Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov
 overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
 (the `-ov` files are new; the d1/d4 goldens must still pass untouched).
 
+### Moving traffic art (`crowd_layers.gd` `_plug_traffic`, `look_d4_item.gdshader` `cells`)
+
+The car MultiMesh draws a steel placeholder quad until d4-production's
+`features/city/art/vehicles/traffic_atlas.png` is in the tree (cells of 512 x 256 px = the
+6.4 x 3.2 m quad of native `fill_render`, nose +x, cell = the sim car art id in `custom.x`: 0-7
+civilian, 8 the police cruiser; the grid is read from the texture size, today 3 x 3, and an atlas
+that is not whole cells or holds fewer than 9 keeps the placeholder with a warning). Then the
+cars AND their drop shadows sample that cell: the cars through a second item-print material
+(`CrowdLayers.car_print` = look_d4_item with `cells` = that grid; CityView gives it the look's item
+uniforms on every look change and `world_px` every frame), the shadows tinted ink so they are
+car-shaped. An unprinted look uses crowd_atlas.gdshader for the cell lookup. A file that does not
+load (an LFS pointer) keeps the placeholder. `CrowdLayers.apply_print` owns every crowd layer's
+material and leaves a layer someone else re-materialed (the baked crowd atlas) alone.
+
 ## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
 
 Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #17131B, `ink_2` charcoal, `wash`, `steel`) and the two

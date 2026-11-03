@@ -9,6 +9,9 @@ uniform float ghost = 0.0;
 uniform vec2 world_px = vec2(0.0);  // the camera's world offset in screen px: tooth and ghost dots locked to the world
 uniform float shadow_k = 0.62;     // drop-shadow ink tint per unit alpha
 uniform vec3 steel_out = vec3(0.640, 0.600, 0.630);   // the flat wash value steel prints at
+// cells: an atlas grid for a MultiMesh whose instance custom.x is the cell (moving traffic: n-d4's
+// traffic_atlas, 3 x 3); 1 x 1 = the texture as is (every other user)
+uniform ivec2 cells = ivec2(1, 1);
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -21,6 +24,13 @@ float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.545
 float dots(vec2 frag, float cov, float ang) {
 	vec2 p = mat2(vec2(cos(ang), sin(ang)), vec2(-sin(ang), cos(ang))) * frag / 2.0;
 	return step(length(fract(p) - 0.5), sqrt(cov / 3.14159));
+}
+
+void vertex() {
+	if (cells.x * cells.y > 1) {
+		float cell = floor(INSTANCE_CUSTOM.x + 0.5);
+		UV = (UV + vec2(mod(cell, float(cells.x)), floor(cell / float(cells.x)))) / vec2(cells);
+	}
 }
 
 void fragment() {

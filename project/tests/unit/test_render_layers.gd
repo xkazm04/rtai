@@ -107,8 +107,20 @@ func test_look_toggle_keeps_a_layer_material_it_did_not_set() -> void:
 	people.material = atlas  # what CityCharacters.bake does with the crowd atlas material
 	_view.set_look_enabled(false)
 	assert_eq(people.material, atlas, "--look=off must not drop the crowd atlas material")
-	assert_null(cars.material)
+	if _view.crowd.car_print == null:  # no traffic atlas in the tree: the plain steel quad
+		assert_null(cars.material)
+	else:  # the traffic atlas keeps its cell lookup unprinted
+		assert_ne(cars.material, _view.crowd.car_print)
 	_view.set_look_enabled(true)
 	assert_eq(people.material, atlas)
 	assert_not_null(cars.material)
 	people.material = saved
+
+
+func test_traffic_grid_is_read_from_the_atlas_size() -> void:
+	assert_eq(CrowdLayers.traffic_grid(Vector2i(1536, 768)), Vector2i(3, 3), "n-d4's 3 x 3 atlas")
+	assert_eq(CrowdLayers.traffic_grid(Vector2i(2048, 768)), Vector2i(4, 3))
+	assert_eq(
+		CrowdLayers.traffic_grid(Vector2i(1024, 1024)), Vector2i.ZERO, "2 x 4: no cell 8 (police)"
+	)
+	assert_eq(CrowdLayers.traffic_grid(Vector2i(1500, 768)), Vector2i.ZERO, "not whole cells")
