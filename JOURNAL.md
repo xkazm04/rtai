@@ -582,3 +582,8 @@ NEXT (iteration 10 / morning, in order):
   calling it done (spawn one at the junction in the selftest); (2) find the streak: dump the car layer's
   instance transforms + custom.x for that frame (CitySim write_render buffer) and look for a quad with a
   tiny axis or an out-of-range cell; (3) frames 32 / 48 / 64 + accent gate + world lock, then re-bless.
+- 02:09 corrected 1080p iGPU (after 1c7e3aa, 2 runs): frame 5.72 / 5.79 ms = print 3.07 / 3.18, rigs 0.54 /
+  0.61, crowd 0.19 / 0.25, lights 0.26 / 0.34, FX 0.09 / 0.21. The print pass is ~55 % of the low-end frame
+  at both resolutions: it stays NEXT 3's target. README per-pass table updated. Session end 02:10: tree
+  clean, scratch worktree removed, my temp files deleted, no processes of mine running (the two Godot
+  processes on the machine are the noir lane's movie capture).
