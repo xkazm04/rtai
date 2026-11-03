@@ -339,6 +339,27 @@ sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, golden
 Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 -> 46.0 -> 48.0 px/m at
 9-tick steps; explosion shake offset 5.3 px).
 
+## Plugging a view in (`print_stage.gd`)
+
+`PrintStage` is the whole engine as one node, for any view that is not the city (quest stages, arenas,
+interiors, menus over the world). The view adds it, sets `look_id` / `rig` / `clock`, and:
+
+- draws its world as children of the stage, each top-level item on a world band
+  (`z_index = RenderLayers.z(&"ground" | &"ground_decals" | &"props" | &"roofs")`): printed by `look_d4`;
+- puts people / vehicles under `actor_layer()` on `actors` / `vehicles` with
+  `material = item_material()`: printed by `look_d4_item` (accents kept where the doctrine allows);
+- calls `place(focus_m)` once a frame: camera + rig (zoom ease, look-ahead, shake, hit-stop), the
+  zoom-anchored `world_px`, the look for the zoom (`auto`: D4 -> D5 overlay), lights, FX, markers;
+- uses `fx` / `fx_triggers` / `lights` / `markers` like `CityView` does.
+
+`tests/unit/test_print_stage.gd` audits the layers, the look by zoom and the world lock. Evidence:
+`dev/selftest/print_stage_demo.tscn` draws quest 1's placeholder style (flat cream / ink shapes, one
+vermilion fire barrel as a world prop, one vermilion threat as an actor) under one PrintStage:
+`gtai-masters/night/visual-engine/44-print-stage` (the barrel prints cream - the world carries no accent
+plate - and the threat keeps its vermilion). Main's quest 1 view (`boot/collect_call/view/`) draws with
+its own `Ink` constants and camera today; moving it onto PrintStage is a few lines after the merge, and
+`CityView` (which predates it and composes the same pieces) should move onto it too.
+
 ## World lock (every print pass on `world_px`)
 
 `CityView` computes `world_px` (the camera's world offset in screen px, after zoom ease, look-ahead and shake)
