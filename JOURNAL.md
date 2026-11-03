@@ -1022,3 +1022,13 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
   (D5_INK_P0 0.08 -> 0.0) inside the package: mid 0.08 -> 0.09, top-row mid 0.102 -> 0.111, but paper L 0.856 ->
   0.851 and frame L 0.468 -> 0.459. Same trade as step_soft: light hatch prints as an even darkening, not as the
   mock's grey hatch. NEXT 30 (plates with a fine interior hatch) stands; README gap 2 already says so.
+- 04:06 OPTION, NOT IN THE PACKAGE (h122rule5 / h123pkg / a18rule; all restored, project/ clean): iteration 5's
+  rejected ruled roof hatch (build_roofs.py D5_ROOF_RULE 0.5, period 12 art px) retried under the thin print. 32 px/m
+  (D5 tier): by eye the roofs carry the mock's diagonal pen hatch across the membranes (masters work/i7/rule_ab.png);
+  top-row mid share 0.102 -> 0.118 (mock 0.128), mural roof HF 0.135 -> 0.139, frame L 0.468 -> 0.461, paper 0.32 ->
+  0.31, readability unchanged; pan 48 px/m unchanged (0.00049 / 0.00000; note this pan metric uses a pixel-snapped
+  camera, so it catches screen-locked noise, not sub-pixel shimmer during zoom changes). BUT up close (arena 64 px/m,
+  42223 px changed): an even, mechanical hatch over everything, across the OSHA sign plate. Helps at 32, hurts
+  where D5 lives, so it stays an option (package_shot.sh env D5_ROOF_RULE=0.5, default 0). Needs a membrane mask
+  (no signs/props) and a zoom fade (hand-made mips) first. h123pkg reproduces h122rule5 (0 px). Board
+  evidence/item41_roof_rule_option.png; ladder row.

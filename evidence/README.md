@@ -68,6 +68,7 @@ tick count, no RNG.
 | `item38_rim_owner_ab.png` | iteration 7, OWNER A/B: the sticker rim as the rig draws it vs +1 px cream (look_d5_halo `rim_px`, D5_HALO_RIM=1; both with the outer ink line + shadow) at 32 x3 and 48, + the mock's stickers. Not in the package |
 | `item39_d4tier_package.png` | iteration 7: the package in the D4 tier (D4 roofs) at 32 px/m, h106 vs h117pkg + a x2 roof crop: warm and light like the mock, but the D4 roof outlines print thin (solid ink 0.13 -> 0.07, mock 0.12) |
 | `item40_d4_roof_lines.png` | iteration 7, PROPOSAL for d4-production: the D4 roofs with heavier lines (k 1.0) under the package, D4 tier 32 px/m x2: h106 / package / package + heavier lines (solid ink 0.13 / 0.07 / 0.11, mock 0.12) |
+| `item41_roof_rule_option.png` | iteration 7, OPTION (not in the package): the ruled roof hatch under the thin print: the mock's diagonal membrane hatch at 32 px/m, but mechanical at 64 (across the OSHA sign plate). Needs a membrane mask + a zoom fade |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h115se1 at 32 px/m, the mock, h115se1 at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -245,6 +246,8 @@ What still separates us, largest first:
    vs mock 0.290, readability down); so is a softer wash step (rejected h113ss10: mid 0.08 -> 0.09 but the paper
    darkens 0.856 -> 0.847). The mid-tones are in the mock's art (soft grey roof shading), so: next plates (Codex)
    with a mid-grey shading layer under the pen hatch, judged by these per-class numbers.
+   Closest lever found: the ruled roof hatch under the thin print (`item41`: top-row mid 0.102 -> 0.118, mock
+   0.128), blocked by its look at 64 px/m until it gets a membrane mask and a zoom fade.
 3. **Roof texture on the D4 neighbours**: the D5 plates show the mock's fine diagonal hatch under the thin print,
    but the D4 neighbour roofs (and the helipad, the arena's warehouse/long roofs) have no D5 plate. Next: Codex plates
    on the square-padded template (budget), or the d4-production lane's D4 set under the thin print.
