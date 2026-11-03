@@ -7,6 +7,7 @@ import numpy as np
 
 SR = 44100
 IMPULSIVE = ("pistol_shot", "rifle_shot", "nailgun_shot", "impact_")
+GUNS = ("pistol_shot", "rifle_shot", "nailgun_shot")
 FF = "ffmpeg"
 
 
@@ -40,6 +41,11 @@ def trim(a: np.ndarray, floor_db: float = -45.0) -> np.ndarray:
     return a[max(idx[0] - int(0.004 * SR), 0): min(idx[-1] + int(0.03 * SR), len(a))]
 
 
+def decay_db(a: np.ndarray) -> float:
+    half = len(a) // 2
+    return 20 * np.log10(max(float(np.sqrt((a[half:] ** 2).mean())), 1e-9) / max(float(np.sqrt((a[:half] ** 2).mean())), 1e-9))
+
+
 def fade(a: np.ndarray, ms: float = 12.0) -> np.ndarray:
     n = min(int(ms / 1000 * SR), len(a) // 2)
     if n > 0:
@@ -67,6 +73,8 @@ def write_ogg(path: pathlib.Path, a: np.ndarray, q: int = 4) -> None:
 
 
 def sfx(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
+    count: dict = {}
+    srcmap: dict = {}
     for f in sorted(raw.glob("*.mp3")):
         key = f.stem.rsplit("_", 1)[0]
         loop = key.endswith("_loop") or key == "city_ambience"
@@ -81,6 +89,8 @@ def sfx(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
             rec.update(status="REJECT", why="empty or silent after trim"); log.append(rec); continue
         if not loop and key.startswith(IMPULSIVE) and int(np.abs(b).argmax()) > 0.12 * SR:
             rec.update(status="REJECT", why=f"impulsive sound peaks late ({int(np.abs(b).argmax()) * 1000 // SR} ms)"); log.append(rec); continue
+        if not loop and key.startswith(GUNS) and decay_db(b) > -18.0:
+            rec.update(status="REJECT", why=f"no decay ({decay_db(b):.1f} dB second half vs first): a sustained noise burst, not a shot"); log.append(rec); continue
         if not loop and float(np.abs(b[-int(0.05 * SR):]).max()) > 0.1 * float(np.abs(b).max()):
             b = fade(b, 80.0)  # cut off while still loud (the generator stopped at its length): a longer fade hides the cut
         if full_scale >= 6:
@@ -90,10 +100,15 @@ def sfx(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
         b = b * (10 ** (target / 20) / peak)
         rms = float(np.sqrt((b ** 2).mean()))
         dur = len(b) / SR
-        name = f"{f.stem}.{'ogg' if dur > 3.0 else 'wav'}"
+        count[key] = count.get(key, 0) + 1
+        stem = f"{key}_{count[key]:02d}"
+        srcmap[stem] = f.stem
+        name = f"{stem}.{'ogg' if dur > 3.0 else 'wav'}"
         (write_ogg if dur > 3.0 else write_wav)(out / "sfx" / name, b)
         rec.update(status="OK", out=name, dur=round(dur, 2), peak_db=round(db(float(np.abs(b).max())), 1), rms_db=round(db(rms), 1), loop=loop)
         log.append(rec)
+    (out.parent.parent.parent / "evidence").mkdir(exist_ok=True)
+    (out.parent.parent.parent / "evidence" / "sfx_map.json").write_text(json.dumps({"takes": count, "src": srcmap}, indent=1, sort_keys=True))
 
 
 def voice(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:

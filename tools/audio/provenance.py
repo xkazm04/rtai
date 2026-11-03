@@ -8,6 +8,7 @@ seen = set()
 for l in log.read_text(encoding="utf-8").splitlines():
     if l.strip():
         r = json.loads(l); seen.add((r["file"].replace("\\", "/"), r["sha256"]))
+sfx_src = json.loads(pathlib.Path("evidence/sfx_map.json").read_text())["src"]
 gen = {}
 for l in (masters / "raw" / "gen_log.jsonl").read_text().splitlines():
     r = json.loads(l)
@@ -37,7 +38,7 @@ for f in sorted(pathlib.Path("project/assets/audio").rglob("*")):
         m = extra[stem]
         base.update(tool=m["tool"], model=m["model"], prompt_ref=m["prompt_ref"], human_edits=m["human_edits"])
     else:
-        g = gen[stem]
+        g = gen[sfx_src.get(stem, stem)]
         base.update(tool="elevenlabs-sound-generation (direct API; PoF audio-gen refused every request, POF-GAP 1)", model="elevenlabs sound-generation v2",
                     prompt_ref=f"masters:day-d5/audio/raw/gen_log.jsonl#{g['file']}: {g['prompt']}",
                     human_edits="trimmed silence, 12 ms fades, downmixed mono 44.1 kHz, peak-normalised (-3 dBFS; loops -6 dBFS, 0.3 s crossfaded seam)")

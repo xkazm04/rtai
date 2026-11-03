@@ -7,6 +7,7 @@ URL = "https://api.elevenlabs.io/v1/sound-generation?output_format=mp3_44100_128
 SPECS = [
   # key, kind, duration, loop, variations, prompt
   ("pistol_shot", "sfx", 0.8, False, 3, "single close-miked 9mm pistol gunshot, sharp crack with short room tail, dry, no music, no voices"),
+  ("pistol_shot", "sfx", 0.8, False, 4, "9mm handgun gunshot, one sharp crack then a quick natural decay, no sustained noise, no hiss, dry outdoor, no music", 4),
   ("rifle_shot", "sfx", 1.0, False, 3, "single assault rifle gunshot, heavy punchy crack with a short outdoor echo, no music, no voices"),
   ("nailgun_shot", "sfx", 0.7, False, 3, "single pneumatic roofing nail gun shot, compressed-air thump and metallic clack, no music"),
   ("impact_flesh", "sfx", 0.6, False, 2, "bullet hitting a body, wet meaty thud, short, no music"),
@@ -35,9 +36,10 @@ def main():
     out = pathlib.Path(sys.argv[1]); out.mkdir(parents=True, exist_ok=True)
     only = sys.argv[2] if len(sys.argv) > 2 else ""
     log = []
-    for key, kind, dur, loop, n, prompt in SPECS:
+    for key, kind, dur, loop, n, prompt, *rest in SPECS:
+        first = rest[0] if rest else 1
         if only and not key.startswith(only): continue
-        for v in range(1, n + 1):
+        for v in range(first, first + n):
             body = {"text": f"{prompt} (take {v})"[:440], "duration_seconds": dur, "prompt_influence": 0.5}
             dst = out / f"{key}_{v:02d}.mp3"
             if dst.exists(): continue

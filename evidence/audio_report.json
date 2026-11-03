@@ -220,22 +220,54 @@
    "file": "pistol_shot_02.mp3",
    "src_dur": 0.8,
    "src_peak_db": -28.8,
-   "status": "OK",
-   "out": "pistol_shot_02.wav",
-   "dur": 0.3,
-   "peak_db": -3.0,
-   "rms_db": -9.6,
-   "loop": false
+   "status": "REJECT",
+   "why": "no decay (-6.9 dB second half vs first): a sustained noise burst, not a shot"
   },
   {
    "file": "pistol_shot_03.mp3",
    "src_dur": 0.8,
    "src_peak_db": -25.8,
+   "status": "REJECT",
+   "why": "no decay (-6.5 dB second half vs first): a sustained noise burst, not a shot"
+  },
+  {
+   "file": "pistol_shot_04.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": -21.8,
+   "status": "REJECT",
+   "why": "no decay (-16.4 dB second half vs first): a sustained noise burst, not a shot"
+  },
+  {
+   "file": "pistol_shot_05.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": -4.2,
+   "status": "OK",
+   "out": "pistol_shot_02.wav",
+   "dur": 0.38,
+   "peak_db": -3.0,
+   "rms_db": -15.5,
+   "loop": false
+  },
+  {
+   "file": "pistol_shot_06.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": 3.0,
    "status": "OK",
    "out": "pistol_shot_03.wav",
-   "dur": 0.51,
+   "dur": 0.8,
    "peak_db": -3.0,
-   "rms_db": -14.5,
+   "rms_db": -14.7,
+   "loop": false
+  },
+  {
+   "file": "pistol_shot_07.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": 3.1,
+   "status": "OK",
+   "out": "pistol_shot_04.wav",
+   "dur": 0.8,
+   "peak_db": -3.0,
+   "rms_db": -17.0,
    "loop": false
   },
   {
