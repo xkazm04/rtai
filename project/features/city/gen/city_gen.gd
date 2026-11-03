@@ -7,7 +7,7 @@ extends RefCounted
 ## plazas by seed.
 
 ## Bump when the output of any generator code changes (it is stamped into every chunk header).
-const GENERATOR_VERSION: int = 11
+const GENERATOR_VERSION: int = 12
 const PERIOD: int = 8
 
 var seed_value: int = 1
