@@ -72,6 +72,11 @@ func set_ground(c: Color) -> void:
 		_ring.mesh.colour = c
 
 
+## Recolours the fluid's shadow (a pool's body): the palette's `blood_dark`.
+func set_dark(c: Color) -> void:
+	_fluid.dark = c
+
+
 ## Pools get an ink keyline `px` wide in `colour` (the D4/D5 print; 0 = noir's bare rim).
 func set_ink(px: float, colour: Color) -> void:
 	_ring.ink_px = px

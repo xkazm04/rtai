@@ -192,3 +192,9 @@ green at 971a118.
   0.17 ms, game 0.01 ms), >50 ms 0. Overall JUDGE: MISSES p99CpuMs + over50.unexplained (the 2 unexplained >50 ms
   are in the drive scenarios, not the riot). Riot p99 across today: 4.86 / 7.68 / 15.18 / 9.87 ms: the shared GPU.
   Evidence: evidence/d5-combat/bench/iter3/.
+- MILESTONE (next commit): pool body = doctrine blood_dark #540005 (answers d5-city's REQUEST 2/4 and closes my
+  REQUEST 4): blood_fx.json colour.blood_dark 0.46,0,0.03 -> 0.329,0,0.02 (hard-coded until the tokens merge),
+  CombatBlood also reads palette `blood_dark` (BloodFx.set_dark) when the token exists: same value, zero change at the
+  merge. Corpse stains' dark spots follow (same json). Frames: masters frames/pool-dark-t900-{32,48,64,128}ppm-pair.png
+  (same run, same --zooms). At 128 the bright meniscus rim over a dark body reads deeper and wetter; at 32 the pools
+  still read red on asphalt. Camera breaks: 0 of 8.

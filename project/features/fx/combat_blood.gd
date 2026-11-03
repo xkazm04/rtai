@@ -60,6 +60,8 @@ func _init() -> void:
 	var tokens: Dictionary[StringName, Color] = PaletteTokens.shared().tokens
 	if tokens.has(&"blood"):
 		blood.set_ground(tokens[&"blood"])
+	if tokens.has(&"blood_dark"):
+		blood.set_dark(tokens[&"blood_dark"])
 	_game = blood.p.get("game", {})
 	var fallback: String = _game.get("default", "noir")
 	mode = requested(fallback)
