@@ -248,6 +248,20 @@ No images (50/50 used). The open proposals were finished and measured as ONE pac
   step_soft 0.10, dark_soft 0.20, shadow tint 0.22, no paper clean on the plates, the BAKED roof rule (`item41`).
 - Reproduce the package from HEAD: masters `tools/package_shot.sh <round> [hero|arena]`.
 
+## Iteration 10 (06:00 -> ) in one screen (`item50_ui_sharp.png`, `item50b_cards.png`, `item51_mip_audit.png`)
+No images (50/50 used). The weakest item was 5 (the close-up portraits): they read soft in the dialogue and phone UI.
+- **Proposal (HUD lane, default off): `look_d5_ui.gdshader`** for the mipmapped D5 UI art drawn at 0.3-0.85x: 4
+  rotated-grid taps one mip finer + unsharp 0.5. Error vs a Lanczos reference: dialogue portrait 4.82 -> 2.53
+  (200 px panel), 4.95 -> 2.82 (270 px, a 1080p panel), phone portrait 6.09 -> 4.77; works at any UI scale, unlike
+  a pre-scaled set (the old NEXT 11). params JSON `ui` group; dev A/B `D5_UI=sharp` in `d5_hero.gd --dialogue / --phone`.
+- **Guard (`item50b`)**: NOT for the 1920x1081 full-screen cards (finishers, boss intro, loading; no mipmaps): at a
+  1280x800 window plain linear is best (3.00 vs 6.01 with the shader, 6.99 trilinear). `dev/showcase/d5_card.gd`.
+- **Rejected**: the same sampling inside look_d5_part (`rgss`) for gap 5 (in-part hatch at 64 px/m): rig detail +7%,
+  walk shimmer +4% HF, the rig 0.008 darker on the street; not kept.
+- **Audit (`item51`)**: building_union_hall and the 4 street decals import without mipmaps (the other 6 plates and
+  all D4 roofs with). Mips on the union hall: tone toward the mock, line energy away; on the decals they lose the
+  spray dots and spatter. Imports kept; the city lane / owner sets one rule for D5 plates.
+
 ## Gap list after iteration 9 (package v9 = i9mot, vs `d4h2_mock.jpg`)
 Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existing plates (`item48_roof_membrane.png`).
 1. **Mid-tones, closed at frame level for the package**: the mock's mid-tones sit in its paper areas, and its roof
