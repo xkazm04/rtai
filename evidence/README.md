@@ -277,8 +277,9 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    reach 0.90+ (0.128 of its off-road px, ours 0). look_d5_print `paper_hi` 1.0 prints sources lighter than cream
    lighter: 0.90+ bin 0 -> 0.044, paper median L 0.848 -> 0.852 (mock 0.867), mid and actors unchanged, no pan swim.
    Still open: our light-wash step (L ~0.75) holds 0.135 of the off-road px vs the mock's 0.034, but lightening it
-   (wash_lo 0.22) costs the mid-tones (0.11 -> 0.08). Next: a light-wash step that keeps a soft ramp instead of one
-   flat level, judged on these bins (masters work/i9/paperbins.py).
+   (wash_lo 0.22) costs the mid-tones (0.11 -> 0.08), and a soft ramp (look_d5_print `lo_soft` 0.10) gets closer
+   to the mock's bin shape but darkens the paper median (0.852 -> 0.838) and blurs the roof blotches into smooth grey
+   (rejected, journal). The light-tone spread is in the mock's ART (soft pencil greys), so it is for the next plates.
 5. Items 1, 3-7 of iteration 8 stand.
 
 ## Gap list after iteration 8 (in-engine h139rs committed / h140all with every proposal, vs `d4h2_mock.jpg` and the concept)
