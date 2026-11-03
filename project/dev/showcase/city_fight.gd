@@ -8,6 +8,10 @@ extends Node
 ##   --blood=<mode> --out=<dir> [--at=<tick>,...] [--zooms=1,1.5,2] [--focus=<i>] [--tag=<name>]
 ##   [--hit-rivet=<ticks>]  Rivet takes a Robo-tazer hit (Events.player_hit) every <ticks>, wired
 ##   as boot/world.gd wires the game (fx_triggers.listen): sparks, crackle, his oil.
+##   [--rivet-kills=<m>]  DEV STAND-IN: a riot death within <m> metres of Rivet is credited to him
+##   (Events.actor_killed with his id), so the rivet_kill cue and the kill beat fire in the riot.
+##   [--beat-frames=<n>]  from the first kill beat, saves <n> consecutive frames at the first
+##   --zooms zoom (beat-<mode>-<ppm>-fNN.png) and quits; pair with -- --kill-beat=<mode>.
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -20,6 +24,8 @@ var _focus: int = 0
 var _tag: String = ""
 var _hit_every: int = 0
 var _last_hit: int = 0
+var _kill_m: float = 0.0
+var _beat_frames: int = 0
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -48,9 +54,15 @@ func _ready() -> void:
 	_chars = CityCharacters.new(_city, _view, _world.context())
 	await _chars.bake()
 	await _view.prewarm()
-	var rivet_px: Callable = func() -> Vector2: return _city.target * SimConst.PX_PER_M
-	_view.fx_triggers.player_id = CityCharacters.RIVET_ID
-	_view.fx_triggers.listen(Events, _world.context().clock, rivet_px)
+	_wire()
+	if _beat_frames > 0:
+		@warning_ignore("return_value_discarded")
+		DirAccess.make_dir_recursive_absolute(_out)
+		_view.zoom = _zooms[0]
+		var ok_beat: bool = await _shoot_beat()
+		printerr(_summary())
+		get_tree().quit(0 if ok_beat else 1)
+		return
 	var ok: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
 	for tick: int in _at:
 		while _world.context().clock.tick() < tick:
@@ -77,6 +89,39 @@ func _shoot(tick: int) -> bool:
 	return ok
 
 
+## Rivet's hits and kills wired as boot/world.gd wires the game, plus the dev kill stand-in.
+func _wire() -> void:
+	var rivet_px: Callable = func() -> Vector2: return _city.target * SimConst.PX_PER_M
+	_view.fx_triggers.player_id = CityCharacters.RIVET_ID
+	_view.fx_triggers.listen(Events, _world.context().clock, rivet_px)
+	@warning_ignore("return_value_discarded")
+	_view.fx_triggers.cued.connect(_on_cue)
+
+
+func _on_cue(id: StringName, pos_px: Vector2, _angle: float, _tick: int) -> void:
+	var rivet: Vector2 = _city.target * SimConst.PX_PER_M
+	if id == &"death" and _kill_m > 0.0 and pos_px.distance_to(rivet) <= _kill_m * 32.0:
+		Events.actor_killed.emit(CityCharacters.RIVET_ID, 0, &"melee")
+
+
+## Waits for the first beat, then saves _beat_frames frames in a row (the beat as a clip).
+func _shoot_beat() -> bool:
+	var beat: KillBeat = _chars.blood.beat
+	var guard: int = 0
+	while beat.beats == 0 and guard < 3600:
+		guard += 1
+		await get_tree().process_frame
+		_maybe_hit()
+	var ppm: int = roundi(_zooms[0] * SimConst.PX_PER_M)
+	var ok: bool = beat.beats > 0
+	for f: int in _beat_frames:
+		await RenderingServer.frame_post_draw
+		var img: Image = get_viewport().get_texture().get_image()
+		var file: String = "beat%s-%s-%dppm-f%02d.png" % [_tag, beat.mode, ppm, f]
+		ok = img != null and img.save_png(_out.path_join(file)) == OK and ok
+	return ok
+
+
 func _maybe_hit() -> void:
 	var now: int = _world.context().clock.tick()
 	if _hit_every > 0 and now - _last_hit >= _hit_every:
@@ -90,7 +135,7 @@ func _summary() -> String:
 	return (
 		(
 			"city_fight: tick=%d deaths=%d shots=%d kills=%d aimed=%d decals=%d draw_us=%d"
-			+ " avg_us_per_frame=%.1f frames=%d"
+			+ " avg_us_per_frame=%.1f frames=%d beats=%d calm=%d"
 		)
 		% [
 			_world.context().clock.tick(),
@@ -101,7 +146,9 @@ func _summary() -> String:
 			b.blood.live_decals(),
 			b.blood.draw_us,
 			float(b.spent_us) / maxi(b.frames, 1),
-			b.frames
+			b.frames,
+			_chars.blood.beat.beats,
+			_chars.blood.beat.calm_beats
 		]
 	)
 
@@ -122,9 +169,13 @@ func _parse_args() -> bool:
 			_focus = arg.substr(8).to_int()
 		elif arg.begins_with("--hit-rivet="):
 			_hit_every = arg.substr(12).to_int()
+		elif arg.begins_with("--rivet-kills="):
+			_kill_m = arg.substr(14).to_float()
+		elif arg.begins_with("--beat-frames="):
+			_beat_frames = arg.substr(14).to_int()
 		elif arg.begins_with("--tag="):
 			_tag = "-" + arg.substr(6)
-		elif not arg.begins_with("--blood="):
+		elif not (arg.begins_with("--blood=") or arg.begins_with("--kill-beat=")):
 			printerr("city_fight: unknown argument %s" % arg)
 			return false
 	return true

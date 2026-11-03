@@ -43,6 +43,13 @@
       "space": "follow"
     },
     {
+      "doc": "the comic kill beat (lane d5-combat, KillBeat over noir's ImpactFrame: the silhouette flash, the held panel), above the world UI and under the HUD; off unless -- --kill-beat",
+      "id": "beat",
+      "layer": 6,
+      "print": "none",
+      "space": "screen"
+    },
+    {
       "doc": "the HUD",
       "id": "hud",
       "layer": 10,
@@ -185,6 +192,14 @@
       "doc": "markers, the objective pointer",
       "drawn_by": "WorldMarkers (CityView.markers, world_markers.json)",
       "id": "world_markers",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "beat",
+      "doc": "the kill beat's full-screen rect (look_noir_impact.gdshader)",
+      "drawn_by": "KillBeat (features/fx) ImpactFrame",
+      "id": "kill_beat",
       "status": "live",
       "z": 0
     },

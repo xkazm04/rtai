@@ -4,8 +4,11 @@ extends Node
 ## puts a CombatBlood on the city view's actors canvas, follows the view's FX cues (the riot's sim
 ## deaths, Rivet's hits), splats the walls the sim calls solid, and steps it on the sim tick with
 ## the view's world lock each frame (after the view placed its camera: it is the view's child).
+## Also the kill beat (features/fx/kill_beat.gd, `-- --kill-beat`): its silhouette frames hide
+## the world canvas, its print pass and the light grade, so only the actors and the blood print.
 
 var blood: CombatBlood = CombatBlood.new()
+var beat: KillBeat = null
 var _city: CitySystem
 var _view: CityView
 
@@ -19,12 +22,30 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 	glue.blood.solid = glue._solid
 	glue.blood.player_px = func() -> Vector2: return city.target * SimConst.PX_PER_M
 	view.add_child(glue)
+	var game: Dictionary = glue.blood.blood.p.get("game", {})
+	var beat_default: String = game.get("kill_beat", "off")
+	glue.beat = KillBeat.new(beat_default)
+	glue.beat.attach(view.fx_triggers)
+	glue.beat.to_uv = glue._to_uv
+	var hide: Array[Node] = [view, view.lights]
+	for c: Node in view.get_children():
+		if c is CanvasLayer and (c as CanvasLayer).layer == RenderLayers.canvas(&"print"):
+			hide.append(c)
+	glue.beat.hide_on_flash(hide)
+	glue.add_child(glue.beat)
 	return glue
 
 
 func _process(_delta: float) -> void:
 	if _view.clock != null:
 		blood.step(_view.clock.tick(), _view.world_px)
+		beat.step(_view.clock.tick())
+
+
+## World px -> screen uv through the view's camera.
+func _to_uv(px: Vector2) -> Vector2:
+	var vp: Viewport = _view.get_viewport()
+	return (vp.get_canvas_transform() * px) / vp.get_visible_rect().size
 
 
 func _solid(px: Vector2) -> bool:

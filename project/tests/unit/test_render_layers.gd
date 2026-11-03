@@ -54,6 +54,7 @@ func test_the_stack_is_in_the_documented_order() -> void:
 		&"grade",
 		&"lights",
 		&"world_markers",
+		&"kill_beat",
 		&"hud"
 	]
 	for i: int in order.size() - 1:
