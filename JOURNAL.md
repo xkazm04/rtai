@@ -41,3 +41,5 @@ NEXT:
    C new art: ask before generating) and duration/cooldown (8 s / 20 s now).
 4. Stomp wind-up ~0.3 s (registry band), a stomp input (melee while transformed?), ram damage to cars through
    VehicleService; Gearbox through `VehicleService.soul_hijack_traffic(slot)` in the city block.
+- 21:20 MILESTONE: stomp wind-up 0.3 s (`stomp_windup_s`; HaulerForm.arm/stomp_due/windup_k), closes the registry
+  deviation above. Unit test checks it sits in the readable band.

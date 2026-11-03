@@ -12,7 +12,7 @@
   "hauler": {
     "accel_mps2": 9,
     "body_class": "rivet_ghost",
-    "doc": "Hauler: Rivet becomes the bulky ghost tank (body class body_class, bodies.json). morph_s is the readable grow/shrink; the tank moves at most top_mps, accelerates at accel_mps2 (momentum: no instant stop) and turns at most turn_dps. Ram: above ram_mps a contact knocks down humans and robots (the tackle matrix) and damages a car by ram_car_damage. Stomp: a radial shockwave of stomp_radius_m, knockdown inside stomp_knock_m, stun stomp_stun_s, every stomp_cooldown_s.",
+    "doc": "Hauler: Rivet becomes the bulky ghost tank (body class body_class, bodies.json). morph_s is the readable grow/shrink; the tank moves at most top_mps, accelerates at accel_mps2 (momentum: no instant stop) and turns at most turn_dps. Ram: above ram_mps a contact knocks down humans and robots (the tackle matrix) and damages a car by ram_car_damage. Stomp: arm() starts a stomp_windup_s telegraph (readable, dodgeable), then a radial shockwave of stomp_radius_m, knockdown inside stomp_knock_m, stun stomp_stun_s, every stomp_cooldown_s.",
     "morph_s": 0.4,
     "ram_car_damage": 40,
     "ram_mps": 3,
@@ -20,6 +20,7 @@
     "stomp_knock_m": 2.2,
     "stomp_radius_m": 4,
     "stomp_stun_s": 1.2,
+    "stomp_windup_s": 0.3,
     "top_mps": 4.2,
     "turn_dps": 220
   },

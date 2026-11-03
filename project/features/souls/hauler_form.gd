@@ -18,6 +18,8 @@ var _morph_ticks: int = 1
 ## Ticks into the morph: counts up while on, down while off (0..morph_ticks).
 var _morph: int = 0
 var _stomp_wait: int = 0
+## Ticks left in an armed stomp's telegraph (-1 = none armed).
+var _windup: int = -1
 
 
 func _init(tuning: Dictionary) -> void:
@@ -46,6 +48,8 @@ func morph_k() -> float:
 func step(want_dir: Vector2) -> void:
 	_morph = clampi(_morph + (1 if on else -1), 0, _morph_ticks)
 	_stomp_wait = maxi(0, _stomp_wait - 1)
+	if _windup > 0:
+		_windup -= 1
 	var dt: float = SimClock.TICK_DT
 	var target: Vector2 = want_dir.limit_length(1.0) * num(&"top_mps")
 	if vel.length() > 0.5 and target.length() > 0.01:
@@ -71,6 +75,7 @@ func stomp(at: Vector2, bodies: PackedVector2Array) -> Array[Dictionary]:
 	var hits: Array[Dictionary] = []
 	if not on or _stomp_wait > 0:
 		return hits
+	_windup = -1
 	_stomp_wait = PowerDef.ticks(num(&"stomp_cooldown_s"))
 	stomps += 1
 	var radius: float = num(&"stomp_radius_m")
@@ -88,7 +93,29 @@ func stomp(at: Vector2, bodies: PackedVector2Array) -> Array[Dictionary]:
 
 
 func stomp_ready() -> bool:
-	return on and _stomp_wait == 0
+	return on and _stomp_wait == 0 and _windup < 0
+
+
+## Starts the stomp telegraph (stomp_windup_s); true when armed. The host shows the wind-up
+## and calls stomp() on the tick stomp_due() turns true.
+func arm() -> bool:
+	if not stomp_ready():
+		return false
+	_windup = PowerDef.ticks(num(&"stomp_windup_s"))
+	return true
+
+
+## True once an armed stomp's telegraph has run out (the host then calls stomp()).
+func stomp_due() -> bool:
+	return on and _windup == 0
+
+
+## 0..1 through the telegraph (for the wind-up pose); 0 when none armed.
+func windup_k() -> float:
+	if _windup < 0:
+		return 0.0
+	var total: int = maxi(1, PowerDef.ticks(num(&"stomp_windup_s")))
+	return 1.0 - float(_windup) / float(total)
 
 
 func _on_started(id: StringName, _bark: StringName) -> void:

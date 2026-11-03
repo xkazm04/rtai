@@ -80,3 +80,19 @@ func test_tank_rig_scale_matches_the_ghost_body_radius() -> void:
 	var tank: BodyPlan = RivetPlan.build(RivetPlan.FORM_HAULER)
 	var body_k: float = b.radius(&"rivet_ghost") / b.radius(&"rivet_base")
 	assert_almost_eq(tank.size_k / base.size_k, body_k, 0.05, "the art grows with the body")
+
+
+func test_stomp_telegraphs_inside_the_readable_band_before_it_lands() -> void:
+	var r: Array = _rig()
+	var p: SoulPowers = r[0]
+	var h: HaulerForm = r[1]
+	assert_eq(p.try_activate(&"hauler"), SoulPowers.OK)
+	assert_true(h.arm())
+	assert_false(h.arm(), "one stomp at a time")
+	var n: int = 0
+	while not h.stomp_due() and n < 600:
+		h.step(Vector2.ZERO)
+		n += 1
+	assert_between(n / 60.0, 0.25, 1.5, "wind-up seconds (realtime-combat-semantics band)")
+	assert_eq(h.stomp(Vector2.ZERO, PackedVector2Array([Vector2(1, 0)])).size(), 1)
+	assert_false(h.stomp_due())
