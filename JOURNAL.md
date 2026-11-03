@@ -1018,3 +1018,44 @@ NEXT addendum: find a view where a building sweep shows (a block edge onto a pla
 - Evidence: masters night/noir/figshadow-v10/{32,48,64} (final), figshadow-v7/{32,64}-before, shadowshow/48
   (before 48), figshadow-notes/ (the rejected steps); scratch v3/v4/v6/v8/v9 deleted. Ladder row 35 (35 rows).
   evidence/: figure-shadows-before-after.png, showcase-figure-shadows-48.mp4, NOIR.md iteration-16 paragraph + row.
+- (06:45) Gates at 126878b (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + iteration-16 row.
+- MILESTONE (06:46-06:49, 8f1c748) **figure shadows in the game**: NoirLook (on its first light_street with the
+  cast shadows) attaches NoirFigureShadows to the city actor layer's CharacterRigs (CityCharacters' rigs) unless a
+  host already put its own there (the showcase), and hides it with the look. No city / boot code touched.
+  noir_frames (--fixed-fps 60, default 1280x800; my first shot at --resolution 1280x720 did not match the
+  shadow-v4 base - re-shot): all 9 D4 frames **0 px** changed; noir frames 3-14k px. Showcase 48 mp4
+  byte-identical to figshadow-v10. Read: **street - a gain** (64 px/m: a cop in the headlight cone between two
+  cars casts an ink figure into the beam; a ped on the cream pavement casts a black mass;
+  evidence/figure-shadows-city-street-64.png, ladder row 36). **Junction riot - mixed**: the 16 nearest people
+  are full rigs and cast, their shadows merge into murky masses with faint outlines on the asphalt (the junction
+  asphalt is not as dark as the street's), and the baked-atlas crowd beyond them casts nothing - an inconsistency
+  a player could notice in a lamp pool (evidence/figure-shadows-city-junction-48-mixed.png). Kept on (the doctrine
+  wants black masses carved by light, and the gain is in the light); `shadows.figures.len_m` 0 turns it off.
+NEXT (iteration 16 close, in order):
+1. Owner picks (carried): the hero (showcase-hero-car.png vs the lamp street vs the junction), Rivet's oil, the
+   value roles / noir Rivet parts, the cast-shadow lengths. New: figure shadows on in the game (the junction riot
+   is mixed, see 06:46) - keep, or showcase-only (`len_m` 0 in the params, the showcase host passes its own).
+2. Figure shadows for the baked-atlas crowd: cast the people MultiMeshInstance2D too (the same bit) and feed the
+   taper the crowd's centres from the sim snapshot (MAX_BODIES 16 -> ~48; the shader's nearest loop runs only
+   inside the per-body quads). Without centres the reach clamp drops them, which is why they cast nothing now.
+3. Junction asphalt outlines: the shadow (0.03) against the junction asphalt crosses the pass's dark-on-dark rim
+   band; a shadow-aware rim (a mask channel) or a darker junction asphalt print would fix it. Same root cause as
+   the cast-shadow lamp fragments (NEXT 3 of iteration 14): the pass needs a prop / shadow mask.
+4. Per-light directions: a figure in a headlight cone should cast away from the car, in a lamp pool away from the
+   lamp. One global light_dir tonight; NoirLook knows the car noses and the lamps, so the shader could take the
+   nearest light per body.
+5. Carried over from iteration 14: NoirCue into the real quest view, soul swaps need `player` per body, the car as
+   art, noir parts + coat into the rigs, BloodStains / BloodFx.solid in the game hosts, the noir HUD in the
+   composition root, a settings toggle for safety.flashes, the flash margin. showcase_fight.gd is 230 lines
+   (soft ~200): _save / _to_uv could move out.
+- (06:50) Gates at 8f1c748 (`run.mjs --no-bench --allow-dirty`): lint (13), 8 scenarios, parity (1200 steps,
+  mutation caught at 629), selftest PASS; unit 206 passed, 0 failed, but the step is marked FAIL by the runner's
+  "tree changed during run" guard - my own JOURNAL.md append landed mid-run (no code changed). Re-run at the end.
+- TRIED / REVERTED (06:50-06:52) NEXT item 4, per-light directions: each body casts away from its nearest light
+  within 8 m (NoirLook fed the lamp and car-nose uv; per-body sweeps in the shader, the nearest body chosen by the
+  distance to its sweep segment). Physically right - cop B's shadow ran along the beam, away from the car - but the
+  cop stands at the cone's far end, so the shadow fell past the lit ground onto black: a small notch instead of
+  the ink figure in the beam. Worse to the eye in the one shot that shows it, so reverted (files back to 8f1c748):
+  evidence/figure-shadows-per-light-NOT-adopted.png (before | global | per-light). Worth trying again where a body
+  stands mid-beam or mid-pool (the light's direction then puts the shadow on lit ground).
