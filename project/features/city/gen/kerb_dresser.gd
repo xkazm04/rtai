@@ -1,11 +1,11 @@
 class_name KerbDresser
 extends RefCounted
 ## Street dressing for the generator: furniture on the sidewalk, parked cars on the kerb-side
-## asphalt, drain grates, road decals and lane arrows. Solid props stamp C_PROP cells.
+## asphalt, drain grates and road decals (no lane arrows: T1 has none). Solid props stamp
+## C_PROP cells.
 
 const T_LAMP: int = 24
 const T_DRAIN: int = 57
-const T_ARROW: int = 61
 const KERB_PROPS: Array[int] = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37]
 const NEAR_KERB: Array[int] = [34, 32, 29]
 ## T1's wall-side clutter (crates, dumpsters, vending, bins) flush against the building, on the
@@ -99,14 +99,6 @@ func road_decals(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> void:
 		b.add(ChunkBuild.L_DECAL, 56 if r < 0.5 else 59, c + Vector2(jx * 5.0, jy * 4.0), rot)
 	elif r < 0.6:
 		b.add(ChunkBuild.L_DECAL, 62, Vector2(c.x, c.y + jy * 3.0), rot)
-	# lane arrows on the approach to each junction (right-hand traffic)
-	var m: int = (t.x if horiz else t.y) % CityGen.PERIOD
-	if m == 7:
-		var off: Vector2 = Vector2(0.0, 2.0) if horiz else Vector2(-2.0, 0.0)
-		b.add(ChunkBuild.L_DECAL, T_ARROW, c + off, rot)
-	elif m == 3:
-		var off: Vector2 = Vector2(0.0, -2.0) if horiz else Vector2(2.0, 0.0)
-		b.add(ChunkBuild.L_DECAL, T_ARROW, c + off, rot + PI)
 
 
 ## The tile-local point (u, v) in metres of a kerb tile rotated by rot, in world metres.
