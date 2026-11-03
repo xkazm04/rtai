@@ -1372,3 +1372,9 @@ NEXT (session end, iteration 14):
 - 04:54 FRICTION (mine): e34e82f was staged with `git add -A evidence/iter14/ ...` (path-scoped, but AGENTS rule 1 bans
   `-A`); it staged exactly the 3 intended paths (the patch rename, README, JOURNAL). Per-path `git add` / `git rm` only
   from here.
+- 04:55 CHECK colour doctrine over every PNG in my scope (city / fx / hud / quest art, pickups; teal = g, b well above r;
+  vermilion = r > 170, g < 130): TEAL only on the hijack overlays + hijack atlas, the 4 soul portraits, the active
+  soul card, the soul pickup, and 0.4 % of cast_rivet (the torch tip, allowed). VERMILION only on the full / army
+  pips, fire, cone / barricade / barrels / police barrier (hazard props, F-08), the cop and the quest threats (guards,
+  Mertz), the objective (taped cash, TUCK-IN crates), pickups (health, cash, ammo, keycard), the cruiser light bar
+  (1.9 %), the ammo-ticket bullet, the FX danger cores and the arc-ball ring. No off-doctrine accent. No change.
