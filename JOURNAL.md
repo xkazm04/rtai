@@ -389,3 +389,15 @@ NEXT (after the 18:00 sync), in order:
   game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
   machine and keep the per-scenario aggregate; REQUEST 3 (kill hit-stop 8 under a beat mode).
 - 17:05 session end: tree clean after this commit.
+
+## Iteration 52 (17:08-17:30, STABILIZE)
+- 17:09-17:12 gate re-check at 36d366d (no project/ change since 5a6e21b): lint 13/13; scenarios exit 0;
+  evidence/run.mjs --no-bench all PASS (unit 352/0, scenarios 8, parity exact, selftest PASS, goldens 11/11 + 5/5).
+- FRICTION: the first unit run failed 1 test (test_noir_shadows) with an engine error, "Parameter t is null" in
+  texture_2d_initialize. It came from ResourceLoader.load_threaded_get in features/city/view/city_textures.gd:65
+  (headless dummy renderer). Alone it passed 3/3, and two full re-runs were 352/0. It is a flake in city texture
+  loading (not my scope), so the code is unchanged. Noted in REPORT.md (commit count 53 -> 54).
+- bench.lock is held by another lane (17:10): untouched. My Godot runs all exited (timeout-wrapped); none left.
+- NEXT: the owner picks (--blood, --kill-beat, muzzle pop, pool body colour, pool size via blood_fx.json
+  game.pool_radius_px); then the car-hit slide via a FxTriggers.cued death-speed field; re-bench on an idle
+  machine; REQUEST 3; REQUEST 4 -> d5-city: city_textures threaded load can return null headless (test flake).

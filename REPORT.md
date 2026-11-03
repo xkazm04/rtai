@@ -8,7 +8,7 @@ raw/). A copy of frames.json, the ladder and the strips is in `evidence/d5-comba
 Every performance number here is **CONTENDED** (7 lanes, one GPU).
 
 ## Summary
-- 53 commits on `d-combat`, this report included. The code froze at **5a6e21b** (116 files, +2697/-52 against
+- 54 commits on `d-combat`, this report included. The code froze at **5a6e21b** (116 files, +2697/-52 against
   main). Only journal, evidence and report commits came after it.
 - **Gates at the freeze** (evidence/run.mjs --no-bench, 16:40; unit re-run on a clean tree):
   - lint 13/13;
@@ -18,6 +18,10 @@ Every performance number here is **CONTENDED** (7 lanes, one GPU).
   - selftest PASS (look goldens 11/11 worst 0.74, block goldens 5/5 worst 0.97).
   - Flake: scenario_city_chase once went over the 2 ms nav budget at 15.2 ms. A headless re-run was green (491 us).
     It is nav code, not FX.
+  - Re-checked at 17:12 on 36d366d (STABILIZE): lint 13/13, scenarios 8/8 (exit 0), evidence/run.mjs --no-bench
+    all PASS. Unit had a second flake: 1 run of 4 failed test_noir_shadows on a null texture from the threaded
+    load in city_textures.gd (headless dummy renderer; the code falls back to a placeholder). Alone it passed 3/3,
+    and two full re-runs were 352/0. It is in city texture loading, not FX.
 - **Bench: not a valid judge today.** Six bench runs, all CONTENDED. The riot (400 actors, blood on) p99 was
   4.86 / 7.68 / 15.18 / 9.87 / 10.31 / 7.88 ms, with no hot-path change between most runs. The riot hitches are
   `present` waits.
