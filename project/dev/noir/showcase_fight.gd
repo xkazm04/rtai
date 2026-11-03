@@ -215,13 +215,7 @@ func _on_hit_stop(ticks: int) -> void:
 
 
 func _save(f: int, tag: String) -> void:
-	await RenderingServer.frame_post_draw
-	var img: Image = get_viewport().get_texture().get_image()
-	var ppm: int = roundi(_a.zoom * SimConst.PX_PER_M)
-	var look: String = "d4" if _a.d4 else "noir"
-	var file: String = "show-%s-%dppm-f%03d-%s.png" % [look, ppm, f, tag]
-	if img.save_png(_a.out.path_join(file)) != OK:
-		printerr("showcase_fight: frame %d not saved" % f)
+	await NoirShowcaseShots.save(get_viewport(), _a, f, tag)
 
 
 ## The sim's building cells are the walls the blood splats on.
@@ -230,6 +224,4 @@ func _solid(px: Vector2) -> bool:
 
 
 func _to_uv(px: Vector2) -> Vector2:
-	var cam: Vector2 = _view.camera.position
-	var view: Vector2 = get_viewport().get_visible_rect().size
-	return ((px - cam) * _a.zoom + view * 0.5) / view
+	return NoirShowcaseShots.to_uv(get_viewport(), _view.camera.position, _a.zoom, px)
