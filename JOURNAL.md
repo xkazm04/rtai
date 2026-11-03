@@ -1028,3 +1028,56 @@ NEXT (iteration 13 / morning, in order):
   read) - worse for zone readability: the placeholder tints need >= the wash step (or real ground art)
   before this ships. Patch + frames: gtai-masters/night/visual-engine/45-quest1/
   (collect_call_view-on-print_stage.patch, cmp-quest1.png); ladder 45.
+- Evidence at a275142 (05:33-05:35): lint 13/13, unit 234, scenarios 8, parity bit-exact + mutation
+  caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3). The first
+  attempt FAILED unit on import churn: print_stage_demo.gd.uid was not committed (rule 8) - committed in
+  a275142, re-run green. Copied to evidence/pof (7846d47).
+- FIX (9f6c7b3) review: PrintStage applied the look's params before re-assigning the item shader on an
+  off -> printed switch; shader first now (+ unit assert).
+- MILESTONE (72d631b) print_stage_demo drives FX (explosion + muzzle) and the night grade + a fire light
+  through PrintStage. LOOKED at: smoke puffs + paper light rings at the barrel, muzzle cone at the threat;
+  night re-prints darker, the fire is a vermilion pool, the threat's vermilion holds. The crackle spawned
+  at a person was NOT visible at the capture tick (not claimed). 7/7 frames byte-identical across two runs.
+- 05:38 idle check for the bench: other lanes' Godot (noir_frames, run_parity, an n-d5 import) running ->
+  no idle bench this session either.
+- MILESTONE (a103850) FX item 5's electroshock crackle had no trigger: FxTriggers fires player_hit then
+  player_hit_<weapon> when the table has it; fx_triggers.json player_hit_robo_tazer -> crackle (main's
+  arena emits player_hit(&"robo-tazer")). Unit 235. In-engine: fired 1, 4 emissive FX alive in the held
+  impact frame - but LOOKED: nothing readable (paper bolts on Rivet's cream body).
+- FIX (90fe24c) the bolt's rim came from the generic p * 1.18 trick (< 1 px on a thin zigzag): now an ink
+  band (0.17) around a paper core (0.07) from the same zigzag distance; crackle size_m 0.8 -> 1.4. Held
+  impact frame (lead_showcase, before = HEAD shader + fx.json swapped in, restored, git diff checked):
+  48 px/m before nothing / after ink-rimmed zigzags around the core; 32 px/m visible but small.
+  46-tazer/cmp-tazer*.png; ladder 46 / 46b. When n-d4's FX sheet lands the crackle draws its sheet cell
+  (atlas size_m 1.6) and this analytic bolt is moot: re-check the crackle ON RIVET then (paper on cream).
+- Evidence at 90fe24c (05:41-05:43, `node tools/evidence/run.mjs --no-bench`, all PASS): lint 13/13,
+  unit 235, scenarios 8, parity bit-exact + mutation caught, selftest PASS (junction 11/11 + block 5/5
+  goldens worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to evidence/pof. Bench: the
+  contended run at 4d83199 above (camera / flash / PrintStage changes are not on the bench's path: no rig,
+  fire flicker only changes a toggle rate).
+- Iteration 13 tally: frames rejected for camera 0 (all engine captures, straight down); approaches
+  reverted 0 (the zoom anchor measured better at low frequency, equal on the 1 px grain - kept); re-runs:
+  1 (on_foot lead pass forgot --mode), 1 (print_stage_demo parse errors -> hung run, my PID 32332 + child
+  killed by PID). Swaps of old files for before-frames (city_view.gd, camera_rig.gd) restored and
+  verified by git diff each time. Scratch worktrees scratch-visual-trial13 / scratch-visual-q1 (mine)
+  removed; scratch-m16 / scratch-q1 are not mine (untouched). No AI images (no codex) -> no provenance.
+  Ladder rows 41-46b (1280 x 23202).
+
+NEXT (iteration 14 / morning, in order):
+1. Director merge: JOURNAL.md-only conflicts vs n-d4 / n-d5 / n-noir; main merges clean (trial: lint,
+   unit 253, scenarios 8). After it:
+   - move CityView onto PrintStage (it composes the same pieces; n-noir's city_view hunks land first);
+   - quest 1: apply 45-quest1/collect_call_view-on-print_stage.patch ONLY with its zone tints raised to
+     <= ~188 grey (README tint ladder) or real ground art - as patched today its zone floors print as
+     paper; hand the arena's player id to print_stage.fx_triggers.player_id so main's actor_killed /
+     player_hit drive the hit-stops; CameraRig.listen(Events, clock) gives it the boss zoom (64, D5);
+   - `--reduced-motion` in boot/launch_args.gd KNOWN_FLAGS + World (rig + markers), held back tonight to
+     keep n-noir's identical KNOWN_FLAGS edit merge-clean;
+   - iteration 12 NEXT 1 items (n-d4 atlas -> re-bless goldens incl. 3 night goldens; n-d5 patches;
+     noir vs night street lights).
+2. Idle bench still not had (two contended runs: 3.25 then 2.81 ms p99; iteration 11 2.75).
+3. Owner calls: night tuning (40), fire flicker as colour flash at 2.5 Hz vs steady vermilion pool with
+   intensity-only flicker (photosensitivity), the D4 -> D5 ramp start (48 px/m today; 0.35 at 48 was
+   d5-close's ask), plus iteration 11/12's open calls.
+4. Unchanged: rig 0.448 ms p99 (contended) vs 0.3 target (native RigArm / RigGait, characters owner);
+   print_part tones; traffic states; d4-production asset notes.

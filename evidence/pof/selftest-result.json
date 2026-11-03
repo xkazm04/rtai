@@ -9,7 +9,7 @@
       "file": "selftest-32ppm.png",
       "height": 800,
       "lights_active": 0,
-      "mean_luminance": 0.389974629338313,
+      "mean_luminance": 0.389546267403704,
       "ok": true,
       "ppm": 32,
       "visible_actors": 103,
@@ -22,7 +22,7 @@
       "file": "selftest-48ppm.png",
       "height": 800,
       "lights_active": 0,
-      "mean_luminance": 0.32012975941244,
+      "mean_luminance": 0.320158078125031,
       "ok": true,
       "ppm": 48,
       "visible_actors": 81,
@@ -33,6 +33,7 @@
   "fx_cues": {
     "death": 9,
     "player_hit": 0,
+    "player_hit_robo_tazer": 0,
     "projectile_end": 9,
     "rivet_kill": 0,
     "shot": 11
@@ -41,8 +42,8 @@
   "gpu": "NVIDIA GeForce RTX 4090",
   "ok": true,
   "placeholders": 22,
-  "prewarm_ms": 30.172,
+  "prewarm_ms": 30.736,
   "schema": "gtai.selftest/1",
   "texture_failures": [],
-  "texture_load_ms": 75.053
+  "texture_load_ms": 79.506
 }
