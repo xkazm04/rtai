@@ -1378,3 +1378,19 @@ NEXT (session end, iteration 14):
   pips, fire, cone / barricade / barrels / police barrier (hazard props, F-08), the cop and the quest threats (guards,
   Mertz), the objective (taped cash, TUCK-IN crates), pickups (health, cash, ammo, keycard), the cruiser light bar
   (1.9 %), the ammo-ticket bullet, the FX danger cores and the arc-ball ring. No off-doctrine accent. No change.
+- 04:54 GATES at 51e7c1e (final for iteration 14, every art commit incl. the pip): `run.mjs --no-bench` rc 0 - lint 13/13,
+  unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders
+  (`evidence/iter14/gates-51e7c1e.txt`). Summary sheet now 10 rows (+ heat pip).
+NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
+- Owner review (each reverts alone): 165ae0f (splat sticker; `masters:backup_fx14/`), d6317ee (Toner Room floor;
+  `backup_bf14/`), fc6501c (arc ball strip; only the quest patch draws it), 62923f7 (flat heat pip; `backup_pip14/`).
+- Director: REQUEST 16 = `evidence/iter14/q1_view_art.patch` (merge n-d4 into main, then `git apply`; checked on main
+  and on main + n-d4 + n-visual). REQUEST 23 = `evidence/iter14/fx_fade.patch` (visual-engine; muzzle + crackle; also
+  closes REQUEST 14). REQUEST 24 = who ships the in-world souls. REQUEST 19 / 21 (`evidence/iter10/`), 22 unchanged.
+  Index: `evidence/README.md`.
+- Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
+- Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` (bench.json stale); city_chase's 2 ms nav budget is
+  load-sensitive (failed once at 04:41 under other lanes' load).
+- Codex: 1 image this iteration (0 rejected); night total 29 images, 194 cells, 7 rejected; no limit hit.
+- Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (final quest patch applied, art = n-d4 HEAD);
+  all other scratch worktrees removed; my Godot runs all finished.
