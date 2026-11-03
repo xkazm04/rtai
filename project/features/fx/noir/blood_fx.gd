@@ -22,6 +22,8 @@ var _d_r1: PackedFloat32Array = PackedFloat32Array()
 var _d_born: PackedInt32Array = PackedInt32Array()
 var _d_grow: PackedInt32Array = PackedInt32Array()
 var _d_seed: PackedInt32Array = PackedInt32Array()
+## Per decal: the travel direction at landing (length = elongation), or a pool's flow.
+var _d_dir: PackedVector2Array = PackedVector2Array()
 var _d_next: int = 0
 var _p_next: int = 0
 var _pools: int = 16
@@ -49,6 +51,7 @@ func _init() -> void:
 	_d_born = _pi(max_decals)
 	_d_grow = _pi(max_decals)
 	_d_seed = _pi(max_decals)
+	_d_dir = _pv(max_decals)
 	var c: Dictionary = p["colour"]
 	_blood = _col(c["blood"])
 	_dark = _col(c["blood_dark"])
@@ -66,7 +69,8 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var a: float = base + (_rand() - 0.5) * cone * (0.4 + 0.6 * _rand())
 		var sp: float = _range(h["speed_px"]) * (0.6 + 0.4 * _rand())
 		_spawn_drop(at + Vector2(_rand() - 0.5, _rand() - 0.5) * 3.0, Vector2.from_angle(a) * sp, h)
-	_add_decal(at, _range(h["splat_px"]) * 1.4, 0)
+	var hit: int = _add_decal(at, _range(h["splat_px"]) * 1.4, 0)
+	_d_dir[hit] = dir.normalized() * 0.5
 	if h["pool"]:
 		var pool: Dictionary = p["pool"]
 		var r: Array = pool["radius_px"]
@@ -74,7 +78,9 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var grow: int = pool["grow_ticks"]
 		var r0: float = r[0]
 		var r1: float = r[1]
-		_add_decal(at + dir.normalized() * 4.0, r1, grow, r0, delay)
+		var run: float = pool.get("run", 0.0)
+		var i: int = _add_decal(at + dir.normalized() * 4.0, r1, grow, r0, delay)
+		_d_dir[i] = dir.normalized() * run
 
 
 ## Decals on the ground now (splats + pools; capped by the budget).
@@ -108,7 +114,8 @@ func step_ticks(n: int) -> void:
 			if _life[i] <= 0 or _vel[i].length() < land:
 				_life[i] = 0
 				drops -= 1
-				_add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
+				var d: int = _add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
+				_d_dir[d] = _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0)
 	queue_redraw()
 
 
@@ -128,7 +135,7 @@ func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:
 
 ## A decal of radius r1 (grows from r0 over `grow` ticks after `delay`). Splats and pools have
 ## their own rings (pools: the last max_pools slots), so droplets never evict a kill's pool.
-func _add_decal(at: Vector2, r1: float, grow: int, r0: float = -1.0, delay: int = 0) -> void:
+func _add_decal(at: Vector2, r1: float, grow: int, r0: float = -1.0, delay: int = 0) -> int:
 	var splats: int = _d_pos.size() - _pools
 	var i: int = _d_next
 	if grow > 0:
@@ -142,13 +149,14 @@ func _add_decal(at: Vector2, r1: float, grow: int, r0: float = -1.0, delay: int 
 	_d_born[i] = tick + delay
 	_d_grow[i] = grow
 	_d_seed[i] = int(_rand() * 100000.0)
+	_d_dir[i] = Vector2.ZERO
+	return i
 
 
 func _draw() -> void:
 	var dc: Dictionary = p["decal"]
 	var after: int = dc["fade_after_ticks"]
 	var fade: int = dc["fade_ticks"]
-	var lobes: int = dc["lobes"]
 	for i: int in decals:
 		var age: int = tick - _d_born[i]
 		if age < 0 or _d_r1[i] <= 0.0:
@@ -156,28 +164,16 @@ func _draw() -> void:
 		var g: float = 1.0 if _d_grow[i] == 0 else clampf(float(age) / _d_grow[i], 0.0, 1.0)
 		var r: float = lerpf(_d_r0[i], _d_r1[i], 1.0 - pow(1.0 - g, 2.0))
 		var a: float = 1.0 - clampf(float(age - after) / fade, 0.0, 1.0)
-		var big: bool = _d_r1[i] > 10.0
-		_blob(_d_pos[i], r, lobes, _d_seed[i], Color(_dark if big else _blood, a))
-		if big:
-			draw_circle(_d_pos[i] + Vector2(-r, -r) * 0.3, r * 0.12, Color(_sheen, a * 0.9))
+		if _d_grow[i] > 0:
+			var cols: PackedColorArray = [Color(_dark, a), Color(_blood, a), Color(_sheen, a * 0.9)]
+			BloodMarks.pool(self, _d_pos[i], r, _d_dir[i], cols)
+		else:
+			BloodMarks.splat(self, _d_pos[i], r, _d_dir[i], Color(_blood, a))
 	var trail: float = p["physics"]["trail"]
 	for i: int in _pos.size():
 		if _life[i] > 0:
 			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _blood, _size[i] * 1.4)
 			draw_circle(_pos[i], _size[i], _blood)
-
-
-## An ink-blot splat: a core disc and `lobes` satellite discs at hashed angles and sizes
-## (discs, not a polygon: no triangulation, and blots read rounder at 32 px/m).
-func _blob(at: Vector2, r: float, lobes: int, seed_i: int, c: Color) -> void:
-	draw_circle(at, r * 0.72, c)
-	if r < 3.0:
-		return
-	for k: int in lobes:
-		var j: float = _hash(seed_i * 31 + k)
-		var a: float = TAU * (k + 0.5 * j) / lobes
-		var d: float = r * (0.45 + 0.4 * _hash(seed_i * 17 + k))
-		draw_circle(at + Vector2.from_angle(a) * d, r * (0.18 + 0.3 * j), c)
 
 
 func _rand() -> float:

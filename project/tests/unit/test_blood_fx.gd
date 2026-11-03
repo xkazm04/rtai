@@ -49,3 +49,21 @@ func test_impact_beat_is_one_to_three_frames() -> void:
 		f.step_ticks(1)
 	assert_eq(frames, f.sequence.size() + f.panel_ticks)
 	f.free()
+
+
+func test_pool_edge_wobbles_but_stays_star_shaped_and_runs_along_the_hit() -> void:
+	var at: Vector2 = Vector2(40, 12)
+	var s: float = BloodMarks.seed_of(at)
+	var still: PackedVector2Array = BloodMarks.ring(at, 20.0, Vector2.ZERO, s)
+	var run: PackedVector2Array = BloodMarks.ring(at, 20.0, Vector2.RIGHT * 0.6, s)
+	assert_eq(still.size(), BloodMarks.POOL_PTS)
+	var lo: float = INF
+	var hi: float = 0.0
+	for k: int in still.size():
+		var d: float = still[k].distance_to(at)
+		lo = minf(lo, d)
+		hi = maxf(hi, d)
+	assert_gt(lo, 20.0 * 0.6, "never pinched to the centre (a simple polygon)")
+	assert_gt(hi - lo, 2.0, "the wet edge wobbles, it is not a disc")
+	assert_gt(run[0].x - still[0].x, 5.0, "the pool runs out along the hit direction")
+	assert_almost_eq(run[BloodMarks.POOL_PTS / 2].x, still[BloodMarks.POOL_PTS / 2].x, 0.01)
