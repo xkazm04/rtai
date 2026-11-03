@@ -1850,3 +1850,15 @@ export-folder mkdir in tools/bench/run.mjs, shared tooling).
 NEXT (iteration 22, final; 43-52 stand): lane done for the night. Morning: Director merges n-d5 per the merge
 sheet; open items are 50 (hint_range on the look_d5* uniforms + range test, needs a before/after frame diff) and
 51 (bench export-folder mkdir in tools/bench/run.mjs, shared tooling).
+
+## Iteration 23 (2026-11-03, REPORT, 08:15 -> 08:30), no images
+- 08:15 read JOURNAL (iteration 22), git log, the merge sheet (evidence/README.md), build/evidence statuses (lint,
+  unit, scenarios, parity, selftest pass at 850652b; bench pass at 4b61ff4). Looked again at item4_hero_vs_targets.png
+  and item1_gate.png (straight down, nothing broken).
+- MILESTONE: REPORT.md written. Every cited evidence/, project/, build/evidence/ and masters path checked to exist by
+  script (the only non-existent path named is build/export/windows-bench/, cited as the folder the bench needs).
+  The report states plainly that only the RigDetail tier is wired into game code; the rest renders in the
+  dev/showcase scenes and waits for the owning lanes.
+- No visual change, no frames. Shared files touched: none. AI assets: none new.
+
+NEXT (final): lane closed. Morning: Director merges n-d5 per evidence/README.md and REPORT.md; open items 50 and 51.
