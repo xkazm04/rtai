@@ -149,3 +149,4 @@ NEXT (iteration 3), in order:
 6. REQUEST 3 (kill hit-stop 8 for the beat) and knockback held a beat: camera.json / sim owners.
 - GATES at 971a118 (evidence/run.mjs --no-bench, 12:1x): lint 13/13, unit 347/0, scenarios 8/8, parity exact (1200 steps,
   mutation caught), selftest PASS (look goldens 11/11, block 5/5). Bench: judged at 11:40, MISS p99 (CONTENDED, above).
+- EVIDENCE gap closed: kill beat real-time at 48 px/m (brief item 4 wanted 48 and 64): masters beat-{flash,panel,both}-48ppm-realtime.mp4 + frames/beat-modes-48ppm-realtime-strip.png (--fixed-fps 60, --beat-frames=60). 12:06 bench.lock held by vehicles (12 min): repeat bench skipped.

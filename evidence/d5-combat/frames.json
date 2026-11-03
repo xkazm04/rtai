@@ -116,15 +116,6 @@
   "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
  },
  {
-  "file": "frames/quest1-04-dock-wave.png",
-  "title": "Quest 1's real CombatArena kills bleed (48 px/m)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 48,
-  "note": "collect_call frame grabber (CollectCallView via PrintStage): Events.actor_killed -> blood under the dead guards (bottom right)."
- },
- {
   "file": "beat-both-64ppm-realtime.mp4",
   "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
   "source": "game-city",
@@ -141,5 +132,14 @@
   "look": "auto (D4->D5)",
   "ppm": 64,
   "note": ""
+ },
+ {
+  "file": "frames/beat-modes-48ppm-realtime-strip.png",
+  "title": "Kill beat A/B at 48 px/m in real time: flash / panel / both",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "city_fight --fixed-fps 60 --kill-beat=<mode> --rivet-kills=3 --beat-frames=60 (one tick a frame). Clips: beat-flash|panel|both-48ppm-realtime.mp4 (1 s each; the 64 px/m twins are beat-*-64ppm-realtime.mp4). Default stays off."
  }
 ]
