@@ -585,3 +585,9 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
   evidence/item21b_misprint_laundry.png. MISTAKE: I deleted frames/h85 while cleaning (boards cited it); the boards
   (item4, night_iter5_summary) and evidence/hero-*ppm.png are re-made from h86 (= h85 + this fix), README updated.
 - 02:10 checked by eye at 48 px/m: HQ and pension b plates print clean (s4), no defects; ladder +1 row (h85 vs h86, HQ/pension at 48).
+- 02:11 FINAL gates (iteration 5 end): evidence tool (--no-parity --no-bench) ALL PASS at b98bb9b (lint 13/13, unit
+  149/0, scenarios 8/0, selftest ok); 51 untracked evidence PNGs moved aside and restored. Parity/bench not run (no
+  native build in this worktree). Frame rounds kept: h81 (item3), h86 (hero frames, item4, summary), s4, a15.
+NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so no more Codex this night. If a later
+  session has budget: a D5 plate for the warehouse (pad to a square template) and long/helipad (the arena's
+  bottom-right and the hero's last D4 neighbour), same prompt (gen/_prompts/roof_sign_b.txt) and build path.
