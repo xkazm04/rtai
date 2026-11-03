@@ -35,11 +35,12 @@ for teal eyes, and that call belongs to the owner.
 | `cast_guard_down.png` | 1.6 x 1.6 | 192 x 192 | a dead hostile's faint disc. Knocked out, lying face up. **No vermilion** (no longer a threat). Draw at **1x** with alpha 0.8 so the bodies stay quiet. |
 | `cast_mertz_down.png` | 2.6 x 2.4 | 288 x 312 | the "shorted out" box + label. Sparking backpack, gloves re-inked. 1.5x, alpha 0.8. |
 
-Reuse from the city set (already D4): `features/city/art/props/payphone.png` (1.3 m) for `_phone()`,
+Reuse from the city set (already D4): `features/city/art/ground/road_straight_tone{,_b,_c}.png` for Harbor Road
+(the band between the tile's edge lines, rows 20..748, scaled to the 5 m road, cycling the three variants), `features/city/art/props/payphone.png` (1.3 m) for `_phone()`,
 `features/city/art/props/dumpster.png` (2.4 x 1.6 m in quest 1) for the hide spots.
 
 To tile in `_draw()`: `draw_texture_rect_region()` per repeat (an import with repeat on also works).
 A working local patch of the two views that draws all of the above and the
 before/after frames of quest 1's own frame grabber are in the lane masters:
-`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1n/` (final).
+`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1o/` (final).
 The patch is not committed here, because the view code belongs to the quest 1 owner.

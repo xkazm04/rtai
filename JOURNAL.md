@@ -675,3 +675,7 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
 - 01:37 quest patch drops the placeholder labels the art now carries ("PAYPHONE", "$1,500", "taped under"), as the
   GDS-08 deviation's re-check asks (`work/q1labels_ab.png`). Zone names and "PROJECT TUCK-IN" stay. Final patch +125 /
   -80 over 4 view files, lint clean; final frames `after_q1n/`.
+- 01:41 quest patch: Harbor Road (a flat grey band) draws the city's D4 road tile (the band between its edge
+  lines, scaled uniformly to the 5 m road), cycling road_straight_tone / _b / _c. A single tile repeated every
+  5.3 m showed the same patch and cracks, so the variants cycle. Zone label drawn on top (`work/q1road_ab.png`).
+  No new art. Final patch +149 / -81 over 4 view files, gdformat + gdlint clean; final frames `after_q1o/`.
