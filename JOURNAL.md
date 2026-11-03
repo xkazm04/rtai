@@ -43,3 +43,9 @@ NEXT:
    VehicleService; Gearbox through `VehicleService.soul_hijack_traffic(slot)` in the city block.
 - 21:20 MILESTONE: stomp wind-up 0.3 s (`stomp_windup_s`; HaulerForm.arm/stomp_due/windup_k), closes the registry
   deviation above. Unit test checks it sits in the readable band.
+- 21:24 CORRECTION: the 21:16 rejection was my misread. Rivet is the centre figure (U torso); King (1.3) is the lower
+  left one. Re-rendered base and hauler: the form DOES apply (Rivet 2.6x grips both cops). Frames restored under
+  gtai-masters/eve/ghost-powers/frames/form-{base,hauler}/ and listed in frames.json (4 stills, no clips yet).
+- ASK ghost-powers-2 (tank look: A scaled+teal, B bulked short-arm from existing parts, C new art), default B: a
+  plain scale-up keeps the long arms the owner disliked on base Rivet. NEXT step 1 should build B as a FORMS-like
+  plan override (arm lengths) so A/B/C is one flag.
