@@ -66,7 +66,9 @@ NEXT (iteration 3):
 2. Biggest remaining gap vs T1 at 32 px/m: far more asphalt than blocks (T1 is block-dominated). Measure
    road share per frame (n-d5 gap list 3 method) and decide with the owner: wider pavements / kerb props
    vs the sim's road width (sim data: a decisions line + re-bless).
-3. D5 ground tiles: sidewalk_tone D5 (1 m joints) and road b; check each in the real city; the D5 road b
+3. D5 ground tiles: sidewalk_tone D5 TRIED 11:18 and REVERTED (evidence/d5-city/rejected-d5-sidewalk-32ppm.png):
+   only id 13 swaps, so its thin grey 1 m joints patchwork against the kerb tiles' bold 2 m joints; it
+   needs D5 kerb/corner tiles (7-10) in the same joint language first (Codex or a joint-redraw tool). Road b; check each in the real city; the D5 road b
    has a dark band under the dashes - likely reject. D5 lamp post (aspect 4.9:1 vs 6.4:1: needs size_m).
 4. Roof clutter density toward T1 (work order item 4): count clutter per roof in T1 vs ours; generic roofs
    65-71 first; Codex plates only if needed (~30 images budget, one exec at a time).
@@ -86,3 +88,9 @@ NEXT (iteration 3):
   palette names `blood`, `blood_dark`, `cop_blue`, `cop_blue_hi` (palette.json is live at e9b9323).
 - REQUEST 3 -> vehicles (owner of art/vehicles/police*): cruiser vermilion is now an offender on `vehicles`;
   repaint body accents cop_blue, light bar cop_blue_hi.
+
+## NEXT (stop 11:20, iteration 2 end)
+Branch d-city at the commit after b6ea66f, tree clean, gates PASS at 000087f (evidence/d5-city/evidence-000087f).
+Start iteration 3 with NEXT 1 (dash-free arm tile), then NEXT 2 (road share 2x T1: measure + owner call),
+then NEXT 4 (roof clutter density). Masters + frames.json + ladder.png: gtai-masters/day-d5/d5-city/.
+Requests 1-4 above are for the Director to relay. No bench run yet (lock protocol at the end of the day).
