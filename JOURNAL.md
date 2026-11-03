@@ -331,3 +331,11 @@ NEXT (after the 18:00 sync), in order:
   Masters folder now 681 MB; C: 234 GB free. Kept raw/ (frames.json points into it) and beatclip/ (beat stills).
 - NEXT: unchanged from the list above (owner picks first; then the car-hit slide via a FxTriggers.cued field).
 - 16:41 session end: tree clean after this commit; gates last green at 5a6e21b (docs-only commits since).
+- 16:38 (iter 46, BUILD, 22 min to freeze): no new code this close to the freeze (any FX change would need a
+  re-render + gate run that cannot both finish before 17:00). Ran the freeze gate pass at HEAD 29c6062
+  (evidence/run.mjs --no-bench). bench.lock present (another lane's): not benched. One Godot PID 46060 running:
+  not mine, untouched.
+- GATES at 29c6062 (evidence/run.mjs --no-bench, 16:40): lint 13/13, unit 352/0 (judged FAIL only for "tree
+  changed during run": my JOURNAL append mid-run, again), scenarios 8/8 (the chase timing flake did not recur),
+  parity exact, selftest PASS (look goldens 11/11 worst 0.74, block goldens 5/5 worst 0.97). Unit re-run on a
+  clean tree below.
