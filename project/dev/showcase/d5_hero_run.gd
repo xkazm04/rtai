@@ -233,6 +233,9 @@ func _tier(tier: String) -> void:
 	D5HeroGround.fade(_cracks, tier, _rigs.zoom * PX)
 	if OS.get_environment("D5_PRINT") == "thin":  # dev A/B: the look_d5_print proposal (both tiers)
 		_look.shader = load("res://assets/shaders/look_d5_print.gdshader") as Shader
+	if OS.get_environment("D5_HALO") == "ink":  # dev A/B: an ink line outside the sticker rim
+		var w: String = OS.get_environment("D5_HALO_PX")
+		D5HeroHaloInk.apply(self, 1.0 if w.is_empty() else w.to_float())
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
