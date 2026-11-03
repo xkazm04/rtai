@@ -852,6 +852,6 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   the patch 27 ms vs 31 ms without (n-d4); 63 ms on the merged n-visual + n-d4 tree (n-visual's extra passes).
   Session end for iteration 8: all my Godot runs finished (each under `timeout`), scratch worktree removed, tree
   clean after this entry.
-- 02:35 64 px/m traffic check (the D5 "up close" zoom): `city_frame.gd` gained `--zooms=`; wiring patch applied for
+- 02:34 64 px/m traffic check (the D5 "up close" zoom): `city_frame.gd` gained `--zooms=`; wiring patch applied for
   the shot (reverted): `before_tr64|after_tr64/city-*-64ppm`. The moving van and taxi hold up at 64 (ink outline,
   dark glass, grime stipple, no blur from the 80 px/m cells); before = the grey boxes. Ladder row.
