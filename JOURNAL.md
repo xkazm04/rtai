@@ -281,3 +281,13 @@ NEXT (iteration 4), in order:
 - GATES at 58a8388 (evidence/run.mjs --no-bench, 16:10): lint 13/13, unit 351/0 (judged FAIL only for "tree changed
   during run": my own JOURNAL/evidence edits mid-run; re-run below), scenarios 8/8, parity exact, selftest PASS
   (look goldens 11/11 worst 0.74, was 0.49: the pools moved 0.54 m; within mean 4, no re-bless).
+- SOURCE of the 0.54 m slide (found after the fix): native projectiles.cpp sets a shot victim's v = 3.0 m/s along
+  the round, people.cpp decelerates the dead at 8 m/s2: sum over 60 Hz ticks = 0.54 m (matches the measurement).
+  Car-hit deaths (v = car speed / 2) slide further; they still get 0.54 (acceptable; noted in the decision line).
+- CLIPS final state (58a8388): masters clip-it4-final-{48,64}ppm.mp4 (seed 91, ticks 300-1200, --fixed-fps 60,
+  every 2nd frame = 15 s real time); strip frames/clip-it4-64-strip.png. 16 deaths, 16 bled, 15 aimed, 14 soaked,
+  2 missed. Camera breaks: 0 (7 strip frames checked). PNG scratch (900 frames) deleted after encoding.
+  frames.json (15): final headline pairs at 48/64, pool-lead t600, pool-size owner A/B, clip-it4 replace the it3
+  hero frames, pop-after and stains-after (still in masters). ladder.png +3 rows (7604 px tall).
+- GATES at 7d82f2e (evidence/run.mjs --no-bench, 16:15, clean tree): lint 13/13, unit 351/0, scenarios 8/8, parity
+  exact, selftest PASS.
