@@ -253,3 +253,38 @@ NEXT:
   b4-dock), 1200 frames, one tick per frame, vsync off, d3d12, viewport 1422x800 (the window
   came up smaller than the 1920x1080 asked). CONTENDED: p50 1.81 ms, p95 5.65 ms, p99 11.95 ms,
   max 20.38 ms (one frame over 16.7). evidence/slice-play/slice-frames-32ppm.json.
+- 12:16 (fe40b14) stencils only for places r >= 5 m (the vault cage's name sat unreadable
+  under the crates); CollectCallView prewarms the CityView's chunks where Rivet stands (a
+  Continue or Retry starts mid-street). The prewarm on resume is NOT verified in a frame.
+  Frames: city32c/still_{7000,8200,8400}_32.png (Mertz venting, the tazer arcs reaching Rivet).
+  REJECTED 1 frame: a still taken as the first capture after a camera jump to tick 8200 showed
+  half the city unstreamed (cream void); re-taken after a 7000 warm-up. frames.json 15.
+- 12:17 exe re-exported at fe40b14: replays the 12:03 input log identical (rc 0); windowed
+  boot of the exe (--quit-after 180, d3d12) rc 0, no errors logged.
+- GATE at fe40b14 (evidence/run.mjs --no-bench): lint 13/13, unit 344, parity, selftest PASS;
+  scenarios 9/10: scenario_city_chase FAILED on its wall-clock nav budget (native flow field
+  max 2442 us > 2 ms, one tick of 49). Isolated it passes twice (max 171 / 209 us); a second
+  full suite failed it again (2442 us). My diff since the green gate at a1cf583 touches no
+  features/ or native/ code, and city_chase runs before every quest scenario. Read as
+  CONTENDED (seven lanes on one machine), NOT proven: Director, re-run it on a quiet machine.
+  Evidence copied to evidence/slice-play/iter2-fe40b14/ (it records the FAIL).
+- FRICTION: a wall-clock budget assert inside the scenario gate fails under shared-machine
+  load; it is the d4/city lane's test, so I did not touch it.
+
+## End of iteration 2 (real clock 12:25)
+- Exe `build/export/windows/RTAI.exe` at fe40b14: title -> quest 1 ON THE GENERATED CITY
+  (D4 print, crowd, parked cars, collisions for Rivet and the hostiles, place stencils) ->
+  paid; keyboard+mouse or pad; pause/settings; checkpoints + Continue; Retry.
+- Slice frame time on the city (Dock 9, CONTENDED): p50 1.81, p95 5.65, p99 11.95, max 20.4 ms.
+- No Godot process of mine is running; bench.lock released.
+
+NEXT:
+1. A human run of the exe end to end (owner/Director): the street meet with the four allies,
+   Mertz's vent window, parked cars in the way, Continue mid-street (prewarm unverified).
+2. Director: re-run scenario_city_chase on a quiet machine (failed here only under load).
+3. Places as rooms: a plaza block or authored lot for the Toner Room and Dock 9 (fit tool
+   with a plaza constraint, or REQUEST d5-city).
+4. After the merge: StagePilot's car press -> VehicleService.try_enter/exit (parked cars
+   now stand beside Rivet); the World LiveInput hookup (MERGE NOTE, iteration 1).
+5. Re-capture cast_rivet.png from d5-cast's base form; RIVET_FORM_K = 1.0 (REQUEST 2).
+6. A city clip v2 at fe40b14 (the current one is 42a304d: no stencils, tazer bursting short).
