@@ -494,6 +494,14 @@ NEXT (iteration 6 close, in order):
   (flash meter 2/s). Ladder row 26 (26 rows). Honest read: a clear gain - the text is clean, the heat pips
   read as solid ink vs cream; the speaker name loses its accent (still upper case). The boxes stay D4 cream,
   not pure paper. Only in the dev host; the shared HudView / CollectCallView are not touched.
+- (02:48) Gates at afdb64f (after the HUD commit; `run.mjs --no-bench --allow-dirty`): lint (13), 191 unit, 8
+  scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+- (02:49) TUNE the hit spots on Rivet: stain.player_hit r_px 1.0-2.0 -> 1.8-3.0 (3450469). Evidence
+  masters night/noir/stain-rivet-64.png (64 px/m crop, f322, left before / right after; also evidence/):
+  reads as a wound on his chest instead of two specks. show-final4 re-shot with it (noir 48 / 64 / 32, D4
+  48) and evidence/showcase-hero.png rebuilt from it. Flash meter: noir 32 / 48 / 64 all 2 per second max.
+  The 32 px/m cut (evidence/show-32-final3-vs-final4.png, aftermath f322): at the on-foot zoom the body
+  stains are barely visible (a few px); the ground pools and spatter carry the blood there.
 NEXT (iteration 8 close, in order):
 1. Owner picks from evidence/showcase-hero.png (re-shot, show-final4) + masters night/noir/show-final4/*.mp4:
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
