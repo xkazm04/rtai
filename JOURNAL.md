@@ -813,3 +813,8 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   item31_all_proposals_32.png (committed vs every open proposal vs the mock), night_iter6_summary.png, the gap list
   after iteration 6 (evidence/README.md), then the decisions: look_d5_print (NEXT 26), age_floor + grain_floor
   (NEXT 21), toned zebra (NEXT 23). Images: 50 of ~50 used; none this iteration.
+- 03:09 look_d5_print at 48/64/128 (h101 -> h101thin, whole frame L / px darker than 0.35): 48 px/m d4 0.406 / 0.718
+  -> 0.443 / 0.661, d5 0.396 / 0.712 -> 0.441 / 0.639; 64 d4 0.396 / 0.744 -> 0.429 / 0.688, d5 0.401 / 0.702 ->
+  0.437 / 0.642; 128 d5 0.367 / 0.769 -> 0.378 / 0.749 (almost unchanged up close: lines are already wide there). By
+  eye at 48/64: finer line weight like the mock, the union hall's dark membrane opens up; some thin outlines go
+  grey (the roof dish). Board evidence/item29b_thin_print_48_64.png.
