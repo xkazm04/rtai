@@ -41,8 +41,9 @@ class LaneWatch:
 				if first_pass < 0:
 					first_pass = t
 
-	func report(out: Dictionary, at: Vector2) -> void:
+	func report(out: Dictionary, at: Vector2, cues: VehicleCues) -> void:
 		out["at"] = [at.x, at.y]
+		out["horns"] = cues.fired.get(&"horn", 0)
 		out["queued_s"] = float(queued) / SimClock.TICK_RATE
 		out["passed"] = passed.size()
 		out["first_pass_s"] = float(first_pass) / SimClock.TICK_RATE
@@ -110,7 +111,7 @@ static func _arm(blind: bool) -> Dictionary:
 			rear_ends += 1
 		moving = now
 	var out: Dictionary = {"rear_ends": rear_ends, "hp_lost": car.hp_lost, "ticks_near": near}
-	lane_m.report(out, car.pos)
+	lane_m.report(out, car.pos, svc.cues)
 	out["cars_alive"] = city.sim.get_counters()[SimConst.CN_CARS]
 	world.free()
 	bus.free()

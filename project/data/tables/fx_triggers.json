@@ -114,7 +114,7 @@
     },
     {
       "cue": "vehicles",
-      "doc": "traffic the driven car rammed leans on the horn (VehicleCues, at most every 45 ticks): audio only",
+      "doc": "traffic the driven car rammed leans on the horn (VehicleCues, at most every 45 ticks), and traffic queued behind a service car honks after about 1 s (at the queued car): audio only",
       "fx": [],
       "hitstop": "",
       "id": "horn",

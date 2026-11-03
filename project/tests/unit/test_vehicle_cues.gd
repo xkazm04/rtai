@@ -88,6 +88,46 @@ func test_a_parked_car_does_not_screech_and_rams_honk_at_most_every_gap() -> voi
 	assert_eq(_n(c, &"tyre_screech"), 0)
 
 
+## One civilian car standing 6 m behind the service car at (10, 4), heading east.
+class Queue:
+	extends VehicleWorld
+	var behind: bool = true
+
+	func cars_near(_at: Vector2, _radius: float) -> PackedFloat64Array:
+		if not behind:
+			return PackedFloat64Array()
+		return PackedFloat64Array([12, 0, 4.0, 4.0, 1.0, 0.0, 0.0, 0])
+
+
+func test_traffic_queued_behind_honks_after_a_wait_then_repeats() -> void:
+	var c: VehicleCues = _cues()
+	var b: VehicleBody = _car()
+	var cars: Array[VehicleBody] = [b]
+	var w: Queue = Queue.new()
+	var every: int = VehicleCues.QUEUE_EVERY
+	for k: int in VehicleCues.QUEUE_HONK - 1:
+		c.observe(cars, null, 0, k * every, w)
+	assert_eq(_n(c, &"horn"), 0, "no honk before the wait")
+	c.observe(cars, null, 0, (VehicleCues.QUEUE_HONK - 1) * every, w)
+	assert_eq(_n(c, &"horn"), 1)
+	for k: int in range(VehicleCues.QUEUE_HONK, VehicleCues.QUEUE_HONK + VehicleCues.QUEUE_REPEAT):
+		c.observe(cars, null, 0, k * every, w)
+	assert_eq(_n(c, &"horn"), 2, "repeats every QUEUE_REPEAT checks")
+	w.behind = false
+	c.observe(cars, null, 0, 100 * every, w)
+	w.behind = true
+	c.observe(cars, null, 0, 101 * every, w)
+	assert_eq(_n(c, &"horn"), 2, "the wait starts over once the queue clears")
+
+
+func test_a_car_ahead_or_moving_is_not_queued() -> void:
+	var b: VehicleBody = _car()
+	var ahead: Queue = Queue.new()
+	assert_eq(VehicleCues.queued_behind(b, ahead).size(), 4)
+	b.pos = Vector2(-10.0, 4.0)
+	assert_true(VehicleCues.queued_behind(b, ahead).is_empty(), "the car is ahead of it")
+
+
 func test_every_cue_has_a_trigger_row() -> void:
 	var t: FxTriggers = FxTriggers.new()
 	for id: StringName in [

@@ -101,7 +101,7 @@ func soul_hijack(vehicle_id: int) -> void:
 func step(tick: int, input: TickInput) -> void:
 	var t0: int = Time.get_ticks_usec()
 	_step(input)
-	cues.observe(cars, driving, _contacts.traffic_hits.size(), tick)
+	cues.observe(cars, driving, _contacts.traffic_hits.size(), tick, world)
 	last_us = Time.get_ticks_usec() - t0
 	max_us = maxi(max_us, last_us)
 
