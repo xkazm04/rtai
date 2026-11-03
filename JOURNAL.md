@@ -343,3 +343,19 @@ NEXT (the night run, from the merged main):
   AIMING along their facing. Clip `clips/arena-pit-rigs-32ppm-20s.mp4` (+ sheet): waves 1-3 on
   the cop rigs, with flinches, death sprawls and the red blood. This is the arena's best frame
   of the full chain so far. frames.json: 14 entries, the two --rigs clips first.
+- Gates at 05c1b48: lint 13/13 (514 files), unit 562/562 (`evidence/arena/unit-it4b.log`),
+  scenarios 24/24 (`evidence/arena/scenarios-it4b.log`), all with a private APPDATA.
+  answers.json re-read at 23:02: nothing new.
+
+NEXT (supersedes the list above; for the night run, from the merged main):
+1. Re-read answers.json. Run `stations_check.gd` on the merged tree (exit 0 expected), then the
+   arena scenarios with every lane's file in.
+2. Make `--rigs` the arena's default view: rivet-motion's Rivet plan, enemy-ai's reaction feed
+   (HitFeel.reaction) in `ArenaRigs._put` instead of the generic HIT clip, robot and contractor
+   plans instead of COP for everyone, and the SHOOT clip on a fired shot. REQUEST 6 -> d5-cast:
+   a per-host RADIUS_M. Then a scenario that boots the arena with rigs for N ticks.
+3. Gearbox's ArenaHook (ghost-powers) on `stage.cars()`, and a scripted pad bot (Hauler stomp
+   into the robot line, Gearbox into the strafers) for a replaying pad clip and scenario.
+4. The 00:00 vertical sample in the arena: one 20-40 s `--rigs --clean` clip with the pistol,
+   the claw combo, the cop and the robot thug, and one power.
+5. Camera lead (48 px/m, arena-2) if no lane owns it; dummies' own look once the rigs are default.
