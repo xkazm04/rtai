@@ -20,7 +20,8 @@ static var _mat: ShaderMaterial = null
 
 
 ## The dev A/B switches for the hero and arena scenes (both tiers): D5_PRINT=thin swaps the world
-## print to look_d5_print; D5_HALO=ink adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow);
+## print to look_d5_print (D5_PRINT_SET=<uniform>=<v>,... sets its uniforms); D5_HALO=ink
+## adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow);
 ## D5_FRINGE=<k> / D5_DOTS=<k> set look_d5_part fringe_k / dots_k on the D5 part overlays
 ## (iteration 8 owner A/B options).
 static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
@@ -34,6 +35,9 @@ static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
 				m.set_shader_parameter(PART_ENV[env], k.to_float())
 	if OS.get_environment("D5_PRINT") == "thin":
 		look.shader = load(PRINT) as Shader
+		for kv: String in OS.get_environment("D5_PRINT_SET").split(",", false):
+			var u: StringName = StringName(kv.get_slice("=", 0))
+			look.set_shader_parameter(u, kv.get_slice("=", 1).to_float())
 	if OS.get_environment("D5_HALO") == "ink":
 		var w: String = OS.get_environment("D5_HALO_PX")
 		var sh: float = OS.get_environment("D5_HALO_SHADOW").to_float() * SHADOW_M * ppm
