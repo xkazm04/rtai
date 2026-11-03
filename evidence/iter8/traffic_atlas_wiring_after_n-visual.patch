@@ -1,0 +1,62 @@
+diff --git a/project/features/city/view/crowd_layers.gd b/project/features/city/view/crowd_layers.gd
+index 32ea788..43d9b05 100644
+--- a/project/features/city/view/crowd_layers.gd
++++ b/project/features/city/view/crowd_layers.gd
+@@ -13,15 +13,24 @@ const BAND: Array[StringName] = [&"actors", &"actor_shadows", &"vehicles", &"act
+ const INK: Color = Color(0.09, 0.075, 0.106)
+ const PAPER: Color = Color(0.949, 0.91, 0.835)
+ const STEEL: Color = Color(0.561, 0.533, 0.506)
++## Moving traffic: the D4 car atlas, cell = the sim's car art id (vehicles README).
++const TRAFFIC_ATLAS: String = "res://features/city/art/vehicles/traffic_atlas.png"
++const TRAFFIC_SHADER: String = "res://features/city/view/traffic_atlas.gdshader"
+ 
+ var multimeshes: Array[MultiMesh] = []
+ var nodes: Array[MultiMeshInstance2D] = []
++## The cars' and car shadows' atlas material (null = the placeholder body); the look keeps it.
++var traffic: ShaderMaterial = null
+ 
+ 
+ func _init() -> void:
+ 	var quad: ArrayMesh = _quad()
+ 	var blob: Texture2D = _blob()
+ 	var body: Texture2D = _body()
++	if ResourceLoader.exists(TRAFFIC_ATLAS) and ResourceLoader.exists(TRAFFIC_SHADER):
++		body = load(TRAFFIC_ATLAS)
++		traffic = ShaderMaterial.new()
++		traffic.shader = load(TRAFFIC_SHADER)
+ 	var figure: Texture2D = _figure()
+ 	for k: int in SimConst.RL_COUNT:
+ 		var mm: MultiMesh = MultiMesh.new()
+@@ -34,7 +43,10 @@ func _init() -> void:
+ 		mm.custom_aabb = AABB(Vector3(-1e7, -1e7, -10), Vector3(2e7, 2e7, 20))
+ 		var node: MultiMeshInstance2D = MultiMeshInstance2D.new()
+ 		node.multimesh = mm
+-		node.texture = body if k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS else blob
++		node.texture = blob
++		if k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS:
++			node.texture = body
++			node.material = traffic
+ 		if k == SimConst.RL_PEDS:
+ 			node.texture = figure
+ 		node.z_index = RenderLayers.z(BAND[k])
+diff --git a/project/features/city/view/traffic_atlas.gdshader b/project/features/city/view/traffic_atlas.gdshader
+new file mode 100644
+index 0000000..a2d8139
+--- /dev/null
++++ b/project/features/city/view/traffic_atlas.gdshader
+@@ -0,0 +1,15 @@
++shader_type canvas_item;
++// Moving traffic (CrowdLayers cars + car shadows): one quad per car; the instance's custom.x is
++// its art id (city_spawner CAR_ART / ART_POLICE_CAR), which is its cell in the cols x rows
++// traffic atlas (features/city/art/vehicles/README.md). COLOR is the instance tint (white for
++// the car, translucent ink for its shadow).
++
++uniform int cols = 3;
++uniform int rows = 3;
++
++void vertex() {
++	float cell = floor(INSTANCE_CUSTOM.x + 0.5);
++	float c = mod(cell, float(cols));
++	float r = floor(cell / float(cols));
++	UV = (UV + vec2(c, r)) / vec2(float(cols), float(rows));
++}

@@ -770,3 +770,14 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   `--check` matches golden again. Unit 142/142, lint 13/13. Ladder rows. 0 Codex images.
 19. city/generator owner (via the Director): apply `roof_pick_generic.patch` after n-d4 (it moves the AST-12
     golden hash list, included in the patch).
+- 02:07 GATES at eceb6b3: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact
+  (mutation caught at step 629), selftest **72** art textures (65 + the 7 roof rows), 0 placeholders.
+- REVERTED probe (not shipped): a diagonal ink hatch over the roof membrane (target compare `work/shadow_vs_target.png`:
+  the target hatches its roofs). Measured: our roof art IS already hatched (membrane local std 29-44); the fine hatch
+  just dissolves at 32 px/m. The probe's mask hatched the coping, sign plate and tank tops instead - worse. A
+  coarser roof hatch would be a print-pass question (visual-engine), not an art one.
+- 02:07 MERGED CHECK: scratch worktree = n-visual + n-d4 (HEAD) + both patches, re-baked: `bake_city --check` matches
+  the golden list shipped in the roof patch; city frames `merged_all/` (no grey boxes, a moving cruiser, generic +
+  upright landmark roofs). Scratch worktree removed afterwards. Honesty note: its two scratch merge commits (never
+  in a branch, deleted with the worktree) - the second was made with `--no-verify`, which I should not have done.
+- `evidence/iter8/` (lane cwd): summary sheet, the 3 patches, gate results, README.
