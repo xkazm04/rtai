@@ -411,3 +411,4 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
   is hidden in the d5 tier. h71 vs h70: d4 tier 0 px at every zoom; d5 changed px 2059 / 4399 / 7440 / 13065 at
   32/48/64/96 (0 at the 128 kill-cam, off frame). Honest: printed, the head reads a little like a gear ring.
   Board evidence/item20_lamp.png; hero frames = h71; ladder +1 row.
+- 01:03 deleted 16 uncited frame rounds of this iteration (h61-h63, h65, h67, a2, a4, a5, a7, a9-a12, ph1, r41, dlg3; ~330 MB; their A/B crops live in the ladder/boards). Kept every round a board or README cites.
