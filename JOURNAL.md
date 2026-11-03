@@ -1424,7 +1424,7 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   (err 41: everything squared darker); fixed with a vertex varying for the modulate. (2) my first 270 px crops ran
   past the 800 px window (error 13.7 was the crop, not the filter); re-measured on the rows inside the window.
   Board evidence/item50_ui_sharp.png (looked at: reference / mipmaps / sharp at 2x, phone 1x); ladder row.
-- 06:25 item50b (negative result, kept as a guard): do the 1920x1081 D5 cards (finishers, boss intro, loading; no
+- 06:09 item50b (negative result, kept as a guard): do the 1920x1081 D5 cards (finishers, boss intro, loading; no
   mipmaps; no scene draws them yet) need look_d5_ui too? New dev scene dev/showcase/d5_card.gd (one card covering the
   window, --ui). At 1280x800 (0.74x), error vs Lanczos finisher_drone / loading_rivet: linear no mips (as imported)
   3.00 / 2.28, look_d5_ui no mips 6.01 / 4.46 (worse: without mips its unsharp subtracts a point sample = a blur),
@@ -1433,3 +1433,8 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   restored and re-imported, tree checked. MISTAKES: d5_card's first run drew the card magnified (size set before
   the tree; fixed with a full-rect anchor) and its first version did not parse (discarded return value). Board
   evidence/item50b_cards.png (looked at).
+- 06:10 MEASURED the phone close-up (it was by eye only): the cop_alarmed portrait in the phone screen draws at
+  0.83x (cover), mipmapped. Error vs Lanczos (top 300 rows of the screen, reference aligned by a half-px shift search
+  on the BASELINE's best shift): trilinear 6.09 -> look_d5_ui 4.77. Rule from item50 + 50b: on a mipmapped texture
+  look_d5_ui beats trilinear at every scale tried (0.39, 0.53, 0.74, 0.83x); a non-mipmapped texture at >= 0.6x is
+  best left linear. README row updated.
