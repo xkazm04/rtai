@@ -19,6 +19,8 @@ const CAP: int = 32
 var service: VehicleService = null
 ## Tyre marks under the cars (a child, drawn below the shadows).
 var skids: VehicleSkids = VehicleSkids.new()
+## Burning wrecks (a child, drawn over the car bodies).
+var fire: VehicleFire = VehicleFire.new()
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
@@ -43,6 +45,9 @@ func setup(
 			textures[k] if k < textures.size() and textures[k] != null else textures[0]
 		)
 		_bodies.append(_layer(car, tex, car.z_index))
+	fire.service = svc
+	fire.z_index = car.z_index + 1
+	add_child(fire)
 
 
 func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:

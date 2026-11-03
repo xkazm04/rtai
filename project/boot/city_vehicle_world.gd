@@ -116,6 +116,13 @@ static func make_view(svc: VehicleService, view: CityView) -> VehicleView:
 	var nodes: Array[MultiMeshInstance2D] = view.crowd.nodes
 	v.setup(svc, tex, nodes[SimConst.RL_CARS], nodes[SimConst.RL_CAR_SHADOWS])
 	svc.cues.sink = view.fx_triggers.fire
+	# The fire is emissive (above the lights and the smoke, like the blast's glow twin): lit by
+	# its own light it would print as a peach smudge under the wreck smoke.
+	if view.fx.glow != null and view.fx.glow.get_parent() != null:
+		v.remove_child(v.fire)
+		view.fx.glow.get_parent().add_child(v.fire)
+		v.fire.z_index = view.fx.glow.z_index - 1
+	v.fire.lights = view.lights
 	return v
 
 
