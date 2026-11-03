@@ -267,3 +267,11 @@ NEXT:
 - D5 crowd at arena zoom: make RigDetail overlays print in CrowdBaker's SubViewport first (the cop cell is the test),
   then decide on palette-swapped parts; only then a D5 atlas twin (code shape in the journal entry above).
 - King into the game when the boss ticket lands (KingPlan ready); ghost form = a new RivetPlan.FORMS row.
+- DIAGNOSIS (12:30) of the D5 crowd twin's missing print, for the next owner: the D5 part tier itself is strong at 64
+  (dev d5_showcase, same pose, tier off vs on: 9282 px change at 64, 16955 at 96; masters renders/tier64/cop-tier64.png
+  shows the hatched dome and scratched shoulders). The bake lost it because RigDetail is global: CharacterRigs steps
+  every frame and calls RigDetail.set_view(view zoom = 1 or 1.5) during the ~30 bake frames, which turns `active` off
+  (the bake's sync then hides the overlays) and sets the SHARED overlay materials' `amount` to 0. Probable, not proven
+  (no instrumented run). Fix shape: the baker builds its own overlay materials (amount 1, px_scale at the bake zoom) and
+  a RigDetail.sync variant that takes `want` and the material instead of reading the globals. Then re-dump the atlases
+  (rig_showcase saves crowd-atlas.png; add crowd-atlas-d5.png) and judge the cop cell before any city integration.
