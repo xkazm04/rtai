@@ -318,7 +318,7 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
 - Owner frames (masters frames.json, still 15; build_frames.iter4.py keeps the old recipe): lineup now 3-way
   (night | iteration 1 | now), the city1-128 A/B replaced by the 4-zoom real-game hunch A/B, T2/T1/hero frames and the
   King frame re-shot with the hunch. All images looked at: all straight down, 0 rejected.
-- 12:55-13:20 D5 crowd twin, third attempt (timeboxed), TRIED + REVERTED (never committed; masters
+- 12:49-12:54 D5 crowd twin, third attempt (timeboxed), TRIED + REVERTED (never committed; masters
   day-d5/d5-cast/crowd-twin-v3.patch, 379 lines, applies on 2eb58bb). Found WHY the goldens moved in attempt 2:
   look_golden.gd lets the World process during the load (World._prewarm holds the sim; the golden scene does not), so the
   twin's ~30 bake frames advanced the riot. Fix in the patch: CityCharacters.bake_d5() as its own step; World._prewarm
@@ -330,3 +330,15 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   48 (figures separate less from the asphalt); the D5 hatch it adds is hardly visible at 64. At 96 the hatch is crisper,
   but 64 is the arena zoom the twin was for. Not shipped (brief: worse in-engine -> revert). If someone resumes: bake the
   halo at the D4 bake's width (scale the halo by 1.5/2.0 in the twin stage) and re-judge at 64 first.
+  ADDENDUM: the thinner rim is by design, not a twin bug: CutRig._on_view fades the halo as view px rises
+  (hk = 1 - smoothstep(0.12, 0.3, px)), so the live full rigs at 64 px/m (the 16 nearest, Rivet) already carry the
+  same thin rim; only the D4 atlas cells, baked at 48, carry the thick one. The twin makes the crowd consistent with
+  the full rigs; the D4 cells give more separation. OWNER CHOICE (frames in masters renders twin-city0-64-zoom.png,
+  twin-city0-96-zoom.png; patch crowd-twin-v3.patch; then re-bless the 64+ goldens with a decisions line).
+- CHECKED d-city (00ebb7c): REQUEST 4 (look_d4 cop-blue plate for parked cruisers) not landed; the masters patch still
+  applies cleanly (git apply --check, read-only). d-city's palette.json cop_blue #3A4766 / cop_blue_hi #4F86E0 equal the
+  values hard-coded in print_part / look_d5_part (shaders cannot read the table; same as d-city's item shader).
+  d-city's REQUEST 1 to d5-cast (cop rigs + atlas to cop_blue) is done here since iteration 1 (answered iteration 3).
+- NOTE d-city bf43a68 ramps the WORLD's D5 overlay in from 32 px/m (0.5 at 32, 1 at 64). The characters' D5 part tier
+  (RigDetail, 56 -> 64 px/m) is left as is: below 56 most people are D4 atlas cells (only the 16 nearest are full rigs),
+  so a part ramp from 32 would split the crowd into two tiers, and the D5 part grime is sub-pixel at 32. Owner call.
