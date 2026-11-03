@@ -60,3 +60,16 @@ func test_a_rig_zoom_keeps_the_centre_print_still() -> void:
 	var after: Vector2 = stage.world_px + stage.get_viewport_rect().size * 0.5
 	assert_eq(stage.zoom, 1.5)
 	assert_almost_eq(after.x, before.x, 1.0, "the centre's print coordinate holds through the ease")
+
+
+func test_listen_wires_the_boss_zoom_and_the_hit_stop() -> void:
+	var stage: PrintStage = _stage()
+	var bus: EventBus = autofree(EventBus.new())
+	var clock: SimClock = SimClock.new()
+	stage.listen(bus, clock, 7, Callable())
+	bus.boss_engaged.emit(&"quartermaster-mertz")
+	assert_eq(stage.rig.mode, &"arena")
+	bus.actor_killed.emit(7, 9, &"shot")
+	assert_gt(clock.held(), 0.0, "Rivet's kill holds the clock")
+	bus.player_hit.emit(&"robo-tazer")
+	assert_eq(stage.fx_triggers.fired[&"player_hit_robo_tazer"], 1)

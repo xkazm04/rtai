@@ -48,6 +48,20 @@ func _ready() -> void:
 	_build_fx()
 
 
+## Wires the game feel to the F-04 events on `bus` at `p_clock`'s tick: a CameraRig (made here
+## if none, on foot) follows vehicles / the boss / the contract end, and the FX cues fire on
+## player_hit (sparks, the weapon's own cue, rivet_hit hit-stop) and on kills by `player_id`
+## (kill hit-stop). `at` returns the player's position in world px (where hit FX land).
+func listen(bus: EventBus, p_clock: SimClock, player_id: int, at: Callable) -> void:
+	clock = p_clock
+	if rig == null:
+		rig = CameraRig.new()
+	rig.listen(bus, p_clock)
+	fx_triggers.rig = rig
+	fx_triggers.player_id = player_id
+	fx_triggers.listen(bus, p_clock, at)
+
+
 ## The canvas the view's people and vehicles go on (z bands `actors`, `vehicles`, ...).
 func actor_layer() -> CanvasLayer:
 	return _actors

@@ -353,6 +353,9 @@ interiors, menus over the world). The view adds it, sets `look_id` / `rig` / `cl
 - calls `place(focus_m)` once a frame: camera + rig (zoom ease, look-ahead, shake, hit-stop), the
   zoom-anchored `world_px`, the look for the zoom (`auto`: D4 -> D5 overlay), lights, FX, markers;
 - uses `fx` / `fx_triggers` / `lights` / `markers` like `CityView` does.
+- calls `listen(Events, clock, player_id, at)` once for the game feel: a CameraRig on the F-04 events
+  (vehicles, `boss_engaged` -> arena 64 px/m, contract end) and the FX cues (hits, the weapon's own cue,
+  the hit-stops on Rivet's hits and kills).
 
 `tests/unit/test_print_stage.gd` audits the layers, the look by zoom and the world lock. Evidence:
 `dev/selftest/print_stage_demo.tscn` draws quest 1's placeholder style (flat cream / ink shapes, one
