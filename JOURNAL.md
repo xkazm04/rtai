@@ -505,3 +505,44 @@ NEXT (iteration 9 / morning, in order):
   stands. Honest low-end headline: at Deck resolution on a 2-CU iGPU the D4 frame is ~3.3 ms of GPU,
   half of it the print pass. In play the bug needed a look whose `printed` flips (`--look=off`); the
   default look never flips, so shipped play was not affected.
+- 01:58 re-checked against the lanes' newer heads (n-d4 dbb8c6f, n-d5 1f348e6, n-noir 9062ecf): still only
+  JOURNAL.md conflicts; their shaders still hash FRAGCOORD + world_px; look_d5 unchanged since f6b9018, so
+  evidence/pass-cost/look_d5-early-outs.patch applies cleanly (patch --dry-run).
+- Ladder rows 21 (trial merge, D4 48 px/m: branch | merged) and 21b (64 px/m: branch D4 | merged auto with
+  look_d5 at full amount; NOTE 21b's two halves are different ticks of the golden run - a look comparison,
+  not the same moment). ladder.png 1280 x 8222. Frames rejected for camera: 0 (engine captures, straight
+  down). Composites I made wrong and redid: 1 (golden vs full-res corner paste) + 1 mislabelled ladder row
+  (cropped off and re-added). Approaches rejected: 1 (crowd quad trim). No AI images (no codex), so no
+  provenance lines.
+- Scratch worktree gtai-wt/scratch-visual-trial removed (its trial-merge commits were on no branch); my
+  /tmp scratch deleted. Processes of mine killed tonight: 56680 / 32664 (the hung pass_cost parse error).
+
+NEXT (iteration 10 / morning, in order):
+1. Director merge: follow the POST-MERGE RECIPE above (JOURNAL.md only conflicts; re-bless the 10 look
+   goldens and look at them; delete the traffic_light_lamps debt row; evidence run). Then apply
+   evidence/pass-cost/look_d5-early-outs.patch (n-d5's file, bit-identical, -0.45 ms of the overlay's
+   +2.5 ms on the iGPU) - look_golden must stay at mean 0.00 after it.
+2. Moving traffic is still the steel placeholder quad (the lavender boxes in every frame; ladder 21).
+   n-d4 shipped `features/city/art/vehicles/traffic_atlas.png` for exactly this quad: 2 x 4 cells of 512 x 256
+   px = 6.4 x 3.2 m (CL x CW in native render.cpp), nose +x, cell = the spawn variant (custom.x, already
+   written by fill_render). Design: CrowdLayers plugs it when the file exists (like FxSystem.atlas_live)
+   and owns the per-layer materials (move the set_look_enabled loop into CrowdLayers.apply_print, which
+   also brings city_view.gd back under 200 lines); look_d4_item gets `uniform ivec2 cells = ivec2(1, 1)` +
+   a vertex() cell lookup, used by a SECOND item material for the cars only (car SHADOWS keep the body
+   blob: they carry the variant in custom.x too, so they must not get the cell lookup); that material must
+   receive the look's item uniforms on every look change and world_px every frame (as _item_mat does).
+   Unprinted looks use crowd_atlas.gdshader (cols 2, rows 4). Then frames at 32 / 48 / 64 px/m: does the
+   item print's nearest-ink snap keep n-d4's grime and glass, or flatten it? If it flattens, give the car
+   material a softer snap (the steel wash only) - judge on frames. Damage / hijack states need a state in
+   custom.y from the sim (characters / sim owner).
+3. Low-end GPU (iGPU 1280x800, after 1c7e3aa): frame 3.3 ms, print 1.6, rigs 0.5. The print pass is
+   still half: next candidates, each A/B'd with pass_cost + bit-identity checked by a full-res look_golden
+   diff: drop the always-on 2 vnoise grime to one octave (NOT bit-identical: needs the owner's eye),
+   sobel on 2 taps reused from the plate samples. The D5 overlay (+2.0 ms after the patch) is the bigger
+   one at 64 px/m: its BackBufferCopy + paper tooth; measure on a real Deck before cutting more.
+4. Owner calls still open (frames ready): objective solid vermilion vs paper + core (16-objective-core);
+   cop vermilion body vs cream body + cap (17-cop-accent); 15 Hz outer rigs (15-rig-quarter gifs);
+   overlay amount at 48 px/m (0 shipped vs n-d5's 0.35).
+5. Rig 0.334 ms per tick vs 0.3: native RigArm / RigGait (characters owner).
+6. The one unreproduced 9 s `game` stall in the trial-merge drive bench (evidence/trial-merge): re-run the
+   full bench on the real merge; if it recurs, it is in streaming (stream+spawn 5.5 ms/tick in that run).
