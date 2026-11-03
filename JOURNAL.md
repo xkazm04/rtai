@@ -290,3 +290,9 @@ NEXT (iteration 56 end): unchanged from iteration 52 (Director: apply `evidence/
 - Lint re-run on this tree: 13/13 over 353 GDScript files. Nothing changed since a14dd64 (gates green there; six-tip merge check at eb2dc3f: 463 unit, 13 scenarios). No new audio code, no ElevenLabs calls (lane total ~4.6k of 25k; voice characters after 11:45: 0).
 
 NEXT (iteration 57 end): unchanged from iteration 52 (Director: apply `evidence/requests/quest1_game_audio.patch`, the `radio_next` input row, `_ready_blood()` at the slice/combat merge; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops; hot clip vehicles_fire.mp4 -> lower `car_wreck` gain_db if it clips).
+
+## 2026-11-03 iteration 58 (STABILIZE, started 17:16)
+- 17:19 Tip check: d-slice cadb24c, d-vehicles ebb2ed9, d-combat 7e1f034, d-bodies 2508c45. Events schema diffs vs main still add only `pedestrian_struck` (d-vehicles) and `actor_knocked_down` (d-bodies); both hooked. No new unhooked Event.
+- Lint re-run on this tree: 13/13 over 353 GDScript files. Nothing changed since a14dd64 (gates green there; six-tip merge check at eb2dc3f: 463 unit, 13 scenarios). No new audio code, no ElevenLabs calls (lane total ~4.6k of 25k; voice characters after 11:45: 0).
+
+NEXT (iteration 58 end): unchanged from iteration 52 (Director: apply `evidence/requests/quest1_game_audio.patch`, the `radio_next` input row, `_ready_blood()` at the slice/combat merge; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops; hot clip vehicles_fire.mp4 -> lower `car_wreck` gain_db if it clips).
