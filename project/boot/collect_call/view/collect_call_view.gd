@@ -36,6 +36,8 @@ var px_per_m: float = Ink.PX_PER_M
 var city_view: CityView = null
 var city: CitySystem = null
 var _camera: Camera2D = null
+## The Hauler stomp the camera last kicked for (features/souls).
+var _kicked: int = -1
 var _stage: CollectCallStage
 var _system: QuestSystem
 
@@ -133,6 +135,7 @@ func fill_street(max_passes: int = 600) -> int:
 func _process(_delta: float) -> void:
 	hud_feed.fill(hud_view.state, _stage, _system)
 	hud_view.state.notice = notice.text()
+	_hauler_kick()
 	if _stage == null or city_view != null:
 		return
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
@@ -164,3 +167,13 @@ func _dead_px() -> Dictionary[int, Vector2]:
 		if not h.alive():
 			out[h.id] = h.pos * SimConst.PX_PER_M
 	return out
+
+
+## features/souls: a Hauler stomp landing kicks the city camera once (powers.json stomp_shake).
+func _hauler_kick() -> void:
+	if city_view == null or city_view.rig == null or _stage == null or _stage.pilot == null:
+		return
+	var h: HaulerStage = _stage.pilot.hauler
+	if h.stomp_tick >= 0 and h.stomp_tick != _kicked:
+		_kicked = h.stomp_tick
+		city_view.rig.kick(h.form.id_of(&"stomp_shake"), _stage.tick)
