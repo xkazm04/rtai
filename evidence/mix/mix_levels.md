@@ -52,7 +52,7 @@ Measured, not heard.
 A scratch merge (d-slice fe40b14 + d-audio) with `evidence/requests/quest1_game_audio.patch` applied (3 hunks, 9 lines in boot/quest1_game.gd: attach StageAudio after the
 view is built, free it on restart). The scene is the slice's own `boot/quest1.tscn` (title card -> Start -> quest 1 driven by CollectCallInputDriver's scripted pad, one tick per
 rendered frame; the scratch driver is `evidence/requests/slice_clip.gd.txt`). 150 s of play = tick 9000, beats b1 dumpster .. b5 quartermaster (the Dock 9 boss): **-19.5 LUFS integrated,
-true peak -2.9 dBFS, LRA 3.3 LU**, 5 s windows -21.8 .. -15.0 dBFS; 20 of the 23 voice lines started in those 150 s (the other 3 come later in the quest), 7 voice-queue drops,
+true peak -2.9 dBFS, LRA 3.3 LU**, 5 s windows -21.8 .. -15.0 dBFS; 20 of the 23 voice lines were requested by the line player in those 150 s (the other 3 come later), **7 of those 20 were dropped from the voice queue (13 actually spoke)**,
 123 footsteps, 44 kill punches, 74 shots, 3 Robo-tazer charges, 1 boss stinger, no missing sound file. Frames at 20 s and 140 s looked at: straight down, 0 rejected.
 Measured, not heard. Without the patch the slice is silent (nothing in d-slice calls StageAudio).
 
