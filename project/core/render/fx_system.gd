@@ -41,6 +41,7 @@ var _last_tick: int = -1
 var _atlas_path: String = ""
 var _atlas_grid: Vector2 = Vector2.ONE
 var _world_px: Vector2 = Vector2.ZERO
+var _page_age: float = 0.0
 
 
 func _init() -> void:
@@ -111,6 +112,8 @@ func step(tick: int, world_px: Vector2 = Vector2.ZERO) -> void:
 	if world_px != _world_px:
 		_world_px = world_px
 		(_node.material as ShaderMaterial).set_shader_parameter(&"world_px", world_px)
+	if glow != null and lights != null:
+		glow.set_page_age(lights.page_age)  # the twin above the grade ages itself; this band is graded
 	var t0: int = Time.get_ticks_usec()
 	var steps: int = clampi(tick - _last_tick, 0, MAX_STEPS) if _last_tick >= 0 else 0
 	if tick == _last_tick and not _dirty:
@@ -181,3 +184,11 @@ func _load_atlas(a: Dictionary) -> void:
 	_atlas_path = path
 	_atlas_grid = Vector2(cols, rows)
 	atlas_live = true
+
+
+## The page age for FX that draw above the grade rect (the emissive twin; LightLayer.set_page_age).
+func set_page_age(a: float) -> void:
+	if is_equal_approx(a, _page_age):
+		return
+	_page_age = a
+	(_node.material as ShaderMaterial).set_shader_parameter(&"age", a)

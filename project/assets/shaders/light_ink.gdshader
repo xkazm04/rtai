@@ -8,6 +8,7 @@ render_mode blend_add;
 
 uniform vec2 world_px = vec2(0.0);   // the camera's world offset in screen px (hatch locked to the world)
 uniform float hatch_px = 5.0;        // the band-edge hatch period in screen px
+#include "res://assets/shaders/page_age.gdshaderinc"
 
 varying vec4 custom;
 
@@ -33,5 +34,5 @@ void fragment() {
 	float line = abs(fract((w.x - w.y) / hatch_px) - 0.5) * 2.0;
 	band += step(line, smoothstep(0.6, 1.0, f));
 	float level = band / steps;
-	COLOR = vec4(COLOR.rgb * level * COLOR.a, 1.0);
+	COLOR = vec4(page_age(COLOR.rgb) * level * COLOR.a, 1.0);   // a paper light adds the aged paper
 }

@@ -95,11 +95,35 @@ func test_the_grade_rect_draws_for_an_age_and_hides_without_one() -> void:
 	assert_false(rect.visible)
 
 
-func test_the_grade_shader_declares_the_age() -> void:
-	var sh: Shader = load(LightLayer.GRADE_SHADER)
-	var names: Array[String] = []
-	for u: Dictionary in sh.get_shader_uniform_list():
-		var n: String = u["name"]
-		names.append(n)
-	for n: String in ["age", "age_dark", "age_light"]:
-		assert_true(names.has(n), n)
+func test_every_page_pass_shader_declares_the_age() -> void:
+	for path: String in [LightLayer.GRADE_SHADER, LightLayer.SHADER, FxSystem.SHADER]:
+		var sh: Shader = load(path)
+		var names: Array[String] = []
+		for u: Dictionary in sh.get_shader_uniform_list():
+			var n: String = u["name"]
+			names.append(n)
+		for n: String in ["age", "age_dark", "age_light"]:
+			assert_true(names.has(n), "%s declares %s" % [path, n])
+
+
+func test_the_lights_and_only_the_emissive_fx_twin_age_above_the_grade() -> void:
+	var lights: LightLayer = autofree(LightLayer.new())
+	var fx: FxSystem = autofree(FxSystem.new())
+	fx.glow = autofree(FxSystem.new())
+	fx.lights = lights
+	lights.set_page_age(0.75)
+	var light_age: float = _node_mat(lights).get_shader_parameter(&"age")
+	assert_almost_eq(light_age, 0.75, 1e-6, "the additive lights draw above the grade")
+	fx.step(0)
+	var glow_age: float = _node_mat(fx.glow).get_shader_parameter(&"age")
+	assert_almost_eq(glow_age, 0.75, 1e-6, "the emissive twin draws above the grade")
+	var band: Variant = _node_mat(fx).get_shader_parameter(&"age")
+	var band_set: bool = typeof(band) != TYPE_NIL
+	assert_false(band_set, "the actors-band FX are graded already (never set)")
+
+
+func _node_mat(n: Node) -> ShaderMaterial:
+	for c: Node in n.get_children():
+		if c is MultiMeshInstance2D:
+			return (c as MultiMeshInstance2D).material
+	return null

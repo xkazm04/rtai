@@ -89,6 +89,7 @@ func set_page_age(a: float) -> void:
 	page_age = v
 	var mat: ShaderMaterial = _grade.material
 	mat.set_shader_parameter(&"age", page_age)
+	_mat.set_shader_parameter(&"age", page_age)  # the lights draw above the grade: age them too
 	_grade.visible = _grade_draws()
 
 

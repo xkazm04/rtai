@@ -8,6 +8,8 @@ shader_type canvas_item;
 uniform sampler2D atlas : source_color, filter_linear_mipmap, repeat_disable;
 uniform vec2 grid = vec2(1.0);
 uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px: the fade dither is world-locked
+// the page age: set on the emissive twin only (it draws above the grade rect, which ages the rest)
+#include "res://assets/shaders/page_age.gdshaderinc"
 
 varying vec4 custom;
 
@@ -63,4 +65,5 @@ void fragment() {
 		vec3 ink = vec3(0.090, 0.075, 0.106);
 		COLOR = vec4(mix(ink, COLOR.rgb, inner), m * keep);
 	}
+	COLOR.rgb = page_age(COLOR.rgb);
 }
