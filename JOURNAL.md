@@ -717,6 +717,8 @@ NEXT (session end, iteration 6):
   whisper rings (FX code; the arc-ball probe read worse).
 - Earlier lists still stand: traffic atlas wiring (visual-engine), generic roof pick (generator), RigVariant slots for
   the new ped parts (characters), accent_debt row traffic_light_lamps to delete after the merge.
-- If more time: the D4 Rivet rig in the quest view (characters owner); a top-down smoke puff for the crate fire (the
-  view still draws translucent grey discs, which are not D4).
+- If more time: the D4 Rivet rig in the quest view (characters owner).
 - Branch n-d4, tree clean after this entry; nothing pushed or merged.
+- 01:43 quest patch: the crate fire's translucent grey smoke discs replaced by the FX atlas smoke puffs (row 2, cells
+  0-3, fading as they lift), a clear gain (`work/q1smoke_ab.png`). No new art. Final patch +156 / -83, lint clean,
+  final frames `after_q1p/`. (Supersedes "after_q1o" and "+149 / -81" in the NEXT above.)

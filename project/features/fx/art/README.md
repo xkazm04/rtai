@@ -34,4 +34,4 @@ placeholder drew side-view flame tongues, a camera break). Vermilion = danger. M
 | 1 | `embers_1`, `embers_2` (alternate about every 8 ticks), `fire_wide` (cells 2-3, 5 x 2.5 m: a fire along a row of crates or a car) |
 
 Quest 1 uses it for the burning TUCK-IN stack (`fx_view._fire()`): `fire_wide` at 2x over the stack + three loop
-fires at 1.3x; see `features/quest/art/collect_call/README.md` and the lane masters' `q1_view_art.patch`.
+fires at 1.3x, and the smoke above it from `fx_atlas.png` row 2 cells 0-3 (fading as it lifts); see `features/quest/art/collect_call/README.md` and the lane masters' `q1_view_art.patch`.

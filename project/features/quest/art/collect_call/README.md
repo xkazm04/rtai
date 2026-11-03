@@ -42,5 +42,5 @@ Reuse from the city set (already D4): `features/city/art/ground/road_straight_to
 To tile in `_draw()`: `draw_texture_rect_region()` per repeat (an import with repeat on also works).
 A working local patch of the two views that draws all of the above and the
 before/after frames of quest 1's own frame grabber are in the lane masters:
-`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1o/` (final).
+`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1p/` (final).
 The patch is not committed here, because the view code belongs to the quest 1 owner.
