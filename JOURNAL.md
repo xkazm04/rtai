@@ -1236,3 +1236,11 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   `work/fx14/q1bf_03.png`, 1:1 `q1bf_03_11.png`: clean linoleum, the cast reads off it. Procedural (no provenance line,
   as in iteration 6). README row. Original in `masters:backup_bf14/`. Ladder2 row. Commit d6317ee. 0 Codex.
   (scratch-q1 now holds this floor too; quest patch unchanged.)
+- 04:31 MILESTONE (patch only, quest 1 view code) Factory Row floor. Beats 1-2 stood on a flat grey wash rectangle
+  (`_floor(..., Ink.WASH, "FACTORY ROW")`, an untextured placeholder). The patch now tiles the D4 warehouse concrete
+  (`dock_floor`, 8 m: slabs, saw-cut joints, the bay line) there and draws the zone outline + label over it (as Harbor
+  Road does). No new art. Quest grabber (seeded) `after_q1bf|after_q1fr/0{1,2}-*.png`, sheet `work/fx14/q1fr_ab.png`:
+  a factory floor, and the hidden-Rivet dumpster stands off it. `q1_view_art.patch` regenerated (+193 / -111, 4 view
+  files; gdformat + gdlint clean; `git apply --check` clean on main 721fbbb; the iteration-12 one kept as
+  `masters:q1_view_art_i12.patch`) -> `evidence/iter14/q1_view_art.patch` (REQUEST 16 now means this one). Unit in
+  scratch-q1 with it: **166 passed, 0 failed**. Ladder2 row.

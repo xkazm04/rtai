@@ -1,0 +1,485 @@
+diff --git a/project/boot/collect_call/view/cast_view.gd b/project/boot/collect_call/view/cast_view.gd
+index f3cc7e2..7030090 100644
+--- a/project/boot/collect_call/view/cast_view.gd
++++ b/project/boot/collect_call/view/cast_view.gd
+@@ -16,8 +16,27 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
+ 	"Don Fax": Vector2(1.8, 1.1),
+ }
+ 
++const ART: String = "res://features/quest/art/collect_call/cast_"
++## The art is fitted to the gameplay footprints; drawn at these factors the silhouettes carry the
++## visual mass of the placeholder boxes (a thin IV-pole robot at 0.8 m read as a speck).
++const CAST_DRAW: float = 1.5
++const GUARD_DRAW: float = 1.7
++## Knocked-out bodies stay quiet (the placeholder drew them as faint discs).
++const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
++## cast_rivet.png: the real Rivet rig (idle, facing -y) captured at 120 px/m, body at the centre;
++## drawn at true scale (372 x 468 px = 3.1 x 3.9 m, arms included).
++const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
++## cast_rivet_peek.png: a round cut of the same capture (plate + hazard collar) for the hide spots.
++const RIVET_PEEK: Vector2 = Vector2(1.03, 1.03)
++## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
++const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
++const ALLY_ART: Dictionary[String, String] = {
++	"Juno": "juno", "Brass": "brass", "Dr. Kilohm": "kilohm", "Don Fax": "don_fax"
++}
++
+ var stage: CollectCallStage
+ var port: CollectCallWorld
++var _tex: Dictionary[String, Texture2D] = {}
+ 
+ 
+ func _process(_delta: float) -> void:
+@@ -31,78 +50,40 @@ func _draw() -> void:
+ 		_ally(tag, stage.layout.places.actors[tag].at)
+ 	if stage.heat.level > 0:
+ 		for p: Vector2 in stage.patrol_pos:
+-			_human(p, "C", Vector2.DOWN)
++			_sprite("cop", p, COP_SIZE, Vector2.DOWN)
+ 	for h: Fighter in stage.arena.hostiles:
+ 		if h.kind == Fighter.Kind.BOSS:
+ 			_mertz(h)
+ 		elif h.alive():
+-			_human(h.pos, "G", h.facing)
++			_sprite("dock_guard", h.pos, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
+ 		else:
+-			Ink.disc(self, h.pos, 0.3, Color(Ink.INK, 0.35))
++			_sprite("guard_down", h.pos, Vector2(1.6, 1.6), h.facing, DOWN_FADE)
+ 	_rivet(stage.arena.rivet)
+ 
+ 
+ func _rivet(r: Fighter) -> void:
+ 	var at: Vector2 = r.pos
+ 	if stage.hidden_in != "":
+-		Ink.box(self, at + Vector2(0.0, -0.75), Vector2(0.9, 0.6), Ink.CREAM)
+-		_eyes(at + Vector2(0.0, -0.85))
+-		Ink.initial(self, at + Vector2(0.0, -0.58), "R", Ink.INK, 0.28)
++		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK, Vector2.UP)
+ 		return
+-	var hand: Vector2 = at + Vector2(0.45, 0.0)
+-	var arm: Vector2 = r.facing.normalized() * 0.9
+-	draw_line(Ink.px(hand), Ink.px(hand + arm), Ink.INK, 5.0)
+-	draw_circle(Ink.px(hand + arm), 4.0, Ink.TEAL)
+-	Ink.box(self, at + Vector2(0.0, 0.15), Vector2(1.0, 1.1), Ink.CREAM)
+-	Ink.box(self, at + Vector2(0.0, -0.55), Vector2(0.9, 0.6), Ink.CREAM)
+-	var collar_a: Vector2 = Ink.px(at + Vector2(-0.5, -0.2))
+-	draw_line(collar_a, Ink.px(at + Vector2(0.5, -0.2)), Ink.VERMILION, 6.0)
+-	_eyes(at + Vector2(0.0, -0.6))
+-	Ink.initial(self, at + Vector2(0.0, 0.2), "R", Ink.INK, 0.5)
++	_sprite("rivet", at, RIVET_SIZE, r.facing)
+ 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
+ 
+ 
+-func _eyes(at: Vector2) -> void:
+-	var c: Vector2 = Ink.px(at)
+-	draw_rect(Rect2(c + Vector2(-14, -4), Vector2(28, 8)), Ink.INK, true)
+-	draw_rect(Rect2(c + Vector2(-11, -2), Vector2(8, 4)), Ink.TEAL, true)
+-	draw_rect(Rect2(c + Vector2(3, -2), Vector2(8, 4)), Ink.TEAL, true)
+-
+-
+ func _ally(tag: String, at: Vector2) -> void:
+ 	var size: Vector2 = ALLY_SIZE.get(tag, Vector2.ONE)
+-	var dark: bool = tag == "Brass"
+-	Ink.box(self, at, size, Ink.INK if dark else Ink.CREAM)
+-	_eyes(at + Vector2(0.0, -size.y * 0.3))
+-	var letter: String = ALLY_LETTER.get(tag, "?")
+-	Ink.initial(
+-		self, at + Vector2(0.0, size.y * 0.15), letter, Ink.CREAM if dark else Ink.INK, 0.45
+-	)
+-	if tag == "Don Fax":
+-		draw_circle(Ink.px(at + Vector2(0.6, 0.3)), 5.0, Ink.VERMILION)
++	var art: String = ALLY_ART.get(tag, "juno")
++	_sprite(art, at, size * CAST_DRAW, Vector2.UP)
+ 	Ink.label(self, at + Vector2(0.0, size.y * 0.5 + 0.45), tag, 18, Ink.INK)
+ 
+ 
+-func _human(at: Vector2, letter: String, facing: Vector2) -> void:
+-	draw_line(Ink.px(at), Ink.px(at + facing.normalized() * 0.9), Ink.INK, 5.0)
+-	Ink.disc(self, at, 0.45, Ink.VERMILION, letter)
+-	draw_arc(Ink.px(at), 0.32 * Ink.PX_PER_M, 0.3, 2.8, 12, Ink.CREAM, 3.0, true)
+-
+-
+ func _mertz(m: Fighter) -> void:
+ 	var at: Vector2 = m.pos
+ 	if not m.alive():
+-		Ink.box(self, at + Vector2(0.0, 0.3), Vector2(1.9, 0.9), Color(Ink.INK, 0.6))
+-		Ink.label(self, at + Vector2(0.0, 1.3), "shorted out", 16, Ink.INK)
++		_sprite("mertz_down", at, Vector2(2.6, 2.4) * CAST_DRAW, Vector2.UP, DOWN_FADE)
+ 		return
+-	Ink.box(self, at + Vector2(0.0, -0.95), Vector2(1.2, 0.7), Ink.INK)
+-	Ink.box(self, at, Vector2(1.9, 1.5), Ink.INK)
+-	Ink.box(self, at + Vector2(0.0, -0.95), Vector2(1.0, 0.25), Ink.CREAM)
+-	for i: int in 3:
+-		var bar: Vector2 = Ink.px(at + Vector2(-0.75 + i * 0.25, -0.5))
+-		draw_rect(Rect2(bar, Vector2(9, 5)), Ink.CREAM, true)
+-	Ink.initial(self, at + Vector2(0.15, 0.15), "M", Ink.CREAM, 0.6)
+ 	var dir: Vector2 = m.facing.normalized()
++	_sprite("mertz", at, Vector2(1.9, 2.0) * CAST_DRAW, dir)
+ 	var gun_root: Vector2 = at + dir * 0.9
+ 	var muzzle: Vector2 = at + dir * 2.1
+ 	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
+@@ -128,8 +109,21 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
+ 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+ 
+ 
++## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.
+ func _hp_bar(at: Vector2, frac: float) -> void:
+ 	var r: Rect2 = Rect2(Ink.px(at) - Vector2(30, 4), Vector2(60, 8))
+ 	draw_rect(r, Ink.CREAM, true)
+-	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
++	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.INK, true)
+ 	draw_rect(r, Ink.INK, false, 2.0)
++
++
++## A cast sprite (drawn facing -y) centred on `at`, turned to `facing`.
++func _sprite(
++	name: String, at: Vector2, size: Vector2, facing: Vector2, tint: Color = Color.WHITE
++) -> void:
++	if not _tex.has(name):
++		_tex[name] = load(ART + name + ".png") as Texture2D
++	draw_set_transform(Ink.px(at), facing.angle() + PI * 0.5)
++	var r: Rect2 = Rect2(-size * 0.5 * Ink.PX_PER_M, size * Ink.PX_PER_M)
++	draw_texture_rect(_tex[name], r, false, tint)
++	draw_set_transform(Vector2.ZERO)
+diff --git a/project/boot/collect_call/view/fx_view.gd b/project/boot/collect_call/view/fx_view.gd
+index 7c04f05..8cf3a85 100644
+--- a/project/boot/collect_call/view/fx_view.gd
++++ b/project/boot/collect_call/view/fx_view.gd
+@@ -7,6 +7,8 @@ extends Node2D
+ var stage: CollectCallStage
+ var _whisper_ticks: int = 0
+ var _arc_ticks: int = 0
++var _fire_tex: Texture2D = null
++var _atlas: Texture2D = null
+ var _arc_seen: int = 0
+ 
+ 
+@@ -72,39 +74,31 @@ func _whispers() -> void:
+ 		draw_arc(Ink.px(at), r, 0.0, TAU, 24, Color(Ink.TEAL, 0.8), 2.0, true)
+ 
+ 
+-## Flames stand over the whole stack: vermilion tongues with cream cores and an ink rim,
+-## swaying on the tick, with embers and smoke rising off them.
++## The crate fire seen from above (features/fx/art/fx_fire.png, 4 x 2 cells of
++## 2.5 m): one wide band over the stack, three loop fires with offset phases, embers flickering.
+ func _fire() -> void:
+ 	var at: Vector2 = stage.layout.crates_at
+-	var t: float = float(stage.tick)
+-	for i: int in 9:
+-		var base: Vector2 = at + Vector2(-4.4 + i * 1.1, 1.4)
+-		var h: float = 2.6 + sin(t * 0.21 + i * 1.7) * 0.7 + float(i % 2) * 0.6
+-		var sway: float = sin(t * 0.13 + i) * 0.35
+-		var outer: PackedVector2Array = _flame(base, 0.75, h, sway)
+-		draw_colored_polygon(outer, Ink.VERMILION)
+-		draw_polyline(outer, Ink.INK, 2.5, true)
+-		draw_colored_polygon(_flame(base, 0.35, h * 0.55, sway * 0.6), Ink.CREAM)
+-	for k: int in 12:
+-		var rise: float = float((stage.tick + k * 23) % 90) / 90.0
+-		var drift: float = sin(t * 0.1 + k) * 0.3
+-		var ember: Vector2 = at + Vector2(-4.0 + k * 0.75 + drift, -1.0 - rise * 4.0)
+-		draw_circle(Ink.px(ember), 4.0, Ink.CREAM if k % 2 == 0 else Ink.VERMILION)
++	var tick: int = stage.tick
++	_fire_cell(Vector2i(2, 1), 2, at + Vector2(0.0, 0.2), 2.0)
++	for i: int in 3:
++		var frame: int = (tick / 5 + i * 2) % 4
++		_fire_cell(Vector2i(frame, 0), 1, at + Vector2(-3.4 + i * 3.4, 0.1 * float(i % 2)), 1.3)
++	_fire_cell(Vector2i((tick / 8) % 2, 1), 1, at + Vector2(0.0, -1.6), 2.0)
++	if _atlas == null:
++		_atlas = load("res://features/fx/art/fx_atlas.png") as Texture2D
+ 	for k: int in 5:
+ 		var lift: float = float((stage.tick + k * 17) % 60) * 0.04
+ 		var puff: Vector2 = at + Vector2(-3.0 + k * 1.5, -3.5 - lift)
+-		draw_circle(Ink.px(puff), 26.0 + k * 3.0, Color(Ink.INK, 0.22))
++		var size: Vector2 = Vector2.ONE * (2.2 + k * 0.2) * Ink.PX_PER_M
++		var src: Rect2 = Rect2(Vector2(k % 4, 2) * 256.0, Vector2(256.0, 256.0))
++		var fade: Color = Color(1.0, 1.0, 1.0, 1.0 - lift / 2.4)
++		draw_texture_rect_region(_atlas, Rect2(Ink.px(puff) - size * 0.5, size), src, fade)
+ 
+ 
+-## A tongue of flame on `base`: wide at the foot, bulging, then a swaying point.
+-func _flame(base: Vector2, w: float, h: float, sway: float) -> PackedVector2Array:
+-	var pts: Array[Vector2] = [
+-		Ink.px(base + Vector2(-w, 0.0)),
+-		Ink.px(base + Vector2(-w * 1.1, -h * 0.35)),
+-		Ink.px(base + Vector2(-w * 0.45 + sway * 0.5, -h * 0.7)),
+-		Ink.px(base + Vector2(sway, -h)),
+-		Ink.px(base + Vector2(w * 0.45 + sway * 0.5, -h * 0.7)),
+-		Ink.px(base + Vector2(w * 1.1, -h * 0.35)),
+-		Ink.px(base + Vector2(w, 0.0)),
+-	]
+-	return PackedVector2Array(pts)
++## One cell (w cells wide) of the fire sheet centred on `at`, `scale` x its 2.5 m cell size.
++func _fire_cell(cell: Vector2i, w: int, at: Vector2, scale: float) -> void:
++	if _fire_tex == null:
++		_fire_tex = load("res://features/fx/art/fx_fire.png") as Texture2D
++	var size: Vector2 = Vector2(2.5 * w, 2.5) * scale * Ink.PX_PER_M
++	var src: Rect2 = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
++	draw_texture_rect_region(_fire_tex, Rect2(Ink.px(at) - size * 0.5, size), src)
+diff --git a/project/boot/collect_call/view/hud_view.gd b/project/boot/collect_call/view/hud_view.gd
+index 8058c60..1e33900 100644
+--- a/project/boot/collect_call/view/hud_view.gd
++++ b/project/boot/collect_call/view/hud_view.gd
+@@ -8,8 +8,20 @@ const TEXT_SIZE: int = 30
+ const NAME_SIZE: int = 26
+ const MARGIN: float = 36.0
+ 
++const HUD_ART: String = "res://features/hud/art/"
++## 9-slice margin of the torn-paper memo frame, in frame px (2x art), and its draw scale.
++const MEMO_MARGIN: float = 44.0
++const MEMO_SCALE: float = 0.5
++## hud_digits.png (features/hud/art/README.md): 112 x 160 cells, cap 120 px, baseline y 140.
++const DIGITS: String = "0123456789$/x+-:,.%#"
++const DIGIT_CELL: Vector2 = Vector2(112.0, 160.0)
++const DIGIT_ADVANCE: PackedFloat32Array = [
++	70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 58, 74, 66, 62, 36, 32, 32, 98, 80
++]
++
+ var stage: CollectCallStage
+ var system: QuestSystem
++var _tex: Dictionary[String, Texture2D] = {}
+ var _text: QuestText = QuestText.new()
+ 
+ 
+@@ -42,23 +54,23 @@ func _top_left() -> void:
+ 	var heat_word: String = _text.resolve(&"HUD__HEAT", "HEAT")
+ 	_say(Vector2(MARGIN + 18, MARGIN + 80), heat_word, 24, Ink.INK)
+ 	for i: int in stage.heat.max_level:
+-		var pip: Rect2 = Rect2(MARGIN + 110 + i * 46, MARGIN + 58, 36, 26)
+-		draw_rect(pip, Ink.VERMILION if i < stage.heat.level else Ink.CREAM, true)
+-		draw_rect(pip, Ink.INK, false, 3.0)
++		var pip: Rect2 = Rect2(MARGIN + 110 + i * 46, MARGIN + 52, 38, 38)
++		var lit: bool = i < stage.heat.level
++		draw_texture_rect(_art("wanted_pip_full" if lit else "wanted_pip_empty"), pip, false)
+ 
+ 
+ func _top_right(screen: Vector2) -> void:
+-	var box: Rect2 = Rect2(screen.x - MARGIN - 380, MARGIN, 380, 96)
+-	_panel(box)
++	var box: Rect2 = Rect2(screen.x - MARGIN - 420, MARGIN - 8, 420, 104)
++	draw_texture_rect(_art("cash_frame"), box, false)
+ 	var cash: String = "$%s" % _thousands(stage.wallet.cash)
+-	_say(box.position + Vector2(18, 44), cash, 34, Ink.INK)
++	_ink_digits(box.position + Vector2(112, 50), cash, 32.0)
+ 	var weapon: String = stage.weapon_name()
+ 	var weapon_text: String = _text.resolve(
+ 		StringName("WEAPON__%s" % QuestText.symbol(weapon)), weapon
+ 	)
+ 	if weapon == "":
+ 		weapon_text = _text.resolve(&"HUD__UNARMED", "unarmed")
+-	_say(box.position + Vector2(18, 82), weapon_text, 24, Ink.VERMILION)
++	_say(box.position + Vector2(112, 76), weapon_text, 22, Ink.VERMILION)
+ 
+ 
+ func _refusal() -> PackedStringArray:
+@@ -68,23 +80,61 @@ func _refusal() -> PackedStringArray:
+ 
+ 
+ func _subtitle(screen: Vector2, who: String, words: String) -> void:
+-	var box: Rect2 = Rect2(MARGIN * 4, screen.y - MARGIN - 200, screen.x - MARGIN * 8, 200)
++	var box: Rect2 = Rect2(MARGIN * 4, screen.y - MARGIN - 236, screen.x - MARGIN * 8, 236)
+ 	_panel(box)
+-	_say(box.position + Vector2(24, 40), who.to_upper(), NAME_SIZE, Ink.VERMILION)
++	_say(box.position + Vector2(24, 58), who.to_upper(), NAME_SIZE, Ink.VERMILION)
+ 	var font: Font = ThemeDB.fallback_font
+-	var at: Vector2 = box.position + Vector2(24, 84)
++	var at: Vector2 = box.position + Vector2(24, 100)
+ 	draw_multiline_string(font, at, words, 0, box.size.x - 48, TEXT_SIZE, 4, Ink.INK)
+ 
+ 
+ func _panel(r: Rect2) -> void:
+-	draw_rect(r, Ink.CREAM, true)
+-	draw_rect(r, Ink.INK, false, 4.0)
++	# 18 px of extra paper on top: the tape strip sits above the first line of text
++	_nine(_art("memo_frame"), r.grow_individual(10.0, 28.0, 10.0, 10.0), MEMO_MARGIN, MEMO_SCALE)
++
++
++func _art(name: String) -> Texture2D:
++	if not _tex.has(name):
++		_tex[name] = load(HUD_ART + name + ".png") as Texture2D
++	return _tex[name]
++
++
++## A 9-slice draw of `t` into `r`: corners kept at `scale`, edges and centre stretched.
++func _nine(t: Texture2D, r: Rect2, m: float, scale: float) -> void:
++	var ts: Vector2 = Vector2(t.get_size())
++	var sx: PackedFloat32Array = [0.0, m, ts.x - m, ts.x]
++	var sy: PackedFloat32Array = [0.0, m, ts.y - m, ts.y]
++	var d: float = m * scale
++	var dx: PackedFloat32Array = [r.position.x, r.position.x + d, r.end.x - d, r.end.x]
++	var dy: PackedFloat32Array = [r.position.y, r.position.y + d, r.end.y - d, r.end.y]
++	for j: int in 3:
++		for i: int in 3:
++			var src: Rect2 = Rect2(sx[i], sy[j], sx[i + 1] - sx[i], sy[j + 1] - sy[j])
++			var dst: Rect2 = Rect2(dx[i], dy[j], dx[i + 1] - dx[i], dy[j + 1] - dy[j])
++			draw_texture_rect_region(t, dst, src)
+ 
+ 
+ func _say(at: Vector2, words: String, size: int, color: Color) -> void:
+ 	draw_string(ThemeDB.fallback_font, at, words, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)
+ 
+ 
++## The hand-inked numeral strip on the baseline `at`, cap height 0.92 of `size` (the condensed caps
++## need more height than the sans to carry the same weight). Unknown characters advance a space.
++func _ink_digits(at: Vector2, value: String, size: float) -> void:
++	var s: float = size * 0.92 / 120.0
++	var x: float = at.x
++	for ch: String in value:
++		var k: int = DIGITS.find(ch)
++		if k < 0:
++			x += 30.0 * s
++			continue
++		var adv: float = DIGIT_ADVANCE[k]
++		var src: Rect2 = Rect2(Vector2(k * DIGIT_CELL.x, 0.0), DIGIT_CELL)
++		var pos: Vector2 = Vector2(x - (DIGIT_CELL.x - adv) * 0.5 * s, at.y - 140.0 * s)
++		draw_texture_rect_region(_art("hud_digits"), Rect2(pos, DIGIT_CELL * s), src)
++		x += adv * s
++
++
+ func _thousands(n: int) -> String:
+ 	var digits: String = str(absi(n))
+ 	var out: String = ""
+diff --git a/project/boot/collect_call/view/stage_view.gd b/project/boot/collect_call/view/stage_view.gd
+index d8da4ad..170f8e1 100644
+--- a/project/boot/collect_call/view/stage_view.gd
++++ b/project/boot/collect_call/view/stage_view.gd
+@@ -5,7 +5,11 @@ extends Node2D
+ ## catwalks and vault cage, the TUCK-IN crate stack with its bolt-through-a-robot mark, the
+ ## Harbor Road skip, and the cash taped under the phone.
+ 
++const ART: String = "res://features/quest/art/collect_call/"
++const PROPS: String = "res://features/city/art/props/"
++
+ var stage: CollectCallStage
++var _tex: Dictionary[String, Texture2D] = {}
+ 
+ 
+ func _process(_delta: float) -> void:
+@@ -17,8 +21,7 @@ func _draw() -> void:
+ 		return
+ 	_zones()
+ 	for spot: String in stage.layout.hide_at:
+-		Ink.box(self, stage.layout.hide_at[spot], Vector2(2.4, 1.6), Ink.INK)
+-		Ink.box(self, stage.layout.hide_at[spot] + Vector2(0, -0.7), Vector2(2.6, 0.3), Ink.CREAM)
++		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6), PROPS)
+ 	for phone: String in stage.layout.phones:
+ 		_phone(phone, stage.layout.phones[phone])
+ 	_crates()
+@@ -26,23 +29,23 @@ func _draw() -> void:
+ 
+ func _zones() -> void:
+ 	var l: StageLayout = stage.layout
+-	_floor(Rect2(-9, -9, 18, 18), Ink.WASH, "FACTORY ROW")
++	_tiled(Rect2(-9, -9, 18, 18), "dock_floor", 8.0)
++	_floor(Rect2(-9, -9, 18, 18), Color(0, 0, 0, 0), "FACTORY ROW")
+ 	var toner: Vector2 = l.marker("The Toner Room").at
+ 	_floor(Rect2(toner - Vector2(9, 7), Vector2(18, 14)), Color(Ink.INK, 0.22), "THE TONER ROOM")
++	_tiled(Rect2(toner - Vector2(9, 7), Vector2(18, 14)), "basement_floor", 4.0)
+ 	var dock: Vector2 = l.marker("Dock 9 bonded storage").at
+ 	_floor(Rect2(dock - Vector2(18, 18), Vector2(38, 36)), Color(Ink.INK, 0.08), "DOCK 9")
++	_tiled(Rect2(dock - Vector2(18, 18), Vector2(38, 36)), "dock_floor", 8.0)
+ 	for y: float in [-15.0, 15.0]:
+-		draw_line(Ink.px(Vector2(dock.x - 12, y)), Ink.px(Vector2(dock.x + 14, y)), Ink.INK, 6.0)
++		_tiled(Rect2(dock.x - 12, y - 0.6, 26.0, 1.2), "catwalk", 4.0, 1.2)
+ 	var cage: Vector2 = l.marker("Dock 9 vault cage").at
+ 	var cage_rect: Rect2 = Rect2(Ink.px(cage - Vector2(8, 10)), Vector2(16, 6) * Ink.PX_PER_M)
+-	for i: int in 33:
+-		var x: float = cage_rect.position.x + i * cage_rect.size.x / 32.0
+-		draw_line(
+-			Vector2(x, cage_rect.position.y), Vector2(x, cage_rect.end.y), Color(Ink.INK, 0.5), 1.5
+-		)
++	_tiled(Rect2(cage - Vector2(8, 10), Vector2(16, 6)), "cage_mesh", 2.0)
+ 	draw_rect(cage_rect, Ink.INK, false, Ink.LINE_PX)
+ 	var road: Vector2 = l.marker("Harbor Road").at
+-	_floor(Rect2(road.x - 22, road.y + 3, 50, 5), Color(Ink.INK, 0.55), "HARBOR ROAD")
++	_road(Rect2(road.x - 22, road.y + 3, 50, 5))
++	_floor(Rect2(road.x - 22, road.y + 3, 50, 5), Color(0, 0, 0, 0), "HARBOR ROAD")
+ 
+ 
+ func _floor(r: Rect2, fill: Color, name: String) -> void:
+@@ -52,11 +55,57 @@ func _floor(r: Rect2, fill: Color, name: String) -> void:
+ 	Ink.label(self, r.position + Vector2(r.size.x * 0.5, 0.8), name, 30, Ink.INK)
+ 
+ 
++func _art(name: String, dir: String = ART) -> Texture2D:
++	if not _tex.has(name):
++		_tex[name] = load(dir + name + ".png") as Texture2D
++	return _tex[name]
++
++
++## A texture tiled over a rect in metres, one texture repeat = tile_w x tile_h metres.
++func _tiled(r: Rect2, name: String, tile_w: float, tile_h: float = -1.0) -> void:
++	var t: Texture2D = _art(name)
++	var th: float = tile_w if tile_h < 0.0 else tile_h
++	var reps: Vector2 = Vector2(r.size.x / tile_w, r.size.y / th)
++	var x: float = 0.0
++	while x < reps.x:
++		var y: float = 0.0
++		while y < reps.y:
++			var cell: Vector2 = Vector2(minf(1.0, reps.x - x), minf(1.0, reps.y - y))
++			var at: Vector2 = r.position + Vector2(x * tile_w, y * th)
++			var dst: Rect2 = Rect2(Ink.px(at), Vector2(cell.x * tile_w, cell.y * th) * Ink.PX_PER_M)
++			draw_texture_rect_region(t, dst, Rect2(Vector2.ZERO, Vector2(t.get_size()) * cell))
++			y += 1.0
++		x += 1.0
++
++
++## The city's D4 road tile between its two edge lines (texture rows 20..748), scaled uniformly
++## so that band is the road's height, repeated along x and clipped at the end.
++func _road(r: Rect2) -> void:
++	var band: Rect2 = Rect2(0.0, 20.0, 768.0, 728.0)
++	var rep: float = r.size.y * band.size.x / band.size.y
++	var x: float = 0.0
++	var k: int = 0
++	while x < r.size.x:
++		var tile: String = ["road_straight_tone", "road_straight_tone_b", "road_straight_tone_c"][
++			k % 3
++		]
++		var t: Texture2D = _art(tile, "res://features/city/art/ground/")
++		var w: float = minf(rep, r.size.x - x)
++		var src: Rect2 = Rect2(band.position, Vector2(band.size.x * w / rep, band.size.y))
++		var dst: Rect2 = Rect2(
++			Ink.px(r.position + Vector2(x, 0.0)), Vector2(w, r.size.y) * Ink.PX_PER_M
++		)
++		draw_texture_rect_region(t, dst, src)
++		x += rep
++		k += 1
++
++
++func _sprite(name: String, at: Vector2, size: Vector2, dir: String = ART) -> void:
++	draw_texture_rect(_art(name, dir), Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M), false)
++
++
+ func _phone(phone: String, at: Vector2) -> void:
+-	Ink.box(self, at + Vector2(0.0, 0.3), Vector2(0.25, 0.9), Ink.INK)
+-	Ink.box(self, at + Vector2(0.0, -0.3), Vector2(0.9, 0.9), Ink.INK)
+-	Ink.box(self, at + Vector2(-0.15, -0.35), Vector2(0.25, 0.6), Ink.VERMILION)
+-	Ink.label(self, at + Vector2(0.0, -1.1), "PAYPHONE", 18, Ink.INK)
++	_sprite("payphone", at, Vector2(1.3, 1.3), PROPS)
+ 	if stage.router.ringing(phone):
+ 		var pulse: float = float(stage.tick % 30) / 30.0
+ 		for k: int in 3:
+@@ -67,12 +116,7 @@ func _phone(phone: String, at: Vector2) -> void:
+ 
+ 
+ func _cash(env: Vector2) -> void:
+-	Ink.box(self, env, Vector2(1.4, 0.8), Ink.CREAM)
+-	var a: Vector2 = env + Vector2(-0.8, -0.3)
+-	draw_line(Ink.px(a), Ink.px(env + Vector2(-0.2, 0.4)), Ink.VERMILION, 6.0)
+-	draw_line(Ink.px(env + Vector2(0.2, -0.4)), Ink.px(env + Vector2(0.8, 0.3)), Ink.VERMILION, 6.0)
+-	Ink.label(self, env, "$1,500", 18, Ink.INK)
+-	Ink.label(self, env + Vector2(0.0, 0.75), "taped under", 14, Ink.INK)
++	_sprite("cash_taped", env, Vector2(1.4, 0.8))
+ 
+ 
+ func _crates() -> void:
+@@ -80,8 +124,8 @@ func _crates() -> void:
+ 	for row: int in 2:
+ 		for col: int in 5:
+ 			var c: Vector2 = at + Vector2(-4.0 + col * 2.0, -1.0 + row * 1.6)
+-			Ink.box(self, c, Vector2(1.8, 1.4), Ink.CREAM)
+-			_bolt_robot(c + Vector2(0.45, 0.0))
++			var crate: String = "tuckin_crate_hit" if stage.crates_burning else "tuckin_crate"
++			_sprite(crate, c, Vector2(1.8, 1.4))
+ 	Ink.label(self, at + Vector2(0.0, -2.1), stage.layout.crates_label, 22, Ink.INK)
+ 
+ 
