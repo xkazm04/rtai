@@ -34,7 +34,8 @@ evidence-9df230f (all gates PASS on a clean tree),
 
 package v9 print `d5c` at 32 px/m (02), D5 sidewalk tile alone (rejected-d5-sidewalk-32ppm.png), plain
 D5 lamp (rejected/), axis-aligned corner traffic lights (rejected/), full D5 at 32 px/m (18), the
-corner lamp turned into the block (19), the chalk robot decal (20).
+corner lamp turned into the block (19), the chalk robot decal (20), the 2 x 2 roof plate rotated
+180 deg (22: its shadows fall upper-left).
 
 ## Owner calls for the 18:00 sync
 
