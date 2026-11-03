@@ -26,6 +26,9 @@ var settled_every: int = 1
 ## How far (px) along the blow a kill's pool starts from the hit point (the D4/D5 city's dead
 ## slide there: CombatBlood sets it per kill; noir's own scenes keep the 4 px).
 var pool_lead_px: float = 4.0
+## A kill pool's full radius (px); 0 = blood_fx.json pool.radius_px. CombatBlood sets it
+## from game.pool_radius_px when that key exists (a D4/D5-only size; noir keeps the table's).
+var pool_r1_px: float = 0.0
 var _busy_until: int = 0
 var _drawn_at: int = -1
 var _pos: PackedVector2Array = PackedVector2Array()
@@ -126,6 +129,7 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var grow: int = pool["grow_ticks"]
 		var r0: float = r[0]
 		var r1: float = r[1]
+		r1 = pool_r1_px if pool_r1_px > 0.0 else r1
 		var run: float = pool.get("run", 0.0)
 		var i: int = _add_decal(at + dir.normalized() * pool_lead_px, r1, grow, r0, delay)
 		_ring.set_dir(i, dir.normalized() * run)

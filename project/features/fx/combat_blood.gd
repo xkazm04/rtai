@@ -63,8 +63,7 @@ func _init() -> void:
 	if tokens.has(&"blood"):
 		blood.set_ground(tokens[&"blood"])
 	_game = blood.p.get("game", {})
-	var lead_m: float = _game.get("pool_lead_m", 0.125)
-	_slide_px = lead_m * SimConst.PX_PER_M
+	_pool_from_game()
 	if not NoirLook.requested():  # the noir gate prints a body this dark as black
 		var dark: Color = NoirPack.rgb(_game.get("pool_dark", [0.46, 0.0, 0.03]))
 		blood.set_dark(tokens[&"blood_dark"] if tokens.has(&"blood_dark") else dark)
@@ -179,6 +178,14 @@ func hit_robot(pos_px: Vector2) -> void:
 	var kind: String = player.get("hit", "robot_hit")
 	fx.splash(pos_px, Vector2.from_angle(hits * 2.4), kind)
 	leak.start()
+
+
+## The D4/D5 pool's lead (the city's death slide) and its optional size (blood_fx.json game).
+func _pool_from_game() -> void:
+	var lead_m: float = _game.get("pool_lead_m", 0.125)
+	_slide_px = lead_m * SimConst.PX_PER_M
+	var pool_r1: float = _game.get("pool_radius_px", 0.0)
+	blood.pool_r1_px = pool_r1
 
 
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).

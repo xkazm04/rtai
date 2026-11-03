@@ -130,6 +130,15 @@ func test_quest_kills_keep_the_pool_at_the_hit() -> void:
 	assert_true(b.blood.has_pool_at(Vector2(324, 320), 6.0), "events path: 4 px lead, no slide")
 
 
+func test_a_game_pool_size_overrides_the_table() -> void:
+	var b: CombatBlood = _blood("noir")
+	b.blood.pool_r1_px = 12.0
+	b.kill_human(Vector2(320, 320), Vector2.RIGHT)
+	var r1: PackedFloat32Array = b.blood._ring._r1
+	assert_true(r1.has(12.0), "game.pool_radius_px wins over pool.radius_px")
+	assert_false(r1.has(22.0), "the table radius is not used")
+
+
 func test_pool_body_is_the_doctrine_blood_dark() -> void:
 	var b: CombatBlood = CombatBlood.new()
 	var want: Color = Color8(0x54, 0x00, 0x05)
