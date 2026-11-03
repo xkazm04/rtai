@@ -1084,3 +1084,16 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   gdformat + gdlint clean, `git apply --check` clean on main 721fbbb; the old one kept as `q1_view_art_i6.patch`),
   copied to `evidence/iter12/`. Unit tests in scratch-q1 with it: 166 passed, 0 failed. Ladder row "i12c".
   REQUEST 16 now means this patch.
+- 03:58 MILESTONE quest 1's Rivet in D4 (the hero was an "R" box in the only playable quest). No new AI image: a new dev
+  rig `dev/showcase/rivet_sprite.gd` (+ `_run`) draws the real Rivet rig (CharacterRigs, idle, facing -y, 120 px/m)
+  over flat black and flat white; `tools/rivet_matte.py` recovers colour + alpha, pads the body to the image centre
+  -> `features/quest/art/collect_call/cast_rivet.png` (372 x 468 = 3.1 x 3.9 m with the arms; README row: a stand-in
+  until the quest view hosts the rig, re-capture if the parts change). First capture cropped at 2.6 m cut the arms
+  (re-shot at 4 m). Without a rim it lacked the cast's sticker read on the grey dock (`after_q1r/`); a 5 px cream rim
+  (`tools/sprite_rim.py`) kept (`after_q1r2/`). Quest view patch: `_rivet()` draws the sprite at true scale turned to
+  `facing` (the hidden-in-crate peek and the HP bar stay). Frames (quest 1's own grabber, seeded)
+  `before_q1h|after_q1r|after_q1r2/0*.png`, crops `work/q1r_ab.png`: a clear gain on dock, office and fire beats.
+  `q1_view_art.patch` regenerated (+183 / -92), `git apply --check` clean on main 721fbbb, copied to evidence/iter12.
+  Provenance line (capture of the Rivet part pixels), ladder rows "i12d". 0 Codex.
+  Still placeholders in quest 1: the patrol cops ("C" discs; the same capture would work for the cop rig), the arc
+  ball and whisper rings (code-drawn FX).
