@@ -883,3 +883,12 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   digital stipple that dirties the slabs and costs the cream peds some separation. A softer speck falls under
   `step_lo` and prints as plain paper. So the paper grain is a print-pass matter (look_d4 `grit`, visual-engine),
   not texture specks. Files restored from `masters:backup_pg/`; tool kept for the record.
+- 02:48 MILESTONE junction zebras redrawn. Selftest junction (`build/evidence/selftest-48ppm.png`): the crossings
+  were 10 thin stripes a side, the corner stripes overlapping into "+", "L", "T" glyphs (the south crossing read
+  "TIIIIIIr") and asphalt wear blotches inside the paint printing as ink pepper. `masters:tools/zebra_redraw.py`:
+  old stripes + outline filled with the base asphalt and re-grained (iteration-6 aggregate), 6 clean stripes a side
+  (0.5 m wide, 0.375 m gaps, the old 1 m band), corners left as asphalt, 2 px ink outline, 0.4 % fine wear.
+  Probed 7 x 0.46 m too: also clean, but 6 x 0.5 m is closer to the target's stripe / gap rhythm. In-engine selftest
+  (same seed) `zb_before|zb_z6|zb_z7/selftest-{32,48}ppm.png`, crops `work/zb_ab{32,48}.png`: bold and clean at both,
+  peds read on the stripes. 64 px/m: no fixed junction shot exists (selftest = 32/48). Provenance line, README row 11,
+  ladder rows. Commit 5b3ce9c. Original in `masters:backup_zb/`. 0 Codex.
