@@ -1392,3 +1392,4 @@ item47 (owner A/B) -> night_iter7_summary.png.
 - New committed code this iteration (all default-off / no-op): look_d5_print paper_hi + lo_soft uniforms,
   D5_PRINT_SET dev switch. A broken commit (1b1cc5f, PAPER_HI const missing) was fixed in the next one.
 - NEXT 35 amended: adopting the print = look_d5_print with print.paper_hi 1.0 from the params JSON + the v9 plates.
+- 05:56 GATES (final, iteration 9): evidence tool (--no-parity --no-bench) ALL PASS at f1bc6e2 (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 95 untracked evidence PNGs moved aside and restored; tree clean. The selftest read 102 actors at 32 px/m (103 before); two more runs at f1bc6e2: 103 / 82 colours and 103 / 76: selftest noise (its frame timing), not a change of mine. Parity / bench not run (no native build in this worktree).
