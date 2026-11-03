@@ -36,6 +36,7 @@ const CARNAGE_SHOTS: Dictionary[int, String] = {
 	560: "ram-3",
 	660: "aftermath",
 	900: "after-the-wreck",
+	2400: "burnt-out",
 }
 const YIELD_SHOTS: Dictionary[int, String] = {
 	12: "yield-cars-coming",
