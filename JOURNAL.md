@@ -212,3 +212,12 @@ cruiser in city_frame; KingPlan into the boss ticket).
   city0 32/48 and hero frames re-shot with the ring; portraits 3-way (orig | navy | dome) and the dome dialogue frame.
   Dropped from the 15: the cop-shoulders A/B frame (its B panel was from an earlier tree; the A/B question stays in NEXT,
   file frames/cop-shoulders-32ppm-verm-A-B.png kept on disk).
+- Patch attribution: the same merged scratch tree WITHOUT the patch gives the identical selftest line (goldens 6/11
+  worst 2.47, block 0/5 worst 3.63, same accent shares, "no new off-doctrine accents"): the golden drift is the merge
+  alone, the patch moves nothing at the golden sites. Scratch worktree gtai-wt/scratch-cast-plate removed after.
+- OPTION (not shipped) King's portrait cape in ink: masters king_cape/cape.py, frames/king-cape-option.png (owner
+  question 3 shown, not asked). Hand-set sash band per portrait (measured stripe centres per row); vermilion components
+  >= 300 px with r - max(g,b) > 90 outside the band -> a charcoal ramp (folds kept); sash, gauge needle, rust kept.
+  Rejected on the way: a 31 px density mask (inked the dense sash bottom), rl > 30 (blotched King's warm steel), and a
+  self-intersecting band polygon (my bug: extra closing points dropped half the band). A few cape folds inside the band
+  stay vermilion. Owner frames: the dialogue frame swapped out for this one (still 15; file kept).
