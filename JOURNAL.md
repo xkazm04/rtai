@@ -1532,3 +1532,24 @@ Morning reading order: night_iter10_summary.png -> item50 / item50b -> item52 ->
   the rule 0 / 0. So the 1-px rule overlays (imported without mipmaps, item42) are most of the extra popping; the thin
   print alone flips a bit more than look_d4 (its dark-side ink is a harder edge threshold) at a lower residual. Every
   print pops under a sub-pixel camera. Board evidence/item53_subpx_camera.png (looked at; split lines added).
+- 06:42 GATES (final, iteration 10): evidence tool (--no-parity --no-bench) ALL PASS at 4bd9b76 (lint 13/13 over
+  195 files, unit 149/0, scenarios 8/0, selftest ok); 103 untracked evidence PNGs moved aside and restored; tree
+  clean. night_iter10_summary.png gained the item53 strip and two lines (looked at). Ladder row for item53. Scratch
+  deleted (pans, King motion, roof rounds; numbers above). Kept: i10r0, a10k0 / a10k00 / a10k05, i10u*, i10p*, i10c_*.
+
+## Summary addendum (iteration 10, after 06:30)
+- Rejected: look_d5_ui on the roofs (D5_UI_ROOF): the package's roofs already sit at the mock's roof line energy at
+  32 px/m (0.0926 vs 0.0935); sharper sampling overshoots and costs mid-tones.
+- FOUND (item53): the game camera is not pixel-snapped; all dev scenes are. Sub-pixel, every thresholding print
+  pops; the package's 1-px ruled roof overlays most (flip 0.145 vs look_d4 0.065, thin print alone 0.091). Snapped: 0.
+  Every pan-swim number of the night holds only for a snapped camera.
+- New dev switches: D5_UI_ROOF=<sharp>, D5_SUBPX=1 (d5_showcase_run._frame_at: no snap, as the game).
+
+NEXT (final, iteration 10; 38-40 above, 35-37, 31-34, 27-30 stand):
+41. Visual-engine lane (BEFORE NEXT 35): snap the world camera to whole screen px (city_view._place_camera: round
+    camera.position * zoom; world_px is already rounded), then re-run item53 in-game. Check the snapped pan's judder at
+    48 px/m (5.84 px per tick at 7.3 m/s steps 5 / 6 px), unmeasured. If a sub-pixel camera is kept, the ruled roof
+    overlays (item42) should not ship as 1-px rules without mipmaps.
+42. d5-close / visual-engine: re-measure the night's motion claims sub-pixel (D5_SUBPX=1) where they matter: the walk
+    (rigs move sub-pixel already, so d5_walk holds), the pan (item32, item44-46 shadows).
+Morning reading order: night_iter10_summary.png -> item53 -> item50 / item50b -> item52 -> item51, then iteration 9's.
