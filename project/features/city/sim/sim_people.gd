@@ -7,6 +7,7 @@ var _s: CitySimState
 var _h: CitySimHash
 var _solid: CitySimSolid
 var _flow: CitySimFlow
+var _body: CitySimBody
 var _dx: float = 0.0
 var _dy: float = 0.0
 var _spd: float = 0.0
@@ -14,10 +15,13 @@ var _x: float = 0.0
 var _y: float = 0.0
 
 
-func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> void:
+func _init(
+	state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow, body: CitySimBody
+) -> void:
 	_s = state
 	_h = hash_grid
 	_flow = flow
+	_body = body
 	_solid = CitySimSolid.new(state)
 
 
@@ -30,6 +34,9 @@ func ped(i: int, dt: float) -> void:
 		_s.v[i] = vv
 		_s.px[i] = x + _s.hx[i] * vv * dt
 		_s.py[i] = y + _s.hy[i] * vv * dt
+		return
+	if m == SimConst.M_DOWN:
+		_body.down(i, dt)
 		return
 	_dx = _s.hx[i]
 	_dy = _s.hy[i]
@@ -47,6 +54,9 @@ func cop(i: int, dt: float, tgx: float, tgy: float) -> void:
 	var x: float = _s.px[i]
 	var y: float = _s.py[i]
 	if _s.mode[i] == SimConst.M_DEAD:
+		return
+	if _s.mode[i] == SimConst.M_DOWN:
+		_body.down(i, dt)
 		return
 	var ax: float = tgx - x
 	var ay: float = tgy - y
@@ -162,13 +172,18 @@ func _move(i: int, x0: float, y0: float, dt: float) -> void:
 	_y = y0 + _dy * _spd * dt
 	if _s.tier[i] == 0:
 		_crowd(i)
-		_solid.x = _x
-		_solid.y = _y
+		_body.x = _x
+		_body.y = _y
+		_body.push(i)
+		_solid.x = _body.x
+		_solid.y = _body.y
 		_solid.push_out(0.3)
 		_x = _solid.x
 		_y = _solid.y
 	_s.px[i] = _x
 	_s.py[i] = _y
+	if _s.mode[i] == SimConst.M_DOWN:
+		return  # tackled this step (CitySimBody.push)
 	_s.hx[i] = _dx
 	_s.hy[i] = _dy
 	_s.v[i] = _spd

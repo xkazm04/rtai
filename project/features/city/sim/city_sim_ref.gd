@@ -9,7 +9,8 @@ extends CitySimBackend
 var _s: CitySimState = CitySimState.new()
 var _h: CitySimHash = CitySimHash.new(_s)
 var _flow: CitySimFlow = CitySimFlow.new(_s)
-var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow)
+var _body: CitySimBody = CitySimBody.new(_s, _h)
+var _people: CitySimPeople = CitySimPeople.new(_s, _h, _flow, _body)
 var _cars: CitySimCars = CitySimCars.new(_s, _h, _flow)
 var _shots: CitySimShots = CitySimShots.new(_s, _h)
 var _render: CitySimRender = CitySimRender.new(_s)
@@ -67,6 +68,7 @@ func kill(i: int) -> void:
 
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_s.time += dt
+	_body.knocks.clear()
 	_tier(dt, camx, camy)
 	_h.build(camx, camy)
 	_flow.update(tgx, tgy)
@@ -80,6 +82,7 @@ func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 			_people.cop(i, dt, tgx, tgy)
 		else:
 			_cars.car(i, dt, tgx, tgy)
+	_body.resolve()
 	_shots.step(dt)
 	_count()
 
@@ -118,6 +121,14 @@ func snapshot() -> PackedFloat64Array:
 		if _s.qalive[k] != 0:
 			out.append_array([SimConst.SNAP_PROJ_BASE + k, _s.qx[k], _s.qy[k]])
 	return out
+
+
+func set_body(spec: PackedFloat64Array) -> void:
+	_body.set_spec(spec)
+
+
+func body_result() -> PackedFloat64Array:
+	return _body.result()
 
 
 func set_render(mms: Array[RID], clips: PackedInt32Array) -> void:

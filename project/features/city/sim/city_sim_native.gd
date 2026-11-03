@@ -81,6 +81,15 @@ func snapshot() -> PackedFloat64Array:
 	return s if s is PackedFloat64Array else PackedFloat64Array()
 
 
+func set_body(spec: PackedFloat64Array) -> void:
+	_call(&"set_body", [spec])
+
+
+func body_result() -> PackedFloat64Array:
+	var r: Variant = _call(&"body_result", [])
+	return r if r is PackedFloat64Array else PackedFloat64Array()
+
+
 func set_render(mms: Array[RID], clips: PackedInt32Array) -> void:
 	_call(&"set_render", [Array(mms), clips])
 

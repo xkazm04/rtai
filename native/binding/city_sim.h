@@ -36,6 +36,8 @@ public:
 	void step(double dt, double camx, double camy, double tgx, double tgy);
 	PackedInt32Array get_counters() const;
 	PackedFloat64Array snapshot() const;
+	void set_body(const PackedFloat64Array &spec);
+	PackedFloat64Array body_result() const;
 	void set_render(const Array &mms, const PackedInt32Array &clips);
 	void write_render(double vx0, double vy0, double vx1, double vy1);
 	PackedInt32Array get_render_counts() const;

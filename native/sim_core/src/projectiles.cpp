@@ -61,7 +61,7 @@ void CityCore::scare(double x, double y) {
 	int n = query(x, y, 2, buf);
 	for (int q = 0; q < n; q++) {
 		int j = buf[q];
-		if (kind_[j] != K_PED || mode_[j] == M_DEAD) continue;
+		if (kind_[j] != K_PED || mode_[j] == M_DEAD || mode_[j] == M_DOWN) continue;
 		double rx = px_[j] - x, ry = py_[j] - y;
 		if (rx * rx + ry * ry < 81.0) {
 			mode_[j] = M_FLEE;

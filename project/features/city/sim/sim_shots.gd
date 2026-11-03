@@ -65,6 +65,8 @@ func _scare(x: float, y: float) -> void:
 	for j: int in _h.query(x, y, 2):
 		if _s.kind[j] != SimConst.K_PED or _s.mode[j] == SimConst.M_DEAD:
 			continue
+		if _s.mode[j] == SimConst.M_DOWN:
+			continue
 		var rx: float = _s.px[j] - x
 		var ry: float = _s.py[j] - y
 		if rx * rx + ry * ry < 81.0:

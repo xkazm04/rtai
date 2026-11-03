@@ -23,6 +23,10 @@ extends RefCounted
 ## Every live actor (SNAP_STRIDE floats) then every live projectile, in slot order: the parity
 ## and replay state (SIM-05).
 @abstract func snapshot() -> PackedFloat64Array
+## The player body for the next step (SimConst.BD_LEN floats, BD_X..BD_FLEE; features/bodies).
+@abstract func set_body(spec: PackedFloat64Array) -> void
+## After a step: BR_X, BR_Y (the body pushed out of people), BR_N, then (slot, x, y) knockdowns.
+@abstract func body_result() -> PackedFloat64Array
 @abstract func set_render(mms: Array[RID], clips: PackedInt32Array) -> void
 @abstract func write_render(vx0: float, vy0: float, vx1: float, vy1: float) -> void
 @abstract func get_render_counts() -> PackedInt32Array

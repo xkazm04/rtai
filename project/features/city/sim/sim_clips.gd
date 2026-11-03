@@ -6,6 +6,7 @@ extends RefCounted
 const IDLE: int = 0
 const WALK: int = 1
 const RUN: int = 2
+const HIT: int = 3
 const DEATH: int = 4
 const SHOOT: int = 5
 
@@ -15,6 +16,8 @@ static func clip_of(s: CitySimState, i: int) -> int:
 	var k: int = s.kind[i]
 	if m == SimConst.M_DEAD:
 		return DEATH
+	if m == SimConst.M_DOWN:
+		return HIT
 	if k == SimConst.K_COP and s.t1[i] > 0.0:
 		return SHOOT
 	if s.v[i] < 0.2:
@@ -29,6 +32,8 @@ static func frame_of(s: CitySimState, i: int, cl: int, clip: Vector2i) -> int:
 	var cnt: int = clip.x
 	if cl == DEATH:
 		return mini(int(s.t2[i] * clip.y), cnt - 1)
+	if cl == HIT:
+		return cnt - 1
 	if cl == SHOOT:
 		return mini(int((0.25 - s.t1[i]) * 24.0), cnt - 1)
 	if cl == IDLE:

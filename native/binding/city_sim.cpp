@@ -71,6 +71,19 @@ PackedInt32Array CitySim::get_counters() const {
 	return out;
 }
 
+void CitySim::set_body(const PackedFloat64Array &spec) {
+	if (spec.size() != gtai::sim::BD_LEN) return;
+	core_->set_body(spec.ptr());
+}
+
+PackedFloat64Array CitySim::body_result() const {
+	std::vector<double> r = core_->body_result();
+	PackedFloat64Array out;
+	out.resize((int64_t)r.size());
+	for (size_t k = 0; k < r.size(); k++) out.set((int64_t)k, r[k]);
+	return out;
+}
+
 PackedFloat64Array CitySim::snapshot() const {
 	std::vector<double> s = core_->snapshot();
 	PackedFloat64Array out;
@@ -148,6 +161,8 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("step", "dt", "camx", "camy", "tgx", "tgy"), &CitySim::step);
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
 	ClassDB::bind_method(D_METHOD("snapshot"), &CitySim::snapshot);
+	ClassDB::bind_method(D_METHOD("set_body", "spec"), &CitySim::set_body);
+	ClassDB::bind_method(D_METHOD("body_result"), &CitySim::body_result);
 	ClassDB::bind_method(D_METHOD("set_render", "mms", "clips"), &CitySim::set_render);
 	ClassDB::bind_method(D_METHOD("write_render", "vx0", "vy0", "vx1", "vy1"), &CitySim::write_render);
 	ClassDB::bind_method(D_METHOD("get_render_counts"), &CitySim::get_render_counts);

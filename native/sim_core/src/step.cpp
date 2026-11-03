@@ -6,6 +6,7 @@ namespace gtai::sim {
 
 void CityCore::step(double dt, double camx, double camy, double tgx, double tgy) {
 	time_ += dt;
+	knocks_.clear();
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] == 0) continue;
 		int k = kind_[i];
@@ -27,6 +28,7 @@ void CityCore::step(double dt, double camx, double camy, double tgx, double tgy)
 		else if (k == K_COP) cop(i, dt, tgx, tgy);
 		else car(i, dt, tgx, tgy);
 	}
+	body_resolve();
 	projectiles(dt);
 	count();
 }
