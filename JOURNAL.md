@@ -259,3 +259,21 @@ REQUESTS 1-4 still stand (d5-cast cop_blue rigs/atlas; d5-combat blood names; ve
   GENERATOR 13; block 32 px/m golden re-blessed (far 2.25 %). Codex used today: 4.
   evidence/d5-city/27-long-t1/.
 - FRICTION: selftest "no result (needs a display)" = GODOT_BIN not exported in the shell.
+- MILESTONE 16:36 evidence at bba930d on a clean tree (--no-bench): lint, unit 335, scenarios 8,
+  parity, selftest all PASS -> evidence/d5-city/evidence-bba930d/. Ladder 7 foci (ladder-iter6.png,
+  masters ladder.png); frames.json 15 entries. 0 camera-break rejects this session; 1 change
+  rejected by eye earlier (rotated 2 x 2 plate); 1 what-if not adopted (70% share).
+
+## NEXT (final, 16:40; supersedes the 16:15 NEXT)
+Branch d-city at the commit after bba930d; all gates PASS at bba930d. The bench (PASS, CONTENDED) ran at
+61e9222, before plates C and 81: re-bench idle if the owner wants the final number.
+1. OWNER CALLS at 18:00: road width ~17 m vs T1 ~10 m (11-road-width-mock; the 48 px/m drive frame is
+   mostly asphalt); keep plazas (12%)?; how coarse should rooftops go (2 x 2 at 35% of blocks + plate
+   81 in a third of the long slots; focus 10 is the closest street frame to T1).
+2. Perimeter coarseness: more T1-scale long plates (2-3 more on layout templates, fit_roof.py with a
+   height arg), and consider long slots on the street-facing rows more often than 30%.
+3. Overlay at 32 px/m: +0.9 ms twice; the shader-reading hypothesis (content-dependent branches) is in
+   24-bench-end/README.md, test idle with hatch 0 / street_hatch 0.
+4. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13).
+Codex: 4 images used today by this lane (of ~30). REQUESTS 1-4 still stand (d5-cast cop_blue rigs and
+atlas; d5-combat blood names; vehicles cruiser accents).
