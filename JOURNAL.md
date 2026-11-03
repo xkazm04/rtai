@@ -1310,3 +1310,7 @@ night_iter7_summary.png and the iteration-7 order.
   0.19 / 0.21). Under the thin print those D4 roofs ALREADY print mid-heavy; the tone moves them away from their D5
   neighbours. The cream I saw at 64 misled me; the numbers say no. package_shot.sh keeps D5_ROOF_DERIVE=0 (i9v9b = i9mot
   0 px at 32-128, deleted). Scratch deleted: i9der, a33der.
+- 05:40 NO LEVER (option kept at its no-op default): build_roofs.py D5_ROOF_CAP_G (lighter pen lines on the parapet
+  cap band, 4-34 px). i9cap16 (1.6, package v9): roof-area dark 0.176 -> 0.172, frame L 0.455 -> 0.457: the leftover
+  dark is the outer outline and the building shadow strips, not the cap lines. Not shot further; i9cap16 deleted.
+  README 9.1 gained the one-command plate rebuild for adoption and the two rejections.

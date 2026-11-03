@@ -257,6 +257,11 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    read identical, pan 0.00000. NOT for the committed print (roof mid +0.009, frame darker): it rides with look_d5_print.
    Reproduce: `bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round>` (v9 is the default;
    pre-v9: `D5_ROOF_SHADE=0 D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65 D5_FIST_WASH=0.18`).
+   If the print is adopted, the committed plates become v9 with ONE command (masters, then commit the 7 PNGs):
+   `D5_ROOF_LIFT_B=0.6 D5_ROOF_LIFT_B_BY=union_hall:0.8 D5_ROOF_SHADE=1 D5_ROOF_SHADE_MOT=1 D5_FIST_WASH=0 python tools/build_roofs.py`.
+   Tried and rejected: the same tone on derived plates for the D4-only roofs (warehouse, long, helipad): under the
+   thin print they already print mid-heavy and the tone lowers it (journal 05:37); lighter parapet-cap lines
+   (`D5_ROOF_CAP_G` 1.6: roof dark 0.176 -> 0.172, no lever).
 2. **Roof areas, what is left**: dark 0.176 vs the mock's 0.149, but most of that is the mask: our zebra (denser
    bars, street between them) falls inside the bright mask. Without the zebra box: v8 0.723 / 0.107 / 0.170, v9
    0.702 / 0.138 / 0.160 (paper / mid / dark), so 0.011 more dark than the mock, from our heavier parapet outlines. The membrane's hue is NOT a gap: its mid pixels' median is 174,154,138 vs the mock's 165,146,127 (r-b 36
