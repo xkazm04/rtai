@@ -21,9 +21,24 @@ const CELL_PX: int = 128
 ## The bake camera: 48 px/m (zoom 1.5), so a cell covers 128 / 1.5 world px (2.67 m).
 const BAKE_ZOOM: float = 1.5
 const SHADER_PATH: String = "res://features/characters/crowd_atlas.gdshader"
+## The D5 twin (d5-cast, 2026-11-03): the same layout and world cell, baked at 64 px/m with the D5
+## part overlays at full, so people past the 16 full rigs print D5 at arena zoom too (171 px cells).
+const D5_CELL_PX: int = 171
 
 var texture: Texture2D = null
 var baked: bool = false
+var cell_px: int = CELL_PX
+var bake_zoom: float = BAKE_ZOOM
+var d5: bool = false
+
+
+## The D5 twin: its bake zoom keeps cell_world_px(), so the people layer swaps only the texture.
+static func make_d5() -> CrowdAtlas:
+	var a: CrowdAtlas = CrowdAtlas.new()
+	a.cell_px = D5_CELL_PX
+	a.bake_zoom = D5_CELL_PX / cell_world_px()
+	a.d5 = true
+	return a
 
 
 static func cols() -> int:

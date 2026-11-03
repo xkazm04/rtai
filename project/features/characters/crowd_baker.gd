@@ -11,15 +11,23 @@ const TICK: float = 1.0 / 60.0
 var _rigs: Array[CutRig] = []
 var _vp: SubViewport = null
 var _image: Image = null
+var _cell: int = CrowdAtlas.CELL_PX
+## The D5 twin's own overlay materials (plain, hit tint): RigDetail's are shared with the live
+## rigs, whose per-frame set_view would fade them out mid-bake.
+var _d5_mats: Array[ShaderMaterial] = []
 
 
+## A D5 atlas (CrowdAtlas.make_d5) bakes with CrowdBakeDetail overlays at full on every rig.
 func bake(atlas: CrowdAtlas) -> void:
 	if DisplayServer.get_name() == "headless":
 		return
 	var saved_zoom: float = PartMaterials.view_px / CutRig.SC
-	PartMaterials.set_view(CrowdAtlas.BAKE_ZOOM)
-	_make_stage()
-	var cell: int = CrowdAtlas.CELL_PX
+	_cell = atlas.cell_px
+	if atlas.d5:
+		_d5_mats = CrowdBakeDetail.materials(atlas.bake_zoom)
+	PartMaterials.set_view(atlas.bake_zoom)
+	_make_stage(atlas.bake_zoom)
+	var cell: int = _cell
 	_image = Image.create_empty(
 		CrowdAtlas.cols() * cell, CrowdAtlas.rows() * cell, false, Image.FORMAT_RGBA8
 	)
@@ -39,14 +47,14 @@ func bake(atlas: CrowdAtlas) -> void:
 	PartMaterials.set_view(saved_zoom)
 
 
-func _make_stage() -> void:
-	var cell: int = CrowdAtlas.CELL_PX
+func _make_stage(zoom: float) -> void:
+	var cell: int = _cell
 	_vp = SubViewport.new()
 	_vp.size = Vector2i(CrowdAtlas.LOOKS * cell, cell)
 	_vp.transparent_bg = true
 	_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	add_child(_vp)
-	_vp.canvas_transform = Transform2D.IDENTITY.scaled(Vector2.ONE * CrowdAtlas.BAKE_ZOOM)
+	_vp.canvas_transform = Transform2D.IDENTITY.scaled(Vector2.ONE * zoom)
 	for look: int in CrowdAtlas.LOOKS:
 		var v: RigVariant = RigVariant.crowd(look)
 		var rig: CutRig = CutRig.new()
@@ -106,10 +114,13 @@ func _advance(seconds: float) -> void:
 			for i: int in rig.hose_pts.size():
 				rig.hose_pts[i] += back
 				rig.hose_prev[i] += back
+	if not _d5_mats.is_empty():
+		for rig: CutRig in _rigs:
+			CrowdBakeDetail.sync(rig, _d5_mats)
 
 
 func _capture(col: int) -> void:
-	var cell: int = CrowdAtlas.CELL_PX
+	var cell: int = _cell
 	var shot: Image = _vp.get_texture().get_image()
 	if shot == null or shot.is_empty():
 		return
