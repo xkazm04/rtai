@@ -234,12 +234,12 @@ NEXT:
   21/21 (full suite, 22:24); enemy units 16/16.
 - 22:27 arena station `enemy_sample` (kind pit; the shared schema allows only id/kind/doc/script,
   so the staging lives in the doc): the 00:00 sample spawn and the run line.
-- Rendering clip g (24 s, two cop+thug pairs, the second pair from the far side) for the 20-40 s
-  lane clip.
+- Clip g landed (22:33): rig_fight_two_pairs_32ppm.mp4, 15 s of action from a 24 s run (all four
+  down by ~13 s): 4 kills, Rivet 17 nails 14 hits, cops 8 shots 0 hits, thugs 1 swing 0 hits.
 
 NEXT:
 1. Re-read answers.json (no enemy-ai asks open; ASK only with a real-time clip in the final look).
-2. If clip g did not land: re-run it (dev/enemy_ai/enemy_rig_fight_run.gd -- --seconds=24
+2. Clip g landed; to lengthen it to 20-40 s, add a third wave or a slower Rivet; re-run line (dev/enemy_ai/enemy_rig_fight_run.gd -- --seconds=24
    --squad=patrol_cop,robot_thug,patrol_cop,robot_thug --spots=9:-6,-1:2.5,16:5,15:-3 --fire_m=10)
    and encode at 30 fps; add it first in gtai-masters/eve/enemy-ai/frames.json.
 3. The sample with Rivet's REAL weapons: the pit's Rivet is PitDummy (nails). When gunplay's pistol
