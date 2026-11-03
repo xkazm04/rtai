@@ -1,0 +1,44 @@
+{
+  "after_corrupting_newest": {
+    "notice": "A save was damaged. Loaded the last good one.",
+    "point": "as-b3-toner-room"
+  },
+  "meta": {
+    "beat": "b4-dock",
+    "last_played_unix": 1793703612.0,
+    "playtime_s": 98.0,
+    "point": "as-b4-dock",
+    "quest": "collect-call",
+    "schema": "gtai.save-meta/1",
+    "seq": 3.0,
+    "slot": "auto_a"
+  },
+  "quarantined": [
+    "auto_a/state.sav.corrupt",
+    "auto_b/state.sav.corrupt",
+    "meta.json"
+  ],
+  "reference_final_hash": "8dd17ac12943f0aef4853691ea3af664793f321596638e5e95ab89396042cc77",
+  "resumed_final_hash": "8dd17ac12943f0aef4853691ea3af664793f321596638e5e95ab89396042cc77",
+  "saved": {
+    "as-b2-payphone": {
+      "beat": "b2-payphone",
+      "hash": "4cc465835963596096932fffb7d0eb9072921b3de04dd399fe68fdffe6cdf4ad",
+      "tick": 768
+    },
+    "as-b3-toner-room": {
+      "beat": "b3-toner-room",
+      "hash": "d88a1d1587a4f10e1caa32273d04534481b5b6c699cd0ab10c324ef440860fb0",
+      "tick": 2424
+    },
+    "as-b4-dock": {
+      "beat": "b4-dock",
+      "hash": "1385eec80cae7b5365396bdc0c73fb41a96b534cb87cb1be5e361fdab83acc9d",
+      "tick": 5880
+    }
+  },
+  "tampered_hash_and_other_corrupt": {
+    "notice": "Your saves could not be read. Starting the quest from the start.",
+    "status": 1
+  }
+}

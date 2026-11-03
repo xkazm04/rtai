@@ -1,0 +1,359 @@
+From 88abfa0576781ce77f18b18db9b7c6472d1371ba Mon Sep 17 00:00:00 2001
+From: xkazm04 <kazdan@seznam.cz>
+Date: Tue, 3 Nov 2026 12:23:48 +0100
+Subject: [PATCH 1/3] feat(save): Quest1 autosave points and Continue through
+ the Save engine; bound-input resume scenario with planted corruption
+ (integration on d-slice)
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+---
+ evidence/autosave/autosave-input.json         | 32 +++++++
+ project/boot/collect_call/quest1_autosave.gd  | 50 ++++++++++
+ .../boot/collect_call/quest1_autosave.gd.uid  |  1 +
+ project/boot/collect_call/quest1_session.gd   | 11 +++
+ project/boot/quest1_game.gd                   | 46 +++++++---
+ .../scenarios/scenario_autosave_input.gd      | 91 +++++++++++++++++++
+ .../scenarios/scenario_autosave_input.gd.uid  |  1 +
+ 7 files changed, 221 insertions(+), 11 deletions(-)
+ create mode 100644 evidence/autosave/autosave-input.json
+ create mode 100644 project/boot/collect_call/quest1_autosave.gd
+ create mode 100644 project/boot/collect_call/quest1_autosave.gd.uid
+ create mode 100644 project/tests/scenarios/scenario_autosave_input.gd
+ create mode 100644 project/tests/scenarios/scenario_autosave_input.gd.uid
+
+diff --git a/evidence/autosave/autosave-input.json b/evidence/autosave/autosave-input.json
+new file mode 100644
+index 0000000..e50b83f
+--- /dev/null
++++ b/evidence/autosave/autosave-input.json
+@@ -0,0 +1,32 @@
++{
++  "load_1": {
++    "beat": "b4-dock",
++    "point": "as-b4-dock",
++    "tick": 5669
++  },
++  "load_2": {
++    "beat": "b3-toner-room",
++    "tick": 2421
++  },
++  "load_2_after_corrupting_newest": {
++    "notice": "A save was damaged. Loaded the last good one.",
++    "point": "as-b3-toner-room"
++  },
++  "saved": {
++    "as-b2-payphone": {
++      "beat": "b2-payphone",
++      "hash": "14a335fea371a129662c5f2064069f055481bd6e3d687c941f45321117780a1b",
++      "tick": 768
++    },
++    "as-b3-toner-room": {
++      "beat": "b3-toner-room",
++      "hash": "233518a3df21d6028eee09bd9ff05e0073ec8a9f1941dacfa905b0ce8bccf97d",
++      "tick": 2421
++    },
++    "as-b4-dock": {
++      "beat": "b4-dock",
++      "hash": "4dddc569b1fd0547e0b9ac8c2b9f905bbe3f65bb56bdbebc35707ea2c6dddd37",
++      "tick": 5669
++    }
++  }
++}
+diff --git a/project/boot/collect_call/quest1_autosave.gd b/project/boot/collect_call/quest1_autosave.gd
+new file mode 100644
+index 0000000..4d7efbc
+--- /dev/null
++++ b/project/boot/collect_call/quest1_autosave.gd
+@@ -0,0 +1,50 @@
++class_name Quest1Autosave
++extends RefCounted
++## Quest 1's autosave points on the slice's session (the autosave lane's glue, SAV-08): the points
++## quest.json declares plus the quest end fire `sink` (Save.autosave) at their beat edges, with the
++## session's checkpoint as the slot body. Call poll() once after each step; with no sink it does
++## nothing (tests, the invented arena). `accept()` is the other direction, for Save.load_latest.
++
++var sink: Callable = Callable()
++var points: AutosavePoints.Result
++var last_beat: String = ""
++var _session: Quest1Session
++var _saver: QuestAutosaver
++
++
++func _init(session: Quest1Session, beat_ids: Array[String]) -> void:
++	_session = session
++	points = AutosavePoints.load_file(Quest1Session.QUEST)
++	if not points.ok():
++		Log.error("save", "autosavePoints: %s" % [points.errors])
++	_saver = QuestAutosaver.new(points, beat_ids, snapshot, _send)
++
++
++func poll() -> void:
++	if not sink.is_valid():
++		return
++	var runner: QuestRunner = _session.system.runner
++	_saver.poll(runner.beat_index, runner.state == QuestRunner.State.SUCCEEDED)
++
++
++## What a slot carries: the checkpoint at this tick plus the meta.json fields.
++func snapshot(_point: String) -> Dictionary:
++	var beat: String = _session.beat_id()
++	last_beat = beat if beat != "" else last_beat
++	var cp: Checkpoint = _session.checkpoint(last_beat)
++	var seconds: int = cp.tick / SimClock.TICK_RATE
++	return {
++		"body": cp.to_dict(),
++		"meta": {"quest": Quest1Session.QUEST, "beat": last_beat, "playtime_s": seconds},
++	}
++
++
++func _send(point: String, body: Dictionary, meta: Dictionary) -> void:
++	sink.call(point, body, meta)
++
++
++## The Callable for Save.load_latest: a slot body -> the resumed session, or null (refused).
++static func accept(events: EventBus, data: DataStore) -> Callable:
++	return func(body: Dictionary) -> Variant:
++		var cp: Checkpoint = CheckpointSlot.read(body)
++		return Quest1Session.resume(events, data, cp) if cp != null else null
+diff --git a/project/boot/collect_call/quest1_autosave.gd.uid b/project/boot/collect_call/quest1_autosave.gd.uid
+new file mode 100644
+index 0000000..37e2101
+--- /dev/null
++++ b/project/boot/collect_call/quest1_autosave.gd.uid
+@@ -0,0 +1 @@
++uid://c5f5amahkj44f
+diff --git a/project/boot/collect_call/quest1_session.gd b/project/boot/collect_call/quest1_session.gd
+index 059ab93..fb0cb11 100644
+--- a/project/boot/collect_call/quest1_session.gd
++++ b/project/boot/collect_call/quest1_session.gd
+@@ -28,6 +28,8 @@ var live: LiveInput
+ var tape: InputTape
+ var actions: PlayerActions
+ var report: QuestReport = QuestReport.new()
++## The quest's autosave points (set a `sink` to turn them on; see Quest1Autosave).
++var autosave: Quest1Autosave
+ var cash_before: int = 0
+ var master_seed: int = MASTER_SEED
+ var _last_beat: String = ""
+@@ -62,6 +64,10 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) ->
+ 		Log.error("quest1", "collect-call did not load: %s" % [s.report])
+ 		s.world.free()
+ 		return null
++	var ids: Array[String] = []
++	for beat: QuestBeat in loaded.package.beats:
++		ids.append(beat.id)
++	s.autosave = Quest1Autosave.new(s, ids)
+ 	s.system.runner.start()
+ 	s.cash_before = s.stage.wallet.cash
+ 	s._last_beat = s.beat_id()
+@@ -107,6 +113,11 @@ func poll_checkpoint() -> Checkpoint:
+ 	if beat == _last_beat or state() != QuestRunner.State.ACTIVE:
+ 		return null
+ 	_last_beat = beat
++	return checkpoint(beat)
++
++
++## The checkpoint at this tick (between ticks): the tape before it and the sim's state hash.
++func checkpoint(beat: String) -> Checkpoint:
+ 	var cp: Checkpoint = Checkpoint.new()
+ 	cp.quest = QUEST
+ 	cp.beat = beat
+diff --git a/project/boot/quest1_game.gd b/project/boot/quest1_game.gd
+index 435594e..caf0b80 100644
+--- a/project/boot/quest1_game.gd
++++ b/project/boot/quest1_game.gd
+@@ -40,12 +40,12 @@ func boot() -> void:
+ 	@warning_ignore("return_value_discarded")
+ 	card.start_pressed.connect(start)
+ 	@warning_ignore("return_value_discarded")
+-	card.continue_pressed.connect(func() -> void: restart(Checkpoint.load_file(save_path)))
++	card.continue_pressed.connect(_continue)
+ 	@warning_ignore("return_value_discarded")
+ 	card.resume_pressed.connect(func() -> void: set_paused(false))
+ 	@warning_ignore("return_value_discarded")
+ 	card.quit_pressed.connect(func() -> void: get_tree().quit(0))
+-	card.show_title(save_path != "" and Checkpoint.load_file(save_path) != null)
++	card.show_title(_can_continue())
+ 	if LaunchArgs.has("--replay"):
+ 		_replay.call_deferred(LaunchArgs.value("--replay"))
+ 
+@@ -55,13 +55,41 @@ func start(cp: Checkpoint = null) -> void:
+ 	if session != null:
+ 		set_paused(false)
+ 		return
+-	session = Quest1Session.resume(Events, Data, cp) if cp != null else null
+-	if session == null:
+-		session = Quest1Session.open(Events, Data)
++	var opened: Quest1Session = Quest1Session.resume(Events, Data, cp) if cp != null else null
++	_begin(opened if opened != null else Quest1Session.open(Events, Data))
++
++
++## Continue / Retry: the newest valid autosave slot (the other when one is damaged), else a
++## fresh start with the engine's one-line notice (SAV-08). Re-simulation happens in `accept`.
++func _continue() -> void:
++	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
++	var resumed: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
++	if session != null:
++		session.world.queue_free()
++		session = null
++	if view != null:
++		view.queue_free()
++		view = null
++	_ended = false
++	paused = false
++	_begin(resumed if resumed != null else Quest1Session.open(Events, Data))
++
++
++## True when Continue has a game to offer: a slot exists and the newest save is not the quest end.
++func _can_continue() -> bool:
++	if save_path == "" or not Save.has_continue():
++		return false
++	return Save.read_meta().get("point", "") != AutosavePoints.QUEST_END
++
++
++func _begin(opened: Quest1Session) -> void:
++	session = opened
+ 	if session == null:
+ 		get_tree().quit(1)
+ 		return
+ 	settings.apply()
++	if save_path != "":
++		session.autosave.sink = Save.autosave
+ 	if LaunchArgs.has("--record"):
+ 		session.world.loop().start_recording()
+ 	add_child(session.world)
+@@ -101,16 +129,14 @@ func _unhandled_input(event: InputEvent) -> void:
+ func _process(_delta: float) -> void:
+ 	if session == null or _ended:
+ 		return
+-	var cp: Checkpoint = session.poll_checkpoint()
+-	if cp != null and save_path != "":
+-		Log.info("save", "checkpoint %s at tick %d (%d)" % [cp.beat, cp.tick, cp.save(save_path)])
++	session.autosave.poll()
+ 	if session.paid() and not session.system.runner.lines.busy():
+ 		_end()
+ 	elif session.failed():
+ 		_ended = true
+ 		session.live.enabled = false
+ 		Log.info("quest1", "contract failed at %s" % session.beat_id())
+-		card.show_failed(save_path != "" and Checkpoint.load_file(save_path) != null)
++		card.show_failed(_can_continue())
+ 
+ 
+ func set_paused(on: bool) -> void:
+@@ -142,8 +168,6 @@ func _end() -> void:
+ 	var cash: int = session.stage.wallet.cash - session.cash_before
+ 	Log.info("quest1", "paid +%d at tick %d" % [cash, session.tick()])
+ 	card.show_paid(cash)
+-	if save_path != "":
+-		Checkpoint.erase(save_path)
+ 
+ 
+ ## `-- --replay=<file>` (SIM-05): re-runs a recorded slice log on a fresh session and quits
+diff --git a/project/tests/scenarios/scenario_autosave_input.gd b/project/tests/scenarios/scenario_autosave_input.gd
+new file mode 100644
+index 0000000..6d4ded1
+--- /dev/null
++++ b/project/tests/scenarios/scenario_autosave_input.gd
+@@ -0,0 +1,91 @@
++extends Scenario
++## The autosave lane's exit, on the slice's real path: quest 1 (boot/quest1.tscn) is played through
++## the bound input only (CollectCallInputDriver -> InputMap -> LiveInput -> StagePilot) with its
++## declared autosave points writing the two rotating slots through the real Save engine. At beat 4
++## world dropped; Continue's loader (Quest1Autosave.accept) re-simulates the tape, lands on
++## the saved tick and state hash. The newest slot is then flipped: the loader quarantines it, lands
++## on the older slot's beat and says so. Leaves autosave-input.json. (The driver's own state is not
++## in a save, so no claim is made that a resumed run ends on the uninterrupted run's hash; the load
++## itself is exact or refused.)
++
++const EVIDENCE_FILE: String = "autosave-input.json"
++const ROOT: String = "user://scenario_autosave_input"
++const STOP_POINT: String = "as-b4-dock"
++const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
++
++
++func run(tree: SceneTree) -> String:
++	SaveKit.wipe(ROOT)
++	Save.use_root(ROOT)
++	var log: Dictionary = {}
++	var failure: String = _run(tree, log)
++	Save.use_root(Save.DEFAULT_ROOT)
++	SaveKit.wipe(ROOT)
++	return failure if failure != "" else write_evidence(EVIDENCE_FILE, log)
++
++
++func _run(tree: SceneTree, log: Dictionary) -> String:
++	var game: Quest1Game = (load("res://boot/quest1.tscn") as PackedScene).instantiate()
++	game.settings_path = ""
++	tree.root.add_child(game)
++	game.boot()
++	game.card.start_pressed.emit()
++	var s: Quest1Session = game.session
++	if s == null:
++		game.free()
++		return "the Start button did not open quest 1"
++	s.world.set_process(false)
++	var saved: Dictionary[String, Dictionary] = {}
++	var failure: String = _play(s, saved)
++	log["saved"] = saved
++	if failure == "":
++		failure = _resume(game, saved, log)
++	game.free()
++	return failure
++
++
++## Plays through the input path until `STOP_POINT` fired, waiting for each write to land.
++func _play(s: Quest1Session, saved: Dictionary[String, Dictionary]) -> String:
++	var driver: CollectCallInputDriver = CollectCallInputDriver.new(s.stage, s.system)
++	s.autosave.sink = func(point: String, body: Dictionary, meta: Dictionary) -> void:
++		saved[point] = {"tick": body["tick"], "hash": body["state_hash"], "beat": body["beat"]}
++		Save.autosave(point, body, meta)
++		Save.flush()
++	while not saved.has(STOP_POINT) and s.tick() < TIMEOUT_TICKS and not driver.done():
++		driver.act()
++		s.step()
++		s.autosave.poll()
++	driver.release()
++	if saved.keys() != ["as-b2-payphone", "as-b3-toner-room", STOP_POINT]:
++		return "autosaves fired %s" % [saved.keys()]
++	return ""
++
++
++func _resume(game: Quest1Game, saved: Dictionary[String, Dictionary], log: Dictionary) -> String:
++	game.session.world.free()
++	game.session = null
++	var slots: SaveSlots = Save.slots()
++	var census: Array[String] = SaveKit.census(slots.root)
++	if census != ["auto_a/state.sav", "auto_b/state.sav", "meta.json"]:
++		return "files on disk: %s" % [census]
++	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
++	var s: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
++	if s == null or out.point != STOP_POINT:
++		return "load 1 landed on '%s'" % out.point
++	var want: Dictionary = saved[STOP_POINT]
++	if s.world.loop().state_hash() != want["hash"] or s.tick() != want["tick"]:
++		return "load 1 did not land on the saved tick and hash"
++	log["load_1"] = {"point": out.point, "beat": s.beat_id(), "tick": s.tick()}
++	s.world.free()
++	var newest: int = 0 if slots.read(0).seq() > slots.read(1).seq() else 1
++	SaveKit.flip(slots.slot_path(newest), 70)
++	out = Save.load_latest(Quest1Autosave.accept(Events, Data))
++	s = out.value if out.status == SaveLoader.Status.LOADED else null
++	log["load_2_after_corrupting_newest"] = {"point": out.point, "notice": out.notice}
++	if s == null or out.point != "as-b3-toner-room" or out.notice == "":
++		return "corrupt newest: landed on '%s', notice '%s'" % [out.point, out.notice]
++	if s.world.loop().state_hash() != saved["as-b3-toner-room"]["hash"]:
++		return "the fallback did not land on the older slot's hash"
++	log["load_2"] = {"beat": s.beat_id(), "tick": s.tick()}
++	s.world.free()
++	return ""
+diff --git a/project/tests/scenarios/scenario_autosave_input.gd.uid b/project/tests/scenarios/scenario_autosave_input.gd.uid
+new file mode 100644
+index 0000000..7569f94
+--- /dev/null
++++ b/project/tests/scenarios/scenario_autosave_input.gd.uid
+@@ -0,0 +1 @@
++uid://blmdhiuamqwut
+-- 
+2.43.0.windows.1
+

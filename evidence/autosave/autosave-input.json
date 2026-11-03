@@ -1,0 +1,42 @@
+{
+  "continue_button": {
+    "beat": "b3-toner-room",
+    "sink_on": true
+  },
+  "load_1": {
+    "beat": "b4-dock",
+    "point": "as-b4-dock",
+    "tick": 5669
+  },
+  "load_1_ms_contended": 740,
+  "load_2": {
+    "beat": "b3-toner-room",
+    "tick": 2421
+  },
+  "load_2_after_corrupting_newest": {
+    "notice": "A save was damaged. Loaded the last good one.",
+    "point": "as-b3-toner-room"
+  },
+  "quit_save": {
+    "beat": "b3-toner-room",
+    "hash": "c121ca2f28ee418918b8ec8cca72d71d89ad4c1d09cb3b47c49bb4d48ca80b2e",
+    "tick": 2466
+  },
+  "saved": {
+    "as-b2-payphone": {
+      "beat": "b2-payphone",
+      "hash": "14a335fea371a129662c5f2064069f055481bd6e3d687c941f45321117780a1b",
+      "tick": 768
+    },
+    "as-b3-toner-room": {
+      "beat": "b3-toner-room",
+      "hash": "233518a3df21d6028eee09bd9ff05e0073ec8a9f1941dacfa905b0ce8bccf97d",
+      "tick": 2421
+    },
+    "as-b4-dock": {
+      "beat": "b4-dock",
+      "hash": "4dddc569b1fd0547e0b9ac8c2b9f905bbe3f65bb56bdbebc35707ea2c6dddd37",
+      "tick": 5669
+    }
+  }
+}
