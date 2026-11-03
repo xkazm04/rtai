@@ -7,6 +7,6 @@
 - `q1_view_art.patch`: quest 1 view (stage / cast / fx / hud) drawing the D4 art, +156 / -82. `git apply --check` is
   clean on main 721fbbb. It needs the n-d4 art merged first. Not applied on this branch: the view code is the quest
   owner's.
-- `gates-cc3b37c.txt`: `node tools/evidence/run.mjs --no-bench` at cc3b37c, rc 0. Only docs changed after it.
+- `gates-cc3b37c.txt`, `gates-6b954ad.txt`: `node tools/evidence/run.mjs --no-bench`, rc 0 at both (6b954ad = this folder in place).
 - Full frame sets, every probe (kept and reverted) and the running ladder: `gtai-masters/night/d4-production/`
   (`ladder.png`, `before_*` / `after_*`, `work/`). See `JOURNAL.md` 00:50-01:44.

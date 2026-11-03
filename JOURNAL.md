@@ -729,3 +729,4 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
 - 01:45 `evidence/iter6/` (lane cwd, per the night brief): summary sheet, the quest 1 view patch, gate results at
   cc3b37c, index README. The full frame sets stay in masters. Shared-scope note: `evidence/` is a new top-level folder
   (the Director may move it to `docs/` or drop it at merge).
+- 01:47 GATES at 6b954ad (HEAD incl. evidence/): run.mjs --no-bench rc 0, all 5 PASS (lint 13/13, unit 142, scenarios 8, parity bit-exact, selftest 0 placeholders). Session end for iteration 6; tree clean after this entry.
