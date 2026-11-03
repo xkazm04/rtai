@@ -77,3 +77,4 @@ NEXT:
 5. A scenario test for projectile determinism through `run_scenarios` (replay identical, planted
    fault).
 6. Burn panic and fire-patch visuals; the vehicles-lane hook for rocket car damage.
+- MILESTONE (iteration 1 close): range_view takes `--ppm=`; the 48 px/m clip is at gtai-masters/eve/gunplay/range-core6-48ppm.mp4 (frames.json now has 4 entries). The lane marks overlap at 48 because lane spacing is capped at 120 px to fit 800 px.
