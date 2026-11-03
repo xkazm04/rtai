@@ -1226,8 +1226,7 @@ NEXT (iteration 15 / morning, in order):
    zoom (+0.3-0.6 ms iGPU at 48 px/m, 50-age-floor) vs iteration 11's zero-cost paper hex; grain_floor needs
    the whole D5 overlay drawn at gameplay zoom (~+2 ms iGPU) - not wired; the D4 -> D5 ramp start (48 px/m
    0 today; 0.35 = d5-close's ask); fire flicker; night tuning; objective core; cop accent.
-3. Page-age known limit: lights, emissive FX (paper) and markers draw above the grade rect and stay D4 cream
-   at 64 px/m.
+3. (done 06:47, aa15198) page-age known limit: the lights and the emissive FX now age with the page.
 4. Idle bench still not had (merged build contended: p99 2.47 ms PASS, evidence/trial-merge14).
 5. Unchanged: rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
 - MILESTONE (aa15198) the page-age known limit closed: page_age.gdshaderinc (age uniforms + the solved gains +
@@ -1240,3 +1239,6 @@ NEXT (iteration 15 / morning, in order):
   explosion / muzzle only; LOOKED: the sheet's explosion cloud and the light rings print aged sepia cream
   instead of cool D4 cream; vermilion-gate px 10 971 = 10 971. 52-age-emissive/cmp-fx64.png, ladder 52.
   NEXT item 3 (known limit) is done.
+- Evidence at 06db11e (06:48-06:50, --no-bench, all PASS): lint 13/13, unit 242, scenarios 8, parity
+  bit-exact + mutation caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock
+  0.00 % x3). Copied to evidence/pof.
