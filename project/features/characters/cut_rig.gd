@@ -46,6 +46,10 @@ var phase: float = 0.0
 var run_blend: float = 0.0
 var twist: float = 0.0
 var twist_v: float = 0.0
+var hip_yaw: float = 0.0
+## The arm a timed strike swings (RigClips.strike): -1 = the plan's melee arm, 2 = both.
+var strike_arm: int = -1
+var hip_yaw_v: float = 0.0
 var speed_now: float = 0.0
 var t_alive: float = 0.0
 var shove: Vector2 = Vector2.ZERO
@@ -126,6 +130,7 @@ func drive(dt: float) -> void:
 	speed_now = vel_in.length()
 	clips.sample(self, dt)
 	RigSprings.step(self, dt)
+	RigHips.step(self, dt)
 	rotation = facing
 	RigGait.step(self, dt)
 	RigPose.step(self)

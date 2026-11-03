@@ -1,0 +1,108 @@
+{
+  "$id": "gtai.rivet-motion/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "roll": {
+      "additionalProperties": false,
+      "properties": {
+        "cooldown_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "exit_speed_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "iframe_from": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "iframe_to": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "recovery_move_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "recovery_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "roll_m": {
+          "maximum": 8,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "roll_ticks": {
+          "maximum": 60,
+          "minimum": 4,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cooldown_ticks",
+        "exit_speed_k",
+        "iframe_from",
+        "iframe_to",
+        "recovery_move_scale",
+        "recovery_ticks",
+        "roll_m",
+        "roll_ticks"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.rivet-motion/1"
+    },
+    "sprint": {
+      "additionalProperties": false,
+      "properties": {
+        "accel_mps2": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "number"
+        },
+        "min_forward_dot": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
+        "sprint_mps": {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "number"
+        },
+        "turn_dps": {
+          "maximum": 2000,
+          "minimum": 10,
+          "type": "number"
+        }
+      },
+      "required": [
+        "accel_mps2",
+        "min_forward_dot",
+        "sprint_mps",
+        "turn_dps"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "roll",
+    "schema",
+    "sprint"
+  ],
+  "type": "object"
+}

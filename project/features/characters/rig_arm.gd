@@ -5,6 +5,11 @@ extends RefCounted
 ## melee arm, hands-up, roll tuck and death sprawl; solved as a 3D two-bone chain. A strongly
 ## foreshortened segment swaps to its end-on cell; the gun arm swaps to its pistol cell.
 
+## rivet-motion: the sprint arm pump. At the sprint top (RigPose.sprint01 = 1, Rivet only) the
+## counter-swing grows by SPRINT_PUMP and the hands pull in toward the body by SPRINT_TUCK.
+const SPRINT_PUMP: float = 0.5
+const SPRINT_TUCK: float = 0.35
+
 
 static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 	var p: BodyPlan = rig.plan
@@ -25,6 +30,9 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 	side.j_elbow = e2
 	side.j_hand = h2
 	var fore_draw: float = _place(rig, s, aim_arm)
+	if p.arm_w != 1.0:
+		side.upper.scale.y = p.arm_w
+		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
 	var behind: bool = h2.x < sh.x - 40.0
 	side.upper.z_index = p.arm_below if behind else p.arm_above
@@ -44,7 +52,10 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 	if not p.ready_stance:
 		hang = 1.0
 	var tgt: Vector3 = p.hand_ready[s].lerp(p.hand_relax[s], hang)
-	tgt.x += sin(ph) * -sgn * lerpf(70.0, 150.0, rig.run_blend) * walk01
+	var sprint: float = RigPose.sprint01(rig) * walk01
+	var pump: float = 1.0 + SPRINT_PUMP * sprint
+	tgt.x += sin(ph) * -sgn * lerpf(70.0, 150.0, rig.run_blend) * walk01 * pump
+	tgt.y = lerpf(tgt.y, sh.y * 0.6, SPRINT_TUCK * sprint)
 	if rig.sides[s].shield != null and rig.sides[s].shield.visible:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.8, sh.y * 0.35, -20.0), 0.85)
 	if rig.aiming and aim_arm:
@@ -52,7 +63,8 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 		var dv: Vector2 = (tl - Vector2(sh.x, sh.y)).normalized()
 		tgt = Vector3(sh.x + dv.x * reach * 0.97, sh.y + dv.y * reach * 0.97, -10.0)
 		tgt.x -= 60.0 * rig.c_recoil
-	if s == p.melee_arm and rig.c_reach > 0.0:
+	var striking: bool = rig.strike_arm == s or rig.strike_arm == 2
+	if (striking or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
 	if rig.c_hands_up > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 30.0, sh.y * 0.55, 160.0), rig.c_hands_up)
@@ -99,7 +111,9 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
 	if side.hand != null:
 		var p: BodyPlan = rig.plan
 		side.hand.position = Vector2(fore_draw + p.hand_gap, 0.0)
-		side.hand.scale = Vector2((0.6 + 0.4 * minf(fs, 1.0)) / maxf(fs, 0.01), 1.0)
+		side.hand.scale = (
+			Vector2((0.6 + 0.4 * minf(fs, 1.0)) / maxf(fs, 0.01), 1.0 / p.arm_w) * p.hand_k
+		)
 		var cell: String = p.hand_open
 		if rig.gun_out:
 			cell = p.hand_pistol

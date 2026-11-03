@@ -10,6 +10,8 @@ static func measure(root: Node) -> Dictionary:
 	var out: Dictionary = {}
 	var plans: Dictionary[String, BodyPlan] = {
 		"rivet": RigPool.plan_of(BodyPlan.Kind.RIVET),
+		"rivet_mild": RivetPlan.build(RivetPlan.FORM_MILD),
+		"rivet_day": RivetPlan.build(RivetPlan.FORM_DAY),
 		"cop": RigPool.plan_of(BodyPlan.Kind.COP),
 		"ped": RigPool.plan_of(BodyPlan.Kind.PED),
 		"king": KingPlan.build(),
@@ -19,7 +21,7 @@ static func measure(root: Node) -> Dictionary:
 		var rig: CutRig = CutRig.new()
 		root.add_child(rig)
 		var look: RigVariant = RigVariant.crowd(0)
-		if name == "rivet" or name.begins_with("king"):
+		if name.begins_with("rivet") or name.begins_with("king"):
 			look = RigVariant.rivet()
 		elif name == "cop":
 			look = RigVariant.crowd(5)

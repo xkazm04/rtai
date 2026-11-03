@@ -1,0 +1,164 @@
+{
+  "$defs": {
+    "hit": {
+      "additionalProperties": false,
+      "properties": {
+        "active_ticks": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "chain_hops": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "cone_dot": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
+        "damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "knockback_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lunge_m": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "number"
+        },
+        "reach_m": {
+          "maximum": 6,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "recovery_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "stun_ticks": {
+          "maximum": 900,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "windup_ticks": {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "active_ticks",
+        "chain_hops",
+        "cone_dot",
+        "damage",
+        "doc",
+        "id",
+        "knockback_m",
+        "lunge_m",
+        "reach_m",
+        "recovery_ticks",
+        "stun_ticks",
+        "windup_ticks"
+      ],
+      "type": "object"
+    },
+    "weapon": {
+      "additionalProperties": false,
+      "properties": {
+        "cancel_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "chain_radius_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "combo_window_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grip": {
+          "enum": [
+            "one_hand",
+            "two_hand"
+          ]
+        },
+        "hits": {
+          "items": {
+            "$ref": "#/$defs/hit"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "type": "array"
+        },
+        "length_m": {
+          "maximum": 3,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "move_mult": {
+          "maximum": 1.5,
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cancel_ticks",
+        "chain_radius_m",
+        "combo_window_ticks",
+        "doc",
+        "grip",
+        "hits",
+        "length_m",
+        "move_mult"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.melee-weapons/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.melee-weapons/1"
+    },
+    "weapons": {
+      "additionalProperties": {
+        "$ref": "#/$defs/weapon"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "schema",
+    "weapons"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "doc": "Rivet's sprint and dodge roll as data (rivet-motion, 2026-11-03 eve). Ticks are 60 Hz frames. Sprint (owner call C19: a held key) raises the top speed above the 5.0 m/s tackle line (bodies.json rivet run_mps) while the stick points within min_forward_dot of the facing; the facing then follows the walk at turn_dps, not the aim. The roll is a press: roll_m covered in roll_ticks on an ease-out curve along the stick (or the facing), invulnerable from iframe_from to iframe_to (inclusive), then recovery_ticks with the stick scaled by recovery_move_scale; no new roll until cooldown_ticks after the recovery. The live tuning panel edits these rows.",
+  "roll": {
+    "cooldown_ticks": 8,
+    "exit_speed_k": 0.5,
+    "iframe_from": 2,
+    "iframe_to": 14,
+    "recovery_move_scale": 0.35,
+    "recovery_ticks": 10,
+    "roll_m": 3.2,
+    "roll_ticks": 22
+  },
+  "schema": "gtai.rivet-motion/1",
+  "sprint": {
+    "accel_mps2": 16,
+    "min_forward_dot": 0.4,
+    "sprint_mps": 6.2,
+    "turn_dps": 320
+  }
+}

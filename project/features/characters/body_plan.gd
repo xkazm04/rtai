@@ -68,6 +68,10 @@ var hand_open: String = ""
 var hand_closed: String = ""
 var hand_pistol: String = ""
 var hand_gap: float = 2.0
+## The hand cell's scale (RivetPlan's proportions: T2's claw is smaller than the day's art).
+var hand_k: float = 1.0
+## The arm segments' drawn thickness (scale across the bone; the hand cell is not thinned).
+var arm_w: float = 1.0
 var gun_arm: int = -1
 var gun_cell: String = ""
 var melee_arm: int = L
@@ -83,6 +87,12 @@ var hose_bulge: float = 260.0
 
 var ready_stance: bool = true
 var gait_scale: float = 1.0
+## rivet-motion: extra stride above the run speed (0 = the stride stops growing at RUN_SPEED);
+## at SPRINT_SPEED the stride is (1 + sprint_stride) x the run stride.
+var sprint_stride: float = 0.0
+## Twin-stick hips (RigHips): 0 = the hips stay on the facing; 1 = they turn to the walk.
+var hip_follow: float = 0.0
+var hip_twist_max: float = deg_to_rad(70.0)
 ## Rivet's cream rods print as one flat value at gameplay scale; flat bold human limbs do not.
 var limb_lod: bool = true
 

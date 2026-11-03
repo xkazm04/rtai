@@ -26,7 +26,14 @@ const DOWN_DELAY_S: float = 0.12
 
 var punch_t: float = 0.0
 var punch_len: float = PUNCH_S
+## A timed strike (rivet-motion's claw combo): [windup, active, recovery] seconds; overrides the
+## punch's sine with anticipation (the torso cocks back), a fast extension on the active frames
+## and an eased return. strike_t counts up; < 0 = no strike.
+var strike_t: float = -1.0
+var strike_ph: Vector3 = Vector3.ZERO
 var roll_t: float = 0.0
+## The running roll's length (rivet-motion: PlayerMotion's roll_ticks); the spike's 0.45 s default.
+var roll_len: float = ROLL_S
 var death_t: float = -1.0
 var death_amount: float = 1.0
 var recoil: float = 0.0
@@ -55,8 +62,16 @@ func punch(combo: int) -> void:
 	punch_t = punch_len
 
 
-func roll() -> void:
-	roll_t = ROLL_S
+## arm: BodyPlan.L / R, or 2 = both hands (the finisher's slam).
+func strike(rig: CutRig, windup_s: float, active_s: float, recovery_s: float, arm: int) -> void:
+	strike_t = 0.0
+	strike_ph = Vector3(windup_s, active_s, recovery_s)
+	rig.strike_arm = arm
+
+
+func roll(duration_s: float = ROLL_S) -> void:
+	roll_len = maxf(duration_s, 0.05)
+	roll_t = roll_len
 
 
 ## blown = an explosion death: a wider sprawl.
@@ -100,8 +115,16 @@ func sample(rig: CutRig, dt: float) -> void:
 	recoil = maxf(0.0, recoil - dt * RECOIL_DECAY)
 	hit_t = maxf(0.0, hit_t - dt)
 	rig.c_reach = sin((1.0 - punch_t / punch_len) * PI) if punch_t > 0.0 else 0.0
+	if strike_t >= 0.0:
+		rig.c_reach = _strike_reach()
+		strike_t += dt
+		if strike_t > strike_ph.x + strike_ph.y + strike_ph.z:
+			strike_t = -1.0
+			rig.strike_arm = -1
 	rig.c_lean = 0.6 * rig.c_reach
-	rig.c_tuck = clampf(sin(PI * (1.0 - roll_t / ROLL_S)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
+	rig.c_tuck = (
+		clampf(sin(PI * (1.0 - roll_t / roll_len)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
+	)
 	rig.c_recoil = recoil
 	rig.c_hands_up = move_toward(rig.c_hands_up, 0.85 if fleeing else 0.0, dt * 4.0)
 	rig.set_tint(hit_t > HIT_TINT_FROM)
@@ -117,3 +140,17 @@ func sample(rig: CutRig, dt: float) -> void:
 		down_amt = move_toward(down_amt, goal, dt * rate)
 		rig.dead = down_amt > 0.05
 		rig.c_sprawl = down_amt
+
+
+## The strike's reach: -0.35 at the end of the windup (the torso twists back), 1 by the end of
+## the active frames (ease-out), back to 0 over the recovery (smoothstep).
+func _strike_reach() -> float:
+	var w: float = maxf(strike_ph.x, 0.001)
+	var a: float = maxf(strike_ph.y, 0.001)
+	var r: float = maxf(strike_ph.z, 0.001)
+	if strike_t < w:
+		return -0.35 * smoothstep(0.0, 1.0, strike_t / w)
+	if strike_t < w + a:
+		var k: float = (strike_t - w) / a
+		return lerpf(-0.35, 1.0, 1.0 - (1.0 - k) * (1.0 - k))
+	return 1.0 - smoothstep(0.0, 1.0, (strike_t - w - a) / r)

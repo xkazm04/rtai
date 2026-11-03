@@ -1,0 +1,739 @@
+{
+  "doc": "rivet-motion's stations (Rivet's locomotion and bare-handed melee). Tuning keys are <table>.<path>; an array row is addressed by its index (rivet_melee.claw.hits.0 = claw_1). The course station measures the PlayerMotion feel numbers (dev/rivet_motion/motion_probe.gd prints the same ones headless); the melee line is three human dummies 2 m apart (x 0..4, y -3 in the hub) for the claw combo and a metal line 2 m apart for the shock's chain (kind metal, the arena's steel dummy; the far one sits 4 m out, past the 3 m chain radius). The melee line also tunes the melee weapons (melee_weapons.weapons.<id>..., electro_baton and katana tonight) on the same dummies. Until the arena scene is on this branch, res://dev/rivet_motion/motion_course.gd and combo_clip.gd run these.",
+  "lane": "rivet_motion",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "course",
+      "id": "rivet_motion_course",
+      "measures": [
+        "to_top_speed_ms",
+        "stop_m",
+        "stop_ms",
+        "turn180_ms",
+        "roll_m",
+        "iframes_ms",
+        "roll_lockout_ms",
+        "tackles"
+      ],
+      "name": "Rivet motion course",
+      "props": [
+        {
+          "at": [
+            -20,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -19,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -18,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -17,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -16,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -15,
+            4
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            0.3
+          ]
+        },
+        {
+          "at": [
+            -20,
+            6
+          ],
+          "kind": "firing_line",
+          "size": [
+            16,
+            0.2
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            -8,
+            4
+          ],
+          "id": "tackle_crowd",
+          "kind": "crowd",
+          "motion": "static",
+          "span_m": 3,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "rivet_motion.sprint.sprint_mps",
+          "max": 9,
+          "min": 4,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_motion.sprint.accel_mps2",
+          "max": 40,
+          "min": 4,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.sprint.turn_dps",
+          "max": 720,
+          "min": 90,
+          "step": 10
+        },
+        {
+          "key": "rivet_motion.sprint.min_forward_dot",
+          "max": 1,
+          "min": -1,
+          "step": 0.05
+        },
+        {
+          "key": "rivet_motion.roll.roll_m",
+          "max": 6,
+          "min": 1,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_motion.roll.roll_ticks",
+          "max": 40,
+          "min": 8,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.roll.iframe_from",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.roll.iframe_to",
+          "max": 39,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.roll.recovery_ticks",
+          "max": 30,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.roll.recovery_move_scale",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "rivet_motion.roll.cooldown_ticks",
+          "max": 60,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_motion.roll.exit_speed_k",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "input_actions.move.accel_mps2",
+          "max": 80,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "input_actions.move.brake_mps2",
+          "max": 80,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "input_actions.move.turn_dps",
+          "max": 1440,
+          "min": 180,
+          "step": 30
+        },
+        {
+          "key": "input_actions.move.strafe_scale",
+          "max": 1,
+          "min": 0.5,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "area": "hub",
+      "id": "rivet_melee_line",
+      "measures": [
+        "combo_cadence_ms",
+        "first_hit_ms",
+        "chain_recover_ms",
+        "hits",
+        "stuns",
+        "chain_length"
+      ],
+      "name": "Melee dummy line",
+      "props": [],
+      "spawns": [
+        {
+          "at": [
+            0,
+            -3
+          ],
+          "id": "dummy_human_1",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            2,
+            -3
+          ],
+          "id": "dummy_human_2",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            4,
+            -3
+          ],
+          "id": "dummy_human_3",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            6,
+            -3
+          ],
+          "id": "dummy_metal_1",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            8,
+            -3
+          ],
+          "id": "dummy_metal_2",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            -3
+          ],
+          "id": "dummy_metal_3",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            14,
+            -3
+          ],
+          "id": "dummy_metal_far",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "rivet_melee.claw.cancel_ticks",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.combo_window_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.0.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.0.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.0.recovery_ticks",
+          "max": 40,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.0.reach_m",
+          "max": 2.5,
+          "min": 0.8,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.claw.hits.0.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.claw.hits.1.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.1.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.1.recovery_ticks",
+          "max": 40,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.1.reach_m",
+          "max": 2.5,
+          "min": 0.8,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.claw.hits.1.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.claw.hits.2.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.2.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.2.recovery_ticks",
+          "max": 40,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.claw.hits.2.reach_m",
+          "max": 2.5,
+          "min": 0.8,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.claw.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "rivet_melee.shock.charge_min_ticks",
+          "max": 40,
+          "min": 4,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.shock.charge_full_ticks",
+          "max": 120,
+          "min": 12,
+          "step": 1
+        },
+        {
+          "key": "rivet_melee.shock.stun_min_ticks",
+          "max": 200,
+          "min": 10,
+          "step": 5
+        },
+        {
+          "key": "rivet_melee.shock.stun_full_ticks",
+          "max": 300,
+          "min": 30,
+          "step": 5
+        },
+        {
+          "key": "rivet_melee.shock.chain_radius_m",
+          "max": 6,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "rivet_melee.shock.chain_hops",
+          "max": 6,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.cancel_ticks",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.combo_window_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.move_mult",
+          "max": 1.2,
+          "min": 0.3,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.cancel_ticks",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.combo_window_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.move_mult",
+          "max": 1.2,
+          "min": 0.3,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.chain_radius_m",
+          "max": 6,
+          "min": 0,
+          "step": 0.1
+        }
+      ]
+    }
+  ]
+}

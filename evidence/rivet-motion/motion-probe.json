@@ -1,0 +1,24 @@
+{
+  "walk": {
+    "top_mps": 4.5,
+    "to_90pct_ms": 150,
+    "press_tick_moves_m": 0.0083,
+    "stop_m": 0.22,
+    "stop_ms": 117
+  },
+  "sprint": {
+    "top_mps": 6.2,
+    "to_90pct_ms": 350,
+    "press_tick_moves_m": 0.0044,
+    "stop_m": 0.43,
+    "stop_ms": 167
+  },
+  "turn180_walk_ms": 250,
+  "turn180_sprint_ms": 550,
+  "roll": {
+    "roll_ms": 367,
+    "iframes_ms": 233,
+    "lockout_ms": 667,
+    "moved_after_press_tick_m": 2.96
+  }
+}
