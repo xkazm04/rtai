@@ -1083,8 +1083,9 @@ NEXT (iteration 13 / morning, in order):
   reverted 0 (the zoom anchor measured better at low frequency, equal on the 1 px grain - kept); re-runs:
   1 (on_foot lead pass forgot --mode), 1 (print_stage_demo parse errors -> hung run, my PID 32332 + child
   killed by PID). Swaps of old files for before-frames (city_view.gd, camera_rig.gd) restored and
-  verified by git diff each time. Scratch worktrees scratch-visual-trial13 / scratch-visual-q1 (mine)
-  removed; scratch-m16 / scratch-q1 are not mine (untouched). No AI images (no codex) -> no provenance.
+  verified by git diff each time. Scratch worktrees scratch-visual-trial13 / -q1 / -q1b (mine) removed;
+  1 false alarm caught (an LFS pointer copied as the FX sheet), 1 slip fixed at once (rm -rf removed the
+  tracked features/fx/README.md, restored from HEAD); scratch-m16 / scratch-q1 are not mine (untouched). No AI images (no codex) -> no provenance.
   Ladder rows 41-46b + 45b (1280 x 23630).
 
 NEXT (iteration 14 / morning, in order):
@@ -1093,8 +1094,9 @@ NEXT (iteration 14 / morning, in order):
    - move CityView onto PrintStage (it composes the same pieces; n-noir's city_view hunks land first);
    - quest 1: apply 45-quest1/collect_call_view-on-print_stage.patch ONLY with its zone tints raised to
      <= ~188 grey (README tint ladder) or real ground art - as patched today its zone floors print as
-     paper; hand the arena's player id to print_stage.fx_triggers.player_id so main's actor_killed /
-     player_hit drive the hit-stops; CameraRig.listen(Events, clock) gives it the boss zoom (64, D5);
+     paper (Ink.WASH 0.30 fixes Factory Row; Dock 9's floor tint too); then one
+     `print_stage.listen(Events, clock, <Rivet's id>, <Rivet px>)` gives it the boss zoom (64 px/m, D5),
+     the hit-stops on main's actor_killed / player_hit and the tazer crackle;
    - `--reduced-motion` in boot/launch_args.gd KNOWN_FLAGS + World (rig + markers), held back tonight to
      keep n-noir's identical KNOWN_FLAGS edit merge-clean;
    - n-d4's FX sheet replaces the analytic crackle: re-check the Robo-tazer hit on Rivet at 32 px/m
