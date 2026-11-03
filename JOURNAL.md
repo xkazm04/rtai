@@ -836,10 +836,9 @@ NEXT (iteration 12 close, in order):
 1. Owner picks: the hero (car street showcase `showcase-hero-car.png` vs the lamp-only street vs the junction),
    Rivet's oil instead of blood (one `player` row in blood_fx.json; set fluid "" to restore red), and the
    iteration-8 open choices (value roles, noir Rivet parts, Rivet's ink mass).
-2. Resolution independence of the noir light sizes: at 1920x1080 the lamp pools, the cones (beam_len / beam_w)
-   and the muzzle pool print larger relative to the frame than at 1280x720. Log get_visible_rect().size and
-   SCREEN_PIXEL_SIZE at both sizes, fix `ls` (view_h) once, then move the muzzle pool onto it (flash_r 128).
-   Compare with --write-movie runs only.
+2. DONE at 05:06 (5143f55), see the CORRECTION entry: the lights are resolution-independent at 720 / 1080.
+   Left: the ragged-edge noise of the pools is sampled in screen px (FRAGCOORD), so the edge wobble is finer at
+   1080 - cosmetic.
 3. The car is a shader shape (no sprite): fine in noir, absent in D4. Real car art's size should drive
    car_len / car_half_w; the scripted car could also open a door for cop B (fight_script choreography).
 4. Doctrine follow-ups: NoirCue into the real quest view under --look=noir (shared code: needs the owner's OK);
@@ -848,3 +847,14 @@ NEXT (iteration 12 close, in order):
 6. Carried over: noir parts + coat into the rigs, BloodStains / BloodFx.solid into the real game hosts, the noir
    HUD in the composition root under --look=noir, a settings toggle for safety.flashes, the flash margin (3/s at
    64 px/m over lit ground; an owner choice, see 04:37).
+- CORRECTION + MILESTONE (05:03-05:06) the 04:57-05:01 entry was wrong about the lamps. Checked the stretch
+  settings (base 1280x800, canvas_items, expand: the visible rect is 1422x800 at both 1280x720 and 1920x1080,
+  so view_h 800 holds) and re-ran with --write-movie only (masters res-chk/): with the current code the lamp
+  pools and the cones are the SAME size relative to the frame at 720 and 1080; only the muzzle pool shrank at
+  1080 (to about 2/3, the zoom-only screen-px radius), a confirmed bug. The earlier "larger at 1080" read came
+  from comparing mismatched frames. Re-applied the fix (5143f55: radius flash_r * ls, flash_r 115 -> 128; the
+  view_h line in update() dropped, not needed): 4-way before/after x 720/1080 at f064 (cop A's muzzle light):
+  evidence/flash-res-720-vs-1080.png (the NOT-adopted file deleted). After: the pool is the same size at both
+  sizes; at 720 the change is the 3 lit frames' ragged edge only (144-284 px), so the oilcar hero clips stand
+  and are not re-shot. 199 unit pass. NEXT item 2 (resolution independence) is done by this; item 4 of the
+  iteration-10 NEXT too.
