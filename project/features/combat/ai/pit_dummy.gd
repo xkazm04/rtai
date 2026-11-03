@@ -32,6 +32,8 @@ var _side: float = 1.0
 var _nail_cd: int = 0
 var _home: Vector2 = Vector2.ZERO
 var _calm: int = 0
+## enemy id -> whether a human-like reader noticed its current tell (it dodges that shot only).
+var _noticed: Dictionary[int, bool] = {}
 
 
 func _init(p_mode: Mode, home: Vector2 = Vector2.ZERO) -> void:
@@ -58,8 +60,7 @@ func step(pit: EnemyPit) -> void:
 
 func _dodge(pit: EnemyPit) -> Vector2:
 	for e: EnemyAgent in pit.agents:
-		var firing: bool = e.state == EnemyAgent.State.FIRE
-		if not firing and not _reads(e, pit):
+		if not _reads(e, pit):
 			continue
 		var to: Vector2 = pit.rivet_pos - e.pos
 		if e.melee():
@@ -75,14 +76,18 @@ func _dodge(pit: EnemyPit) -> Vector2:
 	return Vector2.ZERO
 
 
-## Whether it is dodging `e`'s tell this tick (a perfect reader, or a human-like one).
+## Whether it is dodging `e`'s tell or shot this tick (a perfect reader, or a human-like one who
+## dodges a shot only when it noticed the tell before it: a missed tell is a missed shot).
 func _reads(e: EnemyAgent, pit: EnemyPit) -> bool:
+	if e.state == EnemyAgent.State.FIRE:
+		return react_ticks < 0 or _noticed.get(e.id, false)
 	if e.state != EnemyAgent.State.WINDUP:
 		return false
 	if react_ticks < 0:
 		return e.timer <= pit.roster.aim_lock_ticks + 4
 	var started: int = e.id * 7919 + pit.tick - e.state_ticks
 	var noticed: bool = fposmod(float(started) * 0.618034, 1.0) < read_frac
+	_noticed[e.id] = noticed
 	return noticed and e.state_ticks >= react_ticks
 
 
