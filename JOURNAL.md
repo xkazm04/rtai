@@ -1252,3 +1252,6 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   at its layout marker (layout data, quest owner). Patch +208 / -111 (4 view files; stage_view.gd 158 lines; gdformat +
   gdlint clean; `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`. Unit in scratch-q1
   **166/166**. Ladder2 row.
+- 04:36 Summary sheet `masters:night/d4-production/night_iter14_summary.png` (= `evidence/iter14/`, 8 rows: ink splat
+  FX 32 / 48 / 64 + city 64, Toner Room floor, Factory Row floor, Harbor Road kerb, REJECTED dock wear), before |
+  after | target crop. Tool `masters:tools/summary_i14.py`.
