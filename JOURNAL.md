@@ -978,3 +978,43 @@ NEXT addendum: find a view where a building sweep shows (a block edge onto a pla
   the noir look (collect_call_frames = quest 1, the selftest is shared and D4-only); left for NEXT.
 - (06:01) Stop (iteration 14). Last code commit 65c7bc3, gates PASS at 2eaa99b, docs after that. No process of
   mine running; working tree clean except the untracked evidence/ folder (by design).
+
+## Iteration 16 (BUILD, 06:01 - , stop by 07:30)
+- (06:02) Read JOURNAL, git log. No iteration-15 entry (that slot did not run in this lane). Leonardo not probed:
+  no image generation planned (engine work); images 0. Picked NEXT item 2 (figure shadows done properly).
+- MILESTONE (06:04-06:27, acb6633) **figure shadows**: `features/fx/noir/noir_figure_shadows.gd` (NoirFigureShadows)
+  + `assets/shaders/look_noir_figure.gdshader`. The rigs carry a cull-mask bit (`visibility_layer`, bit 19, set on
+  the caster subtree and on every node added under it later); a SubViewport (own empty World2D) is attached to the
+  actor CanvasLayer's canvas (`viewport_attach_canvas`) with the layer's transform each frame, so it renders the
+  rigs alone. The node draws that texture in screen px (its transform undoes the layer's), z -2 (under the blood
+  and the rigs). Params `shadows.figures` {len_m 1.2, reach_m 1.0, value 0.03}; showcase only (`--no-figure-shadows`
+  for the before frames). Unit test (3): params, the bit on casters + later children only, the dead cast none.
+  Steps (all street showcase 48 px/m, same flags as shadowshow, movie maker, same ticks):
+  v3 straight sweep of the silhouette: a top-down body swept through its height is a PARALLELOGRAM - read as boxes
+  (NOT adopted, evidence/figure-shadows-straight-sweep-NOT-adopted.png). v4 taper: each tap samples the silhouette
+  scaled about the nearest body's centre (legs 0.35 -> shoulders 1.0 -> head 0.5): reads as figures, but the
+  magnified sampling picked up a NEIGHBOUR's pixels (a ghost blob beside cop A; found with a diff mask). v5 a reach
+  clamp (a sample > reach from the centre is another body's): fixed. v5 (0.1) vs v5b (0.03): at 0.1 the noir
+  pass's dark-on-dark rim outlines every shadow on the asphalt (reads as puddle edges); 0.03 drops them and stays
+  ink inside the headlight cone (under lamp_gate) - adopted (evidence/figure-shadows-value-before-0.1-0.03.png).
+  v6: a dead cop lying in the cone still cast a standing figure - the dead now drop the bit (no shadow).
+  Read: **a real gain in the light** - the cop in the car's headlight cone stands on a hard ink figure cut into the
+  white beam (32 / 48 / 64 px/m, evidence/figure-shadows-before-after.png); **nothing on the asphalt** (black on
+  black, by design). One global light direction (the cast shadows' light_dir), not away from the car: in this shot
+  the car is to the left, so the shadow falls down-right, roughly but not exactly away from the beam.
+  FRICTION: the first record hung (parse error in the new class: `.get()` on a Variant) - 10 min of a growing AVI
+  until I looked; killed by PID (Godot x2, then rec_show's ffmpeg). The journal's own rule (headless check BEFORE
+  every record) was skipped once; followed on every later run. A second slip: one cost run went out with a
+  parse error too (invalid numbers, discarded, re-run).
+- COST + FIX (06:28-06:41, 126878b). Showcase `--cost` (dev/noir/gpu_meter.gd NoirGpuMeter: the mean viewport
+  render time of the root and the silhouette viewport), 1920x1080, zoom 1.5, real time, 676 frames.
+  First draft (full-screen sweep rect): AMD iGPU root 11.75 -> 20.52 / 20.60 ms (**+8.8 ms**, 2 runs); 4090
+  0.99/1.06 -> 2.05/1.68 ms. Fix 1: one quad per standing body (its reach + sweep): iGPU root +0.09..0.15 ms,
+  silhouette viewport 0.39 ms. Fix 2: the silhouette viewport at half size (`res_scale` 0.5): 0.19 ms (2 runs:
+  0.188, 0.192). **Final: ~+0.33 ms on the iGPU** (root 11.88/11.87/11.93 vs 11.74/11.75 without + 0.19), the 4090
+  in the noise (1.3-2.2 ms either way, run to run). Frames: per-body quads within 6 px of full-screen; half size
+  within 419 edge px per frame (no visible change at 2x crop). Refactor-only re-record (meter merge,
+  _light_flash split): mp4 byte-identical. showcase_fight.gd 230 lines (soft ~200, under 300).
+- Evidence: masters night/noir/figshadow-v10/{32,48,64} (final), figshadow-v7/{32,64}-before, shadowshow/48
+  (before 48), figshadow-notes/ (the rejected steps); scratch v3/v4/v6/v8/v9 deleted. Ladder row 35 (35 rows).
+  evidence/: figure-shadows-before-after.png, showcase-figure-shadows-48.mp4, NOIR.md iteration-16 paragraph + row.
