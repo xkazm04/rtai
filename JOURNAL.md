@@ -1826,3 +1826,8 @@ NEXT (final, iteration 21; the iteration-18 final NEXT stands except where noted
 - Gates green at d2d56a6 (no-bench). The bench is still owed an idle-box run. Codex: 0 images this iteration; night
   total 29 images, 194 cells, 7 rejected; no limit hit. Nothing pushed or merged. scratch-v3 also carries the new
   oil_stain (uncommitted, like the iteration-18 tiles).
+- 06:58 LOOKED, no change: city_frame focus 0 at 64, n-d4 alone (`after_i21oilc/`) vs the morning stack
+  (`morning_i21/`). The hatched rectangles on the asphalt and the grey blotches on the paving show only on the
+  morning stack, so they come from n-visual's pass (REQUEST 22 family), not this lane's tiles. Nothing new in my scope
+  is below the bar. With about 30 min to freeze I'm not starting another probe: one that is half-evidenced at 07:30
+  would be worse than none. Session end; tree clean at the commit below.
