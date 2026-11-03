@@ -18,6 +18,8 @@ var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 ## Each fighter's last hurt tick already played as a HIT clip.
 var _hurt_seen: Dictionary[int, int] = {}
+## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
+var _fire_seen: Dictionary[int, Vector2i] = {}
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
@@ -62,9 +64,24 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	if who.weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
 		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
 		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
+	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
+	var before: Vector2i = _fire_seen.get(who.id, mark)
+	var shot: bool = fired(before, mark)
+	_fire_seen[who.id] = mark
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
+	elif shot and who.weapon != &"":
+		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
 	_hurt_seen[who.id] = who.hurt_tick
+
+
+## True when a fighter fired between two frames, from its (cooldown, burst_left): a guard's burst
+## spends a round (burst_left falls), Rivet's trigger re-arms the cooldown with no burst running.
+## A guard starting a burst (cooldown and burst_left both rise) has not fired yet.
+static func fired(before: Vector2i, now: Vector2i) -> bool:
+	if now.y < before.y:
+		return true
+	return now.y == 0 and before.y == 0 and now.x > before.x
