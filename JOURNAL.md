@@ -564,3 +564,21 @@ NEXT (iteration 10 / morning, in order):
 - Evidence at a4f61ad (HEAD code, 02:04): lint 13/13, unit 202, scenarios 8, parity PASS, selftest PASS
   (goldens 10/10 worst 0.05, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied
   to evidence/pof. No bench this session on the branch (the trial-merge bench is in evidence/trial-merge).
+- REVERTED (02:07, 2a72129) the traffic atlas plug-in (746c765) - NEXT 2 is OPEN again. Found while
+  checking the plugged frames up close (23-traffic-atlas/zoom-cop-car-32-v3/v4.png): (a) a thin steel
+  streak (~110 x 4 px at 32 px/m, steel wash 157,147,154 + ink = the traffic layer through the car print)
+  across two cops; not there with the placeholder; a variant -> cell map did NOT change it, so it is not
+  the police variant; UNDIAGNOSED. (b) civilian traffic rolls art 0-7 (CitySpawner CAR_ART), and cell 4 of
+  the atlas is the police cruiser (vermilion light bar) -> civilians would wear the cop's livery =
+  a doctrine / readability bug; police cars spawn art 8, which is outside the 8 cells. The plug-in
+  would have gone live by itself on the n-d4 merge, so nothing lands tonight. Unverified cell-map work
+  discarded (never committed). Project code at HEAD == 1ed6d3e (git diff empty), whose evidence passed
+  (01:56: lint, unit 202, scenarios 8, parity, selftest); unit 202 re-run after the revert. Ladder rows
+  23 / 23b show the PLUGGED capture of the reverted change (labelled "capture only"): the look target,
+  not the shipped state.
+- NEXT 2 (replaces the one above): re-apply 746c765 (`git revert 2a72129`) on top of the merged tree,
+  then (1) render-only variant -> cell map (civilian 0-7 -> never cell 4; police 8 -> 4): a uniform int
+  array set from GDScript must have the declared length (pad to 16) - and SEE a cruiser on screen before
+  calling it done (spawn one at the junction in the selftest); (2) find the streak: dump the car layer's
+  instance transforms + custom.x for that frame (CitySim write_render buffer) and look for a quad with a
+  tiny axis or an out-of-range cell; (3) frames 32 / 48 / 64 + accent gate + world lock, then re-bless.
