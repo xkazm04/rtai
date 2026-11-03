@@ -173,6 +173,70 @@
       "minimum": 1,
       "type": "integer"
     },
+    "prop_lights": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grades": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "max_props": {
+          "maximum": 32,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "props": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "at_m": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "prop": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "prop",
+              "at_m"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "radius_m": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "grades",
+        "kind",
+        "max_props",
+        "props",
+        "radius_m"
+      ],
+      "type": "object"
+    },
     "schema": {
       "const": "gtai.lights/1"
     }
@@ -183,7 +247,8 @@
     "max_lights",
     "kinds",
     "grades",
-    "car_lights"
+    "car_lights",
+    "prop_lights"
   ],
   "type": "object"
 }

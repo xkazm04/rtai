@@ -96,8 +96,37 @@
       "radius_m": 3.5,
       "steps": 3,
       "token": "vermilion"
+    },
+    {
+      "cone_deg": 0,
+      "doc": "a street lamp's pool: a small paper disc under the head, two bands",
+      "flicker_hz": 0,
+      "id": "street_lamp",
+      "intensity": 0.38,
+      "life_ticks": 0,
+      "radius_m": 4.5,
+      "steps": 2,
+      "token": "paper"
     }
   ],
-  "max_lights": 32,
+  "max_lights": 40,
+  "prop_lights": {
+    "doc": "features/city/view/city_prop_lights.gd: on these grades the max_props light-carrying props nearest the focus within radius_m hold a `kind` light at their row's at_m (the prop sprite's frame, metres from its centre, +x along the sprite: the lamp head). Day holds none.",
+    "grades": [
+      "night"
+    ],
+    "kind": "street_lamp",
+    "max_props": 8,
+    "props": [
+      {
+        "at_m": [
+          1.05,
+          0
+        ],
+        "prop": "lamp_post"
+      }
+    ],
+    "radius_m": 32
+  },
   "schema": "gtai.lights/1"
 }

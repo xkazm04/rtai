@@ -43,6 +43,8 @@ var world_px: Vector2 = Vector2.ZERO
 ## The followed body's velocity (m/s) for the rig's look-ahead.
 var follow_vel_mps: Vector2 = Vector2.ZERO
 var textures: CityTextures = null
+## Street lamps at night from the resident chunks' props (city_prop_lights.gd).
+var prop_lights: CityPropLights = null
 var visible_actors: int = 0
 ## Called with the focus (m) each frame right before the actors are written (the composition
 ## root hooks the characters in here: rig selection, the rig slots the crowd layer skips).
@@ -63,8 +65,10 @@ func setup(city: CitySystem) -> void:
 		camera.make_current()
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_build_layers()
-	textures = CityTextures.new(CityGen.read_json(CitySystem.TEXTURES))
+	var tex_table: Dictionary = CityGen.read_json(CitySystem.TEXTURES)
+	textures = CityTextures.new(tex_table)
 	chunks = ChunkView.new(get_canvas_item(), textures)
+	prop_lights = CityPropLights.new(lights, tex_table)
 	city.sim.set_render(crowd.rids(), CrowdLayers.placeholder_clips())
 	set_look_enabled(look_enabled)
 
@@ -106,6 +110,7 @@ func _process(_delta: float) -> void:
 	var focus: Vector2 = _city.focus
 	_place_camera(focus)
 	chunks.update(focus, _city.residency, zoom)
+	prop_lights.update(_city.residency, focus, clock.tick() if clock != null else 0)
 	var half: Vector2 = get_viewport_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
 	half += Vector2.ONE * VIEW_MARGIN_M
 	if before_render.is_valid():

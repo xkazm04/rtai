@@ -228,6 +228,13 @@ lights moved onto the picked cars, the rest released; by day it returns after on
 are released. At most 18 held lights of the 32: timed lights (muzzles, blasts) keep 14. Cost (editor
 build, headless, 400-actor snapshot with 57 cars): 38 us per tick at night. Frames `38-car-lights`.
 
+Street lamps (`features/city/view/city_prop_lights.gd`, lights.json `prop_lights` + kind `street_lamp`,
+2026-11-03): on `night` the `max_props` (8) lamp posts nearest the focus within 32 m hold a 4.5 m paper
+pool (2 bands) at the lamp head: `at_m` [1.05, 0] in the `lamp_post` sprite's frame (the oval at 83 % of
+its width). Heads are read once per resident chunk from its draw commands (the baked shadow command
+skipped) and cached until the chunk leaves; the nearest set is re-picked when the focus moved 2 m.
+`max_lights` 32 -> 40 so 18 car lights + 8 lamps leave timed lights 14. Frames `39-street-lamps`.
+
 Cost (`light_showcase.gd` -> `light-cost.json`, 48 px/m): CPU `step()` 70-168 us for 32-64 lights
 (GDScript loop). GPU: two long back-to-back runs (no lights, then 32) gave -1.40 .. +1.32 ms (clock /
 power-state drift and other lanes on the GPU). Since 2026-11-02 23:00 the probe interleaves 16 blocks of
