@@ -772,3 +772,9 @@ NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade
 NEXT (final, iteration 6): NEXT 1-25 stand. Morning reading order: evidence/night_iter6_summary.png (h86 vs h98b at
   32/48 + mock + concept), item4_hero_vs_targets.png, the gap list after iteration 6 in evidence/README.md, then the
   owner A/Bs item26 (age_floor + grain_floor) and item27 (toned zebra). Images: 50 of ~50 used; none this iteration.
+- 03:03 REJECTED (h100s35 / h100s40, params JSON restored byte-identically, tree clean): a finer building cast-shadow
+  hatch (shadow period 5 -> 3.5 / 4.0 world px, cov 0.42 -> 0.32 / 0.30) to get closer to the mock's fine shadow hatch
+  at 32 px/m (ours prints ~2 px strokes 5 px apart = broad stripes). By eye the change is marginal at 32 and 48: the
+  look_d4 Sobel pass re-inks both sides of every stroke, so a finer pen hatch still prints as stripes; thinner lines
+  would also add pan-swim risk. Kept period 5. Crop masters work/i6/shadow_ab.png. Same root cause as gap 2: the
+  print fattens thin lines (NEXT 17 covers it).
