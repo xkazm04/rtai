@@ -1349,3 +1349,13 @@ RigArm / RigGait).
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:21: tree clean after commit, no Godot of mine running, scratch log removed.
+
+## Iteration 19 (07:24-07:26, BUILD, 6 min to freeze)
+- No new work started: 6 minutes is too short for any code change plus its before/after frames and an
+  evidence re-run, and every remaining NEXT item needs the merge, an owner call or native work. HEAD
+  19260d5 is unchanged since iteration 18's gate re-check (lint 13/13, unit 247, scenarios 8 green);
+  evidence/pof at cfc9e2c is still valid for this tree.
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no Godot started.
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:26: tree clean after commit, no Godot of mine running, no scratch.
