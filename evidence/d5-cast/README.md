@@ -29,3 +29,10 @@ Iteration 3 (2026-11-03, 11:00-11:35):
 Late afternoon (15:40-17:00): the D5 hero scene's borrowed cruiser bar in cop navy (masters
 `day-d5/d5-cast/borrowed/`, `d5_hero --borrow=<dir>`; frames `cruiser-hero-navybar-ab.png`); a CONTENDED headless
 rig bench (`build/evidence/rig-bench-*.json`, git-ignored; numbers in JOURNAL.md).
+- `rig-bench-ab.json`: rig bench A/B, main vs d-cast (CONTENDED, headless CPU): no rig-cost change.
+
+Iteration 47 (16:02-17:00):
+- `cop-closeup-real.json`: the REAL-GAME cop close-up, `dev/showcase/cop_close.tscn` (real World + CitySystem +
+  CityView + crowd, seed 91 riot; the camera follows the nearest live cop) at 32 / 48 / 64 / 128 px/m, main vs d-cast:
+  0 vermilion px on cops at every zoom (residual = Rivet's hazard collar). Frames `cop-follow-real-4zoom-ab.png`, and the
+  same script on a scratch merge with d-city + d-combat: `merge4-preview-cop-follow-4zoom.png`.
