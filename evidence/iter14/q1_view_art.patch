@@ -257,7 +257,7 @@ index 7c04f05..8ad84fc 100644
 +	var src: Rect2 = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
 +	draw_texture_rect_region(_fire_tex, Rect2(Ink.px(at) - size * 0.5, size), src)
 diff --git a/project/boot/collect_call/view/hud_view.gd b/project/boot/collect_call/view/hud_view.gd
-index 8058c60..1e33900 100644
+index 8058c60..ccb83bc 100644
 --- a/project/boot/collect_call/view/hud_view.gd
 +++ b/project/boot/collect_call/view/hud_view.gd
 @@ -8,8 +8,20 @@ const TEXT_SIZE: int = 30
@@ -308,7 +308,7 @@ index 8058c60..1e33900 100644
  	if weapon == "":
  		weapon_text = _text.resolve(&"HUD__UNARMED", "unarmed")
 -	_say(box.position + Vector2(18, 82), weapon_text, 24, Ink.VERMILION)
-+	_say(box.position + Vector2(112, 76), weapon_text, 22, Ink.VERMILION)
++	_say(box.position + Vector2(112, 76), weapon_text, 22, Ink.INK)
  
  
  func _refusal() -> PackedStringArray:

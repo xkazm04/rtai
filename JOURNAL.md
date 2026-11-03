@@ -1582,3 +1582,10 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
 - Worktrees: `scratch-q1` (quest patch applied), `scratch-v2` (the full morning stack, uncommitted; delete when
   done). Dangling commit c9167f9 (main + n-d4, plumbing) is unreferenced except by scratch-v2. Nothing pushed or
   merged. Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+- 05:44 MILESTONE (patch only, quest 1 HUD) the weapon label ("gloria" / "unarmed" under the cash) prints INK, was
+  vermilion (main's original colour, kept by my patch until now). A weapon name is none of the doctrine's vermilion
+  cases (threats, cops, danger, pickups, objectives, Rivet's collar); the HEAT pips stay the HUD's vermilion. Quest 1
+  grabber, seeded, scratch-q1: `after_q1pip|after_i16wp/0*.png` (only the label's ~1,100 px differ per beat), crop
+  `work/i16/weapon_ink.png`. `evidence/iter14/q1_view_art.patch` regenerated (one line differs from the 04:56 one);
+  applies on main and on main + n-d4 (c9167f9); scratch-q1 unit 166/166; scratch-v2 updated to match. Speaker names
+  in the subtitle box stay vermilion: a design accent - added to the owner questions. Ladder2 row. 0 Codex.
