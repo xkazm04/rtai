@@ -16,6 +16,8 @@ var service: AudioService
 var fx_cues: bool = false
 ## True for the frame an actor_killed was heard: the stage feed voices a body hit, not a wall hit.
 var kill_pending: bool = false
+## Rivet's actor id where nothing else voices his kills (the quest stage); -1 = the FX sink does.
+var rivet_id: int = -1
 ## Steps walked so far (heard or not: a busy pool may drop one).
 var steps: int = 0
 var _tick: Callable = Callable()
@@ -38,7 +40,7 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	@warning_ignore("return_value_discarded")
 	bus.player_hit.connect(_on_player_hit)
 	@warning_ignore("return_value_discarded")
-	bus.actor_killed.connect(func(_k: int, _v: int, _kind: StringName) -> void: kill_pending = true)
+	bus.actor_killed.connect(_on_killed)
 	@warning_ignore("return_value_discarded")
 	bus.wanted_changed.connect(_on_wanted)
 	@warning_ignore("return_value_discarded")
@@ -86,6 +88,12 @@ func _cue(id: StringName) -> void:
 
 func _on_telegraph(weapon: StringName) -> void:
 	_cue(&"tazer_charge" if weapon == &"robo-tazer" else &"attack_telegraphed")
+
+
+func _on_killed(killer: int, _victim: int, _kind: StringName) -> void:
+	kill_pending = true
+	if rivet_id >= 0 and killer == rivet_id:
+		_cue(&"rivet_kill")
 
 
 func _on_player_hit(weapon: StringName) -> void:

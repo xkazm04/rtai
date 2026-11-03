@@ -5,6 +5,9 @@ extends Node
 ## a body hit when an actor died that frame) and the voice player for the quest's lines. Everything
 ## reads the stage; nothing is written back.
 
+## The riot's night-city bed is the quest stage's too, a little lower (a dock, not a crossing).
+const STAGE_BED_TRIM_DB: float = -3.0
+
 var service: AudioService
 var hooks: AudioHooks = AudioHooks.new()
 var voice: QuestVoice = QuestVoice.new()
@@ -24,7 +27,9 @@ static func attach(
 	var rivet_m: Callable = func() -> Vector2: return stage.arena.rivet.pos
 	a.service.listener_fn = rivet_m
 	a.add_child(a.hooks)
+	a.hooks.rivet_id = stage.arena.rivet.id
 	a.hooks.attach(a.service, bus, func() -> int: return stage.tick, rivet_m)
+	a.service.loops.set_on(&"city_ambience", true, STAGE_BED_TRIM_DB)
 	var radio: CarRadio = CarRadio.new()
 	a.add_child(radio)
 	radio.listen(bus)

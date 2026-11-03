@@ -137,3 +137,13 @@ func test_a_robo_tazer_wind_up_charges_and_a_boss_gets_its_stinger() -> void:
 	assert_eq(_played(&"attack_telegraphed"), 1)
 	_bus.boss_engaged.emit(&"robo-tazer")
 	assert_eq(_played(&"boss_stinger"), 1)
+
+
+func test_rivets_kill_punches_only_where_the_stage_asks() -> void:
+	_bus.actor_killed.emit(1, 9, &"shot")
+	assert_eq(_played(&"rivet_kill"), 0, "the FX sink owns it in the riot")
+	_hooks.rivet_id = 1
+	_bus.actor_killed.emit(2, 8, &"shot")
+	assert_eq(_played(&"rivet_kill"), 0, "someone else's kill")
+	_bus.actor_killed.emit(1, 7, &"shot")
+	assert_eq(_played(&"rivet_kill"), 1)
