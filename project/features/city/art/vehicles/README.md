@@ -14,6 +14,7 @@ Import: lossless, mipmaps on (AST-01/03). Masters + prompts: `art_src/d4.manifes
 | `hijack_<vehicle>` | (overlay) | the Gearbox hijacked state: a teal plate (dashed rim + glass), drawn **on top of** the same-name vehicle at the same transform. Civilian bodies only (sedans, taxi, van, pickup). |
 | `traffic_atlas.png` | (moving traffic) | 1536 x 768, 3 x 3 cells of 512 x 256 = **6.4 x 3.2 m** (the `sim_render` `CAR_L x CAR_W` quad) at 80 px/m, car centred, nose to +x. **Cell = the sim car art id** (`city_spawner` `CAR_ART` 0-7, `ART_POLICE_CAR` 8), cell `i` at `(i % 3, i / 3)`: 0 `sedan`, 1 `sedan_b`, 2 `sedan_c`, 3 `taxi`, 4 `van`, 5 `pickup`, 6 `ambulance`, 7 `sedan_grey` (the sedan in a mid-wash paint with a cream sticker rim: value variety in traffic, atlas only), 8 `police_cruiser` |
 | `traffic_atlas_hijack.png` | (moving traffic) | the same cells with the teal hijack plate composited (cruiser and ambulance stay plain) |
+| `traffic_atlas_d1.png`, `traffic_atlas_d2.png` | (moving traffic) | the damage states in the same 3 x 3 layout (cell = art id; id 7 = the sedan damage sprite in the grey paint), registered to the intact cells (max diff 0), so a damage hook only swaps the texture per car |
 
 - **Colour doctrine:** ink, wash and paper only. Vermilion only on the police light bar (tail lights neutralised).
   Teal only in the hijack overlays (the soul's colour). Damage is ink, never red.
