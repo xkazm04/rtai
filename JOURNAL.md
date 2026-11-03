@@ -204,3 +204,16 @@ bosses we resolve in future."
   lying-down state (d5-combat).
 - Unit: 333/334 on the first run; the failure was test_noir_shadows again (the flaky engine
   "Parameter t is null", not mine).
+
+### MILESTONE: tackle line 3.2 -> 5.0 m/s (commit e0583c5, iteration 2's last commit, logged here)
+- slice-play's combat.json walk became 4.5 m/s (Rivet's only quest gait). At a 3.2 m/s line every
+  full-stick brush knocked people down: the walk-in probe knocked all 5 peds down. At 5.0 the quest walk
+  shoves (0 knockdowns, worst overlap 0.0011 m in the new 4.5 m/s leg of scenario_bodies_crowd) and a
+  6 m/s sprint still tackles. Decision line in docs/decisions.md. Parity keeps its own spec (3.2): unchanged.
+
+## Iteration 3 (15:40 - 17:00)
+
+- Read: JOURNAL, git log, decisions. d-slice still has no sprint (combat.json walk 3 / 4.5, no run_mps):
+  REQUEST 3 stays open.
+- The frames.json notes and the clip were made at the old 3.2 line with a 1.4 m/s walk. Re-shooting
+  them as clip v2: the walk leg at the quest gait (4.5 m/s), the sprint at 6 m/s, 17 s, same seed/site.

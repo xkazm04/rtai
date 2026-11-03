@@ -2,10 +2,13 @@ class_name BodiesClipDrive
 extends WorldSystem
 ## The bodies clip's script on the fixed tick (registered after the city): plants a standing
 ## crowd on a long sidewalk band, then moves Rivet (city.target, the camera follows) east: stand
-## 1 s, walk 10 s at 1.4 m/s through crowd A, stand 1 s, sprint 5 s at 6 m/s into crowd B, stand.
+## 1 s, walk 4 s at 4.5 m/s (slice-play's quest gait, under the 5.0 m/s tackle line) through
+## crowd A, stand 2 s, sprint 3 s at 6 m/s into crowd B, stand while they lie, get up and flee.
 
-const WALK_MPS: float = 1.4
+const WALK_MPS: float = 4.5
 const SPRINT_MPS: float = 6.0
+const WALK_S: Vector2 = Vector2(1.0, 5.0)
+const SPRINT_S: Vector2 = Vector2(7.0, 10.0)
 
 var band: Vector2 = Vector2(-1, -1)
 var knocks: int = 0
@@ -37,9 +40,9 @@ func step(tick: int, _input: TickInput) -> void:
 	knocks += _city.body.knocks.size() / SimConst.BR_STRIDE
 	var t: float = tick * SimClock.TICK_DT
 	var v: float = 0.0
-	if t >= 1.0 and t < 11.0:
+	if t >= WALK_S.x and t < WALK_S.y:
 		v = WALK_MPS
-	elif t >= 12.0 and t < 17.0:
+	elif t >= SPRINT_S.x and t < SPRINT_S.y:
 		v = SPRINT_MPS
 	var from: Vector2 = _city.target if _before else _city.body.pos
 	_city.target = from + Vector2(v, 0.0) * SimClock.TICK_DT

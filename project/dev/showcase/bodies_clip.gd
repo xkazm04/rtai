@@ -1,17 +1,17 @@
 extends Node
 ## features/bodies evidence on the REAL city: World + CitySystem + CityView + CityCharacters (as
 ## city_frame.gd builds them), stepped one tick per rendered frame so a frame is a fixed tick.
-## Rivet walks east (1.4 m/s) through a standing crowd that parts, stops, then sprints (6 m/s)
-## into a second group: knockdowns, slides, get-ups, flight. --before = his body off (the game
-## before features/bodies: he walks through everyone). Windowed only. Usage:
+## Rivet walks east (4.5 m/s, the quest gait) through a standing crowd that parts, stops, then
+## sprints (6 m/s) into a second group: knockdowns, slides, get-ups, flight. --before = his body
+## off (the game before features/bodies: he walks through everyone). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/bodies_clip.tscn
 ##     -- --out=<dir>
 ##   [--before] [--zoom=<z>] [--every=<n>] (clip frame every n ticks, 0 = stills only)
 
 const MASTER_SEED: int = 91
 const START: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
-const END_TICK: int = 1320
-const STILLS: Array[int] = [420, 990, 1050, 1250]
+const END_TICK: int = 1020
+const STILLS: Array[int] = [180, 500, 560, 760]
 
 var _out: String = "user://bodies_clip"
 var _before: bool = false
