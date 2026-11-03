@@ -39,6 +39,35 @@ func test_a_missing_rule_is_a_load_error() -> void:
 	assert_false(t.ok())
 
 
+## The shove/tackle line is per class (the attacker's): Rivet's walk must shove, a fleeing or
+## rioting human (4.5 m/s in the sim) must be a run into Rivet, so it is blocked, never a shove.
+func test_run_line_is_per_class() -> void:
+	var t: BodyTable = BodyTable.load_default()
+	assert_gt(t.run_mps(&"rivet_base"), 4.5, "Rivet's 4.5 m/s quest walk is a walk")
+	assert_lt(t.run_mps(&"human"), 4.5, "a 4.5 m/s fleeing human is a run")
+	var runner: BodyContact = BodyContact.resolve(
+		t,
+		&"human",
+		&"rivet_base",
+		PackedVector2Array([Vector2.ZERO, Vector2(0.7, 0)]),
+		Vector2(4.5, 0)
+	)
+	assert_eq(runner.result, &"blocked")
+
+
+func test_a_class_without_run_mps_is_a_load_error() -> void:
+	var raw: Dictionary = DataTable.open(BodyTable.PATH, BodyTable.SCHEMA).raw.duplicate(true)
+	var classes: Array = raw["classes"]
+	var human: Dictionary = classes[1]
+	assert_eq(str(human["id"]), "human")
+	@warning_ignore("return_value_discarded")
+	human.erase("run_mps")
+	var t: BodyTable = BodyTable.from_table(
+		DataTable.parse(JSON.stringify(raw), BodyTable.SCHEMA, "t")
+	)
+	assert_false(t.ok())
+
+
 func test_blocked_contact_holds_the_defender() -> void:
 	var t: BodyTable = BodyTable.load_default()
 	var c: BodyContact = BodyContact.resolve(
