@@ -553,3 +553,34 @@ NEXT (iteration 8 close, in order):
 5. The noir HUD (done in quest_fight, 02:46) belongs in the look profile: when --look=noir is the game's
    look, the composition root should lift the HUD and set look_noir_hud (today: the dev host only).
 6. blood_fx.gd is 250 lines (over the ~200 guide, under the 300 stop): split the droplet pool out if it grows.
+
+## 2026-11-03 iteration 10 (BUILD), 03:01-
+
+- 03:02 Read JOURNAL + git log. Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null
+  -> no Leonardo. No image generation planned this session. Disk C: 226 GB free.
+- Weakest point picked from the hero sheet: the noir world is a uniform black street with thin white lines;
+  the brief's "big black shadow masses carved by white light" only happens on the one muzzle frame.
+- MILESTONE (03:14) street light (2d0c56a): `features/fx/noir/noir_lamps.gd` (NoirLamps) reads the city's
+  `lamp_post` props from the resident chunks' draw lists (each chunk scanned once; the offset shadow copy
+  - xf[3] = 1 - skipped, an early bug: every lamp came in twice), centres the pool under the arm's head
+  (HEAD_M 1.0 along the prop's rotation; the art's head is its +x end) and NoirLook.light_street hands up
+  to 8 (screen px, nearest the focus) to look_noir: `lamps[8]`, `lamp_count`, data `lamp_r` 190 (px at 32
+  px/m, ~5.9 m), `lamp_lift` 0.45, `lamp_core` 0.45, `lamp_gate` 0.05 (values under it stay ink in the
+  light: the cops' ink masses). The lift falls off from core to rim through the threshold band, so a pool's
+  edge prints as pen strokes. Shared file: city_view.gd +1 line (`noir.light_street(...)` in
+  _place_camera). +5 unit tests (196 pass), lint clean.
+  A/B tick-exact (noir_frames --fixed-fps 60): masters night/noir/lamp-v1/ (base = lamp_r 0, lamp = v1 pool
+  on the post, v3 = under the head, lift 0.45 = kept; ab-<scene>-<ppm>.png = before | v1 | v3, all 3 scenes
+  at 32/48/64), evidence/lamp-street-48.png, lamp-street-32.png, lamp-roofs-32.png. Ladder row 28.
+  Iterations: v1 (pool on the post, lift 0.35, gate 0.144) lit the pavement and spilled onto the roof
+  behind the post; v2 (gate 0.05) = no visible change (asphalt is darker than the gate matters for); v3
+  (under the head, lift 0.45) moves the pools to the kerb. Kept v3.
+  Honest read: the biggest step towards the brief's "black masses carved by white light" since look-v4 -
+  the street now has a rhythm of white pools along both pavements (16 m apart, the city's spacing), the
+  falloff hatches, a cop in a pool is a solid black silhouette, white peds keep their ink outline. Costs:
+  the asphalt barely lights (pools stop at the kerb: reads as "light on the sidewalk"); where a pool falls
+  on an already-paper area (roofs scene) it washes out the D4 grid dots; the junction (the showcase spot)
+  has NO lamp within reach (nearest heads ~19-24 m away), so the hero frames do not change.
+  FRICTION: city_view.gd was CRLF in the working tree (index LF); a scripted edit missed - normalised.
+  FRICTION: one `ladder.py` row pointed at rim-v1/hi/, which the iteration 8 trim emptied; row 27's after
+  now uses lamp-v1/base (the same code as 9aa5986: lamp_r 0 = no lift).
