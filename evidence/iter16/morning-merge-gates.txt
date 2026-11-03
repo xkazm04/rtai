@@ -1,0 +1,18 @@
+Morning merge dry run (lane d4-production, iteration 16, 2026-11-03 ~05:15)
+Tree: scratch worktree = n-visual 41ee996 + `git merge --no-commit --no-ff n-d4` (n-d4 at 26fb82e; JOURNAL.md the only
+conflict, resolved to n-d4's for the run) + `git apply` of
+  evidence/iter10/generator_art_pick_v2.patch   (REQUEST 19, city / generator)
+  evidence/iter10/rig_variant_new_looks.patch   (REQUEST 21, characters)
+  evidence/iter14/fx_fade.patch                 (REQUEST 23, visual-engine)
+(all three `git apply --check` clean), native bin copied from n-d4, `--import`, then bake_city (256 chunks).
+
+bake_city --check            : deterministic, matches golden (the golden list from patch 19)
+node tools/lint/lint.mjs     : all 13 checks pass over 220 GDScript files
+node tools/tests/run_unit.mjs: 221 passed, 0 failed, 0 skipped (GUT, headless)
+run_scenarios.gd             : 8 ran, 0 failed (replay_60s final cbeb734ff9b97c41; city replay 1200 ticks identical)
+city_selftest (d3d12)        : ok, placeholders 0, 72 art textures, texture_failures []
+city_frame (d3d12)           : placeholders 0 (3 foci x 32 / 48 / 64 px/m)
+Not run here: n-visual's look / block golden selftest (needs the post-merge re-bless, see iter14 merge note), bench.
+
+Frames: masters night/d4-production/morning_i16/, morning_i16_st/; board night_iter16_morning.png
+(= evidence/iter16/night_iter16_morning.jpg): n-d4 alone | morning merge | target d4h2_mock, 32 / 48 / 64 px/m.
