@@ -13,19 +13,25 @@ const SHADOW_M: float = 0.09
 const RULE_DIR: String = "res://features/city/art/d5/roofs/rule/"
 const PX_PER_M: float = 32.0  # zoom 1.0
 
+## dev env switch -> look_d5_part uniform (iteration 8 options)
+const PART_ENV: Dictionary[String, String] = {"D5_FRINGE": "fringe_k", "D5_DOTS": "dots_k"}
+
 static var _mat: ShaderMaterial = null
 
 
 ## The dev A/B switches for the hero and arena scenes (both tiers): D5_PRINT=thin swaps the world
 ## print to look_d5_print; D5_HALO=ink adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow);
-## D5_FRINGE=<k> sets look_d5_part fringe_k on the D5 part overlays (iteration 8 owner A/B).
+## D5_FRINGE=<k> / D5_DOTS=<k> set look_d5_part fringe_k / dots_k on the D5 part overlays
+## (iteration 8 owner A/B options).
 static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
-	var fringe: String = OS.get_environment("D5_FRINGE")
-	if not fringe.is_empty():
+	for env: String in PART_ENV:
+		var k: String = OS.get_environment(env)
+		if k.is_empty():
+			continue
 		for n: Node in root.find_children(String(RigDetail.OVERLAY), "Sprite2D", true, false):
 			var m: ShaderMaterial = (n as Sprite2D).material as ShaderMaterial
 			if m != null:
-				m.set_shader_parameter("fringe_k", fringe.to_float())
+				m.set_shader_parameter(PART_ENV[env], k.to_float())
 	if OS.get_environment("D5_PRINT") == "thin":
 		look.shader = load(PRINT) as Shader
 	if OS.get_environment("D5_HALO") == "ink":

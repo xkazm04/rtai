@@ -36,6 +36,9 @@ uniform float fringe_k = 0.0;    // OPTION (owner A/B, iteration 8): the concept
 uniform float fringe_art = 22.0;  // that band's depth in PART px (the art's outline is drawn in part px too)
 uniform vec2 fringe_fade = vec2(0.2, 0.3); // px_scale where it starts / is full (64 -> 96 px/m: busy at 64)
 uniform float fringe_dry = 0.2;   // the misprint's vermilion mixed this far toward ink (the collar stays the purest)
+uniform float dots_k = 0.0;       // OPTION (owner A/B, iteration 8): the concept's halftone dot screen in the steel
+                                  // mid-tones (violet-grey dots, part space: no swim), fading in with fringe_fade
+uniform float dots_period = 3.0;  // screen px between dots
 uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
@@ -127,6 +130,11 @@ void fragment() {
 			float fk = fringe_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale);
 			float brk = smoothstep(0.30, 0.45, vnoise(q * vec2(0.22, 0.31) + 7.0));   // the misprint drops out
 			o = mix(o, mix(VERM, INK, fringe_dry), fringe * brk * fk * (1.0 - ink));
+			float band = smoothstep(0.26, 0.44, d) * (1.0 - smoothstep(0.62, 0.74, d)) * (0.45 + 0.55 * shade);
+			vec2 cell = fract(mat2(vec2(0.966, 0.259), vec2(-0.259, 0.966)) * q / dots_period) - 0.5;
+			float rad = 0.5 * sqrt(band * 0.55);
+			float dot = 1.0 - smoothstep(rad - 0.1, rad + 0.1, length(cell));
+			o = mix(o, STEEL_LO, dot * dots_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale) * (1.0 - ink));
 			// paper grime: blotchy dry-brush in part space
 			float gr = vnoise(q * 0.35) * vnoise(q * 1.7 + 3.0);
 			o = mix(o, INK, smoothstep(0.48, 0.66, gr) * grime);
