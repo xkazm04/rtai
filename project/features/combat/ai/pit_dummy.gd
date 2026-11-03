@@ -24,6 +24,9 @@ var fire_m: float = 22.0
 var react_ticks: int = -1
 ## The share of tells it notices at all (1 = every one; a busy player misses some).
 var read_frac: float = 1.0
+## Shifts which tells it reads (0 = the historic pattern; a dev A/B sets it per seed so many
+## seeds are many fights, not one staging with only the shot spread varied).
+var read_salt: int = 0
 ## Nail aim error, degrees either side (0 = perfect aim). The spread is a fixed low-discrepancy
 ## sequence, not an RNG draw, so the dummy never touches the fight's RNG streams.
 var aim_err_deg: float = 0.0
@@ -85,7 +88,7 @@ func _reads(e: EnemyAgent, pit: EnemyPit) -> bool:
 		return false
 	if react_ticks < 0:
 		return e.timer <= pit.roster.aim_lock_ticks + 4
-	var started: int = e.id * 7919 + pit.tick - e.state_ticks
+	var started: int = e.id * 7919 + pit.tick - e.state_ticks + read_salt * 104729
 	var noticed: bool = fposmod(float(started) * 0.618034, 1.0) < read_frac
 	_noticed[e.id] = noticed
 	return noticed and e.state_ticks >= react_ticks

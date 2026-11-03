@@ -2,7 +2,7 @@ extends SceneTree
 ## Headless A/B of squad.aim_lead over many seeds: the three-pairs staging of the rig fight clips,
 ## the human-like PitDummy (react 15 ticks, reads 70 % of tells, 4 deg aim error), no render.
 ## Usage: <godot> --headless --path project -s res://dev/enemy_ai/aim_lead_ab.gd
-##   -- [--seeds=20] [--seconds=25] [--read=0.7 (share of tells the dummy reads)] [--out=<json>]
+##   -- [--seeds=20] [--seconds=25] [--read=0.7 (tells read)] [--salt=1|0] [--out=<json>]
 
 const SPOTS: Array[Vector2] = [
 	Vector2(9, -6),
@@ -15,6 +15,7 @@ const SPOTS: Array[Vector2] = [
 const LEADS: Array[float] = [0.0, 0.8]
 
 var _read: float = 0.7
+var _salt: bool = true
 
 
 func _initialize() -> void:
@@ -31,6 +32,8 @@ func _initialize() -> void:
 				seconds = float(val)
 			"read":
 				_read = float(val)
+			"salt":
+				_salt = val != "0"
 			"out":
 				out = val
 			_:
@@ -38,7 +41,11 @@ func _initialize() -> void:
 				quit(2)
 				return
 	var report: Dictionary = {
-		"schema": "gtai.aim-lead-ab/1", "seeds": seeds, "seconds": seconds, "read": _read
+		"schema": "gtai.aim-lead-ab/1",
+		"seeds": seeds,
+		"seconds": seconds,
+		"read": _read,
+		"read_salt_by_seed": _salt
 	}
 	for lead: float in LEADS:
 		report["lead_%.1f" % lead] = _sum(lead, seeds, roundi(seconds * 60.0))
@@ -89,6 +96,7 @@ func _fight(seed: int, lead: float, ticks: int) -> Object:
 	dummy.set("fire_m", 10.0)
 	dummy.set("react_ticks", 15)
 	dummy.set("read_frac", _read)
+	dummy.set("read_salt", seed if _salt else 0)
 	dummy.set("aim_err_deg", 4.0)
 	dummy.set("watch_rounds", false)
 	for t: int in ticks:
