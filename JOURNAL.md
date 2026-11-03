@@ -209,3 +209,12 @@ NEXT (iteration 4 end):
   Keeping both sides compiles and passes the tests, but lint gd-size then FAILS: `func _ready is 43 lines > 40` (slice's city branch + combat's blood block). For the Director: move combat's blood block
   (the `if _stage != null and _stage.events() != null:` part) into its own function, e.g. `_ready_blood()`. Nothing in audio's files conflicts with any other lane.
 - Masters: frames.json now 10 entries (riot with the blood layers, blood spectrograms).
+- 16:12 GATES at af5272a (`node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched): lint 13/13, unit 356 passed, scenarios 8/8, parity exact + planted mutation caught at step 629, selftest + look goldens 11/11 unchanged. Bench NOT run (lane rule).
+  ElevenLabs credits today after 11:45: SFX only. This iteration: 5 takes (blood), ~150-250 credits (not read back). Lane total ~4.2k of 25k; voice characters spent after 11:45: 0.
+
+NEXT (iteration 49 end):
+1. Director at merge: apply `evidence/requests/quest1_game_audio.patch` (the slice is silent without it; applies clean on d-slice 69ee1cd), the `radio_next` input row (REQUEST 6), decide REQUEST 1 (line timing: 6-7 of 23 lines lost). Resolve d-slice vs d-combat in collect_call_view.gd by extracting combat's blood block out of `_ready` (gd-size).
+2. A human must LISTEN: every SFX (new: blood_splat x3, blood_spurt, car_wreck, boss_loop), the 23 TEMP voices (PoF Voice room replaces them), the 3 radio loops.
+3. tools/audio/build_tables.py is stale: edit the JSON tables directly, or back-port car_wreck / boss_loop / Gloria -1 / the `layer` field first.
+4. Not done: positional cruiser sirens, tyre screech as a loop (the vehicles lane fires a one-shot at slide start and does not publish the slide state), per-surface footsteps, a settings slider UI for music / sfx / voice.
+5. POF-GAP 1-3 stand (audio-gen prompt wrapper > 450 chars; no tts; no music kind). POF-GAP 2 is closed by pof-voice's Voice room when it lands.
