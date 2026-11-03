@@ -438,3 +438,10 @@ NEXT (night run):
   evidence/ folder): all PASS, incl. parity bit-exact (planted mutation caught at step 629),
   scenarios 20/20, selftest look goldens 11/11 + block 5/5 (evidence/evidence-it7.log). No bench
   this iteration (no perf-relevant change).
+
+## Iteration 8 (23:25, BUILD; freeze 23:30, a 5-minute session)
+- answers.json re-read at 23:26: nothing new for gunplay (1, 2 placeholders; 3 = A already applied).
+- No code change: 5 minutes is too short for a gated change (lint + unit + scenarios take longer).
+  Branch head stays 3d692a6 with all gates green (iteration 7 evidence gate all PASS).
+- NEXT (night run): unchanged from iteration 7's list, item 1 first (area behaviours on
+  CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m).
