@@ -151,3 +151,6 @@ NEXT:
 - After d5-city REQUEST 3 lands: shoot a city_frame with a parked AND a moving cruiser on screen (no current frame has one;
   traffic timing varies per run: --police=16 did not bring one into frame) and check both bars print cop blue.
 - King into the game when the boss ticket lands (KingPlan ready); ghost form = a new RivetPlan.FORMS row.
+- REJECTED (not committed): a darker T1 dome (0.82 x paper instead of 0.94) to part the cop's head from the cream sticker
+  rim on the sidewalk at 32. Same-scene hero A/B: d4-32 4 px changed, d4-48 10 px (the D4 part print snaps the dome to
+  paper at gameplay zoom), d5-64/128 only ~15 luma darker. No gain where it was meant to help; art reverted, DOME_K = 0.94.
