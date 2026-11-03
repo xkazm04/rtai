@@ -121,5 +121,23 @@
     "look": "auto (D4->D5)",
     "ppm": 64,
     "note": ""
+  },
+  {
+    "file": "beat-both-64ppm-realtime.mp4",
+    "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
+  },
+  {
+    "file": "beat-flash-64ppm-realtime.mp4",
+    "title": "Kill beat 'flash' in real time at 64 px/m",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": ""
   }
 ]
