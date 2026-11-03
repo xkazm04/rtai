@@ -218,3 +218,12 @@ REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
 
 NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` after merging d-save + d-slice;
 REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
+
+## 2026-11-03 iteration 55 (BUILD, 16:00) - trial tree refreshed on d-slice 36eab8f
+- d-slice moved to 36eab8f (Rivet base-form art/table edit only, no code in my scope). Re-merged into `d-save-trial`
+  (a8db85c -> 3f74350; only JOURNAL.md conflicted, kept ours). Gates on the trial tree: lint 13/13, unit 409 passed / 0 failed,
+  scenarios 12/12 (replay_60s identical, final cbeb734ff9b97c41). Patches 0001..0005 still hold. Logs: evidence/unit55.log, scen55.log.
+- `git merge-tree` of d-save against every lane branch: only JOURNAL.md (add/add). d-save: no code change, no sim file, no bench, no lock.
+
+NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` 3f74350 after merging d-save + d-slice;
+REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).

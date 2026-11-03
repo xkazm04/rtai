@@ -1,0 +1,88 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] quest1: city cells: 2 chunks in 27 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: city cells: 2 chunks in 30 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2421)
+[WARN] save: auto_a corrupt (payload hash mismatch): quarantined (OK)
+[INFO] quest1: city cells: 2 chunks in 36 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2421)
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2466)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: auto_a corrupt (payload hash mismatch): quarantined (OK)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: auto_b corrupt (the saved state did not re-simulate): quarantined (OK)
+[INFO] scenario: chase (native): cops 60.7 -> 6.5 m, nearest police car 3.2 m, 49 fields, max 232 us, last 158 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"checks":10,"counters_a":[149,70,25,6,133,117,12,20,338,20],"counters_b":[149,70,25,6,133,117,12,20,338,20],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"snapshot_floats":3550,"step_ms_a":4.21786,"step_ms_b":4.22478333333333,"steps":300}
+[INFO] scenario: city focus moved 107 m, 17 chunks stamped
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9032
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9032
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] quest1: city cells: 2 chunks in 20 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: city cells: 2 chunks in 22 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: checkpoint at b4-dock did not re-simulate to its hash
+[INFO] quest1: city cells: 2 chunks in 15 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 input: {"beats":["b1-dumpster","b2-payphone","b3-toner-room","b4-dock","b5-quartermaster","b6-hot-walk"],"checkpoint_load":{"beat":"b4-dock","resumed":true,"tamper_refused":true},"checkpoints":["b2-payphone@768","b3-toner-room@2421","b4-dock@5669","b5-quartermaster@8086","b6-hot-walk@9033"],"deaths":0,"final_hash":"c7361b9a3e6347fc2deda04636f4b55d8b2264e4d6af1e03af83da3c2570af3a","hints":["SLICE__HINT_HIDE","SLICE__HINT_STAY","SLICE__HINT_PHONE","SLICE__HINT_MEET","SLICE__HINT_LISTEN","SLICE__HINT_FIGHT","SLICE__HINT_RIFLE","SLICE__HINT_BOSS","SLICE__HINT_TORCH","SLICE__HINT_COOL","SLICE__HINT_PAID"],"input_changes":1309,"input_events":56232,"interact_presses":11,"kills":49,"log":"C:/Users/kazda/AppData/Roaming/RTAI Uprising/test_tmp/quest1/input-run.replay.json","log_saved":true,"paid":1500,"path":"simulated InputEvents -> InputMap -> LiveInput -> TickInput -> StagePilot","replay":"identical","scene":"res://boot/quest1.tscn","seconds":187.35,"shots":66,"state":"succeeded","ticks":11241,"verdict":"pass"}
+[INFO] quest1: city cells: 2 chunks in 16 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in 'dumpster'
+[INFO] quest1: city cells: 2 chunks in 21 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in ''
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] scenario: quest collect-call: succeeded in 11436 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+[INFO] characters: prewarmed 33 rigs in 94.2 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.0940759259259259,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":94.202,"rigMsAvg":0.542981481481481,"rigMsMax":2.716,"rigMsP50":0.547,"rigMsP99":1.424,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 7.7 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.445988888888889,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":7.728,"rigMsAvg":0.52032037037037,"rigMsMax":0.905,"rigMsP50":0.533,"rigMsP99":0.806,"rigsBuilt":33.0,"ticks":540.0}
+run_scenarios: 12 ran, 0 failed
+WARNING: 3248 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 57 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
