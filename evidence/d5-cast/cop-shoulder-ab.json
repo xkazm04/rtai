@@ -1,0 +1,38 @@
+{
+ "verm (before) 32": {
+  "blue_blobs": 0,
+  "blue_px": 0,
+  "blue_hi_px": 0,
+  "verm_px": 4691
+ },
+ "verm (before) 48": {
+  "blue_blobs": 0,
+  "blue_px": 0,
+  "blue_hi_px": 0,
+  "verm_px": 6135
+ },
+ "A full blue-hi balls 32": {
+  "blue_blobs": 19,
+  "blue_px": 3664,
+  "blue_hi_px": 197,
+  "verm_px": 164
+ },
+ "A full blue-hi balls 48": {
+  "blue_blobs": 18,
+  "blue_px": 4831,
+  "blue_hi_px": 318,
+  "verm_px": 77
+ },
+ "B navy balls + hi core 32": {
+  "blue_blobs": 21,
+  "blue_px": 3385,
+  "blue_hi_px": 75,
+  "verm_px": 167
+ },
+ "B navy balls + hi core 48": {
+  "blue_blobs": 16,
+  "blue_px": 4718,
+  "blue_hi_px": 82,
+  "verm_px": 75
+ }
+}

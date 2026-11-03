@@ -1,0 +1,57 @@
+{
+ "before/city-0-32": {
+  "verm_blobs": 15,
+  "verm_px": 4691,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-0-48": {
+  "verm_blobs": 12,
+  "verm_px": 6135,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-2-32": {
+  "verm_blobs": 1,
+  "verm_px": 94,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-2-48": {
+  "verm_blobs": 8,
+  "verm_px": 112,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "after/city-0-32": {
+  "verm_blobs": 6,
+  "verm_px": 164,
+  "blue_blobs": 19,
+  "blue_px": 3664
+ },
+ "after/city-0-48": {
+  "verm_blobs": 3,
+  "verm_px": 77,
+  "blue_blobs": 18,
+  "blue_px": 4831
+ },
+ "after/city-2-32": {
+  "verm_blobs": 1,
+  "verm_px": 94,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "after/city-2-48": {
+  "verm_blobs": 8,
+  "verm_px": 112,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "deltaE76": {
+  "cop_blue_vs_ink(ped body)": 28.1,
+  "cop_blue_hi_vs_ink": 68.3,
+  "cop_blue_hi_vs_cream": 72.2,
+  "vermilion_vs_ink(before)": 92.0,
+  "cop_blue_vs_asphalt": 19.2
+ }
+}
