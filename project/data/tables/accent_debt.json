@@ -20,6 +20,16 @@
       "owner": "d5-city",
       "ppm": 32,
       "source": "not a source: a few lit blood-splat pixels sit on the vermilion/blood gate boundary and flip class between the full capture and the layer-hidden capture 2 frames later; no cop or car is under them (docs/day/2026-11-03/int-day/accent-flicker-*.png)"
+    },
+    {
+      "accent": "vermilion",
+      "doc": "measured 2026-11-04 at the int-eve merge (block 64 px/m: 16 px, the same 16 px on the e-fixes merge alone and on the six-lane tree, so the 12 m street moved the block frame onto it); no cop full rig carries vermilion (cop: 0), the 16 px are actors-layer vermilion beyond Rivet's own rig while Rivet stands in a fresh blood pool beside a corpse (build/evidence/block/accent-64ppm.png); the row goes with blood_flicker_cop_48 when the audit compares same-frame captures",
+      "id": "blood_flicker_cop_block_64",
+      "layer": "cop",
+      "max_px": 24,
+      "owner": "d5-city",
+      "ppm": 64,
+      "source": "suspected, not proven: lit blood-pool pixels under Rivet on the vermilion/blood gate boundary (the flicker blood_flicker_cop_48 names), counted as vermilion on the actors layer by actors - rivet; not a cop printing vermilion"
     }
   ],
   "schema": "gtai.accent-debt/1"
