@@ -1,0 +1,68 @@
+{
+  "$id": "gtai.arena/1",
+  "additionalProperties": false,
+  "properties": {
+    "areas": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rect": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "rect"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rivet_start": {
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.arena/1",
+      "type": "string"
+    },
+    "zoom_ppm": {
+      "items": {
+        "maximum": 256,
+        "minimum": 8,
+        "type": "number"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rivet_start",
+    "zoom_ppm",
+    "areas"
+  ],
+  "type": "object"
+}

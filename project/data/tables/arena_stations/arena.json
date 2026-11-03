@@ -1,0 +1,347 @@
+{
+  "doc": "The arena lane's stations (features/arena/README.md). One file per lane under data/tables/arena_stations/; every file validates against arena_station.schema.json. Coordinates are metres from the arena's hub (arena.json rivet_start). spawns: kind target = a hit-reporting dummy (motion static, strafe = side to side over span_m at speed_mps, approach = walks span_m toward the firing line and resets), crowd = a pedestrian patch (radius span_m), enemy/car = for the lanes that own them. props: flat ink shapes the floor draws (and later collides). tuning: the table keys this station exposes to the live panel. measures: what its telemetry reports.",
+  "lane": "arena",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "range",
+      "id": "range",
+      "measures": [
+        "shots",
+        "hits",
+        "hit_rate",
+        "ttk_s",
+        "damage_taken"
+      ],
+      "name": "Firing range",
+      "props": [
+        {
+          "at": [
+            0,
+            -15
+          ],
+          "kind": "firing_line",
+          "size": [
+            0.3,
+            14
+          ]
+        },
+        {
+          "at": [
+            5,
+            -7
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            10,
+            -7
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            20,
+            -7
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            35,
+            -7
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.6,
+            0.6
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            5,
+            -10
+          ],
+          "id": "static_05m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            5,
+            -15
+          ],
+          "id": "strafe_05m",
+          "kind": "target",
+          "motion": "strafe",
+          "span_m": 3,
+          "speed_mps": 2
+        },
+        {
+          "at": [
+            10,
+            -10
+          ],
+          "id": "static_10m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            -15
+          ],
+          "id": "strafe_10m",
+          "kind": "target",
+          "motion": "strafe",
+          "span_m": 3,
+          "speed_mps": 2
+        },
+        {
+          "at": [
+            20,
+            -10
+          ],
+          "id": "static_20m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            20,
+            -15
+          ],
+          "id": "strafe_20m",
+          "kind": "target",
+          "motion": "strafe",
+          "span_m": 3,
+          "speed_mps": 2
+        },
+        {
+          "at": [
+            35,
+            -10
+          ],
+          "id": "static_35m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            35,
+            -15
+          ],
+          "id": "strafe_35m",
+          "kind": "target",
+          "motion": "strafe",
+          "span_m": 3,
+          "speed_mps": 2
+        },
+        {
+          "at": [
+            35,
+            -20
+          ],
+          "id": "approach_35m",
+          "kind": "target",
+          "motion": "approach",
+          "span_m": 30,
+          "speed_mps": 1.6
+        }
+      ],
+      "tuning": [
+        {
+          "key": "input_actions.movement.turn_dps",
+          "max": 1440,
+          "min": 180,
+          "step": 30
+        },
+        {
+          "key": "input_actions.movement.strafe_scale",
+          "max": 1,
+          "min": 0.5,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "area": "course",
+      "id": "course",
+      "measures": [
+        "input_latency_ticks",
+        "turn_rate_dps",
+        "top_speed_mps",
+        "knockdowns"
+      ],
+      "name": "Movement course",
+      "props": [
+        {
+          "at": [
+            -8,
+            0
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -12,
+            2.5
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -16,
+            0
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -20,
+            2.5
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -24,
+            0
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -28,
+            2.5
+          ],
+          "kind": "cone",
+          "size": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "at": [
+            -30,
+            8
+          ],
+          "kind": "wall_high",
+          "size": [
+            8,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            -26.3,
+            11
+          ],
+          "kind": "wall_high",
+          "size": [
+            0.6,
+            6
+          ]
+        },
+        {
+          "at": [
+            -16,
+            8.6
+          ],
+          "kind": "wall_high",
+          "size": [
+            8,
+            0.4
+          ]
+        },
+        {
+          "at": [
+            -16,
+            10.8
+          ],
+          "kind": "wall_high",
+          "size": [
+            8,
+            0.4
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            -36,
+            0
+          ],
+          "id": "crowd_patch",
+          "kind": "crowd",
+          "motion": "static",
+          "span_m": 4,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "input_actions.movement.accel_mps2",
+          "max": 80,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "input_actions.movement.brake_mps2",
+          "max": 80,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "input_actions.movement.turn_dps",
+          "max": 1440,
+          "min": 180,
+          "step": 30
+        }
+      ]
+    }
+  ]
+}

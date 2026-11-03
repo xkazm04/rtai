@@ -1,0 +1,66 @@
+{
+  "areas": [
+    {
+      "id": "range",
+      "name": "RANGE",
+      "rect": [
+        -3,
+        -23,
+        42,
+        17
+      ]
+    },
+    {
+      "id": "course",
+      "name": "COURSE",
+      "rect": [
+        -42,
+        -5,
+        38,
+        20
+      ]
+    },
+    {
+      "id": "pit",
+      "name": "PIT",
+      "rect": [
+        -3,
+        6,
+        36,
+        26
+      ]
+    },
+    {
+      "id": "pad",
+      "name": "POWERS PAD",
+      "rect": [
+        -42,
+        17,
+        38,
+        15
+      ]
+    },
+    {
+      "id": "hub",
+      "name": "HUB",
+      "rect": [
+        -3,
+        -5,
+        8,
+        10
+      ]
+    }
+  ],
+  "doc": "The dev arena's floor plan (features/arena/README.md): areas as rects in metres from the hub, where Rivet starts, and the zoom steps (px per metre) the zoom keys cycle. Stations (arena_stations/*.json) place their spawns and props inside their area.",
+  "rivet_start": [
+    0,
+    0
+  ],
+  "schema": "gtai.arena/1",
+  "zoom_ppm": [
+    32,
+    48,
+    64,
+    128
+  ]
+}
