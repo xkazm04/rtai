@@ -1214,3 +1214,17 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - 04:23 GATES at d14de52: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
   selftest 72 art textures, 0 placeholders (`evidence/iter14/gates-d14de52.txt`). Note: the 04:14 / 04:21 lines were
   first written with guessed clock times (05:xx); corrected from `date`.
+- 04:24 MERGED CHECK (scratch-m14 = n-visual fe63853 + n-d4 + the new atlas): unit **216 passed, 0 failed** (n-visual's
+  suite incl. the accent audit; the splat is ink + cream only). n-visual's new night grade (`city_selftest
+  --grade=night [--fx-moment --site=block]`, `merged_i14_night/`, `merged_i14_nightfx/`): my cars, roofs, props and
+  the splats hold; vermilion held; nothing of mine breaks at night. No change.
+- 04:24 CHECKED: n-visual's `--markers` pickup is a code-drawn diamond (`core/render/world_markers.gd`), not my token
+  art - REQUEST 2 (draw `assets/pickups/` in the item pass) still open.
+- 04:27 REJECTED, NOT SHIPPED: Dock 9 floor wear (quest 1; `masters:tools/dock_wear.py`, one mark per 4 m slab: oil
+  stain, anchor plate, corner crack + hatched spall). Quest grabber (scratch-q1, seeded) `before_q1df|after_q1df|
+  after_q1df3|after_q1df4/04-*.png`, sheets `work/fx14/q1df*_04.png`: the marks break the blank slabs, but on the 8 m
+  tile the oil stains line up as a stamped row; a per-tile x-mirror in the quest view (`_tiled(..., mirror)`,
+  `draw_set_transform`; a negative-size rect drew nothing, caught in `after_q1df2`) moved them sideways but they still
+  sat on one line; without the stain the crack curls into a repeated fishhook; plates alone are a marginal scale cue.
+  Not a clear gain - the calm floor stays (the same call as iteration 6's wheel scuffs). scratch-q1 restored (floor
+  + `stage_view.gd` = the iteration-12 patch, checked byte-equal). Original kept in `masters:backup_df14/`.
