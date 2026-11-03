@@ -565,3 +565,28 @@ NEXT:
 - PERF: run the 3+3 UNCONTENDED riot A/B (d-cast vs main). Only if the ~1.5 ms contended p99 gap holds, bench
   perf-bisect/ patch A (print_part cop-blue revert) then B (head_swap = 4) in scratch worktrees
   (create build/export/windows-bench/ first).
+
+## Iteration 51 (17:00-17:14, STABILIZE, past freeze: no new features)
+- 17:00 bench.lock was free at the start, but d5-city took it at 17:00:19 while I was staging the main scratch
+  worktree (gtai-wt/scratch-cast-benchmain at 089400e, DLLs copied, imported). Skipped (rule). The lock cleared at
+  17:09:25 and slice-play took it at once. A d-cast + main pair needs ~14 min, which overruns the 17:30 stop, so the
+  3rd riot A/B pair was CALLED OFF for this session. The scratch worktree was removed and pruned. FRICTION: the first
+  `git worktree remove` hit "Permission denied" because the shell cwd was inside it; after a cd out, rm -rf + prune worked.
+- 17:01 gates re-run on HEAD ea6ab0e (no project/tools change since 8dbf7f4): unit 326 passed / 0 failed (GUT,
+  headless); scenarios 8 ran / 0 failed. Lint was green at 16:53.
+  The scenario run ends with "690 ObjectDB instances leaked / 32 resources still in use at exit". main 089400e prints
+  the SAME two lines (checked in the scratch worktree), so this is pre-existing and not from this lane. Exit code 0.
+- 17:02 owner page re-checked: masters day-d5/d5-cast/frames.json has 15 entries and 0 missing `file`/`before`;
+  ladder.png (16:15) is present. No frame changed since, so the evidence still matches the build.
+- No code or art changed this iteration.
+
+## Status at 17:14 (iteration 51, STABILIZE) and NEXT
+- Items 1-5 evidenced (see iteration 47). Gates green on HEAD (unit 326/0, scenarios 8/0, lint 13/13).
+  Owner frames: masters day-d5/d5-cast/frames.json (15) + ladder.png.
+NEXT:
+- Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
+- PERF (the only open item): riot p99 CPU d-cast ~4.9 vs main ~3.2-3.5 ms over 2 CONTENDED pairs, every run within
+  the 7 ms limit. Run a 3+3 uncontended A/B (when no other lane is benching). Only if the gap holds, bench
+  masters perf-bisect/ patch A, then B. Bench worktrees need build/export/windows-bench/ created first.
+- Pre-existing (main too): exit-time ObjectDB / resource leak lines in run_scenarios. Not this lane's scope; noted
+  for whoever owns tests/run_scenarios.gd.
