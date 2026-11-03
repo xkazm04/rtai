@@ -191,8 +191,20 @@ the hit flash only), cops 24.7k-29.3k (+2.7-3.1k flash). The `fx` band now also 
 
 The `light` canvas (screen space, above the actors, below the world UI) holds two bands:
 
-- `grade` (z 0): a full-screen multiply rect, the time-of-day grade. `day` is white (a no-op, the D4
-  baseline); `night` (#6E6878) pushes the whole print toward the charcoal for later acts.
+- `grade` (z 0): a full-screen rect, the time-of-day grade (`grade_ink.gdshader`, a lights.json
+  `grades` row: `paper_level`, `gamma`, `accent_keep`). It reads the printed screen and re-prints each
+  pixel at luminance `paper_level * l^gamma` with its hue kept, so night is the same black-and-white print,
+  darker and harder: the cream paper sinks to a warm grey, the charcoal streets to near ink, ink stays
+  ink. Pixels the palette gates (palette.json `verm_gate` / `teal_gate`) call an accent keep
+  `accent_keep` of their value, so at night the spot colours (cops, threats, danger cues, souls) stand
+  out of the darkened print. `day` is the identity (1 / 1 / 0) and HIDES the rect: the day print pays
+  no screen read. `night` = 0.58 / 1.5 / 0.85. It replaced (2026-11-03) a flat multiply by #6E6878: a
+  lavender cast (B > R) over the warm paper and charcoal (the tones re-warmed in iteration 11), lower
+  contrast, and the accents dimmed below the gates with everything else. Frames `37-night` in
+  `gtai-masters/night/visual-engine` (cmp-block / cmp-junction / cmp-lights at 32 / 48 / 64 px/m).
+  Cost (`light_showcase.gd` `gpu_ms_night_grade_delta`, interleaved day / night blocks, 48 px/m,
+  1280x800): RTX 4090 +0.04 ms; the 2-CU iGPU (`--gpu-index 1`) +0.46 / +0.46 ms (2 runs; the screen
+  copy plus one full-screen pass), inside the Deck's 25 ms frame. Night only.
 - `lights` (z 100): one MultiMesh of additive quads, `max_lights` (32) per frame. `light_ink.gdshader`
   cuts each light's radial (or cone) falloff into `steps` flat bands and draws every band edge as
   world-locked 45-degree pen hatching, so a light prints as a drawn patch of paper (or vermilion for

@@ -1,16 +1,21 @@
 class_name LightLayer
 extends CanvasLayer
 ## The 2D light model (data/tables/lights.json, gtai.lights/1; core/render/README.md): the
-## time-of-day grade (a full-screen multiply, day = white) under a pool of additive light quads,
-## one MultiMesh draw, banded by light_ink.gdshader so lights print as paper / accent ink. Lights
-## live on the 60 Hz tick (add() takes the tick, step() fades them), never on a frame delta.
-## Render only. Usage: add_child(LightLayer.new()), then add()/remove() and step(tick) per frame.
+## time-of-day grade (grade_ink.gdshader re-prints the screen darker; day = hidden) under a pool
+## of additive light quads, one MultiMesh draw, banded by light_ink.gdshader so lights print as
+## paper / accent ink. Lights live on the 60 Hz tick (add() takes the tick, step() fades them),
+## never on a frame delta. Render only. Usage: add_child(LightLayer.new()), then add() /
+## remove() and step(tick) per frame.
 
 const TABLE: String = "res://data/tables/lights.json"
 const SHADER: String = "res://assets/shaders/light_ink.gdshader"
+const GRADE_SHADER: String = "res://assets/shaders/grade_ink.gdshader"
+## A grade row's shader uniforms (lights.json `grades`).
+const GRADE_KEYS: Array[StringName] = [&"paper_level", &"gamma", &"accent_keep"]
 
 var kinds: Dictionary[StringName, Dictionary] = {}
-var grades: Dictionary[StringName, Color] = {}
+var grades: Dictionary[StringName, Dictionary] = {}
+var grade: StringName = &"day"
 var max_lights: int = 64
 var active: int = 0
 var dropped: int = 0
@@ -30,13 +35,16 @@ func _init() -> void:
 	layer = RenderLayers.canvas(&"light")
 	_load(FileAccess.get_file_as_string(TABLE))
 	_pool = LightPool.new(max_lights)
-	_grade.color = Color.WHITE
 	_grade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_grade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_grade.z_index = RenderLayers.z(&"grade")
-	var mul: CanvasItemMaterial = CanvasItemMaterial.new()
-	mul.blend_mode = CanvasItemMaterial.BLEND_MODE_MUL
-	_grade.material = mul
+	var gm: ShaderMaterial = ShaderMaterial.new()
+	gm.shader = load(GRADE_SHADER)
+	var pal: PaletteTokens = PaletteTokens.shared()
+	gm.set_shader_parameter(&"verm_gate", pal.verm_gate)
+	gm.set_shader_parameter(&"teal_gate", pal.teal_gate)
+	_grade.material = gm
+	_grade.visible = false
 	add_child(_grade)
 	_mm.transform_format = MultiMesh.TRANSFORM_2D
 	_mm.use_colors = true
@@ -53,9 +61,22 @@ func _init() -> void:
 	add_child(_node)
 
 
-## The grade by id (`day`, `night`); unknown ids grade as day.
+## The grade by id (`day`, `night`); unknown ids grade as day. An identity grade (paper_level 1,
+## gamma 1: `day`) hides the rect, so the day print pays no screen read.
 func set_grade(id: StringName) -> void:
-	_grade.color = grades.get(id, Color.WHITE)
+	grade = id if grades.has(id) else &"day"
+	var row: Dictionary = grades.get(grade, {})
+	var mat: ShaderMaterial = _grade.material
+	for key: StringName in GRADE_KEYS:
+		mat.set_shader_parameter(key, row.get(String(key), 1.0 if key != &"accent_keep" else 0.0))
+	_grade.visible = not is_identity(row)
+
+
+## True when a grade row leaves the print untouched (the rect stays hidden).
+static func is_identity(row: Dictionary) -> bool:
+	var level: float = row.get("paper_level", 1.0)
+	var g: float = row.get("gamma", 1.0)
+	return is_equal_approx(level, 1.0) and is_equal_approx(g, 1.0)
 
 
 ## A light of `kind` at `pos_px` (world px), pointing along `angle`, born on sim tick `tick`.
@@ -115,5 +136,4 @@ func _load(text: String) -> void:
 		kinds[StringName(kid)] = k
 	for row: Dictionary in d.get("grades", []):
 		var gid: String = row["id"]
-		var hex: String = row["multiply"]
-		grades[StringName(gid)] = Color.html(hex)
+		grades[StringName(gid)] = row

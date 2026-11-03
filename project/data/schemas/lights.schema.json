@@ -10,22 +10,35 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "accent_keep": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
+          },
+          "gamma": {
+            "maximum": 4,
+            "minimum": 0.5,
+            "type": "number"
           },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
-          "multiply": {
-            "pattern": "^#[0-9A-F]{6}$",
-            "type": "string"
+          "paper_level": {
+            "maximum": 1,
+            "minimum": 0.05,
+            "type": "number"
           }
         },
         "required": [
           "id",
-          "multiply",
+          "paper_level",
+          "gamma",
+          "accent_keep",
           "doc"
         ],
         "type": "object"

@@ -2,7 +2,8 @@ extends "res://dev/selftest/city_selftest.gd"
 ## The 2D light model, evidenced: the selftest junction (seed 91) under --fixed-fps 60 at 32 / 48
 ## / 64 px/m, the tree paused (same sim state) and captured with no lights, with the demo lights
 ## (a blast, muzzle flashes, headlights, a siren, a fire) in the day grade and in the night grade.
-## Then the cost: GPU and CPU render time over COST_FRAMES with 0 lights and with the full budget.
+## Then the cost: GPU and CPU render time over COST_FRAMES with 0 lights and with the full budget,
+## and the night grade's own delta (day hides the grade rect).
 ##   godot --fixed-fps 60 --path project res://dev/selftest/light_showcase.tscn -- --out=<dir>
 
 const PPMS: Array[int] = [32, 48, 64]
@@ -81,13 +82,7 @@ func _cost() -> Dictionary:
 	_view.zoom = 1.5
 	var vp: RID = get_viewport().get_viewport_rid()
 	RenderingServer.viewport_set_measure_render_time(vp, true)
-	var c: Vector2 = JUNCTION * SimConst.PX_PER_M
-	for i: int in _view.lights.max_lights:
-		var at: Vector2 = (
-			c + Vector2((i % 8) - 4.0, floorf(i / 8.0) - 4.0) * 3.0 * SimConst.PX_PER_M
-		)
-		@warning_ignore("return_value_discarded")
-		_view.lights.add(&"fire", at, 0.0, 0)
+	_fill_budget()
 	# interleaved blocks (lights hidden / shown), median of the block means: GPU clock and
 	# power-state drift between two long runs swamped the delta (four runs: -0.87 .. +1.32 ms)
 	var off: Array[Vector2] = []
@@ -100,7 +95,10 @@ func _cost() -> Dictionary:
 	_view.lights.visible = true
 	var none: Vector2 = _median(off)
 	var full: Vector2 = _median(on)
+	var grade: Vector2 = await _grade_cost(vp)
 	return {
+		"gpu_ms_night_grade_delta": grade.x,
+		"cpu_ms_night_grade_delta": grade.y,
 		"schema": "gtai.light-cost/1",
 		"ppm": 48,
 		"lights": _view.lights.active,
@@ -115,6 +113,31 @@ func _cost() -> Dictionary:
 		"light_step_us": _view.lights.last_us,
 		"gpu": RenderingServer.get_video_adapter_name(),
 	}
+
+
+## The full light budget: a grid of held fires around the junction.
+func _fill_budget() -> void:
+	var c: Vector2 = JUNCTION * SimConst.PX_PER_M
+	for i: int in _view.lights.max_lights:
+		var at: Vector2 = (
+			c + Vector2((i % 8) - 4.0, floorf(i / 8.0) - 4.0) * 3.0 * SimConst.PX_PER_M
+		)
+		@warning_ignore("return_value_discarded")
+		_view.lights.add(&"fire", at, 0.0, 0)
+
+
+## The night grade's own cost (the full light budget stays on; hiding the layer would hide the
+## grade too): interleaved day / night blocks, median delta.
+func _grade_cost(vp: RID) -> Vector2:
+	var day: Array[Vector2] = []
+	var night: Array[Vector2] = []
+	for b: int in BLOCKS:
+		_view.lights.set_grade(&"night" if b % 2 == 1 else &"day")
+		await RenderingServer.frame_post_draw
+		var m: Vector2 = await _measure(vp)
+		(night if b % 2 == 1 else day).append(m)
+	_view.lights.set_grade(&"day")
+	return _median(night) - _median(day)
 
 
 static func _median(v: Array[Vector2]) -> Vector2:
