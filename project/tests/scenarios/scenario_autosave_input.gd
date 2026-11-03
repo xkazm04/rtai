@@ -88,4 +88,14 @@ func _resume(game: Quest1Game, saved: Dictionary[String, Dictionary], log: Dicti
 		return "the fallback did not land on the older slot's hash"
 	log["load_2"] = {"beat": s.beat_id(), "tick": s.tick()}
 	s.world.free()
-	return ""
+	return _continue_button(game, log)
+
+
+## The title card's Continue: the game opens a session on the surviving slot's beat.
+func _continue_button(game: Quest1Game, log: Dictionary) -> String:
+	game.card.continue_pressed.emit()
+	var s: Quest1Session = game.session
+	if s == null or s.beat_id() != "b3-toner-room":
+		return "Continue did not resume the surviving slot's beat"
+	log["continue_button"] = {"beat": s.beat_id(), "sink_on": s.autosave.sink.is_valid()}
+	return "" if s.autosave.sink.is_valid() else "Continue left autosave off"
