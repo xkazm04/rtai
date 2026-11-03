@@ -468,3 +468,16 @@ NEXT (after the 17:00 freeze / next session, in order):
 - NEXT: unchanged from iteration 46 (fire half 2 after splitting `vehicle_burn.gd` first; frame the
   fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; use d-vehicles' native DLL at
   merge; a drive48 bench variant with VehicleService).
+
+## Iteration 48 (16:51-16:55, BUILD, 9 min to freeze)
+- No new code, for the same reason as iteration 47: a change cannot pass the full gates (5-8 min on
+  the contended machine) and be checked before 17:00, and nothing ungated goes on the branch.
+- Handoff check again: `frames.json` has 15 entries and none are missing; `ladder.png` (16:36) is
+  there; evidence/vehicles/ has it2-it5 + parity/drive/carnage JSON. No Godot console process is
+  running on the machine. The bench lock is held by d5-combat (not mine, not touched).
+- Branch head for the merge: the last gated code is e341b25, gated again at 2b62519
+  (evidence/vehicles/it5/). Everything after that is docs only.
+- 0 frames, 0 rejected, no AI images, no provenance lines, no bench lock taken.
+- NEXT: unchanged from iteration 46 (fire half 2 after splitting out `vehicle_burn.gd`; frame the
+  fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; use d-vehicles' native DLL
+  at merge; a drive48 bench variant with VehicleService).
