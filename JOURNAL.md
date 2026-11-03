@@ -629,3 +629,13 @@ NEXT (iteration 8 close, in order):
   The per-pixel loops are 8 lamps + 12 cars with a value-noise call each; a quiet-machine re-measure (or the
   iGPU, `--gpu-index 1`) is the next step. Files: evidence/noir-cost-1080p-z1.5-lights.json, -z1.0-lights.json,
   masters night/noir/cost-*.json.
+- (03:38) TUNE the cones' brush edge (c04dae9): width wobbles 16% along the cone (world-locked value noise), so
+  the edge is a hand-inked line, not a ruler. Small gain. masters beam-v5/edge-*.png (v4 above, v5 below;
+  also evidence/light-cone-edge-48.png).
+- TRIED / NOT ADOPTED (03:41) traffic in the showcase: `--cars=<n>` (efd6435). 6 cars never reached the
+  street in 11 s (spawns are >= 105 m out; the clip was byte-identical); 40 cars do pass. The cone sweeping
+  under Rivet is the best noir image of the night (evidence/cars-through-fight-NOT-adopted.png, 9.0 s), but
+  the sim's cars do not see the scripted fighters: at --at=501,523 a car's roof ran over a dead cop's legs,
+  at --at=501,520.5 a car drove straight through Rivet and the body (the same evidence image, 9.5 / 10.0 s).
+  A camera-break-class defect, so not in the hero. Needs the fighters as sim obstacles (or a scripted car).
+  Masters cars-show2/ (clip + strip). Flag kept, with the caveat in its doc line.
