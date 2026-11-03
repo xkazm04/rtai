@@ -491,3 +491,17 @@ NEXT (iteration 9 / morning, in order):
   to ALL crowd nodes in CityView.set_look_enabled, which would replace the crowd atlas material on the
   people layer after the bake (wrong cells). Not seen in play (the default look never flips); fix =
   skip the people node once CityCharacters.bake swapped it. Not done tonight.
+- CORRECTION (02:0x) - my own measurements above were partly wrong. While writing the note on
+  set_look_enabled I fixed it (1c7e3aa: a look toggle replaced the baked crowd atlas material on the
+  people layer; unit test planted -> 2 failing asserts). pass_cost toggles the print OFF and ON, so
+  from its first `no_print` block every crowd person drew the WHOLE 3200 x 1024 atlas. With the fix,
+  iGPU 1280x800 48 px/m (2 runs, evidence/pass-cost/split2-*): frame 3.23 / 3.30 ms = print 1.56 /
+  1.61, full rigs 0.47 / 0.56, atlas crowd 0.09 / 0.15, crowd shadows ~0.03, lights 0.12 / 0.17, cars
+  0.01 / 0.15, FX ~0. So: (1) the "atlas crowd 1.6 ms" was the bug, not the crowd; (2) the crowd-trim
+  A/B was INVALID (its shader was not even bound after the first toggle) - still rejected, because the
+  real crowd costs ~0.1 ms; (3) the frame totals I quoted for look_d4 (6.06 -> 4.9 ms) include ~1.5 ms
+  of that artifact on both sides; the print-pass deltas (2.76-2.92 -> 1.21-1.76 ms) are like for like
+  (same broken layer in both configs of a run) and the frames are bit-identical, so the shader change
+  stands. Honest low-end headline: at Deck resolution on a 2-CU iGPU the D4 frame is ~3.3 ms of GPU,
+  half of it the print pass. In play the bug needed a look whose `printed` flips (`--look=off`); the
+  default look never flips, so shipped play was not affected.

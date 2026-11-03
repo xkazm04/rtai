@@ -256,7 +256,7 @@ bit-identical (render look_golden with the old and the new shader and diff the f
 
 | Pass | Cost | How measured |
 |---|---|---|
-| D4 world print (`look_d4`), low-end GPU | AMD Radeon iGPU (2 CU, below a Steam Deck), 48 px/m riot, 1280x800: 2.76-2.92 ms of a 6.06-6.12 ms frame before; 1.21-1.76 of 4.66-4.94 ms after the early-outs (3 interleaved pairs, bit-identical frames). 1920x1080: 5.31 -> 3.76 ms (1 run). Actors (rigs + crowd + FX) 2.0-2.3 ms, lights 0.26 ms, FX ~0 | `pass_cost.gd --gpu-index 1` (`evidence/pass-cost`) |
+| D4 world print (`look_d4`), low-end GPU | AMD Radeon iGPU (2 CU, below a Steam Deck), 48 px/m riot, 1280x800: 2.76-2.92 ms of a 6.06-6.12 ms frame before; 1.21-1.76 of 4.66-4.94 ms after the early-outs (3 interleaved pairs, bit-identical frames). 1920x1080: 5.31 -> 3.76 ms (1 run). Those frame totals carry ~1.5 ms of a measuring artifact (the print toggle broke the crowd atlas material until 1c7e3aa; the print deltas are like for like). After 1c7e3aa: frame 3.23-3.30 ms = print 1.56-1.61, full rigs 0.47-0.56, atlas crowd 0.09-0.15, lights 0.12-0.17, cars and FX under 0.15 | `pass_cost.gd --gpu-index 1` (`evidence/pass-cost`) |
 | D4 world print, RTX 4090 | 0.39 ms of 0.86 ms at 1280x800, 0.85 of 1.49 at 1080p (before); after-runs were contended (other lanes on the GPU): judge on the iGPU | `pass_cost.gd` |
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
 | D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |
