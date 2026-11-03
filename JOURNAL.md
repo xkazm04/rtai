@@ -1361,3 +1361,8 @@ NEXT (iteration 28, final for the night; same as iteration 27):
   4. Iteration-18 07:10 items 3-5.
 
   Later: `noir` as a row in look_profiles.json.
+
+## Iteration 29 (08:15-08:17, REPORT, nothing built)
+- (08:16) MILESTONE: REPORT.md written in the lane cwd. It covers what works (each claim with an evidence path), what does not or was not adopted, blockers and time lost (Leonardo 0 tokens all night; about 58 min of hung recordings; the merge fix can only land on n-visual), the merge steps, and next steps. Every cited path was checked by script: all exist (evidence/ in this worktree, `M/` = gtai-masters/night/noir).
+- Images: 0 generated this iteration (night total: 7 Codex, 0 rejected, 1 reverted in-engine); provenance +0. Gates last run at 1d152e0, PASS (project/ unchanged since 641d2b1). Code commits: none. Shared files touched: none. No process of mine is running.
+NEXT (for the morning): read REPORT.md, then follow its "Next steps" 1-5 (owner pick from evidence/showcase-hero-current.png; merge per evidence/MERGE-noir.md + patch; crowd-shadow root cause; mask channel; move the coat and noir parts into the game's rigs).
