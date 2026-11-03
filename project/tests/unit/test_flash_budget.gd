@@ -2,13 +2,30 @@ extends GutTest
 ## FlashBudget (lane noir): the kill beat and the muzzle light share one photosensitivity budget.
 
 
-func test_the_budget_allows_two_flashes_a_second() -> void:
+func test_the_muzzle_light_leaves_room_for_a_kill_beat() -> void:
 	var b: FlashBudget = FlashBudget.new()
 	var spent: int = 0
 	for t: int in 120:
-		spent += 1 if b.spend(FlashBudget.LIGHT_COST) else 0
+		spent += 1 if b.spend_light() else 0
 		b.step_ticks(1)
-	assert_eq(spent, 2 * FlashBudget.MAX_FLASHES, "2 s of rounds every tick light 4 frames")
+	assert_eq(spent, 2, "2 s of rounds every tick light 2 frames (1 a second)")
+	assert_true(b.can_spend(FlashBudget.BEAT_COST), "a kill beat still fits")
+	assert_true(FlashBudget.LIGHT_COST + FlashBudget.BEAT_COST <= FlashBudget.MAX_FLASHES)
+	assert_true(FlashBudget.MAX_FLASHES <= 3, "WCAG 2.3.1: at most 3 flashes in any second")
+
+
+func test_a_round_just_before_a_kill_keeps_the_full_beat() -> void:
+	var f: ImpactFrame = ImpactFrame.new()
+	var m: MuzzleFlash = MuzzleFlash.new()
+	m.budget = f.budget
+	m.fire(Vector2.ZERO, Vector2.RIGHT)
+	assert_true(m.lit())
+	m.step_ticks(1)
+	f.step_ticks(1)
+	f.fire(Vector2(0.5, 0.5))
+	assert_false(f.calm(), "the light did not eat the beat")
+	f.free()
+	m.free()
 
 
 func test_a_kill_beat_and_rounds_never_pass_the_budget_together() -> void:

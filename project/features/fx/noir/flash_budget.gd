@@ -3,13 +3,16 @@ extends RefCounted
 ## D-Noir photosensitivity budget (lane noir): every effect that flashes a large part of the
 ## screen (the kill beat's white silhouette flash + panel, the muzzle's pool of light) spends
 ## from ONE shared budget, so they cannot add up past the limit together. WCAG 2.x 2.3.1 allows
-## at most 3 flashes in any 1 s; the budget allows MAX_FLASHES (2) per WINDOW ticks to keep a
-## margin (a flash = a pair of opposite luminance changes). enabled = false is the "flashes off"
+## at most 3 flashes in any 1 s (a flash = a pair of opposite luminance changes); the budget is
+## MAX_FLASHES (3) per WINDOW ticks, and the muzzle light keeps BEAT_COST free (spend_light), so
+## a round fired just before a kill never turns that kill's beat calm: at most 1 light + 1 beat
+## a second. The beat is costed at 2 (measured 1-1.5 in the flash check), which is the margin.
+## enabled = false is the "flashes off"
 ## accessibility mode: nothing may flash at all (the callers fall back to non-flashing beats).
 ## Stepped on the fixed tick.
 
 const WINDOW: int = 60
-const MAX_FLASHES: int = 2
+const MAX_FLASHES: int = 3
 ## What each effect costs: the kill beat flashes the whole frame and then holds a paper-gutter
 ## panel (up to two luminance pairs in a region); the muzzle light is one frame of light.
 const BEAT_COST: int = 2
@@ -42,6 +45,13 @@ func spend(cost: int) -> bool:
 		@warning_ignore("return_value_discarded")
 		_spent.append(_tick)
 	return true
+
+
+## The muzzle light's spend: only if a kill beat would still fit after it.
+func spend_light() -> bool:
+	if not can_spend(LIGHT_COST + BEAT_COST):
+		return false
+	return spend(LIGHT_COST)
 
 
 func step_ticks(n: int) -> void:

@@ -34,7 +34,7 @@ func fire(at_px: Vector2, dir: Vector2) -> void:
 	_dir.append(dir.normalized())
 	@warning_ignore("return_value_discarded")
 	_age.append(0)
-	if _since_lit >= LIT_GAP and (budget == null or budget.spend(FlashBudget.LIGHT_COST)):
+	if _since_lit >= LIT_GAP and (budget == null or budget.spend_light()):
 		_lit = true
 		_lit_at = at_px
 		_since_lit = 0
