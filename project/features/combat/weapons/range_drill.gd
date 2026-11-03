@@ -15,6 +15,8 @@ class Lane:
 	var target_hp: float = 100.0
 	var target_radius_m: float = 0.35
 	var strafe_mps: float = 0.0
+	## A hostile holds the gun (enemy_fire scale: slower, weaker rounds); the target is Rivet.
+	var enemy_shooter: bool = false
 
 
 class Result:
@@ -36,6 +38,8 @@ static func run(table: WeaponTable, lane: Lane, rng: RandomNumberGenerator) -> R
 		1, Vector2(lane.distance_m, 0.0), lane.target_hp, lane.target_radius_m
 	)
 	target.walk = Vector2(0.0, lane.strafe_mps)
+	var team: int = Projectile.TEAM_ENEMY if lane.enemy_shooter else Projectile.TEAM_PLAYER
+	target.team = Projectile.TEAM_PLAYER if lane.enemy_shooter else Projectile.TEAM_ENEMY
 	sim.targets.append(target)
 	var res: Result = Result.new()
 	for tick: int in TIMEOUT_TICKS:
@@ -43,7 +47,7 @@ static func run(table: WeaponTable, lane: Lane, rng: RandomNumberGenerator) -> R
 		trig.step()
 		var held: bool = trig.spec.auto or tick % 2 == 0
 		if trig.pull(held):
-			sim.fire(trig, Vector2(0.4, 0.0), target.pos, Projectile.TEAM_PLAYER, 0)
+			sim.fire(trig, Vector2(0.4, 0.0), target.pos, team, 0)
 		sim.step(tick)
 		if not target.alive():
 			res.killed = true

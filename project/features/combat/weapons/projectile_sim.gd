@@ -40,8 +40,9 @@ func fire(
 		var p: Projectile = Projectile.launch(w, muzzle, trigger.shot_dir(aim, _rng), team)
 		p.shooter_id = shooter_id
 		p.born_tick = tick
-		if w.kind == WeaponSpec.Kind.THROWN:
-			p.left_m = minf(muzzle.distance_to(aim_point), w.range_m)
+		if w.kind == WeaponSpec.Kind.THROWN or w.kind == WeaponSpec.Kind.ROCKET:
+			# Bottles land and rockets burst at the aimed point (or the first body, for rockets).
+			p.left_m = minf(maxf(muzzle.distance_to(aim_point), 1.0), w.range_m)
 		if team == Projectile.TEAM_ENEMY:
 			p.vel *= _table.enemy_speed_scale
 			p.damage *= _table.enemy_damage_scale

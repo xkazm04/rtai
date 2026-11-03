@@ -108,3 +108,12 @@ func test_planted_fault_is_caught() -> void:
 	var a: RangeDrill.Result = RangeDrill.run(_table, lane, _rng(7))
 	var b: RangeDrill.Result = RangeDrill.run(_table, lane, _rng(8))
 	assert_ne(a.digest, b.digest, "a different spread stream must move the digest")
+
+
+func test_a_rocket_bursts_at_the_aim_point_and_catches_a_strafer() -> void:
+	var lane: RangeDrill.Lane = RangeDrill.Lane.new()
+	lane.weapon = &"rocket_launcher"
+	lane.distance_m = 5.0
+	lane.strafe_mps = 3.2
+	var res: RangeDrill.Result = RangeDrill.run(_table, lane, _rng(11))
+	assert_true(res.killed, "splash at the aimed point covers a 0.8 m juke")
