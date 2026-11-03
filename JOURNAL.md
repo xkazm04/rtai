@@ -577,3 +577,4 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
     and paper is where the screen-locked grain swims during a pan (+18% on the mural roof crop, per-px rate
     unchanged).
 19. Owner: HQ's vermilion plate on "HQ" is heavier than the other signs; keep or thin.
+- 02:07 FINAL gates (iteration 5): evidence tool (--no-parity --no-bench) ALL PASS at dd3f0f5 (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 50 untracked evidence PNGs moved aside and restored.
