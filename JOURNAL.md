@@ -406,3 +406,25 @@ NEXT (iteration 5, in order):
 - Session end 16:41: tree clean after this commit, no Godot process of mine left, bench lock not
   held, scratch deleted. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png 1280 x
   8364, carnage-20s-48ppm-v3.mp4, crop-fire-v12.png, crop-wreck-v13.png, build_wreck_atlas.py).
+
+## Iteration 46 (16:39 - 17:00, BUILD; freeze 17:00)
+- 16:39 read the JOURNAL tail + git log. d-audio answered REQUEST 8 on its side (fire bed proven on
+  this lane's carnage route in a scratch merge; car_wreck cooldown 8 ticks). d-audio's five-way
+  merge check FRICTION for the Director: the scenarios need the native DLL BUILT FROM d-vehicles
+  (`CitySim::set_obstacles`); int-day's older DLL fails 3 vehicle scenarios.
+- MILESTONE 16:43 e341b25, NEXT 3 (fire as gameplay), first half: `VehicleContacts.burn(b, world)`,
+  called for every service car each tick in `_collide` (wrecks stand still, so it runs before the
+  standing-car early return). A WRECK younger than BURN_S kills every living person within
+  FIRE_R 1.2 m of its fire (NOSE_M 1.5 m ahead of the centre): `strike_person(slot, ZERO, true)` ->
+  `pedestrian_struck(slot, true)`, so d5-combat's blood and the heat hook fire as for a run-over.
+  BURN_S / NOSE_M moved from VehicleFire (render) to VehicleContacts (sim); VehicleFire reads them,
+  so the drawn fire and the lethal one cannot drift. Deterministic (sim tick, no RNG).
+  Deviation: the kill reuses the run-over event, so the `actor_killed` cause is the vehicle one,
+  not `fire`. A distinct cause needs an events.json change (shared file), so it was not done in the
+  last 20 minutes. Not yet: Rivet taking fire damage, wreck-to-wreck spread.
+  Unit test `test_a_burning_wreck_kills_whoever_stands_in_its_fire` (inside 1.2 m dies, 4 m lives,
+  burnt-out kills nobody). Gates at e341b25: lint 13/13 (gd-size: service 200, contacts 200),
+  unit 370/0, scenarios 11 ran 0 failed (replay_60s final cbeb734ff9b97c41, vehicle drive replay
+  identical, rig_stress green). Native code untouched, so parity is unaffected (evidence run below).
+  No new frame: the fire kill shows as d5-combat's blood, which is not on this branch's capture
+  path. So it is evidenced by test only, not by a frame.

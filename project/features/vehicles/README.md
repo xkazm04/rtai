@@ -14,7 +14,7 @@ Depends only on `core/` and WorldContext (LAY-05); the city is reached through t
 | `vehicle_contacts.gd` | hull vs solid cells, car vs car (three circles per car), car vs people; `hull_points()` = what traffic brakes for |
 | `vehicle_cues.gd` | render cues read off the cars after each tick: `crash`, `hit_metal`, `car_wreck` (explosion), `tyre_screech`, `horn` -> `FxTriggers.fire` (fx_triggers.json cue kind `vehicles`; the audio lane hears the same ids) |
 | `vehicle_skids.gd` | tyre marks: inked dashes from both rear wheels while a car slides (render only) |
-| `vehicle_fire.gd` | a wreck burns for 24 s: the top-down fire loop (`features/fx/art/fx_fire.png`) on its engine bay, on the emissive canvas above the smoke (render only); a held `fire` light off the day grade |
+| `vehicle_fire.gd` | a wreck burns for 24 s: the top-down fire loop (`features/fx/art/fx_fire.png`) on its engine bay, on the emissive canvas above the smoke (render only); a held `fire` light off the day grade. The burn time and the fire's place are the sim's (`VehicleContacts.BURN_S` / `NOSE_M`): a person within `FIRE_R` 1.2 m of a burning wreck's fire dies (`pedestrian_struck(slot, true)`, the same event as a run-over) |
 | `vehicle_traffic.gd` | the sim traffic the service rammed: render state on custom.y, D2+ taken over as a body |
 | `vehicle_world.gd` | the port (an empty world in tests) |
 | `vehicle_view.gd` | draws the service cars with the crowd car layer's mesh + look material, one MultiMesh per damage atlas; wrecks print `art/traffic_atlas_wreck.png` (n-d4's burnt wrecks packed in the traffic atlas layout, cell = art id; built by masters `day-d5/vehicles/build_wreck_atlas.py`) |
