@@ -1,0 +1,9 @@
+shot at (-14, 0) m: L  -20.1 dB  R  -26.4 dB  L-R   6.3 dB  total  -19.2 dB
+shot at (14, 0) m: L  -26.0 dB  R  -19.6 dB  L-R  -6.3 dB  total  -18.7 dB
+shot at (-4, 0) m: L  -20.9 dB  R  -22.7 dB  L-R   1.7 dB  total  -18.7 dB
+shot at (4, 0) m: L  -21.4 dB  R  -19.7 dB  L-R  -1.7 dB  total  -17.5 dB
+shot at (0, -10) m: L  -23.2 dB  R  -23.2 dB  L-R   0.0 dB  total  -20.2 dB
+shot at (0, 10) m: L  -21.9 dB  R  -21.9 dB  L-R   0.0 dB  total  -18.9 dB
+shot at (5, 0) m: L  -23.2 dB  R  -21.0 dB  L-R  -2.2 dB  total  -19.0 dB
+shot at (25, 0) m: L  -31.1 dB  R  -21.6 dB  L-R  -9.5 dB  total  -21.1 dB
+shot at (45, 0) m: L  -39.9 dB  R  -30.3 dB  L-R  -9.5 dB  total  -29.9 dB

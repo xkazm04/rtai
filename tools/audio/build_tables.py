@@ -61,7 +61,7 @@ dump(P / "tables/audio_mix.json", {
         {"id": "music", "parent": "", "volume_db": -8.0},
         {"id": "ui", "parent": "", "volume_db": -4.0},
     ],
-    "voice_cap_per_frame": 4, "pool_size": 24, "m_to_px": 32.0, "attenuation": 1.6, "panning_strength": 0.7,
+    "voice_cap_per_frame": 4, "pool_size": 24, "m_to_px": 64.0, "attenuation": 1.6, "panning_strength": 1.0,
     "duck": {"buses": ["music", "sfx"], "duck_db": {"music": -9.0, "sfx": -3.0}, "duck_attack_s": 0.12, "duck_release_s": 0.6},
     "loudness": {"sfx_peak_db": -3.0, "loop_peak_db": -6.0, "voice_lufs": -18.0, "voice_true_peak_db": -2.0},
     "footstep_speed_mps": 0.6, "servo_chance": 0.35, "master_limiter_db": -1.0,

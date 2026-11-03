@@ -42,9 +42,9 @@
     "voice_lufs": -18,
     "voice_true_peak_db": -2
   },
-  "m_to_px": 32,
+  "m_to_px": 64,
   "master_limiter_db": -1,
-  "panning_strength": 0.7,
+  "panning_strength": 1,
   "pool_size": 24,
   "schema": "gtai.audio-mix/1",
   "servo_chance": 0.35,

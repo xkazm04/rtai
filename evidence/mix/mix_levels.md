@@ -22,3 +22,10 @@ The riot clip again, with a scripted tour of the sounds nothing in the game fire
 25 vehicle_exited (engine + radio off), 26 contract_completed (radio stinger). -17.3 LUFS, sample peak -1.0 dBFS (the limiter ceiling), LRA 4.8. The windows' RMS levels of the first demo take
 (bed -16.2 dBFS; engine + radio on -14.8; horn -10.7; screech -13.1; crash -11.2; radio station 2 -12.4; siren on -13.2) showed each
 sound clearly above the bed. Measured, not heard.
+
+## Pan and distance check (`dev/audio/audio_pan.tscn`, `tools/audio/pan_check.py`, evidence/mix/pan_check.txt)
+
+One rifle shot per second at known positions around a listener at the origin, recorded stereo. With m_to_px 32 / panning_strength 0.7
+the pan was nearly invisible (14 m left: L-R +2.1 dB, std of L-R over the whole riot clip 0.9 dB), so the audio space was widened:
+m_to_px 64, panning_strength 1.0. Now: 14 m left +6.3 dB L-R, 14 m right -6.3 dB, 25 m / 45 m right -9.5 dB, straight ahead / behind 0.0 dB;
+level (total) -19.0 dB at 5 m, -21.1 dB at 25 m, -29.9 dB at 45 m. Godot's 2D pan depends on the viewport width, so a wider window pans less.
