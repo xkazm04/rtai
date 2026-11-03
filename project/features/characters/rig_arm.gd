@@ -55,7 +55,8 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 		var dv: Vector2 = (tl - Vector2(sh.x, sh.y)).normalized()
 		tgt = Vector3(sh.x + dv.x * reach * 0.97, sh.y + dv.y * reach * 0.97, -10.0)
 		tgt.x -= 60.0 * rig.c_recoil
-	if s == p.melee_arm and rig.c_reach > 0.0:
+	var striking: bool = rig.strike_arm == s or rig.strike_arm == 2
+	if (striking or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
 	if rig.c_hands_up > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 30.0, sh.y * 0.55, 160.0), rig.c_hands_up)

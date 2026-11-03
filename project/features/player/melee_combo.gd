@@ -16,7 +16,8 @@ var buffered: bool = false
 ## Ticks since the last hit ended (the combo window), and which hit that was.
 var since_end: int = 1 << 20
 var last_index: int = 0
-var landed_count: int = 0
+## Counts hit starts: a host that poses the rig compares it with the count it last saw.
+var starts: int = 0
 
 
 func _init(p_table: MeleeTable) -> void:
@@ -81,5 +82,6 @@ func progress() -> float:
 
 func _start(index: int) -> void:
 	hit_index = index
+	starts += 1
 	tick_in = 0
 	buffered = false
