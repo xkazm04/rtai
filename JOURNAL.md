@@ -183,3 +183,8 @@ NEXT (iteration 4 end):
 4. Boss: the loop ends with `contract_completed`; when the combat lane emits a boss-defeated event (or the arena does), stop it there. Still no real boss/tazer SFX beyond the generated charge and stinger.
 5. Not done: positional siren from cruisers (the siren is one bed by wanted level), tyre screech as a loop while sliding (it is a one-shot at the slide's start), per-surface footsteps, a settings slider UI.
 6. POF-GAP 1-3 stand (audio-gen: prompt wrapper pushes every request past ElevenLabs' 450-char limit; no tts kind; no music kind). The pof-voice lane's Voice room closes POF-GAP 2.
+- 13:05 MILESTONE tuning from a per-cue audit: Gloria's nail gun (the quest's own weapon) sat 12 dB under the guards' rifle by exposure level (mean SEL -32.0 vs -19.9 dB); cue gain -5 -> -1, quest fight clip re-recorded (q1_fight_mix4.mp4, -18.8 LUFS, peak -1.0).
+  slice_q1_audio.mp4 was recorded before that tune (Gloria at -5). The boss loop now also ends when Mertz goes down (StageAudio polls `arena.boss.alive()`; checked on a 200 s bot run: loop level -60 dB, boss dead).
+  All shot / impact / punch takes are below -30 dB of their peak by 0.44 s (tail check). Masters: frames.json (8 frames) + ladder.png refreshed.
+- GATES at 53fb7d7 (final, `node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched during the run): lint 13/13, unit 355 passed, scenarios 8/8, parity exact + planted mutation caught at step 629, selftest + look goldens unchanged.
+  Bench NOT run (lane rule). Credits: ElevenLabs ~4.0k of the lane's 25k used (sfx + music only today after 11:45; voice 0 chars).
