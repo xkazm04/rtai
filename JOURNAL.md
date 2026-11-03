@@ -517,3 +517,15 @@
   5. Wire PlayerMotion into the game so display latency can be measured (it is UNMEASURED in
      FEEL-NUMBERS.md). Then: REQUEST 1 -> gunplay HitFeel for the vermilion hit flash, and the
      tackle contact beat.
+
+## Iteration 9 (23:30-23:35, STABILIZE, past freeze)
+- answers.json re-read at 23:30: no new answers for rivet-motion (1 = A and 2 = B placeholder, both applied).
+- Tree clean at 16390b6. Lint re-run at 23:30: 13/13 pass over 507 GDScript files.
+  Unit and scenarios were not re-run (a full unit pass does not fit before the 23:40 stop);
+  the gates of record stay those at f5a31e9: unit 574/574 (test_save_slots 16/16 alone), scenarios 19/19.
+- Evidence check: gtai-masters/eve/rivet-motion/frames.json has 15 entries, every file exists;
+  evidence/rivet-motion/ holds FEEL-NUMBERS.md, motion-probe.json, the stride and footprint probes, clips/.
+  No code changed since f5a31e9, so the evidence still matches the build.
+- NEXT (night run): unchanged from iteration 8 (answers.json; split combo_clip_run.gd then the baton
+  arc on metal dummies; weapon art then ASK rivet-motion-3 with a D5-look clip; chainsaw and plasma
+  sword; wire PlayerMotion into the game to measure display latency; REQUEST 1 -> gunplay HitFeel).
