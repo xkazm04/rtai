@@ -1126,3 +1126,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   Package + fringe at 64 (h140all): the hatch sits with the soft halo shadow, actors still pop. Board
   evidence/item46_rig_shadows.png; ladder row. Proposal for the characters lane.
 - 04:40 showcase frames refreshed: evidence/hero-d4d5-* and hero-d4-* from h139rs, arena-d4d5-64/128 from a22rs (rig shadows); night_iter8_summary.png rebuilt from h139rs / h140all / a23all (package + fringe + rig shadows).
+- 04:42 GATES (iteration 8): evidence tool (--no-parity --no-bench) ALL PASS at b9468c7 (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 81 untracked evidence PNGs moved aside and restored. Parity/bench not run (no native build in this worktree). Gap list after iteration 8 written (evidence/README.md).

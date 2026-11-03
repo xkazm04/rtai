@@ -243,6 +243,26 @@ No images (50/50 used). The open proposals were finished and measured as ONE pac
   step_soft 0.10, dark_soft 0.20, shadow tint 0.22, no paper clean on the plates, the BAKED roof rule (`item41`).
 - Reproduce the package from HEAD: masters `tools/package_shot.sh <round> [hero|arena]`.
 
+## Gap list after iteration 8 (in-engine h139rs committed / h140all with every proposal, vs `d4h2_mock.jpg` and the concept)
+Iteration 8 had no image budget. It worked where the remaining differences were visible by eye rather than in the
+tone table: the up-close misprint (`item43`), grounding (prop, car and rig shadows: `item44`, `item46`) and the
+mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
+1. **The package is still not adopted** (unchanged; NEXT 27). Reproduce it plus the fringe: `D5_FRINGE=1 bash
+   C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]` (h140all / a23all).
+2. **Mid-tones** (unchanged, art): with this board's classes (`night_iter8_summary`), mock mid 0.104 vs package
+   0.081 vs committed 0.049. The prop and rig shadows do not move it (0.048 -> 0.049): the gap is the roof interiors.
+3. **Grounding** (NEW, closed in the dev scenes): every mock prop, car and actor sits on a pen-hatched shadow. Ours
+   now do too: props and cars at every zoom (`item44`), rigs from 56 px/m where their halos go (`item46`). Next: the
+   city lane gives props a shadow sprite (D5HeroPropShadow is the recipe), the characters lane moves D5RigShadow
+   into CharacterRigs (one CanvasGroup per rig layer; the crowd atlas sprites already get it).
+4. **The concept's red misprint** (NEW, owner A/B, `item43`): look_d5_part `fringe_k` 1.0 prints it along every
+   segment's down-right edge from 64 to 96 px/m; Rivet's red share 0.018 -> 0.030 (concept body 0.039), pure vermilion
+   unchanged. The colour doctrine says vermilion only on what matters, so the owner decides; default off.
+5. **Up close, still open**: Rivet's steel value (concept mauve, darker; the owner kept lavender, `item9`), the
+   concept's halftone stipple on the steel (we print a pen hatch), King has no rig (plan-view sprite).
+6. **Cones**: their square base alpha prints a boxy shadow beyond 0.12 m (kept short); a round base in the D4
+   prop art would let the shadow lengthen.
+
 ## Gap list after iteration 7 (in-engine h106 committed / h115se1 with every open proposal, vs `d4h2_mock.jpg` and the concept)
 Iteration 7 had no image budget; it finished the open proposals and measured them as one package. At 32 px/m the
 package (`item35`, h115se1) matches the mock PER TONE CLASS: street median 80,69,71 (mock 81,70,71) at share 0.49
