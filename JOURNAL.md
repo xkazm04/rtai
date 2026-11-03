@@ -322,3 +322,16 @@ NEXT (night run):
    sideways shove; a short crouch would read better at 32 px/m.
 6. The city block clip (owner decision 1), dev/showcase/city_fight.gd as the host.
 7. Robot hit tint is vermilion-orange (CutRig hit tint): note for d5-cast/gunplay.
+- Clip i landed (23:03): rig_fight_three_pairs_lead_32ppm.mp4 (25 s, 30 fps real time, same
+  staging as clip h, lead + dummy fix): cops 13 shots 2 hits, thug 2 swings 1 hit (first claw hit
+  on Rivet tonight), Rivet damage 32, kills 6, nails 25 / 21 hits, flinch 1 (frame 291, saved as
+  rig_fight_cop_flinch_f291.png: a claw hit sparks Rivet while a nail passes the cop). It is now
+  the lane's lead clip in gtai-masters/eve/enemy-ai/frames.json (14 entries); stats copied to
+  evidence/enemy-ai/. Raw frame folders deleted. No ask raised: Rivet is still the scripted dummy
+  firing nails, which does not meet the 21:25 bar (final look with the finished pistol).
+- Arena lane FYI (cross-session, 23:0x): e-arena 05c1b48 draws its fighters on the cast rigs
+  (`-- --bot=pit --rigs`, dev/arena/arena_rigs.gd); ArenaRigs._put is the one place where the
+  enemy rig rows (EnemyRigFeed.row, the robot plan) should replace its generic COP + HIT after the
+  merge. Added to the night run: NEXT 2 (with the ArenaHook).
+- GATES at the end of iteration 4: lint 13/13; unit 560/560 (run_unit.mjs, 23:04); scenarios
+  21/21 (full suite, 22:52) + enemy scenarios 2/2 after the dummy fix.

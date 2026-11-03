@@ -1,0 +1,17 @@
+{
+  "flinch_frame_3": 291.0,
+  "flinches": 1.0,
+  "frames": 798.0,
+  "kills": 6.0,
+  "max_attackers": 2.0,
+  "nail_hits": 21.0,
+  "nails": 25.0,
+  "rivet_damage": 32.0,
+  "rivet_hp": 368.0,
+  "shot_hits": 2.0,
+  "shots": 13.0,
+  "swing_hits": 1.0,
+  "swings": 2.0,
+  "tells": 10.0,
+  "tells_broken": 1.0
+}
