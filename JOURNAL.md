@@ -818,3 +818,7 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   0.437 / 0.642; 128 d5 0.367 / 0.769 -> 0.378 / 0.749 (almost unchanged up close: lines are already wide there). By
   eye at 48/64: finer line weight like the mock, the union hall's dark membrane opens up; some thin outlines go
   grey (the roof dish). Board evidence/item29b_thin_print_48_64.png.
+- 03:10 TUNE (h104ds10): look_d5_print dark_soft 0.04 -> 0.10 (committed; the proposal print only). D4+D5
+  tier 32 px/m L 0.483 -> 0.474 (look_d4 0.425, mock 0.488), px darker than 0.35 0.552 -> 0.562; 48: 0.441 -> 0.435.
+  By eye the thin outlines (crates, fan, dish) firm up and stay finer than look_d4. Board evidence/item29c_dark_soft.png.
+  (item29/29b/30/31 were shot at 0.04; the tone numbers differ by <= 0.01.)

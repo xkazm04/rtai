@@ -56,6 +56,7 @@ tick count, no RNG.
 | `item28_cracks_up_close.png` | iteration 6: the road cracks at 128 / 96 / 48 px/m: h86 bold / h92c thinned, clean zebra (faint up close) / h97 the original cracks and zebra wear fading back in from 56 to 96 px/m, + the concept |
 | `item29_thin_print_proposal.png` | iteration 6, PROPOSAL for the visual-engine lane: `look_d5_print` (look_d4 with edge ink on the dark side only) vs look_d4 at 32 px/m, D4 and D4+D5 tiers, + the mock and a x2 crop |
 | `item29b_thin_print_48_64.png` | iteration 6: look_d4 (left) vs the look_d5_print proposal (right), D4+D5 tier at 48 (top) and 64 px/m (bottom) |
+| `item29c_dark_soft.png` | iteration 6: the mural at 48 px/m, look_d4 / look_d5_print dark_soft 0.04 / 0.10 (kept: thin outlines keep their definition) |
 | `item30_thin_print_roof.png` | iteration 6: the mural roof at 32 px/m: look_d4 / look_d5_print / look_d5_print + plate lines at gamma 0.45 (the mock's diagonal hatch AND a light tone) / the mock's LOCAL 9 roof |
 | `item31_all_proposals_32.png` | iteration 6, FOR THE MORNING: 32 px/m h86 / h98b (committed) / h98b + every open proposal (look_d5_print, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45; not committed) / the mock |
 | `ladder.png` | the night's iterations, including the reverted ones |
