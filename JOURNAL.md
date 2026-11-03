@@ -1376,3 +1376,4 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
   ladder row. Godot runs were children of run.mjs, all exited.
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:36: tree clean, scratch log removed. The Godot processes running at session end are the noir lane's showcase render and n-d5's scenarios (checked by command line), not mine; left alone.
