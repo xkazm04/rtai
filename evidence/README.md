@@ -24,6 +24,11 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 
 ## Merge notes
 
+- **Dry run of the whole morning (iteration 16, `iter16/morning-full-stack-gates.txt`):** main + n-d4 + n-visual
+  a103850 + patches 16, 19, 21 (iter16 sleeves), 23 in that order: every merge is clean except `JOURNAL.md`, every
+  patch applies, re-bake matches the golden; lint 13/13, unit 260/260, scenarios 8/8, parity exact; selftest fails
+  only on n-visual's look / block goldens (re-bless after the merge), doctrine gate clean, 0 placeholders.
+
 - n-d4 merges into main and into n-visual with `JOURNAL.md` the only conflict (both lanes keep one at the root).
 - After merging n-visual + n-d4, n-visual's look / block goldens must be re-blessed: they were blessed without n-d4's
   art, so all 16 move (`iter14/merged-n-visual-41ee996-gates.txt`: worst mean 20.44; everything else in that run
