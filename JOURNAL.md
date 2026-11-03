@@ -370,8 +370,9 @@ NEXT (iteration 6 close, in order):
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light;
    (b) value roles: cops = ink among paper peds (default) vs ink peds + paper cops (`noir_frames --noir-parts
        --verm=1`, evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png).
-2. Photosensitivity: the muzzle light is a big one-frame white strobe. Measure flashes per second in a heavy
-   firefight (the 400-actor riot) and cap it (e.g. at most one lit frame per 0.33 s, or a smaller lift).
+2. Photosensitivity: (done 01:53) the muzzle light is capped at one lit frame per 0.33 s (LIT_GAP 20 ticks,
+   unit-tested). Still to do: the kill's silhouette flash (2 white ticks per kill) has no cap in a mass
+   fight; have an accessibility toggle (flash off) reviewed before anything ships.
 3. Rivet's noir limbs read as paper (the redraw is mostly lit white, and at 32 px/m the sticker LOD ignores
    the art for limbs and core). If the owner wants a darker Rivet: a limbs round with more ink mass, or a
    noir limb_wash in print_part.
@@ -381,3 +382,7 @@ NEXT (iteration 6 close, in order):
 6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
 7. Make noir_frames tick-exact between runs (step the world by ticks, not frames) so ped/crowd A/Bs are
    the same pixels; re-shoot quest_fight with the muzzle light.
+- (01:53) Gates at 180c78a (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint
+  (13), 181 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS (the run
+  before it flagged unit-tests only because I edited JOURNAL.md during it). Gate JSONs copied to evidence/.
+  Then the photosensitivity guard (LIT_GAP 20 ticks) + its test: 182 unit pass, showcase pixel-identical.
