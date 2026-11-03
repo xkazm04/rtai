@@ -1050,6 +1050,15 @@ NEXT (iteration 13 / morning, in order):
   48 px/m before nothing / after ink-rimmed zigzags around the core; 32 px/m visible but small.
   46-tazer/cmp-tazer*.png; ladder 46 / 46b. When n-d4's FX sheet lands the crackle draws its sheet cell
   (atlas size_m 1.6) and this analytic bolt is moot: re-check the crackle ON RIVET then (paper on cream).
+- Crackle with n-d4's real FX sheet (copied in for the capture only, removed after; the sheet then
+  replaces my analytic bolt): FIRST ATTEMPT WAS WRONG - I copied `git show n-d4:...fx_atlas.png`, which
+  is a Git LFS pointer (130 bytes of text), so the "sheet" drew opaque white squares over Rivet; caught
+  on looking + checking the file, NOT a sheet bug, frames deleted. Re-done with n-d4's checked-out png
+  (1108005 bytes = the LFS size; read-only copy). Real result: 48 px/m - a cream spark star at Rivet's
+  core with a little crackle, readable; 32 px/m - nothing readable on Rivet. For d4-production: the
+  shock_1..4 cells read on asphalt (their iteration-4 check) but not on Rivet's cream / grey body at
+  32 px/m (46-tazer/cmp-sheet-crackle.png). Also: my cleanup `rm -rf project/features/fx` removed the
+  tracked features/fx/README.md - restored from HEAD at once (git checkout --), tree verified clean.
 - Evidence at 90fe24c (05:41-05:43, `node tools/evidence/run.mjs --no-bench`, all PASS): lint 13/13,
   unit 235, scenarios 8, parity bit-exact + mutation caught, selftest PASS (junction 11/11 + block 5/5
   goldens worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to evidence/pof. Bench: the
@@ -1073,6 +1082,8 @@ NEXT (iteration 14 / morning, in order):
      player_hit drive the hit-stops; CameraRig.listen(Events, clock) gives it the boss zoom (64, D5);
    - `--reduced-motion` in boot/launch_args.gd KNOWN_FLAGS + World (rig + markers), held back tonight to
      keep n-noir's identical KNOWN_FLAGS edit merge-clean;
+   - n-d4's FX sheet replaces the analytic crackle: re-check the Robo-tazer hit on Rivet at 32 px/m
+     (unreadable with the sheet today, 46-tazer/cmp-sheet-crackle.png);
    - iteration 12 NEXT 1 items (n-d4 atlas -> re-bless goldens incl. 3 night goldens; n-d5 patches;
      noir vs night street lights).
 2. Idle bench still not had (two contended runs: 3.25 then 2.81 ms p99; iteration 11 2.75).
