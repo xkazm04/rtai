@@ -21,7 +21,7 @@ Written for the Director and the owner. Every row points at a board in this fold
 - Boss arena (King) and the showcase: `hero-d4d5-<ppm>ppm.png`, `arena-d4d5-{64,128}ppm.png`,
   `item4_hero_vs_targets.png` (beside the mock and the concept).
 - Close-up art: portraits, expressions, finishers, loading illustration (`item5_portraits.png`, `item5b_loading.png`;
-  provenance logged). Store-safe marks are the lane's, OWNER REVIEW PENDING; `finisher_k9.png` is in-game only.
+  provenance logged for all 104 D5 PNGs, guarded by `test_d5_provenance.gd`). Store-safe marks are the lane's, OWNER REVIEW PENDING; `finisher_k9.png` is in-game only.
 **Proposals, default OFF, for another lane** (one switch each, in `assets/shaders/look_d5.params.json`):
 - visual-engine: `look_d5_print` instead of look_d4 + `world.age_floor` / `grain_floor` 1.0 + `print.paper_hi` =
   "package v9" (`hero-pkg9-*`, `night_iter8_summary.png`, gap list 9). Adopt together, with the v9 roof plates

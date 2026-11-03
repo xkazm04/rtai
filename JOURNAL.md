@@ -1707,3 +1707,5 @@ NEXT (iteration 13; 43-46 stand, earlier lists stand):
 NEXT (iteration 14; 43-47 stand, earlier lists stand):
 48. Director: the provenance guard covers the d5 folders only. If the owner wants it for all AI art, move the check
     into tools/lint (shared tooling, not this lane's scope) and widen it to every logged art root.
+- 07:17 CORRECTION: the merge-sheet edit in c901106 hit the wrong line (no change landed although the entry above
+  said it did); applied now, in its own commit.
