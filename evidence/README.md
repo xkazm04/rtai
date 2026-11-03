@@ -12,7 +12,7 @@ tick count, no RNG.
 | `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h72, iteration 4) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h72, iteration 4 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h73, iteration 4 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -41,6 +41,7 @@ tick count, no RNG.
 | `item19_phone.png` | iteration 4: the D5 phone close-up in-engine (cop_alarmed behind the keyed phone screen) at 32/48 + the raw frame |
 | `item5e_boss_intro.png` | iteration 4: the D5 boss intro card (King on his turntable; `features/combat/art/d5/boss_intro_king.png`, not wired) |
 | `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a13) |
+| `item1d_rust_dry.png` | iteration 4: Rivet at 96 px/m, rust_dry 0.42 (h72) vs 0.55 (h73, kept) |
 | `item20_lamp.png` | iteration 4: at 48 and 64: the D4 lamp ('spoon', h70) / the first D5 lamp (riveted head = gear ring, h71) / the plain-cap D5 lamp (h72, kept) |
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
@@ -90,6 +91,7 @@ tick count, no RNG.
 - **Item 1 gate, numerically (first try)**: Rivet (h72) vs the concept's Rivet scaled to the same height: rust/collar
   red-lead share concept 0.079, D4 0.030, D5 0.097 (64) / 0.106 (96) = D5 closer; ink share about level (0.39 / 0.39 /
   0.35); mean L concept 0.274 vs ours ~0.46 (the lavender steel, owner choice). Texture HF not comparable (rim).
+  Then drier rust (rust_dry 0.55, 780beb2): red-lead share 0.088 at 64 (concept 0.079), the collar stands out more.
 - Re-measured on the final shaders: tier-fade sweep 0 at 51-55 px/m then monotone (no pop); walk shimmer HF 1.024.
 - Codex this iteration: 7 images (cop expressions, arena floor, King top view, phone frame, boss intro card, lamp
   post + its redo), 0 rejected for camera breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger
