@@ -1175,3 +1175,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   64 the capsule reads as the cone's height; at 32 it is a small hatched dash beside the cone (the plate covers its
   root), not worse than the box. Board evidence/item44b_cone_shadow.png (h125 none / h141rs box / h147cone capsule, 32
   x4 and 64 x2, + the mock's cone). Unit 149/0.
+- 04:58 showcase frames evidence/hero-d4d5-* and hero-d4-* refreshed from h147cone (the committed default now); ladder row.
