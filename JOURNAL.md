@@ -1012,3 +1012,13 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
   building cast shadow between the strokes (tint 0.36 -> 0.22), testing whether the mock's extra mid-tone share sits
   in its hatched shadows. 56338 px changed at 32; per class: paper 0.32 -> 0.35 (mock 0.33), mid 0.08 -> 0.06 (mock
   0.11), street 0.49 -> 0.48, ink 0.11: the gaps print as paper, not mid. Mid-tones stay an art item (NEXT 30).
+- 04:02 FOUND (where the mid-tone gap lives; masters work/i7/midmap.png): mid-tone (L 0.42-0.70) density maps, mock vs
+  h117pkg at 32 px/m. The mock's mid-tones spread evenly over its roof INTERIORS (fine hatch averaging to grey at
+  this scale): mid share top / road band / bottom 0.128 / 0.064 / 0.145. Ours sit in thick bands along the roof
+  edges (ink foot, parapets, cast shadows) with paper-light interiors: 0.102 / 0.076 / 0.059 (the bottom row of roofs
+  is mostly D4 neighbours). So the last per-class gap is gap 2 (roof texture, HF 0.11 vs 0.163) seen from the tone
+  side: roof interiors need a fine hatch that greys out at 32 px/m.
+- 04:02 REJECTED (h121p0, deleted; roofs + params restored, project/ clean): the D5 plates without the paper clean
+  (D5_INK_P0 0.08 -> 0.0) inside the package: mid 0.08 -> 0.09, top-row mid 0.102 -> 0.111, but paper L 0.856 ->
+  0.851 and frame L 0.468 -> 0.459. Same trade as step_soft: light hatch prints as an even darkening, not as the
+  mock's grey hatch. NEXT 30 (plates with a fine interior hatch) stands; README gap 2 already says so.
