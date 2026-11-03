@@ -1602,3 +1602,10 @@ night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png -> item46
 - NEXT 42 walk claim, from the same runs (pan_cls whole crop, D5 tier minus D4 tier change): fixed camera +0.0082,
   follow snapped +0.0117, follow sub-px +0.0122. The sub-pixel camera adds ~4%; following adds most (the D5 world
   moving under the crop). d5_walk's claim holds sub-pixel.
+- 07:03 MEASURED King's sprite shadow in motion (02fe572: d5_king_move --shadow=world|rig; King drifts 0.43 px per
+  frame and turns, 64 px/m, crop follows): in-shadow flip 0.065 world / 0.053 rig / 0.043 none (trilinear series;
+  look_d5_ui series 0.066 / 0.055 / 0.044). Smaller gain than the rigs: slow drift, no look_d4 print in that scene,
+  and the strokes keep the world angle (translation-only anchor, by design: the light's diagonal must not turn with
+  King). Frame looked at (work/i11_king_shadow.png). The arena's King shadow left world-locked (static there).
+- 07:05 MEASURED the walk at 128 px/m (d5_walk --zoom=4.0): in-shadow flip 0.615 world -> 0.177 rig (none 0.130 /
+  0.154 by mask), change 0.151 -> 0.061. Frames looked at (work/i11_walk128.png). Ladder row; evidence README lines.

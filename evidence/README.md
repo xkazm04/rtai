@@ -278,6 +278,9 @@ No images (50/50 used). The weakest item was 5 (the close-up portraits): they re
 - **NEXT 42 (sub-pixel camera) for the shadows**: the camera adds nothing to the rig shadow (world 0.437 / rig
   0.169 sub-px follow, same as fixed camera); prop shadows at 48 px/m sub-px: in-shadow flip 0.058 vs 0.045 without,
   mean change equal (0.0216 vs 0.0213). The pan claims for the shadows hold sub-pixel, with that small flip cost.
+- At 128 px/m (kill-cam) the walk gain is larger: in-shadow flip 0.615 world -> 0.177 rig (no shadow 0.13-0.15).
+  King's sprite shadow (`d5_king_move --shadow=world|rig`, slow drift + turn): 0.065 -> 0.053 (none 0.043); the
+  arena scene's King shadow stays world-locked (King is static there; a moving boss should take its position).
 
 ## Gap list after iteration 9 (package v9 = i9mot, vs `d4h2_mock.jpg`)
 Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existing plates (`item48_roof_membrane.png`).
