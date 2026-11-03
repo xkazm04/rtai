@@ -1032,3 +1032,16 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
   where D5 lives, so it stays an option (package_shot.sh env D5_ROOF_RULE=0.5, default 0). Needs a membrane mask
   (no signs/props) and a zoom fade (hand-made mips) first. h123pkg reproduces h122rule5 (0 px). Board
   evidence/item41_roof_rule_option.png; ladder row.
+- 04:10 MILESTONE (6808d30 + provenance): the ruled roof hatch made adoptable. masters tools/build_rule_overlays.py
+  bakes build_roofs.py's _rule (same seed, alpha 0.5, masked by each plate's luminance and alpha) as a transparent
+  ink overlay per D5 plate: features/city/art/d5/roofs/rule/ (7 PNGs, 836 KB, + .import). D5HeroHaloInk.roof_rule()
+  puts one as a child of each D5 roof sprite, d5 tier, ON only with D5_PRINT=thin (under look_d4 it fattened into
+  tone, iteration 5), alpha 1 at <= 48 px/m -> 0 at 64. Default frames: h124 = h106 at 32-128, both tiers (0 px).
+  Package with overlay (h124rf) vs without (h117pkg): 73387 / 64073 / 0 / 0 / 0 px at 32 / 48 / 64 / 96 / 128 (the
+  64 px/m regression of item41 is gone). Fade sweep (temporary zoom list, restored; tree checked), strength per
+  area: 6141 / 3676 / 1796 / 806 / 0 at 48 / 52 / 56 / 60 / 64: monotone, no pop. Per class at 32: L 0.468 ->
+  0.459, paper 0.32 -> 0.30 (mock 0.33), mid 0.08 -> 0.09 (mock 0.11), ink 0.11, readability unchanged. By eye: the
+  roofs carry the mock's diagonal pen hatch at 32 and 48 (work/i7/rulefade_ab.png). Provenance +7 lines (procedural,
+  derived from the AI plates). package_shot.sh now shows it (D5_PRINT=thin turns it on). Board
+  evidence/item42_roof_rule_fade.png; ladder row. The overlay lum mask comes from the committed plates (gamma 0.7),
+  the baked h122rule5 from the gamma 0.45 build, so the two differ (80088 / 58684 px at 32 / 48).

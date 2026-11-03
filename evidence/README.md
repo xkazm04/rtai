@@ -69,6 +69,7 @@ tick count, no RNG.
 | `item39_d4tier_package.png` | iteration 7: the package in the D4 tier (D4 roofs) at 32 px/m, h106 vs h117pkg + a x2 roof crop: warm and light like the mock, but the D4 roof outlines print thin (solid ink 0.13 -> 0.07, mock 0.12) |
 | `item40_d4_roof_lines.png` | iteration 7, PROPOSAL for d4-production: the D4 roofs with heavier lines (k 1.0) under the package, D4 tier 32 px/m x2: h106 / package / package + heavier lines (solid ink 0.13 / 0.07 / 0.11, mock 0.12) |
 | `item41_roof_rule_option.png` | iteration 7, OPTION (not in the package): the ruled roof hatch under the thin print: the mock's diagonal membrane hatch at 32 px/m, but mechanical at 64 (across the OSHA sign plate). Needs a membrane mask + a zoom fade |
+| `item42_roof_rule_fade.png` | iteration 7 (kept, in the package): the ruled roof hatch as zoom-fading overlays (`features/city/art/d5/roofs/rule/`, on with the thin print, gone at 64 px/m), h117pkg vs h124rf at 32 x2 and 48 + the mock roof |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h115se1 at 32 px/m, the mock, h115se1 at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -230,7 +231,8 @@ package (`item35`, h115se1) matches the mock PER TONE CLASS: street median 80,69
 with no swim (48 px/m: junction 0.00049, roof 0.00000; shipped look_d4 0.00739 / 0.00975), keeps the actor read
 (rim dL 0.610, vermilion dE 77.5, teal dE 57.6 vs h106 0.604 / 81.2 / 56.9), and is neutral up close (`item36`).
 What still separates us, largest first:
-1. **The package is not adopted** (all default-off): look_d5_print (dark-side edges + world grain + street_edge), look_d5
+1. **The package is not adopted** (all default-off): look_d5_print (dark-side edges + world grain + street_edge) with the
+   ruled roof hatch overlays (`item42`), look_d5
    `age_floor` + `grain_floor` 1.0, the D5 roof plates' lines at gamma 0.45 (union hall 0.65; build_roofs.py env
    `D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65`), look_d5_halo line + shadow. Next: visual-engine lane +
    owner decide on `item35`; if the print is adopted, d5-close rebuilds the roof plates at 0.45 (one command) and the
@@ -247,7 +249,8 @@ What still separates us, largest first:
    darkens 0.856 -> 0.847). The mid-tones are in the mock's art (soft grey roof shading), so: next plates (Codex)
    with a mid-grey shading layer under the pen hatch, judged by these per-class numbers.
    Closest lever found: the ruled roof hatch under the thin print (`item41`: top-row mid 0.102 -> 0.118, mock
-   0.128), blocked by its look at 64 px/m until it gets a membrane mask and a zoom fade.
+   0.128); mechanical at 64 px/m when baked, so it now ships as zoom-fading overlays (`item42`: full <= 48, gone at
+   64, no pop). With it the package's paper share drops to 0.30 (mock 0.33): the next plates need a lighter base.
 3. **Roof texture on the D4 neighbours**: the D5 plates show the mock's fine diagonal hatch under the thin print,
    but the D4 neighbour roofs (and the helipad, the arena's warehouse/long roofs) have no D5 plate. Next: Codex plates
    on the square-padded template (budget), or the d4-production lane's D4 set under the thin print.
