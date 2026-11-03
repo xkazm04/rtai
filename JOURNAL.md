@@ -1773,3 +1773,17 @@ NEXT (final, iteration 18; supersedes the 06:18 NEXT + addendum where they diffe
   component, clear the rest). The 4 cream chips are joined to the crack through faint halo pixels, so only
   1549 px of specks cleared; the same-scene 32 / 48 / 64 (`after_i20nc/`) cannot be told from HEAD
   (`evidence/iter20/cracks_nochips_nogain.jpg`). Reverted (cmp equal), re-imported. Cracks: leave the art as it is.
+- 06:48 CORRECTION to 06:42: the grey traffic slab is an n-d4-only sight. On the merged stack, moving traffic draws
+  this lane's atlas cars (n-visual 7bfb6b9; REQUEST 18 superseded, iteration 10). The open code item is still
+  only the per-car damage / hijack state hook.
+- 06:48 CHECK provenance at 0d79d59 (python, LEG-05): 240 tracked PNGs under project/; 231 have a latest log line
+  with a matching sha256 (0 stale); the 9 without one are GUT addon icons (third-party, VENDORS.md), not art.
+
+NEXT (final, iteration 20; the iteration-18 final NEXT stands, no art changed this iteration):
+- No shipped art changed in iteration 20: 2 cracks-decal probes, 1 rejected (worse) + 1 no gain, both reverted.
+  The owner-review list, the Director's morning order, owner questions and code-side gaps are as in the
+  iteration-18 final NEXT, word for word.
+- Lever for the cracks gap vs the target (it has no crack stars): how often the bake / dressing places decal 54
+  `cracks` - code, low priority. Do not retouch the art: thinning breaks it into specks at 48 px/m.
+- Gates green at 4d010ba (no-bench); the bench is still owed an idle-box run. Codex: 0 images this iteration; night
+  total 29 images, 194 cells, 7 rejected; no limit hit. Nothing pushed or merged.
