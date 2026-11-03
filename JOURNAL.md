@@ -1065,3 +1065,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
 - 04:13 the arena scene calls roof_rule too (committed). Default a19 = a16 (0 px at 32-128, both tiers). Package
   a19pkg vs a17se1: 33215 / 64765 / 0 / 0 / 0 px at 32 / 48 / 64 / 96 / 128: the yard roofs get the hatch at the
   gameplay zooms, the arena close-ups (64+) are untouched, so item36's "neutral up close" still holds.
+- 04:13 scratch deleted (numbers logged above, no board cites them): frames/swr_ctl, swr_rf, pan15se(R), pan16rule(R), h114ink, h123pkg, h124 (= h106), a19 (= a16). Rounds the boards cite are kept: h105-h110sh, h115se1, h116rim1, h117pkg, h122rule5, h124rf, a16, a16all, a17se1, a18rule, a19pkg, pan12*, pan14*.

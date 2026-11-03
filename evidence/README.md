@@ -223,6 +223,21 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
+## Iteration 7 (03:12 -> 04:15) in one screen (`night_iter7_summary.png`)
+No images (50/50 used). The open proposals were finished and measured as ONE package against the mock:
+- **Committed, default frames**: STRIKE and the fist stencil inside the west lane (`item33`; d4 tier 0 px).
+- **Committed, on with the thin print only**: the ruled roof hatch as zoom-fading overlays (`item42`; the mock's
+  diagonal membrane hatch at 32/48, gone at 64, no pop).
+- **Proposals (default off)**: look_d5_print + world grain (`item32`: pan 0.00814 -> 0.00049, roof -> 0) +
+  street_edge (`item37`: road paint without ink rings); look_d5_halo, the ink line outside the sticker rim + a soft
+  drop shadow (`item34`; fades with the halo, sweep-checked); rim width owner A/B (`item38`).
+- **The package at 32 px/m** (`item35`, h124rf) vs the mock per tone class: street 80,69,71 (81,70,71), paper 0.30 /
+  243,219,191 (0.33 / 245,222,195), solid ink 0.11 (0.12), mid 0.09 (0.11); readability held (rim dL 0.610);
+  neutral up close (`item36`). In the D4 tier it needs heavier D4 roof lines (`item39`, `item40`).
+- **Rejected** (restored, numbers in JOURNAL): wash_hi 0.15 (street lighter than the mock), age_floor 0.6,
+  step_soft 0.10, dark_soft 0.20, shadow tint 0.22, no paper clean on the plates, the BAKED roof rule (`item41`).
+- Reproduce the package from HEAD: masters `tools/package_shot.sh <round> [hero|arena]`.
+
 ## Gap list after iteration 7 (in-engine h106 committed / h115se1 with every open proposal, vs `d4h2_mock.jpg` and the concept)
 Iteration 7 had no image budget; it finished the open proposals and measured them as one package. At 32 px/m the
 package (`item35`, h115se1) matches the mock PER TONE CLASS: street median 80,69,71 (mock 81,70,71) at share 0.49
