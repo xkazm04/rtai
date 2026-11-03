@@ -44,6 +44,7 @@
       "world": {
         "aquatint": 0,
         "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.36,
         "edge_lo": 0.16,
         "grime": 0,
@@ -51,9 +52,12 @@
         "hatch_on": 0.94,
         "hatch_period": 4,
         "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           0,
@@ -85,6 +89,7 @@
       "world": {
         "aquatint": 0.18,
         "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
         "grime": 0.15,
@@ -92,9 +97,12 @@
         "hatch_on": 0.86,
         "hatch_period": 4,
         "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           -1,
@@ -126,6 +134,7 @@
       "world": {
         "aquatint": 0.26,
         "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.26,
         "edge_lo": 0.09,
         "grime": 0.45,
@@ -133,9 +142,12 @@
         "hatch_on": 0.74,
         "hatch_period": 5,
         "line_ink": 0.84,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.64,
         "step_lo": 0.17,
         "step_mid": 0.42,
+        "street_edge": 0,
         "teal": 0,
         "teal_shift": [
           -2,
@@ -167,6 +179,7 @@
       "world": {
         "aquatint": 0.18,
         "blood": 1,
+        "edge_dark": 0,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
         "grime": 0.15,
@@ -174,9 +187,57 @@
         "hatch_on": 0.86,
         "hatch_period": 4,
         "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 0,
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
+        "street_edge": 0,
+        "teal": 0,
+        "teal_shift": [
+          -1,
+          2
+        ],
+        "verm": 0,
+        "verm_shift": [
+          2,
+          -1
+        ],
+        "wash_hi": 0.3,
+        "wash_lo": 0.3,
+        "wash_mid": 0.9
+      }
+    },
+    {
+      "doc": "D5 city print (d5-city, 2026-11-03): d4 + d5-close's 'package v9' print changes (look_d5_print ported into look_d4 as keys): edge ink on the dark side only (thin pen lines stay thin), no edge ink on paint inside the dark street wash, lit paper above cream. A candidate for the gameplay zoom; --look=d5c pins it.",
+      "id": "d5c",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0.18,
+        "blood": 1,
+        "edge_dark": 1,
+        "edge_hi": 0.32,
+        "edge_lo": 0.13,
+        "grime": 0.15,
+        "grit": 0.35,
+        "hatch_on": 0.86,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "lo_soft": 0.03,
+        "paper_hi": 1,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "street_edge": 1,
         "teal": 0,
         "teal_shift": [
           -1,

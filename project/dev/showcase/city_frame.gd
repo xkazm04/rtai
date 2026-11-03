@@ -8,6 +8,8 @@ extends Node
 ##   [--hud=<ui scale>,...]  also captures each frame with the dev HudOverlay at those UI scales.
 ##   [--cars=<n>] [--police=<n>] [--settle=<frames>]  traffic targets (24, 2), frames per shot (60).
 ##   [--zooms=<z>,...]  zooms to shoot (1 = 32 px/m; default 1,1.5; 2 = 64 px/m).
+##   [--look=<id>]  the look profile (default `auto`); [--foci=<i>,...] which FOCI to shoot.
+##   Run with --fixed-fps 60 for a deterministic frame (one sim tick per rendered frame).
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -24,6 +26,8 @@ var _cars: int = 24
 var _police: int = 2
 var _settle: int = SETTLE_FRAMES
 var _zooms: Array[float] = ZOOMS.duplicate()
+var _look: StringName = &""
+var _foci: Array[int] = [0, 1, 2]
 
 
 func _ready() -> void:
@@ -44,11 +48,13 @@ func _ready() -> void:
 	_view = CityView.new()
 	add_child(_view)
 	_view.setup(_city)
+	if _look != &"":
+		_view.look_id = _look
 	var characters: CityCharacters = CityCharacters.new(_city, _view, world.context())
 	await characters.bake()
 	await _view.prewarm()
 	var ok: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
-	for i: int in FOCI.size():
+	for i: int in _foci:
 		_set_focus(BASE + FOCI[i])
 		for zoom: float in _zooms:
 			ok = await _capture(i, zoom) and ok
@@ -69,6 +75,12 @@ func _parse_args() -> bool:
 			_police = arg.substr(9).to_int()
 		elif arg.begins_with("--settle="):
 			_settle = arg.substr(9).to_int()
+		elif arg.begins_with("--look="):
+			_look = StringName(arg.substr(7))
+		elif arg.begins_with("--foci="):
+			_foci.clear()
+			for v: String in arg.substr(7).split(","):
+				_foci.append(v.to_int())
 		elif arg.begins_with("--zooms="):
 			_zooms.clear()
 			for v: String in arg.substr(8).split(","):

@@ -4,7 +4,7 @@ Iteration 1 (09:04) died on a billing error before any turn; iteration 2 (10:04)
 
 ## 2026-11-03 iteration 2 (10:04 - 11:34)
 
-- MILESTONE 10:50 item 1 doctrine: palette.json `blood` #A30509 / `blood_dark` #540005 (world, actors, fx),
+- MILESTONE 10:20 item 1 doctrine: palette.json `blood` #A30509 / `blood_dark` #540005 (world, actors, fx),
   `cop_blue` #3A4766 (luma 0.28 = the charcoal's 0.29; actors, vehicles), `cop_blue_hi` #4F86E0 (badge,
   light bar); vermilion loses use `cop` and layer `vehicles`. Gates `blood_r` 0.30 / `blood_gr` 0.18 /
   `blue_gate` 0.08; PaletteTokens.classify order blood -> verm -> teal -> blue; count_inks().
