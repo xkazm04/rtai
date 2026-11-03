@@ -470,3 +470,9 @@ NEXT:
 5. The guard/cast draw factors (1.7x / 1.5x from the placeholder era) now make the humans
    larger than true scale next to a true-scale Rivet; re-capture them from rigs at 1x when
    d5-cast's human rigs are final.
+- 16:40 light-pool diagnosis, last tries: temporary printerr in LightLayer.add, FxSystem.spawn
+  and FxTriggers.fire (never committed, restored) over scenario_quest1_keys / quest1_input
+  headless -> 0 calls, but those headless runs build no city view, so that proves NOTHING. The
+  windowed run with the same logs (5 s) was SKIPPED: bench.lock held by d5-city. That windowed
+  run is the next step (NEXT 1). frames.json clip-v4 note corrected (it claimed the cover fixed it).
+- No Godot process of mine is running; bench.lock is not mine; scratch: clip PNGs deleted.
