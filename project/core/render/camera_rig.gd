@@ -4,9 +4,11 @@ extends RefCounted
 ## (32 px/m on foot, 48 in a car, 64 in an arena), velocity look-ahead in a car, screen shake and
 ## hit-stop by id, all scaled down under reduced motion. Steps on the 60 Hz sim tick; the shake is
 ## a hash of the tick (no RNG stream). Render only: CityView reads ppm() and offset_px() each frame;
-## the sim loop owns any hit-stop freeze and asks hitstop_ticks() for its length.
+## a hit-stop (hitstop()) is held by the caller on the SimClock (SimClock.hold).
 
 const TABLE: String = "res://data/tables/camera.json"
+## A focus faster than this (m/s) jumped (a cut, a respawn, a bench reset): it leads nothing.
+const JUMP_MPS: float = 90.0
 
 var reduced_motion: bool = false
 var mode: StringName = &"on_foot"
@@ -16,6 +18,7 @@ var hitstops: Dictionary[StringName, int] = {}
 var reduced: Dictionary = {}
 var ease_ticks: int = 36
 var look_ease: float = 0.06
+var stop_cooldown: int = 20
 
 var _from_ppm: float = 32.0
 var _ppm: float = 32.0
@@ -25,6 +28,9 @@ var _look_m: Vector2 = Vector2.ZERO
 var _shake_id: StringName = &""
 var _shake_tick: int = -100000
 var _clock: SimClock = null
+var _focus_m: Vector2 = Vector2.ZERO
+var _focus_tick: int = -1
+var _stop_tick: int = -100000
 
 
 func _init() -> void:
@@ -43,6 +49,8 @@ func _init() -> void:
 	var e: float = d["zoom_ease_ticks"]
 	ease_ticks = int(e)
 	look_ease = d["look_ahead_ease"]
+	var c: float = d["hitstop_cooldown_ticks"]
+	stop_cooldown = int(c)
 	_ppm = _target_ppm()
 	_from_ppm = _ppm
 
@@ -94,6 +102,16 @@ func hitstop_ticks(id: StringName) -> int:
 	return roundi(base * _scale("hitstop_scale"))
 
 
+## Hit-stop `id` asked for at sim tick `tick`: the ticks to hold (0 under reduced motion, for an
+## unknown id, or inside the cooldown of the last stop). The caller holds the clock (SimClock.hold).
+func hitstop(id: StringName, tick: int) -> int:
+	var ticks: int = hitstop_ticks(id)
+	if ticks <= 0 or tick - _stop_tick < stop_cooldown:
+		return 0
+	_stop_tick = tick
+	return ticks
+
+
 ## Advances to sim tick `tick` with the followed body's velocity (m/s).
 func step(tick: int, vel_mps: Vector2) -> void:
 	var steps: int = clampi(tick - _tick, 0, 8)
@@ -108,6 +126,22 @@ func step(tick: int, vel_mps: Vector2) -> void:
 	var want: Vector2 = (vel_mps * per).limit_length(cap)
 	for i: int in steps:
 		_look_m = _look_m.lerp(want, look_ease)
+
+
+## Advances to sim tick `tick` following the focus at `focus_m` (metres): its velocity is how far
+## it moved since the last tick it was seen at, so whoever moves the focus feeds the look-ahead.
+## Frames with no new tick lead nothing and keep the last sample.
+func follow(tick: int, focus_m: Vector2) -> void:
+	var vel: Vector2 = Vector2.ZERO
+	var ticks: int = tick - _focus_tick
+	if _focus_tick >= 0 and ticks > 0:
+		vel = (focus_m - _focus_m) / (ticks * SimClock.TICK_DT)
+		if vel.length() > JUMP_MPS:
+			vel = Vector2.ZERO
+	if ticks != 0:
+		_focus_m = focus_m
+		_focus_tick = tick
+	step(tick, vel)
 
 
 func ppm() -> float:

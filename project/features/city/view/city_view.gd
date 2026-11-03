@@ -40,8 +40,6 @@ var clock: SimClock = null
 var rig: CameraRig = null
 ## The camera's world offset in screen px this frame (every print shader's world lock).
 var world_px: Vector2 = Vector2.ZERO
-## The followed body's velocity (m/s) for the rig's look-ahead.
-var follow_vel_mps: Vector2 = Vector2.ZERO
 var textures: CityTextures = null
 ## Street lamps at night from the resident chunks' props (city_prop_lights.gd).
 var prop_lights: CityPropLights = null
@@ -125,7 +123,7 @@ func _place_camera(focus: Vector2) -> void:
 	var tick: int = clock.tick() if clock != null else 0
 	var offset: Vector2 = Vector2.ZERO
 	if rig != null:
-		rig.step(tick, follow_vel_mps)
+		rig.follow(tick, focus)
 		zoom = rig.ppm() / SimConst.PX_PER_M
 		offset = rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = Vector2.ONE * zoom

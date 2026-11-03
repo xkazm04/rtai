@@ -1,5 +1,6 @@
 {
-  "doc": "Camera feel (core/render/README.md). modes: the screen scale per situation (ppm = screen px per metre; F-13: 32 on foot, 48 in a car, about 64 in boss arenas). A mode change eases the zoom over zoom_ease_ticks (smoothstep, 60 Hz sim ticks). look_ahead_m_per_mps leads the camera along the velocity, capped at look_ahead_max_m, eased by look_ahead_ease per tick. shakes: amplitude in screen px decaying linearly over ticks at freq_hz (a hash of the tick, no RNG stream); hitstops: ticks the game may freeze on an impact (the sim loop owns the freeze; the camera only reports it). reduced_motion scales shake and look-ahead and lengthens the zoom ease.",
+  "doc": "Camera feel (core/render/README.md). modes: the screen scale per situation (ppm = screen px per metre; F-13: 32 on foot, 48 in a car, about 64 in boss arenas). A mode change eases the zoom over zoom_ease_ticks (smoothstep, 60 Hz sim ticks). look_ahead_m_per_mps leads the camera along the velocity, capped at look_ahead_max_m, eased by look_ahead_ease per tick. shakes: amplitude in screen px decaying linearly over ticks at freq_hz (a hash of the tick, no RNG stream); hitstops: ticks the game freezes on an impact (fx_triggers.json `hitstop` names the row; SimClock.hold withholds that much frame time, no tick changes), at most one per hitstop_cooldown_ticks. reduced_motion scales shake and look-ahead and lengthens the zoom ease.",
+  "hitstop_cooldown_ticks": 20,
   "hitstops": [
     {
       "id": "melee_hit",
@@ -12,6 +13,10 @@
     {
       "id": "boss_hit",
       "ticks": 8
+    },
+    {
+      "id": "rivet_hit",
+      "ticks": 3
     }
   ],
   "look_ahead_ease": 0.06,

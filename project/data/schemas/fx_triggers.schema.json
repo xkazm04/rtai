@@ -31,6 +31,10 @@
             "maxItems": 4,
             "type": "array"
           },
+          "hitstop": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
@@ -51,7 +55,8 @@
           "doc",
           "fx",
           "shake",
-          "shake_near_m"
+          "shake_near_m",
+          "hitstop"
         ],
         "type": "object"
       },

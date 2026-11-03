@@ -314,10 +314,19 @@ a kind whose token is an accent ink not allowed for its `use` (palette.json `use
 
 Modes `on_foot` 32, `car` 48, `arena` 64 px/m; `set_mode(id, tick)` eases the zoom over
 `zoom_ease_ticks` (36) with a smoothstep, `snap(id)` jumps (boot, cuts). In a car the camera leads the
-velocity (`look_ahead_m_per_mps` 0.35, capped at 7 m, eased 6 % a tick). Shakes by id (`gunfire`, `hit`,
+velocity (`look_ahead_m_per_mps` 0.35, capped at 7 m, eased 6 % a tick). The velocity is the focus's
+own motion: `CityView` calls `rig.follow(tick, focus)` every frame and the rig differences the focus
+between the ticks it saw (frames with no new tick lead nothing; a jump faster than 90 m/s - a cut, a
+respawn - leads nothing), so whatever moves `CitySystem.focus` (input, a car, a cutscene) feeds it.
+Shakes by id (`gunfire`, `hit`,
 `explosion`, `crash`: amplitude in screen px, linear decay over ticks, a tick-phase wobble, no RNG);
-the strongest shake in progress wins. Hit-stops by id (`melee_hit` 4, `kill` 6, `boss_hit` 8 ticks):
-the camera only reports them (`hitstop_ticks`); freezing is the sim loop's job. `reduced_motion` zeroes
+the strongest shake in progress wins. Hit-stops by id (`melee_hit` 4, `kill` 6, `boss_hit` 8,
+`rivet_hit` 3 ticks): an `fx_triggers.json` row's `hitstop` names one (`player_hit` -> `rivet_hit`;
+`rivet_kill` = `actor_killed` with Rivet's id as killer -> `kill`); `rig.hitstop(id, tick)` returns
+its length (0 under reduced motion or within `hitstop_cooldown_ticks` 20 of the last stop) and
+`FxTriggers` holds the clock for it (`SimClock.hold(seconds)`: that much frame time is not simulated,
+so sim, FX, lights and shake all hold still; every tick is unchanged, so replays stay identical, and
+headless runs have no views, so no hold). `reduced_motion` zeroes
 shake and hit-stop, halves the look-ahead and stretches the zoom ease 1.5x (wire it to the settings
 feature when it lands). `CityView.rig` drives `zoom` and the camera offset every frame when set (the game
 sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, goldens and benches rely on.

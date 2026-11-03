@@ -6,6 +6,11 @@
       "minLength": 1,
       "type": "string"
     },
+    "hitstop_cooldown_ticks": {
+      "maximum": 600,
+      "minimum": 0,
+      "type": "integer"
+    },
     "hitstops": {
       "items": {
         "additionalProperties": false,
@@ -153,7 +158,8 @@
     "look_ahead_ease",
     "shakes",
     "hitstops",
-    "reduced_motion"
+    "reduced_motion",
+    "hitstop_cooldown_ticks"
   ],
   "type": "object"
 }
