@@ -17,6 +17,8 @@ var pit: ArenaPit
 var dodges: ArenaDodges = ArenaDodges.new()
 ## Other lanes' code, from their stations' `script` (ArenaHook), in station-file order.
 var hooks: Array[ArenaHook] = []
+## The powers pad's cars (ArenaCars), or null when no station brings a "car" spawn.
+var vehicles: VehicleService = null
 var _shots_before: int = 0
 
 
@@ -53,7 +55,7 @@ func setup(ctx: WorldContext) -> void:
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:
 		for sp: ArenaStation.Spawn in s.spawns:
-			if sp.kind in ["target", "metal"] and _clear(plan.base + sp.at):
+			if _dummy(s, sp) and _clear(plan.base + sp.at):
 				@warning_ignore("return_value_discarded")
 				targets.add(arena, sp, plan.base, id)
 				id += 1
@@ -117,6 +119,15 @@ func _collide_hostiles() -> void:
 			h.pos = cells.push_out(h.pos, h.radius_m) if cells != null else h.pos
 
 
+## A range dummy: kinds "target" and "metal", and an "enemy" outside the pit (the powers pad's
+## robot line, a melee line): a dummy with its motion until that lane's hook brings a real brain.
+## Enemies in the pit are ArenaPit's waves (or the lane's own pit spawner).
+func _dummy(s: ArenaStation, sp: ArenaStation.Spawn) -> bool:
+	if sp.kind in ["target", "metal"]:
+		return true
+	return sp.kind == "enemy" and s.area != str(plan.pit.get("area", "pit"))
+
+
 ## A spawn is allowed where a body fits: anywhere in the dev arena, off buildings on the city.
 func _clear(at: Vector2) -> bool:
 	if cells == null or cells.clear(at, arena.tuning.human["radius_m"]):
@@ -138,8 +149,29 @@ func _respawn() -> void:
 
 func telemetry_dict() -> Dictionary:
 	var out: Dictionary = telemetry.to_dict(targets.ttk_s)
+	if vehicles != null:
+		out["cars"] = car_counts()
 	for hook: ArenaHook in hooks:
 		var extra: Dictionary = hook.telemetry()
 		if not extra.is_empty():
 			out[hook.station.id] = extra
 	return out
+
+
+## Every car on the floor (parked, driven by a power, wrecked); empty without a car spawn.
+func cars() -> Array[VehicleBody]:
+	return vehicles.cars if vehicles != null else ([] as Array[VehicleBody])
+
+
+## The cars by state for the telemetry: total, soul-hijacked, damaged, wrecked.
+func car_counts() -> Dictionary:
+	var n: Dictionary = {"total": 0, "hijacked": 0, "damaged": 0, "wrecked": 0}
+	for b: VehicleBody in cars():
+		n["total"] += 1
+		if b.soul_hijacked:
+			n["hijacked"] += 1
+		if b.state == VehicleBody.State.WRECK:
+			n["wrecked"] += 1
+		elif b.hp_lost > 0.0:
+			n["damaged"] += 1
+	return n

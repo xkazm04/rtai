@@ -46,6 +46,9 @@ static func open(
 	s.world.add_system(s.stage)
 	if on_city:
 		s._add_city()
+	if ArenaCars.wanted(s.stations):
+		@warning_ignore("return_value_discarded")
+		ArenaCars.attach(s.world, s.stage)
 	s.live = LiveInput.new(s.actions)
 	s.tape = InputTape.new(s.live)
 	s.world.loop().set_input(input if input != null else s.tape)
