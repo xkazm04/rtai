@@ -15,3 +15,7 @@
 - REQUEST 1 -> d5-city: look_d4.gdshader (world pass) needs a cop_blue plate like your look_d4_item one; parked
   police cruisers draw on the world layer and their new blue light bar prints grey there. Token values I hard-coded
   in print_part / look_d5_part: cop_blue #3A4766, cop_blue_hi #4F86E0 (from your uncommitted palette.json).
+- MILESTONE item 4 cop portraits: the 5 cop portraits recoloured (vermilion armour -> lifted cop navy #415D91, style
+  untouched, glints kept). 0 Codex images used: a recolour keeps the "great" D5 portraits exactly. evidence/portraits-cop-ab.png.
+  Rivet/King portraits: busts, no scale issue. QUESTION for owner: King's portrait cape is vermilion (doctrine: vermilion =
+  danger/objectives/collar); left as is.
