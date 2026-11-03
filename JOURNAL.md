@@ -99,3 +99,14 @@ NEXT (iteration 2, in order):
 5. Traffic is blind to the player's car (it shoves into it); a sim obstacle list for
    car_desired_speed would make it brake (native + parity work).
 6. Explosions (stretch): wreck -> fire/explosion needs an FX source.
+- FRICTION 11:08 the soul / noir captures came out with no hijack (Rivet walked off on foot): the
+  dev capture set the route input after the bake/prewarm awaits and the world could tick in
+  between, so the tick-30 USE press was missed. 20 frames REJECTED (soul-v1, noir-v1, deleted);
+  the earlier good captures had won the race. Fixed in dc918c6 (input set at tick 0, logged).
+  Also learned: a headless probe script that hits a parse error can hang until timeout (killed by
+  timeout; no Godot of mine left running).
+- MILESTONE 11:13 Gearbox slice frame: soul_hijack -> teal plate on Rivet's taxi (soul-v2);
+  carnage under --look=noir (noir-v2): service cars print in the active look. frames.json now 14
+  entries, ladder.png 1280 x 5512. Rejected frames today: 20 of 54 (all for the input race, none
+  for camera breaks: every capture straight down).
+- 11:14 bench lock taken (vehicles), `node tools/evidence/run.mjs` running (full, with bench).
