@@ -35,7 +35,9 @@ Written for the Director and the owner. Every row points at a board in this fold
 (`item9`); zebra cream vs toned (`item27`); sticker rim +1 px (`item38`); the concept's vermilion misprint `fringe_k`
 (`item43`, a colour-doctrine call) and halftone `dots_k` (`item47`), both up close only.
 **Open**: the gap list after iteration 9 stands (paper-area mid-tones, parapet line weight, the light-wash spread);
-each needs new plates, so Codex budget (50/50 used tonight). Parity and bench were not run in this worktree (no native build).
+each needs new plates, so Codex budget (50/50 used tonight). Parity MEASURED at 8aa9774 (iteration 18, native built in the worktree): native == GDScript bit for bit over 1200
+steps, planted mutation caught at step 629; lint 13/13, unit 152/0, scenarios 8/0, selftest ok (backend native). Bench not run
+(needs the windows-bench export).
 
 | File | What |
 |---|---|
