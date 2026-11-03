@@ -1,0 +1,45 @@
+{
+ "note": "Crowd atlas (48 px/m cell), first WALK frame. rim_before-rim_after = (area_before-area_after)/edge_after; RIM_K 1.0 vs 0.5 so rim_after = that delta and rim_before = 2x.",
+ "looks": [
+  {
+   "look": 0,
+   "rim_before_px": 1.73,
+   "rim_after_px": 0.86
+  },
+  {
+   "look": 1,
+   "rim_before_px": 1.56,
+   "rim_after_px": 0.78
+  },
+  {
+   "look": 2,
+   "rim_before_px": 1.64,
+   "rim_after_px": 0.82
+  },
+  {
+   "look": 3,
+   "rim_before_px": 2.06,
+   "rim_after_px": 1.03
+  },
+  {
+   "look": 4,
+   "rim_before_px": 1.82,
+   "rim_after_px": 0.91
+  },
+  {
+   "look": 5,
+   "rim_before_px": 2.92,
+   "rim_after_px": 1.46
+  },
+  {
+   "look": 6,
+   "rim_before_px": 2.37,
+   "rim_after_px": 1.19
+  },
+  {
+   "look": 7,
+   "rim_before_px": 1.64,
+   "rim_after_px": 0.82
+  }
+ ]
+}
