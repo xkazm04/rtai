@@ -408,3 +408,9 @@ NEXT (night run; supersedes iteration 5 items 1 and 3, the rest stand):
   near 10 %. So pressure at range for a 70 % reader needs the accuracy curve or a shorter
   tell-to-lock window (aim_lock_ticks), not more shooters. --acc knob is still open (item 2).
   evidence/enemy-ai/aim_lead_ab_salted_shooters{1,3}.json. Lint 13/13 after the change.
+- 23:24 f9366b9: the pre-commit hook caught a 100+ char usage line and _initialize at 43 lines on
+  the first try; split the usage line, moved the file write to _write(). Lint 13/13. Re-running
+  --shooters=1 rewrote its evidence byte-identical (the sweep is deterministic). Unit/scenarios
+  not re-run after this commit: dev-only file, no sim or test code touched since the 23:19 green
+  run. The two Godot processes still alive (PIDs 33868, 39464) are not this session's; all my
+  runs were under `timeout` and exited. NEXT stands as written above (item 2: the --acc knob next).
