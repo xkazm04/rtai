@@ -956,3 +956,4 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   sticker read, closer to the mock's chunky rim, the ink line still separates; but more cream mass around every
   actor (busier at 48 where cops stand close to Rivet). A taste call, so not in the package. Board
   evidence/item38_rim_owner_ab.png; ladder row.
+- 03:55 gates: evidence tool (--no-parity --no-bench) ALL PASS at f5145f8 (lint 13/13 over 191 files, unit 149/0, scenarios 8/0, selftest ok); 72 untracked evidence PNGs moved aside and restored.
