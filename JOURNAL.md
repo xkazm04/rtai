@@ -287,3 +287,13 @@ atlas; d5-combat blood names; vehicles cruiser accents).
 ## NEXT addendum (16:45): item 0 before anything else = idle re-bench at the branch head
   (`node tools/bench/run.mjs`, the full 3 x 60 s gate if the machine is quiet). Bench of record:
   16:00 PASS at 61e9222; 16:42 FAIL at 1e7caef (contended).
+- BLOCKED 16:46 (iter 46) idle re-bench: lock held by d5-combat (written 16:43, < 20 min); skipped per
+  the lock rule. The machine is not idle anyway (another lane is benching), so an idle number cannot be
+  taken before the 17:00 freeze. Checked frames.json: 15 entries, every `file`/`before` exists (0 missing).
+## NEXT (16:47, final for the day; supersedes earlier NEXTs on item order only)
+0. Idle re-bench at the branch head after the run ends (`node tools/bench/run.mjs`, full 3 x 60 s,
+   with no other lane on the GPU). Bench of record: 16:00 PASS at 61e9222 (CONTENDED); 16:42 FAIL p99 CPU
+   at 1e7caef (CONTENDED; riot regressed as much as drive48, so most likely machine load). The branch
+   should not merge on the FAIL alone. It also should not merge as "PASS" until the idle run is done.
+1-4 as in the 16:40 NEXT (owner calls on road width / plazas / roof coarseness; more T1 long plates;
+   overlay 32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
