@@ -77,3 +77,21 @@ func test_a_named_victim_soaks_its_own_body_not_the_nearest() -> void:
 	assert_eq(stains.soaked, 1)
 	assert_eq((stains.get_child(0) as Node2D).position, Vector2(110, 100), "body 2, not body 1")
 	stains.free()
+
+
+func test_a_soak_fades_while_rivet_stands_on_the_body() -> void:
+	var stains: CorpseStains = CorpseStains.new(2)
+	var body: Vector2 = Vector2(320, 64)
+	var dead: Dictionary[int, Vector2] = {7: body}
+	stains.on_bled_body(7, Vector2.RIGHT)
+	stains.step_bodies(1, dead)
+	var soak: Node2D = stains.get_child(0) as Node2D
+	assert_eq(soak.modulate.a, 1.0, "no walker: the soak is whole")
+	stains.walkers = PackedVector2Array([body + Vector2(4, 0)])
+	stains.step_bodies(2, dead)
+	assert_eq(soak.modulate.a, 0.0, "Rivet on the corpse: the soak never draws over him")
+	var clear_px: float = CorpseStains.CLEAR_M * SimConst.PX_PER_M + 1.0
+	stains.walkers = PackedVector2Array([body + Vector2(clear_px, 0)])
+	stains.step_bodies(3, dead)
+	assert_eq(soak.modulate.a, 1.0, "Rivet stepped off: whole again")
+	stains.free()

@@ -82,6 +82,7 @@ func _process(_delta: float) -> void:
 		print_stage.place(at)
 		if blood != null:
 			blood.step(_stage.tick, print_stage.world_px)
+			stains.walkers = PackedVector2Array([_stage.arena.rivet.pos * SimConst.PX_PER_M])
 			stains.step_bodies(_stage.tick, _dead_px())
 	else:
 		_camera.position = Ink.px(at)

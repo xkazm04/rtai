@@ -7,6 +7,8 @@ extends Node
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/city_fight.tscn --
 ##   --blood=<mode> --out=<dir> [--at=<tick>,...] [--zooms=1,1.5,2] [--focus=<i>] [--tag=<name>]
 ##   [--no-stains]  hides the blood on the dead (CorpseStains): the before frame of that change.
+##   [--dev=rivet-on-dead,no-walker-fade]  each --at shot first puts Rivet on the soaked body
+##   nearest the focus; no-walker-fade draws the soaks over him (the before of that change).
 ##   [--pop-shots=<k>,...]  at the k-th muzzle pop: freezes and shoots every --zooms zoom with
 ##   the pop on, then off (pop-on/pop-off-<k>-<ppm>.png): the same moment, A/B.
 ##   [--pop-strength=<0..1>]  overrides game.muzzle_pop.strength (the owner's A/B).
@@ -37,6 +39,7 @@ var _beat_frames: int = 0
 var _clip: Vector2i = Vector2i.ZERO
 var _no_stains: bool = false
 var _no_pop: bool = false
+var _dev: PackedStringArray = []
 var _pop_strength: float = -1.0
 var _pop_shots: Array[int] = []
 var _world: World = null
@@ -87,6 +90,7 @@ func _ready() -> void:
 ## The A/B switches: --no-stains, --no-pop, --pop-strength.
 func _dev_overrides() -> void:
 	_chars.blood.stains.visible = not _no_stains
+	_chars.blood.stains.fade_walkers = not _dev.has("no-walker-fade")
 	var pop: MuzzlePop = _chars.blood.pop
 	if pop == null:
 		return
@@ -112,6 +116,9 @@ func _print_pops() -> void:
 
 func _shoot(tick: int) -> bool:
 	Engine.time_scale = 0.0
+	if _dev.has("rivet-on-dead"):
+		var on: Vector2 = _chars.blood.stains.nearest_soak(_city.focus * SimConst.PX_PER_M)
+		_city.target = on / SimConst.PX_PER_M + Vector2(0.12, 0.0)
 	var ok: bool = true
 	for zoom: float in _zooms:
 		_view.zoom = zoom
@@ -279,6 +286,8 @@ func _parse_args() -> bool:
 			_pop_strength = arg.substr(15).to_float()
 		elif arg == "--no-pop":
 			_no_pop = true
+		elif arg.begins_with("--dev="):
+			_dev = arg.substr(6).split(",")
 		elif arg == "--no-stains":
 			_no_stains = true
 		elif arg.begins_with("--tag="):

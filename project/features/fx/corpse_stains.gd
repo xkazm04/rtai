@@ -8,18 +8,27 @@ extends Node2D
 ## per-tick _draw was ~13 circles a stain). A body that leaves the dead (despawned after 8 s,
 ## or its slot reused) takes its stains with it. On the actors band, each body's node SOAK_Z
 ## above it (a rig's parts stay under +30: body_plan arm_above 10), so the stains lie on the
-## dead; printed with the blood's material.
+## dead; printed with the blood's material. That z also lifts them over a living body on the
+## same band, so a soak fades out while a walker (Rivet: robots never bleed) stands on its body.
 ## Data: blood_fx.json stain.<row>. Counter-hash scatter, stepped on the sim tick. Render only.
 
 const MATCH_M: float = 1.5
 const SOAK_Z: int = 60
 ## Ticks a death waits for its body to show up dead in the feed before it is dropped.
 const WAIT_TICKS: int = 6
+## A walker this close (m) hides the soak; it is whole again past CLEAR_M.
+const COVER_M: float = 0.4
+const CLEAR_M: float = 0.9
 
 var row: String = "corpse"
 ## Bodies soaked so far, and deaths that never found their body (evidence).
 var soaked: int = 0
 var missed: int = 0
+## Where the walkers stand (px): living bodies the soaks must not draw over (step() fills
+## Rivet from the rig feed; a host using step_bodies sets it).
+var walkers: PackedVector2Array = PackedVector2Array()
+## False draws the soaks over the walkers too (the before frame of that change).
+var fade_walkers: bool = true
 ## CPU microseconds spent in step since boot, and the steps (the riot budget, STANDARDS 20).
 var spent_us: int = 0
 var steps: int = 0
@@ -87,9 +96,13 @@ func on_bled_body(id: int, dir: Vector2) -> void:
 func step(tick: int, feed: RigFeed) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var dead: Dictionary[int, Vector2] = {}
+	walkers.clear()
 	for i: int in feed.count:
 		if (feed.flags[i] & RigFeed.Flag.DEAD) != 0:
 			dead[feed.ids[i]] = feed.pos[i]
+		elif feed.kinds[i] == BodyPlan.Kind.RIVET:
+			@warning_ignore("return_value_discarded")
+			walkers.append(feed.pos[i])
 	step_bodies(tick, dead)
 	spent_us += Time.get_ticks_usec() - t0
 	steps += 1
@@ -109,6 +122,27 @@ func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
 			continue
 		s.position = dead[s.slot]
 		s.scale = Vector2.ONE * clampf(float(tick - s.born) / maxf(_grow, 1.0), 0.3, 1.0)
+		s.modulate.a = _uncovered(s.position) if fade_walkers else 1.0
+
+
+## 0 while a walker stands on the body at `at` (px), 1 once every walker is CLEAR_M away.
+func _uncovered(at: Vector2) -> float:
+	var a: float = 1.0
+	for w: Vector2 in walkers:
+		var m: float = at.distance_to(w) / SimConst.PX_PER_M
+		a = minf(a, smoothstep(COVER_M, CLEAR_M, m))
+	return a
+
+
+## The soaked body nearest `at` (px), or `at` when none is soaked (evidence captures).
+func nearest_soak(at: Vector2) -> Vector2:
+	var out: Vector2 = at
+	var best: float = INF
+	for s: Soak in _soaks:
+		if s.slot >= 0 and at.distance_to(s.position) < best:
+			best = at.distance_to(s.position)
+			out = s.position
+	return out
 
 
 ## Bodies carrying stains now (tests, evidence).
