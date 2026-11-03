@@ -1,0 +1,107 @@
+{
+ "what": "F-09b rig bench (dev/bench/rig_bench.gd), same-session interleaved A/B, 3 runs each: base = main 089400e (scratch worktree), cast = d-cast 04b95af",
+ "label": "CONTENDED (7 lanes on one machine), headless (CPU only), debug build",
+ "budget": {
+  "rigHardMs": 1.0,
+  "rigTargetMs": 0.3
+ },
+ "cpu": "AMD Ryzen 7 7800X3D 8-Core Processor",
+ "time": "2026-11-03 15:58, bench.lock taken + released",
+ "runs": {
+  "base": {
+   "50": [
+    {
+     "rigMsAvg": 0.4162,
+     "rigMsP99": 0.705,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.3846,
+     "rigMsP99": 0.666,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.3429,
+     "rigMsP99": 0.794,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    }
+   ],
+   "200": [
+    {
+     "rigMsAvg": 0.4703,
+     "rigMsP99": 0.827,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.4038,
+     "rigMsP99": 0.77,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.373,
+     "rigMsP99": 0.686,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    }
+   ]
+  },
+  "cast": {
+   "50": [
+    {
+     "rigMsAvg": 0.3763,
+     "rigMsP99": 0.628,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.3745,
+     "rigMsP99": 0.624,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.388,
+     "rigMsP99": 0.723,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    }
+   ],
+   "200": [
+    {
+     "rigMsAvg": 0.4104,
+     "rigMsP99": 0.791,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.3614,
+     "rigMsP99": 0.678,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    },
+    {
+     "rigMsAvg": 0.3526,
+     "rigMsP99": 0.626,
+     "fullRigsMax": 16.0,
+     "poolGrown": 0.0
+    }
+   ]
+  }
+ },
+ "mean_rigMsAvg": {
+  "base": {
+   "50": 0.3812,
+   "200": 0.4157
+  },
+  "cast": {
+   "50": 0.3796,
+   "200": 0.3748
+  }
+ },
+ "verdict": "no rig-cost change from d-cast (cast 0.380 / 0.375 ms vs base 0.381 / 0.416 ms at 50 / 200 people; spread within a run set ~0.07 ms). Both above the 0.3 ms target and under the 1.0 ms hard cap, contended and debug; not an idle measurement."
+}

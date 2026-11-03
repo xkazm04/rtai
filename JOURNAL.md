@@ -388,3 +388,8 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   characters/ code (crowd_atlas.gd, rig_clips/feed/input) and merges cleanly with d-cast's art and plan changes.
   d-city's REQUEST 3 (cruiser accents -> vehicles) is done here: the brief gives police art to d5-cast and d-vehicles
   changes no art (their damage pick custom.y 0/1/2 selects the cruiser cells this lane recoloured: intact, d1, d2).
+- MILESTONE 15:58 rig bench A/B (bench.lock taken + released; CONTENDED, headless CPU only, debug build): main
+  089400e (scratch worktree, removed after) vs d-cast, interleaved, 3 runs each. Mean rigMsAvg at 50 / 200 people:
+  base 0.381 / 0.416 ms, d-cast 0.380 / 0.375 ms -> no rig-cost change from this lane (run spread ~0.07 ms). Both over
+  the 0.3 ms target and under the 1.0 ms hard cap; full rigs max 16, pool never grew. evidence/d5-cast/rig-bench-ab.json.
+  GPU bench (bench/run.mjs) still not run by this lane: art and scale changes only; unmeasured, not zero.
