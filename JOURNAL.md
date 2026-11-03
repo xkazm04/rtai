@@ -288,3 +288,4 @@ NEXT:
    now stand beside Rivet); the World LiveInput hookup (MERGE NOTE, iteration 1).
 5. Re-capture cast_rivet.png from d5-cast's base form; RIVET_FORM_K = 1.0 (REQUEST 2).
 6. A city clip v2 at fe40b14 (the current one is 42a304d: no stencils, tazer bursting short).
+- 12:25 clip v2 NOT recorded: bench.lock held by `collisions` (a render would skew their bench). Deleted my 2.6 GB of clip PNG scratch (mp4 + sheet kept).
