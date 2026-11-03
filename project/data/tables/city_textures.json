@@ -716,6 +716,83 @@
         3.5
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_skylights.png",
+      "class": "building",
+      "id": 65,
+      "name": "roof_skylights",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_garden.png",
+      "class": "building",
+      "id": 66,
+      "name": "roof_garden",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_sawtooth.png",
+      "class": "building",
+      "id": 67,
+      "name": "roof_sawtooth",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_solar.png",
+      "class": "building",
+      "id": 68,
+      "name": "roof_solar",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_telecom.png",
+      "class": "building",
+      "id": 69,
+      "name": "roof_telecom",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_tank.png",
+      "class": "building",
+      "id": 70,
+      "name": "roof_tank",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
+    },
+    {
+      "art": "res://features/city/art/roofs/roof_charging.png",
+      "class": "building",
+      "id": 71,
+      "name": "roof_charging",
+      "size_m": [
+        8.4,
+        8.4
+      ],
+      "solid": true
     }
   ]
 }

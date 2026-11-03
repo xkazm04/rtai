@@ -15,7 +15,7 @@ func before_all() -> void:
 func test_tables_load() -> void:
 	assert_not_null(_gen)
 	assert_eq(_gen.district_id, "district_01")
-	assert_eq(_gen.sizes.size(), 65)
+	assert_eq(_gen.sizes.size(), 72)
 
 
 func test_generation_is_deterministic() -> void:
