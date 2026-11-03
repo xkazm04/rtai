@@ -10,7 +10,8 @@ Written for the Director and the owner. Every row points at a board in this fold
 **On by default when merged** (all D5 work sits above 48 px/m or on large surfaces; 32 px/m keeps D4's read):
 - D5 Rivet / cop / pedestrian parts tier on the same rigs (`look_d5_part`; on at zoom 1.75, full at 2.0, off below 1.6875 =
   56 / 64 / 54 px/m, the gap is the hysteresis against switch shimmer): `item1_gate.png`, `item1c_shade_k.png`,
-  `item6_cop_shade.png`.
+  `item6_cop_shade.png`. The stops live in `RigDetail` and in `look_d5.params.json`; `test_look_d5_params.gd` fails if they drift
+  (iteration 13).
 - `look_d5` world layer (ink-pressure hatch, paper age and grain, misregistration; amount 0 at 32 px/m, 0.35 at 48, 1.0 from 64; floors 0):
   `item7_paper_age.png`, `item2b_street48.png`.
 - D5 landmark roofs (union-fist mural, bar, HQ, pension bank + neighbours) and big street decals:
