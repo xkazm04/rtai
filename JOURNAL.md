@@ -1381,3 +1381,14 @@ item47 (owner A/B) -> night_iter7_summary.png.
   (mock 0.867, away) and mid 0.11 -> 0.10; 0.15 worse (0.286, median 0.824). By eye (masters work/i9/ls_board.png):
   the membrane blotches blur into a smooth grey and the roofs read less printed. The step is part of the print's look.
   Scratch deleted: i9ls03, i9ls10, i9ls15. README 9.4's "next" (a soft ramp) is thereby answered: no.
+- 05:54 CHECKED the D4 tier under package v9 (the thin print swaps both tiers): i9pkg / i9mot / i9ph1 d4-32:
+  L 0.473 / 0.473 / 0.474, ink 0.07 (item39's under-ink condition unchanged), mid 0.08, actor read identical.
+
+## Summary addendum (iteration 9, after item48)
+- item49 (package v9): look_d5_print paper_hi 1.0, lit tops print L 0.90+ (0 -> 0.044 of off-road px; mock 0.128),
+  paper median 0.848 -> 0.852; mid, actors, pan unchanged. params JSON print.paper_hi 1.0. Final v9 frame = i9ph1:
+  whole frame L 0.457 / paper 0.29 / ink 0.11 / mid 0.11 (mock 0.488 / 0.33 / 0.12 / 0.11).
+- Rejected: wash_lo 0.22 (mid 0.11 -> 0.08), lo_soft 0.10 / 0.15 (blurs the print; paper median darker).
+- New committed code this iteration (all default-off / no-op): look_d5_print paper_hi + lo_soft uniforms,
+  D5_PRINT_SET dev switch. A broken commit (1b1cc5f, PAPER_HI const missing) was fixed in the next one.
+- NEXT 35 amended: adopting the print = look_d5_print with print.paper_hi 1.0 from the params JSON + the v9 plates.
