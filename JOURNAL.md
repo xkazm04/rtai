@@ -757,3 +757,16 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
 ## REQUESTS (iteration 8)
 18. visual-engine (via the Director): apply `traffic_atlas_wiring_after_n-visual.patch` after merging n-d4 (or
     `traffic_atlas_wiring.patch` if n-visual is not merged). Damage states / hijack overlay still need a state hook.
+- 02:03 MILESTONE generic roofs reach the city (data + a generator patch). Found: my 7 generic roofs (iteration 1)
+  had NO table rows, so the generator only ever drew the 8 lettered/landmark district buildings, each at a random
+  90-degree turn: "HQ" printed upside down and sideways, two HQs side by side (`before_rf/city-1-32ppm`). Committed
+  (5186edf): table rows 65-71 (class building, 8.4 m); bake unchanged (`bake_city --check` matches golden);
+  `test_city_chunks` counts 72 (one-line shared-test bump). NOT committed (generator = city code):
+  `masters:night/d4-production/roof_pick_generic.patch` (tile_painter + chunk_build + new golden sha256): landmarks
+  on 30 % of square blocks, generic roofs on the rest; a pick that repeats its left or upper neighbour's steps to the
+  next generic (first try without it: two LOCAL 9 UNIONs side by side - fixed); lettered roofs (bar, HQ, OSHA,
+  pension, union hall) always upright; generic roofs get the building shadow offset. Evidence `before_rf|after_rf/
+  city-*` (patch applied + re-baked), sheets `work/rf_ab_{32,48}.png`; afterwards code reverted, chunks re-baked,
+  `--check` matches golden again. Unit 142/142, lint 13/13. Ladder rows. 0 Codex images.
+19. city/generator owner (via the Director): apply `roof_pick_generic.patch` after n-d4 (it moves the AST-12
+    golden hash list, included in the patch).
