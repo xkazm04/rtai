@@ -891,3 +891,32 @@ and junction at 32 / 48, the light showcase at 32 / 48 / 64).
   to flat ink. 40-night-options/night-options-block-{32,48}.png; ladder 40. lights.json was edited for the
   renders and restored (git clean). First sheet mixed an --fx-moment shipped frame with plain option
   frames (different sim moment) - caught on looking, re-rendered; the mixed sheet was overwritten.
+- Merge check (04:50, merge-tree): my first README append (grade_ink at the end of assets/shaders/
+  README.md) conflicted with n-d5's end-of-file section; moved it above the D4 section -> JOURNAL.md-only
+  conflicts again with n-d4 / n-d5 / n-noir. n-noir's city_view.gd hunks (NoirLook, set_noir,
+  noir.light_street) auto-merge with mine (prop_lights, tex_table); merged file ~226 lines (< 300).
+- Iteration 12 tally: frames rejected for camera 0 (all engine captures, straight down); 1 option sheet
+  rebuilt (mixed sim moments); 0 approaches reverted. No AI images (no codex) -> no provenance lines.
+  Scratch probes (zz_scratch_headlights / zz_scratch_lamps) deleted, lights.json option edits restored,
+  /tmp scratch deleted. Ladder rows 37-40 (1280 x 19350).
+
+NEXT (iteration 13 / morning, in order):
+1. Director merge (JOURNAL.md-only conflicts at 04:50). After it:
+   - n-d4: traffic atlas live -> re-bless junction AND block goldens INCLUDING the 3 night goldens
+     (d4-48ppm-night, block-d4-48ppm-night, block-auto-64ppm-night); LOOK at them. Check the headlight
+     lamps_m [2.3, +-0.7] against the drawn car noses (placeholder quad today).
+   - n-d5: as iteration 11 NEXT 1 (cast_shadows prefers look_d5_shadow; apply the two look_d5 patches).
+   - n-noir: NoirLook.light_street and my night lights (CityHeadlights / CityPropLights) both light the
+     street. Decide: noir = a LOOK, night = a GRADE; if noir is on at night, one of the two street-light
+     paths should yield (simplest: noir's light_street skips when lights.grade has prop_lights).
+   - `node tools/selftest/run.mjs`: both sites, 16 goldens, accents clean, world lock 0.00 %.
+2. Bench owed on an idle machine: iteration 12's run was contended (p99 3.25 ms, rigs 0.65 ms vs 2.75 /
+   0.43 at iter 11 with 6 other-lane Godots running). Expect no change (day path: one early return + one
+   fewer full-screen rect); prove it.
+3. Owner calls with frames: night tuning (40-night-options: soft / shipped / hard), the night look as a
+   whole (37-39: grade, car lights, lamp pools), plus iteration 11's open calls (warm charcoal 29,
+   aquatint 30, cast shadow length 34, paper warmth 35) and the older ones (16, 17, 15).
+4. Gameplay hook for the grade: nothing sets `night` outside the selftests yet (acts / missions own
+   when it is night); the API is CityView.lights.set_grade(&"night").
+5. Unchanged: print_part ink / paper tones (characters / n-noir file); traffic states from sim custom.y;
+   rig 0.43 ms p99 vs 0.3 target (native RigArm / RigGait); d4-production asset notes (barrels, road patch).
