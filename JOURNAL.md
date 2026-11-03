@@ -1091,3 +1091,13 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   call (more red on the hero), so OWNER A/B, not default. Board evidence/item43_fringe_owner_ab.png; ladder row.
 - 04:24 CORRECTION: the three entries above first carried 04:20 / 04:30 / 04:36 and the ladder row "04:40", written
   ahead of the clock (the same mistake as iteration 7). Times fixed to the shell clock; the ladder row re-added.
+- 04:29 MILESTONE (88c1e5e + uid): hatched cast shadows for props and parked cars in the D5 hero scene (new
+  dev/showcase/d5_hero_prop_shadow.gd: one sibling sprite per prop with the prop's own silhouette, look_d5_shadow,
+  offset down-right 0.12-0.45 m, under the prop on the world layer; d5 tier only; D5_PROP_SHADOW=0 off). Found by
+  eye vs the mock at 32: every mock prop and car throws a pen-hatched shadow, ours none. h125 -> h131ps (tint 0.5)
+  -> REJECTED h132ps7 (tint 0.7 / stroke 0.9: a solid black blob on the asphalt, the hatch is lost) -> h133ps
+  (0.5, cone 0.2 -> 0.12 m: its square base alpha printed a box). 8637 / 13614 / 14853 / 19254 / 24443 px at
+  32-128, d4 and d5p tiers 0 px; 32 px/m: ink 0.176 -> 0.179, L 0.423 -> 0.422, paper 0.286 -> 0.284. Package
+  h134pkg (package_shot.sh, tree restored) vs h124rf: 8596 / 13465 / 14740 px at 32 / 48 / 64, ink 0.094 -> 0.097.
+  Readability: actors untouched. d5_hero_run.gd is 256 lines (soft 200, hard 300; dev code). Board
+  evidence/item44_prop_shadows.png; ladder row. Proposal for the city lane.
