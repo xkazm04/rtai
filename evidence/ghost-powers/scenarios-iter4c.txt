@@ -1,0 +1,97 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] quest1: city cells: 2 chunks in 12 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2421)
+[WARN] save: auto_a corrupt (payload hash mismatch): quarantined (OK)
+[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2421)
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] quest1: city cells: 2 chunks in 17 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b3-toner-room (tick 2466)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: auto_a corrupt (payload hash mismatch): quarantined (OK)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: auto_b corrupt (the saved state did not re-simulate): quarantined (OK)
+[INFO] scenario: cop tackle: { "knocks": 1, "down_ticks": 84, "resumed": true, "fled": false, "worst_rivet": 0.00001313209534 }; planted down_s 0: { "knocks": 6, "down_ticks": 6, "resumed": true, "fled": false, "worst_rivet": 0.00001211881638 }
+[INFO] scenario: crowd walk: worst Rivet overlap 0.0004 m (tol 0.02), people-people 0.006 m, progress 19.0/19.6 m, knockdowns 0; planted r=0 0.420 m, body off (before) 0.766 m
+[INFO] scenario: run-in: { "met": true, "rivet_pushed_m": 0.09284806251526, "worst_rivet": 0.00000752925873, "knocks": 0 }; planted (rule off): { "met": true, "rivet_pushed_m": 0.60846668481827, "worst_rivet": 0.00001915216446, "knocks": 0 }
+[INFO] scenario: tackle: human { "knocks": 1, "went_down": true, "got_up": true, "fled": true, "slide_m": 1.92881858348846, "keep": 0.99177376168673, "worst_rivet": 0.00001229763031 }; robot { "result": "blocked", "worst": -0.00000007629395, "rivet_x_max": 4.07999992370605, "stop_x": 5.0, "rs": 0.92, "robot_moved_m": 0.0, "table_ok": true }; planted { "knocks": 0, "went_down": false, "got_up": false, "fled": false, "slide_m": 0.0, "keep": 0.98452958904329, "worst_rivet": 0.00001378774643 } / { "result": "", "worst": 0.91999761581421, "rivet_x_max": 12.0000095367432, "stop_x": 5.0, "rs": 0.92, "robot_moved_m": 0.0, "table_ok": false }
+[INFO] scenario: chase (native): cops 60.3 -> 6.5 m, nearest police car 0.0 m, 49 fields, max 180 us, last 135 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"body_knockdowns":3,"checks":10,"counters_a":[149,70,25,6,127,123,13,27,362,29],"counters_b":[149,70,25,6,127,123,13,27,362,29],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"snapshot_floats":3553,"step_ms_a":4.66823333333333,"step_ms_b":4.70661,"steps":300}
+[INFO] scenario: city focus moved 65 m, 16 chunks stamped
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] quest1: city cells: 2 chunks in 22 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9032
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9032
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] quest1: city cells: 2 chunks in 20 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[WARN] save: checkpoint at b4-dock did not re-simulate to its hash
+[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] save: resumed quest 1 at b4-dock (tick 5669)
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 input: {"beats":["b1-dumpster","b2-payphone","b3-toner-room","b4-dock","b5-quartermaster","b6-hot-walk"],"checkpoint_load":{"beat":"b4-dock","resumed":true,"tamper_refused":true},"checkpoints":["b2-payphone@768","b3-toner-room@2421","b4-dock@5669","b5-quartermaster@8086","b6-hot-walk@9033"],"deaths":0,"final_hash":"9d9b1eb1b5e428bf0510f7af6604674713e578acbafaa525a4e838e7343128e2","hints":["SLICE__HINT_HIDE","SLICE__HINT_STAY","SLICE__HINT_PHONE","SLICE__HINT_MEET","SLICE__HINT_LISTEN","SLICE__HINT_FIGHT","SLICE__HINT_RIFLE","SLICE__HINT_BOSS","SLICE__HINT_TORCH","SLICE__HINT_COOL","SLICE__HINT_PAID"],"input_changes":1309,"input_events":56232,"interact_presses":11,"kills":49,"log":"C:/Users/kazda/kiro/gtai-eve/appdata/ghost-powers/RTAI Uprising/test_tmp/quest1/input-run.replay.json","log_saved":true,"paid":1500,"path":"simulated InputEvents -> InputMap -> LiveInput -> TickInput -> StagePilot","replay":"identical","scene":"res://boot/quest1.tscn","seconds":187.35,"shots":66,"state":"succeeded","ticks":11241,"verdict":"pass"}
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in 'dumpster'
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in ''
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] scenario: quest collect-call: succeeded in 11436 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+[INFO] characters: prewarmed 33 rigs in 95.1 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.0727314814814815,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":95.065,"rigMsAvg":0.414418518518519,"rigMsMax":0.815,"rigMsP50":0.38,"rigMsP99":0.681,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 4.5 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.359324074074074,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":4.498,"rigMsAvg":0.447451851851852,"rigMsMax":0.996,"rigMsP50":0.427,"rigMsP99":0.774,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] scenario: souls: { "human": { "knocks": 1, "downed": true, "class": "rivet_ghost" }, "planted_no_class": { "knocks": 0, "downed": false, "class": "rivet_base" }, "robot": { "result": "knockdown", "at_mps": 4.19999980926514, "t_s": 1.31666666666667 }, "planted_robot_base": { "result": "blocked", "at_mps": 4.19999980926514, "t_s": 1.43333333333333 }, "stomp": { "hits": 6 }, "planted_stomp_r0": { "hits": 0 }, "stomp_city": { "knocks": 6, "outside_down": 0 }, "planted_no_pulse": { "knocks": 0, "outside_down": 0 }, "gearbox": { "crashed": true, "t_s": 1.41666666666667, "mps": 14.0 }, "planted_no_turn": { "crashed": false, "closest_m": 70.1504516601563 } }
+[INFO] scenario: vehicle carnage: {"cues":{"crash":4,"horn":2},"hijacked":["taxi"],"player_hp_lost":91.5900018215179,"result":"pass","states":[2,2]}
+[INFO] scenario: vehicle drive: {"final_hp_lost":0.0,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":60.925,"service_us_max":341,"struck":1,"ticks":720,"timing":"CONTENDED (shared machine, headless, native sim)"}
+[INFO] scenario: vehicle yield: {"blind":{"at":[342.931915283203,270.0],"cars_alive":40,"first_pass_s":-0.0166666666666667,"horns":0,"hp_lost":0.0,"passed":0,"queued_s":0.3,"rear_ends":2,"ticks_near":805},"result":"pass","ticks":2400,"yield":{"at":[300.0,270.0],"cars_alive":40,"first_pass_s":11.1,"horns":15,"hp_lost":0.0,"passed":2,"queued_s":8.95,"rear_ends":0,"ticks_near":1787}}
+run_scenarios: 20 ran, 0 failed
+WARNING: 3665 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 66 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+exit 0

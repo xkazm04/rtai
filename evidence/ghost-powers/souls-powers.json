@@ -1,0 +1,45 @@
+{
+  "gearbox": {
+    "crashed": true,
+    "mps": 14.0,
+    "t_s": 1.41666666666667
+  },
+  "human": {
+    "class": "rivet_ghost",
+    "downed": true,
+    "knocks": 1
+  },
+  "planted_no_class": {
+    "class": "rivet_base",
+    "downed": false,
+    "knocks": 0
+  },
+  "planted_no_pulse": {
+    "knocks": 0,
+    "outside_down": 0
+  },
+  "planted_no_turn": {
+    "closest_m": 70.1504516601563,
+    "crashed": false
+  },
+  "planted_robot_base": {
+    "at_mps": 4.19999980926514,
+    "result": "blocked",
+    "t_s": 1.43333333333333
+  },
+  "planted_stomp_r0": {
+    "hits": 0
+  },
+  "robot": {
+    "at_mps": 4.19999980926514,
+    "result": "knockdown",
+    "t_s": 1.31666666666667
+  },
+  "stomp": {
+    "hits": 6
+  },
+  "stomp_city": {
+    "knocks": 6,
+    "outside_down": 0
+  }
+}

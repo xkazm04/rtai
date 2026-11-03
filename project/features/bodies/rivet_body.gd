@@ -16,6 +16,8 @@ const TELEPORT_MPS: float = 30.0
 ## A tackle speed no body reaches: the rule's run result is not a knockdown.
 const NEVER_MPS: float = 1.0e9
 
+## The class he steps as: CLASS on foot, `rivet_ghost` while the Hauler soul is on (features/souls).
+var body_class: StringName = CLASS
 ## False while Rivet is in a car: the sim then has no player body.
 var on: bool = true
 var table: BodyTable = null
@@ -24,6 +26,9 @@ var pos: Vector2 = Vector2.ZERO
 var vel: Vector2 = Vector2.ZERO
 ## The last step's knockdowns: BR_STRIDE floats each (slot, x, y).
 var knocks: PackedFloat64Array = PackedFloat64Array()
+## A one-step radial pulse (features/souls: the Hauler stomp): [radius m, knock slide m/s, down s].
+## While set, the next spec() knocks down every person inside the radius, then clears it.
+var pulse: Vector3 = Vector3.ZERO
 var _events: EventBus = null
 
 
@@ -47,20 +52,36 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	s[SimConst.BD_VX] = vel.x
 	s[SimConst.BD_VY] = vel.y
 	s[SimConst.BD_ON] = 1.0 if on else 0.0
-	s[SimConst.BD_R] = table.radius(CLASS)
+	s[SimConst.BD_R] = table.radius(body_class)
 	s[SimConst.BD_RP] = table.radius(PERSON)
-	s[SimConst.BD_SHARE] = table.share(CLASS, PERSON)
-	var r: BodyRule = table.rule(CLASS, PERSON)
+	s[SimConst.BD_SHARE] = table.share(body_class, PERSON)
+	var r: BodyRule = table.rule(body_class, PERSON)
 	var knock: bool = r != null and r.run == &"knockdown"
-	s[SimConst.BD_TACKLE] = table.run_mps(CLASS) if knock else NEVER_MPS
+	s[SimConst.BD_TACKLE] = table.run_mps(body_class) if knock else NEVER_MPS
 	s[SimConst.BD_KNOCK] = sqrt(2.0 * SLIDE_DECEL * r.knockback_m) if knock else 0.0
 	s[SimConst.BD_DOWN] = r.down_s if knock else 0.0
 	s[SimConst.BD_FLEE] = table.flee_s
-	var back: BodyRule = table.rule(PERSON, CLASS)
+	var back: BodyRule = table.rule(PERSON, body_class)
 	var blocked: bool = back != null and back.run == &"blocked"
 	s[SimConst.BD_RUN_IN] = table.run_mps(PERSON) if blocked else 0.0
 	pos = want
+	if pulse.x > 0.0:
+		_pulse(s)
 	return s
+
+
+## The pulse overrides: a still body of the pulse radius that tackles at any closing speed and
+## moves nobody by overlap (share 0), so each person slides out along the radial knock.
+func _pulse(s: PackedFloat64Array) -> void:
+	s[SimConst.BD_VX] = 0.0
+	s[SimConst.BD_VY] = 0.0
+	s[SimConst.BD_R] = pulse.x
+	s[SimConst.BD_SHARE] = 0.0
+	s[SimConst.BD_TACKLE] = -1.0
+	s[SimConst.BD_KNOCK] = pulse.y
+	s[SimConst.BD_DOWN] = pulse.z
+	s[SimConst.BD_RUN_IN] = 0.0
+	pulse = Vector3.ZERO
 
 
 ## Reads the sim's body_result() after the step; emits one actor_knocked_down per knockdown.

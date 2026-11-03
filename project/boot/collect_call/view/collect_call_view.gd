@@ -35,6 +35,8 @@ var px_per_m: float = Ink.PX_PER_M
 ## on its actor layer; the invented arena's floors are not drawn. Set before adding the view.
 var city_view: CityView = null
 var city: CitySystem = null
+## The Hauler stomp's shake and hit-stop (features/souls/hauler_kick.gd).
+var hauler_kick: HaulerKick = HaulerKick.new()
 var _camera: Camera2D = null
 var _stage: CollectCallStage
 var _system: QuestSystem
@@ -83,18 +85,19 @@ func _ready() -> void:
 	cast_view.material = print_stage.item_material()
 	print_stage.actor_layer().add_child(cast_view)
 	print_stage.actor_layer().add_child(fx_view)
-	_ready_blood()
+	_ready_blood(print_stage.actor_layer())
 
 
-## The combat blood and corpse stains on the printed path (d5-combat), split out of _ready.
-func _ready_blood() -> void:
+## The combat blood and corpse stains (d5-combat) on `layer`: the printed path's actor layer, or
+## the CityView's on the city (quest 1 on the generated city, the arena's city block).
+func _ready_blood(layer: CanvasLayer) -> void:
 	if _stage != null and _stage.events() != null:
 		blood = CombatBlood.new()
-		print_stage.actor_layer().add_child(blood)
+		layer.add_child(blood)
 		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
 		stains = CorpseStains.new(BODIES, blood.blood.use_splat_mesh().colour, blood.blood.dark())
 		stains.material = blood.print_material()
-		print_stage.actor_layer().add_child(stains)
+		layer.add_child(stains)
 		@warning_ignore("return_value_discarded")
 		blood.bled_body.connect(stains.on_bled_body)
 
@@ -108,6 +111,7 @@ func _ready_on_city() -> void:
 	for v: Node2D in [stage_view, fx_view, cast_view]:
 		v.scale = k
 		city_view.actor_layer().add_child(v)
+	_ready_blood(city_view.actor_layer())
 	# pipelines warmed with the camera where Rivet stands now (a Continue or Retry starts
 	# mid-street), and that street drawn at once instead of over many budgeted frames
 	@warning_ignore("return_value_discarded")
@@ -133,17 +137,27 @@ func fill_street(max_passes: int = 600) -> int:
 func _process(_delta: float) -> void:
 	hud_feed.fill(hud_view.state, _stage, _system)
 	hud_view.state.notice = notice.text()
-	if _stage == null or city_view != null:
+	_hauler_kick()
+	if _stage == null:
+		return
+	if city_view != null:
+		# the CityView (a child) places its camera after this: its world_px is last frame's
+		_step_blood(city_view.world_px)
 		return
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
 	if print_stage != null:
 		print_stage.place(at)
-		if blood != null:
-			blood.step(_stage.tick, print_stage.world_px)
-			stains.walkers = PackedVector2Array([_stage.arena.rivet.pos * SimConst.PX_PER_M])
-			stains.step_bodies(_stage.tick, _dead_px())
+		_step_blood(print_stage.world_px)
 	else:
 		_camera.position = Ink.px(at)
+
+
+func _step_blood(world_px: Vector2) -> void:
+	if blood == null:
+		return
+	blood.step(_stage.tick, world_px)
+	stains.walkers = PackedVector2Array([_stage.arena.rivet.pos * SimConst.PX_PER_M])
+	stains.step_bodies(_stage.tick, _dead_px())
 
 
 ## Where fighter `id` stands (metres), or Vector2.INF.
@@ -164,3 +178,19 @@ func _dead_px() -> Dictionary[int, Vector2]:
 		if not h.alive():
 			out[h.id] = h.pos * SimConst.PX_PER_M
 	return out
+
+
+## features/souls: a Hauler stomp landing shakes the camera and holds the clock (hit-stop), on
+## the city (quest 1) and on the printed floor (the arena's pit and pad).
+func _hauler_kick() -> void:
+	if _stage == null or _stage.pilot == null or (city_view == null and print_stage == null):
+		return
+	hauler_kick.reduced_motion = fx_view.reduced_motion
+	var clock: SimClock = _stage.clock
+	if city_view != null and city_view.clock != null:
+		clock = city_view.clock
+	var h: HaulerStage = _stage.pilot.hauler
+	if city_view != null:
+		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig)
+	else:
+		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig)

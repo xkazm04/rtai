@@ -23,17 +23,22 @@ const FORM_OPEN: StringName = &"open"
 const FORM_DAY: StringName = &"day"
 ## The owner's ASK rivet-motion-1 options: T2's ratio (base), a milder cut, the day's arms.
 const FORM_MILD: StringName = &"mild"
+## The Hauler ghost tank (features/souls): 2.6 = base 1.2 x (0.9 / 0.42), the rivet_ghost radius.
+const FORM_HAULER: StringName = &"hauler"
 const FORMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(1.2, 0.7, -250.0),
 	FORM_OPEN: Vector3(1.1, 0.85, -30.0),
 	FORM_NIGHT: Vector3(1.3, 1.0, -30.0),
 	FORM_DAY: Vector3(1.2, 0.7, -250.0),
 	FORM_MILD: Vector3(1.2, 0.7, -250.0),
+	FORM_HAULER: Vector3(2.6, 1.0, -30.0),
 }
 ## [arm_k, hand_k, arm_w] per form; a form missing here keeps 1.0 (King, the night and day forms).
 const ARMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
+	## The tank is base Rivet grown (HaulerLook bulks the arms further from these).
+	FORM_HAULER: Vector3(0.72, 0.78, 0.8),
 }
 ## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
 ## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.

@@ -1,0 +1,198 @@
+{
+  "doc": "The ghost-powers lane's stations on the powers pad (features/souls/README.md). hauler_pad: a crowd patch and a robot line to stomp and ram as the Hauler ghost tank (knockdowns by stomp and ram, time transformed). gearbox_pad: parked cars to soft-lock and a robot line to drive them into (kills per link, crashes). Tuning keys are powers.json blocks.",
+  "lane": "ghost_powers",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "pad",
+      "id": "hauler_pad",
+      "measures": [
+        "activations",
+        "time_transformed_s",
+        "stomp_knockdowns",
+        "ram_knockdowns",
+        "kills_per_activation",
+        "madness"
+      ],
+      "name": "Hauler: ghost tank",
+      "props": [
+        {
+          "at": [
+            -15.5,
+            24
+          ],
+          "kind": "lane_mark",
+          "size": [
+            0.3,
+            8
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            -12,
+            24
+          ],
+          "id": "hauler_crowd",
+          "kind": "crowd",
+          "motion": "static",
+          "span_m": 3,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            -18,
+            21
+          ],
+          "id": "hauler_bot_a",
+          "kind": "enemy",
+          "motion": "approach",
+          "span_m": 8,
+          "speed_mps": 1.6
+        },
+        {
+          "at": [
+            -18,
+            27
+          ],
+          "id": "hauler_bot_b",
+          "kind": "enemy",
+          "motion": "approach",
+          "span_m": 8,
+          "speed_mps": 1.6
+        }
+      ],
+      "tuning": [
+        {
+          "key": "powers.hauler.top_mps",
+          "max": 8,
+          "min": 2,
+          "step": 0.2
+        },
+        {
+          "key": "powers.hauler.turn_dps",
+          "max": 720,
+          "min": 60,
+          "step": 20
+        },
+        {
+          "key": "powers.hauler.accel_mps2",
+          "max": 40,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "powers.hauler.stomp_radius_m",
+          "max": 10,
+          "min": 1,
+          "step": 0.5
+        },
+        {
+          "key": "powers.hauler.morph_s",
+          "max": 1.5,
+          "min": 0.1,
+          "step": 0.05
+        }
+      ]
+    },
+    {
+      "area": "pad",
+      "id": "gearbox_pad",
+      "measures": [
+        "activations",
+        "links",
+        "crashes",
+        "car_strikes",
+        "kills_per_activation",
+        "madness"
+      ],
+      "name": "Gearbox: remote car",
+      "props": [
+        {
+          "at": [
+            -30,
+            19
+          ],
+          "kind": "lane_mark",
+          "size": [
+            10,
+            0.3
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            -34,
+            20
+          ],
+          "id": "gearbox_car_a",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            -28,
+            20
+          ],
+          "id": "gearbox_car_b",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            -36,
+            29
+          ],
+          "id": "gearbox_bot_a",
+          "kind": "enemy",
+          "motion": "strafe",
+          "span_m": 6,
+          "speed_mps": 1.5
+        },
+        {
+          "at": [
+            -26,
+            29
+          ],
+          "id": "gearbox_bot_b",
+          "kind": "enemy",
+          "motion": "strafe",
+          "span_m": 6,
+          "speed_mps": 1.5
+        }
+      ],
+      "tuning": [
+        {
+          "key": "powers.gearbox.drive_mps",
+          "max": 30,
+          "min": 4,
+          "step": 1
+        },
+        {
+          "key": "powers.gearbox.turn_dps",
+          "max": 400,
+          "min": 30,
+          "step": 10
+        },
+        {
+          "key": "powers.gearbox.range_m",
+          "max": 60,
+          "min": 6,
+          "step": 2
+        },
+        {
+          "key": "powers.gearbox.lock_radius_m",
+          "max": 8,
+          "min": 1,
+          "step": 0.5
+        }
+      ]
+    }
+  ]
+}

@@ -252,6 +252,30 @@
         "Ctrl"
       ],
       "mouse": []
+    },
+    {
+      "bit": 7,
+      "id": "power_hauler",
+      "joy_axes": [],
+      "joy_buttons": [
+        9
+      ],
+      "keys": [
+        "Q"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 8,
+      "id": "power_gearbox",
+      "joy_axes": [],
+      "joy_buttons": [
+        10
+      ],
+      "keys": [
+        "G"
+      ],
+      "mouse": []
     }
   ],
   "schema": "gtai.input-actions/1"

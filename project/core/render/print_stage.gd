@@ -19,6 +19,9 @@ var zoom: float = 1.5
 var look_id: StringName = LookProfiles.shared().default_id
 var rig: CameraRig = null
 var clock: SimClock = null
+## A one-off camera offset in world px a host adds this frame (a power's shake with no rig,
+## features/souls/hauler_kick.gd); inside the print lock like the rig's. Zero = bit-identical.
+var kick_px: Vector2 = Vector2.ZERO
 var camera: Camera2D = Camera2D.new()
 var lights: LightLayer = LightLayer.new()
 var fx: FxSystem = FxSystem.new()
@@ -76,11 +79,11 @@ func item_material() -> ShaderMaterial:
 ## every print / light / FX / marker pass stepped on the sim tick with this frame's world_px.
 func place(focus_m: Vector2) -> void:
 	var tick: int = clock.tick() if clock != null else 0
-	var offset: Vector2 = Vector2.ZERO
+	var offset: Vector2 = kick_px
 	if rig != null:
 		rig.follow(tick, focus_m)
 		zoom = rig.ppm() / SimConst.PX_PER_M
-		offset = rig.offset_px(SimConst.PX_PER_M)
+		offset += rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = Vector2.ONE * zoom
 	camera.position = focus_m * SimConst.PX_PER_M + offset
 	fx_triggers.rig = rig

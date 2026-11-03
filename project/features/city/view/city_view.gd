@@ -38,6 +38,9 @@ var clock: SimClock = null
 ## Camera feel (core/render/camera_rig.gd): when set it drives `zoom` and the camera offset each
 ## frame (eased zoom, look-ahead, shake); null keeps `zoom` as set (selftests, goldens, benches).
 var rig: CameraRig = null
+## A one-off camera offset in world px a host adds this frame (a power's shake with no rig,
+## features/souls/hauler_kick.gd); inside the print lock like the rig's. Zero = bit-identical.
+var kick_px: Vector2 = Vector2.ZERO
 ## Pixel-snapped camera: the camera sits on whole screen px, so a pan moves the world art by whole
 ## px (no bilinear swim of the hatching and pen lines) in step with the print's rounded world_px.
 ## False is the old sub-pixel camera (A/B: dev/showcase/city_frame.gd --pan --nosnap).
@@ -151,11 +154,11 @@ func _process(_delta: float) -> void:
 ## Camera on the focus; world_px locks the print pass's grime and hatch to the world.
 func _place_camera(focus: Vector2) -> void:
 	var tick: int = clock.tick() if clock != null else 0
-	var offset: Vector2 = Vector2.ZERO
+	var offset: Vector2 = kick_px
 	if rig != null:
 		rig.follow(tick, focus)
 		zoom = rig.ppm() / SimConst.PX_PER_M
-		offset = rig.offset_px(SimConst.PX_PER_M)
+		offset += rig.offset_px(SimConst.PX_PER_M)
 	camera.zoom = Vector2.ONE * zoom
 	_update_look()
 	var cam: Vector2 = focus * SimConst.PX_PER_M + offset

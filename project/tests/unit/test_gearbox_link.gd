@@ -1,0 +1,87 @@
+extends GutTest
+
+
+func _link() -> GearboxLink:
+	return GearboxLink.new(PowerTable.load_default().gearbox)
+
+
+func test_soft_lock_takes_the_car_nearest_the_reticle_in_range() -> void:
+	var g: GearboxLink = _link()
+	var cars: PackedVector2Array = [Vector2(10, 0), Vector2(11, 1), Vector2(80, 0)]
+	assert_eq(g.pick(Vector2.ZERO, Vector2(11, 0.8), cars), 1)
+	assert_eq(g.pick(Vector2.ZERO, Vector2(80, 0), cars), GearboxLink.NONE, "out of range")
+	assert_eq(g.pick(Vector2.ZERO, Vector2(10, 9), cars), GearboxLink.NONE, "reticle too far")
+
+
+func test_linked_car_drives_toward_the_reticle() -> void:
+	var g: GearboxLink = _link()
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	var target: Vector2 = Vector2(0, 30)
+	for i: int in 90:
+		g.step(target)
+	assert_lt(g.pos.distance_to(target), 20.0)
+	assert_gt(g.pos.y, 1.0, "it turned toward the reticle")
+
+
+func test_fast_contact_wrecks_and_slows_rivet_only_while_linked() -> void:
+	var g: GearboxLink = _link()
+	assert_eq(g.rivet_move_k(), 1.0)
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	assert_lt(g.rivet_move_k(), 1.0, "Rivet is slowed while steering")
+	assert_false(g.contact(), "a standing car does not wreck")
+	for i: int in 60:
+		g.step(Vector2(100, 0))
+	assert_true(g.contact())
+	assert_false(g.linked())
+	assert_eq(g.rivet_move_k(), 1.0)
+
+
+func test_link_drops_when_the_power_ends() -> void:
+	var t: PowerTable = PowerTable.load_default()
+	var p: SoulPowers = SoulPowers.new(t)
+	var g: GearboxLink = GearboxLink.new(t.gearbox)
+	g.bind(p)
+	assert_eq(p.try_activate(&"gearbox"), SoulPowers.OK)
+	assert_true(g.link(2, Vector2.ZERO, 0.0))
+	assert_true(p.interrupt(&"hit"))
+	assert_false(g.linked())
+
+
+func test_turn_is_rate_limited_and_ties_go_to_the_lower_index() -> void:
+	var g: GearboxLink = _link()
+	var cars: PackedVector2Array = [Vector2(10, 1), Vector2(10, -1)]
+	assert_eq(g.pick(Vector2.ZERO, Vector2(10, 0), cars), 0, "tie -> lower index")
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	g.step(Vector2(-30, 0.1))
+	var max_turn: float = deg_to_rad(g.num(&"turn_dps")) * SimClock.TICK_DT
+	assert_almost_eq(absf(g.heading), max_turn, 0.0001, "one tick turns at most turn_dps")
+
+
+func test_slow_contact_strikes_without_a_wreck() -> void:
+	var g: GearboxLink = _link()
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	g.step(Vector2(30, 0))
+	assert_lt(g.speed, g.num(&"crash_mps"))
+	assert_false(g.contact(), "below crash_mps the car survives")
+	assert_eq(g.strikes, 1)
+	assert_eq(g.crashes, 0)
+	assert_true(g.linked())
+
+
+func test_residue_keeps_the_last_order_then_drops() -> void:
+	var t: Dictionary = PowerTable.load_default().gearbox.duplicate()
+	t["residue_s"] = 1.0
+	var g: GearboxLink = GearboxLink.new(t)
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	for i: int in 30:
+		g.step(Vector2(0, 40))
+	g.release()
+	assert_true(g.linked(), "residue: the car still drives")
+	assert_eq(g.rivet_move_k(), 1.0, "residue costs Rivet nothing")
+	var h0: float = g.heading
+	for i: int in 30:
+		g.step(Vector2(0, -40))
+	assert_gt(g.heading, h0, "it keeps turning to the last order, not the new reticle")
+	for i: int in 40:
+		g.step(Vector2.ZERO)
+	assert_false(g.linked(), "the residue ran out")

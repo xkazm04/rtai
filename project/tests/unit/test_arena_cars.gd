@@ -8,8 +8,10 @@ const CARS: String = """{"schema": "gtai.arena-station/1", "doc": "t", "lane": "
 
 
 func test_car_spawns_park_real_vehicles() -> void:
-	var stations: ArenaStations = ArenaStations.shipped()
-	assert_false(ArenaCars.wanted(stations), "the shipped arena brings no cars")
+	# the arena's own file only: ghost-powers.json parks its own pad cars beside it
+	var stations: ArenaStations = ArenaStations.new()
+	stations.add_file(ArenaStations.DIR + "/arena.json")
+	assert_false(ArenaCars.wanted(stations), "the arena's own stations bring no cars")
 	stations.add_text(CARS, "zz-cars.json")
 	assert_eq(stations.errors.size(), 0)
 	assert_true(ArenaCars.wanted(stations))

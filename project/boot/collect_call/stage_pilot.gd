@@ -16,6 +16,8 @@ var mover: TopDownMover = TopDownMover.new()
 var melee_cooldown: int = 0
 var melee_swings: int = 0
 var car_presses: int = 0
+## features/souls: the Hauler for the bound player (Q / LB); the bot never builds a pilot.
+var hauler: HaulerStage = HaulerStage.shipped()
 var _previous: int = 0
 
 
@@ -40,6 +42,12 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO:
 		stage.intent.fire_at = stage.arena.rivet.pos + c.aim * actions.aim_range_m
 	melee_cooldown = maxi(melee_cooldown - 1, 0)
+	if hauler != null:
+		var melee: bool = c.was_pressed(actions, &"melee")
+		var power: bool = c.was_pressed(actions, &"power_hauler")
+		stage.intent.move_by = hauler.drive(stage, power, melee, stage.intent.move_by)
+		if hauler.owns_melee():
+			return
 	if c.was_pressed(actions, &"melee") and melee_cooldown == 0:
 		_jab(stage, c.aim if c.aim != Vector2.ZERO else mover.facing)
 	if c.was_pressed(actions, &"car"):
@@ -55,6 +63,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	mover.write_state(out)
 	out.put_32(melee_cooldown)
 	out.put_32(_previous)
+	if hauler != null:
+		hauler.write_state(out)
 
 
 ## The electroshock jab: every exposed hostile in a cone in front, within reach, takes a hit.
