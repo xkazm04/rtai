@@ -125,3 +125,12 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
   the D4 lamp's black pole + ball base read bold (T1's lamps are dark poles). Reverted (table untouched).
   evidence/d5-city/rejected/rejected-d5-lamp-{32,64}ppm.png. Retry only as a darker-inked variant or a
   zoom-tiered swap (D5 art from 48 px/m up).
+- MILESTONE 145dae2 T1 street paint: the six road tiles draw `*_open` copies with the two solid edge
+  lines painted out (mocked first on a real frame: the street reads as one 2-lane street, not a 4-lane
+  highway); once the lines went, the 8 m zebras floated mid-asphalt inside the crossing street, so the
+  zebra moved to T1's place: 17 m kerb to kerb (measured 16.75 m between the corner kerbs), 5.15-7.55 m
+  from the box (the crossing street's kerb line is at 4.1 m, the corner rounding ends at 5.1 m); two
+  dash erasers per arm. GENERATOR 5; replay unchanged; junction goldens re-blessed, block in tolerance.
+  Provenance lines for the 6 derived tiles + road_box_plain + dash_eraser (the latter two lacked them).
+  evidence/d5-city/12-open-roads/. Ladder refreshed (masters ladder.png, evidence ladder-iter3.png).
+- CORRECTION: kerb to kerb is ~16.75-17 m of asphalt (measured), not 18 m as written above.
