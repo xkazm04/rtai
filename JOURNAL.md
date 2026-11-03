@@ -1275,3 +1275,8 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   fx_showcase `before_i14mz|probe_i14mz/fx-*`, crops `work/fx14/muzzle_ab.png`: the flash prints as a solid inked star
   with the vermilion core instead of dither fragments, at 48 and 64. One-line patch for visual-engine:
   `evidence/iter14/fx_muzzle_fade.patch` (applies on n-visual 56d23e7; their file, not committed here).
+- 04:38 (housekeeping) scratch-q1's art copies synced to n-d4 HEAD (it held main's older curb tile), re-imported; its
+  view diff still equals `evidence/iter14/q1_view_art.patch`.
+- 04:38 REJECTED, NOT SHIPPED: D5 ink grime on 12 props (`veh_grime.py` amount 1, 3 scratches; the car method).
+  Props board `before_i14pg|after_i14pg/props-{32,48,64}ppm.png`, zoom `work/fx14/pg_z64.png`: near invisible even at
+  64 px/m - the props are already hatched and grimed in the art. Reverted (git checkout), re-imported.
