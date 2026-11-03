@@ -217,3 +217,8 @@ NEXT:
   (agent-behaviour-authoring / combat telegraphs): commit to the telegraphed line, never home in
   after the lock. scenario_enemy_pit thug run now: swings 1, hits 0 (the scripted Rivet dodges it).
   enemy units 16/16, enemy scenarios 2/2, lint 13/13.
+- Clip e (lunge code, same staging): the thug's windup arc while the cop's aim line is up (two
+  threats at once), the dash into Rivet, nails flash it (the rig's own hit tint) and spark it;
+  it still dies a beat before the swing (swings 0: 7 nails, 7 hits, 6 hp; a race the scripted
+  Rivet wins at 100 % close-range accuracy). Kept as rig_fight_lunge_race_32ppm.mp4. Clip f
+  stages the thug 4.6 m out (inside reach + lunge at once) so the windup -> lunge -> swing reads.
