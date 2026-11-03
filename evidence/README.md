@@ -258,8 +258,9 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    Reproduce: `bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round>` (v9 is the default;
    pre-v9: `D5_ROOF_SHADE=0 D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65 D5_FIST_WASH=0.18`).
 2. **Still open in the roof areas**: dark 0.176 vs the mock's 0.149 (our parapet outlines and drawn shadows are
-   heavier), and the membrane prints violet-grey where the mock is warm (look_d4's WASH colour). Next: the
-   visual-engine lane tries a warmer WASH in look_d5_print, judged on the same mask (masters work/i9/roofcls.py).
+   heavier). The membrane's hue is NOT a gap: its mid pixels' median is 174,154,138 vs the mock's 165,146,127 (r-b 36
+   vs 38; a "violet-grey" impression by eye did not survive the measurement). Next: lighter parapet outlines on
+   the next plates (Codex budget), judged on the same mask (masters work/i9/roofcls.py).
 3. Items 1, 3-7 of iteration 8 stand.
 
 ## Gap list after iteration 8 (in-engine h139rs committed / h140all with every proposal, vs `d4h2_mock.jpg` and the concept)
