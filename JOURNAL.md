@@ -169,3 +169,7 @@ cruiser in city_frame; KingPlan into the boss ticket).
   (renders/cruiser-hero48-3way.png: night vermilion | d-cast | merged). So the owner's hero frames keep the night's
   vermilion borrowed cruiser (masters night/d5-close/borrowed, dev-only sprite; mine at day-d5/d5-cast/borrowed/ is ready
   for when the plate lands). evidence/d5-cast/cruiser-world-print.json carries the correction; decisions line fixed.
+- 11:41 owner frames final for this iteration (masters frames.json, 15 + ladder.png): hero frames re-shot with the
+  night-borrowed cruiser; cop-heads A/B differs only at the cops' heads (32/64: 2 regions = riot + patrol head).
+  Scratch worktree scratch-cast-merge2 removed. No art/code change since the clean-tree evidence run at 07182f0
+  (the darker-dome trial was reverted; later commits are docs/evidence JSON only).
