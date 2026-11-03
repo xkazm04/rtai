@@ -1046,3 +1046,19 @@ NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now on
   evidence/item42_roof_rule_fade.png; ladder row. The overlay lum mask comes from the committed plates (gamma 0.7),
   the baked h122rule5 from the gamma 0.45 build, so the two differ (80088 / 58684 px at 32 / 48).
 - 04:11 boards item35 + night_iter7_summary rebuilt from h124rf (the package incl. the roof hatch overlays: 32 px/m L 0.459, dark 0.572, paper 0.30, ink 0.11, mid 0.09).
+- 04:12 FINAL gates (iteration 7): evidence tool (--no-parity --no-bench) ALL PASS at 227dd01 (lint 13/13 over 191
+  files, unit 149/0, scenarios 8/0, selftest ok); 76 untracked evidence PNGs moved aside and restored; tree clean.
+  Parity/bench not run (no native build in this worktree).
+NEXT (final, iteration 7; supersedes the NEXT 27-30 block above where they differ):
+27. Visual-engine lane + owner: ONE decision on the package (evidence/item35, night_iter7_summary; reproduce with
+    masters tools/package_shot.sh): look_d5_print as the world print (dark_soft 0.10, street_edge 1.0, world grain)
+    + look_d5 age_floor/grain_floor 1.0 + look_d5_halo on the rig halos + the ruled roof hatch overlays
+    (features/city/art/d5/roofs/rule/, fade 48 -> 64 px/m). Values in look_d5.params.json ("print", "halo").
+28. If adopted: d5-close commits the D5 plates rebuilt at line gamma 0.45 (union hall 0.65) and rebuilds the rule
+    overlays from them (tools/build_rule_overlays.py); d4-production weights the D4 roof lines (item40, k 1.0).
+29. Characters lane: look_d5_halo into rig_build.gd _halo (+ the crowd atlas); owner: rim_px (item38).
+30. Next Codex budget: lighter plate bases with a fine interior hatch (paper share 0.30 vs 0.33, mid 0.09 vs 0.11
+    with the overlays), plates for the helipad / warehouse / long roofs, King's rig parts.
+Morning reading order: night_iter7_summary.png -> item35 (package vs committed vs mock) -> item37/item42 (road
+paint, roof hatch) -> item34/item38 (stickers) -> item39/item40 (D4-tier condition) -> README gap list after
+iteration 7. Images: 50 of ~50 used; none this iteration.
