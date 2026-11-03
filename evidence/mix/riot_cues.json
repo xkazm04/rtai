@@ -1,31 +1,29 @@
 {
   "cops_near": 100,
   "dropped": {
-    "death:cooldown": 112,
-    "death:voices": 184,
-    "footsteps:cooldown": 1593,
-    "footsteps:voices": 188,
-    "projectile_end:cooldown": 412,
-    "projectile_end:far": 238,
-    "projectile_end:voices": 768,
-    "shot:cooldown": 380,
-    "shot:voices": 1087
+    "death:cooldown": 105,
+    "death:voices": 166,
+    "projectile_end:cooldown": 321,
+    "projectile_end:far": 181,
+    "projectile_end:voices": 629,
+    "shot:cooldown": 310,
+    "shot:voices": 888
   },
-  "frames": 1800,
+  "frames": 1500,
   "fx_fired": {
-    "death": 464,
+    "death": 406,
     "player_hit": 0,
     "player_hit_robo_tazer": 0,
-    "projectile_end": 1670,
+    "projectile_end": 1339,
     "rivet_kill": 0,
-    "shot": 1708
+    "shot": 1397
   },
-  "max_projectiles": 73,
+  "max_projectiles": 67,
   "played": {
-    "death": 168,
-    "footsteps": 17,
-    "projectile_end": 252,
+    "death": 135,
+    "footstep": 38,
+    "projectile_end": 208,
     "servo": 5,
-    "shot": 241
+    "shot": 199
   }
 }

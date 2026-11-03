@@ -127,3 +127,13 @@ func test_a_contract_pings_when_it_starts_and_confirms_when_done() -> void:
 
 func _played(id: StringName) -> int:
 	return _service.played.get(id, 0)
+
+
+func test_a_robo_tazer_wind_up_charges_and_a_boss_gets_its_stinger() -> void:
+	_bus.attack_telegraphed.emit(&"robo-tazer")
+	assert_eq(_played(&"tazer_charge"), 1)
+	assert_eq(_played(&"attack_telegraphed"), 0)
+	_bus.attack_telegraphed.emit(&"slam")
+	assert_eq(_played(&"attack_telegraphed"), 1)
+	_bus.boss_engaged.emit(&"robo-tazer")
+	assert_eq(_played(&"boss_stinger"), 1)

@@ -30,6 +30,8 @@ SPECS = [
   ("ui_back", "sfx", 0.5, False, 2, "short low UI cancel blip, one falling electronic tone, clean, no music"),
   ("ui_back", "sfx", 0.5, False, 1, "short low UI cancel blip, one falling electronic tone, quiet, clean, no music", 3),
   ("objective_ping", "sfx", 1.0, False, 2, "soft notification ping, single bell-like chime with a short tail, mission objective update, no music"),
+  ("boss_stinger", "sfx", 2.5, False, 3, "ominous boss reveal hit, deep sub boom with a metallic industrial scrape and a low dissonant swell, cinematic, no melody, no voices"),
+  ("tazer_charge", "sfx", 1.2, False, 3, "electric weapon charging up, rising capacitor whine with crackling sparks building to a ready zap, sci-fi, no music, no voices"),
   ("city_ambience", "ambient", 8.0, True, 1, "night city street ambience, distant traffic, faint wind, occasional far-away siren, seamless loop, no music, no voices"),
 ]
 
