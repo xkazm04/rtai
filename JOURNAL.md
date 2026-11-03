@@ -1225,3 +1225,9 @@ night_iter7_summary.png and the iteration-7 order.
   rebuilt from h149st / h150all / a30all (D5_FRINGE=1 D5_DOTS=1 package_shot.sh). NEXT 33 updated. Scratch deleted:
   h148all, a26all, cost8nogroup (superseded).
 - 05:06 FINAL gates (iteration 8): evidence tool (--no-parity --no-bench) ALL PASS at 3f5af2e (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 84 untracked evidence PNGs moved aside and restored; tree clean. Parity/bench not run (no native build in this worktree).
+- 05:09 FIX (da44a1a, option still default 0): found by eye at 128 in h150all: with D5_FRINGE=1 the cop's cream glove
+  carried a red edge that reads as blood (all-ages / doctrine). The fringe now prints only where the source is cool
+  steel (b >= r - 0.03). Rivet keeps it: red-lead share at 96 / 128 0.021 / 0.022 (ungated 0.028 / 0.030; off
+  0.017 / 0.018; concept body 0.039). Default h154 = h149st (0 px, deleted); package + options h153all vs h150all
+  0 / 0 / 0 / 2065 / 3495 px. Board evidence/item43b_fringe_steel_only.png; night_iter8_summary rebuilt from h149st /
+  h153all / a31all. Deleted (superseded; the boards were built before): h150all, a30all, h154.

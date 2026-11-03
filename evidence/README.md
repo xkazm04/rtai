@@ -71,6 +71,7 @@ tick count, no RNG.
 | `item41_roof_rule_option.png` | iteration 7, OPTION (not in the package): the ruled roof hatch under the thin print: the mock's diagonal membrane hatch at 32 px/m, but mechanical at 64 (across the OSHA sign plate). Needs a membrane mask + a zoom fade |
 | `item42_roof_rule_fade.png` | iteration 7 (kept, in the package): the ruled roof hatch as zoom-fading overlays (`features/city/art/d5/roofs/rule/`, on with the thin print, gone at 64 px/m), h117pkg vs h124rf at 32 x2 and 48 + the mock roof |
 | `item43_fringe_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `fringe_k` (the concept's off-register vermilion along each part's down-right edge, dried 0.2, fading in 64 -> 96 px/m) off vs on at 64 / 96 / 128 px/m (hero + arena kill-cam) beside the concept; pure vermilion unchanged, red-lead share 0.018 -> 0.030 (concept 0.039). Not default |
+| `item43b_fringe_steel_only.png` | iteration 8 (da44a1a): the fringe option only on cool steel: the cop's cream glove got a red edge that read as blood (h150all vs h153all at 128), Rivet keeps it (h130ff vs h151fc) |
 | `item44_prop_shadows.png` | iteration 8 (committed in the dev hero scene, d5 tier): hatched cast shadows for props and parked cars (look_d5_shadow on each prop's silhouette), h125 vs h133ps at 32 x2 / 48 / 64, the package h124rf vs h134pkg at 48, + the mock's car and crates; tint 0.7 rejected (blob) |
 | `item44b_cone_shadow.png` | iteration 8: the traffic cone's shadow: none (h125) / its base plate's silhouette = a box (h141rs) / a capsule past the plate (h147cone, kept) at 32 x4 and 64 x2, + the mock's cone |
 | `item45_street_clutter.png` | iteration 8 (dev hero scene): the mock's wall-side clutter on our empty pavement strips (bench, planter, mailbox, vending machine; neutral props only), h133ps vs h135cl at 32 + x2 crops + 48, beside the mock |
@@ -78,7 +79,7 @@ tick count, no RNG.
 | `item46_rig_shadows.png` | iteration 8 (dev hero + arena scenes, d5 tier): hatched cast shadows for the rigs up close (first form: D5RigShadow + a CanvasGroup; superseded by `item46b`), a20 vs a22rs at 128 and 64, h135cl vs h139rs at 64 and 96, the package at 64, + the concept's ground shadow; fade 56 -> 64 px/m |
 | `item47_dots_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `dots_k` (the concept's halftone stipple in the shaded steel mid-tones, 64 -> 96 px/m) off / rejected 4 px screen / on at 128 and 96, the arena with dots + fringe, the concept; walk at 96: no added shimmer. Not default |
 | `item46b_rig_shadow_nogroup.png` | iteration 8 (kept): the rig shadow without a CanvasGroup, as world-locked strokes only (nothing stacks): group a24rs / no group + tint a27nogroup (rejected: stacks at joints) / strokes only a29st at 128, hero 64/96; cost +0.07..0.18 / +0.012 / +0.005 ms GPU |
-| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h149st at 32 / every proposal h150all at 32 and 64 (package + fringe + dots + rig shadows) / the arena kill-cam a30all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
+| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h149st at 32 / every proposal h153all at 32 and 64 (package + fringe + dots + rig shadows) / the arena kill-cam a31all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -252,7 +253,7 @@ tone table: the up-close misprint (`item43`), grounding (prop, car and rig shado
 mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
 1. **The package is still not adopted** (unchanged; NEXT 27). Reproduce it plus both owner options: `D5_FRINGE=1
    D5_DOTS=1 bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]`
-   (h150all / a30all, `night_iter8_summary`).
+   (h153all / a31all, `night_iter8_summary`).
 2. **Mid-tones** (unchanged, art): with this board's classes (`night_iter8_summary`), mock mid 0.104 vs package
    0.081 vs committed 0.049. The prop and rig shadows do not move it (0.048 -> 0.049): the gap is the roof interiors.
 3. **Grounding** (NEW, closed in the dev scenes): every mock prop, car and actor sits on a pen-hatched shadow. Ours
@@ -260,8 +261,8 @@ mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
    city lane gives props a shadow sprite (D5HeroPropShadow is the recipe), the characters lane moves D5RigShadow
    into CharacterRigs (one CanvasGroup per rig layer; the crowd atlas sprites already get it).
 4. **The concept's red misprint** (NEW, owner A/B, `item43`): look_d5_part `fringe_k` 1.0 prints it along every
-   segment's down-right edge from 64 to 96 px/m; Rivet's red share 0.018 -> 0.030 (concept body 0.039), pure vermilion
-   unchanged. The colour doctrine says vermilion only on what matters, so the owner decides; default off.
+   steel segment's down-right edge from 64 to 96 px/m (cool steel only since `item43b`: never on cream gloves);
+   Rivet's red share 0.018 -> 0.022 (concept body 0.039), pure vermilion unchanged. The colour doctrine says vermilion only on what matters, so the owner decides; default off.
 5. **Up close, still open**: Rivet's steel value (concept mauve, darker; the owner kept lavender, `item9`); the
    concept's halftone stipple is now an owner A/B option (`item47`, `dots_k`, with the fringe = the riso-print
    signature); King has no rig (plan-view sprite). The D5 tier's own walk shimmer at 96 px/m (HF 1.13 vs D4) was
