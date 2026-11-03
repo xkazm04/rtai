@@ -113,6 +113,7 @@ private:
 		double ddx, ddy;
 		bool is_p, waiting;
 		double hhx, hhy, vv;
+		double ln;  // lane line steered to this step (car_pass)
 	};
 
 	double rnd();                                     // world.cpp
@@ -134,6 +135,9 @@ private:
 			double tgy) const;
 	void car_follow(Car &c);                          // car_route.cpp
 	void car_reserve(Car &c);                         // car_route.cpp
+	void car_pass(Car &c);                            // car_pass.cpp
+	bool car_obst_in(const Car &c, double ln, double a, double b) const;
+	bool car_lane_clear(const Car &c, double ln);
 	void car_steer(Car &c, double dt);                // car_drive.cpp
 	double car_desired_speed(const Car &c);           // car_drive.cpp
 	void car_contacts(Car &c);                        // car_hit.cpp

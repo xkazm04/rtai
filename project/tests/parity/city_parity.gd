@@ -11,8 +11,9 @@ const CHECK_EVERY: int = 30
 ## one lethal, one knockdown, so that write is held to parity too.
 const STRIKE_EVERY: int = 97
 ## Every OBST_EVERY steps the obstacle list (set_obstacles(), the vehicles feature's service cars)
-## is re-placed 9 m ahead of the first cars of side a's snapshot, so traffic brakes for it.
-const OBST_EVERY: int = 40
+## is re-placed 9 m ahead of the first cars of side a's snapshot, so traffic brakes for it, stands
+## longer than CitySimCarPass.PASS_WAIT_S and pulls out into the oncoming lane to pass.
+const OBST_EVERY: int = 300
 const SIM_SEED: int = 4242
 const SPAWN_SEED: int = 99
 const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)

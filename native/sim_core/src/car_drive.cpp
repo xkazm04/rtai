@@ -10,9 +10,9 @@ void CityCore::car_steer(Car &c, double dt) {
 	double tx = 0.0, ty = 0.0;
 	if (c.d == 0 || c.d == 2) {
 		tx = c.x + c.ddx * 6.0;
-		ty = lane_[i];
+		ty = c.ln;
 	} else {
-		tx = lane_[i];
+		tx = c.ln;
 		ty = c.y + c.ddy * 6.0;
 	}
 	double ax = tx - c.x, ay = ty - c.y;

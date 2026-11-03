@@ -158,6 +158,12 @@
           "name": "F_RIOTER",
           "type": "int",
           "value": 4
+        },
+        {
+          "doc": "traffic car passing a stopped service car in the oncoming lane",
+          "name": "F_PASSING",
+          "type": "int",
+          "value": 8
         }
       ],
       "doc": "Actor flag bits.",

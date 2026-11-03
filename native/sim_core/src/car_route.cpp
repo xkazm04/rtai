@@ -12,6 +12,7 @@ void CityCore::car(int i, double dt, double tgx, double tgy) {
 	if (ndir_[i] < 0) car_plan(c, tgx, tgy);
 	if (ndir_[i] >= 0) car_follow(c);
 	car_reserve(c);
+	car_pass(c);
 	car_steer(c, dt);
 	c.vv = v_[i];
 	double vdes = car_desired_speed(c);
