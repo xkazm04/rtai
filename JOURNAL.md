@@ -757,3 +757,16 @@ by the item list (all 7 items are evidenced): the world print's inks. Measured, 
   only at 32 px/m (prop shadows; worst 0.11, re-blessed), accents unchanged, unit 214 (+3).
   iGPU at the building block, interleaved x2: +0.01 / +0.02 ms frame = noise (evidence/pass-cost/
   cast-shadows). Ladder 34 / 34b. Not fed: look_d5_shadow's `zoom` (only matters above 64 px/m).
+- MILESTONE (c89365e) the selftest gates now run at TWO sites: `--site=block` (456, 428), a street between
+  built blocks, next to the riot junction. look goldens (block: d4 32 / 48 + auto 64, tests/golden/look/
+  block-*.png, LOOKED at before blessing) and the accent gate run at both via tools/selftest/run.mjs; debt
+  rows stay junction-measured. Why: this session's two finds (the plaza barrels' vermilion, the missing
+  roof shadow) were both invisible to a junction-only gate. Selftest PASS: goldens 10/10 + block 3/3 worst
+  0.00, accents clean at both (block 1.05 / 0.70 / 0.31 % actor vermilion), world lock 0.00 % x3. The
+  scratch zz_scratch_* scenes it replaces are deleted (never committed).
+- Checked, not mine: a hatched 4 m square mid-street at the block (block-auto-64ppm) is there with the
+  flat shadow too - a darker asphalt patch in the road tile that look_d4 hatches as deep shadow. FOR
+  d4-production: now that hatching = a cast shadow, a hatched patch with no caster reads as a shadow of
+  nothing; keep road patches out of the hatch range (lighter than density 0.86) or give them a caster.
+  Frame: 34-buildings/square-64-flat-vs-hatched.png.
+- 03:45 evidence run started at c89365e (lint, unit, scenarios, parity, selftest, bench).
