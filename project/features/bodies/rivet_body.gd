@@ -56,6 +56,8 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	s[SimConst.BD_KNOCK] = sqrt(2.0 * SLIDE_DECEL * r.knockback_m) if knock else 0.0
 	s[SimConst.BD_DOWN] = r.down_s if knock else 0.0
 	s[SimConst.BD_FLEE] = table.flee_s
+	var back: BodyRule = table.rule(PERSON, CLASS)
+	s[SimConst.BD_RUN_IN] = 1.0 if back != null and back.run == &"blocked" else 0.0
 	pos = want
 	return s
 

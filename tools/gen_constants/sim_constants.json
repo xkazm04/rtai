@@ -648,10 +648,16 @@
           "value": 11
         },
         {
+          "doc": "1.0: a person running into the body takes all the overlap",
+          "name": "BD_RUN_IN",
+          "type": "int",
+          "value": 12
+        },
+        {
           "doc": "spec length",
           "name": "BD_LEN",
           "type": "int",
-          "value": 12
+          "value": 13
         },
         {
           "doc": "body_result(): resolved body x",

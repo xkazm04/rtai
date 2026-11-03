@@ -31,8 +31,8 @@ func set_spec(p_spec: PackedFloat64Array) -> void:
 	by = spec[SimConst.BD_Y]
 
 
-## Person i at the scratch (x, y) against the body.
-func push(i: int) -> void:
+## Person i at the scratch (x, y), moving at (pvx, pvy) m/s, against the body.
+func push(i: int, pvx: float, pvy: float) -> void:
 	if spec[SimConst.BD_ON] == 0.0:
 		return
 	var rs: float = spec[SimConst.BD_R] + spec[SimConst.BD_RP]
@@ -51,19 +51,30 @@ func push(i: int) -> void:
 	var closing: float = spec[SimConst.BD_VX] * nx + spec[SimConst.BD_VY] * ny
 	var tackle: bool = _s.mode[i] != SimConst.M_DOWN and closing > spec[SimConst.BD_TACKLE]
 	if tackle:
-		_s.mode[i] = SimConst.M_DOWN
-		_s.hx[i] = nx
-		_s.hy[i] = ny
-		_s.v[i] = spec[SimConst.BD_KNOCK]
-		_s.t1[i] = spec[SimConst.BD_DOWN]
-		_s.sx[i] = bx
-		_s.sy[i] = by
-		knocks.append_array([float(i), x, y])
-	var pen: float = (rs - d) * spec[SimConst.BD_SHARE]
+		_knock(i, nx, ny)
+	var sh: float = spec[SimConst.BD_SHARE]
+	# a person running into the body is blocked (human -> rivet_base run): it takes it all
+	var run_in: bool = (
+		spec[SimConst.BD_RUN_IN] != 0.0 and -(pvx * nx + pvy * ny) > spec[SimConst.BD_TACKLE]
+	)
+	if not tackle and run_in:
+		sh = 1.0
+	var pen: float = (rs - d) * sh
 	x += nx * pen
 	y += ny * pen
 	if not tackle:
 		_aside(i, nx, ny, pen)
+
+
+func _knock(i: int, nx: float, ny: float) -> void:
+	_s.mode[i] = SimConst.M_DOWN
+	_s.hx[i] = nx
+	_s.hy[i] = ny
+	_s.v[i] = spec[SimConst.BD_KNOCK]
+	_s.t1[i] = spec[SimConst.BD_DOWN]
+	_s.sx[i] = bx
+	_s.sy[i] = by
+	knocks.append_array([float(i), x, y])
 
 
 ## A shove also steps the person aside (to the side they stand on; dead ahead: by slot), so a
@@ -95,7 +106,7 @@ func down(i: int, dt: float) -> void:
 	x = _s.px[i] + _s.hx[i] * vv * dt
 	y = _s.py[i] + _s.hy[i] * vv * dt
 	if _s.tier[i] == 0:
-		push(i)
+		push(i, 0.0, 0.0)
 		_solid.x = x
 		_solid.y = y
 		_solid.push_out(0.3)

@@ -174,7 +174,7 @@ func _move(i: int, x0: float, y0: float, dt: float) -> void:
 		_crowd(i)
 		_body.x = _x
 		_body.y = _y
-		_body.push(i)
+		_body.push(i, _dx * _spd, _dy * _spd)
 		_solid.x = _body.x
 		_solid.y = _body.y
 		_solid.push_out(0.3)

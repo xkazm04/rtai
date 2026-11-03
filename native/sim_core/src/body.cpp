@@ -13,8 +13,8 @@ void CityCore::set_body(const double *spec) {
 	by_ = body_[BD_Y];
 }
 
-// Person i at the scratch position (cx_, cy_) against the body.
-void CityCore::body_push(int i) {
+// Person i at the scratch position (cx_, cy_), moving at (pvx, pvy) m/s, against the body.
+void CityCore::body_push(int i, double pvx, double pvy) {
 	if (body_[BD_ON] == 0.0) return;
 	double rs = body_[BD_R] + body_[BD_RP];
 	double ddx = cx_ - bx_, ddy = cy_ - by_;
@@ -39,7 +39,10 @@ void CityCore::body_push(int i) {
 		knocks_.push_back(cx_);
 		knocks_.push_back(cy_);
 	}
-	double pen = (rs - d) * body_[BD_SHARE];
+	double sh = body_[BD_SHARE];
+	// a person running into the body is blocked (human -> rivet_base run): it takes it all
+	if (!tackle && body_[BD_RUN_IN] != 0.0 && -(pvx * nx + pvy * ny) > body_[BD_TACKLE]) sh = 1.0;
+	double pen = (rs - d) * sh;
 	cx_ += nx * pen;
 	cy_ += ny * pen;
 	double vx = body_[BD_VX], vy = body_[BD_VY];
@@ -64,7 +67,7 @@ void CityCore::down(int i, double dt) {
 	if (tier_[i] == 0) {
 		cx_ = x;
 		cy_ = y;
-		body_push(i);
+		body_push(i, 0.0, 0.0);
 		solid(0.3);
 		x = cx_;
 		y = cy_;

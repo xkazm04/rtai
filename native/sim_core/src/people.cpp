@@ -34,7 +34,7 @@ void CityCore::ped(int i, double dt) {
 		cx_ = x;
 		cy_ = y;
 		crowd(i);
-		body_push(i);
+		body_push(i, dx * spd, dy * spd);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
@@ -162,7 +162,7 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		cx_ = x;
 		cy_ = y;
 		crowd(i);
-		body_push(i);
+		body_push(i, mx * spd, my * spd);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
