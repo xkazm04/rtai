@@ -8,6 +8,10 @@ extends RefCounted
 ## the bot's direct calls. The stick is proportional to the distance left (an arriving thumb).
 
 const STICK_GAIN: float = 8.0
+## The least push past the stick dead zone, so the last few cm still move Rivet (a thumb that
+## arrives instead of resting short of the mark).
+const STICK_FLOOR: float = 0.02
+const STAND_M: float = 0.15
 
 var bot: CollectCallBot
 var presses: int = 0
@@ -19,6 +23,8 @@ var _interact_down: bool = false
 func _init(stage: CollectCallStage, system: QuestSystem) -> void:
 	_stage = stage
 	bot = CollectCallBot.new(stage, system)
+	bot.stand_m = STAND_M
+	bot.waits_for_hit = stage.cells == null
 
 
 func done() -> bool:
@@ -33,6 +39,9 @@ func act() -> void:
 	if intent.move_to != Vector2.INF:
 		var walk: float = _stage.arena.tuning.rivet["walk_mps"]
 		stick = ((intent.move_to - _stage.arena.rivet.pos) * STICK_GAIN / walk).limit_length(1.0)
+		var least: float = _stage.pilot.actions.stick_deadzone + STICK_FLOOR
+		if stick != Vector2.ZERO and stick.length() < least:
+			stick = stick.normalized() * least
 	_axis(JOY_AXIS_LEFT_X, stick.x)
 	_axis(JOY_AXIS_LEFT_Y, stick.y)
 	var aim: Vector2 = Vector2.ZERO

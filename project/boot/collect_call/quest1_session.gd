@@ -8,9 +8,18 @@ extends RefCounted
 
 const QUEST: String = "collect-call"
 const MASTER_SEED: int = 20261102
+## The city's crowd around the quest (people only: the stage runs its own police, and no car is
+## drivable yet, so no traffic drives through the fight).
+const CITY_PEDS: int = 120
+
+## Quest 1 plays on the generated city (collect_call_city.json; false = the invented arena the
+## bot scenario and its goldens were taken on). Every open/resume/replay of a run uses the same.
+static var on_city: bool = true
 
 var world: World = World.new()
 var stage: CollectCallStage
+## The streamed city under the quest (null on the invented arena).
+var city: CitySystem = null
 var port: CollectCallWorld
 var system: QuestSystem
 var pilot: StagePilot
@@ -31,7 +40,7 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.actions.install()
 	s.world.name = "Quest1World"
 	s.world.start(events, data, seed)
-	s.stage = CollectCallStage.new(StageLayout.shipped())
+	s.stage = CollectCallStage.new(StageLayout.shipped(on_city))
 	s.pilot = StagePilot.new(s.actions)
 	s.stage.pilot = s.pilot
 	s.port = CollectCallWorld.new(s.stage)
@@ -39,6 +48,8 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.stage.watch(s.system)
 	s.world.add_system(s.stage)
 	s.world.add_system(s.system)
+	if on_city:
+		s._add_city()
 	s.master_seed = seed
 	s.live = LiveInput.new(s.actions)
 	s.tape = InputTape.new(s.live)
@@ -55,6 +66,19 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.cash_before = s.stage.wallet.cash
 	s._last_beat = s.beat_id()
 	return s
+
+
+## The city after the stage and the quest: its bubble follows Rivet (the stage sets the focus
+## each tick), and he collides with its buildings, props and parked cars (StageCells).
+func _add_city() -> void:
+	city = CitySystem.new(true)
+	city.steer_by_input = false
+	stage.cells = StageCells.shipped()
+	stage.follow = city
+	city.focus = stage.layout.rivet_start
+	city.target = city.focus
+	world.add_system(city)
+	city.spawner.targets = CityTargets.street(CITY_PEDS, 0, 0)
 
 
 ## A session at `cp`: the tape's history re-simulated on a fresh world; null when the state

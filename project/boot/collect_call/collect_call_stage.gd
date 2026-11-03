@@ -36,6 +36,10 @@ var press_left: bool = false
 ## The player (bound input) when set; null for the bot, which writes intent itself.
 var pilot: StagePilot = null
 var tick: int = 0
+## The city's walk cells Rivet collides with, and the city whose bubble follows him (both null
+## on the invented arena).
+var cells: StageCells = null
+var follow: CitySystem = null
 var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
 var _cued: Dictionary[String, bool] = {}
@@ -90,6 +94,9 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	refusal_left = maxi(refusal_left - 1, 0)
 	burn_ticks += 1 if crates_burning else 0
 	intent.clear()
+	if follow != null:
+		follow.focus = arena.rivet.pos
+		follow.target = follow.focus
 
 
 ## The torch: the crate stack burns, the whispers spike, and the alarm puts heat at its peak.
@@ -131,7 +138,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 func _move() -> void:
 	if intent.move_to == Vector2.INF and intent.move_by != Vector2.ZERO:
 		hidden_in = ""
-		arena.rivet.pos += intent.move_by
+		arena.rivet.pos = _collide(arena.rivet.pos + intent.move_by)
 		return
 	if intent.move_to == Vector2.INF:
 		hidden_ticks += 1 if hidden_in != "" else 0
@@ -139,7 +146,11 @@ func _move() -> void:
 	if hidden_in != "":
 		hidden_in = ""
 	var speed: float = arena.tuning.rivet["walk_mps"] * SimClock.TICK_DT
-	arena.rivet.pos = arena.rivet.pos.move_toward(intent.move_to, speed)
+	arena.rivet.pos = _collide(arena.rivet.pos.move_toward(intent.move_to, speed))
+
+
+func _collide(p: Vector2) -> Vector2:
+	return cells.push_out(p, arena.tuning.rivet["radius_m"]) if cells != null else p
 
 
 func _spawns() -> void:

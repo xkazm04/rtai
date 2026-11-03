@@ -7,6 +7,9 @@ extends RefCounted
 const TABLE: String = "res://data/tables/collect_call_stage.json"
 const SCHEMA: String = "gtai.collect-call-stage/1"
 const PLACES: String = "res://data/tables/collect_call_places.json"
+## Where the stage sits on the generated city (gtai.collect-call-city/1).
+const CITY: String = "res://data/tables/collect_call_city.json"
+const CITY_SCHEMA: String = "gtai.collect-call-city/1"
 
 
 class Patrol:
@@ -37,15 +40,27 @@ var metal: PackedVector2Array = PackedVector2Array()
 var tape_bill: int = 0
 var refusal_ticks: int = 420
 var line_hooks: Dictionary[String, String] = {}
+## Stage metres -> world metres (w()): identity on the invented arena; on the city, the stage is
+## laid along one street (origin + p * squash), so every leg Rivet walks stays on the street.
+var origin: Vector2 = Vector2.ZERO
+var squash: Vector2 = Vector2.ONE
+var on_city: bool = false
 var _errors: Array[String] = []
 
 
-static func shipped() -> StageLayout:
+## The stage; `city` lays it on the generated city (collect_call_city.json).
+static func shipped(city: bool = false) -> StageLayout:
 	var s: StageLayout = StageLayout.new()
 	s.places = QuestPlaces.from_json_text(FileAccess.get_file_as_string(PLACES))
+	var c: DataTable = DataTable.open(CITY, CITY_SCHEMA)
+	if city:
+		s.on_city = true
+		s.origin = c.vec(c.raw, "origin")
+		s.squash = c.vec(c.raw, "squash")
+		s._map_places()
 	var t: DataTable = DataTable.open(TABLE, SCHEMA)
 	s._read(t, t.raw)
-	s._errors = t.errors() + s.places.errors()
+	s._errors = t.errors() + s.places.errors() + c.errors()
 	if not s.ok():
 		Log.error("stage", str(s._errors))
 	return s
@@ -59,12 +74,25 @@ func marker(name: String) -> QuestPlaces.Marker:
 	return places.markers[name]
 
 
+## A stage point in world metres.
+func w(p: Vector2) -> Vector2:
+	return origin + p * squash
+
+
+func _map_places() -> void:
+	for m: QuestPlaces.Marker in places.markers.values():
+		m.at = w(m.at)
+		m.phone = w(m.phone)
+	for a: QuestPlaces.Actor in places.actors.values():
+		a.at = w(a.at)
+
+
 func _read(t: DataTable, raw: Dictionary) -> void:
-	rivet_start = t.vec(raw, "rivet_start")
+	rivet_start = w(t.vec(raw, "rivet_start"))
 	start_heat = t.integer(raw, "start_heat")
 	var spots: Dictionary = t.object(raw, "hide_spots")
 	for id: String in spots:
-		hide_at[id] = t.vec(t.object(spots, id), "at")
+		hide_at[id] = w(t.vec(t.object(spots, id), "at"))
 		hide_r[id] = t.num(t.object(spots, id), "r")
 	for row: Variant in t.array(raw, "patrols"):
 		var d: Dictionary = row if row is Dictionary else {}
@@ -76,7 +104,7 @@ func _read(t: DataTable, raw: Dictionary) -> void:
 		whisper_cues[t.text(c, "beat")] = CombatTuning.ticks(t.num(c, "after_s"))
 	var points: Dictionary = t.object(raw, "spawn_points")
 	for id: String in points:
-		spawn_points[id] = t.vec(points, id)
+		spawn_points[id] = w(t.vec(points, id))
 	waves = WaveDirector.new(t, t.array(raw, "waves"), t.object(raw, "dock"))
 	_read_crates(t, raw)
 	tape_bill = t.integer(raw, "tape_bill")
@@ -88,14 +116,14 @@ func _read(t: DataTable, raw: Dictionary) -> void:
 
 func _read_crates(t: DataTable, raw: Dictionary) -> void:
 	var c: Dictionary = t.object(raw, "crates")
-	crates_at = t.vec(c, "at")
+	crates_at = w(t.vec(c, "at"))
 	crates_count = t.integer(c, "count")
 	crates_label = t.text(c, "label")
 	torch_reach_m = t.num(c, "torch_reach_m")
 	var points: Array = t.array(raw, "metal")
 	var out: Array[Vector2] = []
 	for i: int in points.size():
-		out.append(t.vec({"p": points[i]}, "p"))
+		out.append(w(t.vec({"p": points[i]}, "p")))
 	metal = PackedVector2Array(out)
 
 
@@ -105,5 +133,5 @@ func _patrol(t: DataTable, row: Dictionary) -> Patrol:
 	p.mps = t.num(row, "mps")
 	var route: Array = t.array(row, "route")
 	for i: int in route.size():
-		p.route.append(t.vec({"p": route[i]}, "p"))
+		p.route.append(w(t.vec({"p": route[i]}, "p")))
 	return p
