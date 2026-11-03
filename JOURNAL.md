@@ -1040,3 +1040,15 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
 - 03:37 CHECKED, no change: FX board at HEAD (`now_i12_fx/fx-48ppm.png`, every cell reads), the vehicle set
   (`work/i12_veh_sheet.png`: 9 cars x intact / d1 / d2, 4 wrecks, 6 hijack overlays, all bold, cruiser vermilion on the
   bar only), roof values vs the target (ours 0.61-0.71 mean lum, target roofs 0.58-0.61; no lift needed).
+- 03:44 MILESTONE HUD numerals (work order 5, HUD: the default sans was the most off-style thing left on screen;
+  no font is bundled). Codex `d4n_digits` (layout template `gen/refs/t_digits.png`: 16 grey guide glyphs on green,
+  guide glyphs set in Windows Bahnschrift for position only; style ref `refs/ref_lettering.png` = the target's
+  "LOCAL 9" + our union-hall sign + the cash frame): **1 image, 16 glyphs, 0 rejected** (all in place, in order;
+  a flat UI sheet, no camera to break). `tools/slice_digits.py`: keyed, one scale, one baseline ->
+  `features/hud/art/hud_digits.png` (1792 x 160, 16 cells, README documents cells + advances, mipmaps on like the other
+  HUD art). Dev `hud_overlay.gd` draws the counters per glyph (AtlasTexture) instead of a Label. First cut at the
+  Label's cap height (0.72) printed ~20 % smaller than the sans (`after_i12h/`, `work/hud12_ab.png`); 0.92 kept
+  (`after_i12h2/`, `work/hud12_ab2.png`): bold condensed counters that match the world lettering, read at UI 0.4
+  and 0.5. Manifest `d4n_digits`, provenance line, ladder rows "i12 HUD numerals". Commit 36ce71b.
+  Words (labels) still need a font: owner question unchanged (AST-10). Codex night total: 27 images, 186 cells,
+  7 rejected.
