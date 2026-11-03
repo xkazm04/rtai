@@ -9,7 +9,7 @@ extends Node2D
 ## or its slot reused) takes its stains with it. On the actors band, each body's node SOAK_Z
 ## above it (a rig's parts stay under +30: body_plan arm_above 10), so the stains lie on the
 ## dead; printed with the blood's material. That z also lifts them over a living body on the
-## same band, so a soak fades out while a walker (Rivet: robots never bleed) stands on its body.
+## same band, so a soak fades out while a walker (Rivet, or anyone alive) stands on its body.
 ## Data: blood_fx.json stain.<row>. Counter-hash scatter, stepped on the sim tick. Render only.
 
 const MATCH_M: float = 1.5
@@ -25,10 +25,12 @@ var row: String = "corpse"
 var soaked: int = 0
 var missed: int = 0
 ## Where the walkers stand (px): living bodies the soaks must not draw over (step() fills
-## Rivet from the rig feed; a host using step_bodies sets it).
+## every living row of the rig feed; a host using step_bodies sets it).
 var walkers: PackedVector2Array = PackedVector2Array()
 ## False draws the soaks over the walkers too (the before frame of that change).
 var fade_walkers: bool = true
+## The first tick a walker stood on a soaked body (evidence captures; -1 = not yet).
+var first_cover: int = -1
 ## CPU microseconds spent in step since boot, and the steps (the riot budget, STANDARDS 20).
 var spent_us: int = 0
 var steps: int = 0
@@ -103,7 +105,7 @@ func step(tick: int, feed: RigFeed) -> void:
 	for i: int in feed.count:
 		if (feed.flags[i] & RigFeed.Flag.DEAD) != 0:
 			dead[feed.ids[i]] = feed.pos[i]
-		elif feed.kinds[i] == BodyPlan.Kind.RIVET:
+		else:
 			@warning_ignore("return_value_discarded")
 			walkers.append(feed.pos[i])
 	step_bodies(tick, dead)
@@ -131,9 +133,13 @@ func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
 ## 0 while a walker stands on the body at `at` (px), 1 once every walker is CLEAR_M away.
 func _uncovered(at: Vector2) -> float:
 	var a: float = 1.0
+	var clear2: float = pow(CLEAR_M * SimConst.PX_PER_M, 2.0)
 	for w: Vector2 in walkers:
-		var m: float = at.distance_to(w) / SimConst.PX_PER_M
-		a = minf(a, smoothstep(COVER_M, CLEAR_M, m))
+		if at.distance_squared_to(w) < clear2:
+			var m: float = at.distance_to(w) / SimConst.PX_PER_M
+			a = minf(a, smoothstep(COVER_M, CLEAR_M, m))
+	if a < 0.5 and first_cover < 0:
+		first_cover = _tick
 	return a
 
 

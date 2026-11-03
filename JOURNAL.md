@@ -232,12 +232,16 @@ NEXT (iteration 4), in order:
    once (expected unchanged: same values) and that the token blood_dark never reaches the noir path.
 4. Orphan pools (bodies despawn at 8 s, pools stay): owner's read; a render-side faster fade once the body leaves
    is ready to build in CorpseStains/BloodFx if wanted.
-5. Walker fade for EVERY living body (rioters crossing corpses can get the same over-draw as Rivet): tried at
-   13:10 (step() puts every live feed row in walkers, distance_squared reject): stains step 48 us vs 34-38 us
-   Rivet-only (debug, CONTENDED); REVERTED: no on-screen overlap at seed 91 t900 to prove it (the diff was freeze
-   jitter). Re-try with a capture that freezes when a live body is within 0.6 m of a soaked one.
+5. (done after this NEXT was written, see the MILESTONE below: walker fade for every living body.)
 6. REQUEST 3 (kill hit-stop 8 under a beat mode) stands; quest 1 has no hit-stop at all (no FxTriggers in
    CollectCallView): wire one when quest 1 gets a player entry.
-- 13:12 session end: tree clean at the commit after 335f6ca. All gates green at 030eb10 (later commits: docs, the
+- MILESTONE (next commit): the walker fade covers EVERY living body, not only Rivet (rioters crossing corpses got
+  the soak printed on them). First tried 13:05 and reverted (no proof frame at t900); then CorpseStains.first_cover
+  (first tick a walker stood on a soaked body) + city_fight summary cover=<tick> (city_fight now exactly 300 lines,
+  the hard stop: the next dev switch must move code out first). Seed 91: cover=430; shot t432 with and without
+  (--dev=no-walker-fade): masters frames/walker-all-t432-64ppm-crop.png (+ repo evidence/d5-combat/): before the soak
+  clump overprints the rioter's arm, after it is faded. Cost: stains step 48 us vs 34-38 us Rivet-only (debug,
+  CONTENDED; distance_squared reject). Camera breaks: 0 of 6.
+- 13:12 session end (superseded below): tree clean at the commit after 335f6ca. All gates green at 030eb10 (later commits: docs, the
   frames.json/ladder and journal only). Masters frames.json 15 entries, ladder.png 6405 px tall, raw/ 320 MB
   (kept: the before/after sources). No Godot process of mine left (3 running at 13:04 belong to other lanes).
