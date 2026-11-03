@@ -834,3 +834,9 @@ NEXT (session end, iteration 8):
   `traffic_atlas_hijack.png` for one probe (reverted): `probe_tr_hj/` vs `after_tr_dense/`, `work/hj_ab48.png`. The teal
   plate (glass + dashed rim) reads strongly at 48 px/m; in play only the hijacked car would carry it (needs the same
   per-car state hook as damage). No art change. Ladder row.
+- 02:30 FIX grey sedan (id 7) highlights. The grey paint re-valued every light pixel, so on the d2 grey sedan the
+  crack-star rims and bullet-hole rings went grey and the holes faded (`work/traffic9/peek_grey_d2.png`). `grey()` now
+  keeps small ink-enclosed light shapes (light share < 45 % in a 9 x 9 box) at paper value, and no longer mutates its
+  input (my first comparison was greyed twice by that - caught by looking, redone). Only cell 7 changes in all 4
+  atlases (diff bbox checked). In-engine (wiring patch + ids 7/8 forced, reverted): `probe_tr78|probe_g_after` and
+  `probe_g_before_d2|probe_g_after_d2`, crop `work/grey_ab48.png`: d2 cracks + holes read again, intact a touch crisper.
