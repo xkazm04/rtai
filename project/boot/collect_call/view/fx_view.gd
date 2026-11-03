@@ -5,6 +5,7 @@ extends Node2D
 ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
 
 const TRACER_TAIL_M: float = 2.5
+const ENEMY_TAIL_M: float = 1.2
 ## A table gun's muzzle flash holds this many ticks after the trigger breaks.
 const MUZZLE_TICKS: int = 2
 
@@ -30,7 +31,7 @@ func _draw() -> void:
 	for d: Vector2 in arena.rifle_drops:
 		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
 	for s: Shot in arena.shots:
-		if s.from_rivet and arena.gun != null:
+		if arena.gun != null:
 			_tracer(s)
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
@@ -45,13 +46,16 @@ func _draw() -> void:
 		_fire()
 
 
-## Lane gunplay: a table gun's round as a tracer readable at 32 px/m (a 2.5 m tail, cream core
-## in an ink casing, a cream head).
+## Lane gunplay: with a table gun wired, every round is a tracer readable at 32 px/m: Rivet's a
+## 2.5 m tail, cream core in an ink casing, a cream head; an enemy round (danger) is vermilion in
+## the same casing, shorter (ENEMY_TAIL_M), so a strafe can beat it.
 func _tracer(s: Shot) -> void:
-	var tail: Vector2 = s.pos - s.vel.normalized() * TRACER_TAIL_M
+	var tail_m: float = TRACER_TAIL_M if s.from_rivet else ENEMY_TAIL_M
+	var core: Color = Ink.CREAM if s.from_rivet else Ink.VERMILION
+	var tail: Vector2 = s.pos - s.vel.normalized() * tail_m
 	draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 9.0)
-	draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), Ink.CREAM, 4.0)
-	draw_circle(Ink.px(s.pos), 5.0, Ink.CREAM)
+	draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), core, 4.0)
+	draw_circle(Ink.px(s.pos), 5.0, core)
 
 
 ## Lane gunplay: the muzzle flash, a small cream star in an ink rim off the claw for the first

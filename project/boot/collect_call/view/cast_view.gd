@@ -65,6 +65,7 @@ func _rivet(r: Fighter) -> void:
 	if stage.hidden_in != "":
 		_sprite("rivet_peek", at + Vector2(0.0, -0.75), _size(&"rivet_peek"), Vector2.UP)
 		return
+	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_sprite("rivet", at, _size(&"rivet"), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
 
@@ -109,7 +110,7 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 
 
 ## The hit flash: a cream star with an ink rim behind the victim, big on the hit, shrinking out.
-func _impact(f: Fighter) -> void:
+func _impact(f: Fighter, rim: Color = Ink.INK) -> void:
 	var k: float = hit_link.flash(f) if hit_link != null else 0.0
 	if k <= 0.0:
 		return
@@ -122,7 +123,7 @@ func _impact(f: Fighter) -> void:
 		pts[i] = Ink.px(f.pos + Vector2.from_angle(spin + TAU * i / 16.0) * r)
 	pts[16] = pts[0]
 	draw_colored_polygon(pts.slice(0, 16), Ink.CREAM)
-	draw_polyline(pts, Ink.INK, 3.0, true)
+	draw_polyline(pts, rim, 3.0, true)
 
 
 ## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.

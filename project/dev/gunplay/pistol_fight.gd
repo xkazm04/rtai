@@ -13,6 +13,7 @@ const LIVE_FRAMES: int = 1200
 const HEROES: PackedInt32Array = [60, 240, 480, 900]
 const RNG_SEED: int = 20261103
 const HIT_SHOTS: int = 4
+const FOCUS_EASE: float = 0.06
 
 var _out: String = "user://pistol_fight"
 var _play: CollectCallPlay
@@ -22,6 +23,7 @@ var _rig: CameraRig = CameraRig.new()
 var _live: int = -1
 var _hold: int = 0
 var _holds: int = 0
+var _focus: Vector2 = Vector2.INF
 ## Rounds fired before the live part began (the first HIT_SHOTS live shots save a still too).
 var _shots_at_live: int = 0
 ## Live frames on which a round landed (the first HIT_SHOTS also save a still: the impact star).
@@ -77,7 +79,10 @@ func _process(_delta: float) -> void:
 		_hold -= 1
 	else:
 		_tick()
-	_view.focus = _frame_focus()
+	# eased, so a kill (the nearest hostile changes) never cuts the camera
+	var want: Vector2 = _frame_focus()
+	_focus = want if _focus == Vector2.INF else _focus.lerp(want, FOCUS_EASE)
+	_view.focus = _focus
 	if HEROES.has(_live):
 		_save.call_deferred(_live)
 	if _live >= LIVE_FRAMES:
