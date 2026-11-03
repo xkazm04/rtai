@@ -72,6 +72,7 @@ tick count, no RNG.
 | `item42_roof_rule_fade.png` | iteration 7 (kept, in the package): the ruled roof hatch as zoom-fading overlays (`features/city/art/d5/roofs/rule/`, on with the thin print, gone at 64 px/m), h117pkg vs h124rf at 32 x2 and 48 + the mock roof |
 | `item43_fringe_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `fringe_k` (the concept's off-register vermilion along each part's down-right edge, dried 0.2, fading in 64 -> 96 px/m) off vs on at 64 / 96 / 128 px/m (hero + arena kill-cam) beside the concept; pure vermilion unchanged, red-lead share 0.018 -> 0.030 (concept 0.039). Not default |
 | `item44_prop_shadows.png` | iteration 8 (committed in the dev hero scene, d5 tier): hatched cast shadows for props and parked cars (look_d5_shadow on each prop's silhouette), h125 vs h133ps at 32 x2 / 48 / 64, the package h124rf vs h134pkg at 48, + the mock's car and crates; tint 0.7 rejected (blob) |
+| `item45_street_clutter.png` | iteration 8 (dev hero scene): the mock's wall-side clutter on our empty pavement strips (bench, planter, mailbox, vending machine; neutral props only), h133ps vs h135cl at 32 + x2 crops + 48, beside the mock |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 

@@ -1101,3 +1101,9 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   h134pkg (package_shot.sh, tree restored) vs h124rf: 8596 / 13465 / 14740 px at 32 / 48 / 64, ink 0.094 -> 0.097.
   Readability: actors untouched. d5_hero_run.gd is 256 lines (soft 200, hard 300; dev code). Board
   evidence/item44_prop_shadows.png; ladder row. Proposal for the city lane.
+- 04:31 MILESTONE (a252a46): the mock's wall-side clutter on the hero scene's empty pavement strips: bench, planter,
+  mailbox (bottom-left strip, empty before), vending machine (top-left, beside the crates); sizes from
+  city_textures.json; neutral cream props only (barrel_cluster / barricade print vermilion = doctrine noise). Each
+  gets the item44 shadow. h133ps -> h135cl: d5 7939 / 4212 px at 32 / 48 (d4 tier 6150 / 2867: the same props);
+  d5 32 px/m L 0.422 -> 0.419, ink 0.179 -> 0.180, mid 0.048 -> 0.049. Actors untouched. Board
+  evidence/item45_street_clutter.png; ladder row. d5_hero_run.gd now 261 lines (dev, under the 300 hard stop).
