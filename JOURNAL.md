@@ -226,3 +226,12 @@ cruiser in city_frame; KingPlan into the boss ticket).
   kerb-parked police cruiser (1 in 12 parked cars) prints its light bar grey in the real game.
 - CHECKED Rivet at 32 px/m in the real city (rimB city-1/2): grey arms, a readable claw, the vermilion collar ring,
   the cream helmet: T1's read. City-0's dark Rivet is a crowd ped standing on him (known), not the rig.
+- REAL-GAME cop close-up at 64 px/m (city_frame --police=12 --zooms=2,4, city-0; masters renders/copclose): a cop
+  with the new ring, blue badge, navy body, blue-hi shoulders: T1's read (added as row 3 of frames/cop-rim-t1-ab.png).
+  No cop came within the 128 px/m views (0 blue px in all three foci): the 128 cop close-up stays the hero scene's.
+- FINDING (for the owner / d5-city): at 64 px/m in the REAL game most people print the D4 tier, not D5. RigDetail adds
+  the D5 overlay to full rigs only, and RigSelect gives full rigs to the 16 nearest within 14 m (STANDARDS section 20);
+  everyone else is a CrowdAtlas cell baked from the D4 rig. A 64 px/m view holds ~20 people, so the outer ones (the cop
+  above, ~7 m from Rivet) never get the D5 grime H2 shows. PROPOSAL (d5-cast owns the atlas inputs, d5-city the people
+  layer): bake a second CrowdAtlas with RigDetail on at FULL_ZOOM and swap the MultiMesh texture while RigDetail.active
+  (memory: one more 128 px-cell atlas; bake time ~30 frames at load). Not started: too big for this session's tail.
