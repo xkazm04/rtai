@@ -10,6 +10,8 @@ extends RefCounted
 var tell_ticks: int = 21
 var lock_ticks: int = 10
 var speed_scale: float = 1.0
+## The locked burst's spread as a share of the rifle's (a told line that sprays a cone lies).
+var spread_scale: float = 1.0
 ## Planted fault and A/B switch: keep tracking through the lock (no dodge window).
 var track_through_lock: bool = false
 ## Telemetry: enemy rounds fired under a tell.
@@ -21,6 +23,7 @@ static func from_table(table: WeaponTable) -> GuardTell:
 	t.tell_ticks = maxi(table.enemy_tell_ticks, 1)
 	t.lock_ticks = clampi(table.enemy_lock_ticks, 0, t.tell_ticks)
 	t.speed_scale = table.enemy_speed_scale
+	t.spread_scale = table.enemy_lock_spread
 	return t
 
 
@@ -68,7 +71,8 @@ func _burst(g: Fighter, w: CombatTuning.Weapon, rng: RandomNumberGenerator) -> S
 		return null
 	g.burst_left -= 1
 	g.burst_gap = w.burst_gap_ticks
-	var spread: float = rng.randf_range(-w.spread_rad, w.spread_rad)
+	var cone: float = w.spread_rad * spread_scale
+	var spread: float = rng.randf_range(-cone, cone)
 	var s: Shot = Shot.fire(g, g.facing.rotated(spread), w)
 	s.vel *= speed_scale
 	rounds += 1

@@ -46,6 +46,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "lock_spread_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "muzzle_flash_s": {
           "minimum": 0,
           "type": "number"
@@ -70,6 +75,7 @@
       "required": [
         "damage_scale",
         "lock_frac",
+        "lock_spread_scale",
         "muzzle_flash_s",
         "rest_s",
         "speed_scale",

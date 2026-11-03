@@ -18,6 +18,8 @@ var enemy_tell_ticks: int = 0
 var enemy_flash_ticks: int = 0
 ## The tell's last lock_ticks hold the aim still (the dodge window); volley shots, then rest.
 var enemy_lock_ticks: int = 0
+## A locked burst's spread as a share of the gun's (gunplay-3: 0.3 tight line vs 1.0 the cone).
+var enemy_lock_spread: float = 1.0
 var enemy_volley: int = 1
 var enemy_rest_ticks: int = 0
 var aim_assist: AimAssist = null
@@ -48,6 +50,7 @@ static func from_table(t: DataTable) -> WeaponTable:
 	wt.enemy_tell_ticks = WeaponSpec.ticks(t.num(ef, "tell_s"))
 	wt.enemy_flash_ticks = WeaponSpec.ticks(t.num(ef, "muzzle_flash_s"))
 	wt.enemy_lock_ticks = roundi(float(wt.enemy_tell_ticks) * t.num(ef, "lock_frac"))
+	wt.enemy_lock_spread = t.num(ef, "lock_spread_scale")
 	wt.enemy_volley = maxi(int(t.num(ef, "volley_shots")), 1)
 	wt.enemy_rest_ticks = WeaponSpec.ticks(t.num(ef, "rest_s"))
 	wt.aim_assist = AimAssist.from_table(t)

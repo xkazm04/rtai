@@ -9,6 +9,7 @@
   "enemy_fire": {
     "damage_scale": 0.25,
     "lock_frac": 0.5,
+    "lock_spread_scale": 0.3,
     "muzzle_flash_s": 0.08,
     "rest_s": 1,
     "speed_scale": 0.45,

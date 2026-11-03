@@ -7,6 +7,7 @@ extends Node
 ## camera is a CameraRig on foot (32 px/m). Fast-forwards to the first fight, then 1 tick a frame:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
 ##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
+##        [--dodge]  (a scripted player: Rivet strafes across a locked aim line, on the lock)
 
 const SKIP_PER_FRAME: int = 600
 const LIVE_FRAMES: int = 1200
@@ -14,6 +15,10 @@ const HEROES: PackedInt32Array = [60, 240, 480, 900]
 const RNG_SEED: int = 20261103
 const HIT_SHOTS: int = 4
 const FOCUS_EASE: float = 0.06
+## --dodge: the strafe speed (a jog; the collisions lane's tackle needs a sprint over 5) and how
+## long it runs past the lock (the burst's flight).
+const STRAFE_MPS: float = 4.5
+const STRAFE_AFTER: int = 24
 
 var _out: String = "user://pistol_fight"
 var _play: CollectCallPlay
@@ -32,6 +37,12 @@ var _hit_frames: PackedInt32Array = PackedInt32Array()
 var _armored_hp: float = 0.0
 ## Enemy rounds that landed on Rivet (the rest of GuardTell.rounds missed or were dodged).
 var _rivet_hits: int = 0
+var _dodge: bool = false
+## --spread=<k>: overrides the table's lock_spread_scale (GuardTell.spread_scale); <0 keeps it.
+var _spread: float = -1.0
+var _dodges: int = 0
+var _strafe_left: int = 0
+var _strafe_dir: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -40,12 +51,18 @@ func _ready() -> void:
 			_out = arg.substr(6)
 		elif arg == "--armored":
 			_armored_hp = 1.0
+		elif arg == "--dodge":
+			_dodge = true
+		elif arg.begins_with("--spread="):
+			_spread = arg.substr(9).to_float()
 		else:
 			get_tree().quit(2)
 			return
 	if DirAccess.make_dir_recursive_absolute(_out) != OK:
 		Log.error("pistol_fight", "cannot create %s" % _out)
 	_play = CollectCallPlay.begin()
+	if _dodge:
+		_play.after_act = _strafe
 	var arena: CombatArena = _play.stage.arena
 	var table: WeaponTable = WeaponTable.shipped()
 	if _armored_hp > 0.0:
@@ -54,6 +71,8 @@ func _ready() -> void:
 	arena.gun = GunHand.make(table, &"pistol", rng.stream(&"gunplay"))
 	arena.gun.tap = true
 	arena.guard_tell = GuardTell.from_table(table)  # readable bursts: tell, lock, slow rounds
+	if _spread >= 0.0:
+		arena.guard_tell.spread_scale = _spread
 	arena.rivet.weapon = &"gloria"  # the view's armed state (the rig's claw_pistol cell)
 	_link = HitLink.make(arena, HitFeel.shipped(_rig), table)
 	@warning_ignore("return_value_discarded")
@@ -122,6 +141,23 @@ func _armor() -> void:
 			h.hp = _armored_hp
 
 
+## --dodge (after the bot acted, before the step): on a lock, Rivet strafes across the locked
+## line instead of holding the bot's post (alternating sides per dodge).
+func _strafe() -> void:
+	var arena: CombatArena = _play.stage.arena
+	for h: Fighter in arena.hostiles:
+		if h.alive() and h.tell_left == arena.guard_tell.lock_ticks - 1:
+			# a strafe already running keeps its side (flipping walks back into the first line)
+			if _strafe_left <= 0:
+				_strafe_dir = h.facing.orthogonal() * (1.0 if _dodges % 2 == 0 else -1.0)
+				_dodges += 1
+			_strafe_left = arena.guard_tell.lock_ticks + STRAFE_AFTER
+	if _strafe_left > 0 and arena.rivet.alive():
+		_strafe_left -= 1
+		_play.stage.intent.move_to = Vector2.INF
+		_play.stage.intent.move_by = _strafe_dir * STRAFE_MPS * SimClock.TICK_DT
+
+
 ## Between Rivet and the nearest live hostile, so the fight is in frame.
 func _frame_focus() -> Vector2:
 	var arena: CombatArena = _play.stage.arena
@@ -156,6 +192,7 @@ func _done() -> void:
 			arena.guard_tell.rounds,
 		]
 	)
+	line += " dodges %d" % _dodges
 	Log.info("pistol_fight", line + " hit_frames %s" % str(_hit_frames))
 	printerr(line)
 	get_tree().quit(0)
