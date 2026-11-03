@@ -1788,3 +1788,22 @@ NEXT (iteration 18; 43-50 stand, earlier lists stand):
     bench.json "fail" that measured nothing.
 52. Morning merge: parity and bench were measured on n-d5 itself (native built locally, git-ignored), so this branch's
     D5 work is shown not to touch the sim (parity exact) or the section 20 budget (bench pass).
+
+## Iteration 19 (2026-11-03, STABILIZE, 07:50 -> report 08:15), no image budget (50/50)
+- 07:50 read JOURNAL (iteration 18, NEXT 51-52), git log; tree clean except the 104 untracked evidence PNGs.
+  build/evidence was at 4b61ff4/8aa9774; HEAD 850652b is docs-only since, but refreshed so the evidence names HEAD.
+- 07:51 GATES at 850652b (`run.mjs --no-bench`, 39 s): ALL PASS - lint 13/13 over 196 files, unit 152/0,
+  scenarios 8/0, PARITY PASS (bit-exact over 1200 steps, 40 snapshot checks, 3547 floats; mutation caught at step
+  629), selftest ok (32 px/m 103 actors, 48 px/m 81 actors; 43 art textures, 22 placeholders, prewarm 31 ms).
+  bench.json stays from iteration 18 (4b61ff4, PASS); only docs changed since, so not re-run (12 min box time).
+  Looked at selftest-48ppm.png: straight-down D4 junction, Rivet's collar and the cop vermilion read, nothing
+  broken. 104 evidence PNGs moved aside (masters work/i19_aside) and restored 104. Log: masters
+  night/d5-close/i19_evidence.log.
+- No visual change, so no frames and no ladder row. Shared files touched: none. AI assets: none new.
+
+## Summary (iteration 19, STABILIZE)
+- Build green at HEAD and the evidence matches it (lint, unit, scenarios, parity, selftest at 850652b; bench at
+  4b61ff4, docs-only diff). No code changed. Images: 0 (50 of ~50).
+
+NEXT (iteration 19; 43-52 stand, earlier lists stand): nothing new. Morning: Director merges n-d5 per the merge
+sheet; 50 (hint_range on the look_d5* uniforms + range test) and 51 (bench export-folder mkdir) are the open items.
