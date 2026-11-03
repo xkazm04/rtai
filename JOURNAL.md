@@ -320,3 +320,42 @@ NEXT (iteration 5):
   unit 567/567 at 8bb66ea + test_guard_tell 4/4 at 5068f67 (later commits are docs and a dev-scene
   arg split, re-run: same 9/36). One-slot clip landed: gtai-masters/eve/gunplay/pistol_fight_one_slot/.
   Godot processes of mine: none left running.
+
+## Iteration 5 (23:04-23:30, BUILD)
+- answers.json re-read at 23:04: no answer to gunplay-3 yet (default A, spread 0.3, stays).
+- MILESTONE 6caa763: `pistol_fight --weapon=<id>` (any weapons.json row on the D5 hit chain;
+  unknown id exits 2). Machine pistol, armored dock fight, alternating dodge: Rivet 104 rounds,
+  70 hits (67 %: bloom 1.4 deg/shot up to 14 deg at dock range; the tapped pistol is 42/42),
+  14 kills; enemy rounds landed 10/31. The stream reads as separate tracers (f0060: three in
+  flight). Clip: gtai-masters/eve/gunplay/pistol_fight_machine_pistol/ (32 px/m).
+- MILESTONE 3b1a5da: `--dodge-away` (the strafe side away from the other live gunners). Armored
+  dock fight, enemy rounds landed: pistol 17/48 (alternating) -> 8/42; machine pistol 10/31 -> 8/33.
+  Headless and the rendered capture give identical counts (deterministic). DECISION (docs/decisions.md):
+  GuardTell.one_slot stays off; the crossfire was the dodge walking into a second line, and a smart
+  strafe beats one_slot (9/36) without slowing the fight by a quarter.
+- FRICTION/FINDING (evidence labels): `--ppm=48` never worked. PrintStage takes its zoom from the
+  CameraRig (camera.json on_foot = 32), and the rig only eases in step(), which this scene never
+  calls; `_view.px_per_m` never reached the screen. Proof: evidence/pistol_fight_48 f0240 and
+  pistol_fight_dodge_s0.3 f0240 are byte-identical (md5 ef2d39...). So every pistol_fight clip so far
+  is a true 32 px/m (labels right) and iteration 4's "48 px/m flinch" judgement was made on the
+  32 px/m image. Fixed (1a916bb): --ppm snaps the rig to the camera.json mode with that ppm; verified
+  by the floor tile (4 m: 128 -> 192 px). frames.json: the fake 48 entry withdrawn, a real 48 px/m
+  machine pistol clip added (pistol_fight_mp_48/). The 48 px/m flinch needs re-judging on it.
+- FRICTION: I committed a parse error (5ac6d4a, `float(Variant)` under warnings-as-errors); lint does
+  not parse scripts and `--check-only -s` cannot resolve autoloads for this scene. Caught by the
+  capture's run.log, fixed in the next commit. Always grep run.log for SCRIPT ERROR before trusting
+  a capture. Also fixed: a bad arg / weapon now exits 2 without script errors (_process guarded,
+  the weapon check before the quest starts).
+- Rules applied: realtime-combat-semantics (the threat zone is honest; the player can read it and
+  move off the line), evidence rules (look at every frame: the identical-frame check is what caught
+  the ppm lie).
+- Re-judged the flinch on a real 48 px/m frame (pistol_fight_mp_48 f0056): the impact star (~2.3 m,
+  ~110 px) still covers the 0.3 m lean (~14 px). Same conclusion as iteration 4, now on the right
+  image: the star carries the hit; a readable flinch needs enemy-ai's animation (REQUEST 5/7).
+- FRICTION (gate, contended): full unit run at 1a916bb: 555/568, all 13 failures in
+  test_save_slots (ERR 16 on the slot files, flip() out of bounds). Two other lanes' GUT runs were
+  live at the same moment (PIDs 9260, 50232, not mine), and SaveKit.SCRATCH is `user://test_save`,
+  which is the same folder for every worktree of this project on the machine. Not a gunplay change
+  (my commits touch only dev/gunplay/pistol_fight.gd). REQUEST 8 -> autosave owner: SaveKit.SCRATCH
+  per process (append OS.get_process_id()) so parallel lanes stop colliding. Log:
+  build/test-results/unit-tests.log, summary evidence/unit-it5.log.
