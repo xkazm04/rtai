@@ -412,3 +412,18 @@ NEXT (night run, from the merged main; supersedes iteration 4's NEXT where it di
   user://test_save/blocker/auto_a", the replay log "schema or tick rate mismatch", autosave counts). Every
   worktree shares one app user dir (same project name), so concurrent lanes overwrite each other's
   tmp files. My diff does not touch that code. Re-run alone below.
+- Re-run alone at 23:17 (only 1 Godot left): unit 569/569 (`evidence/arena/unit-it6-rerun.log`). So the
+  443/569 was the shared `user://`, not this change. REQUEST 7 -> int/Director: give each concurrent lane run
+  its own user dir (e.g. `--user-data-dir` / `application/config/use_custom_user_dir` per worktree), or run
+  unit gates one at a time like the bench lock.
+
+NEXT (night run; same as iteration 5's NEXT, with item 2's weapon kick done in a08445f):
+1. Re-read answers.json. Run `stations_check.gd` and the arena scenarios on the merged tree. Unit gate alone
+   (shared user:// across lanes, REQUEST 7).
+2. `--rigs` as the default: rivet-motion's Rivet plan, enemy-ai's HitFeel.reaction in `ArenaRigs._put`
+   in place of the generic HIT, robot/contractor plans in place of COP. SHOOT + per-weapon kick are done.
+   REQUEST 6 -> d5-cast: a per-host RADIUS_M. Then a scenario that boots the arena with rigs.
+3. Gearbox ArenaHook on `stage.cars()` and a scripted pad bot, so the pad clip and scenario replay.
+4. The 00:00 vertical sample: one 20-40 s `--rigs --clean` clip (pistol, claw combo, cop + robot thug, one
+   power) at 48 px/m with a camera lead (arena-2). Judge the rifle vs pistol kick in it at 64 px/m.
+5. Dummies' own look (cardboard / steel plate) once the rigs are the default.
