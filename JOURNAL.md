@@ -1466,10 +1466,10 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   the new imports without mipmaps (Godot default); fixed to the README's "lossless with mipmaps", re-shot
   (`after_i16sl2*`, same read). 8 provenance lines (derived from the f08 parts), characters art README, ladder2 rows
   "i16 crowd sleeves". Commit 767ee6c. Unused on n-d4 alone until the patch lands. 0 Codex.
-- 05:22 GATES at 767ee6c: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+- 05:20 GATES at 767ee6c: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
   selftest 72 art textures, 0 placeholders (`evidence/iter16/gates-767ee6c.txt`). Morning tree + the sleeves patch
   (instead of 21): lint 13/13, unit 221/221, scenarios 8/8.
-- 05:27 REJECTED (patch variant, not shipped): the coat-hood look on `_grey` sleeves too (thirds: 2 cream, 2 grey, 2
+- 05:21 REJECTED (patch variant, not shipped): the coat-hood look on `_grey` sleeves too (thirds: 2 cream, 2 grey, 2
   ink). `after_i16sl3*/`, crops `work/i16/pave32_abc.png`, `junction32_abc.png` (morning | sleeves | thirds): on the
   paving a little better, but on the asphalt - the riot's main ground - the grey sleeves sit at the asphalt's value
   and lean on the rim alone: muddier. The shipped patch (2 ink, 1 grey, 3 cream) stays; scratch back to it (checked
