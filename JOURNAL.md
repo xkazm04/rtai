@@ -655,3 +655,11 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   n-visual F-14), the patrol cops ("C": the cop rig), the arc ball and whisper rings (FX code).
 - Codex this iteration so far: 5 images (q1, q1cast, q1cast2, fire, q1down), 26 cells, 4 rejected.
   Night: 25 images, 167 cells, 7 rejected.
+- 01:33 MILESTONE payphone, vending machine, mailbox redrawn. Props contact sheet (`work/props_sheet.png`): the F-08
+  payphone (quest 1's core objective) and vending machine were featureless bevelled boxes. Codex d4n_props2 (3 cells,
+  **0 rejected**, anchored on the approved newsstand / dumpster / trash can): one bold top-down glyph each (handset +
+  coiled cord, soda-can disc, envelope), the props' 4 px inner stroke (3 px mailbox), same footprints. Props board
+  `before_pr2|after_pr2s/props-{32,48,64}ppm.png`, crops `work/props2_ab.png`; city `after_pr2_city/`; quest
+  `after_q1l/`. Commit 58da0b0.
+- 01:35 quest HUD: the stretched memo tape crossed the beat title; the memo frame got 18 px more paper on top
+  (`work/q1_top_check.png`). Patch re-saved; final quest frames = `after_q1l/`.
