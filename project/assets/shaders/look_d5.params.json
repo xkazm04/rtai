@@ -1,5 +1,11 @@
 {
-  "_doc": "D5 'Inked Grime' parameter proposal for the visual-engine lane (d5-close, 2026-11-02). world = look_d5.gdshader uniforms (a layer over the look_d4 world print, under the actors; set world_px like look_d4). zoom_amount = [zoom, amount] stops (zoom 1.0 = 32 px/m), linear between stops, clamped: drive the layer's `amount` from the camera zoom. shadow = look_d5_shadow.gdshader uniforms + the cast offset in metres (down-right). part = look_d5_part.gdshader defaults (the D5 character tier, RigDetail: on at tier_on_zoom, full at tier_full_zoom, off below tier_off_zoom).",
+  "_doc": "D5 'Inked Grime' parameter proposal for the visual-engine lane (d5-close, 2026-11-02). world = look_d5.gdshader uniforms (a layer over the look_d4 world print, under the actors; set world_px like look_d4). zoom_amount = [zoom, amount] stops (zoom 1.0 = 32 px/m), linear between stops, clamped: drive the layer's `amount` from the camera zoom. shadow = look_d5_shadow.gdshader uniforms + the cast offset in metres (down-right). part = look_d5_part.gdshader defaults (the D5 character tier, RigDetail: on at tier_on_zoom, full at tier_full_zoom, off below tier_off_zoom). Iteration 7, default-off PROPOSALS (evidence/item35, item36): print = look_d5_print.gdshader uniforms (the world print instead of look_d4: edge ink on the dark side only + world-locked grain); halo = look_d5_halo.gdshader uniforms (a ring sprite under every rig halo: the ink line outside the sticker rim + a soft drop shadow; shadow_m = the shadow offset in metres, down-right, scaled by the caller to screen px; shadow_blur = 0.4 x that offset, min 1 px). Adopt together with world.age_floor 1.0 and world.grain_floor 1.0 (and the D5 roof plates rebuilt at line gamma 0.45).",
+  "halo": {
+    "cut": 0.3,
+    "line_px": 1.0,
+    "shadow_a": 0.4,
+    "shadow_m": 0.09
+  },
   "part": {
     "grime": 0.1,
     "hatch_hi": 0.7,
@@ -16,6 +22,9 @@
     "shade_px": 8.0,
     "verm_gate": 48.0,
     "verm_shade": 0.7
+  },
+  "print": {
+    "dark_soft": 0.1
   },
   "schema": "gtai.look-d5-params/1",
   "shadow": {

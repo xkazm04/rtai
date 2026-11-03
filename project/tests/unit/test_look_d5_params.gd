@@ -8,9 +8,11 @@ const SHADERS: Dictionary[String, String] = {
 	"world": "res://assets/shaders/look_d5.gdshader",
 	"part": "res://assets/shaders/look_d5_part.gdshader",
 	"shadow": "res://assets/shaders/look_d5_shadow.gdshader",
+	"print": "res://assets/shaders/look_d5_print.gdshader",
+	"halo": "res://assets/shaders/look_d5_halo.gdshader",
 }
 ## documented keys that are not uniforms (placement data for the caller)
-const NOT_UNIFORMS: Array[String] = ["shadow.offset_m"]
+const NOT_UNIFORMS: Array[String] = ["shadow.offset_m", "halo.shadow_m"]
 
 
 func _params() -> Dictionary:
