@@ -97,3 +97,14 @@ the replay behind a loading frame (the engine already returns the Outcome synchr
 NEXT: Director applies the patches after merging d-save and d-slice. Then: Loc keys
 SAVE__NOTICE_FELL_BACK / SAVE__NOTICE_NONE_READABLE; hook `Save.take_notice()` to the HUD line; decide
 the quit-time autosave ("quit" point) with slice-play.
+
+## 2026-11-03 iteration 4 (BUILD) - SAV-05 budget made a tested claim
+- MILESTONE `tests/unit/test_save_budget.gd` (2): a 20-minute tape changing 4x/s (4,800 changes) uses
+  under half of the 256 KB slot budget and raises no note; a pathological tape (a change on every one
+  of 72,000 ticks = 889 KB) is still WRITTEN, with a `SAV-05` note and loads back (an over-budget
+  save is reported, never dropped: losing the autosave would be worse than a big file).
+- Loc keys SAVE__NOTICE_*: not done; `data/loc` has no PO files yet (nothing to add them to).
+- Gates: lint 13/13, unit 367 passed. No sim file touched; scenarios/parity unchanged from 544fb5c.
+
+NEXT: unchanged from iteration 3 (Director applies the three patches after merging d-save + d-slice;
+Loc keys when the string table lands; the "quit" autosave point with slice-play).
