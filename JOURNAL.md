@@ -58,3 +58,8 @@ NEXT:
 - Optional: King D5 expressions/portrait check vs the rig; Rivet portrait busts are scale-free (checked).
 - EVIDENCE (clean tree, HEAD 1586b06): lint, unit 326/326, scenarios 8/8, parity 1200 steps exact, selftest look goldens 11/11 PASS (--no-bench; bench not run).
 - A/B/C cop shoulders: C (core 0.75 of the ball) also rejected: blue-hi px at 32 = 91 vs A 197, and at 64 it looks like A. A stays.
+- FIX missed vermilion on cops: the end-on shoulder cell (upperarm_endon, shown when the arm foreshortens: the riot
+  shield arm) was still 57-62% vermilion in both tiers -> cop_blue_hi like the shoulder ball; all other cop parts' red
+  flecks (D5 rust on shield/pelvis/forearms, D4 edge tint) -> their grey value. Cop vermilion px now 0 in D4 and D5
+  (gate r - max(g,b) > 40). Found by looking at the noir A/B junction frame (d4 side). Noir still switches (ink masses,
+  no blue leak). Goldens re-blessed (the check passed unblessed at mean <= 0.027). Unit 326/326.
