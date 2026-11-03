@@ -1186,3 +1186,25 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   generator patch - REQUEST 19 (`evidence/iter10/generator_art_pick_v2.patch`) fixes it; the flat-roof membrane stays
   paper-clean (adding hatch was rejected in iteration 8: it prints solid grey at 32).
 - 04:12 Session end for iteration 12: tree at HEAD art (the skid probe reverted and re-imported), gates last run at 297bd42 (only journal / evidence docs since), all my Godot runs finished, scratch worktrees removed except `scratch-q1`. The final NEXT above ("NEXT (final, iteration 12)") stands; also: `ladder.png` is 1720 x 65534 px, start a `ladder2.png` next iteration (PIL's size guard).
+
+## 2026-11-03 04:13 iteration 14, BUILD (raise the weakest item; stop 05:43)
+- 04:20 Re-read: journal, log, merged i10 / i12 frames vs the target at 32 / 48 / 64. Road crack repeats in the merged
+  frames are the variant pick (generator patch v2, REQUEST 19), roof_tone / props / decals / pickups already handled.
+  The weakest thing left on screen in the MERGED slice (n-visual draws my FX atlas): the ink blood splat under every
+  body read as a cluster of cream-ringed bubbles ("frog spawn") at 48 / 64 px/m - iteration 4's 11 px rim went round
+  every droplet.
+- 05:02 MILESTONE ink blood splat = one ink pool with one cream sticker edge. `masters:tools/splat_sticker.py` re-cuts
+  the 4 splat cells from the master exactly as build_fx.py does (no rim), bridges the droplets into the body with ink
+  (closing 14 px, holes filled; the cut's pale edge pixels painted solid ink - they printed as rings), then a round
+  cream edge around that one silhouette (far droplets an own 8 px edge). Only fx_atlas row 3 cells 0-3 change.
+  Probes (flat composites, `work/fx14/cand_*.png`): a cream backing around the un-bridged droplets (closing 12-26 px)
+  read as a cream cloud with black spots - rejected; ink-dominant k (edge 9 px) and m (edge 13 px) went in-engine.
+  Scratch `scratch-m14` = n-visual fe63853 + `merge --no-commit n-d4` (JOURNAL the only conflict) + my bin / chunks:
+  city_frame `before_i14_city|after_i14k_city|after_i14m_city/city-*-{32,48,64}ppm.png` (`work/fx14/abc.png`,
+  `ab64.png`) and n-visual's fx_showcase (fixed fps, deterministic) `before_i14_fx|after_i14m_fx/fx-*` (crops
+  `work/fx14/fx_ab.png`). **m kept**: at 48 / 64 an ink blood pool with a cream sticker edge under the body (was
+  bubbles); at 32 a solid dark pool with a faint edge (was a mottled smear) - a gain at all three. k's 9 px edge
+  thinned to almost nothing at 48. (city_frame shoots 32 before anyone dies, so 32 is judged on the fx_showcase.)
+  README row 3, provenance line (new sha, iteration-14 edit appended). Original in `masters:backup_fx14/`.
+  Ladder: **`ladder2.png` started** (ladder.py takes `LADDER=`; ladder.png is at PIL's size guard), rows "i14 ink
+  splat fx 32/48/64, city 64". Commit 165ae0f. 0 Codex. Blood is still ink (owner question unchanged).
