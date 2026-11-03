@@ -73,3 +73,17 @@ func test_gameplay_zoom_proposals_default_off() -> void:
 	assert_eq(floor_v, 0.0, "age_floor stays off until the visual-engine lane adopts it")
 	var grain_v: float = world.get("grain_floor", -1.0)
 	assert_eq(grain_v, 0.0, "grain_floor stays off until the visual-engine lane adopts it")
+
+
+func test_tier_zoom_stops_match_rig_detail_and_keep_the_car_camera_d4() -> void:
+	var data: Dictionary = _params()
+	var off_z: float = data.get("tier_off_zoom", -1.0)
+	var on_z: float = data.get("tier_on_zoom", -1.0)
+	var full_z: float = data.get("tier_full_zoom", -1.0)
+	assert_eq(off_z, RigDetail.OFF_ZOOM, "params tier_off_zoom = RigDetail.OFF_ZOOM")
+	assert_eq(on_z, RigDetail.ON_ZOOM, "params tier_on_zoom = RigDetail.ON_ZOOM")
+	assert_eq(full_z, RigDetail.FULL_ZOOM, "params tier_full_zoom = RigDetail.FULL_ZOOM")
+	assert_lt(off_z, on_z, "hysteresis band: off below on, against switch shimmer")
+	assert_true(on_z <= full_z, "the fade completes at or after the switch")
+	assert_gt(off_z, 1.5, "the 48 px/m car camera (zoom 1.5) never shows the D5 tier")
+	assert_eq(smoothstep(on_z, full_z, on_z), 0.0, "the overlay is invisible at the switch")
