@@ -134,11 +134,9 @@ func _draw_gunner(g: EnemyGunner) -> void:
 func _draw_rivet() -> void:
 	var at: Vector2 = _to_px(_rivet.pos)
 	var dir: Vector2 = _aim_dir()
-	var reach: float = minf(_trig.spec.range_m, 13.0) * _ppm
-	draw_line(at, at + dir * reach, Color(INK, 0.22), 1.0)
-	var aim_px: Vector2 = _to_px(GUNNERS[_aim_at])
-	var dist_m: float = _rivet.pos.distance_to(GUNNERS[_aim_at])
-	var ring: float = maxf(tan(_trig.cone_rad()) * dist_m * _ppm, 6.0)
-	draw_arc(aim_px, ring, 0.0, TAU, 32, INK, 1.5)
+	var aim: AimReadout = AimReadout.of(_trig, _rivet.pos, GUNNERS[_aim_at])
+	draw_line(_to_px(aim.line_from), _to_px(aim.line_to), Color(INK, 0.22), 1.0)
+	var ring_col: Color = INK if aim.in_range else Color(INK, 0.35)
+	draw_arc(_to_px(aim.reticle_at), aim.reticle_radius_m * _ppm, 0.0, TAU, 32, ring_col, 1.5)
 	draw_circle(at, 0.42 * _ppm, INK)
 	draw_arc(at, 0.42 * _ppm, dir.angle() + 2.4, dir.angle() + 3.9, 8, DANGER, 3.0)

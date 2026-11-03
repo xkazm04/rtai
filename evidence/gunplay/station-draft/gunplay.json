@@ -594,6 +594,24 @@
           "max": 0.3,
           "min": 0,
           "step": 0.01
+        },
+        {
+          "key": "weapons.enemy_fire.lock_frac",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.volley_shots",
+          "max": 8,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "weapons.enemy_fire.rest_s",
+          "max": 4,
+          "min": 0.2,
+          "step": 0.1
         }
       ]
     },
@@ -668,6 +686,24 @@
           "max": 0.3,
           "min": 0,
           "step": 0.01
+        },
+        {
+          "key": "weapons.enemy_fire.lock_frac",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.volley_shots",
+          "max": 8,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "weapons.enemy_fire.rest_s",
+          "max": 4,
+          "min": 0.2,
+          "step": 0.1
         }
       ]
     }
