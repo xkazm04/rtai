@@ -177,3 +177,29 @@ NEXT:
   tests/unit/test_enemy_rig_feed.gd 3/3; enemy units 13/13; enemy scenarios green; lint 13/13.
   Not yet rendered: NEXT 2 is now "a dev scene that hosts CharacterRigs and feeds it from
   EnemyRigFeed + Rivet's row, at 32 px/m in the D5 look, real-time clip".
+
+## Iteration 3 (22:00-22:45), BUILD: the pit fight on the cast rigs
+- 22:01 answers.json re-read: nothing new for enemy-ai (enemy-ai-1 = A placeholder, recorded).
+  Deleted gtai-masters/eve/enemy-ai/fr_steep/.
+- MILESTONE a8b5512: dev/enemy_ai/enemy_rig_fight.gd (+ _run.gd launcher, enemy_fight_fx.gd):
+  the pit fight (PitLayout + PitDummy as Rivet) drawn by the CAST RIGS in the D5 look at 32 px/m
+  (look_d4 + look_d5 overlay from D5ShowcaseRun, RigDetail on), never circles. Cops = CharacterRigs
+  rows written by EnemyRigFeed.row() (new; write() loops it); robots = their own CutRig on
+  KingPlan(1.05) with collar_part cleared (vermilion is Rivet's collar only), fed by a second
+  RigFeed + RigInput.apply, so no shared features/characters file changed (no ROBOT body kind yet).
+  Chain on screen: gun tell (vermilion aim line from the rig's muzzle, thin while tracking, thick
+  once locked), melee windup arc, muzzle star 2 ticks, tracers (warm paper enemy rounds, steel
+  nails), HIT clip shoved along the blow + the rig's own hit flash, CombatBlood: red splash on a
+  hurt human, kill_human on a death (pool), robot_hit sparks/oil on robots and on Rivet; a 3-frame
+  hold on a kill, an 8-tick camera shake when Rivet is hit. Camera eases on the fight's middle;
+  CharacterRigs.focus = the camera centre (full rigs only within its 14 m radius, else the cop
+  vanished: it is a baked-crowd row there).
+- FRICTION: crates are crate_stack.png stretched to the box size; the barricade prop prints
+  vermilion stripes (danger only), so the low wall is a crate too. Placeholder pit floor = flat
+  D5 asphalt until the arena lane's scene is on this branch.
+- First clip (rigfight_a, east column spawn, fire_m 12): both enemies dead in ~6 s, the cop fired
+  2 rounds (0 hits), the thug never swung (6 nails before it closed). Numbers: kills 2, nails 13,
+  nail hits 7, Rivet damage 0. Owner doctrine (enemies.json doc): humans die to one nail, so the
+  patrol cop's hit reaction IS its death (DEATH shoved along the blow + blood); hp NOT changed.
+  For the sample the run takes --spots (PitLayout.place: a staged, hot spawn) so the thug reaches
+  Rivet and the cop gets its tell and shot off.

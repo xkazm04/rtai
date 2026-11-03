@@ -35,6 +35,14 @@ static func squad(pit: EnemyPit, ids: Array[StringName], hot: bool = true) -> vo
 			e.enter(EnemyAgent.State.ENGAGE)
 
 
+## `ids` spawned at `spots` (metres), already alert: a staged fight (the rig clips).
+static func place(pit: EnemyPit, ids: Array[StringName], spots: PackedVector2Array) -> void:
+	for i: int in ids.size():
+		var e: EnemyAgent = pit.spawn(ids[i], spots[i])
+		e.last_seen = pit.rivet_pos
+		e.enter(EnemyAgent.State.ENGAGE)
+
+
 static func many(id: StringName, n: int) -> Array[StringName]:
 	var out: Array[StringName] = []
 	for i: int in n:

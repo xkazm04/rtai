@@ -4,9 +4,10 @@ extends SceneTree
 ## Usage: <godot> --rendering-driver d3d12 --resolution 1280x720 --path project
 ##   -s res://dev/enemy_ai/enemy_rig_fight_run.gd -- --out=<dir> [--squad=patrol_cop,robot_thug]
 ##   [--seconds=20] [--seed=31] [--every=2] [--hp=400] [--human=1] [--fire_m=12] [--rivet_x=-5]
+##   [--spots=x:y,x:y (metres, one per squad id; default the east column)]
 
 const KEYS: Array[String] = [
-	"out", "squad", "seconds", "seed", "every", "hp", "human", "fire_m", "rivet_x"
+	"out", "squad", "seconds", "seed", "every", "hp", "human", "fire_m", "rivet_x", "spots"
 ]
 
 
@@ -33,7 +34,15 @@ func _setup(node: Node, args: Dictionary[String, String]) -> void:
 	var ids: Array[StringName] = []
 	for id: String in _a(args, "squad", "patrol_cop,robot_thug").split(","):
 		ids.append(StringName(id))
-	layout.call("squad", pit, ids)
+	var spots: String = _a(args, "spots", "")
+	if spots == "":
+		layout.call("squad", pit, ids)
+	else:
+		var at: PackedVector2Array = PackedVector2Array()
+		for xy: String in spots.split(","):
+			@warning_ignore("return_value_discarded")
+			at.append(Vector2(float(xy.get_slice(":", 0)), float(xy.get_slice(":", 1))))
+		layout.call("place", pit, ids, at)
 	pit.set("rivet_hp", float(_a(args, "hp", "400")))
 	var dummy_script: GDScript = load("res://features/combat/ai/pit_dummy.gd")
 	var dummy: Object = dummy_script.new(2, pit.get("rivet_pos"))  # PitDummy.Mode.FIGHT
