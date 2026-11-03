@@ -1475,3 +1475,14 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   and lean on the rim alone: muddier. The shipped patch (2 ink, 1 grey, 3 cream) stays; scratch back to it (checked
   equal to the patch). Note: the cream-sleeved looks are still faint on cream paving at 32 (head + outline bits) -
   a rim question for the print pass / characters (the rim is cream on cream there), not an art value change.
+- 05:26 REJECTED (probe, shader = not my scope, never committed): an ink cut line at the outer edge of the rigs'
+  cream halo (`print_part.gdshader` silhouette branch, 1.2 screen px) for the cream-sleeved peds that fade on cream
+  paving. `probe_i16rim*/`, `work/i16/rim_ab32.png`: at 32 the rim is only 1-2 px, so the line eats it - on the
+  asphalt the figures lose their cream sticker; on the paving the gain is marginal. scratch shader restored. So the
+  cream-sleeved looks on cream paving stay an open note for characters / visual-engine (a wider halo on paving?).
+- 05:27 HONESTY NOTE on evidence: the selftest junction is NOT a same-scene frame across art changes - `after_i16sl_st`
+  and `sl2_st` are pixel-identical to each other (deterministic), but vs `morning_i16_st` the crowd sits at a different
+  moment (10 % px differ, people moved; thirds `sl3_st` only 1 %). The city_frame foci stay put (0.5 % px differ at
+  32, only the sleeves). So the sleeve and thirds calls rest on city_frame crops: `sleeves_pave48.png` and
+  `asphalt_abc.png` (morning | sleeves | thirds, city-0 at 48 and 32, same scene): sleeves crisp ink / cream, thirds'
+  grey sleeves faint on the asphalt - both calls hold. The junction crops are illustrations only.
