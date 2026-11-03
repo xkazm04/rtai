@@ -308,3 +308,14 @@ bosses we resolve in future."
 4. Get-up grace and Rivet's recovery cost: ask the owner from bodies-v2-before-after-32ppm.mp4.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles
    (evidence/merge/README.md, 16:20 re-check).
+
+### 16:26 - 16:35: one more sprawl try, and a run-in guard
+- v6 (uncommitted): DOWN_SPRAWL 0.9 -> 0.6. A wash: slightly less overlap with Rivet, but the fallers read as
+  crouching. Discarded and 0.9 kept. That is 4 rejected tries on the moment-of-hit overlap, all in frames.json (14 entries).
+  OWNER QUESTION: is a faller drawn partly under Rivet for about 0.3 s of a sprint-through acceptable, or should the
+  sprawl art itself shrink (d5-cast)?
+- Commit 32989bc: scenario_bodies_runin's runner is back at the crowd's real 4.5 m/s flee speed. I had raised it
+  to 5.5 in e0583c5, which hid the shared-line regression from the scenario; only the goldens caught it.
+  Now: pushed 0.093 m (bound 0.15); with the rule off (what the shared 5.0 line did) 0.61 m, so it is caught.
+  `--filter=bodies_runin` passes 1/1; the full standalone suite passed 12/12 with this speed before the comment rewrap.
+- Every experiment's scratch was reverted; `git status` shows only the 3 untracked files from before the session.
