@@ -162,3 +162,45 @@ bosses we resolve in future."
 4. Arena knockdown state (a lying guard) with the d5-combat lane; then robots and bosses when the owner
    designs them (the bodies.json rows are ready; ArenaBodies.class_of needs a body class per fighter).
 5. REQUEST 2 (vehicles): `city.body.on = false` while driving.
+
+## Iteration 2 (12:42 - 14:12)
+
+### MILESTONE: trial merges with d-slice and d-vehicles (commits 7312d63, 03463db)
+- Scratch worktrees `../x-bodies-slice` and `../x-bodies-veh` (branches x-bodies-slice and x-bodies-veh,
+  scratch only, never pushed). All notes and patches are in `evidence/merge/README.md`.
+- `git merge-tree` against the other 5 game lanes: only JOURNAL.md and the 11 look goldens conflict
+  (re-bless at the end).
+- d-slice: the conflict is in collect_call_stage.gd. The resolution keeps their pilot, StageLines and
+  `_collide_hostiles`, and adds the read-back (REQUEST 1, done as a merge patch), ArenaBodies, and a
+  wall push-out.
+  - Merged tree: scenarios 16/16 PASS.
+  - Quest 1 to "paid": 11241 ticks with and without the read-back (Rivet never comes within 2.9 m of a city
+    person on the bot's route).
+  - Walk-in probe in the real quest session (5 city peds on his path):
+    - with the read-back: walk overlap 0.0073 m, progress 10.59 m; sprint overlap 0.031 m, 5 knockdowns;
+    - without it: walk 0.0103 m and progress 11.21 m (= the free walk, so his mass is ignored).
+  - FRICTION (mine): I first copied a stale probe JSON (the planted run had written to the same
+    evidence dir). I caught it when the numbers disagreed and re-ran 4 ways: deterministic.
+- d-vehicles: native conflicts (SConstruct, generated constants, city_parity.gd). The resolution: union, regenerate
+  with gen.mjs, keep both. No constant collides (M_DOWN 4, F_PASSING 8).
+  - Native rebuilt. Parity is **exact over 1200 steps**, and the planted mutation is caught at 629. Scenarios 15/15 PASS.
+  - REQUEST 2 as a merge patch: `_city.body.on = not in_car` in set_focus. Measured: 0 body knockdowns in
+    vehicle_drive with and without it, so it is NOT shown necessary. It is kept as the contract.
+  - FRICTION: the godot-cpp submodule is empty in fresh worktrees. I junctioned d-bodies' copy for the scratch build.
+
+### FINDING: no tackle is possible in the merged quest today (commit c02f2c2)
+- slice-play's Rivet tops out at combat.json `walk_mps` 3.0 m/s (TopDownMover has no sprint). The tackle line is
+  his own speed into the body (body.cpp: not the closing speed, so an oncoming ped does not count) above
+  `tackle_mps` 3.2. So in quest 1 a walk always shoves and nothing can knock anyone down.
+  - On main's free-steer city (the clip), tackles work.
+  - The walk-in probe shows that a 6 m/s move in the real quest session knocks down all 5 peds.
+- New unit test `test_rivet_walk_speed_never_tackles`: combat walk_mps < bodies tackle_mps. If someone raises
+  the walk past 3.2, every brush becomes a knockdown and this test names the two tables.
+- **REQUEST 3 -> slice-play:** a held `sprint` action (about 6 m/s, a `run_mps` beside `walk_mps` in
+  combat.json's rivet row, and TopDownMover's top speed while held). The owner's rule "running into someone is a
+  tackle" needs a run. No bodies change is needed: the city body and ArenaBodies read his velocity.
+- Arena note: ArenaBodies applies the 1.6 m knockback in one tick (a 51 px pop at 32 px/m). It cannot happen in
+  quest 1 today (the 3.0 m/s cap). If a sprint lands, turn it into a slide over ticks, or give the arena a
+  lying-down state (d5-combat).
+- Unit: 333/334 on the first run; the failure was test_noir_shadows again (the flaky engine
+  "Parameter t is null", not mine).
