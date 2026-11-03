@@ -42,6 +42,8 @@ var last_line: String = ""
 ## on the invented arena).
 var cells: StageCells = null
 var follow: CitySystem = null
+## The world's clock (read only: a view's hit-stop holds it, features/souls/hauler_kick.gd).
+var clock: SimClock = null
 var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
 var _cued: Dictionary[String, bool] = {}
@@ -64,6 +66,7 @@ func events() -> EventBus:
 
 func setup(ctx: WorldContext) -> void:
 	_events = ctx.events
+	clock = ctx.clock
 	heat = HeatMeter.new(ctx.events)
 	router = PayphoneRouter.new()
 	wallet = Wallet.new(ctx.events)

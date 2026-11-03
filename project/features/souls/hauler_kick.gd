@@ -15,8 +15,9 @@ var kicks: int = 0
 var _rig: CameraRig = null
 
 
-## One view frame at sim tick `tick`. Returns the shake offset (world px) to add to the camera,
-## zero when `host_rig` is set (it shakes itself) or when no shake is running.
+## One view frame at stage tick `tick` (the stomp's timebase). Returns the shake offset (world
+## px) to add to the camera, zero when `host_rig` is set (it shakes itself, on the clock's tick)
+## or when no shake is running.
 func step(h: HaulerStage, tick: int, clock: SimClock, host_rig: CameraRig) -> Vector2:
 	if _rig == null and host_rig == null:
 		_rig = CameraRig.new()
@@ -26,8 +27,11 @@ func step(h: HaulerStage, tick: int, clock: SimClock, host_rig: CameraRig) -> Ve
 	if h != null and h.stomp_tick >= 0 and h.stomp_tick != kicked_tick:
 		kicked_tick = h.stomp_tick
 		kicks += 1
-		r.kick(h.form.id_of(&"stomp_shake"), h.stomp_tick)
-		held_ticks = r.hitstop(h.form.id_of(&"stomp_hitstop"), h.stomp_tick)
+		var at: int = h.stomp_tick
+		if host_rig != null and clock != null:
+			at += clock.tick() - tick
+		r.kick(h.form.id_of(&"stomp_shake"), at)
+		held_ticks = r.hitstop(h.form.id_of(&"stomp_hitstop"), at)
 		if clock != null and held_ticks > 0:
 			clock.hold(held_ticks * SimClock.TICK_DT)
 	if host_rig != null:

@@ -169,11 +169,17 @@ func _dead_px() -> Dictionary[int, Vector2]:
 	return out
 
 
-## features/souls: a Hauler stomp landing shakes the city camera and holds the clock (hit-stop).
+## features/souls: a Hauler stomp landing shakes the camera and holds the clock (hit-stop), on
+## the city (quest 1) and on the printed floor (the arena's pit and pad).
 func _hauler_kick() -> void:
-	if city_view == null or _stage == null or _stage.pilot == null:
+	if _stage == null or _stage.pilot == null or (city_view == null and print_stage == null):
 		return
 	hauler_kick.reduced_motion = fx_view.reduced_motion
-	var clock: SimClock = city_view.clock
-	var tick: int = clock.tick() if clock != null else _stage.tick
-	city_view.kick_px = hauler_kick.step(_stage.pilot.hauler, tick, clock, city_view.rig)
+	var clock: SimClock = _stage.clock
+	if city_view != null and city_view.clock != null:
+		clock = city_view.clock
+	var h: HaulerStage = _stage.pilot.hauler
+	if city_view != null:
+		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig)
+	else:
+		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig)
