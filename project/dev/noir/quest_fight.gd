@@ -6,8 +6,9 @@ extends Node
 ## forwards to the first fight, then plays 1 tick per frame. Record with the movie maker:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/noir/quest_fight.tscn
 ##     -- --out=<dir> [--flashes=off]  (off = the flashes-off accessibility mode)
+## --phone: fast-forward to the first ringing payphone instead (the objective cue), framed on it.
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes", "--phone"]
 const SKIP_PER_FRAME: int = 600
 const HUD_SHADER: String = "res://assets/shaders/look_noir_hud.gdshader"
 const LIVE_FRAMES: int = 900
@@ -25,6 +26,11 @@ var _fx: NoirCombatFx = NoirCombatFx.new()
 var _live: int = -1
 var _hold: int = 0
 var _shots_seen: Dictionary[Shot, bool] = {}
+## --phone: the ringing payphone the camera holds on ("" = the fight).
+var _phone: String = ""
+var _want_phone: bool = false
+## --phone: the objective cue in the noir style (white arcs in an ink casing) over the D4 ring.
+var _cue: NoirCue = null
 
 
 func _ready() -> void:
@@ -35,6 +41,8 @@ func _ready() -> void:
 			return
 		if flag == "--out":
 			_out = arg.substr(6)
+		elif flag == "--phone":
+			_want_phone = true
 		else:
 			_impact.budget.enabled = arg != "--flashes=off"
 	var made: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
@@ -60,10 +68,7 @@ func _ready() -> void:
 	_fx.to_screen_uv = _to_uv
 	_fx.set_stains(_stains)
 	_fx.bind(_play.bus(), _blood, _impact)
-	var oil: BloodFx = _fx.make_player_fx()
-	if oil != null:
-		_view.add_child(oil)
-		_view.move_child(oil, _blood.get_index() + 1)
+	_add_player_fluid()
 	@warning_ignore("return_value_discarded")
 	_fx.hit_stop.connect(func(t: int) -> void: _hold = t)
 
@@ -75,7 +80,7 @@ func _process(_delta: float) -> void:
 	if _live < 0:
 		for i: int in SKIP_PER_FRAME:
 			_play.tick_once()
-			if _play.stage.arena.hostiles_alive() > 0:
+			if _started():
 				_live = 0
 				break
 		return
@@ -91,6 +96,7 @@ func _process(_delta: float) -> void:
 		_fx.step_ticks(1)
 	_new_shots()
 	_view.focus = _frame_focus()
+	_ring_cue()
 	var light: Dictionary = {"flash": 1.0 if _flash.lit() else 0.0}
 	if _flash.lit():
 		light["flash_uv"] = _to_uv(_flash.lit_at())
@@ -102,8 +108,43 @@ func _process(_delta: float) -> void:
 		_done()
 
 
-## The camera between Rivet and the nearest live hostile, so the fight is in frame.
+## Rivet's own fluid (blood_fx.json `player`: oil) just above the blood.
+func _add_player_fluid() -> void:
+	var oil: BloodFx = _fx.make_player_fx()
+	if oil != null:
+		_view.add_child(oil)
+		_view.move_child(oil, _blood.get_index() + 1)
+
+
+## --phone: the noir cue rings while the phone does.
+func _ring_cue() -> void:
+	if _phone.is_empty():
+		return
+	if _cue == null:
+		_cue = NoirCue.new()
+		_view.add_child(_cue)
+	var stage: CollectCallStage = _play.stage
+	_cue.visible = stage.router.ringing(_phone)
+	if _cue.visible:
+		_cue.show_ring(Ink.px(stage.layout.phones[_phone]), stage.tick)
+
+
+## True once the part to film has begun: the first fight, or with --phone the first ringing phone.
+func _started() -> bool:
+	if not _want_phone:
+		return _play.stage.arena.hostiles_alive() > 0
+	for phone: String in _play.stage.layout.phones:
+		if _play.stage.router.ringing(phone):
+			_phone = phone
+			return true
+	return false
+
+
+## The camera between Rivet and the nearest live hostile, so the fight is in frame (with
+## --phone: between Rivet and the ringing phone).
 func _frame_focus() -> Vector2:
+	if not _phone.is_empty():
+		return _play.stage.arena.rivet.pos.lerp(_play.stage.layout.phones[_phone], 0.5)
 	var arena: CombatArena = _play.stage.arena
 	var best: Vector2 = arena.rivet.pos
 	var d: float = INF
