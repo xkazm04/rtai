@@ -43,6 +43,18 @@ func apply(rig: CutRig, k: float, wk: float = 0.0, slam_k: float = 0.0) -> void:
 	_arms(rig.plan, ak, wk, slam_k)
 
 
+## For views that draw Rivet as one capture (quest 1's CastView): the size factor for the morph
+## k and the wind-up wk (base form = 1), and the teal tint at look_tint_k.
+static func sprite_k(k: float, wk: float = 0.0) -> float:
+	var base: float = RivetPlan.FORMS[RivetPlan.FORM_BASE].x
+	var big: float = RivetPlan.FORMS[RivetPlan.FORM_HAULER].x / base
+	return lerpf(1.0, big, k) * (1.0 + WINDUP_SWELL * wk)
+
+
+static func tint(tint_k: float, k: float) -> Color:
+	return Color.WHITE.lerp(TEAL, tint_k * k)
+
+
 ## Arm segment scale on the plan (1 = the base numbers, restored exactly).
 func _arms(plan: BodyPlan, ak: float, wk: float, slam_k: float) -> void:
 	if plan != _plan:

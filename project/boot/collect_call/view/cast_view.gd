@@ -61,7 +61,15 @@ func _rivet(r: Fighter) -> void:
 	if stage.hidden_in != "":
 		_sprite("rivet_peek", at + Vector2(0.0, -0.75), _size(&"rivet_peek"), Vector2.UP)
 		return
-	_sprite("rivet", at, _size(&"rivet"), r.facing)
+	_hauler_marks()
+	var h: HaulerForm = stage.pilot.hauler.form if stage.pilot != null else null
+	var k: float = h.morph_k() if h != null else 0.0
+	if k > 0.0:  # features/souls: the Hauler grows and tints Rivet by the morph
+		var grow: float = HaulerLook.sprite_k(k, h.windup_k())
+		var tint: Color = HaulerLook.tint(h.num(&"look_tint_k"), k)
+		_sprite("rivet", at, _size(&"rivet") * grow, r.facing, tint)
+	else:
+		_sprite("rivet", at, _size(&"rivet"), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
 
 
@@ -102,6 +110,16 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 		for k: int in 3:
 			var tip: Vector2 = muzzle + dir.rotated(-0.8 + k * 0.8) * (0.5 + frac * 0.6)
 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+
+
+## The Hauler stomp's ring and D5 crack where it landed (features/souls HaulerMarks).
+func _hauler_marks() -> void:
+	var h: HaulerStage = stage.pilot.hauler if stage.pilot != null else null
+	if h == null or h.stomp_tick < 0:
+		return
+	var age: float = (stage.tick - h.stomp_tick) * SimClock.TICK_DT
+	var radius: float = h.form.num(&"stomp_radius_m")
+	HaulerMarks.draw(self, Ink.px(h.stomp_at), age, radius, Ink.PX_PER_M, h.stomp_tick)
 
 
 ## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.
