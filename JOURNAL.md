@@ -1067,3 +1067,25 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   gameplay zooms, the arena close-ups (64+) are untouched, so item36's "neutral up close" still holds.
 - 04:13 scratch deleted (numbers logged above, no board cites them): frames/swr_ctl, swr_rf, pan15se(R), pan16rule(R), h114ink, h123pkg, h124 (= h106), a19 (= a16). Rounds the boards cite are kept: h105-h110sh, h115se1, h116rim1, h117pkg, h122rule5, h124rf, a16, a16all, a17se1, a18rule, a19pkg, pan12*, pan14*.
 - 04:14 session close (cap 04:42): tree clean, last gate run ALL PASS at 227dd01 (later commits: the arena roof_rule hook, checked 0 px on default, lint ok; docs). The final NEXT (27-30 + reading order) above stands; nothing is half-done or uncommitted.
+
+## Iteration 8 (04:15 -> cap 05:45), BUILD, no images (50/50 used)
+- 04:15 read JOURNAL (iteration 7 NEXT 27-30), git log, evidence README gap list. Weakest item picked by eye at
+  64-128 vs the concept (where D5 lives): the brief's "misregistered vermilion from the concept". look_d5_part only
+  offsets vermilion that is already in the art (the collar, rust), so the concept's red misprint along EVERY
+  segment's edge (work/i8/concept_leg.png) is missing.
+- 04:17 control h125 (default shader + new code at fringe_k 0) = h106 at 32-128 (0 px).
+- 04:20 REJECTED h126fr8 (band 2.5 screen px past mis_px, k 0.8): 1009-1043 px, invisible by eye: the art's ~7 part px
+  outline (measured over the rivet parts) eats the band. REJECTED h127fr10 (5 screen px, k 1): visible at 64 but
+  blotchy, and at 128 the outline (thicker in screen px) still eats it -> the band must be sized in PART px.
+  REJECTED h128fa (14 part px, print-space direction, dry 0.2, k 0.9): faint everywhere.
+- 04:30 h129fa22 (22 part px, k 1): at 128 the forearm / shoulder plates carry the concept's rust-red edge misprint;
+  at 64 Rivet's red-lead share doubles (0.016 -> 0.029) and it is busy next to the collar -> fade it in by zoom.
+- 04:36 MILESTONE (3f66c09, OPTION default 0): look_d5_part fringe_k / fringe_art 22 / fringe_fade (px_scale 0.2 ->
+  0.3 = 64 -> 96 px/m) / fringe_dry 0.2; params JSON "part" + _doc (unit test: keys are uniforms, 149/0; lint 13/13).
+  Default frames: h125 = h106, a20 = a16 (0 px at 32-128). With fringe_k 1: hero h130ff 0/0/0/3442/5765 px at
+  32/48/64/96/128, arena a20ff 0/0/0/2862/3899. Fade sweep (temporary zoom list 64-96, restored, tree checked):
+  strength per area 0 / 190 / 615 / 1011 / 1205 at 64 / 72 / 80 / 88 / 96: monotone, no pop. Doctrine: Rivet crop
+  red-lead share 0.017-0.019 -> 0.027-0.030 at 96-128 (concept body region 0.039), PURE vermilion (dE < 40)
+  unchanged 0.0055-0.0062: the collar stays the only pure vermilion; King is a plain sprite (unchanged); cops'
+  steel parts get it too (gloves/guns: by eye negligible). By eye closer to the concept up close; a doctrine/taste
+  call (more red on the hero), so OWNER A/B, not default. Board evidence/item43_fringe_owner_ab.png; ladder row.
