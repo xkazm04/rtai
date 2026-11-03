@@ -1025,3 +1025,9 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   overwritten by c by my copy slip, b's 32 crop survives in `tt12_abc.png`). Provenance: a new line,
   tool `code:track_redraw.py`, no image model (it replaces the Codex tread). README note, ladder rows "i12 tank tracks".
   Original in `masters:backup_tt/`. Commit 7f517e6. 0 Codex.
+- 03:50 REJECTED, NOT SHIPPED: skid_marks redraw (`tools/skid_redraw.py`, two 0.3 m dry-brush rubber streaks 1.5 m
+  apart, procedural). City frames (`city_frame --zooms=1,1.5,2`, city-1 has the skid decal) `before_i12s_city|
+  probe_i12s_city/city-1-{32,48,64}ppm.png`, crops `work/sk12_ab.png`: the original hatched streaks are wider, read
+  better at 32 and are more "ink and hatch" at 64; mine thins into the asphalt. Original kept (`backup_sk/`), tree
+  back at HEAD art. Ladder row "i12 skid REJECTED". (The grey box in city-1-48 is the unwired moving-traffic
+  placeholder on n-d4 alone; n-visual draws the atlas there.)
