@@ -18,8 +18,8 @@
     "rain_len": 22.0,
     "rain_slant": 0.18,
     "rim": 1.0,
-    "rim_hi": 0.06,
-    "rim_lo": 0.02,
+    "rim_hi": 0.14,
+    "rim_lo": 0.06,
     "soft": 0.025,
     "splash": 0.3,
     "splash_zoom": [
