@@ -16,6 +16,15 @@ var decals: int = 0
 ## one stops at the wall and smears along it (a wall splat) instead of landing beyond it.
 var solid: Callable = Callable()
 var wall_hits: int = 0
+## Microseconds the last _draw took (the riot budget, lane d5-combat).
+var draw_us: int = 0
+## Redraws since boot (the per-frame cost average: draw_us summed over draws / frames).
+var draws: int = 0
+## Redraw cadence (ticks) once nothing flies or grows and only the slow fade moves; 1 = every
+## tick (noir's own scenes). The combat blood sets blood_fx.json game.settled_redraw_ticks.
+var settled_every: int = 1
+var _busy_until: int = 0
+var _drawn_at: int = -1
 var _pos: PackedVector2Array = PackedVector2Array()
 var _vel: PackedVector2Array = PackedVector2Array()
 var _size: PackedFloat32Array = PackedFloat32Array()
@@ -52,6 +61,26 @@ func use_fluid(fluid: String) -> bool:
 		return false
 	_fluid = NoirFluid.from(f)
 	return true
+
+
+## Pools get an ink keyline `px` wide in `colour` (the D4/D5 print; 0 = noir's bare rim).
+func set_ink(px: float, colour: Color) -> void:
+	_ring.ink_px = px
+	_ring.ink = colour
+
+
+## Draws the splats as one MultiMesh (BloodSplatMesh, the GPU path the riot needs); returns it.
+func use_splat_mesh() -> BloodSplatMesh:
+	if _ring.mesh == null:
+		_ring.mesh = BloodSplatMesh.new(_ring.size())
+		var dc: Dictionary = p["decal"]
+		var after: int = dc["fade_after_ticks"]
+		var fade: int = dc["fade_ticks"]
+		var floor_a: float = dc["min_alpha"]
+		_ring.mesh.set_fade(after, fade, floor_a)
+		add_child(_ring.mesh)
+	_ring.mesh.colour = _fluid.ground
+	return _ring.mesh
 
 
 ## A hit at `at` (px) travelling along `dir`: hit kind `kind` from the `hits` table.
@@ -112,7 +141,11 @@ func step_ticks(n: int) -> void:
 				drops -= 1
 				var d: int = _add_decal(_pos[i], _size[i] * (1.2 + _rand()), 0)
 				_ring.set_dir(d, _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0))
-	queue_redraw()
+	# with the splat mesh a landing splat needs no redraw: only drops, pools and the fade do
+	var busy: bool = tick <= _busy_until and _ring.mesh == null
+	if drops > 0 or busy or tick - _drawn_at >= settled_every:
+		_drawn_at = tick
+		queue_redraw()
 
 
 ## A droplet into a wall: two splats at the contact smeared both ways along the wall, sized
@@ -150,27 +183,24 @@ func _spawn_drop(at: Vector2, v: Vector2, h: Dictionary) -> void:
 ## One scatter draw per decal (its old per-decal seed), so the scatter sequence is unchanged.
 func _add_decal(at: Vector2, r1: float, grow: int, r0: float = -1.0, delay: int = 0) -> int:
 	var i: int = _ring.add(at, r1, grow, r0, tick + delay)
+	_busy_until = maxi(_busy_until, tick + delay + grow + 1)
 	@warning_ignore("return_value_discarded")
 	_rand()
 	return i
 
 
 func _draw() -> void:
+	var t0: int = Time.get_ticks_usec()
 	var dc: Dictionary = p["decal"]
 	_ring.draw(self, tick, decals, _fluid, dc)
 	var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
-	for i: int in _pos.size():
-		if _life[i] > 0 and _fluid.case_px > 0.0:
-			draw_line(
-				_pos[i] - _vel[i] * trail,
-				_pos[i],
-				Color.BLACK,
-				_size[i] * 1.4 + _fluid.case_px * 2.0
-			)
-	for i: int in _pos.size():
-		if _life[i] > 0:
-			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _fluid.flight, _size[i] * 1.4)
-			draw_circle(_pos[i], _size[i], _fluid.flight)
+	if drops > 0:
+		var fx: Array = [_pos, _vel, _size, _life]
+		if _fluid.case_px > 0.0:
+			BloodBatch.drops(self, fx, trail, Color.BLACK, _fluid.case_px * 2.0)
+		BloodBatch.drops(self, fx, trail, _fluid.flight, 0.0)
+	draw_us = Time.get_ticks_usec() - t0
+	draws += 1
 
 
 func _rand() -> float:

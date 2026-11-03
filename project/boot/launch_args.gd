@@ -3,7 +3,14 @@ extends Node
 ## (boot/boot.gd) warns about each, so a misspelt flag is not silently ignored.
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--seed", "--replay", "--record", "--devtools", "--look", "--reduced-motion"
+	"--seed",
+	"--replay",
+	"--record",
+	"--devtools",
+	"--look",
+	"--reduced-motion",
+	"--blood",
+	"--kill-beat"
 ]
 
 var _values: Dictionary[String, String] = {}

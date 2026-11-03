@@ -7,6 +7,9 @@ extends RefCounted
 ## `hitstop` holds the clock (SimClock.hold: wall time only, every tick unchanged). Render only:
 ## no RNG stream, no frame delta, nothing written back to the sim.
 
+## Every cue fired (after its FX): listeners like the combat blood (features/fx) follow it.
+signal cued(id: StringName, pos_px: Vector2, angle: float, tick: int)
+
 const TABLE: String = "res://data/tables/fx_triggers.json"
 
 var rows: Dictionary[StringName, Dictionary] = {}
@@ -46,6 +49,7 @@ func fire(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 			@warning_ignore("return_value_discarded")
 			fx.spawn(StringName(kind), pos_px, angle, tick)
 	_stop(row, tick)
+	cued.emit(id, pos_px, angle, tick)
 	var shake: String = row["shake"]
 	if rig == null or shake == "":
 		return

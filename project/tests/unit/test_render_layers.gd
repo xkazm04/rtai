@@ -45,6 +45,7 @@ func test_the_stack_is_in_the_documented_order() -> void:
 		&"props",
 		&"roofs",
 		&"print_pass",
+		&"blood",
 		&"actor_shadows",
 		&"actors",
 		&"vehicles",

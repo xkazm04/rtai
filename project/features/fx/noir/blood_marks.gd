@@ -10,9 +10,15 @@ const LOBES: int = 4
 
 ## A spreading pool: a star-shaped wet edge (low-frequency hashed waves, never self-crossing),
 ## run out along `flow` (the hit direction; length = how far it runs): a dark body inside a
-## bright red meniscus rim, a white sheen arc on the lit side. cols = [body, rim, sheen].
+## bright red meniscus rim, a white sheen arc on the lit side. cols = [body, rim, sheen] and an
+## optional 4th, the ink keyline drawn ink_px outside the rim (the D4/D5 print).
 static func pool(
-	ci: CanvasItem, at: Vector2, r: float, flow: Vector2, cols: PackedColorArray
+	ci: CanvasItem,
+	at: Vector2,
+	r: float,
+	flow: Vector2,
+	cols: PackedColorArray,
+	ink_px: float = 0.0
 ) -> void:
 	if r < 3.0:
 		ci.draw_circle(at, r, cols[0])
@@ -21,6 +27,8 @@ static func pool(
 	# thousands) the triangulator loses precision on small rings
 	var s: float = seed_of(at)
 	ci.draw_set_transform(at)
+	if cols.size() > 3:
+		ci.draw_colored_polygon(ring(Vector2.ZERO, r * RIM + ink_px, flow, s), cols[3])
 	ci.draw_colored_polygon(ring(Vector2.ZERO, r * RIM, flow, s), cols[1])
 	ci.draw_colored_polygon(ring(Vector2.ZERO, r, flow, s), cols[0])
 	ci.draw_set_transform(Vector2.ZERO)

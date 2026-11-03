@@ -110,6 +110,14 @@
     },
     {
       "canvas": "actors",
+      "doc": "blood and oil on the ground (noir's blood, the D4/D5 default): above the print, under the drop shadows and the bodies (a body's shadow falls across its blood); red never goes through the world print (it would print vermilion)",
+      "drawn_by": "CombatBlood (features/fx)",
+      "id": "blood",
+      "status": "live",
+      "z": -100
+    },
+    {
+      "canvas": "actors",
       "doc": "people and vehicle drop shadows (flat ink tint)",
       "drawn_by": "CrowdLayers shadows",
       "id": "actor_shadows",

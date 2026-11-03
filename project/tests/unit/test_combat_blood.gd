@@ -1,0 +1,81 @@
+extends GutTest
+## The default D4/D5 blood (lane d5-combat): FX cues in, blood on the ground out.
+
+
+func _blood(mode: String) -> CombatBlood:
+	var b: CombatBlood = CombatBlood.new()
+	b.mode = mode
+	add_child_autofree(b)
+	return b
+
+
+func test_death_bleeds_and_mutes_the_ink_splat() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("noir")
+	b.attach(t)
+	var death: Array = t.rows[&"death"]["fx"]
+	assert_false(death.has("ink_splat"), "noir mode mutes the D4 ink splat")
+	t.fire(&"death", Vector2(320, 320), 0.0, 10)
+	b.step(10, Vector2.ZERO)
+	b.step(80, Vector2.ZERO)
+	assert_eq(b.kills, 1)
+	assert_gt(b.blood.live_decals(), 1, "a spurt and a pool")
+	assert_true(b.blood.has_pool_at(Vector2(320, 320), 12.0), "a pool under the body")
+
+
+func test_ink_mode_keeps_the_splat_and_draws_no_blood() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("ink")
+	b.attach(t)
+	var death: Array = t.rows[&"death"]["fx"]
+	assert_true(death.has("ink_splat"), "the fallback keeps the D4 splat")
+	t.fire(&"death", Vector2(320, 320), 0.0, 10)
+	b.step(10, Vector2.ZERO)
+	assert_eq(b.kills, 0)
+	assert_eq(b.blood.live_decals(), 0)
+
+
+func test_death_sprays_along_the_round_that_killed() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("noir")
+	b.attach(t)
+	# the round travelled +y (heading PI/2): projectile_end is thrown back, at heading + PI
+	t.fire(&"death", Vector2(320, 320), 0.0, 10)
+	t.fire(&"projectile_end", Vector2(320, 312), PI / 2.0 + PI, 10)
+	b.step(10, Vector2.ZERO)
+	assert_eq(b.aimed, 1)
+
+
+func test_a_far_round_does_not_aim_the_spray() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("noir")
+	b.attach(t)
+	t.fire(&"death", Vector2(320, 320), 0.0, 10)
+	t.fire(&"projectile_end", Vector2(900, 320), 0.0, 10)
+	b.step(10, Vector2.ZERO)
+	assert_eq(b.aimed, 0)
+	assert_eq(b.kills, 1)
+
+
+func test_rivet_leaks_oil_not_blood() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("noir")
+	b.attach(t)
+	t.fire(&"player_hit", Vector2(320, 320), 0.0, 10)
+	b.step(10, Vector2.ZERO)
+	b.step(60, Vector2.ZERO)
+	assert_eq(b.hits, 1)
+	assert_eq(b.blood.live_decals(), 0, "a robot never bleeds red")
+	assert_gt(b.oil.live_decals(), 0, "black oil on the ground")
+
+
+func test_splats_land_on_the_gpu_mesh_once() -> void:
+	var b: CombatBlood = _blood("noir")
+	b.kill_human(Vector2(320, 320), Vector2.RIGHT)
+	b.step(1, Vector2.ZERO)
+	b.step(60, Vector2.ZERO)
+	var mesh: BloodSplatMesh = b.blood.use_splat_mesh()
+	assert_gt(mesh.written, 0)
+	var w: int = mesh.written
+	b.step(64, Vector2.ZERO)
+	assert_eq(mesh.written, w, "a settled frame writes no instance")

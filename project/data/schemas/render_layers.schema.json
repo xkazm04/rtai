@@ -79,7 +79,7 @@
           },
           "z": {
             "maximum": 4000,
-            "minimum": 0,
+            "minimum": -4000,
             "type": "integer"
           }
         },
