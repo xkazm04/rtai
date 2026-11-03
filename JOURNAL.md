@@ -1742,3 +1742,23 @@ NEXT (final, iteration 18; supersedes the 06:18 NEXT + addendum where they diffe
 - Worktrees: `scratch-q1` (main + quest patch), `scratch-v3` (full morning stack on ce0db12 + this iteration's tiles,
   uncommitted; dangling e011f35 / 190f3ba). Nothing pushed or merged. Codex: 0 images this iteration; night total 29
   images, 194 cells, 7 rejected; no limit hit.
+
+## 2026-11-03 06:40 iteration 20, BUILD (raise the weakest item; freeze 07:30)
+- 06:41 Read JOURNAL (iteration 18 final NEXT), git log. Tree clean at fde15fb. No iteration-19 entries (odd
+  iterations are not this lane's). 4 Godot processes from other lanes running (not mine, untouched); C: 273 GB free.
+- 06:42 SURVEY at HEAD: `city_frame` at 32 / 48 / 64 (`masters:survey_i20/`) beside the target `d4h2_mock`. Off the
+  target and in this lane's scope: the 4 m `cracks` decal (a black crack star with chips; the target's asphalt
+  has none). Off the target but NOT this lane's: the moving traffic body is still the grey slab (wiring patch /
+  per-car state hook, code), the warmer tan pavement (n-visual's page grade).
+- 06:43 REJECTED, NOT SHIPPED: `cracks` decal calmed (`masters:tools/cracks_calm.py`: alpha eroded 3 px + feather,
+  ink lifted 25 % toward a charcoal, alpha x0.85; cover 9.6 % -> 5.7 %). Same scene, city_frame 32 / 48 / 64
+  (`survey_i20/` vs `after_i20ck/`; the decal is only in focus 0): at 48 the thin branches die and the left
+  decal breaks into loose specks and chips with no crack between them - noise, not a calmer crack
+  (`evidence/iter20/cracks_calm_rejected.jpg`, top = HEAD, bottom = probe). Reverted with `git checkout`
+  (cmp equal to `masters:backup_decals20/cracks.png`) and re-imported. How often the decal is placed is the real
+  lever (bake / dressing code), not the art -> a note for the Director, not a request (low priority).
+- 06:47 LOOKED, no change: pavement vs the target by value - target pavement median L 218 (5-95 % 65-240), ours at
+  32 L 222 (37-228), ink share 9 % vs 7-13 %: the same band. The hue gap (target 229/204/177, ours 215/206/190) is
+  the page grade, n-visual's. Peds at 32 on paving and asphalt read as inked figures (the iteration-16 arm outline);
+  `barrel_cluster`'s vermilion is on doctrine (explosive barrels = a hazard prop, ruled in iteration 4).
+- Codex this iteration: 0 images.
