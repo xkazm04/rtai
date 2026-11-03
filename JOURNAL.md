@@ -862,3 +862,7 @@ NEXT (iteration 12 close, in order):
   steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + a muzzle-light row.
   Final state of iteration 12: last code commit 5143f55, 0 processes of mine running, images 0 / rejected 0 /
   Leonardo 0 tokens / provenance +0. NEXT list above stands (item 2 done).
+- (05:09) NoirCue unit test (2 tests: shows where/when asked; the pulse follows the caller's tick, back after one
+  30-tick period): 201 unit pass, lint 13 pass. The arc radius moved into `radius(k)` (same expression; not
+  re-rendered, so pixel identity is assumed, not shown).
+- 05:10 Stop. Last commits: 5143f55 (code + gates PASS), then the NoirCue test. No process of mine running.
