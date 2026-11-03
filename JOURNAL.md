@@ -645,3 +645,11 @@ NEXT (iteration 10 / morning, in order):
   read as the shared display, not the lattice or the traffic plug (the plug is not live on this branch
   anyway). Riot rig 0.372 ms per tick (iter 8: 0.334; also contended). evidence/bench-*-iter10.json,
   bench-iter10.txt.
+- REJECTED (02:58, reverted) the rest of look_d4's value noise on the lattice too (hatch wobble / gaps,
+  edge jitter, vermilion edge). Why it looked worth it: a branch-mask capture (27-print-masks, scratch
+  shader) shows the deep-shadow hatch runs on 27-38 % of the print (the hatched lots), edges 8-12 %,
+  vermilion 6-7 %. Measured interleaved on the iGPU: print 1.44 / 1.41 ms vs grime-only 1.57 / 1.37
+  (and 1.39 / 1.33 earlier) - inside the run-to-run noise, so no gain to pay a re-laid hatch for.
+  Shader kept as 27-print-masks/look_d4-all-lattice-rejected.gdshader; jsons in evidence/pass-cost/hash-ab.
+- test: the traffic cell (512 x 256 px) is pinned to the sim's car quad at 80 px/m (CitySimRender CAR_L /
+  CAR_W); planted 512 x 240 -> 3 failing tests, restored. Unit 207.

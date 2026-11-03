@@ -124,3 +124,9 @@ func test_traffic_grid_is_read_from_the_atlas_size() -> void:
 		CrowdLayers.traffic_grid(Vector2i(1024, 1024)), Vector2i.ZERO, "2 x 4: no cell 8 (police)"
 	)
 	assert_eq(CrowdLayers.traffic_grid(Vector2i(1500, 768)), Vector2i.ZERO, "not whole cells")
+
+
+func test_traffic_cell_is_the_sim_car_quad_at_80_px_per_m() -> void:
+	var m: Vector2 = Vector2(CitySimRender.CAR_L, CitySimRender.CAR_W) / SimConst.PX_PER_M
+	var px: Vector2i = Vector2i((m * 80.0).round())
+	assert_eq(CrowdLayers.TRAFFIC_CELL_PX, px, "n-d4's atlas cells are the 6.4 x 3.2 m car quad")
