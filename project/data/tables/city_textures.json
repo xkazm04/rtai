@@ -815,6 +815,17 @@
         2.4
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/decals/dash_eraser.png",
+      "class": "decal",
+      "id": 74,
+      "name": "dash_eraser",
+      "size_m": [
+        4,
+        0.6
+      ],
+      "solid": false
     }
   ]
 }

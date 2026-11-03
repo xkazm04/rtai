@@ -15,7 +15,7 @@ func before_all() -> void:
 func test_tables_load() -> void:
 	assert_not_null(_gen)
 	assert_eq(_gen.district_id, "district_01")
-	assert_eq(_gen.sizes.size(), 74, "72 road_box_plain + 73 zebra (2026-11-03)")
+	assert_eq(_gen.sizes.size(), 75, "72 road_box_plain, 73 zebra, 74 dash_eraser (2026-11-03)")
 
 
 func test_generation_is_deterministic() -> void:
@@ -65,11 +65,15 @@ func test_a_junction_has_a_plain_box_and_four_approach_zebras() -> void:
 	var chunk: CityChunk = _gen.gen_chunk(4, 4)
 	var box: int = 0
 	var zebras: int = 0
+	var erasers: int = 0
 	for i: int in chunk.command_count():
 		if chunk.tex[i] == TilePainter.T_BOX:
 			box += 1
 		elif chunk.tex[i] == TilePainter.T_ZEBRA:
 			zebras += 1
+		elif chunk.tex[i] == TilePainter.T_DASH_ERASER:
+			erasers += 1
 		assert_ne(chunk.tex[i], 6, "the ringed intersection tile is not placed")
 	assert_gt(box, 0)
 	assert_eq(zebras, 4 * box)
+	assert_eq(erasers, 4 * box, "the dashes stop short of every zebra")
