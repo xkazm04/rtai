@@ -744,6 +744,20 @@
     "own: masters:night/d4-production/gen/refs/ref_digits_set.png (the approved d4n_digits strip)"
    ],
    "seed": null
+  },
+  "d4n_arcball": {
+   "file": "masters:night/d4-production/gen/out/d4n_arcball.png",
+   "sha256": "6c43ccc5c2bf2e089793cd8a941a6fca1ecd474e461bc0e1a0a0d827026c7e11",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/arcball.txt",
+   "prompt_sha256": "b8ab028d888a9f6c3a34ddbc5fd20b080eb8efa9a3652266d61749b94ca67551",
+   "layout_template": "masters:night/d4-production/gen/refs/t_arcball.png (4 grey guide discs on chroma green, one row)",
+   "references": [
+    "own: masters:night/d4-production/gen/refs/ref_fx_style.png (crops of the approved fx_atlas.png: muzzles, explosion, crackle, sparks)"
+   ],
+   "seed": null
   }
  }
 }

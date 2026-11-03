@@ -35,3 +35,12 @@ placeholder drew side-view flame tongues, a camera break). Vermilion = danger. M
 
 Quest 1 uses it for the burning TUCK-IN stack (`fx_view._fire()`): `fire_wide` at 2x over the stack + three loop
 fires at 1.3x, and the smoke above it from `fx_atlas.png` row 2 cells 0-3 (fading as it lifts); see `features/quest/art/collect_call/README.md` and the lane masters' `q1_view_art.patch`.
+
+## `fx_arcball.png`: the Robo-tazer arc ball (night iteration 14)
+
+1024 x 256, **4 columns x 1 row of 256 px cells**, one scale, one looping animation (about 4 ticks a frame): a cream
+ball with an ink outline, cream zig-zag bolts crackling out (a different pattern per frame), ink spark dashes and a
+broken FLAT vermilion danger ring (vermilion = danger) at about 0.84 of the cell half-width. Seen straight down, no
+glow. Draw a cell at about 2.8 m so the ring sits at about 1.15 m. Master: `art_src/d4.manifest.json#d4n_arcball`.
+Quest 1 draws it for the arc ball (`fx_view._ball()`, in the lane masters' `q1_view_art.patch`), with an ink + cream
+zig-zag tether back to the muzzle.
