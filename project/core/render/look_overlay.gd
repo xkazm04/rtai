@@ -27,6 +27,7 @@ static func create(row: Dictionary) -> LookOverlay:
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	var path: String = row["shader"]
 	o._mat.shader = load(path)
+	o._mat.set_shader_parameter(&"grime_tex", GrimeLattice.texture())  # used if it declares it
 	rect.material = o._mat
 	o.add_child(rect)
 	var ramp: Array = row["amount_ppm"]

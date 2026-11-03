@@ -590,7 +590,7 @@ NEXT (iteration 10 / morning, in order):
 
 ## Iteration 10 (02:10 - , BUILD)
 
-- MILESTONE (02:40, 7bfb6b9) NEXT 2's streak DIAGNOSED and the traffic plug-in RE-APPLIED. Root cause:
+- MILESTONE (02:15, 7bfb6b9) NEXT 2's streak DIAGNOSED and the traffic plug-in RE-APPLIED. Root cause:
   n-d4 re-laid traffic_atlas.png out 3 x 3 (1536 x 768, cell = sim car art id: 0-7 civilian, 8 police)
   at 01:49 (59e1448); my 746c765 (02:02) hard-coded the old 2 x 4 grid, so every car sampled across cell
   borders: the "steel streak" was the next row's car sliver, the sliced taxi above it the same bug, and
@@ -609,3 +609,26 @@ NEXT (iteration 10 / morning, in order):
   needed). Ladder rows 24 / 24b / 24c (placeholder | plugged; 1280 x 10362). 0 frames rejected for
   camera (engine captures, straight down). Still open: damage / hijack states need a sim state in
   custom.y (n-d4 ships traffic_atlas_hijack.png + _d1/_d2 bodies).
+- MILESTONE (02:30, 52bec98) print pass -17 % on the low-end GPU: the D4 grime (2 octaves = 8 sin hashes on
+  EVERY pixel) samples a baked 128 x 128 value lattice (core/render/grime_lattice.gd, the same hash, L8,
+  bilinear at i + smoothstep(f) + 0.5 = the same faded value noise, 1 fetch per octave). iGPU 1280x800
+  48 px/m, 2 runs each (evidence/pass-cost/hash-ab): print 1.67 / 1.61 -> 1.39 / 1.33 ms, frame 3.21 /
+  3.29 -> 3.08 / 3.01. Bounds measured first (scratch): grime + paper tooth 0.43 ms, Sobel 0.18 ms.
+  Goldens 10/10 worst mean 0.09 (no re-bless), accent gate clean, world lock 0.00 % x3, unit 206.
+  Not bit-identical (8-bit values, a 128-cell tile = 1.1-3.6k px period), so judged on frames:
+  25-grime-lattice/{before,after} (all 10 golden frames) and amp8-{sin,lattice} (grime x8 in scratch so
+  the pattern is visible: same blotch scale and shape, amp8-compare.png). Ladder 25 / 25b.
+- REJECTED (reverted, never committed) an integer hash for every hash() in look_d4: print 1.67 -> 2.37 /
+  2.40 ms (+0.75, 2 runs) - 32-bit integer multiplies are slow on the AMD iGPU; sin is cheaper there.
+  Shader kept as 22-pass-cost/look_d4-inthash-rejected.gdshader.
+- MILESTONE (02:31) the D5 overlay on the same lattice - a PATCH for n-d5 (its file), my side committed:
+  LookOverlay hands every overlay material `grime_tex` (unused if the shader does not declare it). With
+  n-d5's current look_d5 plugged in (plug.sh d5 in/out, capture only) + my early-outs patch (still
+  applies on n-d5 HEAD b98bb9b), look_d5's vnoise() -> one lattice fetch: iGPU 1280x800 64 px/m,
+  interleaved pairs, overlay +1.91 / +1.87 -> +1.25 / +1.39 ms (-0.57 ms, -30 %). Frames
+  26-d5-lattice/{before-eo,after-lattice}: d5/auto overlay frames move (mean 3.2-3.5, 2.3-2.9 % of px
+  > 24) because the stroke wobble / pressure patches are re-laid (negative lattice coords wrap the tile);
+  same character up close (crop-d5-64-eo-vs-lattice.png), no tiling seen in the 64 px/m frame; the d4
+  and d1 frames are untouched (mean 0.00). Patch: evidence/pass-cost/look_d5-early-outs-lattice.patch
+  (early-outs + lattice in one, `git apply --check` OK on n-d5). Needs the owner's eye for the moved
+  hatch patches; the -ov goldens are re-blessed after the merge anyway. Ladder 26.
