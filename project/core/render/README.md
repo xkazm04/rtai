@@ -131,6 +131,18 @@ Paid only at arena zoom (hidden at 32 and 48 px/m). It is a full-viewport BackBu
 noise-heavy fragment pass; before it ships on the Deck it needs a cheaper shader (fewer vnoise taps) or
 a half-resolution pass - a note for the d5-close lane.
 
+Page age (`LookOverlay.page_age_of` -> `LightLayer.set_page_age` -> `grade_ink` `age`): an overlay's
+params `age` / `age_floor` (look_d5 "aged paper") are NOT sent to the overlay, which sits under the
+actors; the view hands `max(age x amount, age_floor)` (0 for a look without the overlay) to the light
+canvas' grade rect, which warms the neutral print of the whole page - world, actors, vehicles, FX -
+before the lights. Found in the 4-lane trial merge (2026-11-03): with the world-only age, every D4
+cream body read cool-grey on the warmed paper at 64 px/m (cool light px 10 911 -> 0 at the block,
+12 218 -> 0 at the junction; paper and street unchanged; accent shares unchanged). At 48 px/m and
+below (amount 0, age_floor 0) the rect stays hidden: 32 / 48 frames byte-identical, zero cost. Cost at
+64 px/m: +0.54 / +0.47 ms GPU (iGPU 1280x800, 2 interleaved pairs, `pass_cost.gd --ppm=64`,
+`evidence/page-age-cost/`). An `age_floor` > 0 (n-d5's proposal for D4) would now age the whole page
+at 32 px/m too and pay the rect there.
+
 Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov.png`), so the
 overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
 (the `-ov` files are new; the d1/d4 goldens must still pass untouched).
@@ -425,6 +437,7 @@ bit-identical (render look_golden with the old and the new shader and diff the f
 | D4 world print, RTX 4090 | 0.39 ms of 0.86 ms at 1280x800, 0.85 of 1.49 at 1080p (before); after-runs were contended (other lanes on the GPU): judge on the iGPU | `pass_cost.gd` |
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
 | D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |
+| Page age (the D5 aged paper on the grade rect, 64 px/m only) | +0.54 / +0.47 ms GPU on the iGPU at 1280x800 (2 interleaved pairs), 0 at 32 / 48 (rect hidden) | `pass_cost.gd --ppm=64` |
 | Lights `step()` | 30-168 us CPU for 32-64 lights; GPU +0.29 .. +1.35 ms for 32 fires (interleaved, 3 runs, shared GPU) | `light_showcase.gd` |
 | FX `step()` | 48 us CPU for 43 live particles; 135 us for 147 (3 twins). Skipped on frames with no tick and no spawn. A single-buffer upload (16 GDScript writes per particle) measured slower (192 us) and changed the picture: reverted | `fx_showcase.gd` |
 | FX feed in the riot (shots, ends, deaths -> FX + lights) | avg frame +0.07 ms, p99 CPU +0.15 ms (was +0.35 ms avg before the no-tick skip) | `city_bench -- --fx-feed=off` A/B, 3 interleaved pairs x 20 s |

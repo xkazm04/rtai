@@ -8,6 +8,10 @@ The `light` canvas' `grade` rect (core/render/light_layer.gd). Reads the screen 
 and re-prints it at luminance `paper_level * l^gamma`, hue kept; accent pixels (palette gates) keep
 `accent_keep` of their value. Uniforms come from a lights.json `grades` row (+ the palette gates);
 `day` is the identity and hides the rect. See core/render/README.md "The 2D light model".
+`age` (0 = off) is the page age: the D5 overlay's aged paper, applied here first, to neutral pixels only
+(`age_dark` / `age_light` = look_d5's mock-median gains), so the world and the actors above it warm
+together; the rect draws when the grade is not the identity OR the age is > 0 (core/render/README.md
+"Page age").
 
 ## D4 "Ink and Hatch" print pass (F-08)
 
