@@ -261,3 +261,23 @@ NEXT (iteration 4), in order:
   (84,0,5) = #540005. The palette read in CombatBlood is a zero-change at merge. Noir: CombatBlood skips set_dark
   under --look=noir, so the token blood_dark never reaches the noir pool body; set_ground(blood) is the same value as
   noir's colour.blood.
+- FRAMES (final state, e086c85): city_fight seed 91 t900, --blood=ink vs --blood=noir (default) at 32/48/64/128
+  px/m: masters frames/final-t900-{32,48,64,128}ppm-pair.png (raw/final/). Camera breaks: 0 of 8.
+- OWNER A/B (frames only, NOT committed): pool size. A grown pool at radius_px 22 + run 0.6 is ~2 m across vs T1's
+  ~1.4 m splat. Rendered riot t900 at 22 / 16 / 12 px with a temporary blood_fx.json pool.radius_px edit (restored,
+  tree clean): masters frames/pool-size-ab-t900-{48,64}ppm.png. My read: 16 keeps the brutality and lets the spray
+  read. Camera breaks: 0 of 6.
+- FINDING + MILESTONE 58a8388: pools printed BESIDE their body. Measured with temporary CorpseStains logging
+  (reverted): the city's dead slide exactly 0.54 m along the blow after death (8/8 bodies, slide . blow = 1.00);
+  the pool started 4 px past the hit point. Fix: blood_fx.json game.pool_lead_m 0.54 -> CombatBlood passes it to
+  BloodFx.pool_lead_px on the cue path only (quest 1's events path + noir's own scenes keep 4 px). Unit test
+  updated (pool at the rest point, not the hit) + 1 new (events path keeps the hit). Unit 351/0, lint 13/13.
+  Frames: masters frames/pool-lead-t{480,600}-{32,48,64}ppm-pair.png (before = lead 0.125 m = exactly the old 4 px,
+  same run) + t900 pairs (frames/pool-lead-t900-*). At t600 each body lies in the middle of its pool. Camera
+  breaks: 0 of 18. NOTE on my first read: at t900 most pools are orphans (bodies despawn at 8 s), so t900 does
+  not show the fix; t480/t600 do.
+- FRICTION: Python text-mode writes on Windows turned LF files into CRLF (git warned); converted back to LF before
+  commit. gdformat also rewrote a file as CRLF. Write bytes, not text, on this machine.
+- GATES at 58a8388 (evidence/run.mjs --no-bench, 16:10): lint 13/13, unit 351/0 (judged FAIL only for "tree changed
+  during run": my own JOURNAL/evidence edits mid-run; re-run below), scenarios 8/8, parity exact, selftest PASS
+  (look goldens 11/11 worst 0.74, was 0.49: the pools moved 0.54 m; within mean 4, no re-bless).
