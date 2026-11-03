@@ -232,8 +232,9 @@ What still separates us, largest first:
    mock's 245,222,195; street 80,69,71 vs 81,70,71, with `age_floor` 1.0; 0.6 was worse, h112af06). What is left is
    the mid-tone share (L 0.42-0.70): 0.08 vs the mock's 0.11 (h106 0.05): the print posterizes into paper / wash /
    ink steps where the mock keeps soft greys. Lifting the street is the WRONG lever (rejected h111wh15: street 0.332
-   vs mock 0.290, readability down). Next (visual-engine): a softer mid wash step in look_d5_print (wider
-   smoothstep on step_mid), A/B at 32 against these per-class numbers.
+   vs mock 0.290, readability down); so is a softer wash step (rejected h113ss10: mid 0.08 -> 0.09 but the paper
+   darkens 0.856 -> 0.847). The mid-tones are in the mock's art (soft grey roof shading), so: next plates (Codex)
+   with a mid-grey shading layer under the pen hatch, judged by these per-class numbers.
 3. **Roof texture on the D4 neighbours**: the D5 plates show the mock's fine diagonal hatch under the thin print,
    but the D4 neighbour roofs (and the helipad, the arena's warehouse/long roofs) have no D5 plate. Next: Codex plates
    on the square-padded template (budget), or the d4-production lane's D4 set under the thin print.

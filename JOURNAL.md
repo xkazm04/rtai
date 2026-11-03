@@ -915,3 +915,9 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   0.6 gives 238,220,196 (cooler) and paper L 0.855 (no lift); street 80,69,71 (mock 81,70,71) -> 79,69,74. So
   age_floor 1.0 is right and the paper L gap (0.856 vs 0.867) is not the tint. The remaining class gap is the
   MID-TONE share: L 0.42-0.70 px 0.08 (h109all) vs 0.11 (mock), h106 0.05. Gap 2 in the README corrected.
+- 03:42 REJECTED (h113ss10; shader reverted to HEAD, roofs + params restored, project/ clean): a softer light/mid wash
+  step in look_d5_print (step_soft 0.03 -> 0.10) for gap 2's mid-tone share. 32 px/m per class vs h109all: mid
+  0.08 -> 0.09 (mock 0.11), paper L 0.856 -> 0.847 (mock 0.867, further away), paper 244,220,192 -> 241,217,190,
+  street and readability unchanged (rim dL 0.610, verm 77.5, teal 57.6). Not worth it. The mid-tone gap is in the
+  art (the mock's roofs carry soft grey shading at its resolution), not in the step width. Metric script masters
+  work/i7/cls.py (per-class shares + the readability band).
