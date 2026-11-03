@@ -3,7 +3,7 @@ extends RefCounted
 ## One enemy as data: archetype, body state, the brain's state and timers. Views read pose();
 ## nothing here is a node (SIM-03). Positions in metres, timers in ticks.
 
-enum State { PATROL, ALERT, ENGAGE, WINDUP, FIRE, RECOVER, COVER, FLANK, PANIC, DOWN, DEAD }
+enum State {PATROL, ALERT, ENGAGE, WINDUP, FIRE, RECOVER, COVER, FLANK, PANIC, DOWN, DEAD, STAGGER}
 
 const HURT_TICKS: int = 12
 
@@ -87,8 +87,10 @@ func pose(now: int) -> StringName:
 			p = &"swing" if melee() else &"shoot"
 		State.PANIC:
 			p = &"flee"
+		State.STAGGER:
+			p = &"stagger"
 	var hurt: bool = now - hurt_tick < HURT_TICKS and state != State.DEAD
-	return &"hit" if hurt and state != State.DOWN else p
+	return &"hit" if hurt and state != State.DOWN and state != State.STAGGER else p
 
 
 func write_state(out: StreamPeerBuffer) -> void:

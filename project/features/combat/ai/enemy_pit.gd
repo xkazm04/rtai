@@ -168,9 +168,22 @@ func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2) -> void:
 		e.token = false
 		e.died_tick = tick
 		stats["kills"] += 1.0
+	elif e.arch.stagger_ticks > 0:
+		stun(e, e.arch.stagger_ticks)
 	elif e.state == EnemyAgent.State.PATROL:
 		e.last_seen = rivet_pos
 		e.enter(EnemyAgent.State.ALERT, e.arch.reaction_ticks)
+
+
+## Interrupts `e` for `ticks` (a stagger, or the electroshock's stun): a windup is cancelled and
+## its squad token handed back. The dead and the downed are left as they are.
+func stun(e: EnemyAgent, ticks: int) -> void:
+	if not e.alive() or e.state == EnemyAgent.State.DOWN:
+		return
+	e.token = false
+	e.last_seen = rivet_pos
+	e.vel *= 0.3
+	e.enter(EnemyAgent.State.STAGGER, ticks)
 
 
 ## Rivet's sprint tackle: humans go down; robots and bosses stay blocked (owner: later).

@@ -36,6 +36,7 @@ class Archetype:
 	var morale: float = 0.5
 	var reaction_ticks: int = 30
 	var telegraph_ticks: int = 30
+	var stagger_ticks: int = 0
 	var uses_cover: bool = false
 	var flanks: bool = false
 	var shield_front_mult: float = 1.0
@@ -127,6 +128,7 @@ func _archetype(t: DataTable, row: Dictionary) -> Archetype:
 	a.morale = t.num(row, "morale")
 	a.reaction_ticks = CombatTuning.ticks(t.num(row, "reaction_s"))
 	a.telegraph_ticks = CombatTuning.ticks(t.num(row, "telegraph_s"))
+	a.stagger_ticks = CombatTuning.ticks(t.num(row, "stagger_s"))
 	a.uses_cover = row.get("uses_cover", false) == true
 	a.flanks = row.get("flanks", false) == true
 	a.shield_front_mult = t.num(row, "shield_front_mult")

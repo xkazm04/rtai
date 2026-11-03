@@ -24,7 +24,7 @@ static func step(e: EnemyAgent, pit: EnemyPit) -> void:
 	match e.state:
 		S.PATROL, S.ALERT:
 			_patrol(e, pit)
-		S.DOWN, S.PANIC, S.RECOVER:
+		S.DOWN, S.PANIC, S.RECOVER, S.STAGGER:
 			_timed(e, pit)
 		S.WINDUP:
 			_windup(e, pit)
@@ -54,7 +54,7 @@ static func _timed(e: EnemyAgent, pit: EnemyPit) -> void:
 	var desired: Vector2 = Vector2.ZERO
 	if e.state == S.PANIC:
 		desired = (e.pos - pit.rivet_pos).normalized() * e.arch.speed_mps
-	if e.state != S.DOWN:
+	if e.state != S.DOWN and e.state != S.STAGGER:
 		EnemyMotor.move(e, desired, e.last_seen, pit.agents, pit)
 	if e.timer <= 0:
 		e.token = false
