@@ -235,3 +235,12 @@ cruiser in city_frame; KingPlan into the boss ticket).
   above, ~7 m from Rivet) never get the D5 grime H2 shows. PROPOSAL (d5-cast owns the atlas inputs, d5-city the people
   layer): bake a second CrowdAtlas with RigDetail on at FULL_ZOOM and swap the MultiMesh texture while RigDetail.active
   (memory: one more 128 px-cell atlas; bake time ~30 frames at load). Not started: too big for this session's tail.
+- TRIED + REVERTED (never committed): a D5 twin of the crowd atlas (CrowdAtlas.make_d5: 171 px cells at 64 px/m,
+  baked with RigDetail on, the people layer swapping textures while RigDetail.active; unit 329/329 green). The dumped
+  atlases (masters renders/atlasD5/atlas-zoom.png, crowd-atlas vs crowd-atlas-d5) show NO D5 print in the twin: the cells
+  are the D4 print at a higher resolution. Known cause for the sleeved looks: RigDetail skips palette-swapped parts
+  (sprite_swaps != 0). Unverified for the cop look (unswapped, has d5/cop parts) - its twin cell shows no D5 scratches
+  either, so the overlays may not print in the bake SubViewport at all. Cost without the gain (+~23 MB VRAM, +~30 load
+  frames, and a real-city run whose crowd layout moved because the longer load let the sim advance) -> reverted.
+  The FINDING above stands: outer crowd at 64 px/m prints D4. NEXT owner: whoever takes the D5 crowd must first make the
+  RigDetail overlays print in the baker's SubViewport (check the cop cell), then decide on swapped parts.
