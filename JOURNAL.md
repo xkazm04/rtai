@@ -245,3 +245,19 @@ NEXT (iteration 4), in order:
 - 13:12 session end (superseded below): tree clean at the commit after 335f6ca. All gates green at 030eb10 (later commits: docs, the
   frames.json/ladder and journal only). Masters frames.json 15 entries, ladder.png 6405 px tall, raw/ 320 MB
   (kept: the before/after sources). No Godot process of mine left (3 running at 13:04 belong to other lanes).
+
+## Iteration 44 (15:41-17:00)
+- 15:41 read JOURNAL + git log. bench.lock free: took it (d5-combat), ran evidence/run.mjs (with bench) at e086c85,
+  released the lock 15:57. (A first try at 15:42 refused: I had put the log under evidence/ = dirty tree; moved the
+  log to masters raw/run-iter4.log.)
+- GATES at e086c85 (the all-walkers fade commit, not gated before): lint 13/13, unit 350/0, scenarios 8/8, parity
+  exact (1200 steps, mutation caught at 629), selftest PASS (goldens 11/11 worst 0.49, block 5/5 worst 0.94).
+- BENCH iter4 (15:49-15:57, CONTENDED, lock held), release export, 3 runs x 4 x 60 s. Riot (400 actors, blood on):
+  avg 3.03 ms, p99 10.31 ms, 1% low 78 fps, hitches >25 ms 3 (iter3: 58), >50 ms 0, worst frame 46.2 ms, rigs p99
+  0.82 ms. Overall JUDGE: MISSES p99CpuMs, worstSwapMs, over50.unexplained: the 11 unexplained >50 ms and the
+  168 ms worst frame are in the drive scenarios (no blood there). Evidence: evidence/d5-combat/bench/iter4/.
+- MERGE CHECK (NEXT 3): d5-city's palette.json (d-city e9b9323) has blood #A30509 and blood_dark #540005; my
+  hard-coded blood_fx.json colour.blood 0.64,0.02,0.035 = (163,5,9) = #A30509 and game.pool_dark 0.329,0,0.02 =
+  (84,0,5) = #540005. The palette read in CombatBlood is a zero-change at merge. Noir: CombatBlood skips set_dark
+  under --look=noir, so the token blood_dark never reaches the noir pool body; set_ground(blood) is the same value as
+  noir's colour.blood.
