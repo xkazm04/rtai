@@ -4,8 +4,10 @@ extends SceneTree
 ## Needs a window (the headless display has no renderer); dev-only, never shipped.
 ## Usage: godot --path project --resolution 1920x1080 -s res://dev/frames/quest1_clip.gd
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
+##   [--save=<abs file>] (the game writes its beat checkpoints there)
+##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--stills"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--stills", "--save", "--continue"]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
 
@@ -47,6 +49,8 @@ func _initialize() -> void:
 	for t: String in ticks.split(",", false):
 		stills.append(t.to_int())
 	rec.set("stills", stills)
+	rec.set("save_path", values.get("--save", ""))
+	rec.set("press_continue", values.has("--continue"))
 	root.add_child(rec)
 
 

@@ -13,6 +13,10 @@ var px_per_m: float = 32.0
 var every: int = 2
 ## Stills mode: only these ticks (even) are saved, as still_<tick>_<ppm>.png; no clip.
 var stills: Array[int] = []
+## Where the game writes its beat checkpoints ("" = none); with press_continue the run presses
+## Continue on the title and saves continue_f1 / continue_f6 (the first frames after it).
+var save_path: String = ""
+var press_continue: bool = false
 var _game: Quest1Game
 var _driver: CollectCallInputDriver = null
 var _frame: int = 0
@@ -23,11 +27,14 @@ func _ready() -> void:
 	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
 	_game = scene.instantiate() as Quest1Game
 	_game.px_per_m = px_per_m
-	_game.save_path = ""
+	_game.save_path = save_path
 	_game.settings_path = ""
 	add_child(_game)
 	await _settle()
 	await _save("title")
+	if press_continue:
+		await _continue_frames()
+		return
 	_game.card.start_button.pressed.emit()
 	_game.session.world.set_process(false)
 	_game.session.live.viewport = null
@@ -46,6 +53,7 @@ func _run() -> void:
 		var beat: String = s.beat_id()
 		if not stills.is_empty():
 			if stills.has(s.tick()):
+				await _warm()
 				await _save("still_%d_%d" % [s.tick(), px_per_m])
 				if s.tick() == stills[0]:
 					_game.set_paused(true)
@@ -72,6 +80,22 @@ func _run() -> void:
 		get_tree().quit(0)
 
 
+func _continue_frames() -> void:
+	_game.card.continue_pressed.emit()
+	_game.session.world.set_process(false)
+	await _save("continue_f1")
+	for i: int in 5:
+		await get_tree().process_frame
+	await _save("continue_f6")
+	Log.info(
+		"clip", "continue at tick %d, beat %s" % [_game.session.tick(), _game.session.beat_id()]
+	)
+	if get_tree().has_method(&"finish"):
+		get_tree().call(&"finish")
+	else:
+		get_tree().quit(0)
+
+
 func _keep(beat: String) -> bool:
 	for w: Array in WINDOWS:
 		if w[0] == beat:
@@ -81,6 +105,15 @@ func _keep(beat: String) -> bool:
 				_kept[beat] = n + every
 				return true
 	return false
+
+
+## A still jumps the sim thousands of ticks with no frame drawn, so the city view has not streamed
+## the chunks around Rivet yet: fill the street the way a Continue does, then let the crowd settle.
+func _warm() -> void:
+	if _game.view != null and _game.view.city_view != null:
+		@warning_ignore("return_value_discarded")
+		_game.view.fill_street()
+	await _settle()
 
 
 func _settle() -> void:

@@ -84,9 +84,26 @@ func _ready_on_city() -> void:
 	for v: Node2D in [stage_view, fx_view, cast_view]:
 		v.scale = k
 		city_view.actor_layer().add_child(v)
-	# the chunks around where Rivet stands now (a Continue or Retry starts mid-street)
+	# pipelines warmed with the camera where Rivet stands now (a Continue or Retry starts
+	# mid-street), and that street drawn at once instead of over many budgeted frames
 	@warning_ignore("return_value_discarded")
 	city_view.prewarm()
+	Log.info("quest1", "street filled in %d chunk passes" % fill_street())
+
+
+## Draws every resident chunk around the city focus now: the chunk view streams under a per-frame
+## budget, so after a jump (Continue, Retry, a dev still) the street would draw in over many
+## frames. The sim's residency is not touched (that steps on the tick). Returns the passes taken.
+func fill_street(max_passes: int = 600) -> int:
+	if city_view == null or city == null or city_view.chunks == null:
+		return 0
+	var n: int = 0
+	while n < max_passes:
+		city_view.chunks.update(city.focus, city.residency, city_view.zoom)
+		n += 1
+		if not city_view.chunks.frame_swapped:
+			break
+	return n
 
 
 func _process(_delta: float) -> void:
