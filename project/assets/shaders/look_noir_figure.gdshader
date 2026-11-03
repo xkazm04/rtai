@@ -1,7 +1,7 @@
 shader_type canvas_item;
 // D-Noir figure shadows (lane noir, NoirFigureShadows): TEXTURE is the casters (the rigs) rendered
 // alone into a screen-sized SubViewport. Each fragment walks back along the sweep (towards the light)
-// and takes the max alpha of the silhouette, SCALED about the nearest body's centre by a height
+// and takes the max alpha of the silhouette, SCALED about the quad's body centre by a height
 // profile: narrow legs at the feet, the full shoulders mid-way, a small head at the far end - so a
 // body casts a figure, not the box a straight sweep of its top-down outline makes. Printed flat.
 
@@ -20,17 +20,16 @@ float width(float t) {
 	return mix(legs, 1.0, smoothstep(0.25, 0.55, t)) * mix(1.0, head, smoothstep(0.8, 0.95, t));
 }
 
+// the quad's body index travels in its modulate colour (r = k / 255): one body per quad, no search
+varying float body;
+
+void vertex() {
+	body = COLOR.r * 255.0;
+}
+
 void fragment() {
-	vec2 mid = UV - sweep * 0.5;
-	vec2 c = vec2(-10.0);
-	float best = 1e9;
-	for (int k = 0; k < body_count; k++) {
-		float dd = length((bodies[k] - mid) * view);
-		if (dd < best) {
-			best = dd;
-			c = bodies[k];
-		}
-	}
+	int k = clamp(int(body + 0.5), 0, MAX_BODIES - 1);
+	vec2 c = k < body_count ? bodies[k] : vec2(-10.0);
 	float a = 0.0;
 	for (int i = 1; i <= taps; i++) {
 		float t = float(i) / float(taps);

@@ -145,8 +145,11 @@ func _set_quads(view: Vector2, d_px: Vector2, reach: float) -> void:
 
 func _draw() -> void:
 	var tex: Texture2D = _sub.get_texture()
-	for r: Rect2 in _quads:
-		draw_texture_rect_region(tex, r, Rect2(r.position * res_scale, r.size * res_scale))
+	for k: int in _quads.size():
+		var r: Rect2 = _quads[k]
+		var src: Rect2 = Rect2(r.position * res_scale, r.size * res_scale)
+		# the body index rides in the modulate colour (look_noir_figure.gdshader reads it)
+		draw_texture_rect_region(tex, r, src, Color(k / 255.0, 0.0, 0.0))
 
 
 func _on_node_added(node: Node) -> void:
