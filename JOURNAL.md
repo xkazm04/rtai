@@ -326,3 +326,58 @@
   5. A longer reel (20-40 s): add the charged shock once a metal target rig exists
      (REQUEST 2 -> enemy-ai: the robot thug), and a second cop that shoots (gunplay's tell).
   6. Then the deferred breadth: melee weapons (baton, katana) on MeleeCombo rows.
+
+## Iteration 4 (22:31-23:16), BUILD
+- 22:31 Read: JOURNAL, git log, answers.json. Nothing new for this lane (10 answers; -1 and -2
+  already applied). Item: brief 4b, the melee-weapon framework plus the electro baton and the
+  katana ("tonight"; the chainsaw and plasma sword come in the night run).
+- Registry rules applied (realtime-combat-semantics, as read in iteration 1): the timing is data
+  per phase (windup / active / recovery), and one landing tick per hit; a thrust that travels
+  is shown by the attacker's motion, not by a longer hitbox. No deviation.
+- MILESTONE 5aaaa51: the framework.
+  - `data/tables/melee_weapons.json` plus schema `gtai.melee-weapons/1`. It is a separate
+    table, so it never conflicts with gunplay's weapons.json.
+  - Each weapon is a combo in the claw's shape, plus per-hit `stun_ticks` / `chain_hops` /
+    `lunge_m` and per-weapon `move_mult` / `chain_radius_m` / `length_m` / `grip`.
+  - `MeleeTable.weapon(id)` loads a weapon into the same shape; `weapon_ids()` lists them for
+    the panel.
+  - `MeleeCombo` gained `lunge_step_m()` (lunge_m spread over windup + active, 0 in recovery)
+    and `move_scale()`.
+  - The baton: 2 jabs (stun 30 ticks), then an overhead crack (stun 90, arcs to 2 metal
+    targets within 2.5 m); move_mult 0.85.
+  - The katana: 2 wide slashes at 2.1 m reach, then a 2.4 m lunge thrust (2.5 m travel,
+    knockback 1.2); move_mult 0.7.
+  - Mashed 3-hit chain: the baton is faster than the claw (tested).
+  - All 46 new values are tunable on the melee line station.
+  - `test_melee_weapons` passes 9/9, with 3 planted faults: a missing weapon, a string
+    move_mult, a lunge stretched into the recovery.
+- MILESTONE edb694d: the weapons on screen.
+  - `features/player/melee_weapon_view.gd` draws the prop from the fist along the forearm, at
+    length_m, with the D5 ink outline. Slashes sweep +-1.1 rad (two-hand) or 0.7 (one-hand),
+    alternating sides, with a 4-tick smear. A thrust never sweeps. Baton hits zap the struck
+    body for its stun_ticks.
+  - Colours: pale blue-white electric and steel; no teal, no vermilion.
+  - `combo_clip.gd -- --weapon=<id>`: Rivet stands off at the weapon's reach, and the lunge
+    stops 0.8 m short of a body.
+  - Measured: katana_1/2 land at 1.79 m, katana_3 at 0.75 m after the lunge; the baton
+    lands at 1.30 m.
+  - Clips: `clips/weapon-{katana,electro_baton}-48ppm.mp4` plus `-sheet.png`.
+  - Honest read: the katana's sweep and thrust read, the smear is faint, and the blade is a
+    thin pale line at 1x. The baton (0.7 m) is mostly hidden by the guard at 1x; the stun zap
+    carries its read. The shared vermilion hit flash still tints the ped (REQUEST 1 -> gunplay).
+- FRICTION: the first unit run after the view said "exit -1" because GODOT_BIN was not
+  exported in that shell, and the 568 shown was the stale junit count. Export it in every call.
+- The arena lane (e-arena-56) sent 3 layout notes on my station. Applied in b03f575:
+  - the metal dummies are `kind: metal`;
+  - the humans are 2 m apart at x 0/2/4 (rings 0.8 m overlapped at 1.2 m), and the metals sit
+    at 6/8/10 plus 14 (past the 3 m chain radius);
+  - the course props and tackle_crowd moved onto the course rect (x -42..-4).
+  SHARED FILE: `data/schemas/arena_station.schema.json` was taken verbatim from e-arena
+  ab3d26d (it adds kind metal), so it merges clean. I replied to the arena lane.
+  REQUEST 1 -> arena is closed (the metal dummy kind exists).
+- decisions.md: the melee weapons line.
+- frames.json: 15 entries. Added the katana clip and sheet and the baton clip. Dropped the
+  motion course at 48 and its sheet, and the claw impact clip at 32 (the reel supersedes them).
+- No ASK: the owner's 21:25 bar is a real-time clip in the final look, and these props are
+  placeholders without weapon art. Ask the night run with weapon art (codex image_gen) on the
+  props: `rivet-motion-3` is a clip of each weapon against the dummy line.
