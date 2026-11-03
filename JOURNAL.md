@@ -954,7 +954,7 @@ NEXT (iteration 14 close, in order):
    (car_len / car_half_w from the sprite), noir parts + coat into the rigs, BloodStains / BloodFx.solid in the
    game hosts, the noir HUD in the composition root, a settings toggle for safety.flashes, the flash margin.
 5. showcase_fight.gd is 213 lines (soft ~200): the hero-frame saving (_save, _to_uv) could move out next.
-- (06:00) Owner reference for NEXT item 1 (shadow length): roof blocks (`len_m.building`) at 2.0 m instead of
+- (05:57) Owner reference for NEXT item 1 (shadow length): roof blocks (`len_m.building`) at 2.0 m instead of
   3.0 m (masters shadow-len2/, not committed): evidence/cast-shadows-length-option.png (none | 2.0 | 3.0).
   Measured against the same code at 3.0 (shadow-v4): all 9 noir frames byte-identical but 1 px. So **the
   building sweeps show nowhere in the standard frames** (the 8.4 m blocks tile edge to edge, so a block's sweep
