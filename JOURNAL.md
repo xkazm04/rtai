@@ -487,3 +487,13 @@
   line is the blocker test's expected error. So the earlier red was cross-lane contention on
   the shared user dir, as suspected. Unit at f5a31e9 counts as green (558 + 16). Session ends
   here; everything is committed.
+
+## Iteration 7 (23:20-23:30, BUILD, ten minutes before freeze)
+- answers.json re-read: only rivet-motion-1 (A) and rivet-motion-2 (B, placeholder) are there, and both were already applied.
+- Checked frames.json in gtai-masters/eve/rivet-motion: 15 entries, and every file exists.
+- MILESTONE: `evidence/rivet-motion/FEEL-NUMBERS.md` collects every measured feel number
+  (locomotion, roll, combo cadence, tackle reel, planted faults) on one sheet for the 23:40 report.
+  Display latency is still named UNMEASURED.
+- NEXT (night run): same list as in iteration 6 (weapon art, then the ASK rivet-motion-3 with a D5-look clip;
+  the baton arc on metal dummies in combo_clip_run after splitting it, since it is 216 lines; then the chainsaw
+  and the plasma sword; the HitFeel REQUEST 1; wiring PlayerMotion into the game so display latency can be measured).
