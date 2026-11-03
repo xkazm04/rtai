@@ -319,3 +319,7 @@ bosses we resolve in future."
   Now: pushed 0.093 m (bound 0.15); with the rule off (what the shared 5.0 line did) 0.61 m, so it is caught.
   `--filter=bodies_runin` passes 1/1; the full standalone suite passed 12/12 with this speed before the comment rewrap.
 - Every experiment's scratch was reverted; `git status` shows only the 3 untracked files from before the session.
+- Commit (test): two unit tests for today's schema change. The run line is per class: a 4.5 m/s human into Rivet
+  gives `blocked`, which the shared 5.0 line would have made a shove. A class without run_mps is a load error.
+  Unit 336/0, lint 13/13. FRICTION: GUT's assert_eq on a Dictionary value needs `str()` (Variant subtype
+  warning), and `erase()` needs `@warning_ignore`. A first run caught both through load_all, before any test ran.
