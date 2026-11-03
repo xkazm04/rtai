@@ -219,3 +219,30 @@ NEXT (iteration 3, final order):
 - What the clip still does NOT show (honest): contractors are 1 hp, so no non-lethal hit and no
   flinch; there is no cop raised-gun tell (REQUEST 5 -> enemy-ai); Rivet's art is the static
   capture, so the claw does not visibly point the pistol (REQUEST 6 -> rivet-motion).
+- MILESTONE 9e3715a + e2a88b9: `pistol_fight -- --armored` (contractors take weapons.json's
+  `armored` hp, 2.5 pistol rounds): 42 shots, 42 hits, 14 kills, 11 kill hit-stops; the impact
+  star now shows on a LIVING figure. FINDING: quest 1's enemy rounds were 4 px vermilion dashes
+  (0.25 m), invisible at 32 px/m. With a table gun wired, FxView now draws them as 1.2 m vermilion
+  strokes in an ink casing (Rivet's: 2.5 m cream), and Rivet struck gets the star with a vermilion
+  rim. The dev camera eases (FOCUS_EASE 0.06), because a kill used to cut the frame (seen on a
+  contact sheet). Clips: gtai-masters/eve/gunplay/pistol_fight{,_armored}/; frames.json updated
+  (top 6 are this iteration).
+- Rules applied: realtime-combat-semantics (readability of the incoming threat over the
+  outgoing one: the enemy round is the more saturated colour), the morning's palette verdicts
+  (vermilion = danger only: enemy rounds and Rivet struck; red = blood only; nothing teal).
+
+NEXT (iteration 4, depth on the pistol chain, then ASK):
+1. Arena wiring (REQUEST 4 still open on e-arena): in `ArenaStage.setup`, set `arena.gun` and
+   `HitLink.make(arena, HitFeel.shipped(view_rig), WeaponTable.shipped())`, set
+   `view.cast_view.hit_link`, and hold the play on `link.hold`. If the arena lane has not done
+   it, capture on a local scratch merge (never committed).
+2. The cop's raised-gun tell (REQUEST 5 -> enemy-ai): route GuardBrain's shot through
+   EnemyGunner so the tell line and the lock show in this same D5 view. Then quest-1 contractors
+   become the dodge test: count rounds dodged by a strafe in pistol_fight --armored.
+3. The flinch: HitFeel.reaction is emitted on non-lethal hits; nothing draws it. Until enemy-ai
+   lands an animation, a 6-tick lean back along the hit direction in CastView (data: the
+   class's stagger_ticks) would show it.
+4. Then re-ASK gunplay-2 with pistol_fight_armored_32ppm.mp4 (D5, real cast, hit reaction) plus
+   the 5/10/20/35 m TTK row for the pistol. Only after that: the machine pistol on the same chain.
+- Gates at e2a88b9: lint 13/13; scenarios 20/20 (at 4972c90, view-only changes since); unit:
+  all mine pass, test_save_slots fails here AND on int-day (shared machine, see FRICTION).
