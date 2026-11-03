@@ -246,3 +246,9 @@ NEXT (iteration 4, depth on the pistol chain, then ASK):
    the 5/10/20/35 m TTK row for the pistol. Only after that: the machine pistol on the same chain.
 - Gates at e2a88b9: lint 13/13; scenarios 20/20 (at 4972c90, view-only changes since); unit:
   all mine pass, test_save_slots fails here AND on int-day (shared machine, see FRICTION).
+- MILESTONE (22:30): NEXT 3 done in code. `HitLink.lean(f)` listens to `HitFeel.reaction` and
+  CastView draws a living contractor offset 0.3 m along the hit, easing back over the
+  reaction's ticks (view only; the sim position is untouched). test_hit_link 3/3, scenarios
+  20/20 (evidence/scenarios-it3b.log). NOT visually confirmed: at 32 px/m the `light` class
+  lean is about 10 px for 6 ticks and did not read on a contact sheet. Next iteration: judge it
+  at 48 px/m, and raise `light.stagger_ticks` or LEAN_M if it is still lost (a hit_feel.json value).
