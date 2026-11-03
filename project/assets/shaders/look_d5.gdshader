@@ -31,9 +31,10 @@ uniform float age = 0.0;           // aged paper: warms the neutral print toward
 uniform float age_floor = 0.0;     // aged paper below the D5 zoom (32 px/m too): a proposal for the D4 profile, 0 = off
 uniform float grain_floor = 0.0;   // the world-locked paper tooth below the D5 zoom (the mock's mottle): a proposal, 0 = off
 
-const vec3 CREAM = vec3(0.949, 0.910, 0.835);
+// the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
+uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
+uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
-const vec3 INK = vec3(0.090, 0.075, 0.106);
 // aged-paper gains, dark end and light end (d4h2_mock.jpg medians: street 78,67,68 / paper 246,223,195)
 const vec3 AGE_DARK = vec3(1.03, 0.955, 0.87);
 const vec3 AGE_LIGHT = vec3(1.065, 1.0, 0.955);
@@ -79,19 +80,19 @@ void fragment() {
 			float patch = smoothstep(0.42, 0.72, vnoise(w * 0.018 + 7.0));   // hand pressure comes and goes in patches
 			if (wash > 0.0) {
 				float h = strokes(w, -0.62, mix(0.16, 0.34, smoothstep(0.3, 0.6, d))) * wash * patch * hatch;
-				o = mix(o, INK, h * amount);
+				o = mix(o, ink_tone, h * amount);
 			}
 			// the street (dark wash): sparse, darker pen strokes, only at full amount (64 px/m+), the mock's hatched asphalt
 			if (street > 0.0) {
 				float hs = strokes(w + vec2(3.0, 0.0), 0.785, 0.16) * street * patch * street_hatch;
 				float hz = mix(street_hatch_car * smoothstep(0.2, 0.35, amount), 1.0, smoothstep(0.7, 1.0, amount));
-				o = mix(o, INK, hs * hz);
+				o = mix(o, ink_tone, hs * hz);
 			}
 		}
 		// off-register ink ghost: ink that should be a pixel away, printed faintly here (only onto lighter ink)
 		if (amount > 0.0 && d < 0.66) {
 			float dg = dens(texture(screen_tex, uv - ink_mis * tx).rgb);
-			o = mix(o, INK, max(dg - d - 0.35, 0.0) * ink_ghost * amount);
+			o = mix(o, ink_tone, max(dg - d - 0.35, 0.0) * ink_ghost * amount);
 		}
 		// off-register vermilion pass
 		if (!is_verm && amount > 0.0 && d < 0.95) {
@@ -101,8 +102,8 @@ void fragment() {
 		// paper tooth: an isotropic dry-brush mottle
 		float fib = vnoise(w * 0.07) * vnoise(w * 0.45 + 3.1);   // isotropic mottle (anisotropic fibres read as rain)
 		float tooth = (fib - 0.25) * max(grain * amount, grain_floor);
-		o = mix(o, CREAM, clamp(tooth * d * 0.35, 0.0, 1.0));
-		o = mix(o, INK, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
+		o = mix(o, paper_tone, clamp(tooth * d * 0.35, 0.0, 1.0));
+		o = mix(o, ink_tone, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
 		// aged paper: only the neutral print warms (vermilion, teal and every pickup colour keep their hue)
 		float chroma = max(o.r, max(o.g, o.b)) - min(o.r, min(o.g, o.b));
 		float neutral = 1.0 - smoothstep(0.12, 0.22, chroma);
