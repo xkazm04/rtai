@@ -22,3 +22,20 @@
   `RivetPlan.ARMS[FORM_BASE]` (one row).
 - FRICTION: `--check-only` on a dev script fails on autoloads (`Log`) - expected; the windowed run
   was fine.
+- Gates at 5dc151c + test fix: lint 13/13 (pre-commit hook), unit 538/538 (after updating
+  `test_rivet_plan_is_the_cutout_lanes` to pin the day form's 159 and the base's scaled length),
+  scenarios exit 0 (19 incl. the 60 s replay). Look goldens / evidence run NOT run this iteration:
+  Rivet's arms are in the look golden frames, so they may need a dated re-bless (next iteration).
+- Owner page: `gtai-masters/eve/rivet-motion/frames.json` (4 entries so far).
+- Found for item 2: the sim side already does twin-stick (TopDownMover faces the aim at
+  `turn_dps`, strafe_scale slows off-facing moves) and RigGait already steps the feet along
+  `vel_in`. What is missing is the HIPS: the pelvis and the knee poles stay on the aim facing, so a
+  strafe crosses the legs and a backpedal reads as a forward walk.
+- NEXT: (1) re-read answers.json (rivet-motion-1). (2) Run `node tools/evidence/run.mjs --no-bench`
+  to see whether the look goldens moved; if so, re-bless once with a decisions.md line.
+  (3) Item 2: add `CutRig.hip_yaw` (Rivet-only via `BodyPlan.hip_follow`, default 0 so cops and
+  peds stay byte-identical): target = wrap(vel angle - facing), folded by PI when |x| > 100 deg
+  (backpedal), clamped to `hip_twist_max` (~70 deg), springed; pelvis.rotation += hip_yaw, the
+  knee pole in `_solve_leg` rotated by hip_yaw. Then a 32/48 px/m clip of Rivet circle-strafing
+  a fixed aim point (dev scene in `project/dev/rivet_motion/`, `--fixed-fps 60`), plus the turn
+  rate number. (4) Locomotion clips (item 3), registry subjects first.
