@@ -116,3 +116,46 @@ data value so the owner's answer is a one-line switch.
   idles at the north edge at t 45 (probably waiting for a token out of sight; check next).
 - MILESTONE e369543: the pit view runs a curve (--curve, --human=1, --every=2 for a 30 fps
   real-time clip).
+- MILESTONE 604fec8: unit tests test_enemy_waves (curves load, gates interleave, a wave waits
+  for the clear plus the breather). Caught: an Array[StringName].sort() is not alphabetical
+  (sorts by interned pointer); curve_ids sorts by String now.
+- MILESTONE 354ba63, two more behaviour bugs the waves surfaced:
+  (1) MORALE counted every enemy the pit ever spawned, so from wave 2 on patrol cops (morale
+  0.5) broke after the first death (wave 1's dead counted). EnemyAgent.squad (the wave index)
+  + EnemyPit.fallen_frac(squad). Unit test added.
+  (2) CORNER PING-PONG: a corner the target is still hidden from was costed as if the line went
+  on through the box, so two corners took turns winning and a SWAT oscillated 0.3 m behind the
+  north-west crate for 200 s. Blind corners now rank last (+100 m).
+  The pit view's tag shows pose/brain-state (how the alert SWAT was spotted).
+- Numbers after the fixes (seed 31, human profile): standard 14.5 / 18.3 / 25.7 s, dmg
+  0 / 0 / 16; steep 15.9 / 21.9 / 24.7 s, dmg 0 / 0 / 0 (99 enemy shots); gentle 8.2 / 14.2 /
+  11.5 s, dmg 0. Clips re-rendered (wave 3 cut ~2 s before its clear).
+- ANSWER enemy-ai-1 (owner, 21:25 via answers.json): A as a placeholder; "not judgeable in
+  this state - no weapon design, no final animation, no opponent hit reaction"; stop tuning on
+  numbers, re-ask only with real-time clips in the final look (common.md, Owner direction
+  21:25). Recorded in docs/decisions.md.
+- WITHDRAWN ask enemy-ai-2 (difficulty curve): its clips are debug circles with no hit chain,
+  so under the 21:25 rule 4 it is not a valid ask; deleted the file at 21:53. The curve is my
+  call: steep stays the pit default (most pressure; the arena is a stress test).
+- DIRECTION CHANGE (common.md 21:25): depth before breadth; enemies must be the cast rigs, not
+  circles; the 00:00 sample is a patrol cop and a robot thug with full hit reactions and
+  deaths, against Rivet's pistol and claw combo, in the arena, one 20-40 s clip per lane.
+- Scouted for that: features/characters (CutRig.drive/hit(from_dir, strength); RigClips SHOOT,
+  HIT, DEATH, knockdown fall/rise), dev/showcase/d5_arena_run.gd (Rivet vs two cops on the rig,
+  on King's arena floor, the closest template), KingPlan (the robot boss on Rivet's skeleton,
+  SIZE_K 1.3: a candidate base for the robot thug until a thug plan exists).
+- Gates at 354ba63: lint 13/13; unit 543/543 at e369543 (+4 new enemy-wave tests green since);
+  scenarios: enemy_pit + enemy_waves green (the full suite not re-run this iteration).
+- Housekeeping: gtai-masters/eve/enemy-ai/fr_steep/ (raw frames, ~44 MB) could not be deleted
+  (it was the session's cwd); delete it next session.
+
+NEXT:
+1. Re-read answers.json. Delete gtai-masters/eve/enemy-ai/fr_steep/.
+2. The 21:25 sample, enemy half: an EnemyRigView that drives CutRig cops (patrol cop first)
+   from EnemyAgent each tick: facing + velocity -> drive(), pose() -> RigClips (shoot -> SHOOT
+   recoil, windup -> a raised-gun aim hold, hit/stagger -> HIT with from_dir, die -> DEATH,
+   down/getup -> the bodies lane's fall/rise). Start from d5_arena_run.gd's setup, at 32 px/m,
+   D5 look, real-time clip.
+3. The robot thug on a rig: KingPlan scaled down (or a thug plan), the claw windup as a pose,
+   sparks on hit (hit_fx). Then the gun tell in the final look (coordinate with gunplay).
+4. Full scenario suite + run_unit before the freeze; then the 20-40 s lane clip for 00:00.
