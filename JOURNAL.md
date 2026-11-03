@@ -456,3 +456,15 @@ NEXT (night run):
 - NEXT (night run): unchanged from iteration 7's list, item 1 first (area behaviours on
   CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m; the held
   gun scale via REQUEST 9; the living read apart from corpses, REQUEST 10).
+
+## Iteration 10 (23:35, STABILIZE; report 23:40, a 5-minute session)
+- answers.json re-read at 23:35: nothing new for gunplay (1, 2 placeholders; 3 = A applied).
+- No code change since 948aa53; the head is docs only. Iteration 7's gates still hold for the
+  code: lint 13/13, unit 569/569, scenarios 20/20, evidence gate all PASS, parity bit-exact.
+  Gates were not re-run: 5 minutes is not enough for them.
+- Untracked evidence/ (logs, frames, clips) stays untracked on purpose (lane evidence, not repo).
+- No Godot processes of mine running. No bench taken; no bench.lock of mine.
+- NEXT (night run): unchanged from iteration 7's list, item 1 first (area behaviours on
+  CombatArena via GunHand + impact.gd/sweep.gd, then per-weapon clips at 32 and 48 px/m in the D5
+  look; the held gun scale via REQUEST 9; the living read apart from corpses, REQUEST 10; re-ask
+  gunplay-2 only with the full tell chain clip in the final look).
