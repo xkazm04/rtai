@@ -663,3 +663,9 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   `after_q1l/`. Commit 58da0b0.
 - 01:35 quest HUD: the stretched memo tape crossed the beat title; the memo frame got 18 px more paper on top
   (`work/q1_top_check.png`). Patch re-saved; final quest frames = `after_q1l/`.
+- 01:36 FRICTION (mine): edited two README pointers while `run.mjs` ran -> unit-tests FAILED on "tree changed during
+  run" (tests themselves 142/142). Same lesson as iteration 3: never touch the tree while the gates run.
+- 01:40 GATES at 11cc7a3 (clean re-run): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
+  parity bit-exact, selftest 65 art textures, 0 placeholders. bench not re-run (no new city texture ids; the city
+  textures changed are the same count and size).
+- Sheet: `masters:night/d4-production/night_iter6_summary.png` (7 items, before | after).
