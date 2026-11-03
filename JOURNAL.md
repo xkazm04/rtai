@@ -1155,3 +1155,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   L 0.424 -> 0.420, ink 0.20, mid 0.05; package h124rf -> h140all: rim dL 0.610, verm dE 77.5, teal dE 57.6
   (identical), L 0.459 -> 0.455, paper 0.30, ink 0.11, mid 0.09 (mock L 0.488 / paper 0.33 / ink 0.12 / mid 0.11).
   The prop shadows and clutter cost no actor read; the frame darkens by 0.004 L.
+- 04:51 TOOL (dev): d5_walk.gd --zoom=<z> (walk_zoom; the crop box scales with it). Default walk9_64 = walk6 (total 1.078 / HF 1.026); --zoom=3.0 walk9_96 = walk8_ctl (1.176 / 1.131). masters tools/shoot.sh usage line now says it passes scene args through. package_shot.sh passes D5_FRINGE / D5_DOTS / D5_RIG_SHADOW / D5_PROP_SHADOW through the environment.

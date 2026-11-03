@@ -5,12 +5,15 @@ extends D5ShowcaseRun
 ## the frame-to-frame change of the two series: extra change in D5 = shimmer.
 
 const WALK_TICKS: int = 40
-const BOX: Vector2 = Vector2(120.0, 120.0)
+const BOX: Vector2 = Vector2(120.0, 120.0)  # at zoom 2.0; scales with walk_zoom
+
+## camera zoom of the walk (1.0 = 32 px/m); d5_walk.gd --zoom
+var walk_zoom: float = 2.0
 
 
 func shoot() -> int:
 	var ok: bool = DirAccess.make_dir_recursive_absolute(out_dir) == OK
-	_frame_at(2.0)
+	_frame_at(walk_zoom)
 	for t: int in SETTLE_TICKS + WALK_TICKS:
 		_pose(t)
 		_walk()
@@ -39,6 +42,7 @@ func _save_walk(name: String) -> bool:
 	if img == null or img.is_empty():
 		return false
 	var view: Vector2 = Vector2(img.get_size())
-	var at: Vector2 = (view * 0.5 + (_rigs.feed.pos[0] - cam) * 2.0).round()
-	var r: Rect2i = Rect2i(Vector2i(at - BOX * 0.5), Vector2i(BOX))
+	var at: Vector2 = (view * 0.5 + (_rigs.feed.pos[0] - cam) * walk_zoom).round()
+	var box: Vector2 = (BOX * walk_zoom * 0.5).round()
+	var r: Rect2i = Rect2i(Vector2i(at - box * 0.5), Vector2i(box))
 	return img.get_region(r).save_png(out_dir.path_join(name + ".png")) == OK
