@@ -1,36 +1,5 @@
 {
   "doc": "Known colour-doctrine debt the accent audit (dev/selftest/accent_audit.gd) tolerates: an accent ink on a layer palette.json does not allow it on (or, layer `cop`, vermilion on the cops: their accent is cop_blue since 2026-11-03), up to max_px at ppm px/m in the selftest junction (seed 91). Any offender not listed here, or above its max_px, fails the selftest evidence (tools/selftest/run.mjs). A row is debt, not a permission: it names the source and the lane that pays it off, and is deleted when the source is fixed.",
-  "rows": [
-    {
-      "accent": "vermilion",
-      "doc": "measured 2026-11-03 at d-city (junction 9412, block 10580 px); the row goes when the cops print in cop_blue",
-      "id": "cop_vermilion_32",
-      "layer": "cop",
-      "max_px": 11000,
-      "owner": "d5-cast",
-      "ppm": 32,
-      "source": "the cop rig parts and the cop crowd-atlas looks (patrol 29.3k, riot 24.7k texels) still print vermilion; cops go cop_blue (owner verdict 6, 2026-11-03)"
-    },
-    {
-      "accent": "vermilion",
-      "doc": "measured 2026-11-03 at d-city (junction 9660, block 6964 px); the row goes when the cops print in cop_blue",
-      "id": "cop_vermilion_48",
-      "layer": "cop",
-      "max_px": 10500,
-      "owner": "d5-cast",
-      "ppm": 48,
-      "source": "the cop rig parts and the cop crowd-atlas looks (patrol 29.3k, riot 24.7k texels) still print vermilion; cops go cop_blue (owner verdict 6, 2026-11-03)"
-    },
-    {
-      "accent": "vermilion",
-      "doc": "measured 2026-11-03 at d-city (junction 2060, block 2744 px); re-measured at 8209a4e (junction 1936, block 4900 px: the selftest crowd lands on another tick after generator changes, prewarm timing); the row goes when the cops print in cop_blue",
-      "id": "cop_vermilion_64",
-      "layer": "cop",
-      "max_px": 6000,
-      "owner": "d5-cast",
-      "ppm": 64,
-      "source": "the cop rig parts and the cop crowd-atlas looks (patrol 29.3k, riot 24.7k texels) still print vermilion; cops go cop_blue (owner verdict 6, 2026-11-03)"
-    }
-  ],
+  "rows": [],
   "schema": "gtai.accent-debt/1"
 }

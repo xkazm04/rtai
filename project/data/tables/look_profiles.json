@@ -48,6 +48,7 @@
       "world": {
         "aquatint": 0,
         "blood": 1,
+        "cop_blue": 1,
         "edge_dark": 0,
         "edge_hi": 0.36,
         "edge_lo": 0.16,
@@ -93,6 +94,7 @@
       "world": {
         "aquatint": 0.18,
         "blood": 1,
+        "cop_blue": 1,
         "edge_dark": 0,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
@@ -138,6 +140,7 @@
       "world": {
         "aquatint": 0.26,
         "blood": 1,
+        "cop_blue": 1,
         "edge_dark": 0,
         "edge_hi": 0.26,
         "edge_lo": 0.09,
@@ -183,6 +186,7 @@
       "world": {
         "aquatint": 0.18,
         "blood": 1,
+        "cop_blue": 0,
         "edge_dark": 0,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
@@ -228,6 +232,7 @@
       "world": {
         "aquatint": 0.18,
         "blood": 1,
+        "cop_blue": 1,
         "edge_dark": 1,
         "edge_hi": 0.32,
         "edge_lo": 0.13,

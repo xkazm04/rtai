@@ -138,6 +138,11 @@
                 "minimum": 0,
                 "type": "number"
               },
+              "cop_blue": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
               "edge_dark": {
                 "maximum": 1,
                 "minimum": 0,
@@ -255,6 +260,7 @@
             "required": [
               "aquatint",
               "blood",
+              "cop_blue",
               "edge_dark",
               "edge_hi",
               "edge_lo",

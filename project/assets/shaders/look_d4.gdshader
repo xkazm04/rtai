@@ -35,6 +35,7 @@ uniform float aquatint = 0.0;     // ink grain inside the washes, its density se
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
+uniform float cop_blue = 0.0;      // the cop-blue plate (palette cop_blue_hi; 0 = blue prints as its ink density)
 uniform float blood = 1.0;         // the protected blood plate (0 = blood prints as its ink density)
 // d5-close's look_d5_print changes ("package v9"), ported as keys whose d4 values are the old print exactly:
 uniform float paper_hi = 0.0;      // sources lighter than cream print a lighter paper (the mock's lit tops)
@@ -48,6 +49,7 @@ uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
+const vec3 COP_BLUE_HI = vec3(0.310, 0.525, 0.878);
 const vec3 BLOOD = vec3(0.639, 0.020, 0.035);
 const vec3 BLOOD_DARK = vec3(0.329, 0.000, 0.020);
 const vec3 PAPER_HI = vec3(0.985, 0.955, 0.895);
@@ -77,7 +79,7 @@ float blood_mask(vec3 c) {
 vec3 plates(vec3 c) {
 	float lum = dot(c, vec3(0.299, 0.587, 0.114));
 	float v = clamp((c.r - max(c.g, c.b) - 0.12) * 2.6, 0.0, 1.0);
-	float t = clamp((min(c.g, c.b) - c.r - 0.08) * 2.8, 0.0, 1.0);
+	float t = clamp((min(c.g, c.b) - c.r - 0.08) * 2.8, 0.0, 1.0) * (1.0 - smoothstep(0.12, 0.16, c.b - c.g));  // cop blue is not teal
 	float ink = clamp((0.93 - lum) * 1.25 - v * 0.55 - t * 0.55, 0.0, 1.0);
 	return vec3(ink, v, t);
 }
@@ -150,6 +152,9 @@ void fragment() {
 		col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
 	}
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
+	if (cop_blue > 0.0) {  // palette gates: b - max(r, g) >= 0.157 (the light bar, never the navy body)
+		col = mix(col, COP_BLUE_HI, smoothstep(0.12, 0.16, src.b - max(src.r, src.g)) * cop_blue);
+	}
 	if (blood > 0.0) {
 		float bm = blood_mask(src) * blood;
 		col = mix(col, mix(BLOOD_DARK, BLOOD, smoothstep(0.35, 0.6, src.r)), bm);
