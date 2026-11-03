@@ -124,3 +124,28 @@ bosses we resolve in future."
   with a cop slot is the hook.
 - NOTE for d5-cast: Rivet's body radius is 0.42 m in bodies.json whatever the sprite scale.
 - NOTE: dev/noir/showcase_fight.gd sets rivet_on_foot = false but leaves the body on (a dev scene).
+
+### MILESTONE: run-in rule + section 20 bench (commits 3e0f344, e3956f1)
+- A person RUNNING into Rivet (closing speed > tackle_mps) now follows the table's human ->
+  rivet_base run result (`blocked`): the person takes the whole overlap (new spec slot BD_RUN_IN,
+  set from the table by RivetBody). Parity is still exact.
+  scenario_bodies_runin: a 4.5 m/s ped into a standing Rivet moves him 0.09 m (the glancing shoves after the
+  ped steps aside). With the planted fault (rule off) he moves 0.61 m: caught.
+- Bench, under the lock (`node tools/bench/run.mjs`, exported release, 3 runs x 4 scenarios x
+  60 s), **CONTENDED** (7+ lanes on one machine):
+  - p99 7.511 ms; 1 % low 62 fps; worst swap 216 ms.
+  - Riot rigs p99 0.901 ms (this morning's idle figure: 0.407 ms).
+  - MISSES p99CpuMs (7 ms) and worstSwapMs. I can't attribute these to bodies under contention: the CPU-only
+    probe (bodies_cost.gd) shows the body within noise in the sim step. Re-run idle before the merge.
+  - FRICTION: the export needed `build/export/windows-bench/` to exist (a fresh worktree).
+  - Files: evidence/bench-*-bodies-contended.json + .txt.
+
+### NEXT
+1. REQUEST 1 (slice-play) through the Director: d-slice's quest1_session must read
+   `city.body.pos` back into the pilot after each city step, or the pilot puts Rivet back inside people.
+2. Re-run the section 20 bench on an idle machine: are the p99 CPU and worst swap misses contention or bodies?
+3. A grace window after the get-up (no re-tackle for about 0.5 s) and a small recovery cost for Rivet after a
+   tackle. Ask the owner first, from the clip (bodies-after-32ppm.mp4).
+4. Arena knockdown state (a lying guard) with the d5-combat lane; then robots and bosses when the owner
+   designs them (the bodies.json rows are ready; ArenaBodies.class_of needs a body class per fighter).
+5. REQUEST 2 (vehicles): `city.body.on = false` while driving.
