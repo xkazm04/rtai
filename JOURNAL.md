@@ -94,3 +94,26 @@ NEXT (supersedes the NEXT above where they differ):
   robot victims (sparks/oil) in the city clip, no attacker anim for the stomp beyond the swell (a raised-claws
   slam pose would sell it), the morph is a scale lerp (no ink burst).
 - FRICTION: Python on Windows writes CRLF: always open(..., newline='\n') when editing repo files.
+- MILESTONE 6a5940b: `--cops` (3 patrol cops in the stomp group): they walk in on the tank and are rammed first;
+  8 knockdowns, 3 by the stomp. Blood in these clips is the city's own traffic (the --before run has a
+  car-struck cop bleeding too), not the power.
+- MILESTONE ece49cb: sound hook: `HaulerCity.cued(id, at, tick)`: morph_cue `servo` at the morph, stomp_cue
+  `crash` at the landing (temp audio_cues ids; powers.json). The clip records them: servo@60, crash@438.
+- MILESTONE 7564956: the stomp is posed (attacker animation): wind-up raises both claws overhead, the landing slams
+  them forward and down (HaulerLook wk/slam_k on the plan's hand_ready/hand_relax; restored exactly at rest).
+  Headline clip: gtai-masters/eve/ghost-powers/clips/hauler-slam/hauler-slam-32ppm.mp4 (60 fps, every tick).
+- Gates at a4bcb1f-ish: lint 13/13 (every commit), scenarios 20/20 (evidence/ghost-powers/scenarios-iter2.txt),
+  unit 560/560 (unit-iter2.txt, ran at 6a5940b; test_hauler_look re-run 3/3 after the pose change). No bench:
+  the power runs only in the dev clip; nothing on the game's frame path changed (RivetBody.pulse defaults to 0).
+- frames.json: 13 entries, headline = the slam clip; the old clean-ring clip dropped.
+
+NEXT (iteration 3; owner 21:25: depth before breadth, the Hauler is the one finished power):
+1. Re-read answers.json. Re-ask nothing until the Hauler clip has the full hit chain in the final look.
+2. Arena: if e-arena's scene is on main/this branch, mount the Hauler on the powers pad (stations file exists)
+   against the cast rigs: a patrol cop and a robot thug (BodyContact robots) with full reactions: robots get
+   sparks/oil on the stomp and ram (red only on humans). Until then the city clip is the proof.
+3. The Hauler in the playable loop: bind `power_hauler` (Q/LB) to SoulPowers.try_activate in the quest/arena
+   session; stomp on melee click while transformed (arm()); HaulerCity on the session's CitySystem.
+4. Hit chain gaps: a real stomp sound (audio lane REQUEST or a cue row), an ink burst / dust puff on the morph
+   instead of a pure scale lerp, a short screen-space crack decal where the stomp lands (D5 grime).
+5. Gearbox only after the Hauler is judged finished (aim-to-steer placeholder, ghost-powers-1).
