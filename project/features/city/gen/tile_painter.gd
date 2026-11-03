@@ -5,11 +5,12 @@ extends RefCounted
 
 const PERIOD: int = CityGen.PERIOD
 const T_TRAFFIC_LIGHT: int = 35
-## The junction box is plain asphalt; zebras lie on the four approaches, against the box (T1).
+## The junction box is plain asphalt; zebras cross each approach kerb to kerb just outside the
+## crossing street's kerb line (5.15-7.55 m from the box, clear of the rounded corners; T1).
 const T_BOX: int = 72
 const T_ZEBRA: int = 73
-const ZEBRA_IN_M: float = 2.6
-## Clean asphalt over the arm's box-side half: the dashes stop ~2 m short of the zebra (T1).
+const ZEBRA_IN_M: float = -2.35
+## Clean asphalt over both halves of an approach arm: no dashes in the crossing or the zebra.
 const T_DASH_ERASER: int = 74
 const PLAZA_PROPS: Array[int] = [28, 33, 26, 24, 32, 29, 38]
 const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
@@ -56,7 +57,8 @@ func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 		if mx != my:
 			var to_box: Vector2 = Vector2(1 - mx, 1 - my)
 			var across: float = 0.0 if mx == 1 else PI * 0.5
-			b.add(ChunkBuild.L_DECAL, T_DASH_ERASER, c + to_box * 2.0, PI * 0.5 - across)
+			for half: float in [2.0, -2.0]:
+				b.add(ChunkBuild.L_DECAL, T_DASH_ERASER, c + to_box * half, PI * 0.5 - across)
 			b.add(ChunkBuild.L_DECAL, T_ZEBRA, c + to_box * ZEBRA_IN_M, across)
 		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_LANE)
 		if mx == my:

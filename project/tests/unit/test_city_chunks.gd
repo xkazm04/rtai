@@ -76,4 +76,4 @@ func test_a_junction_has_a_plain_box_and_four_approach_zebras() -> void:
 		assert_ne(chunk.tex[i], 6, "the ringed intersection tile is not placed")
 	assert_gt(box, 0)
 	assert_eq(zebras, 4 * box)
-	assert_eq(erasers, 4 * box, "the dashes stop short of every zebra")
+	assert_eq(erasers, 8 * box, "no dashes on any approach arm")
