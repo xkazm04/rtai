@@ -1059,6 +1059,11 @@ NEXT (iteration 13 / morning, in order):
   shock_1..4 cells read on asphalt (their iteration-4 check) but not on Rivet's cream / grey body at
   32 px/m (46-tazer/cmp-sheet-crackle.png). Also: my cleanup `rm -rf project/features/fx` removed the
   tracked features/fx/README.md - restored from HEAD at once (git checkout --), tree verified clean.
+- Tint ladder checked on main's quest 1 (scratch scratch-visual-q1b = n-visual + main + the 45-quest1
+  patch, Ink.WASH alpha 0.12 -> 0.30 = luma ~0.66 / density ~0.34; removed after, nothing committed):
+  Factory Row's zone (02-collect-call) prints as a wash and reads again; Dock 9's floor (04 / 06) is
+  STILL paper - it is drawn with another, lighter tint than Ink.WASH (needs the same <= ~188 grey rule).
+  45-quest1/cmp-quest1-wash.png (own view | PrintStage | PrintStage + WASH 0.30); ladder 45b.
 - Evidence at 90fe24c (05:41-05:43, `node tools/evidence/run.mjs --no-bench`, all PASS): lint 13/13,
   unit 235, scenarios 8, parity bit-exact + mutation caught, selftest PASS (junction 11/11 + block 5/5
   goldens worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to evidence/pof. Bench: the
@@ -1070,7 +1075,7 @@ NEXT (iteration 13 / morning, in order):
   killed by PID). Swaps of old files for before-frames (city_view.gd, camera_rig.gd) restored and
   verified by git diff each time. Scratch worktrees scratch-visual-trial13 / scratch-visual-q1 (mine)
   removed; scratch-m16 / scratch-q1 are not mine (untouched). No AI images (no codex) -> no provenance.
-  Ladder rows 41-46b (1280 x 23202).
+  Ladder rows 41-46b + 45b (1280 x 23630).
 
 NEXT (iteration 14 / morning, in order):
 1. Director merge: JOURNAL.md-only conflicts vs n-d4 / n-d5 / n-noir; main merges clean (trial: lint,
