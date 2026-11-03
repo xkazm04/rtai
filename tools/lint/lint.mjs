@@ -2,7 +2,7 @@
 // The lint job (TST-04 job 1): every check runs; exit 1 if any fails.
 //   node tools/lint/lint.mjs [--json]
 import { readFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { canonicalJson } from '../lib/canonical_json.mjs';
 import { PROJECT, ROOT, ownGdFiles, readJson, rel, run, walk } from '../lib/repo.mjs';
@@ -70,7 +70,9 @@ function eventsRegistry() {
 function dataTables() {
   const issues = [];
   for (const table of walk(join(PROJECT, 'data', 'tables'), (n) => n.endsWith('.json'))) {
-    const base = basename(table, '.json');
+    // arena_stations/<lane>.json: one file per lane, all under the one station schema
+    const station = basename(dirname(table)) === 'arena_stations';
+    const base = station ? 'arena_station' : basename(table, '.json');
     const schemaPath = join(PROJECT, 'data', 'schemas', `${base}.schema.json`);
     let schema;
     try {
