@@ -773,3 +773,23 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   frames); evidence/showcase-hero-car.png rebuilt from it (the D4 column is the lamp-show/d4 run: no car, red drips).
   Flash meter 32 = 2/s, 48 = 2/s, 64 = 3/s (budget max), 0 red. Ladder row 32 (32 rows). Superseded scratch
   deleted (oil-v1..v3 hero pngs); masters night/noir 1.8 GB.
+- (04:35) Gates at 14662ea (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest (D4 78 / 80 colours) all PASS; JSONs copied into evidence/.
+- (04:36) The D4 column of evidence/showcase-hero-car.png re-shot with current code (masters oilcar/d4/, `--d4
+  --car-pass`: the car is noir-only so D4 has none; Rivet's oil shows in D4 too as black specks - the robot rule
+  holds in both looks). Also evidence/showcase-32-car.png (the car showcase at 32 px/m: the car reads as a car,
+  the cone carries the fight).
+- DECIDED NOT (04:37) NEXT item 3, flash margin: a 2-per-second budget (a short beat without the inverted tick
+  when a muzzle light was spent in the last second) would cost both showcase kills their inverted panel (each
+  comes < 1 s after a light). The 3/s at 64 px/m is the budget's own maximum and a WCAG pass; left as an owner
+  choice.
+- MILESTONE (04:39) objective cue by value, not hue (28fd24d). Checked quest 1's ringing payphone under the
+  noir pass for the first time (`quest_fight --phone`: fast-forwards to the first ringing phone and frames it):
+  the D4 vermilion ring arcs print as ink with a faint white rim - the objective barely reads (masters
+  phone-v0/). `features/fx/noir/noir_cue.gd` (NoirCue) draws the same ring geometry over it as bold white arcs
+  in an ink casing, pulsing on the stage's tick; dev host wiring only (the shared quest view is untouched).
+  A/B same tick 48 px/m: evidence/objective-cue-48.png (crop), masters phone-v1/ab-f120.png. Clear gain: the cue
+  pops white on the black street. Artifact: each arc carries a thin white echo line (the pass's dark-on-dark rim
+  at the casing's outer edge, visible when zoomed; reads like a comic vibration line at game scale). Quest 1's
+  view is fixed at 48 px/m, so no 32 / 64 frames. Still vermilion-as-ink in noir: the "$1,500 taped under"
+  cash cue and the phone's handset (not changed). Ladder row 33 (33 rows).
