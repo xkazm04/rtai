@@ -722,3 +722,29 @@ NEXT (iteration 10, in order):
 NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly answered by 32e1bc0; the
   junction showcase (show-final6) re-shot at 32 px/m after it (03:58; flash meter in the next line); 48 / 64 verified unchanged.
   show-final6 noir 32 re-shot at a62cc7c: flash meter 2 per second max; evidence/show-32-final5-vs-final6.png rebuilt from it.
+
+## Iteration 12 (BUILD, 03:59 -> stop by 05:29)
+- (03:59) Read JOURNAL + git log. Took NEXT item 2 (traffic in a fight) with the dev-side answer: a scripted car.
+- MILESTONE (04:02) showcase `--car-pass` (2e5b5b4): `dev/noir/noir_car_pass.gd` (NoirCarPass) brakes a car in
+  along a straight line (18 m over 96 live ticks, constant deceleration, from off-screen left) and parks it with its
+  nose at (-8.5, +3.0) m from the fight, aimed at (0, +1): the south lane, angled into the fight, its headlight
+  cone across cop B and toward Rivet. It freezes with the hit-stop (live-tick clock). Unit test: the car's body
+  keeps > 2 m from every fighter over the whole fight. `NoirLook.extra_cars` (world-metre noses, lit before the
+  sim's cars) is the only shared-code change. The car is noir-only (no sprite: car_ink draws the body), so the D4
+  run has no car - the D4 column of the comparison is car-less.
+- (04:04) The first take showed the parked car as a plain ink rectangle with a white edge (reads as a crate / a UI
+  box). TUNE (e823bcf) `car_glass` 1: rounded corners (0.45 of the half width), a white windscreen band (tapered)
+  and a rear window. A/B/C same tick: masters night/noir/carpass-v3/ab3-glass-48.png (box | glass | glass +
+  rounded), evidence/car-glass-48.png. Clear gain: it reads as a car from above. Applies to the sim's cars too
+  (car_ink): every traffic car in the noir pass now has glass.
+- MILESTONE (04:08) the street showcase with the car, re-shot at 32 / 48 / 64 px/m: masters night/noir/carpass-v3/
+  (clips showcase-noir-{32,48,64}.mp4 + hero frames, `--coat --noir-parts --at=501,523 --car-pass`), hero sheet
+  evidence/showcase-hero-car.png (D4 48 from lamp-show/d4 | noir 48 | noir 64: fire tick, silhouette flash, held
+  panel, aftermath). Looked at every hero frame (0 rejected). Read: the best version of the hero so far - cop B
+  fires and falls INSIDE the cone as a solid ink silhouette (64 px/m f151, f299), his blood lands red on the white
+  cone, and the parked car's dark hulk anchors the left of the frame; the inverted panel turns the cone black
+  (a strong graphic beat). Costs: the muzzle light's pool merges with the cone on cop B's shots (one big white
+  shape at 48 px/m f230); the car is a shader shape, not art; the cone is long enough that the 48 px/m frame is
+  about one third white.
+  Flash meter: 32 = 2/s, 48 = 2/s (was 3 in lamp-show3: the lit cone keeps the quarter window bright through the
+  kill beat), 64 = 3/s (the budget's own maximum, unchanged), 0 red. Ladder row 31 (31 rows).
