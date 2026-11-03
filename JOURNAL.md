@@ -338,3 +338,21 @@ NEXT (iteration 3, in order):
   burning wreck at night, none by day, freed when it goes out). Lint 13/13.
 - frames.json 15 (aftermath pair now carnage-v9 -> carnage-v12 at tick 900; +night aftermath;
   dropped carnage-v4/766), ladder 1280 x 7964, crop-fire-v12.png (before/after crop, 2x).
+- 15:59 gates at 080de9b (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 367, scenarios
+  11/11, parity EXACT (1200 steps, mutation caught at 629), selftest PASS (look goldens 11/11 worst
+  0.00). Copied to evidence/vehicles/it4/. Bench SKIPPED: bench.lock taken by `d5-city` at 15:59
+  (fresh) between my check and my noclobber create (the create refused, as designed).
+- 16:00 carnage-20s-48ppm-v3.mp4 (20.0 s, CONTENDED capture, 287 frames over 1204 ticks at 14.35
+  fps = real time): the wrecks now burn after the blast. Sheet clip-carnage-v3-sheet.png (32
+  frames): 0 camera breaks. Scratch PNGs deleted.
+- MILESTONE 0bfaaa1 wrecks print n-d4's burnt wreck art: car/van/pickup/cruiser_wreck.png were
+  drawn last night but never wired (a wreck drew its d2 cell darkened to a lavender grey). Packed
+  (no new art) into features/vehicles/art/traffic_atlas_wreck.png in the traffic atlas layout
+  (cell = sim art id; van_wreck stands in for the ambulance), built by masters
+  day-d5/vehicles/build_wreck_atlas.py; provenance line added (derived from d4n_veh_c). Import =
+  the project defaults (lossless, no mips, fix_alpha_border). VehicleView has a WRECK layer;
+  without the atlas it falls back to the old darkened d2. Unit 369 (+2). Frames carnage-v13 (900
+  and the new 2400 burnt-out shot, f2259ec): the charred bodies read under the fire and smoke,
+  where v12 showed pale lavender; 21 frames, 0 rejected, 0 camera breaks. crop-wreck-v13.png.
+- frames.json 15 (aftermath -> carnage-v13/900 vs carnage-v9/900, +burnt-out 2400, clip -> v3;
+  dropped pass32 420), ladder 1280 x 8364.

@@ -17,7 +17,7 @@ Depends only on `core/` and WorldContext (LAY-05); the city is reached through t
 | `vehicle_fire.gd` | a wreck burns for 24 s: the top-down fire loop (`features/fx/art/fx_fire.png`) on its engine bay, on the emissive canvas above the smoke (render only); a held `fire` light off the day grade |
 | `vehicle_traffic.gd` | the sim traffic the service rammed: render state on custom.y, D2+ taken over as a body |
 | `vehicle_world.gd` | the port (an empty world in tests) |
-| `vehicle_view.gd` | draws the service cars with the crowd car layer's mesh + look material, one MultiMesh per damage atlas |
+| `vehicle_view.gd` | draws the service cars with the crowd car layer's mesh + look material, one MultiMesh per damage atlas; wrecks print `art/traffic_atlas_wreck.png` (n-d4's burnt wrecks packed in the traffic atlas layout, cell = art id; built by masters `day-d5/vehicles/build_wreck_atlas.py`) |
 
 Input (TickInput): bit `BIT_USE` (0) enter/exit on the press, bit `BIT_HANDBRAKE` (1), `move_y < 0`
 throttle (`> 0` brake, then reverse), `move_x` steer.
