@@ -1,0 +1,5 @@
+PASS lint: lint: all 13 checks pass over 176 GDScript files
+PASS unit-tests: unit-tests: 142 passed, 0 failed, 0 skipped (GUT, headless)
+PASS scenario-tests: scenario-tests: 8 passed (headless)
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3547 floats); planted mutation caught at step 629
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 103 actors, 79 colours; 48 px/m ok, 81 actors, 86 colours); 72 art textures, 0 placeholders, prewarm 29 ms

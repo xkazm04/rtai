@@ -1593,3 +1593,6 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   arcs (the objective), Mertz's Robo-tazer barrel + charge arcs and "VENTING" (the boss threat / its weak point),
   hostile shot trails (Rivet's are ink), the burst arcs (danger), the TUCK-IN crate bolt (objective), the whisper
   rings (teal = the souls). All on doctrine; only the speaker names remain an owner call.
+- 05:46 GATES at b065fde (final for iteration 16; art unchanged since 97558d7): `run.mjs --no-bench` rc 0 - lint
+  13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders
+  (`evidence/iter16/gates-b065fde.txt`). (A first try refused a dirty tree - the summary sheet - committed first.)
