@@ -78,3 +78,41 @@ NEXT:
    the ring by slot. The dummy needs wall sense (it ends against the pit wall).
 7. Align the pit size with the arena lane (36 x 26 m) and move into the arena scene via the
    station file once the arena is on this branch; a city-block proving run.
+
+## Iteration 2 (21:27-22:12), BUILD
+
+answers.json at 21:27: only rivet-motion-1 (not mine); enemy-ai-1 still open (default A holds).
+Registry applied: encounter-balance-simulation's habit (measure the curve against a scripted
+player profile, publish the profile with the numbers); difficulty-design: the curve is one
+data value so the owner's answer is a one-line switch.
+
+- MILESTONE 924f532: waves. `data/tables/enemy_waves.json` + schema (curves gentle / standard /
+  steep, gates east/north/south as [x, y], breather_s 3, spawn_gap_s 0.6), `PitWaves` (loader,
+  interleaves the gates), `WaveRun` (BREATHER -> SPAWNING -> FIGHTING per wave, report per wave:
+  start, seconds, damage, shots, hits, max_alive), `PitLayout.wave_fight`,
+  `scenario_enemy_waves` (live curve clears, no overlap, breather holds, replay digest equal;
+  planted fault: overlapping waves caught, max_alive 7 > 5).
+- FIX (found by the wave runs, same commit): EnemySenses.detour (1) re-picked the corner the
+  walker already stood on (zero velocity forever: a cop parked at a box corner for 200 s);
+  (2) tested the line to a corner against the bare box, so a body on a box face aimed through
+  its own push-out zone and stayed pinned (two SWAT stuck on the east face of the low wall).
+  Now: corners within 0.3 m are skipped and reachability uses the box grown by the body
+  radius - 0.05. scenario_enemy_pit still green; its evidence numbers moved (movement changed).
+- PitDummy human profile: react_ticks (dodges N ticks after a tell starts), read_frac (share
+  of tells noticed, a low-discrepancy pick per tell, no RNG), aim_err_deg (nail spread, a fixed
+  golden-ratio sequence, no RNG: the dummy never touches the fight's streams).
+- Numbers (scenario seed 31, human profile, fire inside 16 m; identical in the view clips):
+  standard 7.9 / 18.2 / 20.5 s, dmg 0 / 0 / 0; steep 16.9 / 19.6 / 26.4 s, dmg 0 / 4 / 20;
+  gentle 8.2 / 16.6 / 15.4 s, dmg 0. FINDING: enemies barely hurt even a 70 %-reader: the
+  dummy one-shots cops at 16 m before they reach their 14-20 m firing range, where their
+  accuracy is 25-35 %. Per-archetype danger is the next knob (not the wave count).
+- Aim lock vs a reacting dodger (react 0.25 s, reads every tell, 3 shooters): lock 0.12 s ->
+  hit rate 0.237, 0.20 -> 0.211, 0.30 -> 0.0. With a 0.5 s patrol tell, a 0.3 s lock starts
+  before the player has reacted, so a reacting player always escapes; 0.2 keeps a sliver of
+  tracking. Keep 0.2 (as built).
+- ASK enemy-ai-2 (first difficulty curve), default B = steep, applied in data.
+- Evidence: gtai-masters/eve/enemy-ai/pit_waves_standard_1-3.mp4 (58 s), pit_waves_steep_1-3.mp4
+  (74 s), 3 stills, clip stats JSON; frames.json now 12 entries. Seen: in the steep clip a SWAT
+  idles at the north edge at t 45 (probably waiting for a token out of sight; check next).
+- MILESTONE e369543: the pit view runs a curve (--curve, --human=1, --every=2 for a 30 fps
+  real-time clip).
