@@ -9,6 +9,7 @@ extends Node
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes"]
 const SKIP_PER_FRAME: int = 600
+const HUD_SHADER: String = "res://assets/shaders/look_noir_hud.gdshader"
 const LIVE_FRAMES: int = 900
 const HEROES: PackedInt32Array = [120, 300, 600, 899]
 
@@ -42,6 +43,11 @@ func _ready() -> void:
 	_play = CollectCallPlay.begin()
 	_view.bind(_play.stage, _play.port, _play.system)
 	add_child(_view)
+	# The HUD prints above the noir pass and the comic beat (no rain or threshold over the text).
+	(_view.hud_view.get_parent() as CanvasLayer).layer = ImpactFrame.LAYER + 1
+	var hud_print: ShaderMaterial = ShaderMaterial.new()
+	hud_print.shader = load(HUD_SHADER) as Shader
+	_view.hud_view.material = hud_print
 	_view.add_child(_blood)
 	_view.add_child(_flash)
 	_view.add_child(_stains)
