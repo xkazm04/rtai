@@ -166,3 +166,11 @@ NEXT (iteration 3, depth-first on the pistol):
   A Codex image_gen job for that prop ran at 21:55 in gtai-spike/gunplay-pistol/ (style ref:
   the d5-cast Rivet frame). It is not integrated. If it is kept, add a provenance line and
   REQUEST rivet-motion/d5-cast to repaint the claw_pistol cell, A/B in the full-chain clip.
+- REQUEST 4 -> arena (exact): in `ArenaStage.setup(ctx)` (e-arena features/arena/arena_stage.gd,
+  after `arena.rivet.weapon = WEAPON`), add
+  `arena.gun = GunHand.make(WeaponTable.shipped(), &"pistol", ctx.rng.stream(&"gunplay"))`.
+  Keep `rivet.weapon` set, because the view's armed state and the rig's claw_pistol swap read
+  it. Then connect `arena.struck` to `HitFeel.land(v.id, spec.hit_class, dir, lethal, tick)`
+  with the view's CameraRig, and hold `SimClock.hold(ticks)` on the returned hit-stop. That
+  moves the arena's own replay (a new RNG stream and new shot timing), so re-bless it. Quest 1
+  is unaffected because `gun` stays null there.
