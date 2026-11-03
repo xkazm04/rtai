@@ -131,13 +131,16 @@ The d5-close lane builds D5 "Inked Grime" as a **second print layer over the unt
 (`assets/shaders/look_d5.gdshader` + `look_d5.params.json`), not as re-tuned D4 uniforms. An
 `overlays` row names the shader, its params file and key (`world`), the `base` profile under it
 (`d4`), the looks it ramps by zoom (`zoom_looks`: `auto`) or pins at full (`full_looks`: `d5`) and
-the `amount_ppm` stops (48 px/m: 0, 64 px/m: 1). A row is **live only when both files exist**
+the `amount_ppm` stops (32 px/m: 0.5, 48 px/m: 0.75, 64 px/m: 1). A row is **live only when both files exist**
 (`LookProfiles.overlays`): then `auto` and `d5` resolve to `d4`, and `CityView` puts one
 `LookOverlay` (a viewport `BackBufferCopy` + a full-rect `ColorRect`) on the `print_overlay` band
-and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero cost at 32 and
-48 px/m). Without the files the placeholder `d5` row and the d4 -> d5 uniform blend stay in use,
-so this branch renders exactly as before. The gameplay-zoom amount is one number: the brief says
-pure D4 at 48 px/m (0, shipped); d5-close proposes 0.35 there (an owner call).
+and feeds it `amount` and `world_px` every frame; at amount 0 it is hidden (zero cost). Without the files the placeholder `d5` row and the d4 -> d5 uniform blend stay in use,
+so this branch renders exactly as before. The gameplay-zoom amount: D4-only at 32/48 px/m until
+2026-11-03, when the owner named D5 the direction to chase; d5-city then put 0.5 at 32 px/m and
+0.75 at 48 with a pixel-snapped camera (`CityView.snap_px`: no swim under a pan) after a
+readability gate against D4 (edge energy 96-98 % of D4, paper within dE 3-10 of T1 vs 12-14;
+evidence/d5-city/17-snap-cam, 18-d5-earlier). The overlay now costs at every zoom (about 0.18 ms
+GPU at 64 px/m, contended).
 
 Cost (`dev/selftest/overlay_cost.gd`, 16 interleaved blocks of 30 frames, `d4` vs `auto` at 64 px/m, n-d5
 157dec8's look_d5 copied in): **+0.90, +1.15, +1.51 ms GPU** (1280x800, RTX 4090, shared GPU), CPU flat.

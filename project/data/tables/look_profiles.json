@@ -5,8 +5,12 @@
     {
       "amount_ppm": [
         [
+          32,
+          0.5
+        ],
+        [
           48,
-          0
+          0.75
         ],
         [
           64,
@@ -14,7 +18,7 @@
         ]
       ],
       "base": "d4",
-      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm keeps the brief's pure D4 at gameplay zoom (48 px/m: 0); d5-close proposes 0.35 at 48 px/m (their zoom_amount stop 1.5) - an owner call, one number here.",
+      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm: 0.5 at 32 px/m, 0.75 at 48, 1 at 64 (d5-city 2026-11-03: the owner chose D5; gated against D4 at 32 px/m with the pixel-snapped camera; was 0 up to 48 px/m).",
       "full_looks": [
         "d5"
       ],
