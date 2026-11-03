@@ -1848,3 +1848,19 @@ Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Not
 - 07:01 LOOKED, no change: city_frame focus 2 at 48 (`masters:after_i21oilc/city-2-48ppm.png`): the re-inked
   oil_stain, the tile cracks, planters, drains, lamps, parked hatchback and Rivet all read as ink on cream; no
   asset in scope is below the bar. Session end at 07:01; tree clean at the commit below.
+
+## 2026-11-03 06:57 iteration 23, BUILD (freeze 07:30)
+- 06:58 Read JOURNAL (iteration 22 final NEXT), git log. Tree clean at 7525e6c. C: 272 GB free.
+- 06:58 Bench NOT run: the box is contended again (4 other-lane Godot processes, PIDs 4804 / 32084 / 57448 / 46244,
+  not mine, untouched). The idle-box bench is still owed.
+- 07:00 LOOKED, no change: vehicles board at 32 (`masters:board_i18/extras/extras-32ppm.png`, HEAD art). Sedans,
+  taxi, cruiser (vermilion on the light bar only), van, pickup, hatchback, both damage states each and the burnt wreck
+  all read as bold 2-ink silhouettes on the charcoal road. The ambulance / bus row overlapping in the top lane is
+  the board script packing long footprints into one row (dev layout, not the art or the footprints). Nothing in
+  scope is below the bar; with about 30 min to freeze I am not opening a probe that could not be evidenced at
+  32 / 48 / 64 and gated before 07:30.
+- Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 23): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-23).
+Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Bench still owed on an idle box.
+Nothing pushed or merged. Session end; tree clean at the commit below.
