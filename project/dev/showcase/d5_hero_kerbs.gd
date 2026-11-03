@@ -10,9 +10,9 @@ const LINE_M: float = 0.07
 const HALF_ROAD_M: float = 4.0
 const ASPHALT: Color = Color(0.345, 0.322, 0.322)
 const INK: Color = Color(0.090, 0.075, 0.106)
+const ARC_STEPS: int = 12
 ## the mock's kerb stone: a thin ink line STONE_M inside the street edge, continuous along
 ## the straight kerbs and round the corner (a corner-only arc floated: reverted in iteration 2)
-## kerbs and round the corner (a corner-only arc floated and was reverted in iteration 2)
 const STONE_M: float = 0.3
 const STONE_LINE_M: float = 0.04
 const REACH_M: float = 20.0
