@@ -26,6 +26,9 @@ var pos: Vector2 = Vector2.ZERO
 var vel: Vector2 = Vector2.ZERO
 ## The last step's knockdowns: BR_STRIDE floats each (slot, x, y).
 var knocks: PackedFloat64Array = PackedFloat64Array()
+## A one-step radial pulse (features/souls: the Hauler stomp): [radius m, knock slide m/s, down s].
+## While set, the next spec() knocks down every person inside the radius, then clears it.
+var pulse: Vector3 = Vector3.ZERO
 var _events: EventBus = null
 
 
@@ -62,7 +65,23 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	var blocked: bool = back != null and back.run == &"blocked"
 	s[SimConst.BD_RUN_IN] = table.run_mps(PERSON) if blocked else 0.0
 	pos = want
+	if pulse.x > 0.0:
+		_pulse(s)
 	return s
+
+
+## The pulse overrides: a still body of the pulse radius that tackles at any closing speed and
+## moves nobody by overlap (share 0), so each person slides out along the radial knock.
+func _pulse(s: PackedFloat64Array) -> void:
+	s[SimConst.BD_VX] = 0.0
+	s[SimConst.BD_VY] = 0.0
+	s[SimConst.BD_R] = pulse.x
+	s[SimConst.BD_SHARE] = 0.0
+	s[SimConst.BD_TACKLE] = -1.0
+	s[SimConst.BD_KNOCK] = pulse.y
+	s[SimConst.BD_DOWN] = pulse.z
+	s[SimConst.BD_RUN_IN] = 0.0
+	pulse = Vector3.ZERO
 
 
 ## Reads the sim's body_result() after the step; emits one actor_knocked_down per knockdown.
