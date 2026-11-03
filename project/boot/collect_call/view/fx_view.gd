@@ -5,6 +5,8 @@ extends Node2D
 ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
 
 var stage: CollectCallStage
+## Whisper rings hold still (no growth, no spin) when set (the settings flag).
+var reduced_motion: bool = false
 var _whisper_ticks: int = 0
 var _arc_ticks: int = 0
 var _fire_tex: Texture2D = null
@@ -69,10 +71,12 @@ func _whispers() -> void:
 	_whisper_ticks -= 1
 	var at: Vector2 = stage.arena.rivet.pos + Vector2(0.0, -0.6)
 	for k: int in 3:
-		var r: float = (0.9 + k * 0.45 + (45 - _whisper_ticks) * 0.02) * Ink.PX_PER_M
+		var grow: float = 0.0 if reduced_motion else (45 - _whisper_ticks) * 0.02
+		var r: float = (0.9 + k * 0.45 + grow) * Ink.PX_PER_M
 		# radio static: broken inked dashes (ink under teal), the gaps shifting per ring and tick
 		for d: int in 9:
-			var a0: float = TAU * d / 9.0 + k * 0.4 + float(stage.tick / 4) * 0.25
+			var spin: float = 0.0 if reduced_motion else float(stage.tick / 4) * 0.25
+			var a0: float = TAU * d / 9.0 + k * 0.4 + spin
 			var span: float = 0.42 + 0.18 * sin(float(d * 7 + k * 3))
 			draw_arc(Ink.px(at), r, a0, a0 + span, 6, Ink.INK, 6.0, true)
 			draw_arc(Ink.px(at), r, a0, a0 + span, 6, Ink.TEAL, 3.0, true)

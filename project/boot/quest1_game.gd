@@ -16,6 +16,9 @@ var paused: bool = false
 var px_per_m: float = 32.0
 ## Where the beat checkpoints go ("" turns saving off, e.g. a test that must not touch user://).
 var save_path: String = Checkpoint.DEFAULT_PATH
+## The player's settings file ("" = defaults, never saved: tests).
+var settings_path: String = PlayerSettings.PATH
+var settings: PlayerSettings = PlayerSettings.new()
 var _ended: bool = false
 
 
@@ -28,6 +31,9 @@ func boot() -> void:
 	if card.get_parent() != null:
 		return
 	RenderingServer.set_default_clear_color(Ink.CREAM)
+	if settings_path != "":
+		settings = PlayerSettings.load_or_default(settings_path)
+	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
 	add_child(card)
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
@@ -53,6 +59,7 @@ func start(cp: Checkpoint = null) -> void:
 	if session == null:
 		get_tree().quit(1)
 		return
+	settings.apply()
 	if LaunchArgs.has("--record"):
 		session.world.loop().start_recording()
 	add_child(session.world)
@@ -60,6 +67,7 @@ func start(cp: Checkpoint = null) -> void:
 		view = CollectCallView.new()
 		view.px_per_m = px_per_m
 		view.objective_view = ObjectiveView.new()
+		view.fx_view.reduced_motion = settings.reduced_motion
 		view.bind(session.stage, session.port, session.system)
 		add_child(view)
 		session.live.viewport = get_viewport()
@@ -90,7 +98,7 @@ func set_paused(on: bool) -> void:
 	session.world.set_process(not on)
 	session.live.enabled = not on
 	if on:
-		card.show_pause()
+		card.show_pause(_settings_panel())
 	else:
 		card.hide_all()
 
@@ -117,3 +125,12 @@ func _replay(path: String) -> void:
 	Log.info("replay", divergence if divergence != "" else "identical")
 	again.world.free()
 	get_tree().quit(0 if divergence == "" else 1)
+
+
+func _settings_panel() -> Quest1SettingsPanel:
+	var panel: Quest1SettingsPanel = Quest1SettingsPanel.new(settings)
+	@warning_ignore("return_value_discarded")
+	panel.changed.connect(
+		func() -> void: view.fx_view.reduced_motion = settings.reduced_motion if view else false
+	)
+	return panel

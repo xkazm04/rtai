@@ -66,3 +66,11 @@
   input log: `RTAI.exe --headless -- --replay=<log>` -> "replay: identical", exit 0; the same log
   with one input changed -> exit 1 ("state hash differs at tick 7620"); a missing file -> exit 2.
   So the exe's sim is the tested sim. frames.json (10 entries) + ladder.png in masters.
+- MILESTONE 11:00 pause + settings (brief item 5): Quest1SettingsPanel in the pause card:
+  master volume (AudioServer bus 0), reduced motion (whisper rings hold still; also
+  `--reduced-motion`), keyboard rebinding for move/interact/melee/car (press Rebind, then a
+  key; Esc cancels). PlayerSettings `gtai.player-settings/1` in user://settings.json, applied
+  after the InputMap install. Unit 337/337, quest scenarios 3/3. Frame: masters pause32/.
+- GATES at b8c7f61 (before settings): evidence/run.mjs --no-bench PASS (lint 13/13, unit 335,
+  scenarios 9/9, parity exact + mutation caught, selftest goldens 11/11); copied to
+  evidence/slice-play/ with the exe replay logs. No bench taken (lane changes no city cost).

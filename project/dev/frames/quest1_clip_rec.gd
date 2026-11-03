@@ -24,6 +24,7 @@ func _ready() -> void:
 	_game = scene.instantiate() as Quest1Game
 	_game.px_per_m = px_per_m
 	_game.save_path = ""
+	_game.settings_path = ""
 	add_child(_game)
 	await _settle()
 	await _save("title")
@@ -46,6 +47,12 @@ func _run() -> void:
 		if not stills.is_empty():
 			if stills.has(s.tick()):
 				await _save("still_%d_%d" % [s.tick(), px_per_m])
+				if s.tick() == stills[0]:
+					_game.set_paused(true)
+					await _settle()
+					await _save("pause_%d" % px_per_m)
+					_game.set_paused(false)
+					_game.session.world.set_process(false)
 			if s.tick() > stills.max():
 				break
 			continue

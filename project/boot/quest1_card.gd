@@ -60,10 +60,13 @@ func show_title(can_continue: bool = false) -> void:
 	(first if first != null else start_button).grab_focus.call_deferred()
 
 
-func show_pause() -> void:
+## Pause: the controls, then the settings panel (volume, reduced motion, rebinding) if given.
+func show_pause(settings_panel: Control = null) -> void:
 	_clear()
 	_label(_t(&"SLICE__PAUSED", "Paused"), 48, Ink.INK)
 	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	if settings_panel != null:
+		_box.add_child(settings_panel)
 	var resume: Button = _button(_t(&"SLICE__RESUME", "Resume"), resume_pressed)
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)

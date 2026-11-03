@@ -17,6 +17,7 @@ func run(tree: SceneTree) -> String:
 	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
 	var game: Quest1Game = scene.instantiate() as Quest1Game
 	game.save_path = ""
+	game.settings_path = ""
 	tree.root.add_child(game)
 	game.boot()
 	game.card.start_button.pressed.emit()
