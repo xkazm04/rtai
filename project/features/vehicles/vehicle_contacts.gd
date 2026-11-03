@@ -14,6 +14,8 @@ const WALL_E: float = 0.2
 ## Sim slots this tick: people struck [slot, killed 0/1] pairs, and traffic speed changes.
 var struck: PackedInt32Array = PackedInt32Array()
 var traffic_hits: Dictionary[int, float] = {}
+## The art id of each slot hit this tick (VehicleTraffic tells a reused slot by it).
+var traffic_art: Dictionary[int, int] = {}
 var _rules: VehicleDamage
 ## Where along each car's axis the last _overlap() touched (m ahead of centre): the lever arms.
 var _lever_a: float = 0.0
@@ -29,6 +31,7 @@ func _init(rules: VehicleDamage, profiles: Dictionary[StringName, VehicleProfile
 func begin() -> void:
 	struck.clear()
 	traffic_hits.clear()
+	traffic_art.clear()
 
 
 ## Six hull points against solid cells: push out along the shallowest axis, bounce the normal
@@ -74,6 +77,7 @@ func traffic(b: VehicleBody, world: VehicleWorld) -> void:
 		if dv.y > 0.0:
 			var was: float = traffic_hits.get(slot, 0.0)
 			traffic_hits[slot] = maxf(was, dv.y)
+			traffic_art[slot] = int(recs[r + 7])
 
 
 ## Two service cars (a driven car into a parked one, or into a wreck).

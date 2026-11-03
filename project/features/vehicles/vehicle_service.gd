@@ -124,7 +124,7 @@ func _step(input: TickInput) -> void:
 		b.step(SimClock.TICK_DT, -axis.y if mine else 0.0, axis.x if mine else 0.0, hb)
 		_collide(b)
 	_age_wrecks()
-	for slot: int in traffic.settle(_contacts.traffic_hits, world):
+	for slot: int in traffic.settle(_contacts.traffic_hits, _contacts.traffic_art, world):
 		traffic.take(slot, world, self)
 	_emit_struck()
 	if driving != null:

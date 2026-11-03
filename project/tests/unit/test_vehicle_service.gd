@@ -148,3 +148,21 @@ func test_traffic_shoves_a_parked_car() -> void:
 	_svc.step(0, TickInput.new())
 	assert_gt(car.vel.x, 1.0, "the van rear-ending it pushed it forward")
 	assert_gt(car.hp_lost, 0.0)
+
+
+func test_a_reused_traffic_slot_starts_a_fresh_damage_book() -> void:
+	var car: VehicleBody = _svc.spawn_parked(&"van", Vector2(0, 0), Vector2.RIGHT)
+	@warning_ignore("return_value_discarded")
+	_svc.try_enter(Vector2.ZERO)
+	_w.cars = PackedFloat64Array([9, 0, 3.4, 0.0, 1.0, 0.0, 0.0, 0])
+	car.vel = Vector2(12, 0)
+	_svc.step(0, TickInput.new())
+	var first: float = _svc.traffic.lost_of(9)
+	assert_gt(first, 0.0)
+	car.pos = Vector2.ZERO
+	_w.cars = PackedFloat64Array([9, 0, 3.4, 0.0, 1.0, 0.0, 0.0, 4])
+	car.vel = Vector2(12, 0)
+	_svc.step(1, TickInput.new())
+	var fresh: float = _svc.traffic.lost_of(9)
+	assert_gt(fresh, 0.0)
+	assert_lt(fresh, first, "a new (heavier) car in slot 9: its own damage, not added to the old")

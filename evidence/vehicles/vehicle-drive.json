@@ -8,8 +8,8 @@
     "max_slip_deg": 90.0,
     "peak_speed_mps": 28.0,
     "replay": "identical",
-    "service_us_avg": 43.4125,
-    "service_us_max": 79,
+    "service_us_avg": 50.8986111111111,
+    "service_us_max": 197,
     "struck": 1,
     "ticks": 720,
     "timing": "CONTENDED (shared machine, headless, native sim)"

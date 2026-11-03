@@ -9,6 +9,7 @@ extends RefCounted
 ## Sim slot -> VehicleBody.State shown.
 var state: Dictionary[int, int] = {}
 var _lost: Dictionary[int, float] = {}
+var _art: Dictionary[int, int] = {}
 var _rules: VehicleDamage
 
 
@@ -30,9 +31,16 @@ func soul_hijack(slot: int, world: VehicleWorld) -> void:
 
 
 ## Applies this tick's ram speed changes; returns the slots to disable (D2 or worse).
-func settle(hits: Dictionary[int, float], world: VehicleWorld) -> Array[int]:
+## A slot whose art changed since its last hit was despawned and reused: its book starts over.
+func settle(
+	hits: Dictionary[int, float], arts: Dictionary[int, int], world: VehicleWorld
+) -> Array[int]:
 	var out: Array[int] = []
 	for slot: int in hits:
+		var art: int = arts.get(slot, -1)
+		if _art.get(slot, art) != art:
+			forget(slot, world)
+		_art[slot] = art
 		var lost: float = lost_of(slot) + _rules.damage_for(hits[slot], true)
 		_lost[slot] = lost
 		var st: int = _rules.state_for(lost, soul(slot))
@@ -50,6 +58,8 @@ func forget(slot: int, world: VehicleWorld) -> void:
 	state.erase(slot)
 	@warning_ignore("return_value_discarded")
 	_lost.erase(slot)
+	@warning_ignore("return_value_discarded")
+	_art.erase(slot)
 
 
 ## A rammed traffic car at D2 or worse leaves the sim as a service body coasting to a stop.
