@@ -8,6 +8,7 @@ extends Node
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
 ##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
 ##        [--ppm=48]  [--dodge]  (a scripted player strafes across each locked aim line)
+##        [--weapon=machine_pistol]  (any weapons.json row on the same chain; pistol by default)
 
 const SKIP_PER_FRAME: int = 600
 const LIVE_FRAMES: int = 1200
@@ -40,6 +41,7 @@ var _rivet_hits: int = 0
 var _dodge: bool = false
 ## --spread=<k>: overrides the table's lock_spread_scale (GuardTell.spread_scale); <0 keeps it.
 var _spread: float = -1.0
+var _gun_id: StringName = &"pistol"  # --weapon=<id>: Rivet's weapons.json row
 var _one_slot: bool = false  # --one-slot: GuardTell.one_slot (one gunner tells at a time)
 var _dodges: int = 0
 var _strafe_left: int = 0
@@ -59,8 +61,12 @@ func _ready() -> void:
 	var table: WeaponTable = WeaponTable.shipped()
 	if _armored_hp > 0.0:
 		_armored_hp = table.target_hp[&"armored"] / table.target_hp[&"human"]
+	if not table.weapons.has(_gun_id):
+		Log.error("pistol_fight", "no weapon %s" % _gun_id)
+		get_tree().quit(2)
+		return
 	var rng: RngRegistry = RngRegistry.new(RNG_SEED)
-	arena.gun = GunHand.make(table, &"pistol", rng.stream(&"gunplay"))
+	arena.gun = GunHand.make(table, _gun_id, rng.stream(&"gunplay"))
 	arena.gun.tap = true
 	arena.guard_tell = GuardTell.from_table(table)  # readable bursts: tell, lock, slow rounds
 	arena.guard_tell.one_slot = _one_slot
@@ -91,6 +97,8 @@ func _parse_args() -> bool:
 			_one_slot = true
 		elif arg.begins_with("--ppm="):
 			_view.px_per_m = arg.substr(6).to_float()
+		elif arg.begins_with("--weapon="):
+			_gun_id = StringName(arg.substr(9))
 		elif arg.begins_with("--spread="):
 			_spread = arg.substr(9).to_float()
 		else:
