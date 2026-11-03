@@ -38,3 +38,17 @@ func test_death_sets_dead_and_the_death_clip() -> void:
 	assert_eq(EnemyRigFeed.write(pit, feed, 0, 32.0), 2)
 	assert_true(feed.has_flag(0, RigFeed.Flag.DEAD))
 	assert_eq(feed.clip[0], RigClips.Clip.DEATH)
+
+
+func test_place_spawns_hot_at_the_spots_and_row_matches_write() -> void:
+	var pit: EnemyPit = PitLayout.build(9, false)
+	var spots: PackedVector2Array = PackedVector2Array([Vector2(3.0, 2.5), Vector2(8.0, -5.0)])
+	PitLayout.place(pit, [&"robot_thug", &"patrol_cop"], spots)
+	assert_eq(pit.agents[1].pos, Vector2(8.0, -5.0))
+	assert_eq(pit.agents[0].state, EnemyAgent.State.ENGAGE, "a staged spawn starts hot")
+	var a: RigFeed = RigFeed.new()
+	var b: RigFeed = RigFeed.new()
+	assert_eq(EnemyRigFeed.write(pit, a, 0, 32.0), 2)
+	EnemyRigFeed.row(pit.agents[1], pit.tick, b, 0, 32.0)
+	assert_eq(b.pos[0], a.pos[1])
+	assert_eq(b.flags[0], a.flags[1])
