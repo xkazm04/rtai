@@ -1,5 +1,5 @@
 diff --git a/project/data/tables/fx.json b/project/data/tables/fx.json
-index 4fbbb8f..74f9632 100644
+index 4fbbb8f..0047669 100644
 --- a/project/data/tables/fx.json
 +++ b/project/data/tables/fx.json
 @@ -21,7 +21,7 @@
@@ -11,3 +11,12 @@ index 4fbbb8f..74f9632 100644
        "ground": false,
        "grow": 0.5,
        "id": "muzzle",
+@@ -210,7 +210,7 @@
+       "doc": "the electroshock melee crackle: paper bolts (teal is the dead's only)",
+       "drag": 0,
+       "emissive": true,
+-      "fade_from": 0,
++      "fade_from": 0.6,
+       "ground": false,
+       "grow": 0,
+       "id": "crackle",

@@ -1273,7 +1273,7 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
     before it dissolves (`masters:night/d4-production/work/fx14/muzzle64.png`).
 - 04:37 EVIDENCE for REQUEST 23 (probe in scratch-m14 only, reverted): fx.json `muzzle.fade_from` 0 -> 0.6, n-visual's
   fx_showcase `before_i14mz|probe_i14mz/fx-*`, crops `work/fx14/muzzle_ab.png`: the flash prints as a solid inked star
-  with the vermilion core instead of dither fragments, at 48 and 64. One-line patch for visual-engine:
+  with the vermilion core instead of dither fragments, at 48 and 64. Patch for visual-engine (now superseded by fx_fade.patch, 04:53):
   `evidence/iter14/fx_muzzle_fade.patch` (applies on n-visual 56d23e7; their file, not committed here).
 - 04:38 (housekeeping) scratch-q1's art copies synced to n-d4 HEAD (it held main's older curb tile), re-imported; its
   view diff still equals `evidence/iter14/q1_view_art.patch`.
@@ -1341,7 +1341,7 @@ NEXT (session end, iteration 14):
 - Director: REQUEST 16 = `evidence/iter14/q1_view_art.patch` (+217 / -121; supersedes iteration 12's). Order: merge n-d4
   into main (no conflict), then `git apply` it; dry-run 04:36 (plus the arc ball since: unit 166/166 in scratch-q1).
   REQUEST 19 / 21 unchanged (`evidence/iter10/`); REQUEST 22 (aquatint, optional); **REQUEST 23** (visual-engine:
-  `evidence/iter14/fx_muzzle_fade.patch`, + crackle the same); **REQUEST 24** (who ships the in-world souls).
+  `evidence/iter14/fx_fade.patch` (muzzle + crackle)); **REQUEST 24** (who ships the in-world souls).
 - Quest 1 left as code: the whisper rings (teal, the souls - on doctrine), the burst's chained arcs, rifle / nail
   lines, the words (font). The payphone and a dumpster sit on the Harbor Road band (layout markers, quest owner).
 - Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
@@ -1364,3 +1364,8 @@ NEXT (session end, iteration 14):
   Next time: `git merge --no-commit` the second branch onto a tree built with `git read-tree` / or run the hook.
 - 04:52 Evidence index (`evidence/README.md`) updated: iter14 folder, REQUEST 16 -> iter14 patch, REQUEST 23 row,
   REQUEST 24, Codex 29 images. Pickups re-checked (`work/fx14/pickups.png`): flat bold tokens, no gloss. No change.
+- 04:53 EVIDENCE for REQUEST 14 + 23 together (scratch n-visual 56d23e7 + n-d4, probe reverted): `muzzle`, `crackle`,
+  `spark` `fade_from` 0 -> 0.6, fx_showcase `before_i14fd|probe_i14fd/fx-*`, crops `work/fx14/fade_ab.png`: the crackle
+  prints as solid inked bolts (was dither-speckled), the muzzle as a solid star; the spark is about the same, so it is
+  left out. `evidence/iter14/fx_fade.patch` (muzzle + crackle, 2 lines; `git apply --check` clean on n-visual)
+  replaces `fx_muzzle_fade.patch` (removed). Scratch removed.
