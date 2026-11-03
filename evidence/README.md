@@ -75,6 +75,7 @@ tick count, no RNG.
 | `item45_street_clutter.png` | iteration 8 (dev hero scene): the mock's wall-side clutter on our empty pavement strips (bench, planter, mailbox, vending machine; neutral props only), h133ps vs h135cl at 32 + x2 crops + 48, beside the mock |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `item46_rig_shadows.png` | iteration 8 (dev hero + arena scenes, d5 tier): hatched cast shadows for the rigs up close (D5RigShadow + look_d5_shadow_group), a20 vs a22rs at 128 and 64, h135cl vs h139rs at 64 and 96, the package at 64, + the concept's ground shadow; fade 56 -> 64 px/m |
+| `item47_dots_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `dots_k` (the concept's halftone stipple in the shaded steel mid-tones, 64 -> 96 px/m) off / rejected 4 px screen / on at 128 and 96, the arena with dots + fringe, the concept; walk at 96: no added shimmer. Not default |
 | `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h135cl at 32 / every proposal h138all at 32 and 48 (package + fringe) / the arena kill-cam a21all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -258,8 +259,13 @@ mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
 4. **The concept's red misprint** (NEW, owner A/B, `item43`): look_d5_part `fringe_k` 1.0 prints it along every
    segment's down-right edge from 64 to 96 px/m; Rivet's red share 0.018 -> 0.030 (concept body 0.039), pure vermilion
    unchanged. The colour doctrine says vermilion only on what matters, so the owner decides; default off.
-5. **Up close, still open**: Rivet's steel value (concept mauve, darker; the owner kept lavender, `item9`), the
-   concept's halftone stipple on the steel (we print a pen hatch), King has no rig (plan-view sprite).
+5. **Up close, still open**: Rivet's steel value (concept mauve, darker; the owner kept lavender, `item9`); the
+   concept's halftone stipple is now an owner A/B option (`item47`, `dots_k`, with the fringe = the riso-print
+   signature); King has no rig (plan-view sprite). The D5 tier's own walk shimmer at 96 px/m (HF 1.13 vs D4) was
+   measured for the first time tonight; at 64 it is 1.03.
+7. **Cost** (NEW, measured): rig shadows +0.07 to +0.18 ms GPU median (p95 about 1 ms) and 0.27 ms script at 16 full
+   rigs, 64 px/m, RTX 4090 (`d5-cost.json` "d5s"). The dev version walks a cached part list; in production it
+   belongs in rig_build (no per-frame walk).
 6. **Cones**: their square base alpha prints a boxy shadow beyond 0.12 m (kept short); a round base in the D4
    prop art would let the shadow lengthen.
 

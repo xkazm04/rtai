@@ -1137,3 +1137,16 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   cost8c: clock states), so only same-run deltas are quoted. evidence/d5-cost.json = cost8d (now with d5s; the
   shoot() split into _measure() for the 40-line limit, caught by the pre-commit lint). For the characters lane: build the shadow per rig in rig_build (no per-frame walk) and
   check the p95 spike with one CanvasGroup per rig layer vs per rig.
+- 04:50 OPTION (820c5f2, owner A/B, default 0): look_d5_part dots_k / dots_period 3 - the concept's halftone stipple
+  (gap list 5). h142dt (4 px screen over all mid-tones, d 0.16-0.70): REJECTED, an even mechanical screen over the
+  whole robot. h144dt3 (3 px, d 0.26-0.74, x (0.45 + 0.55 shade): denser on the form-shade side, violet-grey dots,
+  part space at 15 deg, the fringe's 64 -> 96 fade): by eye a fine print stipple in the shading, closer to the
+  concept's dot screen. 0 / 0 / 0 / 5265 / 8154 px at 32-128 vs h141rs. Default h145 = h141rs (0 px); arena a25fd
+  (D5_DOTS=1 D5_FRINGE=1) 0/0/0/7033/10036. D5_DOTS dev switch (PART_ENV table in d5_hero_halo_ink.gd). Params JSON
+  part.dots_k 0 / dots_period 3 (unit 149/0).
+- 04:50 SHIMMER at 96 px/m MEASURED (first time at 96: the walk scene hardcodes zoom 2.0 in _frame_at AND in the crop;
+  first try at 3.0 changed only _frame_at, so the 120 px crop missed Rivet: walk8 discarded, re-shot with both + a
+  180 px box, temporary, restored, tree checked). D5/D4 change over 40 walk ticks: options off total 1.176 / HF 1.131;
+  dots + fringe on 1.150 / 1.106: no added shimmer. Note the D5 tier's own HF ratio at 96 (1.13) is higher than at
+  64 (1.03, walk6): not a regression of tonight, just never measured; the characters lane may want to look at it.
+  Board evidence/item47_dots_owner_ab.png; ladder row.
