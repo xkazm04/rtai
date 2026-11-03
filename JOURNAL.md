@@ -113,3 +113,8 @@ NEXT:
   (recolor_cops.t1_cap, both tiers). Gate (real city, city-0): blue px 3207 -> 2393 at 32, 4437 -> 2864 at 48, every cop
   still its own blue blob (10 -> 15 blobs at 32: head no longer joins body). evidence/d5-cast/cop-cap-t1.json. Hero A/B:
   only the cops' heads change. Goldens pass unblessed (worst 0.92 / 0.53). Frames: renders/cap-hero-ab.png, cap-city32-ab.png.
+- OWNER CHOICE flagged (masters frames.json "cop heads as T1 draws them"): cream domes are T1's cop, but blue px per frame
+  fall vs iteration 1's navy heads: 3449 -> 2393 at 32 (-31 %), 4466 -> 2864 at 48 (-36 %); on the cream sidewalk the
+  cream cap meets the cream sticker rim, so the blue mass per cop is smaller at 32. Every cop is still its own blue blob
+  (navy body + blue-hi shoulders), so the gate holds. Back to navy heads = git revert 90bb8f6 34acc56.
+- Scratch worktree gtai-wt/scratch-cast-merge removed after the trial merge (its commit was never on a branch).
