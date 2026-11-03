@@ -1,0 +1,65 @@
+{
+  "car_speed_mps_per_second": [
+    8.2,
+    15.7,
+    19.2,
+    5.1,
+    1.1,
+    9.7,
+    3.7,
+    3.9,
+    7.0,
+    1.0,
+    6.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0,
+    -1.0
+  ],
+  "dropped": {
+    "car_wreck:cooldown": 1,
+    "crash:cooldown": 2
+  },
+  "engine_pitch_per_second": [
+    0.99,
+    1.23,
+    1.41,
+    0.9,
+    0.79,
+    1.03,
+    0.85,
+    0.92,
+    0.94,
+    0.79,
+    0.94,
+    0.83,
+    0.83,
+    0.83,
+    0.83,
+    0.83,
+    0.83,
+    0.83,
+    0.83,
+    0.83
+  ],
+  "frames": 1200,
+  "missing": [],
+  "played": {
+    "car_wreck": 1,
+    "crash": 5,
+    "hit_metal": 2,
+    "horn": 3
+  },
+  "vehicle_cues": {
+    "car_wreck": 2,
+    "crash": 7,
+    "hit_metal": 1,
+    "horn": 3,
+    "wreck_smoke": 13
+  }
+}

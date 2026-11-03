@@ -55,3 +55,13 @@ rendered frame; the scratch driver is `evidence/requests/slice_clip.gd.txt`). 15
 true peak -2.9 dBFS, LRA 3.3 LU**, 5 s windows -21.8 .. -15.0 dBFS; 20 of the 23 voice lines started in those 150 s (the other 3 come later in the quest), 7 voice-queue drops,
 123 footsteps, 44 kill punches, 74 shots, 3 Robo-tazer charges, 1 boss stinger, no missing sound file. Frames at 20 s and 140 s looked at: straight down, 0 rejected.
 Measured, not heard. Without the patch the slice is silent (nothing in d-slice calls StageAudio).
+
+## Iteration 4: audio on the vehicles lane's real cars (`vehicles_merge_carnage.mp4`, 20 s, scratch merge d-vehicles 01bd7a0.. + d-audio, contended GPU)
+
+A scratch merge of d-vehicles and d-audio (one conflict, JOURNAL.md; boot/world.gd auto-merged; **386 unit tests pass** after fixing my run-over hook test, which re-declared
+`pedestrian_struck` once the vehicles lane declares it). The scene replays the vehicles lane's own carnage route (`VehicleFrameSetup`: hijack a taxi, ram two cars, reverse, wreck;
+scratch driver `evidence/requests/audio_vehicle.gd.txt`) with the sink hung the WorldAudio way. What the sink heard from VehicleCues, no code on either side beyond the merge:
+**5 crashes, 1 car_wreck explosion (a second one dropped by the 30-tick cooldown), 2 hit_metal, 3 horns**, no missing sound file. The engine bed's pitch followed the car:
+speeds 8.2 / 15.7 / 19.2 / 5.1 / 1.1 m/s per second -> pitch scale 0.99 / 1.23 / 1.41 / 0.90 / 0.79. -16.5 LUFS integrated, true peak -3.1 dBFS, LRA 22 LU (the engine bed runs, then
+the clip goes quiet after the wreck). Frames at 3, 9, 13 s looked at: straight down, 0 rejected. Not covered: tyre_screech (the route has no slide), hijack slam (`vehicle_hijacked`),
+`pedestrian_struck` thud (unit-tested only). Measured, not heard. (The native DLL of my lane lacks `CitySim::set_obstacles`: with it the engine logs one error per call; the vehicles lane's DLL does not.)
