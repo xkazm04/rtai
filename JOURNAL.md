@@ -339,3 +339,9 @@ NEXT (iteration 4 close, in order):
   the one lit figure. BUT the cops lose their main noir cue (they were the dark masses among white peds;
   now everyone except Rivet is dark), and at 32 px/m a dense crowd turns into a busy mesh of rims. So it
   is opt-in only, not in the showcase.
+- EXPERIMENT (01:41) the cop read with ink peds: `noir_frames -- --noir-parts --verm=1` (the vermilion
+  plate prints as paper; the crowd cops carry it through the rig palette swap). Evidence
+  evidence/ped-cop-read.png (street + junction 48 px/m: D4 peds | ink peds | ink peds + paper cops) and
+  ped-cop-read-zoom.png. Read: the crowd cop pops again as the one bright torso among dark passers-by,
+  but the white cap band is lost and cops and Rivet are now both the bright figures (Rivet keeps his ink
+  core + visor U). An owner choice of value roles, not adopted: params keep verm_value 0, showcase unchanged.
