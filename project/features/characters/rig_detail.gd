@@ -22,6 +22,7 @@ static var active: bool = false
 static var enabled: bool = true
 static var _mats: Array[ShaderMaterial] = []
 static var _has: Dictionary[String, bool] = {}
+static var _has_part: Dictionary[String, bool] = {}
 static var _on: Dictionary[int, bool] = {}
 static var _over: Dictionary[int, Array] = {}
 
@@ -46,6 +47,15 @@ static func has_d5(art_dir: String) -> bool:
 			PartLibrary.ART_ROOT + D5_DIR + art_dir + "/parts.json"
 		)
 	return _has[art_dir]
+
+
+## A D5 set can lack a part the D4 set gained later (d4-production's sleeve values and new looks):
+## that part then gets no overlay and keeps its D4 print, instead of a missing-file load per rig.
+static func has_part(dir: String, part: String) -> bool:
+	var key: String = dir + "/" + part
+	if not _has_part.has(key):
+		_has_part[key] = ResourceLoader.exists(PartLibrary.ART_ROOT + key + ".png")
+	return _has_part[key]
 
 
 static func is_on(rig: CutRig) -> bool:
@@ -94,7 +104,8 @@ static func _make(rig: CutRig) -> void:
 static func _point(o: Sprite2D, rig: CutRig, src: Texture2D) -> void:
 	o.set_meta(&"src", src)
 	var part: String = src.resource_path.get_file().get_basename()
-	o.texture = PartLibrary.texture(D5_DIR + rig.plan.art_dir, part)
+	var dir: String = D5_DIR + rig.plan.art_dir
+	o.texture = PartLibrary.texture(dir, part) if has_part(dir, part) else null
 	o.offset = (o.get_parent() as Sprite2D).offset
 
 

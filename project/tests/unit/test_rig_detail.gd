@@ -74,3 +74,32 @@ func test_palette_swapped_parts_keep_the_d4_print() -> void:
 	for i: int in cop.sprites.size():
 		var o: Sprite2D = cop.sprites[i].get_node(NodePath(String(RigDetail.OVERLAY)))
 		assert_eq(o.visible, cop.sprite_swaps[i] == 0, "overlay %d" % i)
+
+
+func test_d5_ped_parts_mirror_or_skip_the_d4_parts() -> void:
+	# d4-production added ped parts (sleeve values, new looks) after the D5 ped set was cut:
+	# those get no overlay (their D4 print shows), the rest keep the silhouette lock.
+	assert_true(RigDetail.has_d5("ped"))
+	var d4: PartLibrary = PartLibrary.of("ped")
+	var dir: String = RigDetail.D5_DIR + "ped"
+	var mirrored: int = 0
+	for part: String in d4.sizes:
+		if RigDetail.has_part(dir, part):
+			mirrored += 1
+			assert_eq(PartLibrary.texture(dir, part).get_size(), d4.tex(part).get_size(), part)
+	assert_gt(mirrored, 0, "the D5 ped set covers the base parts")
+	assert_false(RigDetail.has_part(dir, "no_such_part"))
+
+
+func test_a_part_with_no_d5_mirror_gets_no_overlay() -> void:
+	@warning_ignore("return_value_discarded")
+	_rigs.feed.put(1, 3, BodyPlan.Kind.PED, Vector2(32.0, 0.0), Vector2.ZERO)
+	_rigs.zoom = 2.0
+	_rigs.step_ticks(1)
+	var ped: CutRig = _rigs.rig_for(3)
+	assert_true(RigDetail.is_on(ped))
+	var spr: Sprite2D = ped.sprites[0]
+	spr.texture = load("res://addons/gut/icon.png") as Texture2D  # a part with no D5 file
+	RigDetail.sync(ped)
+	var o: Sprite2D = spr.get_node(NodePath(String(RigDetail.OVERLAY)))
+	assert_null(o.texture, "no D5 mirror: no overlay texture, the D4 print shows")
