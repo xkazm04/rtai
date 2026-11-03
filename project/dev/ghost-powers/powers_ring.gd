@@ -1,14 +1,14 @@
 class_name PowersRing
 extends Node2D
-## The Hauler's look on the city view (dev clip): scales Rivet's rig by the morph (base size_k to
-## the hauler FORMS row), tints it toward the souls' teal, draws the stomp telegraph (a thin ring
-## closing in) and the shockwave (a teal ring growing to the stomp radius over SHOCK_S).
+## The Hauler on the city view (dev clip): HaulerLook grows and tints Rivet's rig by the morph;
+## this node draws the stomp telegraph (a thin ring closing in) and the shockwave (a teal ring
+## growing to the stomp radius over SHOCK_S).
 
-const TEAL: Color = Color(0.18, 0.80, 0.76)
+const TEAL: Color = HaulerLook.TEAL
 const SHOCK_S: float = 0.35
-const TINT_K: float = 0.55
 
 var hauler: HaulerCity = null
+var look: HaulerLook = null
 var rig: CutRig = null
 var tick: int = 0
 
@@ -16,13 +16,7 @@ var tick: int = 0
 func sync(p_tick: int, p_rig: CutRig) -> void:
 	tick = p_tick
 	rig = p_rig
-	if rig != null:
-		var k: float = hauler.form.morph_k()
-		var base: float = RivetPlan.FORMS[RivetPlan.FORM_BASE].x
-		var big: float = RivetPlan.FORMS[RivetPlan.FORM_HAULER].x / base
-		var bump: float = 1.0 + 0.12 * hauler.form.windup_k()
-		rig.scale = Vector2.ONE * CutRig.SC * base * lerpf(1.0, big, k) * bump
-		rig.modulate = Color.WHITE.lerp(TEAL, TINT_K * k)
+	look.apply(rig, hauler.form.morph_k(), hauler.form.windup_k())
 	queue_redraw()
 
 

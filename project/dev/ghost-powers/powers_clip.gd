@@ -6,6 +6,7 @@ extends Node
 ## stomp and floors a group. --before = base Rivet on the same path and speed. Windowed only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/powers_clip.tscn
 ##     -- --out=<dir> [--before] [--zoom=<z>] [--every=<n>] (clip frame every n ticks)
+##     [--look=<scaled|bulked>] (overrides powers.json hauler.look)
 
 const MASTER_SEED: int = 91
 const START: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -20,6 +21,8 @@ var _world: World = null
 var _view: CityView = null
 var _drive: PowersClipDrive = null
 var _ring: PowersRing = null
+## --look=<scaled|bulked> overrides powers.json hauler.look (ASK ghost-powers-2 A/B frames).
+var _look: StringName = &""
 var _characters: CityCharacters = null
 
 
@@ -43,6 +46,9 @@ func _ready() -> void:
 	await _characters.bake()
 	_ring = PowersRing.new()
 	_ring.hauler = _drive.hauler
+	_ring.look = HaulerLook.new(PowerTable.load_default().hauler)
+	if _look != &"":
+		_ring.look.look = _look
 	_ring.z_index = RenderLayers.z(&"actors") + 1
 	_view.actor_layer().add_child(_ring)
 	await _view.prewarm()
@@ -82,7 +88,8 @@ func _numbers() -> bool:
 
 
 func _tag() -> String:
-	return "before" if _before else "after"
+	var tag: String = "before" if _before else "after"
+	return tag if _look == &"" else "%s-%s" % [tag, _look]
 
 
 func _shoot(tick: int) -> bool:
@@ -116,6 +123,8 @@ func _parse_args() -> bool:
 			_before = true
 		elif arg.begins_with("--zoom="):
 			_zoom = arg.substr(7).to_float()
+		elif arg.begins_with("--look="):
+			_look = StringName(arg.substr(7))
 		elif arg.begins_with("--every="):
 			_every = arg.substr(8).to_int()
 		else:
