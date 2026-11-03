@@ -1304,3 +1304,26 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
   GPU load). Fix later: stop the selftest World's _process and step SimClock a fixed number of ticks
   before each capture (changes the selftest frames' content - re-look at them), or drop the colour count.
   Session end 07:09: tree clean, no Godot of mine running, no scratch worktrees.
+
+## Iteration 16 (07:10-07:30, BUILD, short: 20 min to freeze)
+- MILESTONE (cfbfc53 + cfc9e2c) NEXT 4 done: the city_selftest live frame lands on a fixed sim tick.
+  city_selftest._ready turns the World's _process off and _step() feeds exactly one SimClock.TICK_DT per
+  rendered frame, so the 32 px/m capture is tick 90 and the 48 px/m capture tick 180 (result JSON gains
+  `sim_tick`). Two d3d12 runs: both PNGs byte-identical (md5), 87 / 81 colours both times, and the
+  evidence run a third time gave 87 / 81 again (before: 75 / 77 / 81 run to run). Frames looked at: same
+  look, straight down, only the crowd moment differs (fewer pre-capture ticks). Ladder rows 54 (32 + 48
+  px/m before | after), 54-selftest-fixed-tick/ in masters. Ladder 1280 x 27482.
+- FRICTION / approach rejected 1: the first cut put set_process(false) in the shared _build(); the
+  look_golden / accent_audit / world_lock scenes extend city_selftest and call _build() but never _step(),
+  so their sim froze at tick 0 and every golden moved (look 0/11 worst 35.17, block 0/5 worst 51.56).
+  Moved the switch into city_selftest._ready only (those scenes override _ready and already run
+  deterministic under --fixed-fps 60). Goldens back to 11/11 + 5/5 worst 0.00 without a re-bless.
+- Evidence at the fix (07:14-07:16, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity
+  bit-exact + mutation caught at 629, selftest 87 / 81 colours, goldens 11/11 + 5/5 worst 0.00). Copied
+  to evidence/pof.
+- Iteration 16 tally: frames rejected 0, approaches rejected 1 (shared-_build switch), no AI images ->
+  no provenance. No scratch worktrees; /tmp frame scratch removed.
+
+NEXT (morning): iteration 15's list stands minus item 4 (done). In order: 1 Director merge + one golden
+re-bless after it; 2 the owner calls; 3 hard-fail on unknown args (owner call); 5 idle bench, rig p99
+0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
