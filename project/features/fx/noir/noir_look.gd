@@ -23,6 +23,9 @@ var light_us: int = 0
 var extra_cars: PackedVector4Array = PackedVector4Array()
 ## Long cast shadows in the world canvas (params `shadows`); null until the first light_street().
 var shadows: NoirShadows = null
+## The people's shadows (params `shadows.figures`), cast by the city's CharacterRigs; null until
+## a CharacterRigs is on the actor layer (or when a host attached its own).
+var figures: NoirFigureShadows = null
 var _lamp_r_px: float = 0.0
 var _beam_len_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
@@ -131,6 +134,28 @@ func _cast_shadows(city: CitySystem) -> void:
 		@warning_ignore("return_value_discarded")
 		visibility_changed.connect(func() -> void: shadows.set_visible(visible))
 	shadows.update(city.residency)
+	if figures == null:
+		_cast_figures(view)
+
+
+## The figure shadows on the city's actor layer, cast by its CharacterRigs (the game's rigs);
+## skipped when a host already put its own NoirFigureShadows there.
+func _cast_figures(view: CityView) -> void:
+	var layer: CanvasLayer = view.actor_layer()
+	if layer == null:
+		return
+	var rigs: CharacterRigs = null
+	for child: Node in layer.get_children():
+		if child is NoirFigureShadows:
+			figures = child as NoirFigureShadows
+			return
+		if child is CharacterRigs and rigs == null:
+			rigs = child as CharacterRigs
+	if rigs == null:
+		return
+	figures = NoirFigureShadows.attach(layer, params, rigs)
+	@warning_ignore("return_value_discarded")
+	visibility_changed.connect(func() -> void: figures.visible = visible)
 
 
 func _exit_tree() -> void:
