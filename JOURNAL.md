@@ -232,3 +232,25 @@ NEXT:
   on an enemy is arguably not danger. Note for d5-cast / gunplay (hit-feel owner).
 - GATES at the lunge commit (8a71359 + docs): lint 13/13; unit 553/553 (run_unit.mjs); scenarios
   21/21 (full suite, 22:24); enemy units 16/16.
+- 22:27 arena station `enemy_sample` (kind pit; the shared schema allows only id/kind/doc/script,
+  so the staging lives in the doc): the 00:00 sample spawn and the run line.
+- Rendering clip g (24 s, two cop+thug pairs, the second pair from the far side) for the 20-40 s
+  lane clip.
+
+NEXT:
+1. Re-read answers.json (no enemy-ai asks open; ASK only with a real-time clip in the final look).
+2. If clip g did not land: re-run it (dev/enemy_ai/enemy_rig_fight_run.gd -- --seconds=24
+   --squad=patrol_cop,robot_thug,patrol_cop,robot_thug --spots=9:-6,-1:2.5,16:5,15:-3 --fire_m=10)
+   and encode at 30 fps; add it first in gtai-masters/eve/enemy-ai/frames.json.
+3. The sample with Rivet's REAL weapons: the pit's Rivet is PitDummy (nails). When gunplay's pistol
+   and rivet-motion's claw combo are on main, swap the dummy's rivet_fire for their API (or merge
+   on the night run) so the cast-rig fight shows the finished pistol and claw against the enemies.
+4. A robot thug plan + art (not King's skeleton): a ROBOT BodyPlan.Kind in features/characters is
+   a d5-cast/rivet-motion file: REQUEST it, or land a minimal kind on the night run.
+5. Suppression (the brief's "suppress" state): a nail passing within ~0.6 m of a human enemy
+   flinches it / delays its windup; humans die to one nail, so a near-miss flinch is the only
+   non-lethal reaction a patrol cop can show. Needs a distinct clip from HIT (a hit and a miss must
+   read differently).
+6. The city block clip (owner decision 1: tuned in the arena, holds in the city): the pit fight's
+   brains on the generated city (dev/showcase/city_fight.gd is the closest host).
+7. Robot hit tint note for d5-cast/gunplay (vermilion flash on enemy hits).
