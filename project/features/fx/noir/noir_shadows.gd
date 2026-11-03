@@ -3,16 +3,22 @@ extends RefCounted
 ## D-Noir cast shadows (lane noir): every shadowed draw command of the resident chunks (props,
 ## parked cars, the roof blocks) also casts a LONG hard shadow - its own silhouette swept away
 ## from the light (look params `light_dir`) by a length per texture class (look params
-## `shadows`). Stamped in near-black into the world canvas, above the ground and under every
-## prop and roof, so the noir pass prints them as ink masses (and the street lamps still lift
-## them: the value sits just over lamp_gate). Render only: reads chunk data, never sim state.
+## `shadows`), one quad per caster that look_noir_shadow.gdshader sweeps. Printed near-black
+## into the world canvas, above the ground and under every prop and roof, so the noir pass
+## prints them as ink masses (and the street lamps still lift them: the value sits just over
+## lamp_gate). Render only: reads chunk data, never sim state.
 ## One chunk is recorded per update(), once; an evicted chunk's item is cleared and pooled.
 
-## World px (at 32 px/m) between two stamps of one sweep.
+## World px (at 32 px/m) between two taps of one sweep.
 const STEP_PX: float = 2.0
+## The shader's sweep packing range (texture uv per colour unit; look_noir_shadow.gdshader).
+const D_SCALE: float = 16.0
 const SHADER: String = "res://assets/shaders/look_noir_shadow.gdshader"
 
+## Swept casters recorded so far (one quad each).
 var stamps: int = 0
+## The slowest chunk recording so far (CPU, microseconds; one chunk per update()).
+var record_max_us: int = 0
 var _parent: RID
 var _root: RID
 var _tex: CityTextures
@@ -69,7 +75,9 @@ func update(res: CityResidency) -> void:
 			_drawn.erase(key)
 	for key: Vector2i in res.resident_keys():
 		if not _drawn.has(key):
+			var t0: int = Time.get_ticks_usec()
 			_drawn[key] = _record(res.chunk_at(key))
+			record_max_us = maxi(record_max_us, Time.get_ticks_usec() - t0)
 			return
 
 
@@ -95,14 +103,25 @@ func _record(chunk: CityChunk) -> RID:
 		if chunk.xf[o + 3] < 0.5 or t >= _len_px.size() or _len_px[t] <= 0.0:
 			continue
 		var pos: Vector2 = Vector2(chunk.xf[o], chunk.xf[o + 1]) * SimConst.PX_PER_M
-		var sz: Vector2 = _tex.size_px[t]
-		var n: int = ceili(_len_px[t] / STEP_PX)
-		for s: int in n + 1:
-			var at: Vector2 = pos + _dir * (_len_px[t] * float(s) / float(maxi(n, 1)))
-			RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
-			RenderingServer.canvas_item_add_texture_rect(item, Rect2(-sz * 0.5, sz), _tex.rids[t])
-		stamps += n + 1
+		RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], pos))
+		_sweep(item, t, (_dir * _len_px[t]).rotated(-chunk.xf[o + 2]))
+		stamps += 1
 	return item
+
+
+## One quad over the caster's texture and its sweep d (local px): the shader takes the max
+## alpha along the sweep; the region runs past the texture so the quad's uv is texture uv.
+func _sweep(item: RID, t: int, d: Vector2) -> void:
+	var sz: Vector2 = _tex.size_px[t]
+	var r: Rect2 = Rect2(-sz * 0.5, sz).merge(Rect2(-sz * 0.5 + d, sz))
+	var tex_px: Vector2 = _tex.textures[t].get_size()
+	var src: Rect2 = Rect2((r.position + sz * 0.5) / sz * tex_px, r.size / sz * tex_px)
+	var d_uv: Vector2 = d / sz
+	var taps: float = clampf(ceilf(d.length() / STEP_PX), 1.0, 255.0)
+	var pack: Color = Color(0.5 + d_uv.x / D_SCALE, 0.5 + d_uv.y / D_SCALE, taps / 255.0)
+	RenderingServer.canvas_item_add_texture_rect_region(
+		item, r, _tex.rids[t], src, pack, false, false
+	)
 
 
 ## Frees every canvas item this created (WLD-05: the creator frees).

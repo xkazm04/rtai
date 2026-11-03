@@ -38,9 +38,7 @@ func test_only_shadow_commands_with_a_length_are_swept() -> void:
 	var root: RID = RenderingServer.canvas_item_create()
 	var sh: NoirShadows = NoirShadows.new(root, CityTextures.new(table), table, _params())
 	var item: RID = sh._record(c)
-	var cfg: Dictionary = _params()["shadows"]
-	var len_px: float = NoirShadows.lengths(table, cfg)[HYDRANT]
-	assert_eq(sh.stamps, ceili(len_px / NoirShadows.STEP_PX) + 1, "one sweep: the hydrant's shadow")
+	assert_eq(sh.stamps, 1, "one swept quad: the hydrant's shadow (not the lamp, not the hydrant)")
 	RenderingServer.free_rid(item)
 	sh.dispose()
 	RenderingServer.free_rid(root)
