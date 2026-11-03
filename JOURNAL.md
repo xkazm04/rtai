@@ -147,3 +147,5 @@ NEXT (iteration 3), in order:
 5. Stains draw above Rivet when he stands on a corpse (z +60 above the actors band); clip them under Rivet's rig
    (Rivet's node z above the soaks) if it shows in play.
 6. REQUEST 3 (kill hit-stop 8 for the beat) and knockback held a beat: camera.json / sim owners.
+- GATES at 971a118 (evidence/run.mjs --no-bench, 12:1x): lint 13/13, unit 347/0, scenarios 8/8, parity exact (1200 steps,
+  mutation caught), selftest PASS (look goldens 11/11, block 5/5). Bench: judged at 11:40, MISS p99 (CONTENDED, above).
