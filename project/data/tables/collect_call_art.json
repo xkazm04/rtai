@@ -86,16 +86,14 @@
     },
     {
       "art": "res://features/quest/art/collect_call/cast_rivet.png",
-      "draw_k": 0.846154,
       "id": "rivet",
       "size_m": [
-        3.1,
-        3.9
+        2.733333,
+        2.9
       ]
     },
     {
       "art": "res://features/quest/art/collect_call/cast_rivet_peek.png",
-      "draw_k": 0.846154,
       "id": "rivet_peek",
       "size_m": [
         1.03,
@@ -123,6 +121,6 @@
       "id": "tuckin_crate_hit"
     }
   ],
-  "doc": "Quest 1's art by id (CastView, StageView, FxView ask for an id, never a path), so an art lane can swap a file here without touching the scenes; an id that is missing or fails to load draws a flat ink square and logs once. size_m: the drawn size in metres where the art fixes it (the rig captures); rows without it are drawn into the size the view's layout gives. draw_k: a factor on size_m (rivet / rivet_peek: the captures are of the night rig at size_k 1.3, the owner's base form is size_k 1.1 (d5-cast, 2026-11-03), so 1.1 / 1.3 until re-captured; then set the new capture, its size_m, and draw_k 1).",
+  "doc": "Quest 1's art by id (CastView, StageView, FxView ask for an id, never a path), so an art lane can swap a file here without touching the scenes; an id that is missing or fails to load draws a flat ink square and logs once. size_m: the drawn size in metres where the art fixes it (the rig captures); rows without it are drawn into the size the view's layout gives. draw_k: an optional factor on size_m (default 1). rivet / rivet_peek are captures of d5-cast's base form (RivetPlan FORM_BASE: size_k 1.2, the T2 hunch; d-cast 062939d, 2026-11-03).",
   "schema": "gtai.collect-call-art/1"
 }

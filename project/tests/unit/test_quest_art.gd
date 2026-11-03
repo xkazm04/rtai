@@ -27,9 +27,12 @@ func test_every_id_the_views_name_loads() -> void:
 
 func test_rivet_draws_at_the_base_form() -> void:
 	var art: ArtIds = QuestArt.shared()
-	var k: float = 1.1 / 1.3
-	assert_almost_eq(art.size_m(&"rivet").x, 3.1 * k, 0.001)
-	assert_almost_eq(art.size_m(&"rivet").y, 3.9 * k, 0.001)
+	for id: StringName in [&"rivet", &"rivet_peek"]:
+		var px: Vector2 = Vector2(art.texture(id).get_size())
+		assert_almost_eq(art.size_m(id).x, px.x / 120.0, 0.01, "%s at true scale" % id)
+		assert_almost_eq(art.size_m(id).y, px.y / 120.0, 0.01, "%s at true scale" % id)
+	# owner verdict 1: only slightly larger than a human (the night capture was 3.1 x 3.9 m)
+	assert_lt(art.size_m(&"rivet").y, art.size_m(&"cop").y, "shorter frame than the gun-out cop")
 	assert_eq(art.size_m(&"cop"), Vector2(1.85, 3.23), "no draw_k = 1")
 
 

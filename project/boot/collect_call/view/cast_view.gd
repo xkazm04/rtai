@@ -24,8 +24,8 @@ const GUARD_DRAW: float = 1.7
 const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
 ## Art by id from data/tables/collect_call_art.json (QuestArt). The rig captures (rivet: idle,
 ## facing -y, 120 px/m, arms included; rivet_peek: its round cut for the hide spots; cop: gun
-## out) carry their drawn size there (size_m x draw_k: Rivet at the base form, 1.1 / 1.3 of the
-## night capture until d5-cast re-captures him), so a re-capture is a table edit.
+## out) carry their drawn size there (size_m x draw_k; Rivet is d5-cast's base form, the T2
+## hunch, at true scale), so a re-capture is a table edit.
 const ALLY_ART: Dictionary[String, String] = {
 	"Juno": "juno", "Brass": "brass", "Dr. Kilohm": "kilohm", "Don Fax": "don_fax"
 }
