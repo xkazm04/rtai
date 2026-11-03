@@ -17,6 +17,10 @@ const LENGTH_M: Dictionary[String, float] = {
 	"police_barrier": 0.25,
 	"traffic_cone": 0.12,  # its square base alpha prints a box when longer
 	"crate_stack": 0.45,
+	"planter": 0.3,
+	"bench": 0.2,
+	"mailbox": 0.3,
+	"vending_machine": 0.45,
 	"cruiser": 0.4,
 	"sedan_dark": 0.4,
 }

@@ -37,6 +37,11 @@ const PROP_SPOTS: Array[Array] = [
 	# the mock's wall-side crates (barrel_cluster prints vermilion = doctrine noise, not used)
 	["crate_stack", -10.8, -4.8, 2.1, 1.4, 0.0],
 	["crate_stack", 7.8, 4.8, 2.1, 1.4, 0.0],
+	# iteration 8: the mock's wall-side clutter on the empty strips (neutral props only)
+	["planter", -9.6, 4.85, 2.0, 1.1, 0.0],
+	["bench", -12.8, 4.55, 1.9, 0.7, 0.0],
+	["mailbox", -6.9, 4.45, 0.7, 0.6, 0.0],
+	["vending_machine", -7.4, -4.85, 1.2, 1.3, 0.0],
 ]
 ## kerb shadow strips in metres (the pavement blocks' street-side edges facing down-right),
 ## stopping where D5HeroKerbs rounds the corner (radius 1.6 m)
