@@ -100,7 +100,7 @@ void fragment() {
 	} else {
 		vec3 s = c.rgb;
 		float d = dens(s);
-		bool teal = (s.g > s.r + 0.23) && (s.b > s.r + 0.16) && (s.g > 0.43);
+		bool teal = (s.g > s.r + 0.23) && (s.b > s.r + 0.16) && (s.g > 0.43) && (s.b - s.g < 0.157);  // not a bright cop blue
 		vec2 q = UV / TEXTURE_PIXEL_SIZE * px_scale;   // part space in screen px: hatch rotates with the part
 		vec3 o;
 		if (teal) {

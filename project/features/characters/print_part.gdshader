@@ -69,7 +69,7 @@ void fragment() {
 	} else {
 		vec3 s = c.rgb * 255.0;
 		float vr = s.r - max(s.g, s.b);
-		bool teal = (s.g > s.r + 60.0) && (s.b > s.r + 40.0) && (s.g > 110.0);
+		bool teal = (s.g > s.r + 60.0) && (s.b > s.r + 40.0) && (s.g > 110.0) && (s.b - s.g < 40.0);  // not a bright cop blue (d5-cast)
 		float lum = dot(c.rgb, vec3(0.299, 0.587, 0.114));
 		float lc = dot(CREAM, vec3(0.299, 0.587, 0.114));
 		float li = dot(INK, vec3(0.299, 0.587, 0.114));

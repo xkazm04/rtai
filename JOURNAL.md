@@ -31,3 +31,7 @@
   Goldens re-blessed again (check run mean 0.00). Unit 326/326, lint green.
 - A/B cop shoulders: B (navy ball + small blue-hi core) tried and NOT shipped: bright px at 32 fell 197 -> 75; A kept,
   B offered to the owner (frames + masters recolor_cops.shoulder_marks()).
+- FIX teal leak: the brightest cop_blue_hi shoulder pixels passed the teal gate (printed soul-teal on cops at 128 px/m).
+  Teal now also needs b - g < 40/255 in print_part and look_d5_part (cop teal 512 px -> 0; Rivet loses 9 of 736 edge px).
+  King's parts: teal-ish and green-spill pixels greyed (King carries no teal); provenance rows re-hashed. Look goldens
+  still pass unblessed (max mean 0.007).
