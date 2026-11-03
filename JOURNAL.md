@@ -344,3 +344,11 @@ NEXT (after the 18:00 sync), in order:
 - NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
   blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field).
 - 16:41 session end: tree clean after this commit; no Godot process of mine running; bench.lock (not mine) untouched.
+- 16:44 (iter 47, BUILD, 16 min to freeze): no new code (no time for a re-render plus a gate run). Housekeeping:
+  the tracked evidence/d5-combat/frames.json (13:04, the iter-3 set) and ladder.png were stale against the masters
+  copies (16:36 / 16:08: final-t900 pairs, pool-lead, pool-size A/B, 128 px/m final, clip-it4). Synced both from
+  C:\Users\kazda\kiro\gtai-masters\day-d5\d5-combat\ (frames.json paths stay relative to that masters folder).
+  ladder.png is LFS (pointer diff only). bench.lock (16:40, not mine) untouched; 4 Godot PIDs running, none mine.
+- NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
+  blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field).
+- 16:45 session end: tree clean after this commit; gates last green at 5a6e21b (docs/evidence-only commits since).

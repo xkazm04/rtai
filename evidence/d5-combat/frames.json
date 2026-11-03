@@ -1,146 +1,145 @@
 [
- {
-  "file": "frames/fight-noir-t900-48ppm-it3.png",
-  "title": "Real city riot, 15 s in: the default D4/D5 blood as of iteration 3 (48 px/m)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 48,
-  "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools. ITERATION 3 (1a7174f): liquid pool edge (56-point ring, wet scallop, rounded run) and the doctrine blood_dark #540005 pool body; 'before' = the same seed-91 moment at iteration 1.",
-  "before": "frames/fight-noir-t900-48ppm.png"
- },
- {
-  "file": "frames/fight-noir-t900-64ppm-it3.png",
-  "title": "Same moment at arena zoom (64 px/m): the default D4/D5 blood as of iteration 3 (64 px/m)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat). ITERATION 3 (1a7174f): liquid pool edge (56-point ring, wet scallop, rounded run) and the doctrine blood_dark #540005 pool body; 'before' = the same seed-91 moment at iteration 1.",
-  "before": "frames/fight-noir-t900-64ppm.png"
- },
- {
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "file": "frames/stains-after-t480-64ppm.png",
-  "before": "frames/stains-before-t480-64ppm.png",
-  "ppm": 64,
-  "title": "Blood soaks into the dead (64 px/m): stains on the bodies, not only under them",
-  "note": "CorpseStains (13c4f9d), city_fight.tscn seed 91 tick 480: every human kill soaks its body (7/7 deaths, 0 missed); the stains slide with the body and leave with it at the 8 s despawn. Before = --no-stains in the same deterministic run. 32 px/m pair: frames/stains-t480-32ppm-pair.png."
- },
- {
-  "file": "frames/walker-fade-t480-64ppm-pair.png",
-  "title": "Rivet on a corpse (64 px/m): the soak no longer prints on the robot",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "d4d5",
-  "ppm": 64,
-  "before": "raw/walker/fight-before-noir-t480-64ppm.png",
-  "note": "Real city riot, seed 91, t480; Rivet moved onto the nearest soaked body (city_fight --dev=rivet-on-dead). Left = before (red stain dots on his chassis: the corpse soak drew over him), right = after (the soak fades while he stands on the body; robots never bleed). Also at 32/48: frames/walker-fade-t480-{32,48}ppm-pair.png. Commit 6370b54."
- },
- {
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "file": "frames/pop-after-64ppm.png",
-  "before": "frames/pop-before-64ppm.png",
-  "ppm": 64,
-  "title": "The muzzle lights the scene for one tick (64 px/m)",
-  "note": "MuzzlePop (3464242): a shot near the camera throws a stepped 3-band pool of paper light, 5 m, for exactly one sim tick, over the ground, the print and the bodies. Photosensitivity: at most 1 per 20 ticks AND inside the kill beat's shared flash budget (~1 a second in a riot); none under reduced motion. Before = the same frozen tick with the pop hidden."
- },
- {
-  "file": "frames/fight-noir-t900-128ppm-it3.png",
-  "title": "Kill-cam zoom (128 px/m), iteration 3: liquid pools in blood_dark with a bright meniscus rim",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "d4d5",
-  "ppm": 128,
-  "before": "raw/pool/fight-before-noir-t900-128ppm.png",
-  "note": "Same riot, same tick (seed 91, t900, identical --zooms). Before: 28-point ring (straight chords, pointed run), body #750008. After: 56 points + wet-edge scallop + rounded run lobe (9671d9e), body = doctrine blood_dark #540005 (1a7174f). Step pairs: frames/pool-edge-t900-*-pair.png, frames/pool-dark-t900-*-pair.png. Cost net lower (settled redraw 6 ticks): 294 vs 369 us/frame back to back, debug, CONTENDED."
- },
- {
-  "file": "frames/pop-strength-ab-64ppm.png",
-  "title": "Owner A/B: muzzle pop strength off / 0.20 / 0.32 (default) / 0.45",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": "Same frozen tick (3rd pop of the riot), city_fight --pop-shots=3 --pop-strength=<s>. At 0.45 the ink lines lift to grey (the black-and-white read weakens); 0.32 kept. Data: blood_fx.json game.muzzle_pop.strength."
- },
- {
-  "file": "clip-it3-pools-64ppm.mp4",
-  "title": "15 s riot clip at 64 px/m, real time, iteration 3: liquid pools in blood_dark, stains, muzzle pop",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": "city_fight seed 91, ticks 300-1200, --fixed-fps 60, every 2nd frame (30 fps). 16 deaths, 15 sprayed along the killing round, 14 bodies soaked. 48 px/m: clip-it3-pools-48ppm.mp4. Strip: frames/clip-it3-64-strip.png. Before = the iteration 2 clip (same seed, same ticks).",
-  "before": "clip-it2-stains-pop-64ppm.mp4"
- },
- {
-  "file": "frames/quest1-stains-04-crop.png",
-  "title": "Quest 1 dock wave: the dead guards soaked too (crop x2, before | after)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "d4 (quest 1 PrintStage)",
-  "ppm": 48,
-  "note": "collect_call_frames grabber (the real quest 1 play, CombatArena events). 49 bodies soaked, 0 missed. Before = the same grab with the quest view stains reverted."
- },
- {
-  "file": "frames/fight-oil-after-noir-t420-64ppm.png",
-  "title": "Rivet's oil now reads on asphalt (64 px/m)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": "Rivet hit every 2 s (dev --hit-rivet=120, wired as the game wires player_hit). Before: black flecks lost in the asphalt grime. After: black drops with a thin cream rim (D4 ink-with-cream-rim rule) + an oil leak trail where he walks. Still no red on the robot.",
-  "before": "frames/fight-oil-before-noir-t420-64ppm.png"
- },
- {
-  "file": "frames/pool-dark-t900-64ppm-pair.png",
-  "title": "Owner pick: pool body #750008 (left) vs doctrine blood_dark #540005 (right, now default), 64 px/m",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "d4d5",
-  "ppm": 64,
-  "before": "raw/pool/fight-after-noir-t900-64ppm.png",
-  "note": "Same riot moment (seed 91, t900). The doctrine body (d5-city palette blood_dark) under the bright blood rim reads deeper and wetter; the D4/D5 game uses it now (030eb10), noir keeps #750008 (its blood gate prints #540005 black: frames/noir-pool-dark-check.png). 32/48/128: frames/pool-dark-t900-*-pair.png. (The kill-beat panel still frame moved out of this list; frames/beat-modes-contact.png shows every mode.)"
- },
- {
-  "file": "frames/beat-modes-contact.png",
-  "title": "All kill-beat modes at 48 and 64 px/m (rows: flash48, flash64, panel48, panel64, both48, both64)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 48,
-  "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
- },
- {
-  "file": "beat-both-64ppm-realtime.mp4",
-  "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
- },
- {
-  "file": "frames/wall-splat-f1-t900-32ppm-crop.png",
-  "title": "Wall splats in the real city (32 px/m, crop x3)",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "d4d5",
-  "ppm": 32,
-  "note": "city_fight seed 91, focus 1 (a street along buildings), t900: the riot's sprays met the buildings 19 times (CombatBlood solid = the sim's C_BUILD/C_PROP cells); a droplet into a wall stops and smears along it instead of landing beyond it. Full frame: raw/wall/fight-f1-noir-t900-32ppm.png. (The kill-beat 'flash' real-time clip moved out of this list: beat-flash-64ppm-realtime.mp4 is still in the masters folder.)"
- },
- {
-  "file": "frames/beat-modes-48ppm-realtime-strip.png",
-  "title": "Kill beat A/B at 48 px/m in real time: flash / panel / both",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 48,
-  "note": "city_fight --fixed-fps 60 --kill-beat=<mode> --rivet-kills=3 --beat-frames=60 (one tick a frame). Clips: beat-flash|panel|both-48ppm-realtime.mp4 (1 s each; the 64 px/m twins are beat-*-64ppm-realtime.mp4). Default stays off."
- }
+  {
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "file": "frames/final-t900-48ppm-pair.png",
+    "title": "Headline, 48 px/m: the D4 ink splat (before, --blood=ink fallback) vs today's default D4/D5 blood (after), real city riot 15 s in",
+    "ppm": 48,
+    "before": "raw/final/fight-final-ink-t900-48ppm.png",
+    "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops), tick 900, code e086c85 (identical at 58a8388 except pool placement). 14 sim deaths, 14 bled, 13 sprays aimed by the killing round, 12 bodies soaked, 2 wall hits. Spurts, teardrop splats, liquid pools in blood_dark #540005 with the #A30509 meniscus, ink keyline, stains on the dead. Most pools at t900 are orphans: bodies despawn at 8 s (the sim), pools persist and fade as in noir."
+  },
+  {
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "file": "frames/final-t900-64ppm-pair.png",
+    "title": "Headline, 64 px/m (arena zoom): ink splat vs today's default blood, same moment",
+    "ppm": 64,
+    "before": "raw/final/fight-final-ink-t900-64ppm.png",
+    "note": "Same run and tick as the 48 px/m headline; 32 and 128 px/m pairs beside it in frames/final-t900-{32,128}ppm-pair.png."
+  },
+  {
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "file": "frames/pool-lead-t600-64ppm-pair.png",
+    "title": "Pools now spread from under the body, not beside it (64 px/m, 10 s in)",
+    "ppm": 64,
+    "before": "raw/lead2/fight-L0.125-noir-t600-64ppm.png",
+    "note": "58a8388. Measured: the city's dead slide 0.54 m along the blow after death (8/8 bodies, direction match 1.00); the pool started at the hit point, so it printed half outside the body. Now it starts 0.54 m along the blow (blood_fx.json game.pool_lead_m). Same run; t480 and 32/48 px/m pairs in frames/pool-lead-*. Quest 1's events path is unchanged."
+  },
+  {
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "file": "frames/pool-size-ab-t900-64ppm.png",
+    "title": "OWNER PICK: pool size 22 px (1.4 m core, current) / 16 px / 12 px (64 px/m, riot t900)",
+    "ppm": 64,
+    "note": "Frames only, not committed: rendered with a temporary blood_fx.json pool.radius_px edit (restored after). T1's splat is ~1.4 m; at 22 px a grown pool plus its run is ~2 m and dominates; 16 px keeps the brutal read and lets the spray show. A pick is one key since 5a6e21b: blood_fx.json game.pool_radius_px = 16 or 12 (D4/D5 only; noir keeps 22). 48 px/m sheet: frames/pool-size-ab-t900-48ppm.png."
+  },
+  {
+    "file": "frames/walker-fade-t480-64ppm-pair.png",
+    "title": "Rivet on a corpse (64 px/m): the soak no longer prints on the robot",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "d4d5",
+    "ppm": 64,
+    "before": "raw/walker/fight-before-noir-t480-64ppm.png",
+    "note": "Real city riot, seed 91, t480; Rivet moved onto the nearest soaked body (city_fight --dev=rivet-on-dead). Left = before (red stain dots on his chassis: the corpse soak drew over him), right = after (the soak fades while he stands on the body; robots never bleed). Also at 32/48: frames/walker-fade-t480-{32,48}ppm-pair.png. Commit 6370b54."
+  },
+  {
+    "file": "frames/fight-final-t900-128ppm.png",
+    "title": "Kill-cam zoom (128 px/m), final state (58a8388): liquid pools in blood_dark with the red meniscus and sheen",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "d4d5",
+    "ppm": 128,
+    "before": "frames/fight-noir-t900-128ppm-it3.png",
+    "note": "city_fight seed 91 t900. Pools at this moment are orphans (their bodies despawned at 8 s, the sim); they persist and fade as in noir. Before = iteration 3 (pools 0.54 m short of where the bodies came to rest)."
+  },
+  {
+    "file": "frames/pop-strength-ab-64ppm.png",
+    "title": "Owner A/B: muzzle pop strength off / 0.20 / 0.32 (default) / 0.45",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "Same frozen tick (3rd pop of the riot), city_fight --pop-shots=3 --pop-strength=<s>. At 0.45 the ink lines lift to grey (the black-and-white read weakens); 0.32 kept. Data: blood_fx.json game.muzzle_pop.strength."
+  },
+  {
+    "file": "clip-it4-final-64ppm.mp4",
+    "title": "15 s riot clip at 64 px/m, real time, final state (58a8388): pools spread from under the slid bodies",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "city_fight seed 91, ticks 300-1200, --fixed-fps 60, every 2nd frame at 30 fps = real time. 16 deaths, 16 bled, 15 aimed, 14 soaked, 2 missed. 48 px/m: clip-it4-final-48ppm.mp4. Strip: frames/clip-it4-64-strip.png. Before = iteration 3 (pools beside the bodies, no walker fade for rioters).",
+    "before": "clip-it3-pools-64ppm.mp4"
+  },
+  {
+    "file": "frames/quest1-stains-04-crop.png",
+    "title": "Quest 1 dock wave: the dead guards soaked too (crop x2, before | after)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "d4 (quest 1 PrintStage)",
+    "ppm": 48,
+    "note": "collect_call_frames grabber (the real quest 1 play, CombatArena events). 49 bodies soaked, 0 missed. Before = the same grab with the quest view stains reverted."
+  },
+  {
+    "file": "frames/fight-oil-after-noir-t420-64ppm.png",
+    "title": "Rivet's oil now reads on asphalt (64 px/m)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "Rivet hit every 2 s (dev --hit-rivet=120, wired as the game wires player_hit). Before: black flecks lost in the asphalt grime. After: black drops with a thin cream rim (D4 ink-with-cream-rim rule) + an oil leak trail where he walks. Still no red on the robot.",
+    "before": "frames/fight-oil-before-noir-t420-64ppm.png"
+  },
+  {
+    "file": "frames/pool-dark-t900-64ppm-pair.png",
+    "title": "Owner pick: pool body #750008 (left) vs doctrine blood_dark #540005 (right, now default), 64 px/m",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "d4d5",
+    "ppm": 64,
+    "before": "raw/pool/fight-after-noir-t900-64ppm.png",
+    "note": "Same riot moment (seed 91, t900). The doctrine body (d5-city palette blood_dark) under the bright blood rim reads deeper and wetter; the D4/D5 game uses it now (030eb10), noir keeps #750008 (its blood gate prints #540005 black: frames/noir-pool-dark-check.png). 32/48/128: frames/pool-dark-t900-*-pair.png. (The kill-beat panel still frame moved out of this list; frames/beat-modes-contact.png shows every mode.)"
+  },
+  {
+    "file": "frames/beat-modes-contact.png",
+    "title": "All kill-beat modes at 48 and 64 px/m (rows: flash48, flash64, panel48, panel64, both48, both64)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
+  },
+  {
+    "file": "beat-both-64ppm-realtime.mp4",
+    "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 64,
+    "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
+  },
+  {
+    "file": "frames/wall-splat-f1-t900-32ppm-crop.png",
+    "title": "Wall splats in the real city (32 px/m, crop x3)",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "d4d5",
+    "ppm": 32,
+    "note": "city_fight seed 91, focus 1 (a street along buildings), t900: the riot's sprays met the buildings 19 times (CombatBlood solid = the sim's C_BUILD/C_PROP cells); a droplet into a wall stops and smears along it instead of landing beyond it. Full frame: raw/wall/fight-f1-noir-t900-32ppm.png. (The kill-beat 'flash' real-time clip moved out of this list: beat-flash-64ppm-realtime.mp4 is still in the masters folder.)"
+  },
+  {
+    "file": "frames/beat-modes-48ppm-realtime-strip.png",
+    "title": "Kill beat A/B at 48 px/m in real time: flash / panel / both",
+    "source": "game-city",
+    "branch": "d-combat",
+    "look": "auto (D4->D5)",
+    "ppm": 48,
+    "note": "city_fight --fixed-fps 60 --kill-beat=<mode> --rivet-kills=3 --beat-frames=60 (one tick a frame). Clips: beat-flash|panel|both-48ppm-realtime.mp4 (1 s each; the 64 px/m twins are beat-*-64ppm-realtime.mp4). Default stays off."
+  }
 ]
