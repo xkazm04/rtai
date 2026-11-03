@@ -442,3 +442,44 @@
      record the clip.
   5. Still open: the vermilion hit flash (REQUEST 1 -> gunplay HitFeel); a Rivet contact beat
      on the tackle; a longer reel with the shock and a cop that shoots.
+
+## Iteration 6 (23:11-23:30, BUILD, short session)
+- 23:11 answers.json re-read: 10 answers, nothing new for this lane.
+- Picked a small item I could gate before the freeze: combo cadence as a measured feel number
+  (brief item 5). Wiring the baton's arc into the clip needs metal dummy visuals (the clip's line
+  is ped/cop/ped), and there was no time to record it. That stays in NEXT.
+- MILESTONE f5a31e9: `test_melee_cadence`. Mashing at 20 presses/s, the landing ticks (60 Hz)
+  per table are:
+  claw 5/16/32 (finisher at 0.53 s), electro baton 4/13/27 (0.45 s), katana 5/16/30 (0.50 s).
+  Every finisher lands inside a second, and the baton chain is the fastest (the design claim of
+  "the fast stun stick"). Planted fault: a baton with no cancel point (cancel = recovery) lands
+  its finisher later, and the check catches it.
+- MILESTONE 9032298: fixed a latent nondeterminism bug. `MeleeTable.weapon_ids()` called
+  `sort()` on an Array[StringName]. Godot orders StringNames by interned pointer, not
+  alphabetically, so the panel's weapon list flipped to katana, electro_baton once the new test
+  interned `&"katana"` before test_melee_weapons ran. It now sorts a PackedStringArray, then
+  converts. FRICTION/lesson: never sort StringNames for display or for anything deterministic.
+- FRICTION (environment, not this lane): `test_save_slots` fails 14-16 of 16, both in the full
+  run and alone. It writes to `user://test_save` under `%APPDATA%/RTAI Uprising`, which every
+  worktree shares (custom_user_dir_name). Two Godot processes from other lanes were running, and
+  the dir appeared and vanished between my checks. I did not touch save code. Re-run it alone on
+  a quiet machine before calling it red. REQUEST 4 -> int/Director: give each test run its own
+  user subdir (for example, a per-PID suffix on test_save/test_tmp) so concurrent lanes cannot
+  collide.
+- Gates at f5a31e9: lint 13/13 (507 files), scenarios 19/19. Unit: 558 passed, 16 failing, all
+  in test_save_slots (the contention above); every other script is green, including the new
+  cadence test and test_melee_weapons. No evidence or bench run: the change touches no runtime
+  path, goldens or parity.
+- NEXT (night run):
+  1. answers.json first. Re-run test_save_slots alone on a quiet machine to confirm green.
+  2. Weapon art for the katana and the baton (codex image_gen, with provenance). Then ASK
+     rivet-motion-3: a clip per weapon against the dummy line, in the D5 look (the owner's 21:25
+     rule: a real-time clip in the final look only).
+  3. The arc on screen: add metal dummies to combo_clip_run (a robot/metal rig or the station's
+     metal props). `--weapon=electro_baton` calls MeleeTable.chain_for on the finisher and zaps
+     every chained body with arc lines (reuse the shock's arc draw). combo_clip_run.gd is
+     already 216 lines, so split out a ComboClipTargets helper first.
+  4. The chainsaw (a hold mode on MeleeCombo) and the plasma sword (a timed block that deflects
+     bullets; needs gunplay projectiles).
+  5. Still open: the vermilion hit flash (REQUEST 1 -> gunplay HitFeel); a Rivet contact beat
+     on the tackle; a longer reel with the shock and a cop that shoots.
