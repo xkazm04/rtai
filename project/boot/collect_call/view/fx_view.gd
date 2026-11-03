@@ -41,7 +41,7 @@ func _ball(b: ArcBall) -> void:
 	Ink.zigzag(self, b.muzzle, b.pos, 10, tick / 3, Ink.INK)
 	Ink.zigzag(self, b.muzzle, b.pos, 10, tick / 3 + 5, Ink.CREAM)
 	if _ball_tex == null:
-		_ball_tex = load("res://features/fx/art/fx_arcball.png") as Texture2D
+		_ball_tex = QuestArt.shared().texture(&"fx_arcball")
 	# 4-frame loop, 4 ticks a frame; the vermilion danger ring sits at ~1.15 m, the old halo
 	var src: Rect2 = Rect2(float((tick / 4) % 4) * 256.0, 0.0, 256.0, 256.0)
 	var size: Vector2 = Vector2.ONE * 2.8 * Ink.PX_PER_M
@@ -93,7 +93,7 @@ func _fire() -> void:
 		_fire_cell(Vector2i(frame, 0), 1, at + Vector2(-3.4 + i * 3.4, 0.1 * float(i % 2)), 1.3)
 	_fire_cell(Vector2i((tick / 8) % 2, 1), 1, at + Vector2(0.0, -1.6), 2.0)
 	if _atlas == null:
-		_atlas = load("res://features/fx/art/fx_atlas.png") as Texture2D
+		_atlas = QuestArt.shared().texture(&"fx_atlas")
 	for k: int in 5:
 		var lift: float = float((stage.tick + k * 17) % 60) * 0.04
 		var puff: Vector2 = at + Vector2(-3.0 + k * 1.5, -3.5 - lift)
@@ -106,7 +106,7 @@ func _fire() -> void:
 ## One cell (w cells wide) of the fire sheet centred on `at`, `scale` x its 2.5 m cell size.
 func _fire_cell(cell: Vector2i, w: int, at: Vector2, scale: float) -> void:
 	if _fire_tex == null:
-		_fire_tex = load("res://features/fx/art/fx_fire.png") as Texture2D
+		_fire_tex = QuestArt.shared().texture(&"fx_fire")
 	var size: Vector2 = Vector2(2.5 * w, 2.5) * scale * Ink.PX_PER_M
 	var src: Rect2 = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
 	draw_texture_rect_region(_fire_tex, Rect2(Ink.px(at) - size * 0.5, size), src)

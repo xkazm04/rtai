@@ -1,0 +1,128 @@
+{
+  "art": [
+    {
+      "art": "res://features/quest/art/collect_call/basement_floor.png",
+      "id": "basement_floor"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_brass.png",
+      "id": "brass"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cage_mesh.png",
+      "id": "cage_mesh"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cash_taped.png",
+      "id": "cash_taped"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/catwalk.png",
+      "id": "catwalk"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_cop.png",
+      "id": "cop",
+      "size_m": [
+        1.85,
+        3.23
+      ]
+    },
+    {
+      "art": "res://features/city/art/ground/curb_straight_tone.png",
+      "id": "curb_straight_tone"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/dock_floor.png",
+      "id": "dock_floor"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_dock_guard.png",
+      "id": "dock_guard"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_don_fax.png",
+      "id": "don_fax"
+    },
+    {
+      "art": "res://features/city/art/props/dumpster.png",
+      "id": "dumpster"
+    },
+    {
+      "art": "res://features/fx/art/fx_arcball.png",
+      "id": "fx_arcball"
+    },
+    {
+      "art": "res://features/fx/art/fx_atlas.png",
+      "id": "fx_atlas"
+    },
+    {
+      "art": "res://features/fx/art/fx_fire.png",
+      "id": "fx_fire"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_guard_down.png",
+      "id": "guard_down"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_juno.png",
+      "id": "juno"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_kilohm.png",
+      "id": "kilohm"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_mertz.png",
+      "id": "mertz"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_mertz_down.png",
+      "id": "mertz_down"
+    },
+    {
+      "art": "res://features/city/art/props/payphone.png",
+      "id": "payphone"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_rivet.png",
+      "draw_k": 0.846154,
+      "id": "rivet",
+      "size_m": [
+        3.1,
+        3.9
+      ]
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_rivet_peek.png",
+      "draw_k": 0.846154,
+      "id": "rivet_peek",
+      "size_m": [
+        1.03,
+        1.03
+      ]
+    },
+    {
+      "art": "res://features/city/art/ground/road_straight_tone.png",
+      "id": "road_straight_tone"
+    },
+    {
+      "art": "res://features/city/art/ground/road_straight_tone_b.png",
+      "id": "road_straight_tone_b"
+    },
+    {
+      "art": "res://features/city/art/ground/road_straight_tone_c.png",
+      "id": "road_straight_tone_c"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/tuckin_crate.png",
+      "id": "tuckin_crate"
+    },
+    {
+      "art": "res://features/quest/art/collect_call/tuckin_crate_hit.png",
+      "id": "tuckin_crate_hit"
+    }
+  ],
+  "doc": "Quest 1's art by id (CastView, StageView, FxView ask for an id, never a path), so an art lane can swap a file here without touching the scenes; an id that is missing or fails to load draws a flat ink square and logs once. size_m: the drawn size in metres where the art fixes it (the rig captures); rows without it are drawn into the size the view's layout gives. draw_k: a factor on size_m (rivet / rivet_peek: the captures are of the night rig at size_k 1.3, the owner's base form is size_k 1.1 (d5-cast, 2026-11-03), so 1.1 / 1.3 until re-captured; then set the new capture, its size_m, and draw_k 1).",
+  "schema": "gtai.collect-call-art/1"
+}

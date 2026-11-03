@@ -4,6 +4,12 @@ Replaces the flat placeholder shapes of quest 1's view (`boot/collect_call/view/
 `main`). Seen straight down. Sizes are the footprints the placeholder view already draws, so a swap
 keeps the layout. Night lane d4-production, 2026-11-03.
 
+**Since 2026-11-03 (slice-play) the views load this art by id** from
+`data/tables/collect_call_art.json` (`QuestArt` / `core/data/art_ids.gd`), never by path. To swap a
+file, change its row's `art`. The rig captures (`rivet`, `rivet_peek`, `cop`) also carry their
+drawn size there (`size_m` x `draw_k`): a Rivet re-capture at the base form is the new file, its
+`size_m`, and `draw_k` 1 (today 1.1 / 1.3 = 0.846154). An unknown id draws an ink square, no crash.
+
 | File | Footprint (m) | px | Replaces | Notes |
 |---|---|---|---|---|
 | `tuckin_crate.png` | 1.8 x 1.4 | 144 x 112 | `_crates()` box + `_bolt_robot()` + the "TUCK-IN" label | The robot head with the bolt through it is the stencil. Vermilion on the bolt only (an objective). |

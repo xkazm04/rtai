@@ -5,16 +5,13 @@ extends Node2D
 ## catwalks and vault cage, the TUCK-IN crate stack with its bolt-through-a-robot mark, the
 ## Harbor Road skip, and the cash taped under the phone.
 
-const ART: String = "res://features/quest/art/collect_call/"
 const KERB_ROWS: float = 338.0
-const PROPS: String = "res://features/city/art/props/"
 ## Places at least this big (m) get their name stencilled on the city street.
 const STENCIL_MIN_R: float = 5.0
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
 var zones: bool = true
-var _tex: Dictionary[String, Texture2D] = {}
 
 
 func _process(_delta: float) -> void:
@@ -29,7 +26,7 @@ func _draw() -> void:
 	else:
 		_stencils()
 	for spot: String in stage.layout.hide_at:
-		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6), PROPS)
+		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6))
 	for phone: String in stage.layout.phones:
 		_phone(phone, stage.layout.phones[phone])
 	_crates()
@@ -73,10 +70,9 @@ func _floor(r: Rect2, fill: Color, name: String) -> void:
 	Ink.label(self, r.position + Vector2(r.size.x * 0.5, 0.8), name, 30, Ink.INK)
 
 
-func _art(name: String, dir: String = ART) -> Texture2D:
-	if not _tex.has(name):
-		_tex[name] = load(dir + name + ".png") as Texture2D
-	return _tex[name]
+## Art by id (data/tables/collect_call_art.json): an art swap never touches this scene.
+func _art(name: String) -> Texture2D:
+	return QuestArt.shared().texture(StringName(name))
 
 
 ## A texture tiled over a rect in metres, one texture repeat = tile_w x tile_h metres.
@@ -99,7 +95,7 @@ func _tiled(r: Rect2, name: String, tile_w: float, tile_h: float = -1.0) -> void
 ## The city's D4 pavement + kerb (curb_straight_tone rows 0..KERB_ROWS, 96 px/m) along the road's
 ## north edge, 8 m repeats clipped at the end; the road band brings its own edge line.
 func _kerb(r: Rect2) -> void:
-	var t: Texture2D = _art("curb_straight_tone", "res://features/city/art/ground/")
+	var t: Texture2D = _art("curb_straight_tone")
 	var x: float = 0.0
 	while x < r.size.x:
 		var w: float = minf(8.0, r.size.x - x)
@@ -120,7 +116,7 @@ func _road(r: Rect2) -> void:
 		var tile: String = ["road_straight_tone", "road_straight_tone_b", "road_straight_tone_c"][
 			k % 3
 		]
-		var t: Texture2D = _art(tile, "res://features/city/art/ground/")
+		var t: Texture2D = _art(tile)
 		var w: float = minf(rep, r.size.x - x)
 		var src: Rect2 = Rect2(band.position, Vector2(band.size.x * w / rep, band.size.y))
 		var dst: Rect2 = Rect2(
@@ -131,12 +127,12 @@ func _road(r: Rect2) -> void:
 		k += 1
 
 
-func _sprite(name: String, at: Vector2, size: Vector2, dir: String = ART) -> void:
-	draw_texture_rect(_art(name, dir), Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M), false)
+func _sprite(name: String, at: Vector2, size: Vector2) -> void:
+	draw_texture_rect(_art(name), Rect2(Ink.px(at - size * 0.5), size * Ink.PX_PER_M), false)
 
 
 func _phone(phone: String, at: Vector2) -> void:
-	_sprite("payphone", at, Vector2(1.3, 1.3), PROPS)
+	_sprite("payphone", at, Vector2(1.3, 1.3))
 	if stage.router.ringing(phone):
 		var pulse: float = float(stage.tick % 30) / 30.0
 		for k: int in 3:
