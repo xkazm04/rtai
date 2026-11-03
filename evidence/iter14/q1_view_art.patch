@@ -339,14 +339,15 @@ index 8058c60..1e33900 100644
  	var digits: String = str(absi(n))
  	var out: String = ""
 diff --git a/project/boot/collect_call/view/stage_view.gd b/project/boot/collect_call/view/stage_view.gd
-index d8da4ad..170f8e1 100644
+index d8da4ad..e42434c 100644
 --- a/project/boot/collect_call/view/stage_view.gd
 +++ b/project/boot/collect_call/view/stage_view.gd
-@@ -5,7 +5,11 @@ extends Node2D
+@@ -5,7 +5,12 @@ extends Node2D
  ## catwalks and vault cage, the TUCK-IN crate stack with its bolt-through-a-robot mark, the
  ## Harbor Road skip, and the cash taped under the phone.
  
 +const ART: String = "res://features/quest/art/collect_call/"
++const KERB_ROWS: float = 338.0
 +const PROPS: String = "res://features/city/art/props/"
 +
  var stage: CollectCallStage
@@ -354,7 +355,7 @@ index d8da4ad..170f8e1 100644
  
  
  func _process(_delta: float) -> void:
-@@ -17,8 +21,7 @@ func _draw() -> void:
+@@ -17,8 +22,7 @@ func _draw() -> void:
  		return
  	_zones()
  	for spot: String in stage.layout.hide_at:
@@ -364,7 +365,7 @@ index d8da4ad..170f8e1 100644
  	for phone: String in stage.layout.phones:
  		_phone(phone, stage.layout.phones[phone])
  	_crates()
-@@ -26,23 +29,23 @@ func _draw() -> void:
+@@ -26,23 +30,24 @@ func _draw() -> void:
  
  func _zones() -> void:
  	var l: StageLayout = stage.layout
@@ -392,11 +393,12 @@ index d8da4ad..170f8e1 100644
  	var road: Vector2 = l.marker("Harbor Road").at
 -	_floor(Rect2(road.x - 22, road.y + 3, 50, 5), Color(Ink.INK, 0.55), "HARBOR ROAD")
 +	_road(Rect2(road.x - 22, road.y + 3, 50, 5))
++	_kerb(Rect2(road.x - 22, road.y + 3 - KERB_ROWS / 96.0, 50, KERB_ROWS / 96.0))
 +	_floor(Rect2(road.x - 22, road.y + 3, 50, 5), Color(0, 0, 0, 0), "HARBOR ROAD")
  
  
  func _floor(r: Rect2, fill: Color, name: String) -> void:
-@@ -52,11 +55,57 @@ func _floor(r: Rect2, fill: Color, name: String) -> void:
+@@ -52,11 +57,70 @@ func _floor(r: Rect2, fill: Color, name: String) -> void:
  	Ink.label(self, r.position + Vector2(r.size.x * 0.5, 0.8), name, 30, Ink.INK)
  
  
@@ -421,6 +423,19 @@ index d8da4ad..170f8e1 100644
 +			draw_texture_rect_region(t, dst, Rect2(Vector2.ZERO, Vector2(t.get_size()) * cell))
 +			y += 1.0
 +		x += 1.0
++
++
++## The city's D4 pavement + kerb (curb_straight_tone rows 0..KERB_ROWS, 96 px/m) along the road's
++## north edge, 8 m repeats clipped at the end; the road band brings its own edge line.
++func _kerb(r: Rect2) -> void:
++	var t: Texture2D = _art("curb_straight_tone", "res://features/city/art/ground/")
++	var x: float = 0.0
++	while x < r.size.x:
++		var w: float = minf(8.0, r.size.x - x)
++		var src: Rect2 = Rect2(0.0, 0.0, 96.0 * w, KERB_ROWS)
++		var at: Vector2 = Ink.px(r.position + Vector2(x, 0.0))
++		draw_texture_rect_region(t, Rect2(at, Vector2(w, r.size.y) * Ink.PX_PER_M), src)
++		x += 8.0
 +
 +
 +## The city's D4 road tile between its two edge lines (texture rows 20..748), scaled uniformly
@@ -458,7 +473,7 @@ index d8da4ad..170f8e1 100644
  	if stage.router.ringing(phone):
  		var pulse: float = float(stage.tick % 30) / 30.0
  		for k: int in 3:
-@@ -67,12 +116,7 @@ func _phone(phone: String, at: Vector2) -> void:
+@@ -67,12 +131,7 @@ func _phone(phone: String, at: Vector2) -> void:
  
  
  func _cash(env: Vector2) -> void:
@@ -472,7 +487,7 @@ index d8da4ad..170f8e1 100644
  
  
  func _crates() -> void:
-@@ -80,8 +124,8 @@ func _crates() -> void:
+@@ -80,8 +139,8 @@ func _crates() -> void:
  	for row: int in 2:
  		for col: int in 5:
  			var c: Vector2 = at + Vector2(-4.0 + col * 2.0, -1.0 + row * 1.6)

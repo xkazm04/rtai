@@ -1244,3 +1244,11 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   files; gdformat + gdlint clean; `git apply --check` clean on main 721fbbb; the iteration-12 one kept as
   `masters:q1_view_art_i12.patch`) -> `evidence/iter14/q1_view_art.patch` (REQUEST 16 now means this one). Unit in
   scratch-q1 with it: **166 passed, 0 failed**. Ladder2 row.
+- 04:32 MILESTONE (patch only, quest 1 view code) Harbor Road gets its pavement + kerb. Beats 7-9 had Rivet on blank
+  paper above a road with no kerb. New `stage_view._kerb()`: the city's `curb_straight_tone` rows 0..338 (pavement
+  slabs + kerb face, 96 px/m true scale, 8 m repeats clipped) along the road's north edge; the road band keeps its own
+  edge line. No new art. Quest grabber (seeded) `after_q1fr|after_q1kb/0{7,8,9}-*.png`, sheet `work/fx14/q1kb_ab.png`:
+  a D4 street like the slice, Rivet stands on the pavement. Noted, unchanged: the payphone prop sits on the road band
+  at its layout marker (layout data, quest owner). Patch +208 / -111 (4 view files; stage_view.gd 158 lines; gdformat +
+  gdlint clean; `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`. Unit in scratch-q1
+  **166/166**. Ladder2 row.
