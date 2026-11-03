@@ -1066,3 +1066,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   a19pkg vs a17se1: 33215 / 64765 / 0 / 0 / 0 px at 32 / 48 / 64 / 96 / 128: the yard roofs get the hatch at the
   gameplay zooms, the arena close-ups (64+) are untouched, so item36's "neutral up close" still holds.
 - 04:13 scratch deleted (numbers logged above, no board cites them): frames/swr_ctl, swr_rf, pan15se(R), pan16rule(R), h114ink, h123pkg, h124 (= h106), a19 (= a16). Rounds the boards cite are kept: h105-h110sh, h115se1, h116rim1, h117pkg, h122rule5, h124rf, a16, a16all, a17se1, a18rule, a19pkg, pan12*, pan14*.
+- 04:14 session close (cap 04:42): tree clean, last gate run ALL PASS at 227dd01 (later commits: the arena roof_rule hook, checked 0 px on default, lint ok; docs). The final NEXT (27-30 + reading order) above stands; nothing is half-done or uncommitted.
