@@ -540,7 +540,7 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   rectangle (32 px/m: rows 0-361 and 706-800; the street band 361-706 and every actor 0 px; 1 stray px at 48). The
   pan-swim test (d5_pan.gd) crops kerb/pavement/street only, so roof swim is NOT measured (open; the roofs are
   mipmapped world sprites like the D4 ones).
-- 02:10 MEASURED roof pan swim (closes the open item above): d5_pan.gd gained `--anchor=<x>,<y>` (metres, the
+- 02:05 MEASURED roof pan swim (closes the open item above): d5_pan.gd gained `--anchor=<x>,<y>` (metres, the
   world-locked crop centre; default unchanged). 48 px/m car pan, 40 ticks, crop on the mural roof (9.7,-8.5):
   mean frame change NEW roofs 0.00959 (overlay off) / 0.00964 (on) vs OLD D5 roofs 0.00814 / 0.00808 (pan6roofold,
   old plates rebuilt temporarily, then restored: tree clean): +18%. Split by pixel class (d5 series): paper px change
@@ -549,3 +549,31 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   So the new art adds no aliasing; the +18% is the known look_d4 grain (iteration-3 NEXT 2: hash(floor(w)), -93%).
   Default-anchor crop (pan4) 0.00749 vs pan3 0.00706: that crop takes the mural roof's lower edge. Change maps
   work/i5/pan_changemaps.png.
+
+## Summary (iteration 5, 01:15 -> 02:06)
+- Weakest item raised: item 3 (D5 landmark roofs vs the mock at gameplay zoom). All 7 D5 roofs (mural, bar, union
+  hall, HQ, pension bank + NEW OSHA and tall) are now a pen-hatch plate (the mock's diagonal membrane hatch, no grey
+  wash blotches). At 32 px/m the roof interiors went from darker than D4 to at or above D4 and toward the mock:
+  mural L 0.487 -> 0.593 / paper 0.28 -> 0.44 (mock 0.589 / 0.41). The mural fist: a light ink wash with its own ink
+  line misprinted vermilion. The boss arena's yard prints OSHA/tall in D5 (64 px/m: paper 0.33 -> 0.40, 0.24 -> 0.36).
+- Images: 9 Codex (mural_b, bar_b, union_hall_b, pension_bank_b, hq_b, mural_c, osha_b, tall_b, warehouse_b);
+  ledger 41 -> 50 = the night's budget. Camera-break rejections: 0. Rejected for other reasons: 2 (mural_c: the bold
+  hatch takes the fist's figure/ground and the tone; warehouse_b: my squashed template).
+- Rejected/reverted: h74 (b plate as is: too clean), the composited ruled hatch (screen tone + union hall moire),
+  mural_c (bold hatch), warehouse_b. Kept: h75 mural, h76 bar, h78 union hall (gamma 1.0), s4 HQ/pension, a15 yard.
+- Tools: d5_hero `--cam`, d5_pan `--anchor`, the off-frame Rivet crop skip; build_roofs.py b path (masters).
+- Measured, no regression: d4 tier 0 px in every round; street band and actors 0 px (h85 vs h73); roof pan swim
+  per pixel class identical to the old plates (the total +18% = more paper under look_d4's screen grain).
+- Shared files touched: none (steam/ai-provenance append-only, art_src/d5.manifest.json, my dev/showcase scripts).
+
+NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
+16. City lane: adopt the 7 D5 pen-hatch roofs (features/city/art/d5/roofs/, 672 px, D4 alpha = footprint lock) for
+    the landmarks + OSHA/tall; for the warehouse (1312x672) pad the D4 roof to a square layout template, never
+    squash (warehouse_b rejected for this).
+17. Visual-engine lane: look_d4 roof print. At 32 px/m a roof holds the mock's tone OR visible hatch lines, not both
+    (mural_c, the composited rule): look_d4's thresholds fatten any line that survives minification. A roof print
+    that keeps thin art lines thin would close the texture gap (HF 0.11-0.14 vs the mock's 0.163).
+18. Visual-engine lane: NEXT 2 (look_d4 grain on world coords) matters more now: the lighter roofs show more paper,
+    and paper is where the screen-locked grain swims during a pan (+18% on the mural roof crop, per-px rate
+    unchanged).
+19. Owner: HQ's vermilion plate on "HQ" is heavier than the other signs; keep or thin.
