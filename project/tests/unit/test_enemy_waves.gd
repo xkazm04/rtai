@@ -41,3 +41,14 @@ func test_next_wave_waits_for_clear_and_breather() -> void:
 		run.step(pit)
 		pit.step()
 	assert_eq(run.index, 1)
+
+
+func test_morale_counts_only_the_own_wave() -> void:
+	var pit: EnemyPit = PitLayout.build(5)
+	PitLayout.squad(pit, PitLayout.many(&"patrol_cop", 3))
+	for e: EnemyAgent in pit.agents:
+		pit.hurt(e, 99.0, Vector2.RIGHT)
+	var fresh: EnemyAgent = pit.spawn(&"patrol_cop", Vector2(14.0, 0.0))
+	fresh.squad = 1
+	assert_eq(pit.fallen_frac(0), 1.0)
+	assert_eq(pit.fallen_frac(1), 0.0, "wave 1's dead do not break wave 2")

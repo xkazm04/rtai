@@ -2,7 +2,7 @@
   "archetypes": {
     "patrol_cop": {
       "cleared": true,
-      "digest": "ab5b9750295ed3a6",
+      "digest": "39dc8b463ef7cbf1",
       "hit_rate": 0.0,
       "kills": 3.0,
       "max_attackers": 2.0,
@@ -36,7 +36,7 @@
     },
     "robot_gunner": {
       "cleared": true,
-      "digest": "497cb005976b64f5",
+      "digest": "3aaccfc9e4c9ec20",
       "hit_rate": 0.0,
       "kills": 3.0,
       "max_attackers": 2.0,
@@ -44,7 +44,7 @@
       "nails": 12.0,
       "rivet_damage": 0.0,
       "rivet_hp": 100.0,
-      "seconds": 18.45,
+      "seconds": 18.47,
       "shot_hits": 0.0,
       "shots": 9.0,
       "swing_hits": 0.0,
@@ -70,29 +70,29 @@
     },
     "swat": {
       "cleared": false,
-      "digest": "a8e4186f88f9b7fb",
+      "digest": "ab8b53d829f2e604",
       "hit_rate": 0.0,
-      "kills": 1.0,
+      "kills": 2.0,
       "max_attackers": 2.0,
-      "nail_hits": 3.0,
-      "nails": 3.0,
+      "nail_hits": 4.0,
+      "nails": 4.0,
       "rivet_damage": 0.0,
       "rivet_hp": 100.0,
       "seconds": 40.0,
       "shot_hits": 0.0,
-      "shots": 72.0,
+      "shots": 81.0,
       "swing_hits": 0.0,
       "swings": 0.0,
-      "tells": 25.0
+      "tells": 29.0
     }
   },
   "cover": {
-    "hidden_frac": 0.609
+    "hidden_frac": 0.711
   },
   "determinism": {
-    "a": "f54b2afc19af41c8",
-    "b": "f54b2afc19af41c8",
-    "other_seed": "bcbda79d564aafd7"
+    "a": "4cf78de798398665",
+    "b": "4cf78de798398665",
+    "other_seed": "5779ea95775f141d"
   },
   "dodge": {
     "cleared": false,

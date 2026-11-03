@@ -115,7 +115,8 @@ func _draw_enemy(e: EnemyAgent) -> void:
 	draw_line(p, p + e.facing * r * 1.4, Color.WHITE, 2.0)
 	if e.pose(_pit.tick) == &"hit":
 		draw_arc(p, r + 3.0, 0.0, TAU, 20, Color.WHITE, 2.0)
-	var tag: String = "%s %s" % [e.arch.id, e.pose(_pit.tick)]
+	var st: String = str(EnemyAgent.State.keys()[e.state]).to_lower()
+	var tag: String = "%s %s/%s" % [e.arch.id, e.pose(_pit.tick), st]
 	draw_string(ThemeDB.fallback_font, p + Vector2(-r, -r - 6), tag, 0, -1, 12)
 
 

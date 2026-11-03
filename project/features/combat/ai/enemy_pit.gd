@@ -100,8 +100,15 @@ func alive() -> int:
 	return n
 
 
-func fallen_frac() -> float:
-	return 0.0 if agents.is_empty() else 1.0 - float(alive()) / float(agents.size())
+## The share of `squad` that has fallen (morale reads its own group, not every earlier wave).
+func fallen_frac(squad: int = 0) -> float:
+	var n: int = 0
+	var down: int = 0
+	for e: EnemyAgent in agents:
+		if e.squad == squad:
+			n += 1
+			down += 0 if e.alive() else 1
+	return 0.0 if n == 0 else float(down) / float(n)
 
 
 ## Cover spots other enemies have already claimed (so two never share a box side).

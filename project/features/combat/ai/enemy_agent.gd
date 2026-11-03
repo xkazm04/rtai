@@ -33,6 +33,8 @@ var hurt_tick: int = -1000
 var died_tick: int = -1
 ## The pit's cover boxes (shared, read-only here): the motor paths round them.
 var cover_ref: Array[Rect2] = []
+## The group this enemy fights with (a pit wave): morale counts only its own fallen.
+var squad: int = 0
 
 
 static func make(p_id: int, p_arch: EnemyRoster.Archetype, at: Vector2) -> EnemyAgent:

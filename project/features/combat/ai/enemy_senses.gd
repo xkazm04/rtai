@@ -6,6 +6,7 @@ extends RefCounted
 const COVER_GAP_M: float = 0.35
 const CORNER_REACHED_M: float = 0.3
 const BODY_SLACK_M: float = 0.05
+const BLIND_CORNER_COST_M: float = 100.0
 
 
 static func blocked(a: Vector2, b: Vector2, cover: Array[Rect2]) -> bool:
@@ -77,6 +78,10 @@ static func detour(from: Vector2, to: Vector2, radius: float, cover: Array[Rect2
 			if from.distance_to(c) < CORNER_REACHED_M or _segment_hits_rect(from, c, r):
 				continue
 			var cost: float = from.distance_to(c) + c.distance_to(to)
+			# A corner the target is still hidden from needs a second corner: rank it last, or
+			# two corners on either side win by turns and the walker ping-pongs between them.
+			if _segment_hits_rect(c, to, r):
+				cost += BLIND_CORNER_COST_M
 			if cost < best_cost:
 				best_cost = cost
 				best = c

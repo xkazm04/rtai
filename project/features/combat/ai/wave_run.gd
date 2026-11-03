@@ -75,6 +75,7 @@ func _spawn_one(pit: EnemyPit) -> void:
 	var e: EnemyAgent = pit.spawn(arch, at)
 	e.last_seen = pit.rivet_pos
 	e.enter(EnemyAgent.State.ALERT, e.arch.reaction_ticks)
+	e.squad = index
 	_members.append(e)
 	_until = pit.tick + _gap
 	if not _pending.is_empty():

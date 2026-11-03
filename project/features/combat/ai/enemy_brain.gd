@@ -62,7 +62,7 @@ static func _timed(e: EnemyAgent, pit: EnemyPit) -> void:
 
 
 static func _engage(e: EnemyAgent, pit: EnemyPit) -> void:
-	if not e.broke and e.arch.morale < 1.0 and pit.fallen_frac() > e.arch.morale:
+	if not e.broke and e.arch.morale < 1.0 and pit.fallen_frac(e.squad) > e.arch.morale:
 		e.broke = true
 		e.token = false
 		e.enter(S.PANIC, pit.roster.panic_ticks)
