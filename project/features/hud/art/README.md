@@ -14,7 +14,7 @@ visible at 1280 x 800 and still reads; 0.5 is the upper bound.
 |---|---|---|
 | `cash_frame` | 728 x 173 | banknote glyph at the left (ends x ~165); text area x 185..680, y 25..125 |
 | `wanted_frame` | 687 x 172 | five sockets, centres x = 137.5, 235.5, 334, 432, 530.5, y = 72.5 (inner diameter ~61) |
-| `wanted_pip_empty`, `wanted_pip_full`, `wanted_pip_army` | ~148 x 150 | pips: draw at 64 / 148 of the frame's scale, centred on a socket |
+| `wanted_pip_empty`, `wanted_pip_full`, `wanted_pip_army` | ~148 x 150 | pips: draw at 64 / 148 of the frame's scale, centred on a socket. Flat inks only (iteration 14: the full pip's glossy highlight painted out) |
 | `ammo_ticket` | 671 x 321 | bullet stub left of the perforation (x < 120); count / weapon text area x 135..620 |
 | `soul_card`, `soul_card_active` | ~295 x 430 | portrait area inset ~28 px; the active card has the teal border |
 | `soul_<id>`, `soul_<id>_idle` | 220 x 350 | soul portraits (`gearbox`, `sentry`, `hauler`, `mop`, the pitch's working names): draw at the card's scale, centred across the card, 40 card px from its top. Teal = the active card; `_idle` is the same portrait in ink for an idle / locked card |
