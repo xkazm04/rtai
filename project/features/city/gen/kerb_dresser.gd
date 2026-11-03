@@ -15,6 +15,10 @@ const WALL_SHARE: float = 0.75
 const WALL_GAP_M: float = 0.3
 ## clearance (m) between a wall prop and the lamp post's arm / the kerb prop, along the tile
 const CLEAR_M: float = 0.45
+## the hero scene's story paint on 8% of lane tiles (art/d5/decals): STRIKE and the union fist
+## stencil (the chalk robot, row 77, printed as a grey smudge at 32-48 px/m: not placed)
+const LANE_PAINT: Array[int] = [75, 76]
+const LANE_M: float = 2.1
 const PARKED: Array[int] = [44, 45, 46, 47, 48, 49, 44, 45, 46, 50, 52, 53]
 
 
@@ -99,6 +103,19 @@ func road_decals(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> void:
 		b.add(ChunkBuild.L_DECAL, 56 if r < 0.5 else 59, c + Vector2(jx * 5.0, jy * 4.0), rot)
 	elif r < 0.6:
 		b.add(ChunkBuild.L_DECAL, 62, Vector2(c.x, c.y + jy * 3.0), rot)
+	elif r < 0.68:
+		_lane_paint(g, b, t, horiz, LANE_PAINT[int((r - 0.6) / 0.08 * LANE_PAINT.size())])
+
+
+## H2's road paint (STRIKE, the union fist) inside one lane, clear of the centre dashes, across
+## the lane and upright for the traffic in it.
+func _lane_paint(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool, tex: int) -> void:
+	var c: Vector2 = TilePainter.origin(t) + Vector2(4.0, 4.0)
+	var side: float = 1.0 if g.rnd(t.x, t.y, 0, 54) < 0.5 else -1.0
+	var along: float = (g.rnd(t.x, t.y, 0, 55) - 0.5) * 3.0
+	var off: Vector2 = Vector2(along, LANE_M * side) if horiz else Vector2(LANE_M * side, along)
+	var rot: float = PI * 0.5 if horiz else 0.0
+	b.add(ChunkBuild.L_DECAL, tex, c + off, rot + (PI if side < 0.0 else 0.0))
 
 
 ## The tile-local point (u, v) in metres of a kerb tile rotated by rot, in world metres.

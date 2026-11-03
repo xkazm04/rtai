@@ -826,6 +826,39 @@
         0.6
       ],
       "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/strike_paint.png",
+      "class": "decal",
+      "id": 75,
+      "name": "strike_paint",
+      "size_m": [
+        3,
+        0.97
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/union_fist_stencil.png",
+      "class": "decal",
+      "id": 76,
+      "name": "union_fist_stencil",
+      "size_m": [
+        2.6,
+        2.55
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/d5/decals/chalk_robot.png",
+      "class": "decal",
+      "id": 77,
+      "name": "chalk_robot",
+      "size_m": [
+        1.74,
+        2.4
+      ],
+      "solid": false
     }
   ]
 }
