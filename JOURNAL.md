@@ -1697,11 +1697,16 @@ NEXT (iteration 18; the iteration-16 final NEXT stands where not superseded):
   centre tile, the target's cross the approaches), street-clutter placement, paving aquatint (REQUEST 22).
 - Worktrees: `scratch-q1` (main + quest patch), `scratch-v3` (full morning stack on ce0db12, patches uncommitted;
   dangling e011f35 / 190f3ba). scratch-v2 removed. Nothing pushed or merged.
-- 06:22 REJECTED, NOT SHIPPED: Dock 9 floor (quest 1 boss arena) toned to a street charcoal (slab range -31, median
+- 06:21 REJECTED, NOT SHIPPED: Dock 9 floor (quest 1 boss arena) toned to a street charcoal (slab range -31, median
   123 -> 92, joints and the bay paint kept). Quest 1's seeded grabber in scratch-q1 `before_i18dk|probe_i18dk/`
   (beats 04 / 05 / 06, `evidence/iter18/dock_dark_rejected.jpg`): the 4 m slab joints vanish into the darker floor,
   the knocked-out cast (a mid wash) turns muddy, and Rivet pops no better. scratch-q1 floor restored (cmp equal) and
   re-imported. 0 Codex.
-- 06:22 NOTE for the owner question "teal robot eyes": the quest 1 cast sheet (`d4n_q1cast2`) is seen straight down,
+- 06:21 NOTE for the owner question "teal robot eyes": the quest 1 cast sheet (`d4n_q1cast2`) is seen straight down,
   so the robots show head tops with no visible eyes and the raw sheet holds no teal at all - the question only
   applies to face-on art (portraits, the soul cards), not to these sprites.
+- 06:24 MILESTONE (small) junction tile: an orphan hatched patch lip beside the right-hand zebras (left when the
+  zebras were redrawn in iteration 10) replaced by the tile's own asphalt (`tick_mend.py`, two passes; a first box
+  ate two stripe outlines - tightened). Tile 1:1 + in-engine selftest 48 crop (n-d4, `before_i18wd|after_i18wd/`):
+  `evidence/iter18/junction_wedge_ab.png` - the wedge is gone, stripes intact; a 1-2 px stub stays where its tail
+  met a stripe outline (sub-pixel at 48). Original in `masters:backup_ground18/`. Provenance line, README step 12.
