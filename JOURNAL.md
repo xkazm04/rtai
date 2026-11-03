@@ -1486,3 +1486,10 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   32, only the sleeves). So the sleeve and thirds calls rest on city_frame crops: `sleeves_pave48.png` and
   `asphalt_abc.png` (morning | sleeves | thirds, city-0 at 48 and 32, same scene): sleeves crisp ink / cream, thirds'
   grey sleeves faint on the asphalt - both calls hold. The junction crops are illustrations only.
+- 05:25 REJECTED, NOT SHIPPED: Dock 9 floor in pen and ink (quest 1; `masters:tools/dock_hatch.py`). A = slab interior
+  as paper + a uniform 45-degree ink hatch (9 px / 2 px at 96 px/m); B = the grey kept + hatched lips on the
+  down-right of every saw-cut joint. Quest 1's own seeded grabber in scratch-q1 `after_q1pip|probe_i16dockA|
+  probe_i16dockB/04-dock-wave.png`, crops `work/i16/dock_engine.png`, `dock_rivet.png` (1:1). A reads as D4 paper +
+  hatch at full frame but is busy at 1:1, and Rivet's cream rim merges into the light floor (he pops on the grey);
+  B only darkens the grid. The D4 hybrid's own rule (sticker characters on a flat-wash ground; hatching on roofs,
+  kerbs, shadows) favours the calm grey - kept. scratch-q1 floor restored (cmp equal) and re-imported. 0 Codex.
