@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/audio/audio_riot.gd" id="1_riot"]
+
+[node name="AudioRiot" type="Node"]
+script = ExtResource("1_riot")
