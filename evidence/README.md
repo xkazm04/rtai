@@ -10,7 +10,7 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 | `iter8/` | moving-traffic atlas, damage / hijack atlases, generic roofs; generator patch v1 (superseded by `iter10/`); traffic wiring patches (superseded: n-visual wired traffic itself); gates, bench PASS at 38136e8 |
 | `iter10/` | inked paving joints, plaza flags, junction zebras; **generator patch v2**, **crowd slot patch**; gates, bench at 56b9b72 |
 | `iter12/` | tank tracks, bollard, HUD numeral strip; quest 1 view patch (superseded by `iter14/`); gates at 297bd42 |
-| `iter16/` | morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch: green) and its board vs the target; pedestrian sleeve variants + **rig sleeves patch** (supersedes 21); gates at 767ee6c |
+| `iter16/` | summary sheet `night_iter16_summary.jpg`; morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch: green) and its board vs the target; pedestrian sleeve variants + **rig sleeves patch** (supersedes 21); gates at 767ee6c |
 | `iter14/` | ink splat sticker (FX), Toner Room floor, inked arc ball, flat heat pip; **quest 1 view patch (final)**; muzzle + crackle fade patch for visual-engine; summary sheet; gates at 4477108 |
 
 ## Patches for code owners (apply after merging n-d4; none is committed as code)
@@ -44,5 +44,5 @@ quest 1 design notes (shipped as ink).
 
 ## Codex use
 
-29 images, 194 cells, 7 rejected (camera breaks / front views), no usage limit hit. Every AI asset has a line in
+29 images, 194 cells, 7 rejected (camera breaks / front views), no usage limit hit (iteration 16: 0 images). Every AI asset has a line in
 `steam/ai-provenance/2026-11.jsonl`; procedural redraws carry a `code:` tool line.
