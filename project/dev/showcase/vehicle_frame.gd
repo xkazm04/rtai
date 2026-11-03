@@ -9,7 +9,7 @@ extends Node
 ##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage|yield] [--soul] [--cue-shots]
 ## --scene=yield: Rivet stays on foot beside the parked sedan while three cars stop behind it;
 ## --blind hands traffic no obstacles (the behaviour before set_obstacles); --car-zoom starts the
-## camera at 48 px/m.
+## camera at 48 px/m. --grade=night prints the night grade (car and fire lights on).
 ## --soul-traffic soul-hijacks the civilian sim cars within 60 m at tick SOUL_TRAFFIC_TICK.
 ## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
 
@@ -163,6 +163,8 @@ func _parse_args() -> bool:
 		elif arg == "--scene=carnage":
 			_carnage = true
 			_shots = CARNAGE_SHOTS.duplicate()
+		elif arg.begins_with("--grade="):
+			VehicleFrameSetup.grade = StringName(arg.substr(8))
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
 		else:

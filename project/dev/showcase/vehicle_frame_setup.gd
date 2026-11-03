@@ -16,6 +16,8 @@ static var chasers: bool = false
 static var blind: bool = false
 ## --car-zoom: the camera starts in the car mode (48 px/m) even on foot (the yield scene at 48).
 static var car_zoom: bool = false
+## --grade=<id>: a lights.json grade (night shows the car and fire lights).
+static var grade: StringName = &""
 
 
 class Blind:
@@ -100,6 +102,8 @@ static func build(world: World, parent: Node, look: StringName, carnage: bool) -
 	view.rig.listen(Events, world.context().clock)
 	parent.add_child(view)
 	view.setup(city)
+	if grade != &"":
+		view.lights.set_grade(grade)
 	view.fx_triggers.player_id = CityCharacters.RIVET_ID
 	var rivet_px: Callable = func() -> Vector2: return city.target * SimConst.PX_PER_M
 	view.fx_triggers.listen(Events, world.context().clock, rivet_px)
