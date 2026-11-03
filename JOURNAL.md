@@ -226,3 +226,14 @@ vehicles: cruiser accents cop_blue).
   transfers plate A's tone/tint (luma histogram match + A's luma->RGB LUT). 50/50 pick per block (salt
   62), upright only. city_frame focus 8 = block (9, 6). evidence/d5-city/23-big-roof-b/. Codex used: 2.
 - FRICTION: first focus-8 pick was a plaza block (plaza check runs before the big-roof rows).
+- MILESTONE 16:02 end-of-day bench (lock taken 15:59:40, released 16:02:41, CONTENDED): city bench PASS
+  p99 3.16 ms, 1% low 266 fps, 0 hitches >50 ms (11:50 run failed on 2 unexplained). Overlay cost
+  +0.875 ms at 32 (repeats 13:03's +0.9: real, not noise), +0.27 at 48, 64 contaminated (baseline
+  6.8x). evidence/d5-city/24-bench-end/.
+- FRICTION: scenario city_chase failed once on the 2 ms nav budget (max 26.9 ms) while d5-combat held
+  the bench lock; re-run 8/8. Nav grid is unchanged by the 2 x 2 roofs (blocks stamped whole).
+- MILESTONE plate C (GENERATOR 12): skylight grid + two tanks + big fan. Hash pick clustered (8/10 B
+  in the frame window) -> A-B-C cycle per block row from a per-row random offset (no two neighbours
+  share a plate; 27/32/32 over 256 blocks). city_frame focus 9. evidence/d5-city/25-big-roof-c/.
+  Codex used today: 3.
+- Proof: masters ladder.png = ladder-i5 (6 foci, row 6 = the 2 x 2 block), frames.json 15 entries.
