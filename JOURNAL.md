@@ -183,3 +183,17 @@ the PO table lands.
   unit 375, scenarios 9/9 (incl. replay_60s, autosave_resume), parity exact (planted mutation caught at
   step 629), selftest look goldens 11/11. Bench not run (no render/sim change; no lock). Log:
   gtai-masters/day-d5/autosave/ev7.log.
+
+## 2026-11-03 iteration 8 (BUILD, 15:40) - audit, nothing to change
+- d-slice moved to 69ee1cd (one dev-only file, quest1_clip_rec.gd); the trial tree on 2de6c16 still holds, not re-merged.
+- `git merge-tree` of d-save against d-slice, d-bodies, d-vehicles, d-city, d-cast, d-combat, d-audio and main:
+  the only conflict is JOURNAL.md (add/add), which the Director keeps per lane. quest.json (d-audio also edits it)
+  auto-merges.
+- Audit of the cold-path list in the brief against the tests: every case has a unit test (truncation at every length,
+  every flipped byte, newer version, zero-length, missing slot, leftover tmp, unwritable dir, both corrupt, 1000
+  alternating saves, tmp that fails verification, coalescing). Loc keys for the notices exist as keys with English
+  fallback text; the PO table does not exist yet.
+- Gates on d-save (no code change this iteration): lint 13/13, unit 375 passed, 0 failed. No sim file touched, no bench, no lock.
+
+NEXT: unchanged. Director applies patches 0001..0005 (or cherry-picks `d-save-trial`) after merging d-save + d-slice;
+REQUEST 1 (patch 0005) and REQUEST 2 (quest id check in `accept()`) to slice-play; Loc keys when the PO table lands.
