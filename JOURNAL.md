@@ -1608,12 +1608,14 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
 
 ## 2026-11-03 05:48 iteration 18, BUILD (raise the weakest item; stop 07:18)
 - 05:48 Read JOURNAL (iteration 16 final NEXT), git log -30. Tree clean at 643996e.
-- 05:58 Weakest-item survey: roofs vs the target by value (target roofs mean L 147-155, ink 23-28 %, paper 39-44 %;
+- 05:50 Weakest-item survey: roofs vs the target by value (target roofs mean L 147-155, ink 23-28 %, paper 39-44 %;
   ours at 32 L 164 / ink 20 % / paper 54 %, at 48 L 130 / ink 38 % / paper 39 %) - same band, no art change called
   for. In-world souls: n-d5 has a D5 set + look_d5_soul (their evidence `item4c_souls_print.png` reads like the
   target's teal ghosts), so a D4 set from this lane would only duplicate it - REQUEST 24 stays an owner pick.
-- 06:00 FIX provenance audit (LEG-05: every shipped image needs a line; CI check is a TODO): 231 shipped PNGs vs the
+- 05:51 FIX provenance audit (LEG-05: every shipped image needs a line; CI check is a TODO): 231 shipped PNGs vs the
   log's latest line per file. 3 had NO line (quest 1 `dock_floor`, `basement_floor`, `cage_mesh` - procedural, no AI
   pixels, iteration 6) and 1 was STALE (`lamp_post.png`: the iteration-4 procedural redraw never got a line, the
   log still had the Codex version's sha). 4 lines appended (`tool: human:procedural-script`, append-only correction
   for the lamp). Re-audit: 0 missing, 0 stale. Every PNG also has a committed `.import`. 0 Codex.
+- 05:53 Box idle for the first time tonight (no Godot running): `node tools/bench/run.mjs` started at 05:52:56
+  (log `masters:work/bench_i18.txt`). Meanwhile, python only: asphalt patch probe (below).
