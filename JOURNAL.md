@@ -234,3 +234,10 @@
   5. The tackle animation: Rivet's shoulder-lead pose above 5 m/s (c_lean with a sprint lean),
      plus a sprint lean in RigPose. The sprint currently reads only through cadence and stride.
   6. Only then: the baton and the katana (deferred by the 21:25 direction).
+- 21:57 MILESTONE: sprint lean in RigPose. A plan with a sprint stride moves the body up to
+  30 part px ahead of the hips between 5 and 6.2 m/s. It is subtle at 48 px/m
+  (`clips/sprint-lean-before-after-48ppm-2x.png`), so it is not yet a readable sprint pose;
+  NEXT item 5 still stands (a shoulder lead and arm pump for the tackle).
+  motion-course-48ppm.mp4 was re-encoded with the lean. Unit 556/556, exit 0.
+  FRICTION: run_unit.mjs without GODOT_BIN exported reports "exit -1" on every step but still
+  prints "556 passed". Always export GODOT_BIN in the same shell call.
