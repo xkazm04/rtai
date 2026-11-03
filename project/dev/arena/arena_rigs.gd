@@ -7,11 +7,17 @@ extends Node
 ## SimConst.PX_PER_M, the print stage's space); it writes nothing back and draws no RNG.
 
 const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
+## CharacterRigs poses full rigs within RADIUS_M (14 m) of its focus and leaves the rest to the
+## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
+## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
+const FOCUS_AHEAD_M: float = 7.0
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
+## Each fighter's last hurt tick already played as a HIT clip.
+var _hurt_seen: Dictionary[int, int] = {}
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
@@ -42,7 +48,7 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
-	rigs.focus = r.pos * SimConst.PX_PER_M
+	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom
 
 
@@ -56,3 +62,7 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	f.face[i] = who.facing.angle()
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
+	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
+		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
+		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
+	_hurt_seen[who.id] = who.hurt_tick
