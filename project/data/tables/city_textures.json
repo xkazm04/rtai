@@ -892,6 +892,17 @@
         16.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_long_t1.png",
+      "class": "building",
+      "id": 81,
+      "name": "building_long_t1",
+      "size_m": [
+        16.4,
+        8.4
+      ],
+      "solid": true
     }
   ]
 }

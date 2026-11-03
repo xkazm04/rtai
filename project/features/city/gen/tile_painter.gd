@@ -34,6 +34,9 @@ const LETTERED: Array[int] = [14, 16, 18, 19, 21, 23]
 const T_BIG_ROOF: int = 78
 const BIG_SHARE: float = 0.35
 const BIG_PLATES: int = 3
+## Long (two-tile) buildings: 22 long, 23 warehouse, 81 the T1-scale long roof (upright only).
+const T_LONG_T1: int = 81
+const LONG_ROOFS: Array[int] = [22, 23, T_LONG_T1]
 
 var _kerb: KerbDresser = KerbDresser.new()
 
@@ -159,8 +162,9 @@ func _block(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	if _empty_interior(g, t) or ((mx == 4 or mx == 6) and _long_at(g, Vector2i(t.x - 1, t.y))):
 		return SimConst.T_BLOCK
 	if (mx == 3 or mx == 5) and not big and g.rnd(t.x, t.y, 0, 32) < 0.3:
-		var tex: int = 22 + int(g.rnd(t.x, t.y, 0, 33) * 2.0)
-		var rot: float = PI if g.rnd(t.x, t.y, 0, 34) < 0.5 and not LETTERED.has(tex) else 0.0
+		var tex: int = LONG_ROOFS[int(g.rnd(t.x, t.y, 0, 33) * LONG_ROOFS.size())]
+		var turn: bool = g.rnd(t.x, t.y, 0, 34) < 0.5 and not LETTERED.has(tex) and tex != T_LONG_T1
+		var rot: float = PI if turn else 0.0
 		b.add(ChunkBuild.L_ROOF, tex, Vector2(c.x + 4.0, c.y), rot, true)
 	else:
 		var tex: int = _square_roof(g, t)
