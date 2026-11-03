@@ -9,6 +9,9 @@ extends Node2D
 const EDGE_INSET: float = 70.0
 const RING_PX: float = 34.0
 const TEXT_SIZE: int = 24
+## Edge arrows stay below the beat panel and above the subtitle box (screen px).
+const TOP_CLEAR: float = 250.0
+const BOTTOM_CLEAR: float = 340.0
 
 var stage: CollectCallStage
 var system: QuestSystem
@@ -44,17 +47,28 @@ func _goal(goal_m: Vector2) -> void:
 	var screen: Vector2 = get_viewport_rect().size
 	var centre: Vector2 = screen / 2.0
 	var at: Vector2 = centre + (goal_m - stage.arena.rivet.pos) * px_per_m
-	var inner: Rect2 = Rect2(Vector2.ONE * EDGE_INSET, screen - Vector2.ONE * EDGE_INSET * 2.0)
+	# the clear band between the top panels and the subtitle box
+	var top: float = minf(TOP_CLEAR, centre.y - 40.0)
+	var bottom: float = maxf(screen.y - BOTTOM_CLEAR, centre.y + 40.0)
+	var inner: Rect2 = Rect2(EDGE_INSET, top, screen.x - EDGE_INSET * 2.0, bottom - top)
 	if inner.has_point(at):
 		if at.distance_to(centre) > RING_PX:
 			draw_arc(at, RING_PX, 0.0, TAU, 32, Ink.VERMILION, 4.0, true)
 		return
 	var dir: Vector2 = (at - centre).normalized()
-	var half: Vector2 = inner.size / 2.0
-	var tx: float = absf(half.x / dir.x) if dir.x != 0.0 else INF
-	var t: float = minf(tx, absf(half.y / dir.y) if dir.y != 0.0 else INF)
-	var tip: Vector2 = centre + dir * t
-	var side: Vector2 = dir.orthogonal() * 16.0
-	var tri: PackedVector2Array = [tip, tip - dir * 34.0 + side, tip - dir * 34.0 - side]
-	draw_colored_polygon(tri, Ink.VERMILION)
-	draw_polyline(tri + PackedVector2Array([tip]), Ink.INK, 3.0, true)
+	var tx: float = (
+		(inner.end.x - centre.x if dir.x > 0.0 else inner.position.x - centre.x) / dir.x
+		if dir.x != 0.0
+		else INF
+	)
+	var ty: float = (
+		(inner.end.y - centre.y if dir.y > 0.0 else inner.position.y - centre.y) / dir.y
+		if dir.y != 0.0
+		else INF
+	)
+	var tip: Vector2 = centre + dir * minf(absf(tx), absf(ty))
+	var base: Vector2 = tip - dir * 40.0
+	var wing: Vector2 = dir.orthogonal() * 18.0
+	var head: PackedVector2Array = [tip, base + wing, base - dir * -8.0, base - wing]
+	draw_colored_polygon(head, Ink.VERMILION)
+	draw_polyline(head + PackedVector2Array([tip]), Ink.INK, 3.0, true)
