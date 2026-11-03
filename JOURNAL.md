@@ -156,3 +156,7 @@ NEXT (iteration 3), in order:
   hot-path change between the last two (stain tuning data only): the swing is the shared GPU, not the FX. The
   bench is NOT a valid judge on this machine today; re-bench at the 18:00 sync on an idle machine.
   Evidence: evidence/d5-combat/bench/iter2b/.
+
+NEXT (iteration 3): the NEXT list above stands (owner picks; quiet-machine bench; REQUEST 4 blood_dark; orphan
+pools; stains over Rivet; REQUEST 3). Session stopped 12:16 with a clean tree at the commit after 2b8145a; all gates
+green at 971a118.
