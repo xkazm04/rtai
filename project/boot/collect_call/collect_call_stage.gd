@@ -81,6 +81,7 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	if intent.fire_at != Vector2.INF and hidden_in == "":
 		shots_fired += 1 if arena.rivet_fire(intent.fire_at) else 0
 	arena.step(tick)
+	_collide_hostiles()
 	_encounters()
 	_spawns()
 	StagePolice.step_patrols(self)
@@ -151,6 +152,15 @@ func _move() -> void:
 
 func _collide(p: Vector2) -> Vector2:
 	return cells.push_out(p, arena.tuning.rivet["radius_m"]) if cells != null else p
+
+
+## On the city the guards and Mertz keep out of buildings, props and parked cars too.
+func _collide_hostiles() -> void:
+	if cells == null:
+		return
+	for h: Fighter in arena.hostiles:
+		if h.alive():
+			h.pos = cells.push_out(h.pos, h.radius_m)
 
 
 func _spawns() -> void:
