@@ -355,3 +355,5 @@ bosses we resolve in future."
 - 32 px/m check of v7 (`v7/delay-v2-vs-v7-32ppm.png`): the gain is small at the on-foot zoom (a sprawled arm across
   Rivet's top becomes an upright head at his top-right). Clearly better at 48; neutral to slightly better at 32. Kept.
   6 stills looked at this iteration, 0 rejected.
+- 16:48 end of iteration 44. HEAD b7fb4f9 (+ this line). The tree is clean apart from the 3 untracked evidence files that
+  predate the session. No Godot processes left running (every capture ran to exit 0). The NEXT list above stands.
