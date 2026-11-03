@@ -245,3 +245,57 @@
   scenarios 19 ran / 0 failed. Quest 1's bound-input run replays identical: the new sprint/roll
   input rows do not move its hash. Evidence/parity/bench were not run (no sim or runtime path
   changed). Session ends; NEXT is the iteration-3 list above.
+
+## Iteration 3 (22:01-22:45), BUILD
+- 22:01 Read: JOURNAL, git log, answers.json. No new answers for this lane (rivet-motion-1 = A
+  and -2 = B are both already applied). The owner's 21:25 direction still governs: depth, the
+  full chain, real rigs, the D5 look, asks only with real-time clips.
+- Item: the sample reel (NEXT 2+3), `dev/rivet_motion/rivet_reel{,_run}.gd` + `reel_victim.gd`.
+  One scene on King's D5 arena floor (king_arena.png 12 m in asphalt, look_d4 + the D5 print),
+  driven by the real state machines:
+  - PlayerMotion strafes a box around an aim mark;
+  - Rivet sprints into a ped, and bodies.json's `rivet_base -> human` rule decides the contact
+    from the closing speed (the collisions lane's table; knockback_m/down_s from the row);
+  - he rolls out and walks up to a patrolling cop, which turns to face him inside 4 m;
+  - MeleeCombo claws the cop to death: hit-stop 3/3/7, a decaying shake, the knockback, the
+    sprawl, and CombatBlood.kill_human (the d5-combat lane's spray and pool) on the finisher.
+  The shared vermilion hit flash is suppressed in the reel (`flash` = false). Red is blood only,
+  and REQUEST 1 -> gunplay still stands.
+- MILESTONE e771e93 (22:12): the reel ran clean once the parse warnings were fixed. Measured
+  run (48 px/m, 796 ticks, 13.3 s):
+  - tackle contact at tick 447, 6.03 m/s, so `knockdown` (0.4 m slide, then down);
+  - claw 1/2/3 land at ticks 568/579/595, and the cop dies on claw 3;
+  - CombatBlood sprays along the blow, and the pool follows the slide.
+  Fixed on the way:
+  - the walk's momentum carried into the sprint and Rivet missed the ped's lane, so a 0.4 s
+    "east" set-up beat comes before the sprint;
+  - the 2.5 m finisher knockback threw the corpse over the arena rim, so the cop patrols
+    x 3.6, y -1.8..1.4;
+  - the cop overlapped Rivet's strafe box.
+  The clips are cropped to the 12 m arena (the 48 px/m frame shows 26 m, so the floor filled
+  under half of it), at the same px/m:
+  - `clips/rivet-reel-48ppm.mp4` (720x720) and `clips/rivet-reel-32ppm.mp4` (480x480);
+  - the stills `clips/rivet-reel-48ppm-sheet.png`.
+  Honest read: the chain reads at 48 (tackle, sprawl, claws, the kill in its blood). At 32 the
+  bodies are small, and look_d5's print is 0 there.
+- FRICTION: a parse error in the run script (`-s` launcher loads it at run time) does not exit:
+  Godot idles and --write-movie wrote 10k frames (200 MB) until `timeout` killed it. Always do
+  a headless run of a new runner first (that run exits and prints the parse errors).
+- FRICTION: python `open(p,'w')` on Windows wrote CRLF into rig_pose.gd; caught by git's
+  warning, fixed with sed before committing. Use `newline=''`.
+- MILESTONE c2f6c15: the tackle read. Above 5 m/s the claw shoulder leads (0.5 rad at 6.2 m/s)
+  and the torso swing drops 60 %, on top of the sprint lean (Rivet only). Before/after still:
+  `clips/tackle-shoulder-before-after-48ppm-2x.png`. Visible at 2x, modest at 1x; the arm pump
+  is still owed. Unit 556/556 on it.
+- MILESTONE 936b6a1: `test_rivet_tackle_chain` (4/4). PlayerMotion's sprint against bodies.json
+  rivet_base -> human: a sprint from a stand crosses run_mps after **0.84 m** and knocks down;
+  a walk never does. Planted faults caught: run_mps above the sprint top, a 0.5 m run-up.
+- frames.json: 15 entries (the reel 48/32, the reel sheet and the tackle before/after added;
+  dropped the 48 px/m proportion crop, the two impact-less claw clips and the answered
+  stride A/B).
+- decisions.md: the tackle read line.
+- 22:20 answers.json re-read: 10 answers, nothing new for this lane.
+- No ASK this iteration. The reel is the first clip that meets the owner's 21:25 bar for this
+  lane: real rigs, the D5 venue floor, the full claw chain, blood. The Director can show it as
+  is. The next ask should come from it (rivet-motion-3: a lower guard, if Rivet still reads
+  large beside the ped; at 48 px/m he is clearly bigger than the ped, about the cop's bulk).
