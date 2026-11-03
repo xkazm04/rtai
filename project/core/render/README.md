@@ -261,13 +261,13 @@ The `light` canvas (screen space, above the actors, below the world UI) holds tw
 - `lights` (z 100): one MultiMesh of additive quads, `max_lights` (32) per frame. `light_ink.gdshader`
   cuts each light's radial (or cone) falloff into `steps` flat bands and draws every band edge as
   world-locked 45-degree pen hatching, so a light prints as a drawn patch of paper (or vermilion for
-  danger: the blast's rim, fire, the siren) over the charcoal, never a soft 3D bloom. The first version
+  danger: the blast's rim, fire; cop_blue_hi for the siren) over the charcoal, never a soft 3D bloom. The first version
   used a random 2 px stipple; it read as a halftone glow and was replaced (frames `04-lights` vs
   `04b-lights-hatch` in `gtai-masters/night/visual-engine`).
 
 Kinds: `muzzle_flash` (paper fan, 4 ticks), `explosion` (paper core, vermilion rim, 36 ticks),
-`headlight` (paper cone, held), `siren` (vermilion / paper strobe at 2.5 Hz, held: red and blue are
-off-doctrine and teal is the dead's), `fire` (vermilion / paper flicker at 2.5 Hz, held; it was 7 Hz =
+`headlight` (paper cone, held), `siren` (cop_blue_hi / paper strobe at 2.5 Hz, held; vermilion until 2026-11-03, when cops went
+blue; the night grade keeps cop blue like the other accents, `blue_gate`), `fire` (vermilion / paper flicker at 2.5 Hz, held; it was 7 Hz =
 7 saturated-red flashes a second). Photosensitivity: `max_flash_hz` 3 (WCAG 2.3.1 / Harding) and
 `LightLayer.MAX_FLASH_HZ` cap every alternating kind at load (a faster row is clamped with a warning). Lights live on the 60 Hz tick:
 `add(kind, pos_px, angle, tick)`, `move()`, `remove()`, and `CityView` calls `step(tick, world_px)` every

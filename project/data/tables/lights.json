@@ -76,14 +76,14 @@
     {
       "alt_token": "paper",
       "cone_deg": 0,
-      "doc": "the police strobe: vermilion / paper (red and blue are off-doctrine; teal is the dead)",
+      "doc": "the police light bar: cop_blue_hi / paper strobe (owner verdict 6, 2026-11-03: cops in blue, no vermilion; was vermilion / paper)",
       "flicker_hz": 2.5,
       "id": "siren",
       "intensity": 0.45,
       "life_ticks": 0,
       "radius_m": 5,
       "steps": 2,
-      "token": "vermilion"
+      "token": "cop_blue_hi"
     },
     {
       "alt_token": "paper",
