@@ -24,3 +24,8 @@ Soul portraits (night iteration 4): master `art_src/d4.manifest.json#d4n_souls`,
 ghosts (`ref-4-rivet-concept.jpg`); front-on busts, the lower edge dissolving into smoke at the card's foot. The
 teal is a pure deep-teal / look_d4-teal / cream ramp (doctrine: teal belongs to the dead). Evidence in-engine:
 `masters:night/d4-production/before_soul|after_soul/city-*-hud{40,50}.png` (dev HudOverlay: Gearbox active, Sentry idle).
+
+Quest 1's HUD (`boot/collect_call/view/hud_view.gd` on main, night iteration 6): `cash_frame` drawn into its cash box
+(420 x 104 px at 1080p, text from x 112), `wanted_pip_full` / `_empty` as the heat pips (38 px), and `memo_frame` as
+a **9-slice** (source margin 44 frame px, drawn at 0.5) for the beat panel and the subtitle box (grown to 236 px tall
+so three lines clear the torn edge). Patch and frames: lane masters `q1_view_art.patch`, `before_q1/` vs `after_q1i/`.
