@@ -34,3 +34,13 @@ func test_both_shadow_shaders_declare_the_table_uniforms() -> void:
 		names.append(str(u["name"]))
 	for k: String in _casts.uniforms:
 		assert_has(names, k)
+
+
+func test_a_named_prop_casts_its_hero_scene_length() -> void:
+	# D5HeroPropShadow LENGTH_M adopted (2026-11-03): dumpster 0.45 m total, the class bakes 0.18 m
+	var classes: Array[String] = ["prop", "prop", "vehicle"]
+	var names: Array[String] = ["dumpster", "lamp_post", "sedan"]
+	var px: PackedVector2Array = _casts.extra_px(classes, 32.0, names)
+	assert_almost_eq(px[0].x, (0.45 - 0.18) * 32.0, 0.001)
+	assert_eq(px[1], Vector2.ZERO, "an unnamed prop keeps its class length")
+	assert_almost_eq(px[2].x, (0.4 - 0.18) * 32.0, 0.001)

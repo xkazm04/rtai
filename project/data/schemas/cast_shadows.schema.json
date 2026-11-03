@@ -2,6 +2,17 @@
   "$id": "gtai.cast-shadows/1",
   "additionalProperties": false,
   "properties": {
+    "by_name": {
+      "additionalProperties": {
+        "maximum": 4,
+        "minimum": 0,
+        "type": "number"
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "type": "object"
+    },
     "classes": {
       "items": {
         "additionalProperties": false,

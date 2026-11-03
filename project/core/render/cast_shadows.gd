@@ -12,6 +12,9 @@ var shader_path: String = ""
 var uniforms: Dictionary = {}
 ## class -> the extra offset in metres down-right the view adds to a baked shadow command.
 var extra_m: Dictionary[String, float] = {}
+## texture name -> the total cast distance in metres (overrides its class's offset_m)
+var by_name_m: Dictionary[String, float] = {}
+var _baked_m: Dictionary[String, float] = {}
 
 
 static func load_table() -> CastShadows:
@@ -31,6 +34,11 @@ static func load_table() -> CastShadows:
 		var total: float = row["offset_m"]
 		var baked: float = row["baked_offset_m"]
 		out.extra_m[cls] = total - baked
+		out._baked_m[cls] = baked
+	var names: Dictionary = d.get("by_name", {})
+	for n: String in names:
+		var m: float = names[n]
+		out.by_name_m[n] = m
 	return out
 
 
@@ -48,11 +56,18 @@ func material() -> ShaderMaterial:
 	return m
 
 
-## The extra cast offset in px for each texture id of `classes` (CityTextures.classes order).
-func extra_px(classes: Array[String], px_per_m: float) -> PackedVector2Array:
+## The extra cast offset in px for each texture id of `classes` (CityTextures.classes order);
+## `names` (the same order) picks a by_name length over the class's.
+func extra_px(
+	classes: Array[String], px_per_m: float, names: Array[String] = []
+) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
-	for cls: String in classes:
-		var e: float = extra_m.get(cls, 0.0) * px_per_m
+	for i: int in classes.size():
+		var cls: String = classes[i]
+		var em: float = extra_m.get(cls, 0.0)
+		if i < names.size() and by_name_m.has(names[i]):
+			em = by_name_m[names[i]] - _baked_m.get(cls, 0.0)
+		var e: float = em * px_per_m
 		@warning_ignore("return_value_discarded")
 		out.append(Vector2(e, e))
 	return out

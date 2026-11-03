@@ -51,7 +51,7 @@ func _init(parent: RID, textures: CityTextures) -> void:
 		_band_of.append(band)
 	var casts: CastShadows = CastShadows.load_table()
 	_shadow_mat = casts.material()
-	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M)
+	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M, textures.names)
 
 
 ## zoom: the camera zoom (1 = 32 px/m); the shadow strokes keep their screen spacing above 64 px/m.

@@ -92,7 +92,10 @@ The `building_shadows` band is the height cue. The generator bakes every buildin
 shadow as the silhouette offset a short way down-right (0.25 m buildings, 0.18 m the rest, ChunkBuild.add);
 ChunkView draws those commands with ONE material on that band and adds the rest of the cast distance per
 texture class (`offset_m - baked_offset_m`: buildings 1.1 m, the d5-close lane's proposal), so a longer
-shadow needs no re-bake. The material is `shader` (n-d5's `look_d5_shadow`) when that file is in the tree,
+shadow needs no re-bake. `by_name` (2026-11-03) overrides the class length per texture `name`: the d5-close hero
+scene's D5HeroPropShadow lengths (dumpster / crates / vending 0.45 m, payphone 0.4, planter / mailbox 0.3,
+hydrant / bin / barrier 0.25, bench 0.2) and parked cars 0.4 m by class (was 0.18 m): the car and prop
+shadows read as T1's hatched lift at 32 px/m (`evidence/d5-city/03-prop-shadows/`). The material is `shader` (n-d5's `look_d5_shadow`) when that file is in the tree,
 else `cast_shadow.gdshader` (this lane's placeholder, the same uniforms, the wobble and gaps on the grime
 lattice): a light ink tint plus world-locked 45-degree pen strokes that the look_d4 print inks. Roofs sit
 on the band above, so a shadow only shows where it leaves its block: a 1.1 m hatched band on the pavement
