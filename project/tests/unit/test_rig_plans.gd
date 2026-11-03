@@ -7,7 +7,8 @@ func test_rivet_plan_is_the_cutout_lanes() -> void:
 	var p: BodyPlan = RivetPlan.build()
 	assert_eq(p.kind, BodyPlan.Kind.RIVET)
 	assert_almost_eq(p.thigh_len, 166.0, 0.01)
-	assert_almost_eq(p.upper_len, 159.0, 0.01)
+	assert_almost_eq(RivetPlan.build(RivetPlan.FORM_DAY).upper_len, 159.0, 0.01)
+	assert_almost_eq(p.upper_len, 159.0 * RivetPlan.ARMS[RivetPlan.FORM_BASE].x, 0.01)
 	assert_true(p.has_collar() and p.has_hand() and p.has_hose() and p.has_endon())
 	assert_eq(p.gun_arm, BodyPlan.L, "the claw holds the gun")
 
@@ -55,6 +56,22 @@ func test_rivet_forms_and_king() -> void:
 	assert_eq(king.art_dir, "king")
 	assert_false(king.has_hose(), "King carries no torch hose")
 	assert_gt(king.size_k, base.size_k, "the boss is a touch bigger than Rivet")
+
+
+func test_rivet_arms_match_t2_ratio() -> void:
+	var day: BodyPlan = RivetPlan.build(RivetPlan.FORM_DAY)
+	var base: BodyPlan = RivetPlan.build(RivetPlan.FORM_BASE)
+	var leg: float = base.thigh_len + base.shin_len
+	var arm: float = base.upper_len + base.fore_len[0]
+	assert_almost_eq(arm / leg, 0.81, 0.03, "T2: arm (shoulder to wrist) is about 0.8 of the leg")
+	assert_gt(day.upper_len + day.fore_len[0], leg, "the day form keeps the long arms (A/B)")
+	assert_lt(base.hand_k, 1.0, "the claw is smaller than the day art")
+	assert_lt(base.arm_w, 1.0, "the arms are drawn thinner")
+	var reach: float = arm
+	for s: int in 2:
+		var off: Vector3 = base.hand_ready[s] - base.shoulder[s]
+		assert_lt(off.length(), reach + 1.0, "the guard target stays inside the shortened reach")
+	assert_almost_eq(KingPlan.build().hand_k, 1.0, 0.001, "King keeps his own proportions")
 
 
 func test_crowd_looks_split_cops_and_peds() -> void:

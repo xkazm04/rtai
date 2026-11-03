@@ -25,6 +25,9 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 	side.j_elbow = e2
 	side.j_hand = h2
 	var fore_draw: float = _place(rig, s, aim_arm)
+	if p.arm_w != 1.0:
+		side.upper.scale.y = p.arm_w
+		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
 	var behind: bool = h2.x < sh.x - 40.0
 	side.upper.z_index = p.arm_below if behind else p.arm_above
@@ -99,7 +102,9 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
 	if side.hand != null:
 		var p: BodyPlan = rig.plan
 		side.hand.position = Vector2(fore_draw + p.hand_gap, 0.0)
-		side.hand.scale = Vector2((0.6 + 0.4 * minf(fs, 1.0)) / maxf(fs, 0.01), 1.0)
+		side.hand.scale = (
+			Vector2((0.6 + 0.4 * minf(fs, 1.0)) / maxf(fs, 0.01), 1.0 / p.arm_w) * p.hand_k
+		)
 		var cell: String = p.hand_open
 		if rig.gun_out:
 			cell = p.hand_pistol
