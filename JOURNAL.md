@@ -90,3 +90,30 @@ NEXT:
 6. POF-GAP 1-3 stand (audio-gen refuses every request; no tts; no music). Ask the PoF lane: raw-prompt opt-out, a length guard, tts + music kinds.
 - Voice artifact check (ffmpeg silencedetect -40 dB, >= 1 s): 21 of 23 lines have no pause that long; rivet-who-is-this has 1 (the written "...One"), brass-gloria 2
   (check by ear whether the pauses are the written ellipses or a TTS stall). Speech runs ~14-15 characters/s.
+
+## 2026-11-03 iteration 2 (BUILD, started 11:19)
+- POF-GAP 1 re-checked at ~11:25 with a 2-word prompt: PoF audio-gen still 400s (568 chars > 450). Direct ElevenLabs route again (credits: 74,117 used after
+  this iteration's first 17 SFX takes; lane total 3,398 of 25,000).
+- MILESTONE footsteps: the old 2 s "4 steps" clips replayed every 1.7 s sounded like a loop. tools/audio/split_steps.py cuts the two generated runs into 8 single
+  steps (footstep_01..08.wav, each with a decaying envelope: checked per 50 ms window); the hook now fires one per `footstep_stride_m` (1.15 m) of Rivet's walk
+  (cue `footstep`, 8 takes, cooldown 8 ticks; servo chance per step 0.12). Unit tests: stride cadence (4 steps in 4.8 m), standing still = none.
+- MILESTONE new cues, all generated direct (ElevenLabs sound-generation, 24 takes, QC rejected 4 of them for hard-clipped sources: kill_punch_02, ui_back_02,
+  boss_stinger_01, boss_stinger_02; the others kept): `rivet_kill` (= kill_punch, 3 takes; the FX trigger sink already routes this id), `cash_ding`
+  (cash_changed delta>0), `objective_ping` (contract_started), `ui_confirm` (contract_completed), `ui_click` / `ui_back` (API only: the pause card and
+  menus are slice-play's), `tazer_charge` (attack_telegraphed with weapon robo-tazer; the other weapons keep the servo whine), `boss_stinger` (boss_engaged;
+  one take, the others clipped). ui_click_01 had a stray blip at 0.45 s: cut to its first 120 ms by hand.
+- Vehicles lane (their branch d-vehicles, not merged yet): it emits vehicle_entered/exited (already hooked), `vehicle_hijacked` and `pedestrian_struck(victim, killed)`
+  and fires NO FxTriggers: hooks now connect to those two when the Events bus has them (has_signal guard; the unit test adds the signal with add_user_signal):
+  run-over = hit_flesh (+ death when killed), hijack = hit_metal. No crash/tyre screech/horn event exists in their branch -> REQUEST 4 below.
+- Clip re-recorded: evidence/mix/riot_mix3.mp4 (25 s, 960 px, replaces riot_mix2): -20.4 LUFS, peak -1.4 dBFS, LRA 1.8; played 38 steps, 199 shots, 208 projectile ends,
+  135 deaths, 5 servo; Rivet does not kill in the riot so rivet_kill/kill_punch is covered by unit tests only, not by this clip. Frame at 12 s looked at: straight down, 0 rejected.
+- FINDING (the biggest audio defect left) voice vs the quest timeline, measured, not guessed: dev/audio/line_timeline.tscn plays the bot through quest 1 and logs when
+  each line is on screen; simulating the VoiceChannel FIFO (max 2 waiting) against voice_lengths.json: **6 of 23 lines are dropped** (rivet-third-person,
+  rivet-who-is-this, juno-load-bearing, brass-gloria, kilohm-accents, rivet-buildings-talk) and the 17 that play start 0-16 s late (the subtitle has long gone).
+  Quest 1 lasts 190.6 s; the voices alone are 272 s. Experiment (local, reverted): quest_rules line_type_cps 45 -> 15 and line_max_s 9 -> 22 puts every line on
+  screen for its voice length +-3 s (one line, brass-gloria, 5 s short) and nothing is dropped, but quest 1 then lasts 344 s (the lines gate the quest).
+- REQUEST 1 (revised) -> slice-play: that data change (`line_type_cps` ~15, `line_max_s` ~22 in data/tables/quest_rules.json; or a per-line max(text time, voice_s + 0.4)
+  from data/tables/voice_lengths.json) is yours to decide: it moves the replay/scenario goldens and the quest's pace. Without it 6 lines are lost.
+- REQUEST 3 (revised, exact) -> slice-play: in boot/quest1_game.gd after `add_child(view)` (non-headless branch): `StageAudio.attach(self, session.stage, session.system, Events, Quest1Session.MASTER_SEED)`.
+- REQUEST 4 -> vehicles: emit something for a car-vs-car / car-vs-wall crash with a closing speed (or call `FxTriggers.fire(&"crash", pos_px, 0.0, tick)`), and for a
+  hard drift (tyre_screech) and a horn key; audio has the sounds (crash, tyre_screech, horn, hit_metal), nothing triggers them in your branch.
