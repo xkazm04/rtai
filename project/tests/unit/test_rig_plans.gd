@@ -51,6 +51,26 @@ func test_crowd_looks_split_cops_and_peds() -> void:
 	assert_false(RigVariant.crowd(5).shield, "patrol does not")
 
 
+func test_sleeved_looks_have_every_arm_cell() -> void:
+	var missing: PackedStringArray = PackedStringArray()
+	var sleeved: int = 0
+	for look: int in RigVariant.CROWD_COUNT:
+		var v: RigVariant = RigVariant.crowd(look)
+		if v.sleeve == "":
+			continue
+		sleeved += 1
+		var p: BodyPlan = RigPool.plan_of(v.kind)
+		var lib: PartLibrary = PartLibrary.of(p.art_dir)
+		for part: String in [p.upper_part[0], p.fore_part[0], p.endon_upper[0], p.endon_fore[0]]:
+			if not lib.sizes.has(part + v.sleeve):
+				@warning_ignore("return_value_discarded")
+				missing.append("look %d: %s%s" % [look, part, v.sleeve])
+	assert_gt(sleeved, 0, "some crowd looks wear sleeve variants")
+	assert_eq(
+		missing, PackedStringArray(), "a sleeve suffix without its arm cells falls back to cream"
+	)
+
+
 func _parts(p: BodyPlan) -> PackedStringArray:
 	var out: PackedStringArray = PackedStringArray([p.torso_part, p.head_part, p.pelvis_part])
 	out.append_array(p.thigh_part)

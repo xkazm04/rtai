@@ -13,6 +13,9 @@ var head: String = ""
 var torso: String = ""
 var shield: bool = false
 var swap: int = 0
+## Sleeve value: "" = the cream arm parts, else a suffix ("_dark", "_grey"): the arm cells use
+## `<part><sleeve>` where the art has it, so looks differ in their widest shapes, not only the head.
+var sleeve: String = ""
 
 
 static func make(
@@ -31,17 +34,21 @@ static func rivet() -> RigVariant:
 	return make(BodyPlan.Kind.RIVET, "rivet", "helmet", "torso", false)
 
 
-## The slice cast: cops (patrol, riot) and pedestrians (coat or jacket, three heads).
+## The slice cast: cops (patrol, riot) and pedestrians (coat, jacket, vest, hoodie, overalls).
 static func crowd(index: int) -> RigVariant:
 	match index:
 		0:
 			return make(BodyPlan.Kind.PED, "coat-hat", "head_hat", "torso", false)
 		1:
-			return make(BodyPlan.Kind.PED, "jacket-hair", "head_hair", "torso_jacket", false)
+			return _sleeved(
+				make(BodyPlan.Kind.PED, "jacket-hair", "head_hair", "torso_jacket", false), "_dark"
+			)
 		2:
 			return make(BodyPlan.Kind.PED, "coat-hood", "head_hood", "torso", false)
 		3:
-			return make(BodyPlan.Kind.PED, "jacket-hat", "head_hat", "torso_jacket", false)
+			return _sleeved(
+				make(BodyPlan.Kind.PED, "hoodie-cap", "head_cap", "torso_hoodie", false), "_dark"
+			)
 		4:
 			return make(BodyPlan.Kind.PED, "vest-hair", "head_hair", "torso_vest", false)
 		5:
@@ -49,7 +56,15 @@ static func crowd(index: int) -> RigVariant:
 		6:
 			return make(BodyPlan.Kind.COP, "riot", "head_helmet", "torso", true)
 		_:
-			return make(BodyPlan.Kind.PED, "coat-hair", "head_hair", "torso", false)
+			return _sleeved(
+				make(BodyPlan.Kind.PED, "overalls-bald", "head_bald", "torso_overalls", false),
+				"_grey"
+			)
+
+
+static func _sleeved(v: RigVariant, p_sleeve: String) -> RigVariant:
+	v.sleeve = p_sleeve
+	return v
 
 
 ## A stable look for an actor id with no RNG draw (rigs are render-side: they must never move a

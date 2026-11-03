@@ -114,6 +114,10 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
 
 ## Swaps a part's cell only when it changes (which: 0 upper, 1 fore, 2 hand).
 static func _cell(rig: CutRig, spr: Sprite2D, cell: String, which: int, side: RigLimbs) -> void:
+	if which < 2 and rig.variant != null and rig.variant.sleeve != "":
+		var alt: String = cell + rig.variant.sleeve
+		if rig.lib.sizes.has(alt):
+			cell = alt
 	var now: String = (
 		side.upper_cell if which == 0 else (side.fore_cell if which == 1 else side.hand_cell)
 	)
