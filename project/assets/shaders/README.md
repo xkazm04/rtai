@@ -8,8 +8,9 @@ The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
 
 | File | Layer | What it does |
 |---|---|---|
-| `look_d4.gdshader` | full-screen pass over the world (ground, roofs, props, parked cars) | the tone budget: paper / light / mid / dark ink wash in flat steps; the art's own ink lines stay solid ink; hatching only in deep shadow; wobbly Sobel ink edges; flat off-register vermilion and teal plates |
+| `look_d4.gdshader` | full-screen pass over the world (ground, roofs, props, parked cars) | the tone budget: paper / light / mid / dark ink wash in flat steps; the art's own ink lines stay solid ink; hatching only in deep shadow; wobbly Sobel ink edges; `aquatint` grain inside the washes; flat off-register vermilion and teal plates (0 in every shipped profile since 2026-11-03: the world carries no accent) |
 | `look_d4_item.gdshader` | traffic, actors' fx, HUD, ghosts (above the world pass) | nearest-ink snap; steel prints one flat wash value; drop shadows a flat ink tint; `ghost = 1` prints on the teal plate |
+| `cast_shadow.gdshader` | the `building_shadows` band of every chunk (ChunkView, under the world pass) | a shadow silhouette as a light ink tint + world-locked 45-degree pen strokes (lattice wobble and gaps) that the world pass inks; this lane's placeholder for n-d5's `look_d5_shadow` (same uniforms; `data/tables/cast_shadows.json` picks whichever is in the tree) |
 
 - Set `world_px` on the world pass every frame to the camera's world offset in screen pixels
   (`(cam.position * cam.zoom.x).round() - viewport_size / 2`), so the grime, hatch and paper tooth are locked
@@ -21,6 +22,9 @@ The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
 - Set `grime_tex` on the world pass to `GrimeLattice.texture()` (`core/render/grime_lattice.gd`): the two grime
   octaves sample that baked value lattice (one bilinear fetch each) instead of 4 sin hashes each (-17 % print
   pass on the low-end GPU). Unset, the grime is a flat offset, not blotches.
+- The output inks are uniforms (`paper_tone`, `wash_tone`, `ink_tone` on the world pass; `paper_tone`, `ink_tone` on
+  the item pass), set from palette.json tokens by `LookParams` (look_profiles.json `tones`); the defaults are the
+  pre-2026-11-03 cool constants. Every other world-pass uniform is a look-profile parameter too.
 - The pen work comes from the D4 art (`features/city/art/`), not from the shader. The colour doctrine
   (vermilion = threat, hazard, pickup, Rivet's collar; teal = the dead, the torch tip) lives in the assets.
 - Cutout characters keep their own part print (`print_part`, ported with the rig in F-09); the cream sticker rim is
