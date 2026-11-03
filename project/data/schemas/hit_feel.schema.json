@@ -1,0 +1,77 @@
+{
+  "$id": "gtai.hit_feel/1",
+  "additionalProperties": false,
+  "properties": {
+    "classes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "flash_ticks": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "hitstop": {
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "knockback_scale": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "reaction": {
+            "enum": [
+              "none",
+              "flinch",
+              "stagger",
+              "knockdown"
+            ]
+          },
+          "shake": {
+            "type": "string"
+          },
+          "stagger_ticks": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "doc",
+          "flash_ticks",
+          "hitstop",
+          "id",
+          "knockback_scale",
+          "reaction",
+          "shake",
+          "stagger_ticks"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kill_hitstop": {
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.hit_feel/1"
+    }
+  },
+  "required": [
+    "classes",
+    "doc",
+    "kill_hitstop",
+    "schema"
+  ],
+  "type": "object"
+}
