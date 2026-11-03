@@ -339,3 +339,10 @@ atlas; d5-combat blood names; vehicles cruiser accents).
   for HEAD. I made no code change and did not re-run any gates (identical code; that would only load
   another lane's bench). The 17:12 NEXT stands unchanged: item 0 is one idle full-gate bench after the run.
 - MILESTONE 17:19 (iter 52) the pre-commit hook ran lint on 9ccc7af: all 13 checks pass over 333 GDScript files.
+- MILESTONE 17:33 (iter 53, REPORT phase) REPORT.md written: what works with evidence paths, what does
+  not, blockers with durations, owner calls, open requests, next steps. Every cited path checked (0
+  missing); frames.json 15 entries, 0 missing. No code change, no gates re-run (code = bba930d).
+## NEXT (17:33, final; same as the 17:12 NEXT)
+0. One idle full-gate bench at the branch head after the run (`node tools/bench/run.mjs`, timeout >= 900 s).
+1. Owner calls (road width first, plazas, roof coarseness share, D5 amount at 32/48).
+2. More T1-scale long plates; 3. overlay 32 px/m hatch A/B idle; 4. kerb/corner tiles 7-10, then the D5 sidewalk.
