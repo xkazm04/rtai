@@ -687,3 +687,9 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   vs street dE 76.6 -> 72.3 (the warmth; iteration 3 measured the same trend). By eye the both-on frame is the
   closest to the mock tonight. Board evidence/item26_grain_floor_32.png; ladder +1 row. World-locked by construction
   (w = FRAGCOORD + world_px), the same tooth whose pan swim was measured at 0 extra in iteration 3.
+- 02:46 gap list after iteration 6 written (evidence/README.md, 7 items, next step each). Checked by eye before
+  writing gap 5: the mock's stickers DO carry a thin dark line outside the cream rim (+ a soft shadow); ours go
+  rim -> street. The rim halos are built in features/characters/rig_build.gd (characters lane, not mine): handed off.
+- 02:49 OWNER A/B (h95zt, NOT committed; the intersection tile restored byte-identically, tree clean): zebra paint
+  x0.84 (the dashes' tone). Rivet's rim and arms over the crossing separate from the bars at 32/48/64; the crossing
+  still reads. Board evidence/item27_zebra_owner_ab.png; ladder row; README gap 4.

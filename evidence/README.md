@@ -52,6 +52,7 @@ tick count, no RNG.
 | `item24_kerb_stone.png` | iteration 6: the kerb stone line (continuous, 0.3 m inside the street edge), h90 vs h91 at 32/48/64 + the mock's kerb corner |
 | `item25_road_dashes.png` | iteration 6: the mock's bold centre dashes, h91 / h92b cream (rejected: merges with the actors' rim) / h92c toned (kept) at 32 + the cop-on-dash contact at 48 |
 | `item26_grain_floor_32.png` | iteration 6, PROPOSAL: look_d5 `grain_floor` (world-locked paper tooth at 32 px/m, default off) alone and with `age_floor`, vs as shipped and the mock + street crops |
+| `item27_zebra_owner_ab.png` | iteration 6, OWNER A/B: the zebra cream (committed) vs toned x0.84 like the dashes (h95zt, not committed), Rivet over the crossing at 32/48/64 |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -219,7 +220,8 @@ cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 
    `build_road.py`) to the D4 set; they are deterministic and documented in their headers.
 4. **Cream on cream** (OWNER): the zebra bars are the same cream as the actors' sticker rim (D4 and the mock alike);
    where Rivet's arm lies over the crossing the rim touches a bar. The dashes were toned a step down for this
-   (`item25`); a toned zebra would leave the mock's look. Owner's call.
+   (`item25`); a toned zebra would leave the mock's look. Owner's call: `item27_zebra_owner_ab.png` (x0.84, the
+   dashes' tone: Rivet's rim and arms separate from the bars, the crossing still reads; not committed).
 5. **Characters at 32 px/m**: the mock's characters carry a dark outline OUTSIDE the cream rim; ours have the rim
    straight onto the street. At 32 px/m the rim still reads (rim vs street dL 0.58), but against the cream zebra and
    pavement only the inner ink line separates. Next (characters / visual-engine): an outer ink hairline on the rig's
