@@ -1235,3 +1235,9 @@ night_iter7_summary.png and the iteration-7 order.
 - 05:10 FINAL gates (iteration 8, after the fringe fix): evidence tool (--no-parity --no-bench) ALL PASS at 5d16b85
   (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 85 untracked evidence PNGs moved aside and
   restored; tree clean. NEXT 31 updated (item43b). The iteration-8 NEXT (31-34) and reading order above stand.
+- 05:11 MEASURED the rig shadow in motion (temporary D5RigShadow.on_tier hook in d5_walk_run.gd, restored, tree
+  checked; the D4 series has no shadow, so the ratio includes the shadow's own motion): walk D5/D4 HF at 64 px/m
+  1.026 -> 1.054 (total 1.078 -> 1.113), at 96 1.131 -> 1.189 (1.176 -> 1.254). By eye (walk11_rs frames 10-12) the
+  hatch is world-locked and steady; the extra change is the silhouette edge sweeping across fixed strokes as the
+  limbs move (stroke ends appear/vanish at the edge). Modest, not aliasing; for the characters lane: if it reads
+  busy in play, soften the shadow's edge (a 1-2 px alpha ramp) so strokes fade in rather than switch.

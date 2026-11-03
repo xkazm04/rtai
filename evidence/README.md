@@ -270,7 +270,9 @@ mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
 7. **Cost** (NEW, measured): rig shadows as world-locked strokes without a CanvasGroup (`item46b`): +0.005 ms GPU
    median, p95 0.161, 0.29 ms script at 16 full rigs, 64 px/m, RTX 4090 (`d5-cost.json` "d5s"; the group version
    cost +0.07 to +0.18 ms with ~1 ms p95 spikes). The dev version mirrors a cached part list each frame; in production
-   it belongs in rig_build (shadow sprites as part children, no per-frame copy).
+   it belongs in rig_build (shadow sprites as part children, no per-frame copy). In motion (walk, D5/D4 HF) the
+   shadow adds 1.026 -> 1.054 at 64 px/m and 1.131 -> 1.189 at 96: the silhouette edge sweeping over fixed strokes;
+   a soft alpha edge would turn stroke ends from switching to fading.
 6. **Cones** (closed in the dev scene, `item44b`): a capsule shadow past the flat base plate instead of the plate's
    box. For the city lane: props on flat base plates need a shadow shape, not their silhouette.
 
