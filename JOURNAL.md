@@ -590,3 +590,21 @@ NEXT:
   masters perf-bisect/ patch A, then B. Bench worktrees need build/export/windows-bench/ created first.
 - Pre-existing (main too): exit-time ObjectDB / resource leak lines in run_scenarios. Not this lane's scope; noted
   for whoever owns tests/run_scenarios.gd.
+
+## Iteration 52 (17:10-17:13, STABILIZE, past freeze: no new features)
+- 17:10 tree clean; HEAD b8d2e68. `git diff 8dbf7f4 HEAD -- project tools` is empty, so the 17:01 gate run
+  (unit 326/0, scenarios 8/0, lint 13/13 at 16:53) still covers the build exactly. Not re-run (nothing to re-test).
+- 17:11 owner page re-checked: masters day-d5/d5-cast/frames.json 15 entries, 0 missing `file`/`before`;
+  ladder.png present. Evidence matches the build.
+- bench.lock was free at 17:10, but a d-cast + main riot pair needs ~14 min (incl. re-staging the main scratch
+  worktree) and would overrun the 17:30 stop; with 6 other lanes live it would not be uncontended anyway. Not started.
+- No code or art changed.
+
+## Status at 17:13 (iteration 52, STABILIZE) and NEXT
+- Items 1-5 evidenced (see iteration 47). Gates green on HEAD. Owner frames: frames.json (15) + ladder.png.
+NEXT:
+- Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
+- PERF (only open item): riot p99 CPU d-cast ~4.9 vs main ~3.2-3.5 ms over 2 CONTENDED pairs, all within 7 ms.
+  Run a 3+3 uncontended A/B after the day run (machine quiet). Only if the gap holds, bench masters perf-bisect/
+  patch A, then B (bench worktrees need build/export/windows-bench/ created first).
+- Pre-existing (main too): exit-time ObjectDB/resource leak lines in run_scenarios; not this lane's scope.
