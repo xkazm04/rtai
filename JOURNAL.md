@@ -1108,3 +1108,27 @@ NEXT (final for iteration 16, replaces the addendum): 1-5 of the 06:5x NEXT list
   crowd MultiMesh itself (a second instance layer under the people), not swept per frame.
 - (07:05) Stop (iteration 16). Last code commit a8ea30d, gates PASS at a8ea30d; working tree clean except the
   untracked evidence/ folder. No process of mine running.
+
+## Iteration 18 (07:05-07:30, BUILD; freeze 07:30)
+- (07:05) Read JOURNAL tail + git log. 25 min to the freeze: too short for the crowd blob-shadow layer (needs a
+  cost measurement + frames + gates), so NEXT 5's small hygiene item instead. Leonardo not probed (nothing to
+  generate); images 0 generated, 0 rejected; provenance +0.
+- REFACTOR (07:06-07:09, 641d2b1) the showcase's hero-frame saving and world -> screen uv mapping move to
+  `dev/noir/showcase_shots.gd` (NoirShowcaseShots, static); showcase_fight.gd 235 -> 227 lines (soft ~200, still
+  over; under 300). Check: street showcase 48 re-recorded with v12's flags (`--coat --noir-parts --at=501,523
+  --car-pass`, masters scratch shots-v1/48): **23/23 hero frames and the mp4 byte-identical to figshadow-v12/48**.
+  Scratch deleted.
+- FRICTION (07:07) my first check recorded the default (junction) fight and compared it to v12 (the street):
+  every frame "differed" (~390k px). Not a regression - the wrong flags. Rule: the v10/v11/v12 showcase sets are
+  the street fight (`--coat --noir-parts --at=501,523 --car-pass`); write the flags next to every masters set.
+- (07:10) Gates at 641d2b1 (`run.mjs --no-bench --allow-dirty`, journal untouched during the run): lint (13), 206
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in
+  evidence/gates-641d2b1/; NOIR.md gates line updated.
+NEXT (iteration 18 close; the iteration-16 list 1-5 stands):
+1. Owner picks (carried; see the iteration-16 NEXT item 1).
+2. Crowd shadows the cheap way: one baked shadow blob per atlas cell, drawn by the crowd MultiMesh as a second
+   instance layer under the people (no per-frame sweep). Budget target: under +0.3 ms on the iGPU junction riot
+   (per-frame casting cost +2.3 ms, reverted 07:04).
+3. Junction asphalt outlines / lamp fragments: the pass needs a prop / shadow mask channel.
+4. Per-light directions: retry only where a body stands mid-beam or mid-pool.
+5. showcase_fight.gd 227 lines: _add_player_fluid / _wear_noir_parts / _solid could go into a setup helper.
