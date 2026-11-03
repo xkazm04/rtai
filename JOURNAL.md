@@ -144,3 +144,25 @@ NEXT (iteration 2 end):
 5. Bench: never run by this lane (no GPU work); the pool is capped at 24 players / 4 starts per frame, the RiotBed does a 6-key lookup per frame.
 - GATES at the NEXT commit (clean evidence run, `node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched during the run): lint 13/13, unit 350 passed, scenarios 8/8,
   parity exact + planted mutation caught, selftest + look goldens unchanged. Bench NOT run (lane rule; contended GPU, audio has no GPU work). Earlier run's unit "FAIL" was only my journal commit mid-run.
+
+## 2026-11-03 iteration 4 (BUILD, started 12:07; iteration 3 left no journal entry, the log above is its state)
+- MILESTONE (12:20) new sounds: `car_wreck` (ElevenLabs sound-generation direct, 3 takes, QC 3 kept / 0 rejected; the vehicles lane fires `car_wreck` with every explosion),
+  `boss_loop` (ElevenLabs /v1/music, 24 s, loop; starts with `boss_engaged` after the stinger, ends with `contract_completed` like the arena camera; file lives in assets/audio/sfx
+  because SoundBank only reads that dir, bus `music` so the voice duck applies). Engine pitch follows the driven car (AudioHooks.drive_to: position change per rendered frame, smoothed;
+  `engine_pitch_idle` 0.75 .. `engine_pitch_top` 1.6 at `engine_top_mps` 26 in audio_mix.json + schema). Unit tests: test_audio_driving.gd (4). Demo tour 4 clip (evidence/mix/riot_demo_mix4.mp4, -18.1 LUFS).
+- POF-GAP 1 re-checked at 12:07 (4th time): /api/audio-gen still 400 "text_too_long 450" (PoF wraps the prompt to 592 chars). Direct route again.
+- Credits: car_wreck 3 takes + boss_loop (24 s music): about 450-500 credits (not read back from the API; the key is not printed). Lane total ~4.0k of 25k. No voice characters spent today after 11:45 (owner rule).
+- FIXED (I missed it at 11:45): the 23 voice lines are marked temp: `tools/audio/casting.json` `"status": "temp"`, `data/tables/voice_lengths.json` `"status": "temp"` (+ schema).
+- NEW QC, an ear proxy: tools/audio/stt_check.py reads all 23 voices back with a local Whisper (base.en, HF cache, offline) and compares the words with the quest text: mean WER 2.9% (the rest is digits vs words:
+  "forty" -> "40"). It found ONE real fault: rivet-who-is-this had the written "...One" read as a stray syllable ("a fraced one"). Cut by tools/audio/fix_who_is_this.sh (raw take 4.45-5.36 s, 0.25 s beat back, same loudnorm),
+  12.9 -> 12.3 s, STT re-check "Everything's dead tonight. One. I pressed one." (WER 0). evidence/voice_stt.json. This is a read-back, not a listening test (pacing, acting, timbre still unheard).
+- MILESTONE (12:31) REQUEST 3 proven on the real slice: scratch merge d-slice + d-audio + `evidence/requests/quest1_game_audio.patch` (9 lines in boot/quest1_game.gd) -> 150 s of the slice's own main scene
+  (title -> Start -> scripted input pad) with sound: -19.5 LUFS, true peak -2.9 dBFS, 20 of 23 voice lines started, 7 voice-queue drops, 123 footsteps, 44 kill punches, 3 tazer charges, boss stinger, nothing missing.
+  Clip evidence/mix/slice_q1_audio.mp4 (frames at 20 s and 140 s looked at, straight down, 0 rejected). WITHOUT THE PATCH THE SLICE IS SILENT: nothing in d-slice calls StageAudio.
+- MILESTONE (12:35) merge with the vehicles lane proven: scratch merge d-vehicles + d-audio, one conflict (JOURNAL.md), 386 unit tests green (my run-over test re-declared `pedestrian_struck`: fixed). On the vehicles lane's real cars
+  (their carnage route): 5 crashes, 1 car_wreck, 2 hit_metal, 3 horns heard; their plain route: 1 tyre_screech, 1 thud + 1 death for the run-over; engine pitch 0.99 .. 1.60 .. 0.75 with the car speed.
+  evidence/mix/vehicles_merge_carnage.mp4 (-16.5 LUFS, peak -3.1) and *_cues.json. Hence REQUEST 2 and 4 are DONE by the vehicles lane (they fire FxTriggers and Events as asked).
+- REQUESTS still open: REQUEST 1 slice-play (voice vs subtitle timing, 7 voice drops in 150 s), REQUEST 3 slice-play (apply evidence/requests/quest1_game_audio.patch: it is the whole wiring), REQUEST 6 -> slice-play/Director:
+  `CarRadio.next()` needs an input action (the radio only starts on vehicle_entered; no way to change station yet).
+- FRICTION: my shell's cwd drifted between worktrees several times (a `cd ../d-vehicles` in one command leaves the primary dir changed): always `git -C`/absolute paths. Python on Windows resolves bash `/tmp/..` and `/c/..` differently from bash
+  (a write to `/tmp/stt/x` went to %LOCALAPPDATA%\Temp, `/c/...` args need `cygpath -m`): I lost two runs to it. No debris was left outside the repo and masters.
