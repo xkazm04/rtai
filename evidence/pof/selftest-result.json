@@ -4,12 +4,12 @@
   "debug_build": true,
   "frames": [
     {
-      "distinct_colours": 75,
+      "distinct_colours": 77,
       "emissive_fx_alive": 0,
       "file": "selftest-32ppm.png",
       "height": 800,
       "lights_active": 0,
-      "mean_luminance": 0.384336423804699,
+      "mean_luminance": 0.390395623686749,
       "ok": true,
       "ppm": 32,
       "visible_actors": 103,
@@ -17,12 +17,12 @@
       "width": 1280
     },
     {
-      "distinct_colours": 70,
+      "distinct_colours": 81,
       "emissive_fx_alive": 0,
       "file": "selftest-48ppm.png",
       "height": 800,
-      "lights_active": 0,
-      "mean_luminance": 0.314428879801805,
+      "lights_active": 1,
+      "mean_luminance": 0.314779547069015,
       "ok": true,
       "ppm": 48,
       "visible_actors": 81,
@@ -40,8 +40,8 @@
   "gpu": "NVIDIA GeForce RTX 4090",
   "ok": true,
   "placeholders": 22,
-  "prewarm_ms": 30.953,
+  "prewarm_ms": 31.25,
   "schema": "gtai.selftest/1",
   "texture_failures": [],
-  "texture_load_ms": 75.645
+  "texture_load_ms": 77.084
 }

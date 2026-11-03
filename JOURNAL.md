@@ -770,3 +770,13 @@ by the item list (all 7 items are evidenced): the world print's inks. Measured, 
   nothing; keep road patches out of the hatch range (lighter than density 0.86) or give them a caster.
   Frame: 34-buildings/square-64-flat-vs-hatched.png.
 - 03:45 evidence run started at c89365e (lint, unit, scenarios, parity, selftest, bench).
+- FRICTION (03:45): I edited chunk_view / city_view / cast_shadow (the `zoom` feed) while the evidence run
+  read the working tree; parked as evidence/patches/cast-shadow-zoom.patch within ~30 s and restored the
+  tree to c89365e. The overlap hit the unit stage only (the edit was API-compatible: a defaulted param);
+  unit is re-run at the final HEAD. Rule for me: no tree edits while tools/evidence/run.mjs runs.
+- Evidence at c89365e (03:44-03:58, `node tools/evidence/run.mjs`, all PASS): lint 13/13, unit 214,
+  scenarios 8, parity bit-exact + mutation caught, selftest PASS (junction goldens 10/10 + block 3/3 worst
+  0.00; accents clean at both sites; world lock 0.00 % x3), bench (release export, 3 x 4 x 60 s) p99 2.75 ms
+  (iter 10: 2.83), 1% low 226 fps, worst swap 33.3 ms, 1 frame > 50 ms (cause `present`, 0 unexplained),
+  riot rigs p99 0.432 ms per frame. With every iteration-11 change on (warm tones, aquatint, hatched cast
+  shadows, no world accents). Copied to evidence/pof (+ pof/block), evidence/bench-*-iter11.json.

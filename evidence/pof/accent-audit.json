@@ -101,9 +101,9 @@
     {
       "frame": {
         "teal": 0,
-        "vermilion": 9692
+        "vermilion": 9556
       },
-      "frame_share": 0.00946484375,
+      "frame_share": 0.00933203125,
       "full_rigs_by_kind": {
         "cop": {
           "teal": 0,
@@ -121,7 +121,7 @@
       "layers": {
         "actors": {
           "teal": 0,
-          "vermilion": 9476
+          "vermilion": 9556
         },
         "fx": {
           "teal": 0,
@@ -133,12 +133,10 @@
         },
         "world": {
           "teal": 0,
-          "vermilion": 216
+          "vermilion": 0
         }
       },
-      "offenders": [
-        "vermilion on world: 216 px"
-      ],
+      "offenders": [],
       "ppm": 32
     },
     {
@@ -225,7 +223,7 @@
     }
   ],
   "gpu": "NVIDIA GeForce RTX 4090",
-  "ok": false,
+  "ok": true,
   "schema": "gtai.accent-audit/1",
   "stride": 2
 }
