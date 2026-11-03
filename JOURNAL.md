@@ -190,3 +190,13 @@ vehicles: cruiser accents cop_blue).
 - NOTE item 4 roof density: the 7 generic roofs (65-71) + long/warehouse already carry 10-15 clutter
   items per 8.4 m roof (T1: 6-8 larger items per block); masters roofs-i4/sheet-generic.png. No Codex
   plates needed for density; T1's roof items are larger/coarser, not more numerous. 0 Codex images used.
+- MILESTONE f85bfc0 corner lamps (NEXT 4): two diagonal junction corners carry the inked D5 lamp
+  (head at the kerb corner over the crossing, T1), two keep traffic lights. GENERATOR 8. First try
+  read wrong by me (thought the head pointed into the block), flipped, then saw the flip WAS wrong
+  (cream disc = head): reverted to 45 deg; rejected-flipped-zoom.png kept. Replay unchanged; goldens
+  in tolerance (junction night +0.78: new lamp pools). evidence/d5-city/19-corner-lamps/.
+- MILESTONE 9dddff4 H2 road paint: STRIKE + union fist stencil (d5 decals, rows 75-77) on 8% of lane
+  tiles, 2.1 m off the centre dashes (1.85 touched them). Chalk robot REJECTED (grey smudge on asphalt,
+  invisible on plaza paving). city_frame foci 5 (STRIKE) + 6 (fist under a roof row). GENERATOR 9.
+  FRICTION: test_city_chunks pins the texture row count (75 -> 78): first unit run failed on it.
+  evidence/d5-city/20-story-paint/ (before = f85bfc0 via a temporary checkout of 2 files + re-bake).
