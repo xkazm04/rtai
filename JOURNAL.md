@@ -186,3 +186,20 @@
     shake, knockback, the cop's flinch/stagger/knockdown/death, blood, the sound hook;
   - plus Rivet's locomotion, in one 20-40 s clip at 32 px/m, in D5.
   The robot thug rig is not on this branch (enemy-ai's?): REQUEST 2 -> enemy-ai.
+- MILESTONE (21:49): claw combo impact in combo_clip: hit-stop 3/3/7 ticks, a decaying
+  deterministic shake 2/2.5/7 px, the cop dies on the finisher (DEATH sprawl), the peds are
+  knocked down and get up. Clips `combo-claw-impact-{32,48}ppm.mp4` and a death sheet.
+  FRICTION: the struck cop still flashes vermilion. That's the shared rig tint, REQUEST 1 ->
+  gunplay; e-gunplay's HitFeel owns a victim flash, so the fix lands with it.
+- Gunplay's HitFeel on e-gunplay (`features/combat/hit_feel/hit_feel.gd`, `hit_feel.json`):
+  - `land(target_id, hit_class, dir, lethal, tick) -> int` (the hit-stop ticks);
+  - classes light/medium/heavy/blast/...; the claw finisher is `heavy` (hitstop melee_hit,
+    shake hit, stagger 24 ticks);
+  - a `reaction(target_id, kind, dir, ticks)` signal for the victim's animation.
+  Plan: give each `rivet_melee.json` hit a `hit_class` (claw_1/2 -> a light melee class with a
+  short stop; REQUEST 3 -> gunplay: a `melee_light` class, since `light` has no hit-stop).
+- frames.json: 15 entries (motion course x3 and the impact clip/death added; the raw lineup and
+  the 1.6 stride A/B dropped).
+- Registry applied (motion-quality-gating): responsiveness numbers are sim-true, and the
+  display latency is named unmeasured. The clips use the real state machine (PlayerMotion,
+  MeleeCombo), not a hand-keyed animation.
