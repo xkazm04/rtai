@@ -24,7 +24,7 @@
       "file": "look-d4-32ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0133541666666667,
+      "mean": 0.0869166666666667,
       "ok": true,
       "ppm": 32
     },
@@ -33,7 +33,7 @@
       "file": "look-d4-48ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.00331770833333333,
+      "mean": 0.00673958333333333,
       "ok": true,
       "ppm": 48
     },
@@ -42,7 +42,7 @@
       "file": "look-d4-64ppm.png",
       "found": true,
       "look": "d4",
-      "mean": 0.0507760416666667,
+      "mean": 0.0555260416666667,
       "ok": true,
       "ppm": 64
     },
@@ -51,7 +51,7 @@
       "file": "look-d5-48ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.01615625,
+      "mean": 0.0279375,
       "ok": true,
       "ppm": 48
     },
@@ -60,7 +60,7 @@
       "file": "look-d5-64ppm.png",
       "found": true,
       "look": "d5",
-      "mean": 0.0001875,
+      "mean": 0.0121927083333333,
       "ok": true,
       "ppm": 64
     },
@@ -69,7 +69,7 @@
       "file": "look-auto-48ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.000494791666666667,
+      "mean": 0.00378645833333333,
       "ok": true,
       "ppm": 48
     },
@@ -78,7 +78,7 @@
       "file": "look-auto-56ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.0288177083333333,
+      "mean": 0.043421875,
       "ok": true,
       "ppm": 56
     },
@@ -87,7 +87,7 @@
       "file": "look-auto-64ppm.png",
       "found": true,
       "look": "auto",
-      "mean": 0.00659375,
+      "mean": 0.0181666666666667,
       "ok": true,
       "ppm": 64
     }
