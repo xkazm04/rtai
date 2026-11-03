@@ -13,6 +13,8 @@ var stage: CollectCallStage
 var port: CollectCallWorld
 var system: QuestSystem
 var bot: CollectCallBot
+## Optional: called after the bot acted, before the world steps (may rewrite stage.intent).
+var after_act: Callable = Callable()
 var events: EventLog = EventLog.new()
 var report: QuestReport = QuestReport.new()
 var pkg: QuestPackage = null
@@ -80,6 +82,8 @@ func running() -> bool:
 
 func tick_once() -> void:
 	bot.act()
+	if after_act.is_valid():
+		after_act.call()  # dev/gunplay --dodge: a scripted strafe overrides the bot's move
 	_world.loop().step()
 	ticks += 1
 	var beat: QuestBeat = system.runner.current_beat()

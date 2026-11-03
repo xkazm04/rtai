@@ -19,6 +19,8 @@ var burst_gap: int = 0
 ## Hits land only while exposed (the boss is in cover outside his vent window).
 var exposed: bool = true
 var hurt_tick: int = -1000000
+## Lane gunplay (GuardTell): ticks of the readable tell left before a burst; 0 = none.
+var tell_left: int = 0
 
 
 static func make(p_kind: Kind, p_id: int, at: Vector2, hp_max: float) -> Fighter:

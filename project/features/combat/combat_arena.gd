@@ -6,6 +6,9 @@ extends RefCounted
 ## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
 ## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
 
+## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
+signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
+
 const SPAWN_SPREAD_M: float = 2.5
 
 var tuning: CombatTuning
@@ -29,6 +32,10 @@ var tazer_hit_now: bool = false
 ## The last bursts' arc paths (VFX), newest last.
 var burst_arcs: Array = []
 var tick: int = 0
+## Lane gunplay: Rivet's gun from weapons.json (GunHand); null keeps quest 1's own weapons.
+var gun: GunHand = null
+## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
+var guard_tell: GuardTell = null
 var _events: EventBus
 var _rng: RandomNumberGenerator
 var _next_id: int = 1
@@ -82,6 +89,10 @@ func hostiles_alive() -> int:
 
 ## Rivet pulls the trigger at `at`; false while the weapon cools or there is none.
 func rivet_fire(at: Vector2) -> bool:
+	if gun != null:
+		var fired: Array[Shot] = gun.pull(rivet, at) if rivet.alive() else []
+		shots.append_array(fired)
+		return not fired.is_empty()
 	if rivet.weapon == &"" or rivet.cooldown > 0 or not rivet.alive():
 		return false
 	var w: CombatTuning.Weapon = tuning.weapon(rivet.weapon)
@@ -120,6 +131,8 @@ func step(p_tick: int) -> void:
 	_step_shots()
 	_step_balls()
 	_repair()
+	if gun != null:
+		gun.settle()
 
 
 ## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
@@ -157,7 +170,11 @@ func _step_hostile(h: Fighter) -> void:
 		if ball != null:
 			balls.append(ball)
 		return
-	var shot: Shot = GuardBrain.step(h, rivet.pos, tuning, _rng)
+	var shot: Shot = (
+		guard_tell.step(h, rivet.pos, tuning, _rng)
+		if guard_tell != null
+		else GuardBrain.step(h, rivet.pos, tuning, _rng)
+	)
 	if shot != null:
 		shots.append(shot)
 
@@ -168,6 +185,7 @@ func _step_shots() -> void:
 		var victim: Fighter = _struck(s, from)
 		if victim != null:
 			damage(victim, s.damage, s.shooter_id, s.weapon)
+			struck.emit(victim, s.vel.normalized(), not victim.alive(), s.weapon)
 		if victim != null or s.spent() or _blocked(s, from):
 			shots.erase(s)
 

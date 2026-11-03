@@ -1,0 +1,78 @@
+{
+  "beat_kill_hitstop": "boss_hit",
+  "classes": [
+    {
+      "doc": "Pistol, machine pistol, nails: a flash and a flinch, no stop (rate of fire would stutter).",
+      "flash_ticks": 4,
+      "hitstop": "",
+      "id": "light",
+      "knockback_scale": 1,
+      "reaction": "flinch",
+      "shake": "",
+      "stagger_ticks": 6
+    },
+    {
+      "doc": "Plasma, homing shards.",
+      "flash_ticks": 6,
+      "hitstop": "rivet_hit",
+      "id": "medium",
+      "knockback_scale": 1,
+      "reaction": "flinch",
+      "shake": "gunfire",
+      "stagger_ticks": 10
+    },
+    {
+      "doc": "Hand cannon, the claw combo finisher.",
+      "flash_ticks": 8,
+      "hitstop": "melee_hit",
+      "id": "heavy",
+      "knockback_scale": 1.2,
+      "reaction": "stagger",
+      "shake": "hit",
+      "stagger_ticks": 24
+    },
+    {
+      "doc": "Rockets, the Hauler stomp, a wrecked car.",
+      "flash_ticks": 10,
+      "hitstop": "boss_hit",
+      "id": "blast",
+      "knockback_scale": 1.5,
+      "reaction": "knockdown",
+      "shake": "explosion",
+      "stagger_ticks": 60
+    },
+    {
+      "doc": "Flame puffs and fire patches: burning drives panic, not a flinch per tick.",
+      "flash_ticks": 3,
+      "hitstop": "",
+      "id": "burn",
+      "knockback_scale": 0,
+      "reaction": "none",
+      "shake": "",
+      "stagger_ticks": 0
+    },
+    {
+      "doc": "Electro bolt, the charged electroshock.",
+      "flash_ticks": 8,
+      "hitstop": "melee_hit",
+      "id": "shock",
+      "knockback_scale": 0.5,
+      "reaction": "stagger",
+      "shake": "hit",
+      "stagger_ticks": 30
+    },
+    {
+      "doc": "One claw swipe.",
+      "flash_ticks": 6,
+      "hitstop": "melee_hit",
+      "id": "melee",
+      "knockback_scale": 1,
+      "reaction": "flinch",
+      "shake": "hit",
+      "stagger_ticks": 12
+    }
+  ],
+  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6).",
+  "kill_hitstop": "kill",
+  "schema": "gtai.hit_feel/1"
+}

@@ -32,6 +32,9 @@ const ALLY_ART: Dictionary[String, String] = {
 
 var stage: CollectCallStage
 var port: CollectCallWorld
+## Lane gunplay: the shared hit feel's flash, drawn as an inked impact star behind the struck
+## figure (null in quest 1 until a gun is wired).
+var hit_link: HitLink = null
 
 
 func _process(_delta: float) -> void:
@@ -47,10 +50,12 @@ func _draw() -> void:
 		for p: Vector2 in stage.patrol_pos:
 			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
 	for h: Fighter in stage.arena.hostiles:
+		_impact(h)
 		if h.kind == Fighter.Kind.BOSS:
 			_mertz(h)
 		elif h.alive():
-			_sprite("dock_guard", h.pos, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
+			var lean: Vector2 = hit_link.lean(h) if hit_link != null else Vector2.ZERO
+			_sprite("dock_guard", h.pos + lean, Vector2(0.9, 0.9) * GUARD_DRAW, h.facing)
 		else:
 			_sprite("guard_down", h.pos, Vector2(1.6, 1.6), h.facing, DOWN_FADE)
 	_rivet(stage.arena.rivet)
@@ -61,6 +66,7 @@ func _rivet(r: Fighter) -> void:
 	if stage.hidden_in != "":
 		_sprite("rivet_peek", at + Vector2(0.0, -0.75), _size(&"rivet_peek"), Vector2.UP)
 		return
+	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_sprite("rivet", at, _size(&"rivet"), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
 
@@ -102,6 +108,23 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 		for k: int in 3:
 			var tip: Vector2 = muzzle + dir.rotated(-0.8 + k * 0.8) * (0.5 + frac * 0.6)
 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+
+
+## The hit flash: a cream star with an ink rim behind the victim, big on the hit, shrinking out.
+func _impact(f: Fighter, rim: Color = Ink.INK) -> void:
+	var k: float = hit_link.flash(f) if hit_link != null else 0.0
+	if k <= 0.0:
+		return
+	var pts: PackedVector2Array = PackedVector2Array()
+	@warning_ignore("return_value_discarded")
+	pts.resize(17)
+	var spin: float = float(f.id) * 0.7
+	for i: int in 16:
+		var r: float = (1.15 if i % 2 == 0 else 0.55) * (0.6 + 0.6 * k)
+		pts[i] = Ink.px(f.pos + Vector2.from_angle(spin + TAU * i / 16.0) * r)
+	pts[16] = pts[0]
+	draw_colored_polygon(pts.slice(0, 16), Ink.CREAM)
+	draw_polyline(pts, rim, 3.0, true)
 
 
 ## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.

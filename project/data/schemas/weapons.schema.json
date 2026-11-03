@@ -1,0 +1,313 @@
+{
+  "$id": "gtai.weapons/1",
+  "additionalProperties": false,
+  "properties": {
+    "aim_assist": {
+      "additionalProperties": false,
+      "properties": {
+        "cone_deg": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "pad_only": {
+          "type": "boolean"
+        },
+        "range_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "strength": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cone_deg",
+        "pad_only",
+        "range_m",
+        "strength"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "enemy_fire": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_scale": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "lock_frac": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lock_spread_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "muzzle_flash_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "rest_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "speed_scale": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "tell_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "volley_shots": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "damage_scale",
+        "lock_frac",
+        "lock_spread_scale",
+        "muzzle_flash_s",
+        "rest_s",
+        "speed_scale",
+        "tell_s",
+        "volley_shots"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.weapons/1"
+    },
+    "targets": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hp": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "metal": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "body",
+          "doc",
+          "hp",
+          "id",
+          "metal"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "weapons": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "chain_hops": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "chain_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dot_dps": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "dot_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "fire_mode": {
+            "enum": [
+              "semi",
+              "auto"
+            ]
+          },
+          "held_scale": {
+            "maximum": 3,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "hit_class": {
+            "enum": [
+              "light",
+              "medium",
+              "heavy",
+              "blast",
+              "burn",
+              "shock"
+            ]
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "bullet",
+              "cone",
+              "rocket",
+              "bolt",
+              "thrown"
+            ]
+          },
+          "knockback_mps": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "magazine": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "patch_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "patch_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "pellets": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "range_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "reload_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "rof_hz": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "speed_mps": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "splash_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_bloom_deg": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_deg": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_max_deg": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_recover_dps": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "stun_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "tier": {
+            "enum": [
+              "core",
+              "canon",
+              "unique"
+            ]
+          },
+          "tracer_len_m": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "chain_hops",
+          "chain_radius_m",
+          "damage",
+          "doc",
+          "dot_dps",
+          "dot_s",
+          "enabled",
+          "fire_mode",
+          "hit_class",
+          "id",
+          "kind",
+          "knockback_mps",
+          "magazine",
+          "patch_radius_m",
+          "patch_s",
+          "pellets",
+          "range_m",
+          "reload_s",
+          "rof_hz",
+          "speed_mps",
+          "splash_damage",
+          "splash_radius_m",
+          "spread_bloom_deg",
+          "spread_deg",
+          "spread_max_deg",
+          "spread_recover_dps",
+          "stun_s",
+          "tier",
+          "tracer_len_m"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "aim_assist",
+    "doc",
+    "enemy_fire",
+    "schema",
+    "targets",
+    "weapons"
+  ],
+  "type": "object"
+}

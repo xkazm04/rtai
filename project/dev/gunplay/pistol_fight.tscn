@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/gunplay/pistol_fight.gd" id="1_pf"]
+
+[node name="PistolFight" type="Node"]
+script = ExtResource("1_pf")
