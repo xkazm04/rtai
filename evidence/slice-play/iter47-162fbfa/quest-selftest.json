@@ -1,0 +1,133 @@
+{
+  "barksMissing": [],
+  "beatsReached": 3,
+  "cash": 500,
+  "checks": {
+    "allBarksFired": true,
+    "allBeatLinesShown": true,
+    "allBeatsReached": true,
+    "cashPaid": true,
+    "contractCompletedOnce": true,
+    "contractStartedOnce": true,
+    "heatClamped": true,
+    "loaded": true,
+    "succeeded": true,
+    "unlocksGranted": true
+  },
+  "engineVersion": "4.7.2-stable (official)",
+  "events": [
+    "220 contract_started [\"_selftest\"]",
+    "2054 wanted_changed [2]",
+    "2386 contract_completed [\"_selftest\"]"
+  ],
+  "finalState": "succeeded",
+  "heatClamps": 1,
+  "linesMissing": [],
+  "linesShown": [
+    {
+      "bark": false,
+      "beat": 0,
+      "id": "patch-ring-1",
+      "speaker": "patch",
+      "tick": 220
+    },
+    {
+      "bark": false,
+      "beat": 0,
+      "id": "rivet-answer-1",
+      "speaker": "rivet",
+      "tick": 430
+    },
+    {
+      "bark": false,
+      "beat": 0,
+      "id": "patch-job-1",
+      "speaker": "patch",
+      "tick": 581
+    },
+    {
+      "bark": true,
+      "beat": 0,
+      "id": "hauler-bark-1",
+      "speaker": "hauler",
+      "tick": 842
+    },
+    {
+      "bark": false,
+      "beat": 1,
+      "id": "valet-warn-1",
+      "speaker": "the-valet",
+      "tick": 1083
+    },
+    {
+      "bark": false,
+      "beat": 1,
+      "id": "rivet-steal-1",
+      "speaker": "rivet",
+      "tick": 1258
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "patch-paid-1",
+      "speaker": "patch",
+      "tick": 1611
+    },
+    {
+      "bark": false,
+      "beat": 2,
+      "id": "rivet-done-1",
+      "speaker": "rivet",
+      "tick": 1851
+    },
+    {
+      "bark": true,
+      "beat": 2,
+      "id": "patch-heat-1",
+      "speaker": "patch",
+      "tick": 2054
+    }
+  ],
+  "loadErrors": [],
+  "loadWarnings": [],
+  "pass": true,
+  "planted": {
+    "caughtBy": "succeeded",
+    "fault": "phone never answered"
+  },
+  "plantedFaults": [
+    {
+      "caughtBy": "succeeded",
+      "fault": "phone never answered"
+    }
+  ],
+  "problem": "",
+  "quest": "_selftest",
+  "schema": "gtai.quest-selftest/1",
+  "secondPlayIdentical": true,
+  "simStep": "fixed 60 Hz ticks",
+  "stateHash": "55865ee8edb4fe94b274183cc321462bf093b31c12e35c5cb8a491688cf41db6",
+  "stubbed": [
+    "movement: Rivet walks and drives in straight lines on the spike's yard map (no city)",
+    "heat: the hit-and-run is the bot setting wanted 4 once (no police feature)",
+    "souls: the Hauler swap is the bot setting the stub's soul (no soul feature)"
+  ],
+  "ticks": 2388,
+  "timeline": [
+    "0 -> offered",
+    "220 -> active",
+    "220 beat 0 the-bay (go_to)",
+    "1083 beat the-bay done",
+    "1083 beat 1 the-sedan (steal)",
+    "1611 beat the-sedan done",
+    "1611 beat 2 the-gate (deliver)",
+    "2054 heat clamp 4 -> 2",
+    "2386 beat the-gate done",
+    "2386 -> succeeded",
+    "2386 reward: cash +500, unlocks [\"giver:the-valet\"]"
+  ],
+  "unlocks": [
+    "giver:the-valet"
+  ],
+  "world": "tests/support/stub_quest_world.gd (stub; the city is integrated later)"
+}

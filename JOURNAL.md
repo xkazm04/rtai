@@ -438,3 +438,35 @@ NEXT:
   `explosion`. Best untested guess: a held `siren` light (5 m, life 0) placed at Rivet before
   the stage police cars move off. Next step: log LightLayer.add(kind) calls for ticks 0-4 in a
   headless run of quest1.tscn.
+- GATES 16:35 (evidence/run.mjs --no-bench) at 3db4792: unit flagged FAIL only because I
+  appended to JOURNAL.md during the run (359/359 passed; my error), scenarios 9/10 with
+  scenario_city_chase over its wall-clock nav budget by 2 us (max 2002 us > 2 ms, one tick,
+  CONTENDED; the iteration-2 flake; it passed in my 15:41 and 16:13 runs). RE-RUN 16:38 at 162fbfa
+  with the tree untouched: ALL PASS (lint 13/13 over 369 files, unit 359, scenarios 10/10,
+  parity exact + mutation caught, selftest incl. look goldens 11/11 worst 0.00, block
+  goldens 5/5, world lock). Copied to evidence/slice-play/iter47-162fbfa/.
+- 16:38 exe re-exported at 162fbfa (the 16:15 export still had the cover in it):
+  `RTAI.exe --headless -- --replay=<gate's input log>` -> identical, rc 0. Windowed boot
+  smoke SKIPPED (bench.lock held by d5-cast).
+
+## End of iteration 47 (state at the freeze)
+- Exe `build/export/windows/RTAI.exe` (git-ignored) at 162fbfa: title -> quest 1 on the
+  generated city -> paid, keyboard+mouse or pad; pause/settings (volume, reduced motion,
+  rebinding); beat checkpoints + Continue; Retry. Rivet at d5-cast's base form; frame 1
+  after Start shows the street. A light pool on Rivet for the first ticks is UNRESOLVED. `RTAI.exe --headless -- --replay=<gate's input log>` -> identical.
+- A human has still NOT played it end to end (the scenario drives simulated InputEvents).
+
+NEXT:
+1. The owner's 18:00 run of the exe: the street meet, Mertz's vent window, parked cars in the
+   way, Continue mid-street (frame 1 = street now), Rivet's new size among the guards.
+   Also: the light pool on Rivet in the first ticks (log LightLayer.add kinds, ticks 0-4).
+2. Merge: d-cast's rivet_plan.gd (FORM_BASE) is what quest 1's sprite was captured from; merge
+   d-cast with/before d-slice so the rig and the sprite agree. MERGE NOTE for autosave
+   (iteration 3) stands: Continue/Retry/checkpoint call sites in quest1_game.gd.
+3. After the merge: StagePilot's car press -> VehicleService (it already reads bit 0 `car`
+   from TickInput); the free-roam World's on-foot Rivet through TopDownMover + cells (vehicles'
+   REQUEST 5), re-blessing the 60 s replay golden deliberately.
+4. Places as rooms (Toner Room, Dock 9 are a street with a stencil): a plaza/authored lot.
+5. The guard/cast draw factors (1.7x / 1.5x from the placeholder era) now make the humans
+   larger than true scale next to a true-scale Rivet; re-capture them from rigs at 1x when
+   d5-cast's human rigs are final.
