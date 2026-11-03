@@ -110,3 +110,13 @@ NEXT (iteration 2, in order):
   entries, ladder.png 1280 x 5512. Rejected frames today: 20 of 54 (all for the input race, none
   for camera breaks: every capture straight down).
 - 11:14 bench lock taken (vehicles), `node tools/evidence/run.mjs` running (full, with bench).
+- 11:17 `node tools/evidence/run.mjs` at dc918c6: lint PASS 13/13, unit PASS 345, scenarios PASS 10,
+  parity PASS (exact, 1200 steps, mutation caught at 629), selftest PASS (look goldens 11/11 worst
+  0.00, world lock 0.00 %). bench FAIL at export: `build/export/windows-bench/` did not exist in this
+  worktree (environment). FRICTION: created the folder.
+- 11:19 bench re-run SHORT FORM (`--secs=30 --runs=1`, exported release, windowed), CONTENDED, under
+  the lock: PASS, p99 6.82 ms, 1 % low 83 fps, worst frame 50.6 ms, hitches >25 ms 72 (>50 ms 1),
+  rigs p99 0.83 ms. Not a section-20 verdict (1 run, 30 s, shared GPU); it covers my native
+  fill_render / strike changes only (the bench World has no VehicleService). Copied to
+  evidence/vehicles/bench-short-contended.json. Lock released 11:19.
+- NEXT (unchanged order above); add: run the full-length bench (3 x 60 s) once the machine is quiet.
