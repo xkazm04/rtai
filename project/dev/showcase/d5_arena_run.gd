@@ -106,6 +106,7 @@ func _yard() -> void:
 
 
 func _tier(tier: String) -> void:
+	D5RigShadow.on_tier(_world, _rigs, PX, _rigs.zoom * PX, tier)  # up close: hatched rig shadows
 	D5HeroHaloInk.dev_switches(self, _look, _rigs.zoom * PX)  # D5_PRINT=thin, D5_HALO=ink (proposals)
 	for n: Node2D in _feet:
 		n.visible = tier == "d5"

@@ -232,6 +232,7 @@ func _pose(t: int) -> void:
 
 
 func _tier(tier: String) -> void:
+	D5RigShadow.on_tier(_world, _rigs, PX, _rigs.zoom * PX, tier)  # up close: hatched rig shadows
 	var sm: ShaderMaterial = _soul_mat as ShaderMaterial
 	if sm != null and soul_mode == "d5":  # the soul print rides the D5 tier fade (56 -> 64 px/m)
 		sm.set_shader_parameter("amount", clampf((_rigs.zoom * PX - 56.0) / 8.0, 0.0, 1.0))
