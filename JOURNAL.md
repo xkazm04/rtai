@@ -1185,3 +1185,19 @@ NEXT (iteration 19): 1. Owner picks (carried). 2. Crowd shadows: first identify 
   dump above (suspects a/b/c), then fix at the cause and re-apply look_noir_crowd_shadow (01409e4). Items 3-5
   of the iteration-18 07:10 list stand (junction prop/shadow mask channel, per-light directions,
   showcase_fight.gd 227 lines -> setup helper).
+
+## Iteration 20 (07:20-07:30, BUILD, 10 min window before freeze)
+- (07:24) Read-only check of suspect (a), the blank atlas cell. The crowd atlas only exists at runtime:
+  `features/characters/crowd_atlas.gd` holds `texture` from CrowdBaker on the GPU, and no atlas PNG exists in
+  build/evidence/frames or the masters. So the per-cell alpha cannot be checked offline. The layout is fixed:
+  25 cells per look (idle 1, walk 8, flee 8, hit 2, death 4, shoot 2), 128 px cells baked at 48 px/m. The
+  cheapest test next time is a dev-only dump: after CrowdBaker bakes, `texture.get_image().save_png()` into
+  build/evidence/, then count the opaque pixels per cell with Python. Any cell near zero confirms (a). This
+  adds no code to a release path (dev/ only). Not done: it would not fit in the window with a GPU run.
+- (07:26) Close (iteration 20). Code commits: none (journal only). Gates: not re-run; the project/ tree is
+  unchanged since 641d2b1 (PASS there stands). Images 0 generated, 0 rejected; Leonardo not probed;
+  provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 20): 1. Owner picks (carried). 2. Crowd shadows: dump the baked atlas (dev script, above) and
+  check the per-cell alpha for suspect (a). Then do the per-person dump for (b)/(c) (iteration 19). Fix at the
+  cause, re-apply look_noir_crowd_shadow (01409e4) and re-shoot noir_frames street 48. Items 3-5 of the
+  iteration-18 07:10 list stand.
