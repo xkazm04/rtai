@@ -1327,3 +1327,4 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
 NEXT (morning): iteration 15's list stands minus item 4 (done). In order: 1 Director merge + one golden
 re-bless after it; 2 the owner calls; 3 hard-fail on unknown args (owner call); 5 idle bench, rig p99
 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:17: tree clean, no Godot of mine running (the 2 Godot processes in tasklist, PIDs 32704 / 44860, are not mine; left alone), no scratch. Remaining NEXT items need the merge, owner calls or native work - none fits before the 07:30 freeze.
