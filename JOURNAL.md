@@ -371,8 +371,9 @@ NEXT (iteration 6 close, in order):
    (b) value roles: cops = ink among paper peds (default) vs ink peds + paper cops (`noir_frames --noir-parts
        --verm=1`, evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png).
 2. Photosensitivity: (done 01:53) the muzzle light is capped at one lit frame per 0.33 s (LIT_GAP 20 ticks,
-   unit-tested). Still to do: the kill's silhouette flash (2 white ticks per kill) has no cap in a mass
-   fight; have an accessibility toggle (flash off) reviewed before anything ships.
+   unit-tested) and (done 01:54) the kill beat at one per second (ImpactFrame.BEAT_GAP 60; kills inside
+   the gap keep their blood, no flash, no hit-stop). Still to do: an accessibility toggle (flashes off),
+   reviewed against a real guideline, before anything ships. blood_clip's kills may now skip a beat.
 3. Rivet's noir limbs read as paper (the redraw is mostly lit white, and at 32 px/m the sticker LOD ignores
    the art for limbs and core). If the owner wants a darker Rivet: a limbs round with more ink mass, or a
    noir limb_wash in print_part.
@@ -386,3 +387,5 @@ NEXT (iteration 6 close, in order):
   (13), 181 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS (the run
   before it flagged unit-tests only because I edited JOURNAL.md during it). Gate JSONs copied to evidence/.
   Then the photosensitivity guard (LIT_GAP 20 ticks) + its test: 182 unit pass, showcase pixel-identical.
+- (01:54) Photosensitivity guard on the kill beat too (BEAT_GAP 60 ticks) + test: 183 unit pass; the
+  showcase kill frames are pixel-identical (its kills are 124 ticks apart).
