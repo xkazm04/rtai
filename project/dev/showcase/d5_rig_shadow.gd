@@ -13,9 +13,13 @@ const LENGTH_M: float = 0.45
 const SKIP: Array[StringName] = [&"d5", &"halo_ink"]
 const NAME: StringName = &"rig_shadow"
 
+## script time spent in _sync since the last reset (the cost scene reads it)
+static var sync_usec: int = 0
+
 var source: Node = null
 var px: float = 32.0
 var _pool: Array[Sprite2D] = []
+var _parts: Array[Sprite2D] = []  # cached on each tier switch (the tree walk cost ~1.7 ms a frame)
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
 
@@ -44,19 +48,23 @@ func set_view(ppm: float, tier: String) -> void:
 	var on: bool = OS.get_environment("D5_RIG_SHADOW") != "0" and tier == "d5"
 	var a: float = clampf((ppm - 56.0) / 8.0, 0.0, 1.0)
 	visible = on and a > 0.0
+	_parts.clear()
 	_mat.set_shader_parameter("amount", a)
 	_mat.set_shader_parameter("zoom", ppm / 32.0)
 
 
 func _process(_delta: float) -> void:
 	if visible and source != null:
+		var t0: int = Time.get_ticks_usec()
 		_sync()
+		sync_usec += Time.get_ticks_usec() - t0
 
 
 func _sync() -> void:
-	var parts: Array[Sprite2D] = []
-	var skip: Array[Sprite2D] = []
-	_collect(source, parts, skip)
+	if _parts.is_empty():
+		var skip: Dictionary[Sprite2D, bool] = {}
+		_collect(source, _parts, skip)
+	var parts: Array[Sprite2D] = _parts
 	while _pool.size() < parts.size():
 		var s: Sprite2D = Sprite2D.new()
 		add_child(s)
@@ -64,7 +72,7 @@ func _sync() -> void:
 	var off: Vector2 = Vector2.ONE * LENGTH_M * px * 0.7071
 	for i: int in _pool.size():
 		var s: Sprite2D = _pool[i]
-		s.visible = i < parts.size()
+		s.visible = i < parts.size() and parts[i].is_visible_in_tree()
 		if s.visible:
 			var p: Sprite2D = parts[i]
 			s.texture = p.texture
@@ -78,13 +86,14 @@ func _sync() -> void:
 			s.global_transform = Transform2D(g.x, g.y, g.origin + off)
 
 
-func _collect(n: Node, out: Array[Sprite2D], skip: Array[Sprite2D]) -> void:
+func _collect(n: Node, out: Array[Sprite2D], skip: Dictionary[Sprite2D, bool]) -> void:
 	for c: Node in n.get_children():
 		var rig: CutRig = c as CutRig
 		if rig != null:
-			skip.append_array(rig.halos)
+			for h: Sprite2D in rig.halos:
+				skip[h] = true
 		var s: Sprite2D = c as Sprite2D
-		if s != null and s.texture != null and s.is_visible_in_tree():
+		if s != null and s.texture != null:
 			if not skip.has(s) and not SKIP.has(s.name):
 				out.append(s)
 		_collect(c, out, skip)

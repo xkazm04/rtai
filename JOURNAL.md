@@ -1127,3 +1127,13 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   evidence/item46_rig_shadows.png; ladder row. Proposal for the characters lane.
 - 04:40 showcase frames refreshed: evidence/hero-d4d5-* and hero-d4-* from h139rs, arena-d4d5-64/128 from a22rs (rig shadows); night_iter8_summary.png rebuilt from h139rs / h140all / a23all (package + fringe + rig shadows).
 - 04:42 GATES (iteration 8): evidence tool (--no-parity --no-bench) ALL PASS at b9468c7 (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 81 untracked evidence PNGs moved aside and restored. Parity/bench not run (no native build in this worktree). Gap list after iteration 8 written (evidence/README.md).
+- 04:44 MEASURED (cost of the rig shadows; d5_cost_run.gd gained a "d5s" tier = d5 + D5RigShadow, and the shadow's
+  script time): 16 full rigs at 64 px/m, RTX 4090, 240 frames. First version: script sync 1.71 ms/frame (a tree walk
+  every frame) -> FIXED (part list cached per tier switch, halos skipped through a Dictionary, visibility checked per
+  frame): 0.27 ms/frame; frames unchanged (h141rs = h139rs, a24rs = a22rs, 0 px at 32-128). Render cost, two
+  runs after the fix (cost8b / cost8c / cost8d): d5 GPU median 0.338-0.339 -> d5s 0.409-0.518 (+0.07 to +0.18), p95
+  0.34 -> 0.97-1.16 (spiky: the CanvasGroup's extra buffer pass, suspected, not proven), render CPU 0.25-0.26 ->
+  0.33-0.34, script 0.27-0.28 ms. GPU baselines move between runs (d4 0.084 in cost8 / cost8d vs 0.208 in cost8b /
+  cost8c: clock states), so only same-run deltas are quoted. evidence/d5-cost.json = cost8d (now with d5s; the
+  shoot() split into _measure() for the 40-line limit, caught by the pre-commit lint). For the characters lane: build the shadow per rig in rig_build (no per-frame walk) and
+  check the p95 spike with one CanvasGroup per rig layer vs per rig.

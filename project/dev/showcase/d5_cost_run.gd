@@ -2,8 +2,9 @@ class_name D5CostRun
 extends D5ShowcaseRun
 ## d5-close: GPU cost of the D5 tier. 16 full rigs (Rivet, 7 cops, 8 peds: CharacterRigs.MAX_FULL)
 ## on the showcase ground at 64 px/m, walking; each tier ("d4", "d5p" = + the D5 part overlays,
-## "d5" = + the look_d5 world layer) renders FRAMES frames with vsync off and the viewport's
-## measured GPU and CPU render time is recorded. Writes <out>/d5-cost.json. Windowed (GPU).
+## "d5" = + the look_d5 world layer, "d5s" = + the hatched rig shadows, D5RigShadow, iteration 8)
+## renders FRAMES frames with vsync off and the viewport's measured GPU and CPU render time is
+## recorded (+ the rig shadow's per-frame script time). Writes <out>/d5-cost.json. Windowed (GPU).
 
 const FRAMES: int = 240
 const WARM: int = 30
@@ -46,21 +47,14 @@ func shoot() -> int:
 		"ppm": roundi(COST_ZOOM * PX),
 		"tiers": {},
 	}
-	for tier: String in TIERS:
+	var tiers: Array[String] = TIERS.duplicate()
+	tiers.append("d5s")
+	for tier: String in tiers:
 		RigDetail.enabled = tier != "d4"
-		overlay.set_shader_parameter("amount", amount_at(COST_ZOOM) if tier == "d5" else 0.0)
-		var gpu: PackedFloat32Array = PackedFloat32Array()
-		var cpu: PackedFloat32Array = PackedFloat32Array()
-		for k: int in FRAMES + WARM:
-			_pose(k)
-			_rigs.step_ticks(1)
-			await RenderingServer.frame_post_draw
-			if k >= WARM:
-				@warning_ignore("return_value_discarded")
-				gpu.append(RenderingServer.viewport_get_measured_render_time_gpu(rid))
-				@warning_ignore("return_value_discarded")
-				cpu.append(RenderingServer.viewport_get_measured_render_time_cpu(rid))
-		report["tiers"][tier] = {"gpu_ms": _stats(gpu), "cpu_ms": _stats(cpu)}
+		var world_on: bool = tier == "d5" or tier == "d5s"
+		overlay.set_shader_parameter("amount", amount_at(COST_ZOOM) if world_on else 0.0)
+		D5RigShadow.on_tier(_world, _rigs, PX, COST_ZOOM * PX, "d5" if tier == "d5s" else "off")
+		report["tiers"][tier] = await _measure(rid)
 		var img: Image = get_viewport().get_texture().get_image()
 		ok = img.save_png(out_dir.path_join("cost-%s.png" % tier)) == OK and ok
 	RigDetail.enabled = true
@@ -72,6 +66,28 @@ func shoot() -> int:
 	fh.close()
 	printerr(JSON.stringify(report))
 	return 0 if ok else 1
+
+
+## FRAMES measured frames (after WARM) of the current tier: GPU / CPU render time + the rig
+## shadow's script time per frame.
+func _measure(rid: RID) -> Dictionary:
+	D5RigShadow.sync_usec = 0
+	var gpu: PackedFloat32Array = PackedFloat32Array()
+	var cpu: PackedFloat32Array = PackedFloat32Array()
+	for k: int in FRAMES + WARM:
+		_pose(k)
+		_rigs.step_ticks(1)
+		await RenderingServer.frame_post_draw
+		if k >= WARM:
+			@warning_ignore("return_value_discarded")
+			gpu.append(RenderingServer.viewport_get_measured_render_time_gpu(rid))
+			@warning_ignore("return_value_discarded")
+			cpu.append(RenderingServer.viewport_get_measured_render_time_cpu(rid))
+	return {
+		"gpu_ms": _stats(gpu),
+		"cpu_ms": _stats(cpu),
+		"shadow_sync_ms": D5RigShadow.sync_usec / 1000.0 / (FRAMES + WARM),
+	}
 
 
 static func _stats(v: PackedFloat32Array) -> Dictionary:
