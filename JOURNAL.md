@@ -1498,3 +1498,16 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   tree: unit **222/222**; planted fault (jacket look `"_dork"`) -> 1 failing, caught; restored. Patch regenerated
   (`evidence/iter16/rig_sleeves_and_looks.patch`, 3 files; `git apply --check` clean on n-d4 = main for these files).
   Bench not re-run: another lane's Godot is running (05:25), the box is not idle.
+- 05:29 MILESTONE (brief item 4 again) pedestrian arm outline. The ped arm parts' painted ink outline is ~7 part px,
+  under 1 screen px at 32 px/m, so cream sleeves on cream paving printed as faint blobs (a head and leg bits).
+  `masters:tools/arm_outline.py`: ink within 14 px of the alpha edge, inside it (footprint, alpha, pivots
+  unchanged) on `upperarm`, `forearm`, `upperarm_endon`, `forearm_endon`; the 8 sleeve variants regenerated from
+  them (the end-on sleeve crescent is now under the outline: all three end-on forearms print alike). In-engine,
+  same city_frame scenes: n-d4 alone `before_i16|after_i16ol/city-0-{32,48,64}ppm.png` (5 % px differ at 32, crop
+  `work/i16/outline_nd4_32.png`) and the morning tree `after_i16sl2|probe_i16ol/` (`outline_ab.png`,
+  `outline_zoom32.png`, `outline_64.png`): on paving the cream-sleeved people now read as inked figures; on asphalt
+  the cream rim stays and the arms gain a line; at 64 bolder comic ink. Helps every ped on n-d4 now (no patch
+  needed). Provenance lines updated in place (12, new sha + edit appended), characters art README, ladder2 rows
+  "i16 arm outline". Originals `masters:backup_arms16/`. Commit 97558d7. 0 Codex.
+- 05:30 GATES at 97558d7: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+  selftest 72 art textures, 0 placeholders (`evidence/iter16/gates-97558d7.txt`).
