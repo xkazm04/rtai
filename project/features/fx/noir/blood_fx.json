@@ -79,6 +79,14 @@
     ],
     "ink_px": 1.4,
     "kill_beat": "off",
+    "muzzle_pop": {
+      "doc": "lane d5-combat, features/fx/muzzle_pop.gd: a round fired lights the scene for one sim tick: a soft ADD pool of paper light radius_m wide at strength, at most one per lit_gap_ticks and only while the shared FlashBudget has a light to spend (none under reduced motion). on = false drops the node. near_m: only a round that close to the camera focus pops (the nearest of a tick wins).",
+      "lit_gap_ticks": 20,
+      "near_m": 12.0,
+      "on": true,
+      "radius_m": 5.0,
+      "strength": 0.32
+    },
     "replaces_fx": [
       "ink_splat"
     ],

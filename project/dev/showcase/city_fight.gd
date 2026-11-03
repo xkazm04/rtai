@@ -7,6 +7,9 @@ extends Node
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/city_fight.tscn --
 ##   --blood=<mode> --out=<dir> [--at=<tick>,...] [--zooms=1,1.5,2] [--focus=<i>] [--tag=<name>]
 ##   [--no-stains]  hides the blood on the dead (CorpseStains): the before frame of that change.
+##   [--pop-shots=<k>,...]  at the k-th muzzle pop: freezes and shoots every --zooms zoom with
+##   the pop on, then off (pop-on/pop-off-<k>-<ppm>.png): the same moment, A/B.
+##   [--no-pop]  no muzzle pop (MuzzlePop): the before frame of that change.
 ##   [--hit-rivet=<ticks>]  Rivet takes a Robo-tazer hit (Events.player_hit) every <ticks>, wired
 ##   as boot/world.gd wires the game (fx_triggers.listen): sparks, crackle, his oil.
 ##   [--rivet-kills=<m>]  DEV STAND-IN: a riot death within <m> metres of Rivet is credited to him
@@ -32,6 +35,8 @@ var _kill_m: float = 0.0
 var _beat_frames: int = 0
 var _clip: Vector2i = Vector2i.ZERO
 var _no_stains: bool = false
+var _no_pop: bool = false
+var _pop_shots: Array[int] = []
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -59,10 +64,12 @@ func _ready() -> void:
 	_view.setup(_city)
 	_chars = CityCharacters.new(_city, _view, _world.context())
 	_chars.blood.stains.visible = not _no_stains
+	if _no_pop and _chars.blood.pop != null:
+		_chars.blood.pop.lit_gap = 1 << 30
 	await _chars.bake()
 	await _view.prewarm()
 	_wire()
-	if _clip.y > 0 or _beat_frames > 0:
+	if _clip.y > 0 or _beat_frames > 0 or not _pop_shots.is_empty():
 		var ok_dev: bool = await _shoot_dev()
 		printerr(_summary())
 		get_tree().quit(0 if ok_dev else 1)
@@ -74,7 +81,15 @@ func _ready() -> void:
 			_maybe_hit()
 		ok = await _shoot(tick) and ok
 	printerr(_summary())
+	_print_pops()
 	get_tree().quit(0 if ok else 1)
+
+
+func _print_pops() -> void:
+	if _chars.blood.pop != null:
+		var pp: MuzzlePop = _chars.blood.pop
+		printerr("city_fight: pops=%d held=%d at %s" % [pp.pops, pp.held, pp.pop_ticks])
+		printerr("city_fight: pop px %s focus %s" % [pp.pop_at, _view.fx_triggers.focus_px])
 
 
 func _shoot(tick: int) -> bool:
@@ -90,6 +105,33 @@ func _shoot(tick: int) -> bool:
 		var file: String = "fight%s-%s-t%d-%dppm.png" % [_tag, _chars.blood.blood.mode, tick, ppm]
 		ok = img != null and img.save_png(_out.path_join(file)) == OK and ok
 	Engine.time_scale = 1.0
+	return ok
+
+
+## At each k-th muzzle pop: the frozen moment at every zoom, pop on then off (one run, A/B).
+func _shoot_pops() -> bool:
+	var pop: MuzzlePop = _chars.blood.pop
+	var ok: bool = DirAccess.make_dir_recursive_absolute(_out) == OK and pop != null
+	for k: int in _pop_shots:
+		while ok and pop.pops < k:
+			await get_tree().process_frame
+		Engine.time_scale = 0.0
+		for f: int in 3:
+			await get_tree().process_frame  # the clock settles (it may still step once)
+		for zoom: float in _zooms:
+			_view.zoom = zoom
+			for on: bool in [true, false]:
+				pop.visible = on
+				for f: int in 3:
+					await get_tree().process_frame
+				await RenderingServer.frame_post_draw
+				var img: Image = get_viewport().get_texture().get_image()
+				var tag: String = "on" if on else "off"
+				var file: String = (
+					"pop-%s-%d-%dppm.png" % [tag, k, roundi(zoom * SimConst.PX_PER_M)]
+				)
+				ok = img != null and img.save_png(_out.path_join(file)) == OK and ok
+		Engine.time_scale = 1.0
 	return ok
 
 
@@ -112,6 +154,8 @@ func _on_cue(id: StringName, pos_px: Vector2, _angle: float, _tick: int) -> void
 func _shoot_dev() -> bool:
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(_out)
+	if not _pop_shots.is_empty():
+		return await _shoot_pops()
 	_view.zoom = _zooms[0]
 	if _clip.y > 0:
 		return await _shoot_clip()
@@ -210,6 +254,11 @@ func _parse_args() -> bool:
 			_clip = Vector2i(v[0].to_int(), v[1].to_int() if v.size() > 1 else 600)
 		elif arg.begins_with("--beat-frames="):
 			_beat_frames = arg.substr(14).to_int()
+		elif arg.begins_with("--pop-shots="):
+			for v: String in arg.substr(12).split(","):
+				_pop_shots.append(v.to_int())
+		elif arg == "--no-pop":
+			_no_pop = true
 		elif arg == "--no-stains":
 			_no_stains = true
 		elif arg.begins_with("--tag="):

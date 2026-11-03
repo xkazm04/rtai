@@ -4,13 +4,16 @@ extends Node
 ## puts a CombatBlood on the city view's actors canvas, follows the view's FX cues (the riot's sim
 ## deaths, Rivet's hits), splats the walls the sim calls solid, and steps it on the sim tick with
 ## the view's world lock each frame (after the view placed its camera: it is the view's child).
-## Also the kill beat (features/fx/kill_beat.gd, `-- --kill-beat`): its silhouette frames hide
+## Also the muzzle's one lit frame (MuzzlePop, spending the kill beat's flash budget) and the
+## kill beat (features/fx/kill_beat.gd, `-- --kill-beat`): its silhouette frames hide
 ## the world canvas, its print pass and the light grade, so only the actors and the blood print.
 
 var blood: CombatBlood = CombatBlood.new()
 var beat: KillBeat = null
 ## Blood on the dead (follow()): null until the rig feed is known.
 var stains: CorpseStains = null
+## The muzzle's one lit frame (features/fx/muzzle_pop.gd); null when game.muzzle_pop.on is false.
+var pop: MuzzlePop = null
 var _feed: RigFeed = null
 var _city: CitySystem
 var _view: CityView
@@ -36,6 +39,12 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 			hide.append(c)
 	glue.beat.hide_on_flash(hide)
 	glue.add_child(glue.beat)
+	var pop_row: Dictionary = game.get("muzzle_pop", {})
+	if pop_row.get("on", false):
+		glue.pop = MuzzlePop.new(pop_row)
+		glue.pop.budget = glue.beat.impact.budget
+		glue.pop.attach(view.fx_triggers)
+		view.actor_layer().add_child(glue.pop)
 	return glue
 
 
@@ -53,6 +62,8 @@ func _process(_delta: float) -> void:
 	if _view.clock != null:
 		blood.step(_view.clock.tick(), _view.world_px)
 		beat.step(_view.clock.tick())
+		if pop != null:
+			pop.step(_view.clock.tick())
 		if stains != null:
 			stains.step(_view.clock.tick(), _feed)
 
