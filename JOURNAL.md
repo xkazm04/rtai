@@ -179,3 +179,7 @@ loading frame.
 
 NEXT: Director applies patches 0001..0005 after merging d-save + d-slice. REQUEST 2 above. Loc keys when
 the PO table lands.
+- MILESTONE full gates on d-save at 3eecdca: `node tools/evidence/run.mjs --no-bench` PASS: lint 13/13,
+  unit 375, scenarios 9/9 (incl. replay_60s, autosave_resume), parity exact (planted mutation caught at
+  step 629), selftest look goldens 11/11. Bench not run (no render/sim change; no lock). Log:
+  gtai-masters/day-d5/autosave/ev7.log.
