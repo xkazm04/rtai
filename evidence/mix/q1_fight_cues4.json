@@ -17,6 +17,7 @@
     "shot_assault_rifle": 24,
     "shot_gloria": 30
   },
+  "voice_dropped_ids": [],
   "voice_drops": 0,
   "voice_lines": [
     "guard-who-do-we-call",
