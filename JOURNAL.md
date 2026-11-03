@@ -133,3 +133,12 @@ NEXT:
   beyond 22 m there. Not heard by a human.
 - MILESTONE per-bus player volume: `AudioBuses.set_user_gain(bus, 0..1)` (unit-tested: -6 dB at 0.5, ducking stacks on top, 1.0 restores). The pause card only has a master
   slider (PlayerSettings): REQUEST 5 -> slice-play, optional: music / sfx / voice sliders call `StageAudio.service.buses.set_user_gain(...)`.
+
+NEXT (iteration 2 end):
+1. Open requests to other lanes (nothing of mine blocks on them, but audio is incomplete without): REQUEST 1 slice-play (voice timing: 6 of 23 lines dropped, `line_type_cps` 15 / `line_max_s` 22 or per-line voice length),
+   REQUEST 3 slice-play (one line in boot/quest1_game.gd: `StageAudio.attach(self, session.stage, session.system, Events, Quest1Session.MASTER_SEED)` after `add_child(view)`),
+   REQUEST 2/4 vehicles (crash / tyre screech / horn triggers; `FxTriggers.fire(&"crash", pos_px, 0.0, tick)` or a cue API call; a `radio_next` input action for `CarRadio.next()`), REQUEST 5 optional sliders.
+2. A human must LISTEN: all SFX, the 23 voices, 3 radio loops, the new roar/kill punch/tazer charge/boss stinger. Still numbers + spectrograms only.
+3. After merge with d-vehicles: re-record the demo tour with real vehicle events (pedestrian_struck thud, hijack slam are unit-tested only).
+4. Boss/tazer: tazer_charge is stretched by pitch 0.8 to the 1.5 s wind-up; the boss_stinger has one take; no boss music loop (a /v1/music call ~300 credits would do it).
+5. Bench: never run by this lane (no GPU work); the pool is capped at 24 players / 4 starts per frame, the RiotBed does a 6-key lookup per frame.
