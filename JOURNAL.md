@@ -1447,3 +1447,5 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   1.044 / 1.068, at 96 (rgss 1): 1.131 -> 1.178; baselines reproduced exactly. By eye at 64 the joints and collar
   edges show a few more drawn lines: a modest gain for +4% shimmer and less rig contrast. Not proposed, so
   not kept as an option either. README part row records it. Scratch: i10r0/r5/r1, a10r0/r1, w10r* (deleted below).
+- 06:15 look_d5.params.json gained `ui` (look_d5_ui: sharp 0.5, lod_bias 0) + a _doc line for the HUD lane;
+  test_look_d5_params checks the ui group against the shader's uniforms. Unit 149/0.
