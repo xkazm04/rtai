@@ -67,3 +67,30 @@ NEXT (supersedes the NEXT above where they differ):
    lerp by morph_k, a teal tint; Gearbox on a VehicleService car (`soul_hijack_traffic`).
 3. Clips at 32 and 48 px/m (--fixed-fps 60): Hauler vs a wave, Gearbox into robots; numbers per activation.
 4. Build the tank look option B (short thick arms from existing parts) as a form override so A/B/C is one flag.
+
+## 2026-11-03 iteration 2 (21:25-22:10), BUILD
+
+- 21:25 read JOURNAL, git log, answers.json (nothing for this lane yet at start).
+- MILESTONE 88ec340/faedfab: Hauler on the REAL city sim. `HaulerCity` (features/souls) drives Rivet's target by
+  the form's heavy movement, keeps `RivetBody.body_class` in sync, and turns a due stomp into a one-step
+  `RivetBody.pulse` (minimal change in features/bodies, default zero: goldens unmoved). scenario_souls_powers adds
+  `stomp_city`: a 6-person ring floored, 2 people 6 m out untouched; planted no-pulse = 0. Scenario passes.
+- MILESTONE d2ccb17: `dev/ghost-powers/powers_clip.tscn` (bodies_clip's real World + CityView + rigs, one tick per
+  frame): activate at 1 s, drive east through 12 people, coast, arm the stomp at 7 s in a group of 9, shrink at 9 s.
+  Numbers (deterministic, 32 and 48 px/m identical): 10 knockdowns per activation (6 by the stomp), 8.0 s
+  transformed; `--before` (base Rivet, same path and speed): 0 knockdowns.
+- 21:40 ANSWERS: ghost-powers-1 = A, ghost-powers-2 = B, both "default as a placeholder" (owner 21:25: not judgeable
+  without the full hit chain in the final look; re-ask only with real-time clips in that look; depth before breadth).
+  Applied: the Hauler is this lane's ONE finished power for the 00:00 sample; Gearbox waits. Recorded in decisions.md.
+- MILESTONE 3f0d1c4: `HaulerLook` (features/souls): grows/tints Rivet's rig by morph_k; `look=bulked` shortens both
+  arm segments to look_arm_k 0.6 on Rivet's shared plan, restored exactly at morph 0 (3 unit tests pass).
+- MILESTONE 7f4f715: the stomp's hit chain in the clip: wind-up = rig swell (+12 %), no debug telegraph circle;
+  landing = camera.json shake `crash` + hit-stop `boss_hit` (8 rendered frames, sim held); an inked shock ring
+  (wobbled polyline, ink + thin soul-teal edge, grit) instead of the clean teal circle. Clips: clips/hauler-feel/.
+- Registry applied: realtime-combat-semantics (hit-stop/shake on the heavy hit; wind-up stays readable: morph 0.4 s,
+  stomp 0.3 s). Tuning note (my call per owner 21:25): 0.3 s stomp wind-up is below the 0.4 s band floor; acceptable
+  for the player's own move (enemies read the swell), revisit when enemies must dodge it.
+- Owner-direction gaps for the Hauler hit chain still open: no sound cue fired (bark ids exist, no audio call), no
+  robot victims (sparks/oil) in the city clip, no attacker anim for the stomp beyond the swell (a raised-claws
+  slam pose would sell it), the morph is a scale lerp (no ink burst).
+- FRICTION: Python on Windows writes CRLF: always open(..., newline='\n') when editing repo files.
