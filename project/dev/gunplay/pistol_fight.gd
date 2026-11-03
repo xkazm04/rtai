@@ -6,7 +6,7 @@ extends Node
 ## kill hit-stop held here, the impact star (the victim flash) and the knockback slide. The
 ## camera is a CameraRig on foot (32 px/m). Fast-forwards to the first fight, then 1 tick a frame:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
-##     -- --out=<dir>
+##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
 
 const SKIP_PER_FRAME: int = 600
 const LIVE_FRAMES: int = 1200
@@ -26,12 +26,16 @@ var _holds: int = 0
 var _shots_at_live: int = 0
 ## Live frames on which a round landed (the first HIT_SHOTS also save a still: the impact star).
 var _hit_frames: PackedInt32Array = PackedInt32Array()
+## --armored: Fighter hp for each contractor (table armored hp / human hp); 0 = quest 1's own.
+var _armored_hp: float = 0.0
 
 
 func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--out="):
 			_out = arg.substr(6)
+		elif arg == "--armored":
+			_armored_hp = 1.0
 		else:
 			get_tree().quit(2)
 			return
@@ -40,6 +44,8 @@ func _ready() -> void:
 	_play = CollectCallPlay.begin()
 	var arena: CombatArena = _play.stage.arena
 	var table: WeaponTable = WeaponTable.shipped()
+	if _armored_hp > 0.0:
+		_armored_hp = table.target_hp[&"armored"] / table.target_hp[&"human"]
 	var rng: RngRegistry = RngRegistry.new(RNG_SEED)
 	arena.gun = GunHand.make(table, &"pistol", rng.stream(&"gunplay"))
 	arena.gun.tap = true
@@ -82,6 +88,7 @@ func _tick() -> void:
 	var hits_before: int = _link.hits
 	var shots_before: int = _play.stage.arena.gun.shots_fired
 	_play.tick_once()
+	_armor()
 	_link.step()
 	var shots_now: int = _play.stage.arena.gun.shots_fired
 	if _live >= 0 and shots_now > shots_before and shots_now - _shots_at_live <= HIT_SHOTS:
@@ -95,6 +102,14 @@ func _tick() -> void:
 		_hold = _link.hold
 		_holds += 1
 		_link.hold = 0
+
+
+## --armored: a contractor not yet armoured takes the armoured hp (before any round lands).
+func _armor() -> void:
+	for h: Fighter in _play.stage.arena.hostiles:
+		if _armored_hp > 0.0 and h.max_hp < _armored_hp:
+			h.max_hp = _armored_hp
+			h.hp = _armored_hp
 
 
 ## Between Rivet and the nearest live hostile, so the fight is in frame.
