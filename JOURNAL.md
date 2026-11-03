@@ -56,6 +56,15 @@ perception latency beyond the alert reaction time.
   alone. This lane touches no save code. REQUEST 2 -> Director/int: check test_save_slots on
   main on a quiet machine; if it is the shared dir, give tests a per-worktree scratch dir.
 
+- REQUEST 3 -> gunplay: the enemy gun tell is the windup (telegraph_s per archetype, 0.5-0.9 s)
+  with the aim locking aim_lock_s 0.2 before the shot; EnemyPit emits
+  Events.attack_telegraphed(weapon id) at windup start and Events.player_hit(weapon id) on a
+  hit. Each archetype carries hit_fx (blood | sparks) for your hit-feel module: please expose
+  one call (position, direction, hit_fx, killed) that EnemyPit.hurt() can make, and say if your
+  tell art (aim line or muzzle glint) wants the locked/tracking phase as a separate signal.
+- Clip 3 (stagger build): gtai-masters/eve/enemy-ai/pit_mixed_squad_fight_stagger.mp4, 5 kills
+  in 20 s, 24 shots, 0 hits on the perfect dummy.
+
 NEXT:
 1. Re-read answers.json (enemy-ai-1).
 2. PitDummy reaction delay (react N ticks after the tell starts, not at the lock), then
