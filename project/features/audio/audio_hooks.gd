@@ -43,6 +43,12 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	bus.vehicle_entered.connect(func(_id: int) -> void: _set_driving(true))
 	@warning_ignore("return_value_discarded")
 	bus.vehicle_exited.connect(func(_id: int) -> void: _set_driving(false))
+	@warning_ignore("return_value_discarded")
+	bus.cash_changed.connect(func(_total: int, delta: int) -> void: _ui_if(delta > 0, &"cash_ding"))
+	@warning_ignore("return_value_discarded")
+	bus.contract_started.connect(func(_id: StringName) -> void: _ui_if(true, &"objective_ping"))
+	@warning_ignore("return_value_discarded")
+	bus.contract_completed.connect(func(_id: StringName) -> void: _ui_if(true, &"ui_confirm"))
 	_connect_vehicles(bus)
 
 
@@ -54,6 +60,12 @@ func _connect_vehicles(bus: EventBus) -> void:
 	if bus.has_signal(&"vehicle_hijacked"):
 		@warning_ignore("return_value_discarded")
 		bus.connect(&"vehicle_hijacked", func(_kind: StringName) -> void: _cue(&"hit_metal"))
+
+
+func _ui_if(when: bool, id: StringName) -> void:
+	if when:
+		@warning_ignore("return_value_discarded")
+		service.cue(id, Vector2.ZERO, _now())
 
 
 func _on_struck(_victim: int, killed: bool) -> void:

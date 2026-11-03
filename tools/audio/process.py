@@ -6,7 +6,7 @@ import json, pathlib, subprocess, sys
 import numpy as np
 
 SR = 44100
-IMPULSIVE = ("pistol_shot", "rifle_shot", "nailgun_shot", "impact_")
+IMPULSIVE = ("pistol_shot", "rifle_shot", "nailgun_shot", "impact_", "kill_punch")
 GUNS = ("pistol_shot", "rifle_shot", "nailgun_shot")
 FF = "ffmpeg"
 

@@ -109,3 +109,21 @@ func test_a_run_over_is_a_thud_and_a_kill_adds_the_death() -> void:
 	bus.emit_signal("pedestrian_struck", 6, true)
 	death = _service.played.get(&"death", 0)
 	assert_eq(death, 1)
+
+
+func test_cash_up_dings_and_cash_down_is_silent() -> void:
+	_bus.cash_changed.emit(100, -20)
+	assert_eq(_played(&"cash_ding"), 0)
+	_bus.cash_changed.emit(300, 200)
+	assert_eq(_played(&"cash_ding"), 1)
+
+
+func test_a_contract_pings_when_it_starts_and_confirms_when_done() -> void:
+	_bus.contract_started.emit(&"collect-call")
+	_bus.contract_completed.emit(&"collect-call")
+	assert_eq(_played(&"objective_ping"), 1)
+	assert_eq(_played(&"ui_confirm"), 1)
+
+
+func _played(id: StringName) -> int:
+	return _service.played.get(id, 0)

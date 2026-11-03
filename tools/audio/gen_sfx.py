@@ -22,6 +22,14 @@ SPECS = [
   ("crowd_panic", "ambient", 4.0, False, 2, "crowd of people screaming and panicking in a city street, running footsteps, distant, no music, no intelligible words"),
   ("footsteps", "sfx", 2.0, False, 2, "footsteps of one person walking steadily on concrete pavement, 4 steps, dry, no music"),
   ("servo_whine", "sfx", 1.5, False, 2, "small robot servo motor whine, quick mechanical whirring and a soft clank, no music"),
+  ("kill_punch", "sfx", 0.9, False, 2, "short heavy cinematic punch impact with a deep sub thump and a sharp snap, one hit, comic-book knockout, dry, no music, no voices"),
+  ("kill_punch", "sfx", 0.9, False, 2, "heavy punch impact, deep thump and a sharp snap, one hit, not too loud, dry, no music, no voices", 3),
+  ("cash_ding", "sfx", 0.8, False, 2, "bright coin pickup ding, two quick metallic chimes, arcade reward, clean, no music"),
+  ("ui_click", "sfx", 0.5, False, 2, "soft mechanical UI button click, short dry tick, no music"),
+  ("ui_confirm", "sfx", 0.6, False, 2, "short positive UI confirm blip, two rising electronic tones, clean, no music"),
+  ("ui_back", "sfx", 0.5, False, 2, "short low UI cancel blip, one falling electronic tone, clean, no music"),
+  ("ui_back", "sfx", 0.5, False, 1, "short low UI cancel blip, one falling electronic tone, quiet, clean, no music", 3),
+  ("objective_ping", "sfx", 1.0, False, 2, "soft notification ping, single bell-like chime with a short tail, mission objective update, no music"),
   ("city_ambience", "ambient", 8.0, True, 1, "night city street ambience, distant traffic, faint wind, occasional far-away siren, seamless loop, no music, no voices"),
 ]
 
