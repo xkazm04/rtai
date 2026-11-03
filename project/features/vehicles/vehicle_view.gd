@@ -3,8 +3,9 @@ extends Node2D
 ## Draws VehicleService's cars (driven, parked, wrecks) the way the city draws traffic: the same
 ## quad mesh and look material as the crowd's car layer (handed in by the composition root, so the
 ## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked; a wreck draws its d2
-## cell in ink-darkened paint) plus a car-shaped ink shadow. Reads the service each frame and writes
-## nothing back (render only; never sim state). Size and cell rules = CitySimRender cars.
+## cell in ink-darkened paint) plus a car-shaped ink shadow and tyre marks (VehicleSkids). Reads
+## the service each frame and writes nothing back (render only; never sim state). Size and cell
+## rules = CitySimRender cars.
 
 const CAR_L: float = 204.8
 const CAR_W: float = 102.4
@@ -14,6 +15,8 @@ const WRECK_TINT: Color = Color(0.62, 0.6, 0.58, 1.0)
 const CAP: int = 32
 
 var service: VehicleService = null
+## Tyre marks under the cars (a child, drawn below the shadows).
+var skids: VehicleSkids = VehicleSkids.new()
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
@@ -29,6 +32,9 @@ func setup(
 	shadow: MultiMeshInstance2D
 ) -> void:
 	service = svc
+	skids.service = svc
+	skids.z_index = shadow.z_index - 1
+	add_child(skids)
 	_shadow = _layer(shadow, textures[0], shadow.z_index)
 	for k: int in VehicleBody.State.HIJACKED + 1:
 		var tex: Texture2D = (
