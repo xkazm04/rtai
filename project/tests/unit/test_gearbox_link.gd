@@ -45,3 +45,24 @@ func test_link_drops_when_the_power_ends() -> void:
 	assert_true(g.link(2, Vector2.ZERO, 0.0))
 	assert_true(p.interrupt(&"hit"))
 	assert_false(g.linked())
+
+
+func test_turn_is_rate_limited_and_ties_go_to_the_lower_index() -> void:
+	var g: GearboxLink = _link()
+	var cars: PackedVector2Array = [Vector2(10, 1), Vector2(10, -1)]
+	assert_eq(g.pick(Vector2.ZERO, Vector2(10, 0), cars), 0, "tie -> lower index")
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	g.step(Vector2(-30, 0.1))
+	var max_turn: float = deg_to_rad(g.num(&"turn_dps")) * SimClock.TICK_DT
+	assert_almost_eq(absf(g.heading), max_turn, 0.0001, "one tick turns at most turn_dps")
+
+
+func test_slow_contact_strikes_without_a_wreck() -> void:
+	var g: GearboxLink = _link()
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	g.step(Vector2(30, 0))
+	assert_lt(g.speed, g.num(&"crash_mps"))
+	assert_false(g.contact(), "below crash_mps the car survives")
+	assert_eq(g.strikes, 1)
+	assert_eq(g.crashes, 0)
+	assert_true(g.linked())

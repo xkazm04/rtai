@@ -241,3 +241,17 @@ NEXT (iteration 5 / the night run after the 00:00 merge):
   ARE hostiles (ArenaPit spawn_guard), so the Hauler works in the pit today. NEXT 2 refined: either capture the
   Hauler in the pit (`--start=pit`), or a ghost-powers ArenaHook that spawns the pad bots as real guards
   (arena.spawn_guard at the station's points) instead of dummies. answers.json re-read 23:10: nothing new.
+
+## Iteration 5 (23:09-23:30, BUILD, short: freeze 23:30)
+- answers.json re-read 23:10: nothing new for ghost-powers (both asks answered 21:25 "not judgeable; re-ask only
+  with a real-time clip in the final look"). Defaults stay as placeholders.
+- MILESTONE: GearboxLink gets two more unit tests: the turn is rate-limited to turn_dps per tick and soft-lock
+  ties go to the lower index (deterministic); a contact below crash_mps strikes without a wreck and keeps the link.
+  Planted fault (turn clamp doubled in gearbox_link.gd) -> exactly that test fails (568 pass / 1 fail,
+  evidence/ghost-powers/planted-gearbox-turn-iter5.txt); source restored. Gates: unit 569/569, lint 13/13
+  (evidence/ghost-powers/unit-iter5.txt, lint-iter5.txt). Scenarios not re-run (no sim/scene change).
+
+NEXT (the night run after the 00:00 merge): unchanged from iteration 4's NEXT list, items 1-6, with item 2 refined
+(the pad bots are dummies: capture the Hauler in the pit with `--start=pit`, or a ghost-powers ArenaHook spawning
+the pad bots via arena.spawn_guard). Highest value first: the tank on Rivet's real rig + cast-rig victims with
+reactions, then re-ask ghost-powers-1/2 with that clip; then the Gearbox ArenaHook on gearbox_pad.
