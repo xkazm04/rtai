@@ -21,6 +21,8 @@ var light_us: int = 0
 ## Scripted cars (dev hosts): noses in world metres (x, y) with headings (z, w), lit before the
 ## sim's cars.
 var extra_cars: PackedVector4Array = PackedVector4Array()
+## Long cast shadows in the world canvas (params `shadows`); null until the first light_street().
+var shadows: NoirShadows = null
 var _lamp_r_px: float = 0.0
 var _beam_len_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
@@ -115,4 +117,23 @@ func light_street(city: CitySystem, focus: Vector2, zoom: float) -> void:
 		@warning_ignore("return_value_discarded")
 		beams.resize(NoirHeadlights.MAX_CARS)
 		_mat.set_shader_parameter(&"cars", beams)
+	_cast_shadows(city)
 	light_us = Time.get_ticks_usec() - t0
+
+
+func _cast_shadows(city: CitySystem) -> void:
+	var view: CityView = get_parent() as CityView
+	if view == null or view.textures == null or not params.has("shadows"):
+		return
+	if shadows == null:
+		var table: Dictionary = CityGen.read_json(CitySystem.TEXTURES)
+		shadows = NoirShadows.new(view.get_canvas_item(), view.textures, table, params)
+		@warning_ignore("return_value_discarded")
+		visibility_changed.connect(func() -> void: shadows.set_visible(visible))
+	shadows.update(city.residency)
+
+
+func _exit_tree() -> void:
+	if shadows != null:
+		shadows.dispose()
+		shadows = null
