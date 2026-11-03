@@ -19,6 +19,15 @@ var shoots: bool = true
 var watch_rounds: bool = true
 ## Nails only enemies nearer than this (a player engages at a range, not across the pit).
 var fire_m: float = 22.0
+## A human's reaction: start dodging this many ticks after a tell appears (-1: a perfect reader
+## who moves exactly as the aim locks; about 15 ticks = 0.25 s is a player who watches).
+var react_ticks: int = -1
+## The share of tells it notices at all (1 = every one; a busy player misses some).
+var read_frac: float = 1.0
+## Nail aim error, degrees either side (0 = perfect aim). The spread is a fixed low-discrepancy
+## sequence, not an RNG draw, so the dummy never touches the fight's RNG streams.
+var aim_err_deg: float = 0.0
+var _nails: int = 0
 var _side: float = 1.0
 var _nail_cd: int = 0
 var _home: Vector2 = Vector2.ZERO
@@ -50,8 +59,7 @@ func step(pit: EnemyPit) -> void:
 func _dodge(pit: EnemyPit) -> Vector2:
 	for e: EnemyAgent in pit.agents:
 		var firing: bool = e.state == EnemyAgent.State.FIRE
-		var locked: bool = e.state == EnemyAgent.State.WINDUP
-		if not firing and not (locked and e.timer <= pit.roster.aim_lock_ticks + 4):
+		if not firing and not _reads(e, pit):
 			continue
 		var to: Vector2 = pit.rivet_pos - e.pos
 		if e.melee():
@@ -65,6 +73,17 @@ func _dodge(pit: EnemyPit) -> Vector2:
 		if along > 0.0 and along < s.vel.length() * THREAT_S:
 			return _across(s.vel.normalized(), rel)
 	return Vector2.ZERO
+
+
+## Whether it is dodging `e`'s tell this tick (a perfect reader, or a human-like one).
+func _reads(e: EnemyAgent, pit: EnemyPit) -> bool:
+	if e.state != EnemyAgent.State.WINDUP:
+		return false
+	if react_ticks < 0:
+		return e.timer <= pit.roster.aim_lock_ticks + 4
+	var started: int = e.id * 7919 + pit.tick - e.state_ticks
+	var noticed: bool = fposmod(float(started) * 0.618034, 1.0) < read_frac
+	return noticed and e.state_ticks >= react_ticks
 
 
 ## Sidestep perpendicular to `line`, toward the side Rivet already leans to.
@@ -86,5 +105,7 @@ func _fire_nearest(pit: EnemyPit) -> void:
 			best_d = d
 			best = e
 	if best != null and best_d < fire_m:
-		pit.rivet_fire((best.pos - pit.rivet_pos).normalized())
+		_nails += 1
+		var err: float = (fposmod(float(_nails) * 0.618034, 1.0) * 2.0 - 1.0) * aim_err_deg
+		pit.rivet_fire((best.pos - pit.rivet_pos).normalized().rotated(deg_to_rad(err)))
 		_nail_cd = NAIL_GAP_TICKS

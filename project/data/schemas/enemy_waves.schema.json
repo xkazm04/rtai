@@ -1,0 +1,148 @@
+{
+  "$defs": {
+    "gate": {
+      "items": {
+        "maximum": 20,
+        "minimum": -20,
+        "type": "number"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "wave": {
+      "additionalProperties": false,
+      "properties": {
+        "groups": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "arch": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              },
+              "count": {
+                "maximum": 12,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "gate": {
+                "enum": [
+                  "east",
+                  "north",
+                  "south"
+                ]
+              }
+            },
+            "required": [
+              "arch",
+              "count",
+              "gate"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "groups",
+        "id"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.enemy_waves/1",
+  "additionalProperties": false,
+  "properties": {
+    "breather_s": {
+      "maximum": 30,
+      "minimum": 0,
+      "type": "number"
+    },
+    "curve": {
+      "enum": [
+        "gentle",
+        "standard",
+        "steep"
+      ]
+    },
+    "curves": {
+      "additionalProperties": false,
+      "properties": {
+        "gentle": {
+          "items": {
+            "$ref": "#/$defs/wave"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "standard": {
+          "items": {
+            "$ref": "#/$defs/wave"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "steep": {
+          "items": {
+            "$ref": "#/$defs/wave"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "gentle",
+        "standard",
+        "steep"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "gates": {
+      "additionalProperties": false,
+      "properties": {
+        "east": {
+          "$ref": "#/$defs/gate"
+        },
+        "north": {
+          "$ref": "#/$defs/gate"
+        },
+        "south": {
+          "$ref": "#/$defs/gate"
+        }
+      },
+      "required": [
+        "east",
+        "north",
+        "south"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.enemy_waves/1"
+    },
+    "spawn_gap_s": {
+      "maximum": 5,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "breather_s",
+    "curve",
+    "curves",
+    "doc",
+    "gates",
+    "schema",
+    "spawn_gap_s"
+  ],
+  "type": "object"
+}

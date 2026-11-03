@@ -73,3 +73,24 @@ static func fight(pit: EnemyPit, dummy: PitDummy, max_s: float) -> Dictionary:
 	out["hit_rate"] = snappedf(pit.stats["shot_hits"] / maxf(pit.stats["shots"], 1.0), 0.001)
 	out["digest"] = digest(pit)
 	return out
+
+
+## Runs `run`'s waves against `dummy` until the curve is done or `max_s` passes (Rivet's hp is
+## the caller's: set it high to measure the damage a whole curve deals).
+static func wave_fight(pit: EnemyPit, dummy: PitDummy, run: WaveRun, max_s: float) -> Dictionary:
+	var max_ticks: int = CombatTuning.ticks(max_s)
+	while pit.tick < max_ticks and not run.done():
+		run.step(pit)
+		dummy.step(pit)
+		pit.step()
+	var out: Dictionary = {"waves": run.report(), "done": run.done()}
+	out["seconds"] = snappedf(pit.tick * SimClock.TICK_DT, 0.01)
+	out["rivet_damage"] = pit.stats["rivet_damage"]
+	out["digest"] = digest(pit)
+	var left: Array[String] = []
+	for e: EnemyAgent in pit.agents:
+		if e.alive():
+			var st: String = EnemyAgent.State.keys()[e.state]
+			left.append("%s %s %s seen %s sees %s" % [e.arch.id, st, e.pos, e.last_seen, e.sees])
+	out["left"] = left
+	return out

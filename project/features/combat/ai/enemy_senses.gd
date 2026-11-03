@@ -4,6 +4,8 @@ extends RefCounted
 ## hearing a shot, and the cover spot behind a box away from Rivet. Pure functions on data.
 
 const COVER_GAP_M: float = 0.35
+const CORNER_REACHED_M: float = 0.3
+const BODY_SLACK_M: float = 0.05
 
 
 static func blocked(a: Vector2, b: Vector2, cover: Array[Rect2]) -> bool:
@@ -59,17 +61,20 @@ static func best_cover(
 ## Where to head for `to` from `from`: `to` itself when the line is clear, else the corner of
 ## the first box in the way (grown by the body) that is visible and shortest round.
 static func detour(from: Vector2, to: Vector2, radius: float, cover: Array[Rect2]) -> Vector2:
-	for r: Rect2 in cover:
+	for box: Rect2 in cover:
+		# The body's own footprint: a line that clips it pins the walker on the face (push-out).
+		var r: Rect2 = box.grow(maxf(radius - BODY_SLACK_M, 0.0))
 		if not _segment_hits_rect(from, to, r):
 			continue
-		var g: Rect2 = r.grow(radius + COVER_GAP_M)
+		var g: Rect2 = box.grow(radius + COVER_GAP_M)
 		var best: Vector2 = to
 		var best_cost: float = INF
 		var corners: Array[Vector2] = [
 			g.position, Vector2(g.end.x, g.position.y), g.end, Vector2(g.position.x, g.end.y)
 		]
 		for c: Vector2 in corners:
-			if _segment_hits_rect(from, c, r):
+			# A corner already reached is no waypoint (picking it again stalls the walker there).
+			if from.distance_to(c) < CORNER_REACHED_M or _segment_hits_rect(from, c, r):
 				continue
 			var cost: float = from.distance_to(c) + c.distance_to(to)
 			if cost < best_cost:
