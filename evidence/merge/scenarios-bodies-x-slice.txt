@@ -1,0 +1,19 @@
+[INFO] scenario: cop tackle: { "knocks": 1, "down_ticks": 84, "resumed": true, "fled": false, "worst_rivet": 0.00002004623413 }; planted down_s 0: { "knocks": 8, "down_ticks": 8, "resumed": true, "fle
+[INFO] scenario: crowd walk: worst Rivet overlap 0.0003 m (tol 0.02), people-people 0.006 m, progress 19.0/19.6 m, knockdowns 0; planted r=0 0.420 m, body off (before) 0.770 m
+[INFO] scenario: run-in: { "met": true, "rivet_pushed_m": 0.09284806251526, "worst_rivet": 0.00001688718796, "knocks": 0 }; planted (rule off): { "met": true, "rivet_pushed_m": 0.60846930742264, "wors
+[INFO] scenario: tackle: human { "knocks": 1, "went_down": true, "got_up": true, "fled": true, "slide_m": 1.92887198925018, "keep": 0.99178126600922, "worst_rivet": 0.0000238609314 }; robot { "result"
+[INFO] scenario: chase (native): cops 60.7 -> 6.5 m, nearest police car 3.2 m, 49 fields, max 1692 us, last 232 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"body_knockdowns":0,"checks":10,"counters_a":[149,70,25,6,133,117,16,23,352,23],"counters_b":[149,70,25,6,133,117,16,23,3
+[INFO] scenario: city focus moved 42 m, 16 chunks stamped
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] scenario: quest1 bodies: {"knockdowns":0,"overlap_ticks":0,"paid":true,"ticks":11241,"worst_arena":-1.02202497005463,"worst_city":-2.94889853477478,"worst_city_target":-2.94889853477478}
+[INFO] scenario: quest1 input: {"beats":["b1-dumpster","b2-payphone","b3-toner-room","b4-dock","b5-quartermaster","b6-hot-walk"],"checkpoint_load":{"beat":"b4-dock","resumed":true,"tamper_refused":tru
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in 'dumpster'
+[INFO] scenario: quest1 keys: walked 40 ticks, hidden in ''
+[INFO] scenario: quest1 walk-in: {"peds":5,"run":{"knockdowns":5,"progress_m":47.4254455566406,"worst_overlap_m":0.0310991597175598},"walk":{"knockdowns":0,"progress_m":10.5869445800781,"worst_overlap
+[INFO] scenario: quest collect-call: succeeded in 11436 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.230718518518519,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":277.519,"rigMsAvg":1.24193333333333,"rigMsMax":100.281,"rigMsP50":0.646
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.74992962962963,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":8.819,"rigMsAvg":1.10349444444444,"rigMsMax":36.58,"rigMsP50":0.732,"r
+run_scenarios: 16 ran, 0 failed

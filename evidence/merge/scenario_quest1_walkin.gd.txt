@@ -1,0 +1,74 @@
+extends Scenario
+## Trial-merge probe (d-bodies x d-slice): in quest 1's real session (stage + city), Rivet walks
+## then sprints east from his start through standing city peds placed on his own free path.
+## Measures the drawn Rivet (stage arena pos) against every live city person on every tick.
+
+const WALK_MPS: float = 1.4
+const RUN_MPS: float = 6.0
+const TICKS: int = 8 * SimClock.TICK_RATE
+
+
+func run(tree: SceneTree) -> String:
+	var dry: PackedVector2Array = _go(tree, PackedVector2Array(), WALK_MPS)["path"]
+	var spots: PackedVector2Array = PackedVector2Array()
+	for i: int in range(90, dry.size() - 30, 75):
+		@warning_ignore("return_value_discarded")
+		spots.append(dry[i])
+	var walk: Dictionary = _go(tree, spots, WALK_MPS)
+	var run_: Dictionary = _go(tree, spots, RUN_MPS)
+	@warning_ignore("return_value_discarded")
+	walk.erase("path")
+	@warning_ignore("return_value_discarded")
+	run_.erase("path")
+	var out: Dictionary = {"peds": spots.size(), "walk": walk, "run": run_}
+	Log.info("scenario", "quest1 walk-in: %s" % JSON.stringify(out))
+	return write_evidence("quest1-walkin.json", out)
+
+
+func _go(tree: SceneTree, spots: PackedVector2Array, mps: float) -> Dictionary:
+	var game: Quest1Game = (load("res://boot/quest1.tscn") as PackedScene).instantiate()
+	game.save_path = ""
+	game.settings_path = ""
+	tree.root.add_child(game)
+	game.boot()
+	game.card.start_button.pressed.emit()
+	var s: Quest1Session = game.session
+	s.world.set_process(false)
+	s.stage.pilot = null
+	s.step()
+	for p: Vector2 in spots:
+		var spec: Array = [SimConst.K_PED, p.x, p.y, 1.0, 0.0, 1, SimConst.F_PROMOTED, 0.0]
+		@warning_ignore("return_value_discarded")
+		s.city.sim.spawn(PackedFloat64Array(spec + [0.0, 0]))
+	var t: BodyTable = BodyTable.load_default()
+	var rr: float = t.radius(RivetBody.CLASS) + t.radius(RivetBody.PERSON)
+	var path: PackedVector2Array = PackedVector2Array()
+	var worst: float = -INF
+	var knocks: int = 0
+	var x0: float = s.stage.arena.rivet.pos.x
+	for i: int in TICKS:
+		s.stage.intent.move_by = Vector2(mps * SimClock.TICK_DT, 0.0)
+		s.step()
+		knocks += s.city.body.knocks.size() / SimConst.BR_STRIDE
+		@warning_ignore("return_value_discarded")
+		path.append(s.stage.arena.rivet.pos)
+		worst = maxf(worst, _worst(s.city.sim.snapshot(), s.stage.arena.rivet.pos, rr))
+	var res: Dictionary = {
+		"worst_overlap_m": worst,
+		"knockdowns": knocks,
+		"progress_m": s.stage.arena.rivet.pos.x - x0,
+		"path": path,
+	}
+	game.free()
+	return res
+
+
+static func _worst(snap: PackedFloat64Array, at: Vector2, rr: float) -> float:
+	var w: float = -INF
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE:
+			break
+		var k: int = int(snap[r + 1])
+		if (k == SimConst.K_PED or k == SimConst.K_COP) and int(snap[r + 2]) != SimConst.M_DEAD:
+			w = maxf(w, rr - at.distance_to(Vector2(snap[r + 4], snap[r + 5])))
+	return w
