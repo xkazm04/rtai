@@ -327,3 +327,10 @@ NEXT (night run, after the 00:00 merge): unchanged from iteration 6/7:
 3. Gearbox ArenaHook on gearbox_pad (residue_s 2 via station data).
 4. Hauler in the arena pit (`--start=pit`).
 5. Bench the city-path blood (riot scene) when bench.lock is free.
+
+## Iteration 9 (23:40-23:58, REPORT)
+- answers.json re-read 23:40: nothing new for ghost-powers. REPORT.md written: every cited evidence path checked
+  to exist (frames.json 15/15 files present; E/ and M/clips paths listed). No code change.
+
+NEXT (night run): see REPORT.md "Next steps" (REQUEST 4 patch; tank on the real rig + cast victims, then re-ask;
+Gearbox ArenaHook; Hauler in the pit; robot sparks + sound; bench the city-path blood).
