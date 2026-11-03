@@ -14,6 +14,8 @@ var bank: SoundBank = SoundBank.new()
 var dice: AudioDice
 var buses: AudioBuses
 var loops: AudioLoops
+## Microseconds the last rendered frame's own work took (evidence: dev/audio/audio_riot.gd).
+var process_us: int = 0
 var voice: VoiceChannel = VoiceChannel.new()
 ## Cues played / dropped since boot, by id and by reason (evidence and tests).
 var played: Dictionary[StringName, int] = {}
@@ -150,6 +152,7 @@ func _drop(id: StringName, reason: StringName) -> bool:
 
 
 func _process(_delta: float) -> void:
+	var t0: int = Time.get_ticks_usec()
 	_frame_starts = 0
 	if listener_fn.is_valid():
 		var at: Variant = listener_fn.call()
@@ -160,3 +163,4 @@ func _process(_delta: float) -> void:
 	buses.step_duck(voice.playing(), frame_s)
 	loops.step(frame_s)
 	voice.step(frame_s)
+	process_us = Time.get_ticks_usec() - t0

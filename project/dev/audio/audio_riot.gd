@@ -34,6 +34,11 @@ var _max_proj: int = 0
 var _demo_on: bool = false
 var _angle: float = 0.0
 var _engine_log: Array[float] = []
+var _cue_us: int = 0
+var _cue_max_us: int = 0
+var _cue_calls: int = 0
+var _proc_us: int = 0
+var _proc_max_us: int = 0
 var _city: CitySystem = null
 var _audio: AudioService = null
 var _view: CityView = null
@@ -67,6 +72,14 @@ func _ready() -> void:
 	view.setup(_city)
 	_view = view
 	_audio = WorldAudio.attach(world, world.context(), view, _city)
+	var inner: Callable = view.fx_triggers.sink
+	view.fx_triggers.sink = func(id: StringName, pos_px: Vector2, tick: int) -> void:
+		var t0: int = Time.get_ticks_usec()
+		inner.call(id, pos_px, tick)
+		var took: int = Time.get_ticks_usec() - t0
+		_cue_us += took
+		_cue_max_us = maxi(_cue_max_us, took)
+		_cue_calls += 1
 	_characters = CityCharacters.new(_city, view, world.context())
 	await _characters.bake()
 	await view.prewarm()
@@ -76,6 +89,8 @@ func _process(_delta: float) -> void:
 	if _audio == null or _city == null:
 		return
 	_n += 1
+	_proc_us += _audio.process_us
+	_proc_max_us = maxi(_proc_max_us, _audio.process_us)
 	var t: float = _n / 60.0
 	if _demo_on and t >= 5.0 and t < 21.0:
 		_angle += _drive_mps(t) / DRIVE_R_M / 60.0
@@ -143,6 +158,14 @@ func _done() -> void:
 		},
 		"dropped": _audio.dropped,
 		"engine_pitch_per_second": _engine_log,
+		"cost_us":
+		{
+			"sink_calls": _cue_calls,
+			"sink_mean_us": _cue_us / maxi(_cue_calls, 1),
+			"sink_max_us": _cue_max_us,
+			"service_frame_mean_us": _proc_us / maxi(_n, 1),
+			"service_frame_max_us": _proc_max_us,
+		},
 		"fx_fired": _view.fx_triggers.fired,
 		"cops_near": _cops_within(20.0),
 		"max_projectiles": _max_proj,
