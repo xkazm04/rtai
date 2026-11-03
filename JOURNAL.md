@@ -1062,3 +1062,10 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   **214 passed, 0 failed** (n-visual's suite incl. the accent audit). Scratch removed.
 - Not done, noted: quest 1's HUD (`hud_view.gd`, quest owner) prints cash with a thousands comma, which the strip
   lacks; a `,` glyph and a patch would bring it over. Left for a later iteration / the quest owner.
+- 03:50 CHECK merged look at 64 px/m (`work/i12_strip64.png`, n-d4 alone | merged): the soft grey cloud blotches on
+  the paving come from n-visual's aquatint pass, not the texture (n-d4 alone shows clean slabs with the hatched
+  stains). n-visual's hatched building cast shadow lands well on the pavement.
+## REQUESTS (iteration 12)
+22. visual-engine (optional, owner's eye): the aquatint blotches on the cream paving read as airbrushed clouds at
+    64 px/m (`masters:night/d4-production/work/i12_strip64.png`), not ink; a tighter / grained aquatint on paper, or
+    none on paving, would stay pen-and-ink.

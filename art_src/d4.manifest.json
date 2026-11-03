@@ -730,6 +730,20 @@
     "own: project/features/hud/art/cash_frame.png"
    ],
    "seed": null
+  },
+  "d4n_digits2": {
+   "file": "masters:night/d4-production/gen/out/d4n_digits2.png",
+   "sha256": "db4a642c8cdf8b904f052572a2fe00b251bb3f656174e07361e005a1a13797f5",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/digits2.txt",
+   "prompt_sha256": "e06fd7e43583c9c966d72e828d711559515f71b0b1a334c9581500b6d25df3e0",
+   "layout_template": "masters:night/d4-production/gen/refs/t_digits2.png (grey guide characters set in Windows Bahnschrift Bold Condensed for position and identity only; the 0 is the scale anchor, not shipped)",
+   "references": [
+    "own: masters:night/d4-production/gen/refs/ref_digits_set.png (the approved d4n_digits strip)"
+   ],
+   "seed": null
   }
  }
 }

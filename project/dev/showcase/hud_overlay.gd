@@ -16,11 +16,22 @@ const PLATE: Vector2 = Vector2(7.0, 7.0)
 const STARS: int = 2
 ## hud_digits.png: one row of DIGIT_CELL cells in DIGIT_GLYPHS order, cap height DIGIT_CAP strip px
 ## centred in the cell; advances in strip px (digits tabular).
-const DIGIT_GLYPHS: String = "0123456789$/x+-:"
+const DIGIT_GLYPHS: String = "0123456789$/x+-:,.%#"
 const DIGIT_CELL: Vector2 = Vector2(112.0, 160.0)
 const DIGIT_CAP: float = 120.0
 const DIGIT_ADVANCE: Dictionary[String, float] = {
-	"$": 70.0, "/": 58.0, "x": 74.0, "+": 66.0, "-": 62.0, ":": 36.0, " ": 30.0, "1": 70.0
+	"$": 70.0,
+	"/": 58.0,
+	"x": 74.0,
+	"+": 66.0,
+	"-": 62.0,
+	":": 36.0,
+	" ": 30.0,
+	"1": 70.0,
+	",": 32.0,
+	".": 32.0,
+	"%": 98.0,
+	"#": 80.0
 }
 const DIGIT_TABULAR: float = 70.0
 
@@ -33,7 +44,7 @@ func build(scale_ui: float) -> void:
 		child.queue_free()
 	var view: Vector2 = Vector2(get_viewport().get_visible_rect().size)
 	_frame("cash_frame", Vector2(MARGIN, MARGIN))
-	_digits("12480", Vector2(MARGIN, MARGIN) + (PLATE + Vector2(190.0, 30.0)) * ui_scale, 88)
+	_digits("12,480", Vector2(MARGIN, MARGIN) + (PLATE + Vector2(190.0, 30.0)) * ui_scale, 88)
 	var wanted: Vector2 = _size("wanted_frame")
 	var w_pos: Vector2 = Vector2(view.x - MARGIN - wanted.x, MARGIN)
 	_frame("wanted_frame", w_pos)
