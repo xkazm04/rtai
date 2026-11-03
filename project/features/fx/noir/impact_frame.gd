@@ -11,6 +11,9 @@ const LAYER: int = 11
 ## clear colour is this key, so every non-key pixel is an actor (or blood) and prints as ink.
 const KEY: Color = Color(0.0, 1.0, 0.0)
 const SILHOUETTE: int = 4
+## Photosensitivity guard: a new beat (its white flash + inverted panel) at most once per
+## BEAT_GAP ticks (1 s); kills inside the gap keep their blood but get no beat.
+const BEAT_GAP: int = 60
 
 var sequence: PackedInt32Array = PackedInt32Array([1, 3, 2])
 ## After the sequence: the held panel, this many ticks (a comic panel border around the kill).
@@ -23,6 +26,7 @@ var _shown: Dictionary[Node, bool] = {}
 var _clear: Color = Color.BLACK
 var _keyed: bool = false
 var _left: int = 0
+var _since: int = BEAT_GAP
 var _rect: ColorRect = ColorRect.new()
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
@@ -53,6 +57,7 @@ func _init() -> void:
 ## Starts the beat (shown this frame: call step_ticks before fire() each tick), the burst
 ## centred on `screen_uv`.
 func fire(screen_uv: Vector2) -> void:
+	_since = 0
 	_left = sequence.size() + panel_ticks
 	_mat.set_shader_parameter(&"center", screen_uv)
 	var gutter: Vector2 = panel_half + Vector2(0.03, 0.04)
@@ -70,7 +75,13 @@ func active() -> bool:
 	return _left > 0
 
 
+## False inside BEAT_GAP ticks of the last beat (the caller skips the beat and its hit-stop).
+func can_fire() -> bool:
+	return _since >= BEAT_GAP
+
+
 func step_ticks(n: int) -> void:
+	_since += n
 	if _left <= 0:
 		return
 	_left = maxi(_left - n, 0)

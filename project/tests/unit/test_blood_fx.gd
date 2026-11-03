@@ -109,3 +109,14 @@ func test_the_muzzle_light_is_capped_under_three_flashes_a_second() -> void:
 		f.step_ticks(1)
 	assert_eq(lit, 3, "a round every tick for 1 s lights 3 frames")
 	f.free()
+
+
+func test_kill_beats_are_capped_to_one_a_second() -> void:
+	var f: ImpactFrame = ImpactFrame.new()
+	assert_true(f.can_fire())
+	f.fire(Vector2(0.5, 0.5))
+	f.step_ticks(ImpactFrame.BEAT_GAP - 1)
+	assert_false(f.can_fire(), "a second kill inside 1 s gets no flash")
+	f.step_ticks(1)
+	assert_true(f.can_fire())
+	f.free()

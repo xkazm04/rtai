@@ -50,6 +50,8 @@ func _on_actor_killed(killer_id: int, victim_id: int, _kind: StringName) -> void
 	kills += 1
 	if blood != null:
 		blood.splash(px, dir.normalized(), "kill")
+	if impact != null and not impact.can_fire():
+		return
 	if impact != null:
 		var uv: Vector2 = Vector2(0.5, 0.5)
 		if to_screen_uv.is_valid():
