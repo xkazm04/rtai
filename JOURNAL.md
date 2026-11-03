@@ -480,9 +480,9 @@ NEXT (iteration 6 close, in order):
   `--coat --noir-parts`) + evidence/showcase-hero.png rebuilt with masters tools/hero.py (the previous sheet is
   evidence/showcase-hero-v3.png). Flash meter on show-final4 noir 48 and 64: 2 flashes max in any second
   (show-final3: 3). Rows: f230 (lit under the budget), f169 silhouette flash, f175 held panel, f322 aftermath
-  (now with the stains). NOTE: the hero rows use f169 for the silhouette flash because f170 already shows the
-  inverted panel (mode 1), so the silhouette lasts one frame on screen, not the two the params' [4, 4, 1] say.
-  The same in every run since show-final3 (frame brightness identical), so it is not new; not investigated.
+  (now with the stains). The hero rows use f169 for the silhouette flash: the kill fires on f168 and the heroes
+  are saved at kill +1 / +2 / +4 / +7, so f168 + f169 are the two silhouette ticks and f170 the inverted panel,
+  exactly the params' [4, 4, 1] (checked; an earlier note of mine here called it a one-frame bug - wrong).
   Masters trimmed (my own superseded scratch) to ~950 MB. Images this session: 0 (no generation needed);
   Leonardo 0 tokens; provenance +0.
 NEXT (iteration 8 close, in order):
