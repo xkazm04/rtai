@@ -3,7 +3,8 @@ extends WorldSystem
 ## The Hauler clip's script on the fixed tick (registered after the city): plants a standing crowd
 ## on a sidewalk band and a tight group further on, then: stand 1 s, activate Hauler (0.4 s morph),
 ## drive east through the crowd at the tank's top speed, let go (momentum carries him), arm a stomp
-## in the group, stand while they lie, and shrink back when the 8 s power runs out.
+## in the group (cops: 3 of the 9 are patrol cops), stand while they lie, and shrink back when
+## the 8 s power runs out.
 ## --before = the same script without the power (base Rivet driven at the tank's speed).
 
 const ACTIVATE_S: float = 1.0
@@ -14,6 +15,8 @@ var band: Vector2 = Vector2(-1, -1)
 var powers: SoulPowers = null
 var hauler: HaulerCity = null
 var base_knocks: int = 0
+## Three of the stomp group are patrol cops (they walk in on Rivet and can be rammed first).
+var cops: bool = false
 var _city: CitySystem
 var _start: Vector2
 var _before: bool = false
@@ -69,12 +72,13 @@ func _plant() -> void:
 			_stand(band + Vector2(5.0 + col * 2.5, row * 0.9), col * 3 + row + 1)
 	for k: int in 9:
 		var ring: Vector2 = Vector2.from_angle(TAU * k / 9.0) * (1.4 + 0.5 * (k % 2))
-		_stand(band + Vector2(25.0, 0.0) + Vector2(ring.x, ring.y * 0.6), k)
+		var kind: int = SimConst.K_COP if cops and k % 3 == 0 else SimConst.K_PED
+		_stand(band + Vector2(25.0, 0.0) + Vector2(ring.x, ring.y * 0.6), k, kind)
 
 
-func _stand(at: Vector2, look: int) -> void:
+func _stand(at: Vector2, look: int, kind: int = SimConst.K_PED) -> void:
 	var v: int = look % SimConst.CLIP_VARIANTS
-	var spec: Array = [SimConst.K_PED, at.x, at.y, 1.0, 0.0, v, SimConst.F_PROMOTED, 0.0]
+	var spec: Array = [kind, at.x, at.y, 1.0, 0.0, v, SimConst.F_PROMOTED, 0.0]
 	@warning_ignore("return_value_discarded")
 	_city.sim.spawn(PackedFloat64Array(spec + [0.0, 0]))
 

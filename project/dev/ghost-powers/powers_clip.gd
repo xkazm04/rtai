@@ -6,7 +6,7 @@ extends Node
 ## stomp and floors a group. --before = base Rivet on the same path and speed. Windowed only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/powers_clip.tscn
 ##     -- --out=<dir> [--before] [--zoom=<z>] [--every=<n>] (clip frame every n ticks)
-##     [--look=<scaled|bulked>] (overrides powers.json hauler.look)
+##     [--look=<scaled|bulked>] (overrides powers.json hauler.look) [--cops] (3 cops in the group)
 
 const MASTER_SEED: int = 91
 const START: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -25,6 +25,7 @@ var _drive: PowersClipDrive = null
 var _ring: PowersRing = null
 ## --look=<scaled|bulked> overrides powers.json hauler.look (ASK ghost-powers-2 A/B frames).
 var _look: StringName = &""
+var _cops: bool = false
 ## Rendered frames (a hit-stop renders frames without a tick) and frames still held.
 var _frame: int = 0
 var _held: int = 0
@@ -43,6 +44,7 @@ func _ready() -> void:
 	city.steer_by_input = false
 	city.spawner.targets = CityTargets.street(60, 10, 0)
 	_drive = PowersClipDrive.new(city, START, _before)
+	_drive.cops = _cops
 	_world.add_system(_drive)
 	_view = CityView.new()
 	add_child(_view)
@@ -105,6 +107,7 @@ func _numbers() -> bool:
 
 func _tag() -> String:
 	var tag: String = "before" if _before else "after"
+	tag += "-cops" if _cops else ""
 	return tag if _look == &"" else "%s-%s" % [tag, _look]
 
 
@@ -151,6 +154,8 @@ func _parse_args() -> bool:
 			_before = true
 		elif arg.begins_with("--zoom="):
 			_zoom = arg.substr(7).to_float()
+		elif arg == "--cops":
+			_cops = true
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
 		elif arg.begins_with("--every="):
