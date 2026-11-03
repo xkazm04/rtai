@@ -1196,3 +1196,10 @@ NEXT (iteration 14 / morning, in order):
   incl. the street and the rigs' print_part cream. One number in n-d5's look_d5.params.json either way.
   Note: n-d5's `grain_floor` can NOT work in this engine yet - LookOverlay hides the overlay at amount 0,
   so a floor below the ramp needs the whole overlay drawn at gameplay zoom (~+2 ms iGPU, iteration 9).
+- MILESTONE (6592ebd) page-age gains solved per channel (grade_ink age_dark / age_light at luma 0 / 1)
+  from the merged D4 street (86,76,77) and paper (235,225,207) against d4h2_mock.jpg's medians: 64 px/m
+  auto street 89,74,69 -> 81,71,72 (= mock), paper 247,222,194 -> 241,216,186 (mock 243,218,188); with the
+  age_floor option at 32 / 48: street 81,71,72, paper 243,218,188 / 242,218,187. Vermilion-gate px
+  394 / 394. LOOKED: the street prints the mock's charcoal instead of a reddish brown; night arena same
+  read, vermilion holds. 51-age-gains/ (cmp64-old-new-mock.png, cmp-night64.png), ladder 51. On this
+  branch alone nothing moves (no look_d5 = rect hidden); unit 241. READMEs + decision line updated.
