@@ -160,3 +160,22 @@ loading frame.
   step 629), selftest look goldens 11/11. Bench not run (no render/sim change on d-save; no lock).
   FRICTION `/tmp/ev.log` is shared by every lane on this machine; my first tail read another lane's
   (d-vehicles) results. Use a path under the lane cwd for logs.
+
+## 2026-11-03 iteration 7 (BUILD) - trial merge on d-slice 2de6c16; a load can no longer be asked for the impossible
+- MILESTONE d-slice moved again (2de6c16, art-by-id views, Continue street fill). Re-merged into the
+  scratch trial branch `d-save-trial` (only JOURNAL.md conflicted, kept ours; collect_call_view.gd and
+  quest1_game.gd auto-merged with patch 0005's hunks). Gates on the trial tree: lint 13/13, unit 404,
+  scenarios 12/12 (quest1_input replay identical, autosave_input hashes unchanged), so patches 0001..0005 hold.
+- GAP found (cold-path, SEC): a slot with a correct hash can still carry a checkpoint of tick 10^9 or a
+  tape out of order; `Quest1Session.resume` loops `while tick < cp.tick`, so Continue would hang the game.
+  The hash guards damage, not intent (a future writer bug, a hand edit with the hash recomputed).
+  FIX `CheckpointSlot.read` (mine) now refuses tick > 6 h of ticks (MAX_TICK 1,296,000) and a tape not
+  strictly ascending / not below the checkpoint tick; the refusal quarantines the slot and falls back
+  like any bad slot. checkpoint.gd stays byte-identical to d-slice's. 5 tests (test_checkpoint_slot.gd),
+  incl. the 72,000-change pathological tape still reading. Unit 375 on d-save, lint 13/13.
+- Not done, d-slice's file: `accept()` does not check `cp.quest == Quest1Session.QUEST`. One line in
+  quest1_autosave.gd; REQUEST 2 -> slice-play (a collect-call slot loaded by another quest's Continue).
+- No sim file touched; no bench, no lock.
+
+NEXT: Director applies patches 0001..0005 after merging d-save + d-slice. REQUEST 2 above. Loc keys when
+the PO table lands.
