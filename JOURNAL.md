@@ -1310,3 +1310,42 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   `d4n_arcball`, provenance line, ladder2 row. Commit fc6501c. Patch +217 / -121 (4 view files, gdformat + gdlint clean,
   `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`; unit in scratch-q1 **166/166**.
   Codex night total: **29 images, 194 cells, 7 rejected**; no limit hit (70 s).
+- 04:48 GATES at 4477108 (every iteration-14 art commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter14/gates-4477108.txt`).
+  Bench not re-run: one atlas row repainted (same size), a quest floor and a new quest-only FX strip.
+
+## SUMMARY iteration 14 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter14_summary.png` (= `evidence/iter14/`, 9 rows). Ladder: **`ladder2.png`**
+(new; `ladder.png` is full), rows "i14 ...".
+1. Ink blood splat FX (fx_atlas row 3): one ink pool with one cream sticker edge, instead of cream-ringed bubbles; judged
+   in n-visual's real FX system on a merged tree at 32 / 48 / 64. Procedural. 165ae0f
+2. Toner Room linoleum (quest 1): the scuff blotches removed (cow-print mottling behind the cast). Procedural. d6317ee
+3. Quest 1 arc ball: an inked 4-frame loop (`fx_arcball.png`, Codex 1 image, 0 rejected), vermilion only on the
+   danger ring, ink + cream tether (the patch draws it). fc6501c
+4. Quest 1 view patch (patch only): Factory Row on the warehouse concrete (was a flat grey wash), Harbor Road lined
+   with the D4 pavement + kerb (Rivet stood on blank paper), the arc ball. `evidence/iter14/q1_view_art.patch`.
+5. Evidence for visual-engine: muzzle `fade_from` 0 -> 0.6 prints the flash as a solid star (`fx_muzzle_fade.patch`).
+- Rejected / not shipped: the sticker on the dynamic blood decals, Dock 9 floor wear (stamped rows), D5 grime on props
+  (invisible).
+- Checked, no change: n-visual's night grade + new lamp pools / headlight cones over my art, the rest of the FX set in
+  their system, the pickup marker (a UI ring, not the item), in-world souls (n-d5's, unshipped; REQUEST 24).
+- Merged checks: n-visual fe63853 + n-d4: unit 216/216; main + n-d4 + the iteration-14 quest patch: lint 13/13, unit
+  166/166, scenarios 8/8.
+- Codex this iteration: **1 image** (d4n_arcball), 4 cells, 0 rejected. Night total: **29 images, 194 cells,
+  7 rejected**. No usage limit hit.
+
+NEXT (session end, iteration 14):
+- Owner review (each reverts alone): 165ae0f (splat sticker; original `masters:backup_fx14/`), d6317ee (Toner Room
+  floor; `backup_bf14/`), fc6501c (arc ball strip; only drawn by the quest patch). Earlier lists stand (tank tracks,
+  bollard, HUD numerals, quest cast captures, paving, zebras, ...).
+- Director: REQUEST 16 = `evidence/iter14/q1_view_art.patch` (+217 / -121; supersedes iteration 12's). Order: merge n-d4
+  into main (no conflict), then `git apply` it; dry-run 04:36 (plus the arc ball since: unit 166/166 in scratch-q1).
+  REQUEST 19 / 21 unchanged (`evidence/iter10/`); REQUEST 22 (aquatint, optional); **REQUEST 23** (visual-engine:
+  `evidence/iter14/fx_muzzle_fade.patch`, + crackle the same); **REQUEST 24** (who ships the in-world souls).
+- Quest 1 left as code: the whisper rings (teal, the souls - on doctrine), the burst's chained arcs, rifle / nail
+  lines, the words (font). The payphone and a dumpster sit on the Harbor Road band (layout markers, quest owner).
+- Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
+- Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` (bench.json stale). Note: `scenario_city_chase`'s 2 ms
+  nav budget failed once under other lanes' load (2300 us), green on 3 re-runs.
+- Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (iteration-14 quest patch applied + art synced to
+  n-d4 HEAD); scratch-m14 / m14q removed; my Godot runs all finished.
