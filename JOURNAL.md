@@ -287,10 +287,30 @@ NEXT (iteration 3, in order):
   (034 the halo moves) and the 060/360/660 full-frame diffs: not from this change (render-only,
   sim identical). Unit 359, vehicle scenarios 3/3. When d5-city's shader pick lands, the overlay
   draws the same cell twice (harmless; remove it then).
-- 13:02 dev capture `--soul-traffic` (soul_hijack_traffic on every civilian car within 60 m at
+- 12:59 dev capture `--soul-traffic` (soul_hijack_traffic on every civilian car within 60 m at
   tick 30): soultraffic48-v1, the queued sedans and the van carry the teal plate, and the overlay
   follows the passing car through its turn (540). Brief item 5 now has traffic evidence, not
   only Rivet's own taxi.
 - frames.json 15 (+D1 traffic pair, +soul traffic; dropped the noir carnage frame and the
   carnage-v2 450 frame), ladder 1280 x 7964. Frames this iteration: 72 captured (10 yield48-v2
   rejected: scene parked on a junction; 62 kept), 0 camera breaks.
+- 13:02 carnage-20s-48ppm-v2.mp4 (20.07 s, CONTENDED capture, 1 frame per 4 ticks at 15 fps = real
+  time): the same deterministic run as v1 with the D1 overlay on rammed traffic. Contact sheet
+  (31 frames, clip-carnage-v2-sheet.png): 0 camera breaks; the wider opening frames are Rivet on
+  foot at 32 px/m before the hijack. frames.json entry now points at v2 (v1 as before). Temp PNGs
+  deleted.
+- MILESTONE 13:07 cb21859 unit tests for CitySimCarPass on the reference sim: a car waits more
+  than PASS_WAIT_S, pulls out more than 3 m, is back within 0.6 m of its lane 24 m past the
+  obstacle (the lane change back takes ~17 m of travel); a second obstacle in the oncoming lane
+  keeps it behind. (At 900 ticks the car had turned south at the next junction: assert at the
+  moment it is past, not at the end.)
+- MILESTONE 13:11 050b007 VehicleView tests: marked traffic gets one D1 and one hijacked instance,
+  unmarked none, an empty book none; `car_xf` (now shared by service cars and the overlay) equals
+  the native render rows. Headless MultiMesh does not keep instance data (reads back identity), so
+  the transform is tested on the pure helper. Unit 364.
+- FRICTION 13:11 I committed 050b007 with the unit run chained by `;` and it reported 3 failures:
+  test_noir_shadows (the known engine flake) and test_city_streaming x2 ("stale bake generator
+  v-1"): `user://test_tmp/city_chunks` is SHARED by every worktree (same project name = same user
+  data dir), so two lanes running unit tests at once race on it. Re-run: 364 passed, 0 failed.
+  Lesson: gate the commit with `&&`. REQUEST 6 -> Director / tests owner: per-worktree user dir
+  for tests (e.g. `--user-data-dir` or a DIR keyed on the res:// path hash) to stop the race.
