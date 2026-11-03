@@ -655,3 +655,30 @@ NEXT (iteration 10 / morning, in order):
   CAR_W); planted 512 x 240 -> 3 failing tests, restored. Unit 207.
 - 03:03 the lattice at 1080p on the iGPU (2 runs): frame 5.29 / 5.40 ms (was 5.72 / 5.79), print 2.60 / 2.70
   (3.07 / 3.18, -15 %), rigs 0.56 / 0.67. README per-pass row updated. evidence/pass-cost/hash-ab/lattice-1080-*.
+- Checked (03:05): the plugged D1 frame (unprinted crowd_atlas cell path) shows whole cars; the "cop rig over a
+  car" from iteration 9 was the mis-addressed atlas slice - rigs draw at actors z 100 + part z (<= ~11), cars
+  at vehicles z 200, so a rig is always under a car. Closed.
+- Iteration 10 tally: frames rejected for camera 0 (all engine captures, straight down); approaches rejected
+  2 (integer hash +0.75 ms; all-noise lattice no gain); scratch probes reverted 3 (police-forced CAR_ART,
+  branch-mask shader, sobel / grime bounds). No AI images, so no provenance lines. My processes: only the
+  Godot runs I started, all exited; /tmp scratch deleted.
+
+NEXT (iteration 11 / morning, in order):
+1. Director merge (POST-MERGE RECIPE above, still JOURNAL.md-only conflicts with n-d4 / n-d5 / n-noir at
+   their 02:10 heads). After merging n-d4 the traffic atlas goes LIVE by itself (7bfb6b9): re-bless the 10
+   look goldens and LOOK at them (cars should be whole inked cars, the cruiser black-and-white with the
+   vermilion bar). Do NOT also apply n-d4's traffic_atlas_wiring*.patch.
+2. Apply evidence/pass-cost/look_d5-early-outs-lattice.patch (supersedes look_d5-early-outs.patch; needs
+   0d4175d's LookOverlay grime_tex, which is on this branch): D5 overlay -0.57 ms on the iGPU, but its
+   stroke wobble / pressure patches re-lay (frames 26-d5-lattice) -> owner's eye, then re-bless the -ov
+   goldens.
+3. Traffic states: n-d4 ships traffic_atlas_hijack.png (same 3 x 3 cells) and _d1 / _d2 damage bodies. The
+   render side needs a per-car state from the sim (native fill_render writes only custom.x = art id):
+   characters / sim owner adds custom.y (0 intact, 1 d1, 2 d2, 3 hijacked); then CrowdLayers picks the
+   texture / an atlas row by it.
+4. Low-end GPU now (iGPU 1280x800): frame ~3.05 ms, print ~1.35, rigs ~0.5. Print bounds: Sobel 0.18 ms,
+   tooth + grit ~0.15 ms; the rest is the screen copy + 3 plate fetches + tone maths. Small wins only left;
+   measure on a real Deck before cutting the look.
+5. Owner calls (frames ready, unchanged): objective solid vermilion vs paper + core (16); cop vermilion
+   body vs cream body + cap (17); 15 Hz outer rigs (15); overlay amount at 48 px/m.
+6. Rig 0.37 ms per tick (contended bench) vs 0.3: native RigArm / RigGait (characters owner).
