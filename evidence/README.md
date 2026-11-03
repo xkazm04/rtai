@@ -19,7 +19,6 @@ The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS /
 | 16 | quest 1 | `iter14/q1_view_art.patch` | 4 view files: places (+ Factory Row concrete, Harbor Road pavement + kerb), cast (incl. Rivet, patrol cops, Rivet's hide-spot peek from rig captures), HUD frames + inked cash counter, ink HP bar, the inked arc ball loop. Dry run (04:36, before the arc ball; with it unit 166/166 in scratch-q1): main 721fbbb + n-d4 merges with no conflict, the patch applies, lint 13/13, unit 166/166, scenarios 8/8; also applies with n-visual merged in |
 | 19 | city / generator | `iter10/generator_art_pick_v2.patch` | generic roofs in the pick, no neighbour repeats, upright lettered roofs, plaza quarter turns, street variants cycle; moves the AST-12 golden list (included) |
 | 21 | characters | `iter10/rig_variant_new_looks.patch` | crowd slots 3 and 7 use the hoodie / cap and overalls / bald parts |
-
 | 23 | visual-engine | `iter14/fx_muzzle_fade.patch` | fx.json `muzzle.fade_from` 0 -> 0.6: the 3-tick flash prints as a solid inked star instead of dither fragments (crackle wants the same, REQUEST 14) |
 
 ## Optional requests to visual-engine (owner's eye)
