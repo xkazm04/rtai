@@ -449,3 +449,23 @@ NEXT (iteration 6 close, in order):
   48 px/m) and read as dots. Wall splats still need wall edges in the view (not done).
   FRICTION: an earlier Python edit wrote CRLF into 5 noir files, and a later multi-line replace then
   silently missed (caught by the line count); files normalised to LF, edits now assert their match.
+- MILESTONE (02:30) wall splats (the brief's last missing blood item; NEXT item 5 now done in a first
+  form): BloodFx.solid = Callable(px) -> bool (the host's wall test). A droplet that would fly into a
+  solid cell stops at the last free point and leaves two splats there, sized by the impact speed and
+  stretched both ways along the wall (axis-aligned normal: the city's 1 m cells), so a spray ends in a
+  hard red line at the edge. The hosts use the sim's cells (`cell_at >= C_BUILD`: buildings AND props /
+  parked cars count as walls; void does not). `blood_clip --wall` stages the first kill 1.2 m short of
+  the nearest solid cell along the kill line (`--wall=nosplat` = the same staging, walls ignored = the
+  before). 39 droplets hit the wall. +1 unit test (191 pass), lint clean.
+  v1 (r = size * (1.4 + v/5)) read as a few dots along the edge - too small; v2 (r = size * (2.2 + v/2.5),
+  full stretch, nudged off the wall) reads as a smear line. Kept v2.
+  Evidence: masters night/noir/wall-crops-64.png (64 px/m crops: before | v1 | v2),
+  wall-before-after-48/64.png (v1 full frames), wall-v2/48 + wall-v2/ frames, clip wall-v1/wall-fight-48.mp4
+  / -64.mp4 (v1); evidence/wall-crops-64.png, evidence/wall-48-f300.png. Ladder row 25.
+  Honest read: correct and readable at 48/64 as "the blood hit something and stopped", but top-down
+  hides the wall face, so it is a line, not a splash running down a wall; the before (spatter over the
+  roof of the block) was more spectacular and physically wrong. The block it hits here is a hatched
+  solid on the pavement (a building or a prop - the test does not tell them apart). The showcase kills
+  are > 4 m from any wall, so the showcase does not show it (it is wired there; frames re-shot to check
+  nothing else moved). FRICTION: the first showcase re-record with the wall test hung for 10 min (no
+  frames); killed by PID (my own processes only); a headless check found no script error; re-recording.

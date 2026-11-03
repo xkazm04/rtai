@@ -36,6 +36,7 @@ var _rigs: CharacterRigs = CharacterRigs.new()
 var _fight: NoirFightScript = NoirFightScript.new()
 var _blood: BloodFx = BloodFx.new()
 var _flash: MuzzleFlash = MuzzleFlash.new()
+var _city: CitySystem = null
 var _stains: BloodStains = BloodStains.new()
 var _impact: ImpactFrame = ImpactFrame.new()
 var _fx: NoirCombatFx = NoirCombatFx.new()
@@ -54,6 +55,8 @@ func _ready() -> void:
 	_view.zoom = _zoom
 	_view.set_noir(not _d4)
 	var chars: CityCharacters = built[3]
+	_city = built[2]
+	_blood.solid = _solid
 	chars.rivet_on_foot = false
 	_fight.origin = NoirFrames.JUNCTION
 	_blood.z_index = -1
@@ -186,6 +189,11 @@ func _save(f: int, tag: String) -> void:
 	var file: String = "show-%s-%dppm-f%03d-%s.png" % [look, ppm, f, tag]
 	if img.save_png(_out.path_join(file)) != OK:
 		printerr("showcase_fight: frame %d not saved" % f)
+
+
+## The sim's building cells are the walls the blood splats on.
+func _solid(px: Vector2) -> bool:
+	return _city.sim.cell_at(px.x / SimConst.PX_PER_M, px.y / SimConst.PX_PER_M) >= SimConst.C_BUILD
 
 
 func _to_uv(px: Vector2) -> Vector2:
