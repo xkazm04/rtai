@@ -115,6 +115,31 @@ func test_a_run_over_is_a_thud_and_a_kill_adds_the_death() -> void:
 	assert_eq(death, 1)
 
 
+func test_a_tackle_is_a_body_thud_where_the_defender_fell() -> void:
+	var bus: EventBus = EventBus.new()
+	add_child_autofree(bus)
+	if not bus.has_signal(&"actor_knocked_down"):  # the bodies lane declares it once merged
+		(
+			bus
+			. add_user_signal(
+				"actor_knocked_down",
+				[
+					{"name": "attacker_id", "type": TYPE_INT},
+					{"name": "defender_id", "type": TYPE_INT},
+					{"name": "defender_class", "type": TYPE_STRING_NAME},
+					{"name": "at", "type": TYPE_VECTOR2},
+				]
+			)
+		)
+	var hooks: AudioHooks = AudioHooks.new()
+	_service.add_child(hooks)
+	hooks.attach(_service, bus, func() -> int: return _tick, func() -> Vector2: return Vector2.ZERO)
+	@warning_ignore("return_value_discarded")
+	bus.emit_signal("actor_knocked_down", 1, 7, &"human", Vector2(3.0, 4.0))
+	assert_eq(_played(&"body_fall"), 1)
+	assert_eq(_service.bank.missing.size(), 0, "the three takes load")
+
+
 func test_cash_up_dings_and_cash_down_is_silent() -> void:
 	_bus.cash_changed.emit(100, -20)
 	assert_eq(_played(&"cash_ding"), 0)

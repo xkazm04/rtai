@@ -4,6 +4,9 @@
   "blood_splat_02": "blood_splat_02",
   "blood_splat_03": "blood_splat_03",
   "blood_spurt_01": "blood_spurt_01",
+  "body_fall_01": "body_fall_01",
+  "body_fall_02": "body_fall_02",
+  "body_fall_03": "body_fall_03",
   "city_ambience_01": "city_ambience_01",
   "crash_01": "crash_01",
   "crash_02": "crash_02",
@@ -42,6 +45,7 @@
  "takes": {
   "blood_splat": 3,
   "blood_spurt": 1,
+  "body_fall": 3,
   "city_ambience": 1,
   "crash": 2,
   "crowd_panic": 2,

@@ -35,6 +35,7 @@ SPECS = [
   ("crowd_roar", "ambient", 8.0, True, 2, "large angry crowd shouting and roaring in a city plaza, chaotic and distant, steady swell, seamless loop, no intelligible words, no music"),
   ("car_wreck", "sfx", 2.5, False, 3, "car exploding, a heavy fuel-tank fireball boom with twisting metal and a rolling low rumble that fades, one explosion, no music, no voices"),
   ("fire_crackle", "sfx", 20.0, False, 2, "burning car wreck, steady fire crackling and popping with a low soft roar, flames licking, close, no music, no voices, no explosion"),
+  ("body_fall", "sfx", 0.8, False, 3, "a person shoved off their feet onto a concrete pavement, one dull body thud with a short cloth scuff, no voice, no grunt, no music"),
   ("city_ambience", "ambient", 8.0, True, 1, "night city street ambience, distant traffic, faint wind, occasional far-away siren, seamless loop, no music, no voices"),
 ]
 

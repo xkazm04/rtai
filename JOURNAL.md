@@ -230,3 +230,8 @@ NEXT (iteration 49 end):
   (0.3 s after the first) got no boom and no fire (1 of 2 wrecks heard); cooldown -> 8 ticks on `car_wreck` and `fire_crackle` (max_voices 2 / 3 still bound it): 2 of 2.
   Clip evidence/mix/vehicles_fire.mp4 (30 s, D3D12 movie maker, 640 px, CONTENDED GPU, not timed): **-17.5 LUFS, true peak -1.1 dBFS (AAC re-encoded; two booms + crashes stack, the hottest clip of the lane, watch it)**.
   Frame at 14 s looked at: straight down, two burning wrecks with flames, 0 camera breaks rejected. 357 unit tests pass, lint 13/13.
+- MILESTONE (16:40) bodies lane's new Event `actor_knocked_down(attacker_id, defender_id, defender_class, at)` (a tackle, d-bodies; wired true) had no sound. New cue `body_fall` (3 takes, ElevenLabs sound-generation direct, 0.8 s each,
+  SFX credits only ~100-200; no voice characters): dull body thud + cloth scuff, no voice. QC by the pipeline's rules (trim, peak at the start <= 80 ms, tails -26 .. -33 dB by 0.3 s, flat run <= 5): 3 of 3 kept, 0 rejected;
+  0.32-0.39 s, peak -3.0, RMS -18.4 / -24.8 / -24.0 dBFS (take 1 is the most sustained). Hook: AudioHooks connects `actor_knocked_down` only when the Events bus declares it (same pattern as pedestrian_struck), cue positional at `at` (metres).
+  Unit test with a user-signal stand-in; 358 unit tests pass, lint 13/13. Provenance +3. Not tried on the real bodies lane (needs the merge), not heard by a human.
+- RETIRED tools/audio/build_tables.py (exits with a message; it would clobber the hand-edited tables).

@@ -62,8 +62,12 @@ func attach(p_service: AudioService, bus: EventBus, tick: Callable, at: Callable
 	_connect_vehicles(bus)
 
 
-## The vehicles lane's Events (pedestrian_struck, vehicle_hijacked) exist once that lane is merged.
+## Events other lanes declare (they exist once that lane is merged): the vehicles lane's
+## pedestrian_struck / vehicle_hijacked, the bodies lane's actor_knocked_down.
 func _connect_vehicles(bus: EventBus) -> void:
+	if bus.has_signal(&"actor_knocked_down"):
+		@warning_ignore("return_value_discarded")
+		bus.connect(&"actor_knocked_down", _on_knocked)
 	if bus.has_signal(&"pedestrian_struck"):
 		@warning_ignore("return_value_discarded")
 		bus.connect(&"pedestrian_struck", _on_struck)
@@ -94,6 +98,12 @@ func _on_struck(_victim: int, killed: bool) -> void:
 	_cue(&"hit_flesh")
 	if killed:
 		_cue(&"death")
+
+
+## A tackle: a body thud where the defender went down (`at` is metres).
+func _on_knocked(_attacker: int, _defender: int, _class: StringName, at: Vector2) -> void:
+	@warning_ignore("return_value_discarded")
+	service.cue(&"body_fall", at, _now())
 
 
 func _cue(id: StringName) -> void:
