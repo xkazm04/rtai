@@ -533,7 +533,7 @@ NEXT (iteration 6 close, in order):
   running (the two Godot run_scenarios processes at 02:59 are another lane's; untouched).
   Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final5/*.mp4,
   evidence/safety-before-after-48.png, evidence/ladder.png.
-- (03:03) The rim tune checked on the third scene too (roofs at 32 / 48 / 64, tick-exact; params restored with
+- (03:00) The rim tune checked on the third scene too (roofs at 32 / 48 / 64, tick-exact; params restored with
   `git checkout` after the temporary base run - tree clean): masters rim-v1/ab-roofs-32.png, ab-roofs-48.png
   (also evidence/rim-roofs-32.png). The paper rooftops do not change (the rim only acts dark-on-dark); the
   street strip at the edge gets calmer, as on the street. Neutral to positive: kept.
