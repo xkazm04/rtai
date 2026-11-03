@@ -7,16 +7,24 @@ extends Node
 ##   godot --path project res://dev/selftest/city_selftest.tscn -- --out=<dir>
 ## [--grade=night] (a lights.json grade) [--fx-moment] (after settling, wait for the first frame
 ## with an emissive FX alive, e.g. a muzzle star, so the lights and flashes are in the frame)
-## [--markers] (a pickup, a soul and an objective on screen; the pointed objective off screen).
+## [--markers] (a pickup, a soul and an objective on screen; the pointed objective off screen)
+## [--site=junction|block] (SITES: where the camera and the riot sit; block = a street between
+## two built blocks: roofs, their cast shadows, kerb props).
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--grade", "--fx-moment", "--markers"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--grade", "--fx-moment", "--markers", "--site"]
 const FX_WAIT_FRAMES: int = 240
 const MASTER_SEED: int = 91
 const JUNCTION: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
+const SITES: Dictionary[String, Vector2] = {
+	"junction": JUNCTION,
+	"block": Vector2(456.0, 428.0),
+}
 const ZOOMS: Array[float] = [1.0, 1.5]
 const SETTLE_FRAMES: int = 90
 
 var _out: String = "user://selftest"
+var _site: String = "junction"
+var _at: Vector2 = JUNCTION
 var _grade: StringName = &"day"
 var _fx_moment: bool = false
 var _markers: bool = false
@@ -38,6 +46,9 @@ func _ready() -> void:
 			_out = value
 		elif flag == "--grade":
 			_grade = StringName(value)
+		elif flag == "--site":
+			if not set_site(value):
+				return
 		else:
 			_fx_moment = _fx_moment or flag == "--fx-moment"
 			_markers = _markers or flag == "--markers"
@@ -50,6 +61,17 @@ func _ready() -> void:
 	_finish(frames, warm_us)
 
 
+## Points the scene at SITES[id]; false (and quits with 2) for an unknown id.
+func set_site(id: String) -> bool:
+	if not SITES.has(id):
+		printerr("selftest: unknown site %s" % id)
+		get_tree().quit(2)
+		return false
+	_site = id
+	_at = SITES[id]
+	return true
+
+
 func _build() -> void:
 	_world = World.new()
 	_world.start(Events, Data, MASTER_SEED)
@@ -57,13 +79,13 @@ func _build() -> void:
 	_city = CitySystem.new(true)
 	_world.add_system(_city)
 	_city.steer_by_input = false
-	_city.focus = JUNCTION
-	_city.target = JUNCTION
+	_city.focus = _at
+	_city.target = _at
 	var t: CityTargets = CityTargets.riot(110, 16)
 	t.cars = 40
 	t.police_cars = 4
 	_city.spawner.targets = t
-	_city.spawner.riot_c = JUNCTION
+	_city.spawner.riot_c = _at
 	_view = CityView.new()
 	add_child(_view)
 	_view.setup(_city)
@@ -77,12 +99,12 @@ func _place_markers() -> void:
 	var m: WorldMarkers = _view.markers
 	var px: float = SimConst.PX_PER_M
 	@warning_ignore("return_value_discarded")
-	m.add(&"pickup", (JUNCTION + Vector2(4.0, 3.0)) * px)
+	m.add(&"pickup", (_at + Vector2(4.0, 3.0)) * px)
 	@warning_ignore("return_value_discarded")
-	m.add(&"soul", (JUNCTION + Vector2(-5.0, -2.0)) * px)
+	m.add(&"soul", (_at + Vector2(-5.0, -2.0)) * px)
 	@warning_ignore("return_value_discarded")
-	m.add(&"objective", (JUNCTION + Vector2(3.0, -4.0)) * px)
-	m.objective = m.add(&"objective", (JUNCTION + Vector2(60.0, 20.0)) * px)
+	m.add(&"objective", (_at + Vector2(3.0, -4.0)) * px)
+	m.objective = m.add(&"objective", (_at + Vector2(60.0, 20.0)) * px)
 
 
 func _capture(zoom: float) -> Dictionary:

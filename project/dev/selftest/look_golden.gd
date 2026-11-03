@@ -25,6 +25,9 @@ const CASES: Array[Array] = [
 	[&"auto", 64],
 ]
 
+## The cases at any other --site (the block: roofs, cast shadows), saved as <site>-<look>-<ppm>.
+const SITE_CASES: Array[Array] = [[&"d4", 32], [&"d4", 48], [&"auto", 64]]
+
 var _bless: bool = false
 
 
@@ -35,6 +38,9 @@ func _ready() -> void:
 			_bless = true
 		elif arg.begins_with("--out="):
 			_out = arg.substr(6)
+		elif arg.begins_with("--site="):
+			if not set_site(arg.substr(7)):
+				return
 		else:
 			printerr("look_golden: unknown argument %s" % arg)
 			get_tree().quit(2)
@@ -44,7 +50,7 @@ func _ready() -> void:
 	@warning_ignore("return_value_discarded")
 	await _view.prewarm()
 	var rows: Array[Dictionary] = []
-	for c: Array in CASES:
+	for c: Array in CASES if _site == "junction" else SITE_CASES:
 		var look: StringName = c[0]
 		var ppm: int = c[1]
 		rows.append(await _golden(look, ppm))
@@ -60,7 +66,8 @@ func _golden(look: StringName, ppm: int) -> Dictionary:
 	var img: Image = get_viewport().get_texture().get_image()
 	# a look an overlay covers (d5-close's look_d5 present) has its own goldens (-ov)
 	var ov: String = "-ov" if LookProfiles.shared().overlay_base(look) != &"" else ""
-	var fname: String = "%s-%dppm%s.png" % [look, ppm, ov]
+	var site: String = "" if _site == "junction" else _site + "-"
+	var fname: String = "%s%s-%dppm%s.png" % [site, look, ppm, ov]
 	@warning_ignore("return_value_discarded")
 	img.save_png(_out.path_join("look-" + fname))
 	img.resize(GOLDEN_SIZE.x, GOLDEN_SIZE.y, Image.INTERPOLATE_BILINEAR)

@@ -16,6 +16,10 @@ var _palette: PaletteTokens = PaletteTokens.shared()
 
 func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--site="):
+			if not set_site(arg.substr(7)):
+				return
+			continue
 		if not arg.begins_with("--out="):
 			printerr("accent_audit: unknown argument %s" % arg)
 			get_tree().quit(2)

@@ -71,6 +71,14 @@ on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look chan
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
 
+### Selftest sites (`--site=junction|block`)
+
+`city_selftest.gd` SITES: `junction` (the riot junction every gate grew up on) and `block` (456, 428: a
+street between two built blocks - roofs, their cast shadows, kerb props, pavements). `tools/selftest/run.mjs`
+runs the look goldens and the accent gate at BOTH (block: d4 32 / 48 + auto 64, goldens
+`tests/golden/look/block-*.png`, results in `<out>/block/`). Why: the junction alone never saw a prop's
+vermilion (the plaza barrels, 4324 px) nor a roof or its shadow. Debt rows stay junction-measured.
+
 ### Cast shadows (`cast_shadows.gd`, `data/tables/cast_shadows.json`)
 
 The `building_shadows` band is the height cue. The generator bakes every building / prop / parked-car
