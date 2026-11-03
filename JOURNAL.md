@@ -1493,7 +1493,7 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   hatch at full frame but is busy at 1:1, and Rivet's cream rim merges into the light floor (he pops on the grey);
   B only darkens the grid. The D4 hybrid's own rule (sticker characters on a flat-wash ground; hatching on roofs,
   kerbs, shadows) favours the calm grey - kept. scratch-q1 floor restored (cmp equal) and re-imported. 0 Codex.
-- 05:31 Sleeves patch + a unit test (`test_rig_plans.gd::test_sleeved_looks_have_every_arm_cell`: every sleeve suffix a
+- 05:27 Sleeves patch + a unit test (`test_rig_plans.gd::test_sleeved_looks_have_every_arm_cell`: every sleeve suffix a
   crowd look wears has all 4 arm cells in the ped PartLibrary, else that look silently falls back to cream). Morning
   tree: unit **222/222**; planted fault (jacket look `"_dork"`) -> 1 failing, caught; restored. Patch regenerated
   (`evidence/iter16/rig_sleeves_and_looks.patch`, 3 files; `git apply --check` clean on n-d4 = main for these files).
