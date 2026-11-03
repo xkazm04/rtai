@@ -1107,3 +1107,10 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   gets the item44 shadow. h133ps -> h135cl: d5 7939 / 4212 px at 32 / 48 (d4 tier 6150 / 2867: the same props);
   d5 32 px/m L 0.422 -> 0.419, ink 0.179 -> 0.180, mid 0.048 -> 0.049. Actors untouched. Board
   evidence/item45_street_clutter.png; ladder row. d5_hero_run.gd now 261 lines (dev, under the 300 hard stop).
+- 04:34 D5_FRINGE=<k> dev switch (d5_hero_halo_ink.gd dev_switches: fringe_k on the part overlays): D5_FRINGE=1 h136fe
+  vs h135cl = 0/0/0/3442/5765 px (identical to the shader-edit round h130ff); no env h137 = h135cl (0 px).
+  package_shot.sh passes it through: h138all (hero) and a21all (arena) = package + fringe, tree restored.
+- 04:34 showcase frames evidence/hero-d4d5-*ppm.png and hero-d4-*ppm.png refreshed from h135cl (the committed default).
+  Board evidence/night_iter8_summary.png. Per class at 32 px/m with THIS board's classes (paper L > 0.70, mid
+  0.42-0.70, ink L < 0.15; not iteration 7's ink class): mock L 0.494 / paper 0.336 / mid 0.104 / ink 0.080;
+  h106 0.423 / 0.286 / 0.048 / 0.176; h135cl 0.419 / 0.280 / 0.049 / 0.180; h138all 0.460 / 0.311 / 0.081 / 0.097.
