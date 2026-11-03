@@ -60,6 +60,15 @@
   "note": "Same frozen moment (the 3rd pop of the riot, cop firing at a rioter right of Rivet). 32 px/m: frames/pop-3-32ppm-pair.png."
  },
  {
+  "file": "frames/pop-strength-ab-64ppm.png",
+  "title": "Owner A/B: muzzle pop strength off / 0.20 / 0.32 (default) / 0.45",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": "Same frozen tick (3rd pop of the riot), city_fight --pop-shots=3 --pop-strength=<s>. At 0.45 the ink lines lift to grey (the black-and-white read weakens); 0.32 kept. Data: blood_fx.json game.muzzle_pop.strength."
+ },
+ {
   "file": "clip-it2-stains-pop-64ppm.mp4",
   "title": "15 s riot clip at 64 px/m, real time: blood + stains on the dead + muzzle pops",
   "source": "game-city",
@@ -114,15 +123,6 @@
   "look": "auto (D4->D5)",
   "ppm": 48,
   "note": "collect_call frame grabber (CollectCallView via PrintStage): Events.actor_killed -> blood under the dead guards (bottom right)."
- },
- {
-  "file": "clip-blood-noir-64ppm.mp4",
-  "title": "15 s riot clip at 64 px/m",
-  "source": "game-city",
-  "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": ""
  },
  {
   "file": "beat-both-64ppm-realtime.mp4",

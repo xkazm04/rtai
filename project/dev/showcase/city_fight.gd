@@ -9,6 +9,7 @@ extends Node
 ##   [--no-stains]  hides the blood on the dead (CorpseStains): the before frame of that change.
 ##   [--pop-shots=<k>,...]  at the k-th muzzle pop: freezes and shoots every --zooms zoom with
 ##   the pop on, then off (pop-on/pop-off-<k>-<ppm>.png): the same moment, A/B.
+##   [--pop-strength=<0..1>]  overrides game.muzzle_pop.strength (the owner's A/B).
 ##   [--no-pop]  no muzzle pop (MuzzlePop): the before frame of that change.
 ##   [--hit-rivet=<ticks>]  Rivet takes a Robo-tazer hit (Events.player_hit) every <ticks>, wired
 ##   as boot/world.gd wires the game (fx_triggers.listen): sparks, crackle, his oil.
@@ -36,6 +37,7 @@ var _beat_frames: int = 0
 var _clip: Vector2i = Vector2i.ZERO
 var _no_stains: bool = false
 var _no_pop: bool = false
+var _pop_strength: float = -1.0
 var _pop_shots: Array[int] = []
 var _world: World = null
 var _city: CitySystem = null
@@ -57,15 +59,12 @@ func _ready() -> void:
 	_city.focus = p
 	_city.target = p
 	_city.spawner.riot_c = p
-	var t: CityTargets = CityTargets.riot(40, 8)
-	_city.spawner.targets = t
+	_city.spawner.targets = CityTargets.riot(40, 8)
 	_view = CityView.new()
 	add_child(_view)
 	_view.setup(_city)
 	_chars = CityCharacters.new(_city, _view, _world.context())
-	_chars.blood.stains.visible = not _no_stains
-	if _no_pop and _chars.blood.pop != null:
-		_chars.blood.pop.lit_gap = 1 << 30
+	_dev_overrides()
 	await _chars.bake()
 	await _view.prewarm()
 	_wire()
@@ -83,6 +82,18 @@ func _ready() -> void:
 	printerr(_summary())
 	_print_pops()
 	get_tree().quit(0 if ok else 1)
+
+
+## The A/B switches: --no-stains, --no-pop, --pop-strength.
+func _dev_overrides() -> void:
+	_chars.blood.stains.visible = not _no_stains
+	var pop: MuzzlePop = _chars.blood.pop
+	if pop == null:
+		return
+	if _pop_strength >= 0.0:
+		pop.strength = _pop_strength
+	if _no_pop:
+		pop.lit_gap = 1 << 30
 
 
 func _print_pops() -> void:
@@ -264,6 +275,8 @@ func _parse_args() -> bool:
 		elif arg.begins_with("--pop-shots="):
 			for v: String in arg.substr(12).split(","):
 				_pop_shots.append(v.to_int())
+		elif arg.begins_with("--pop-strength="):
+			_pop_strength = arg.substr(15).to_float()
 		elif arg == "--no-pop":
 			_no_pop = true
 		elif arg == "--no-stains":
