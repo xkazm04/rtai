@@ -1369,3 +1369,6 @@ NEXT (session end, iteration 14):
   prints as solid inked bolts (was dither-speckled), the muzzle as a solid star; the spark is about the same, so it is
   left out. `evidence/iter14/fx_fade.patch` (muzzle + crackle, 2 lines; `git apply --check` clean on n-visual)
   replaces `fx_muzzle_fade.patch` (removed). Scratch removed.
+- 04:54 FRICTION (mine): e34e82f was staged with `git add -A evidence/iter14/ ...` (path-scoped, but AGENTS rule 1 bans
+  `-A`); it staged exactly the 3 intended paths (the patch rename, README, JOURNAL). Per-path `git add` / `git rm` only
+  from here.
