@@ -1203,3 +1203,30 @@ NEXT (iteration 14 / morning, in order):
   394 / 394. LOOKED: the street prints the mock's charcoal instead of a reddish brown; night arena same
   read, vermilion holds. 51-age-gains/ (cmp64-old-new-mock.png, cmp-night64.png), ladder 51. On this
   branch alone nothing moves (no look_d5 = rect hidden); unit 241. READMEs + decision line updated.
+- Iteration 14 tally: frames rejected for camera 0 (all engine captures, straight down); approaches
+  rejected 1 (quest patch v2: broke n-noir's quest_fight, superseded by v3); re-runs: 2 (bench export
+  failed on a missing export dir in the fresh worktree; city_selftest needs its out dir to exist) - both
+  setup, not results. Scratch worktree scratch-visual-trial14 (mine) removed after diffing the v3 patch
+  against it; scratch-q1 / scratch-v3 are not mine (untouched). The look_d5.params.json age_floor edits
+  were scratch-only and restored by git checkout each time. No AI images (no codex) -> no provenance.
+  Ladder rows 48-51 (1280 x 25770).
+
+NEXT (iteration 15 / morning, in order):
+1. Director merge (merge-tree at 06:44: JOURNAL.md-only conflicts vs n-d4 / n-d5 / n-noir, main clean;
+   NEW: n-d4 and n-d5 both add `evidence/README.md` -> add/add conflict between those two lanes). After it:
+   - re-bless the goldens once: n-d4's art moves every d4 golden; the `-ov` overlay goldens (5 + 5) do not
+     exist until look_d5 lands (the selftest reports them as worst 255 = missing, not broken);
+   - page age goes live with n-d5's look_d5 (a84bd39 + 6592ebd): check auto 64 px/m on the merged build
+     once more (48-trial14 / 51-age-gains are the expected frames);
+   - quest 1: apply 49-quest1-v2/quest1-on-print_stage-v3.patch AFTER n-noir (it touches n-noir's
+     dev/noir/quest_fight.gd; README.txt there). listen() waits for quest 1 running on World's SimClock;
+   - move CityView onto PrintStage; `--reduced-motion` launch flag (KNOWN_FLAGS + World); n-d4's FX sheet
+     crackle on Rivet at 32 px/m (unreadable, 46-tazer).
+2. Owner calls (rendered, one number each): age_floor 1 = the mock's sepia over the whole page at gameplay
+   zoom (+0.3-0.6 ms iGPU at 48 px/m, 50-age-floor) vs iteration 11's zero-cost paper hex; grain_floor needs
+   the whole D5 overlay drawn at gameplay zoom (~+2 ms iGPU) - not wired; the D4 -> D5 ramp start (48 px/m
+   0 today; 0.35 = d5-close's ask); fire flicker; night tuning; objective core; cop accent.
+3. Page-age known limit: lights, emissive FX (paper) and markers draw above the grade rect and stay D4 cream
+   at 64 px/m.
+4. Idle bench still not had (merged build contended: p99 2.47 ms PASS, evidence/trial-merge14).
+5. Unchanged: rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
