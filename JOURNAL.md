@@ -129,3 +129,8 @@
 - Unit on f053e6f: every failure is in `test_save_slots` (13 tests, 358 asserts in its
   1000-write loop, plus a save_kit index error from the same collision). It's the shared
   user-dir collision noted above; all other suites pass.
+- 21:25 Confirmed the save-slot flake is environmental: `test_save_slots` on merged main
+  (int-day, baf2e80) gave 15 pass / 1 fail at 21:24; on e-motion one minute later, 16/16 pass.
+  No save code differs from baf2e80. Gates at session end: lint 13/13; unit = everything except
+  this flake (it passed alone at 21:25); scenarios exit 0 (a692b60); parity exact and look goldens
+  11/11 unblessed (0287cec evidence run). Session ends 21:35.
