@@ -1,0 +1,57 @@
+class_name GunHand
+extends RefCounted
+## The bridge from the weapon table to the arena's combat (CombatArena.gun): Rivet's held gun as
+## a Trigger (semi on the press edge, bloom that recovers, magazine, reload) whose shots fly as
+## CombatArena Shots with the row's speed, range and spread. Damage converts from table hp
+## points (a human is target_hp.human) into Fighter hp (a human is 1). Null in quest 1, so the
+## quest's own weapons and goldens stay as they are.
+
+var trigger: Trigger
+var shots_fired: int = 0
+var _hp_scale: float = 0.01
+var _rng: RandomNumberGenerator
+var _pulled: bool = false
+
+
+static func make(table: WeaponTable, weapon: StringName, rng: RandomNumberGenerator) -> GunHand:
+	var g: GunHand = GunHand.new()
+	g.trigger = Trigger.new(table.weapon(weapon))
+	var human_hp: float = table.target_hp.get(&"human", 100.0)
+	g._hp_scale = 1.0 / maxf(human_hp, 1.0)
+	g._rng = rng
+	return g
+
+
+## The fire button is held this tick, aiming at `at`; returns the shots that leave (maybe none).
+func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
+	_pulled = true
+	var out: Array[Shot] = []
+	var aim: Vector2 = (at - shooter.pos).normalized()
+	if aim == Vector2.ZERO or not trigger.pull(true):
+		return out
+	var w: WeaponSpec = trigger.spec
+	for i: int in w.pellets:
+		var dir: Vector2 = trigger.shot_dir(aim, _rng)
+		var s: Shot = Shot.new()
+		s.pos = shooter.pos + dir * (shooter.radius_m + 0.1)
+		s.vel = dir * w.speed_mps
+		s.from_rivet = true
+		s.weapon = w.id
+		s.damage = w.damage * _hp_scale
+		s.left_m = w.range_m
+		s.shooter_id = shooter.id
+		out.append(s)
+	trigger.add_bloom()
+	shots_fired += 1
+	shooter.facing = aim
+	return out
+
+
+## Once per tick after the pulls: a tick without a pull is a release (semi needs the edge), then
+## the trigger's cooldown, bloom and reload advance.
+func settle() -> void:
+	if not _pulled:
+		@warning_ignore("return_value_discarded")
+		trigger.pull(false)
+	_pulled = false
+	trigger.step()
