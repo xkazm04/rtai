@@ -456,3 +456,14 @@ NEXT (night run): unchanged from iteration 6's NEXT list above (1: gates on the 
 per REQUEST 7; 2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot;
 4: the 48 px/m vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it;
 5: dummies' own look).
+
+## Iteration 8 (BUILD, 23:22-23:30, freeze 23:30)
+- 23:22 answers.json re-read: no new answer to an arena ask (arena-1 C and arena-2 A stand as placeholders
+  per the owner's 21:25 rule; re-ask only with a real-time clip in the final look).
+- 8 minutes to freeze: again too short for a code change plus the four gates, so no code. Checked that
+  `gtai-masters/eve/arena/frames.json` has 15 entries and every `file` exists on disk (0 missing). Worktree
+  clean. Last code commit stays a08445f (lint 13/13, unit 569/569 alone, scenarios 24/24).
+
+NEXT (night run): unchanged from iteration 6's list (1: gates on the merged tree, unit alone per REQUEST 7;
+2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot; 4: the 48 px/m
+vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it; 5: dummies' own look).
