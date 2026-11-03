@@ -1,6 +1,7 @@
 extends Scenario
 ## features/combat/ai waves in the pit: every difficulty curve of enemy_waves.json runs against a
-## scripted Rivet with a human-like profile (reacts 0.25 s after a tell, notices 70 % of them,
+## scripted Rivet with a human-like profile (reacts 0.25 s after a tell, notices 70 % of them and
+## does not sidestep rounds already in flight,
 ## nails what it sees inside 16 m with 4 degrees of aim error). Judges: the live curve clears
 ## every wave, waves never overlap (no more alive than the wave's own size), the breather holds
 ## between waves, the same seed replays to the same digest.
@@ -41,6 +42,7 @@ func _curve(table: PitWaves, curve: StringName, plant: bool, seed_value: int) ->
 	dummy.react_ticks = REACT_TICKS
 	dummy.read_frac = READ_FRAC
 	dummy.aim_err_deg = AIM_ERR_DEG
+	dummy.watch_rounds = false
 	var wr: WaveRun = WaveRun.new(table, curve)
 	wr.plant_overlap = plant
 	return PitLayout.wave_fight(pit, dummy, wr, MAX_S)

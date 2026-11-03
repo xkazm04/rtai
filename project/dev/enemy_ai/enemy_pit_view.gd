@@ -5,6 +5,7 @@ extends Node2D
 ## gun tell (thin while the aim tracks, thick once it locks), the vermilion arc a melee windup.
 ## Usage: godot --rendering-driver d3d12 --path project res://dev/enemy_ai/enemy_pit_view.tscn
 ##   -- --out=<dir> --squad=<id,id,...> [--mode=stand|dodge|fight] [--seconds=<s>] [--seed=<n>]
+##   [--curve=gentle|standard|steep (waves instead of --squad)] [--human=1] [--every=<ticks>]
 
 const PPM: float = 32.0
 const ORIGIN: Vector2 = Vector2(640.0, 448.0)
@@ -18,6 +19,8 @@ var _pit: EnemyPit = null
 var _dummy: PitDummy = null
 var _out: String = ""
 var _ticks: int = 900
+var _waves: WaveRun = null
+var _every: int = 1
 
 
 func _ready() -> void:
@@ -30,7 +33,12 @@ func _ready() -> void:
 	var ids: Array[StringName] = []
 	for id: String in _arg(args, "squad", "patrol_cop,swat,riot_cop").split(","):
 		ids.append(StringName(id))
-	PitLayout.squad(_pit, ids)
+	var curve: String = _arg(args, "curve", "")
+	if curve == "":
+		PitLayout.squad(_pit, ids)
+	else:
+		_waves = WaveRun.new(PitWaves.shipped(), StringName(curve))
+	_every = int(_arg(args, "every", "1"))
 	var mode: PitDummy.Mode = PitDummy.Mode.FIGHT
 	match _arg(args, "mode", "fight"):
 		"stand":
@@ -40,6 +48,11 @@ func _ready() -> void:
 	_dummy = PitDummy.new(mode, _pit.rivet_pos)
 	_dummy.fire_m = float(_arg(args, "fire_m", "10"))
 	_pit.rivet_hp = float(_arg(args, "hp", "100"))
+	if _arg(args, "human", "0") == "1":
+		_dummy.react_ticks = 15
+		_dummy.read_frac = 0.7
+		_dummy.aim_err_deg = 4.0
+		_dummy.watch_rounds = false
 	var made: Error = DirAccess.make_dir_recursive_absolute(_out)
 	assert(made == OK or DirAccess.dir_exists_absolute(_out))
 	_run.call_deferred()
@@ -47,14 +60,20 @@ func _ready() -> void:
 
 func _run() -> void:
 	while _pit.tick < _ticks:
+		if _waves != null:
+			_waves.step(_pit)
 		_dummy.step(_pit)
 		_pit.step()
+		if _pit.tick % _every != 0:
+			continue
 		queue_redraw()
 		await RenderingServer.frame_post_draw
 		var img: Image = get_viewport().get_texture().get_image()
 		var saved: Error = img.save_png("%s/f%05d.png" % [_out, _pit.tick])
 		assert(saved == OK)
-	var report: String = JSON.stringify(_pit.stats)
+	var report: String = JSON.stringify(
+		_pit.stats if _waves == null else {"waves": _waves.report()}
+	)
 	var f: FileAccess = FileAccess.open(_out + "/stats.json", FileAccess.WRITE)
 	var wrote: bool = f.store_string(report)
 	f.close()
@@ -76,6 +95,8 @@ func _draw() -> void:
 	draw_circle(rp, _pit.rivet_radius * PPM, Color(0.3, 0.31, 0.33))
 	draw_arc(rp, _pit.rivet_radius * PPM * 0.8, 0.0, TAU, 24, DANGER, 3.0)
 	var hp: String = "Rivet hp %d   t %.1f s" % [_pit.rivet_hp, _pit.tick * SimClock.TICK_DT]
+	if _waves != null:
+		hp += "   wave %d" % (_waves.index + 1)
 	draw_string(ThemeDB.fallback_font, Vector2(16, 28), hp, HORIZONTAL_ALIGNMENT_LEFT, -1, 20)
 
 

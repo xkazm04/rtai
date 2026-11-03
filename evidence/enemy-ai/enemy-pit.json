@@ -2,7 +2,7 @@
   "archetypes": {
     "patrol_cop": {
       "cleared": true,
-      "digest": "715f6a18ce7b131e",
+      "digest": "ab5b9750295ed3a6",
       "hit_rate": 0.0,
       "kills": 3.0,
       "max_attackers": 2.0,
@@ -10,7 +10,7 @@
       "nails": 3.0,
       "rivet_damage": 0.0,
       "rivet_hp": 100.0,
-      "seconds": 14.35,
+      "seconds": 14.25,
       "shot_hits": 0.0,
       "shots": 10.0,
       "swing_hits": 0.0,
@@ -19,41 +19,41 @@
     },
     "riot_cop": {
       "cleared": true,
-      "digest": "6965dafba9406eab",
+      "digest": "7506d3b598f6f0bb",
       "hit_rate": 0.0,
       "kills": 3.0,
       "max_attackers": 2.0,
       "nail_hits": 33.0,
       "nails": 33.0,
-      "rivet_damage": 24.0,
-      "rivet_hp": 76.0,
+      "rivet_damage": 36.0,
+      "rivet_hp": 64.0,
       "seconds": 17.47,
       "shot_hits": 0.0,
       "shots": 0.0,
-      "swing_hits": 2.0,
+      "swing_hits": 3.0,
       "swings": 4.0,
-      "tells": 11.0
+      "tells": 9.0
     },
     "robot_gunner": {
-      "cleared": false,
-      "digest": "914d2ee62b9e2289",
+      "cleared": true,
+      "digest": "497cb005976b64f5",
       "hit_rate": 0.0,
-      "kills": 0.0,
+      "kills": 3.0,
       "max_attackers": 2.0,
-      "nail_hits": 0.0,
-      "nails": 0.0,
+      "nail_hits": 12.0,
+      "nails": 12.0,
       "rivet_damage": 0.0,
       "rivet_hp": 100.0,
-      "seconds": 40.0,
+      "seconds": 18.45,
       "shot_hits": 0.0,
-      "shots": 13.0,
+      "shots": 9.0,
       "swing_hits": 0.0,
       "swings": 0.0,
-      "tells": 14.0
+      "tells": 18.0
     },
     "robot_thug": {
       "cleared": true,
-      "digest": "b456de0c8df7c683",
+      "digest": "1e061460ef3f408b",
       "hit_rate": 0.0,
       "kills": 3.0,
       "max_attackers": 1.0,
@@ -69,30 +69,30 @@
       "tells": 1.0
     },
     "swat": {
-      "cleared": true,
-      "digest": "711b140110454084",
+      "cleared": false,
+      "digest": "a8e4186f88f9b7fb",
       "hit_rate": 0.0,
-      "kills": 3.0,
+      "kills": 1.0,
       "max_attackers": 2.0,
-      "nail_hits": 6.0,
-      "nails": 6.0,
+      "nail_hits": 3.0,
+      "nails": 3.0,
       "rivet_damage": 0.0,
       "rivet_hp": 100.0,
-      "seconds": 22.92,
+      "seconds": 40.0,
       "shot_hits": 0.0,
-      "shots": 34.0,
+      "shots": 72.0,
       "swing_hits": 0.0,
       "swings": 0.0,
-      "tells": 14.0
+      "tells": 25.0
     }
   },
   "cover": {
-    "hidden_frac": 0.781
+    "hidden_frac": 0.609
   },
   "determinism": {
-    "a": "037a7daef2bae9df",
-    "b": "037a7daef2bae9df",
-    "other_seed": "4dd1237482ae9192"
+    "a": "f54b2afc19af41c8",
+    "b": "f54b2afc19af41c8",
+    "other_seed": "bcbda79d564aafd7"
   },
   "dodge": {
     "cleared": false,

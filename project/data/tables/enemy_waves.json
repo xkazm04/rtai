@@ -1,6 +1,6 @@
 {
   "breather_s": 3,
-  "curve": "standard",
+  "curve": "steep",
   "curves": {
     "gentle": [
       {

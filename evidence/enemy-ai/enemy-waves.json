@@ -1,0 +1,236 @@
+{
+  "breather_s": 3.0,
+  "curves": {
+    "gentle": {
+      "digest": "964f128656cf0f9e",
+      "done": true,
+      "left": [],
+      "rivet_damage": 0.0,
+      "seconds": 49.1,
+      "waves": [
+        {
+          "cleared": true,
+          "enemies": 3,
+          "max_alive": 3,
+          "nails": 7.0,
+          "rivet_damage": 0.0,
+          "seconds": 8.18,
+          "shot_hits": 0.0,
+          "shots": 3.0,
+          "start_s": 0.0,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w1"
+        },
+        {
+          "cleared": true,
+          "enemies": 4,
+          "max_alive": 4,
+          "nails": 37.0,
+          "rivet_damage": 0.0,
+          "seconds": 16.55,
+          "shot_hits": 0.0,
+          "shots": 8.0,
+          "start_s": 11.18,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w2"
+        },
+        {
+          "cleared": true,
+          "enemies": 5,
+          "max_alive": 5,
+          "nails": 24.0,
+          "rivet_damage": 0.0,
+          "seconds": 15.35,
+          "shot_hits": 0.0,
+          "shots": 17.0,
+          "start_s": 30.73,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w3"
+        }
+      ]
+    },
+    "standard": {
+      "digest": "0d281e9c974d9f9a",
+      "done": true,
+      "left": [],
+      "rivet_damage": 0.0,
+      "seconds": 55.6,
+      "waves": [
+        {
+          "cleared": true,
+          "enemies": 4,
+          "max_alive": 4,
+          "nails": 12.0,
+          "rivet_damage": 0.0,
+          "seconds": 7.87,
+          "shot_hits": 0.0,
+          "shots": 4.0,
+          "start_s": 0.0,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w1"
+        },
+        {
+          "cleared": true,
+          "enemies": 5,
+          "max_alive": 5,
+          "nails": 40.0,
+          "rivet_damage": 0.0,
+          "seconds": 18.23,
+          "shot_hits": 0.0,
+          "shots": 29.0,
+          "start_s": 10.87,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w2"
+        },
+        {
+          "cleared": true,
+          "enemies": 6,
+          "max_alive": 6,
+          "nails": 49.0,
+          "rivet_damage": 0.0,
+          "seconds": 20.48,
+          "shot_hits": 0.0,
+          "shots": 15.0,
+          "start_s": 32.1,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w3"
+        }
+      ]
+    },
+    "steep": {
+      "digest": "d073c7873de83ebc",
+      "done": true,
+      "left": [],
+      "rivet_damage": 28.0,
+      "seconds": 72.02,
+      "waves": [
+        {
+          "cleared": true,
+          "enemies": 5,
+          "max_alive": 5,
+          "nails": 41.0,
+          "rivet_damage": 0.0,
+          "seconds": 16.93,
+          "shot_hits": 0.0,
+          "shots": 18.0,
+          "start_s": 0.0,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w1"
+        },
+        {
+          "cleared": true,
+          "enemies": 6,
+          "max_alive": 6,
+          "nails": 44.0,
+          "rivet_damage": 4.0,
+          "seconds": 19.63,
+          "shot_hits": 1.0,
+          "shots": 38.0,
+          "start_s": 19.93,
+          "swing_hits": 0.0,
+          "swings": 1.0,
+          "wave": "w2"
+        },
+        {
+          "cleared": true,
+          "enemies": 8,
+          "max_alive": 8,
+          "nails": 63.0,
+          "rivet_damage": 20.0,
+          "seconds": 26.43,
+          "shot_hits": 2.0,
+          "shots": 36.0,
+          "start_s": 42.57,
+          "swing_hits": 0.0,
+          "swings": 0.0,
+          "wave": "w3"
+        }
+      ]
+    }
+  },
+  "live_curve": "steep",
+  "lock_vs_react": {
+    "0.12": 0.237,
+    "0.20": 0.211,
+    "0.30": 0.0
+  },
+  "planted_overlap": {
+    "digest": "d5560565aa131d6f",
+    "done": true,
+    "left": [
+      "patrol_cop ENGAGE (-5.342853, -0.027511) seen (-8.971042, 8.368369) sees true",
+      "riot_cop ENGAGE (-10.41391, 0.923761) seen (-8.971042, 8.368369) sees true",
+      "patrol_cop ENGAGE (-1.147148, -1.277324) seen (-8.971042, 8.368369) sees true",
+      "riot_cop ENGAGE (-8.804778, -0.64407) seen (-8.971042, 8.368369) sees true",
+      "patrol_cop ENGAGE (1.477843, 3.850672) seen (-9.287561, 6.606767) sees false",
+      "swat COVER (-2.939826, -4.171661) seen (-8.971042, 8.368369) sees true",
+      "riot_cop STAGGER (-5.935024, 7.171187) seen (-8.971042, 8.368369) sees true",
+      "robot_thug ENGAGE (5.55867, 1.590133) seen (-9.135221, 7.426059) sees false",
+      "swat ENGAGE (-0.790361, -7.740862) seen (-9.9593, 2.198921) sees false",
+      "riot_cop ENGAGE (-5.358285, 9.975809) seen (-8.971042, 8.368369) sees true",
+      "swat COVER (7.009434, -9.482795) seen (-11.50844, 2.681572) sees false",
+      "swat ENGAGE (3.855477, -2.157437) seen (-9.135221, 7.426059) sees false",
+      "robot_gunner ENGAGE (11.36647, -1.691528) seen (-11.93049, 0.074896) sees false",
+      "robot_thug ENGAGE (-2.397675, 11.54524) seen (-8.971042, 8.368369) sees true",
+      "riot_cop ENGAGE (12.62794, 0.312256) seen (-11.50844, 2.681572) sees false",
+      "swat COVER (8.258958, -10.17131) seen (-8.957493, 8.381899) sees false",
+      "robot_gunner ENGAGE (16.631, 1.237592) seen (-9.405353, 5.973178) sees false",
+      "robot_thug ENGAGE (4.993338, 12.50024) seen (-8.971042, 8.368369) sees true",
+      "riot_cop ALERT (18.0, 1.0) seen (-8.952133, 8.420609) sees false"
+    ],
+    "rivet_damage": 0.0,
+    "seconds": 9.67,
+    "waves": [
+      {
+        "cleared": false,
+        "enemies": 5,
+        "max_alive": 4,
+        "nails": 0.0,
+        "rivet_damage": 0.0,
+        "seconds": 2.4,
+        "shot_hits": 0.0,
+        "shots": 0.0,
+        "start_s": 0.0,
+        "swing_hits": 0.0,
+        "swings": 0.0,
+        "wave": "w1"
+      },
+      {
+        "cleared": false,
+        "enemies": 6,
+        "max_alive": 10,
+        "nails": 8.0,
+        "rivet_damage": 0.0,
+        "seconds": 3.0,
+        "shot_hits": 0.0,
+        "shots": 3.0,
+        "start_s": 2.42,
+        "swing_hits": 0.0,
+        "swings": 0.0,
+        "wave": "w2"
+      },
+      {
+        "cleared": false,
+        "enemies": 8,
+        "max_alive": 18,
+        "nails": 12.0,
+        "rivet_damage": 0.0,
+        "seconds": 4.2,
+        "shot_hits": 0.0,
+        "shots": 9.0,
+        "start_s": 5.43,
+        "swing_hits": 0.0,
+        "swings": 0.0,
+        "wave": "w3"
+      }
+    ]
+  },
+  "replay": "d073c7873de83ebc"
+}
