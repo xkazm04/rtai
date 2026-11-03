@@ -947,3 +947,4 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   the turntable rim, hazard stripes and King's sprite keep their lines. Pan: pan15se / pan15seR = pan12thin /
   pan12thinR (0.00049 / 0.00000). Params JSON print.street_edge 1.0; unit 149/0. Board evidence/item37_street_edge.png;
   ladder row. (item29-32 and h109all/item35 were shot without it; h115se1 is the package's frame from here.)
+- 03:51 boards item35_all_proposals_iter7.png and night_iter7_summary.png rebuilt from h115se1 (+ a17se1 for the arena kill-cam); gap list numbers updated (L 0.468, ink 0.11).

@@ -62,10 +62,10 @@ tick count, no RNG.
 | `item32_print_world_grain.png` | iteration 7: the look_d5_print proposal's paper grain moved to world pixels; 48 px/m car pan (40 ticks) stills + change maps: look_d4 / print with screen grain / print with world grain, junction (0.00739 / 0.00814 / 0.00049) and mural roof (0.00975 / 0.01075 / 0.00000) |
 | `item33_strike_lane.png` | iteration 7: STRIKE and the fist stencil inside the west lane instead of across the centre line (gap 7), h105 vs h106 at 48 and 32 px/m |
 | `item34_halo_ink.png` | iteration 7, PROPOSAL for the characters lane: the thin ink line outside the cream sticker rim (look_d5_halo, D5_HALO=ink), h106 vs h107ink at 32 px/m x3 + the mock's stickers (at the mock's own scale) |
-| `item35_all_proposals_iter7.png` | iteration 7, FOR THE MORNING (supersedes item31): committed h106 vs h106 + every open proposal (look_d5_print with world grain, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45, look_d5_halo line + shadow; h109all, not committed) at 32/48/64 + the mock + the concept |
+| `item35_all_proposals_iter7.png` | iteration 7, FOR THE MORNING (supersedes item31): committed h106 vs h106 + every open proposal (look_d5_print with world grain + street_edge, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45, look_d5_halo line + shadow; h115se1, not committed) at 32/48/64 + the mock + the concept |
 | `item36_arena_all_proposals.png` | iteration 7: the boss arena up close, committed (a16 = a15) vs every open proposal (a16all) at 64 and 128 px/m + the concept: no regression where D5 lives |
 | `item37_street_edge.png` | iteration 7: look_d5_print `street_edge` (no edge ink on the dark wash step: road paint without ink rings, as in the mock), h109all vs h115se1 at 32 px/m x3 + the mock, and the arena at 64/128 (a16all vs a17se1) |
-| `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h109all at 32 px/m, the mock, h109all at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
+| `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h115se1 at 32 px/m, the mock, h115se1 at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -218,19 +218,20 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
-## Gap list after iteration 7 (in-engine h106 committed / h109all with every open proposal, vs `d4h2_mock.jpg` and the concept)
+## Gap list after iteration 7 (in-engine h106 committed / h115se1 with every open proposal, vs `d4h2_mock.jpg` and the concept)
 Iteration 7 had no image budget; it finished the open proposals and measured them as one package. At 32 px/m the
-package (`item35`) matches the mock PER TONE CLASS: street share / median L 0.46 / 0.288 (mock 0.45 / 0.290), paper
-0.32 / 0.856 (mock 0.33 / 0.867), solid ink 0.14 (mock 0.12); committed h106 has ink 0.20 and paper 0.28. It pans
+package (`item35`, h115se1) matches the mock PER TONE CLASS: street median 80,69,71 (mock 81,70,71) at share 0.49
+(mock 0.45), paper 0.32 / 244,220,192 (mock 0.33 / 245,222,195), solid ink 0.11 (mock 0.12; 0.14 before
+`street_edge`, `item37`); committed h106 has ink 0.20 and paper 0.28. It pans
 with no swim (48 px/m: junction 0.00049, roof 0.00000; shipped look_d4 0.00739 / 0.00975), keeps the actor read
 (rim dL 0.610, vermilion dE 77.5, teal dE 57.6 vs h106 0.604 / 81.2 / 56.9), and is neutral up close (`item36`).
 What still separates us, largest first:
-1. **The package is not adopted** (all default-off): look_d5_print (dark-side edges + world grain), look_d5
+1. **The package is not adopted** (all default-off): look_d5_print (dark-side edges + world grain + street_edge), look_d5
    `age_floor` + `grain_floor` 1.0, the D5 roof plates' lines at gamma 0.45 (union hall 0.65; build_roofs.py env
    `D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65`), look_d5_halo line + shadow. Next: visual-engine lane +
    owner decide on `item35`; if the print is adopted, d5-close rebuilds the roof plates at 0.45 (one command) and the
    characters lane moves the halo pass into rig_build.gd `_halo`.
-2. **Mid-tones**: the whole frame is still L 0.462 vs 0.488. Colour is matched (paper median 244,220,192 vs the
+2. **Mid-tones**: the whole frame is still L 0.468 vs 0.488. Colour is matched (paper median 244,220,192 vs the
    mock's 245,222,195; street 80,69,71 vs 81,70,71, with `age_floor` 1.0; 0.6 was worse, h112af06). What is left is
    the mid-tone share (L 0.42-0.70): 0.08 vs the mock's 0.11 (h106 0.05): the print posterizes into paper / wash /
    ink steps where the mock keeps soft greys. Lifting the street is the WRONG lever (rejected h111wh15: street 0.332
