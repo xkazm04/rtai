@@ -4,6 +4,8 @@ extends Node2D
 ## the Robo-tazer's arc ball (the inked fx_arcball loop with an ink + cream zigzag tether back to
 ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
 
+const TRACER_TAIL_M: float = 2.5
+
 var stage: CollectCallStage
 ## Whisper rings hold still (no growth, no spin) when set (the settings flag).
 var reduced_motion: bool = false
@@ -26,6 +28,9 @@ func _draw() -> void:
 	for d: Vector2 in arena.rifle_drops:
 		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
 	for s: Shot in arena.shots:
+		if s.from_rivet and arena.gun != null:
+			_tracer(s)
+			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
 	for b: ArcBall in arena.balls:
@@ -34,6 +39,15 @@ func _draw() -> void:
 	_whispers()
 	if stage.crates_burning:
 		_fire()
+
+
+## Lane gunplay: a table gun's round as a tracer readable at 32 px/m (a 2.5 m tail, cream core
+## in an ink casing, a cream head).
+func _tracer(s: Shot) -> void:
+	var tail: Vector2 = s.pos - s.vel.normalized() * TRACER_TAIL_M
+	draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 9.0)
+	draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), Ink.CREAM, 4.0)
+	draw_circle(Ink.px(s.pos), 5.0, Ink.CREAM)
 
 
 func _ball(b: ArcBall) -> void:

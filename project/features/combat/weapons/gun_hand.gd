@@ -8,6 +8,9 @@ extends RefCounted
 
 var trigger: Trigger
 var shots_fired: int = 0
+## A bot's held fire button: a semi gun re-taps as soon as it is ready (dev scenes and bots
+## only; a player's semi gun needs a new press).
+var tap: bool = false
 var _hp_scale: float = 0.01
 var _rng: RandomNumberGenerator
 var _pulled: bool = false
@@ -27,6 +30,9 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 	_pulled = true
 	var out: Array[Shot] = []
 	var aim: Vector2 = (at - shooter.pos).normalized()
+	if tap and trigger.cooldown == 0 and not trigger.reloading():
+		@warning_ignore("return_value_discarded")
+		trigger.pull(false)
 	if aim == Vector2.ZERO or not trigger.pull(true):
 		return out
 	var w: WeaponSpec = trigger.spec

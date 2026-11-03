@@ -32,6 +32,9 @@ const ALLY_ART: Dictionary[String, String] = {
 
 var stage: CollectCallStage
 var port: CollectCallWorld
+## Lane gunplay: the shared hit feel's flash, drawn as an inked impact star behind the struck
+## figure (null in quest 1 until a gun is wired).
+var hit_link: HitLink = null
 
 
 func _process(_delta: float) -> void:
@@ -47,6 +50,7 @@ func _draw() -> void:
 		for p: Vector2 in stage.patrol_pos:
 			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
 	for h: Fighter in stage.arena.hostiles:
+		_impact(h)
 		if h.kind == Fighter.Kind.BOSS:
 			_mertz(h)
 		elif h.alive():
@@ -102,6 +106,23 @@ func _tazer_charge(m: Fighter, muzzle: Vector2, dir: Vector2) -> void:
 		for k: int in 3:
 			var tip: Vector2 = muzzle + dir.rotated(-0.8 + k * 0.8) * (0.5 + frac * 0.6)
 			Ink.zigzag(self, muzzle, tip, 4, tazer.ticks + k, Ink.VERMILION)
+
+
+## The hit flash: a cream star with an ink rim behind the victim, big on the hit, shrinking out.
+func _impact(f: Fighter) -> void:
+	var k: float = hit_link.flash(f) if hit_link != null else 0.0
+	if k <= 0.0:
+		return
+	var pts: PackedVector2Array = PackedVector2Array()
+	@warning_ignore("return_value_discarded")
+	pts.resize(17)
+	var spin: float = float(f.id) * 0.7
+	for i: int in 16:
+		var r: float = (1.15 if i % 2 == 0 else 0.55) * (0.6 + 0.6 * k)
+		pts[i] = Ink.px(f.pos + Vector2.from_angle(spin + TAU * i / 16.0) * r)
+	pts[16] = pts[0]
+	draw_colored_polygon(pts.slice(0, 16), Ink.CREAM)
+	draw_polyline(pts, Ink.INK, 3.0, true)
 
 
 ## Ink on cream: teal belongs to the dead (D4 doctrine), not to a health bar.
