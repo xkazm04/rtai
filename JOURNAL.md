@@ -799,6 +799,6 @@ NEXT (addendum): 26. Visual-engine lane: A/B look_d5_print (dark-side edges) as 
   across the roof while the tone stays light: the first time tonight a roof holds hatch AND tone (iteration 5's
   "tone OR lines" was the print, not the art). Not committed (depends on the print being adopted). Board
   evidence/item30_thin_print_roof.png; README gap 2; ladder row. NEXT 26 holds: print first, then the plate gamma.
-- 03:07 MEASURED readability under look_d5_print (street band at 32 px/m, h101 -> h101thin): street L 0.294 = 0.294,
+- 03:06 MEASURED readability under look_d5_print (street band at 32 px/m, h101 -> h101thin): street L 0.294 = 0.294,
   sticker rim vs street dL 0.575 -> 0.576, vermilion dE 76.6 -> 76.7, teal dE 41.3 -> 41.4 (both tiers): the actor
   read is untouched (actors print on their own layer; the street keeps its tone).
