@@ -395,13 +395,13 @@ NEXT (iteration 6 close, in order):
   16 kills through the real CombatArena events) + evidence/quest-lit-strip.png (frames 193 / 194 / 550 of the
   clip, found as one-frame brightness bumps: Rivet's nail-gun rounds light a ragged pool around him). The
   kill beats show as 8-9 frame bright runs; the spacing in this clip is >= 1 s, so the cap did not bite.
-- 02:00 Session close (iteration 6). Head after this entry; last code commit 9062ecf, all gates PASS there.
+- 01:57 Session close (iteration 6). Head after this entry; last code commit 9062ecf, all gates PASS there.
   This session: noir Rivet parts (modest gain: visor U, B/W collar), blood marks (directional spatter,
   wet-edged pools; clear gain), drips, the muzzle's one-frame pool of light (the strongest new beat),
   photosensitivity caps on the light and the kill beat, noir peds (not adopted: they cost the cop read),
   the cop-read value-role experiment, final showcase re-shot (show-final3). Images: 3 Codex, 0 rejected,
   no limit hit; Leonardo 0 tokens; provenance +29 lines. Ladder 22 rows (masters + evidence/). Masters
-  ~720 MB in night/noir. No process of mine left running (the Godot processes at 02:00 are the n-d5 and
+  ~720 MB in night/noir. No process of mine left running (the Godot processes at 01:57 are the n-d5 and
   visual-engine lanes'; codex-windows-sandbox-service is Codex's own service).
   Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final3/*.mp4,
   evidence/ladder.png. NEXT: the list above (iteration 6 close).
