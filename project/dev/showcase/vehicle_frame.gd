@@ -56,14 +56,15 @@ func _ready() -> void:
 	var characters: CityCharacters = w[1]
 	var view: CityView = w[2]
 	_world.set_process(false)
+	_world.loop().set_input(
+		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
+	)
+	printerr("vehicle_frame: input set at tick %d" % _world.context().clock.tick())
 	add_child(_world)
 	await characters.bake()
 	await view.prewarm()
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(_out)
-	_world.loop().set_input(
-		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
-	)
 	_world.set_process(true)
 
 

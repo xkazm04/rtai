@@ -87,7 +87,7 @@ static func _world(master_seed: int) -> Array[Object]:
 	world.start(bus, data, master_seed)
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
-	city.spawner.targets = CityTargets.street(60, 0, 0)
+	city.spawner.targets = CityTargets.street(60, 6, 1)
 	var svc: VehicleService = VehicleService.new()
 	world.add_system(svc)
 	var vw: CityVehicleWorld = CityVehicleWorld.new(city)
