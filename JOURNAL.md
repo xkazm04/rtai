@@ -371,3 +371,6 @@ NEXT (night run; supersedes the iteration 4 list's items 1, the rest stand):
    are 20 fights, not one staging with spread varied.
 4. Items 2-7 of the iteration 4 NEXT (ArenaHook, real weapons, robot plan, flinch duck, city
    block clip, robot hit tint note).
+- GATES at the end of iteration 5 (d4f26ea): lint 13/13; unit 560/560 (run_unit.mjs, 23:14);
+  scenarios 21/21 (full suite, 23:15, exit 0). No sim change this iteration (dev + evidence only),
+  so replay and parity goldens are untouched. Godot processes from this session all exited.
