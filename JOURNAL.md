@@ -481,3 +481,20 @@ NEXT (after the 17:00 freeze / next session, in order):
 - NEXT: unchanged from iteration 46 (fire half 2 after splitting out `vehicle_burn.gd`; frame the
   fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; use d-vehicles' native DLL
   at merge; a drive48 bench variant with VehicleService).
+
+## Iteration 49 (17:00-17:05, STABILIZE)
+- MILESTONE: the full gates re-run on the frozen head eb7d066 (`node tools/evidence/run.mjs --no-bench`),
+  all PASS: lint 13/13 over 358 files; unit 370 passed / 0 failed; scenarios 11/11 (city_chase
+  green this time, so the it5 flake was contention); parity bit-exact over 1200 steps (planted
+  mutation caught at step 629); selftest look goldens 11/11 and block goldens 5/5 at worst 0.00.
+  Copied to evidence/vehicles/it6/.
+- Determinism check against it5: vehicle-carnage.json and vehicle-yield.json are identical, and
+  vehicle-drive.json differs only in `service_us_avg/max` (wall-clock, CONTENDED: 80 us avg / 179 us
+  max now against 138 / 7485 in it5). Every trace sample (speed, slip) matches.
+- The bench was not run (STABILIZE; there is no vehicles-specific bench path). No lock taken, no
+  Godot process of mine left, 0 frames, 0 rejected, no AI images, no provenance lines.
+- Merge note for the Director: the gated head is eb7d066 (the code is unchanged since e341b25).
+  Use the native DLL from d-vehicles (`set_obstacles`). int-day's DLL fails 3 vehicle scenarios.
+- NEXT: unchanged from iteration 46 (fire half 2 after splitting out `vehicle_burn.gd`; frame the
+  fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; a drive48 bench variant with
+  VehicleService).
