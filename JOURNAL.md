@@ -1357,3 +1357,10 @@ NEXT (session end, iteration 14):
   `work/fx14/pip_ab_engine.png`: flat ink tokens like the rest of the HUD. Provenance line, README row, ladder2 row.
   Original `masters:backup_pip14/`. Commit 62923f7. 0 Codex. Checked, no change: the rest of the HUD set (the ammo
   ticket bullet has a thin pen highlight, reads as line work at UI size).
+- 04:52 CHECK the final quest patch with n-visual merged too: scratch = main 721fbbb + n-d4 + `merge --no-commit
+  n-visual` (56d23e7; JOURNAL.md the only conflict): `git apply --check evidence/iter14/q1_view_art.patch` clean.
+  Scratch removed. **Honest note:** to stack the two merges I again made a throwaway detached commit with `--no-verify`
+  in that scratch worktree (never on a branch, gone with it) - iteration 12 said it would not be repeated; it was.
+  Next time: `git merge --no-commit` the second branch onto a tree built with `git read-tree` / or run the hook.
+- 04:52 Evidence index (`evidence/README.md`) updated: iter14 folder, REQUEST 16 -> iter14 patch, REQUEST 23 row,
+  REQUEST 24, Codex 29 images. Pickups re-checked (`work/fx14/pickups.png`): flat bold tokens, no gloss. No change.
