@@ -3,7 +3,9 @@ extends Node
 ## rivet-motion: the claw combo against the melee dummy line. Rivet walks up to each of three
 ## dummies (ped, cop, ped) and mashes melee; MeleeCombo (rivet_melee.json timing) drives the rig's
 ## timed strike (claw, torch arm, two-hand slam) and the hit test on each landing tick: a hit
-## flinches the dummy, the finisher knocks it back and down. Logs each landing tick.
+## flinches the dummy, the finisher knocks it back and down. Logs each landing tick. `weapon`
+## (a melee_weapons.json id) swaps the claw for that weapon's combo, drawn by MeleeWeaponView in
+## the weapon hand; Rivet stands off at the weapon's reach and its lunge carries him in.
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
@@ -23,6 +25,8 @@ const DIES: Array[bool] = [false, true, false]
 ## true: the D5 world print over look_d4 (the game's look); false: look_d4 alone (the before).
 var d5: bool = true
 var zoom: float = 1.5
+## "" = the bare claw; else a melee_weapons.json id (electro_baton, katana).
+var weapon: StringName = &""
 var _d5: ShaderMaterial = null
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
@@ -32,7 +36,9 @@ var _rivet: CutRig = CutRig.new()
 var _dummies: Array[CutRig] = []
 var _knock: Array[Vector2] = []
 var _down: PackedInt32Array = PackedInt32Array()
-var _combo: MeleeCombo = MeleeCombo.new(MeleeTable.shipped())
+var _combo: MeleeCombo = null
+var _view: MeleeWeaponView = null
+var _stand_y: float = 0.0
 var _tick: int = 0
 var _seen_starts: int = 0
 var _freeze: int = 0
@@ -71,6 +77,7 @@ func _ready() -> void:
 	_rivet.setup(RivetPlan.build(), RigVariant.rivet())
 	_rivet.position = Vector2(-DUMMY_GAP_M * 1.7, 0.0) * PX
 	_rivet.snap_facing(-PI * 0.5)
+	_arm_weapon()
 	var view: Vector2 = get_viewport().get_visible_rect().size
 	var xf: Transform2D = Transform2D(0.0, Vector2(zoom, zoom), 0.0, view * 0.5)
 	_world.transform = xf
@@ -83,7 +90,7 @@ func _ready() -> void:
 
 func play() -> int:
 	for i: int in 3:
-		var to: Vector2 = Vector2((i - 1) * DUMMY_GAP_M, 0.0) * PX
+		var to: Vector2 = Vector2((i - 1) * DUMMY_GAP_M, _stand_y) * PX
 		while _rivet.position.distance_to(to) > 1.0:
 			var v: Vector2 = (to - _rivet.position).limit_length(WALK_MPS * PX)
 			await _step(v, false)
@@ -102,6 +109,8 @@ func _step(vel: Vector2, press: bool) -> void:
 		await get_tree().process_frame
 		return
 	_rivet.position += vel * SimClock.TICK_DT
+	if not _blocked_ahead():
+		_rivet.position += _rivet.fwd() * _combo.lunge_step_m() * PX
 	_rivet.vel_in = vel
 	_rivet.face_to = -PI * 0.5
 	if press:
@@ -113,6 +122,8 @@ func _step(vel: Vector2, press: bool) -> void:
 	if _combo.lands():
 		_land(_combo.current())
 	_rivet.drive(SimClock.TICK_DT)
+	if _view != null:
+		_view.track(_rivet, _combo)
 	for i: int in _dummies.size():
 		_dummy(i)
 	await get_tree().process_frame
@@ -122,17 +133,22 @@ func _start_strike() -> void:
 	var h: MeleeHit = _combo.current()
 	var dt: float = SimClock.TICK_DT
 	var arm: int = ARMS[mini(_combo.hit_index - 1, ARMS.size() - 1)]
+	if _view != null:
+		var two: bool = _combo.table.grip == &"two_hand" and _combo.hit_index == 3
+		arm = 2 if two else _rivet.plan.gun_arm
 	_rivet.clips.strike(_rivet, h.windup * dt, h.active * dt, h.recovery * dt, arm)
 
 
 func _land(h: MeleeHit) -> void:
-	Log.info("combo", "tick %d: %s lands" % [_tick, h.id])
+	Log.info("combo", "tick %d: %s lands at %.2f m" % [_tick, h.id, _nearest_m()])
 	for i: int in _dummies.size():
 		var d: CutRig = _dummies[i]
 		var to: Vector2 = (d.position - _rivet.position) / PX
 		if to.length() > h.reach_m + 0.45 or to.normalized().dot(_rivet.fwd()) < h.cone_dot:
 			continue
 		d.clips.hit(d, to.normalized())
+		if _view != null and h.stun_ticks > 0:
+			_view.zap(d.position, h.stun_ticks)
 		var k: int = mini(_combo.hit_index - 1, HITSTOP_TICKS.size() - 1)
 		_freeze = HITSTOP_TICKS[k]
 		_shake = SHAKE_PX[k]
@@ -154,6 +170,33 @@ func _dummy(i: int) -> void:
 	d.clips.down = _down[i] > 0
 	d.vel_in = Vector2.ZERO
 	d.drive(SimClock.TICK_DT)
+
+
+func _arm_weapon() -> void:
+	var table: MeleeTable = MeleeTable.shipped() if weapon == &"" else MeleeTable.weapon(weapon)
+	if not table.ok():
+		Log.error("combo", str(table.errors))
+	_combo = MeleeCombo.new(table)
+	_stand_y = maxf(0.0, table.hits[0].reach_m - STAND_OFF_M - 0.3) if table.ok() else 0.0
+	if weapon == &"":
+		return
+	_view = MeleeWeaponView.new()
+	_view.kind = weapon
+	_view.length_px = table.length_m * PX
+	_view.sweep_rad = 1.1 if table.grip == &"two_hand" else 0.7
+	_actors.add_child(_view)
+
+
+## The body test the game's collisions do: a lunge stops 0.8 m short of a dummy ahead.
+func _blocked_ahead() -> bool:
+	return _nearest_m() < 0.8
+
+
+func _nearest_m() -> float:
+	var best: float = INF
+	for d: CutRig in _dummies:
+		best = minf(best, d.position.distance_to(_rivet.position) / PX)
+	return best
 
 
 ## A decaying shake on the world and the actors (a deterministic wobble, no RNG).

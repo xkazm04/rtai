@@ -59,6 +59,25 @@ func test_move_scale_only_while_a_hit_plays() -> void:
 	assert_lt(katana.move_mult, 1.0, "a two-hand blade slows Rivet while it swings")
 
 
+func test_view_sweeps_slashes_and_never_a_thrust() -> void:
+	var katana: MeleeTable = MeleeTable.weapon(&"katana")
+	var view: MeleeWeaponView = MeleeWeaponView.new()
+	var c: MeleeCombo = MeleeCombo.new(katana)
+	assert_eq(view.sweep_of(c), 0.0, "idle: on the forearm line")
+	c.press()
+	var h: MeleeHit = katana.hits[0]
+	for _t: int in h.windup:
+		c.step()
+	assert_almost_eq(view.sweep_of(c), view.sweep_rad * (1.0 - 2.0 / h.active), 1e-4)
+	for _t: int in h.active - 1:
+		c.step()
+	assert_almost_eq(view.sweep_of(c), -view.sweep_rad, 1e-4, "swept through to the far side")
+	var thrust: MeleeCombo = _combo_at_hit(katana, 3)
+	thrust.step()
+	assert_eq(view.sweep_of(thrust), 0.0, "the lunge thrust stays on line")
+	view.free()
+
+
 func test_planted_fault_missing_weapon_is_an_error() -> void:
 	var w: MeleeTable = MeleeTable.weapon(&"chainsaw")
 	assert_false(w.ok(), "no chainsaw row tonight: an error, not a crash")
