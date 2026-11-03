@@ -12,6 +12,8 @@ var cast_view: CastView = CastView.new()
 var fx_view: FxView = FxView.new()
 var hud_view: HudView = HudView.new()
 var hud_feed: HudFeed = HudFeed.new()
+## The save notice (Save.take_notice after a load); the game calls `notice.show(line)`.
+var notice: SaveNotice = SaveNotice.new()
 ## The slice's objective prompt and pointer (off unless the caller turns it on).
 var objective_view: ObjectiveView = null
 ## Where the camera looks, in metres; Vector2.INF follows Rivet.
@@ -130,6 +132,7 @@ func fill_street(max_passes: int = 600) -> int:
 
 func _process(_delta: float) -> void:
 	hud_feed.fill(hud_view.state, _stage, _system)
+	hud_view.state.notice = notice.text()
 	if _stage == null or city_view != null:
 		return
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos

@@ -17,6 +17,8 @@ var ammo: int = -1
 ## The subtitle box: speaker and words; an empty speaker hides the box.
 var speaker: String = ""
 var words: String = ""
+## One line under the beat panel (the save notice); empty hides it.
+var notice: String = ""
 ## Translated labels (HUD__HEAT, HUD__UNARMED).
 var heat_label: String = "HEAT"
 var unarmed_label: String = "unarmed"

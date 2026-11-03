@@ -31,6 +31,8 @@ func _draw() -> void:
 	if state.head != "":
 		_top_left()
 	_top_right(screen)
+	if state.notice != "":
+		_notice(screen)
 	if state.speaker != "":
 		_subtitle(screen, state.speaker, state.words)
 
@@ -43,6 +45,13 @@ func _top_left() -> void:
 		var pip: Rect2 = Rect2(MARGIN + 110 + i * 46, MARGIN + 52, 38, 38)
 		var id: StringName = &"wanted_pip_police" if i < state.heat else &"wanted_pip_empty"
 		draw_texture_rect(art.texture(id), pip, false)
+
+
+## The one-line notice: centred just above the subtitle box, clear of the objective prompt.
+func _notice(screen: Vector2) -> void:
+	var box: Rect2 = Rect2(screen.x * 0.5 - 450.0, screen.y - MARGIN - 236.0 - 84.0, 900, 52)
+	_panel(box)
+	_say(box.position + Vector2(18, 38), state.notice, 24)
 
 
 func _top_right(screen: Vector2) -> void:

@@ -115,6 +115,8 @@ func _begin(opened: Quest1Session) -> void:
 		session.live.viewport = get_viewport()
 		session.live.origin_px = func() -> Vector2:
 			return get_viewport().get_visible_rect().size / 2.0
+	if view != null:
+		view.notice.show(Save.take_notice())
 	card.hide_all()
 	started.emit()
 	Log.info("quest1", "started: Rivet is the player's (seed %d)" % Quest1Session.MASTER_SEED)
