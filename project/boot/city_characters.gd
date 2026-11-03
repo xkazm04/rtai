@@ -13,6 +13,9 @@ const FEED_RADIUS_M: float = CharacterRigs.RADIUS_M + 4.0
 ## Rivet stands at the city's target (on foot); false while Rivet is in a car.
 var rivet_on_foot: bool = true
 var rigs: CharacterRigs = CharacterRigs.new()
+## Frames where no sim tick passed and the rig pass was skipped (bench evidence).
+var skipped_frames: int = 0
+var _primed: bool = false
 var _city: CitySystem
 var _view: CityView
 var _clock: SimClock
@@ -25,8 +28,10 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	_city = city
 	_view = view
 	_clock = ctx.clock
+	view.clock = ctx.clock
 	_last_tick = _clock.tick()
 	_rivet_prev = city.target
+	rigs.z_index = RenderLayers.z(&"actors")
 	view.actor_layer().add_child(rigs)
 	rigs.setup(ctx)
 	rigs.set_process(false)
@@ -45,11 +50,22 @@ func bake() -> void:
 	_city.sim.set_person_px(CrowdAtlas.cell_world_px())
 
 
+## The rigs only move on a sim tick: on a frame where no tick passed (a display faster than
+## 60 Hz, or a second frame inside one tick) the feed, the pose and the rig slots are all
+## unchanged, so the whole rig pass is skipped (lane A measured rig p99 0.57 ms against 0.3).
 func _before_render(focus: Vector2) -> void:
+	PartMaterials.set_world_px(_view.world_px)  # every frame: the camera moves between ticks
+	var steps: int = clampi(_clock.tick() - _last_tick, 0, CharacterRigs.MAX_STEPS)
+	if steps == 0 and _primed and is_equal_approx(rigs.zoom, _view.zoom):
+		rigs.last_us = 0
+		skipped_frames += 1
+		return
+	_primed = true
 	_fill_feed(focus)
+	if _view.look_params != null:
+		PartMaterials.set_flat_below(_view.look_params.parts_flat_below)
 	rigs.focus = focus * SimConst.PX_PER_M
 	rigs.zoom = _view.zoom
-	var steps: int = clampi(_clock.tick() - _last_tick, 0, CharacterRigs.MAX_STEPS)
 	_last_tick = _clock.tick()
 	rigs.step_ticks(steps)
 	_slots.clear()
@@ -62,17 +78,18 @@ func _before_render(focus: Vector2) -> void:
 ## One row per live person within FEED_RADIUS_M of the focus, then Rivet.
 func _fill_feed(focus: Vector2) -> void:
 	var snap: PackedFloat64Array = _city.sim.snapshot()
+	if _view.fx_feed != null:
+		_view.fx_feed.observe(snap, _clock.tick())
 	var variants: PackedByteArray = _city.sim.get_variants()
 	var feed: RigFeed = rigs.feed
 	feed.count = 0
 	var r2: float = FEED_RADIUS_M * FEED_RADIUS_M
 	var aim: Vector2 = _city.target * SimConst.PX_PER_M
 	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if snap[r] >= SimConst.SNAP_PROJ_BASE:
+			break  # projectile records (stride 3) follow every actor: not people
 		var kind: int = int(snap[r + 1])
-		if (
-			snap[r] >= SimConst.SNAP_PROJ_BASE
-			or (kind != SimConst.K_PED and kind != SimConst.K_COP)
-		):
+		if kind != SimConst.K_PED and kind != SimConst.K_COP:
 			continue
 		var p: Vector2 = Vector2(snap[r + 4], snap[r + 5])
 		if p.distance_squared_to(focus) > r2:

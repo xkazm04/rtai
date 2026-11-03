@@ -1,0 +1,9 @@
+Trial merge (n-visual a66ad1b + n-d4 68d7fb4 + n-d5 f6b9018 + n-noir 52fd07f), exported release RTAI-bench.exe,
+`-- --scenario=drive --secs=30 --zoom=0.3 --vsync=disabled`, run 01:15-01:19 after the full bench (CPU 13 %, 24 GB free).
+The full bench (bench.txt, 01:06-01:13) had ONE drive run with two `game` stalls: tick 1165 game_ms 667, tick 1625
+game_ms 9068 (stream+spawn avg 5.5 ms/tick over that run). Re-runs (console metrics; JSON out path did not take):
+run1: hitchesOver50 0, low1Fps 332, streamSpawnMsPerTick 0.079, worstFrameMs 13.4, p99CpuMs 2.20
+run2: hitchesOver50 0, low1Fps 325, streamSpawnMsPerTick 0.080, worstFrameMs 33.0
+run3: hitchesOver50 0, low1Fps 306, streamSpawnMsPerTick 0.078, worstFrameMs 32.3
+run4: hitchesOver50 0, low1Fps 184, streamSpawnMsPerTick 0.113, worstFrameMs 31.4
+Not reproduced in 4 runs. Cause unknown (suspect: first read of a freshly exported pck - AV scan / cold cache).

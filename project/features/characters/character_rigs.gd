@@ -10,9 +10,18 @@ extends Node2D
 
 const MAX_FULL: int = 16
 ## LOD 0b: past the nearest FULL_RATE rigs, a rig poses on alternate ticks with twice the step
-## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true).
-const FULL_RATE: int = 6
+## (the spike's half-rate crowd LOD: the gait phase and planted feet stay true); past HALF_RATE,
+## every 4th tick with four times the step (LOD 0c, RigSprings sub-steps the springs). The rig
+## still moves to its sim position every frame; only the limbs pose at 30 / 15 Hz.
+const FULL_RATE: int = 4
+const HALF_RATE: int = 8
+## At arena zoom (64 px/m, zoom 2) the rigs are twice the size and nearly all on screen, while an
+## arena holds few people: no quarter tier there (ranks past HALF_RATE pose at half rate).
+const ARENA_ZOOM: float = 1.9
 const RADIUS_M: float = 14.0
+## The nearest-N selection (a GDScript scan of the whole feed, ~0.1 ms in a riot) runs every
+## SELECT_EVERY calls; between, the kept rigs only find their rows again (a native find).
+const SELECT_EVERY: int = 4
 const PX_PER_M: float = 32.0
 const MAX_STEPS: int = 4
 const PREWARM: Dictionary[int, int] = {
@@ -34,6 +43,7 @@ var _pool: RigPool = RigPool.new()
 var _by_actor: Dictionary[int, CutRig] = {}
 var _full: PackedByteArray = PackedByteArray()
 var _rank: Dictionary[int, int] = {}
+var _select_in: int = 0
 
 
 func setup(ctx: WorldContext) -> void:
@@ -69,11 +79,18 @@ func step_ticks(steps: int) -> void:
 	for _k: int in steps:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
-			if _rank[actor] < FULL_RATE:
-				_by_actor[actor].drive(SimClock.TICK_DT)
-			elif (ticks_stepped + actor) % 2 == 0:
-				_by_actor[actor].drive(SimClock.TICK_DT * 2.0)
+			var every: int = rate_of(_rank[actor], zoom)
+			if (ticks_stepped + actor) % every == 0:
+				_by_actor[actor].drive(SimClock.TICK_DT * every)
 	last_us = Time.get_ticks_usec() - t0
+
+
+## Ticks between pose steps for the rig at nearest-rank r: 1 (full), 2 (half) or 4 (quarter; half
+## at arena zoom).
+static func rate_of(r: int, view_zoom: float = 1.0) -> int:
+	if r < FULL_RATE:
+		return 1
+	return 2 if r < HALF_RATE or view_zoom >= ARENA_ZOOM else 4
 
 
 func full_row(i: int) -> bool:
@@ -106,6 +123,10 @@ func baked_cell(i: int, t: float) -> int:
 
 
 func _assign() -> void:
+	_select_in -= 1
+	if _select_in > 0 and _remap():
+		return
+	_select_in = SELECT_EVERY
 	var chosen: PackedInt32Array = RigSelect.nearest(feed, focus, RADIUS_M * PX_PER_M, MAX_FULL)
 	@warning_ignore("return_value_discarded")
 	_full.resize(feed.count)
@@ -127,6 +148,21 @@ func _assign() -> void:
 		if not _by_actor.has(actor):
 			_by_actor[actor] = _acquire(i)
 		RigInput.apply(_by_actor[actor], feed, i)
+
+
+## Between selections the feed is rebuilt (rows move): each kept rig finds its row by actor id
+## and takes its input. False when a kept actor left the feed (the caller then reselects).
+func _remap() -> bool:
+	@warning_ignore("return_value_discarded")
+	_full.resize(feed.count)
+	_full.fill(0)
+	for actor: int in _by_actor:
+		var i: int = feed.ids.find(actor)
+		if i < 0 or i >= feed.count:
+			return false
+		_full[i] = 1
+		RigInput.apply(_by_actor[actor], feed, i)
+	return true
 
 
 func _acquire(i: int) -> CutRig:

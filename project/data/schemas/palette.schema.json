@@ -1,0 +1,115 @@
+{
+  "$id": "gtai.palette/1",
+  "additionalProperties": false,
+  "properties": {
+    "accents": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "layers": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "uses": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "token",
+          "uses",
+          "layers"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "gates": {
+      "additionalProperties": false,
+      "properties": {
+        "teal_gate": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "verm_gate": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "verm_gate",
+        "teal_gate"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.palette/1"
+    },
+    "tokens": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hex": {
+            "pattern": "^#[0-9A-F]{6}$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "base",
+              "accent"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "hex",
+          "role",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "gates",
+    "tokens",
+    "accents"
+  ],
+  "type": "object"
+}

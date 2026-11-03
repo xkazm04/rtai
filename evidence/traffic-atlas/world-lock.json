@@ -1,0 +1,35 @@
+{
+  "frames": [
+    {
+      "differing_share": 0.0,
+      "ok": true,
+      "pan_px": [
+        40,
+        24
+      ],
+      "ppm": 32
+    },
+    {
+      "differing_share": 0.00000444152290937517,
+      "ok": true,
+      "pan_px": [
+        60,
+        36
+      ],
+      "ppm": 48
+    },
+    {
+      "differing_share": 0.0,
+      "ok": true,
+      "pan_px": [
+        80,
+        48
+      ],
+      "ppm": 64
+    }
+  ],
+  "max_share": 0.005,
+  "ok": true,
+  "planted_unlocked": false,
+  "schema": "gtai.world-lock/1"
+}

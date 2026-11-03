@@ -1,0 +1,260 @@
+{
+  "$id": "gtai.lights/1",
+  "additionalProperties": false,
+  "properties": {
+    "car_lights": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grades": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lamps_m": {
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 4,
+          "type": "array"
+        },
+        "max_cars": {
+          "maximum": 16,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "radius_m": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
+        "siren_m": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "doc",
+        "grades",
+        "lamps_m",
+        "max_cars",
+        "radius_m",
+        "siren_m"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "grades": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "accent_keep": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "gamma": {
+            "maximum": 4,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "paper_level": {
+            "maximum": 1,
+            "minimum": 0.05,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "paper_level",
+          "gamma",
+          "accent_keep",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "kinds": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "alt_token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "cone_deg": {
+            "maximum": 180,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "flicker_hz": {
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "intensity": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "life_ticks": {
+            "maximum": 3600,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "radius_m": {
+            "maximum": 64,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          "steps": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "token",
+          "radius_m",
+          "intensity",
+          "steps",
+          "cone_deg",
+          "life_ticks",
+          "flicker_hz",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "max_flash_hz": {
+      "maximum": 3,
+      "minimum": 0.5,
+      "type": "number"
+    },
+    "max_lights": {
+      "maximum": 1024,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "prop_lights": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grades": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "max_props": {
+          "maximum": 32,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "props": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "at_m": {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "prop": {
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "prop",
+              "at_m"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "radius_m": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "grades",
+        "kind",
+        "max_props",
+        "props",
+        "radius_m"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.lights/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "max_lights",
+    "kinds",
+    "grades",
+    "car_lights",
+    "prop_lights",
+    "max_flash_hz"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,17 @@
+{
+  "blocks": 16,
+  "cpu_ms_night_grade_delta": -0.00866664946079254,
+  "cpu_render_ms_full_budget": 0.265900015830994,
+  "cpu_render_ms_no_lights": 0.235299974679947,
+  "dropped": 2577,
+  "frames_per_block": 30,
+  "gpu": "AMD Radeon(TM) Graphics",
+  "gpu_ms_delta": 0.602399587631226,
+  "gpu_ms_full_budget": 3.60159969329834,
+  "gpu_ms_night_grade_delta": 0.429199695587158,
+  "gpu_ms_no_lights": 2.99920010566711,
+  "light_step_us": 41,
+  "lights": 40,
+  "ppm": 48,
+  "schema": "gtai.light-cost/1"
+}

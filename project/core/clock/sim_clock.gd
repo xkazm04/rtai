@@ -18,16 +18,31 @@ var _tick: int = 0
 var _accumulator: float = 0.0
 var _frame_delta: float = 0.0
 var _dropped_seconds: float = 0.0
+var _hold: float = 0.0
 
 
 ## Clamps the raw frame delta and returns how many fixed steps to run now (0..4).
 func advance(raw_delta: float) -> int:
 	_frame_delta = clampf(raw_delta, 0.0, MAX_FRAME_DELTA)
 	_dropped_seconds += maxf(raw_delta - MAX_FRAME_DELTA, 0.0)
-	_accumulator += _frame_delta
+	var eaten: float = minf(_hold, _frame_delta)
+	_hold -= eaten
+	_accumulator += _frame_delta - eaten
 	var steps: int = mini(floori((_accumulator + EPSILON) / TICK_DT), MAX_STEPS_PER_FRAME)
 	_accumulator = maxf(_accumulator - steps * TICK_DT, 0.0)
 	return steps
+
+
+## Hit-stop (render feel, core/render/README.md): the next `seconds` of frame time are not
+## simulated, so the whole world holds still. Only wall time moves; every tick is unchanged, so
+## replays (which step ticks directly) are identical. A longer hold in progress is kept.
+func hold(seconds: float) -> void:
+	_hold = maxf(_hold, seconds)
+
+
+## Frame time still to be held (seconds).
+func held() -> float:
+	return _hold
 
 
 ## Called by SimLoop after every system stepped.
@@ -60,3 +75,4 @@ func reset() -> void:
 	_accumulator = 0.0
 	_frame_delta = 0.0
 	_dropped_seconds = 0.0
+	_hold = 0.0

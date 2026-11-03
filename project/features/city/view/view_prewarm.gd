@@ -4,6 +4,8 @@ extends RefCounted
 ## the world's mipmap filter, under the print pass) and one instance in every actor layer (with
 ## the item shader) for WARM_FRAMES rendered frames, so first-use texture bindings and pipeline
 ## compiles land on the loading screen instead of in gameplay. Headless it returns at once.
+## It also shows one particle of every FX kind (all three FX canvases) and one light, so the
+## fx_ink and light_ink pipelines are not first built on the riot's first shot.
 
 const WARM_FRAMES: int = 3
 const CELL_PX: float = 12.0
@@ -22,12 +24,32 @@ func run() -> int:
 	var centre: Vector2 = _view.camera.position
 	var item: RID = _draw_textures(centre)
 	_fill_actor_layers(centre)
+	var tick: int = _view.clock.tick() if _view.clock != null else 0
+	var light: int = _warm_fx(centre, tick)
 	for i: int in WARM_FRAMES:
 		await RenderingServer.frame_post_draw
 	RenderingServer.free_rid(item)
+	_view.fx.clear()
+	_view.lights.remove(light)
+	_view.lights.step(tick, Vector2.ZERO)
 	for mm: MultiMesh in _view.crowd.multimeshes:
 		mm.visible_instance_count = 0
 	return Time.get_ticks_usec() - t0
+
+
+func _warm_fx(centre: Vector2, tick: int) -> int:
+	for kind: StringName in _view.fx.kinds:
+		@warning_ignore("return_value_discarded")
+		_view.fx.spawn(kind, centre, 0.0, tick)
+	var light: int = -1
+	for kind: StringName in _view.lights.kinds:
+		light = _view.lights.add(kind, centre, 0.0, tick)
+		break
+	_view.fx.step(tick)
+	_view.fx.glow.step(tick)
+	_view.fx.ground.step(tick)
+	_view.lights.step(tick, Vector2.ZERO)
+	return light
 
 
 func _draw_textures(centre: Vector2) -> RID:

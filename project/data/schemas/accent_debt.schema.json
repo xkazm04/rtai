@@ -1,0 +1,76 @@
+{
+  "$id": "gtai.accent-debt/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "accent": {
+            "enum": [
+              "vermilion",
+              "teal"
+            ]
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "layer": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "max_px": {
+            "maximum": 100000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "owner": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ppm": {
+            "enum": [
+              32,
+              48,
+              64
+            ]
+          },
+          "source": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "accent",
+          "layer",
+          "ppm",
+          "max_px",
+          "source",
+          "owner",
+          "doc"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.accent-debt/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rows"
+  ],
+  "type": "object"
+}

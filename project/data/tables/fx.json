@@ -1,0 +1,279 @@
+{
+  "atlas": {
+    "cols": 8,
+    "doc": "The d4-production FX sheet (features/fx/art/README.md: 8 x 4 cells of 256 px, cell index = row * 8 + col). When the texture is present every kind with an `atlas` block draws atlas cells and its block's fields override the row (count, size_m, speed...); when it is absent the analytic placeholder shapes draw.",
+    "path": "res://features/fx/art/fx_atlas.png",
+    "rows": 4
+  },
+  "doc": "The FX kinds (core/render/README.md). One spawn emits `count` particles from a pooled MultiMesh on the `fx` band of the actors canvas. shape is a placeholder analytic sprite in fx_ink.gdshader (disc, streak, burst, splat, bolt) when the FX sheet (`atlas`) is absent; with it, each kind's `atlas` block picks its cells. token: a palette.json id. Particles move on the 60 Hz tick: speed_mps along the spawn angle +- spread_deg/2 (a per-particle hash of the spawn serial, no RNG stream), slowed by drag per second, size grows by grow x per second, fading over the last (1 - fade_from) of life_ticks (fade_from 0 = the whole life). light: a lights.json kind spawned with it (\"\" = none). Budgets: max_particles alive, max_spawns_per_frame; over budget a spawn is dropped and counted. emissive: the kind draws on the fx_emissive band of the emissive canvas, above the lights (FxSystem.glow), with its own budgets. ground: the kind lies on the street (FxSystem.ground on the world canvas's ground_decals band): under the bodies, the shadows and the roofs, and printed by look_d4 like any decal.",
+  "kinds": [
+    {
+      "atlas": {
+        "cells": [
+          0,
+          3
+        ],
+        "grow": 0,
+        "mode": "pick",
+        "size_m": 1.3
+      },
+      "count": 1,
+      "doc": "the gun mouth: a paper star, 3 ticks",
+      "drag": 0,
+      "emissive": true,
+      "fade_from": 0,
+      "ground": false,
+      "grow": 0.5,
+      "id": "muzzle",
+      "life_ticks": 3,
+      "light": "muzzle_flash",
+      "shape": "burst",
+      "size_m": 0.7,
+      "speed_mps": 0,
+      "spread_deg": 0,
+      "token": "paper"
+    },
+    {
+      "atlas": {
+        "cells": [
+          3,
+          1
+        ],
+        "mode": "pick",
+        "size_m": 2.2
+      },
+      "count": 1,
+      "doc": "the round in flight: a paper streak along the shot",
+      "drag": 0,
+      "emissive": true,
+      "fade_from": 0,
+      "ground": false,
+      "grow": 0,
+      "id": "tracer",
+      "life_ticks": 6,
+      "light": "",
+      "shape": "streak",
+      "size_m": 1.4,
+      "speed_mps": 60,
+      "spread_deg": 0,
+      "token": "paper"
+    },
+    {
+      "atlas": {
+        "cells": [
+          4,
+          2
+        ],
+        "count": 2,
+        "mode": "pick",
+        "size_m": 0.9,
+        "speed_mps": 1.5
+      },
+      "count": 4,
+      "doc": "a hit on a wall or car: ink chips thrown back",
+      "drag": 4,
+      "emissive": false,
+      "fade_from": 0.5,
+      "ground": false,
+      "grow": 0,
+      "id": "impact",
+      "life_ticks": 10,
+      "light": "",
+      "shape": "burst",
+      "size_m": 0.25,
+      "speed_mps": 4,
+      "spread_deg": 140,
+      "token": "ink"
+    },
+    {
+      "atlas": {
+        "cells": [
+          8,
+          8
+        ],
+        "count": 1,
+        "grow": 0.2,
+        "mode": "anim",
+        "size_m": 5.5,
+        "speed_mps": 0
+      },
+      "count": 10,
+      "doc": "a blast: paper puffs racing out, vermilion light rim",
+      "drag": 3,
+      "emissive": true,
+      "fade_from": 0.6,
+      "ground": false,
+      "grow": 1.5,
+      "id": "explosion",
+      "life_ticks": 30,
+      "light": "explosion",
+      "shape": "disc",
+      "size_m": 1.2,
+      "speed_mps": 6,
+      "spread_deg": 360,
+      "token": "paper"
+    },
+    {
+      "atlas": {
+        "cells": [
+          16,
+          4
+        ],
+        "count": 3,
+        "grow": 0.6,
+        "mode": "pick",
+        "size_m": 2.4
+      },
+      "count": 6,
+      "doc": "smoke: charcoal puffs that swell and drift",
+      "drag": 0.5,
+      "emissive": false,
+      "fade_from": 0.5,
+      "ground": false,
+      "grow": 1.2,
+      "id": "smoke",
+      "life_ticks": 120,
+      "light": "",
+      "shape": "disc",
+      "size_m": 1,
+      "speed_mps": 1.2,
+      "spread_deg": 360,
+      "token": "ink_2"
+    },
+    {
+      "atlas": {
+        "cells": [
+          6,
+          2
+        ],
+        "count": 2,
+        "mode": "pick",
+        "size_m": 1.2,
+        "speed_mps": 3
+      },
+      "count": 8,
+      "doc": "debris: ink shards",
+      "drag": 2.5,
+      "emissive": false,
+      "fade_from": 0.6,
+      "ground": false,
+      "grow": 0,
+      "id": "debris",
+      "life_ticks": 45,
+      "light": "",
+      "shape": "splat",
+      "size_m": 0.3,
+      "speed_mps": 7,
+      "spread_deg": 360,
+      "token": "ink"
+    },
+    {
+      "atlas": {
+        "cells": [
+          24,
+          4
+        ],
+        "count": 1,
+        "frame_ticks": 3,
+        "mode": "anim",
+        "size_m": 1.8,
+        "speed_mps": 0
+      },
+      "count": 5,
+      "doc": "blood as ink: black splats that settle and stay a while",
+      "drag": 8,
+      "emissive": false,
+      "fade_from": 0.8,
+      "ground": true,
+      "grow": 0,
+      "id": "ink_splat",
+      "life_ticks": 240,
+      "light": "",
+      "shape": "splat",
+      "size_m": 0.8,
+      "speed_mps": 2.5,
+      "spread_deg": 120,
+      "token": "ink"
+    },
+    {
+      "atlas": {
+        "cells": [
+          20,
+          4
+        ],
+        "count": 1,
+        "frame_ticks": 2,
+        "mode": "anim",
+        "rim": 0.04,
+        "size_m": 1.6
+      },
+      "count": 3,
+      "doc": "the electroshock melee crackle: paper bolts (teal is the dead's only)",
+      "drag": 0,
+      "emissive": true,
+      "fade_from": 0,
+      "ground": false,
+      "grow": 0,
+      "id": "crackle",
+      "life_ticks": 8,
+      "light": "",
+      "shape": "bolt",
+      "size_m": 1.4,
+      "speed_mps": 0,
+      "spread_deg": 360,
+      "token": "paper"
+    },
+    {
+      "atlas": {
+        "cells": [
+          30,
+          1
+        ],
+        "mode": "pick",
+        "size_m": 0.5
+      },
+      "count": 1,
+      "doc": "a spent casing kicked out of the breech: an ink sliver that tumbles and settles (atlas: the casing cell, drawn small)",
+      "drag": 6,
+      "emissive": false,
+      "fade_from": 0.7,
+      "ground": true,
+      "grow": 0,
+      "id": "casing",
+      "life_ticks": 90,
+      "light": "",
+      "shape": "streak",
+      "size_m": 0.15,
+      "speed_mps": 3,
+      "spread_deg": 60,
+      "token": "paper"
+    },
+    {
+      "atlas": {
+        "cells": [
+          28,
+          2
+        ],
+        "mode": "pick"
+      },
+      "count": 1,
+      "doc": "sparks off metal: a paper starburst, 6 ticks",
+      "drag": 0,
+      "emissive": true,
+      "fade_from": 0,
+      "ground": false,
+      "grow": 0.8,
+      "id": "spark",
+      "life_ticks": 6,
+      "light": "",
+      "shape": "burst",
+      "size_m": 0.8,
+      "speed_mps": 0,
+      "spread_deg": 360,
+      "token": "paper"
+    }
+  ],
+  "max_particles": 512,
+  "max_spawns_per_frame": 24,
+  "schema": "gtai.fx/1"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "d5_weight": 0.0,
+    "file": "arena-0.png",
+    "mode": "arena",
+    "ppm": 32.0727023319616
+  },
+  {
+    "d5_weight": 0.0,
+    "file": "arena-1.png",
+    "mode": "arena",
+    "ppm": 38.0356652949246
+  },
+  {
+    "d5_weight": 0.019636649607002,
+    "file": "arena-2.png",
+    "mode": "arena",
+    "ppm": 49.3319615912208
+  },
+  {
+    "d5_weight": 0.841040766431948,
+    "file": "arena-3.png",
+    "mode": "arena",
+    "ppm": 59.9615912208505
+  },
+  {
+    "d5_weight": 1.0,
+    "file": "arena-4.png",
+    "mode": "arena",
+    "ppm": 64.0
+  }
+]

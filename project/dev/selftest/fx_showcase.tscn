@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/selftest/fx_showcase.gd" id="1_fx"]
+
+[node name="FxShowcase" type="Node"]
+script = ExtResource("1_fx")

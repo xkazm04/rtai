@@ -55,6 +55,7 @@ func _write(path: String, runs: Array[Dictionary], ticks: int) -> bool:
 		"budget": {"rigTargetMs": RigStress.TARGET_MS, "rigHardMs": RigStress.HARD_MS},
 		"maxFullRigs": CharacterRigs.MAX_FULL,
 		"fullRateRigs": CharacterRigs.FULL_RATE,
+		"halfRateRigs": CharacterRigs.HALF_RATE,
 		"radiusM": CharacterRigs.RADIUS_M,
 		"runs": runs,
 		"cpu": OS.get_processor_name(),

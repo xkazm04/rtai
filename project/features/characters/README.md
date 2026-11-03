@@ -14,7 +14,10 @@ WorldContext (LAY-05). Ported from the spike (`gtai-spike/evolve/project/game/cu
 - **LOD and pooling (`character_rigs.gd`):** full rigs for the 16 nearest within 14 m
   (`rig_select.gd`), pools per body plan prewarmed at load (`rig_pool.gd`), everyone else from
   the baked crowd atlas (`crowd_atlas.gd`, `crowd_baker.gd`, `crowd_atlas.gdshader`). The host
-  fills a `RigFeed` each tick.
+  fills a `RigFeed` each tick. Pose rate by nearest rank: 0-3 every tick, 4-7 every 2nd, 8-15
+  every 4th (`CharacterRigs.rate_of`); the rig still moves to its sim position every frame. The
+  springs (`rig_springs.gd`) sub-step any step over 2 ticks: plain Euler at 4 ticks diverges.
+  Motion strip: `rig_showcase.gd -- --motion`.
 - **Print:** `print_part.gdshader` with the D4 flat-tint mode; the cream halos are the sticker rim.
 - **Render-side only:** rigs step on the 60 Hz tick from `ctx.clock`, draw no RNG stream and
   write no replay state.

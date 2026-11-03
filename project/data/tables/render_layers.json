@@ -1,0 +1,193 @@
+{
+  "canvases": [
+    {
+      "doc": "the city art: ground, decals, building shadows, props, parked vehicles, roofs",
+      "id": "world",
+      "layer": 0,
+      "print": "world",
+      "space": "camera"
+    },
+    {
+      "doc": "the full-screen look_d4 print pass over the world canvas",
+      "id": "print",
+      "layer": 1,
+      "print": "pass",
+      "space": "screen"
+    },
+    {
+      "doc": "moving things above the print: shadows, people, vehicles, occluders, fx",
+      "id": "actors",
+      "layer": 2,
+      "print": "item",
+      "space": "follow"
+    },
+    {
+      "doc": "the night grade (a full-screen multiply) then the additive 2D lights (LightLayer follows the camera itself)",
+      "id": "light",
+      "layer": 3,
+      "print": "none",
+      "space": "screen"
+    },
+    {
+      "doc": "emissive FX above the lights: a muzzle star or a blast is not lit by its own light (the additive paper would lift its vermilion core to a peach glow)",
+      "id": "emissive",
+      "layer": 4,
+      "print": "none",
+      "space": "follow"
+    },
+    {
+      "doc": "markers and the objective pointer, in world space",
+      "id": "world_ui",
+      "layer": 5,
+      "print": "none",
+      "space": "follow"
+    },
+    {
+      "doc": "the HUD",
+      "id": "hud",
+      "layer": 10,
+      "print": "none",
+      "space": "screen"
+    }
+  ],
+  "doc": "The render layer stack of the 90-degree top-down city, bottom up (core/render/README.md). A canvas is a Godot CanvasLayer (layer = its draw order; space: camera = drawn in the world viewport under the Camera2D, follow = a CanvasLayer that follows the viewport, screen = fixed to the screen). print: which D4 print pass the canvas goes through (world = read by look_d4 through the screen texture, item = look_d4_item per node, pass = the print pass itself, none = unprinted). A layer is a z band inside a canvas: a top-level item of the canvas sits exactly at its band z; its children are relative to it and stay below the next band. status: live = drawn today, reserved = declared, nothing draws there yet. RenderLayers.audit() fails any node outside this table.",
+  "layers": [
+    {
+      "canvas": "world",
+      "doc": "roads, pavements, kerbs, crossings",
+      "drawn_by": "ChunkView ground items",
+      "id": "ground",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "world",
+      "doc": "oil, skid marks, blood ink, cracks (decal class); the FX that lie on the street",
+      "drawn_by": "ChunkView decal items + FxSystem ground twin (ink splats, casings)",
+      "id": "ground_decals",
+      "status": "live",
+      "z": 1
+    },
+    {
+      "canvas": "world",
+      "doc": "the cast drop shadow of buildings and props (the height cue)",
+      "drawn_by": "ChunkView shadow items",
+      "id": "building_shadows",
+      "status": "live",
+      "z": 2
+    },
+    {
+      "canvas": "world",
+      "doc": "street props and parked vehicles",
+      "drawn_by": "ChunkView prop items",
+      "id": "props",
+      "status": "live",
+      "z": 3
+    },
+    {
+      "canvas": "world",
+      "doc": "building roofs (they print with the world pass)",
+      "drawn_by": "ChunkView roof items",
+      "id": "roofs",
+      "status": "live",
+      "z": 4
+    },
+    {
+      "canvas": "print",
+      "doc": "the look_d4 full-rect ColorRect",
+      "drawn_by": "CityView look rect",
+      "id": "print_pass",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "print",
+      "doc": "print layers over the D4 print (BackBufferCopy + full rect): the D5 Inked Grime overlay, ramped by zoom, hidden at amount 0",
+      "drawn_by": "LookOverlay (look_profiles.json overlays; draws once look_d5.gdshader is present)",
+      "id": "print_overlay",
+      "status": "live",
+      "z": 100
+    },
+    {
+      "canvas": "actors",
+      "doc": "people and vehicle drop shadows (flat ink tint)",
+      "drawn_by": "CrowdLayers shadows",
+      "id": "actor_shadows",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "actors",
+      "doc": "the baked crowd atlas and the full cutout rigs",
+      "drawn_by": "CrowdLayers people + CharacterRigs",
+      "id": "actors",
+      "status": "live",
+      "z": 100
+    },
+    {
+      "canvas": "actors",
+      "doc": "moving traffic and police cars",
+      "drawn_by": "CrowdLayers cars",
+      "id": "vehicles",
+      "status": "live",
+      "z": 200
+    },
+    {
+      "canvas": "actors",
+      "doc": "overhangs and awnings that cover actors",
+      "drawn_by": "none yet",
+      "id": "roof_occluders",
+      "status": "reserved",
+      "z": 300
+    },
+    {
+      "canvas": "actors",
+      "doc": "muzzle, tracer, impact, explosion, smoke, debris, splat, crackle",
+      "drawn_by": "CrowdLayers bullets + FxSystem",
+      "id": "fx",
+      "status": "live",
+      "z": 400
+    },
+    {
+      "canvas": "light",
+      "doc": "the time-of-day grade (multiply; day = white)",
+      "drawn_by": "LightLayer grade rect",
+      "id": "grade",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "light",
+      "doc": "additive light sprites",
+      "drawn_by": "LightLayer",
+      "id": "lights",
+      "status": "live",
+      "z": 100
+    },
+    {
+      "canvas": "emissive",
+      "doc": "fx kinds with emissive: true (muzzle, tracer, explosion, spark, crackle)",
+      "drawn_by": "FxSystem glow (CityView)",
+      "id": "fx_emissive",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "world_ui",
+      "doc": "markers, the objective pointer",
+      "drawn_by": "WorldMarkers (CityView.markers, world_markers.json)",
+      "id": "world_markers",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "hud",
+      "doc": "the HUD root",
+      "drawn_by": "features/hud",
+      "id": "hud",
+      "status": "reserved",
+      "z": 0
+    }
+  ],
+  "schema": "gtai.render-layers/1"
+}

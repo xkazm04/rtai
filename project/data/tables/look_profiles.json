@@ -1,0 +1,171 @@
+{
+  "default": "auto",
+  "doc": "Look profiles: every print-pass parameter of the D4 world pass (look_d4.gdshader: world), the item pass (look_d4_item.gdshader: item) and the cutout part print (parts_flat_below: below this many screen px per part px Rivet's limbs, collar and core print as flat stickers). zoom_blend is the default look (--look=auto): profile `from` up to start_ppm, blending to profile `to` at full_ppm and above. --look=<id> pins one profile; --look=off draws the raw art. core/render/README.md.",
+  "overlays": [
+    {
+      "amount_ppm": [
+        [
+          48,
+          0
+        ],
+        [
+          64,
+          1
+        ]
+      ],
+      "base": "d4",
+      "doc": "D5 'Inked Grime' (the d5-close lane's look_d5.gdshader + look_d5.params.json `world`): ink-pressure hatch, paper tooth and off-register ink / vermilion re-printed over the D4 world print, under the actors. Live only when both files exist; then `auto` resolves to `base` (d4) with this overlay ramped by amount_ppm, and `d5` to d4 + the overlay at 1. amount_ppm keeps the brief's pure D4 at gameplay zoom (48 px/m: 0); d5-close proposes 0.35 at 48 px/m (their zoom_amount stop 1.5) - an owner call, one number here.",
+      "full_looks": [
+        "d5"
+      ],
+      "id": "d5_world",
+      "params": "res://assets/shaders/look_d5.params.json",
+      "params_key": "world",
+      "shader": "res://assets/shaders/look_d5.gdshader",
+      "zoom_looks": [
+        "auto"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "doc": "D1 Riso Refined, approximated on the D4 pass: flat ink fills, no grime, no misregistration, almost no hatching, clean outlines. The riso dot-screen shader itself is not ported (the safe backup lives in the spike as look=fine).",
+      "id": "d1",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0,
+        "edge_hi": 0.36,
+        "edge_lo": 0.16,
+        "grime": 0,
+        "grit": 0.1,
+        "hatch_on": 0.94,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "teal": 0,
+        "teal_shift": [
+          0,
+          0
+        ],
+        "verm": 0,
+        "verm_shift": [
+          0,
+          0
+        ],
+        "wash_hi": 0.25,
+        "wash_lo": 0.3,
+        "wash_mid": 0.85
+      }
+    },
+    {
+      "doc": "D4 Ink and Hatch (the target look): the F-08 tuning + the f08b charcoal-street retune (crop gates at 32 and 48 px/m, 2026-11-02).",
+      "id": "d4",
+      "item": {
+        "shadow_k": 0.62,
+        "steel_out": [
+          0.64,
+          0.6,
+          0.63
+        ]
+      },
+      "parts_flat_below": 0.13,
+      "print": true,
+      "world": {
+        "aquatint": 0.18,
+        "edge_hi": 0.32,
+        "edge_lo": 0.13,
+        "grime": 0.15,
+        "grit": 0.35,
+        "hatch_on": 0.86,
+        "hatch_period": 4,
+        "line_ink": 0.9,
+        "step_hi": 0.68,
+        "step_lo": 0.19,
+        "step_mid": 0.45,
+        "teal": 0,
+        "teal_shift": [
+          -1,
+          2
+        ],
+        "verm": 0,
+        "verm_shift": [
+          2,
+          -1
+        ],
+        "wash_hi": 0.3,
+        "wash_lo": 0.3,
+        "wash_mid": 0.9
+      }
+    },
+    {
+      "doc": "D5 Inked Grime, pushed where it survives (arena zoom, 64 px/m and above): heavier grime and grit, more hatching at a wider pen period, lower ink-edge thresholds, stronger misregistration of the accent plates. Placeholder values until the d5-close lane delivers its params.",
+      "id": "d5",
+      "item": {
+        "shadow_k": 0.7,
+        "steel_out": [
+          0.6,
+          0.56,
+          0.6
+        ]
+      },
+      "parts_flat_below": 0.1,
+      "print": true,
+      "world": {
+        "aquatint": 0.26,
+        "edge_hi": 0.26,
+        "edge_lo": 0.09,
+        "grime": 0.45,
+        "grit": 0.6,
+        "hatch_on": 0.74,
+        "hatch_period": 5,
+        "line_ink": 0.84,
+        "step_hi": 0.64,
+        "step_lo": 0.17,
+        "step_mid": 0.42,
+        "teal": 0,
+        "teal_shift": [
+          -2,
+          3
+        ],
+        "verm": 0,
+        "verm_shift": [
+          3,
+          -2
+        ],
+        "wash_hi": 0.4,
+        "wash_lo": 0.34,
+        "wash_mid": 0.92
+      }
+    }
+  ],
+  "schema": "gtai.look-profiles/1",
+  "tones": {
+    "doc": "The print passes' output inks as palette.json token ids (pass -> shader uniform -> token): palette.json is the one source of paper / wash / ink. A profile row may still set the uniform itself (a Vector3) to override.",
+    "item": {
+      "ink_tone": "ink",
+      "paper_tone": "paper"
+    },
+    "world": {
+      "ink_tone": "ink",
+      "paper_tone": "paper",
+      "wash_tone": "wash"
+    }
+  },
+  "zoom_blend": {
+    "from": "d4",
+    "full_ppm": 64,
+    "start_ppm": 48,
+    "to": "d5"
+  }
+}

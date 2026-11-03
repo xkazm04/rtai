@@ -1,0 +1,220 @@
+{
+  "$id": "gtai.fx/1",
+  "additionalProperties": false,
+  "properties": {
+    "atlas": {
+      "additionalProperties": false,
+      "properties": {
+        "cols": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "pattern": "^res://.+\\.png$",
+          "type": "string"
+        },
+        "rows": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "cols",
+        "rows",
+        "doc"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kinds": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "atlas": {
+            "additionalProperties": false,
+            "properties": {
+              "cells": {
+                "items": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "count": {
+                "maximum": 64,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "drag": {
+                "maximum": 60,
+                "minimum": 0,
+                "type": "number"
+              },
+              "frame_ticks": {
+                "maximum": 600,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "grow": {
+                "maximum": 16,
+                "minimum": 0,
+                "type": "number"
+              },
+              "mode": {
+                "enum": [
+                  "anim",
+                  "pick"
+                ]
+              },
+              "rim": {
+                "description": "an ink rim around the sheet cell's silhouette, in cell widths (0 = none): a paper cell on a cream body needs one to read",
+                "maximum": 0.2,
+                "minimum": 0,
+                "type": "number"
+              },
+              "size_m": {
+                "maximum": 16,
+                "minimum": 0.01,
+                "type": "number"
+              },
+              "speed_mps": {
+                "maximum": 200,
+                "minimum": 0,
+                "type": "number"
+              }
+            },
+            "required": [
+              "cells",
+              "mode"
+            ],
+            "type": "object"
+          },
+          "count": {
+            "maximum": 64,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "drag": {
+            "maximum": 60,
+            "minimum": 0,
+            "type": "number"
+          },
+          "emissive": {
+            "type": "boolean"
+          },
+          "fade_from": {
+            "maximum": 0.99,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ground": {
+            "type": "boolean"
+          },
+          "grow": {
+            "maximum": 16,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "life_ticks": {
+            "maximum": 3600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "light": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
+          "shape": {
+            "enum": [
+              "disc",
+              "streak",
+              "burst",
+              "splat",
+              "bolt"
+            ]
+          },
+          "size_m": {
+            "maximum": 16,
+            "minimum": 0.01,
+            "type": "number"
+          },
+          "speed_mps": {
+            "maximum": 200,
+            "minimum": 0,
+            "type": "number"
+          },
+          "spread_deg": {
+            "maximum": 360,
+            "minimum": 0,
+            "type": "number"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "shape",
+          "token",
+          "count",
+          "life_ticks",
+          "size_m",
+          "speed_mps",
+          "spread_deg",
+          "grow",
+          "drag",
+          "light",
+          "doc",
+          "fade_from",
+          "emissive",
+          "ground"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "max_particles": {
+      "maximum": 8192,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "max_spawns_per_frame": {
+      "maximum": 1024,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.fx/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "max_particles",
+    "max_spawns_per_frame",
+    "kinds"
+  ],
+  "type": "object"
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Render selftest (the `selftest` evidence): renders the city in the D4 look at 32 and 48 px/m,
-// windowed (headless renders nothing), and sanity-checks the frames (dev/selftest/city_selftest.gd).
+// windowed (headless renders nothing), and sanity-checks the frames (dev/selftest/city_selftest.gd);
+// then the look golden frames (dev/selftest/look_golden.gd, --fixed-fps 60): every look profile at
+// 32 / 48 / 64 px/m diffed against tests/golden/look.
 //   node tools/selftest/run.mjs
 import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,6 +10,90 @@ import { pathToFileURL } from 'node:url';
 import { ROOT, godotBin, run } from '../lib/repo.mjs';
 
 export const RESULT_NAME = 'selftest-result.json';
+export const GOLDEN_NAME = 'look-golden-result.json';
+
+/** A --site other than the junction writes into <out>/<site> (city_selftest.gd SITES). */
+function siteDirs(outDir, out, site) {
+  if (site === 'junction') return [outDir, out, []];
+  mkdirSync(join(outDir, site), { recursive: true });
+  return [join(outDir, site), join(out, site), [`--site=${site}`]];
+}
+
+/** The look golden frames: { ok, frames, summary }; frames is [] when it did not run. */
+export function runLookGolden(outDir0, out0, site = 'junction') {
+  const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
+  rmSync(join(outDir, GOLDEN_NAME), { force: true });
+  const res = run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/look_golden.tscn', '--',
+    `--out=${out}`, ...siteArg], { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, GOLDEN_NAME);
+  if (!existsSync(file)) return { ok: false, frames: [], summary: `look goldens: no result (exit ${res.status})` };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const worst = Math.max(0, ...frames.map((f) => f.mean ?? 255));
+  const bad = frames.filter((f) => !f.ok).map((f) => `${f.look}@${f.ppm}${f.grade && f.grade !== 'day' ? `-${f.grade}` : ''}`);
+  return { ok: res.status === 0 && r.ok === true && frames.length > 0, frames,
+    summary: `${site === 'junction' ? 'look' : site} goldens ${frames.length - bad.length}/${frames.length} within mean ${r.max_mean} (worst ${worst.toFixed(2)})`
+      + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };
+}
+
+/** Splits audit offenders into tolerated debt (data/tables/accent_debt.json: accent + layer + ppm
+ *  up to max_px) and new offenders. Strings come from accent_audit.gd: "<accent> on <layer>: <n> px",
+ *  prefixed here with "<ppm> px/m "; anything else (crowd looks) is never debt. */
+export function judgeAccents(offenders, debtRows) {
+  const debt = [];
+  const fresh = [];
+  for (const o of offenders) {
+    const m = /^(\d+) px\/m (\w+) on (\w+): (\d+) px$/.exec(o);
+    const row = m && debtRows.find((d) => d.ppm === Number(m[1]) && d.accent === m[2] && d.layer === m[3]);
+    if (row && Number(m[4]) <= row.max_px) debt.push(`${o} (debt ${row.id}, <= ${row.max_px}, ${row.owner})`);
+    else fresh.push(o);
+  }
+  return { debt, fresh };
+}
+
+/** The colour-doctrine audit (dev/selftest/accent_audit.gd). Gating: an offender not covered by
+ *  accent_debt.json (or above its max_px) fails the selftest. { ok, frames, offenders, summary }. */
+export function runAccentAudit(outDir0, out0, site = 'junction') {
+  const [outDir, out, siteArg] = siteDirs(outDir0, out0, site);
+  rmSync(join(outDir, 'accent-audit.json'), { force: true });
+  run(godotBin(), ['--fixed-fps', '60', '--path', 'project', 'res://dev/selftest/accent_audit.tscn', '--', `--out=${out}`,
+    ...siteArg], { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, 'accent-audit.json');
+  if (!existsSync(file)) return { ok: false, frames: [], offenders: [], summary: 'accent audit: no result' };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const offenders = frames.flatMap((f) => f.offenders.map((o) => `${f.ppm} px/m ${o}`));
+  const share = frames.map((f) => `${f.ppm}: ${(f.frame_share * 100).toFixed(2)} %`).join(', ');
+  // the atlas crowd split at the source: a pedestrian look with vermilion outside its hit flash
+  const looks = r.crowd_atlas_by_look ?? [];
+  for (const l of looks.filter((x) => x.off_doctrine)) offenders.push(`crowd look ${l.look} (${l.tag}) ${l.vermilion} vermilion texels`);
+  const crowd = looks.length ? `; crowd atlas ${looks.filter((x) => x.kind === 'ped' && !x.off_doctrine).length}/`
+    + `${looks.filter((x) => x.kind === 'ped').length} pedestrian looks on doctrine` : '';
+  const debtRows = JSON.parse(readFileSync(join(ROOT, 'project', 'data', 'tables', 'accent_debt.json'), 'utf8')).rows;
+  const { debt, fresh } = judgeAccents(offenders, debtRows);
+  const verdict = fresh.length ? `NEW off-doctrine: ${fresh.join('; ')}` : 'no new off-doctrine accents';
+  // debt rows are measured at the junction: only that site can report one paid off
+  const paid = site !== 'junction' ? [] : debtRows.filter((d) => !offenders.some((o) => o.startsWith(`${d.ppm} px/m ${d.accent} on ${d.layer}:`)))
+    .map((d) => d.id);
+  return { ok: fresh.length === 0, frames, offenders,
+    summary: `${site === 'junction' ? '' : `${site} `}accent pixels ${share}${crowd}; ${verdict}${debt.length ? `; known debt: ${debt.join('; ')}` : ''}`
+      + (paid.length ? `; debt rows no longer seen (delete them): ${paid.join(', ')}` : '') };
+}
+
+/** The print pass's world lock (dev/selftest/world_lock.gd): the paused junction panned by a whole
+ *  number of px at 32 / 48 / 64 px/m must move rigidly (world_px fed every frame). Gating. */
+export function runWorldLock(outDir, out) {
+  rmSync(join(outDir, 'world-lock.json'), { force: true });
+  run(godotBin(), ['--path', 'project', 'res://dev/selftest/world_lock.tscn', '--', `--out=${out}`],
+    { cwd: ROOT, timeout: 180000 });
+  const file = join(outDir, 'world-lock.json');
+  if (!existsSync(file)) return { ok: false, frames: [], summary: 'world lock: no result' };
+  const r = JSON.parse(readFileSync(file, 'utf8'));
+  const frames = r.frames ?? [];
+  const detail = frames.map((f) => `${f.ppm}: ${(f.differing_share * 100).toFixed(2)} %`).join(', ');
+  return { ok: r.ok === true && frames.length > 0, frames,
+    summary: `world lock ${r.ok ? 'holds' : 'SWIMS'} (${detail} of the overlap differs after a pan, max ${r.max_share * 100} %)` };
+}
 
 export function runSelftest(outDir) {
   mkdirSync(outDir, { recursive: true });
@@ -24,16 +110,36 @@ export function runSelftest(outDir) {
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const pngs = frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
-  const ok = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
+  const cityOk = res.status === 0 && r.ok === true && pngs.length === frames.length && frames.length > 0;
   const detail = frames.map((f) => `${f.ppm} px/m ${f.ok ? 'ok' : `FAIL (${f.why})`}, ${f.visible_actors} actors, `
     + `${f.distinct_colours} colours`).join('; ');
-  const summary = `selftest: D4 city frames ${ok ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
-    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms`;
-  const metrics = { artLoaded: r.art_loaded, placeholders: r.placeholders, prewarmMs: r.prewarm_ms,
-    textureLoadMs: r.texture_load_ms };
+  const gold = runLookGolden(outDir, out);
+  const accents = runAccentAudit(outDir, out);
+  // the same gates at a street between two built blocks (roofs, cast shadows, kerb props): the
+  // junction alone never saw a prop's vermilion or a roof's shadow
+  const blockGold = runLookGolden(outDir, out, 'block');
+  const blockAccents = runAccentAudit(outDir, out, 'block');
+  const lock = runWorldLock(outDir, out);
+  const summary = `selftest: D4 city frames ${cityOk ? 'rendered' : 'FAILED'} (${detail}); ${r.art_loaded} art textures, `
+    + `${r.placeholders} placeholders, prewarm ${Math.round(r.prewarm_ms)} ms; ${gold.summary}; ${accents.summary}; `
+    + `${blockGold.summary}; ${blockAccents.summary}; ${lock.summary}`;
+  const metrics = { lookGoldenFrames: gold.frames.length, lookGoldenOk: gold.ok ? 1 : 0, artLoaded: r.art_loaded,
+    placeholders: r.placeholders, prewarmMs: r.prewarm_ms, textureLoadMs: r.texture_load_ms };
   for (const f of frames) metrics[`visibleActors${f.ppm}ppm`] = f.visible_actors;
-  return { ok, counts: { passed: frames.filter((f) => f.ok).length, failed: frames.filter((f) => !f.ok).length, skipped: 0 },
-    summary, metrics, artifacts: [...pngs, RESULT_NAME] };
+  for (const f of accents.frames) metrics[`accentShare${f.ppm}ppm`] = f.frame_share;
+  metrics.accentOffenders = accents.offenders.length;
+  metrics.accentNewOffenders = accents.ok ? 0 : Math.max(1, accents.offenders.length);
+  for (const f of lock.frames) metrics[`worldLockShare${f.ppm}ppm`] = f.differing_share;
+  metrics.blockGoldenFrames = blockGold.frames.length;
+  metrics.blockAccentOffenders = blockAccents.offenders.length;
+  const ok = cityOk && gold.ok && accents.ok && blockGold.ok && blockAccents.ok && lock.ok;
+  const all = [...frames, ...gold.frames, ...blockGold.frames];
+  const goldPngs = gold.frames.map((f) => f.file).filter((f) => existsSync(join(outDir, f)));
+  return { ok, counts: { passed: all.filter((f) => f.ok).length, failed: all.filter((f) => !f.ok).length, skipped: 0 },
+    summary, metrics, artifacts: [...pngs, RESULT_NAME, ...goldPngs, ...(gold.frames.length ? [GOLDEN_NAME] : []),
+      ...(accents.frames.length ? ['accent-audit.json'] : []), ...(lock.frames.length ? ['world-lock.json'] : []),
+      ...(blockGold.frames.length ? [`block/${GOLDEN_NAME}`] : []),
+      ...(blockAccents.frames.length ? ['block/accent-audit.json'] : [])] };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

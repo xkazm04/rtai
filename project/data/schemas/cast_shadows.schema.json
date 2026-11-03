@@ -1,0 +1,67 @@
+{
+  "$id": "gtai.cast-shadows/1",
+  "additionalProperties": false,
+  "properties": {
+    "classes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "baked_offset_m": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
+          "class": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "offset_m": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "class",
+          "offset_m",
+          "baked_offset_m"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fallback_shader": {
+      "pattern": "^res://.+\\.gdshader$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.cast-shadows/1"
+    },
+    "shader": {
+      "pattern": "^res://.+\\.gdshader$",
+      "type": "string"
+    },
+    "uniforms": {
+      "additionalProperties": {
+        "maximum": 16,
+        "minimum": 0,
+        "type": "number"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "shader",
+    "fallback_shader",
+    "uniforms",
+    "classes"
+  ],
+  "type": "object"
+}

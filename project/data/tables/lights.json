@@ -1,0 +1,133 @@
+{
+  "car_lights": {
+    "doc": "features/city/view/city_headlights.gd: on these grades the max_cars cars nearest the focus within radius_m carry a headlight cone per lamps_m offset (car frame, metres, nose along +x) and police cars a siren at siren_m; held lights, moved once per sim tick. Day holds none.",
+    "grades": [
+      "night"
+    ],
+    "lamps_m": [
+      [
+        2.3,
+        -0.7
+      ],
+      [
+        2.3,
+        0.7
+      ]
+    ],
+    "max_cars": 6,
+    "radius_m": 40,
+    "siren_m": [
+      0,
+      0
+    ]
+  },
+  "doc": "The 2D light model (core/render/README.md). A light is a pooled additive quad on the `light` canvas whose radial falloff is cut into `steps` flat bands with world-locked 45-degree hatching at each band edge, so it prints as paper (or an accent ink) over the charcoal streets, never as a soft 3D glow. token / alt_token are palette.json ids (alt: the strobe alternates on flicker_hz). cone_deg 0 = radial, else a cone along the light rotation. life_ticks 0 = held until removed (headlights, fire, sirens), else fades out over that many 60 Hz sim ticks. grades re-print the screen before the lights add (grade_ink.gdshader: luminance -> paper_level * l^gamma, hue kept, accent pixels keep accent_keep of their value; day = identity, the rect is hidden). max_lights is the per-frame budget: beyond it the oldest timed light is dropped. max_flash_hz: the photosensitivity cap (WCAG 2.3.1 / Harding: at most 3 flashes a second); a kind alternating token / alt_token flashes flicker_hz times a second, and the loader clamps flicker_hz to it.",
+  "grades": [
+    {
+      "accent_keep": 0,
+      "doc": "the D4 baseline: no grading (the grade rect is hidden)",
+      "gamma": 1,
+      "id": "day",
+      "paper_level": 1
+    },
+    {
+      "accent_keep": 0.85,
+      "doc": "later acts: the same print re-inked darker and harder - paper prints at paper_level of its luminance, the mids and darks sink faster (gamma), hue kept (warm paper, warm charcoal); accent pixels keep most of their value so the spot colours stand out; lights cut paper back out of it",
+      "gamma": 1.5,
+      "id": "night",
+      "paper_level": 0.58
+    }
+  ],
+  "kinds": [
+    {
+      "cone_deg": 70,
+      "doc": "a gun firing: a short paper fan along the barrel",
+      "flicker_hz": 0,
+      "id": "muzzle_flash",
+      "intensity": 0.9,
+      "life_ticks": 4,
+      "radius_m": 1.6,
+      "steps": 2,
+      "token": "paper"
+    },
+    {
+      "alt_token": "vermilion",
+      "cone_deg": 0,
+      "doc": "a blast: paper core, the outer band on the vermilion plate (danger)",
+      "flicker_hz": 0,
+      "id": "explosion",
+      "intensity": 0.75,
+      "life_ticks": 36,
+      "radius_m": 6,
+      "steps": 3,
+      "token": "paper"
+    },
+    {
+      "cone_deg": 34,
+      "doc": "a vehicle headlight cone",
+      "flicker_hz": 0,
+      "id": "headlight",
+      "intensity": 0.55,
+      "life_ticks": 0,
+      "radius_m": 9,
+      "steps": 3,
+      "token": "paper"
+    },
+    {
+      "alt_token": "paper",
+      "cone_deg": 0,
+      "doc": "the police strobe: vermilion / paper (red and blue are off-doctrine; teal is the dead)",
+      "flicker_hz": 2.5,
+      "id": "siren",
+      "intensity": 0.45,
+      "life_ticks": 0,
+      "radius_m": 5,
+      "steps": 2,
+      "token": "vermilion"
+    },
+    {
+      "alt_token": "paper",
+      "cone_deg": 0,
+      "doc": "burning wreck or barrel: a flickering vermilion core",
+      "flicker_hz": 2.5,
+      "id": "fire",
+      "intensity": 0.5,
+      "life_ticks": 0,
+      "radius_m": 3.5,
+      "steps": 3,
+      "token": "vermilion"
+    },
+    {
+      "cone_deg": 0,
+      "doc": "a street lamp's pool: a small paper disc under the head, two bands",
+      "flicker_hz": 0,
+      "id": "street_lamp",
+      "intensity": 0.38,
+      "life_ticks": 0,
+      "radius_m": 4.5,
+      "steps": 2,
+      "token": "paper"
+    }
+  ],
+  "max_flash_hz": 3,
+  "max_lights": 40,
+  "prop_lights": {
+    "doc": "features/city/view/city_prop_lights.gd: on these grades the max_props light-carrying props nearest the focus within radius_m hold a `kind` light at their row's at_m (the prop sprite's frame, metres from its centre, +x along the sprite: the lamp head). Day holds none.",
+    "grades": [
+      "night"
+    ],
+    "kind": "street_lamp",
+    "max_props": 8,
+    "props": [
+      {
+        "at_m": [
+          1.05,
+          0
+        ],
+        "prop": "lamp_post"
+      }
+    ],
+    "radius_m": 32
+  },
+  "schema": "gtai.lights/1"
+}

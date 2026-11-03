@@ -45,6 +45,32 @@ func test_moving_focus_recycles_rigs_without_building() -> void:
 	assert_eq(_rigs.full_count(), CharacterRigs.MAX_FULL)
 
 
+func test_selection_runs_every_few_ticks_and_rows_follow_between() -> void:
+	_crowd(60, Vector2.ZERO)
+	_rigs.step_ticks(1)
+	var before: int = _rigs.full_count()
+	# a newcomer right on the focus: the atlas draws it until the next selection
+	@warning_ignore("return_value_discarded")
+	_rigs.feed.put(_rigs.feed.count, 999, BodyPlan.Kind.PED, Vector2.ONE, Vector2.ZERO)
+	_rigs.step_ticks(1)
+	assert_null(_rigs.rig_for(999), "no reselect between selections")
+	assert_eq(_rigs.full_count(), before)
+	assert_true(_rigs.full_row(0), "kept rigs find their rows again")
+	for k: int in CharacterRigs.SELECT_EVERY:
+		_rigs.step_ticks(1)
+	assert_not_null(_rigs.rig_for(999), "picked up within SELECT_EVERY ticks")
+
+
+func test_a_kept_actor_leaving_the_feed_reselects_at_once() -> void:
+	_crowd(60, Vector2.ZERO)
+	_rigs.step_ticks(1)
+	assert_not_null(_rigs.rig_for(101))
+	_rigs.feed.ids[1] = 5000
+	_rigs.step_ticks(1)
+	assert_null(_rigs.rig_for(101), "the gone actor's rig went back to the pool")
+	assert_eq(_rigs.full_count(), CharacterRigs.MAX_FULL)
+
+
 func test_a_look_reskins_by_texture() -> void:
 	var cop: CutRig = _rigs.pool().acquire(
 		BodyPlan.Kind.COP, RigVariant.crowd(6), Vector2.ZERO, 0.0

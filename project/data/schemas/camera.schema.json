@@ -1,0 +1,165 @@
+{
+  "$id": "gtai.camera/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "hitstop_cooldown_ticks": {
+      "maximum": 600,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "hitstops": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "ticks": {
+            "maximum": 60,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "ticks"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "look_ahead_ease": {
+      "maximum": 1,
+      "minimum": 0.001,
+      "type": "number"
+    },
+    "modes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "look_ahead_m_per_mps": {
+            "maximum": 4,
+            "minimum": 0,
+            "type": "number"
+          },
+          "look_ahead_max_m": {
+            "maximum": 64,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ppm": {
+            "maximum": 256,
+            "minimum": 8,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "ppm",
+          "look_ahead_m_per_mps",
+          "look_ahead_max_m"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "reduced_motion": {
+      "additionalProperties": false,
+      "properties": {
+        "hitstop_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "look_ahead_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "shake_scale": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "zoom_ease_scale": {
+          "maximum": 8,
+          "minimum": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "shake_scale",
+        "look_ahead_scale",
+        "zoom_ease_scale",
+        "hitstop_scale"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.camera/1"
+    },
+    "shakes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "amp_px": {
+            "maximum": 64,
+            "minimum": 0,
+            "type": "number"
+          },
+          "freq_hz": {
+            "maximum": 60,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "ticks": {
+            "maximum": 600,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "amp_px",
+          "ticks",
+          "freq_hz"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "zoom_ease_ticks": {
+      "maximum": 600,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "modes",
+    "zoom_ease_ticks",
+    "look_ahead_ease",
+    "shakes",
+    "hitstops",
+    "reduced_motion",
+    "hitstop_cooldown_ticks"
+  ],
+  "type": "object"
+}

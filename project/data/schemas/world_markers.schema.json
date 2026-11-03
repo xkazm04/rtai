@@ -1,0 +1,123 @@
+{
+  "$id": "gtai.world-markers/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kinds": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bob_px": {
+            "maximum": 16,
+            "minimum": 0,
+            "type": "number"
+          },
+          "bob_ticks": {
+            "maximum": 600,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "core": {
+            "maximum": 0.9,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fill_token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "rim_px": {
+            "maximum": 8,
+            "minimum": 0,
+            "type": "number"
+          },
+          "shape": {
+            "enum": [
+              "diamond",
+              "ring"
+            ]
+          },
+          "size_px": {
+            "maximum": 96,
+            "minimum": 4,
+            "type": "number"
+          },
+          "token": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "use": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "shape",
+          "token",
+          "use",
+          "size_px",
+          "rim_px",
+          "bob_px",
+          "bob_ticks"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "pointer": {
+      "additionalProperties": false,
+      "properties": {
+        "margin_px": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rim_px": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "number"
+        },
+        "size_px": {
+          "maximum": 96,
+          "minimum": 4,
+          "type": "number"
+        },
+        "token": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "token",
+        "size_px",
+        "rim_px",
+        "margin_px"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.world-markers/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "kinds",
+    "pointer"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,194 @@
+class_name FxSystem
+extends Node2D
+## Data-driven FX (data/tables/fx.json, gtai.fx/1; core/render/README.md): muzzle, tracer,
+## impact, explosion, smoke, debris, ink splat and the melee crackle as pooled particles in one
+## MultiMesh on the `fx` band of the actors canvas (world px). spawn() is budgeted per frame and
+## per pool; particles advance on the 60 Hz sim tick (step(tick)), never on a frame delta, and
+## spread by a hash of the spawn serial (no RNG stream: render only, replay untouched).
+## With the d4-production FX sheet present (fx.json `atlas`), kinds draw atlas cells ("pick" a
+## cell by seed or "anim" through them); without it the analytic placeholder shapes draw.
+
+const TABLE: String = "res://data/tables/fx.json"
+const SHADER: String = "res://assets/shaders/fx_ink.gdshader"
+const SHAPES: Dictionary[String, float] = {
+	"disc": 0.0, "streak": 1.0, "burst": 2.0, "splat": 3.0, "bolt": 4.0
+}
+const MAX_STEPS: int = 4
+
+var kinds: Dictionary[StringName, Dictionary] = {}
+var max_spawns_per_frame: int = 24
+## The light layer an fx kind's `light` goes to (null = no lights).
+var lights: LightLayer = null
+var dropped: int = 0
+var spawned_this_frame: int = 0
+var last_us: int = 0
+## The emissive twin (CityView puts it on the `emissive` canvas, above the lights): spawn()
+## forwards `emissive` kinds to it. null = everything draws here.
+var glow: FxSystem = null
+## The ground twin (CityView puts it on the world canvas's ground_decals band, so the print pass
+## inks it like a decal, under bodies, shadows and roofs): spawn() forwards `ground` kinds to it.
+var ground: FxSystem = null
+## True when the FX sheet loaded: kinds use their `atlas` blocks.
+var atlas_live: bool = false
+
+var _pool: FxPool = null
+var _mm: MultiMesh = MultiMesh.new()
+var _node: MultiMeshInstance2D = MultiMeshInstance2D.new()
+var _serial: int = 0
+## Something spawned since the last write: the MultiMesh must be rewritten even without a tick.
+var _dirty: bool = true
+var _last_tick: int = -1
+var _atlas_path: String = ""
+var _atlas_grid: Vector2 = Vector2.ONE
+var _world_px: Vector2 = Vector2.ZERO
+var _page_age: float = 0.0
+
+
+func _init() -> void:
+	z_index = RenderLayers.z(&"fx")
+	var cap: int = _load(FileAccess.get_file_as_string(TABLE))
+	_pool = FxPool.new(cap)
+	_mm.transform_format = MultiMesh.TRANSFORM_2D
+	_mm.use_colors = true
+	_mm.use_custom_data = true
+	var quad: QuadMesh = QuadMesh.new()
+	quad.size = Vector2(2, 2)
+	_mm.mesh = quad
+	_mm.instance_count = cap
+	_mm.visible_instance_count = 0
+	_node.multimesh = _mm
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = load(SHADER)
+	if atlas_live:
+		mat.set_shader_parameter(&"atlas", load(_atlas_path))
+		mat.set_shader_parameter(&"grid", _atlas_grid)
+	_node.material = mat
+	add_child(_node)
+
+
+func alive() -> int:
+	return _pool.alive
+
+
+## Emits one `kind` at `pos_px` (world px) along `angle` on sim tick `tick`. False when the kind
+## is unknown or the frame / pool budget is spent (counted in `dropped`).
+func spawn(kind: StringName, pos_px: Vector2, angle: float, tick: int) -> bool:
+	if not kinds.has(kind):
+		return false
+	var k: Dictionary = kinds[kind]
+	if glow != null and k.get("emissive", false):
+		return glow.spawn(kind, pos_px, angle, tick)
+	if ground != null and k.get("ground", false):
+		return ground.spawn(kind, pos_px, angle, tick)
+	var count: int = k["count"]
+	if spawned_this_frame >= max_spawns_per_frame or _pool.alive + count > _pool.capacity():
+		dropped += 1
+		return false
+	spawned_this_frame += 1
+	_dirty = true
+	var spread_deg: float = k["spread_deg"]
+	var spread: float = deg_to_rad(spread_deg)
+	var speed: float = k["speed_mps"]
+	for i: int in count:
+		_serial += 1
+		var h: float = _hash01(_serial)
+		var a: float = angle + (h - 0.5) * spread
+		var v: Vector2 = (
+			Vector2.from_angle(a) * speed * FxPool.PX_PER_M * (0.6 + 0.4 * _hash01(~_serial))
+		)
+		_pool.put(k, Transform2D(a, pos_px), v, tick, h)
+	var light: String = k["light"]
+	if lights != null and light != "":
+		@warning_ignore("return_value_discarded")
+		lights.add(StringName(light), pos_px, angle, tick)
+	return true
+
+
+## Advances the particles to sim tick `tick` and draws them; call once a frame. Everything a
+## particle shows is a function of the tick, so a frame with no tick and no spawn keeps the
+## MultiMesh as it is (the per-instance rewrite cost +0.35 ms a frame in the riot at ~1000 fps).
+## world_px (the camera's world offset in screen px) locks the fade dither to the world.
+func step(tick: int, world_px: Vector2 = Vector2.ZERO) -> void:
+	if world_px != _world_px:
+		_world_px = world_px
+		(_node.material as ShaderMaterial).set_shader_parameter(&"world_px", world_px)
+	if glow != null and lights != null:
+		glow.set_page_age(lights.page_age)  # the twin above the grade ages itself; this band is graded
+	var t0: int = Time.get_ticks_usec()
+	var steps: int = clampi(tick - _last_tick, 0, MAX_STEPS) if _last_tick >= 0 else 0
+	if tick == _last_tick and not _dirty:
+		last_us = 0
+		return
+	_last_tick = tick
+	_pool.step(steps, tick, _mm)
+	_dirty = false
+	spawned_this_frame = 0
+	last_us = Time.get_ticks_usec() - t0
+
+
+## Drops every particle here and in the twins (the loading-screen prewarm sample, a scene cut).
+func clear() -> void:
+	_pool.alive = 0
+	_mm.visible_instance_count = 0
+	_dirty = true
+	for twin: FxSystem in [glow, ground]:
+		if twin != null:
+			twin.clear()
+
+
+static func _hash01(n: int) -> float:
+	var x: int = (n * 0x45D9F3B) & 0x7FFFFFFF
+	x = ((x ^ (x >> 16)) * 0x45D9F3B) & 0x7FFFFFFF
+	return float(x ^ (x >> 16)) / float(0x7FFFFFFF)
+
+
+func _load(text: String) -> int:
+	var parser: JSON = JSON.new()
+	if parser.parse(text) != OK or not parser.data is Dictionary:
+		return 1
+	var d: Dictionary = parser.data
+	var spf: float = d["max_spawns_per_frame"]
+	max_spawns_per_frame = int(spf)
+	var atlas: Dictionary = d.get("atlas", {})
+	_load_atlas(atlas)
+	var pal: PaletteTokens = PaletteTokens.shared()
+	for row: Dictionary in d["kinds"]:
+		var k: Dictionary = row.duplicate()
+		if atlas_live and row.has("atlas"):
+			var a: Dictionary = row["atlas"]
+			k.merge(a, true)
+			var cells: Array = a["cells"]
+			var first: float = cells[0]
+			var n: float = cells[1]
+			k["cell0"] = first
+			k["cell_n"] = n
+			k["anim"] = a["mode"] == "anim"
+		var token: String = row["token"]
+		var shape: String = row["shape"]
+		k["color"] = pal.color(StringName(token))
+		k["shape_id"] = SHAPES.get(shape, 0.0)
+		var kid: String = row["id"]
+		kinds[StringName(kid)] = k
+	var cap: float = d["max_particles"]
+	return int(cap)
+
+
+func _load_atlas(a: Dictionary) -> void:
+	if a.is_empty():
+		return
+	var path: String = a["path"]
+	if not ResourceLoader.exists(path):
+		return
+	var cols: float = a["cols"]
+	var rows: float = a["rows"]
+	_atlas_path = path
+	_atlas_grid = Vector2(cols, rows)
+	atlas_live = true
+
+
+## The page age for FX that draw above the grade rect (the emissive twin; LightLayer.set_page_age).
+func set_page_age(a: float) -> void:
+	if is_equal_approx(a, _page_age):
+		return
+	_page_age = a
+	(_node.material as ShaderMaterial).set_shader_parameter(&"age", a)

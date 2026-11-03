@@ -6,7 +6,8 @@ extends Node
 ## the game, and it goes straight into SimClock.advance() (SIM-01).
 ## `-- --seed=<n>` sets the master seed; `-- --replay=<file>` re-runs a recorded log headless,
 ## compares it (SIM-05) and quits 0 when identical, 1 when it diverged; `-- --record=<file>`
-## records this run and writes the log when the world leaves the tree.
+## records this run and writes the log when the world leaves the tree. `-- --reduced-motion`
+## turns off the camera shake / hit-stop and the marker pulse (the settings menu owns it later).
 
 const DEFAULT_SEED: int = 1
 
@@ -49,8 +50,18 @@ func _register_features(with_views: bool) -> void:
 	add_system(city)
 	if with_views and DisplayServer.get_name() != "headless":
 		var view: CityView = CityView.new()
+		if LaunchArgs.has("--look"):
+			view.look_id = StringName(LaunchArgs.value("--look"))
+		view.rig = CameraRig.new()
+		view.rig.snap(&"car")
+		view.rig.reduced_motion = LaunchArgs.has("--reduced-motion")
+		view.markers.reduced_motion = view.rig.reduced_motion
+		view.rig.listen(Events, _ctx.clock)
 		add_child(view)
 		view.setup(city)
+		var rivet_px: Callable = func() -> Vector2: return city.target * SimConst.PX_PER_M
+		view.fx_triggers.player_id = CityCharacters.RIVET_ID
+		view.fx_triggers.listen(Events, _ctx.clock, rivet_px)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
 		add_frame_probe(func() -> float: return view.chunks.frame_us / 1000.0)
 		add_frame_probe(func() -> float: return characters.rigs.last_us / 1000.0)

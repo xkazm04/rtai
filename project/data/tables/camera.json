@@ -1,0 +1,77 @@
+{
+  "doc": "Camera feel (core/render/README.md). modes: the screen scale per situation (ppm = screen px per metre; F-13: 32 on foot, 48 in a car, about 64 in boss arenas). A mode change eases the zoom over zoom_ease_ticks (smoothstep, 60 Hz sim ticks). look_ahead_m_per_mps leads the camera along the velocity, capped at look_ahead_max_m, eased by look_ahead_ease per tick. shakes: amplitude in screen px decaying linearly over ticks at freq_hz (a hash of the tick, no RNG stream); hitstops: ticks the game freezes on an impact (fx_triggers.json `hitstop` names the row; SimClock.hold withholds that much frame time, no tick changes), at most one per hitstop_cooldown_ticks. reduced_motion scales shake and look-ahead and lengthens the zoom ease.",
+  "hitstop_cooldown_ticks": 20,
+  "hitstops": [
+    {
+      "id": "melee_hit",
+      "ticks": 4
+    },
+    {
+      "id": "kill",
+      "ticks": 6
+    },
+    {
+      "id": "boss_hit",
+      "ticks": 8
+    },
+    {
+      "id": "rivet_hit",
+      "ticks": 3
+    }
+  ],
+  "look_ahead_ease": 0.06,
+  "modes": [
+    {
+      "id": "on_foot",
+      "look_ahead_m_per_mps": 0,
+      "look_ahead_max_m": 0,
+      "ppm": 32
+    },
+    {
+      "id": "car",
+      "look_ahead_m_per_mps": 0.35,
+      "look_ahead_max_m": 7,
+      "ppm": 48
+    },
+    {
+      "id": "arena",
+      "look_ahead_m_per_mps": 0,
+      "look_ahead_max_m": 0,
+      "ppm": 64
+    }
+  ],
+  "reduced_motion": {
+    "hitstop_scale": 0,
+    "look_ahead_scale": 0.5,
+    "shake_scale": 0,
+    "zoom_ease_scale": 1.5
+  },
+  "schema": "gtai.camera/1",
+  "shakes": [
+    {
+      "amp_px": 1.5,
+      "freq_hz": 30,
+      "id": "gunfire",
+      "ticks": 4
+    },
+    {
+      "amp_px": 4,
+      "freq_hz": 25,
+      "id": "hit",
+      "ticks": 10
+    },
+    {
+      "amp_px": 10,
+      "freq_hz": 18,
+      "id": "explosion",
+      "ticks": 24
+    },
+    {
+      "amp_px": 7,
+      "freq_hz": 20,
+      "id": "crash",
+      "ticks": 14
+    }
+  ],
+  "zoom_ease_ticks": 36
+}

@@ -1,0 +1,73 @@
+{
+  "$id": "gtai.fx-triggers/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.fx-triggers/1"
+    },
+    "triggers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "cue": {
+            "enum": [
+              "sim",
+              "event"
+            ]
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fx": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "maxItems": 4,
+            "type": "array"
+          },
+          "hitstop": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "shake": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
+          "shake_near_m": {
+            "maximum": 200,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "cue",
+          "doc",
+          "fx",
+          "shake",
+          "shake_near_m",
+          "hitstop"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "triggers"
+  ],
+  "type": "object"
+}

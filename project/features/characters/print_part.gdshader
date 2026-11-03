@@ -21,6 +21,7 @@ uniform float px_scale = 0.34;    // screen px per part px. Small (gameplay, ~0.
                                   // shading prints cream) instead of dithering into noise. Large: full halftone.
 uniform float verm_gate = 62.0;   // r - max(g,b) (0..255) above which a pixel is vermilion
 uniform float alpha_cut = 0.45;
+uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px (PartMaterials.set_world_px): tooth + dots world-locked
 uniform float tint = 0.0;         // 1 = print everything vermilion (hit flash)
 uniform float silhouette = 0.0;
 uniform int swap = 0;           // crowd palette variants: 1 vermilion->ink, 2 vermilion->cream, 3 cream->vermilion, 4 ink->vermilion (a cop's solid plate)
@@ -47,7 +48,7 @@ float dots(vec2 frag, float cov, float ang) {
 
 void fragment() {
 	vec4 c = COLOR;
-	vec2 px = FRAGCOORD.xy;
+	vec2 px = FRAGCOORD.xy + world_px;
 	float g = 1.0 - 0.06 * hash(floor(px));
 	if (c.a < 0.04) discard;
 	if (silhouette > 0.5) {

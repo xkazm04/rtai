@@ -1,0 +1,32 @@
+[
+  {
+    "d5_weight": 0.0,
+    "file": "arena-0.png",
+    "mode": "on_foot",
+    "ppm": 32.0
+  },
+  {
+    "d5_weight": 0.0,
+    "file": "arena-1.png",
+    "mode": "on_foot",
+    "ppm": 32.0
+  },
+  {
+    "d5_weight": 0.0,
+    "file": "arena-2.png",
+    "mode": "on_foot",
+    "ppm": 32.0
+  },
+  {
+    "d5_weight": 0.0,
+    "file": "arena-3.png",
+    "mode": "on_foot",
+    "ppm": 32.0
+  },
+  {
+    "d5_weight": 0.0,
+    "file": "arena-4.png",
+    "mode": "on_foot",
+    "ppm": 32.0
+  }
+]

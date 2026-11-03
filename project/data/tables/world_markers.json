@@ -1,0 +1,45 @@
+{
+  "doc": "World-UI markers on the world_ui canvas's world_markers band (core/render/README.md): a few shapes drawn in palette inks at a constant screen size at every zoom (size_px, rim_px: an ink outline, then a paper sticker rim like the characters'), optional fill_token (the body's ink, default = token) with a core of the token's ink at core x size (0 = none), bobbing on the 60 Hz tick (bob_px over bob_ticks; 0 = still; reduced motion stops it). use: the palette.json accent use it stands for (the colour doctrine: accents only on what matters). The pointer is the objective arrow pinned inside the screen edge (margin_px) when the marked objective is off screen.",
+  "kinds": [
+    {
+      "bob_px": 3,
+      "bob_ticks": 60,
+      "doc": "where the contract wants Rivet: a vermilion diamond",
+      "id": "objective",
+      "rim_px": 2,
+      "shape": "diamond",
+      "size_px": 22,
+      "token": "vermilion",
+      "use": "objective"
+    },
+    {
+      "bob_px": 2,
+      "bob_ticks": 45,
+      "doc": "something to pick up: a vermilion ring",
+      "id": "pickup",
+      "rim_px": 2,
+      "shape": "ring",
+      "size_px": 18,
+      "token": "vermilion",
+      "use": "pickup"
+    },
+    {
+      "bob_px": 0,
+      "bob_ticks": 0,
+      "doc": "a soul to take: a teal ring (teal belongs to the dead only)",
+      "id": "soul",
+      "rim_px": 2,
+      "shape": "ring",
+      "size_px": 20,
+      "token": "teal",
+      "use": "soul"
+    }
+  ],
+  "pointer": {
+    "margin_px": 28,
+    "rim_px": 3,
+    "size_px": 34,
+    "token": "vermilion"
+  },
+  "schema": "gtai.world-markers/1"
+}

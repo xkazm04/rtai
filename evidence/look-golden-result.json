@@ -1,0 +1,100 @@
+{
+  "blessed": false,
+  "frames": [
+    {
+      "far": 0.00265625,
+      "file": "look-d1-32ppm.png",
+      "found": true,
+      "look": "d1",
+      "mean": 0.216932291666667,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.007234375,
+      "file": "look-d1-48ppm.png",
+      "found": true,
+      "look": "d1",
+      "mean": 0.651453125,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.0056875,
+      "file": "look-d4-32ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 0.504739583333333,
+      "ok": true,
+      "ppm": 32
+    },
+    {
+      "far": 0.005234375,
+      "file": "look-d4-48ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 0.452817708333333,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.00078125,
+      "file": "look-d4-64ppm.png",
+      "found": true,
+      "look": "d4",
+      "mean": 0.0744947916666667,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.00515625,
+      "file": "look-d5-48ppm.png",
+      "found": true,
+      "look": "d5",
+      "mean": 0.582328125,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.00075,
+      "file": "look-d5-64ppm.png",
+      "found": true,
+      "look": "d5",
+      "mean": 0.0779947916666667,
+      "ok": true,
+      "ppm": 64
+    },
+    {
+      "far": 0.00759375,
+      "file": "look-auto-48ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 0.737203125,
+      "ok": true,
+      "ppm": 48
+    },
+    {
+      "far": 0.001125,
+      "file": "look-auto-56ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 0.11775,
+      "ok": true,
+      "ppm": 56
+    },
+    {
+      "far": 0.0,
+      "file": "look-auto-64ppm.png",
+      "found": true,
+      "look": "auto",
+      "mean": 0.000713541666666667,
+      "ok": true,
+      "ppm": 64
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "max_far": 0.02,
+  "max_mean": 4.0,
+  "ok": true,
+  "schema": "gtai.look-golden/1"
+}

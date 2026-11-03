@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://dev/selftest/overlay_cost.gd" id="1_ovcost"]
+
+[node name="OverlayCost" type="Node"]
+script = ExtResource("1_ovcost")

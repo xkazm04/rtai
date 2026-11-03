@@ -1,0 +1,56 @@
+{
+  "blocks": 8,
+  "canvas": "1280x800",
+  "configs": {
+    "full": {
+      "cpu_render_ms": 0.240600004792213,
+      "gpu_ms": 3.88336610794067,
+      "gpu_ms_saved": 0.0
+    },
+    "no_actors": {
+      "cpu_render_ms": 0.152233332395554,
+      "gpu_ms": 3.28600001335144,
+      "gpu_ms_saved": 0.597366094589233
+    },
+    "no_cars": {
+      "cpu_render_ms": 0.242533385753632,
+      "gpu_ms": 3.87849926948547,
+      "gpu_ms_saved": 0.0048668384552002
+    },
+    "no_fx": {
+      "cpu_render_ms": 0.237733319401741,
+      "gpu_ms": 3.86133313179016,
+      "gpu_ms_saved": 0.0220329761505127
+    },
+    "no_lights": {
+      "cpu_render_ms": 0.248033300042152,
+      "gpu_ms": 3.76940011978149,
+      "gpu_ms_saved": 0.11396598815918
+    },
+    "no_ped_shadows": {
+      "cpu_render_ms": 0.243599966168404,
+      "gpu_ms": 3.87009978294373,
+      "gpu_ms_saved": 0.0132663249969482
+    },
+    "no_peds": {
+      "cpu_render_ms": 0.238566681742668,
+      "gpu_ms": 3.7915666103363,
+      "gpu_ms_saved": 0.0917994976043701
+    },
+    "no_print": {
+      "cpu_render_ms": 0.230099990963936,
+      "gpu_ms": 1.48026657104492,
+      "gpu_ms_saved": 2.40309953689575
+    },
+    "no_rigs": {
+      "cpu_render_ms": 0.149566665291786,
+      "gpu_ms": 3.47376680374146,
+      "gpu_ms_saved": 0.409599304199219
+    }
+  },
+  "frames_per_block": 30,
+  "gpu": "AMD Radeon(TM) Graphics",
+  "ppm": 48.0,
+  "resolution": "1280x800",
+  "schema": "gtai.pass-cost/1"
+}

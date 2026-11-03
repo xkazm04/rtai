@@ -1,0 +1,348 @@
+{
+  "$id": "gtai.look-profiles/1",
+  "additionalProperties": false,
+  "properties": {
+    "default": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "type": "string"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "overlays": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_ppm": {
+            "items": {
+              "items": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "base": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "full_looks": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "params": {
+            "pattern": "^res://.+\\.json$",
+            "type": "string"
+          },
+          "params_key": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "shader": {
+            "pattern": "^res://.+\\.gdshader$",
+            "type": "string"
+          },
+          "zoom_looks": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "shader",
+          "params",
+          "params_key",
+          "base",
+          "zoom_looks",
+          "full_looks",
+          "amount_ppm"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "profiles": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "item": {
+            "additionalProperties": false,
+            "properties": {
+              "shadow_k": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "steel_out": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 3,
+                "type": "array"
+              }
+            },
+            "required": [
+              "shadow_k",
+              "steel_out"
+            ],
+            "type": "object"
+          },
+          "parts_flat_below": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "print": {
+            "type": "boolean"
+          },
+          "world": {
+            "additionalProperties": false,
+            "properties": {
+              "aquatint": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "edge_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "edge_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "grime": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "grit": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "hatch_on": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "hatch_period": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "line_ink": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "step_mid": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "teal": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "teal_shift": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "verm": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "verm_shift": {
+                "items": {
+                  "maximum": 16,
+                  "minimum": -8,
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              },
+              "wash_hi": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "wash_lo": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
+              "wash_mid": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              }
+            },
+            "required": [
+              "edge_hi",
+              "edge_lo",
+              "grime",
+              "grit",
+              "hatch_on",
+              "hatch_period",
+              "line_ink",
+              "aquatint",
+              "step_hi",
+              "step_lo",
+              "step_mid",
+              "teal",
+              "teal_shift",
+              "verm",
+              "verm_shift",
+              "wash_hi",
+              "wash_lo",
+              "wash_mid"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "print",
+          "world",
+          "item",
+          "parts_flat_below"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.look-profiles/1"
+    },
+    "tones": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "item": {
+          "additionalProperties": false,
+          "properties": {
+            "ink_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "paper_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "world": {
+          "additionalProperties": false,
+          "properties": {
+            "ink_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "paper_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "wash_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "zoom_blend": {
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "full_ppm": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "start_ppm": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "to": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "start_ppm",
+        "full_ppm"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "default",
+    "zoom_blend",
+    "profiles"
+  ],
+  "type": "object"
+}
