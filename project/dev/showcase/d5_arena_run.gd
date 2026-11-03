@@ -106,6 +106,7 @@ func _yard() -> void:
 
 
 func _tier(tier: String) -> void:
+	D5HeroHaloInk.dev_switches(self, _look, _rigs.zoom * PX)  # D5_PRINT=thin, D5_HALO=ink (proposals)
 	for n: Node2D in _feet:
 		n.visible = tier == "d5"
 	for r: Sprite2D in _yard_roofs:  # the yard roofs that have D5 art print it in the "d5" tier

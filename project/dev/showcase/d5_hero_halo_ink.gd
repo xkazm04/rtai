@@ -8,7 +8,21 @@ extends RefCounted
 const SHADER: String = "res://assets/shaders/look_d5_halo.gdshader"
 const RING: StringName = &"halo_ink"
 
+const PRINT: String = "res://assets/shaders/look_d5_print.gdshader"
+const SHADOW_M: float = 0.09
+
 static var _mat: ShaderMaterial = null
+
+
+## The dev A/B switches for the hero and arena scenes (both tiers): D5_PRINT=thin swaps the world
+## print to look_d5_print; D5_HALO=ink adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow).
+static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
+	if OS.get_environment("D5_PRINT") == "thin":
+		look.shader = load(PRINT) as Shader
+	if OS.get_environment("D5_HALO") == "ink":
+		var w: String = OS.get_environment("D5_HALO_PX")
+		var sh: float = OS.get_environment("D5_HALO_SHADOW").to_float() * SHADOW_M * ppm
+		apply(root, 1.0 if w.is_empty() else w.to_float(), sh)
 
 
 ## Adds the rings once (idempotent); shadow_px = the drop shadow offset in screen px (0 = none).
