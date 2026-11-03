@@ -174,3 +174,23 @@ NEXT (iteration 3, depth-first on the pistol):
   with the view's CameraRig, and hold `SimClock.hold(ticks)` on the returned hit-stop. That
   moves the arena's own replay (a new RNG stream and new shot timing), so re-bless it. Quest 1
   is unaffected because `gun` stays null there.
+- FINDING 21:58 (evidence: gtai-masters/eve/gunplay/art/pistol_scale_preview.png): the Codex
+  pistol prop is a clean, original, inked top-down service pistol (art/pistol_topdown_candidate.png,
+  keyed). At true scale (0.22 m) it is 7 px at 32 px/m and melts into the asphalt. DESIGN RULE
+  for every weapon prop: draw it about 2x true length with a thick cream rim and one bright
+  accent at the muzzle, the way d5-cast already draws the cop pistol and the claw_pistol cell.
+  The candidate is not in the repo, so there is no provenance line yet. Add one
+  (steam/ai-provenance/2026-11.jsonl, model "codex image_gen", prompt in
+  gtai-spike/gunplay-pistol/codex.log) only if a cell made from it lands.
+
+NEXT (iteration 3, final order):
+1. Arena wiring. REQUEST 4 (exact hook above), or capture on a local scratch merge of e-arena
+   into a throwaway branch (never committed). Settle the pistol's GunHand and struck -> HitFeel.
+2. The victim's side in the view: the hit flash (HitFeel.flash) on the CastView figure, and
+   knockback on Fighter (WeaponSpec.knockback_mps x HitFeel.knock_scale, decaying). The cop's
+   flinch and death come from enemy-ai (REQUEST 5), blood from d5-combat (already in that view).
+3. The muzzle flash and casing spark on Rivet's claw_pistol (MuzzlePop exists in features/fx).
+   The tracer is drawn from `CombatArena.shots` in the view, with the 2.5 m tail and the D5 ink.
+4. The 20-40 s full-chain clip at 32 px/m (--fixed-fps 60) in the arena. Then re-ask
+   gunplay-2 with it if the tell still matters.
+5. Only then the second weapon.
