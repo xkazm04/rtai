@@ -204,6 +204,7 @@
         "count": 1,
         "frame_ticks": 2,
         "mode": "anim",
+        "rim": 0.04,
         "size_m": 1.6
       },
       "count": 3,

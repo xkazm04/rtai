@@ -68,10 +68,17 @@ func step(steps: int, tick: int, mm: MultiMesh) -> void:
 		col.a = clampf((1.0 - float(age) / life) / (1.0 - fade_from), 0.0, 1.0)
 		mm.set_instance_transform_2d(i, Transform2D(rot[i], Vector2.ONE * size, 0.0, pos[i]))
 		mm.set_instance_color(i, col)
-		var shape: float = k["shape_id"]
-		mm.set_instance_custom_data(i, Color(shape, seed_of[i], cell(k, age, seed_of[i]), 0.0))
+		mm.set_instance_custom_data(i, custom_of(k, age, seed_of[i]))
 		i += 1
 	mm.visible_instance_count = alive
+
+
+## The fx_ink instance custom: shape id, seed, sheet cell + 1, the cell's ink rim (fx.json
+## atlas `rim`, cell widths; 0 = none).
+static func custom_of(k: Dictionary, age: int, s: float) -> Color:
+	var shape: float = k["shape_id"]
+	var rim: float = k.get("rim", 0.0)
+	return Color(shape, s, cell(k, age, s), rim)
 
 
 ## The FX sheet cell + 1 a particle of kind `k` draws at `age` ticks (0 = the analytic shape):

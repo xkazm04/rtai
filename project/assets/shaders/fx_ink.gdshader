@@ -40,17 +40,27 @@ float shape_mask(vec2 p, int shape, float seed) {
 	return step(r, 0.8);   // disc
 }
 
-vec4 sheet(float cell_plus1, vec2 uv, float keep) {
+vec4 sheet(float cell_plus1, vec2 uv, float keep, float rim) {
 	float c = floor(cell_plus1 - 0.5);
 	vec2 cell = vec2(mod(c, grid.x), floor(c / grid.x));
 	vec4 tex = texture(atlas, (cell + clamp(uv, vec2(0.004), vec2(0.996))) / grid);
+	if (tex.a < 0.5 && rim > 0.0) {   // .w: an ink rim (in cell widths) just outside the cell's silhouette
+		float near = 0.0;
+		for (int i = 0; i < 8; i++) {
+			vec2 o = vec2(cos(float(i) * 0.785398), sin(float(i) * 0.785398)) * rim;
+			near = max(near, texture(atlas, (cell + clamp(uv + o, vec2(0.004), vec2(0.996))) / grid).a);
+		}
+		if (near >= 0.5) {
+			return vec4(0.090, 0.075, 0.106, keep);
+		}
+	}
 	return vec4(tex.rgb, step(0.5, tex.a) * keep);
 }
 
 void fragment() {
 	float keep = step(hash(floor((FRAGCOORD.xy + world_px) / 2.0)), COLOR.a);
 	if (custom.z > 0.5) {
-		COLOR = sheet(custom.z, UV, keep);
+		COLOR = sheet(custom.z, UV, keep, custom.w);
 	} else {
 		vec2 p = UV * 2.0 - 1.0;
 		int shape = int(custom.x + 0.5);

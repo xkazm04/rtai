@@ -78,6 +78,12 @@
                   "pick"
                 ]
               },
+              "rim": {
+                "description": "an ink rim around the sheet cell's silhouette, in cell widths (0 = none): a paper cell on a cream body needs one to read",
+                "maximum": 0.2,
+                "minimum": 0,
+                "type": "number"
+              },
               "size_m": {
                 "maximum": 16,
                 "minimum": 0.01,
