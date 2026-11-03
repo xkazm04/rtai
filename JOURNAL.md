@@ -875,3 +875,13 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   cream ground 0.83 -> 0.62. By eye at 48: the cops and Rivet's arms sit on a soft shadow like the mock's stickers.
   Not measured in motion separately (same sprite as the ring, which adds 0; the shadow is a soft alpha). Board
   evidence/item34_halo_ink.png rebuilt with three columns + the mock; ladder row replaced (03:31).
+- 03:32 PROPOSAL FRAME (h109all, nothing committed; roofs rebuilt with the defaults and params restored from a copy,
+  git status of project/ clean; a default rebuild was checked byte-identical BEFORE the run): h106 + D5_PRINT=thin
+  (now with world grain, dark_soft 0.10) + age_floor 1 + grain_floor 1 + D5 roof plate lines gamma 0.45 (union hall
+  0.65) + D5_HALO=ink + D5_HALO_SHADOW=1. Whole frame L / px darker than 0.35 / median RGB (same script for all):
+  32 px/m h86 0.410 / 0.682 / 76,70,79 -> h106 0.424 / 0.654 / 77,71,79 -> h109all 0.462 / 0.569 / 86,74,75; 48 px/m
+  h106 0.394 / 0.715 -> h109all 0.424 / 0.651; mock 0.488 / 0.516 / 94,83,82 (this script; iteration 6 quoted
+  96,84,83 from another crop/method). h109all is a touch darker than iteration 6's h103all (0.472) because of the
+  dark_soft 0.10 tune and the drop shadows. By eye: warmer, lighter roofs with visible hatch, stickers lifted off
+  the street; the closest frame to the mock tonight. Board evidence/item35_all_proposals_iter7.png (32/48/64 +
+  mock + concept); ladder row.
