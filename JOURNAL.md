@@ -1526,3 +1526,9 @@ Morning reading order: night_iter10_summary.png -> item50 / item50b -> item52 ->
   pixel-snapped world camera (round camera.position * zoom to whole px, as the dev scenes and world_px already do);
   without it the thin print pops more than look_d4 while the car camera moves. Not yet measured: a snapped camera's
   judder at 48 px/m (5.84 px per tick at 7.3 m/s: steps of 5 or 6 px).
+- 06:40 CORRECTION of the camera entry above (it blamed the thin print): split by D5_ROOF_RULE_FADE=0. Mural roof,
+  sub-px, residual / flip>0.1: look_d4 0.0298 / 0.065, thin print without the ruled roof hatch overlays 0.0273 /
+  0.091, with them 0.0445 / 0.145; junction crop look_d4 0.0223 / 0.047, thin 0.0251 / 0.077; snapped thin without
+  the rule 0 / 0. So the 1-px rule overlays (imported without mipmaps, item42) are most of the extra popping; the thin
+  print alone flips a bit more than look_d4 (its dark-side ink is a harder edge threshold) at a lower residual. Every
+  print pops under a sub-pixel camera. Board evidence/item53_subpx_camera.png (looked at; split lines added).
