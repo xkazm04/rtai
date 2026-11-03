@@ -117,3 +117,9 @@ NEXT (iteration 3; owner 21:25: depth before breadth, the Hauler is the one fini
 4. Hit chain gaps: a real stomp sound (audio lane REQUEST or a cue row), an ink burst / dust puff on the morph
    instead of a pure scale lerp, a short screen-space crack decal where the stomp lands (D5 grime).
 5. Gearbox only after the Hauler is judged finished (aim-to-steer placeholder, ghost-powers-1).
+- 22:00 MILESTONE: a lingering ink crack at the stomp point (9 kinked rays 1.4-2.7 m, 2 s hold, 1.5 s fade), and the
+  shock layer moved under the rigs (ground level). FIRST PASS ONLY: the rays read as thin straight lines
+  ("spider legs"), not the D5 crack decals the ground already has (the cracked-asphalt marks seen in every city
+  frame). Next: stamp the D5 ground crack art (or bake one stomp crack sprite) instead of polylines. The headline
+  clip (hauler-slam) predates the crack; the crack stills are in clips/hauler-crack/.
+- 48 px/m slam clip added (clips/hauler-slam/hauler-slam-48ppm.mp4); frames.json has 14 entries.
