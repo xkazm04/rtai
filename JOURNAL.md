@@ -235,3 +235,4 @@ NEXT (iteration 49 end):
   0.32-0.39 s, peak -3.0, RMS -18.4 / -24.8 / -24.0 dBFS (take 1 is the most sustained). Hook: AudioHooks connects `actor_knocked_down` only when the Events bus declares it (same pattern as pedestrian_struck), cue positional at `at` (metres).
   Unit test with a user-signal stand-in; 358 unit tests pass, lint 13/13. Provenance +3. Not tried on the real bodies lane (needs the merge), not heard by a human.
 - RETIRED tools/audio/build_tables.py (exits with a message; it would clobber the hand-edited tables).
+- 16:48 MERGE CHECK d-audio 32f33af + d-bodies (scratch worktree, deleted; the one conflict was JOURNAL.md / docs, took ours): **367 unit tests pass** with the real `actor_knocked_down` signal (the test used the real declaration, not the stand-in).
