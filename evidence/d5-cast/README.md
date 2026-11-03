@@ -22,3 +22,4 @@ Iteration 3 (2026-11-03, 11:00-11:35):
 - `cruiser-world-print.json`: parked cruisers through the look_d4 world pass: grey in the real game (profiles' world teal = 0);
   ~37 % teal only under the shader's default teal uniform (dev scenes such as the D5 hero). See its CORRECTION.
 - `cop-rim-t1.json`: iteration 4, T1's thick ink ring around the D4 cop dome (real city A/B at 32/48: ink px in the cop zones up, blue px and blobs unchanged).
+- `cruiser-parked-plate.json`: iteration 4, the proposed look_d4 cop-blue plate (d5-city's shader; patch in masters) proven on a merged scratch tree: a parked cruiser's bar grey -> cop blue at 48/64, goldens unaffected by the patch.

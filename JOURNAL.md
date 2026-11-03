@@ -221,3 +221,8 @@ cruiser in city_frame; KingPlan into the boss ticket).
   Rejected on the way: a 31 px density mask (inked the dense sash bottom), rl > 30 (blotched King's warm steel), and a
   self-intersecting band polygon (my bug: extra closing points dropped half the band). A few cape folds inside the band
   stay vermilion. Owner frames: the dialogue frame swapped out for this one (still 15; file kept).
+- REQUEST 4 -> d5-city (supersedes REQUEST 1/3): apply masters day-d5/d5-cast/look_d4-cop-blue-plate.patch (17 lines,
+  tested; evidence/d5-cast/cruiser-parked-plate.json), or the Director applies it at the merge. Without it, every
+  kerb-parked police cruiser (1 in 12 parked cars) prints its light bar grey in the real game.
+- CHECKED Rivet at 32 px/m in the real city (rimB city-1/2): grey arms, a readable claw, the vermilion collar ring,
+  the cream helmet: T1's read. City-0's dark Rivet is a crowd ped standing on him (known), not the rig.
