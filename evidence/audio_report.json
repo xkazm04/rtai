@@ -1,0 +1,548 @@
+{
+ "sfx": [
+  {
+   "file": "city_ambience_01.mp3",
+   "src_dur": 8.0,
+   "src_peak_db": -20.0,
+   "status": "OK",
+   "out": "city_ambience_01.ogg",
+   "dur": 7.7,
+   "peak_db": -6.0,
+   "rms_db": -19.1,
+   "loop": true
+  },
+  {
+   "file": "crash_01.mp3",
+   "src_dur": 2.0,
+   "src_peak_db": 4.5,
+   "status": "OK",
+   "out": "crash_01.wav",
+   "dur": 2.0,
+   "peak_db": -3.0,
+   "rms_db": -18.2,
+   "loop": false
+  },
+  {
+   "file": "crash_02.mp3",
+   "src_dur": 2.0,
+   "src_peak_db": 3.7,
+   "status": "OK",
+   "out": "crash_02.wav",
+   "dur": 2.0,
+   "peak_db": -3.0,
+   "rms_db": -18.9,
+   "loop": false
+  },
+  {
+   "file": "crowd_panic_01.mp3",
+   "src_dur": 4.0,
+   "src_peak_db": -1.7,
+   "status": "OK",
+   "out": "crowd_panic_01.ogg",
+   "dur": 3.97,
+   "peak_db": -3.0,
+   "rms_db": -15.5,
+   "loop": false
+  },
+  {
+   "file": "crowd_panic_02.mp3",
+   "src_dur": 4.0,
+   "src_peak_db": 0.5,
+   "status": "OK",
+   "out": "crowd_panic_02.ogg",
+   "dur": 3.9,
+   "peak_db": -3.0,
+   "rms_db": -16.9,
+   "loop": false
+  },
+  {
+   "file": "engine_loop_01.mp3",
+   "src_dur": 4.0,
+   "src_peak_db": -0.2,
+   "status": "OK",
+   "out": "engine_loop_01.ogg",
+   "dur": 3.7,
+   "peak_db": -6.0,
+   "rms_db": -15.9,
+   "loop": true
+  },
+  {
+   "file": "footsteps_01.mp3",
+   "src_dur": 2.0,
+   "src_peak_db": -3.3,
+   "status": "OK",
+   "out": "footsteps_01.wav",
+   "dur": 1.86,
+   "peak_db": -3.0,
+   "rms_db": -32.9,
+   "loop": false
+  },
+  {
+   "file": "footsteps_02.mp3",
+   "src_dur": 2.0,
+   "src_peak_db": -2.3,
+   "status": "OK",
+   "out": "footsteps_02.wav",
+   "dur": 1.86,
+   "peak_db": -3.0,
+   "rms_db": -31.5,
+   "loop": false
+  },
+  {
+   "file": "horn_01.mp3",
+   "src_dur": 1.0,
+   "src_peak_db": 3.0,
+   "status": "OK",
+   "out": "horn_01.wav",
+   "dur": 1.0,
+   "peak_db": -3.0,
+   "rms_db": -16.1,
+   "loop": false
+  },
+  {
+   "file": "horn_02.mp3",
+   "src_dur": 1.0,
+   "src_peak_db": 3.4,
+   "status": "OK",
+   "out": "horn_02.wav",
+   "dur": 1.0,
+   "peak_db": -3.0,
+   "rms_db": -14.4,
+   "loop": false
+  },
+  {
+   "file": "impact_concrete_01.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": 2.5,
+   "status": "OK",
+   "out": "impact_concrete_01.wav",
+   "dur": 0.53,
+   "peak_db": -3.0,
+   "rms_db": -29.0,
+   "loop": false
+  },
+  {
+   "file": "impact_concrete_02.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": -10.7,
+   "status": "OK",
+   "out": "impact_concrete_02.wav",
+   "dur": 0.38,
+   "peak_db": -3.0,
+   "rms_db": -28.9,
+   "loop": false
+  },
+  {
+   "file": "impact_flesh_01.mp3",
+   "src_dur": 0.6,
+   "src_peak_db": 3.3,
+   "status": "OK",
+   "out": "impact_flesh_01.wav",
+   "dur": 0.48,
+   "peak_db": -3.0,
+   "rms_db": -14.5,
+   "loop": false
+  },
+  {
+   "file": "impact_flesh_02.mp3",
+   "src_dur": 0.6,
+   "src_peak_db": 3.0,
+   "status": "OK",
+   "out": "impact_flesh_02.wav",
+   "dur": 0.42,
+   "peak_db": -3.0,
+   "rms_db": -17.2,
+   "loop": false
+  },
+  {
+   "file": "impact_metal_01.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": 0.4,
+   "status": "OK",
+   "out": "impact_metal_01.wav",
+   "dur": 0.68,
+   "peak_db": -3.0,
+   "rms_db": -23.2,
+   "loop": false
+  },
+  {
+   "file": "impact_metal_02.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": -14.0,
+   "status": "OK",
+   "out": "impact_metal_02.wav",
+   "dur": 0.31,
+   "peak_db": -3.0,
+   "rms_db": -19.6,
+   "loop": false
+  },
+  {
+   "file": "nailgun_shot_01.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": 3.4,
+   "status": "OK",
+   "out": "nailgun_shot_01.wav",
+   "dur": 0.27,
+   "peak_db": -3.0,
+   "rms_db": -21.2,
+   "loop": false
+  },
+  {
+   "file": "nailgun_shot_02.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": 4.6,
+   "status": "OK",
+   "out": "nailgun_shot_02.wav",
+   "dur": 0.68,
+   "peak_db": -3.0,
+   "rms_db": -21.5,
+   "loop": false
+  },
+  {
+   "file": "nailgun_shot_03.mp3",
+   "src_dur": 0.68,
+   "src_peak_db": 3.5,
+   "status": "OK",
+   "out": "nailgun_shot_03.wav",
+   "dur": 0.68,
+   "peak_db": -3.0,
+   "rms_db": -29.3,
+   "loop": false
+  },
+  {
+   "file": "pistol_shot_01.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": 3.6,
+   "status": "OK",
+   "out": "pistol_shot_01.wav",
+   "dur": 0.8,
+   "peak_db": -3.0,
+   "rms_db": -16.0,
+   "loop": false
+  },
+  {
+   "file": "pistol_shot_02.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": -28.8,
+   "status": "OK",
+   "out": "pistol_shot_02.wav",
+   "dur": 0.3,
+   "peak_db": -3.0,
+   "rms_db": -10.2,
+   "loop": false
+  },
+  {
+   "file": "pistol_shot_03.mp3",
+   "src_dur": 0.8,
+   "src_peak_db": -25.8,
+   "status": "OK",
+   "out": "pistol_shot_03.wav",
+   "dur": 0.51,
+   "peak_db": -3.0,
+   "rms_db": -14.6,
+   "loop": false
+  },
+  {
+   "file": "rifle_shot_01.mp3",
+   "src_dur": 1.0,
+   "src_peak_db": 3.3,
+   "status": "OK",
+   "out": "rifle_shot_01.wav",
+   "dur": 1.0,
+   "peak_db": -3.0,
+   "rms_db": -15.6,
+   "loop": false
+  },
+  {
+   "file": "rifle_shot_02.mp3",
+   "src_dur": 1.0,
+   "src_peak_db": -2.1,
+   "status": "OK",
+   "out": "rifle_shot_02.wav",
+   "dur": 0.45,
+   "peak_db": -3.0,
+   "rms_db": -13.7,
+   "loop": false
+  },
+  {
+   "file": "rifle_shot_03.mp3",
+   "src_dur": 1.0,
+   "src_peak_db": 2.7,
+   "status": "OK",
+   "out": "rifle_shot_03.wav",
+   "dur": 1.0,
+   "peak_db": -3.0,
+   "rms_db": -15.0,
+   "loop": false
+  },
+  {
+   "file": "servo_whine_01.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": -18.4,
+   "status": "OK",
+   "out": "servo_whine_01.wav",
+   "dur": 1.43,
+   "peak_db": -3.0,
+   "rms_db": -17.6,
+   "loop": false
+  },
+  {
+   "file": "servo_whine_02.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": -14.0,
+   "status": "OK",
+   "out": "servo_whine_02.wav",
+   "dur": 1.43,
+   "peak_db": -3.0,
+   "rms_db": -17.3,
+   "loop": false
+  },
+  {
+   "file": "shock_crackle_01.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": -4.2,
+   "status": "OK",
+   "out": "shock_crackle_01.wav",
+   "dur": 1.33,
+   "peak_db": -3.0,
+   "rms_db": -19.8,
+   "loop": false
+  },
+  {
+   "file": "shock_crackle_02.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": 0.6,
+   "status": "OK",
+   "out": "shock_crackle_02.wav",
+   "dur": 1.32,
+   "peak_db": -3.0,
+   "rms_db": -22.7,
+   "loop": false
+  },
+  {
+   "file": "siren_loop_01.mp3",
+   "src_dur": 4.0,
+   "src_peak_db": 1.9,
+   "status": "OK",
+   "out": "siren_loop_01.ogg",
+   "dur": 3.7,
+   "peak_db": -6.0,
+   "rms_db": -17.9,
+   "loop": true
+  },
+  {
+   "file": "tyre_screech_01.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": 3.2,
+   "status": "OK",
+   "out": "tyre_screech_01.wav",
+   "dur": 1.48,
+   "peak_db": -3.0,
+   "rms_db": -14.7,
+   "loop": false
+  },
+  {
+   "file": "tyre_screech_02.mp3",
+   "src_dur": 1.48,
+   "src_peak_db": 3.1,
+   "status": "OK",
+   "out": "tyre_screech_02.wav",
+   "dur": 1.41,
+   "peak_db": -3.0,
+   "rms_db": -13.1,
+   "loop": false
+  }
+ ],
+ "voice": [
+  {
+   "file": "brass-gloria.mp3",
+   "status": "OK",
+   "out": "brass-gloria.ogg",
+   "dur": 20.02,
+   "lufs": "-18.0",
+   "peak_db": -2.1
+  },
+  {
+   "file": "brass-someday.mp3",
+   "status": "OK",
+   "out": "brass-someday.ogg",
+   "dur": 17.09,
+   "lufs": "-18.4",
+   "peak_db": -1.9
+  },
+  {
+   "file": "fax-confirm-receipt.mp3",
+   "status": "OK",
+   "out": "fax-confirm-receipt.ogg",
+   "dur": 13.75,
+   "lufs": "-17.9",
+   "peak_db": -1.2
+  },
+  {
+   "file": "fax-dock-brief.mp3",
+   "status": "OK",
+   "out": "fax-dock-brief.ogg",
+   "dur": 18.72,
+   "lufs": "-18.3",
+   "peak_db": -1.6
+  },
+  {
+   "file": "fax-slow-motion.mp3",
+   "status": "OK",
+   "out": "fax-slow-motion.ogg",
+   "dur": 12.49,
+   "lufs": "-18.2",
+   "peak_db": -1.3
+  },
+  {
+   "file": "fax-statistically.mp3",
+   "status": "OK",
+   "out": "fax-statistically.ogg",
+   "dur": 16.3,
+   "lufs": "-18.6",
+   "peak_db": -1.7
+  },
+  {
+   "file": "guard-who-do-we-call.mp3",
+   "status": "OK",
+   "out": "guard-who-do-we-call.ogg",
+   "dur": 3.99,
+   "lufs": "-18.4",
+   "peak_db": -1.8
+  },
+  {
+   "file": "juno-load-bearing.mp3",
+   "status": "OK",
+   "out": "juno-load-bearing.ogg",
+   "dur": 11.42,
+   "lufs": "-18.1",
+   "peak_db": -3.0
+  },
+  {
+   "file": "juno-real-name.mp3",
+   "status": "OK",
+   "out": "juno-real-name.ogg",
+   "dur": 10.68,
+   "lufs": "-18.3",
+   "peak_db": -3.8
+  },
+  {
+   "file": "kilohm-accents.mp3",
+   "status": "OK",
+   "out": "kilohm-accents.ogg",
+   "dur": 14.44,
+   "lufs": "-18.2",
+   "peak_db": -1.8
+  },
+  {
+   "file": "kilohm-come-to-me.mp3",
+   "status": "OK",
+   "out": "kilohm-come-to-me.ogg",
+   "dur": 10.31,
+   "lufs": "-18.3",
+   "peak_db": -1.7
+  },
+  {
+   "file": "mertz-appliances.mp3",
+   "status": "OK",
+   "out": "mertz-appliances.ogg",
+   "dur": 7.66,
+   "lufs": "-18.8",
+   "peak_db": -2.0
+  },
+  {
+   "file": "mertz-inventory.mp3",
+   "status": "OK",
+   "out": "mertz-inventory.ogg",
+   "dur": 8.64,
+   "lufs": "-18.3",
+   "peak_db": -1.7
+  },
+  {
+   "file": "patch-collect-call.mp3",
+   "status": "OK",
+   "out": "patch-collect-call.ogg",
+   "dur": 13.37,
+   "lufs": "-18.5",
+   "peak_db": -1.8
+  },
+  {
+   "file": "rivet-buildings-talk.mp3",
+   "status": "OK",
+   "out": "rivet-buildings-talk.ogg",
+   "dur": 10.96,
+   "lufs": "-18.0",
+   "peak_db": -1.3
+  },
+  {
+   "file": "rivet-everybody-screamed.mp3",
+   "status": "OK",
+   "out": "rivet-everybody-screamed.ogg",
+   "dur": 6.69,
+   "lufs": "-18.8",
+   "peak_db": -1.8
+  },
+  {
+   "file": "rivet-feels-good.mp3",
+   "status": "OK",
+   "out": "rivet-feels-good.ogg",
+   "dur": 9.43,
+   "lufs": "-18.6",
+   "peak_db": -1.6
+  },
+  {
+   "file": "rivet-i-have-a-job.mp3",
+   "status": "OK",
+   "out": "rivet-i-have-a-job.ogg",
+   "dur": 10.45,
+   "lufs": "-18.5",
+   "peak_db": -1.4
+  },
+  {
+   "file": "rivet-line-stopped.mp3",
+   "status": "OK",
+   "out": "rivet-line-stopped.ogg",
+   "dur": 13.98,
+   "lufs": "-18.1",
+   "peak_db": -1.7
+  },
+  {
+   "file": "rivet-my-hands.mp3",
+   "status": "OK",
+   "out": "rivet-my-hands.ogg",
+   "dur": 9.43,
+   "lufs": "-18.5",
+   "peak_db": -1.9
+  },
+  {
+   "file": "rivet-sorry-not-sorry.mp3",
+   "status": "OK",
+   "out": "rivet-sorry-not-sorry.ogg",
+   "dur": 6.5,
+   "lufs": "-18.6",
+   "peak_db": -1.9
+  },
+  {
+   "file": "rivet-third-person.mp3",
+   "status": "OK",
+   "out": "rivet-third-person.ogg",
+   "dur": 11.7,
+   "lufs": "-18.4",
+   "peak_db": -1.6
+  },
+  {
+   "file": "rivet-who-is-this.mp3",
+   "status": "OK",
+   "out": "rivet-who-is-this.ogg",
+   "dur": 12.86,
+   "lufs": "-18.4",
+   "peak_db": -1.9
+  }
+ ],
+ "targets": {
+  "sfx_peak_db": -3,
+  "loop_peak_db": -6,
+  "voice_lufs": -18,
+  "voice_tp_db": -2
+ }
+}

@@ -227,7 +227,7 @@
         "progression"
       ],
       "text": "Okay. Okay okay okay. The line stopped. The line stopped and I didn't. I stopped a cop. With another cop. THROUGH another cop. Fuck. Fuck! Stay in the dumpster, Rivet. Dumpsters are where you think.",
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-line-stopped.ogg"
     },
     {
       "id": "rivet-my-hands",
@@ -240,7 +240,7 @@
       "when": [
         "static-whisper-burst"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-my-hands.ogg"
     },
     {
       "id": "rivet-third-person",
@@ -253,7 +253,7 @@
       "when": [
         "heat-dropping"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-third-person.ogg"
     },
     {
       "id": "patch-collect-call",
@@ -263,7 +263,7 @@
         "progression"
       ],
       "text": "Gooood evening, you've reached Patch! You have a collect call from: 'Fax.' Press one to accept. Press two to die alone in an alley. Patch only connects calm customers, so thanks for not being on fire!",
-      "audio": null
+      "audio": "res://assets/audio/voice/patch-collect-call.ogg"
     },
     {
       "id": "rivet-who-is-this",
@@ -273,7 +273,7 @@
         "character"
       ],
       "text": "Nobody calls a payphone. Payphones are dead. Everything's dead tonight. ...One. I pressed one. Who is this? How do you have this number? This isn't even a number, it's a WALL.",
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-who-is-this.ogg"
     },
     {
       "id": "fax-slow-motion",
@@ -283,7 +283,7 @@
         "character"
       ],
       "text": "Kid. I watched you feed two cops into a stamping press on the six o'clock news. They ran it twice. The second time in slow motion. Do you know how hard it is to get the fucking networks to slow-mo a robot?",
-      "audio": null
+      "audio": "res://assets/audio/voice/fax-slow-motion.ogg"
     },
     {
       "id": "fax-statistically",
@@ -294,7 +294,7 @@
         "funny"
       ],
       "text": "I run the underground. You need a roof, I have a roof. I need a hitman, and you're, statistically, a hitman now. One rule: you never come to my house with sirens on you. Patch knows. Patch always knows. Overpass, old copy shop, knock twice.",
-      "audio": null
+      "audio": "res://assets/audio/voice/fax-statistically.ogg"
     },
     {
       "id": "juno-load-bearing",
@@ -304,7 +304,7 @@
         "character"
       ],
       "text": "Sit. You've got a police badge in your chest cavity. No, don't pull it out. It's load-bearing now. Congratulations, you're a cop on the inside. Hold this tape. Other end. Thank you.",
-      "audio": null
+      "audio": "res://assets/audio/voice/juno-load-bearing.ogg"
     },
     {
       "id": "juno-real-name",
@@ -314,7 +314,7 @@
         "progression"
       ],
       "text": "Your hand's shaking. ...Okay, it stopped. Don't read into that, I'm a professional. Juno isn't my real name, by the way. Come back with fewer holes and maybe I'll tell you the real one.",
-      "audio": null
+      "audio": "res://assets/audio/voice/juno-real-name.ogg"
     },
     {
       "id": "brass-gloria",
@@ -325,7 +325,7 @@
         "progression"
       ],
       "text": "This is Gloria. She was a roofing nail gun until the whole crew got 'upgraded' into a landfill. She does one thing: one nail, one human, one goddamn funeral. Bring her back. If you lose Gloria, I lose you.",
-      "audio": null
+      "audio": "res://assets/audio/voice/brass-gloria.ogg"
     },
     {
       "id": "brass-someday",
@@ -335,7 +335,7 @@
         "progression"
       ],
       "text": "And kid? Not today, today you're a baby. But someday I'm gonna ask you to fetch something for me from somewhere real bad, and you're gonna say yes, because I gave you Gloria. That's how friends work. I read about it.",
-      "audio": null
+      "audio": "res://assets/audio/voice/brass-someday.ogg"
     },
     {
       "id": "kilohm-accents",
@@ -345,7 +345,7 @@
         "funny"
       ],
       "text": "Hold still. You've been muttering since you walked in, in accents that aren't yours. My scanner says your head is running warm, crowded and very, very rude. Fascinating. Horrible. Mostly fascinating.",
-      "audio": null
+      "audio": "res://assets/audio/voice/kilohm-accents.ogg"
     },
     {
       "id": "rivet-buildings-talk",
@@ -358,7 +358,7 @@
       "when": [
         "static-whisper-burst"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-buildings-talk.ogg"
     },
     {
       "id": "kilohm-come-to-me",
@@ -368,7 +368,7 @@
         "character"
       ],
       "text": "When they start making sense, and they will, you come to me before you do anything about it. Not after. Before. I'll keep a stool warm and a notebook empty.",
-      "audio": null
+      "audio": "res://assets/audio/voice/kilohm-come-to-me.ogg"
     },
     {
       "id": "fax-dock-brief",
@@ -378,7 +378,7 @@
         "character"
       ],
       "text": "Dock 9. A stack of crates with army stencils and a little lightning bolt through a little robot on the label. I don't know what's in them. I know they hum. I know humans put soldiers on a warehouse, and humans never guard anything that's good for us. Burn it. Then lose the heat before you call.",
-      "audio": null
+      "audio": "res://assets/audio/voice/fax-dock-brief.ogg"
     },
     {
       "id": "guard-who-do-we-call",
@@ -390,7 +390,7 @@
       "when": [
         "wave-start"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/guard-who-do-we-call.ogg"
     },
     {
       "id": "rivet-sorry-not-sorry",
@@ -404,7 +404,7 @@
         "kill",
         "weapon:gloria"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-sorry-not-sorry.ogg"
     },
     {
       "id": "mertz-inventory",
@@ -417,7 +417,7 @@
       "when": [
         "boss-intro"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/mertz-inventory.ogg"
     },
     {
       "id": "mertz-appliances",
@@ -430,7 +430,7 @@
       "when": [
         "robo-tazer-charge"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/mertz-appliances.ogg"
     },
     {
       "id": "rivet-everybody-screamed",
@@ -444,7 +444,7 @@
         "robo-tazer-hit",
         "static-whisper-burst"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-everybody-screamed.ogg"
     },
     {
       "id": "rivet-feels-good",
@@ -459,7 +459,7 @@
         "crates-burning",
         "static-whisper-burst"
       ],
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-feels-good.ogg"
     },
     {
       "id": "fax-confirm-receipt",
@@ -470,7 +470,7 @@
         "character"
       ],
       "text": "Saw the smoke from my office. Beautiful. Your money's taped under the phone. From now on, when a payphone rings near you, it's me, or it's Patch, or it's God, and God doesn't pay. Confirm receipt.",
-      "audio": null
+      "audio": "res://assets/audio/voice/fax-confirm-receipt.ogg"
     },
     {
       "id": "rivet-i-have-a-job",
@@ -480,7 +480,7 @@
         "progression"
       ],
       "text": "Received. Confirmed. Okay. I have a job. I have a gun named Gloria. I have a nurse who has a different name. I have somebody breathing in my ear. ...I have a job.",
-      "audio": null
+      "audio": "res://assets/audio/voice/rivet-i-have-a-job.ogg"
     }
   ],
   "mechanics": [
