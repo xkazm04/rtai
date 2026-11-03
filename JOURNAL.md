@@ -269,3 +269,15 @@ reactions, then re-ask ghost-powers-1/2 with that clip; then the Gearbox ArenaHo
   log kept (evidence/ghost-powers/unit-iter5b-full.log). REQUEST 4 -> (night run / save owner): give the unit
   runner a per-worktree user dir (e.g. --user-data-dir or a test_tmp suffix from the cwd) so parallel lanes stop
   colliding. Re-run the unit gate alone after the merge.
+- 23:17 gates after 003f4b6: lint 13/13; scenarios 20/20 (replay identical; evidence/ghost-powers/scenarios-iter5c.txt);
+  unit 503 pass / 67 fail, ALL 67 in test_save_slots.gd (shared user:// with parallel lanes at the freeze, see FRICTION
+  above; evidence/ghost-powers/unit-iter5c-full.log). Every souls test passes. Re-run the unit gate alone after the merge.
+
+NEXT (night run, after the 00:00 merge), in order:
+1. Re-run `node tools/tests/run_unit.mjs` ALONE (expect 570/570), and REQUEST 4 (per-worktree user dir for tests).
+2. The tank on Rivet's real rig in the playable view + cast-rig victims with reactions; then re-ask ghost-powers-1/2
+   with that real-time clip (the owner's 21:25 rule).
+3. Gearbox ArenaHook on gearbox_pad (e-arena's ArenaHook/stage.cars()/soul_hijack); show residue there
+   (set residue_s 2 on the pad only, via the station data, once the hook reads per-station tuning).
+4. The Hauler on the arena: `--start=pit` (the pit's waves are hostiles; the pad bots are dummies).
+5. Bench the city-path blood (riot scene) when bench.lock is free.
