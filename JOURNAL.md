@@ -895,3 +895,10 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
 - 02:49 CHECK kerb corner board (`asset_board --page=corner`) before/after the joint ink: `before_pjc|after_pjc/
   corner-{32,48,64}ppm.png`, `work/pjc_ab48.png`: the inked joints run cleanly into the rounded kerb; no stubs on
   the kerb stone, curb straights and corner join row for row. Ladder rows. Tree restored to HEAD art afterwards.
+- 02:51 CORRECTION + MILESTONE zebras at the target's rhythm. Putting the zebra row beside the target in the summary
+  sheet showed my "fewer, bolder" reading was wrong: the target lays about 9 THIN stripes a crossing (stripe ~ gap)
+  in a deeper band. What was really wrong before was the corner glyphs and the wear pepper, not the count. Re-ran
+  `zebra_redraw.py 9 28 0.004 150` (9 x 0.29 m stripes, 0.28 m gaps, band 0.375-1.56 m): `zb_z9/selftest-*`, crops
+  `work/zb9_ab{32,48}.png` (before | 6 | 9 | target): 9 matches the target, still reads at 32. Commit 95d22f1
+  (supersedes 5b3ce9c's look; revert both together). Tool docstring corrected. Ladder rows "i10b".
+- 02:52 `evidence/iter10/`: summary sheet (7 rows incl. the rejected grain), gates at c4dfe4a, README.
