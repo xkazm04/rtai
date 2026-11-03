@@ -1649,3 +1649,19 @@ Morning reading order: item54_rig_shadow_lock.png -> night_iter10_summary.png ->
   all-ages"; the journal says store-safe marks were given by the lane, OWNER REVIEW PENDING, and finisher_k9 is
   in-game only. The sheet says that.
 - Gates: docs only since 857b615 (iteration 11 full gates ALL PASS); the pre-commit lint ran 13/13 over 195 files.
+- 07:09 GATES (iteration 12): evidence tool (--no-parity --no-bench) ALL PASS at cfd0f55 (lint 13/13 over 195 files,
+  unit 149/0, scenarios 8/0, selftest ok: 32 px/m 103 actors, 48 px/m 81 actors); 104 untracked evidence PNGs moved
+  aside (masters work/i12_aside, now empty and removed) and restored 104; tracked tree clean. build/evidence/*.json
+  are current for the merge. Parity / bench not run (no native build in this worktree).
+
+## Summary (iteration 12)
+- One deliverable: the morning merge sheet at the top of evidence/README.md (defaults / proposals by owning lane /
+  owner A/Bs / open), every board name and zoom number checked. No visual change, so no new frames or ladder row.
+- Images: 0 (50 of ~50 used). Shared files touched: none. AI assets: none new.
+
+NEXT (iteration 12; 43-44 of iteration 11 stand, earlier lists stand):
+45. Director / owner: start at evidence/README.md "Morning merge sheet", then item54_rig_shadow_lock.png ->
+    night_iter10_summary.png -> item53 -> item50 / item50b -> item52. The owner A/Bs (item9, 27, 38, 43, 47) and the
+    store-safe marks on the portraits / loading art / finishers (finisher_k9 in-game only) need a yes or no.
+46. d5-close, next session with Codex budget: the gap list after iteration 9 (paper-area mid-tones, parapet line
+    weight, light-wash spread) needs new roof plates; judge on masters work/i9/roofcls.py, same mask.
