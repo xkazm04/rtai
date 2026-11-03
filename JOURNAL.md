@@ -252,3 +252,10 @@ frames.json (15), evidence/d5-city/README.md index (add 22-25 if not yet).
 4. More T1-scale plates (Codex budget: 3 of ~30 used): a 2 x 1 (16.4 x 8.2 m) for the long-building
    slots, so 8.4 m roofs stop dominating; same layout-template + fit_roof.py route.
 REQUESTS 1-4 still stand (d5-cast cop_blue rigs/atlas; d5-combat blood names; vehicles cruiser).
+- FINDING 26-whatif-share: 2 x 2 share 70% barely changes a street frame (the 2 x 2 is interior; the
+  street sees the perimeter ring). Reverted + re-baked (bake --check alone does NOT rewrite chunks).
+- MILESTONE b08a010 T1-scale long roof (plate 81, 16.4 x 8.4 m Codex, layout D) in the long two-tile
+  slots (22/23/81, upright): city_frame focus 10 = the closest street-level frame to T1 so far.
+  GENERATOR 13; block 32 px/m golden re-blessed (far 2.25 %). Codex used today: 4.
+  evidence/d5-city/27-long-t1/.
+- FRICTION: selftest "no result (needs a display)" = GODOT_BIN not exported in the shell.
