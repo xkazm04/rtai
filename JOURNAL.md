@@ -1230,3 +1230,13 @@ NEXT (iteration 15 / morning, in order):
    at 64 px/m.
 4. Idle bench still not had (merged build contended: p99 2.47 ms PASS, evidence/trial-merge14).
 5. Unchanged: rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
+- MILESTONE (aa15198) the page-age known limit closed: page_age.gdshaderinc (age uniforms + the solved gains +
+  page_age(c), neutral colours only) included by grade_ink, light_ink and fx_ink; LightLayer.set_page_age
+  ages its lights; a FxSystem with a glow twin hands it lights.page_age each step; actors-band FX never set
+  (graded by the rect: no double age). Unit 242 (+1). Branch goldens 11/11 + 5/5 worst 0.00 (age 0).
+  Frames (fresh merged scratch scratch-visual-trial14b at the lanes' 06:45 heads, removed after):
+  print_stage_demo's 7 frames byte-identical before / after (its FX shot is d4 at 48 px/m = no age);
+  with the FX shot moved to auto 64 px/m (scratch-only edit, restored): 193 706 px change around the
+  explosion / muzzle only; LOOKED: the sheet's explosion cloud and the light rings print aged sepia cream
+  instead of cool D4 cream; vermilion-gate px 10 971 = 10 971. 52-age-emissive/cmp-fx64.png, ladder 52.
+  NEXT item 3 (known limit) is done.
