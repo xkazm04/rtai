@@ -22,3 +22,22 @@
   Packed arrays too. `test_save_slots` fails a different case each run when other lanes run the suite at the same
   time (shared `user://test_save`), not this lane's code; the first full run was 555/555.
 - ASK ghost-powers-1 (Gearbox control: aim-to-steer vs target-and-launch), default A.
+- 21:16 REJECTED frames: `king_showcase.gd -- --rivet-form=hauler` renders Rivet unchanged (base vs hauler frames
+  differ only around King's idle; PIL diff bbox 675,185-991,513). RivetPlan.form is set before super._ready, so the
+  showcase's Rivet must come from elsewhere (not RigPool.plan_of?). Not chased this session; frames deleted, none
+  published. frames.json is empty on purpose: no power is shown in motion yet.
+- Gates at f6d23a6: lint 13/13, unit 555/555 (first full run; later runs lose 1-11 save-slot cases to the shared
+  user:// contention), scenarios 20/20 exit 0. No bench run (logic only, nothing on the frame path yet).
+
+NEXT:
+1. Re-read answers.json (ghost-powers-1). A dev scene `project/dev/ghost-powers/powers_pad.gd` on the real rig
+   (start from `dev/showcase/rig_showcase_run.gd`): Rivet + a crowd + 2 robots (BodyContact) + 2 cars. Wire
+   SoulPowers.tick, HaulerForm.step -> Rivet's velocity and `RivetBody.body_class`, and the rig scale =
+   base * lerp(1, 2.6/1.2, morph_k) (find why --rivet-form did not reach the showcase Rivet first).
+   Teal ghost tint on the tank's parts (souls' colour) via the part material.
+2. Clips at 32 and 48 px/m (--fixed-fps 60, 10-20 s): Hauler morph + ram + stomp into a wave; Gearbox lock + drive
+   into robots. Numbers: knockdowns per activation, time transformed, time to hit.
+3. ASK ghost-powers-2 with those clips: the tank look (A scaled Rivet parts + teal, B scaled + armour plates,
+   C new art: ask before generating) and duration/cooldown (8 s / 20 s now).
+4. Stomp wind-up ~0.3 s (registry band), a stomp input (melee while transformed?), ram damage to cars through
+   VehicleService; Gearbox through `VehicleService.soul_hijack_traffic(slot)` in the city block.
