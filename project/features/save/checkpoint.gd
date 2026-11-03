@@ -37,15 +37,7 @@ func to_dict() -> Dictionary:
 static func from_json(text: String) -> Checkpoint:
 	var parser: JSON = JSON.new()
 	var parsed: Variant = parser.data if parser.parse(text) == OK else null
-	var d: Dictionary = {}
-	if parsed is Dictionary:
-		d = parsed
-	return from_dict(d)
-
-
-## null (with the reason logged) when `d` is not a valid version-1 checkpoint. The Save slot
-## carries `to_dict()` as its body; this is what reads it back (every field validated).
-static func from_dict(d: Dictionary) -> Checkpoint:
+	var d: Dictionary = parsed if parsed is Dictionary else {}
 	if d.get("schema") != SCHEMA or _int(d.get("version")) != VERSION:
 		Log.warn("save", "not a %s v%d checkpoint" % [SCHEMA, VERSION])
 		return null

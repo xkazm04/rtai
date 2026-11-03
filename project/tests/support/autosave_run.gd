@@ -49,7 +49,7 @@ func _snapshot(point: String, play: CollectCallPlay) -> Dictionary:
 
 ## The accept callable for Save.load_latest: a CollectCallPlay at the checkpoint, or null.
 static func resume(body: Dictionary) -> Variant:
-	var cp: Checkpoint = Checkpoint.from_dict(body)
+	var cp: Checkpoint = CheckpointSlot.read(body)
 	if cp == null:
 		return null
 	var play: CollectCallPlay = CollectCallPlay.begin(cp.master_seed)

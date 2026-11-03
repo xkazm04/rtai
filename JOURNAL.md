@@ -38,8 +38,9 @@
   `Save.take_notice() -> String` and signal `Save.notice(key, text)` for the HUD line,
   `Save.autosave(point, body, meta)`, `Save.flush()`, `Save.read_meta()`. Notice keys:
   SAVE__NOTICE_FELL_BACK, SAVE__NOTICE_NONE_READABLE (English fallback text in the signal).
-- Merge notes for the Director: checkpoint.gd/input_tape.gd are copies of d-slice 1d834f9 plus
-  `Checkpoint.from_dict`; take d-slice's versions and re-apply from_dict. slice-play should replace
+- Merge notes for the Director: checkpoint.gd/input_tape.gd/README.md are now byte-identical copies of
+  d-slice's (1d834f9 .. a1cf583 never touched them), so only JOURNAL.md conflicts (`git merge-tree`
+  checked against d-slice, d-bodies, d-vehicles). My reader is `CheckpointSlot.read(body)` (own file). slice-play should replace
   `Checkpoint.save/load_file/erase` with `Save.autosave/load_latest` and call
   `QuestAutosaver.poll(runner.beat_index, runner.state == SUCCEEDED)` once after each step
   (replaces `poll_checkpoint`). Quit: Save flushes on WM_CLOSE_REQUEST.
