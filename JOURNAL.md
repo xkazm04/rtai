@@ -1121,3 +1121,38 @@ NEXT (iteration 14 / morning, in order):
 - (05:56) test_render_layers: CityView's zoom anchor unit-tested on the real city view (no rig: world_px =
   camera x zoom, the goldens' contract; with a rig easing 32 -> 48 the centre's print holds within 1 px;
   it would jump ~7.3k px without the fix). Unit 237/237.
+
+## Iteration 14 (05:54 - , BUILD)
+
+- 05:54 tasklist: 2 other-lane Godot processes running -> no idle bench again. All 7 items evidenced;
+  weakest point picked from a FRESH 4-lane trial merge (the last one with frames was iteration 9; every
+  lane has moved since).
+- Trial merge (my scratch worktree gtai-wt/scratch-visual-trial14, detached at 3bf80d1, merged main 721fbbb,
+  n-d4 5b05873, n-d5 f1bc6e2, n-noir 65c7bc3; JOURNAL = ours): conflicts JOURNAL.md (x2) and a NEW one,
+  `evidence/README.md` add/add between n-d4 and n-d5 (both lanes' evidence index; for the Director - took
+  n-d4's for the trial). Native bin copied in (git-ignored), import clean, bake 256 chunks.
+  Selftest on the merged build: frames OK (72 art textures, 0 placeholders), accent gate PASS (0.94 / 0.96 /
+  0.24 %, block 1.05 / 0.70 / 0.32 %), world lock 0.00 % x3; goldens fail as expected on the new art
+  (worst 22.9; the block "255" = the `-ov` overlay frames have no golden yet, not a broken frame).
+  LOOKED at junction 48, block 32 / 48 / 64: n-d4's cars print as inked cream (lavender boxes gone), roofs /
+  pavements / street close to the mock at 32 px/m.
+- FOUND (merge-time, my lane): at 64 px/m n-d5's look_d5 ages the WORLD print (paper 246,222,192) but the
+  actors canvas above it keeps D4 cream (234,222,204): every body read cool lavender-grey on the paper
+  (crop 48-trial14/z-crowd64.png).
+- MILESTONE (a84bd39) page age: LookOverlay takes `age` / `age_floor` out of the world-only overlay
+  (sends 0 to it) and reports page_age() = max(age x amount, age_floor) while the look has the overlay
+  (0 for d4 / d1 / off); CityView and PrintStage hand LookOverlay.page_age_of(_overlays) to
+  LightLayer.set_page_age; grade_ink warms neutral pixels by look_d5's mock-median gains before the grade.
+  The rect draws when grade != identity OR age > 0.004. Unit 241 (+4, test_page_age.gd). Lint 13/13.
+  On this branch alone (no look_d5) nothing changes.
+- Frames (trial scratch, cherry-picked a84bd39, look_golden before / after = deterministic): 32 / 48 px/m
+  and every d1 / d4 frame BYTE-IDENTICAL (0 px); the 5 `-ov` frames change 38-58 %. Measured at 64 px/m:
+  cool light px (r > 180, b >= r - 14) 10 911 -> 0 (block), 12 218 -> 0 (junction); cool mid-tones 4 467 -> 0;
+  pavement (247,222,194) and street (89,73,69) unchanged (the age moved, not doubled); accent shares
+  unchanged. LOOKED: bodies now share the paper's warmth; night + age: vermilion cops / collar hold.
+  (The city_selftest frames differ 0.4 % - same code run twice differs as much: not frame-locked; the
+  goldens are.) 48-trial14/{before,after}/, crop64-*.png, cmp-night64.png; ladder row 48 (1280 x 24486).
+- Cost (pass_cost.gd --ppm=64, iGPU 1280x800, 2 interleaved pairs, age files reverted / HEAD): frame
+  6.58 -> 7.12, 6.70 -> 7.17 ms; the light canvas' share 0.09 / -0.10 -> 0.59 / 0.55 ms => the page age
+  pass is ~+0.5 ms at arena zoom only, 0 at gameplay zoom. evidence/page-age-cost/. Docs: both READMEs
+  (ce0db12).
