@@ -88,3 +88,13 @@ func test_a_hit_fighter_leaves_a_drip_trail_that_stops() -> void:
 	assert_eq(fx.bleeding(), 0, "the wound stops bleeding")
 	blood.free()
 	fx.free()
+
+
+func test_a_round_lights_its_muzzle_for_one_tick() -> void:
+	var f: MuzzleFlash = MuzzleFlash.new()
+	f.fire(Vector2(30, 40), Vector2.RIGHT)
+	assert_true(f.lit())
+	assert_eq(f.lit_at(), Vector2(30, 40))
+	f.step_ticks(1)
+	assert_false(f.lit(), "one frame of light")
+	f.free()
