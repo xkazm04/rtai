@@ -855,3 +855,4 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
 - 02:34 64 px/m traffic check (the D5 "up close" zoom): `city_frame.gd` gained `--zooms=`; wiring patch applied for
   the shot (reverted): `before_tr64|after_tr64/city-*-64ppm`. The moving van and taxi hold up at 64 (ink outline,
   dark glass, grime stipple, no blur from the 80 px/m cells); before = the grey boxes. Ladder row.
+- 02:35 GATES at f1bfc1b (HEAD): run.mjs --no-bench rc 0, all 5 PASS (lint 13/13, unit 142, scenarios 8, parity bit-exact, selftest 72 textures, 0 placeholders). Final for iteration 8; NEXT as at 02:32. Tree clean after this entry.
