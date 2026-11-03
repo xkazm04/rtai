@@ -340,3 +340,25 @@ NEXT:
      (deterministic, in the replay). No change needed there for the merge.
   `save_path` defaults to `Checkpoint.DEFAULT_PATH`; tests and dev tools pass "" (no saves) or
   their own file. Since 11:45 I have not extended features/save (only read it).
+- 12:38 GATE (separately): lint 13/13, unit 354, scenarios 10/10 at cbeada4. Exe re-exported
+  at cbeada4 (12:39): `RTAI.exe --headless -- --replay=<gate's input log>` -> identical, rc 0.
+- 12:39 Continue frames (masters cont_before/ vs cont_after/, 32 px/m, from a real tick-7000
+  Dock 9 checkpoint written by the game through `--save`): before = frame 1 a cream void with
+  the props floating (street in by frame 6); after = the whole street at frame 1 (16 chunk
+  passes). The fill is VERIFIED in a frame now. (The capture lock-check: vehicles took
+  bench.lock during the cont_before run? no: d5-combat held it 12:32-12:37 while my first
+  --save stills run rendered (~40 s); I rendered nothing more until it was released.)
+- Seen but not chased: a bright radial glow on Rivet in the tick-7000 stills after 42a304d
+  (absent at 8400). The light layer's add/remove looks right; most likely a gameplay light (the
+  scripted pad shocks there). UNVERIFIED.
+- 12:41 (f29734c) prompts teach pause in the first minute ("Stay hidden. Let the sirens pass.
+  [Escape] pauses.") and the Dock 9 prompt names the aim device ([mouse] / [R-stick]). With
+  cbeada4 the prompts name the pad's buttons (A, X, RT, Start, L-stick) once a pad was used
+  last (LiveInput.pad_last; a key or the mouse switches back; aim is unchanged). Unit 355.
+- 12:45 (08181b4) the cast, stage and FX views load art by id from
+  `data/tables/collect_call_art.json` (generic `core/data/art_ids.gd` ArtIds + QuestArt). The
+  Rivet / peek / cop captures carry their drawn size (size_m x draw_k) in the table.
+  REQUEST 2 -> d5-cast UPDATED: a Rivet re-capture at the base form is now a table edit (new
+  file, its size_m, draw_k 1), no code. Unit 359, scenarios 10/10.
+- frames.json (15): + cont_after/continue_f1 (before cont_before), the Dock 9 entry now the
+  hud32 still (before city32), the arena v2 clip dropped. ladder.png + 1 row (Continue f1).
