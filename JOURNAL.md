@@ -418,3 +418,15 @@ bosses we resolve in future."
 3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52, 17:00 and 17:03: lock held).
 4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+
+### 17:04 - 17:06 (iteration 49, STABILIZE): verify only, no change
+- Bench skipped a fourth time: `bench.lock` held by d5-city since 17:00:19 (4 min old at 17:04, under the 20 min stale rule; no Godot process on the machine at the check). The section 20 bench stays UNMEASURED on this branch's final tree.
+- HEAD 3e16b3b differs from the last gated code commit b7fb4f9 only in JOURNAL.md; the iteration 47 gates still stand (lint 13/13, unit 337/0, scenarios 12/12, parity exact, replay identical, rig_stress green CONTENDED).
+- No code change, no new frames; frames.json 15 entries unchanged. Untracked evidence/clip/ and evidence/scen/quest-*.json left as in iteration 46.
+
+### NEXT (unchanged from iteration 44-48)
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Section 20 bench and scenario_city_chase on an idle machine (skipped at 16:52, 17:00, 17:03 and 17:04: lock held).
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
