@@ -12,30 +12,9 @@ extends Node
 ## --at=<x>,<y>: the fight (and the camera) at that world point in metres, not the junction.
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
-const KNOWN_FLAGS: PackedStringArray = [
-	"--out",
-	"--zoom",
-	"--ink",
-	"--d4",
-	"--noir-parts",
-	"--coat",
-	"--flashes",
-	"--at",
-	"--cars",
-	"--car-pass"
-]
-## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
 
-var _out: String = "user://noir"
-var _zoom: float = 1.5
-var _ink: bool = false
-var _d4: bool = false
-var _noir_parts: bool = false
-var _at: Vector2 = NoirFrames.JUNCTION
-## --cars=<n>: traffic cars around the fight (their headlights light the street). NOT for the hero:
-## the sim's cars do not see the scripted fighters and drive through them.
-var _cars: int = 0
+var _a: NoirShowcaseArgs = NoirShowcaseArgs.new()
 var _coats: NoirCoats = null
 ## --car-pass: a scripted car brakes in and stops with its headlights on the fight (noir only).
 var _car: NoirCarPass = null
@@ -65,14 +44,14 @@ func _ready() -> void:
 	if not _args():
 		get_tree().quit(2)
 		return
-	if DirAccess.make_dir_recursive_absolute(_out) != OK:
-		printerr("showcase_fight: cannot create %s" % _out)
-	PartMaterials.set_noir(_ink)
-	var built: Array = NoirFrames.build_city(self, CityTargets.street(12, _cars, 0))
+	if DirAccess.make_dir_recursive_absolute(_a.out) != OK:
+		printerr("showcase_fight: cannot create %s" % _a.out)
+	PartMaterials.set_noir(_a.ink)
+	var built: Array = NoirFrames.build_city(self, CityTargets.street(12, _a.cars, 0))
 	_world = built[0]
 	_view = built[1]
-	_view.zoom = _zoom
-	_view.set_noir(not _d4)
+	_view.zoom = _a.zoom
+	_view.set_noir(not _a.d4)
 	var chars: CityCharacters = built[3]
 	_city = built[2]
 	chars.rivet_on_foot = false
@@ -83,7 +62,7 @@ func _ready() -> void:
 	_view.actor_layer().add_child(_flash)
 	_view.actor_layer().add_child(_stains)
 	_flash.budget = _impact.budget
-	if _noir_parts:
+	if _a.noir_parts:
 		_wear_noir_parts()
 	_rigs.setup(_world.context())
 	add_child(_impact)
@@ -94,7 +73,7 @@ func _ready() -> void:
 	_fx.to_screen_uv = _to_uv
 	_fx.set_stains(_stains)
 	# D4 has no comic beat: --d4 keeps the blood and the hit-stop, not the impact frames.
-	_fx.bind(Events, _blood, null if _d4 else _impact)
+	_fx.bind(Events, _blood, null if _a.d4 else _impact)
 	_add_player_fluid()
 	@warning_ignore("return_value_discarded")
 	_fx.hit_stop.connect(_on_hit_stop)
@@ -104,32 +83,12 @@ func _ready() -> void:
 
 
 func _args() -> bool:
-	for arg: String in OS.get_cmdline_user_args():
-		var flag: String = arg.get_slice("=", 0)
-		if not KNOWN_FLAGS.has(flag):
-			printerr("showcase_fight: unknown argument %s" % arg)
-			return false
-		var v: String = arg.substr(flag.length() + 1)
-		if flag == "--out":
-			_out = v
-		elif flag == "--zoom":
-			_zoom = v.to_float()
-		elif flag == "--d4":
-			_d4 = true
-		elif flag == "--noir-parts":
-			_noir_parts = true
-		elif flag == "--cars":
-			_cars = v.to_int()
-		elif flag == "--at":
-			_at = Vector2(v.get_slice(",", 0).to_float(), v.get_slice(",", 1).to_float())
-		elif flag == "--car-pass":
-			_car = NoirCarPass.new()
-		elif flag == "--coat":
-			_coats = NoirCoats.new()
-		elif flag == "--flashes":
-			_impact.budget.enabled = v != "off"
-		else:
-			_ink = true
+	if not _a.parse(OS.get_cmdline_user_args()):
+		return false
+	_car = NoirCarPass.new() if _a.car_pass else null
+	_coats = NoirCoats.new() if _a.coat else null
+	if _a.flashes != "":
+		_impact.budget.enabled = _a.flashes != "off"
 	return true
 
 
@@ -145,7 +104,7 @@ func _process(_delta: float) -> void:
 	_hold = maxi(_hold - 1, 0)
 	_view.noir.fixed_phase = float(_frame)
 	_rigs.focus = _fight.origin * SimConst.PX_PER_M
-	_rigs.zoom = _zoom
+	_rigs.zoom = _a.zoom
 	_impact.step_ticks(1)
 	_blood.step_ticks(1)
 	_flash.step_ticks(1)
@@ -158,7 +117,7 @@ func _process(_delta: float) -> void:
 		_drive_car()
 		if _coats != null:
 			_coats.step(_rigs, PackedInt32Array([NoirFightScript.COP_A, NoirFightScript.COP_B]))
-	if not _d4:
+	if not _a.d4:
 		var lit: bool = _flash.lit()
 		var light: Dictionary = {"flash": 1.0 if lit else 0.0}
 		if lit:
@@ -193,18 +152,20 @@ func _cue(cue: Array) -> void:
 				_heroes[_frame + k] = "kill%d" % id
 
 
-## The fight, the city's focus and its camera at _at (the junction unless --at).
+## The fight, the city's focus and its camera at _a.at (the junction unless --at).
 func _stage() -> void:
-	_fight.origin = _at
-	_city.focus = _at
-	_city.target = _at
+	_fight.origin = _a.at
+	_city.focus = _a.at
+	_city.target = _a.at
 
 
 ## --car-pass: the scripted car's nose and heading (world metres) for this live tick.
 func _drive_car() -> void:
 	if _car != null:
 		var c: Vector4 = _car.at(_t)
-		_view.noir.extra_cars = PackedVector4Array([Vector4(c.x + _at.x, c.y + _at.y, c.z, c.w)])
+		_view.noir.extra_cars = PackedVector4Array(
+			[Vector4(c.x + _a.at.x, c.y + _a.at.y, c.z, c.w)]
+		)
 
 
 ## The blood splats on the sim's walls; Rivet's own fluid (blood_fx.json `player`) lies on the
@@ -224,7 +185,7 @@ func _wear_noir_parts() -> void:
 
 
 func _on_hit_stop(ticks: int) -> void:
-	if _d4 or _impact.calm():
+	if _a.d4 or _impact.calm():
 		_hold = ticks
 	else:
 		_hold_in = _impact.sequence.size()
@@ -234,10 +195,10 @@ func _on_hit_stop(ticks: int) -> void:
 func _save(f: int, tag: String) -> void:
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
-	var ppm: int = roundi(_zoom * SimConst.PX_PER_M)
-	var look: String = "d4" if _d4 else "noir"
+	var ppm: int = roundi(_a.zoom * SimConst.PX_PER_M)
+	var look: String = "d4" if _a.d4 else "noir"
 	var file: String = "show-%s-%dppm-f%03d-%s.png" % [look, ppm, f, tag]
-	if img.save_png(_out.path_join(file)) != OK:
+	if img.save_png(_a.out.path_join(file)) != OK:
 		printerr("showcase_fight: frame %d not saved" % f)
 
 
@@ -249,4 +210,4 @@ func _solid(px: Vector2) -> bool:
 func _to_uv(px: Vector2) -> Vector2:
 	var cam: Vector2 = _view.camera.position
 	var view: Vector2 = get_viewport().get_visible_rect().size
-	return ((px - cam) * _zoom + view * 0.5) / view
+	return ((px - cam) * _a.zoom + view * 0.5) / view
