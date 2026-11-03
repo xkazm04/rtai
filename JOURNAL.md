@@ -1158,3 +1158,9 @@ NEXT (iteration 18 final, replaces the 07:10 list's item 2): 2. Crowd shadows: f
   source (sim_render: no RL_PED_SHADOWS instance when no body is drawn for that person - check the rigged slots
   and hidden people), then re-apply look_noir_crowd_shadow (in git history at 01409e4) and re-shoot noir_frames
   street 48. Items 1, 3, 4, 5 of the 07:10 list stand.
+- (07:19) Lead, read-only: `features/city/sim/sim_render.gd` write() puts an RL_PED_SHADOWS blob for every alive
+  ped/cop in view BEFORE the `_rigged[i]` check, so a rigged slot casts a blob whether or not CharacterRigs
+  draws a body there (and cars' passengers / hidden slots, if any, too). Prime suspect for the body-less blot: a
+  rigged slot with no drawn rig (e.g. the player slot, or a rig culled by CharacterRigs). The native CitySim
+  mirrors this writer (NAT-06 parity), so a sim-side fix must land in both and pass `just parity`; a render-side
+  alternative is to have NoirLook skip only the rigged slots (they already cast NoirFigureShadows).
