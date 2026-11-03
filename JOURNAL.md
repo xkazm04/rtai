@@ -1359,3 +1359,20 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:26: tree clean after commit, no Godot of mine running, no scratch.
+
+## Iteration 21 (07:30-07:35, STABILIZE, past freeze)
+- No features. Evidence refreshed so its commit stamp matches the build: `node tools/evidence/run.mjs
+  --no-bench` at 8bd2ec0 (code unchanged since cfc9e2c; only README/journal since), 07:30-07:32, exit 0, all
+  PASS: lint 13/13 over 221 files, unit 247 / 0 failed, scenarios 8, parity bit-exact over 1200 steps +
+  mutation caught at 629, selftest 87 / 81 colours (ticks 90 / 180), look goldens 11/11 + block 5/5 worst
+  0.00, accent 32: 0.93 % / 48: 0.95 % / 64: 0.25 %, world lock 0.00 % at 32/48/64.
+- Cross-session determinism check: selftest-32ppm.png and selftest-48ppm.png are md5-identical to
+  iteration 16's masters/night/visual-engine/54-selftest-fixed-tick/after-*.png. Looked at the 48 px/m
+  frame: straight down, unchanged look (vermilion only on cops + Rivet's collar). Frames rejected 0.
+- Diff vs the cfc9e2c evidence: only prewarm / texture-load timings and one world-lock share
+  (0.0000044 -> 0.0, limit 0.005). Copied to evidence/pof. bench.json not re-run (bench untouched since
+  iteration 13's contended runs; code unchanged since).
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no visual change -> no
+  ladder row. Godot runs were children of run.mjs, all exited.
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
