@@ -6,7 +6,9 @@ extends StageView
 
 const PROP_FILL: Dictionary[String, Color] = {
 	"wall_high": Color("#17131B"),
+	"cover_high": Color("#17131B"),
 	"cover_low": Color(0.090, 0.075, 0.106, 0.55),
+	"door": Color(0.090, 0.075, 0.106, 0.18),
 	"cone": Color("#E8502A"),
 	"firing_line": Color("#E8502A"),
 }

@@ -15,6 +15,10 @@ var latency_ticks: Array[int] = []
 var turn_dps_peak: float = 0.0
 var top_speed_mps: float = 0.0
 var knockdowns: int = 0
+var pit_kills: int = 0
+var pit_waves: int = 0
+var dodges: int = 0
+var deaths: int = 0
 var ticks: int = 0
 var _press_tick: int = -1
 var _was_moving_stick: bool = false
@@ -68,4 +72,8 @@ func to_dict(ttk_s: Dictionary[String, Array]) -> Dictionary:
 		"turn_rate_peak_dps": turn_dps_peak,
 		"top_speed_mps": top_speed_mps,
 		"knockdowns": knockdowns,
+		"pit_kills": pit_kills,
+		"pit_waves": pit_waves,
+		"dodges": dodges,
+		"deaths": deaths,
 	}

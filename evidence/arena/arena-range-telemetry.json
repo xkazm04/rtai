@@ -1,5 +1,7 @@
 {
   "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
   "hit_rate": 0.409090909090909,
   "hits": 18,
   "input_latency_mean_ticks": 0.0,
@@ -7,6 +9,8 @@
     0
   ],
   "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
   "schema": "gtai.arena-telemetry/1",
   "shots": 44,
   "ticks": 1199,

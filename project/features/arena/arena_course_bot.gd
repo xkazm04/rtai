@@ -6,7 +6,8 @@ extends InputSource
 ## time); its TickInputs go through the same InputTape as live play, so a run replays.
 
 const REACH_M: float = 0.6
-## Hub-relative waypoints: the slalom (cones at x -8..-28, y 0 / 2.5), then the corridor (y 9.7).
+## Hub-relative waypoints: the slalom (cones at x -8..-28, y 0 / 2.5), round the corridor's
+## lower wall (the walls collide), then the corridor (y 9.7).
 const PATH: Array[Vector2] = [
 	Vector2(-4.0, 1.2),
 	Vector2(-8.0, -1.2),
@@ -15,7 +16,8 @@ const PATH: Array[Vector2] = [
 	Vector2(-20.0, 3.7),
 	Vector2(-24.0, -1.2),
 	Vector2(-28.0, 3.7),
-	Vector2(-10.0, 9.7),
+	Vector2(-10.5, 6.5),
+	Vector2(-10.5, 9.7),
 	Vector2(-21.0, 9.7),
 ]
 

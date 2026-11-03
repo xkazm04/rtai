@@ -342,6 +342,342 @@
           "step": 30
         }
       ]
+    },
+    {
+      "area": "pit",
+      "id": "pit",
+      "measures": [
+        "waves",
+        "kills",
+        "damage_taken",
+        "dodges",
+        "hit_rate",
+        "deaths"
+      ],
+      "name": "The pit",
+      "props": [
+        {
+          "at": [
+            -1,
+            7
+          ],
+          "kind": "wall_high",
+          "size": [
+            4,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            12,
+            7
+          ],
+          "kind": "wall_high",
+          "size": [
+            14,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            28,
+            7
+          ],
+          "kind": "wall_high",
+          "size": [
+            10,
+            0.6
+          ]
+        },
+        {
+          "at": [
+            3,
+            7
+          ],
+          "kind": "door",
+          "size": [
+            4,
+            0.2
+          ]
+        },
+        {
+          "at": [
+            21,
+            7
+          ],
+          "kind": "door",
+          "size": [
+            4,
+            0.2
+          ]
+        },
+        {
+          "at": [
+            4,
+            13
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            15,
+            13
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            9,
+            18
+          ],
+          "kind": "cover_low",
+          "size": [
+            0.8,
+            2.4
+          ]
+        },
+        {
+          "at": [
+            25,
+            15
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            4,
+            24
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            17,
+            27
+          ],
+          "kind": "cover_low",
+          "size": [
+            2.4,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            10,
+            11.5
+          ],
+          "kind": "cover_high",
+          "size": [
+            1.2,
+            1.2
+          ]
+        },
+        {
+          "at": [
+            20,
+            20
+          ],
+          "kind": "cover_high",
+          "size": [
+            1.2,
+            1.2
+          ]
+        },
+        {
+          "at": [
+            12,
+            23
+          ],
+          "kind": "cover_high",
+          "size": [
+            1.2,
+            1.2
+          ]
+        },
+        {
+          "at": [
+            26,
+            24
+          ],
+          "kind": "wall_high",
+          "size": [
+            2,
+            0.4
+          ]
+        },
+        {
+          "at": [
+            30,
+            24
+          ],
+          "kind": "wall_high",
+          "size": [
+            2,
+            0.4
+          ]
+        },
+        {
+          "at": [
+            28,
+            24
+          ],
+          "kind": "door",
+          "size": [
+            2,
+            0.2
+          ]
+        },
+        {
+          "at": [
+            25,
+            27.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            0.4,
+            7
+          ]
+        },
+        {
+          "at": [
+            31,
+            27.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            0.4,
+            7
+          ]
+        },
+        {
+          "at": [
+            28,
+            31
+          ],
+          "kind": "wall_high",
+          "size": [
+            6.4,
+            0.4
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            2,
+            30
+          ],
+          "id": "pit_sw",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            14,
+            30
+          ],
+          "id": "pit_s",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            31,
+            11
+          ],
+          "id": "pit_ne",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            31,
+            19
+          ],
+          "id": "pit_e",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            22,
+            30
+          ],
+          "id": "pit_se",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "combat.weapons.assault-rifle.speed_mps",
+          "max": 60,
+          "min": 10,
+          "step": 1
+        },
+        {
+          "key": "combat.weapons.assault-rifle.spread_deg",
+          "max": 20,
+          "min": 0,
+          "step": 0.5
+        },
+        {
+          "key": "combat.weapons.assault-rifle.cooldown_s",
+          "max": 4,
+          "min": 0.3,
+          "step": 0.1
+        },
+        {
+          "key": "combat.weapons.assault-rifle.damage_vs_rivet",
+          "max": 3,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "combat.human.engage_m",
+          "max": 30,
+          "min": 4,
+          "step": 1
+        },
+        {
+          "key": "combat.human.walk_mps",
+          "max": 6,
+          "min": 1,
+          "step": 0.1
+        },
+        {
+          "key": "combat.weapons.gloria.cooldown_s",
+          "max": 1.5,
+          "min": 0.1,
+          "step": 0.05
+        }
+      ]
     }
   ]
 }

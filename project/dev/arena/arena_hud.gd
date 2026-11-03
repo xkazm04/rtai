@@ -2,7 +2,8 @@ class_name ArenaHud
 extends Control
 ## The arena's live telemetry, top left in screen space (dev overlay): the station Rivet stands
 ## in, the zoom, shots / hits / hit rate, the mean time to kill, input-to-motion latency (sim
-## ticks), the peak turn rate, top speed, damage taken, and the dev keys. Reads, never writes.
+## ticks), the peak turn rate, top speed, damage taken, the pit (wave, kills, dodges,
+## deaths), and the dev keys. Reads, never writes.
 
 const FONT_PX: int = 18
 const LINE_PX: float = 22.0
@@ -40,6 +41,7 @@ func text_lines() -> Array[String]:
 		tr("input to motion %s ticks (sim)") % _latency(t),
 		tr("turn peak %d deg/s   top speed %.1f m/s") % [roundi(t.turn_dps_peak), t.top_speed_mps],
 		tr("damage taken %.1f   knockdowns %d") % [t.damage_taken, t.knockdowns],
+		tr("pit wave %d   kills %d   dodges %d   deaths %d") % _pit(t),
 		tr("F1 panel   T teleport   Z zoom   F6 save telemetry"),
 	]
 	if note != "":
@@ -69,3 +71,7 @@ func _ttk() -> String:
 func _latency(t: ArenaTelemetry) -> String:
 	var m: float = t.latency_mean()
 	return "%.1f" % m if m >= 0.0 else "-"
+
+
+func _pit(t: ArenaTelemetry) -> Array[int]:
+	return [t.pit_waves, t.pit_kills, t.dodges, t.deaths]

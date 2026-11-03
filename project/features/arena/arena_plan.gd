@@ -18,6 +18,8 @@ var base: Vector2 = Vector2.ZERO
 var rivet_start: Vector2 = Vector2.ZERO
 var zoom_ppm: Array[float] = [32.0]
 var areas: Array[Area] = []
+## The pit's wave rule as read (ArenaPit.from_plan reads its numbers).
+var pit: Dictionary = {}
 var errors: Array[String] = []
 
 
@@ -39,6 +41,7 @@ static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 			var at: Vector2 = t.vec({"v": [r[0], r[1]]}, "v")
 			a.rect = Rect2(p_base + at, t.vec({"v": [r[2], r[3]]}, "v"))
 		p.areas.append(a)
+	p.pit = t.object(t.raw, "pit")
 	p.errors = t.errors()
 	return p
 

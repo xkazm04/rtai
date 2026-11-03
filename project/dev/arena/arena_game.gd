@@ -2,9 +2,9 @@ class_name ArenaGame
 extends Node
 ## The dev arena's scene (dev/arena/arena.tscn): ArenaSession under the player's hands, drawn
 ## by quest 1's CollectCallView (print pass, D5 look, blood) with ArenaFloorView as its floor.
-## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range plays the range's scripted
-## player, --shot=<png> saves one frame after --shot-tick=<tick> and quits, --telemetry=<json>
-## writes the session's telemetry on exit.
+## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
+## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
+## --telemetry=<json> writes the session's telemetry on exit.
 
 const TUNE_TICK: int = 300
 
@@ -36,6 +36,8 @@ func _ready() -> void:
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
+	elif args.text("--bot") == "pit":
+		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
 	add_child(session.world)
 	view = CollectCallView.new()
 	view.px_per_m = px_per_m
