@@ -23,7 +23,10 @@ throttle (`> 0` brake, then reverse), `move_x` steer.
 
 Traffic yields: every tick the service hands the sim its cars' hull circles
 (`CitySimBackend.set_obstacles`, native + GDScript twin); tier-A civilian traffic brakes for them
-like for a car ahead. Police cars ignore them (cops ram).
+like for a car ahead. Police cars ignore them (cops ram). A car that stood 2.5 s behind one,
+mid-block, pulls out into the oncoming lane when it is clear and returns 7 m past it
+(`CitySimCarPass` / native `car_pass.cpp`, flag `F_PASSING`); cars queued behind a service car honk
+after about 1 s (`VehicleCues`, render only).
 
 Events (emitter here): `vehicle_entered`, `vehicle_exited`, `vehicle_hijacked`, `pedestrian_struck`.
 The camera rig eases to `car` (48 px/m, look-ahead) on `vehicle_entered`.
@@ -33,5 +36,5 @@ States (`VehicleBody.State`, also the sim's custom.y on the cars layer): 0 intac
 
 Evidence: `tests/scenarios/scenario_vehicle_drive.gd` (feel route + trace),
 `scenario_vehicle_carnage.gd` (hijack + rams + crash cues), `scenario_vehicle_yield.gd` (a parked
-car in a lane: obstacles on vs blind), `dev/showcase/vehicle_frame.tscn` (frames in the real game at
+car in a lane: obstacles on vs blind; queued time, cars that pass, horns), `dev/showcase/vehicle_frame.tscn` (frames in the real game at
 32 / 48 px/m; `--scene=carnage|yield`, `--blind`, `--cue-shots`, `--clip`, `--soul`, `--look=`).

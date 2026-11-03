@@ -259,3 +259,20 @@ NEXT (iteration 3, in order):
   0 rejected, 0 camera breaks. Pair: 540 at 48 (three queue vs one past), 420 at 32 (pulling out).
 - frames.json 15 (added the two pass pairs; dropped the on-foot frame and the 32 px/m yield pair,
   which the 48 one covers), ladder.png 1280 x 7564, now rebuilt by masters/.../ladder.py.
+- MILESTONE 12:37 8dbf14b queued traffic honks (NEXT 4): VehicleCues checks every 15 ticks for a
+  civilian sim car standing 0-13 m behind any service car in its path (cars_near 14 m, speed
+  < 0.5, lateral < 2 m); 4 checks in a row (~1 s) = `horn` at the queued car's position, then
+  every 6 checks (1.5 s) while it lasts; the wait resets when the queue clears. Render only (the
+  yield scenario's sim metrics are unchanged to the digit; 6 horns in the yield arm, 0 blind).
+  fx_triggers.json horn doc string updated (shared table, one string). Unit 359 (+2).
+- 12:38 evidence run refused: dirty tree (journal timestamp fix). Committed, lock re-taken 12:39.
+- 12:53 `node tools/evidence/run.mjs` at 27f4192 under the bench lock (vehicles 12:39 - 12:53,
+  released): lint PASS 13/13, unit PASS 359, parity PASS (exact, 1200 steps, mutation at 629),
+  selftest PASS (look goldens 11/11 worst 0.00, block goldens 5/5). scenarios FAIL 1 of 11:
+  scenario_city_chase flow field max 6150 us > 2 ms budget (last field 135 us): a contention spike.
+  Re-ran it alone twice: PASS (max 380 us, 144 us). Flow field is not vehicles' code. bench FAIL,
+  CONTENDED (seven lanes, one GPU): p99 11.1 ms, 1 % low 43 fps, worst frame 2662 ms (a machine
+  stall), >50 ms hitches 97 (7 unexplained); misses p99Cpu, low1Fps, worstSwap, over50.unexplained.
+  At 12:10 the same gate gave p99 6.37 ms. The only vehicles change on the bench path is
+  car_pass's early-outs per car (no obstacles in the bench World, so no hash query): not a
+  verdict either way; re-run when the machine is quiet. Copied to evidence/vehicles/it3/.
