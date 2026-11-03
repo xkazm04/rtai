@@ -101,6 +101,7 @@ func _place_camera(focus: Vector2) -> void:
 	_look_mat.set_shader_parameter(&"world_px", world_px)
 	if noir != null:
 		noir.update(world_px, float(Engine.get_physics_frames()))
+		noir.light_street(_city.residency if _city != null else null, focus, world_px, zoom)
 
 
 func _build_layers() -> void:

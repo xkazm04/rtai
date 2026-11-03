@@ -9,6 +9,10 @@
     "flash_lift": 0.3,
     "flash_r": 115.0,
     "grain": 0.06,
+    "lamp_core": 0.45,
+    "lamp_gate": 0.05,
+    "lamp_lift": 0.45,
+    "lamp_r": 190.0,
     "light_dir": [
       -0.6,
       -0.8

@@ -14,6 +14,9 @@ var keep_d4: bool = true
 var params: Dictionary = {}
 ## >= 0 pins the rain (deterministic A/B frames); < 0 follows the caller's phase.
 var fixed_phase: float = -1.0
+## The street light (lamp posts as pools of light); null until the first light_street().
+var street: NoirLamps = null
+var _lamp_r_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
@@ -32,6 +35,7 @@ func _init() -> void:
 	if frame is Dictionary:
 		var u: Dictionary = frame
 		apply(u)
+		_lamp_r_px = u.get("lamp_r", 0.0)
 
 
 ## True when the launch args ask for the noir look (--look=noir).
@@ -72,3 +76,19 @@ func update(world_px: Vector2, rain_phase: float) -> void:
 func set_amount(a: float) -> void:
 	_mat.set_shader_parameter(&"amount", a)
 	_rect.visible = a > 0.001
+
+
+## Per frame, with the city: the lamp posts around focus (m) light their pools (none when the
+## params have no lamp_r, or without a city).
+func light_street(res: CityResidency, focus: Vector2, world_px: Vector2, zoom: float) -> void:
+	if res == null or _lamp_r_px <= 0.0 or not is_inside_tree():
+		return
+	if street == null:
+		street = NoirLamps.new(CityGen.read_json(CitySystem.TEXTURES))
+	var half: Vector2 = get_viewport().get_visible_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
+	var lamps: PackedVector2Array = street.near(res, focus, half, _lamp_r_px / SimConst.PX_PER_M)
+	var px: PackedVector2Array = NoirLamps.to_screen(lamps, world_px, zoom)
+	_mat.set_shader_parameter(&"lamp_count", px.size())
+	@warning_ignore("return_value_discarded")
+	px.resize(NoirLamps.MAX_LAMPS)
+	_mat.set_shader_parameter(&"lamps", px)
