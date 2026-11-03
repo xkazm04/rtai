@@ -1476,3 +1476,36 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   look_d5_ui sharp 0 (round a36k, d5 tier): only King's pixels differ (64: 27528 px, 128: 98286). Looked at 128: King
   crisp beside the D5 tier Rivet. README table row. Default frames re-checked: 60 of 60 byte-identical to this
   session's baselines (i10r0, a10k0) after every iteration-10 commit.
+- 06:30 GATES (iteration 10): evidence tool (--no-parity --no-bench) ALL PASS at 8bdf616 (lint 13/13 over 195
+  files, unit 149/0, scenarios 8/0, selftest ok); 101 untracked evidence PNGs moved aside and restored; tree clean.
+- 06:30 Board evidence/night_iter10_summary.png (looked at); ladder rows for item50, item51, item52.
+
+## Summary (iteration 10, 06:00 -> 06:30), no images (50/50 used)
+- Theme: the weakest item was 5 (close-up portraits read soft in the UI). The cause is general: D5 art drawn
+  MINIFIED through trilinear mipmaps blends two mips and blurs the pen line.
+- Kept (proposals, default off, default frames 60 / 60 byte-identical):
+  - look_d5_ui.gdshader (item50): 4 rotated-grid taps one mip finer + unsharp 0.5. Dialogue portrait error vs
+    Lanczos 4.82 -> 2.53 (200 px), 4.95 -> 2.82 (270 px), phone portrait 6.09 -> 4.77. params JSON `ui` group
+    (test covers it). HUD lane.
+  - King through it at sharp 0 (item52): detail +11% at 64 px/m (content ratio, flat background), in motion the
+    extra change stays 1.03-1.06x the extra detail (sharp 0.5: 1.10-1.14x). arena-pkg10 frames. Characters / combat.
+- Guards and rejections: not for the 1920x1081 non-mipmapped cards (item50b: linear 3.00 beats it); look_d5_part
+  rgss (sampling the rig parts the same way): +7% detail for +4% walk shimmer and a darker rig, reverted.
+- Audit (item51): building_union_hall + the 4 street decals import without mipmaps (all other roofs with). Mips on
+  the union hall: tone toward the mock, line energy away; on the decals they lose spray and spatter. Kept as is.
+- Tools: dev/showcase/d5_card.gd (a full-screen card), d5_king_move.gd (sprite motion A/B), D5_UI / D5_UI_SHARP /
+  D5_UI_PX (dialogue), D5_UI_KING=<sharp> (arena); masters work/i10/uierr.py, carderr.py, shim_norm.py.
+- Mistakes: COLOR already holds the texture sample in a Godot 4 fragment (first look_d5_ui squared the colour);
+  270 px crops past the window edge; d5_card drew magnified (size before the tree) and first did not parse; a
+  journal stamp ahead of the clock (06:25 at 06:09, fixed); item52's board label on the wrong tile (fixed).
+- Shared files touched: none.
+
+NEXT (iteration 10; 35-37 of iteration 9, 31-34 of iteration 8, 27-30 of iteration 7 stand):
+38. HUD lane: dialogue and phone portraits through look_d5_ui (params JSON `ui`, sharp 0.5) on a TextureRect with
+    LINEAR_WITH_MIPMAPS; replaces the pre-scaled-set idea of NEXT 11. Leave the full-screen cards linear, no mips.
+39. Characters / combat lane: King's plan sprite (and any big minified MOVING sprite: bosses, vehicles drawn as
+    one sprite) through look_d5_ui at sharp 0; re-check in a real fight with tools/shimmer.py-style A/B.
+40. City lane + owner: one mipmap rule for D5 plates (item51). If mips: the next union hall plate needs a hatch
+    coarse enough to survive mip 1 (the mock's hatch is ~3 screen px at 32 px/m); decals stay no-mip.
+Morning reading order: night_iter10_summary.png -> item50 / item50b -> item52 -> item51, then iteration 9's
+(night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png ...).
