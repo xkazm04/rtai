@@ -11,6 +11,16 @@ const PROPS: String = "res://features/city/art/props/"
 const GROUND: String = "res://features/city/art/ground/"
 const ZOOMS: Array[float] = [1.0, 1.5, 2.0]
 const SETTLE_FRAMES: int = 8
+## Quest 1's cast at the gameplay footprints, drawn at 1.5x (the guard 1.7x) as the README asks.
+const CAST: Array[String] = ["juno", "brass", "kilohm", "don_fax", "dock_guard", "mertz"]
+const CAST_FOOT: Array[Vector2] = [
+	Vector2(0.8, 1.2),
+	Vector2(1.6, 1.2),
+	Vector2(0.8, 1.6),
+	Vector2(1.8, 1.1),
+	Vector2(0.9, 0.9),
+	Vector2(1.9, 2.0),
+]
 
 var out_dir: String = ""
 var page: String = "quest"
@@ -38,6 +48,10 @@ func _ready() -> void:
 	_sprite(PROPS + "payphone", Vector2(10, 0.5), Vector2(1.3, 1.3))
 	_sprite(ART + "cash_taped", Vector2(11.8, 0.2), Vector2(1.4, 0.8))
 	_sprite(PROPS + "dumpster", Vector2(13.5, 2.5), Vector2(2.4, 1.6))
+	for k: int in CAST.size():
+		var foot: Vector2 = CAST_FOOT[k] * (1.7 if CAST[k] == "dock_guard" else 1.5)
+		_sprite(ART + "cast_" + CAST[k], Vector2(-19.0 + k * 3.0, -1.0), foot)
+		_sprite(ART + "cast_" + CAST[k], Vector2(11.0 + (k % 3) * 2.6, -14.0 + (k / 3) * 3.2), foot)
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
