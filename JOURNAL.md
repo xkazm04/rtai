@@ -252,3 +252,33 @@ NEXT (iteration 4, depth on the pistol chain, then ASK):
   20/20 (evidence/scenarios-it3b.log). NOT visually confirmed: at 32 px/m the `light` class
   lean is about 10 px for 6 ticks and did not read on a contact sheet. Next iteration: judge it
   at 48 px/m, and raise `light.stagger_ticks` or LEAN_M if it is still lost (a hit_feel.json value).
+
+## Iteration 4 (22:32-23:17), BUILD
+- Answers re-read 22:32: nothing new for gunplay (gunplay-1/2 placeholders A; the Director wants the
+  enemy tell in the D5 full chain before a re-ask). This iteration builds exactly that.
+- MILESTONE b0abbf4: `GuardTell` (features/combat/weapons/guard_tell.gd). With a table gun wired
+  (`CombatArena.guard_tell`, null keeps GuardBrain and quest 1's goldens), a contractor stops, shows
+  a tell (weapons.json tell_s 0.35 s: dashed vermilion aim line tracking Rivet, then solid line in an
+  ink casing + a cream muzzle glint for the lock_frac 0.5 lock), then fires the rifle burst down the
+  locked line at speed_scale (30 -> 13.5 m/s). FxView draws it. Fighter gained `tell_left` (not in
+  write_state, so no golden moves). test_guard_tell 3/3: told before any round, slowed rounds,
+  control (standing still is hit), a 5 m/s strafe takes none, planted fault (tracking through the
+  lock) caught. Clip: gtai-masters/eve/gunplay/pistol_fight_tell/ (20 s, 32 px/m, fixed 60).
+- FRICTION/FINDING (the first dodge run changed nothing: 25/61 vs 25/60): quest 1's bot holds a
+  firing post at (100, 2) and walks back every tick, so a positional nudge never sticks (it also
+  is not the city follow: that writes back what the stage gave it). Fix: `CollectCallPlay.after_act`
+  (dev/bots, shared dev file, +3 lines), a callable run after bot.act() and before the step; the
+  pistol_fight `--dodge` uses it to rewrite stage.intent.move_by on each lock (4.5 m/s across the
+  locked line for lock + 24 ticks, the side alternates per dodge, a running strafe never flips).
+- FINDING (design): the 8-degree rifle cone at 12 m is +-1.7 m, so the drawn line lied about a cone.
+  New data value `enemy_fire.lock_spread_scale` (schema updated), default 0.3. Armored dock fight,
+  enemy rounds landed on Rivet: cone 1.0 standing 25/60, strafing 9/48; tight 0.3 standing 60/60,
+  strafing 17/48 (the rest is crossfire from a second gunner on another line; seen at frame ~860).
+  ASK gunplay-3 filed (default A = tight 0.3), with both dodge clips and the locked-tell still.
+  Recorded in docs/decisions.md.
+- Rules applied: realtime-combat-semantics (the telegraph must show the real threat zone; incoming
+  danger in the saturated colour), morning palette verdicts (vermilion = danger: the aim line and
+  enemy rounds; cream = Rivet's rounds and the glint; red only blood).
+- Gates at 8dac77f: lint 13/13; scenarios 20/20 (evidence/scenarios-it4.log, at b0abbf4: data-only
+  and dev changes since); unit full run 564/564 at b0abbf4 incl. test_save_slots this time;
+  test_guard_tell + test_hit_link re-run at 8dac77f 3/3 each.
