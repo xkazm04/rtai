@@ -2,6 +2,7 @@
   "classes": [
     {
       "doc": "A boss body (the combat arenas). Rules are the neutral blocked rule until the owner designs bosses.",
+      "down_radius_m": 1.2,
       "id": "boss",
       "mass_kg": 900,
       "radius_m": 1.2,
@@ -9,7 +10,8 @@
       "run_mps": 3.2
     },
     {
-      "doc": "Peds, rioters, cops and quest people. 0.35 m keeps the sim crowd separation (two humans part at 0.7 m).",
+      "doc": "Peds, rioters, cops and quest people. 0.35 m keeps the sim crowd separation (two humans part at 0.7 m). Lying down (knocked down) the body is 0.6 m: the sprawl pose's torso and upper limbs, so Rivet never stands on a faller.",
+      "down_radius_m": 0.6,
       "id": "human",
       "mass_kg": 75,
       "radius_m": 0.35,
@@ -18,6 +20,7 @@
     },
     {
       "doc": "Rivet in his base form: only slightly larger than a human (owner verdict 1), heavier (a machine). Read from here, never from the sprite size.",
+      "down_radius_m": 0.42,
       "id": "rivet_base",
       "mass_kg": 160,
       "radius_m": 0.42,
@@ -26,6 +29,7 @@
     },
     {
       "doc": "Reserved: the bulky ghost form, later in the story. No rules yet; nothing uses it.",
+      "down_radius_m": 0.9,
       "id": "rivet_ghost",
       "mass_kg": 600,
       "radius_m": 0.9,
@@ -34,6 +38,7 @@
     },
     {
       "doc": "A robot body. Neutral blocked rule until the owner designs robots.",
+      "down_radius_m": 0.5,
       "id": "robot",
       "mass_kg": 300,
       "radius_m": 0.5,

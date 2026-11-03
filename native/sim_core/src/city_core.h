@@ -117,6 +117,7 @@ private:
 	void crowd(int i);                                // contact.cpp
 	void solid(double r);                             // contact.cpp
 	void body_push(int i, double pvx, double pvy);    // body.cpp
+	double body_rp(int i) const;                      // body.cpp
 	void down(int i, double dt);                      // body.cpp
 	void body_resolve();                              // body.cpp
 	void car(int i, double dt, double tgx, double tgy);  // car_route.cpp

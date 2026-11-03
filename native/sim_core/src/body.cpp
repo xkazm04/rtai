@@ -13,10 +13,16 @@ void CityCore::set_body(const double *spec) {
 	by_ = body_[BD_Y];
 }
 
+// Person i's radius against the body: lying down (M_DOWN) it is BD_RP_DOWN when set.
+double CityCore::body_rp(int i) const {
+	double down = body_[BD_RP_DOWN];
+	return down > 0.0 && mode_[i] == M_DOWN ? down : body_[BD_RP];
+}
+
 // Person i at the scratch position (cx_, cy_), moving at (pvx, pvy) m/s, against the body.
 void CityCore::body_push(int i, double pvx, double pvy) {
 	if (body_[BD_ON] == 0.0) return;
-	double rs = body_[BD_R] + body_[BD_RP];
+	double rs = body_[BD_R] + body_rp(i);
 	double ddx = cx_ - bx_, ddy = cy_ - by_;
 	double d2 = ddx * ddx + ddy * ddy;
 	if (d2 >= rs * rs) return;
@@ -88,13 +94,13 @@ void CityCore::down(int i, double dt) {
 // The body out of every live tier-A person it still overlaps (twice), then out of solid cells.
 void CityCore::body_resolve() {
 	if (body_[BD_ON] == 0.0) return;
-	double rs = body_[BD_R] + body_[BD_RP];
 	for (int it = 0; it < 2; it++) {
 		int n = query(bx_, by_, 1, qbuf_);
 		for (int q = 0; q < n; q++) {
 			int j = qbuf_[q];
 			int kj = kind_[j];
 			if (alive_[j] == 0 || (kj != K_PED && kj != K_COP) || mode_[j] == M_DEAD) continue;
+			double rs = body_[BD_R] + body_rp(j);
 			double ddx = bx_ - px_[j], ddy = by_ - py_[j];
 			double d2 = ddx * ddx + ddy * ddy;
 			if (d2 >= rs * rs || d2 <= 1e-12) continue;

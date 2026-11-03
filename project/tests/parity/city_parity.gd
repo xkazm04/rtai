@@ -96,6 +96,7 @@ static func body_spec(st: int) -> PackedFloat64Array:
 	s[SimConst.BD_ON] = 1.0
 	s[SimConst.BD_R] = 0.42
 	s[SimConst.BD_RP] = 0.35
+	s[SimConst.BD_RP_DOWN] = 0.6
 	s[SimConst.BD_SHARE] = 160.0 / 235.0
 	s[SimConst.BD_TACKLE] = 3.2
 	s[SimConst.BD_KNOCK] = 5.0

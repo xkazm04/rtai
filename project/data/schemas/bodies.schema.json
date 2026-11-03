@@ -10,6 +10,11 @@
             "minLength": 1,
             "type": "string"
           },
+          "down_radius_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 10,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
@@ -35,6 +40,7 @@
         },
         "required": [
           "doc",
+          "down_radius_m",
           "id",
           "mass_kg",
           "radius_m",

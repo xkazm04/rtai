@@ -4,13 +4,13 @@
     "fled": false,
     "knocks": 1,
     "resumed": true,
-    "worst_rivet": 0.0000200462341308771
+    "worst_rivet": 0.0000300598144531428
   },
   "planted": {
-    "down_ticks": 6,
+    "down_ticks": 4,
     "fled": false,
-    "knocks": 6,
+    "knocks": 4,
     "resumed": true,
-    "worst_rivet": 0.0000316095352173029
+    "worst_rivet": 0.0000248146057129084
   }
 }

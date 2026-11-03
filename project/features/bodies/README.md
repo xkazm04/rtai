@@ -18,6 +18,8 @@ a neutral `blocked` rule until the owner designs them later in the story.
   or riot into Rivet is a run, so it is `blocked`). Until 2026-11-03 16:00 one `tackle_mps` served
   both directions; raising it to 5.0 for Rivet's walk turned running humans into walkers that
   shoved him (the look goldens caught it).
+- `down_radius_m` per class: the body while lying down (knocked down). Human 0.6 m (standing 0.35):
+  the sprawl pose's torso and upper limbs, so Rivet never stands on a faller (sim slot `BD_RP_DOWN`).
 - `rules`: attacker x defender -> `walk` and `run` results (`shove`, `stagger`, `knockdown`,
   `blocked`), `knockback_m`, `down_s`, `can_hurt` (false everywhere today: a tackle that kills
   nobody makes no blood). `flee_s`: how long a knocked-down ped flees after getting up.

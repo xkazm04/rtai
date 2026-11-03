@@ -49,6 +49,7 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	s[SimConst.BD_ON] = 1.0 if on else 0.0
 	s[SimConst.BD_R] = table.radius(CLASS)
 	s[SimConst.BD_RP] = table.radius(PERSON)
+	s[SimConst.BD_RP_DOWN] = table.down_radius(PERSON)
 	s[SimConst.BD_SHARE] = table.share(CLASS, PERSON)
 	var r: BodyRule = table.rule(CLASS, PERSON)
 	var knock: bool = r != null and r.run == &"knockdown"
