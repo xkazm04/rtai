@@ -36,6 +36,9 @@ var _pool: Array[RID] = []
 var _active: Vector2i = Vector2i(-1, -1)
 var _k: int = 0
 var _band_of: PackedByteArray = PackedByteArray()
+## The building_shadows band's material and per-texture extra cast offset (CastShadows).
+var _shadow_mat: ShaderMaterial = null
+var _shadow_extra: PackedVector2Array = PackedVector2Array()
 
 
 func _init(parent: RID, textures: CityTextures) -> void:
@@ -45,6 +48,9 @@ func _init(parent: RID, textures: CityTextures) -> void:
 		var band: int = BAND_OF_CLASS.get(cls, 3)
 		@warning_ignore("return_value_discarded")
 		_band_of.append(band)
+	var casts: CastShadows = CastShadows.load_table()
+	_shadow_mat = casts.material()
+	_shadow_extra = casts.extra_px(textures.classes, SimConst.PX_PER_M)
 
 
 func update(focus: Vector2, res: CityResidency) -> void:
@@ -98,9 +104,8 @@ func _slice(chunk: CityChunk, t0: int) -> void:
 		var q: int = (1 if pos.x - origin.x >= 64.0 else 0) + (2 if pos.y - origin.y >= 64.0 else 0)
 		var item: RID = items[q + 4 * (SHADOW_BAND if shadow else _band_of[t])]
 		var sz: Vector2 = _tex.size_px[t]
-		RenderingServer.canvas_item_add_set_transform(
-			item, Transform2D(chunk.xf[o + 2], pos * SimConst.PX_PER_M)
-		)
+		var at: Vector2 = pos * SimConst.PX_PER_M + (_shadow_extra[t] if shadow else Vector2.ZERO)
+		RenderingServer.canvas_item_add_set_transform(item, Transform2D(chunk.xf[o + 2], at))
 		RenderingServer.canvas_item_add_texture_rect(
 			item, Rect2(-sz * 0.5, sz), _tex.rids[t], false, SHADOW if shadow else Color.WHITE
 		)
@@ -121,6 +126,10 @@ func _take_items() -> Array:
 		RenderingServer.canvas_item_set_parent(item, _parent)
 		RenderingServer.canvas_item_set_z_index(item, RenderLayers.z(BANDS[q >> 2]))
 		RenderingServer.canvas_item_set_default_texture_filter(item, MIPMAP_FILTER)
+		var shadow_band: bool = (q >> 2) == SHADOW_BAND and _shadow_mat != null
+		RenderingServer.canvas_item_set_material(
+			item, _shadow_mat.get_rid() if shadow_band else RID()
+		)
 		items.append(item)
 	return items
 

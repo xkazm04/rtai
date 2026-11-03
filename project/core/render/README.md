@@ -71,6 +71,19 @@ on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look chan
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
 
+### Cast shadows (`cast_shadows.gd`, `data/tables/cast_shadows.json`)
+
+The `building_shadows` band is the height cue. The generator bakes every building / prop / parked-car
+shadow as the silhouette offset a short way down-right (0.25 m buildings, 0.18 m the rest, ChunkBuild.add);
+ChunkView draws those commands with ONE material on that band and adds the rest of the cast distance per
+texture class (`offset_m - baked_offset_m`: buildings 1.1 m, the d5-close lane's proposal), so a longer
+shadow needs no re-bake. The material is `shader` (n-d5's `look_d5_shadow`) when that file is in the tree,
+else `cast_shadow.gdshader` (this lane's placeholder, the same uniforms, the wobble and gaps on the grime
+lattice): a light ink tint plus world-locked 45-degree pen strokes that the look_d4 print inks. Roofs sit
+on the band above, so a shadow only shows where it leaves its block: a 1.1 m hatched band on the pavement
+down-right of every block, like the target frame. n-d5's shader takes a `zoom` uniform above 64 px/m
+(stroke spacing); not fed yet (default 1 = right at 32-64 px/m). Frames `34-buildings/`.
+
 ### Aquatint (`aquatint`, look_d4)
 
 The grime only moves the wash step edges, so a field that sits deep inside one step (the charcoal

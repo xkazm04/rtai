@@ -1,0 +1,29 @@
+{
+  "classes": [
+    {
+      "baked_offset_m": 0.25,
+      "class": "building",
+      "offset_m": 1.1
+    },
+    {
+      "baked_offset_m": 0.18,
+      "class": "prop",
+      "offset_m": 0.18
+    },
+    {
+      "baked_offset_m": 0.18,
+      "class": "vehicle",
+      "offset_m": 0.18
+    }
+  ],
+  "doc": "The building_shadows band (core/render/README.md 'Cast shadows'): the height cue of the 90-degree city. Every chunk shadow command (a building, prop or parked car silhouette the generator offsets down-right and flags as a shadow) draws on that band with one material: `shader` when it is in the tree (the d5-close lane's look_d5_shadow, its 'shadow' params proposal), else `fallback_shader` (this lane's D4 placeholder, the same uniforms). Both print as a light ink tint plus world-locked hand-drawn pen strokes that the look_d4 print then inks (the hatched cast shadows of the target frame). classes: offset_m = the cast distance down-right per texture class; the chunk data carries baked_offset_m (ChunkBuild.add), the view adds the rest, so no re-bake.",
+  "fallback_shader": "res://assets/shaders/cast_shadow.gdshader",
+  "schema": "gtai.cast-shadows/1",
+  "shader": "res://assets/shaders/look_d5_shadow.gdshader",
+  "uniforms": {
+    "cov": 0.42,
+    "period": 5,
+    "stroke": 0.85,
+    "tint": 0.36
+  }
+}
