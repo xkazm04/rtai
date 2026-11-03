@@ -873,3 +873,13 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   Frames `before_pj|after_pj/city-*-{32,48,64}ppm.png`; ladder rows "i10 paving ink joints". 5 provenance lines,
   README recipe row 10. Commit 3ebf21a. **Judgment call, owner review**: it partly reverses the iteration-2 "quiet
   paving" call (now: inked joints on 2 m slabs); revert = 3ebf21a alone. Originals in `masters:backup_pj/`. 0 Codex.
+- (clock fix: the 02:58 MILESTONE above was logged at 02:42 by `date`; timestamps below are from `date`.)
+- 02:43 GATES at c4dfe4a (incl. 3ebf21a): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity
+  bit-exact (mutation caught at step 629), selftest 72 art textures, 0 placeholders.
+- 02:45 REVERTED probe (not shipped): paper grain on the paving. The target's slabs carry a dense mid-dark speckle
+  (slab std 25 vs our flat cream); `masters:tools/paving_grain.py` (soft dark specks on paving px only, clumped,
+  wrapped). In-engine (`work/pg_ab{32,48,64}.png`, `pgc_crowd48.png`): round specks (dark 60, r 1.5-3) print as little
+  inked rings at 48 (the Sobel edge pass outlines each one); fine specks (dark 55, r 0.8-1.8, 10 %) print as a
+  digital stipple that dirties the slabs and costs the cream peds some separation. A softer speck falls under
+  `step_lo` and prints as plain paper. So the paper grain is a print-pass matter (look_d4 `grit`, visual-engine),
+  not texture specks. Files restored from `masters:backup_pg/`; tool kept for the record.
