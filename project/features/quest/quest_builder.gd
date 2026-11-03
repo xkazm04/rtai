@@ -36,6 +36,7 @@ static func _line(l: Dictionary, quest_id: String, rules: QuestRules) -> QuestLi
 	line.text = l["text"]
 	line.key = QuestText.line_key(quest_id, line.id)
 	line.purposes = QuestJson.strings(l["purpose"])
+	line.voice_s = VoiceLengths.seconds_for(str(l.get("audio", "")))
 	for tag: String in QuestJson.strings(l.get("when", [])):
 		line.conditions.append(QuestCondition.parse(tag, rules))
 	return line

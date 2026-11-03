@@ -1,0 +1,47 @@
+{
+	"cell_px": 128,
+	"looks": [
+		{
+			"area_px": 1637,
+			"edge_px": 169,
+			"look": 0
+		},
+		{
+			"area_px": 1578,
+			"edge_px": 169,
+			"look": 1
+		},
+		{
+			"area_px": 1599,
+			"edge_px": 172,
+			"look": 2
+		},
+		{
+			"area_px": 1711,
+			"edge_px": 162,
+			"look": 3
+		},
+		{
+			"area_px": 1622,
+			"edge_px": 170,
+			"look": 4
+		},
+		{
+			"area_px": 3348,
+			"edge_px": 220,
+			"look": 5
+		},
+		{
+			"area_px": 3833,
+			"edge_px": 264,
+			"look": 6
+		},
+		{
+			"area_px": 1580,
+			"edge_px": 169,
+			"look": 7
+		}
+	],
+	"ppm": 48,
+	"tag": "after"
+}

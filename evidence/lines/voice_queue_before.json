@@ -1,0 +1,12 @@
+{
+ "voiced_lines": 23,
+ "spoken": 17,
+ "dropped": [
+  "rivet-third-person",
+  "rivet-who-is-this",
+  "juno-load-bearing",
+  "brass-gloria",
+  "kilohm-accents",
+  "rivet-buildings-talk"
+ ]
+}

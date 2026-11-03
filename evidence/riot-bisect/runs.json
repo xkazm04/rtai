@@ -1,0 +1,209 @@
+{
+ "base": [
+  {
+   "p99CpuMs": 6.27,
+   "low1Fps": 102.636165935115,
+   "avgFrameMs": 1.28297162309056,
+   "simStepMsPerTick": 0.153045690936107,
+   "rigMsP99": 0.864
+  },
+  {
+   "p99CpuMs": 6.44,
+   "low1Fps": 115.133645232893,
+   "avgFrameMs": 1.28121904544286,
+   "simStepMsPerTick": 0.154535661218425,
+   "rigMsP99": 0.848
+  },
+  {
+   "p99CpuMs": 6.922,
+   "low1Fps": 105.884432813964,
+   "avgFrameMs": 1.33732055946559,
+   "simStepMsPerTick": 0.150823114083984,
+   "rigMsP99": 0.865
+  }
+ ],
+ "head": [
+  {
+   "p99CpuMs": 7.707,
+   "low1Fps": 99.8497795726963,
+   "avgFrameMs": 2.01202142633018,
+   "simStepMsPerTick": 0.123931700074239,
+   "rigMsP99": 0.678
+  },
+  {
+   "p99CpuMs": 7.906,
+   "low1Fps": 89.4089372025256,
+   "avgFrameMs": 2.06214369663023,
+   "simStepMsPerTick": 0.130945825602968,
+   "rigMsP99": 0.706
+  },
+  {
+   "p99CpuMs": 8.035,
+   "low1Fps": 85.4126547859492,
+   "avgFrameMs": 2.06767596942065,
+   "simStepMsPerTick": 0.134073152617898,
+   "rigMsP99": 0.718
+  }
+ ],
+ "m2-cast": [
+  {
+   "p99CpuMs": 3.184,
+   "low1Fps": 178.042112171534,
+   "avgFrameMs": 1.05321954138992,
+   "simStepMsPerTick": 0.114090976606016,
+   "rigMsP99": 0.679
+  },
+  {
+   "p99CpuMs": 4.94,
+   "low1Fps": 142.547335206506,
+   "avgFrameMs": 1.12803525391361,
+   "simStepMsPerTick": 0.109925389755011,
+   "rigMsP99": 0.671
+  },
+  {
+   "p99CpuMs": 5.995,
+   "low1Fps": 112.924656546408,
+   "avgFrameMs": 1.22129038398782,
+   "simStepMsPerTick": 0.121528756957328,
+   "rigMsP99": 0.729
+  }
+ ],
+ "m3-combat": [
+  {
+   "p99CpuMs": 8.258,
+   "low1Fps": 90.8481049127375,
+   "avgFrameMs": 2.07667916048925,
+   "simStepMsPerTick": 0.103806763285024,
+   "rigMsP99": 0.738
+  },
+  {
+   "p99CpuMs": 8.474,
+   "low1Fps": 86.2288642757676,
+   "avgFrameMs": 2.23923140619544,
+   "simStepMsPerTick": 0.111320341499629,
+   "rigMsP99": 0.753
+  },
+  {
+   "p99CpuMs": 7.501,
+   "low1Fps": 100.026320289809,
+   "avgFrameMs": 2.0756223937867,
+   "simStepMsPerTick": 0.105053432282004,
+   "rigMsP99": 0.682
+  }
+ ],
+ "m3-noblood": [
+  {
+   "p99CpuMs": 5.228,
+   "low1Fps": 118.111998750299,
+   "avgFrameMs": 1.21905885359228,
+   "simStepMsPerTick": 0.117081845238095,
+   "rigMsP99": 0.718
+  },
+  {
+   "p99CpuMs": 4.275,
+   "low1Fps": 152.857098550737,
+   "avgFrameMs": 1.08360087475533,
+   "simStepMsPerTick": 0.112091044221479,
+   "rigMsP99": 0.692
+  },
+  {
+   "p99CpuMs": 5.301,
+   "low1Fps": 144.816901223958,
+   "avgFrameMs": 1.12914659251058,
+   "simStepMsPerTick": 0.109463224368499,
+   "rigMsP99": 0.71
+  }
+ ],
+ "m3-nopop": [
+  {
+   "p99CpuMs": 8.49,
+   "low1Fps": 89.7762542670697,
+   "avgFrameMs": 2.16202246268295,
+   "simStepMsPerTick": 0.10816679076694,
+   "rigMsP99": 0.739
+  },
+  {
+   "p99CpuMs": 8.012,
+   "low1Fps": 97.7465482960599,
+   "avgFrameMs": 2.1318645363468,
+   "simStepMsPerTick": 0.103920935412027,
+   "rigMsP99": 0.692
+  },
+  {
+   "p99CpuMs": 6.504,
+   "low1Fps": 117.329462616209,
+   "avgFrameMs": 1.89356222559946,
+   "simStepMsPerTick": 0.0981285767372724,
+   "rigMsP99": 0.614
+  }
+ ],
+ "m3-nostains": [
+  {
+   "p99CpuMs": 10.955,
+   "low1Fps": 47.2695457396655,
+   "avgFrameMs": 2.75607767648144,
+   "simStepMsPerTick": 0.170989195230999,
+   "rigMsP99": 2.706
+  },
+  {
+   "p99CpuMs": 10.136,
+   "low1Fps": 6.76745885864527,
+   "avgFrameMs": 3.67651673999355,
+   "simStepMsPerTick": 0.156914679582712,
+   "rigMsP99": 1.051
+  },
+  {
+   "p99CpuMs": 9.411,
+   "low1Fps": 73.1567084168924,
+   "avgFrameMs": 2.18058986713388,
+   "simStepMsPerTick": 0.145955745630346,
+   "rigMsP99": 0.957
+  }
+ ],
+ "m4-vehicles": [
+  {
+   "p99CpuMs": 6.134,
+   "low1Fps": 100.904637518033,
+   "avgFrameMs": 1.88232497484065,
+   "simStepMsPerTick": 0.0962312546399406,
+   "rigMsP99": 0.558
+  },
+  {
+   "p99CpuMs": 7.498,
+   "low1Fps": 94.7934995033081,
+   "avgFrameMs": 2.05702190349629,
+   "simStepMsPerTick": 0.102012620638456,
+   "rigMsP99": 0.672
+  },
+  {
+   "p99CpuMs": 7.236,
+   "low1Fps": 108.077167097308,
+   "avgFrameMs": 2.0757720874236,
+   "simStepMsPerTick": 0.104188777406169,
+   "rigMsP99": 0.705
+  }
+ ],
+ "m6-slice": [
+  {
+   "p99CpuMs": 16.727,
+   "low1Fps": 19.9121071929998,
+   "avgFrameMs": 4.53540601140427,
+   "simStepMsPerTick": 0.188641607740975,
+   "rigMsP99": 1.162
+  },
+  {
+   "p99CpuMs": 15.751,
+   "low1Fps": 40.8061857844249,
+   "avgFrameMs": 3.99181021897812,
+   "simStepMsPerTick": 0.183065427509294,
+   "rigMsP99": 1.021
+  },
+  {
+   "p99CpuMs": 14.464,
+   "low1Fps": 50.3639012761506,
+   "avgFrameMs": 3.94377726952851,
+   "simStepMsPerTick": 0.176698772777984,
+   "rigMsP99": 0.995
+  }
+ ]
+}

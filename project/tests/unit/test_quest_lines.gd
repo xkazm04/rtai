@@ -28,6 +28,20 @@ func test_duration_is_typed_time_plus_hold_clamped() -> void:
 	assert_eq(line.duration_ticks(rules), 324, "180 / 45 + 1.4 = 5.4 s")
 
 
+func test_voiced_line_lasts_its_voice_plus_a_beat() -> void:
+	var rules: QuestRules = QuestRules.shipped()
+	var line: QuestLine = QuestLine.new()
+	line.text = "Hi."
+	line.voice_s = 20.1
+	assert_eq(line.duration_ticks(rules), 1230, "20.1 s voice + 0.4 s beat beats the 9 s ceiling")
+	line.voice_s = 1.0
+	assert_eq(line.duration_ticks(rules), 132, "a short voice keeps the text time")
+	assert_almost_eq(
+		VoiceLengths.seconds_for("res://assets/audio/voice/brass-gloria.ogg"), 20.1, 0.01
+	)
+	assert_eq(VoiceLengths.seconds_for("res://assets/audio/voice/nope.ogg"), 0.0)
+
+
 func test_beat_lines_play_in_order_each_for_its_duration() -> void:
 	_runner.start()
 	_step(1)

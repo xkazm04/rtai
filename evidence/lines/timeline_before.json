@@ -1,0 +1,120 @@
+{
+  "lines": [
+    {
+      "id": "rivet-line-stopped",
+      "in": 1,
+      "out": 349
+    },
+    {
+      "id": "rivet-my-hands",
+      "in": 349,
+      "out": 633
+    },
+    {
+      "id": "rivet-third-person",
+      "in": 633,
+      "out": 971
+    },
+    {
+      "id": "patch-collect-call",
+      "in": 992,
+      "out": 1343
+    },
+    {
+      "id": "rivet-who-is-this",
+      "in": 1343,
+      "out": 1661
+    },
+    {
+      "id": "fax-slow-motion",
+      "in": 1661,
+      "out": 2019
+    },
+    {
+      "id": "fax-statistically",
+      "in": 2019,
+      "out": 2423
+    },
+    {
+      "id": "juno-load-bearing",
+      "in": 2902,
+      "out": 3228
+    },
+    {
+      "id": "juno-real-name",
+      "in": 3228,
+      "out": 3559
+    },
+    {
+      "id": "brass-gloria",
+      "in": 3619,
+      "out": 3977
+    },
+    {
+      "id": "brass-someday",
+      "in": 3977,
+      "out": 4349
+    },
+    {
+      "id": "kilohm-accents",
+      "in": 4410,
+      "out": 4760
+    },
+    {
+      "id": "rivet-buildings-talk",
+      "in": 4760,
+      "out": 5023
+    },
+    {
+      "id": "kilohm-come-to-me",
+      "in": 5023,
+      "out": 5315
+    },
+    {
+      "id": "fax-dock-brief",
+      "in": 5401,
+      "out": 5879
+    },
+    {
+      "id": "guard-who-do-we-call",
+      "in": 6494,
+      "out": 6694
+    },
+    {
+      "id": "rivet-sorry-not-sorry",
+      "in": 6694,
+      "out": 6913
+    },
+    {
+      "id": "mertz-inventory",
+      "in": 8779,
+      "out": 9062
+    },
+    {
+      "id": "mertz-appliances",
+      "in": 9062,
+      "out": 9321
+    },
+    {
+      "id": "rivet-everybody-screamed",
+      "in": 9321,
+      "out": 9560
+    },
+    {
+      "id": "rivet-feels-good",
+      "in": 9560,
+      "out": 9831
+    },
+    {
+      "id": "fax-confirm-receipt",
+      "in": 10788,
+      "out": 11134
+    },
+    {
+      "id": "rivet-i-have-a-job",
+      "in": 11134,
+      "out": 11434
+    }
+  ],
+  "ticks": 11436
+}

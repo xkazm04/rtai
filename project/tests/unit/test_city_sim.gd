@@ -79,7 +79,7 @@ func test_same_seed_same_world() -> void:
 
 func test_a_cop_shoots_and_a_hit_kills() -> void:
 	var sim: CitySimRef = _world()
-	var victim: Vector2 = Vector2(CAM.x, ROAD_Y - 6.5)
+	var victim: Vector2 = Vector2(CAM.x, ROAD_Y - 3.0)
 	assert_gte(sim.spawn(_ped(victim)), 0)
 	var cop: Array = [SimConst.K_COP, victim.x - 9.0, victim.y, 1.0, 0.0, 7, 1, 3.4, 0.0, 0]
 	assert_gte(sim.spawn(PackedFloat64Array(cop)), 0)
