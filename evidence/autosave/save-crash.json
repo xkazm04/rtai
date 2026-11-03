@@ -1,0 +1,248 @@
+{
+  "rounds": 12,
+  "failures": 0,
+  "rows": [
+    {
+      "round": 1,
+      "killed_after_ms": 3460,
+      "a": {
+        "kind": "ok",
+        "seq": 455,
+        "point": "crash-455"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 454,
+        "point": "crash-454"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 2,
+      "killed_after_ms": 2573,
+      "a": {
+        "kind": "ok",
+        "seq": 753,
+        "point": "crash-298"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 752,
+        "point": "crash-297"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 3,
+      "killed_after_ms": 3120,
+      "a": {
+        "kind": "ok",
+        "seq": 1155,
+        "point": "crash-402"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 1154,
+        "point": "crash-401"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 4,
+      "killed_after_ms": 4379,
+      "a": {
+        "kind": "ok",
+        "seq": 1647,
+        "point": "crash-492"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 1648,
+        "point": "crash-493"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json",
+        "meta.json.tmp"
+      ],
+      "problems": []
+    },
+    {
+      "round": 5,
+      "killed_after_ms": 4187,
+      "a": {
+        "kind": "ok",
+        "seq": 2125,
+        "point": "crash-477"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 2126,
+        "point": "crash-478"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_a/state.sav.tmp",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 6,
+      "killed_after_ms": 4158,
+      "a": {
+        "kind": "ok",
+        "seq": 2581,
+        "point": "crash-455"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 2582,
+        "point": "crash-456"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 7,
+      "killed_after_ms": 2562,
+      "a": {
+        "kind": "ok",
+        "seq": 2877,
+        "point": "crash-295"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 2878,
+        "point": "crash-296"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 8,
+      "killed_after_ms": 2862,
+      "a": {
+        "kind": "ok",
+        "seq": 3171,
+        "point": "crash-293"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 3170,
+        "point": "crash-292"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 9,
+      "killed_after_ms": 3298,
+      "a": {
+        "kind": "ok",
+        "seq": 3563,
+        "point": "crash-392"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 3564,
+        "point": "crash-393"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 10,
+      "killed_after_ms": 4663,
+      "a": {
+        "kind": "ok",
+        "seq": 4071,
+        "point": "crash-507"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 4070,
+        "point": "crash-506"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 11,
+      "killed_after_ms": 2714,
+      "a": {
+        "kind": "ok",
+        "seq": 4397,
+        "point": "crash-326"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 4398,
+        "point": "crash-327"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    },
+    {
+      "round": 12,
+      "killed_after_ms": 3177,
+      "a": {
+        "kind": "ok",
+        "seq": 4673,
+        "point": "crash-275"
+      },
+      "b": {
+        "kind": "ok",
+        "seq": 4674,
+        "point": "crash-276"
+      },
+      "files": [
+        "auto_a/state.sav",
+        "auto_b/state.sav",
+        "meta.json"
+      ],
+      "problems": []
+    }
+  ]
+}

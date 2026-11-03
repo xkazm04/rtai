@@ -43,3 +43,11 @@
   `Checkpoint.save/load_file/erase` with `Save.autosave/load_latest` and call
   `QuestAutosaver.poll(runner.beat_index, runner.state == SUCCEEDED)` once after each step
   (replaces `poll_checkpoint`). Quit: Save flushes on WM_CLOSE_REQUEST.
+- MILESTONE real-process crash test: `node tools/tests/save_crash.mjs [rounds]` spawns a headless writer
+  (`dev/save_crash_writer.gd` + `save_crash_loop.gd`), kills it by PID at random moments, and reads the
+  slots with an independent Node GTSV reader. 12 kills, ~4,670 writes: at least one valid slot every
+  round (always both, in this run), sequence never backwards, no stray files (one leftover .tmp seen and
+  tolerated). Evidence evidence/autosave/save-crash.json. Random timing: not a deterministic gate, so it
+  is not in `just evidence`; run it by hand.
+- FRICTION `-s` SceneTree scripts cannot name autoloads (Save, Log) at compile time; the writer loads its
+  loop script at run time instead.
