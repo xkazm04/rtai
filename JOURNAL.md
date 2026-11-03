@@ -1509,3 +1509,20 @@ NEXT (iteration 10; 35-37 of iteration 9, 31-34 of iteration 8, 27-30 of iterati
     coarse enough to survive mip 1 (the mock's hatch is ~3 screen px at 32 px/m); decals stay no-mip.
 Morning reading order: night_iter10_summary.png -> item50 / item50b -> item52 -> item51, then iteration 9's
 (night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png ...).
+- 06:37 REJECTED look_d5_ui on the roofs (D5_UI_ROOF=<sharp> dev switch, committed 70117c6, default off; every
+  mipmapped roof, D4 neighbours included, not the no-mip union hall). Roof-area (fixed mask) at 32 px/m, committed
+  scene: |L - blur1| 0.0657 -> 0.0676 (sharp 0) / 0.0690 (0.5), dark 0.185 -> 0.191 / 0.194 (mock 0.149: away);
+  package v9 (i10pk = i9ph1 byte-exact): HF 0.0926 -> 0.0982 vs the MOCK 0.0935 (already matched, now overshoots),
+  mid 0.129 -> 0.123 (mock 0.152: away). The package's roofs already carry the mock's line energy at 32 px/m.
+- 06:37 FINDING (camera, for the visual-engine lane; MEASURED): every dev showcase rounds the world transform to
+  whole screen px (d5_showcase_run._frame_at), but the GAME camera does not (city_view.gd:86 camera.position = focus *
+  PX_PER_M; no snap in project.godot). So every pan-swim number tonight (item32 etc.) assumed a pixel-snapped
+  camera: a world-locked print then gives exactly 0 change (re-checked: p10roX 0.00000). New dev switch D5_SUBPX=1
+  (efce369) renders without the snap: mural roof crop, 48 px/m car pan, flip rate (px whose L changes > 0.1 per tick):
+  committed look_d4 0.098 ink / 0.216 mid, thin print 0.218 / 0.294; motion-compensated (best sub-px shift, bicubic,
+  masters work/i10/mc_swim.py; includes interpolation error) residual 0.0298 look_d4 vs 0.0445 thin print, flip
+  0.065 vs 0.145. Reading: a thresholding screen print re-quantizes on every sub-pixel world shift, and the thin
+  print (dark-side Sobel ink) does so more. Snapped: 0 for both. => NEXT 35 (adopt the thin print) must come WITH a
+  pixel-snapped world camera (round camera.position * zoom to whole px, as the dev scenes and world_px already do);
+  without it the thin print pops more than look_d4 while the car camera moves. Not yet measured: a snapped camera's
+  judder at 48 px/m (5.84 px per tick at 7.3 m/s: steps of 5 or 6 px).

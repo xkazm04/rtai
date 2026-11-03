@@ -259,6 +259,12 @@ No images (50/50 used). The weakest item was 5 (the close-up portraits): they re
   1280x800 window plain linear is best (3.00 vs 6.01 with the shader, 6.99 trilinear). `dev/showcase/d5_card.gd`.
 - **Rejected**: the same sampling inside look_d5_part (`rgss`) for gap 5 (in-part hatch at 64 px/m): rig detail +7%,
   walk shimmer +4% HF, the rig 0.008 darker on the street; not kept.
+- **Camera caveat (MEASURED)**: every dev scene snaps the world to whole screen px; the game camera
+  (`city_view.gd:86`) does not. Snapped, a world-locked print does not change at all in a pan (all tonight's pan numbers);
+  sub-pixel (`D5_SUBPX=1`), the 48 px/m pan over the mural roof flips 6.5% of px per tick under look_d4 and 14.5%
+  under the thin print (motion-compensated). Adopting the thin print (NEXT 35) needs a pixel-snapped world camera.
+- **Rejected**: look_d5_ui on the roofs (`D5_UI_ROOF`): the package's roofs already match the mock's line energy at
+  32 px/m (0.0926 vs 0.0935); sharper sampling overshoots (0.0982) and costs mid-tones.
 - **Audit (`item51`)**: building_union_hall and the 4 street decals import without mipmaps (the other 6 plates and
   all D4 roofs with). Mips on the union hall: tone toward the mock, line energy away; on the decals they lose the
   spray dots and spatter. Imports kept; the city lane / owner sets one rule for D5 plates.
