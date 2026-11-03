@@ -58,17 +58,17 @@ func _ready() -> void:
 		return
 	if DirAccess.make_dir_recursive_absolute(_out) != OK:
 		Log.error("pistol_fight", "cannot create %s" % _out)
-	_play = CollectCallPlay.begin()
-	if _dodge:
-		_play.after_act = _strafe
-	var arena: CombatArena = _play.stage.arena
 	var table: WeaponTable = WeaponTable.shipped()
-	if _armored_hp > 0.0:
-		_armored_hp = table.target_hp[&"armored"] / table.target_hp[&"human"]
 	if not table.weapons.has(_gun_id):
 		Log.error("pistol_fight", "no weapon %s" % _gun_id)
 		get_tree().quit(2)
 		return
+	_play = CollectCallPlay.begin()
+	if _dodge:
+		_play.after_act = _strafe
+	var arena: CombatArena = _play.stage.arena
+	if _armored_hp > 0.0:
+		_armored_hp = table.target_hp[&"armored"] / table.target_hp[&"human"]
 	var rng: RngRegistry = RngRegistry.new(RNG_SEED)
 	arena.gun = GunHand.make(table, _gun_id, rng.stream(&"gunplay"))
 	arena.gun.tap = true
@@ -114,6 +114,8 @@ func _parse_args() -> bool:
 
 
 func _process(_delta: float) -> void:
+	if _play == null:  # a bad arg: quit(2) is pending
+		return
 	if not _play.running():
 		_done()
 		return
@@ -202,7 +204,8 @@ func _side(h: Fighter) -> float:
 ## rig drives the print stage's zoom, so the view's own px_per_m never reached the screen.
 func _ppm_mode(ppm: float) -> void:
 	for id: StringName in _rig.modes:
-		if is_equal_approx(float(_rig.modes[id]["ppm"]), ppm):
+		var mode_ppm: float = _rig.modes[id]["ppm"]
+		if is_equal_approx(mode_ppm, ppm):
 			_rig.set_mode(id, 0)
 
 
