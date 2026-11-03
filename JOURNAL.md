@@ -858,3 +858,7 @@ NEXT (iteration 12 close, in order):
   sizes; at 720 the change is the 3 lit frames' ragged edge only (144-284 px), so the oilcar hero clips stand
   and are not re-shot. 199 unit pass. NEXT item 2 (resolution independence) is done by this; item 4 of the
   iteration-10 NEXT too.
+- 05:07 Gates at 5143f55 (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + a muzzle-light row.
+  Final state of iteration 12: last code commit 5143f55, 0 processes of mine running, images 0 / rejected 0 /
+  Leonardo 0 tokens / provenance +0. NEXT list above stands (item 2 done).
