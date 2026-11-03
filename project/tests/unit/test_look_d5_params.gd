@@ -87,3 +87,11 @@ func test_tier_zoom_stops_match_rig_detail_and_keep_the_car_camera_d4() -> void:
 	assert_true(on_z <= full_z, "the fade completes at or after the switch")
 	assert_gt(off_z, 1.5, "the 48 px/m car camera (zoom 1.5) never shows the D5 tier")
 	assert_eq(smoothstep(on_z, full_z, on_z), 0.0, "the overlay is invisible at the switch")
+
+
+func test_soul_shader_exposes_the_uniforms_the_hero_shot_relies_on() -> void:
+	## look_d5_soul is not in the params proposal (teal belongs to the dead only; it is a
+	## per-material print), so this is its only guard against a rename or a parse break.
+	var names: Array[String] = _uniforms("res://assets/shaders/look_d5_soul.gdshader")
+	for want: String in ["fade", "amount", "ink_at", "rim_sat"]:
+		assert_has(names, want, "look_d5_soul keeps uniform " + want)
