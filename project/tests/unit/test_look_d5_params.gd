@@ -68,3 +68,5 @@ func test_gameplay_zoom_proposals_default_off() -> void:
 	var world: Dictionary = _params().get("world", {})
 	var floor_v: float = world.get("age_floor", -1.0)
 	assert_eq(floor_v, 0.0, "age_floor stays off until the visual-engine lane adopts it")
+	var grain_v: float = world.get("grain_floor", -1.0)
+	assert_eq(grain_v, 0.0, "grain_floor stays off until the visual-engine lane adopts it")

@@ -27,6 +27,7 @@ uniform vec2 verm_mis = vec2(-2.0, 1.0);
 uniform float verm_ghost = 0.65;   // strength of the off-register vermilion pass
 uniform float age = 0.0;           // aged paper: warms the neutral print toward the mock's sepia (0 = off)
 uniform float age_floor = 0.0;     // aged paper below the D5 zoom (32 px/m too): a proposal for the D4 profile, 0 = off
+uniform float grain_floor = 0.0;   // the world-locked paper tooth below the D5 zoom (the mock's mottle): a proposal, 0 = off
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -62,7 +63,7 @@ void fragment() {
 	vec2 tx = SCREEN_PIXEL_SIZE;
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec3 c = texture(screen_tex, uv).rgb;
-	if (amount < 0.004 && age_floor < 0.004) {
+	if (amount < 0.004 && age_floor < 0.004 && grain_floor < 0.004) {
 		COLOR = vec4(c, 1.0);
 	} else {
 		float d = dens(c);
@@ -86,7 +87,7 @@ void fragment() {
 		o = mix(o, VERM, vg * (is_verm ? 0.0 : 1.0) * verm_ghost * amount * (1.0 - smoothstep(0.85, 0.95, d)));
 		// paper tooth: an isotropic dry-brush mottle
 		float fib = vnoise(w * 0.07) * vnoise(w * 0.45 + 3.1);   // isotropic mottle (anisotropic fibres read as rain)
-		float tooth = (fib - 0.25) * grain * amount;
+		float tooth = (fib - 0.25) * max(grain * amount, grain_floor);
 		o = mix(o, CREAM, clamp(tooth * d * 0.35, 0.0, 1.0));
 		o = mix(o, INK, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
 		// aged paper: only the neutral print warms (vermilion, teal and every pickup colour keep their hue)

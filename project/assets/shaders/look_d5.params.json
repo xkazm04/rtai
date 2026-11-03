@@ -32,6 +32,7 @@
     "age": 1.0,
     "age_floor": 0.0,
     "grain": 0.5,
+    "grain_floor": 0.0,
     "hatch": 0.45,
     "hatch_period": 6.0,
     "ink_ghost": 0.22,
