@@ -10,9 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h92c, iteration 6) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h96, iteration 6) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h92c, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks, bold toned centre dashes + the kerb stone line; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h96, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks that fade back in up close, bold toned centre dashes + the kerb stone line; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -48,11 +48,12 @@ tick count, no RNG.
 | `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h86 at 32/48/64/128, the arena a15 at 64 and 128, concept |
 | `item22_pavement_joints.png` | iteration 6: the D5 sidewalk tile's print-aware joints, h86 vs h87d at 32 (full frame) and pavement crops at 48/64 + the mock |
 | `item23_street_print.png` | iteration 6: the D5 crosswalk (no black wear dots) and thinned road cracks, h87d vs h90 at 32/48/64 + the mock |
-| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h92c) at 32 and 48, the mock, the concept |
+| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h96) at 32 and 48, the mock, the concept |
 | `item24_kerb_stone.png` | iteration 6: the kerb stone line (continuous, 0.3 m inside the street edge), h90 vs h91 at 32/48/64 + the mock's kerb corner |
 | `item25_road_dashes.png` | iteration 6: the mock's bold centre dashes, h91 / h92b cream (rejected: merges with the actors' rim) / h92c toned (kept) at 32 + the cop-on-dash contact at 48 |
 | `item26_grain_floor_32.png` | iteration 6, PROPOSAL: look_d5 `grain_floor` (world-locked paper tooth at 32 px/m, default off) alone and with `age_floor`, vs as shipped and the mock + street crops |
 | `item27_zebra_owner_ab.png` | iteration 6, OWNER A/B: the zebra cream (committed) vs toned x0.84 like the dashes (h95zt, not committed), Rivet over the crossing at 32/48/64 |
+| `item28_cracks_up_close.png` | iteration 6: the road cracks at 128 / 96 / 48 px/m: h86 bold / h92c thinned (faint up close) / h96 thinned + the original cracks fading back in from 56 to 96 px/m, + the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -69,7 +70,9 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
 - **Road cracks** (51b96d4, d8a5b9c): the road tiles' patch outline and cracks (2-3 px ink, repeated every 8 m)
   thinned by 2 grey-level passes: gone at 32 px/m (the mock's street is clean), pen lines at 64+ (D5 up close).
   A hard 1-px ridge was rejected (stair-stepped). Pan at 48 px/m on the patch: ink px flipping per tick 0.00116 ->
-  0.00102 (no flicker from the thin lines).
+  0.00102 (no flicker from the thin lines). Up close the thin cracks went faint at the 128 px/m kill-cam, so
+  `D5HeroGround` (70c20a6, `item28_cracks_up_close.png`) fades the original crack pixels back in as a world-locked
+  overlay, alpha 0 at 56 px/m -> 1 at 96: 0 px at 32/48, bold grime at 96-128, monotone over a 48-100 px/m sweep.
 - **Kerb stone** (`item24_kerb_stone.png`, 15adfae + f8864e9): the mock's kerb is a cream stone band with an inner
   line that runs along the straight kerbs and round the corner. A thin (0.04 m) ink line 0.3 m inside the street edge,
   one polyline per quadrant (iteration 2's corner-only arc floated and was reverted). On a 48 px/m pan its ink px
@@ -202,7 +205,7 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
-## Gap list after iteration 6 (in-engine h92c vs `d4h2_mock.jpg` and the concept; next step each)
+## Gap list after iteration 6 (in-engine h96 vs `d4h2_mock.jpg` and the concept; next step each)
 What changed: the GROUND now prints like the mock's at 32/48 px/m (faint slab joints, clean zebra, no repeating
 cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 -> 0.425, px darker than 0.2
 0.231 -> 0.218 (mock 0.488 / 0.123). What still separates us from the target, largest first:

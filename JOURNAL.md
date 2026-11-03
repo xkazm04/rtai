@@ -730,3 +730,14 @@ NEXT (iteration 6; NEXT 1-19 of iterations 3-5 still stand):
     street. An outer ink hairline in rig_build.gd's halo pass, A/B at 32 px/m on the crossing and pavement.
 23. Owner: zebra cream (as the mock) or toned like the dashes (item27).
 24. City: road paint (STRIKE) off the centre line; the bold dashes now show between its letters at 48 px/m.
+- 02:51 FOUND + FIXED (h96, 70c20a6): the thinned road cracks also went faint at the 128 px/m kill-cam (the night's
+  closest frame to the concept: a D5 regression up close, seen on a 96/128 check after the summary). D5HeroGround: a
+  child overlay per road tile with the D4 tile's ORIGINAL crack pixels (masters tools/build_cracks.py; paint and the
+  widened dashes excluded), alpha 0 at 56 px/m -> 1 at 96, d5 tier only. h96 vs h92c: 0 px at 32/48 in both tiers,
+  d4 tier 0 px at every zoom; d5 changed 2518 / 7409 / 15666 px at 64 / 96 / 128 (Rivet crops: 24-29 px, all at the
+  crop's left edge on street-luminance ground, not Rivet). Zoom sweep (temporary zoom list, restored; tree checked):
+  fade vs full overlay changed px per m^2 3.95 / 2.59 / 2.29 / 2.04 / 1.98 / 1.87 / 1.47 / 0.86 / 0 at 48 / 56 / 60 /
+  64 / 68 / 72 / 80 / 88 / 96 px/m: monotone, no pop. (My first "off" run set FADE_ON = 1000, which the clamp turns
+  into alpha ~1 at every zoom, i.e. "always full": I read the numbers as that, which is the comparison wanted.)
+  Provenance +3 lines. Boards item28_cracks_up_close.png, item4 + night_iter6_summary from h96; evidence/
+  hero-d4d5-*ppm.png = h96 (hero-d4-* unchanged); ladder +1 row.
