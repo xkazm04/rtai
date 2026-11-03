@@ -2,9 +2,10 @@ class_name VehicleView
 extends Node2D
 ## Draws VehicleService's cars (driven, parked, wrecks) the way the city draws traffic: the same
 ## quad mesh and look material as the crowd's car layer (handed in by the composition root, so the
-## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked; a wreck draws its d2
-## cell in ink-darkened paint) plus a car-shaped ink shadow and tyre marks (VehicleSkids). Reads
-## the service each frame and writes nothing back (render only; never sim state). Size and cell
+## print matches), one MultiMesh per body texture (intact, d1, d2, hijacked, wreck: n-d4's burnt
+## wrecks in the traffic atlas layout; without that atlas a wreck draws its d2 cell darkened) plus
+## a car-shaped ink shadow, tyre marks (VehicleSkids) and burning wrecks (VehicleFire). Reads the
+## service each frame and writes nothing back (render only; never sim state). Size and cell
 ## rules = CitySimRender cars. Sim traffic the service rammed to D1 or soul-hijacked keeps driving
 ## in the sim, drawn by the crowd layer with its intact art: the view lays the D1 / hijacked cell
 ## over it at the same transform (until the city's car shader picks art by custom.y itself).
@@ -23,12 +24,15 @@ var skids: VehicleSkids = VehicleSkids.new()
 var fire: VehicleFire = VehicleFire.new()
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
+## True when the burnt wreck atlas was handed in (else wrecks draw d2, darkened).
+var _burnt: bool = false
 ## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
 var _mirrors: Array[Array] = []
 
 
-## textures: one per VehicleBody.State up to HIJACKED (intact, d1, d2, hijacked); a null entry
-## falls back to the intact atlas. car / shadow: the crowd's car and car-shadow layer nodes.
+## textures: one per VehicleBody.State (intact, d1, d2, hijacked, wreck); a null or missing entry
+## falls back to the intact atlas (the wreck to d2, darkened). car / shadow: the crowd's car and
+## car-shadow layer nodes.
 func setup(
 	svc: VehicleService,
 	textures: Array[Texture2D],
@@ -40,9 +44,11 @@ func setup(
 	skids.z_index = shadow.z_index - 1
 	add_child(skids)
 	_shadow = _layer(shadow, textures[0], shadow.z_index)
-	for k: int in VehicleBody.State.HIJACKED + 1:
+	_burnt = textures.size() > VehicleBody.State.WRECK and textures[VehicleBody.State.WRECK] != null
+	for k: int in VehicleBody.State.WRECK + 1:
+		var pick: int = VehicleBody.State.D2 if k == VehicleBody.State.WRECK and not _burnt else k
 		var tex: Texture2D = (
-			textures[k] if k < textures.size() and textures[k] != null else textures[0]
+			textures[pick] if pick < textures.size() and textures[pick] != null else textures[0]
 		)
 		_bodies.append(_layer(car, tex, car.z_index))
 	fire.service = svc
@@ -85,10 +91,10 @@ func _process(_delta: float) -> void:
 		if ns >= CAP:
 			break
 		var wreck: bool = b.state == VehicleBody.State.WRECK
-		var k: int = VehicleBody.State.D2 if wreck else b.state
+		var k: int = b.state
 		var mm: MultiMesh = _bodies[k]
 		var xf: Transform2D = car_xf(b.pos, b.head)
-		var tint: Color = WRECK_TINT if wreck else Color.WHITE
+		var tint: Color = WRECK_TINT if wreck and not _burnt else Color.WHITE
 		_put(mm, counts[k], xf, tint, b)
 		counts[k] += 1
 		_put(_shadow, ns, xf.translated(SHADOW_OFF), SHADOW, b)

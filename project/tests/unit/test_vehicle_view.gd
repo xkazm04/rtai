@@ -15,7 +15,7 @@ class Traffic:
 		return flat
 
 
-func _view(svc: VehicleService) -> VehicleView:
+func _view(svc: VehicleService, n_tex: int = VehicleBody.State.HIJACKED + 1) -> VehicleView:
 	var mesh: QuadMesh = QuadMesh.new()
 	var layers: Array[MultiMeshInstance2D] = []
 	for k: int in 2:
@@ -24,7 +24,7 @@ func _view(svc: VehicleService) -> VehicleView:
 		node.multimesh.mesh = mesh
 		layers.append(node)
 	var tex: Array[Texture2D] = []
-	for k: int in VehicleBody.State.HIJACKED + 1:
+	for k: int in n_tex:
 		tex.append(PlaceholderTexture2D.new())
 	var view: VehicleView = autofree(VehicleView.new())
 	view.setup(svc, tex, layers[0], layers[1])
@@ -65,3 +65,31 @@ func test_an_empty_book_draws_no_traffic() -> void:
 	view._process(0.0)
 	for mm: MultiMesh in view._bodies:
 		assert_eq(mm.visible_instance_count, 0)
+
+
+func test_a_wreck_draws_the_burnt_atlas_untinted() -> void:
+	var svc: VehicleService = _service()
+	var b: VehicleBody = svc.spawn_parked(&"sedan", Vector2(5, 5), Vector2.RIGHT)
+	b.state = VehicleBody.State.WRECK
+	var view: VehicleView = _view(svc, VehicleBody.State.WRECK + 1)
+	view._process(0.0)
+	var wreck: MultiMesh = view._bodies[VehicleBody.State.WRECK]
+	assert_eq(wreck.visible_instance_count, 1)
+	assert_eq(view._bodies[VehicleBody.State.D2].visible_instance_count, 0)
+	assert_true(view._burnt)
+
+
+func test_without_the_burnt_atlas_a_wreck_is_its_d2_cell_darkened() -> void:
+	var svc: VehicleService = _service()
+	var b: VehicleBody = svc.spawn_parked(&"sedan", Vector2(5, 5), Vector2.RIGHT)
+	b.state = VehicleBody.State.WRECK
+	var view: VehicleView = _view(svc)
+	assert_false(view._burnt)
+	var nodes: Array[MultiMeshInstance2D] = []
+	for c: Node in view.get_children():
+		if c is MultiMeshInstance2D:
+			nodes.append(c)
+	# children: shadow, then one body layer per state
+	var d2: MultiMeshInstance2D = nodes[1 + VehicleBody.State.D2]
+	var wreck: MultiMeshInstance2D = nodes[1 + VehicleBody.State.WRECK]
+	assert_eq(wreck.texture, d2.texture)

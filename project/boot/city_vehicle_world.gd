@@ -112,6 +112,8 @@ static func make_view(svc: VehicleService, view: CityView) -> VehicleView:
 	]:
 		var path: String = "res://features/city/art/vehicles/%s.png" % f
 		tex.append(load(path) as Texture2D if ResourceLoader.exists(path) else null)
+	var burnt: String = "res://features/vehicles/art/traffic_atlas_wreck.png"
+	tex.append(load(burnt) as Texture2D if ResourceLoader.exists(burnt) else null)
 	var v: VehicleView = VehicleView.new()
 	var nodes: Array[MultiMeshInstance2D] = view.crowd.nodes
 	v.setup(svc, tex, nodes[SimConst.RL_CARS], nodes[SimConst.RL_CAR_SHADOWS])
