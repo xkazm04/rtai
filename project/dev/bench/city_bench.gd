@@ -62,6 +62,7 @@ func _ready() -> void:
 		_view.fx_feed = null
 	_characters = CityCharacters.new(_city, _view, world.context())
 	_characters.rivet_on_foot = _args["--scenario"] == "riot"
+	_city.body.on = _characters.rivet_on_foot  # in a car Rivet has no body (features/bodies)
 	await _characters.bake()
 	var prewarm_us: int = await _view.prewarm()
 	printerr("city_bench: prewarm %.1f ms" % (prewarm_us / 1000.0))
