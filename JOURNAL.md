@@ -278,3 +278,7 @@ Branch d-city at the commit after bba930d; all gates PASS at bba930d. The bench 
 Codex: 4 images used today by this lane (of ~30). REQUESTS 1-4 still stand (d5-cast cop_blue rigs and
 atlas; d5-combat blood names; vehicles cruiser accents).
 - BLOCKED 16:38 final re-bench: lock held by d5-cast (16:36, < 20 min); skipped. Bench of record = 16:00 at 61e9222.
+- MILESTONE/FAIL 16:43 final bench at 1e7caef (lock 16:40:41-16:43:08, CONTENDED): exit 1 on p99 CPU
+  8.7 ms (16:00 run at 61e9222 passed at 3.16 ms). Likely contention, NOT shown: idle re-run owed
+  before merge (suspect if real: plate texture upload on chunk load). Overlay at 32 px/m now +0.51 ms
+  on a 0.64 ms baseline: the earlier +0.9 was partly contention. evidence/d5-city/28-bench-final/.
