@@ -197,3 +197,13 @@ the PO table lands.
 
 NEXT: unchanged. Director applies patches 0001..0005 (or cherry-picks `d-save-trial`) after merging d-save + d-slice;
 REQUEST 1 (patch 0005) and REQUEST 2 (quest id check in `accept()`) to slice-play; Loc keys when the PO table lands.
+
+## 2026-11-03 iteration 9 (BUILD, 15:50) - trial tree refreshed on d-slice d0d092e
+- d-slice moved to d0d092e (`Quest1Session` makes the chunks around Rivet resident before tick 0; live, replay and
+  resume share that path). Re-merged into `d-save-trial` (clean auto-merge, no conflict). Gates on the trial tree:
+  unit 409 passed / 0 failed, scenarios 12/12 (autosave_input and quest1_input hashes unchanged, replay_60s identical,
+  final cbeb734ff9b97c41). So patches 0001..0005 still hold against d-slice d0d092e. d-save itself: no code change.
+- No shared file changed on d-save, no bench, no lock.
+
+NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` after merging d-save + d-slice;
+REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
