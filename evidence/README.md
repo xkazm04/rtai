@@ -12,7 +12,7 @@ tick count, no RNG.
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h106, iteration 7) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h147cone, iteration 8 = h106 + hatched prop/car shadows incl. the cone capsule (d5 tier) + wall-side clutter (both tiers) + hatched rig shadows from 64 px/m (d5 tier); round h106, iteration 7 = h98b with STRIKE and the fist stencil inside the west lane; h98b, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks that fade back in up close, bold toned centre dashes, the kerb stone line + 2 more D5 lamps; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h149st, iteration 8 = h106 + hatched prop/car shadows incl. the cone capsule (d5 tier) + wall-side clutter (both tiers) + rig shadows as world-locked strokes from 56-64 px/m (d5 tier); round h106, iteration 7 = h98b with STRIKE and the fist stencil inside the west lane; h98b, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks that fade back in up close, bold toned centre dashes, the kerb stone line + 2 more D5 lamps; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -77,7 +77,8 @@ tick count, no RNG.
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `item46_rig_shadows.png` | iteration 8 (dev hero + arena scenes, d5 tier): hatched cast shadows for the rigs up close (D5RigShadow + look_d5_shadow_group), a20 vs a22rs at 128 and 64, h135cl vs h139rs at 64 and 96, the package at 64, + the concept's ground shadow; fade 56 -> 64 px/m |
 | `item47_dots_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `dots_k` (the concept's halftone stipple in the shaded steel mid-tones, 64 -> 96 px/m) off / rejected 4 px screen / on at 128 and 96, the arena with dots + fringe, the concept; walk at 96: no added shimmer. Not default |
-| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h147cone at 32 / every proposal h148all at 32 and 64 (package + fringe + dots + rig shadows) / the arena kill-cam a26all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
+| `item46b_rig_shadow_nogroup.png` | iteration 8 (kept): the rig shadow without a CanvasGroup, as world-locked strokes only (nothing stacks): group a24rs / no group + tint a27nogroup (rejected: stacks at joints) / strokes only a29st at 128, hero 64/96; cost +0.07..0.18 / +0.012 / +0.005 ms GPU |
+| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h149st at 32 / every proposal h150all at 32 and 64 (package + fringe + dots + rig shadows) / the arena kill-cam a30all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -251,7 +252,7 @@ tone table: the up-close misprint (`item43`), grounding (prop, car and rig shado
 mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
 1. **The package is still not adopted** (unchanged; NEXT 27). Reproduce it plus both owner options: `D5_FRINGE=1
    D5_DOTS=1 bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]`
-   (h148all / a26all, `night_iter8_summary`).
+   (h150all / a30all, `night_iter8_summary`).
 2. **Mid-tones** (unchanged, art): with this board's classes (`night_iter8_summary`), mock mid 0.104 vs package
    0.081 vs committed 0.049. The prop and rig shadows do not move it (0.048 -> 0.049): the gap is the roof interiors.
 3. **Grounding** (NEW, closed in the dev scenes): every mock prop, car and actor sits on a pen-hatched shadow. Ours
@@ -265,9 +266,10 @@ mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
    concept's halftone stipple is now an owner A/B option (`item47`, `dots_k`, with the fringe = the riso-print
    signature); King has no rig (plan-view sprite). The D5 tier's own walk shimmer at 96 px/m (HF 1.13 vs D4) was
    measured for the first time tonight; at 64 it is 1.03.
-7. **Cost** (NEW, measured): rig shadows +0.07 to +0.18 ms GPU median (p95 about 1 ms) and 0.27 ms script at 16 full
-   rigs, 64 px/m, RTX 4090 (`d5-cost.json` "d5s"). The dev version walks a cached part list; in production it
-   belongs in rig_build (no per-frame walk).
+7. **Cost** (NEW, measured): rig shadows as world-locked strokes without a CanvasGroup (`item46b`): +0.005 ms GPU
+   median, p95 0.161, 0.29 ms script at 16 full rigs, 64 px/m, RTX 4090 (`d5-cost.json` "d5s"; the group version
+   cost +0.07 to +0.18 ms with ~1 ms p95 spikes). The dev version mirrors a cached part list each frame; in production
+   it belongs in rig_build (shadow sprites as part children, no per-frame copy).
 6. **Cones** (closed in the dev scene, `item44b`): a capsule shadow past the flat base plate instead of the plate's
    box. For the city lane: props on flat base plates need a shadow shape, not their silhouette.
 

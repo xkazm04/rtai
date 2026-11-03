@@ -1203,10 +1203,22 @@ NEXT (iteration 8; NEXT 27-30 of iteration 7 still stand):
     concept's print look. If yes: set part.fringe_k / dots_k to 1.0 in look_d5.params.json and the shader defaults.
 32. City lane: prop shadows (D5HeroPropShadow recipe: the silhouette offset for boxes, a capsule for props on flat
     plates, tint 0.5) and the pavement clutter density of the mock (item45).
-33. Characters lane: rig cast shadows (D5RigShadow recipe) built in rig_build (no per-frame walk); check the GPU p95
-    spike (one CanvasGroup per rig layer vs per rig, or no group with a tint that does not stack).
+33. Characters lane: rig cast shadows (D5RigShadow recipe: world-locked look_d5_shadow strokes only, tint 0 /
+    stroke 1, no CanvasGroup; item46b) built in rig_build as part children (no per-frame copy).
 34. If the image budget returns: King's rig parts and plates for the roof interiors with a fine mid-grey hatch
     (mid-tones, gap 2), as in NEXT 30.
 Morning reading order: night_iter8_summary.png -> item46 / item44 (grounding) -> item43 / item47 (owner A/B) ->
 night_iter7_summary.png and the iteration-7 order.
 - 05:00 night_iter8_summary.png rebuilt from h147cone (committed) / h148all + a26all (D5_FRINGE=1 D5_DOTS=1 package_shot.sh: every proposal + both options + rig shadows); per class at 32 (this board's classes): h148all L 0.460 / paper 0.311 / mid 0.082 / ink 0.097 (mock 0.494 / 0.336 / 0.104 / 0.080). a23all deleted (superseded).
+- 05:04 MILESTONE (f16de04): the rig shadow without the CanvasGroup (NEXT 33's question answered tonight). Temporary
+  variants (file restored from a copy, tree checked): no group + tint 0.36 (a27nogroup, cost8nogroup): d5 -> d5s
+  +0.012 ms GPU, p95 0.365 (no spike), but the tint stacks into darker patches where parts overlap (joints):
+  REJECTED. No group + strokes only (tint 0, stroke 1; a28strokes): the strokes are world-locked, so overlapping
+  sprites draw the same stroke pixels and nothing stacks: an even hatch, lighter than the group (no tint between
+  strokes). Committed as the default (D5RigShadow extends Node2D, per-sprite look_d5_shadow, alpha via modulate;
+  look_d5_shadow_group removed): cost8e d5 0.152 -> d5s 0.157 GPU median (+0.005), p95 0.161, script 0.29 ms (GPU
+  baseline again different from earlier runs: only same-run deltas quoted). Frames: h149st vs h147cone 0 / 0 / 3368 /
+  7287 / 14098 px at 32-128, d4 tier 0; a29st = a28strokes (0 px). evidence/d5-cost.json = cost8e. Board
+  evidence/item46b_rig_shadow_nogroup.png; ladder row. Showcase frames from h149st / a29st; night_iter8_summary
+  rebuilt from h149st / h150all / a30all (D5_FRINGE=1 D5_DOTS=1 package_shot.sh). NEXT 33 updated. Scratch deleted:
+  h148all, a26all, cost8nogroup (superseded).
