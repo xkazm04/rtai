@@ -416,12 +416,16 @@ NEXT (iteration 5, in order):
   called for every service car each tick in `_collide` (wrecks stand still, so it runs before the
   standing-car early return). A WRECK younger than BURN_S kills every living person within
   FIRE_R 1.2 m of its fire (NOSE_M 1.5 m ahead of the centre): `strike_person(slot, ZERO, true)` ->
-  `pedestrian_struck(slot, true)`, so d5-combat's blood and the heat hook fire as for a run-over.
+  `pedestrian_struck(slot, true)`: the same event as a run-over (d5-combat's chokepoint maps it to
+  actor_killed per REQUEST 2; vehicles still does not emit actor_killed itself).
   BURN_S / NOSE_M moved from VehicleFire (render) to VehicleContacts (sim); VehicleFire reads them,
   so the drawn fire and the lethal one cannot drift. Deterministic (sim tick, no RNG).
-  Deviation: the kill reuses the run-over event, so the `actor_killed` cause is the vehicle one,
-  not `fire`. A distinct cause needs an events.json change (shared file), so it was not done in the
+  Deviation: the kill reuses the run-over event, so downstream it reads as `run_over`, not as
+  `burned`. A distinct cause needs an events.json change (a shared file), so it was not done in the
   last 20 minutes. Not yet: Rivet taking fire damage, wreck-to-wreck spread.
+- REQUEST 10 -> d5-combat (with REQUEST 2): a `burned` kill kind. Vehicles can emit a
+  `pedestrian_burned(slot)` (events.json) or pass a cause on pedestrian_struck, whichever your
+  chokepoint prefers. Today a fire kill arrives as pedestrian_struck(slot, true).
   Unit test `test_a_burning_wreck_kills_whoever_stands_in_its_fire` (inside 1.2 m dies, 4 m lives,
   burnt-out kills nobody). Gates at e341b25: lint 13/13 (gd-size: service 200, contacts 200),
   unit 370/0, scenarios 11 ran 0 failed (replay_60s final cbeb734ff9b97c41, vehicle drive replay
