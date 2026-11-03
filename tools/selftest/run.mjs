@@ -30,7 +30,7 @@ export function runLookGolden(outDir0, out0, site = 'junction') {
   const r = JSON.parse(readFileSync(file, 'utf8'));
   const frames = r.frames ?? [];
   const worst = Math.max(0, ...frames.map((f) => f.mean ?? 255));
-  const bad = frames.filter((f) => !f.ok).map((f) => `${f.look}@${f.ppm}`);
+  const bad = frames.filter((f) => !f.ok).map((f) => `${f.look}@${f.ppm}${f.grade && f.grade !== 'day' ? `-${f.grade}` : ''}`);
   return { ok: res.status === 0 && r.ok === true && frames.length > 0, frames,
     summary: `${site === 'junction' ? 'look' : site} goldens ${frames.length - bad.length}/${frames.length} within mean ${r.max_mean} (worst ${worst.toFixed(2)})`
       + (bad.length ? `; OFF: ${bad.join(', ')}` : '') };

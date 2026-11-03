@@ -26,7 +26,8 @@ const CASES: Array[Array] = [
 ]
 
 ## The cases at any other --site (the block: roofs, cast shadows), saved as <site>-<look>-<ppm>.
-const SITE_CASES: Array[Array] = [[&"d4", 32], [&"d4", 48], [&"auto", 64]]
+## A third column is a lights.json grade (default day), saved with a -<grade> suffix.
+const SITE_CASES: Array[Array] = [[&"d4", 32], [&"d4", 48], [&"auto", 64], [&"d4", 48, &"night"]]
 
 var _bless: bool = false
 
@@ -53,12 +54,14 @@ func _ready() -> void:
 	for c: Array in CASES if _site == "junction" else SITE_CASES:
 		var look: StringName = c[0]
 		var ppm: int = c[1]
-		rows.append(await _golden(look, ppm))
+		var grade: StringName = c[2] if c.size() > 2 else &"day"
+		rows.append(await _golden(look, ppm, grade))
 	_write(rows)
 
 
-func _golden(look: StringName, ppm: int) -> Dictionary:
+func _golden(look: StringName, ppm: int, grade: StringName) -> Dictionary:
 	_view.look_id = look
+	_view.lights.set_grade(grade)
 	_view.zoom = ppm / SimConst.PX_PER_M
 	for i: int in SETTLE_FRAMES:
 		await get_tree().process_frame
@@ -67,12 +70,16 @@ func _golden(look: StringName, ppm: int) -> Dictionary:
 	# a look an overlay covers (d5-close's look_d5 present) has its own goldens (-ov)
 	var ov: String = "-ov" if LookProfiles.shared().overlay_base(look) != &"" else ""
 	var site: String = "" if _site == "junction" else _site + "-"
-	var fname: String = "%s%s-%dppm%s.png" % [site, look, ppm, ov]
+	var night: String = "" if grade == &"day" else "-" + String(grade)
+	var fname: String = "%s%s-%dppm%s%s.png" % [site, look, ppm, ov, night]
 	@warning_ignore("return_value_discarded")
 	img.save_png(_out.path_join("look-" + fname))
 	img.resize(GOLDEN_SIZE.x, GOLDEN_SIZE.y, Image.INTERPOLATE_BILINEAR)
 	var path: String = ProjectSettings.globalize_path(GOLDEN_DIR.path_join(fname))
-	var row: Dictionary = {"look": String(look), "ppm": ppm, "file": "look-" + fname}
+	var row: Dictionary = {
+		"look": String(look), "ppm": ppm, "grade": String(grade), "file": "look-" + fname
+	}
+	_view.lights.set_grade(&"day")
 	if _bless:
 		row["blessed"] = img.save_png(path) == OK
 		row["ok"] = row["blessed"]
