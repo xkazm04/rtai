@@ -64,3 +64,15 @@ NEXT:
   (gate r - max(g,b) > 40). Found by looking at the noir A/B junction frame (d4 side). Noir still switches (ink masses,
   no blue leak). Goldens re-blessed (the check passed unblessed at mean <= 0.027). Unit 326/326.
 - EVIDENCE final (clean tree, HEAD 1848411, 11:0x): lint, unit 326/326, scenarios 8/8, parity exact, selftest goldens PASS (--no-bench). Owner frames rebuilt from the final renders (15, masters frames.json + ladder.png).
+
+## 2026-11-03 iteration 3 (BUILD, 11:01-12:31)
+- 11:01 start. Items 1-5 evidenced; this iteration raises the weakest. Checked integration with d5-city (d-city f0cedb3):
+  its look_d4_item tests cop blue BEFORE the nearest-teal fallback, so cop_blue_hi never prints teal there: my REQUEST 2
+  is moot. REQUEST 1 (look_d4 world pass cop-blue plate for parked cruisers) still open on d-city. The crowd atlas is
+  baked at run time from the rig, so it inherits the blue cops (d5-city's "29.3k/24.7k vermilion texels" are main's).
+- MILESTONE portraits to the doctrine: iteration 1's #415D91 lift (x1.7 highlights) read royal blue (mean 63,90,140, chroma
+  77). Now a navy ramp: shadows -> ink, median on #3D5078, highlights -> pale slate (mean 60,77,114, chroma 54). And the
+  leftover vermilion specks (123-780 px per portrait, rl > 40) greyed: 0 vermilion px left. A first speck gate (rl > 25)
+  caught 24k px of warm paper/ink greys per portrait: rejected, never shipped. Dialogue frame re-shot (d5_hero
+  --dialogue=rivet,cop_shouting): panel armour (62,88,137) -> (60,76,112), vermilion 95 -> 0. Provenance re-hashed.
+  Frames: masters frames/portraits-cop-ab.png (top orig, bottom now) + portraits-cop-3way.png (orig | iter1 | now).
