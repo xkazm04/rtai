@@ -1308,3 +1308,32 @@ NEXT (iteration 25, for the morning; same as iteration 24): 1. Director: merge p
   evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21 clips. 3. Find the
   crowd-shadow root cause (atlas dump), then re-apply 01409e4. 4. Iteration-18 07:10 items 3-5. Later: `noir` as a row
   in look_profiles.json.
+
+## Iteration 27 (07:55-07:59, STABILIZE, past freeze: no features)
+- (07:55) No iteration-26 entry exists in this journal, so 26 left no record. Branch tips: main 721fbbb is unchanged.
+  **n-visual moved 0ea52b9 -> 8d4750d, n-d4 2471640 -> e6dcac5, n-d5 4b61ff4 -> a55382e.** All three changed only
+  JOURNAL.md, plus evidence/README.md on n-d5. None touched project/ paths. Merge-tree into n-noir HEAD ad88a39 shows
+  the same picture as iteration 25:
+  - main: clean.
+  - n-d4 and n-d5: a JOURNAL.md add/add conflict only.
+  - n-visual: JOURNAL.md, plus the launch_args.gd text conflict. city_view.gd auto-merges; the latent set_look_enabled
+    clash stands (patch in evidence/merge-noir-city_view.patch).
+- (07:56) Gates at ad88a39 (project/ and tools/ identical to 641d2b1):
+  - lint: 13/13 over 243 files, exit 0.
+  - unit: 206/0/0, exit 0.
+  - scenarios: 8 ran, 0 failed, exit 0. replay_60s final cbeb734ff9b97c41, unchanged.
+
+  Logs are in evidence/gates-ad88a39-*.log. The "resources still in use at exit" warning was already there and is
+  not a failure. Disk: C: 267G free.
+- Leonardo probed (07:57): apiSubscriptionTokens 0, apiPaidTokens null. Images: 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine is running.
+NEXT (iteration 27, for the morning; same as iteration 25):
+  1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and apply
+     evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 against masters
+     crowdshadow-v1/before/ (expected identical), and run test_render_layers with noir on.
+  2. Owner picks from evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21
+     clips.
+  3. Find the crowd-shadow root cause (atlas dump), then re-apply 01409e4.
+  4. Iteration-18 07:10 items 3-5.
+
+  Later: `noir` as a row in look_profiles.json.
