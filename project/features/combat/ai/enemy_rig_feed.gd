@@ -14,13 +14,20 @@ const SWING_COMBO: float = 1.0
 static func write(pit: EnemyPit, feed: RigFeed, first: int, ppm: float) -> int:
 	var n: int = 0
 	for e: EnemyAgent in pit.agents:
-		var i: int = feed.put(first + n, e.id, BodyPlan.Kind.COP, e.pos * ppm, e.vel * ppm)
-		feed.face[i] = e.facing.angle()
-		feed.aim[i] = (e.pos + e.aim * AIM_LEAD_M) * ppm
-		feed.flags[i] = flags(e)
-		_clip(e, pit.tick, feed, i)
+		row(e, pit.tick, feed, first + n, ppm)
 		n += 1
 	return n
+
+
+## One enemy as feed row i at sim tick `now` (a host that draws robots on their own rig writes
+## its rows one by one).
+static func row(e: EnemyAgent, now: int, feed: RigFeed, i: int, ppm: float) -> void:
+	@warning_ignore("return_value_discarded")
+	feed.put(i, e.id, BodyPlan.Kind.COP, e.pos * ppm, e.vel * ppm)
+	feed.face[i] = e.facing.angle()
+	feed.aim[i] = (e.pos + e.aim * AIM_LEAD_M) * ppm
+	feed.flags[i] = flags(e)
+	_clip(e, now, feed, i)
 
 
 static func flags(e: EnemyAgent) -> int:
