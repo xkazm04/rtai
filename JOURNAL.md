@@ -799,11 +799,11 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
 - 02:24 generator patch: the 16 m warehouse roof (id 23) also turned 180 degrees at random, printing its painted "7"
   as an "L" (`after_pl/city-2-32ppm`, right edge). It now stays upright too (`after_pl2/`, crop `work/wh_ab.png`).
   `generator_art_pick.patch` re-exported (lint clean, applies on main), code reverted, re-baked, `--check` matches.
-- 02:36 GATES at 42ee60f (HEAD): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity
+- 02:26 GATES at 42ee60f (HEAD): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity
   bit-exact (mutation caught at step 629), selftest 72 art textures, 0 placeholders. Copied to `evidence/iter8/`.
   Deleted my superseded scratch: `probe_tr2/` (dense probe), `work/roofhatch/` (rejected hatch probe).
 
-## 02:36 SUMMARY iteration 8 (raise the weakest items; every change before/after in-engine)
+## 02:26 SUMMARY iteration 8 (raise the weakest items; every change before/after in-engine)
 Sheet: `masters:night/d4-production/night_iter8_summary.png` (= `evidence/iter8/`). Ladder rows "i8 ...".
 1. Moving traffic, the most visible placeholder left in the merged slice (grey steel boxes): traffic atlas re-laid
    out so cell = sim car art id, + a grey-paint sedan (id 7); wiring patch for visual-engine (two variants: before /
