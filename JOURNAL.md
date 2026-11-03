@@ -296,3 +296,29 @@ NEXT:
   into the JSON (json-canonical failed); re-emitted via tools/lib/canonical_json.mjs.
 - GATES at 09b59b1 (+ the flinch-frame stats commit): lint 13/13; unit 558/558 at e01b895 (+2
   aim-lead tests green in the enemy unit run, 23/23); scenarios 21/21 (full suite, 22:52).
+- Clip with the lead only (22:55, fr_lead first pass): cops still 17 shots 0 hits. Root cause was
+  the scripted Rivet, not the enemies: PitDummy dodged EVERY shot the tick it was fired (a FIRE
+  state bypassed the read share and the reaction delay), a zero-reaction read no player has.
+- FIX (pit_dummy.gd): the human-like dummy dodges a shot only if it noticed that enemy's tell
+  (the same read_frac hash, remembered per enemy); the perfect reader (react_ticks -1, used by the
+  pit scenario's dodge/stand/lock judges) is unchanged, so those judges did not move. The waves
+  scenario (human profile) now draws damage on every curve (gentle 6 / 12 / 4 per wave).
+  Enemy scenarios 2/2, enemy units 23/23, lint 13/13.
+
+NEXT (night run):
+1. Re-read answers.json. Encode clip i (fr_lead, the lead + dummy fix) if this session did not.
+   ASK candidate with real-time clips in the final look: aim_lead 0.8 (a steady strafe is hit;
+   only a juke after the lock dodges) vs 0 (strafing is safe): clip h (rig_fight_three_pairs_
+   flinch, lead 0, but with the old dummy) vs clip i. Re-render clip h with lead 0 and the fixed
+   dummy first, so the two differ only in the lead (`squad.aim_lead` in enemies.json).
+2. An ArenaHook for the pit (features/combat/ai/enemy_pit_hook.gd extends ArenaHook once the
+   arena scene is on main: setup builds EnemyPit + WaveRun, step drives it from
+   stage.arena.rivet.pos, write_state = pit digest); then add "script" back to
+   arena_stations/enemy-ai.json and delete project/data/schemas/enemy-ai.schema.json (orphan).
+3. Swap PitDummy's nails for gunplay's pistol and rivet-motion's claw combo once merged; the
+   sample clip with Rivet's real weapons and his real hit reaction.
+4. A robot thug plan + art (not King's skeleton), a ROBOT BodyPlan.Kind (REQUEST d5-cast).
+5. A flinch duck clip on the rig (RigClips is d5-cast/rivet-motion): today a flinch is only a
+   sideways shove; a short crouch would read better at 32 px/m.
+6. The city block clip (owner decision 1), dev/showcase/city_fight.gd as the host.
+7. Robot hit tint is vermilion-orange (CutRig hit tint): note for d5-cast/gunplay.
