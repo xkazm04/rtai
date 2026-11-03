@@ -1150,3 +1150,8 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   dots + fringe on 1.150 / 1.106: no added shimmer. Note the D5 tier's own HF ratio at 96 (1.13) is higher than at
   64 (1.03, walk6): not a regression of tonight, just never measured; the characters lane may want to look at it.
   Board evidence/item47_dots_owner_ab.png; ladder row.
+- 04:50 RE-CHECKED item 2 readability after iteration 8's scene additions (masters work/i7/cls.py, iteration 7's
+  classes and street band): committed h106 -> h139rs / h145: rim dL 0.604, verm dE 81.2, teal dE 56.9 (identical),
+  L 0.424 -> 0.420, ink 0.20, mid 0.05; package h124rf -> h140all: rim dL 0.610, verm dE 77.5, teal dE 57.6
+  (identical), L 0.459 -> 0.455, paper 0.30, ink 0.11, mid 0.09 (mock L 0.488 / paper 0.33 / ink 0.12 / mid 0.11).
+  The prop shadows and clutter cost no actor read; the frame darkens by 0.004 L.
