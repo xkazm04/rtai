@@ -970,3 +970,10 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   give the D4 tier its ink back. D4 tier solid ink 0.07 -> 0.07 (no change: the extra edge ink lands as grey, not
   solid), paper 0.32 -> 0.29, L 0.475 -> 0.458; D5 tier paper 0.32 -> 0.29, L 0.468 -> 0.452. Worse on both tiers.
   The D4-tier condition stays an art fix (D5 plates or heavier D4 roof lines).
+- 03:59 PROPOSAL for d4-production (no D4 asset committed; features/city/art/roofs restored with git checkout, tree
+  clean): the D4-tier condition is an art fix. masters work/i7/d4_roof_lines.py weights the D4 roofs' dark lines
+  (d' = d + k (1 - d) smoothstep(0.35, 0.75, d), vermilion kept, alpha kept). Under the package, D4 tier at 32 px/m:
+  solid ink h117pkg 0.07 -> k 0.6 0.09 -> k 1.0 0.11 (mock 0.12; committed h106 0.13), L 0.475 -> 0.466 -> 0.461,
+  paper 0.32 -> 0.31; readability unchanged; the D5 tier is unchanged (its frame roofs are all D5 plates). By eye at
+  x2: the parapets and pipes print bold again under the warm, light tone. Board evidence/item40_d4_roof_lines.png;
+  ladder row.

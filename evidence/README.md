@@ -67,6 +67,7 @@ tick count, no RNG.
 | `item37_street_edge.png` | iteration 7: look_d5_print `street_edge` (no edge ink on the dark wash step: road paint without ink rings, as in the mock), h109all vs h115se1 at 32 px/m x3 + the mock, and the arena at 64/128 (a16all vs a17se1) |
 | `item38_rim_owner_ab.png` | iteration 7, OWNER A/B: the sticker rim as the rig draws it vs +1 px cream (look_d5_halo `rim_px`, D5_HALO_RIM=1; both with the outer ink line + shadow) at 32 x3 and 48, + the mock's stickers. Not in the package |
 | `item39_d4tier_package.png` | iteration 7: the package in the D4 tier (D4 roofs) at 32 px/m, h106 vs h117pkg + a x2 roof crop: warm and light like the mock, but the D4 roof outlines print thin (solid ink 0.13 -> 0.07, mock 0.12) |
+| `item40_d4_roof_lines.png` | iteration 7, PROPOSAL for d4-production: the D4 roofs with heavier lines (k 1.0) under the package, D4 tier 32 px/m x2: h106 / package / package + heavier lines (solid ink 0.13 / 0.07 / 0.11, mock 0.12) |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h115se1 at 32 px/m, the mock, h115se1 at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -235,7 +236,8 @@ What still separates us, largest first:
    characters lane moves the halo pass into rig_build.gd `_halo`.
    CONDITION (`item39`): in the D4 tier (D4 roofs) the package under-inks at 32 px/m (solid ink 0.13 -> 0.07, mock
    0.12): the D4 roofs were drawn for look_d4's fattening print and their outlines go thin. Adopt the print with
-   the D5 plates (D5 tier: 0.11) or with the d4-production lane's D4 roof lines weighted up.
+   the D5 plates (D5 tier: 0.11) or with the d4-production lane's D4 roof lines weighted up: shown, `item40`, line
+   weight k 1.0 (masters work/i7/d4_roof_lines.py) gives the D4 tier 0.11.
 2. **Mid-tones**: the whole frame is still L 0.468 vs 0.488. Colour is matched (paper median 244,220,192 vs the
    mock's 245,222,195; street 80,69,71 vs 81,70,71, with `age_floor` 1.0; 0.6 was worse, h112af06). What is left is
    the mid-tone share (L 0.42-0.70): 0.08 vs the mock's 0.11 (h106 0.05): the print posterizes into paper / wash /
