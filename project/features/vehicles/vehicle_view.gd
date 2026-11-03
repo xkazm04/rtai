@@ -82,8 +82,7 @@ func _process(_delta: float) -> void:
 		var wreck: bool = b.state == VehicleBody.State.WRECK
 		var k: int = VehicleBody.State.D2 if wreck else b.state
 		var mm: MultiMesh = _bodies[k]
-		var at: Vector2 = b.pos * SimConst.PX_PER_M
-		var xf: Transform2D = Transform2D(b.head * CAR_L, Vector2(-b.head.y, b.head.x) * CAR_W, at)
+		var xf: Transform2D = car_xf(b.pos, b.head)
 		var tint: Color = WRECK_TINT if wreck else Color.WHITE
 		_put(mm, counts[k], xf, tint, b)
 		counts[k] += 1
@@ -93,6 +92,12 @@ func _process(_delta: float) -> void:
 	for k: int in _bodies.size():
 		_bodies[k].visible_instance_count = counts[k]
 	_shadow.visible_instance_count = ns
+
+
+## A car's quad at `pos` metres facing `head` (CitySimRender cars: x axis head * CAR_L, y axis
+## its left normal * CAR_W, origin in world px).
+static func car_xf(pos: Vector2, head: Vector2) -> Transform2D:
+	return Transform2D(head * CAR_L, Vector2(-head.y, head.x) * CAR_W, pos * SimConst.PX_PER_M)
 
 
 static func _put(mm: MultiMesh, i: int, xf: Transform2D, c: Color, b: VehicleBody) -> void:
@@ -115,8 +120,7 @@ func _marked_traffic(counts: PackedInt32Array) -> void:
 		if counts[st] >= CAP:
 			continue
 		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
-		var at: Vector2 = Vector2(recs[r + 2], recs[r + 3]) * SimConst.PX_PER_M
-		var xf: Transform2D = Transform2D(head * CAR_L, Vector2(-head.y, head.x) * CAR_W, at)
+		var xf: Transform2D = car_xf(Vector2(recs[r + 2], recs[r + 3]), head)
 		var mm: MultiMesh = _bodies[st]
 		mm.set_instance_transform_2d(counts[st], xf)
 		mm.set_instance_color(counts[st], Color.WHITE)
