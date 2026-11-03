@@ -352,3 +352,15 @@ NEXT (after the 18:00 sync), in order:
 - NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
   blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field).
 - 16:45 session end: tree clean after this commit; gates last green at 5a6e21b (docs/evidence-only commits since).
+
+## Iteration 48 (16:43-17:00)
+- 16:44-16:57 BENCH iter5 at code HEAD 5a6e21b (freeze code; first bench after the pool-lead + pool-size commits),
+  bench.lock taken 16:43 and released 16:57. CONTENDED (7 lanes, one GPU). tools/bench/run.mjs, release export,
+  3 runs x 4 scenarios x 60 s. Overall p99 12.71 ms, 1% low 26 fps, worst swap 38.5 ms, worst frame 3289 ms (a stall),
+  hitches >25 ms 199, >50 ms 15 (14 `present`, 1 unexplained); rigs p99 1.00 ms (riot). JUDGE: MISSES p99CpuMs,
+  low1Fps, over50.unexplained (iter4 at 15:57: p99 10.31, 3 hitches). The swing again tracks machine load (no
+  hot-path FX change since iter4: 58a8388 moves the pool origin, 5a6e21b adds one optional key). Not a valid judge
+  today. Raw JSON + log: masters raw/bench-iter5/ and raw/bench-iter5.log (outside git, so the tree stays clean).
+- NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
+  blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field; re-bench idle).
+- 16:58 session end: tree clean after this commit; bench.lock released; no Godot process of mine left.
