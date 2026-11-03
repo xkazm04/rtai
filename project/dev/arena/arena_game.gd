@@ -4,7 +4,8 @@ extends Node
 ## by quest 1's CollectCallView (print pass, D5 look, blood) with ArenaFloorView as its floor.
 ## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
 ## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
-## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block.
+## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
+## --clean hides the dev HUD (clips of the game only).
 
 const TUNE_TICK: int = 300
 
@@ -43,6 +44,7 @@ func _ready() -> void:
 	hud.session = session
 	hud.px_per_m = px_per_m
 	layer.add_child(hud)
+	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	panel.tick_now = session.tick
 	panel.build(session.stations, tuning)
@@ -139,7 +141,9 @@ func _quit() -> void:
 	get_tree().quit(0)
 
 
+## Window closed, or the engine's --quit-after ended a clip capture: the telemetry is written.
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST and _telemetry != "" and session != null:
+	var leaving: bool = what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_PREDELETE
+	if leaving and _telemetry != "" and session != null:
 		@warning_ignore("return_value_discarded")
 		session.write_telemetry(_telemetry)
