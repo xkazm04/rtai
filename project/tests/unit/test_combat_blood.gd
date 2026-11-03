@@ -79,3 +79,19 @@ func test_splats_land_on_the_gpu_mesh_once() -> void:
 	var w: int = mesh.written
 	b.step(64, Vector2.ZERO)
 	assert_eq(mesh.written, w, "a settled frame writes no instance")
+
+
+func test_quest_events_bleed_guards_and_oil_rivet() -> void:
+	var bus: EventBus = EventBus.new()
+	var b: CombatBlood = _blood("noir")
+	var where: Dictionary[int, Vector2] = {1: Vector2(5, 5), 2: Vector2(8, 5)}
+	b.listen(bus, func(id: int) -> Vector2: return where.get(id, Vector2.INF), 1)
+	bus.actor_killed.emit(1, 2, &"shot")
+	bus.player_hit.emit(&"robo-tazer")
+	bus.actor_killed.emit(1, 99, &"shot")
+	b.step(1, Vector2.ZERO)
+	b.step(80, Vector2.ZERO)
+	assert_eq(b.kills, 1, "the guard bleeds; an unknown victim does not")
+	assert_eq(b.hits, 1)
+	assert_true(b.blood.has_pool_at(Vector2(8, 5) * SimConst.PX_PER_M, 16.0))
+	bus.free()

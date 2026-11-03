@@ -30,6 +30,8 @@ var hits: int = 0
 var aimed: int = 0
 ## Microseconds the last step took (the riot budget, STANDARDS section 20).
 var last_us: int = 0
+## Ticks one step may catch up (the game: MAX_STEPS; a fast-forwarding frame grabber: more).
+var max_steps: int = MAX_STEPS
 ## Frames stepped and the CPU microseconds spent (steps + redraws) since boot: the riot average.
 var frames: int = 0
 var spent_us: int = 0
@@ -39,6 +41,8 @@ var _deaths: Array[Vector4] = []
 var _ends: Array[Vector4] = []
 var _tick: int = -1
 var _mat: ShaderMaterial = ShaderMaterial.new()
+var _locate: Callable = Callable()
+var _player: int = -1
 var _meshes: Array[BloodSplatMesh] = []
 
 
@@ -92,6 +96,18 @@ func attach(triggers: FxTriggers) -> void:
 		row["fx"] = kept
 
 
+## Follows a quest fight's Events instead of the cues: actor_killed bleeds the victim along
+## killer -> victim, player_hit leaks the player's oil. `locate`: Callable(id) -> Vector2 metres
+## (Vector2.INF when unknown); `player` = the player's actor id.
+func listen(bus: EventBus, locate: Callable, player: int) -> void:
+	_locate = locate
+	_player = player
+	@warning_ignore("return_value_discarded")
+	bus.actor_killed.connect(_on_killed)
+	@warning_ignore("return_value_discarded")
+	bus.player_hit.connect(_on_player_hit)
+
+
 func set_solid(c: Callable) -> void:
 	solid = c
 	blood.solid = c
@@ -111,6 +127,24 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 		_ends.append(Vector4(pos_px.x, pos_px.y, angle + PI, tick))
 	elif id == &"player_hit":
 		hit_robot(pos_px)
+
+
+func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
+	var at: Vector2 = _locate.call(victim)
+	if at == Vector2.INF or not bleeds():
+		return
+	var from: Vector2 = _locate.call(killer)
+	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT
+	if victim == _player:
+		hit_robot(at * SimConst.PX_PER_M)
+	else:
+		kill_human(at * SimConst.PX_PER_M, dir)
+
+
+func _on_player_hit(_weapon: StringName) -> void:
+	var at: Vector2 = _locate.call(_player)
+	if at != Vector2.INF and bleeds():
+		hit_robot(at * SimConst.PX_PER_M)
 
 
 ## A hit on a robot (Rivet) at `pos_px`: white sparks that land as black oil, no red.
@@ -134,7 +168,7 @@ func step(tick: int, world_px: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
 	_mat.set_shader_parameter(&"world_px", world_px)
 	_resolve()
-	var n: int = clampi(tick - _tick, 0, MAX_STEPS) if _tick >= 0 else 1
+	var n: int = clampi(tick - _tick, 0, max_steps) if _tick >= 0 else 1
 	_tick = tick
 	if n > 0:
 		blood.step_ticks(n)

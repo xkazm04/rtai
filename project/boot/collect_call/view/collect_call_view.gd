@@ -15,6 +15,9 @@ var focus: Vector2 = Vector2.INF
 ## (a caller with its own print pass, e.g. dev/noir/quest_fight.gd).
 var printed: bool = true
 var print_stage: PrintStage = null
+## The combat blood (features/fx/combat_blood.gd, noir's blood in D4/D5) on the printed path:
+## guards and the boss bleed on Events.actor_killed, Rivet leaks oil on player_hit.
+var blood: CombatBlood = null
 var _camera: Camera2D = null
 var _stage: CollectCallStage
 
@@ -55,6 +58,10 @@ func _ready() -> void:
 	cast_view.material = print_stage.item_material()
 	print_stage.actor_layer().add_child(cast_view)
 	print_stage.actor_layer().add_child(fx_view)
+	if _stage != null and _stage.events() != null:
+		blood = CombatBlood.new()
+		print_stage.actor_layer().add_child(blood)
+		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
 
 
 func _process(_delta: float) -> void:
@@ -63,5 +70,18 @@ func _process(_delta: float) -> void:
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
 	if print_stage != null:
 		print_stage.place(at)
+		if blood != null:
+			blood.step(_stage.tick, print_stage.world_px)
 	else:
 		_camera.position = Ink.px(at)
+
+
+## Where fighter `id` stands (metres), or Vector2.INF.
+func _locate(id: int) -> Vector2:
+	var arena: CombatArena = _stage.arena
+	if id == arena.rivet.id:
+		return arena.rivet.pos
+	for h: Fighter in arena.hostiles:
+		if h.id == id:
+			return h.pos
+	return Vector2.INF

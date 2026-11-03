@@ -20,6 +20,8 @@ func _ready() -> void:
 	_view = CollectCallView.new()
 	_view.bind(_play.stage, _play.port, _play.system)
 	add_child(_view)
+	if _view.blood != null:
+		_view.blood.max_steps = MAX_TICKS_PER_FRAME  # fast-forward: the blood keeps up with the sim
 	_shots = FrameShot.collect_call(_play)
 
 
