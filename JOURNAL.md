@@ -82,3 +82,20 @@
   touching circle; capped 4 rad/s, bled 5 rad/s2; in the replay state). Unit 343 + 1, scenarios green.
 - Bench: lock held by d5-combat 10:55 -> skipped the bench this iteration (and `just bench` does not
   include vehicles anyway: city_bench builds its own World).
+- 11:01 a reused traffic slot starts a fresh damage book (art id per slot); VehicleView follows the
+  crowd car material when the look swaps it; features/vehicles/README.md (API for slice-play).
+- Gates at ca7078a: lint 13/13, unit 343 (+3 vehicle tests since), scenarios 10/0 incl.
+  scenario_vehicle_drive + scenario_vehicle_carnage, parity exact (1200 steps, strikes in).
+  `tools/evidence/run.mjs` not run this iteration (bench lock held by d5-combat since 10:55).
+
+NEXT (iteration 2, in order):
+1. Run `node tools/evidence/run.mjs` (bench under the lock; label CONTENDED). Bench does not include
+   vehicles (city_bench builds its own World) - consider a drive48 variant with VehicleService.
+2. When d5-city lands the custom.y pick (REQUEST 4): capture D1 / hijacked traffic frames; then
+   consider keeping D2 traffic in the sim (decisions.md "vehicle carnage" re-check).
+3. When d5-combat answers REQUEST 2: run-over -> actor_killed(run_over) -> blood; capture frames
+   (vehicle_frame default route, tick 205).
+4. Live input (REQUEST 1) - then steering shaping (slew, release faster than turn-in) belongs there.
+5. Traffic is blind to the player's car (it shoves into it); a sim obstacle list for
+   car_desired_speed would make it brake (native + parity work).
+6. Explosions (stretch): wreck -> fire/explosion needs an FX source.
