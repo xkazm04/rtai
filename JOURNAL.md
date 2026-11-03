@@ -926,3 +926,12 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   placement, not a uniform), + the adoption note in _doc (with age_floor/grain_floor 1.0 and the roof plates at line
   gamma 0.45). test_look_d5_params.gd checks both groups against the real shader uniforms: unit 149/0. Only the
   "world" group is read by the dev scenes, so no frame changes.
+- 03:46 FOUND + FIXED (c74aa1d): the look_d5_halo ring POPPED at the halo switch. Zoom sweep (temporary zoom list in
+  d5_hero_run.gd, restored from a copy, tree checked), ring strength = summed |dRGB| vs the control per (px/m / 32):
+  before 172 / 187 / 195 / 202 / 200 / 198 / 197 / 200 / 0 at 32 / 40 / 48 / 56 / 64 / 72 / 80 / 88 / 96+: a full
+  1 px line up to 88 px/m, then nothing, where CutRig._on_view only loses a 2% halo sliver (halos shrink by
+  hk = 1 - smoothstep(0.12, 0.3, SC * zoom) and hide below hk 0.01). Fix: a "fade" uniform (ring alpha and shadow)
+  = (hk - 0.01) / 0.29 clamped, set by the dev helper from the zoom (CutRig's constants copied, noted). After: 172
+  / 187 / 195 / 202 / 200 / 198 / 123 / 29 / 0: full strength through 72 px/m, graded out over 80-96. h114ink =
+  h107ink at 32/48/64 (0 px). The same check the brief asks of the D5 tier switch, now applied to my proposal; I
+  had claimed "halos are off at 96+, 0 px" without looking at the zooms in between.
