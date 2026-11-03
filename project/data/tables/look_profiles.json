@@ -147,6 +147,18 @@
     }
   ],
   "schema": "gtai.look-profiles/1",
+  "tones": {
+    "doc": "The print passes' output inks as palette.json token ids (pass -> shader uniform -> token): palette.json is the one source of paper / wash / ink. A profile row may still set the uniform itself (a Vector3) to override.",
+    "item": {
+      "ink_tone": "ink",
+      "paper_tone": "paper"
+    },
+    "world": {
+      "ink_tone": "ink",
+      "paper_tone": "paper",
+      "wash_tone": "wash"
+    }
+  },
   "zoom_blend": {
     "from": "d4",
     "full_ppm": 64,

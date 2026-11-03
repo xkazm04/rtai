@@ -77,3 +77,31 @@ func test_the_golden_diff_is_zero_on_itself_and_counts_a_change() -> void:
 	assert_almost_eq(far, 0.5, 0.0001)
 	var missing: bool = GoldenDiff.compare(a, null, 0.1)["found"]
 	assert_false(missing)
+
+
+func test_every_profile_prints_in_the_palette_tokens() -> void:
+	var pal: PaletteTokens = PaletteTokens.shared()
+	for id: StringName in _looks.profiles:
+		var p: LookParams = _looks.profiles[id]
+		var tones: Dictionary[StringName, StringName] = {
+			&"ink_tone": &"ink", &"paper_tone": &"paper", &"wash_tone": &"wash"
+		}
+		for u: StringName in tones:
+			var c: Color = pal.color(tones[u])
+			var got: Vector3 = p.world[u]
+			assert_eq(got, Vector3(c.r, c.g, c.b), "%s world %s" % [id, u])
+		var ink: Color = pal.color(&"ink")
+		var item_ink: Vector3 = p.item[&"ink_tone"]
+		assert_eq(item_ink, Vector3(ink.r, ink.g, ink.b), "%s item ink" % id)
+
+
+func test_the_print_shaders_declare_every_tone_uniform() -> void:
+	var names: Array[String] = []
+	for shader_path: String in ["look_d4", "look_d4_item"]:
+		var sh: Shader = load("res://assets/shaders/%s.gdshader" % shader_path)
+		for u: Dictionary in sh.get_shader_uniform_list():
+			names.append("%s.%s" % [shader_path, u["name"]])
+	for u: String in ["ink_tone", "paper_tone", "wash_tone"]:
+		assert_has(names, "look_d4." + u)
+	for u: String in ["ink_tone", "paper_tone"]:
+		assert_has(names, "look_d4_item." + u)

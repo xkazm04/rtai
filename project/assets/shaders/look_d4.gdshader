@@ -32,12 +32,13 @@ uniform float hatch_period = 4.0;  // pen-stroke spacing in screen px (D5 widens
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
+// the output inks: palette.json tokens paper / wash / ink via look_profiles.json `tones`
+uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
+uniform vec3 wash_tone = vec3(0.400, 0.372, 0.408);
+uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 
-const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
-const vec3 INK = vec3(0.090, 0.075, 0.106);
-const vec3 WASH = vec3(0.400, 0.372, 0.408);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -90,10 +91,10 @@ void fragment() {
 	float d = p0.x;
 	float g = ((tnoise(w * 0.035) - 0.5) * 0.22 + (tnoise(w * 0.11 + 61.0) - 0.5) * 0.10) * grime;
 	float t = clamp(d + g, 0.0, 1.0);
-	vec3 col = CREAM;
-	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
-	col = mix(col, mix(CREAM, WASH, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
-	col = mix(col, mix(WASH, INK, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
+	vec3 col = paper_tone;
+	col = mix(col, mix(paper_tone, wash_tone, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));
+	col = mix(col, mix(paper_tone, wash_tone, wash_mid), smoothstep(step_mid - 0.03, step_mid + 0.03, t));
+	col = mix(col, mix(wash_tone, ink_tone, wash_hi), smoothstep(step_hi - 0.03, step_hi + 0.03, t));
 	// Early-outs (bit-identical): each noise term below is skipped where its mask is exactly 0, so a
 	// typical pixel pays 2 value-noise calls (the grime) instead of 9 (the low-end GPU cost, README).
 	float ink = smoothstep(line_ink, line_ink + 0.06, d);
@@ -111,8 +112,8 @@ void fragment() {
 		col = mix(col, VERM, smoothstep(0.26, 0.40, vden + (vnoise(w * 0.3) - 0.5) * 0.12) * verm);
 	}
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
-	col = mix(col, INK, ink);
-	col = mix(col, INK, step(0.985, hash(floor(w))) * 0.5 * grit);
+	col = mix(col, ink_tone, ink);
+	col = mix(col, ink_tone, step(0.985, hash(floor(w))) * 0.5 * grit);
 	// paper tooth, world-locked like the grime (was hash(FRAGCOORD): a screen-door that swam on pans)
 	COLOR = vec4(col * (1.0 - 0.05 * hash(floor(w) + vec2(17.0, 31.0))), 1.0);
 }

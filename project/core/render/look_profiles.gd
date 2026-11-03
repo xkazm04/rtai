@@ -51,6 +51,9 @@ static func from_json(text: String) -> LookProfiles:
 	for row: Dictionary in d["profiles"]:
 		var pid: String = row["id"]
 		out.profiles[StringName(pid)] = LookParams.from_row(row)
+	var tones: Dictionary = d.get("tones", {})
+	for p: LookParams in out.profiles.values():
+		p.add_tones(tones, PaletteTokens.shared())
 	var ov: Array = d.get("overlays", [])
 	for row: Dictionary in ov:
 		var shader: String = row["shader"]

@@ -40,6 +40,15 @@ static func lerp_params(a: LookParams, b: LookParams, t: float) -> LookParams:
 	return p
 
 
+## Fills the output inks from palette tokens (look_profiles.json `tones`: pass -> uniform -> token
+## id), so palette.json is the one source of paper / wash / ink. A profile row's own value wins.
+func add_tones(tones: Dictionary, palette: PaletteTokens) -> void:
+	var w: Dictionary = tones.get("world", {})
+	var it: Dictionary = tones.get("item", {})
+	_fill_tones(world, w, palette)
+	_fill_tones(item, it, palette)
+
+
 func duplicate_params() -> LookParams:
 	var p: LookParams = LookParams.new()
 	p.printed = printed
@@ -82,6 +91,15 @@ static func uniform_value(v: Variant) -> Variant:
 		var n: float = v
 		return n
 	return v
+
+
+static func _fill_tones(
+	into: Dictionary[StringName, Variant], map: Dictionary, palette: PaletteTokens
+) -> void:
+	for k: String in map:
+		if not into.has(StringName(k)):
+			var c: Color = palette.color(StringName(str(map[k])))
+			into[StringName(k)] = Vector3(c.r, c.g, c.b)
 
 
 static func _mix(a: Variant, b: Variant, t: float) -> Variant:

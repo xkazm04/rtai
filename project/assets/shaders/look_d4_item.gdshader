@@ -12,6 +12,10 @@ uniform vec3 steel_out = vec3(0.640, 0.600, 0.630);   // the flat wash value ste
 // cells: an atlas grid for a MultiMesh whose instance custom.x is the cell (moving traffic: n-d4's
 // traffic_atlas, 3 x 3); 1 x 1 = the texture as is (every other user)
 uniform ivec2 cells = ivec2(1, 1);
+// the output inks (palette.json paper / ink via look_profiles.json `tones`); CREAM / INK below stay the
+// classification centres the art is painted in
+uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
+uniform vec3 ink_tone = vec3(0.090, 0.075, 0.106);
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -44,15 +48,15 @@ void fragment() {
 		else if (dots(px, 0.6, 1.31) > 0.5) { COLOR = vec4(TEAL * g, 1.0); }
 		else discard;
 	} else if (c.a < 0.75) {
-		COLOR = vec4(INK, c.a * shadow_k);
+		COLOR = vec4(ink_tone, c.a * shadow_k);
 	} else {
 		vec3 col = c.rgb;
-		vec3 o = CREAM;
+		vec3 o = paper_tone;
 		float best = distance(col, CREAM);
 		float ds = distance(col, STEEL);
 		if (ds < best) { best = ds; o = steel_out; }
 		float di = distance(col, INK);
-		if (di < best) { best = di; o = INK; }
+		if (di < best) { best = di; o = ink_tone; }
 		float dv = distance(col, VERM);
 		if (dv < best) { best = dv; o = VERM; }
 		float dt = distance(col, TEAL);

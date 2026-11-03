@@ -260,6 +260,48 @@
     "schema": {
       "const": "gtai.look-profiles/1"
     },
+    "tones": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "item": {
+          "additionalProperties": false,
+          "properties": {
+            "ink_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "paper_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "world": {
+          "additionalProperties": false,
+          "properties": {
+            "ink_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "paper_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "wash_tone": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "zoom_blend": {
       "additionalProperties": false,
       "properties": {
