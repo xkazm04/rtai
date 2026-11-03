@@ -459,7 +459,8 @@ NEXT:
 NEXT:
 1. The owner's 18:00 run of the exe: the street meet, Mertz's vent window, parked cars in the
    way, Continue mid-street (frame 1 = street now), Rivet's new size among the guards.
-   Also: the light pool on Rivet in the first ticks (log LightLayer.add kinds, ticks 0-4).
+   Also: the light pool on Rivet in the first ticks: root cause found, fix patch ready
+   (evidence/slice-play/prewarm-light-leak.patch, REQUEST 3 -> d5-city); verify in a frame.
 2. Merge: d-cast's rivet_plan.gd (FORM_BASE) is what quest 1's sprite was captured from; merge
    d-cast with/before d-slice so the rig and the sprite agree. MERGE NOTE for autosave
    (iteration 3) stands: Continue/Retry/checkpoint call sites in quest1_game.gd.
@@ -476,3 +477,17 @@ NEXT:
   windowed run with the same logs (5 s) was SKIPPED: bench.lock held by d5-city. That windowed
   run is the next step (NEXT 1). frames.json clip-v4 note corrected (it claimed the cover fixed it).
 - No Godot process of mine is running; bench.lock is not mine; scratch: clip PNGs deleted.
+- ROOT CAUSE FOUND 16:43 (windowed probe under my own lock, logs restored after): the light
+  pool on Rivet is the `explosion` light (36 ticks, 6 m) that CityView's ViewPrewarm leaks. It
+  spawns every FX kind at Rivet at tick 0; the explosion kind spawns on the GLOW TWIN
+  (fx_system.gd:80 -> glow.spawn -> :103 lights.add), and the twin keeps its own `lights`
+  reference, so my 16:30 attempt (detaching only fx.lights) missed it. fx.clear() clears the
+  particles, but nothing removes that light. The same leak hits the free-roam World for the
+  first 0.6 s after its loading screen.
+- FIX READY, NOT APPLIED: evidence/slice-play/prewarm-light-leak.patch (view_prewarm.gd, d5-city's
+  file): detach `lights` on fx, fx.glow and fx.ground during the warm spawn, then restore them;
+  the warm's own single light still compiles the light pipeline. Lint 13/13, unit 359/359 with
+  it. NOT frame-verified: bench.lock held by d5-combat from 16:44 to the freeze, so I did not
+  commit an unproven change to another lane's file. REQUEST 3 -> d5-city: apply the patch (or
+  `git apply evidence/slice-play/prewarm-light-leak.patch` at the merge), then check
+  `quest1_clip --continue` frames 4-6 (no pool on Rivet) and the selftest goldens.
