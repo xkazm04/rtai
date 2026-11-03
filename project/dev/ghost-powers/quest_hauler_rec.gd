@@ -46,7 +46,10 @@ func _run() -> void:
 	var at: Vector2 = stage.arena.rivet.pos
 	for i: int in RING:
 		var g: Fighter = stage.arena.spawn_guard(at)
-		g.pos = at + Vector2.from_angle(TAU * i / RING) * (2.6 if i % 2 == 0 else 6.5)
+		g.pos = at + Vector2.from_angle(TAU * i / RING) * 2.6
+		if i % 2 == 1:
+			# the outer ring stands on the ram's line east, past the stomp's 4 m
+			g.pos = at + Vector2(4.8 + 1.6 * (i - 1) / 2.0, 0.4 * (i - 3))
 	for t: int in END_TICK:
 		_tap(&"power_hauler", t == 10)
 		_tap(&"melee", t == 40 or t == 230)
