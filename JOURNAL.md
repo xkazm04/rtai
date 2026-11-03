@@ -35,3 +35,24 @@
   Teal now also needs b - g < 40/255 in print_part and look_d5_part (cop teal 512 px -> 0; Rivet loses 9 of 736 edge px).
   King's parts: teal-ish and green-spill pixels greyed (King carries no teal); provenance rows re-hashed. Look goldens
   still pass unblessed (max mean 0.007).
+
+## Status at ~10:50 (iteration 1)
+- Items 1-5 all landed and evidenced; 10 commits on d-cast (089400e..HEAD). Paths moved: raw renders now in
+  masters:day-d5/d5-cast/renders/ (130 MB, outside git); owner frames: masters:day-d5/d5-cast/frames.json (15) + ladder.png;
+  gate numbers: evidence/d5-cast/*.json (committed). The early "evidence/rivet-scale-ab-*" paths above are superseded.
+- Final Rivet: RivetPlan FORMS base = (size_k 1.1, guard_k 0.85); night = (1.3, 1.0). King: KingPlan size_k 1.3.
+- Codex images used: 1 (King parts). Portraits and cops are deterministic recolours (masters recolor_cops.py), so the
+  "great" D5 style is kept exactly.
+- Bench NOT run (no cost-bearing change: colours, a scale factor and a dev-only King). Unmeasured, not zero.
+- Shared files touched: assets/shaders/look_d5_part.gdshader (cop-blue plate + teal gate), steam/ai-provenance/2026-11.jsonl.
+- OPEN for the owner: (1) cop shoulders A (shipped) vs B (navy + small core); (2) King's portrait cape is vermilion;
+  (3) in-game cruisers show the blue light bar as grey until REQUEST 1 lands.
+- REQUEST 2 -> d5-city: look_d4_item's cop-blue plate should also exclude a bright cop blue from its teal test if it has
+  one (here teal needed b - g < 40/255 so cop_blue_hi #4F86E0 highlights never print soul-teal).
+
+NEXT:
+- Owner pick on the cop shoulders (A/B); if B, run recolor_cops.shoulder_marks(art, 0.5), re-import, re-bless the goldens.
+- After d5-city's look_d4 cop-blue plate merges: re-shoot city_frame with --police=4 and check the cruiser light bar is blue.
+- King into the game: a BodyPlan.Kind or a pool entry + feed row when the boss fight ticket lands; KingPlan is ready.
+- The bulky ghost form: a new RivetPlan.FORMS row (no rig code); the souls stay behind --souls until a mechanic uses them.
+- Optional: King D5 expressions/portrait check vs the rig; Rivet portrait busts are scale-free (checked).
