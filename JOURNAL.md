@@ -719,6 +719,10 @@ NEXT (session end, iteration 6):
   the new ped parts (characters), accent_debt row traffic_light_lamps to delete after the merge.
 - If more time: the D4 Rivet rig in the quest view (characters owner).
 - Branch n-d4, tree clean after this entry; nothing pushed or merged.
-- 01:43 quest patch: the crate fire's translucent grey smoke discs replaced by the FX atlas smoke puffs (row 2, cells
-  0-3, fading as they lift), a clear gain (`work/q1smoke_ab.png`). No new art. Final patch +156 / -83, lint clean,
+- 01:42 quest patch: the crate fire's translucent grey smoke discs replaced by the FX atlas smoke puffs (row 2, cells
+  0-3, fading as they lift), a clear gain (`work/q1smoke_ab.png`). No new art. Final patch +156 / -82, lint clean, LF only,
   final frames `after_q1p/`. (Supersedes "after_q1o" and "+149 / -81" in the NEXT above.)
+- 01:44 `git apply --check masters:night/d4-production/q1_view_art.patch` in a fresh detached worktree at main
+  721fbbb: **applies clean** (check worktree removed again). It needs n-d4's art to be merged first.
+NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` after the n-d4 merge; final quest frames
+`after_q1p/`; everything else as in the iteration-6 NEXT list. Tree clean; nothing pushed or merged.
