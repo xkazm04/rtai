@@ -50,6 +50,7 @@ func test_rivet_forms_and_king() -> void:
 		base.size_k, night.size_k, "the base form is smaller than the night's (owner, 2026-11-03)"
 	)
 	assert_lt(base.hand_ready[0].x, night.hand_ready[0].x, "the guard is pulled in")
+	assert_lt(base.hand_ready[0].z, night.hand_ready[0].z, "T2's hunch: the guard hands drop")
 	var king: BodyPlan = KingPlan.build()
 	assert_eq(king.art_dir, "king")
 	assert_false(king.has_hose(), "King carries no torch hose")

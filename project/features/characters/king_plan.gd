@@ -4,13 +4,14 @@ extends RefCounted
 ## sprite, art/d5/king/king_top.png). Same skeleton and part layout as Rivet (art/king/ carries
 ## Rivet's part names, sizes and pivots: the layout-template technique, King's parts restyled in
 ## one Codex edit and sliced with Rivet's alpha), except the megaphone forearm (r_forearm), keyed
-## wider than the torch. No hose. A boss: a touch bigger than Rivet's base form.
+## wider than the torch. No hose. A boss: a touch bigger than Rivet's base form, in the open guard
+## (Rivet's base form hunches; King squares up).
 
 const SIZE_K: float = 1.3
 
 
 static func build() -> BodyPlan:
-	var p: BodyPlan = RivetPlan.build(RivetPlan.FORM_BASE)
+	var p: BodyPlan = RivetPlan.build(RivetPlan.FORM_OPEN)
 	p.name = "king"
 	p.art_dir = "king"
 	p.size_k = SIZE_K
