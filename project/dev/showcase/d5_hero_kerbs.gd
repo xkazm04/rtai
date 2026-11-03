@@ -10,7 +10,12 @@ const LINE_M: float = 0.07
 const HALF_ROAD_M: float = 4.0
 const ASPHALT: Color = Color(0.345, 0.322, 0.322)
 const INK: Color = Color(0.090, 0.075, 0.106)
-const ARC_STEPS: int = 12
+## the mock's kerb stone: a thin ink line STONE_M inside the street edge, continuous along
+## the straight kerbs and round the corner (a corner-only arc floated: reverted in iteration 2)
+## kerbs and round the corner (a corner-only arc floated and was reverted in iteration 2)
+const STONE_M: float = 0.3
+const STONE_LINE_M: float = 0.04
+const REACH_M: float = 20.0
 
 
 ## One rounded corner per junction quadrant; returns the nodes (hidden: the "d5" tier shows them).
@@ -42,8 +47,27 @@ static func _corner(parent: Node, s: Vector2, px: float) -> Array[Node2D]:
 	line.width = LINE_M * px
 	line.default_color = INK
 	line.antialiased = true
-	var nodes: Array[Node2D] = [fill, line]
+	var nodes: Array[Node2D] = [fill, line, _stone(s, px)]
 	for n: Node2D in nodes:
 		n.visible = false
 		parent.add_child(n)
 	return nodes
+
+
+static func _stone(s: Vector2, px: float) -> Line2D:
+	var a: float = HALF_ROAD_M + STONE_M
+	var c: float = HALF_ROAD_M + RADIUS_M
+	var r: float = RADIUS_M - STONE_M
+	var pts: PackedVector2Array = PackedVector2Array([Vector2(s.x * REACH_M, s.y * a) * px])
+	for k: int in ARC_STEPS + 1:
+		var t: float = float(k) / ARC_STEPS * PI * 0.5
+		@warning_ignore("return_value_discarded")
+		pts.append((Vector2(s.x * c, s.y * c) - Vector2(s.x * sin(t), s.y * cos(t)) * r) * px)
+	@warning_ignore("return_value_discarded")
+	pts.append(Vector2(s.x * a, s.y * REACH_M) * px)
+	var stone: Line2D = Line2D.new()
+	stone.points = pts
+	stone.width = STONE_LINE_M * px
+	stone.default_color = INK
+	stone.antialiased = true
+	return stone
