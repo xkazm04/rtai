@@ -270,8 +270,11 @@ Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existin
    the next plates (Codex budget), judged on the same mask (masters work/i9/roofcls.py).
 3. **Whole-frame L split** (package v9 0.455 vs mock 0.488 at 32 px/m; road = 41 px box blur of L below 0.40): road
    share 0.426 vs 0.366 (road L 0.313 vs 0.297), off-road L 0.560 vs 0.598. Re-weighted to the mock's road share, v9
-   gives 0.470: about 0.015 of the gap is LAYOUT (our roads take more of the frame: a city-lane / camera-framing
-   question, not the look) and about 0.024 is off-road tone (roof outlines and the building shadow strips, see 9.2).
+   gives 0.470: about 0.015 of the gap is FRAMING, not the look. The roads are the same width (mock 247 px = 7.7 m if
+   the mock is at 32 px/m, the art-direction camera; ours 253-262 px = 7.9-8.2 m); the mock's frame is 941 px = 29.4 m
+   tall, our dev frames 800 px = 25 m, so the same road takes more of ours. (A 1672x941 render does not test it: the
+   project's stretch mode keeps the vertical world extent and scaled px/m by ~1.18; discarded.) At a 1080p window
+   the game shows 34 m at 32 px/m, so in play the road share sits nearer the mock's and about 0.024 is off-road tone (roof outlines and the building shadow strips, see 9.2).
    The committed frame (h149st) has road share 0.571 by this mask (its darker print joins pavements' edges into it).
 4. **Paper highlights** (`item49`, in package v9): the print capped paper at CREAM (L 0.898); the mock's lit tops
    reach 0.90+ (0.128 of its off-road px, ours 0). look_d5_print `paper_hi` 1.0 prints sources lighter than cream

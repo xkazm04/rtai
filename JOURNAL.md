@@ -1400,3 +1400,9 @@ item47 (owner A/B) -> night_iter7_summary.png.
 NEXT: 35 (amended: look_d5_print + print.paper_hi 1.0 + the v9 plates, one change), 36 (road share), 37 (next plates),
 on top of iteration 8's 31-34 and iteration 7's 27-30. Morning reading order: night_iter9_summary.png -> item48 ->
 item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A/B) -> night_iter7_summary.png.
+- 05:58 CORRECTED NEXT 36 (road share): measured road widths: mock 247 px (7.7 m at 32 px/m, assumed from the
+  art-direction camera), ours 253-262 px (7.9-8.2 m): the SAME road. The share differs because the mock frame is 941
+  px tall (29.4 m) and our dev frames 800 px (25 m). Tried a 1672x941 render (masters shoot.sh GODOT_EXTRA passes
+  engine args; i9big): the project's stretch mode keeps the vertical world extent, so px/m scaled by ~1.18 (roads
+  286-298 px): not a 32 px/m frame, discarded and deleted. NEXT 36 is therefore: compare at equal view height (or
+  crop the mock to 800 px tall) before anyone tunes road width; at a 1080p window the game shows 34 m at 32 px/m.
