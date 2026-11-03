@@ -584,3 +584,35 @@ NEXT (iteration 8 close, in order):
   FRICTION: city_view.gd was CRLF in the working tree (index LF); a scripted edit missed - normalised.
   FRICTION: one `ladder.py` row pointed at rim-v1/hi/, which the iteration 8 trim emptied; row 27's after
   now uses lamp-v1/base (the same code as 9aa5986: lamp_r 0 = no lift).
+- MILESTONE (03:30) headlights + a placement fix (ba739a2). `features/fx/noir/noir_headlights.gd`
+  (NoirHeadlights, static, render only): every live traffic / police car in the sim snapshot (kind [1],
+  mode [2] not M_DEAD, x y [4..5], unit heading hx hy [6..7]) throws a cone of white ahead of its nose (centre
+  + heading * 2 m); up to 12 nearest the focus. look_noir `cars[12]`, `car_count`, data `beam_len` 300,
+  `beam_w` 18, `beam_spread` 0.2, `beam_lift` 0.5; the throw ends in a ragged arc (v1 = a hard straight cut).
+  v1 cones were ~9 m wide (spread 0.38): too much; narrowed in v2.
+  FIX (a bug in my 03:14 lamp commit, found because the v2/v3 cones did not sit on any car): the lights were
+  placed in canvas px, but the project's base viewport is 1280x800 with canvas_items stretch, so at a
+  1280x720 window the canvas view is 1422x800 and canvas px != screen px. A printed car record vs the D4 frame
+  showed the cone ~1.5 m off its car; the lamp pools were off by up to ~2 m, so the 03:14 "pool under the
+  head" read was confounded. Lamps and cars now go in as screen uv (the muzzle light's mapping, which was
+  right), sizes scale by zoom * window / view (`view_h`). Checked: at 32 px/m (beam-v4/cmp32.png, D4 above,
+  noir below, same tick) every cone starts at a car's nose and the pools sit on the D4 lamp posts.
+  `light_street(city, focus, zoom)` (CityView's one call changed). +2 unit tests (197 pass), lint clean.
+  Evidence: masters night/noir/beam-v4/ (all 3 scenes at 32/48/64; ab-<scene>-<ppm>.png = before | after),
+  evidence/light-street-48.png, light-street-32.png, light-junction-48.png (replacing the mis-placed
+  lamp-*.png of 03:14). Ladder row 28 now = before vs beam-v4.
+  Honest read: the street at 48 px/m reads as a noir street - pools on both pavements, a hard white wedge
+  ahead of every car, silhouettes inside. The junction (no lamps in reach) now gets light from the riot's
+  cars. Costs: the cone edges are perfectly straight (a vector look next to the ragged pools); a car prints
+  as a flat paper box, so box + cone read as one shape; more white area makes the 32 px/m frame lighter
+  overall (less "black mass" at the on-foot zoom).
+- MILESTONE (03:32) the showcase under the street light: showcase `--at=<x>,<y>` (b1ca607) stages the same
+  fight at (501, 523), the street west of the junction with a lamp above the fight. Re-shot after the fix:
+  masters night/noir/lamp-show2/ (noir 32 / 48 / 64 clips + frames; D4 48 in lamp-show/d4, the D4 run is
+  unaffected) and evidence/showcase-hero-street.png (D4 48 | noir 48 | noir 64: fire tick, silhouette flash,
+  held panel, aftermath). Ladder row 29 (junction vs lit street aftermath). Flash meter: 32 = 2/s, 48 = 3/s
+  (the WCAG limit, still a pass; the junction showcase is 2/s - the lit pools make one quarter window count
+  one more transition around the kill beat), 64 = 2/s; 0 red flashes. The lamp-show/ (03:12) set is the
+  mis-placed one; superseded.
+  Read: this is the stronger hero - the fight on black asphalt between two white pools, red the only colour.
+  The junction showcase (show-final5, evidence/showcase-hero.png) stays the brief's spec'd scene.
