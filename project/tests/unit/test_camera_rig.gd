@@ -64,3 +64,16 @@ func test_vehicle_events_switch_the_mode() -> void:
 	assert_eq(rig.mode, &"on_foot")
 	bus.vehicle_entered.emit(3)
 	assert_eq(rig.mode, &"car")
+
+
+func test_a_boss_eases_to_the_arena_and_the_contract_end_back_on_foot() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var rig: CameraRig = CameraRig.new()
+	rig.listen(bus, null)
+	bus.boss_engaged.emit(&"quartermaster-mertz")
+	assert_eq(rig.mode, &"arena")
+	for t: int in range(1, rig.ease_ticks + 1):
+		rig.step(t, Vector2.ZERO)
+	assert_eq(rig.ppm(), 64.0)
+	bus.contract_completed.emit(&"collect-call")
+	assert_eq(rig.mode, &"on_foot")

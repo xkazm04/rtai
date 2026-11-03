@@ -64,17 +64,26 @@ func set_mode(id: StringName, tick: int) -> void:
 	_ease_start = tick
 
 
-## Follows the F-04 vehicle events on `bus` (the Events autoload): entering a vehicle eases to
-## `car`, leaving it to `on_foot`, at the tick `clock` reads when the event fires.
+## Follows the F-04 events on `bus` (the Events autoload) at the tick `clock` reads when one fires:
+## entering a vehicle eases to `car`, leaving it to `on_foot`; a boss engaging eases to `arena`
+## (64 px/m, where the `auto` look reaches D5) and the contract completing back to `on_foot`.
 func listen(bus: EventBus, clock: SimClock) -> void:
 	_clock = clock
 	@warning_ignore("return_value_discarded")
 	bus.vehicle_entered.connect(_on_vehicle.bind(&"car"))
 	@warning_ignore("return_value_discarded")
 	bus.vehicle_exited.connect(_on_vehicle.bind(&"on_foot"))
+	@warning_ignore("return_value_discarded")
+	bus.boss_engaged.connect(_on_named.bind(&"arena"))
+	@warning_ignore("return_value_discarded")
+	bus.contract_completed.connect(_on_named.bind(&"on_foot"))
 
 
 func _on_vehicle(_vehicle_id: int, id: StringName) -> void:
+	set_mode(id, _clock.tick() if _clock != null else 0)
+
+
+func _on_named(_what: StringName, id: StringName) -> void:
 	set_mode(id, _clock.tick() if _clock != null else 0)
 
 

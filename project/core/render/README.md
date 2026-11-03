@@ -313,7 +313,10 @@ a kind whose token is an accent ink not allowed for its `use` (palette.json `use
 ## Camera feel (`camera_rig.gd`, `data/tables/camera.json`)
 
 Modes `on_foot` 32, `car` 48, `arena` 64 px/m; `set_mode(id, tick)` eases the zoom over
-`zoom_ease_ticks` (36) with a smoothstep, `snap(id)` jumps (boot, cuts). In a car the camera leads the
+`zoom_ease_ticks` (36) with a smoothstep, `snap(id)` jumps (boot, cuts). `listen(Events, clock)` drives the modes
+from F-04 events: `vehicle_entered` -> `car`, `vehicle_exited` -> `on_foot`, `boss_engaged` -> `arena`
+(the `auto` look reaches D5 on the way: blend 0.02 at 49 px/m, 0.84 at 60, 1.00 at 64),
+`contract_completed` -> `on_foot`. Frames: `gtai-masters/night/visual-engine/42-arena`. In a car the camera leads the
 velocity (`look_ahead_m_per_mps` 0.35, capped at 7 m, eased 6 % a tick). The velocity is the focus's
 own motion: `CityView` calls `rig.follow(tick, focus)` every frame and the rig differences the focus
 between the ticks it saw (frames with no new tick lead nothing; a jump faster than 90 m/s - a cut, a
