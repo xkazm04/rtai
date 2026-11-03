@@ -45,3 +45,22 @@ func test_a_spray_into_a_wall_splats_on_the_wall() -> void:
 	var n: Vector2 = BloodMarks.wall_normal(blood.solid, Vector2(38, 0), Vector2(8, 3))
 	assert_eq(n, Vector2.LEFT, "the wall faces back at the spray")
 	blood.free()
+
+
+func test_robot_player_loses_oil_not_blood() -> void:
+	var bus: EventBus = EventBus.new()
+	var blood: BloodFx = BloodFx.new()
+	var stains: BloodStains = BloodStains.new()
+	var fx: NoirCombatFx = NoirCombatFx.new()
+	fx.player_id = 1
+	fx.locate = func(_id: int) -> Vector2: return Vector2(5, 5)
+	fx.bind(bus, blood, null)
+	fx.set_stains(stains)
+	var oil: BloodFx = fx.make_player_fx()
+	assert_not_null(oil, "blood_fx.json player.fluid names a fluid")
+	bus.player_hit.emit(&"pistol")
+	assert_eq(blood.drops, 0, "no red droplets from the robot")
+	assert_eq(stains.count(1), 0, "no red stains on the robot")
+	assert_gt(oil.drops, 0, "the hit throws the player's own fluid (sparks)")
+	for n: Node in [fx, blood, stains, oil]:
+		n.free()

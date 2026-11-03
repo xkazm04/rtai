@@ -36,6 +36,11 @@ var _k: int = 0
 var _blood: Color
 var _dark: Color
 var _sheen: Color
+## The colour of a droplet in the air (sparks for oil); the blood colour by default.
+var _flight: Color
+## An ink casing (px) around each droplet in the air; the fluid's own streak (< 0: physics).
+var _case: float = 0.0
+var _trail: float = -1.0
 
 
 func _init() -> void:
@@ -60,6 +65,23 @@ func _init() -> void:
 	_blood = NoirPack.rgb(c["blood"])
 	_dark = NoirPack.rgb(c["blood_dark"])
 	_sheen = NoirPack.rgb(c["sheen"])
+	_flight = _blood
+
+
+## Draws another fluid of the `fluids` table (e.g. "oil": white sparks in the air, black on the
+## ground) instead of blood. False when the table has no such fluid.
+func use_fluid(fluid: String) -> bool:
+	var fluids: Dictionary = p.get("fluids", {})
+	var f: Dictionary = fluids.get(fluid, {})
+	if f.is_empty():
+		return false
+	_blood = NoirPack.rgb(f["blood"])
+	_dark = NoirPack.rgb(f["blood_dark"])
+	_sheen = NoirPack.rgb(f["sheen"])
+	_flight = NoirPack.rgb(f.get("flight", f["blood"]))
+	_case = f.get("case_px", 0.0)
+	_trail = f.get("trail", -1.0)
+	return true
 
 
 ## A hit at `at` (px) travelling along `dir`: hit kind `kind` from the `hits` table.
@@ -196,11 +218,14 @@ func _draw() -> void:
 			BloodMarks.pool(self, _d_pos[i], r, _d_dir[i], cols)
 		else:
 			BloodMarks.splat(self, _d_pos[i], r, _d_dir[i], Color(_blood, a))
-	var trail: float = p["physics"]["trail"]
+	var trail: float = _trail if _trail >= 0.0 else p["physics"]["trail"]
+	for i: int in _pos.size():
+		if _life[i] > 0 and _case > 0.0:
+			draw_line(_pos[i] - _vel[i] * trail, _pos[i], Color.BLACK, _size[i] * 1.4 + _case * 2.0)
 	for i: int in _pos.size():
 		if _life[i] > 0:
-			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _blood, _size[i] * 1.4)
-			draw_circle(_pos[i], _size[i], _blood)
+			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _flight, _size[i] * 1.4)
+			draw_circle(_pos[i], _size[i], _flight)
 
 
 func _rand() -> float:

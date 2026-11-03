@@ -52,6 +52,8 @@ var _view: CityView = null
 var _rigs: CharacterRigs = CharacterRigs.new()
 var _fight: NoirFightScript = NoirFightScript.new()
 var _blood: BloodFx = BloodFx.new()
+## Rivet's own fluid (oil: sparks, then black) from blood_fx.json `player`; null = blood.
+var _oil: BloodFx = null
 var _flash: MuzzleFlash = MuzzleFlash.new()
 var _city: CitySystem = null
 var _stains: BloodStains = BloodStains.new()
@@ -73,7 +75,6 @@ func _ready() -> void:
 	_view.set_noir(not _d4)
 	var chars: CityCharacters = built[3]
 	_city = built[2]
-	_blood.solid = _solid
 	chars.rivet_on_foot = false
 	_stage()
 	_blood.z_index = -1
@@ -94,6 +95,7 @@ func _ready() -> void:
 	_fx.set_stains(_stains)
 	# D4 has no comic beat: --d4 keeps the blood and the hit-stop, not the impact frames.
 	_fx.bind(Events, _blood, null if _d4 else _impact)
+	_add_player_fluid()
 	@warning_ignore("return_value_discarded")
 	_fx.hit_stop.connect(_on_hit_stop)
 	await chars.bake()
@@ -203,6 +205,16 @@ func _drive_car() -> void:
 	if _car != null:
 		var c: Vector4 = _car.at(_t)
 		_view.noir.extra_cars = PackedVector4Array([Vector4(c.x + _at.x, c.y + _at.y, c.z, c.w)])
+
+
+## The blood splats on the sim's walls; Rivet's own fluid (blood_fx.json `player`) lies on the
+## ground under the rigs like the blood.
+func _add_player_fluid() -> void:
+	_blood.solid = _solid
+	_oil = _fx.make_player_fx()
+	if _oil != null:
+		_oil.z_index = -1
+		_view.actor_layer().add_child(_oil)
 
 
 ## Fills the shared part caches with the noir redraws before the showcase rigs are built.

@@ -10,6 +10,9 @@ extends Node
 signal hit_stop(ticks: int)
 
 var blood: BloodFx = null
+## What the player's body loses on player_hit (blood_fx.json `player`): a BloodFx drawing that
+## fluid (oil for Rivet: sparks, then black). null = the player bleeds `blood`, with stains.
+var player_fx: BloodFx = null
 var impact: ImpactFrame = null
 ## Blood on the bodies (optional; set_stains hands it the px locate).
 var stains: BloodStains = null
@@ -69,12 +72,31 @@ func _on_player_hit(_weapon: StringName) -> void:
 	if at == Vector2.INF or blood == null:
 		return
 	hits += 1
-	blood.splash(at * px_per_m, Vector2.from_angle(hits * 2.4), "player_hit")
-	if stains != null:
-		stains.mark(player_id, Vector2.from_angle(hits * 2.4), "player_hit")
+	var dir: Vector2 = Vector2.from_angle(hits * 2.4)
+	if player_fx != null:
+		var player: Dictionary = blood.p["player"]
+		var kind: String = player.get("hit", "player_hit")
+		player_fx.splash(at * px_per_m, dir, kind)
+	else:
+		blood.splash(at * px_per_m, dir, "player_hit")
+		if stains != null:
+			stains.mark(player_id, dir, "player_hit")
 	_bleed[player_id] = blood.p["drip"]["bleed_ticks"]
 	_drip_at[player_id] = at * px_per_m
 	_drip_t[player_id] = 0
+
+
+## The player's own fluid from blood_fx.json `player.fluid` (a new BloodFx, or null for blood);
+## the host adds it to its canvas; step_ticks steps it (so it holds with the hit-stop).
+func make_player_fx() -> BloodFx:
+	var player: Dictionary = blood.p.get("player", {}) if blood != null else {}
+	var fluid: String = player.get("fluid", "")
+	var fx: BloodFx = BloodFx.new()
+	if fluid.is_empty() or not fx.use_fluid(fluid):
+		fx.free()
+		return null
+	player_fx = fx
+	return fx
 
 
 ## Puts blood on the bodies too: `s` follows each body through this node's locate (in px).
@@ -89,6 +111,8 @@ func set_stains(s: BloodStains) -> void:
 func step_ticks(n: int) -> void:
 	if blood == null:
 		return
+	if player_fx != null:
+		player_fx.step_ticks(n)
 	var dp: Dictionary = blood.p["drip"]
 	var every_px: float = dp["every_px"]
 	var still: int = dp["still_ticks"]
@@ -104,7 +128,7 @@ func step_ticks(n: int) -> void:
 		_was[id] = px
 		_drip_t[id] += n
 		if px.distance_to(_drip_at[id]) >= every_px or _drip_t[id] >= still:
-			blood.drip(px, move)
+			(player_fx if id == player_id and player_fx != null else blood).drip(px, move)
 			_drip_at[id] = px
 			_drip_t[id] = 0
 

@@ -60,6 +60,10 @@ func _ready() -> void:
 	_fx.to_screen_uv = _to_uv
 	_fx.set_stains(_stains)
 	_fx.bind(_play.bus(), _blood, _impact)
+	var oil: BloodFx = _fx.make_player_fx()
+	if oil != null:
+		_view.add_child(oil)
+		_view.move_child(oil, _blood.get_index() + 1)
 	@warning_ignore("return_value_discarded")
 	_fx.hit_stop.connect(func(t: int) -> void: _hold = t)
 
