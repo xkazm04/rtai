@@ -1182,14 +1182,16 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   the concept, and grounding (every mock prop, car and actor sits on a pen-hatched shadow).
 - Committed, default ON in the dev scenes (d5 tier): hatched prop + car cast shadows (item44, D5HeroPropShadow; the
   cone as a capsule past its base plate, item44b); the mock's wall-side clutter (item45: bench, planter, mailbox,
-  vending machine); hatched rig cast shadows up close (item46, D5RigShadow + look_d5_shadow_group, 56 -> 64 px/m).
+  vending machine); hatched rig cast shadows up close (item46; final form item46b: world-locked strokes, no
+  CanvasGroup, 56 -> 64 px/m).
 - Committed OPTIONS, default off (owner A/B; dev switches D5_FRINGE=1, D5_DOTS=1; params JSON "part"): look_d5_part
   fringe_k (item43: the concept's red misprint edge, 64 -> 96 px/m, pure vermilion unchanged) and dots_k (item47:
   the concept's halftone stipple in the shaded steel mid-tones). Together: the concept's riso-print signature.
 - Measured: readability unchanged (rim dL 0.604 / verm dE 81.2 / teal dE 56.9 committed; 0.610 / 77.5 / 57.6
   package); pan swim unchanged (0.00732 committed, 0.00049 package); walk shimmer at 96 px/m with both options 1.106
-  vs 1.131 without (no added shimmer; the tier's own 1.13 at 96 is the art's detail, decomposed); rig shadow cost +0.07
-  to +0.18 ms GPU median (p95 about 1 ms), 0.27 ms script at 16 full rigs (first version 1.71 ms, fixed).
+  vs 1.131 without (no added shimmer; the tier's own 1.13 at 96 is the art's detail, decomposed); rig shadow cost
+  +0.005 ms GPU median, p95 0.161, 0.29 ms script at 16 full rigs (the group version: +0.07..0.18 ms, ~1 ms p95; the
+  first script version 1.71 ms, fixed).
 - Tools: d5_walk --zoom; the cost scene's d5s tier; package_shot.sh passes the iteration-8 env through.
 - Rejected: fringe bands sized in screen px (h126 invisible, h127 blotchy), 14 part px (h128 faint); prop shadow tint
   0.7 (h132ps7, blob); the 4 px even dot screen (h142dt, mechanical).
