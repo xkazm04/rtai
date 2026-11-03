@@ -1813,3 +1813,16 @@ NEXT (final, iteration 20; the iteration-18 final NEXT stands, no art changed th
   (`evidence/iter21/oil_morning_stack_ab.jpg`). Ladder2 rows "i21 oil_stain 32 / 48" appended.
 - 06:55 LOOKED, no change: `scorch` / `scorch_b` vs `blood_m` (`masters:work/scorch_look_i21.png`): the scorch is a
   hatched radial burn with no rim, the blood a rimmed splat - they stay apart at 32.
+- 06:56 LOOKED, no change: props board at 32 (`board_i18/props/`) - all 20 props read; `oil_splash` (dynamic, no
+  system draws it yet) already has a hard edge, so the oil_stain treatment would add only a sheen - skipped.
+
+NEXT (final, iteration 21; the iteration-18 final NEXT stands except where noted):
+- Owner review (each reverts alone): add **cbde379** (`oil_stain` decal re-inked: hard edge, ink contour, thin cream
+  sheen; original `masters:backup_decals21/`; `evidence/iter21/oil_city_ab.jpg`, `oil_morning_stack_ab.jpg`) to
+  7a35d1b + 0b08658 + 4cd1521 and the earlier lists (767ee6c, 97558d7; 165ae0f, d6317ee, fc6501c, 62923f7).
+- Director: the morning order is unchanged (merge n-d4, merge n-visual, `git apply` REQUEST 16 / 19 / 21 / 23, re-bake,
+  re-bless n-visual's look / block goldens - they also move with cbde379's decal). JOURNAL.md is the only conflict.
+- Owner questions and code-side gaps: as in the iteration-18 final NEXT (+ the iteration-20 cracks-placement note).
+- Gates green at d2d56a6 (no-bench). The bench is still owed an idle-box run. Codex: 0 images this iteration; night
+  total 29 images, 194 cells, 7 rejected; no limit hit. Nothing pushed or merged. scratch-v3 also carries the new
+  oil_stain (uncommitted, like the iteration-18 tiles).
