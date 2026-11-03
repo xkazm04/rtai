@@ -222,7 +222,7 @@ cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 
    PROPOSAL `assets/shaders/look_d5_print.gdshader` (`item29`, 22eba5b) = look_d4 + edge ink on the dark side only:
    the D4 tier's 32 px/m frame goes L 0.438 -> 0.487 (mock 0.488), dark px 0.65 -> 0.57 (mock 0.51), the mural roof
    0.531 / 0.29 / 0.39 -> 0.595 / 0.34 / 0.29 (L / paper / ink; mock roof 0.594 / 0.36 / 0.25); on a 48 px/m pan ink
-   flips -58 to -70%. HF does not rise (0.111): thin lines, not more lines. Next (visual-engine): adopt or reject it
+   flips -58 to -70%; actor read unchanged (rim dL 0.575 -> 0.576, teal dE 41.3 -> 41.4). HF does not rise (0.111). Next (visual-engine): adopt or reject it
    for look_d4; if adopted, the D5 roof plates need their line weight retuned (they were lifted for the fattening
    print and go too light: mural 0.603 -> 0.667). Retune shown (`item30`, not committed): plate lines gamma 0.7 ->
    0.45 under the thin print, mural L 0.643 / paper 0.44 / ink 0.24 / HF 0.093 -> 0.105: the first frame tonight where
