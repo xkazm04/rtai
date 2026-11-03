@@ -65,3 +65,20 @@ func test_the_dead_lie_down_and_do_not_shoot() -> void:
 	assert_true(f.has_flag(0, RigFeed.Flag.DEAD))
 	assert_true(f.has_flag(0, RigFeed.Flag.DOWN))
 	assert_eq(f.clip[0], RigClips.Clip.NONE)
+
+
+func test_a_rifle_kicks_harder_than_the_pistol() -> void:
+	var r: ArenaRigs = _rigs()
+	r.plan = ArenaPlan.shipped()
+	assert_gt(r.plan.kick(&"assault-rifle"), r.plan.kick(&"gloria"))
+	assert_eq(r.plan.kick(&"no-such-gun"), 1.0)
+	var g: Fighter = _armed(7)
+	g.weapon = &"assault-rifle"
+	r._put(0, g, BodyPlan.Kind.COP)
+	g.burst_left = 2
+	g.cooldown = 30
+	r._put(0, g, BodyPlan.Kind.COP)
+	g.burst_left = 1
+	r._put(0, g, BodyPlan.Kind.COP)
+	assert_eq(r.rigs.feed.clip[0], RigClips.Clip.SHOOT)
+	assert_almost_eq(r.rigs.feed.clip_arg[0], r.plan.kick(&"assault-rifle"), 0.001)

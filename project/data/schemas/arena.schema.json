@@ -95,6 +95,15 @@
       ],
       "type": "object"
     },
+    "rig_kick": {
+      "additionalProperties": {
+        "maximum": 1.6,
+        "minimum": 0.4,
+        "type": "number"
+      },
+      "description": "--rigs render only: the SHOOT recoil strength per weapon id (RigClips.shoot clamps to 0.4-1.6; a weapon not listed kicks 1.0).",
+      "type": "object"
+    },
     "rivet_start": {
       "items": {
         "type": "number"

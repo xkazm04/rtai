@@ -14,6 +14,8 @@ const FOCUS_AHEAD_M: float = 7.0
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
+## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
+var plan: ArenaPlan = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 ## Each fighter's last hurt tick already played as a HIT clip.
@@ -28,6 +30,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	if view.print_stage == null:
 		return false
 	stage = p_stage
+	plan = p_stage.plan
 	_print = view.print_stage
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
@@ -71,7 +74,8 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
 	elif shot and who.weapon != &"":
-		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm
+		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
+		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()

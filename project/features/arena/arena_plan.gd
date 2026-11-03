@@ -22,6 +22,8 @@ var areas: Array[Area] = []
 var pit: Dictionary = {}
 ## Where the hub sits on the generated city for the proving block (--arena=city).
 var city_base: Vector2 = Vector2.ZERO
+## --rigs: the SHOOT recoil strength per weapon id (a weapon not listed kicks 1.0).
+var rig_kick: Dictionary[StringName, float] = {}
 var errors: Array[String] = []
 
 
@@ -45,8 +47,16 @@ static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 		p.areas.append(a)
 	p.pit = t.object(t.raw, "pit")
 	p.city_base = t.vec(t.object(t.raw, "city"), "base")
+	var kicks: Dictionary = t.object(t.raw, "rig_kick")
+	for w: Variant in kicks:
+		p.rig_kick[StringName(str(w))] = t.num(kicks, str(w))
 	p.errors = t.errors()
 	return p
+
+
+## The recoil strength a shot of this weapon plays on its rig (1.0 when the table has none).
+func kick(weapon: StringName) -> float:
+	return rig_kick.get(weapon, 1.0)
 
 
 func area(id: String) -> Area:

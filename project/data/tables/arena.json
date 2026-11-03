@@ -66,6 +66,11 @@
     "max_wave": 5,
     "trigger_inset_m": 3
   },
+  "rig_kick": {
+    "assault-rifle": 1.4,
+    "gloria": 0.8,
+    "robo-tazer": 1.1
+  },
   "rivet_start": [
     0,
     0
