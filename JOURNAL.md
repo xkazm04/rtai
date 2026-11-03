@@ -1697,3 +1697,11 @@ NEXT (iteration 18; the iteration-16 final NEXT stands where not superseded):
   centre tile, the target's cross the approaches), street-clutter placement, paving aquatint (REQUEST 22).
 - Worktrees: `scratch-q1` (main + quest patch), `scratch-v3` (full morning stack on ce0db12, patches uncommitted;
   dangling e011f35 / 190f3ba). scratch-v2 removed. Nothing pushed or merged.
+- 06:22 REJECTED, NOT SHIPPED: Dock 9 floor (quest 1 boss arena) toned to a street charcoal (slab range -31, median
+  123 -> 92, joints and the bay paint kept). Quest 1's seeded grabber in scratch-q1 `before_i18dk|probe_i18dk/`
+  (beats 04 / 05 / 06, `evidence/iter18/dock_dark_rejected.jpg`): the 4 m slab joints vanish into the darker floor,
+  the knocked-out cast (a mid wash) turns muddy, and Rivet pops no better. scratch-q1 floor restored (cmp equal) and
+  re-imported. 0 Codex.
+- 06:22 NOTE for the owner question "teal robot eyes": the quest 1 cast sheet (`d4n_q1cast2`) is seen straight down,
+  so the robots show head tops with no visible eyes and the raw sheet holds no teal at all - the question only
+  applies to face-on art (portraits, the soul cards), not to these sprites.
