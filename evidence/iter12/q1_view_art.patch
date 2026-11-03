@@ -1,8 +1,8 @@
 diff --git a/project/boot/collect_call/view/cast_view.gd b/project/boot/collect_call/view/cast_view.gd
-index f3cc7e2..b4011d4 100644
+index f3cc7e2..0aef35e 100644
 --- a/project/boot/collect_call/view/cast_view.gd
 +++ b/project/boot/collect_call/view/cast_view.gd
-@@ -16,8 +16,25 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
+@@ -16,8 +16,27 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
  	"Don Fax": Vector2(1.8, 1.1),
  }
  
@@ -16,6 +16,8 @@ index f3cc7e2..b4011d4 100644
 +## cast_rivet.png: the real Rivet rig (idle, facing -y) captured at 120 px/m, body at the centre;
 +## drawn at true scale (372 x 468 px = 3.1 x 3.9 m, arms included).
 +const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
++## cast_rivet_peek.png: a round cut of the same capture (plate + hazard collar) for the hide spots.
++const RIVET_PEEK: Vector2 = Vector2(1.03, 1.03)
 +## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
 +const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
 +const ALLY_ART: Dictionary[String, String] = {
@@ -28,7 +30,7 @@ index f3cc7e2..b4011d4 100644
  
  
  func _process(_delta: float) -> void:
-@@ -31,14 +48,14 @@ func _draw() -> void:
+@@ -31,78 +50,40 @@ func _draw() -> void:
  		_ally(tag, stage.layout.places.actors[tag].at)
  	if stage.heat.level > 0:
  		for p: Vector2 in stage.patrol_pos:
@@ -46,9 +48,13 @@ index f3cc7e2..b4011d4 100644
  	_rivet(stage.arena.rivet)
  
  
-@@ -49,16 +66,7 @@ func _rivet(r: Fighter) -> void:
- 		_eyes(at + Vector2(0.0, -0.85))
- 		Ink.initial(self, at + Vector2(0.0, -0.58), "R", Ink.INK, 0.28)
+ func _rivet(r: Fighter) -> void:
+ 	var at: Vector2 = r.pos
+ 	if stage.hidden_in != "":
+-		Ink.box(self, at + Vector2(0.0, -0.75), Vector2(0.9, 0.6), Ink.CREAM)
+-		_eyes(at + Vector2(0.0, -0.85))
+-		Ink.initial(self, at + Vector2(0.0, -0.58), "R", Ink.INK, 0.28)
++		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK, Vector2.UP)
  		return
 -	var hand: Vector2 = at + Vector2(0.45, 0.0)
 -	var arm: Vector2 = r.facing.normalized() * 0.9
@@ -64,8 +70,13 @@ index f3cc7e2..b4011d4 100644
  	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
  
  
-@@ -71,38 +79,18 @@ func _eyes(at: Vector2) -> void:
- 
+-func _eyes(at: Vector2) -> void:
+-	var c: Vector2 = Ink.px(at)
+-	draw_rect(Rect2(c + Vector2(-14, -4), Vector2(28, 8)), Ink.INK, true)
+-	draw_rect(Rect2(c + Vector2(-11, -2), Vector2(8, 4)), Ink.TEAL, true)
+-	draw_rect(Rect2(c + Vector2(3, -2), Vector2(8, 4)), Ink.TEAL, true)
+-
+-
  func _ally(tag: String, at: Vector2) -> void:
  	var size: Vector2 = ALLY_SIZE.get(tag, Vector2.ONE)
 -	var dark: bool = tag == "Brass"
@@ -107,7 +118,7 @@ index f3cc7e2..b4011d4 100644
  	var gun_root: Vector2 = at + dir * 0.9
  	var muzzle: Vector2 = at + dir * 2.1
  	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
-@@ -133,3 +121,15 @@ func _hp_bar(at: Vector2, frac: float) -> void:
+@@ -133,3 +114,15 @@ func _hp_bar(at: Vector2, frac: float) -> void:
  	draw_rect(r, Ink.CREAM, true)
  	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
  	draw_rect(r, Ink.INK, false, 2.0)

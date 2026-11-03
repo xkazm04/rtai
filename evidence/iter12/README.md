@@ -22,8 +22,12 @@
   kept there as `q1_view_art_i6.patch`): as before, plus quest 1's cash counter drawn from `hud_digits.png`
   (`hud_view._ink_digits`, baseline-placed, cap 0.92 of the old font size), and Rivet drawn from `cast_rivet.png` (a
   capture of the real Rivet rig) instead of the "R" boxes, and the patrol cops from `cast_cop.png` (the cop rig) instead
-  of the "C" discs. 4 view files, +186 / -99, gdformat +
+  of the "C" discs, and Rivet's hide-spot peek from `cast_rivet_peek.png` (was a teal-eyed "R" box). 4 view files,
+  +189 / -109, gdformat +
   gdlint clean, `git apply --check` clean on main 721fbbb, unit tests 166/166 there with it. Needs n-d4 merged
   first (it loads n-d4 art).
   Frames (quest 1's own grabber, seeded): `masters:night/d4-production/before_q1h|after_q1h/0*.png`, crop
-  `work/q1h_ab.png`; Rivet `after_q1r` (no rim) | `after_q1r2` (cream rim, kept), crops `work/q1r_ab.png`; cops `after_q1c`, crop `work/q1c_ab.png`.
+  `work/q1h_ab.png`; Rivet `after_q1r` (no rim) | `after_q1r2` (cream rim, kept), crops `work/q1r_ab.png`; cops `after_q1c`, crop `work/q1c_ab.png`; peek `after_q1p2`, crop `work/q1peek_ab.png`.
+- Morning-order dry run (scratch: main 721fbbb + `merge --no-commit n-d4` + this patch): n-d4 merges into main with no
+  conflict, the patch applies, lint 13/13 (214 files), unit 166/166, quest frames `merged_q1_i12/` match the scratch-q1
+  frames except the dumpster, which shows n-d4's current prop (the scratch held an older copy).

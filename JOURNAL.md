@@ -1136,3 +1136,14 @@ NEXT (session end, iteration 12):
 - Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (now holds the iteration-12 quest patch applied +
   copies of n-d4 art); other scratch worktrees removed.
 - 04:01 GATES at 0276ab4: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders; scratch-q1 with the final quest patch: unit 166/166 (`evidence/iter12/gates-0276ab4.txt`).
+- 04:03 CHECK morning merge order for the quest patch (neither n-d4 nor n-visual contains main's quest commit
+  721fbbb): scratch `scratch-m12q` = main 721fbbb + `merge --no-commit n-d4` (no conflict at all) + the patch (applies):
+  lint 13/13 over 214 files, unit **166/166**, quest frames `merged_q1_i12/` identical to `after_q1c/` except the
+  dumpster, which now shows n-d4's current prop (scratch-q1 held an older copy, `work/q1m_diff.png`). So the cast art
+  loads from the merged tree, not from copies.
+- 04:04 MILESTONE (found in that check) Rivet's hide-spot peek: beat 01 shows Rivet hidden in a dumpster as a cream
+  box with TEAL eyes and "R" (teal is off doctrine on Rivet). `tools/rivet_peek.py`: a round cut (r 54 px) of the
+  same rig capture around the torso plate + hazard collar, cream rim 4 px -> `cast_rivet_peek.png` (124 px, 1.03 m).
+  Patch: the hidden branch draws it at the old peek spot; `_eyes()` removed (no callers). Frames
+  `after_q1c|after_q1p2/01-monologue.png`, crop `work/q1peek_ab.png`. Patch +189 / -109, `git apply --check` clean on
+  main. README row, provenance line, ladder row "i12f". Note for the quest owner: the HP bar is drawn teal (code).
