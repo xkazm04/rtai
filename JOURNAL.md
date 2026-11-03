@@ -840,3 +840,10 @@ NEXT (session end, iteration 8):
   input (my first comparison was greyed twice by that - caught by looking, redone). Only cell 7 changes in all 4
   atlases (diff bbox checked). In-engine (wiring patch + ids 7/8 forced, reverted): `probe_tr78|probe_g_after` and
   `probe_g_before_d2|probe_g_after_d2`, crop `work/grey_ab48.png`: d2 cracks + holes read again, intact a touch crisper.
+- 02:32 GATES at 9be0221 (HEAD, every iteration-8 commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter8/gates-9be0221.txt`).
+  Bench last run at 38136e8 (PASS); since then only atlas pixels changed (same sizes, not drawn without the patch).
+- Summary sheet re-made with 7 rows (adds damage d2, hijacked teal, plaza + warehouse).
+NEXT (final, iteration 8; supersedes the 02:26 NEXT where they differ): as listed at 02:26, plus - the grey sedan
+fix (c24d769) and the hijack probe change no request. Codex: 0 images this iteration (night total 26 images, 170
+cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or merged.
