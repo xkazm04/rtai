@@ -61,3 +61,17 @@ func test_a_burst_of_autosaves_never_exceeds_two_slot_files() -> void:
 		SaveKit.census(ROOT), ["auto_a/state.sav", "auto_b/state.sav", "meta.json"] as Array[String]
 	)
 	assert_eq(SaveKit.n_of(Save.load_latest(SaveKit.accept_all).body), 49, "the last one won")
+
+
+func test_a_damaged_meta_json_never_blocks_a_load() -> void:
+	Save.autosave("p", _body(7), {"quest": "q"})
+	Save.flush()
+	SaveKit.put(Save.slots().meta_path(), "{not json".to_utf8_buffer())
+	SaveKit.put(SlotFile.tmp_path(Save.slots().meta_path()), "half".to_utf8_buffer())
+	assert_eq(Save.read_meta(), {}, "unreadable meta is just absent")
+	var out: SaveLoader.Outcome = Save.load_latest(SaveKit.accept_all)
+	assert_eq(SaveKit.n_of(out.body), 7)
+	assert_false(FileAccess.file_exists(SlotFile.tmp_path(Save.slots().meta_path())))
+	Save.autosave("p", _body(8), {"quest": "q"})
+	Save.flush()
+	assert_eq(str(Save.read_meta().get("quest")), "q", "the next autosave rewrites it")

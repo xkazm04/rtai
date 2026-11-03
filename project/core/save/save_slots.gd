@@ -86,8 +86,10 @@ func quarantine(index: int) -> Error:
 ## Removes tmp files a crash mid-write left behind; the number removed.
 func clear_stale_tmp() -> int:
 	var removed: int = 0
+	var tmps: Array[String] = [SlotFile.tmp_path(meta_path())]
 	for index: int in IDS.size():
-		var tmp: String = SlotFile.tmp_path(slot_path(index))
+		tmps.append(SlotFile.tmp_path(slot_path(index)))
+	for tmp: String in tmps:
 		if FileAccess.file_exists(tmp) and DirAccess.remove_absolute(tmp) == OK:
 			removed += 1
 	return removed
