@@ -778,3 +778,18 @@ NEXT (final, iteration 6): NEXT 1-25 stand. Morning reading order: evidence/nigh
   look_d4 Sobel pass re-inks both sides of every stroke, so a finer pen hatch still prints as stripes; thinner lines
   would also add pan-swim risk. Kept period 5. Crop masters work/i6/shadow_ab.png. Same root cause as gap 2: the
   print fattens thin lines (NEXT 17 covers it).
+- 03:04 MILESTONE (22eba5b): look_d5_print PROPOSAL, the root cause of tonight's two "thin lines fatten" rejections.
+  look_d4's Sobel edge (|lum(x+1) - lum(x-1)|) is high on BOTH neighbours of a thin dark line, so a 1 px pen line
+  prints ~3 px. look_d5_print = look_d4 verbatim + edge ink only where the pixel is no lighter than its 4-neighbour
+  mean (dark_soft 0.04). Not default: d5_hero_run swaps it in with env D5_PRINT=thin; h101 (default) = h98b 0 px.
+  32 px/m, D4 tier (h101 -> h101thin): frame L 0.438 -> 0.487 (mock 0.488), px darker than 0.35 0.65 -> 0.57 (mock
+  0.51); mural roof L/paper/ink/HF 0.531/0.29/0.39/0.111 -> 0.595/0.34/0.29/0.111 (mock roof 0.594/0.36/0.25/0.163).
+  D4+D5 tier: frame 0.425 -> 0.483, but the D5 mural goes 0.603 -> 0.667 (too light: the plates were lifted for the
+  fattening print; they would need retuning). By eye (x2 crop of The Last Shift): crisper pen weight, the objects
+  still defined by their ink fills. Pan 48 px/m (pan11thin / pan11thinR vs pan10 / pan11R): ink px flips 0.00278 ->
+  0.00117 (junction), 0.00335 -> 0.00099 (mural roof); total change +12% / +12%, entirely the paper share (0.32 ->
+  0.40, 0.58 -> 0.68) under look_d4's screen-locked grain (per-class rates equal: paper 0.0143 / 0.0143). Board
+  evidence/item29_thin_print_proposal.png; shader README row; gap 2 updated. For the visual-engine lane + owner.
+NEXT (addendum): 26. Visual-engine lane: A/B look_d5_print (dark-side edges) as the look_d4 print; it is the
+  closest single change to the mock's 32 px/m tone tonight (D4 tier frame L 0.487 vs mock 0.488). Fix the screen
+  grain first (more paper). If adopted, d5-close retunes the D5 roof line weight (build_roofs.py gamma) under it.

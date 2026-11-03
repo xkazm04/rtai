@@ -54,6 +54,7 @@ tick count, no RNG.
 | `item26_grain_floor_32.png` | iteration 6, PROPOSAL: look_d5 `grain_floor` (world-locked paper tooth at 32 px/m, default off) alone and with `age_floor`, vs as shipped and the mock + street crops |
 | `item27_zebra_owner_ab.png` | iteration 6, OWNER A/B: the zebra cream (committed) vs toned x0.84 like the dashes (h95zt, not committed), Rivet over the crossing at 32/48/64 |
 | `item28_cracks_up_close.png` | iteration 6: the road cracks at 128 / 96 / 48 px/m: h86 bold / h92c thinned, clean zebra (faint up close) / h97 the original cracks and zebra wear fading back in from 56 to 96 px/m, + the concept |
+| `item29_thin_print_proposal.png` | iteration 6, PROPOSAL for the visual-engine lane: `look_d5_print` (look_d4 with edge ink on the dark side only) vs look_d4 at 32 px/m, D4 and D4+D5 tiers, + the mock and a x2 crop |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -216,7 +217,13 @@ cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 
    switch them on (or move the gains into look_d4), and fix look_d4's screen-locked grain (gap 7) first, because
    the lighter ground now shows more paper, and paper is where that grain swims.
 2. **Roof texture** (gap 2): at 32 px/m a roof keeps the mock's tone OR thin visible hatch lines, not both (HF
-   0.11-0.14 vs the mock's 0.163). Next (visual-engine): a roof print that keeps thin art lines thin. One D4 neighbour
+   0.11-0.14 vs the mock's 0.163). Root cause found: look_d4's Sobel inks BOTH sides of a thin line (1 px -> ~3 px).
+   PROPOSAL `assets/shaders/look_d5_print.gdshader` (`item29`, 22eba5b) = look_d4 + edge ink on the dark side only:
+   the D4 tier's 32 px/m frame goes L 0.438 -> 0.487 (mock 0.488), dark px 0.65 -> 0.57 (mock 0.51), the mural roof
+   0.531 / 0.29 / 0.39 -> 0.595 / 0.34 / 0.29 (L / paper / ink; mock roof 0.594 / 0.36 / 0.25); on a 48 px/m pan ink
+   flips -58 to -70%. HF does not rise (0.111): thin lines, not more lines. Next (visual-engine): adopt or reject it
+   for look_d4; if adopted, the D5 roof plates need their line weight retuned (they were lifted for the fattening
+   print and go too light: mural 0.603 -> 0.667). One D4 neighbour
    (helipad) and the arena's warehouse/long roofs have no D5 plate yet (Codex, square-padded template).
 3. **The ground tiles are D5-tier only.** The 4 print-aware tiles (`features/city/art/d5/ground/`) are swapped in
    by the hero scene alone; the city and the D4 tier still print the black slab grid. Next (city / d4-production
