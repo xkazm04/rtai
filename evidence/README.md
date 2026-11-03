@@ -10,9 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h90, iteration 6) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h91, iteration 6) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h90, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h91, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks + the kerb stone line; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -48,7 +48,8 @@ tick count, no RNG.
 | `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h86 at 32/48/64/128, the arena a15 at 64 and 128, concept |
 | `item22_pavement_joints.png` | iteration 6: the D5 sidewalk tile's print-aware joints, h86 vs h87d at 32 (full frame) and pavement crops at 48/64 + the mock |
 | `item23_street_print.png` | iteration 6: the D5 crosswalk (no black wear dots) and thinned road cracks, h87d vs h90 at 32/48/64 + the mock |
-| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h90) at 32 and 48, the mock, the concept |
+| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h91) at 32 and 48, the mock, the concept |
+| `item24_kerb_stone.png` | iteration 6: the kerb stone line (continuous, 0.3 m inside the street edge), h90 vs h91 at 32/48/64 + the mock's kerb corner |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -66,6 +67,10 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   thinned by 2 grey-level passes: gone at 32 px/m (the mock's street is clean), pen lines at 64+ (D5 up close).
   A hard 1-px ridge was rejected (stair-stepped). Pan at 48 px/m on the patch: ink px flipping per tick 0.00116 ->
   0.00102 (no flicker from the thin lines).
+- **Kerb stone** (`item24_kerb_stone.png`, 15adfae + f8864e9): the mock's kerb is a cream stone band with an inner
+  line that runs along the straight kerbs and round the corner. A thin (0.04 m) ink line 0.3 m inside the street edge,
+  one polyline per quadrant (iteration 2's corner-only arc floated and was reverted). On a 48 px/m pan its ink px
+  flip at 0.0063 per px/tick, the same as the crop's existing ink edges (0.0062).
 - Whole frame, d5 tier (L / px darker than 0.2 / HF): 32 px/m 0.410 / 0.231 / 0.071 -> **0.427 / 0.212 / 0.068**;
   48: 0.390 / 0.196 -> 0.396 / 0.183. Mock 0.488 / 0.123 / 0.104: closer in tone and ink, not in HF (the mock's high
   frequency is fine paper/asphalt grain; ours was grid and crack lines).
