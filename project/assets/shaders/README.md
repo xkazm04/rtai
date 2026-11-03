@@ -18,6 +18,9 @@ The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
   `dev/selftest/world_lock.gd` (pan the paused junction; the whole frame must move rigidly). The item
   (`look_d4_item`, CityView sets it) and part (`print_part`, `PartMaterials.set_world_px` every frame) shaders
   take the same `world_px` for their tooth, shadow dots and ghost dots.
+- Set `grime_tex` on the world pass to `GrimeLattice.texture()` (`core/render/grime_lattice.gd`): the two grime
+  octaves sample that baked value lattice (one bilinear fetch each) instead of 4 sin hashes each (-17 % print
+  pass on the low-end GPU). Unset, the grime is a flat offset, not blotches.
 - The pen work comes from the D4 art (`features/city/art/`), not from the shader. The colour doctrine
   (vermilion = threat, hazard, pickup, Rivet's collar; teal = the dead, the torch tip) lives in the assets.
 - Cutout characters keep their own part print (`print_part`, ported with the rig in F-09); the cream sticker rim is

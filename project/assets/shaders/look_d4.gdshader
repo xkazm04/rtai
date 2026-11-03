@@ -12,6 +12,8 @@ shader_type canvas_item;
 // use look_d4_item.gdshader. Defaults are the F-08 tuning + the f08b charcoal-street retune (crop gates at 32 and 48 px/m, 2026-11-02).
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
+// the grime's value-noise lattice (core/render/grime_lattice.gd, 128 x 128, set by CityView)
+uniform sampler2D grime_tex : filter_linear, repeat_enable;
 uniform vec2 world_px = vec2(0.0);
 uniform vec2 verm_shift = vec2(2.0, -1.0);
 uniform vec2 teal_shift = vec2(-1.0, 2.0);
@@ -38,6 +40,12 @@ const vec3 INK = vec3(0.090, 0.075, 0.106);
 const vec3 WASH = vec3(0.400, 0.372, 0.408);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+
+// vnoise() on the baked lattice: bilinear at i + smoothstep(f) = the same smoothstep fade, 1 fetch
+float tnoise(vec2 p) {
+	vec2 i = floor(p), f = fract(p);
+	return texture(grime_tex, (i + f * f * (3.0 - 2.0 * f) + 0.5) / 128.0).r;
+}
 
 float vnoise(vec2 p) {
 	vec2 i = floor(p), f = fract(p);
@@ -80,7 +88,7 @@ void fragment() {
 	float vden = plates(texture(screen_tex, uv + verm_shift * tx).rgb).y;
 	float tden = plates(texture(screen_tex, uv + teal_shift * tx).rgb).z;
 	float d = p0.x;
-	float g = ((vnoise(w * 0.035) - 0.5) * 0.22 + (vnoise(w * 0.11) - 0.5) * 0.10) * grime;
+	float g = ((tnoise(w * 0.035) - 0.5) * 0.22 + (tnoise(w * 0.11 + 61.0) - 0.5) * 0.10) * grime;
 	float t = clamp(d + g, 0.0, 1.0);
 	vec3 col = CREAM;
 	col = mix(col, mix(CREAM, WASH, wash_lo), smoothstep(step_lo - 0.03, step_lo + 0.03, t));

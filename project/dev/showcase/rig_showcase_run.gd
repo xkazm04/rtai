@@ -30,6 +30,7 @@ func _ready() -> void:
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
+	_look.set_shader_parameter(&"grime_tex", GrimeLattice.texture())
 	rect.material = _look
 	_post.add_child(rect)
 	_actors.add_child(_rigs)

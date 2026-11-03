@@ -148,6 +148,7 @@ func _build_layers() -> void:
 	look.layer = RenderLayers.canvas(&"print")
 	var look_shader: Shader = load(LOOK_SHADER)
 	_look_mat.shader = look_shader
+	_look_mat.set_shader_parameter(&"grime_tex", GrimeLattice.texture())
 	_look_rect.material = _look_mat
 	_look_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_look_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
