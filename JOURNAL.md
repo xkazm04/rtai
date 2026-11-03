@@ -679,3 +679,44 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   lines, scaled uniformly to the 5 m road), cycling road_straight_tone / _b / _c. A single tile repeated every
   5.3 m showed the same patch and cracks, so the variants cycle. Zone label drawn on top (`work/q1road_ab.png`).
   No new art. Final patch +149 / -81 over 4 view files, gdformat + gdlint clean; final frames `after_q1o/`.
+- 01:42 GATES at cc3b37c (HEAD, every iteration-6 commit): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact (mutation caught at step 629), selftest 65 art textures, 0 placeholders. Bench
+  not re-run: no new city texture ids, and the 3 redrawn props keep their sizes.
+- Scratch cleanup: removed worktree `scratch-d4ag` (my n-visual+n-d4 merge probe, never committed). `scratch-q1`
+  (detached at main 721fbbb, holds the uncommitted view patch) is KEPT so the Director / quest owner can look at it.
+  Delete it with `git worktree remove --force ../scratch-q1` after the patch is taken. Superseded probe frames
+  deleted from masters (ag1-3, q1 a-d/g/h, board 1).
+
+## 01:42 SUMMARY iteration 6 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter6_summary.png` (8 rows, before | after). Ladder rows for every item.
+1. Asphalt aggregate: pale clumped specks on the 11 road / kerb tiles. The asphalt printed as one flat wash (target
+   std 14 vs ours 1.1). Dark specks turned into digital pepper, so pale only. 20bb95b
+2. Pavement de-tiled: 1 crack + 2 stains per 8 m tile (was 3 + 5, in rows). d365cba
+3. Quest 1 (collect-call, new on main) places in D4: TUCK-IN crates (intact / sabotaged), taped cash, catwalk, dock
+   gate, Dock 9 floor, Toner Room floor, vault-cage mesh. 153d91d, 6034c96
+4. Quest 1 cast seen straight down (owner design notes): Juno, Brass, Kilohm, Don Fax, dock guard, Mertz (+ knocked-out
+   guard and Mertz, vermilion re-inked). 3876da7, 9ce186d, dc9a895
+5. Fire FX seen from above (`fx/art/fx_fire.png`): quest 1 drew side-view flames (a camera break). 1ac7ff0, b57a535
+6. Payphone, vending machine, mailbox redrawn with one bold top-down glyph each (handset, soda can, envelope). 58da0b0
+7. Quest 1 HUD in the existing D4 frames, plus the Harbor Road on the D4 road tiles: both in the view patch only.
+- Evidence rig: `dev/showcase/quest_board_run.gd` (`asset_board.gd --page=quest`, look_d4 at 32/48/64).
+- Reverted / not shipped: dark asphalt specks (pepper), wheel-scuff arcs on the dock floor (tiling tell), 0.25 m cage
+  mesh (solid hatch), arc ball with the atlas crackle (lost its danger ring), downed bodies in vermilion at 1.5x.
+- Codex this iteration: **7 images** (q1, q1cast, q1cast2, fire, q1down, props2 + 0 retries beyond q1cast2), 29 cells,
+  **4 rejected** (q1cast: 4 front views). Night total: **27 images, 170 cells, 7 rejected**. No usage limit hit.
+
+NEXT (session end, iteration 6):
+- Owner review: iteration-6 commits each revert alone: 20bb95b (asphalt), d365cba (pavement), 153d91d + 6034c96 +
+  3876da7 + dc9a895 (quest 1 art, all under `features/quest/art/collect_call/`), 1ac7ff0 (fire), 58da0b0 (props).
+- Director: relay REQUEST 16 to the quest 1 owner: `masters:night/d4-production/q1_view_art.patch` (4 view files,
+  +149 / -81, lint clean, renders all 9 beats) applies on main 721fbbb once n-d4 is merged (it loads n-d4 art).
+  Before/after: `before_q1/` vs `after_q1o/`. The scratch worktree `gtai-wt/scratch-q1` holds it applied.
+- Owner calls: teal robot eyes in the quest 1 design notes vs the D4 doctrine (ink now); blood ink vs vermilion; cop
+  uniform (all still open).
+- Still placeholders in quest 1 (not my scope): Rivet "R" box (Rivet rig), patrol cops "C" (cop rig), the arc ball and
+  whisper rings (FX code; the arc-ball probe read worse).
+- Earlier lists still stand: traffic atlas wiring (visual-engine), generic roof pick (generator), RigVariant slots for
+  the new ped parts (characters), accent_debt row traffic_light_lamps to delete after the merge.
+- If more time: the D4 Rivet rig in the quest view (characters owner); a top-down smoke puff for the crate fire (the
+  view still draws translucent grey discs, which are not D4).
+- Branch n-d4, tree clean after this entry; nothing pushed or merged.
