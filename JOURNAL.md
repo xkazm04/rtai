@@ -1008,3 +1008,4 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
 - Codex: 0 images this iteration; night total 26 images, 170 cells, 7 rejected.
 - Branch n-d4, nothing pushed or merged; scratch-q1 kept; my other scratch worktrees removed; my Godot runs all
   finished (the 2 Godot processes running at 03:26 are not mine, untouched). Tree clean after this entry.
+- 03:27 re-check on n-visual 0b34727 (it moved since the merged check): both iteration-10 patches apply; merge n-d4 into it conflicts in JOURNAL.md only. Scratch removed. Tree clean after this entry.
