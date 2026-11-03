@@ -59,4 +59,6 @@ func _send(point: String, body: Dictionary, meta: Dictionary) -> void:
 static func accept(events: EventBus, data: DataStore) -> Callable:
 	return func(body: Dictionary) -> Variant:
 		var cp: Checkpoint = CheckpointSlot.read(body)
-		return Quest1Session.resume(events, data, cp) if cp != null else null
+		if cp == null or cp.quest != Quest1Session.QUEST:  # another quest's slot is not ours
+			return null
+		return Quest1Session.resume(events, data, cp)
