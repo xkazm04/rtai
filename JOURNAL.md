@@ -1630,3 +1630,7 @@ NEXT (iteration 11; 38-42 of iteration 10 stand, 42 closed for shadows / walk; e
 44. d5-close: the prop shadows' +0.013 in-shadow flip under a sub-pixel camera goes away with NEXT 41's snapped
     camera; re-measure there before tuning the stroke edge.
 Morning reading order: item54_rig_shadow_lock.png -> night_iter10_summary.png -> item53 -> item50 / item50b -> item52.
+- 07:05 GATES (iteration 11): evidence tool (--no-parity --no-bench) ALL PASS at 857b615 (lint 13/13 over 195 files,
+  unit 149/0, scenarios 8/0, selftest ok); 104 untracked evidence PNGs moved aside and restored; tree clean.
+  Scratch deleted (pan, cost, King, 128 px/m and duplicate rounds; numbers above). Kept (masters frames/): i11he /
+  i11ae (default showcase), i11h0 (world-locked hero), i11w0 / i11x0 / i11xr / i11ws / i11xs / i11xsr (board).
