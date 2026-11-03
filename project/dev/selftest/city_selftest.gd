@@ -3,6 +3,7 @@ extends Node
 ## look at a fixed junction with a crowd, prewarmed, captured after frame_post_draw at 32 px/m
 ## (zoom 1.0) and 48 px/m (zoom 1.5). Each frame is sanity-checked (size, not blank, enough
 ## distinct colours, actors on screen) and saved as PNG next to a gtai.selftest/1 result JSON.
+## The sim steps one TICK_DT per rendered frame (not wall-clock), so captures land on fixed ticks.
 ## Windowed only (headless renders nothing). Usage:
 ##   godot --path project res://dev/selftest/city_selftest.tscn -- --out=<dir>
 ## [--grade=night] (a lights.json grade) [--fx-moment] (after settling, wait for the first frame
@@ -76,6 +77,9 @@ func _build() -> void:
 	_world = World.new()
 	_world.start(Events, Data, MASTER_SEED)
 	add_child(_world)
+	# Fixed sim time: the World never reads the wall-clock frame delta here; _step() feeds it
+	# exactly one TICK_DT per rendered frame, so each capture lands on the same sim tick.
+	_world.set_process(false)
 	_city = CitySystem.new(true)
 	_world.add_system(_city)
 	_city.steer_by_input = false
@@ -110,10 +114,10 @@ func _place_markers() -> void:
 func _capture(zoom: float) -> Dictionary:
 	_view.zoom = zoom
 	for i: int in SETTLE_FRAMES:
-		await get_tree().process_frame
+		await _step()
 	var waited: int = 0
 	while _fx_moment and _view.fx.glow.alive() == 0 and waited < FX_WAIT_FRAMES:
-		await get_tree().process_frame
+		await _step()
 		waited += 1
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
@@ -126,8 +130,15 @@ func _capture(zoom: float) -> Dictionary:
 	check["visible_actors"] = _view.visible_actors
 	check["emissive_fx_alive"] = _view.fx.glow.alive()
 	check["lights_active"] = _view.lights.active
+	check["sim_tick"] = _world.context().clock.tick()
 	check["ok"] = saved and check["ok"] and _view.visible_actors > 0
 	return check
+
+
+## One rendered frame on exactly one sim tick (not the wall-clock delta).
+func _step() -> void:
+	_world.loop().frame(SimClock.TICK_DT)
+	await get_tree().process_frame
 
 
 func _finish(frames: Array[Dictionary], warm_us: int) -> void:
