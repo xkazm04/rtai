@@ -452,3 +452,20 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   warmth), (b) Rivet/King steel (world lavender vs close-up mauve rule), (c) store-safe marks (portraits, expressions,
   loading, phone, boss card; k9 in-game only), (d) the boss card's vermilion crown.
 - 01:14 arena re-shot on the final shaders (a14); arena frames, item18 and night_iter4_summary now a14 + h73 (all evidence on one shader state).
+
+## Iteration 5 (01:15 -> 02:45), BUILD: raise the weakest item (item 3, landmark roofs vs the mock)
+- 01:16 picked: item 3. Against d4h2_mock the D5 roofs were the furthest off at gameplay zoom: mural roof at 32 px/m
+  L 0.487 / paper 0.28 (mock 0.589 / 0.41, D4 0.516 / 0.27), and the grey wash blotches print as camouflage.
+- 01:19 Codex: d5_roof_mural_b (Image 1 = the D4 roof layout, Image 2 = NEW refs/mock_roofs.png = two crops of the
+  mock, the hatching target; Image 3 = concept, line quality only): tone with pen lines only, no wash blotches. 104 s,
+  0 rejected (plan view held, objects in place against the D4 layout). Ledger 42.
+- 01:20 h74 (b as is, lift 1.0): FRICTION, the first shot forgot `--borrow=` (street life missing, cars/cops moved):
+  re-shot. d4 tier 0 px. Too clean: L 0.617 / paper 0.54, the hatch vanishes in the print, the fist loses its mass
+  (reads D3 clear line). REJECTED.
+- 01:30 MILESTONE item 3 (h75): build_roofs.py b path: paper cleaned (d < 0.08 -> cream), pen lines weighted
+  (gamma 0.7), the fist a light ink wash 0.18 (seeded from the iteration-1 fist, eroded 8 px, grown to the b ink
+  outline) and the fist's OWN ink line re-printed vermilion 3 px down-right (the misprint; the first try with a
+  shifted mask edge leaked outside the outline). Mural roof at 32 px/m: L 0.593 / paper 0.44 / ink 0.32 (mock 0.589
+  / 0.41 / 0.27): tone now at the mock. HONEST: HF 0.113 < D4 0.125 < mock 0.163 (the membrane hatch prints as tone,
+  not lines, at 32-48; at 64 the lines show). d4 tier 0 px at every zoom; d5 changed px 46861 / 91997 / 120133 at
+  32/48/64. Board evidence/item21_mural_pen.png; ladder +1 row; old d5_roof_mural SUPERSEDED in the manifest.
