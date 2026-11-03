@@ -8,6 +8,13 @@ const T_DRAIN: int = 57
 const T_ARROW: int = 61
 const KERB_PROPS: Array[int] = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37]
 const NEAR_KERB: Array[int] = [34, 32, 29]
+## T1's wall-side clutter (crates, dumpsters, vending, bins) flush against the building, on the
+## half of the tile the kerb prop left free; neutral inks only (barrel_cluster prints vermilion).
+const WALL_PROPS: Array[int] = [39, 34, 32, 26, 34, 26]
+const WALL_SHARE: float = 0.75
+const WALL_GAP_M: float = 0.3
+## clearance (m) between a wall prop and the lamp post's arm / the kerb prop, along the tile
+const CLEAR_M: float = 0.45
 const PARKED: Array[int] = [44, 45, 46, 47, 48, 49, 44, 45, 46, 50, 52, 53]
 
 
@@ -22,13 +29,18 @@ func prop(g: CityGen, b: ChunkBuild, tex: int, p: Vector2, rot: float) -> void:
 func dress(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, horiz: bool) -> void:
 	var along: int = t.x if horiz else t.y
 	var c: Vector2 = TilePainter.origin(t) + Vector2(4.0, 4.0)
+	var busy: Array[Vector2] = []  # tile-local u spans the wall prop must keep clear of
 	if along % 2 == 0:
 		b.add(ChunkBuild.L_PROP, T_LAMP, _local(c, rot, 4.0, 2.4), rot + PI * 0.5, true)
+		busy.append(Vector2(4.0 - 0.25, 4.0 + 0.25))
 	if g.rnd(t.x, t.y, 0, 41) < 0.4:
 		var tex: int = KERB_PROPS[int(g.rnd(t.x, t.y, 0, 42) * KERB_PROPS.size())]
 		var u: float = 1.2 + 5.6 * g.rnd(t.x, t.y, 0, 43)
 		var v: float = 0.9 if NEAR_KERB.has(tex) else 2.3
 		prop(g, b, tex, _local(c, rot, u, v), rot)
+		busy.append(Vector2(u - g.sizes[tex].x * 0.5, u + g.sizes[tex].x * 0.5))
+	if not _faces_plaza(g, t, horiz):
+		_wall_prop(g, b, t, rot, busy)
 	if g.rnd(t.x, t.y, 0, 44) < 0.4:
 		var car: int = PARKED[int(g.rnd(t.x, t.y, 0, 45) * PARKED.size())]
 		var p: Vector2 = _local(c, rot, 4.0 + (g.rnd(t.x, t.y, 0, 46) - 0.5), 4.45)
@@ -38,6 +50,39 @@ func dress(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, horiz: bool) -> v
 	elif g.rnd(t.x, t.y, 0, 48) < 0.5:
 		var p: Vector2 = _local(c, rot, 1.0 + 6.0 * g.rnd(t.x, t.y, 0, 49), 3.35)
 		b.add(ChunkBuild.L_DECAL, T_DRAIN, p, rot)
+
+
+## One wall-side prop, flush to the building, on a free stretch of the tile (busy = taken u spans).
+func _wall_prop(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, busy: Array[Vector2]) -> void:
+	if g.rnd(t.x, t.y, 0, 56) >= WALL_SHARE:
+		return
+	var tex: int = WALL_PROPS[int(g.rnd(t.x, t.y, 0, 57) * WALL_PROPS.size())]
+	var half: Vector2 = g.sizes[tex] * 0.5
+	var free: Array[Vector2] = [Vector2(half.x + 0.3, 7.7 - half.x)]
+	for span: Vector2 in busy:
+		var cut: Vector2 = Vector2(span.x - half.x - CLEAR_M, span.y + half.x + CLEAR_M)
+		var next: Array[Vector2] = []
+		for f: Vector2 in free:
+			if f.x < cut.x:
+				next.append(Vector2(f.x, minf(f.y, cut.x)))
+			if f.y > cut.y:
+				next.append(Vector2(maxf(f.x, cut.y), f.y))
+		free = next
+	if free.is_empty():
+		return
+	var f: Vector2 = free[int(g.rnd(t.x, t.y, 0, 58) * free.size())]
+	var u: float = lerpf(f.x, f.y, g.rnd(t.x, t.y, 0, 59))
+	var c: Vector2 = TilePainter.origin(t) + Vector2(4.0, 4.0)
+	prop(g, b, tex, _local(c, rot, u, half.y + WALL_GAP_M), rot)
+
+
+## Whether the kerb tile's back edge faces a plaza block (open paving, no wall to lean on).
+static func _faces_plaza(g: CityGen, t: Vector2i, horiz: bool) -> bool:
+	var m: int = (t.y if horiz else t.x) % CityGen.PERIOD
+	var out: int = -1 if m == 0 else 1
+	var n: Vector2i = t + (Vector2i(0, out) if horiz else Vector2i(out, 0))
+	var period: float = float(CityGen.PERIOD)
+	return g.rnd(floori(n.x / period), floori(n.y / period), 0, 5) < 0.12
 
 
 func road_decals(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> void:
