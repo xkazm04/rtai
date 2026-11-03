@@ -137,3 +137,5 @@ NEXT:
   9/9 (incl. scenario_quest1_input: paid via input events, replay identical, checkpoint
   round-trip + tamper refused, Retry, 11 prompts), parity exact + mutation caught, selftest
   goldens 11/11. Copied to evidence/slice-play/. Exe built at 0a8fda3 (code identical to HEAD).
+- 11:12 scenario_quest1_keys: the keyboard path (the move_* and interact actions' InputEventKeys,
+  digital): Rivet walks to the dumpster in 48 ticks and E hides him. Scenarios 10/10.
