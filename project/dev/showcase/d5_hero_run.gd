@@ -67,6 +67,7 @@ var _roofs: Dictionary[String, Sprite2D] = {}
 var _d5_neighbours: Array[Sprite2D] = []
 var _shadows: Array[Polygon2D] = []
 var _corners: Array[Node2D] = []
+var _cracks: Array[Sprite2D] = []
 var _roof_at: Array[Vector2] = []
 
 
@@ -104,6 +105,7 @@ func _ground() -> void:
 				_d5_neighbours.append(nb)
 			idx += 1
 	_kerb_shadows()
+	_cracks = D5HeroGround.overlays(_world)  # before the decals: only the ground tiles are scanned
 	_corners = D5HeroKerbs.corners(_world, PX)
 	_corners.append_array(D5HeroDecals.place(_world, PX))  # d5-tier world additions
 	_corners.append_array(D5HeroParapets.place(_world, PX, _roof_at, ROOF_M))
@@ -228,6 +230,7 @@ func _tier(tier: String) -> void:
 	if sm != null and soul_mode == "d5":  # the soul print rides the D5 tier fade (56 -> 64 px/m)
 		sm.set_shader_parameter("amount", clampf((_rigs.zoom * PX - 56.0) / 8.0, 0.0, 1.0))
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
+	D5HeroGround.fade(_cracks, tier, _rigs.zoom * PX)
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
