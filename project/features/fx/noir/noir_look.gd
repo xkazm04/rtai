@@ -16,6 +16,8 @@ var params: Dictionary = {}
 var fixed_phase: float = -1.0
 ## The street light (lamp posts as pools of light); null until the first light_street().
 var street: NoirLamps = null
+## Microseconds the last light_street() took (CPU: the lamp lookup + the snapshot read).
+var light_us: int = 0
 var _lamp_r_px: float = 0.0
 var _beam_len_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
@@ -85,8 +87,9 @@ func set_amount(a: float) -> void:
 ## Positions go in as screen uv (the canvas view can be larger than the window: canvas_items
 ## stretch), sizes as px at 32 px/m that the shader scales by zoom and view_h.
 func light_street(city: CitySystem, focus: Vector2, zoom: float) -> void:
-	if city == null or not is_inside_tree():
+	if city == null or not visible or not is_inside_tree():
 		return
+	var t0: int = Time.get_ticks_usec()
 	var view: Vector2 = get_viewport().get_visible_rect().size
 	var half: Vector2 = view * 0.5 / (zoom * SimConst.PX_PER_M)
 	_mat.set_shader_parameter(&"view_h", view.y)
@@ -110,3 +113,4 @@ func light_street(city: CitySystem, focus: Vector2, zoom: float) -> void:
 		@warning_ignore("return_value_discarded")
 		beams.resize(NoirHeadlights.MAX_CARS)
 		_mat.set_shader_parameter(&"cars", beams)
+	light_us = Time.get_ticks_usec() - t0

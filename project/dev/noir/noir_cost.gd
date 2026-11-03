@@ -37,6 +37,7 @@ func _ready() -> void:
 		await get_tree().process_frame
 	var gpu: Dictionary[String, float] = {"d4": 0.0, "noir": 0.0}
 	var cpu: Dictionary[String, float] = {"d4": 0.0, "noir": 0.0}
+	var light: float = 0.0
 	for b: int in BLOCKS:
 		var look: String = "noir" if b % 2 == 1 else "d4"
 		view.set_noir(look == "noir")
@@ -46,6 +47,8 @@ func _ready() -> void:
 			await get_tree().process_frame
 			gpu[look] += RenderingServer.viewport_get_measured_render_time_gpu(vp)
 			cpu[look] += RenderingServer.viewport_get_measured_render_time_cpu(vp)
+			light += view.noir.light_us / 1000.0 if look == "noir" else 0.0
+	cpu["light"] = light
 	_report(gpu, cpu)
 	get_tree().quit(0)
 
@@ -61,6 +64,7 @@ func _report(gpu: Dictionary[String, float], cpu: Dictionary[String, float]) -> 
 		"gpu_ms": {"d4": gpu["d4"] / n, "noir": gpu["noir"] / n},
 		"cpu_render_ms": {"d4": cpu["d4"] / n, "noir": cpu["noir"] / n},
 		"gpu": RenderingServer.get_video_adapter_name(),
+		"noir_light_cpu_ms": cpu["light"] / n,
 	}
 	var f: FileAccess = FileAccess.open(_out, FileAccess.WRITE)
 	if f != null:
