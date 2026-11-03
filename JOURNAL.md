@@ -359,3 +359,24 @@ NEXT (iteration 5):
   (my commits touch only dev/gunplay/pistol_fight.gd). REQUEST 8 -> autosave owner: SaveKit.SCRATCH
   per process (append OS.get_process_id()) so parallel lanes stop colliding. Log:
   build/test-results/unit-tests.log, summary evidence/unit-it5.log.
+- FINDING (the quest arena models direct hits only): the other core rows through the same chain
+  (`--weapon=<id> --armored --dodge-away`, headless, 1200 live ticks; logs evidence/it5/w_*.log):
+  flamethrower 302 puffs, 54 hits, 0 kills (no burn DoT, no cone, no lingering fire on
+  CombatArena: the table's dot_dps/patch_s are ignored there); rocket_launcher 10 shots, 9 hits,
+  9 kills (direct hit only, no splash or knockdown); electro_gun 29/29 hits, 5 kills, 29 hit-stops
+  (no chain, no stun); gloria 36/36, 11 kills. Enemy rounds landed 1/139 .. 14/59. The range scene
+  (range_clip/ttk_bench) has the full behaviours; CombatArena's Shot does not. That gap is the next
+  real work for "a value tuned in the arena must hold in the city".
+- Gates at ab24bca: lint 13/13; scenarios 20/20 (evidence/scenarios-it5.log); unit 555/568 with all
+  13 in test_save_slots under the shared user:// scratch collision (see above; at 8bb66ea it was
+  567/567 when no other lane ran GUT at the same time). Godot processes of mine: none left running.
+
+NEXT (iteration 6 / night run):
+1. Apply gunplay-3 when answered (weapons.json enemy_fire.lock_spread_scale; B = 1.0).
+2. Carry the table's area behaviours onto CombatArena (the quest/city fight): flamethrower cone +
+   burn DoT + fire patch, rocket splash + knockdown, electro chain + stun. Reuse the range scene's
+   code (features/combat/weapons/impact.gd, sweep.gd) through GunHand, not a second copy; then
+   pistol_fight --weapon=<each> clips at 32 and 48 px/m (--ppm works now).
+3. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
+4. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
+5. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
