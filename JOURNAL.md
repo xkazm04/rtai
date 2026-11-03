@@ -1076,3 +1076,11 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   (it hung 6 px out). Strip now 2240 x 160, 20 cells (README). Dev cash counter prints "12,480"
   (`after_i12h3/`, `work/hud12_ab3.png`: before | i12 | i12b). Manifest `d4n_digits2`, provenance line, ladder row.
   Commit 200d8e4. Codex night total: 28 images, 190 cells, 7 rejected.
+- 03:53 MILESTONE (patch only, quest 1 view code) quest 1's cash counter in the inked numerals - the one HUD that
+  really plays. In `scratch-q1` (main 721fbbb + my iteration-6 view patch): `hud_view._ink_digits()` draws "$1,500"
+  from `hud_digits.png` on the old text baseline; the weapon line and the beat words keep the font (words need a
+  font, owner). Quest 1's own frame grabber (seeded) `before_q1h|after_q1h/0*.png`, crop `work/q1h_ab.png`: bold
+  condensed counter, clear of the banknote glyph. `q1_view_art.patch` regenerated (+179 / -82, 4 view files,
+  gdformat + gdlint clean, `git apply --check` clean on main 721fbbb; the old one kept as `q1_view_art_i6.patch`),
+  copied to `evidence/iter12/`. Unit tests in scratch-q1 with it: 166 passed, 0 failed. Ladder row "i12c".
+  REQUEST 16 now means this patch.

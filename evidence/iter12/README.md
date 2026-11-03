@@ -17,3 +17,10 @@
   `masters:night/d4-production/merged_i12/city-*-{32,48,64}ppm(-hud50).png`, `merged_i12_dec/decals-*`.
 - Full frame sets: `gtai-masters/night/d4-production/{before,after}_i12d(_c)`, `{before,after}_i12b(2)`,
   `{before,after}_i12h(2)`, `{before,probe}_i12s_city`; ladder rows "i12 ...".
+- `q1_view_art.patch` (quest 1 view code, for the quest owner; SUPERSEDES the iteration-6 patch in lane masters,
+  kept there as `q1_view_art_i6.patch`): as before, plus quest 1's cash counter drawn from `hud_digits.png`
+  (`hud_view._ink_digits`, baseline-placed, cap 0.92 of the old font size). 4 view files, +179 / -82, gdformat +
+  gdlint clean, `git apply --check` clean on main 721fbbb, unit tests 166/166 there with it. Needs n-d4 merged
+  first (it loads n-d4 art).
+  Frames (quest 1's own grabber, seeded): `masters:night/d4-production/before_q1h|after_q1h/0*.png`, crop
+  `work/q1h_ab.png`.
