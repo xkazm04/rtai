@@ -333,3 +333,8 @@ atlas; d5-combat blood names; vehicles cruiser accents).
   `git diff bba930d HEAD -- project tools native` is empty and the tree is clean, so the code gates of
   record stand for HEAD. I did not re-run unit/scenarios: they would only load the CPU under another
   lane's bench, and they cannot change on identical code. No code change; the 17:12 NEXT stands as is.
+- BLOCKED 17:18 (iter 52) idle full-gate bench: lock now held by `slice-play` (written 17:13, < 20 min);
+  skipped. It could not finish before the 17:30 stop in any case (~14 min plus export). Still no diff
+  under project/, tools/ or native/ since bba930d and the tree is clean, so the code gates of record stand
+  for HEAD. I made no code change and did not re-run any gates (identical code; that would only load
+  another lane's bench). The 17:12 NEXT stands unchanged: item 0 is one idle full-gate bench after the run.
