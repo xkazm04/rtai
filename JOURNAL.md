@@ -250,3 +250,15 @@ REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
 
 NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` 3f74350 after merging d-save + d-slice;
 REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
+
+## 2026-11-03 iteration 59 (BUILD, 16:20) - trial tree refreshed on d-slice 140cf98
+- d-slice moved to 140cf98 (ViewPrewarm paper sheet in collect_call_view.gd + clip recorder; nothing in my scope). Re-merged into
+  `d-save-trial` (3f74350 -> 333e3a6; only JOURNAL.md conflicted, kept ours). Patches 0001..0005 still hold.
+- Gates on the trial tree: lint 13/13; scenarios 12/12 (replay_60s identical); unit 409/0 on the re-run. FRICTION: the first unit run
+  had 1 failure, `test_noir_shadows.test_only_shadow_commands_with_a_length_are_swept` ("Parameter 't' is null", engine error in a
+  render test, not save code); it passed on an immediate re-run with no change, so it reads as a contended-machine flake (CONTENDED:
+  seven lanes share the box). Not mine to fix; flagging for the Director.
+- d-save itself: no code, sim, shared-file or bench change; no lock taken.
+
+NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` 333e3a6 after merging d-save + d-slice;
+REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
