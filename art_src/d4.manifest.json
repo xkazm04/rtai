@@ -640,6 +640,21 @@
     "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Inked Grime concept: the teal soul ghosts)"
    ],
    "seed": null
+  },
+  "d4n_q1": {
+   "file": "masters:night/d4-production/gen/out/d4n_q1.png",
+   "sha256": "b5089482baca04efe0204210e9a442f506878ae37c3fc5f69ae57c71f51c44d8",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/q1.txt",
+   "prompt_sha256": "9f88508699ea7350d24156f30b0bc3f2f5aff0126bd5a932f4ffc4d6c02a4b16",
+   "layout_template": "masters:night/d4-production/gen/refs/t_q1.png",
+   "references": [
+    "own: rtai features/city/art/props/crate_stack.png (approved D4 prop, style anchor)",
+    "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
+   ],
+   "seed": null
   }
  }
 }
