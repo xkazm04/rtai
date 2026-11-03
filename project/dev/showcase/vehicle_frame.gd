@@ -6,7 +6,9 @@ extends Node
 ## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
 ## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
-##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage] [--soul] [--cue-shots]
+##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage|yield] [--soul] [--cue-shots]
+## --scene=yield: Rivet stays on foot beside the parked sedan while three cars stop behind it;
+## --blind hands traffic no obstacles (the behaviour before set_obstacles).
 ## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
 
 const MASTER_SEED: int = 31
@@ -32,6 +34,12 @@ const CARNAGE_SHOTS: Dictionary[int, String] = {
 	560: "ram-3",
 	660: "aftermath",
 	900: "after-the-wreck",
+}
+const YIELD_SHOTS: Dictionary[int, String] = {
+	12: "yield-cars-coming",
+	75: "yield-braking",
+	180: "yield-queued",
+	420: "yield-still-queued",
 }
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
 
@@ -62,6 +70,8 @@ func _ready() -> void:
 	_world.loop().set_input(
 		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
 	)
+	if VehicleFrameSetup.chasers:
+		_world.loop().set_input(InputSource.new())
 	printerr("vehicle_frame: input set at tick %d" % _world.context().clock.tick())
 	if _cue_shots:
 		_follow_cues()
@@ -129,6 +139,11 @@ func _parse_args() -> bool:
 			_soul = true
 		elif arg == "--cue-shots":
 			_cue_shots = true
+		elif arg == "--blind":
+			VehicleFrameSetup.blind = true
+		elif arg == "--scene=yield":
+			VehicleFrameSetup.chasers = true
+			_shots = YIELD_SHOTS.duplicate()
 		elif arg == "--scene=carnage":
 			_carnage = true
 			_shots = CARNAGE_SHOTS.duplicate()

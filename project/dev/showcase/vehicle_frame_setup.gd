@@ -7,6 +7,18 @@ extends RefCounted
 
 const LANE_TILES: int = 10
 
+## --scene=yield: three sim cars come up behind the parked sedan (traffic yields to service cars).
+static var chasers: bool = false
+## --blind: the port drops the obstacle feed (traffic cannot see service cars: the "before").
+static var blind: bool = false
+
+
+class Blind:
+	extends CityVehicleWorld
+
+	func set_obstacles(_xy: PackedFloat64Array) -> void:
+		pass
+
 
 class Route:
 	extends InputSource
@@ -71,7 +83,7 @@ static func build(world: World, parent: Node, look: StringName, carnage: bool) -
 	city.spawner.targets = CityTargets.street(140, 6, 1)
 	var svc: VehicleService = VehicleService.new()
 	world.add_system(svc)
-	var vw: CityVehicleWorld = CityVehicleWorld.new(city)
+	var vw: CityVehicleWorld = Blind.new(city) if blind else CityVehicleWorld.new(city)
 	svc.world = vw
 	city.residency.update(city.focus)
 	_stage(city, svc, vw, carnage)
@@ -107,6 +119,13 @@ static func _stage(
 	else:
 		@warning_ignore("return_value_discarded")
 		svc.spawn_parked(&"sedan", lane, Vector2.RIGHT, 0)
+		for back: float in [20.0, 34.0, 48.0] if chasers else []:
+			var at: Vector2 = lane - Vector2(back, 0.0)
+			var car: Array = [SimConst.K_CAR, at.x, at.y, 1.0, 0.0, int(back) % 5, 0, 12.0, at.y, 0]
+			@warning_ignore("return_value_discarded")
+			city.sim.spawn(PackedFloat64Array(car))
+		if chasers:
+			return
 		var ped: Vector2 = lane + Vector2(26.0, 0.0)
 		var spec: Array = [SimConst.K_PED, ped.x, ped.y, 0, 1, 2, 0, 0.0, 0, 0]
 		@warning_ignore("return_value_discarded")
