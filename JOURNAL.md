@@ -1209,3 +1209,4 @@ NEXT (iteration 8; NEXT 27-30 of iteration 7 still stand):
     (mid-tones, gap 2), as in NEXT 30.
 Morning reading order: night_iter8_summary.png -> item46 / item44 (grounding) -> item43 / item47 (owner A/B) ->
 night_iter7_summary.png and the iteration-7 order.
+- 05:00 night_iter8_summary.png rebuilt from h147cone (committed) / h148all + a26all (D5_FRINGE=1 D5_DOTS=1 package_shot.sh: every proposal + both options + rig shadows); per class at 32 (this board's classes): h148all L 0.460 / paper 0.311 / mid 0.082 / ink 0.097 (mock 0.494 / 0.336 / 0.104 / 0.080). a23all deleted (superseded).

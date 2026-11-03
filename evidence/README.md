@@ -77,7 +77,7 @@ tick count, no RNG.
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `item46_rig_shadows.png` | iteration 8 (dev hero + arena scenes, d5 tier): hatched cast shadows for the rigs up close (D5RigShadow + look_d5_shadow_group), a20 vs a22rs at 128 and 64, h135cl vs h139rs at 64 and 96, the package at 64, + the concept's ground shadow; fade 56 -> 64 px/m |
 | `item47_dots_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `dots_k` (the concept's halftone stipple in the shaded steel mid-tones, 64 -> 96 px/m) off / rejected 4 px screen / on at 128 and 96, the arena with dots + fringe, the concept; walk at 96: no added shimmer. Not default |
-| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h135cl at 32 / every proposal h138all at 32 and 48 (package + fringe) / the arena kill-cam a21all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
+| `night_iter8_summary.png` | ONE SCREEN for the morning, iteration 8: the mock / committed h147cone at 32 / every proposal h148all at 32 and 64 (package + fringe + dots + rig shadows) / the arena kill-cam a26all / the concept + a per-class table (ink = L < 0.15 here, not iteration 7's class) |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -249,8 +249,9 @@ No images (50/50 used). The open proposals were finished and measured as ONE pac
 Iteration 8 had no image budget. It worked where the remaining differences were visible by eye rather than in the
 tone table: the up-close misprint (`item43`), grounding (prop, car and rig shadows: `item44`, `item46`) and the
 mock's pavement clutter (`item45`). The iteration-7 list stands; changes:
-1. **The package is still not adopted** (unchanged; NEXT 27). Reproduce it plus the fringe: `D5_FRINGE=1 bash
-   C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]` (h140all / a23all).
+1. **The package is still not adopted** (unchanged; NEXT 27). Reproduce it plus both owner options: `D5_FRINGE=1
+   D5_DOTS=1 bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]`
+   (h148all / a26all, `night_iter8_summary`).
 2. **Mid-tones** (unchanged, art): with this board's classes (`night_iter8_summary`), mock mid 0.104 vs package
    0.081 vs committed 0.049. The prop and rig shadows do not move it (0.048 -> 0.049): the gap is the roof interiors.
 3. **Grounding** (NEW, closed in the dev scenes): every mock prop, car and actor sits on a pen-hatched shadow. Ours
