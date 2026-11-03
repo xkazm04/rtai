@@ -3,7 +3,8 @@ extends RefCounted
 ## D-Noir blood marks (lane noir): the shapes BloodFx leaves on the ground. Static, stateless,
 ## render only. The wobble is a hash of the mark's position (no RNG stream, no sim state).
 
-const POOL_PTS: int = 28
+## 56: at the 128 px/m kill-cam a 28-point ring printed straight chords (cut paper, not liquid).
+const POOL_PTS: int = 56
 const RIM: float = 1.1
 const LOBES: int = 4
 
@@ -83,8 +84,9 @@ static func contact(solid: Callable, at: Vector2, v: Vector2) -> Vector2:
 	return free
 
 
-## The pool outline: radius r wobbled by three low-frequency waves (min 0.66 r, so the polygon
-## stays star-shaped and simple), pushed out up to |flow| on the side facing flow.
+## The pool outline: radius r wobbled by three low-frequency waves and a fine scallop (the wet
+## edge meeting the asphalt; min 0.64 r, so the polygon stays star-shaped and simple), pushed
+## out up to |flow| as a broad rounded lobe on the side facing flow (a cos^2 lobe ran to a point).
 static func ring(at: Vector2, r: float, flow: Vector2, s: float) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
 	var f: Vector2 = flow.normalized() if flow.length() > 0.001 else Vector2.ZERO
@@ -93,8 +95,9 @@ static func ring(at: Vector2, r: float, flow: Vector2, s: float) -> PackedVector
 		var ang: float = TAU * k / POOL_PTS
 		var u: Vector2 = Vector2.from_angle(ang)
 		var w: float = 1.0 + 0.16 * sin(3.0 * ang + s * TAU) + 0.1 * sin(5.0 * ang + s * 17.0)
-		w += 0.06 * sin(9.0 * ang + s * 29.0)
-		w *= 1.0 + run * pow(maxf(u.dot(f), 0.0), 2.0)
+		w += 0.06 * sin(9.0 * ang + s * 29.0) + 0.035 * sin(13.0 * ang + s * 41.0)
+		var lobe: float = 0.5 + 0.5 * u.dot(f)
+		w *= 1.0 + run * lobe * lobe
 		@warning_ignore("return_value_discarded")
 		out.append(at + u * r * w)
 	return out

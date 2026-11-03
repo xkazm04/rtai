@@ -90,7 +90,7 @@
     "replaces_fx": [
       "ink_splat"
     ],
-    "settled_redraw_ticks": 4
+    "settled_redraw_ticks": 6
   },
   "hits": {
     "kill": {
