@@ -270,3 +270,41 @@ bosses we resolve in future."
 3. A get-up grace window (no re-tackle for about 0.5 s) and a small recovery cost for Rivet. Ask the owner from the clip first.
 4. Re-run the section 20 bench on an idle machine (the 12:29 numbers were CONTENDED).
 5. At the merge: re-bless the look goldens once on the merged tree. My branch needs none today (11/11 at 0.00).
+
+### TRIED AND REJECTED (uncommitted, 16:17 - 16:28): two more fixes for the faller drawn under Rivet
+- v4: draw a downed body up to 0.4 m ahead of its sim point along its facing (rig_input.gd, drawing only).
+  WORSE. Rivet at 6 m/s outruns the 5.1 m/s slide, so by tick 560 the faller is beside or behind him and "ahead"
+  (the knock normal) points back at him. Discarded.
+- v5: throw a tackled human 45 degrees off his path (normal + the step-aside side, both sims). Earlier fallers
+  land wider, but the one tackled at the frame's tick is still drawn over him. Discarded, and the debug DLL rebuilt from HEAD.
+- Conclusion from three tries (v3 bigger lying body, v4, v5): the overlap at the moment of the hit is the
+  sprawl's reach (about 0.9 m) against a 0.77 m contact distance. The fix is a shorter sprawl, or one that
+  lands after the slide has opened a gap: rig art and timing (d5-cast / the rig), not the body sim. Evidence:
+  `v3/`, `v4/` and `v5/` crops in frames.json (13 entries).
+- FRICTION: `--import` and `run.mjs` flag "tree changed during run" if I edit tracked files while the gates run.
+  Draft in /tmp until the run ends.
+
+### Final state (iteration 3)
+- HEAD = the merge re-check commit on top of 05dd380 (7212f66 revert + 279aec7 run line + d80ff0b clip v2).
+  Both DLLs were rebuilt from HEAD.
+- Final gates: see the line below (written after the run).
+- Final evidence run (`run.mjs --no-bench --allow-dirty`, HEAD, both DLLs from HEAD):
+  - Green: lint 13/13, unit 334/0, parity exact (3532 floats, mutation caught at 629),
+    selftest goldens 11/11 (worst 0.00) + block 5/5.
+  - Scenarios **11/12** inside run.mjs: `scenario_city_chase` flow field max 2267 us > the 2 ms nav budget
+    (last field 140 us).
+  - FLAKY under contention, not bodies: my branch does not touch flow.cpp, sim_flow or the scenario
+    (`git diff main` is empty). The same suite standalone, 3 times today: 12/12 at max 356, 168 and 555 us.
+    In-runner today: 2 fails (2045, 2267 us) and 3 passes. **CONTENDED; re-run idle before the merge.**
+- Unmeasured this iteration: the section 20 bench. I did not take the lock: CPU-only changes since the 12:29
+  bench (run line), and the machine is contended.
+
+### NEXT (replaces the list above)
+1. The faller drawn under Rivet at the moment of a tackle: a shorter or delayed sprawl (DOWN_SPRAWL 0.9 ->
+   about 0.6, or start the fall after about 0.1 s of slide), judged on v2/after-48ppm-t560.png. Ask d5-cast whether the
+   sprawl art itself should shrink. Do NOT retry the sim fixes (v3, v4, v5 are in frames.json).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Re-run the section 20 bench and scenario_city_chase on an idle machine.
+4. Get-up grace and Rivet's recovery cost: ask the owner from bodies-v2-before-after-32ppm.mp4.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles
+   (evidence/merge/README.md, 16:20 re-check).
