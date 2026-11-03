@@ -40,7 +40,7 @@ func _init(texture_table: Dictionary) -> void:
 		names.append(str(row.get("name", "")))
 		var art: Variant = row.get("art")
 		var path: String = art if art is String else ""
-		if path != "" and ResourceLoader.load_threaded_request(path, "Texture2D", true) != OK:
+		if path != "" and ResourceLoader.load_threaded_request(path, "Texture2D", false) != OK:
 			failures.append("%s: load request refused" % path)
 			path = ""
 		paths.append(path)

@@ -46,6 +46,15 @@ Iteration 1 (09:04) died on a billing error before any turn; iteration 2 (10:04)
 - Gates at 77bac0d: lint 13/13, unit 335/335, scenarios 8/0, parity bit-exact, selftest 0 (debt only),
   bake --check deterministic.
 
+- FRICTION 11:08 flaky unit test: `test_noir_shadows.test_only_shadow_commands_with_a_length_are_swept`
+  failed 2 of 6 unit runs at 3bcd9a8 with an engine error `Parameter "t" is null` (no assert failed). It
+  builds CityTextures (ResourceLoader.load_threaded_request with sub-threads) from the full table. The
+  evidence run at 3bcd9a8 recorded unit FAIL for that reason (lint, scenarios, parity, selftest PASS).
+  Main 089400e on a scratch worktree: 3/3 unit runs pass (325). Likely trigger: my art-path swap makes
+  CityTextures thread-load the same d5/roofs files other tests load(). Fix (likely, not proven):
+  CityTextures.load_threaded_request use_sub_threads false -> 4/4 runs pass, goldens bit-identical,
+  prewarm 31 ms. If it recurs, look at ResourceLoader races on shared paths first.
+
 NEXT (iteration 3):
 1. Dash-free arm variant: the lane dashes run through the zebra gaps (T1 stops them 1-2 m short): a
    procedural `road_arm` tile (dashes cut at the zebra) for the 4 arms, same tool.
