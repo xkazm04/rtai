@@ -1115,3 +1115,6 @@ NEXT (iteration 14 / morning, in order):
    d5-close's ask), plus iteration 11/12's open calls.
 4. Unchanged: rig 0.448 ms p99 (contended) vs 0.3 target (native RigArm / RigGait, characters owner);
    print_part tones; traffic states; d4-production asset notes.
+- Final at 72b7845 (05:53): unit 236/236, scenarios 8/8 (the last commit touched a dev scene + README only;
+  full evidence at 7e3eb68 above). Session end: tree clean, no Godot of mine running, my /tmp scratch and
+  scratch worktrees deleted.
