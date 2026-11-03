@@ -1164,3 +1164,24 @@ NEXT (iteration 18 final, replaces the 07:10 list's item 2): 2. Crowd shadows: f
   rigged slot with no drawn rig (e.g. the player slot, or a rig culled by CharacterRigs). The native CitySim
   mirrors this writer (NAT-06 parity), so a sim-side fix must land in both and pass `just parity`; a render-side
   alternative is to have NoirLook skip only the rigged slots (they already cast NoirFigureShadows).
+
+## Iteration 19 (07:18-07:30, BUILD, 12 min window before freeze)
+- (07:22) Read-only follow-up on the body-less blob lead (no code change, no frame). The 07:19 "rigged slot with
+  no drawn rig" suspect is WEAKER than written: `boot/city_characters.gd` `_before_render` only passes slots for
+  which `rigs.full_row(i)` is true (and never Rivet), i.e. slots CharacterRigs does draw as a full rig that
+  frame. Rivet is not in the sim's ped/cop kinds' rigged list either. So the remaining suspects, unverified:
+  (a) a crowd atlas cell that is blank / near-transparent for some clip frame (down / dying / a walk frame), so
+  RL_PEDS draws an empty quad above a real blob; (b) a one-frame order gap - a person dropping out of the
+  full-row set while its rig is already hidden; (c) a ped whose atlas sprite is drawn offset from (2,3) px so
+  the stretched blob lands on open pavement. How to tell them apart next time: dump `_frame_cell(i)` + `_rigged`
+  for the people inside the street-48 crop (row 5 of evidence/crowd-shadow-before-after-NOT-adopted.png) and
+  check those atlas cells' alpha. Cheapest render-side fix regardless of cause: in look_noir_crowd_shadow, only
+  print the hard ink where the crowd's people layer has ink above it (needs the people layer as a texture -
+  not free) - so prefer fixing the cause.
+- (07:24) Close (iteration 19). Code commits: none (journal only). Gates: not re-run; project/ tree unchanged
+  since 641d2b1 (gate PASS there stands). Images 0 generated, 0 rejected; Leonardo not probed (no generation
+  planned in a 12 min window); provenance +0. Shared files touched: none. No process of mine running.
+NEXT (iteration 19): 1. Owner picks (carried). 2. Crowd shadows: first identify the body-less blob with the
+  dump above (suspects a/b/c), then fix at the cause and re-apply look_noir_crowd_shadow (01409e4). Items 3-5
+  of the iteration-18 07:10 list stand (junction prop/shadow mask channel, per-light directions,
+  showcase_fight.gd 227 lines -> setup helper).
