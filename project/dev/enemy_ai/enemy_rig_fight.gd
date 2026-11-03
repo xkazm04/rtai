@@ -146,6 +146,7 @@ func _impacts() -> void:
 	for e: EnemyAgent in pit.agents:
 		if e.flinch_tick == pit.tick and _rig_of(e.id) != null:
 			_rig_of(e.id).hit(e.flinch_dir, FLINCH_SHOVE)
+			stats["flinch_frame_%d" % e.id] = _frame_no + 1  # the next saved frame (evidence)
 		if e.hurt_tick != pit.tick:
 			continue
 		var at: Vector2 = e.pos * PX
