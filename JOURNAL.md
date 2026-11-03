@@ -1147,3 +1147,26 @@ NEXT (session end, iteration 12):
   Patch: the hidden branch draws it at the old peek spot; `_eyes()` removed (no callers). Frames
   `after_q1c|after_q1p2/01-monologue.png`, crop `work/q1peek_ab.png`. Patch +189 / -109, `git apply --check` clean on
   main. README row, provenance line, ladder row "i12f". Note for the quest owner: the HP bar is drawn teal (code).
+- 04:06 CHECK final morning order (fresh `scratch-m12q` = main 721fbbb + `merge --no-commit n-d4` at aeb69f3, no
+  conflict, + the final `q1_view_art.patch`, applies): lint 13/13 over 214 files, unit **166/166**, scenarios **8 ran,
+  0 failed** (quest collect-call succeeds in 11436 ticks, cash 1500; replay_60s final cbeb734ff9b97c41), quest frames
+  `merged_q1_i12b/` = `after_q1p2/` except the dumpster (n-d4's current prop; `work/q1m_diff07.png`). Scratch removed.
+  Summary sheet now 11 rows (+ the peek).
+NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
+- Owner review (each reverts alone): 7f517e6 (tank tracks), 72301db (bollard), 36ce71b + 200d8e4 (HUD numeral strip +
+  dev overlay; revert together), dd1f68c + 6e8689e + aeb69f3 (quest 1 cast captures: Rivet, patrol cop, Rivet peek;
+  only drawn by the quest patch). Originals in `masters:backup_tt/`, `backup_bl/`.
+- Director: REQUEST 16 = `evidence/iter12/q1_view_art.patch` (+189 / -109; the iteration-6 places/cast/HUD art plus the
+  inked cash counter, Rivet, the patrol cops and Rivet's hide-spot peek). Order: merge n-d4 into main (no conflict),
+  then `git apply` it; dry-run results in the 04:06 CHECK line. REQUEST 19 / 21 unchanged (`evidence/iter10/`),
+  REQUEST 22 (visual-engine, optional): aquatint on paving.
+- A real HUD (code owner): counters from `features/hud/art/hud_digits.png` (README: cells, advances, baseline). Words
+  still need a bundled font (AST-10, owner OK).
+- Quest 1 left as code placeholders: the arc ball + whisper rings (FX code), the teal HP bar (doctrine: teal = the
+  dead), the beat / HEAT words (font). The cast sprites are rig snapshots: re-capture with `dev/showcase/
+  rivet_sprite.gd [--kind=cop]` + masters `rivet_matte.py` / `sprite_rim.py` / `rivet_peek.py` if the parts change.
+- Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
+- Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` so `build/evidence/bench.json` is current.
+- Codex: 2 images this iteration (0 rejected); night total 28 images, 190 cells, 7 rejected; no limit hit.
+- Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (quest patch applied + art copies); other scratch
+  worktrees removed; my Godot runs all finished.
