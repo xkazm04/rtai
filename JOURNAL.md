@@ -882,3 +882,12 @@ and junction at 32 / 48, the light showcase at 32 / 48 / 64).
   FOUND: `dropped` 161 -> 2577 in the showcase - its probe fills the budget with held fires, and at night
   CityHeadlights retries its refused adds every tick (cheap, but inflates the counter). Fix candidate:
   back off a refused slot until the next re-pick / count refusals apart.
+- FIX (96d76a8): CityHeadlights backs off 30 ticks after the budget refuses an add (unit 221: one refusal,
+  then none inside the back-off). Goldens unchanged.
+- MILESTONE (99211fc) night golden at arena zoom: block auto 64 px/m night (the D5 overlay under the grade;
+  LOOKED at: vermilion held, lamp pools at both kerbs, rigs readable). Block goldens 5/5 worst 0.00.
+- OWNER OPTION (rendered, not shipped): night tuning, same scene (block, no fx-moment) at 32 / 48:
+  soft 0.66 / 1.3 keeps the street's cracks and grain; shipped 0.58 / 1.5; hard 0.50 / 1.8 sinks the street
+  to flat ink. 40-night-options/night-options-block-{32,48}.png; ladder 40. lights.json was edited for the
+  renders and restored (git clean). First sheet mixed an --fx-moment shipped frame with plain option
+  frames (different sim moment) - caught on looking, re-rendered; the mixed sheet was overwritten.
