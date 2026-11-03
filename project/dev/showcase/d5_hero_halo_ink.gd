@@ -17,8 +17,15 @@ static var _mat: ShaderMaterial = null
 
 
 ## The dev A/B switches for the hero and arena scenes (both tiers): D5_PRINT=thin swaps the world
-## print to look_d5_print; D5_HALO=ink adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow).
+## print to look_d5_print; D5_HALO=ink adds the rings (D5_HALO_PX width, D5_HALO_SHADOW=1 shadow);
+## D5_FRINGE=<k> sets look_d5_part fringe_k on the D5 part overlays (iteration 8 owner A/B).
 static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
+	var fringe: String = OS.get_environment("D5_FRINGE")
+	if not fringe.is_empty():
+		for n: Node in root.find_children(String(RigDetail.OVERLAY), "Sprite2D", true, false):
+			var m: ShaderMaterial = (n as Sprite2D).material as ShaderMaterial
+			if m != null:
+				m.set_shader_parameter("fringe_k", fringe.to_float())
 	if OS.get_environment("D5_PRINT") == "thin":
 		look.shader = load(PRINT) as Shader
 	if OS.get_environment("D5_HALO") == "ink":
