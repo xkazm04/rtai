@@ -1864,3 +1864,22 @@ Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Not
 NEXT (final, iteration 23): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-23).
 Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Bench still owed on an idle box.
 Nothing pushed or merged. Session end; tree clean at the commit below.
+
+## 2026-11-03 07:03 iteration 24, BUILD (freeze 07:30)
+- 07:04 Read JOURNAL (iteration 23 final NEXT), git log. Tree clean at ea418ee. C: 272 GB free.
+- 07:04 Bench NOT run: the box is contended again (4 other-lane Godot processes, PIDs 51284 / 43124 / 56416 / 38116,
+  not mine, untouched). The idle-box bench is still owed.
+- 07:06 LOOKED, no change: roofs board at 32 (`masters:night/d4-production/board_i18/roofs/roofs-32ppm.png`, HEAD
+  art). All 12 roofs read as ink on cream: the stencils (THE LAST SHIFT, OSHA, HQ, LOCAL 9 UNION) are legible, the
+  hazard stripe is the only accent, no camera break.
+- 07:07 LOOKED, no change: FX at 32 (`masters:night/d4-production/after_i14m_fx/fx-32ppm-1-fx.png`). The explosion,
+  smoke puffs, debris and muzzle flash read as ink-on-paper. The soft grey disc round the blast is the light /
+  shading pass, not an atlas cell; if the owner wants it gone, that's a visual-engine question (no request filed,
+  since it's not clearly worse than the target).
+- Nothing in scope is below the bar. With about 23 min to freeze I am not opening a probe that could not be evidenced
+  at 32 / 48 / 64 and gated before 07:30.
+- Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 24): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-24).
+Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Bench still owed on an idle box.
+Nothing pushed or merged. Session end; tree clean at the commit below.
