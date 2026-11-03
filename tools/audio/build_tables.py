@@ -48,7 +48,7 @@ CUES = [
     ("tyre_screech", "tyres screech in a hard turn (vehicles lane)", "tyre_screech", 2, "sfx", -9, 1.0, 0.08, 60, 30, 3, 2, False),
     ("engine_loop", "the car Rivet drives: engine bed (vehicle_entered)", "engine_loop", 1, "sfx", -14, 1.0, 0.0, 0, 0, 1, 3, True),
     ("siren_loop", "police sirens while wanted (wanted_changed)", "siren_loop", 1, "sfx", -16, 1.0, 0.0, 0, 0, 1, 2, True),
-    ("crowd_roar", "the riot's roar: a bed that swells with the gunfire and kills heard in the last seconds (AudioHooks.riot_bed)", "crowd_roar", 1, "sfx", -16, 1.0, 0.0, 0, 0, 1, 1, True),
+    ("crowd_roar", "the riot's roar: a bed that swells with the gunfire and kills heard in the last seconds (AudioHooks.riot_bed)", "crowd_roar", 1, "sfx", -7, 1.0, 0.0, 0, 0, 1, 1, True),
     ("city_ambience", "the night city bed under everything", "city_ambience", 1, "sfx", -22, 1.0, 0.0, 0, 0, 1, 0, True),
 ]
 KEYS = ["id", "doc", "sound", "takes", "bus", "gain_db", "pitch", "pitch_jitter", "max_m", "cooldown_ticks", "max_voices", "priority", "loop"]

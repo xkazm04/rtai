@@ -38,6 +38,12 @@ func set_on(id: StringName, on: bool, trim_db: float = 0.0) -> void:
 	_target_db[id] = (cue.gain_db + trim_db) if on else SILENT_DB
 
 
+## The bed's current level in dB (SILENT_DB when it has no player yet).
+func level_db(id: StringName) -> float:
+	var p: AudioStreamPlayer = _players.get(id)
+	return p.volume_db if p != null else SILENT_DB
+
+
 func is_on(id: StringName) -> bool:
 	return _target_db.get(id, SILENT_DB) > SILENT_DB
 

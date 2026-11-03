@@ -394,7 +394,7 @@
       "bus": "sfx",
       "cooldown_ticks": 0,
       "doc": "the riot's roar: a bed that swells with the gunfire and kills heard in the last seconds (AudioHooks.riot_bed)",
-      "gain_db": -16,
+      "gain_db": -7,
       "id": "crowd_roar",
       "loop": true,
       "max_m": 0,

@@ -110,6 +110,11 @@ func _done() -> void:
 	var out: Dictionary = {
 		"frames": _n,
 		"played": _audio.played,
+		"beds_db":
+		{
+			"crowd_roar": _audio.loops.level_db(&"crowd_roar"),
+			"city_ambience": _audio.loops.level_db(&"city_ambience")
+		},
 		"dropped": _audio.dropped,
 		"fx_fired": _view.fx_triggers.fired,
 		"cops_near": _cops_within(20.0),
