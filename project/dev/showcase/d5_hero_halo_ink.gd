@@ -10,6 +10,7 @@ const RING: StringName = &"halo_ink"
 
 const PRINT: String = "res://assets/shaders/look_d5_print.gdshader"
 const SHADOW_M: float = 0.09
+const PX_PER_M: float = 32.0  # zoom 1.0
 
 static var _mat: ShaderMaterial = null
 
@@ -23,6 +24,15 @@ static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
 		var w: String = OS.get_environment("D5_HALO_PX")
 		var sh: float = OS.get_environment("D5_HALO_SHADOW").to_float() * SHADOW_M * ppm
 		apply(root, 1.0 if w.is_empty() else w.to_float(), sh)
+		_mat.set_shader_parameter("fade", fade_at(ppm / PX_PER_M))
+
+
+## The ring's strength at a camera zoom: CutRig._on_view shrinks the halos by
+## hk = 1 - smoothstep(0.12, 0.3, SC * zoom) and hides them below hk 0.01 (constants copied);
+## the ring fades over hk 0.01..0.30 so it is gone exactly where the halo goes (no pop).
+static func fade_at(zoom: float) -> float:
+	var hk: float = 1.0 - smoothstep(0.12, 0.3, CutRig.SC * zoom)
+	return clampf((hk - 0.01) / 0.29, 0.0, 1.0)
 
 
 ## Adds the rings once (idempotent); shadow_px = the drop shadow offset in screen px (0 = none).

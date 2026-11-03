@@ -12,6 +12,7 @@ uniform float cut = 0.3;                   // = print_part.gdshader's silhouette
 uniform vec2 shadow_px = vec2(0.0);        // drop shadow offset, screen px (0 = no shadow)
 uniform float shadow_blur = 1.5;           // shadow softness, screen px
 uniform float shadow_a = 0.0;              // shadow ink opacity
+uniform float fade = 1.0;                  // follows the halo's own shrink (CutRig hk), so nothing pops where halos hide
 
 const vec3 INK = vec3(0.090, 0.075, 0.106);
 
@@ -29,12 +30,12 @@ void fragment() {
 		m = max(m, texture(TEXTURE, UV + dir * line_px).a);
 		s += step(cut, texture(TEXTURE, sc + dir * shadow_blur).a);
 	}
-	float sh = (s / 9.0) * shadow_a * step(0.01, length(shadow_px));
+	float sh = (s / 9.0) * shadow_a * step(0.01, length(shadow_px)) * fade;
 	if (a >= cut) {
 		discard;
 	}
 	if (m >= cut) {
-		COLOR = vec4(INK, 1.0);
+		COLOR = vec4(INK, fade);
 	} else if (sh > 0.004) {
 		COLOR = vec4(INK, sh);
 	} else {
