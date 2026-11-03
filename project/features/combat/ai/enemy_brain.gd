@@ -126,10 +126,21 @@ static func _flank_spot(e: EnemyAgent, pit: EnemyPit) -> Vector2:
 	return spot.clamp(pit.bounds.position, pit.bounds.end)
 
 
+## Where a tracking aim points: a gun leads a moving Rivet (roster.aim_lead) by his travel over
+## the lock plus the round's flight, so a steady strafe is hit and a late change of course is not.
+static func _tracked_aim(e: EnemyAgent, pit: EnemyPit) -> Vector2:
+	var to: Vector2 = pit.rivet_pos - e.pos
+	if e.melee() or pit.roster.aim_lead <= 0.0:
+		return to.normalized()
+	var flight: float = to.length() / maxf(e.arch.weapon.speed_mps, 1.0)
+	var t: float = pit.roster.aim_lock_ticks * SimClock.TICK_DT + flight
+	return (to + pit.rivet_vel * t * pit.roster.aim_lead).normalized()
+
+
 static func _windup(e: EnemyAgent, pit: EnemyPit) -> void:
 	e.timer -= 1
 	if not e.aim_locked(pit.roster.aim_lock_ticks):
-		e.aim = (pit.rivet_pos - e.pos).normalized()
+		e.aim = _tracked_aim(e, pit)
 	var creep: Vector2 = Vector2.ZERO
 	if e.melee():
 		creep = EnemyMotor.arrive(e, pit.rivet_pos, e.arch.speed_mps * 0.35, 0.9)

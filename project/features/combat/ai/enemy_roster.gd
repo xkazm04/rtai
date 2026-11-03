@@ -61,6 +61,7 @@ var max_shooters: int = 2
 var max_melee: int = 2
 var token_hold_ticks: int = 150
 var aim_lock_ticks: int = 12
+var aim_lead: float = 0.0
 var recover_ticks: int = 30
 var panic_ticks: int = 180
 var sight_m: float = 24.0
@@ -103,6 +104,7 @@ func _squad(t: DataTable, s: Dictionary) -> void:
 	max_melee = t.integer(s, "max_melee")
 	token_hold_ticks = CombatTuning.ticks(t.num(s, "token_hold_s"))
 	aim_lock_ticks = CombatTuning.ticks(t.num(s, "aim_lock_s"))
+	aim_lead = t.num(s, "aim_lead")
 	recover_ticks = CombatTuning.ticks(t.num(s, "recover_s"))
 	panic_ticks = CombatTuning.ticks(t.num(s, "panic_s"))
 	sight_m = t.num(s, "sight_m")

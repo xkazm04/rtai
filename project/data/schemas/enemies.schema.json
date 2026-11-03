@@ -173,6 +173,11 @@
     "squad": {
       "additionalProperties": false,
       "properties": {
+        "aim_lead": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "aim_lock_s": {
           "maximum": 1,
           "minimum": 0,
@@ -220,6 +225,7 @@
         }
       },
       "required": [
+        "aim_lead",
         "aim_lock_s",
         "hearing_m",
         "max_melee",
