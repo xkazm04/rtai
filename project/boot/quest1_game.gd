@@ -40,12 +40,12 @@ func boot() -> void:
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
 	@warning_ignore("return_value_discarded")
-	card.continue_pressed.connect(func() -> void: restart(Checkpoint.load_file(save_path)))
+	card.continue_pressed.connect(_continue)
 	@warning_ignore("return_value_discarded")
 	card.resume_pressed.connect(func() -> void: set_paused(false))
 	@warning_ignore("return_value_discarded")
 	card.quit_pressed.connect(func() -> void: get_tree().quit(0))
-	card.show_title(save_path != "" and Checkpoint.load_file(save_path) != null)
+	card.show_title(_can_continue())
 	if LaunchArgs.has("--replay"):
 		_replay.call_deferred(LaunchArgs.value("--replay"))
 
@@ -55,13 +55,41 @@ func start(cp: Checkpoint = null) -> void:
 	if session != null:
 		set_paused(false)
 		return
-	session = Quest1Session.resume(Events, Data, cp) if cp != null else null
-	if session == null:
-		session = Quest1Session.open(Events, Data)
+	var opened: Quest1Session = Quest1Session.resume(Events, Data, cp) if cp != null else null
+	_begin(opened if opened != null else Quest1Session.open(Events, Data))
+
+
+## Continue / Retry: the newest valid autosave slot (the other when one is damaged), else a
+## fresh start with the engine's one-line notice (SAV-08). Re-simulation happens in `accept`.
+func _continue() -> void:
+	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
+	var resumed: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
+	if session != null:
+		session.world.queue_free()
+		session = null
+	if view != null:
+		view.queue_free()
+		view = null
+	_ended = false
+	paused = false
+	_begin(resumed if resumed != null else Quest1Session.open(Events, Data))
+
+
+## True when Continue has a game to offer: a slot exists and the newest save is not the quest end.
+func _can_continue() -> bool:
+	if save_path == "" or not Save.has_continue():
+		return false
+	return Save.read_meta().get("point", "") != AutosavePoints.QUEST_END
+
+
+func _begin(opened: Quest1Session) -> void:
+	session = opened
 	if session == null:
 		get_tree().quit(1)
 		return
 	settings.apply()
+	if save_path != "":
+		session.autosave.sink = Save.autosave
 	if LaunchArgs.has("--record"):
 		session.world.loop().start_recording()
 	add_child(session.world)
@@ -103,16 +131,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if session == null or _ended:
 		return
-	var cp: Checkpoint = session.poll_checkpoint()
-	if cp != null and save_path != "":
-		Log.info("save", "checkpoint %s at tick %d (%d)" % [cp.beat, cp.tick, cp.save(save_path)])
+	session.autosave.poll()
 	if session.paid() and not session.system.runner.lines.busy():
 		_end()
 	elif session.failed():
 		_ended = true
 		session.live.enabled = false
 		Log.info("quest1", "contract failed at %s" % session.beat_id())
-		card.show_failed(save_path != "" and Checkpoint.load_file(save_path) != null)
+		card.show_failed(_can_continue())
 
 
 func set_paused(on: bool) -> void:
@@ -144,8 +170,6 @@ func _end() -> void:
 	var cash: int = session.stage.wallet.cash - session.cash_before
 	Log.info("quest1", "paid +%d at tick %d" % [cash, session.tick()])
 	card.show_paid(cash)
-	if save_path != "":
-		Checkpoint.erase(save_path)
 
 
 ## `-- --replay=<file>` (SIM-05): re-runs a recorded slice log on a fresh session and quits

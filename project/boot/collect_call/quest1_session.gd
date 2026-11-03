@@ -28,6 +28,8 @@ var live: LiveInput
 var tape: InputTape
 var actions: PlayerActions
 var report: QuestReport = QuestReport.new()
+## The quest's autosave points (set a `sink` to turn them on; see Quest1Autosave).
+var autosave: Quest1Autosave
 var cash_before: int = 0
 var master_seed: int = MASTER_SEED
 var _last_beat: String = ""
@@ -62,6 +64,10 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 		Log.error("quest1", "collect-call did not load: %s" % [s.report])
 		s.world.free()
 		return null
+	var ids: Array[String] = []
+	for beat: QuestBeat in loaded.package.beats:
+		ids.append(beat.id)
+	s.autosave = Quest1Autosave.new(s, ids)
 	s.system.runner.start()
 	s.cash_before = s.stage.wallet.cash
 	s._last_beat = s.beat_id()
@@ -110,6 +116,11 @@ func poll_checkpoint() -> Checkpoint:
 	if beat == _last_beat or state() != QuestRunner.State.ACTIVE:
 		return null
 	_last_beat = beat
+	return checkpoint(beat)
+
+
+## The checkpoint at this tick (between ticks): the tape before it and the sim's state hash.
+func checkpoint(beat: String) -> Checkpoint:
 	var cp: Checkpoint = Checkpoint.new()
 	cp.quest = QUEST
 	cp.beat = beat
