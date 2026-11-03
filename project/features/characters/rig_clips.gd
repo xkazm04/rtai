@@ -21,6 +21,8 @@ const HIT_SHOVE: float = 90.0
 const DOWN_SPRAWL: float = 0.9
 const DOWN_FALL_S: float = 0.22
 const DOWN_RISE_S: float = 0.45
+## The faller stays upright this long while the knock slide opens a gap, then sprawls.
+const DOWN_DELAY_S: float = 0.12
 
 var punch_t: float = 0.0
 var punch_len: float = PUNCH_S
@@ -33,6 +35,7 @@ var fleeing: bool = false
 ## Set by the host while the body is knocked down (RigFeed.Flag.DOWN); clearing it gets up.
 var down: bool = false
 var down_amt: float = 0.0
+var down_t: float = 0.0
 
 
 func reset() -> void:
@@ -44,6 +47,7 @@ func reset() -> void:
 	fleeing = false
 	down = false
 	down_amt = 0.0
+	down_t = 0.0
 
 
 func punch(combo: int) -> void:
@@ -106,7 +110,10 @@ func sample(rig: CutRig, dt: float) -> void:
 		rig.dead = true
 		rig.c_sprawl = minf(death_amount, death_t / DEATH_RAMP_S * death_amount)
 	else:
+		down_t = down_t + dt if down else 0.0
+		var falling: bool = down and down_t >= DOWN_DELAY_S
 		var rate: float = 1.0 / DOWN_FALL_S if down else 1.0 / DOWN_RISE_S
-		down_amt = move_toward(down_amt, DOWN_SPRAWL if down else 0.0, dt * rate)
+		var goal: float = DOWN_SPRAWL if falling else (down_amt if down else 0.0)
+		down_amt = move_toward(down_amt, goal, dt * rate)
 		rig.dead = down_amt > 0.05
 		rig.c_sprawl = down_amt
