@@ -1,12 +1,15 @@
 extends Node
 ## The Hauler in quest 1's real view (boot/quest1.tscn), through bound input only: Start, a ring
-## of dock guards pinned round Rivet, then Q (power_hauler) and the left stick (the tank rams
-## east) and the melee press (the stomp), one tick per frame, a PNG every tick. Dev-only:
+## of dock guards pinned round Rivet, then Q (power_hauler), the melee press (a stomp on the
+## near ring), the left stick (the tank rams east through the outer ring) and a second stomp, one
+## tick per frame, a PNG every tick. Dev-only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/quest_hauler_rec.tscn
 ##     -- --out=<abs dir>
 
 const RING: int = 6
-const END_TICK: int = 260
+const END_TICK: int = 330
+## Ticks run before the ring (the opening line types out).
+const WARM: int = 420
 
 var _out: String = ""
 var _game: Quest1Game
@@ -32,7 +35,7 @@ func _ready() -> void:
 
 func _run() -> void:
 	var s: Quest1Session = _game.session
-	for i: int in 30:
+	for i: int in WARM:
 		s.step()
 	var stage: CollectCallStage = s.stage
 	var at: Vector2 = stage.arena.rivet.pos
@@ -41,8 +44,8 @@ func _run() -> void:
 		g.pos = at + Vector2.from_angle(TAU * i / RING) * (2.6 if i % 2 == 0 else 6.5)
 	for t: int in END_TICK:
 		_tap(&"power_hauler", t == 10)
-		_tap(&"melee", t == 150)
-		_stick(0.9 if t >= 40 and t < 110 else 0.0)
+		_tap(&"melee", t == 40 or t == 230)
+		_stick(0.9 if t >= 90 and t < 170 else 0.0)
 		Input.flush_buffered_events()
 		s.step()
 		await _save("f_%04d" % t)
