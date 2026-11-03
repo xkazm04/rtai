@@ -1,0 +1,136 @@
+{
+  "$id": "gtai.vehicle_handling/1",
+  "additionalProperties": false,
+  "properties": {
+    "damage": {
+      "additionalProperties": false,
+      "properties": {
+        "d1_at": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "d2_at": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "dv_min": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "hp": {
+          "minimum": 1,
+          "type": "number"
+        },
+        "per_dv": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "wreck_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "hp",
+        "d1_at",
+        "d2_at",
+        "dv_min",
+        "per_dv",
+        "wreck_s"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kill_at": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "profiles": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "accel": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "brake": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "drag": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "drift_at": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "grip": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "handbrake_grip": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "mass": {
+            "minimum": 1,
+            "type": "number"
+          },
+          "reverse_max": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "slide_grip": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "steer_rate": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "vmax": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "mass",
+          "vmax",
+          "reverse_max",
+          "accel",
+          "brake",
+          "drag",
+          "grip",
+          "slide_grip",
+          "drift_at",
+          "handbrake_grip",
+          "steer_rate"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.vehicle_handling/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "kill_at",
+    "damage",
+    "profiles"
+  ],
+  "type": "object"
+}

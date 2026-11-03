@@ -36,7 +36,7 @@
           "type": "StringName"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "contract": "The full payload (killer, victim, kind) is decided BEFORE the damage chokepoint applies the lethal hit, and the chokepoint is the only emitter. Spike bug: evolve moves.gd:119 set death_kind after _damage(), so the kill log saw the default kind.",
@@ -127,7 +127,7 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
     },
     {
       "doc": "Rivet left a vehicle (runtime vehicle id).",
@@ -139,7 +139,23 @@
           "type": "int"
         }
       ],
-      "wired": false
+      "wired": true
+    },
+    {
+      "doc": "A car Rivet drives hit a person (victim_id = the bubble sim slot): killed above the vehicle_handling kill_at speed, else knocked down. Combat's chokepoint turns a kill into actor_killed (kind run_over); the heat ladder may raise heat on it.",
+      "emitter": "features/vehicles",
+      "name": "pedestrian_struck",
+      "params": [
+        {
+          "name": "victim_id",
+          "type": "int"
+        },
+        {
+          "name": "killed",
+          "type": "bool"
+        }
+      ],
+      "wired": true
     },
     {
       "doc": "The next wave of a combat encounter began. encounter is the place id the encounter is held at (a quest location), wave counts from 1. Quest bark tag wave-start.",
