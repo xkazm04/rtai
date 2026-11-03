@@ -661,17 +661,17 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   coiled cord, soda-can disc, envelope), the props' 4 px inner stroke (3 px mailbox), same footprints. Props board
   `before_pr2|after_pr2s/props-{32,48,64}ppm.png`, crops `work/props2_ab.png`; city `after_pr2_city/`; quest
   `after_q1l/`. Commit 58da0b0.
-- 01:35 quest HUD: the stretched memo tape crossed the beat title; the memo frame got 18 px more paper on top
+- 01:34 quest HUD: the stretched memo tape crossed the beat title; the memo frame got 18 px more paper on top
   (`work/q1_top_check.png`). Patch re-saved; final quest frames = `after_q1l/`.
-- 01:36 FRICTION (mine): edited two README pointers while `run.mjs` ran -> unit-tests FAILED on "tree changed during
+- 01:34 FRICTION (mine): edited two README pointers while `run.mjs` ran -> unit-tests FAILED on "tree changed during
   run" (tests themselves 142/142). Same lesson as iteration 3: never touch the tree while the gates run.
-- 01:40 GATES at 11cc7a3 (clean re-run): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
+- 01:36 GATES at 11cc7a3 (clean re-run): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8,
   parity bit-exact, selftest 65 art textures, 0 placeholders. bench not re-run (no new city texture ids; the city
   textures changed are the same count and size).
 - Sheet: `masters:night/d4-production/night_iter6_summary.png` (7 items, before | after).
-- 01:43 REVERTED (not shipped): the Robo-tazer arc ball drawn with the FX atlas crackle instead of its translucent
+- 01:37 REVERTED (not shipped): the Robo-tazer arc ball drawn with the FX atlas crackle instead of its translucent
   vermilion halo (`after_q1m`, `work/q1ball_ab.png`): the crackle barely showed and the ball lost its vermilion danger
   ring. It read worse, so the original drawing stays.
-- 01:45 quest patch drops the placeholder labels the art now carries ("PAYPHONE", "$1,500", "taped under"), as the
+- 01:37 quest patch drops the placeholder labels the art now carries ("PAYPHONE", "$1,500", "taped under"), as the
   GDS-08 deviation's re-check asks (`work/q1labels_ab.png`). Zone names and "PROJECT TUCK-IN" stay. Final patch +125 /
   -80 over 4 view files, lint clean; final frames `after_q1n/`.
