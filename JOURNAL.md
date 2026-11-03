@@ -509,3 +509,14 @@ NEXT (after the 17:00 freeze / next session, in order):
 - NEXT: (post-day) fire half 2 after splitting out `vehicle_burn.gd` (Rivet takes fire damage,
   wreck-to-wreck spread); frame the fire kill once d5-combat's blood is merged; a `burned` kill kind
   (REQUEST 10); consumers for REQUEST 1/2/3/4; a drive48 bench variant that includes VehicleService.
+
+## Iteration 51 (17:05-17:08, STABILIZE)
+- Handoff check only. Since the gated code e341b25 the only change under project/native/tools is
+  one line in `project/features/vehicles/README.md`. Lint re-run on fc6c092: 13/13 pass over 358
+  files. Unit/scenarios/parity were not re-run; they were green at eb7d066 (evidence/vehicles/it6/),
+  and no code has changed since then.
+- REPORT.md (17:04) and evidence/vehicles/it2-it6 are in place. No Godot process is running. The bench lock is held by
+  d5-city, and I did not touch it. 0 frames, 0 rejected, no AI images, no provenance lines.
+- NEXT: unchanged from iteration 50 (post-day: fire half 2 after splitting out `vehicle_burn.gd`;
+  frame the fire kill once d5-combat's blood is merged; a `burned` kill kind (REQUEST 10); consumers
+  for REQUEST 1-4; a drive48 bench variant with VehicleService). Merge with d-vehicles' native DLL.
