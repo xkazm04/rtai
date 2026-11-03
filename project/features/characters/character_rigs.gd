@@ -75,7 +75,11 @@ func _process(_delta: float) -> void:
 func step_ticks(steps: int) -> void:
 	var t0: int = Time.get_ticks_usec()
 	PartMaterials.set_view(zoom)
+	var d5: bool = RigDetail.set_view(zoom)
 	_assign()
+	for actor: int in _by_actor:
+		if d5 or RigDetail.is_on(_by_actor[actor]):
+			RigDetail.sync(_by_actor[actor])
 	for _k: int in steps:
 		ticks_stepped += 1
 		for actor: int in _by_actor:
