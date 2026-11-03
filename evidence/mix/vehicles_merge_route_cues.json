@@ -1,0 +1,43 @@
+{
+  "car_speed_mps_per_second": [
+    8.5,
+    15.9,
+    21.0,
+    26.4,
+    28.0,
+    25.4,
+    14.6,
+    6.0,
+    6.0,
+    4.2,
+    1.8,
+    0.0
+  ],
+  "dropped": {
+    "death:cooldown": 1
+  },
+  "engine_pitch_per_second": [
+    0.99,
+    1.24,
+    1.41,
+    1.59,
+    1.6,
+    1.6,
+    1.31,
+    0.95,
+    0.95,
+    0.9,
+    0.82,
+    0.75
+  ],
+  "frames": 720,
+  "missing": [],
+  "played": {
+    "death": 1,
+    "hit_flesh": 1,
+    "tyre_screech": 1
+  },
+  "vehicle_cues": {
+    "tyre_screech": 1
+  }
+}

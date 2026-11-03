@@ -65,3 +65,7 @@ scratch driver `evidence/requests/audio_vehicle.gd.txt`) with the sink hung the 
 speeds 8.2 / 15.7 / 19.2 / 5.1 / 1.1 m/s per second -> pitch scale 0.99 / 1.23 / 1.41 / 0.90 / 0.79. -16.5 LUFS integrated, true peak -3.1 dBFS, LRA 22 LU (the engine bed runs, then
 the clip goes quiet after the wreck). Frames at 3, 9, 13 s looked at: straight down, 0 rejected. Not covered: tyre_screech (the route has no slide), hijack slam (`vehicle_hijacked`),
 `pedestrian_struck` thud (unit-tested only). Measured, not heard. (The native DLL of my lane lacks `CitySim::set_obstacles`: with it the engine logs one error per call; the vehicles lane's DLL does not.)
+
+Second run on the vehicles lane's plain route (`--route`: enter the sedan, full throttle through a pedestrian, S-bend, handbrake slide; 12 s, report only, no clip,
+`vehicles_merge_route_cues.json`): the sink heard `tyre_screech` 1, and the `pedestrian_struck` Event gave 1 body thud + 1 death (the pedestrian was killed); engine pitch 0.99 -> 1.60 at
+28 m/s top speed -> 0.75 at rest (all four vehicle sounds now covered against real cars; the hijack slam is the `hit_metal` of the carnage run). Not heard.
