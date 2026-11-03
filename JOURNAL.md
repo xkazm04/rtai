@@ -335,3 +335,39 @@ NEXT (night run):
   merge. Added to the night run: NEXT 2 (with the ArenaHook).
 - GATES at the end of iteration 4: lint 13/13; unit 560/560 (run_unit.mjs, 23:04); scenarios
   21/21 (full suite, 22:52) + enemy scenarios 2/2 after the dummy fix.
+
+## Iteration 5 (23:05-23:30), BUILD: the fair aim-lead A/B clip
+- 23:05 answers.json re-read: nothing new for enemy-ai (enemy-ai-1 = A, placeholder; re-ask only
+  with a real-time clip in the final look). No ask this iteration (Rivet is still the nail dummy).
+- 34eea0c: enemy_rig_fight_run.gd takes --aim_lead=<f> (sets pit.roster.aim_lead after build), so
+  the A/B differs only in the lead without touching enemies.json. FRICTION: `(x as Object)` on a
+  Variant is an unsafe-cast warning = parse error; check-only caught it before the windowed run.
+- Clip j landed (23:10): rig_fight_three_pairs_nolead_32ppm.mp4, the A/B partner of clip i (same
+  staging, seed 31, fixed dummy; only aim_lead 0): cops 14 shots 1 hit, thug 1 swing 0 hits,
+  Rivet damage 6 (clip i, lead 0.8: 13/2, swings 2/1, damage 32). Looked at f165 and f400: the
+  chain reads. frames.json: j is now entry 2 and clip i's `before`; dropped the staged_prelunge
+  clip (superseded by the lunge clips) to stay at 15.
+- MILESTONE 3cd1378 + 5a635fa: dev/enemy_ai/aim_lead_ab.gd, a headless A/B (3 s for 2x20 fights).
+  FINDING (the clip pair is n=1, so measured): the seed only moves the shot spread, so the 20
+  seeds are one staging with spread varied; read it as such. Cop hit rate by the dummy's tell-read
+  share (lead 0 -> 0.8): read 0 = 43.7 % -> 43.7 % (a Rivet who never reads stands and fights, so
+  the lead has nothing to lead; 70 dmg / 25 s); read 0.7 = 8.2 % -> 10.8 % (damage 6.9 -> 28.4,
+  most of the gap is the thug's claw: the lead does not touch melee, it moves Rivet into the
+  claw, a second-order effect); read 1 = 0.4 % -> 1.7 %. So the TELL decides the hit (the
+  design contract: a watched tell is a dodged shot), and the lead only punishes moving without
+  reading. evidence/enemy-ai/aim_lead_ab{,_read0,_read1}.json.
+- Design read for the owner (no ask: the 21:25 bar needs the final look): at read 0.7 a cop
+  lands ~1 shot in 10. That is low pressure at range for a human who reads most tells; the dial is
+  accuracy by range or max_shooters, not the lead. Not tuned tonight (owner: stop tuning on
+  numbers until the final look).
+
+NEXT (night run; supersedes the iteration 4 list's items 1, the rest stand):
+1. Re-read answers.json. The lead A/B is ready as evidence (clips i/j + aim_lead_ab*.json), but
+   ASK only once Rivet fights with gunplay's pistol and rivet-motion's claw (21:25 bar).
+2. Pressure at range: a human reading 70 % of tells is hit ~1 in 10. Before any tuning, sweep
+   accuracy-by-range and squad.max_shooters with aim_lead_ab.gd (add --acc / --shooters knobs)
+   and pick the curve against the wave targets in pit_waves; then one clip per candidate.
+3. aim_lead_ab: make the seed move the dummy too (its read hash is seed-free today), so 20 seeds
+   are 20 fights, not one staging with spread varied.
+4. Items 2-7 of the iteration 4 NEXT (ArenaHook, real weapons, robot plan, flinch duck, city
+   block clip, robot hit tint note).
