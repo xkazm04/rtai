@@ -428,3 +428,7 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
 - 01:08 MILESTONE: lamp head fixed (h72): the riveted head of h71 printed as a gear ring at 48-64; the plain cap reads
   as the mock's round lamp head. d4 tier 0 px; d5 changed 972 / 2094 / 3585 px at 32/48/64 vs h71. d5_lamp marked
   SUPERSEDED in the manifest (no game file). item20 board = h70 | h71 | h72; hero frames = h72; ladder +1 row.
+- 01:09 FINAL gates: evidence tool (--no-parity --no-bench) ALL PASS at d5c2f3c (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok; the selftest colour count varies run to run as noted at 22:09); 47 untracked evidence PNGs restored.
+NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (features/city/art/d5/props/lamp_post.png,
+  arm over the street from the kerb) replaces the D4 'spoon' (hero d5 tier, item20). Images tonight: 41 of ~50.
