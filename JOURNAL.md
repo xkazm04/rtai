@@ -1845,3 +1845,6 @@ NEXT (final, iteration 21; the iteration-18 final NEXT stands except where noted
 
 NEXT (final, iteration 22): the iteration-21 final NEXT stands word for word (no art changed in iteration 22).
 Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Nothing pushed or merged. Tree clean.
+- 07:01 LOOKED, no change: city_frame focus 2 at 48 (`masters:after_i21oilc/city-2-48ppm.png`): the re-inked
+  oil_stain, the tile cracks, planters, drains, lamps, parked hatchback and Rivet all read as ink on cream; no
+  asset in scope is below the bar. Session end at 07:01; tree clean at the commit below.
