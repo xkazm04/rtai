@@ -24,6 +24,7 @@ static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
 		var w: String = OS.get_environment("D5_HALO_PX")
 		var sh: float = OS.get_environment("D5_HALO_SHADOW").to_float() * SHADOW_M * ppm
 		apply(root, 1.0 if w.is_empty() else w.to_float(), sh)
+		_mat.set_shader_parameter("rim_px", OS.get_environment("D5_HALO_RIM").to_float())
 		_mat.set_shader_parameter("fade", fade_at(ppm / PX_PER_M))
 
 

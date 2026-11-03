@@ -8,6 +8,7 @@ shader_type canvas_item;
 // and the part rotations. Dev A/B: D5_HALO=ink (D5_HALO_SHADOW=1 for the shadow) with dev/showcase/d5_hero.gd.
 
 uniform float line_px = 1.0;               // ring width, screen px
+uniform float rim_px = 0.0;                // extra cream rim width inside the ring, screen px (0 = the rig's own rim)
 uniform float cut = 0.3;                   // = print_part.gdshader's silhouette alpha cut (the cream rim's edge)
 uniform vec2 shadow_px = vec2(0.0);        // drop shadow offset, screen px (0 = no shadow)
 uniform float shadow_blur = 1.5;           // shadow softness, screen px
@@ -15,26 +16,31 @@ uniform float shadow_a = 0.0;              // shadow ink opacity
 uniform float fade = 1.0;                  // follows the halo's own shrink (CutRig hk), so nothing pops where halos hide
 
 const vec3 INK = vec3(0.090, 0.075, 0.106);
+const vec3 CREAM = vec3(0.949, 0.910, 0.835) * 0.97;   // print_part's halo cream x its mean grain
 
 void fragment() {
 	vec2 dx = dFdx(UV);
 	vec2 dy = dFdy(UV);
 	float a = texture(TEXTURE, UV).a;
 	float m = 0.0;
+	float c = 0.0;
 	float s = 0.0;
 	vec2 sc = UV - dx * shadow_px.x - dy * shadow_px.y;
 	s += step(cut, texture(TEXTURE, sc).a);
 	for (int k = 0; k < 8; k++) {
 		float an = float(k) * 0.785398;
 		vec2 dir = dx * cos(an) + dy * sin(an);
-		m = max(m, texture(TEXTURE, UV + dir * line_px).a);
+		m = max(m, texture(TEXTURE, UV + dir * (rim_px + line_px)).a);
+		c = max(c, texture(TEXTURE, UV + dir * rim_px).a * step(0.01, rim_px));
 		s += step(cut, texture(TEXTURE, sc + dir * shadow_blur).a);
 	}
 	float sh = (s / 9.0) * shadow_a * step(0.01, length(shadow_px)) * fade;
 	if (a >= cut) {
 		discard;
 	}
-	if (m >= cut) {
+	if (c >= cut) {
+		COLOR = vec4(CREAM, fade);
+	} else if (m >= cut) {
 		COLOR = vec4(INK, fade);
 	} else if (sh > 0.004) {
 		COLOR = vec4(INK, sh);
