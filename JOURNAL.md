@@ -370,3 +370,14 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   50 people rigMsAvg 0.366 (p99 0.647), 200 people 0.342 (p99 0.529), full rigs max 16, pool grown 0. Older uncontended
   rig-quarter "new" runs (another day, main) were ~0.30 at 50. Same-session A/B against main 089400e was set up
   (scratch worktree gtai-wt/scratch-cast-bench) but d5-combat took the bench lock at 15:42 -> skipped (rule).
+- Evidence run (clean tree, HEAD 294e6b5, --no-bench): lint 13/13, unit 326/326, scenarios 8/8, parity exact (1200
+  steps, mutation caught at 629), selftest look goldens 11/11 (worst 1.37) + block 5/5 (worst 0.91), world lock holds.
+- MILESTONE (masters only, no code) D5 hero scene's parked cruiser loses the night's vermilion light bar, the last
+  vermilion on a cop in the owner's H2 frames. A blue bar printed soul-teal there (dev-scene world teal uniform), so the
+  bar goes to cop NAVY (#3A4766 ramp by luminance, 1742 px) in a d5-cast copy of the borrowed sprites:
+  masters day-d5/d5-cast/borrowed/ (the night's folder untouched). Shoot with d5_hero --borrow=<that dir>. Same-session
+  A/B (renders heroBarA vs heroBarB): only the cruiser region changes (288 / 527 / 326 px at 32 / 48 / 64); it prints
+  ink (dark bar, cream centre), no vermilion, no teal; heroBarA == heroHunch12 (0 px). All straight down, 0 rejected.
+  Owner frames t1-vs-hero-48ppm and hero-d5-64ppm-ab rebuilt from heroBarB; A/B at frames/cruiser-hero-navybar-ab.png
+  (named in the cruiser-art-ab note; frames.json stays 15). Vermilion left in that scene = cones and the striped
+  barrier (danger cues, doctrine-allowed) and Rivet's collar.
