@@ -1787,3 +1787,6 @@ NEXT (final, iteration 20; the iteration-18 final NEXT stands, no art changed th
   `cracks` - code, low priority. Do not retouch the art: thinning breaks it into specks at 48 px/m.
 - Gates green at 4d010ba (no-bench); the bench is still owed an idle-box run. Codex: 0 images this iteration; night
   total 29 images, 194 cells, 7 rejected; no limit hit. Nothing pushed or merged.
+- 06:49 Bench NOT run: the box is contended again (4 other-lane Godot processes, PIDs 58268 / 30740 / 14668 / 31732,
+  not mine, untouched); a third contended PASS would add nothing. Scratch: the unreferenced hud100 frames deleted;
+  `survey_i20/`, `after_i20ck/`, `after_i20nc/`, `hud_i20/` kept (cited above). Session end; tree clean.
