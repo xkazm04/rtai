@@ -71,6 +71,23 @@
           "minLength": 1,
           "type": "string"
         },
+        "look": {
+          "enum": [
+            "bulked",
+            "scaled"
+          ],
+          "type": "string"
+        },
+        "look_arm_k": {
+          "maximum": 1,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "look_tint_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "morph_s": {
           "maximum": 3,
           "minimum": 0.05,
@@ -126,6 +143,9 @@
         "accel_mps2",
         "body_class",
         "doc",
+        "look",
+        "look_arm_k",
+        "look_tint_k",
         "morph_s",
         "ram_car_damage",
         "ram_mps",

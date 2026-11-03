@@ -12,7 +12,10 @@
   "hauler": {
     "accel_mps2": 9,
     "body_class": "rivet_ghost",
-    "doc": "Hauler: Rivet becomes the bulky ghost tank (body class body_class, bodies.json). morph_s is the readable grow/shrink; the tank moves at most top_mps, accelerates at accel_mps2 (momentum: no instant stop) and turns at most turn_dps. Ram: above ram_mps a contact knocks down humans and robots (the tackle matrix) and damages a car by ram_car_damage. Stomp: arm() starts a stomp_windup_s telegraph (readable, dodgeable), then a radial shockwave of stomp_radius_m, knockdown inside stomp_knock_m, stun stomp_stun_s, every stomp_cooldown_s.",
+    "doc": "Hauler: Rivet becomes the bulky ghost tank (body class body_class, bodies.json). morph_s is the readable grow/shrink; the tank moves at most top_mps, accelerates at accel_mps2 (momentum: no instant stop) and turns at most turn_dps. Ram: above ram_mps a contact knocks down humans and robots (the tackle matrix) and damages a car by ram_car_damage. Stomp: arm() starts a stomp_windup_s telegraph (readable, dodgeable), then a radial shockwave of stomp_radius_m, knockdown inside stomp_knock_m, stun stomp_stun_s, every stomp_cooldown_s. look is the tank silhouette (ASK ghost-powers-2): scaled = Rivet's parts grown to the hauler FORMS size; bulked = the same plus arms shortened to look_arm_k (a squat press-bot); both tint toward the souls' teal by look_tint_k.",
+    "look": "bulked",
+    "look_arm_k": 0.6,
+    "look_tint_k": 0.55,
     "morph_s": 0.4,
     "ram_car_damage": 40,
     "ram_mps": 3,
