@@ -839,3 +839,18 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   swims LESS than look_d4 on every crop instead of +12%. Default frames untouched (the shader loads only with
   D5_PRINT=thin). Board evidence/item32_print_world_grain.png; shader README row; ladder +1 row (label first written
   as 03:25, ahead of the clock: row cropped and re-added as 03:15). Metric script masters work/i7/pan_cls.py.
+- 03:19 MEASURED the whole open proposal package in motion (params JSON temporarily age_floor 1 + grain_floor 1,
+  restored from a copy, tree checked): D5_PRINT=thin + both floors, 48 px/m pan: junction pan13pkg 0.00049, mural
+  roof pan13pkgR 0.00000 (both tiers), vs shipped look_d4 0.00739 / 0.00975. Floors verified active in the stills
+  (tick 20 median RGB d4 78,72,81 -> 91,78,78; d5 80,72,78 -> 90,78,78). So NEXT 21's "fix the screen grain first"
+  is now inside the package: look_d5_print + the two floors can be adopted together with no pan cost.
+- 03:19 MILESTONE (0727aab, h106; gap 7): STRIKE (3.0 m, was 4.4) and the fist stencil (2.6 m, was 2.8) moved inside
+  the west lane (x -1.85; lane -3.5..-0.2) of the hero scene. Before, a bold centre dash showed between STRIKE's
+  letters and ran through the wrench, and the lamp head sat on the E. Control h105 = h98b (0 px at every zoom, both
+  tiers). h105 -> h106: d4 tier 0 px everywhere; d5 11683 / 25646 / 43962 / 31087 / 0 px at 32 / 48 / 64 / 96 / 128
+  (only the two decals and the dashes they uncover). By eye (work/i7/strike_ab.png = evidence/item33_strike_lane.png):
+  the dashes run unbroken, the lamp head is clear, STRIKE still reads at 32 px/m (letters ~16 px tall). The faint
+  wobbly contour under STRIKE is in the decal art (both rounds), not new. Ladder row (label first written 03:24,
+  ahead of the clock; cropped and re-added as 03:18).
+- 03:19 (same timestamp habit: the ladder label in the 03:15 entry was also ahead of the clock). Rule for the rest of
+  the session: run date before writing any time.

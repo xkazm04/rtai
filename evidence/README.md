@@ -60,6 +60,7 @@ tick count, no RNG.
 | `item30_thin_print_roof.png` | iteration 6: the mural roof at 32 px/m: look_d4 / look_d5_print / look_d5_print + plate lines at gamma 0.45 (the mock's diagonal hatch AND a light tone) / the mock's LOCAL 9 roof |
 | `item31_all_proposals_32.png` | iteration 6, FOR THE MORNING: 32 px/m h86 / h98b (committed) / h98b + every open proposal (look_d5_print, age_floor + grain_floor 1.0, D5 roof lines gamma 0.45; not committed) / the mock |
 | `item32_print_world_grain.png` | iteration 7: the look_d5_print proposal's paper grain moved to world pixels; 48 px/m car pan (40 ticks) stills + change maps: look_d4 / print with screen grain / print with world grain, junction (0.00739 / 0.00814 / 0.00049) and mural roof (0.00975 / 0.01075 / 0.00000) |
+| `item33_strike_lane.png` | iteration 7: STRIKE and the fist stencil inside the west lane instead of across the centre line (gap 7), h105 vs h106 at 48 and 32 px/m |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
