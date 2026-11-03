@@ -758,3 +758,9 @@ NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade
 - 02:57 boards + evidence/hero-d4d5-*ppm.png = h98b (d4 frames unchanged). MEASURED the whole iteration in motion:
   d5_pan default crop, 48 px/m, 40 ticks: pan7c (iteration start: old tiles) vs pan10 (h98b): d5 series mean change
   0.00739 -> 0.00739, paper px rate 0.0144 -> 0.0143, ink px flips per tick 0.00284 -> 0.00278. No added swim.
+- 03:01 REJECTED (h99m15 / h99m20, not committed; roofs restored byte-identically, tree clean): lighter pen lines on
+  the mural plate (b gamma 0.7 -> 1.5 / 2.0), testing whether lighter lines land in the light-wash step as thin grey
+  lines. Mural interior at 32 px/m (L / paper / ink / HF): 0.603 / 0.45 / 0.32 / 0.093 -> 0.635 / 0.49 / 0.26 / 0.094
+  -> 0.648 / 0.50 / 0.23 / 0.095 (mock roof 0.594 / 0.36 / 0.25 / 0.163). The tone overshoots the mock, the props'
+  hatch shading disappears, and HF does not move: iteration 5's conclusion stands (the roof texture gap needs a
+  look_d4 roof print, NEXT 17). Crop masters work/i6/mural_gamma.png; ladder row.
