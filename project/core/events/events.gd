@@ -19,6 +19,8 @@ signal contract_started(id: StringName)
 signal contract_completed(id: StringName)
 signal vehicle_entered(vehicle_id: int)
 signal vehicle_exited(vehicle_id: int)
+## A car hit a person (victim = the bubble sim slot): killed, or knocked down.
+signal pedestrian_struck(victim_id: int, killed: bool)
 ## The next wave of a combat encounter began (encounter = its place id, wave from 1).
 signal wave_started(encounter: StringName, wave: int)
 ## A boss stepped into the fight (boss = its character id).

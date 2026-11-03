@@ -88,6 +88,8 @@ var tiles: PackedByteArray
 var cells: PackedByteArray
 var owner: PackedInt32Array
 var counters: PackedInt32Array
+## Points outside the sim traffic brakes for (x, y pairs, at most OBST_MAX; set_obstacles()).
+var obst: PackedFloat64Array = PackedFloat64Array()
 ## Bumped by every chunk stamp or clear (the flow field rebuilds on a change).
 var map_version: int = 0
 
@@ -95,6 +97,7 @@ var map_version: int = 0
 func init(seed_value: int) -> void:
 	rs = seed_value & 0xFFFFFFFF
 	time = 0.0
+	obst = PackedFloat64Array()
 	map_version = 0
 	dir16x = SimArrays.f64(16)
 	dir16y = SimArrays.f64(16)

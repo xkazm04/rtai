@@ -1,0 +1,38 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "scenario-tests",
+  "gameId": "gtai",
+  "commit": "ac7827b426c1f1383f218e34b16239e4a951b83b",
+  "builtAt": "2026-11-03T15:25:37.248Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "fail",
+  "summary": "scenario-tests: exit 1, 1 of 11 failed (scenario_city_chase.gd)",
+  "counts": {
+    "passed": 10,
+    "failed": 1,
+    "skipped": 0
+  },
+  "metrics": {
+    "questPass": 1,
+    "questTicks": 2388,
+    "questBeatsReached": 3,
+    "questLinesShown": 9,
+    "questCashPaid": 500,
+    "questChecksPassed": 10,
+    "questChecksTotal": 10,
+    "questStubbed": 3,
+    "collectCallPass": 1,
+    "collectCallTicks": 11436,
+    "collectCallBeatsReached": 6,
+    "collectCallLinesShown": 23,
+    "collectCallCashPaid": 1500,
+    "collectCallChecksPassed": 20,
+    "collectCallChecksTotal": 20,
+    "collectCallStubbed": 3
+  },
+  "artifacts": [
+    "scenario-tests.log",
+    "quest-selftest.json",
+    "quest-collect-call.json"
+  ]
+}

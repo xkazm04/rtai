@@ -1,0 +1,18 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "lint",
+  "gameId": "gtai",
+  "commit": "27f41920e17ded5d98dbe0d7a4d479ad0de11363",
+  "builtAt": "2026-11-03T11:38:42.263Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "pass",
+  "summary": "lint: all 13 checks pass over 354 GDScript files",
+  "counts": {
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    "lint.log"
+  ]
+}

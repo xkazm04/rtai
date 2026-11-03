@@ -1,0 +1,15 @@
+{
+  "cues": {
+    "crash": 4,
+    "horn": 2
+  },
+  "hijacked": [
+    "taxi"
+  ],
+  "player_hp_lost": 91.5900018215179,
+  "result": "pass",
+  "states": [
+    2,
+    2
+  ]
+}

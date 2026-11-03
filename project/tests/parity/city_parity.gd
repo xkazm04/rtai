@@ -7,6 +7,13 @@ extends RefCounted
 ## rioter of side b) to prove the gate can fail (TST-05).
 
 const CHECK_EVERY: int = 30
+## Every STRIKE_EVERY steps a car hits two people on both sides (the vehicles feature's strike()):
+## one lethal, one knockdown, so that write is held to parity too.
+const STRIKE_EVERY: int = 97
+## Every OBST_EVERY steps the obstacle list (set_obstacles(), the vehicles feature's service cars)
+## is re-placed 9 m ahead of the first cars of side a's snapshot, so traffic brakes for it, stands
+## longer than CitySimCarPass.PASS_WAIT_S and pulls out into the oncoming lane to pass.
+const OBST_EVERY: int = 300
 const SIM_SEED: int = 4242
 const SPAWN_SEED: int = 99
 const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -34,6 +41,7 @@ func run(a: CitySimBackend, b: CitySimBackend, steps: int, plant_at: int) -> boo
 		b.step(dt, cam.x, cam.y, tg.x, tg.y)
 		us[0] += t1 - t0
 		us[1] += Time.get_ticks_usec() - t1
+		_vehicle_inputs(a, b, st)
 		if st == plant_at:
 			_plant(b)
 		var made_a: int = sa.tick(cam, false)
@@ -72,6 +80,42 @@ func _side(sim: CitySimBackend, gen: CityGen) -> CitySpawner:
 		@warning_ignore("return_value_discarded")
 		sp.try_riot(RIOT, 22.0, 34.0, true)
 	return sp
+
+
+## The vehicles feature's writes, the same on both sides: strikes and the obstacle list.
+static func _vehicle_inputs(a: CitySimBackend, b: CitySimBackend, st: int) -> void:
+	if st % STRIKE_EVERY == 48:
+		_strike(a, st)
+		_strike(b, st)
+	if st % OBST_EVERY == 7:
+		var xy: PackedFloat64Array = _obstacles(a.snapshot())
+		a.set_obstacles(xy)
+		b.set_obstacles(xy)
+
+
+## The first two live, standing people of the snapshot: the first killed, the second knocked down.
+static func _strike(sim: CitySimBackend, st: int) -> void:
+	var snap: PackedFloat64Array = sim.snapshot()
+	var hit: int = 0
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE or hit == 2:
+			return
+		var k: int = int(snap[r + 1])
+		if (k == SimConst.K_PED or k == SimConst.K_COP) and int(snap[r + 2]) != SimConst.M_DEAD:
+			sim.strike(int(snap[r]), 9.0 + st * 0.001, -3.0, hit == 0)
+			hit += 1
+
+
+## A point 9 m ahead of each of the first OBST_MAX cars in `snap`.
+static func _obstacles(snap: PackedFloat64Array) -> PackedFloat64Array:
+	var xy: PackedFloat64Array = PackedFloat64Array()
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE or xy.size() >= SimConst.OBST_MAX * 2:
+			break
+		if int(snap[r + 1]) == SimConst.K_CAR:
+			@warning_ignore("return_value_discarded")
+			xy.append_array([snap[r + 4] + snap[r + 6] * 9.0, snap[r + 5] + snap[r + 7] * 9.0])
+	return xy
 
 
 ## 0.0 when identical; otherwise the largest absolute difference (INF when sizes differ).

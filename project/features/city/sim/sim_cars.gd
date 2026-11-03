@@ -7,6 +7,7 @@ extends RefCounted
 var _s: CitySimState
 var _h: CitySimHash
 var _r: CitySimCarRoute
+var _pass: CitySimCarPass
 var _x: float = 0.0
 var _y: float = 0.0
 var _hx: float = 0.0
@@ -18,6 +19,7 @@ func _init(state: CitySimState, hash_grid: CitySimHash, flow: CitySimFlow) -> vo
 	_s = state
 	_h = hash_grid
 	_r = CitySimCarRoute.new(state, flow)
+	_pass = CitySimCarPass.new(state, hash_grid)
 
 
 func car(i: int, dt: float, tgx: float, tgy: float) -> void:
@@ -31,7 +33,7 @@ func car(i: int, dt: float, tgx: float, tgy: float) -> void:
 	var waiting: bool = false
 	if _s.ndir[i] >= 0 and _s.tier[i] == 0 and _s.res[i] < 0:
 		waiting = _r.reserve(i)
-	_steer(i, x, y, dt)
+	_steer(i, x, y, _pass.lane_line(i, x, y, _r), dt)
 	_vv = _accelerate(_s.v[i], _desired_speed(i, x, y, waiting), dt)
 	_x = x + _hx * _vv * dt
 	_y = y + _hy * _vv * dt
@@ -41,14 +43,14 @@ func car(i: int, dt: float, tgx: float, tgy: float) -> void:
 	_finish(i, dt, waiting)
 
 
-func _steer(i: int, x: float, y: float, dt: float) -> void:
+func _steer(i: int, x: float, y: float, ln: float, dt: float) -> void:
 	var tx: float = 0.0
 	var ty: float = 0.0
 	if _r.d == 0 or _r.d == 2:
 		tx = x + _r.ddx * 6.0
-		ty = _s.lane[i]
+		ty = ln
 	else:
-		tx = _s.lane[i]
+		tx = ln
 		ty = y + _r.ddy * 6.0
 	var ax: float = tx - x
 	var ay: float = ty - y
@@ -88,6 +90,12 @@ func _desired_speed(i: int, x: float, y: float, waiting: bool) -> float:
 		elif _s.mode[j] != SimConst.M_DEAD:
 			if f > 0.0 and f < 7.0 and s < 1.6:
 				vdes = minf(vdes, maxf(0.0, f - 3.0) * 1.5)
+	for k: int in range(0, _s.obst.size(), 2):
+		var ox: float = _s.obst[k] - x
+		var oy: float = _s.obst[k + 1] - y
+		var of: float = ox * _hx + oy * _hy
+		if of > 0.0 and of < 12.0 and absf(ox * _hy - oy * _hx) < 1.8:
+			vdes = minf(vdes, maxf(0.0, of - 5.5) * 1.4)
 	return vdes
 
 

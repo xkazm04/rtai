@@ -32,6 +32,9 @@ public:
 	int spawn(const PackedFloat64Array &spec);
 	void set_riot_centre(int i, double x, double y);
 	void kill(int i);
+	void strike(int i, double vx, double vy, bool lethal);
+	void set_car_state(int i, int state);
+	void set_obstacles(const PackedFloat64Array &xy);
 	void fire(double x, double y, double vx, double vy, double ttl);
 	void step(double dt, double camx, double camy, double tgx, double tgy);
 	PackedInt32Array get_counters() const;

@@ -1,0 +1,10 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "bench",
+  "gameId": "gtai",
+  "commit": "dc918c62713b45506dfcd0f2c1d3032618446868",
+  "builtAt": "2026-11-03T10:16:38.070Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "fail",
+  "summary": "bench: export failed: em | Starting file scan...\r\n[ DONE ] first_scan_filesystem\r\n\r\nERROR: Prepare Template: The given export path doesn't exist.\r\n   at: add_message (./editor/export/editor_export_platform.h:270)\r\nERROR: Project export for preset \"windows-bench\" failed.\r\n   at: _fs_changed (editor/editor_node.cpp:1417)\r\n"
+}

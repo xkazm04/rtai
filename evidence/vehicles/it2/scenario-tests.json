@@ -1,0 +1,38 @@
+{
+  "schema": "pof.godot-evidence/1",
+  "kind": "scenario-tests",
+  "gameId": "gtai",
+  "commit": "75ee59946be3e1191fecc60893645d1130bc9b12",
+  "builtAt": "2026-11-03T11:09:59.679Z",
+  "godotVersion": "4.7.2.stable.official.ed1daf0bf",
+  "status": "pass",
+  "summary": "scenario-tests: 11 passed (headless)",
+  "counts": {
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "metrics": {
+    "questPass": 1,
+    "questTicks": 2388,
+    "questBeatsReached": 3,
+    "questLinesShown": 9,
+    "questCashPaid": 500,
+    "questChecksPassed": 10,
+    "questChecksTotal": 10,
+    "questStubbed": 3,
+    "collectCallPass": 1,
+    "collectCallTicks": 11436,
+    "collectCallBeatsReached": 6,
+    "collectCallLinesShown": 23,
+    "collectCallCashPaid": 1500,
+    "collectCallChecksPassed": 20,
+    "collectCallChecksTotal": 20,
+    "collectCallStubbed": 3
+  },
+  "artifacts": [
+    "scenario-tests.log",
+    "quest-selftest.json",
+    "quest-collect-call.json"
+  ]
+}

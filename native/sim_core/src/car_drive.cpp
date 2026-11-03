@@ -10,9 +10,9 @@ void CityCore::car_steer(Car &c, double dt) {
 	double tx = 0.0, ty = 0.0;
 	if (c.d == 0 || c.d == 2) {
 		tx = c.x + c.ddx * 6.0;
-		ty = lane_[i];
+		ty = c.ln;
 	} else {
-		tx = lane_[i];
+		tx = c.ln;
 		ty = c.y + c.ddy * 6.0;
 	}
 	double ax = tx - c.x, ay = ty - c.y;
@@ -52,6 +52,12 @@ double CityCore::car_desired_speed(const Car &c) {
 		} else if (mode_[j] != M_DEAD) {
 			if (f > 0.0 && f < 7.0 && s < 1.6) vdes = minf(vdes, maxf(0.0, f - 3.0) * 1.5);
 		}
+	}
+	for (int k = 0; k < obst_n_; k++) {
+		double rx = obst_[k * 2] - c.x, ry = obst_[k * 2 + 1] - c.y;
+		double f = rx * c.hhx + ry * c.hhy;
+		double s = std::fabs(rx * c.hhy - ry * c.hhx);
+		if (f > 0.0 && f < 12.0 && s < 1.8) vdes = minf(vdes, maxf(0.0, f - 5.5) * 1.4);
 	}
 	return vdes;
 }
