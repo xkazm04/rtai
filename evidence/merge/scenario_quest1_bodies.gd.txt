@@ -1,0 +1,60 @@
+extends Scenario
+## Trial-merge probe (d-bodies x d-slice): quest 1 played by the input driver to "paid"; every
+## tick the drawn Rivet (stage arena pos) against every live city person and arena hostile.
+
+const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
+
+
+func run(tree: SceneTree) -> String:
+	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
+	var game: Quest1Game = scene.instantiate() as Quest1Game
+	game.save_path = ""
+	game.settings_path = ""
+	tree.root.add_child(game)
+	game.boot()
+	game.card.start_button.pressed.emit()
+	var s: Quest1Session = game.session
+	s.world.set_process(false)
+	var driver: CollectCallInputDriver = CollectCallInputDriver.new(s.stage, s.system)
+	var t: BodyTable = BodyTable.load_default()
+	var rr: float = t.radius(RivetBody.CLASS) + t.radius(RivetBody.PERSON)
+	var out: Dictionary = {}
+	var wc: float = -INF
+	var wt: float = -INF
+	var wa: float = -INF
+	var knocks: int = 0
+	var bad_ticks: int = 0
+	while not driver.done() and s.tick() < TIMEOUT_TICKS:
+		driver.act()
+		s.step()
+		knocks += s.city.body.knocks.size() / SimConst.BR_STRIDE
+		var w: float = _worst(s.city.sim.snapshot(), s.stage.arena.rivet.pos, rr)
+		bad_ticks += 1 if w > 0.02 else 0
+		wc = maxf(wc, w)
+		wt = maxf(wt, _worst(s.city.sim.snapshot(), s.city.target, rr))
+		for h: Fighter in s.stage.arena.hostiles:
+			if h.alive():
+				wa = maxf(wa, rr - h.pos.distance_to(s.stage.arena.rivet.pos))
+	driver.release()
+	out["worst_city"] = wc
+	out["worst_city_target"] = wt
+	out["worst_arena"] = wa
+	out["ticks"] = s.tick()
+	out["paid"] = s.paid()
+	out["knockdowns"] = knocks
+	out["overlap_ticks"] = bad_ticks
+	Log.info("scenario", "quest1 bodies: %s" % JSON.stringify(out))
+	var err: String = write_evidence("quest1-bodies.json", out)
+	game.free()
+	return err if s.paid() else "not paid"
+
+
+static func _worst(snap: PackedFloat64Array, at: Vector2, rr: float) -> float:
+	var w: float = -INF
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE:
+			break
+		var k: int = int(snap[r + 1])
+		if (k == SimConst.K_PED or k == SimConst.K_COP) and int(snap[r + 2]) != SimConst.M_DEAD:
+			w = maxf(w, rr - at.distance_to(Vector2(snap[r + 4], snap[r + 5])))
+	return w

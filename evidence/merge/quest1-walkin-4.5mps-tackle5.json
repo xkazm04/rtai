@@ -1,0 +1,13 @@
+{
+  "peds": 5,
+  "run": {
+    "knockdowns": 5,
+    "progress_m": 47.476806640625,
+    "worst_overlap_m": 0.0211921525001526
+  },
+  "walk": {
+    "knockdowns": 0,
+    "progress_m": 35.4118041992188,
+    "worst_overlap_m": 0.023243625164032
+  }
+}

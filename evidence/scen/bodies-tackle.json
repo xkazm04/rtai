@@ -1,0 +1,38 @@
+{
+  "human": {
+    "fled": true,
+    "got_up": true,
+    "keep": 0.991781266009221,
+    "knocks": 1,
+    "slide_m": 1.92887198925018,
+    "went_down": true,
+    "worst_rivet": 0.0000238609313965021
+  },
+  "planted_no_robot_row": {
+    "result": "",
+    "rivet_x_max": 12.0000095367432,
+    "robot_moved_m": 0.0,
+    "rs": 0.92,
+    "stop_x": 5.0,
+    "table_ok": false,
+    "worst": 0.919997615814209
+  },
+  "planted_no_tackle": {
+    "fled": false,
+    "got_up": false,
+    "keep": 0.984537093365779,
+    "knocks": 0,
+    "slide_m": 0.0,
+    "went_down": false,
+    "worst_rivet": 0.0000175428390503107
+  },
+  "robot": {
+    "result": "blocked",
+    "rivet_x_max": 4.07999992370605,
+    "robot_moved_m": 0.0,
+    "rs": 0.92,
+    "stop_x": 5.0,
+    "table_ok": true,
+    "worst": -0.0000000762939453835543
+  }
+}

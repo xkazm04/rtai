@@ -215,6 +215,30 @@
       "name": "whispers_spiked",
       "params": [],
       "wired": true
+    },
+    {
+      "doc": "A body knocked another down (features/bodies tackle matrix: a run into a lighter class). Ids are runtime actor ids (the bubble sim slot, or Rivet's id); defender_class is the bodies.json class; at is where the defender was hit, metres. Low frequency: one per knockdown. No heat rule reads it yet (a tackled cop is still a cop).",
+      "emitter": "features/bodies",
+      "name": "actor_knocked_down",
+      "params": [
+        {
+          "name": "attacker_id",
+          "type": "int"
+        },
+        {
+          "name": "defender_id",
+          "type": "int"
+        },
+        {
+          "name": "defender_class",
+          "type": "StringName"
+        },
+        {
+          "name": "at",
+          "type": "Vector2"
+        }
+      ],
+      "wired": true
     }
   ]
 }

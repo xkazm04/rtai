@@ -5,7 +5,8 @@ extends RefCounted
 ## (32 px = 1 m on foot). A clip column starts an authored clip on that row this tick.
 ## look = a RigVariant.crowd() index, or LOOK_AUTO for a stable pick from the actor id.
 
-enum Flag { DEAD = 1, AIMING = 2, GUN_OUT = 4, FLEE = 8 }
+## DOWN: knocked down by a tackle (features/bodies): lying, gets up when the flag clears.
+enum Flag { DEAD = 1, AIMING = 2, GUN_OUT = 4, FLEE = 8, DOWN = 16 }
 
 const LOOK_AUTO: int = 255
 

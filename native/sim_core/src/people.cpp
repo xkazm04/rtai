@@ -14,6 +14,10 @@ void CityCore::ped(int i, double dt) {
 		py_[i] = y + hy_[i] * vv * dt;
 		return;
 	}
+	if (m == M_DOWN) {
+		down(i, dt);
+		return;
+	}
 	double dx = hx_[i], dy = hy_[i], spd = 0.0;
 	if (m == M_FLEE) {
 		ped_flee(i, dt, x, y, dx, dy);
@@ -30,12 +34,14 @@ void CityCore::ped(int i, double dt) {
 		cx_ = x;
 		cy_ = y;
 		crowd(i);
+		body_push(i, dx * spd, dy * spd);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
 	}
 	px_[i] = x;
 	py_[i] = y;
+	if (mode_[i] == M_DOWN) return;  // tackled this step (body_push)
 	hx_[i] = dx;
 	hy_[i] = dy;
 	v_[i] = spd;
@@ -125,6 +131,10 @@ void CityCore::ped_walk(int i, double x, double y, double &dx, double &dy, doubl
 void CityCore::cop(int i, double dt, double tgx, double tgy) {
 	double x = px_[i], y = py_[i];
 	if (mode_[i] == M_DEAD) return;
+	if (mode_[i] == M_DOWN) {
+		down(i, dt);
+		return;
+	}
 	double ax = tgx - x, ay = tgy - y;
 	double d = std::sqrt(ax * ax + ay * ay);
 	double dx = hx_[i], dy = hy_[i];
@@ -152,12 +162,14 @@ void CityCore::cop(int i, double dt, double tgx, double tgy) {
 		cx_ = x;
 		cy_ = y;
 		crowd(i);
+		body_push(i, mx * spd, my * spd);
 		solid(0.3);
 		x = cx_;
 		y = cy_;
 	}
 	px_[i] = x;
 	py_[i] = y;
+	if (mode_[i] == M_DOWN) return;  // tackled this step (body_push)
 	hx_[i] = mx;
 	hy_[i] = my;
 	v_[i] = spd;

@@ -36,6 +36,7 @@ void CityCore::set_rig_slots(const int32_t *slots, int n) {
 int CityCore::frame_of(int i, int &cell) const {
 	int k = kind_[i], m = mode_[i], cl = 1, f = 0;
 	if (m == M_DEAD) cl = 4;
+	else if (m == M_DOWN) cl = 3;
 	else if (k == K_COP && t1_[i] > 0.0) cl = 5;
 	else if (v_[i] < 0.2) cl = 0;
 	else if (m == M_FLEE || m == M_RIOT || k == K_COP || v_[i] > 3.0) cl = 2;
@@ -43,6 +44,7 @@ int CityCore::frame_of(int i, int &cell) const {
 	int b = (variant_[i] * CLIPS + cl) * 3;
 	int cnt = cp[b + 1];
 	if (cl == 4) f = std::min((int)(t2_[i] * cp[b + 2]), cnt - 1);
+	else if (cl == 3) f = cnt - 1;
 	else if (cl == 5) f = std::min((int)((0.25 - t1_[i]) * 24.0), cnt - 1);
 	else if (cl == 0) f = (int)((time_ + i * 0.37) * cp[b + 2]) % cnt;
 	else if (cl == 2) f = (int)(phase_[i] / 2.585 * cnt) % cnt;

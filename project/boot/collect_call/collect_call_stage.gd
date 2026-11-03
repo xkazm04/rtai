@@ -72,11 +72,14 @@ func step(p_tick: int, _input: TickInput) -> void:
 	tick = p_tick
 	whisper_now = false
 	_line_hooks()
+	var from: Vector2 = arena.rivet.pos
 	_move()
 	press_left = intent.interact and not StageActions.interact(self)
 	if intent.fire_at != Vector2.INF and hidden_in == "":
 		shots_fired += 1 if arena.rivet_fire(intent.fire_at) else 0
 	arena.step(tick)
+	@warning_ignore("return_value_discarded")
+	ArenaBodies.resolve(arena, (arena.rivet.pos - from) / SimClock.TICK_DT)  # features/bodies
 	_encounters()
 	_spawns()
 	StagePolice.step_patrols(self)

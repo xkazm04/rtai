@@ -1,0 +1,129 @@
+{
+  "$id": "gtai.bodies/1",
+  "additionalProperties": false,
+  "properties": {
+    "classes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "mass_kg": {
+            "exclusiveMinimum": 0,
+            "maximum": 100000,
+            "type": "number"
+          },
+          "radius_m": {
+            "exclusiveMinimum": 0,
+            "maximum": 10,
+            "type": "number"
+          },
+          "reserved": {
+            "type": "boolean"
+          },
+          "run_mps": {
+            "maximum": 50,
+            "minimum": 0.5,
+            "type": "number"
+          }
+        },
+        "required": [
+          "doc",
+          "id",
+          "mass_kg",
+          "radius_m",
+          "reserved",
+          "run_mps"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "flee_s": {
+      "maximum": 30,
+      "minimum": 0,
+      "type": "number"
+    },
+    "rules": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "attacker": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "can_hurt": {
+            "type": "boolean"
+          },
+          "defender": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "down_s": {
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
+          "knockback_m": {
+            "maximum": 20,
+            "minimum": 0,
+            "type": "number"
+          },
+          "run": {
+            "enum": [
+              "blocked",
+              "knockdown",
+              "shove",
+              "stagger"
+            ],
+            "type": "string"
+          },
+          "walk": {
+            "enum": [
+              "blocked",
+              "knockdown",
+              "shove",
+              "stagger"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "attacker",
+          "can_hurt",
+          "defender",
+          "down_s",
+          "knockback_m",
+          "run",
+          "walk"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.bodies/1",
+      "type": "string"
+    }
+  },
+  "required": [
+    "classes",
+    "doc",
+    "flee_s",
+    "rules",
+    "schema"
+  ],
+  "type": "object"
+}

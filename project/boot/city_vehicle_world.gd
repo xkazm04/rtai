@@ -102,6 +102,8 @@ func set_focus(at: Vector2, in_car: bool) -> void:
 	_city.target = at
 	if characters != null:
 		characters.rivet_on_foot = not in_car
+	if _city.body != null:
+		_city.body.on = not in_car  # features/bodies: no Rivet body inside a car
 
 
 ## The service's view, printed like the city's traffic (the crowd car layers' mesh + material).

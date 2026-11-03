@@ -32,15 +32,18 @@ func run(a: CitySimBackend, b: CitySimBackend, steps: int, plant_at: int) -> boo
 	var checks: int = 0
 	var us: PackedInt64Array = PackedInt64Array([0, 0])
 	var diff: float = 0.0
+	var knocks: int = 0
 	for st: int in steps:
 		var cam: Vector2 = RIOT - Vector2(150, 0) + Vector2(300.0 * st / steps, 0)
 		var tg: Vector2 = RIOT + Vector2(cos(st * 0.01), sin(st * 0.01)) * 5.0
+		_set_bodies(a, b, st)
 		var t0: int = Time.get_ticks_usec()
 		a.step(dt, cam.x, cam.y, tg.x, tg.y)
 		var t1: int = Time.get_ticks_usec()
 		b.step(dt, cam.x, cam.y, tg.x, tg.y)
 		us[0] += t1 - t0
 		us[1] += Time.get_ticks_usec() - t1
+		knocks += int(a.body_result()[SimConst.BR_N])
 		_vehicle_inputs(a, b, st)
 		if st == plant_at:
 			_plant(b)
@@ -52,10 +55,11 @@ func run(a: CitySimBackend, b: CitySimBackend, steps: int, plant_at: int) -> boo
 		if st % CHECK_EVERY == CHECK_EVERY - 1 or st == steps - 1:
 			checks += 1
 			diff = _compare(a.snapshot(), b.snapshot())
+			diff = maxf(diff, _compare(a.body_result(), b.body_result()))
 			if diff != 0.0:
 				mismatch = st
 				break
-	_report(a, b, [steps, checks, mismatch], us, diff)
+	_report(a, b, [steps, checks, mismatch, knocks], us, diff)
 	return mismatch < 0
 
 
@@ -80,6 +84,38 @@ func _side(sim: CitySimBackend, gen: CityGen) -> CitySpawner:
 		@warning_ignore("return_value_discarded")
 		sp.try_riot(RIOT, 22.0, 34.0, true)
 	return sp
+
+
+## The same player body spec on both sides before the step (features/bodies).
+static func _set_bodies(a: CitySimBackend, b: CitySimBackend, st: int) -> void:
+	a.set_body(body_spec(st))
+	b.set_body(body_spec(st))
+
+
+## The player body (features/bodies) crossing the riot east-west, 12 m each way: a walk (1.5 m/s,
+## shoves) on even legs, a sprint (6 m/s, tackles) on odd legs, with the shipped body table.
+static func body_spec(st: int) -> PackedFloat64Array:
+	@warning_ignore("integer_division")
+	var leg: int = st / 240
+	var u: float = float(st % 240) / 240.0
+	var spd: float = 6.0 if leg % 2 == 1 else 1.5
+	var dir: float = 1.0 if (leg % 4) < 2 else -1.0
+	var x0: float = RIOT.x - dir * spd * 2.0
+	var vx: float = dir * spd
+	var s: PackedFloat64Array = SimArrays.f64(SimConst.BD_LEN)
+	s[SimConst.BD_X] = x0 + vx * 4.0 * u
+	s[SimConst.BD_Y] = RIOT.y + 0.5
+	s[SimConst.BD_VX] = vx
+	s[SimConst.BD_ON] = 1.0
+	s[SimConst.BD_R] = 0.42
+	s[SimConst.BD_RP] = 0.35
+	s[SimConst.BD_SHARE] = 160.0 / 235.0
+	s[SimConst.BD_TACKLE] = 3.2
+	s[SimConst.BD_KNOCK] = 5.0
+	s[SimConst.BD_DOWN] = 1.4
+	s[SimConst.BD_FLEE] = 3.0
+	s[SimConst.BD_RUN_IN] = 3.2
+	return s
 
 
 ## The vehicles feature's writes, the same on both sides: strikes and the obstacle list.
@@ -150,6 +186,7 @@ func _report(
 		"checks": n[1],
 		"exact": n[2] < 0,
 		"first_mismatch_step": n[2],
+		"body_knockdowns": n[3],
 		"max_abs_diff": diff if is_finite(diff) else -1.0,
 		"snapshot_floats": a.snapshot().size(),
 		"counters_a": Array(a.get_counters()),

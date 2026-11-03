@@ -57,7 +57,7 @@ static func cell_for(look: int, c: Clip, t: float) -> int:
 
 ## The clip a feed row shows when it is not full-rigged.
 static func clip_of(feed: RigFeed, i: int) -> Clip:
-	if feed.has_flag(i, RigFeed.Flag.DEAD):
+	if feed.has_flag(i, RigFeed.Flag.DEAD) or feed.has_flag(i, RigFeed.Flag.DOWN):
 		return Clip.DEATH
 	if feed.clip[i] == RigClips.Clip.HIT:
 		return Clip.HIT

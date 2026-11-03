@@ -13,6 +13,10 @@ signal soul_swapped(from: int, to: int)
 signal vehicle_hijacked(vehicle_kind: StringName)
 ## The payload is decided before the damage chokepoint applies the lethal hit (events.json).
 signal actor_killed(killer_id: int, victim_id: int, kind: StringName)
+## A tackle knocked a body down (features/bodies; events.json).
+signal actor_knocked_down(
+	attacker_id: int, defender_id: int, defender_class: StringName, at: Vector2
+)
 signal wanted_changed(level: int)
 signal cash_changed(amount: int, delta: int)
 signal contract_started(id: StringName)

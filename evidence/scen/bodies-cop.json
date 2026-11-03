@@ -1,0 +1,16 @@
+{
+  "cop": {
+    "down_ticks": 84,
+    "fled": false,
+    "knocks": 1,
+    "resumed": true,
+    "worst_rivet": 0.0000200462341308771
+  },
+  "planted": {
+    "down_ticks": 6,
+    "fled": false,
+    "knocks": 6,
+    "resumed": true,
+    "worst_rivet": 0.0000316095352173029
+  }
+}

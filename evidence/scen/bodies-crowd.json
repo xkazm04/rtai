@@ -1,0 +1,46 @@
+{
+  "after": {
+    "backend": "native",
+    "band": [
+      342.5,
+      321.5
+    ],
+    "knocks": 0,
+    "progress": 18.9708862304688,
+    "worst_people": 0.00645084381103511,
+    "worst_rivet": 0.000346322059631365
+  },
+  "before_body_off": {
+    "backend": "native",
+    "band": [
+      342.5,
+      321.5
+    ],
+    "knocks": 0,
+    "progress": 19.610595703125,
+    "worst_people": -0.199993896484375,
+    "worst_rivet": 0.769908447265625
+  },
+  "planted_radius_zero": {
+    "backend": "native",
+    "band": [
+      342.5,
+      321.5
+    ],
+    "knocks": 0,
+    "progress": 19.3357238769531,
+    "worst_people": 0.00635088682174678,
+    "worst_rivet": 0.420027096271515
+  },
+  "quest_walk_4_5": {
+    "backend": "native",
+    "band": [
+      342.5,
+      321.5
+    ],
+    "knocks": 0,
+    "progress": 62.3986511230469,
+    "worst_people": 0.0193707466125488,
+    "worst_rivet": 0.0010643792152405
+  }
+}

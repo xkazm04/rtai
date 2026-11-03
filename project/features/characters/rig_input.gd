@@ -12,6 +12,7 @@ static func apply(rig: CutRig, feed: RigFeed, i: int) -> void:
 	rig.gun_out = feed.has_flag(i, RigFeed.Flag.GUN_OUT) and not rig.clips.rolling()
 	rig.aiming = rig.gun_out and feed.has_flag(i, RigFeed.Flag.AIMING)
 	rig.clips.fleeing = feed.has_flag(i, RigFeed.Flag.FLEE)
+	rig.clips.down = feed.has_flag(i, RigFeed.Flag.DOWN)
 	if feed.has_flag(i, RigFeed.Flag.DEAD):
 		rig.clips.die(feed.clip_arg[i] > 0.5)
 	match feed.clip[i] as RigClips.Clip:

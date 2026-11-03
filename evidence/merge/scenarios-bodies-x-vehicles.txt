@@ -1,0 +1,17 @@
+[INFO] scenario: cop tackle: { "knocks": 1, "down_ticks": 84, "resumed": true, "fled": false, "worst_rivet": 0.00002004623413 }; planted down_s 0: { "knocks": 8, "down_ticks": 8, "resumed": true, "fle
+[INFO] scenario: crowd walk: worst Rivet overlap 0.0003 m (tol 0.02), people-people 0.006 m, progress 19.0/19.6 m, knockdowns 0; planted r=0 0.420 m, body off (before) 0.770 m
+[INFO] scenario: run-in: { "met": true, "rivet_pushed_m": 0.09284806251526, "worst_rivet": 0.00001688718796, "knocks": 0 }; planted (rule off): { "met": true, "rivet_pushed_m": 0.60846930742264, "wors
+[INFO] scenario: tackle: human { "knocks": 1, "went_down": true, "got_up": true, "fled": true, "slide_m": 1.92887198925018, "keep": 0.99178126600922, "worst_rivet": 0.0000238609314 }; robot { "result"
+[INFO] scenario: chase (native): cops 60.7 -> 6.5 m, nearest police car 3.2 m, 49 fields, max 163 us, last 157 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"body_knockdowns":0,"checks":10,"counters_a":[147,70,25,6,134,114,9,24,352,27],"counters_b":[147,70,25,6,134,114,9,24,352
+[INFO] scenario: city focus moved 42 m, 16 chunks stamped
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] scenario: quest collect-call: succeeded in 11436 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.107085185185185,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":104.488,"rigMsAvg":0.548688888888889,"rigMsMax":0.845,"rigMsP50":0.555,
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.506335185185185,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":7.202,"rigMsAvg":0.56727962962963,"rigMsMax":1.996,"rigMsP50":0.556,"
+[INFO] scenario: vehicle carnage: {"cues":{"crash":4,"horn":2},"hijacked":["taxi"],"player_hp_lost":91.5900018215179,"result":"pass","states":[2,2]}
+[INFO] scenario: vehicle drive: {"final_hp_lost":0.0,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":82.4833333333333,"service_us_ma
+[INFO] scenario: vehicle yield: {"blind":{"at":[339.812408447266,268.666656494141],"cars_alive":40,"first_pass_s":-0.0166666666666667,"horns":0,"hp_lost":46.1968061923981,"passed":0,"queued_s":0.96666
+run_scenarios: 15 ran, 0 failed

@@ -1,0 +1,20 @@
+{
+  "backend": "native",
+  "body_off": {
+    "backend": "native",
+    "knockdowns": 0,
+    "max_ms": 4.196,
+    "p50_ms": 0.077,
+    "p99_ms": 0.301,
+    "tier_a": 400
+  },
+  "body_on": {
+    "backend": "native",
+    "knockdowns": 23,
+    "max_ms": 0.58,
+    "p50_ms": 0.072,
+    "p99_ms": 0.303,
+    "tier_a": 399
+  },
+  "label": "CONTENDED"
+}
