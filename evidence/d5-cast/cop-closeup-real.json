@@ -3,8 +3,8 @@
  "before": "main 089400e (scratch worktree, same script)",
  "date": "2026-11-03",
  "metric": "saturated px in the whole 1280x800 frame: vermilion (H<22 or >240 of 255, S>110, V>90), blue (130<H<185)",
- "note": "Same cop slot (1) and pose in both runs; the camera sits 0.06-0.11 m apart (frame-timed settle), so no region-diff claim. 4 frames looked at, straight down, 0 rejected. Owner frame: masters day-d5/d5-cast/frames/cop-closeup-real-64-128-ab.png",
- "scene": "dev/showcase/cop_close.tscn (real World+CitySystem+CityView+crowd, seed 91, riot at city_frame focus 0, 12 cops, settle 120 frames, camera follows the nearest live cop)",
+ "note": "Same cop slot (1) and pose in both runs; the camera sits 0.06-0.11 m apart (frame-timed settle), so no region-diff claim. 8 frames looked at, straight down, 0 rejected. Owner frame: masters day-d5/d5-cast/frames/cop-follow-real-4zoom-ab.png After-run vermilion at 32/48 (139/159 px) = Rivet's hazard collar at the view's left edge (doctrine-allowed; looked at); 0 vermilion px on cops at every zoom.",
+ "scene": "dev/showcase/cop_close.tscn (real World+CitySystem+CityView+crowd, seed 91, riot at city_frame focus 0, 12 cops, settle 120 frames, camera follows the nearest live cop); --zooms=1,1.5 for 32/48 (a second run each side)",
  "schema": "d5-cast.cop-closeup-real/1",
  "zooms": {
   "128": {
@@ -12,6 +12,18 @@
    "after_vermilion": 0,
    "before_blue": 0,
    "before_vermilion": 8008
+  },
+  "32": {
+   "after_blue": 654,
+   "after_vermilion": 139,
+   "before_blue": 0,
+   "before_vermilion": 4006
+  },
+  "48": {
+   "after_blue": 689,
+   "after_vermilion": 159,
+   "before_blue": 0,
+   "before_vermilion": 2566
   },
   "64": {
    "after_blue": 1570,

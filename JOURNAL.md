@@ -444,3 +444,8 @@ NEXT (for the 18:00 sync and the Director):
   OBSERVATIONS for the owner: (a) at 128 the cop_blue_hi shoulder mark is the largest bright patch on the cop
   (shoulder option B in masters recolor_cops.shoulder_marks is smaller); (b) the dead pedestrian's pool in both runs
   prints black with a cream rim, not red: noir blood (verdict 5) is d5-combat's lane and not on this branch.
+- Same script at 32 / 48 px/m (--zooms=1,1.5; main again in a fresh scratch worktree, removed after): the owner frame
+  is now frames/cop-follow-real-4zoom-ab.png (rows 32, 48, 64, 128; before | after). At 32/48 vermilion 4006/2566 ->
+  139/159 px: all of it Rivet's hazard collar at the view's edge (cropped and looked at; doctrine-allowed); 0 on cops.
+  Blue 0 -> 654/689. At 32 the blue cop still separates from the all-black peds (cream dome, blue mass, ink ring) but
+  is quieter on asphalt than vermilion was: the trade verdict 6 asks for. 8 frames, straight down, 0 rejected.
