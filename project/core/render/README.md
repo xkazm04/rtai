@@ -351,8 +351,9 @@ its length (0 under reduced motion or within `hitstop_cooldown_ticks` 20 of the 
 so sim, FX, lights and shake all hold still; every tick is unchanged, so replays stay identical, and
 headless runs have no views, so no hold). `reduced_motion` zeroes
 shake and hit-stop, halves the look-ahead cap (7 -> 3.5 m: at 15 m/s the lead is 3.29 m vs 4.93 m in
-engine, 47-reduced) and stretches the zoom ease 1.5x (wire it to the settings
-feature when it lands). `CityView.rig` drives `zoom` and the camera offset every frame when set (the game
+engine, 47-reduced) and stretches the zoom ease 1.5x. The game reads it from the `-- --reduced-motion`
+launch flag (World sets `rig.reduced_motion` and `markers.reduced_motion`, so the marker pulse stops too);
+wire it to the settings feature when that lands. `CityView.rig` drives `zoom` and the camera offset every frame when set (the game
 sets it, snapped to `car`); null keeps `zoom` fixed, which the selftests, goldens and benches rely on.
 `world_px` is computed after the offset, every frame, so the print grain stays locked to the world.
 Frames: `gtai-masters/night/visual-engine/06-camera` (ease 32.0 -> 35.0 -> 40.7 -> 46.0 -> 48.0 px/m at
