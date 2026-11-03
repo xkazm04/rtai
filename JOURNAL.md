@@ -291,3 +291,23 @@ NEXT (iteration 4), in order:
   hero frames, pop-after and stains-after (still in masters). ladder.png +3 rows (7604 px tall).
 - GATES at 7d82f2e (evidence/run.mjs --no-bench, 16:15, clean tree): lint 13/13, unit 351/0, scenarios 8/8, parity
   exact, selftest PASS.
+- Quest 1 check (code read): CombatArena's dead do not slide (no death velocity), so the events path's 4 px lead
+  is right there; only the city cue path gets the 0.54 m lead.
+- 32 px/m check of the lead fix (frames/pool-lead-t600-32ppm-pair.png): on-foot zoom, the bodies now sit in their
+  pools. frames.json 128 px/m entry now shows 58a8388 (frames/fight-final-t900-128ppm.png, before = it3).
+
+NEXT (after the 18:00 sync), in order:
+1. Owner picks: --blood (noir proposed default), --kill-beat (off/panel/flash/both; default off), muzzle pop
+   0.32 or off, pool body blood_dark #540005 vs #750008, and NEW pool size 22 / 16 / 12 px
+   (masters frames/pool-size-ab-t900-{48,64}ppm.png; my read: 16). A size pick is one number: pool.radius_px[1]
+   in blood_fx.json (shared with noir; add a game-only override if noir should keep 22).
+2. After the d5-city merge: nothing to do for colour (palette blood #A30509 / blood_dark #540005 = my values,
+   checked against d-city e9b9323); run the selftest once to confirm the junction goldens.
+3. Orphan pools (bodies despawn at 8 s in the sim, pools persist and fade): owner's read at t900 frames.
+4. Car-hit deaths slide v_car^2/64 m (v = car/2, 8 m/s2), more than 0.54: their pool sits short of the body. Needs
+   the death speed on the cue (FxTriggers) to fix; not worth it before an owner ask.
+5. REQUEST 3 (kill hit-stop 8 under a beat mode) stands; quest 1 has no hit-stop until it gets a player entry.
+6. Re-bench on a quiet machine: iter4 riot p99 10.3 ms, 3 hitches >25 ms, 0 >50 ms (CONTENDED); the misses are in
+   the drive scenarios.
+- 16:28 session end: tree clean after this commit. All gates green at 7d82f2e (later commits: docs only). No Godot
+  process of mine left; clip PNG scratch deleted; bench.lock released at 15:57.
