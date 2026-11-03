@@ -314,3 +314,27 @@ NEXT (iteration 3, in order):
   data dir), so two lanes running unit tests at once race on it. Re-run: 364 passed, 0 failed.
   Lesson: gate the commit with `&&`. REQUEST 6 -> Director / tests owner: per-worktree user dir
   for tests (e.g. `--user-data-dir` or a DIR keyed on the res:// path hash) to stop the race.
+
+## Iteration 4 (15:41 - 17:00, BUILD)
+
+- 15:41 read: journal, git log. The NEXT list is done except 5 (explosion art) and 6 (quiet bench).
+  d-audio's three-way merge check (13:15) heard every vehicles cue (crash, car_wreck, hit_metal,
+  horn, tyre_screech, thud) and says its REQUEST 2/4 to vehicles are done; d-slice's REQUEST 1
+  (car key bits) is answered. Heat: HeatMeter exists only in the quest 1 stage (collect_call);
+  the city World has none, so the emit-only hook (vehicle_hijacked / pedestrian_struck) stands.
+- MILESTONE ac26e26 wrecks burn (NEXT 5, without new art): the explosion source exists (car_wreck),
+  the burning wreck did not. VehicleFire (render only, VehicleView's child, moved by the
+  composition root onto the emissive canvas just under the blast's glow twin): for 24 s after a
+  car becomes a wreck the top-down fire loop (features/fx/art/fx_fire.png, the quest crate fire
+  art, 4 frames at 10 fps off the wreck's own sim clock) plus an ember cell sit on the engine bay,
+  shrinking over the last 6 s; a held `fire` light (lights.json) off the day grade only.
+  Iterated in the real game (vehicle_frame carnage, same ticks): carnage-v10 (fire under the
+  smoke on the actors band: only the light halo showed, pink smoke) REJECTED 20 frames; carnage-v11
+  (emissive, day light on: the halo washed the smoke pink) REJECTED 20; carnage-v12 kept (inked
+  flames in grey smoke, both wrecks). carnage-night-v1 (new dev flag `--grade=night`, 7c66762):
+  the fire light makes the wrecks the brightest point on the street. 60 frames, 40 rejected,
+  0 camera breaks. Colour: the fire art is vermilion; a burning wreck is a danger cue, which the
+  doctrine keeps vermilion for. Unit 367 (+3: burn curve, which wrecks burn, one held light per
+  burning wreck at night, none by day, freed when it goes out). Lint 13/13.
+- frames.json 15 (aftermath pair now carnage-v9 -> carnage-v12 at tick 900; +night aftermath;
+  dropped carnage-v4/766), ladder 1280 x 7964, crop-fire-v12.png (before/after crop, 2x).
