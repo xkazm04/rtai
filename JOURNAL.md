@@ -491,7 +491,7 @@ NEXT (iteration 9 / morning, in order):
   to ALL crowd nodes in CityView.set_look_enabled, which would replace the crowd atlas material on the
   people layer after the bake (wrong cells). Not seen in play (the default look never flips); fix =
   skip the people node once CityCharacters.bake swapped it. Not done tonight.
-- CORRECTION (02:0x) - my own measurements above were partly wrong. While writing the note on
+- CORRECTION (01:54) - my own measurements above were partly wrong. While writing the note on
   set_look_enabled I fixed it (1c7e3aa: a look toggle replaced the baked crowd atlas material on the
   people layer; unit test planted -> 2 failing asserts). pass_cost toggles the print OFF and ON, so
   from its first `no_print` block every crowd person drew the WHOLE 3200 x 1024 atlas. With the fix,
