@@ -33,6 +33,11 @@
           "minimum": 1,
           "type": "number"
         },
+        "residue_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
         "rivet_move_k": {
           "maximum": 1,
           "minimum": 0,
@@ -50,6 +55,7 @@
         "drive_mps",
         "lock_radius_m",
         "range_m",
+        "residue_s",
         "rivet_move_k",
         "turn_dps"
       ],

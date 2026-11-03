@@ -66,3 +66,22 @@ func test_slow_contact_strikes_without_a_wreck() -> void:
 	assert_eq(g.strikes, 1)
 	assert_eq(g.crashes, 0)
 	assert_true(g.linked())
+
+
+func test_residue_keeps_the_last_order_then_drops() -> void:
+	var t: Dictionary = PowerTable.load_default().gearbox.duplicate()
+	t["residue_s"] = 1.0
+	var g: GearboxLink = GearboxLink.new(t)
+	assert_true(g.link(0, Vector2.ZERO, 0.0))
+	for i: int in 30:
+		g.step(Vector2(0, 40))
+	g.release()
+	assert_true(g.linked(), "residue: the car still drives")
+	assert_eq(g.rivet_move_k(), 1.0, "residue costs Rivet nothing")
+	var h0: float = g.heading
+	for i: int in 30:
+		g.step(Vector2(0, -40))
+	assert_gt(g.heading, h0, "it keeps turning to the last order, not the new reticle")
+	for i: int in 40:
+		g.step(Vector2.ZERO)
+	assert_false(g.linked(), "the residue ran out")

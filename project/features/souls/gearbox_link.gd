@@ -4,7 +4,8 @@ extends RefCounted
 ## pick() is the soft lock (the nearest car to the reticle within lock_radius_m, and within
 ## range_m of Rivet). While linked the car drives at drive_mps toward the reticle, turning at
 ## most turn_dps, and wrecks on a contact above crash_mps. Rivet stays on foot and slowed
-## (rivet_move_k): the cost. The host owns the car (VehicleService / a dev body) and feeds it.
+## (rivet_move_k): the cost. Residue (residue_s > 0, an upgrade): when the link is released the car
+## keeps driving its last order for residue_s, unsteered. The host owns the car and feeds it.
 
 const NONE: int = -1
 
@@ -18,6 +19,9 @@ var crashed: bool = false
 var links: int = 0
 var crashes: int = 0
 var strikes: int = 0
+## Residue ticks left (0 = Rivet steers, or no residue); the order the car keeps while coasting.
+var coast_ticks: int = 0
+var _order: Vector2 = Vector2.ZERO
 var _t: Dictionary = {}
 
 
@@ -53,23 +57,40 @@ func link(index: int, at: Vector2, p_heading: float) -> bool:
 	heading = p_heading
 	speed = 0.0
 	crashed = false
+	coast_ticks = 0
+	_order = at + Vector2.from_angle(p_heading)
 	links += 1
 	return true
 
 
+## True while the car is under the soul's order (steered, or coasting on residue).
 func linked() -> bool:
 	return car != NONE and not crashed
 
 
-## Rivet's move scale this tick (slowed while steering a car).
+## True while Rivet steers the car himself (not coasting).
+func steered() -> bool:
+	return linked() and coast_ticks == 0
+
+
+## Rivet's move scale this tick (slowed only while steering a car; residue costs nothing).
 func rivet_move_k() -> float:
-	return num(&"rivet_move_k") if linked() else 1.0
+	return num(&"rivet_move_k") if steered() else 1.0
 
 
-## One tick: the car turns toward `reticle` (turn-limited) and speeds up to drive_mps.
+## One tick: the car turns toward `reticle` (its last order while coasting; turn-limited) and
+## speeds up to drive_mps. The residue runs out -> the link drops.
 func step(reticle: Vector2) -> void:
 	if not linked():
 		return
+	if coast_ticks > 0:
+		reticle = _order
+		coast_ticks -= 1
+		if coast_ticks == 0:
+			_drop()
+			return
+	else:
+		_order = reticle
 	var dt: float = SimClock.TICK_DT
 	var to: Vector2 = reticle - pos
 	if to.length() > 0.5:
@@ -91,10 +112,20 @@ func contact() -> bool:
 	return crashed
 
 
-## Drops the link (the power ended or was interrupted). The car keeps its pose for the host.
+## The power ended or was interrupted: with residue the car coasts on its last order, otherwise
+## the link drops. The car keeps its pose for the host.
 func release() -> void:
+	var ticks: int = roundi(num(&"residue_s") / SimClock.TICK_DT)
+	if steered() and ticks > 0:
+		coast_ticks = ticks
+		return
+	_drop()
+
+
+func _drop() -> void:
 	car = NONE
 	speed = 0.0
+	coast_ticks = 0
 
 
 ## Wire to SoulPowers.ended so the link drops when the gearbox power ends.

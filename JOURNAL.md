@@ -255,3 +255,17 @@ NEXT (the night run after the 00:00 merge): unchanged from iteration 4's NEXT li
 (the pad bots are dummies: capture the Hauler in the pit with `--start=pit`, or a ghost-powers ArenaHook spawning
 the pad bots via arena.spawn_guard). Highest value first: the tank on Rivet's real rig + cast-rig victims with
 reactions, then re-ask ghost-powers-1/2 with that clip; then the Gearbox ArenaHook on gearbox_pad.
+- MILESTONE: Gearbox residue upgrade (pitch: "a car keeps driving your last order"): powers.json gearbox.residue_s
+  (schema 0..10, default 0 = locked = the old stop-on-release, so nothing that runs today changes). With residue,
+  release() leaves the car coasting on its last reticle for residue_s, unsteered, and Rivet unslowed
+  (GearboxLink.steered() vs linked()); then the link drops. Unit test + planted fault (coasting obeys the new
+  reticle) -> caught (heading 0.0 vs > 1.22 rad; evidence/ghost-powers/planted-gearbox-residue-iter5.txt).
+  The first residue test (asserting y still grows) MISSED the fault (the car drifts +y while turning); fixed to
+  assert the heading. Lesson: a planted fault for every new assertion, not just for the feature.
+- FRICTION 23:14-23:15: two full unit runs went red with ONLY test_save_slots.gd failing (1498 error lines, empty
+  save bytes, "Could not create directory user://test_save/..."; the junit counts go negative). user:// is shared by
+  every worktree of this project and other lanes run their gates at the freeze: their save tests clobber ours.
+  test_gearbox_link 7/7 passed in that run; the same save code was 569/569 green at 23:10. Not this lane's code;
+  log kept (evidence/ghost-powers/unit-iter5b-full.log). REQUEST 4 -> (night run / save owner): give the unit
+  runner a per-worktree user dir (e.g. --user-data-dir or a test_tmp suffix from the cwd) so parallel lanes stop
+  colliding. Re-run the unit gate alone after the merge.
