@@ -3,7 +3,7 @@
 Lane goal: the real generated city at gameplay zoom looks like the D5 hero scene (H2) and the target
 mock (T1). Every folder holds real-game frames from `dev/showcase/city_frame.tscn` (real World +
 CitySystem + CityView, seed 91) unless its README says otherwise. Frames for the owner's page:
-`gtai-masters/day-d5/d5-city/frames.json` (15 entries) and `ladder.png` (copy: ladder-iter4.png).
+`gtai-masters/day-d5/d5-city/frames.json` (15 entries) and `ladder.png` (copy: ladder-iter5.png, 6 foci).
 
 ## Adopted (in the generator / look stack)
 
@@ -23,8 +23,11 @@ CitySystem + CityView, seed 91) unless its README says otherwise. Frames for the
 | 18-d5-earlier | D5 overlay from 32 px/m (0.5 / 0.75 at 48 / 1 at 64), gated against D4 |
 | 19-corner-lamps | two junction corners carry street lamps (T1), two keep signals |
 | 20-story-paint | H2's STRIKE and union fist road paint on 8% of lane tiles |
+| 22, 23, 25 | T1-scale rooftops: one 16.4 m building (3 Codex plates A/B/C, 80 px/m) over the 2 x 2 interior of 35% of blocks; plates cycle along a block row |
 
 Also: 10-drive (48 px/m car drive frame), 13-bench (contended bench + D5 cost per pass at 64 px/m),
+21-overlay-cost (D5 overlay cost at 32/48/64), 24-bench-end (end-of-day bench PASS, contended),
+evidence-9df230f (all gates PASS on a clean tree),
 11-road-width-mock (concept, labelled).
 
 ## Rejected by eye (frames kept)
@@ -39,6 +42,7 @@ corner lamp turned into the block (19), the chalk robot decal (20).
    mostly asphalt). What-if mock: 11-road-width-mock/. Sim data: needs vehicles + slice-play.
 2. Plazas: 12% of blocks are open plazas; T1 has none.
 3. D5 at gameplay zoom: adopted at 0.5 (32 px/m) / 0.75 (48). Pure D4 back is one number.
+4. Share of T1-scale 2 x 2 buildings: 35% of blocks now; T1 is that coarse almost everywhere.
 
 ## Not this lane's (requests in JOURNAL.md)
 
