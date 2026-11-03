@@ -120,3 +120,37 @@ NEXT (iteration 2, in order):
   fill_render / strike changes only (the bench World has no VehicleService). Copied to
   evidence/vehicles/bench-short-contended.json. Lock released 11:19.
 - NEXT (unchanged order above); add: run the full-length bench (3 x 60 s) once the machine is quiet.
+
+## Iteration 2 (11:20 - 12:50, BUILD)
+
+- 11:21 read: journal, git log, other lanes' journals. d-audio REQUEST 2 -> vehicles (fire horn /
+  crash / tyre_screech / hit_metal through FxTriggers.fire); d-slice answered REQUEST 1 (bits 0/1 =
+  car / handbrake in input_actions.json, LiveInput hookup in World is a Director merge note);
+  d-city REQUEST 3 (cruiser vermilion) is done by d5-cast (40d1e40); REQUEST 4 (custom.y pick) still
+  open. d-combat did not take REQUEST 2, but it does not need to: a lethal strike() sets the person
+  M_DEAD, CityFxFeed fires the `death` cue, and d-combat's CombatBlood (boot/city_blood.gd) bleeds
+  on that cue, along the body heading strike() sets = the hit direction. So run-overs will bleed
+  after the merge with no new hook. (actor_killed run_over is still wanted for quest facts / heat.)
+- MILESTONE 11:27 c4f6d46 VehicleCues: render-only cues read off the service cars after each tick:
+  crash (8+ hp in a tick; spark + debris + crash shake), hit_metal, car_wreck (explosion + smoke +
+  debris + explosion shake: the explosion stretch goal, with fx.json's existing kinds), tyre_screech
+  (slide start above 7 m/s), horn (rammed traffic, every 45 ticks at most). New fx_triggers cue
+  kind `vehicles` (schema enum + 5 rows; shared table, minimal). Ids = the audio lane's cue ids;
+  their FxTriggers.sink hears them after the merge. Carnage scenario asserts a crash cue (4 crash,
+  2 horn). Unit 350.
+- 11:30 dev capture --cue-shots + a 4th ram that wrecks the taxi. carnage-v3 REJECTED (21 frames):
+  the plan kept throttle after the wreck ejected Rivet, so he walked north through buildings onto
+  a roof (on-foot movement does not collide: not vehicles' code; NOTE -> slice-play / player
+  owner). Fixed the plan (neutral after 748); carnage-v4 good: 742 explosion, 766 Rivet thrown out
+  at 32 px/m beside the pile-up.
+- MILESTONE 11:35 fbf5871 traffic yields to service cars: sim input set_obstacles(xy) (native
+  CityCore + binding + GDScript twin, OBST_MAX 24 in sim_constants.json); VehicleService hands the
+  hull circles (3 per car, up to 8 cars) every tick through the port. Parity re-places an obstacle
+  list every 40 steps: EXACT over 1200 steps, mutation caught at 629. Native rebuild 20 s (debug +
+  release), sim_core tests 0 failed. decisions.md line "traffic yields to service cars".
+- MILESTONE 11:41 cbc0e2d scenario_vehicle_yield (real World, 40 s, A/B): blind 4 rear-ends /
+  46 hp lost / shoved 48 m; yield 0 / 0 / stays put. Real-game frames yield-v1 vs yield-blind-v1
+  (tick 180, 32 px/m). Known limit: queued traffic waits behind a parked car (no going around).
+- frames.json 14 entries (dropped 3 weaker drive frames for the wreck, the ejection, the yield
+  pair); ladder.png rebuilt 1280 x 9242. Rejected today: 41 of 87 frames (all input-plan faults,
+  0 camera breaks).
