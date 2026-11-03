@@ -388,3 +388,38 @@ NEXT:
   bench.lock (taken 15:42); I checked the lock in the same command instead of before it. Short,
   but it could have touched one of their frames. The in-game before/after stills wait for the
   lock to be released.
+- ANSWER to vehicles' REQUEST 5 (on-foot Rivet walks onto roofs in the city World): the free
+  roam World does not use features/player's TopDownMover; only quest 1's StagePilot does, and
+  quest 1 collides Rivet with buildings, props and parked cars (StageCells, 2092706). So the
+  World's on-foot mover is not mine today; after the merge the clean fix is to drive the World's
+  player through TopDownMover + a cell grid like StageCells (bodies vs crowd = the collisions
+  lane). NOT done this iteration (the 60 s replay golden walks the player). Vehicles' enter/exit
+  already reads bit 0 (`car`, F / pad Y) from TickInput, which is my input table's bit 0: no
+  new API call is needed from the player side.
+- 15:58 in-game before/after for the Rivet re-capture (lock free when I started): the input run's
+  deterministic ticks 240 / 3000 / 7000 at 32 and 48 px/m (dev/frames/quest1_clip --stills),
+  before = the old sprite + table swapped back into the tree for the render only, then restored
+  (git checkout HEAD) and re-imported. masters rbase-{before,after}{32,48}/, crops side by side
+  rivet-base-ab.png. All 12 looked at: straight down, 0 rejected. After = a tucked, denser
+  silhouette with the D5 hatching, about the guards' size (guards and cast are drawn at 1.7x /
+  1.5x since iteration 1). At tick 240 Rivet is in the dumpster (the peek), nearly the same.
+- FRICTION (my error) 15:59-16:07: clip v4 rendered for 7 min while bench.lock was HELD (it
+  appeared between my 15:58 free check and the 15:59 start; my command printed it but did not
+  gate on it). Holder unknown (file gone at 16:07:08, then vehicles took it at 16:07:19). That
+  lane's numbers in that window may carry my GPU load. Every render since checks the lock
+  first and skips if it is held.
+- 16:07 clip v4: masters quest1-city-input-run-32ppm-v4.mp4 (32 s, 32 px/m, the scripted
+  pad through simulated InputEvents, NOT a human), sheet clip32v4_sheet.png (15 frames
+  sampled, 0 camera breaks). Frame 0 now shows the street (d0d092e VERIFIED in the clip);
+  Rivet at the base form. frames.json: v4 replaces v3 (v3 is its before).
+- FOUND the "glow on Rivet" (iteration 3, unverified): clip v4 frames 1-2 show a banded light
+  pool on Rivet with him washed out (masters rivet-base/glow_f1_crop.png). Cause: CityView's
+  ViewPrewarm adds a light and spawns every FX kind at the camera centre (= Rivet) for 3
+  frames to compile pipelines; the free-roam World hides that behind its loading screen
+  (WLD-07), quest 1 ran it on the visible street after Start/Continue. Fix 140cf98: a paper
+  sheet (CanvasLayer 90) covers those frames, the warm-up still renders under it. Gates: lint
+  13/13, unit 359, scenarios 10/10. The frame proof waits for the lock (vehicles, 16:07).
+- frames.json (15): v4 clip; Rivet base form (rbase 7000_48, before rbase-before48) in place of
+  the old draw_k frame; Start frame 1 pair (start_before / start_after) in place of the second
+  Dock 9 stencil frame. ladder.png + 2 rows. Deleted 3.6 GB of clip PNG scratch (v1, v2) and
+  v4's frames except 0-2.
