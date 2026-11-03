@@ -71,6 +71,14 @@ on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look chan
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
 
+### Aquatint (`aquatint`, look_d4)
+
+The grime only moves the wash step edges, so a field that sits deep inside one step (the charcoal
+street, t well above `step_hi`) printed flat. `aquatint` prints 1 px ink grains inside the washes
+(scaled by smoothstep(step_lo, step_hi, t): paper stays clean), mean-preserving around a 35 % cover that
+the same grime blotches push up and down: the target frame's grainy asphalt. The grain is the baked
+lattice read at texel centres, world-locked like every other print hash. d1 0, d4 0.18, d5 0.26.
+
 ### Print inks (`look_profiles.json` `tones`)
 
 The world and item prints' output inks are uniforms (`paper_tone`, `wash_tone`, `ink_tone`), filled from
@@ -284,6 +292,7 @@ bit-identical (render look_golden with the old and the new shader and diff the f
 | D4 world print (`look_d4`), low-end GPU | AMD Radeon iGPU (2 CU, below a Steam Deck), 48 px/m riot, 1280x800: 2.76-2.92 ms of a 6.06-6.12 ms frame before; 1.21-1.76 of 4.66-4.94 ms after the early-outs (3 interleaved pairs, bit-identical frames). 1920x1080: 5.31 -> 3.76 ms (1 run). Those frame totals carry ~1.5 ms of a measuring artifact (the print toggle broke the crowd atlas material until 1c7e3aa; the print deltas are like for like). After 1c7e3aa: frame 3.23-3.30 ms = print 1.56-1.61, full rigs 0.47-0.56, atlas crowd 0.09-0.15, lights 0.12-0.17, cars and FX under 0.15; at 1920x1080: frame 5.72-5.79 ms = print 3.07-3.18, rigs 0.54-0.61, crowd 0.19-0.25, lights 0.26-0.34 | `pass_cost.gd --gpu-index 1` (`evidence/pass-cost`) |
 | D4 world print, grime lattice (`grime_lattice.gd`) | iGPU 1280x800 48 px/m, 2 runs each: print 1.67 / 1.61 -> 1.39 / 1.33 ms (-0.28, -17 %), frame 3.21 / 3.29 -> 3.08 / 3.01; 1920x1080: print 3.07 / 3.18 -> 2.60 / 2.70 ms, frame 5.72 / 5.79 -> 5.29 / 5.40. The two grime octaves sample a baked 128 x 128 value lattice (bilinear at i + smoothstep(f) = the same faded value noise) instead of 4 sin hashes each. Not bit-identical (8-bit lattice, tiling) but the goldens hold at worst mean 0.09 and the x8-amplified grime keeps its blotch scale. Bounds measured on the way: grime + paper tooth 0.43 ms, Sobel 0.18 ms. REJECTED: an integer hash for every `hash()` (+0.75 ms: 32-bit integer multiplies are slow on this AMD iGPU) | `pass_cost.gd` (`evidence/pass-cost/hash-ab`) |
 | D5 overlay on the grime lattice (patch for n-d5) | iGPU 1280x800 64 px/m, interleaved, on top of the early-outs patch: +1.91 / +1.87 -> +1.25 / +1.39 ms (-0.57, -30 %). look_d5's vnoise() becomes one lattice fetch (`LookOverlay` sets `grime_tex`); the overlay frames move (mean 3.3, the stroke wobble and pressure patches re-laid) with the same character, no tiling seen. `evidence/pass-cost/look_d5-early-outs-lattice.patch` applies on n-d5 as is (it includes the early-outs) | `overlay_cost.gd` (`evidence/pass-cost/d5-lattice`) |
+| D4 aquatint (`aquatint`, 2026-11-03) | iGPU 1280x800 48 px/m, interleaved on / off x2: print 1.35 / 1.38 -> 1.45 / 1.45 ms (+0.08 to +0.10), frame 3.04 / 3.05 -> 3.13 / 3.14. One lattice fetch at the pixel's texel centre, only where a wash prints (t > step_lo); the grime blotches set the grain cover. REJECTED on the way: the same grain from the sin `hash()` (diagonal streaks at 35 % cover, 30-mottle/cmp1x-d4-48ppm.png) and a smooth tone mottle (read as airbrushed clouds, not ink) | `pass_cost.gd` (`evidence/pass-cost/aquatint`) |
 | D4 world print, RTX 4090 | 0.39 ms of 0.86 ms at 1280x800, 0.85 of 1.49 at 1080p (before); after-runs were contended (other lanes on the GPU): judge on the iGPU | `pass_cost.gd` |
 | Look resolve (`_update_look`) | one dictionary compare a frame; a held zoom or pinned id returns the cached object | code path |
 | D5 print overlay (64 px/m only) | +0.90 .. +1.51 ms GPU (interleaved, 3 runs, shared GPU), 0 at 32 / 48 | `overlay_cost.gd` |

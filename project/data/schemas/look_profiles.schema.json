@@ -128,6 +128,11 @@
           "world": {
             "additionalProperties": false,
             "properties": {
+              "aquatint": {
+                "maximum": 16,
+                "minimum": -8,
+                "type": "number"
+              },
               "edge_hi": {
                 "maximum": 16,
                 "minimum": -8,
@@ -223,23 +228,24 @@
               }
             },
             "required": [
-              "grime",
-              "step_lo",
-              "step_mid",
-              "step_hi",
-              "wash_lo",
-              "wash_mid",
-              "wash_hi",
-              "line_ink",
-              "edge_lo",
               "edge_hi",
+              "edge_lo",
+              "grime",
+              "grit",
               "hatch_on",
               "hatch_period",
-              "grit",
-              "verm",
+              "line_ink",
+              "aquatint",
+              "step_hi",
+              "step_lo",
+              "step_mid",
               "teal",
+              "teal_shift",
+              "verm",
               "verm_shift",
-              "teal_shift"
+              "wash_hi",
+              "wash_lo",
+              "wash_mid"
             ],
             "type": "object"
           }

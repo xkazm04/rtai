@@ -42,6 +42,7 @@
       "parts_flat_below": 0.13,
       "print": true,
       "world": {
+        "aquatint": 0,
         "edge_hi": 0.36,
         "edge_lo": 0.16,
         "grime": 0,
@@ -81,6 +82,7 @@
       "parts_flat_below": 0.13,
       "print": true,
       "world": {
+        "aquatint": 0.18,
         "edge_hi": 0.32,
         "edge_lo": 0.13,
         "grime": 0.15,
@@ -120,6 +122,7 @@
       "parts_flat_below": 0.1,
       "print": true,
       "world": {
+        "aquatint": 0.26,
         "edge_hi": 0.26,
         "edge_lo": 0.09,
         "grime": 0.45,
