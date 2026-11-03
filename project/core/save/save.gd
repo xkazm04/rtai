@@ -10,15 +10,14 @@ signal notice(key: StringName, text: String)
 
 const DEFAULT_ROOT: String = "user://profile"
 
-var _slots: SaveSlots = SaveSlots.new(DEFAULT_ROOT)
-var _worker: SaveWorker = SaveWorker.new(_slots)
+var _slots: SaveSlots
+var _worker: SaveWorker
 var _active_slot: int = -1
 var _last_notice: String = ""
 
 
-func _ready() -> void:
-	@warning_ignore("return_value_discarded")
-	_worker.finished.connect(_on_finished)
+func _init() -> void:
+	_open(DEFAULT_ROOT)
 
 
 func _process(_delta: float) -> void:
@@ -28,6 +27,10 @@ func _process(_delta: float) -> void:
 ## Points the engine at another profile folder (tests, --profile). Flushes first.
 func use_root(root: String) -> void:
 	flush()
+	_open(root)
+
+
+func _open(root: String) -> void:
 	_slots = SaveSlots.new(root)
 	_worker = SaveWorker.new(_slots)
 	@warning_ignore("return_value_discarded")

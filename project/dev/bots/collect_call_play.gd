@@ -69,6 +69,11 @@ func bus() -> EventBus:
 	return _bus
 
 
+## The sim's state hash now (the autosave checkpoint reads it; it never changes the sim).
+func state_hash() -> String:
+	return _world.loop().state_hash()
+
+
 func running() -> bool:
 	return bot != null and not bot.done() and ticks < TIMEOUT_TICKS
 

@@ -52,3 +52,4 @@ gdformatrc text eol=lf
 # Append-only logs: parallel lanes each append lines, so merge them as a union instead of conflicting.
 docs/decisions.md merge=union
 steam/ai-provenance/*.jsonl merge=union
+*.sav binary

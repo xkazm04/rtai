@@ -37,14 +37,15 @@ class Result:
 ## Reads `raw["autosavePoints"]` (absent is fine: no declared points) against `raw["beats"]`.
 static func read(raw: Dictionary) -> Result:
 	var out: Result = Result.new()
-	var declared: Variant = raw.get("autosavePoints", [])
-	if not declared is Array:
+	var raw_points: Variant = raw.get("autosavePoints", [])
+	if not raw_points is Array:
 		out.errors.append("autosavePoints: not an array")
 		return out
+	var declared: Array = raw_points
 	var beat_ids: Dictionary[String, bool] = _beat_ids(raw)
 	var seen: Dictionary[String, bool] = {}
-	for i: int in (declared as Array).size():
-		var p: Point = _point((declared as Array)[i], i, beat_ids, seen, out)
+	for i: int in declared.size():
+		var p: Point = _point(declared[i], i, beat_ids, seen, out)
 		if p != null:
 			out.points.append(p)
 	return out
@@ -52,10 +53,13 @@ static func read(raw: Dictionary) -> Result:
 
 static func _beat_ids(raw: Dictionary) -> Dictionary[String, bool]:
 	var ids: Dictionary[String, bool] = {}
-	var beats: Variant = raw.get("beats", [])
-	for b: Variant in beats if beats is Array else []:
-		if b is Dictionary and (b as Dictionary).get("id") is String:
-			ids[str((b as Dictionary)["id"])] = true
+	var raw_beats: Variant = raw.get("beats", [])
+	var beats: Array = raw_beats if raw_beats is Array else []
+	for b: Variant in beats:
+		var beat: Dictionary = b if b is Dictionary else {}
+		var id: Variant = beat.get("id")
+		if id is String:
+			ids[id] = true
 	return ids
 
 
@@ -101,4 +105,7 @@ static func load_file(id: String, root: String = "res://quests") -> Result:
 		var failed: Result = Result.new()
 		failed.errors.append("%s: not readable as JSON" % path)
 		return failed
-	return read(parser.data if parser.data is Dictionary else {})
+	var doc: Dictionary = {}
+	if parser.data is Dictionary:
+		doc = parser.data
+	return read(doc)

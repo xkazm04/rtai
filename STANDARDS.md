@@ -338,14 +338,13 @@ gtai/                      STANDARDS.md AGENTS.md versions.toml justfile .gitatt
   2. On a worker, serialise it and round-trip parse it.
   3. Write `.tmp` and close it.
   4. Re-read it and verify the length and SHA-256.
-  5. Rename `.sav` to `.bak`.
-  6. Rename `.tmp` to `.sav`.
+  5. Rename `.tmp` over the target slot. The target is always the slot with the lower sequence number (owner decision 2026-11-03: two rotating autosave slots replace the `.bak`), so the newer good slot is never touched by a write.
 
-  Load order: `.sav`, then `.bak`, then a valid `.tmp` newer than both. If all fail, stop and offer recovery; never reset silently. *Why:* on Windows, Godot's rename deletes the target first, and Godot has no fsync. [D S4-S5][D] [^save]
+  Load order: read both slots, load the newest that passes the container, hash, version and the caller's own check (a checkpoint's replay-to-hash); quarantine a corrupt one (`state.sav.corrupt`, the latest per slot only) and fall back to the other. A `.tmp` is never loaded; a leftover one is removed at load. If both fail, keep the quarantined files, start the quest from its start and tell the player; never reset silently. *Why:* on Windows, Godot's rename deletes the target first, and Godot has no fsync. [D S4-S5][D] [^save]
 - **SAV-04 MUST** Every save carries a `save_version`, with chained pure migration functions (`vN -> vN+1`). A fixture for every released version lives in `tests/saves/vN.sav`, and tests load each one. A save newer than the reader knows is refused and never overwritten. [D §6][D]
 - **SAV-05 MUST** Store world state as sparse deltas against the generated chunks, referencing data ids. Budget: 256 KB per slot, 8 files per profile, under 5 MB in total. [D §6][D]
 - **SAV-06 MUST** Use a custom user dir, `<Studio>/GTAI Uprising`, laid out as:
-  - `profile/` (synced): `prefs.json`; `slot_N/{meta.json, state.sav, state.sav.bak}`; `auto_a/`, `auto_b/`.
+  - `profile/` (synced): `prefs.json`; `meta.json`; `auto_a/state.sav`, `auto_b/state.sav` (exactly two autosave slots, manual save is descoped; plus at most `*.corrupt` and a transient `*.tmp`).
   - `device/` (never synced): `settings.json`, `achievements_mirror.json`.
   - `logs/` (never synced).
 
@@ -357,7 +356,7 @@ gtai/                      STANDARDS.md AGENTS.md versions.toml justfile .gitatt
 
   [D S8][D] [W C1-C3][W]
 - **SAV-08 MUST** Save at checkpoints, mission ends and quit, with encode, hash and write off the main thread. *Why:* the Deck sends no suspend callback. `meta.json` shows last played, playtime and mission, so the Steam conflict dialog's timestamps can be checked against the title screen. [W C4-C5][W] [D S6][D]
-- **SAV-09 MUST** Test the cold paths: truncated file, flipped byte, newer version, missing `.bak`, zero-length file, no write permission. [D S9][D]
+- **SAV-09 MUST** Test the cold paths: truncated file, flipped byte, newer version, a missing slot, zero-length file, a leftover tmp from a crash, no write permission, both slots corrupt, and 1,000 alternating autosaves that leave exactly two slot files. [D S9][D]
 - **SAV-10 MUST** Settings are versioned JSON:
   - deep-merged over code defaults, clamped, unknown keys ignored;
   - on a parse failure: rename to `settings.corrupt-<time>.json`, use defaults, tell the player;
