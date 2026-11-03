@@ -856,3 +856,20 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
   the shot (reverted): `before_tr64|after_tr64/city-*-64ppm`. The moving van and taxi hold up at 64 (ink outline,
   dark glass, grime stipple, no blur from the 80 px/m cells); before = the grey boxes. Ladder row.
 - 02:35 GATES at f1bfc1b (HEAD): run.mjs --no-bench rc 0, all 5 PASS (lint 13/13, unit 142, scenarios 8, parity bit-exact, selftest 72 textures, 0 placeholders). Final for iteration 8; NEXT as at 02:32. Tree clean after this entry.
+
+## 2026-11-03 02:36 iteration 10, BUILD (raise the weakest item; stop 04:06)
+- Read: JOURNAL (iteration 8 NEXT), git log, target frame vs `merged_all/` (n-visual + n-d4 + both patches).
+  Picked: **pavement joints**. Side by side with the target (`work/tgt_pave_crop.png` vs `work/our_pave_crop48.png`)
+  the target inks its paving joints (dark, ~2-3 px at ~50 px/m); ours are a 2 px 128-grey line that mipmaps to a pale
+  hairline. My iteration-2 lightening was made against a 1 m BLACK 4 px grid (bathroom tiles); since iteration 3 the
+  slabs are 2 m, so the weight was worth re-checking.
+- 02:58 MILESTONE paving joints inked. `masters:tools/paving_ink.py <tone> <width> [y_end] [x_end]` on sidewalk,
+  curb x3 (y_end 286), curb_corner (y_end, x_end 286). Probes, all in-engine city_frame 32/48/64 (look_d4, same seed):
+  tone 96 x 4 px: muddy dithered wash at 32 (rejected); 64 x 4: black window grid at 32, fights the people (rejected,
+  `work/pj_ab0_32.png`); 64 x 2: crisp at 48 but broken pale lines + dark dots at the crossings at 32 (rejected,
+  `work/pjw2_zoom32.png`); 40 x 2: heavy and dithered; 88 x 3: dithered dashes at 32 (lands on a step threshold);
+  **64 x 3 kept**: one solid 1 px ink line at 32, a crisp ink hairline at 48, the target's look at 64
+  (`work/pjw3_zoom{32,48}.png`, `work/pjw3_crowd32.png`, `work/pj_ab64.png`). Peds keep reading on it (cream rims).
+  Frames `before_pj|after_pj/city-*-{32,48,64}ppm.png`; ladder rows "i10 paving ink joints". 5 provenance lines,
+  README recipe row 10. Commit 3ebf21a. **Judgment call, owner review**: it partly reverses the iteration-2 "quiet
+  paving" call (now: inked joints on 2 m slabs); revert = 3ebf21a alone. Originals in `masters:backup_pj/`. 0 Codex.
