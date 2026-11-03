@@ -188,3 +188,6 @@ NEXT (iteration 4 end):
   All shot / impact / punch takes are below -30 dB of their peak by 0.44 s (tail check). Masters: frames.json (8 frames) + ladder.png refreshed.
 - GATES at 53fb7d7 (final, `node tools/evidence/run.mjs --no-bench`, exit 0, tree untouched during the run): lint 13/13, unit 355 passed, scenarios 8/8, parity exact + planted mutation caught at step 629, selftest + look goldens unchanged.
   Bench NOT run (lane rule). Credits: ElevenLabs ~4.0k of the lane's 25k used (sfx + music only today after 11:45; voice 0 chars).
+- 13:06 COST measured (evidence/audio_cost.json; HEADLESS, CONTENDED CPU; the GPU bench lock was held by another lane so no bench was taken): in the 300-person riot the service's own frame work is 30 us mean / 335 us max,
+  a cue() call through the FX sink 25 us mean / 2.1 ms max (1264 calls in 25 s), about 0.05 ms per frame against 16.6 ms. This replaces "pool cost unmeasured" above for the script side; the real positional mixing on a device is still unmeasured.
+  Final HEAD: 2af3b1f (gates last run at 53fb7d7; only the service's timing probe and a dev scene changed after, lint + 355 unit tests green at HEAD).
