@@ -1,0 +1,34 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] scenario: chase (native): cops 60.7 -> 6.5 m, nearest police car 3.2 m, 49 fields, max 6879 us, last 146 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"checks":10,"counters_a":[150,69,25,6,129,121,12,25,366,28],"counters_b":[150,69,25,6,129,121,12,25,366,28],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"snapshot_floats":3550,"step_ms_a":7.26617,"step_ms_b":7.56628,"steps":300}
+[INFO] scenario: city focus moved 107 m, 17 chunks stamped
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch refused a hot caller at Harbor Road (heat 2)
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] payphone: Patch connected the call at Factory Row corner
+[INFO] stage: TUCK-IN crates on fire at tick 9408
+[INFO] payphone: Patch connected the call at Harbor Road
+[INFO] scenario: quest collect-call: succeeded in 11436 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+[INFO] characters: prewarmed 33 rigs in 350.1 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.136025925925926,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":350.145,"rigMsAvg":0.784366666666667,"rigMsMax":13.778,"rigMsP50":0.641,"rigMsP99":4.422,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 29.9 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.865962962962963,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":29.892,"rigMsAvg":0.918488888888889,"rigMsMax":22.07,"rigMsP50":0.714,"rigMsP99":3.945,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] scenario: vehicle carnage: {"cues":{"crash":4,"horn":2},"hijacked":["taxi"],"player_hp_lost":91.5900018215179,"result":"pass","states":[2,2]}
+[INFO] scenario: vehicle drive: {"final_hp_lost":0.0,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":137.701388888889,"service_us_max":7485,"struck":1,"ticks":720,"timing":"CONTENDED (shared machine, headless, native sim)"}
+[INFO] scenario: vehicle yield: {"blind":{"at":[339.812408447266,268.666656494141],"cars_alive":40,"first_pass_s":-0.0166666666666667,"horns":0,"hp_lost":46.1968061923981,"passed":0,"queued_s":0.966666666666667,"rear_ends":4,"ticks_near":2400},"result":"pass","ticks":2400,"yield":{"at":[292.0,270.0],"cars_alive":40,"first_pass_s":9.25,"horns":6,"hp_lost":0.0,"passed":3,"queued_s":13.6166666666667,"rear_ends":0,"ticks_near":1542}}
+FAIL scenario_city_chase.gd: flow field over the 2 ms nav budget: chase (native): cops 60.7 -> 6.5 m, nearest police car 3.2 m, 49 fields, max 6879 us, last 146 us
+run_scenarios: 11 ran, 1 failed
+WARNING: 690 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 32 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

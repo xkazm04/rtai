@@ -432,3 +432,27 @@ NEXT (iteration 5, in order):
   identical, rig_stress green). Native code untouched, so parity is unaffected (evidence run below).
   No new frame: the fire kill shows as d5-combat's blood, which is not on this branch's capture
   path. So it is evidenced by test only, not by a frame.
+- 16:45 evidence run 1 (`run.mjs --no-bench`): unit marked FAIL ONLY because I committed the
+  JOURNAL/README edits while it ran (the run's tree-changed guard; 370 passed, 0 failed). Own
+  mistake: do not touch the tree during an evidence run. Re-ran at 2b62519 (tree clean, 16:46-16:49):
+  lint 13/13, unit 370/0, parity EXACT (1200 steps, mutation caught at 629), selftest PASS (look
+  goldens 11/11 worst 0.00, block 5/5); scenarios 10 of 11: scenario_city_chase FAIL on the
+  wall-clock nav budget again (max field 6879 us, last 146 us, sim outcome identical: cops 60.7 ->
+  6.5 m, 49 fields). Re-ran alone twice at 16:49: PASS (max 154 us, 141 us). The full scenario run
+  at e341b25 (16:42) was 11/11. Same flake as 12:53 / 16:25 (REQUEST 9). Copied to
+  evidence/vehicles/it5/ (with the scenario log). Bench not run (no time before the freeze).
+- Iteration totals: 0 frames (the fire kill is evidenced by unit test + gates, not by a frame),
+  0 rejected, no AI images, no provenance lines, no bench lock taken. No Godot process of mine left.
+
+NEXT (after the 17:00 freeze / next session, in order):
+1. Fire as gameplay, half 2: Rivet takes damage in a burning wreck's fire (on foot), and a burning
+   wreck sets the service car it touches alight (chain wrecks). Both are sim-side in VehicleContacts
+   (now at 200 lines: split the fire rules into a `vehicle_burn.gd` first). Add a fire-kill count
+   to the carnage scenario metrics.
+2. Frame the fire kill once d5-combat's blood is merged: a crowd person walking into the fire at
+   48 px/m, before/after on carnage-v13's route.
+3. REQUEST 10 (burned kill kind) and REQUEST 2 (run_over -> actor_killed) answers are one-line
+   consumers here.
+4. The Director's merge: use the native DLL built from d-vehicles (set_obstacles), per d-audio's
+   five-way merge check. int-day's DLL fails 3 vehicle scenarios.
+5. A drive48 bench variant with VehicleService (the vehicles draw cost is on no bench path).
