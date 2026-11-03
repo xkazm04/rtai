@@ -153,3 +153,8 @@ NEXT:
   weapon is in hand (name; the rifle's magazine as inked digits); the cash frame's duplicate
   weapon line is gone. Frame: masters ammo32/still_7400_32.png (Gloria). The rifle-count state
   was NOT captured in a frame (unmeasured). Quest scenarios 4/4. Exe re-exported after this.
+- 11:14 exe rebuilt at cdfb800 (replay identical, windowed boot clean). Full evidence gate last
+  green at 36be941; since then: the keys scenario (+fault), the clip tool exit code, the ammo
+  ticket; lint + all quest scenarios re-run green after each. NEXT unchanged (1 human run,
+  2 quest 1 in the real city, 3 post-merge World/VehicleService hookup, 4 Rivet re-capture,
+  5 HUD into features/hud).
