@@ -108,3 +108,8 @@ NEXT:
   multiply t by step(c.b - c.g, 0.157) (teal has b ~ g; cop_blue_hi has b - g = 0.35), and (b) add a cop-blue plate
   (b - max(r, g) >= blue_gate) like look_d4_item's, so parked cruisers' bars print cop_blue_hi, not grey/teal.
   Until then the parked cruisers are the one place blue cop art prints off-doctrine. Not changed here: shared shader.
+- MILESTONE patrol cap to T1 too: in T1 BOTH cops (baton and pistol) wear the cream dome; our patrol cap (the majority of
+  city cops) was a navy dome merging into the navy body. Now cream crown, cop-navy band, ink brim, blue-hi badge
+  (recolor_cops.t1_cap, both tiers). Gate (real city, city-0): blue px 3207 -> 2393 at 32, 4437 -> 2864 at 48, every cop
+  still its own blue blob (10 -> 15 blobs at 32: head no longer joins body). evidence/d5-cast/cop-cap-t1.json. Hero A/B:
+  only the cops' heads change. Goldens pass unblessed (worst 0.92 / 0.53). Frames: renders/cap-hero-ab.png, cap-city32-ab.png.
