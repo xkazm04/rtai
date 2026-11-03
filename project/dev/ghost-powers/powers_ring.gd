@@ -8,6 +8,8 @@ extends Node2D
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
 const SHOCK_S: float = 0.4
+## The landing slam pose: in fast, held, out over this long.
+const SLAM_S: float = 0.35
 const VERTS: int = 48
 const GRIT: int = 18
 
@@ -20,7 +22,11 @@ var tick: int = 0
 func sync(p_tick: int, p_rig: CutRig) -> void:
 	tick = p_tick
 	rig = p_rig
-	look.apply(rig, hauler.form.morph_k(), hauler.form.windup_k())
+	var slam: float = 0.0
+	if hauler.stomp_tick >= 0:
+		var age: float = (tick - hauler.stomp_tick) * SimClock.TICK_DT
+		slam = clampf(1.0 - absf(age - SLAM_S * 0.25) / SLAM_S, 0.0, 1.0)
+	look.apply(rig, hauler.form.morph_k(), hauler.form.windup_k(), slam)
 	queue_redraw()
 
 
