@@ -1,143 +1,144 @@
 [
-  {
-    "file": "frames/fight-noir-t900-48ppm.png",
-    "title": "Real city riot, 15 s in: noir's blood as the D4/D5 default (48 px/m)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools.",
-    "before": "frames/fight-ink-t900-48ppm.png"
-  },
-  {
-    "file": "frames/fight-noir-t900-64ppm.png",
-    "title": "Same moment at arena zoom (64 px/m): pools with ink keyline, grain, sheen",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat).",
-    "before": "frames/fight-ink-t900-64ppm.png"
-  },
-  {
-    "file": "frames/fight-noir-t900-32ppm.png",
-    "title": "Same moment on foot (32 px/m)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 32,
-    "note": "At 32 px/m the blood still reads as the one saturated red.",
-    "before": "frames/fight-ink-t900-32ppm.png"
-  },
-  {
-    "file": "frames/fight-noir-t480-48ppm.png",
-    "title": "8 s in: fresh directional spurts (48 px/m)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "Spurts thrown along the shot, teardrop splats with satellites ahead.",
-    "before": "frames/fight-ink-t480-48ppm.png"
-  },
-  {
-    "file": "frames/fight-oil-after-noir-t420-64ppm.png",
-    "title": "Rivet's oil now reads on asphalt (64 px/m)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": "Rivet hit every 2 s (dev --hit-rivet=120, wired as the game wires player_hit). Before: black flecks lost in the asphalt grime. After: black drops with a thin cream rim (D4 ink-with-cream-rim rule) + an oil leak trail where he walks. Still no red on the robot.",
-    "before": "frames/fight-oil-before-noir-t420-64ppm.png"
-  },
-  {
-    "file": "frames/fight-oil-after-noir-t420-48ppm.png",
-    "title": "Rivet's oil at 48 px/m",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "",
-    "before": "frames/fight-oil-before-noir-t420-48ppm.png"
-  },
-  {
-    "file": "frames/beat-both-48ppm-f00.png",
-    "title": "Kill beat A/B: silhouette on speed lines (--kill-beat=flash|both)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "Rivet's kill (dev stand-in: riot deaths within 8 m credited to him). World + print hidden one beat: actors solid ink, blood stays red. Default is OFF. Shared flash budget: <=3 flashes/s; 0 with --reduced-motion (calm border only)."
-  },
-  {
-    "file": "frames/beat-panel-64ppm-f01.png",
-    "title": "Kill beat A/B: the held comic panel (--kill-beat=panel|both) at 64 px/m",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": "The kill framed in a panel with paper gutters for impact.panel_ticks."
-  },
-  {
-    "file": "frames/beat-modes-contact.png",
-    "title": "All kill-beat modes at 48 and 64 px/m (rows: flash48, flash64, panel48, panel64, both48, both64)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
-  },
-  {
-    "file": "frames/quest1-04-dock-wave.png",
-    "title": "Quest 1's real CombatArena kills bleed (48 px/m)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "collect_call frame grabber (CollectCallView via PrintStage): Events.actor_killed -> blood under the dead guards (bottom right)."
-  },
-  {
-    "file": "frames/quest1-06-crates-burning.png",
-    "title": "Quest 1 boss fight: blood from the dock waves",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": ""
-  },
-  {
-    "file": "clip-blood-noir-48ppm.mp4",
-    "title": "15 s riot clip at 48 px/m (blood + Rivet's oil)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 48,
-    "note": "--fixed-fps 60: one sim tick per frame, real time, 30 fps output."
-  },
-  {
-    "file": "clip-blood-noir-64ppm.mp4",
-    "title": "15 s riot clip at 64 px/m",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": ""
-  },
-  {
-    "file": "beat-both-64ppm-realtime.mp4",
-    "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
-  },
-  {
-    "file": "beat-flash-64ppm-realtime.mp4",
-    "title": "Kill beat 'flash' in real time at 64 px/m",
-    "source": "game-city",
-    "branch": "d-combat",
-    "look": "auto (D4->D5)",
-    "ppm": 64,
-    "note": ""
-  }
+ {
+  "file": "frames/fight-noir-t900-48ppm.png",
+  "title": "Real city riot, 15 s in: noir's blood as the D4/D5 default (48 px/m)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "city_fight.tscn (real World+CityView+CityCharacters, seed 91, 40 rioters + 8 cops). 14 sim deaths, all bled; 13/14 sprays follow the killing round. Before = the D4 ink splat (--blood=ink, kept as the fallback). Bodies the sim despawns leave orphan pools.",
+  "before": "frames/fight-ink-t900-48ppm.png"
+ },
+ {
+  "file": "frames/fight-noir-t900-64ppm.png",
+  "title": "Same moment at arena zoom (64 px/m): pools with ink keyline, grain, sheen",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": "Pools: wobbly wet edge, red meniscus rim, ink keyline (game.ink_px 1.4), white sheen; splats get the grime-lattice ink grain + paper tooth (fx_blood_splat).",
+  "before": "frames/fight-ink-t900-64ppm.png"
+ },
+ {
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "file": "frames/stains-after-t480-64ppm.png",
+  "before": "frames/stains-before-t480-64ppm.png",
+  "ppm": 64,
+  "title": "Blood soaks into the dead (64 px/m): stains on the bodies, not only under them",
+  "note": "CorpseStains (13c4f9d), city_fight.tscn seed 91 tick 480: every human kill soaks its body (7/7 deaths, 0 missed); the stains slide with the body and leave with it at the 8 s despawn. Before = --no-stains in the same deterministic run. 32 px/m pair: frames/stains-t480-32ppm-pair.png."
+ },
+ {
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "file": "frames/stains-after-t480-48ppm.png",
+  "before": "frames/stains-before-t480-48ppm.png",
+  "ppm": 48,
+  "title": "Blood on the dead at 48 px/m (in a car)",
+  "note": "Same moment as the 64 px/m frame. Riot-cheap: each body is drawn once, then only moved and scaled."
+ },
+ {
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "file": "frames/pop-after-64ppm.png",
+  "before": "frames/pop-before-64ppm.png",
+  "ppm": 64,
+  "title": "The muzzle lights the scene for one tick (64 px/m)",
+  "note": "MuzzlePop (3464242): a shot near the camera throws a stepped 3-band pool of paper light, 5 m, for exactly one sim tick, over the ground, the print and the bodies. Photosensitivity: at most 1 per 20 ticks AND inside the kill beat's shared flash budget (~1 a second in a riot); none under reduced motion. Before = the same frozen tick with the pop hidden."
+ },
+ {
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "file": "frames/pop-after-48ppm.png",
+  "before": "frames/pop-before-48ppm.png",
+  "ppm": 48,
+  "title": "Muzzle pop at 48 px/m",
+  "note": "Same frozen moment (the 3rd pop of the riot, cop firing at a rioter right of Rivet). 32 px/m: frames/pop-3-32ppm-pair.png."
+ },
+ {
+  "file": "frames/fight-oil-after-noir-t420-64ppm.png",
+  "title": "Rivet's oil now reads on asphalt (64 px/m)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": "Rivet hit every 2 s (dev --hit-rivet=120, wired as the game wires player_hit). Before: black flecks lost in the asphalt grime. After: black drops with a thin cream rim (D4 ink-with-cream-rim rule) + an oil leak trail where he walks. Still no red on the robot.",
+  "before": "frames/fight-oil-before-noir-t420-64ppm.png"
+ },
+ {
+  "file": "frames/beat-both-48ppm-f00.png",
+  "title": "Kill beat A/B: silhouette on speed lines (--kill-beat=flash|both)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "Rivet's kill (dev stand-in: riot deaths within 8 m credited to him). World + print hidden one beat: actors solid ink, blood stays red. Default is OFF. Shared flash budget: <=3 flashes/s; 0 with --reduced-motion (calm border only)."
+ },
+ {
+  "file": "frames/beat-panel-64ppm-f01.png",
+  "title": "Kill beat A/B: the held comic panel (--kill-beat=panel|both) at 64 px/m",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": "The kill framed in a panel with paper gutters for impact.panel_ticks."
+ },
+ {
+  "file": "frames/beat-modes-contact.png",
+  "title": "All kill-beat modes at 48 and 64 px/m (rows: flash48, flash64, panel48, panel64, both48, both64)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "Frames f00,f01,f02,f03,f05. NOTE: captured with PNG saves slowing frames, so several ticks pass per frame: the sequence is compressed, the clip timing is not real-time here."
+ },
+ {
+  "file": "frames/quest1-04-dock-wave.png",
+  "title": "Quest 1's real CombatArena kills bleed (48 px/m)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "collect_call frame grabber (CollectCallView via PrintStage): Events.actor_killed -> blood under the dead guards (bottom right)."
+ },
+ {
+  "file": "clip-blood-noir-48ppm.mp4",
+  "title": "15 s riot clip at 48 px/m (blood + Rivet's oil)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 48,
+  "note": "--fixed-fps 60: one sim tick per frame, real time, 30 fps output."
+ },
+ {
+  "file": "clip-blood-noir-64ppm.mp4",
+  "title": "15 s riot clip at 64 px/m",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": ""
+ },
+ {
+  "file": "beat-both-64ppm-realtime.mp4",
+  "title": "Kill beat 'both' in real time at 64 px/m (silhouette ~2 frames, then the held panel)",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
+ },
+ {
+  "file": "beat-flash-64ppm-realtime.mp4",
+  "title": "Kill beat 'flash' in real time at 64 px/m",
+  "source": "game-city",
+  "branch": "d-combat",
+  "look": "auto (D4->D5)",
+  "ppm": 64,
+  "note": ""
+ }
 ]

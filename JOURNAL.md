@@ -77,3 +77,36 @@ NEXT (iteration 2), in order:
    tweak; body stains on dead sim bodies (BloodStains above the rigs, keyed by sim slot).
 3. Palette `blood` token (REQUEST 1) when d5-city lands it; re-bless the junction goldens afterwards (they will move).
 4. Owner sync: pick --blood default (noir proposed) and --kill-beat (off / panel / flash / both).
+
+## Iteration 2 (11:16-12:46)
+
+- 11:16 bench.lock held by `vehicles` (fresh): bench skipped at start, retry later.
+- FINDING: d-city (e9b9323) landed palette tokens blood #A30509 (= blood_fx.json colour.blood, same value),
+  blood_dark #540005 (noir shader BLOOD_DARK 0.33; blood_fx.json's pool body is 0.46, #750008), cop_blue, cop_blue_hi.
+  CombatBlood now reads palette `blood` when the token exists (else blood_fx.json): zero visual change today, follows
+  the doctrine after the merge. blood_dark NOT adopted (it would darken every pool body and move the junction goldens
+  at merge time): REQUEST 4 -> d5-city: blood_dark #540005 vs the pool body #750008; I keep #750008 unless you want
+  the doctrine value, then I switch and re-bless.
+- MILESTONE 13c4f9d: CorpseStains: blood soaked into the city's dead (brief item 1 "stains on bodies", noir's
+  BloodStains made riot-cheap: one cached node per body, drawn once; transform follows the sliding body, scale grows
+  the soak; leaves with the body at the 8 s despawn / slot reuse). city_fight seed 91: 7/7 deaths soaked, 0 missed,
+  run bit-deterministic (before/after logs identical). Frames: masters frames/stains-t480-{32,48,64}ppm-pair.png +
+  stains-t480-64ppm-crop.png (before = --no-stains, same run). Camera breaks: 0.
+- FRICTION: a `body_stains` band between actors (100) and vehicles (200) breaks test_render_layers (bands in the
+  actors canvas must be BAND_SPAN 100 apart, rig parts use the z range). Stains sit on the actors band, each body
+  node z +60 relative (rig parts stay under +30). No shared-file change.
+- MILESTONE 3464242: MuzzlePop (brief item 5 "a muzzle starburst that lights the scene for one frame", my REQUEST 2
+  done in my own files instead of lights.json): stepped 3-band ADD paper pool, 5 m, 1 sim tick, round nearest the
+  focus within 12 m, <= 1 per 20 ticks AND spend_light on the kill beat's FlashBudget (~1 lit tick a second in the
+  riot; tested), none under reduced motion. FRICTION: first cut picked the first shot of a tick anywhere in the riot:
+  the pops landed off-screen (diff of before/after = 0 soft-lift pixels); fixed with the focus gate. FRICTION: an
+  --at=<tick> still misses a 1-tick pop (the clock steps once after time_scale 0): new dev capture
+  city_fight --pop-shots=<k> (freeze at the k-th pop, shoot on then off, same moment). First version was a smooth
+  gradient: looked like airbrush haze next to the stepped D4 lights -> 3 hard bands (kept). Frames: masters
+  frames/pop-after|before-{32,48,64}ppm.png, pop-3-64ppm-crop.png. Camera breaks: 0.
+- FINDING: the evidence run at 13c4f9d FAILED selftest (junction d4@48/64, auto@56/64) only because it ran while I
+  was writing MuzzlePop: city_blood.gd referenced the not-yet-imported class, the glue failed to compile, the riot
+  drew no blood (the exact inverse of the aa1661d re-bless). Re-run at 3464242 on a clean tree: selftest PASS, look
+  goldens 11/11 (worst 0.40), block 5/5 (worst 0.93), no re-bless needed (stains/pop move < the tolerance).
+  LESSON: never edit the tree while evidence/run.mjs runs.
+- 11:37 bench.lock taken (d5-combat); bench run.mjs --secs=30 --runs=2 in the background.
