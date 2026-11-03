@@ -40,7 +40,8 @@ The bubble sim (GDScript reference `features/city/sim/sim_body.gd` and native
    of being bulldozed. Above the tackle speed it is knocked down: `M_DOWN`, slides along the hit
    normal, lies `down_s`, then a ped flees (`M_FLEE` from where it was hit, or back to the riot if it
    was a rioter) and a cop resumes. Downed people are not scared by gunfire (they stay down), can
-   still be shot and run over, and draw the `hit` clip's last frame.
+   still be shot and run over. The rig draws them with `RigClips` (drawing only): upright for
+   `DOWN_DELAY_S` (0.12 s) while the slide opens a gap, then the `DOWN_SPRAWL` fall; they rise over `DOWN_RISE_S`.
    A person RUNNING into the body (its own closing speed above the human run_mps) follows the
    table's human -> rivet_base run result: `blocked` sets `BD_RUN_IN` to that speed, and the person takes the whole
    overlap (a fleeing ped cannot shove Rivet).
