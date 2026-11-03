@@ -125,6 +125,7 @@ clip per lane at 32 px/m for the 00:00 vertical sample.
   building: features/bodies' follow also keeps Rivet out of buildings. Good for the game, wrong
   for the test; replaced by the drop-in check.
 - Gates at 1c4cae4: lint 13/13 (505 files), unit 551/551 (rerun), scenarios 23/23
+- Gates after the pit stand-down: unit 552/552 (`evidence/arena/unit-it2b.log`), arena scenarios 4/4
   (`evidence/arena/scenarios-it2.log`).
 - frames.json: 11 entries (pit clip, pit props before/after, city block added).
 - Shared files touched: none this iteration.
@@ -146,13 +147,17 @@ clip per lane at 32 px/m for the 00:00 vertical sample.
 - frames.json: 14 entries.
 - answers.json re-read 21:56: no new answers for arena.
 
+- 22:00 NEXT 2 done early: ArenaPit drives only the arena lane's own enemy spawns and stands down
+  (logged) when another lane's station declares enemies in the pit, so enemy-ai's file plugs in
+  without double spawns at the merge (unit test with a probe enemy_ai station). REQUEST 1 is
+  answered by this: enemy-ai only has to ship its station file.
+
 NEXT (iteration 3):
 1. Re-read answers.json. The 21:25 direction rules: depth before breadth, real characters, full
    hit chain, asks only with real-time clips in the final look.
-2. The arena as the stage for the vertical sample: merge-readiness for the other lanes' station
-   files (enemy-ai's cop + robot thug spawns in the pit, gunplay's range, ghost-powers' pad):
-   when a lane declares `enemy` spawns in the pit, ArenaPit must not double-spawn (REQUEST 1).
-   Make ArenaPit read only the spawns of stations whose lane opts in, or a pit.driver flag.
+2. The arena as the stage for the vertical sample: after the 00:00 merge, load every lane's
+   station file together and check the arena boots with all of them (ArenaPit already stands
+   down for another lane's pit enemies; check gunplay's range vs the arena's range dummies).
 3. Dummies read as dummies (cardboard target art, not the guard sprite's vermilion vests); an
    image_gen asset is allowed (provenance line).
 4. Camera: the 48 px/m off-screen finding. If no lane owns camera lead by iteration 3, build it in

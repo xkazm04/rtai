@@ -4,7 +4,9 @@ extends RefCounted
 ## guard is standing, the next wave comes after gap_s: first_wave guards, grow more each wave, up
 ## to max_wave, each at the pit's "enemy" spawn points in turn (CombatArena.spawn_guard spreads
 ## them). They are the real GuardBrain contractors with their real rifles. Rivet's death clears
-## the pit and starts it again from wave 1. Numbers: arena.json "pit".
+## the pit and starts it again from wave 1. Numbers: arena.json "pit". A placeholder: it drives
+## only the arena lane's own enemy spawns, and stands down when another lane's station declares
+## enemies in the pit (that lane's wave spawner owns the pit then).
 
 var points: Array[Vector2] = []
 var zone: Rect2 = Rect2()
@@ -32,10 +34,19 @@ static func from_plan(
 	p.max_wave = roundi(_num(rule, "max_wave", 5.0))
 	p.gap_ticks = roundi(_num(rule, "gap_s", 2.5) / SimClock.TICK_DT)
 	for s: ArenaStation in stations.stations:
-		if area != null and s.area == area.id:
-			for sp: ArenaStation.Spawn in s.spawns:
-				if sp.kind == "enemy" and (cells == null or cells.clear(plan.base + sp.at, 0.5)):
-					p.points.append(plan.base + sp.at)
+		if area == null or s.area != area.id:
+			continue
+		for sp: ArenaStation.Spawn in s.spawns:
+			if sp.kind != "enemy":
+				continue
+			if s.lane != "arena":
+				Log.info(
+					"arena", "pit: lane %s brings its own enemies; the waves stand down" % s.lane
+				)
+				p.points.clear()
+				return p
+			if cells == null or cells.clear(plan.base + sp.at, 0.5):
+				p.points.append(plan.base + sp.at)
 	return p
 
 

@@ -43,3 +43,38 @@ func test_the_pit_reads_its_wave_rule_and_spawn_points() -> void:
 	assert_eq(pit.gap_ticks, roundi(2.5 / SimClock.TICK_DT))
 	assert_true(pit.zone.has_point(Vector2(7.0, 17.0)))
 	assert_false(pit.zone.has_point(Vector2.ZERO))
+
+
+func test_the_pit_waves_stand_down_when_another_lane_brings_enemies() -> void:
+	var stations: ArenaStations = ArenaStations.shipped()
+	var other: Dictionary = {
+		"schema": "gtai.arena-station/1",
+		"doc": "probe",
+		"lane": "enemy_ai",
+		"stations":
+		[
+			{
+				"id": "probe_pit",
+				"name": "Probe",
+				"area": "pit",
+				"spawns":
+				[
+					{
+						"id": "cop_1",
+						"kind": "enemy",
+						"at": [10, 20],
+						"motion": "static",
+						"speed_mps": 0,
+						"span_m": 0
+					}
+				],
+				"props": [],
+				"tuning": [],
+				"measures": []
+			}
+		]
+	}
+	stations.add_text(JSON.stringify(other), "enemy-ai.json")
+	var pit: ArenaPit = ArenaPit.from_plan(ArenaPlan.shipped(), stations)
+	assert_eq(stations.stations.size(), 4, "the probe station loaded")
+	assert_eq(pit.points.size(), 0)
