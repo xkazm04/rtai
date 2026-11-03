@@ -34,6 +34,8 @@ var burst_arcs: Array = []
 var tick: int = 0
 ## Lane gunplay: Rivet's gun from weapons.json (GunHand); null keeps quest 1's own weapons.
 var gun: GunHand = null
+## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
+var guard_tell: GuardTell = null
 var _events: EventBus
 var _rng: RandomNumberGenerator
 var _next_id: int = 1
@@ -168,7 +170,11 @@ func _step_hostile(h: Fighter) -> void:
 		if ball != null:
 			balls.append(ball)
 		return
-	var shot: Shot = GuardBrain.step(h, rivet.pos, tuning, _rng)
+	var shot: Shot = (
+		guard_tell.step(h, rivet.pos, tuning, _rng)
+		if guard_tell != null
+		else GuardBrain.step(h, rivet.pos, tuning, _rng)
+	)
 	if shot != null:
 		shots.append(shot)
 

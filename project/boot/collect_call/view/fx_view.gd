@@ -38,6 +38,10 @@ func _draw() -> void:
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
 	if arena.gun != null:
 		_muzzle(arena.rivet, arena.gun)
+	if arena.guard_tell != null:
+		for h: Fighter in arena.hostiles:
+			if h.alive() and GuardTell.telling(h):
+				_tell(h, arena.guard_tell.locked(h), arena.rivet.pos)
 	for b: ArcBall in arena.balls:
 		_ball(b)
 	_arcs(arena)
@@ -74,6 +78,21 @@ func _muzzle(r: Fighter, gun: GunHand) -> void:
 	pts[10] = pts[0]
 	draw_colored_polygon(pts.slice(0, 10), Ink.CREAM)
 	draw_polyline(pts, Ink.INK, 2.5, true)
+
+
+## Lane gunplay: a contractor's tell (GuardTell). Tracking: a thin dashed vermilion aim line
+## that follows Rivet. Locked (the dodge window): the line goes solid in an ink casing and a cream
+## glint sits on the muzzle; the burst will go exactly down it.
+func _tell(g: Fighter, locked: bool, target: Vector2) -> void:
+	var from: Vector2 = g.pos + g.facing * (g.radius_m + 0.3)
+	var to: Vector2 = from + g.facing * minf(g.pos.distance_to(target) + 3.0, 16.0)
+	if not locked:
+		draw_dashed_line(Ink.px(from), Ink.px(to), Ink.VERMILION, 2.0, 10.0)
+		return
+	draw_line(Ink.px(from), Ink.px(to), Ink.INK, 7.0)
+	draw_line(Ink.px(from), Ink.px(to), Ink.VERMILION, 3.0)
+	draw_circle(Ink.px(from), 7.0, Ink.INK)
+	draw_circle(Ink.px(from), 4.5, Ink.CREAM)
 
 
 func _ball(b: ArcBall) -> void:

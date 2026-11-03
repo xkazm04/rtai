@@ -30,6 +30,8 @@ var _shots_at_live: int = 0
 var _hit_frames: PackedInt32Array = PackedInt32Array()
 ## --armored: Fighter hp for each contractor (table armored hp / human hp); 0 = quest 1's own.
 var _armored_hp: float = 0.0
+## Enemy rounds that landed on Rivet (the rest of GuardTell.rounds missed or were dodged).
+var _rivet_hits: int = 0
 
 
 func _ready() -> void:
@@ -51,8 +53,11 @@ func _ready() -> void:
 	var rng: RngRegistry = RngRegistry.new(RNG_SEED)
 	arena.gun = GunHand.make(table, &"pistol", rng.stream(&"gunplay"))
 	arena.gun.tap = true
+	arena.guard_tell = GuardTell.from_table(table)  # readable bursts: tell, lock, slow rounds
 	arena.rivet.weapon = &"gloria"  # the view's armed state (the rig's claw_pistol cell)
 	_link = HitLink.make(arena, HitFeel.shipped(_rig), table)
+	@warning_ignore("return_value_discarded")
+	arena.struck.connect(_on_struck)
 	_view.bind(_play.stage, _play.port, _play.system)
 	_view.cast_view.hit_link = _link
 	add_child(_view)
@@ -139,9 +144,23 @@ func _save(f: int) -> void:
 func _done() -> void:
 	var arena: CombatArena = _play.stage.arena
 	var line: String = (
-		"pistol_fight: live %d shots %d hits %d kills %d hitstops %d rivet_hp %.2f"
-		% [_live, arena.gun.shots_fired, _link.hits, _link.kills, _holds, arena.rivet.hp]
+		"pistol_fight: live %d shots %d hits %d kills %d hitstops %d rivet_hp %.2f enemy %d/%d"
+		% [
+			_live,
+			arena.gun.shots_fired,
+			_link.hits - _rivet_hits,
+			_link.kills,
+			_holds,
+			arena.rivet.hp,
+			_rivet_hits,
+			arena.guard_tell.rounds,
+		]
 	)
 	Log.info("pistol_fight", line + " hit_frames %s" % str(_hit_frames))
 	printerr(line)
 	get_tree().quit(0)
+
+
+func _on_struck(victim: Fighter, _dir: Vector2, _lethal: bool, _weapon: StringName) -> void:
+	if victim.kind == Fighter.Kind.RIVET:
+		_rivet_hits += 1
