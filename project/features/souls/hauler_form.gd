@@ -39,6 +39,11 @@ func num(key: StringName) -> float:
 	return SoulTuning.num(_t, key)
 
 
+## A string tuning value as an id (cue ids, shake ids); &"" when missing.
+func id_of(key: StringName) -> StringName:
+	return StringName(str(_t.get(key, "")))
+
+
 ## 0 = base Rivet, 1 = the full tank (a smoothstep over morph_s; the rig scales by it).
 func morph_k() -> float:
 	return smoothstep(0.0, 1.0, float(_morph) / float(_morph_ticks))

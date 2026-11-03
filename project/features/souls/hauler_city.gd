@@ -4,7 +4,10 @@ extends RefCounted
 ## the city stepped: it moves Rivet by the form's heavy movement (city.target for the next step),
 ## keeps his body class in sync (rivet_ghost while on: the tackle matrix knocks humans down) and
 ## turns a due stomp into a one-step body pulse (RivetBody.pulse: a radial knockdown in the sim).
-## A pulse body is wide, so the step after it puts Rivet back where he stood.
+## A pulse body is wide, so the step after it puts Rivet back where he stood. cued() is the sound
+## hook (powers.json morph_cue / stomp_cue; the host routes it to AudioService.cue).
+
+signal cued(id: StringName, at: Vector2, tick: int)
 
 var form: HaulerForm = null
 ## Counters for evidence: knockdowns while transformed (ram + stomp) and by stomps alone.
@@ -30,6 +33,7 @@ func step(tick: int, want: Vector2, arm: bool) -> void:
 	@warning_ignore("integer_division")
 	var n: int = body.knocks.size() / SimConst.BR_STRIDE
 	if _pulsed:
+		cued.emit(form.id_of(&"stomp_cue"), _hold, tick)
 		stomp_knocks += n
 		body.pos = _hold
 		_city.target = _hold
@@ -40,7 +44,10 @@ func step(tick: int, want: Vector2, arm: bool) -> void:
 	if arm:
 		@warning_ignore("return_value_discarded")
 		form.arm()
+	var was_on: bool = form.on and form.morph_k() > 0.0
 	form.step(want)
+	if form.on and not was_on:
+		cued.emit(form.id_of(&"morph_cue"), body.pos, tick)
 	body.body_class = form.body_class
 	if form.stomp_due():
 		_stomp(tick, body)
