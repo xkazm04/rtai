@@ -976,3 +976,28 @@ NEXT (iteration 13 / morning, in order):
   px/m is where look_profiles' smoothstep sits), so the grime arrives late and fast; a gentler
   start_ppm (e.g. 40) would spread it - not changed (it also moves the auto goldens at 48 / 56).
   Frames 42-arena/strip-arena-{junction,block}.png; ladder 42. Unit 229 (+1). Rejected: 0 frames.
+- Trial merge (05:17, my own scratch worktree gtai-wt/scratch-visual-trial13, detached at 02719bb, merged
+  main 721fbbb = quest 1 + combat arena; removed after): textual conflicts none; lint 13/13 over 253
+  files, unit 253/253, scenarios 8/8. merge-tree vs n-d4 / n-d5 / n-noir: JOURNAL.md-only conflicts (as
+  at 04:50; my new world.gd / sim_clock.gd / fx_triggers.gd hunks merge clean).
+- FIX (5557cfe) photosensitivity: lights.json `fire` alternated vermilion / paper at flicker_hz 7 = 7
+  saturated-red flashes a second (WCAG 2.3.1 / Harding allow 3; a riot holds up to 40 fires on screen).
+  fire -> 2.5 Hz (the siren's rate); lights.json max_flash_hz 3 (schema) + LightLayer.MAX_FLASH_HZ clamp
+  any faster alternating row at load with a Log.warn. Unit 230 (+1). No frame: a rate is temporal (a
+  single frame cannot show it); the test reads the loaded table. Owner option: fire as a steady
+  vermilion pool with an intensity-only flicker (no colour flash at all).
+- Selftest at 5557cfe (flash cap): PASS, goldens 11/11 + 5/5 worst 0.00, accents clean, lock 0.00 % x3.
+- FOUND + FIXED (zoom swim, now that the zoom eases are live): world_px = camera.position * zoom, so a
+  world point X prints at X * zoom and a rig zoom ease slid the print by X * dz a tick (~600 px at the
+  block). CityView._print_px(): an offset moves by -camera * dz on each RIG zoom step (screen centre
+  keeps its print, pans stay locked; no rig = offset 0 = goldens bit-identical). Evidence
+  (dev/selftest/arena_showcase.tscn gained --skip / --shots / --stride; block, 4 consecutive mid-ease
+  ticks 44.0 / 45.3 / 46.7 / 48.0 px/m, before = 2a50244, after = fix, same sim moments):
+  - first metrics (full-res residual of frame k warped onto k+1, building box; then by radius bands)
+    showed NO difference (21.35 vs 21.28): dominated by edge resampling and moving actors, and the 1 px
+    grain re-rolls in both (any slide > 1 px decorrelates it). LOOKED at street crops: grain boils in both
+    rows - true and unavoidable with constant-screen-size grain; it settles when the ease ends.
+  - low-passed (the grime blotches, ~30 px): street trimmed-mean residual 1.76 -> 0.89 (sigma 3),
+    1.50 -> 0.67 (6), 1.21 -> 0.54 (10) = the large-scale print swim halved. Same-tick before/after
+    frames differ in 85 % of pixels (the grain sits elsewhere; the fix applies). Kept (measured better,
+    not worse). gtai-masters/.../43-zoom-swim/ (crops, residual maps, swim_metric.py / .txt); ladder 43.
