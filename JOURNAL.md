@@ -282,3 +282,26 @@ NEXT (iteration 4, depth on the pistol chain, then ASK):
 - Gates at 8dac77f: lint 13/13; scenarios 20/20 (evidence/scenarios-it4.log, at b0abbf4: data-only
   and dev changes since); unit full run 564/564 at b0abbf4 incl. test_save_slots this time;
   test_guard_tell + test_hit_link re-run at 8dac77f 3/3 each.
+- MILESTONE 20438a7: `pistol_fight --ppm=48`. Clip gtai-masters/eve/gunplay/pistol_fight_48/ (same
+  dodge run, 17/48). The drawn flinch (LEAN_M 0.3 m, light class 6 ticks) reads at 48 px/m as a
+  ~14 px shove, mostly under the impact star for its first 3 ticks (lean-sheet.png: 16 consecutive
+  frames, 2x crop). Left as is: the owner's 21:25 direction is no number tuning before the full
+  look, and the star already carries the hit. A real flinch needs enemy-ai's animation (REQUEST 5).
+- REQUEST 7 -> enemy-ai (sharpens REQUEST 5): the tell is now in the sim on quest 1's fight.
+  While `GuardTell.telling(fighter)` (Fighter.tell_left > 0) play the raised-rifle pose; while
+  `arena.guard_tell.locked(fighter)` hold it still (the dodge window). Draw nothing else: FxView
+  already draws the aim line and the muzzle glint. The same two calls work for any CombatArena
+  with `guard_tell` set (arena lane: set it next to `arena.gun`, REQUEST 4).
+- FRAMES: frames.json top 5 are this iteration (dodge tight 32, 48 px/m, the dodge pass still,
+  the locked tell still, dodge with the full cone).
+
+NEXT (iteration 5):
+1. Apply gunplay-3 when answered (one value: weapons.json enemy_fire.lock_spread_scale; B = 1.0).
+2. Crossfire: with 2-3 gunners the strafe away from one line walks into another (17/48 still land
+   with the tight burst). Options to measure, not tune blind: stagger the tells (a token so only
+   one gunner locks at a time, the encounter-balance "attack slots" pattern), or let the scripted
+   dodger pick the side away from the other live lines. Measure landed/48 for each.
+3. Rivet's own side of the dodge: the dodge is a scripted strafe through the bot's intent; a real
+   player strafes with the move stick while aiming (twin-stick). Capture a TickInput-driven dodge
+   (stage.pilot with a scripted TickInput) so the clip shows the real mover's acceleration.
+4. Then the machine pistol on the same D5 chain (GunHand with &"machine_pistol"), same clip.
