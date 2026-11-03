@@ -153,17 +153,20 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
   evidence/d5-city/15-lamp/ (D4 / plain D5 / inked D5). Work-order item 3 is now fully in the generator.
 - Proof at 4867336: masters ladder.png (copy evidence/d5-city/ladder-iter3.png), frames.json 15 entries.
 
+- MILESTONE de53c3f no lane arrows (T1 has none; they were the biggest white marks after the zebras at
+  32 px/m); road_arrow row kept for missions. GENERATOR 7. evidence/d5-city/16-no-arrows/.
+- MILESTONE evidence at 750c089 (--no-bench): lint, unit 335, scenarios 8, parity, selftest all PASS ->
+  evidence/d5-city/evidence-750c089/. Ladder + frames.json at de53c3f.
+
 ## NEXT (iteration 4)
-Branch d-city at the commit after 4867336; gates PASS at 10cc4d8 (evidence/d5-city/evidence-10cc4d8);
-lamp commit re-checked (lint, unit 335, goldens both sites in tolerance).
+Branch d-city at the commit after 750c089; gates PASS at 750c089 (evidence/d5-city/evidence-750c089).
 1. OWNER CALL at 18:00 (put it on the sync page): road width ~17 m kerb to kerb vs T1 ~10 m
    (evidence/d5-city/11-road-width-mock/). If yes: sim data (PERIOD 8, 3 street tiles, kerb tiles with
    5 m asphalt + parking at v 4.45) -> a decisions line, replay/parity re-bless, and the vehicles +
    slice-play lanes must agree. Also ask: keep plazas (12% of blocks, T1 has none)?
 2. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13); Codex budget
    untouched (0 of ~30 images used today by this lane).
-3. Lane arrows: T1 has none; ours sit on every approach (KerbDresser.road_decals m 3/7). Try one per
-   approach or none, judge at 32 px/m.
+3. (done de53c3f: lane arrows removed.)
 4. Corner traffic lights sit diagonal (rot + 45) and read a bit like spoons at 32 px/m; T1 has corner
    lamp posts. Try axis-aligned or the inked lamp at corners.
 5. Pixel-snapped world camera, then package v9's edge_dark with shadows that carry their own ink.
