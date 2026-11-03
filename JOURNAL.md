@@ -854,3 +854,16 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   ahead of the clock; cropped and re-added as 03:18).
 - 03:19 (same timestamp habit: the ladder label in the 03:15 entry was also ahead of the clock). Rule for the rest of
   the session: run date before writing any time.
+- 03:28 MILESTONE (f145fa4; gap 5, PROPOSAL, default off): look_d5_halo.gdshader + dev/showcase/d5_hero_halo_ink.gd:
+  the mock's thin ink line OUTSIDE the cream sticker rim (checked by eye on a x3 mock crop: dark contour beyond the
+  cream, plus a soft drop shadow, not done). A ring-only pass on a child sprite of every CutRig halo; width in screen
+  px from UV derivatives (holds under the limb halos' non-uniform scale and part rotation); z absolute below the
+  lowest halo, so where halos overlap the cream covers the ring and only the silhouette's outer edge is lined. No
+  characters-lane file touched (the dev scene swaps it in with D5_HALO=ink). h106 -> h107ink: 674 / 1107 / 1463 px at
+  32 / 48 / 64 (both tiers alike; halos are off at 96+, so 0 px at 96/128). Where the ring landed at 32 px/m: 62 px
+  over cream ground (zebra/pavement; L 0.86 -> 0.09: the rim now separates from a cream bar) and 612 px over street
+  (L 0.28 -> 0.09: darker than the asphalt, like the mock's line). Motion: pan14ctl vs pan14ink (48 px/m, 40 ticks,
+  look_d5_print so only actors change; Rivet's idle in the crop, ring present: 269 px differ at tick 0): mean change
+  0.00049 = 0.00049, HF change 0.000538 = 0.000538, changed px/tick 991.6 vs 991.4: no added flicker. Board
+  evidence/item34_halo_ink.png (the mock crop is at its own scale: its stickers are drawn larger and with a thicker
+  rim than ours at 32 px/m). Ladder row. For the characters lane: the same pass in rig_build.gd _halo.
