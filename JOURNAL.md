@@ -369,3 +369,31 @@ NEXT (iteration 3, in order):
   fx_triggers.json `car_wreck`; the burning wreck after it now uses features/fx/art/fx_fire.png.
 - REQUEST 8 -> audio: a burning-wreck crackle loop. `VehicleView.fire.burning()` returns the ids of
   the burning wrecks each frame (positions: VehicleService.cars); 24 s per wreck, then smoke only.
+- 16:25 gates at ac7827b (HEAD, after the wreck atlas; `run.mjs --no-bench`): lint 13/13, unit 369,
+  parity EXACT (mutation at 629), selftest PASS (goldens 11/11 worst 0.00); scenarios 10 of 11:
+  scenario_city_chase FAIL on its wall-clock nav budget, max field 6964 us > 2 ms with last field
+  148 us and the sim outcome identical to the passing runs (cops 60.7 -> 6.5 m, 49 fields). The
+  same contention spike as at 12:53. Re-ran it alone twice at 16:28: PASS (max 215 us, 183 us).
+  Flow field is not vehicles' code. Copied to evidence/vehicles/it4/head/ (with the log).
+  REQUEST 9 -> Director / city-nav owner: the chase gate judges the MAX of 49 wall-clock samples;
+  on a seven-lane machine one descheduled field fails it. A p95 or "2 of 49 over" rule would keep
+  the budget honest without the flake.
+- Iteration totals: frames captured 101 (carnage-v10 20 + v11 20 rejected and deleted; v12 20,
+  night 20, v13 21 kept) + 287 clip frames (assembled, scratch deleted); 40 rejected, 0 camera
+  breaks. No new AI images (one provenance line for the packed wreck atlas). Bench 1 run (lock).
+
+NEXT (iteration 5, in order):
+1. Before frame for the 2400 burnt-out shot (v12 lacks it): rebuild without the wreck atlas (move
+   the png aside, re-import) or accept the 900 pair. A night clip of the burning wrecks if the owner
+   likes carnage-night-v1.
+2. REQUEST 7 / 8 answers (D5 fireball kind, burning-wreck crackle) are one-line consumers here.
+3. Fire as gameplay (stretch): a person or Rivet standing in a burning wreck's fire takes damage,
+   a burning wreck can set the car it touches alight (chain wrecks). Sim-side, so: the service step,
+   deterministic, a carnage scenario metric.
+4. Bench a drive48 variant with VehicleService (the bench World has none today, so the vehicles
+   draw cost - VehicleView, VehicleFire, skids - is not on any bench path).
+5. Owner sync items: cop blue on the cruiser light bar and the service cruiser (d5-cast's art; the
+   frames still show the vermilion bar), Rivet's size beside a car (d5-cast).
+- Session end 16:31: tree clean after this commit, no Godot process of mine left, bench lock not
+  held, scratch deleted. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png 1280 x
+  8364, carnage-20s-48ppm-v3.mp4, crop-fire-v12.png, crop-wreck-v13.png, build_wreck_atlas.py).
