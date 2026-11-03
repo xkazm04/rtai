@@ -26,6 +26,10 @@ var focus: Vector2 = START
 var target: Vector2 = START
 ## Set focus from outside (a bench or a cutscene) instead of the input axes.
 var steer_by_input: bool = true
+## Rivet's body at `target` (features/bodies): people part around him and are tackled; the step
+## writes the resolved position back to target (and focus, when steered by input). body.on =
+## false while he drives.
+var body: RivetBody = null
 ## Microseconds spent since the last take_stats(): [residency, spawner, sim step, ticks].
 var stats_us: PackedInt64Array = PackedInt64Array([0, 0, 0, 0])
 var _filled: bool = false
@@ -46,6 +50,8 @@ func setup(ctx: WorldContext) -> void:
 	spawner = CitySpawner.new(sim, residency, ctx.rng.stream(SPAWN_STREAM))
 	spawner.rb = RB
 	spawner.targets = CityTargets.street(270, 120, 10)
+	body = RivetBody.new(BodyTable.load_default(), target)
+	body.bind(ctx.events)
 
 
 func step(_tick: int, input: TickInput) -> void:
@@ -60,7 +66,13 @@ func step(_tick: int, input: TickInput) -> void:
 	spawner.tick(focus, not _filled)
 	_filled = true
 	var t2: int = Time.get_ticks_usec()
+	sim.set_body(body.spec(target))
 	sim.step(SimClock.TICK_DT, focus.x, focus.y, target.x, target.y)
+	body.take(sim.body_result())
+	if body.on:
+		target = body.pos
+		if steer_by_input:
+			focus = target
 	stats_us[0] += t1 - t0
 	stats_us[1] += t2 - t1
 	stats_us[2] += Time.get_ticks_usec() - t2
