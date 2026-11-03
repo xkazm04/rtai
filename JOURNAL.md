@@ -88,3 +88,26 @@
   5. `arena_stations/rivet-motion.json` once the arena lane's station schema exists (check
      their branch or docs; otherwise propose one).
   6. Melee weapons framework (`melee_weapons.json`: baton, katana) on MeleeCombo rows.
+
+## Iteration 1, last entries (21:16-21:22)
+- MILESTONE a6f231c: `MeleeShock` (charge, scaled stun, metal-only chain) + test_melee_shock
+  (4/4, planted zero-radius fault caught). Scenarios exit 0 on the combo tree (a692b60).
+- Stride probe (`dev/rivet_motion/stride_probe.gd`, headless; evidence/rivet-motion/stride-probe.txt):
+  max foot reach from the body centre, in m:
+
+  | gait_scale | walk 1.6 m/s | run 4.5 m/s | sprint 5.6 m/s |
+  |---|---|---|---|
+  | 1.0 | 0.53 | 0.73 | 0.73 |
+  | 1.3 | 0.68 | 0.92 | 0.92 |
+  | 1.6 | 0.83 | 1.12 | 1.12 |
+
+  At 1.0 the feet stay inside Rivet's idle footprint half-length (~0.84 m with the arms). That
+  is why the legs barely read from above. The stride also stops growing past RUN_SPEED (5 m/s),
+  so a sprint shows a faster cadence but no longer reach; the sprint pose needs its own
+  stride/lean.
+  A torso half-length measure was tried and dropped: it grew with distance travelled, so it was
+  not trustworthy.
+- NEXT (adds to the list above): try Rivet `gait_scale` 1.3 (+ a sprint stride band above
+  5 m/s) and judge it in a 32 px/m clip against the hips A/B. Footfalls stay world-planted (no
+  skating by construction); check the cadence still reads natural. If the look is a fork, ASK it
+  (rivet-motion-2: stride 1.0 / 1.3 / 1.6 clips).
