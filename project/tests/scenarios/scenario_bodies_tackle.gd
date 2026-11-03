@@ -3,9 +3,7 @@ extends Scenario
 ## rivet_base -> human run result is a knockdown: the human slides back, lies down_s, gets up
 ## and flees; Rivet keeps most of his speed and never overlaps him. Then a sprint into a
 ## `robot` (BodyContact, outside the city sim) is `blocked`: no overlap, Rivet stopped short.
-## A lying human is a bigger body (down_radius_m, the sprawl): Rivet sprinting on past the faller
-## never steps onto it. Planted faults (TST-05): the tackle disabled in the spec (no knockdown
-## must be seen), the lying radius off (standing radius: Rivet runs over the sprawl), and a
+## Planted faults (TST-05): the tackle disabled in the spec (no knockdown must be seen), and a
 ## table without the rivet_base -> robot row (load error and Rivet passes into the robot).
 
 const SPRINT: Vector2 = Vector2(6.0, 0.0)
@@ -13,11 +11,10 @@ const TOL: float = 0.02
 
 
 func run(_tree: SceneTree) -> String:
-	var human: Dictionary = _sprint_human(0)
+	var human: Dictionary = _sprint_human(false)
 	if human.has("error"):
 		return human["error"]
-	var planted: Dictionary = _sprint_human(1)
-	var standing: Dictionary = _sprint_human(2)
+	var planted: Dictionary = _sprint_human(true)
 	var robot: Dictionary = _sprint_robot(BodyTable.load_default())
 	var no_row: Dictionary = _sprint_robot(_table_without(&"rivet_base", &"robot"))
 	Log.info(
@@ -29,16 +26,12 @@ func run(_tree: SceneTree) -> String:
 			"human": human,
 			"robot": robot,
 			"planted_no_tackle": planted,
-			"planted_down_standing": standing,
 			"planted_no_robot_row": no_row
 		}
 	)
 	if err != "":
 		return err
-	var caught: String = ""
-	if standing.get("worst_rivet", 0.0) <= TOL:
-		caught = "planted fault (lying radius off) was not caught: %s" % standing
-	return _judge_human(human, planted) + caught + _judge_robot(robot, no_row)
+	return _judge_human(human, planted) + _judge_robot(robot, no_row)
 
 
 func _judge_human(h: Dictionary, planted: Dictionary) -> String:
@@ -62,8 +55,7 @@ func _judge_robot(r: Dictionary, no_row: Dictionary) -> String:
 	return ""
 
 
-## plant: 0 none, 1 the tackle off, 2 the lying radius off (BD_RP_DOWN 0: the standing radius).
-func _sprint_human(plant: int) -> Dictionary:
+func _sprint_human(plant: bool) -> Dictionary:
 	var st: BodiesStage = BodiesStage.new()
 	var err: String = st.setup(20.0)
 	if err != "":
@@ -72,8 +64,7 @@ func _sprint_human(plant: int) -> Dictionary:
 	var slot: int = st.stand(at)
 	var x0: float = st.body.pos.x
 	var rule: BodyRule = st.table.rule(RivetBody.CLASS, RivetBody.PERSON)
-	st.plant_no_tackle = plant == 1
-	st.plant_down_standing = plant == 2
+	st.plant_no_tackle = plant
 	var flags: PackedInt32Array = PackedInt32Array([0, 0, 0])  # went down, got up, fled
 	var slide: float = 0.0
 	var keep: float = 0.0

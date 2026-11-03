@@ -35,7 +35,7 @@ func set_spec(p_spec: PackedFloat64Array) -> void:
 func push(i: int, pvx: float, pvy: float) -> void:
 	if spec[SimConst.BD_ON] == 0.0:
 		return
-	var rs: float = spec[SimConst.BD_R] + _rp(i)
+	var rs: float = spec[SimConst.BD_R] + spec[SimConst.BD_RP]
 	var ddx: float = x - bx
 	var ddy: float = y - by
 	var d2: float = ddx * ddx + ddy * ddy
@@ -129,6 +129,7 @@ func down(i: int, dt: float) -> void:
 func resolve() -> void:
 	if spec[SimConst.BD_ON] == 0.0:
 		return
+	var rs: float = spec[SimConst.BD_R] + spec[SimConst.BD_RP]
 	for _it: int in 2:
 		for j: int in _h.query(bx, by, 1):
 			var kj: int = _s.kind[j]
@@ -136,7 +137,6 @@ func resolve() -> void:
 				continue
 			if _s.mode[j] == SimConst.M_DEAD:
 				continue
-			var rs: float = spec[SimConst.BD_R] + _rp(j)
 			var ddx: float = bx - _s.px[j]
 			var ddy: float = by - _s.py[j]
 			var d2: float = ddx * ddx + ddy * ddy
@@ -150,12 +150,6 @@ func resolve() -> void:
 	_solid.push_out(spec[SimConst.BD_R])
 	bx = _solid.x
 	by = _solid.y
-
-
-## Person i's radius against the body: lying down (M_DOWN) it is BD_RP_DOWN when set.
-func _rp(i: int) -> float:
-	var lying: float = spec[SimConst.BD_RP_DOWN]
-	return lying if lying > 0.0 and _s.mode[i] == SimConst.M_DOWN else spec[SimConst.BD_RP]
 
 
 ## BR_X, BR_Y, BR_N, then BR_STRIDE floats per knockdown this step (slot, x, y).

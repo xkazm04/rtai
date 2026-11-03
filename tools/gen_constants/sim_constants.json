@@ -654,16 +654,10 @@
           "value": 12
         },
         {
-          "doc": "lying (M_DOWN) person radius m; 0 = the standing BD_RP",
-          "name": "BD_RP_DOWN",
-          "type": "int",
-          "value": 13
-        },
-        {
           "doc": "spec length",
           "name": "BD_LEN",
           "type": "int",
-          "value": 14
+          "value": 13
         },
         {
           "doc": "body_result(): resolved body x",

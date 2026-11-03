@@ -4,7 +4,7 @@ extends RefCounted
 ## sidewalk band, standing peds placed by the test (no spawner), and Rivet's body driven through
 ## them on the fixed tick exactly as CitySystem does (RivetBody.spec -> step -> take). Measures,
 ## every tick, the worst overlap between Rivet and any live person (sum of the table radii minus
-## the distance; a lying person counts at its down_radius_m) and the worst person-person overlap.
+## the distance) and the worst person-person overlap.
 
 const ORIGIN: Vector2 = Vector2(64.0 * 5 + 30.0, 64.0 * 5 + 12.0)
 
@@ -21,7 +21,6 @@ var plant_body_off: bool = false
 var plant_no_tackle: bool = false
 var plant_down_zero: bool = false
 var plant_no_run_in: bool = false
-var plant_down_standing: bool = false
 
 
 ## Stamps the city and finds a sidewalk band (rows y-1..y+1 walkable for `length` m east).
@@ -67,8 +66,6 @@ func tick(vel: Vector2) -> void:
 		spec[SimConst.BD_DOWN] = 0.0
 	if plant_no_run_in:
 		spec[SimConst.BD_RUN_IN] = 0.0
-	if plant_down_standing:
-		spec[SimConst.BD_RP_DOWN] = 0.0
 	sim.set_body(spec)
 	sim.step(SimClock.TICK_DT, body.pos.x, body.pos.y, body.pos.x, body.pos.y)
 	body.take(sim.body_result())
@@ -90,10 +87,8 @@ func person(slot: int) -> PackedFloat64Array:
 
 func _measure() -> void:
 	var rr: float = table.radius(RivetBody.CLASS) + table.radius(RivetBody.PERSON)
-	var rr_down: float = table.radius(RivetBody.CLASS) + table.down_radius(RivetBody.PERSON)
 	var rp: float = table.radius(RivetBody.PERSON) * 2.0
 	var pts: PackedVector2Array = PackedVector2Array()
-	var down: Array[bool] = []
 	var snap: PackedFloat64Array = sim.snapshot()
 	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
 		if int(snap[r]) >= SimConst.SNAP_PROJ_BASE:
@@ -103,10 +98,8 @@ func _measure() -> void:
 		if person_kind and int(snap[r + 2]) != SimConst.M_DEAD:
 			@warning_ignore("return_value_discarded")
 			pts.append(Vector2(snap[r + 4], snap[r + 5]))
-			down.append(int(snap[r + 2]) == SimConst.M_DOWN)
 	for i: int in pts.size():
-		var reach: float = rr_down if down[i] else rr
-		worst_rivet = maxf(worst_rivet, reach - body.pos.distance_to(pts[i]))
+		worst_rivet = maxf(worst_rivet, rr - body.pos.distance_to(pts[i]))
 		for j: int in range(i + 1, pts.size()):
 			worst_people = maxf(worst_people, rp - pts[i].distance_to(pts[j]))
 

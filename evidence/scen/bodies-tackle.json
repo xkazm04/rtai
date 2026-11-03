@@ -2,20 +2,11 @@
   "human": {
     "fled": true,
     "got_up": true,
-    "keep": 0.950847688268443,
-    "knocks": 1,
-    "slide_m": 2.09250450134277,
-    "went_down": true,
-    "worst_rivet": 0.0000213575363159357
-  },
-  "planted_down_standing": {
-    "fled": true,
-    "got_up": true,
     "keep": 0.991781266009221,
     "knocks": 1,
     "slide_m": 1.92887198925018,
     "went_down": true,
-    "worst_rivet": 0.250023860931397
+    "worst_rivet": 0.0000238609313965021
   },
   "planted_no_robot_row": {
     "result": "",
