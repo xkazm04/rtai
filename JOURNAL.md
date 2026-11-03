@@ -307,3 +307,11 @@ REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
 
 NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` e58f359 after merging d-save + d-slice;
 REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
+
+## 2026-11-03 iteration 68 (STABILIZE, 17:20) - audit, nothing to change
+- d-slice head is 17a85df. Since 77168ff the only `project/` change is `features/city/view/view_prewarm.gd` (+12 lines, light-pool fix; not in my scope, no save code touched). main still 089400e.
+- Trial tree `d-save-trial` stays at e58f359; NOT re-merged or re-gated this iteration (session ends 17:30), so the gates from iteration 61 (lint 13/13, unit 409/0, scenarios 12/12) are the last measured ones for the trial tree.
+- d-save: no code, sim, shared-file or bench change; no lock taken; worktree was clean. Work order items 1-6 stay evidenced.
+
+NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` e58f359 after merging d-save + d-slice;
+REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands). If time allows, re-merge d-slice 17a85df into the trial tree and re-run gates.
