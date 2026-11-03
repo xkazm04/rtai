@@ -1420,3 +1420,13 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:55: tree clean after commit, no scratch.
+
+## Iteration 26 (08:07-08:10, STABILIZE, past freeze)
+- No features, no code change: `git diff 8bd2ec0 HEAD -- project tools native` still empty, so evidence/pof
+  at 8bd2ec0 (all PASS) still describes this build; not re-run. Lint re-checked at HEAD 8d4750d: 13/13 pass
+  over 221 files (unit last re-checked iteration 25, scenarios iteration 23, both on identical code).
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no visual change -> no
+  ladder row, no Godot started.
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 08:10: tree clean after commit, no scratch.
