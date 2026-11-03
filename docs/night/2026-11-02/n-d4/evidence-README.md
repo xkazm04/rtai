@@ -1,0 +1,55 @@
+# n-d4 night evidence index (lane d4-production, 2026-11-02 / 03)
+
+One folder per iteration that left evidence in the tree; the full frame sets, masters, prompts and tools are in
+`C:\Users\kazda\kiro\gtai-masters\night\d4-production\` (ladders `ladder.png` then `ladder2.png` from iteration 14, summary sheets `night_iter*_summary.png`).
+The day-by-day record is `JOURNAL.md` (MILESTONE / CHECK / REJECTED / REQUESTS / NEXT entries).
+
+| Folder | What is in it |
+|---|---|
+| `iter6/` | quest 1 places + cast art summary, the first quest view patch (superseded by `iter12/`), gates |
+| `iter8/` | moving-traffic atlas, damage / hijack atlases, generic roofs; generator patch v1 (superseded by `iter10/`); traffic wiring patches (superseded: n-visual wired traffic itself); gates, bench PASS at 38136e8 |
+| `iter10/` | inked paving joints, plaza flags, junction zebras; **generator patch v2**, **crowd slot patch**; gates, bench at 56b9b72 |
+| `iter12/` | tank tracks, bollard, HUD numeral strip; quest 1 view patch (superseded by `iter14/`); gates at 297bd42 |
+| `iter16/` | summary sheet `night_iter16_summary.jpg`; morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch: green) and its board vs the target; pedestrian sleeve variants + **rig sleeves patch** (supersedes 21); gates at 767ee6c |
+| `iter14/` | ink splat sticker (FX), Toner Room floor, inked arc ball, flat heat pip; **quest 1 view patch (final)**; muzzle + crackle fade patch for visual-engine; summary sheet; gates at 4477108 |
+| `iter27/` | STABILIZE: full gates incl. bench at 31f8c4c (art identical to d2d56a6; all 6 PASS) |
+| `report/` | REPORT phase: lint / unit / scenarios at 0e733b6 (green); the hand-off is `REPORT.md` at the root |
+
+## Patches for code owners (apply after merging n-d4; none is committed as code)
+
+| # | Owner | Patch | Note |
+|---|---|---|---|
+| 16 | quest 1 | `iter14/q1_view_art.patch` | 4 view files: places (+ Factory Row concrete, Harbor Road pavement + kerb), cast (incl. Rivet, patrol cops, Rivet's hide-spot peek from rig captures), HUD frames + inked cash counter, ink HP bar, the inked arc ball loop, inked whisper rings, the weapon label in ink (iteration 16). Dry run (04:36, before the arc ball; with it unit 166/166 in scratch-q1): main 721fbbb + n-d4 merges with no conflict, the patch applies, lint 13/13, unit 166/166, scenarios 8/8; also applies with n-visual merged in |
+| 19 | city / generator | `iter10/generator_art_pick_v2.patch` | generic roofs in the pick, no neighbour repeats, upright lettered roofs, plaza quarter turns, street variants cycle; moves the AST-12 golden list (included) |
+| 21 | characters | `iter16/rig_sleeves_and_looks.patch` (supersedes `iter10/rig_variant_new_looks.patch`) | crowd slots 3 and 7 use the hoodie / cap and overalls / bald parts, and jacket / hoodie looks wear the `_dark` sleeves, overalls `_grey` (`RigVariant.sleeve` + 4 lines in `RigArm._cell`): the crowd stops reading as clones at 32 / 48 px/m |
+| 23 | visual-engine | `iter14/fx_fade.patch` | fx.json `muzzle` + `crackle` `fade_from` 0 -> 0.6: the flash prints as a solid inked star and the bolts as solid ink instead of dither fragments (REQUEST 14 + 23) |
+
+## Merge notes
+
+- **Dry run of the whole morning (iteration 16, `iter16/morning-full-stack-gates.txt`):** main + n-d4 + n-visual
+  a103850 + patches 16, 19, 21 (iter16 sleeves), 23 in that order: every merge is clean except `JOURNAL.md`, every
+  patch applies, re-bake matches the golden; lint 13/13, unit 260/260, scenarios 8/8, parity exact; selftest fails
+  only on n-visual's look / block goldens (re-bless after the merge), doctrine gate clean, 0 placeholders.
+
+- n-d4 merges into main and into n-visual with `JOURNAL.md` the only conflict (both lanes keep one at the root).
+- After merging n-visual + n-d4, n-visual's look / block goldens must be re-blessed: they were blessed without n-d4's
+  art, so all 16 move (`iter14/merged-n-visual-41ee996-gates.txt`: worst mean 20.44; everything else in that run
+  passes, incl. the accent gate). Their unit suite passes on the merged tree (221/221).
+
+## Optional requests to visual-engine (owner's eye)
+
+- 20: the target's speckled slabs would come from the print pass grit, not texture specks.
+- 22: the aquatint prints soft cloud blotches on the cream paving at 64 px/m (`masters:.../work/i12_strip64.png`).
+
+## Owner decisions still open
+
+REQUEST 24: who ships the in-world soul sprites (n-d5 has D5 ones in masters, unshipped; this lane can slice + ship).
+
+HUD / lettering font for words (no font bundled; numerals are own art in `features/hud/art/hud_digits.png`), cop
+uniform vermilion share, blood ink vs vermilion (the target paints it vermilion; we ship ink), teal robot eyes in the
+quest 1 design notes (shipped as ink).
+
+## Codex use
+
+29 images, 194 cells, 7 rejected (camera breaks / front views), no usage limit hit (iteration 16: 0 images). Every AI asset has a line in
+`steam/ai-provenance/2026-11.jsonl`; procedural redraws carry a `code:` tool line.

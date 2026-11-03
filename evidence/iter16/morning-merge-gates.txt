@@ -1,0 +1,32 @@
+Morning merge dry run (lane d4-production, iteration 16, 2026-11-03 ~05:15)
+Tree: scratch worktree = n-visual 41ee996 + `git merge --no-commit --no-ff n-d4` (n-d4 at 26fb82e; JOURNAL.md the only
+conflict, resolved to n-d4's for the run) + `git apply` of
+  evidence/iter10/generator_art_pick_v2.patch   (REQUEST 19, city / generator)
+  evidence/iter10/rig_variant_new_looks.patch   (REQUEST 21, characters)
+  evidence/iter14/fx_fade.patch                 (REQUEST 23, visual-engine)
+(all three `git apply --check` clean), native bin copied from n-d4, `--import`, then bake_city (256 chunks).
+
+bake_city --check            : deterministic, matches golden (the golden list from patch 19)
+node tools/lint/lint.mjs     : all 13 checks pass over 220 GDScript files
+node tools/tests/run_unit.mjs: 221 passed, 0 failed, 0 skipped (GUT, headless)
+run_scenarios.gd             : 8 ran, 0 failed (replay_60s final cbeb734ff9b97c41; city replay 1200 ticks identical)
+city_selftest (d3d12)        : ok, placeholders 0, 72 art textures, texture_failures []
+city_frame (d3d12)           : placeholders 0 (3 foci x 32 / 48 / 64 px/m)
+Not run here: n-visual's look / block golden selftest (needs the post-merge re-bless, see iter14 merge note), bench.
+
+Frames: masters night/d4-production/morning_i16/, morning_i16_st/; board night_iter16_morning.png
+(= evidence/iter16/night_iter16_morning.jpg): n-d4 alone | morning merge | target d4h2_mock, 32 / 48 / 64 px/m.
+
++ evidence/iter16/rig_sleeves_and_looks.patch instead of REQUEST 21's patch (it contains 21's looks + the sleeves),
+  with n-d4 767ee6c's sleeve art: lint 13/13 (220 files), unit 221/221, scenarios 8/8, selftest + city_frame
+  0 placeholders. Frames: masters after_i16sl2/, after_i16sl2_st/ (before = morning_i16*/).
+
+05:32 re-run with n-d4 97558d7's arm art (outline 14 px; byte-equal to the scratch) + the sleeves patch WITH its unit
+test: lint 13/13 (220 files), unit 222/222, scenarios 8/8.
+
+05:36 n-visual's own run.mjs on the same morning tree (`--no-bench --no-parity --allow-dirty`): lint, unit 222,
+scenarios PASS; selftest FAIL only on n-visual's goldens, as expected before the post-merge re-bless: look goldens
+0/11 within mean 4 (worst 22.16), block goldens 0/5 (worst 35.49 - patch 19 changes the generator's picks, so the
+blocks move more than in iter14's merge without it). Same run: 72 art textures, 0 placeholders, accent pixels
+32: 0.94 %, 48: 0.96 %, 64: 0.25 %, "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents",
+world lock holds (0.00 % at 32 / 48 / 64).

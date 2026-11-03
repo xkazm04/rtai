@@ -1,0 +1,2 @@
+bench (exported release build, windowed, 3 consecutive runs x 4 scenarios x 60 s): p99 2.597 ms, 1% low 197 fps, worst swap 32.026 ms, worst frame 66.932 ms; hitches >25 ms 105, >50 ms 1 (unexplained 0, outside 0, present 1); vsync-on drive >25 ms: 6; visible avg 47.602 / 7.921 / 272.732 (drive/drive48/riot); rigs p50 0.102 / p99 0.543 ms per frame (riot, up to 16)
+rc 0

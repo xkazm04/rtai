@@ -253,5 +253,226 @@
    38.0,
    108.0
   ]
+ },
+ "torso_hoodie": {
+  "size": [
+   166,
+   214
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 1,
+  "scale": 1.0,
+  "pivot_a": [
+   99.0,
+   107.0
+  ],
+  "pivot_b": [
+   56.0,
+   106.5
+  ]
+ },
+ "torso_overalls": {
+  "size": [
+   129,
+   215
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 2,
+  "scale": 1.0,
+  "pivot_a": [
+   108.0,
+   106.0
+  ],
+  "pivot_b": [
+   20.0,
+   106.5
+  ]
+ },
+ "head_cap": {
+  "size": [
+   160,
+   153
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 3,
+  "scale": 1.0,
+  "pivot_a": [
+   78.0,
+   76.0
+  ],
+  "pivot_b": [
+   80.0,
+   76.0
+  ]
+ },
+ "head_bald": {
+  "size": [
+   127,
+   148
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 4,
+  "scale": 1.0,
+  "pivot_a": [
+   74.0,
+   73.0
+  ],
+  "pivot_b": [
+   50.0,
+   73.0
+  ]
+ },
+ "head_beanie": {
+  "size": [
+   154,
+   154
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 5,
+  "scale": 1.0,
+  "pivot_a": [
+   77.0,
+   76.0
+  ],
+  "pivot_b": [
+   76.0,
+   76.0
+  ]
+ },
+ "upperarm_dark": {
+  "size": [
+   155,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm.png",
+  "cell": 1,
+  "scale": 1.0,
+  "pivot_a": [
+   42.0,
+   42.5
+  ],
+  "pivot_b": [
+   118.0,
+   41.5
+  ]
+ },
+ "forearm_dark": {
+  "size": [
+   185,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from forearm.png",
+  "cell": 2,
+  "scale": 1.0,
+  "pivot_a": [
+   43.0,
+   42.5
+  ],
+  "pivot_b": [
+   148.0,
+   42.0
+  ]
+ },
+ "upperarm_endon_dark": {
+  "size": [
+   77,
+   77
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm_endon.png",
+  "cell": 2,
+  "scale": 1.0047,
+  "pivot_a": [
+   39.0,
+   37.5
+  ],
+  "pivot_b": [
+   37.0,
+   37.5
+  ]
+ },
+ "forearm_endon_dark": {
+  "size": [
+   79,
+   78
+  ],
+  "sheet": "code:ped_sleeves.py from forearm_endon.png",
+  "cell": 3,
+  "scale": 1.0047,
+  "pivot_a": [
+   40.0,
+   38.0
+  ],
+  "pivot_b": [
+   38.0,
+   38.0
+  ]
+ },
+ "upperarm_grey": {
+  "size": [
+   155,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm.png",
+  "cell": 1,
+  "scale": 1.0,
+  "pivot_a": [
+   42.0,
+   42.5
+  ],
+  "pivot_b": [
+   118.0,
+   41.5
+  ]
+ },
+ "forearm_grey": {
+  "size": [
+   185,
+   85
+  ],
+  "sheet": "code:ped_sleeves.py from forearm.png",
+  "cell": 2,
+  "scale": 1.0,
+  "pivot_a": [
+   43.0,
+   42.5
+  ],
+  "pivot_b": [
+   148.0,
+   42.0
+  ]
+ },
+ "upperarm_endon_grey": {
+  "size": [
+   77,
+   77
+  ],
+  "sheet": "code:ped_sleeves.py from upperarm_endon.png",
+  "cell": 2,
+  "scale": 1.0047,
+  "pivot_a": [
+   39.0,
+   37.5
+  ],
+  "pivot_b": [
+   37.0,
+   37.5
+  ]
+ },
+ "forearm_endon_grey": {
+  "size": [
+   79,
+   78
+  ],
+  "sheet": "code:ped_sleeves.py from forearm_endon.png",
+  "cell": 3,
+  "scale": 1.0047,
+  "pivot_a": [
+   40.0,
+   38.0
+  ],
+  "pivot_b": [
+   38.0,
+   38.0
+  ]
  }
 }

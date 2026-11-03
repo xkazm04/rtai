@@ -1,0 +1,102 @@
+diff --git a/project/features/characters/rig_arm.gd b/project/features/characters/rig_arm.gd
+index 04d5b66..0256c3e 100644
+--- a/project/features/characters/rig_arm.gd
++++ b/project/features/characters/rig_arm.gd
+@@ -114,6 +114,10 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
+ 
+ ## Swaps a part's cell only when it changes (which: 0 upper, 1 fore, 2 hand).
+ static func _cell(rig: CutRig, spr: Sprite2D, cell: String, which: int, side: RigLimbs) -> void:
++	if which < 2 and rig.variant != null and rig.variant.sleeve != "":
++		var alt: String = cell + rig.variant.sleeve
++		if rig.lib.sizes.has(alt):
++			cell = alt
+ 	var now: String = (
+ 		side.upper_cell if which == 0 else (side.fore_cell if which == 1 else side.hand_cell)
+ 	)
+diff --git a/project/features/characters/rig_variant.gd b/project/features/characters/rig_variant.gd
+index 6f4ec61..f6a1bf0 100644
+--- a/project/features/characters/rig_variant.gd
++++ b/project/features/characters/rig_variant.gd
+@@ -13,6 +13,9 @@ var head: String = ""
+ var torso: String = ""
+ var shield: bool = false
+ var swap: int = 0
++## Sleeve value: "" = the cream arm parts, else a suffix ("_dark", "_grey"): the arm cells use
++## `<part><sleeve>` where the art has it, so looks differ in their widest shapes, not only the head.
++var sleeve: String = ""
+ 
+ 
+ static func make(
+@@ -31,17 +34,21 @@ static func rivet() -> RigVariant:
+ 	return make(BodyPlan.Kind.RIVET, "rivet", "helmet", "torso", false)
+ 
+ 
+-## The slice cast: cops (patrol, riot) and pedestrians (coat or jacket, three heads).
++## The slice cast: cops (patrol, riot) and pedestrians (coat, jacket, vest, hoodie, overalls).
+ static func crowd(index: int) -> RigVariant:
+ 	match index:
+ 		0:
+ 			return make(BodyPlan.Kind.PED, "coat-hat", "head_hat", "torso", false)
+ 		1:
+-			return make(BodyPlan.Kind.PED, "jacket-hair", "head_hair", "torso_jacket", false)
++			return _sleeved(
++				make(BodyPlan.Kind.PED, "jacket-hair", "head_hair", "torso_jacket", false), "_dark"
++			)
+ 		2:
+ 			return make(BodyPlan.Kind.PED, "coat-hood", "head_hood", "torso", false)
+ 		3:
+-			return make(BodyPlan.Kind.PED, "jacket-hat", "head_hat", "torso_jacket", false)
++			return _sleeved(
++				make(BodyPlan.Kind.PED, "hoodie-cap", "head_cap", "torso_hoodie", false), "_dark"
++			)
+ 		4:
+ 			return make(BodyPlan.Kind.PED, "vest-hair", "head_hair", "torso_vest", false)
+ 		5:
+@@ -49,7 +56,15 @@ static func crowd(index: int) -> RigVariant:
+ 		6:
+ 			return make(BodyPlan.Kind.COP, "riot", "head_helmet", "torso", true)
+ 		_:
+-			return make(BodyPlan.Kind.PED, "coat-hair", "head_hair", "torso", false)
++			return _sleeved(
++				make(BodyPlan.Kind.PED, "overalls-bald", "head_bald", "torso_overalls", false),
++				"_grey"
++			)
++
++
++static func _sleeved(v: RigVariant, p_sleeve: String) -> RigVariant:
++	v.sleeve = p_sleeve
++	return v
+ 
+ 
+ ## A stable look for an actor id with no RNG draw (rigs are render-side: they must never move a
+diff --git a/project/tests/unit/test_rig_plans.gd b/project/tests/unit/test_rig_plans.gd
+index 07f691b..d0a3264 100644
+--- a/project/tests/unit/test_rig_plans.gd
++++ b/project/tests/unit/test_rig_plans.gd
+@@ -51,6 +51,26 @@ func test_crowd_looks_split_cops_and_peds() -> void:
+ 	assert_false(RigVariant.crowd(5).shield, "patrol does not")
+ 
+ 
++func test_sleeved_looks_have_every_arm_cell() -> void:
++	var missing: PackedStringArray = PackedStringArray()
++	var sleeved: int = 0
++	for look: int in RigVariant.CROWD_COUNT:
++		var v: RigVariant = RigVariant.crowd(look)
++		if v.sleeve == "":
++			continue
++		sleeved += 1
++		var p: BodyPlan = RigPool.plan_of(v.kind)
++		var lib: PartLibrary = PartLibrary.of(p.art_dir)
++		for part: String in [p.upper_part[0], p.fore_part[0], p.endon_upper[0], p.endon_fore[0]]:
++			if not lib.sizes.has(part + v.sleeve):
++				@warning_ignore("return_value_discarded")
++				missing.append("look %d: %s%s" % [look, part, v.sleeve])
++	assert_gt(sleeved, 0, "some crowd looks wear sleeve variants")
++	assert_eq(
++		missing, PackedStringArray(), "a sleeve suffix without its arm cells falls back to cream"
++	)
++
++
+ func _parts(p: BodyPlan) -> PackedStringArray:
+ 	var out: PackedStringArray = PackedStringArray([p.torso_part, p.head_part, p.pelvis_part])
+ 	out.append_array(p.thigh_part)

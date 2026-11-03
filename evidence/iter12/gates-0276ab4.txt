@@ -1,0 +1,9 @@
+gates at 0276ab4 (HEAD incl. the quest cast captures + dev capture rig): node tools/evidence/run.mjs --no-bench
+PASS lint: lint: all 13 checks pass over 176 GDScript files
+PASS unit-tests: unit-tests: 142 passed, 0 failed, 0 skipped (GUT, headless)
+PASS scenario-tests: scenario-tests: 8 passed (headless)
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3547 floats); planted mutation caught at step 629
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 103 actors, 79 colours; 48 px/m ok, 81 actors, 80 colours); 72 art textures, 0 placeholders, prewarm 29 ms
+rc=0
+scratch-q1 (main 721fbbb + evidence/iter12/q1_view_art.patch + n-d4 art copies): node tools/tests/run_unit.mjs
+unit-tests: 166 passed, 0 failed, 0 skipped (GUT, headless)

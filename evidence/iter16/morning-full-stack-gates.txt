@@ -1,0 +1,27 @@
+FULL morning stack dry run (lane d4-production, iteration 16, 2026-11-03 05:39)
+Tree: main 721fbbb + n-d4 (merged with plumbing: `git merge-tree --write-tree` + `git commit-tree`, dangling commit
+c9167f9, no hooks skipped, never on a branch) + `merge --no-commit n-visual` 41ee996 (JOURNAL.md the only conflict;
+docs/decisions.md auto-merged) + `git apply` of, in order:
+  evidence/iter14/q1_view_art.patch            (REQUEST 16, quest 1)
+  evidence/iter10/generator_art_pick_v2.patch  (REQUEST 19, city / generator)
+  evidence/iter16/rig_sleeves_and_looks.patch  (REQUEST 21, characters)
+  evidence/iter14/fx_fade.patch                (REQUEST 23, visual-engine)
+all four applied clean; native bin copied, --import, bake_city (256 chunks), bake --check: matches golden.
+
+node tools/evidence/run.mjs --no-bench --allow-dirty:
+  PASS lint 13/13 over 264 GDScript files
+  PASS unit 259 passed, 0 failed
+  PASS scenarios 8 passed
+  PASS parity bit-exact over 1200 steps, planted mutation caught at 629
+  FAIL selftest ONLY on n-visual's goldens (look 0/11 within mean 4, worst 22.16; blocks as in the morning tree):
+       the expected post-merge re-bless. Same run: 72 art textures, 0 placeholders, "crowd atlas 6/6 pedestrian
+       looks on doctrine; no new off-doctrine accents".
+Quest 1's own frame grabber: all 9 beats rendered (masters night/d4-production/morning_full_q1/), city_frame
+0 placeholders (morning_full/).
+Bench not run (other lanes' Godot running).
+
+05:42 RE-RUN on n-visual's newer tip a103850 (PrintStage, crackle on Robo-tazer hits; 52 files since 41ee996):
+same recipe (c9167f9 + merge --no-commit a103850, JOURNAL.md the only conflict, the four patches apply clean,
+re-baked): lint 13/13 (264 files), unit 260/260, scenarios 8/8, parity bit-exact; selftest fails only on the look
+goldens (worst 22.16, re-bless), "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents",
+0 placeholders. Scratch worktree: gtai-wt/scratch-v2 (replaces scratch-full).
