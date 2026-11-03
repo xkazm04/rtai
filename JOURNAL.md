@@ -382,10 +382,16 @@ NEXT (iteration 6 close, in order):
 5. Wall splats (still needs wall/prop edges in the view); blood marks on the bodies themselves.
 6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
 7. Make noir_frames tick-exact between runs (step the world by ticks, not frames) so ped/crowd A/Bs are
-   the same pixels; re-shoot quest_fight with the muzzle light.
+   the same pixels. (quest_fight re-shot with the muzzle light at 01:57: done.)
 - (01:53) Gates at 180c78a (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint
   (13), 181 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS (the run
   before it flagged unit-tests only because I edited JOURNAL.md during it). Gate JSONs copied to evidence/.
   Then the photosensitivity guard (LIT_GAP 20 ticks) + its test: 182 unit pass, showcase pixel-identical.
 - (01:54) Photosensitivity guard on the kill beat too (BEAT_GAP 60 ticks) + test: 183 unit pass; the
   showcase kill frames are pixel-identical (its kills are 124 ticks apart).
+- (01:55) Gates at 9062ecf (`run.mjs --no-bench --allow-dirty`): lint (13), 183 unit, 8 scenarios, parity
+  (1200 steps, mutation caught), selftest all PASS; JSONs in evidence/.
+- (01:57) quest_fight re-shot with the muzzle light: masters night/noir/quest-v4/quest-fight-48.mp4 (15 s,
+  16 kills through the real CombatArena events) + evidence/quest-lit-strip.png (frames 193 / 194 / 550 of the
+  clip, found as one-frame brightness bumps: Rivet's nail-gun rounds light a ragged pool around him). The
+  kill beats show as 8-9 frame bright runs; the spacing in this clip is >= 1 s, so the cap did not bite.
