@@ -89,9 +89,9 @@ func _update_look() -> void:
 	if p == look_params or p.equals(look_params):
 		return
 	look_params = p
+	_item_mat.shader = load(ITEM_SHADER) if p.printed else null
 	p.apply(_look_mat, _item_mat)
 	_look_rect.visible = p.printed
-	_item_mat.shader = load(ITEM_SHADER) if p.printed else null
 
 
 ## As CityView._print_px: a rig zoom step moves the offset by -camera * dz (no swim).

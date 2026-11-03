@@ -31,6 +31,10 @@ func test_the_look_follows_the_zoom_and_off_hides_the_print() -> void:
 	stage.look_id = LookProfiles.OFF
 	stage.place(Vector2.ZERO)
 	assert_false(stage.look_params.printed)
+	assert_null(stage.item_material().shader)
+	stage.look_id = &"d4"
+	stage.place(Vector2.ZERO)
+	assert_not_null(stage.item_material().shader, "back on: the item print returns")
 
 
 func test_without_a_rig_world_px_is_the_camera_at_the_zoom() -> void:
