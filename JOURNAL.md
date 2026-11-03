@@ -329,3 +329,7 @@ atlas; d5-combat blood names; vehicles cruiser accents).
    pass 2 inside the limits (all CONTENDED).
 1-4 unchanged (owner calls on road width / plazas / roof coarseness; more T1 long plates; overlay
    32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
+- BLOCKED 17:13 (iter 51) idle full-gate bench: lock still held by `collisions` (17:10, < 20 min); skipped.
+  `git diff bba930d HEAD -- project tools native` is empty and the tree is clean, so the code gates of
+  record stand for HEAD. I did not re-run unit/scenarios: they would only load the CPU under another
+  lane's bench, and they cannot change on identical code. No code change; the 17:12 NEXT stands as is.
