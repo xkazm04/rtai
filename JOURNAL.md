@@ -311,3 +311,17 @@ NEXT (after the 18:00 sync), in order:
    the drive scenarios.
 - 16:28 session end: tree clean after this commit. All gates green at 7d82f2e (later commits: docs only). No Godot
   process of mine left; clip PNG scratch deleted; bench.lock released at 15:57.
+- MILESTONE 5a6e21b: optional game-only pool size, blood_fx.json game.pool_radius_px (absent = pool.radius_px, so
+  no change today). If the owner picks 16 or 12 px, set that key and noir keeps 22. +1 unit test. Re-render at t600
+  48 px/m matches the 58a8388 frame up to the known pedestrian freeze jitter (5.4k px, all on the sidewalk peds, no
+  pool moved). FRICTION: `float(r[1])` on a Variant is a warning-as-error parse failure (the 2nd time today):
+  assign to a typed var first.
+- GATES at 5a6e21b (evidence/run.mjs --no-bench, 16:35): lint 13/13, unit 352/0, parity exact, selftest PASS
+  (goldens 11/11 worst 0.74); scenarios 7/8: scenario_city_chase "flow field over the 2 ms nav budget" (max 15.2 ms
+  on one step, last 142 us; nav code, not FX; machine contended). Re-run headless at 16:36: 8/8, max 491 us.
+  => CONTENDED timing flake, recorded, not mine to tune.
+- NEXT update: item 1's pool-size pick is now `game.pool_radius_px` (one key). Item 4 (car-hit slide) route: the
+  snapshot row's v (CityFxFeed, snap[r + 8]) gives the remaining slide; carrying it to CombatBlood needs a
+  FxTriggers.cued field (core/render, shared with kill_beat + muzzle_pop + city_fight): a small API change for
+  the next session, not 25 min before the freeze.
+- 16:37 session end: tree clean after this commit; no Godot process of mine running; bench.lock (d5-cast's) untouched.
