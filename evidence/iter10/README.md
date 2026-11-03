@@ -15,3 +15,8 @@
   included. Applies on main, n-d4 and n-visual; lint 13/13, unit 142/142 with it applied on n-d4.
 - REQUEST 18 (traffic wiring patches in `evidence/iter8/`) is SUPERSEDED: n-visual wired the traffic atlas itself
   (7bfb6b9); the iteration-8 wiring patches no longer apply there and are not needed.
+- `rig_variant_new_looks.patch` (characters code, for the characters owner): crowd slot 3 jacket-hat -> hoodie-cap
+  (`head_cap`, `torso_hoodie`), slot 7 coat-hair -> overalls-bald (`head_bald`, `torso_overalls`), so the 5 ped parts
+  n-d4 shipped in iteration 1 are finally seen (the runtime crowd baker picks them up; no prewarm warnings).
+  `before_rv|after_rv/city-*-{32,48,64}ppm.png`, `work/rv_zoom48.png`. Lint 13/13, unit 142/142, scenarios 8/8 with it
+  applied. Needs n-d4 merged first (the parts live in n-d4); applies on main and n-visual.

@@ -1,0 +1,31 @@
+diff --git a/project/features/characters/rig_variant.gd b/project/features/characters/rig_variant.gd
+index 6f4ec61..71f369b 100644
+--- a/project/features/characters/rig_variant.gd
++++ b/project/features/characters/rig_variant.gd
+@@ -31,7 +31,7 @@ static func rivet() -> RigVariant:
+ 	return make(BodyPlan.Kind.RIVET, "rivet", "helmet", "torso", false)
+ 
+ 
+-## The slice cast: cops (patrol, riot) and pedestrians (coat or jacket, three heads).
++## The slice cast: cops (patrol, riot) and pedestrians (coat, jacket, vest, hoodie, overalls).
+ static func crowd(index: int) -> RigVariant:
+ 	match index:
+ 		0:
+@@ -41,7 +41,7 @@ static func crowd(index: int) -> RigVariant:
+ 		2:
+ 			return make(BodyPlan.Kind.PED, "coat-hood", "head_hood", "torso", false)
+ 		3:
+-			return make(BodyPlan.Kind.PED, "jacket-hat", "head_hat", "torso_jacket", false)
++			return make(BodyPlan.Kind.PED, "hoodie-cap", "head_cap", "torso_hoodie", false)
+ 		4:
+ 			return make(BodyPlan.Kind.PED, "vest-hair", "head_hair", "torso_vest", false)
+ 		5:
+@@ -49,7 +49,7 @@ static func crowd(index: int) -> RigVariant:
+ 		6:
+ 			return make(BodyPlan.Kind.COP, "riot", "head_helmet", "torso", true)
+ 		_:
+-			return make(BodyPlan.Kind.PED, "coat-hair", "head_hair", "torso", false)
++			return make(BodyPlan.Kind.PED, "overalls-bald", "head_bald", "torso_overalls", false)
+ 
+ 
+ ## A stable look for an actor id with no RNG draw (rigs are render-side: they must never move a

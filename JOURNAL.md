@@ -931,3 +931,12 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
     iteration-8 one) after merging n-d4; it moves the AST-12 golden list (included).
 20. visual-engine: paper grain on the paving belongs in the print pass (`grit`), texture specks print as rings or
     stipple (iteration-10 probe, `work/pg_ab48.png`). Only if the owner wants the target's speckled slabs.
+- 03:00 MILESTONE (patch only, characters code) the new ped looks reach the crowd. Work order 4's 5 new parts
+  (iteration 1) were never drawn: `RigVariant.crowd()` has 8 fixed slots. `evidence/iter10/rig_variant_new_looks.patch`:
+  slot 3 jacket-hat -> hoodie-cap, slot 7 coat-hair -> overalls-bald (my iteration-1 suggestion). The crowd atlas bakes
+  from RigVariant at load, so nothing else changes. In-engine `before_rv|after_rv/city-*-{32,48,64}ppm.png`,
+  `work/rv_ab48.png`, `rv_zoom48.png`: grey overalls with ink straps under a bald ink head and an ink cap over a
+  hoodie join the crowd; every figure keeps its cream rim and reads on paving and asphalt. Lint 13/13, unit 142/142,
+  scenarios 8/8 (rc 0; the "8 resources still in use at exit" line is also in the HEAD gate log) with it applied.
+  Code reverted. Applies on main and n-visual once n-d4 (the parts) is merged. Ladder rows.
+21. characters owner (via the Director): apply `evidence/iter10/rig_variant_new_looks.patch` after merging n-d4.
