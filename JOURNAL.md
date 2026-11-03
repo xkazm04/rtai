@@ -787,3 +787,12 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   tile keeps the seams: `after_pl/` vs `after_rf/`, crop `work/pl_crop.png` - cracks vary, no doubled joints. Modest
   but real. Folded with the roof pick into ONE patch `generator_art_pick.patch` (one golden list; supersedes
   roof_pick_generic.patch, deleted); `git apply --check` clean on main. Code reverted, re-baked, `--check` matches.
+- 02:21 BENCH at 38136e8 (72 textures, no wiring patch): `tools/bench/run.mjs` rc 0 - p99 2.60 ms, 1% low 197 fps,
+  worst swap 32 ms, 1 frame > 50 ms (present, 0 unexplained). Section 20 PASS.
+- 02:23 MILESTONE traffic damage states ready for a hook. `traffic_atlas_d1.png` / `_d2.png` in the same 3 x 3 layout
+  (cell = art id), from the `<car>_d1/_d2` sprites (same sizes as intact; registration check vs the intact cell: max
+  diff 0); id 7 = the sedan damage sprite through the grey paint. `tools/build_traffic_dmg.py`. In-engine probe: the
+  wiring patch applied with the texture swapped to d1 then d2 (reverted after): `probe_tr_d1|probe_tr_d2/` vs
+  `after_tr_dense/` (same seed, same cars), sheets `work/dmg_ab{32,48}.png` - d1 (star crack + holes) and d2 (shattered
+  + scorched nose) both read at 32 and 48. The sim has no per-car damage state yet (`F_` flags: promoted, crossing,
+  rioter only), so the hook is code (visual-engine / city). Commit 205ae1f. Ladder rows.
