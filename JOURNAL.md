@@ -1267,8 +1267,12 @@ NEXT (iteration 15 / morning, in order):
   FRICTION: first test draft called the autoload script through `.call()` - Variant args are
   warnings-as-errors under GDS-01; the test drives the LaunchArgs autoload and restores it from the real
   command line in after_each.
-  Note: nothing reads LaunchArgs.unknown() yet - TST-03 "unknown args fail loudly" is not enforced
-  in the game boot (only in the dev scripts' own KNOWN_FLAGS). Left alone (boot is shared; owner/Director call).
+  Note: nothing read LaunchArgs.unknown() (its doc said "fail loudly"). TST-03 binds the runners,
+  which check their own KNOWN_FLAGS. Fixed lightly in 971ba37 (below).
+- MILESTONE (971ba37) boot.gd Log.warns each unknown `--` arg; launch_args.gd doc corrected. Real run
+  d3d12 `-- --reduce-motion --look=d4`: "[WARN] boot: unknown launch arg --reduce-motion (ignored)",
+  exit 0. Unit 247, scenarios 8 ran 0 failed. Shared file note: project/boot/ touched (boot.gd,
+  world.gd, launch_args.gd) - minimal, recorded here.
 - Iteration 15 tally: frames rejected 0 (none taken), approaches rejected 1 (Variant-call test draft),
   no AI images -> no provenance. No scratch worktrees made.
 
@@ -1280,8 +1284,9 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
    the sheet crackle rim once n-d4's sheet is live.
 2. Owner calls (one number each, iteration 14 list): age_floor, grain_floor, D4 -> D5 ramp start, fire
    flicker, night tuning, objective core, cop accent.
-3. TST-03 in the game boot: World could Log.error + quit(2) on LaunchArgs.unknown() (not done: boot is
-   shared, check the scenario / replay runners pass no stray user args first).
+3. (partly done 07:06, 971ba37) unknown launch args: the main scene (boot.gd) now Log.warns each one. A
+   quit(2) was rejected: city_selftest / city_bench build a World with their own flags, so World must
+   not reject them; whether the shipped game should hard-fail on a typo is an owner call.
 4. Idle bench still not had; rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
 - Evidence at d07f1d5 (07:03-07:05, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity bit-exact
   + mutation caught at 629, selftest 11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
