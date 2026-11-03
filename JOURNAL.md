@@ -1241,3 +1241,9 @@ night_iter7_summary.png and the iteration-7 order.
   hatch is world-locked and steady; the extra change is the silhouette edge sweeping across fixed strokes as the
   limbs move (stroke ends appear/vanish at the edge). Modest, not aliasing; for the characters lane: if it reads
   busy in play, soften the shadow's edge (a 1-2 px alpha ramp) so strokes fade in rather than switch.
+- 05:12 REJECTED + REVERTED (git restore, tree clean): the soft shadow edge for the rig shadow (look_d5_shadow soft_px 2,
+  a 5-tap alpha blur + smoothstep, default 0 elsewhere). Walk D5/D4 HF 1.054 -> 1.054 at 64 px/m, 1.189 -> 1.188 at
+  96; frames 0 / 0 / 591 / 991 / 1357 px at 32-128. The look_d4 print quantizes the shadow's alpha (as in the fade
+  sweep), so the soft ramp prints as the same stroke switch. My 05:11 suggestion to the characters lane ("soften the
+  edge") is therefore withdrawn: the lever would have to be in the print, not the shadow. Scratch deleted: walk11_*,
+  walk12_*, h155soft.
