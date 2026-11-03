@@ -887,3 +887,7 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   mock + concept); ladder row.
 - 03:33 evidence/hero-d4d5-*ppm.png and item4_hero_vs_targets.png = h106 (hero-d4-* unchanged: d4 tier byte-identical).
 - 03:34 gates: evidence tool (--no-parity --no-bench) ALL PASS at 29d838a (lint 13/13 over 191 files, unit 149/0, scenarios 8/0, selftest ok); 68 untracked evidence PNGs moved aside and restored.
+- 03:35 MEASURED the halo shadow in motion (closes the "not measured" in the 03:31 entry): pan14sh (D5_PRINT=thin,
+  D5_HALO=ink, D5_HALO_SHADOW=1) vs pan14ink / pan14ctl, 48 px/m, 40 ticks. Whole crop identical to 5 decimals, so
+  checked locally: the 612 px ever touched by ring or shadow, dilated 3 px (Rivet's idle does move there): mean change
+  per tick ctl 0.00750 / ink 0.00749 / shadow 0.00748 (max tick 0.00888 / 0.00880 / 0.00880). Neither adds flicker.
