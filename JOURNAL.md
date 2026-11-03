@@ -383,9 +383,7 @@ NEXT (iteration 3, in order):
   breaks. No new AI images (one provenance line for the packed wreck atlas). Bench 1 run (lock).
 
 NEXT (iteration 5, in order):
-1. Before frame for the 2400 burnt-out shot (v12 lacks it): rebuild without the wreck atlas (move
-   the png aside, re-import) or accept the 900 pair. A night clip of the burning wrecks if the owner
-   likes carnage-night-v1.
+1. (done 16:36, see below) A night clip of the burning wrecks if the owner likes carnage-night-v1.
 2. REQUEST 7 / 8 answers (D5 fireball kind, burning-wreck crackle) are one-line consumers here.
 3. Fire as gameplay (stretch): a person or Rivet standing in a burning wreck's fire takes damage,
    a burning wreck can set the car it touches alight (chain wrecks). Sim-side, so: the service step,
@@ -394,6 +392,13 @@ NEXT (iteration 5, in order):
    draw cost - VehicleView, VehicleFire, skids - is not on any bench path).
 5. Owner sync items: cop blue on the cruiser light bar and the service cruiser (d5-cast's art; the
    frames still show the vermilion bar), Rivet's size beside a car (d5-cast).
-- Session end 16:31: tree clean after this commit, no Godot process of mine left, bench lock not
+- 16:34 FRICTION: a temporary before-frame edit (`tex.append(null)`) left `burnt` unused = a parse
+  error (warnings are errors), and the WINDOWED capture hung until my 400 s timeout instead of
+  exiting. Restored the file at once; lesson (again): headless --import and grep SCRIPT ERROR
+  before any windowed run. Retry pointed the path at a missing file (the fallback), checked the
+  import, captured, `git restore`d: carnage-v13-noatlas (the old lavender d2 wreck) vs carnage-v13
+  at 2400 = NEXT 1 done; crop-burnt-2400.png; frames.json 2400 entry now has its before. 21 more
+  frames, 0 rejected, 0 camera breaks.
+- Session end 16:40: tree clean after this commit, no Godot process of mine left, bench lock not
   held, scratch deleted. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png 1280 x
   8364, carnage-20s-48ppm-v3.mp4, crop-fire-v12.png, crop-wreck-v13.png, build_wreck_atlas.py).
