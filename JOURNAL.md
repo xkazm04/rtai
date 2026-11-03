@@ -935,3 +935,4 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   / 187 / 195 / 202 / 200 / 198 / 123 / 29 / 0: full strength through 72 px/m, graded out over 80-96. h114ink =
   h107ink at 32/48/64 (0 px). The same check the brief asks of the D5 tier switch, now applied to my proposal; I
   had claimed "halos are off at 96+, 0 px" without looking at the zooms in between.
+- 03:47 board evidence/night_iter7_summary.png (h98b / h106 / h109all at 32, mock, h109all 48, a16all 128, concept + the per-class table); README row.
