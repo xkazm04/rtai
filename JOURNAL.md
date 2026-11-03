@@ -1647,3 +1647,8 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
 - 06:12 LOOKED, no change: the merged paving at 64 shows grey cloud blotches that are not in the tile (n-d4 alone is
   clean cream, `masters:work/i18/paving64.png`) - n-visual's aquatint, REQUEST 22 as before. Oil vs blood decals:
   the blood splats carry the cream rim and the oil does not, so they stay apart (`work/i18/decals.png`).
+- 06:16 CHECK FX + quest 1 on the ce0db12 morning stack (scratch-v3): n-visual's fx_showcase (`--fixed-fps 60`,
+  `masters:morning_i18_fx/`): the explosion (ink cloud, vermilion star), smoke, debris, crackle, muzzle star and
+  tracer all still print as ink on paper under the whole-page aged paper. Quest 1's grabber renders all 9 beats
+  (`masters:morning_i18_q1/`, `work/i18/q1_ab.png` beats 04 / 06 vs iteration 16's `morning_full_q1/`): same read,
+  the weapon label in ink, the paper slightly aged. No art change called for. 0 Codex.
