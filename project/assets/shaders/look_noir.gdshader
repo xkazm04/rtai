@@ -66,6 +66,7 @@ uniform float beam_lift = 0.0;
 uniform float car_ink = 0.0;       // 1 = a moving car prints as an ink mass with a white edge (its body: car_len x car_half_w behind the nose)
 uniform float car_len = 140.0;     // px at 32 px/m
 uniform float car_half_w = 30.0;
+uniform float car_glass = 0.0;     // 1 = the windscreen and the rear window print as white bands across the ink body
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -163,13 +164,22 @@ void fragment() {
 	}
 	// the car bodies: signed distance to each body box (screen px); < 0 inside
 	float car_d = 1e5;
+	float glass = 0.0;
 	for (int i = 0; i < 12; i++) {
 		if (i >= car_count) { break; }
 		vec2 cd = sp - cars[i].xy / SCREEN_PIXEL_SIZE;
 		vec2 ch = cars[i].zw;
 		vec2 q = vec2(-dot(cd, ch) - car_len * ls * 0.5, dot(cd, vec2(-ch.y, ch.x)));
-		vec2 e = abs(q) - vec2(car_len * ls * 0.5, car_half_w * ls);
-		car_d = min(car_d, length(max(e, 0.0)) + min(max(e.x, e.y), 0.0));
+		// a rounded box: the corners are a car's, not a crate's
+		float cr = car_half_w * ls * 0.45 * car_glass;
+		vec2 e = abs(q) - vec2(car_len * ls * 0.5, car_half_w * ls) + cr;
+		car_d = min(car_d, length(max(e, 0.0)) + min(max(e.x, e.y), 0.0) - cr);
+		// glass: 0 at the nose .. 1 at the tail; the windscreen is wider than the rear window
+		float gx = q.x / (car_len * ls) + 0.5;
+		float gy = abs(q.y) / (car_half_w * ls);
+		float ws = step(0.25, gx) * step(gx, 0.36) * step(gy, 0.80 - (gx - 0.25) * 0.9);
+		float rw = step(0.80, gx) * step(gx, 0.87) * step(gy, 0.66);
+		glass = max(glass, max(ws, rw));
 	}
 	v += (lamp_lift * lit + beam_lift * beam) * step(lamp_gate, v);
 	// threshold: crushed ink, the stroke band, paper
@@ -198,6 +208,7 @@ void fragment() {
 	float in_car = (1.0 - smoothstep(-0.5, 0.5, car_d)) * car_ink;
 	paper = mix(paper, 0.0, in_car);
 	paper = max(paper, (1.0 - smoothstep(1.0, 2.0, abs(car_d + 0.5))) * car_ink);
+	paper = max(paper, glass * in_car * car_glass);
 	// rain: white over ink, ink over paper
 	float rain_lod = mix(rain_far, 1.0, smoothstep(splash_zoom.x, splash_zoom.y, zoom));
 	float rm = rain_mask(w) * step(hash(vec2(floor((w.x - w.y * rain_slant) / 3.0), 11.0)), rain_lod);
