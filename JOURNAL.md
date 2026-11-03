@@ -456,3 +456,15 @@ NEXT (after the 17:00 freeze / next session, in order):
 4. The Director's merge: use the native DLL built from d-vehicles (set_obstacles), per d-audio's
    five-way merge check. int-day's DLL fails 3 vehicle scenarios.
 5. A drive48 bench variant with VehicleService (the vehicles draw cost is on no bench path).
+
+## Iteration 47 (16:50-16:55, BUILD, 10 min to freeze)
+- Did not start new code. A split of VehicleContacts into `vehicle_burn.gd` would need a full gate
+  run (unit + scenarios + evidence takes 5-8 min on the contended machine), and that cannot finish
+  and be checked before 17:00. Rule: nothing goes on the branch that has not passed the gates.
+- Checked the handoff: `gtai-masters/day-d5/vehicles/frames.json` has 15 entries and every file
+  exists. `ladder.png` is from 16:36. No Godot process of mine is running. The tree is clean at
+  cd992e9 (the last gated evidence run is at 2b62519 and is in evidence/vehicles/it5/).
+- 0 frames, 0 rejected, no AI images, no bench lock taken.
+- NEXT: unchanged from iteration 46 (fire half 2 after splitting `vehicle_burn.gd` first; frame the
+  fire kill once d5-combat's blood is merged; REQUEST 2/10 consumers; use d-vehicles' native DLL at
+  merge; a drive48 bench variant with VehicleService).
