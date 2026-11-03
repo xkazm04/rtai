@@ -1167,3 +1167,18 @@ NEXT (iteration 14 / morning, in order):
   0.22 - only 0.06 inside the first wash edge, it would mottle - and Dock 9 0.08 -> 0.30 = density ~0.33,
   the first wash). NOT wired: print_stage.listen() - quest 1 steps its own stage.tick with no SimClock, so
   the rig / hit-stop need World's clock (after the merge).
+- Bench on the merged build (scratch, exported release, 06:12-06:25; CONTENDED: another lane's MovieWriter
+  capture + 5 other Godot processes): PASS section 20 - p99 2.47 ms, 1% low 214 fps, worst swap 32.5 ms,
+  worst frame 46.4 ms, 0 frames > 50 ms; riot rigs p99 0.439 ms per frame. All 4 lanes' art + n-noir's
+  shadows + n-d5's tier in: within the branch's run-to-run range (2.55-2.81). evidence/trial-merge14/.
+  (First attempt: export failed, build/export/windows-bench missing in a fresh worktree - mkdir, re-run.)
+- Quest 1 frames, patch v2 on the merged tree (49-quest1-v2/, 9 shots, before = own view): LOOKED at 4 -
+  all three floors print as the first wash and read (Dock 9's edge clear); accents and the HUD hold. Trade:
+  the Toner Room is no longer darker than Factory Row. Ladder row 49.
+- FOUND + FIXED (patch v3): v2 broke n-noir's dev/noir/quest_fight.gd (it builds a CollectCallView and
+  adds its blood / flash / stains in Ink px): the noir pass stacked on the D4 print (busy double hatch) and
+  the blood left its place (noir-fight/cmp-f300.png). v3: CollectCallView.printed (default true; false =
+  the raw view under its own Camera2D) + 1 line in quest_fight (`_view.printed = false`). Noir frames
+  before vs v3: same frame, blood in place (0.08-0.34 % px > 8 spread thin); printed frames v2 vs v3 <= 26 px.
+  Merged + v3: lint 13/13, unit 309, scenarios 8. v3 = 49-quest1-v2/quest1-on-print_stage-v3.patch
+  (apply AFTER n-noir; README.txt there). Frames rejected for camera: 0 (engine captures).
