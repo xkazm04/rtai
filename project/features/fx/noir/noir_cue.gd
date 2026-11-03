@@ -24,11 +24,20 @@ func show_ring(at: Vector2, tick: int) -> void:
 	queue_redraw()
 
 
-func _draw() -> void:
+## Where the ring is (local px).
+func ring_at() -> Vector2:
+	return _at
+
+
+## Arc k's radius (px) at the current tick.
+func radius(k: int) -> float:
 	var pulse: float = float(_tick % PULSE_TICKS) / float(PULSE_TICKS)
+	return (0.8 + k * 0.5 + pulse * 0.5) * px_per_m
+
+
+func _draw() -> void:
 	for layer: int in 2:
 		var w: float = LINE_PX + (CASE_PX * 2.0 if layer == 0 else 0.0)
 		var c: Color = Color.BLACK if layer == 0 else Color.WHITE
 		for k: int in ARCS:
-			var r: float = (0.8 + k * 0.5 + pulse * 0.5) * px_per_m
-			draw_arc(_at, r, -2.4, -0.7, 16, c, w, true)
+			draw_arc(_at, radius(k), -2.4, -0.7, 16, c, w, true)
