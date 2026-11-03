@@ -482,3 +482,14 @@ NEXT: unchanged from iteration 46 (owner choices 1-6, merge recipe, re-bless gol
   merged within 40 px -> 7 blue clusters of 158-423 px at 32 px/m, one per cop figure in view; at 48, 4 clusters
   of 809 / 647 / 542 / 216 px for 3 cops in view (the downed cop in the blood at the bottom-left splits in two).
   CORRECTION: the first version of this line gave unmeasured 48 px/m numbers; these are computed. Every cop stays a distinct blue mark among the black/cream crowd after the merge.
+- 16:20-16:40 MILESTONE GPU bench, first time this lane (bench.lock taken + released per run; CONTENDED; exported
+  release build, --runs=1, interleaved d-cast / main 089400e / d-cast / main; main in scratch worktree
+  gtai-wt/scratch-cast-benchmain, removed). FRICTION: the first try failed export ("export path doesn't exist"): the
+  worktree had no build/export/windows-bench/; mkdir fixed it. Results (evidence/d5-cast/gpu-bench-ab.json):
+  all four runs pass p99 < 7 ms, 1% low > 45 fps, worst swap < 50 ms. RIOT p99 CPU d-cast 4.91 / 4.90 ms vs main
+  3.47 / 3.24 (2 of 2 pairs higher, ~1.5 ms; avg frame 1.26 / 1.23 vs 1.12 / 0.87). Drive p99 overlaps (d-cast
+  3.33 / 3.12, main 1.97 / 4.45): noise. over50.unexplained MISS: d-cast runs 1 (4) and 3 (1), main run 2 (1).
+  OPEN LEAD (no root cause before the freeze): d-cast's game-path code is two shader tweaks, Rivet/King plans and one
+  rig_detail line, nothing on the sim or per-frame CPU path, and the headless rig bench A/B showed no change; but the
+  riot gap repeated. NEXT: a 3+3 uncontended A/B on the merged tree; if it holds, bisect 704570f (cop ring shader),
+  062939d/8118692 (Rivet hunch), the D5 part shader.
