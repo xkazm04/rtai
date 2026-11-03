@@ -8,8 +8,9 @@ raw/). A copy of frames.json, the ladder and the strips is in `evidence/d5-comba
 Every performance number here is **CONTENDED** (7 lanes, one GPU).
 
 ## Summary
-- 54 commits on `d-combat`, this report included. The code froze at **5a6e21b** (116 files, +2697/-52 against
-  main). Only journal, evidence and report commits came after it.
+- 55 commits on `d-combat` at the last report edit (17:15, that edit included). The code froze at **5a6e21b**
+  (116 files, +2697/-52 against main). Only journal, evidence and report commits came after it
+  (`git log 5a6e21b..HEAD -- project/ tools/ native/` is empty, checked 17:15).
 - **Gates at the freeze** (evidence/run.mjs --no-bench, 16:40; unit re-run on a clean tree):
   - lint 13/13;
   - unit 352/0;
