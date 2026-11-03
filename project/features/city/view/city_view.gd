@@ -176,6 +176,7 @@ func _build_fx(actors: CanvasLayer) -> void:
 	fx.lights = lights
 	fx_triggers.fx = fx
 	add_child(lights)
+	fx_feed.headlights = CityHeadlights.new(lights)
 	fx.ground = FxSystem.new()
 	fx.ground.z_index = RenderLayers.z(&"ground_decals")
 	fx.ground.lights = lights

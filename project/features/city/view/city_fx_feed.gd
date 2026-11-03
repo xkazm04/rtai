@@ -13,6 +13,8 @@ const PENDING: int = 1
 const FLYING: int = 2
 
 var triggers: FxTriggers
+## The car lights (night), fed the same snapshot; null = none.
+var headlights: CityHeadlights = null
 var _q: PackedVector2Array = PackedVector2Array()
 var _heading: PackedFloat32Array = PackedFloat32Array()
 var _state: PackedByteArray = PackedByteArray()
@@ -53,6 +55,8 @@ func observe(snap: PackedFloat64Array, tick: int) -> void:
 		if _state[k] != 0 and _seen[k] == 0:
 			_end(k, tick)
 	_primed = true
+	if headlights != null:
+		headlights.observe(snap, triggers.focus_px / SimConst.PX_PER_M, tick)
 
 
 func _person(snap: PackedFloat64Array, r: int, tick: int) -> void:

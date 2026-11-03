@@ -23,6 +23,7 @@ const CASES: Array[Array] = [
 	[&"auto", 48],
 	[&"auto", 56],
 	[&"auto", 64],
+	[&"d4", 48, &"night"],
 ]
 
 ## The cases at any other --site (the block: roofs, cast shadows), saved as <site>-<look>-<ppm>.

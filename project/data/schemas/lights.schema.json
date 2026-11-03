@@ -2,6 +2,61 @@
   "$id": "gtai.lights/1",
   "additionalProperties": false,
   "properties": {
+    "car_lights": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grades": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lamps_m": {
+          "items": {
+            "items": {
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 4,
+          "type": "array"
+        },
+        "max_cars": {
+          "maximum": 16,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "radius_m": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
+        "siren_m": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "doc",
+        "grades",
+        "lamps_m",
+        "max_cars",
+        "radius_m",
+        "siren_m"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -127,7 +182,8 @@
     "doc",
     "max_lights",
     "kinds",
-    "grades"
+    "grades",
+    "car_lights"
   ],
   "type": "object"
 }

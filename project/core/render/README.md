@@ -217,8 +217,16 @@ Kinds: `muzzle_flash` (paper fan, 4 ticks), `explosion` (paper core, vermilion r
 off-doctrine and teal is the dead's), `fire` (vermilion flicker, held). Lights live on the 60 Hz tick:
 `add(kind, pos_px, angle, tick)`, `move()`, `remove()`, and `CityView` calls `step(tick, world_px)` every
 frame. When the budget is full a timed light evicts the oldest timed light; a held light is refused
-(`dropped` counts both). Nothing emits lights from gameplay yet: there are no positional shot /
-explosion events in the F-04 registry; `dev/selftest/light_showcase.gd` places the demo set.
+(`dropped` counts both). The riot's shots light their muzzle through the FX feed (fx_triggers.json);
+`dev/selftest/light_showcase.gd` places the full demo set.
+
+Car lights (`features/city/view/city_headlights.gd`, lights.json `car_lights`, 2026-11-03): on a grade
+listed in `grades` (night) the `max_cars` (6) cars nearest the focus within `radius_m` (40 m) carry a
+`headlight` cone per `lamps_m` offset (2: the nose corners) and police cars a `siren` on the roof. Fed the
+snapshot `CityFxFeed` already reads (once per sim tick: the rig pass's snapshot, no extra sim call), held
+lights moved onto the picked cars, the rest released; by day it returns after one check once its lights
+are released. At most 18 held lights of the 32: timed lights (muzzles, blasts) keep 14. Cost (editor
+build, headless, 400-actor snapshot with 57 cars): 38 us per tick at night. Frames `38-car-lights`.
 
 Cost (`light_showcase.gd` -> `light-cost.json`, 48 px/m): CPU `step()` 70-168 us for 32-64 lights
 (GDScript loop). GPU: two long back-to-back runs (no lights, then 32) gave -1.40 .. +1.32 ms (clock /
