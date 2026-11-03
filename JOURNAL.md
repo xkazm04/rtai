@@ -811,3 +811,40 @@ NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly 
   `features/fx/noir/noir_fluid.gd` (NoirFluid); blood_fx.gd 240 -> 233 lines (the commit message says 234).
   Re-recorded the street showcase at 48 px/m: 23/23 hero frames pixel-identical to oilcar/48 (the mp4 has the same
   byte size); 199 unit pass. blood_fx.gd is still over the ~200 soft target (under the 300 hard stop).
+- (04:56) Gates at f26c133 (`run.mjs --no-bench --allow-dirty`): lint (13), 199 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest (D4 78 / 80 colours) all PASS; JSONs in evidence/. NOIR.md updated
+  (iteration 12 paragraph, 4 new table rows, gates line, 33 ladder rows).
+- TRIED / REVERTED (04:57-05:01) NEXT item 4, the muzzle pool sized in screen px (`flash_r * zoom`): moved it to
+  the lamps' world scale (`ls`, flash_r 115 -> 128 to keep the look; view_h also set in update()). At 1280x720 the
+  deterministic recording changed only the 3 lit frames by 144-284 edge pixels (as intended). At 1920x1080
+  (scaled to 720, f064) the muzzle pool AND the lamp pools came out LARGER relative to the frame than at 720,
+  so the `ls` scale the lamps already use is not resolution-independent either (view_h from
+  get_visible_rect() is probably not the canvas height at 1080p; not checked). Not proven, so reverted
+  (`git checkout`); evidence/flash-res-720-vs-1080-NOT-adopted.png. Lesson: frames saved without
+  --write-movie land on timing-dependent ticks - only movie runs give same-tick A/B.
+  Two Godot processes running at 05:01 are the d5-close lane's (n-d5 worktree), not mine; left alone.
+- 05:02 Session close (iteration 12). Last code commit f26c133; gates PASS at f26c133. This session: a scripted
+  police car brakes in and parks with its headlights on the fight (--car-pass; NEXT item 2's dev answer), ink cars
+  got glass + rounded corners, Rivet throws white sparks + black oil instead of red (red = human blood only),
+  the objective cue in noir (quest 1's ringing phone in white cased arcs), the cash pickup checked (reads
+  already), blood_fx.gd's fluid look split out (NoirFluid). Tried and reverted: oil gloss (invisible), the
+  muzzle pool's world scale (unproven at 1080p). Decided not: the 2/s flash margin. Images: 0 generated, 0
+  rejected; Leonardo 0 tokens; provenance +0. Ladder 33 rows. Masters night/noir 1.8 GB. No process of mine
+  running. Morning entry points: evidence/NOIR.md, evidence/showcase-hero-car.png + masters
+  oilcar/{32,48,64}/*.mp4, evidence/oil-before-after-64.png, evidence/objective-cue-48.png.
+NEXT (iteration 12 close, in order):
+1. Owner picks: the hero (car street showcase `showcase-hero-car.png` vs the lamp-only street vs the junction),
+   Rivet's oil instead of blood (one `player` row in blood_fx.json; set fluid "" to restore red), and the
+   iteration-8 open choices (value roles, noir Rivet parts, Rivet's ink mass).
+2. Resolution independence of the noir light sizes: at 1920x1080 the lamp pools, the cones (beam_len / beam_w)
+   and the muzzle pool print larger relative to the frame than at 1280x720. Log get_visible_rect().size and
+   SCREEN_PIXEL_SIZE at both sizes, fix `ls` (view_h) once, then move the muzzle pool onto it (flash_r 128).
+   Compare with --write-movie runs only.
+3. The car is a shader shape (no sprite): fine in noir, absent in D4. Real car art's size should drive
+   car_len / car_half_w; the scripted car could also open a door for cop B (fight_script choreography).
+4. Doctrine follow-ups: NoirCue into the real quest view under --look=noir (shared code: needs the owner's OK);
+   the phone handset and other vermilion props still print as ink; soul swaps need `player` per body.
+5. blood_fx.gd is 233 lines (soft target ~200): the decal ring could move out next.
+6. Carried over: noir parts + coat into the rigs, BloodStains / BloodFx.solid into the real game hosts, the noir
+   HUD in the composition root under --look=noir, a settings toggle for safety.flashes, the flash margin (3/s at
+   64 px/m over lit ground; an owner choice, see 04:37).
