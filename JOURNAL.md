@@ -1255,3 +1255,19 @@ NEXT (iteration 15 / morning, in order):
 - Session end (06:57): tree clean, my scratch worktrees (trial14, trial14b, tazer14) removed, no Godot of
   mine running. Ladder rows 48-53 this iteration.
 - Evidence at 02b4c04 (06:58-07:00, --no-bench, all PASS: lint 13/13, unit 245, scenarios 8, parity, selftest 11/11 + 5/5 worst 0.00, world lock 0.00 % x3). Copied to evidence/pof.
+
+## Iteration 15 (06:59-07:30, BUILD, short: 30 min to freeze)
+- MILESTONE (204a0c6, d07f1d5) `--reduced-motion` launch flag (NEXT 1 item): LaunchArgs.KNOWN_FLAGS gains it;
+  World sets `view.rig.reduced_motion` and `view.markers.reduced_motion` from it (shake + hit-stop off,
+  look-ahead cap halved, zoom ease 1.5x, marker pulse off). Unit 247 (+2: test_launch_args - the flag
+  parses as known, a misspelt `--reduce-motion` lands in unknown()). Real run: the game on d3d12 (RTX 4090)
+  with `--quit-after 240 -- --reduced-motion` booted, prewarmed 33 rigs, exited 0 with no script errors.
+  No new frame: the flag changes motion, not a still frame; the behaviour it switches on was framed
+  in iteration 10 (47-reduced: lead 3.29 m vs 4.93 m at 15 m/s). README (render) updated.
+  FRICTION: first test draft called the autoload script through `.call()` - Variant args are
+  warnings-as-errors under GDS-01; the test drives the LaunchArgs autoload and restores it from the real
+  command line in after_each.
+  Note: nothing reads LaunchArgs.unknown() yet - TST-03 "unknown args fail loudly" is not enforced
+  in the game boot (only in the dev scripts' own KNOWN_FLAGS). Left alone (boot is shared; owner/Director call).
+- Iteration 15 tally: frames rejected 0 (none taken), approaches rejected 1 (Variant-call test draft),
+  no AI images -> no provenance. No scratch worktrees made.
