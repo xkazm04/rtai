@@ -33,6 +33,8 @@ static func dev_switches(root: Node, look: ShaderMaterial, ppm: float) -> void:
 			var m: ShaderMaterial = (n as Sprite2D).material as ShaderMaterial
 			if m != null:
 				m.set_shader_parameter(PART_ENV[env], k.to_float())
+	if OS.get_environment("D5_UI_KING") != "":
+		_ui_king(root, OS.get_environment("D5_UI_KING").to_float())
 	if OS.get_environment("D5_PRINT") == "thin":
 		look.shader = load(PRINT) as Shader
 		for kv: String in OS.get_environment("D5_PRINT_SET").split(",", false):
@@ -120,3 +122,15 @@ static func roof_rule(roofs: Array[Sprite2D], tier: String, ppm: float) -> void:
 		if ov != null:
 			ov.visible = on and a > 0.0
 			ov.modulate.a = a
+
+
+## Iteration 10 (D5_UI_KING=<sharp>): King's plan-view sprite sampled through look_d5_ui.
+static func _ui_king(root: Node, sharp: float) -> void:
+	for n: Node in root.find_children("*", "Sprite2D", true, false):
+		var spr: Sprite2D = n as Sprite2D
+		var path: String = spr.texture.resource_path if spr.texture != null else ""
+		if spr.material == null and path.ends_with("/king/king_top.png"):
+			var m: ShaderMaterial = ShaderMaterial.new()
+			m.shader = load("res://assets/shaders/look_d5_ui.gdshader") as Shader
+			m.set_shader_parameter(&"sharp", sharp)
+			spr.material = m

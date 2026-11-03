@@ -1462,3 +1462,13 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   no-mip is better there. NOT a clear win: committed imports kept. Also tried look_d5_ui on all roof sprites
   (D5_UI_WORLD dev switch, reverted, never committed): union hall cleans up like the mips version, frame L 0.420 ->
   0.417. For the city lane / owner: one rule for D5 plates (mips + a hatch coarse enough to survive mip 1, or none).
+- 06:26 item52 KING through look_d5_ui (proposal, dev switch D5_UI_KING=<sharp>, committed default frames
+  untouched). King's plan sprite (640 px for 3.6 m) draws at 0.18 / 0.36 / 0.72x at 32 / 64 / 128 px/m on the actor
+  layer (not re-printed), trilinear. Arena frames, King footprint fine detail at sharp 0.5: 32 0.0455 -> 0.0634, 64
+  0.0410 -> 0.0536, 128 0.0357 -> 0.0493, L unchanged; by eye crisper cape folds, stripes and rim at every zoom
+  (board looked at; its 128 label was first placed over the wrong tile, fixed). MOTION: new dev scene
+  d5_king_move.gd (drift 0.37,0.21 px + 0.004 rad per frame, 40 frames, both samplings per pose) + masters
+  work/i10/shim_norm.py (change ratio / content ratio, 1.0 = only the extra detail moving): sharp 0.5 1.106 / 1.105 /
+  1.142 (32 / 64 / 128; content x1.27 / 1.19 / 1.22); sharp 0 1.060 / 1.048 / 1.029 (content x1.17 / 1.11 / 1.06).
+  Proposal: King with sharp 0 (moving), UI with 0.5 (static). Caveat: synthetic motion, flat background; untested
+  in a real fight. Board evidence/item52_king_sharp.png.
