@@ -357,3 +357,17 @@ bosses we resolve in future."
   6 stills looked at this iteration, 0 rejected.
 - 16:48 end of iteration 44. HEAD b7fb4f9 (+ this line). The tree is clean apart from the 3 untracked evidence files that
   predate the session. No Godot processes left running (every capture ran to exit 0). The NEXT list above stands.
+
+### 16:49 - 16:53 (iteration 45, BUILD, 11 min to freeze): gate re-check, flake chased
+- Unit run 5 times back to back on HEAD 5c6d51a: 337/0 every time (`gtai-masters/day-d5/collisions/unit-it45.log`).
+  The 16:42 "336/1" did not repeat in 6 runs; it stays logged as a contention flake (CONTENDED, other lanes busy then).
+- Lint 13/13 over 347 files. Scenarios 12 ran, 0 failed, 21 s (`scen-it45.log`, CONTENDED).
+- frames.json: 15 entries, every file present. No Godot processes of mine running.
+- No code change this iteration: too little time before the 17:00 freeze for a sim or rig edit plus its evidence.
+
+### NEXT (stands from iteration 44, unchanged)
+1. Owner review of the v7 clip and crop; shoulder touch for about 0.12 s OK, or ask d5-cast for a shorter sprawl (do not retry v3-v6).
+2. REQUEST 3 (slice-play): a held sprint above 5.0 m/s; then arena knockback as a slide over ticks.
+3. Section 20 bench and scenario_city_chase on an idle machine.
+4. Get-up grace (about 0.5 s, no re-tackle) and Rivet's recovery cost: owner call from the v7 clip.
+5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
