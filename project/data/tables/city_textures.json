@@ -903,6 +903,50 @@
         8.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/ground/curb12_straight_tone.png",
+      "class": "ground",
+      "id": 82,
+      "name": "curb12_straight_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/ground/curb12_straight_tone_b.png",
+      "class": "ground",
+      "id": 83,
+      "name": "curb12_straight_tone_b",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/ground/curb12_straight_tone_c.png",
+      "class": "ground",
+      "id": 84,
+      "name": "curb12_straight_tone_c",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/ground/curb12_corner_tone.png",
+      "class": "ground",
+      "id": 85,
+      "name": "curb12_corner_tone",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
     }
   ]
 }

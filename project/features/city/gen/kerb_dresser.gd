@@ -19,6 +19,7 @@ const CLEAR_M: float = 0.45
 ## stencil (the chalk robot, row 77, printed as a grey smudge at 32-48 px/m: not placed)
 const LANE_PAINT: Array[int] = [75, 76]
 const LANE_M: float = 2.1
+const CAR_STRIP_M: float = 1.8
 const PARKED: Array[int] = [44, 45, 46, 47, 48, 49, 44, 45, 46, 50, 52, 53]
 
 
@@ -35,24 +36,31 @@ func dress(g: CityGen, b: ChunkBuild, t: Vector2i, rot: float, horiz: bool) -> v
 	var c: Vector2 = TilePainter.origin(t) + Vector2(4.0, 4.0)
 	var busy: Array[Vector2] = []  # tile-local u spans the wall prop must keep clear of
 	if along % 2 == 0:
-		b.add(ChunkBuild.L_PROP, T_LAMP, _local(c, rot, 4.0, 2.4), rot + PI * 0.5, true)
+		b.add(
+			ChunkBuild.L_PROP,
+			T_LAMP,
+			_local(c, rot, 4.0, CityGen.WALK_M - 0.6),
+			rot + PI * 0.5,
+			true
+		)
 		busy.append(Vector2(4.0 - 0.25, 4.0 + 0.25))
 	if g.rnd(t.x, t.y, 0, 41) < 0.4:
 		var tex: int = KERB_PROPS[int(g.rnd(t.x, t.y, 0, 42) * KERB_PROPS.size())]
 		var u: float = 1.2 + 5.6 * g.rnd(t.x, t.y, 0, 43)
-		var v: float = 0.9 if NEAR_KERB.has(tex) else 2.3
+		var v: float = 0.9 if NEAR_KERB.has(tex) else CityGen.WALK_M - 0.7
 		prop(g, b, tex, _local(c, rot, u, v), rot)
 		busy.append(Vector2(u - g.sizes[tex].x * 0.5, u + g.sizes[tex].x * 0.5))
 	if not _faces_plaza(g, t, horiz):
 		_wall_prop(g, b, t, rot, busy)
 	if g.rnd(t.x, t.y, 0, 44) < 0.4:
 		var car: int = PARKED[int(g.rnd(t.x, t.y, 0, 45) * PARKED.size())]
-		var p: Vector2 = _local(c, rot, 4.0 + (g.rnd(t.x, t.y, 0, 46) - 0.5), 4.45)
+		var p: Vector2 = _local(c, rot, 4.0 + (g.rnd(t.x, t.y, 0, 46) - 0.5), CityGen.WALK_M + 1.05)
 		var r: float = rot + (PI if g.rnd(t.x, t.y, 0, 47) < 0.5 else 0.0)
 		b.add(ChunkBuild.L_PROP, car, p, r, true)
-		_block_footprint(b, p, g.sizes[car] * 0.9, r)
+		# solid for the 2 m kerb strip only (a van's 2.7 m overhangs the lane by looks, not cells)
+		_block_footprint(b, p, Vector2(g.sizes[car].x * 0.9, CAR_STRIP_M), r)
 	elif g.rnd(t.x, t.y, 0, 48) < 0.5:
-		var p: Vector2 = _local(c, rot, 1.0 + 6.0 * g.rnd(t.x, t.y, 0, 49), 3.35)
+		var p: Vector2 = _local(c, rot, 1.0 + 6.0 * g.rnd(t.x, t.y, 0, 49), CityGen.WALK_M + 0.35)
 		b.add(ChunkBuild.L_DECAL, T_DRAIN, p, rot)
 
 

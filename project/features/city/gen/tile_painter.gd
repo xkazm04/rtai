@@ -9,7 +9,7 @@ const T_TRAFFIC_LIGHT: int = 35
 ## crossing street's kerb line (5.15-7.55 m from the box, clear of the rounded corners; T1).
 const T_BOX: int = 72
 const T_ZEBRA: int = 73
-const ZEBRA_IN_M: float = -2.35
+const ZEBRA_IN_M: float = -2.35 + (CityGen.WALK_M - 3.0)
 ## Clean asphalt over both halves of an approach arm: no dashes in the crossing or the zebra.
 const T_DASH_ERASER: int = 74
 ## plaza dressing: one prop per slot (3 slots a tile, apart so their footprints never meet);
@@ -85,12 +85,14 @@ func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	# rounded kerb corner: sidewalk in the corner that touches the block diagonal
 	var k: int = (mx >> 1) + 2 * (my >> 1)
 	var rot: float = CORNER_ROT[k]
-	b.add(ChunkBuild.L_GROUND, 10, c, deg_to_rad(rot))
+	b.add(ChunkBuild.L_GROUND, CityGen.CORNER_TEX, c, deg_to_rad(rot))
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_PARK)
-	var s: Vector2 = Vector2(o.x if mx == 0 else o.x + 5.0, o.y if my == 0 else o.y + 5.0)
-	b.stamp(Rect2(s, Vector2(3, 3)), SimConst.C_WALK)
+	var w: float = CityGen.WALK_M
+	var s: Vector2 = Vector2(o.x if mx == 0 else o.x + 8.0 - w, o.y if my == 0 else o.y + 8.0 - w)
+	b.stamp(Rect2(s, Vector2(w, w)), SimConst.C_WALK)
 	var post: int = KerbDresser.T_LAMP if k == 0 or k == 3 else T_TRAFFIC_LIGHT
-	b.add(ChunkBuild.L_PROP, post, s + Vector2(1.5, 1.5), deg_to_rad(rot + 45.0), true)
+	var at: Vector2 = Vector2(w - 1.5 if mx == 0 else 1.5, w - 1.5 if my == 0 else 1.5)
+	b.add(ChunkBuild.L_PROP, post, s + at, deg_to_rad(rot + 45.0), true)
 	b.chunk.dens_ped[local_index(t)] = int(90 * b.district)
 	return SimConst.T_CORNER
 
@@ -108,12 +110,12 @@ func _street(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> int:
 		return SimConst.T_ROAD_H if horiz else SimConst.T_ROAD_V
 	var rotd: float = (0.0 if m == 0 else 180.0) if horiz else (270.0 if m == 0 else 90.0)
 	var rot: float = deg_to_rad(rotd)
-	b.add(ChunkBuild.L_GROUND, 7 + v3, c, rot)
+	b.add(ChunkBuild.L_GROUND, CityGen.KERB_TEX[v3], c, rot)
 	# rotate each cell centre back into the rot-0 frame: sidewalk where v < 3
 	for yy: int in 8:
 		for xx: int in 8:
 			var p: Vector2 = KerbDresser.quarter_turn(Vector2(xx + 0.5 - 4.0, yy + 0.5 - 4.0), -rot)
-			var code: int = SimConst.C_WALK if p.y + 4.0 < 3.0 else SimConst.C_PARK
+			var code: int = SimConst.C_WALK if p.y + 4.0 < CityGen.WALK_M else SimConst.C_PARK
 			b.set_cell(int(o.x) + xx, int(o.y) + yy, code)
 	_kerb.dress(g, b, t, rot, horiz)
 	b.chunk.dens_ped[local_index(t)] = int(clampf(140.0 * b.district, 0, 255))

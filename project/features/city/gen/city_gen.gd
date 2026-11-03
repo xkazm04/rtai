@@ -7,8 +7,15 @@ extends RefCounted
 ## plazas by seed.
 
 ## Bump when the output of any generator code changes (it is stamped into every chunk header).
-const GENERATOR_VERSION: int = 13
+const GENERATOR_VERSION: int = 14
 const PERIOD: int = 8
+## Street cross-section (owner call C1, T1 shows about 10 m; built at 12 m): the 8 m lane tile plus
+## two 8 m kerb tiles, each WALK_M of sidewalk (art/ground/curb12_*) and 8 - WALK_M of kerb-side
+## asphalt (2 m: the parked cars). 3.0 with KERB_TEX = [7, 8, 9] and CORNER_TEX = 10 is the old
+## 18 m street (the old art is still in the table).
+const WALK_M: float = 6.0
+const KERB_TEX: Array[int] = [82, 83, 84]
+const CORNER_TEX: int = 85
 
 var seed_value: int = 1
 var district_id: String = ""
