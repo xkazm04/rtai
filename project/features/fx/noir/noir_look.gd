@@ -8,6 +8,7 @@ const SHADER: String = "res://assets/shaders/look_noir.gdshader"
 const PARAMS: String = "res://assets/shaders/look_noir.params.json"
 const LAYER: int = 10
 const LOOK_ID: String = "noir"
+const CROWD_SHADOW: Shader = preload("res://assets/shaders/look_noir_crowd_shadow.gdshader")
 
 ## true: the D4 world print stays under the noir pass (params `keep_d4`).
 var keep_d4: bool = true
@@ -136,6 +137,7 @@ func _cast_shadows(city: CitySystem) -> void:
 	shadows.update(city.residency)
 	if figures == null:
 		_cast_figures(view)
+	_ink_crowd_shadows(view)
 
 
 ## The figure shadows on the city's actor layer, cast by its CharacterRigs (the game's rigs);
@@ -156,6 +158,26 @@ func _cast_figures(view: CityView) -> void:
 	figures = NoirFigureShadows.attach(layer, params, rigs)
 	@warning_ignore("return_value_discarded")
 	visibility_changed.connect(func() -> void: figures.visible = visible)
+
+
+## The crowd's soft shadow blobs print as hard ink stretched away from the light (one material).
+func _ink_crowd_shadows(view: CityView) -> void:
+	var node: MultiMeshInstance2D = view.crowd.nodes[SimConst.RL_PED_SHADOWS]
+	if node.has_meta(&"noir_ink"):
+		return
+	node.set_meta(&"noir_ink", true)
+	var mat: ShaderMaterial = ShaderMaterial.new()
+	mat.shader = CROWD_SHADOW
+	var frame: Dictionary = params["frame"]
+	var d: Array = frame.get("light_dir", [-0.6, -0.8])
+	var lx: float = d[0]
+	var ly: float = d[1]
+	var away: Vector2 = -Vector2(lx, ly).normalized()
+	mat.set_shader_parameter("away", away)
+	var d4: Material = node.material  # the D4 item print; back when the noir look is off
+	node.material = mat if visible else d4
+	@warning_ignore("return_value_discarded")
+	visibility_changed.connect(func() -> void: node.material = mat if visible else d4)
 
 
 func _exit_tree() -> void:
