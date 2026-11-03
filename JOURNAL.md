@@ -159,3 +159,14 @@ NEXT:
 3. The robot thug on a rig: KingPlan scaled down (or a thug plan), the claw windup as a pose,
    sparks on hit (hit_fx). Then the gun tell in the final look (coordinate with gunplay).
 4. Full scenario suite + run_unit before the freeze; then the 20-40 s lane clip for 00:00.
+- Scout detail for NEXT 2 (21:58): the rigs are data-fed through RigFeed rows (put(i, id,
+  kind, pos_px, vel); face[], aim[], flags[] = DEAD | AIMING | GUN_OUT | FLEE | DOWN; clip[] +
+  clip_arg[] per row = a RigClips.Clip to trigger). CharacterRigs.step_ticks / rig_for(id).
+  So the enemy half is one adapter, `features/combat/ai/enemy_rig_feed.gd`: per tick, every
+  EnemyAgent -> a feed row (pos * 32, vel, facing.angle(), aim, flags from state: WINDUP/FIRE ->
+  AIMING|GUN_OUT, PANIC -> FLEE, DOWN -> DOWN, DEAD -> DEAD; clip: shoot -> SHOOT with the
+  weapon's kick, hurt_tick == now -> HIT with the blow direction, died_tick == now -> DEATH).
+  d5_arena_run.gd's _cast/_pose show the feed in use (RIVET + 2 COP rows, looks 5 and 6).
+  BodyPlan.Kind is only RIVET, COP, PED: the robot thug needs a ROBOT kind (KingPlan-based,
+  smaller) in features/characters; that file is the d5-cast/rivet-motion area: ask in a
+  REQUEST or add a minimal kind with a JOURNAL note.
