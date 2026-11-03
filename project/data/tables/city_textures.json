@@ -157,7 +157,7 @@
       "solid": false
     },
     {
-      "art": "res://features/city/art/roofs/building_bar.png",
+      "art": "res://features/city/art/d5/roofs/building_bar.png",
       "class": "building",
       "id": 14,
       "name": "building_bar",
@@ -179,7 +179,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_hq.png",
+      "art": "res://features/city/art/d5/roofs/building_hq.png",
       "class": "building",
       "id": 16,
       "name": "building_hq",
@@ -190,7 +190,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_mural.png",
+      "art": "res://features/city/art/d5/roofs/building_mural.png",
       "class": "building",
       "id": 17,
       "name": "building_mural",
@@ -201,7 +201,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_osha.png",
+      "art": "res://features/city/art/d5/roofs/building_osha.png",
       "class": "building",
       "id": 18,
       "name": "building_osha",
@@ -212,7 +212,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_pension_bank.png",
+      "art": "res://features/city/art/d5/roofs/building_pension_bank.png",
       "class": "building",
       "id": 19,
       "name": "building_pension_bank",
@@ -223,7 +223,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_tall.png",
+      "art": "res://features/city/art/d5/roofs/building_tall.png",
       "class": "building",
       "id": 20,
       "name": "building_tall",
@@ -234,7 +234,7 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/roofs/building_union_hall.png",
+      "art": "res://features/city/art/d5/roofs/building_union_hall.png",
       "class": "building",
       "id": 21,
       "name": "building_union_hall",
