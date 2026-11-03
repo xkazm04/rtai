@@ -424,3 +424,6 @@ NEXT (for the 18:00 sync and the Director):
 - REQUEST 5 -> d5-city: a city_frame focus that follows the nearest cop after settle, for a real-game 128 px/m cop.
 - Later: King into the game with the boss ticket (KingPlan ready); the ghost form = a new RivetPlan.FORMS row; souls
   stay behind --souls until a combat mechanism uses them.
+- 16:20 owner frames: hero-d5-128ppm-ab (dev scene, redundant with the T2 kill-cam frame) replaced by the REAL-GAME
+  riot at 64 px/m (frames/riot-city0-64ppm-real.png, from renders/copclose128b). frames.json 15, every file and
+  `before` present; ladder rebuilt and looked at. Session ends here: tree clean, NEXT above stands.
