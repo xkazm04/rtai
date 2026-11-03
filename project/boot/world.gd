@@ -6,7 +6,8 @@ extends Node
 ## the game, and it goes straight into SimClock.advance() (SIM-01).
 ## `-- --seed=<n>` sets the master seed; `-- --replay=<file>` re-runs a recorded log headless,
 ## compares it (SIM-05) and quits 0 when identical, 1 when it diverged; `-- --record=<file>`
-## records this run and writes the log when the world leaves the tree.
+## records this run and writes the log when the world leaves the tree. `-- --reduced-motion`
+## turns off the camera shake / hit-stop and the marker pulse (the settings menu owns it later).
 
 const DEFAULT_SEED: int = 1
 
@@ -53,6 +54,8 @@ func _register_features(with_views: bool) -> void:
 			view.look_id = StringName(LaunchArgs.value("--look"))
 		view.rig = CameraRig.new()
 		view.rig.snap(&"car")
+		view.rig.reduced_motion = LaunchArgs.has("--reduced-motion")
+		view.markers.reduced_motion = view.rig.reduced_motion
 		view.rig.listen(Events, _ctx.clock)
 		add_child(view)
 		view.setup(city)
