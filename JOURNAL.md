@@ -299,3 +299,30 @@
   lane: real rigs, the D5 venue floor, the full claw chain, blood. The Director can show it as
   is. The next ask should come from it (rivet-motion-3: a lower guard, if Rivet still reads
   large beside the ped; at 48 px/m he is clearly bigger than the ped, about the cop's bulk).
+- MILESTONE 012f4ef: sprint arm pump. At the sprint top the counter-swing grows 50 % and the
+  hands tuck 35 % toward the body (Rivet only, via `RigPose.sprint01`). Still:
+  `clips/sprint-pump-before-after-48ppm-2x.png` (shoulder lead only vs plus the pump). The
+  sprint now reads through four cues: cadence, stride, lean, and shoulder plus pump. Both reels
+  were re-recorded with it (same ticks; the sim is untouched). Unit 560/560.
+- Gates at 012f4ef (`node tools/evidence/run.mjs --no-bench`, 22:29): lint 13/13 (504 files),
+  unit 560/560, scenarios 19/19, parity exact (mutation caught at step 629), selftest look
+  goldens 11/11 (worst 0.46) and block goldens 5/5 with NO re-bless. Earlier: scenarios at
+  936b6a1; the pump commit is view-only). The bench was skipped: no runtime path changed, since
+  PlayerMotion is still not wired into the game and the rig changes fire only above 5 m/s.
+- frames.json: 15 entries (sprint pump still added, the 32 px/m hips clip dropped).
+- Look: the torch tip on Rivet's left forearm is teal in the D5 print. That's existing art,
+  not this lane's, and teal is for souls only. For the Director / d5-cast: check whether the
+  torch tip counts as a soul.
+- NEXT (iteration 4 / night run):
+  1. answers.json first.
+  2. Show the reel to the owner, through the Director: `clips/rivet-reel-48ppm.mp4`. Then ASK
+     rivet-motion-3 from it: a lower guard vs today's, if Rivet reads large beside the ped. At
+     48 px/m he is about the cop's bulk and clearly bigger than the ped.
+  3. The hit flash: still vermilion in the shared shader (print_part / look_d5_part `tint` ->
+     VERM). REQUEST 1 -> gunplay. When HitFeel lands, swap the reel's HITSTOP/SHAKE constants
+     for `HitFeel.land(...)` plus a `hit_class` per rivet_melee.json hit.
+  4. A Rivet contact beat on the tackle (a brief recoil or shoulder-drive on the rig at
+     contact); today only the victim reacts.
+  5. A longer reel (20-40 s): add the charged shock once a metal target rig exists
+     (REQUEST 2 -> enemy-ai: the robot thug), and a second cop that shoots (gunplay's tell).
+  6. Then the deferred breadth: melee weapons (baton, katana) on MeleeCombo rows.
