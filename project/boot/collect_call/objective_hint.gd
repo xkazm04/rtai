@@ -2,10 +2,15 @@ class_name ObjectiveHint
 extends RefCounted
 ## Where quest 1 wants Rivet now and what to press, for a player who has never seen it: one goal
 ## point per beat state (the dumpster, the ringing phone, the next ally, Dock 9, the crates, the
-## Harbor Road skip or phone) and one prompt naming the bound keys (read from the InputMap, so
-## a rebinding shows through). Reads the stage and the quest, never writes them.
+## Harbor Road skip or phone) and one prompt naming the bound keys, or the pad's buttons when a
+## pad was used last (read from the InputMap, so a rebinding shows through). Reads only.
 
 const MEET_ORDER: Array[String] = ["Juno", "Brass", "Dr. Kilohm", "Don Fax"]
+## Glyph labels for a pad in the common A/B/X/Y layout (Godot's JoyButton / JoyAxis numbers).
+const PAD_BUTTONS: Dictionary[int, String] = {
+	0: "A", 1: "B", 2: "X", 3: "Y", 4: "Back", 6: "Start", 9: "LB", 10: "RB"
+}
+const PAD_AXES: Dictionary[int, String] = {4: "LT", 5: "RT"}
 
 var goal: Vector2 = Vector2.INF
 var key: StringName = &""
@@ -53,22 +58,40 @@ static func of(stage: CollectCallStage, system: QuestSystem) -> ObjectiveHint:
 	return h
 
 
-## The prompt in the player's language, with the ally's name and the bound keys filled in.
-func words(t: QuestText) -> String:
+## The prompt in the player's language, the ally's name and the keys (pad buttons if `pad`) in.
+func words(t: QuestText, pad: bool = false) -> String:
 	var resolved: String = t.resolve(key, text)
-	return with_keys(resolved % arg if arg != "" else resolved)
+	return with_keys(resolved % arg if arg != "" else resolved, pad)
 
 
-## The prompt with [action] replaced by the action's first bound key (or mouse button).
-static func with_keys(prompt: String) -> String:
+## The prompt with [action] replaced by the action's first bound key (or mouse button), or by its
+## first pad button or trigger when `pad`.
+static func with_keys(prompt: String, pad: bool = false) -> String:
 	var move: Array[String] = []
 	for dir: String in ["up", "left", "down", "right"]:
 		move.append(key_name(StringName("move_" + dir)))
-	var out: String = prompt.replace("[move]", "[%s]" % " ".join(PackedStringArray(move)))
+	var move_label: String = "L-stick" if pad else " ".join(PackedStringArray(move))
+	var out: String = prompt.replace("[move]", "[%s]" % move_label)
 	for action: String in ["use", "fire", "melee"]:
 		var id: StringName = &"interact" if action == "use" else StringName(action)
-		out = out.replace("[%s]" % action, "[%s]" % key_name(id))
+		out = out.replace("[%s]" % action, "[%s]" % (pad_name(id) if pad else key_name(id)))
 	return out
+
+
+## The action's first pad button or trigger label ("A", "RT"); the key name when it has none.
+static func pad_name(action: StringName) -> String:
+	if not InputMap.has_action(action):
+		return String(action)
+	for ev: InputEvent in InputMap.action_get_events(action):
+		if ev is InputEventJoypadButton:
+			var b: InputEventJoypadButton = ev
+			if PAD_BUTTONS.has(b.button_index):
+				return PAD_BUTTONS[b.button_index]
+		if ev is InputEventJoypadMotion:
+			var m: InputEventJoypadMotion = ev
+			if PAD_AXES.has(m.axis):
+				return PAD_AXES[m.axis]
+	return key_name(action)
 
 
 static func key_name(action: StringName) -> String:

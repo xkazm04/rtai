@@ -16,6 +16,8 @@ const BOTTOM_CLEAR: float = 340.0
 var stage: CollectCallStage
 var system: QuestSystem
 var px_per_m: float = 32.0
+## true when the prompts should name the pad's buttons (the player used a pad last).
+var pad_prompts: Callable = func() -> bool: return false
 var _text: QuestText = QuestText.new()
 
 
@@ -29,7 +31,8 @@ func _draw() -> void:
 	var hint: ObjectiveHint = ObjectiveHint.of(stage, system)
 	if hint.key == &"":
 		return
-	_prompt(hint.words(_text))
+	var pad: bool = pad_prompts.call()
+	_prompt(hint.words(_text, pad))
 	if hint.goal != Vector2.INF:
 		_goal(hint.goal)
 

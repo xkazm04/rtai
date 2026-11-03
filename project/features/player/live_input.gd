@@ -14,6 +14,9 @@ var enabled: bool = true
 ## true once the mouse moved last, false once a pad was used last: a released right stick
 ## then faces the walk direction instead of snapping to wherever the cursor rests.
 var mouse_aims: bool = true
+## true once a pad was used last, false once a key or the mouse was: the prompts name the pad's
+## buttons or the keys (aim is not affected; that is mouse_aims).
+var pad_last: bool = false
 
 
 func _init(p_actions: PlayerActions) -> void:
@@ -37,10 +40,14 @@ func sample(_tick: int) -> TickInput:
 func note_event(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		mouse_aims = true
+		pad_last = false
+	elif event is InputEventKey:
+		pad_last = false
 	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
 		var motion: InputEventJoypadMotion = event as InputEventJoypadMotion
 		if motion == null or absf(motion.axis_value) >= actions.stick_deadzone:
 			mouse_aims = false
+			pad_last = true
 
 
 func _aim() -> Vector2:
