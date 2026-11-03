@@ -521,3 +521,28 @@ NEXT (unchanged, in order): 1) owner's 18:00 exe run + frame-verify the light-po
 - prewarm-light-leak.patch still applies cleanly to BOTH d-slice and d-city HEAD (view_prewarm.gd
   is byte-identical on the two branches), so REQUEST 3 -> d5-city is a plain `git apply`.
 - 17:00:19 bench.lock taken by d5-city (seconds before my try); waiting on it for the frame check.
+- 17:09 bench.lock freed (d5-city); took it as slice-play. VERIFIED the light-pool fix in the
+  REAL game: windowed `quest1_clip --continue` from the same Dock 9 save (b4-dock, tick 7005),
+  patch reverted vs applied: f4 before = a big light pool on Rivet, f4 after = none. Masters
+  `lightfix_before/` vs `lightfix/`, sheet `lightfix-ab-32.png`. Frame 1 shows one frame of the
+  warm-up particles at Rivet in BOTH (pre-existing, not from the patch; left as is). Lock
+  released 17:10; both captures exited rc 0 (only the usual "resources still in use at exit").
+- FIX COMMITTED ebe1dd6 (view_prewarm.gd, d5-city's file, a minimal shared change recorded here):
+  the file is byte-identical on d-city, so merging both is clean; if d5-city applied the same
+  patch, git sees the same hunk. REQUEST 3 -> d5-city is now DONE ON d-slice (nothing to apply).
+- GATES at ebe1dd6: lint 13/13 (369 files), unit 359/359, scenarios 10/10 (quest1 input run
+  paid 1500, replay identical, checkpoint resume + tamper refused). The first unit run "failed"
+  with exit -1 only because GODOT_BIN was unset in that shell; rerun green. Logs:
+  evidence/slice-play/unit-tests-ebe1dd6.log, scenarios-ebe1dd6.log.
+- Exe re-exported at ebe1dd6 (windows-slice -> build/export/windows/RTAI.exe, 17:11):
+  `RTAI.exe --headless -- --replay=<gate's input log>` -> "replay: identical", rc 0.
+  exe-built-at.txt = ebe1dd6. The v4 clip predates this fix (its first ticks show the pool).
+- frames.json: entry 1 (Continue f1, the cream-void fix, still covered by entry 14) replaced
+  with the light-fix pair (lightfix/continue_f4.png, before lightfix_before/continue_f4.png). 15 entries.
+- Not run this iteration: `node tools/evidence/run.mjs` (it includes the bench; skipped as the
+  lock is shared and the freeze has passed). Godot PID 9252 on the machine is not mine; untouched.
+NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at ebe1dd6);
+  2) merge d-cast with/before d-slice (rivet_plan FORM_BASE = quest 1 sprite); the autosave MERGE
+  NOTE call sites in quest1_game.gd; 3) car press -> VehicleService, free-roam Rivet via
+  TopDownMover (re-bless the 60 s golden); 4) places as rooms; 5) re-capture guard/cast sprites
+  at 1x from final rigs; 6) the one-frame warm-up particle burst on Continue/Start f1.
