@@ -62,3 +62,6 @@ NEXT (iteration 2):
 3. Blood colour from palette `blood` once d5-city lands it (REQUEST 1).
 4. Stains on bodies in the city (dead sim bodies are static: draw BloodStains above the rigs, keyed by sim slot).
 5. Orphan pools: the sim despawns bodies; consider fading pools faster once their body is gone (render-side).
+- NEXT item 1 re-scoped: quest 1 humans have 1 hp (tuning.human.hp), so every human hit is a kill and already bleeds;
+  "blood on a non-lethal human hit" has no trigger in today's game. It becomes real when a human gets hp > 1 (a boss
+  phase); the hook is Fighter.hurt_tick (render-side read in CollectCallView) -> blood.splash(..., "player_hit").

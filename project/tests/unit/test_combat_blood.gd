@@ -107,3 +107,14 @@ func test_a_hit_robot_leaves_an_oil_trail_where_it_walks() -> void:
 		b.step(t, Vector2.ZERO)
 	assert_gt(b.leak.drips, 5, "a drop every few px walked")
 	assert_eq(b.blood.live_decals(), 0, "the trail is oil, not blood")
+
+
+func test_both_keeps_the_ink_splat_under_the_blood() -> void:
+	var t: FxTriggers = FxTriggers.new()
+	var b: CombatBlood = _blood("both")
+	b.attach(t)
+	var death: Array = t.rows[&"death"]["fx"]
+	assert_true(death.has("ink_splat"))
+	t.fire(&"death", Vector2(320, 320), 0.0, 10)
+	b.step(10, Vector2.ZERO)
+	assert_eq(b.kills, 1)
