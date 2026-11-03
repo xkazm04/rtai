@@ -1,0 +1,52 @@
+{
+  "beats": [
+    "b1-dumpster",
+    "b2-payphone",
+    "b3-toner-room",
+    "b4-dock",
+    "b5-quartermaster",
+    "b6-hot-walk"
+  ],
+  "checkpoint_load": {
+    "beat": "b4-dock",
+    "resumed": true,
+    "tamper_refused": true
+  },
+  "checkpoints": [
+    "b2-payphone@768",
+    "b3-toner-room@2421",
+    "b4-dock@5669",
+    "b5-quartermaster@8086",
+    "b6-hot-walk@9033"
+  ],
+  "deaths": 0,
+  "final_hash": "c7361b9a3e6347fc2deda04636f4b55d8b2264e4d6af1e03af83da3c2570af3a",
+  "hints": [
+    "SLICE__HINT_HIDE",
+    "SLICE__HINT_STAY",
+    "SLICE__HINT_PHONE",
+    "SLICE__HINT_MEET",
+    "SLICE__HINT_LISTEN",
+    "SLICE__HINT_FIGHT",
+    "SLICE__HINT_RIFLE",
+    "SLICE__HINT_BOSS",
+    "SLICE__HINT_TORCH",
+    "SLICE__HINT_COOL",
+    "SLICE__HINT_PAID"
+  ],
+  "input_changes": 1309,
+  "input_events": 56232,
+  "interact_presses": 11,
+  "kills": 49,
+  "log": "C:/Users/kazda/AppData/Roaming/RTAI Uprising/test_tmp/quest1/input-run.replay.json",
+  "log_saved": true,
+  "paid": 1500,
+  "path": "simulated InputEvents -> InputMap -> LiveInput -> TickInput -> StagePilot",
+  "replay": "identical",
+  "scene": "res://boot/quest1.tscn",
+  "seconds": 187.35,
+  "shots": 66,
+  "state": "succeeded",
+  "ticks": 11241,
+  "verdict": "pass"
+}

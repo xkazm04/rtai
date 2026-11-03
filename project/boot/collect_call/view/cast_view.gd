@@ -2,7 +2,7 @@ class_name CastView
 extends Node2D
 ## Quest 1's people as flat placeholder ink, each with its initial on its body: Rivet (cream,
 ## teal eye slits, vermilion collar), the Toner Room robots (Juno, Brass, Dr. Kilohm, Don Fax)
-## once the quest brings them on, the vermilion humans (patrol cops while Rivet is hot, the
+## once the quest brings them on, the humans (patrol cops in cop blue while Rivet is hot, the
 ## dock contractors), and Quartermaster Mertz in his own silhouette: wide black uniform, a
 ## flat garrison cap, the battery backpack and its cable to the Robo-tazer.
 
@@ -16,27 +16,22 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
 	"Don Fax": Vector2(1.8, 1.1),
 }
 
-const ART: String = "res://features/quest/art/collect_call/cast_"
 ## The art is fitted to the gameplay footprints; drawn at these factors the silhouettes carry the
 ## visual mass of the placeholder boxes (a thin IV-pole robot at 0.8 m read as a speck).
 const CAST_DRAW: float = 1.5
 const GUARD_DRAW: float = 1.7
 ## Knocked-out bodies stay quiet (the placeholder drew them as faint discs).
 const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
-## cast_rivet.png: the real Rivet rig (idle, facing -y) captured at 120 px/m, body at the centre;
-## drawn at true scale (372 x 468 px = 3.1 x 3.9 m, arms included).
-const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
-## cast_rivet_peek.png: a round cut of the same capture (plate + hazard collar) for the hide spots.
-const RIVET_PEEK: Vector2 = Vector2(1.03, 1.03)
-## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
-const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
+## Art by id from data/tables/collect_call_art.json (QuestArt). The rig captures (rivet: idle,
+## facing -y, 120 px/m, arms included; rivet_peek: its round cut for the hide spots; cop: gun
+## out) carry their drawn size there (size_m x draw_k; Rivet is d5-cast's base form, the T2
+## hunch, at true scale), so a re-capture is a table edit.
 const ALLY_ART: Dictionary[String, String] = {
 	"Juno": "juno", "Brass": "brass", "Dr. Kilohm": "kilohm", "Don Fax": "don_fax"
 }
 
 var stage: CollectCallStage
 var port: CollectCallWorld
-var _tex: Dictionary[String, Texture2D] = {}
 
 
 func _process(_delta: float) -> void:
@@ -50,7 +45,7 @@ func _draw() -> void:
 		_ally(tag, stage.layout.places.actors[tag].at)
 	if stage.heat.level > 0:
 		for p: Vector2 in stage.patrol_pos:
-			_sprite("cop", p, COP_SIZE, Vector2.DOWN)
+			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS:
 			_mertz(h)
@@ -64,9 +59,9 @@ func _draw() -> void:
 func _rivet(r: Fighter) -> void:
 	var at: Vector2 = r.pos
 	if stage.hidden_in != "":
-		_sprite("rivet_peek", at + Vector2(0.0, -0.75), RIVET_PEEK, Vector2.UP)
+		_sprite("rivet_peek", at + Vector2(0.0, -0.75), _size(&"rivet_peek"), Vector2.UP)
 		return
-	_sprite("rivet", at, RIVET_SIZE, r.facing)
+	_sprite("rivet", at, _size(&"rivet"), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
 
 
@@ -121,9 +116,12 @@ func _hp_bar(at: Vector2, frac: float) -> void:
 func _sprite(
 	name: String, at: Vector2, size: Vector2, facing: Vector2, tint: Color = Color.WHITE
 ) -> void:
-	if not _tex.has(name):
-		_tex[name] = load(ART + name + ".png") as Texture2D
+	var tex: Texture2D = QuestArt.shared().texture(StringName(name))
 	draw_set_transform(Ink.px(at), facing.angle() + PI * 0.5)
 	var r: Rect2 = Rect2(-size * 0.5 * Ink.PX_PER_M, size * Ink.PX_PER_M)
-	draw_texture_rect(_tex[name], r, false, tint)
+	draw_texture_rect(tex, r, false, tint)
 	draw_set_transform(Vector2.ZERO)
+
+
+func _size(id: StringName) -> Vector2:
+	return QuestArt.shared().size_m(id)

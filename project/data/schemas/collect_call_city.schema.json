@@ -1,0 +1,36 @@
+{
+  "$id": "gtai.collect-call-city/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "type": "string"
+    },
+    "origin": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.collect-call-city/1"
+    },
+    "squash": {
+      "items": {
+        "exclusiveMinimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    }
+  },
+  "required": [
+    "doc",
+    "origin",
+    "schema",
+    "squash"
+  ],
+  "type": "object"
+}

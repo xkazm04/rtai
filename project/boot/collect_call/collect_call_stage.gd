@@ -33,11 +33,19 @@ var deaths: int = 0
 var shots_fired: int = 0
 ## This tick's interact press, if the stage did not use it (the quest's meet beat takes it).
 var press_left: bool = false
+## The player (bound input) when set; null for the bot, which writes intent itself.
+var pilot: StagePilot = null
 var tick: int = 0
+## The last quest line StageLines acted on.
+var last_line: String = ""
+## The city's walk cells Rivet collides with, and the city whose bubble follows him (both null
+## on the invented arena).
+var cells: StageCells = null
+var follow: CitySystem = null
 var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
+var _cued: Dictionary[String, bool] = {}
 var _events: EventBus
-var _last_line: String = ""
 
 
 func _init(p_layout: StageLayout) -> void:
@@ -47,11 +55,6 @@ func _init(p_layout: StageLayout) -> void:
 ## The quest whose spoken lines drive line_hooks (read only).
 func watch(quest: QuestSystem) -> void:
 	_quest = quest
-
-
-## The bus the stage's fight emits on (read only; the view's blood listens to it).
-func events() -> EventBus:
-	return _events
 
 
 func setup(ctx: WorldContext) -> void:
@@ -68,11 +71,15 @@ func setup(ctx: WorldContext) -> void:
 		patrol_leg.append(1 % p.route.size())
 
 
-func step(p_tick: int, _input: TickInput) -> void:
+func step(p_tick: int, tick_input: TickInput) -> void:
 	tick = p_tick
 	whisper_now = false
-	_line_hooks()
+	StageLines.apply(self, _current_line())
+	if follow != null and follow.body != null and follow.body.on:
+		arena.rivet.pos = follow.target  # features/bodies: where the city's people left him
 	var from: Vector2 = arena.rivet.pos
+	if pilot != null:
+		pilot.drive(self, tick_input)
 	_move()
 	press_left = intent.interact and not StageActions.interact(self)
 	if intent.fire_at != Vector2.INF and hidden_in == "":
@@ -80,6 +87,8 @@ func step(p_tick: int, _input: TickInput) -> void:
 	arena.step(tick)
 	@warning_ignore("return_value_discarded")
 	ArenaBodies.resolve(arena, (arena.rivet.pos - from) / SimClock.TICK_DT)  # features/bodies
+	arena.rivet.pos = _collide(arena.rivet.pos)
+	_collide_hostiles()
 	_encounters()
 	_spawns()
 	StagePolice.step_patrols(self)
@@ -93,6 +102,9 @@ func step(p_tick: int, _input: TickInput) -> void:
 	refusal_left = maxi(refusal_left - 1, 0)
 	burn_ticks += 1 if crates_burning else 0
 	intent.clear()
+	if follow != null:
+		follow.focus = arena.rivet.pos
+		follow.target = follow.focus
 
 
 ## The torch: the crate stack burns, the whispers spike, and the alarm puts heat at its peak.
@@ -126,16 +138,36 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_8(1 if crates_burning else 0)
 	out.put_utf8_string(hidden_in)
 	out.put_32(deaths)
+	out.put_32(_cued.size())
+	if pilot != null:
+		pilot.write_state(out)
 
 
 func _move() -> void:
+	if intent.move_to == Vector2.INF and intent.move_by != Vector2.ZERO:
+		hidden_in = ""
+		arena.rivet.pos = _collide(arena.rivet.pos + intent.move_by)
+		return
 	if intent.move_to == Vector2.INF:
 		hidden_ticks += 1 if hidden_in != "" else 0
 		return
 	if hidden_in != "":
 		hidden_in = ""
 	var speed: float = arena.tuning.rivet["walk_mps"] * SimClock.TICK_DT
-	arena.rivet.pos = arena.rivet.pos.move_toward(intent.move_to, speed)
+	arena.rivet.pos = _collide(arena.rivet.pos.move_toward(intent.move_to, speed))
+
+
+func _collide(p: Vector2) -> Vector2:
+	return cells.push_out(p, arena.tuning.rivet["radius_m"]) if cells != null else p
+
+
+## On the city the guards and Mertz keep out of buildings, props and parked cars too.
+func _collide_hostiles() -> void:
+	if cells == null:
+		return
+	for h: Fighter in arena.hostiles:
+		if h.alive():
+			h.pos = cells.push_out(h.pos, h.radius_m)
 
 
 func _spawns() -> void:
@@ -163,17 +195,32 @@ func _encounters() -> void:
 				_asked[marker] = false
 
 
-## The voices (the madness stand-in): hiding raises a whisper burst after whisper_first_ticks,
-## then every whisper_every_ticks; so do the tazer hit, the fire and Kilohm's scan.
+## The voices (the madness stand-in), cued by the story, never by a repeating timer: a beat's
+## whisper cue (data whispers.cues: in b1, once Rivet has hidden a moment), Kilohm's line
+## (line_hooks), the tazer hit and the fire.
 func _emit_events() -> void:
 	if arena.tazer_hit_now:
 		whisper_now = true
-	var first: int = layout.whisper_first_ticks
-	if hidden_in != "" and hidden_ticks >= first:
-		if (hidden_ticks - first) % layout.whisper_every_ticks == 0:
+	var beat: String = _beat_id()
+	if layout.whisper_cues.has(beat) and not _cued.has(beat) and hidden_in != "":
+		if hidden_ticks >= layout.whisper_cues[beat]:
+			_cued[beat] = true
 			whisper_now = true
 	if whisper_now:
 		_events.whispers_spiked.emit()
+
+
+## The quest line on screen ("" for none).
+func _current_line() -> String:
+	if _quest != null and _quest.runner != null and _quest.runner.lines.current != null:
+		return _quest.runner.lines.current.id
+	return ""
+
+
+func _beat_id() -> String:
+	if _quest == null or _quest.runner == null or _quest.runner.current_beat() == null:
+		return ""
+	return _quest.runner.current_beat().id
 
 
 ## Wave `i`'s number within its encounter, from 1.
@@ -193,30 +240,3 @@ func _respawn() -> void:
 	arena.rivet.pos = layout.marker("The Toner Room").at
 	hidden_in = ""
 	Log.info("stage", "Rivet destroyed: respawn at the Toner Room (tape bill %d)" % deaths)
-
-
-func _line_hooks() -> void:
-	var line: String = ""
-	if _quest != null and _quest.runner != null and _quest.runner.lines.current != null:
-		line = _quest.runner.lines.current.id
-	if line == _last_line:
-		return
-	_last_line = line
-	match layout.line_hooks.get(line, ""):
-		"give_gloria":
-			arena.rivet.weapon = &"gloria"
-		"repair":
-			arena.rivet.hp = arena.rivet.max_hp
-		"whisper":
-			whisper_now = true
-		"cash_under_phone":
-			cash_phone = _nearest_phone()
-
-
-func _nearest_phone() -> String:
-	var best: String = ""
-	for phone: String in layout.phones:
-		var d: float = layout.phones[phone].distance_to(arena.rivet.pos)
-		if best == "" or d < layout.phones[best].distance_to(arena.rivet.pos):
-			best = phone
-	return best

@@ -1,0 +1,74 @@
+{
+  "$id": "gtai.input-actions/1",
+  "additionalProperties": false,
+  "properties": {
+    "aim": {
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "move": {
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bit": {
+            "maximum": 15,
+            "minimum": -1,
+            "type": "integer"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "joy_axes": {
+            "type": "array"
+          },
+          "joy_buttons": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "mouse": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "bit",
+          "keys",
+          "mouse",
+          "joy_buttons",
+          "joy_axes"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.input-actions/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rows",
+    "aim",
+    "move"
+  ],
+  "type": "object"
+}

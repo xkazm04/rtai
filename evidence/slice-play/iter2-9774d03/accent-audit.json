@@ -1,0 +1,229 @@
+{
+  "crowd_atlas_by_look": [
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 636
+      },
+      "kind": "ped",
+      "look": 0,
+      "off_doctrine": false,
+      "tag": "coat-hat",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 176
+      },
+      "kind": "ped",
+      "look": 1,
+      "off_doctrine": false,
+      "tag": "jacket-hair",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 624
+      },
+      "kind": "ped",
+      "look": 2,
+      "off_doctrine": false,
+      "tag": "coat-hood",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 244
+      },
+      "kind": "ped",
+      "look": 3,
+      "off_doctrine": false,
+      "tag": "hoodie-cap",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 492
+      },
+      "kind": "ped",
+      "look": 4,
+      "off_doctrine": false,
+      "tag": "vest-hair",
+      "teal": 0,
+      "vermilion": 0
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 3056
+      },
+      "kind": "cop",
+      "look": 5,
+      "off_doctrine": false,
+      "tag": "patrol",
+      "teal": 0,
+      "vermilion": 29308
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 2680
+      },
+      "kind": "cop",
+      "look": 6,
+      "off_doctrine": false,
+      "tag": "riot",
+      "teal": 0,
+      "vermilion": 24716
+    },
+    {
+      "hit_flash": {
+        "teal": 0,
+        "vermilion": 688
+      },
+      "kind": "ped",
+      "look": 7,
+      "off_doctrine": false,
+      "tag": "overalls-bald",
+      "teal": 0,
+      "vermilion": 0
+    }
+  ],
+  "frames": [
+    {
+      "frame": {
+        "teal": 0,
+        "vermilion": 9580
+      },
+      "frame_share": 0.00935546875,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 0,
+          "vermilion": 168
+        }
+      },
+      "layers": {
+        "actors": {
+          "teal": 0,
+          "vermilion": 9580
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 0
+        }
+      },
+      "offenders": [],
+      "ppm": 32
+    },
+    {
+      "frame": {
+        "teal": 4,
+        "vermilion": 9836
+      },
+      "frame_share": 0.009609375,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 4,
+          "vermilion": 176
+        }
+      },
+      "layers": {
+        "actors": {
+          "teal": 4,
+          "vermilion": 9836
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 0
+        }
+      },
+      "offenders": [],
+      "ppm": 48
+    },
+    {
+      "frame": {
+        "teal": 0,
+        "vermilion": 2448
+      },
+      "frame_share": 0.002390625,
+      "full_rigs_by_kind": {
+        "cop": {
+          "teal": 0,
+          "vermilion": 1716
+        },
+        "ped": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "rivet": {
+          "teal": 0,
+          "vermilion": 388
+        }
+      },
+      "layers": {
+        "actors": {
+          "teal": 0,
+          "vermilion": 2448
+        },
+        "fx": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "vehicles": {
+          "teal": 0,
+          "vermilion": 0
+        },
+        "world": {
+          "teal": 0,
+          "vermilion": 0
+        }
+      },
+      "offenders": [],
+      "ppm": 64
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "ok": true,
+  "schema": "gtai.accent-audit/1",
+  "stride": 2
+}

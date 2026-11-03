@@ -1,0 +1,53 @@
+{
+  "$id": "gtai.collect-call-art/1",
+  "additionalProperties": false,
+  "properties": {
+    "art": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://features/[a-z0-9_/]+\\.png$",
+            "type": "string"
+          },
+          "draw_k": {
+            "minimum": 0.01,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "size_m": {
+            "items": {
+              "minimum": 0.01,
+              "type": "number"
+            },
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "art"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.collect-call-art/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "art"
+  ],
+  "type": "object"
+}

@@ -208,16 +208,43 @@
     "whispers": {
       "additionalProperties": false,
       "properties": {
-        "every_s": {
-          "type": "number"
+        "cues": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "after_s": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "beat": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "doc": {
+                "type": "string"
+              },
+              "on": {
+                "enum": [
+                  "hidden"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "beat",
+              "on",
+              "after_s"
+            ],
+            "type": "object"
+          },
+          "type": "array"
         },
-        "first_s": {
-          "type": "number"
+        "doc": {
+          "type": "string"
         }
       },
       "required": [
-        "every_s",
-        "first_s"
+        "cues"
       ],
       "type": "object"
     }

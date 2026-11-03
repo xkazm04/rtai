@@ -21,6 +21,9 @@ const LINGER_TICKS: int = 120
 const GIVE_UP_TICKS: int = 600
 
 var phase: String = "start"
+## How near a goal counts as there (the input driver's thumb arrives less exactly than a direct
+## move_to; every reach it stands in for is 1.1 m or more).
+var stand_m: float = STAND_M
 ## false plants the scenario's fault: the bot never tries the Harbor Road phone while hot.
 var tries_hot_phone: bool = true
 ## false plants the other fault: the bot never torches the crates (the quest cannot finish).
@@ -69,11 +72,11 @@ func act() -> void:
 ## Walks toward `to`; true once there.
 func _go(to: Vector2) -> bool:
 	_walk(to)
-	return _stage.arena.rivet.pos.distance_to(to) <= STAND_M
+	return _stage.arena.rivet.pos.distance_to(to) <= stand_m
 
 
 func _walk(to: Vector2) -> void:
-	if _stage.arena.rivet.pos.distance_to(to) > STAND_M:
+	if _stage.arena.rivet.pos.distance_to(to) > stand_m:
 		_stage.intent.move_to = to
 
 
@@ -112,7 +115,7 @@ func _fight() -> void:
 			_stage.intent.interact = true
 			grabbed = true
 	else:
-		_walk(DOCK_HOLD)
+		_walk(_stage.layout.w(DOCK_HOLD))
 	_shoot_nearest()
 
 
@@ -122,7 +125,7 @@ func _boss() -> void:
 		_walk(_stage.layout.marker("Dock 9 vault cage").at)
 		return
 	if arena.boss.alive():
-		_walk(BOSS_STANDOFF)
+		_walk(_stage.layout.w(BOSS_STANDOFF))
 		if arena.boss.exposed and arena.tazer_hits >= 1:
 			_stage.intent.fire_at = arena.boss.pos
 		return
