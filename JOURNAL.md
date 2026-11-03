@@ -270,3 +270,28 @@ NEXT (iteration 4 close, in order):
 - (00:53) noir pass cost on the integrated GPU: `noir_cost.tscn --gpu-index 1` (AMD Radeon(TM) Graphics) at
   1920x1080, 48 px/m riot junction: GPU noir 6.61 ms vs D4 8.17 ms; CPU render 0.24 ms both. A 4090 re-run:
   0.90 vs 1.09 ms. Noir is cheaper on both GPUs because it replaces the D4 print pass. evidence/noir-cost-1080p-igpu.json.
+
+## 2026-11-03 iteration 6 (BUILD), 00:52-02:22
+
+- 00:53 Leonardo probe (key not printed): apiSubscriptionTokens 0, apiPaidTokens null -> Codex only. Disk 217 GB free.
+- MILESTONE (01:07) noir Rivet (work order 2, the weakest item: Rivet had no noir redraw). Two Codex
+  layout-template edits, one at a time, no limit hit (the gen.sh "limit=429" flag on the 2nd was a false
+  positive: a file size of 1429015 bytes in the log): noir_rivet_1 (84 s; helmet, collar, torso, pelvis,
+  claw_closed, prod forearm at 1.85x) and noir_rivet_limbs_1 (61 s; upperarm, forearm, claw_open,
+  claw_pistol, thigh, shin, foot, foot_toeoff at 1.5x). Prompt: hard chiaroscuro (top-left half lit paper,
+  lower-right a solid ink mass), and per the helmet lesson only BOLD WIDE white shapes: the visor U thick,
+  the collar as wide black/white hazard stripes. Both top-down, 0 rejected. New tool
+  masters:night/noir/tools/make_template.py (D4 parts pasted at a scale, rows, box json); sliced with
+  slice_noir.py (original part alpha, so pivots and silhouettes are exact). l_/r_ D4 limbs are the SAME
+  image (diffed), so one redraw serves both sides. 19 pngs in features/characters/art/noir/rivet/,
+  19 provenance lines. `--noir-parts` now wears every png under art/noir/<kind>/ (ResourceLoader.list_directory).
+  FRICTION: a typed `const Dictionary[String, PackedStringArray]` iterated in _ready crashed Godot 4.7.2
+  (signal 11, no script error); plain consts fixed it, then the scan replaced them.
+  Evidence: masters night/noir/rivet-before-after.png (Rivet crops f040, rows 32 / 48 / 64 px/m, left
+  before = show-final / rivet-v0-32, right after = rivet-v2), clips rivet-v2/showcase-noir-32/48/64.mp4.
+  The rerun after the refactor is pixel-identical (3 frames diffed).
+  Honest read: a MODEST gain. At all three zooms the helmet prints as an ink plate with the white visor U
+  (before: a paper square); from 48 px/m the collar shows black/white hazard stripes (before: one ink ring) -
+  the brief's B/W collar. The limbs barely change: the redraw is mostly lit white, and the part print
+  (print_part, D4 limb wash; the sticker LOD at 32 px/m) keeps them paper with ink outlines, so only the
+  joint hubs go black. At 48 the torso is a little busier (black blots between the white plates). Kept, opt-in.
