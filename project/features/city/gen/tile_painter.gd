@@ -19,6 +19,8 @@ const PLAZA_SLOTS: Array[Vector2] = [Vector2(2.0, 2.0), Vector2(6.0, 3.5), Vecto
 const PLAZA_SHARE: float = 0.6
 const PLAZA_JITTER_M: float = 0.8
 const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
+## T1 lights its corners with street lamps: two diagonal corners take the inked lamp, the other
+## two keep a traffic light, each over the crossing (45 degrees).
 ## Square roofs: the 8 district buildings (14-21) are landmarks, LANDMARK_SHARE of the blocks;
 ## the rest take the 7 generic roofs (65-71). Lettered roofs (and the warehouse's 7) stay upright.
 const LANDMARK_SHARE: float = 0.3
@@ -71,12 +73,14 @@ func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 			return SimConst.T_INTER
 		return SimConst.T_ROAD_V if mx == 1 else SimConst.T_ROAD_H
 	# rounded kerb corner: sidewalk in the corner that touches the block diagonal
-	var rot: float = CORNER_ROT[(mx >> 1) + 2 * (my >> 1)]
+	var k: int = (mx >> 1) + 2 * (my >> 1)
+	var rot: float = CORNER_ROT[k]
 	b.add(ChunkBuild.L_GROUND, 10, c, deg_to_rad(rot))
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_PARK)
 	var s: Vector2 = Vector2(o.x if mx == 0 else o.x + 5.0, o.y if my == 0 else o.y + 5.0)
 	b.stamp(Rect2(s, Vector2(3, 3)), SimConst.C_WALK)
-	b.add(ChunkBuild.L_PROP, T_TRAFFIC_LIGHT, s + Vector2(1.5, 1.5), deg_to_rad(rot + 45.0), true)
+	var post: int = KerbDresser.T_LAMP if k == 0 or k == 3 else T_TRAFFIC_LIGHT
+	b.add(ChunkBuild.L_PROP, post, s + Vector2(1.5, 1.5), deg_to_rad(rot + 45.0), true)
 	b.chunk.dens_ped[local_index(t)] = int(90 * b.district)
 	return SimConst.T_CORNER
 
