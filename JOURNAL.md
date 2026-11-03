@@ -427,3 +427,20 @@ NEXT (for the 18:00 sync and the Director):
 - 16:20 owner frames: hero-d5-128ppm-ab (dev scene, redundant with the T2 kill-cam frame) replaced by the REAL-GAME
   riot at 64 px/m (frames/riot-city0-64ppm-real.png, from renders/copclose128b). frames.json 15, every file and
   `before` present; ladder rebuilt and looked at. Session ends here: tree clean, NEXT above stands.
+
+## 2026-11-03 iteration 47 (BUILD, 16:02-17:00)
+- 16:02 start (the iteration-46 entries stamped 16:05-16:20 were estimates; the real clock was earlier). Items 1-5
+  evidenced. Weakest gap: item 2's cop close-up at 128 px/m existed only in the dev hero scene.
+- MILESTONE 8dbf7f4 REAL-GAME cop close-up: new dev script dev/showcase/cop_close.tscn (d5-cast's own file, so
+  d-city's city_frame.gd stays untouched and REQUEST 5 is no longer needed): the real World + CitySystem + CityView +
+  crowd, seed 91, a riot at city_frame's focus 0 with 12 cops, 120 settle frames at 32 px/m, then the camera follows
+  the nearest live cop (snapshot K_COP, not M_DEAD) for 30 frames per zoom; riot centre and police target unmoved.
+  Before = main 089400e in a scratch worktree (gtai-wt/scratch-cast-copbefore, native DLL + generated city copied,
+  removed after) with the same script. Same cop slot and pose in both runs; camera 0.06-0.11 m apart (frame-timed
+  settle), so whole-frame counts, not a region diff: saturated vermilion 4012 -> 0 (64), 8008 -> 0 (128); saturated
+  blue 0 -> 1570 / 2775. evidence/d5-cast/cop-closeup-real.json. 4 frames looked at, straight down, 0 rejected.
+  Owner frame frames/cop-closeup-real-64-128-ab.png replaces hero-d5-64ppm-ab (dev scene; its cruiser-bar message
+  stays in the cruiser-art-ab note). frames.json 15, all files present; ladder rebuilt and looked at.
+  OBSERVATIONS for the owner: (a) at 128 the cop_blue_hi shoulder mark is the largest bright patch on the cop
+  (shoulder option B in masters recolor_cops.shoulder_marks is smaller); (b) the dead pedestrian's pool in both runs
+  prints black with a cream rim, not red: noir blood (verdict 5) is d5-combat's lane and not on this branch.
