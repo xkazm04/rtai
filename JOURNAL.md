@@ -98,3 +98,38 @@
   checkpoint / Quit (Quest1Game.restart drops the session and resumes); the input scenario
   checks Retry resumes b4-dock. (Death itself respawns at the Toner Room before the quest
   can see it, so rivet_wasted does not end the run.)
+- NOTE: the timestamps on the 11:00-11:12 entries above were estimates written ahead of the
+  clock; the real times were ~10:52-10:59. The clip v2 finished 11:02, the last commit 11:03.
+- 11:04 objective edge arrow fixed (it sat on the beat panel and read backwards); re-exported;
+  exe replays the input log identical. Clip v2 (`quest1-input-run-32ppm-v2.mp4`, current state:
+  blue cops, hints, base-form Rivet) recorded; frames.json 11 entries + ladder.png refreshed.
+  Frames looked at: every still listed in frames.json + clip v2 frame 700; 0 camera breaks,
+  0 rejected. One frame set was re-rendered after a broken script (see FRICTION).
+
+## State at the end of iteration 1 (HEAD after 0a8fda3)
+- Exe: `build/export/windows/RTAI.exe` (git-ignored; rebuild with the export command in
+  project/boot/README.md). Title -> quest 1 -> paid with keyboard+mouse or a pad; Esc pause
+  with volume / reduced motion / rebinding; beat checkpoints + Continue; failed card + Retry.
+- Brief items: 1 DONE (input table, controller, replay-safe); 2 PARTIAL (the quest HUD
+  (boot/collect_call/view/hud_view.gd, d4 art, real state) kept, cop-blue pips, soul cards not
+  drawn; not moved into features/hud); 3 PARTIAL (whispers beat-cued DONE, checkpoints DONE,
+  respawn existed; the REAL ARENA is NOT done: quest 1 still plays on the invented arena with
+  no collisions); 4 DONE (exe, title card, input scenario, clip = scripted pad, not human);
+  5 PARTIAL (pause + settings DONE; per-control prompts are folded into the objective hints).
+- NOT measured: performance (no bench this iteration; the slice adds no city cost).
+  A human has NOT played the exe yet: every input-path proof is the scripted pad.
+
+NEXT:
+1. Run the exe by hand once (keyboard+mouse) end to end; fix whatever a human trips on
+   (meet reach, aiming at Mertz's vent window, the walk distances).
+2. Quest 1 in the real city (brief item 3, the big one): place the stage's markers on the
+   generated city (CitySystem + CityView under Quest1Session), with collisions, so the owner
+   plays in the D4/D5 city rather than the invented arena. Needs: a marker map from
+   collect_call_places.json to city coordinates (d5-city?) and the city's walk collision.
+3. After the merge: the World hookup for LiveInput (MERGE NOTE above) and StagePilot's car
+   press -> VehicleService.try_enter/exit once quest 1 runs in the city.
+4. Re-capture cast_rivet.png from d5-cast's base form when it merges; set RIVET_FORM_K = 1.0.
+5. Move HudView/ObjectiveView into features/hud (scope) and load art by id from a table.
+6. dev/frames/quest1_clip: fail with a non-zero exit when a script error is logged.
+- FRICTION: editing JOURNAL.md while tools/evidence/run.mjs ran failed its "tree changed during
+  run" guard (unit tests themselves 339/339). Re-ran the gate with the tree untouched.
