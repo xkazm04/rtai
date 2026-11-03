@@ -1377,3 +1377,14 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 07:36: tree clean, scratch log removed. The Godot processes running at session end are the noir lane's showcase render and n-d5's scenarios (checked by command line), not mine; left alone.
+
+## Iteration 22 (07:33-07:36, STABILIZE, past freeze)
+- No features, no code change. `project/`, `tools/`, `native/` are byte-identical between 8bd2ec0 (the
+  iteration 21 evidence stamp) and HEAD 239ee56 (only JOURNAL.md + evidence/pof since), so evidence/pof at
+  8bd2ec0 (all PASS) still describes this build. Not re-run: a fresh run would only move the stamp onto a
+  journal-only commit. Lint re-checked at HEAD: 13/13 pass over 221 files.
+- Tally: frames rejected 0, approaches rejected 0, no AI images -> no provenance, no visual change -> no
+  ladder row, no Godot started (the 2 Godot processes running, PIDs 27216 / 30020, are not mine; left alone).
+NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
+on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
+- Session end 07:36: tree clean after commit, no scratch.
