@@ -383,7 +383,7 @@ NEXT (iteration 3, in order):
   breaks. No new AI images (one provenance line for the packed wreck atlas). Bench 1 run (lock).
 
 NEXT (iteration 5, in order):
-1. (done 16:36, see below) A night clip of the burning wrecks if the owner likes carnage-night-v1.
+1. (done 16:36 / 16:39, see below)
 2. REQUEST 7 / 8 answers (D5 fireball kind, burning-wreck crackle) are one-line consumers here.
 3. Fire as gameplay (stretch): a person or Rivet standing in a burning wreck's fire takes damage,
    a burning wreck can set the car it touches alight (chain wrecks). Sim-side, so: the service step,
@@ -399,6 +399,10 @@ NEXT (iteration 5, in order):
   import, captured, `git restore`d: carnage-v13-noatlas (the old lavender d2 wreck) vs carnage-v13
   at 2400 = NEXT 1 done; crop-burnt-2400.png; frames.json 2400 entry now has its before. 21 more
   frames, 0 rejected, 0 camera breaks.
-- Session end 16:40: tree clean after this commit, no Godot process of mine left, bench lock not
+- 16:39 carnage-night-20s-48ppm-v1.mp4 (20.0 s, `--clip --grade=night`, CONTENDED capture, 287
+  frames at 14.35 fps = real time): headlight cones, street lamps, and after the blast the two
+  burning wrecks glow vermilion / paper. Sheet clip-carnage-night-v1-sheet.png (32 frames): 0
+  camera breaks. Linked from the night frame entry (frames.json stays 15). Scratch deleted.
+- Session end 16:41: tree clean after this commit, no Godot process of mine left, bench lock not
   held, scratch deleted. Masters: gtai-masters/day-d5/vehicles (frames.json 15, ladder.png 1280 x
   8364, carnage-20s-48ppm-v3.mp4, crop-fire-v12.png, crop-wreck-v13.png, build_wreck_atlas.py).
