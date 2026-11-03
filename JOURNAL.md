@@ -303,3 +303,13 @@ NEXT (night run, after the 00:00 merge), in order:
    (residue_s 2 on the pad only, via station data once the hook reads per-station tuning).
 4. The Hauler in the arena pit (`--start=pit`: the pit's waves are hostiles; the pad bots are dummies).
 5. Bench the city-path blood (riot scene) when bench.lock is free.
+
+## Iteration 7 (23:20-23:30, BUILD, 10 min before freeze)
+- answers.json re-read 23:20: nothing new for ghost-powers (ghost-powers-1/2 stay placeholders until a real-time
+  clip in the final look). Tree clean at e0a6f42; gates as of iteration 6: lint 13/13, unit 570/570 alone, scenarios 20/20.
+- Too short for a feature. REQUEST 4 made concrete: evidence/ghost-powers/request4-per-worktree-scratch.patch
+  (SaveKit.SCRATCH derived from a hash of the worktree's res:// path; test_save_facade ROOT follows it). NOT applied:
+  tests/support is shared, and it is freeze time. Unverified (not parsed or run); the night run applies it, then
+  runs `--check-only` and the unit gate.
+
+NEXT (night run, after the 00:00 merge): unchanged from iteration 6, item 1 now has a patch to start from.

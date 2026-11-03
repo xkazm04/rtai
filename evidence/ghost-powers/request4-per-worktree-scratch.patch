@@ -1,0 +1,15 @@
+# REQUEST 4 proposal (ghost-powers, 23:22, NOT applied: tests/support is not this lane's scope).
+# Gives every worktree its own save-test scratch dir, so parallel lanes stop clobbering user://test_save.
+# SCRATCH becomes a var derived from a hash of the worktree's res:// absolute path.
+--- a/project/tests/support/save_kit.gd
++++ b/project/tests/support/save_kit.gd
+@@
+-const SCRATCH: String = "user://test_save"
++static var SCRATCH: String = (
++	"user://test_save_%08x" % (ProjectSettings.globalize_path("res://").hash() & 0xFFFFFFFF)
++)
+--- a/project/tests/unit/test_save_facade.gd
++++ b/project/tests/unit/test_save_facade.gd
+@@
+-const ROOT: String = "user://test_save/facade"
++var ROOT: String = SaveKit.SCRATCH.path_join("facade")
