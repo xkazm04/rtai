@@ -111,3 +111,11 @@
   5 m/s) and judge it in a 32 px/m clip against the hips A/B. Footfalls stay world-planted (no
   skating by construction); check the cadence still reads natural. If the look is a fork, ASK it
   (rivet-motion-2: stride 1.0 / 1.3 / 1.6 clips).
+- 21:21 ASK rivet-motion-2 (stride 1.0 / 1.3 / 1.6, default B = 1.3). Clips:
+  `clips/stride-1.0-vs-{1.3,1.6}-{32,96}ppm.mp4`; strafe_clip gained `--stride=<k>`.
+  The default is NOT applied yet: next iteration sets `p.gait_scale` in RivetPlan from the
+  answer (one line).
+- frames.json: 12 entries.
+- NEXT (first thing in iteration 2): answers.json -> apply rivet-motion-1/2. Then the order is
+  the shock rig pose + clip, sprint + roll (PlayerMotion), the arena station file, then melee
+  weapons (baton, katana).

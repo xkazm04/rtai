@@ -16,6 +16,8 @@ const SPOTS: Array[Vector2] = [Vector2(-4.7, 1.2), Vector2(2.3, 1.2)]
 const LEGS: Array[Vector2] = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
 
 var zoom: float = 1.5
+## > 0: the stride A/B instead (both with hips; left gait_scale 1.0, right this value).
+var stride_k: float = 0.0
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
@@ -41,7 +43,9 @@ func _ready() -> void:
 	_post.add_child(rect)
 	for i: int in 2:
 		var plan: BodyPlan = RivetPlan.build()
-		plan.hip_follow = 0.0 if i == 0 else 1.0
+		plan.hip_follow = 0.0 if i == 0 and stride_k <= 0.0 else 1.0
+		if stride_k > 0.0 and i == 1:
+			plan.gait_scale = stride_k
 		var rig: CutRig = CutRig.new()
 		_actors.add_child(rig)
 		rig.setup(plan, RigVariant.rivet())
