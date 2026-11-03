@@ -66,7 +66,10 @@ func _run() -> void:
 	await _settle()
 	await _save("paid")
 	Log.info("clip", "saved %d clip frames at %d px/m, tick %d" % [_frame, px_per_m, s.tick()])
-	get_tree().quit(0)
+	if get_tree().has_method(&"finish"):
+		get_tree().call(&"finish")
+	else:
+		get_tree().quit(0)
 
 
 func _keep(beat: String) -> bool:

@@ -7,6 +7,10 @@ extends SceneTree
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--stills"]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
+const COUNTER: String = "res://tests/support/error_counter.gd"
+
+## Counts engine/script errors during the capture; finish() exits 1 when there were any.
+var _errors: Logger = null
 
 
 func _initialize() -> void:
@@ -23,6 +27,12 @@ func _initialize() -> void:
 		printerr("quest1_clip: needs --out=<writable dir>")
 		quit(2)
 		return
+	var counter: GDScript = load(COUNTER) as GDScript
+	if counter != null and counter.can_instantiate():
+		var made: Object = counter.new()
+		if made is Logger:
+			_errors = made
+			OS.add_logger(_errors)
 	var script: GDScript = load(RECORDER) as GDScript
 	if script == null or not script.can_instantiate():
 		printerr("quest1_clip: %s does not compile" % RECORDER)
@@ -38,3 +48,15 @@ func _initialize() -> void:
 		stills.append(t.to_int())
 	rec.set("stills", stills)
 	root.add_child(rec)
+
+
+## Called by the recorder when it is done: 0, or 1 when any engine/script error was logged.
+func finish() -> void:
+	var count: int = 0
+	if _errors != null:
+		var n: Variant = _errors.call(&"count")
+		count = n if n is int else 0
+		OS.remove_logger(_errors)
+	if count > 0:
+		printerr("quest1_clip: %d engine/script error(s) during the capture" % count)
+	quit(1 if count > 0 else 0)

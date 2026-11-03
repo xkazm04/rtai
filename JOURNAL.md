@@ -139,3 +139,6 @@ NEXT:
   goldens 11/11. Copied to evidence/slice-play/. Exe built at 0a8fda3 (code identical to HEAD).
 - 11:12 scenario_quest1_keys: the keyboard path (the move_* and interact actions' InputEventKeys,
   digital): Rivet walks to the dumpster in 48 ticks and E hides him. Scenarios 10/10.
+- 11:16 dev/frames/quest1_clip now exits 1 when any engine/script error is logged during a
+  capture (tests/support ErrorCounter as a Logger); clean run 0, planted push_error -> 1
+  ("10 engine/script error(s)"), plant reverted. Closes NEXT 6 / the FRICTION above.
