@@ -1301,3 +1301,12 @@ night_iter7_summary.png and the iteration-7 order.
   tan under the hatch, the fist's cream blotches read as peeling mural paint. Kept. Tree checked after the plate build.
 - 05:33 Board evidence/night_iter9_summary.png (mock / committed / v8 / v9 at 32; v9 48, 64; arena 128 a32v9; concept).
 - 05:34 FIX: two journal times above had been written ahead of the clock (05:36 / 05:37 at 05:33); corrected.
+- 05:37 REJECTED (gap 3, package only, never committed): derived D5 plates for the roofs with no Codex plate
+  (warehouse, long, helipad = D4 art + the membrane tone; build_roofs.py D5_ROOF_DERIVE=1, files written and deleted
+  with their .import by package_shot.sh; tree checked after every round). Seen at 64 in the arena, the warehouse "7"
+  and long roofs stay D4 cream beside the toned OSHA, so I tried it. a33der (with the b plates' line gamma 0.6): at 32
+  the derived roofs print darker and busier than their D5 neighbours. a34der (lines as drawn): per-roof at 32 (arena
+  boxes, masters work/i9): warehouse mid 0.25 -> 0.13, dark 0.38 -> 0.47; long mid 0.15 -> 0.10 (OSHA / tall D5 plates
+  0.19 / 0.21). Under the thin print those D4 roofs ALREADY print mid-heavy; the tone moves them away from their D5
+  neighbours. The cream I saw at 64 misled me; the numbers say no. package_shot.sh keeps D5_ROOF_DERIVE=0 (i9v9b = i9mot
+  0 px at 32-128, deleted). Scratch deleted: i9der, a33der.
