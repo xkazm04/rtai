@@ -237,3 +237,18 @@ vehicles: cruiser accents cop_blue).
   share a plate; 27/32/32 over 256 blocks). city_frame focus 9. evidence/d5-city/25-big-roof-c/.
   Codex used today: 3.
 - Proof: masters ladder.png = ladder-i5 (6 foci, row 6 = the 2 x 2 block), frames.json 15 entries.
+- MILESTONE 16:15 evidence at 9df230f on a clean tree (--no-bench; bench taken 16:00, 24-bench-end):
+  lint, unit 335, scenarios 8, parity (1200 steps + mutation caught), selftest PASS (goldens 11/11
+  worst 0.78, block 5/5, 81 textures, world lock 0 %). evidence/d5-city/evidence-9df230f/.
+
+## NEXT (after iteration 5, 16:15)
+Branch d-city at the commit after 9df230f; all gates PASS there. Proof: masters ladder.png (6 foci) +
+frames.json (15), evidence/d5-city/README.md index (add 22-25 if not yet).
+1. OWNER CALLS at 18:00: road width ~17 m vs T1 ~10 m (11-road-width-mock); keep plazas (12%)?;
+   2 x 2 roof share 35% (raise toward T1, where nearly every building is that coarse?).
+2. Overlay cost at 32 px/m is +0.9 ms twice (2-3x 48 px/m): profile idle (crowd under the
+   BackBufferCopy?). 64 px/m number of 16:02 is contaminated; re-measure idle.
+3. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13).
+4. More T1-scale plates (Codex budget: 3 of ~30 used): a 2 x 1 (16.4 x 8.2 m) for the long-building
+   slots, so 8.4 m roofs stop dominating; same layout-template + fit_roof.py route.
+REQUESTS 1-4 still stand (d5-cast cop_blue rigs/atlas; d5-combat blood names; vehicles cruiser).
