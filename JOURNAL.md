@@ -208,3 +208,31 @@ NEXT (iteration 4; depth before breadth, the Hauler is the one finished power):
   city_view.actor_layer() with city_view.world_px. Not done here (known open on main, not this lane's file).
 - Registry applied (realtime-combat-semantics / combat-pacing): the impact is render feel only (hit-stop holds
   wall time, never the sim's tick math), one stop per stomp with the camera.json cooldown, scaled by reduced motion.
+- MILESTONE cfc5ce0: quest 1's CITY path bleeds (REQUEST 3 done here after all: no other lane touches
+  collect_call_view.gd, checked e-arena/e-gunplay/e-enemy/e-motion/e-fixes): CombatBlood + CorpseStains mount on
+  the CityView's actor layer, stepped with city_view.world_px (one frame stale: the CityView child places its camera
+  after this view's _process; a 1-frame print-grain lag on the blood while panning, not visible in the clips).
+  So quest 1 on the generated city and the arena's city block bleed on every kill, not only the Hauler's.
+  Render only; no bench this iteration (bench.lock held by visual-fixes at 22:37) -> the city-path blood cost is
+  UNMEASURED (the d5-combat riot budget for CombatBlood is the reference).
+- MILESTONE 1f2b02a: quest_hauler_rec's outer guards stand on the ram's line: the ram connects (before: 0 ram hits).
+- MILESTONE 4de62b2: a ram hit lands with its own hit-stop (kill, 6 ticks) and shake (hit, 4 px), powers.json
+  ram_hitstop / ram_shake; the camera.json cooldown (20 ticks) keeps a ram burst to one stop. Unit 4/4.
+- Numbers (headline clip clips/quest-hauler-ram2/, 32 and 48 px/m, 60 fps, bound input): 1 activation, 2 stomps
+  (4 hits), 2 ram hits, 6 kills per activation, 25 held frames, time transformed = the whole 5.9 s run
+  (the tank's duration outlasts the clip). Gates at 4de62b2: lint 13/13, unit 567/567, scenarios 20/20
+  (evidence/ghost-powers/*-iter4c.txt). frames.json 15 entries, headline = the ram2 clip.
+
+NEXT (iteration 5 / the night run after the 00:00 merge):
+1. Re-read answers.json. Re-ask only with a real-time clip in the final look (Rivet's rig as the tank in the
+   playable view + cast-rig victims with reactions).
+2. After the merge: run the arena with `--start=pad` (e-arena) and capture the Hauler on the pad: StagePilot.hauler
+   is live there, the printed-path kick (PrintStage.kick_px) and blood are wired. Check the hauler_pad bots get hit
+   (they are ArenaStage hostiles? if they are station dummies, HaulerStage only hits arena.hostiles: hook them).
+3. Gearbox ArenaHook (features/souls/gearbox_arena_hook.gd extends ArenaHook, `script` on gearbox_pad): setup()
+   builds SoulPowers + GearboxLink, step() picks from stage.cars() and soul_hijack(id) (e-arena 92e467e API).
+4. The tank on Rivet's RIG in the playable view (rivet-motion's rig in the quest/arena view): HaulerLook.apply
+   with the slam pose instead of the scaled capture.
+5. Victims with reactions: the quest guards -> cast rigs (enemy-ai's EnemyRigFeed: flinch, knockdown, death);
+   robots get sparks/oil from CombatBlood (robots never bleed). A real stomp sound (audio cue row).
+6. Bench the city-path blood (riot scene) when bench.lock is free.
