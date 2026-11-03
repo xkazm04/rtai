@@ -70,6 +70,7 @@ tick count, no RNG.
 | `item40_d4_roof_lines.png` | iteration 7, PROPOSAL for d4-production: the D4 roofs with heavier lines (k 1.0) under the package, D4 tier 32 px/m x2: h106 / package / package + heavier lines (solid ink 0.13 / 0.07 / 0.11, mock 0.12) |
 | `item41_roof_rule_option.png` | iteration 7, OPTION (not in the package): the ruled roof hatch under the thin print: the mock's diagonal membrane hatch at 32 px/m, but mechanical at 64 (across the OSHA sign plate). Needs a membrane mask + a zoom fade |
 | `item42_roof_rule_fade.png` | iteration 7 (kept, in the package): the ruled roof hatch as zoom-fading overlays (`features/city/art/d5/roofs/rule/`, on with the thin print, gone at 64 px/m), h117pkg vs h124rf at 32 x2 and 48 + the mock roof |
+| `item43_fringe_owner_ab.png` | iteration 8, OWNER A/B: look_d5_part `fringe_k` (the concept's off-register vermilion along each part's down-right edge, dried 0.2, fading in 64 -> 96 px/m) off vs on at 64 / 96 / 128 px/m (hero + arena kill-cam) beside the concept; pure vermilion unchanged, red-lead share 0.018 -> 0.030 (concept 0.039). Not default |
 | `night_iter7_summary.png` | ONE SCREEN for the morning, iteration 7: h98b / h106 / h124rf at 32 px/m, the mock, h124rf at 48, the arena kill-cam with every proposal, the concept, + the per-tone-class table |
 | `ladder.png` | the night's iterations, including the reverted ones |
 

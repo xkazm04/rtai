@@ -1074,13 +1074,13 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   offsets vermilion that is already in the art (the collar, rust), so the concept's red misprint along EVERY
   segment's edge (work/i8/concept_leg.png) is missing.
 - 04:17 control h125 (default shader + new code at fringe_k 0) = h106 at 32-128 (0 px).
-- 04:20 REJECTED h126fr8 (band 2.5 screen px past mis_px, k 0.8): 1009-1043 px, invisible by eye: the art's ~7 part px
+- 04:19 REJECTED h126fr8 (band 2.5 screen px past mis_px, k 0.8): 1009-1043 px, invisible by eye: the art's ~7 part px
   outline (measured over the rivet parts) eats the band. REJECTED h127fr10 (5 screen px, k 1): visible at 64 but
   blotchy, and at 128 the outline (thicker in screen px) still eats it -> the band must be sized in PART px.
   REJECTED h128fa (14 part px, print-space direction, dry 0.2, k 0.9): faint everywhere.
-- 04:30 h129fa22 (22 part px, k 1): at 128 the forearm / shoulder plates carry the concept's rust-red edge misprint;
+- 04:21 h129fa22 (22 part px, k 1): at 128 the forearm / shoulder plates carry the concept's rust-red edge misprint;
   at 64 Rivet's red-lead share doubles (0.016 -> 0.029) and it is busy next to the collar -> fade it in by zoom.
-- 04:36 MILESTONE (3f66c09, OPTION default 0): look_d5_part fringe_k / fringe_art 22 / fringe_fade (px_scale 0.2 ->
+- 04:22 MILESTONE (3f66c09, OPTION default 0): look_d5_part fringe_k / fringe_art 22 / fringe_fade (px_scale 0.2 ->
   0.3 = 64 -> 96 px/m) / fringe_dry 0.2; params JSON "part" + _doc (unit test: keys are uniforms, 149/0; lint 13/13).
   Default frames: h125 = h106, a20 = a16 (0 px at 32-128). With fringe_k 1: hero h130ff 0/0/0/3442/5765 px at
   32/48/64/96/128, arena a20ff 0/0/0/2862/3899. Fade sweep (temporary zoom list 64-96, restored, tree checked):
@@ -1089,3 +1089,5 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   unchanged 0.0055-0.0062: the collar stays the only pure vermilion; King is a plain sprite (unchanged); cops'
   steel parts get it too (gloves/guns: by eye negligible). By eye closer to the concept up close; a doctrine/taste
   call (more red on the hero), so OWNER A/B, not default. Board evidence/item43_fringe_owner_ab.png; ladder row.
+- 04:24 CORRECTION: the three entries above first carried 04:20 / 04:30 / 04:36 and the ladder row "04:40", written
+  ahead of the clock (the same mistake as iteration 7). Times fixed to the shell clock; the ladder row re-added.
