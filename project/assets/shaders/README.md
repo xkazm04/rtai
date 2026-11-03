@@ -2,6 +2,13 @@
 
 Shared shaders.
 
+## grade_ink.gdshader (the time-of-day grade)
+
+The `light` canvas' `grade` rect (core/render/light_layer.gd). Reads the screen (`hint_screen_texture`)
+and re-prints it at luminance `paper_level * l^gamma`, hue kept; accent pixels (palette gates) keep
+`accent_keep` of their value. Uniforms come from a lights.json `grades` row (+ the palette gates);
+`day` is the identity and hides the rect. See core/render/README.md "The 2D light model".
+
 ## D4 "Ink and Hatch" print pass (F-08)
 
 The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
@@ -32,10 +39,3 @@ The slice look (owner decision 2026-11-02: D4 hybrid; fallback D3 Clear Line).
 - Ported from the spike's art-direction study (`gtai-spike/evolve/project-artdir`, `look.gdshader` mode 5 and
   `look_item.gdshader` mode 5, commit `821a3e7`) and tuned in the F-08 crop tests: `grime` 0.30, `wash_mid` 0.90,
   `step_hi` 0.84, `line_ink` 0.86; the item pass's shadows are a flat tint instead of the study's dot screen.
-
-## grade_ink.gdshader (the time-of-day grade)
-
-The `light` canvas' `grade` rect (core/render/light_layer.gd). Reads the screen (`hint_screen_texture`)
-and re-prints it at luminance `paper_level * l^gamma`, hue kept; accent pixels (palette gates) keep
-`accent_keep` of their value. Uniforms come from a lights.json `grades` row (+ the palette gates);
-`day` is the identity and hides the rect. See core/render/README.md "The 2D light model".
