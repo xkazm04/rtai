@@ -25,7 +25,7 @@ uniform float alpha_cut = 0.45;
 uniform float grime = 0.10;        // dry-brush grime blotches
 uniform float ink_at = 0.74;       // density above which the (mip-softened) pen lines print solid ink
 uniform float plate_lod = 5.0;     // mip level at which a vermilion PLATE (the collar) is still vermilion
-uniform float rust_dry = 0.42;     // rust prints as vermilion mixed this far toward ink
+uniform float rust_dry = 0.55;     // rust prints as vermilion mixed this far toward ink
 uniform float rust_lod = 3.0;      // mip level the rust must survive at (kills isolated specks: no shimmer)
 uniform float shade_px = 8.0;     // width of the hatched shadow band on each part's lower-right edge, screen px
 uniform float shade_k = 0.26;     // stroke coverage in that band (0 = off)

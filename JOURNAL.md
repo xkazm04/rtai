@@ -439,3 +439,8 @@ NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (
   Mean L: concept 0.274 / D4 0.460 / 0.477 / D5 0.449 / 0.471: both far (the lavender steel, owner choice item9).
   HF is not comparable (our mask includes the cream sticker rim and outline). Supports the eye judgement on rust and
   print, not on tone.
+- 01:12 MILESTONE item 1: drier rust (rust_dry 0.42 -> 0.55, shader + params json; h73). Red-lead share on Rivet at
+  64/96: 0.097/0.106 -> 0.088/0.098 (concept 0.079). Pure-vermilion px 729 -> 455 at 64: that is RUST leaving the
+  pure gate (a 0.42 mix has red lead ~88 > 70, a 0.55 mix ~68), the collar plates print VERM unchanged; by eye the
+  collar now stands out more against drier rust. dL 0.1709 -> 0.1692 (D4 0.161). 0 px at 32/48 and in the d4 tier.
+  Board evidence/item1d_rust_dry.png; hero frames = h73; ladder +1 row.
