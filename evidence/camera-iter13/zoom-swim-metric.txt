@@ -1,0 +1,7 @@
+zoom-ease print swim, block site, 3 consecutive tick pairs 44.0->45.3->46.7->48.0 px/m; frame k warped onto k+1 (pure zoom about the centre); low-pass sigma; street x430-1000 y60-660; mean of pixels below the 80th percentile (drops actors)
+sigma  3 before 1.864 1.792 1.636 mean 1.764
+sigma  3 after  0.959 0.909 0.802 mean 0.890
+sigma  6 before 1.578 1.516 1.400 mean 1.498
+sigma  6 after  0.744 0.687 0.572 mean 0.668
+sigma 10 before 1.227 1.191 1.196 mean 1.205
+sigma 10 after  0.584 0.542 0.488 mean 0.538

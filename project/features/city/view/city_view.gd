@@ -54,6 +54,8 @@ var _look_mat: ShaderMaterial = ShaderMaterial.new()
 var _item_mat: ShaderMaterial = ShaderMaterial.new()
 var _actors: CanvasLayer = null
 var _overlays: Array[LookOverlay] = []
+var _print_off: Vector2 = Vector2.ZERO
+var _print_zoom: float = -1.0
 
 
 func setup(city: CitySystem) -> void:
@@ -131,7 +133,7 @@ func _place_camera(focus: Vector2) -> void:
 	camera.position = focus * SimConst.PX_PER_M + offset
 	fx_triggers.rig = rig
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
-	world_px = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
+	world_px = _print_px() - get_viewport_rect().size * 0.5
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	if crowd.car_print != null:
 		crowd.car_print.set_shader_parameter(&"world_px", world_px)
@@ -144,6 +146,17 @@ func _place_camera(focus: Vector2) -> void:
 	fx.ground.step(tick, world_px)
 	markers.step(tick)
 	_look_mat.set_shader_parameter(&"world_px", world_px)
+
+
+## The print coordinate of the screen centre. A point X prints at X * zoom, so a rig zoom ease
+## slid the print by X * dz a tick (the grime swam). Each rig zoom step moves an offset by
+## -camera * dz: the centre keeps its print, pans stay world-locked (README, camera feel).
+## No rig (selftests, goldens): offset 0, bit-identical.
+func _print_px() -> Vector2:
+	if rig != null and _print_zoom > 0.0 and zoom != _print_zoom:
+		_print_off -= camera.position * (zoom - _print_zoom)
+	_print_zoom = zoom
+	return (camera.position * zoom + _print_off).round()
 
 
 func _build_layers() -> void:

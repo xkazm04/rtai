@@ -351,6 +351,15 @@ with the world and never swim on a pan. Two checks: `test_shader_world_lock` (un
 at 32 / 48 / 64 px/m; the frame must move rigidly, max 0.5 % of the overlap differing; 0.00 % on
 2026-11-03, 0.60 / 0.23 / 0.52 % before the fix, 43 / 37 / 45 % with `--plant-unlocked`).
 
+Zoom: a world point X prints at `X * zoom`, so while the rig eased the zoom the print slid by `X * dz` a
+tick (~600 px at the block: the grime blotches and hatch re-rolled every tick of a 32 / 48 / 64 ease).
+`CityView._print_px()` keeps an offset that moves by `-camera * dz` on each rig zoom step: the screen
+centre keeps its print, the edges slide a few px a tick, pans stay exactly locked; with no rig the offset
+is 0 (selftests and goldens bit-identical). Measured (`gtai-masters/night/visual-engine/43-zoom-swim`,
+`swim_metric.txt`: consecutive mid-ease ticks warped onto each other, street, low-passed): residual
+1.76 -> 0.89 (sigma 3), 1.50 -> 0.67 (6), 1.21 -> 0.54 (10). The 1 px grain still re-rolls during an
+ease (any slide > 1 px does; constant-screen-size grain cannot avoid it); it settles when the ease ends.
+
 ## Per-pass cost (2026-11-02, RTX 4090 / 7800X3D, debug editor binary unless noted)
 
 `dev/selftest/pass_cost.gd` measures the GPU cost of each pass in the real riot frame: interleaved
