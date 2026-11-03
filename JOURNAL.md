@@ -1572,3 +1572,33 @@ NEXT: 41 (snap the world camera, then the thin print), 38 (portraits through loo
 rule for D5 plates), 42 (re-measure motion claims sub-pixel), on top of 35-37 (iteration 9), 31-34, 27-30.
 Morning reading order: night_iter10_summary.png -> item53 -> item50 / item50b -> item52 -> item51, then
 night_iter9_summary.png -> item48 -> item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47.
+
+## Iteration 11 (2026-11-03, BUILD, 06:45 -> freeze 07:30), no image budget (50/50): NEXT 42 + the rig shadow
+- 06:45 read JOURNAL (iteration 10 close, NEXT 38-42), git log. Plan: NEXT 42 (re-measure motion claims under a
+  sub-pixel camera) for the shadows (item44-46), all in dev scenes; then whatever it turns up.
+- 06:48 MEASURED item44 prop shadows, 48 px/m car pan (d5_pan, 40 ticks), D5_PROP_SHADOW=0 as control: snapped
+  (i11n1 / i11n0) whole crop mc residual 0.00729 / 0.00737; SUB-PX (D5_SUBPX=1, i11s1 / i11s0) 0.02232 / 0.02240,
+  flip 0.0469 / 0.0471. Whole crop dilutes it (shadow ~3400 px of 153600), so per in-shadow px (mask = ON differs
+  from OFF): sub-px change 0.0216 vs 0.0213, flip>0.1 0.058 vs 0.045 (+0.013); snapped 0.0036 vs 0.0070 (the
+  shadow covers look_d4's screen grain). Reading: prop shadows hold sub-pixel, with a small extra flip.
+- 06:50 dev: d5_walk_run gained D5_WALK_FOLLOW=1 (camera follows Rivet, as the game) and D5_WALK_SHADOW=1 (the rig
+  shadow in the d5 series; the walk scene had none, so item46b was never measured in motion). FOUND: the rig
+  shadow's world-locked strokes crawl under the moving shadow (shower-door): in-shadow flip 0.436 vs 0.133 with no
+  shadow, change 0.133 vs 0.063 (fixed camera); sub-px follow 0.437 / 0.132: the camera adds nothing, the lock does.
+- 06:52 MILESTONE (67c27a6): rig-LOCKED strokes. look_d5_shadow `anchor` (default 0: buildings / props / kerbs 0 px
+  at every zoom, d4 tier 0 px); D5RigShadow one material per rig (built once per collect), anchor = the rig's
+  position set once per rig a frame. Walk: in-shadow flip 0.436 -> 0.184, change 0.133 -> 0.088 (fixed);
+  sub-px follow 0.437 -> 0.169. Stills hero / arena 64-128: same density, stroke phase only (looked at,
+  work/i11_ab_still.png, i11_ab_arena.png; no seams where two rigs' shadows meet). D5_RIG_SHADOW_LOCK=world
+  reproduces the old frames 0 px. Two fixes before commit: (1) a per-part set_shader_parameter put script sync at
+  0.40-0.48 ms vs 0.28 -> anchor once per rig + per-part material array; (2) materials created after the anchor
+  pass had anchor 0 on their first frame (64 px/m hero differed 5720 px from the A/B run) -> fixed: default frames
+  = the A/B run byte-exact (hero, arena 32-128, walk 40 ticks). Cost (d5_cost, 16 full rigs, 64 px/m): sync 0.30 /
+  0.33 ms rig vs 0.28 / 0.31 world (3 runs); GPU d5s - d5 inside noise (the unchanged d5 tier alone swings 0.16-0.34
+  ms between runs, so no GPU claim). Gates: lint 13/13, unit 149/0 (GODOT_BIN exported; without it the runner
+  prints exit -1, known friction), scenarios 8/0.
+- 06:59 Board evidence/item54_rig_shadow_lock.png (looked at); ladder row (07:00 item54). READMEs (a9a18b4). An
+  earlier draft board item54_shadows_subpx.png was superseded (prop shadow too small in its crop to see) and removed.
+- NEXT 42 walk claim, from the same runs (pan_cls whole crop, D5 tier minus D4 tier change): fixed camera +0.0082,
+  follow snapped +0.0117, follow sub-px +0.0122. The sub-pixel camera adds ~4%; following adds most (the D5 world
+  moving under the crop). d5_walk's claim holds sub-pixel.
