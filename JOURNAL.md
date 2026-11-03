@@ -154,3 +154,35 @@ NEXT (iteration 2, in order):
 - frames.json 14 entries (dropped 3 weaker drive frames for the wreck, the ejection, the yield
   pair); ladder.png rebuilt 1280 x 9242. Rejected today: 41 of 87 frames (all input-plan faults,
   0 camera breaks).
+- CORRECTION to the 11:41 count: frames captured today 125 (54 iteration 1, 21 carnage-v3, 21
+  carnage-v4, 21 carnage-v5, 8 yield); rejected 41 (20 input race, 21 carnage-v3 roof walk);
+  carnage-v5 deleted as a duplicate of v4 (same deterministic ticks, nothing new: the rammer is a
+  patrol cruiser and police ignore obstacles by design). 0 camera breaks.
+- MILESTONE 11:44 run-over -> blood VERIFIED in a scratch merge d-vehicles + d-combat (local
+  worktree, merge was clean apart from JOURNAL.md; deleted afterwards): drive route tick 205 shows
+  red blood at the impact, the body slid on (runover-merged-combat/205 vs frames-v2/205).
+  actor_killed stays combat's: events.json says the damage chokepoint is the only emitter, so
+  vehicles does NOT emit it (REQUEST 2 stays open for quest facts / kill hit-stop / heat).
+- MILESTONE 11:46 1e737c8 steering slew: per-archetype steer_in_s (0.14 hatchback .. 0.26 van /
+  ambulance), release and counter-steer 2x faster; the wheel is replay state. golden path
+  steering-feel-profile-shaping APPLIED (was deferred in iteration 1 for want of live input;
+  slice-play's LiveInput now gives digital full lock). decisions.md line. Unit 353.
+- FRICTION 11:45 test_noir_shadows failed once ("Parameter t is null", engine error), passed on
+  the re-run with no change: the flake the audio lane also saw. Not vehicles' code.
+- MILESTONE 11:50 75ee599 tyre marks (VehicleSkids, render only, VehicleView's child under the
+  shadows): both rear wheels lay inked dashes while a car slides above 4 m/s; ring of 480, oldest
+  fade. Frames skids-v1 (375 slide, 440 recover). Unit 356.
+- 11:53 carnage-20s-48ppm.mp4 (20.03 s, CONTENDED: one frame per 4 ticks at 15 fps = real time):
+  hijack, rams with sparks/debris + crash shake, the explosion, ejection to 32 px/m, the pile-up.
+  Contact sheet (every 10th frame): 0 camera breaks. Temp PNGs deleted.
+- Item 4 (heat): the hook is the events (vehicle_hijacked, pedestrian_struck); HeatMeter.raise_by()
+  exists (features/police) but only the collect-call stage builds one, and "a human saw it" is the
+  police owner's call: REQUEST 3 stands (police/heat owner: on vehicle_hijacked and on
+  pedestrian_struck(killed) call heat.raise_by(1) when a human sees Rivet).
+- REQUEST 5 -> slice-play (player/on-foot owner): on-foot movement does not collide with
+  buildings in the city World (carnage-v3: held "up" walked Rivet onto a roof after a wreck threw
+  him out). Vehicles only calls set_focus(door, false) on exit.
+- REQUEST 2 (restated) -> d5-combat: run-over kills already bleed through the `death` cue. Still
+  wanted: actor_killed(RIVET_ID, slot, &"run_over") from your chokepoint on
+  Events.pedestrian_struck(slot, killed=true) (quest facts, kill hit-stop, heat), plus `run_over`
+  in the kind values.

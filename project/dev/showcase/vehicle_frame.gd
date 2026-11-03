@@ -8,7 +8,8 @@ extends Node
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
 ##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage|yield] [--soul] [--cue-shots]
 ## --scene=yield: Rivet stays on foot beside the parked sedan while three cars stop behind it;
-## --blind hands traffic no obstacles (the behaviour before set_obstacles).
+## --blind hands traffic no obstacles (the behaviour before set_obstacles); --car-zoom starts the
+## camera at 48 px/m.
 ## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
 
 const MASTER_SEED: int = 31
@@ -139,6 +140,8 @@ func _parse_args() -> bool:
 			_soul = true
 		elif arg == "--cue-shots":
 			_cue_shots = true
+		elif arg == "--car-zoom":
+			VehicleFrameSetup.car_zoom = true
 		elif arg == "--blind":
 			VehicleFrameSetup.blind = true
 		elif arg == "--scene=yield":

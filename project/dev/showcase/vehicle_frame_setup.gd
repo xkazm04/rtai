@@ -11,6 +11,8 @@ const LANE_TILES: int = 10
 static var chasers: bool = false
 ## --blind: the port drops the obstacle feed (traffic cannot see service cars: the "before").
 static var blind: bool = false
+## --car-zoom: the camera starts in the car mode (48 px/m) even on foot (the yield scene at 48).
+static var car_zoom: bool = false
 
 
 class Blind:
@@ -91,7 +93,7 @@ static func build(world: World, parent: Node, look: StringName, carnage: bool) -
 	if look != &"":
 		view.look_id = look
 	view.rig = CameraRig.new()
-	view.rig.snap(&"on_foot")
+	view.rig.snap(&"car" if car_zoom else &"on_foot")
 	view.rig.listen(Events, world.context().clock)
 	parent.add_child(view)
 	view.setup(city)
