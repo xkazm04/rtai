@@ -53,3 +53,17 @@ NEXT:
   seven worktrees share one `user://`; `test_save_slots.gd` (user://test_save) fails 1-136 asserts per run while
   other lanes run the suite. Every failure in this lane's evidence run (549/557) is in that one file. Suggest a
   per-checkout test dir (e.g. `user://test_save_<hash of res:// path>`). Not changed here (outside lane scope).
+- 21:23 Evidence gate (`run.mjs --no-bench`, at 7a7cb3c): lint PASS 13/13, scenarios PASS 20/20, parity PASS (bit exact,
+  planted mutation caught at step 629), selftest PASS (look goldens 11/11, block goldens 5/5, worst 0.00). unit FAIL:
+  every one of the failing asserts is in `test_save_slots.gd`, plus one script error in `tests/support/save_kit.gd:56`
+  (REQUEST 1, shared user://); "tree changed" = my JOURNAL commit during the run. Earlier the same tree ran 555/555
+  when no other lane was testing. No bench: nothing on the frame path changed (logic and data only).
+  Summary: evidence/ghost-powers/evidence-gate-iter1.txt.
+
+NEXT (supersedes the NEXT above where they differ):
+1. Re-read answers.json for ghost-powers-1 (Gearbox control) and ghost-powers-2 (tank look); apply them.
+2. Powers dev scene `project/dev/ghost-powers/powers_pad.gd` on the real rig (start from RigShowcaseRun; the
+   `--rivet-form` path works). Wire SoulPowers.tick, HaulerForm.step/arm/stomp, RivetBody.body_class, the rig scale
+   lerp by morph_k, a teal tint; Gearbox on a VehicleService car (`soul_hijack_traffic`).
+3. Clips at 32 and 48 px/m (--fixed-fps 60): Hauler vs a wave, Gearbox into robots; numbers per activation.
+4. Build the tank look option B (short thick arms from existing parts) as a form override so A/B/C is one flag.

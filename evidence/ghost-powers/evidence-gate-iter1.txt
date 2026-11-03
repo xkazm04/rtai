@@ -1,0 +1,12 @@
+PASS lint: lint: all 13 checks pass over 488 GDScript files
+     -> C:\Users\kazda\kiro\gtai-wt\e-powers\build\evidence\lint.json
+FAIL unit-tests: unit-tests: gut exit 1; gut reported script errors; 68 failing (489 passed, 68 failed, 0 skipped); tree changed during run (1 paths, import churn): M  JOURNAL.md
+     -> C:\Users\kazda\kiro\gtai-wt\e-powers\build\evidence\unit-tests.json
+PASS scenario-tests: scenario-tests: 20 passed (headless)
+     -> C:\Users\kazda\kiro\gtai-wt\e-powers\build\evidence\scenario-tests.json
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3553 floats); planted mutation caught at step 629
+     -> C:\Users\kazda\kiro\gtai-wt\e-powers\build\evidence\parity.json
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 99 colours; 48 px/m ok, 89 actors, 90 colours); 82 art textures, 0 placeholders, prewarm 31 ms; look goldens 11/11 within mean 4 (worst 0.00); accent pixels 32: 0.75 %, 48: 1.61 %, 64: 8.87 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; 
+     -> C:\Users\kazda\kiro\gtai-wt\e-powers\build\evidence\selftest.json
+evidence: commit 7a7cb3c1fc5224b817cb1272a81f4b2219fe68fc, godot 4.7.2.stable.official.ed1daf0bf
+exit 1
