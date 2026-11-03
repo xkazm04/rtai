@@ -1,0 +1,13 @@
+{
+ "light_bar_px": 1262,
+ "main_look_d4_item(d-cast alone)": {
+  "steel": 28,
+  "teal": 1159,
+  "ink": 75
+ },
+ "d-city_look_d4_item(f0cedb3, merged)": {
+  "cop_blue": 103,
+  "cop_blue_hi": 1159
+ },
+ "note": "traffic_atlas cell 8 light-bar pixels (alpha >= 0.75) classified with each item shader's own rules, replayed in numpy (d5-cast iteration 3)."
+}

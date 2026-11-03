@@ -92,3 +92,11 @@ NEXT:
   orig/vehicles_atlas/): 1179-1306 px each, 0 px outside cell 8, 0 vermilion left. cruiser_wreck / car_wreck: 0 vermilion.
   CAVEAT on this branch alone: main's look_d4_item has no blue plate, so a moving cruiser's blue bar prints as nearest-ink
   TEAL here; d-city's look_d4_item (f0cedb3) adds the cop-blue plate. MERGE ORDER: d-city with d-cast (trial merge below).
+- TRIAL MERGE d-cast (40d1e40) + d-city (f0cedb3) in a scratch worktree (gtai-wt/scratch-cast-merge, detached, never
+  pushed): conflicts ONLY in JOURNAL.md and the 16 look goldens (both lanes re-blessed); all code/art merges clean.
+  city_frame --police=4 on the merged tree = the d-cast frames (accent counts within a few px; blue cops intact).
+  No moving cruiser came on screen in any run (riot frames; traffic timing differs per run), so the print was proven
+  numerically: evidence/d5-cast/cruiser-atlas-print.json replays each item shader's rules on the 1262 cell-8 light-bar px:
+  d-cast alone (main look_d4_item) -> 1159 TEAL; merged (d-city look_d4_item) -> 1159 cop_blue_hi + 103 cop_blue.
+  MERGE NOTE for the Director: merge d-city before (or with) d-cast; d-cast alone prints moving cruisers' bars soul-teal.
+  Goldens after the merge: take either side, then re-bless once on the merged tree (look_golden --bless).
