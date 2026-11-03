@@ -408,3 +408,5 @@
   5. Carried over from iteration 3: the hit flash is still vermilion (REQUEST 1 -> gunplay,
      HitFeel); a Rivet contact beat on the tackle; a longer reel with the shock and a cop that
      shoots.
+- 23:05 Unit re-run on a clean tree at 24851db: 569/569, and the tree stayed clean. Session ends
+  here (stop by 23:16). Everything is committed.
