@@ -8,6 +8,7 @@ var stage_view: StageView = StageView.new()
 var cast_view: CastView = CastView.new()
 var fx_view: FxView = FxView.new()
 var hud_view: HudView = HudView.new()
+var hud_feed: HudFeed = HudFeed.new()
 ## The slice's objective prompt and pointer (off unless the caller turns it on).
 var objective_view: ObjectiveView = null
 ## Where the camera looks, in metres; Vector2.INF follows Rivet.
@@ -26,6 +27,7 @@ var city_view: CityView = null
 var city: CitySystem = null
 var _camera: Camera2D = null
 var _stage: CollectCallStage
+var _system: QuestSystem
 
 
 func bind(stage: CollectCallStage, port: CollectCallWorld, system: QuestSystem) -> void:
@@ -34,8 +36,7 @@ func bind(stage: CollectCallStage, port: CollectCallWorld, system: QuestSystem) 
 	cast_view.stage = stage
 	cast_view.port = port
 	fx_view.stage = stage
-	hud_view.stage = stage
-	hud_view.system = system
+	_system = system
 
 
 func _ready() -> void:
@@ -45,7 +46,7 @@ func _ready() -> void:
 	layer.add_child(hud_view)
 	if objective_view != null:
 		objective_view.stage = _stage
-		objective_view.system = hud_view.system
+		objective_view.system = _system
 		objective_view.px_per_m = px_per_m
 		layer.add_child(objective_view)
 	if city_view != null:
@@ -89,6 +90,7 @@ func _ready_on_city() -> void:
 
 
 func _process(_delta: float) -> void:
+	hud_feed.fill(hud_view.state, _stage, _system)
 	if _stage == null or city_view != null:
 		return
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos

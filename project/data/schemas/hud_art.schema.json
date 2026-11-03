@@ -1,0 +1,126 @@
+{
+  "$id": "gtai.hud-art/1",
+  "additionalProperties": false,
+  "properties": {
+    "art": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "art": {
+            "pattern": "^res://features/hud/art/[a-z0-9_]+\\.png$",
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "size_px": {
+            "items": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "art",
+          "size_px"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "digits": {
+      "additionalProperties": false,
+      "properties": {
+        "advance_px": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "art": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "baseline_px": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cap_px": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "cell_px": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "minItems": 2,
+          "type": "array"
+        },
+        "glyphs": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "space_px": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "art",
+        "glyphs",
+        "cell_px",
+        "advance_px",
+        "baseline_px",
+        "cap_px",
+        "space_px"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "memo": {
+      "additionalProperties": false,
+      "properties": {
+        "art": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "margin_px": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "scale": {
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "art",
+        "margin_px",
+        "scale"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.hud-art/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "art",
+    "digits",
+    "memo"
+  ],
+  "type": "object"
+}

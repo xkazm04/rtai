@@ -1,0 +1,92 @@
+{
+  "art": [
+    {
+      "art": "res://features/hud/art/ammo_ticket.png",
+      "id": "ammo_ticket",
+      "size_px": [
+        671,
+        321
+      ]
+    },
+    {
+      "art": "res://features/hud/art/cash_frame.png",
+      "id": "cash_frame",
+      "size_px": [
+        728,
+        173
+      ]
+    },
+    {
+      "art": "res://features/hud/art/hud_digits.png",
+      "id": "hud_digits",
+      "size_px": [
+        2240,
+        160
+      ]
+    },
+    {
+      "art": "res://features/hud/art/memo_frame.png",
+      "id": "memo_frame",
+      "size_px": [
+        672,
+        322
+      ]
+    },
+    {
+      "art": "res://features/hud/art/wanted_pip_empty.png",
+      "id": "wanted_pip_empty",
+      "size_px": [
+        149,
+        150
+      ]
+    },
+    {
+      "art": "res://features/hud/art/wanted_pip_police.png",
+      "id": "wanted_pip_police",
+      "size_px": [
+        148,
+        150
+      ]
+    }
+  ],
+  "digits": {
+    "advance_px": [
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      70,
+      58,
+      74,
+      66,
+      62,
+      36,
+      32,
+      32,
+      98,
+      80
+    ],
+    "art": "hud_digits",
+    "baseline_px": 140,
+    "cap_px": 120,
+    "cell_px": [
+      112,
+      160
+    ],
+    "glyphs": "0123456789$/x+-:,.%#",
+    "space_px": 30
+  },
+  "doc": "The HUD's art by id (features/hud/art/README.md: authored at 2x, frames plated). HudView asks for an id, never a path, so an art lane can swap a file here without touching the scene; an id that is missing or does not load draws a flat ink placeholder and logs once. size_px is the authored size the layout coordinates refer to (a new file at another size is drawn into the same box). digits: the hand-inked numeral strip (cells left to right in glyphs order, advances in strip px, space for unknown characters). memo: the 9-slice margin of the memo frame in frame px and the scale its corners are drawn at.",
+  "memo": {
+    "art": "memo_frame",
+    "margin_px": 44,
+    "scale": 0.5
+  },
+  "schema": "gtai.hud-art/1"
+}
