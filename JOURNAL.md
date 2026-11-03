@@ -62,3 +62,7 @@
   draws the prompt strip under the beat panel and a vermilion ring (on screen) or edge arrow
   (off screen) at the goal. The input scenario asserts >= 10 distinct prompts (11 seen).
   Frames: masters/day-d5/slice-play/hints32/ (ticks 60..10400, 32 px/m).
+- MILESTONE 10:47 exported exe re-exported (all of the above) and checked against the scenario's
+  input log: `RTAI.exe --headless -- --replay=<log>` -> "replay: identical", exit 0; the same log
+  with one input changed -> exit 1 ("state hash differs at tick 7620"); a missing file -> exit 2.
+  So the exe's sim is the tested sim. frames.json (10 entries) + ladder.png in masters.

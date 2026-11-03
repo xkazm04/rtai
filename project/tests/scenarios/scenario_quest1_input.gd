@@ -9,6 +9,8 @@ const EVIDENCE_FILE: String = "quest1-input.json"
 const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
 const SAVE_PATH: String = "user://test_tmp/quest1/checkpoint.json"
 const LOAD_BEAT: String = "b4-dock"
+## The run's input log, kept for the exported exe's own --replay check (build/evidence).
+const LOG_PATH: String = "user://test_tmp/quest1/input-run.replay.json"
 
 
 func run(tree: SceneTree) -> String:
@@ -31,6 +33,8 @@ func run(tree: SceneTree) -> String:
 	_play(s, driver, beats, saves, hints)
 	var log: ReplayLog = s.world.loop().finish_recording()
 	var out: Dictionary = _evidence(s, driver, beats, log)
+	out["log"] = ProjectSettings.globalize_path(LOG_PATH)
+	out["log_saved"] = log.save(LOG_PATH) == OK
 	var reason: String = _verdict(s, log, out)
 	out["hints"] = hints
 	if reason == "" and hints.size() < 10:
