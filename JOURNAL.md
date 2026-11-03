@@ -381,3 +381,30 @@
 - No ASK: the owner's 21:25 bar is a real-time clip in the final look, and these props are
   placeholders without weapon art. Ask the night run with weapon art (codex image_gen) on the
   props: `rivet-motion-3` is a clip of each weapon against the dummy line.
+- MILESTONE 36905b3: the props a touch wider (blade 3 px, grip 3.4) after a 1x look; at 1x
+  the katana now reads as steel. Re-recorded `weapon-katana-48ppm.mp4` and its sheet, plus
+  `weapon-katana-32ppm.mp4`.
+- Gates on the weapons commits: lint 13/13 (506 files), unit 569/569, scenarios 19/19 at
+  36905b3 (run at 22:55 on b03f575 + view). The evidence run follows below.
+- 22:58 answers.json re-read: 10 answers, nothing new for this lane.
+- Evidence run at 36905b3 (`--no-bench`, about 23:00): lint 13/13, scenarios 19/19, parity
+  exact (mutation caught at step 629), selftest look goldens 11/11 (worst 0.46) and block
+  goldens 5/5 (worst 0.48), with NO re-bless. Unit 569/569, but the step was flagged FAIL by
+  the dirty-tree guard: I appended to JOURNAL.md during the run (my mistake, not a test
+  failure). Unit was re-run clean after committing (below). The bench was skipped: the
+  weapons are dev-scene only, and no runtime path changed.
+- NEXT (night run):
+  1. answers.json first.
+  2. Weapon art: replace MeleeWeaponView's drawn props with D5-look sprites (codex image_gen,
+     one at a time, with a provenance line). Then ASK rivet-motion-3: one clip per weapon
+     against the dummy line, in the D5 look. The owner wants to experiment with each weapon's
+     feel.
+  3. The chainsaw (hold-to-grind: a hold mode on MeleeCombo, continuous damage ticks,
+     move_mult about 0.5, hit-stop on contact) and the plasma sword (a timed block window that
+     deflects bullets; needs gunplay's projectiles). Both are rows in melee_weapons.json.
+  4. Wire the weapons into the arena: the arena lane's hub now spawns my line (`--start=hub`).
+     The baton's chain against the `metal` dummies needs MeleeShock's chain logic reused per
+     hit (chain_hops / chain_radius_m are already in the rows).
+  5. Carried over from iteration 3: the hit flash is still vermilion (REQUEST 1 -> gunplay,
+     HitFeel); a Rivet contact beat on the tackle; a longer reel with the shock and a cop that
+     shoots.
