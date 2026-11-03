@@ -1430,3 +1430,14 @@ on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (nativ
 NEXT (morning): unchanged - 1 Director merge + one golden re-bless after it; 2 the owner calls; 3 hard-fail
 on unknown args (owner call); 5 idle bench, rig p99 0.439-0.448 ms vs 0.3 (native RigArm / RigGait).
 - Session end 08:10: tree clean after commit, no scratch.
+
+## Iteration 27 (08:15-08:3x, REPORT)
+- Wrote REPORT.md: what works (items 1-7, each with a commit + evidence path or command), what does not
+  (rig 0.3 ms target, no idle bench of the final code, art lanes not live on the branch, n-d5 patches
+  unapplied, explosion / smoke / night sources, D3 profile, untrustworthy 4090 timings), blockers with
+  durations, rejected approaches, next steps. Every cited repo path and masters folder checked to exist
+  (one claim corrected while checking: the world-plate doctrine test lives in test_look_profiles.gd).
+  No code change, no Godot started; evidence stamp stays 8bd2ec0.
+NEXT (morning): as REPORT.md "Next steps" - 1 Director merge + one golden re-bless + the n-d5 patches +
+the quest 1 v3 patch after n-noir + a full evidence run with an idle bench; 2 owner calls (frames listed);
+3 native RigArm / RigGait for the 0.3 ms rig target; 4 FX / night / traffic-state sources; 5 Deck numbers.
