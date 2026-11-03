@@ -71,6 +71,17 @@ on the RTX 4090 / d3d12 were bit-identical. Re-bless after an intended look chan
 `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<dir> --bless`
 and put the before/after frames in the commit message's evidence.
 
+### Print inks (`look_profiles.json` `tones`)
+
+The world and item prints' output inks are uniforms (`paper_tone`, `wash_tone`, `ink_tone`), filled from
+palette.json tokens by `LookParams.add_tones` (`tones`: pass -> uniform -> token id; a profile row may set
+the Vector3 itself to override). Re-toning the world is two hex values in palette.json, no shader edit.
+The shader defaults are the pre-2026-11-03 cool inks, so a material that never gets a look keeps those.
+`print_part.gdshader` (characters) still has its own ink / cream constants: the rigs' ink lines are
+(23,19,27), the world's (27,21,23) - not visible apart at any zoom; pass the tones when that file is next
+touched. 2026-11-03: `ink` #17131B -> #1B1517 and `wash` #665F68 -> #6C6161 put the street on the target
+frame's warm charcoal (81,71,72 measured in both; was 75,70,78 lavender) at the same luminance.
+
 ### Print overlays: where D5 plugs in (`look_overlay.gd`, `look_profiles.json` `overlays`)
 
 The d5-close lane builds D5 "Inked Grime" as a **second print layer over the untouched D4 print**
@@ -111,7 +122,7 @@ material and leaves a layer someone else re-materialed (the baked crowd atlas) a
 
 ## The colour doctrine (`palette_tokens.gd`, `data/tables/palette.json`)
 
-Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #17131B, `ink_2` charcoal, `wash`, `steel`) and the two
+Base tokens (`paper` #F2E8D5, `paper_2`, `ink` #1B1517, `ink_2` charcoal, `wash` #6C6161, `steel`) and the two
 accent inks: **vermilion** #E8502A (threat, cop, danger cue, pickup, objective, Rivet's collar, hit
 flash) and **teal** #1FB5A8 (souls, the dead, the torch tip). Each accent lists the render layers it may
 appear on: never `world` (ground, decals, shadows, props, roofs); a pickup or hazard in the world is

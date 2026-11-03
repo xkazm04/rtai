@@ -10,7 +10,11 @@ func before_all() -> void:
 
 func test_the_tokens_match_the_print_shaders() -> void:
 	assert_true(_pal.color(&"paper").is_equal_approx(Color8(0xF2, 0xE8, 0xD5)))
-	assert_true(_pal.color(&"ink").is_equal_approx(Color8(0x17, 0x13, 0x1B)))
+	# ink / wash reach the print as uniforms (look_profiles tones, test_look_profiles); pinned
+	# here so a re-tone is a deliberate edit: the target frame's warm charcoal (2026-11-03)
+	assert_true(_pal.color(&"ink").is_equal_approx(Color8(0x1B, 0x15, 0x17)))
+	assert_true(_pal.color(&"wash").is_equal_approx(Color8(0x6C, 0x61, 0x61)))
+	assert_eq(_pal.classify(_pal.color(&"ink_2")), 0)
 	assert_true(_pal.color(&"vermilion").is_equal_approx(Color8(0xE8, 0x50, 0x2A)))
 	assert_true(_pal.color(&"teal").is_equal_approx(Color8(0x1F, 0xB5, 0xA8)))
 

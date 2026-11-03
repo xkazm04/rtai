@@ -36,7 +36,7 @@
       ]
     }
   ],
-  "doc": "The colour doctrine as tokens (D4 Ink and Hatch). The world is a black-and-white baseline: ink, paper and the charcoal / wash greys. Two accent inks appear rarely and only on their allowed uses. The print shaders (look_d4, look_d4_item, print_part) carry the same hex values as constants; PaletteTokens.classify() uses the gates below, which mirror look_d4 plates(): a pixel is vermilion when r - max(g, b) >= verm_gate, teal when min(g, b) - r >= teal_gate (0..1 channels). dev/selftest/accent_audit.gd counts accent pixels per render layer against these.",
+  "doc": "The colour doctrine as tokens (D4 Ink and Hatch). The world is a black-and-white baseline: ink, paper and the charcoal / wash greys. Two accent inks appear rarely and only on their allowed uses. look_d4 and look_d4_item print paper / wash / ink from these tokens (look_profiles.json tones; print_part still carries its own constants); PaletteTokens.classify() uses the gates below, which mirror look_d4 plates(): a pixel is vermilion when r - max(g, b) >= verm_gate, teal when min(g, b) - r >= teal_gate (0..1 channels). dev/selftest/accent_audit.gd counts accent pixels per render layer against these.",
   "gates": {
     "teal_gate": 0.26,
     "verm_gate": 0.31
@@ -57,19 +57,19 @@
     },
     {
       "doc": "the ink: lines, hatching, the darkest wash",
-      "hex": "#17131B",
+      "hex": "#1B1517",
       "id": "ink",
       "role": "base"
     },
     {
       "doc": "the charcoal of the streets",
-      "hex": "#4A4350",
+      "hex": "#514748",
       "id": "ink_2",
       "role": "base"
     },
     {
-      "doc": "the mid wash (look_d4 WASH)",
-      "hex": "#665F68",
+      "doc": "the mid wash (look_d4 wash_tone)",
+      "hex": "#6C6161",
       "id": "wash",
       "role": "base"
     },
