@@ -9,7 +9,7 @@ const ART: String = "res://features/quest/art/collect_call/"
 const KERB_ROWS: float = 338.0
 const PROPS: String = "res://features/city/art/props/"
 ## Places at least this big (m) get their name stencilled on the city street.
-const STENCIL_MIN_R: float = 3.0
+const STENCIL_MIN_R: float = 5.0
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).

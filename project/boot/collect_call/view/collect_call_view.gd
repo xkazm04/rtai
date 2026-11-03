@@ -83,6 +83,9 @@ func _ready_on_city() -> void:
 	for v: Node2D in [stage_view, fx_view, cast_view]:
 		v.scale = k
 		city_view.actor_layer().add_child(v)
+	# the chunks around where Rivet stands now (a Continue or Retry starts mid-street)
+	@warning_ignore("return_value_discarded")
+	city_view.prewarm()
 
 
 func _process(_delta: float) -> void:
