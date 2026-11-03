@@ -726,3 +726,6 @@ NEXT (session end, iteration 6):
   721fbbb: **applies clean** (check worktree removed again). It needs n-d4's art to be merged first.
 NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` after the n-d4 merge; final quest frames
 `after_q1p/`; everything else as in the iteration-6 NEXT list. Tree clean; nothing pushed or merged.
+- 01:45 `evidence/iter6/` (lane cwd, per the night brief): summary sheet, the quest 1 view patch, gate results at
+  cc3b37c, index README. The full frame sets stay in masters. Shared-scope note: `evidence/` is a new top-level folder
+  (the Director may move it to `docs/` or drop it at merge).
