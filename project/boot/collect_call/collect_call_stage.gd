@@ -33,6 +33,8 @@ var deaths: int = 0
 var shots_fired: int = 0
 ## This tick's interact press, if the stage did not use it (the quest's meet beat takes it).
 var press_left: bool = false
+## The player (bound input) when set; null for the bot, which writes intent itself.
+var pilot: StagePilot = null
 var tick: int = 0
 var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
@@ -63,10 +65,12 @@ func setup(ctx: WorldContext) -> void:
 		patrol_leg.append(1 % p.route.size())
 
 
-func step(p_tick: int, _input: TickInput) -> void:
+func step(p_tick: int, tick_input: TickInput) -> void:
 	tick = p_tick
 	whisper_now = false
 	_line_hooks()
+	if pilot != null:
+		pilot.drive(self, tick_input)
 	_move()
 	press_left = intent.interact and not StageActions.interact(self)
 	if intent.fire_at != Vector2.INF and hidden_in == "":
@@ -118,9 +122,15 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_8(1 if crates_burning else 0)
 	out.put_utf8_string(hidden_in)
 	out.put_32(deaths)
+	if pilot != null:
+		pilot.write_state(out)
 
 
 func _move() -> void:
+	if intent.move_to == Vector2.INF and intent.move_by != Vector2.ZERO:
+		hidden_in = ""
+		arena.rivet.pos += intent.move_by
+		return
 	if intent.move_to == Vector2.INF:
 		hidden_ticks += 1 if hidden_in != "" else 0
 		return

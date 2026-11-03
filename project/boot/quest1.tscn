@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://boot/quest1_game.gd" id="1_q1"]
+
+[node name="Quest1" type="Node"]
+script = ExtResource("1_q1")

@@ -1,0 +1,41 @@
+class_name LiveInput
+extends InputSource
+## Live devices into one TickInput per tick (SIM-05: the sim sees only these ints, so a recorded
+## run replays bit-identically). The move stick from the move_* actions (keys, d-pad or the left
+## stick), the buttons from the bit-carrying actions, and the aim heading from the right stick
+## when it is pushed, else from the mouse relative to `origin_px` (Rivet on screen).
+
+var actions: PlayerActions
+## Rivet's position in viewport pixels; the mouse aim is the heading from here to the cursor.
+var origin_px: Callable = func() -> Vector2: return Vector2.INF
+var viewport: Viewport = null
+## false while a menu is open: the sim then sees idle input.
+var enabled: bool = true
+
+
+func _init(p_actions: PlayerActions) -> void:
+	actions = p_actions
+
+
+func sample(_tick: int) -> TickInput:
+	if not enabled:
+		return TickInput.new()
+	var move: Vector2 = Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+	var buttons: int = 0
+	for action: StringName in actions.bits:
+		if Input.is_action_pressed(action):
+			buttons |= 1 << actions.bits[action]
+	buttons |= PlayerCommand.pack_aim(_aim(), actions)
+	var k: float = float(TickInput.AXIS_MAX)
+	return TickInput.new(buttons, roundi(move.x * k), roundi(move.y * k))
+
+
+func _aim() -> Vector2:
+	var stick: Vector2 = Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
+	if stick.length() >= actions.stick_deadzone:
+		return stick.normalized()
+	var from: Vector2 = origin_px.call()
+	if viewport == null or from == Vector2.INF:
+		return Vector2.ZERO
+	var d: Vector2 = viewport.get_mouse_position() - from
+	return d.normalized() if d.length() > 4.0 else Vector2.ZERO
