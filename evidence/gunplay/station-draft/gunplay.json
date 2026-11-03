@@ -1,0 +1,675 @@
+{
+  "doc": "Lane gunplay: the weapon range (the arena range lanes at 5/10/20/35 m carry the TTK drill of dev/gunplay/ttk_bench.gd) and the dodge lane (an enemy shooter firing the slower enemy rounds at Rivet). Every weapons.json value of the playable weapons is on the tuning panel. Coordinates follow arena_stations/arena.json (x = down range).",
+  "lane": "gunplay",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "range",
+      "id": "gunplay_range",
+      "measures": [
+        "shots",
+        "hits",
+        "hit_rate",
+        "ttk_s",
+        "kill_rate",
+        "bloom_deg",
+        "reload_s"
+      ],
+      "name": "Weapon range",
+      "props": [
+        {
+          "at": [
+            8,
+            -24
+          ],
+          "kind": "cover_crate",
+          "size": [
+            0.6,
+            2
+          ]
+        },
+        {
+          "at": [
+            16,
+            -20
+          ],
+          "kind": "metal_post",
+          "size": [
+            0.4,
+            0.4
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            10,
+            -20
+          ],
+          "id": "robot_10m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            20,
+            -20
+          ],
+          "id": "robot_20m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            -5
+          ],
+          "id": "armored_strafe_10m",
+          "kind": "target",
+          "motion": "strafe",
+          "span_m": 4.5,
+          "speed_mps": 3.2
+        },
+        {
+          "at": [
+            12,
+            -24
+          ],
+          "id": "cluster_a_12m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            13,
+            -25
+          ],
+          "id": "cluster_b_12m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            12,
+            -26
+          ],
+          "id": "cluster_c_12m",
+          "kind": "target",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "weapons.pistol.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.pistol.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.pistol.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.pistol.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.pistol.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.pistol.spread_bloom_deg",
+          "max": 10,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.pistol.spread_max_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.5
+        },
+        {
+          "key": "weapons.pistol.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.pistol.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.pistol.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.pistol.knockback_mps",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.machine_pistol.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.machine_pistol.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.machine_pistol.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.machine_pistol.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.machine_pistol.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.machine_pistol.spread_bloom_deg",
+          "max": 10,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.machine_pistol.spread_max_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.5
+        },
+        {
+          "key": "weapons.machine_pistol.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.machine_pistol.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.machine_pistol.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.machine_pistol.knockback_mps",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.flamethrower.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.flamethrower.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.flamethrower.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.flamethrower.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.flamethrower.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.flamethrower.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.flamethrower.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.flamethrower.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.flamethrower.dot_dps",
+          "max": 100,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.flamethrower.dot_s",
+          "max": 10,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.flamethrower.patch_radius_m",
+          "max": 8,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.flamethrower.patch_s",
+          "max": 10,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.rocket_launcher.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.rocket_launcher.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.rocket_launcher.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.rocket_launcher.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.rocket_launcher.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.rocket_launcher.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.rocket_launcher.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.rocket_launcher.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.rocket_launcher.knockback_mps",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.rocket_launcher.splash_damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.rocket_launcher.splash_radius_m",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.electro_gun.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.electro_gun.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.electro_gun.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.electro_gun.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.electro_gun.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.electro_gun.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.electro_gun.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.electro_gun.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.electro_gun.knockback_mps",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.electro_gun.chain_hops",
+          "max": 8,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.electro_gun.chain_radius_m",
+          "max": 10,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.electro_gun.stun_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.molotov.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.molotov.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.molotov.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.molotov.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.molotov.spread_deg",
+          "max": 30,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.molotov.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.molotov.magazine",
+          "max": 200,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.molotov.reload_s",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.molotov.splash_damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.molotov.splash_radius_m",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.molotov.dot_dps",
+          "max": 100,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.molotov.dot_s",
+          "max": 10,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.molotov.patch_radius_m",
+          "max": 8,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.molotov.patch_s",
+          "max": 10,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.gloria.damage",
+          "max": 600,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "weapons.gloria.rof_hz",
+          "max": 25,
+          "min": 0.2,
+          "step": 0.1
+        },
+        {
+          "key": "weapons.gloria.speed_mps",
+          "max": 120,
+          "min": 5,
+          "step": 1
+        },
+        {
+          "key": "weapons.gloria.range_m",
+          "max": 60,
+          "min": 2,
+          "step": 1
+        },
+        {
+          "key": "weapons.gloria.spread_recover_dps",
+          "max": 90,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "weapons.gloria.knockback_mps",
+          "max": 15,
+          "min": 0,
+          "step": 0.25
+        },
+        {
+          "key": "weapons.enemy_fire.speed_scale",
+          "max": 1,
+          "min": 0.1,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.damage_scale",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.tell_s",
+          "max": 1.5,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.muzzle_flash_s",
+          "max": 0.3,
+          "min": 0,
+          "step": 0.01
+        }
+      ]
+    },
+    {
+      "area": "pit",
+      "id": "gunplay_dodge",
+      "measures": [
+        "enemy_shots",
+        "enemy_hits",
+        "dodge_rate",
+        "damage_taken"
+      ],
+      "name": "Dodge lane",
+      "props": [
+        {
+          "at": [
+            6,
+            2
+          ],
+          "kind": "cover_crate",
+          "size": [
+            2,
+            0.6
+          ]
+        }
+      ],
+      "spawns": [
+        {
+          "at": [
+            15,
+            0
+          ],
+          "id": "shooter_15m",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            25,
+            4
+          ],
+          "id": "shooter_25m",
+          "kind": "enemy",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "weapons.enemy_fire.speed_scale",
+          "max": 1,
+          "min": 0.1,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.damage_scale",
+          "max": 1,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.tell_s",
+          "max": 1.5,
+          "min": 0,
+          "step": 0.05
+        },
+        {
+          "key": "weapons.enemy_fire.muzzle_flash_s",
+          "max": 0.3,
+          "min": 0,
+          "step": 0.01
+        }
+      ]
+    }
+  ]
+}
