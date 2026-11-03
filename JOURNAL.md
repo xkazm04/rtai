@@ -695,3 +695,31 @@ NEXT (iteration 11 / morning, in order):
   (goldens 10/10 worst 0.09, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied to
   evidence/pof. Session end: tree clean, no Godot of mine running, my /tmp scratch deleted; masters frames
   24-28 kept as evidence, ladder.png 1280 x 11646 (rows 24, 24b, 24c, 25, 25b, 26).
+
+## Iteration 11 (03:07 - , BUILD)
+
+Weakest point picked by comparing the in-engine D4 frame with the target frame (d4h2_mock.jpg) instead of
+by the item list (all 7 items are evidenced): the world print's inks. Measured, same regions: mock street
+(81,71,72) warm, engine (75,70,78) lavender (B > R) - it fought the cream paper; mock street grain stddev
+14-22, engine 9 (flat). Both are print-pass parameters = this lane.
+- MILESTONE (f5fb578) item 2 gap closed: look_d4 / look_d4_item printed hard-coded CREAM / WASH / INK, the
+  one print parameter outside the look profiles. Now uniforms `paper_tone` / `wash_tone` / `ink_tone`,
+  filled from palette.json tokens through look_profiles.json `tones` (LookParams.add_tones; a row may
+  override). Goldens 10/10 worst mean 0.10 (hex rounding). Unit 209 (+2: every profile prints in the
+  tokens; both shaders declare the tone uniforms).
+- MILESTONE (aa8a5f7) warm charcoal: ink #17131B -> #1B1517, wash #665F68 -> #6C6161 (solved for the mock's
+  street through the dark-step mix) -> engine street (81,71,72) = the mock, same luminance. Accent gate
+  unchanged (0.95 / 0.95 / 0.25 %), world lock 0.00 % x3, goldens re-blessed. Frames 29-tones/ (a-refactor
+  vs b-warm, all 10 looks; compare-*.png with the mock strip). Ladder 29 / 29b / 29c. Rigs (print_part,
+  characters' file) keep their own ink constant (23,19,27) vs the world's (27,21,23): not visible apart;
+  README notes to pass the tones there when that file is next touched.
+- MILESTONE (2a51fe3) D4 aquatint: the grime only moves wash step EDGES, so a field deep inside one step
+  (the street) printed flat whatever `grime` was. `aquatint` (d1 0, d4 0.18, d5 0.26) = 1 px lattice
+  grains inside the washes, mean-preserving around 35 % cover, the cover pushed by the grime blotches;
+  paper clean. Street stddev 9 -> 12. iGPU 1280x800 48 px/m interleaved x2: print 1.35 / 1.38 -> 1.45 /
+  1.45 ms, frame 3.04 / 3.05 -> 3.13 / 3.14 (evidence/pass-cost/aquatint). World lock 0.00 % x3, accent
+  unchanged, d1 goldens untouched (aquatint 0 is exactly off), the rest re-blessed. Frames 30-mottle/.
+  REJECTED x2 (never committed): (1) smooth tone mottle (col *= 1 + gn * 1.2) - read as airbrushed clouds,
+  not ink (grain-m12-x2 / m12/); (2) the same grain from the sin hash() - diagonal streaks at 35 % cover
+  (cmp1x-d4-48ppm.png), fixed by reading the lattice at texel centres. Ladder 30 / 30b / 30c (rejected).
+  Owner's eye: at 32 px/m the lots' diagonal hatching is a little less crisp on the grain.
