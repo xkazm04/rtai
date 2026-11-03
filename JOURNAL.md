@@ -1623,7 +1623,7 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   worst frame 45.1 ms, hitches >25 ms 170, >50 ms 0 (unexplained 0); visible avg 47.5 / 7.9 / 273.5
   (drive / drive48 / riot); rigs p50 0.106 / p99 0.571 ms. NOT a clean idle run: two other lanes' Godot processes
   (~300 MB each) started during it. `evidence/iter18/bench-643996e.txt`; raw per-scenario json in `build/bench/`.
-- 06:10 MILESTONE asphalt patches removed (road x5 + curb_b / curb_c tiles). Weakest left on the morning board:
+- 06:09 MILESTONE asphalt patches removed (road x5 + curb_b / curb_c tiles). Weakest left on the morning board:
   the closed asphalt-patch boxes (1-2 per 8 m tile, the same shapes every tile) - n-visual's print turns them
   back into dark stamped squares at 48-64 px/m (`night_iter16_morning` city-2 64); the target's asphalt has none.
   Iteration 4's clearing was judged on n-d4 alone (already faint there) and reverted; on the merged print it is
