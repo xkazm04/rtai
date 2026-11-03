@@ -1314,3 +1314,4 @@ night_iter7_summary.png and the iteration-7 order.
   cap band, 4-34 px). i9cap16 (1.6, package v9): roof-area dark 0.176 -> 0.172, frame L 0.455 -> 0.457: the leftover
   dark is the outer outline and the building shadow strips, not the cap lines. Not shot further; i9cap16 deleted.
   README 9.1 gained the one-command plate rebuild for adoption and the two rejections.
+- 05:39 GATES (iteration 9): evidence tool (--no-parity --no-bench) ALL PASS at 037ba7d (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 87 untracked evidence PNGs moved aside and restored; tree clean (project/ unchanged this iteration: item48 is a package component built by masters tools).
