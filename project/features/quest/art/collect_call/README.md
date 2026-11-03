@@ -30,11 +30,12 @@ for teal eyes, and that call belongs to the owner.
 | `cast_brass.png` | 1.6 x 1.2 | 192 x 144 | `_ally("Brass")` |
 | `cast_kilohm.png` | 0.8 x 1.6 | 96 x 192 | `_ally("Dr. Kilohm")` |
 | `cast_don_fax.png` | 1.8 x 1.1 | 216 x 132 | `_ally("Don Fax")` (incl. the vermilion dot) |
-| `cast_dock_guard.png` | 0.9 x 0.9 | 108 x 108 | `_human(..., "G", facing)`: vermilion vest = threat. The patrol cops ("C") stay with the cop rig. |
+| `cast_dock_guard.png` | 0.9 x 0.9 | 108 x 108 | `_human(..., "G", facing)`: vermilion vest = threat. |
 | `cast_mertz.png` | 1.9 x 2.0 | 228 x 240 | `_mertz()` body boxes, cap, ribbon bars, "M". Keep the Robo-tazer, its cable and the charge tubes as code. |
 | `cast_guard_down.png` | 1.6 x 1.6 | 192 x 192 | a dead hostile's faint disc. Knocked out, lying face up. **No vermilion** (no longer a threat). Draw at **1x** with alpha 0.8 so the bodies stay quiet. |
 | `cast_mertz_down.png` | 2.6 x 2.4 | 288 x 312 | the "shorted out" box + label. Sparking backpack, gloves re-inked. 1.5x, alpha 0.8. |
 | `cast_rivet.png` | 3.1 x 3.9 (arms incl.) | 372 x 468 | `_rivet()` boxes, collar bar, eyes, "R" (not the hidden-in-crate peek). **A capture of the real Rivet rig** (idle, facing -y, 120 px/m, `dev/showcase/rivet_sprite.gd` + masters `tools/rivet_matte.py`, cream rim `tools/sprite_rim.py` r 5), body at the image centre; draw at **1x** (true scale). A stand-in until the quest view hosts the rig itself: re-capture if the Rivet parts change. |
+| `cast_cop.png` | 1.85 x 3.23 (gun arm incl.) | 222 x 388 | the patrol cops' vermilion "C" discs (`_human`). The patrol cop rig (look 5, gun out, aiming -y) captured the same way (`rivet_sprite.gd --kind=cop`), cream rim r 5, body centred; **1x**. Its vermilion uniform share is the open owner call on cop uniforms. |
 
 Reuse from the city set (already D4): `features/city/art/ground/road_straight_tone{,_b,_c}.png` for Harbor Road
 (the band between the tile's edge lines, rows 20..748, scaled to the 5 m road, cycling the three variants), `features/city/art/props/payphone.png` (1.3 m) for `_phone()`,

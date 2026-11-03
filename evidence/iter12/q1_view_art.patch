@@ -1,8 +1,8 @@
 diff --git a/project/boot/collect_call/view/cast_view.gd b/project/boot/collect_call/view/cast_view.gd
-index f3cc7e2..d3a4bef 100644
+index f3cc7e2..b4011d4 100644
 --- a/project/boot/collect_call/view/cast_view.gd
 +++ b/project/boot/collect_call/view/cast_view.gd
-@@ -16,8 +16,23 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
+@@ -16,8 +16,25 @@ const ALLY_SIZE: Dictionary[String, Vector2] = {
  	"Don Fax": Vector2(1.8, 1.1),
  }
  
@@ -16,6 +16,8 @@ index f3cc7e2..d3a4bef 100644
 +## cast_rivet.png: the real Rivet rig (idle, facing -y) captured at 120 px/m, body at the centre;
 +## drawn at true scale (372 x 468 px = 3.1 x 3.9 m, arms included).
 +const RIVET_SIZE: Vector2 = Vector2(3.1, 3.9)
++## cast_cop.png: the patrol cop rig (gun out, facing -y) captured the same way, body centred, 1x.
++const COP_SIZE: Vector2 = Vector2(1.85, 3.23)
 +const ALLY_ART: Dictionary[String, String] = {
 +	"Juno": "juno", "Brass": "brass", "Dr. Kilohm": "kilohm", "Don Fax": "don_fax"
 +}
@@ -26,7 +28,13 @@ index f3cc7e2..d3a4bef 100644
  
  
  func _process(_delta: float) -> void:
-@@ -36,9 +51,9 @@ func _draw() -> void:
+@@ -31,14 +48,14 @@ func _draw() -> void:
+ 		_ally(tag, stage.layout.places.actors[tag].at)
+ 	if stage.heat.level > 0:
+ 		for p: Vector2 in stage.patrol_pos:
+-			_human(p, "C", Vector2.DOWN)
++			_sprite("cop", p, COP_SIZE, Vector2.DOWN)
+ 	for h: Fighter in stage.arena.hostiles:
  		if h.kind == Fighter.Kind.BOSS:
  			_mertz(h)
  		elif h.alive():
@@ -38,7 +46,7 @@ index f3cc7e2..d3a4bef 100644
  	_rivet(stage.arena.rivet)
  
  
-@@ -49,16 +64,7 @@ func _rivet(r: Fighter) -> void:
+@@ -49,16 +66,7 @@ func _rivet(r: Fighter) -> void:
  		_eyes(at + Vector2(0.0, -0.85))
  		Ink.initial(self, at + Vector2(0.0, -0.58), "R", Ink.INK, 0.28)
  		return
@@ -56,7 +64,7 @@ index f3cc7e2..d3a4bef 100644
  	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
  
  
-@@ -71,15 +77,8 @@ func _eyes(at: Vector2) -> void:
+@@ -71,38 +79,18 @@ func _eyes(at: Vector2) -> void:
  
  func _ally(tag: String, at: Vector2) -> void:
  	var size: Vector2 = ALLY_SIZE.get(tag, Vector2.ONE)
@@ -74,7 +82,12 @@ index f3cc7e2..d3a4bef 100644
  	Ink.label(self, at + Vector2(0.0, size.y * 0.5 + 0.45), tag, 18, Ink.INK)
  
  
-@@ -92,17 +91,10 @@ func _human(at: Vector2, letter: String, facing: Vector2) -> void:
+-func _human(at: Vector2, letter: String, facing: Vector2) -> void:
+-	draw_line(Ink.px(at), Ink.px(at + facing.normalized() * 0.9), Ink.INK, 5.0)
+-	Ink.disc(self, at, 0.45, Ink.VERMILION, letter)
+-	draw_arc(Ink.px(at), 0.32 * Ink.PX_PER_M, 0.3, 2.8, 12, Ink.CREAM, 3.0, true)
+-
+-
  func _mertz(m: Fighter) -> void:
  	var at: Vector2 = m.pos
  	if not m.alive():
@@ -94,7 +107,7 @@ index f3cc7e2..d3a4bef 100644
  	var gun_root: Vector2 = at + dir * 0.9
  	var muzzle: Vector2 = at + dir * 2.1
  	draw_line(Ink.px(gun_root), Ink.px(muzzle), Ink.INK, 12.0)
-@@ -133,3 +125,15 @@ func _hp_bar(at: Vector2, frac: float) -> void:
+@@ -133,3 +121,15 @@ func _hp_bar(at: Vector2, frac: float) -> void:
  	draw_rect(r, Ink.CREAM, true)
  	draw_rect(Rect2(r.position, Vector2(60.0 * clampf(frac, 0.0, 1.0), 8)), Ink.TEAL, true)
  	draw_rect(r, Ink.INK, false, 2.0)
