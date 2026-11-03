@@ -520,6 +520,19 @@ NEXT (iteration 6 close, in order):
   48 / 64; the D4 48 clip and frames copied from show-final4, as the D4 run never reads look_noir) and
   evidence/showcase-hero.png rebuilt (show-final4's sheet kept as evidence/showcase-hero-v4.png). Flash meter
   on show-final5 noir 32 / 48 / 64: 2 per second max, 0 red. Ladder row 27 (27 rows).
+- (02:59) Gates at b0bac00 (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13),
+  191 unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+- 03:00 Session close (iteration 8). Last code commit 9aa5986 (rim tune); gates PASS at b0bac00.
+  This session: photosensitivity measured and fixed (a flash meter with the WCAG luminance + red tests; the
+  showcase was AT 3 flashes/s, now 2 with one shared FlashBudget; a flashes-off mode with a calm beat = 0),
+  blood on the bodies (stains following each body; Rivet's hit spots tuned up), wall splats (sprays stop at
+  the sim's solid cells and smear along the edge), quest 1's HUD lifted above the pass and printed B/W,
+  noir_frames tick-exact via --fixed-fps 60, a calmer 32 px/m street (rim tune), final showcase re-shot twice
+  (show-final5 is current) + hero sheet rebuilt. Images: 0 generated, 0 rejected; Leonardo 0 tokens;
+  provenance +0. Ladder 27 rows (masters + evidence/). Masters ~1.1 GB in night/noir. No process of mine left
+  running (the two Godot run_scenarios processes at 02:59 are another lane's; untouched).
+  Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final5/*.mp4,
+  evidence/safety-before-after-48.png, evidence/ladder.png.
 NEXT (iteration 8 close, in order):
 1. Owner picks from evidence/showcase-hero.png (re-shot, show-final5) + masters night/noir/show-final5/*.mp4:
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
