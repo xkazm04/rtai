@@ -1271,3 +1271,18 @@ NEXT (iteration 15 / morning, in order):
   in the game boot (only in the dev scripts' own KNOWN_FLAGS). Left alone (boot is shared; owner/Director call).
 - Iteration 15 tally: frames rejected 0 (none taken), approaches rejected 1 (Variant-call test draft),
   no AI images -> no provenance. No scratch worktrees made.
+
+NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion flag):
+1. Director merge (JOURNAL.md-only conflicts vs n-d4 / n-d5 / n-noir; n-d4 vs n-d5 add/add on
+   evidence/README.md). After it: re-bless the goldens once (n-d4 art moves every d4 golden; the 5 + 5
+   `-ov` goldens appear with look_d5); check page age at auto 64 px/m; apply
+   49-quest1-v2/quest1-on-print_stage-v3.patch AFTER n-noir; move CityView onto PrintStage; re-check
+   the sheet crackle rim once n-d4's sheet is live.
+2. Owner calls (one number each, iteration 14 list): age_floor, grain_floor, D4 -> D5 ramp start, fire
+   flicker, night tuning, objective core, cop accent.
+3. TST-03 in the game boot: World could Log.error + quit(2) on LaunchArgs.unknown() (not done: boot is
+   shared, check the scenario / replay runners pass no stray user args first).
+4. Idle bench still not had; rig 0.439-0.448 ms p99 vs 0.3 target (native RigArm / RigGait, characters owner).
+- Evidence at d07f1d5 (07:03-07:05, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity bit-exact
+  + mutation caught at 629, selftest 11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
+  Copied to evidence/pof. Session end: tree clean, no Godot of mine running, no scratch.
