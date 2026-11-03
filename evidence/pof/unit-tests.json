@@ -2,13 +2,13 @@
   "schema": "pof.godot-evidence/1",
   "kind": "unit-tests",
   "gameId": "gtai",
-  "commit": "7e3eb6844f3f4131bb148dcf9d11593168aa722b",
-  "builtAt": "2026-11-03T04:48:45.566Z",
+  "commit": "b0f98abb1df3a5c9c6e63f112c1acba37f12b954",
+  "builtAt": "2026-11-03T05:31:40.267Z",
   "godotVersion": "4.7.2.stable.official.ed1daf0bf",
   "status": "pass",
-  "summary": "unit-tests: 236 passed, 0 failed, 0 skipped (GUT, headless)",
+  "summary": "unit-tests: 241 passed, 0 failed, 0 skipped (GUT, headless)",
   "counts": {
-    "passed": 236,
+    "passed": 241,
     "failed": 0,
     "skipped": 0
   },
