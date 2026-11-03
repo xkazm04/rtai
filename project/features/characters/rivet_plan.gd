@@ -66,6 +66,7 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	p.melee_arm = BodyPlan.L
 	p.hose_tex = "hose"
 	p.hose_from = Vector2(-95, 70)
+	p.hip_follow = 1.0
 	return p
 
 

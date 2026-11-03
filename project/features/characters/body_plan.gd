@@ -87,6 +87,9 @@ var hose_bulge: float = 260.0
 
 var ready_stance: bool = true
 var gait_scale: float = 1.0
+## Twin-stick hips (RigHips): 0 = the hips stay on the facing; 1 = they turn to the walk.
+var hip_follow: float = 0.0
+var hip_twist_max: float = deg_to_rad(70.0)
 ## Rivet's cream rods print as one flat value at gameplay scale; flat bold human limbs do not.
 var limb_lod: bool = true
 

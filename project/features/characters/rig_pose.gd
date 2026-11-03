@@ -12,7 +12,7 @@ static func step(rig: CutRig) -> void:
 	var ph: float = TAU * rig.phase
 	var tw_amp: float = lerpf(0.07, 0.13, rig.run_blend) * walk01
 	rig.torso.rotation = tw_amp * sin(ph) + rig.twist + 0.32 * rig.c_reach
-	rig.pelvis.rotation = -0.55 * tw_amp * sin(ph) + rig.twist * 0.4
+	rig.pelvis.rotation = -0.55 * tw_amp * sin(ph) + rig.twist * 0.4 + rig.hip_yaw
 	_body(rig, walk01, ph)
 	_head(rig, p)
 	for s: int in 2:

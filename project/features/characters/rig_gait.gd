@@ -91,7 +91,8 @@ static func _solve_leg(rig: CutRig, side: RigLimbs, s: int, hl: Vector2) -> void
 		fl = fl.lerp(rig.hip_local(BodyPlan.R) + reach, rig.c_kick)
 		lift = maxf(lift, 0.5 * rig.c_kick)
 	var hz: float = p.hip_z * (1.0 - 0.75 * rig.c_sprawl) * (1.0 - 0.35 * rig.c_tuck)
-	var pole: Vector3 = Vector3(1.0, p.side_sign(s) * 0.25, 0.0)
+	var pole2: Vector2 = Vector2(1.0, p.side_sign(s) * 0.25).rotated(rig.hip_yaw)
+	var pole: Vector3 = Vector3(pole2.x, pole2.y, 0.0)
 	var hip3: Vector3 = Vector3(hl.x, hl.y, hz)
 	var knee3: Vector3 = ik3(
 		hip3, Vector3(fl.x, fl.y, lift * LIFT_PX), p.thigh_len, p.shin_len, pole
