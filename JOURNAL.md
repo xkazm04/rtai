@@ -455,3 +455,39 @@ NEXT (iteration 9 / morning, in order):
      (windowed, d3d12), look at the 10 frames, commit the 10 PNGs (tests/golden/look, LFS).
   3. Delete the `traffic_light_lamps` row from data/tables/accent_debt.json (the gate reports it).
   4. `node tools/evidence/run.mjs` -> expect lint, unit 244, scenarios 8, parity, selftest all PASS.
+- MILESTONE low-end GPU numbers, first time for my passes: `dev/selftest/pass_cost.gd` (new): the riot
+  junction at 48 px/m, interleaved 30-frame blocks that switch ONE pass off vs `full`, median of 8
+  rounds; `--gpu-index 1` = the 7800X3D's AMD Radeon iGPU (2 CU: weaker than a Steam Deck, so a
+  pessimistic Deck proxy; idle - the other lanes render on the 4090), `--resolution 1280x800` = Deck.
+  iGPU 1280x800 BEFORE: frame 5.99 ms GPU = D4 world print 2.95 + actors 2.08 + lights 0.26 + FX ~0.
+  1920x1080: 11.15 ms, print 5.31. The 4090: 0.86 ms (print 0.39) - but my 4090 after-runs read 2.61 ms
+  for a bit-identical shader = other lanes on that GPU: 4090 GPU numbers tonight are NOT trustworthy.
+- MILESTONE look_d4 early-outs (1871a36): every value-noise term whose mask is exactly 0 sits behind an
+  `if` on that mask (deep hatch d > hatch_on, cross-hatch d > 0.93, edge wobble e > edge_lo, vermilion
+  jitter vden > 0.20) -> a typical pixel runs 2 vnoise instead of 9. BIT-IDENTICAL: look_golden with the
+  old and the new shader, 10 frames x 1280x800, 0 px differ. iGPU 1280x800, 3 interleaved pairs: frame
+  6.06 / 6.06 / 6.12 -> 4.94 / 4.66 / 4.92 ms (-1.2 ms, -20 %), print pass 2.86 / 2.92 / 2.76 ->
+  1.76 / 1.58 / 1.21 ms (-45 %). 1080p (1 run): print 5.31 -> 3.76 ms. evidence/pass-cost/.
+  No visual change, so no ladder row; before/after frames kept (22-pass-cost/frames).
+- D5 overlay on the iGPU (trial-merge scratch, n-d5's look_d5 at f6b9018), 64 px/m 1280x800: +2.47 /
+  +2.52 / +2.57 ms (frame 5.9 -> 8.4 ms). The same early-out rule applied to look_d5 (scratch only, NOT
+  committed - n-d5's file): 0 px differ in all 10 look frames incl. the 5 overlay ones; overlay +2.12 /
+  +2.02 ms (-0.45, -18 %). Patch: evidence/pass-cost/look_d5-early-outs.patch (for n-d5 / the Director:
+  apply after the merge, then re-run look_golden - it must stay at mean 0). What is left of the overlay
+  is the full-viewport BackBufferCopy + the always-on paper tooth (2 vnoise) + street strokes over most
+  of a 64 px/m frame.
+- Actors split (pass_cost `no_rigs` / `no_peds` / `no_cars`), iGPU 1280x800, 2 runs: actors 2.11 ms =
+  atlas crowd + its shadows 1.60 / 1.61, full rigs 0.52 / 0.59, moving cars 0.04.
+- REJECTED (reverted, evidence/pass-cost/crowd-trim-rejected): shrinking the crowd quads to the figures
+  (the 2.67 m cells are mostly empty: median figure half-extent 43 of 64 px). Per-column trim, then
+  per-cell: crowd 1.60 / 1.62 -> 1.58 / 1.65 / 1.64 ms = no gain, and the frames moved by up to 4/255
+  on up to 0.9 % of pixels (UV rounding). Not fill-bound; cause of the 1.6 ms still unknown (candidates:
+  the ped shadow layer, MultiMesh instance count CAP vs visible, texture cache on the 3200 x 1024
+  atlas without mipmaps at 32 px/m). Next: split no_peds into figures vs shadows.
+- FRICTION (again): a parse error in a windowed scene never quits - my first pass_cost runs hung to the
+  300 s timeout (Array[Vector2] from a Dictionary = Variant -> warning as error); killed my own PIDs
+  56680 / 32664 only. Run the scene once with output to a file before looping it.
+- NOTE for the Director: `--look=off` (or any look whose `printed` flips) re-applies the item material
+  to ALL crowd nodes in CityView.set_look_enabled, which would replace the crowd atlas material on the
+  people layer after the bake (wrong cells). Not seen in play (the default look never flips); fix =
+  skip the people node once CityCharacters.bake swapped it. Not done tonight.
