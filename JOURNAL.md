@@ -245,3 +245,11 @@ NEXT:
 - 12:05 exe re-exported (code = 603b852): replays the 12:03 input log identical, rc 0.
 - GATES PASS at a1cf583 (lint 13/13 over 360 files, unit 339, scenarios 10/10, parity,
   selftest 11/11) -> evidence/slice-play/iter2-a1cf583/.
+- 12:12 (adde04f) unit tests for StageCells and the city mapping: 344/344. One first draft put
+  the test point 0.7 m deep in a parked car (one push-out pass does not clear that; Rivet moves
+  cm per tick, so the test now overlaps the edge by 0.25 m like a real step).
+- 12:15 BENCH under bench.lock (taken after vehicles and d5-combat released it; released
+  right after): dev/bench/quest1_frames, Dock 9 fight on the city (from tick 5800, beat
+  b4-dock), 1200 frames, one tick per frame, vsync off, d3d12, viewport 1422x800 (the window
+  came up smaller than the 1920x1080 asked). CONTENDED: p50 1.81 ms, p95 5.65 ms, p99 11.95 ms,
+  max 20.38 ms (one frame over 16.7). evidence/slice-play/slice-frames-32ppm.json.
