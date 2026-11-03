@@ -9,10 +9,13 @@ extends Node
 var session: ArenaSession = null
 var view: CollectCallView = null
 var px_per_m: float = 32.0
+var hud: ArenaHud = ArenaHud.new()
 var _shot: String = ""
 var _shot_tick: int = 600
 var _telemetry: String = ""
 var _taken: bool = false
+var _zoom_i: int = 0
+var _area_i: int = 0
 
 
 func _ready() -> void:
@@ -32,6 +35,15 @@ func _ready() -> void:
 	view.stage_view = floor_view
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
+	view.hud_view.visible = false
+	@warning_ignore("return_value_discarded")
+	ArenaKeys.install()
+	var layer: CanvasLayer = CanvasLayer.new()
+	layer.layer = RenderLayers.canvas(&"hud")
+	add_child(layer)
+	hud.session = session
+	hud.px_per_m = px_per_m
+	layer.add_child(hud)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
 
@@ -40,6 +52,33 @@ func _process(_delta: float) -> void:
 	if _shot != "" and not _taken and session.tick() >= _shot_tick:
 		_taken = true
 		_save_shot.call_deferred()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"arena_zoom"):
+		_zoom_i = (_zoom_i + 1) % session.plan.zoom_ppm.size()
+		set_zoom(session.plan.zoom_ppm[_zoom_i])
+	elif event.is_action_pressed(&"arena_teleport"):
+		_area_i = (_area_i + 1) % session.plan.areas.size()
+		teleport(session.plan.areas[_area_i])
+	elif event.is_action_pressed(&"arena_save_telemetry"):
+		var path: String = _telemetry if _telemetry != "" else "user://arena/telemetry.json"
+		hud.note = "telemetry -> %s (%s)" % [path, session.write_telemetry(path)]
+
+
+func set_zoom(ppm: float) -> void:
+	px_per_m = ppm
+	hud.px_per_m = ppm
+	if view.print_stage != null:
+		view.print_stage.zoom = ppm / SimConst.PX_PER_M
+
+
+## Dev teleport (outside the input tape: a live run that teleports does not replay; logged).
+func teleport(area: ArenaPlan.Area) -> void:
+	session.stage.arena.rivet.pos = area.rect.get_center()
+	session.pilot.mover.stop()
+	hud.note = "teleported to %s (this run no longer replays)" % area.name
+	Log.info("arena", "teleport to %s at tick %d" % [area.id, session.tick()])
 
 
 func _save_shot() -> void:

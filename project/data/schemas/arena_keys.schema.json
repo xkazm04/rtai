@@ -1,0 +1,52 @@
+{
+  "$id": "gtai.arena-keys/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "joy_buttons": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "keys": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "keys",
+          "joy_buttons"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.arena-keys/1",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rows"
+  ],
+  "type": "object"
+}
