@@ -1554,3 +1554,9 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   doctrine clean - "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents", world lock holds;
   only their look (worst 22.16) / block (worst 35.49) goldens fail, the expected post-merge re-bless
   (`evidence/iter16/morning-merge-gates.txt`). Bench still not run: another lane rendering (05:34).
+- 05:39 CHECK the FULL morning stack: main + n-d4 (plumbing merge, dangling c9167f9, no hooks skipped) + n-visual
+  (JOURNAL.md the only conflict) + all four patches (16 quest 1, 19 generator, 21 sleeves, 23 fx fade) applied clean,
+  re-baked (bake --check matches): lint 13/13 (264 files), unit **259/259**, scenarios 8/8, parity bit-exact;
+  selftest fails only on n-visual's goldens (re-bless), doctrine gate clean, 0 placeholders. Quest 1 grabber renders
+  all 9 beats on that stack (`masters:morning_full_q1/`; beat 06 checked by eye: D4 HUD, inked fire, cast, dialogue
+  card). `evidence/iter16/morning-full-stack-gates.txt`. Scratch `scratch-full` kept for the Director if useful.
