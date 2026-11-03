@@ -1449,3 +1449,16 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   not kept as an option either. README part row records it. Scratch: i10r0/r5/r1, a10r0/r1, w10r* (deleted below).
 - 06:15 look_d5.params.json gained `ui` (look_d5_ui: sharp 0.5, lod_bias 0) + a _doc line for the HUD lane;
   test_look_d5_params checks the ui group against the shader's uniforms. Unit 149/0.
+- 06:20 item51 MIPMAP AUDIT of the D5 city art (no commit to project/; board evidence/item51_mip_audit.png,
+  looked at). Found: 6 of 7 D5 roof plates and all 10 D4 roofs import WITH mipmaps; building_union_hall (since
+  a00e79a, not documented as a choice) and the 4 street decals do not (the rule overlays do not either: a proposal,
+  not tested). Tested (imports flipped, re-imported, restored with git checkout, tree checked): union hall at 32 px/m
+  interior box L / paper / mid / dark / |dL/dx| committed 0.499 / 0.471 / 0.042 / 0.487 / 0.131, mips 0.534 / 0.489 /
+  0.061 / 0.450 / 0.106, mock LOCAL 9 roof 0.613 / 0.522 / 0.170 / 0.307 / 0.162 (loose: the mock is not a minified
+  texture): mips move the tone toward the mock and the line energy away (the no-mip plate aliases its pen hatch into
+  scratches, which happens to read like the mock's visible hatch). Pan swim 48 px/m thin print, crop at (18.1,-8.5),
+  half of it off the window: 0.00587 -> 0.00593; committed print 0.01131 -> 0.01259 (its screen grain dominates);
+  junction crop identical. Decals by eye at 32 / 48: mips lose the fist's spray dots and the scorch's spatter rays:
+  no-mip is better there. NOT a clear win: committed imports kept. Also tried look_d5_ui on all roof sprites
+  (D5_UI_WORLD dev switch, reverted, never committed): union hall cleans up like the mips version, frame L 0.420 ->
+  0.417. For the city lane / owner: one rule for D5 plates (mips + a hatch coarse enough to survive mip 1, or none).
