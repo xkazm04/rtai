@@ -1,0 +1,41 @@
+{
+  "backends": [
+    "gdscript",
+    "native"
+  ],
+  "checks": 40,
+  "counters_a": [
+    150,
+    69,
+    25,
+    6,
+    101,
+    149,
+    11,
+    20,
+    427,
+    66
+  ],
+  "counters_b": [
+    150,
+    69,
+    25,
+    6,
+    101,
+    149,
+    11,
+    20,
+    427,
+    66
+  ],
+  "debug_build": true,
+  "exact": true,
+  "first_mismatch_step": -1,
+  "max_abs_diff": 0.0,
+  "planted_first_mismatch_step": 629,
+  "planted_mutation_caught": true,
+  "snapshot_floats": 3547,
+  "step_ms_a": 3.29790333333333,
+  "step_ms_b": 0.0374891666666667,
+  "steps": 1200
+}

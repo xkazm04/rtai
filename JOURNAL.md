@@ -55,6 +55,11 @@ Iteration 1 (09:04) died on a billing error before any turn; iteration 2 (10:04)
   CityTextures.load_threaded_request use_sub_threads false -> 4/4 runs pass, goldens bit-identical,
   prewarm 31 ms. If it recurs, look at ResourceLoader races on shared paths first.
 
+- MILESTONE 11:15 evidence at 000087f (--no-bench): lint, unit 335, scenarios 8, parity, selftest all
+  PASS -> evidence/d5-city/evidence-000087f/. Road share at 32 px/m (dark L, 41 px box blur < 0.40;
+  evidence/d5-city/road-share.json): T1 0.35, H2 0.41, real city focus 0 street 0.63, 1 roofs 0.46,
+  2 street 0.42, 3 junction 0.72 -> the city shows up to 2x T1's asphalt: the next big lever.
+
 NEXT (iteration 3):
 1. Dash-free arm variant: the lane dashes run through the zebra gaps (T1 stops them 1-2 m short): a
    procedural `road_arm` tile (dashes cut at the zebra) for the 4 arms, same tool.
