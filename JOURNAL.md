@@ -49,6 +49,20 @@ iteration reads both golden paths properly. DEVIATION none yet.
   warns). From now on I run each new script headless with --quit-after before any windowed run.
 - Gates at e3f9f2a: lint 13/13, unit 545/545 (`evidence/arena/unit-it1.log`), scenarios 20/20
 
+- MILESTONE 21:23: course station recording: `ArenaCourseBot` + `scenario_arena_course` (course
+  time 15.5 s, turn peak 720 deg/s, replay identical, planted no-stick fault caught);
+  `--bot=course` in the scene; frame `arena-course-32.png`. FRICTION: arena walls are drawn but
+  do not collide yet (NEXT 3).
+- MILESTONE 21:22: first clip `gtai-masters/eve/arena/clips/arena-range-32ppm-15s.mp4` (Godot
+  `--write-movie`, `--fixed-fps 60`, 900 frames, made into an mp4 with ffmpeg). I checked the
+  8-frame sheet. Recipe: `"$GODOT_BIN" --rendering-driver d3d12 --fixed-fps 60 --resolution
+  1280x720 --write-movie <x>.avi --quit-after 900 --path project res://dev/arena/arena.tscn --
+  --bot=range --ppm=32`. Any lane can capture its station the same way. frames.json: 7 entries.
+- answers.json re-read 21:22: no answers yet to arena-1 or arena-2.
+- 21:26: course clip `clips/arena-course-48ppm-16s.mp4` (sheet checked; the walls do not collide
+  yet). frames.json now has 8 entries. Still missing: range at 48 px/m and course at 32 px/m as
+  clips (stills exist).
+
 NEXT (iteration 2):
 1. Re-read answers.json for arena-1 and arena-2 and apply them: arena-1 C is built (T teleport);
    arena-2 A means camera aim look-ahead, which is the camera lane's to build, so file it as a
@@ -65,16 +79,3 @@ NEXT (iteration 2):
 8. Other lanes: write arena_stations/<lane>.json (format: features/arena/README.md). Knob keys
    are "<table>.<json path>"; live apply covers input_actions.move.* and combat weapons /
    rivet / human so far.
-- MILESTONE 21:23: course station recording: `ArenaCourseBot` + `scenario_arena_course` (course
-  time 15.5 s, turn peak 720 deg/s, replay identical, planted no-stick fault caught);
-  `--bot=course` in the scene; frame `arena-course-32.png`. FRICTION: arena walls are drawn but
-  do not collide yet (NEXT 3).
-- MILESTONE 21:22: first clip `gtai-masters/eve/arena/clips/arena-range-32ppm-15s.mp4` (Godot
-  `--write-movie`, `--fixed-fps 60`, 900 frames, made into an mp4 with ffmpeg). I checked the
-  8-frame sheet. Recipe: `"$GODOT_BIN" --rendering-driver d3d12 --fixed-fps 60 --resolution
-  1280x720 --write-movie <x>.avi --quit-after 900 --path project res://dev/arena/arena.tscn --
-  --bot=range --ppm=32`. Any lane can capture its station the same way. frames.json: 7 entries.
-- answers.json re-read 21:22: no answers yet to arena-1 or arena-2.
-- 21:26: course clip `clips/arena-course-48ppm-16s.mp4` (sheet checked; the walls do not collide
-  yet). frames.json now has 8 entries. Still missing: range at 48 px/m and course at 32 px/m as
-  clips (stills exist).
