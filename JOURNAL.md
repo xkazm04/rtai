@@ -466,3 +466,15 @@ NEXT (for the 18:00 sync and the Director):
   blue cops in d-city's crowd and D5 ramp, d-combat's red blood the only red besides Rivet's collar; at 128 the navy cop
   separates from the cream crowd beside a red kill splatter. 4 frames straight down, 0 rejected. Owner frame
   frames/merge4-preview-cop-follow-4zoom.png replaces merged-preview-city0-32-64 (frames.json 15; ladder rebuilt).
+
+## Status at ~16:20 (iteration 47) and NEXT
+- Items 1-5 evidenced. This iteration closed item 2's last dev-only proof: a REAL-GAME cop close-up at
+  32/48/64/128 vs main (cop_close.tscn, 8dbf7f4), plus a real-game merge preview with d-city + d-combat.
+- EVIDENCE (clean tree, HEAD 8dbf7f4; later commits journal/evidence docs only): lint 13/13, unit 326/326,
+  scenarios 8/8, parity exact, look goldens 11/11 + block 5/5 PASS unblessed (--no-bench).
+- GPU bench (bench/run.mjs): still unmeasured by this lane (lock held by other lanes when checked).
+- Owner frames: masters day-d5/d5-cast/frames.json (15) + ladder.png; 12 frames looked at this iteration, all straight
+  down, 0 rejected. Codex images today: 1.
+NEXT: unchanged from iteration 46 (owner choices 1-6, merge recipe, re-bless goldens once on the merged tree).
+  REQUEST 5 is withdrawn (cop_close.tscn does the nearest-cop follow without touching city_frame.gd).
+  For the merge, the scratch-merge recipe is: merge-tree --write-tree + commit-tree, then checkout --detach.
