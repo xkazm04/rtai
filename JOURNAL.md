@@ -1228,3 +1228,11 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   sat on one line; without the stain the crack curls into a repeated fishhook; plates alone are a marginal scale cue.
   Not a clear gain - the calm floor stays (the same call as iteration 6's wheel scuffs). scratch-q1 restored (floor
   + `stage_view.gd` = the iteration-12 patch, checked byte-equal). Original kept in `masters:backup_df14/`.
+- 04:29 MILESTONE Toner Room linoleum calmed (quest 1 beat 3). My iteration-6 `basement_floor.png` printed as
+  cow-print mottling in every square behind Juno / Kilohm / Don Fax: its scuff term (sparse points blurred at sigma 5)
+  made soft grey clouds. `masters:tools/basement_calm.py` rebuilds it with the same seed (the unchanged build
+  reproduces the shipped file, max diff 0) minus the scuffs: checker, tone drift, grain and ink grout kept. Quest
+  grabber (scratch-q1, seeded, the quest's own camera) `before_q1df|after_q1bf/03-toner-room.png`, crops
+  `work/fx14/q1bf_03.png`, 1:1 `q1bf_03_11.png`: clean linoleum, the cast reads off it. Procedural (no provenance line,
+  as in iteration 6). README row. Original in `masters:backup_bf14/`. Ladder2 row. Commit d6317ee. 0 Codex.
+  (scratch-q1 now holds this floor too; quest patch unchanged.)
