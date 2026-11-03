@@ -195,3 +195,20 @@ cruiser in city_frame; KingPlan into the boss ticket).
   selftest look goldens 11/11 (worst 0.84) + block 5/5 (worst 0.46) PASS unblessed, crowd atlas on doctrine (--no-bench).
 - CHECKED Rivet's portraits: ~13-21k vermilion-ish px each, all in the collar and the rust drips. T2 draws the same
   red-orange rust streaks all over him, so they stay (no change). King: the cape question stands for the owner.
+- 12:00 hero scene re-shot with the ring (masters renders/heroRim, --borrow night cruiser): deterministic, the ONLY
+  changed px vs heroCapB are the cop heads at 32/48 (103 / 238 px), 64+ D5 tier identical. Owner hero frames now heroRim.
+- READY PATCH for REQUEST 1/3 (d5-city's look_d4 world pass, parked cruisers): masters day-d5/d5-cast/
+  look_d4-cop-blue-plate.patch (applies on d-city 4e1e055; 17 lines): `uniform float cop_blue = 0.0` + a COP_BLUE_HI
+  plate where src b - max(r, g) >= 0.12..0.16 (palette gate 0.157: only the light bar, never the navy body), the teal
+  density zeroed for b - g > 0.16 (cop blue is not teal), and look_profiles `world.cop_blue` = 1 in d1/d4/d5/d5c, 0 in
+  noir (+ schema key). Tested in a scratch worktree (d-city 4e1e055 + d-cast merged, goldens/JOURNAL from d-city, never
+  committed): parked cruisers are 1 in 12 kerb-parked cars (kerb_dresser PARKED id 53); a found one (offset -32, 7.7 from
+  city_frame BASE, temporary focus at -32, 3) prints its bar GREY without the patch and cop_blue_hi with it: blue px 0 ->
+  340 at 48, 0 -> 633 at 64; teal px unchanged (Rivet's torch tip). The same 32 px/m shot holds a MOVING cruiser too,
+  already blue through d-city's look_d4_item: both bars now agree (masters frames/parked-cruiser-plate-ab.png).
+  Merged + patched: lint 13/13, unit 336/336, selftest "no new off-doctrine accents" (cop vermilion debt rows reported
+  paid). Goldens OFF on the merged tree as expected (both lanes re-blessed; re-bless once after the merge).
+- Owner frames (masters frames.json 15 + ladder.png): + cop-rim-t1-ab, + parked-cruiser-plate-ab (PROPOSED patch);
+  city0 32/48 and hero frames re-shot with the ring; portraits 3-way (orig | navy | dome) and the dome dialogue frame.
+  Dropped from the 15: the cop-shoulders A/B frame (its B panel was from an earlier tree; the A/B question stays in NEXT,
+  file frames/cop-shoulders-32ppm-verm-A-B.png kept on disk).
