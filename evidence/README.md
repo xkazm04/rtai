@@ -9,10 +9,10 @@ tick count, no RNG.
 |---|---|
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
-| `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
+| `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
 | `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h73, iteration 4) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h73, iteration 4 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h85, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -40,11 +40,29 @@ tick count, no RNG.
 | `item18_arena.png` | iteration 4: the D5 boss arena (King's chop-shop floor + a plan-view King sprite) at 32/48/64/96, D4 tier, the rejected cream crown (a1), the concept |
 | `item19_phone.png` | iteration 4: the D5 phone close-up in-engine (cop_alarmed behind the keyed phone screen) at 32/48 + the raw frame |
 | `item5e_boss_intro.png` | iteration 4: the D5 boss intro card (King on his turntable; `features/combat/art/d5/boss_intro_king.png`, not wired) |
-| `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a14) |
+| `arena-d4d5-<ppm>ppm.png` | the boss arena at 64 and the 128 px/m boss kill-cam (a15, iteration 5: D5 OSHA + tall yard roofs) |
 | `item1d_rust_dry.png` | iteration 4: Rivet at 96 px/m, rust_dry 0.42 (h72) vs 0.55 (h73, kept) |
 | `item20_lamp.png` | iteration 4: at 48 and 64: the D4 lamp ('spoon', h70) / the first D5 lamp (riveted head = gear ring, h71) / the plain-cap D5 lamp (h72, kept) |
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
+| `item21_mural_pen.png` | iteration 5: the mural roof D4 / D5 wash grime (h73) / pen-hatch b as is (h74, too clean) / b + ink weight + fist wash + misprint (h75, kept) at 32/48/64 + the mock roof + numbers; the rejected bold-hatch c (h83/h84) |
+| `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h85 at 32/48/64/128, the arena a15 at 64 and 128, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
+
+## Iteration 5 (01:15 -> 02:10) in one screen (`night_iter5_summary.png`)
+- **Pen-hatch D5 roofs** (item 3 raised; `item21_mural_pen.png`, `item3_roofs_gate.png`; 5fa5d38 .. 8ab942a): the
+  D5 roofs' grey wash blotches printed as camouflage and sat darker than D4. New Codex plates (Image 2 = crops of
+  the mock as the HATCHING target) draw tone with pen lines only; `build_roofs.py` cleans the paper and weights the
+  lines (gamma 0.7; union hall 1.0) so the hatch survives look_d4. Roof interiors at 32 px/m (L / paper):
+  mural 0.487/0.28 -> 0.593/0.44 (mock 0.589/0.41), bar 0.463/0.27 -> 0.494/0.39, union hall 0.469/0.37 ->
+  0.518/0.43, HQ 0.459/0.27 -> 0.502/0.39, pension 0.506/0.34 -> 0.555/0.47. The mural fist is a light ink wash
+  with its own ink line misprinted vermilion 3 px down-right. NEW D5 OSHA and tall plates: the arena yard (a15) and
+  the hero's neighbours print them in the d5 tier (64 px/m: OSHA paper 0.33 -> 0.40, tall 0.24 -> 0.36).
+- **Rejected**: the b plate as is (too clean, the fist lost its mass), a composited ruled hatch (screen tone, union
+  hall moire), a bold-hatch Codex plate (lines survive but take the fist's figure/ground and the tone), the warehouse
+  plate (my template squashed a 2:1 roof).
+- **No regression**: d4 tier 0 px in every round; street band and actors 0 px (h85 vs h73); roof pan swim per pixel
+  class unchanged (the total +18% on the mural crop = more paper under look_d4's screen grain, gap 7).
+- Codex: 9 images (ledger 50 = the night's budget), 0 rejected for camera breaks. Gates ALL PASS at dd3f0f5.
 
 ## Iteration 4 (00:11 -> ) in one screen (`night_iter4_summary.png`)
 - **Roof ink foot** (gap 5, `item16_parapets.png`, 67c4b77): the mock draws each roof as a raised slab: cream lip ->
@@ -154,6 +172,11 @@ Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
    the same mid-tone density lift (`build_roofs.py` LIFT) on the D4 roof set, gated against the grime/detail loss
    seen at 2.2. Tried on temporary copies (`item14_d4_roof_lift_proposal.png`, nothing committed): OSHA 0.482 ->
    0.538 L, paper 26% -> 38%. What is left is the roofs' thick hatched border ring (roof art).
+   Iteration 5: the D5 roofs are now ABOVE D4 and at the mock's tone on the mural (pen-hatch plates, see above);
+   OSHA and tall have D5 plates. Remaining: TEXTURE. At 32 px/m HF 0.11-0.14 vs the mock's 0.163: through look_d4
+   a roof keeps the mock's tone OR visible hatch lines, not both (the print fattens any line that survives
+   minification). Next (visual-engine): a roof print that keeps thin art lines thin; (city): adopt the 7 D5 plates,
+   pad non-square roofs (warehouse) to a square template.
 3. **Pavement grid.** Ours: a hard white slab grid with black joints; the mock: soft, irregular slab joints. Next:
    city lane's pavement tile (the D5 sidewalk tile helped only marginally). Iteration 3 tried softening the D5
    tile's joints (h55): the look_d4 print re-inks them (dark px 25.3% -> 23.9%), reverted. The joint weight lives in
