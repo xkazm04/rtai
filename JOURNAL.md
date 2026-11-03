@@ -885,3 +885,4 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   dark_soft 0.10 tune and the drop shadows. By eye: warmer, lighter roofs with visible hatch, stickers lifted off
   the street; the closest frame to the mock tonight. Board evidence/item35_all_proposals_iter7.png (32/48/64 +
   mock + concept); ladder row.
+- 03:33 evidence/hero-d4d5-*ppm.png and item4_hero_vs_targets.png = h106 (hero-d4-* unchanged: d4 tier byte-identical).
