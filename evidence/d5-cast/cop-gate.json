@@ -1,0 +1,119 @@
+{
+ "deltaE76": {
+  "cop_blue_vs_ink(ped body)": 28.1,
+  "cop_blue_hi_vs_ink": 68.3,
+  "cop_blue_hi_vs_cream": 72.2,
+  "vermilion_vs_ink(before)": 92.0,
+  "cop_blue_vs_asphalt": 19.2
+ },
+ "before/city-0-32": {
+  "verm_blobs": 16,
+  "verm_px": 4471,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-0-48": {
+  "verm_blobs": 14,
+  "verm_px": 6218,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-1-32": {
+  "verm_blobs": 2,
+  "verm_px": 161,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-1-48": {
+  "verm_blobs": 8,
+  "verm_px": 187,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-2-32": {
+  "verm_blobs": 2,
+  "verm_px": 161,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "before/city-2-48": {
+  "verm_blobs": 8,
+  "verm_px": 182,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "final/city-0-32": {
+  "verm_blobs": 1,
+  "verm_px": 74,
+  "blue_blobs": 17,
+  "blue_px": 3405
+ },
+ "final/city-0-48": {
+  "verm_blobs": 3,
+  "verm_px": 33,
+  "blue_blobs": 17,
+  "blue_px": 4412
+ },
+ "final/city-1-32": {
+  "verm_blobs": 1,
+  "verm_px": 119,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "final/city-1-48": {
+  "verm_blobs": 8,
+  "verm_px": 124,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "final/city-2-32": {
+  "verm_blobs": 1,
+  "verm_px": 119,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "final/city-2-48": {
+  "verm_blobs": 8,
+  "verm_px": 127,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "note": "city_frame.tscn seed 91, riot targets, --police=4. before = main 089400e; final = d-cast HEAD (Rivet 1.1, blue cops, end-on shoulder fixed). Remaining vermilion px after = Rivet collar, objective/danger props, hit flashes.",
+ "t1heads/city-0-32": {
+  "verm_blobs": 1,
+  "verm_px": 66,
+  "blue_blobs": 15,
+  "blue_px": 2393
+ },
+ "t1heads/city-0-48": {
+  "verm_blobs": 1,
+  "verm_px": 33,
+  "blue_blobs": 13,
+  "blue_px": 2864
+ },
+ "t1heads/city-1-32": {
+  "verm_blobs": 1,
+  "verm_px": 119,
+  "blue_blobs": 0,
+  "blue_px": 0
+ },
+ "t1heads/city-1-48": {
+  "verm_blobs": 1,
+  "verm_px": 124,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "t1heads/city-2-32": {
+  "verm_blobs": 1,
+  "verm_px": 119,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "t1heads/city-2-48": {
+  "verm_blobs": 1,
+  "verm_px": 127,
+  "blue_blobs": 0,
+  "blue_px": 1
+ },
+ "note_t1heads": "t1heads = d-cast 90bb8f6 (T1 cream cop heads), same city_frame args; blue gate here b - max(r,g) > 20 (the night gate's blobs >= 15 px). Iteration-1 heads (final/*) kept above for the owner's A/B."
+}

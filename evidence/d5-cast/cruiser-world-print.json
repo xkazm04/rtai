@@ -1,0 +1,19 @@
+{
+ "police_cruiser": {
+  "bar_px": 1262,
+  "mean_teal_plate": 0.374,
+  "px_teal_over_half": 791
+ },
+ "police_cruiser_d1": {
+  "bar_px": 1306,
+  "mean_teal_plate": 0.375,
+  "px_teal_over_half": 870
+ },
+ "police_cruiser_d2": {
+  "bar_px": 1179,
+  "mean_teal_plate": 0.366,
+  "px_teal_over_half": 663
+ },
+ "note": "look_d4 world pass (main and d-city f0cedb3 alike): teal density t = (min(g,b) - r - 0.08) * 2.8, plate = smoothstep(0.30, 0.45, t) * teal(0.85), replayed on the parked cruiser sprites' light-bar px. Needs d5-city REQUEST 1/3: a cop-blue plate and b - g < 40/255 in the teal test.",
+ "CORRECTION (11:45)": "The teal numbers above use the shader's default teal uniform (0.85). Every look profile in look_profiles.json (d1, d4, d5) sets world teal = 0 and verm = 0, so in the REAL game a parked cruiser's cop_blue_hi bar prints as plain ink/grey (no blue plate, no teal). Teal only appears where a dev scene leaves the default uniform: the D5 hero scene prints the borrowed blue-bar cruiser teal on d-cast AND on the d-cast+d-city trial merge (157 px, masters renders/cruiser-hero48-3way.png). The real-game need is REQUEST 1's: a cop-blue plate in look_d4's world pass."
+}

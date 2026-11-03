@@ -1,0 +1,26 @@
+{
+ "city_frame seed 91 --police=4, city-0 (real World+CityView)": {
+  "helmet_only(32)": {
+   "blue_px": 3207,
+   "blue_blobs>=15px": 10
+  },
+  "helmet+cap(32)": {
+   "blue_px": 2393,
+   "blue_blobs>=15px": 15
+  },
+  "helmet_only(48)": {
+   "blue_px": 4437,
+   "blue_blobs>=15px": 10
+  },
+  "helmet+cap(48)": {
+   "blue_px": 2864,
+   "blue_blobs>=15px": 13
+  }
+ },
+ "hero changed px (heroHelmB -> heroCapB)": {
+  "d4-32": 221,
+  "d5-64": 947,
+  "d5-128": 296
+ },
+ "note": "Patrol cap the T1 way: cream crown, cop-navy band, ink brim, cop_blue_hi badge. Blue px fall 25-35 % (the navy crown is gone) but every cop stays its own blue blob (navy body + blue-hi shoulders); the cream dome on a navy body is T1's cop read. Vermilion on the cap: 0 px both tiers. Look goldens pass unblessed (11/11 worst 0.92, block 5/5 worst 0.53)."
+}

@@ -28,8 +28,8 @@ const SHOT_FROM: Vector2 = Vector2(7.25, -1.6)
 const SHOT_TO: Vector2 = Vector2(4.8, -2.4)
 
 
-## souls go to soul_parent (the actor layer, above the world print) with soul_mat;
-## the rest to parent
+## souls go to soul_parent (the actor layer, above the world print) with soul_mat; the rest to
+## parent. soul_parent null = no souls (the default: the soul trail is descoped, `--souls`)
 static func place(
 	parent: Node, dir: String, px: float, soul_parent: Node, soul_mat: Material
 ) -> int:
@@ -37,7 +37,8 @@ static func place(
 	for spot: Array in SPOTS:
 		var name: String = spot[0]
 		if name.begins_with("soul"):
-			placed += _put(soul_parent, dir, spot, px, soul_mat)
+			if soul_parent != null:
+				placed += _put(soul_parent, dir, spot, px, soul_mat)
 		else:
 			placed += _put(parent, dir, spot, px)
 	var d: Vector2 = (SHOT_TO - SHOT_FROM).normalized()

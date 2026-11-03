@@ -1,0 +1,194 @@
+{
+ "contended": true,
+ "date": "2026-11-03",
+ "limits": {
+  "low1Fps": 45,
+  "p99CpuMs": 7,
+  "worstSwapMs": 50
+ },
+ "method": "node tools/bench/run.mjs --runs=1 (exported release build, windowed, 4 scenarios x 60 s), interleaved d-cast / main / d-cast / main, bench.lock held by d5-cast for each run; main in a scratch worktree (removed after). Same machine: Ryzen 7 7800X3D, RTX 4090; other lanes rendering.",
+ "runs": {
+  "1 d-cast 0ee82cb": {
+   "scenarios": {
+    "drive": {
+     "avgFrameMs": 1.188,
+     "hitches25": 29.0,
+     "hitchesOver50": 3.0,
+     "low1Fps": 129.893,
+     "over50.present": 0.0,
+     "over50.unexplained": 3.0,
+     "p99CpuMs": 3.332,
+     "rigMsP99": 0.317
+    },
+    "drive48": {
+     "avgFrameMs": 0.805,
+     "hitches25": 7.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 203.358,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 2.769,
+     "rigMsP99": 0.575
+    },
+    "drive48vsync": {
+     "avgFrameMs": 16.726,
+     "hitches25": 22.0,
+     "hitchesOver50": 2.0,
+     "low1Fps": 28.107,
+     "over50.present": 2.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 21.151,
+     "rigMsP99": 0.911
+    },
+    "riot": {
+     "avgFrameMs": 1.264,
+     "hitches25": 21.0,
+     "hitchesOver50": 2.0,
+     "low1Fps": 122.404,
+     "over50.present": 1.0,
+     "over50.unexplained": 1.0,
+     "p99CpuMs": 4.912,
+     "rigMsP99": 0.895
+    }
+   },
+   "window": "16:20-16:25"
+  },
+  "2 main 089400e": {
+   "scenarios": {
+    "drive": {
+     "avgFrameMs": 0.967,
+     "hitches25": 0.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 357.216,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 1.967,
+     "rigMsP99": 0.277
+    },
+    "drive48": {
+     "avgFrameMs": 0.723,
+     "hitches25": 0.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 318.48,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 2.249,
+     "rigMsP99": 0.536
+    },
+    "drive48vsync": {
+     "avgFrameMs": 16.684,
+     "hitches25": 19.0,
+     "hitchesOver50": 1.0,
+     "low1Fps": 34.077,
+     "over50.present": 0.0,
+     "over50.unexplained": 1.0,
+     "p99CpuMs": 21.708,
+     "rigMsP99": 1.019
+    },
+    "riot": {
+     "avgFrameMs": 1.119,
+     "hitches25": 4.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 178.704,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 3.474,
+     "rigMsP99": 0.849
+    }
+   },
+   "window": "16:26-16:30"
+  },
+  "3 d-cast 0ee82cb": {
+   "scenarios": {
+    "drive": {
+     "avgFrameMs": 1.142,
+     "hitches25": 21.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 154.231,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 3.118,
+     "rigMsP99": 0.32
+    },
+    "drive48": {
+     "avgFrameMs": 0.866,
+     "hitches25": 31.0,
+     "hitchesOver50": 2.0,
+     "low1Fps": 81.639,
+     "over50.present": 2.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 2.694,
+     "rigMsP99": 0.561
+    },
+    "drive48vsync": {
+     "avgFrameMs": 16.674,
+     "hitches25": 0.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 50.868,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 19.058,
+     "rigMsP99": 0.717
+    },
+    "riot": {
+     "avgFrameMs": 1.229,
+     "hitches25": 12.0,
+     "hitchesOver50": 1.0,
+     "low1Fps": 142.476,
+     "over50.present": 0.0,
+     "over50.unexplained": 1.0,
+     "p99CpuMs": 4.898,
+     "rigMsP99": 0.862
+    }
+   },
+   "window": "16:31-16:36"
+  },
+  "4 main 089400e": {
+   "scenarios": {
+    "drive": {
+     "avgFrameMs": 0.936,
+     "hitches25": 22.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 135.586,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 4.449,
+     "rigMsP99": 0.182
+    },
+    "drive48": {
+     "avgFrameMs": 0.731,
+     "hitches25": 34.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 142.134,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 3.746,
+     "rigMsP99": 0.346
+    },
+    "drive48vsync": {
+     "avgFrameMs": 16.674,
+     "hitches25": 0.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 48.006,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 19.901,
+     "rigMsP99": 0.74
+    },
+    "riot": {
+     "avgFrameMs": 0.873,
+     "hitches25": 18.0,
+     "hitchesOver50": 0.0,
+     "low1Fps": 167.278,
+     "over50.present": 0.0,
+     "over50.unexplained": 0.0,
+     "p99CpuMs": 3.237,
+     "rigMsP99": 0.537
+    }
+   },
+   "window": "16:36-16:40"
+  }
+ },
+ "schema": "d5-cast.gpu-bench-ab/1",
+ "verdict": "riot p99 CPU d-cast 4.912 / 4.898 ms vs main 3.474 / 3.237 ms (2 of 2 interleaved pairs higher, ~1.5 ms), avgFrameMs 1.264 / 1.229 vs 1.119 / 0.873; under the 7 ms limit. Drive p99 overlaps (d-cast 3.33 / 3.12, main 1.97 / 4.45): noise. over50.unexplained misses: d-cast run 1 (4) and run 3 (1); main run 2 (1); main run 4 clean. d-cast run 3 had a 4982 ms worst frame (machine stall). OPEN LEAD, not a verdict: d-cast's game-path code changes are two shaders (print_part, look_d5_part), Rivet/King plans and one rig_detail line, nothing on the sim or per-frame CPU path; the headless rig bench A/B showed no rig-cost change. Needs a 3+3 uncontended A/B on the merged tree."
+}

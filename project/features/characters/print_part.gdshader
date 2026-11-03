@@ -40,6 +40,13 @@ const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM  = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL  = vec3(0.122, 0.710, 0.659);
 const vec3 INK   = vec3(0.090, 0.075, 0.106);
+// d5-cast (2026-11-03): the police inks (palette.json cop_blue #3A4766, cop_blue_hi #4F86E0) replace vermilion
+// on cops. A pixel is cop blue where blue leads (b - max(r, g) >= blue_gate) and g >= r (navy, not the violet
+// steel sheen; a light pixel by blue_gate_hi); its light half prints cop_blue_hi (badge, shoulder marks), the rest cop_blue.
+const vec3 COP_BLUE    = vec3(0.227, 0.278, 0.400);
+const vec3 COP_BLUE_HI = vec3(0.310, 0.525, 0.878);
+uniform float blue_gate = 22.0;
+uniform float blue_gate_hi = 50.0;  // a light pixel must lead harder (the D5 steel's cool sheen is not a badge)
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -62,7 +69,7 @@ void fragment() {
 	} else {
 		vec3 s = c.rgb * 255.0;
 		float vr = s.r - max(s.g, s.b);
-		bool teal = (s.g > s.r + 60.0) && (s.b > s.r + 40.0) && (s.g > 110.0);
+		bool teal = (s.g > s.r + 60.0) && (s.b > s.r + 40.0) && (s.g > 110.0) && (s.b - s.g < 40.0);  // not a bright cop blue (d5-cast)
 		float lum = dot(c.rgb, vec3(0.299, 0.587, 0.114));
 		float lc = dot(CREAM, vec3(0.299, 0.587, 0.114));
 		float li = dot(INK, vec3(0.299, 0.587, 0.114));
@@ -90,6 +97,8 @@ void fragment() {
 		} else if (vr > verm_gate) {
 			// dark vermilion (shaded cape folds) keeps an ink dot over the vermilion
 			o = (d > 0.62 && dots(px, (d - 0.62) * 2.0, 0.785) > 0.5) ? INK : VERM;
+		} else if (s.b - max(s.r, s.g) >= (lum > 0.40 ? blue_gate_hi : blue_gate) && s.g >= s.r) {
+			o = lum > 0.40 ? COP_BLUE_HI : (d > 0.93 ? INK : COP_BLUE);
 		} else if (d >= hi) {
 			o = INK;
 		} else if (d <= lo) {

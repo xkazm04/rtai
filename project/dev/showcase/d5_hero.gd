@@ -4,6 +4,7 @@ extends SceneTree
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/d5_hero.gd
 ##        -- --out=<dir>   (default: <repo>/build/evidence/frames-d5-hero)
 ##           --borrow=<dir> (optional: keyed street-life sprites, see D5HeroExtras)
+##           --souls (the teal soul trail behind Rivet: off by default, descoped 2026-11-03)
 ##           --soul=<d5|raw|ghost> (how the souls print, see D5HeroRun._soul_material)
 ##           --dialogue=<left>,<right> (D5DialogueRun: a dialogue panel with these portraits)
 ##           --phone=<portrait> (D5DialogueRun: the D5 phone close-up with this portrait)
@@ -37,6 +38,7 @@ func _initialize() -> void:
 	node.set("out_dir", out)
 	node.set("borrow_dir", _arg(a, "borrow", ""))
 	node.set("soul_mode", _arg(a, "soul", "d5"))
+	node.set("show_souls", a.has("souls"))
 	var cam: PackedStringArray = _arg(a, "cam", "").split(",", false)
 	if cam.size() == 2:
 		node.set("hero_cam", Vector2(cam[0].to_float(), cam[1].to_float()) * 32.0)
@@ -52,6 +54,9 @@ func _arg(a: Dictionary[String, String], key: String, fallback: String) -> Strin
 func _args() -> Dictionary[String, String]:
 	var a: Dictionary[String, String] = {}
 	for arg: String in OS.get_cmdline_user_args():
+		if arg == "--souls":
+			a["souls"] = ""
+			continue
 		var key: String = arg.trim_prefix("--").get_slice("=", 0)
 		if not arg.begins_with("--") or not arg.contains("=") or not KEYS.has(key):
 			a["?"] = arg

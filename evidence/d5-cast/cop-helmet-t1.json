@@ -1,0 +1,71 @@
+{
+ "d4-32ppm.png": {
+  "helmet_px": 192,
+  "before_mean_rgb": [
+   100,
+   107,
+   123
+  ],
+  "after_mean_rgb": [
+   173,
+   169,
+   165
+  ],
+  "before_luma": 106.5,
+  "after_luma": 169.5,
+  "after_blue_px": 48,
+  "after_verm_px": 0
+ },
+ "d5-48ppm.png": {
+  "helmet_px": 424,
+  "before_mean_rgb": [
+   101,
+   107,
+   125
+  ],
+  "after_mean_rgb": [
+   171,
+   167,
+   163
+  ],
+  "before_luma": 107.3,
+  "after_luma": 168.0,
+  "after_blue_px": 102,
+  "after_verm_px": 0
+ },
+ "d5-64ppm.png": {
+  "helmet_px": 785,
+  "before_mean_rgb": [
+   111,
+   114,
+   130
+  ],
+  "after_mean_rgb": [
+   168,
+   163,
+   164
+  ],
+  "before_luma": 114.8,
+  "after_luma": 164.7,
+  "after_blue_px": 145,
+  "after_verm_px": 0
+ },
+ "d5-128ppm.png": {
+  "helmet_px": 3086,
+  "before_mean_rgb": [
+   107,
+   111,
+   126
+  ],
+  "after_mean_rgb": [
+   166,
+   162,
+   162
+  ],
+  "before_luma": 111.5,
+  "after_luma": 163.0,
+  "after_blue_px": 656,
+  "after_verm_px": 0
+ },
+ "note": "d5_hero (--borrow night d5-close), hero1 = d-cast 1848411 vs heroHelmB = T1 helmet (recolor_cops.t1_helmet). The only changed region at every zoom is the riot cop's helmet; patrol cap untouched."
+}

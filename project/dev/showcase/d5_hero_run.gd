@@ -66,6 +66,8 @@ var borrow_dir: String = ""
 ## the camera below the kill-cam zoom (world px); D5PanRun moves it
 var hero_cam: Vector2 = HERO_CAM_M * PX
 var soul_mode: String = "d5"
+## the teal soul trail behind Rivet: descoped 2026-11-03 until a combat mechanism uses the souls
+var show_souls: bool = false
 var _soul_mat: Material = null
 var _roofs: Dictionary[String, Sprite2D] = {}
 ## neighbour roofs that have D5 art (the LOCAL 9 union hall): swapped with the landmarks
@@ -118,7 +120,8 @@ func _ground() -> void:
 		_prop(spot)
 	if borrow_dir != "":
 		_soul_mat = _soul_material()
-		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, _actors, _soul_mat)
+		var souls: Node = _actors if show_souls else null
+		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, souls, _soul_mat)
 		Log.info("dev", "d5_hero: %d borrowed sprites" % n)
 	_corners.append_array(D5HeroPropShadow.place(_world, PX))  # d5 tier: hatched prop/car shadows
 
