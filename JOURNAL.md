@@ -234,3 +234,14 @@ NEXT:
    parked right beside Rivet); the World LiveInput hookup (MERGE NOTE, iteration 1).
 5. Re-capture cast_rivet.png from d5-cast's base form; RIVET_FORM_K = 1.0 (REQUEST 2).
 6. HudView/ObjectiveView into features/hud, art by id from a table.
+- 12:03 (603b852) Robo-tazer on the city: the ball homes on any metal within 14 m while Rivet
+  is farther away, and the squash had put the (106,-10) post 0.3 m off the boss->Rivet line, so
+  every ball burst on it (Mertz harmless). Metal now keeps its true offsets around Mertz's post
+  (spawn `vault-cage`); the input driver waits for a tazer hit again (bot flag removed) and
+  the run is paid, so the ball reaches Rivet on the city. Decision line updated.
+- 12:05 (a1cf583) dev/bench/quest1_frames: the slice's frame time (windowed, vsync off, one
+  tick per frame from tick 5800 = Dock 9). Headless smoke only so far (not a measurement).
+  bench.lock held by `vehicles` (10-14 min old): bench skipped until it frees or goes stale.
+- 12:05 exe re-exported (code = 603b852): replays the 12:03 input log identical, rc 0.
+- GATES PASS at a1cf583 (lint 13/13 over 360 files, unit 339, scenarios 10/10, parity,
+  selftest 11/11) -> evidence/slice-play/iter2-a1cf583/.
