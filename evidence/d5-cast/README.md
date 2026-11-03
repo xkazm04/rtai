@@ -36,3 +36,5 @@ Iteration 47 (16:02-17:00):
   CityView + crowd, seed 91 riot; the camera follows the nearest live cop) at 32 / 48 / 64 / 128 px/m, main vs d-cast:
   0 vermilion px on cops at every zoom (residual = Rivet's hazard collar). Frames `cop-follow-real-4zoom-ab.png`, and the
   same script on a scratch merge with d-city + d-combat: `merge4-preview-cop-follow-4zoom.png`.
+- `gpu-bench-ab.json`: the first GPU bench for this lane, interleaved 2+2 vs main (CONTENDED, `--runs=1`): every
+  section-20 limit passes; riot p99 CPU ~1.5 ms higher on d-cast in both pairs (open lead, see JOURNAL).

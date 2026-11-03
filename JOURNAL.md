@@ -493,3 +493,14 @@ NEXT: unchanged from iteration 46 (owner choices 1-6, merge recipe, re-bless gol
   rig_detail line, nothing on the sim or per-frame CPU path, and the headless rig bench A/B showed no change; but the
   riot gap repeated. NEXT: a 3+3 uncontended A/B on the merged tree; if it holds, bisect 704570f (cop ring shader),
   062939d/8118692 (Rivet hunch), the D5 part shader.
+
+## Final status at 16:45 (iteration 47) and NEXT
+- This iteration: real-game cop close-up at 32/48/64/128 vs main (cop_close.tscn, 8dbf7f4); real-game merge preview
+  with d-city + d-combat; cop gate on the merged preview; merge check refreshed (0 code conflicts); first GPU bench
+  A/B (limits pass, riot p99 lead open). Evidence gates green at 8dbf7f4 (later commits docs/evidence only).
+- Owner frames: masters day-d5/d5-cast/frames.json (15) + ladder.png. 12 frames looked at this iteration, 0 rejected.
+NEXT:
+- Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT above). REQUEST 5 withdrawn.
+- PERF LEAD: riot p99 CPU d-cast 4.9 vs main 3.2-3.5 ms (2 of 2 contended pairs). Re-run 3+3 uncontended on the
+  merged tree; if it holds, bisect the cop ring shader (704570f), Rivet hunch (062939d, 8118692), look_d5_part.
+  A bench worktree needs build/export/windows-bench/ created first.
