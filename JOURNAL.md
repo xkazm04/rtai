@@ -17,6 +17,49 @@ Iteration 1 (09:04) died on a billing error before any turn; iteration 2 (10:04)
 - FRICTION: a parse error (Variant into maxi) hung the windowed accent_audit; killed my PIDs. Use
   `--headless --check-only -s <script>` before every windowed run (autoload errors there are expected).
 
+- MILESTONE 10:33 item 2 (D5 earlier than 64 px/m?): ported d5-close's look_d5_print ("package v9")
+  into look_d4 as keys (paper_hi, lo_soft, edge_dark, street_edge; d4 values = old print, goldens
+  bit-identical) + row `d5c`. Real-city A/B at 32 px/m (focus 2): edge_dark thins pavement joints toward
+  T1 but ERASES the hatched cast shadows (their strokes print through edge ink); street_edge drops car
+  outlines on asphalt; paper_hi 0 px. Worse in-engine -> NOT adopted, auto unchanged (D5 overlay from
+  48 -> 64 as merged). Pixel-snapped camera not built (moot until a v9 print is adopted).
+  evidence/d5-city/02-d5c-print/.
+- MILESTONE 10:38 item 3 prop shadows: cast_shadows.json by_name = D5HeroPropShadow lengths, parked cars
+  0.18 -> 0.4 m. evidence/d5-city/03-prop-shadows/. Goldens re-blessed (mean <= 0.09).
+- MILESTONE 10:43 item 3 roof plates: the 7 landmark roofs (ids 14-21 minus helipad) point at
+  art/d5/roofs/ (n-d5's plates). Texture ids unchanged: bake --check matches, sim untouched.
+  evidence/d5-city/04-d5-roofs/. SHARED-ish file: data/tables/city_textures.json (the city's table).
+- MILESTONE 10:48 item 3 parapets: ChunkView draws every building silhouette again in solid ink 0.22 m
+  down-right (cast_shadows.json parapet_core_m) on a 6th per-quadrant item at building_shadows z + 1.
+  evidence/d5-city/05-parapets/.
+- MILESTONE 10:52 doctrine: lights.json siren -> cop_blue_hi; grade_ink blue_gate (night keeps cop blue).
+  evidence/d5-city/06-siren/ (light_showcase before/after, same scene).
+- MILESTONE 11:03 item 3 zebras: junction box = procedural plain asphalt (id 72), 4 zebra decals (id 73)
+  on the approach arms (tools/art/city_marks.py, no AI, so no provenance line). GENERATOR_VERSION 2,
+  hashes re-baked. replay_60s cbeb734ff9b97c41 + parity unchanged. evidence/d5-city/07-zebras/.
+- FRICTION: city_frame reads the BAKED chunks: a generator "before" frame needs a re-bake with the old
+  painter (did it, restored, sha matched). The junction goldens' crowd moved with the zebras although no
+  sim input changed: ChunkView.prewarm draws on a wall-clock budget while the World ticks, so more
+  commands = capture on another tick. Pre-existing fragility of the look goldens (decisions.md).
+- Proof so far: masters day-d5/d5-city/ladder.png (3 foci x before/after 32/48/64 + T1 + H2),
+  frames.json (12 frames), 0 camera-break rejects. Bench NOT run this iteration (end-of-day item; lock).
+- Gates at 77bac0d: lint 13/13, unit 335/335, scenarios 8/0, parity bit-exact, selftest 0 (debt only),
+  bake --check deterministic.
+
+NEXT (iteration 3):
+1. Dash-free arm variant: the lane dashes run through the zebra gaps (T1 stops them 1-2 m short): a
+   procedural `road_arm` tile (dashes cut at the zebra) for the 4 arms, same tool.
+2. Biggest remaining gap vs T1 at 32 px/m: far more asphalt than blocks (T1 is block-dominated). Measure
+   road share per frame (n-d5 gap list 3 method) and decide with the owner: wider pavements / kerb props
+   vs the sim's road width (sim data: a decisions line + re-bless).
+3. D5 ground tiles: sidewalk_tone D5 (1 m joints) and road b; check each in the real city; the D5 road b
+   has a dark band under the dashes - likely reject. D5 lamp post (aspect 4.9:1 vs 6.4:1: needs size_m).
+4. Roof clutter density toward T1 (work order item 4): count clutter per roof in T1 vs ours; generic roofs
+   65-71 first; Codex plates only if needed (~30 images budget, one exec at a time).
+5. Pixel-snapped world camera, then retry edge_dark ONLY together with shadows that carry their own ink
+   (cast_shadow strokes printed as ink, not via Sobel) - the one way package v9 can reach 32 px/m.
+6. End of day: bench with the lock (gtai-day-d5/bench.lock), idle if possible, D5 cost per pass.
+
 ## REQUESTS
 - REQUEST 1 -> d5-cast: cop rig parts + cop crowd-atlas looks (patrol 29.3k, riot 24.7k vermilion texels)
   go cop_blue (#3A4766) / cop_blue_hi (#4F86E0) per palette.json; the item print already keeps both inks.
@@ -25,5 +68,7 @@ Iteration 1 (09:04) died on a billing error before any turn; iteration 2 (10:04)
   land, delete accent_debt rows cop_vermilion_* (the selftest reports them as paid).
 - REQUEST 2 -> d5-combat: blood in the world (ground_decals) now keeps its red under look_d4 (`blood`
   plate); paint pools/splats in palette `blood` / `blood_dark` (r >= 0.30, max(g,b) < 0.18 r).
+- REQUEST 4 -> d5-cast / d5-combat: blood_dark (#540005) classifies as blood (r >= 0.30); use the
+  palette names `blood`, `blood_dark`, `cop_blue`, `cop_blue_hi` (palette.json is live at e9b9323).
 - REQUEST 3 -> vehicles (owner of art/vehicles/police*): cruiser vermilion is now an offender on `vehicles`;
   repaint body accents cop_blue, light bar cop_blue_hi.
