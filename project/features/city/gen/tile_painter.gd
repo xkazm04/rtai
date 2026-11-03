@@ -27,6 +27,10 @@ const LANDMARK_SHARE: float = 0.3
 const GENERIC_ROOF: int = 65
 const GENERIC_ROOFS: int = 7
 const LETTERED: Array[int] = [14, 16, 18, 19, 21, 23]
+## T1's coarse rooftops: on BIG_SHARE of the blocks one 16.4 m building covers the 2 x 2 interior
+## tiles (mx, my 4-5) with T1-scale objects (a 4.5 m tank, 2.2 m fans); no long building crosses it.
+const T_BIG_ROOF: int = 78
+const BIG_SHARE: float = 0.35
 
 var _kerb: KerbDresser = KerbDresser.new()
 
@@ -142,9 +146,14 @@ func _block(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	else:
 		b.add(ChunkBuild.L_GROUND, 12, c, 0.0)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_BUILD)
+	var big: bool = _big_rows(g, t)
+	if big and (mx == 4 or mx == 5):
+		if mx == 4 and my == 4:  # upright: its big hatched shadows fall lower-right, as T1's
+			b.add(ChunkBuild.L_ROOF, T_BIG_ROOF, o + Vector2(8.0, 8.0), 0.0, true)
+		return SimConst.T_BLOCK
 	if _empty_interior(g, t) or ((mx == 4 or mx == 6) and _long_at(g, Vector2i(t.x - 1, t.y))):
 		return SimConst.T_BLOCK
-	if (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3:
+	if (mx == 3 or mx == 5) and not big and g.rnd(t.x, t.y, 0, 32) < 0.3:
 		var tex: int = 22 + int(g.rnd(t.x, t.y, 0, 33) * 2.0)
 		var rot: float = PI if g.rnd(t.x, t.y, 0, 34) < 0.5 and not LETTERED.has(tex) else 0.0
 		b.add(ChunkBuild.L_ROOF, tex, Vector2(c.x + 4.0, c.y), rot, true)
@@ -198,11 +207,20 @@ static func _empty_interior(g: CityGen, t: Vector2i) -> bool:
 ## Whether tile t starts a long (two-tile) building, so its right neighbour stays empty.
 static func _long_at(g: CityGen, t: Vector2i) -> bool:
 	var mx: int = t.x % PERIOD
+	if _big_rows(g, t):
+		return false
 	if g.rnd(floori(float(t.x) / PERIOD), floori(float(t.y) / PERIOD), 0, 5) < 0.12:
 		return false
 	if _empty_interior(g, t):
 		return false
 	return (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3
+
+
+## Whether tile t sits in rows 4-5 of a block that holds the 2 x 2 building.
+static func _big_rows(g: CityGen, t: Vector2i) -> bool:
+	var my: int = t.y % PERIOD
+	var bx: int = floori(float(t.x) / PERIOD)
+	return (my == 4 or my == 5) and g.rnd(bx, floori(float(t.y) / PERIOD), 0, 6) < BIG_SHARE
 
 
 ## Road / kerb art variant (0-2): an a-b-c cycle along the street from a random offset
