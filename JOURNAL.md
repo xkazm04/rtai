@@ -1182,3 +1182,17 @@ NEXT (iteration 14 / morning, in order):
   before vs v3: same frame, blood in place (0.08-0.34 % px > 8 spread thin); printed frames v2 vs v3 <= 26 px.
   Merged + v3: lint 13/13, unit 309, scenarios 8. v3 = 49-quest1-v2/quest1-on-print_stage-v3.patch
   (apply AFTER n-noir; README.txt there). Frames rejected for camera: 0 (engine captures).
+- Evidence at b0f98ab (06:31-06:33, --no-bench, all PASS): lint 13/13, unit 241, scenarios 8, parity bit-exact
+  + mutation caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
+  Copied to evidence/pof.
+- OWNER OPTION (rendered, NOT shipped): n-d5's `age_floor` 1 (aged paper below the D5 zoom), which page age
+  now applies to the WHOLE page (before a84bd39 it would have left every body cool on sepia paper).
+  Merged tree, city_selftest auto, block 32 / 48 px/m: pavement (235,225,207) -> (249,224,196) (mock
+  243,218,188), street (86,76,77) -> (89,74,69) (mock 81,71,72: a touch too red). LOOKED: reads like the
+  mock's sepia, bodies warm with it. Cost at 48 px/m (iGPU 1280x800, 2 interleaved pairs, pass_cost):
+  frame 3.01 / 2.93 -> 3.33 / 3.50 ms (the grade rect now draws at gameplay zoom).
+  evidence/age-floor-cost/, 50-age-floor/ab-32-shipped-agefloor-mock.png, ladder 50. vs iteration 11's
+  zero-cost option (paper hex #F0E1C6): that warms only the paper token; age_floor warms every neutral
+  incl. the street and the rigs' print_part cream. One number in n-d5's look_d5.params.json either way.
+  Note: n-d5's `grain_floor` can NOT work in this engine yet - LookOverlay hides the overlay at amount 0,
+  so a floor below the ramp needs the whole overlay drawn at gameplay zoom (~+2 ms iGPU, iteration 9).
