@@ -393,3 +393,10 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   base 0.381 / 0.416 ms, d-cast 0.380 / 0.375 ms -> no rig-cost change from this lane (run spread ~0.07 ms). Both over
   the 0.3 ms target and under the 1.0 ms hard cap; full rigs max 16, pool never grew. evidence/d5-cast/rig-bench-ab.json.
   GPU bench (bench/run.mjs) still not run by this lane: art and scale changes only; unmeasured, not zero.
+- 16:05 TRIED a REAL-GAME cop close-up at 128 px/m again: city_frame --police=40 --zooms=4 (renders copclose128:
+  0-7 blue px, no cop), then a temporary uncommitted riot(40, 30) cops pin (d-city also edits city_frame.gd, so no new
+  arg committed; restored with checkout) --zooms=2,4 (renders copclose128b): the cops ring the riot ~5-9 m from its
+  centre, so at 128 (10 x 6 m view) still no cop (<= 7 blue px); at 64 Rivet stands in the riot with blue cops at the
+  edges, reading only somewhat bigger than the people (city-0-64ppm.png, straight down, a good owner reference).
+  The 128 cop close-up stays the hero scene's. To get one in the real game: a city_frame focus-on-actor option
+  (d-city's file; REQUEST 5 -> d5-city: `--foci` could accept a "nearest cop" focus after settle).
