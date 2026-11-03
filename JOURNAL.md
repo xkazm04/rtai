@@ -984,3 +984,13 @@ NEXT (session end, iteration 10):
   scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders. Summary sheet now 11 rows (+ plaza).
   NEXT as at 03:02, plus: owner review a1874f7 together with 3ebf21a (revert a1874f7 alone = the plaza back to the
   2 m ink grid; revert both = the old grey joints).
+- 03:07 CHECK corner board with the plaza change (`after_pl4c/corner-*`, `work/pl4c32.png`): the plaza's 4 m ink flags
+  meet the curb tiles' 2 m ink slabs as a kerbside border band of smaller flags (a real paving pattern); no broken
+  lines at the tile seams. Kept.
+- 03:26 BENCH at 56b9b72 (`tools/bench/run.mjs`, exported release build, windowed, 3 x 4 scenarios x 60 s): rc 0 -
+  p99 3.35 ms, 1 % low 165 fps, worst frame 37.9 ms, hitches > 50 ms 0 (unexplained 0), > 25 ms 123; rigs p99 0.83 ms.
+  Honest compare: iteration 8 (38136e8) had p99 2.60 ms, 1 % low 197 fps, 1 frame > 50 ms. My changes since are
+  ground pixels only (same sizes, same ids, same mip chain), so the p99 / 1 % low drift is most likely the shared
+  GPU (other lanes' Godot processes were running: 2 Godot PIDs not mine, untouched) - but that is not proven; a
+  re-run on an idle box decides it. `build/evidence/bench.json` is stale (21:47, an older failed export), not this
+  run; this run's output is `evidence/iter10/bench-56b9b72.txt` + `build/bench/*.json`.
