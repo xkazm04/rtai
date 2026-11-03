@@ -10,6 +10,7 @@ extends Node
 ## --scene=yield: Rivet stays on foot beside the parked sedan while three cars stop behind it;
 ## --blind hands traffic no obstacles (the behaviour before set_obstacles); --car-zoom starts the
 ## camera at 48 px/m.
+## --soul-traffic soul-hijacks the civilian sim cars within 60 m at tick SOUL_TRAFFIC_TICK.
 ## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
 
 const MASTER_SEED: int = 31
@@ -48,6 +49,7 @@ const YIELD_SHOTS: Dictionary[int, String] = {
 	600: "yield-t600",
 	720: "yield-t720",
 }
+const SOUL_TRAFFIC_TICK: int = 30
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
 
 var _out: String = "user://vehicle_frame"
@@ -55,6 +57,7 @@ var _clip: bool = false
 var _look: StringName = &""
 var _carnage: bool = false
 var _soul: bool = false
+var _soul_traffic: bool = false
 var _cue_shots: bool = false
 var _shots: Dictionary[int, String] = SHOTS.duplicate()
 var _world: World = null
@@ -96,6 +99,8 @@ func _process(_delta: float) -> void:
 	var tick: int = _world.context().clock.tick()
 	if _soul and _svc.driving != null and not _svc.driving.soul_hijacked:
 		_svc.soul_hijack(_svc.driving.id)  # Gearbox's ability, once it lands, sets this
+	if _soul_traffic and tick >= SOUL_TRAFFIC_TICK and _svc.traffic.state.is_empty():
+		_soul_traffic_near()
 	var last: int = CLIP_TICKS if _clip else _shots.keys().max()
 	if tick > last + 2:
 		printerr("vehicle_frame: done at tick %d, cars %d" % [tick, _svc.cars.size()])
@@ -144,6 +149,8 @@ func _parse_args() -> bool:
 			_clip = true
 		elif arg == "--soul":
 			_soul = true
+		elif arg == "--soul-traffic":
+			_soul_traffic = true
 		elif arg == "--cue-shots":
 			_cue_shots = true
 		elif arg == "--car-zoom":
@@ -162,3 +169,11 @@ func _parse_args() -> bool:
 			printerr("vehicle_frame: unknown argument %s" % arg)
 			return false
 	return true
+
+
+## The Gearbox slice on sim traffic: every civilian car near Rivet shows the hijacked plate.
+func _soul_traffic_near() -> void:
+	var recs: PackedFloat64Array = _svc.world.cars_near(_svc.world.player_pos(), 60.0)
+	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
+		if recs[r + 1] < 0.5:
+			_svc.soul_hijack_traffic(int(recs[r]))
