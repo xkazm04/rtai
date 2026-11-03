@@ -10,9 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h86, iteration 5) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h90, iteration 6) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h90, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -46,7 +46,31 @@ tick count, no RNG.
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
 | `item21_mural_pen.png` | iteration 5: the mural roof D4 / D5 wash grime (h73) / pen-hatch b as is (h74, too clean) / b + ink weight + fist wash + misprint (h75, kept) at 32/48/64 + the mock roof + numbers; the rejected bold-hatch c (h83/h84) |
 | `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h86 at 32/48/64/128, the arena a15 at 64 and 128, concept |
+| `item22_pavement_joints.png` | iteration 6: the D5 sidewalk tile's print-aware joints, h86 vs h87d at 32 (full frame) and pavement crops at 48/64 + the mock |
+| `item23_street_print.png` | iteration 6: the D5 crosswalk (no black wear dots) and thinned road cracks, h87d vs h90 at 32/48/64 + the mock |
+| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h90) at 32 and 48, the mock, the concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
+
+## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
+No image budget left (50/50): non-generative, print-aware edits of the GROUND, the largest surface in the gameplay
+frame. The finding behind all three: look_d4 prints anything darker than its surface as either the surface's own
+step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles are now built for that.
+- **Pavement joints** (gap 3, `item22_pavement_joints.png`, 92068f9): the 4 px joints (L 0.05) printed as a black
+  slab grid. The D5 sidewalk tile lifts them to light-wash density (they print as faint grey joints like the mock's),
+  their weight wanders along the joint, and the source tile's stain slabs are lifted (they read as grey squares once
+  the grid was light). Pavement strip at 48 px/m: L 0.569 -> 0.594, dark px 0.41 -> 0.36 (mock 0.616 / 0.30).
+  Rejected on the way: joints too light (h87a: stain blotches), dashed joints (h87b).
+- **Crosswalk** (`item23_street_print.png`, 285cc30): the zebra's wear holes printed as black dots; small holes filled,
+  large ones a light paint/asphalt mix. Changed px only on the bars.
+- **Road cracks** (51b96d4, d8a5b9c): the road tiles' patch outline and cracks (2-3 px ink, repeated every 8 m)
+  thinned by 2 grey-level passes: gone at 32 px/m (the mock's street is clean), pen lines at 64+ (D5 up close).
+  A hard 1-px ridge was rejected (stair-stepped). Pan at 48 px/m on the patch: ink px flipping per tick 0.00116 ->
+  0.00102 (no flicker from the thin lines).
+- Whole frame, d5 tier (L / px darker than 0.2 / HF): 32 px/m 0.410 / 0.231 / 0.071 -> **0.427 / 0.212 / 0.068**;
+  48: 0.390 / 0.196 -> 0.396 / 0.183. Mock 0.488 / 0.123 / 0.104: closer in tone and ink, not in HF (the mock's high
+  frequency is fine paper/asphalt grain; ours was grid and crack lines).
+- No regression: d4 tier 0 px at 32-128 in every round; 0 actor px; no vermilion/teal px changed; pan swim per
+  pixel class unchanged. Tools (masters): build_sidewalk.py, build_crossing.py, build_road.py (seeded/deterministic).
 
 ## Iteration 5 (01:15 -> 02:10, written 02:08) in one screen (`night_iter5_summary.png`)
 - **Pen-hatch D5 roofs** (item 3 raised; `item21_mural_pen.png`, `item3_roofs_gate.png`; 5fa5d38 .. 8ab942a): the
@@ -181,6 +205,9 @@ Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
    city lane's pavement tile (the D5 sidewalk tile helped only marginally). Iteration 3 tried softening the D5
    tile's joints (h55): the look_d4 print re-inks them (dark px 25.3% -> 23.9%), reverted. The joint weight lives in
    look_d4's print thresholds or needs a thinner-jointed tile.
+   Iteration 6: CLOSED for the D5 tier by a print-aware tile (joints at light-wash density, `item22`); the crosswalk
+   and road cracks too (`item23`). Next (city lane): adopt the 4 D5 ground tiles (`features/city/art/d5/ground/`) or
+   apply the same build rules (masters tools/build_sidewalk.py, build_crossing.py, build_road.py) to the D4 set.
 4. **Lamp post** read as a spoon lying on the pavement (mock: kerb base + curved arm + round head). Iteration 4: a D5
    plan-view lamp (`features/city/art/d5/props/lamp_post.png`, 1 Codex image) on the kerb with its arm over the
    street in the hero's d5 tier (`item20_lamp.png`); a first riveted head printed as a gear ring and was redrawn as a
