@@ -21,6 +21,11 @@ var px_per_m: float = SimConst.PX_PER_M
 var kills: int = 0
 var hits: int = 0
 var _stop_ticks: int = 5
+## Wounded fighters: actor id -> bleed ticks left; where each last dripped (px) and when.
+var _bleed: Dictionary[int, int] = {}
+var _drip_at: Dictionary[int, Vector2] = {}
+var _drip_t: Dictionary[int, int] = {}
+var _was: Dictionary[int, Vector2] = {}
 
 
 func bind(events: EventBus, p_blood: BloodFx, p_impact: ImpactFrame) -> void:
@@ -59,6 +64,38 @@ func _on_player_hit(_weapon: StringName) -> void:
 		return
 	hits += 1
 	blood.splash(at * px_per_m, Vector2.from_angle(hits * 2.4), "player_hit")
+	_bleed[player_id] = blood.p["drip"]["bleed_ticks"]
+	_drip_at[player_id] = at * px_per_m
+	_drip_t[player_id] = 0
+
+
+## Advances the drip trails on the fixed tick (the host calls it with the blood's step).
+func step_ticks(n: int) -> void:
+	if blood == null:
+		return
+	var dp: Dictionary = blood.p["drip"]
+	var every_px: float = dp["every_px"]
+	var still: int = dp["still_ticks"]
+	for id: int in _bleed.keys():
+		var at: Vector2 = _where(id)
+		_bleed[id] -= n
+		if at == Vector2.INF or _bleed[id] <= 0:
+			@warning_ignore("return_value_discarded")
+			_bleed.erase(id)
+			continue
+		var px: Vector2 = at * px_per_m
+		var move: Vector2 = px - _was.get(id, px)
+		_was[id] = px
+		_drip_t[id] += n
+		if px.distance_to(_drip_at[id]) >= every_px or _drip_t[id] >= still:
+			blood.drip(px, move)
+			_drip_at[id] = px
+			_drip_t[id] = 0
+
+
+## Fighters bleeding now (tests, evidence).
+func bleeding() -> int:
+	return _bleed.size()
 
 
 func _where(id: int) -> Vector2:

@@ -120,6 +120,7 @@ func _process(_delta: float) -> void:
 	_blood.step_ticks(1)
 	_flash.step_ticks(1)
 	if not held:
+		_fx.step_ticks(1)
 		_t += 1
 		for cue: Array in _fight.step(_t, _rigs.feed):
 			_cue(cue)

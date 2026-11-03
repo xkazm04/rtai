@@ -83,6 +83,12 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		_d_dir[i] = dir.normalized() * run
 
 
+## One drip from a wounded fighter at `at` (px), stretched along `move` (px per tick, may be zero).
+func drip(at: Vector2, move: Vector2) -> void:
+	var i: int = _add_decal(at, _range(p["drip"]["splat_px"]), 0)
+	_d_dir[i] = move.normalized() * clampf(move.length() / 3.0, 0.0, 0.8)
+
+
 ## Decals on the ground now (splats + pools; capped by the budget).
 func live_decals() -> int:
 	var n: int = 0

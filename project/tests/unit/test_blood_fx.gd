@@ -67,3 +67,24 @@ func test_pool_edge_wobbles_but_stays_star_shaped_and_runs_along_the_hit() -> vo
 	assert_gt(hi - lo, 2.0, "the wet edge wobbles, it is not a disc")
 	assert_gt(run[0].x - still[0].x, 5.0, "the pool runs out along the hit direction")
 	assert_almost_eq(run[BloodMarks.POOL_PTS / 2].x, still[BloodMarks.POOL_PTS / 2].x, 0.01)
+
+
+func test_a_hit_fighter_leaves_a_drip_trail_that_stops() -> void:
+	var fx: NoirCombatFx = NoirCombatFx.new()
+	var blood: BloodFx = BloodFx.new()
+	fx.blood = blood
+	var pos: Array[Vector2] = [Vector2(2, 2)]
+	fx.locate = func(_id: int) -> Vector2: return pos[0]
+	fx._on_player_hit(&"pistol")
+	var after_hit: int = blood.live_decals()
+	assert_eq(fx.bleeding(), 1)
+	for t: int in 60:
+		pos[0] += Vector2(0.1, 0.0)
+		fx.step_ticks(1)
+	var walked: int = blood.live_decals() - after_hit
+	assert_between(walked, 15, 25, "about one drip per every_px of the 6 m walked")
+	var bleed: int = blood.p["drip"]["bleed_ticks"]
+	fx.step_ticks(bleed)
+	assert_eq(fx.bleeding(), 0, "the wound stops bleeding")
+	blood.free()
+	fx.free()

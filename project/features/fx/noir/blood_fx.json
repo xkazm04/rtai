@@ -1,5 +1,5 @@
 {
-  "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14). Splats are teardrops along the drop's travel with satellite drops ahead (blood_marks.gd); a pool is a wobbly wet edge run out along the hit (pool.run) with a bright red meniscus rim around the dark body and a white sheen arc.",
+  "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14). Splats are teardrops along the drop's travel with satellite drops ahead (blood_marks.gd); a pool is a wobbly wet edge run out along the hit (pool.run) with a bright red meniscus rim around the dark body and a white sheen arc. drip = a wounded fighter (player_hit) bleeds for bleed_ticks: one drop every every_px px moved (stretched along the move), one every still_ticks while standing.",
   "budget": {
     "max_decals": 160,
     "max_drops": 320,
@@ -26,6 +26,15 @@
     "fade_after_ticks": 3600,
     "fade_ticks": 7200,
     "min_alpha": 0.0
+  },
+  "drip": {
+    "bleed_ticks": 360,
+    "every_px": 9.0,
+    "splat_px": [
+      0.9,
+      2.0
+    ],
+    "still_ticks": 45
   },
   "hits": {
     "kill": {
