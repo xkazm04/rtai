@@ -780,3 +780,37 @@ by the item list (all 7 items are evidenced): the world print's inks. Measured, 
   (iter 10: 2.83), 1% low 226 fps, worst swap 33.3 ms, 1 frame > 50 ms (cause `present`, 0 unexplained),
   riot rigs p99 0.432 ms per frame. With every iteration-11 change on (warm tones, aquatint, hatched cast
   shadows, no world accents). Copied to evidence/pof (+ pof/block), evidence/bench-*-iter11.json.
+- MILESTONE (d5785a9) the cast-shadow material gets the camera zoom (ChunkView.update(focus, res, zoom), one
+  changed call in CityView._process, off n-noir's hunks; merge-tree still JOURNAL-only x3). Goldens
+  bit-identical at both sites (worst 0.00). Checked above 64 px/m (scratch: block site moved to x 448 so
+  the band is in a 128 px/m view, SITE_CASES [d4 128]; both reverted, never committed): with vs without
+  the zoom feed the frames differ only in the shadow-band columns (diff bbox x 665-984) - finer strokes.
+  First 128 px/m try (x 456) had no shadow on screen (0 px differ = inconclusive, not counted).
+  Frames 36-shadow-zoom/ (cmp2-128.png).
+- OWNER OPTION (rendered, NOT shipped): paper #F2E8D5 -> #F0E1C6 toward the mock's sepia. Frames
+  35-paper-option/ (shipped vs warm at the block, + mock strip; ladder 35). Reads coherent with the warm
+  charcoal; the rigs' sticker rims stay on print_part's own cream, so they pop a touch more. One hex in
+  palette.json if the owner wants it (re-bless both sites' goldens after).
+- Iteration 11 tally: frames rejected for camera 0 (all engine captures, straight down); approaches rejected
+  3 (smooth tone mottle; sin-hash grain; per-asset debt rows instead of the world-plate rule) + 1
+  inconclusive probe discarded (128 px/m without a shadow in view). No AI images (no codex), so no
+  provenance lines. Scratch scenes (zz_scratch_*), the chunk probe and the temporary SITE_CASES / site
+  edits all deleted or reverted; /tmp scratch deleted. Ladder 1280 x 16354 (rows 29-35).
+
+NEXT (iteration 12 / morning, in order):
+1. Director merge (JOURNAL.md-only conflicts with n-d4 / n-d5 / n-noir at 03:59). After it:
+   - n-d4: the traffic atlas goes live (7bfb6b9) -> re-bless the junction AND block goldens, LOOK at them.
+   - n-d5: cast_shadows.json then prefers look_d5_shadow automatically (same uniforms, takes `zoom`);
+     apply evidence/pass-cost/look_d5-early-outs-lattice.patch THEN look_d5-tones.patch; re-bless the -ov
+     goldens. Do NOT apply n-d4's traffic_atlas_wiring*.patch.
+   - Run `node tools/selftest/run.mjs`: both sites must pass (accents clean, world lock 0.00 %).
+2. Owner calls, frames ready: warm charcoal (29, shipped - revert = 2 hex), aquatint at 32 px/m vs the lots'
+   hatch legibility (30), cast shadow length 1.1 m (34), paper warmth option (35, not shipped); older:
+   objective vermilion vs paper (16), cop accent (17), 15 Hz outer rigs (15), overlay amount at 48 px/m.
+3. For d4-production: barrel_cluster red barrels now print cream (world carries no accent - if they are an
+   explosive hazard, that is a world_markers cue / actor); the road tile's dark asphalt patch hatches like a
+   shadow with no caster (34-buildings/square-64-flat-vs-hatched.png).
+4. print_part (characters / n-noir file): take ink_tone / paper_tone like look_d4_item (rig ink is 23,19,27
+   vs the world's 27,21,23: invisible today, drifts if the palette moves).
+5. Traffic states (unchanged): sim custom.y (intact / d1 / d2 / hijacked) -> CrowdLayers picks n-d4's atlas.
+6. Rig 0.43 ms p99 per frame in the riot (bench at c89365e) vs the 0.3 target: native RigArm / RigGait.
