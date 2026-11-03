@@ -478,3 +478,6 @@ NEXT (for the 18:00 sync and the Director):
 NEXT: unchanged from iteration 46 (owner choices 1-6, merge recipe, re-bless goldens once on the merged tree).
   REQUEST 5 is withdrawn (cop_close.tscn does the nearest-cop follow without touching city_frame.gd).
   For the merge, the scratch-merge recipe is: merge-tree --write-tree + commit-tree, then checkout --detach.
+- Gate on the MERGED preview (renders copclose-merge4, d-city crowd + d-cast cops): saturated-blue blobs >= 12 px
+  merged within 40 px -> 7 blue clusters of 158-423 px at 32 px/m, one per cop figure in view; at 48, 4 clusters
+  (526-628 px). Every cop stays a distinct blue mark among the black/cream crowd after the merge.
