@@ -147,3 +147,26 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
 - MILESTONE evidence at 10cc4d8 (--no-bench): lint, unit 335, scenarios 8, parity, selftest all PASS ->
   evidence/d5-city/evidence-10cc4d8/. Masters: ladder.png + frames.json (15) at after-final/ (8209a4e);
   drive frame drive/drive-final.720.png. 0 camera-break rejects; 1 change rejected by eye (D5 lamp).
+- MILESTONE 4867336 the D5 lamp post, inked: an inked derivative of n-d5's lamp (metal through
+  luma^1.8 * 170, cream head kept; city_marks.py inked_lamp + provenance) holds the D4 pole's read at
+  32 px/m and adds the bolted base + pipe at 64. Goldens in tolerance, night lamp pools unchanged.
+  evidence/d5-city/15-lamp/ (D4 / plain D5 / inked D5). Work-order item 3 is now fully in the generator.
+- Proof at 4867336: masters ladder.png (copy evidence/d5-city/ladder-iter3.png), frames.json 15 entries.
+
+## NEXT (iteration 4)
+Branch d-city at the commit after 4867336; gates PASS at 10cc4d8 (evidence/d5-city/evidence-10cc4d8);
+lamp commit re-checked (lint, unit 335, goldens both sites in tolerance).
+1. OWNER CALL at 18:00 (put it on the sync page): road width ~17 m kerb to kerb vs T1 ~10 m
+   (evidence/d5-city/11-road-width-mock/). If yes: sim data (PERIOD 8, 3 street tiles, kerb tiles with
+   5 m asphalt + parking at v 4.45) -> a decisions line, replay/parity re-bless, and the vehicles +
+   slice-play lanes must agree. Also ask: keep plazas (12% of blocks, T1 has none)?
+2. Kerb/corner tiles (7-10) in the D5 joint language, then retry the D5 sidewalk (13); Codex budget
+   untouched (0 of ~30 images used today by this lane).
+3. Lane arrows: T1 has none; ours sit on every approach (KerbDresser.road_decals m 3/7). Try one per
+   approach or none, judge at 32 px/m.
+4. Corner traffic lights sit diagonal (rot + 45) and read a bit like spoons at 32 px/m; T1 has corner
+   lamp posts. Try axis-aligned or the inked lamp at corners.
+5. Pixel-snapped world camera, then package v9's edge_dark with shadows that carry their own ink.
+6. Bench idle at the end of the day if the lock allows (this run was contended, 1 x 30 s).
+REQUESTS 1-4 above still stand (d5-cast: cop rigs/atlas to cop_blue; d5-combat: blood palette names;
+vehicles: cruiser accents cop_blue).
