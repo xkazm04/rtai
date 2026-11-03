@@ -1472,3 +1472,7 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   1.142 (32 / 64 / 128; content x1.27 / 1.19 / 1.22); sharp 0 1.060 / 1.048 / 1.029 (content x1.17 / 1.11 / 1.06).
   Proposal: King with sharp 0 (moving), UI with 0.5 (static). Caveat: synthetic motion, flat background; untested
   in a real fight. Board evidence/item52_king_sharp.png.
+- 06:28 evidence/arena-pkg10-{64,128}ppm.png: arena-pkg9 (a35v9 reproduced byte-exact as a36v9, deleted) + King
+  look_d5_ui sharp 0 (round a36k, d5 tier): only King's pixels differ (64: 27528 px, 128: 98286). Looked at 128: King
+  crisp beside the D5 tier Rivet. README table row. Default frames re-checked: 60 of 60 byte-identical to this
+  session's baselines (i10r0, a10k0) after every iteration-10 commit.
