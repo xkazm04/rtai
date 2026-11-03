@@ -14,6 +14,8 @@ extends Node2D
 
 ## A human sprayed at `pos_px` along `dir` (CorpseStains soaks the body).
 signal bled(pos_px: Vector2, dir: Vector2)
+## The same, when the host named the victim (listen(): Events.actor_killed's victim id).
+signal bled_body(id: int, dir: Vector2)
 
 const MODES: PackedStringArray = ["noir", "ink", "both"]
 const SHADER: String = "res://assets/shaders/fx_blood_print.gdshader"
@@ -153,6 +155,7 @@ func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
 		hit_robot(at * SimConst.PX_PER_M)
 	else:
 		kill_human(at * SimConst.PX_PER_M, dir)
+		bled_body.emit(victim, dir.normalized())
 
 
 func _on_player_hit(_weapon: StringName) -> void:

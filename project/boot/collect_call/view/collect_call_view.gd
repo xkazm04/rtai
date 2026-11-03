@@ -71,7 +71,7 @@ func _ready() -> void:
 		stains.material = blood.print_material()
 		print_stage.actor_layer().add_child(stains)
 		@warning_ignore("return_value_discarded")
-		blood.bled.connect(stains.on_bled)
+		blood.bled_body.connect(stains.on_bled_body)
 
 
 func _process(_delta: float) -> void:

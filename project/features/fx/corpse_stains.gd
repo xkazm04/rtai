@@ -31,6 +31,8 @@ var _soaks: Array[Soak] = []
 var _next: int = 0
 ## Waiting deaths: x, y (px), heading angle, tick seen.
 var _pending: Array[Vector4] = []
+## Waiting named deaths: body id -> Vector2(heading angle, tick seen).
+var _named: Dictionary[int, Vector2] = {}
 var _k: int = 0
 var _tick: int = 0
 
@@ -75,6 +77,12 @@ func on_bled(pos_px: Vector2, dir: Vector2) -> void:
 	_pending.append(Vector4(pos_px.x, pos_px.y, dir.angle(), _tick))
 
 
+## Body `id` killed by a blow along `dir` (connect to CombatBlood.bled_body when the host
+## names its victims: the exact body, never a neighbour in a pile).
+func on_bled_body(id: int, dir: Vector2) -> void:
+	_named[id] = Vector2(dir.angle(), _tick)
+
+
 ## Advances to sim tick `tick` against `feed` (the city's RigFeed: dead rows carry Flag.DEAD).
 func step(tick: int, feed: RigFeed) -> void:
 	var t0: int = Time.get_ticks_usec()
@@ -112,6 +120,15 @@ func active() -> int:
 
 
 func _match(dead: Dictionary[int, Vector2]) -> void:
+	for id: int in _named.keys():
+		var w: Vector2 = _named[id]
+		if dead.has(id) or _tick - int(w.y) >= WAIT_TICKS:
+			if dead.has(id) and not _soaked(id):
+				_soak(id, Vector2.from_angle(w.x))
+			elif not dead.has(id):
+				missed += 1
+			@warning_ignore("return_value_discarded")
+			_named.erase(id)
 	var keep: Array[Vector4] = []
 	for d: Vector4 in _pending:
 		var slot: int = _nearest(dead, Vector2(d.x, d.y))

@@ -67,3 +67,13 @@ func test_any_host_can_hand_its_dead_as_a_map() -> void:
 	assert_eq(stains.soaked, 1, "quest 1's dead guard (id 42) is soaked")
 	assert_eq((stains.get_child(0) as Node2D).position, Vector2(320, 64))
 	stains.free()
+
+
+func test_a_named_victim_soaks_its_own_body_not_the_nearest() -> void:
+	var stains: CorpseStains = CorpseStains.new(4)
+	var dead: Dictionary[int, Vector2] = {1: Vector2(100, 100), 2: Vector2(110, 100)}
+	stains.on_bled_body(2, Vector2.RIGHT)
+	stains.step_bodies(3, dead)
+	assert_eq(stains.soaked, 1)
+	assert_eq((stains.get_child(0) as Node2D).position, Vector2(110, 100), "body 2, not body 1")
+	stains.free()
