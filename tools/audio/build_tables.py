@@ -1,6 +1,12 @@
 """Writes data/tables/audio_cues.json, audio_mix.json and their schemas (sorted keys, DAT-02). Run from the repo root."""
 import json
 import pathlib
+import sys
+
+sys.exit(
+    "build_tables.py is RETIRED (iteration 50): it lacks car_wreck, boss_loop, fire_crackle, the cue layer field and the tuned gains, "
+    "so running it would clobber hand edits. Edit project/data/tables/audio_cues.json / audio_mix.json directly (sorted keys, 2-space, LF)."
+)
 
 P = pathlib.Path("project/data")
 

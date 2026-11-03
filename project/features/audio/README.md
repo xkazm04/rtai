@@ -44,4 +44,4 @@ master volume is `PlayerSettings`, which writes the AudioServer's Master). Posit
 ## Tools (`tools/audio/`)
 
 `gen_sfx.py`, `gen_voice.py`, `gen_music.py` (ElevenLabs direct; PoF's audio route could not serve them, see JOURNAL POF-GAP 1-3),
-`process.py` (trim / loudness / QC), `split_steps.py` (a run of steps -> single steps), `provenance.py`, `voice_lengths.py`, `build_tables.py`. The key comes from the environment only.
+`process.py` (trim / loudness / QC), `split_steps.py` (a run of steps -> single steps), `provenance.py`, `voice_lengths.py`. (`build_tables.py` is retired: edit the JSON tables directly.) The key comes from the environment only.
