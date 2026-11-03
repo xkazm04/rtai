@@ -1421,3 +1421,9 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   moves after the merge. Same frames: 72 art textures, 0 placeholders, accent gate "no new off-doctrine accents",
   crowd atlas 6/6 looks on doctrine, world lock holds. **For the Director:** after merging n-visual + n-d4, re-bless
   the look goldens (n-visual's recipe) - expected, as noted in iteration 8. Scratch removed.
+- 05:01 Session end for iteration 14. Tree clean after this entry; gates last run at 51e7c1e (all 5 PASS; only journal /
+  evidence / patch files since - the whisper rings live in the quest patch, not in `project/`). Worktree `scratch-q1`
+  kept (final quest patch applied, art = n-d4 HEAD); all other scratch worktrees removed; my Godot runs all finished
+  (the Godot processes running now are other lanes', untouched). The final NEXT is the 04:54 one plus the 04:58 and
+  05:00 notes (quest patch also inks the whisper rings; re-bless n-visual's goldens after the merge). Nothing pushed or
+  merged.
