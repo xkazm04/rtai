@@ -1883,3 +1883,20 @@ Nothing pushed or merged. Session end; tree clean at the commit below.
 NEXT (final, iteration 24): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-24).
 Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Bench still owed on an idle box.
 Nothing pushed or merged. Session end; tree clean at the commit below.
+
+## 2026-11-03 07:14 iteration 25, BUILD (freeze 07:30)
+- 07:15 Read JOURNAL (iteration 24 final NEXT), git log. Tree clean at 0c4eab6. C: 273 GB free.
+- 07:15 Bench NOT run: the box is contended again (5 other-lane Godot processes, PIDs 53244 / 52924 / 55484 / 16516 /
+  37488, not mine, untouched). The idle-box bench is still owed.
+- 07:17 LOOKED, no change: HUD over city focus 0 at 32 (`masters:night/d4-production/after_hud3/city-0-32ppm-hud40.png`,
+  HEAD art). Cash ticket, wanted pips (vermilion filled, cream empty), ammo ticket with the vermilion round, and the
+  soul cards (teal frame only on the live card) all read as ink on cream with doctrine accents. The many vermilion
+  bodies in the crowd are the cops: still the open owner question from 23:10 (full vermilion uniform vs ink uniform
+  with a small accent, which needs a redraw). Not re-probed.
+- Nothing in scope is below the bar. With about 13 min to freeze I am not opening a probe that could not be evidenced
+  at 32 / 48 / 64 and gated before 07:30.
+- Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 25): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-25).
+Owner decision still open: the cop vermilion (23:10 entry). Gates last green at d2d56a6 (no-bench); everything after it
+is JOURNAL-only. Bench still owed on an idle box. Nothing pushed or merged. Session end; tree clean at the commit below.
