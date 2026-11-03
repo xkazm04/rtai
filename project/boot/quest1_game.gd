@@ -22,6 +22,8 @@ var save_path: String = Checkpoint.DEFAULT_PATH
 var settings_path: String = PlayerSettings.PATH
 var settings: PlayerSettings = PlayerSettings.new()
 var _ended: bool = false
+## Quest 1's sound (features/audio): the service, the Events hooks, the shot feed, the voice player.
+var _audio: StageAudio = null
 ## The city's crowd atlas and near rigs (quest 1 on the city; Rivet is the quest's cast).
 var _characters: CityCharacters = null
 
@@ -112,6 +114,9 @@ func _begin(opened: Quest1Session) -> void:
 			_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 			_characters.rivet_on_foot = false
 			_characters.bake()
+		_audio = StageAudio.attach(
+			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
+		)
 		session.live.viewport = get_viewport()
 		session.live.origin_px = func() -> Vector2:
 			return get_viewport().get_visible_rect().size / 2.0
@@ -179,6 +184,9 @@ func restart(cp: Checkpoint) -> void:
 	if view != null:
 		view.queue_free()
 		view = null
+	if _audio != null:
+		_audio.queue_free()
+		_audio = null
 	_ended = false
 	paused = false
 	start(cp)

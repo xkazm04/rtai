@@ -216,6 +216,18 @@
         "P"
       ],
       "mouse": []
+    },
+    {
+      "bit": -1,
+      "id": "radio_next",
+      "joy_axes": [],
+      "joy_buttons": [
+        5
+      ],
+      "keys": [
+        "R"
+      ],
+      "mouse": []
     }
   ],
   "schema": "gtai.input-actions/1"
