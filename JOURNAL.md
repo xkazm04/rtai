@@ -218,3 +218,19 @@ green at 971a118.
   t900: pools identical to 1a7174f at 128, stains identical by eye at 32-64 (5k px of freeze-tick jitter).
   Evidence: frames/noir-pool-dark-check.png (old | 1a7174f | fix). LESSON: a shared fx table value has a noir
   reader; check --look=noir after any blood_fx.json colour change.
+- GATES at 030eb10 (evidence/run.mjs --no-bench, 13:01): lint 13/13, unit 350/0, scenarios 8/8, parity exact,
+  selftest PASS (goldens 11/11 worst 0.49, block 5/5 worst 0.94). e73ee34: decision line (fx pool body).
+- Quest 1 check at e73ee34 (collect_call_frames, 1920x1080): 9 frames, no script errors, stains soaked 48 missed 0;
+  the dock-wave pools under the dead guards carry the blood_dark body. masters raw/q1-it3/.
+
+NEXT (iteration 4), in order:
+1. Owner sync picks (18:00): --blood (noir proposed), --kill-beat (off/panel/flash/both), muzzle pop 0.32 or off,
+   pool body blood_dark (frames/pool-dark-t900-*-pair.png) vs the brighter #750008.
+2. Re-bench on a quiet machine: riot p99 today 4.86 / 7.68 / 15.18 / 9.87 ms with every riot hitch `present`
+   (GPU shared by 7 lanes); the blood's CPU cost is ~0.2-0.4 ms/frame debug (city_fight avg_us_per_frame).
+3. After the d5-city merge: palette blood + blood_dark are read already (CombatBlood); check the junction goldens
+   once (expected unchanged: same values) and that the token blood_dark never reaches the noir path.
+4. Orphan pools (bodies despawn at 8 s, pools stay): owner's read; a render-side faster fade once the body leaves
+   is ready to build in CorpseStains/BloodFx if wanted.
+5. REQUEST 3 (kill hit-stop 8 under a beat mode) stands; quest 1 has no hit-stop at all (no FxTriggers in
+   CollectCallView): wire one when quest 1 gets a player entry.
