@@ -451,3 +451,4 @@ NEXT (addendum, iteration 4 after 01:00): 15. City lane: the D5 plan-view lamp (
 NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, in order: (a) age_floor (gameplay-zoom
   warmth), (b) Rivet/King steel (world lavender vs close-up mauve rule), (c) store-safe marks (portraits, expressions,
   loading, phone, boss card; k9 in-game only), (d) the boss card's vermilion crown.
+- 01:14 arena re-shot on the final shaders (a14); arena frames, item18 and night_iter4_summary now a14 + h73 (all evidence on one shader state).

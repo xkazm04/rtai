@@ -40,7 +40,7 @@ tick count, no RNG.
 | `item18_arena.png` | iteration 4: the D5 boss arena (King's chop-shop floor + a plan-view King sprite) at 32/48/64/96, D4 tier, the rejected cream crown (a1), the concept |
 | `item19_phone.png` | iteration 4: the D5 phone close-up in-engine (cop_alarmed behind the keyed phone screen) at 32/48 + the raw frame |
 | `item5e_boss_intro.png` | iteration 4: the D5 boss intro card (King on his turntable; `features/combat/art/d5/boss_intro_king.png`, not wired) |
-| `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a13) |
+| `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a14) |
 | `item1d_rust_dry.png` | iteration 4: Rivet at 96 px/m, rust_dry 0.42 (h72) vs 0.55 (h73, kept) |
 | `item20_lamp.png` | iteration 4: at 48 and 64: the D4 lamp ('spoon', h70) / the first D5 lamp (riveted head = gear ring, h71) / the plain-cap D5 lamp (h72, kept) |
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
