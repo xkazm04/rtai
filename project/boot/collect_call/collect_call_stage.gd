@@ -38,6 +38,7 @@ var pilot: StagePilot = null
 var tick: int = 0
 var _quest: QuestSystem = null
 var _asked: Dictionary[String, bool] = {}
+var _cued: Dictionary[String, bool] = {}
 var _events: EventBus
 var _last_line: String = ""
 
@@ -122,6 +123,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_8(1 if crates_burning else 0)
 	out.put_utf8_string(hidden_in)
 	out.put_32(deaths)
+	out.put_32(_cued.size())
 	if pilot != null:
 		pilot.write_state(out)
 
@@ -165,17 +167,25 @@ func _encounters() -> void:
 				_asked[marker] = false
 
 
-## The voices (the madness stand-in): hiding raises a whisper burst after whisper_first_ticks,
-## then every whisper_every_ticks; so do the tazer hit, the fire and Kilohm's scan.
+## The voices (the madness stand-in), cued by the story, never by a repeating timer: a beat's
+## whisper cue (data whispers.cues: in b1, once Rivet has hidden a moment), Kilohm's line
+## (line_hooks), the tazer hit and the fire.
 func _emit_events() -> void:
 	if arena.tazer_hit_now:
 		whisper_now = true
-	var first: int = layout.whisper_first_ticks
-	if hidden_in != "" and hidden_ticks >= first:
-		if (hidden_ticks - first) % layout.whisper_every_ticks == 0:
+	var beat: String = _beat_id()
+	if layout.whisper_cues.has(beat) and not _cued.has(beat) and hidden_in != "":
+		if hidden_ticks >= layout.whisper_cues[beat]:
+			_cued[beat] = true
 			whisper_now = true
 	if whisper_now:
 		_events.whispers_spiked.emit()
+
+
+func _beat_id() -> String:
+	if _quest == null or _quest.runner == null or _quest.runner.current_beat() == null:
+		return ""
+	return _quest.runner.current_beat().id
 
 
 ## Wave `i`'s number within its encounter, from 1.

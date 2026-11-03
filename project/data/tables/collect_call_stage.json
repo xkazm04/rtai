@@ -211,7 +211,14 @@
     }
   ],
   "whispers": {
-    "every_s": 7,
-    "first_s": 1.5
+    "cues": [
+      {
+        "after_s": 1.5,
+        "beat": "b1-dumpster",
+        "doc": "the voices spike once Rivet has been in the dumpster a moment (rivet-my-hands)",
+        "on": "hidden"
+      }
+    ],
+    "doc": "Whisper bursts (the madness stand-in) are cued by quest beats, never by a repeating timer: each cue fires once, in its beat, when its condition ('hidden': Rivet in a hide spot) has held for after_s. The rest come from story moments: Kilohm's line (line_hooks), the Robo-tazer hit and the torch."
   }
 }

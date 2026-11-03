@@ -24,8 +24,9 @@ var hide_r: Dictionary[String, float] = {}
 var patrols: Array[Patrol] = []
 ## Payphone id (its marker name) -> where it stands.
 var phones: Dictionary[String, Vector2] = {}
-var whisper_first_ticks: int = 90
-var whisper_every_ticks: int = 420
+## Whisper cues (data whispers.cues): beat id -> ticks the cue's condition must hold
+## ("hidden" is the one condition so far). Each fires once.
+var whisper_cues: Dictionary[String, int] = {}
 var spawn_points: Dictionary[String, Vector2] = {}
 var waves: WaveDirector
 var crates_at: Vector2 = Vector2.ZERO
@@ -70,9 +71,9 @@ func _read(t: DataTable, raw: Dictionary) -> void:
 		patrols.append(_patrol(t, d))
 	for id: Variant in t.array(raw, "payphones"):
 		phones[str(id)] = places.markers[str(id)].phone
-	var w: Dictionary = t.object(raw, "whispers")
-	whisper_first_ticks = CombatTuning.ticks(t.num(w, "first_s"))
-	whisper_every_ticks = CombatTuning.ticks(t.num(w, "every_s"))
+	for cue: Variant in t.array(t.object(raw, "whispers"), "cues"):
+		var c: Dictionary = cue if cue is Dictionary else {}
+		whisper_cues[t.text(c, "beat")] = CombatTuning.ticks(t.num(c, "after_s"))
 	var points: Dictionary = t.object(raw, "spawn_points")
 	for id: String in points:
 		spawn_points[id] = t.vec(points, id)

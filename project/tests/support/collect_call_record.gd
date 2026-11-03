@@ -36,14 +36,18 @@ func cash() -> int:
 func stubbed() -> Array[String]:
 	return [
 		(
-			"places and movement: an invented arena in metres (data/tables/collect_call_places.json,"
-			+ " collect_call_stage.json), not the city; Rivet walks straight lines, no collisions"
+			"places: an invented arena in metres (data/tables/collect_call_places.json,"
+			+ " collect_call_stage.json), not the city; no collisions (Rivet walks through walls)"
 		),
 		(
-			"madness: whisper bursts are timed by the stage (hiding, the tazer hit, the fire, "
-			+ "Kilohm's scan) and the band is fixed 'crowded'; there is no madness system yet"
+			"madness: whisper bursts are cued by beats and story moments (the b1 hide cue, the"
+			+ " tazer hit, the fire, Kilohm's line) and the band is fixed 'crowded'; there is no"
+			+ " madness system yet"
 		),
-		"input: no actions are bound to StageIntent; CollectCallBot (dev/bots) plays Rivet",
+		(
+			"input (bot scenario only): CollectCallBot sets StageIntent directly; the bound input"
+			+ " path is scenario_quest1_input (StagePilot through LiveInput)"
+		),
 	]
 
 
