@@ -10,7 +10,12 @@ const D5_GROUND: String = "res://features/city/art/d5/ground/"
 const ROOFS_D5: String = "res://features/city/art/d5/roofs/"
 ## ground tiles with a D5 variant in D5_GROUND (print-aware joints / crosswalk wear),
 ## swapped in the "d5" tier
-const D5_TILES: Array[String] = ["sidewalk_tone.png", "road_intersection_tone.png"]
+const D5_TILES: Array[String] = [
+	"sidewalk_tone.png",
+	"road_intersection_tone.png",
+	"road_straight_tone_b.png",
+	"road_straight_v_tone_b.png",
+]
 const LANDMARKS: Dictionary[String, Vector2] = {
 	"building_mural": Vector2(9.7, -9.7),
 	"building_bar": Vector2(-9.7, -9.7),
