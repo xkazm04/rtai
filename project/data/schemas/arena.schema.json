@@ -32,6 +32,22 @@
       "minItems": 1,
       "type": "array"
     },
+    "city": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "base"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -106,7 +122,8 @@
     "rivet_start",
     "zoom_ppm",
     "areas",
-    "pit"
+    "pit",
+    "city"
   ],
   "type": "object"
 }

@@ -45,11 +45,13 @@ static func cleared_layout(p_plan: ArenaPlan) -> StageLayout:
 
 func setup(ctx: WorldContext) -> void:
 	super.setup(ctx)
+	if cells != null:
+		pit = ArenaPit.from_plan(plan, stations, cells)
 	arena.rivet.weapon = WEAPON
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:
 		for sp: ArenaStation.Spawn in s.spawns:
-			if sp.kind == "target":
+			if sp.kind == "target" and _clear(plan.base + sp.at):
 				@warning_ignore("return_value_discarded")
 				targets.add(arena, sp, plan.base, id)
 				id += 1
@@ -87,14 +89,26 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 ## Rivet and every standing hostile keep out of the arena's walls and cover.
+## On the city proving block the city's buildings, props and parked cars collide too (cells).
 func _collide(p: Vector2) -> Vector2:
-	return walls.push_out(p, arena.tuning.rivet["radius_m"])
+	var r: float = arena.tuning.rivet["radius_m"]
+	var out: Vector2 = walls.push_out(p, r)
+	return cells.push_out(out, r) if cells != null else out
 
 
 func _collide_hostiles() -> void:
 	for h: Fighter in arena.hostiles:
 		if h.alive():
 			h.pos = walls.push_out(h.pos, h.radius_m)
+			h.pos = cells.push_out(h.pos, h.radius_m) if cells != null else h.pos
+
+
+## A spawn is allowed where a body fits: anywhere in the dev arena, off buildings on the city.
+func _clear(at: Vector2) -> bool:
+	if cells == null or cells.clear(at, arena.tuning.human["radius_m"]):
+		return true
+	Log.info("arena", "city block: spawn at %s is in a building, dropped" % at)
+	return false
 
 
 ## Rivet destroyed in the arena: he is back at the hub at full hp and the pit starts over.

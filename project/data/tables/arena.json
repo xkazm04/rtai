@@ -51,7 +51,13 @@
       ]
     }
   ],
-  "doc": "The dev arena's floor plan (features/arena/README.md): areas as rects in metres from the hub, where Rivet starts, and the zoom steps (px per metre) the zoom keys cycle. Stations (arena_stations/*.json) place their spawns and props inside their area. pit: the pit's waves (first wave size, +grow per wave up to max_wave guards, gap_s between a cleared wave and the next; they start once Rivet is trigger_inset_m inside the pit area).",
+  "city": {
+    "base": [
+      524,
+      524
+    ]
+  },
+  "doc": "The dev arena's floor plan (features/arena/README.md): areas as rects in metres from the hub, where Rivet starts, and the zoom steps (px per metre) the zoom keys cycle. Stations (arena_stations/*.json) place their spawns and props inside their area. pit: the pit's waves (first wave size, +grow per wave up to max_wave guards, gap_s between a cleared wave and the next; they start once Rivet is trigger_inset_m inside the pit area). city: the city proving block (--arena=city): the hub sits at base (world metres, a 3 x 3 tile junction of the generated city); spawns that land in a building are dropped.",
   "pit": {
     "area": "pit",
     "first_wave": 2,

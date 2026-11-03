@@ -19,7 +19,9 @@ var standing: Array[Fighter] = []
 var _due_tick: int = -1
 
 
-static func from_plan(plan: ArenaPlan, stations: ArenaStations) -> ArenaPit:
+static func from_plan(
+	plan: ArenaPlan, stations: ArenaStations, cells: StageCells = null
+) -> ArenaPit:
 	var p: ArenaPit = ArenaPit.new()
 	var rule: Dictionary = plan.pit
 	var area: ArenaPlan.Area = plan.area(str(rule.get("area", "pit")))
@@ -32,7 +34,7 @@ static func from_plan(plan: ArenaPlan, stations: ArenaStations) -> ArenaPit:
 	for s: ArenaStation in stations.stations:
 		if area != null and s.area == area.id:
 			for sp: ArenaStation.Spawn in s.spawns:
-				if sp.kind == "enemy":
+				if sp.kind == "enemy" and (cells == null or cells.clear(plan.base + sp.at, 0.5)):
 					p.points.append(plan.base + sp.at)
 	return p
 

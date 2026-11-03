@@ -27,8 +27,9 @@ func _draw() -> void:
 	if arena == null:
 		return
 	for a: ArenaPlan.Area in arena.plan.areas:
-		_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
-		_floor(a.rect, Color(0, 0, 0, 0), a.name)
+		if arena.cells == null:  # on the city proving block the city is the floor
+			_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
+			_floor(a.rect, Color(0, 0, 0, 0), a.name)
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			_prop(arena.plan.base + p.at, p)

@@ -20,6 +20,8 @@ var zoom_ppm: Array[float] = [32.0]
 var areas: Array[Area] = []
 ## The pit's wave rule as read (ArenaPit.from_plan reads its numbers).
 var pit: Dictionary = {}
+## Where the hub sits on the generated city for the proving block (--arena=city).
+var city_base: Vector2 = Vector2.ZERO
 var errors: Array[String] = []
 
 
@@ -42,6 +44,7 @@ static func shipped(p_base: Vector2 = Vector2.ZERO) -> ArenaPlan:
 			a.rect = Rect2(p_base + at, t.vec({"v": [r[2], r[3]]}, "v"))
 		p.areas.append(a)
 	p.pit = t.object(t.raw, "pit")
+	p.city_base = t.vec(t.object(t.raw, "city"), "base")
 	p.errors = t.errors()
 	return p
 

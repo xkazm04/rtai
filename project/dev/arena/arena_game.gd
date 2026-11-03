@@ -4,7 +4,7 @@ extends Node
 ## by quest 1's CollectCallView (print pass, D5 look, blood) with ArenaFloorView as its floor.
 ## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
 ## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
-## --telemetry=<json> writes the session's telemetry on exit.
+## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block.
 
 const TUNE_TICK: int = 300
 
@@ -21,6 +21,7 @@ var _taken: bool = false
 var _tune: String = ""
 var _zoom_i: int = 0
 var _area_i: int = 0
+var _characters: CityCharacters = null
 
 
 func _ready() -> void:
@@ -31,20 +32,8 @@ func _ready() -> void:
 	_shot_tick = int(args.number("--shot-tick", 600.0))
 	_telemetry = args.text("--telemetry")
 	_tune = args.text("--tune")
-	session = ArenaSession.open(Events, Data)
-	if args.text("--bot") == "range":
-		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
-	elif args.text("--bot") == "course":
-		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
-	elif args.text("--bot") == "pit":
-		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
-	add_child(session.world)
-	view = CollectCallView.new()
-	view.px_per_m = px_per_m
-	var floor_view: ArenaFloorView = ArenaFloorView.new()
-	view.stage_view = floor_view
-	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
-	add_child(view)
+	_open(args)
+	_add_view()
 	view.hud_view.visible = false
 	@warning_ignore("return_value_discarded")
 	ArenaKeys.install()
@@ -62,6 +51,36 @@ func _ready() -> void:
 	layer.add_child(panel)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
+
+
+## The session (the dev arena, or the city proving block with --arena=city) and the bot.
+func _open(args: ArenaArgs) -> void:
+	var on_city: bool = args.text("--arena") == "city"
+	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	if args.text("--bot") == "range":
+		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "course":
+		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
+	elif args.text("--bot") == "pit":
+		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	add_child(session.world)
+
+
+## Quest 1's view on the arena's floor; on the city its CityView and baked characters as well.
+func _add_view() -> void:
+	view = CollectCallView.new()
+	view.px_per_m = px_per_m
+	view.stage_view = ArenaFloorView.new()
+	if session.city != null:
+		view.city = session.city
+		view.city_view = CityView.new()
+		view.city_view.clock = session.world.context().clock
+	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
+	add_child(view)
+	if session.city != null:
+		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
+		_characters.rivet_on_foot = false
+		_characters.bake()
 
 
 func _process(_delta: float) -> void:
