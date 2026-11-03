@@ -20,7 +20,10 @@ func test_death_bleeds_and_mutes_the_ink_splat() -> void:
 	b.step(80, Vector2.ZERO)
 	assert_eq(b.kills, 1)
 	assert_gt(b.blood.live_decals(), 1, "a spurt and a pool")
-	assert_true(b.blood.has_pool_at(Vector2(320, 320), 12.0), "a pool under the body")
+	# the city's dead slide 0.54 m along the blow (heading 0 = +x): the pool spreads under them
+	var rest: Vector2 = Vector2(320.0 + 0.54 * SimConst.PX_PER_M, 320.0)
+	assert_true(b.blood.has_pool_at(rest, 6.0), "a pool under the body where it slid to")
+	assert_false(b.blood.has_pool_at(Vector2(320, 320), 6.0), "not where it was hit")
 
 
 func test_ink_mode_keeps_the_splat_and_draws_no_blood() -> void:
@@ -118,6 +121,13 @@ func test_both_keeps_the_ink_splat_under_the_blood() -> void:
 	t.fire(&"death", Vector2(320, 320), 0.0, 10)
 	b.step(10, Vector2.ZERO)
 	assert_eq(b.kills, 1)
+
+
+func test_quest_kills_keep_the_pool_at_the_hit() -> void:
+	var b: CombatBlood = _blood("noir")
+	b.kill_human(Vector2(320, 320), Vector2.RIGHT)
+	b.step(80, Vector2.ZERO)
+	assert_true(b.blood.has_pool_at(Vector2(324, 320), 6.0), "events path: 4 px lead, no slide")
 
 
 func test_pool_body_is_the_doctrine_blood_dark() -> void:

@@ -45,6 +45,8 @@ var player_px: Callable = Callable()
 var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
 var _game: Dictionary = {}
+## The city's dead slide this far (px) along the blow (blood_fx.json game.pool_lead_m).
+var _slide_px: float = 4.0
 var _deaths: Array[Vector4] = []
 var _ends: Array[Vector4] = []
 var _tick: int = -1
@@ -61,6 +63,8 @@ func _init() -> void:
 	if tokens.has(&"blood"):
 		blood.set_ground(tokens[&"blood"])
 	_game = blood.p.get("game", {})
+	var lead_m: float = _game.get("pool_lead_m", 0.125)
+	_slide_px = lead_m * SimConst.PX_PER_M
 	if not NoirLook.requested():  # the noir gate prints a body this dark as black
 		var dark: Color = NoirPack.rgb(_game.get("pool_dark", [0.46, 0.0, 0.03]))
 		blood.set_dark(tokens[&"blood_dark"] if tokens.has(&"blood_dark") else dark)
@@ -178,9 +182,11 @@ func hit_robot(pos_px: Vector2) -> void:
 
 
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).
-func kill_human(pos_px: Vector2, dir: Vector2) -> void:
+## `slide_px`: how far the body slides along `dir` after death (its pool starts under it there).
+func kill_human(pos_px: Vector2, dir: Vector2, slide_px: float = 4.0) -> void:
 	kills += 1
 	var kind: String = _game.get("death_hit", "kill")
+	blood.pool_lead_px = slide_px
 	blood.splash(pos_px, dir.normalized(), kind)
 	bled.emit(pos_px, dir.normalized())
 
@@ -226,7 +232,7 @@ func _resolve() -> void:
 				dir = Vector2.from_angle(e.z)
 				hit = true
 		aimed += 1 if hit else 0
-		kill_human(at, dir)
+		kill_human(at, dir, _slide_px)
 	_deaths.clear()
 	_ends.clear()
 

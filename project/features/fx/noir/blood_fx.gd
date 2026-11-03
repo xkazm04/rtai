@@ -23,6 +23,9 @@ var draws: int = 0
 ## Redraw cadence (ticks) once nothing flies or grows and only the slow fade moves; 1 = every
 ## tick (noir's own scenes). The combat blood sets blood_fx.json game.settled_redraw_ticks.
 var settled_every: int = 1
+## How far (px) along the blow a kill's pool starts from the hit point (the D4/D5 city's dead
+## slide there: CombatBlood sets it per kill; noir's own scenes keep the 4 px).
+var pool_lead_px: float = 4.0
 var _busy_until: int = 0
 var _drawn_at: int = -1
 var _pos: PackedVector2Array = PackedVector2Array()
@@ -124,7 +127,7 @@ func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 		var r0: float = r[0]
 		var r1: float = r[1]
 		var run: float = pool.get("run", 0.0)
-		var i: int = _add_decal(at + dir.normalized() * 4.0, r1, grow, r0, delay)
+		var i: int = _add_decal(at + dir.normalized() * pool_lead_px, r1, grow, r0, delay)
 		_ring.set_dir(i, dir.normalized() * run)
 
 
