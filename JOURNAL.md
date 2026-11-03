@@ -408,3 +408,29 @@ NEXT (night run):
 4. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
 5. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
 6. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
+
+## Iteration 7 (23:19, BUILD; freeze 23:30, an 11-minute session)
+- answers.json re-read at 23:19: nothing new for gunplay (1 and 2 placeholders, 3 = A applied in
+  iteration 6).
+- MILESTONE 948aa53: weapons.json rows take an optional `held_scale` (schema 0.5-3; WeaponSpec
+  default 1.0 when the key is absent, so no row and no golden moves). This is the data side of
+  Director note (a) / REQUEST 9 -> rivet-motion: the held-weapon socket multiplies the gun model by
+  `WeaponSpec.held_scale`. No row sets it yet: pick the value from a 32 px/m still once
+  rivet-motion's socket reads it (a guess now would be tuning on numbers, which the owner ruled out).
+- Gates at 948aa53: lint 13/13, unit 569/569 (evidence/lint-it7.log, unit-it7.log; the
+  test_save_slots shared-scratch flake did not fire this time). Scenarios: see below.
+- Scenarios at 948aa53: 20 ran, 0 failed (evidence/scenarios-it7.log; the "60 resources still in
+  use at exit" lines were in iteration 5's log too, exit 0). Replay and parity goldens untouched
+  (no sim change). No Godot processes of mine left running. Session ends at the 23:30 freeze.
+
+NEXT (night run):
+1. Carry the table's area behaviours onto CombatArena (the quest/city fight): flamethrower cone +
+   burn DoT + fire patch, rocket splash + knockdown, electro chain + stun, through GunHand reusing
+   features/combat/weapons/impact.gd and sweep.gd; then pistol_fight --weapon=<each> clips at 32
+   and 48 px/m.
+2. The held weapon reads at 32 px/m: rivet-motion's socket scales the gun by
+   WeaponSpec.held_scale (REQUEST 9); set per-row values from a 32 px/m still, not by guessing.
+3. The living read apart from corpses (Director note b; REQUEST 10).
+4. Rivet's real dodge: a TickInput-driven strafe (stage.pilot) instead of the bot-intent rewrite.
+5. Re-ask gunplay-2 only with a clip in the final look (enemy-ai's tell pose + hit reaction).
+6. REQUEST 8 -> autosave owner (SaveKit.SCRATCH per process).
