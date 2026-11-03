@@ -1589,3 +1589,7 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   `work/i16/weapon_ink.png`. `evidence/iter14/q1_view_art.patch` regenerated (one line differs from the 04:56 one);
   applies on main and on main + n-d4 (c9167f9); scratch-q1 unit 166/166; scratch-v2 updated to match. Speaker names
   in the subtitle box stay vermilion: a design accent - added to the owner questions. Ladder2 row. 0 Codex.
+- 05:46 CHECKED, no change: every other vermilion / teal in quest 1's view code (with the patch) - the ringing payphone
+  arcs (the objective), Mertz's Robo-tazer barrel + charge arcs and "VENTING" (the boss threat / its weak point),
+  hostile shot trails (Rivet's are ink), the burst arcs (danger), the TUCK-IN crate bolt (objective), the whisper
+  rings (teal = the souls). All on doctrine; only the speaker names remain an owner call.
