@@ -72,3 +72,11 @@ func test_no_stomp_in_base_form() -> void:
 	var r: Array = _rig()
 	var h: HaulerForm = r[1]
 	assert_eq(h.stomp(Vector2.ZERO, PackedVector2Array([Vector2(1, 0)])).size(), 0)
+
+
+func test_tank_rig_scale_matches_the_ghost_body_radius() -> void:
+	var b: BodyTable = BodyTable.load_default()
+	var base: BodyPlan = RivetPlan.build(RivetPlan.FORM_BASE)
+	var tank: BodyPlan = RivetPlan.build(RivetPlan.FORM_HAULER)
+	var body_k: float = b.radius(&"rivet_ghost") / b.radius(&"rivet_base")
+	assert_almost_eq(tank.size_k / base.size_k, body_k, 0.05, "the art grows with the body")
