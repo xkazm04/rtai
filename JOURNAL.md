@@ -1319,3 +1319,38 @@ night_iter7_summary.png and the iteration-7 order.
 - 05:40 evidence/hero-pkg9-{32..128}ppm.png (i9mot) and arena-pkg9-{64,128}ppm.png (a32v9): the package v9 showcase frames beside the committed hero-d4d5-* (README table row). By eye at 48 (i9mot): no defects, membranes tan under the hatch, no visible blotch repeat between roofs.
 - 05:40 scratch deleted (numbers logged above; the by-eye boards in masters work/i9 were built before): i9sh60, i9sh66, i9sh70, i9sh74, i9sh74g6, i9g6, i9m74, i9m74f, i9mot45, i9mot66, i9pre (= i9pkg), i9v9 (= i9mot). Kept: i9pkg, i9mot, i9base, i9cmot, i9pan_pkg, i9pan_mot, a32v9, a34der.
 - 05:41 MEASURED the whole-frame L gap split (README 9.3): v9 road share 0.426 vs mock 0.366, off-road L 0.560 vs 0.598; re-weighted to the mock's road share v9 = 0.470 (mock 0.488): ~0.015 of the 0.033 gap is layout (road share), ~0.024 off-road tone.
+
+## Summary (iteration 9, 05:13 -> 05:41), no images (50/50 used)
+- Theme: gap 2 (mid-tones), the last tone-table gap of the package at 32 px/m.
+- Found: the mock's mid-tones live in its paper areas, and its roof VALUE STRUCTURE is a mid-tan membrane with cream
+  props; ours was cream on cream. The print keeps a mid tone only near look_d4's light/mid wash step.
+- Kept as PACKAGE v9 (masters build_roofs.py D5_ROOF_SHADE + SHADE_MOT, fist wash 0, plate lines gamma 0.6 / union
+  hall 0.8; package_shot.sh default): whole frame at 32 mid 0.09 -> 0.11 (mock 0.11) at the same L 0.455 and ink 0.11;
+  roof areas (no zebra) paper / mid / dark 0.723 / 0.107 / 0.170 -> 0.702 / 0.138 / 0.160 (mock 0.698 / 0.152 /
+  0.149); actor read identical; pan 0.00000; D4 tier 0 px. Up close (64-96) a weathered tan / cream roof, the fist as
+  peeling mural paint. Not committed as the plate default: under the committed print it only darkens (L 0.420 ->
+  0.416). Adoption = one command (README 9.1).
+- Rejected: prop cast shadows on the plates (they have drawn ones), the flat membrane tone (wipes the grime at 64,
+  merges the fist), the gamma alone, derived plates for the D4-only roofs (they already print mid-heavy under the
+  thin print; the tone lowers it), lighter cap lines (no lever).
+- Measured: the remaining whole-frame L gap (0.455 vs 0.488) is ~0.015 layout (road share 0.426 vs 0.366) + ~0.024
+  off-road tone (README 9.3). The membrane hue is not a gap (measured).
+- Tools (masters): package_shot.sh v9 default + pan mode + a full restore (unsets every D5_ROOF* / D5_FIST* /
+  D5_INK*, deletes derived plates); roof_shot.sh (committed scene + caller's plates); work/i9/roofcls.py (fixed-mask
+  classes).
+- Mistakes: two restores inherited the caller's env (fixed by hand, then in the script); a literal "\n" in a line made
+  two rounds shoot the committed plates (caught by "n: command not found", deleted, re-shot); journal stamps ahead
+  of the clock twice (corrected).
+- Boards: evidence/item48_roof_membrane.png, night_iter9_summary.png, hero-pkg9-* / arena-pkg9-*; ladder row.
+- Shared files touched: none. project/ unchanged this iteration (docs + evidence only). Gates ALL PASS at 037ba7d.
+
+NEXT (iteration 9; 31-34 of iteration 8 and 27-30 of iteration 7 stand):
+35. Visual-engine lane + owner: package v9 (night_iter9_summary.png, item48). If look_d5_print is adopted, rebuild the
+    7 D5 plates with the README 9.1 command and commit them in the same change (the thin print and the v9 plates go
+    together; v9 plates under look_d4 darken the frame).
+36. City lane: the road share (README 9.3): our junction gives the road 0.43 of a 32 px/m frame vs the mock's 0.37;
+    half the remaining L gap. Check the road width / block size against the mock before tuning any more tone.
+37. Next plates (if the Codex budget returns): lighter outer parapet outlines, judged on the fixed roof mask
+    (masters work/i9/roofcls.py); a D5 plate for warehouse / long / helipad drawn as such (not derived: README 9.1).
+Morning reading order: night_iter9_summary.png -> item48 -> night_iter8_summary.png -> item46 / item44 -> item43 /
+item47 (owner A/B) -> night_iter7_summary.png.
