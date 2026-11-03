@@ -231,6 +231,8 @@ func _tier(tier: String) -> void:
 		sm.set_shader_parameter("amount", clampf((_rigs.zoom * PX - 56.0) / 8.0, 0.0, 1.0))
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	D5HeroGround.fade(_cracks, tier, _rigs.zoom * PX)
+	if OS.get_environment("D5_PRINT") == "thin":  # dev A/B: the look_d5_print proposal (both tiers)
+		_look.shader = load("res://assets/shaders/look_d5_print.gdshader") as Shader
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
