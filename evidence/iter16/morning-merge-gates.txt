@@ -20,3 +20,6 @@ Frames: masters night/d4-production/morning_i16/, morning_i16_st/; board night_i
 + evidence/iter16/rig_sleeves_and_looks.patch instead of REQUEST 21's patch (it contains 21's looks + the sleeves),
   with n-d4 767ee6c's sleeve art: lint 13/13 (220 files), unit 221/221, scenarios 8/8, selftest + city_frame
   0 placeholders. Frames: masters after_i16sl2/, after_i16sl2_st/ (before = morning_i16*/).
+
+05:32 re-run with n-d4 97558d7's arm art (outline 14 px; byte-equal to the scratch) + the sleeves patch WITH its unit
+test: lint 13/13 (220 files), unit 222/222, scenarios 8/8.

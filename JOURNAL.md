@@ -1511,3 +1511,34 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   "i16 arm outline". Originals `masters:backup_arms16/`. Commit 97558d7. 0 Codex.
 - 05:30 GATES at 97558d7: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
   selftest 72 art textures, 0 placeholders (`evidence/iter16/gates-97558d7.txt`).
+- 05:32 CHECK morning tree at n-d4's final art (arm parts byte-equal to 97558d7) + the sleeves patch with its test:
+  lint 13/13, unit 222/222, scenarios 8/8 (`evidence/iter16/morning-merge-gates.txt`).
+
+## SUMMARY iteration 16 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter16_summary.png` (= `evidence/iter16/night_iter16_summary.jpg`); morning
+board `night_iter16_morning.png` (= `evidence/iter16/night_iter16_morning.jpg`); ladder2 rows "i16 ...".
+1. Pedestrian sleeve variants (`_dark` ink, `_grey` wash; hands cream) + `evidence/iter16/rig_sleeves_and_looks.patch`
+   (characters; REQUEST 21's looks + `RigVariant.sleeve` + 4 lines in `RigArm._cell` + a unit test): the riot crowd
+   stops reading as clones. 767ee6c (art), patch supersedes `iter10/rig_variant_new_looks.patch`.
+2. Pedestrian arm outline 14 px (brief item 4): cream sleeves on cream paving read as inked figures at 32; works on
+   n-d4 alone. 97558d7.
+3. Morning merge dry run (n-visual 41ee996 + n-d4 + patches 19 / 23 + the sleeves patch): green; board vs target.
+- Rejected / not shipped: D5 hatch on Rivet's parts (D4 hybrid keeps characters flat - owner question for 64 px/m),
+  sleeve thirds (grey faint on asphalt), an ink cut line on the cream halo (eats the rim at 32), Dock 9 floor hatch
+  (Rivet loses his rim).
+- Codex this iteration: 0 images. Night total unchanged: 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
+- Owner review (each reverts alone): 767ee6c (sleeve parts; inert without the patch), 97558d7 (arm outline; originals
+  `masters:backup_arms16/`).
+- Director: REQUEST 21 now = `evidence/iter16/rig_sleeves_and_looks.patch` (applies on n-d4 = main for its 3 files;
+  green on the morning tree). REQUEST 16 (`iter14/q1_view_art.patch`), 19 (`iter10/generator_art_pick_v2.patch`),
+  23 (`iter14/fx_fade.patch`) unchanged - all three `git apply --check` clean on n-visual 41ee996 + n-d4. After the
+  merge: re-bless n-visual's look goldens (they move with n-d4's art; the crowd moves again with the sleeves).
+- Owner questions: + hatch Rivet's limbs for the 64 px/m boss arenas only? (variant in `masters:work/i16/rivet_g4/`);
+  HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes; REQUEST 24 (souls).
+- Notes for characters / visual-engine: the selftest junction's crowd moment shifts when art changes (not a
+  same-scene frame across art changes; city_frame foci are); cream-sleeved looks on cream paving now rely on the
+  arm outline - a wider halo on paving is the code-side option. The bald head part has a small gloss arc (only
+  worn with patch 21's overalls look; flatten like the iteration-14 pip if it shows at 64).
+- Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` (bench.json stale; another lane was rendering 05:25).
