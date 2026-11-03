@@ -1069,6 +1069,16 @@ NEXT (iteration 13 / morning, in order):
   goldens worst 0.00, accents clean at both, world lock 0.00 % x3). Copied to evidence/pof. Bench: the
   contended run at 4d83199 above (camera / flash / PrintStage changes are not on the bench's path: no rig,
   fire flicker only changes a toggle rate).
+- docs/decisions.md (shared, appended after my own iteration-11 lines; merge-tree re-checked: still
+  JOURNAL.md-only): DECISION render hit-stop (SimClock.hold, SIM-01 / SIM-05 safe) and DECISION render
+  PrintStage.
+- MILESTONE (7e3eb68) PrintStage.listen(bus, clock, player_id, at): the game feel in one call (a CameraRig
+  on the F-04 events incl. boss_engaged -> arena, the FX cues, the hit-stops). Unit 236 (+1). For quest 1
+  after the merge: the 45-quest1 patch + `print_stage.listen(Events, <its clock>, <Rivet's id>, ...)`
+  (CollectCallView has no SimClock today: the play steps ticks itself - give it one or pass the stage's).
+- Evidence at 7e3eb68 (05:48-05:50, all PASS): lint 13/13, unit 236, scenarios 8, parity bit-exact +
+  mutation caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
+  Copied to evidence/pof.
 - Iteration 13 tally: frames rejected for camera 0 (all engine captures, straight down); approaches
   reverted 0 (the zoom anchor measured better at low frequency, equal on the 1 px grain - kept); re-runs:
   1 (on_foot lead pass forgot --mode), 1 (print_stage_demo parse errors -> hung run, my PID 32332 + child
