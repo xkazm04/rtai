@@ -117,3 +117,16 @@ func test_a_rocket_bursts_at_the_aim_point_and_catches_a_strafer() -> void:
 	lane.strafe_mps = 3.2
 	var res: RangeDrill.Result = RangeDrill.run(_table, lane, _rng(11))
 	assert_true(res.killed, "splash at the aimed point covers a 0.8 m juke")
+
+
+func test_pad_aim_assist_bends_toward_a_target_and_the_mouse_stays_raw() -> void:
+	var assist: AimAssist = _table.aim_assist
+	var t: RangeTarget = RangeTarget.make(1, Vector2(10, 1), 100.0, 0.35)
+	var targets: Array[RangeTarget] = [t]
+	var raw: Vector2 = Vector2.RIGHT
+	var pad: Vector2 = assist.bend(raw, Vector2.ZERO, targets, true)
+	assert_gt(pad.angle(), 0.0, "bent toward the target")
+	assert_lt(pad.angle(), Vector2(10, 1).angle(), "only part of the way (light)")
+	assert_eq(assist.bend(raw, Vector2.ZERO, targets, false), raw, "mouse untouched")
+	var wide: Array[RangeTarget] = [RangeTarget.make(2, Vector2(5, 5), 100.0, 0.35)]
+	assert_eq(assist.bend(raw, Vector2.ZERO, wide, true), raw, "outside the cone")

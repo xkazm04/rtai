@@ -2,6 +2,34 @@
   "$id": "gtai.weapons/1",
   "additionalProperties": false,
   "properties": {
+    "aim_assist": {
+      "additionalProperties": false,
+      "properties": {
+        "cone_deg": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "pad_only": {
+          "type": "boolean"
+        },
+        "range_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "strength": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cone_deg",
+        "pad_only",
+        "range_m",
+        "strength"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -247,6 +275,7 @@
     }
   },
   "required": [
+    "aim_assist",
     "doc",
     "enemy_fire",
     "schema",

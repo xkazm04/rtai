@@ -16,6 +16,7 @@ var enemy_speed_scale: float = 1.0
 var enemy_damage_scale: float = 1.0
 var enemy_tell_ticks: int = 0
 var enemy_flash_ticks: int = 0
+var aim_assist: AimAssist = null
 var _errors: Array[String] = []
 
 
@@ -42,6 +43,7 @@ static func from_table(t: DataTable) -> WeaponTable:
 	wt.enemy_damage_scale = t.num(ef, "damage_scale")
 	wt.enemy_tell_ticks = WeaponSpec.ticks(t.num(ef, "tell_s"))
 	wt.enemy_flash_ticks = WeaponSpec.ticks(t.num(ef, "muzzle_flash_s"))
+	wt.aim_assist = AimAssist.from_table(t)
 	wt._errors = t.errors()
 	if not wt.ok():
 		Log.error("weapons", str(wt._errors))

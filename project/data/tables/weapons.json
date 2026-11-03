@@ -1,4 +1,10 @@
 {
+  "aim_assist": {
+    "cone_deg": 8,
+    "pad_only": true,
+    "range_m": 25,
+    "strength": 0.35
+  },
   "doc": "The weapon table (lane gunplay, owner weapon set 2026-11-03 20:00). Damage is in hp points: a human has 100 (one pistol hit, the one-hit doctrine), see targets. Seconds and metres; the sim converts to 60 Hz ticks. enemy_fire scales the same rows when a hostile holds the gun, so enemy shots are slower and readable.",
   "enemy_fire": {
     "damage_scale": 0.25,
