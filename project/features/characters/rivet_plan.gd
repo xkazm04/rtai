@@ -15,7 +15,7 @@ const FORM_NIGHT: StringName = &"night"
 ## The open guard (hands level and forward): King's stance, a boss squares up.
 const FORM_OPEN: StringName = &"open"
 const FORMS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(1.1, 0.7, -250.0),
+	FORM_BASE: Vector3(1.2, 0.7, -250.0),
 	FORM_OPEN: Vector3(1.1, 0.85, -30.0),
 	FORM_NIGHT: Vector3(1.3, 1.0, -30.0),
 }
