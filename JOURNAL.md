@@ -193,3 +193,12 @@ NEXT (iteration 4 end):
   Final HEAD: 2af3b1f (gates last run at 53fb7d7; only the service's timing probe and a dev scene changed after, lint + 355 unit tests green at HEAD).
 - 13:15 THREE-WAY MERGE CHECK (scratch worktree, deleted): d-slice 2de6c16 + d-vehicles + d-audio 2af3b1f + `evidence/requests/quest1_game_audio.patch` applied: the only conflict is JOURNAL.md (every lane's own file); lint 13/13 over 413 GDScript files,
   **425 unit tests pass, 13 scenarios ran / 0 failed** (quest 1 input run: replay identical, 187 s; vehicle drive and yield pass; city replay 20 checkpoints identical). So the whole audio wiring is: merge + that 9-line patch + the input row (REQUEST 6).
+
+## 2026-11-03 iteration 49 (BUILD, started 15:40)
+- MILESTONE (15:55) blood sounds for the D5 blood (owner verdict 5: red blood, spurts, splats; the d-combat lane's CombatBlood draws them off `FxTriggers.cued`): deaths used a pitched flesh thud only.
+  Generated direct (ElevenLabs sound-generation, 5 takes, ~0.9 s, SFX credits only, no voice characters; POF-GAP 1 unchanged): `blood_splat` x3, `blood_spurt` x2. QC: 0 rejected by the pipeline,
+  by hand rejected 1 (blood_spurt_02: a quiet -35 dB RMS click after a gap, nothing a player would hear as a spurt). Kept: blood_splat_01..03, blood_spurt_01 (env decays 12-30 dB in the first 100 ms: no long tails).
+  New optional cue field `layer` (a second cue started along with the first; unit-tested, README): `death` -> `blood_splat` (-8 dB), `rivet_kill` -> `blood_spurt` (-7 dB). No change to the event hooks, the riot bed (it counts only the
+  parent cues) or the FX sink: the layer starts inside `AudioService.cue`. Provenance +4 lines. Unit 356 (355 pass; the one fail is the known test_noir_shadows engine-error flake, not audio),
+  lint 13/13, scenarios 8/8. Not heard by a human.
+- FRICTION: tools/audio/build_tables.py is STALE (it lacks car_wreck / boss_loop and has Gloria at -5 instead of the tuned -1): running it clobbers hand edits. The tables are edited as JSON now; do not regenerate.

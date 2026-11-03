@@ -81,6 +81,9 @@ func cue(id: StringName, pos_m: Vector2, tick: int) -> bool:
 	_next_ok[id] = tick + c.cooldown_ticks
 	_frame_starts += 1
 	played[id] = played.get(id, 0) + 1
+	if c.layer != &"":
+		@warning_ignore("return_value_discarded")
+		cue(c.layer, pos_m, tick)
 	return true
 
 

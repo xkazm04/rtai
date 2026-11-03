@@ -32,6 +32,10 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "layer": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
           "loop": {
             "type": "boolean"
           },

@@ -114,3 +114,13 @@ func test_a_player_volume_scales_one_bus_and_survives_the_duck() -> void:
 	s.buses.step_duck(false, 100.0)
 	s.buses.set_user_gain(&"music", 1.0)
 	assert_almost_eq(AudioServer.get_bus_volume_db(idx), base, 0.05)
+
+
+func test_a_death_also_starts_its_blood_layer() -> void:
+	var s: AudioService = _service()
+	assert_true(s.cue(&"death", Vector2.ZERO, 100))
+	var splat: int = s.played.get(&"blood_splat", 0)
+	assert_eq(splat, 1, "the layer cue starts with its parent")
+	assert_true(s.cue(&"rivet_kill", Vector2.ZERO, 100))
+	var spurt: int = s.played.get(&"blood_spurt", 0)
+	assert_eq(spurt, 1)

@@ -5,7 +5,7 @@ game (FX cues, `Events`, the quest line player) and never writes the sim, so rep
 
 | Piece | File | What it does |
 |---|---|---|
-| Service | `audio_service.gd` | `cue(id, pos_m, tick)`: 24 pooled `AudioStreamPlayer2D`, per-frame voice cap, per-cue cooldown / max voices / priority steal, distance cull, pan + fade by the listener (the camera focus), variation + pitch jitter from `AudioDice` |
+| Service | `audio_service.gd` | `cue(id, pos_m, tick)`: 24 pooled `AudioStreamPlayer2D`, per-frame voice cap, per-cue cooldown / max voices / priority steal, distance cull, pan + fade by the listener (the camera focus), variation + pitch jitter from `AudioDice`; a cue row's optional `layer` names a second cue started along with it (`death` -> `blood_splat`, `rivet_kill` -> `blood_spurt`) |
 | Tables | `audio_tables.gd`, `audio_cue.gd` | `data/tables/audio_cues.json` (cue -> sound, takes, bus, gain, pitch, range) and `audio_mix.json` (buses, cap, duck, loudness targets) |
 | Dice | `audio_dice.gd` | variation + jitter, seeded from the RNG registry's master seed; deliberately not a registry stream (see decisions) |
 | Buses | `audio_buses.gd` | sfx / voice / music / ui / radio built at boot from the mix table; voice ducks music and sfx |

@@ -1,5 +1,9 @@
 {
  "src": {
+  "blood_splat_01": "blood_splat_01",
+  "blood_splat_02": "blood_splat_02",
+  "blood_splat_03": "blood_splat_03",
+  "blood_spurt_01": "blood_spurt_01",
   "city_ambience_01": "city_ambience_01",
   "crash_01": "crash_01",
   "crash_02": "crash_02",
@@ -34,6 +38,8 @@
   "tyre_screech_02": "tyre_screech_02"
  },
  "takes": {
+  "blood_splat": 3,
+  "blood_spurt": 1,
   "city_ambience": 1,
   "crash": 2,
   "crowd_panic": 2,

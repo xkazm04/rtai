@@ -14,6 +14,8 @@ var cooldown_ticks: int = 0
 var max_voices: int = 1
 var priority: int = 0
 var loop: bool = false
+## A cue started along with this one ("" = none): the blood under a death or a kill punch.
+var layer: StringName = &""
 
 
 static func from_row(row: Dictionary) -> AudioCue:
@@ -31,6 +33,7 @@ static func from_row(row: Dictionary) -> AudioCue:
 	c.priority = _i(row, "priority")
 	var loop_flag: bool = row["loop"]
 	c.loop = loop_flag
+	c.layer = StringName(str(row.get("layer", "")))
 	return c
 
 
