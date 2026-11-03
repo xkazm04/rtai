@@ -262,3 +262,13 @@ REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
 
 NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` 333e3a6 after merging d-save + d-slice;
 REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
+
+## 2026-11-03 iteration 61 (BUILD, 16:40) - trial tree refreshed on d-slice 3db4792
+- d-slice moved to 3db4792 (reverts the ViewPrewarm paper cover in collect_call_view.gd; nothing in my scope). Re-merged into
+  `d-save-trial` (333e3a6 -> e58f359; merged cleanly, no conflict). Patches 0001..0005 still hold.
+- Gates on the trial tree: lint 13/13, unit 409 passed / 0 failed, scenarios 12/12 (logs in the trial tree's evidence/unit61.log, scen61.log).
+  The iteration-59 noir_shadows flake did not recur.
+- d-save itself: no code, sim, shared-file or bench change; no lock taken. Work order items 1-6 stay evidenced.
+
+NEXT: unchanged (Director applies patches 0001..0005 / cherry-picks `d-save-trial` e58f359 after merging d-save + d-slice;
+REQUEST 1 and 2 to slice-play; Loc keys when the PO table lands).
