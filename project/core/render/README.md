@@ -141,7 +141,10 @@ cream body read cool-grey on the warmed paper at 64 px/m (cool light px 10 911 -
 below (amount 0, age_floor 0) the rect stays hidden: 32 / 48 frames byte-identical, zero cost. Cost at
 64 px/m: +0.54 / +0.47 ms GPU (iGPU 1280x800, 2 interleaved pairs, `pass_cost.gd --ppm=64`,
 `evidence/page-age-cost/`). An `age_floor` > 0 (n-d5's proposal for D4) would now age the whole page
-at 32 px/m too and pay the rect there.
+at 32 px/m too and pay the rect there. Known limit: what draws above the grade rect is not aged - the
+additive lights, the `emissive` FX (muzzle, tracer, explosion, crackle, spark: all `paper` token) and the
+world-UI markers (accent inks, which the age keeps anyway) - so a paper flash at 64 px/m prints D4 cream
+on the aged page (a brief, bright flash; same rule as under the night grade).
 
 Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov.png`), so the
 overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
