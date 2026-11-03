@@ -88,3 +88,5 @@ NEXT:
 4. d5-combat/boss work: a boss telegraph cue exists (attack_telegraphed -> servo whine at 0.7 pitch); real boss/robo-tazer charge sounds are still a placeholder.
 5. Mix: the riot is ~3 LU under the voiced quest; no occlusion or distance low-pass (Godot's 2D player has none); settings sliders (a volume per bus) not built.
 6. POF-GAP 1-3 stand (audio-gen refuses every request; no tts; no music). Ask the PoF lane: raw-prompt opt-out, a length guard, tts + music kinds.
+- Voice artifact check (ffmpeg silencedetect -40 dB, >= 1 s): 21 of 23 lines have no pause that long; rivet-who-is-this has 1 (the written "...One"), brass-gloria 2
+  (check by ear whether the pauses are the written ellipses or a TTS stall). Speech runs ~14-15 characters/s.
