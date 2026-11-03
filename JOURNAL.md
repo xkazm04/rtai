@@ -1250,3 +1250,43 @@ night_iter7_summary.png and the iteration-7 order.
 - 05:12 session close (cap 05:45): tree clean; the last code commit (da44a1a) passed the full gate run at 5d16b85 (later
   commits are docs only, each passed the pre-commit lint). Nothing half-done or uncommitted. NEXT: the iteration-8 NEXT
   31-34 + reading order above (31 amended), on top of iteration 7's 27-30. Images: 50 of ~50 used; none this iteration.
+
+## Iteration 9 (05:13 -> cap 06:43), BUILD, no images (50/50 used)
+- 05:13 read JOURNAL (NEXT 31-34), git log, README gap list. Weakest open item that this lane can move without Codex:
+  gap 2, mid-tones (mock 0.104 vs package 0.081 at 32 px/m, "the gap is the roof interiors").
+- 05:15 DIAGNOSED (class maps, masters work/i9/classmap.png): the mock's mid-tones sit in its PAPER areas (roofs +
+  pavements: mid 0.152 of the bright area vs package 0.102, committed 0.035). The plates themselves already have mid
+  0.14-0.18 (plate-level); the print loses it: look_d4 / look_d5_print step ink density into paper / light wash
+  (L ~0.77, still "paper") / mid wash (L ~0.44), so a mid tone survives only around the light/mid step. And the mock's
+  VALUE STRUCTURE differs from ours: its membrane is a mid tan with cream props and cap; ours is cream on cream.
+- 05:16 REJECTED (build_roofs.py first try, D5_ROOF_SHADE prop cast shadows down-right): invisible, the D5 plates
+  already carry drawn hatched cast shadows, so a grey shadow lands on ink. Replaced, never shot.
+- 05:20 NEW build_roofs.py option D5_ROOF_SHADE (masters, default 0 = the committed build): the MEMBRANE (inside the
+  parapet, outside every filled pen outline) is toned to the mock's tan; props, cap and pen lines stay. Rounds (all
+  package_shot.sh, hero, roof-area classes on a FIXED mask = i9pkg's bright areas, masters work/i9/roofcls.py):
+  i9pkg (package v8 baseline, = h153all 0 px) paper 0.712 / mid 0.102 / dark 0.186 / L 0.695; mock 0.698 / 0.152 /
+  0.149 / 0.725. Flat target (np.minimum): sh60 0.571 / 0.217 / 0.212, sh66 0.629 / 0.177, sh70 0.642 / 0.168, sh74
+  0.651 / 0.163: mid reached, paper lost. By eye (work/i9/sh_board.png, m74_board.png): the mock's structure at 32
+  (props pop), but at 64 the flat tone wipes the membrane's grime and the mural fist merges into the roof: REJECTED.
+  Plate lines gamma 0.45 -> 0.6 (union hall 0.65 -> 0.8) alone (i9g6): dark 0.186 -> 0.173, mid 0.096: not the lever
+  alone. Scaled paper (grime kept) + fist wash 0 (i9m74f): still flat at 64.
+- 05:24 KEPT (as a PACKAGE component): D5_ROOF_SHADE_MOT=1 = the tone applied as 0.2-0.5 m blotches (seeded per roof),
+  + fist wash 0 + lines gamma 0.6 / 0.8 (i9mot): roof areas 0.692 / 0.132 / 0.176 / L 0.688 (sum |err| vs mock 0.101 ->
+  0.053); whole frame (cls.py) L 0.455 = 0.455, paper 0.30 -> 0.29, mid 0.09 -> 0.11 (mock 0.11), ink 0.11 = 0.11;
+  rim dL 0.610 / verm dE 77.5 / teal dE 57.6 identical (actor read unchanged). Without the gamma change (i9mot45) the
+  lines add dark (0.191): both needed. By eye: at 32 the mock's tan membrane with cream props; at 48/64 a weathered
+  tan / cream roof (more "Inked Grime" than the clean v8 membrane); the fist takes the blotches as weathered paint,
+  its outline holds at 32. Pan (48 px/m car, mural roof crop --anchor=9.7,-8.5, 40 ticks): 0.00000 v8 and v9 (the
+  thin print's grain is world-locked; the crop checked by eye). Under the COMMITTED print (tools/roof_shot.sh i9cmot)
+  it is small: roof mid 0.035 -> 0.044, frame L 0.420 -> 0.416 (darker, away from the mock): NOT a committed default.
+  D4 tier 0 px everywhere. Arena (a32v9 vs a31all): the OSHA / tall roofs take the tone at 32-96 (71k-123k px), by
+  eye not worse; the kill-cam 128 0 px.
+- 05:27 TOOLS (masters): package_shot.sh = package v9 by default (membrane + gamma 0.6 / 0.8 + fist 0; the pre-v9
+  package = D5_ROOF_SHADE=0 D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65 D5_FIST_WASH=0.18: i9pre = i9pkg 0
+  px, i9v9 = i9mot 0 px at 32-128); a pan mode (package_shot.sh <round> pan [--anchor=x,y]); NEW roof_shot.sh (the
+  committed scene with the caller's D5_ROOF* plates, restored after).
+- FRICTION (fixed): the package restore step inherited the caller's D5_ROOF_LIFT_B / D5_FIST_WASH (twice "RESTORE
+  FAILED", tree restored by hand both times, checked clean); it now unsets every D5_ROOF* / D5_FIST* / D5_INK*. And a
+  Python-written line continuation left a literal "\n" in package_shot.sh, so two rounds shot the COMMITTED plates
+  ("n: command not found", still "tree restored"): both deleted, line fixed, re-shot, verified byte-exact above.
+- 05:30 Board evidence/item48_roof_membrane.png (mock / v8 / v9 at 32, roof crops 32 / 48 / 64, numbers); ladder row.
