@@ -16,6 +16,8 @@ const CAP: int = 32
 var service: VehicleService = null
 var _bodies: Array[MultiMesh] = []
 var _shadow: MultiMesh = null
+## [our node, the crowd node it mirrors]: the look may swap the crowd's material at runtime.
+var _mirrors: Array[Array] = []
 
 
 ## textures: one per VehicleBody.State up to HIJACKED (intact, d1, d2, hijacked); a null entry
@@ -50,12 +52,18 @@ func _layer(like: MultiMeshInstance2D, tex: Texture2D, z: int) -> MultiMesh:
 	node.material = like.material
 	node.z_index = z
 	add_child(node)
+	_mirrors.append([node, like])
 	return mm
 
 
 func _process(_delta: float) -> void:
 	if service == null:
 		return
+	for m: Array in _mirrors:
+		var mine: MultiMeshInstance2D = m[0]
+		var like: MultiMeshInstance2D = m[1]
+		if mine.material != like.material:
+			mine.material = like.material
 	var counts: PackedInt32Array = PackedInt32Array()
 	@warning_ignore("return_value_discarded")
 	counts.resize(_bodies.size())
