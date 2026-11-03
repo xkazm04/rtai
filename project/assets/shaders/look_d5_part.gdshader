@@ -129,7 +129,8 @@ void fragment() {
 			o = mix(o, VERM, rv * mis_k * (1.0 - ink));
 			float fk = fringe_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale);
 			float brk = smoothstep(0.30, 0.45, vnoise(q * vec2(0.22, 0.31) + 7.0));   // the misprint drops out
-			o = mix(o, mix(VERM, INK, fringe_dry), fringe * brk * fk * (1.0 - ink));
+			float cool = step(s.r - 0.03, s.b);   // steel only: on a cream glove a red edge reads as blood
+			o = mix(o, mix(VERM, INK, fringe_dry), fringe * brk * fk * cool * (1.0 - ink));
 			float band = smoothstep(0.26, 0.44, d) * (1.0 - smoothstep(0.62, 0.74, d)) * (0.45 + 0.55 * shade);
 			vec2 cell = fract(mat2(vec2(0.966, 0.259), vec2(-0.259, 0.966)) * q / dots_period) - 0.5;
 			float rad = 0.5 * sqrt(band * 0.55);
