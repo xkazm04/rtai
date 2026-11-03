@@ -8,7 +8,7 @@ keeps the layout. Night lane d4-production, 2026-11-03.
 |---|---|---|---|---|
 | `tuckin_crate.png` | 1.8 x 1.4 | 144 x 112 | `_crates()` box + `_bolt_robot()` + the "TUCK-IN" label | The robot head with the bolt through it is the stencil. Vermilion on the bolt only (an objective). |
 | `tuckin_crate_hit.png` | 1.8 x 1.4 | 144 x 112 | the same crate while `stage.crates_burning` | Cracked lid, scorch hatch, half-burnt stencil. The fire stays FX (`fx_view.gd`). |
-| `cash_taped.png` | 1.4 x 0.8 | 112 x 64 | `_cash()` box + the vermilion tape lines | Envelope + bill edge, two vermilion tape strips. The "$1,500" label can go. |
+| `cash_taped.png` | 1.4 x 0.8 | 112 x 64 | `_cash()` box + the vermilion tape lines | Envelope + bill edge, two vermilion tape strips. The patch drops the "$1,500" / "taped under" labels and the "PAYPHONE" label (the art carries them). |
 | `catwalk.png` | 4.0 x 1.2, tiles along x | 320 x 96 | the two 6 px lines at Dock 9 (y -15 / +15) | Repeats end to end every 4 m. |
 | `dock_gate.png` | 4.0 x 0.7 | 320 x 56 | (no placeholder yet) | Closed sliding gate with hazard ends and a lock box, for Dock 9's gates. |
 | `dock_floor.png` | 8 x 8, tiles | 768 x 768 | Dock 9's `_floor()` fill | Procedural (no AI pixels): 4 m slabs, saw-cut joints, a worn bay line. 96 px/m (F-13 ground). |
@@ -41,5 +41,5 @@ Reuse from the city set (already D4): `features/city/art/props/payphone.png` (1.
 To tile in `_draw()`: `draw_texture_rect_region()` per repeat (an import with repeat on also works).
 A working local patch of the two views that draws all of the above and the
 before/after frames of quest 1's own frame grabber are in the lane masters:
-`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1l/` (final).
+`gtai-masters/night/d4-production/q1_view_art.patch` (stage_view.gd + cast_view.gd), `before_q1/`, `after_q1n/` (final).
 The patch is not committed here, because the view code belongs to the quest 1 owner.

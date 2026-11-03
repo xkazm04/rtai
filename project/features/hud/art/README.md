@@ -28,4 +28,4 @@ teal is a pure deep-teal / look_d4-teal / cream ramp (doctrine: teal belongs to 
 Quest 1's HUD (`boot/collect_call/view/hud_view.gd` on main, night iteration 6): `cash_frame` drawn into its cash box
 (420 x 104 px at 1080p, text from x 112), `wanted_pip_full` / `_empty` as the heat pips (38 px), and `memo_frame` as
 a **9-slice** (source margin 44 frame px, drawn at 0.5) for the beat panel and the subtitle box (grown to 236 px tall
-so three lines clear the torn edge). Patch and frames: lane masters `q1_view_art.patch`, `before_q1/` vs `after_q1l/`.
+so three lines clear the torn edge). Patch and frames: lane masters `q1_view_art.patch`, `before_q1/` vs `after_q1n/`.

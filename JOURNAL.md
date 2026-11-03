@@ -669,3 +669,9 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   parity bit-exact, selftest 65 art textures, 0 placeholders. bench not re-run (no new city texture ids; the city
   textures changed are the same count and size).
 - Sheet: `masters:night/d4-production/night_iter6_summary.png` (7 items, before | after).
+- 01:43 REVERTED (not shipped): the Robo-tazer arc ball drawn with the FX atlas crackle instead of its translucent
+  vermilion halo (`after_q1m`, `work/q1ball_ab.png`): the crackle barely showed and the ball lost its vermilion danger
+  ring. It read worse, so the original drawing stays.
+- 01:45 quest patch drops the placeholder labels the art now carries ("PAYPHONE", "$1,500", "taped under"), as the
+  GDS-08 deviation's re-check asks (`work/q1labels_ab.png`). Zone names and "PROJECT TUCK-IN" stay. Final patch +125 /
+  -80 over 4 view files, lint clean; final frames `after_q1n/`.
