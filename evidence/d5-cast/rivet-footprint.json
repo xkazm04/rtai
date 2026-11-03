@@ -1,1 +1,68 @@
-{"cop":{"length_m":1.27,"size_k":1.45,"width_m":1.88},"ped":{"length_m":0.69,"size_k":1.25,"width_m":1.34},"rivet":{"length_m":1.97,"size_k":1.10000002384186,"width_m":2.37}}
+{
+ "cop": {
+  "length_m": 1.27,
+  "size_k": 1.45,
+  "width_m": 1.88
+ },
+ "gates": "selftest look goldens 11/11 (worst 1.37) + block 5/5 (worst 0.91) PASS unblessed; scenarios 8/8; parity exact; unit 326/326 (one run hit the known test_noir_shadows engine flake, re-run green)",
+ "history": [
+  {
+   "form": "night (pre-2026-11-03)",
+   "guard_k": 1.0,
+   "hand_z": -30,
+   "length_m": 2.5,
+   "size_k": 1.3,
+   "width_m": 2.62
+  },
+  {
+   "form": "iteration 1 base",
+   "guard_k": 0.85,
+   "hand_z": -30,
+   "length_m": 1.97,
+   "size_k": 1.1,
+   "width_m": 2.37
+  },
+  {
+   "form": "trial (guard only)",
+   "guard_k": 0.6,
+   "hand_z": -30,
+   "length_m": 1.67,
+   "note": "pulling the hands in flares the elbows: wider",
+   "size_k": 1.1,
+   "width_m": 2.5
+  },
+  {
+   "form": "trial hunch at 1.1",
+   "guard_k": 0.7,
+   "hand_z": -250,
+   "length_m": 1.74,
+   "note": "read cop-sized or smaller beside the riot cops in the D5 hero scene",
+   "size_k": 1.1,
+   "width_m": 1.88
+  },
+  {
+   "form": "base now (T2 hunch)",
+   "guard_k": 0.7,
+   "hand_z": -250,
+   "length_m": 1.9,
+   "size_k": 1.2,
+   "width_m": 2.05
+  }
+ ],
+ "measured_by": "dev/bench/rig_footprint.gd (headless, idle stance facing +x, 90 ticks, union of visible part rects at 32 px/m)",
+ "ped": {
+  "length_m": 0.69,
+  "size_k": 1.25,
+  "width_m": 1.34
+ },
+ "real_game_ab": "city_frame seed 91 --police=4, 32/48/64/128 px/m, renders masters day-d5/d5-cast/renders/hunchA (iteration 1) vs hunchC (now), same session: the only changed region in focus 1 is Rivet (1814 / 4301 / 9128 / 31840 px). Focus 0 differs frame-wide by crowd jitter between runs (known).",
+ "rivet": {
+  "guard_k": 0.7,
+  "hand_z": -250.0,
+  "length_m": 1.9,
+  "size_k": 1.2,
+  "width_m": 2.05
+ },
+ "schema": "d5-cast.rivet-footprint/2",
+ "sim": "unchanged: sim radius 0.6 m, no replay/parity golden moves"
+}

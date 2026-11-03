@@ -299,3 +299,22 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
 - 12:35 checks: provenance audit, all 91 latest d5-cast rows hash-match their files. Masters frames.json: 15 frames,
   every file and `before` exists. REQUEST 4's patch still applies cleanly (git apply --check, read-only) on d-city
   b8efb91 + its working tree. Session end for iteration 4: tree clean at the commit below, evidence green at f88df08.
+
+## 2026-11-03 iteration 5 (BUILD, 12:34-)
+- 12:34 start. Items 1-5 evidenced; raising the weakest against verdict 1 ("Rivet too massive"): the kill-cam frame
+  (T2 vs hero 128) still showed a 2 m "C" of arms, with the hands level and forward in the guard.
+- MILESTONE 8118692 + its follow-up: Rivet's guard hunches as T2 draws him. RivetPlan FORMS rows are now (size_k,
+  guard_k, hand_z): base = (1.2, 0.7, -250); King keeps the open guard (FORM_OPEN = the old base, so the boss squares up).
+  Footprint (rig_footprint) 1.97 x 2.37 -> 1.90 x 2.05 m (cop 1.27 x 1.88). Tried on the way: guard_k 0.6 alone
+  (1.67 x 2.50: elbows flare, WIDER, rejected); the hunch at 1.1 (1.74 x 1.88, shipped briefly in 8118692): in the D5 hero
+  scene Rivet then read cop-sized or smaller beside the riot cops, while T1 draws him ~1.3x a cop -> 1.2.
+  Real-game A/B (city_frame seed 91 --police=4, same session, renders hunchA vs hunchC): focus 1 changes only at Rivet
+  at 32/48/64/128; the claw and torch read at 32; at 64+ the upper arms show their end-on cells (round shoulder joints,
+  as T2). King lineup: only Rivet's region changes. Hero scene re-shot (renders heroHunch12): only Rivet changes.
+  Goldens 11/11 (worst 1.37) + block 5/5 (worst 0.91) PASS unblessed; scenarios 8/8; parity exact; unit 326/326.
+  decisions line + evidence/d5-cast/rivet-footprint.json. OWNER CHOICE: open guard = revert both commits.
+- FRICTION: test_noir_shadows "Parameter t is null" failed inside the evidence run twice this iteration and passed
+  standalone both times (engine flake, not d5-cast scope; d-city has a thread-load fix in 000087f).
+- Owner frames (masters frames.json, still 15; build_frames.iter4.py keeps the old recipe): lineup now 3-way
+  (night | iteration 1 | now), the city1-128 A/B replaced by the 4-zoom real-game hunch A/B, T2/T1/hero frames and the
+  King frame re-shot with the hunch. All images looked at: all straight down, 0 rejected.
