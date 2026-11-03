@@ -1374,3 +1374,4 @@ item47 (owner A/B) -> night_iter7_summary.png.
   undoes item48.
 - 05:50 Board evidence/item49_paper_hi.png; night_iter9_summary.png, hero-pkg9-* and arena-pkg9-* rebuilt from the
   final v9 (i9ph1, a35v9 = + fringe + dots); ladder row. i9v9c = i9ph1 and i9v9off = i9mot (0 px, deleted).
+- 05:52 GATES: evidence tool (--no-parity --no-bench) ALL PASS at c0274ee (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 95 untracked evidence PNGs moved aside and restored; tree clean. The selftest's 48 px/m colour count read 71 (65 at 037ba7d): two more selftest runs at c0274ee gave 67 and 65, so it is run-to-run noise in the selftest, not tonight's change (no non-dev code reads the params JSON or look_d5_print).
