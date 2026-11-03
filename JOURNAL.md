@@ -1261,17 +1261,17 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   `merged_q1_i14/` = `after_q1kb/` except the dumpster (01) and the Harbor Road kerb (09): the merged tree draws
   n-d4's calmed, inked curb tile (scratch-q1 still held main's older one with the crack repeats;
   `work/fx14/m14q_09.png`) - better. Scratch removed.
-- 04:38 CHECK n-visual's new night lights (56d23e7: lamp pools at the lamp_post heads, car headlight cones) over n-d4
+- 04:36 CHECK n-visual's new night lights (56d23e7: lamp pools at the lamp_post heads, car headlight cones) over n-d4
   (scratch-m14 re-merged, JOURNAL the only conflict): `merged_i14_night2/` (block site), `merged_i14_night2b/`. The
   cones leave from my cars' front glass, the pools sit on my lamp heads; nothing of mine breaks. No change.
-- 04:39 CHECK muzzle flash: the atlas cells (row 0, 0-2) are bold cream stars with a vermilion core
+- 04:36 CHECK muzzle flash: the atlas cells (row 0, 0-2) are bold cream stars with a vermilion core
   (`work/fx14/row0_left.png`), but in the FX system at 64 px/m the 3-tick flash prints fragmented
   (`work/fx14/muzzle64.png`): fx.json `muzzle` has `fade_from` 0, so the fade dither eats it from its first tick
   (same cause as the crackle, REQUEST 14). Data, not art -> REQUEST 23.
 ## REQUESTS (iteration 14)
 23. visual-engine: fx.json `muzzle` (and `crackle`, REQUEST 14) `fade_from` 0 -> ~0.6, so the short flash prints solid
     before it dissolves (`masters:night/d4-production/work/fx14/muzzle64.png`).
-- 04:41 EVIDENCE for REQUEST 23 (probe in scratch-m14 only, reverted): fx.json `muzzle.fade_from` 0 -> 0.6, n-visual's
+- 04:37 EVIDENCE for REQUEST 23 (probe in scratch-m14 only, reverted): fx.json `muzzle.fade_from` 0 -> 0.6, n-visual's
   fx_showcase `before_i14mz|probe_i14mz/fx-*`, crops `work/fx14/muzzle_ab.png`: the flash prints as a solid inked star
   with the vermilion core instead of dither fragments, at 48 and 64. One-line patch for visual-engine:
   `evidence/iter14/fx_muzzle_fade.patch` (applies on n-visual 56d23e7; their file, not committed here).
