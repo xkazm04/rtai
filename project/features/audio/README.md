@@ -21,7 +21,20 @@ game (FX cues, `Events`, the quest line player) and never writes the sim, so rep
 * A new sound: add the files `assets/audio/sfx/<sound>_01..NN.wav` and a row in `audio_cues.json`.
 * Quest voice: set the line's `audio` to `res://assets/audio/voice/<line id>.ogg`; `tools/audio/` makes the files.
 
+## What fires what (`audio_hooks.gd`)
+
+| Source | Cue |
+|---|---|
+| Rivet walking (one step per `footstep_stride_m`, 8 single-step takes) | `footstep`, now and then `servo` |
+| `wave_started` / `attack_telegraphed` (`robo-tazer` = `tazer_charge`) / `boss_engaged` | `crowd_panic` / `attack_telegraphed` or `tazer_charge` / `boss_stinger` |
+| `player_hit` (+ `robo-tazer`) | `player_hit` (+ `player_hit_robo_tazer`) |
+| `cash_changed` (delta > 0) / `contract_started` / `contract_completed` | `cash_ding` / `objective_ping` / `ui_confirm` (bus `ui`) |
+| `wanted_changed` / `vehicle_entered`..`exited` | `siren_loop` / `engine_loop` + radio |
+| vehicles lane, once merged: `pedestrian_struck` / `vehicle_hijacked` | `hit_flesh` (+ `death`) / `hit_metal` |
+| FX trigger sink (riot) | `shot`, `projectile_end`, `death`, `player_hit`, `rivet_kill` (= `kill_punch`) |
+| API only: `ui_click`, `ui_back` | `service.cue(&"ui_click", Vector2.ZERO, tick)` |
+
 ## Tools (`tools/audio/`)
 
 `gen_sfx.py`, `gen_voice.py`, `gen_music.py` (ElevenLabs direct; PoF's audio route could not serve them, see JOURNAL POF-GAP 1-3),
-`process.py` (trim / loudness / QC), `provenance.py`, `voice_lengths.py`, `build_tables.py`. The key comes from the environment only.
+`process.py` (trim / loudness / QC), `split_steps.py` (a run of steps -> single steps), `provenance.py`, `voice_lengths.py`, `build_tables.py`. The key comes from the environment only.
