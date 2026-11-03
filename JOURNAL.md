@@ -1564,7 +1564,7 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   n-visual + patches 16 / 19 / 21 / 23) - merge clean but JOURNAL.md, patches apply, re-baked: lint 13/13, unit
   **260/260**, scenarios 8/8, parity exact; selftest only the goldens (re-bless); doctrine clean. scratch-full removed,
   `scratch-v2` kept (that stack, uncommitted). `evidence/iter16/morning-full-stack-gates.txt`.
-- 05:44 LOOKED at the junction on the final stack (`masters:v2_st/selftest-32ppm.png`): inked crowd with cream rims,
+- 05:43 LOOKED at the junction on the final stack (`masters:v2_st/selftest-32ppm.png`): inked crowd with cream rims,
   cops the vermilion threats, Rivet's collar the only other vermilion, no placeholder. No new weakest art item found
   that is in this lane's scope; what is left vs the target is code-side (roof parapets / lift = n-d5 + visual-engine
   proposals, the aquatint blotches on paving at 64 = REQUEST 22, the cream halo on paving).
