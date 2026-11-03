@@ -7,7 +7,7 @@ extends Node
 ## camera is a CameraRig on foot (32 px/m). Fast-forwards to the first fight, then 1 tick a frame:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
 ##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
-##        [--dodge]  (a scripted player: Rivet strafes across a locked aim line, on the lock)
+##        [--ppm=48]  [--dodge]  (a scripted player strafes across each locked aim line)
 
 const SKIP_PER_FRAME: int = 600
 const LIVE_FRAMES: int = 1200
@@ -53,6 +53,8 @@ func _ready() -> void:
 			_armored_hp = 1.0
 		elif arg == "--dodge":
 			_dodge = true
+		elif arg.begins_with("--ppm="):
+			_view.px_per_m = arg.substr(6).to_float()
 		elif arg.begins_with("--spread="):
 			_spread = arg.substr(9).to_float()
 		else:
@@ -173,7 +175,8 @@ func _frame_focus() -> Vector2:
 func _save(f: int) -> void:
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
-	if img.save_png(_out.path_join("pistol-fight-32ppm-f%04d.png" % f)) != OK:
+	var png: String = "pistol-fight-%dppm-f%04d.png" % [roundi(_view.px_per_m), f]
+	if img.save_png(_out.path_join(png)) != OK:
 		Log.error("pistol_fight", "frame %d not saved" % f)
 
 
