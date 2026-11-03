@@ -247,6 +247,21 @@ No images (50/50 used). The open proposals were finished and measured as ONE pac
   step_soft 0.10, dark_soft 0.20, shadow tint 0.22, no paper clean on the plates, the BAKED roof rule (`item41`).
 - Reproduce the package from HEAD: masters `tools/package_shot.sh <round> [hero|arena]`.
 
+## Gap list after iteration 9 (package v9 = i9mot, vs `d4h2_mock.jpg`)
+Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existing plates (`item48_roof_membrane.png`).
+1. **Mid-tones, closed at frame level for the package**: the mock's mid-tones sit in its paper areas, and its roof
+   membrane is a mid tan with cream props (ours was cream on cream). The print keeps a mid tone only near look_d4's
+   light/mid wash step, so the D5 plates now (package only) tone the membrane as 0.2-0.5 m tan blotches, fist wash 0,
+   lines gamma 0.6 (union hall 0.8). Whole frame at 32 px/m: mid 0.09 -> 0.11 (mock 0.11), L 0.455 unchanged, ink 0.11;
+   roof areas paper / mid / dark 0.712 / 0.102 / 0.186 -> 0.692 / 0.132 / 0.176 (mock 0.698 / 0.152 / 0.149). Actor
+   read identical, pan 0.00000. NOT for the committed print (roof mid +0.009, frame darker): it rides with look_d5_print.
+   Reproduce: `bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round>` (v9 is the default;
+   pre-v9: `D5_ROOF_SHADE=0 D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65 D5_FIST_WASH=0.18`).
+2. **Still open in the roof areas**: dark 0.176 vs the mock's 0.149 (our parapet outlines and drawn shadows are
+   heavier), and the membrane prints violet-grey where the mock is warm (look_d4's WASH colour). Next: the
+   visual-engine lane tries a warmer WASH in look_d5_print, judged on the same mask (masters work/i9/roofcls.py).
+3. Items 1, 3-7 of iteration 8 stand.
+
 ## Gap list after iteration 8 (in-engine h139rs committed / h140all with every proposal, vs `d4h2_mock.jpg` and the concept)
 Iteration 8 had no image budget. It worked where the remaining differences were visible by eye rather than in the
 tone table: the up-close misprint (`item43`), grounding (prop, car and rig shadows: `item44`, `item46`) and the
