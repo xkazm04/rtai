@@ -17,12 +17,14 @@ func shoot() -> int:
 	for t: int in SETTLE_TICKS + WALK_TICKS:
 		_pose(t)
 		_walk()
+		_follow()
 		_rigs.step_ticks(1)
 		if t < SETTLE_TICKS:
 			await get_tree().process_frame
 			continue
 		for d5: bool in [false, true]:
 			RigDetail.enabled = d5
+			_shadow(d5)
 			_rigs.step_ticks(0)
 			await get_tree().process_frame
 			await RenderingServer.frame_post_draw
@@ -35,6 +37,21 @@ func _walk() -> void:
 	var f: RigFeed = _rigs.feed
 	f.vel[0] = Vector2(64.0, 0.0)
 	f.pos[0] += f.vel[0] * SimClock.TICK_DT
+
+
+## D5_WALK_FOLLOW=1: the camera follows Rivet (as the game camera), so the world moves under him;
+## with D5_SUBPX=1 it moves by sub-pixel steps
+func _follow() -> void:
+	if OS.get_environment("D5_WALK_FOLLOW") == "1":
+		cam = _rigs.feed.pos[0]
+		_frame_at(walk_zoom)
+
+
+## D5_WALK_SHADOW=1: the hatched rig shadow (item46b) in the d5 series
+func _shadow(d5: bool) -> void:
+	if OS.get_environment("D5_WALK_SHADOW") == "1":
+		var tier: String = "d5" if d5 else "off"
+		D5RigShadow.on_tier(_world, _rigs, 32.0, walk_zoom * 32.0, tier)
 
 
 func _save_walk(name: String) -> bool:

@@ -12,6 +12,8 @@ uniform float stroke = 0.85;   // ink alpha of a stroke
 uniform float cov = 0.42;      // stroke width as a fraction of the period
 uniform float zoom = 1.0;      // camera zoom (1 = 32 px/m): above 2 (64 px/m) the world period shrinks so the
                                // strokes stay ~10 screen px apart (at 128 px/m they read as coarse stripes)
+uniform vec2 anchor = vec2(0.0); // world px subtracted before hatching: 0 = world-locked (buildings, props); a
+                               // rig's position = the strokes travel with that rig (no shower-door crawl, item54)
 
 varying vec2 w;
 
@@ -24,7 +26,7 @@ float vnoise(vec2 p) {
 }
 
 void vertex() {
-	w = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+	w = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy - anchor;
 }
 
 void fragment() {
