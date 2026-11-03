@@ -27,7 +27,8 @@ CitySystem + CityView, seed 91) unless its README says otherwise. Frames for the
 | 27-long-t1 | T1-scale long roof (16.4 x 8.4 m Codex plate) in the long two-tile slots, so the street-facing row gets it too |
 
 Also: 10-drive (48 px/m car drive frame), 13-bench (contended bench + D5 cost per pass at 64 px/m),
-21-overlay-cost (D5 overlay cost at 32/48/64), 24-bench-end (end-of-day bench PASS, contended),
+21-overlay-cost (D5 overlay cost at 32/48/64), 24-bench-end (bench PASS at 61e9222, contended),
+28-bench-final (bench FAIL p99 CPU at 1e7caef, contended; idle re-run owed),
 evidence-bba930d (all gates PASS on a clean tree, final), 26-whatif-share (70% 2 x 2 what-if, not adopted),
 11-road-width-mock (concept, labelled).
 

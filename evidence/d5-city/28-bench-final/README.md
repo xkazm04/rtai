@@ -16,3 +16,8 @@ Logs: bench.log, bench-*.json.
 +0.508 ms GPU (off 0.640, on 1.148). The two earlier runs (+0.900 at 13:03, +0.875 at 16:02) sat on
 heavier baselines (1.50 / 1.90 ms): so the 32 px/m excess is at least partly contention after all,
 which weakens the "repeats, so real" reading in 24-bench-end. Still above 48 px/m's +0.27-0.42.
+
+## Per scenario, CPU p99 ms (16:00 at 61e9222 -> 16:42 at 1e7caef)
+drive 3.16 -> 3.71, drive48 1.53 -> 8.37, drive48vsync 19.17 -> 19.23 (vsync-bound), riot 2.89 -> 8.71.
+The riot is stationary (no chunk crossings, so no plate streaming after load) and regressed as much
+as drive48: that points at machine load, not the new plates. Supporting, not proof: re-run idle.

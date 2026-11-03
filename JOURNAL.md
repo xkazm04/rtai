@@ -282,3 +282,8 @@ atlas; d5-combat blood names; vehicles cruiser accents).
   8.7 ms (16:00 run at 61e9222 passed at 3.16 ms). Likely contention, NOT shown: idle re-run owed
   before merge (suspect if real: plate texture upload on chunk load). Overlay at 32 px/m now +0.51 ms
   on a 0.64 ms baseline: the earlier +0.9 was partly contention. evidence/d5-city/28-bench-final/.
+  Per scenario: riot (stationary, no streaming) CPU p99 2.9 -> 8.7 like drive48 1.5 -> 8.4: points
+  at machine load, not the plates (supporting, not proof).
+## NEXT addendum (16:45): item 0 before anything else = idle re-bench at the branch head
+  (`node tools/bench/run.mjs`, the full 3 x 60 s gate if the machine is quiet). Bench of record:
+  16:00 PASS at 61e9222; 16:42 FAIL at 1e7caef (contended).
