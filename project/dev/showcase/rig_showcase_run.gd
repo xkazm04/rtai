@@ -55,9 +55,6 @@ func shoot() -> int:
 	if _rigs.atlas.texture != null:
 		var path: String = out_dir.path_join("crowd-atlas.png")
 		ok = _rigs.atlas.texture.get_image().save_png(path) == OK and ok
-	if _rigs.atlas_d5.texture != null:  # the D5 twin (same cells, 64 px/m, D5 part overlays)
-		var d5_path: String = out_dir.path_join("crowd-atlas-d5.png")
-		ok = _rigs.atlas_d5.texture.get_image().save_png(d5_path) == OK and ok
 	printerr(
 		(
 			"rig_showcase: crowd atlas baked=%s (%d ms to save)"

@@ -68,7 +68,6 @@ func _before_render(focus: Vector2) -> void:
 	rigs.zoom = _view.zoom
 	_last_tick = _clock.tick()
 	rigs.step_ticks(steps)
-	_sync_crowd_tier()
 	_slots.clear()
 	for i: int in rigs.feed.count:
 		if rigs.full_row(i) and rigs.feed.ids[i] != RIVET_ID:
@@ -127,13 +126,3 @@ static func _put_person(
 		if a[10] > 0.0:
 			fl |= RigFeed.Flag.AIMING
 	feed.flags[i] = fl
-
-
-## The people layer shows the D5 crowd atlas while the D5 tier is on (arena zoom), else the D4 one.
-func _sync_crowd_tier() -> void:
-	if not rigs.atlas.baked:
-		return
-	var people: MultiMeshInstance2D = _view.crowd.nodes[SimConst.RL_PEDS]
-	var tex: Texture2D = rigs.crowd_texture()
-	if people.texture != tex:
-		people.texture = tex

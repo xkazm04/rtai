@@ -32,8 +32,6 @@ var feed: RigFeed = RigFeed.new(512)
 var focus: Vector2 = Vector2.ZERO
 var zoom: float = 1.0
 var atlas: CrowdAtlas = CrowdAtlas.new()
-## The D5 twin of the crowd atlas, shown by the people layer while the RigDetail tier is on.
-var atlas_d5: CrowdAtlas = CrowdAtlas.make_d5()
 var prewarm_ms: float = 0.0
 ## Per-frame cost of the rig work (selection + pose steps), for the section 20 rig budget.
 var last_us: int = 0
@@ -57,19 +55,12 @@ func setup(ctx: WorldContext) -> void:
 	Log.info("characters", "prewarmed %d rigs in %.1f ms" % [rig_count(), prewarm_ms])
 
 
-## Bakes the crowd atlas and its D5 twin (await at load; a no-op headless).
+## Bakes the crowd atlas (await at load; a no-op headless).
 func bake_crowd() -> void:
-	for a: CrowdAtlas in [atlas, atlas_d5]:
-		var baker: CrowdBaker = CrowdBaker.new()
-		add_child(baker)
-		await baker.bake(a)
-		baker.queue_free()
-
-
-## The crowd atlas the people layer shows now: the D5 twin while the RigDetail tier is on.
-func crowd_texture() -> Texture2D:
-	var d5: bool = RigDetail.active and RigDetail.enabled and atlas_d5.baked
-	return atlas_d5.texture if d5 else atlas.texture
+	var baker: CrowdBaker = CrowdBaker.new()
+	add_child(baker)
+	await baker.bake(atlas)
+	baker.queue_free()
 
 
 func _process(_delta: float) -> void:
