@@ -1402,3 +1402,6 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   grabber frames unchanged (0 px differ on 01 / 04 / 06 / 09 vs `after_q1pip/`). Patch +223 / -122 (fx_view.gd 108
   lines; gdformat + gdlint clean; `git apply --check` clean on main 721fbbb) -> `evidence/iter14/q1_view_art.patch`;
   unit in scratch-q1 **166/166**. Ladder2 row. 0 Codex.
+- 04:57 CHECKED, no change: the burst's chained arcs (vermilion + cream zigzags, `fx_view._arcs`). A local probe holding
+  the last burst on (`probe_q1ba/`) changed 0 px in beats 05-07: the seeded bot never fires a burst, so there is no
+  frame to judge a change by - left as is (no unevidenced edits). scratch-q1 back to the patch (checked equal).
