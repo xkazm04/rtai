@@ -356,3 +356,16 @@ NEXT (iteration 3, in order):
   where v12 showed pale lavender; 21 frames, 0 rejected, 0 camera breaks. crop-wreck-v13.png.
 - frames.json 15 (aftermath -> carnage-v13/900 vs carnage-v9/900, +burnt-out 2400, clip -> v3;
   dropped pass32 420), ladder 1280 x 8364.
+- 16:20 BENCH, full length (NEXT 6; `node tools/bench/run.mjs`, exported release build, windowed,
+  3 runs x 4 scenarios x 60 s) at b079c4e under bench.lock (vehicles 16:07 - 16:20, released).
+  CONTENDED (seven lanes, one GPU): p99 4.79 ms, 1 % low 131 fps, worst swap 14.0 ms, worst frame
+  71.6 ms; >25 ms hitches 104, >50 ms 6 (present 4, outside 0, unexplained 2); rigs p99 0.88 ms.
+  Misses only over50.unexplained (2). At 12:53 (contended) the same gate gave p99 11.1 ms and 7
+  unexplained: this run is the better machine state, not a vehicles change (the bench World has
+  no VehicleService; VehicleFire / the wreck atlas are not on its path). Per-scenario files of the
+  last run + summary in evidence/vehicles/it4/bench/.
+- REQUEST 7 -> d5-combat: car_wreck still fires the D4 `explosion` kind (paper puffs + vermilion
+  rim). If your FX sheet gets a D5 inked fireball, the vehicles cue only needs the kind id in
+  fx_triggers.json `car_wreck`; the burning wreck after it now uses features/fx/art/fx_fire.png.
+- REQUEST 8 -> audio: a burning-wreck crackle loop. `VehicleView.fire.burning()` returns the ids of
+  the burning wrecks each frame (positions: VehicleService.cars); 24 s per wreck, then smoke only.
