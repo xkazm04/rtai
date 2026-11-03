@@ -241,3 +241,7 @@
   motion-course-48ppm.mp4 was re-encoded with the lean. Unit 556/556, exit 0.
   FRICTION: run_unit.mjs without GODOT_BIN exported reports "exit -1" on every step but still
   prints "556 passed". Always export GODOT_BIN in the same shell call.
+- 21:59 Gates at HEAD (the sprint-lean commit): lint 13/13, unit 556/556 (exit 0),
+  scenarios 19 ran / 0 failed. Quest 1's bound-input run replays identical: the new sprint/roll
+  input rows do not move its hash. Evidence/parity/bench were not run (no sim or runtime path
+  changed). Session ends; NEXT is the iteration-3 list above.
