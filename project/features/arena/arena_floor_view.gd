@@ -13,6 +13,8 @@ const PROP_FILL: Dictionary[String, Color] = {
 	"firing_line": Color("#E8502A"),
 }
 const FLOOR_TILE_M: float = 8.0
+## The area's stencilled name, this far in from its top edge (below a station's edge wall).
+const LABEL_M: float = 2.2
 ## The city's inked props as the arena's cover, so the arena reads as the game, not a sketch:
 ## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
 ## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
@@ -41,7 +43,7 @@ func _draw() -> void:
 	for a: ArenaPlan.Area in arena.plan.areas:
 		if arena.cells == null:  # on the city proving block the city is the floor
 			_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
-			_floor(a.rect, Color(0, 0, 0, 0), a.name)
+			_floor(a.rect, Color(0, 0, 0, 0), "")
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
 			_prop(arena.plan.base + p.at, p)
@@ -51,6 +53,11 @@ func _draw() -> void:
 	for b: VehicleBody in arena.cars():
 		_car(b)
 	draw_set_transform(Vector2.ZERO)
+	for a: ArenaPlan.Area in arena.plan.areas:  # over the props: a wall never hides a name
+		if arena.cells == null:
+			Ink.label(
+				self, a.rect.position + Vector2(a.rect.size.x * 0.5, LABEL_M), a.name, 30, Ink.INK
+			)
 	for t: ArenaTargets.Target in arena.targets.targets:
 		var up: bool = t.fighter.exposed
 		_ring(t.fighter.pos, 0.8, Ink.INK if up else Ink.WASH)
