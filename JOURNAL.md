@@ -616,3 +616,16 @@ NEXT (iteration 8 close, in order):
   mis-placed one; superseded.
   Read: this is the stronger hero - the fight on black asphalt between two white pools, red the only colour.
   The junction showcase (show-final5, evidence/showcase-hero.png) stays the brief's spec'd scene.
+- (03:33) Gates at 7195d2c (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13), 197
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/.
+  evidence/NOIR.md updated for iteration 10. Masters: my superseded light scratch deleted (lamp-show 48/64/32,
+  beam-v1..v3, lamp-v1 lamp/v3); night/noir ~1.2 GB.
+- (03:45) Cost of the lights (`noir_cost`, junction riot, 1920x1080, RTX 4090, zoom 1.5; light_street now skips
+  while the pass is hidden and records `light_us`; noir_cost reports `noir_light_cpu_ms`):
+  CPU: light_street = **0.064 ms / frame** (the lamp lookup + one extra sim snapshot copy), measured.
+  GPU: NOT resolved. Four alternating runs (lights off / on / off / on): D4 2.65 / 1.47 / 1.97 / 1.50 ms, noir
+  1.57 / 1.30 / 2.33 / 1.66 ms - the run-to-run noise (other lanes share this GPU tonight) is bigger than the
+  lights' cost, so the honest statement is "below ~0.5 ms at 1080p on this GPU, not measured more precisely".
+  The per-pixel loops are 8 lamps + 12 cars with a value-noise call each; a quiet-machine re-measure (or the
+  iGPU, `--gpu-index 1`) is the next step. Files: evidence/noir-cost-1080p-z1.5-lights.json, -z1.0-lights.json,
+  masters night/noir/cost-*.json.
