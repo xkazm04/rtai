@@ -1125,3 +1125,4 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   130 / 876 / 2716 / 3555, monotone (the look_d4 print quantizes the low alphas, so most of the ramp lands 60-62).
   Package + fringe at 64 (h140all): the hatch sits with the soft halo shadow, actors still pop. Board
   evidence/item46_rig_shadows.png; ladder row. Proposal for the characters lane.
+- 04:40 showcase frames refreshed: evidence/hero-d4d5-* and hero-d4-* from h139rs, arena-d4d5-64/128 from a22rs (rig shadows); night_iter8_summary.png rebuilt from h139rs / h140all / a23all (package + fringe + rig shadows).
