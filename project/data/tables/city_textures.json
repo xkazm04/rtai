@@ -793,6 +793,28 @@
         8.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/ground/road_box_plain.png",
+      "class": "ground",
+      "id": 72,
+      "name": "road_box_plain",
+      "size_m": [
+        8,
+        8
+      ],
+      "solid": false
+    },
+    {
+      "art": "res://features/city/art/decals/zebra.png",
+      "class": "decal",
+      "id": 73,
+      "name": "zebra",
+      "size_m": [
+        8,
+        2.4
+      ],
+      "solid": false
     }
   ]
 }

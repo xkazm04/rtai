@@ -13,7 +13,10 @@ extends Node
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
-const FOCI: Array[Vector2] = [Vector2(30.0, -4.0), Vector2(-4.0, 30.0), Vector2(62.0, 30.0)]
+## 0-2 the d4-production streets; 3 the junction centre (opt-in: --foci=3)
+const FOCI: Array[Vector2] = [
+	Vector2(30.0, -4.0), Vector2(-4.0, 30.0), Vector2(62.0, 30.0), Vector2(0.0, 0.0)
+]
 const ZOOMS: Array[float] = [1.0, 1.5]
 const SETTLE_FRAMES: int = 60
 

@@ -5,6 +5,10 @@ extends RefCounted
 
 const PERIOD: int = CityGen.PERIOD
 const T_TRAFFIC_LIGHT: int = 35
+## The junction box is plain asphalt; zebras lie on the four approaches, against the box (T1).
+const T_BOX: int = 72
+const T_ZEBRA: int = 73
+const ZEBRA_IN_M: float = 2.6
 const PLAZA_PROPS: Array[int] = [28, 33, 26, 24, 32, 29, 38]
 const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
 ## Square roofs: the 8 district buildings (14-21) are landmarks, LANDMARK_SHARE of the blocks;
@@ -45,8 +49,13 @@ func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	var c: Vector2 = o + Vector2(4.0, 4.0)
 	var v3: int = _variant(g, t, mx != 1)
 	if mx == 1 or my == 1:
-		var tex: int = 6 if mx == my else (3 + v3 if mx == 1 else v3)
+		var tex: int = T_BOX if mx == my else (3 + v3 if mx == 1 else v3)
 		b.add(ChunkBuild.L_GROUND, tex, c, 0.0)
+		if mx != my:
+			var to_box: Vector2 = Vector2(1 - mx, 1 - my)
+			b.add(
+				ChunkBuild.L_DECAL, T_ZEBRA, c + to_box * ZEBRA_IN_M, 0.0 if mx == 1 else PI * 0.5
+			)
 		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_LANE)
 		if mx == my:
 			b.chunk.dens_car[local_index(t)] = 0
