@@ -10,7 +10,7 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h73, iteration 4) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h85, iteration 5) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
 | `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h85, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
@@ -48,7 +48,7 @@ tick count, no RNG.
 | `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h85 at 32/48/64/128, the arena a15 at 64 and 128, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
-## Iteration 5 (01:15 -> 02:10) in one screen (`night_iter5_summary.png`)
+## Iteration 5 (01:15 -> 02:10, written 02:08) in one screen (`night_iter5_summary.png`)
 - **Pen-hatch D5 roofs** (item 3 raised; `item21_mural_pen.png`, `item3_roofs_gate.png`; 5fa5d38 .. 8ab942a): the
   D5 roofs' grey wash blotches printed as camouflage and sat darker than D4. New Codex plates (Image 2 = crops of
   the mock as the HATCHING target) draw tone with pen lines only; `build_roofs.py` cleans the paper and weights the

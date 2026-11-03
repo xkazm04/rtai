@@ -578,3 +578,4 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
     unchanged).
 19. Owner: HQ's vermilion plate on "HQ" is heavier than the other signs; keep or thin.
 - 02:07 FINAL gates (iteration 5): evidence tool (--no-parity --no-bench) ALL PASS at dd3f0f5 (lint 13/13, unit 149/0, scenarios 8/0, selftest ok); 50 untracked evidence PNGs moved aside and restored.
+- 02:08 item4_hero_vs_targets.png rebuilt from h85 (all boards and evidence frames now on one state: h85 / s4 / a15). evidence/README.md: iteration 5 section, table rows, gap 2 updated.
