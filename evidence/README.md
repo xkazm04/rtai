@@ -17,7 +17,7 @@ Written for the Director and the owner. Every row points at a board in this fold
 - D5 landmark roofs (union-fist mural, bar, HQ, pension bank + neighbours) and big street decals:
   `item3_roofs_gate.png`, `item10_street_decals.png`; D5 ground tiles (joints, crosswalk, dashes, kerb): `item22`-`item25`.
 - Cast shadows as pen strokes (`look_d5_shadow`): buildings, kerbs, props / cars, rigs up close, the rig strokes
-  rig-locked (`item54_rig_shadow_lock.png`). Souls through `look_d5_soul` (`item4c_souls_print.png`).
+  rig-locked (`item54_rig_shadow_lock.png`). Souls through `look_d5_soul` (`item4c_souls_print.png`; its uniforms guarded by `test_look_d5_params.gd`).
 - Boss arena (King) and the showcase: `hero-d4d5-<ppm>ppm.png`, `arena-d4d5-{64,128}ppm.png`,
   `item4_hero_vs_targets.png` (beside the mock and the concept).
 - Close-up art: portraits, expressions, finishers, loading illustration (`item5_portraits.png`, `item5b_loading.png`;
