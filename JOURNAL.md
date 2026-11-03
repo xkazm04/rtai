@@ -1291,3 +1291,10 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 24. Director / owner: decide who ships the in-world soul sprites (n-d5's D5 souls, which read well at 64 px/m, or a
     D4 set from this lane); this lane can slice + ship them into `features/fx/art/` with provenance once assigned.
 - 04:40 scratch-m14 (my n-visual + n-d4 merge probe, never committed) removed.
+- 04:41 GATES at f35fa5d: `run.mjs --no-bench` rc 1 - lint, unit 142/142, parity, selftest PASS; **scenarios FAILED
+  1 of 8**: `scenario_city_chase` "flow field over the 2 ms nav budget" (one field took 2300 us) while another lane's
+  Godot (PID 55040, not mine, untouched) was running (`evidence/iter14/gates-f35fa5d-chase-spike.txt`). Re-run alone
+  twice: 8/8, chase max 97 / 118 us. Full re-run (`--allow-dirty`; the one dirty path was that copied log, outside
+  `project/`): rc 0, all 5 PASS, chase max 147 us (`evidence/iter14/gates-f35fa5d.txt`). Reading: a one-frame CPU
+  spike from contention; since the green d14de52 run only the Toner Room PNG changed in `project/`. Owner note: the
+  chase budget test is load-sensitive.
