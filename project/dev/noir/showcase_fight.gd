@@ -8,10 +8,11 @@ extends Node
 ##   godot --path project --resolution 1280x720 --write-movie <f.avi> --fixed-fps 60
 ##     res://dev/noir/showcase_fight.tscn -- --out=<dir> [--zoom=1.5] [--ink] [--d4]
 ## --flashes=off: the flashes-off accessibility mode (calm beats, no muzzle light).
+## --at=<x>,<y>: the fight (and the camera) at that world point in metres, not the junction.
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes"
+	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes", "--at"
 ]
 ## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
@@ -21,6 +22,7 @@ var _zoom: float = 1.5
 var _ink: bool = false
 var _d4: bool = false
 var _noir_parts: bool = false
+var _at: Vector2 = NoirFrames.JUNCTION
 var _coats: NoirCoats = null
 var _frame: int = 0
 var _t: int = 0
@@ -58,7 +60,7 @@ func _ready() -> void:
 	_city = built[2]
 	_blood.solid = _solid
 	chars.rivet_on_foot = false
-	_fight.origin = NoirFrames.JUNCTION
+	_stage()
 	_blood.z_index = -1
 	_view.actor_layer().add_child(_blood)
 	_view.actor_layer().add_child(_rigs)
@@ -99,6 +101,8 @@ func _args() -> bool:
 			_d4 = true
 		elif flag == "--noir-parts":
 			_noir_parts = true
+		elif flag == "--at":
+			_at = Vector2(v.get_slice(",", 0).to_float(), v.get_slice(",", 1).to_float())
 		elif flag == "--coat":
 			_coats = NoirCoats.new()
 		elif flag == "--flashes":
@@ -165,6 +169,13 @@ func _cue(cue: Array) -> void:
 			Events.actor_killed.emit(NoirFightScript.RIVET, id, &"melee")
 			for k: int in [1, 2, 4, 7, 30]:
 				_heroes[_frame + k] = "kill%d" % id
+
+
+## The fight, the city's focus and its camera at _at (the junction unless --at).
+func _stage() -> void:
+	_fight.origin = _at
+	_city.focus = _at
+	_city.target = _at
 
 
 ## Fills the shared part caches with the noir redraws before the showcase rigs are built.
