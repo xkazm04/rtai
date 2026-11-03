@@ -449,3 +449,12 @@ NEXT (for the 18:00 sync and the Director):
   139/159 px: all of it Rivet's hazard collar at the view's edge (cropped and looked at; doctrine-allowed); 0 on cops.
   Blue 0 -> 654/689. At 32 the blue cop still separates from the all-black peds (cream dome, blue mass, ink ring) but
   is quieter on asphalt than vermilion was: the trade verdict 6 asks for. 8 frames, straight down, 0 rejected.
+- Evidence run (clean tree, HEAD 8dbf7f4, --no-bench): lint 13/13, unit 326/326, scenarios 8/8, parity exact
+  (mutation caught at 629), selftest look goldens 11/11 (worst 1.37) + block 5/5 (worst 0.91), accent audit "no new
+  off-doctrine accents", world lock holds. Later commits are journal/evidence JSON only.
+- 16:09 bench.lock held by vehicles (16:07, fresh) -> GPU bench skipped (rule). Still unmeasured by this lane.
+- 16:12 MERGE CHECK refreshed (git merge-tree, read-only, d-cast 675a532): d-city bd9d5a1, d-combat 58a8388, d-bodies
+  7212f66, d-vehicles b079c4e, d-slice 36eab8f, d-audio 9bea8c6: 0 code conflicts with any. Conflicts = JOURNAL.md
+  (all) + look goldens (d-city 16, d-combat 11, d-bodies 11): re-bless ONCE on the fully merged tree. REQUEST 4
+  (look_d4 cop-blue plate) still not on d-city; masters look_d4-cop-blue-plate.patch still applies to d-city bd9d5a1
+  (git apply --check on a temp copy of its 3 files).
