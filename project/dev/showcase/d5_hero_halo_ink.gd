@@ -10,6 +10,7 @@ const RING: StringName = &"halo_ink"
 
 const PRINT: String = "res://assets/shaders/look_d5_print.gdshader"
 const SHADOW_M: float = 0.09
+const RULE_DIR: String = "res://features/city/art/d5/roofs/rule/"
 const PX_PER_M: float = 32.0  # zoom 1.0
 
 static var _mat: ShaderMaterial = null
@@ -81,3 +82,24 @@ static func _abs_z(ci: CanvasItem) -> int:
 		ci = p
 		p = ci.get_parent() as CanvasItem
 	return z
+
+
+## The ruled roof hatch overlay (with D5_PRINT=thin; D5_ROOF_RULE_FADE=0 turns it off):
+## full at 48 px/m and below, gone at 64, where the baked rule read as a mechanical
+## pattern (iteration 7, item41).
+static func roof_rule(roofs: Array[Sprite2D], tier: String, ppm: float) -> void:
+	var on: bool = OS.get_environment("D5_PRINT") == "thin"
+	on = on and OS.get_environment("D5_ROOF_RULE_FADE") != "0" and tier == "d5"
+	var a: float = clampf((64.0 - ppm) / 16.0, 0.0, 1.0)
+	for r: Sprite2D in roofs:
+		var ov: Sprite2D = r.get_node_or_null(^"rule") as Sprite2D
+		var path: String = RULE_DIR + r.texture.resource_path.get_file()
+		if ov == null and ResourceLoader.exists(path):
+			ov = Sprite2D.new()
+			ov.name = &"rule"
+			ov.texture = load(path) as Texture2D
+			ov.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			r.add_child(ov)
+		if ov != null:
+			ov.visible = on and a > 0.0
+			ov.modulate.a = a

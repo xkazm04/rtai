@@ -249,3 +249,6 @@ func _tier(tier: String) -> void:
 	for nb: Sprite2D in _d5_neighbours:
 		var nb_name: String = nb.get_meta(&"roof")
 		nb.texture = load(dir + nb_name + ".png") as Texture2D
+	var plates: Array[Sprite2D] = _d5_neighbours.duplicate()
+	plates.append_array(_roofs.values())
+	D5HeroHaloInk.roof_rule(plates, tier, _rigs.zoom * PX)  # proposal: ruled roof hatch, fades by 64
