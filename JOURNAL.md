@@ -427,3 +427,9 @@ NEXT (night run; same as iteration 5's NEXT, with item 2's weapon kick done in a
 4. The 00:00 vertical sample: one 20-40 s `--rigs --clean` clip (pistol, claw combo, cop + robot thug, one
    power) at 48 px/m with a camera lead (arena-2). Judge the rifle vs pistol kick in it at 64 px/m.
 5. Dummies' own look (cardboard / steel plate) once the rigs are the default.
+- 23:19 clip `clips/arena-pit-rigs-kick-64ppm-10s.mp4` (+ `pit_rigs_kick64_sheet.png`, 8 frames checked),
+  `--bot=pit --ppm=64 --rigs`, fixed-fps 60, 600 frames. Honest result: at 64 px/m the pit guards are off
+  screen the whole time. They show only as two bodies at the top-right edge after Rivet's 2 kills (hits 2,
+  hit rate 100 %). So the clip shows Rivet's gloria kick (0.8) and NOT the rifle against the pistol. It is not in
+  frames.json. A real comparison needs the camera lead (arena-2) or a 48 px/m clip with a guard close by:
+  folded into NEXT item 4.
