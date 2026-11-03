@@ -16,6 +16,12 @@
           "value": 256
         },
         {
+          "doc": "points outside the sim traffic brakes for (service car hulls)",
+          "name": "OBST_MAX",
+          "type": "int",
+          "value": 24
+        },
+        {
           "doc": "cell map width (1 m cells)",
           "name": "W",
           "type": "int",

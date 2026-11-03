@@ -71,6 +71,10 @@ func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
 	_call(&"strike", [i, vx, vy, lethal])
 
 
+func set_obstacles(xy: PackedFloat64Array) -> void:
+	_call(&"set_obstacles", [xy])
+
+
 func set_car_state(i: int, state: int) -> void:
 	_call(&"set_car_state", [i, state])
 

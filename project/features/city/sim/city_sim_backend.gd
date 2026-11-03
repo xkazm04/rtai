@@ -21,6 +21,9 @@ extends RefCounted
 @abstract func strike(i: int, vx: float, vy: float, lethal: bool) -> void
 ## Render only: a car slot's state for the atlas pick (custom.y; VehicleBody.State).
 @abstract func set_car_state(i: int, state: int) -> void
+## Sim input: points outside the sim (service cars' hull circles, x y pairs, at most
+## SimConst.OBST_MAX) that traffic brakes for like a car ahead; kept until the next call.
+@abstract func set_obstacles(xy: PackedFloat64Array) -> void
 ## One fixed tick (SIM-01): dt is SimClock.TICK_DT; cam is the bubble centre; tg the pursuit target.
 @abstract func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void
 @abstract func get_counters() -> PackedInt32Array

@@ -12,6 +12,10 @@ class FakeWorld:
 	var states: Dictionary[int, int] = {}
 	var at: Vector2 = Vector2.ZERO
 	var in_car: bool = false
+	var obstacles: PackedFloat64Array = PackedFloat64Array()
+
+	func set_obstacles(xy: PackedFloat64Array) -> void:
+		obstacles = xy
 
 	func cars_near(_p: Vector2, _r: float) -> PackedFloat64Array:
 		return cars
@@ -148,6 +152,17 @@ func test_traffic_shoves_a_parked_car() -> void:
 	_svc.step(0, TickInput.new())
 	assert_gt(car.vel.x, 1.0, "the van rear-ending it pushed it forward")
 	assert_gt(car.hp_lost, 0.0)
+
+
+func test_traffic_is_handed_every_car_hull_circle() -> void:
+	@warning_ignore("return_value_discarded")
+	_svc.spawn_parked(&"sedan", Vector2(10, 0), Vector2.RIGHT)
+	@warning_ignore("return_value_discarded")
+	_svc.spawn_parked(&"van", Vector2(0, 20), Vector2.DOWN)
+	_svc.step(0, TickInput.new())
+	assert_eq(_w.obstacles.size(), 12, "3 circles x 2 cars")
+	assert_almost_eq(_w.obstacles[0], 10.0 + VehicleContacts.CIRCLE_OFF, 1e-6, "sedan nose")
+	assert_almost_eq(_w.obstacles[11], 20.0 - VehicleContacts.CIRCLE_OFF, 1e-6, "van tail")
 
 
 func test_a_reused_traffic_slot_starts_a_fresh_damage_book() -> void:

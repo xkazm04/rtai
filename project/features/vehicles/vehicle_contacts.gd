@@ -115,6 +115,18 @@ func people(b: VehicleBody, world: VehicleWorld) -> void:
 		b.vel *= 0.93
 
 
+## The three hull circles (nose, waist, tail) of up to OBST_MAX / 3 cars as x, y pairs: what
+## sim traffic brakes for (CitySimBackend.set_obstacles).
+static func hull_points(cars: Array[VehicleBody]) -> PackedFloat64Array:
+	var xy: PackedFloat64Array = PackedFloat64Array()
+	for b: VehicleBody in cars.slice(0, floori(SimConst.OBST_MAX / 3.0)):
+		for i: int in 3:
+			var c: Vector2 = b.pos + b.head * CIRCLE_OFF * (1 - i)
+			@warning_ignore("return_value_discarded")
+			xy.append_array([c.x, c.y])
+	return xy
+
+
 ## The contact normal (unit, from a to b) when the cars' circle chains (nose, waist, tail)
 ## overlap, else zero.
 ## Separates a by the deepest overlap.

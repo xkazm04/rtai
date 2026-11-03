@@ -72,6 +72,10 @@ func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
 	CitySimStrike.strike(_s, i, vx, vy, lethal)
 
 
+func set_obstacles(xy: PackedFloat64Array) -> void:
+	_s.obst = xy.slice(0, mini(xy.size() >> 1, SimConst.OBST_MAX) * 2)
+
+
 func set_car_state(i: int, state: int) -> void:
 	if i >= 0 and i < SimConst.CAP:
 		_render.car_state[i] = state

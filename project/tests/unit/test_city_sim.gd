@@ -47,6 +47,22 @@ func test_a_car_drives_east_in_its_lane() -> void:
 	assert_almost_eq(snap[5], lane, 0.5, "stayed in its lane")
 
 
+func test_a_car_stops_behind_an_obstacle_point() -> void:
+	var lane: float = ROAD_Y + 2.0
+	var start: Vector2 = Vector2(CAM.x - 20.0, lane)
+	var spec: Array = [SimConst.K_CAR, start.x, start.y, 1.0, 0.0, 0, 0, 12.0, lane, 0]
+	var free: CitySimRef = _world()
+	var held: CitySimRef = _world()
+	held.set_obstacles(PackedFloat64Array([start.x + 14.0, lane]))
+	for sim: CitySimRef in [free, held]:
+		assert_gte(sim.spawn(PackedFloat64Array(spec)), 0)
+		for i: int in 300:
+			sim.step(SimClock.TICK_DT, CAM.x, CAM.y, CAM.x, CAM.y)
+	assert_gt(free.snapshot()[4], start.x + 30.0, "no obstacle: drove on")
+	var x: float = held.snapshot()[4]
+	assert_between(x, start.x + 6.0, start.x + 14.0 - 5.0, "stopped short of the obstacle")
+
+
 func test_same_seed_same_world() -> void:
 	var a: CitySimRef = _world()
 	var b: CitySimRef = _world()

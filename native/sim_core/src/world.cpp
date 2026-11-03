@@ -17,6 +17,7 @@ void CityCore::init(int64_t seed) {
 		dir16y_[k] = iy / l;
 	}
 	time_ = 0.0;
+	obst_n_ = 0;
 	std::memset(alive_, 0, sizeof(alive_));
 	std::memset(kind_, 0, sizeof(kind_));
 	std::memset(tier_, 0, sizeof(tier_));

@@ -44,6 +44,11 @@ func strike_person(_slot: int, _vel: Vector2, _kill: bool) -> bool:
 	return _kill
 
 
+## Sim input: the service cars' hull circles (x, y pairs) traffic brakes for, set every tick.
+func set_obstacles(_xy: PackedFloat64Array) -> void:
+	pass
+
+
 ## Render-only state of a sim car (VehicleBody.State) for the view's atlas pick (custom.y).
 func set_car_state(_slot: int, _state: int) -> void:
 	pass

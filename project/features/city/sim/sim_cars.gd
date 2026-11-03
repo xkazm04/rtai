@@ -88,6 +88,12 @@ func _desired_speed(i: int, x: float, y: float, waiting: bool) -> float:
 		elif _s.mode[j] != SimConst.M_DEAD:
 			if f > 0.0 and f < 7.0 and s < 1.6:
 				vdes = minf(vdes, maxf(0.0, f - 3.0) * 1.5)
+	for k: int in range(0, _s.obst.size(), 2):
+		var ox: float = _s.obst[k] - x
+		var oy: float = _s.obst[k + 1] - y
+		var of: float = ox * _hx + oy * _hy
+		if of > 0.0 and of < 12.0 and absf(ox * _hy - oy * _hx) < 1.8:
+			vdes = minf(vdes, maxf(0.0, of - 5.5) * 1.4)
 	return vdes
 
 

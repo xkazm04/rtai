@@ -32,6 +32,13 @@ public:
 	// A car hit person i at (vx, vy) m/s: lethal = dead (body slides along the hit), else a
 	// knockdown (shoved 1 m along the hit, then flees 3 s). Called by the vehicles feature only.
 	void strike(int i, double vx, double vy, bool lethal);
+	// Points outside the sim (the vehicles feature's cars: three hull circles each) that traffic
+	// brakes for like a car ahead. xy holds n (x, y) pairs, capped at OBST_MAX; a sim input set
+	// before step() and kept until the next call.
+	void set_obstacles(const double *xy, int n) {
+		obst_n_ = n < 0 ? 0 : (n > OBST_MAX ? OBST_MAX : n);
+		for (int k = 0; k < obst_n_ * 2; k++) obst_[k] = xy[k];
+	}
 
 	// step.cpp
 	void step(double dt, double camx, double camy, double tgx, double tgy);
@@ -79,6 +86,8 @@ private:
 	int32_t hcount_[HW * HW + 1], hstart_[HW * HW + 1], hitems_[CAP];
 	int hgx_ = 0, hgy_ = 0;
 	int32_t counters_[CN_COUNT] = {};
+	double obst_[OBST_MAX * 2] = {};
+	int obst_n_ = 0;
 	std::vector<int32_t> clips_;
 	uint8_t rigged_[CAP] = {};
 	uint8_t cstate_[CAP] = {};

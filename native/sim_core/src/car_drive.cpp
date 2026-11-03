@@ -53,6 +53,12 @@ double CityCore::car_desired_speed(const Car &c) {
 			if (f > 0.0 && f < 7.0 && s < 1.6) vdes = minf(vdes, maxf(0.0, f - 3.0) * 1.5);
 		}
 	}
+	for (int k = 0; k < obst_n_; k++) {
+		double rx = obst_[k * 2] - c.x, ry = obst_[k * 2 + 1] - c.y;
+		double f = rx * c.hhx + ry * c.hhy;
+		double s = std::fabs(rx * c.hhy - ry * c.hhx);
+		if (f > 0.0 && f < 12.0 && s < 1.8) vdes = minf(vdes, maxf(0.0, f - 5.5) * 1.4);
+	}
 	return vdes;
 }
 

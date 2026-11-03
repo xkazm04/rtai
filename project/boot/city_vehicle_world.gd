@@ -83,6 +83,10 @@ func eject_driver(at: Vector2, away: Vector2, art: int) -> void:
 		_city.sim.strike(slot, away.x * 3.0, away.y * 3.0, false)
 
 
+func set_obstacles(xy: PackedFloat64Array) -> void:
+	_city.sim.set_obstacles(xy)
+
+
 func strike_person(slot: int, vel: Vector2, kill: bool) -> bool:
 	_city.sim.strike(slot, vel.x, vel.y, kill)
 	return kill
