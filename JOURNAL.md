@@ -318,3 +318,15 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
 - Owner frames (masters frames.json, still 15; build_frames.iter4.py keeps the old recipe): lineup now 3-way
   (night | iteration 1 | now), the city1-128 A/B replaced by the 4-zoom real-game hunch A/B, T2/T1/hero frames and the
   King frame re-shot with the hunch. All images looked at: all straight down, 0 rejected.
+- 12:55-13:20 D5 crowd twin, third attempt (timeboxed), TRIED + REVERTED (never committed; masters
+  day-d5/d5-cast/crowd-twin-v3.patch, 379 lines, applies on 2eb58bb). Found WHY the goldens moved in attempt 2:
+  look_golden.gd lets the World process during the load (World._prewarm holds the sim; the golden scene does not), so the
+  twin's ~30 bake frames advanced the riot. Fix in the patch: CityCharacters.bake_d5() as its own step; World._prewarm
+  awaits it; look_golden/city_frame hold the World (set_process(false)) around it; city_frame --no-d5-crowd for A/B;
+  plus a get_meta default fix in CrowdBakeDetail (an engine ERROR on the first sync). Real-city A/B (city_frame seed 91
+  --police=12 --zooms=2,3, renders twin-off vs twin-on, frames twin-city0-64-zoom.png / twin-city0-96-zoom.png):
+  city-1/2 unchanged (<30 px: everyone on screen is a full rig); city-0 38.8k px at 64, 56k at 96. LOOKS WORSE at 64:
+  the twin bakes the sticker halo at 64 px/m, so the crowd keeps a thinner cream rim than the D4 cells magnified from
+  48 (figures separate less from the asphalt); the D5 hatch it adds is hardly visible at 64. At 96 the hatch is crisper,
+  but 64 is the arena zoom the twin was for. Not shipped (brief: worse in-engine -> revert). If someone resumes: bake the
+  halo at the D4 bake's width (scale the halo by 1.5/2.0 in the twin stage) and re-judge at 64 first.
