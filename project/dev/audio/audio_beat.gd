@@ -78,6 +78,9 @@ func _done() -> void:
 		"voice_lines": _audio.voice.played,
 		"voice_drops": s.voice.drops,
 		"voice_dropped_ids": s.voice.dropped_ids,
+		"boss_loop_db": s.loops.level_db(&"boss_loop"),
+		"boss_loop_on": s.loops.is_on(&"boss_loop"),
+		"boss_alive": _play.stage.arena.boss != null and _play.stage.arena.boss.alive(),
 		"missing": s.bank.missing,
 	}
 	printerr("audio_beat: %s" % JSON.stringify(out))

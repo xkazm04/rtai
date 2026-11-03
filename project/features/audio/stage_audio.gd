@@ -41,6 +41,7 @@ static func attach(
 func _process(_delta: float) -> void:
 	if _stage == null:
 		return
+	_end_boss_loop()
 	var live: Dictionary[Shot, Vector2] = {}
 	for s: Shot in _stage.arena.shots:
 		live[s] = s.pos
@@ -53,6 +54,13 @@ func _process(_delta: float) -> void:
 			@warning_ignore("return_value_discarded")
 			service.cue(id, _shots[s], _stage.tick)
 	_shots = live
+
+
+## The boss loop plays while Mertz stands: it ends when he goes down (not only with the contract).
+func _end_boss_loop() -> void:
+	var boss: Fighter = _stage.arena.boss
+	if boss != null and not boss.alive() and service.loops.is_on(&"boss_loop"):
+		service.loops.set_on(&"boss_loop", false)
 
 
 func _shot_cue(s: Shot) -> StringName:
