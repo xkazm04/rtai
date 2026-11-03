@@ -424,3 +424,7 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
 - 01:05 RE-MEASURED pan swim with tonight's additions (pan3, d5_pan.gd, 48 px/m, world-locked crop, 40 ticks):
   mean frame change D4 0.00706 / D5 0.00694 (iteration 3, pan1: 0.00709 / 0.00696). The ink foot, the D5 lamp and
   the shadow changes add no swim; the D5 layer still sits at or below D4 in motion.
+- 01:07 Codex: 1 lamp redo (d5_lamp_b: same template, the head a PLAIN cream cap with one dot; 71 s), 0 rejected. Ledger 41.
+- 01:08 MILESTONE: lamp head fixed (h72): the riveted head of h71 printed as a gear ring at 48-64; the plain cap reads
+  as the mock's round lamp head. d4 tier 0 px; d5 changed 972 / 2094 / 3585 px at 32/48/64 vs h71. d5_lamp marked
+  SUPERSEDED in the manifest (no game file). item20 board = h70 | h71 | h72; hero frames = h72; ladder +1 row.
