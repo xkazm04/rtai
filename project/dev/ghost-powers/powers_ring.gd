@@ -12,8 +12,11 @@ const SHOCK_S: float = 0.4
 const SLAM_S: float = 0.35
 const VERTS: int = 48
 const GRIT: int = 18
-## The ink crack left in the asphalt where the stomp landed: rays, held, then faded out.
-const CRACKS: int = 9
+## The ink crack left in the asphalt where the stomp landed: the D5 crack art, held, then faded.
+const CRACK_ART: Texture2D = preload("res://features/souls/art/stomp_crack.png")
+const CRACK_ART_PX_PER_M: float = 96.0
+## The art spans +-3.1 m; grown so its branches reach the stomp radius (4 m).
+const CRACK_SCALE: float = 1.3
 const CRACK_HOLD_S: float = 2.0
 const CRACK_FADE_S: float = 1.5
 
@@ -59,18 +62,14 @@ func _draw() -> void:
 		draw_circle(c + Vector2.from_angle(a) * d, lerpf(3.0, 1.0, k), Color(INK, 1.0 - k))
 
 
-## Jagged ink rays from the landing point (deterministic kinks), 1.4-2.7 m long (past the tank).
+## The D5 ground crack where the stomp landed (features/souls/art/stomp_crack.png, baked from the
+## road tile's own crack art at 96 px/m), turned per stomp, held, then faded out.
 func _crack(c: Vector2, age: float) -> void:
 	var a_k: float = 1.0 - clampf((age - CRACK_HOLD_S) / CRACK_FADE_S, 0.0, 1.0)
 	if a_k <= 0.0:
 		return
-	var px: float = SimConst.PX_PER_M
-	for i: int in CRACKS:
-		var a: float = TAU * i / CRACKS + 0.35 * sin(i * 4.7)
-		var length: float = px * (1.4 + 1.3 * absf(sin(i * 2.3 + 0.5)))
-		var pts: PackedVector2Array = PackedVector2Array([c])
-		for j: int in range(1, 4):
-			var kink: float = 0.35 * sin(i * 5.1 + j * 2.9)
-			@warning_ignore("return_value_discarded")
-			pts.push_back(c + Vector2.from_angle(a + kink) * length * j / 3.0)
-		draw_polyline(pts, Color(INK, 0.85 * a_k), 2.5)
+	var k: float = CRACK_SCALE * SimConst.PX_PER_M / CRACK_ART_PX_PER_M
+	var turn: float = TAU * fposmod(hauler.stomp_tick * 0.618, 1.0)
+	draw_set_transform(c, turn, Vector2(k, k))
+	draw_texture(CRACK_ART, -CRACK_ART.get_size() * 0.5, Color(1.0, 1.0, 1.0, a_k))
+	draw_set_transform(Vector2.ZERO)
