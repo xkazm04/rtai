@@ -202,3 +202,5 @@ NEXT (iteration 4 end):
   parent cues) or the FX sink: the layer starts inside `AudioService.cue`. Provenance +4 lines. Unit 356 (355 pass; the one fail is the known test_noir_shadows engine-error flake, not audio),
   lint 13/13, scenarios 8/8. Not heard by a human.
 - FRICTION: tools/audio/build_tables.py is STALE (it lacks car_wreck / boss_loop and has Gloria at -5 instead of the tuned -1): running it clobbers hand edits. The tables are edited as JSON now; do not regenerate.
+- 15:52 clip evidence/mix/riot_mix6.mp4 (25 s, 960 px, replaces riot_mix5; D3D12 movie maker, CONTENDED GPU, not timed): **-19.9 LUFS, true peak -2.2 dBFS, LRA 1.8** (riot_mix5 was -20.2 / -1.4): the blood layer moves the mix +0.3 LU.
+  Headless report (evidence/mix/riot_cues_blood.json, 25 s): 88 deaths started, 44 blood splats started (44 more dropped by the 3-voice cap: the riot saturates it), 110 shots, 38 steps. Frame at 12 s looked at: straight down, 0 camera breaks rejected.
