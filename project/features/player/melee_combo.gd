@@ -80,6 +80,20 @@ func progress() -> float:
 	return float(tick_in) / float(h.length()) if h != null else 0.0
 
 
+## Metres Rivet travels along his facing on this tick: a hit's lunge_m spread evenly over its
+## windup and active ticks (the katana's thrust); 0 in recovery, idle, or for a hit without one.
+func lunge_step_m() -> float:
+	var h: MeleeHit = current()
+	if h == null or h.lunge_m <= 0.0 or tick_in >= h.windup + h.active:
+		return 0.0
+	return h.lunge_m / float(h.windup + h.active)
+
+
+## Top-speed scale for the mover: the weapon's move_mult while a hit plays, else 1.
+func move_scale() -> float:
+	return table.move_mult if hit_index > 0 else 1.0
+
+
 func _start(index: int) -> void:
 	hit_index = index
 	starts += 1

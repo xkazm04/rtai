@@ -1,16 +1,27 @@
 class_name MeleeTable
 extends RefCounted
-## Rivet's bare-handed melee timing (data/tables/rivet_melee.json): the claw combo's hits as
-## windup / active / recovery ticks, the cancel point and the combo window, and the charged
-## shock. Read once through DataTable; a broken row is an error, never a crash.
+## One melee combo as timing data: the hits as windup / active / recovery ticks, the cancel point
+## and the combo window. The bare claw (data/tables/rivet_melee.json, with the charged shock) and
+## each melee weapon (data/tables/melee_weapons.json: electro_baton, katana) load into the same
+## shape, so MeleeCombo plays any of them. A broken row is an error, never a crash.
 
 const TABLE: String = "res://data/tables/rivet_melee.json"
 const SCHEMA: String = "gtai.rivet-melee/1"
+const WEAPONS: String = "res://data/tables/melee_weapons.json"
+const WEAPONS_SCHEMA: String = "gtai.melee-weapons/1"
+const CLAW: StringName = &"claw"
 
+var id: StringName = CLAW
 var hits: Array[MeleeHit] = []
 var cancel_ticks: int = 4
 var combo_window_ticks: int = 12
 var shock: Dictionary = {}
+## Weapon-only: top-speed scale while a hit plays, the metal-chain radius, the blade length and
+## grip (for the rig). The claw keeps the defaults.
+var move_mult: float = 1.0
+var chain_radius_m: float = 0.0
+var length_m: float = 0.0
+var grip: StringName = &"none"
 var errors: Array[String] = []
 
 
@@ -20,10 +31,53 @@ static func shipped() -> MeleeTable:
 
 static func from_table(t: DataTable) -> MeleeTable:
 	var m: MeleeTable = MeleeTable.new()
-	var claw: Dictionary = t.object(t.raw, "claw")
-	m.cancel_ticks = t.integer(claw, "cancel_ticks")
-	m.combo_window_ticks = t.integer(claw, "combo_window_ticks")
-	for raw: Variant in t.array(claw, "hits"):
+	_read_combo(t, t.object(t.raw, "claw"), m)
+	m.shock = t.object(t.raw, "shock")
+	m.errors = t.errors()
+	if m.hits.is_empty():
+		m.errors.append("rivet_melee.json: claw.hits is empty")
+	return m
+
+
+## The shipped melee weapon `weapon_id`, or a table whose errors name the missing row.
+static func weapon(weapon_id: StringName) -> MeleeTable:
+	return weapon_from(DataTable.open(WEAPONS, WEAPONS_SCHEMA), weapon_id)
+
+
+static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
+	var m: MeleeTable = MeleeTable.new()
+	m.id = weapon_id
+	var rows: Dictionary = t.object(t.raw, "weapons")
+	if not rows.has(String(weapon_id)):
+		m.errors = t.errors()
+		m.errors.append("melee_weapons.json: no weapon %s" % weapon_id)
+		return m
+	var row: Dictionary = t.object(rows, String(weapon_id))
+	_read_combo(t, row, m)
+	m.move_mult = t.num(row, "move_mult")
+	m.chain_radius_m = t.num(row, "chain_radius_m")
+	m.length_m = t.num(row, "length_m")
+	m.grip = StringName(t.text(row, "grip"))
+	m.errors = t.errors()
+	if m.hits.is_empty():
+		m.errors.append("melee_weapons.json: %s.hits is empty" % weapon_id)
+	return m
+
+
+## The ids in melee_weapons.json, sorted (the panel's weapon list).
+static func weapon_ids() -> Array[StringName]:
+	var t: DataTable = DataTable.open(WEAPONS, WEAPONS_SCHEMA)
+	var out: Array[StringName] = []
+	for key: Variant in t.object(t.raw, "weapons").keys():
+		out.append(StringName(str(key)))
+	out.sort()
+	return out
+
+
+static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
+	m.cancel_ticks = t.integer(combo, "cancel_ticks")
+	m.combo_window_ticks = t.integer(combo, "combo_window_ticks")
+	for raw: Variant in t.array(combo, "hits"):
 		var row: Dictionary = raw if raw is Dictionary else {}
 		var h: MeleeHit = MeleeHit.new()
 		h.id = StringName(t.text(row, "id"))
@@ -34,12 +88,12 @@ static func from_table(t: DataTable) -> MeleeTable:
 		h.cone_dot = t.num(row, "cone_dot")
 		h.damage = t.num(row, "damage")
 		h.knockback_m = t.num(row, "knockback_m")
+		# Weapon-only fields: the claw rows omit them and keep 0.
+		if row.has("stun_ticks"):
+			h.stun_ticks = t.integer(row, "stun_ticks")
+			h.chain_hops = t.integer(row, "chain_hops")
+			h.lunge_m = t.num(row, "lunge_m")
 		m.hits.append(h)
-	m.shock = t.object(t.raw, "shock")
-	m.errors = t.errors()
-	if m.hits.is_empty():
-		m.errors.append("rivet_melee.json: claw.hits is empty")
-	return m
 
 
 func ok() -> bool:

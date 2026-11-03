@@ -1,5 +1,5 @@
 {
-  "doc": "rivet-motion's stations (Rivet's locomotion and bare-handed melee). Tuning keys are <table>.<path>; an array row is addressed by its index (rivet_melee.claw.hits.0 = claw_1). The course station measures the PlayerMotion feel numbers (dev/rivet_motion/motion_probe.gd prints the same ones headless); the melee line is three human dummies 1.2 m apart for the claw combo and a metal line 2 m apart for the shock's chain (kind enemy until the arena has a metal dummy kind: REQUEST 1 -> arena). Until the arena scene is on this branch, res://dev/rivet_motion/motion_course.gd and combo_clip.gd run these.",
+  "doc": "rivet-motion's stations (Rivet's locomotion and bare-handed melee). Tuning keys are <table>.<path>; an array row is addressed by its index (rivet_melee.claw.hits.0 = claw_1). The course station measures the PlayerMotion feel numbers (dev/rivet_motion/motion_probe.gd prints the same ones headless); the melee line is three human dummies 1.2 m apart for the claw combo and a metal line 2 m apart for the shock's chain (kind enemy until the arena has a metal dummy kind: REQUEST 1 -> arena). The melee line also tunes the melee weapons (melee_weapons.weapons.<id>..., electro_baton and katana tonight) on the same dummies. Until the arena scene is on this branch, res://dev/rivet_motion/motion_course.gd and combo_clip.gd run these.",
   "lane": "rivet_motion",
   "schema": "gtai.arena-station/1",
   "stations": [
@@ -438,6 +438,300 @@
           "max": 6,
           "min": 0,
           "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.cancel_ticks",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.combo_window_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.move_mult",
+          "max": 1.2,
+          "min": 0.3,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.0.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.1.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.hits.2.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.cancel_ticks",
+          "max": 20,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.combo_window_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.move_mult",
+          "max": 1.2,
+          "min": 0.3,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.0.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.1.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.windup_ticks",
+          "max": 30,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.active_ticks",
+          "max": 12,
+          "min": 1,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.recovery_ticks",
+          "max": 40,
+          "min": 0,
+          "step": 1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.reach_m",
+          "max": 4,
+          "min": 0.5,
+          "step": 0.05
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.stun_ticks",
+          "max": 240,
+          "min": 0,
+          "step": 5
+        },
+        {
+          "key": "melee_weapons.weapons.katana.hits.2.lunge_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        },
+        {
+          "key": "melee_weapons.weapons.electro_baton.chain_radius_m",
+          "max": 6,
+          "min": 0,
+          "step": 0.1
         }
       ]
     }
