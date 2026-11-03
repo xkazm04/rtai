@@ -1634,3 +1634,18 @@ Morning reading order: item54_rig_shadow_lock.png -> night_iter10_summary.png ->
   unit 149/0, scenarios 8/0, selftest ok); 104 untracked evidence PNGs moved aside and restored; tree clean.
   Scratch deleted (pan, cost, King, 128 px/m and duplicate rounds; numbers above). Kept (masters frames/): i11he /
   i11ae (default showcase), i11h0 (world-locked hero), i11w0 / i11x0 / i11xr / i11ws / i11xs / i11xsr (board).
+
+## Iteration 12 (2026-11-03, BUILD, 07:06 -> freeze 07:30), no image budget (50/50), short session
+- 07:06 read JOURNAL (iteration 11 summary, NEXT 43-44), git log. With 24 min to freeze, no render round fits;
+  NEXT 44 waits on the visual-engine lane's snapped camera. Picked the merge: the Director and owner face 50+ boards
+  and 11 iterations of proposals, scattered over 5 gap lists.
+- 07:10 MILESTONE (406362e): evidence/README.md "Morning merge sheet" at the top: what is ON by default when n-d5
+  merges (parts tier with its zoom stops, look_d5 world layer, D5 roofs / decals / ground tiles, pen-stroke shadows
+  incl. rig-locked, souls, arena, close-up art), the default-OFF proposals grouped by the lane that owns the switch
+  (visual-engine package v9, characters halo, HUD look_d5_ui, d4-production roof lines, city mip rule), the owner
+  A/Bs (steel, zebra, rim, fringe, dots) and what stays open. Every board it names checked to exist (25 names, 0
+  missing); every zoom number checked against look_d5.params.json (world amount 0 / 0.35 / 1.0 at 32 / 48 / 64 px/m;
+  tier 1.75 / 2.0 / 1.6875). CORRECTION before commit: a first draft said the cop / King portraits were "not marked
+  all-ages"; the journal says store-safe marks were given by the lane, OWNER REVIEW PENDING, and finisher_k9 is
+  in-game only. The sheet says that.
+- Gates: docs only since 857b615 (iteration 11 full gates ALL PASS); the pre-commit lint ran 13/13 over 195 files.

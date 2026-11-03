@@ -11,7 +11,7 @@ Written for the Director and the owner. Every row points at a board in this fold
 - D5 Rivet / cop / pedestrian parts tier on the same rigs (`look_d5_part`; on at zoom 1.75, full at 2.0, off below 1.6875 =
   56 / 64 / 54 px/m, the gap is the hysteresis against switch shimmer): `item1_gate.png`, `item1c_shade_k.png`,
   `item6_cop_shade.png`.
-- `look_d5` world layer (ink-pressure hatch, paper age and grain, misregistration; amount by zoom):
+- `look_d5` world layer (ink-pressure hatch, paper age and grain, misregistration; amount 0 at 32 px/m, 0.35 at 48, 1.0 from 64; floors 0):
   `item7_paper_age.png`, `item2b_street48.png`.
 - D5 landmark roofs (union-fist mural, bar, HQ, pension bank + neighbours) and big street decals:
   `item3_roofs_gate.png`, `item10_street_decals.png`; D5 ground tiles (joints, crosswalk, dashes, kerb): `item22`-`item25`.
