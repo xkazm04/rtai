@@ -63,6 +63,15 @@ func use_fluid(fluid: String) -> bool:
 	return true
 
 
+## Recolours the fluid's ground (and its flight, when the two were one): the palette's `blood`.
+func set_ground(c: Color) -> void:
+	if _fluid.flight == _fluid.ground:
+		_fluid.flight = c
+	_fluid.ground = c
+	if _ring.mesh != null:
+		_ring.mesh.colour = c
+
+
 ## Pools get an ink keyline `px` wide in `colour` (the D4/D5 print; 0 = noir's bare rim).
 func set_ink(px: float, colour: Color) -> void:
 	_ring.ink_px = px

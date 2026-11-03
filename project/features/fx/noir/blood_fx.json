@@ -161,6 +161,15 @@
   },
   "schema": "gtai.noir-blood/1",
   "stain": {
+    "corpse": {
+      "exit_px": 4.0,
+      "r_px": [
+        2.0,
+        4.2
+      ],
+      "spots": 7,
+      "spread_px": 5.0
+    },
     "grow_ticks": 24,
     "kill": {
       "exit_px": 4.0,

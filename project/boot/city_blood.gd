@@ -9,6 +9,9 @@ extends Node
 
 var blood: CombatBlood = CombatBlood.new()
 var beat: KillBeat = null
+## Blood on the dead (follow()): null until the rig feed is known.
+var stains: CorpseStains = null
+var _feed: RigFeed = null
 var _city: CitySystem
 var _view: CityView
 
@@ -36,10 +39,22 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 	return glue
 
 
+## Soaks the dead of `feed` (the city's rig feed) with the blood of their kill.
+func follow(feed: RigFeed) -> void:
+	_feed = feed
+	stains = CorpseStains.new(16, blood.blood.use_splat_mesh().colour)
+	stains.material = blood.print_material()
+	_view.actor_layer().add_child(stains)
+	@warning_ignore("return_value_discarded")
+	blood.bled.connect(stains.on_bled)
+
+
 func _process(_delta: float) -> void:
 	if _view.clock != null:
 		blood.step(_view.clock.tick(), _view.world_px)
 		beat.step(_view.clock.tick())
+		if stains != null:
+			stains.step(_view.clock.tick(), _feed)
 
 
 ## World px -> screen uv through the view's camera.

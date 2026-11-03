@@ -12,6 +12,9 @@ extends Node2D
 ## that splat; `both` keeps it under the blood. Render only: counter-hash scatter, stepped on
 ## the sim tick (never a frame delta), nothing written back to the sim.
 
+## A human sprayed at `pos_px` along `dir` (CorpseStains soaks the body).
+signal bled(pos_px: Vector2, dir: Vector2)
+
 const MODES: PackedStringArray = ["noir", "ink", "both"]
 const SHADER: String = "res://assets/shaders/fx_blood_print.gdshader"
 const MATCH_M: float = 1.5
@@ -52,6 +55,9 @@ var _meshes: Array[BloodSplatMesh] = []
 func _init() -> void:
 	z_index = RenderLayers.z(&"blood")
 	blood = BloodFx.new()
+	var tokens: Dictionary[StringName, Color] = PaletteTokens.shared().tokens
+	if tokens.has(&"blood"):
+		blood.set_ground(tokens[&"blood"])
 	_game = blood.p.get("game", {})
 	var fallback: String = _game.get("default", "noir")
 	mode = requested(fallback)
@@ -170,6 +176,12 @@ func kill_human(pos_px: Vector2, dir: Vector2) -> void:
 	kills += 1
 	var kind: String = _game.get("death_hit", "kill")
 	blood.splash(pos_px, dir.normalized(), kind)
+	bled.emit(pos_px, dir.normalized())
+
+
+## The blood's print (fx_blood_print): other blood nodes (CorpseStains) print through it.
+func print_material() -> ShaderMaterial:
+	return _mat
 
 
 ## Advances the blood to sim tick `tick` (once a frame); world_px locks the print grain.

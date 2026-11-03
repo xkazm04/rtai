@@ -39,6 +39,7 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	rigs.set_process(false)
 	view.before_render = _before_render
 	blood = CityBlood.attach(city, view)
+	blood.follow(rigs.feed)
 
 
 ## At load: bakes the crowd atlas (a no-op headless) and switches the people layer to it.

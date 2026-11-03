@@ -6,6 +6,7 @@ extends Node
 ## flag (-- --blood=noir|ink|both). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/city_fight.tscn --
 ##   --blood=<mode> --out=<dir> [--at=<tick>,...] [--zooms=1,1.5,2] [--focus=<i>] [--tag=<name>]
+##   [--no-stains]  hides the blood on the dead (CorpseStains): the before frame of that change.
 ##   [--hit-rivet=<ticks>]  Rivet takes a Robo-tazer hit (Events.player_hit) every <ticks>, wired
 ##   as boot/world.gd wires the game (fx_triggers.listen): sparks, crackle, his oil.
 ##   [--rivet-kills=<m>]  DEV STAND-IN: a riot death within <m> metres of Rivet is credited to him
@@ -30,6 +31,7 @@ var _last_hit: int = 0
 var _kill_m: float = 0.0
 var _beat_frames: int = 0
 var _clip: Vector2i = Vector2i.ZERO
+var _no_stains: bool = false
 var _world: World = null
 var _city: CitySystem = null
 var _view: CityView = null
@@ -56,6 +58,7 @@ func _ready() -> void:
 	add_child(_view)
 	_view.setup(_city)
 	_chars = CityCharacters.new(_city, _view, _world.context())
+	_chars.blood.stains.visible = not _no_stains
 	await _chars.bake()
 	await _view.prewarm()
 	_wire()
@@ -164,7 +167,7 @@ func _summary() -> String:
 	return (
 		(
 			"city_fight: tick=%d deaths=%d shots=%d kills=%d aimed=%d decals=%d draw_us=%d"
-			+ " avg_us_per_frame=%.1f frames=%d beats=%d calm=%d"
+			+ " avg_us_per_frame=%.1f frames=%d beats=%d calm=%d soaked=%d missed=%d"
 		)
 		% [
 			_world.context().clock.tick(),
@@ -177,7 +180,9 @@ func _summary() -> String:
 			float(b.spent_us) / maxi(b.frames, 1),
 			b.frames,
 			_chars.blood.beat.beats,
-			_chars.blood.beat.calm_beats
+			_chars.blood.beat.calm_beats,
+			_chars.blood.stains.soaked,
+			_chars.blood.stains.missed
 		]
 	)
 
@@ -205,6 +210,8 @@ func _parse_args() -> bool:
 			_clip = Vector2i(v[0].to_int(), v[1].to_int() if v.size() > 1 else 600)
 		elif arg.begins_with("--beat-frames="):
 			_beat_frames = arg.substr(14).to_int()
+		elif arg == "--no-stains":
+			_no_stains = true
 		elif arg.begins_with("--tag="):
 			_tag = "-" + arg.substr(6)
 		elif not (arg.begins_with("--blood=") or arg.begins_with("--kill-beat=")):
