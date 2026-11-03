@@ -114,6 +114,7 @@ func _tier(tier: String) -> void:
 		var file: String = roof + ".png"
 		var d5: bool = tier == "d5" and ResourceLoader.exists(YARD_D5 + file)
 		r.texture = load((YARD_D5 if d5 else YARD_D4) + file) as Texture2D
+	D5HeroHaloInk.roof_rule(_yard_roofs, tier, _rigs.zoom * PX)  # proposal: ruled roof hatch overlays
 	if _shadow_node != null:
 		_shadow_node.visible = tier == "d5"
 		(_shadow_node.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
