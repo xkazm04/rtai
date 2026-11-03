@@ -9,13 +9,14 @@ extends "res://dev/selftest/city_selftest.gd"
 ## shows the hit-stop hold (rivet_hit, 3 ticks). Writes lead-<tick>.png and
 ## lead-showcase.json (lead per shot, ticks per frame around the hit).
 ##   godot --fixed-fps 60 --path project res://dev/selftest/lead_showcase.tscn -- --out=<dir>
-##   [--mode=on_foot]
+##   [--mode=on_foot] [--reduced-motion] (look-ahead cap halved, no shake, no hit-stop)
 
 const SPEED_MPS: float = 15.0
 const SHOTS: Array[int] = [0, 30, 60, 150]
 
 var _log: Array[Dictionary] = []
 var _mode: StringName = &"car"
+var _reduced: bool = false
 
 
 func _ready() -> void:
@@ -24,12 +25,15 @@ func _ready() -> void:
 			_out = arg.substr(6)
 		elif arg.begins_with("--mode="):
 			_mode = StringName(arg.substr(7))
+		elif arg == "--reduced-motion":
+			_reduced = true
 		else:
 			get_tree().quit(2)
 			return
 	_build()
 	_view.rig = CameraRig.new()
 	_view.rig.snap(_mode)
+	_view.rig.reduced_motion = _reduced
 	await _characters.bake()
 	@warning_ignore("return_value_discarded")
 	await _view.prewarm()

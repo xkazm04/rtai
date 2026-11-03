@@ -1079,6 +1079,12 @@ NEXT (iteration 13 / morning, in order):
 - Evidence at 7e3eb68 (05:48-05:50, all PASS): lint 13/13, unit 236, scenarios 8, parity bit-exact +
   mutation caught, selftest PASS (11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
   Copied to evidence/pof.
+- Reduced motion in-engine (lead_showcase --reduced-motion, a dev flag; the game's launch flag waits
+  for the merge): lead 2.74 / 3.17 / 3.29 m at ticks 30 / 60 / 150 (normal 4.13 / 4.78 / 4.93) - the
+  table halves the look-ahead CAP (7 -> 3.5 m), not the lead (README said "halves the look-ahead":
+  corrected); the Robo-tazer hit: crackle fired, offset y exactly 0 (no shake), ticks
+  [268, 268, 269, 270, ...] = 0 frames held, stops 0. 47-reduced/; ladder 47;
+  evidence/camera-iter13/lead-showcase-reduced-motion.json.
 - Iteration 13 tally: frames rejected for camera 0 (all engine captures, straight down); approaches
   reverted 0 (the zoom anchor measured better at low frequency, equal on the 1 px grain - kept); re-runs:
   1 (on_foot lead pass forgot --mode), 1 (print_stage_demo parse errors -> hung run, my PID 32332 + child
@@ -1086,7 +1092,7 @@ NEXT (iteration 13 / morning, in order):
   verified by git diff each time. Scratch worktrees scratch-visual-trial13 / -q1 / -q1b (mine) removed;
   1 false alarm caught (an LFS pointer copied as the FX sheet), 1 slip fixed at once (rm -rf removed the
   tracked features/fx/README.md, restored from HEAD); scratch-m16 / scratch-q1 are not mine (untouched). No AI images (no codex) -> no provenance.
-  Ladder rows 41-46b + 45b (1280 x 23630).
+  Ladder rows 41-47 (1280 x 24058).
 
 NEXT (iteration 14 / morning, in order):
 1. Director merge: JOURNAL.md-only conflicts vs n-d4 / n-d5 / n-noir; main merges clean (trial: lint,

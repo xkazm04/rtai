@@ -1,0 +1,70 @@
+[
+  {
+    "driven_ticks": 0,
+    "file": "lead-000.png",
+    "lead_m": [
+      0.0,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 30,
+    "file": "lead-030.png",
+    "lead_m": [
+      2.74310517311096,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 60,
+    "file": "lead-060.png",
+    "lead_m": [
+      3.17173075675964,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": 150,
+    "file": "lead-150.png",
+    "lead_m": [
+      3.28874754905701,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "driven_ticks": -1,
+    "file": "hitstop-tazer.png",
+    "lead_m": [
+      2.9059374332428,
+      0.0
+    ],
+    "ppm": 48.0
+  },
+  {
+    "fired": {
+      "death": 11,
+      "player_hit": 1,
+      "player_hit_robo_tazer": 1,
+      "projectile_end": 15,
+      "rivet_kill": 0,
+      "shot": 18
+    },
+    "fx_alive": 4
+  },
+  {
+    "hitstop_ticks_per_frame": [
+      268,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273
+    ],
+    "stops": 0
+  }
+]
