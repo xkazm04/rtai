@@ -1059,3 +1059,23 @@ NEXT (iteration 16 close, in order):
   the ink figure in the beam. Worse to the eye in the one shot that shows it, so reverted (files back to 8f1c748):
   evidence/figure-shadows-per-light-NOT-adopted.png (before | global | per-light). Worth trying again where a body
   stands mid-beam or mid-pool (the light's direction then puts the shadow on lit ground).
+- TRIED / REVERTED (06:53-06:55) NEXT 2, the baked crowd casts too: NoirLook cast the people MultiMesh as well and
+  fed the taper the live people's centres from the sim snapshot (MAX_BODIES 16 -> 48). Visually it fixes the
+  inconsistency (every ped on the cream pavement gets a black blot; at 32 px/m the blots in dense groups merge),
+  but the junction riot on the AMD iGPU (noir_cost, 1080p, z1.5): noir 12.46 ms without figure shadows -> 19.40 ms
+  (**+6.9 ms**). Reverted. evidence/figure-shadows-crowd-casting-street32-NOT-adopted.png,
+  cost-figures-crowd48-junction-igpu-NOT-adopted.json.
+- COST (06:55-06:57) the committed city version measured for the first time (the showcase's +0.33 ms had 3
+  bodies): junction riot, 16 casting rigs, iGPU 1080p: noir 12.46 / 12.43 ms without -> 13.82 / 13.95 ms with
+  (**+1.4 ms**, 2 runs each). Fix (e1ffaeb): a tap every 4 screen px, not 2 -> 13.24 ms (+0.8 ms, 1 run); noir
+  frames within 2.5k px of step 2, no visible change at 64 px/m (evidence/figure-shadows-step2-vs-step4-
+  junction64.png). Files: evidence/cost-figures-{off-junction-igpu-a,-b,rigs16-junction-igpu-a,-b,step4-
+  junction-igpu}.json. Still the most expensive noir layer per body; the remaining cost is the per-fragment
+  nearest-body loop over 16 bodies in overlapping quads plus the silhouette viewport.
+- (06:57) Showcase 48 re-recorded at e1ffaeb (masters figshadow-v11/48) -> evidence/showcase-figure-shadows-48.mp4.
+- (07:01) Gates at e1ffaeb (`run.mjs --no-bench --allow-dirty`): lint (13), 206 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line + the city cost.
+NEXT addendum (iteration 16): figure shadows cost +0.8 ms on the iGPU in the junction riot. Before the baked crowd
+  can cast: draw ONE quad per body cluster (or a tile list) so overlapping quads stop re-running the nearest loop,
+  and pass the body index per quad (vertex colour, as NoirShadows packs its sweep) so the shader needs no loop
+  at all. That also makes per-light directions cheap (one sweep per quad).
