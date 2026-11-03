@@ -1730,3 +1730,22 @@ NEXT (iteration 15; 43-48 stand, earlier lists stand):
 49. Next session: export GODOT_BIN before the first gate run. Without it, run_unit.mjs prints a plausible "1 failing"
     line with exit -1 instead of an error that says Godot is missing. The fix is in shared tooling, so it is for the
     Director, not this lane.
+
+## Iteration 16 (2026-11-03, BUILD, 07:20 -> freeze 07:30), no image budget (50/50), short session
+- 07:20 read JOURNAL (iteration 15, NEXT 49), git log; tree clean (only the untracked evidence PNGs).
+- 07:21 TRIED + REVERTED: a test that every scalar in look_d5.params.json sits inside its uniform's hint_range.
+  It parsed after two typed-Variant fixes (warnings are errors), then failed on its own floor: only 1 param was
+  range-checked. MEASURED: hint_range count per shader = 0 in look_d5, _halo, _part, _print, _shadow, _soul and
+  1 in _ui. A range guard over un-hinted uniforms protects nothing, so it was not committed. Test file restored;
+  unit 152/0 (unchanged from iteration 15).
+- No visual change, so no frames and no ladder row. Shared files touched: none. AI assets: none new.
+
+## Summary (iteration 16)
+- No code landed: the range-test idea was measured hollow and dropped. Images: 0 (50 of ~50).
+
+NEXT (iteration 16; 43-49 stand, earlier lists stand):
+50. look_d5*.gdshader uniforms have no hint_range (1 in 7 files has one). Add `: hint_range(min, max)` to each
+    tuned float (ranges from the iteration 1-9 tuning notes), so the visual-engine lane's inspector cannot drag a
+    D5 param off its tested range; then land the range test sketched in iteration 16 (shader uniform list ->
+    PROPERTY_HINT_RANGE -> params.json value inside it, floor of 10 checked). Do this when there is time to
+    re-render the hero shot before/after: hint_range does not change rendering, but check that with a frame diff.
