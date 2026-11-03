@@ -12,7 +12,12 @@ const T_ZEBRA: int = 73
 const ZEBRA_IN_M: float = -2.35
 ## Clean asphalt over both halves of an approach arm: no dashes in the crossing or the zebra.
 const T_DASH_ERASER: int = 74
-const PLAZA_PROPS: Array[int] = [28, 33, 26, 24, 32, 29, 38]
+## plaza dressing: one prop per slot (3 slots a tile, apart so their footprints never meet);
+## benches and planters twice; no barrel_cluster (prints vermilion), no lamp (reads as a spoon)
+const PLAZA_PROPS: Array[int] = [28, 33, 26, 28, 32, 29, 33]
+const PLAZA_SLOTS: Array[Vector2] = [Vector2(2.0, 2.0), Vector2(6.0, 3.5), Vector2(2.8, 6.2)]
+const PLAZA_SHARE: float = 0.6
+const PLAZA_JITTER_M: float = 0.8
 const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
 ## Square roofs: the 8 district buildings (14-21) are landmarks, LANDMARK_SHARE of the blocks;
 ## the rest take the 7 generic roofs (65-71). Lettered roofs (and the warehouse's 7) stay upright.
@@ -108,12 +113,13 @@ func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	b.add(ChunkBuild.L_GROUND, 13, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[local_index(t)] = int(255 * b.district)
-	for k: int in 2:
-		if g.rnd(t.x, t.y, k, 21) < 0.55:
+	for k: int in PLAZA_SLOTS.size():
+		if g.rnd(t.x, t.y, k, 21) < PLAZA_SHARE:
 			var tex: int = PLAZA_PROPS[int(g.rnd(t.x, t.y, k, 22) * PLAZA_PROPS.size())]
-			var p: Vector2 = Vector2(
-				o.x + 1.5 + 5.0 * g.rnd(t.x, t.y, k, 23), o.y + 1.5 + 5.0 * g.rnd(t.x, t.y, k, 24)
+			var jitter: Vector2 = (
+				Vector2(g.rnd(t.x, t.y, k, 23), g.rnd(t.x, t.y, k, 24)) - Vector2.ONE * 0.5
 			)
+			var p: Vector2 = o + PLAZA_SLOTS[k] + jitter * PLAZA_JITTER_M
 			var rot: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, k, 25) * 4.0))
 			_kerb.prop(g, b, tex, p, rot)
 	return SimConst.T_PLAZA
