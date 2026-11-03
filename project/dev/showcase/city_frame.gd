@@ -6,6 +6,7 @@ extends Node
 ## Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/city_frame.tscn -- --out=<dir>
 ##   [--hud=<ui scale>,...]  also captures each frame with the dev HudOverlay at those UI scales.
+##   [--cars=<n>] [--police=<n>] [--settle=<frames>]  traffic targets (24, 2), frames per shot (60).
 
 const MASTER_SEED: int = 91
 const BASE: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -18,6 +19,9 @@ var _city: CitySystem = null
 var _view: CityView = null
 var _hud_scales: Array[float] = []
 var _hud: HudOverlay = null
+var _cars: int = 24
+var _police: int = 2
+var _settle: int = SETTLE_FRAMES
 
 
 func _ready() -> void:
@@ -32,8 +36,8 @@ func _ready() -> void:
 	_city.steer_by_input = false
 	_set_focus(BASE + FOCI[0])
 	var t: CityTargets = CityTargets.riot(40, 8)
-	t.cars = 24
-	t.police_cars = 2
+	t.cars = _cars
+	t.police_cars = _police
 	_city.spawner.targets = t
 	_view = CityView.new()
 	add_child(_view)
@@ -57,6 +61,12 @@ func _parse_args() -> bool:
 		elif arg.begins_with("--hud="):
 			for v: String in arg.substr(6).split(","):
 				_hud_scales.append(v.to_float())
+		elif arg.begins_with("--cars="):
+			_cars = arg.substr(7).to_int()
+		elif arg.begins_with("--police="):
+			_police = arg.substr(9).to_int()
+		elif arg.begins_with("--settle="):
+			_settle = arg.substr(9).to_int()
 		else:
 			printerr("city_frame: unknown argument %s" % arg)
 			return false
@@ -71,7 +81,7 @@ func _set_focus(p: Vector2) -> void:
 
 func _capture(i: int, zoom: float) -> bool:
 	_view.zoom = zoom
-	for f: int in SETTLE_FRAMES:
+	for f: int in _settle:
 		await get_tree().process_frame
 	var file: String = "city-%d-%dppm" % [i, roundi(zoom * SimConst.PX_PER_M)]
 	var ok: bool = await _save(file)
