@@ -395,3 +395,20 @@ NEXT (night run, from the merged main; supersedes iteration 4's NEXT where it di
 4. The 00:00 vertical sample: one 20-40 s `--rigs --clean` clip with pistol, claw combo, cop + robot
    thug and one power, at 48 px/m with a camera lead (arena-2).
 5. Dummies' own look (cardboard / steel plate) once the rigs are the default.
+
+## Iteration 6 (23:12-23:30, BUILD, short: 18 minutes to the freeze)
+- answers.json re-read 23:12: nothing new for arena (arena-1 C, arena-2 A stand as placeholders).
+- MILESTONE `a08445f` `--rigs`: each shot's SHOOT recoil is now as strong as its weapon (NEXT item 2,
+  "pass the weapon's kick as clip_arg"). The values live in `arena.json` `rig_kick` (schema: 0.4-1.6, the same
+  range RigClips.shoot clamps to): assault-rifle 1.4 > robo-tazer 1.1 > gloria 0.8; an unlisted weapon kicks
+  1.0. `ArenaPlan.kick(weapon)`; ArenaRigs reads it from its stage's plan (with no plan it falls back to 1.0,
+  which keeps the unit tests with no stage working). These are placeholder numbers, per the owner's 21:25 rule (do not tune on numbers),
+  and switching one is a single data value. Render only: no sim state, no RNG, replays and parity untouched.
+  New unit test `test_a_rifle_kicks_harder_than_the_pistol` (test_arena_rigs 7/7). Gotcha: RigFeed.clip_arg
+  is float32 (1.4 reads back as 1.39999998), so compare with assert_almost_eq.
+- Gates at a08445f: lint 13/13 (515 files); scenarios 24/24 (`evidence/arena/scenarios-it6.log`).
+- FRICTION: the full unit suite came back 443/569 with 6 other lanes' Godot processes running at once.
+  The failures are all in tests that write to `user://` (save slots "Could not create directory
+  user://test_save/blocker/auto_a", the replay log "schema or tick rate mismatch", autosave counts). Every
+  worktree shares one app user dir (same project name), so concurrent lanes overwrite each other's
+  tmp files. My diff does not touch that code. Re-run alone below.
