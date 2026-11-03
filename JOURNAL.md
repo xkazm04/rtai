@@ -514,3 +514,10 @@ NEXT (unchanged, in order): 1) owner's 18:00 exe run + frame-verify the light-po
   2) merge d-cast with/before d-slice; autosave MERGE NOTE call sites in quest1_game.gd;
   3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
   4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs.
+
+## Iteration 50 (17:00, STABILIZE, past the freeze)
+- 17:00 read JOURNAL + git log. Code unchanged since 162fbfa (`git diff 162fbfa HEAD -- project
+  tools` is empty), so the exe (exe-built-at.txt = 162fbfa) and the gate evidence match the build.
+- prewarm-light-leak.patch still applies cleanly to BOTH d-slice and d-city HEAD (view_prewarm.gd
+  is byte-identical on the two branches), so REQUEST 3 -> d5-city is a plain `git apply`.
+- 17:00:19 bench.lock taken by d5-city (seconds before my try); waiting on it for the frame check.
