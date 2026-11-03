@@ -960,3 +960,9 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
 - 03:56 TOOL (masters, outside git): tools/package_shot.sh <round> [hero|arena] shoots a scene with EVERY open proposal
   and restores project/ (refuses a dirty tree; checks the restore). h117pkg (from the committed files) = h115se1 at
   32-128 (0 px), so the package frame is reproducible from HEAD in one command.
+- 03:57 FOUND (adoption condition): the package in the D4 TIER (D4 roofs/ground, h117pkg d4 frames) at 32 px/m per
+  class: street 0.53 / 80,69,71, paper 0.32 / 245,220,192, solid ink 0.13 (h106) -> 0.07 (mock 0.12), mid 0.04 ->
+  0.08, L 0.438 -> 0.475; readability the same as the D5 tier. By eye: warm and light like the mock, but the D4
+  roofs' bold outlines and pipes print thin: the D4 art was drawn for look_d4's fattening print. So look_d5_print
+  needs the D5 plates (or heavier D4 roof lines, d4-production) to keep the mock's ink weight; with them (D5 tier)
+  ink is 0.11 vs 0.12. Board evidence/item39_d4tier_package.png. Gap list item 1 amended.
