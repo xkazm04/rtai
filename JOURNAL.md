@@ -1294,5 +1294,9 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
 - Evidence at c186220 (07:06-07:08, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity, selftest
   11/11 + 5/5 goldens worst 0.00, accents identical to d07f1d5, world lock 0.00 % x3). Copied to evidence/pof.
   Seen: the live 48 px/m city frame counted 81 colours vs 75 at d07f1d5 (32 px/m 77 both). Not a golden;
-  the selftest builds World directly (boot.gd is not in it), so I read it as live-crowd variance - not proven.
+  the selftest builds World directly (boot.gd is not in it). CHECKED: across the last 12 evidence commits the
+  48 px/m count flips 75 / 77 / 81 with no code cause (e.g. 5acfb14 81, b9b8781 75, 7a77816 81, f09a541 75)
+  -> pre-existing variance in the live (non-golden) frame. FRICTION: the colour count is not a stable
+  number; the goldens (fixed seed, worst 0.00) are the real gate. Later: pin the live frame's tick or
+  drop the colour count from the summary.
   Session end 07:09: tree clean, no Godot of mine running, no scratch worktrees.
