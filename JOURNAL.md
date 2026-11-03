@@ -707,10 +707,10 @@ NEXT (iteration 10, in order):
   (64 rose from 2: the same mechanism as 03:50, the inverted panel over a lit pool; the budget's own maximum,
   a pass); 0 red. The junction showcase at 48 px/m re-recorded and diffed: 23/23 frames pixel-identical to
   show-final6, so evidence/showcase-hero.png stands (its 32 px/m frames will differ slightly; not re-shot).
-- (03:58) Gates at acb72b3 (`run.mjs --no-bench --allow-dirty`): lint (13), 197 unit, 8 scenarios, parity (1200
+- (03:57) Gates at acb72b3 (`run.mjs --no-bench --allow-dirty`): lint (13), 197 unit, 8 scenarios, parity (1200
   steps, mutation caught at 629), selftest all PASS; JSONs in evidence/ (selftest D4 colours 76 / 73: the
   count moves run to run). evidence/NOIR.md: gates line, the honest comparison gains the street-light note.
-- 03:58 Session close (iteration 10). Last code commit 32e1bc0; gates PASS at acb72b3. This session: street
+- 03:57 Session close (iteration 10). Last code commit 32e1bc0; gates PASS at acb72b3. This session: street
   light (lamp posts -> pools of paper, from the city's own props), headlights (sim cars -> white cones), cars as
   ink masses, a placement bug found and fixed (canvas px vs screen px under canvas_items stretch), the pools moved
   out over the kerb, the showcase staged under a street lamp (`--at`), traffic in the fight tried and not
@@ -720,4 +720,5 @@ NEXT (iteration 10, in order):
   Morning entry points: evidence/NOIR.md, evidence/showcase-hero-street.png + masters lamp-show3/*.mp4,
   evidence/showcase-hero.png + show-final6/*.mp4, evidence/light-street-48.png, evidence/ladder.png.
 NEXT addendum (iteration 10 close): item 5's "pools stop at the kerb" is mostly answered by 32e1bc0; the
-  junction showcase's 32 px/m frames (show-final6) predate it (48 / 64 verified unchanged).
+  junction showcase (show-final6) re-shot at 32 px/m after it (03:58; flash meter in the next line); 48 / 64 verified unchanged.
+  show-final6 noir 32 re-shot at a62cc7c: flash meter 2 per second max; evidence/show-32-final5-vs-final6.png rebuilt from it.
