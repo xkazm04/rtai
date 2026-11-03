@@ -11,6 +11,7 @@ const L_PROP: int = 3
 const L_ROOF: int = 4
 const FIRST_BUILDING: int = 14
 const LAST_BUILDING: int = 23
+const GENERIC_ROOF: int = 65  # the generic roofs, 65-71 (city_textures.json)
 
 var chunk: CityChunk
 var district: float = 1.0
@@ -34,7 +35,8 @@ func _init(cx: int, cy: int) -> void:
 ## One draw command; a shadowed one also gets an offset copy on the shadow layer.
 func add(layer: int, t: int, pos: Vector2, rot: float, shadow: bool = false) -> void:
 	if shadow:
-		var o: float = 0.25 if t >= FIRST_BUILDING and t <= LAST_BUILDING else 0.18
+		var roof: bool = (t >= FIRST_BUILDING and t <= LAST_BUILDING) or t >= GENERIC_ROOF
+		var o: float = 0.25 if roof else 0.18
 		_push(L_SHADOW, t, Vector2(pos.x + o, pos.y + o), rot, 1.0)
 	_push(layer, t, pos, rot, 0.0)
 

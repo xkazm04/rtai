@@ -7,6 +7,12 @@ const PERIOD: int = CityGen.PERIOD
 const T_TRAFFIC_LIGHT: int = 35
 const PLAZA_PROPS: Array[int] = [28, 33, 26, 24, 32, 29, 38]
 const CORNER_ROT: Array[float] = [0.0, 90.0, 270.0, 180.0]
+## Square roofs: the 8 district buildings (14-21) are landmarks, LANDMARK_SHARE of the blocks;
+## the rest take the 7 generic roofs (65-71). Lettered roofs (and the warehouse's 7) stay upright.
+const LANDMARK_SHARE: float = 0.3
+const GENERIC_ROOF: int = 65
+const GENERIC_ROOFS: int = 7
+const LETTERED: Array[int] = [14, 16, 18, 19, 21, 23]
 
 var _kerb: KerbDresser = KerbDresser.new()
 
@@ -37,7 +43,7 @@ func _junction(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	var my: int = t.y % PERIOD
 	var o: Vector2 = origin(t)
 	var c: Vector2 = o + Vector2(4.0, 4.0)
-	var v3: int = int(g.rnd(t.x, t.y, 0, 1) * 3.0)
+	var v3: int = _variant(g, t, mx != 1)
 	if mx == 1 or my == 1:
 		var tex: int = 6 if mx == my else (3 + v3 if mx == 1 else v3)
 		b.add(ChunkBuild.L_GROUND, tex, c, 0.0)
@@ -61,7 +67,7 @@ func _street(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> int:
 	var m: int = (t.y if horiz else t.x) % PERIOD
 	var o: Vector2 = origin(t)
 	var c: Vector2 = o + Vector2(4.0, 4.0)
-	var v3: int = int(g.rnd(t.x, t.y, 0, 1) * 3.0)
+	var v3: int = _variant(g, t, horiz)
 	if m == 1:
 		b.add(ChunkBuild.L_GROUND, v3 if horiz else 3 + v3, c, 0.0)
 		b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_LANE)
@@ -84,7 +90,9 @@ func _street(g: CityGen, b: ChunkBuild, t: Vector2i, horiz: bool) -> int:
 
 func _plaza(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	var o: Vector2 = origin(t)
-	b.add(ChunkBuild.L_GROUND, 13, o + Vector2(4.0, 4.0), 0.0)
+	# a quarter turn per tile breaks the 8 m repeat of the paving's cracks and stains (joints stay)
+	var turn: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 26) * 4.0))
+	b.add(ChunkBuild.L_GROUND, 13, o + Vector2(4.0, 4.0), turn)
 	b.stamp(Rect2(o, Vector2(8, 8)), SimConst.C_WALK)
 	b.chunk.dens_ped[local_index(t)] = int(255 * b.district)
 	for k: int in 2:
@@ -115,13 +123,36 @@ func _block(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 		return SimConst.T_BLOCK
 	if (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3:
 		var tex: int = 22 + int(g.rnd(t.x, t.y, 0, 33) * 2.0)
-		var rot: float = PI if g.rnd(t.x, t.y, 0, 34) < 0.5 else 0.0
+		var rot: float = PI if g.rnd(t.x, t.y, 0, 34) < 0.5 and not LETTERED.has(tex) else 0.0
 		b.add(ChunkBuild.L_ROOF, tex, Vector2(c.x + 4.0, c.y), rot, true)
 	else:
-		var tex: int = 14 + int(g.rnd(t.x, t.y, 0, 33) * 8.0)
+		var tex: int = _square_roof(g, t)
 		var rot: float = deg_to_rad(90.0 * int(g.rnd(t.x, t.y, 0, 34) * 4.0))
+		if LETTERED.has(tex):
+			rot = 0.0
 		b.add(ChunkBuild.L_ROOF, tex, c, rot, true)
 	return SimConst.T_BLOCK
+
+
+## A tile's roof; one that repeats its left or upper neighbour's pick steps to the next generic.
+static func _square_roof(g: CityGen, t: Vector2i) -> int:
+	var tex: int = _roof_pick(g, t)
+	var left: int = _roof_pick(g, t + Vector2i.LEFT)
+	var up: int = _roof_pick(g, t + Vector2i.UP)
+	var step: int = (tex - GENERIC_ROOF + 1) if tex >= GENERIC_ROOF else 0
+	for i: int in 3:
+		if tex != left and tex != up:
+			break
+		tex = GENERIC_ROOF + (step + i) % GENERIC_ROOFS
+	return tex
+
+
+static func _roof_pick(g: CityGen, t: Vector2i) -> int:
+	var r: float = g.rnd(t.x, t.y, 0, 33)
+	if r < LANDMARK_SHARE:
+		return 14 + mini(int(r / LANDMARK_SHARE * 8.0), 7)
+	var k: int = int((r - LANDMARK_SHARE) / (1.0 - LANDMARK_SHARE) * GENERIC_ROOFS)
+	return GENERIC_ROOF + mini(k, GENERIC_ROOFS - 1)
 
 
 static func _edge(mx: int, my: int) -> float:
@@ -149,3 +180,12 @@ static func _long_at(g: CityGen, t: Vector2i) -> bool:
 	if _empty_interior(g, t):
 		return false
 	return (mx == 3 or mx == 5) and g.rnd(t.x, t.y, 0, 32) < 0.3
+
+
+## Road / kerb art variant (0-2): an a-b-c cycle along the street from a random offset
+## per street line, so two neighbouring tiles never share a variant (a random pick
+## repeated a distinctive crack on every third pair of tiles).
+static func _variant(g: CityGen, t: Vector2i, horiz: bool) -> int:
+	var k: int = t.x if horiz else t.y
+	var line: int = t.y if horiz else t.x
+	return posmod(k + int(g.rnd(line, 1 if horiz else 0, 0, 7) * 3.0), 3)
