@@ -145,7 +145,7 @@ data value so the owner's answer is a one-line switch.
   on King's arena floor, the closest template), KingPlan (the robot boss on Rivet's skeleton,
   SIZE_K 1.3: a candidate base for the robot thug until a thug plan exists).
 - Gates at 354ba63: lint 13/13; unit 543/543 at e369543 (+4 new enemy-wave tests green since);
-  scenarios: enemy_pit + enemy_waves green (the full suite not re-run this iteration).
+  scenarios: full suite 21/21 green at 530fb96 (21:58).
 - Housekeeping: gtai-masters/eve/enemy-ai/fr_steep/ (raw frames, ~44 MB) could not be deleted
   (it was the session's cwd); delete it next session.
 
