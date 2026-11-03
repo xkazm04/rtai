@@ -1,5 +1,5 @@
 {
-  "doc": "Seconds of each voiced quest line (the processed Ogg in assets/audio/voice). Quest line timing (quest_rules.json: line_type_cps, line_hold_s, line_max_s) shows a line for 2.2-9 s while the voice runs 4-20 s, so a voiced line outlives its subtitle; the quest lane should take max(text time, voice_s + a beat) from here. Written by tools/audio/voice_lengths.py.",
+  "doc": "Seconds of each voiced quest line (the processed Ogg in assets/audio/voice). Quest line timing (quest_rules.json: line_type_cps, line_hold_s, line_max_s) shows a line for 2.2-9 s while the voice runs 4-20 s, so a voiced line outlives its subtitle. STATUS temp: these are placeholder voices (the PoF voice room replaces them, human-gated); the quest lane should take max(text time, voice_s + a beat) from here. Written by tools/audio/voice_lengths.py.",
   "lines": {
     "brass-gloria": 20.1,
     "brass-someday": 17.1,
@@ -25,5 +25,6 @@
     "rivet-third-person": 11.8,
     "rivet-who-is-this": 12.9
   },
-  "schema": "gtai.voice-lengths/1"
+  "schema": "gtai.voice-lengths/1",
+  "status": "temp"
 }

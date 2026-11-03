@@ -1,5 +1,6 @@
 {
-  "doc": "Quest 1 voice casting: stock ElevenLabs premade voices (no clones, no imitation of real people). Settings tuned per voice bible.",
+  "status": "temp",
+  "doc": "TEMP voices (owner 2026-11-03: real voice acting goes through the PoF Voice room, human gated; these 23 lines only keep the slice from being silent). Quest 1 voice casting: stock ElevenLabs premade voices (no clones, no imitation of real people). Settings tuned per voice bible.",
   "model": "eleven_multilingual_v2",
   "cast": {
     "rivet": {"voice_id": "TX3LPaxmHKxFdv7VOQHJ", "voice": "Liam", "stability": 0.28, "style": 0.55, "similarity_boost": 0.75, "speed": 1.08, "note": "frightened, fast, self-correcting"},

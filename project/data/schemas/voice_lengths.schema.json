@@ -16,10 +16,17 @@
     },
     "schema": {
       "const": "gtai.voice-lengths/1"
+    },
+    "status": {
+      "enum": [
+        "temp",
+        "final"
+      ]
     }
   },
   "required": [
     "schema",
+    "status",
     "doc",
     "lines"
   ],
