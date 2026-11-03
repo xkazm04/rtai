@@ -40,7 +40,13 @@ const YIELD_SHOTS: Dictionary[int, String] = {
 	12: "yield-cars-coming",
 	75: "yield-braking",
 	180: "yield-queued",
+	300: "yield-t300",
+	360: "yield-t360",
 	420: "yield-still-queued",
+	480: "yield-t480",
+	540: "yield-t540",
+	600: "yield-t600",
+	720: "yield-t720",
 }
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
 

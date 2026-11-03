@@ -6,6 +6,9 @@ extends RefCounted
 ## 26 m ahead. Route: the fixed input plan (enter at tick 30).
 
 const LANE_TILES: int = 10
+## The yield scene parks the sedan this far into the straight (mid-block, as in
+## scenario_vehicle_yield) and stands Rivet on the kerb, so the cars behind can pass it.
+const PARK_AHEAD_M: float = 24.0
 
 ## --scene=yield: three sim cars come up behind the parked sedan (traffic yields to service cars).
 static var chasers: bool = false
@@ -111,7 +114,9 @@ static func _stage(
 	city: CitySystem, svc: VehicleService, vw: CityVehicleWorld, carnage: bool
 ) -> void:
 	var lane: Vector2 = east_lane(city)
-	vw.set_focus(lane + Vector2(0.5, -2.2), false)
+	if chasers:
+		lane += Vector2(PARK_AHEAD_M, 0.0)
+	vw.set_focus(lane + Vector2(0.5, -6.5 if chasers else -2.2), false)
 	if carnage:
 		for c: Vector3 in [Vector3(0, 3, 0), Vector3(40, 0, 0), Vector3(47, 5, 0)]:
 			var at: Vector2 = lane + Vector2(c.x, 0)
