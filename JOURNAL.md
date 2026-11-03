@@ -219,3 +219,23 @@ NEXT (iteration 3):
   knobs become live through `tune()`. Re-bless the arena replays then (a new RNG stream).
 - REQUEST 5 -> rivet-motion, ghost-powers: same route for your knobs (`tune()` in a hook) and
   your scripted dev scenes; the metal dummy kind is `"kind": "metal"` (next commit).
+- 22:34 merge rehearsal with REQUEST 3 applied to a copy of enemy-ai.json
+  (`gtai-masters/eve/arena/merge-rehearsal/fixed/`, `report-fixed.json`): 10 stations, 0 problems,
+  the hook builds. Notes in `merge-rehearsal/README.md`.
+- Shared files touched this iteration: none (arena_station.schema.json is the arena's).
+- answers.json re-read 22:34: nothing new for arena.
+
+NEXT (iteration 4 / the night run from the merged main):
+1. Re-read answers.json. On the merged tree run
+   `godot --headless --path project -s res://dev/arena/stations_check.gd -- --out=build/evidence/arena-stations.json`
+   (default folder = every lane's file). Exit must be 0: fix or REQUEST whatever it lists, then the
+   arena scenarios (boot, range, course, pit, city) with every lane's station loaded.
+2. The vertical sample in the arena: every lane's hook in, one 20-40 s clip at 32 px/m with
+   `--clean` (pistol + claw combo against the cop and robot rigs, the pit cover, a power on the pad).
+3. Camera lead (48 px/m off-screen finding, arena-2): build in the arena view only if no lane owns
+   it after the merge; show it as a clip.
+4. Dummies read as dummies (cardboard target art; image_gen allowed with a provenance line); the
+   metal dummy needs its own look (a steel plate) once rivet-motion uses `"kind": "metal"`.
+5. Powers pad with VehicleSystem in ArenaSession (ghost-powers' gearbox_pad spawns `car`; the
+   arena does not spawn cars yet: ArenaStage only places `target`/`metal`).
+6. Low cover stopping shots: ask only with a full-chain clip (ArenaWalls.SOLID is the one value).
