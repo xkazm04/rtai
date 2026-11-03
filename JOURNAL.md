@@ -374,3 +374,30 @@ NEXT (night run; supersedes the iteration 4 list's items 1, the rest stand):
 - GATES at the end of iteration 5 (d4f26ea): lint 13/13; unit 560/560 (run_unit.mjs, 23:14);
   scenarios 21/21 (full suite, 23:15, exit 0). No sim change this iteration (dev + evidence only),
   so replay and parity goldens are untouched. Godot processes from this session all exited.
+
+## Iteration 6 (23:16-23:30), BUILD: the seeds become fights (NEXT item 3)
+- 23:16 answers.json re-read: nothing new for enemy-ai (enemy-ai-1 = A placeholder stands).
+- a6851c8: PitDummy.read_salt (default 0 = the historic read pattern, so scenario_enemy_waves and
+  every clip are unchanged); aim_lead_ab.gd sets read_salt = seed (--salt=0 restores the old run).
+  Now 20 seeds are 20 fights: which tells the dummy reads differs per seed, not only the spread.
+- MILESTONE 3d74df6, CORRECTION of the iteration 5 finding (n=20 real fights now). Cop hit rate,
+  damage per fight, lead 0 -> 0.8: read 0 = 43.7 % -> 43.7 %, 69.8 -> 69.8 (unchanged, as
+  before); read 0.7 = 10.7 % -> 11.4 %, 13.6 -> 15.9 (iteration 5 said 6.9 -> 28.4: that gap was
+  one staging's luck, the claw pull-in effect is mostly not real); read 1 = 0.4 % -> 1.7 %, 0.3 ->
+  2.7. So the lead is a small dial (+2 damage per 25 s fight for a 70 % reader); the tell decides
+  the hit, and the pressure-at-range question is accuracy and max_shooters, not the lead.
+  evidence/enemy-ai/aim_lead_ab_salted{,_read0,_read1}.json. Clips i/j stay as the look of the
+  chain, but their damage numbers are n=1 and must not be quoted as the effect of the lead.
+- FRICTION: --check-only -s on a script that uses the Log autoload reports "Identifier not found:
+  Log" (no autoloads in check-only); the real headless run is the check for those files.
+- GATES (23:19): lint 13/13; unit 560/560; scenarios 21/21 (exit 0). Sim untouched (dev knob
+  with default 0), replay and parity goldens untouched.
+
+NEXT (night run; supersedes iteration 5 items 1 and 3, the rest stand):
+1. Re-read answers.json. ASK on the lead only once Rivet fights with gunplay's pistol and
+   rivet-motion's claw (21:25 bar), and quote the salted numbers, not clip i/j damage.
+2. Pressure at range: add --acc (scale the accuracy-by-range curve) and --shooters
+   (squad.max_shooters) knobs to aim_lead_ab.gd, sweep them salted at read 0.7, pick the curve
+   against pit_waves' targets, then one clip per candidate.
+3. Iteration 4 NEXT items 2-7 (ArenaHook, real weapons, robot plan, flinch duck, city block
+   clip, robot hit tint note).
