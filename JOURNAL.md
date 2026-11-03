@@ -825,3 +825,17 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
 - 03:11 FINAL gates (session close): evidence tool (--no-parity --no-bench) ALL PASS at 3eb05cc (lint 13/13 over
   190 files, unit 149/0, scenarios 8/0, selftest ok); 64 untracked evidence PNGs moved aside and restored; tree clean.
   Session ends here (cap 03:42). NEXT: the final NEXT above (1-26) stands; nothing is half-done or uncommitted.
+
+## Iteration 7 (2026-11-03, BUILD, 03:12 -> ), no image budget left (50/50): shader proposals, compositing
+- 03:12 read JOURNAL, git log, evidence README gap list. Plan: complete the look_d5_print proposal (its only pan cost
+  was look_d4's screen-locked grain), then the showcase's remaining in-scope gaps.
+- 03:15 MILESTONE (56920ab): look_d5_print's 5% paper grain hashed on world pixels (hash(floor(w) + (17,5)), offset
+  so it does not correlate with the world stipple) instead of FRAGCOORD. Same-commit A/B (the iteration-6 pan11thin
+  rounds were shot at dark_soft 0.04, so a fresh control was shot with the line temporarily put back, file restored
+  from a copy, diff checked): 48 px/m car pan, 40 ticks, D4+D5 tier: junction crop pan12ctl 0.00814 -> pan12thin
+  0.00049 (-94%; what remains is Rivet's idle, the change map is otherwise white); mural roof crop (9.7,-8.5)
+  pan12ctlR 0.01075 -> pan12thinR 0.00000. Shipped look_d4 for scale: 0.00739 / 0.00975 (pan10 / pan11R). Still
+  frame tick 20: mean L identical to 4 decimals (0.4879, 0.6448), 0 px differ by > 0.06. So the proposal print now
+  swims LESS than look_d4 on every crop instead of +12%. Default frames untouched (the shader loads only with
+  D5_PRINT=thin). Board evidence/item32_print_world_grain.png; shader README row; ladder +1 row (label first written
+  as 03:25, ahead of the clock: row cropped and re-added as 03:15). Metric script masters work/i7/pan_cls.py.
