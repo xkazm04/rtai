@@ -20,6 +20,7 @@ var plant_radius_zero: bool = false
 var plant_body_off: bool = false
 var plant_no_tackle: bool = false
 var plant_down_zero: bool = false
+var plant_no_run_in: bool = false
 
 
 ## Stamps the city and finds a sidewalk band (rows y-1..y+1 walkable for `length` m east).
@@ -46,6 +47,12 @@ func stand(at: Vector2, kind: int = SimConst.K_PED) -> int:
 	return sim.spawn(PackedFloat64Array(spec + [0.0, 0]))
 
 
+## A ped walking along `dir` at `mps` (promoted); returns the slot.
+func walker(at: Vector2, dir: Vector2, mps: float) -> int:
+	var spec: Array = [SimConst.K_PED, at.x, at.y, dir.x, dir.y, 2, SimConst.F_PROMOTED, mps]
+	return sim.spawn(PackedFloat64Array(spec + [0.0, 0]))
+
+
 ## One tick: Rivet wants to move by vel * dt from where he ended the last tick.
 func tick(vel: Vector2) -> void:
 	var spec: PackedFloat64Array = body.spec(body.pos + vel * SimClock.TICK_DT)
@@ -57,6 +64,8 @@ func tick(vel: Vector2) -> void:
 		spec[SimConst.BD_TACKLE] = RivetBody.NEVER_MPS
 	if plant_down_zero:
 		spec[SimConst.BD_DOWN] = 0.0
+	if plant_no_run_in:
+		spec[SimConst.BD_RUN_IN] = 0.0
 	sim.set_body(spec)
 	sim.step(SimClock.TICK_DT, body.pos.x, body.pos.y, body.pos.x, body.pos.y)
 	body.take(sim.body_result())
