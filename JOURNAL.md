@@ -295,12 +295,23 @@ NEXT (iteration 4, depth on the pistol chain, then ASK):
 - FRAMES: frames.json top 5 are this iteration (dodge tight 32, 48 px/m, the dodge pass still,
   the locked tell still, dodge with the full cone).
 
+- MILESTONE 5068f67 (NEXT 2 started, measured): `GuardTell.one_slot` (off by default, an A/B
+  switch): one attack slot, so only one contractor tells or bursts at a time. Armored dock fight,
+  tight burst, enemy rounds landed: no slot standing 60/60 / strafing 17/48; one slot standing
+  41/41 / strafing 9/36 (fewer rounds: the pace drops by a quarter). test_guard_tell 4/4 (never two
+  busy at once, both still get turns). Unit full run at 8bb66ea: 567 passed, 0 failed
+  (evidence/unit-it4.log). FRICTION: the earlier full GUT run "passed 564" while test_guard_tell
+  had a parse error: GUT's CLI skipped the broken script silently; run_unit.mjs counts it. Always
+  read the per-file count for a new test.
+- Clip (one slot + dodge): gtai-masters/eve/gunplay/pistol_fight_one_slot/ if the background
+  capture finished before the stop (see run.log there).
+
 NEXT (iteration 5):
 1. Apply gunplay-3 when answered (one value: weapons.json enemy_fire.lock_spread_scale; B = 1.0).
-2. Crossfire: with 2-3 gunners the strafe away from one line walks into another (17/48 still land
-   with the tight burst). Options to measure, not tune blind: stagger the tells (a token so only
-   one gunner locks at a time, the encounter-balance "attack slots" pattern), or let the scripted
-   dodger pick the side away from the other live lines. Measure landed/48 for each.
+2. Crossfire: one_slot is built and measured (9/36 vs 17/48). Decide its default with a side-by-
+   side clip (pistol_fight_one_slot vs pistol_fight_dodge_s0.3) as one ASK, or give the slot
+   count to enemy-ai's encounter director (attack slots belong to enemy-ai; GuardTell only
+   honours them). Also: let the scripted dodger pick the side away from other live lines.
 3. Rivet's own side of the dodge: the dodge is a scripted strafe through the bot's intent; a real
    player strafes with the move stick while aiming (twin-stick). Capture a TickInput-driven dodge
    (stage.pilot with a scripted TickInput) so the clip shows the real mover's acceleration.
