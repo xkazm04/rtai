@@ -1,0 +1,6 @@
+REQUEST 6 -> slice-play (owner of data/tables/input_actions.json): add this one row to "rows" (sorted keys, bit -1 = a UI action with no TickInput bit).
+CarRadio (features/audio/car_radio.gd) already listens for the action while Rivet drives; with no row it does nothing (no error).
+
+    {"bit": -1, "id": "radio_next", "joy_axes": [], "joy_buttons": [5], "keys": ["R"], "mouse": []}
+
+R and joypad button 5 (right shoulder) are unused by the other rows (W A S D arrows Space E F Escape P, buttons 0 1 2 3 6 11-14).

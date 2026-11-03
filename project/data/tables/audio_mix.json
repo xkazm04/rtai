@@ -1,0 +1,69 @@
+{
+  "attenuation": 1.6,
+  "buses": [
+    {
+      "id": "sfx",
+      "parent": "",
+      "volume_db": 3
+    },
+    {
+      "id": "voice",
+      "parent": "",
+      "volume_db": -2
+    },
+    {
+      "id": "music",
+      "parent": "",
+      "volume_db": -8
+    },
+    {
+      "id": "ui",
+      "parent": "",
+      "volume_db": -4
+    },
+    {
+      "id": "sfx_far",
+      "parent": "sfx",
+      "volume_db": 0
+    }
+  ],
+  "doc": "The mix as data (features/audio/audio_buses.gd builds the buses at boot, no default_bus_layout.tres). buses: id, parent bus id ('' = Master), volume_db. voice_cap_per_frame: most new positional voices started in one rendered frame (a riot frame can ask for dozens). pool_size: AudioStreamPlayer2D voices. m_to_px: audio-space pixels per metre (cue max_m scales by it). attenuation: AudioStreamPlayer2D attenuation exponent. panning_strength: 0..1 stereo spread for the top-down camera. duck: while a voice line plays, these buses drop by duck_db over duck_attack_s and recover over duck_release_s (rendered frames, not ticks). loudness: the targets the files were normalised to (tools/audio/process.py). footstep_speed_mps: Rivet's speed above which footsteps play; footstep_stride_m: metres walked per step. servo_chance: odds a step also gets Rivet's servo whine. far_m / far_lowpass_hz: positional sfx cues heard from farther than far_m metres play on the `sfx_far` bus (a child of sfx with a low-pass at far_lowpass_hz): distance muffles. riot_bed_*: the crowd roar bed swells from quiet_db to loud_db as the shots, deaths and body hits heard per second reach full_rate (smoothed: rise_s up, fall_s down). engine_*: the engine bed's pitch scale runs from engine_pitch_idle at rest to engine_pitch_top at engine_top_mps (the fastest car's vmax), speed smoothed by engine_smooth per rendered frame.",
+  "duck": {
+    "buses": [
+      "music",
+      "sfx"
+    ],
+    "duck_attack_s": 0.12,
+    "duck_db": {
+      "music": -9,
+      "sfx": -3
+    },
+    "duck_release_s": 0.6
+  },
+  "engine_pitch_idle": 0.75,
+  "engine_pitch_top": 1.6,
+  "engine_smooth": 0.12,
+  "engine_top_mps": 26,
+  "far_lowpass_hz": 2500,
+  "far_m": 22,
+  "footstep_speed_mps": 0.6,
+  "footstep_stride_m": 1.15,
+  "loudness": {
+    "loop_peak_db": -6,
+    "sfx_peak_db": -3,
+    "voice_lufs": -18,
+    "voice_true_peak_db": -2
+  },
+  "m_to_px": 64,
+  "master_limiter_db": -1,
+  "panning_strength": 1,
+  "pool_size": 24,
+  "riot_bed_fall_s": 4,
+  "riot_bed_full_rate": 6,
+  "riot_bed_loud_db": 0,
+  "riot_bed_quiet_db": -18,
+  "riot_bed_rise_s": 1.5,
+  "schema": "gtai.audio-mix/1",
+  "servo_chance": 0.12,
+  "voice_cap_per_frame": 4
+}

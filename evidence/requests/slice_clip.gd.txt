@@ -1,0 +1,67 @@
+extends Node
+## SCRATCH (audio lane, not in d-audio: it needs the slice's classes). The real slice scene
+## (boot/quest1.tscn = Quest1Game) with StageAudio attached by the REQUEST 3 patch, Start pressed,
+## quest 1 driven through input events (CollectCallInputDriver), one tick per rendered frame.
+## godot --rendering-driver d3d12 --path project --write-movie f.avi --fixed-fps 60
+##   res://dev/audio/slice_clip.tscn -- --seconds=60 --report=<file>
+
+var _game: Quest1Game
+var _driver: CollectCallInputDriver = null
+var _frames: int = 60 * 60
+var _n: int = 0
+var _report: String = ""
+var _beats: Array[String] = []
+
+
+func _ready() -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--seconds="):
+			_frames = arg.get_slice("=", 1).to_int() * 60
+		elif arg.begins_with("--report="):
+			_report = arg.get_slice("=", 1)
+	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
+	_game = scene.instantiate() as Quest1Game
+	_game.save_path = ""
+	_game.settings_path = ""
+	add_child(_game)
+	for i: int in 3:
+		await get_tree().process_frame
+	_game.card.start_button.pressed.emit()
+	_game.session.world.set_process(false)
+	_game.session.live.viewport = null
+	_driver = CollectCallInputDriver.new(_game.session.stage, _game.session.system)
+	for i: int in 3:
+		await get_tree().process_frame
+	set_process(true)
+
+
+func _process(_delta: float) -> void:
+	if _driver == null or _game.session == null:
+		return
+	_driver.act()
+	_game.session.step()
+	var b: String = _game.session.beat_id()
+	if _beats.is_empty() or _beats[-1] != b:
+		_beats.append(b)
+	_n += 1
+	if _n >= _frames or _driver.done():
+		_done()
+
+
+func _done() -> void:
+	var a: StageAudio = _game._audio
+	var out: Dictionary = {"frames": _n, "tick": _game.session.tick(), "beats": _beats}
+	if a != null:
+		out["played"] = a.service.played
+		out["dropped"] = a.service.dropped
+		out["voice_lines"] = a.voice.played
+		out["voice_drops"] = a.service.voice.drops
+		out["missing"] = a.service.bank.missing
+	printerr("slice_clip: %s" % JSON.stringify(out))
+	if _report != "":
+		var f: FileAccess = FileAccess.open(_report, FileAccess.WRITE)
+		if f != null:
+			@warning_ignore("return_value_discarded")
+			f.store_string(JSON.stringify(out, "  ", true))
+	_driver.release()
+	get_tree().quit(0)

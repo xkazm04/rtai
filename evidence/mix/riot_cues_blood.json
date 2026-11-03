@@ -1,0 +1,45 @@
+{
+  "beds_db": {
+    "boss_loop": -60.0,
+    "city_ambience": -22.0,
+    "crowd_roar": -20.6602783203125
+  },
+  "cops_near": 100,
+  "cost_us": {
+    "service_frame_max_us": 17852,
+    "service_frame_mean_us": 96,
+    "sink_calls": 2292,
+    "sink_max_us": 25314,
+    "sink_mean_us": 109
+  },
+  "dropped": {
+    "blood_splat:voices": 44,
+    "death:cooldown": 75,
+    "death:far": 1,
+    "death:voices": 178,
+    "projectile_end:cooldown": 172,
+    "projectile_end:far": 131,
+    "projectile_end:voices": 528,
+    "shot:cooldown": 206,
+    "shot:voices": 686
+  },
+  "engine_pitch_per_second": [],
+  "frames": 1500,
+  "fx_fired": {
+    "death": 342,
+    "player_hit": 0,
+    "player_hit_robo_tazer": 0,
+    "projectile_end": 948,
+    "rivet_kill": 0,
+    "shot": 1002
+  },
+  "max_projectiles": 77,
+  "played": {
+    "blood_splat": 44,
+    "death": 88,
+    "footstep": 38,
+    "projectile_end": 117,
+    "servo": 2,
+    "shot": 110
+  }
+}

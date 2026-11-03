@@ -1,0 +1,20 @@
+{
+  "beat": "opening",
+  "dropped": {},
+  "frames": 2700,
+  "missing": [],
+  "played": {
+    "footstep": 32,
+    "servo": 1
+  },
+  "voice_drops": 2,
+  "voice_lines": [
+    "rivet-line-stopped",
+    "rivet-my-hands",
+    "rivet-third-person",
+    "patch-collect-call",
+    "rivet-who-is-this",
+    "fax-slow-motion",
+    "fax-statistically"
+  ]
+}

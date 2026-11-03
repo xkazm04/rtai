@@ -1,0 +1,30 @@
+{
+  "doc": "Seconds of each voiced quest line (the processed Ogg in assets/audio/voice). Quest line timing (quest_rules.json: line_type_cps, line_hold_s, line_max_s) shows a line for 2.2-9 s while the voice runs 4-20 s, so a voiced line outlives its subtitle. STATUS temp: these are placeholder voices (the PoF voice room replaces them, human-gated); the quest lane should take max(text time, voice_s + a beat) from here. Written by tools/audio/voice_lengths.py.",
+  "lines": {
+    "brass-gloria": 20.1,
+    "brass-someday": 17.1,
+    "fax-confirm-receipt": 13.8,
+    "fax-dock-brief": 18.8,
+    "fax-slow-motion": 12.5,
+    "fax-statistically": 16.4,
+    "guard-who-do-we-call": 4,
+    "juno-load-bearing": 11.5,
+    "juno-real-name": 10.7,
+    "kilohm-accents": 14.5,
+    "kilohm-come-to-me": 10.4,
+    "mertz-appliances": 7.7,
+    "mertz-inventory": 8.7,
+    "patch-collect-call": 13.4,
+    "rivet-buildings-talk": 11,
+    "rivet-everybody-screamed": 6.7,
+    "rivet-feels-good": 9.5,
+    "rivet-i-have-a-job": 10.5,
+    "rivet-line-stopped": 14,
+    "rivet-my-hands": 9.5,
+    "rivet-sorry-not-sorry": 6.6,
+    "rivet-third-person": 11.8,
+    "rivet-who-is-this": 12.3
+  },
+  "schema": "gtai.voice-lengths/1",
+  "status": "temp"
+}

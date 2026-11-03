@@ -1,0 +1,111 @@
+{
+  "$id": "gtai.audio-cues/1",
+  "additionalProperties": false,
+  "properties": {
+    "cues": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bus": {
+            "enum": [
+              "sfx",
+              "voice",
+              "music",
+              "ui"
+            ]
+          },
+          "cooldown_ticks": {
+            "maximum": 3600,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "gain_db": {
+            "maximum": 12,
+            "minimum": -60,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "layer": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
+          "loop": {
+            "type": "boolean"
+          },
+          "max_m": {
+            "maximum": 300,
+            "minimum": 0,
+            "type": "number"
+          },
+          "max_voices": {
+            "maximum": 16,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "pitch": {
+            "maximum": 4,
+            "minimum": 0.25,
+            "type": "number"
+          },
+          "pitch_jitter": {
+            "maximum": 0.5,
+            "minimum": 0,
+            "type": "number"
+          },
+          "priority": {
+            "maximum": 9,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "sound": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "takes": {
+            "maximum": 9,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "doc",
+          "sound",
+          "takes",
+          "bus",
+          "gain_db",
+          "pitch",
+          "pitch_jitter",
+          "max_m",
+          "cooldown_ticks",
+          "max_voices",
+          "priority",
+          "loop"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.audio-cues/1"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "cues"
+  ],
+  "type": "object"
+}

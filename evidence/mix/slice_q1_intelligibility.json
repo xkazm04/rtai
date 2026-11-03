@@ -1,0 +1,86 @@
+{
+ "clip": "evidence/mix/slice_q1_audio.mp4",
+ "transcript": " Okay. Okay. Okay. Okay. The line stopped. The line stopped and I didn't. I stopped a cop with another cop through another cop. Fuck. Fuck. Stay in the dumpster, rivet. Dumpsters are where you think. Hands. Stop shaking. Those are my hands. Why is there whispering? Who's whispering? There's nobody in the dumpster. There's barely me in the dumpster. Good evening I watched you feed two cops into a stamping press on the six o'clock news. They ran it twice, the second time in slow motion. Do you know how hard it is to get the fucking networks to slow mo a robot? I run the underground, you need a roof, I have a roof, I need a hit man, and you're statistically a hit man now. One rule, you never come to my house with sirens on you, patch nose, patch always nose, overpass, old copy Okay, it stopped. Don't read into that. I'm a professional. Juno isn't my real, one goddamn funeral. Bring her back. If you lose Gloria, I lose you. They're not voices. It's the building. Old buildings talk, right? Pipes, rats, ghosts, and printers, right? Somebody say right, not you. He's got a nail gun is that even legal who do we call oh shit we are who you call sorry sorry not sorry I don property, son. I signed for every one of these. 40 crates. You make it 39, and that comes out of my pension. Hold still, this is a product demonstration, says right here on the box it's rated",
+ "lines": [
+  {
+   "id": "rivet-line-stopped",
+   "match": 1.0
+  },
+  {
+   "id": "rivet-my-hands",
+   "match": 1.0
+  },
+  {
+   "id": "rivet-third-person",
+   "match": 0.13
+  },
+  {
+   "id": "patch-collect-call",
+   "match": 0.16
+  },
+  {
+   "id": "rivet-who-is-this",
+   "match": 0.21
+  },
+  {
+   "id": "fax-slow-motion",
+   "match": 0.98
+  },
+  {
+   "id": "fax-statistically",
+   "match": 0.84
+  },
+  {
+   "id": "juno-load-bearing",
+   "match": 0.13
+  },
+  {
+   "id": "juno-real-name",
+   "match": 0.52
+  },
+  {
+   "id": "fax-dock-brief",
+   "match": 0.14
+  },
+  {
+   "id": "brass-gloria",
+   "match": 0.39
+  },
+  {
+   "id": "brass-someday",
+   "match": 0.16
+  },
+  {
+   "id": "kilohm-accents",
+   "match": 0.13
+  },
+  {
+   "id": "rivet-buildings-talk",
+   "match": 0.95
+  },
+  {
+   "id": "kilohm-come-to-me",
+   "match": 0.21
+  },
+  {
+   "id": "guard-who-do-we-call",
+   "match": 1.0
+  },
+  {
+   "id": "rivet-sorry-not-sorry",
+   "match": 0.36
+  },
+  {
+   "id": "mertz-inventory",
+   "match": 0.78
+  },
+  {
+   "id": "mertz-appliances",
+   "match": 0.79
+  },
+  {
+   "id": "rivet-everybody-screamed",
+   "match": 0.21
+  }
+ ]
+}

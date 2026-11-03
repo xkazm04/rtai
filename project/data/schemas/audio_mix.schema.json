@@ -1,0 +1,208 @@
+{
+  "$id": "gtai.audio-mix/1",
+  "additionalProperties": false,
+  "properties": {
+    "attenuation": {
+      "maximum": 8,
+      "minimum": 0.1,
+      "type": "number"
+    },
+    "buses": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "volume_db": {
+            "maximum": 12,
+            "minimum": -80,
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "parent",
+          "volume_db"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "duck": {
+      "additionalProperties": false,
+      "properties": {
+        "buses": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "duck_attack_s": {
+          "maximum": 5,
+          "minimum": 0.01,
+          "type": "number"
+        },
+        "duck_db": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        },
+        "duck_release_s": {
+          "maximum": 10,
+          "minimum": 0.01,
+          "type": "number"
+        }
+      },
+      "required": [
+        "buses",
+        "duck_db",
+        "duck_attack_s",
+        "duck_release_s"
+      ],
+      "type": "object"
+    },
+    "engine_pitch_idle": {
+      "maximum": 4,
+      "minimum": 0.25,
+      "type": "number"
+    },
+    "engine_pitch_top": {
+      "maximum": 4,
+      "minimum": 0.25,
+      "type": "number"
+    },
+    "engine_smooth": {
+      "maximum": 1,
+      "minimum": 0.01,
+      "type": "number"
+    },
+    "engine_top_mps": {
+      "maximum": 200,
+      "minimum": 1,
+      "type": "number"
+    },
+    "far_lowpass_hz": {
+      "maximum": 20000,
+      "minimum": 200,
+      "type": "number"
+    },
+    "far_m": {
+      "maximum": 300,
+      "minimum": 1,
+      "type": "number"
+    },
+    "footstep_speed_mps": {
+      "maximum": 10,
+      "minimum": 0,
+      "type": "number"
+    },
+    "footstep_stride_m": {
+      "maximum": 3,
+      "minimum": 0.3,
+      "type": "number"
+    },
+    "loudness": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "type": "object"
+    },
+    "m_to_px": {
+      "maximum": 128,
+      "minimum": 1,
+      "type": "number"
+    },
+    "master_limiter_db": {
+      "maximum": 0,
+      "minimum": -20,
+      "type": "number"
+    },
+    "panning_strength": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "pool_size": {
+      "maximum": 64,
+      "minimum": 4,
+      "type": "integer"
+    },
+    "riot_bed_fall_s": {
+      "maximum": 60,
+      "minimum": 0.1,
+      "type": "number"
+    },
+    "riot_bed_full_rate": {
+      "maximum": 60,
+      "minimum": 0.5,
+      "type": "number"
+    },
+    "riot_bed_loud_db": {
+      "maximum": 12,
+      "minimum": -60,
+      "type": "number"
+    },
+    "riot_bed_quiet_db": {
+      "maximum": 12,
+      "minimum": -60,
+      "type": "number"
+    },
+    "riot_bed_rise_s": {
+      "maximum": 30,
+      "minimum": 0.1,
+      "type": "number"
+    },
+    "schema": {
+      "const": "gtai.audio-mix/1"
+    },
+    "servo_chance": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "voice_cap_per_frame": {
+      "maximum": 32,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "buses",
+    "voice_cap_per_frame",
+    "pool_size",
+    "m_to_px",
+    "attenuation",
+    "panning_strength",
+    "duck",
+    "loudness",
+    "footstep_speed_mps",
+    "footstep_stride_m",
+    "servo_chance",
+    "master_limiter_db",
+    "far_m",
+    "far_lowpass_hz",
+    "riot_bed_full_rate",
+    "riot_bed_quiet_db",
+    "riot_bed_loud_db",
+    "riot_bed_rise_s",
+    "riot_bed_fall_s",
+    "engine_pitch_idle",
+    "engine_pitch_top",
+    "engine_top_mps",
+    "engine_smooth"
+  ],
+  "type": "object"
+}

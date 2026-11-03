@@ -1,0 +1,73 @@
+extends Node
+## SCRATCH (audio lane; needs the vehicles lane's classes, so it is not in d-audio). The vehicles
+## lane's carnage route (VehicleFrameSetup: hijack a taxi, ram two cars, reverse, wreck) on the real
+## World + CityView + VehicleService, with WorldAudio-style sound hung on it. Record:
+##   godot --rendering-driver d3d12 --path project --write-movie f.avi --fixed-fps 60
+##     res://dev/audio/audio_vehicle.tscn -- --seconds=20 --report=<file>
+const MASTER_SEED: int = 31
+
+var _world: World
+var _svc: VehicleService
+var _city: CitySystem
+var _audio: AudioService
+var _frames: int = 20 * 60
+var _report: String = ""
+var _n: int = 0
+var _pitch: Array[float] = []
+var _speed: Array[float] = []
+var _cues: Array[String] = []
+var _ready_go: bool = false
+var _route: bool = false
+
+
+func _ready() -> void:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg == "--route":
+			_route = true
+		elif arg.begins_with("--seconds="):
+			_frames = arg.get_slice("=", 1).to_int() * 60
+		elif arg.begins_with("--report="):
+			_report = arg.get_slice("=", 1)
+	_world = World.new()
+	_world.start(Events, Data, MASTER_SEED)
+	var w: Array[Object] = VehicleFrameSetup.build(_world, self, &"", not _route)
+	_svc = w[0]
+	var characters: CityCharacters = w[1]
+	var view: CityView = w[2]
+	_city = view._city
+	_world.set_process(false)
+	_world.loop().set_input(VehicleFrameSetup.Route.new() if _route else VehicleFrameSetup.Carnage.new())
+	add_child(_world)
+	_audio = WorldAudio.attach(_world, _world.context(), view, _city)
+	_audio.loops.set_on(&"crowd_roar", false)
+	await characters.bake()
+	await view.prewarm()
+	_world.set_process(true)
+	_ready_go = true
+
+
+func _process(_delta: float) -> void:
+	if not _ready_go:
+		return
+	_n += 1
+	if _n % 60 == 0 and _audio != null:
+		_pitch.append(snappedf(_audio.loops.pitch(&"engine_loop"), 0.01))
+		var d: VehicleBody = _svc.driving
+		_speed.append(snappedf(d.speed(), 0.1) if d != null else -1.0)
+	if _n >= _frames:
+		var out: Dictionary = {
+			"frames": _n,
+			"played": _audio.played,
+			"dropped": _audio.dropped,
+			"vehicle_cues": _svc.cues.fired,
+			"engine_pitch_per_second": _pitch,
+			"car_speed_mps_per_second": _speed,
+			"missing": _audio.bank.missing,
+		}
+		printerr("audio_vehicle: %s" % JSON.stringify(out))
+		if _report != "":
+			var f: FileAccess = FileAccess.open(_report, FileAccess.WRITE)
+			if f != null:
+				@warning_ignore("return_value_discarded")
+				f.store_string(JSON.stringify(out, "  ", true))
+		get_tree().quit(0)

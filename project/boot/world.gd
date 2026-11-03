@@ -68,6 +68,8 @@ func _register_features(with_views: bool) -> void:
 		var rivet_px: Callable = func() -> Vector2: return city.target * SimConst.PX_PER_M
 		view.fx_triggers.player_id = CityCharacters.RIVET_ID
 		view.fx_triggers.listen(Events, _ctx.clock, rivet_px)
+		@warning_ignore("return_value_discarded")
+		WorldAudio.attach(self, _ctx, view, city)
 		var characters: CityCharacters = CityCharacters.new(city, view, _ctx)
 		vworld.characters = characters
 		view.actor_layer().add_child(CityVehicleWorld.make_view(vehicles, view))

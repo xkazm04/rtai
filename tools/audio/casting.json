@@ -1,0 +1,15 @@
+{
+  "status": "temp",
+  "doc": "TEMP voices (owner 2026-11-03: real voice acting goes through the PoF Voice room, human gated; these 23 lines only keep the slice from being silent). Quest 1 voice casting: stock ElevenLabs premade voices (no clones, no imitation of real people). Settings tuned per voice bible.",
+  "model": "eleven_multilingual_v2",
+  "cast": {
+    "rivet": {"voice_id": "TX3LPaxmHKxFdv7VOQHJ", "voice": "Liam", "stability": 0.28, "style": 0.55, "similarity_boost": 0.75, "speed": 1.08, "note": "frightened, fast, self-correcting"},
+    "patch": {"voice_id": "cgSgspJ2msm6clMCkdW9", "voice": "Jessica", "stability": 0.7, "style": 0.35, "similarity_boost": 0.8, "speed": 1.0, "note": "relentlessly bright switchboard chirp; phone filter applied in post"},
+    "don-fax": {"voice_id": "CwhRBWXzGAHq8TQ4Fs17", "voice": "Roger", "stability": 0.5, "style": 0.4, "similarity_boost": 0.8, "speed": 0.98, "note": "laid-back mob boss, resonant"},
+    "nurse": {"voice_id": "EXAVITQu4vr4xnSDxMaL", "voice": "Sarah", "stability": 0.55, "style": 0.3, "similarity_boost": 0.8, "speed": 0.98, "note": "dry, professional, hides warmth"},
+    "gunsmith": {"voice_id": "pqHfZKP75CvOlQylNhV4", "voice": "Bill", "stability": 0.5, "style": 0.4, "similarity_boost": 0.8, "speed": 1.0, "note": "gruff craftsman, threat as affection"},
+    "scientist": {"voice_id": "Xb7hH8MSUJpSbSDYk0k2", "voice": "Alice", "stability": 0.6, "style": 0.25, "similarity_boost": 0.8, "speed": 0.97, "note": "clinical, curious"},
+    "dock-guard": {"voice_id": "iP95p4xoKVk53GoZ742B", "voice": "Chris", "stability": 0.25, "style": 0.6, "similarity_boost": 0.75, "speed": 1.12, "note": "panicking grunt"},
+    "quartermaster-mertz": {"voice_id": "nPczCjzI2devNBz1zQrb", "voice": "Brian", "stability": 0.45, "style": 0.45, "similarity_boost": 0.8, "speed": 1.0, "note": "smug quartermaster, outraged about inventory"}
+  }
+}

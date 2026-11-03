@@ -1,0 +1,11 @@
+{
+  "doc": "CPU cost of the audio service in the 300-person riot (dev/audio/audio_riot.tscn, 25 s = 1500 frames), measured with Time.get_ticks_usec inside the service and around the FX sink. HEADLESS (dummy audio driver, no GPU), machine CONTENDED by the other lanes (the shared GPU bench lock was held by another lane at 13:04, so no GPU bench was taken). Not the bench; it shows the script-side cost only.",
+  "service_frame_mean_us": 30,
+  "service_frame_max_us": 335,
+  "sink_calls": 1264,
+  "sink_mean_us": 25,
+  "sink_max_us": 2144,
+  "estimate_per_frame_ms": 0.05,
+  "budget_frame_ms": 16.6,
+  "played": {"death": 61, "footstep": 38, "projectile_end": 81, "servo": 2, "shot": 78}
+}

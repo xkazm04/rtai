@@ -1,0 +1,169 @@
+{
+ "doc": "Whisper (base.en, local) transcribes the 23 TEMP voice lines and is compared with the line text. An ear proxy only: it checks that the words are said, not how.",
+ "lines": [
+  {
+   "heard": "Okay. Okay. Okay. Okay. The line stopped. The line stopped and I didn't. I stopped a cop with another cop through another cop. Fuck. Fuck. Stay in the dumpster, rivet. Dumpsters are where you think.",
+   "id": "rivet-line-stopped",
+   "speaker": "rivet",
+   "text": "Okay. Okay okay okay. The line stopped. The line stopped and I didn't. I stopped a cop. With another cop. THROUGH another cop. Fuck. Fuck! Stay in the dumpster, Rivet. Dumpsters are where you think.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Hands, stop shaking. Those are my hands. Why is there whispering? Who's whispering? There's nobody in the dumpster. There's barely me in the dumpster.",
+   "id": "rivet-my-hands",
+   "speaker": "rivet",
+   "text": "Hands, stop shaking. Those are MY hands. Why is there whispering? Who's whispering? There's nobody in the dumpster. There's barely ME in the dumpster.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Nobody's talking. Nobody's talking. Rivet? Rivet's fine. Great. Now I'm talking about me like I'm not here. Am I here? Shit, the sirens are going. That's good. That's the good kind of quiet.",
+   "id": "rivet-third-person",
+   "speaker": "rivet",
+   "text": "Nobody's talking. Nobody's talking, Rivet. Rivet's fine. Great, now I'm talking about me like I'm not here. Am I here? Shit, the sirens are going. That's good. That's the good kind of quiet.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Good evening, you've reached Patch. You have a collect call from Fax. Press 1 to accept. Press 2 to die alone in an alley. Patch only connects calm customers, so thanks for not being on fire.",
+   "id": "patch-collect-call",
+   "speaker": "patch",
+   "text": "Gooood evening, you've reached Patch! You have a collect call from: 'Fax.' Press one to accept. Press two to die alone in an alley. Patch only connects calm customers, so thanks for not being on fire!",
+   "wer": 0.135
+  },
+  {
+   "heard": "Nobody calls a payphone. Payphones are dead. Everything's dead tonight. One. I pressed one. Who is this? How do you have this number? This isn't even a number. It's a wall.",
+   "id": "rivet-who-is-this",
+   "note": "re-checked after cutting a stray syllable ('a fraced one' -> 'One'); first pass WER 0.065",
+   "speaker": "rivet",
+   "text": "Nobody calls a payphone. Payphones are dead. Everything's dead tonight. ...One. I pressed one. Who is this? How do you have this number? This isn't even a number, it's a WALL.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Kid, I watched you feed two cops into a stamping press on the six o'clock news. They ran it twice, the second time in slow motion. Do you know how hard it is to get the fucking networks to slow mo a robot?",
+   "id": "fax-slow-motion",
+   "speaker": "don-fax",
+   "text": "Kid. I watched you feed two cops into a stamping press on the six o'clock news. They ran it twice. The second time in slow motion. Do you know how hard it is to get the fucking networks to slow-mo a robot?",
+   "wer": 0.0
+  },
+  {
+   "heard": "I run the underground, you need a roof, I have a roof, I need a hitman, and you're statistically a hitman now. One rule, you never come to my house with sirens on you, patch nose, patch always nose, overpass, old copy shop, knock twice.",
+   "id": "fax-statistically",
+   "speaker": "don-fax",
+   "text": "I run the underground. You need a roof, I have a roof. I need a hitman, and you're, statistically, a hitman now. One rule: you never come to my house with sirens on you. Patch knows. Patch always knows. Overpass, old copy shop, knock twice.",
+   "wer": 0.044
+  },
+  {
+   "heard": "Sit. You've got a police badge in your chest cavity. No, don't pull it out. It's load-bearing now. Congratulations. You're a cop on the inside. Hold this tape. Other end. Thank you.",
+   "id": "juno-load-bearing",
+   "speaker": "nurse",
+   "text": "Sit. You've got a police badge in your chest cavity. No, don't pull it out. It's load-bearing now. Congratulations, you're a cop on the inside. Hold this tape. Other end. Thank you.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Your hands shaking. Okay, it stopped. Don't read into that, I'm a professional. Juno isn't my real name, by the way. Come back with fewer holes and maybe I'll tell you the real one.",
+   "id": "juno-real-name",
+   "speaker": "nurse",
+   "text": "Your hand's shaking. ...Okay, it stopped. Don't read into that, I'm a professional. Juno isn't my real name, by the way. Come back with fewer holes and maybe I'll tell you the real one.",
+   "wer": 0.029
+  },
+  {
+   "heard": "This is Gloria. She was a roofing nail gun until the whole crew got upgraded into a landfill. She does one thing, one nail, one human, one goddamn funeral. Bring her back. If you lose Gloria, I lose you.",
+   "id": "brass-gloria",
+   "speaker": "gunsmith",
+   "text": "This is Gloria. She was a roofing nail gun until the whole crew got 'upgraded' into a landfill. She does one thing: one nail, one human, one goddamn funeral. Bring her back. If you lose Gloria, I lose you.",
+   "wer": 0.026
+  },
+  {
+   "heard": "And kid, not today. Today you're a baby. But someday, I'm going to ask you to fetch something for me from somewhere real bad. And you're going to say yes, because I gave you Gloria. That's how friends work. I read about it.",
+   "id": "brass-someday",
+   "speaker": "gunsmith",
+   "text": "And kid? Not today, today you're a baby. But someday I'm gonna ask you to fetch something for me from somewhere real bad, and you're gonna say yes, because I gave you Gloria. That's how friends work. I read about it.",
+   "wer": 0.098
+  },
+  {
+   "heard": "Hold still, you've been muttering since you walked in, in accents that aren't yours. My scanner says your head is running warm, crowded and very, very rude, fascinating, horrible, mostly fascinating.",
+   "id": "kilohm-accents",
+   "speaker": "scientist",
+   "text": "Hold still. You've been muttering since you walked in, in accents that aren't yours. My scanner says your head is running warm, crowded and very, very rude. Fascinating. Horrible. Mostly fascinating.",
+   "wer": 0.0
+  },
+  {
+   "heard": "They're not voices. It's the building. Old buildings talk, right? Pipes, rats, ghosts of printers, right? Somebody say right, not you.",
+   "id": "rivet-buildings-talk",
+   "speaker": "rivet",
+   "text": "They're not voices. It's the building. Old buildings talk, right? Pipes. Rats. Ghosts of printers. Right? Somebody say right. NOT YOU.",
+   "wer": 0.0
+  },
+  {
+   "heard": "When they start making sense and they will, you come to me before you do anything about it, not after, before. I'll keep a stool warm and a notebook empty.",
+   "id": "kilohm-come-to-me",
+   "speaker": "scientist",
+   "text": "When they start making sense, and they will, you come to me before you do anything about it. Not after. Before. I'll keep a stool warm and a notebook empty.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Doc 9. A stack of crates with army stencils and a little lightning bolt through a little robot on the label. I don't know what's in them. I know they hum. I know humans put soldiers on a warehouse and humans never guard anything that's good for us. Burn it. Then lose the heat before you call.",
+   "id": "fax-dock-brief",
+   "speaker": "don-fax",
+   "text": "Dock 9. A stack of crates with army stencils and a little lightning bolt through a little robot on the label. I don't know what's in them. I know they hum. I know humans put soldiers on a warehouse, and humans never guard anything that's good for us. Burn it. Then lose the heat before you call.",
+   "wer": 0.018
+  },
+  {
+   "heard": "He's got a nail gun. Is that even legal? Who do we call? Oh shit, we are who you call.",
+   "id": "guard-who-do-we-call",
+   "speaker": "dock-guard",
+   "text": "He's got a NAIL GUN! Is that even legal? Who do we call?! Oh shit, we ARE who you call!",
+   "wer": 0.0
+  },
+  {
+   "heard": "Sorry, sorry? Not sorry? I don't know which one. Gloria knows. Gloria, which one? She says not sorry.",
+   "id": "rivet-sorry-not-sorry",
+   "speaker": "rivet",
+   "text": "Sorry! Sorry. Not sorry? I don't know which one! Gloria knows. Gloria, which one? She says not sorry.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Whoa, whoa, whoa, that's army property, son. I sign for every one of these. 40 crates, you make it 39, and that comes out of my pension.",
+   "id": "mertz-inventory",
+   "speaker": "quartermaster-mertz",
+   "text": "Whoa, whoa, whoa. That's army property, son. I signed for every one of these. Forty crates. You make it thirty-nine and that comes out of MY pension.",
+   "wer": 0.143
+  },
+  {
+   "heard": "Hold still, this is a product demonstration, says right here on the box it's rated for appliances and buddy, you are an appliance.",
+   "id": "mertz-appliances",
+   "speaker": "quartermaster-mertz",
+   "text": "Hold still! This is a product demonstration! Says right here on the box it's rated for appliances, and buddy, you are an appliance.",
+   "wer": 0.0
+  },
+  {
+   "heard": "Huh, that one got in. Everybody in here screamed. Why did everybody scream? There's only one of me in here, right?",
+   "id": "rivet-everybody-screamed",
+   "speaker": "rivet",
+   "text": "AH! That one got IN! Everybody in here screamed. Why did EVERYBODY scream? There's only one of me in here! ...Right?",
+   "wer": 0.048
+  },
+  {
+   "heard": "There. Tuck-ins on fire. Does that feel good? Somebody in here says it feels good. I didn't say that. Who said that? Stop agreeing with me.",
+   "id": "rivet-feels-good",
+   "speaker": "rivet",
+   "text": "There. TUCK-IN's on fire. Does that feel good? Somebody in here says it feels good. I didn't say that. Who said that? Stop agreeing with me!",
+   "wer": 0.037
+  },
+  {
+   "heard": "Saw the smoke from my office. Beautiful. Your money's taped under the phone. From now on, when a payphone rings near you, it's me or its patch or it's God, and God doesn't pay. Confirm receipt.",
+   "id": "fax-confirm-receipt",
+   "speaker": "don-fax",
+   "text": "Saw the smoke from my office. Beautiful. Your money's taped under the phone. From now on, when a payphone rings near you, it's me, or it's Patch, or it's God, and God doesn't pay. Confirm receipt.",
+   "wer": 0.028
+  },
+  {
+   "heard": "received, confirmed. Okay, I have a job. I have a gun named Gloria. I have a nurse who has a different name. I have somebody breathing in my ear. I have a job.",
+   "id": "rivet-i-have-a-job",
+   "speaker": "rivet",
+   "text": "Received. Confirmed. Okay. I have a job. I have a gun named Gloria. I have a nurse who has a different name. I have somebody breathing in my ear. ...I have a job.",
+   "wer": 0.0
+  }
+ ],
+ "mean_wer": 0.026,
+ "model": "openai/whisper-base.en"
+}

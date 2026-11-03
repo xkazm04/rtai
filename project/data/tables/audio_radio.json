@@ -1,0 +1,27 @@
+{
+  "doc": "The car radio stub (features/audio/car_radio.gd): stations are looping music files under res://assets/audio/music/, played on the `radio` bus (a band-limited child of `music`) while Rivet drives (vehicle_entered / vehicle_exited). The stinger is a one-shot on the `ui` bus for a completed contract. Placeholder generation: three 20 s loops and a 3 s sting.",
+  "high_pass_hz": 320,
+  "low_pass_hz": 5200,
+  "schema": "gtai.audio-radio/1",
+  "stations": [
+    {
+      "file": "radio_loop_1",
+      "gain_db": -2,
+      "id": "night_jazz"
+    },
+    {
+      "file": "radio_loop_2",
+      "gain_db": -3,
+      "id": "gridlock_synth"
+    },
+    {
+      "file": "radio_loop_3",
+      "gain_db": -4,
+      "id": "static_punk"
+    }
+  ],
+  "stinger": {
+    "file": "radio_stinger",
+    "gain_db": -4
+  }
+}

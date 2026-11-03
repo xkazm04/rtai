@@ -1,0 +1,79 @@
+{
+  "$id": "gtai.audio-radio/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "high_pass_hz": {
+      "maximum": 2000,
+      "minimum": 20,
+      "type": "number"
+    },
+    "low_pass_hz": {
+      "maximum": 20000,
+      "minimum": 1000,
+      "type": "number"
+    },
+    "schema": {
+      "const": "gtai.audio-radio/1"
+    },
+    "stations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "file": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "gain_db": {
+            "maximum": 6,
+            "minimum": -40,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "file",
+          "gain_db"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "stinger": {
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "gain_db": {
+          "maximum": 6,
+          "minimum": -40,
+          "type": "number"
+        }
+      },
+      "required": [
+        "file",
+        "gain_db"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "stations",
+    "stinger",
+    "high_pass_hz",
+    "low_pass_hz"
+  ],
+  "type": "object"
+}
