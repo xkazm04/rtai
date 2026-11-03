@@ -102,6 +102,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "ram_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
         "ram_mps": {
           "maximum": 50,
           "minimum": 0.5,
@@ -115,6 +120,11 @@
         "stomp_cue": {
           "pattern": "^[a-z][a-z0-9_]*$",
           "type": "string"
+        },
+        "stomp_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
         },
         "stomp_hitstop": {
           "pattern": "^[a-z][a-z0-9_]*$",
@@ -165,9 +175,11 @@
         "morph_cue",
         "morph_s",
         "ram_car_damage",
+        "ram_damage",
         "ram_mps",
         "stomp_cooldown_s",
         "stomp_cue",
+        "stomp_damage",
         "stomp_hitstop",
         "stomp_knock_m",
         "stomp_radius_m",
