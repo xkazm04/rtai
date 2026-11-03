@@ -56,3 +56,4 @@ NEXT:
 - King into the game: a BodyPlan.Kind or a pool entry + feed row when the boss fight ticket lands; KingPlan is ready.
 - The bulky ghost form: a new RivetPlan.FORMS row (no rig code); the souls stay behind --souls until a mechanic uses them.
 - Optional: King D5 expressions/portrait check vs the rig; Rivet portrait busts are scale-free (checked).
+- EVIDENCE (clean tree, HEAD 1586b06): lint, unit 326/326, scenarios 8/8, parity 1200 steps exact, selftest look goldens 11/11 PASS (--no-bench; bench not run).
