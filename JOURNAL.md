@@ -364,3 +364,11 @@ NEXT (after the 18:00 sync), in order:
 - NEXT: unchanged (owner picks first: --blood, --kill-beat, muzzle pop, pool body colour, pool size via
   blood_fx.json game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field; re-bench idle).
 - 16:58 session end: tree clean after this commit; bench.lock released; no Godot process of mine left.
+
+## Iteration 49 (17:00-17:30, STABILIZE)
+- 17:00 freeze: no code change. Drafted REPORT.md from this journal (claims checked against the masters files:
+  15 frames.json entries, the clips, the frames). Correction made while drafting: there is no real-time panel clip at
+  64 px/m (only beat-{flash,both}-64ppm-realtime.mp4); panel at 64 is in beat-modes-contact.png only.
+  Code HEAD stays 5a6e21b, gates green there (16:40). No Godot process of mine; bench.lock not touched.
+- NEXT: unchanged (owner picks: --blood, --kill-beat, muzzle pop, pool body colour, pool size via blood_fx.json
+  game.pool_radius_px; then the car-hit slide via a FxTriggers.cued death-speed field; re-bench idle; REQUEST 3).
