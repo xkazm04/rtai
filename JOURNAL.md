@@ -65,3 +65,15 @@ NEXT (iteration 2):
 - NEXT item 1 re-scoped: quest 1 humans have 1 hp (tuning.human.hp), so every human hit is a kill and already bleeds;
   "blood on a non-lethal human hit" has no trigger in today's game. It becomes real when a human gets hp > 1 (a boss
   phase); the hook is Fighter.hurt_tick (render-side read in CollectCallView) -> blood.splash(..., "player_hit").
+- FINDING + FIX aa1661d: evidence/run.mjs selftest FAILED at 6fee0e8: the junction look goldens (a riot with deaths)
+  now carry blood (d4@48/64, auto@56/64 over the 2 % far cap). Re-blessed the junction (11), check run bit-identical;
+  decision line in docs/decisions.md. Block site untouched (5/5).
+- GATES at aa1661d (evidence/run.mjs --no-bench): lint 13/13, unit 338/0, scenarios 8/8, parity exact (1200 steps,
+  mutation caught), selftest PASS. Bench: partial (see above), judge not run.
+
+NEXT (iteration 2), in order:
+1. Bench in the foreground under the lock with a long timeout so run.mjs judges it; add a riot-with-deaths variant.
+2. Item 5 hit feel: REQUEST 2/3 (muzzle pop light, kill hit-stop 8) or, if no owner answers, a fx.json-only muzzle
+   tweak; body stains on dead sim bodies (BloodStains above the rigs, keyed by sim slot).
+3. Palette `blood` token (REQUEST 1) when d5-city lands it; re-bless the junction goldens afterwards (they will move).
+4. Owner sync: pick --blood default (noir proposed) and --kill-beat (off / panel / flash / both).
