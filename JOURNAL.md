@@ -275,3 +275,24 @@ NEXT:
   (no instrumented run). Fix shape: the baker builds its own overlay materials (amount 1, px_scale at the bake zoom) and
   a RigDetail.sync variant that takes `want` and the material instead of reading the globals. Then re-dump the atlases
   (rig_showcase saves crowd-atlas.png; add crowd-atlas-d5.png) and judge the cop cell before any city integration.
+- 12:22-12:32 D5 crowd twin, second attempt (timeboxed): DIAGNOSIS CONFIRMED. With the baker's own overlay materials
+  (CrowdBakeDetail: look_d5_part at amount 1, px_scale at the bake zoom, independent of RigDetail.active) the twin
+  prints the D5 tier (masters renders/atlasD5b/atlas-zoom.png: hatched domes, scratched shoulders, like the live tier).
+  Committed as 7f187e1 (unit 330/330, scenarios, parity green) and REVERTED in f88df08: the selftest went red, look
+  goldens 0/11 (worst 11.64, d1@32 and d4@32 included) and block 0/5 (worst 15.29). The second bake's ~30 extra load
+  frames move the crowd's timing in every golden scene, not the print. And the in-game benefit was not shown: in the
+  real city at 64 px/m (--police=12) all ~12 visible people were inside the 16 full rigs (A/B crowdA/crowdB, temporary
+  pin of crowd_texture() to D4, never committed), so the twin only matters in denser scenes (riots).
+- EVIDENCE (clean tree, HEAD f88df08, project/ identical to 704570f): lint 13/13, unit 326/326, scenarios 8/8,
+  parity exact, selftest goldens 11/11 (worst 0.84) + 5/5 PASS (--no-bench).
+- FRICTION: one unit run failed test_noir_shadows ("Parameter t is null", engine) and passed on the re-run unchanged:
+  a flake (d-city fixed a CityTextures thread-load flake today, 000087f; not on this branch).
+
+NEXT (final for iteration 4, supersedes the NEXT above where they differ):
+- Owner picks: cop heads cream (shipped) vs navy (revert 90bb8f6 34acc56 704570f); cop portrait domes (revert 02d459e);
+  shoulders A vs B; King's portrait cape vermilion (shipped) vs ink (masters king_cape).
+- Merge: d-city before/with d-cast; re-bless the goldens once on the merged tree; apply REQUEST 4's patch.
+- D5 crowd twin: code is in 7f187e1 (revert of the revert to resume). Before re-landing: (a) bake the twin without
+  changing load timing (e.g. after the selftest/scene starts its clock, or bake both looks in ONE SubViewport pass),
+  or re-bless deliberately with a decisions line; (b) prove it in a dense real scene at 64 px/m (riot) A/B.
+- King into the game with the boss ticket; ghost form = a new RivetPlan.FORMS row.
