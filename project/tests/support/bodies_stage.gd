@@ -7,6 +7,9 @@ extends RefCounted
 ## the distance) and the worst person-person overlap.
 
 const ORIGIN: Vector2 = Vector2(64.0 * 5 + 30.0, 64.0 * 5 + 12.0)
+## How far (m) from ORIGIN the band may sit, nearest rows first: d5-city's wall-side clutter
+## (2026-11-03) leaves no clean 3-row band within the old 24 m.
+const BAND_SEARCH_M: int = 160
 
 var sim: CitySimBackend = null
 var table: BodyTable = BodyTable.load_default()
@@ -105,8 +108,10 @@ func _measure() -> void:
 
 
 func _find_band(length: float) -> Vector2:
-	for dy: int in range(-24, 25):
-		for dx: int in range(-24, 25, 4):
+	for k: int in range(0, 2 * BAND_SEARCH_M + 1):
+		@warning_ignore("integer_division")
+		var dy: int = (k + 1) / 2 * (1 if k % 2 == 1 else -1)
+		for dx: int in range(-BAND_SEARCH_M, BAND_SEARCH_M + 1, 4):
 			var p: Vector2 = Vector2(floorf(ORIGIN.x) + dx + 0.5, floorf(ORIGIN.y) + dy + 0.5)
 			if _band_ok(p, length):
 				return p

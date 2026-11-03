@@ -12,7 +12,7 @@ extends Scenario
 const Drive: GDScript = preload("res://tests/scenarios/scenario_vehicle_drive.gd")
 const MASTER_SEED: int = 53
 const TICKS: int = 40 * SimClock.TICK_RATE
-const PARK_AHEAD_M: float = 24.0
+const PARK_AHEAD_M: float = 32.0  # int-day: 24 m left the queue in the junction (decisions.md)
 const MIN_PASSED: int = 2
 
 
