@@ -479,3 +479,12 @@ vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in
 NEXT (night run): unchanged from iteration 6's list (1: gates on the merged tree, unit alone per REQUEST 7;
 2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot; 4: the 48 px/m
 vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it; 5: dummies' own look).
+
+## Iteration 10 (REPORT, 23:40)
+- answers.json re-read 23:40: nothing new for arena (arena-1 C, arena-2 A stay placeholders).
+- REPORT.md written: what works (each claim with an evidence path), gaps, blockers, next steps. Every cited
+  path checked on disk. No code.
+
+NEXT (night run): REPORT.md "Next steps" (1: stations_check + arena scenarios on the merged tree, unit alone;
+2: `--rigs` as default with rivet-motion/enemy-ai plans + rigs boot scenario; 3: Gearbox ArenaHook + pad bot;
+4: camera lead (arena-2) then the 48 px/m vertical-sample clip; 5: frame-level input latency; 6: dummies' look).
