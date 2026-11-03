@@ -49,3 +49,15 @@ func test_cars_outside_the_radius_are_dark_and_day_releases_everything() -> void
 	assert_eq(cars.held, 0)
 	layer.step(12, Vector2.ZERO)
 	assert_eq(layer.active, 0, "the held lights were removed")
+
+
+func test_a_full_budget_refuses_once_then_backs_off() -> void:
+	var layer: LightLayer = autofree(LightLayer.new())
+	var cars: CityHeadlights = CityHeadlights.new(layer)
+	layer.set_grade(&"night")
+	for i: int in layer.max_lights:
+		assert_gte(layer.add(&"fire", Vector2(i, 0), 0.0, 0), 0)
+	for t: int in CityHeadlights.BACKOFF_TICKS - 1:
+		cars.observe(_snap(2, -1), Vector2.ZERO, 10 + t)
+	assert_eq(cars.held, 0)
+	assert_eq(layer.dropped, 1, "one refusal, then no retry inside the back-off")

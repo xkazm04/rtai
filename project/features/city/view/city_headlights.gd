@@ -7,6 +7,8 @@ extends RefCounted
 ## onto the picked cars, the rest released. Off-grade (day) it holds nothing and costs one check.
 
 const TABLE: String = "res://data/tables/lights.json"
+## Ticks a refused add (the light budget was full) waits before the slots try again.
+const BACKOFF_TICKS: int = 30
 
 var lights: LightLayer
 var grades: PackedStringArray = PackedStringArray()
@@ -20,6 +22,7 @@ var last_us: int = 0
 ## Light handles per car slot: lamps.size() headlights, then the siren (-1 = none held).
 var _h: PackedInt32Array = PackedInt32Array()
 var _tick: int = 0
+var _retry_at: int = -1
 
 
 func _init(layer: LightLayer, text: String = "") -> void:
@@ -108,7 +111,11 @@ func _hold(k: int, kind: StringName, on: bool, xf: Transform2D, at_m: Vector2) -
 		return
 	var pos_px: Vector2 = (xf * at_m) * SimConst.PX_PER_M
 	if _h[k] < 0:
+		if _tick < _retry_at:
+			return  # the budget refused an add lately: no retry every tick
 		_h[k] = lights.add(kind, pos_px, xf.get_rotation(), _tick)
+		if _h[k] < 0:
+			_retry_at = _tick + BACKOFF_TICKS
 	else:
 		lights.move(_h[k], pos_px, xf.get_rotation())
 	held += 1 if _h[k] >= 0 else 0
