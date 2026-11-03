@@ -1639,7 +1639,7 @@ Morning reading order: item54_rig_shadow_lock.png -> night_iter10_summary.png ->
 - 07:06 read JOURNAL (iteration 11 summary, NEXT 43-44), git log. With 24 min to freeze, no render round fits;
   NEXT 44 waits on the visual-engine lane's snapped camera. Picked the merge: the Director and owner face 50+ boards
   and 11 iterations of proposals, scattered over 5 gap lists.
-- 07:10 MILESTONE (406362e): evidence/README.md "Morning merge sheet" at the top: what is ON by default when n-d5
+- 07:07 MILESTONE (406362e): evidence/README.md "Morning merge sheet" at the top: what is ON by default when n-d5
   merges (parts tier with its zoom stops, look_d5 world layer, D5 roofs / decals / ground tiles, pen-stroke shadows
   incl. rig-locked, souls, arena, close-up art), the default-OFF proposals grouped by the lane that owns the switch
   (visual-engine package v9, characters halo, HUD look_d5_ui, d4-production roof lines, city mip rule), the owner
@@ -1665,3 +1665,4 @@ NEXT (iteration 12; 43-44 of iteration 11 stand, earlier lists stand):
     store-safe marks on the portraits / loading art / finishers (finisher_k9 in-game only) need a yes or no.
 46. d5-close, next session with Codex budget: the gap list after iteration 9 (paper-area mid-tones, parapet line
     weight, light-wash spread) needs new roof plates; judge on masters work/i9/roofcls.py, same mask.
+- 07:10 CORRECTION: the merge sheet and its journal entry were first stamped 07:10, ahead of the clock (07:07); fixed.

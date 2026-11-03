@@ -5,7 +5,7 @@ PNGs in this folder are left untracked (16 MB; the same files are in masters). M
 Godot 4.7.2 on d3d12 from `dev/showcase/d5_showcase.gd` / `d5_hero.gd`. They are deterministic: fixed cast, fixed
 tick count, no RNG.
 
-## Morning merge sheet (iteration 12, 07:10): what `n-d5` turns on, what it only proposes
+## Morning merge sheet (iteration 12, 07:07): what `n-d5` turns on, what it only proposes
 Written for the Director and the owner. Every row points at a board in this folder; the numbers are in the journal.
 **On by default when merged** (all D5 work sits above 48 px/m or on large surfaces; 32 px/m keeps D4's read):
 - D5 Rivet / cop / pedestrian parts tier on the same rigs (`look_d5_part`; on at zoom 1.75, full at 2.0, off below 1.6875 =
