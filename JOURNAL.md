@@ -1687,3 +1687,23 @@ NEXT (iteration 12; 43-44 of iteration 11 stand, earlier lists stand):
 NEXT (iteration 13; 43-46 stand, earlier lists stand):
 47. visual-engine lane, when it adopts the look-profile zoom blend: read the tier stops from look_d5.params.json and
     drop RigDetail's constants (or keep the new test as the guard). Edit both together until then.
+
+## Iteration 14 (2026-11-03, BUILD, 07:13 -> freeze 07:30), no image budget (50/50), short session
+- 07:13 read JOURNAL (iteration 13 summary, NEXT 47), git log. No render round fits and no Codex budget. The merge
+  sheet says the close-up art is "provenance logged", but nothing checked it. MEASURED: 104 tracked D5 PNGs under
+  project/features/*/art/d5/, 104 with a line in steam/ai-provenance/2026-11.jsonl, 0 missing.
+- 07:15 MILESTONE (04bb6d4): test_d5_provenance.gd: every res://features/**/art/d5/*.png has a provenance line
+  (the log is read from the repo root, outside res://). MEASURED by mutation: a planted unlogged
+  rivet/zz_planted.png -> unit 150 / 1 failing; removed (with its .import), tree clean.
+- 07:16 GATES (iteration 14): evidence tool (--no-parity --no-bench) ALL PASS at 04bb6d4 (lint 13/13 over 196 files,
+  unit 151/0, scenarios 8/0, selftest ok: 32 px/m 103 actors, 48 px/m 81 actors); 104 untracked evidence PNGs moved
+  aside (masters work/i14_aside, removed) and restored 104. No visual change, so no frames and no ladder row.
+- Merge sheet line for the close-up art now names the guard.
+
+## Summary (iteration 14)
+- One test: D5 art cannot land without an AI-provenance line (checked by mutation). Images: 0 (50 of ~50).
+  Shared files touched: none. AI assets: none new.
+
+NEXT (iteration 14; 43-47 stand, earlier lists stand):
+48. Director: the provenance guard covers the d5 folders only. If the owner wants it for all AI art, move the check
+    into tools/lint (shared tooling, not this lane's scope) and widen it to every logged art root.
