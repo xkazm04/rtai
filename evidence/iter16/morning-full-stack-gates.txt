@@ -19,3 +19,9 @@ node tools/evidence/run.mjs --no-bench --allow-dirty:
 Quest 1's own frame grabber: all 9 beats rendered (masters night/d4-production/morning_full_q1/), city_frame
 0 placeholders (morning_full/).
 Bench not run (other lanes' Godot running).
+
+05:42 RE-RUN on n-visual's newer tip a103850 (PrintStage, crackle on Robo-tazer hits; 52 files since 41ee996):
+same recipe (c9167f9 + merge --no-commit a103850, JOURNAL.md the only conflict, the four patches apply clean,
+re-baked): lint 13/13 (264 files), unit 260/260, scenarios 8/8, parity bit-exact; selftest fails only on the look
+goldens (worst 22.16, re-bless), "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents",
+0 placeholders. Scratch worktree: gtai-wt/scratch-v2 (replaces scratch-full).

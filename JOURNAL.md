@@ -1560,3 +1560,7 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   selftest fails only on n-visual's goldens (re-bless), doctrine gate clean, 0 placeholders. Quest 1 grabber renders
   all 9 beats on that stack (`masters:morning_full_q1/`; beat 06 checked by eye: D4 HUD, inked fire, cast, dialogue
   card). `evidence/iter16/morning-full-stack-gates.txt`. Scratch `scratch-full` kept for the Director if useful.
+- 05:42 RE-CHECK on n-visual's new tip a103850 (moved since 41ee996: PrintStage etc.): the full stack (main + n-d4 +
+  n-visual + patches 16 / 19 / 21 / 23) - merge clean but JOURNAL.md, patches apply, re-baked: lint 13/13, unit
+  **260/260**, scenarios 8/8, parity exact; selftest only the goldens (re-bless); doctrine clean. scratch-full removed,
+  `scratch-v2` kept (that stack, uncommitted). `evidence/iter16/morning-full-stack-gates.txt`.
