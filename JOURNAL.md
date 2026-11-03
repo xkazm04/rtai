@@ -400,3 +400,27 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   edges, reading only somewhat bigger than the people (city-0-64ppm.png, straight down, a good owner reference).
   The 128 cop close-up stays the hero scene's. To get one in the real game: a city_frame focus-on-actor option
   (d-city's file; REQUEST 5 -> d5-city: `--foci` could accept a "nearest cop" focus after settle).
+
+## Status at ~16:15 (iteration 46) and NEXT
+- Items 1-5 evidenced (unchanged since 13:20 except dev King size dial). This iteration: King size option (294e6b5),
+  hero cruiser bar to cop navy (masters borrow, no code), rig bench A/B vs main (no cost change, CONTENDED), pairwise
+  merge check (0 code conflicts with every day lane), real-game 128 cop close-up tried (cops ring the riot; not shot).
+- EVIDENCE (clean tree, HEAD 294e6b5; later commits are journal/evidence JSON only): lint 13/13, unit 326/326,
+  scenarios 8/8, parity exact, look goldens 11/11 + block 5/5 PASS unblessed (--no-bench).
+- Codex images used today: 1 (King). All owner frames looked at; 0 camera-break rejects this iteration.
+- Owner frames: masters day-d5/d5-cast/frames.json (15) + ladder.png.
+
+NEXT (for the 18:00 sync and the Director):
+- OWNER CHOICES, each one revert or one constant:
+  1. Rivet base form: T2 hunch at size_k 1.2 (shipped) | open guard = revert 062939d 8118692.
+  2. King size: 1.3 (shipped) | 1.2 = KingPlan.SIZE_K (frames/king-size-option.png).
+  3. Cop heads: T1 cream domes + ink ring (shipped) | navy = revert 704570f 34acc56 90bb8f6; portraits' domes 02d459e.
+  4. Cop shoulders A (shipped) | B (masters recolor_cops.shoulder_marks).
+  5. King's portrait cape vermilion (shipped) | ink (masters king_cape).
+  6. D5 crowd twin at 64 (thinner rim, consistent with the full rigs) | D4 cells (shipped): masters crowd-twin-v3.patch.
+- MERGE: d-city before/with d-cast; apply masters look_d4-cop-blue-plate.patch (REQUEST 4); delete accent_debt rows
+  cop_vermilion_32/48/64; re-bless look goldens ONCE on the fully merged tree (d-city, d-combat, d-bodies also move
+  them) with a decisions line; re-run the selftest unblessed.
+- REQUEST 5 -> d5-city: a city_frame focus that follows the nearest cop after settle, for a real-game 128 px/m cop.
+- Later: King into the game with the boss ticket (KingPlan ready); the ghost form = a new RivetPlan.FORMS row; souls
+  stay behind --souls until a combat mechanism uses them.
