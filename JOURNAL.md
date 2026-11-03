@@ -126,3 +126,15 @@ NEXT:
 - FIX found by a full cop/police art audit (34 files): the D5 riot helmet still carried 118 vermilion px (rust flecks in
   the crescent; t1_helmet lacked the red-fleck greying t1_cap has). Greyed: cop + police art vermilion now 0 px in all 34
   files (gate r - max(g,b) > 40). (1-6 teal-gate px per D4 part are anti-aliased alpha-edge pixels, not printed teal.)
+
+## Status at ~11:30 (iteration 3)
+- New this iteration (d-cast 913129e..HEAD): cop portraits on a navy ramp (0 vermilion); T1 cop heads (riot cream dome +
+  navy band; patrol cream crown + navy band + blue badge; OWNER CHOICE, revert = 90bb8f6 34acc56); traffic atlas cell 8
+  blue (moving cruisers had vermilion bars); D5 helmet rust greyed; full audit: 0 vermilion in all 34 cop/police files.
+- Integration: trial merge with d-city clean except JOURNAL + goldens; merged lint + unit 336/336 green; MERGE d-city
+  BEFORE/WITH d-cast (else moving cruiser bars print teal). REQUEST 3 -> d5-city: world-pass teal gate excludes blue +
+  cop-blue plate (parked cruisers print ~37 % teal today on every branch).
+- Codex images used today: still 1 (King). Bench not run (colour-only changes): unmeasured, not zero.
+- EVIDENCE run at dee7dab: lint, unit 326/326, scenarios 8/8, parity exact, selftest goldens 11/11 (worst 0.92) + 5/5
+  PASS, but the run reports FAIL on its tree-changed guard: I appended to JOURNAL.md mid-run (FRICTION: never edit the
+  tree during an evidence run). Re-run below on a clean tree.
