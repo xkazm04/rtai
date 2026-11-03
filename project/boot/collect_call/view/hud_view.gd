@@ -69,8 +69,22 @@ func _top_right(screen: Vector2) -> void:
 		StringName("WEAPON__%s" % QuestText.symbol(weapon)), weapon
 	)
 	if weapon == "":
-		weapon_text = _text.resolve(&"HUD__UNARMED", "unarmed")
-	_say(box.position + Vector2(112, 76), weapon_text, 22, Ink.INK)
+		_say(
+			box.position + Vector2(112, 76), _text.resolve(&"HUD__UNARMED", "unarmed"), 22, Ink.INK
+		)
+	else:
+		_ammo_ticket(Rect2(screen.x - MARGIN - 260, MARGIN + 104, 260, 124), weapon_text)
+
+
+## features/hud/art/ammo_ticket.png (671 x 321): the bullet stub left of x 120, text from x 135.
+## The rifle shows its magazine; Gloria (the nail gun) has no count.
+func _ammo_ticket(r: Rect2, weapon_text: String) -> void:
+	draw_texture_rect(_art("ammo_ticket"), r, false)
+	var k: float = r.size.x / 671.0
+	var at: Vector2 = r.position + Vector2(140.0 * k, r.size.y * 0.5)
+	_say(at, weapon_text.to_upper(), 20, Ink.INK)
+	if stage.weapon_name() == "assault-rifle":
+		_ink_digits(at + Vector2(0.0, 40.0), "x%d" % stage.arena.rifle_ammo, 30.0)
 
 
 func _refusal() -> PackedStringArray:

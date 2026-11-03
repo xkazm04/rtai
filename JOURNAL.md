@@ -149,3 +149,7 @@ NEXT:
   the real city with collisions, the largest gap against the brief).
 - scenario_quest1_keys gains its TST-05 planted fault (no interact press -> Rivet stays in the
   open, caught). Scenario passes both halves.
+- HUD: the d4 ammo ticket (features/hud/art/ammo_ticket.png) shows under the cash frame while a
+  weapon is in hand (name; the rifle's magazine as inked digits); the cash frame's duplicate
+  weapon line is gone. Frame: masters ammo32/still_7400_32.png (Gloria). The rifle-count state
+  was NOT captured in a frame (unmeasured). Quest scenarios 4/4. Exe re-exported after this.
