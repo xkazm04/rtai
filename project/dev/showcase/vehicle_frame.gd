@@ -1,0 +1,97 @@
+extends Node
+## Vehicles evidence frames (lane d-vehicles): the real World + CitySystem + CityView +
+## CityCharacters + VehicleService (as World._register_features wires them) and the real camera
+## rig, which eases from on_foot (32 px/m) to car (48 px/m, look-ahead) on vehicle_entered. Rivet
+## stands beside a parked sedan, gets in, drives a fixed route (full throttle through a pedestrian
+## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
+## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
+##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
+##     --out=<dir> [--clip] [--look=<id>]
+
+const MASTER_SEED: int = 31
+const SHOTS: Dictionary[int, String] = {
+	12: "on-foot-beside-car",
+	50: "entered-easing",
+	120: "full-throttle",
+	205: "s-bend",
+	330: "top-speed",
+	375: "handbrake-slide",
+	440: "slide-recover",
+	620: "stopped",
+}
+const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
+
+var _out: String = "user://vehicle_frame"
+var _clip: bool = false
+var _look: StringName = &""
+var _world: World = null
+var _svc: VehicleService = null
+var _done: Dictionary[int, bool] = {}
+var _busy: bool = false
+
+
+func _ready() -> void:
+	if not _parse_args():
+		get_tree().quit(2)
+		return
+	_world = World.new()
+	_world.start(Events, Data, MASTER_SEED)
+	var w: Array[Object] = VehicleFrameSetup.build(_world, self, _look)
+	_svc = w[0]
+	var characters: CityCharacters = w[1]
+	var view: CityView = w[2]
+	_world.set_process(false)
+	add_child(_world)
+	await characters.bake()
+	await view.prewarm()
+	@warning_ignore("return_value_discarded")
+	DirAccess.make_dir_recursive_absolute(_out)
+	_world.loop().set_input(VehicleFrameSetup.Route.new())
+	_world.set_process(true)
+
+
+func _process(_delta: float) -> void:
+	if _world == null or _busy:
+		return
+	var tick: int = _world.context().clock.tick()
+	var last: int = CLIP_TICKS if _clip else SHOTS.keys().max()
+	if tick > last + 2:
+		printerr("vehicle_frame: done at tick %d, cars %d" % [tick, _svc.cars.size()])
+		get_tree().quit(0)
+		return
+	var name: String = ""
+	if _clip and tick % 2 == 0 and not _done.has(tick):
+		name = "clip-%04d" % (tick >> 1)
+	for t: int in SHOTS:
+		if not _clip and tick >= t and not _done.has(t):
+			_done[t] = true
+			name = "%03d-%s" % [t, SHOTS[t]]
+	if name != "":
+		_done[tick] = true
+		_shoot(name)
+
+
+func _shoot(name: String) -> void:
+	_busy = true
+	_world.set_process(false)
+	await RenderingServer.frame_post_draw
+	var img: Image = get_viewport().get_texture().get_image()
+	if img != null:
+		@warning_ignore("return_value_discarded")
+		img.save_png(_out.path_join(name + ".png"))
+	_world.set_process(true)
+	_busy = false
+
+
+func _parse_args() -> bool:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--out="):
+			_out = arg.substr(6)
+		elif arg == "--clip":
+			_clip = true
+		elif arg.begins_with("--look="):
+			_look = StringName(arg.substr(7))
+		else:
+			printerr("vehicle_frame: unknown argument %s" % arg)
+			return false
+	return true
