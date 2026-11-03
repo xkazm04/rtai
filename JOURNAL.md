@@ -743,3 +743,17 @@ by the item list (all 7 items are evidenced): the world print's inks. Measured, 
   capture <= 2 levels on ~5 % of px at 64 px/m, 48 bit-identical. 33-d5-tones/. D5 at 64 px/m over the
   warm aquatint print looks right (the Rivet concept's warm grime). Ladder 32, 33.
 - Merge check (03:30, merge-tree): n-d4 / n-d5 / n-noir still conflict on JOURNAL.md only.
+- MILESTONE (55f60d5) hatched building cast shadows (item 1's `building_shadows` band, finally carrying
+  the height cue): found a building block via a scratch chunk probe (dev/selftest/zz_scratch_*, never
+  committed; camera at (456, 428)) - cream inked roofs + charcoal street already read like the target
+  frame; the gap was the shadow: the bake offsets the roof silhouette only 0.25 m at flat ink 0.45 = a
+  thin grey line at the roof edge, where the mock drops a broad hatched band. Now cast_shadows.json
+  (gtai.cast-shadows/1): one material for the band = n-d5's look_d5_shadow when in the tree (their
+  "proposal for the city lane"; only their showcases used it), else my cast_shadow.gdshader placeholder
+  (same uniforms period 5 / tint 0.36 / stroke 0.85 / cov 0.42, wobble + gaps on the grime lattice); the
+  view adds the per-class cast distance (buildings 1.1 m total = n-d5's offset_m; baked 0.25) -> no
+  re-bake. Every block drops a 1.1 m hatched band on its pavement. Frames 34-buildings/ (before,
+  after-d4, cmp-32 / cmp-48). World lock 0.00 % x3 (the strokes use the canvas position), goldens moved
+  only at 32 px/m (prop shadows; worst 0.11, re-blessed), accents unchanged, unit 214 (+3).
+  iGPU at the building block, interleaved x2: +0.01 / +0.02 ms frame = noise (evidence/pass-cost/
+  cast-shadows). Ladder 34 / 34b. Not fed: look_d5_shadow's `zoom` (only matters above 64 px/m).
