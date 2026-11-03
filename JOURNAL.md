@@ -529,3 +529,11 @@
 - NEXT (night run): unchanged from iteration 8 (answers.json; split combo_clip_run.gd then the baton
   arc on metal dummies; weapon art then ASK rivet-motion-3 with a D5-look clip; chainsaw and plasma
   sword; wire PlayerMotion into the game to measure display latency; REQUEST 1 -> gunplay HitFeel).
+
+## Iteration 10 (23:40-23:50, REPORT)
+- answers.json re-read 23:40: nothing new for rivet-motion.
+- Wrote REPORT.md (what works with evidence paths, what does not, blocked/friction, requests, next).
+  Every cited path checked to exist at 23:40 (frames.json 15/15, repo files, tests). No code change.
+- NEXT: the night run follows REPORT.md "Next steps" (answers.json; wire PlayerMotion/MeleeCombo into the
+  arena hub + city block and measure display latency; split combo_clip_run.gd, then the baton arc and shock clip;
+  weapon art then ASK rivet-motion-3; chainsaw and plasma sword; HitFeel REQUEST 1).
