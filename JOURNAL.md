@@ -297,3 +297,7 @@ atlas; d5-combat blood names; vehicles cruiser accents).
    should not merge on the FAIL alone. It also should not merge as "PASS" until the idle run is done.
 1-4 as in the 16:40 NEXT (owner calls on road width / plazas / roof coarseness; more T1 long plates;
    overlay 32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
+- MILESTONE 16:48 (iter 47) lint at the branch head 1a1a5c5: all 13 checks pass over 333 GDScript files.
+  Since bba930d (unit 335, scenarios 8, parity, selftest PASS) only evidence/ and JOURNAL.md changed,
+  so the code gates of record still apply to HEAD. Bench lock still held by d5-combat (16:43, < 20 min):
+  the idle re-bench stays item 0 of the 16:47 NEXT. No code changes this iteration; lane frozen for 17:00.
