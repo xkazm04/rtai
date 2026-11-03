@@ -359,3 +359,21 @@ NEXT (supersedes the list above; for the night run, from the merged main):
 4. The 00:00 vertical sample in the arena: one 20-40 s `--rigs --clean` clip with the pistol,
    the claw combo, the cop and the robot thug, and one power.
 5. Camera lead (48 px/m, arena-2) if no lane owns it; dummies' own look once the rigs are default.
+
+## Iteration 5 (23:04-23:30, BUILD)
+- answers.json re-read 23:04: no new answers (arena-1 C and arena-2 A from 21:25 stand: placeholders,
+  re-ask only with a real-time clip in the final look).
+- MILESTONE `fc4728d` `--rigs`: a fired shot plays the rig's SHOOT recoil. ArenaRigs reads each
+  fighter's (cooldown, burst_left) per frame. `ArenaRigs.fired()` counts a round when a guard's
+  burst_left falls, or when Rivet's cooldown re-arms with no burst running. A guard *starting* a
+  burst (both values rise) is not counted as a shot. The dead get DEAD|DOWN and no clip. New unit
+  test `test_arena_rigs.gd` (6 tests): fired() edges, gun out + aiming, recoil exactly once per
+  round, dead lie down. Render only: no sim state, no RNG, so replays and parity are not touched.
+- Clip `clips/arena-pit-rigs-recoil-32ppm-20s.mp4` (+ `pit_rigs_recoil32_sheet.png`, 8 frames checked;
+  `pit_rigs_recoil32_burst.png`, 10 consecutive crops of frames 540-630). Honest gap: at 32 px/m the
+  recoil kick is a few pixels and I cannot see it in the stills, so it has to be judged in motion
+  or at 64+ px/m. frames.json is at 15 entries with this clip first.
+- FRICTION: `--check-only -s <script>` reports "Compilation failed" for anything that reaches
+  `part_library.gd`, because the `Log` autoload is missing in -s check mode. Not a real parse error;
+  the GUT run (`-gselect=test_arena_rigs`, 6/6) is the real check.
+- Gates at fc4728d: lint 13/13 (515 files), unit 568/568 (`evidence/arena/unit-it5.log`).
