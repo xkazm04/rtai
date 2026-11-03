@@ -362,3 +362,29 @@ NEXT:
   file, its size_m, draw_k 1), no code. Unit 359, scenarios 10/10.
 - frames.json (15): + cont_after/continue_f1 (before cont_before), the Dock 9 entry now the
   hud32 still (before city32), the arena v2 clip dropped. ladder.png + 1 row (Continue f1).
+
+## Iteration 47 (BUILD, 15:40 - 17:00)
+- 15:41 read JOURNAL + git log. Found work from 13:05-13:12 that was never journaled: clip v3
+  (masters quest1-city-input-run-32ppm-v3.mp4, 13:03, already in frames.json), 69ee1cd
+  (quest1_clip --continue steps one tick per frame after the press) and an UNCOMMITTED fix in
+  quest1_session.gd (city.residency.update(focus) before tick 0). Its frames were already
+  shot: masters start_before/continue_f1.png (the first frame after Start = a cream void with
+  props floating) vs start_after/continue_f1.png (the whole street). Looked at both: VERIFIED.
+- GATES on that diff: lint 13/13 (369 files), unit 359/359, scenarios 10/10 (quest1 input run
+  paid, replay identical, checkpoint resume + tamper refused). Committed d0d092e.
+- 15:43 exe re-exported at d0d092e: `RTAI.exe --headless -- --replay=<gate's input log>` ->
+  "replay: identical", rc 0.
+- MILESTONE 15:47 (77ccc39) verdict 1 in the slice: Rivet re-captured from d5-cast's base form
+  (RivetPlan FORM_BASE: size_k 1.2, guard hands hunched as T2; d-cast 062939d). I copied
+  d-cast's rivet_plan.gd into my tree for the capture only and restored it (not committed:
+  d5-cast's file; after the merge the rig and the quest sprite agree). Sprite 328 x 348 px =
+  2.73 x 2.9 m at 120 px/m (centred, the hands forward), drawn at true scale (draw_k removed);
+  the night capture was 3.1 x 3.9 m drawn at 0.846. Side by side with the gun-out cop:
+  masters rivet-base/compare_old_new_cop.png (old at its drawn size | new | cop): Rivet is now
+  about 1.2x a cop's width, the arms no longer spread. The parts in the tree are the grimed D5
+  ones, so the sprite also picks up the D5 hatching. Unit test now pins true scale for both
+  captures and Rivet's frame shorter than the gun-out cop's. REQUEST 2 -> d5-cast: CLOSED here.
+- FRICTION: the 15:45 capture (a ~5 s windowed render of one rig) ran while d5-combat held
+  bench.lock (taken 15:42); I checked the lock in the same command instead of before it. Short,
+  but it could have touched one of their frames. The in-game before/after stills wait for the
+  lock to be released.
