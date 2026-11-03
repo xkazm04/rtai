@@ -1156,3 +1156,7 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   (identical), L 0.459 -> 0.455, paper 0.30, ink 0.11, mid 0.09 (mock L 0.488 / paper 0.33 / ink 0.12 / mid 0.11).
   The prop shadows and clutter cost no actor read; the frame darkens by 0.004 L.
 - 04:51 TOOL (dev): d5_walk.gd --zoom=<z> (walk_zoom; the crop box scales with it). Default walk9_64 = walk6 (total 1.078 / HF 1.026); --zoom=3.0 walk9_96 = walk8_ctl (1.176 / 1.131). masters tools/shoot.sh usage line now says it passes scene args through. package_shot.sh passes D5_FRINGE / D5_DOTS / D5_RIG_SHADOW / D5_PROP_SHADOW through the environment.
+- 04:52 EVALUATED, NO CHANGE (the D5 tier's walk HF 1.131 at 96 px/m; one term off at a time, temporary shader
+  defaults, restored, tree checked): grime 0 -> 1.134, no hatch strokes (hatch_lo 2.0) -> 1.116, no form shade
+  (shade_k 0) -> 1.123. No single print term drives it: the residual ~1.12 is the D5 art's own detail (rust, the
+  steel ramp) moving with the limbs, which is the point of the tier, not aliasing. Nothing to fix in the print.
