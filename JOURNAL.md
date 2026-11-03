@@ -643,7 +643,7 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   two road tiles as by-code derivatives of the D4 tiles, model/prompt refs carried from their D4 lines).
 - 02:29 gates: evidence tool (--no-parity --no-bench) ALL PASS at e94c9e2 (lint 13/13, unit 149/0, scenarios 8/0,
   selftest ok); 54 untracked evidence PNGs moved aside and restored.
-- 02:33 MILESTONE (h91, 15adfae): kerb stone line (D5HeroKerbs._stone): the mock's kerb = a cream stone band with an
+- 02:30 MILESTONE (h91, 15adfae): kerb stone line (D5HeroKerbs._stone): the mock's kerb = a cream stone band with an
   inner line running along the straight kerbs AND round the corner; ours had only the edge outline. 0.04 m ink line
   0.3 m inside the street edge, one polyline per quadrant (straight -> arc r 1.3 m -> straight), shown in the d5
   tier. Iteration 2 (h39) reverted a corner-only arc because it floated; continuous, it reads as a kerb at 32/48/64
@@ -652,9 +652,10 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   all ink flips 0.00266 -> 0.00278; flips in the line's band 0.0063 per px/tick vs the crop's existing ink edges
   0.0062 (= any line already in the world); 0.06 m (pan9w) 0.0053 but heavier than the mock's line: kept 0.04.
   d4 tier 0 px at 32-128, Rivet crops 0 px, no vermilion/teal px changed.
-- 02:40 FRICTION/MISTAKE: a sed to wrap a long comment line in d5_hero_kerbs.gd replaced the wrong lines and deleted
+- 02:32 FRICTION/MISTAKE: a sed to wrap a long comment line in d5_hero_kerbs.gd replaced the wrong lines and deleted
   `const ARC_STEPS`; lint passed (gdlint does not resolve identifiers) and 15adfae was committed with a file that does
   not parse. Fixed in f8864e9; the fixed tree re-shot (h91b) = h91, 0 px in all 10 frames. Lesson: line edits by
   number only after printing those exact lines; run --check-only on a changed script before committing.
-- 02:42 boards from h91: item4_hero_vs_targets.png, night_iter6_summary.png (tools/boards_i6.py), evidence/
+- 02:33 boards from h91: item4_hero_vs_targets.png, night_iter6_summary.png (tools/boards_i6.py), evidence/
   hero-d4d5-*ppm.png = h91 (hero-d4-* unchanged, byte identical); ladder +1 row; README rows + section.
+- 02:34 (timestamps of the three entries above corrected to the clock; they were first written ahead of it.)
