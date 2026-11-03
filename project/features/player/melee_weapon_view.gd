@@ -88,8 +88,8 @@ func _draw() -> void:
 		if _hot:
 			draw_arc(_tip, 7.0, 0.0, TAU, 12, Color(SPARK, 0.7), 1.5)
 		return
-	_bar(_grip - dir * 4.0, hilt, 3.0, GRIP)
-	_bar(hilt, _tip, 2.2, STEEL)
+	_bar(_grip - dir * 4.0, hilt, 3.4, GRIP)
+	_bar(hilt, _tip, 3.0, STEEL)
 	draw_line(hilt - dir.orthogonal() * 3.5, hilt + dir.orthogonal() * 3.5, INK, 2.0)
 
 
