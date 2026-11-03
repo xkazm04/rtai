@@ -17,6 +17,20 @@ static func shipped() -> StageCells:
 	return StageCells.new(CityGen.from_tables(CitySystem.DISTRICT, CitySystem.TEXTURES))
 
 
+## Generates every chunk under `points` now (at load), so play never waits on one; returns the
+## microseconds it took.
+func prewarm(points: Array[Vector2]) -> int:
+	var t0: int = Time.get_ticks_usec()
+	for p: Vector2 in points:
+		@warning_ignore("return_value_discarded")
+		code_at(floori(p.x), floori(p.y))
+	return Time.get_ticks_usec() - t0
+
+
+func chunk_count() -> int:
+	return _chunks.size()
+
+
 func code_at(cx: int, cy: int) -> int:
 	if cx < 0 or cy < 0 or cx >= SimConst.W or cy >= SimConst.W:
 		return SimConst.C_VOID

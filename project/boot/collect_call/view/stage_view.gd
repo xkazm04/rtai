@@ -8,6 +8,8 @@ extends Node2D
 const ART: String = "res://features/quest/art/collect_call/"
 const KERB_ROWS: float = 338.0
 const PROPS: String = "res://features/city/art/props/"
+## Places at least this big (m) get their name stencilled on the city street.
+const STENCIL_MIN_R: float = 3.0
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
@@ -24,6 +26,8 @@ func _draw() -> void:
 		return
 	if zones:
 		_zones()
+	else:
+		_stencils()
 	for spot: String in stage.layout.hide_at:
 		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6), PROPS)
 	for phone: String in stage.layout.phones:
@@ -51,6 +55,15 @@ func _zones() -> void:
 	_road(Rect2(road.x - 22, road.y + 3, 50, 5))
 	_kerb(Rect2(road.x - 22, road.y + 3 - KERB_ROWS / 96.0, 50, KERB_ROWS / 96.0))
 	_floor(Rect2(road.x - 22, road.y + 3, 50, 5), Color(0, 0, 0, 0), "HARBOR ROAD")
+
+
+## On the city: each place's name stencilled on the asphalt in road paint (the names are the
+## places table's marker ids), above the place.
+func _stencils() -> void:
+	for name: String in stage.layout.places.markers:
+		var m: QuestPlaces.Marker = stage.layout.marker(name)
+		if m.radius_m >= STENCIL_MIN_R:
+			Ink.label(self, m.at - Vector2(0.0, 2.2), name.to_upper(), 30, Ink.CREAM)
 
 
 func _floor(r: Rect2, fill: Color, name: String) -> void:

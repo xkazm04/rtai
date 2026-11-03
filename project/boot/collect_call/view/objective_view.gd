@@ -49,7 +49,8 @@ func _goal(goal_m: Vector2) -> void:
 	var at: Vector2 = centre + (goal_m - stage.arena.rivet.pos) * px_per_m
 	# the clear band between the top panels and the subtitle box
 	var top: float = minf(TOP_CLEAR, centre.y - 40.0)
-	var bottom: float = maxf(screen.y - BOTTOM_CLEAR, centre.y + 40.0)
+	var clear_below: float = BOTTOM_CLEAR if _subtitled() else EDGE_INSET
+	var bottom: float = maxf(screen.y - clear_below, centre.y + 40.0)
 	var inner: Rect2 = Rect2(EDGE_INSET, top, screen.x - EDGE_INSET * 2.0, bottom - top)
 	if inner.has_point(at):
 		if at.distance_to(centre) > RING_PX:
@@ -72,3 +73,8 @@ func _goal(goal_m: Vector2) -> void:
 	var head: PackedVector2Array = [tip, base + wing, base - dir * -8.0, base - wing]
 	draw_colored_polygon(head, Ink.VERMILION)
 	draw_polyline(head + PackedVector2Array([tip]), Ink.INK, 3.0, true)
+
+
+## A line is on screen (the subtitle box covers the bottom band).
+func _subtitled() -> bool:
+	return system != null and system.runner != null and system.runner.lines.current != null

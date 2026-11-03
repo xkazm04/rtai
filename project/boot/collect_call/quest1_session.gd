@@ -74,6 +74,8 @@ func _add_city() -> void:
 	city = CitySystem.new(true)
 	city.steer_by_input = false
 	stage.cells = StageCells.shipped()
+	var us: int = stage.cells.prewarm(stage.layout.extent())
+	Log.info("quest1", "city cells: %d chunks in %d ms" % [stage.cells.chunk_count(), us / 1000])
 	stage.follow = city
 	city.focus = stage.layout.rivet_start
 	city.target = city.focus

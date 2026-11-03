@@ -74,6 +74,18 @@ func marker(name: String) -> QuestPlaces.Marker:
 	return places.markers[name]
 
 
+## The stage's places, spawn points, hide spots and patrol corners (world metres).
+func extent() -> Array[Vector2]:
+	var out: Array[Vector2] = [rivet_start, crates_at]
+	out.append_array(spawn_points.values())
+	out.append_array(hide_at.values())
+	for m: QuestPlaces.Marker in places.markers.values():
+		out.append_array([m.at, m.phone])
+	for p: Patrol in patrols:
+		out.append_array(p.route)
+	return out
+
+
 ## A stage point in world metres.
 func w(p: Vector2) -> Vector2:
 	return origin + p * squash
