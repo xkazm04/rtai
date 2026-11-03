@@ -1664,3 +1664,36 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
   differs by up to 27 k px at city-0 32 - the moving crowd and traffic). So the "% px differ" figures in the 06:09
   entry include run noise; the same-scene visual boards are the evidence, not the counts. The quest grabber and
   fx_showcase (`--fixed-fps 60`) are the deterministic scenes.
+- 06:18 GATES at 3083177 (final art of iteration 18): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter18/gates-3083177.txt`).
+  Provenance re-audit: 231 shipped PNGs, 0 missing, 0 stale. scratch-v3 synced with the two tick-mended tiles.
+
+## SUMMARY iteration 18 (raise the weakest items; every change before/after in-engine)
+Sheet `masters:night/d4-production/night_iter18_summary.png` (= `evidence/iter18/night_iter18_summary.jpg`); ladder2
+rows "i18 asphalt ...".
+1. Asphalt patches removed from 5 road + 2 curb tiles (7a35d1b) + 2 leftover dash ticks (0b08658): n-visual's print
+   stamped them as dark boxes every 8 m; the target's asphalt has none. Merged and n-d4-alone boards at 32 / 48 / 64.
+   Originals `masters:backup_ground18/`; tools `patch_clear2.py`, `gutter_mend.py`, `tick_mend.py`; README step 12.
+2. Provenance audit (5bc954d): 3 procedural quest tiles had no line, the procedural lamp post's line was stale; fixed.
+3. Bench on a near-idle box (first run tonight): rc 0, p99 2.45 ms, 0 hitches > 50 ms (two other lanes' Godot
+   started mid-run, so not a clean idle number).
+4. Morning stack on n-visual ce0db12 (whole-page aged paper) + patches 16 / 19 / 21 / 23: green (unit 266/266); FX and
+   quest 1 re-checked under it.
+- Looked at, no change: roof values vs the target (same band), in-world souls (n-d5 has a set), paving blotches
+  (n-visual's aquatint, REQUEST 22), oil vs blood decals, plaza paving, corner / intersection tiles.
+- Finding: city_frame is not pixel-identical run to run (crowd / traffic); trust its boards, not px counts.
+- Codex this iteration: 0 images. Night total unchanged: 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (iteration 18; the iteration-16 final NEXT stands where not superseded):
+- Owner review (each reverts alone): 7a35d1b + 0b08658 (asphalt patches; originals `masters:backup_ground18/`).
+  Iteration-16 list stands (767ee6c, 97558d7) and iteration 14's (165ae0f, d6317ee, fc6501c, 62923f7).
+- Director, morning order unchanged (dry-run green on n-visual ce0db12; d8925e2 adds docs only): merge n-d4, merge
+  n-visual, `git apply` REQUEST 16 `iter14/q1_view_art.patch`, 19 `iter10/generator_art_pick_v2.patch`, 21
+  `iter16/rig_sleeves_and_looks.patch`, 23 `iter14/fx_fade.patch`; re-bake; re-bless n-visual's look / block goldens
+  (they move with the ground tiles too now). JOURNAL.md is the only conflict.
+- Owner questions unchanged: hatch Rivet's limbs at 64 px/m only?; HUD / lettering font; cop uniform vermilion share;
+  blood ink vs vermilion; teal robot eyes; speaker names in vermilion; REQUEST 24 (in-world souls).
+- Code-side gaps vs the target (not this lane): roof parapets / cast shadows, junction zebra layout (zebras ring the
+  centre tile, the target's cross the approaches), street-clutter placement, paving aquatint (REQUEST 22).
+- Worktrees: `scratch-q1` (main + quest patch), `scratch-v3` (full morning stack on ce0db12, patches uncommitted;
+  dangling e011f35 / 190f3ba). scratch-v2 removed. Nothing pushed or merged.
