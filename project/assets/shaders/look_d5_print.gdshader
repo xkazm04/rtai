@@ -4,7 +4,8 @@ shader_type canvas_item;
 // either neighbour), so a 1 px pen line prints ~3 px wide: at 32 px/m a roof keeps the mock's tone OR visible hatch,
 // never both (iteration 5), and fine shadow hatch prints as stripes (iteration 6). Inking only where the pixel is no
 // lighter than its 4 neighbours keeps thin lines thin and puts object outlines on the object.
-// Everything else is look_d4 verbatim (keep in sync). Dev A/B: D5_PRINT=thin with dev/showcase/d5_hero.gd.
+// Second change (iteration 7): the 5% paper grain is hashed on world pixels w, not FRAGCOORD (look_d4 re-rolls it on
+// every camera move: pan swim). Everything else is look_d4 verbatim (keep in sync). Dev A/B: D5_PRINT=thin.
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
 uniform vec2 world_px = vec2(0.0);
@@ -92,5 +93,5 @@ void fragment() {
 	col = mix(col, TEAL, smoothstep(0.30, 0.45, tden) * teal);
 	col = mix(col, INK, ink);
 	col = mix(col, INK, step(0.985, hash(floor(w))) * 0.5 * grit);
-	COLOR = vec4(col * (1.0 - 0.05 * hash(floor(FRAGCOORD.xy))), 1.0);
+	COLOR = vec4(col * (1.0 - 0.05 * hash(floor(w) + vec2(17.0, 5.0))), 1.0);   // world-locked grain (look_d4 hashes FRAGCOORD: pan swim)
 }
