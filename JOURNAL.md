@@ -1316,3 +1316,4 @@ night_iter7_summary.png and the iteration-7 order.
   README 9.1 gained the one-command plate rebuild for adoption and the two rejections.
 - 05:39 GATES (iteration 9): evidence tool (--no-parity --no-bench) ALL PASS at 037ba7d (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 87 untracked evidence PNGs moved aside and restored; tree clean (project/ unchanged this iteration: item48 is a package component built by masters tools).
 - 05:39 FIX: the cap entry was stamped 05:40 ahead of the clock; corrected to 05:38. From here every stamp comes from `date`.
+- 05:40 evidence/hero-pkg9-{32..128}ppm.png (i9mot) and arena-pkg9-{64,128}ppm.png (a32v9): the package v9 showcase frames beside the committed hero-d4d5-* (README table row). By eye at 48 (i9mot): no defects, membranes tan under the hatch, no visible blotch repeat between roofs.
