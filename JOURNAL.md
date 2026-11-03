@@ -291,3 +291,15 @@ NEXT (night run, after the 00:00 merge), in order:
   test_save_facade.gd `user://test_save/facade` are fixed paths in the project's shared user:// dir, so every
   worktree of gtai writes the same folder. Not changed here (not this lane's file, and it is freeze time);
   REQUEST 4 stands: derive the scratch dir per worktree (e.g. hash of ProjectSettings.globalize_path("res://")).
+- MILESTONE 23:19: unit gate re-run alone (31 s) = 570 passed / 0 failed (evidence/ghost-powers/unit-iter6.log).
+  The iteration-5 red was the shared user://test_save collision, as diagnosed; every gate is green at cb62571:
+  lint 13/13 (pre-commit), unit 570/570, scenarios 20/20 (iter 5c, no sim change since).
+
+NEXT (night run, after the 00:00 merge), in order:
+1. REQUEST 4 (save owner / night run): per-worktree scratch dir for the save tests, so parallel lanes stop colliding.
+2. The tank on Rivet's real rig in the playable view + cast-rig victims with hit reactions; then re-ask
+   ghost-powers-1/2 with that real-time clip in the D5 look (owner's 21:25 rule).
+3. Gearbox ArenaHook on gearbox_pad (e-arena's ArenaHook / stage.cars() / soul_hijack); show residue there
+   (residue_s 2 on the pad only, via station data once the hook reads per-station tuning).
+4. The Hauler in the arena pit (`--start=pit`: the pit's waves are hostiles; the pad bots are dummies).
+5. Bench the city-path blood (riot scene) when bench.lock is free.
