@@ -1161,3 +1161,7 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   (shade_k 0) -> 1.123. No single print term drives it: the residual ~1.12 is the D5 art's own detail (rust, the
   steel ramp) moving with the limbs, which is the point of the tier, not aliasing. Nothing to fix in the print.
 - 04:53 scratch deleted (numbers logged above, no board cites them): frames/h128fa, h129fa22, h131ps, h136fe, h137, h138all, a21all, h143, h145, swf_*, swr_*, walk8_*, walk9_*, walk10_*, cost8, cost8b, cost8c. Kept the rounds the boards cite: h125, h126fr8, h127fr10, h130ff, h132ps7, h133ps, h134pkg, h135cl, h139rs, h140all, h141rs, h142dt, h144dt3, a20, a20ff, a22rs, a23all, a24rs, a25fd, cost8d.
+- 04:54 RE-CHECKED the car-camera pan after iteration 8's world additions (d5_pan, 48 px/m, 40 ticks, the default
+  junction crop; the pan launcher takes no --borrow, so no parked cars: the first try passed it and exited, re-shot):
+  committed pan17 d5 0.00732 (pan10, iteration 6: 0.00739); package pan17pkg 0.00049 (= pan14sh). The prop shadows'
+  hatch is world-locked like the building shadows: no added swim.
