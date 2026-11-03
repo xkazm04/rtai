@@ -866,3 +866,48 @@ NEXT (iteration 12 close, in order):
   30-tick period): 201 unit pass, lint 13 pass. The arc radius moved into `radius(k)` (same expression; not
   re-rendered, so pixel identity is assumed, not shown).
 - 05:10 Stop. Last commits: 5143f55 (code + gates PASS), then the NoirCue test. No process of mine running.
+
+## Iteration 14 (BUILD, 05:09 - , stop by 06:39)
+- (05:10) Read JOURNAL, git log, NOIR.md. Leonardo probe skipped this session: no image generation planned
+  (the work is engine-side); images 0.
+- Choice: the weakest standard scene is the roofs (`look-v4/roofs-noir-48ppm.png`: a flat white field of grid
+  and rain - nothing of the "big black shadow masses carved by white light" the brief asks for). The street and
+  junction already have the light (lamps, cones) carving the black.
+- MILESTONE (05:12-05:24, 05d405a) **long cast shadows**: `features/fx/noir/noir_shadows.gd` (NoirShadows). Every
+  shadowed draw command of the resident chunks (the D4 offset-shadow copies: kerb props, parked cars, the roof
+  blocks) also casts a long hard shadow - its own silhouette swept away from `light_dir` by `len_m` per texture
+  class (look_noir.params.json new table `shadows`: building 3.0, prop 1.0, vehicle 0.8; `by_name` lamp_post 0,
+  traffic_light 0), printed flat at `value` 0.1 by `look_noir_shadow.gdshader`. Drawn in the world canvas (z 1,
+  draw index -1000: above the ground, under every prop and roof), created lazily by NoirLook.light_street
+  (no change to city_view.gd or chunk_view.gd), hidden with the look (so the D4 frames are byte-identical:
+  0 changed px in all 9 D4 frames). Unit test (2): lengths by name/class; only shadow commands with a length
+  are swept.
+  Evidence (noir_frames --fixed-fps 60, same tick, masters night/noir/shadow-v2/{before,after}):
+  evidence/cast-shadows-before-after.png (roofs 32/48, street 32/48/64). Read: **roofs - clear gain**, each
+  roof unit / barrel cluster now stands on a long ink shadow, the white field gets black masses and depth.
+  **Street - modest** (most shadows fall on asphalt that is black already; the pavement props and building
+  corners gain a hard shadow). **Junction - neutral** (all asphalt; 0 changed px at 64).
+  v1 had the lamp arms casting too: caster-less black blobs (the lamp prints white in its own pool), fixed by
+  `by_name` 0 (v2).
+- TRIED / NOT ADOPTED (05:25) shadow value 0.03 (under lamp_gate, so shadows stay ink inside lamp pools): props
+  inside a pool print white, so their shadows became caster-less black brackets (bus stops, benches) - worse.
+  evidence/cast-shadows-value-0.03-NOT-adopted.png. Kept 0.1: a lamp pool lifts the shadow away with the prop.
+  Left: a shadow that straddles a pool's edge leaves a small fragment (roofs 32 px/m, one diamond).
+- COST + FIX (05:28-05:38, 0854fab). Measured the stamp version first (noir_cost gains `--scene=roofs` and
+  `--shadows`: blocks alternate noir without / with the shadows; RTX 4090, 1920x1080): 61,855 stamps over 14
+  chunks, chunk record **2.1-2.5 ms in one frame** (a hitch, over ChunkView's own 1.5 ms slice), CPU render
+  0.17 -> 0.34 ms; GPU in the noise. Rewrote it as ONE quad per caster (the region runs past the texture so
+  uv = texture uv; the shader takes the max alpha along the sweep; the sweep + tap count travel in the modulate
+  colour). FRICTION: first try showed almost no shadows - Godot 4's fragment COLOR is already multiplied by the
+  texture, so the packing has to go through a varying from vertex(); found with a UV debug frame.
+  After: **1,972 quads, record 0.22-0.32 ms, CPU render +0.06 ms**, GPU 4090 +0.02 ms (z1) / +0.10 ms (z2) (in the
+  noise); AMD iGPU (`--gpu-index 1`, z1.5) 9.78 -> 10.10 ms (+0.32). Frames vs the stamp version: <= 361 px
+  differ per frame (edge anti-aliasing: max alpha vs stacked stamps), 0 at street 48/64. Files:
+  evidence/cost-shadows-stamps-roofs-z*.json, cost-shadows-quad-roofs-z*.json. Ladder row 34 (34 rows).
+- (05:41) Street showcase re-recorded with the shadows (masters night/noir/shadowshow/48, same flags as oilcar:
+  `--coat --noir-parts --at=501,523 --car-pass`): ~3,100 px change per frame, one small shadow beside the
+  newsstand - the street fight's ground is asphalt and lamp pools, so the hero (showcase-hero-car.png) is NOT
+  re-built; the clip there is the current state.
+- (05:43) Gates at 0854fab (`run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios, parity (1200
+  steps, mutation caught at 629), selftest all PASS; JSONs in evidence/. NOIR.md: iteration 14 paragraph, a
+  cast-shadow row, 34 ladder rows.
