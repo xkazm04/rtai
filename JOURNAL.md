@@ -1393,3 +1393,10 @@ item47 (owner A/B) -> night_iter7_summary.png.
   D5_PRINT_SET dev switch. A broken commit (1b1cc5f, PAPER_HI const missing) was fixed in the next one.
 - NEXT 35 amended: adopting the print = look_d5_print with print.paper_hi 1.0 from the params JSON + the v9 plates.
 - 05:56 GATES (final, iteration 9): evidence tool (--no-parity --no-bench) ALL PASS at f1bc6e2 (lint 13/13 over 193 files, unit 149/0, scenarios 8/0, selftest ok); 95 untracked evidence PNGs moved aside and restored; tree clean. The selftest read 102 actors at 32 px/m (103 before); two more runs at f1bc6e2: 103 / 82 colours and 103 / 76: selftest noise (its frame timing), not a change of mine. Parity / bench not run (no native build in this worktree).
+- 05:56 session close (cap 06:43): tree clean, every change committed, last code commit (lo_soft, default no-op)
+  passed the full gate run at f1bc6e2. Kept rounds (masters frames/): i9pkg (v8), i9mot (v9 without paper_hi),
+  i9ph1 (final v9), i9base / i9cmot (committed scene, membrane under the committed print), i9pan_pkg / i9pan_mot /
+  i9pan_jh / i9pan_rh, a32v9 / a34der / a35v9. Images: 50 of ~50 used; none this iteration.
+NEXT: 35 (amended: look_d5_print + print.paper_hi 1.0 + the v9 plates, one change), 36 (road share), 37 (next plates),
+on top of iteration 8's 31-34 and iteration 7's 27-30. Morning reading order: night_iter9_summary.png -> item48 ->
+item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A/B) -> night_iter7_summary.png.
