@@ -405,3 +405,31 @@ NEXT (iteration 6 close, in order):
   visual-engine lanes'; codex-windows-sandbox-service is Codex's own service).
   Morning entry points: evidence/NOIR.md, evidence/showcase-hero.png, masters night/noir/show-final3/*.mp4,
   evidence/ladder.png. NEXT: the list above (iteration 6 close).
+
+## 2026-11-03 iteration 8 (BUILD), 01:58-03:28
+
+- 01:58 Read JOURNAL + git log (head df54a58). No iteration 7 entry in this journal. Leonardo probe (key not
+  printed): apiSubscriptionTokens 0, apiPaidTokens null -> Codex only, if any images.
+- MILESTONE (02:07) photosensitivity, measured (NEXT item 2). New tool (outside git, masters
+  night/noir/tools/flash_check.py, `python -I flash_check.py <clip>`): an approximation of the WCAG 2.x
+  2.3.1 general-flash test - linear relative luminance averaged over sliding quarter-screen windows,
+  transitions of >= 0.1 with the darker side < 0.8, a flash = a pair of opposite transitions, worst
+  count in any 1 s. LENIENT on small local flashes (its windows are bigger than WCAG's ~10-degree area)
+  and it has no red-flash test, so it is a smoke test, not a certification.
+  BEFORE: show-final3 noir 48 = 3 flashes in one second (frames 177-222: light, beat, light) - AT the
+  limit with zero margin; quest-v4 = 3 too; D4 = 0. The two separate caps (light 3/s, beat 1/s) could
+  add up past 3 together. (A first version of the tool double-counted; fixed before these numbers.)
+  FIX: `features/fx/noir/flash_budget.gd` (FlashBudget): ONE budget shared by the kill beat (cost 2)
+  and the muzzle light (cost 1), 3 per 60 ticks, and the light only spends when a beat would still fit
+  (safe-v1 showed a round just before a kill otherwise turned that kill's beat calm - fixed in befeb57).
+  Net: at most 1 light + 1 beat a second. The light now lights 1 round a second (was up to 3): in the
+  showcase 3 of 6 rounds light (f064, f150, f230), f104/f194/f270 do not - a visible cost.
+  Flashes-off mode: params `safety.flashes` (ships true) / `--flashes=off` in showcase_fight and
+  quest_fight: no muzzle light, and the kill beat is the CALM one (no white flash, no gutters, the
+  hit-stop kept, the held pose framed by a thin PAPER border - v1's ink border vanished on black).
+  AFTER: safe-v2 (default) = 2 flashes max in any second, 2 full-frame flashes (the two kills); safe-v3
+  (flashes off) = 0. 188 unit pass (+5: test_flash_budget.gd), lint clean.
+  Evidence: masters night/noir/safety-before-after-48.png (rows before / budget / flashes off, cols the
+  fire ticks and kill 101), safety-calm-beat-48.png (calm beat v1 ink border vs v3 paper border), clips
+  safe-v2/showcase-noir-48-budget.mp4, safe-v3/showcase-noir-48-flashes-off.mp4 (both also in evidence/
+  as PNG sheets). Not yet: a settings-menu toggle (core/settings is a README only; the param is the hook).
