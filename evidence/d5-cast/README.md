@@ -23,3 +23,9 @@ Iteration 3 (2026-11-03, 11:00-11:35):
   ~37 % teal only under the shader's default teal uniform (dev scenes such as the D5 hero). See its CORRECTION.
 - `cop-rim-t1.json`: iteration 4, T1's thick ink ring around the D4 cop dome (real city A/B at 32/48: ink px in the cop zones up, blue px and blobs unchanged).
 - `cruiser-parked-plate.json`: iteration 4, the proposed look_d4 cop-blue plate (d5-city's shader; patch in masters) proven on a merged scratch tree: a parked cruiser's bar grey -> cop blue at 48/64, goldens unaffected by the patch.
+- `rivet-footprint.json`: iteration 5 adds Rivet's T2 hunch (1.90 x 2.05 m) and King; 15:55 adds the King size
+  option (1.2 = 2.15 x 2.62 m vs shipped 1.3 = 2.33 x 2.84 m; `king_showcase --king-size`).
+
+Late afternoon (15:40-17:00): the D5 hero scene's borrowed cruiser bar in cop navy (masters
+`day-d5/d5-cast/borrowed/`, `d5_hero --borrow=<dir>`; frames `cruiser-hero-navybar-ab.png`); a CONTENDED headless
+rig bench (`build/evidence/rig-bench-*.json`, git-ignored; numbers in JOURNAL.md).
