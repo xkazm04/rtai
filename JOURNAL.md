@@ -639,3 +639,10 @@ NEXT (iteration 8 close, in order):
   at --at=501,520.5 a car drove straight through Rivet and the body (the same evidence image, 9.5 / 10.0 s).
   A camera-break-class defect, so not in the hero. Needs the fighters as sim obstacles (or a scripted car).
   Masters cars-show2/ (clip + strip). Flag kept, with the caveat in its doc line.
+- (03:45) The junction showcase re-shot with the lights: masters night/noir/show-final6/ (noir 32 / 48 / 64 at
+  efd6435; D4 48 copied from show-final5, the D4 run never reads look_noir). Checked frame by frame against
+  show-final5: all 48 and 64 px/m hero frames are pixel-identical (no lamp or car within reach of the
+  junction view; the showcase has 0 cars), only the 32 px/m frames change (lamp pools from off-screen posts
+  on the four corner pavements): evidence/show-32-final5-vs-final6.png. So evidence/showcase-hero.png (48/64)
+  stands as it is. The four posts in the junction's corners are traffic signals, not `lamp_post`, so they
+  throw no pool. Flash meter show-final6 noir 32 / 48 / 64: 2 per second max, 0 red.
