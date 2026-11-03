@@ -9,7 +9,7 @@ and re-prints it at luminance `paper_level * l^gamma`, hue kept; accent pixels (
 `accent_keep` of their value. Uniforms come from a lights.json `grades` row (+ the palette gates);
 `day` is the identity and hides the rect. See core/render/README.md "The 2D light model".
 `age` (0 = off) is the page age: the D5 overlay's aged paper, applied here first, to neutral pixels only
-(`age_dark` / `age_light` = look_d5's mock-median gains), so the world and the actors above it warm
+(`age_dark` / `age_light`: per-channel gains solved so the aged D4 street / paper land on d4h2_mock.jpg's medians 81,71,72 / 243,218,188), so the world and the actors above it warm
 together; the rect draws when the grade is not the identity OR the age is > 0 (core/render/README.md
 "Page age").
 

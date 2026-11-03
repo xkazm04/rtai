@@ -135,7 +135,9 @@ Page age (`LookOverlay.page_age_of` -> `LightLayer.set_page_age` -> `grade_ink` 
 params `age` / `age_floor` (look_d5 "aged paper") are NOT sent to the overlay, which sits under the
 actors; the view hands `max(age x amount, age_floor)` (0 for a look without the overlay) to the light
 canvas' grade rect, which warms the neutral print of the whole page - world, actors, vehicles, FX -
-before the lights. Found in the 4-lane trial merge (2026-11-03): with the world-only age, every D4
+before the lights. The gains (`grade_ink` `age_dark` / `age_light`) are solved per channel so the
+aged D4 street and paper land on the mock's medians (81,71,72 / 243,218,188; look_d5's own constants left
+the street at 89,74,69). Found in the 4-lane trial merge (2026-11-03): with the world-only age, every D4
 cream body read cool-grey on the warmed paper at 64 px/m (cool light px 10 911 -> 0 at the block,
 12 218 -> 0 at the junction; paper and street unchanged; accent shares unchanged). At 48 px/m and
 below (amount 0, age_floor 0) the rect stays hidden: 32 / 48 frames byte-identical, zero cost. Cost at
