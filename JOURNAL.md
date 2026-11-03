@@ -440,3 +440,19 @@ NEXT (night run; same as iteration 5's NEXT, with item 2's weapon kick done in a
   clip. Both are still a few pixels and have to be judged in motion. The cops at the very edge show again why the
   camera lead (arena-2) is needed. Not added to frames.json (it is at 15). For the night run: swap it in for the
   32 px/m recoil clip once the camera lead lands.
+
+## Iteration 7 (BUILD, 23:21-23:30, freeze 23:30)
+- 23:21 answers.json re-read: no new answer to an arena ask (arena-1 C and arena-2 A stand as placeholders,
+  owner 21:25 rule: no tuning on numbers; re-ask only with a real-time clip in the final look).
+- 9 minutes to freeze, too short for a code change plus all four gates, so no code this iteration.
+  Committed two stray logs with honest names: `evidence/arena/unit-it6-contended-2316.log` (443/569 at
+  23:16 with other lanes' Godot running; it was wrongly saved as "-alone") and
+  `evidence/arena/unit-it3-rerun-full.log` (iteration 3's full rerun output). The unit run of record for
+  iteration 6 is `unit-it6-rerun.log` (569/569 alone, 23:17).
+- Branch state for the 00:00 merge: last code commit a08445f (gates: lint 13/13, unit 569/569 alone,
+  scenarios 24/24). Everything after it is docs/evidence only.
+
+NEXT (night run): unchanged from iteration 6's NEXT list above (1: gates on the merged tree, unit alone
+per REQUEST 7; 2: `--rigs` as the default with rivet-motion/enemy-ai plans; 3: Gearbox ArenaHook + pad bot;
+4: the 48 px/m vertical-sample clip with the arena-2 camera lead, judge rifle vs pistol kick in it;
+5: dummies' own look).
