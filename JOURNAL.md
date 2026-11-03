@@ -599,3 +599,37 @@ NEXT (session end, iteration 4; supersedes the NEXT list in the 00:43 summary wh
   tooth. In-lane before/after `before_ag|after_ag/city-*` + boards `corner|decals` at 32/48/64
   (`work/ag_corner64.png`): no tile seams (corner and straights grain alike). 11 provenance lines. Commit 20bb95b.
   Ladder rows 3.
+- 01:00 MILESTONE pavement de-tiled. sidewalk_tone is the ONLY pavement texture (8 m, 4 x 4 slabs), so its 3 crack
+  squiggles + 5 hatch stains lined up in rows every 8 m at 32 px/m (wallpaper tell, city-2). `tools/sw_declutter.py`:
+  2 cracks + 3 stains replaced by the same slab-relative pixels of a clean donor slab (joints byte-identical, checked).
+  `after_ag|after_sw3/city-*` + `corner-64` (`work/sw_ab.png`). Commit d365cba.
+- 01:00 GATES at d365cba: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact,
+  selftest 65 art textures, 0 placeholders.
+- 01:03 FINDING: main gained quest 1 (collect-call, 721fbbb) whose view (`boot/collect_call/view/`, DEVIATION GDS-08)
+  draws every place and person as flat placeholder boxes with letters. That is the slice's biggest visible
+  placeholder set now, and the art is in my scope (the view code is not).
+- 01:10 MILESTONE quest 1 places in D4. Codex d4n_q1 (5 cells, **0 rejected**): TUCK-IN crate (robot-and-bolt
+  stencil, vermilion bolt = objective), the sabotaged crate, taped cash, catwalk (tiles 4 m), dock gate.
+  Procedural (no AI pixels, `tools/build_q1_floors.py`): Dock 9 floor (4 m slabs, bay line), Toner Room basement
+  checker, vault-cage chain-link mesh (RGBA). `features/quest/art/collect_call/` + README (footprints = what the
+  placeholder view draws). Evidence: quest 1's OWN frame grabber (`dev/frames/collect_call_frames.gd`, seeded) in a
+  scratch worktree at main 721fbbb: `before_q1/` (main as is) vs `after_q1f/` (+ my art + a LOCAL view patch,
+  `masters:night/d4-production/q1_view_art.patch`, not committed: view code is the quest owner's). Sheets
+  `work/q1_ab_sheet.png`, `q1cast_ab_sheet2.png`. Through look_d4 at 32/48/64: new `--page=quest` board
+  (`after_q1board3/`). Fixes found by looking: wheel-scuff arcs repeated per 8 m tile (removed), a 0.25 m cage mesh
+  read as solid hatch (0.5 m kept), dock floor at density 0.50 sat on look_d4's mid step and printed as cloudy speckle
+  (moved to 0.54: flat mid wash), 0.5 m checker busy behind the cast (1 m kept). Commits 153d91d, 6034c96.
+- 01:17 MILESTONE quest 1 cast in D4 (from the package's owner-approved design notes). Codex d4n_q1cast: **4 of 6
+  rejected** (Brass, Kilohm, Don Fax front views; Mertz's cap and face from the front). Retry d4n_q1cast2 with an
+  explicit overhead construction per character + the camera reference: **0 of 6 rejected**. Juno, Brass, Kilohm,
+  Don Fax, the dock guard (vermilion vest = threat), Mertz (vermilion gloves). 120 px/m, facing -y.
+  FRICTION: at the gameplay footprints the thin robots and the guards read as specks next to the placeholder boxes
+  (`after_q1e`); drawn at 1.5x (guard 1.7x) they carry the boxes' visual mass (`after_q1f`). README says so.
+  Teal neutralised (doctrine); the package asks for teal robot eyes - **owner call**. Commits 3876da7, 9ce186d.
+- Codex this iteration: 3 images (d4n_q1, d4n_q1cast, d4n_q1cast2), 17 cells, 4 rejected. Night: 23 images,
+  158 cells, 7 rejected.
+## REQUESTS (iteration 6)
+16. quest 1 owner (via the Director): apply `masters:night/d4-production/q1_view_art.patch` (stage_view.gd +
+    cast_view.gd, about +60 / -35 lines, compiles warnings-as-errors) or an equivalent once n-d4 is merged; then drop
+    the placeholder labels that the art now carries (TUCK-IN, the cash box) per the GDS-08 deviation's re-check.
+17. quest 1 owner: the quest view has no look_d4 pass (raw art at its own zoom); the D4 read is the board's.
