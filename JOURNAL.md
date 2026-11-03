@@ -225,3 +225,8 @@ NEXT (iteration 49 end):
   positional at the wreck, 19.6 s, RMS -24.9 dBFS (the beds sit at -18..-20), peak -1.0..-2.4 after a tanh soft limit at -3, 0.25 s fade in, 5 s fade out. QC by hand: 2 of 2 kept, 0 rejected;
   per-second RMS steady within 4 dB for 15 s (no explosion, no voices), peaky crackle (spectrogram evidence/spectro/fire_crackle_0{1,2}.png: broadband pops over a steady bed, fade at the end).
   Unit test `test_a_car_wreck_also_starts_its_fire_bed` (357 tests pass; the run printed `import exit 3221225477` with 0 failed: an import crash on a contended machine, not a test failure), lint 13/13. Provenance +2 lines. Not heard by a human; not yet recorded on the real vehicles lane (it is in its own branch: the clip needs the merge).
+- MILESTONE (16:25) fire bed proven on the vehicles lane's real carnage route (scratch merge d-vehicles f2259ec + d-audio, deleted afterwards; scene = evidence/requests/audio_vehicle.gd.txt): 30 s, headless cue report
+  evidence/mix/vehicles_fire_cues.json: `car_wreck` 2, `fire_crackle` 2, crash 5, hit_metal 2, horn 3, missing [], dropped only `crash:cooldown` 2. FOUND + FIXED: with `car_wreck` cooldown 30 ticks the second wreck
+  (0.3 s after the first) got no boom and no fire (1 of 2 wrecks heard); cooldown -> 8 ticks on `car_wreck` and `fire_crackle` (max_voices 2 / 3 still bound it): 2 of 2.
+  Clip evidence/mix/vehicles_fire.mp4 (30 s, D3D12 movie maker, 640 px, CONTENDED GPU, not timed): **-17.5 LUFS, true peak -1.1 dBFS (AAC re-encoded; two booms + crashes stack, the hottest clip of the lane, watch it)**.
+  Frame at 14 s looked at: straight down, two burning wrecks with flames, 0 camera breaks rejected. 357 unit tests pass, lint 13/13.

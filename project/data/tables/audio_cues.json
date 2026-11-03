@@ -424,7 +424,7 @@
     },
     {
       "bus": "sfx",
-      "cooldown_ticks": 30,
+      "cooldown_ticks": 8,
       "doc": "a car turned wreck and exploded (vehicles lane car_wreck, fired with a crash)",
       "gain_db": -1,
       "id": "car_wreck",
@@ -485,7 +485,7 @@
     },
     {
       "bus": "sfx",
-      "cooldown_ticks": 30,
+      "cooldown_ticks": 8,
       "doc": "a wreck burns (layered under car_wreck; the vehicles lane's VehicleFire burns 24 s, fading over the last 6): a crackling bed that fades with it",
       "gain_db": -5,
       "id": "fire_crackle",
