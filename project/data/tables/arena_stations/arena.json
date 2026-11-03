@@ -174,13 +174,13 @@
       ],
       "tuning": [
         {
-          "key": "input_actions.movement.turn_dps",
+          "key": "input_actions.move.turn_dps",
           "max": 1440,
           "min": 180,
           "step": 30
         },
         {
-          "key": "input_actions.movement.strafe_scale",
+          "key": "input_actions.move.strafe_scale",
           "max": 1,
           "min": 0.5,
           "step": 0.05
@@ -324,19 +324,19 @@
       ],
       "tuning": [
         {
-          "key": "input_actions.movement.accel_mps2",
+          "key": "input_actions.move.accel_mps2",
           "max": 80,
           "min": 5,
           "step": 1
         },
         {
-          "key": "input_actions.movement.brake_mps2",
+          "key": "input_actions.move.brake_mps2",
           "max": 80,
           "min": 5,
           "step": 1
         },
         {
-          "key": "input_actions.movement.turn_dps",
+          "key": "input_actions.move.turn_dps",
           "max": 1440,
           "min": 180,
           "step": 30

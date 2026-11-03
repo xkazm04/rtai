@@ -1,7 +1,8 @@
 class_name ArenaArgs
 extends RefCounted
-## The dev arena's own args after `--` (read here, not added to the LaunchArgs autoload, which
-## is shared): --ppm=<n>, --bot=<station>, --shot=<png>, --shot-tick=<n>, --telemetry=<json>.
+## The dev arena's own args after `--` (read here, not added to the shared LaunchArgs autoload):
+## --ppm=<n>, --bot=<station>, --shot=<png>, --shot-tick=<n>, --telemetry=<json>, --panel (open
+## the tuning panel), --tune=<key>:<value> (one live change at tick 300, for the panel proof).
 
 var values: Dictionary[String, String] = {}
 
@@ -16,6 +17,10 @@ static func parse(args: PackedStringArray = OS.get_cmdline_user_args()) -> Arena
 
 func text(flag: String, fallback: String = "") -> String:
 	return values.get(flag, fallback)
+
+
+func has(flag: String) -> bool:
+	return values.has(flag)
 
 
 func number(flag: String, fallback: float) -> float:

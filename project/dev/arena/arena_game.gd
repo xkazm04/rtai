@@ -6,14 +6,19 @@ extends Node
 ## player, --shot=<png> saves one frame after --shot-tick=<tick> and quits, --telemetry=<json>
 ## writes the session's telemetry on exit.
 
+const TUNE_TICK: int = 300
+
 var session: ArenaSession = null
 var view: CollectCallView = null
 var px_per_m: float = 32.0
 var hud: ArenaHud = ArenaHud.new()
+var panel: ArenaPanel = ArenaPanel.new()
+var tuning: ArenaTuning = null
 var _shot: String = ""
 var _shot_tick: int = 600
 var _telemetry: String = ""
 var _taken: bool = false
+var _tune: String = ""
 var _zoom_i: int = 0
 var _area_i: int = 0
 
@@ -25,6 +30,7 @@ func _ready() -> void:
 	_shot = args.text("--shot")
 	_shot_tick = int(args.number("--shot-tick", 600.0))
 	_telemetry = args.text("--telemetry")
+	_tune = args.text("--tune")
 	session = ArenaSession.open(Events, Data)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
@@ -44,18 +50,30 @@ func _ready() -> void:
 	hud.session = session
 	hud.px_per_m = px_per_m
 	layer.add_child(hud)
+	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
+	panel.tick_now = session.tick
+	panel.build(session.stations, tuning)
+	panel.position = Vector2(8.0, 200.0)
+	panel.visible = args.has("--panel")
+	layer.add_child(panel)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
 
 
 func _process(_delta: float) -> void:
+	if _tune != "" and session.tick() >= TUNE_TICK:
+		var ok: bool = panel.set_live(_tune.get_slice(":", 0), _tune.get_slice(":", 1).to_float())
+		hud.note = "tuned %s live (%s)" % [_tune, ok]
+		_tune = ""
 	if _shot != "" and not _taken and session.tick() >= _shot_tick:
 		_taken = true
 		_save_shot.call_deferred()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(&"arena_zoom"):
+	if event.is_action_pressed(&"arena_panel"):
+		panel.visible = not panel.visible
+	elif event.is_action_pressed(&"arena_zoom"):
 		_zoom_i = (_zoom_i + 1) % session.plan.zoom_ppm.size()
 		set_zoom(session.plan.zoom_ppm[_zoom_i])
 	elif event.is_action_pressed(&"arena_teleport"):
