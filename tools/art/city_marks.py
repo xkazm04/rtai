@@ -5,7 +5,8 @@ zebra. Deterministic (fixed seed); 96 px/m like every ground tile.
     python -I tools/art/city_marks.py
 writes project/features/city/art/ground/road_box_plain.png, .../decals/zebra.png and
 .../decals/dash_eraser.png, and road_straight*_open.png: the six road tiles with their two
-solid edge lines painted out (T1's streets carry centre dashes only)."""
+solid edge lines painted out (T1's streets carry centre dashes only), and d5/props/lamp_post_ink.png:
+n-d5's D5 lamp with its metal inked to the D4 pole's value (the plain D5 lamp washed out at 32 px/m)."""
 import random
 import sys
 from pathlib import Path
@@ -89,7 +90,23 @@ def open_road(src: Image.Image, vertical: bool) -> Image.Image:
     return img.transpose(Image.TRANSPOSE) if vertical else img
 
 
+def inked_lamp() -> Image.Image:
+    """The D5 lamp's metal through a darker grey curve (luma^1.8 * 170); the cream head stays."""
+    img = Image.open(ART / "d5" / "props" / "lamp_post.png").convert("RGBA")
+    px = img.load()
+    for y in range(img.height):
+        for x in range(img.width):
+            r, g, b, a = px[x, y]
+            luma = (r * 299 + g * 587 + b * 114) // 1000
+            if a == 0 or (luma > 200 and r >= b):
+                continue
+            k = int(max(0, min(255, (luma / 255.0) ** 1.8 * 170)))
+            px[x, y] = (k, k, k, a)
+    return img
+
+
 def main() -> int:
+    inked_lamp().save(ART / "d5" / "props" / "lamp_post_ink.png")
     for name in ROADS:
         src = Image.open(ART / "ground" / f"{name}.png").convert("RGBA")
         open_road(src, "_v_" in name).save(ART / "ground" / f"{name}_open.png")

@@ -267,13 +267,13 @@
       "solid": true
     },
     {
-      "art": "res://features/city/art/props/lamp_post.png",
+      "art": "res://features/city/art/d5/props/lamp_post_ink.png",
       "class": "prop",
       "id": 24,
       "name": "lamp_post",
       "size_m": [
         3.2,
-        0.5
+        0.66
       ],
       "solid": false
     },
