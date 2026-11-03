@@ -84,7 +84,8 @@ func _continue_frames() -> void:
 	_game.card.continue_pressed.emit()
 	_game.session.world.set_process(false)
 	await _save("continue_f1")
-	for i: int in 5:
+	for i: int in 5:  # one tick per frame, as the game steps
+		_game.session.step()
 		await get_tree().process_frame
 	await _save("continue_f6")
 	Log.info(
