@@ -43,11 +43,20 @@ func run(tree: SceneTree) -> String:
 	out["checkpoints"] = saves.map(func(c: Checkpoint) -> String: return "%s@%d" % [c.beat, c.tick])
 	if reason == "":
 		reason = _check_checkpoint(saves, out)
+	if reason == "":
+		reason = _check_restart(game)
 	out["verdict"] = "pass" if reason == "" else reason
 	var write_error: String = write_evidence(EVIDENCE_FILE, out)
 	Log.info("scenario", "quest1 input: %s" % JSON.stringify(out))
 	game.free()
 	return reason if reason != "" else write_error
+
+
+## The failed card's Retry: the game drops its session and resumes the Dock 9 checkpoint.
+func _check_restart(game: Quest1Game) -> String:
+	game.restart(Checkpoint.load_file(SAVE_PATH))
+	var ok: bool = game.session != null and game.session.beat_id() == LOAD_BEAT
+	return "" if ok else "Retry did not resume the %s checkpoint" % LOAD_BEAT
 
 
 ## Drives the run to the end, noting beats, beat checkpoints and objective prompts seen.

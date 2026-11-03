@@ -94,3 +94,7 @@
   live.viewport = get_viewport(); live.origin_px = <Rivet's screen px>; _loop.set_input(live)`.
   Quest 1's StagePilot will call `VehicleService.try_enter(at)` / `exit()` on the car press once
   quest 1 runs in the city (no cars on the invented stage; the press is logged and counted now).
+- 11:12 failed card: if the contract ever fails, "The line went dead." with Retry from the last
+  checkpoint / Quit (Quest1Game.restart drops the session and resumes); the input scenario
+  checks Retry resumes b4-dock. (Death itself respawns at the Toner Room before the quest
+  can see it, so rivet_wasted does not end the run.)

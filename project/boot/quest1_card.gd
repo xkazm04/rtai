@@ -81,6 +81,17 @@ func show_paid(cash: int) -> void:
 	quit.grab_focus.call_deferred()
 
 
+## The contract failed: retry from the last beat checkpoint (when there is one) or quit.
+func show_failed(can_continue: bool) -> void:
+	_clear()
+	_label(_t(&"SLICE__FAILED", "The line went dead."), 48, Ink.INK)
+	var first: Button = null
+	if can_continue:
+		first = _button(_t(&"SLICE__RETRY", "Retry from the last checkpoint"), continue_pressed)
+	var quit: Button = _button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
+	(first if first != null else quit).grab_focus.call_deferred()
+
+
 func hide_all() -> void:
 	_panel.visible = false
 

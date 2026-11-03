@@ -38,7 +38,7 @@ func boot() -> void:
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
 	@warning_ignore("return_value_discarded")
-	card.continue_pressed.connect(func() -> void: start(Checkpoint.load_file(save_path)))
+	card.continue_pressed.connect(func() -> void: restart(Checkpoint.load_file(save_path)))
 	@warning_ignore("return_value_discarded")
 	card.resume_pressed.connect(func() -> void: set_paused(false))
 	@warning_ignore("return_value_discarded")
@@ -96,6 +96,11 @@ func _process(_delta: float) -> void:
 		Log.info("save", "checkpoint %s at tick %d (%d)" % [cp.beat, cp.tick, cp.save(save_path)])
 	if session.paid() and not session.system.runner.lines.busy():
 		_end()
+	elif session.failed():
+		_ended = true
+		session.live.enabled = false
+		Log.info("quest1", "contract failed at %s" % session.beat_id())
+		card.show_failed(save_path != "" and Checkpoint.load_file(save_path) != null)
 
 
 func set_paused(on: bool) -> void:
@@ -106,6 +111,19 @@ func set_paused(on: bool) -> void:
 		card.show_pause(_settings_panel())
 	else:
 		card.hide_all()
+
+
+## Drops the running session (if any) and starts again: from `cp`, or fresh when null.
+func restart(cp: Checkpoint) -> void:
+	if session != null:
+		session.world.queue_free()
+		session = null
+	if view != null:
+		view.queue_free()
+		view = null
+	_ended = false
+	paused = false
+	start(cp)
 
 
 func _end() -> void:
