@@ -1905,3 +1905,20 @@ is JOURNAL-only. Bench still owed on an idle box. Nothing pushed or merged. Sess
 - 07:30 Read JOURNAL (iteration 25 final NEXT), git log. Tree clean at f72b913; content diff vs d2d56a6 is
   JOURNAL + evidence/iter21 only. C: 268 GB free. No Godot process running: the box is idle for the first time
   since iteration 18, so this iteration runs the full evidence set with the bench (the owed idle-box run).
+- 07:31-07:44 CHECK: full evidence at 31f8c4c (`evidence/iter27/gates-31f8c4c.txt`), all 6 PASS: lint 13/13 over
+  176 files, unit 142/142, scenarios 8/8, parity exact over 1200 steps (mutation caught at 629), selftest 32 / 48
+  px/m ok (72 art textures, 0 placeholders), **bench PASS** (release export, 3 runs x 4 scenarios x 60 s: p99
+  6.516 ms, 1% low 110 fps, >50 ms hitches 0, unexplained 0). Honesty note: the box was idle when the run started,
+  but other-lane Godot processes showed up during it (5 at 07:33, not mine, untouched), so this is not a clean
+  idle-box bench. It passed anyway; the earlier "bench owed" item is closed with that caveat.
+- 07:33 CHECK, no files changed: provenance `steam/ai-provenance/2026-11.jsonl` 517 lines, all parse;
+  `art_src/d4.manifest.json` has 51 masters, and all 51 sha256 match the files in gtai-masters.
+- 07:45 LOOKED: selftest at 32 (`masters:night/d4-production/i27_selftest32_half.jpg`) matches the d2d56a6 frame:
+  inked crowd, kerbs, roofs, parked cars. Still there: the grey moving-traffic slab (n-d4 only; the merged
+  stack draws the atlas cars) and the vermilion cops (owner question). No regression; no art changed this iteration.
+- Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 27): the iteration-21 final NEXT stands (morning order: merge n-d4, merge n-visual,
+`git apply` REQUEST 16 / 19 / 21 / 23, re-bake, re-bless n-visual's look / block goldens; JOURNAL.md is the only
+conflict). Gates incl. bench green at 31f8c4c. Owner decision still open: cop vermilion (23:10 entry). Nothing pushed
+or merged. Tree clean at the commit below.

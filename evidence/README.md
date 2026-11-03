@@ -51,3 +51,4 @@ quest 1 design notes (shipped as ink).
 
 29 images, 194 cells, 7 rejected (camera breaks / front views), no usage limit hit (iteration 16: 0 images). Every AI asset has a line in
 `steam/ai-provenance/2026-11.jsonl`; procedural redraws carry a `code:` tool line.
+| `iter27/` | STABILIZE: full gates incl. bench at 31f8c4c (art identical to d2d56a6; all 6 PASS) |
