@@ -576,3 +576,17 @@ NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at 
   3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
   4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
   6) the one-frame warm-up particle burst on Continue/Start f1.
+
+## Iteration 53 (17:22, STABILIZE, short: report at 17:30)
+- Code still unchanged since ebe1dd6. Re-ran at HEAD ca3b3ad: unit 359 passed / 0 failed
+  (evidence/slice-play/unit-it53.log), scenarios 10 ran / 0 failed, rc 0, quest1 input run
+  "paid 1500" at tick 11241, replay identical, checkpoint load + tamper refusal pass
+  (evidence/slice-play/scenarios-it53.log; the "47 resources still in use at exit" line is the
+  known exit-time leak note, rc 0). Lint 13/13 from iteration 52 stands.
+- Exe present: build/export/windows/RTAI.exe (193.7 MB, 17:11) + release DLL. No bench, no
+  render, no Godot process left running. frames.json unchanged (15 entries).
+NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at ebe1dd6);
+  2) merge d-cast with/before d-slice; the autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
+  6) the one-frame warm-up particle burst on Continue/Start f1.
