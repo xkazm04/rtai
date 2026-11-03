@@ -354,3 +354,6 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   Real-city preview (city_frame seed 91 --police=4): renders merge3/, owner frame frames/merged-preview-city0-32-64.png
   (d-city's D5 world ramp from 32 + blue cops + hunched Rivet; at 64 Rivet stands clear and reads). It replaced the
   city0-48ppm-ab frame (its after showed the iteration-1 Rivet). frames.json still 15, all files present.
+- rig_footprint now also measures King (KingPlan, Rivet's look): King 2.33 x 2.84 m vs Rivet 1.90 x 2.05 m (1.7x the
+  area; about the night Rivet the owner called too massive). Kept: a boss in a 64 px/m arena. OWNER QUESTION: smaller
+  King = KingPlan.SIZE_K (1.3 -> 1.2 gives ~2.15 x 2.6 m by proportion, unmeasured).

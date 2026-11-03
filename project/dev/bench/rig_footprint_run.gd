@@ -8,17 +8,21 @@ const TICKS: int = 90
 
 static func measure(root: Node) -> Dictionary:
 	var out: Dictionary = {}
-	var kinds: Dictionary = {
-		"rivet": BodyPlan.Kind.RIVET, "cop": BodyPlan.Kind.COP, "ped": BodyPlan.Kind.PED
+	var plans: Dictionary[String, BodyPlan] = {
+		"rivet": RigPool.plan_of(BodyPlan.Kind.RIVET),
+		"cop": RigPool.plan_of(BodyPlan.Kind.COP),
+		"ped": RigPool.plan_of(BodyPlan.Kind.PED),
+		"king": KingPlan.build(),
 	}
-	for name: String in kinds:
-		var kind: BodyPlan.Kind = kinds[name]
+	for name: String in plans:
 		var rig: CutRig = CutRig.new()
 		root.add_child(rig)
-		var look: RigVariant = RigVariant.rivet() if name == "rivet" else RigVariant.crowd(0)
-		if name == "cop":
+		var look: RigVariant = RigVariant.crowd(0)
+		if name == "rivet" or name == "king":
+			look = RigVariant.rivet()
+		elif name == "cop":
 			look = RigVariant.crowd(5)
-		rig.setup(RigPool.plan_of(kind), look)
+		rig.setup(plans[name], look)
 		for i: int in TICKS:
 			rig.drive(1.0 / 60.0)
 		var box: Rect2 = _bounds(rig)

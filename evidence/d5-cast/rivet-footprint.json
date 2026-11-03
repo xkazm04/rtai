@@ -49,6 +49,13 @@
    "width_m": 2.05
   }
  ],
+ "king": {
+  "form": "open (FORM_OPEN guard, KingPlan.SIZE_K 1.3)",
+  "length_m": 2.33,
+  "note": "1.7x Rivet's footprint area: the night Rivet's size. Boss; owner may want him smaller (KingPlan.SIZE_K).",
+  "size_k": 1.3,
+  "width_m": 2.84
+ },
  "measured_by": "dev/bench/rig_footprint.gd (headless, idle stance facing +x, 90 ticks, union of visible part rects at 32 px/m)",
  "ped": {
   "length_m": 0.69,
