@@ -678,3 +678,12 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   build_grain.py: seeded light specks, 3% of the asphalt, L 0.53, mid-wash step). HF 32/48/64 0.0705/0.0630/0.0613 ->
   0.0721/0.0664/0.0636, but by eye the specks read as sprinkled salt, not the mock's grain: the mock's asphalt is a
   dense LOW-CONTRAST mottle, which one print step cannot hold. Crop masters work/i6/grain_rejected_h93.png; ladder row.
+- 02:43 MILESTONE (f9f07fb): look_d5 `grain_floor` PROPOSAL, default 0. The tooth (world-locked mottle, already in
+  look_d5) is scaled by amount = 0 at 32 px/m; grain_floor is its floor (like age_floor). Default: h94 = h92c, 0 px
+  in all 10 frames; test_look_d5_params asserts it ships off (unit 149/0). A/B at 32 (params JSON restored byte-
+  identically after each shot): street crop sd 0.0529 (off) / 0.0526 (0.5) / 0.0541 (1.0) vs mock 0.0567; street
+  median 76,70,79 / 77,71,80 (grain 1.0) / 80,69,71 (grain 1.0 + age_floor 1.0) vs mock 81,70,72. Readability with
+  both on (street band at 32): sticker rim vs street dL 0.575 -> 0.580, teal vs street dE 41.3 -> 41.6, vermilion
+  vs street dE 76.6 -> 72.3 (the warmth; iteration 3 measured the same trend). By eye the both-on frame is the
+  closest to the mock tonight. Board evidence/item26_grain_floor_32.png; ladder +1 row. World-locked by construction
+  (w = FRAGCOORD + world_px), the same tooth whose pan swim was measured at 0 extra in iteration 3.

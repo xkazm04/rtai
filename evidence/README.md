@@ -51,6 +51,7 @@ tick count, no RNG.
 | `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h92c) at 32 and 48, the mock, the concept |
 | `item24_kerb_stone.png` | iteration 6: the kerb stone line (continuous, 0.3 m inside the street edge), h90 vs h91 at 32/48/64 + the mock's kerb corner |
 | `item25_road_dashes.png` | iteration 6: the mock's bold centre dashes, h91 / h92b cream (rejected: merges with the actors' rim) / h92c toned (kept) at 32 + the cop-on-dash contact at 48 |
+| `item26_grain_floor_32.png` | iteration 6, PROPOSAL: look_d5 `grain_floor` (world-locked paper tooth at 32 px/m, default off) alone and with `age_floor`, vs as shipped and the mock + street crops |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
 ## Iteration 6 (02:12 -> ) in one screen (`night_iter6_summary.png`)
@@ -76,6 +77,12 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   were 0.08 m and barely read at 32 px/m. Widened to 0.375 m. Pure cream (h92b) merged with a cop's cream sticker rim
   where he stands on the line (rim vs dash dL 0.02 at 48): the dash paint is toned x0.84 so it prints as a light
   wash, dL 0.16 / 0.14 at 32 / 48 (kept, h92c). The cream rim stays the street's only cream besides the zebra.
+- **Gameplay-zoom grain, a proposal** (`item26_grain_floor_32.png`, f9f07fb): the mock's asphalt is a low-contrast
+  mottle; ours prints flat. Specks in the tile read as salt (h93, rejected). look_d5's world-locked paper tooth is
+  the right texture but scales with the zoom amount (0 at 32). `world.grain_floor` (default 0: h94 = h92c, 0 px)
+  is its floor, like `age_floor`. With both at 1.0 the 32 px/m street median is 80,69,71 (mock 81,70,72; shipped
+  76,70,79) and readability holds: rim vs street dL 0.575 -> 0.580, teal dE 41.3 -> 41.6, vermilion dE 76.6 -> 72.3.
+  Visual-engine lane + owner decide (it changes the D4 gameplay frame).
 - Whole frame, d5 tier (L / px darker than 0.2 / HF), h86 -> h92c: 32 px/m 0.410 / 0.231 / 0.071 -> **0.425 / 0.218 /
   0.071**; 48: 0.390 / 0.196 / 0.063 -> 0.396 / 0.188 / 0.063. Mock 0.488 / 0.123 / 0.104: closer in tone and ink, not in HF (the mock's high
   frequency is fine paper/asphalt grain; ours was grid and crack lines).
