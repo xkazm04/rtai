@@ -1,7 +1,7 @@
 {
   "_doc": "D-Noir blood (lane noir): blood is THE colour of this direction. Units: px at 32 px/m world scale (1 m = 32 px), ticks at 60 Hz. spurt = the droplets thrown along the hit direction; each droplet that lands leaves a splat decal. pool = a slow-spreading pool under a kill. Decals persist and fade over fade_ticks after fade_after_ticks. Colours are the protected red the look_noir pass keeps (r high, g/r under 0.14). Splats are teardrops along the drop's travel with satellite drops ahead (blood_marks.gd); a pool is a wobbly wet edge run out along the hit (pool.run) with a bright red meniscus rim around the dark body and a white sheen arc. stain = blood ON the bodies (blood_stains.gd, drawn above the rigs, following each body): spots per hit kind, radius r_px, scattered spread_px around a point exit_px toward the exit side of the hit, growing over grow_ticks; max_stains is the pool. drip = a wounded fighter (player_hit) bleeds for bleed_ticks: one drop every every_px px moved (stretched along the move), one every still_ticks while standing. fluids = other fluids than blood (colour sets; flight = the colour of a droplet in the air, default the blood colour; case_px = an ink casing around each droplet in the air so white sparks read on paper too; trail = the fluid's own streak length, default physics.trail). player = what the player's body loses on player_hit: Rivet is a robot, so his hits throw white sparks that land as black oil (hit kind robot_hit, fluid oil) and leave no red: red is human blood only. An empty fluid = blood.",
   "budget": {
-    "max_decals": 160,
+    "max_decals": 1024,
     "max_drops": 320,
     "max_pools": 16
   },
@@ -54,6 +54,12 @@
         1.0,
         1.0
       ],
+      "halo": 0.16,
+      "halo_tone": [
+        0.93,
+        0.9,
+        0.82
+      ],
       "sheen": [
         0.95,
         0.94,
@@ -61,6 +67,36 @@
       ],
       "trail": 2.2
     }
+  },
+  "game": {
+    "death_hit": "kill",
+    "default": "noir",
+    "doc": "lane d5-combat: the blood of the default D4/D5 game (features/fx/combat_blood.gd). default = the mode without -- --blood (noir = this blood, the D4 ink splat muted; ink = the D4 ink splat with the cream rim only, the fallback; both = the splat under the blood). replaces_fx = the fx.json kinds the blood replaces under noir. death_hit = the hits row a sim death sprays. ink_px / ink = the ink keyline around each pool (the D4/D5 print). kill_beat = the comic kill beat without -- --kill-beat (off|panel|flash|both; features/fx/kill_beat.gd). settled_redraw_ticks = the canvas redraw cadence while no droplet flies (the pools grow ~0.04 px a tick and the fade is minutes long; landed splats are on the GPU mesh and need no redraw). pool_dark = the pool body of the D4/D5 game (palette blood_dark #540005; the palette token wins once it lands); NOT under --look=noir: the noir pass's blood gate prints a body that dark as black, so noir keeps colour.blood_dark. pool_lead_m = how far (m) along the blow a city kill's pool starts from the hit point: the city's dead slide 0.54 m along the blow after death (measured: city_fight seed 91, 8/8 bodies, slide . blow 1.00), so the pool spreads from under the body where it comes to rest, not from the spot it was hit (the cue path only; quest 1's events path keeps 4 px). pool_radius_px (optional; absent = pool.radius_px[1], shared with noir) = a D4/D5-only kill pool radius in px (the owner's size A/B: 22 / 16 / 12).",
+    "ink": [
+      0.1,
+      0.075,
+      0.075
+    ],
+    "ink_px": 1.4,
+    "kill_beat": "off",
+    "muzzle_pop": {
+      "doc": "lane d5-combat, features/fx/muzzle_pop.gd: a round fired lights the scene for one sim tick: a soft ADD pool of paper light radius_m wide at strength, at most one per lit_gap_ticks and only while the shared FlashBudget has a light to spend (none under reduced motion). on = false drops the node. near_m: only a round that close to the camera focus pops (the nearest of a tick wins).",
+      "lit_gap_ticks": 20,
+      "near_m": 12.0,
+      "on": true,
+      "radius_m": 5.0,
+      "strength": 0.32
+    },
+    "pool_dark": [
+      0.329,
+      0.0,
+      0.02
+    ],
+    "pool_lead_m": 0.54,
+    "replaces_fx": [
+      "ink_splat"
+    ],
+    "settled_redraw_ticks": 6
   },
   "hits": {
     "kill": {
@@ -100,8 +136,8 @@
     "robot_hit": {
       "cone_deg": 160.0,
       "drop_px": [
-        0.8,
-        1.5
+        1.0,
+        1.9
       ],
       "drops": 26,
       "pool": false,
@@ -139,6 +175,15 @@
   },
   "schema": "gtai.noir-blood/1",
   "stain": {
+    "corpse": {
+      "exit_px": 5.0,
+      "r_px": [
+        1.2,
+        3.0
+      ],
+      "spots": 11,
+      "spread_px": 7.0
+    },
     "grow_ticks": 24,
     "kill": {
       "exit_px": 4.0,

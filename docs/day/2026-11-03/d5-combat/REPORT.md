@@ -1,0 +1,122 @@
+# REPORT: day lane d5-combat (branch `d-combat`), 2026-11-03 10:06 to 17:30
+
+Mission: combat in the default D5 game looks and feels brutal. Noir's red blood becomes the default blood under
+D4/D5, and the comic kill beat becomes an owner A/B.
+
+`<masters>` = `C:\Users\kazda\kiro\gtai-masters\day-d5\d5-combat\` (frames.json with 15 entries, ladder.png, clips,
+raw/). A copy of frames.json, the ladder and the strips is in `evidence/d5-combat/`. The running log is `JOURNAL.md`.
+Every performance number here is **CONTENDED** (7 lanes, one GPU).
+
+## Summary
+- 58 commits on `d-combat` with the final report edit (17:33, iteration 56) included. The code froze at **5a6e21b**
+  (116 files, +2697/-52 against main). Only journal, evidence and report commits came after it
+  (`git log 5a6e21b..HEAD -- project/ tools/ native/` is empty, re-checked 17:31).
+- **Gates at the freeze** (evidence/run.mjs --no-bench, 16:40; unit re-run on a clean tree):
+  - lint 13/13;
+  - unit 352/0;
+  - scenarios 8/8;
+  - parity exact (1200 steps, the planted mutation caught);
+  - selftest PASS (look goldens 11/11 worst 0.74, block goldens 5/5 worst 0.97).
+  - Flake: scenario_city_chase once went over the 2 ms nav budget at 15.2 ms. A headless re-run was green (491 us).
+    It is nav code, not FX.
+  - Re-checked at 17:12 on 36d366d (STABILIZE): lint 13/13, scenarios 8/8 (exit 0), evidence/run.mjs --no-bench
+    all PASS. Unit had a second flake: 1 run of 4 failed test_noir_shadows on a null texture from the threaded
+    load in city_textures.gd (headless dummy renderer; the code falls back to a placeholder). Alone it passed 3/3,
+    and two full re-runs were 352/0. It is in city texture loading, not FX.
+- **Bench: not a valid judge today.** Six bench runs, all CONTENDED. The riot (400 actors, blood on) p99 was
+  4.86 / 7.68 / 15.18 / 9.87 / 10.31 / 7.88 ms, with no hot-path change between most runs. The riot hitches are
+  `present` waits.
+  - The 7.88 comes from the one iter5 riot JSON that was kept (1 of 3 runs). That run had 1 hitch >25 ms and
+    0 >50 ms.
+  - The last judge (iter5, 16:57) MISSES p99CpuMs, low1Fps and over50.unexplained. Those numbers are overall,
+    across all 4 scenarios and 3 runs: p99 12.71 ms, 199 hitches >25 ms, 15 >50 ms (14 `present`, 1 unexplained).
+  - The per-scenario split of that total was not kept, so the misses are not attributed to a scenario.
+  - Re-bench on an idle machine.
+- Camera breaks rejected: 0 (every frame straight down).
+- No Codex images were generated: everything is code, data and in-engine frames.
+
+## What works (claim -> evidence)
+1. **Noir's blood is the default blood in the real game** (`--blood=noir|ink|both`, default noir; `ink` = the old
+   D4 splat, kept as the fallback).
+   - `CombatBlood` plus the `boot/city_blood.gd` glue drive the city riot from the sim cues (shot, projectile_end,
+     death). On seed 91: 16 deaths, 16 bled, 15 sprays aimed along the killing round.
+   - Quest 1's CombatArena bleeds through `Events` (CollectCallView): 48-49 guards soaked, 0 missed.
+   - What prints: directional spurts, teardrop splats with satellites, pools that spread with a wet-edge scallop,
+     drip trails, wall splats (they pile at the wall base and never cross a roof edge), and corpse stains.
+   - Blood draws on its own `blood` band, because look_d4 would turn any red into the vermilion plate.
+   - Colours: blood #A30509 and pool body #540005. These equal d5-city's palette `blood` / `blood_dark`.
+     CombatBlood reads the tokens when they exist, so the merge changes nothing. Noir's pool body keeps #750008.
+   - Frames: `<masters>frames/final-t900-{32,48,64,128}ppm-pair.png` (ink before, noir after),
+     `fight-final-t900-128ppm.png`, `wall-splat-f1-t900-32ppm-crop.png`, `quest1-stains-04-crop.png`.
+   - Clips: `<masters>clip-it4-final-{48,64}ppm.mp4` (15 s, real time).
+2. **Pools spread from under the body** (58a8388).
+   - The city's dead slide 0.54 m along the blow, so the pool used to sit beside the body.
+   - `blood_fx.json game.pool_lead_m` fixes it on the city cue path. Frames: `frames/pool-lead-t{480,600}-*-pair.png`.
+3. **Riot cost.**
+   - Noir's draw path cost 61.5 ms per redraw at 400 decals. It is now MultiMesh splats, cached pool fans and
+     bucketed drops.
+   - City riot average 0.22-0.42 ms/frame (debug, CONTENDED). The stains step costs 34-48 us.
+4. **Robots do not bleed.**
+   - Rivet and the robots throw white sparks and black oil. The oil now has a cream rim plus an OilLeak trail, so it
+     reads on asphalt: `frames/fight-oil-after-noir-t420-64ppm.png`.
+   - A corpse's soak fades under any walker standing on it (Rivet or rioters): `frames/walker-fade-t480-64ppm-pair.png`.
+5. **Kill beat A/B: `--kill-beat=off|panel|flash|both`, default off.**
+   - It shares the FlashBudget (at most 3/s) and stays calm under `--reduced-motion`.
+   - Evidence: `frames/beat-modes-contact.png`, `beat-{flash,panel,both}-48ppm-realtime.mp4`, `beat-{flash,both}-64ppm-realtime.mp4`.
+     There is no real-time panel clip at 64 px/m; panel at 64 is in the contact sheet only.
+6. **Muzzle pop** (MuzzlePop): it lights the scene for one tick on the shot nearest the focus.
+   - A 3-band paper pool, 5 m across, at most once per 20 ticks, spending from the FlashBudget. It is off under
+     reduced motion.
+   - Strength A/B: `frames/pop-strength-ab-64ppm.png` (0.32 is the default).
+
+## What blocked me, and for how long
+- **The bench lock (no single block, but recurring).** Other lanes held `bench.lock` at 11:16 and 12:06 (vehicles),
+  at 12:24 (collisions), and through most of 16:40-17:30. I benched 3 times (11:37, 15:41-15:57 and 16:43-16:57).
+  Every number is CONTENDED, so the bench cannot judge the riot cost today (see Summary).
+- **Hit-stop and knockback: blocked by file ownership all day.** `camera.json` and the sim are not my files.
+  This is REQUEST 3.
+- **No Codex image generation was needed.** I hit no usage limit.
+- **13:12-15:41 (about 2.5 h):** there are no commits and no journal entries. No lane session ran in that window, and
+  the journal does not say why.
+- **Friction, minutes each:**
+  - warning-as-error parse failures (`float()` on a Variant, twice);
+  - CRLF from Python writes;
+  - a dirty-tree refusal by evidence/run.mjs when a log was under evidence/;
+  - `city_fight.gd` reaching the 300-line hard stop.
+
+## Owner picks waiting (the 18:00 sync)
+1. `--blood` default (noir proposed) versus the ink fallback.
+2. `--kill-beat` mode (off, panel, flash or both).
+3. Muzzle pop 0.32 or off.
+4. Pool body #540005 (the doctrine, current) versus #750008: `frames/pool-dark-t900-64ppm-pair.png`.
+5. Pool size 22 / 16 / 12 px: `frames/pool-size-ab-t900-64ppm.png`.
+   - My read: 16.
+   - The pick is one key: `blood_fx.json game.pool_radius_px`. Noir keeps 22.
+6. Orphan pools: the sim despawns the dead at 8 s and the pools persist and fade. Is that wanted?
+
+## Not done / gaps
+- **Hit-stop and held knockback were not tuned.** camera.json and the sim are not my files.
+  - REQUEST 3 asks for the kill hit-stop to go from 6 to 8 ticks under a beat mode.
+  - Quest 1 has no hit-stop at all until it gets a player entry.
+- **Blood on a non-lethal human hit has no trigger today.** Humans have 1 hp, and the tazer chain only hops metal.
+  The hook is ready: `Fighter.hurt_tick` -> `splash(..., "player_hit")`.
+- **Car-hit deaths slide further than 0.54 m,** so their pool sits short of the body. The fix needs a death-speed
+  field on `FxTriggers.cued` (core/render, shared).
+- **The `--beat-frames` stills were taken without `--fixed-fps`,** so their beat timing is compressed. The
+  `*-realtime.mp4` clips are timing-true.
+
+## Shared-file changes (minimal, in JOURNAL)
+- `boot/launch_args.gd`: `--blood`, `--kill-beat`.
+- `data/tables/render_layers.json`: band `blood`, canvas `beat`, band `kill_beat`.
+- The render_layers schema: z minimum -4000.
+- `core/render/fx_triggers.gd`: signal `cued`.
+- `core/render/README.md`.
+- `docs/decisions.md`: the junction golden re-bless (aa1661d) and the fx pool body.
+
+## Next steps
+1. The owner's picks above (one flag or one `blood_fx.json` key each).
+2. Re-bench on an idle machine: `node tools/bench/run.mjs`, keeping the per-scenario riot JSON.
+3. Car-hit pool lead: add a death-speed field to `FxTriggers.cued`. That file is shared (core/render).
+4. REQUEST 3: kill hit-stop 6 -> 8 ticks under a beat mode. Wire a hit-stop into quest 1 once it gets a player entry.
+5. REQUEST 4 -> d5-city: `city_textures.gd` threaded load can return null headless (the unit flake).
+6. Move code out of `dev/showcase/city_fight.gd` (300 lines) before the next dev switch.

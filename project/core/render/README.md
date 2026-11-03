@@ -13,7 +13,7 @@ model. The stack is declared once as data, bottom up. A **canvas** is a Godot `C
 |---|---|---|---|
 | `world` (0, camera space) | read by `look_d4` | `ground` 0, `ground_decals` 1, `building_shadows` 2, `props` 3, `roofs` 4 | `ChunkView` (one canvas item per band per 64 m quadrant) |
 | `print` (1, screen) | is the pass | `print_pass` 0, `print_overlay` 100 | `CityView` look rect, `LookOverlay` |
-| `actors` (2, follows the camera) | `look_d4_item` | `actor_shadows` 0, `actors` 100, `vehicles` 200, `roof_occluders` 300 (reserved), `fx` 400 | `CrowdLayers`, `CharacterRigs`, the FX system |
+| `actors` (2, follows the camera) | `look_d4_item` | `blood` -100 (CombatBlood: noir blood, its own print), `actor_shadows` 0, `actors` 100, `vehicles` 200, `roof_occluders` 300 (reserved), `fx` 400 | `CrowdLayers`, `CharacterRigs`, the FX system |
 | `light` (3, screen) | none (additive) | `grade` 0, `lights` 100 | `LightLayer` |
 | `emissive` (4, follows) | none | `fx_emissive` 0 | the FX glow twin (emissive kinds) |
 | `world_ui` (5, follows) | none | `world_markers` 0 | `WorldMarkers` (markers, the objective pointer) |

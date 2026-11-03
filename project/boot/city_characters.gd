@@ -15,6 +15,8 @@ var rivet_on_foot: bool = true
 var rigs: CharacterRigs = CharacterRigs.new()
 ## Frames where no sim tick passed and the rig pass was skipped (bench evidence).
 var skipped_frames: int = 0
+## The combat blood on the city (noir's blood, the D4/D5 default; boot/city_blood.gd).
+var blood: CityBlood = null
 var _primed: bool = false
 var _city: CitySystem
 var _view: CityView
@@ -36,6 +38,8 @@ func _init(city: CitySystem, view: CityView, ctx: WorldContext) -> void:
 	rigs.setup(ctx)
 	rigs.set_process(false)
 	view.before_render = _before_render
+	blood = CityBlood.attach(city, view)
+	blood.follow(rigs.feed)
 
 
 ## At load: bakes the crowd atlas (a no-op headless) and switches the people layer to it.

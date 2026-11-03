@@ -3,16 +3,23 @@ extends RefCounted
 ## D-Noir blood marks (lane noir): the shapes BloodFx leaves on the ground. Static, stateless,
 ## render only. The wobble is a hash of the mark's position (no RNG stream, no sim state).
 
-const POOL_PTS: int = 28
+## 56: at the 128 px/m kill-cam a 28-point ring printed straight chords (cut paper, not liquid).
+const POOL_PTS: int = 56
 const RIM: float = 1.1
 const LOBES: int = 4
 
 
 ## A spreading pool: a star-shaped wet edge (low-frequency hashed waves, never self-crossing),
 ## run out along `flow` (the hit direction; length = how far it runs): a dark body inside a
-## bright red meniscus rim, a white sheen arc on the lit side. cols = [body, rim, sheen].
+## bright red meniscus rim, a white sheen arc on the lit side. cols = [body, rim, sheen] and an
+## optional 4th, the ink keyline drawn ink_px outside the rim (the D4/D5 print).
 static func pool(
-	ci: CanvasItem, at: Vector2, r: float, flow: Vector2, cols: PackedColorArray
+	ci: CanvasItem,
+	at: Vector2,
+	r: float,
+	flow: Vector2,
+	cols: PackedColorArray,
+	ink_px: float = 0.0
 ) -> void:
 	if r < 3.0:
 		ci.draw_circle(at, r, cols[0])
@@ -21,6 +28,8 @@ static func pool(
 	# thousands) the triangulator loses precision on small rings
 	var s: float = seed_of(at)
 	ci.draw_set_transform(at)
+	if cols.size() > 3:
+		ci.draw_colored_polygon(ring(Vector2.ZERO, r * RIM + ink_px, flow, s), cols[3])
 	ci.draw_colored_polygon(ring(Vector2.ZERO, r * RIM, flow, s), cols[1])
 	ci.draw_colored_polygon(ring(Vector2.ZERO, r, flow, s), cols[0])
 	ci.draw_set_transform(Vector2.ZERO)
@@ -75,8 +84,9 @@ static func contact(solid: Callable, at: Vector2, v: Vector2) -> Vector2:
 	return free
 
 
-## The pool outline: radius r wobbled by three low-frequency waves (min 0.66 r, so the polygon
-## stays star-shaped and simple), pushed out up to |flow| on the side facing flow.
+## The pool outline: radius r wobbled by three low-frequency waves and a fine scallop (the wet
+## edge meeting the asphalt; min 0.64 r, so the polygon stays star-shaped and simple), pushed
+## out up to |flow| as a broad rounded lobe on the side facing flow (a cos^2 lobe ran to a point).
 static func ring(at: Vector2, r: float, flow: Vector2, s: float) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
 	var f: Vector2 = flow.normalized() if flow.length() > 0.001 else Vector2.ZERO
@@ -85,8 +95,9 @@ static func ring(at: Vector2, r: float, flow: Vector2, s: float) -> PackedVector
 		var ang: float = TAU * k / POOL_PTS
 		var u: Vector2 = Vector2.from_angle(ang)
 		var w: float = 1.0 + 0.16 * sin(3.0 * ang + s * TAU) + 0.1 * sin(5.0 * ang + s * 17.0)
-		w += 0.06 * sin(9.0 * ang + s * 29.0)
-		w *= 1.0 + run * pow(maxf(u.dot(f), 0.0), 2.0)
+		w += 0.06 * sin(9.0 * ang + s * 29.0) + 0.035 * sin(13.0 * ang + s * 41.0)
+		var lobe: float = 0.5 + 0.5 * u.dot(f)
+		w *= 1.0 + run * lobe * lobe
 		@warning_ignore("return_value_discarded")
 		out.append(at + u * r * w)
 	return out

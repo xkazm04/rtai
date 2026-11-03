@@ -43,6 +43,13 @@
       "space": "follow"
     },
     {
+      "doc": "the comic kill beat (lane d5-combat, KillBeat over noir's ImpactFrame: the silhouette flash, the held panel), above the world UI and under the HUD; off unless -- --kill-beat",
+      "id": "beat",
+      "layer": 6,
+      "print": "none",
+      "space": "screen"
+    },
+    {
       "doc": "the HUD",
       "id": "hud",
       "layer": 10,
@@ -107,6 +114,14 @@
       "id": "print_overlay",
       "status": "live",
       "z": 100
+    },
+    {
+      "canvas": "actors",
+      "doc": "blood and oil on the ground (noir's blood, the D4/D5 default): above the print, under the drop shadows and the bodies (a body's shadow falls across its blood); red never goes through the world print (it would print vermilion)",
+      "drawn_by": "CombatBlood (features/fx)",
+      "id": "blood",
+      "status": "live",
+      "z": -100
     },
     {
       "canvas": "actors",
@@ -177,6 +192,14 @@
       "doc": "markers, the objective pointer",
       "drawn_by": "WorldMarkers (CityView.markers, world_markers.json)",
       "id": "world_markers",
+      "status": "live",
+      "z": 0
+    },
+    {
+      "canvas": "beat",
+      "doc": "the kill beat's full-screen rect (look_noir_impact.gdshader)",
+      "drawn_by": "KillBeat (features/fx) ImpactFrame",
+      "id": "kill_beat",
       "status": "live",
       "z": 0
     },
