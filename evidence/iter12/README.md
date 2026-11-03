@@ -11,7 +11,8 @@
   - `features/hud/art/hud_digits.png`: a hand-inked numeral strip (`0123456789$/x+-:`) in the world's sign-painter
     caps, Codex `d4n_digits` (1 image, 0 rejected). The dev HUD overlay draws its counters from it instead of the
     default sans (36ce71b). The HUD README documents the cells and advances. Words still need a font (owner, AST-10).
-- `gates-31a948f.txt`: `node tools/evidence/run.mjs --no-bench`, all PASS.
+- `gates-31a948f.txt`, `gates-0276ab4.txt` (final, incl. the quest cast captures; + the quest patch's unit run):
+  `node tools/evidence/run.mjs --no-bench`, all PASS.
 - Merged check (scratch worktree, n-visual 928ed15 + n-d4 31a948f, `merge --no-commit`): only JOURNAL.md conflicts;
   unit tests there 214 passed, 0 failed (n-visual suite incl. the accent audit); frames
   `masters:night/d4-production/merged_i12/city-*-{32,48,64}ppm(-hud50).png`, `merged_i12_dec/decals-*`.
@@ -21,7 +22,7 @@
   kept there as `q1_view_art_i6.patch`): as before, plus quest 1's cash counter drawn from `hud_digits.png`
   (`hud_view._ink_digits`, baseline-placed, cap 0.92 of the old font size), and Rivet drawn from `cast_rivet.png` (a
   capture of the real Rivet rig) instead of the "R" boxes, and the patrol cops from `cast_cop.png` (the cop rig) instead
-  of the "C" discs. 4 view files, see the journal for the final line count; gdformat +
+  of the "C" discs. 4 view files, +186 / -99, gdformat +
   gdlint clean, `git apply --check` clean on main 721fbbb, unit tests 166/166 there with it. Needs n-d4 merged
   first (it loads n-d4 art).
   Frames (quest 1's own grabber, seeded): `masters:night/d4-production/before_q1h|after_q1h/0*.png`, crop

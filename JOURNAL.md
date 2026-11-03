@@ -1104,3 +1104,35 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   `work/q1c_ab.png`: a gun-out cop instead of a lettered disc. Patch now +186 / -99, `git apply --check` clean on main
   721fbbb. README row, provenance line, ladder row "i12e". Its vermilion uniform share stays the open owner call.
   0 Codex.
+
+## SUMMARY iteration 12 (raise the weakest items; every change before/after in-engine)
+Sheet: `masters:night/d4-production/night_iter12_summary.png` (= `evidence/iter12/`, 10 rows). Ladder rows "i12 ...".
+1. tank_tracks decal: crisp ink chevron imprint (was soft haloed film strips). Procedural. 7f517e6
+2. bollard: a capped post at 48 / 64 (was a plain coin); marginal, level at 32. Procedural. 72301db
+3. HUD numerals: hand-inked strip `hud_digits.png` (0-9 $ / x + - : , . % #) in the world's sign-painter caps; the dev
+   HUD overlay prints its counters with it (was the default sans). Codex 2 images, 0 rejected. 36ce71b, 200d8e4
+4. Quest 1 (patch only, view code): the cash counter in the inked numerals; Rivet drawn from a capture of the real
+   Rivet rig (was an "R" box); the patrol cops from a capture of the cop rig (were "C" discs). The art ships in n-d4
+   (`cast_rivet.png`, `cast_cop.png`, dev capture rig `rivet_sprite.gd`). dd1f68c, 6e8689e; patch in evidence/iter12.
+- Rejected / not shipped: skid marks redraw (the hatched original reads better at 32 and 64).
+- Checked, no change: FX board, the full vehicle set, roof values vs the target, small props, pickups.
+- Merged check n-visual 928ed15 + n-d4: JOURNAL.md only conflict, unit 214/214 there; the aquatint cloud blotches on
+  paving at 64 px/m are n-visual's pass (REQUEST 22, optional).
+- Codex this iteration: **2 images** (d4n_digits, d4n_digits2), 20 cells, 0 rejected. Night total: **28 images,
+  190 cells, 7 rejected**. No usage limit hit.
+
+NEXT (session end, iteration 12):
+- Owner review: 7f517e6 (tank tracks), 72301db (bollard), 36ce71b + 200d8e4 (HUD numerals; revert together),
+  dd1f68c + 6e8689e (quest cast captures; only used by the quest patch). Originals in `masters:backup_tt/`, `backup_bl/`.
+- Director: REQUEST 16 = `evidence/iter12/q1_view_art.patch` (supersedes the iteration-6 patch; adds the inked cash
+  counter, Rivet and the patrol cops) for the quest 1 owner after merging n-d4; REQUEST 19 / 21 unchanged
+  (`evidence/iter10/` patches); REQUEST 22 (visual-engine, optional): aquatint on paving.
+- A real HUD (code owner): draw counters from `features/hud/art/hud_digits.png` (README: cells, advances); words still
+  need a bundled font (AST-10, owner OK).
+- Quest 1 placeholders left: the arc ball + whisper rings (code-drawn FX); the cast sprites are rig snapshots -
+  re-capture with `rivet_sprite.gd [--kind=cop]` if the parts change, or host the rigs in the quest view.
+- Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
+- Morning, idle box: `node tools/bench/run.mjs` (iteration-10 p99 drift question), then `run.mjs` for a current bench.json.
+- Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (now holds the iteration-12 quest patch applied +
+  copies of n-d4 art); other scratch worktrees removed.
+- 04:03 GATES at 0276ab4: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders; scratch-q1 with the final quest patch: unit 166/166 (`evidence/iter12/gates-0276ab4.txt`).
