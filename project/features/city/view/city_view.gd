@@ -73,7 +73,9 @@ func set_look_enabled(on: bool) -> void:
 	look_enabled = on
 	var printed: bool = on and (look_params == null or look_params.printed)
 	_look_rect.visible = printed
-	crowd.apply_print(_item_mat, printed)
+	for node: MultiMeshInstance2D in crowd.nodes:
+		if node.material == null or node.material == _item_mat:  # not the baked crowd's own
+			node.material = _item_mat if printed else null
 
 
 ## Resolves look_id at the current zoom; pushes the uniforms only when the look changed.
@@ -84,7 +86,6 @@ func _update_look() -> void:
 	var was_printed: bool = look_params == null or look_params.printed
 	look_params = p
 	p.apply(_look_mat, _item_mat)
-	p.apply(null, crowd.car_print)
 	if was_printed != p.printed:
 		set_look_enabled(look_enabled)
 
@@ -130,8 +131,6 @@ func _place_camera(focus: Vector2) -> void:
 	fx_triggers.focus_px = focus * SimConst.PX_PER_M
 	world_px = (camera.position * zoom).round() - get_viewport_rect().size * 0.5
 	_item_mat.set_shader_parameter(&"world_px", world_px)
-	if crowd.car_print != null:
-		crowd.car_print.set_shader_parameter(&"world_px", world_px)
 	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
 	for o: LookOverlay in _overlays:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)

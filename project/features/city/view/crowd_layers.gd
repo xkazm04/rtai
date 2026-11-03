@@ -13,17 +13,9 @@ const BAND: Array[StringName] = [&"actors", &"actor_shadows", &"vehicles", &"act
 const INK: Color = Color(0.09, 0.075, 0.106)
 const PAPER: Color = Color(0.949, 0.91, 0.835)
 const STEEL: Color = Color(0.561, 0.533, 0.506)
-## Moving traffic art (night lane d4-production): 2 x 4 cells of 6.4 x 3.2 m, cell = the spawn
-## variant (custom.x), nose to +x. Live only when the file is in the tree; else the steel quad.
-const TRAFFIC_ATLAS: String = "res://features/city/art/vehicles/traffic_atlas.png"
-const TRAFFIC_CELLS: Vector2i = Vector2i(2, 4)
-const CELL_SHADER: String = "res://features/characters/crowd_atlas.gdshader"
 
 var multimeshes: Array[MultiMesh] = []
 var nodes: Array[MultiMeshInstance2D] = []
-## The cars' item print (the look's item shader + the atlas cells); null = no traffic atlas.
-var car_print: ShaderMaterial = null
-var _car_plain: ShaderMaterial = null
 
 
 func _init() -> void:
@@ -48,36 +40,6 @@ func _init() -> void:
 		node.z_index = RenderLayers.z(BAND[k])
 		multimeshes.append(mm)
 		nodes.append(node)
-	_plug_traffic()
-
-
-func _plug_traffic() -> void:
-	if not ResourceLoader.exists(TRAFFIC_ATLAS):
-		return
-	var atlas: Texture2D = load(TRAFFIC_ATLAS) as Texture2D
-	if atlas == null:  # e.g. an LFS pointer instead of the PNG: keep the steel quad
-		return
-	nodes[SimConst.RL_CARS].texture = atlas
-	nodes[SimConst.RL_CAR_SHADOWS].texture = atlas  # same cell (custom.x), tinted ink: car-shaped
-	_car_plain = ShaderMaterial.new()
-	_car_plain.shader = load(CELL_SHADER) as Shader
-	_car_plain.set_shader_parameter("cols", TRAFFIC_CELLS.x)
-	_car_plain.set_shader_parameter("rows", TRAFFIC_CELLS.y)
-	car_print = ShaderMaterial.new()
-
-
-## The print on every layer this class draws (CityView.set_look_enabled). A layer someone else
-## re-materialed (the baked crowd atlas on the people layer) is left alone.
-func apply_print(item: ShaderMaterial, printed: bool) -> void:
-	for k: int in nodes.size():
-		var node: MultiMeshInstance2D = nodes[k]
-		var car: bool = k == SimConst.RL_CARS or k == SimConst.RL_CAR_SHADOWS
-		if car and car_print != null:
-			car_print.shader = item.shader
-			car_print.set_shader_parameter("cells", TRAFFIC_CELLS)
-			node.material = car_print if printed else _car_plain
-		elif node.material == null or node.material == item:
-			node.material = item if printed else null
 
 
 func rids() -> Array[RID]:
