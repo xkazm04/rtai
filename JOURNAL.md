@@ -339,3 +339,7 @@ NEXT (the night run, from the merged main):
   the rest to the crowd atlas, which the arena lacks. A struck fighter plays the rig's HIT flinch
   away from Rivet. Clip re-captured (same path, sheet checked). REQUEST 6 -> d5-cast (night run):
   a per-host RADIUS_M on CharacterRigs, so a small arena can pose every fighter on screen.
+- MILESTONE `--rigs` third pass: armed fighters (Rivet's pistol, the pit's rifles) have GUN_OUT and
+  AIMING along their facing. Clip `clips/arena-pit-rigs-32ppm-20s.mp4` (+ sheet): waves 1-3 on
+  the cop rigs, with flinches, death sprawls and the red blood. This is the arena's best frame
+  of the full chain so far. frames.json: 14 entries, the two --rigs clips first.

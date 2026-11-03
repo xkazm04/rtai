@@ -42,7 +42,6 @@ func _process(_delta: float) -> void:
 	f.count = 0
 	var r: Fighter = stage.arena.rivet
 	_put(0, r, BodyPlan.Kind.RIVET)
-	f.flags[0] |= RigFeed.Flag.AIMING
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
@@ -60,6 +59,9 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	@warning_ignore("return_value_discarded")
 	f.put(i, who.id, kind, at, vel)
 	f.face[i] = who.facing.angle()
+	if who.weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
+		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
+		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
