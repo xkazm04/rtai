@@ -34,5 +34,25 @@
   "blue_px": 4718,
   "blue_hi_px": 82,
   "verm_px": 75
+ },
+ "C core 0.75 (rejected), Rivet 1.1 tree": {
+  "32": {
+   "blue_blobs": 17,
+   "blue_hi_px": 91
+  },
+  "48": {
+   "blue_blobs": 18,
+   "blue_hi_px": 164
+  }
+ },
+ "A (shipped), Rivet 1.1 tree": {
+  "32": {
+   "blue_blobs": 19,
+   "blue_hi_px": 197
+  },
+  "48": {
+   "blue_blobs": 18,
+   "blue_hi_px": 318
+  }
  }
 }
