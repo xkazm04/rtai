@@ -78,6 +78,11 @@ func start(cp: Checkpoint = null) -> void:
 	Log.info("quest1", "started: Rivet is the player's (seed %d)" % Quest1Session.MASTER_SEED)
 
 
+func _input(event: InputEvent) -> void:
+	if session != null:
+		session.live.note_event(event)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if session != null and not _ended and event.is_action_pressed(&"pause"):
 		set_paused(not paused)

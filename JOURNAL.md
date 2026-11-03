@@ -74,3 +74,8 @@
 - GATES at b8c7f61 (before settings): evidence/run.mjs --no-bench PASS (lint 13/13, unit 335,
   scenarios 9/9, parity exact + mutation caught, selftest goldens 11/11); copied to
   evidence/slice-play/ with the exe replay logs. No bench taken (lane changes no city cost).
+- 11:00 gamepad aim follows the last-used device (LiveInput.note_event): a released right stick
+  no longer snaps Rivet's facing to the resting mouse cursor. Unit 338/338.
+- FRICTION: dev/frames/quest1_clip exits 0 even when a script fails to compile (one still was
+  rendered from a broken objective_hint.gd before I caught it in the scenario); always run the
+  input scenario first. Re-rendered the affected still.

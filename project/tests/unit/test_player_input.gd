@@ -73,3 +73,16 @@ func test_facing_turns_at_a_capped_rate() -> void:
 	m.step(Vector2.ZERO, Vector2.LEFT, 4.5, a)
 	var max_turn: float = deg_to_rad(a.turn_dps) * SimClock.TICK_DT
 	assert_almost_eq(absf(Vector2.RIGHT.angle_to(m.facing)), max_turn, 0.001)
+
+
+func test_pad_use_stops_the_mouse_aim_and_mouse_motion_restores_it() -> void:
+	var live: LiveInput = LiveInput.new(_actions())
+	assert_true(live.mouse_aims)
+	var tiny: InputEventJoypadMotion = InputEventJoypadMotion.new()
+	tiny.axis_value = 0.05
+	live.note_event(tiny)
+	assert_true(live.mouse_aims, "stick drift does not count as pad use")
+	live.note_event(InputEventJoypadButton.new())
+	assert_false(live.mouse_aims)
+	live.note_event(InputEventMouseMotion.new())
+	assert_true(live.mouse_aims)
