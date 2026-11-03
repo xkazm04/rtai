@@ -352,3 +352,6 @@ bosses we resolve in future."
 - Commit (test): `test_knockdown_stays_upright_then_sprawls_and_rises` in test_rig_clips. Unit 337/0.
   FRICTION: one full unit run gave "1 failing" (336/1) with the test green alone. It did not repeat (337/0 next run).
   I could not identify which test failed; treat it as a contention flake to re-check idle.
+- 32 px/m check of v7 (`v7/delay-v2-vs-v7-32ppm.png`): the gain is small at the on-foot zoom (a sprawled arm across
+  Rivet's top becomes an upright head at his top-right). Clearly better at 48; neutral to slightly better at 32. Kept.
+  6 stills looked at this iteration, 0 rejected.
