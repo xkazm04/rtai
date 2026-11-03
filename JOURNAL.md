@@ -693,3 +693,40 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
 - 02:49 OWNER A/B (h95zt, NOT committed; the intersection tile restored byte-identically, tree clean): zebra paint
   x0.84 (the dashes' tone). Rivet's rim and arms over the crossing separate from the bars at 32/48/64; the crossing
   still reads. Board evidence/item27_zebra_owner_ab.png; ladder row; README gap 4.
+- 02:48 FINAL gates (iteration 6): evidence tool (--no-parity --no-bench) ALL PASS at 09acc5f (lint 13/13, unit
+  149/0, scenarios 8/0, selftest ok); 58 untracked evidence PNGs moved aside and restored. Parity/bench not run (no
+  native build in this worktree).
+
+## Summary (iteration 6, 02:12 -> 02:50)
+- No image budget left (50/50), so all of it is non-generative: print-aware GROUND for the D5 tier, the largest
+  surface in the gameplay frame and the biggest by-eye gap to the mock at 32 px/m after iteration 5. The finding
+  behind it: look_d4 prints anything darker than a surface as that surface's own step or solid ink, so a line is
+  either solid ink at 32 px/m or gone; the tiles are now built for that (masters tools/build_sidewalk.py,
+  build_crossing.py, build_road.py; deterministic, documented in their headers).
+- Kept: pavement joints at light-wash density (h87d), clean crosswalk (h88), thinned road + junction cracks (h89b,
+  h90), the kerb stone line (h91), bold centre dashes a step below the actors' rim (h92c), and look_d5 `grain_floor`
+  as a default-off proposal (with `age_floor` the 32 px/m street median is 80,69,71 vs the mock's 81,70,72).
+- Rejected: joints too light (h87a), dashed joints (h87b), a hard 1-px crack ridge, 1-pass cracks (h89a, dotted at 32),
+  pure-cream bold dashes (h92b: merged with a cop's rim, dL 0.02), asphalt specks (h93: salt, not grain).
+- Owner A/Bs: toned zebra (item27), grain_floor + age_floor (item26).
+- Measured, no regression: d4 tier 0 px in every round at 32-128; actors 0 px (Rivet crops; changed px masked to
+  ground); pan swim per pixel class unchanged on the pavement, ink flips DOWN on the road (0.00116 -> 0.00102), the
+  kerb line flips like any existing ink edge (0.0063 vs 0.0062); readability with both floors on: rim dL 0.575 ->
+  0.580, teal dE 41.3 -> 41.6.
+- Frame (d5 tier, h86 -> h92c) at 32 px/m: L 0.410 -> 0.425, px darker than 0.2 0.231 -> 0.218 (mock 0.488 / 0.123).
+- Mistakes: two hero rounds shot without --borrow (re-shot); a sed deleted `const ARC_STEPS` and 15adfae does not
+  parse alone (fixed f8864e9, re-shot 0 px); journal times written ahead of the clock (corrected).
+- Shared files touched: steam/ai-provenance/2026-11.jsonl (append only, 8 lines), the look_d5 params JSON + its unit
+  test (mine), project/assets/shaders/README.md (one row).
+
+NEXT (iteration 6; NEXT 1-19 of iterations 3-5 still stand):
+20. City / d4-production lanes: adopt the 4 print-aware D5 ground tiles (features/city/art/d5/ground/) for the city,
+    or apply the same build rules to the D4 set; the kerb stone line (D5HeroKerbs._stone: 0.04 m ink, 0.3 m inside
+    the street edge, continuous) belongs in the kerb tiles.
+21. Visual-engine lane + owner: `age_floor` + `grain_floor` at 1.0 (item26) = the mock's colour and street mottle at
+    32 px/m with readability held; fix look_d4's screen-locked grain first (NEXT 2/18), the lighter ground shows more
+    paper.
+22. Characters lane: the mock's stickers carry a thin dark line OUTSIDE the cream rim (checked by eye); ours go rim ->
+    street. An outer ink hairline in rig_build.gd's halo pass, A/B at 32 px/m on the crossing and pavement.
+23. Owner: zebra cream (as the mock) or toned like the dashes (item27).
+24. City: road paint (STRIKE) off the centre line; the bold dashes now show between its letters at 48 px/m.
