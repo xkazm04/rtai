@@ -1596,3 +1596,9 @@ NEXT (final, iteration 16; supersedes the 05:32 NEXT where they differ):
 - 05:46 GATES at b065fde (final for iteration 16; art unchanged since 97558d7): `run.mjs --no-bench` rc 0 - lint
   13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders
   (`evidence/iter16/gates-b065fde.txt`). (A first try refused a dirty tree - the summary sheet - committed first.)
+- 05:48 Session end for iteration 16. Tree clean after this entry; gates last at b065fde (all 5 PASS). The final NEXT
+  is the 05:43 one plus: REQUEST 16's patch now also inks the weapon label (05:44); owner question added - speaker
+  names in the subtitle box stay vermilion (a design accent; ink would be strict doctrine). Worktrees kept:
+  `scratch-q1` (main + quest patch, final), `scratch-v2` (full morning stack on n-visual a103850, uncommitted);
+  scratch-m16 / scratch-full removed. My Godot runs all finished (the Godot processes running now are other
+  lanes'). Bench not run all iteration (box never idle). 0 Codex images. Nothing pushed or merged.
