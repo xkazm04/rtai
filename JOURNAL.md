@@ -476,3 +476,27 @@ NEXT (iteration 6 close, in order):
 - (02:37) NEXT item 7 (noir_frames tick-exact) needs no code: `--fixed-fps 60` makes every frame one tick;
   two runs of `noir_frames --scenes=street` were pixel-identical in all 6 frames (masters tick-exact/a, b).
   Usage line added to the script header. Older ped A/Bs (ped-v0/v1) were shot without it (not re-shot).
+- (02:41) Final showcase re-shot at b6797ea+: masters night/noir/show-final4/ (noir 48 / 64, D4 48; 11.3 s, 60 fps,
+  `--coat --noir-parts`) + evidence/showcase-hero.png rebuilt with masters tools/hero.py (the previous sheet is
+  evidence/showcase-hero-v3.png). Flash meter on show-final4 noir 48 and 64: 2 flashes max in any second
+  (show-final3: 3). Rows: f230 (lit under the budget), f169 silhouette flash, f175 held panel, f322 aftermath
+  (now with the stains). NOTE: the hero rows use f169 for the silhouette flash because f170 already shows the
+  inverted panel (mode 1), so the silhouette lasts one frame on screen, not the two the params' [4, 4, 1] say.
+  The same in every run since show-final3 (frame brightness identical), so it is not new; not investigated.
+  Masters trimmed (my own superseded scratch) to ~950 MB. Images this session: 0 (no generation needed);
+  Leonardo 0 tokens; provenance +0.
+NEXT (iteration 8 close, in order):
+1. Owner picks from evidence/showcase-hero.png (re-shot, show-final4) + masters night/noir/show-final4/*.mp4:
+   (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
+       1 light a second under the shared flash budget); (b) value roles: cops = ink among paper peds (default)
+       vs ink peds + paper cops (evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png);
+       (d) whether Rivet stays the lit paper figure (his limbs) or gets more ink mass (a limbs round).
+2. Photosensitivity: a real check before shipping (the flash meter in masters tools/flash_check.py is a
+   smoke test: lenient on small flashes, no red-flash test); a settings-menu toggle for `safety.flashes`
+   once core/settings exists (today it is a README only).
+3. Move noir parts + the coat from the dev hook (NoirParts.wear) into the rigs: a noir art_dir per plan,
+   the coat as a CutRig part. Wire BloodStains / BloodFx.solid into the real game hosts with the look.
+4. Wall splats are a line on the edge (top-down hides the wall face); a vertical run-down smear on the
+   building's lit face would need the facade in view (the D4 roofs have no facades).
+5. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+6. blood_fx.gd is 250 lines (over the ~200 guide, under the 300 stop): split the droplet pool out if it grows.
