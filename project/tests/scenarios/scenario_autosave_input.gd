@@ -100,4 +100,29 @@ func _continue_button(game: Quest1Game, log: Dictionary) -> String:
 	if s == null or s.beat_id() != "b3-toner-room":
 		return "Continue did not resume the surviving slot's beat"
 	log["continue_button"] = {"beat": s.beat_id(), "sink_on": s.autosave.sink.is_valid()}
-	return "" if s.autosave.sink.is_valid() else "Continue left autosave off"
+	if not s.autosave.sink.is_valid():
+		return "Continue left autosave off"
+	return _quit_save(game, log)
+
+
+## Closing the window mid-beat writes the "quit" autosave; the next load lands on that very tick.
+func _quit_save(game: Quest1Game, log: Dictionary) -> String:
+	var s: Quest1Session = game.session
+	s.world.set_process(false)
+	for i: int in 45:
+		s.step()
+	var want_tick: int = s.tick()
+	var want_hash: String = s.world.loop().state_hash()
+	if not game.save_on_quit():
+		return "save_on_quit wrote nothing mid-beat"
+	s.world.free()
+	game.session = null
+	var out: SaveLoader.Outcome = Save.load_latest(Quest1Autosave.accept(Events, Data))
+	var back: Quest1Session = out.value if out.status == SaveLoader.Status.LOADED else null
+	if back == null or out.point != "quit":
+		return "after quit the load landed on '%s'" % out.point
+	if back.tick() != want_tick or back.world.loop().state_hash() != want_hash:
+		return "the quit save did not land on its tick and hash"
+	log["quit_save"] = {"beat": back.beat_id(), "tick": back.tick(), "hash": want_hash}
+	back.world.free()
+	return ""

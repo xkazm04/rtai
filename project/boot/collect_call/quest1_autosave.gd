@@ -27,6 +27,18 @@ func poll() -> void:
 	_saver.poll(runner.beat_index, runner.state == QuestRunner.State.SUCCEEDED)
 
 
+## An autosave outside the quest's declared edges (the quit point, SAV-08): the snapshot of this
+## tick goes to the sink at once. False when there is no sink.
+func save_now(point: String) -> bool:
+	if not sink.is_valid():
+		return false
+	var snap: Dictionary = snapshot(point)
+	var body: Dictionary = snap.get("body", {})
+	var meta: Dictionary = snap.get("meta", {})
+	_send(point, body, meta)
+	return true
+
+
 ## What a slot carries: the checkpoint at this tick plus the meta.json fields.
 func snapshot(_point: String) -> Dictionary:
 	var beat: String = _session.beat_id()

@@ -8,6 +8,8 @@ extends Node
 
 signal started
 
+const QUIT_POINT: String = "quit"
+
 var session: Quest1Session = null
 var view: CollectCallView = null
 var card: Quest1Card = Quest1Card.new()
@@ -139,6 +141,22 @@ func _process(_delta: float) -> void:
 		session.live.enabled = false
 		Log.info("quest1", "contract failed at %s" % session.beat_id())
 		card.show_failed(_can_continue())
+
+
+## Quit (SAV-08): a game in progress writes its state as the "quit" autosave and waits for the write
+## before the window closes. A finished or failed run has its own saves (quest end, last beat).
+func save_on_quit() -> bool:
+	if session == null or _ended or session.failed():
+		return false
+	var wrote: bool = session.autosave.save_now(QUIT_POINT)
+	Save.flush()
+	return wrote
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		@warning_ignore("return_value_discarded")
+		save_on_quit()
 
 
 func set_paused(on: bool) -> void:
