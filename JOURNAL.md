@@ -198,3 +198,39 @@ NEXT:
 - Known gaps (honest): Toner Room and Dock 9 are a street, not rooms; contractors and the boss
   do not collide with buildings (they come along the street); StageCells generates its own
   CityGen chunks (a first-touch hitch per chunk, ~3 chunks, unmeasured).
+- 11:55 contractors and Mertz pushed out of solid cells after the arena step (a5e89c6); quest
+  scenarios 4/4 (bot scenario on the arena unchanged: 11436 ticks, cash 1500).
+- 11:57 (7495d70) city cells generated at load (2 chunks, 21-41 ms headless, logged), place
+  names stencilled on the street in road paint (the places table's marker ids, r >= 3 m), and
+  ObjectiveView reserves the subtitle band only while a line is on screen (the ring had turned
+  into an edge arrow beside a visible Juno). Frame city32b/still_2600_32.png; the "before"
+  still was overwritten in the same folder (seen, not kept).
+- 11:59 (9774d03) the line hooks moved to StageLines; collect_call_stage.gd 255 -> 236 lines.
+- GATES PASS at 9774d03 (evidence/run.mjs --no-bench): lint 13/13 (358 files), unit 339,
+  scenarios 10/10, parity exact + mutation caught, selftest goldens 11/11. Copied to
+  evidence/slice-play/iter2-9774d03/.
+- 12:01 exe re-exported at 9774d03; `RTAI.exe --headless -- --replay=<gate's city input log>`
+  -> "replay: identical", rc 0 (city cells 2 chunks, 12 ms in the release exe).
+  frames.json 14 entries (masters). No bench this iteration (no lock taken): the slice's frame
+  cost on the city with 300 people is UNMEASURED.
+
+## State at the end of iteration 2 (HEAD 9774d03 + journal)
+- The exe boots to the title card and plays quest 1 ON THE GENERATED CITY (D4 print, crowd,
+  parked cars, collisions for Rivet and the hostiles) to paid with keyboard+mouse or a pad.
+  Proofs: scenario_quest1_input (simulated pad events, paid, replay identical, checkpoints),
+  scenario_quest1_keys (WASD+E), the city clip (scripted pad). A human has still NOT played it.
+- Brief items: 1 DONE; 2 PARTIAL (HUD wired, not moved into features/hud); 3 DONE except
+  places-as-rooms (Toner Room and Dock 9 are a street with a stencilled name); 4 DONE (exe,
+  scenario, clip on the city); 5 PARTIAL (pause/settings DONE, prompts folded into hints).
+
+NEXT:
+1. A human run of the exe end to end (owner at 18:00, or the Director): watch the meet reach,
+   Mertz's vent window, walking along the street with parked cars in the way.
+2. Bench the slice under bench.lock (city + 300 people + quest + rigs), CONTENDED label.
+3. Places: re-run dev/quest1_city_fit with a plaza block for the Toner Room / a wider fit for
+   Dock 9, or ask d5-city (REQUEST) for an authored dock lot; give the vault metal its own
+   offsets so the Robo-tazer ball reaches Rivet again (then the bot can wait for a hit again).
+4. After the merge: StagePilot's car press -> VehicleService.try_enter/exit (cars are now
+   parked right beside Rivet); the World LiveInput hookup (MERGE NOTE, iteration 1).
+5. Re-capture cast_rivet.png from d5-cast's base form; RIVET_FORM_K = 1.0 (REQUEST 2).
+6. HudView/ObjectiveView into features/hud, art by id from a table.
