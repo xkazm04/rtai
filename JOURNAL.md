@@ -822,3 +822,6 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   tier 32 px/m L 0.483 -> 0.474 (look_d4 0.425, mock 0.488), px darker than 0.35 0.552 -> 0.562; 48: 0.441 -> 0.435.
   By eye the thin outlines (crates, fan, dish) firm up and stay finer than look_d4. Board evidence/item29c_dark_soft.png.
   (item29/29b/30/31 were shot at 0.04; the tone numbers differ by <= 0.01.)
+- 03:11 FINAL gates (session close): evidence tool (--no-parity --no-bench) ALL PASS at 3eb05cc (lint 13/13 over
+  190 files, unit 149/0, scenarios 8/0, selftest ok); 64 untracked evidence PNGs moved aside and restored; tree clean.
+  Session ends here (cap 03:42). NEXT: the final NEXT above (1-26) stands; nothing is half-done or uncommitted.
