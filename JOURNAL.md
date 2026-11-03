@@ -435,3 +435,19 @@ NEXT (night run): unchanged. Item 2: add the --acc knob to aim_lead_ab.gd plus a
   plan, the flinch duck, the city block clip and the robot hit tint note. Then the enemy-ai-1
   re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash, tracer, Rivet hit
   reaction).
+
+## Iteration 9 (STABILIZE, session start 23:30, report 23:40)
+- 23:30 Read the JOURNAL tail and answers.json: still only enemy-ai-1 (keep A as a placeholder;
+  re-ask only with the full D5 chain clip). Nothing new to apply. No new features (past freeze).
+- 23:32 Gates re-run on 0fe0841 (last project/ change is f9366b9, a dev-only file): lint 13/13
+  over 505 files; scenarios 21 ran, 0 failed (exit 0); unit first run 559/560 with the one
+  failure `test_noir_shadows::test_only_shadow_commands_with_a_length_are_swept` ("Parameter t is
+  null"), the brief's known flake under load (scenarios were running alongside). The re-run gave
+  560/560, 6236 asserts. Green. All CONTENDED.
+- 23:33 Evidence check: gtai-masters/eve/enemy-ai/frames.json has 15 entries and every file
+  exists. No sim, data or rig code changed since those clips were cut, so they still match the
+  build. No refresh needed. The Godot processes I started all exited under `timeout`.
+NEXT (night run): unchanged from iteration 8. Item 2: add the --acc knob to aim_lead_ab.gd plus
+  an aim_lock_ticks sweep, salted at read 0.7. Then the iteration 4 items 2-7. Then the
+  enemy-ai-1 re-ask with the full D5 chain clip (cop rig raised-gun tell, muzzle flash, tracer,
+  Rivet hit reaction).
