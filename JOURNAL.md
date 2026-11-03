@@ -100,3 +100,11 @@ NEXT:
   d-cast alone (main look_d4_item) -> 1159 TEAL; merged (d-city look_d4_item) -> 1159 cop_blue_hi + 103 cop_blue.
   MERGE NOTE for the Director: merge d-city before (or with) d-cast; d-cast alone prints moving cruisers' bars soul-teal.
   Goldens after the merge: take either side, then re-bless once on the merged tree (look_golden --bless).
+- Merged tree (scratch d-cast + d-city): lint green, unit 336/336.
+- FOUND: parked cruisers (world layer, look_d4 world pass) print their cop_blue_hi light bar with a mean 37 % SOUL-TEAL plate
+  (663-870 px past half coverage per state): plates() teal density = (min(g,b) - r - 0.08) * 2.8 and cop_blue_hi has
+  g - r = 0.215. Same on main and d-city f0cedb3 (d-city added blue to look_d4_item only). evidence/d5-cast/cruiser-world-print.json.
+- REQUEST 3 -> d5-city (supersedes REQUEST 1): look_d4.gdshader plates(): (a) exclude blue from the teal density, e.g.
+  multiply t by step(c.b - c.g, 0.157) (teal has b ~ g; cop_blue_hi has b - g = 0.35), and (b) add a cop-blue plate
+  (b - max(r, g) >= blue_gate) like look_d4_item's, so parked cruisers' bars print cop_blue_hi, not grey/teal.
+  Until then the parked cruisers are the one place blue cop art prints off-doctrine. Not changed here: shared shader.

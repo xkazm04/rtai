@@ -1,0 +1,18 @@
+{
+ "police_cruiser": {
+  "bar_px": 1262,
+  "mean_teal_plate": 0.374,
+  "px_teal_over_half": 791
+ },
+ "police_cruiser_d1": {
+  "bar_px": 1306,
+  "mean_teal_plate": 0.375,
+  "px_teal_over_half": 870
+ },
+ "police_cruiser_d2": {
+  "bar_px": 1179,
+  "mean_teal_plate": 0.366,
+  "px_teal_over_half": 663
+ },
+ "note": "look_d4 world pass (main and d-city f0cedb3 alike): teal density t = (min(g,b) - r - 0.08) * 2.8, plate = smoothstep(0.30, 0.45, t) * teal(0.85), replayed on the parked cruiser sprites' light-bar px. Needs d5-city REQUEST 1/3: a cop-blue plate and b - g < 40/255 in the teal test."
+}
