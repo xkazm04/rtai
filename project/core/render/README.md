@@ -147,7 +147,18 @@ vermilion on `world` at 32 px/m = the red lamps of `props/traffic_light.png` (an
 **Gate.** `data/tables/accent_debt.json` (gtai.accent-debt/1) lists known debt: accent + layer + ppm up to
 `max_px`, with the source and the lane that pays it off. An offender not in the table, or above its
 `max_px`, or any off-doctrine crowd look fails the selftest evidence; a debt row no longer seen is
-reported for deletion. Today: one row, `traffic_light_lamps` (<= 240 px at 32 px/m, d4-production).
+reported for deletion. Today: no rows. `traffic_light_lamps` (216 px at 32 px/m) was paid off on
+2026-11-03 in code, by the rule below, not by a redraw.
+
+**The world print carries no accent plate (2026-11-03).** palette.json allows neither accent on `world`,
+so every look profile's world `verm` and `teal` are 0: an accent painted into a ground / decal / prop /
+roof texture prints as its ink density (a red barrel or a lit lamp = a paper disc in an ink rim), never as
+vermilion. Found with the audit moved off the junction (a plaza block, `31-block/`): barrel_cluster.png's
+red barrels were 4324 / 5632 / 3916 px of world vermilion at 32 / 48 / 64 px/m, 20x the lamps, and the
+junction never saw them. After: 0 / 0 / 0 there; the junction frames move only at the lamps (32 px/m
+mean 0.02), every other look frame bit-identical (the actors, cars and FX print their accents in their
+own passes). `test_look_profiles` ties it to palette.json. A world-side danger cue goes on `fx` or
+`world_markers`, as the table always said.
 
 The atlas crowd is one MultiMesh, so it is split **at the source** (`crowd_atlas_by_look`): each look's row of
 the baked crowd atlas is classified texel by texel (raw, before the item print), with the HIT clip counted

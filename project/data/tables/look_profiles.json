@@ -53,12 +53,12 @@
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
-        "teal": 0.85,
+        "teal": 0,
         "teal_shift": [
           0,
           0
         ],
-        "verm": 0.92,
+        "verm": 0,
         "verm_shift": [
           0,
           0
@@ -93,12 +93,12 @@
         "step_hi": 0.68,
         "step_lo": 0.19,
         "step_mid": 0.45,
-        "teal": 0.85,
+        "teal": 0,
         "teal_shift": [
           -1,
           2
         ],
-        "verm": 0.92,
+        "verm": 0,
         "verm_shift": [
           2,
           -1
@@ -133,12 +133,12 @@
         "step_hi": 0.64,
         "step_lo": 0.17,
         "step_mid": 0.42,
-        "teal": 0.85,
+        "teal": 0,
         "teal_shift": [
           -2,
           3
         ],
-        "verm": 0.95,
+        "verm": 0,
         "verm_shift": [
           3,
           -2

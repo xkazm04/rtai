@@ -105,3 +105,14 @@ func test_the_print_shaders_declare_every_tone_uniform() -> void:
 		assert_has(names, "look_d4." + u)
 	for u: String in ["ink_tone", "paper_tone"]:
 		assert_has(names, "look_d4_item." + u)
+
+
+func test_the_world_print_has_no_accent_plate_where_the_palette_forbids_it() -> void:
+	var looks: LookProfiles = LookProfiles.shared()
+	var pal: PaletteTokens = PaletteTokens.shared()
+	var plates: Dictionary[StringName, StringName] = {&"verm": &"vermilion", &"teal": &"teal"}
+	for id: StringName in looks.profiles:
+		for plate: StringName in plates:
+			if not pal.allowed(plates[plate], &"world"):
+				var amount: float = looks.profiles[id].world[plate]
+				assert_eq(amount, 0.0, "%s world %s" % [id, plate])
