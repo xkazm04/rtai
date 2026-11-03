@@ -4,7 +4,8 @@ extends Node
 ## dock contractors, d5-combat's blood), but Rivet's gun is the weapons.json pistol (GunHand,
 ## tapped by the bot), and every landed round goes through the shared HitFeel (HitLink): the
 ## kill hit-stop held here, the impact star (the victim flash) and the knockback slide. The
-## camera is a CameraRig on foot (32 px/m). Fast-forwards to the first fight, then 1 tick a frame:
+## camera is a CameraRig on foot (camera.json: 32 px/m; --ppm=48 the car mode). Fast-forwards to
+## the first fight, then 1 tick a frame:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/gunplay/pistol_fight.tscn
 ##     -- --out=<dir> [--armored]  (contractors take the table's `armored` hp: 2.5 rounds)
 ##        [--ppm=48]  [--dodge]  (a scripted player strafes across each locked aim line)
@@ -102,7 +103,7 @@ func _parse_args() -> bool:
 		elif arg == "--one-slot":
 			_one_slot = true
 		elif arg.begins_with("--ppm="):
-			_view.px_per_m = arg.substr(6).to_float()
+			_ppm_mode(arg.substr(6).to_float())
 		elif arg.begins_with("--weapon="):
 			_gun_id = StringName(arg.substr(9))
 		elif arg.begins_with("--spread="):
@@ -197,6 +198,14 @@ func _side(h: Fighter) -> float:
 	return -1.0 if pull > 0.0 else 1.0
 
 
+## --ppm=<n>: the CameraRig mode with that ppm (camera.json: 32 on_foot, 48 car, 64 arena); the
+## rig drives the print stage's zoom, so the view's own px_per_m never reached the screen.
+func _ppm_mode(ppm: float) -> void:
+	for id: StringName in _rig.modes:
+		if is_equal_approx(float(_rig.modes[id]["ppm"]), ppm):
+			_rig.set_mode(id, 0)
+
+
 ## Between Rivet and the nearest live hostile, so the fight is in frame.
 func _frame_focus() -> Vector2:
 	var arena: CombatArena = _play.stage.arena
@@ -212,7 +221,7 @@ func _frame_focus() -> Vector2:
 func _save(f: int) -> void:
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
-	var png: String = "pistol-fight-%dppm-f%04d.png" % [roundi(_view.px_per_m), f]
+	var png: String = "pistol-fight-%dppm-f%04d.png" % [roundi(_rig.ppm()), f]
 	if img.save_png(_out.path_join(png)) != OK:
 		Log.error("pistol_fight", "frame %d not saved" % f)
 
