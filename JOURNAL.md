@@ -491,3 +491,15 @@ NEXT:
   commit an unproven change to another lane's file. REQUEST 3 -> d5-city: apply the patch (or
   `git apply evidence/slice-play/prewarm-light-leak.patch` at the merge), then check
   `quest1_clip --continue` frames 4-6 (no pool on Rivet) and the selftest goldens.
+
+## Iteration 48 (16:52, BUILD, 8 min to the freeze)
+- BLOCKED 16:52: bench.lock still held by d5-combat (16:43, 9 min old, not stale), so the
+  windowed `quest1_clip --continue` frame that would verify prewarm-light-leak.patch was NOT taken.
+  The patch stays unapplied (it touches d5-city's view_prewarm.gd and is not frame-proven).
+- No code change this iteration; gates stand as evidenced at 162fbfa (ef3f425). Worktree clean
+  apart from this journal entry. No Godot process of mine is running.
+NEXT (unchanged from iteration 47, in order): 1) owner's 18:00 exe run + frame-verify the
+  light-pool patch (REQUEST 3 -> d5-city, `git apply evidence/slice-play/prewarm-light-leak.patch`);
+  2) merge d-cast with/before d-slice; autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs.
