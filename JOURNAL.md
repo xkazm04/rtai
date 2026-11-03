@@ -1291,3 +1291,8 @@ NEXT (morning, in order; iteration 14's list stands, minus the reduced-motion fl
 - Evidence at d07f1d5 (07:03-07:05, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity bit-exact
   + mutation caught at 629, selftest 11/11 + 5/5 goldens worst 0.00, accents clean, world lock 0.00 % x3).
   Copied to evidence/pof. Session end: tree clean, no Godot of mine running, no scratch.
+- Evidence at c186220 (07:06-07:08, --no-bench, all PASS: lint 13/13, unit 247, scenarios 8, parity, selftest
+  11/11 + 5/5 goldens worst 0.00, accents identical to d07f1d5, world lock 0.00 % x3). Copied to evidence/pof.
+  Seen: the live 48 px/m city frame counted 81 colours vs 75 at d07f1d5 (32 px/m 77 both). Not a golden;
+  the selftest builds World directly (boot.gd is not in it), so I read it as live-crowd variance - not proven.
+  Session end 07:09: tree clean, no Godot of mine running, no scratch worktrees.
