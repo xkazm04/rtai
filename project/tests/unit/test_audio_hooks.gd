@@ -66,6 +66,9 @@ func test_a_voice_line_queues_behind_the_one_speaking() -> void:
 	assert_true(_service.voice.speak("a", s))
 	assert_true(_service.voice.speak("b", s))
 	assert_eq(_service.voice.line_id, "a", "b waits, it does not cut a")
+	assert_true(_service.voice.speak("d", s))
+	assert_true(_service.voice.speak("e", s))
+	assert_eq(_service.voice.dropped_ids, ["b"], "the oldest waiting line is the one lost")
 	assert_false(_service.voice.speak("c", null))
 
 

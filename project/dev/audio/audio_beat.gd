@@ -77,6 +77,7 @@ func _done() -> void:
 		"dropped": s.dropped,
 		"voice_lines": _audio.voice.played,
 		"voice_drops": s.voice.drops,
+		"voice_dropped_ids": s.voice.dropped_ids,
 		"missing": s.bank.missing,
 	}
 	printerr("audio_beat: %s" % JSON.stringify(out))

@@ -9,6 +9,8 @@ const MAX_PENDING: int = 2
 var line_id: String = ""
 var plays: int = 0
 var drops: int = 0
+## Ids of the lines dropped from the backlog (evidence: which lines the player never heard).
+var dropped_ids: Array[String] = []
 var _player: AudioStreamPlayer = AudioStreamPlayer.new()
 var _pending: Array[Array] = []
 
@@ -28,7 +30,8 @@ func speak(id: String, stream: AudioStream) -> bool:
 	if stream == null:
 		return false
 	if _player.playing and _pending.size() >= MAX_PENDING:
-		_pending.pop_front()
+		var lost: Array = _pending.pop_front()
+		dropped_ids.append(str(lost[0]))
 		drops += 1
 	if _player.playing:
 		_pending.append([id, stream])
