@@ -433,3 +433,10 @@ NEXT (night run; same as iteration 5's NEXT, with item 2's weapon kick done in a
   hit rate 100 %). So the clip shows Rivet's gloria kick (0.8) and NOT the rifle against the pistol. It is not in
   frames.json. A real comparison needs the camera lead (arena-2) or a 48 px/m clip with a guard close by:
   folded into NEXT item 4.
+- 23:20 clip `clips/arena-pit-rigs-kick-48ppm-12s.mp4` (+ `pit_rigs_kick48_sheet.png`, ticks 312-676, 8 frames
+  checked). At 48 px/m the blue rifle cops are in frame at the top-right edge (about 6-7 m from Rivet) and fire
+  at Rivet: a hit flash on him at tick 364, damage taken 3.6. Rivet kills 3 with the gloria (hit rate 100 %,
+  dodges 5), and blood shows on the cops. So the rifle kick (1.4) and the pistol kick (0.8) are both in this one
+  clip. Both are still a few pixels and have to be judged in motion. The cops at the very edge show again why the
+  camera lead (arena-2) is needed. Not added to frames.json (it is at 15). For the night run: swap it in for the
+  32 px/m recoil clip once the camera lead lands.
