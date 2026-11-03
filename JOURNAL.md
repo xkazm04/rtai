@@ -1162,8 +1162,8 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
   REQUEST 22 (visual-engine, optional): aquatint on paving.
 - A real HUD (code owner): counters from `features/hud/art/hud_digits.png` (README: cells, advances, baseline). Words
   still need a bundled font (AST-10, owner OK).
-- Quest 1 left as code placeholders: the arc ball + whisper rings (FX code), the teal HP bar (doctrine: teal = the
-  dead), the beat / HEAT words (font). The cast sprites are rig snapshots: re-capture with `dev/showcase/
+- Quest 1 left as code placeholders: the arc ball + whisper rings (FX code; the HP bar is ink in the patch now), the
+  beat / HEAT words (font). The cast sprites are rig snapshots: re-capture with `dev/showcase/
   rivet_sprite.gd [--kind=cop]` + masters `rivet_matte.py` / `sprite_rim.py` / `rivet_peek.py` if the parts change.
 - Owner questions unchanged: HUD / lettering font, cop uniform vermilion share, blood ink vs vermilion, teal robot eyes.
 - Morning, idle box: `node tools/bench/run.mjs`, then `run.mjs` so `build/evidence/bench.json` is current.
