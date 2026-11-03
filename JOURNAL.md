@@ -1807,3 +1807,18 @@ NEXT (iteration 18; 43-50 stand, earlier lists stand):
 
 NEXT (iteration 19; 43-52 stand, earlier lists stand): nothing new. Morning: Director merges n-d5 per the merge
 sheet; 50 (hint_range on the look_d5* uniforms + range test) and 51 (bench export-folder mkdir) are the open items.
+
+## Iteration 20 (2026-11-03, STABILIZE, 07:52 -> report 08:15), no image budget (50/50)
+- 07:52 read JOURNAL (iteration 19, finished 07:51), git log. HEAD 5526cae; `git diff --stat 850652b HEAD` =
+  JOURNAL.md only (+19). build/evidence: lint, unit, scenarios, parity, selftest at 850652b (07:51), bench at
+  4b61ff4 (07:49, docs-only diff since); all 6 status "pass". evidence/ = 2 tracked (README.md, ladder.png) + 104
+  untracked PNGs, unchanged. The code and assets are the same as the evidence commits, so no re-run (it would
+  only re-stamp the same build). No bugs open in this lane's scope.
+- No visual change, no frames, no ladder row. Shared files touched: none. AI assets: none new.
+
+## Summary (iteration 20, STABILIZE)
+- Build green; the evidence matches the current code (only docs changed since). Images: 0 (50 of ~50).
+
+NEXT (iteration 20; 43-52 stand): nothing new. Morning: Director merges n-d5 per the merge sheet; open items
+are 50 (hint_range on the look_d5* uniforms + range test, needs a before/after frame diff) and 51 (bench
+export-folder mkdir in tools/bench/run.mjs, shared tooling).
