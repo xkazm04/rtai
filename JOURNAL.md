@@ -1132,3 +1132,29 @@ NEXT (iteration 18 close; the iteration-16 list 1-5 stands):
 3. Junction asphalt outlines / lamp fragments: the pass needs a prop / shadow mask channel.
 4. Per-light directions: retry only where a body stands mid-beam or mid-pool.
 5. showcase_fight.gd 227 lines: _add_player_fluid / _wear_noir_parts / _solid could go into a setup helper.
+- TRIED / REVERTED (07:11-07:17, 01409e4 reverted by d6daee0) NEXT 2 the cheapest way: the crowd ALREADY draws a
+  soft ink shadow blob per person (CrowdLayers RL_PED_SHADOWS, 25.6 px, ink 0.3, offset (2,3) px). NoirLook put one
+  ShaderMaterial on that layer (`assets/shaders/look_noir_crowd_shadow.gdshader`: alpha cut 0.4 -> value 0.03,
+  quad stretched x1.8 away from frame.light_dir), no extra draw. First version broke D4 (it set the layer's
+  material to null when the look was off; the crowd layers carry the D4 item material) - fixed by restoring the
+  previous material: D4 18/18 noir_frames byte-identical. Noir: on the asphalt the grey ghost rims around peds
+  mostly go (a doctrine plus), at lit edges the peds get hard blots (street 32 is the best row) - BUT at street
+  48 a blob with **no body above it** prints as a hard ink teardrop on the lit pavement (before: the soft blob
+  printed as nothing). Worse to the eye -> reverted; project/ tree back to 641d2b1 exactly (empty diff), so the
+  641d2b1 gate PASS stands. Evidence: evidence/crowd-shadow-before-after-NOT-adopted.png (rows: junction 32/48/64,
+  street 32/48/64; row 5 = the body-less blot; the revert message says the file without the suffix),
+  masters crowdshadow-v1/{before,after}/, ladder row 37 (marked NOT ADOPTED; 37 rows). Cost not measured (no
+  extra draw, but unmeasured is not zero).
+  Lead for whoever retries: find WHO owns the body-less blob first - sim_render writes RL_PED_SHADOWS for every
+  person before the `_rigged` check, so a rigged slot whose rig is not drawn (or a person hidden for another
+  reason) still casts. Fix there (skip the blob when no body is drawn), then re-apply the material.
+- Selftest colour count: run.mjs at 01409e4 reported 48 px/m 67 colours (80 at 641d2b1); two reruns at 01409e4
+  gave 80 / 80 (32 px/m 78 / 77) - real-time run-to-run noise, not the change.
+- (07:18) Close (iteration 18). Code commits: 641d2b1 (showcase frame-saving split, byte-identical), 01409e4 +
+  revert d6daee0 (crowd ink blobs). Gates PASS at 641d2b1 (= the current project tree). Images 0 generated, 0
+  rejected; Leonardo not probed; provenance +0. Shared files touched: none. Masters scratch shots-v1, st1, st2
+  deleted. No process of mine running.
+NEXT (iteration 18 final, replaces the 07:10 list's item 2): 2. Crowd shadows: fix the body-less blob at the
+  source (sim_render: no RL_PED_SHADOWS instance when no body is drawn for that person - check the rigged slots
+  and hidden people), then re-apply look_noir_crowd_shadow (in git history at 01409e4) and re-shoot noir_frames
+  street 48. Items 1, 3, 4, 5 of the 07:10 list stand.
