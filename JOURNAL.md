@@ -225,6 +225,14 @@ NEXT (iteration 3):
 - Shared files touched this iteration: none (arena_station.schema.json is the arena's).
 - answers.json re-read 22:34: nothing new for arena.
 
+- MILESTONE `37e243c` `scenario_arena_stations`: every shipped station file loads, every hook
+  builds, every knob whose table is in the tree resolves; planted bad knob caught. At the merge,
+  enemy-ai's file as it stands fails this scenario (and lint's data-tables), which is the point.
+- Gates at 37e243c: lint 13/13 (511 files), unit 559/559 (`evidence/arena/unit-it3d.log`),
+  scenarios 23/23 full suite at ccff748 (`evidence/arena/scenarios-it3-full.log`) + the new
+  stations scenario 1/1. `scenarios-it3c.log` is a red run caused by my own half-written metal
+  edit compiled mid-run (fixed in b855c5d), kept as the record.
+
 NEXT (iteration 4 / the night run from the merged main):
 1. Re-read answers.json. On the merged tree run
    `godot --headless --path project -s res://dev/arena/stations_check.gd -- --out=build/evidence/arena-stations.json`
