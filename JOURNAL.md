@@ -1762,3 +1762,14 @@ NEXT (final, iteration 18; supersedes the 06:18 NEXT + addendum where they diffe
   the page grade, n-visual's. Peds at 32 on paving and asphalt read as inked figures (the iteration-16 arm outline);
   `barrel_cluster`'s vermilion is on doctrine (explosive barrels = a hazard prop, ruled in iteration 4).
 - Codex this iteration: 0 images.
+- 06:45 GATES at 4d010ba (`run.mjs --no-bench`, after the revert + re-import) rc 0: lint 13/13, unit 142/142,
+  scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter20/gates-4d010ba.txt`).
+  FRICTION: the first run failed with "Godot not found" (GODOT_BIN unset in that shell) and the one before it
+  refused the dirty tree - neither is a red gate.
+- 06:46 LOOKED, no change: dev HUD at UI scale 0.4 over city_frame at 32 / 48 (`masters:hud_i20/`): cash, wanted,
+  ammo ticket and the two soul cards read; vermilion only on the 2 full pips and the bullet, teal only on the
+  active soul card. Ladder2 rows "i20 cracks-calm REJECTED 32 / 48" appended.
+- 06:47 NO GAIN, NOT SHIPPED: probe 2 on `cracks` (`masters:tools/cracks_nochips.py`: keep the largest alpha
+  component, clear the rest). The 4 cream chips are joined to the crack through faint halo pixels, so only
+  1549 px of specks cleared; the same-scene 32 / 48 / 64 (`after_i20nc/`) cannot be told from HEAD
+  (`evidence/iter20/cracks_nochips_nogain.jpg`). Reverted (cmp equal), re-imported. Cracks: leave the art as it is.
