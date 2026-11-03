@@ -4,7 +4,9 @@ extends Node
 ## same moments, printed in D4 and in D-Noir back to back, at 32, 48 and 64 px/m, for three
 ## scenes (the junction riot, a street with crowd, the roofs). The world is paused (process off)
 ## while one moment is shot in both looks, so the pair is the same frame. Windowed only.
-## Usage: godot --path project res://dev/noir/noir_frames.tscn -- --out=<dir>
+## Usage: godot --path project --fixed-fps 60 res://dev/noir/noir_frames.tscn -- --out=<dir>
+## --fixed-fps 60 makes every frame one sim tick, so two runs (e.g. an A/B of part sets) shoot the
+## same crowd at the same tick, pixel for pixel; without it the settle time follows the wall clock.
 
 const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd", "--noir-parts", "--verm"]
 const MASTER_SEED: int = 91
