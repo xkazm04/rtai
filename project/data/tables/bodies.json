@@ -5,38 +5,43 @@
       "id": "boss",
       "mass_kg": 900,
       "radius_m": 1.2,
-      "reserved": false
+      "reserved": false,
+      "run_mps": 3.2
     },
     {
       "doc": "Peds, rioters, cops and quest people. 0.35 m keeps the sim crowd separation (two humans part at 0.7 m).",
       "id": "human",
       "mass_kg": 75,
       "radius_m": 0.35,
-      "reserved": false
+      "reserved": false,
+      "run_mps": 3.2
     },
     {
       "doc": "Rivet in his base form: only slightly larger than a human (owner verdict 1), heavier (a machine). Read from here, never from the sprite size.",
       "id": "rivet_base",
       "mass_kg": 160,
       "radius_m": 0.42,
-      "reserved": false
+      "reserved": false,
+      "run_mps": 5
     },
     {
       "doc": "Reserved: the bulky ghost form, later in the story. No rules yet; nothing uses it.",
       "id": "rivet_ghost",
       "mass_kg": 600,
       "radius_m": 0.9,
-      "reserved": true
+      "reserved": true,
+      "run_mps": 5
     },
     {
       "doc": "A robot body. Neutral blocked rule until the owner designs robots.",
       "id": "robot",
       "mass_kg": 300,
       "radius_m": 0.5,
-      "reserved": false
+      "reserved": false,
+      "run_mps": 3.2
     }
   ],
-  "doc": "Body size classes and the tackle matrix (features/bodies/README.md). Bodies are circles of radius_m; on contact the overlap is split by mass (a body of mass m against M moves M/(m+M) of it). A contact whose closing speed is above tackle_mps is a run (a tackle), else a walk. rules: attacker class against defender class: walk and run results (shove = the mass split only; stagger = shoved knockback_m with no fall; knockdown = slides knockback_m, lies down_s, gets up and flees flee_s; blocked = the attacker stops at contact and the defender holds (the closing speed is removed, the tangent kept), the neutral rule for robots and bosses until the owner designs them). can_hurt: the contact may damage the defender (no tackle hurts anyone today).",
+  "doc": "Body size classes and the tackle matrix (features/bodies/README.md). Bodies are circles of radius_m; on contact the overlap is split by mass (a body of mass m against M moves M/(m+M) of it). A contact whose closing speed (the attacker's own velocity along the line to the defender) is above the ATTACKER's run_mps is a run (a tackle), else a walk: Rivet runs above 5.0 m/s (his 4.5 m/s quest walk shoves), a human above 3.2 m/s (a 4.5 m/s flee or riot is a run). rules: attacker class against defender class: walk and run results (shove = the mass split only; stagger = shoved knockback_m with no fall; knockdown = slides knockback_m, lies down_s, gets up and flees flee_s; blocked = the attacker stops at contact and the defender holds (the closing speed is removed, the tangent kept), the neutral rule for robots and bosses until the owner designs them). can_hurt: the contact may damage the defender (no tackle hurts anyone today).",
   "flee_s": 3,
   "rules": [
     {
@@ -184,6 +189,5 @@
       "walk": "blocked"
     }
   ],
-  "schema": "gtai.bodies/1",
-  "tackle_mps": 5
+  "schema": "gtai.bodies/1"
 }

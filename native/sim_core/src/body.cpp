@@ -41,7 +41,7 @@ void CityCore::body_push(int i, double pvx, double pvy) {
 	}
 	double sh = body_[BD_SHARE];
 	// a person running into the body is blocked (human -> rivet_base run): it takes it all
-	if (!tackle && body_[BD_RUN_IN] != 0.0 && -(pvx * nx + pvy * ny) > body_[BD_TACKLE]) sh = 1.0;
+	if (!tackle && body_[BD_RUN_IN] != 0.0 && -(pvx * nx + pvy * ny) > body_[BD_RUN_IN]) sh = 1.0;
 	double pen = (rs - d) * sh;
 	cx_ += nx * pen;
 	cy_ += ny * pen;

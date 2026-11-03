@@ -8,9 +8,9 @@ const PATH: String = "res://data/tables/bodies.json"
 const SCHEMA: String = "gtai.bodies/1"
 const RESULTS: Array[StringName] = [&"blocked", &"knockdown", &"shove", &"stagger"]
 
-var tackle_mps: float = 0.0
 var flee_s: float = 0.0
 var _radius: Dictionary[StringName, float] = {}
+var _run: Dictionary[StringName, float] = {}
 var _mass: Dictionary[StringName, float] = {}
 var _rules: Dictionary[StringName, BodyRule] = {}
 var _errors: Array[String] = []
@@ -22,7 +22,6 @@ static func load_default() -> BodyTable:
 
 static func from_table(t: DataTable) -> BodyTable:
 	var b: BodyTable = BodyTable.new()
-	b.tackle_mps = t.num(t.raw, "tackle_mps")
 	b.flee_s = t.num(t.raw, "flee_s")
 	var live: Array[StringName] = []
 	for row: Variant in t.array(t.raw, "classes"):
@@ -30,6 +29,7 @@ static func from_table(t: DataTable) -> BodyTable:
 		var id: StringName = StringName(t.text(c, "id"))
 		b._radius[id] = t.num(c, "radius_m")
 		b._mass[id] = t.num(c, "mass_kg")
+		b._run[id] = t.num(c, "run_mps")
 		if not c.get("reserved", false):
 			live.append(id)
 	for row: Variant in t.array(t.raw, "rules"):
@@ -57,6 +57,11 @@ func radius(cls: StringName) -> float:
 	return _radius.get(cls, 0.0)
 
 
+## The speed (m/s) above which this class's contact is a run (a tackle), else a walk.
+func run_mps(cls: StringName) -> float:
+	return _run.get(cls, 0.0)
+
+
 func mass(cls: StringName) -> float:
 	return _mass.get(cls, 0.0)
 
@@ -75,8 +80,8 @@ func share(attacker: StringName, defender: StringName) -> float:
 
 func _check(live: Array[StringName]) -> void:
 	for id: StringName in _radius:
-		if _radius[id] <= 0.0 or _mass[id] <= 0.0:
-			_errors.append("bodies.json: class %s needs radius_m and mass_kg > 0" % id)
+		if _radius[id] <= 0.0 or _mass[id] <= 0.0 or _run[id] <= 0.0:
+			_errors.append("bodies.json: class %s needs radius_m, mass_kg and run_mps > 0" % id)
 	for a: StringName in live:
 		for d: StringName in live:
 			var r: BodyRule = rule(a, d)

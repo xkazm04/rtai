@@ -648,7 +648,7 @@
           "value": 11
         },
         {
-          "doc": "1.0: a person running into the body takes all the overlap",
+          "doc": "person run line m/s (a faster run-in takes it all; 0 = never)",
           "name": "BD_RUN_IN",
           "type": "int",
           "value": 12

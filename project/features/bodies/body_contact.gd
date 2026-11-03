@@ -32,7 +32,7 @@ static func resolve(
 		return c
 	var n: Vector2 = delta / d if d > 1e-6 else Vector2.RIGHT
 	var closing: float = vel.dot(n)
-	c.result = rule.result(closing, table.tackle_mps)
+	c.result = rule.result(closing, table.run_mps(a))
 	var pen: float = rs - d
 	var share: float = table.share(a, b)
 	if c.result == &"blocked":

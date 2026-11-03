@@ -1,7 +1,7 @@
 class_name BodyRule
 extends RefCounted
 ## One row of the tackle matrix (bodies.json `rules`): what happens when `attacker` walks (walk)
-## or runs (run: closing speed above tackle_mps) into `defender`.
+## or runs (run: closing speed above the attacker's run_mps) into `defender`.
 
 var attacker: StringName = &""
 var defender: StringName = &""
@@ -26,5 +26,5 @@ static func from_row(t: DataTable, r: Dictionary) -> BodyRule:
 
 
 ## The result for a contact at `closing_mps` (the attacker's speed into the defender).
-func result(closing_mps: float, tackle_mps: float) -> StringName:
-	return run if closing_mps > tackle_mps else walk
+func result(closing_mps: float, run_mps: float) -> StringName:
+	return run if closing_mps > run_mps else walk

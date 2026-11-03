@@ -82,9 +82,10 @@ func test_arena_sprint_knocks_a_guard_back() -> void:
 
 ## The shove/tackle line is Rivet's own speed into a body (body.cpp), so his quest walk must stay
 ## under it: a walk always shoves, and only a sprint (above walk speed) tackles. If combat's walk
-## speed is raised past tackle_mps, every brush with a person becomes a knockdown.
+## speed is raised past rivet_base run_mps, every brush with a person becomes a knockdown.
 func test_rivet_walk_speed_never_tackles() -> void:
 	var walk: float = CombatTuning.shipped().rivet["walk_mps"]
 	var t: BodyTable = BodyTable.load_default()
-	var why: String = "combat walk_mps %.2f vs bodies tackle_mps %.2f" % [walk, t.tackle_mps]
-	assert_lt(walk, t.tackle_mps, why)
+	var run: float = t.run_mps(RivetBody.CLASS)
+	var why: String = "combat walk_mps %.2f vs bodies rivet_base run_mps %.2f" % [walk, run]
+	assert_lt(walk, run, why)

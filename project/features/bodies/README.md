@@ -12,8 +12,12 @@ a neutral `blocked` rule until the owner designs them later in the story.
   Rivet's radius is read from here, **never from his sprite**: `d5-cast` rescales the art, the body
   stays 0.42 m ("only slightly larger than a human": 1.2x the human radius, so two humans side by
   side are 1.4 m and Rivet plus a human 0.77 m).
-- `tackle_mps` (5.0, was 3.2 until 2026-11-03 13:20: Rivet's quest walk is 4.5 m/s and must shove): a contact whose closing speed (the attacker's velocity along the line to the
-  defender) is above this is a run (a tackle), else a walk.
+- `run_mps` per class (the ATTACKER's run line): a contact whose closing speed (the attacker's
+  own velocity along the line to the defender) is above it is a run (a tackle), else a walk.
+  `rivet_base` 5.0 (his 4.5 m/s quest walk shoves, a sprint tackles), `human` 3.2 (a 4.5 m/s flee
+  or riot into Rivet is a run, so it is `blocked`). Until 2026-11-03 16:00 one `tackle_mps` served
+  both directions; raising it to 5.0 for Rivet's walk turned running humans into walkers that
+  shoved him (the look goldens caught it).
 - `rules`: attacker x defender -> `walk` and `run` results (`shove`, `stagger`, `knockdown`,
   `blocked`), `knockback_m`, `down_s`, `can_hurt` (false everywhere today: a tackle that kills
   nobody makes no blood). `flee_s`: how long a knocked-down ped flees after getting up.
@@ -37,8 +41,8 @@ The bubble sim (GDScript reference `features/city/sim/sim_body.gd` and native
    normal, lies `down_s`, then a ped flees (`M_FLEE` from where it was hit, or back to the riot if it
    was a rioter) and a cop resumes. Downed people are not scared by gunfire (they stay down), can
    still be shot and run over, and draw the `hit` clip's last frame.
-   A person RUNNING into the body (its own closing speed above the tackle speed) follows the
-   table's human -> rivet_base run result: `blocked` sets `BD_RUN_IN`, and the person takes the whole
+   A person RUNNING into the body (its own closing speed above the human run_mps) follows the
+   table's human -> rivet_base run result: `blocked` sets `BD_RUN_IN` to that speed, and the person takes the whole
    overlap (a fleeing ped cannot shove Rivet).
 3. After all actors moved, the body is pushed out of everything it still overlaps (two passes),
    then out of solid cells. `body_result()` returns the resolved position and the knockdowns

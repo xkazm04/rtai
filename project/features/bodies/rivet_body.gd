@@ -52,12 +52,13 @@ func spec(want: Vector2) -> PackedFloat64Array:
 	s[SimConst.BD_SHARE] = table.share(CLASS, PERSON)
 	var r: BodyRule = table.rule(CLASS, PERSON)
 	var knock: bool = r != null and r.run == &"knockdown"
-	s[SimConst.BD_TACKLE] = table.tackle_mps if knock else NEVER_MPS
+	s[SimConst.BD_TACKLE] = table.run_mps(CLASS) if knock else NEVER_MPS
 	s[SimConst.BD_KNOCK] = sqrt(2.0 * SLIDE_DECEL * r.knockback_m) if knock else 0.0
 	s[SimConst.BD_DOWN] = r.down_s if knock else 0.0
 	s[SimConst.BD_FLEE] = table.flee_s
 	var back: BodyRule = table.rule(PERSON, CLASS)
-	s[SimConst.BD_RUN_IN] = 1.0 if back != null and back.run == &"blocked" else 0.0
+	var blocked: bool = back != null and back.run == &"blocked"
+	s[SimConst.BD_RUN_IN] = table.run_mps(PERSON) if blocked else 0.0
 	pos = want
 	return s
 

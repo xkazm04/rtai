@@ -55,7 +55,7 @@ func push(i: int, pvx: float, pvy: float) -> void:
 	var sh: float = spec[SimConst.BD_SHARE]
 	# a person running into the body is blocked (human -> rivet_base run): it takes it all
 	var run_in: bool = (
-		spec[SimConst.BD_RUN_IN] != 0.0 and -(pvx * nx + pvy * ny) > spec[SimConst.BD_TACKLE]
+		spec[SimConst.BD_RUN_IN] != 0.0 and -(pvx * nx + pvy * ny) > spec[SimConst.BD_RUN_IN]
 	)
 	if not tackle and run_in:
 		sh = 1.0

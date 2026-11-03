@@ -26,6 +26,11 @@
           },
           "reserved": {
             "type": "boolean"
+          },
+          "run_mps": {
+            "maximum": 50,
+            "minimum": 0.5,
+            "type": "number"
           }
         },
         "required": [
@@ -33,7 +38,8 @@
           "id",
           "mass_kg",
           "radius_m",
-          "reserved"
+          "reserved",
+          "run_mps"
         ],
         "type": "object"
       },
@@ -110,11 +116,6 @@
     "schema": {
       "const": "gtai.bodies/1",
       "type": "string"
-    },
-    "tackle_mps": {
-      "maximum": 20,
-      "minimum": 0.5,
-      "type": "number"
     }
   },
   "required": [
@@ -122,8 +123,7 @@
     "doc",
     "flee_s",
     "rules",
-    "schema",
-    "tackle_mps"
+    "schema"
   ],
   "type": "object"
 }
