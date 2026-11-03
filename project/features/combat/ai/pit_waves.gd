@@ -43,7 +43,7 @@ func ok() -> bool:
 func curve_ids() -> Array[StringName]:
 	var out: Array[StringName] = []
 	out.assign(_curves.keys())
-	out.sort()
+	out.sort_custom(func(a: StringName, b: StringName) -> bool: return String(a) < String(b))
 	return out
 
 
