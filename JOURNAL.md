@@ -920,3 +920,7 @@ NEXT (iteration 13 / morning, in order):
    when it is night); the API is CityView.lights.set_grade(&"night").
 5. Unchanged: print_part ink / paper tones (characters / n-noir file); traffic states from sim custom.y;
    rig 0.43 ms p99 vs 0.3 target (native RigArm / RigGait); d4-production asset notes (barrels, road patch).
+- Evidence at 4d83199 (HEAD code, --no-bench, ~04:55): lint 13/13, unit 221, scenarios 8, parity PASS,
+  selftest PASS (junction 11/11 + block 5/5 goldens worst 0.00, accents clean at both, world lock
+  0.00 % x3). Copied to evidence/pof. Bench: the contended run at 56d23e7 above (owed idle, NEXT 2).
+  Session end: tree clean, no Godot of mine running, my /tmp scratch deleted.

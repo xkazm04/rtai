@@ -2,8 +2,8 @@
   "schema": "pof.godot-evidence/1",
   "kind": "parity",
   "gameId": "gtai",
-  "commit": "56d23e7127f9451779d63f450261eef774c358b0",
-  "builtAt": "2026-11-03T03:42:55.970Z",
+  "commit": "4d83199d883e2c1b1ffab30f60574bf20841c311",
+  "builtAt": "2026-11-03T03:51:36.912Z",
   "godotVersion": "4.7.2.stable.official.ed1daf0bf",
   "status": "pass",
   "summary": "parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3547 floats); planted mutation caught at step 629",
@@ -16,8 +16,8 @@
     "steps": 1200,
     "checks": 40,
     "snapshotFloats": 3547,
-    "stepMsGd": 2.638,
-    "stepMsNative": 0.0282,
+    "stepMsGd": 2.621,
+    "stepMsNative": 0.0281,
     "plantedMismatchStep": 629
   },
   "artifacts": [

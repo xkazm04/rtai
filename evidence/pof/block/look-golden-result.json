@@ -40,6 +40,16 @@
       "mean": 0.0,
       "ok": true,
       "ppm": 48
+    },
+    {
+      "far": 0.0,
+      "file": "look-block-auto-64ppm-night.png",
+      "found": true,
+      "grade": "night",
+      "look": "auto",
+      "mean": 0.0,
+      "ok": true,
+      "ppm": 64
     }
   ],
   "gpu": "NVIDIA GeForce RTX 4090",
