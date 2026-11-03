@@ -1,0 +1,31 @@
+{
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "hit_rate": 0.387096774193548,
+  "hits": 12,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 31,
+  "ticks": 899,
+  "top_speed_mps": 4.500732421875,
+  "ttk_s": {
+    "static_10m": [
+      0.183333333333333
+    ],
+    "strafe_05m": [
+      0.116666666666667,
+      0.1
+    ],
+    "strafe_10m": [
+      1.0
+    ]
+  },
+  "turn_rate_peak_dps": 720.000327394338
+}

@@ -1,0 +1,138 @@
+{
+  "$id": "gtai.arena/1",
+  "additionalProperties": false,
+  "properties": {
+    "areas": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rect": {
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "rect"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "city": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "base"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "pit": {
+      "additionalProperties": false,
+      "properties": {
+        "area": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "first_wave": {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "gap_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "grow": {
+          "maximum": 6,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "max_wave": {
+          "maximum": 24,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "trigger_inset_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "area",
+        "first_wave",
+        "grow",
+        "max_wave",
+        "gap_s",
+        "trigger_inset_m"
+      ],
+      "type": "object"
+    },
+    "rig_kick": {
+      "additionalProperties": {
+        "maximum": 1.6,
+        "minimum": 0.4,
+        "type": "number"
+      },
+      "description": "--rigs render only: the SHOOT recoil strength per weapon id (RigClips.shoot clamps to 0.4-1.6; a weapon not listed kicks 1.0).",
+      "type": "object"
+    },
+    "rivet_start": {
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.arena/1",
+      "type": "string"
+    },
+    "zoom_ppm": {
+      "items": {
+        "maximum": 256,
+        "minimum": 8,
+        "type": "number"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rivet_start",
+    "zoom_ppm",
+    "areas",
+    "pit",
+    "city"
+  ],
+  "type": "object"
+}

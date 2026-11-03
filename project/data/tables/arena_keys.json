@@ -1,0 +1,34 @@
+{
+  "doc": "The dev arena's own keys (dev/arena, features/arena/README.md), registered into the InputMap by ArenaKeys next to the gameplay actions (input_actions.json, untouched). None of them enters TickInput: they drive the dev view (zoom, teleport, the tuning panel), never the sim. Keys are physical key names.",
+  "rows": [
+    {
+      "id": "arena_panel",
+      "joy_buttons": [],
+      "keys": [
+        "F1"
+      ]
+    },
+    {
+      "id": "arena_teleport",
+      "joy_buttons": [],
+      "keys": [
+        "T"
+      ]
+    },
+    {
+      "id": "arena_zoom",
+      "joy_buttons": [],
+      "keys": [
+        "Z"
+      ]
+    },
+    {
+      "id": "arena_save_telemetry",
+      "joy_buttons": [],
+      "keys": [
+        "F6"
+      ]
+    }
+  ],
+  "schema": "gtai.arena-keys/1"
+}
