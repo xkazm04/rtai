@@ -572,7 +572,7 @@
    "file": "radio_loop_1.mp3",
    "status": "OK",
    "out": "radio_loop_1.ogg",
-   "dur": 19.56,
+   "dur": 19.5,
    "peak_db": -6.0,
    "rms_db": -19.2
   },
@@ -580,15 +580,15 @@
    "file": "radio_loop_2.mp3",
    "status": "OK",
    "out": "radio_loop_2.ogg",
-   "dur": 19.51,
+   "dur": 17.25,
    "peak_db": -6.0,
-   "rms_db": -19.0
+   "rms_db": -18.5
   },
   {
    "file": "radio_loop_3.mp3",
    "status": "OK",
    "out": "radio_loop_3.ogg",
-   "dur": 19.56,
+   "dur": 19.5,
    "peak_db": -6.0,
    "rms_db": -18.7
   },

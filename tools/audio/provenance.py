@@ -36,7 +36,7 @@ for f in sorted(pathlib.Path("project/assets/audio").rglob("*")):
                     human_edits="loudnorm -18 LUFS / -2 dBTP, mono Ogg Vorbis q4" + ("; telephone band-pass (highpass 320 Hz, lowpass 3.4 kHz, compressor)" if stem == "patch-collect-call" else ""))
     elif "/music/" in rel:
         m = extra[stem]
-        base.update(tool=m["tool"], model=m["model"], prompt_ref=m["prompt_ref"], human_edits=m["human_edits"])
+        base.update(tool=m["tool"], model=m["model"], prompt_ref=m["prompt_ref"], human_edits=m["human_edits"] + ("; fade-out tail cut back so the loop seam is music into music" if stem == "radio_loop_2" else ""))
     else:
         g = gen[sfx_src.get(stem, stem)]
         base.update(tool="elevenlabs-sound-generation (direct API; PoF audio-gen refused every request, POF-GAP 1)", model="elevenlabs sound-generation v2",

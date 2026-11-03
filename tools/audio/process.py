@@ -127,12 +127,22 @@ def voice(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
         log.append({"file": f.name, "status": "OK", "out": dst.name, "dur": round(len(n) / SR, 2), "lufs": lufs, "peak_db": round(db(float(np.abs(n).max())), 1)})
 
 
+def cut_dead_tail(a: np.ndarray, below_db: float = 12.0) -> np.ndarray:
+    """Generated music often fades out at its end: cut back to the last 250 ms that is within `below_db` of the track's mean level,
+    so the loop seam crossfades music into music, not into silence."""
+    w = SR // 4
+    env = np.array([np.sqrt((a[i:i + w] ** 2).mean()) for i in range(0, len(a) - w, w)])
+    mean = float(np.sqrt((env ** 2).mean()))
+    keep = np.where(env > mean * 10 ** (-below_db / 20))[0]
+    return a[: (int(keep[-1]) + 1) * w] if len(keep) else a
+
+
 def music(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
     (out / "music").mkdir(parents=True, exist_ok=True)
     for f in sorted(raw.glob("*.mp3")):
         a = decode(f)
         stinger = "stinger" in f.stem
-        b = fade(trim(a, -50.0).copy(), 20.0) if stinger else loopify(a.copy(), 0.5)
+        b = fade(trim(a, -50.0).copy(), 20.0) if stinger else loopify(cut_dead_tail(a).copy(), 0.5)
         peak = float(np.abs(b).max())
         b = b * (10 ** ((-3.0 if stinger else -6.0) / 20) / peak)
         # stereo is not kept: mono keeps the radio in the same positional chain as everything else
