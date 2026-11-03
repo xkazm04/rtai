@@ -672,3 +672,9 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   over the crossing touches them. Not changed (the mock's zebra is cream); a toned zebra would be the same fix.
 - 02:38 boards from h92c (item4, night_iter6_summary, NEW item25_road_dashes.png), evidence/hero-d4d5-*ppm.png =
   h92c (d4 frames unchanged); ladder +1 row; README rows + section.
+- 02:41 gates: evidence tool (--no-parity --no-bench) ALL PASS at e89a39c (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok); 56 untracked evidence PNGs moved aside and restored.
+- 02:43 REJECTED (h93, reverted, tiles byte-identical to 55f54b8): asphalt grain in the D5 road tiles (masters tools/
+  build_grain.py: seeded light specks, 3% of the asphalt, L 0.53, mid-wash step). HF 32/48/64 0.0705/0.0630/0.0613 ->
+  0.0721/0.0664/0.0636, but by eye the specks read as sprinkled salt, not the mock's grain: the mock's asphalt is a
+  dense LOW-CONTRAST mottle, which one print step cannot hold. Crop masters work/i6/grain_rejected_h93.png; ladder row.
