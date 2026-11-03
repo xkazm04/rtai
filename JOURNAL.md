@@ -695,3 +695,15 @@ NEXT (iteration 10, in order):
   at the kerb: the cones light the asphalt fine at full lift, but the kerb lies in a pool's falloff (the pools
   are centred on the pavement), where the lift is too small to cross the threshold. A geometry question (pool
   radius / centre / core), left in NEXT item 5. Params restored with `git checkout`.
+- TRIED (03:52) lamp_core 0.6 with the pools 2.2 m out (geo-v1): bigger, flatter pools, ink share 62% at 48 px/m.
+  Too much white for little gain; not kept.
+- MILESTONE (03:53) pool geometry (32e1bc0): the pool centres 2.2 m out along the lamp arm (was 1.0), core
+  kept 0.45 (geo-v2). The light now reaches the kerb line and bites into the road edge with hatching, which
+  answers most of "the pools stop at the kerb". Ink share (pixels < 100 of 255) street 48: 70% -> 65%,
+  street 32: 58% -> 55%. A/B 3-way: masters night/noir/geo-v2/ab3-street-48.png, ab3-street-32.png,
+  ab3-roofs-32.png (current | v1 | v2). 197 unit pass.
+  Street showcase re-shot: masters lamp-show3/ (noir 32 / 48 / 64) + evidence/showcase-hero-street.png rebuilt;
+  ladder row 29 now uses lamp-show3 (lamp-show2 deleted: superseded). Flash meter: 32 = 2/s, 48 = 3/s, 64 = 3/s
+  (64 rose from 2: the same mechanism as 03:50, the inverted panel over a lit pool; the budget's own maximum,
+  a pass); 0 red. The junction showcase at 48 px/m re-recorded and diffed: 23/23 frames pixel-identical to
+  show-final6, so evidence/showcase-hero.png stands (its 32 px/m frames will differ slightly; not re-shot).
