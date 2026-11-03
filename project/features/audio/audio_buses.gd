@@ -29,6 +29,7 @@ func ensure() -> void:
 		var base: float = row["volume_db"]
 		_base_db[id] = base
 		AudioServer.set_bus_volume_db(idx, _base_db[id])
+	_far_filter()
 	_limit_master()
 
 
@@ -62,3 +63,13 @@ func _limit_master() -> void:
 	var limiter: AudioEffectHardLimiter = AudioEffectHardLimiter.new()
 	limiter.ceiling_db = ceiling
 	AudioServer.add_bus_effect(master, limiter)
+
+
+## The `sfx_far` bus muffles what is heard from far away: a low-pass at far_lowpass_hz.
+func _far_filter() -> void:
+	var idx: int = AudioServer.get_bus_index(&"sfx_far")
+	if idx < 0 or AudioServer.get_bus_effect_count(idx) > 0:
+		return
+	var lp: AudioEffectLowPassFilter = AudioEffectLowPassFilter.new()
+	lp.cutoff_hz = _mix.get("far_lowpass_hz", 2500.0)
+	AudioServer.add_bus_effect(idx, lp)

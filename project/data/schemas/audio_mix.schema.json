@@ -72,6 +72,16 @@
       ],
       "type": "object"
     },
+    "far_lowpass_hz": {
+      "maximum": 20000,
+      "minimum": 200,
+      "type": "number"
+    },
+    "far_m": {
+      "maximum": 300,
+      "minimum": 1,
+      "type": "number"
+    },
     "footstep_speed_mps": {
       "maximum": 10,
       "minimum": 0,
@@ -162,6 +172,8 @@
     "footstep_stride_m",
     "servo_chance",
     "master_limiter_db",
+    "far_m",
+    "far_lowpass_hz",
     "riot_bed_full_rate",
     "riot_bed_quiet_db",
     "riot_bed_loud_db",

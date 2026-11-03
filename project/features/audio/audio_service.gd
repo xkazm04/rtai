@@ -7,6 +7,8 @@ extends Node2D
 ## only: it reads the game (FX cues, Events) and never writes the sim, so replay and parity are
 ## untouched.
 
+const FAR_BUS: StringName = &"sfx_far"
+
 var tables: AudioTables
 var bank: SoundBank = SoundBank.new()
 var dice: AudioDice
@@ -30,6 +32,7 @@ var _next_ok: Dictionary[StringName, int] = {}
 var _frame_starts: int = 0
 var _m_to_px: float = 32.0
 var _cap: int = 4
+var _far_m: float = 22.0
 var _listener: AudioListener2D = AudioListener2D.new()
 
 
@@ -40,6 +43,7 @@ func _init(p_tables: AudioTables, master_seed: int) -> void:
 	loops = AudioLoops.new(tables, bank)
 	_m_to_px = tables.mix_float("m_to_px", 32.0)
 	_cap = int(tables.mix_float("voice_cap_per_frame", 4.0))
+	_far_m = tables.mix_float("far_m", 22.0)
 
 
 func _ready() -> void:
@@ -95,7 +99,7 @@ func _start(slot: int, c: AudioCue, s: AudioStream, pos_m: Vector2) -> void:
 	var p: AudioStreamPlayer2D = _pool[slot]
 	p.stop()
 	p.stream = s
-	p.bus = c.bus
+	p.bus = _bus_for(c, pos_m)
 	p.volume_db = c.gain_db
 	p.pitch_scale = maxf(c.pitch * dice.jitter(c.pitch_jitter), 0.05)
 	p.max_distance = (c.max_m if c.max_m > 0.0 else 1000.0) * _m_to_px
@@ -103,6 +107,21 @@ func _start(slot: int, c: AudioCue, s: AudioStream, pos_m: Vector2) -> void:
 	p.play()
 	_pool_cue[slot] = c.id
 	_pool_prio[slot] = c.priority
+
+
+## Positional sfx heard from beyond far_m metres go through the muffling bus.
+func _bus_for(c: AudioCue, pos_m: Vector2) -> StringName:
+	if c.bus == &"sfx" and c.max_m > 0.0 and pos_m.distance_to(listener_m) > _far_m:
+		return FAR_BUS
+	return c.bus
+
+
+## The bus the latest still-playing voice of cue `id` runs on (&"" when none): tests and evidence.
+func bus_in_use(id: StringName) -> StringName:
+	for i: int in _pool.size():
+		if _pool_cue[i] == id and _pool[i].playing:
+			return _pool[i].bus
+	return &""
 
 
 func _active(id: StringName) -> int:

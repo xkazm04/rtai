@@ -11,4 +11,7 @@ for k, p in enumerate(POS):
     x = a[int((k + 0.5) * sr): int((k + 1.0) * sr)]
     l = np.sqrt((x[:, 0] ** 2).mean()) + 1e-9
     r = np.sqrt((x[:, 1] ** 2).mean()) + 1e-9
+    spec = np.abs(np.fft.rfft(x.mean(axis=1))) ** 2
+    hf = spec[int(4000 / (sr / 2) * len(spec)):].sum() / (spec.sum() + 1e-12)
+    print(f"HF>4k {10*np.log10(hf+1e-12):6.1f} dB of total  ", end="")
     print(f"shot at {p} m: L {20*np.log10(l):6.1f} dB  R {20*np.log10(r):6.1f} dB  L-R {20*np.log10(l/r):5.1f} dB  total {20*np.log10(np.sqrt(l*l+r*r)):6.1f} dB")

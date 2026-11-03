@@ -89,3 +89,13 @@ func _takes(tables: AudioTables) -> int:
 	for c: AudioCue in tables.cues.values():
 		n += c.takes
 	return n
+
+
+func test_distant_sfx_go_through_the_muffling_bus() -> void:
+	var s: AudioService = _service()
+	assert_true(s.cue(&"shot", Vector2(5.0, 0.0), 10))
+	assert_eq(s.bus_in_use(&"shot"), &"sfx", "close: clear")
+	assert_true(s.cue(&"shot_gloria", Vector2(40.0, 0.0), 10))
+	assert_eq(s.bus_in_use(&"shot_gloria"), AudioService.FAR_BUS, "40 m: muffled")
+	assert_true(AudioServer.get_bus_index(AudioService.FAR_BUS) >= 0)
+	assert_gt(AudioServer.get_bus_effect_count(AudioServer.get_bus_index(AudioService.FAR_BUS)), 0)

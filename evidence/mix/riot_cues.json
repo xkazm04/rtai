@@ -1,4 +1,8 @@
 {
+  "beds_db": {
+    "city_ambience": -22.0,
+    "crowd_roar": -17.4476165771484
+  },
   "cops_near": 100,
   "dropped": {
     "death:cooldown": 105,
