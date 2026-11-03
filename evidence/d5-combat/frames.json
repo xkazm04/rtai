@@ -125,13 +125,13 @@
   "note": "--fixed-fps 60, one tick per frame. Owner A/B: default is off."
  },
  {
-  "file": "beat-flash-64ppm-realtime.mp4",
-  "title": "Kill beat 'flash' in real time at 64 px/m",
+  "file": "frames/wall-splat-f1-t900-32ppm-crop.png",
+  "title": "Wall splats in the real city (32 px/m, crop x3)",
   "source": "game-city",
   "branch": "d-combat",
-  "look": "auto (D4->D5)",
-  "ppm": 64,
-  "note": ""
+  "look": "d4d5",
+  "ppm": 32,
+  "note": "city_fight seed 91, focus 1 (a street along buildings), t900: the riot's sprays met the buildings 19 times (CombatBlood solid = the sim's C_BUILD/C_PROP cells); a droplet into a wall stops and smears along it instead of landing beyond it. Full frame: raw/wall/fight-f1-noir-t900-32ppm.png. (The kill-beat 'flash' real-time clip moved out of this list: beat-flash-64ppm-realtime.mp4 is still in the masters folder.)"
  },
  {
   "file": "frames/beat-modes-48ppm-realtime-strip.png",

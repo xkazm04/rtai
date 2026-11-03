@@ -236,7 +236,7 @@ func _summary() -> String:
 	return (
 		(
 			"city_fight: tick=%d deaths=%d shots=%d kills=%d aimed=%d decals=%d draw_us=%d"
-			+ " avg_us_per_frame=%.1f frames=%d beats=%d calm=%d soaked=%d missed=%d"
+			+ " avg_us_per_frame=%.1f frames=%d beats=%d calm=%d soaked=%d missed=%d walls=%d"
 		)
 		% [
 			_world.context().clock.tick(),
@@ -251,7 +251,8 @@ func _summary() -> String:
 			_chars.blood.beat.beats,
 			_chars.blood.beat.calm_beats,
 			_chars.blood.stains.soaked,
-			_chars.blood.stains.missed
+			_chars.blood.stains.missed,
+			b.blood.wall_hits
 		]
 	)
 

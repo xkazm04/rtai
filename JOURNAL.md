@@ -204,3 +204,8 @@ green at 971a118.
   time); strip frames/clip-it3-64-strip.png (+ repo evidence/d5-combat/). 16 deaths, 15 aimed, 14 soaked, 2 missed.
   Camera breaks: 0. Deleted the 1.3 GB PNG scratch after encoding. frames.json (15): the t900 48/64 hero frames now
   show iteration 3 (before = iteration 1), 128 kill-cam frame added, clip-it3 replaces clip-it2 (as its before).
+- EVIDENCE gap closed (brief item 1 "wall splats" had no real-game frame): city_fight summary prints walls=<n>
+  (BloodFx.wall_hits). Seed 91 to t900: focus 0 walls=2, focus 1 walls=19, focus 2 walls=0. Frame: masters
+  frames/wall-splat-f1-t900-32ppm-crop.png (focus 1; the spray stops at the roof edge and piles along the wall base,
+  never crosses onto the roof). Camera breaks: 0 of 3. frames.json: the wall entry replaces the beat-flash 64 clip
+  (still in masters).
