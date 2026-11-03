@@ -640,3 +640,13 @@ NEXT:
 - PERF (only open item): riot p99 CPU d-cast ~4.9 vs main ~3.2-3.5 ms over 2 CONTENDED pairs, all within 7 ms.
   Run a 3+3 uncontended A/B after the day run. Only if the gap holds, bench masters perf-bisect/ patch A, then B.
 - Pre-existing (main too): exit-time ObjectDB/resource leak lines in run_scenarios; not this lane's scope.
+
+## Iteration 55 (17:30-, REPORT phase: nothing built)
+- 17:30 REPORT.md written in the lane cwd. Every evidence path it cites was checked to exist (script over the
+  `evidence/` and masters `M:` paths). The only miss is the decisions line's stale `evidence/cop-gate.json`, which the
+  report flags (the real path is `evidence/d5-cast/cop-gate.json`). Masters frames.json: 15 entries, all files present.
+- `git diff 8dbf7f4 HEAD -- project tools` is still empty: the build is the one the gates last ran green on.
+
+NEXT: see REPORT.md "Owner choices" and "Next steps". In short: owner picks 1-6; merge d-city before or with d-cast;
+apply the masters look_d4 cop-blue plate patch; re-bless the goldens once on the merged tree; run an uncontended
+3+3 riot bench A/B for the open p99 lead.
