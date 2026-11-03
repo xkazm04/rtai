@@ -13,6 +13,13 @@ const PROP_FILL: Dictionary[String, Color] = {
 	"firing_line": Color("#E8502A"),
 }
 const FLOOR_TILE_M: float = 8.0
+## The city's inked props as the arena's cover, so the arena reads as the game, not a sketch:
+## low cover is a row of crates (one crate of the stack, repeated along the box), high cover a
+## dumpster, the course's cones the street cone. Walls stay solid ink (architecture).
+const CRATES: Texture2D = preload("res://features/city/art/props/crate_stack.png")
+const CRATE_PX: Rect2 = Rect2(0.0, 0.0, 80.0, 80.0)
+const DUMPSTER: Texture2D = preload("res://features/city/art/props/dumpster.png")
+const CONE: Texture2D = preload("res://features/city/art/props/traffic_cone.png")
 
 
 func _draw() -> void:
@@ -38,11 +45,28 @@ func _draw() -> void:
 func _prop(at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
-	if p.kind == "cone":
-		draw_circle(Ink.px(at), p.size.x * 0.5 * Ink.PX_PER_M, fill)
-		return
+	match p.kind:
+		"cone":
+			draw_texture_rect(CONE, r, false)
+			return
+		"cover_high":
+			draw_texture_rect(DUMPSTER, r, false)
+			return
+		"cover_low":
+			_crate_row(r)
+			return
 	draw_rect(r, fill, true)
 	draw_rect(r, Ink.INK, false, Ink.LINE_PX)
+
+
+## Square crates along the box's long side (the last one squeezed to fit).
+func _crate_row(r: Rect2) -> void:
+	var side: float = minf(r.size.x, r.size.y)
+	var along: Vector2 = Vector2(side, 0.0) if r.size.x >= r.size.y else Vector2(0.0, side)
+	var n: int = maxi(roundi(maxf(r.size.x, r.size.y) / side), 1)
+	for i: int in n:
+		var cell: Rect2 = Rect2(r.position + along * i, Vector2(side, side))
+		draw_texture_rect_region(CRATES, cell.intersection(r), CRATE_PX)
 
 
 func _ring(at: Vector2, radius_m: float, color: Color) -> void:
