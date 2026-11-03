@@ -60,6 +60,7 @@ static func _put(parent: Node, dir: String, spot: Array, px: float, mat: Materia
 	if img.generate_mipmaps() != OK:
 		return 0
 	var s: Sprite2D = Sprite2D.new()
+	s.name = name
 	s.texture = ImageTexture.create_from_image(img)
 	var x: float = spot[1]
 	var y: float = spot[2]

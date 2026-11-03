@@ -115,6 +115,7 @@ func _ground() -> void:
 		_soul_mat = _soul_material()
 		var n: int = D5HeroExtras.place(_world, borrow_dir, PX, _actors, _soul_mat)
 		Log.info("dev", "d5_hero: %d borrowed sprites" % n)
+	_corners.append_array(D5HeroPropShadow.place(_world, PX))  # d5 tier: hatched prop/car shadows
 
 
 ## How the souls print: "d5" = look_d5_soul (default), "raw" = the D5 art as drawn (h22),
@@ -232,6 +233,7 @@ func _tier(tier: String) -> void:
 	var dir: String = ROOFS_D5 if tier == "d5" else ROOFS
 	D5HeroGround.fade(_cracks, tier, _rigs.zoom * PX)
 	D5HeroHaloInk.dev_switches(self, _look, _rigs.zoom * PX)  # D5_PRINT=thin, D5_HALO=ink (proposals)
+	D5HeroPropShadow.set_zoom(_rigs.zoom)
 	for p: Polygon2D in _shadows:
 		p.visible = tier == "d5"
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
