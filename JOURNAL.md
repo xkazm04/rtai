@@ -158,3 +158,43 @@ NEXT:
   ticket; lint + all quest scenarios re-run green after each. NEXT unchanged (1 human run,
   2 quest 1 in the real city, 3 post-merge World/VehicleService hookup, 4 Rivet re-capture,
   5 HUD into features/hud).
+
+## Iteration 2 (real clock 11:15 - )
+
+- 11:16 read JOURNAL, git log; picked NEXT 2 (quest 1 in the real city), the largest gap.
+- FRICTION 11:20-11:33: two runs of a new `-s` dev tool error-looped silently for 6.5 + 4 min:
+  a `-s` SceneTree script that names game classes compiles before the `Log` autoload exists.
+  Fix: the -s entry `load()`s its body in `_initialize` (the run_scenarios pattern):
+  `dev/quest1_city_fit.gd` + `dev/quest1_city_fit_run.gd`. Also: always `| head` the first
+  errors of a new tool before a long timeout.
+- MILESTONE 11:35 quest 1 on the generated city (sim): `collect_call_city.json`
+  (`gtai.collect-call-city/1`) lays the stage along one street, world = origin + stage * squash
+  (276,265.85; 1 x 0.3; dev/quest1_city_fit found 4017 clear fits on 4 streets near the city
+  start, 15 s). StageLayout.shipped(city) maps every place/actor/spawn/patrol/metal point;
+  StageCells (CityGen chunks, CitySimSolid's solid rule) pushes Rivet out of buildings, props
+  and parked cars; the CitySystem bubble follows Rivet (stage sets focus each tick), people only
+  (no traffic, no city police). `Quest1Session.on_city` (static, default true; the bot scenario
+  keeps the invented arena through CollectCallPlay). Input driver fixes for the city: stick
+  floor past the dead zone, stand tolerance 0.15 m (it stalled 0.05 m short of Juno), and no
+  wait for a tazer hit on the city (squashed vault metal is within the ball's chain reach, so
+  the ball bursts short; a human still beats Mertz in his vent window). Commit 2092706.
+- MILESTONE 11:38 the slice draws on the real CityView: CollectCallView.city_view puts the
+  quest's props, cast and FX on CityView's actor layer; StageView.zones=false (no invented
+  floors); CityView's camera follows the city focus = Rivet. Commit 23bc30b.
+- 11:41 crowd: 120 people existed (counters) but ~3 per screen; 300 + CityCharacters (crowd
+  atlas + near rigs, rivet_on_foot=false so Rivet is drawn once, by the quest cast). 42a304d.
+- GATES PASS at 42a304d (evidence/run.mjs --no-bench): lint 13/13, unit 339, scenarios 10/10
+  (scenario_quest1_input: paid on the CITY via input events, all 6 beats, checkpoint
+  round-trip + tamper refused, Retry; replay identical), parity exact + mutation caught,
+  selftest goldens 11/11. Copied to evidence/slice-play/iter2-42a304d/.
+- 11:50 exe re-exported at 42a304d (`build/export/windows/RTAI.exe`); `RTAI.exe --headless --
+  --replay=<the gate's city input log>` -> "replay: identical", rc 0.
+- Frames (masters/day-d5/slice-play): city32/ (ticks 240, 2400, 7000, 8400, 10400), city48/
+  (240, 7000), clip `quest1-city-input-run-32ppm.mp4` (32 s; 966 frames; scripted pad, NOT a
+  human), contact sheet clip32city_sheet.png. Looked at: 7 stills + 6 clip frames; 0 camera
+  breaks, 0 rejected. frames.json now 13 entries (city first; the arena ones marked as before);
+  ladder.png +2 rows (arena vs city at ticks 240 and 7000). No bench (no lock taken; the city
+  under quest 1 = the normal city bubble with 300 people, cost UNMEASURED).
+- Known gaps (honest): Toner Room and Dock 9 are a street, not rooms; contractors and the boss
+  do not collide with buildings (they come along the street); StageCells generates its own
+  CityGen chunks (a first-touch hitch per chunk, ~3 chunks, unmeasured).
