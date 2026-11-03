@@ -39,3 +39,52 @@
   knee pole in `_solve_leg` rotated by hip_yaw. Then a 32/48 px/m clip of Rivet circle-strafing
   a fixed aim point (dev scene in `project/dev/rivet_motion/`, `--fixed-fps 60`), plus the turn
   rate number. (4) Locomotion clips (item 3), registry subjects first.
+
+## Iteration 1, continued (20:56-21:20)
+- The clock read 20:56 after the proportions commit, so I carried on with NEXT.
+- Look goldens: the evidence run at 0287cec passed them unblessed (11/11, worst 0.42; block 5/5)
+  and parity was exact. Its unit and scenario FAILs came from my edits landing mid-run ("tree
+  changed during run"). Scenarios re-run alone: exit 0 at bf41369.
+- FRICTION (shared env): `test_save_slots` fails 13-46 asserts with error 16, even run alone.
+  project.godot sets `use_custom_user_dir` ("RTAI Uprising"), so every lane's worktree writes
+  the same %APPDATA% save dir and concurrent gate runs collide. Not this lane's code (the rig is
+  view-only). For the Director: re-run it on a quiet machine before calling it red.
+- MILESTONE bf41369, twin-stick hips: `RigHips` (the hips' yaw follows the walk, folds on a
+  backpedal past 105 deg, clamps at `hip_twist_max` 70 deg, spring k 140). Rivet only
+  (`hip_follow` 1). The strafe foot gauge went 0.4 -> 148 part px (test_rig_hips: the planted
+  locked rig has to measure narrower). Clips `clips/strafe-hips-{32,48,96}ppm.mp4`.
+  Honest read: from straight above the torso hides most of the legs, so the hips help a little
+  and the stride has to get visible (item 3).
+- MILESTONE 02524d3, claw combo as data: `data/tables/rivet_melee.json` (+ schema),
+  `MeleeTable`/`MeleeHit`/`MeleeCombo` in features/player. Buffered chain at `cancel_ticks` 4,
+  `combo_window_ticks` 12, the finisher ends the chain. The shock numbers are in the table; its
+  logic comes next. Not wired into quest 1 (its replay log has no combo; the arena plugs it in).
+- MILESTONE a692b60, strike pose: `RigClips.strike()` (windup anticipation twist, ease-out
+  extension on the active frames, smoothstep recovery); hit 1 claw, hit 2 torch arm (twist
+  mirrored), hit 3 both hands. Clip `clips/combo-claw-{48,96}ppm.mp4` on a 3-dummy line.
+- Feel numbers (measured, data-true at 60 Hz; not input latency):
+  - claw lands at 5 ticks = 83 ms after the press;
+  - a mashed chain lands at 0 / 267 / 533 ms;
+  - the chain recovers at 56 ticks = 0.93 s;
+  - the finisher knocks back 2.5 m.
+  Input-to-motion latency is NOT measured yet (it needs the live input path).
+- REQUEST 1 -> gunplay: the shared hit flash (`RigClips.hit` -> `set_tint`) paints a struck
+  ped/cop vermilion-red. That breaks "red is blood only". Your hit-feel module should own a
+  non-red flash (cream/white).
+- Registry applied (motion-quality-gating): craft, responsiveness and integrity are reported
+  separately; the dimensions are defined by what is visible (gauge, landing tick); no latency
+  number was made up.
+- Owner page `gtai-masters/eve/rivet-motion/frames.json`: 10 entries.
+- NEXT (iteration 2):
+  1. answers.json (rivet-motion-1).
+  2. Charged shock: `MeleeShock` (hold to charge from `charge_min` to `charge_full`; release =
+     stun scaled by charge, chain hops to metal within `chain_radius_m`) + a test with a planted
+     fault + a clip.
+  3. Sprint (held key, above 5 m/s, owner C19) and dodge roll (i-frames, recovery) in a
+     `PlayerMotion` + table rows. The sprint key needs an input_actions row (shared file: a
+     minimal change, logged).
+  4. Visible stride: try `gait_scale` > 1 for Rivet and a feet-ahead lean at run; measure the
+     foot reach past the torso silhouette at 32 px/m.
+  5. `arena_stations/rivet-motion.json` once the arena lane's station schema exists (check
+     their branch or docs; otherwise propose one).
+  6. Melee weapons framework (`melee_weapons.json`: baton, katana) on MeleeCombo rows.
