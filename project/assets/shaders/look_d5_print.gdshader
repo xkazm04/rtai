@@ -24,7 +24,7 @@ uniform float hatch_on = 0.86;     // deep-shadow hatching starts at this densit
 uniform float grit = 0.35;         // paper stipple (0..1)
 uniform float verm = 0.92;
 uniform float teal = 0.85;
-uniform float dark_soft = 0.04;   // proposal: how far lighter than its neighbours a pixel may be and still take edge ink
+uniform float dark_soft = 0.10;   // proposal: how far lighter than its neighbours a pixel may be and still take edge ink
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
