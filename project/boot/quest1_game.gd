@@ -12,6 +12,10 @@ var session: Quest1Session = null
 var view: CollectCallView = null
 var card: Quest1Card = Quest1Card.new()
 var paused: bool = false
+## The on-foot camera: 32 px/m (the AGENTS camera table).
+var px_per_m: float = 32.0
+## Where the beat checkpoints go ("" turns saving off, e.g. a test that must not touch user://).
+var save_path: String = Checkpoint.DEFAULT_PATH
 var _ended: bool = false
 
 
@@ -28,18 +32,24 @@ func boot() -> void:
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
 	@warning_ignore("return_value_discarded")
+	card.continue_pressed.connect(func() -> void: start(Checkpoint.load_file(save_path)))
+	@warning_ignore("return_value_discarded")
 	card.resume_pressed.connect(func() -> void: set_paused(false))
 	@warning_ignore("return_value_discarded")
 	card.quit_pressed.connect(func() -> void: get_tree().quit(0))
-	card.show_title()
+	card.show_title(save_path != "" and Checkpoint.load_file(save_path) != null)
+	if LaunchArgs.has("--replay"):
+		_replay.call_deferred(LaunchArgs.value("--replay"))
 
 
-## The Start button: opens the contract and hands Rivet to the player.
-func start() -> void:
+## Start (cp null) or Continue (the last beat checkpoint): opens the contract for the player.
+func start(cp: Checkpoint = null) -> void:
 	if session != null:
 		set_paused(false)
 		return
-	session = Quest1Session.open(Events, Data)
+	session = Quest1Session.resume(Events, Data, cp) if cp != null else null
+	if session == null:
+		session = Quest1Session.open(Events, Data)
 	if session == null:
 		get_tree().quit(1)
 		return
@@ -48,6 +58,7 @@ func start() -> void:
 	add_child(session.world)
 	if DisplayServer.get_name() != "headless":
 		view = CollectCallView.new()
+		view.px_per_m = px_per_m
 		view.bind(session.stage, session.port, session.system)
 		add_child(view)
 		session.live.viewport = get_viewport()
@@ -66,6 +77,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if session == null or _ended:
 		return
+	var cp: Checkpoint = session.poll_checkpoint()
+	if cp != null and save_path != "":
+		Log.info("save", "checkpoint %s at tick %d (%d)" % [cp.beat, cp.tick, cp.save(save_path)])
 	if session.paid() and not session.system.runner.lines.busy():
 		_end()
 
@@ -86,3 +100,19 @@ func _end() -> void:
 	var cash: int = session.stage.wallet.cash - session.cash_before
 	Log.info("quest1", "paid +%d at tick %d" % [cash, session.tick()])
 	card.show_paid(cash)
+	if save_path != "":
+		Checkpoint.erase(save_path)
+
+
+## `-- --replay=<file>` (SIM-05): re-runs a recorded slice log on a fresh session and quits
+## 0 identical, 1 diverged, 2 unreadable. `-- --record=<file>` is saved by the World on exit.
+func _replay(path: String) -> void:
+	var log: ReplayLog = ReplayLog.load_file(path)
+	var again: Quest1Session = Quest1Session.open(Events, Data, log.master_seed) if log else null
+	if again == null:
+		get_tree().quit(2)
+		return
+	var divergence: String = again.world.verify_replay(log)
+	Log.info("replay", divergence if divergence != "" else "identical")
+	again.world.free()
+	get_tree().quit(0 if divergence == "" else 1)

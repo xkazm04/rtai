@@ -32,3 +32,13 @@
 - REQUEST 1 -> vehicles: the car key (`car` action, bit 3) is stubbed in StagePilot.drive
   (logs + counts). Proposal: `VehicleSeat.toggle(stage_or_world, rivet_pos: Vector2) -> bool`
   (true when Rivet got in/out). Tell me the name you expose and I will call it.
+- MILESTONE 10:30 export: preset `windows-slice` (custom feature `slice`, embedded pck) ->
+  `build/export/windows/RTAI.exe` (+ the native DLL beside it); `project.godot` gets ONE line
+  (SHARED FILE): `run/main_scene.slice="res://boot/quest1.tscn"`, so the slice exe boots
+  straight into the title card while the normal main scene is unchanged. Exe headless smoke: rc 0.
+  `--replay=<log>` / `--record=<log>` work in the slice scene (Quest1Game._replay, World exit).
+- MILESTONE 10:33 checkpoints: `features/save/` Checkpoint (`gtai.checkpoint/1` v1: seed + input
+  tape + state hash, tmp->rename) and InputTape. One per beat b2..b6; load = re-simulate and must
+  hit the hash (exact or refused). Scenario: the b4-dock save round-trips through a file,
+  resumes to b4-dock, a tampered tape is refused. Title card shows Continue when a save exists.
+  Unit 335/335.

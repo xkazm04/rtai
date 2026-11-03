@@ -15,6 +15,8 @@ var focus: Vector2 = Vector2.INF
 ## (a caller with its own print pass, e.g. dev/noir/quest_fight.gd).
 var printed: bool = true
 var print_stage: PrintStage = null
+## Camera scale in px per metre (48 by default; the slice plays on foot at 32, AGENTS camera).
+var px_per_m: float = Ink.PX_PER_M
 var _camera: Camera2D = null
 var _stage: CollectCallStage
 
@@ -43,7 +45,7 @@ func _ready() -> void:
 		return
 	print_stage = PrintStage.new()
 	add_child(print_stage)
-	print_stage.zoom = Ink.PX_PER_M / SimConst.PX_PER_M
+	print_stage.zoom = px_per_m / SimConst.PX_PER_M
 	var k: Vector2 = Vector2.ONE * SimConst.PX_PER_M / Ink.PX_PER_M
 	for v: Node2D in [stage_view, fx_view, cast_view]:
 		v.scale = k

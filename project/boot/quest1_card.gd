@@ -6,6 +6,7 @@ extends CanvasLayer
 
 signal start_pressed
 signal resume_pressed
+signal continue_pressed
 signal quit_pressed
 
 const CONTROLS: String = (
@@ -43,16 +44,20 @@ func build() -> void:
 	add_child(_panel)
 
 
-func show_title() -> void:
+## The title; `can_continue` adds Continue (the last beat checkpoint) above Start.
+func show_title(can_continue: bool = false) -> void:
 	build()
 	_clear()
 	_label(_t(&"SLICE__TITLE", "RTAI: Uprising"), 56, Ink.INK)
 	_label(_t(&"SLICE__QUEST_1", "Quest 1: Collect Call"), 34, Ink.VERMILION)
 	_label(_t(&"SLICE__CONTROLS", CONTROLS), 20, Ink.INK)
+	var first: Button = null
+	if can_continue:
+		first = _button(_t(&"SLICE__CONTINUE", "Continue"), continue_pressed)
 	start_button = _button(_t(&"SLICE__START", "Start"), start_pressed)
 	@warning_ignore("return_value_discarded")
 	_button(_t(&"SLICE__QUIT", "Quit"), quit_pressed)
-	start_button.grab_focus.call_deferred()
+	(first if first != null else start_button).grab_focus.call_deferred()
 
 
 func show_pause() -> void:
