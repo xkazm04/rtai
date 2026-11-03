@@ -752,3 +752,6 @@ NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade
   wear pixels as a world-locked overlay, alpha 0 at 56 px/m -> 1 at 96) is how the thin-at-gameplay / grime-up-close
   ground should ship; or a texture with hand-made mip levels (mip 0 = bold cracks, mip 1+ = thin), if the importer
   allows it.
+- 02:58 MILESTONE (h98b): two more D5 lamps (SW at y 6.8, SE at 8.2) like the mock's lamps at the vertical road's
+  block corners. h98 (all four corners) REJECTED: the NW head sat on STRIKE + the fist stencil, and the facing pairs
+  read as a symmetric gate. d4 tier 0 px; d5 1866 px changed at 32 only (off frame at 48+); Rivet crops 0 px.
