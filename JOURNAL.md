@@ -1977,3 +1977,16 @@ NEXT (final, iteration 31): the iteration-21 final NEXT stands (morning order: m
 `git apply` REQUEST 16 / 19 / 21 / 23, re-bake, re-bless n-visual's look / block goldens; JOURNAL.md is the only
 conflict). Full gates incl. bench green at 31f8c4c; lint / unit / scenarios re-confirmed green at e6dcac5. Owner
 decision still open: cop vermilion (23:10 entry). Nothing pushed or merged. Session end; tree clean at the commit below.
+
+## 2026-11-03 08:15 iteration 32, REPORT
+- 08:15 Read JOURNAL (iteration 31 final NEXT), git log. Tree clean at 0e733b6. Built nothing new.
+- 08:18 CHECK at 0e733b6 (`evidence/report/gates-0e733b6.txt`): lint 13/13 over 176 files, unit 142/142, scenarios
+  8 ran / 0 failed, rc 0 (replay_60s final cbeb734ff9b97c41).
+- 08:25 MILESTONE `REPORT.md` written: what works (each claim with a path), what does not, blocked / friction with
+  durations, owner decisions, morning order. Every cited in-tree path and masters folder checked to exist (scripted).
+- Codex: 0 images; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 32): `REPORT.md` is the hand-off. Morning order: merge n-d4, merge n-visual, `git apply`
+REQUEST 16 / 19 / 21 / 23, re-bake, re-bless n-visual's look / block goldens, full `run.mjs` on an idle box. Owner
+decisions open: cop vermilion share, blood ink vs vermilion, Rivet limb hatch at 64 px/m, HUD font, in-world souls.
+Nothing pushed or merged.

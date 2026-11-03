@@ -1,0 +1,10 @@
+ok   achievements-validate
+ok   achievements-drift
+lint: all 13 checks pass over 176 GDScript files
+unit-tests: 142 passed, 0 failed, 0 skipped (GUT, headless)
+[INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
+[INFO] scenario: quest collect-call: succeeded in 10228 ticks, 23 lines shown, cash 1500, planted fault caught by succeeded
+[INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, planted fault caught by succeeded
+[INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
+run_scenarios: 8 ran, 0 failed
+scen rc=0
