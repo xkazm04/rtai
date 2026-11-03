@@ -191,3 +191,5 @@ NEXT (iteration 4 end):
 - 13:06 COST measured (evidence/audio_cost.json; HEADLESS, CONTENDED CPU; the GPU bench lock was held by another lane so no bench was taken): in the 300-person riot the service's own frame work is 30 us mean / 335 us max,
   a cue() call through the FX sink 25 us mean / 2.1 ms max (1264 calls in 25 s), about 0.05 ms per frame against 16.6 ms. This replaces "pool cost unmeasured" above for the script side; the real positional mixing on a device is still unmeasured.
   Final HEAD: 2af3b1f (gates last run at 53fb7d7; only the service's timing probe and a dev scene changed after, lint + 355 unit tests green at HEAD).
+- 13:15 THREE-WAY MERGE CHECK (scratch worktree, deleted): d-slice 2de6c16 + d-vehicles + d-audio 2af3b1f + `evidence/requests/quest1_game_audio.patch` applied: the only conflict is JOURNAL.md (every lane's own file); lint 13/13 over 413 GDScript files,
+  **425 unit tests pass, 13 scenarios ran / 0 failed** (quest 1 input run: replay identical, 187 s; vehicle drive and yield pass; city replay 20 checkpoints identical). So the whole audio wiring is: merge + that 9-line patch + the input row (REQUEST 6).
