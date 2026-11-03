@@ -141,7 +141,7 @@
       "weapon": "cannon"
     }
   ],
-  "doc": "Enemy archetypes for the arena pit and the city (features/combat/ai/README.md). Seconds and metres; the sim converts to 60 Hz ticks. hp is in Rivet-nail hits (humans die to one, owner doctrine). accuracy: the chance a shot at a standing Rivet hits, linear between near_m and far_m. telegraph_s: the visible tell before every attack (aim line or windup pose); the aim keeps tracking until aim_lock_s before the shot, then locks so a player who moves dodges. squad: at most max_shooters fire at once and max_melee swing at once; the rest reposition (cover, flank, orbit). morale: the fraction of the squad that may fall before this archetype panics (1 = never). stagger_s: a hit that does not kill interrupts the enemy for this long (a windup is cancelled; 0 = the hit does not stagger, heavy robots).",
+  "doc": "Enemy archetypes for the arena pit and the city (features/combat/ai/README.md). Seconds and metres; the sim converts to 60 Hz ticks. hp is in Rivet-nail hits (humans die to one, owner doctrine). accuracy: the chance a shot at a standing Rivet hits, linear between near_m and far_m. telegraph_s: the visible tell before every attack (aim line or windup pose); the aim keeps tracking until aim_lock_s before the shot, then locks so a player who moves dodges. squad: at most max_shooters fire at once and max_melee swing at once; the rest reposition (cover, flank, orbit). morale: the fraction of the squad that may fall before this archetype panics (1 = never). stagger_s: a hit that does not kill interrupts the enemy for this long (a windup is cancelled; 0 = the hit does not stagger, heavy robots). lunge_m / lunge_mps (melee weapons, optional): after the windup the swing dashes up to lunge_m along the LOCKED aim at lunge_mps, then lands; a player who sidesteps the tell is missed.",
   "schema": "gtai.enemies/1",
   "squad": {
     "aim_lock_s": 0.2,
@@ -178,6 +178,8 @@
       "burst_gap_s": 0,
       "cooldown_s": 1.6,
       "damage": 20,
+      "lunge_m": 3,
+      "lunge_mps": 9,
       "melee": true,
       "reach_m": 2,
       "speed_mps": 0

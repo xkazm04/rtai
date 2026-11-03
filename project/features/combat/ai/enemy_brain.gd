@@ -69,7 +69,7 @@ static func _engage(e: EnemyAgent, pit: EnemyPit) -> void:
 		return
 	var dist: float = e.pos.distance_to(e.last_seen)
 	var w: EnemyRoster.Weapon = e.arch.weapon
-	var in_range: bool = dist <= (w.reach_m if w.melee else e.arch.attack_m)
+	var in_range: bool = dist <= (w.reach_m + w.lunge_m if w.melee else e.arch.attack_m)
 	if e.token and e.cooldown == 0 and e.sees and in_range:
 		e.enter(S.WINDUP, e.arch.telegraph_ticks)
 		e.aim = (e.last_seen - e.pos).normalized()
@@ -135,13 +135,17 @@ static func _windup(e: EnemyAgent, pit: EnemyPit) -> void:
 		creep = EnemyMotor.arrive(e, pit.rivet_pos, e.arch.speed_mps * 0.35, 0.9)
 	EnemyMotor.move(e, creep, e.pos + e.aim, pit.agents, pit)
 	if e.timer <= 0:
-		e.enter(S.FIRE)
+		e.enter(S.FIRE, _lunge_ticks(e, pit))
 		e.burst_left = e.arch.weapon.burst
 		e.burst_gap = 0
 
 
 static func _fire(e: EnemyAgent, pit: EnemyPit) -> void:
 	var w: EnemyRoster.Weapon = e.arch.weapon
+	if w.melee and e.timer > 0:  # the lunge: a dash along the locked aim, then the swing
+		e.timer -= 1
+		EnemyMotor.dash(e, e.aim * w.lunge_mps, pit)
+		return
 	EnemyMotor.move(e, Vector2.ZERO, e.pos + e.aim, pit.agents, pit)
 	if e.burst_gap > 0:
 		e.burst_gap -= 1
@@ -155,3 +159,12 @@ static func _fire(e: EnemyAgent, pit: EnemyPit) -> void:
 	if e.burst_left <= 0:
 		e.cooldown = w.cooldown_ticks
 		e.enter(S.RECOVER, pit.roster.recover_ticks)
+
+
+## Ticks of dash that close the gap to 70 % of the reach along the locked aim (0 = no lunge).
+static func _lunge_ticks(e: EnemyAgent, pit: EnemyPit) -> int:
+	var w: EnemyRoster.Weapon = e.arch.weapon
+	if not w.melee or w.lunge_mps <= 0.0:
+		return 0
+	var gap: float = clampf(e.pos.distance_to(pit.rivet_pos) - w.reach_m * 0.7, 0.0, w.lunge_m)
+	return ceili(gap / (w.lunge_mps * SimClock.TICK_DT))

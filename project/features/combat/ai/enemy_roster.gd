@@ -17,6 +17,9 @@ class Weapon:
 	var damage: float = 1.0
 	var reach_m: float = 10.0
 	var speed_mps: float = 20.0
+	## melee only: the dash after the windup (0 = none), along the locked aim
+	var lunge_m: float = 0.0
+	var lunge_mps: float = 0.0
 
 
 class Archetype:
@@ -150,4 +153,6 @@ static func _weapon(t: DataTable, id: StringName, row: Dictionary) -> Weapon:
 	w.damage = t.num(row, "damage")
 	w.reach_m = t.num(row, "reach_m")
 	w.speed_mps = t.num(row, "speed_mps")
+	w.lunge_m = t.num(row, "lunge_m") if row.has("lunge_m") else 0.0
+	w.lunge_mps = t.num(row, "lunge_mps") if row.has("lunge_mps") else 0.0
 	return w

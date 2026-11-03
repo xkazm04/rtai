@@ -24,6 +24,14 @@ static func move(
 	turn_toward(e, face)
 
 
+## A committed dash at `v` (the melee lunge): no easing, no steering, still stopped by cover.
+static func dash(e: EnemyAgent, v: Vector2, pit: EnemyPit) -> void:
+	e.vel = v
+	e.pos += v * SimClock.TICK_DT
+	e.pos = EnemySenses.push_out(e.pos, e.radius(), pit.cover)
+	e.pos = e.pos.clamp(pit.bounds.position, pit.bounds.end)
+
+
 static func turn_toward(e: EnemyAgent, dir: Vector2) -> void:
 	if dir.length() < 0.001:
 		return

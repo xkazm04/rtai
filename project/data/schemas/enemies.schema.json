@@ -256,6 +256,16 @@
             "minimum": 0,
             "type": "number"
           },
+          "lunge_m": {
+            "maximum": 8,
+            "minimum": 0,
+            "type": "number"
+          },
+          "lunge_mps": {
+            "maximum": 20,
+            "minimum": 0,
+            "type": "number"
+          },
           "melee": {
             "type": "boolean"
           },
