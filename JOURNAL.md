@@ -133,3 +133,32 @@ clip per lane at 32 px/m for the 00:00 vertical sample.
   value you need, or I disable ArenaPit when your station file declares its own enemy spawns.
 - REQUEST 2 -> gunplay / enemy-ai: at shipped combat.json the guards (1 hp, engage 12 m) die
   before their first burst against any player faster than ~1 s per target (decisions MEASURE).
+- MILESTONE 21:54 `860c1bc`: `--clean` hides the dev HUD (the 00:00 sample clips show the game
+  only); `--telemetry` is now also written when the engine's `--quit-after` ends a capture
+  (NOTIFICATION_PREDELETE), so every clip can carry its telemetry JSON.
+- 21:53 the arena's sample clip `clips/arena-pit-clean-32ppm-30s.mp4` (sheet checked).
+- 21:55 `clips/arena-city-range-clean-32ppm-20s.mp4` + `evidence/arena/arena-city-clip-telemetry.json`
+  (18/44 hits; time to kill 0.08 s at 5 m static to 1.0 s at 10 m strafing). Sheet checked.
+- 21:57 `clips/arena-pit-clean-48ppm-15s.mp4`. FINDING: at 48 px/m the view is ~26 x 15 m;
+  guards that stop at engage_m 12 to the south/north shoot and die off screen. That is arena-2's
+  problem (camera lead toward the aim), now shown in a clip. Camera lead or a shorter engage
+  range; not the arena's to choose.
+- frames.json: 14 entries.
+- answers.json re-read 21:56: no new answers for arena.
+
+NEXT (iteration 3):
+1. Re-read answers.json. The 21:25 direction rules: depth before breadth, real characters, full
+   hit chain, asks only with real-time clips in the final look.
+2. The arena as the stage for the vertical sample: merge-readiness for the other lanes' station
+   files (enemy-ai's cop + robot thug spawns in the pit, gunplay's range, ghost-powers' pad):
+   when a lane declares `enemy` spawns in the pit, ArenaPit must not double-spawn (REQUEST 1).
+   Make ArenaPit read only the spawns of stations whose lane opts in, or a pit.driver flag.
+3. Dummies read as dummies (cardboard target art, not the guard sprite's vermilion vests); an
+   image_gen asset is allowed (provenance line).
+4. Camera: the 48 px/m off-screen finding. If no lane owns camera lead by iteration 3, build it in
+   the arena view only (a look-ahead toward the aim, as data) and show it as a clip.
+5. Powers pad: props and parked/moving cars for Hauler and Gearbox (needs the vehicles service in
+   the arena session; quest 1 has none, so add VehicleSystem to ArenaSession like _add_city).
+6. The course on the city block: the course walls sit on the street; consider a city-only
+   placement per station (decisions: rejected for now) once a station needs it.
+7. Low cover stopping shots: ask only with a clip once the hit chain exists (ArenaWalls.SOLID).
