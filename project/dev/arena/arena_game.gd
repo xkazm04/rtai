@@ -46,6 +46,7 @@ func _ready() -> void:
 	layer.add_child(hud)
 	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
+	tuning.hooks = session.stage.hooks
 	panel.tick_now = session.tick
 	panel.build(session.stations, tuning)
 	panel.position = Vector2(8.0, 200.0)

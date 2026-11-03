@@ -13,6 +13,8 @@ const LOG_PATH: String = "user://arena/tuning-log.jsonl"
 var actions: PlayerActions
 var combat: CombatTuning
 var log: Array[Dictionary] = []
+## Other lanes' hooks: a knob the arena does not apply itself goes to them (ArenaHook.tune).
+var hooks: Array[ArenaHook] = []
 var _tables: Dictionary[String, Dictionary] = {}
 var _shipped: Dictionary[String, float] = {}
 
@@ -26,13 +28,15 @@ func _init(p_actions: PlayerActions, p_combat: CombatTuning) -> void:
 func shipped(key: String) -> float:
 	if not _shipped.has(key):
 		var v: Variant = _walk(_table(key.get_slice(".", 0)), _path(key))
-		_shipped[key] = v if v is float else NAN
+		var n: float = v if v is float or v is int else NAN
+		_shipped[key] = n
 	return _shipped[key]
 
 
 ## Applies `value` live; false when nothing in the session reads that key yet.
 func set_value(key: String, value: float, tick: int = -1) -> bool:
-	var applied: bool = _apply(_path(key), key.get_slice(".", 0), value)
+	var table: String = key.get_slice(".", 0)
+	var applied: bool = _apply(_path(key), table, value) or _apply_hooks(key, value)
 	_note({"tick": tick, "key": key, "to": value, "applied": applied, "op": "set"})
 	return applied
 
@@ -47,10 +51,15 @@ func save(key: String, value: float) -> bool:
 	var raw: Dictionary = _table(table).duplicate(true)
 	var path: PackedStringArray = _path(key)
 	var at: Variant = _walk(raw, path.slice(0, path.size() - 1))
-	if not at is Dictionary:
+	var last: String = path[path.size() - 1]
+	var rows: Array = at if at is Array else []
+	if at is Dictionary:
+		var parent: Dictionary = at
+		parent[last] = value
+	elif last.is_valid_int() and last.to_int() < rows.size():
+		rows[last.to_int()] = value
+	else:
 		return false
-	var parent: Dictionary = at
-	parent[path[path.size() - 1]] = value
 	var f: FileAccess = FileAccess.open(TABLES % table, FileAccess.WRITE)
 	if f == null:
 		return false
@@ -80,6 +89,13 @@ func _apply(path: PackedStringArray, table: String, v: float) -> bool:
 		var d: Dictionary[String, float] = combat.rivet if path[0] == "rivet" else combat.human
 		d[path[1]] = v
 		return true
+	return false
+
+
+func _apply_hooks(key: String, v: float) -> bool:
+	for hook: ArenaHook in hooks:
+		if hook.tune(key, v):
+			return true
 	return false
 
 
@@ -116,6 +132,12 @@ static func _path(key: String) -> PackedStringArray:
 static func _walk(root: Variant, path: PackedStringArray) -> Variant:
 	var at: Variant = root
 	for p: String in path:
+		if at is Array and p.is_valid_int():
+			var a: Array = at
+			if p.to_int() >= a.size():
+				return null
+			at = a[p.to_int()]
+			continue
 		var d: Dictionary = at if at is Dictionary else {}
 		if not d.has(p):
 			return null

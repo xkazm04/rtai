@@ -33,3 +33,35 @@ func test_canonical_matches_the_repo_form() -> void:
 		var parsed: Variant = JSON.parse_string(text)
 		var raw: Dictionary = parsed if parsed is Dictionary else {}
 		assert_eq(ArenaTuning.canonical(raw), text, table)
+
+
+class ProbeHook:
+	extends ArenaHook
+	var got: Dictionary[String, float] = {}
+
+	func tune(key: String, value: float) -> bool:
+		if not key.begins_with("rivet_melee."):
+			return false
+		got[key] = value
+		return true
+
+
+func test_array_rows_are_addressed_by_index() -> void:
+	var raw: Dictionary = {"claw": {"hits": [{"windup_ticks": 6}, {"windup_ticks": 8}]}}
+	var path: PackedStringArray = ["claw", "hits", "1", "windup_ticks"]
+	var found: Variant = ArenaTuning._walk(raw, path)
+	var missing: Variant = ArenaTuning._walk(raw, ["claw", "hits", "2", "windup_ticks"])
+	var eight: bool = found is int and found == 8
+	var none: bool = missing == null
+	assert_true(eight)
+	assert_true(none)
+
+
+func test_a_knob_the_arena_does_not_know_goes_to_the_lane_hooks() -> void:
+	var t: ArenaTuning = _tuning()
+	var hook: ProbeHook = ProbeHook.new()
+	t.hooks.append(hook)
+	assert_true(t.set_value("rivet_melee.claw.hits.0.windup_ticks", 5.0))
+	var got: float = hook.got.get("rivet_melee.claw.hits.0.windup_ticks", -1.0)
+	assert_eq(got, 5.0)
+	assert_false(t.set_value("ghost_powers.hauler.stomp_m", 3.0))

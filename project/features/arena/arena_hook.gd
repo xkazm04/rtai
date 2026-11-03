@@ -4,8 +4,9 @@ extends RefCounted
 ## extends ArenaHook). The arena stage calls every hook in station-file order, so a lane wires its
 ## weapon, enemies or power into the arena from its own folder and never edits the arena's files:
 ## setup() once after the stage is built, step() every 60 Hz tick after the stage's own step,
-## write_state() into the replay hash, telemetry() into the session's JSON, attach_view() once the
-## dev view exists (absent headless). Every method is optional: the defaults do nothing.
+## write_state() into the replay hash, telemetry() into the session's JSON, attach_view() once
+## the dev view exists (absent headless), tune() for the live panel's knobs.
+## Every method is optional: the defaults do nothing.
 
 ## The station this hook came from (set by the loader before setup).
 var station: ArenaStation = null
@@ -29,6 +30,12 @@ func telemetry() -> Dictionary:
 
 func attach_view(_view: Node) -> void:
 	pass
+
+
+## A live value from the tuning panel for one of this lane's knobs ("<table>.<path>"); true when
+## the hook applied it (the panel then shows it as live, not just saved).
+func tune(_key: String, _value: float) -> bool:
+	return false
 
 
 ## The hook a station names, or null (logged) when the path is missing, outside res://features/,
