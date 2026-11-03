@@ -2,7 +2,7 @@ class_name NoirShowcaseArgs
 extends RefCounted
 ## The showcase fight's launch flags (lane noir, dev only; see showcase_fight.gd for usage).
 ## --out=<dir> --zoom=<z> --ink --d4 --noir-parts --coat --flashes=off --at=<x>,<y> --cars=<n>
-## --car-pass --no-figure-shadows. Unknown flags fail the run.
+## --car-pass --no-figure-shadows --cost. Unknown flags fail the run.
 
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out",
@@ -15,7 +15,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--at",
 	"--cars",
 	"--car-pass",
-	"--no-figure-shadows"
+	"--no-figure-shadows",
+	"--cost"
 ]
 
 var out: String = "user://noir"
@@ -32,6 +33,8 @@ var coat: bool = false
 var car_pass: bool = false
 ## --no-figure-shadows: the rigs cast no shadow (the before frames of NoirFigureShadows).
 var figure_shadows: bool = true
+## --cost: log the mean GPU / CPU render time at the end (windowed, real time).
+var cost: bool = false
 ## --flashes=<v> as given ("" = not given: the params decide; "off" = the flashes-off mode).
 var flashes: String = ""
 
@@ -66,3 +69,4 @@ func _switch(flag: String) -> void:
 	coat = coat or flag == "--coat"
 	ink = ink or flag == "--ink"
 	figure_shadows = figure_shadows and flag != "--no-figure-shadows"
+	cost = cost or flag == "--cost"

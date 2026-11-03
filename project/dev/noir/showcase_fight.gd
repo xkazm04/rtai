@@ -38,6 +38,8 @@ var _city: CitySystem = null
 var _stains: BloodStains = BloodStains.new()
 var _impact: ImpactFrame = ImpactFrame.new()
 var _fx: NoirCombatFx = NoirCombatFx.new()
+## --cost: the root (and figure-shadow) viewports' mean GPU / CPU render time over the live frames.
+var _meter: NoirGpuMeter = null
 
 
 func _ready() -> void:
@@ -84,6 +86,9 @@ func _args() -> bool:
 		return false
 	_car = NoirCarPass.new() if _a.car_pass else null
 	_coats = NoirCoats.new() if _a.coat else null
+	_meter = NoirGpuMeter.new() if _a.cost else null
+	if _meter != null:
+		_meter.add("root", get_viewport().get_viewport_rid())
 	if _a.flashes != "":
 		_impact.budget.enabled = _a.flashes != "off"
 	return true
@@ -93,6 +98,8 @@ func _process(_delta: float) -> void:
 	if not _live:
 		return
 	_frame += 1
+	if _meter != null:
+		_meter.step()
 	if _hold_in > 0:
 		_hold_in -= 1
 		_hold = _hold_len if _hold_in == 0 else _hold
@@ -115,17 +122,24 @@ func _process(_delta: float) -> void:
 		if _coats != null:
 			_coats.step(_rigs, PackedInt32Array([NoirFightScript.COP_A, NoirFightScript.COP_B]))
 	if not _a.d4:
-		var lit: bool = _flash.lit()
-		var light: Dictionary = {"flash": 1.0 if lit else 0.0}
-		if lit:
-			light["flash_uv"] = _to_uv(_flash.lit_at())
-		_view.noir.apply(light)
+		_light_flash()
 	var opening: bool = _t == 40 and not held
 	if _heroes.has(_frame) or opening:
 		_save.call_deferred(_frame, _heroes.get(_frame, "beat"))
 	if _t >= END:
 		printerr("showcase_fight: kills %d hits %d frames %d" % [_fx.kills, _fx.hits, _frame])
+		if _meter != null:
+			printerr("showcase_fight: cost %s" % _meter.report())
 		get_tree().quit(0)
+
+
+## The muzzle light in the noir pass on the fire tick (flash, flash_uv).
+func _light_flash() -> void:
+	var lit: bool = _flash.lit()
+	var light: Dictionary = {"flash": 1.0 if lit else 0.0}
+	if lit:
+		light["flash_uv"] = _to_uv(_flash.lit_at())
+	_view.noir.apply(light)
 
 
 func _cue(cue: Array) -> void:
@@ -155,8 +169,9 @@ func _add_actors() -> void:
 	for node: Node in [_blood, _rigs, _flash, _stains]:
 		layer.add_child(node)
 	if _a.figure_shadows and not _a.d4:
-		@warning_ignore("return_value_discarded")
-		NoirFigureShadows.attach(layer, _view.noir.params, _rigs)
+		var fs: NoirFigureShadows = NoirFigureShadows.attach(layer, _view.noir.params, _rigs)
+		if _meter != null:
+			_meter.add("figures", fs.sub_rid())
 
 
 ## The fight, the city's focus and its camera at _a.at (the junction unless --at).

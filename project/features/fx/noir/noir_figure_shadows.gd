@@ -18,6 +18,8 @@ const MAX_BODIES: int = 16
 var len_px: float = 0.0
 ## World px (at 32 px/m) around a body's centre that is its own silhouette (params reach_m).
 var reach_px: float = 32.0
+## The silhouette viewport's size per screen px (params res_scale; 0.5 = a quarter of the fill).
+var res_scale: float = 1.0
 var _dir: Vector2 = Vector2(0.6, 0.8)
 var _layer: CanvasLayer = null
 var _sub: SubViewport = SubViewport.new()
@@ -25,6 +27,8 @@ var _mat: ShaderMaterial = ShaderMaterial.new()
 var _casters: Array[Node] = []
 ## The bodies (CutRigs) among the casters: their centres scale the silhouette (the taper).
 var _bodies: Array[CutRig] = []
+## Screen px per drawn body: one quad over its reach and its sweep (the shader runs only there).
+var _quads: Array[Rect2] = []
 
 
 ## params = look_noir.params.json (frame.light_dir, shadows.figures {len_m, value}).
@@ -41,6 +45,8 @@ func _init(params: Dictionary) -> void:
 	len_px = len_m * SimConst.PX_PER_M
 	var reach_m: float = cfg.get("reach_m", 1.0)
 	reach_px = reach_m * SimConst.PX_PER_M
+	var res: float = cfg.get("res_scale", 1.0)
+	res_scale = clampf(res, 0.25, 1.0)
 	_mat.shader = load(SHADER) as Shader
 	_mat.set_shader_parameter(&"value", value)
 	material = _mat
@@ -58,6 +64,11 @@ static func attach(layer: CanvasLayer, params: Dictionary, caster: Node) -> Noir
 	layer.add_child(fs)
 	fs.cast(caster)
 	return fs
+
+
+## The silhouette viewport (dev cost meters read its render time).
+func sub_rid() -> RID:
+	return _sub.get_viewport_rid()
 
 
 ## Marks `node` and everything under it (now and later) as a shadow caster.
@@ -78,18 +89,25 @@ func _process(_delta: float) -> void:
 	if _layer == null or len_px <= 0.0 or not is_visible_in_tree():
 		return
 	var view: Vector2 = get_viewport().get_visible_rect().size
-	if Vector2(_sub.size) != view:
-		_sub.size = Vector2i(view)
+	var sub_size: Vector2i = Vector2i((view * res_scale).ceil())
+	if _sub.size != sub_size:
+		_sub.size = sub_size
 	var xf: Transform2D = _layer.get_final_transform()
-	RenderingServer.viewport_set_canvas_transform(_sub.get_viewport_rid(), _layer.get_canvas(), xf)
+	RenderingServer.viewport_set_canvas_transform(
+		_sub.get_viewport_rid(),
+		_layer.get_canvas(),
+		Transform2D().scaled(Vector2.ONE * res_scale) * xf
+	)
 	# this node draws in screen px: undo the layer's (camera) transform
 	transform = xf.affine_inverse()
 	var d_px: Vector2 = _dir * len_px * xf.get_scale().x
 	_mat.set_shader_parameter(&"sweep", d_px / view)
 	_mat.set_shader_parameter(&"taps", clampi(ceili(d_px.length() / STEP_PX), 1, 128))
 	_mat.set_shader_parameter(&"view", view)
-	_mat.set_shader_parameter(&"reach_px", reach_px * xf.get_scale().x)
+	var reach: float = reach_px * xf.get_scale().x
+	_mat.set_shader_parameter(&"reach_px", reach)
 	_set_bodies(xf, view)
+	_set_quads(view, d_px, reach)
 	queue_redraw()
 
 
@@ -113,9 +131,22 @@ func _set_bodies(xf: Transform2D, view: Vector2) -> void:
 	_mat.set_shader_parameter(&"bodies", uv)
 
 
+## One screen-px quad per body: its own reach around the centre, merged with the swept one.
+func _set_quads(view: Vector2, d_px: Vector2, reach: float) -> void:
+	_quads.clear()
+	var bodies: PackedVector2Array = _mat.get_shader_parameter(&"bodies")
+	var n: int = _mat.get_shader_parameter(&"body_count")
+	var half: Vector2 = Vector2.ONE * reach
+	for k: int in n:
+		var c: Vector2 = bodies[k] * view
+		var r: Rect2 = Rect2(c - half, half * 2.0).merge(Rect2(c + d_px - half, half * 2.0))
+		_quads.append(r.intersection(Rect2(Vector2.ZERO, view)))
+
+
 func _draw() -> void:
-	if len_px > 0.0:
-		draw_texture_rect(_sub.get_texture(), Rect2(Vector2.ZERO, Vector2(_sub.size)), false)
+	var tex: Texture2D = _sub.get_texture()
+	for r: Rect2 in _quads:
+		draw_texture_rect_region(tex, r, Rect2(r.position * res_scale, r.size * res_scale))
 
 
 func _on_node_added(node: Node) -> void:

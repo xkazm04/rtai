@@ -70,6 +70,7 @@
     "figures": {
       "len_m": 1.2,
       "reach_m": 1.0,
+      "res_scale": 0.5,
       "value": 0.03
     },
     "len_m": {
