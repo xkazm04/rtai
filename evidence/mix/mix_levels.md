@@ -29,3 +29,10 @@ One rifle shot per second at known positions around a listener at the origin, re
 the pan was nearly invisible (14 m left: L-R +2.1 dB, std of L-R over the whole riot clip 0.9 dB), so the audio space was widened:
 m_to_px 64, panning_strength 1.0. Now: 14 m left +6.3 dB L-R, 14 m right -6.3 dB, 25 m / 45 m right -9.5 dB, straight ahead / behind 0.0 dB;
 level (total) -19.0 dB at 5 m, -21.1 dB at 25 m, -29.9 dB at 45 m. Godot's 2D pan depends on the viewport width, so a wider window pans less.
+
+## Iteration 2 re-records (`*_mix3.mp4`, replace the mix2 clips; 960 px, 30 fps, contended GPU)
+
+Same mix tables, new assets: one footstep per stride (8 single-step takes), the kill punch (`rivet_kill`) in the quest stage, the night-city bed under the
+quest stage (-3 dB trim). riot 25 s: -20.4 LUFS, peak -1.4 dBFS, LRA 1.8. quest opening 45 s: -17.5 LUFS, peak -3.5 dBFS, LRA 2.2 (7 of the bot's lines started,
+2 voice drops in 45 s). quest fight 30 s: -19.2 LUFS, peak -1.0 dBFS, LRA 7.6 (39 body hits, 37 kill punches, 28 steps, 54 shots). Measured, not heard.
+Voice vs the quest timeline over the whole quest: see JOURNAL (6 of 23 lines dropped, `dev/audio/line_timeline.tscn`).

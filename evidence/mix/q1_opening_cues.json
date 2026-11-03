@@ -1,14 +1,11 @@
 {
   "beat": "opening",
-  "dropped": {
-    "footsteps:cooldown": 487,
-    "footsteps:voices": 51
-  },
+  "dropped": {},
   "frames": 2700,
   "missing": [],
   "played": {
-    "footsteps": 7,
-    "servo": 2
+    "footstep": 32,
+    "servo": 1
   },
   "voice_drops": 2,
   "voice_lines": [

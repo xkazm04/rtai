@@ -1,19 +1,19 @@
 {
   "beat": "fight",
   "dropped": {
-    "footsteps:cooldown": 434,
-    "footsteps:voices": 37,
     "hit_flesh:cooldown": 2,
+    "rivet_kill:voices": 2,
     "shot_assault_rifle:voices": 7
   },
   "frames": 1800,
   "missing": [],
   "played": {
     "crowd_panic": 4,
-    "footsteps": 5,
+    "footstep": 28,
     "hit_flesh": 39,
     "projectile_end": 19,
-    "servo": 2,
+    "rivet_kill": 37,
+    "servo": 3,
     "shot_assault_rifle": 24,
     "shot_gloria": 30
   },
