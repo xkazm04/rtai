@@ -768,7 +768,7 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   pension, union hall) always upright; generic roofs get the building shadow offset. Evidence `before_rf|after_rf/
   city-*` (patch applied + re-baked), sheets `work/rf_ab_{32,48}.png`; afterwards code reverted, chunks re-baked,
   `--check` matches golden again. Unit 142/142, lint 13/13. Ladder rows. 0 Codex images.
-19. city/generator owner (via the Director): apply `roof_pick_generic.patch` after n-d4 (it moves the AST-12
+19. city/generator owner (via the Director): apply `generator_art_pick.patch` after n-d4 (it moves the AST-12
     golden hash list, included in the patch).
 - 02:07 GATES at eceb6b3: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact
   (mutation caught at step 629), selftest **72** art textures (65 + the 7 roof rows), 0 placeholders.
@@ -781,7 +781,7 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   upright landmark roofs). Scratch worktree removed afterwards. Honesty note: its two scratch merge commits (never
   in a branch, deleted with the worktree) - the second was made with `--no-verify`, which I should not have done.
 - `evidence/iter8/` (lane cwd): summary sheet, the 3 patches, gate results, README.
-- 02:20 MILESTONE plaza paving de-tiled (generator patch only). The plaza is ONE texture (sidewalk_tone, id 13) at
+- 02:09 MILESTONE plaza paving de-tiled (generator patch only). The plaza is ONE texture (sidewalk_tone, id 13) at
   rotation 0, so its crack + stain marks lined up every 8 m (`after_rf/city-2-32ppm`: a column of identical cracks).
   Its joints sit on all four edges (checked: px rows/cols 0 and 767 are the joint grey), so a random quarter turn per
   tile keeps the seams: `after_pl/` vs `after_rf/`, crop `work/pl_crop.png` - cracks vary, no doubled joints. Modest
