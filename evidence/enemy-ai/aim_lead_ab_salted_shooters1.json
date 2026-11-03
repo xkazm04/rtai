@@ -1,0 +1,24 @@
+{
+  "lead_0.0": {
+    "rivet_damage_per_fight": 10.9,
+    "shot_hit_rate": 0.0934959349593496,
+    "shot_hits": 23.0,
+    "shots": 246.0,
+    "swing_hits": 4.0,
+    "swings": 25.0
+  },
+  "lead_0.8": {
+    "rivet_damage_per_fight": 17.0,
+    "shot_hit_rate": 0.128205128205128,
+    "shot_hits": 30.0,
+    "shots": 234.0,
+    "swing_hits": 8.0,
+    "swings": 26.0
+  },
+  "read": 0.7,
+  "read_salt_by_seed": true,
+  "schema": "gtai.aim-lead-ab/1",
+  "seconds": 25.0,
+  "seeds": 20,
+  "shooters": 1
+}

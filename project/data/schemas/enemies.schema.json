@@ -1,0 +1,311 @@
+{
+  "$id": "gtai.enemies/1",
+  "additionalProperties": false,
+  "properties": {
+    "archetypes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "accel_mps2": {
+            "maximum": 60,
+            "minimum": 1,
+            "type": "number"
+          },
+          "accuracy": {
+            "additionalProperties": false,
+            "properties": {
+              "far": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "far_m": {
+                "maximum": 60,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              "near": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "near_m": {
+                "maximum": 60,
+                "minimum": 0.5,
+                "type": "number"
+              }
+            },
+            "required": [
+              "far",
+              "far_m",
+              "near",
+              "near_m"
+            ],
+            "type": "object"
+          },
+          "aggression": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "attack_m": {
+            "maximum": 60,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "body": {
+            "enum": [
+              "boss",
+              "human",
+              "robot"
+            ]
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "flanks": {
+            "type": "boolean"
+          },
+          "hit_fx": {
+            "enum": [
+              "blood",
+              "sparks"
+            ]
+          },
+          "hp": {
+            "maximum": 1000,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "morale": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "preferred_m": {
+            "maximum": 60,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "reaction_s": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "number"
+          },
+          "shield_front_mult": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "speed_mps": {
+            "maximum": 10,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "stagger_s": {
+            "maximum": 3,
+            "minimum": 0,
+            "type": "number"
+          },
+          "strafe_mps": {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          "telegraph_s": {
+            "maximum": 3,
+            "minimum": 0.1,
+            "type": "number"
+          },
+          "turn_deg_s": {
+            "maximum": 1440,
+            "minimum": 30,
+            "type": "number"
+          },
+          "uses_cover": {
+            "type": "boolean"
+          },
+          "weapon": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "accel_mps2",
+          "accuracy",
+          "aggression",
+          "attack_m",
+          "body",
+          "doc",
+          "flanks",
+          "hit_fx",
+          "hp",
+          "id",
+          "morale",
+          "preferred_m",
+          "reaction_s",
+          "shield_front_mult",
+          "speed_mps",
+          "stagger_s",
+          "strafe_mps",
+          "telegraph_s",
+          "turn_deg_s",
+          "uses_cover",
+          "weapon"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.enemies/1"
+    },
+    "squad": {
+      "additionalProperties": false,
+      "properties": {
+        "aim_lead": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "aim_lock_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "hearing_m": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_melee": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "max_shooters": {
+          "maximum": 8,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "panic_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "recover_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "sight_deg": {
+          "maximum": 360,
+          "minimum": 10,
+          "type": "number"
+        },
+        "sight_m": {
+          "maximum": 100,
+          "minimum": 1,
+          "type": "number"
+        },
+        "token_hold_s": {
+          "maximum": 30,
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "aim_lead",
+        "aim_lock_s",
+        "hearing_m",
+        "max_melee",
+        "max_shooters",
+        "panic_s",
+        "recover_s",
+        "sight_deg",
+        "sight_m",
+        "token_hold_s"
+      ],
+      "type": "object"
+    },
+    "weapons": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "burst": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "burst_gap_s": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "number"
+          },
+          "cooldown_s": {
+            "maximum": 10,
+            "minimum": 0.05,
+            "type": "number"
+          },
+          "damage": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "number"
+          },
+          "lunge_m": {
+            "maximum": 8,
+            "minimum": 0,
+            "type": "number"
+          },
+          "lunge_mps": {
+            "maximum": 20,
+            "minimum": 0,
+            "type": "number"
+          },
+          "melee": {
+            "type": "boolean"
+          },
+          "reach_m": {
+            "maximum": 60,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "speed_mps": {
+            "maximum": 120,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "burst",
+          "burst_gap_s",
+          "cooldown_s",
+          "damage",
+          "melee",
+          "reach_m",
+          "speed_mps"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "archetypes",
+    "doc",
+    "schema",
+    "squad",
+    "weapons"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,194 @@
+{
+  "breather_s": 3,
+  "curve": "steep",
+  "curves": {
+    "gentle": [
+      {
+        "groups": [
+          {
+            "arch": "patrol_cop",
+            "count": 3,
+            "gate": "east"
+          }
+        ],
+        "id": "w1"
+      },
+      {
+        "groups": [
+          {
+            "arch": "patrol_cop",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "north"
+          }
+        ],
+        "id": "w2"
+      },
+      {
+        "groups": [
+          {
+            "arch": "swat",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "patrol_cop",
+            "count": 2,
+            "gate": "south"
+          },
+          {
+            "arch": "robot_thug",
+            "count": 1,
+            "gate": "north"
+          }
+        ],
+        "id": "w3"
+      }
+    ],
+    "standard": [
+      {
+        "groups": [
+          {
+            "arch": "patrol_cop",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "patrol_cop",
+            "count": 2,
+            "gate": "north"
+          }
+        ],
+        "id": "w1"
+      },
+      {
+        "groups": [
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "patrol_cop",
+            "count": 2,
+            "gate": "south"
+          },
+          {
+            "arch": "swat",
+            "count": 1,
+            "gate": "north"
+          }
+        ],
+        "id": "w2"
+      },
+      {
+        "groups": [
+          {
+            "arch": "swat",
+            "count": 2,
+            "gate": "north"
+          },
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "robot_thug",
+            "count": 1,
+            "gate": "south"
+          },
+          {
+            "arch": "robot_gunner",
+            "count": 1,
+            "gate": "east"
+          }
+        ],
+        "id": "w3"
+      }
+    ],
+    "steep": [
+      {
+        "groups": [
+          {
+            "arch": "patrol_cop",
+            "count": 3,
+            "gate": "east"
+          },
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "north"
+          }
+        ],
+        "id": "w1"
+      },
+      {
+        "groups": [
+          {
+            "arch": "swat",
+            "count": 3,
+            "gate": "north"
+          },
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "south"
+          },
+          {
+            "arch": "robot_thug",
+            "count": 1,
+            "gate": "east"
+          }
+        ],
+        "id": "w2"
+      },
+      {
+        "groups": [
+          {
+            "arch": "swat",
+            "count": 2,
+            "gate": "north"
+          },
+          {
+            "arch": "robot_gunner",
+            "count": 2,
+            "gate": "east"
+          },
+          {
+            "arch": "robot_thug",
+            "count": 2,
+            "gate": "south"
+          },
+          {
+            "arch": "riot_cop",
+            "count": 2,
+            "gate": "east"
+          }
+        ],
+        "id": "w3"
+      }
+    ]
+  },
+  "doc": "Pit waves (features/combat/ai/pit_waves.gd). `curve` picks the live curve (the owner's difficulty ASK enemy-ai-2: gentle | standard | steep). A wave starts breather_s after the last one is cleared; its enemies walk in through the gates (east, north, south edges of the pit) spawn_gap_s apart, already hunting Rivet.",
+  "gates": {
+    "east": [
+      18,
+      0
+    ],
+    "north": [
+      4,
+      -12.5
+    ],
+    "south": [
+      4,
+      12.5
+    ]
+  },
+  "schema": "gtai.enemy_waves/1",
+  "spawn_gap_s": 0.6
+}

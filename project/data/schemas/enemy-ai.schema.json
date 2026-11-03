@@ -1,0 +1,192 @@
+{
+  "$id": "gtai.arena-station/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lane": {
+      "pattern": "^[a-z][a-z0-9_\\-]*$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.arena-station/1",
+      "type": "string"
+    },
+    "stations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "area": {
+            "enum": [
+              "range",
+              "pit",
+              "course",
+              "pad",
+              "hub"
+            ],
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "measures": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "props": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "at": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "type": "array"
+                },
+                "kind": {
+                  "pattern": "^[a-z][a-z0-9_]*$",
+                  "type": "string"
+                },
+                "size": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "type": "array"
+                }
+              },
+              "required": [
+                "kind",
+                "at",
+                "size"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "script": {
+            "pattern": "^res://features/[a-z0-9_/]+\\.gd$",
+            "type": "string"
+          },
+          "spawns": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "at": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 2,
+                  "type": "array"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "car",
+                    "crowd",
+                    "enemy",
+                    "metal",
+                    "prop",
+                    "target"
+                  ],
+                  "type": "string"
+                },
+                "motion": {
+                  "enum": [
+                    "static",
+                    "strafe",
+                    "approach",
+                    "loop"
+                  ],
+                  "type": "string"
+                },
+                "span_m": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "speed_mps": {
+                  "maximum": 40,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "kind",
+                "at",
+                "motion",
+                "speed_mps",
+                "span_m"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "tuning": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "key": {
+                  "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_\\-]+)+$",
+                  "type": "string"
+                },
+                "max": {
+                  "type": "number"
+                },
+                "min": {
+                  "type": "number"
+                },
+                "step": {
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "key",
+                "min",
+                "max",
+                "step"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "area"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "lane",
+    "stations"
+  ],
+  "type": "object"
+}
