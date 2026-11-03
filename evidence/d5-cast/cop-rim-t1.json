@@ -1,0 +1,31 @@
+{
+ "change": "D4 cop heads (riot helmet, patrol cap): T1's thick ink ring around the cream dome. Light pixels within 0.13 x part width of the alpha edge -> ink; navy band/stripe and blue-hi badge kept; alpha unchanged (silhouette lock). D5 tier unchanged (its drawn rim reads at 64+). d-cast 704570f; masters recolor_cops.py t1_rim().",
+ "city-0-32": {
+  "blue_blobs>=15px_after": 19,
+  "blue_blobs>=15px_before": 19,
+  "blue_px_after": 2340,
+  "blue_px_before": 2339,
+  "changed_px_in_cop_zone": 579,
+  "changed_px_outside": 138,
+  "cop_zone_px": 17781,
+  "ink_px_l<70_after": 9358,
+  "ink_px_l<70_before": 8944
+ },
+ "city-0-48": {
+  "blue_blobs>=15px_after": 15,
+  "blue_blobs>=15px_before": 15,
+  "blue_px_after": 2819,
+  "blue_px_before": 2815,
+  "changed_px_in_cop_zone": 710,
+  "changed_px_outside": 3804,
+  "cop_zone_px": 24178,
+  "ink_px_l<70_after": 12930,
+  "ink_px_l<70_before": 12399
+ },
+ "city-0-64": {
+  "note": "no cop on screen at 64 in city-0 (cop zone 0 px); 6349 changed px are run-to-run crowd-sim jitter, the D5 tier is not touched"
+ },
+ "method": "cop zone = blue blobs (b - max(r,g) >= 22, >= 15 px) dilated by 0.45 m; ink = luma < 70; changed = max channel delta > 24. Outside-zone changes are the known run-to-run crowd jitter (journal iteration 3).",
+ "read": "By eye (masters frames/cop-rim-t1-ab.png beside T1): at 32 the dome now sits in a dark ring and no longer runs into the cream sticker rim / sidewalk; at 48 the patrol cap is a crisp cream disc in ink, T1's cop head.",
+ "scene": "city_frame seed 91 --police=4 --zooms=1,1.5,2, city-0 (real World+CityView); rimA = 6993dc6, rimB = 704570f, same session"
+}

@@ -184,3 +184,14 @@ cruiser in city_frame; KingPlan into the boss ticket).
   cream riot dome in the same drawing. 0 Codex images. Provenance rows appended (5). Dialogue frame re-shot
   (renders/dialogue-dome): portrait + street cops in the same cream dome. OWNER CHOICE: revert 02d459e = black helmets.
   Frames: masters frames/portraits-cop-dome-3way.png (orig | navy | dome), dialogue-rivet-cop-48ppm-dome.png.
+- MILESTONE 704570f D4 cop heads get T1's thick ink ring: looking at the real city at 32 px/m beside T1, our cop's cream
+  dome (4 % rim, gone in the print) ran into the cream sticker rim and sidewalk, so a cop read as a pale blob with a navy
+  strip; T1 rings the cream dome in a thick ink band. recolor_cops.t1_rim(): light px within 0.13 x width of the edge ->
+  ink, D4 tier only (helmet + cap), band/stripe/badge kept, alpha unchanged. city_frame A/B same session (rimA 6993dc6,
+  rimB 704570f), city-0: ink px in cop zones 8944 -> 9358 at 32, 12399 -> 12930 at 48; 92 % of changed px at 32 are
+  at cops (rest = crowd jitter); blue px/blobs unchanged (2339/19 -> 2340/19). evidence/d5-cast/cop-rim-t1.json.
+  Frame: masters frames/cop-rim-t1-ab.png (T1 | before | after). The owner's city0 32/48 frames now use rimB.
+- EVIDENCE (clean tree, HEAD 704570f, 11:54): lint 13/13, unit 326/326, scenarios 8/8, parity 1200 steps exact,
+  selftest look goldens 11/11 (worst 0.84) + block 5/5 (worst 0.46) PASS unblessed, crowd atlas on doctrine (--no-bench).
+- CHECKED Rivet's portraits: ~13-21k vermilion-ish px each, all in the collar and the rust drips. T2 draws the same
+  red-orange rust streaks all over him, so they stay (no change). King: the cape question stands for the owner.

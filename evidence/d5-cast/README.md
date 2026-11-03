@@ -21,3 +21,4 @@ Iteration 3 (2026-11-03, 11:00-11:35):
   d-cast alone -> teal, merged with d-city -> cop blue. Merge d-city before or with d-cast.
 - `cruiser-world-print.json`: parked cruisers through the look_d4 world pass: grey in the real game (profiles' world teal = 0);
   ~37 % teal only under the shader's default teal uniform (dev scenes such as the D5 hero). See its CORRECTION.
+- `cop-rim-t1.json`: iteration 4, T1's thick ink ring around the D4 cop dome (real city A/B at 32/48: ink px in the cop zones up, blue px and blobs unchanged).
