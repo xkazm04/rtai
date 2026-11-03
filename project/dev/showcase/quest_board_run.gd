@@ -52,6 +52,8 @@ func _ready() -> void:
 		var foot: Vector2 = CAST_FOOT[k] * (1.7 if CAST[k] == "dock_guard" else 1.5)
 		_sprite(ART + "cast_" + CAST[k], Vector2(-19.0 + k * 3.0, -1.0), foot)
 		_sprite(ART + "cast_" + CAST[k], Vector2(11.0 + (k % 3) * 2.6, -14.0 + (k / 3) * 3.2), foot)
+	_fire(Vector2i(0, 0), 1, Vector2(-2.0, -8.2), 1.3)
+	_fire(Vector2i(2, 1), 2, Vector2(-1.0, 6.5), 2.0)
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
@@ -105,6 +107,18 @@ func _sprite(path: String, at: Vector2, size: Vector2) -> void:
 	var s: Sprite2D = Sprite2D.new()
 	s.texture = load(path + ".png") as Texture2D
 	s.scale = size * PX / Vector2(s.texture.get_size())
+	s.position = at * PX
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_world.add_child(s)
+
+
+## A cell of features/fx/art/fx_fire.png (2.5 m cells, w cells wide) at `scale` x its size.
+func _fire(cell: Vector2i, w: int, at: Vector2, scale: float) -> void:
+	var s: Sprite2D = Sprite2D.new()
+	s.texture = load("res://features/fx/art/fx_fire.png") as Texture2D
+	s.region_enabled = true
+	s.region_rect = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
+	s.scale = Vector2.ONE * 2.5 * scale * PX / 256.0
 	s.position = at * PX
 	s.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_world.add_child(s)
