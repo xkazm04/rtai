@@ -151,10 +151,12 @@ func shoot(e: EnemyAgent) -> void:
 	s.shooter_id = e.id
 	shots.append(s)
 	stats["shots"] += 1.0
+	e.shot_tick = tick
 
 
 func swing(e: EnemyAgent) -> void:
 	stats["swings"] += 1.0
+	e.shot_tick = tick
 	var to: Vector2 = rivet_pos - e.pos
 	var reach: float = e.arch.weapon.reach_m + rivet_radius
 	if to.length() <= reach and e.aim.dot(to.normalized()) >= MELEE_ARC_COS:
@@ -170,6 +172,7 @@ func hurt(e: EnemyAgent, dmg: float, from_dir: Vector2) -> void:
 		dmg *= e.arch.shield_front_mult
 	e.hp -= dmg
 	e.hurt_tick = tick
+	e.hurt_dir = from_dir.normalized()
 	if e.hp <= 0.0:
 		e.enter(EnemyAgent.State.DEAD)
 		e.token = false

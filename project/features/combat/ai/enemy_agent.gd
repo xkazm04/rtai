@@ -30,6 +30,10 @@ var last_seen: Vector2 = Vector2.ZERO
 var sees: bool = false
 var broke: bool = false
 var hurt_tick: int = -1000
+## The direction the last blow travelled (the rig's HIT clip shoves along it).
+var hurt_dir: Vector2 = Vector2.RIGHT
+## The tick of the last shot or swing (the rig's SHOOT recoil or swing clip).
+var shot_tick: int = -1000
 var died_tick: int = -1
 ## The pit's cover boxes (shared, read-only here): the motor paths round them.
 var cover_ref: Array[Rect2] = []
