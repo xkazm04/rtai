@@ -1271,3 +1271,7 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 ## REQUESTS (iteration 14)
 23. visual-engine: fx.json `muzzle` (and `crackle`, REQUEST 14) `fade_from` 0 -> ~0.6, so the short flash prints solid
     before it dissolves (`masters:night/d4-production/work/fx14/muzzle64.png`).
+- 04:41 EVIDENCE for REQUEST 23 (probe in scratch-m14 only, reverted): fx.json `muzzle.fade_from` 0 -> 0.6, n-visual's
+  fx_showcase `before_i14mz|probe_i14mz/fx-*`, crops `work/fx14/muzzle_ab.png`: the flash prints as a solid inked star
+  with the vermilion core instead of dither fragments, at 48 and 64. One-line patch for visual-engine:
+  `evidence/iter14/fx_muzzle_fade.patch` (applies on n-visual 56d23e7; their file, not committed here).
