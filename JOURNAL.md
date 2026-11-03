@@ -1413,3 +1413,11 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   (`git merge-tree --write-tree` + `git commit-tree`, a dangling commit 7a44b94, no hooks skipped, never on a branch),
   a scratch worktree at it, `merge --no-commit n-visual` (JOURNAL.md the only conflict), `git apply --check` clean.
   (My 04:58 line first claimed n-visual does not touch fx_view.gd without checking; corrected above.) Scratch removed.
+- 05:00 MERGED CHECK on n-visual's newest tip (41ee996 + n-d4 at d330b47; JOURNAL.md the only conflict; both
+  `evidence/iter14/fx_fade.patch` and the final quest patch apply there): unit **221 passed, 0 failed**; run.mjs
+  (`--no-bench --no-parity --allow-dirty`, `evidence/iter14/merged-n-visual-41ee996-gates.txt`): lint, unit, scenarios
+  PASS; selftest FAIL **only on n-visual's look / block goldens: 0/11 + 0/5 within mean 4 (worst 20.44)** - they were
+  blessed on n-visual alone, without n-d4's art (the whole night's table art, not just tonight's), so every golden
+  moves after the merge. Same frames: 72 art textures, 0 placeholders, accent gate "no new off-doctrine accents",
+  crowd atlas 6/6 looks on doctrine, world lock holds. **For the Director:** after merging n-visual + n-d4, re-bless
+  the look goldens (n-visual's recipe) - expected, as noted in iteration 8. Scratch removed.

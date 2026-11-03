@@ -1,0 +1,9 @@
+PASS lint: lint: all 13 checks pass over 220 GDScript files [dirty tree: 364 uncommitted paths]
+     -> C:\Users\kazda\kiro\gtai-wt\scratch-m14e\build\evidence\lint.json
+PASS unit-tests: unit-tests: 221 passed, 0 failed, 0 skipped (GUT, headless) [dirty tree: 364 uncommitted paths]
+     -> C:\Users\kazda\kiro\gtai-wt\scratch-m14e\build\evidence\unit-tests.json
+PASS scenario-tests: scenario-tests: 8 passed (headless) [dirty tree: 364 uncommitted paths]
+     -> C:\Users\kazda\kiro\gtai-wt\scratch-m14e\build\evidence\scenario-tests.json
+FAIL selftest: selftest: D4 city frames rendered (32 px/m ok, 103 actors, 82 colours; 48 px/m ok, 81 actors, 88 colours); 72 art textures, 0 placeholders, prewarm 32 ms; look goldens 0/11 within mean 4 (worst 20.44); OFF: d1@32, d1@48, d4@32, d4@48, d4@64, d5@48, d5@64, auto@48, auto@56, auto@64, d4@48-night; accent pixels 32: 0.94 %, 48: 0.96 %, 64: 0.25 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; block goldens 0/5 within mean 4 (worst 13.91); OFF: d4@32, d4@48, auto@64, d4@48-night, auto@64-night; block accent pixels 32: 1.05 %, 48: 0.70 %, 64: 0.31 %; crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents; world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %) [dirty tree: 364 uncommitted paths]
+     -> C:\Users\kazda\kiro\gtai-wt\scratch-m14e\build\evidence\selftest.json
+evidence: commit 41ee9961585856ccb065039b400a71a5480a0a4e, godot 4.7.2.stable.official.ed1daf0bf
