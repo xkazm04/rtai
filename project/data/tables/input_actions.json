@@ -228,6 +228,30 @@
         "R"
       ],
       "mouse": []
+    },
+    {
+      "bit": 5,
+      "id": "sprint",
+      "joy_axes": [],
+      "joy_buttons": [
+        7
+      ],
+      "keys": [
+        "Shift"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 6,
+      "id": "roll",
+      "joy_axes": [],
+      "joy_buttons": [
+        1
+      ],
+      "keys": [
+        "Ctrl"
+      ],
+      "mouse": []
     }
   ],
   "schema": "gtai.input-actions/1"
