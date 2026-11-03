@@ -7,6 +7,9 @@ extends Node2D
 
 const SPIKES: int = 8
 const MAX_FLASHES: int = 16
+## Photosensitivity guard: at most one lit frame per LIT_GAP ticks (0.33 s, under 3 flashes a
+## second) however many rounds are fired; the starbursts themselves are not capped.
+const LIT_GAP: int = 20
 
 var ticks: int = 2
 var radius_px: float = 26.0
@@ -15,6 +18,7 @@ var _dir: PackedVector2Array = PackedVector2Array()
 var _age: PackedInt32Array = PackedInt32Array()
 var _lit: bool = false
 var _lit_at: Vector2 = Vector2.ZERO
+var _since_lit: int = LIT_GAP
 
 
 func fire(at_px: Vector2, dir: Vector2) -> void:
@@ -26,8 +30,10 @@ func fire(at_px: Vector2, dir: Vector2) -> void:
 	_dir.append(dir.normalized())
 	@warning_ignore("return_value_discarded")
 	_age.append(0)
-	_lit = true
-	_lit_at = at_px
+	if _since_lit >= LIT_GAP:
+		_lit = true
+		_lit_at = at_px
+		_since_lit = 0
 	queue_redraw()
 
 
@@ -43,6 +49,7 @@ func lit_at() -> Vector2:
 
 func step_ticks(n: int) -> void:
 	_lit = false
+	_since_lit += n
 	for i: int in range(_age.size() - 1, -1, -1):
 		_age[i] += n
 		if _age[i] >= ticks:

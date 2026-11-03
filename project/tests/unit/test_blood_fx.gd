@@ -98,3 +98,14 @@ func test_a_round_lights_its_muzzle_for_one_tick() -> void:
 	f.step_ticks(1)
 	assert_false(f.lit(), "one frame of light")
 	f.free()
+
+
+func test_the_muzzle_light_is_capped_under_three_flashes_a_second() -> void:
+	var f: MuzzleFlash = MuzzleFlash.new()
+	var lit: int = 0
+	for t: int in 60:
+		f.fire(Vector2(t, 0), Vector2.RIGHT)
+		lit += 1 if f.lit() else 0
+		f.step_ticks(1)
+	assert_eq(lit, 3, "a round every tick for 1 s lights 3 frames")
+	f.free()
