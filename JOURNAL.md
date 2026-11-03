@@ -1069,3 +1069,10 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
 22. visual-engine (optional, owner's eye): the aquatint blotches on the cream paving read as airbrushed clouds at
     64 px/m (`masters:night/d4-production/work/i12_strip64.png`), not ink; a tighter / grained aquatint on paper, or
     none on paving, would stay pen-and-ink.
+- 03:51 MILESTONE HUD strip + `, . % #` (a real cash counter needs the thousands comma; quest 1 prints "$1,500").
+  Codex `d4n_digits2` (template `refs/t_digits2.png`: an anchor 0 + the four guides on one baseline; style ref = the
+  approved strip): **1 image, 4 glyphs, 0 rejected**, they match the set. `tools/slice_digits2.py` scales by the
+  anchor zero and keeps each glyph on the strip baseline; the comma tail clamps at y 158 inside its 160 px cell
+  (it hung 6 px out). Strip now 2240 x 160, 20 cells (README). Dev cash counter prints "12,480"
+  (`after_i12h3/`, `work/hud12_ab3.png`: before | i12 | i12b). Manifest `d4n_digits2`, provenance line, ladder row.
+  Commit 200d8e4. Codex night total: 28 images, 190 cells, 7 rejected.
