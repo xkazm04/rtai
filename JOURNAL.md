@@ -1349,3 +1349,11 @@ NEXT (session end, iteration 14):
   nav budget failed once under other lanes' load (2300 us), green on 3 re-runs.
 - Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (iteration-14 quest patch applied + art synced to
   n-d4 HEAD); scratch-m14 / m14q removed; my Godot runs all finished.
+- 04:50 MILESTONE heat / wanted pip flattened. Quest 1's HEAT pips (and the dev HUD's wanted pips) are my iteration-1
+  `wanted_pip_full.png`, which carried a glossy white specular streak: a shaded 3D ball, the one glossy thing in the
+  ink HUD (the empty and army pips are flat). `masters:tools/pip_flat.py`: light pixels inside the vermilion disc
+  painted the pip's flat vermilion (461 px), ink ring + hatch shadow kept. In-engine: dev HUD `city_frame --hud=0.5`
+  `before_i14pip|after_i14pip/city-0-32ppm-hud50.png` and quest 1 `after_q1ab3|after_q1pip/05-*.png`, crops
+  `work/fx14/pip_ab_engine.png`: flat ink tokens like the rest of the HUD. Provenance line, README row, ladder2 row.
+  Original `masters:backup_pip14/`. Commit 62923f7. 0 Codex. Checked, no change: the rest of the HUD set (the ammo
+  ticket bullet has a thin pen highlight, reads as line work at UI size).
