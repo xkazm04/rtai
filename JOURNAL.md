@@ -564,3 +564,15 @@ NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at 
   3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
   4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
   6) the one-frame warm-up particle burst on Continue/Start f1.
+
+## Iteration 52 (17:21, STABILIZE, short: report at 17:30)
+- No code changed since ebe1dd6 (`git diff ebe1dd6 HEAD -- project tools` empty). Re-ran lint at
+  HEAD 17a85df: 13/13 over 369 files. Unit/scenarios not re-run (code identical to the gated
+  ebe1dd6; evidence in iteration 50). No bench, no render, no Godot process started.
+- Exe present: build/export/windows/RTAI.exe (193.7 MB, 17:11, built at ebe1dd6) + the native
+  release DLL beside it. frames.json unchanged (15 entries, clip v5 as entry 1).
+NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at ebe1dd6);
+  2) merge d-cast with/before d-slice; the autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
+  6) the one-frame warm-up particle burst on Continue/Start f1.
