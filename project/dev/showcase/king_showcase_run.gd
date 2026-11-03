@@ -9,6 +9,8 @@ const KING_AT_M: Vector2 = Vector2(-3.2, 2.9)
 
 ## RivetPlan's form for this run (`--rivet-form=night` = the pre-2026-11-03 scale, A/B frames)
 var rivet_form: StringName = RivetPlan.FORM_BASE
+## King's scale for this run (`--king-size=1.2`: the owner's smaller-King option, A/B frames)
+var king_size: float = KingPlan.SIZE_K
 var _king: CutRig = CutRig.new()
 
 
@@ -16,7 +18,7 @@ func _ready() -> void:
 	RivetPlan.form = rivet_form  # before the pool builds Rivet's plan
 	super._ready()
 	_actors.add_child(_king)
-	_king.setup(KingPlan.build(), RigVariant.rivet())
+	_king.setup(KingPlan.build(king_size), RigVariant.rivet())
 	_king.position = KING_AT_M * PX
 	_king.snap_facing((Vector2(0.0, 0.6) - KING_AT_M).angle())  # at Rivet (RigShowcaseRun's spot 0)
 

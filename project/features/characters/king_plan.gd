@@ -10,10 +10,11 @@ extends RefCounted
 const SIZE_K: float = 1.3
 
 
-static func build() -> BodyPlan:
+## size_k: the boss scale (an arena dial; the owner may pick a smaller King, see rig_footprint).
+static func build(size_k: float = SIZE_K) -> BodyPlan:
 	var p: BodyPlan = RivetPlan.build(RivetPlan.FORM_OPEN)
 	p.name = "king"
 	p.art_dir = "king"
-	p.size_k = SIZE_K
+	p.size_k = size_k
 	p.hose_tex = ""
 	return p

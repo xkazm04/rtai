@@ -71,5 +71,26 @@
   "width_m": 2.05
  },
  "schema": "d5-cast.rivet-footprint/2",
- "sim": "unchanged: sim radius 0.6 m, no replay/parity golden moves"
+ "sim": "unchanged: sim radius 0.6 m, no replay/parity golden moves",
+ "king_size_option_2026-11-03_15:55": {
+  "king_1_3_shipped": {
+   "length_m": 2.33,
+   "width_m": 2.84
+  },
+  "king_1_2_option": {
+   "length_m": 2.15,
+   "width_m": 2.62
+  },
+  "rivet": {
+   "length_m": 1.9,
+   "width_m": 2.05
+  },
+  "night_rivet": {
+   "length_m": 2.5,
+   "width_m": 2.62
+  },
+  "tool": "dev/bench/rig_footprint.gd (row king_1_2 = KingPlan.build(1.2))",
+  "frames": "masters day-d5/d5-cast/frames/king-size-option.png (king_showcase --king-size=1.3|1.2, 64 + 128 px/m; only King's region differs: 2306/10904/38267 px at 32/64/128)",
+  "note": "OWNER CHOICE: King 1.3 is about the night Rivet's footprint; 1.2 still reads as the boss beside Rivet. Shipped value unchanged (1.3); pick 1.2 = KingPlan.SIZE_K."
+ }
 }
