@@ -33,14 +33,8 @@ var _p_next: int = 0
 var _pools: int = 16
 var _n: int = 0
 var _k: int = 0
-var _blood: Color
-var _dark: Color
-var _sheen: Color
-## The colour of a droplet in the air (sparks for oil); the blood colour by default.
-var _flight: Color
-## An ink casing (px) around each droplet in the air; the fluid's own streak (< 0: physics).
-var _case: float = 0.0
-var _trail: float = -1.0
+## What is drawn: blood, or another fluid (use_fluid).
+var _fluid: NoirFluid = null
 
 
 func _init() -> void:
@@ -61,11 +55,8 @@ func _init() -> void:
 	_d_grow = NoirPack.ints(max_decals)
 	_d_seed = NoirPack.ints(max_decals)
 	_d_dir = NoirPack.vec2s(max_decals)
-	var c: Dictionary = p["colour"]
-	_blood = NoirPack.rgb(c["blood"])
-	_dark = NoirPack.rgb(c["blood_dark"])
-	_sheen = NoirPack.rgb(c["sheen"])
-	_flight = _blood
+	var colour: Dictionary = p["colour"]
+	_fluid = NoirFluid.from(colour)
 
 
 ## Draws another fluid of the `fluids` table (e.g. "oil": white sparks in the air, black on the
@@ -75,12 +66,7 @@ func use_fluid(fluid: String) -> bool:
 	var f: Dictionary = fluids.get(fluid, {})
 	if f.is_empty():
 		return false
-	_blood = NoirPack.rgb(f["blood"])
-	_dark = NoirPack.rgb(f["blood_dark"])
-	_sheen = NoirPack.rgb(f["sheen"])
-	_flight = NoirPack.rgb(f.get("flight", f["blood"]))
-	_case = f.get("case_px", 0.0)
-	_trail = f.get("trail", -1.0)
+	_fluid = NoirFluid.from(f)
 	return true
 
 
@@ -214,18 +200,25 @@ func _draw() -> void:
 		var r: float = lerpf(_d_r0[i], _d_r1[i], 1.0 - pow(1.0 - g, 2.0))
 		var a: float = 1.0 - clampf(float(age - after) / fade, 0.0, 1.0)
 		if _d_grow[i] > 0:
-			var cols: PackedColorArray = [Color(_dark, a), Color(_blood, a), Color(_sheen, a * 0.9)]
+			var cols: PackedColorArray = [
+				Color(_fluid.dark, a), Color(_fluid.ground, a), Color(_fluid.sheen, a * 0.9)
+			]
 			BloodMarks.pool(self, _d_pos[i], r, _d_dir[i], cols)
 		else:
-			BloodMarks.splat(self, _d_pos[i], r, _d_dir[i], Color(_blood, a))
-	var trail: float = _trail if _trail >= 0.0 else p["physics"]["trail"]
+			BloodMarks.splat(self, _d_pos[i], r, _d_dir[i], Color(_fluid.ground, a))
+	var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
 	for i: int in _pos.size():
-		if _life[i] > 0 and _case > 0.0:
-			draw_line(_pos[i] - _vel[i] * trail, _pos[i], Color.BLACK, _size[i] * 1.4 + _case * 2.0)
+		if _life[i] > 0 and _fluid.case_px > 0.0:
+			draw_line(
+				_pos[i] - _vel[i] * trail,
+				_pos[i],
+				Color.BLACK,
+				_size[i] * 1.4 + _fluid.case_px * 2.0
+			)
 	for i: int in _pos.size():
 		if _life[i] > 0:
-			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _flight, _size[i] * 1.4)
-			draw_circle(_pos[i], _size[i], _flight)
+			draw_line(_pos[i] - _vel[i] * trail, _pos[i], _fluid.flight, _size[i] * 1.4)
+			draw_circle(_pos[i], _size[i], _fluid.flight)
 
 
 func _rand() -> float:
