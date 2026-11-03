@@ -3,6 +3,10 @@
   "frame": {
     "amount": 1.0,
     "band": 0.07,
+    "beam_len": 300.0,
+    "beam_lift": 0.5,
+    "beam_spread": 0.2,
+    "beam_w": 18.0,
     "blood": 1.0,
     "crush": 0.36,
     "edge_ink": 0.0,

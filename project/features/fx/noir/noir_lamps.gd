@@ -57,14 +57,14 @@ func near(
 	return out
 
 
-## Lamps in metres -> the pass's screen px (FRAGCOORD space) for a camera at world_px and zoom.
-static func to_screen(
-	lamps: PackedVector2Array, world_px: Vector2, zoom: float
+## Lamps in metres -> screen uv for a camera on focus (m) at zoom over a canvas view of `view` px.
+static func to_uv(
+	lamps: PackedVector2Array, focus: Vector2, zoom: float, view: Vector2
 ) -> PackedVector2Array:
 	var out: PackedVector2Array = PackedVector2Array()
 	for p: Vector2 in lamps:
 		@warning_ignore("return_value_discarded")
-		out.append(p * SimConst.PX_PER_M * zoom - world_px)
+		out.append(((p - focus) * SimConst.PX_PER_M * zoom + view * 0.5) / view)
 	return out
 
 

@@ -17,6 +17,7 @@ var fixed_phase: float = -1.0
 ## The street light (lamp posts as pools of light); null until the first light_street().
 var street: NoirLamps = null
 var _lamp_r_px: float = 0.0
+var _beam_len_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
 var _mat: ShaderMaterial = ShaderMaterial.new()
 
@@ -36,6 +37,7 @@ func _init() -> void:
 		var u: Dictionary = frame
 		apply(u)
 		_lamp_r_px = u.get("lamp_r", 0.0)
+		_beam_len_px = u.get("beam_len", 0.0)
 
 
 ## True when the launch args ask for the noir look (--look=noir).
@@ -78,17 +80,33 @@ func set_amount(a: float) -> void:
 	_rect.visible = a > 0.001
 
 
-## Per frame, with the city: the lamp posts around focus (m) light their pools (none when the
-## params have no lamp_r, or without a city).
-func light_street(res: CityResidency, focus: Vector2, world_px: Vector2, zoom: float) -> void:
-	if res == null or _lamp_r_px <= 0.0 or not is_inside_tree():
+## Per frame, with the city: the lamp posts around focus (m) light their pools and the cars
+## throw their headlight cones (each off when the params have no lamp_r / beam_len).
+## Positions go in as screen uv (the canvas view can be larger than the window: canvas_items
+## stretch), sizes as px at 32 px/m that the shader scales by zoom and view_h.
+func light_street(city: CitySystem, focus: Vector2, zoom: float) -> void:
+	if city == null or not is_inside_tree():
 		return
-	if street == null:
-		street = NoirLamps.new(CityGen.read_json(CitySystem.TEXTURES))
-	var half: Vector2 = get_viewport().get_visible_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
-	var lamps: PackedVector2Array = street.near(res, focus, half, _lamp_r_px / SimConst.PX_PER_M)
-	var px: PackedVector2Array = NoirLamps.to_screen(lamps, world_px, zoom)
-	_mat.set_shader_parameter(&"lamp_count", px.size())
-	@warning_ignore("return_value_discarded")
-	px.resize(NoirLamps.MAX_LAMPS)
-	_mat.set_shader_parameter(&"lamps", px)
+	var view: Vector2 = get_viewport().get_visible_rect().size
+	var half: Vector2 = view * 0.5 / (zoom * SimConst.PX_PER_M)
+	_mat.set_shader_parameter(&"view_h", view.y)
+	if _lamp_r_px > 0.0 and city.residency != null:
+		if street == null:
+			street = NoirLamps.new(CityGen.read_json(CitySystem.TEXTURES))
+		var reach: float = _lamp_r_px / SimConst.PX_PER_M
+		var lamps: PackedVector2Array = street.near(city.residency, focus, half, reach)
+		var px: PackedVector2Array = NoirLamps.to_uv(lamps, focus, zoom, view)
+		_mat.set_shader_parameter(&"lamp_count", px.size())
+		@warning_ignore("return_value_discarded")
+		px.resize(NoirLamps.MAX_LAMPS)
+		_mat.set_shader_parameter(&"lamps", px)
+	if _beam_len_px > 0.0 and city.sim != null:
+		var reach_m: float = _beam_len_px / SimConst.PX_PER_M
+		var cars: PackedVector4Array = NoirHeadlights.near(
+			city.sim.snapshot(), focus, half, reach_m
+		)
+		var beams: PackedVector4Array = NoirHeadlights.to_uv(cars, focus, zoom, view)
+		_mat.set_shader_parameter(&"car_count", beams.size())
+		@warning_ignore("return_value_discarded")
+		beams.resize(NoirHeadlights.MAX_CARS)
+		_mat.set_shader_parameter(&"cars", beams)

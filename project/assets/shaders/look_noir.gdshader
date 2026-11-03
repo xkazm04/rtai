@@ -46,14 +46,23 @@ uniform vec2 flash_uv = vec2(0.5);
 uniform float flash = 0.0;
 uniform float flash_r = 140.0;
 uniform float flash_lift = 0.3;
-// street light: the host hands in up to 8 lamp posts in screen px (NoirLamps); each lights a pool of lamp_r px
+// street light: the host hands in up to 8 lamp posts in screen uv (NoirLamps); each lights a pool of lamp_r px
 // (at 32 px/m, scaled by zoom) whose lift falls off from lamp_core to the rim, so the falloff prints as pen strokes
+uniform float view_h = 800.0;      // the canvas view's height in canvas px (NoirLook): sizes below scale by zoom * window / view
 uniform vec2 lamps[8];
 uniform int lamp_count = 0;
 uniform float lamp_r = 0.0;        // 0 = no street light
 uniform float lamp_lift = 0.0;
 uniform float lamp_core = 0.45;
 uniform float lamp_gate = 0.144;   // values under this stay ink in the light (the ink masses: cops, deep shadow)
+// headlights: up to 12 cars (NoirHeadlights: xy = the nose in screen uv, zw = the heading) throw a cone of white
+// beam_len px long (at 32 px/m, scaled by zoom), beam_w px wide at the nose, opening by beam_spread per px
+uniform vec4 cars[12];
+uniform int car_count = 0;
+uniform float beam_len = 0.0;      // 0 = no headlights
+uniform float beam_w = 26.0;
+uniform float beam_spread = 0.38;
+uniform float beam_lift = 0.0;
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -125,15 +134,30 @@ void fragment() {
 	float fw = 1.0 + 0.10 * sin(fa * 7.0 + 1.3) + 0.06 * sin(fa * 13.0) + 0.12 * (vnoise(w * 0.09) - 0.5);
 	float fd = length(fv) / (flash_r * zoom * fw);
 	v += flash * flash_lift * (1.0 - smoothstep(0.82, 1.0, fd)) * step(crush * 0.4, v);
+	vec2 sp = uv / SCREEN_PIXEL_SIZE;  // screen px, y down
+	float ls = zoom / (SCREEN_PIXEL_SIZE.y * view_h);  // screen px per world px at 32 px/m
 	float lit = 0.0;
 	for (int i = 0; i < 8; i++) {
 		if (i >= lamp_count) { break; }
-		vec2 ld = FRAGCOORD.xy - lamps[i];
+		vec2 ld = sp - lamps[i] / SCREEN_PIXEL_SIZE;
 		float la = atan(ld.y, ld.x) + float(i) * 2.1;
 		float lw = 1.0 + 0.07 * sin(la * 5.0) + 0.05 * sin(la * 11.0 + 0.7) + 0.08 * (vnoise(w * 0.07) - 0.5);
-		lit = max(lit, 1.0 - smoothstep(lamp_core, 1.0, length(ld) / (lamp_r * zoom * lw + 0.001)));
+		lit = max(lit, 1.0 - smoothstep(lamp_core, 1.0, length(ld) / (lamp_r * ls * lw + 0.001)));
 	}
-	v += lamp_lift * lit * step(lamp_gate, v);
+	float beam = 0.0;
+	for (int i = 0; i < 12; i++) {
+		if (i >= car_count) { break; }
+		vec2 cd = sp - cars[i].xy / SCREEN_PIXEL_SIZE;
+		vec2 ch = cars[i].zw;
+		float along = dot(cd, ch);
+		float across = abs(dot(cd, vec2(-ch.y, ch.x)));
+		float bw = beam_w * ls + along * beam_spread;
+		float cone = step(0.0, along) * (1.0 - smoothstep(0.8, 1.0, across / max(bw, 0.001)));
+		// the throw ends in a ragged arc, not a straight cut
+		float reach = beam_len * ls * (1.0 + 0.18 * (vnoise(w * 0.05) - 0.5)) + 0.001;
+		beam = max(beam, cone * (1.0 - smoothstep(0.3, 1.0, length(cd) / reach)));
+	}
+	v += (lamp_lift * lit + beam_lift * beam) * step(lamp_gate, v);
 	// threshold: crushed ink, the stroke band, paper
 	float paper = smoothstep(thresh - soft, thresh + soft, v);
 	float in_band = 1.0 - smoothstep(band * 0.6, band, abs(v - thresh));
