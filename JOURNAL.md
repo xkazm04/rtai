@@ -174,3 +174,19 @@ Branch d-city at the commit after 750c089; gates PASS at 750c089 (evidence/d5-ci
 6. Bench idle at the end of the day if the lock allows (this run was contended, 1 x 30 s).
 REQUESTS 1-4 above still stand (d5-cast: cop rigs/atlas to cop_blue; d5-combat: blood palette names;
 vehicles: cruiser accents cop_blue).
+
+## 2026-11-03 iteration 4 (12:23 - )
+
+- MILESTONE a4f3d56 pixel-snapped world camera (NEXT 5, work order item 2): CityView.snap_px rounds
+  camera.position * zoom to whole screen px. Real-city pan (city_frame --pan=20, focus 1, 48 px/m,
+  7.3 m/s): world-locked roof crop 0.02 mean / 0 % flips per frame snapped vs 6.9 / 8.2 % sub-pixel
+  (8.6 / 11 % even with the sub-px step compensated: the print thresholds re-quantize). Same under
+  --look=d5 (0.02 / 0 % vs 6.6 / 7.8 %). evidence/d5-city/17-snap-cam/ (swim-crop-3x.png shows it).
+- MILESTONE bf43a68 D5 earlier than 64 px/m (work order item 2 decided with frames): d5_world overlay
+  amount_ppm 32: 0.5, 48: 0.75, 64: 1 (was 0 to 48). Readability gate vs D4 (3 real foci, 32/48):
+  edge energy 96-98 % of D4, ink +1 %, paper dE to T1 2.9-9.5 (D4 12.5-14). Full D5 at 32 rejected
+  (orange paper, hatch patches on asphalt). Goldens re-blessed both sites; decisions line; README.
+  evidence/d5-city/18-d5-earlier/. Package v9 (d5c) stays NOT adopted (erases hatched cast shadows).
+- NOTE item 4 roof density: the 7 generic roofs (65-71) + long/warehouse already carry 10-15 clutter
+  items per 8.4 m roof (T1: 6-8 larger items per block); masters roofs-i4/sheet-generic.png. No Codex
+  plates needed for density; T1's roof items are larger/coarser, not more numerous. 0 Codex images used.
