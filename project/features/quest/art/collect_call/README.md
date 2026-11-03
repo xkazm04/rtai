@@ -12,7 +12,7 @@ keeps the layout. Night lane d4-production, 2026-11-03.
 | `catwalk.png` | 4.0 x 1.2, tiles along x | 320 x 96 | the two 6 px lines at Dock 9 (y -15 / +15) | Repeats end to end every 4 m. |
 | `dock_gate.png` | 4.0 x 0.7 | 320 x 56 | (no placeholder yet) | Closed sliding gate with hazard ends and a lock box, for Dock 9's gates. |
 | `dock_floor.png` | 8 x 8, tiles | 768 x 768 | Dock 9's `_floor()` fill | Procedural (no AI pixels): 4 m slabs, saw-cut joints, a worn bay line. 96 px/m (F-13 ground). |
-| `basement_floor.png` | 4 x 4, tiles | 384 x 384 | the Toner Room's `_floor()` fill | Procedural: 0.5 m low-contrast linoleum checker, ink grout. |
+| `basement_floor.png` | 4 x 4, tiles | 384 x 384 | the Toner Room's `_floor()` fill | Procedural: low-contrast linoleum checker, ink grout, paper grain. Iteration 14: the soft scuff blotches removed (they printed as cow-print mottling in every square behind the cast). |
 | `cage_mesh.png` | 2 x 2, tiles, RGBA | 160 x 160 | the vault cage's 33 vertical lines | Procedural: 0.5 m chain-link diamonds in ink on transparent. Draw it over the floor inside the cage rect. |
 
 ## Cast (`cast_view.gd`)
