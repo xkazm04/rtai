@@ -1749,3 +1749,14 @@ NEXT (iteration 16; 43-49 stand, earlier lists stand):
     D5 param off its tested range; then land the range test sketched in iteration 16 (shader uniform list ->
     PROPERTY_HINT_RANGE -> params.json value inside it, floor of 10 checked). Do this when there is time to
     re-render the hero shot before/after: hint_range does not change rendering, but check that with a frame diff.
+
+## Iteration 18 (2026-11-03, STABILIZE, 07:30 -> report 08:15), no image budget (50/50)
+- 07:30 read JOURNAL (iteration 16, NEXT 50; no iteration 17 entry exists), git log; tree clean except the 104
+  untracked evidence PNGs. build/evidence is from 07:19 (82f4667, only docs commits since), but parity.json is
+  from 01:43 at eb2a541 and says "fail: Godot not found" - stale, not this build. No native build exists in this
+  worktree (no godot-cpp bin, no project/native/bin). Started `scons ... target=template_debug` so parity can be
+  measured on this branch instead of left stale (all outputs are git-ignored: native/**/bin, *.obj, godot-cpp/gen).
+- 07:32 MILESTONE: native built in this worktree (template_debug, 1m33s, exit 0;
+  project/native/bin/gtai_sim.windows.template_debug.x86_64.dll, git-ignored). `--import` exit 0, 0 error lines.
+  `scons tests` builds; native/build/tests/sim_core_tests.exe: "sim_core tests: 0 failed". Log in masters
+  night/d5-close/i18_native_build.log. Next: the full evidence run including parity.
