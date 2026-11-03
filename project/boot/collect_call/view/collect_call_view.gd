@@ -19,6 +19,11 @@ var printed: bool = true
 var print_stage: PrintStage = null
 ## Camera scale in px per metre (48 by default; the slice plays on foot at 32, AGENTS camera).
 var px_per_m: float = Ink.PX_PER_M
+## Quest 1 on the generated city: the CityView (ground, roofs, crowd, its print pass and camera on
+## the city's focus, which follows Rivet) draws the world, and the quest's props, cast and FX go
+## on its actor layer; the invented arena's floors are not drawn. Set before adding the view.
+var city_view: CityView = null
+var city: CitySystem = null
 var _camera: Camera2D = null
 var _stage: CollectCallStage
 
@@ -43,6 +48,9 @@ func _ready() -> void:
 		objective_view.system = hud_view.system
 		objective_view.px_per_m = px_per_m
 		layer.add_child(objective_view)
+	if city_view != null:
+		_ready_on_city()
+		return
 	if not printed:
 		for v: Node2D in [stage_view, fx_view, cast_view]:
 			add_child(v)
@@ -66,8 +74,19 @@ func _ready() -> void:
 	print_stage.actor_layer().add_child(fx_view)
 
 
+func _ready_on_city() -> void:
+	add_child(city_view)
+	city_view.zoom = px_per_m / SimConst.PX_PER_M
+	city_view.setup(city)
+	stage_view.zones = false
+	var k: Vector2 = Vector2.ONE * SimConst.PX_PER_M / Ink.PX_PER_M
+	for v: Node2D in [stage_view, fx_view, cast_view]:
+		v.scale = k
+		city_view.actor_layer().add_child(v)
+
+
 func _process(_delta: float) -> void:
-	if _stage == null:
+	if _stage == null or city_view != null:
 		return
 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
 	if print_stage != null:

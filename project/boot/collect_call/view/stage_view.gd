@@ -10,6 +10,8 @@ const KERB_ROWS: float = 338.0
 const PROPS: String = "res://features/city/art/props/"
 
 var stage: CollectCallStage
+## The invented arena's floors and labels (off on the city, whose ground is the world).
+var zones: bool = true
 var _tex: Dictionary[String, Texture2D] = {}
 
 
@@ -20,7 +22,8 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if stage == null:
 		return
-	_zones()
+	if zones:
+		_zones()
 	for spot: String in stage.layout.hide_at:
 		_sprite("dumpster", stage.layout.hide_at[spot], Vector2(2.4, 1.6), PROPS)
 	for phone: String in stage.layout.phones:

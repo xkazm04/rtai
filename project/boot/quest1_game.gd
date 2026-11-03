@@ -68,6 +68,10 @@ func start(cp: Checkpoint = null) -> void:
 		view.px_per_m = px_per_m
 		view.objective_view = ObjectiveView.new()
 		view.fx_view.reduced_motion = settings.reduced_motion
+		if session.city != null:
+			view.city = session.city
+			view.city_view = CityView.new()
+			view.city_view.clock = session.world.context().clock
 		view.bind(session.stage, session.port, session.system)
 		add_child(view)
 		session.live.viewport = get_viewport()
