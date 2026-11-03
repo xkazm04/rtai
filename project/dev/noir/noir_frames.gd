@@ -6,7 +6,7 @@ extends Node
 ## while one moment is shot in both looks, so the pair is the same frame. Windowed only.
 ## Usage: godot --path project res://dev/noir/noir_frames.tscn -- --out=<dir>
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--scenes", "--crowd", "--noir-parts"]
 const MASTER_SEED: int = 91
 const JUNCTION: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
 const SCENES: Dictionary[String, Vector2] = {
@@ -39,6 +39,10 @@ func _ready() -> void:
 			_out = arg.substr(flag.length() + 1)
 		elif flag == "--crowd":
 			_crowd_ink = arg.ends_with("=ink")
+		elif flag == "--noir-parts":
+			# includes the noir peds (an experiment: they cost the cops their value cue)
+			var worn: int = NoirParts.wear(PackedStringArray(["cop", "rivet", "ped"]))
+			Log.info("noir", "noir parts: %d" % worn)
 		else:
 			_only = arg.substr(flag.length() + 1)
 	_ok(DirAccess.make_dir_recursive_absolute(_out) == OK)
