@@ -8,6 +8,16 @@ const LIMIT_TICKS: int = 20 * SimClock.TICK_RATE
 
 
 func run(tree: SceneTree) -> String:
+	var honest: String = _walk_and_hide(tree, true)
+	if honest != "":
+		return honest
+	# TST-05: the planted fault (the interact key never pressed) must leave Rivet in the open
+	var planted: String = _walk_and_hide(tree, false)
+	return "" if planted != "" else "a run without the interact key still hid Rivet"
+
+
+## "" when Rivet walked to the dumpster on the move keys and is hidden after it.
+func _walk_and_hide(tree: SceneTree, press_use: bool) -> String:
 	var scene: PackedScene = load("res://boot/quest1.tscn") as PackedScene
 	var game: Quest1Game = scene.instantiate() as Quest1Game
 	game.save_path = ""
@@ -33,7 +43,7 @@ func run(tree: SceneTree) -> String:
 		walked += 1
 	for a: StringName in [&"move_right", &"move_left", &"move_down", &"move_up"]:
 		_key(a, false)
-	_key(&"interact", true)
+	_key(&"interact", press_use)
 	s.step()
 	_key(&"interact", false)
 	s.step()

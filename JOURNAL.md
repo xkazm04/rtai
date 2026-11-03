@@ -147,3 +147,5 @@ NEXT:
   from the export), so build/export/windows/RTAI.exe is current. No Godot process of mine runs.
   NEXT 6 is done; NEXT 1-5 stand as written above (1 = a human run of the exe; 2 = quest 1 in
   the real city with collisions, the largest gap against the brief).
+- scenario_quest1_keys gains its TST-05 planted fault (no interact press -> Rivet stays in the
+  open, caught). Scenario passes both halves.
