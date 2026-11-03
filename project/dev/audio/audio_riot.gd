@@ -13,9 +13,11 @@ const KNOWN: PackedStringArray = ["--seconds", "--report"]
 var _frames: int = 60 * 30
 var _report: String = ""
 var _n: int = 0
+var _max_proj: int = 0
 var _city: CitySystem = null
 var _audio: AudioService = null
 var _view: CityView = null
+var _characters: CityCharacters = null
 
 
 func _ready() -> void:
@@ -43,8 +45,8 @@ func _ready() -> void:
 	view.setup(_city)
 	_view = view
 	_audio = WorldAudio.attach(world, world.context(), view, _city)
-	var characters: CityCharacters = CityCharacters.new(_city, view, world.context())
-	await characters.bake()
+	_characters = CityCharacters.new(_city, view, world.context())
+	await _characters.bake()
 	await view.prewarm()
 
 
@@ -55,6 +57,8 @@ func _process(_delta: float) -> void:
 	var t: float = _n / 60.0
 	_city.target = RIOT + Vector2(cos(t * 0.3), sin(t * 0.3)) * 6.0
 	_city.focus = _city.target
+	if _n % 30 == 0:
+		_max_proj = maxi(_max_proj, _projectiles())
 	if _n >= _frames:
 		_done()
 
@@ -66,6 +70,7 @@ func _done() -> void:
 		"dropped": _audio.dropped,
 		"fx_fired": _view.fx_triggers.fired,
 		"cops_near": _cops_within(20.0),
+		"max_projectiles": _max_proj,
 	}
 	printerr("audio_riot: %s" % JSON.stringify(out))
 	if _report != "":
@@ -85,4 +90,14 @@ func _cops_within(r_m: float) -> int:
 		var at: Vector2 = Vector2(snap[r + 4], snap[r + 5])
 		if int(snap[r + 1]) == SimConst.K_COP and at.distance_to(_city.target) < r_m:
 			n += 1
+	return n
+
+
+func _projectiles() -> int:
+	var snap: PackedFloat64Array = _city.sim.snapshot()
+	var n: int = 0
+	for r: int in range(0, snap.size() - SimConst.SNAP_STRIDE + 1, SimConst.SNAP_STRIDE):
+		if snap[r] >= SimConst.SNAP_PROJ_BASE:
+			n = (snap.size() - r) / SimConst.SNAP_PROJ_STRIDE
+			break
 	return n

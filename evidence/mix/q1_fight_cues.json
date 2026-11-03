@@ -1,0 +1,25 @@
+{
+  "beat": "fight",
+  "dropped": {
+    "footsteps:cooldown": 433,
+    "footsteps:voices": 38,
+    "hit_flesh:cooldown": 2,
+    "shot_assault_rifle:voices": 6
+  },
+  "frames": 1800,
+  "missing": [],
+  "played": {
+    "crowd_panic": 4,
+    "footsteps": 5,
+    "hit_flesh": 39,
+    "projectile_end": 19,
+    "servo": 2,
+    "shot_assault_rifle": 25,
+    "shot_gloria": 30
+  },
+  "voice_drops": 0,
+  "voice_lines": [
+    "guard-who-do-we-call",
+    "rivet-sorry-not-sorry"
+  ]
+}

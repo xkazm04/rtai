@@ -14,7 +14,7 @@ CUES = [
     ("shot", "a round leaves a gun in the riot (CitySim projectile feed, no weapon id): 9mm pistol", "pistol_shot", 3, "sfx", -6, 1.0, 0.07, 60, 2, 6, 2, False),
     ("shot_gloria", "Gloria the nail gun fires (quest stage)", "nailgun_shot", 3, "sfx", -5, 1.0, 0.05, 55, 3, 4, 3, False),
     ("shot_assault_rifle", "a contractor's assault rifle fires (quest stage)", "rifle_shot", 3, "sfx", -4, 1.0, 0.05, 70, 2, 6, 3, False),
-    ("projectile_end", "a round stops against a wall, car or its range", "impact_concrete", 2, "sfx", -9, 1.0, 0.1, 45, 2, 5, 1, False),
+    ("projectile_end", "a round stops against a wall, car or its range", "impact_concrete", 1, "sfx", -9, 1.0, 0.1, 45, 2, 5, 1, False),
     ("hit_flesh", "a round stops in a body", "impact_flesh", 2, "sfx", -6, 1.0, 0.1, 45, 2, 5, 2, False),
     ("hit_metal", "a round or a bumper hits metal (vehicles lane)", "impact_metal", 2, "sfx", -7, 1.0, 0.1, 45, 3, 4, 2, False),
     ("death", "a person dies in the riot: a wet thud", "impact_flesh", 2, "sfx", -8, 0.85, 0.08, 45, 3, 4, 2, False),
@@ -56,15 +56,15 @@ dump(P / "tables/audio_cues.json", {"schema": "gtai.audio-cues/1", "doc": CUES_D
 dump(P / "tables/audio_mix.json", {
     "schema": "gtai.audio-mix/1", "doc": MIX_DOC,
     "buses": [
-        {"id": "sfx", "parent": "", "volume_db": 0.0},
-        {"id": "voice", "parent": "", "volume_db": 2.0},
+        {"id": "sfx", "parent": "", "volume_db": 3.0},
+        {"id": "voice", "parent": "", "volume_db": -2.0},
         {"id": "music", "parent": "", "volume_db": -8.0},
         {"id": "ui", "parent": "", "volume_db": -4.0},
     ],
     "voice_cap_per_frame": 4, "pool_size": 24, "m_to_px": 32.0, "attenuation": 1.6, "panning_strength": 0.7,
     "duck": {"buses": ["music", "sfx"], "duck_db": {"music": -9.0, "sfx": -3.0}, "duck_attack_s": 0.12, "duck_release_s": 0.6},
     "loudness": {"sfx_peak_db": -3.0, "loop_peak_db": -6.0, "voice_lufs": -18.0, "voice_true_peak_db": -2.0},
-    "footstep_speed_mps": 0.6, "servo_chance": 0.35,
+    "footstep_speed_mps": 0.6, "servo_chance": 0.35, "master_limiter_db": -1.0,
 })
 
 
@@ -86,7 +86,7 @@ dump(P / "schemas/audio_cues.schema.json", {
                 "max_voices": num(1, 16, "integer"), "priority": num(0, 9, "integer"), "loop": {"type": "boolean"}}}}}})
 dump(P / "schemas/audio_mix.schema.json", {
     "$id": "gtai.audio-mix/1", "additionalProperties": False, "type": "object",
-    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "servo_chance"],
+    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "servo_chance", "master_limiter_db"],
     "properties": {
         "doc": {"minLength": 1, "type": "string"}, "schema": {"const": "gtai.audio-mix/1"},
         "buses": {"minItems": 1, "type": "array", "items": {
@@ -99,4 +99,4 @@ dump(P / "schemas/audio_mix.schema.json", {
                                 "duck_db": {"additionalProperties": {"type": "number"}, "type": "object"},
                                 "duck_attack_s": num(0.01, 5), "duck_release_s": num(0.01, 10)}},
         "loudness": {"additionalProperties": {"type": "number"}, "type": "object"},
-        "footstep_speed_mps": num(0, 10), "servo_chance": num(0, 1)}})
+        "footstep_speed_mps": num(0, 10), "servo_chance": num(0, 1), "master_limiter_db": num(-20, 0)}})

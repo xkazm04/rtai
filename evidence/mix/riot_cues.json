@@ -1,0 +1,31 @@
+{
+  "cops_near": 100,
+  "dropped": {
+    "death:cooldown": 106,
+    "death:voices": 187,
+    "footsteps:cooldown": 1583,
+    "footsteps:voices": 199,
+    "projectile_end:cooldown": 446,
+    "projectile_end:far": 221,
+    "projectile_end:voices": 716,
+    "shot:cooldown": 501,
+    "shot:voices": 914
+  },
+  "frames": 1800,
+  "fx_fired": {
+    "death": 464,
+    "player_hit": 0,
+    "player_hit_robo_tazer": 0,
+    "projectile_end": 1670,
+    "rivet_kill": 0,
+    "shot": 1708
+  },
+  "max_projectiles": 73,
+  "played": {
+    "death": 171,
+    "footsteps": 16,
+    "projectile_end": 287,
+    "servo": 7,
+    "shot": 293
+  }
+}

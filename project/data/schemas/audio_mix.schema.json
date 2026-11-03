@@ -88,6 +88,11 @@
       "minimum": 1,
       "type": "number"
     },
+    "master_limiter_db": {
+      "maximum": 0,
+      "minimum": -20,
+      "type": "number"
+    },
     "panning_strength": {
       "maximum": 1,
       "minimum": 0,
@@ -124,7 +129,8 @@
     "duck",
     "loudness",
     "footstep_speed_mps",
-    "servo_chance"
+    "servo_chance",
+    "master_limiter_db"
   ],
   "type": "object"
 }

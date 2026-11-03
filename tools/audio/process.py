@@ -6,6 +6,7 @@ import json, pathlib, subprocess, sys
 import numpy as np
 
 SR = 44100
+IMPULSIVE = ("pistol_shot", "rifle_shot", "nailgun_shot", "impact_")
 FF = "ffmpeg"
 
 
@@ -78,6 +79,10 @@ def sfx(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
             b = fade(trim(a).copy())
         if len(b) < 0.08 * SR:
             rec.update(status="REJECT", why="empty or silent after trim"); log.append(rec); continue
+        if not loop and key.startswith(IMPULSIVE) and int(np.abs(b).argmax()) > 0.12 * SR:
+            rec.update(status="REJECT", why=f"impulsive sound peaks late ({int(np.abs(b).argmax()) * 1000 // SR} ms)"); log.append(rec); continue
+        if not loop and float(np.abs(b[-int(0.05 * SR):]).max()) > 0.1 * float(np.abs(b).max()):
+            b = fade(b, 80.0)  # cut off while still loud (the generator stopped at its length): a longer fade hides the cut
         if full_scale >= 6:
             rec.update(status="REJECT", why=f"source hard-clipped (flat top of {full_scale} samples)"); log.append(rec); continue
         peak = float(np.abs(b).max())

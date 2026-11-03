@@ -125,12 +125,8 @@
    "file": "impact_concrete_02.mp3",
    "src_dur": 0.68,
    "src_peak_db": -10.7,
-   "status": "OK",
-   "out": "impact_concrete_02.wav",
-   "dur": 0.38,
-   "peak_db": -3.0,
-   "rms_db": -28.9,
-   "loop": false
+   "status": "REJECT",
+   "why": "impulsive sound peaks late (224 ms)"
   },
   {
    "file": "impact_flesh_01.mp3",
@@ -228,7 +224,7 @@
    "out": "pistol_shot_02.wav",
    "dur": 0.3,
    "peak_db": -3.0,
-   "rms_db": -10.2,
+   "rms_db": -9.6,
    "loop": false
   },
   {
@@ -239,7 +235,7 @@
    "out": "pistol_shot_03.wav",
    "dur": 0.51,
    "peak_db": -3.0,
-   "rms_db": -14.6,
+   "rms_db": -14.5,
    "loop": false
   },
   {
@@ -283,7 +279,7 @@
    "out": "servo_whine_01.wav",
    "dur": 1.43,
    "peak_db": -3.0,
-   "rms_db": -17.6,
+   "rms_db": -17.7,
    "loop": false
   },
   {
@@ -294,7 +290,7 @@
    "out": "servo_whine_02.wav",
    "dur": 1.43,
    "peak_db": -3.0,
-   "rms_db": -17.3,
+   "rms_db": -16.5,
    "loop": false
   },
   {

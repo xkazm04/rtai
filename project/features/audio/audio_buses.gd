@@ -29,6 +29,7 @@ func ensure() -> void:
 		var base: float = row["volume_db"]
 		_base_db[id] = base
 		AudioServer.set_bus_volume_db(idx, _base_db[id])
+	_limit_master()
 
 
 ## Moves the duck toward `want` (true = a voice is speaking) by `frame_s` of wall time.
@@ -49,3 +50,15 @@ func step_duck(want: bool, frame_s: float) -> void:
 
 func duck_amount() -> float:
 	return _duck
+
+
+## A hard limiter on Master (ceiling master_limiter_db): the mix never clips, whatever stacks up.
+func _limit_master() -> void:
+	var ceiling: float = _mix.get("master_limiter_db", -1.0)
+	var master: int = AudioServer.get_bus_index(&"Master")
+	for i: int in AudioServer.get_bus_effect_count(master):
+		if AudioServer.get_bus_effect(master, i) is AudioEffectHardLimiter:
+			return
+	var limiter: AudioEffectHardLimiter = AudioEffectHardLimiter.new()
+	limiter.ceiling_db = ceiling
+	AudioServer.add_bus_effect(master, limiter)

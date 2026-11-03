@@ -58,7 +58,7 @@
       "pitch_jitter": 0.1,
       "priority": 1,
       "sound": "impact_concrete",
-      "takes": 2
+      "takes": 1
     },
     {
       "bus": "sfx",

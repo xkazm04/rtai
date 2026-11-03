@@ -34,11 +34,9 @@ func _ready() -> void:
 	_play = CollectCallPlay.begin()
 	_view.bind(_play.stage, _play.port, _play.system)
 	add_child(_view)
-	_audio = StageAudio.attach(
-		self, _play.stage, _play.system, _play.bus(), CollectCallPlay.MASTER_SEED
-	)
-	_audio.service.clock = null
-	_live = 0 if _beat == "opening" else -1
+	_live = -1
+	if _beat == "opening":
+		_start_audio()
 
 
 func _process(_delta: float) -> void:
@@ -49,7 +47,7 @@ func _process(_delta: float) -> void:
 		for i: int in SKIP_PER_FRAME:
 			_play.tick_once()
 			if _play.stage.arena.hostiles_alive() > 0:
-				_live = 0
+				_start_audio()
 				break
 		return
 	_play.tick_once()
@@ -59,7 +57,18 @@ func _process(_delta: float) -> void:
 		_done()
 
 
+## Sound starts with the filming (the fast-forward to the fight is silent).
+func _start_audio() -> void:
+	_audio = StageAudio.attach(
+		self, _play.stage, _play.system, _play.bus(), CollectCallPlay.MASTER_SEED
+	)
+	_live = 0
+
+
 func _done() -> void:
+	if _audio == null:
+		get_tree().quit(1)
+		return
 	var s: AudioService = _audio.service
 	var out: Dictionary = {
 		"beat": _beat,

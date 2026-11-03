@@ -1,0 +1,23 @@
+{
+  "beat": "opening",
+  "dropped": {
+    "footsteps:cooldown": 487,
+    "footsteps:voices": 51
+  },
+  "frames": 2700,
+  "missing": [],
+  "played": {
+    "footsteps": 7,
+    "servo": 2
+  },
+  "voice_drops": 2,
+  "voice_lines": [
+    "rivet-line-stopped",
+    "rivet-my-hands",
+    "rivet-third-person",
+    "patch-collect-call",
+    "rivet-who-is-this",
+    "fax-slow-motion",
+    "fax-statistically"
+  ]
+}
