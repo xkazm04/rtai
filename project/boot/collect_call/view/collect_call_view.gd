@@ -35,9 +35,9 @@ var px_per_m: float = Ink.PX_PER_M
 ## on its actor layer; the invented arena's floors are not drawn. Set before adding the view.
 var city_view: CityView = null
 var city: CitySystem = null
+## The Hauler stomp's shake and hit-stop (features/souls/hauler_kick.gd).
+var hauler_kick: HaulerKick = HaulerKick.new()
 var _camera: Camera2D = null
-## The Hauler stomp the camera last kicked for (features/souls).
-var _kicked: int = -1
 var _stage: CollectCallStage
 var _system: QuestSystem
 
@@ -169,11 +169,11 @@ func _dead_px() -> Dictionary[int, Vector2]:
 	return out
 
 
-## features/souls: a Hauler stomp landing kicks the city camera once (powers.json stomp_shake).
+## features/souls: a Hauler stomp landing shakes the city camera and holds the clock (hit-stop).
 func _hauler_kick() -> void:
-	if city_view == null or city_view.rig == null or _stage == null or _stage.pilot == null:
+	if city_view == null or _stage == null or _stage.pilot == null:
 		return
-	var h: HaulerStage = _stage.pilot.hauler
-	if h.stomp_tick >= 0 and h.stomp_tick != _kicked:
-		_kicked = h.stomp_tick
-		city_view.rig.kick(h.form.id_of(&"stomp_shake"), _stage.tick)
+	hauler_kick.reduced_motion = fx_view.reduced_motion
+	var clock: SimClock = city_view.clock
+	var tick: int = clock.tick() if clock != null else _stage.tick
+	city_view.kick_px = hauler_kick.step(_stage.pilot.hauler, tick, clock, city_view.rig)
