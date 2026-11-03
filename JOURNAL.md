@@ -416,3 +416,8 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
   32 px/m 4.4% of the box changes (kerb shadow, crosswalk decal edges), the street median Rivet stands on is identical
   (0.285 / 0.285); 48 px/m 15.0% (+ the car-camera street hatch), street median 0.285 -> 0.283. The ground under the
   cast is unchanged at gameplay zoom.
+- 01:05 EVALUATED, NO CHANGE: steel saturation (max-min, median over violet mid tones) of the close-up family:
+  phone frame 34, Rivet portrait 34, rivet_angry 39, loading art 24; the world King sprite 15 after its fix. The rule
+  that falls out: WORLD sprites print to the cast's lavender-grey (B/W doctrine at gameplay zoom); CLOSE-UP art
+  (portraits, phone, cards) keeps the concept's mauve. The phone stays as is. (Written into the README gap list for
+  the owner.)

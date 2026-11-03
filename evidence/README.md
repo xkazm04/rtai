@@ -162,6 +162,8 @@ Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
    the 0.22 m ink core in the roof/shadow quads of the city (street-facing south/east edges only, not the alleys).
 6. **Rivet's steel** is light lavender (D4 contrast parity) vs the concept's dark mauve: owner choice
    (`item9_steel_owner_ab.png`: mauve costs 61% body contrast; the cream rim still carries the silhouette).
+   Iteration 4 applied the same logic to the world King sprite (saturation 42 -> 15). The close-up art keeps the
+   concept's mauve (portraits 34-39, phone 34, loading 24): world = printed lavender-grey, close-up = mauve.
 7. **Screen-locked grain in look_d4 (found iteration 3, not mine to change).** `look_d4.gdshader:96` hashes its 5%
    print grain on screen pixels, so every camera move re-rolls the grain over the static world (TV-static swim).
    Car-camera pan test (`dev/showcase/d5_pan.gd`, 48 px/m, world-locked crop): frame change 0.00709 per tick; with
