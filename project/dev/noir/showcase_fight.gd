@@ -12,9 +12,8 @@ extends Node
 const KNOWN_FLAGS: PackedStringArray = [
 	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat"
 ]
-## --noir-parts: the cop rigs wear the noir part redraws (same sizes, same alpha, same pivots).
-const NOIR_COP: String = "res://features/characters/art/noir/cop/"
-const NOIR_COP_PARTS: PackedStringArray = ["torso", "head_cap", "forearm_pistol"]
+## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
+const NOIR_ART: String = "res://features/characters/art/noir/"
 const END: int = 660
 const LIT: float = 0.25
 
@@ -156,13 +155,15 @@ func _cue(cue: Array) -> void:
 				_heroes[_frame + k] = "kill%d" % id
 
 
-## Fills the shared cop part cache with the noir redraws before the showcase rigs are built.
+## Fills the shared part caches with the noir redraws before the showcase rigs are built.
+## Every png in art/noir/<kind>/ replaces the part of that name (the coat png is unused here).
 func _wear_noir_parts() -> void:
-	var lib: PartLibrary = PartLibrary.of("cop")
-	for part: String in NOIR_COP_PARTS:
-		var t: Texture2D = load(NOIR_COP + part + ".png") as Texture2D
-		if t != null:
-			lib.textures[part] = t
+	for kind: String in ["cop", "rivet"]:
+		var lib: PartLibrary = PartLibrary.of(kind)
+		for file: String in ResourceLoader.list_directory(NOIR_ART + kind):
+			if file.ends_with(".png"):
+				var path: String = NOIR_ART + kind + "/" + file
+				lib.textures[file.get_basename()] = load(path) as Texture2D
 
 
 func _on_hit_stop(ticks: int) -> void:
