@@ -296,3 +296,6 @@ NEXT (final for iteration 4, supersedes the NEXT above where they differ):
   changing load timing (e.g. after the selftest/scene starts its clock, or bake both looks in ONE SubViewport pass),
   or re-bless deliberately with a decisions line; (b) prove it in a dense real scene at 64 px/m (riot) A/B.
 - King into the game with the boss ticket; ghost form = a new RivetPlan.FORMS row.
+- 12:35 checks: provenance audit, all 91 latest d5-cast rows hash-match their files. Masters frames.json: 15 frames,
+  every file and `before` exists. REQUEST 4's patch still applies cleanly (git apply --check, read-only) on d-city
+  b8efb91 + its working tree. Session end for iteration 4: tree clean at the commit below, evidence green at f88df08.
