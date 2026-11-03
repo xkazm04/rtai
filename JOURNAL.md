@@ -247,3 +247,13 @@ NEXT (iteration 50 end):
 3. Hot clip: vehicles_fire.mp4 true peak -1.1 dBFS when two booms + crashes stack (car_wreck cooldown is now 8 ticks); if it clips on a device, lower `car_wreck` gain_db -1 -> -3.
 4. Not done: positional cruiser sirens, tyre screech as a loop, per-surface footsteps, settings slider UI.
 5. POF-GAP 1-3 stand (audio-gen wrapper > 450 chars; no tts; no music kind).
+
+## 2026-11-03 iteration 52 (BUILD, started 16:23)
+- 16:40 FIVE-WAY MERGE CHECK at the latest tips (scratch worktree, deleted): d-slice c0b0f76 + d-vehicles ac7827b + d-combat 73396ae + d-audio e417bd2 + `quest1_game_audio.patch` (applies clean).
+  Conflicts: JOURNAL.md (took ours) and, NOT audio's, collect_call_view.gd (d-slice vs d-combat: both add vars + extend `_ready`). Resolved by keeping both and moving combat's blood block into `_ready_blood()`:
+  the text is in `evidence/requests/collect_call_view_ready_blood.txt` (the `_ready` body then ends with `_ready_blood()`); lint 13/13 over 429 files. **462 unit tests pass, 13 scenarios ran / 0 failed.**
+  FRICTION for whoever merges: the scenarios need the native DLL BUILT FROM d-vehicles (CitySim::set_obstacles); int-day's older DLL fails 3 vehicle scenarios (unrelated to audio). With the d-vehicles DLL: 0 failed.
+  d-bodies fa31133 does NOT merge cleanly on top of that (look goldens, generated sim_constants, SConstruct, city_parity.gd, collect_call_stage.gd: all the Director's, nothing in audio); abandoned, the earlier d-bodies + d-audio check (367 tests) still stands.
+- No new audio code this iteration (freeze 17:00; what is left needs a human listen, not more numbers). No ElevenLabs calls; lane total still ~4.6k of 25k; voice characters after 11:45: 0.
+
+NEXT (iteration 52 end): unchanged from iteration 50, plus: use the d-vehicles native DLL for the scenarios, and `_ready_blood()` in collect_call_view.gd at the slice/combat merge.
