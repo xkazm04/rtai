@@ -127,3 +127,23 @@ NEXT (iteration 2), in order:
 - CLIP: masters clip-it2-stains-pop-{48,64}ppm.mp4 (15 s, --fixed-fps 60, every 2nd frame), strip
   frames/clip-it2-64-strip.png. 15 deaths, 13 soaked, 2 missed. VISIBLE GAP: orphan pools (bodies despawn at 8 s,
   pools stay minutes) - next item.
+- MILESTONE 082e0d3: quest 1 soaks by victim id (CombatBlood.bled_body -> CorpseStains.on_bled_body): no nearest-body
+  guess in a pile. Visible frame unchanged (each guard already had its own soak); one top guard's sprite seems drawn
+  offset from its sim pos, so its stains sit on the body under it (cast_view, not my file).
+- e9f1fa1: city_fight --pop-strength; owner A/B sheet frames/pop-strength-ab-64ppm.png (off / 0.20 / 0.32 / 0.45):
+  at 0.45 the ink lifts to grey; 0.32 kept.
+- 971a118: stain.corpse v2 (11 spots, r 1.2-3.0, spread 7): at the 128 px/m kill-cam the v1 soak printed as a grape
+  cluster; v2 is ragged. FRICTION: a run with --zooms=2,4 gives the 128 frame cream rims a --zooms=4 run does not
+  (the look/LOD state depends on the zoom history): compare only runs with identical --zooms.
+- Disk: deleted my 1.3 GB clip PNG scratch after encoding (masters clipraw2).
+
+NEXT (iteration 3), in order:
+1. Owner sync picks: --blood (noir proposed), --kill-beat (off/panel/flash/both), muzzle pop strength (0.32 or off).
+2. Re-bench on a quiet machine (the iter2 p99 miss is attributed to present waits, CONTENDED; prove it with a
+   riot-only rerun when the lock is free and few lanes render).
+3. After d5-city merges: palette `blood` is read already; REQUEST 4 (blood_dark #540005 vs pool body #750008).
+4. Orphan pools: the sim despawns the dead at 8 s, pools stay minutes (per noir's persist-and-fade); if the owner
+   finds bodiless pools odd, fade a pool faster once its body leaves the feed (render side, CorpseStains knows).
+5. Stains draw above Rivet when he stands on a corpse (z +60 above the actors band); clip them under Rivet's rig
+   (Rivet's node z above the soaks) if it shows in play.
+6. REQUEST 3 (kill hit-stop 8 for the beat) and knockback held a beat: camera.json / sim owners.
