@@ -1716,3 +1716,29 @@ NEXT (iteration 18; the iteration-16 final NEXT stands where not superseded):
 - NEXT addendum (supersedes the owner-review line of the 06:18 NEXT): owner review (each reverts alone) 7a35d1b +
   0b08658 + 4cd1521 (ground tiles: asphalt patches, dash ticks, junction lip; originals `masters:backup_ground18/`).
   Rejected this iteration: Dock 9 charcoal floor. Teal-eyes question: not applicable to the top-down cast sprites.
+- 06:26 SWEEP, no change: the dev asset boards at 32 / 48 / 64 (`masters:board_i18/{decals,props,roofs,extras}/`):
+  decals, 20 props, 17 roofs, damage / wreck / hijack sprites all read as D4 ink; nothing new below the bar. The
+  damage, wreck and hijack atlases are still only on the dev board (moving traffic needs a per-car state hook - code).
+- 06:40 FULL EVIDENCE at 4eed8e5 (`node tools/evidence/run.mjs`, 06:26:56-06:40:00) rc 0, all 6 PASS: lint 13/13, unit
+  142/142, scenarios 8/8, parity bit-exact, selftest 0 placeholders, **bench PASS** (p99 2.634 ms, 1 % low 177 fps,
+  worst frame 47.3 ms, >50 ms hitches 0, unexplained 0). `build/evidence/bench.json` is fresh at last (was 21:47).
+  CONTENDED: two other lanes' Godot processes were running throughout (PIDs 42012 / 46508, not mine, untouched).
+  `evidence/iter18/full-run-4eed8e5.txt`.
+
+NEXT (final, iteration 18; supersedes the 06:18 NEXT + addendum where they differ):
+- Owner review (each reverts alone): 7a35d1b + 0b08658 + 4cd1521 (ground tiles: asphalt patches removed, 2 dash ticks,
+  the junction's orphan lip; originals `masters:backup_ground18/`). Earlier lists stand (767ee6c, 97558d7; 165ae0f,
+  d6317ee, fc6501c, 62923f7).
+- Director, morning order unchanged and dry-run green on n-visual ce0db12 (d8925e2 = docs only): merge n-d4, merge
+  n-visual, `git apply` REQUEST 16 `iter14/q1_view_art.patch`, 19 `iter10/generator_art_pick_v2.patch`, 21
+  `iter16/rig_sleeves_and_looks.patch`, 23 `iter14/fx_fade.patch`; re-bake; re-bless n-visual's look / block goldens
+  (they also move with this iteration's ground tiles). JOURNAL.md is the only conflict.
+- Owner questions: hatch Rivet's limbs at 64 px/m only?; HUD / lettering font; cop uniform vermilion share; blood ink
+  vs vermilion; speaker names in vermilion; REQUEST 24 (in-world souls). Teal robot eyes: not applicable to the
+  top-down quest cast (no eyes visible from above).
+- Code-side gaps vs the target (not this lane): roof parapets / cast shadows, junction layout (asphalt corners make the
+  zebras read as a ring), street-clutter placement, paving aquatint (REQUEST 22), traffic damage / hijack state hook.
+- Bench: a truly idle-box run is still owed (both tonight's runs were contended, both PASS).
+- Worktrees: `scratch-q1` (main + quest patch), `scratch-v3` (full morning stack on ce0db12 + this iteration's tiles,
+  uncommitted; dangling e011f35 / 190f3ba). Nothing pushed or merged. Codex: 0 images this iteration; night total 29
+  images, 194 cells, 7 rejected; no limit hit.

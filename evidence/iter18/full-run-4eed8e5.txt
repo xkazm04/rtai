@@ -1,0 +1,16 @@
+06:26:56
+PASS lint: lint: all 13 checks pass over 176 GDScript files
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\lint.json
+PASS unit-tests: unit-tests: 142 passed, 0 failed, 0 skipped (GUT, headless)
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\unit-tests.json
+PASS scenario-tests: scenario-tests: 8 passed (headless)
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\scenario-tests.json
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3547 floats); planted mutation caught at step 629
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\parity.json
+PASS selftest: selftest: D4 city frames rendered (32 px/m ok, 103 actors, 76 colours; 48 px/m ok, 81 actors, 87 colours); 72 art textures, 0 placeholders, prewarm 31 ms
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\selftest.json
+PASS bench: bench (exported release build, windowed, 3 consecutive runs x 4 scenarios x 60 s): p99 2.634 ms, 1% low 177 fps, worst swap 32.077 ms, worst frame 47.316 ms; hitches >25 ms 178, >50 ms 0 (unexplained 0, outside 0, present 0); vsync-on drive >25 ms: 10; visible avg 47.785 / 7.92 / 273.151 (drive/drive48/riot); rigs p50 0.104 / p99 0.582 ms per frame (riot, up to 16)
+     -> C:\Users\kazda\kiro\gtai-wt\n-d4\build\evidence\bench.json
+evidence: commit 4eed8e5daca1dd36b092fa0610fee38632a2f016, godot 4.7.2.stable.official.ed1daf0bf
+rc=0
+06:40:00
