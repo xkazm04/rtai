@@ -50,3 +50,20 @@ func test_reduced_motion_holds_nothing() -> void:
 	rm.reduced_motion = true
 	assert_eq(kick.held_ticks, rm.hitstop_ticks(_h.form.id_of(&"stomp_hitstop")))
 	assert_lte(kick.held_ticks, want)
+
+
+func test_a_ram_hit_lands_with_its_own_stop_and_shake() -> void:
+	var kick: HaulerKick = HaulerKick.new()
+	_h.ram_hits = 1
+	var off: Vector2 = kick.step(_h, 30, _clock, null)
+	var want: int = CameraRig.new().hitstop_ticks(_h.form.id_of(&"ram_hitstop"))
+	assert_gt(want, 0, "the ram's hit-stop id holds ticks")
+	assert_eq(kick.ram_kicks, 1)
+	assert_eq(kick.ram_held_ticks, want)
+	assert_almost_eq(_clock.held(), want * SimClock.TICK_DT, 1e-6)
+	assert_gt(off.length(), 0.5, "the ram hit shakes")
+	_h.ram_hits = 2
+	@warning_ignore("return_value_discarded")
+	kick.step(_h, 31, _clock, null)
+	assert_eq(kick.ram_kicks, 2)
+	assert_eq(kick.ram_held_ticks, want, "a hit inside the cooldown adds no second stop")

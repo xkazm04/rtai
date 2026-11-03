@@ -107,10 +107,18 @@
           "minimum": 0,
           "type": "number"
         },
+        "ram_hitstop": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
         "ram_mps": {
           "maximum": 50,
           "minimum": 0.5,
           "type": "number"
+        },
+        "ram_shake": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
         },
         "stomp_cooldown_s": {
           "maximum": 60,
