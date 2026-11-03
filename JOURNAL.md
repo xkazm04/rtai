@@ -994,3 +994,17 @@ NEXT (session end, iteration 10):
   GPU (other lanes' Godot processes were running: 2 Godot PIDs not mine, untouched) - but that is not proven; a
   re-run on an idle box decides it. `build/evidence/bench.json` is stale (21:47, an older failed export), not this
   run; this run's output is `evidence/iter10/bench-56b9b72.txt` + `build/bench/*.json`.
+- 03:26 CHECK plaza at 64 px/m (`before_rv|after_pl4/city-2-64ppm.png`, `work/pl4_ab64.png`): 4 m ink flags, grey
+  sub-joints, the drain grate and kerb clean. Quarter turns (generator patch) map the 4 m lines onto themselves
+  (lines at px 0/383/384/767 of the 768 tile). No change.
+NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
+- Owner review: 3ebf21a + a1874f7 (inked paving: kerbside 2 m ink, plaza 4 m ink flags; a1874f7 alone reverts the
+  plaza to the 2 m ink grid, both revert to the old grey joints), 5b3ce9c + 95d22f1 (zebras, revert together).
+- Director: REQUEST 19 = `evidence/iter10/generator_art_pick_v2.patch`; REQUEST 21 = `evidence/iter10/
+  rig_variant_new_looks.patch` (after the n-d4 merge); REQUEST 18 dropped (n-visual 7bfb6b9 wires traffic).
+- Morning, idle box: re-run `node tools/bench/run.mjs` (p99 3.35 ms vs 2.60 ms in iteration 8 with a busy GPU; ground
+  pixels only changed). Then `node tools/evidence/run.mjs` so `build/evidence/bench.json` is current (it is stale).
+- Owner questions: HUD font (none bundled), cop uniform, blood ink vs vermilion, teal robot eyes.
+- Codex: 0 images this iteration; night total 26 images, 170 cells, 7 rejected.
+- Branch n-d4, nothing pushed or merged; scratch-q1 kept; my other scratch worktrees removed; my Godot runs all
+  finished (the 2 Godot processes running at 03:26 are not mine, untouched). Tree clean after this entry.
