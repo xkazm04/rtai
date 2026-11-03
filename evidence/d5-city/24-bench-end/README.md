@@ -25,3 +25,11 @@ load landed in that window); read it as unmeasured. The 32 px/m delta repeated (
 is not noise: the pass costs ~2-3x more at 32 than at 48 on this site. Open question for an idle
 re-measure (suspects: more crowd/rigs on screen under the BackBufferCopy at the wider view).
 At +0.9 ms it is 5 % of a 16.7 ms frame.
+
+### Why 32 px/m costs more (hypothesis from reading the shader, NOT measured)
+look_d5.gdshader does constant work per pixel only on the early-out path; the wash hatch
+(`vnoise` + `strokes`), the street strokes and the two off-register screen reads run only where the
+print density falls in their bands (`wash` 0.22-0.65, `street` 0.6-0.95, `d < 0.66`, `d < 0.95`).
+At 32 px/m the junction frame is mostly roofs (mid-wash: every branch live); at 48/64 it is mostly
+flat asphalt and paper. The overlay-off baseline is 3.6x heavier at 32 too (1.90 vs 0.53 ms), the
+same content effect. Test idle: overlay_cost at 32 px/m with `hatch` 0 and `street_hatch` 0.
