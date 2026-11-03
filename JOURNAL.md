@@ -310,3 +310,17 @@ NEXT (iteration 4 close, in order):
   FRICTION: a parse error (new class_name not yet in the global cache) hung the movie recording for
   10 min again; fixed by `--import` + a `--headless --quit-after 60` check BEFORE every record. The 2
   Godot processes running pass_cost.tscn at 01:15 are the visual-engine lane's (not touched).
+- MILESTONE (01:26) drips: `player_hit` starts a bleed (`drip` table in blood_fx.json: bleed_ticks 360,
+  one drop per every_px 9 px moved, stretched along the move; one per still_ticks 45 standing).
+  NoirCombatFx.step_ticks(n) on the fixed tick (all three noir hosts call it). Unit test (a 6 m walk
+  leaves 15-25 drips, the wound stops). Evidence masters blood-v3/drip-crops.png (left before, right
+  after): a dotted red trail follows Rivet's dash and roll after the hit. The drips advance the scatter
+  hash counter, so later splashes differ in detail run to run of DIFFERENT code (same code = identical).
+- (01:30) FIX: blood_clip logged 2 "triangulation failed" - small pool rings far from the origin (city px
+  ~4000) lose float precision in the triangulator (a probe: 2 of 6400 rings failed, both r=1). The ring is
+  now built at the origin and placed with draw_set_transform; < 3 px is a disc. 0 errors in all three
+  hosts; the showcase frames are pixel-identical before/after the fix.
+- (01:28) Final showcase re-shot with everything (`--coat --noir-parts`, blood marks, drips):
+  masters night/noir/show-final2/ (showcase-noir-48.mp4, -64.mp4, showcase-d4-48.mp4, 11.3 s, 60 fps) +
+  evidence/showcase-hero.png (D4 48 | noir 48 | noir 64: shot, silhouette flash, held panel, aftermath;
+  the previous sheet is evidence/showcase-hero-v1.png). evidence/NOIR.md updated. Masters trimmed to ~580 MB.
