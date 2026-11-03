@@ -1709,3 +1709,24 @@ NEXT (iteration 14; 43-47 stand, earlier lists stand):
     into tools/lint (shared tooling, not this lane's scope) and widen it to every logged art root.
 - 07:17 CORRECTION: the merge-sheet edit in c901106 hit the wrong line (no change landed although the entry above
   said it did); applied now, in its own commit.
+
+## Iteration 15 (2026-11-03, BUILD, 07:17 -> freeze 07:30), no image budget (50/50), short session
+- 07:17 read JOURNAL (iteration 14, NEXT 48), git log; tree clean. Audit of the 7 look_d5*.gdshader files: all 7 in
+  the shaders README, 6 of 7 covered by a test. look_d5_soul (the hero shot's default soul print) had no guard; it
+  is not in look_d5.params.json, so the "every param is a uniform" test never loads it.
+- FRICTION: the first unit run reported 1 failing with every exit -1. GODOT_BIN was unset in the new shell, so this
+  was not a real test result. Re-ran with GODOT_BIN set.
+- 07:18 MILESTONE (82f4667): test_look_d5_params.gd +1 test: look_d5_soul loads and keeps fade / amount / ink_at /
+  rim_sat. MEASURED by mutation (rim_sat -> rim_satX in the shader): unit 151 / 1 failing; restored, tree clean.
+- 07:19 GATES (iteration 15): evidence tool (--no-parity --no-bench) ALL PASS at 82f4667 (lint 13/13 over 196 files,
+  unit 152/0, scenarios 8/0, selftest ok: 32 px/m 103 actors, 48 px/m 81 actors); 104 untracked evidence PNGs moved
+  aside (masters work/i15_aside, removed) and restored 104. No visual change, so no frames and no ladder row.
+
+## Summary (iteration 15)
+- One test: every D5 shader is now under a test (look_d5_soul was the gap; checked by mutation). Images: 0
+  (50 of ~50). Shared files touched: none. AI assets: none new.
+
+NEXT (iteration 15; 43-48 stand, earlier lists stand):
+49. Next session: export GODOT_BIN before the first gate run. Without it, run_unit.mjs prints a plausible "1 failing"
+    line with exit -1 instead of an error that says Godot is missing. The fix is in shared tooling, so it is for the
+    Director, not this lane.
