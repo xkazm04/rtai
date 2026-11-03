@@ -6,7 +6,8 @@ extends Node
 ## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
 ## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
-##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage] [--soul]
+##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage] [--soul] [--cue-shots]
+## --cue-shots also saves a frame 1 and 20 ticks after every crash / car_wreck cue.
 
 const MASTER_SEED: int = 31
 const SHOTS: Dictionary[int, String] = {
@@ -30,6 +31,7 @@ const CARNAGE_SHOTS: Dictionary[int, String] = {
 	450: "reverse-2",
 	560: "ram-3",
 	660: "aftermath",
+	900: "after-the-wreck",
 }
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
 
@@ -38,7 +40,8 @@ var _clip: bool = false
 var _look: StringName = &""
 var _carnage: bool = false
 var _soul: bool = false
-var _shots: Dictionary[int, String] = SHOTS
+var _cue_shots: bool = false
+var _shots: Dictionary[int, String] = SHOTS.duplicate()
 var _world: World = null
 var _svc: VehicleService = null
 var _done: Dictionary[int, bool] = {}
@@ -60,6 +63,8 @@ func _ready() -> void:
 		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
 	)
 	printerr("vehicle_frame: input set at tick %d" % _world.context().clock.tick())
+	if _cue_shots:
+		_follow_cues()
 	add_child(_world)
 	await characters.bake()
 	await view.prewarm()
@@ -91,6 +96,17 @@ func _process(_delta: float) -> void:
 		_shoot(name)
 
 
+## Wraps the cue sink: each crash / wreck queues two shots (the FX at birth, then the debris).
+func _follow_cues() -> void:
+	var fire: Callable = _svc.cues.sink
+	_svc.cues.sink = func(id: StringName, px: Vector2, a: float, t: int) -> void:
+		fire.call(id, px, a, t)
+		printerr("vehicle_frame: cue %s at tick %d" % [id, t])
+		if id == &"crash" or id == &"car_wreck":
+			_shots[t + 1] = "cue-%s" % id
+			_shots[t + 20] = "cue-%s-after" % id
+
+
 func _shoot(name: String) -> void:
 	_busy = true
 	_world.set_process(false)
@@ -111,9 +127,11 @@ func _parse_args() -> bool:
 			_clip = true
 		elif arg == "--soul":
 			_soul = true
+		elif arg == "--cue-shots":
+			_cue_shots = true
 		elif arg == "--scene=carnage":
 			_carnage = true
-			_shots = CARNAGE_SHOTS
+			_shots = CARNAGE_SHOTS.duplicate()
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
 		else:
