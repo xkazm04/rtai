@@ -658,3 +658,26 @@ NEXT (iteration 8 close, in order):
   body is an exact rectangle sized to tonight's placeholder car art (real car art will need its size from the
   art table), and it paints over whatever stands on its footprint (at 32 px/m a ped brushing the car loses a
   sliver). 197 unit pass.
+- (03:48) Gates at f3689ac (`run.mjs --no-bench --allow-dirty`, only the untracked evidence/ dirty): lint (13), 197
+  unit, 8 scenarios, parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/. Note: the
+  selftest's D4 48 px/m colour count read 71 (80 at 7195d2c); the noir code is not in that path (no NoirLook
+  in the selftest's CityView: light_street never runs) and the crowd is live - not investigated further.
+  evidence/NOIR.md updated (iteration 10 section, gates line, 30 ladder rows).
+  Images this session: 0 generated, 0 rejected; Leonardo 0 tokens; provenance +0.
+NEXT (iteration 10, in order):
+1. Owner picks: the street-light showcase (evidence/showcase-hero-street.png, masters lamp-show2/*.mp4) vs the
+   junction one (showcase-hero.png, show-final6/); plus the iteration-8 open choices (value roles, noir Rivet
+   parts, Rivet's ink mass).
+2. Traffic in a fight (evidence/cars-through-fight-NOT-adopted.png): the best image of the night, blocked by
+   the sim's cars not seeing the scripted fighters. Either a scripted car in fight_script (dev) or the fighters
+   as sim obstacles (sim scope, not this lane).
+3. Flash margin: the street showcase is at 3 flashes/s at 48 px/m (the limit; a pass) because the inverted
+   panel flips the lit pools to ink. Options: keep lit pools paper in the inverted panel, or count the lit
+   area in FlashBudget. The junction showcase stays at 2.
+4. The muzzle pool's radius still scales by zoom in canvas px (~11% larger on screen than flash_r says at a
+   1280x720 window); move it to `ls` with flash_r * 1/0.9 to keep the look (cosmetic, re-shoot the heroes).
+5. Lights: the asphalt barely lights (pools stop at the kerb), car bodies are placeholder-sized rectangles
+   (car_len / car_half_w should come from the car art table once real cars exist), the lights' GPU cost is
+   unmeasured on a quiet GPU (CPU 0.064 ms/frame measured). Traffic signals could cast small pools too.
+6. Carried over: noir parts + coat into the rigs (art_dir per plan), BloodStains / BloodFx.solid into the real
+   game hosts, the noir HUD in the composition root under --look=noir, a settings toggle for safety.flashes.
