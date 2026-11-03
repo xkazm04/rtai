@@ -28,7 +28,9 @@ const CASES: Array[Array] = [
 
 ## The cases at any other --site (the block: roofs, cast shadows), saved as <site>-<look>-<ppm>.
 ## A third column is a lights.json grade (default day), saved with a -<grade> suffix.
-const SITE_CASES: Array[Array] = [[&"d4", 32], [&"d4", 48], [&"auto", 64], [&"d4", 48, &"night"]]
+const SITE_CASES: Array[Array] = [
+	[&"d4", 32], [&"d4", 48], [&"auto", 64], [&"d4", 48, &"night"], [&"auto", 64, &"night"]
+]
 
 var _bless: bool = false
 
