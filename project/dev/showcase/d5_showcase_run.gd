@@ -88,7 +88,10 @@ func _tier(_name: String) -> void:
 
 func _frame_at(z: float) -> void:
 	var view: Vector2 = get_viewport().get_visible_rect().size
-	var xf: Transform2D = Transform2D(0.0, Vector2(z, z), 0.0, (view * 0.5 - cam * z).round())
+	var o: Vector2 = view * 0.5 - cam * z
+	# D5_SUBPX=1: no pixel snap, as the game camera (city_view: Camera2D at focus * PX_PER_M)
+	o = o if OS.get_environment("D5_SUBPX") == "1" else o.round()
+	var xf: Transform2D = Transform2D(0.0, Vector2(z, z), 0.0, o)
 	_world.transform = xf
 	_actors.transform = xf
 	_rigs.zoom = z
