@@ -1407,3 +1407,4 @@ item49 -> night_iter8_summary.png -> item46 / item44 -> item43 / item47 (owner A
   286-298 px): not a 32 px/m frame, discarded and deleted. NEXT 36 is therefore: compare at equal view height (or
   crop the mock to 800 px tall) before anyone tunes road width; at a 1080p window the game shows 34 m at 32 px/m.
 - 05:58 MEASURED the mock at OUR framing (its 1280x800 crop, junction at our x): L 0.475 / street 0.49 / paper 0.31 / ink 0.11 / mid 0.10 vs v9 (i9ph1) 0.457 / 0.50 / 0.29 / 0.11 / 0.11: the L gap at equal framing is 0.018, all paper tone (README 9.3, 9.4). night_iter9_summary.png gained the line.
+- 05:59 night_iter9_summary.png rebuilt with the equal-framing mock line (its first text edit failed silently; checked the crop, re-inserted). Tree clean; the last code commit passed the gates at f1bc6e2 (later commits are docs only, each passed the pre-commit lint). NEXT 35 / 36 (corrected) / 37 and the reading order of the 05:57 entry stand.
