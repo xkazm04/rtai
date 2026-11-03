@@ -1135,4 +1135,4 @@ NEXT (session end, iteration 12):
 - Morning, idle box: `node tools/bench/run.mjs` (iteration-10 p99 drift question), then `run.mjs` for a current bench.json.
 - Branch n-d4, nothing pushed or merged; worktree `scratch-q1` kept (now holds the iteration-12 quest patch applied +
   copies of n-d4 art); other scratch worktrees removed.
-- 04:03 GATES at 0276ab4: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders; scratch-q1 with the final quest patch: unit 166/166 (`evidence/iter12/gates-0276ab4.txt`).
+- 04:01 GATES at 0276ab4: `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios 8/8, parity bit-exact, selftest 72 art textures, 0 placeholders; scratch-q1 with the final quest patch: unit 166/166 (`evidence/iter12/gates-0276ab4.txt`).
