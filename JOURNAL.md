@@ -886,3 +886,4 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   the street; the closest frame to the mock tonight. Board evidence/item35_all_proposals_iter7.png (32/48/64 +
   mock + concept); ladder row.
 - 03:33 evidence/hero-d4d5-*ppm.png and item4_hero_vs_targets.png = h106 (hero-d4-* unchanged: d4 tier byte-identical).
+- 03:34 gates: evidence tool (--no-parity --no-bench) ALL PASS at 29d838a (lint 13/13 over 191 files, unit 149/0, scenarios 8/0, selftest ok); 68 untracked evidence PNGs moved aside and restored.
