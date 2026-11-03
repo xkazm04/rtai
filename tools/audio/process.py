@@ -77,7 +77,7 @@ def sfx(raw: pathlib.Path, out: pathlib.Path, log: list) -> None:
     srcmap: dict = {}
     for f in sorted(raw.glob("*.mp3")):
         key = f.stem.rsplit("_", 1)[0]
-        loop = key.endswith("_loop") or key == "city_ambience"
+        loop = key.endswith("_loop") or key in ("city_ambience", "crowd_roar")
         a = decode(f)
         rec = {"file": f.name, "src_dur": round(len(a) / SR, 2), "src_peak_db": round(db(float(np.abs(a).max())), 1) if len(a) else None}
         full_scale = flat_run(a)

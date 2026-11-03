@@ -48,6 +48,7 @@ CUES = [
     ("tyre_screech", "tyres screech in a hard turn (vehicles lane)", "tyre_screech", 2, "sfx", -9, 1.0, 0.08, 60, 30, 3, 2, False),
     ("engine_loop", "the car Rivet drives: engine bed (vehicle_entered)", "engine_loop", 1, "sfx", -14, 1.0, 0.0, 0, 0, 1, 3, True),
     ("siren_loop", "police sirens while wanted (wanted_changed)", "siren_loop", 1, "sfx", -16, 1.0, 0.0, 0, 0, 1, 2, True),
+    ("crowd_roar", "the riot's roar: a bed that swells with the gunfire and kills heard in the last seconds (AudioHooks.riot_bed)", "crowd_roar", 1, "sfx", -16, 1.0, 0.0, 0, 0, 1, 1, True),
     ("city_ambience", "the night city bed under everything", "city_ambience", 1, "sfx", -22, 1.0, 0.0, 0, 0, 1, 0, True),
 ]
 KEYS = ["id", "doc", "sound", "takes", "bus", "gain_db", "pitch", "pitch_jitter", "max_m", "cooldown_ticks", "max_voices", "priority", "loop"]
@@ -68,7 +69,7 @@ MIX_DOC = (
     "attenuation: AudioStreamPlayer2D attenuation exponent. panning_strength: 0..1 stereo spread for the top-down camera. duck: "
     "while a voice line plays, these buses drop by duck_db over duck_attack_s and recover over duck_release_s (rendered frames, "
     "not ticks). loudness: the targets the files were normalised to (tools/audio/process.py). footstep_speed_mps: Rivet's speed "
-    "above which footsteps play; footstep_stride_m: metres walked per step. servo_chance: odds a step also gets Rivet's servo whine."
+    "above which footsteps play; footstep_stride_m: metres walked per step. servo_chance: odds a step also gets Rivet's servo whine. riot_bed_*: the crowd roar bed swells from quiet_db to loud_db as the shots, deaths and body hits heard per second reach full_rate (smoothed: rise_s up, fall_s down)."
 )
 
 dump(P / "tables/audio_cues.json", {"schema": "gtai.audio-cues/1", "doc": CUES_DOC, "cues": [dict(zip(KEYS, c)) for c in CUES]})
@@ -83,7 +84,8 @@ dump(P / "tables/audio_mix.json", {
     "voice_cap_per_frame": 4, "pool_size": 24, "m_to_px": 64.0, "attenuation": 1.6, "panning_strength": 1.0,
     "duck": {"buses": ["music", "sfx"], "duck_db": {"music": -9.0, "sfx": -3.0}, "duck_attack_s": 0.12, "duck_release_s": 0.6},
     "loudness": {"sfx_peak_db": -3.0, "loop_peak_db": -6.0, "voice_lufs": -18.0, "voice_true_peak_db": -2.0},
-    "footstep_speed_mps": 0.6, "footstep_stride_m": 1.15, "servo_chance": 0.12, "master_limiter_db": -1.0,
+    "footstep_speed_mps": 0.6, "footstep_stride_m": 1.15, "servo_chance": 0.12,
+    "riot_bed_full_rate": 6.0, "riot_bed_quiet_db": -18.0, "riot_bed_loud_db": 0.0, "riot_bed_rise_s": 1.5, "riot_bed_fall_s": 4.0, "master_limiter_db": -1.0,
 })
 
 
@@ -105,7 +107,7 @@ dump(P / "schemas/audio_cues.schema.json", {
                 "max_voices": num(1, 16, "integer"), "priority": num(0, 9, "integer"), "loop": {"type": "boolean"}}}}}})
 dump(P / "schemas/audio_mix.schema.json", {
     "$id": "gtai.audio-mix/1", "additionalProperties": False, "type": "object",
-    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "footstep_stride_m", "servo_chance", "master_limiter_db"],
+    "required": ["schema", "doc", "buses", "voice_cap_per_frame", "pool_size", "m_to_px", "attenuation", "panning_strength", "duck", "loudness", "footstep_speed_mps", "footstep_stride_m", "servo_chance", "master_limiter_db", "riot_bed_full_rate", "riot_bed_quiet_db", "riot_bed_loud_db", "riot_bed_rise_s", "riot_bed_fall_s"],
     "properties": {
         "doc": {"minLength": 1, "type": "string"}, "schema": {"const": "gtai.audio-mix/1"},
         "buses": {"minItems": 1, "type": "array", "items": {
@@ -118,4 +120,4 @@ dump(P / "schemas/audio_mix.schema.json", {
                                 "duck_db": {"additionalProperties": {"type": "number"}, "type": "object"},
                                 "duck_attack_s": num(0.01, 5), "duck_release_s": num(0.01, 10)}},
         "loudness": {"additionalProperties": {"type": "number"}, "type": "object"},
-        "footstep_speed_mps": num(0, 10), "footstep_stride_m": num(0.3, 3), "servo_chance": num(0, 1), "master_limiter_db": num(-20, 0)}})
+        "footstep_speed_mps": num(0, 10), "footstep_stride_m": num(0.3, 3), "riot_bed_full_rate": num(0.5, 60), "riot_bed_quiet_db": num(-60, 12), "riot_bed_loud_db": num(-60, 12), "riot_bed_rise_s": num(0.1, 30), "riot_bed_fall_s": num(0.1, 60), "servo_chance": num(0, 1), "master_limiter_db": num(-20, 0)}})

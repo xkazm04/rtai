@@ -393,6 +393,21 @@
     {
       "bus": "sfx",
       "cooldown_ticks": 0,
+      "doc": "the riot's roar: a bed that swells with the gunfire and kills heard in the last seconds (AudioHooks.riot_bed)",
+      "gain_db": -16,
+      "id": "crowd_roar",
+      "loop": true,
+      "max_m": 0,
+      "max_voices": 1,
+      "pitch": 1,
+      "pitch_jitter": 0,
+      "priority": 1,
+      "sound": "crowd_roar",
+      "takes": 1
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 0,
       "doc": "the night city bed under everything",
       "gain_db": -22,
       "id": "city_ambience",

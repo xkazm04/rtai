@@ -147,3 +147,17 @@ func test_rivets_kill_punches_only_where_the_stage_asks() -> void:
 	assert_eq(_played(&"rivet_kill"), 0, "someone else's kill")
 	_bus.actor_killed.emit(1, 7, &"shot")
 	assert_eq(_played(&"rivet_kill"), 1)
+
+
+func test_the_riot_roar_swells_with_the_gunfire_and_fades_after() -> void:
+	var bed: RiotBed = RiotBed.new()
+	for i: int in 120:
+		_service.played[&"shot"] = _service.played.get(&"shot", 0) + 1
+		bed.step(_service, 1.0 / 60.0)
+	assert_gt(bed.intensity, 0.3, "two seconds of fire")
+	assert_true(_service.loops.is_on(&"crowd_roar"))
+	var peak: float = bed.intensity
+	for i: int in 60 * 20:
+		bed.step(_service, 1.0 / 60.0)
+	assert_lt(bed.intensity, peak * 0.1, "twenty quiet seconds")
+	assert_false(_service.loops.is_on(&"crowd_roar"))

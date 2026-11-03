@@ -20,6 +20,8 @@ var kill_pending: bool = false
 var rivet_id: int = -1
 ## Steps walked so far (heard or not: a busy pool may drop one).
 var steps: int = 0
+## The riot's roar bed (WorldAudio turns it on; the quest stage has no crowd).
+var riot_bed: RiotBed = null
 var _tick: Callable = Callable()
 var _at: Callable = Callable()
 var _last_at: Vector2 = Vector2.INF
@@ -116,6 +118,8 @@ func _set_driving(on: bool) -> void:
 ## One step per stride while Rivet moves on foot at walking pace; now and then his servo whines too.
 func _process(_delta: float) -> void:
 	var frame_s: float = service.frame_s
+	if riot_bed != null:
+		riot_bed.step(service, frame_s)
 	if not _at.is_valid() or frame_s <= 0.0:
 		return
 	var here: Vector2 = _at.call()

@@ -18,6 +18,7 @@ static func attach(
 		service.cue(id, pos_px * m_per_px, tick)
 	var hooks: AudioHooks = AudioHooks.new()
 	hooks.fx_cues = true
+	hooks.riot_bed = RiotBed.new()
 	service.add_child(hooks)
 	hooks.attach(service, ctx.events, ctx.clock.tick, func() -> Vector2: return city.target)
 	service.loops.set_on(&"city_ambience", true)
