@@ -1247,3 +1247,28 @@ NEXT (iteration 22, for the morning): 1. Director: merge per evidence/MERGE-noir
   line if n-visual lands first, and re-shoot junction 48 to confirm. 2. Owner picks: evidence/NOIR.md ->
   showcase-hero-current.png. 3. The crowd-shadow root cause (atlas dump, iteration 20) and items 3-5 of the
   iteration-18 07:10 list stand. Later: make `noir` a row in look_profiles.json.
+
+## Iteration 23 (07:43-07:55, STABILIZE, past freeze: no features)
+- (07:44) Branch tips re-read: main 721fbbb, n-d4 31f8c4c and n-d5 4b61ff4 are unchanged. **n-visual moved d1d1578 -> 0ea52b9 (a journal
+  entry only).** Merge-tree into n-noir HEAD: same result as iteration 22 (main clean; d4/d5 only JOURNAL.md;
+  n-visual JOURNAL.md + launch_args.gd text conflict).
+- (07:47) **Correction to iteration 22: the city_view clash is latent, not on the `--look=noir` path.** Read in the
+  merged file (merge-tree blob) plus n-visual's look_profiles.gd/json. The first `_update_look()` does not call
+  `set_look_enabled()` (`was_printed` starts true). Only `resolve(&"off")` yields `printed = false`, and
+  `--look=noir` is an unknown id that resolves to the printed default. In the merged `setup()`, set_look_enabled
+  runs before set_noir. No n-noir dev script calls set_look_enabled. So the noir frames should merge unchanged.
+  The clash fires only on an explicit set_look_enabled while noir is on (n-visual's pass_cost.gd, test_render_layers.gd)
+  or with `--look=off`. Exact patch: evidence/merge-noir-city_view.patch (set_look_enabled gains the noir guard;
+  set_noir delegates to set_look_enabled). The patched merged file passes gdformat --check + gdlint (239 lines). Not
+  run in engine. evidence/MERGE-noir.md updated. Scratch build/merge-scratch deleted.
+- (07:52) Gates at ed7ffc0 (project/ + tools/ = 641d2b1): lint 13/13 over 243 files, unit 206/0/0, scenarios
+  8 ran 0 failed (exit 0; replay_60s final cbeb734ff9b97c41). Logs: evidence/gates-ed7ffc0-*.log. The ObjectDB-leak
+  warning at scenario exit is pre-existing and not a failure.
+- FRICTION: my first combined gate command printed `tail`'s exit status as the scenario exit. I re-ran the scenarios alone to get the real code (0).
+- Leonardo probed (07:45): apiSubscriptionTokens 0, apiPaidTokens None. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine running.
+NEXT (iteration 23, for the morning): 1. Director: merge per evidence/MERGE-noir.md. Take n-visual's launch_args.gd and
+  apply evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 vs masters crowdshadow-v1/before/
+  (expected identical), and run test_render_layers with noir on. 2. Owner picks: evidence/NOIR.md ->
+  showcase-hero-current.png. 3. Crowd-shadow root cause (atlas dump, iteration 20). Items 3-5 of the iteration-18
+  07:10 list stand. Later: `noir` as a row in look_profiles.json.
