@@ -103,6 +103,32 @@ func test_planted_fault_lunge_into_recovery_is_caught() -> void:
 	assert_gt(c.lunge_step_m(), 0.0, "the fault (lunge stretched over the recovery) is caught")
 
 
+func test_baton_finisher_arcs_through_the_metal_line() -> void:
+	# The station's metal dummies sit at x 6/8/10 plus 14 (past the chain radius); a human at 4.
+	var baton: MeleeTable = MeleeTable.weapon(&"electro_baton")
+	var pos: PackedVector2Array = [
+		Vector2(6, 0), Vector2(8, 0), Vector2(10, 0), Vector2(14, 0), Vector2(4, 0)
+	]
+	var metal: PackedByteArray = [1, 1, 1, 1, 0]
+	var finisher: MeleeHit = baton.hits[2]
+	assert_eq(
+		Array(baton.chain_for(finisher, pos, metal, 0)), [0, 1, 2], "two hops, 14 out of range"
+	)
+	assert_eq(Array(baton.chain_for(baton.hits[0], pos, metal, 0)), [0], "hit 1 does not arc")
+	assert_eq(
+		Array(baton.chain_for(finisher, pos, metal, 4)), [4], "a human struck first never arcs"
+	)
+
+
+func test_planted_fault_baton_without_radius_does_not_arc() -> void:
+	var baton: MeleeTable = MeleeTable.weapon(&"electro_baton")
+	var pos: PackedVector2Array = [Vector2(6, 0), Vector2(8, 0)]
+	var metal: PackedByteArray = [1, 1]
+	assert_eq(baton.chain_for(baton.hits[2], pos, metal, 0).size(), 2)
+	baton.chain_radius_m = 0.0
+	assert_eq(baton.chain_for(baton.hits[2], pos, metal, 0).size(), 1, "the fault is caught")
+
+
 ## Ticks from the first press to the end of the finisher when melee is mashed every 3 ticks.
 func _mashed_chain_ticks(table: MeleeTable) -> int:
 	var c: MeleeCombo = MeleeCombo.new(table)

@@ -98,3 +98,14 @@ static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
 
 func ok() -> bool:
 	return errors.is_empty()
+
+
+## The bodies a landed hit reaches: `first` (the struck body), then, when that body is metal and
+## the hit has chain_hops, the arc hops metal-to-metal within this weapon's chain_radius_m (the
+## electro baton's finisher; the same walk as the charged shock). A human struck first never arcs.
+func chain_for(
+	hit: MeleeHit, pos: PackedVector2Array, metal: PackedByteArray, first: int
+) -> PackedInt32Array:
+	if hit.chain_hops <= 0 or metal[first] == 0:
+		return PackedInt32Array([first])
+	return MeleeShock.chain_path(pos, metal, first, hit.chain_hops, chain_radius_m)

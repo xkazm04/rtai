@@ -54,11 +54,19 @@ func charge01(c: int = -1) -> float:
 ## The arc's path: from `first`, hop to the nearest unvisited metal target within the chain
 ## radius of the last one. Returns the indices hit, `first` included.
 func chain(pos: PackedVector2Array, metal: PackedByteArray, first: int) -> PackedInt32Array:
+	return chain_path(pos, metal, first, chain_hops, chain_radius_m)
+
+
+## The shared arc walk: the charged shock and a weapon hit with chain_hops (the electro baton's
+## finisher, MeleeTable.chain_for) both hop through it.
+static func chain_path(
+	pos: PackedVector2Array, metal: PackedByteArray, first: int, hops: int, radius_m: float
+) -> PackedInt32Array:
 	var hit: PackedInt32Array = PackedInt32Array([first])
 	var at: Vector2 = pos[first]
-	for _h: int in chain_hops:
+	for _h: int in hops:
 		var best: int = -1
-		var best_d: float = chain_radius_m
+		var best_d: float = radius_m
 		for i: int in pos.size():
 			var d: float = pos[i].distance_to(at)
 			if metal[i] != 0 and not hit.has(i) and d <= best_d:
