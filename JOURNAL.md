@@ -503,3 +503,14 @@ NEXT (unchanged from iteration 47, in order): 1) owner's 18:00 exe run + frame-v
   2) merge d-cast with/before d-slice; autosave MERGE NOTE call sites in quest1_game.gd;
   3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
   4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs.
+
+## Iteration 49 (16:53, BUILD, 7 min to the freeze)
+- BLOCKED 16:53: bench.lock still held by d5-combat (written 16:43, 10 min old, not stale), so
+  the windowed `quest1_clip --continue` frame verifying prewarm-light-leak.patch was again NOT
+  taken. With 7 min left there is no window for a lock + capture + look + commit, so the patch
+  stays unapplied (REQUEST 3 -> d5-city stands; `git apply evidence/slice-play/prewarm-light-leak.patch`).
+- No code change; gates stand as evidenced at 162fbfa (ef3f425). No Godot process of mine running.
+NEXT (unchanged, in order): 1) owner's 18:00 exe run + frame-verify the light-pool patch;
+  2) merge d-cast with/before d-slice; autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs.
