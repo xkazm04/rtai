@@ -977,3 +977,33 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   paper 0.32 -> 0.31; readability unchanged; the D5 tier is unchanged (its frame roofs are all D5 plates). By eye at
   x2: the parapets and pipes print bold again under the warm, light tone. Board evidence/item40_d4_roof_lines.png;
   ladder row.
+
+## Summary (iteration 7, 03:12 -> 04:00), no images (50/50 used)
+- Theme: finish the open proposals as ONE package and measure it against the mock per tone class.
+- Committed (default frames): STRIKE + the fist stencil inside the west lane (gap 7, h106; d4 tier 0 px).
+- Committed proposals (default off, dev switches D5_PRINT=thin, D5_HALO=ink [+ D5_HALO_SHADOW=1, D5_HALO_RIM=1]):
+  look_d5_print + world-locked grain (pan swim -94% / -100%) + street_edge (road paint without ink rings);
+  look_d5_halo (ink line outside the sticker rim + soft drop shadow, fading with the halo: no pop, sweep-checked;
+  rim_px owner option); params JSON "print" + "halo" groups (unit-tested against the uniforms); the arena scene
+  honours the switches; masters tools/package_shot.sh reproduces the package frame from HEAD (h117pkg = h115se1).
+- The number for the morning: with every proposal the 32 px/m D5-tier frame matches the mock per class: street
+  80,69,71 (mock 81,70,71), paper 0.32 / 244,220,192 (0.33 / 245,222,195), solid ink 0.11 (0.12); pan 0.00049 vs
+  shipped 0.00739; readability rim dL 0.610 / verm dE 77.5 / teal dE 57.6 (h106 0.604 / 81.2 / 56.9); neutral up close.
+- Conditions found: in the D4 tier the package under-inks (0.07) unless the D4 roof lines are weighted (k 1.0: 0.11,
+  item40); the remaining whole-frame gap is mid-tone share (0.08 vs 0.11), which lives in the art.
+- Rejected (all restored, numbers above): wash_hi 0.15, age_floor 0.6, step_soft 0.10, dark_soft 0.20.
+- Mistakes: two ladder labels written ahead of the clock (rows re-added); a shader edit that did not compile (rounds
+  deleted, re-shot); a "0 px at 96" claim for the ring that hid a pop at 88 -> 96 (found by a sweep, fixed).
+- Shared files touched: none outside my scope (look_d5* shaders, params JSON + its unit test, dev/showcase, shader
+  README, evidence/). D4 roofs were modified only temporarily for item40 and restored from git.
+
+NEXT (iteration 7; NEXT 1-26 of iterations 3-6 still stand, 21 and 26 are now one decision):
+27. Visual-engine lane + owner: adopt the PACKAGE (item35 / night_iter7_summary) as one decision: look_d5_print as
+    the world print (dark_soft 0.10, street_edge 1.0, world grain), look_d5 age_floor + grain_floor 1.0, look_d5_halo
+    on the rig halos. Reproduce: masters tools/package_shot.sh. The params JSON has the values.
+28. If adopted: d5-close rebuilds the D5 roof plates at line gamma 0.45 (union hall 0.65; one build_roofs.py env
+    run) and commits them; d4-production weights the D4 roof lines (item40, k 1.0) or the city takes the D5 plates.
+29. Characters lane: move look_d5_halo into rig_build.gd _halo (child ring sprite, z below the rig's halos, fade =
+    (hk - 0.01) / 0.29); bake the same ring into the crowd atlas; owner decides rim_px (item38).
+30. Next Codex budget: roof plates with a soft mid-grey shading layer under the pen hatch (the last per-class gap,
+    mid-tones 0.08 vs 0.11), plates for the helipad / warehouse / long roofs, and King's rig parts.
