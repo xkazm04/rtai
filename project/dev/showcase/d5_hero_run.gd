@@ -8,6 +8,9 @@ extends D5ShowcaseRun
 const ROOFS: String = "res://features/city/art/roofs/"
 const D5_GROUND: String = "res://features/city/art/d5/ground/"
 const ROOFS_D5: String = "res://features/city/art/d5/roofs/"
+## ground tiles with a D5 variant in D5_GROUND (print-aware joints / crosswalk wear),
+## swapped in the "d5" tier
+const D5_TILES: Array[String] = ["sidewalk_tone.png", "road_intersection_tone.png"]
 const LANDMARKS: Dictionary[String, Vector2] = {
 	"building_mural": Vector2(9.7, -9.7),
 	"building_bar": Vector2(-9.7, -9.7),
@@ -225,13 +228,11 @@ func _tier(tier: String) -> void:
 		(p.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)
 	for c: Node2D in _corners:
 		c.visible = tier == "d5"
-	var walk: Texture2D = (
-		load((D5_GROUND if tier == "d5" else GROUND) + "sidewalk_tone.png") as Texture2D
-	)
 	for n: Node in _world.get_children():
 		var spr: Sprite2D = n as Sprite2D
-		if spr != null and spr.texture.resource_path.ends_with("/sidewalk_tone.png"):
-			spr.texture = walk
+		var tile: String = "" if spr == null else spr.texture.resource_path.get_file()
+		if tile in D5_TILES:
+			spr.texture = load((D5_GROUND if tier == "d5" else GROUND) + tile) as Texture2D
 		elif spr != null and spr.texture.resource_path == PROPS + "lamp_post.png":
 			spr.visible = tier != "d5"  # the D5 lamp (D5HeroDecals) replaces it
 	for roof: String in _roofs:
