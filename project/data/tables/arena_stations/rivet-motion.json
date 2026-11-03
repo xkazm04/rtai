@@ -1,5 +1,5 @@
 {
-  "doc": "rivet-motion's stations (Rivet's locomotion and bare-handed melee). Tuning keys are <table>.<path>; an array row is addressed by its index (rivet_melee.claw.hits.0 = claw_1). The course station measures the PlayerMotion feel numbers (dev/rivet_motion/motion_probe.gd prints the same ones headless); the melee line is three human dummies 1.2 m apart for the claw combo and a metal line 2 m apart for the shock's chain (kind enemy until the arena has a metal dummy kind: REQUEST 1 -> arena). The melee line also tunes the melee weapons (melee_weapons.weapons.<id>..., electro_baton and katana tonight) on the same dummies. Until the arena scene is on this branch, res://dev/rivet_motion/motion_course.gd and combo_clip.gd run these.",
+  "doc": "rivet-motion's stations (Rivet's locomotion and bare-handed melee). Tuning keys are <table>.<path>; an array row is addressed by its index (rivet_melee.claw.hits.0 = claw_1). The course station measures the PlayerMotion feel numbers (dev/rivet_motion/motion_probe.gd prints the same ones headless); the melee line is three human dummies 2 m apart (x 0..4, y -3 in the hub) for the claw combo and a metal line 2 m apart for the shock's chain (kind metal, the arena's steel dummy; the far one sits 4 m out, past the 3 m chain radius). The melee line also tunes the melee weapons (melee_weapons.weapons.<id>..., electro_baton and katana tonight) on the same dummies. Until the arena scene is on this branch, res://dev/rivet_motion/motion_course.gd and combo_clip.gd run these.",
   "lane": "rivet_motion",
   "schema": "gtai.arena-station/1",
   "stations": [
@@ -20,7 +20,7 @@
       "props": [
         {
           "at": [
-            0,
+            -20,
             4
           ],
           "kind": "lane_mark",
@@ -31,7 +31,7 @@
         },
         {
           "at": [
-            1,
+            -19,
             4
           ],
           "kind": "lane_mark",
@@ -42,7 +42,7 @@
         },
         {
           "at": [
-            2,
+            -18,
             4
           ],
           "kind": "lane_mark",
@@ -53,7 +53,7 @@
         },
         {
           "at": [
-            3,
+            -17,
             4
           ],
           "kind": "lane_mark",
@@ -64,7 +64,7 @@
         },
         {
           "at": [
-            4,
+            -16,
             4
           ],
           "kind": "lane_mark",
@@ -75,7 +75,7 @@
         },
         {
           "at": [
-            5,
+            -15,
             4
           ],
           "kind": "lane_mark",
@@ -86,7 +86,7 @@
         },
         {
           "at": [
-            0,
+            -20,
             6
           ],
           "kind": "firing_line",
@@ -99,8 +99,8 @@
       "spawns": [
         {
           "at": [
-            12,
-            0
+            -8,
+            4
           ],
           "id": "tackle_crowd",
           "kind": "crowd",
@@ -224,7 +224,7 @@
       "spawns": [
         {
           "at": [
-            -3,
+            0,
             -3
           ],
           "id": "dummy_human_1",
@@ -235,7 +235,7 @@
         },
         {
           "at": [
-            -1.8,
+            2,
             -3
           ],
           "id": "dummy_human_2",
@@ -246,7 +246,7 @@
         },
         {
           "at": [
-            -0.6,
+            4,
             -3
           ],
           "id": "dummy_human_3",
@@ -257,44 +257,44 @@
         },
         {
           "at": [
-            2,
-            -3
-          ],
-          "id": "dummy_metal_1",
-          "kind": "enemy",
-          "motion": "static",
-          "span_m": 0,
-          "speed_mps": 0
-        },
-        {
-          "at": [
-            4,
-            -3
-          ],
-          "id": "dummy_metal_2",
-          "kind": "enemy",
-          "motion": "static",
-          "span_m": 0,
-          "speed_mps": 0
-        },
-        {
-          "at": [
             6,
             -3
           ],
-          "id": "dummy_metal_3",
-          "kind": "enemy",
+          "id": "dummy_metal_1",
+          "kind": "metal",
           "motion": "static",
           "span_m": 0,
           "speed_mps": 0
         },
         {
           "at": [
-            11,
+            8,
+            -3
+          ],
+          "id": "dummy_metal_2",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            -3
+          ],
+          "id": "dummy_metal_3",
+          "kind": "metal",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            14,
             -3
           ],
           "id": "dummy_metal_far",
-          "kind": "enemy",
+          "kind": "metal",
           "motion": "static",
           "span_m": 0,
           "speed_mps": 0

@@ -7,7 +7,7 @@
       "type": "string"
     },
     "lane": {
-      "pattern": "^[a-z][a-z0-9_]*$",
+      "pattern": "^[a-z][a-z0-9_\\-]*$",
       "type": "string"
     },
     "schema": {
@@ -26,6 +26,10 @@
               "pad",
               "hub"
             ],
+            "type": "string"
+          },
+          "doc": {
+            "minLength": 1,
             "type": "string"
           },
           "id": {
@@ -75,6 +79,10 @@
             },
             "type": "array"
           },
+          "script": {
+            "pattern": "^res://features/[a-z0-9_/]+\\.gd$",
+            "type": "string"
+          },
           "spawns": {
             "items": {
               "additionalProperties": false,
@@ -92,11 +100,12 @@
                 },
                 "kind": {
                   "enum": [
-                    "target",
+                    "car",
                     "crowd",
                     "enemy",
-                    "car",
-                    "prop"
+                    "metal",
+                    "prop",
+                    "target"
                   ],
                   "type": "string"
                 },
@@ -165,11 +174,7 @@
         "required": [
           "id",
           "name",
-          "area",
-          "spawns",
-          "props",
-          "tuning",
-          "measures"
+          "area"
         ],
         "type": "object"
       },
