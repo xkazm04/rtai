@@ -11,7 +11,7 @@ const FORM_BASE: StringName = &"base"
 ## The pre-2026-11-03 numbers (2.5 x 2.6 m footprint, 2.0x a cop's length); kept for A/B frames.
 const FORM_NIGHT: StringName = &"night"
 const FORMS: Dictionary[StringName, Vector2] = {
-	FORM_BASE: Vector2(1.0, 0.85),
+	FORM_BASE: Vector2(1.1, 0.85),
 	FORM_NIGHT: Vector2(1.3, 1.0),
 }
 ## Which form RigPool builds; a dev scene may flip it before the pool's first build.

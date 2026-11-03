@@ -6,7 +6,7 @@ extends RefCounted
 ## one Codex edit and sliced with Rivet's alpha), except the megaphone forearm (r_forearm), keyed
 ## wider than the torch. No hose. A boss: a touch bigger than Rivet's base form.
 
-const SIZE_K: float = 1.2
+const SIZE_K: float = 1.3
 
 
 static func build() -> BodyPlan:

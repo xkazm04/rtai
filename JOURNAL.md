@@ -26,3 +26,8 @@
   (masters king/gen/out/king_parts_1.png, 121 s, layout held on the first try), sliced with Rivet's alpha, megaphone keyed
   wider. Frames: evidence/king/king-{32,64,128}ppm.png (dev scene, D5 tier on). Unit test: every King part exists.
   Codex images used today: 1 of ~25.
+- MILESTONE Rivet scale tuned 1.0 -> 1.1 after a same-scene lineup (king_showcase --rivet-form=night|base): at 1.0 his
+  body read cop-sized or smaller (cops' torsos are wide). 1.1/0.85: bbox 1.97x2.37 m. King 1.2 -> 1.3 (boss stays bigger).
+  Goldens re-blessed again (check run mean 0.00). Unit 326/326, lint green.
+- A/B cop shoulders: B (navy ball + small blue-hi core) tried and NOT shipped: bright px at 32 fell 197 -> 75; A kept,
+  B offered to the owner (frames + masters recolor_cops.shoulder_marks()).

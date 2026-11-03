@@ -7,10 +7,13 @@ extends RigShowcaseRun
 const KING_ZOOMS: Array[float] = [1.0, 2.0, 4.0]
 const KING_AT_M: Vector2 = Vector2(-3.2, 2.9)
 
+## RivetPlan's form for this run (`--rivet-form=night` = the pre-2026-11-03 scale, A/B frames)
+var rivet_form: StringName = RivetPlan.FORM_BASE
 var _king: CutRig = CutRig.new()
 
 
 func _ready() -> void:
+	RivetPlan.form = rivet_form  # before the pool builds Rivet's plan
 	super._ready()
 	_actors.add_child(_king)
 	_king.setup(KingPlan.build(), RigVariant.rivet())
