@@ -12,6 +12,10 @@ const SHOCK_S: float = 0.4
 const SLAM_S: float = 0.35
 const VERTS: int = 48
 const GRIT: int = 18
+## The ink crack left in the asphalt where the stomp landed: rays, held, then faded out.
+const CRACKS: int = 9
+const CRACK_HOLD_S: float = 2.0
+const CRACK_FADE_S: float = 1.5
 
 var hauler: HaulerCity = null
 var look: HaulerLook = null
@@ -34,6 +38,7 @@ func _draw() -> void:
 	if hauler.stomp_tick < 0:
 		return
 	var age: float = (tick - hauler.stomp_tick) * SimClock.TICK_DT
+	_crack(hauler.stomp_at * SimConst.PX_PER_M, age)
 	if age > SHOCK_S:
 		return
 	var k: float = age / SHOCK_S
@@ -52,3 +57,20 @@ func _draw() -> void:
 		var a: float = TAU * g / GRIT + 0.4 * sin(g * 2.1)
 		var d: float = r * (0.55 + 0.5 * absf(sin(g * 3.7)))
 		draw_circle(c + Vector2.from_angle(a) * d, lerpf(3.0, 1.0, k), Color(INK, 1.0 - k))
+
+
+## Jagged ink rays from the landing point (deterministic kinks), 1.4-2.7 m long (past the tank).
+func _crack(c: Vector2, age: float) -> void:
+	var a_k: float = 1.0 - clampf((age - CRACK_HOLD_S) / CRACK_FADE_S, 0.0, 1.0)
+	if a_k <= 0.0:
+		return
+	var px: float = SimConst.PX_PER_M
+	for i: int in CRACKS:
+		var a: float = TAU * i / CRACKS + 0.35 * sin(i * 4.7)
+		var length: float = px * (1.4 + 1.3 * absf(sin(i * 2.3 + 0.5)))
+		var pts: PackedVector2Array = PackedVector2Array([c])
+		for j: int in range(1, 4):
+			var kink: float = 0.35 * sin(i * 5.1 + j * 2.9)
+			@warning_ignore("return_value_discarded")
+			pts.push_back(c + Vector2.from_angle(a + kink) * length * j / 3.0)
+		draw_polyline(pts, Color(INK, 0.85 * a_k), 2.5)

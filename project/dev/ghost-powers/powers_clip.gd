@@ -87,7 +87,7 @@ func _add_ring() -> void:
 	_ring.look = HaulerLook.new(PowerTable.load_default().hauler)
 	if _look != &"":
 		_ring.look.look = _look
-	_ring.z_index = RenderLayers.z(&"actors") + 1
+	_ring.z_index = RenderLayers.z(&"actors") - 1  # ground level: under the rigs
 	_view.actor_layer().add_child(_ring)
 
 
