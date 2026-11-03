@@ -158,3 +158,18 @@ func test_the_city_print_stays_on_the_centre_through_a_rig_zoom() -> void:
 	view._print_off = Vector2.ZERO
 	view._print_zoom = -1.0
 	view._place_camera(focus)
+
+
+func test_noir_keeps_the_world_print_and_its_overlays_off() -> void:
+	# noir replaces the D4 print (keep_d4 false): a later set_look_enabled() (pass_cost, a
+	# --look=off toggle) must not re-show it, and the D5 overlay must not hatch the raw art.
+	_view.set_noir(true)
+	assert_true(_view.noir_replaces_print())
+	_view.set_look_enabled(true)
+	assert_false(_view._look_rect.visible, "D4 print hidden under noir")
+	assert_eq(_view.overlay_look(), LookProfiles.OFF, "no D5 overlay under noir")
+	_view.set_noir(false)
+	assert_true(_view._look_rect.visible, "D4 print back with noir off")
+	assert_eq(_view.overlay_look(), _view.look_id)
+	_view.noir.free()
+	_view.noir = null

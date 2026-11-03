@@ -89,8 +89,19 @@ func set_noir(on: bool) -> void:
 func set_look_enabled(on: bool) -> void:
 	look_enabled = on
 	var printed: bool = on and (look_params == null or look_params.printed)
-	_look_rect.visible = printed and (noir == null or not noir.visible or noir.keep_d4)
+	_look_rect.visible = printed and not noir_replaces_print()
 	crowd.apply_print(_item_mat, printed)
+
+
+## True while the noir pass is on and replaces the D4 world print (params `keep_d4` false).
+func noir_replaces_print() -> bool:
+	return noir != null and noir.visible and not noir.keep_d4
+
+
+## The look the print overlays (look_d5) follow: off with the print, and off while noir
+## replaces it (the overlay re-prints the D4 frame; under noir it would hatch the raw art).
+func overlay_look() -> StringName:
+	return look_id if look_enabled and not noir_replaces_print() else LookProfiles.OFF
 
 
 ## Resolves look_id at the current zoom; pushes the uniforms only when the look changed.
@@ -150,7 +161,7 @@ func _place_camera(focus: Vector2) -> void:
 	_item_mat.set_shader_parameter(&"world_px", world_px)
 	if crowd.car_print != null:
 		crowd.car_print.set_shader_parameter(&"world_px", world_px)
-	var look_now: StringName = look_id if look_enabled else LookProfiles.OFF
+	var look_now: StringName = overlay_look()
 	for o: LookOverlay in _overlays:
 		o.update(look_now, zoom * SimConst.PX_PER_M, world_px)
 	lights.set_page_age(LookOverlay.page_age_of(_overlays))
