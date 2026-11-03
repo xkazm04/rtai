@@ -1831,3 +1831,17 @@ NEXT (final, iteration 21; the iteration-18 final NEXT stands except where noted
   morning stack, so they come from n-visual's pass (REQUEST 22 family), not this lane's tiles. Nothing new in my scope
   is below the bar. With about 30 min to freeze I'm not starting another probe: one that is half-evidenced at 07:30
   would be worse than none. Session end; tree clean at the commit below.
+
+## 2026-11-03 06:56 iteration 22, BUILD (freeze 07:30)
+- 06:56 Read JOURNAL (iteration 21 final NEXT), git log. Tree clean at 003bc66. C: 272 GB free.
+- 06:57 Bench NOT run: the box is contended again (3 active other-lane Godot processes, PIDs 44892 / 34412 / 31256,
+  not mine, untouched). The idle-box bench is still owed.
+- 06:58 LOOKED, no change: city_frame focus 1 at 32 (`masters:after_i21oilc/city-1-32ppm.png`, HEAD art). Skid
+  decal, kerbs, lamps, parked sedan, roofs (HQ stencils, helipad) and Rivet's collar all read; the only miss in the
+  frame is the moving traffic grey slab, which is n-d4-only (merged stack draws the atlas cars, iteration 20 note).
+  Nothing in my scope is below the bar, and with about 30 min to freeze I am not starting a probe that could not be
+  evidenced at 32 / 48 / 64 and gated before 07:30.
+- Codex: 0 images this iteration; night total 29 images, 194 cells, 7 rejected; no limit hit.
+
+NEXT (final, iteration 22): the iteration-21 final NEXT stands word for word (no art changed in iteration 22).
+Gates last green at d2d56a6 (no-bench); everything after it is JOURNAL-only. Nothing pushed or merged. Tree clean.
