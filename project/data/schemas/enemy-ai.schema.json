@@ -1,0 +1,57 @@
+{
+  "$id": "gtai.arena_station/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lane": {
+      "const": "enemy-ai"
+    },
+    "schema": {
+      "const": "gtai.arena_station/1"
+    },
+    "stations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "gallery",
+              "pit"
+            ]
+          },
+          "script": {
+            "pattern": "^res://",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc",
+          "id",
+          "kind",
+          "script"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "doc",
+    "lane",
+    "schema",
+    "stations"
+  ],
+  "type": "object"
+}

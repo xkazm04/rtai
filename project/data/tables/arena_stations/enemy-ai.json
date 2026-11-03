@@ -1,0 +1,13 @@
+{
+  "doc": "enemy-ai stations for the arena: the pit waves and the archetype gallery. The arena lane reads these; until it lands the dev scene res://dev/enemy_ai/enemy_pit_view.tscn runs them.",
+  "lane": "enemy-ai",
+  "schema": "gtai.arena_station/1",
+  "stations": [
+    {
+      "doc": "The open pit with cover: the wave spawner runs waves.json-style rows from enemies.json against Rivet.",
+      "id": "enemy_pit",
+      "kind": "pit",
+      "script": "res://features/combat/ai/enemy_pit.gd"
+    }
+  ]
+}

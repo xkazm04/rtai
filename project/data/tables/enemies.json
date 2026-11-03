@@ -1,0 +1,199 @@
+{
+  "archetypes": [
+    {
+      "accel_mps2": 14,
+      "accuracy": {
+        "far": 0.25,
+        "far_m": 18,
+        "near": 0.7,
+        "near_m": 4
+      },
+      "aggression": 0.5,
+      "attack_m": 14,
+      "body": "human",
+      "doc": "Patrol cop: a pistol, keeps 8-10 m, strafes while waiting for a shooting slot, breaks and runs when the squad thins.",
+      "flanks": false,
+      "hit_fx": "blood",
+      "hp": 1,
+      "id": "patrol_cop",
+      "morale": 0.5,
+      "preferred_m": 9,
+      "reaction_s": 0.45,
+      "shield_front_mult": 1,
+      "speed_mps": 3.2,
+      "strafe_mps": 1.6,
+      "telegraph_s": 0.5,
+      "turn_deg_s": 360,
+      "uses_cover": false,
+      "weapon": "pistol"
+    },
+    {
+      "accel_mps2": 12,
+      "accuracy": {
+        "far": 1,
+        "far_m": 2,
+        "near": 1,
+        "near_m": 1
+      },
+      "aggression": 0.9,
+      "attack_m": 1.5,
+      "body": "human",
+      "doc": "Riot cop: shield in front (frontal hits mostly absorbed), closes in and swings a baton after a raised-arm windup. Beat him from the side or behind.",
+      "flanks": true,
+      "hit_fx": "blood",
+      "hp": 2,
+      "id": "riot_cop",
+      "morale": 0.8,
+      "preferred_m": 1.2,
+      "reaction_s": 0.35,
+      "shield_front_mult": 0.2,
+      "speed_mps": 2.8,
+      "strafe_mps": 1.2,
+      "telegraph_s": 0.55,
+      "turn_deg_s": 240,
+      "uses_cover": false,
+      "weapon": "baton"
+    },
+    {
+      "accel_mps2": 16,
+      "accuracy": {
+        "far": 0.35,
+        "far_m": 22,
+        "near": 0.8,
+        "near_m": 5
+      },
+      "aggression": 0.7,
+      "attack_m": 20,
+      "body": "human",
+      "doc": "SWAT: a rifle in short bursts, takes cover between bursts, flanks when another squad member holds the shooting slot.",
+      "flanks": true,
+      "hit_fx": "blood",
+      "hp": 2,
+      "id": "swat",
+      "morale": 0.9,
+      "preferred_m": 12,
+      "reaction_s": 0.3,
+      "shield_front_mult": 1,
+      "speed_mps": 3.4,
+      "strafe_mps": 1.8,
+      "telegraph_s": 0.6,
+      "turn_deg_s": 420,
+      "uses_cover": true,
+      "weapon": "rifle"
+    },
+    {
+      "accel_mps2": 8,
+      "accuracy": {
+        "far": 1,
+        "far_m": 2,
+        "near": 1,
+        "near_m": 1
+      },
+      "aggression": 1,
+      "attack_m": 1.8,
+      "body": "robot",
+      "doc": "Robot thug: heavy, slow to turn, walks straight at Rivet and swings a long claw after a deep windup. Never panics; throws sparks, not blood.",
+      "flanks": false,
+      "hit_fx": "sparks",
+      "hp": 6,
+      "id": "robot_thug",
+      "morale": 1,
+      "preferred_m": 1.5,
+      "reaction_s": 0.6,
+      "shield_front_mult": 1,
+      "speed_mps": 2.4,
+      "strafe_mps": 0.8,
+      "telegraph_s": 0.8,
+      "turn_deg_s": 150,
+      "uses_cover": false,
+      "weapon": "claw"
+    },
+    {
+      "accel_mps2": 10,
+      "accuracy": {
+        "far": 0.4,
+        "far_m": 20,
+        "near": 0.75,
+        "near_m": 6
+      },
+      "aggression": 0.6,
+      "attack_m": 18,
+      "body": "robot",
+      "doc": "Robot gunner: stops to plant and charge a slow heavy bolt (long glow tell), then repositions sideways. Never panics.",
+      "flanks": false,
+      "hit_fx": "sparks",
+      "hp": 4,
+      "id": "robot_gunner",
+      "morale": 1,
+      "preferred_m": 11,
+      "reaction_s": 0.5,
+      "shield_front_mult": 1,
+      "speed_mps": 2.2,
+      "strafe_mps": 1.4,
+      "telegraph_s": 0.9,
+      "turn_deg_s": 200,
+      "uses_cover": false,
+      "weapon": "cannon"
+    }
+  ],
+  "doc": "Enemy archetypes for the arena pit and the city (features/combat/ai/README.md). Seconds and metres; the sim converts to 60 Hz ticks. hp is in Rivet-nail hits (humans die to one, owner doctrine). accuracy: the chance a shot at a standing Rivet hits, linear between near_m and far_m. telegraph_s: the visible tell before every attack (aim line or windup pose); the aim keeps tracking until aim_lock_s before the shot, then locks so a player who moves dodges. squad: at most max_shooters fire at once and max_melee swing at once; the rest reposition (cover, flank, orbit). morale: the fraction of the squad that may fall before this archetype panics (1 = never).",
+  "schema": "gtai.enemies/1",
+  "squad": {
+    "aim_lock_s": 0.2,
+    "hearing_m": 22,
+    "max_melee": 2,
+    "max_shooters": 2,
+    "panic_s": 3,
+    "recover_s": 0.5,
+    "sight_deg": 120,
+    "sight_m": 24,
+    "token_hold_s": 2.5
+  },
+  "weapons": {
+    "baton": {
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 1.2,
+      "damage": 12,
+      "melee": true,
+      "reach_m": 1.6,
+      "speed_mps": 0
+    },
+    "cannon": {
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 2.2,
+      "damage": 16,
+      "melee": false,
+      "reach_m": 22,
+      "speed_mps": 11
+    },
+    "claw": {
+      "burst": 1,
+      "burst_gap_s": 0,
+      "cooldown_s": 1.6,
+      "damage": 20,
+      "melee": true,
+      "reach_m": 2,
+      "speed_mps": 0
+    },
+    "pistol": {
+      "burst": 2,
+      "burst_gap_s": 0.25,
+      "cooldown_s": 1.6,
+      "damage": 6,
+      "melee": false,
+      "reach_m": 20,
+      "speed_mps": 18
+    },
+    "rifle": {
+      "burst": 3,
+      "burst_gap_s": 0.1,
+      "cooldown_s": 1.8,
+      "damage": 4,
+      "melee": false,
+      "reach_m": 26,
+      "speed_mps": 24
+    }
+  }
+}
