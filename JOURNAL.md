@@ -426,3 +426,32 @@ NEXT (iteration 9 / morning, in order):
   the old fx_ink dither line -> fails "fx_ink.gdshader: FRAGCOORD without + world_px". When n-d5's
   look_d5 merges, this test judges it before any frame is rendered.
 - Evidence at dfa61d9 (HEAD): lint 13/13, unit 201, scenarios 8, parity PASS, selftest PASS (goldens 10/10, accent gate clean apart from the listed debt, world lock 0.00 % x3). Copied to evidence/pof. Session end ~01:03: tree clean, no processes of mine running, /tmp + Temp scratch deleted; masters frames 15-20 kept as evidence.
+
+## 2026-11-03 iteration 9 BUILD (00:59 -> )
+- Read JOURNAL, git log. All 7 brief items evidenced. n-d4 / n-d5 / n-noir still unmerged here.
+  Started this session with a pre-merge check for the Director (the morning merge is the next risk).
+- `git merge-tree` n-visual vs n-d4 / n-d5 / n-noir: only JOURNAL.md (add/add, every lane has one)
+  plus 2 real conflicts with n-noir (part_materials.gd: my world_px var + set_world_px vs its noir var +
+  set_noir at the same spots; city_view.gd: my pass feeds vs its `noir.update` after the
+  `_look_mat` world_px line). FIXED on my side (a66ad1b, no behaviour change): moved my lines off
+  those insertion points -> n-noir now auto-merges too. Only JOURNAL.md conflicts are left.
+- MILESTONE trial merge (scratch worktree `gtai-wt/scratch-visual-trial`, detached at a66ad1b, merged
+  n-d4 + n-d5 + n-noir with JOURNAL = ours; the scratch commits are in no branch; deleted after use).
+  n-noir carries main's 11 quest-1 commits, so this is effectively main + all 4 lanes:
+  lint 13/13 (282 files), unit 244/244, scenarios 8/8, selftest: render OK (0 placeholders, 65 textures,
+  fx cues 11 / 9 / 9), accent gate PASS (no new offenders; frame vermilion 0.93 / 0.95 / 0.27 %;
+  `traffic_light_lamps` debt row reported "no longer seen" = n-d4's redrawn lamps are on doctrine),
+  world lock 0.00 / 0.00 / 0.00 % (look_d5 and look_noir both hash FRAGCOORD + world_px; the unit
+  world-lock test passes on them). FAILS only: look goldens 0/10, means 5.1 .. 14.9 = n-d4's new art
+  (cream slab pavement + curved kerbs, car sprites, lane arrows, aggregate asphalt) and n-d5's current
+  look_d5 (warmer aged paper at 64 px/m). Looked at them side by side: same junction, same actors, the
+  differences are the new art (21-trial-merge/goldens-branch-left-trial-right.png; my first composite
+  pasted the corner of the 1280 px frame next to the 320 px golden - redone at equal size).
+  Re-blessed in the scratch and re-checked: 10/10 at mean 0.000 -> the merged build is deterministic.
+- POST-MERGE RECIPE for the Director (after merging n-d4, n-d5, n-noir into main or a merge branch):
+  1. JOURNAL.md: keep each lane's journal (they are per-lane files at the same path - e.g. move them to
+     docs/journals/<lane>.md or keep one side); no code conflicts.
+  2. `godot --fixed-fps 60 --path project res://dev/selftest/look_golden.tscn -- --out=<abs dir> --bless`
+     (windowed, d3d12), look at the 10 frames, commit the 10 PNGs (tests/golden/look, LFS).
+  3. Delete the `traffic_light_lamps` row from data/tables/accent_debt.json (the gate reports it).
+  4. `node tools/evidence/run.mjs` -> expect lint, unit 244, scenarios 8, parity, selftest all PASS.
