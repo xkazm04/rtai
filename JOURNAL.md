@@ -546,3 +546,18 @@ NEXT (iteration 10 / morning, in order):
 5. Rig 0.334 ms per tick vs 0.3: native RigArm / RigGait (characters owner).
 6. The one unreproduced 9 s `game` stall in the trial-merge drive bench (evidence/trial-merge): re-run the
    full bench on the real merge; if it recurs, it is in streaming (stream+spawn 5.5 ms/tick in that run).
+- MILESTONE (02:02, after NEXT was written - NEXT 2 is now DONE at 746c765) moving traffic plugs n-d4's
+  traffic_atlas.png: look_d4_item `cells` (default 1 x 1 = unchanged) + a vertex() cell lookup;
+  CrowdLayers._plug_traffic (live only when the PNG loads; an LFS pointer - which is what `git show`
+  gave me first - keeps the placeholder: found and guarded) and CrowdLayers.apply_print (owns every crowd
+  layer's material; replaces CityView's loop). Cars AND car shadows sample the variant's cell (the shadow
+  quad was the full 6.4 x 3.2 m cell: a dark rectangular pad around the car in the first pass -
+  REJECTED, frames after-*; fixed: shadows sample the atlas tinted ink = car-shaped, frames after2-*).
+  Without the PNG (this branch): golden means identical, unit 202. With n-d4's PNG + .import copied in for
+  the capture only (never committed; first copy also clobbered its .import to valid=false - restored from
+  the n-d4 worktree): lavender boxes -> inked cream cars with hatched glass, accent gate clean (no new
+  offenders, vermilion 0.92 / 0.96 / 0.24 %), world lock 0.00 % x3; the goldens move (5.15 worst) =
+  re-bless after the merge (already step 2 of the recipe). Frames 23-traffic-atlas/
+  (crops-before-after-after2.png: placeholder | pads | car shadows), ladder rows 23 / 23b (1280 x 9078).
+  0 frames rejected for camera. Still open from NEXT 2: damage / hijack states need a sim state in
+  custom.y; the cop rig drawn over a car at 32 px/m (rigs vs vehicles band) - check after the merge.
