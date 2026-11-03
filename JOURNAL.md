@@ -755,3 +755,6 @@ NEXT (addendum, iteration 6 after the summary): 25. City lane: the up-close fade
 - 02:58 MILESTONE (h98b): two more D5 lamps (SW at y 6.8, SE at 8.2) like the mock's lamps at the vertical road's
   block corners. h98 (all four corners) REJECTED: the NW head sat on STRIKE + the fist stencil, and the facing pairs
   read as a symmetric gate. d4 tier 0 px; d5 1866 px changed at 32 only (off frame at 48+); Rivet crops 0 px.
+- 02:59 boards + evidence/hero-d4d5-*ppm.png = h98b (d4 frames unchanged). MEASURED the whole iteration in motion:
+  d5_pan default crop, 48 px/m, 40 ticks: pan7c (iteration start: old tiles) vs pan10 (h98b): d5 series mean change
+  0.00739 -> 0.00739, paper px rate 0.0144 -> 0.0143, ink px flips per tick 0.00284 -> 0.00278. No added swim.

@@ -10,9 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | iteration 5: the D5 pen-hatch roofs vs D4 in the hero junction at 32 and 48 px/m (h81) + the two south roofs (s4, `--cam=0,9.7`) + per-roof tone |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h97, iteration 6) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h98b, iteration 6) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h97, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks that fade back in up close, bold toned centre dashes + the kerb stone line; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h98b, iteration 6 = h86 + the D5 ground tiles: print-aware pavement joints, clean crosswalk, thinned road cracks that fade back in up close, bold toned centre dashes, the kerb stone line + 2 more D5 lamps; h86, iteration 5 = h73 + the pen-hatch D5 roofs incl. OSHA/tall neighbours + the laundry-line misprint fix; h73 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp + drier rust; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -48,7 +48,7 @@ tick count, no RNG.
 | `night_iter5_summary.png` | ONE SCREEN for the morning, iteration 5: mock, hero h86 at 32/48/64/128, the arena a15 at 64 and 128, concept |
 | `item22_pavement_joints.png` | iteration 6: the D5 sidewalk tile's print-aware joints, h86 vs h87d at 32 (full frame) and pavement crops at 48/64 + the mock |
 | `item23_street_print.png` | iteration 6: the D5 crosswalk (no black wear dots) and thinned road cracks, h87d vs h90 at 32/48/64 + the mock |
-| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h97) at 32 and 48, the mock, the concept |
+| `night_iter6_summary.png` | ONE SCREEN for the morning, iteration 6: iteration 5 end (h86) vs iteration 6 (h98b) at 32 and 48, the mock, the concept |
 | `item24_kerb_stone.png` | iteration 6: the kerb stone line (continuous, 0.3 m inside the street edge), h90 vs h91 at 32/48/64 + the mock's kerb corner |
 | `item25_road_dashes.png` | iteration 6: the mock's bold centre dashes, h91 / h92b cream (rejected: merges with the actors' rim) / h92c toned (kept) at 32 + the cop-on-dash contact at 48 |
 | `item26_grain_floor_32.png` | iteration 6, PROPOSAL: look_d5 `grain_floor` (world-locked paper tooth at 32 px/m, default off) alone and with `age_floor`, vs as shipped and the mock + street crops |
@@ -91,7 +91,8 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   0.071**; 48: 0.390 / 0.196 / 0.063 -> 0.396 / 0.188 / 0.063. Mock 0.488 / 0.123 / 0.104: closer in tone and ink, not in HF (the mock's high
   frequency is fine paper/asphalt grain; ours was grid and crack lines).
 - No regression: d4 tier 0 px at 32-128 in every round; 0 actor px; no vermilion/teal px changed; pan swim per
-  pixel class unchanged. Tools (masters): build_sidewalk.py, build_crossing.py, build_road.py (seeded/deterministic).
+  pixel class unchanged. Whole iteration, car-camera pan (48 px/m, default crop, 40 ticks): pan7c (iteration start)
+  vs pan10 (h98b state): mean change 0.00739 -> 0.00739, ink px flips per tick 0.00284 -> 0.00278. Tools (masters): build_sidewalk.py, build_crossing.py, build_road.py (seeded/deterministic).
 
 ## Iteration 5 (01:15 -> 02:10, written 02:08) in one screen (`night_iter5_summary.png`)
 - **Pen-hatch D5 roofs** (item 3 raised; `item21_mural_pen.png`, `item3_roofs_gate.png`; 5fa5d38 .. 8ab942a): the
@@ -205,7 +206,7 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
-## Gap list after iteration 6 (in-engine h97 vs `d4h2_mock.jpg` and the concept; next step each)
+## Gap list after iteration 6 (in-engine h98b vs `d4h2_mock.jpg` and the concept; next step each)
 What changed: the GROUND now prints like the mock's at 32/48 px/m (faint slab joints, clean zebra, no repeating
 cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 -> 0.425, px darker than 0.2
 0.231 -> 0.218 (mock 0.488 / 0.123). What still separates us from the target, largest first:
