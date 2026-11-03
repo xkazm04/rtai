@@ -66,3 +66,23 @@ func test_the_lock_holds_the_aim_and_a_strafe_beats_the_burst() -> void:
 func test_planted_fault_tracking_through_the_lock_is_caught() -> void:
 	var out: Run = _run(_arena(true), 5.0)
 	assert_ne(out.lock_from, out.lock_to, "the fault keeps tracking: the lock window is gone")
+
+
+func test_one_slot_never_lets_two_gunners_tell_at_once() -> void:
+	var arena: CombatArena = _arena(false)
+	arena.guard_tell.one_slot = true
+	var other: Fighter = arena.spawn_guard(START + Vector2(0.0, 3.0))
+	other.pos = START + Vector2(0.0, 3.0)
+	other.cooldown = 0
+	var g: Fighter = arena.hostiles[0]
+	var overlap: int = 0
+	var both_told: Array[bool] = [false, false]
+	for i: int in 240:
+		arena.step(i)
+		var busy_a: bool = g.tell_left > 0 or g.burst_left > 0
+		var busy_b: bool = other.tell_left > 0 or other.burst_left > 0
+		overlap += 1 if busy_a and busy_b else 0
+		both_told[0] = both_told[0] or g.tell_left > 0
+		both_told[1] = both_told[1] or other.tell_left > 0
+	assert_eq(overlap, 0, "one slot: never two tells or bursts at once")
+	assert_eq(both_told, [true, true], "and both gunners still get their turn")

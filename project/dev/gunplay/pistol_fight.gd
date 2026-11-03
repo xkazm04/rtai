@@ -40,26 +40,16 @@ var _rivet_hits: int = 0
 var _dodge: bool = false
 ## --spread=<k>: overrides the table's lock_spread_scale (GuardTell.spread_scale); <0 keeps it.
 var _spread: float = -1.0
+var _one_slot: bool = false  # --one-slot: GuardTell.one_slot (one gunner tells at a time)
 var _dodges: int = 0
 var _strafe_left: int = 0
 var _strafe_dir: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
-	for arg: String in OS.get_cmdline_user_args():
-		if arg.begins_with("--out="):
-			_out = arg.substr(6)
-		elif arg == "--armored":
-			_armored_hp = 1.0
-		elif arg == "--dodge":
-			_dodge = true
-		elif arg.begins_with("--ppm="):
-			_view.px_per_m = arg.substr(6).to_float()
-		elif arg.begins_with("--spread="):
-			_spread = arg.substr(9).to_float()
-		else:
-			get_tree().quit(2)
-			return
+	if not _parse_args():
+		get_tree().quit(2)
+		return
 	if DirAccess.make_dir_recursive_absolute(_out) != OK:
 		Log.error("pistol_fight", "cannot create %s" % _out)
 	_play = CollectCallPlay.begin()
@@ -73,6 +63,7 @@ func _ready() -> void:
 	arena.gun = GunHand.make(table, &"pistol", rng.stream(&"gunplay"))
 	arena.gun.tap = true
 	arena.guard_tell = GuardTell.from_table(table)  # readable bursts: tell, lock, slow rounds
+	arena.guard_tell.one_slot = _one_slot
 	if _spread >= 0.0:
 		arena.guard_tell.spread_scale = _spread
 	arena.rivet.weapon = &"gloria"  # the view's armed state (the rig's claw_pistol cell)
@@ -85,6 +76,26 @@ func _ready() -> void:
 	_view.print_stage.rig = _rig
 	# a clean frame: quest 1's dialogue box would cover the lower third of the fight
 	(_view.hud_view.get_parent() as CanvasLayer).visible = false
+
+
+## The user args; false on an unknown one.
+func _parse_args() -> bool:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--out="):
+			_out = arg.substr(6)
+		elif arg == "--armored":
+			_armored_hp = 1.0
+		elif arg == "--dodge":
+			_dodge = true
+		elif arg == "--one-slot":
+			_one_slot = true
+		elif arg.begins_with("--ppm="):
+			_view.px_per_m = arg.substr(6).to_float()
+		elif arg.begins_with("--spread="):
+			_spread = arg.substr(9).to_float()
+		else:
+			return false
+	return true
 
 
 func _process(_delta: float) -> void:

@@ -14,8 +14,12 @@ var speed_scale: float = 1.0
 var spread_scale: float = 1.0
 ## Planted fault and A/B switch: keep tracking through the lock (no dodge window).
 var track_through_lock: bool = false
+## A/B switch (off = every gunner tells on its own clock): one attack slot, so only one
+## contractor tells or bursts at a time (no crossfire of two locked lines).
+var one_slot: bool = false
 ## Telemetry: enemy rounds fired under a tell.
 var rounds: int = 0
+var _holder: Fighter = null
 
 
 static func from_table(table: WeaponTable) -> GuardTell:
@@ -59,9 +63,17 @@ func step(g: Fighter, target: Vector2, tuning: CombatTuning, rng: RandomNumberGe
 	if g.cooldown > 0:
 		g.cooldown -= 1
 		return null
+	if one_slot and not _slot_free(g):
+		return null
+	_holder = g
 	g.tell_left = tell_ticks
 	g.cooldown = w.cooldown_ticks
 	return null
+
+
+func _slot_free(g: Fighter) -> bool:
+	var h: Fighter = _holder
+	return h == null or h == g or not h.alive() or (h.tell_left == 0 and h.burst_left == 0)
 
 
 ## The burst goes down the locked facing (no re-aim), slowed so a strafe beats it.
