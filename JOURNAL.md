@@ -361,3 +361,23 @@ NEXT (iteration 4 close, in order):
   show-final2 clips deleted (frames kept for the before/afters). Ladder 20 rows. NOIR.md updated.
   Images this session: 3 Codex (noir_rivet_1, noir_rivet_limbs_1, noir_ped_1), 0 rejected, no limit
   hit; Leonardo 0 tokens. Provenance this session: 29 lines (19 Rivet + 10 ped).
+- (01:50) The muzzle light at 32 / 48 / 64 px/m (show-final3 f230, evidence/flash-32-48-64.png): the pool
+  scales with the zoom and reads the same at all three. +1 unit test (one tick of light, at the muzzle):
+  181 unit pass. quest_fight ported to the light pool (headless clean, NOT re-shot).
+
+NEXT (iteration 6 close, in order):
+1. Owner picks from evidence/showcase-hero.png + masters night/noir/show-final3/*.mp4:
+   (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light;
+   (b) value roles: cops = ink among paper peds (default) vs ink peds + paper cops (`noir_frames --noir-parts
+       --verm=1`, evidence/ped-cop-read.png); (c) noir Rivet parts (evidence/rivet-before-after.png).
+2. Photosensitivity: the muzzle light is a big one-frame white strobe. Measure flashes per second in a heavy
+   firefight (the 400-actor riot) and cap it (e.g. at most one lit frame per 0.33 s, or a smaller lift).
+3. Rivet's noir limbs read as paper (the redraw is mostly lit white, and at 32 px/m the sticker LOD ignores
+   the art for limbs and core). If the owner wants a darker Rivet: a limbs round with more ink mass, or a
+   noir limb_wash in print_part.
+4. Move noir parts + the coat from the dev hook (NoirParts.wear) into the rigs: a noir art_dir per plan,
+   the coat as a CutRig part.
+5. Wall splats (still needs wall/prop edges in the view); blood marks on the bodies themselves.
+6. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+7. Make noir_frames tick-exact between runs (step the world by ticks, not frames) so ped/crowd A/Bs are
+   the same pixels; re-shoot quest_fight with the muzzle light.
