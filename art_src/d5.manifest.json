@@ -509,6 +509,22 @@
    "sha256": "a13e56c55648f25e6700dfae3f5ef08b9b72e8e0ce7aae37e9f7ca0f65c204d8",
    "tool": "codex-image"
   },
+  "d5_roof_osha_b": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_roof_osha_b.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_osha.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_sign_b.txt",
+   "prompt_sha256": "1eca748157b9a8e6b8ab1dd9f630ae8bde921f7bb878faefb89f11ee1ba90957",
+   "references": [
+    "own: project/features/city/art/roofs/building_osha.png (D4 roof, edit target on a green border: masters gen/refs/roof_osha.png)",
+    "own: masters night/d5-close/gen/refs/mock_roofs.png (crops of own target frame pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg, hatching reference)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "0496b6edc159f42cc45a6737852bb51449a1d5e36bd42e7e49987bb4ce311b42",
+   "tool": "codex-image"
+  },
   "d5_roof_pension_bank": {
    "date": "2026-11-03",
    "file": "masters:night/d5-close/gen/out/d5_roof_pension_bank.png",
@@ -537,6 +553,22 @@
    ],
    "seed": null,
    "sha256": "81e4ff4edd82ed7b3c1608ea804636e1c2ed18e62761eb5115cde709676b0d97",
+   "tool": "codex-image"
+  },
+  "d5_roof_tall_b": {
+   "date": "2026-11-03",
+   "file": "masters:night/d5-close/gen/out/d5_roof_tall_b.png",
+   "layout_template": "masters:night/d5-close/gen/refs/roof_tall.png",
+   "model": "codex-cli 0.160.0 built-in image_gen (ChatGPT Pro plan; agent model gpt-6.1-sol; image model not reported)",
+   "prompt_ref": "masters:night/d5-close/gen/_prompts/roof_sign_b.txt",
+   "prompt_sha256": "1eca748157b9a8e6b8ab1dd9f630ae8bde921f7bb878faefb89f11ee1ba90957",
+   "references": [
+    "own: project/features/city/art/roofs/building_tall.png (D4 roof, edit target on a green border: masters gen/refs/roof_tall.png)",
+    "own: masters night/d5-close/gen/refs/mock_roofs.png (crops of own target frame pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg, hatching reference)",
+    "own: pof games/gtai/art-direction/trivet/ref-4-rivet-concept.jpg (D5 Rivet concept)"
+   ],
+   "seed": null,
+   "sha256": "66ad3ca30a27ef0b69afb343240bfbb144cf026bc8753b4950a25d511245f6e1",
    "tool": "codex-image"
   },
   "d5_roof_union_hall": {

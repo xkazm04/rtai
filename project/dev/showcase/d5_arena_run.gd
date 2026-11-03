@@ -22,9 +22,12 @@ const YARD_ROOFS: Array[String] = [
 	"building_warehouse", "building_tall", "building_osha", "building_long"
 ]
 const ROOF_M: float = 8.4
+const YARD_D4: String = "res://features/city/art/roofs/"
+const YARD_D5: String = "res://features/city/art/d5/roofs/"
 
 var _shadow_node: Sprite2D = null
 var _feet: Array[Node2D] = []
+var _yard_roofs: Array[Sprite2D] = []
 
 
 func _init() -> void:
@@ -90,11 +93,13 @@ func _yard() -> void:
 				sx * (ARENA_M * 0.5 + 0.6 + ROOF_M * 0.5), sy * (ROOF_M * 0.5 + 0.2)
 			)
 			var r: Sprite2D = Sprite2D.new()
-			r.texture = load("res://features/city/art/roofs/%s.png" % YARD_ROOFS[k]) as Texture2D
+			r.texture = load(YARD_D4 + YARD_ROOFS[k] + ".png") as Texture2D
+			r.set_meta(&"roof", YARD_ROOFS[k])
 			r.scale = Vector2.ONE * ROOF_M * PX / r.texture.get_width()
 			r.position = c * PX
 			r.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 			_world.add_child(r)
+			_yard_roofs.append(r)
 			at.append(c)
 			k += 1
 	_feet = D5HeroParapets.place(_world, PX, at, ROOF_M)
@@ -103,6 +108,11 @@ func _yard() -> void:
 func _tier(tier: String) -> void:
 	for n: Node2D in _feet:
 		n.visible = tier == "d5"
+	for r: Sprite2D in _yard_roofs:  # the yard roofs that have D5 art print it in the "d5" tier
+		var roof: String = r.get_meta(&"roof")
+		var file: String = roof + ".png"
+		var d5: bool = tier == "d5" and ResourceLoader.exists(YARD_D5 + file)
+		r.texture = load((YARD_D5 if d5 else YARD_D4) + file) as Texture2D
 	if _shadow_node != null:
 		_shadow_node.visible = tier == "d5"
 		(_shadow_node.material as ShaderMaterial).set_shader_parameter("zoom", _rigs.zoom)

@@ -520,3 +520,13 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   the look_d4 print as it is (it fattens any line that survives the minification). The mock's hatch is thin AND
   visible because the mock is one painted frame, not a minified texture printed by thresholds. Next step: a look_d4
   roof print that keeps thin art lines thin (visual-engine lane) or 48 px/m roofs art at 1:1 screen scale.
+- 01:50 / 01:52 Codex: d5_roof_osha_b (106 s) + d5_roof_tall_b (111 s) on new green-border layout templates of the D4
+  roofs (gen/refs/roof_{osha,tall}.png), roof_sign_b.txt; 0 rejected (layout, OSHA lettering, the hazard band held;
+  tall has no colour). Ledger 49. Images tonight: 49 of ~50: no more generation this session.
+- 01:58 MILESTONE: the boss arena's yard prints D5 roofs: d5_arena_run.gd swaps a yard roof to
+  features/city/art/d5/roofs/<name>.png in the "d5" tier when one exists (OSHA top-right, tall bottom-left;
+  warehouse/long stay D4). The hero swaps OSHA/tall neighbours by its existing ResourceLoader.exists rule (h85).
+  d4 tier 0 px in a15 (vs a14) and h85 (vs h81). At 64 px/m: OSHA L 0.441 -> 0.510, paper 0.33 -> 0.40, ink 0.55
+  -> 0.44 (HF 0.120 both); tall 0.385 -> 0.471, 0.24 -> 0.36, 0.60 -> 0.50 (HF 0.134 -> 0.129). By eye the wash
+  blotches are gone and the hatch reads as pen lines. evidence/arena-d4d5-{64,128}ppm.png = a15; ladder +1 row.
+  .import files for the 2 new PNGs made from the bar's [params] (Godot filled uid/path on --import).
