@@ -18,6 +18,7 @@ const FIELDS: PackedStringArray = [
 	"drift_at",
 	"handbrake_grip",
 	"steer_rate",
+	"steer_in_s",
 ]
 
 var id: StringName = &""
@@ -32,6 +33,7 @@ var slide_grip: float = 6.5
 var drift_at: float = 2.7
 var handbrake_grip: float = 0.25
 var steer_rate: float = 2.5
+var steer_in_s: float = 0.18
 
 
 ## Every profile in the table, by id.

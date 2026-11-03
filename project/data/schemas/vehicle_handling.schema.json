@@ -98,6 +98,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "steer_in_s": {
+            "minimum": 0,
+            "type": "number"
+          },
           "steer_rate": {
             "minimum": 0,
             "type": "number"
@@ -119,7 +123,8 @@
           "slide_grip",
           "drift_at",
           "handbrake_grip",
-          "steer_rate"
+          "steer_rate",
+          "steer_in_s"
         ],
         "type": "object"
       },

@@ -25,6 +25,10 @@ const DRIFT_EXIT: float = 0.6
 const SPIN_MAX: float = 4.0
 const SPIN_DAMP: float = 5.0
 const GYRATION_SQ: float = 2.2
+## Steering slew (steering-feel shaping): the wheel turns in over profile.steer_in_s and comes back
+## (a release, or the first half of a counter-steer) STEER_RELEASE times faster, so a digital key
+## does not snap to full lock and letting go settles the nose quickly.
+const STEER_RELEASE: float = 2.0
 
 var id: int = 0
 var profile: VehicleProfile = null
@@ -42,6 +46,8 @@ var wreck_t: float = 0.0
 var slip: float = 0.0
 var sliding: bool = false
 var spin: float = 0.0
+## The shaped steer actually applied (-1..1), slewed toward the input each tick.
+var wheel: float = 0.0
 
 
 func _init(p_id: int, p_profile: VehicleProfile, p_pos: Vector2, p_head: Vector2) -> void:
@@ -57,6 +63,7 @@ func step(dt: float, throttle: float, steer: float, handbrake: bool) -> void:
 		throttle = 0.0
 		steer = 0.0
 		handbrake = true
+	steer = _slew(steer, dt)
 	var right: Vector2 = Vector2(-head.y, head.x)
 	var vf: float = vel.dot(head)
 	var vl: float = vel.dot(right)
@@ -77,6 +84,18 @@ func step(dt: float, throttle: float, steer: float, handbrake: bool) -> void:
 		_rotate(spin * dt)
 		spin = _toward(spin, 0.0, SPIN_DAMP * dt)
 	pos += vel * dt
+
+
+## Moves the wheel toward the input: turn-in at 1 / steer_in_s per second, release faster.
+func _slew(target: float, dt: float) -> float:
+	if profile.steer_in_s <= 0.0:
+		wheel = target
+		return wheel
+	var rate: float = dt / profile.steer_in_s
+	if absf(target) < absf(wheel) or target * wheel < 0.0:
+		rate *= STEER_RELEASE
+	wheel = _toward(wheel, target, rate)
+	return wheel
 
 
 ## A yaw kick from an impulse dv (m/s along -n for this body) hitting `lever` m ahead of centre.

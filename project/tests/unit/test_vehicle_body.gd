@@ -111,3 +111,19 @@ func test_off_centre_hit_spins_and_the_grip_catches_it() -> void:
 		b.step(SimClock.TICK_DT, 0.0, 0.0, false)
 	assert_eq(b.spin, 0.0, "bled off within a second")
 	assert_lt(b.head.y, -0.05, "the car turned")
+
+
+func test_steering_slews_in_and_releases_faster() -> void:
+	var b: VehicleBody = _drive(&"sedan", 60, 1.0, 0.0, false)
+	var p: VehicleProfile = _p[&"sedan"]
+	var in_ticks: int = 0
+	while b.wheel < 1.0 and in_ticks < 120:
+		b.step(SimClock.TICK_DT, 1.0, 1.0, false)
+		in_ticks += 1
+	assert_almost_eq(in_ticks * SimClock.TICK_DT, p.steer_in_s, 2.0 * SimClock.TICK_DT, "turn-in")
+	var out_ticks: int = 0
+	while b.wheel > 0.0 and out_ticks < 120:
+		b.step(SimClock.TICK_DT, 1.0, 0.0, false)
+		out_ticks += 1
+	assert_lt(out_ticks, in_ticks, "the release is faster than the turn-in")
+	assert_eq(b.wheel, 0.0)
