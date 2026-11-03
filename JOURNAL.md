@@ -916,3 +916,18 @@ cells, 7 rejected). Branch n-d4, tree clean after this entry; nothing pushed or 
 - 02:56 merged tree unit tests (`run_unit.mjs` in scratch-m10): **206 passed, 0 failed** (n-visual's suite incl. the
   accent audit; no new offenders from the joints or zebras). Scratch worktree removed (`git worktree list` = lane
   worktrees + scratch-q1).
+- 02:58 MILESTONE (patch only, generator code) street variants never repeat side by side. At 64 px/m
+  (`merged_i10/city-0-64ppm.png`) the same big hatched kerb crack sat on two neighbouring tiles: `tile_painter`
+  picks road / kerb variants at random per tile, so neighbours match 1 time in 3. The three curb variants do differ
+  (`work/curb3.png`), so no art fix helps. `_variant()`: an a-b-c cycle along the street from a random offset per
+  street line (junction approach tiles too). Before / after with the iteration-8 generator patch applied and re-baked:
+  `before_v3|after_v3/city-*-{32,48,64}ppm.png`, `work/v3_city-0-{64,32}ppm.png`: one crack, not two; at 32 no
+  visible cycle. Lint 13/13 (2 long comment lines fixed), unit 142/142 with it applied. Folded into
+  `evidence/iter10/generator_art_pick_v2.patch` (supersedes the iteration-8 patch; new golden list; applies on main,
+  n-d4, n-visual). Code reverted, re-baked, `--check` matches the HEAD golden. Ladder rows.
+## REQUESTS (iteration 10)
+18. SUPERSEDED: n-visual wired the traffic atlas itself (7bfb6b9); drop the iteration-8 wiring patches.
+19. city/generator owner (via the Director): apply `evidence/iter10/generator_art_pick_v2.patch` (instead of the
+    iteration-8 one) after merging n-d4; it moves the AST-12 golden list (included).
+20. visual-engine: paper grain on the paving belongs in the print pass (`grit`), texture specks print as rings or
+    stipple (iteration-10 probe, `work/pg_ab48.png`). Only if the owner wants the target's speckled slabs.
