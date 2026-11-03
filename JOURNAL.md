@@ -46,3 +46,19 @@
   radio on/off). `CarRadio.next()` flips the station, bind it to an input action.
 - REQUEST 3 -> slice-play: in the real quest scene call `StageAudio.attach(parent, stage, system, bus, seed)` (one call: service + hooks
   + shot feed + voice + radio); the dev clip scene dev/audio/audio_beat.gd shows it.
+
+### MILESTONE radio, mix pass, clips, QC hardening (commits ef91ab6 .. f35b092)
+- Radio stub: CarRadio (data/tables/audio_radio.json): 3 x ~20 s loops + 1 stinger from ElevenLabs /v1/music (direct; POF-GAP 3), on a band-limited
+  `radio` bus under `music`; on while Events.vehicle_entered..exited, stinger on contract_completed. Music cost 866 credits.
+- Mix pass: first mix (sfx 0 dB, voice +2 dB) clipped under dialogue (+0.1 dBFS) and put the voice 11 LU above the riot. Now sfx +3 dB, voice -2 dB,
+  Master hard limiter -1 dB (audio_mix.json). Clips (evidence/mix/*.mp4, recorded with Godot's movie maker, D3D12, real game scenes):
+  riot -21.0 LUFS / -2.7 dBFS, quest opening -17.4 / -2.9, quest fight -19.8 / -2.7, demo tour -17.9 / -1.8. See evidence/mix/mix_levels.md.
+- QC caught three real faults AFTER my first "0 rejected": (1) spectrogram sheet showed pistol takes 02/03 were constant broadband noise bursts
+  with no decay -> new decay rule (second half vs first <= -18 dB, guns only), 4 new pistol takes; (2) impact_concrete_02 peaks at 224 ms and its
+  energy grows -> rejected; (3) radio_loop_2 kept the generator's fade-out, so the loop dipped to silence -> dead tail cut before the seam.
+  Final: SFX 32 kept / 4 rejected of 36 takes (raw pistol takes 02, 03 and 04 + impact_concrete_02), voice 23/23, music 4/4. (The commit message of e4f6d4a says +580 credits for the new pistol takes: wrong, the 4 takes cost ~36.)
+  STILL NOT HEARD by a human. Measured: duration, peak, RMS, LUFS, flat-top clipping, silence, envelope, spectrogram look (sheet in masters).
+- Credits: ElevenLabs used so far this lane: 3274 (started at 70,719; lane cap 25,000; account limit 143,292).
+- Tests: 340 unit tests green incl. 15 new audio ones (tests/unit/test_audio.gd, test_audio_hooks.gd); scenarios 8/8, replay identical; evidence/run.mjs
+  --no-bench green (lint, unit, scenarios, parity, selftest). NOT run: bench (lane rule: shared GPU; the audio service adds no per-frame GPU work).
+  Pool cost not measured under the bench; the service does one array walk per cue and is capped at 4 starts per frame.
