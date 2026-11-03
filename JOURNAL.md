@@ -932,7 +932,7 @@ NEXT (iteration 12 close, in order):
   evidence/figure-shadows-streak-NOT-adopted.png (f322 and the held panel f175, before | after). Files removed.
   The right route is a real silhouette: rigs rendered into a SubViewport (or the parts drawn a second time in
   black) and swept like NoirShadows - not done tonight.
-- (05:58) Gates at 2eaa99b (code 65c7bc3; `run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios,
+- (05:56) Gates at 2eaa99b (code 65c7bc3; `run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios,
   parity (1200 steps, mutation caught at 629), selftest all PASS; JSONs in evidence/; NOIR.md gates line.
 - Session close (iteration 14). Code commits: 05d405a (cast shadows), 0854fab (one quad per caster + cost
   tool), 6cc391a (BloodDecals), 65c7bc3 (NoirShowcaseArgs). Images 0 generated, 0 rejected; Leonardo not probed
@@ -954,3 +954,12 @@ NEXT (iteration 14 close, in order):
    (car_len / car_half_w from the sprite), noir parts + coat into the rigs, BloodStains / BloodFx.solid in the
    game hosts, the noir HUD in the composition root, a settings toggle for safety.flashes, the flash margin.
 5. showcase_fight.gd is 213 lines (soft ~200): the hero-frame saving (_save, _to_uv) could move out next.
+- (06:00) Owner reference for NEXT item 1 (shadow length): roof blocks (`len_m.building`) at 2.0 m instead of
+  3.0 m (masters shadow-len2/, not committed): evidence/cast-shadows-length-option.png (none | 2.0 | 3.0).
+  Measured against the same code at 3.0 (shadow-v4): all 9 noir frames byte-identical but 1 px. So **the
+  building sweeps show nowhere in the standard frames** (the 8.4 m blocks tile edge to edge, so a block's sweep
+  lands under its neighbours' art); every visible cast shadow tonight is a PROP's (barrel clusters, crates,
+  newsstands: `len_m.prop` 1.0). CORRECTION to the 05:12 entry and NOIR.md: "roof blocks" / "building corners"
+  there are props. The building quads are still drawn (fill cost included in the measured +0.32 ms iGPU).
+NEXT addendum: find a view where a building sweep shows (a block edge onto a plaza or pavement); if none, set
+  `len_m.building` 0 and re-measure the GPU cost.
