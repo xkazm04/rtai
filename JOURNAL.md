@@ -615,3 +615,24 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
 - CORRECTION to iteration 5: "Manifest keeps d5_roof_mural_c as REJECTED" is wrong: art_src/d5.manifest.json has no
   status field; mural_c and warehouse_b are listed like the others. Their rejection is recorded here and in the
   evidence README only.
+- 02:19 MILESTONE (h88, 285cc30): D5 crosswalk (masters tools/build_crossing.py, non-generative edit of the D4
+  road_intersection_tone): the zebra's wear holes (asphalt through the paint) printed as black dots at 32-64 px/m.
+  Holes enclosed by paint: filled, the large ones shrunk 2 px to a flat paint/asphalt mix; the holes' anti-aliased
+  rims (L ~0.7) included, or they print as rings (the first build did: caught by eye). d5_hero_run swaps a list of
+  D5 ground tiles (D5_TILES). d4 tier 0 px at 32-128; changed px only on the bars (mask), 0 actor px.
+- 02:22 REJECTED (h89 first try, not shot): a hard 1-px ridge for the road cracks: stair-stepped, broken lines.
+- 02:24 MILESTONE (h89b, 51b96d4): D5 road tiles (road_straight_tone_b / _v_b) with thinned cracks (tools/
+  build_road.py, grey-level 2x2 max filter on the line pixels only, paint excluded, 2 passes). The tiles' patch
+  outline + cracks printed as solid ink at 32-48 px/m and repeated every 8 m. look_d4 prints anything darker than
+  the asphalt as the street step OR solid ink, so a lighter crack vanishes at every zoom; a thinner one minifies away
+  at 32 (the mock's street is clean) and stays a pen line at 64+. 1 pass (h89a) left a dotted patch outline at 32:
+  2 passes kept. Pan (d5_pan --anchor=8,0.5 on the patch, 48 px/m, 40 ticks): mean change 0.00505 (old) / 0.00506
+  (1 pass) / 0.00507 (2 passes); ink px flipping per tick 0.00116 / 0.00111 / 0.00102: thin lines do not flicker.
+  (First pan try at --anchor=-16,0 was off screen: black crops, 0 change; re-run.) d4 tier 0 px at 32-128; no
+  vermilion/teal px changed.
+- 02:26 MILESTONE (h90, d8a5b9c): the intersection tile's crack thinned the same way (crossing, then road).
+- Frame numbers, d5 tier, h86 (iteration 5 end) -> h90 (L / px darker than 0.2 / HF): 32 px/m 0.410 / 0.231 /
+  0.071 -> 0.427 / 0.212 / 0.068; 48: 0.390 / 0.196 / 0.063 -> 0.396 / 0.183 / 0.062; 64: 0.394 / 0.190 / 0.061 ->
+  0.401 / 0.177 / 0.061. Mock (1280 wide): 0.488 / 0.123 / 0.104. Toward the mock in tone and ink; NOT in HF: the
+  mock's high frequency is fine paper/asphalt grain everywhere, ours was black grid and crack lines (now fewer).
+  Grain is look_d4's (and screen-locked, gap 7). Boards evidence/item23_street_print.png; ladder +1 row.
