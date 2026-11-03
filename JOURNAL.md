@@ -133,3 +133,7 @@ NEXT:
 6. dev/frames/quest1_clip: fail with a non-zero exit when a script error is logged.
 - FRICTION: editing JOURNAL.md while tools/evidence/run.mjs ran failed its "tree changed during
   run" guard (unit tests themselves 339/339). Re-ran the gate with the tree untouched.
+- 11:22 GATES PASS at 36be941 (evidence/run.mjs --no-bench): lint 13/13, unit 339, scenarios
+  9/9 (incl. scenario_quest1_input: paid via input events, replay identical, checkpoint
+  round-trip + tamper refused, Retry, 11 prompts), parity exact + mutation caught, selftest
+  goldens 11/11. Copied to evidence/slice-play/. Exe built at 0a8fda3 (code identical to HEAD).

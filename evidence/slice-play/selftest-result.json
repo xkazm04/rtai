@@ -44,8 +44,8 @@
   "gpu": "NVIDIA GeForce RTX 4090",
   "ok": true,
   "placeholders": 0,
-  "prewarm_ms": 32.458,
+  "prewarm_ms": 31.924,
   "schema": "gtai.selftest/1",
   "texture_failures": [],
-  "texture_load_ms": 103.878
+  "texture_load_ms": 105.741
 }
