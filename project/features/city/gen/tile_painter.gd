@@ -29,6 +29,7 @@ const GENERIC_ROOFS: int = 7
 const LETTERED: Array[int] = [14, 16, 18, 19, 21, 23]
 ## T1's coarse rooftops: on BIG_SHARE of the blocks one 16.4 m building covers the 2 x 2 interior
 ## tiles (mx, my 4-5) with T1-scale objects (a 4.5 m tank, 2.2 m fans); no long building crosses it.
+## Two plates (78 tank + fan pairs, 79 machine room + fan row), picked per block; upright only.
 const T_BIG_ROOF: int = 78
 const BIG_SHARE: float = 0.35
 
@@ -149,7 +150,9 @@ func _block(g: CityGen, b: ChunkBuild, t: Vector2i) -> int:
 	var big: bool = _big_rows(g, t)
 	if big and (mx == 4 or mx == 5):
 		if mx == 4 and my == 4:  # upright: its big hatched shadows fall lower-right, as T1's
-			b.add(ChunkBuild.L_ROOF, T_BIG_ROOF, o + Vector2(8.0, 8.0), 0.0, true)
+			var bk: Vector2i = Vector2i(floori(float(t.x) / PERIOD), floori(float(t.y) / PERIOD))
+			var pick: int = int(g.rnd(bk.x, bk.y, 0, 62) * 2.0)
+			b.add(ChunkBuild.L_ROOF, T_BIG_ROOF + pick, o + Vector2(8.0, 8.0), 0.0, true)
 		return SimConst.T_BLOCK
 	if _empty_interior(g, t) or ((mx == 4 or mx == 6) and _long_at(g, Vector2i(t.x - 1, t.y))):
 		return SimConst.T_BLOCK

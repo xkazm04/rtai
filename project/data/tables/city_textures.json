@@ -870,6 +870,17 @@
         16.4
       ],
       "solid": true
+    },
+    {
+      "art": "res://features/city/art/d5/roofs/building_block_2x2_b.png",
+      "class": "building",
+      "id": 79,
+      "name": "building_block_2x2_b",
+      "size_m": [
+        16.4,
+        16.4
+      ],
+      "solid": true
     }
   ]
 }
