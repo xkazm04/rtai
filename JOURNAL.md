@@ -412,3 +412,7 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
   32/48/64/96 (0 at the 128 kill-cam, off frame). Honest: printed, the head reads a little like a gear ring.
   Board evidence/item20_lamp.png; hero frames = h71; ladder +1 row.
 - 01:03 deleted 16 uncited frame rounds of this iteration (h61-h63, h65, h67, a2, a4, a5, a7, a9-a12, ph1, r41, dlg3; ~330 MB; their A/B crops live in the ladder/boards). Kept every round a board or README cites.
+- 01:04 RE-CHECKED item 2 readability with all of tonight's world additions (h71, Rivet's 3.6 m box, d4 vs d5 tier):
+  32 px/m 4.4% of the box changes (kerb shadow, crosswalk decal edges), the street median Rivet stands on is identical
+  (0.285 / 0.285); 48 px/m 15.0% (+ the car-camera street hatch), street median 0.285 -> 0.283. The ground under the
+  cast is unchanged at gameplay zoom.
