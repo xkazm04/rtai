@@ -12,6 +12,9 @@ const PAN_ZOOM: float = 1.5
 const ANCHOR_M: Vector2 = Vector2(8.0, -5.0)
 const PAN_BOX: Vector2i = Vector2i(480, 320)
 
+## the world-locked crop's centre (metres); --anchor in d5_pan.gd (9.7,-8.5 = the mural roof)
+var anchor_m: Vector2 = ANCHOR_M
+
 
 func shoot() -> int:
 	var ok: bool = DirAccess.make_dir_recursive_absolute(out_dir) == OK
@@ -41,6 +44,6 @@ func _save_pan(name: String) -> bool:
 		return false
 	var view: Vector2 = Vector2(img.get_size())
 	var origin: Vector2 = (view * 0.5 - cam * PAN_ZOOM).round()
-	var at: Vector2i = Vector2i(origin + ANCHOR_M * PX * PAN_ZOOM)
+	var at: Vector2i = Vector2i(origin + anchor_m * PX * PAN_ZOOM)
 	var r: Rect2i = Rect2i(at - PAN_BOX / 2, PAN_BOX)
 	return img.get_region(r).save_png(out_dir.path_join(name + ".png")) == OK

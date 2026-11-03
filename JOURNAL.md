@@ -540,3 +540,12 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   rectangle (32 px/m: rows 0-361 and 706-800; the street band 361-706 and every actor 0 px; 1 stray px at 48). The
   pan-swim test (d5_pan.gd) crops kerb/pavement/street only, so roof swim is NOT measured (open; the roofs are
   mipmapped world sprites like the D4 ones).
+- 02:10 MEASURED roof pan swim (closes the open item above): d5_pan.gd gained `--anchor=<x>,<y>` (metres, the
+  world-locked crop centre; default unchanged). 48 px/m car pan, 40 ticks, crop on the mural roof (9.7,-8.5):
+  mean frame change NEW roofs 0.00959 (overlay off) / 0.00964 (on) vs OLD D5 roofs 0.00814 / 0.00808 (pan6roofold,
+  old plates rebuilt temporarily, then restored: tree clean): +18%. Split by pixel class (d5 series): paper px change
+  0.0146 (new) vs 0.0145 (old), pen-line px 0.0036 vs 0.0035, i.e. the SAME per-pixel rate; the new roof just has
+  more paper (45% vs 32% of px) and paper is where look_d4's SCREEN-locked grain re-rolls on every camera move.
+  So the new art adds no aliasing; the +18% is the known look_d4 grain (iteration-3 NEXT 2: hash(floor(w)), -93%).
+  Default-anchor crop (pan4) 0.00749 vs pan3 0.00706: that crop takes the mural roof's lower edge. Change maps
+  work/i5/pan_changemaps.png.
