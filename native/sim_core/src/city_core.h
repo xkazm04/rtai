@@ -29,6 +29,9 @@ public:
 	void set_riot_centre(int i, double x, double y);
 	void kill(int i);
 	void fire(double x, double y, double vx, double vy, double ttl);
+	// A car hit person i at (vx, vy) m/s: lethal = dead (body slides along the hit), else a
+	// knockdown (shoved 1 m along the hit, then flees 3 s). Called by the vehicles feature only.
+	void strike(int i, double vx, double vy, bool lethal);
 
 	// step.cpp
 	void step(double dt, double camx, double camy, double tgx, double tgy);
@@ -41,6 +44,11 @@ public:
 	void set_rig_slots(const int32_t *slots, int n);
 	void set_person_px(float px) { person_px_ = px; }
 	uint8_t variant_of(int i) const { return (i >= 0 && i < CAP) ? variant_[i] : 0; }
+	// Render only: a car's state for the view's atlas pick (custom.y: 0 intact, 1 d1, 2 d2,
+	// 3 hijacked, 4 wreck); reset when the slot spawns again.
+	void set_car_state(int i, int state) {
+		if (i >= 0 && i < CAP) cstate_[i] = (uint8_t)state;
+	}
 	void fill_render(double vx0, double vy0, double vx1, double vy1, float *const *bufs,
 			int32_t *counts) const;
 
@@ -73,6 +81,7 @@ private:
 	int32_t counters_[CN_COUNT] = {};
 	std::vector<int32_t> clips_;
 	uint8_t rigged_[CAP] = {};
+	uint8_t cstate_[CAP] = {};
 	float person_px_ = 122.88f;
 
 	// flow field (flow.cpp); map_version_ bumps on every stamp / clear (world.cpp)

@@ -53,7 +53,10 @@ func tile_at(x: float, y: float) -> int:
 
 
 func spawn(spec: PackedFloat64Array) -> int:
-	return _s.spawn(spec) if spec.size() == SimConst.SP_LEN else -1
+	var i: int = _s.spawn(spec) if spec.size() == SimConst.SP_LEN else -1
+	if i >= 0:
+		_render.car_state[i] = 0
+	return i
 
 
 func set_riot_centre(i: int, x: float, y: float) -> void:
@@ -63,6 +66,15 @@ func set_riot_centre(i: int, x: float, y: float) -> void:
 
 func kill(i: int) -> void:
 	_s.kill(i)
+
+
+func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
+	CitySimStrike.strike(_s, i, vx, vy, lethal)
+
+
+func set_car_state(i: int, state: int) -> void:
+	if i >= 0 and i < SimConst.CAP:
+		_render.car_state[i] = state
 
 
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
@@ -89,35 +101,7 @@ func get_counters() -> PackedInt32Array:
 
 
 func snapshot() -> PackedFloat64Array:
-	var out: PackedFloat64Array = PackedFloat64Array()
-	for i: int in SimConst.CAP:
-		if _s.alive[i] == 0:
-			continue
-		(
-			out
-			. append_array(
-				[
-					i,
-					_s.kind[i],
-					_s.mode[i],
-					_s.tier[i],
-					_s.px[i],
-					_s.py[i],
-					_s.hx[i],
-					_s.hy[i],
-					_s.v[i],
-					_s.phase[i],
-					_s.t1[i],
-					_s.t2[i],
-					_s.dir[i],
-					_s.ndir[i],
-				]
-			)
-		)
-	for k: int in SimConst.PCAP:
-		if _s.qalive[k] != 0:
-			out.append_array([SimConst.SNAP_PROJ_BASE + k, _s.qx[k], _s.qy[k]])
-	return out
+	return SimArrays.snapshot(_s)
 
 
 func set_render(mms: Array[RID], clips: PackedInt32Array) -> void:

@@ -67,6 +67,14 @@ func kill(i: int) -> void:
 	_call(&"kill", [i])
 
 
+func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
+	_call(&"strike", [i, vx, vy, lethal])
+
+
+func set_car_state(i: int, state: int) -> void:
+	_call(&"set_car_state", [i, state])
+
+
 func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void:
 	_call(&"step", [dt, camx, camy, tgx, tgy])
 

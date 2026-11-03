@@ -8,12 +8,14 @@
 namespace gtai::sim {
 
 namespace {
-// 2D transform rows (a, b, 0, ox / c, d, 0, oy), then colour and custom.x.
-void put(float *o, const float *xf, const float *rgba, float custom) {
+// 2D transform rows (a, b, 0, ox / c, d, 0, oy), then colour, custom.x (art cell) and custom.y
+// (cars: the render state set_car_state() holds).
+void put(float *o, const float *xf, const float *rgba, float custom, float custom_y = 0.0f) {
 	for (int k = 0; k < 8; k++) o[k] = xf[k];
 	for (int k = 0; k < 4; k++) o[8 + k] = rgba[k];
 	o[12] = custom;
-	o[13] = o[14] = o[15] = 0.0f;
+	o[13] = custom_y;
+	o[14] = o[15] = 0.0f;
 }
 const float WHITE[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 const float INK_PED[4] = {0.09f, 0.075f, 0.106f, 0.3f};
@@ -74,7 +76,7 @@ void CityCore::fill_render(double vx0, double vy0, double vx1, double vy1, float
 			np++;
 		} else {
 			const float body[8] = {dx * CL, -dy * CW, 0.0f, X, dy * CL, dx * CW, 0.0f, Y};
-			put(bufs[RL_CARS] + nc * RL_STRIDE, body, WHITE, (float)variant_[i]);
+			put(bufs[RL_CARS] + nc * RL_STRIDE, body, WHITE, (float)variant_[i], (float)cstate_[i]);
 			const float sh[8] = {dx * CL, -dy * CW, 0.0f, X + 5.12f, dy * CL, dx * CW, 0.0f, Y + 5.12f};
 			put(bufs[RL_CAR_SHADOWS] + nc * RL_STRIDE, sh, INK_CAR, (float)variant_[i]);
 			nc++;

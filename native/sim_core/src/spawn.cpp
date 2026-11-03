@@ -1,4 +1,6 @@
 // Spawn, kill and fire: the rare per-actor calls (NAT-02).
+#include <cmath>
+
 #include "city_core.h"
 
 namespace gtai::sim {
@@ -10,6 +12,7 @@ int CityCore::spawn(const double *spec) {
 	for (int i = 0; i < CAP; i++) {
 		if (alive_[i] != 0) continue;
 		alive_[i] = 1;
+		cstate_[i] = 0;
 		kind_[i] = (uint8_t)k;
 		tier_[i] = 1;
 		variant_[i] = (uint8_t)(int)spec[SP_VARIANT];
@@ -48,6 +51,28 @@ void CityCore::kill(int i) {
 	if (r >= 0 && owner_[r] == i + 1) owner_[r] = 0;
 	res_[i] = -1;
 	counters_[CN_DESPAWNED] += 1;
+}
+
+void CityCore::strike(int i, double vx, double vy, bool lethal) {
+	if (alive_[i] == 0 || mode_[i] == M_DEAD || (kind_[i] != K_PED && kind_[i] != K_COP)) return;
+	double sp = std::sqrt(vx * vx + vy * vy);
+	if (sp < 1e-9) return;
+	double dx = vx / sp, dy = vy / sp;
+	if (lethal) {
+		mode_[i] = M_DEAD;
+		t2_[i] = 0.0;
+		v_[i] = sp * 0.5;
+		hx_[i] = dx;
+		hy_[i] = dy;
+		counters_[CN_KILLED] += 1;
+		return;
+	}
+	px_[i] += dx;
+	py_[i] += dy;
+	mode_[i] = M_FLEE;
+	t1_[i] = 3.0;
+	sx_[i] = px_[i] - dx * 4.0;
+	sy_[i] = py_[i] - dy * 4.0;
 }
 
 void CityCore::fire(double x, double y, double vx, double vy, double ttl) {

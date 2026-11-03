@@ -91,3 +91,36 @@ static func copy_chunk(
 		var src: int = ly * nc
 		for lx: int in nc:
 			s.cells[row + lx] = cells[src + lx]
+
+
+## The parity / replay snapshot of a sim state (CitySimBackend.snapshot()).
+static func snapshot(s: CitySimState) -> PackedFloat64Array:
+	var out: PackedFloat64Array = PackedFloat64Array()
+	for i: int in SimConst.CAP:
+		if s.alive[i] == 0:
+			continue
+		(
+			out
+			. append_array(
+				[
+					i,
+					s.kind[i],
+					s.mode[i],
+					s.tier[i],
+					s.px[i],
+					s.py[i],
+					s.hx[i],
+					s.hy[i],
+					s.v[i],
+					s.phase[i],
+					s.t1[i],
+					s.t2[i],
+					s.dir[i],
+					s.ndir[i],
+				]
+			)
+		)
+	for k: int in SimConst.PCAP:
+		if s.qalive[k] != 0:
+			out.append_array([SimConst.SNAP_PROJ_BASE + k, s.qx[k], s.qy[k]])
+	return out

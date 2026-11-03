@@ -2,9 +2,9 @@ class_name CitySimRender
 extends RefCounted
 ## The reference sim's MultiMesh writer: every visible actor into five 2D-transform buffers
 ## (people, people shadows, cars, car shadows, bullets; RL_STRIDE floats per instance: 2x4
-## transform rows, colour, custom x = atlas cell), one upload per layer per frame. Render output
-## is not sim state: parity and replay never read it. Only the fallback path uses this writer;
-## the game draws through the native one.
+## transform rows, colour, custom x = atlas cell, custom y = car state), one upload per layer
+## per frame. Render output is not sim state: parity and replay never read it. Only the
+## fallback path uses this writer; the game draws through the native one.
 
 const S_PED: float = 122.88
 const S_SHADOW: float = 25.6
@@ -14,6 +14,8 @@ const INK: Color = Color(0.09, 0.075, 0.106, 1.0)
 const BULLET: Color = Color(1.0, 0.85, 0.4, 1.0)
 
 var counts: PackedInt32Array = SimArrays.i32(SimConst.RL_COUNT, 0)
+## Render only: each car slot's state for the view's atlas pick (custom.y, VehicleBody.State).
+var car_state: PackedByteArray = SimArrays.u8(SimConst.CAP)
 var person_px: float = S_PED
 var _rigged: PackedByteArray = SimArrays.u8(SimConst.CAP)
 var _s: CitySimState
@@ -66,7 +68,7 @@ func write(vx0: float, vy0: float, vx1: float, vy1: float) -> void:
 				_tint(SimConst.RL_PEDS, Color.WHITE, _frame_cell(i))
 		else:
 			_put(SimConst.RL_CARS, h, Vector2(CAR_L, CAR_W), pos)
-			_tint(SimConst.RL_CARS, Color.WHITE, _s.variant[i])
+			_tint(SimConst.RL_CARS, Color.WHITE, _s.variant[i], car_state[i])
 			_put(SimConst.RL_CAR_SHADOWS, h, Vector2(CAR_L, CAR_W), pos + Vector2(5.12, 5.12))
 			_tint(SimConst.RL_CAR_SHADOWS, Color(INK, 0.45), _s.variant[i])
 	_write_bullets(view)
@@ -90,9 +92,9 @@ func _put(layer: int, h: Vector2, size: Vector2, pos: Vector2) -> void:
 	)
 
 
-func _tint(layer: int, c: Color, cell: int) -> void:
+func _tint(layer: int, c: Color, cell: int, state: int = 0) -> void:
 	var out: Array = _layers[layer]
-	out.append_array([c.r, c.g, c.b, c.a, float(cell), 0.0, 0.0, 0.0])
+	out.append_array([c.r, c.g, c.b, c.a, float(cell), float(state), 0.0, 0.0])
 
 
 func _upload() -> void:

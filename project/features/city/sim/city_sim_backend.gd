@@ -17,6 +17,10 @@ extends RefCounted
 @abstract func spawn(spec: PackedFloat64Array) -> int
 @abstract func set_riot_centre(i: int, x: float, y: float) -> void
 @abstract func kill(i: int) -> void
+## A car hit person i at (vx, vy) m/s (the vehicles feature): lethal = dead, else a knockdown.
+@abstract func strike(i: int, vx: float, vy: float, lethal: bool) -> void
+## Render only: a car slot's state for the atlas pick (custom.y; VehicleBody.State).
+@abstract func set_car_state(i: int, state: int) -> void
 ## One fixed tick (SIM-01): dt is SimClock.TICK_DT; cam is the bubble centre; tg the pursuit target.
 @abstract func step(dt: float, camx: float, camy: float, tgx: float, tgy: float) -> void
 @abstract func get_counters() -> PackedInt32Array

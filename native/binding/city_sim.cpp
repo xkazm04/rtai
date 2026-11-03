@@ -55,6 +55,12 @@ void CitySim::kill(int i) {
 	if (slot_ok(i)) core_->kill(i);
 }
 
+void CitySim::strike(int i, double vx, double vy, bool lethal) {
+	if (slot_ok(i)) core_->strike(i, vx, vy, lethal);
+}
+
+void CitySim::set_car_state(int i, int state) { core_->set_car_state(i, state); }
+
 void CitySim::fire(double x, double y, double vx, double vy, double ttl) {
 	core_->fire(x, y, vx, vy, ttl);
 }
@@ -144,6 +150,8 @@ void CitySim::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("spawn", "spec"), &CitySim::spawn);
 	ClassDB::bind_method(D_METHOD("set_riot_centre", "i", "x", "y"), &CitySim::set_riot_centre);
 	ClassDB::bind_method(D_METHOD("kill", "i"), &CitySim::kill);
+	ClassDB::bind_method(D_METHOD("strike", "i", "vx", "vy", "lethal"), &CitySim::strike);
+	ClassDB::bind_method(D_METHOD("set_car_state", "i", "state"), &CitySim::set_car_state);
 	ClassDB::bind_method(D_METHOD("fire", "x", "y", "vx", "vy", "ttl"), &CitySim::fire);
 	ClassDB::bind_method(D_METHOD("step", "dt", "camx", "camy", "tgx", "tgy"), &CitySim::step);
 	ClassDB::bind_method(D_METHOD("get_counters"), &CitySim::get_counters);
