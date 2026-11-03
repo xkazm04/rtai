@@ -140,6 +140,19 @@ bosses we resolve in future."
   - FRICTION: the export needed `build/export/windows-bench/` to exist (a fresh worktree).
   - Files: evidence/bench-*-bodies-contended.json + .txt.
 
+### MILESTONE: look goldens re-blessed + final gates (commit 5352f06)
+- The look-golden selftest failed with the body on (0/11, worst mean 23.04) and matched exactly with the
+  body off (11/11, worst 0.00). The selftest's Rivet stands at the junction riot, and the rioters are now shoved
+  off him. I compared old and new by eye: same city, camera and look; only the crowd positions differ.
+  Re-blessed deliberately, with a decision line in docs/decisions.md. Block goldens 5/5, unchanged.
+- Final `node tools/evidence/run.mjs --no-bench --allow-dirty` (dirty = only the uncommitted
+  evidence/clip/ media + 2 quest JSONs). lint PASS, scenarios 12/12 PASS, parity exact PASS,
+  selftest PASS (11/11 + 5/5). Unit tests: 332/333 in that run. The failure was
+  test_noir_shadows.gd `test_only_shadow_commands_with_a_length_are_swept`, an engine
+  "Parameter t is null" (the noir lane's test, untouched by me). Re-run twice straight after: 333/333 both
+  times. FRICTION: that test is FLAKY under machine contention; reported, not fixed (not my scope).
+- Clip media (59 MB) is not committed. It is in gtai-masters/day-d5/collisions/ and evidence/clip/.
+
 ### NEXT
 1. REQUEST 1 (slice-play) through the Director: d-slice's quest1_session must read
    `city.body.pos` back into the pilot after each city step, or the pilot puts Rivet back inside people.
