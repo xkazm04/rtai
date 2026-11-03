@@ -1,5 +1,14 @@
 [
   {
+    "file": "save-notice-32ppm.png",
+    "title": "A damaged save, and the player is told: newest slot flipped, Continue loads the older one, one-line notice on the HUD",
+    "source": "game-city",
+    "branch": "d-save-trial (d-save + d-slice 19eb758 + patch 0005)",
+    "look": "d4/d5 default",
+    "ppm": 32,
+    "note": "The real game (boot/quest1.tscn on the generated city, real Continue path, real Save engine): quest 1 played through the bound input to beat 3, the newest of the two slots has a byte flipped, Continue lands on the older slot (b2-payphone, tick 768, state hash verified) and the HUD shows 'A save was damaged. Loaded the last good one.' above the subtitle for 7 s. Captured by dev/showcase/save_notice_frame.tscn, windowed d3d12, CONTENDED machine (no timing claimed). One earlier capture rejected: the notice sat under the beat panel and overlapped the objective prompt; moved above the subtitle. 0 camera breaks. No before frame: the notice did not exist (the fallback was silent on screen)."
+  },
+  {
     "file": "autosave-input.json",
     "title": "Autosave on the slice's real path: bound input -> Save -> drop world -> Continue -> planted corruption -> fallback",
     "source": "dev-scene",

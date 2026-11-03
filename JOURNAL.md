@@ -127,3 +127,31 @@ d-slice. Loc keys when the PO table lands. If slice-play wants quit-save off whi
 `save_on_quit()` is the one place.
 - MILESTONE full gates on d-save at 895e93b: `node tools/evidence/run.mjs --no-bench` PASS (lint 13/13,
   unit 367, scenarios 9/9 incl. replay_60s and autosave_resume, parity exact, selftest look goldens 11/11).
+
+## 2026-11-03 iteration 6 (BUILD) - the fallback notice reaches the screen
+- GAP found: `Save.take_notice()` was raised on a fallback but nothing in the game showed it (the
+  title card's Continue called `Save.load_latest` and dropped the line). The brief says "show a
+  one-line notice through a function the HUD can call": the function existed, the HUD never called it.
+- MILESTONE `SaveNotice` (features/save, mine; wall clock, injectable, 3 unit tests; unit 370 on d-save,
+  lint 13/13). First version ticked by frame delta and tripped the SIM-01 banned-api check in the view:
+  it now compares `Time.get_ticks_msec()` against an expiry, so no `_process(delta)` is needed.
+- MILESTONE patch 0005 (trial commit on `d-save-trial`, merged with d-slice 19eb758, the HUD move):
+  `HudState.notice`, `HudView._notice` (a memo strip centred above the subtitle), `CollectCallView.notice`
+  (SaveNotice), `Quest1Game._begin` shows `Save.take_notice()` for 7 s. SHARED-FILE CHANGES (d-slice's
+  files, minimal, in the patch only, not on d-save): hud_state.gd, hud_view.gd, collect_call_view.gd,
+  quest1_game.gd. REQUEST 1 -> slice-play: apply patch 0005 (needs 0001..0004 first) or move the notice
+  line to wherever the HUD wants it; `view.notice.show(line)` is the whole API.
+- Proof: `dev/showcase/save_notice_frame.tscn` plays quest 1 by bound input to b3, flips the newest slot,
+  presses the real Continue, captures the real game at 32 px/m: evidence/autosave/save-notice-32ppm.png
+  (frames.json entry, source game-city). 1 capture rejected (notice overlapped the objective prompt
+  under the beat panel; moved above the subtitle). 0 camera breaks. CONTENDED, no timing claimed.
+- Gates on the trial tree (d-save + d-slice 19eb758 + 0005): lint 13/13, unit 395, scenarios 12/12
+  (replay identical in quest1_input). Not re-run on d-save itself beyond lint + unit (no sim touched).
+  No bench, no lock.
+- FRICTION the notice is raised once, by the first load after the damage; a second load sees the
+  already-quarantined slot as plain missing and says nothing. Right for the title card's Continue
+  (the first load), noted for a Retry-after-death path that loads again.
+
+NEXT: Director applies patches 0001..0005 after merging d-save and d-slice. Loc keys for the notices
+when the PO table lands. If late-game loads get slow (>1 s re-simulation), move the replay behind a
+loading frame.

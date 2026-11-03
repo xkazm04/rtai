@@ -1,0 +1,188 @@
+From 3c12884a88f7a03f202bde68bfc84deba228cb8f Mon Sep 17 00:00:00 2001
+From: xkazm04 <kazdan@seznam.cz>
+Date: Tue, 3 Nov 2026 12:48:06 +0100
+Subject: [PATCH] feat(save): the fallback notice on screen (HudState.notice,
+ drawn above the subtitle), shown after Continue; windowed proof frame
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+---
+ .../collect_call/view/collect_call_view.gd    |  3 +
+ project/boot/quest1_game.gd                   |  2 +
+ project/dev/showcase/save_notice_frame.gd     | 66 +++++++++++++++++++
+ project/dev/showcase/save_notice_frame.gd.uid |  1 +
+ project/dev/showcase/save_notice_frame.tscn   |  6 ++
+ project/features/hud/hud_state.gd             |  2 +
+ project/features/hud/hud_view.gd              |  9 +++
+ 7 files changed, 89 insertions(+)
+ create mode 100644 project/dev/showcase/save_notice_frame.gd
+ create mode 100644 project/dev/showcase/save_notice_frame.gd.uid
+ create mode 100644 project/dev/showcase/save_notice_frame.tscn
+
+diff --git a/project/boot/collect_call/view/collect_call_view.gd b/project/boot/collect_call/view/collect_call_view.gd
+index 08844af..d01d553 100644
+--- a/project/boot/collect_call/view/collect_call_view.gd
++++ b/project/boot/collect_call/view/collect_call_view.gd
+@@ -9,6 +9,8 @@ var cast_view: CastView = CastView.new()
+ var fx_view: FxView = FxView.new()
+ var hud_view: HudView = HudView.new()
+ var hud_feed: HudFeed = HudFeed.new()
++## The save notice (Save.take_notice after a load); the game calls `notice.show(line)`.
++var notice: SaveNotice = SaveNotice.new()
+ ## The slice's objective prompt and pointer (off unless the caller turns it on).
+ var objective_view: ObjectiveView = null
+ ## Where the camera looks, in metres; Vector2.INF follows Rivet.
+@@ -91,6 +93,7 @@ func _ready_on_city() -> void:
+ 
+ func _process(_delta: float) -> void:
+ 	hud_feed.fill(hud_view.state, _stage, _system)
++	hud_view.state.notice = notice.text()
+ 	if _stage == null or city_view != null:
+ 		return
+ 	var at: Vector2 = focus if focus != Vector2.INF else _stage.arena.rivet.pos
+diff --git a/project/boot/quest1_game.gd b/project/boot/quest1_game.gd
+index 46e60aa..b96a8db 100644
+--- a/project/boot/quest1_game.gd
++++ b/project/boot/quest1_game.gd
+@@ -113,6 +113,8 @@ func _begin(opened: Quest1Session) -> void:
+ 		session.live.viewport = get_viewport()
+ 		session.live.origin_px = func() -> Vector2:
+ 			return get_viewport().get_visible_rect().size / 2.0
++	if view != null:
++		view.notice.show(Save.take_notice())
+ 	card.hide_all()
+ 	started.emit()
+ 	Log.info("quest1", "started: Rivet is the player's (seed %d)" % Quest1Session.MASTER_SEED)
+diff --git a/project/dev/showcase/save_notice_frame.gd b/project/dev/showcase/save_notice_frame.gd
+new file mode 100644
+index 0000000..32c7d12
+--- /dev/null
++++ b/project/dev/showcase/save_notice_frame.gd
+@@ -0,0 +1,66 @@
++extends Node
++## The save notice on the real game's screen: quest 1 is played through the bound input to beat 3
++## (two autosaves, the two slots), the newest slot is flipped, and the title card's Continue is
++## pressed. The loader falls back to the older slot; the HUD shows the one-line notice. Frame
++## captured at 32 px/m (on foot). Windowed only. Usage:
++##   godot --rendering-driver d3d12 --path project res://dev/showcase/save_notice_frame.tscn
++##     -- --out=<dir>
++
++const ROOT: String = "user://save_notice_frame"
++const STOP_POINT: String = "as-b3-toner-room"
++const TIMEOUT_TICKS: int = 25 * 60 * SimClock.TICK_RATE
++const SETTLE_FRAMES: int = 90
++
++
++func _ready() -> void:
++	var out: String = "user://save_notice_frame_out"
++	for arg: String in OS.get_cmdline_user_args():
++		if arg.begins_with("--out="):
++			out = arg.trim_prefix("--out=")
++	SaveKit.wipe(ROOT)
++	Save.use_root(ROOT)
++	var game: Quest1Game = (load("res://boot/quest1.tscn") as PackedScene).instantiate()
++	game.settings_path = ""
++	add_child(game)
++	game.card.start_pressed.emit()
++	var failure: String = _play(game.session)
++	if failure == "":
++		var slots: SaveSlots = Save.slots()
++		var newest: int = 0 if slots.read(0).seq() > slots.read(1).seq() else 1
++		SaveKit.flip(slots.slot_path(newest), 70)
++		game.card.continue_pressed.emit()
++		for i: int in SETTLE_FRAMES:
++			await get_tree().process_frame
++		failure = _capture(out, game)
++	Save.use_root(Save.DEFAULT_ROOT)
++	SaveKit.wipe(ROOT)
++	if failure != "":
++		Log.error("save_notice_frame", failure)
++	get_tree().quit(0 if failure == "" else 1)
++
++
++func _play(s: Quest1Session) -> String:
++	s.world.set_process(false)
++	var driver: CollectCallInputDriver = CollectCallInputDriver.new(s.stage, s.system)
++	var fired: Array[String] = []
++	s.autosave.sink = func(point: String, body: Dictionary, meta: Dictionary) -> void:
++		fired.append(point)
++		Save.autosave(point, body, meta)
++		Save.flush()
++	while not fired.has(STOP_POINT) and s.tick() < TIMEOUT_TICKS and not driver.done():
++		driver.act()
++		s.step()
++		s.autosave.poll()
++	driver.release()
++	return "" if fired.has(STOP_POINT) else "autosaves fired %s" % [fired]
++
++
++func _capture(out: String, game: Quest1Game) -> String:
++	if game.view == null or game.view.notice.text() == "":
++		return "no notice on screen after Continue"
++	var dir_err: Error = DirAccess.make_dir_recursive_absolute(out)
++	var image: Image = get_viewport().get_texture().get_image()
++	if dir_err != OK or image.save_png(out.path_join("save-notice-32ppm.png")) != OK:
++		return "could not write the frame to %s" % out
++	Log.info("save_notice_frame", "notice: %s -> %s" % [game.view.notice.text(), out])
++	return ""
+diff --git a/project/dev/showcase/save_notice_frame.gd.uid b/project/dev/showcase/save_notice_frame.gd.uid
+new file mode 100644
+index 0000000..cffe024
+--- /dev/null
++++ b/project/dev/showcase/save_notice_frame.gd.uid
+@@ -0,0 +1 @@
++uid://dcm3qncb048gd
+diff --git a/project/dev/showcase/save_notice_frame.tscn b/project/dev/showcase/save_notice_frame.tscn
+new file mode 100644
+index 0000000..7f8677b
+--- /dev/null
++++ b/project/dev/showcase/save_notice_frame.tscn
+@@ -0,0 +1,6 @@
++[gd_scene format=3]
++
++[ext_resource type="Script" path="res://dev/showcase/save_notice_frame.gd" id="1_savenotice"]
++
++[node name="SaveNoticeFrame" type="Node"]
++script = ExtResource("1_savenotice")
+diff --git a/project/features/hud/hud_state.gd b/project/features/hud/hud_state.gd
+index 33661a0..785d2a1 100644
+--- a/project/features/hud/hud_state.gd
++++ b/project/features/hud/hud_state.gd
+@@ -17,6 +17,8 @@ var ammo: int = -1
+ ## The subtitle box: speaker and words; an empty speaker hides the box.
+ var speaker: String = ""
+ var words: String = ""
++## One line under the beat panel (the save notice); empty hides it.
++var notice: String = ""
+ ## Translated labels (HUD__HEAT, HUD__UNARMED).
+ var heat_label: String = "HEAT"
+ var unarmed_label: String = "unarmed"
+diff --git a/project/features/hud/hud_view.gd b/project/features/hud/hud_view.gd
+index a4d1081..d2a0dba 100644
+--- a/project/features/hud/hud_view.gd
++++ b/project/features/hud/hud_view.gd
+@@ -31,6 +31,8 @@ func _draw() -> void:
+ 	if state.head != "":
+ 		_top_left()
+ 	_top_right(screen)
++	if state.notice != "":
++		_notice(screen)
+ 	if state.speaker != "":
+ 		_subtitle(screen, state.speaker, state.words)
+ 
+@@ -45,6 +47,13 @@ func _top_left() -> void:
+ 		draw_texture_rect(art.texture(id), pip, false)
+ 
+ 
++## The one-line notice: centred just above the subtitle box, clear of the objective prompt.
++func _notice(screen: Vector2) -> void:
++	var box: Rect2 = Rect2(screen.x * 0.5 - 450.0, screen.y - MARGIN - 236.0 - 84.0, 900, 52)
++	_panel(box)
++	_say(box.position + Vector2(18, 38), state.notice, 24)
++
++
+ func _top_right(screen: Vector2) -> void:
+ 	var box: Rect2 = Rect2(screen.x - MARGIN - 420, MARGIN - 8, 420, 104)
+ 	draw_texture_rect(art.texture(&"cash_frame"), box, false)
+-- 
+2.43.0.windows.1
+
