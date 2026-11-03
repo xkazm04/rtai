@@ -125,3 +125,5 @@ Loc keys when the string table lands; the "quit" autosave point with slice-play)
 NEXT: Director applies patches 0001..0004 (or cherry-picks `d-save-trial`) after merging d-save and
 d-slice. Loc keys when the PO table lands. If slice-play wants quit-save off while paused/in a cutscene,
 `save_on_quit()` is the one place.
+- MILESTONE full gates on d-save at 895e93b: `node tools/evidence/run.mjs --no-bench` PASS (lint 13/13,
+  unit 367, scenarios 9/9 incl. replay_60s and autosave_resume, parity exact, selftest look goldens 11/11).
