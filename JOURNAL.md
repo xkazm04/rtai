@@ -963,7 +963,7 @@ NEXT (iteration 14 close, in order):
   there are props. The building quads are still drawn (fill cost included in the measured +0.32 ms iGPU).
 NEXT addendum: find a view where a building sweep shows (a block edge onto a plaza or pavement); if none, set
   `len_m.building` 0 and re-measure the GPU cost.
-- (06:02) Measured the addendum instead of guessing: `len_m.building` 0 (not committed), AMD iGPU, roofs, 1080p,
+- (05:59) Measured the addendum instead of guessing: `len_m.building` 0 (not committed), AMD iGPU, roofs, 1080p,
   z1.5, 2 runs: noir without / with shadows 9.80 -> 10.09 ms (+0.29) both runs, 1,047 quads, CPU render +0.03 ms
   - vs +0.32 ms / 1,972 quads / +0.07 ms with the building sweeps. So the invisible building sweeps cost ~0.03 ms
   GPU + ~0.03 ms CPU; most of the +0.3 ms is the prop sweeps (or the extra layer itself). Default left at 3.0
