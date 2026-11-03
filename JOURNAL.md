@@ -69,3 +69,9 @@ NEXT (iteration 2):
   time 15.5 s, turn peak 720 deg/s, replay identical, planted no-stick fault caught);
   `--bot=course` in the scene; frame `arena-course-32.png`. FRICTION: arena walls are drawn but
   do not collide yet (NEXT 3).
+- MILESTONE 21:22: first clip `gtai-masters/eve/arena/clips/arena-range-32ppm-15s.mp4` (Godot
+  `--write-movie`, `--fixed-fps 60`, 900 frames, made into an mp4 with ffmpeg). I checked the
+  8-frame sheet. Recipe: `"$GODOT_BIN" --rendering-driver d3d12 --fixed-fps 60 --resolution
+  1280x720 --write-movie <x>.avi --quit-after 900 --path project res://dev/arena/arena.tscn --
+  --bot=range --ppm=32`. Any lane can capture its station the same way. frames.json: 7 entries.
+- answers.json re-read 21:22: no answers yet to arena-1 or arena-2.
