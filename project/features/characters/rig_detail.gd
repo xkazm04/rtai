@@ -6,7 +6,7 @@ extends RefCounted
 ## parts have the D4 file names, sizes, pivots and alpha (silhouette lock) and the overlay's
 ## alpha is the zoom fade (`amount`, 0 at ON_ZOOM -> 1 at FULL_ZOOM), so the switch itself
 ## changes no pixel and nothing ever moves an outline or the sticker halo. Parts printed with a
-## palette swap (a cop's vermilion head) keep their D4 print: the overlay would undo the swap.
+## palette swap keep their D4 print: the overlay would undo the swap.
 ## Overlays are made once per rig on first use, then only shown / hidden. Render-side only.
 
 const ON_ZOOM: float = 1.75

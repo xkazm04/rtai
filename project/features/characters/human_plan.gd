@@ -12,7 +12,6 @@ static func cop() -> BodyPlan:
 	var p: BodyPlan = _human(BodyPlan.Kind.COP, "cop", "head_cap", 0.30)
 	p.size_k = 1.45
 	p.gait_scale = 0.8
-	p.head_swap = 4
 	p.gun_arm = BodyPlan.R
 	p.gun_cell = "forearm_pistol"
 	p.melee_arm = BodyPlan.R

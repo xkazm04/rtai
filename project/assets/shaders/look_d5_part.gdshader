@@ -45,6 +45,9 @@ const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
 const vec3 TEAL = vec3(0.122, 0.710, 0.659);
 const vec3 INK = vec3(0.090, 0.075, 0.106);
+// d5-cast (2026-11-03): the police inks (palette.json cop_blue / cop_blue_hi), as print_part.gdshader
+const vec3 COP_BLUE = vec3(0.227, 0.278, 0.400);
+const vec3 COP_BLUE_HI = vec3(0.310, 0.525, 0.878);
 const vec3 STEEL_HI = vec3(0.915, 0.880, 0.890);
 const vec3 STEEL_MID = vec3(0.740, 0.700, 0.760);
 const vec3 STEEL_LO = vec3(0.420, 0.385, 0.450);
@@ -108,6 +111,11 @@ void fragment() {
 			bool plate = red_lead(textureLod(TEXTURE, UV, plate_lod).rgb) > verm_gate * 0.6;
 			o = plate ? VERM : mix(VERM, INK, rust_dry);
 			o = d > 0.72 ? mix(o, INK, 0.55) : o;
+			o = mix(o, INK, strokes(q, 0.785, shade * shade_k * verm_shade));
+		} else if (s.b - max(s.r, s.g) >= (dens(s) < 0.55 ? 0.196 : 0.086) && s.g >= s.r) {
+			// cop blue: the uniform plate (navy) and the small marks (light), hatched like the vermilion plates
+			o = dot(s, vec3(0.299, 0.587, 0.114)) > 0.40 ? COP_BLUE_HI : COP_BLUE;
+			o = d > 0.86 ? mix(o, INK, 0.6) : o;
 			o = mix(o, INK, strokes(q, 0.785, shade * shade_k * verm_shade));
 		} else {
 			o = mix(CREAM, STEEL_HI, smoothstep(0.08, 0.16, d));
