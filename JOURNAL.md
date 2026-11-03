@@ -1427,3 +1427,20 @@ NEXT (final, iteration 14; supersedes the 04:48 NEXT where they differ):
   (the Godot processes running now are other lanes', untouched). The final NEXT is the 04:54 one plus the 04:58 and
   05:00 notes (quest patch also inks the whisper rings; re-bless n-visual's goldens after the merge). Nothing pushed or
   merged.
+
+## 2026-11-03 05:02 iteration 16, BUILD (raise the weakest item; stop 06:32)
+- 05:03 Re-read journal / log / evidence index. Fresh frames: n-d4 alone `masters:night/d4-production/before_i16/` and
+  the MERGED view the owner will see (scratch `scratch-m16` = n-visual 41ee996 + `merge --no-commit n-d4`, my bin +
+  baked chunks, re-imported) `before_i16m/city-{0,1,2}-{32,48,64}ppm.png`. Checked against d4h2_mock: vehicles
+  (`work/i16/vehicles.png`), props (`work/i16/props.png`), road tiles, quest 1 beats - no new placeholder; the
+  remaining gaps are code-side (generator pick = REQUEST 19, the paving print pass, Rivet's part print).
+- 05:09 REJECTED, NOT SHIPPED: D5 ink hatch + grime on Rivet's parts (`masters:tools/rivet_grime.py`: a 45-degree ink
+  hatch on the lower-right band of every light region, sparse ink scuffs on the steel). Merged scratch, same scene:
+  v1 all parts `after_i16g2/` (`work/i16/rivet_ab_g2.png`): the torso plate's "U" hose loop breaks into noise at 32 /
+  48 / 64 - worse. v2 limbs only, 11 px hatch `after_i16g3/`: dotted screen-door at 64. v3 limbs only, 18 px hatch
+  `after_i16g4/` (`work/i16/rivet_zoom_g4.png`): 32 unchanged (the rig's sticker LOD; 0-51 px differ in the Rivet
+  box), 64 prints real diagonal hatch on the joints (a D5-ward gain), 48 grittier. Reverted because the binding D4
+  hybrid (directions-v2 board: "sticker-rimmed characters", "flat-value cut-outs"; "hatching, grime and sketch lines
+  turn to mush" on the character) and `features/characters/art/README.md` ("no hatching on the characters") rule it
+  out, and 48 shows exactly that grit. Kept as an OWNER QUESTION: hatch Rivet's limbs for the 64 px/m boss arenas
+  only? (variant `masters:work/i16/rivet_g4/`, originals `backup_rivet16/`). scratch-m16 restored. 0 Codex.
