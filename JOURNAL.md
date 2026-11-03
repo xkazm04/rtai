@@ -957,3 +957,6 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   actor (busier at 48 where cops stand close to Rivet). A taste call, so not in the package. Board
   evidence/item38_rim_owner_ab.png; ladder row.
 - 03:55 gates: evidence tool (--no-parity --no-bench) ALL PASS at f5145f8 (lint 13/13 over 191 files, unit 149/0, scenarios 8/0, selftest ok); 72 untracked evidence PNGs moved aside and restored.
+- 03:56 TOOL (masters, outside git): tools/package_shot.sh <round> [hero|arena] shoots a scene with EVERY open proposal
+  and restores project/ (refuses a dirty tree; checks the restore). h117pkg (from the committed files) = h115se1 at
+  32-128 (0 px), so the package frame is reproducible from HEAD in one command.

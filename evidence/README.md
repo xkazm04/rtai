@@ -249,6 +249,9 @@ What still separates us, largest first:
    now separates the two where they touch, which may settle it without toning the zebra.
 6. **Up close (D5 proper)**, unchanged since iteration 5: the 128 kill-cam and the arena at 64 are the closest
    frames to the concept; King needs a rig and a King-tuned part print.
+Reproduce the package frame from HEAD: `bash C:/Users/kazda/kiro/gtai-masters/night/d5-close/tools/package_shot.sh <round> [hero|arena]`
+(rebuilds the roof plates, sets the floors, shoots with D5_PRINT=thin D5_HALO=ink D5_HALO_SHADOW=1, restores the tree;
+h117pkg = h115se1, 0 px).
 Closed this iteration: gap 7 of iteration 6 (STRIKE on the centre line, `item33`), the "fix the screen grain first"
 dependency of the floors (now inside look_d5_print, `item32`), gap 5's outer line (as a proposal, `item34`).
 
