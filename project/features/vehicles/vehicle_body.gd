@@ -20,6 +20,11 @@ const GRIP_YAW: float = 0.85
 ## (hysteresis: no flicker at the threshold).
 const RESTORE: float = 2.2
 const DRIFT_EXIT: float = 0.6
+## Impact spin (rad/s): kicked by an off-centre hit (VehicleDamage.collide), capped, and bled by
+## the tyres at SPIN_DAMP rad/s2 so a shunt turns the car and the grip catches it.
+const SPIN_MAX: float = 4.0
+const SPIN_DAMP: float = 5.0
+const GYRATION_SQ: float = 2.2
 
 var id: int = 0
 var profile: VehicleProfile = null
@@ -36,6 +41,7 @@ var wreck_t: float = 0.0
 ## Last step's lateral slip (m/s) and whether the car was sliding (traces, skid FX).
 var slip: float = 0.0
 var sliding: bool = false
+var spin: float = 0.0
 
 
 func _init(p_id: int, p_profile: VehicleProfile, p_pos: Vector2, p_head: Vector2) -> void:
@@ -67,7 +73,17 @@ func step(dt: float, throttle: float, steer: float, handbrake: bool) -> void:
 	_turn(vf, steer, handbrake, dt)
 	if not handbrake and absf(vf) > 1.0:
 		_rotate(clampf(RESTORE * vl / vf, -RESTORE, RESTORE) * dt)
+	if spin != 0.0:
+		_rotate(spin * dt)
+		spin = _toward(spin, 0.0, SPIN_DAMP * dt)
 	pos += vel * dt
+
+
+## A yaw kick from an impulse dv (m/s along -n for this body) hitting `lever` m ahead of centre.
+func kick(lever: float, n: Vector2, dv: float) -> void:
+	var r: Vector2 = head * lever
+	var j: Vector2 = -n * dv
+	spin = clampf(spin + (r.x * j.y - r.y * j.x) / GYRATION_SQ, -SPIN_MAX, SPIN_MAX)
 
 
 func speed() -> float:

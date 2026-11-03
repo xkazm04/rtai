@@ -138,7 +138,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(cars.size())
 	out.put_32(driving.id if driving != null else 0)
 	for b: VehicleBody in cars:
-		for f: float in [b.pos.x, b.pos.y, b.head.x, b.head.y, b.vel.x, b.vel.y, b.hp_lost]:
+		for f: float in [b.pos.x, b.pos.y, b.head.x, b.head.y, b.vel.x, b.vel.y, b.hp_lost, b.spin]:
 			out.put_double(f)
 		out.put_32(b.state)
 

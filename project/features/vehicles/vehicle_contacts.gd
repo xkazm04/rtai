@@ -15,6 +15,9 @@ const WALL_E: float = 0.2
 var struck: PackedInt32Array = PackedInt32Array()
 var traffic_hits: Dictionary[int, float] = {}
 var _rules: VehicleDamage
+## Where along each car's axis the last _overlap() touched (m ahead of centre): the lever arms.
+var _lever_a: float = 0.0
+var _lever_b: float = 0.0
 var _profiles: Dictionary[StringName, VehicleProfile]
 
 
@@ -65,6 +68,7 @@ func traffic(b: VehicleBody, world: VehicleWorld) -> void:
 		)
 		var mass: float = _mass_of(kind)
 		var dv: Vector2 = _rules.collide(b, head * recs[r + 6], mass, n, null)
+		b.kick(_lever_a, n, dv.x)
 		@warning_ignore("return_value_discarded")
 		_rules.hurt(b, dv.x, true)
 		if dv.y > 0.0:
@@ -79,6 +83,8 @@ func pair(a: VehicleBody, b: VehicleBody) -> void:
 		return
 	b.pos += n * 0.05
 	var dv: Vector2 = _rules.collide(a, b.vel, b.profile.mass, n, b)
+	a.kick(_lever_a, n, dv.x)
+	b.kick(_lever_b, -n, dv.y)
 	@warning_ignore("return_value_discarded")
 	_rules.hurt(a, dv.x, true)
 	@warning_ignore("return_value_discarded")
@@ -121,6 +127,8 @@ func _overlap(pa: Vector2, ha: Vector2, pb: Vector2, hb: Vector2) -> Vector2:
 			if depth > best and l > 1e-6:
 				best = depth
 				n = d / l
+				_lever_a = CIRCLE_OFF * (1 - i)
+				_lever_b = CIRCLE_OFF * (1 - j)
 	return n
 
 

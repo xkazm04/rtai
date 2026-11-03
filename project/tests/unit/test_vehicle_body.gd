@@ -98,3 +98,16 @@ func test_heavier_car_takes_less_speed_change() -> void:
 	var dv: Vector2 = rules.collide(van, Vector2.ZERO, _p[&"hatchback"].mass, Vector2.RIGHT, null)
 	assert_gt(dv.y, dv.x, "the hatchback is thrown harder than the van slows")
 	assert_lt(van.vel.x, 15.0)
+
+
+func test_off_centre_hit_spins_and_the_grip_catches_it() -> void:
+	var b: VehicleBody = VehicleBody.new(1, _p[&"sedan"], Vector2.ZERO, Vector2.RIGHT)
+	b.kick(1.25, Vector2.DOWN, 5.0)
+	assert_lt(b.spin, -1.0, "a nose hit from below turns the nose up")
+	b.kick(0.0, Vector2.DOWN, 5.0)
+	var before: float = b.spin
+	assert_eq(before, b.spin, "a hit through the centre adds no spin")
+	for _i: int in 60:
+		b.step(SimClock.TICK_DT, 0.0, 0.0, false)
+	assert_eq(b.spin, 0.0, "bled off within a second")
+	assert_lt(b.head.y, -0.05, "the car turned")
