@@ -506,3 +506,17 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   drops 0.08-0.13 (mural 0.44 -> 0.36: away from the mock) and the UNION HALL moires with its own hatch (L 0.518 ->
   0.433, ink 0.45 -> 0.53). By eye it prints as a grey screen tone, not pen lines. Rebuilt with RULE 0: tree clean
   (installed roofs = h81). Crops work/i5/rule_ab.png. The texture gap stays (needs coarser hatching in the ART).
+- 01:46 gates: evidence tool (--no-parity --no-bench) ALL PASS at eb2a541 (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok); 50 untracked evidence PNGs moved aside and restored. FRICTION: the first run had no GODOT_BIN in
+  that shell ("Godot not found"): my setup, re-run with it exported.
+- 01:45 Codex: d5_roof_mural_c (the b prompt + "BOLD, WIDELY SPACED" membrane hatch, ~40 lines), 108 s, 0 rejected
+  for camera. Ledger 47. Images tonight: 47 of ~50.
+- 01:47 REJECTED c in-engine: h83 (gamma 1.0) 32 px/m L 0.411 / paper 0.21 / ink 0.57 / HF 0.192; h84 (lines
+  thinned, gamma 2.2) 0.469 / 0.26 / 0.47 / 0.202. The hatch survives as lines (HF above the mock's 0.163) but the
+  striped membrane takes the fist mural's figure/ground and the tone leaves the mock. The b plate (h81) stays:
+  rebuilt, tree clean. Manifest keeps d5_roof_mural_c as REJECTED (no game file). Board item21 + 2 rows; ladder +1
+  row (union / HQ / pension old vs b).
+  CONCLUSION for the texture gap: at 32 px/m a roof can have the mock's tone OR visible hatch lines, not both, with
+  the look_d4 print as it is (it fattens any line that survives the minification). The mock's hatch is thin AND
+  visible because the mock is one painted frame, not a minified texture printed by thresholds. Next step: a look_d4
+  roof print that keeps thin art lines thin (visual-engine lane) or 48 px/m roofs art at 1:1 screen scale.
