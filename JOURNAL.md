@@ -911,3 +911,24 @@ NEXT (iteration 12 close, in order):
 - (05:43) Gates at 0854fab (`run.mjs --no-bench --allow-dirty`): lint (13), 203 unit, 8 scenarios, parity (1200
   steps, mutation caught at 629), selftest all PASS; JSONs in evidence/. NOIR.md: iteration 14 paragraph, a
   cast-shadow row, 34 ladder rows.
+- REFACTOR (05:44, 6cc391a) NEXT item 5: the decal rings move from blood_fx.gd to
+  `features/fx/noir/blood_decals.gd` (BloodDecals); blood_fx.gd 233 -> 185 lines (under the ~200 target). The
+  per-decal seed was never read, so it is dropped, but its scatter draw is kept (the sequence is unchanged).
+  Street showcase 48 px/m re-recorded: 23/23 hero frames AND the mp4 byte-identical to shadowshow/48; 203 unit.
+- REFACTOR (05:48, 65c7bc3) the showcase's launch flags move to `dev/noir/showcase_args.gd`
+  (NoirShowcaseArgs); showcase_fight.gd 252 -> 213 lines (still over ~200, under the 300 stop). `--flashes`
+  overrides the params only when given, as before (the first draft always set it - caught by reading
+  FlashBudget, fixed before the run). 48 px/m frames + mp4 byte-identical; `--d4 --flashes=off` runs (23
+  frames, exit 0); 203 unit.
+- TRIED / REVERTED (05:50) long actor shadows via a CanvasGroup around the rigs (its shader sweeping the
+  group's own silhouette): nothing showed. The rig parts set their own z_index (arms, hose, sprites) and a
+  CanvasGroup only captures children at its own z, so the parts draw outside the group.
+  evidence/actor-shadows-canvasgroup-NOT-adopted.png. Files removed.
+- TRIED / REVERTED (05:52-05:54) figure shadows as tapered ink streaks (opt-in `--figure-shadows`): v1 (every
+  figure, away from the car) put white-rimmed capsules on the asphalt, read as objects; v2 (only figures
+  standing in the car's cone, away from the nose, clipped at the beam's reach): inside the cone it reads as a
+  shadow, but as a straight-edged black plank fixed to the body, and part of it still runs past the visible cone
+  (the cone fades before beam_len) onto dark ground where the pass rims it. Not convincing:
+  evidence/figure-shadows-streak-NOT-adopted.png (f322 and the held panel f175, before | after). Files removed.
+  The right route is a real silhouette: rigs rendered into a SubViewport (or the parts drawn a second time in
+  black) and swept like NoirShadows - not done tonight.
