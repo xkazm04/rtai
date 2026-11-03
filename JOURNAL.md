@@ -217,3 +217,56 @@ bosses we resolve in future."
   REQUEST 3 stays open.
 - The frames.json notes and the clip were made at the old 3.2 line with a 1.4 m/s walk. Re-shooting
   them as clip v2: the walk leg at the quest gait (4.5 m/s), the sprint at 6 m/s, 17 s, same seed/site.
+
+### MILESTONE: clip v2 at the quest gait (commit d80ff0b)
+- bodies_clip: walk 4 s at 4.5 m/s (slice-play's quest gait) through crowd A, stand 2 s, sprint 3 s at
+  6 m/s into crowd B, then they lie, get up and flee. 17 s total, the same seed and site. Stills at ticks 180/500/560/760.
+- Real World + CityView + rigs. Every frame I looked at is top-down: **0 rejected**. Re-shot on HEAD 7212f66 after the
+  fixes below; the 15:45 shots are kept in `v2-pre-runline/` (they differ only after the knockdown).
+- Results: the walk gives 0 knockdowns and the crowd parts into two rows; the sprint gives 5 knockdowns (8 in v1 at the old 3.2 line).
+- Files: `gtai-masters/day-d5/collisions/v2/` (16 stills, a 16.5 s after clip, a before clip, and a side-by-side), `ladder.png`,
+  `frames.json` (11 entries). The v1 cut (1.4 m/s walk, 3.2 line) is in `v1-tackle3.2-walk1.4/`.
+
+### FIX: per-class run line (commit 279aec7)
+- **The gate caught my own regression.** e0583c5 (13:11) raised the single `tackle_mps` to 5.0, and the run-in rule
+  used the same number. So a human fleeing or rioting at 4.5 m/s became a "walker" that shoved Rivet by the mass
+  split, and the look-golden selftest fell to 1/11 (worst 21.66).
+  - Iteration 2 did not run the selftest after e0583c5. FRICTION (mine): run the full evidence run after
+    any bodies.json change, not just the scenarios.
+- The fix is `run_mps` per class (the ATTACKER's line): rivet_base 5.0, human 3.2 (robot and boss get the
+  placeholder 3.2). `BD_RUN_IN` becomes the person's run speed instead of a 0/1 flag, so there is no new slot.
+  The parity spec goes 1.0 -> 3.2, which is the same behaviour as before.
+- Results:
+  - Goldens 11/11, worst 0.00, **with no re-bless**.
+  - Parity exact (3532 floats; mutation caught at 629). Scenarios 12/12, unit 334/0, lint 13/13.
+  - Run-in push 0.066 m (it was 0.20 m; 0.60 m with the rule off). The scenario bound goes 0.3 -> 0.15.
+- Decision line added.
+
+### TRIED AND REVERTED: a bigger lying body (27dda9e, reverted in 7212f66)
+- Finding at 48 px/m, tick 560: the person Rivet just knocked down is drawn partly under his sprite, although the
+  circles do not overlap (worst 0.00002 m). The sprawl pose reaches about 0.9 m and the human circle is 0.35 m.
+- Tried: `down_radius_m` 0.6 for a lying human (new slot BD_RP_DOWN in both sims), with a scenario check
+  and a planted fault (caught at 0.25 m). Every gate was green and parity exact.
+- **In-engine it looked no better** (v2 vs v3 crops: `v3/reverted-lying-radius-v2-vs-v3-48ppm.png`). Rivet at 6 m/s
+  outruns the slide, so he bulldozes the faller about 2 m ahead and it is still drawn under him. I reverted it
+  per the brief and rebuilt both DLLs (BD_LEN back to 13: a stale DLL would silently drop the body spec, because
+  set_body checks the size). Gates were green again after the revert, except scenario_city_chase once
+  (flow field 2045 us > 2 ms budget, CONTENDED); a re-run passed at 356 us, 12/12.
+- The real fix is in the pose, not the circle: draw the sprawl AWAY from the hit. Today rig_pose.gd shifts
+  the body BACK by 25 px * c_sprawl (toward Rivet, since the down heading is the knock normal). It needs a
+  down-only offset along the heading, not the shared death channel.
+
+### NOTES for other lanes
+- d5-cast: at 48 px/m Rivet's open arms reach about 1.2 m from his centre (v2/after-48ppm-t760.png: a ped stands
+  inside his arm span). The body stays 0.42 m from bodies.json. If the arms should not wrap people, that is the
+  sprite's reach, not the radius.
+- slice-play: REQUEST 3 (a held sprint above 5.0 m/s) is still open (d-slice has no run_mps today). Until it
+  lands, nobody can be tackled in quest 1; the walk shoves.
+
+### NEXT
+1. The knockdown sprawl drawn away from the hit (rig_clips/rig_pose: a down-only offset along the knock heading).
+   Judge it from the same 48 px/m tick 560 frame (before: v2/after-48ppm-t560.png).
+2. Arena knockback as a slide over ticks. ArenaBodies pops 1.6 m in one tick; this only matters once the sprint lands.
+3. A get-up grace window (no re-tackle for about 0.5 s) and a small recovery cost for Rivet. Ask the owner from the clip first.
+4. Re-run the section 20 bench on an idle machine (the 12:29 numbers were CONTENDED).
+5. At the merge: re-bless the look goldens once on the merged tree. My branch needs none today (11/11 at 0.00).
