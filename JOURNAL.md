@@ -244,3 +244,26 @@ cruiser in city_frame; KingPlan into the boss ticket).
   frames, and a real-city run whose crowd layout moved because the longer load let the sim advance) -> reverted.
   The FINDING above stands: outer crowd at 64 px/m prints D4. NEXT owner: whoever takes the D5 crowd must first make the
   RigDetail overlays print in the baker's SubViewport (check the cop cell), then decide on swapped parts.
+
+## Status at ~12:25 (iteration 4)
+- New this iteration (d-cast 6993dc6..HEAD): cop portraits wear T1's cream dome (02d459e, OWNER CHOICE: revert for black
+  helmets); D4 cop heads get T1's thick ink ring (704570f; real city A/B at 32/48 + a real-game cop at 64); hero frames
+  re-shot (only cop heads changed); a tested look_d4 cop-blue plate patch for parked cruisers (REQUEST 4 -> d5-city,
+  masters patch, evidence/d5-cast/cruiser-parked-plate.json); a King cape option (not shipped); Rivet portraits and
+  Rivet at 32 checked against T2/T1 (no change). Tried and reverted: a D5 crowd atlas twin (no D5 print in the bake).
+- EVIDENCE (clean tree, HEAD 704570f; later commits are docs/evidence JSON only, project/ unchanged since): lint 13/13,
+  unit 326/326, scenarios 8/8, parity exact, selftest goldens 11/11 + 5/5 PASS unblessed (--no-bench).
+- Codex images used today: still 1 (King). Bench not run (art-only changes): unmeasured, not zero.
+- Owner frames: masters day-d5/d5-cast/frames.json (15, `before` now only real files; A/B composites name the before
+  panel in the note) + ladder.png.
+
+NEXT:
+- Owner picks at 18:00: (1) cop heads cream (T1, shipped) vs navy (revert 90bb8f6 34acc56, then also 704570f's ring
+  and 02d459e's portrait domes); (2) shoulders A (shipped) vs B; (3) King's portrait cape: vermilion (shipped) or ink
+  (masters king_cape/cape.py, frames/king-cape-option.png); (4) cop portraits: cream dome (shipped) vs black (revert 02d459e).
+- Merge order: d-city before/with d-cast (moving cruiser bars); goldens conflict both ways: re-bless once on the merged
+  tree. Apply masters look_d4-cop-blue-plate.patch (REQUEST 4) on d-city or at the merge, then delete d-city's
+  accent_debt rows cop_vermilion_32/48/64 (the merged selftest reports them paid).
+- D5 crowd at arena zoom: make RigDetail overlays print in CrowdBaker's SubViewport first (the cop cell is the test),
+  then decide on palette-swapped parts; only then a D5 atlas twin (code shape in the journal entry above).
+- King into the game when the boss ticket lands (KingPlan ready); ghost form = a new RivetPlan.FORMS row.
