@@ -23,3 +23,10 @@ Frames: masters night/d4-production/morning_i16/, morning_i16_st/; board night_i
 
 05:32 re-run with n-d4 97558d7's arm art (outline 14 px; byte-equal to the scratch) + the sleeves patch WITH its unit
 test: lint 13/13 (220 files), unit 222/222, scenarios 8/8.
+
+05:37 n-visual's own run.mjs on the same morning tree (`--no-bench --no-parity --allow-dirty`): lint, unit 222,
+scenarios PASS; selftest FAIL only on n-visual's goldens, as expected before the post-merge re-bless: look goldens
+0/11 within mean 4 (worst 22.16), block goldens 0/5 (worst 35.49 - patch 19 changes the generator's picks, so the
+blocks move more than in iter14's merge without it). Same run: 72 art textures, 0 placeholders, accent pixels
+32: 0.94 %, 48: 0.96 %, 64: 0.25 %, "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents",
+world lock holds (0.00 % at 32 / 48 / 64).

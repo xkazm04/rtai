@@ -1550,3 +1550,7 @@ NEXT (iteration 16; the iteration-14 NEXT stands where not superseded):
   static so the crop is same-scene: `after_i16sl2_st|probe_i16wr_st/selftest-32ppm.png`, `work/i16/wreck_ab.png`:
   n-visual's print already prints the patch as a mid wash (no white splat there - it was n-d4 alone's look), and
   the ash version barely differs. Scratch restored (cmp equal). 0 Codex.
+- 05:37 CHECK n-visual's selftest gates on the morning tree (sleeves + outline + patches 19 / 21-sleeves / 23):
+  doctrine clean - "crowd atlas 6/6 pedestrian looks on doctrine; no new off-doctrine accents", world lock holds;
+  only their look (worst 22.16) / block (worst 35.49) goldens fail, the expected post-merge re-bless
+  (`evidence/iter16/morning-merge-gates.txt`). Bench still not run: another lane rendering (05:34).
