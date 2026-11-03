@@ -891,3 +891,10 @@ NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. M
   D5_HALO=ink, D5_HALO_SHADOW=1) vs pan14ink / pan14ctl, 48 px/m, 40 ticks. Whole crop identical to 5 decimals, so
   checked locally: the 612 px ever touched by ring or shadow, dilated 3 px (Rivet's idle does move there): mean change
   per tick ctl 0.00750 / ink 0.00749 / shadow 0.00748 (max tick 0.00888 / 0.00880 / 0.00880). Neither adds flicker.
+- 03:37 REFACTOR (d5 dev, committed): the D5_PRINT / D5_HALO switches live in D5HeroHaloInk.dev_switches(), called by
+  the hero AND the arena scene. Checked 0 px: h110sh = h108sh and a16 (default arena) = a15 at 32-128, both tiers.
+- 03:37 MEASURED every open proposal UP CLOSE (a16all, the h109all set; roofs + params restored, project/ clean): the
+  boss arena, whole frame L / px darker than 0.35: 64 px/m 0.378 / 0.562 -> 0.394 / 0.527; 96 0.348 / 0.534 -> 0.356 /
+  0.517; 128 0.337 / 0.599 -> 0.343 / 0.588. Rivet crop: 64 0.352 -> 0.351, 96 0.335 -> 0.339, 128 0.342 -> 0.346.
+  By eye: at 64 the floor and the OSHA roof a touch warmer and more open, at 128 almost identical (lines are wide
+  there; halos are off at 96+). The package costs the D5 close-ups nothing. Board evidence/item36_arena_all_proposals.png.
