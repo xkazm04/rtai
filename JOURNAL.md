@@ -126,3 +126,8 @@ NEXT:
 - Clips this iteration (all contended GPU, D3D12, movie maker, 960 px): riot_mix4 -20.2 LUFS / -1.5 dBFS; q1_opening_mix3 -17.5 / -3.5; q1_fight_mix3 -19.2 / -1.0.
   Frames looked at: 5 (riot, fight, opening, + earlier), camera breaks 0. frames.json + ladder.png in masters updated.
 - Credits: ElevenLabs used by this iteration: ~74,117 after the first 17 takes; plus boss/tazer (6 takes) and crowd_roar (2 takes of 8 s): lane total ~3.5k of 25k.
+- MILESTONE (12:0x) distance muffling: positional sfx heard from beyond far_m (22 m) play on a new `sfx_far` bus (child of sfx, low-pass 2.5 kHz); all in
+  audio_mix.json (far_m, far_lowpass_hz). Unit test proves the routing (a 40 m shot runs on sfx_far, a 5 m shot on sfx). Pan probe (evidence/mix/pan_check.txt) now
+  prints the share of energy above 4 kHz: 25 m shot -46 dB vs -20..-31 dB for the close ones, but the probe draws a random take per shot, so that is consistent with
+  the filter, not a clean A/B. The riot clip (riot_mix5, -20.2 LUFS, peak -1.4) did not change in loudness or in its >4 kHz level (-28.1 LU both): few cues land
+  beyond 22 m there. Not heard by a human.
