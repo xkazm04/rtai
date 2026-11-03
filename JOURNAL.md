@@ -1176,3 +1176,36 @@ iteration 7. Images: 50 of ~50 used; none this iteration.
   root), not worse than the box. Board evidence/item44b_cone_shadow.png (h125 none / h141rs box / h147cone capsule, 32
   x4 and 64 x2, + the mock's cone). Unit 149/0.
 - 04:58 showcase frames evidence/hero-d4d5-* and hero-d4-* refreshed from h147cone (the committed default now); ladder row.
+
+## Summary (iteration 8, 04:15 -> 04:58), no images (50/50 used)
+- Theme: where the remaining differences were visible by eye but not in the tone table: up-close print traits of
+  the concept, and grounding (every mock prop, car and actor sits on a pen-hatched shadow).
+- Committed, default ON in the dev scenes (d5 tier): hatched prop + car cast shadows (item44, D5HeroPropShadow; the
+  cone as a capsule past its base plate, item44b); the mock's wall-side clutter (item45: bench, planter, mailbox,
+  vending machine); hatched rig cast shadows up close (item46, D5RigShadow + look_d5_shadow_group, 56 -> 64 px/m).
+- Committed OPTIONS, default off (owner A/B; dev switches D5_FRINGE=1, D5_DOTS=1; params JSON "part"): look_d5_part
+  fringe_k (item43: the concept's red misprint edge, 64 -> 96 px/m, pure vermilion unchanged) and dots_k (item47:
+  the concept's halftone stipple in the shaded steel mid-tones). Together: the concept's riso-print signature.
+- Measured: readability unchanged (rim dL 0.604 / verm dE 81.2 / teal dE 56.9 committed; 0.610 / 77.5 / 57.6
+  package); pan swim unchanged (0.00732 committed, 0.00049 package); walk shimmer at 96 px/m with both options 1.106
+  vs 1.131 without (no added shimmer; the tier's own 1.13 at 96 is the art's detail, decomposed); rig shadow cost +0.07
+  to +0.18 ms GPU median (p95 about 1 ms), 0.27 ms script at 16 full rigs (first version 1.71 ms, fixed).
+- Tools: d5_walk --zoom; the cost scene's d5s tier; package_shot.sh passes the iteration-8 env through.
+- Rejected: fringe bands sized in screen px (h126 invisible, h127 blotchy), 14 part px (h128 faint); prop shadow tint
+  0.7 (h132ps7, blob); the 4 px even dot screen (h142dt, mechanical).
+- Mistakes: journal times and a ladder label written ahead of the clock (fixed at 04:24); a walk round whose crop
+  missed Rivet (hardcoded zoom; discarded, tool fixed); two broken cone rounds (a parse failure that shoot.sh did not
+  flag; a lookup-order bug); a pre-commit lint block (function length) fixed by splitting.
+- Shared files touched: none. Scope: look_d5* shaders + params JSON, dev/showcase, evidence/, masters tools.
+
+NEXT (iteration 8; NEXT 27-30 of iteration 7 still stand):
+31. Owner: two A/B options for the up-close tier, item43 (fringe) and item47 (dots); taken together they are the
+    concept's print look. If yes: set part.fringe_k / dots_k to 1.0 in look_d5.params.json and the shader defaults.
+32. City lane: prop shadows (D5HeroPropShadow recipe: the silhouette offset for boxes, a capsule for props on flat
+    plates, tint 0.5) and the pavement clutter density of the mock (item45).
+33. Characters lane: rig cast shadows (D5RigShadow recipe) built in rig_build (no per-frame walk); check the GPU p95
+    spike (one CanvasGroup per rig layer vs per rig, or no group with a tint that does not stack).
+34. If the image budget returns: King's rig parts and plates for the roof interiors with a fine mid-grey hatch
+    (mid-tones, gap 2), as in NEXT 30.
+Morning reading order: night_iter8_summary.png -> item46 / item44 (grounding) -> item43 / item47 (owner A/B) ->
+night_iter7_summary.png and the iteration-7 order.
