@@ -272,3 +272,9 @@ NEXT (iteration 53 end): unchanged from iteration 52 (Director: patch + radio_ne
 - No new audio code, no ElevenLabs calls (lane total still ~4.6k of 25k; voice characters after 11:45: 0). Tree clean; last gates green at a14dd64 / six-tip merge check at eb2dc3f (463 unit, 13 scenarios).
 
 NEXT (iteration 54 end): unchanged from iteration 52 (Director: apply `evidence/requests/quest1_game_audio.patch`, the `radio_next` input row, `_ready_blood()` at the slice/combat merge; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops; hot clip vehicles_fire.mp4 -> lower `car_wreck` gain_db if it clips).
+
+## 2026-11-03 iteration 55 (BUILD, started 16:41, freeze 17:00)
+- 16:46 Tip check: d-slice 72982ff, d-vehicles ecd9fb0, d-combat 45fe279, d-bodies bfe31d9. Events schema diffs vs main still add only `pedestrian_struck` (d-vehicles) and `actor_knocked_down` (d-bodies); both hooked. No new unhooked Event.
+- No new audio code, no ElevenLabs calls (lane total still ~4.6k of 25k; voice characters after 11:45: 0). Tree clean; gates last green at a14dd64, six-tip merge check at eb2dc3f (463 unit, 13 scenarios). Not re-run: nothing changed.
+
+NEXT (iteration 55 end): unchanged from iteration 52 (Director: apply `evidence/requests/quest1_game_audio.patch`, the `radio_next` input row, `_ready_blood()` at the slice/combat merge; a human must LISTEN to every SFX, the 23 TEMP voices and the 3 radio loops; hot clip vehicles_fire.mp4 -> lower `car_wreck` gain_db if it clips).
