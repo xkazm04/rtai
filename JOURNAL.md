@@ -289,3 +289,54 @@ NEXT:
 5. Re-capture cast_rivet.png from d5-cast's base form; RIVET_FORM_K = 1.0 (REQUEST 2).
 6. A city clip v2 at fe40b14 (the current one is 42a304d: no stencils, tazer bursting short).
 - 12:25 clip v2 NOT recorded: bench.lock held by `collisions` (a render would skew their bench). Deleted my 2.6 GB of clip PNG scratch (mp4 + sheet kept).
+
+## Iteration 3 (BUILD, 12:24 - 13:54)
+- 12:26 read JOURNAL + git log. Picked brief item 2's open half (HUD into features/hud, art by
+  id from a table: the lane rule "load art by id from the data tables, never by hard-coded
+  texture paths" was broken by HudView's `HUD_ART + name + ".png"`).
+- MILESTONE 12:31 (19eb758) the HUD lives in features/hud: `HudView` draws a plain `HudState`
+  (`hud_state.gd`, words already translated), filled each frame by boot's `HudFeed`
+  (`boot/collect_call/view/hud_feed.gd`), so features/hud reads no stage/quest internals
+  (LAY-05). Art by id from `data/tables/hud_art.json` (+ schema `gtai.hud-art/1`) through
+  `HudArt`: ids, authored size_px, the numeral strip's metrics and the memo 9-slice margin. An
+  unknown id or failed load draws a 4x4 ink square and logs once (an art lane landing later
+  cannot crash the scene). Heat pips stay `wanted_pip_police` (the blue pip art; a small mark,
+  so the brighter cop blue is in doctrine). Soul cards not drawn (verdict 3).
+  Tests: test_hud_art (6): every row loads at its size_px, the pips, the placeholder, digit
+  metrics vs the strip, thousands, silent(). Gates: lint 13/13 (365 files), unit 350/350,
+  scenarios 10/10 (city_chase passed this time).
+- Frame check: hud32/still_7000_32.png (after) vs city32c/still_7000_32.png (fe40b14, before):
+  the HUD is pixel-identical (a pure refactor, as intended).
+- FRICTION/REJECTED: both 7000 stills (the iteration-2 city32c one and my first after) were a
+  CREAM VOID behind the HUD: the stills tool steps 7000 ticks with no frame drawn, and ChunkView
+  streams under a 1.5 ms/frame budget. city32c/still_7000 was never in frames.json (the
+  42a304d city32/still_7000 there is fine; re-checked). Rejected 2 frames this iteration.
+- CORRECTION to fe40b14's note: `CityView.prewarm()` (ViewPrewarm) warms pipelines and places
+  the camera; it does NOT stream chunks. So a Continue/Retry mid-street drew its street in over
+  several budgeted frames. Fix: `CollectCallView.fill_street()` loops `chunks.update()` until
+  nothing is left to slice (resident chunks only; the sim's residency is not touched, so the
+  replay is unaffected), called when the view comes up on the city; the stills tool calls it
+  before each still.
+- dev/frames/quest1_clip: `--save=<file>` (the game writes beat checkpoints there) and
+  `--continue` (press Continue on the title, save continue_f1 / continue_f6, quit) so the
+  Continue path can be checked in a real frame.
+- MERGE NOTE -> autosave (d-save), the 11:45 brief item, recorded at 12:41: every place the
+  slice touches features/save today, so the merge can point them at core/save `Save`:
+  1. Title card Continue: `boot/quest1_game.gd:43`
+     `card.continue_pressed -> restart(Checkpoint.load_file(save_path))`; the Continue button
+     shows when `Checkpoint.load_file(save_path) != null` (`quest1_game.gd:48`, title).
+  2. Failed card Retry: `quest1_game.gd:115` `card.show_failed(Checkpoint.load_file(save_path)
+     != null)`; Retry emits the same continue_pressed path (restart from the last checkpoint).
+  3. Beat checkpoint write: `quest1_game.gd:106-108` each frame
+     `session.poll_checkpoint()` (`boot/collect_call/quest1_session.gd:105`: non-null once per
+     new beat; carries quest, beat, tick, master_seed, state_hash and the InputTape history)
+     -> `cp.save(save_path)`. These are quest 1's natural `autosavePoints` (one per beat).
+  4. Resume: `Quest1Session.resume(Events, Data, cp)` (`quest1_session.gd:88`) replays the
+     tape to cp.tick headless and refuses a state_hash mismatch (tamper refused, scenario).
+  5. Paid: `quest1_game.gd:148` `Checkpoint.erase(save_path)` (a finished contract leaves no
+     Continue).
+  6. Respawn on death does NOT touch the save: `CollectCallStage._respawn()`
+     (`boot/collect_call/collect_call_stage.gd:229`) puts Rivet back at the Toner Room in-sim
+     (deterministic, in the replay). No change needed there for the merge.
+  `save_path` defaults to `Checkpoint.DEFAULT_PATH`; tests and dev tools pass "" (no saves) or
+  their own file. Since 11:45 I have not extended features/save (only read it).
