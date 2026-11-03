@@ -781,3 +781,9 @@ NEXT (final, supersedes above where they differ): apply `q1_view_art.patch` afte
   upright landmark roofs). Scratch worktree removed afterwards. Honesty note: its two scratch merge commits (never
   in a branch, deleted with the worktree) - the second was made with `--no-verify`, which I should not have done.
 - `evidence/iter8/` (lane cwd): summary sheet, the 3 patches, gate results, README.
+- 02:20 MILESTONE plaza paving de-tiled (generator patch only). The plaza is ONE texture (sidewalk_tone, id 13) at
+  rotation 0, so its crack + stain marks lined up every 8 m (`after_rf/city-2-32ppm`: a column of identical cracks).
+  Its joints sit on all four edges (checked: px rows/cols 0 and 767 are the joint grey), so a random quarter turn per
+  tile keeps the seams: `after_pl/` vs `after_rf/`, crop `work/pl_crop.png` - cracks vary, no doubled joints. Modest
+  but real. Folded with the roof pick into ONE patch `generator_art_pick.patch` (one golden list; supersedes
+  roof_pick_generic.patch, deleted); `git apply --check` clean on main. Code reverted, re-baked, `--check` matches.

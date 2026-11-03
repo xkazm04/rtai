@@ -6,9 +6,10 @@
 - `traffic_atlas_wiring.patch`: moving traffic draws `features/city/art/vehicles/traffic_atlas.png` (cell = sim car art
   id) - for main / n-d4 without n-visual (crowd_layers + city_view + `traffic_atlas.gdshader`).
 - `traffic_atlas_wiring_after_n-visual.patch`: the same after n-visual is merged (crowd_layers + shader only).
-- `roof_pick_generic.patch`: the generator picks the generic roofs (table rows 65-71) for 70 % of square blocks,
-  landmarks for 30 %, no neighbour repeats, lettered roofs upright; includes the new AST-12 golden hash list
-  (`bake_city --check` matches it on n-visual + n-d4).
+- `generator_art_pick.patch`: the generator picks the generic roofs (table rows 65-71) for 70 % of square blocks,
+  landmarks for 30 %, no neighbour repeats, lettered roofs upright; plaza paving gets a quarter turn per tile (breaks
+  the 8 m repeat of its cracks and stains; `work/pl_crop.png`); includes the new AST-12 golden hash list. Applies on
+  main and on n-visual + n-d4 (the roof-only version's golden matched `bake_city --check` there).
 - `gates-eceb6b3.txt`: `node tools/evidence/run.mjs --no-bench` at eceb6b3, all PASS.
 - Full frame sets: `gtai-masters/night/d4-production/{before,after}_tr`, `after_tr_dense`, `probe_tr78`,
   `{before,after}_rf`, `merged_tr`, `merged_all`; ladder rows "i8 ...".
