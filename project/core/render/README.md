@@ -295,7 +295,9 @@ close to the focus kick it, so a riot two blocks away does not shake the screen)
   along the heading), a person whose mode turns dead is a `death` (an ink splat under the body).
   The first observe only primes. Render only: nothing is written back, so parity and replay are
   untouched, and no positional F-04 event was needed for the riot.
-- **`event` cues** follow an Events signal: `player_hit` (sparks on Rivet + the `hit` shake).
+- **`event` cues** follow an Events signal: `player_hit` (sparks on Rivet + the `hit` shake), then
+  `player_hit_<weapon>` when the table has one (`player_hit_robo_tazer`: the electroshock `crackle`;
+  main's arena emits `player_hit(&"robo-tazer")`), and `rivet_kill` (`actor_killed` by Rivet: hit-stop).
 
 The selftest junction (seed 91, 180 ticks) fires 11 shots, 9 ends, 9 deaths, 0 dropped
 (`fx_cues` in its result JSON). Explosions, crackle and smoke have no sim source yet (no grenades,

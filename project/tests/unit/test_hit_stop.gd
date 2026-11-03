@@ -84,3 +84,12 @@ func test_a_focus_jump_leads_nothing() -> void:
 	for tick: int in range(1, 200):
 		rig.follow(tick, Vector2(500.0, 0.0))
 	assert_almost_eq(rig.offset_px(32.0).x, 0.0, 0.001)
+
+
+func test_a_robo_tazer_hit_adds_the_crackle_once() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var t: FxTriggers = _triggers(SimClock.new(), CameraRig.new(), bus)
+	bus.player_hit.emit(&"robo-tazer")
+	bus.player_hit.emit(&"rifle")
+	assert_eq(t.fired[&"player_hit"], 2)
+	assert_eq(t.fired[&"player_hit_robo_tazer"], 1)

@@ -68,10 +68,15 @@ func listen(bus: EventBus, clock: SimClock, at: Callable) -> void:
 		bus.actor_killed.connect(_on_killed)
 
 
-func _on_player_hit(_weapon: StringName) -> void:
+## Fires `player_hit`, then `player_hit_<weapon>` (dashes as underscores) when the table has it:
+## a weapon's own look on top of the generic hit (robo-tazer -> the electroshock crackle).
+func _on_player_hit(weapon: StringName) -> void:
 	var tick: int = _clock.tick() if _clock != null else 0
 	var at: Vector2 = _at.call() if _at.is_valid() else focus_px
 	fire(&"player_hit", at, 0.0, tick)
+	var own: StringName = StringName("player_hit_" + String(weapon).replace("-", "_"))
+	if rows.has(own):
+		fire(own, at, 0.0, tick)
 
 
 func _on_killed(killer_id: int, _victim_id: int, _kind: StringName) -> void:

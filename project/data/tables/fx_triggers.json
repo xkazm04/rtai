@@ -1,5 +1,5 @@
 {
-  "doc": "What fires the FX, the lights and the camera kicks (core/render/README.md). `sim` cues are read render-side from the sim snapshot (features/city/view/city_fx_feed.gd: a projectile slot appears = shot, disappears = projectile_end, a person turns dead = death), so they need no event and change no sim state. `event` cues follow an F-04 Events signal by name. fx: fx.json kinds spawned at the cue (the angle is the shot heading; projectile_end throws back, death uses the body heading). shake: a camera.json shake id (\"\" = none). shake_near_m: only cues within this many metres of the camera focus kick it (0 = always). hitstop: a camera.json hitstop id (\"\" = none): the game holds still that many ticks (SimClock.hold, none under reduced motion, cooled down by hitstop_cooldown_ticks).",
+  "doc": "What fires the FX, the lights and the camera kicks (core/render/README.md). `sim` cues are read render-side from the sim snapshot (features/city/view/city_fx_feed.gd: a projectile slot appears = shot, disappears = projectile_end, a person turns dead = death), so they need no event and change no sim state. `event` cues follow an F-04 Events signal by name. fx: fx.json kinds spawned at the cue (the angle is the shot heading; projectile_end throws back, death uses the body heading). shake: a camera.json shake id (\"\" = none). shake_near_m: only cues within this many metres of the camera focus kick it (0 = always). hitstop: a camera.json hitstop id (\"\" = none): the game holds still that many ticks (SimClock.hold, none under reduced motion, cooled down by hitstop_cooldown_ticks). A row player_hit_<weapon> (dashes as underscores) fires after player_hit when that weapon hit Rivet.",
   "schema": "gtai.fx-triggers/1",
   "triggers": [
     {
@@ -53,6 +53,17 @@
       "fx": [],
       "hitstop": "kill",
       "id": "rivet_kill",
+      "shake": "",
+      "shake_near_m": 0
+    },
+    {
+      "cue": "event",
+      "doc": "Rivet takes a Robo-tazer hit (Events.player_hit with weapon robo-tazer; fired after player_hit): the electroshock crackle over the sparks",
+      "fx": [
+        "crackle"
+      ],
+      "hitstop": "",
+      "id": "player_hit_robo_tazer",
       "shake": "",
       "shake_near_m": 0
     }

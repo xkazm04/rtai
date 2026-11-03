@@ -4,7 +4,8 @@ extends "res://dev/selftest/city_selftest.gd"
 ## `on_foot` = 32 px/m, which leads nothing by data) and the focus driven
 ## east at SPEED_MPS by moving CitySystem.focus (as a cutscene or the player would); a pickup ring
 ## marks the focus. CityView feeds the rig from the focus itself (CameraRig.follow), so the camera
-## leads the motion. Then Events.player_hit fires the `player_hit` cue: the sim tick per frame
+## leads the motion. Then Events.player_hit(robo-tazer) fires `player_hit` (sparks, shake) and
+## `player_hit_robo_tazer` (the crackle; hitstop-tazer.png inside the hold): the sim tick per frame
 ## shows the hit-stop hold (rivet_hit, 3 ticks). Writes lead-<tick>.png and
 ## lead-showcase.json (lead per shot, ticks per frame around the hit).
 ##   godot --fixed-fps 60 --path project res://dev/selftest/lead_showcase.tscn -- --out=<dir>
@@ -69,8 +70,11 @@ func _hitstop() -> void:
 		Events, clock, func() -> Vector2: return _city.focus * SimConst.PX_PER_M
 	)
 	var ticks: Array[int] = [clock.tick()]
-	Events.player_hit.emit(&"rifle")
+	Events.player_hit.emit(&"robo-tazer")
 	for i: int in 6:
 		await get_tree().process_frame
 		ticks.append(clock.tick())
+		if i == 1:
+			await _shot("hitstop-tazer.png", -1)
+	_log.append({"fired": _view.fx_triggers.fired, "fx_alive": _view.fx.glow.alive()})
 	_log.append({"hitstop_ticks_per_frame": ticks, "stops": _view.fx_triggers.stops})
