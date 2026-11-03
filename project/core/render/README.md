@@ -360,6 +360,25 @@ plate - and the threat keeps its vermilion). Main's quest 1 view (`boot/collect_
 its own `Ink` constants and camera today; moving it onto PrintStage is a few lines after the merge, and
 `CityView` (which predates it and composes the same pieces) should move onto it too.
 
+### What a flat tint prints as (D4, for every art and placeholder palette)
+
+The world print reads density `d = (0.93 - luma) * 1.25` (`look_d4` `plates()`, luma = 0.299 R +
+0.587 G + 0.114 B) and steps it at the d4 profile's thresholds (`look_profiles.json`; the grime moves
+each edge by up to ~0.16 x `grime`, so stay ~0.05 clear of an edge or the fill prints mottled):
+
+| prints as | density | flat grey (sRGB 0-255) at most, with the 0.05 margin |
+|---|---|---|
+| paper | < 0.19 | lighter than ~198 stays paper |
+| first wash | 0.19 - 0.45 | 188 |
+| mid wash | 0.45 - 0.68 | 135 |
+| dark wash (charcoal) | 0.68 - 0.86 | 88 |
+| + hatch | > 0.86 | 51 |
+| solid ink line | > 0.90 | 43 |
+
+Example: quest 1's placeholder `Ink.WASH` (12 % violet-black over cream) is luma 0.81 = density 0.15:
+it prints as paper, so its zone floors vanish under the print (45-quest1). A zone that must read
+needs <= ~188 grey (first wash) or real ground art.
+
 ## World lock (every print pass on `world_px`)
 
 `CityView` computes `world_px` (the camera's world offset in screen px, after zoom ease, look-ahead and shake)
