@@ -590,3 +590,14 @@ NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at 
   3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
   4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
   6) the one-frame warm-up particle burst on Continue/Start f1.
+
+## Iteration 54 (17:30, REPORT)
+- REPORT.md written: 17 claims each with an evidence path (all checked to exist: frames.json 15
+  entries + their befores, evidence/slice-play logs, exe + DLL at ebe1dd6), gaps, blockers
+  (bench.lock waits, my two lock slips, the -s tool hangs, the 13:12-15:40 gap with no lane
+  activity), merge notes and next steps. No code, no render, no Godot process this iteration.
+NEXT (in order): 1) the owner's 18:00 exe run (build/export/windows/RTAI.exe at ebe1dd6);
+  2) merge d-cast with/before d-slice; the autosave MERGE NOTE call sites in quest1_game.gd;
+  3) car press -> VehicleService, free-roam Rivet via TopDownMover (re-bless the 60 s golden);
+  4) places as rooms; 5) re-capture guard/cast sprites at 1x from final rigs;
+  6) the one-frame warm-up particle burst on Continue/Start f1; 7) re-bench the slice.
