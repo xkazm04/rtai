@@ -270,6 +270,15 @@ No images (50/50 used). The weakest item was 5 (the close-up portraits): they re
   all D4 roofs with). Mips on the union hall: tone toward the mock, line energy away; on the decals they lose the
   spray dots and spatter. Imports kept; the city lane / owner sets one rule for D5 plates.
 
+## Iteration 11 (`item54_rig_shadow_lock.png`)
+- **Rig shadow strokes now RIG-locked (67c27a6, default; `D5_RIG_SHADOW_LOCK=world` = old)**: the world-locked
+  strokes of item46b crawled under a walking shadow (a shower-door effect): in-shadow px flipping > 0.1 per tick at
+  64 px/m 0.436, vs 0.184 rig-locked and 0.133 with no shadow. Stills: same density, stroke phase only. Script sync
+  +0.0-0.03 ms (16 full rigs); GPU delta inside run noise. look_d5_shadow `anchor` (default 0: buildings, props unchanged).
+- **NEXT 42 (sub-pixel camera) for the shadows**: the camera adds nothing to the rig shadow (world 0.437 / rig
+  0.169 sub-px follow, same as fixed camera); prop shadows at 48 px/m sub-px: in-shadow flip 0.058 vs 0.045 without,
+  mean change equal (0.0216 vs 0.0213). The pan claims for the shadows hold sub-pixel, with that small flip cost.
+
 ## Gap list after iteration 9 (package v9 = i9mot, vs `d4h2_mock.jpg`)
 Iteration 9 had no image budget. It worked on gap 2 (mid-tones) with the existing plates (`item48_roof_membrane.png`).
 1. **Mid-tones, closed at frame level for the package**: the mock's mid-tones sit in its paper areas, and its roof
