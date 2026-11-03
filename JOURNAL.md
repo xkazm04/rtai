@@ -1280,3 +1280,14 @@ NEXT (final, iteration 12; supersedes the 04:01 NEXT where they differ):
 - 04:38 REJECTED, NOT SHIPPED: D5 ink grime on 12 props (`veh_grime.py` amount 1, 3 scratches; the car method).
   Props board `before_i14pg|after_i14pg/props-{32,48,64}ppm.png`, zoom `work/fx14/pg_z64.png`: near invisible even at
   64 px/m - the props are already hatched and grimed in the art. Reverted (git checkout), re-imported.
+- 04:41 CHECKED, no patch: n-visual's `pickup` marker (`world_markers.json`) is a constant-screen-size world-UI ring
+  OVER a pickup, not the item on the ground; no pickup item view exists yet, so my ink tokens (`assets/pickups/`) wait
+  for a pickups feature (REQUEST 2 restated: the item on the street = the token art in the item pass, the marker ring
+  stays above it).
+- 04:41 CHECKED: in-world souls (the target's teal ghost-robot trail behind Rivet) have no shipped art on any branch;
+  the world marker is a teal ring. n-d5 has D5 soul sprites in masters (`night/d5-close/borrowed/soul_*.png`, drawn
+  through its `look_d5_soul` proposal, `item4c_souls_print.png`) - unshipped dev evidence. Not duplicated here ->
+  REQUEST 24.
+24. Director / owner: decide who ships the in-world soul sprites (n-d5's D5 souls, which read well at 64 px/m, or a
+    D4 set from this lane); this lane can slice + ship them into `features/fx/art/` with provenance once assigned.
+- 04:41 scratch-m14 (my n-visual + n-d4 merge probe, never committed) removed.
