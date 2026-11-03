@@ -155,8 +155,11 @@ ages the additive lights (LightLayer) and the emissive FX twin (FxSystem hands i
 actors-band FX are under the rect and never set (no double age). World-UI markers are accent inks (kept).
 
 Goldens: a look an overlay covers gets its own golden files (`<look>-<ppm>ppm-ov.png`), so the
-overlay path never diffs against the placeholder frames. After look_d5 lands, bless those once
-(the `-ov` files are new; the d1/d4 goldens must still pass untouched).
+overlay path never diffs against the placeholder frames. look_d5 landed in the 2026-11-03 day
+integration: every golden was re-blessed once on the merged tree (n-d4's art moved the d1/d4 ones
+too), and the pre-overlay `auto-*` / `d5-*` / `block-auto-*` files without `-ov` were removed.
+Under `--look=noir` the overlays stay off (`CityView.overlay_look()`): noir replaces the D4 print
+the overlay re-prints.
 
 ### Moving traffic art (`crowd_layers.gd` `_plug_traffic`, `look_d4_item.gdshader` `cells`)
 
