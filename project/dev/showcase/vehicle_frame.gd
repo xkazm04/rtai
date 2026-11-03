@@ -6,7 +6,7 @@ extends Node
 ## in the lane, an S-bend, a handbrake slide), and frames are saved at fixed sim ticks; --clip
 ## saves every 2nd tick for 20 s (assemble with ffmpeg at 30 fps). Windowed only. Usage:
 ##   godot --rendering-driver d3d12 --path project res://dev/showcase/vehicle_frame.tscn --
-##     --out=<dir> [--clip] [--look=<id>]
+##     --out=<dir> [--clip] [--look=<id>] [--scene=carnage]
 
 const MASTER_SEED: int = 31
 const SHOTS: Dictionary[int, String] = {
@@ -19,11 +19,25 @@ const SHOTS: Dictionary[int, String] = {
 	440: "slide-recover",
 	620: "stopped",
 }
+const CARNAGE_SHOTS: Dictionary[int, String] = {
+	26: "beside-the-taxi",
+	34: "hijack-driver-thrown",
+	60: "driving-off",
+	150: "ram-approach",
+	178: "ram-1",
+	260: "reverse",
+	360: "ram-2",
+	450: "reverse-2",
+	560: "ram-3",
+	660: "aftermath",
+}
 const CLIP_TICKS: int = 20 * SimClock.TICK_RATE
 
 var _out: String = "user://vehicle_frame"
 var _clip: bool = false
 var _look: StringName = &""
+var _carnage: bool = false
+var _shots: Dictionary[int, String] = SHOTS
 var _world: World = null
 var _svc: VehicleService = null
 var _done: Dictionary[int, bool] = {}
@@ -36,7 +50,7 @@ func _ready() -> void:
 		return
 	_world = World.new()
 	_world.start(Events, Data, MASTER_SEED)
-	var w: Array[Object] = VehicleFrameSetup.build(_world, self, _look)
+	var w: Array[Object] = VehicleFrameSetup.build(_world, self, _look, _carnage)
 	_svc = w[0]
 	var characters: CityCharacters = w[1]
 	var view: CityView = w[2]
@@ -46,7 +60,9 @@ func _ready() -> void:
 	await view.prewarm()
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(_out)
-	_world.loop().set_input(VehicleFrameSetup.Route.new())
+	_world.loop().set_input(
+		VehicleFrameSetup.Carnage.new() if _carnage else VehicleFrameSetup.Route.new()
+	)
 	_world.set_process(true)
 
 
@@ -54,7 +70,7 @@ func _process(_delta: float) -> void:
 	if _world == null or _busy:
 		return
 	var tick: int = _world.context().clock.tick()
-	var last: int = CLIP_TICKS if _clip else SHOTS.keys().max()
+	var last: int = CLIP_TICKS if _clip else _shots.keys().max()
 	if tick > last + 2:
 		printerr("vehicle_frame: done at tick %d, cars %d" % [tick, _svc.cars.size()])
 		get_tree().quit(0)
@@ -62,10 +78,10 @@ func _process(_delta: float) -> void:
 	var name: String = ""
 	if _clip and tick % 2 == 0 and not _done.has(tick):
 		name = "clip-%04d" % (tick >> 1)
-	for t: int in SHOTS:
+	for t: int in _shots:
 		if not _clip and tick >= t and not _done.has(t):
 			_done[t] = true
-			name = "%03d-%s" % [t, SHOTS[t]]
+			name = "%03d-%s" % [t, _shots[t]]
 	if name != "":
 		_done[tick] = true
 		_shoot(name)
@@ -89,6 +105,9 @@ func _parse_args() -> bool:
 			_out = arg.substr(6)
 		elif arg == "--clip":
 			_clip = true
+		elif arg == "--scene=carnage":
+			_carnage = true
+			_shots = CARNAGE_SHOTS
 		elif arg.begins_with("--look="):
 			_look = StringName(arg.substr(7))
 		else:

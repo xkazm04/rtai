@@ -25,6 +25,10 @@
           "minimum": 0,
           "type": "number"
         },
+        "ram_per_dv": {
+          "minimum": 0,
+          "type": "number"
+        },
         "wreck_s": {
           "minimum": 0,
           "type": "number"
@@ -36,7 +40,8 @@
         "d2_at",
         "dv_min",
         "per_dv",
-        "wreck_s"
+        "wreck_s",
+        "ram_per_dv"
       ],
       "type": "object"
     },

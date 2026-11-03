@@ -107,7 +107,7 @@ func test_runs_a_person_over_above_kill_speed() -> void:
 	assert_signal_emitted_with_parameters(_bus, "pedestrian_struck", [42, true])
 
 
-func test_ramming_traffic_damages_then_wrecks_it() -> void:
+func test_ramming_traffic_damages_then_disables_it() -> void:
 	var car: VehicleBody = _svc.spawn_parked(&"van", Vector2(0, 0), Vector2.RIGHT)
 	@warning_ignore("return_value_discarded")
 	_svc.try_enter(Vector2.ZERO)
@@ -116,15 +116,15 @@ func test_ramming_traffic_damages_then_wrecks_it() -> void:
 		if not _w.taken.is_empty():
 			break
 		_w.cars = PackedFloat64Array([9, 0, car.pos.x + 3.4, car.pos.y, 1.0, 0.0, 0.0, 0])
-		car.vel = Vector2(22, 0)
+		car.vel = Vector2(12, 0)
 		_svc.step(hit, TickInput.new())
 		seen.append(_w.states.get(9, -1))
 	assert_true(seen.has(VehicleBody.State.D1) or seen.has(VehicleBody.State.D2), str(seen))
-	assert_true(_w.taken.has(9), "the wreck left the sim")
+	assert_true(_w.taken.has(9), "the disabled car left the sim")
 	var wrecks: int = 0
 	for b: VehicleBody in _svc.cars:
-		wrecks += 1 if b.state == VehicleBody.State.WRECK else 0
-	assert_eq(wrecks, 1, "and stays as a service wreck")
+		wrecks += 1 if b != car and b.state >= VehicleBody.State.D2 else 0
+	assert_eq(wrecks, 1, "and stays as a damaged service body")
 	assert_gt(car.hp_lost, 0.0, "the rammer took damage too")
 
 

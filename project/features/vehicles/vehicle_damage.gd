@@ -11,7 +11,8 @@ var hp: float = 100.0
 var d1_at: float = 30.0
 var d2_at: float = 65.0
 var dv_min: float = 3.0
-var per_dv: float = 6.0
+var per_dv: float = 3.5
+var ram_per_dv: float = 5.5
 var wreck_s: float = 45.0
 var kill_at: float = 4.0
 
@@ -20,7 +21,7 @@ static func load_rules(path: String = VehicleProfile.TABLE) -> VehicleDamage:
 	var r: VehicleDamage = VehicleDamage.new()
 	var t: DataTable = DataTable.open(path, VehicleProfile.SCHEMA)
 	var d: Dictionary = t.object(t.raw, "damage")
-	for f: String in ["hp", "d1_at", "d2_at", "dv_min", "per_dv", "wreck_s"]:
+	for f: String in ["hp", "d1_at", "d2_at", "dv_min", "per_dv", "ram_per_dv", "wreck_s"]:
 		r.set(f, t.num(d, f))
 	r.kill_at = t.num(t.raw, "kill_at")
 	if not t.ok():
@@ -28,9 +29,9 @@ static func load_rules(path: String = VehicleProfile.TABLE) -> VehicleDamage:
 	return r
 
 
-## hp lost for one speed change (m/s).
-func damage_for(dv: float) -> float:
-	return maxf(0.0, dv - dv_min) * per_dv
+## hp lost for one speed change (m/s); ram = car against car.
+func damage_for(dv: float, ram: bool = false) -> float:
+	return maxf(0.0, dv - dv_min) * (ram_per_dv if ram else per_dv)
 
 
 ## The damage state for hp lost (the soul-hijack flag shows only on an undamaged body).
@@ -45,9 +46,9 @@ func state_for(lost: float, soul: bool) -> VehicleBody.State:
 
 
 ## Adds hp lost to a body and moves its state on; true when this hit wrecked it.
-func hurt(body: VehicleBody, dv: float) -> bool:
+func hurt(body: VehicleBody, dv: float, ram: bool = false) -> bool:
 	var was: VehicleBody.State = body.state
-	body.hp_lost += damage_for(dv)
+	body.hp_lost += damage_for(dv, ram)
 	body.state = state_for(body.hp_lost, body.soul_hijacked)
 	return body.state == VehicleBody.State.WRECK and was != VehicleBody.State.WRECK
 

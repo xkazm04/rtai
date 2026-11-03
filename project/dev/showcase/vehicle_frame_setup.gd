@@ -37,8 +37,33 @@ class Route:
 		return TickInput.new()
 
 
-## [VehicleService, CityCharacters, CityView]; `parent` receives the view.
-static func build(world: World, parent: Node, look: StringName) -> Array[Object]:
+class Carnage:
+	extends Route
+	const RAM: Array[Array] = [
+		[30, 0, 0, 0],
+		[31, USE, 0, 0],
+		[200, 0, 0, -A],
+		[300, 0, 0, A],
+		[400, 0, 0, -A],
+		[500, 0, 0, A],
+		[600, 0, 0, -A],
+		[1 << 30, 0, 0, 0],
+	]
+
+	func sample(tick: int) -> TickInput:
+		for row: Array in RAM:
+			var until: int = row[0]
+			var buttons: int = row[1]
+			var mx: int = row[2]
+			var my: int = row[3]
+			if tick < until:
+				return TickInput.new(buttons, mx, my)
+		return TickInput.new()
+
+
+## [VehicleService, CityCharacters, CityView]; `parent` receives the view. carnage: Rivet stands
+## by a stopped taxi (to hijack) with a stopped sedan and pickup 40 / 47 m down the lane to ram.
+static func build(world: World, parent: Node, look: StringName, carnage: bool) -> Array[Object]:
 	var city: CitySystem = CitySystem.new(true)
 	world.add_system(city)
 	city.spawner.targets = CityTargets.street(140, 6, 1)
@@ -47,13 +72,7 @@ static func build(world: World, parent: Node, look: StringName) -> Array[Object]
 	var vw: CityVehicleWorld = CityVehicleWorld.new(city)
 	svc.world = vw
 	city.residency.update(city.focus)
-	var lane: Vector2 = east_lane(city)
-	@warning_ignore("return_value_discarded")
-	svc.spawn_parked(&"sedan", lane, Vector2.RIGHT, 0)
-	vw.set_focus(lane + Vector2(0.5, -2.2), false)
-	var ped: Vector2 = lane + Vector2(26.0, 0.0)
-	@warning_ignore("return_value_discarded")
-	city.sim.spawn(PackedFloat64Array([SimConst.K_PED, ped.x, ped.y, 0, 1, 2, 0, 0.0, 0, 0]))
+	_stage(city, svc, vw, carnage)
 	var view: CityView = CityView.new()
 	if look != &"":
 		view.look_id = look
@@ -69,6 +88,27 @@ static func build(world: World, parent: Node, look: StringName) -> Array[Object]
 	vw.characters = characters
 	view.actor_layer().add_child(CityVehicleWorld.make_view(svc, view))
 	return [svc, characters, view]
+
+
+## Parks the scene's cars and stands Rivet on the first long east-bound lane.
+static func _stage(
+	city: CitySystem, svc: VehicleService, vw: CityVehicleWorld, carnage: bool
+) -> void:
+	var lane: Vector2 = east_lane(city)
+	vw.set_focus(lane + Vector2(0.5, -2.2), false)
+	if carnage:
+		for c: Vector3 in [Vector3(0, 3, 0), Vector3(40, 0, 0), Vector3(47, 5, 0)]:
+			var at: Vector2 = lane + Vector2(c.x, 0)
+			var spec: Array = [SimConst.K_CAR, at.x, at.y, 1, 0, c.y, 0, 0.0, at.y, 0]
+			@warning_ignore("return_value_discarded")
+			city.sim.spawn(PackedFloat64Array(spec))
+	else:
+		@warning_ignore("return_value_discarded")
+		svc.spawn_parked(&"sedan", lane, Vector2.RIGHT, 0)
+		var ped: Vector2 = lane + Vector2(26.0, 0.0)
+		var spec: Array = [SimConst.K_PED, ped.x, ped.y, 0, 1, 2, 0, 0.0, 0, 0]
+		@warning_ignore("return_value_discarded")
+		city.sim.spawn(PackedFloat64Array(spec))
 
 
 ## The east-bound lane of the first east-west road with LANE_TILES road tiles ahead.

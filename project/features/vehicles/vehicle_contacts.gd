@@ -66,7 +66,7 @@ func traffic(b: VehicleBody, world: VehicleWorld) -> void:
 		var mass: float = _mass_of(kind)
 		var dv: Vector2 = _rules.collide(b, head * recs[r + 6], mass, n, null)
 		@warning_ignore("return_value_discarded")
-		_rules.hurt(b, dv.x)
+		_rules.hurt(b, dv.x, true)
 		if dv.y > 0.0:
 			var was: float = traffic_hits.get(slot, 0.0)
 			traffic_hits[slot] = maxf(was, dv.y)
@@ -80,9 +80,9 @@ func pair(a: VehicleBody, b: VehicleBody) -> void:
 	b.pos += n * 0.05
 	var dv: Vector2 = _rules.collide(a, b.vel, b.profile.mass, n, b)
 	@warning_ignore("return_value_discarded")
-	_rules.hurt(a, dv.x)
+	_rules.hurt(a, dv.x, true)
 	@warning_ignore("return_value_discarded")
-	_rules.hurt(b, dv.y)
+	_rules.hurt(b, dv.y, true)
 
 
 ## People inside the footprint of a moving car: killed above kill_at, else knocked aside.

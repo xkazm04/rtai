@@ -20,9 +20,8 @@ var rules: VehicleDamage = null
 var cars: Array[VehicleBody] = []
 ## The car Rivet drives, or null on foot.
 var driving: VehicleBody = null
-## Render-only states of sim traffic cars this service touched (slot -> VehicleBody.State).
-var traffic_state: Dictionary[int, int] = {}
-var _traffic_lost: Dictionary[int, float] = {}
+## The sim traffic this service rammed or soul-hijacked (render states, damage).
+var traffic: VehicleTraffic = null
 var _contacts: VehicleContacts = null
 var _events: EventBus = null
 var _next_id: int = 1
@@ -34,6 +33,7 @@ func setup(ctx: WorldContext) -> void:
 	profiles = VehicleProfile.load_all()
 	rules = VehicleDamage.load_rules()
 	_contacts = VehicleContacts.new(rules, profiles)
+	traffic = VehicleTraffic.new(rules)
 
 
 func profile(kind: StringName) -> VehicleProfile:
@@ -88,8 +88,7 @@ func exit() -> Vector2:
 
 ## "Hijacked by the soul" (Gearbox): the teal plate on a sim car, until it takes damage.
 func soul_hijack_traffic(slot: int) -> void:
-	traffic_state[slot] = VehicleBody.State.HIJACKED
-	world.set_car_state(slot, VehicleBody.State.HIJACKED)
+	traffic.soul_hijack(slot, world)
 
 
 func step(_tick: int, input: TickInput) -> void:
@@ -111,7 +110,8 @@ func step(_tick: int, input: TickInput) -> void:
 		b.step(SimClock.TICK_DT, -axis.y if mine else 0.0, axis.x if mine else 0.0, hb)
 		_collide(b)
 	_age_wrecks()
-	_settle_traffic()
+	for slot: int in traffic.settle(_contacts.traffic_hits, world):
+		_take_traffic(slot)
 	_emit_struck()
 	if driving != null:
 		world.set_focus(driving.pos, true)
@@ -159,10 +159,10 @@ func _hijack(at: Vector2) -> VehicleBody:
 		kind, Vector2(recs[best + 2], recs[best + 3]), head, int(recs[best + 7])
 	)
 	b.vel = head * recs[best + 6]
-	b.hp_lost = _traffic_lost.get(slot, 0.0)
-	b.soul_hijacked = _soul(slot)
+	b.hp_lost = traffic.lost_of(slot)
+	b.soul_hijacked = traffic.soul(slot)
 	b.state = rules.state_for(b.hp_lost, b.soul_hijacked)
-	_forget_traffic(slot)
+	traffic.forget(slot, world)
 	world.take_car(slot)
 	world.eject_driver(
 		b.pos + Vector2(b.head.y, -b.head.x) * DOOR_OFF, Vector2(b.head.y, -b.head.x), 0
@@ -171,50 +171,22 @@ func _hijack(at: Vector2) -> VehicleBody:
 	return b
 
 
-## Traffic hit this tick: damage by the slot's speed change; a wreck leaves the sim as a body.
-func _settle_traffic() -> void:
-	for slot: int in _contacts.traffic_hits:
-		var before: float = _traffic_lost.get(slot, 0.0)
-		var lost: float = before + rules.damage_for(_contacts.traffic_hits[slot])
-		_traffic_lost[slot] = lost
-		var st: int = rules.state_for(lost, _soul(slot))
-		traffic_state[slot] = st
-		world.set_car_state(slot, st)
-		if st == VehicleBody.State.WRECK:
-			_wreck_traffic(slot)
-
-
-func _wreck_traffic(slot: int) -> void:
+## A rammed traffic car at D2 or worse leaves the sim as a service body coasting to a stop.
+func _take_traffic(slot: int) -> void:
 	var recs: PackedFloat64Array = world.cars_near(world.player_pos(), 1e6)
 	for r: int in range(0, recs.size(), VehicleWorld.CAR_STRIDE):
 		if int(recs[r]) != slot:
 			continue
-		var kind: StringName = VehicleProfile.archetype_of_variant(
-			int(recs[r + 7]), recs[r + 1] > 0.5
-		)
-		var b: VehicleBody = spawn_parked(
-			kind,
-			Vector2(recs[r + 2], recs[r + 3]),
-			Vector2(recs[r + 4], recs[r + 5]),
-			int(recs[r + 7])
-		)
-		b.hp_lost = rules.hp
-		b.state = VehicleBody.State.WRECK
+		var art: int = int(recs[r + 7])
+		var kind: StringName = VehicleProfile.archetype_of_variant(art, recs[r + 1] > 0.5)
+		var head: Vector2 = Vector2(recs[r + 4], recs[r + 5])
+		var b: VehicleBody = spawn_parked(kind, Vector2(recs[r + 2], recs[r + 3]), head, art)
+		b.vel = head * recs[r + 6] * 0.5
+		b.hp_lost = traffic.lost_of(slot)
+		b.state = rules.state_for(b.hp_lost, false)
 		break
-	_forget_traffic(slot)
+	traffic.forget(slot, world)
 	world.take_car(slot)
-
-
-func _soul(slot: int) -> bool:
-	return traffic_state.get(slot, 0) == VehicleBody.State.HIJACKED
-
-
-func _forget_traffic(slot: int) -> void:
-	world.set_car_state(slot, VehicleBody.State.INTACT)
-	@warning_ignore("return_value_discarded")
-	traffic_state.erase(slot)
-	@warning_ignore("return_value_discarded")
-	_traffic_lost.erase(slot)
 
 
 func _age_wrecks() -> void:
