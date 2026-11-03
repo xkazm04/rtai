@@ -550,3 +550,18 @@ NEXT:
 - Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
 - PERF: run the 3+3 UNCONTENDED riot A/B (d-cast vs main). Only if the gap holds, bench perf-bisect/ patch A
   (print_part cop-blue revert) then B (head_swap = 4) in scratch worktrees (create build/export/windows-bench/ first).
+
+## Iteration 50 (16:52-16:55, BUILD, final before the 17:00 freeze)
+- 16:52 bench.lock held by d5-combat (16:43, 9 min old, fresh) -> GPU bench skipped (rule). The 3+3 uncontended
+  riot A/B stays owed; the perf gap remains UNMEASURED beyond the 2 contended pairs.
+- 16:53 lint re-run on HEAD: all 13 checks pass over 338 GDScript files. Tree clean; no code changed.
+- Too little time before the freeze to start new art or code safely, so nothing new was started.
+
+## Status at 16:55 (iteration 50, freeze) and NEXT
+- Items 1-5 evidenced (see iteration 47). Owner frames: masters day-d5/d5-cast/frames.json (15, verified at 16:47)
+  + ladder.png. Gates: lint green at 16:53; unit/scenarios/parity/goldens green since 8dbf7f4.
+NEXT:
+- Owner choices 1-6 and the merge recipe: unchanged (iteration 46 NEXT). Re-bless look goldens ONCE on the merged tree.
+- PERF: run the 3+3 UNCONTENDED riot A/B (d-cast vs main). Only if the ~1.5 ms contended p99 gap holds, bench
+  perf-bisect/ patch A (print_part cop-blue revert) then B (head_swap = 4) in scratch worktrees
+  (create build/export/windows-bench/ first).
