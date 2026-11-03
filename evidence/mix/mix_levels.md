@@ -46,3 +46,12 @@ fades in over ~2.3 s and out the same). Tour: 5 enter (engine + radio 1), 8 horn
 22 boss, 28 contract_completed (radio stinger, boss loop off). -18.1 LUFS, true peak -0.9 dBFS, LRA 3.9 LU. Per-second RMS (dBFS): bed -15..-13.5, wreck second -10.6,
 boss second range -12.9..-11.8 (the boss loop sits ~1-2 dB above the riot bed, under the shots). Frame at 12 s looked at: straight down, 0 rejected.
 Measured, not heard.
+
+## Iteration 4: the real slice with the REQUEST 3 patch (`slice_q1_audio.mp4`, 150 s, contended GPU)
+
+A scratch merge (d-slice fe40b14 + d-audio) with `evidence/requests/quest1_game_audio.patch` applied (3 hunks, 9 lines in boot/quest1_game.gd: attach StageAudio after the
+view is built, free it on restart). The scene is the slice's own `boot/quest1.tscn` (title card -> Start -> quest 1 driven by CollectCallInputDriver's scripted pad, one tick per
+rendered frame; the scratch driver is `evidence/requests/slice_clip.gd.txt`). 150 s of play = tick 9000, beats b1 dumpster .. b5 quartermaster (the Dock 9 boss): **-19.5 LUFS integrated,
+true peak -2.9 dBFS, LRA 3.3 LU**, 5 s windows -21.8 .. -15.0 dBFS; 20 of the 23 voice lines started in those 150 s (the other 3 come later in the quest), 7 voice-queue drops,
+123 footsteps, 44 kill punches, 74 shots, 3 Robo-tazer charges, 1 boss stinger, no missing sound file. Frames at 20 s and 140 s looked at: straight down, 0 rejected.
+Measured, not heard. Without the patch the slice is silent (nothing in d-slice calls StageAudio).

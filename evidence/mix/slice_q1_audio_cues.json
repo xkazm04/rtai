@@ -1,0 +1,60 @@
+{
+  "beats": [
+    "b1-dumpster",
+    "b2-payphone",
+    "b3-toner-room",
+    "b4-dock",
+    "b5-quartermaster"
+  ],
+  "dropped": {
+    "hit_flesh:cooldown": 4,
+    "projectile_end:cooldown": 1,
+    "projectile_end:voices": 6,
+    "rivet_kill:cooldown": 3,
+    "rivet_kill:voices": 2,
+    "servo:cooldown": 2,
+    "servo:voices": 1,
+    "shot_assault_rifle:cooldown": 5,
+    "shot_assault_rifle:voices": 14
+  },
+  "frames": 9000,
+  "missing": [],
+  "played": {
+    "boss_stinger": 1,
+    "crowd_panic": 6,
+    "footstep": 123,
+    "hit_flesh": 46,
+    "player_hit": 1,
+    "player_hit_robo_tazer": 1,
+    "projectile_end": 36,
+    "rivet_kill": 44,
+    "servo": 6,
+    "shot_assault_rifle": 39,
+    "shot_gloria": 35,
+    "tazer_charge": 3
+  },
+  "tick": 9000,
+  "voice_drops": 7,
+  "voice_lines": [
+    "rivet-line-stopped",
+    "rivet-my-hands",
+    "rivet-third-person",
+    "patch-collect-call",
+    "rivet-who-is-this",
+    "fax-slow-motion",
+    "fax-statistically",
+    "juno-load-bearing",
+    "juno-real-name",
+    "fax-dock-brief",
+    "brass-gloria",
+    "brass-someday",
+    "kilohm-accents",
+    "rivet-buildings-talk",
+    "kilohm-come-to-me",
+    "guard-who-do-we-call",
+    "rivet-sorry-not-sorry",
+    "mertz-inventory",
+    "mertz-appliances",
+    "rivet-everybody-screamed"
+  ]
+}
