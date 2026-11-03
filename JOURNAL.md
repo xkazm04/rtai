@@ -1836,3 +1836,17 @@ export-folder mkdir in tools/bench/run.mjs, shared tooling).
 NEXT (iteration 21; 43-52 stand): nothing new. Morning: Director merges n-d5 per the merge sheet; open items
 are 50 (hint_range on the look_d5* uniforms + range test, needs a before/after frame diff) and 51 (bench
 export-folder mkdir in tools/bench/run.mjs, shared tooling).
+
+## Iteration 22 (2026-11-03, STABILIZE, 08:08 -> report 08:15), no image budget (50/50)
+- 08:08 read JOURNAL (iteration 21), git log. HEAD a3875a8; `git diff --stat 850652b HEAD` = JOURNAL.md only (+48).
+  build/evidence: lint, unit-tests, scenario-tests, parity, selftest "pass" at 850652b; bench "pass" at 4b61ff4
+  (docs-only diff since). Tree clean apart from the untracked evidence PNGs. Code and assets match the evidence
+  commits, so no re-run (7 min to report; a re-run would only re-stamp the same build). No bugs open in scope.
+- No visual change, no frames, no ladder row. Shared files touched: none. AI assets: none new.
+
+## Summary (iteration 22, STABILIZE, final before the 08:15 report)
+- Build green; the evidence matches the current code. Images: 0 this iteration (50 of ~50 for the night).
+
+NEXT (iteration 22, final; 43-52 stand): lane done for the night. Morning: Director merges n-d5 per the merge
+sheet; open items are 50 (hint_range on the look_d5* uniforms + range test, needs a before/after frame diff) and
+51 (bench export-folder mkdir in tools/bench/run.mjs, shared tooling).
