@@ -807,3 +807,9 @@ NEXT (addendum): 26. Visual-engine lane: A/B look_d5_print (dark-side edges) as 
   dark / median RGB: h86 0.410 / 0.682 / 76,70,79 -> h98b 0.425 / 0.652 / 77,71,79 -> h103all 0.472 / 0.556 /
   87,75,76 (mock 0.488 / 0.509 / 96,84,83). By eye the closest frame to the mock tonight. Board
   evidence/item31_all_proposals_32.png; README section; ladder row.
+- 03:08 FINAL gates (iteration 6 close): evidence tool (--no-parity --no-bench) ALL PASS at ebb322b (lint 13/13 over
+  190 files, unit 149/0, scenarios 8/0, selftest ok); 62 untracked evidence PNGs moved aside and restored; tree clean.
+NEXT (final, iteration 6, supersedes the earlier final NEXT): NEXT 1-26 stand. Morning order: evidence/
+  item31_all_proposals_32.png (committed vs every open proposal vs the mock), night_iter6_summary.png, the gap list
+  after iteration 6 (evidence/README.md), then the decisions: look_d5_print (NEXT 26), age_floor + grain_floor
+  (NEXT 21), toned zebra (NEXT 23). Images: 50 of ~50 used; none this iteration.
