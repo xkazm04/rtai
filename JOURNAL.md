@@ -316,3 +316,16 @@ atlas; d5-combat blood names; vehicles cruiser accents).
    at 61e9222), 28-bench-final (16:42 FAIL, load), 29-bench-stabilize (17:05 pass 2 inside limits).
 1-4 unchanged (owner calls on road width / plazas / roof coarseness; more T1 long plates; overlay
    32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
+- BLOCKED 17:11 (iter 50) idle full-gate bench: lock held by `collisions` (written 17:10, < 20 min);
+  skipped per the lock rule. It could not finish before the 17:30 stop anyway (~14 min wall plus export).
+  Checks done: frames.json has 15 entries and every `file` and `before` exists (0 missing). ladder.png is
+  there (16:37). 29-bench-stabilize/ is committed (log + 4 scenario JSONs + README). No orphaned Godot
+  from the iter-49 pass-3 kill: no processes with a d-city command line besides this shell. Tree clean,
+  no code changed since bba930d, so the code gates of record (lint at 1a017d6; unit 335, scenarios 8,
+  parity and selftest at bba930d) still apply to HEAD.
+## NEXT (17:12, final for the session; same as the 17:10 NEXT)
+0. One idle full-gate bench after the run ends (`node tools/bench/run.mjs`, timeout >= 900 s, no other
+   lane on the GPU). Bench evidence: 24-bench-end PASS, 28-bench-final FAIL (load), 29-bench-stabilize
+   pass 2 inside the limits (all CONTENDED).
+1-4 unchanged (owner calls on road width / plazas / roof coarseness; more T1 long plates; overlay
+   32 px/m hatch test; kerb/corner tiles then the D5 sidewalk).
