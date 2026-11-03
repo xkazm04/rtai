@@ -20,6 +20,7 @@ uniform float panel = 0.0;
 uniform vec2 panel_center = vec2(0.5);
 uniform vec2 panel_half = vec2(0.36, 0.38);
 uniform float panel_line = 0.006;
+uniform float gutter = 1.0;        // 0 = the calm panel (flashes off): ink border only, no paper gutters
 
 const vec3 PAPER = vec3(0.945, 0.937, 0.910);
 const vec3 INK = vec3(0.027, 0.027, 0.035);
@@ -53,7 +54,7 @@ void fragment() {
 	vec2 q = abs(SCREEN_UV - panel_center) - panel_half;
 	float outside = step(0.0, max(q.x, q.y));
 	float border = step(-panel_line, max(q.x, q.y)) * (1.0 - outside);
-	vec3 framed = mix(mix(c, INK, border), PAPER, outside);
+	vec3 framed = mix(mix(c, INK, border), PAPER, outside * gutter);
 	col = mix(col, framed, panel);
 	COLOR = vec4(col, max(float(mode > 0), panel));
 }

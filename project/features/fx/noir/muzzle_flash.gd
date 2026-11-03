@@ -11,6 +11,10 @@ const MAX_FLASHES: int = 16
 ## second) however many rounds are fired; the starbursts themselves are not capped.
 const LIT_GAP: int = 20
 
+## The shared flash budget (ImpactFrame.budget): the light also spends from it, so kill beats
+## and rounds cannot add up past the limit; null = only LIT_GAP applies.
+var budget: FlashBudget = null
+
 var ticks: int = 2
 var radius_px: float = 26.0
 var _at: PackedVector2Array = PackedVector2Array()
@@ -30,7 +34,7 @@ func fire(at_px: Vector2, dir: Vector2) -> void:
 	_dir.append(dir.normalized())
 	@warning_ignore("return_value_discarded")
 	_age.append(0)
-	if _since_lit >= LIT_GAP:
+	if _since_lit >= LIT_GAP and (budget == null or budget.spend(FlashBudget.LIGHT_COST)):
 		_lit = true
 		_lit_at = at_px
 		_since_lit = 0

@@ -7,10 +7,11 @@ extends Node
 ## Record with the movie maker for a fixed 60 fps:
 ##   godot --path project --resolution 1280x720 --write-movie <f.avi> --fixed-fps 60
 ##     res://dev/noir/showcase_fight.tscn -- --out=<dir> [--zoom=1.5] [--ink] [--d4]
+## --flashes=off: the flashes-off accessibility mode (calm beats, no muzzle light).
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat"
+	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes"
 ]
 ## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
@@ -58,6 +59,7 @@ func _ready() -> void:
 	_view.actor_layer().add_child(_blood)
 	_view.actor_layer().add_child(_rigs)
 	_view.actor_layer().add_child(_flash)
+	_flash.budget = _impact.budget
 	if _noir_parts:
 		_wear_noir_parts()
 	_rigs.setup(_world.context())
@@ -93,6 +95,8 @@ func _args() -> bool:
 			_noir_parts = true
 		elif flag == "--coat":
 			_coats = NoirCoats.new()
+		elif flag == "--flashes":
+			_impact.budget.enabled = v != "off"
 		else:
 			_ink = true
 	return true
@@ -163,7 +167,7 @@ func _wear_noir_parts() -> void:
 
 
 func _on_hit_stop(ticks: int) -> void:
-	if _d4:
+	if _d4 or _impact.calm():
 		_hold = ticks
 	else:
 		_hold_in = _impact.sequence.size()

@@ -5,9 +5,9 @@ extends Node
 ## round (one lit frame), and hit-stop (the play is held for impact.hit_stop_ticks). Fast-
 ## forwards to the first fight, then plays 1 tick per frame. Record with the movie maker:
 ##   godot --path project --write-movie <f.avi> --fixed-fps 60 res://dev/noir/quest_fight.tscn
-##     -- --out=<dir>
+##     -- --out=<dir> [--flashes=off]  (off = the flashes-off accessibility mode)
 
-const KNOWN_FLAGS: PackedStringArray = ["--out"]
+const KNOWN_FLAGS: PackedStringArray = ["--out", "--flashes"]
 const SKIP_PER_FRAME: int = 600
 const LIVE_FRAMES: int = 900
 const HEROES: PackedInt32Array = [120, 300, 600, 899]
@@ -27,10 +27,14 @@ var _shots_seen: Dictionary[Shot, bool] = {}
 
 func _ready() -> void:
 	for arg: String in OS.get_cmdline_user_args():
-		if arg.get_slice("=", 0) != "--out":
+		var flag: String = arg.get_slice("=", 0)
+		if not KNOWN_FLAGS.has(flag):
 			get_tree().quit(2)
 			return
-		_out = arg.substr(6)
+		if flag == "--out":
+			_out = arg.substr(6)
+		else:
+			_impact.budget.enabled = arg != "--flashes=off"
 	var made: bool = DirAccess.make_dir_recursive_absolute(_out) == OK
 	if not made:
 		printerr("quest_fight: cannot create %s" % _out)
@@ -39,6 +43,7 @@ func _ready() -> void:
 	add_child(_view)
 	_view.add_child(_blood)
 	_view.add_child(_flash)
+	_flash.budget = _impact.budget
 	for n: Node in [_noir, _impact, _fx]:
 		add_child(n)
 	_fx.px_per_m = Ink.PX_PER_M
