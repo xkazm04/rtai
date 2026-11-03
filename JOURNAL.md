@@ -47,13 +47,31 @@ REQUESTs:
 - REQUEST 3 -> arena: the 35 m lane is off screen at 32 px/m (your arena-2). The rocket, the
   pistol and the electro gun reach it. My station file lands next iteration.
 
+- MILESTONE 30deecc: range and dodge station draft `evidence/gunplay/station-draft/gunplay.json`.
+  It validates against arena's `gtai.arena-station/1` (from a2467d8) and has 85 tuning keys
+  (`weapons.<id>.<field>`, `weapons.enemy_fire.*`). It cannot live in `data/tables/arena_stations/`
+  on this branch yet: arena's lint maps that folder onto `arena_station.schema.json`, and neither
+  is here. Move it there unchanged once arena is merged.
+- MILESTONE 7ed9305: pad aim assist (`AimAssist`, weapons.json `aim_assist`: 8 deg cone, 25 m,
+  bends 35 % of the way, pad_only). The mouse aims raw.
+- MILESTONE 4305f19: the dev range scene `dev/gunplay/range_view.gd` with the core six side by
+  side. Clip: gtai-masters/eve/gunplay/range-core6-32ppm.mp4 (5 s, --fixed-fps 60, d3d12),
+  frames.json written (3 entries). I looked at frames 150 and 200: the first capture cut off the
+  labels (the project's stretch shifts the canvas about 70 px) and drew them white on paper; both
+  fixed before the kept capture.
+- Gates at 7ed9305: lint 13/13; unit 551/552 at 2c558d1 (test_noir_shadows, the known flake,
+  passes alone); scenarios 19/19 (evidence/gunplay/*-iter1.log). Replay and parity are untouched:
+  no native or quest code changed.
+- answers.json at 21:24: only rivet-motion-1. No answer to gunplay-1 yet.
+
 NEXT:
-1. A visual range dev scene `project/dev/gunplay/` (or the arena station once it is on this
-   branch): tracers at 32 and 48 px/m, the six weapons side by side, a 10-25 s `--fixed-fps 60`
-   clip, then frames.json in gtai-masters/eve/gunplay/. The owner's ASK needs the clip.
-2. `arena_stations/gunplay.json` (+ `gunplay.schema.json`): lanes at 5/10/20/35 m, targets,
-   weapon ids that point into weapons.json.
-3. Aim: reticle and aim line (range-readable), and pad magnetism (light cone, off for the mouse).
+1. Re-read answers.json (gunplay-1). Apply the answer as numbers in weapons.json and re-run the
+   TTK bench.
+2. Clip at 48 px/m (make PPM a `--ppm=` arg in range_view.gd), a longer 15-20 s clip with a lane
+   per weapon at 5/10/20/35 m, and the real Rivet once the arena lane's stage is on this branch.
+3. Aim: the reticle and an aim line in the view that make range readable (the line ends at the
+   weapon's range_m; the reticle opens with cone_rad()). Wire AimAssist into the player's pad
+   aim.
 4. The enemy shot tell and muzzle flash in the view, plus a dodge clip (Rivet strafing through a
    volley).
 5. A scenario test for projectile determinism through `run_scenarios` (replay identical, planted
