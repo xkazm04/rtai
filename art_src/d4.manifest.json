@@ -685,6 +685,21 @@
     "own: pof games/gtai/art-direction/directions-v2/d4h2_mock.jpg (D4 target frame, Codex)"
    ],
    "seed": null
+  },
+  "d4n_q1down": {
+   "file": "masters:night/d4-production/gen/out/d4n_q1down.png",
+   "sha256": "fc9313522ec238b2758402c453bcb87e9d6c1f28fe09b94a233f4933f42b32de",
+   "tool": "codex-image",
+   "model": "codex-cli built-in image_gen (ChatGPT Pro plan; image model not reported)",
+   "date": "2026-11-03",
+   "prompt_ref": "masters:night/d4-production/gen/_prompts/q1down.txt",
+   "prompt_sha256": "62e10d35de36d00ebd24cc70249d37aff2a705980418412e01dae85ed3c5f116",
+   "layout_template": "masters:night/d4-production/gen/refs/t_q1down.png",
+   "references": [
+    "own master: d4n_q1cast2 (the same guard and Mertz, style anchor)",
+    "own: pof games/gtai/art-direction/trivet/ref-1-camera-90-TARGET.jpg (camera reference)"
+   ],
+   "seed": null
   }
  }
 }

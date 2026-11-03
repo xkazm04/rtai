@@ -32,6 +32,8 @@ for teal eyes, and that call belongs to the owner.
 | `cast_don_fax.png` | 1.8 x 1.1 | 216 x 132 | `_ally("Don Fax")` (incl. the vermilion dot) |
 | `cast_dock_guard.png` | 0.9 x 0.9 | 108 x 108 | `_human(..., "G", facing)`: vermilion vest = threat. The patrol cops ("C") stay with the cop rig. |
 | `cast_mertz.png` | 1.9 x 2.0 | 228 x 240 | `_mertz()` body boxes, cap, ribbon bars, "M". Keep the Robo-tazer, its cable and the charge tubes as code. |
+| `cast_guard_down.png` | 1.6 x 1.6 | 192 x 192 | a dead hostile's faint disc. Knocked out, lying face up. **No vermilion** (no longer a threat). Draw at **1x** with alpha 0.8 so the bodies stay quiet. |
+| `cast_mertz_down.png` | 2.6 x 2.4 | 288 x 312 | the "shorted out" box + label. Sparking backpack, gloves re-inked. 1.5x, alpha 0.8. |
 
 Reuse from the city set (already D4): `features/city/art/props/payphone.png` (1.3 m) for `_phone()`,
 `features/city/art/props/dumpster.png` (2.4 x 1.6 m in quest 1) for the hide spots.
