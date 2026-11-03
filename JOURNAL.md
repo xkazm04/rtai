@@ -591,3 +591,27 @@ NEXT (iteration 5; NEXT 1-15 of iterations 3-4 still stand):
 NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so no more Codex this night. If a later
   session has budget: a D5 plate for the warehouse (pad to a square template) and long/helipad (the arena's
   bottom-right and the hero's last D4 neighbour), same prompt (gen/_prompts/roof_sign_b.txt) and build path.
+
+## Iteration 6 (2026-11-03, BUILD, 02:12 -> ), no image budget left (50/50): shader, tiles, compositing
+- 02:12 read JOURNAL, git log. Weakest gap by eye at 32 px/m vs the mock: the pavement prints as a hard white slab
+  grid with BLACK joints (gap 3); the mock's blocks are one cream surface with faint joints.
+- 02:14 FRICTION (mine, again): h87a/b were shot without `--borrow=` (no cruiser/skids); re-shot. Control h87c (old
+  tile) = h86 0 px in d4/d5 at 32/48: the scene is deterministic.
+- 02:16 MILESTONE (h87d, 92068f9): D5 sidewalk tile with print-aware joints (masters tools/build_sidewalk.py,
+  non-generative, seeded, byte-identical rebuild). The 4 px joints (L 0.05 at 96 px/m = 1.33 screen px of solid ink
+  at 32 px/m) lifted to light-wash density (mean joint L 0.59), weight wanders along the joint (0.75-1.0) with rare
+  gaps; the source tile's stain slabs lifted 60% toward the paper (they printed as grey squares once the grid went
+  light). Tried: h87a joint 0.70 (the grid vanishes, the stain slabs read as camouflage blotches: rejected); h87b
+  0.60 + gap period 8 (joints read DASHED at 48/64, stain square: rejected); h87d kept.
+  Numbers (d5 tier, full frame): 32 px/m L 0.410 -> 0.426, px darker than L 0.35 0.682 -> 0.653 (mock 0.488 /
+  0.515); 48: 0.390 -> 0.394; 64: 0.394 -> 0.398. Pavement strip at 48 px/m: L 0.569 -> 0.594, dark 0.413 -> 0.365
+  (mock pavement 0.616 / 0.297); at 64: 0.624 -> 0.661, 0.345 -> 0.279.
+  No regression: d4 tier 0 px at 32/48/64/96/128; the Rivet crops change only in their top rows (pavement at the
+  crop edge), actors 0 px. Pan swim (d5_pan default anchor, 48 px/m, 40 ticks): pan7c (old tile) 0.00739 ->
+  pan7d 0.00751 (+1.6%), per-class rate identical (paper 0.0144 / 0.0143, mid 0.0089 / 0.0087, ink 0.0036 /
+  0.0036): more paper under look_d4's screen grain (gap 7), no new aliasing. Board evidence/item22_pavement_joints.png;
+  ladder +1 row. (Iteration 3's h55 softened the joints by compressing density x0.35 and look_d4 re-inked them; the
+  difference here is the joint's density lands in the light-wash step after minification, below line_ink.)
+- CORRECTION to iteration 5: "Manifest keeps d5_roof_mural_c as REJECTED" is wrong: art_src/d5.manifest.json has no
+  status field; mural_c and warehouse_b are listed like the others. Their rejection is recorded here and in the
+  evidence README only.
