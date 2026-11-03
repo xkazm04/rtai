@@ -60,9 +60,10 @@ func _init() -> void:
 	var tokens: Dictionary[StringName, Color] = PaletteTokens.shared().tokens
 	if tokens.has(&"blood"):
 		blood.set_ground(tokens[&"blood"])
-	if tokens.has(&"blood_dark"):
-		blood.set_dark(tokens[&"blood_dark"])
 	_game = blood.p.get("game", {})
+	if not NoirLook.requested():  # the noir gate prints a body this dark as black
+		var dark: Color = NoirPack.rgb(_game.get("pool_dark", [0.46, 0.0, 0.03]))
+		blood.set_dark(tokens[&"blood_dark"] if tokens.has(&"blood_dark") else dark)
 	var fallback: String = _game.get("default", "noir")
 	mode = requested(fallback)
 	oil = BloodFx.new()

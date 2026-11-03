@@ -77,6 +77,11 @@ func set_dark(c: Color) -> void:
 	_fluid.dark = c
 
 
+## The fluid's shadow (a pool's body; CorpseStains' dark spots follow it).
+func dark() -> Color:
+	return _fluid.dark
+
+
 ## Pools get an ink keyline `px` wide in `colour` (the D4/D5 print; 0 = noir's bare rim).
 func set_ink(px: float, colour: Color) -> void:
 	_ring.ink_px = px

@@ -126,6 +126,9 @@ func test_pool_body_is_the_doctrine_blood_dark() -> void:
 	var dark: Color = b.blood._fluid.dark
 	var gap: float = Vector3(dark.r - want.r, dark.g - want.g, dark.b - want.b).length()
 	assert_lt(gap, 0.005, "palette blood_dark #540005 (d5-city doctrine), got %s" % dark)
+	var noir: BloodFx = BloodFx.new()
+	assert_gt(noir._fluid.dark.r, 0.4, "noir's own body stays over the noir blood gate")
+	noir.free()
 	b.blood.set_dark(Color(0.2, 0.0, 0.0))
 	assert_eq(b.blood._fluid.dark, Color(0.2, 0.0, 0.0), "set_dark recolours the pool body")
 	b.free()

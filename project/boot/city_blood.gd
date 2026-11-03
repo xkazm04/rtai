@@ -51,7 +51,7 @@ static func attach(city: CitySystem, view: CityView) -> CityBlood:
 ## Soaks the dead of `feed` (the city's rig feed) with the blood of their kill.
 func follow(feed: RigFeed) -> void:
 	_feed = feed
-	stains = CorpseStains.new(16, blood.blood.use_splat_mesh().colour)
+	stains = CorpseStains.new(16, blood.blood.use_splat_mesh().colour, blood.blood.dark())
 	stains.material = blood.print_material()
 	_view.actor_layer().add_child(stains)
 	@warning_ignore("return_value_discarded")

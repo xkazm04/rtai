@@ -67,7 +67,7 @@ func _ready() -> void:
 		blood = CombatBlood.new()
 		print_stage.actor_layer().add_child(blood)
 		blood.listen(_stage.events(), _locate, _stage.arena.rivet.id)
-		stains = CorpseStains.new(BODIES, blood.blood.use_splat_mesh().colour)
+		stains = CorpseStains.new(BODIES, blood.blood.use_splat_mesh().colour, blood.blood.dark())
 		stains.material = blood.print_material()
 		print_stage.actor_layer().add_child(stains)
 		@warning_ignore("return_value_discarded")

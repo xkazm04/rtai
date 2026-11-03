@@ -209,3 +209,12 @@ green at 971a118.
   frames/wall-splat-f1-t900-32ppm-crop.png (focus 1; the spray stops at the roof edge and piles along the wall base,
   never crosses onto the roof). Camera breaks: 0 of 3. frames.json: the wall entry replaces the beat-flash 64 clip
   (still in masters).
+- REGRESSION caught + fixed (my own, 1a7174f): blood_fx.json colour.blood_dark is ALSO noir's pool body; at #540005
+  the noir pass's blood gate printed the body black under --look=noir (only the rim red, sheen gone). Seen in
+  dev/noir/showcase_fight at 64 px/m f322 (noir's own scene: the city_fight dev scene rejects --look). Fix: colour.blood_dark
+  back to #750008 (noir unchanged: its f322 frame is pixel-identical to the pre-change one); the D4/D5 body moves to
+  blood_fx.json game.pool_dark #540005, applied by CombatBlood only when NOT NoirLook.requested() (palette blood_dark
+  wins once it lands); CorpseStains takes the blood's body (BloodFx.dark()) so D4/D5 stains follow it. City riot
+  t900: pools identical to 1a7174f at 128, stains identical by eye at 32-64 (5k px of freeze-tick jitter).
+  Evidence: frames/noir-pool-dark-check.png (old | 1a7174f | fix). LESSON: a shared fx table value has a noir
+  reader; check --look=noir after any blood_fx.json colour change.

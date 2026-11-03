@@ -64,13 +64,16 @@ class Soak:
 			BloodMarks.splat(self, at, s.z, dirs[i] * 0.45, blood)
 
 
-func _init(bodies: int = 16, ground: Color = Color(0.64, 0.02, 0.035)) -> void:
+## `dark` = the spots' shadow (the blood's pool body); transparent = blood_fx.json blood_dark.
+func _init(
+	bodies: int = 16, ground: Color = Color(0.64, 0.02, 0.035), dark: Color = Color.TRANSPARENT
+) -> void:
 	z_index = RenderLayers.z(&"actors")
 	var d: Dictionary = NoirLook.read_params(BloodFx.PARAMS)
 	_p = d.get("stain", {})
 	_grow = _p.get("grow_ticks", _grow)
 	var c: Dictionary = d.get("colour", {})
-	_dark = NoirPack.rgb(c.get("blood_dark", [0.46, 0.0, 0.03]))
+	_dark = dark if dark.a > 0.0 else NoirPack.rgb(c.get("blood_dark", [0.46, 0.0, 0.03]))
 	_blood = ground
 	for i: int in bodies:
 		var s: Soak = Soak.new()

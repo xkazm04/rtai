@@ -12,9 +12,9 @@
       0.035
     ],
     "blood_dark": [
-      0.329,
+      0.46,
       0.0,
-      0.02
+      0.03
     ],
     "sheen": [
       0.95,
@@ -71,7 +71,7 @@
   "game": {
     "death_hit": "kill",
     "default": "noir",
-    "doc": "lane d5-combat: the blood of the default D4/D5 game (features/fx/combat_blood.gd). default = the mode without -- --blood (noir = this blood, the D4 ink splat muted; ink = the D4 ink splat with the cream rim only, the fallback; both = the splat under the blood). replaces_fx = the fx.json kinds the blood replaces under noir. death_hit = the hits row a sim death sprays. ink_px / ink = the ink keyline around each pool (the D4/D5 print). kill_beat = the comic kill beat without -- --kill-beat (off|panel|flash|both; features/fx/kill_beat.gd). settled_redraw_ticks = the canvas redraw cadence while no droplet flies (the pools grow ~0.04 px a tick and the fade is minutes long; landed splats are on the GPU mesh and need no redraw).",
+    "doc": "lane d5-combat: the blood of the default D4/D5 game (features/fx/combat_blood.gd). default = the mode without -- --blood (noir = this blood, the D4 ink splat muted; ink = the D4 ink splat with the cream rim only, the fallback; both = the splat under the blood). replaces_fx = the fx.json kinds the blood replaces under noir. death_hit = the hits row a sim death sprays. ink_px / ink = the ink keyline around each pool (the D4/D5 print). kill_beat = the comic kill beat without -- --kill-beat (off|panel|flash|both; features/fx/kill_beat.gd). settled_redraw_ticks = the canvas redraw cadence while no droplet flies (the pools grow ~0.04 px a tick and the fade is minutes long; landed splats are on the GPU mesh and need no redraw). pool_dark = the pool body of the D4/D5 game (palette blood_dark #540005; the palette token wins once it lands); NOT under --look=noir: the noir pass's blood gate prints a body that dark as black, so noir keeps colour.blood_dark.",
     "ink": [
       0.1,
       0.075,
@@ -87,6 +87,11 @@
       "radius_m": 5.0,
       "strength": 0.32
     },
+    "pool_dark": [
+      0.329,
+      0.0,
+      0.02
+    ],
     "replaces_fx": [
       "ink_splat"
     ],
