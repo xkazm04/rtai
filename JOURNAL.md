@@ -1272,3 +1272,23 @@ NEXT (iteration 23, for the morning): 1. Director: merge per evidence/MERGE-noir
   (expected identical), and run test_render_layers with noir on. 2. Owner picks: evidence/NOIR.md ->
   showcase-hero-current.png. 3. Crowd-shadow root cause (atlas dump, iteration 20). Items 3-5 of the iteration-18
   07:10 list stand. Later: `noir` as a row in look_profiles.json.
+
+## Iteration 24 (07:46-07:50, STABILIZE, past freeze: no features)
+- (07:46) Branch tips: main 721fbbb, n-visual 0ea52b9 and n-d5 4b61ff4 are unchanged. **n-d4 moved 31f8c4c -> 02e21c1**
+  (JOURNAL.md and its evidence/ only; no project/ paths). Merge-tree into n-noir HEAD 7aa4da2 gives the same picture as
+  iteration 23. main: clean. n-d4 / n-d5: only JOURNAL.md (add/add). n-visual: JOURNAL.md, plus the
+  launch_args.gd text conflict. city_view.gd auto-merges, and the latent set_look_enabled clash stands (patch in
+  evidence/merge-noir-city_view.patch). evidence/MERGE-noir.md now carries this re-check line.
+- (07:47) Gates at 7aa4da2 (project/ + tools/ are identical to 641d2b1): lint 13/13 over 243 files (exit 0), unit 206/0/0
+  (exit 0), scenarios 8 ran 0 failed (exit 0; replay_60s final cbeb734ff9b97c41, the same as iteration 23). Logs:
+  evidence/gates-7aa4da2-*.log. The "resources still in use at exit" warning is pre-existing and not a failure.
+  The NOIR.md gates line was updated.
+- Leonardo probed (07:47): apiSubscriptionTokens 0, apiPaidTokens None. Images 0 generated, 0 rejected;
+  provenance +0. Code commits: none. Shared files touched: none. No process of mine running.
+NEXT (iteration 24, for the morning; unchanged in substance): 1. Director: merge per evidence/MERGE-noir.md. Take
+  n-visual's launch_args.gd and apply evidence/merge-noir-city_view.patch. Then re-shoot noir_frames junction 48 vs
+  masters crowdshadow-v1/before/ (expected identical) and run test_render_layers with noir on. 2. Owner picks:
+  evidence/NOIR.md -> showcase-hero-current.png (D4 48 | noir 48 | noir 64), then the stab21 clips. 3. Crowd-shadow
+  root cause (dump the baked atlas, suspects a/b/c from iteration 19), then re-apply 01409e4. 4. The iteration-18
+  07:10 items 3-5 (junction prop/shadow mask channel, per-light shadow directions, split showcase_fight.gd 227 lines).
+  Later: `noir` as a row in look_profiles.json.
