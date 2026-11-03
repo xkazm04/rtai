@@ -32,7 +32,7 @@ CUES = [
     ("player_hit", "Rivet is hit: the body blow, loud and close", "impact_flesh", 2, "sfx", -2, 0.8, 0.05, 0, 4, 2, 5, False),
     ("player_hit_robo_tazer", "the Robo-tazer arc lands on Rivet: the electroshock crackle", "shock_crackle", 2, "sfx", -1, 1.0, 0.04, 0, 10, 2, 5, False),
     ("attack_telegraphed", "a boss weapon winds up (the charge whine)", "servo_whine", 2, "sfx", -4, 0.7, 0.06, 0, 30, 2, 4, False),
-    ("tazer_charge", "the Robo-tazer winds up (attack_telegraphed, weapon robo-tazer): a rising capacitor whine", "tazer_charge", 3, "sfx", -4, 1.0, 0.04, 0, 30, 2, 4, False),
+    ("tazer_charge", "the Robo-tazer winds up (attack_telegraphed, weapon robo-tazer): a rising capacitor whine, pitched 0.8 so its ~1.2 s fills combat.json charge_s 1.5", "tazer_charge", 3, "sfx", -4, 0.8, 0.04, 0, 30, 2, 4, False),
     ("boss_stinger", "a boss fight starts (boss_engaged): a deep hit that swells and dies", "boss_stinger", 1, "sfx", -5, 1.0, 0.0, 0, 120, 1, 5, False),
     ("servo", "Rivet's joints, layered over his steps now and then", "servo_whine", 2, "sfx", -16, 1.2, 0.1, 0, 60, 1, 1, False),
     ("footstep", "one of Rivet's steps on concrete (one per stride while he walks; 8 single-step takes cut from two generated runs)", "footstep", 8, "sfx", -13, 1.0, 0.06, 0, 8, 2, 1, False),
