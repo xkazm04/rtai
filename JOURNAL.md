@@ -1097,7 +1097,7 @@ NEXT (final, iteration 10; supersedes the 03:02 NEXT where they differ):
   Provenance line (capture of the Rivet part pixels), ladder rows "i12d". 0 Codex.
   Still placeholders in quest 1: the patrol cops ("C" discs; the same capture would work for the cop rig), the arc
   ball and whisper rings (code-drawn FX).
-- 04:03 MILESTONE quest 1's patrol cops in D4 (vermilion "C" discs). `rivet_sprite.gd --kind=cop` (dev rig
+- 04:00 MILESTONE quest 1's patrol cops in D4 (vermilion "C" discs). `rivet_sprite.gd --kind=cop` (dev rig
   generalised; the Rivet re-capture is pixel-identical, 0 px differ) captures the patrol cop rig (look 5, gun out,
   aiming -y) -> `cast_cop.png` (222 x 388 = 1.85 x 3.23 m, cream rim r 5). Quest view patch: the patrol loop draws
   the sprite facing +y, `_human()` removed (no callers left). Frames `after_q1r2|after_q1c/01-monologue.png`, crop
