@@ -8,12 +8,24 @@ extends Node
 
 const MASTER_SEED: int = 91
 const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
-const KNOWN: PackedStringArray = ["--seconds", "--report"]
+const KNOWN: PackedStringArray = ["--seconds", "--report", "--demo"]
+## --demo: a scripted tour of the sounds nothing fires yet (second -> what), see _demo().
+const DEMO_AT: Dictionary = {
+	5: "enter",
+	9: "horn",
+	11: "screech",
+	13: "crash",
+	15: "next",
+	21: "wanted",
+	25: "exit",
+	26: "sting"
+}
 
 var _frames: int = 60 * 30
 var _report: String = ""
 var _n: int = 0
 var _max_proj: int = 0
+var _demo_on: bool = false
 var _city: CitySystem = null
 var _audio: AudioService = null
 var _view: CityView = null
@@ -26,7 +38,9 @@ func _ready() -> void:
 		if not KNOWN.has(flag):
 			get_tree().quit(2)
 			return
-		if flag == "--seconds":
+		if flag == "--demo":
+			_demo_on = true
+		elif flag == "--seconds":
 			_frames = arg.get_slice("=", 1).to_int() * 60
 		else:
 			_report = arg.get_slice("=", 1)
@@ -57,10 +71,39 @@ func _process(_delta: float) -> void:
 	var t: float = _n / 60.0
 	_city.target = RIOT + Vector2(cos(t * 0.3), sin(t * 0.3)) * 6.0
 	_city.focus = _city.target
+	var second: int = floori(_n / 60.0)
+	if _demo_on and _n % 60 == 0 and DEMO_AT.has(second):
+		var what: String = DEMO_AT[second]
+		_demo(what)
 	if _n % 30 == 0:
 		_max_proj = maxi(_max_proj, _projectiles())
 	if _n >= _frames:
 		_done()
+
+
+func _demo(what: String) -> void:
+	var at: Vector2 = _city.target * SimConst.PX_PER_M
+	var tick: int = _n
+	if what == "enter":
+		Events.vehicle_entered.emit(1)
+	elif what == "exit":
+		Events.vehicle_exited.emit(1)
+	elif what == "wanted":
+		Events.wanted_changed.emit(3)
+	elif what == "sting":
+		Events.contract_completed.emit(&"collect-call")
+	elif what == "next":
+		_radio().next()
+	else:
+		var id: StringName = {"horn": &"horn", "screech": &"tyre_screech", "crash": &"crash"}[what]
+		_view.fx_triggers.fire(id, at, 0.0, tick)
+
+
+func _radio() -> CarRadio:
+	for n: Node in _audio.get_children():
+		if n is CarRadio:
+			return n
+	return null
 
 
 func _done() -> void:

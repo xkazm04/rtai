@@ -14,3 +14,11 @@ StageAudio). Loudness by ffmpeg ebur128. I could not LISTEN (no human in the loo
 Mix 1 had the voice 11 LU above the riot and clipped under dialogue; mix 2 brings the three clips within 4 LU of each other and
 holds the true peak under the limiter ceiling. The riot is still 3-4 LU quieter than the quest (a flat city bed + capped shots):
 a candidate for the next iteration. `*_cues.json` = the cues played / dropped (culled by cooldown, voice cap, distance) in each clip.
+
+## Demo tour (evidence/mix/riot_demo_mix2.mp4, `audio_riot.tscn --demo`)
+
+The riot clip again, with a scripted tour of the sounds nothing in the game fires yet (the vehicles lane will): second 5 vehicle_entered
+(engine bed + car radio, station 1), 9 horn, 11 tyre screech, 13 crash, 15 radio next (station 2), 21 wanted level 3 (siren bed),
+25 vehicle_exited (engine + radio off), 26 contract_completed (radio stinger). -17.9 LUFS, true peak -1.8 dBFS, LRA 4.8. RMS by window
+(dBFS, 24 kHz mono mixdown of the recorded audio): bed only -16.2; engine + radio on -14.8; horn -10.7; screech -13.1; crash -11.2;
+radio station 2 -12.4; siren on -13.2. Measured, not heard.
