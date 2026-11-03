@@ -34,3 +34,18 @@ func test_one_pistol_round_drops_a_guard() -> void:
 	for i: int in 30:
 		arena.step(i + 1)
 	assert_false(guard.alive())
+
+
+func test_a_landed_round_reaches_the_hit_feel() -> void:
+	var arena: CombatArena = _arena()
+	var guard: Fighter = arena.spawn_guard(Vector2(10.0, 0.0))
+	guard.cooldown = 999
+	var feel: HitFeel = HitFeel.shipped(CameraRig.new())
+	var stops: Array[int] = []
+	var hook: Callable = func(v: Fighter, dir: Vector2, lethal: bool, _w: StringName) -> void:
+		stops.append(feel.land(v.id, &"light", dir, lethal, arena.tick))
+	assert_eq(arena.struck.connect(hook), OK)
+	assert_true(arena.rivet_fire(guard.pos))
+	for i: int in 30:
+		arena.step(1000 + i)
+	assert_eq(stops, [6], "one lethal pistol round: the kill hit-stop, once")

@@ -6,6 +6,9 @@ extends RefCounted
 ## announces each wave through announce_wave), boss_engaged, attack_telegraphed, player_hit.
 ## Deterministic: ticks, and the `combat` RNG stream only for guard spread and spawn jitter.
 
+## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
+signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
+
 const SPAWN_SPREAD_M: float = 2.5
 
 var tuning: CombatTuning
@@ -176,6 +179,7 @@ func _step_shots() -> void:
 		var victim: Fighter = _struck(s, from)
 		if victim != null:
 			damage(victim, s.damage, s.shooter_id, s.weapon)
+			struck.emit(victim, s.vel.normalized(), not victim.alive(), s.weapon)
 		if victim != null or s.spent() or _blocked(s, from):
 			shots.erase(s)
 
