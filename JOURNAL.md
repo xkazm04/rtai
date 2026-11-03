@@ -200,3 +200,15 @@ vehicles: cruiser accents cop_blue).
   invisible on plaza paving). city_frame foci 5 (STRIKE) + 6 (fist under a roof row). GENERATOR 9.
   FRICTION: test_city_chunks pins the texture row count (75 -> 78): first unit run failed on it.
   evidence/d5-city/20-story-paint/ (before = f85bfc0 via a temporary checkout of 2 files + re-bake).
+- FINDING item 4 (roof density vs T1), measured on T1's own scale: T1's sedan is 185 x 85 px = 4.9 x
+  2.15 m -> T1 is ~38 px/m. T1 buildings span ~15 m, with 5-6 BIG items each (water tank 4.5 m across,
+  AC units 2.2 m, skylights 3.4 m): ~0.03 items/m2. Ours: 8.4 m roofs with 10-15 items (tank 2.5 m,
+  fans 0.85 m): ~0.17 items/m2, items about half T1's size. So T1 is NOT denser; it is coarser: fewer,
+  2x larger items on 2x larger buildings. Toward T1 = 16.4 x 16.4 m (2 x 2 tile) roof plates at 80 px/m
+  (1312 px, Codex, layout template with T1-scale items) + a 2 x 2 building in TilePainter._block.
+  Scaling the 8.4 m plates 2x would halve texel density (80 -> 40 px/m, breaks the lock): not done.
+- MILESTONE 12:57 evidence at 00ebb7c (--no-bench): lint, scenarios 8, parity, selftest PASS (look
+  goldens 11/11 worst 0.78, block 5/5; no new off-doctrine accents with D5 at 32/48; world lock 0 %);
+  unit 335/335 but the kind FAILED on "tree changed during run" (I wrote evidence/README.md mid-run).
+  Re-stamp on a clean tree at the end.
+- BLOCKED 12:50-13:00 bench: lock held by vehicles (12:38) then slice-play (12:53). Waiting.
