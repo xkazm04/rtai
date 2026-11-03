@@ -469,3 +469,9 @@ NEXT (final, iteration 4): items 1-8 (iteration 3) and 9-15 above stand. Owner, 
   / 0.41 / 0.27): tone now at the mock. HONEST: HF 0.113 < D4 0.125 < mock 0.163 (the membrane hatch prints as tone,
   not lines, at 32-48; at 64 the lines show). d4 tier 0 px at every zoom; d5 changed px 46861 / 91997 / 120133 at
   32/48/64. Board evidence/item21_mural_pen.png; ladder +1 row; old d5_roof_mural SUPERSEDED in the manifest.
+- 01:26 Codex: d5_roof_bar_b (prompt roof_sign_b.txt = the b prompt + the sign's vermilion plate), 111 s, 0 rejected
+  (lettering spelled right; the kegs show a hint of side, like the mock's barrels). Ledger 43.
+- 01:33 MILESTONE (h76): bar roof on the b plate (same build path, mural byte-identical). Bar at 32 px/m: L 0.463 ->
+  0.494, paper 0.27 -> 0.39, ink 0.47 -> 0.46, HF 0.132 -> 0.128 (D4 0.460 / 0.24 / 0.49 / 0.122); the diagonal
+  membrane hatch survives at 32 on this roof. d4 tier 0 px; d5 changed 49064 / 26403 / 0 px at 32/48/64 (the bar is
+  off frame at 64). Crops work/i5/bar_ab32.png.
