@@ -10,9 +10,9 @@ tick count, no RNG.
 | `item5_portraits.png` | the 3 D5 portraits at 512 px plus 128 and 64 px phone sizes |
 | `item1_gate.png` | concept / D5 tier at 32, 48 (= D4) / D4 at 64 / D5 at 64 and 96 (rebuilt from r19, with the form shade) |
 | `item3_roofs_gate.png` | the landmark roofs, D4 vs D5 (lifted, iteration 3) in the hero junction at 32 and 48 px/m (h57) + tone and vermilion share |
-| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h69, iteration 4) / the concept |
+| `item4_hero_vs_targets.png` | `d4h2_mock.jpg` / in-engine D4+D5 at 32, 48, 64 and the 128 kill-cam (h71, iteration 4) / the concept |
 | `item1c_shade_k.png` | iteration 4: Rivet's form-shade coverage 0.42 / 0.34 / 0.26 (kept) vs D4 at 64 (hero pose) + a cop at 96 |
-| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h69, iteration 4 = h60 + the roof ink foot + form-shade 0.26; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
+| `hero-d4-<ppm>ppm.png`, `hero-d4d5-<ppm>ppm.png` | the hero junction (round h71, iteration 4 = h60 + the roof ink foot + form-shade 0.26 + finer shadow strokes at 96+ + the D5 lamp; 128 = kill-cam), before / after, at 32, 48, 64, 96 and 128 px/m (the night's showcase: `hero-d4d5-128ppm.png`, the kill-cam) |
 | `item1b_form_shade.png` | Rivet at 64 px/m: D4 / D5 iter 1 / D5 + form shade, and the form shade at 96 |
 | `item2b_street48.png` | 48 px/m crop: street hatch off (h23) / at 40% for the car camera (h24, kept) |
 | `item4d_kerb_shadow.png` | kerb shadow strips at 64 and 32 px/m (h24 vs h26) |
@@ -41,6 +41,7 @@ tick count, no RNG.
 | `item19_phone.png` | iteration 4: the D5 phone close-up in-engine (cop_alarmed behind the keyed phone screen) at 32/48 + the raw frame |
 | `item5e_boss_intro.png` | iteration 4: the D5 boss intro card (King on his turntable; `features/combat/art/d5/boss_intro_king.png`, not wired) |
 | `arena-d4d5-<ppm>ppm.png` | iteration 4: the boss arena at 64 and the 128 px/m boss kill-cam (a13) |
+| `item20_lamp.png` | iteration 4: the D4 lamp ('spoon') vs the D5 plan-view lamp with its arm over the street, at 48 and 64 (h70 vs h71) |
 | `night_iter4_summary.png` | ONE SCREEN for the morning, iteration 4: mock, hero h64 at 32/48/64, the arena at 64, dialogue + phone close-ups, concept |
 | `ladder.png` | the night's iterations, including the reverted ones |
 
@@ -84,10 +85,12 @@ tick count, no RNG.
 - **Arena polish**: King's hatched cast shadow (look_d5_shadow now takes a sprite's alpha; hero 0 px), shadow strokes
   kept ~10 screen px above 64 px/m (`zoom` uniform; 0 px at 32-64), the 128 px/m boss kill-cam (the closest frame to
   the concept tonight), and D4 yard roofs with the ink foot around the floor (a13).
+- **D5 lamp post** (`item20_lamp.png`, 934233c): the D4 'spoon' replaced in the hero's d5 tier by a plan-view lamp,
+  arm over the street like the mock (d4 tier 0 px).
 - Re-measured on the final shaders: tier-fade sweep 0 at 51-55 px/m then monotone (no pop); walk shimmer HF 1.024.
-- Codex this iteration: 5 images (cop expressions, arena floor, King top view, phone frame, boss intro card), 0
-  rejected for camera breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger
-  total 39.
+- Codex this iteration: 6 images (cop expressions, arena floor, King top view, phone frame, boss intro card, lamp
+  post), 0 rejected for camera breaks (2 mild notes: edge-band crates and the megaphone bell show a hint of side); ledger
+  total 40.
 
 ## Iteration 3 (23:09 -> 00:10) in one screen (`night_iter3_summary.png`)
 - **Aged paper** (`item7_paper_age.png`, f871411): the mock is a warm sepia print, ours was a cool violet-grey. look_d5
@@ -150,7 +153,10 @@ Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
    city lane's pavement tile (the D5 sidewalk tile helped only marginally). Iteration 3 tried softening the D5
    tile's joints (h55): the look_d4 print re-inks them (dark px 25.3% -> 23.9%), reverted. The joint weight lives in
    look_d4's print thresholds or needs a thinner-jointed tile.
-4. **Lamp post** reads as a spoon lying on the pavement (mock: kerb base + curved arm + round head). City props.
+4. **Lamp post** read as a spoon lying on the pavement (mock: kerb base + curved arm + round head). Iteration 4: a D5
+   plan-view lamp (`features/city/art/d5/props/lamp_post.png`, 1 Codex image) on the kerb with its arm over the
+   street in the hero's d5 tier (`item20_lamp.png`). Its head prints a little like a gear ring. Next (city lane):
+   adopt it for the D4 prop too (rotated so the arm reaches over the street) or redraw the D4 lamp to this plan.
 5. **Parapets / building height.** The mock's roofs read as raised slabs. Iteration 4: the hero scene's ink foot
    (`D5HeroParapets`, `item16_parapets.png`) gives the lip -> ink -> hatch profile of the mock. Next (city lane): put
    the 0.22 m ink core in the roof/shadow quads of the city (street-facing south/east edges only, not the alleys).
