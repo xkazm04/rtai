@@ -14,6 +14,8 @@ var uniforms: Dictionary = {}
 var extra_m: Dictionary[String, float] = {}
 ## texture name -> the total cast distance in metres (overrides its class's offset_m)
 var by_name_m: Dictionary[String, float] = {}
+## the parapet ink core's cast distance for buildings (ChunkView; 0 = none)
+var parapet_core_m: float = 0.0
 var _baked_m: Dictionary[String, float] = {}
 
 
@@ -35,11 +37,17 @@ static func load_table() -> CastShadows:
 		var baked: float = row["baked_offset_m"]
 		out.extra_m[cls] = total - baked
 		out._baked_m[cls] = baked
+	out.parapet_core_m = d.get("parapet_core_m", 0.0)
 	var names: Dictionary = d.get("by_name", {})
 	for n: String in names:
 		var m: float = names[n]
 		out.by_name_m[n] = m
 	return out
+
+
+## The offset the chunk data bakes into a `cls` shadow command (m).
+func baked_m(cls: StringName) -> float:
+	return _baked_m.get(String(cls), 0.0)
 
 
 ## The shared shadow material (null when no shader loads: the band keeps its flat tint).

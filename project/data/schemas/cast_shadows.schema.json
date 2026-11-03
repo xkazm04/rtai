@@ -50,6 +50,11 @@
       "pattern": "^res://.+\\.gdshader$",
       "type": "string"
     },
+    "parapet_core_m": {
+      "maximum": 2,
+      "minimum": 0,
+      "type": "number"
+    },
     "schema": {
       "const": "gtai.cast-shadows/1"
     },
