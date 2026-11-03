@@ -8,9 +8,12 @@
   "doc": "The weapon table (lane gunplay, owner weapon set 2026-11-03 20:00). Damage is in hp points: a human has 100 (one pistol hit, the one-hit doctrine), see targets. Seconds and metres; the sim converts to 60 Hz ticks. enemy_fire scales the same rows when a hostile holds the gun, so enemy shots are slower and readable.",
   "enemy_fire": {
     "damage_scale": 0.25,
+    "lock_frac": 0.5,
     "muzzle_flash_s": 0.08,
+    "rest_s": 1,
     "speed_scale": 0.45,
-    "tell_s": 0.35
+    "tell_s": 0.35,
+    "volley_shots": 3
   },
   "schema": "gtai.weapons/1",
   "targets": [

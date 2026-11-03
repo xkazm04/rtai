@@ -41,7 +41,16 @@
           "minimum": 0,
           "type": "number"
         },
+        "lock_frac": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "muzzle_flash_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "rest_s": {
           "minimum": 0,
           "type": "number"
         },
@@ -52,13 +61,20 @@
         "tell_s": {
           "minimum": 0,
           "type": "number"
+        },
+        "volley_shots": {
+          "minimum": 1,
+          "type": "integer"
         }
       },
       "required": [
         "damage_scale",
+        "lock_frac",
         "muzzle_flash_s",
+        "rest_s",
         "speed_scale",
-        "tell_s"
+        "tell_s",
+        "volley_shots"
       ],
       "type": "object"
     },
