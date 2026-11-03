@@ -1,5 +1,26 @@
 {
   "doc": "Known colour-doctrine debt the accent audit (dev/selftest/accent_audit.gd) tolerates: an accent ink on a layer palette.json does not allow it on (or, layer `cop`, vermilion on the cops: their accent is cop_blue since 2026-11-03), up to max_px at ppm px/m in the selftest junction (seed 91). Any offender not listed here, or above its max_px, fails the selftest evidence (tools/selftest/run.mjs). A row is debt, not a permission: it names the source and the lane that pays it off, and is deleted when the source is fixed.",
-  "rows": [],
+  "rows": [
+    {
+      "accent": "vermilion",
+      "doc": "measured 2026-11-03 at the int-day merge (junction 48 px/m: 4 px at stride 2, 7 px full res, all on a blood splat); the row goes when the audit compares a layer-hidden capture against a full capture of the same frame (or ignores gate-boundary flicker)",
+      "id": "blood_flicker_cop_48",
+      "layer": "cop",
+      "max_px": 12,
+      "owner": "d5-city",
+      "ppm": 48,
+      "source": "not a source: a few lit blood-splat pixels sit on the vermilion/blood gate boundary and flip class between the full capture and the layer-hidden capture 2 frames later; no cop or car is under them (docs/day/2026-11-03/int-day/accent-flicker-*.png)"
+    },
+    {
+      "accent": "blood",
+      "doc": "measured 2026-11-03 at the int-day merge (block 32 px/m: 4 px at stride 2, 6 px full res, all on a blood splat); the row goes when the audit compares a layer-hidden capture against a full capture of the same frame (or ignores gate-boundary flicker)",
+      "id": "blood_flicker_vehicles_32",
+      "layer": "vehicles",
+      "max_px": 12,
+      "owner": "d5-city",
+      "ppm": 32,
+      "source": "not a source: a few lit blood-splat pixels sit on the vermilion/blood gate boundary and flip class between the full capture and the layer-hidden capture 2 frames later; no cop or car is under them (docs/day/2026-11-03/int-day/accent-flicker-*.png)"
+    }
+  ],
   "schema": "gtai.accent-debt/1"
 }

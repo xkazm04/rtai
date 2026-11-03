@@ -122,7 +122,9 @@ func _rigs_of(kind: BodyPlan.Kind) -> Array[CanvasItem]:
 
 ## Hides `hide`, draws one frame, counts the accents, shows them again.
 func _count(hide: Array[CanvasItem], save_as: String) -> PackedInt32Array:
+	var was: Array[bool] = []  # an item may be off on purpose (MuzzlePop is off between pops)
 	for item: CanvasItem in hide:
+		was.append(item.visible)
 		item.visible = false
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
@@ -130,8 +132,8 @@ func _count(hide: Array[CanvasItem], save_as: String) -> PackedInt32Array:
 	if save_as != "":
 		@warning_ignore("return_value_discarded")
 		img.save_png(_out.path_join(save_as))
-	for item: CanvasItem in hide:
-		item.visible = true
+	for k: int in hide.size():
+		hide[k].visible = was[k]
 	return _palette.count_inks(img, STRIDE)
 
 
