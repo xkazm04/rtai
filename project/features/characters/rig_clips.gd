@@ -17,6 +17,10 @@ const RECOIL_DECAY: float = 6.0
 const HIT_S: float = 0.18
 const HIT_TINT_FROM: float = 0.10
 const HIT_SHOVE: float = 90.0
+## Knockdown (features/bodies): the sprawl a tackled body falls into, and how fast it falls / rises.
+const DOWN_SPRAWL: float = 0.9
+const DOWN_FALL_S: float = 0.22
+const DOWN_RISE_S: float = 0.45
 
 var punch_t: float = 0.0
 var punch_len: float = PUNCH_S
@@ -26,6 +30,9 @@ var death_amount: float = 1.0
 var recoil: float = 0.0
 var hit_t: float = 0.0
 var fleeing: bool = false
+## Set by the host while the body is knocked down (RigFeed.Flag.DOWN); clearing it gets up.
+var down: bool = false
+var down_amt: float = 0.0
 
 
 func reset() -> void:
@@ -35,6 +42,8 @@ func reset() -> void:
 	recoil = 0.0
 	hit_t = 0.0
 	fleeing = false
+	down = false
+	down_amt = 0.0
 
 
 func punch(combo: int) -> void:
@@ -97,4 +106,7 @@ func sample(rig: CutRig, dt: float) -> void:
 		rig.dead = true
 		rig.c_sprawl = minf(death_amount, death_t / DEATH_RAMP_S * death_amount)
 	else:
-		rig.c_sprawl = 0.0
+		var rate: float = 1.0 / DOWN_FALL_S if down else 1.0 / DOWN_RISE_S
+		down_amt = move_toward(down_amt, DOWN_SPRAWL if down else 0.0, dt * rate)
+		rig.dead = down_amt > 0.05
+		rig.c_sprawl = down_amt

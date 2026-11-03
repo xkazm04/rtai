@@ -118,9 +118,11 @@ static func _put_person(
 	var fl: int = 0
 	if mode == SimConst.M_DEAD:
 		fl |= RigFeed.Flag.DEAD
+	elif mode == SimConst.M_DOWN:
+		fl |= RigFeed.Flag.DOWN
 	elif mode == SimConst.M_FLEE or mode == SimConst.M_RIOT:
 		fl |= RigFeed.Flag.FLEE
-	if cop and mode != SimConst.M_DEAD:
+	if cop and mode != SimConst.M_DEAD and mode != SimConst.M_DOWN:
 		fl |= RigFeed.Flag.GUN_OUT
 		feed.aim[i] = aim
 		if a[10] > 0.0:
