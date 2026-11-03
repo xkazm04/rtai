@@ -118,3 +118,14 @@ func test_both_keeps_the_ink_splat_under_the_blood() -> void:
 	t.fire(&"death", Vector2(320, 320), 0.0, 10)
 	b.step(10, Vector2.ZERO)
 	assert_eq(b.kills, 1)
+
+
+func test_pool_body_is_the_doctrine_blood_dark() -> void:
+	var b: CombatBlood = CombatBlood.new()
+	var want: Color = Color8(0x54, 0x00, 0x05)
+	var dark: Color = b.blood._fluid.dark
+	var gap: float = Vector3(dark.r - want.r, dark.g - want.g, dark.b - want.b).length()
+	assert_lt(gap, 0.005, "palette blood_dark #540005 (d5-city doctrine), got %s" % dark)
+	b.blood.set_dark(Color(0.2, 0.0, 0.0))
+	assert_eq(b.blood._fluid.dark, Color(0.2, 0.0, 0.0), "set_dark recolours the pool body")
+	b.free()

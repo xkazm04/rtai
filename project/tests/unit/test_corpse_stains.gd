@@ -95,3 +95,15 @@ func test_a_soak_fades_while_rivet_stands_on_the_body() -> void:
 	stains.step_bodies(3, dead)
 	assert_eq(soak.modulate.a, 1.0, "Rivet stepped off: whole again")
 	stains.free()
+
+
+func test_nearest_soak_finds_the_closest_soaked_body() -> void:
+	var stains: CorpseStains = CorpseStains.new(4)
+	var at: Vector2 = Vector2(500, 500)
+	assert_eq(stains.nearest_soak(at), at, "nothing soaked: the query point comes back")
+	var dead: Dictionary[int, Vector2] = {1: Vector2(100, 100), 2: Vector2(480, 520)}
+	stains.on_bled_body(1, Vector2.RIGHT)
+	stains.on_bled_body(2, Vector2.RIGHT)
+	stains.step_bodies(1, dead)
+	assert_eq(stains.nearest_soak(at), Vector2(480, 520))
+	stains.free()
