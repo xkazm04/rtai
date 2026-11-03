@@ -1160,7 +1160,7 @@ NEXT (iteration 14 / morning, in order):
   identical). n-noir's city_view hunk lands after my zoom-anchored world_px and reads that member:
   consistent. merge-tree after my decisions.md line (06:12): still JOURNAL.md-only conflicts vs n-d4 / n-d5 /
   n-noir, main clean.
-- Known limit (README, 7b0c...): lights, the 5 emissive FX kinds (all `paper`) and markers draw above the
+- Known limit (README): lights, the 5 emissive FX kinds (all `paper`) and markers draw above the
   grade rect, so they are not aged (a paper flash prints D4 cream on the aged page at 64 px/m).
 - Quest 1 patch v2 (49-quest1-v2/quest1-on-print_stage-v2.patch, 78 lines, applies on the merged tree and on
   main): the 45-quest1 PrintStage move + every zone floor on Ink.WASH at 30 % (Factory Row 0.12, Toner Room
