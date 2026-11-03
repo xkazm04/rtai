@@ -103,3 +103,20 @@ Requests 1-4 above are for the Director to relay. No bench run yet (lock protoco
   re-baked, bake --check ok; lint 13/13, unit 335/335, scenarios 8/0 (replay cbeb734ff9b97c41); look
   goldens 11/11 within tolerance (max mean 0.49), no re-bless. evidence/d5-city/08-dash-stop/ (no seam
   at 64 px/m). Masters: after-i3/.
+- MILESTONE cd1f9dc wall-side clutter (work order item 3): KerbDresser puts one wall prop on 75% of kerb
+  tiles (crate_stack, dumpster x2, vending, trash_can x2; barrel_cluster excluded = vermilion), flush to
+  the building (0.3 m), clear of the lamp arm and the kerb prop (0.45 m), never facing a plaza block.
+  First try (55%, no plaza check) put crates on the open plaza edge: rejected by eye, fixed. GENERATOR 4;
+  replay cbeb734ff9b97c41 + parity unchanged; goldens re-blessed both sites (block: new dumpster + bin;
+  junction: crowd tick shift only). city_frame focus 4 = street between building blocks.
+  evidence/d5-city/09-wall-clutter/. Effect modest at 32 px/m (most foci face plazas).
+- MILESTONE df7ebe2 the 48 px/m drive frame: dev/showcase/drive_shot.tscn wraps city_bench (drive) and
+  saves 3 frames; no player car exists in this tree (the bench drives the focus). evidence/d5-city/10-drive/.
+- MILESTONE proof refresh: masters ladder.png (4 foci x before 32 / after 32/48/64 + T1 + H2; copy
+  evidence/d5-city/ladder-iter3.png), frames.json 15 entries. 0 camera-break rejects this iteration.
+- OWNER CALL (for the 18:00 sync): road width. Kerb to kerb = 18 m of asphalt (8 m lane tile with 2 lanes
+  + 5 m asphalt in each kerb tile, parked cars there) vs T1 ~10 m. At 48 px/m a street frame is almost
+  all asphalt. What-if mock from real game pixels with the lane tile cut out:
+  evidence/d5-city/11-road-width-mock/ (labelled concept). Narrowing is sim data (cells, traffic lanes,
+  PERIOD 8 = 3 street tiles), touches vehicles/slice-play: not done unilaterally.
+- BLOCKED 11:37 bench: bench.lock held by d5-combat (fresh). Skipped.
