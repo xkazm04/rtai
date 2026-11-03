@@ -1,0 +1,38 @@
+[
+  {
+    "file": "autosave-input.json",
+    "title": "Autosave on the slice's real path: bound input -> Save -> drop world -> Continue -> planted corruption -> fallback",
+    "source": "dev-scene",
+    "branch": "d-save-trial (d-save + d-slice merged)",
+    "look": "n/a",
+    "ppm": 0,
+    "note": "Quest 1 on the generated city, played through simulated InputEvents -> InputMap -> LiveInput (CollectCallInputDriver). Three autosave points write the two slots; world dropped; load re-simulates 5,669 ticks to the saved hash in 751 ms (CONTENDED). Newest slot flipped: falls back to as-b3-toner-room with the notice; the title card's Continue button then opens a session on that beat with autosave on. Patch to apply after merging d-save and d-slice: evidence/autosave/patches/ in the d-save worktree. No pixels: the save engine has no visuals."
+  },
+  {
+    "file": "load-after-corruption.log",
+    "title": "Autosave: load after planted corruption (log, not a frame)",
+    "source": "dev-scene",
+    "branch": "d-save",
+    "look": "n/a",
+    "ppm": 0,
+    "note": "Quest 1 played to beat 4 with 3 autosaves in the 2 rotating slots, world dropped, load lands on the saved state hash and plays on to the same final hash as an uninterrupted run. Newest slot corrupted: load falls back to the b3 save, quarantines the bad file, raises the notice. A valid container with a wrong checkpoint hash is refused. Headless run; no pixels (save engine has no visuals). Driver is the deterministic CollectCallBot, not the bound-input session (that is on d-slice)."
+  },
+  {
+    "file": "autosave-resume.json",
+    "title": "Autosave: scenario evidence (hashes, ticks, meta.json, quarantined files)",
+    "source": "dev-scene",
+    "branch": "d-save",
+    "look": "n/a",
+    "ppm": 0,
+    "note": "Machine-readable result of the same run."
+  },
+  {
+    "file": "save-crash.json",
+    "title": "Autosave: 12 hard kills (taskkill /F) mid-write, ~4,670 writes",
+    "source": "dev-scene",
+    "branch": "d-save",
+    "look": "n/a",
+    "ppm": 0,
+    "note": "A headless Godot autosaves 100 KB bodies in a tight loop and is killed at random moments; after each kill an independent Node reader (written from SAV-02) finds both slots valid or at least one valid, sequence numbers never go backwards, no stray files (round 4 shows a leftover .tmp, tolerated). Real-process crash proof, no pixels."
+  }
+]

@@ -67,3 +67,33 @@ NEXT: (1) slice-play wires `Save` into Quest1Session/title card (names above); a
 (4) Loc: add SAVE__NOTICE_FELL_BACK / SAVE__NOTICE_NONE_READABLE to the string table when Loc lands.
 (5) Long resumes re-simulate on the main thread inside `accept`; if a late-game load takes >1 s, move
 the replay behind a loading frame (the engine already returns the Outcome synchronously).
+
+## 2026-11-03 iteration 3 (BUILD) - the bound-input gap closed in a trial merge
+- MILESTONE trial integration (scratch worktree `gtai-wt/scratch-save-trial`, branch `d-save-trial` =
+  d-save + d-slice ac69481; only JOURNAL.md conflicted, resolved "ours"). Wired the autosave engine
+  into slice-play's `Quest1Session` / `Quest1Game`:
+  - new `boot/collect_call/quest1_autosave.gd` (`Quest1Autosave`: points from quest.json, snapshot =
+    `Quest1Session.checkpoint(beat)`, `accept(events, data)` Callable for `Save.load_latest`);
+  - `Quest1Session`: `autosave` member built in `open()`, `poll_checkpoint()` body split into a public
+    `checkpoint(beat)` (behaviour unchanged, `scenario_quest1_input` still passes);
+  - `Quest1Game`: `_process` calls `session.autosave.poll()` instead of writing the checkpoint file;
+    `start()` split into `_begin(session)`; Continue/Retry = `_continue()` -> `Save.load_latest`;
+    `save_path != ""` is now just the on/off switch; `Checkpoint.erase` on the paid card is gone
+    (quest end is an autosave `quest-end`; `_can_continue()` hides Continue when meta.point is that).
+  - new scenario `scenario_autosave_input` (boot/quest1.tscn, bound-input driver, real Save engine):
+    3 points written, world dropped, load = tick 5669 + saved hash (751 ms to re-simulate, CONTENDED),
+    newest slot flipped -> as-b3 + notice + quarantine, Continue button -> session at b3 with autosave on.
+  - Gates on the trial tree: lint 13/13, unit 384 passed, scenarios 12/12 (incl. quest1_input, replay_60s).
+- Patches for the Director: `evidence/autosave/patches/0001..0003` (`git am` onto d-save + d-slice
+  merged, or `git cherry-pick` from branch `d-save-trial` in the shared repo). Evidence:
+  `evidence/autosave/autosave-input.json`, frames.json entry added.
+- HONEST GAP: a resumed bound-input run is not claimed to end on the uninterrupted run's final hash
+  (the driver's own state is not in a save, as a human's hands are not); the load itself is exact or refused.
+- FRICTION a load re-simulates on the main thread: 5,669 ticks = 751 ms contended, so a 20-minute
+  load would be several seconds. The slice should show a loading frame; if it is too slow, a later
+  step can store a periodic state snapshot (needs sim serialisation, not in scope today).
+- Worktree `scratch-save-trial` is scratch; delete after the merge (`git worktree remove`).
+
+NEXT: Director applies the patches after merging d-save and d-slice. Then: Loc keys
+SAVE__NOTICE_FELL_BACK / SAVE__NOTICE_NONE_READABLE; hook `Save.take_notice()` to the HUD line; decide
+the quit-time autosave ("quit" point) with slice-play.

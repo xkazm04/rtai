@@ -1,0 +1,48 @@
+From 029225f18d09e7a2831a98e0c6a40827f03e2cf7 Mon Sep 17 00:00:00 2001
+From: xkazm04 <kazdan@seznam.cz>
+Date: Tue, 3 Nov 2026 12:24:24 +0100
+Subject: [PATCH 2/3] test(save): Continue button resumes the surviving slot
+ (bound-input scenario)
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+---
+ evidence/autosave/autosave-input.json              |  4 ++++
+ project/tests/scenarios/scenario_autosave_input.gd | 12 +++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/evidence/autosave/autosave-input.json b/evidence/autosave/autosave-input.json
+index e50b83f..458e694 100644
+--- a/evidence/autosave/autosave-input.json
++++ b/evidence/autosave/autosave-input.json
+@@ -1,4 +1,8 @@
+ {
++  "continue_button": {
++    "beat": "b3-toner-room",
++    "sink_on": true
++  },
+   "load_1": {
+     "beat": "b4-dock",
+     "point": "as-b4-dock",
+diff --git a/project/tests/scenarios/scenario_autosave_input.gd b/project/tests/scenarios/scenario_autosave_input.gd
+index 6d4ded1..ceaf82f 100644
+--- a/project/tests/scenarios/scenario_autosave_input.gd
++++ b/project/tests/scenarios/scenario_autosave_input.gd
+@@ -88,4 +88,14 @@ func _resume(game: Quest1Game, saved: Dictionary[String, Dictionary], log: Dicti
+ 		return "the fallback did not land on the older slot's hash"
+ 	log["load_2"] = {"beat": s.beat_id(), "tick": s.tick()}
+ 	s.world.free()
+-	return ""
++	return _continue_button(game, log)
++
++
++## The title card's Continue: the game opens a session on the surviving slot's beat.
++func _continue_button(game: Quest1Game, log: Dictionary) -> String:
++	game.card.continue_pressed.emit()
++	var s: Quest1Session = game.session
++	if s == null or s.beat_id() != "b3-toner-room":
++		return "Continue did not resume the surviving slot's beat"
++	log["continue_button"] = {"beat": s.beat_id(), "sink_on": s.autosave.sink.is_valid()}
++	return "" if s.autosave.sink.is_valid() else "Continue left autosave off"
+-- 
+2.43.0.windows.1
+
