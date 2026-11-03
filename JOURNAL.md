@@ -485,6 +485,15 @@ NEXT (iteration 6 close, in order):
   exactly the params' [4, 4, 1] (checked; an earlier note of mine here called it a one-frame bug - wrong).
   Masters trimmed (my own superseded scratch) to ~950 MB. Images this session: 0 (no generation needed);
   Leonardo 0 tokens; provenance +0.
+- MILESTONE (02:46) NEXT item 5 (noir HUD), in the dev host: quest_fight lifts the HUD's CanvasLayer to
+  ImpactFrame.LAYER + 1 (above the noir pass and the comic beat) - v6 showed that this exposes the HUD's D4
+  vermilion (heat pips, speaker name, weapon), against this direction's no-orange rule - so v7 adds
+  `assets/shaders/look_noir_hud.gdshader` on HudView: colours near the vermilion key print as ink (blood
+  and teal untouched). Evidence: masters night/noir/hud-noir-3way.png (also evidence/: v5 under the pass |
+  v6 lifted | v7 lifted + noir print), hud-before-after-f300/f600.png, clip quest-v7/quest-fight-48.mp4
+  (flash meter 2/s). Ladder row 26 (26 rows). Honest read: a clear gain - the text is clean, the heat pips
+  read as solid ink vs cream; the speaker name loses its accent (still upper case). The boxes stay D4 cream,
+  not pure paper. Only in the dev host; the shared HudView / CollectCallView are not touched.
 NEXT (iteration 8 close, in order):
 1. Owner picks from evidence/showcase-hero.png (re-shot, show-final4) + masters night/noir/show-final4/*.mp4:
    (a) the comic language: silhouette flash -> held panel on kills, the muzzle's one-frame pool of light (now
@@ -498,5 +507,6 @@ NEXT (iteration 8 close, in order):
    the coat as a CutRig part. Wire BloodStains / BloodFx.solid into the real game hosts with the look.
 4. Wall splats are a line on the edge (top-down hides the wall face); a vertical run-down smear on the
    building's lit face would need the facade in view (the D4 roofs have no facades).
-5. Noir HUD palette (Ink tokens without vermilion) for quest 1's view, then lift the HUD above the pass.
+5. The noir HUD (done in quest_fight, 02:46) belongs in the look profile: when --look=noir is the game's
+   look, the composition root should lift the HUD and set look_noir_hud (today: the dev host only).
 6. blood_fx.gd is 250 lines (over the ~200 guide, under the 300 stop): split the droplet pool out if it grows.
