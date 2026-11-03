@@ -173,3 +173,14 @@ cruiser in city_frame; KingPlan into the boss ticket).
   night-borrowed cruiser; cop-heads A/B differs only at the cops' heads (32/64: 2 regions = riot + patrol head).
   Scratch worktree scratch-cast-merge2 removed. No art/code change since the clean-tree evidence run at 07182f0
   (the darker-dome trial was reverted; later commits are docs/evidence JSON only).
+
+## 2026-11-03 iteration 4 (BUILD, 11:42-13:12)
+- 11:42 start. d-city has not landed REQUEST 1/3 (no cop-blue plate in look_d4's world pass yet; d-city 0ea24f4).
+- MILESTONE 02d459e cop portraits wear T1's cream dome (owner question 4 from iteration 3, answered by an option that
+  ships): the portraits' black helmets clashed with the rig cops' cream T1 domes in the same dialogue frame. Per portrait a
+  hand-set dome polygon (masters portrait_dome/polys.py; two first masks spilled onto the band / strap buckle, fixed by eye),
+  then a tone curve (smoothstep L 22..85 -> 0.94 x cream) keeps the ink lines in their OWN warm colour (a first pass mixed
+  toward the palette INK and left blue-violet streaks: rejected), paper/visor/band/body untouched. Reads as a scuffed
+  cream riot dome in the same drawing. 0 Codex images. Provenance rows appended (5). Dialogue frame re-shot
+  (renders/dialogue-dome): portrait + street cops in the same cream dome. OWNER CHOICE: revert 02d459e = black helmets.
+  Frames: masters frames/portraits-cop-dome-3way.png (orig | navy | dome), dialogue-rivet-cop-48ppm-dome.png.
