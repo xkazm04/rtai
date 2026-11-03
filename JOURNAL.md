@@ -869,3 +869,16 @@ and junction at 32 / 48, the light showcase at 32 / 48 / 64).
   other block goldens byte-identical. Unit 220 (+1). Cost (editor build, headless scratch on the
   generated city, deleted): first pick 123 us (reads 9 chunks), then 5.9 us mean per frame at 20 m/s,
   worst 212 us (a new chunk entering the radius). Day: one check per frame.
+- Evidence at 56d23e7 (04:28-04:42, `node tools/evidence/run.mjs`, all PASS; commit 5d18ef9): lint 13/13,
+  unit 220, scenarios 8, parity bit-exact + mutation caught, selftest PASS (junction 11/11 + block 4/4
+  goldens worst 0.00 incl. both night goldens; accents clean at both sites; world lock 0.00 % x3), bench
+  PASS but CONTENDED: p99 3.25 ms (iter 11: 2.75), 1% low 219 fps, worst swap 14.3 ms, 0 frames > 50 ms,
+  riot rigs p99 0.653 ms (iter 11: 0.432, rig code unchanged). Six other-lane Godot processes were running
+  (tasklist at 04:43). My day-path changes are one early-return per frame (prop lights) and one fewer
+  full-screen rect (grade hidden); not a credible +0.5 ms, but NOT proven: an idle or interleaved bench
+  re-run is owed. evidence/bench-*-iter12-contended.json.
+- iGPU light cost with max_lights 40 (light_showcase --gpu-index 1, 2 runs): full budget +0.59 / +0.60 ms
+  (32 lights was +0.42 / +0.45), night grade +0.40 / +0.43 ms. evidence/light-cost/night-grade/.
+  FOUND: `dropped` 161 -> 2577 in the showcase - its probe fills the budget with held fires, and at night
+  CityHeadlights retries its refused adds every tick (cheap, but inflates the counter). Fix candidate:
+  back off a refused slot until the next re-pick / count refusals apart.
