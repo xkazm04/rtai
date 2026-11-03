@@ -294,3 +294,5 @@ NEXT:
   0.2 better than no lead; a reversal at the lock halves the hits or better). Pit scenario:
   dodge 0.0, stand 0.5, lock off 0.053 (still caught). FRICTION: python on Windows wrote CRLF
   into the JSON (json-canonical failed); re-emitted via tools/lib/canonical_json.mjs.
+- GATES at 09b59b1 (+ the flinch-frame stats commit): lint 13/13; unit 558/558 at e01b895 (+2
+  aim-lead tests green in the enemy unit run, 23/23); scenarios 21/21 (full suite, 22:52).
