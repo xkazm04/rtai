@@ -44,6 +44,17 @@ func add(arena: CombatArena, spawn: ArenaStation.Spawn, base: Vector2, id: int) 
 	return t
 
 
+## Where the metal dummies (spawn kind "metal") stand now: the CombatArena's metal for the
+## electroshock's chain and the arc ball.
+func metal_points() -> PackedVector2Array:
+	var out: PackedVector2Array = PackedVector2Array()
+	for t: Target in targets:
+		if t.spawn.kind == "metal":
+			@warning_ignore("return_value_discarded")
+			out.append(t.fighter.pos)
+	return out
+
+
 ## After the arena stepped: hits read, dummies placed by their motion, the struck ones re-armed.
 func step(tick: int) -> void:
 	hits_now = 0

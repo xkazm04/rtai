@@ -53,11 +53,12 @@ func setup(ctx: WorldContext) -> void:
 	var id: int = 1000
 	for s: ArenaStation in stations.stations:
 		for sp: ArenaStation.Spawn in s.spawns:
-			if sp.kind == "target" and _clear(plan.base + sp.at):
+			if sp.kind in ["target", "metal"] and _clear(plan.base + sp.at):
 				@warning_ignore("return_value_discarded")
 				targets.add(arena, sp, plan.base, id)
 				id += 1
 	targets.step(0)
+	arena.metal = targets.metal_points()
 	for s: ArenaStation in stations.stations:
 		var hook: ArenaHook = ArenaHook.make(s)
 		if hook != null:
@@ -73,6 +74,8 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	if shots_fired > _shots_before:
 		targets.engage(from, arena.rivet.facing, p_tick)
 	targets.step(p_tick)
+	if not arena.metal.is_empty():
+		arena.metal = targets.metal_points()
 	pit.step(arena, p_tick)
 	dodges.watch(arena)
 	telemetry.shots = shots_fired

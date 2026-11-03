@@ -62,3 +62,26 @@ func test_the_stage_steps_and_reports_its_hooks() -> void:
 	world.free()
 	bus.free()
 	data.free()
+
+
+func test_metal_dummies_are_the_arenas_metal() -> void:
+	var stations: ArenaStations = ArenaStations.shipped()
+	var metal: String = """{"schema": "gtai.arena-station/1", "doc": "t", "lane": "probe",
+"stations": [{"id": "metal_line", "name": "Metal", "area": "hub", "spawns": [
+{"id": "m1", "kind": "metal", "at": [2, 3], "motion": "static", "speed_mps": 0, "span_m": 0}]}]}"""
+	stations.add_text(metal, "zz-metal.json")
+	assert_eq(stations.errors.size(), 0)
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var world: World = World.new()
+	world.start(bus, data, 7)
+	var plan: ArenaPlan = ArenaPlan.shipped()
+	var stage: ArenaStage = ArenaStage.new(plan, stations)
+	stage.pilot = StagePilot.new(PlayerActions.shipped())
+	world.add_system(stage)
+	world.loop().step()
+	assert_eq(stage.arena.metal.size(), 1)
+	assert_eq(stage.arena.metal[0], plan.base + Vector2(2, 3))
+	world.free()
+	bus.free()
+	data.free()

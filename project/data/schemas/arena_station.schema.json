@@ -100,11 +100,12 @@
                 },
                 "kind": {
                   "enum": [
-                    "target",
+                    "car",
                     "crowd",
                     "enemy",
-                    "car",
-                    "prop"
+                    "metal",
+                    "prop",
+                    "target"
                   ],
                   "type": "string"
                 },
