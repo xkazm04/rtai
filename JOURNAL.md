@@ -1710,3 +1710,9 @@ NEXT (iteration 18; the iteration-16 final NEXT stands where not superseded):
   ate two stripe outlines - tightened). Tile 1:1 + in-engine selftest 48 crop (n-d4, `before_i18wd|after_i18wd/`):
   `evidence/iter18/junction_wedge_ab.png` - the wedge is gone, stripes intact; a 1-2 px stub stays where its tail
   met a stripe outline (sub-pixel at 48). Original in `masters:backup_ground18/`. Provenance line, README step 12.
+- 06:23 GATES at d6576d5 (after the junction tile): `run.mjs --no-bench` rc 0 - lint 13/13, unit 142/142, scenarios
+  8/8, parity bit-exact, selftest 72 art textures, 0 placeholders (`evidence/iter18/gates-d6576d5.txt`). scratch-v3
+  synced with the junction tile.
+- NEXT addendum (supersedes the owner-review line of the 06:18 NEXT): owner review (each reverts alone) 7a35d1b +
+  0b08658 + 4cd1521 (ground tiles: asphalt patches, dash ticks, junction lip; originals `masters:backup_ground18/`).
+  Rejected this iteration: Dock 9 charcoal floor. Teal-eyes question: not applicable to the top-down cast sprites.
