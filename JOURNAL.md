@@ -346,3 +346,9 @@ bosses we resolve in future."
 3. Re-run the section 20 bench and scenario_city_chase on an idle machine.
 4. Get-up grace (about 0.5 s with no re-tackle) and Rivet's recovery cost: ask the owner from the v7 clip.
 5. At the merge: re-bless the look goldens once on the merged tree; regenerate the constants with d-vehicles (evidence/merge/README.md).
+- 16:42 evidence run on bfe31d9 (`run.mjs --no-bench --allow-dirty`, CONTENDED): lint 13/13, unit 336/0, scenarios 12/12
+  (scenario_city_chase passed in-runner this time), parity exact (3532 floats, mutation caught at 629), look goldens
+  11/11 (worst 0.00), block 5/5. Log: `gtai-masters/day-d5/collisions/gates-final-it44.log`.
+- Commit (test): `test_knockdown_stays_upright_then_sprawls_and_rises` in test_rig_clips. Unit 337/0.
+  FRICTION: one full unit run gave "1 failing" (336/1) with the test green alone. It did not repeat (337/0 next run).
+  I could not identify which test failed; treat it as a contention flake to re-check idle.
