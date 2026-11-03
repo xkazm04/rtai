@@ -20,6 +20,8 @@ var save_path: String = Checkpoint.DEFAULT_PATH
 var settings_path: String = PlayerSettings.PATH
 var settings: PlayerSettings = PlayerSettings.new()
 var _ended: bool = false
+## The city's crowd atlas and near rigs (quest 1 on the city; Rivet is the quest's cast).
+var _characters: CityCharacters = null
 
 
 func _enter_tree() -> void:
@@ -74,6 +76,10 @@ func start(cp: Checkpoint = null) -> void:
 			view.city_view.clock = session.world.context().clock
 		view.bind(session.stage, session.port, session.system)
 		add_child(view)
+		if session.city != null:
+			_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
+			_characters.rivet_on_foot = false
+			_characters.bake()
 		session.live.viewport = get_viewport()
 		session.live.origin_px = func() -> Vector2:
 			return get_viewport().get_visible_rect().size / 2.0

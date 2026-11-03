@@ -10,7 +10,7 @@ const QUEST: String = "collect-call"
 const MASTER_SEED: int = 20261102
 ## The city's crowd around the quest (people only: the stage runs its own police, and no car is
 ## drivable yet, so no traffic drives through the fight).
-const CITY_PEDS: int = 120
+const CITY_PEDS: int = 300
 
 ## Quest 1 plays on the generated city (collect_call_city.json; false = the invented arena the
 ## bot scenario and its goldens were taken on). Every open/resume/replay of a run uses the same.
