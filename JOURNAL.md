@@ -194,3 +194,28 @@ NEXT (iteration 3, final order):
 4. The 20-40 s full-chain clip at 32 px/m (--fixed-fps 60) in the arena. Then re-ask
    gunplay-2 with it if the tell still matters.
 5. Only then the second weapon.
+
+## Iteration 3 (21:57-22:42), BUILD
+- Answers re-read 21:57: nothing new for gunplay (gunplay-1 and gunplay-2 stay placeholders A until a
+  D5 full-chain clip; this iteration builds toward that clip).
+- MILESTONE 52b92a6: `HitLink` (features/combat/hit_feel/hit_link.gd) wires `CombatArena.struck`
+  into `HitFeel.land`: the hit-stop owed to the caller (`hold`), the victim flash and a decaying
+  knockback (weapon knockback_mps x knock_scale, x0.82 per tick). CastView draws the flash as an
+  inked impact star (`CastView.hit_link`, null in quest 1). FxView draws a table gun's round as a
+  2.5 m ink-cased cream tracer. `GunHand.tap` lets a bot's held button re-tap a semi gun.
+  Shared files touched minimally: cast_view.gd (+1 var, `_impact`), fx_view.gd (`_tracer`).
+  Unit test_hit_link 2/2 (kill hit-stop 6 owed, flash fades, body slides 0.02-0.5 m, tapped
+  cadence). Scenarios 20/20 (quest goldens unchanged).
+- MILESTONE 5d0996e + 4972c90: `dev/gunplay/pistol_fight.tscn`, the pistol on quest 1's REAL dock
+  fight in the D5 print (CollectCallView, real cast art, d5-combat blood), CameraRig on foot at
+  32 px/m, HUD hidden. Clip: gtai-masters/eve/gunplay/pistol_fight/pistol_fight_32ppm.mp4 (20 s,
+  --fixed-fps 60). Telemetry: 24 shots, 24 hits on contractors (100 %, they are 1 hp and close),
+  24 kills, 17 kill hit-stops held (6 ticks; the rig's cooldown drops the rest), Rivet hit once.
+  Muzzle flash: a 2-tick cream star off the claw. Stills at the first shots and hits.
+- FRICTION: `node tools/tests/run_unit.mjs` reports test_save_slots failing (12 cases). The
+  same file fails the same way in `int-day` (merged main, none of my changes), so it is the
+  shared machine (other lanes' runs share the user:// save dir), not this branch. Every other
+  test passes, including mine. Re-run alone on a quiet machine before calling it red.
+- What the clip still does NOT show (honest): contractors are 1 hp, so no non-lethal hit and no
+  flinch; there is no cop raised-gun tell (REQUEST 5 -> enemy-ai); Rivet's art is the static
+  capture, so the claw does not visibly point the pistol (REQUEST 6 -> rivet-motion).
