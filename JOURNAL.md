@@ -421,3 +421,6 @@ NEXT (iteration 4; NEXT 1-8 of iteration 3 still stand):
   that falls out: WORLD sprites print to the cast's lavender-grey (B/W doctrine at gameplay zoom); CLOSE-UP art
   (portraits, phone, cards) keeps the concept's mauve. The phone stays as is. (Written into the README gap list for
   the owner.)
+- 01:05 RE-MEASURED pan swim with tonight's additions (pan3, d5_pan.gd, 48 px/m, world-locked crop, 40 ticks):
+  mean frame change D4 0.00706 / D5 0.00694 (iteration 3, pan1: 0.00709 / 0.00696). The ink foot, the D5 lamp and
+  the shadow changes add no swim; the D5 layer still sits at or below D4 in motion.
