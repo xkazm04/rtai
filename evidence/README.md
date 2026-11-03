@@ -201,6 +201,34 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
+## Gap list after iteration 6 (in-engine h92c vs `d4h2_mock.jpg` and the concept; next step each)
+What changed: the GROUND now prints like the mock's at 32/48 px/m (faint slab joints, clean zebra, no repeating
+cracks, bold dashes, the kerb stone). Whole frame at 32 px/m (d5 tier): L 0.410 -> 0.425, px darker than 0.2
+0.231 -> 0.218 (mock 0.488 / 0.123). What still separates us from the target, largest first:
+1. **Colour and grain at gameplay zoom** (was gaps 1 + 7): cool grey and a flat street vs the mock's warm sepia and
+   mottled asphalt. Both fixes exist as default-off look_d5 proposals: `age_floor` + `grain_floor` at 1.0 give a
+   street median of 80,69,71 (mock 81,70,72), with readability held (`item26`). Next: the visual-engine lane + owner
+   switch them on (or move the gains into look_d4), and fix look_d4's screen-locked grain (gap 7) first, because
+   the lighter ground now shows more paper, and paper is where that grain swims.
+2. **Roof texture** (gap 2): at 32 px/m a roof keeps the mock's tone OR thin visible hatch lines, not both (HF
+   0.11-0.14 vs the mock's 0.163). Next (visual-engine): a roof print that keeps thin art lines thin. One D4 neighbour
+   (helipad) and the arena's warehouse/long roofs have no D5 plate yet (Codex, square-padded template).
+3. **The ground tiles are D5-tier only.** The 4 print-aware tiles (`features/city/art/d5/ground/`) are swapped in
+   by the hero scene alone; the city and the D4 tier still print the black slab grid. Next (city / d4-production
+   lanes): adopt them, or apply the same three build rules (masters `tools/build_sidewalk.py`, `build_crossing.py`,
+   `build_road.py`) to the D4 set; they are deterministic and documented in their headers.
+4. **Cream on cream** (OWNER): the zebra bars are the same cream as the actors' sticker rim (D4 and the mock alike);
+   where Rivet's arm lies over the crossing the rim touches a bar. The dashes were toned a step down for this
+   (`item25`); a toned zebra would leave the mock's look. Owner's call.
+5. **Characters at 32 px/m**: the mock's characters carry a dark outline OUTSIDE the cream rim; ours have the rim
+   straight onto the street. At 32 px/m the rim still reads (rim vs street dL 0.58), but against the cream zebra and
+   pavement only the inner ink line separates. Next (characters / visual-engine): an outer ink hairline on the rig's
+   sticker pass, A/B at 32 on the crossing.
+6. **Up close (D5 proper)**: unchanged since iteration 5: the 128 px/m kill-cam and the arena at 64 are the closest
+   frames to the concept; King needs a rig and a King-tuned part print (gaps 8-9 of iteration 4).
+7. **Street decals on the centre line**: STRIKE sits on the centre line, so a bold dash now shows between its letters
+   at 48 px/m (reads as paint on paint). Next (city): place road paint inside a lane.
+
 ## Gap list after iteration 4 (what still separates in-engine from d4h2_mock and the concept, next step each)
 Items 1-8 are the iteration-3 list with iteration-4 updates; 9-11 are new.
 1. **Gameplay-zoom colour.** The mock (= the 32 px/m frame) is warm sepia; ours is cool grey at 32 and warms only
