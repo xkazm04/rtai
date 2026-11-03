@@ -94,3 +94,12 @@ Branch d-city at the commit after b6ea66f, tree clean, gates PASS at 000087f (ev
 Start iteration 3 with NEXT 1 (dash-free arm tile), then NEXT 2 (road share 2x T1: measure + owner call),
 then NEXT 4 (roof clutter density). Masters + frames.json + ladder.png: gtai-masters/day-d5/d5-city/.
 Requests 1-4 above are for the Director to relay. No bench run yet (lock protocol at the end of the day).
+
+## 2026-11-03 iteration 3 (11:18 - 12:48)
+
+- MILESTONE ed44ab0 NEXT 1 dash stop: `dash_eraser` decal (id 74, 4 x 0.6 m clean asphalt cut from
+  road_straight_tone_c's band, feathered 0.12 m) on each arm's box-side half; dashes end 2.1 m short of
+  the zebra (T1). One decal for all 6 road variants instead of 12 cut tiles. GENERATOR_VERSION 3,
+  re-baked, bake --check ok; lint 13/13, unit 335/335, scenarios 8/0 (replay cbeb734ff9b97c41); look
+  goldens 11/11 within tolerance (max mean 0.49), no re-bless. evidence/d5-city/08-dash-stop/ (no seam
+  at 64 px/m). Masters: after-i3/.
