@@ -8,11 +8,21 @@ extends Node
 ##   godot --path project --resolution 1280x720 --write-movie <f.avi> --fixed-fps 60
 ##     res://dev/noir/showcase_fight.tscn -- --out=<dir> [--zoom=1.5] [--ink] [--d4]
 ## --flashes=off: the flashes-off accessibility mode (calm beats, no muzzle light).
+## --car-pass: a scripted car brakes in and parks with its headlights on the fight.
 ## --at=<x>,<y>: the fight (and the camera) at that world point in metres, not the junction.
 ## --d4 draws the same fight in the D4 look (the noir pass off; blood and beats unchanged).
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--zoom", "--ink", "--d4", "--noir-parts", "--coat", "--flashes", "--at", "--cars"
+	"--out",
+	"--zoom",
+	"--ink",
+	"--d4",
+	"--noir-parts",
+	"--coat",
+	"--flashes",
+	"--at",
+	"--cars",
+	"--car-pass"
 ]
 ## --noir-parts: the rigs wear the noir part redraws (same sizes, same alpha, same pivots).
 const END: int = 660
@@ -27,6 +37,8 @@ var _at: Vector2 = NoirFrames.JUNCTION
 ## the sim's cars do not see the scripted fighters and drive through them.
 var _cars: int = 0
 var _coats: NoirCoats = null
+## --car-pass: a scripted car brakes in and stops with its headlights on the fight (noir only).
+var _car: NoirCarPass = null
 var _frame: int = 0
 var _t: int = 0
 var _hold: int = 0
@@ -108,6 +120,8 @@ func _args() -> bool:
 			_cars = v.to_int()
 		elif flag == "--at":
 			_at = Vector2(v.get_slice(",", 0).to_float(), v.get_slice(",", 1).to_float())
+		elif flag == "--car-pass":
+			_car = NoirCarPass.new()
 		elif flag == "--coat":
 			_coats = NoirCoats.new()
 		elif flag == "--flashes":
@@ -139,6 +153,7 @@ func _process(_delta: float) -> void:
 		_t += 1
 		for cue: Array in _fight.step(_t, _rigs.feed):
 			_cue(cue)
+		_drive_car()
 		if _coats != null:
 			_coats.step(_rigs, PackedInt32Array([NoirFightScript.COP_A, NoirFightScript.COP_B]))
 	if not _d4:
@@ -181,6 +196,13 @@ func _stage() -> void:
 	_fight.origin = _at
 	_city.focus = _at
 	_city.target = _at
+
+
+## --car-pass: the scripted car's nose and heading (world metres) for this live tick.
+func _drive_car() -> void:
+	if _car != null:
+		var c: Vector4 = _car.at(_t)
+		_view.noir.extra_cars = PackedVector4Array([Vector4(c.x + _at.x, c.y + _at.y, c.z, c.w)])
 
 
 ## Fills the shared part caches with the noir redraws before the showcase rigs are built.

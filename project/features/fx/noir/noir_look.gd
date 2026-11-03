@@ -18,6 +18,9 @@ var fixed_phase: float = -1.0
 var street: NoirLamps = null
 ## Microseconds the last light_street() took (CPU: the lamp lookup + the snapshot read).
 var light_us: int = 0
+## Scripted cars (dev hosts): noses in world metres (x, y) with headings (z, w), lit before the
+## sim's cars.
+var extra_cars: PackedVector4Array = PackedVector4Array()
 var _lamp_r_px: float = 0.0
 var _beam_len_px: float = 0.0
 var _rect: ColorRect = ColorRect.new()
@@ -105,11 +108,10 @@ func light_street(city: CitySystem, focus: Vector2, zoom: float) -> void:
 		_mat.set_shader_parameter(&"lamps", px)
 	if _beam_len_px > 0.0 and city.sim != null:
 		var reach_m: float = _beam_len_px / SimConst.PX_PER_M
-		var cars: PackedVector4Array = NoirHeadlights.near(
-			city.sim.snapshot(), focus, half, reach_m
-		)
+		var cars: PackedVector4Array = extra_cars.duplicate()
+		cars.append_array(NoirHeadlights.near(city.sim.snapshot(), focus, half, reach_m))
 		var beams: PackedVector4Array = NoirHeadlights.to_uv(cars, focus, zoom, view)
-		_mat.set_shader_parameter(&"car_count", beams.size())
+		_mat.set_shader_parameter(&"car_count", mini(beams.size(), NoirHeadlights.MAX_CARS))
 		@warning_ignore("return_value_discarded")
 		beams.resize(NoirHeadlights.MAX_CARS)
 		_mat.set_shader_parameter(&"cars", beams)

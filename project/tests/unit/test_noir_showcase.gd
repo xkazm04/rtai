@@ -86,3 +86,21 @@ func _coat(rigs: CharacterRigs, id: int) -> Sprite2D:
 			if (c as Sprite2D).texture.resource_path.ends_with("coat_tail.png"):
 				return c as Sprite2D
 	return null
+
+
+func test_scripted_car_stops_short_of_every_fighter() -> void:
+	var fight: NoirFightScript = NoirFightScript.new()
+	var car: NoirCarPass = NoirCarPass.new()
+	var feed: RigFeed = RigFeed.new(4)
+	var nearest: float = INF
+	for t: int in range(1, 700):
+		@warning_ignore("return_value_discarded")
+		fight.step(t, feed)
+		var c: Vector4 = car.at(t)
+		var h: Vector2 = Vector2(c.z, c.w)
+		for k: int in 9:
+			var body: Vector2 = Vector2(c.x, c.y) - h * (0.55 * k)
+			for id: int in fight.pos:
+				nearest = minf(nearest, body.distance_to(fight.pos[id]))
+	assert_gt(nearest, 2.0, "the car's body keeps 2 m from every fighter (half width ~0.9 m)")
+	assert_eq(car.at(500), car.at(96), "parked after braking")
