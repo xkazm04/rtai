@@ -1900,3 +1900,8 @@ Nothing pushed or merged. Session end; tree clean at the commit below.
 NEXT (final, iteration 25): the iteration-21 final NEXT stands word for word (no art changed in iterations 22-25).
 Owner decision still open: the cop vermilion (23:10 entry). Gates last green at d2d56a6 (no-bench); everything after it
 is JOURNAL-only. Bench still owed on an idle box. Nothing pushed or merged. Session end; tree clean at the commit below.
+
+## 2026-11-03 07:30 iteration 27, STABILIZE (past freeze; report 08:15)
+- 07:30 Read JOURNAL (iteration 25 final NEXT), git log. Tree clean at f72b913; content diff vs d2d56a6 is
+  JOURNAL + evidence/iter21 only. C: 268 GB free. No Godot process running: the box is idle for the first time
+  since iteration 18, so this iteration runs the full evidence set with the bench (the owed idle-box run).
