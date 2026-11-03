@@ -636,3 +636,10 @@ NEXT (final, iteration 5): NEXT 1-19 stand. Images: 50 of ~50 used tonight, so n
   0.401 / 0.177 / 0.061. Mock (1280 wide): 0.488 / 0.123 / 0.104. Toward the mock in tone and ink; NOT in HF: the
   mock's high frequency is fine paper/asphalt grain everywhere, ours was black grid and crack lines (now fewer).
   Grain is look_d4's (and screen-locked, gap 7). Boards evidence/item23_street_print.png; ladder +1 row.
+- 02:27 boards: evidence/item4_hero_vs_targets.png and NEW night_iter6_summary.png from h90 (masters tools/
+  boards_i6.py, so the boards are re-makeable); evidence/hero-d4d5-*ppm.png = h90 (hero-d4-* = h90's d4 frames, byte
+  identical to the old ones). README: iteration 6 section, table rows, gap 3 closed for the D5 tier.
+- 02:28 provenance: 4 lines appended (the sidewalk tile's correction line with the new sha; the D5 crosswalk and the
+  two road tiles as by-code derivatives of the D4 tiles, model/prompt refs carried from their D4 lines).
+- 02:29 gates: evidence tool (--no-parity --no-bench) ALL PASS at e94c9e2 (lint 13/13, unit 149/0, scenarios 8/0,
+  selftest ok); 54 untracked evidence PNGs moved aside and restored.
