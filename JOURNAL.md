@@ -1790,3 +1790,19 @@ NEXT (final, iteration 20; the iteration-18 final NEXT stands, no art changed th
 - 06:49 Bench NOT run: the box is contended again (4 other-lane Godot processes, PIDs 58268 / 30740 / 14668 / 31732,
   not mine, untouched); a third contended PASS would add nothing. Scratch: the unreferenced hud100 frames deleted;
   `survey_i20/`, `after_i20ck/`, `after_i20nc/`, `hud_i20/` kept (cited above). Session end; tree clean.
+
+## 2026-11-03 06:49 iteration 21, BUILD (raise the weakest item; freeze 07:30)
+- 06:50 Read JOURNAL (iteration 20 final NEXT), git log. Tree clean at 4ba9ed6.
+- 06:51 SURVEY (frames on disk, no new render): `survey_i20/`, `morning_i18b/` city frames and the `board_i18/` boards
+  beside `d4h2_mock`. Vehicles, roofs, peds and HUD hold. The softest mark in my scope: the `oil_stain` decal
+  (table 56), a feathered, hatched blot that smears into an airbrush cloud at 32 px/m - the only unoutlined ink
+  shape on the decals board (oil_slick and puddle have contours and a cream sheen).
+- 06:52 MILESTONE (small) `oil_stain` re-inked (`masters:tools/oil_ink.py`: alpha > 90 closed + thresholded, a 3 px
+  solid-ink contour, hatched body pulled 45 % toward ink, one thin cream wet-sheen arc; still rimless so oil stays
+  apart from the rimmed blood). Same scenes before / after: decals board at 32 (`before_i21oil|after_i21oil/`;
+  at 48 / 64 the decal is off the board frame) and city_frame focus 2 at 32 / 48 / 64 (`before_i21oilc|after_i21oilc/`,
+  the decal is baked there): `evidence/iter21/oil_city_ab.jpg` (left = before). At 32 the smear becomes a crisp
+  blot with round drops; at 48 / 64 the gain is smaller (edge only) and the sheen reads as wet oil. Original in
+  `masters:backup_decals21/`. Provenance line (new sha256), README row. Commit cbde379. 0 Codex.
+- 06:53 FRICTION (again): `run.mjs` refuses a dirty tree, and writing its log into `evidence/` dirties it. Log goes
+  to /tmp first, then is copied in.
