@@ -216,6 +216,35 @@ step or solid ink, so a line is either solid ink at 32 px/m or gone. The tiles a
   blend is 0 at 32 px/m and monotone, age_floor defaults off. Gates: evidence tool ALL PASS at e0abd08 and again at
   5922a3d and 8d3a860 (the final tree: lint 13/13, unit 149/0, scenarios 8/0, selftest ok).
 
+## Gap list after iteration 7 (in-engine h106 committed / h109all with every open proposal, vs `d4h2_mock.jpg` and the concept)
+Iteration 7 had no image budget; it finished the open proposals and measured them as one package. At 32 px/m the
+package (`item35`) matches the mock PER TONE CLASS: street share / median L 0.46 / 0.288 (mock 0.45 / 0.290), paper
+0.32 / 0.856 (mock 0.33 / 0.867), solid ink 0.14 (mock 0.12); committed h106 has ink 0.20 and paper 0.28. It pans
+with no swim (48 px/m: junction 0.00049, roof 0.00000; shipped look_d4 0.00739 / 0.00975), keeps the actor read
+(rim dL 0.610, vermilion dE 77.5, teal dE 57.6 vs h106 0.604 / 81.2 / 56.9), and is neutral up close (`item36`).
+What still separates us, largest first:
+1. **The package is not adopted** (all default-off): look_d5_print (dark-side edges + world grain), look_d5
+   `age_floor` + `grain_floor` 1.0, the D5 roof plates' lines at gamma 0.45 (union hall 0.65; build_roofs.py env
+   `D5_ROOF_LIFT_B=0.45 D5_ROOF_LIFT_B_BY=union_hall:0.65`), look_d5_halo line + shadow. Next: visual-engine lane +
+   owner decide on `item35`; if the print is adopted, d5-close rebuilds the roof plates at 0.45 (one command) and the
+   characters lane moves the halo pass into rig_build.gd `_halo`.
+2. **Mid-tones and paper warmth**: the whole frame is still L 0.462 vs 0.488, the rest of the gap sits in the
+   mid-tones and a paper 0.011 darker than the mock's (age_floor's warm tint). Lifting the street is the WRONG lever
+   (rejected h111wh15: street 0.332 vs mock 0.290, readability down). Next: an `age_floor` 0.8 or a cream-side-only
+   age tint, A/B at 32 against the per-class numbers above.
+3. **Roof texture on the D4 neighbours**: the D5 plates show the mock's fine diagonal hatch under the thin print,
+   but the D4 neighbour roofs (and the helipad, the arena's warehouse/long roofs) have no D5 plate. Next: Codex plates
+   on the square-padded template (budget), or the d4-production lane's D4 set under the thin print.
+4. **Stickers**: the outer ink line and drop shadow exist only on full rigs (`look_d5_halo`); baked crowd sprites
+   (CrowdAtlas) would lack them. The mock's cream rim is also thicker than ours at 32 px/m. Next (characters lane):
+   the halo pass in rig_build.gd + the same ring baked into the crowd atlas; a rim-width A/B at 32.
+5. **Cream on cream** (owner, unchanged): zebra bars vs the sticker rim (`item27`); the outer ink line (`item34`)
+   now separates the two where they touch, which may settle it without toning the zebra.
+6. **Up close (D5 proper)**, unchanged since iteration 5: the 128 kill-cam and the arena at 64 are the closest
+   frames to the concept; King needs a rig and a King-tuned part print.
+Closed this iteration: gap 7 of iteration 6 (STRIKE on the centre line, `item33`), the "fix the screen grain first"
+dependency of the floors (now inside look_d5_print, `item32`), gap 5's outer line (as a proposal, `item34`).
+
 ## All proposals together (`item31_all_proposals_32.png`, not committed)
 The committed iteration-6 frame plus every open proposal (look_d5_print as the world print, `age_floor` and
 `grain_floor` at 1.0, the D5 roof plates' lines at gamma 0.45, union hall 0.65) at 32 px/m. Whole frame L / px
