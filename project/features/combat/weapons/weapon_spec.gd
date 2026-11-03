@@ -41,6 +41,8 @@ var chain_radius_m: float = 0.0
 var stun_ticks: int = 0
 var knockback_mps: float = 0.0
 var tracer_len_m: float = 0.0
+## Display scale of the held gun in the claw (REQUEST 9 -> rivet-motion reads it; 1.0 = model size).
+var held_scale: float = 1.0
 
 
 static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
@@ -73,6 +75,7 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.stun_ticks = ticks(t.num(row, "stun_s"))
 	w.knockback_mps = t.num(row, "knockback_mps")
 	w.tracer_len_m = t.num(row, "tracer_len_m")
+	w.held_scale = t.num(row, "held_scale") if row.has("held_scale") else 1.0
 	return w
 
 

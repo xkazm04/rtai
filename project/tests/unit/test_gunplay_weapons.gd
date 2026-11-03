@@ -130,3 +130,7 @@ func test_pad_aim_assist_bends_toward_a_target_and_the_mouse_stays_raw() -> void
 	assert_eq(assist.bend(raw, Vector2.ZERO, targets, false), raw, "mouse untouched")
 	var wide: Array[RangeTarget] = [RangeTarget.make(2, Vector2(5, 5), 100.0, 0.35)]
 	assert_eq(assist.bend(raw, Vector2.ZERO, wide, true), raw, "outside the cone")
+
+
+func test_held_scale_defaults_to_model_size() -> void:
+	assert_eq(_table.weapon(&"pistol").held_scale, 1.0, "no held_scale row -> 1.0")
