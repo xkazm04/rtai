@@ -24,7 +24,11 @@ static func of(stage: CollectCallStage, system: QuestSystem) -> ObjectiveHint:
 	match beat.id:
 		"b1-dumpster":
 			if stage.hidden_in == "":
-				h._mark(l.hide_at["dumpster"], &"SLICE__HINT_HIDE", "Hide in the dumpster: [use]")
+				h._mark(
+					l.hide_at["dumpster"],
+					&"SLICE__HINT_HIDE",
+					"Walk [move] to the dumpster, hide: [use]"
+				)
 			else:
 				h._mark(Vector2.INF, &"SLICE__HINT_STAY", "Stay hidden. Let the sirens pass.")
 		"b2-payphone":
@@ -57,7 +61,10 @@ func words(t: QuestText) -> String:
 
 ## The prompt with [action] replaced by the action's first bound key (or mouse button).
 static func with_keys(prompt: String) -> String:
-	var out: String = prompt
+	var move: Array[String] = []
+	for dir: String in ["up", "left", "down", "right"]:
+		move.append(key_name(StringName("move_" + dir)))
+	var out: String = prompt.replace("[move]", "[%s]" % " ".join(PackedStringArray(move)))
 	for action: String in ["use", "fire", "melee"]:
 		var id: StringName = &"interact" if action == "use" else StringName(action)
 		out = out.replace("[%s]" % action, "[%s]" % key_name(id))
