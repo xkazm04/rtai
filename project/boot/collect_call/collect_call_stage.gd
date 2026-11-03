@@ -57,6 +57,11 @@ func watch(quest: QuestSystem) -> void:
 	_quest = quest
 
 
+## The bus the stage's fight emits on (read only; the view's blood listens to it).
+func events() -> EventBus:
+	return _events
+
+
 func setup(ctx: WorldContext) -> void:
 	_events = ctx.events
 	heat = HeatMeter.new(ctx.events)
