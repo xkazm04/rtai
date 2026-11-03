@@ -377,3 +377,21 @@ NEXT (supersedes the list above; for the night run, from the merged main):
   `part_library.gd`, because the `Log` autoload is missing in -s check mode. Not a real parse error;
   the GUT run (`-gselect=test_arena_rigs`, 6/6) is the real check.
 - Gates at fc4728d: lint 13/13 (515 files), unit 568/568 (`evidence/arena/unit-it5.log`).
+- Clip `clips/arena-range-rigs-recoil-64ppm-10s.mp4` (+ `range_rigs_recoil64_sheet.png`, checked).
+  At 64 px/m you can see Rivet's gun arm and the tracers leaving it. The recoil is still a small
+  kick, best judged in motion. frames.json stays at 15: this clip went in second, and the
+  32 px/m "area name over props" still came out.
+- Gates at 48b154b: scenarios 24/24 (`evidence/arena/scenarios-it5.log`), lint 13/13, unit 568/568.
+  answers.json: nothing new.
+
+NEXT (night run, from the merged main; supersedes iteration 4's NEXT where it differs):
+1. Re-read answers.json. Run `stations_check.gd` and the arena scenarios on the merged tree.
+2. `--rigs` as the default: rivet-motion's Rivet plan, enemy-ai's HitFeel.reaction in
+   `ArenaRigs._put` in place of the generic HIT, robot/contractor plans in place of COP. SHOOT is done
+   (fc4728d). Pass the weapon's kick as clip_arg (rifle > pistol). REQUEST 6 -> d5-cast: a
+   per-host RADIUS_M. Then a scenario that boots the arena with rigs (needs a headless
+   CollectCallView with a print stage).
+3. Gearbox ArenaHook on `stage.cars()` and a scripted pad bot, so the pad clip and scenario replay.
+4. The 00:00 vertical sample: one 20-40 s `--rigs --clean` clip with pistol, claw combo, cop + robot
+   thug and one power, at 48 px/m with a camera lead (arena-2).
+5. Dummies' own look (cardboard / steel plate) once the rigs are the default.
