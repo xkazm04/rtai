@@ -102,9 +102,14 @@ func _foe_aim(at: Vector2, aim: Vector2) -> Vector2:
 	if stage.pilot == null or not stage.pilot.wielding():
 		return aim
 	var best: float = FOE_AIM_M
+	var dummies: Dictionary[int, bool] = {}  # showcase glue: station dummies never die (react_line)
+	if stage.targets != null:
+		for t: ArenaTargets.Target in stage.targets.targets:
+			if t.fighter != null:
+				dummies[t.fighter.id] = true
 	for f: Fighter in stage.arena.hostiles:
 		var d: float = f.pos.distance_to(at)
-		if f.alive() and d < best and d > 0.01:
+		if f.alive() and d < best and d > 0.01 and not dummies.has(f.id):
 			best = d
 			aim = (f.pos - at) / d
 	return aim
