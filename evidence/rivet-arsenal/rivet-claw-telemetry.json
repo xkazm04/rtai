@@ -8,7 +8,7 @@
   "damage_taken": 0.0,
   "deaths": 0,
   "dodges": 0,
-  "finished_tick": 960,
+  "finished_tick": 930,
   "hit_rate": 0.0,
   "hits": 0,
   "input_latency_mean_ticks": 0.0,
@@ -31,7 +31,7 @@
   "schema": "gtai.arena-telemetry/1",
   "shots": 0,
   "sprint_top_mps": 6.19999980926514,
-  "ticks": 960,
+  "ticks": 930,
   "top_speed_mps": 17.0578765869141,
   "ttk_s": {},
   "turn_rate_peak_dps": 10800.0003005374
