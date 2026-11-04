@@ -41,6 +41,9 @@ var cut_deg: float = 0.0
 ## The chainsaw's grind: ticks the cut body stays held together, shaking and spraying, before
 ## the halves fall apart (0 = they leave at once).
 var grind_ticks: int = 0
+## Extra speed (m/s) for the hat alone, thrown off to one side of the shot (alternating kill by
+## kill): the ray gun knocks the cap off the dust heap onto the bare street.
+var hat_kick_mps: float = 0.0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -69,6 +72,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.ash_m = _num(t, d, "ash_m", 0.0)
 	k.cut_deg = _num(t, d, "cut_deg", 0.0)
 	k.grind_ticks = roundi(_num(t, d, "grind_ticks", 0.0))
+	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
 	return k
 
 

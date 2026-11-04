@@ -4,19 +4,15 @@ extends Node2D
 ## copy under a round clip mask; the body glows stiff for row.stand_ticks, then the mask shrinks
 ## over row.crumble_ticks, so the body is eaten from its outline inward by a hot cream ring while
 ## echo rings ripple outward and fade. Glowing motes fall onto a dust pile that is left with the
-## empty uniform (a crumpled blue cloth) and the cap (the row's hat piece) lying on it. Timings
+## empty uniform (a crumpled blue cloth) and the cap (the row's hat piece) lying by it. Timings
 ## against the sim tick, shapes from a hash of the kill serial: no dice, a replay shows the same.
 
 const INK: Color = Color(0.07, 0.06, 0.07)
 const HOT: Color = Color(1.0, 0.96, 0.78)
 const GOLD: Color = Color("#E9A23B")
-const DUST: Color = Color("#C9B98F")
-const CLOTH: Color = Color("#2C4E86")
-const CLOTH_DARK: Color = Color("#1B2F55")
 const MASK_PX: int = 64
 ## The mask's starting radius (metres): the whole posed body fits inside.
 const BODY_R_M: float = 0.62
-const PILE_M: float = 0.42
 const ECHOES: int = 3
 const MOTES: int = 26
 
@@ -30,6 +26,7 @@ class Dissolve:
 	var row: SignatureKill = null
 	var born: int = 0
 	var at: Vector2 = Vector2.ZERO
+	var dir: Vector2 = Vector2.RIGHT
 
 
 var kills: SignatureKills = null
@@ -67,13 +64,14 @@ static func _disc_texture() -> ImageTexture:
 	return _disc
 
 
-func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2) -> void:
+func add(serial: int, root: Node2D, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	var d: Dissolve = Dissolve.new()
 	d.serial = serial
 	d.root = root
 	d.row = row
 	d.born = kills.tick
 	d.at = at
+	d.dir = dir
 	_all.append(d)
 
 
@@ -130,31 +128,13 @@ func _rings(d: Dissolve, c: Vector2, e: float) -> void:
 		draw_arc(c, er, 0.0, TAU, 32, Color(GOLD, 0.6 * (1.0 - k)), 0.035 * ppm * (1.0 - k) + 1.0)
 
 
-## The dust heap grows with the eating; the empty uniform lies crumpled on it.
+## The dust heap grows with the eating, drawn out along the ray (KillDustPile).
 func _pile(d: Dissolve, e: float) -> void:
 	var g: float = clampf(e * 1.4, 0.0, 1.0)
 	if g <= 0.0:
 		return
-	var p: Vector2 = d.at * ppm
-	var cloth: PackedVector2Array = PackedVector2Array()
-	for n: int in 9:
-		var a: float = TAU * float(n) / 9.0
-		var rr: float = (0.2 + 0.1 * _h(d.serial, n)) * ppm * g
-		@warning_ignore("return_value_discarded")
-		cloth.append(p + Vector2(cos(a) * rr * 1.3, sin(a) * rr * 0.8))
-	draw_circle(p, PILE_M * ppm * g + 1.5, INK)
-	draw_circle(p, PILE_M * ppm * g, DUST)
-	KillPoly.fill(self, cloth, CLOTH)
-	@warning_ignore("return_value_discarded")
-	cloth.append(cloth[0])
-	draw_polyline(cloth, INK, 2.0, true)
-	draw_line(
-		p + Vector2(-0.22, 0.02) * ppm * g, p + Vector2(0.2, -0.04) * ppm * g, CLOTH_DARK, 3.0
-	)
 	var glow: float = clampf(1.6 - e * 0.6 - float(kills.tick - d.born) / 900.0, 0.25, 1.0)
-	for n: int in 14:  # the dust still glows, cooling slowly to a faint shimmer
-		var o: Vector2 = Vector2.from_angle(_h(d.serial, n + 50) * TAU) * _h(d.serial, n + 90)
-		draw_circle(p + o * PILE_M * ppm * g, 0.025 * ppm + 1.0, Color(HOT, glow))
+	KillDustPile.draw(self, d.serial, d.at * ppm, d.dir, g, ppm, glow)
 
 
 ## Glowing motes shed off the eating edge, falling to the pile.

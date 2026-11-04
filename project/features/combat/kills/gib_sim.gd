@@ -79,6 +79,9 @@ func throw(
 		var speed: float = rng.randf_range(row.launch_mps.x, row.launch_mps.y) * heavy
 		pos[i] = at + (offsets[p] if p < offsets.size() else Vector2.ZERO)
 		vel[i] = Vector2.from_angle(a) * speed
+		if p == SignatureKill.HAT and row.hat_kick_mps > 0.0:  # off to one side (alternating)
+			var side: Vector2 = dir.orthogonal() * (1.0 if serial % 2 == 0 else -1.0)
+			vel[i] += (side + dir * 0.5).normalized() * row.hat_kick_mps
 		z[i] = 0.6
 		vz[i] = rng.randf_range(row.up_mps.x, row.up_mps.y) * heavy
 		ang[i] = rng.randf_range(-PI, PI)
