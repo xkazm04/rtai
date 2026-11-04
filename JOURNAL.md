@@ -1471,3 +1471,15 @@ capture needs a side approach (bot entry from the east or west) so the panic run
   only kill 1 (tick 604; wave 2 spawned at the end). One longer capture (`TAG=w2`, 2400 frames,
   48 px/m, same script `evidence/n12/city_lone_run.sh`) to see whether kill 2, from the next spawn
   point, dies inside the frame's middle. Code head unchanged (70894746).
+- 10:17 FINDING: the w2 capture ran clean (0 script errors, kill 1 again at tick 604, so the run is
+  deterministic) but no kill 2 in 2400 frames: wave 2 spawns at the north-west point, and the bot's
+  Rivet stalls against the centre crates (looked at a 0.4 fps sheet from 14 s) while the guard
+  wanders the west kerb. Nothing to cut; run deleted by exact names. So the fix after the freeze
+  is in `GunplayBot`'s approach (path around the crates, or enter from the side), as iteration 22
+  said; the spawn rotation alone does not give a mid-frame burn death. REPORT's "still weak" stands.
+- 10:18 Session end. No Godot process of mine running, no lock taken, no scratch left.
+  Code head unchanged at 70894746 (gates of record on dfa5f508).
+
+NEXT (10:40 report phase): unchanged. Re-check that REPORT's paths exist and frames.json parses
+(15 entries). Add to REPORT's open list: the bot stalls at the city block's centre crates on
+the second lone wave.
