@@ -37,6 +37,7 @@ class Row:
 	var projectile_fx: StringName = &""
 	var casing: StringName = &""
 	var parts: Dictionary[String, String] = {}
+	var part_grip: Dictionary[String, Vector2] = {}
 
 
 class Cell:
@@ -134,12 +135,19 @@ func part_texture(id: StringName, part: String) -> Texture2D:
 
 
 ## The held part as a Sprite2D: origin on the grip, +x along the barrel, scaled to world px.
-func make_held(id: StringName) -> Sprite2D:
+## With `part` (`mag`: the reload magazine, feed end +x) the extra part at the same scale, origin
+## where the claw holds it (part_grip_px); null when the weapon has no such part.
+func make_held(id: StringName, part: String = "") -> Sprite2D:
+	var r: Row = _row(id)
+	if part != "" and not r.parts.has(part):
+		return null
 	var s: Sprite2D = Sprite2D.new()
-	s.name = "Held_%s" % id
-	s.texture = held_texture(id)
+	s.name = "Held_%s%s" % [id, "" if part == "" else "_" + part]
+	s.texture = held_texture(id) if part == "" else _load(r.parts[part])
 	s.centered = false
 	s.offset = -grip_px(id)
+	if part != "":
+		s.offset = -(r.part_grip[part] if r.part_grip.has(part) else Vector2.ZERO)
 	s.scale = Vector2.ONE * world_scale(id)
 	return s
 
@@ -183,6 +191,10 @@ func _read_weapon(t: DataTable, r: Dictionary) -> Row:
 	var parts: Dictionary = t.object(r, "parts")
 	for k: Variant in parts:
 		w.parts[str(k)] = str(parts[k])
+	var g: Variant = r.get("part_grip_px", {})
+	var grips: Dictionary = g if g is Dictionary else {}
+	for k: Variant in grips:
+		w.part_grip[str(k)] = t.vec(grips, str(k))
 	return w
 
 

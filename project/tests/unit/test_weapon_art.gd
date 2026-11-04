@@ -106,3 +106,21 @@ func test_impact_cells_and_gore_stickers_resolve() -> void:
 	for g: StringName in top + [&"gore_stump_round", &"gore_charred", &"gore_ash", &"gore_splash"]:
 		assert_eq(art.fx_frames(g).size(), 1, "%s sticker" % g)
 	assert_gt(art.fx_anchor(&"blast").x, 0.0)
+
+
+func test_magazine_guns_have_a_mag_part_held_inside_it() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	for id: StringName in [&"pistol", &"machine_pistol", &"plasma_rifle", &"hand_cannon"]:
+		var mag: Sprite2D = art.make_held(id, "mag")
+		assert_not_null(mag, "%s has a mag" % id)
+		if mag == null:
+			continue
+		var size: Vector2 = mag.texture.get_size()
+		assert_gt(size.x, 40.0, "%s mag is real art, not the placeholder" % id)
+		var grip: Vector2 = -mag.offset
+		assert_true(
+			Rect2(Vector2.ONE, size - Vector2.ONE * 2.0).has_point(grip), "%s grip inside" % id
+		)
+		assert_eq(mag.scale, Vector2.ONE * art.world_scale(id), "%s mag at the held scale" % id)
+		mag.free()
+	assert_null(art.make_held(&"rocket_launcher", "mag"), "a rocket tube has no magazine")

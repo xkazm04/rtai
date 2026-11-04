@@ -87,6 +87,12 @@
         "muzzle_px": {
           "$ref": "#/$defs/vec2"
         },
+        "part_grip_px": {
+          "additionalProperties": {
+            "$ref": "#/$defs/vec2"
+          },
+          "type": "object"
+        },
         "parts": {
           "additionalProperties": {
             "$ref": "#/$defs/path"

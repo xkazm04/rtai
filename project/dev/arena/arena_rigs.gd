@@ -50,6 +50,12 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	held.rivet_id = p_stage.arena.rivet.id
 	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
 	view.print_stage.actor_layer().add_child(held)
+	var mag: WeaponMagView = WeaponMagView.new()  # weapon-art: the reload magazine in the off claw
+	mag.rigs = rigs
+	mag.pilot = p_stage.pilot
+	mag.rivet_id = held.rivet_id
+	mag.z_index = held.z_index
+	view.print_stage.actor_layer().add_child(mag)
 	view.cast_view.visible = false
 	return true
 
