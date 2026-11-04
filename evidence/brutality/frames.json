@@ -90,6 +90,26 @@
     "note": "Isolated cop; the first burst lands off him, the second sets him alight."
   },
   {
+    "file": "clips/homing-shard-burst-solo-64ppm-slow-0.4x.mp4",
+    "title": "Homing shard gun (FIRST PASS): the cop freezes on the shard, then bursts into parts in a ring of red mist (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": null,
+    "note": "Kill #10, data row on the gib path with a 36-tick hold. The shards themselves do not show stuck in the body yet, and the red ring lands at the hit, before the pop."
+  },
+  {
+    "file": "clips/mini-nuke-vaporise-solo-48ppm-8s.mp4",
+    "title": "Mini-nuke (FIRST PASS): the cop vaporised to a charcoal shadow that stays where he stood (48 px/m)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 48,
+    "before": null,
+    "note": "Kill #11. Gunplay's 6 s fire patch covers the shadow until it burns out (watch the end). Hub clip with the dummies: clips/mini-nuke-vaporise-hub-48ppm-11s.mp4 (22 vaporised; reads as a fire carpet)."
+  },
+  {
     "file": "clips/hand-cannon-blowback-solo-64ppm-slow-0.4x.mp4",
     "title": "Hand cannon: blown off his feet, flies back, slides on a smear, cap spins off (64 px/m, 0.4x)",
     "source": "dev-scene",
@@ -98,16 +118,6 @@
     "ppm": 64,
     "before": "clips/hand-cannon-blowback-64ppm-slow-0.4x.mp4",
     "note": "Isolated cop; the body lands near the right edge of the 64 px/m frame (see the 48 px/m reel)."
-  },
-  {
-    "file": "clips/plasma-hole-solo-64ppm-slow-0.4x.mp4",
-    "title": "Plasma rifle: a hole burned through the torso, glowing edge, drop (64 px/m, 0.4x)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "clips/plasma-hole-64ppm-slow-0.4x.mp4",
-    "note": "Isolated cop."
   },
   {
     "file": "clips/chainsaw-grind-city-block-48ppm-12s.mp4",

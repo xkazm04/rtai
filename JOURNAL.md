@@ -446,3 +446,41 @@ NEXT (iteration 7):
   at 48 px/m. (-30, 2) would centre him; not re-shot.
 - Gates 04:32: unit 775/775 (unit-it7.log).
 - Gates 04:34 on 39dd2d0f: unit 775/775, scenarios 35/35 (scenarios-it7.log).
+- MILESTONE 04:38 kill #10 homing shard (FIRST PASS, `homing_shard_burst`, style `burst`, already
+  reserved in the schema): a gib-path row with grind_ticks 36. GibSim.wait holds the six parts
+  together (the cop stands frozen on the shard), then they pop forward (cone 200 deg; 360 threw
+  parts back over Rivet) in a full 360 deg ring of red mist. No new code. Weapon id `homing_shard`
+  (gunplay). Clips: homing-shard-burst-solo-64ppm-{5s,slow-0.4x}.mp4. Missing: the shards stuck
+  in the body during the hold, and the spray lands at the hit rather than at the pop.
+- MILESTONE 04:38 kill #11 mini-nuke (FIRST PASS, `mini_nuke_vaporise`, style `vaporise`):
+  KillCharFx takes it like a burn but keeps the char print as a flat shadow (alpha 0.8) on a
+  0.7 m soot ring, with no embers, smoke, crumble or flash of its own. The shell's flash is
+  gunplay's, under their flash budget and reduced motion. On the hub line one shell vaporises
+  every human in the circle (22 in 11 s incl. the react dummies, which revive). FINDING: gunplay's
+  6 s nuke fire patch covers the shadows, so they only read once it burns out.
+- Scenario 04:37: scenario_brutality_kills now covers 11 weapons (homing_shard: 3 bursts,
+  mini_nuke: 22 vaporised), replay identical, same seed same gibs, planted fault caught.
+- REQUEST 13 -> gunplay: the mini-nuke's fire patch hides brutality's vaporise shadows for 6 s.
+  Options: draw the patch under z -1, or shorten it for the nuke. Separately, the homing shard
+  could keep its shards on the body (a stuck-shard list per victim) so the burst kill can draw
+  them during its 36-tick hold.
+- Shared files touched this iteration: none (rows in my own table; my own scenario).
+
+## Calls for the owner (iteration 7 additions)
+- brutality-10: the blade halves part sideways (SPLIT_FOLLOW 0.25, they rest ~2 m apart in place)
+  vs. flying on along the blade (0.6, the old crowd clips). Default 0.25 (katana solo clips).
+- brutality-11: the electro X-ray holds 4 frames over a cream zap burst, then strobes, vs. a pure
+  strobe. Default: hold + burst (electro strip). One value: KillShockFx.XRAY_HOLD (0 = old strobe).
+- brutality-12: mini-nuke victims become flat charcoal shadows that stay vs. white ash outlines.
+  Default: charcoal (mini-nuke clip, first pass).
+
+NEXT (iteration 8):
+1. Homing shard: draw the shards stuck in the body during the hold (cream slivers on the body
+   copy, from the hit direction) and move the mist spray to the pop (marks at tick + grind).
+2. Mini-nuke: once gunplay answers REQUEST 13, a clean clip of several shadows on the street; a
+   paler, slightly larger shadow; a solo spot clear of the course walkers ((-36, 2) is clear).
+3. Re-shoot the solo set at (-30, 2) (Rivet centred), and in the city block with --sig-solo.
+4. The remaining 20 ms worst frame on the rocket lab: the fresh-smear layer (every moving part's
+   smear redrawn every frame); split fresh per kill like KillGround.
+5. KillView is 290 lines (hard stop 300): move the style dispatch into a KillStyles helper first.
+6. Electro is two rounds (REQUEST 12 -> gunplay: a charged shot).
