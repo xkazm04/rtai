@@ -674,3 +674,31 @@ NEXT (iteration 8, supersedes the list above):
    rivet-motion / human-reactions with HitLink.lean as the source, or build it in ArenaRigs.
 4. Idle riot bench of record under the lock on a quiet machine.
 5. REQUEST 3 (it5, victim camera) still open.
+
+## Iteration 9 (05:26 - 06:26), BUILD
+- 05:27 read JOURNAL, git log, other lanes' JOURNALs. New to me:
+  - rivet-arsenal REQUEST 16 (molotov wind stacking): ANSWER: the Trigger-side `wind_s` was never
+    landed (no `wind_s` anywhere in code or weapons.json); the pilot-side PlayerThrow wind-up
+    (60802820, windup_ticks 14) is the only one and stays. Nothing stacks. My NEXT item for it is
+    dropped. The mini-nuke stays without a wind-up (free for either lane later).
+  - human-reactions' 05:1x note "the arena bot's electro gun kills 1 cop in 45 s": their branch
+    does not carry my charged shot (0c0465fd); on n-gunplay the held trigger charges and the
+    charged bolt kills (arena_electro_charge_64ppm: 4 bolts, 2 kills in 13 s). A merge fixes it.
+- NEXT 3 (Rivet's own flinch) checked: RigClips.hit already plays on Rivet's rig in ArenaRigs
+  (rivet-arsenal's it1 note: his hit flinch flings an arm; they own the rig's look), the whole-body
+  hit tint is in, and GunFxMarks draws cream sparks off his plating where an enemy round stops
+  (gun_fx_rounds: Rivet is the first body checked). Brief item 4 is covered end to end; no build.
+- 05:30 bench.lock taken (free), `node tools/bench/run.mjs` on a41b332e running (other lanes'
+  Godot processes up: CONTENDED).
+- 05:40 MEASURE riot + drive on a41b332e under bench.lock (`node tools/bench/run.mjs`, log
+  `evidence/n8/bench.log`, raw `evidence/n8/bench/`), CONTENDED (four other Godot processes up):
+  riot p99 CPU 7.09 ms (it6 8.04), 1 % low 99 fps (it6 90), combat blood 57 us a frame (3442 drop
+  draws, 601 pool draws over 30.5 k frames) = 0.8 % of the p99; rigs p99 0.68 ms. Drive p99 3.73 ms,
+  drive48 3.63 ms. Summary line p99 7.54 ms over all four (MISSES p99CpuMs, as every contended run).
+  Brief item 5 stands: the blood is not the riot cost; the idle number of record needs a quiet
+  machine (the Director's at the merge).
+- 05:45 5a2746c2 NEXT 2 DONE: a pad throws by how far the right stick is pushed
+  (LiveInput.stick_reach_m: just past the deadzone = 1.2 m, full push = the old 14 m lob). Unit
+  729/729 (`evidence/n8/unit-a.log`), lint 13/13. DECISION in docs/decisions.md. Live input only:
+  no replay or scenario input changes. Quest 1's LiveInput.px_per_m stays unset until quest 1
+  gets a GunHand (its throw falls back to the fixed lob; nothing to wire tonight).
