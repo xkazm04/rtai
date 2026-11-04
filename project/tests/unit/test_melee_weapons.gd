@@ -19,7 +19,10 @@ func test_claw_keeps_weapon_fields_at_zero() -> void:
 	var claw: MeleeTable = MeleeTable.shipped()
 	assert_true(claw.ok(), str(claw.errors))
 	for h: MeleeHit in claw.hits:
-		assert_eq([h.stun_ticks, h.chain_hops, h.lunge_m], [0, 0, 0.0], str(h.id))
+		assert_eq([h.stun_ticks, h.chain_hops], [0, 0], str(h.id))
+	# rivet-arsenal: the follow-ups step in at least the previous hit's knockback, so they connect
+	for i: int in range(1, claw.hits.size()):
+		assert_gte(claw.hits[i].lunge_m, claw.hits[i - 1].knockback_m, str(claw.hits[i].id))
 	assert_eq(claw.move_mult, 1.0)
 
 

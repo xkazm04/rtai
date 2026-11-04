@@ -24,6 +24,7 @@ func before_each() -> void:
 func _drive(buttons: int, move_x: int = 0) -> void:
 	_pilot.drive(_stage, TickInput.new(buttons, move_x, 0))
 	_last_by = _stage.intent.move_by
+	_stage.arena.rivet.pos += _last_by  # the stage's _move (no walls on this open ground)
 	_stage.intent.clear()
 
 
@@ -59,6 +60,28 @@ func test_a_mash_chains_three_claws_and_the_finisher_shoves() -> void:
 	for t: int in 12:
 		_drive(0)
 	assert_gt(cop.pos.distance_to(start), 2.0, "the slam slid the cop back")
+
+
+## The jab's knockback must not push the cop out of the backhand's reach: the follow-ups step in.
+## From the arena bot's stand-off (1.55 m) all three land and a 4 hp cop drops on the finisher.
+func test_the_combo_connects_through_its_own_knockback() -> void:
+	var cop: Fighter = _cop_ahead(1.55)
+	cop.hp = 4.0
+	assert_gt(_mash(60), 0, "the finisher landed")
+	assert_eq(_pilot.melee.whiffs, 0)
+	assert_false(cop.alive(), "1 + 1 + 2 drops a 4 hp cop")
+
+
+func test_planted_no_step_in_whiffs_the_backhand() -> void:
+	var t: MeleeTable = MeleeTable.shipped()
+	for h: MeleeHit in t.hits:
+		h.lunge_m = 0.0
+	_pilot.melee = PlayerMelee.new(t)
+	@warning_ignore("return_value_discarded")
+	_cop_ahead(1.55)
+	@warning_ignore("return_value_discarded")
+	_mash(60)
+	assert_gt(_pilot.melee.whiffs, 0, "the planted fault: without the step-in the backhand whiffs")
 
 
 func test_combo_cadence_is_the_tables() -> void:

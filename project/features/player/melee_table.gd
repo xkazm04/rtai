@@ -93,10 +93,11 @@ static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
 		h.cone_dot = t.num(row, "cone_dot")
 		h.damage = t.num(row, "damage")
 		h.knockback_m = t.num(row, "knockback_m")
-		# Weapon-only fields: the claw rows omit them and keep 0.
+		# Weapon-only fields: the claw rows omit them and keep 0 (the claw may lunge: it steps in).
 		if row.has("stun_ticks"):
 			h.stun_ticks = t.integer(row, "stun_ticks")
 			h.chain_hops = t.integer(row, "chain_hops")
+		if row.has("lunge_m"):
 			h.lunge_m = t.num(row, "lunge_m")
 		m.hits.append(h)
 
