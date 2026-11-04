@@ -1067,3 +1067,19 @@ NEXT (the morning merge / the next night), in order:
 - 04:00-rule pass on the blast death: pit_blast_death_48ppm_sheet.png (the rise29 run at 48 px/m,
   frames 944-1084; death 962 again) replaces the 32 px/m sheet in frames.json. 15 entries, 0
   missing. Scratch deleted.
+
+## Iteration 20 (09:20-, BUILD, extension)
+- Read: JOURNAL NEXT, git log, REQUESTs (none new to me; showcase's cut.sh now films my dev pit
+  as its ROBOT THUG chapter, so the thug's look is in the final reel). Chose NEXT 2b (the lighter
+  oil spray: six hits filled the frame) as the one piece that lands before showcase's 09:45 merge.
+  Registry rules as before (motion-quality-gating: judged in motion at 48 px/m; view only, no
+  sim, golden or replay change).
+- MILESTONE e00a0041: blood_fx.json hits.thug_hit (10 drops, 70 deg, 5-12 px; Rivet keeps
+  robot_hit 26 / 160 deg), enemy_rig_fight THUG_HIT; test_robot_death +1 (half the drops or fewer,
+  a cone not a fan, never pools). Lint 13/13, unit 755/755.
+- Evidence: robot_powerdown_light_48ppm.mp4 + _sheet.png (showcase's exact command, --seconds=11
+  --every=1 --zoom=1.5; death frame 429). Looked: one streak behind the thug along the blow, the
+  silhouette clean on the floor; before (robot_powerdown_48ppm_sheet) the spray covered a third
+  of the frame. frames.json: replaces robot_powerdown_48ppm.mp4 (kept as before). 15, 0 missing.
+- NOTE -> showcase: e00a0041 touches blood_fx.json (a new hits row after robot_hit plus one
+  sentence at the head of _doc; gunplay's hunk is game.doc/spray_tilt_min_deg, no overlap).
