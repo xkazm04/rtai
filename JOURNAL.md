@@ -1153,3 +1153,8 @@ NEXT (replaces the list above):
   (13.03-22.03 s of it18) and the ray-gun chapter (36.0-44.0 s) replaced by the it19 takes with the
   same label style; the other nine untouched. Looked at the sheet
   (evidence/brutality/city-reel-all-11-clean-it19-sheet.png): order and labels right, joins clean.
+- 09:39 REPORT.md updated in place (head of record b03f04ac; new section "After 09:20"; owner
+  call: ray lock stand_ticks 30 default vs 12). The molotov death shares the burn row and
+  KillCharFx (gunplay maps the payload to weapon `burn`), so it gets the rim with no own change.
+- 09:40 `node tools/evidence/run.mjs --no-bench` started on 5c1ea8a9 (clean tree); no capture of
+  mine runs alongside it (the rig_stress budget flaked under my last capture).
