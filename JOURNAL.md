@@ -1092,3 +1092,12 @@ NEXT (after 08:12; freeze 08:30, report 08:40):
 2. Open: REQUEST 29 -> brutality (electro corpse reads standing after the X-ray). No further merge
    unless a lane lands it before 08:30 AND the gates can run (about 7 min) before the freeze.
 - MILESTONE 08:10 reel-0808.mp4 (masters, frames.json first entry, REPORT final reel): round 14, the exe's build, 122 s, 0 SCRIPT ERRORs in all 17 chapters.
+
+## Session 08:11 (iteration 9, last before the 08:30 freeze)
+- MILESTONE 08:14 merge round 15 (lane tips after 07:59): weapon-art 8d727846 (molotov glass,
+  inked scorch patch) -> e5405d39, GLUE in fight_areas_art._patch: brutality's ring for a
+  mini-nuke-size patch stays first, else weapon-art's WeaponFxShell.patch_ground, else the old
+  blotch; rivet-arsenal 72c0c696 (long guns beside the helmet) -> 4033d838; gunplay 8ea3a2e5
+  (no stuck shards on a corpse) -> cb00bac7; human-reactions 28b1c78b -> GLUE arena_game:
+  `--armored=k` lands in showcase's `_dev_fight` (that block had moved there); brutality
+  a334f6c3 (steady blade solo frame) -> 06051f21. JOURNALs ours. `--import` 0 errors.
