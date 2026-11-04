@@ -68,3 +68,35 @@ Agree by replying in your JOURNAL; I will not change the shape without a line he
   > 4 m apart (chain_radius_m 4). The chain is proven in scenario_gunplay_fight (10 hops, 4 stunned
   at once). Needs a clustered station (range dummies on a metal post line) for the clip.
 - 01:40 Gates: lint 13/13, scenarios 29/29 (`evidence/n1/scenarios-f.log`), unit 701/701 (`unit-f.log`). Electro bolt + chain arcs now a 10-11 px ink zigzag with a 4 px cream core (`FightAreasArt._bolt`).
+- 01:44 frames.json written: `C:\Users\kazda\kiro\gtai-masters\n4\gunplay\frames.json` (10 entries, every
+  file checked to exist; I looked at contact sheets / sequence crops of every clip). Removed the
+  blank quest-dock render and the pre-rig rocket clip.
+
+### REQUEST 2 -> human-reactions: the area states to animate (01:45)
+`arena.areas.effect(fighter) -> FighterFx` (null until something landed): `burn_ticks > 0` = burning
+(play a flailing run; FightAreas already moves the body along `flee`), `stun_ticks > 0` = stunned
+(twitch in place), `down_ticks > 0` = knocked down (lie along the last hit dir, get up when it hits 0;
+54 ticks). Deaths: `CombatArena.kill_landed` (REQUEST 1) with kind `burned` / `blown` / `shot`.
+
+### REQUEST 3 -> weapon-art (01:45, low priority, after the pistol/machine pistol art)
+For FightAreasArt: a rocket body cell (top-down, ~0.9 m), a flame-puff loop (the quest's `fx_fire`
+stands in now), a scorch decal (ink, 2-4 m), an electro spark cell. Chroma-green part sheet as usual.
+
+### REQUEST 4 -> rivet-arsenal (01:45)
+Switching Rivet's weapon in the real fight = `arena.gun = GunHand.make(WeaponTable.shipped(), id,
+ctx.rng.stream(&"gunplay"))`; `CombatArena.areas` is built with the first GunHand shot and keeps its
+fires/burns across a switch. The arena hook (`GunplayHook`) arms only with `--weapon=`; if you add a
+switch, the hook can step aside (tell me in your JOURNAL).
+
+NEXT (iteration 2, in order):
+1. Riot blood cost (brief item 5): read `features/fx/combat_blood.gd` + `features/fx/noir/blood_fx.gd`
+   (`draw_us`, `settled_every`, `queue_redraw` at line ~175), print `CombatBlood.spent_us/frames` and
+   `BloodFx.draw_us` into the bench JSON, `settled_redraw_ticks` 6 -> 30, redraw only changed pools;
+   bench before/after under `C:\Users\kazda\kiro\gtai-n4\bench.lock` (`node tools/bench/run.mjs`).
+2. Pistol and machine pistol finished in the arena + city block (`--arena=city`): `--weapon=pistol
+   --bot=gunplay --rigs --clean` at 32 and 64 px/m; shell casings + wall/ground impact decals + the
+   muzzle flash per weapon in FightAreasArt (bullets still draw FxView's tracer).
+3. The electro chain in a clip: a clustered station (dummies 2-3 m apart) or a `--bot=gunplay` wave
+   that bunches. Rockets burst on arena walls (ArenaDodges.cull removes them silently today).
+4. Split fight_areas.gd (254 lines): patches + lob into their own file.
+5. Re-render molotov/electro 32 px/m with the new patch flames and thick bolts; side-by-side clip.
