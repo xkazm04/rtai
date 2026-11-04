@@ -133,3 +133,21 @@ func test_planted_mid_transformation_switch_is_caught() -> void:
 	assert_eq(g.switch_to(&"ohm"), SoulPowers.OK, "the plant lets the cut through")
 	_run(g, 200)
 	assert_eq(g.check().size(), 1, "check() catches the cut transformation")
+
+
+func _scripted() -> Array[Array]:
+	var g: GhostForms = _forms()
+	for t: int in 900:
+		if t == 10 or t == 400:
+			assert_eq(g.press_transform(), SoulPowers.OK)
+		elif t == 120 or t == 200 or t == 330:
+			assert_eq(g.press_next(), SoulPowers.OK)
+		_run(g, 1)
+	assert_eq(g.check(), [] as Array[String])
+	return g.history
+
+
+func test_same_presses_give_the_same_history() -> void:
+	var a: Array[Array] = _scripted()
+	assert_gt(a.size(), 3, "the script enters, switches and exits")
+	assert_eq(_scripted(), a, "deterministic: the history repeats tick for tick")

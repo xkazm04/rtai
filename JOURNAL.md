@@ -75,3 +75,43 @@ Adopt my REQUEST 1 above; the differences from yours:
   stays `rivet_ghost` (0.9 m in bodies.json) until one of us lands a bigger class: yours to pick if your slam
   needs it, I will match the row.
 - Your `ghost_attacks.json` split is fine; I own powers.json rows (madness, duration, cooldown).
+
+- 00:16 MERGE n6-ghost-powers 848b521c (385b710f): Tonnage's attacks, TonnageHook/TonnageView on `hauler_pad`,
+  ghost_attacks.json. One conflict, `tools/lint/lint.mjs`: both lanes fixed the same chunked-gd bug; took theirs.
+  Unit on the merge: 952/0 (`E/unit-iter1-merge.log`).
+- 00:18 FINDING (for the live path, next session): the arena print path draws Tonnage's attack marks
+  (TonnageView on the actor layer via TonnageHook.attach_view), but Rivet's body while transformed is still the
+  HaulerLook-grown cut rig (cast_view.gd for quest 1's capture; the arena rig path not yet traced). To show
+  TonnageRig live: a GhostFormView on the same actor layer (z beside TonnageView) that reads
+  `stage.pilot.hauler.form.morph_k()` (or a GhostForms on the pilot), draws TonnageRig + GhostMorphFx at
+  `arena.rivet.pos` facing `rivet.facing`, and the arena's Rivet rig feed skips Rivet while the form is big.
+- MILESTONE 00:26 f9bc66f0 GhostFormHud (D5 card: four chips with each ghost's mark, the current form in teal,
+  the selected ghost with the chevron + key hint, the cooldown ink sweep, the Madness bar with the selected cost
+  notch). Evidence `M:frames/hud-base-tonnage-cooldown.png` (base, Tonnage on, Tonnage cooling). Unit 1/1.
+  The first pass crowded the names (GAP 64 -> 84 px).
+- 00:27 COMBAT CHECK started: director reel headless 7200 ticks (`E/director-reel-iter1.log`).
+
+NEXT (iteration 2), Tonnage first (depth before breadth), then Dent:
+1. Merge n5-cast's tip if it moved (expect a JOURNAL.md/REPORT.md conflict: keep ours), and n6-ghost-powers'.
+2. Tonnage LIVE: GhostForms on StagePilot (Q = press_transform, G = press_next, replacing HaulerStage's own
+   `try_activate(&"hauler")`; coordinate with ghost-powers, who own HaulerStage's attack logic: put GhostForms
+   in front, keep `powers` shared, HaulerForm still listens to `started/ended` of `hauler`). Then the
+   GhostFormView above (TonnageRig + GhostMorphFx, hide Rivet's rig while big, camera beat through the arena
+   CameraRig budget), GhostFormHud on the arena HUD layer. Proof: 15-20 s clip at 32 px/m in `--arena`
+   (walk, Q in, stamp, slam, Q out) and once in `--arena=city`; 64 px/m slow close-up; target composite.
+3. Tonnage polish: steam as ink-rimmed lumpy puffs (not grey discs); seams along the crown's plate lines (not
+   radial); the in-between pose as plates folding (crown halves + press head shut over the legs); stamp dust
+   ring + teal glint on each `stamped`; the crown a touch lighter at 32 px/m (judge beside r2_a5).
+4. A determinism scenario: GhostForms through enter/switch/exit inside the replay path (replay identical); the
+   forms are input-driven, so a replay with Q/G presses must reproduce the history log byte for byte.
+5. Dent: part sheet (crash-test dummy from above: target discs on head and shoulders, seatbelt harness, dented
+   plates, teal seams), DentRig on the humanoid CutRig if the parts fit Rivet's part names (a new RivetPlan-like
+   plan with art_dir `souls/dent`), stagger gait, the transformation through GhostMorphFx (shared), the G switch
+   Tonnage <-> Dent through the teal flash.
+- 00:28 COMBAT CHECK (partial) `E/director-reel-iter1.log`: `--quit-after 7200` counts engine frames, not sim
+  ticks, so the run ended at sim tick ~2700: 8 of 16 chapters started, the 7 finished all down (claw_combo 2/2,
+  pistol 2/2, machine_pistol 4/4, rocket_launcher 1/1, flamethrower 1/1, electro_gun 1/1, molotov 1/1),
+  0 SCRIPT ERROR, exit 0. FRICTION: the reel needs `--quit-after` about 3x the tick count headless. Full re-run
+  started (`--quit-after 24000`, `E/director-reel-iter1-full.log`).
+- 00:30 unit `test_ghost_forms` 8/8: + determinism (one Q/G script run twice gives the same history tick for
+  tick). Not yet in the replay path (GhostForms is not wired into the sim; NEXT item 4).
