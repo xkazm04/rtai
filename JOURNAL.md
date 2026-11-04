@@ -440,3 +440,4 @@ NEXT (iteration 7, in order):
   p99 9.281 ms, 0.0 -> 8.854 ms, 2.5 again -> 8.829 ms: within run-to-run noise, the startle is
   not the cost. (Startle off = 6 trips, on = 4: the startled are mid-cower when they pass a body
   and trip later or not at all.) NEXT 1 is answered; the riot needs an idle-machine bench.
+- 04:58 gates on the tip (0204a090): lint 13/13, unit 738/738 (04:44), scenarios 32/32 (full suite, 04:58), parity bit-exact (04:40 evidence run; no sim change since). Branch tip has everything; gtai-masters/n4/human-reactions/frames.json 15 entries, each file checked to exist. Session close.
