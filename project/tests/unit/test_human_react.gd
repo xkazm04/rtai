@@ -127,6 +127,18 @@ func test_the_stiff_corpse_falls_back_on_its_heels_over_a_scorch() -> void:
 	assert_eq(rig2.plank_feet, -1.0, "shot in the back it falls forward")
 
 
+func test_the_stiff_corpse_lies_along_the_shot_whichever_way_it_faced() -> void:
+	_rig.facing = -PI / 2.0  # faces north, shot from the west (REQUEST 24b: it lay across)
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"death_shock", Vector2.RIGHT, _table)
+	for i: int in 300:
+		r.pre(_rig, SimClock.TICK_DT)
+	var head: float = _rig.facing + r.turn + (PI if _rig.plank_feet > 0.0 else 0.0)
+	var off: float = absf(wrapf(head - Vector2.RIGHT.angle(), -PI, PI))
+	assert_almost_eq(off, DeathPose.PLANK_TILT, 0.01, "the head end runs down the shot's line")
+	assert_almost_eq(DeathPose.plank_turn(Vector2.LEFT), DeathPose.PLANK_TILT, 0.001, "head-on")
+
+
 func test_a_melee_death_lies_curled_not_in_the_x() -> void:
 	var r: HumanReact = HumanReact.on(_rig)
 	r.play(_rig, &"death_melee", Vector2.LEFT, _table)

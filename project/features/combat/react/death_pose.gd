@@ -15,6 +15,8 @@ const BLAST_TWIST: float = 0.55
 ## cop): hit from the front it falls back on its heels, feet toward the shooter and the head
 ## thrown PLANK_HEAD_PX (part px) past the shoulders away from him, turned PLANK_TILT (rad) off
 ## the shot, over a soot scorch (CorpseScorch). Hit from behind it falls forward, mirrored.
+## The body turns onto the shot's line as it falls whichever way it faced (REQUEST 24b: a victim
+## that did not face Rivet lay across the shot), see plank_turn().
 const PLANK_HEAD_PX: float = 70.0
 const PLANK_TILT: float = 0.3
 
@@ -86,7 +88,15 @@ static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
 	r.scl = Vector2(1.0, 1.0 - 0.12 * fall)
 	r.slide = r.dir * r.travel * fall
 	r.head_off += Vector2(-rig.plank_feet * PLANK_HEAD_PX * fall, 0.0)
-	r.turn = r.side * PLANK_TILT * fall
+	r.turn = plank_turn(r.dir) * fall
 	if fall > 0.5:
 		rig.c_hands_up = 0.0
 	CorpseScorch.ensure(rig)
+
+
+## The rigid turn that lays the stiff body along the shot `dir` (rig-local): the head end
+## (-x from the front, +x from behind) onto the blow's line, then PLANK_TILT off it.
+static func plank_turn(dir: Vector2) -> float:
+	var head: float = PI if dir.x < 0.0 else 0.0
+	var side: float = 1.0 if dir.y >= 0.0 else -1.0
+	return wrapf(dir.angle() - head, -PI, PI) + side * PLANK_TILT
