@@ -761,3 +761,16 @@ NEXT (iteration 11):
 4. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check against KillBurstFx
    (showcase's merged reel reads "shards stuck -> burst" fine, so low risk).
 5. The plasma rifle hole at 32 px/m (still the faintest kill at game zoom).
+- FRICTION 07:08 the 06:47 nuke clips were shot WITHOUT `--rigs` (this branch's arena still draws quest 1's
+  orange sprite cops; rigs-by-default lives in showcase's merge). Re-shot 07:12 with `--rigs`: the blue
+  cast cops; the five shadows now read as black cop silhouettes in the scorch ring. Masters clips
+  replaced under the same names; sheet evidence/brutality/nuke-city-it10-sheet.png re-made. 0 script
+  errors. Always pass `--rigs` on this branch.
+- 07:06 fix 584b3f77 (kill_hole_fx): Topple.pose skips a holed body with no rig cut (a sprite victim):
+  266 script errors per plasma capture without --rigs, now 0. Unit test_kill* 9/9.
+- Tried and rejected: the plasma ring's COOL colour (dark brown -> dim cream): no visible change at
+  32 px/m (the ring is 6 px); reverted.
+- 07:15 session closed. Gates of record: lint 13/13 (every commit), unit 785/785 on bbc674ee, scenario
+  brutality 1/1, look goldens 11/11 (59429978). No Godot process of mine left running. Scratch
+  gtai-n4/scratch-brutality/it10 (frame dumps, not referenced) left for deletion: the tool blocks rm
+  on that folder.
