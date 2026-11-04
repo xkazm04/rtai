@@ -9,6 +9,10 @@ extends RefCounted
 
 const SMOKE: Color = Color(0.090, 0.075, 0.106, 0.55)
 const SCUFF: Color = Color(0.090, 0.075, 0.106, 0.55)
+## A tracer's tail never reaches back past the muzzle (a round leaves radius + 0.1 m out; the
+## flash sits at radius + 0.45 m), and its head meets the sim's line CONVERGE_M out.
+const MUZZLE_BACK_M: float = 0.35
+const CONVERGE_M: float = 3.0
 
 
 static func draw_under(ci: CanvasItem, fx: GunFx, tick: int) -> void:
@@ -53,10 +57,18 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 	var w: float = row.get("tracer_px", 9.0) if s.from_rivet else 9.0
 	var core_w: float = row.get("tracer_core_px", 4.0) if s.from_rivet else 4.0
 	var core: Color = Ink.CREAM if s.from_rivet else Ink.VERMILION
-	var tail: Vector2 = s.pos - s.vel.normalized() * tail_m
-	ci.draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, w)
-	ci.draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), core, core_w)
-	ci.draw_circle(Ink.px(s.pos), core_w + 1.0, core)
+	var dir: Vector2 = s.vel.normalized()
+	var head: Vector2 = s.pos
+	if s.from_rivet:
+		# never behind the muzzle, and from the claw side onto the sim's line over CONVERGE_M
+		var went: float = s.origin.distance_to(s.pos)
+		tail_m = clampf(went - MUZZLE_BACK_M, 0.05, tail_m)
+		var side: float = fx.p.get("claw_side_m", 0.0)
+		head -= dir.orthogonal() * side * clampf(1.0 - went / CONVERGE_M, 0.0, 1.0)
+	var tail: Vector2 = head - dir * tail_m
+	ci.draw_line(Ink.px(tail), Ink.px(head), Ink.INK, w)
+	ci.draw_line(Ink.px(tail.lerp(head, 0.3)), Ink.px(head), core, core_w)
+	ci.draw_circle(Ink.px(head), core_w + 1.0, core)
 
 
 ## A heavy single shot (spikes 3): a long forward flare, two side jets, a short back lip. An

@@ -208,3 +208,21 @@ NEXT (iteration 4, in order):
 4. Electro chain clip with a cluster (city guards stand > 4 m apart; 2 hops in 20 s).
 5. Shell + smoke for the enemy guns (cops' rounds have the tell and the vermilion tracer, no shell
    or muzzle star yet), then the unique five (plasma rifle first) with brutality's kill payload.
+- 02:24 MILESTONE 64 px/m pistol close-up on the arena range (`--weapon=pistol --bot=range`, Rivet
+  stands still, 36 shots): the range bot plays fine with the table gun. It showed two view bugs, both
+  fixed: the flash sat on Rivet's centre line while his rig holds the gun 0.3 m right of it
+  (`gun_fx.json claw_side_m` 0.3: flash, smoke and shells leave the claw; 480fea57), and a fresh
+  tracer's 2.5 m tail reached back through his body (tail clamped to the distance past the muzzle,
+  head converges from the claw side onto the sim line over 3 m; view only).
+  Clip: `MASTERS/n4/gunplay/arena_pistol_range_64ppm/` (+ muzzle_sequence.png).
+- Brass prints greyish through the D5 grade (`#b8913f` under the print pass); judge in the clip, a
+  warmer value is one palette entry.
+- NEXT update: item 1 is half done (the pistol close-up exists). Remaining: the machine pistol on the
+  range at 64 px/m (`--weapon=machine_pistol --bot=range`) and a re-cut side-by-side from the two range
+  clips (Rivet still, same framing); then items 2-5 of the NEXT above.
+- 02:29 Machine pistol on the range at 64 px/m (90 shots, 16 hits) and `side_by_side_range_64ppm.mp4`
+  (same lane, same framing, 5 s each): the two guns read apart with the sound off (cadence, flash shape,
+  tracer weight, shell pile, reload ring). frames.json: 15 entries, the range side-by-side first; the
+  flame and molotov pit clips kept so every finished weapon is on the page.
+- Gates after the tracer fix: unit 707/707 (`evidence/n3/unit-f.log`), scenarios 29/29 (`scenarios-f.log`).
+- NEXT (iteration 4) stands as written above, with item 1 done (both range close-ups + side-by-side).
