@@ -1105,3 +1105,9 @@ glass-and-fuel molotov sheet; (3) blast frame 3 as torn smoke wisps; (4) owner c
   (+ `-halfspeed`), strip `frames/it20-mini-nuke-shell-ab-city-48ppm.png`; frames.json entry 3 (replaces the it9 shell clip).
 - Registry rules applied: motion-quality-gating (same deterministic ticks, one variable, looked at before keeping);
   sprite-and-atlas-production (cells from a seeded script, same import settings as their siblings). No deviation.
+- Gates at 5d453958: lint 13/13, unit 742/742 (`unit-it20b.log`), scenarios 32/32 (`scenarios-it20b.log`).
+- MILESTONE 09:00 (unit 742/742, `unit-it20c.log`; lint 13/13) the wisps at the mini-nuke's 12 m scale: the blast is the same sheet, so its tail tore into 12 puffs
+  6.6 m wide that drifted over Rivet (looked at in the 5d453958 run). Now a puff is capped at `WISP_MAX_M` 2.5 m and
+  the ring tears into more of them (about 32); the rocket at 3.5 m (1.9 m puffs) is unchanged. Same ticks against the
+  5d453958 run, looked at: Rivet reads through the torn ring. Evidence: `clips/it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`,
+  `frames/it20-nuke-blast-wisps-capped-ab-city-48ppm.png` (cited in frames.json entry 2's note).

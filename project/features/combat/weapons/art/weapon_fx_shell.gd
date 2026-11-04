@@ -31,13 +31,15 @@ const GLASS_REACH: float = 1.1
 ## FightAreas.VFX_KEEP_TICKS, the ring tears into WISPS smoke puffs (the rocket's drawn smoke cells,
 ## WISP_M across x the splash radius) that drift from the ring's line (WISP_RING x the radius) out
 ## by WISP_DRIFT of it, easing out, stretched along the ring as it grows (an expanding ring tears
-## into arcs), shrinking and fading. 0 = none.
+## into arcs), shrinking and fading. 0 = none. A big blast (the mini-nuke's 12 m) caps a puff at
+## WISP_MAX_M and tears into more of them, keeping the ring covered (12 puffs 6.6 m wide hid Rivet).
 ## `--blast-tail=ring` = the held smoke ring of 3a703dbd (the before).
 const WISPS: int = 12
 const WISP_FROM: int = 20
 const WISP_RING: float = 0.78
 const WISP_DRIFT: float = 0.4
 const WISP_M: float = 0.55
+const WISP_MAX_M: float = 2.5
 
 static var nuke_as_rocket: bool = OS.get_cmdline_user_args().has("--nuke-shell=rocket")
 static var wisp_tail: bool = not OS.get_cmdline_user_args().has("--blast-tail=ring")
@@ -115,10 +117,12 @@ static func wisps(ci: CanvasItem, b: Vector3, age: int) -> bool:
 		return true
 	var out_k: float = 1.0 - (1.0 - f) * (1.0 - f)
 	var a: float = (1.0 - f) * (1.0 - 0.4 * f)
-	var k: float = WISP_M * b.z * Ink.PX_PER_M / 120.0 / WeaponFxArt.cell_scale()
+	var puff_m: float = minf(WISP_M * b.z, WISP_MAX_M)
+	var n: int = maxi(WISPS, roundi(float(WISPS) * WISP_M * b.z / puff_m))
+	var k: float = puff_m * Ink.PX_PER_M / 120.0 / WeaponFxArt.cell_scale()
 	var seed_ang: float = b.x * 1.9 + b.y * 0.7
-	for i: int in WISPS:
-		var ang: float = seed_ang + TAU * float(i) / float(WISPS) + 0.25 * sin(float(i) * 3.1)
+	for i: int in n:
+		var ang: float = seed_ang + TAU * float(i) / float(n) + 0.25 * sin(float(i) * 3.1)
 		var r: float = b.z * (WISP_RING + WISP_DRIFT * out_k * (0.75 + 0.25 * float(i % 3)))
 		var at: Vector2 = Vector2(b.x, b.y) + Vector2.from_angle(ang) * r
 		var size: float = k * (1.0 - 0.4 * f) * (1.0 - 0.12 * float(i % 2))

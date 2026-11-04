@@ -167,7 +167,9 @@ crops of both grounds.
   and drifts out by 0.4 of the radius, easing out. Each stretches along the ring as it grows (an expanding ring tears
   into arcs), shrinks to 60 % and fades out. Angles come from the blast's place, so a replay draws the same smoke. A
   radial stretch was tried first and read as flower petals. `--blast-tail=ring` is the iteration 14 held ring;
-  `WISPS` 0 also turns the tail off.
+  `WISPS` 0 also turns the tail off. A big blast caps a puff at 2.5 m (`WISP_MAX_M`) and tears into more of them, so the
+  mini-nuke's 12 m ring breaks into about 32 puffs instead of 12 puffs 6.6 m wide that hid Rivet. The rocket (3.5 m,
+  1.9 m puffs) is unchanged.
 - **Mini-nuke shell** (iteration 20): the mini-nuke lobbed the rocket cell at 1.5x, so in flight it read as a big
   rocket. It now flies its own `nuke_shell` cell (`tools/art/nuke_shell.py`, procedural like the other FX cells, so no
   AI provenance line). The cell is a fat bomb from above: a round-bellied steel body, a boxed dark ring tail, a cream
