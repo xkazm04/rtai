@@ -16,6 +16,7 @@ class Grip:
 	var stow_ticks: int = 1
 	var kick: float = 1.0
 	var move_mult: float = 1.0
+	var held_scale: float = 1.0
 
 
 var grips: Dictionary[StringName, Grip] = {}
@@ -43,6 +44,7 @@ static func from_table(t: DataTable) -> ArsenalTable:
 		g.stow_ticks = t.integer(row, "stow_ticks")
 		g.kick = t.num(row, "kick")
 		g.move_mult = t.num(row, "move_mult")
+		g.held_scale = t.num(row, "held_scale")
 		a.grips[g.id] = g
 	var r: Dictionary = t.object(t.raw, "reload")
 	a.out_k = t.num(r, "out_k")

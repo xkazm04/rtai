@@ -24,6 +24,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -45,7 +50,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         },
@@ -61,6 +67,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -82,7 +93,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         },
@@ -98,6 +110,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -119,7 +136,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         },
@@ -135,6 +153,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -156,7 +179,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         },
@@ -172,6 +196,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -193,7 +222,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         },
@@ -209,6 +239,11 @@
               "minimum": 1,
               "type": "integer"
             },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
             "kick": {
               "maximum": 3,
               "minimum": 0,
@@ -230,7 +265,8 @@
             "draw_ticks",
             "stow_ticks",
             "kick",
-            "move_mult"
+            "move_mult",
+            "held_scale"
           ],
           "type": "object"
         }
