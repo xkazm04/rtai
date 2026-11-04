@@ -83,13 +83,14 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   asphalt (`M/frames/crowd-value-vs-r2a5.png`, from `cast_lineup.gd -- --crowd [--road]`, 2d6bb3b8). In r2_a5 and
   r2_c6 the peds are the palest figures (white shirts, pale coats, dark hair), so our peds and navy cops share one
   dark value at game zoom; only the cops' blue pads tell them apart. The cause is the ped art from above, not one
-  value: the bent standing knees put the dark trousers ahead of the chest, the head and hat art (161 px) are wider
-  than the torso (133 px), and the coat's grey fill sits just past the small-scale ink cut. From above, only the
-  torso's rim shows around the head (a vermilion marker render proved it), and that rim is mostly outline ink.
-  Trials, each reverted: lifting the coat fill +42 L (no visible change), a 0.72 head scale (shows more dark leg),
-  straighter standing legs (hip_z 0.97: the lobes a little smaller), and all at once with a thinned coat outline
-  and ped leg_w 0.7: marginal (`M/frames/crowd-trials-32ppm.png`). The fix is a new ped part sheet toward r2_a5
-  (pale shoulders that reach past a small dark head, thin outlines, legs tucked under the coat), a next-run item.
+  print value, and it is not fully identified: two dark lobes ahead of the chest dominate the 32 px/m read. They
+  are NOT the legs (a trial with the legs hidden left them in place) and NOT the cream upper arms (thinning their
+  outline changed nothing); a vermilion marker showed the coat torso only as a rim around the head. Trials, each
+  reverted: coat fill +42 L, a 0.72 head scale, straighter standing legs, a thinned coat outline, ped leg_w 0.7,
+  all together (`M/frames/crowd-trials-32ppm.png`), and a new Codex ped sheet with a pale trench coat and smaller
+  heads installed in D4 (`M/frames/crowd-sheet-trial-32ppm.png`, sheet `masters:n5/cast/gen/r4/out/ped_pale_a.png`,
+  not shipped): all marginal. Next run: mark each ped part in vermilion one at a time to find the lobes, then fix
+  that part (art or pose) and re-try the r4 sheet on top.
 
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,

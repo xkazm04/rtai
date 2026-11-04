@@ -508,14 +508,25 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   FRICTION: a `-s` main script cannot touch HumanPlan (it needs the Log autoload): a dev flag that sets a HumanPlan
   static must go through the run node (cast_lineup_run.gd), as quest1_clip does.
 
+- 23:55 Codex job `ped_pale_a` (55 s, under image.lock, released): an edit of `d4/chars/sheets/ped_a.png` with an
+  r2_a5 crop + r1_c6 as refs: a pale trench-coat torso, a charcoal jacket over a white shirt, a dark hat 132 px
+  (was 161), hair, a pale hood; anchor cell unchanged. Cut by `cut_ped_sheet.py` (masters tools; factor 1.024 from
+  the shipped coat) to `gen/r4/cut/`, installed as a TRIAL by `install_ped_sheet.py` (D4 parts + parts.json, the
+  same-named D5 overlays moved aside): at 32 px/m still dark (`frames/crowd-sheet-trial-32ppm.png`). Reverted (git
+  checkout of art/ped and art/d5/ped, re-import). No provenance line: nothing shipped.
+- 23:58 CORRECTION of the 23:44 diagnosis: a trial with the ped legs hidden (leg_w 0.01) left the two dark lobes
+  ahead of the chest in place, so they are not the knees; a thinned outline on the cream upper arms changed nothing
+  either. The lobes are not identified yet. REPORT section 5 and the decisions line corrected. All trials
+  reverted, tree clean, re-imported, scratch deleted.
+
 NEXT (iteration 11):
-1. The ped part sheet toward r2_a5 and r1_c6 (Codex, under image.lock, not in the last 15 min of a session).
-   Sources: `gtai-masters/d4/chars/sheets/ped_a.png` (torso, jacket, hat, hair, hood cells; ped_b limbs, ped_c
-   endon + pelvis + vest; d4n_ped_d hoodie/overalls/cap/bald/beanie), slicer `d4/chars/tools/slice_chars.py` +
-   `parts_chars.json` (copy into masters `n5/cast/tools/`, never edit the d4 originals). Ask for: pale shirt/coat
-   torsos whose shoulders reach well past a small dark head (head about half the shoulder width, as r1_c6), thinner
-   outlines, the same cells and scale reference. Then the D5 set (alpha lock) or drop the D5 ped parts.
-   Judge with `cast_lineup.gd -- --crowd [--road]` at 32 px/m first; then the react board, corpses and gib cuts on
-   peds, the city at 32 px/m, and the goldens (re-bless once with a dated line).
-2. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session state 23:55: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.
+1. Find the two dark lobes ahead of each ped's chest at 32 px/m: recolour ONE ped part at a time solid vermilion
+   (230,60,30) in D4 (the way the 23:52 torso marker worked), `cast_lineup.gd -- --crowd`, crop col 3 x5; suspects
+   in order: forearm / forearm_dark (an elbow-bent forearm projected forward), pelvis, foot_flat/toeoff, thigh,
+   shin, the halo/shadow sprite (rig_build `_halo`). Revert each with git checkout + `--import`.
+2. Fix that part (art via the d4 chars sheets ped_b/ped_c + `cut_ped_sheet.py`/`install_ped_sheet.py`, or the ped
+   rest pose), then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at 32 px/m, then the
+   react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated line), and a
+   provenance line per shipped part.
+3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
+Session state 00:02: head = this commit, tree clean, image.lock released, no Godot process of mine running.
