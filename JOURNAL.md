@@ -492,3 +492,36 @@ NEXT (iteration 7, in order):
   (`--rigs --bot=gunplay --weapon=electro_gun --start=pit`), too slow for a live clip.
 - DECISION electro corpse: the stiff plank (legs together, arms at the sides) rather than the
   shared X. Alternative: c_plank = 0 in DeathPose._shock (one line) brings back the X.
+- 05:24 evidence on c31a9064 (`--no-bench --allow-dirty`, only untracked evidence/ clips): lint
+  13/13, unit 740/740, scenarios 33/33, parity bit-exact (mutation caught at 629) PASS. Selftest
+  FAIL only on the same accent-audit line as iterations 5-6 (4 px vermilion on vehicles / cop at
+  32 px/m, blood_flicker_* debt rows "no longer seen": gunplay's blood flicker); look goldens
+  11/11 worst 0.34 (unchanged: the c_plank channel moves no other pose), block 5/5.
+- MERGE: cherry-picked gunplay 356a3a2d -> f4ef483f (my REQUEST 1 answer: a kill spray turns up
+  to 14 deg and fans 52 deg; clean). Read on the board: a north/south hit's spray is wider but
+  still reads as a column under the body at 64 px/m (deaths_r7_64ppm_sheet.png rows 1-3).
+- MILESTONE a649b7c0: the melee death lies curled round the blow (DeathPose.MELEE_CURL c_tuck
+  0.55, MELEE_LIE c_sprawl 0.7; was 0.2 / 1.0, the round's X). Unit 741/741 (one run under load
+  showed 1 failure, two re-runs 741/741), human_react / crowd_react scenarios green.
+- Evidence: react_families_r7_64ppm / _32ppm.mp4 (32 s, real time, every family + the five
+  deaths) + deaths_r7_64ppm_sheet.png: five deaths, five corpses (round X/crumple, melee curl,
+  blast spread-eagle, burn charred, electro stiff). frames.json 15 (the board first;
+  riot_deaths_32ppm and limp2_64ppm dropped from the list, the files stay). Scratch frames deleted.
+- DECISION melee corpse curled (c_tuck 0.55, c_sprawl 0.7): "folding over" ends folded. Alternative:
+  MELEE_CURL 0.2 / MELEE_LIE 1.0 brings back the X.
+
+### Calls for the owner (adds to the list)
+- Corpse variety: the electro corpse lies stiff and the melee corpse curled (deaths_r7_64ppm_sheet).
+  Option A: keep five distinct corpses. Option B: one shared sprawl (two constants).
+- Crowd startle radius 2.5 m (street_startle_64ppm.mp4): A keep; B wider (4 m) makes a kill read
+  across a pavement but startles people who could not have seen it.
+
+NEXT (iteration 8, in order):
+1. Read /tmp/ev7b.log or re-run the evidence on the tip (a649b7c0 + journal): the cherry-picked
+   blood fan touches combat_blood + blood_fx.json, so check the look goldens.
+2. The north/south blood column (deaths_r7 sheet): tell gunplay (REQUEST 2 -> gunplay) or try
+   it in CombatBlood.kill_human with their OK; it is their file.
+3. The electro death live: a pit run where the electro gun kills faster (the charged shot from
+   gunplay 0c0465fd, `--weapon=electro_gun` holding fire) and a 64 px/m clip of the stiff corpse.
+4. Blast corpse: thrown spread-eagle is close to the round's X; give it a twisted landing
+   (one leg bent, rot past the slide).
