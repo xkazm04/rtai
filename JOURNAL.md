@@ -279,3 +279,30 @@ NEXT (iteration 5):
 7. Katana live: when rivet-arsenal's melee weapons land (their NEXT 5), merge and re-shoot with
    the real swing instead of the lab lunge.
 - 03:20 reel of the six finished kills (32 px/m, 36 s, labelled): gtai-masters/n4/brutality/clips/signature-kills-reel-32ppm-36s.mp4 (NEXT 5 done). Seen on its sheet: the plasma hole barely reads at 32 px/m, and one red dot lies near a plasma victim (spray is 0: check which path drops it).
+- 03:21 plasma hole polish: a fading heat bloom around the hole + a thinner glow lip (street shows
+  through); reads at 32 px/m right after the kill, then a charred ring. Unit 725/725 re-run on
+  the tree after it (unit-it4.log).
+- 03:23 refactor: KillView's blob stand-ins moved into GibCut.parts (277 -> 262 lines).
+- MILESTONE 03:27 kill #8 plasma sword (`plasma_sword_split`, 68b284b6): the katana split with
+  cauterised edges (KillCutEdge `hot`: hot cream band in a heat bloom, no red), spray 0 so no
+  smears and no blood. plasma_sword is not in melee_weapons.json (shared table, rivet-motion/
+  arsenal own it), so the lab treats any weapon whose row is `split` as a blade. In the scenario
+  (6 kills, replay identical). Clips 32 + 64 px/m.
+- REQUEST 6 -> rivet-arsenal: when melee weapons go live, please emit the hits through
+  CombatArena.damage with weapon ids `katana` / `plasma_sword` and set `hit_dir` to the swing's
+  approach (Rivet -> victim): the brutality rows key on those ids and cut diagonally off hit_dir.
+  A `plasma_sword` row in melee_weapons.json is yours to add.
+
+NEXT (iteration 5, supersedes the list above):
+1. The rocket kill frame spike (74 ms worst, CONTENDED): log per phase (GibCut copy vs ground
+   reprint vs first-draw pipeline compile; does only the FIRST kill spike?); pre-warm, or cut
+   over two frames inside the hit-stop.
+2. Kill #7 chainsaw (the grind: the victim held and shaking with a continuous spray, then a
+   straight split): KillSplitFx.cut + a shake like KillShockFx; the lab blade driver holds Rivet
+   at the victim for ~50 ticks before the damage lands.
+3. Plasma: a cream bolt streak flying on past the body (render only); check the red dot near a
+   plasma victim on the reel sheet (spray 0: which path drops it? likely gunplay's hit splash).
+4. Plasma sword: the cut glow cools over time like KillHoleFx (now static); a 64 px/m slow clip.
+5. Re-cut the reel with all seven kills (rocket, cannon, fire, electro, katana, plasma rifle,
+   plasma sword) and city clips for the plasma sword.
+6. Katana/plasma sword live: merge rivet-arsenal when their melee weapons land, re-shoot.
