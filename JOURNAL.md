@@ -1317,3 +1317,34 @@ NEXT is unchanged, except item 2 (done).
   console processes in the task list are not from my tasks (all of mine finished), so I left them.
   No lock taken. The /tmp scratch frames are deleted. frames.json (15 entries) parses, and its top
   three are the lone reels. Branch head is 7e45061c (code d35ffdf3).
+
+## Iteration 21 (09:28-10:28, BUILD, extension)
+- Read: JOURNAL NEXT, git log, REPORT "After 09:00", other lanes' JOURNALs. No new REQUEST to
+  gunplay (brutality answered its own REQUEST 30 itself at 09:23; showcase 27 was answered by
+  0b2541a9 + aa471560). Open item picked: every lone reel is in the arena pit (`dev-scene`); the
+  04:00 rule wants the morning clip in the arena *or the city block*, and gunplay's city clips are
+  all 32 px/m pack fights. Plan: the same lone capture in the city proving block at 48 px/m.
+- FINDING 09:35: `--lone` already works on `--arena=city` (the city stage has the pit's waves):
+  headless 1500 ticks, pistol, lone kills at ticks 397 and 663. No code change needed. The city
+  camera follows Rivet (city.focus also streams chunks), so the kill sits wherever Rivet's reach
+  puts it. Capture script `evidence/n12/city_lone_run.sh` (`--arena=city --clean --rigs --lone`,
+  48 px/m, fixed 60 fps).
+- Registry: motion-quality-gating (judged in motion at the readability zoom; every frame looked at
+  on a contact sheet before it goes in frames.json).
+- FINDING 09:31 (Rivet camera, `citylone21_48_<gun>/`, the before): the city camera follows Rivet,
+  so the pistol's second kill fell on the frame's bottom edge by the parked car, and the rocket's
+  corpse left the frame 1-2 s after the blast.
+- 09:33 MILESTONE 9a1bec62: `--cam=fight` on the city block leans the view only
+  (`CollectCallView.city_lean_m` -> `CityView.kick_px`, the print lock holds). `city.focus` (chunk
+  streaming, the spawner) stays on Rivet. Kill ticks identical with and without the lean (pistol
+  397/663, rocket 415/741, flamethrower 604, machine pistol 402/673/1053/1376), so it is view only.
+  Unit 757/757 (+1, `evidence/n12/unit-21.log`), scenarios 29/29 (`evidence/n12/scen-21.log`).
+- FINDING: a 4 m cap (the view's actor margin) still left the corpses in the bottom-left corner.
+  3c472354: the cap is 6 m (the pit's lone cap), and `CityView` widens its `write_render` window by
+  `|kick_px|` (one line in a city file; zero offset = the same window), so no edge ped drops.
+  Unit 757/757 (`evidence/n12/unit-21b.log`), lint 13/13.
+- FINDING: on `--arena=city` the pit's `wall_high` props drew as flat black debug bars across the
+  plaza (the flamethrower cut). Showcase fixed it at 08:51; cherry-picked 8a8215a3 as 2c27580e
+  (one view file, `arena_floor_view.gd`).
+- FRICTION: killing a background batch's Godot children let the shell's `wait` start its second
+  half; stopped the task itself first next time (TaskStop, then the PIDs).
