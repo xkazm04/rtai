@@ -88,7 +88,7 @@ func take(serial: int, body: Node2D, row: SignatureKill, at: Vector2, dir: Vecto
 	elif row.style == &"shock":
 		shock_fx.add(serial, body, row, dir)
 	elif row.style == &"dissolve" and body != null:
-		dissolve_fx.add(serial, body, row, at)
+		dissolve_fx.add(serial, body, row, at, dir)
 	elif row.style == &"hole" and body != null:
 		var h: KillHoleFx.Topple = KillHoleFx.Topple.new()
 		h.serial = serial

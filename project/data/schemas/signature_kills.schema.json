@@ -56,6 +56,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "hat_kick_mps": {
+            "minimum": 0,
+            "type": "number"
+          },
           "hitstop_ticks": {
             "minimum": 0,
             "type": "integer"
