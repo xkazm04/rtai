@@ -55,6 +55,13 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`; with the navy cops
   `M/cast-navy-director-64.mp4` (still `M/frames/director-navy-64ppm.png`).
 - Target composite: `M/frames/cast-ingame-vs-r2c6.png`.
+- Every weapon (iteration 8): the full director reel WITH `--loadout=pistol` (the reel's documented args; my
+  earlier checks lacked it, n5-look's note), 7200 ticks at 32 px/m: all 16 chapters n/n down, 0 script errors.
+  One frame per chapter: `M/frames/director-loadout-16ch-32ppm.png`; clip of rocket .. katana
+  `M/cast-loadout-weapons-32.mp4`.
+- City block at 64 px/m on dark asphalt: `M/cast-navy-city-64.mp4` (15 s), still `M/frames/city-navy-64ppm.png`.
+- Quest 1, Dock 9 fight on the cast rigs (`--rigs`, the dev flag): `M/cast-quest1-dock9-32.mp4`, still
+  `M/frames/quest1-dock9-32ppm.png`, 0 script errors.
 
 ### Gates (iteration 7, `tools/evidence/run.mjs --no-bench` on cc4cb843: lint 13/13, unit 940/0, scenarios 46/0,
 parity exact, selftest with look goldens 11/11 (worst 1.07) and block 5/5, no re-bless; iteration 6 on 850c543a:)
@@ -79,8 +86,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    in `r1_c7`; or B, exactly 1.1x the crowd (`RivetPlan.FORM_TRIM`, size_k 0.89; switch with
    `FORMS[FORM_BASE].x` 0.97 -> 0.89). Still with the scale chart: `M/frames/rivet-size-call-64ppm.png`.
 2. Limb weight at 32 px/m: as built, or heavier (`ARMS[FORM_BASE].z` 0.9 -> 1.0, `LEGS[FORM_BASE].y` 1.0 -> 1.2).
-3. Held guns are sized in metres (the look lane's `weapon_art.json`), so they read large on the slimmer Rivet:
-   `M/cast-hybrid-director-64.mp4`.
+3. Held guns: n5-look answered my REQUEST (n5-look 01cd19f2, `rivet_arsenal.json held_size_ref` 1.2): after the
+   merge the held gun follows `plan.size_k`, so this 0.97 Rivet carries 0.81x guns (their still
+   `gtai-masters/n5/look/held-size-ab-cast-merge.png`; before: `M/cast-hybrid-director-64.mp4`). Off = 0.
 4. The patrol cap and riot helmet crowns: navy as in r2_c5 (built, e1f848a5 and the helmet commit after it), or
    d5-cast's cream "T1" crowns, a stronger head mark at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right;
    `M/frames/riot-helmet-navy-ab.png`). Revert = `git revert e1f848a5` (limbs too) or

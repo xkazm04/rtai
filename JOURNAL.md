@@ -374,3 +374,12 @@ Session state 22:28: head = this commit, tree clean, image.lock untouched, no Go
   `frames/quest1-dock9-32ppm.png`. Rivet with Gloria reads as the cream hybrid with the vermilion collar, the quest's
   cops are the navy slim rigs and die in red. Note: quest 1's rigs stay behind the dev flag `--rigs` (rivet-arsenal
   Call 1), so the default quest 1 still draws the sprite cast; nothing of mine changes that.
+- 22:47 the navy cops on dark asphalt at 64 px/m in the city block (`cast-navy-city-64.mp4`, 15 s,
+  `--bot=reel --arena=city --loadout=pistol,machine_pistol --clean`, 0 SCRIPT ERROR; still
+  `frames/city-navy-64ppm.png` t=3/7/11/14 s). Cops read as navy figures with blue pads and navy crowns, riot shields
+  as cream arcs, corpses in red pools; Rivet is the pale hybrid with the vermilion collar, a touch larger than a cop.
+  First take had the debug HUD (no --clean): re-shot. NEXT items 2-3 of iteration 7 are done.
+- 22:58 frames.json 15 (all exist): + director-loadout-16ch, city-navy-64, quest1-dock9; dropped (files kept, REPORT
+  cites them) director-final-ab, brutal-ab, cast-city-ab. REPORT: proof section + Call 3 (held guns answered by
+  n5-look 01cd19f2). Rings around the city cops at 64 px/m = ArenaFloorView target markers (proving block only,
+  `arena_floor_view.gd` 71), not cast art: left alone.
