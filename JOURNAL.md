@@ -165,7 +165,8 @@ NEXT (iteration 4), in order:
    Was: the electro gun in the live fight: the arc + spark are drawn but NOT yet seen in a clip (the bot's electro timing does
    not repeat across windowed runs). Use the arena range station (static dummies) or `--start=range` + a longer
    capture, find frames by tiling every frame around Rivet; judge the bold arc at 64 and 32 px/m.
-2. Molotov in the live fight: the spinning bottle (`molotov` held part) + wick flame + the fire patch; same hunt.
+2. DONE 02:34 molotov via `--bot=range`: the bottle was a speck in flight -> BOTTLE_K 1.8 (96aa742e); now the
+   bottle + wick read arcing over the dummy, bursting into the blast cells + gunplay's fire patch.
 3. The pistol end to end at 32 px/m in the city block (`--arena=city --weapon=pistol`): flash on the gun, tracer,
    brass on cream paving (does the cream casing vanish on cream? if so an ink-steel casing variant).
 4. DONE 02:27 (rocket A/B + headline clip re-shot). Next: the held weapon matching the fired one (REQUEST 1 ->
@@ -181,3 +182,17 @@ NEXT (iteration 4), in order:
   NEXT 8: redraw `charred` (and check `xray`) top-down, matching the human cutout rig's silhouette from above.
 - MEASURE 02:33 electro arc in the live arena (range bot, 64 px/m): reads as a bold paper bolt with a spark head.
   TIP: `--bot=range` is the repeatable way to film a gun at static dummies (the gunplay bot's timing drifts).
+- MEASURE 02:34 molotov (range bot, 64 px/m): bottle was a speck -> drawn 1.8x (96aa742e), re-shot, reads.
+  Gates of record stay at ec1ad879 (lint 13/13, unit 727/727, scenarios 30/30); since then only render constants in
+  `weapon_fx_art.gd` (BOTTLE_K) + docs; lint 13/13 at 96aa742e.
+
+## End of iteration 3 (02:35). State for iteration 4
+- In the live fight now (arena, `--arena=city`): flash frames on the held gun, tracers/nails, rocket + smoke + tail
+  flame, flame tongues, electro arc + spark, molotov bottle, rocket/molotov blast over scorch, spent brass. All
+  evidenced in masters `it3-*` (frames.json 15 entries).
+- Still gunplay's shapes: chain arcs between victims, fire patches (fx_fire loop), burning humans, stun sparks.
+- The claw shows the default gun under `--weapon=` (REQUEST 1 -> rivet-arsenal). Biggest remaining visual gap.
+NEXT (iteration 4), first three: (a) read rivet-arsenal's JOURNAL for REQUEST 1; if not taken, wire it as glue in
+my branch (RivetHeldView reads `arena.gun.trigger.spec.id` when armed) and re-shoot the core six in the claw at
+32 + 64 px/m (brief item 4, the in-game lineup); (b) top-down `charred` (+ `xray`) for brutality; (c) the weapon-rack
+arena station. Then items 5-8 above.
