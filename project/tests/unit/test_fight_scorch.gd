@@ -52,3 +52,19 @@ func test_marks_are_capped() -> void:
 	areas.patch_ticks.clear()
 	scorch.step(areas, 1)
 	assert_eq(scorch.marks.size(), FightScorch.MAX_MARKS)
+
+
+func test_a_rocket_blast_scorches_once_a_bottle_burst_does_not() -> void:
+	var areas: FightAreas = FightAreas.new()
+	var scorch: FightScorch = FightScorch.new()
+	areas.blasts.append(Vector3(5.0, 5.0, 3.5))
+	areas.blast_ticks.append(40)
+	areas.add_patch(Vector2(-5.0, 0.0), 2.2, 60, 20.0)
+	areas.blasts.append(Vector3(-5.0, 0.0, 2.2))
+	areas.blast_ticks.append(40)
+	areas.blasts.append(Vector3(9.0, 0.0, 1.2))
+	areas.blast_ticks.append(40)
+	scorch.step(areas, 41)
+	scorch.step(areas, 42)
+	assert_eq(scorch.marks.size(), 1, "the rocket only, and only once")
+	assert_eq(scorch.marks[0], Vector4(5.0, 5.0, 3.5 * FightScorch.BLAST_K, 40.0))

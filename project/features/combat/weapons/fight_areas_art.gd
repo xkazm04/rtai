@@ -113,12 +113,9 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
-	var scorch: Color = Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5))
 	var ring: bool = p.z >= RING_PATCH_M
 	if ring:
-		ci.draw_arc(
-			Ink.px(c), p.z * 0.85 * Ink.PX_PER_M, 0.0, TAU, 64, scorch, p.z * 0.3 * Ink.PX_PER_M
-		)
+		FightScorchArt.ring(ci, c, p.z, 0.7 + fade * 0.3)
 	else:
 		FightScorchArt.blotch(ci, c, p.z, 0.7 + fade * 0.3)
 	var n: int = maxi(ceili(p.z * 2.5), 1)

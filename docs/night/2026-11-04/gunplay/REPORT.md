@@ -48,6 +48,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 | Readable enemy fire: tell, lock, muzzle star, slowed round, sparks on Rivet | `guard_tell.gd`, `test_guard_tell.gd`; `MASTERS/arena_cop_fire_48ppm/` |
 | Riot blood: drop redraw split, A/B of settled 6 vs 30 (kept at 6: within noise), bench metrics | `WT/evidence/n3/riot-blood-ab.md`; bench runs `WT/evidence/n{1,3,6,8,9}/bench.log` |
 | Time to kill per weapon, range and target (24 seeds a cell); the shard's reach, and the electro tap vs charge | `WT/evidence/n6/ttk-shard.md`, `WT/evidence/n8/ttk-electro.md`, raw `ttk.json` |
+| Fire patches print an ink char (a splash burn: soot wedges, floor hatch, a broken edge), and the burnt ground stays 15 s after the fire; a rocket blast scorches the ground it hit (view only) | `fight_scorch.gd`, `fight_scorch_art.gd`; `test_fight_scorch*.gd`; `MASTERS/molotov_scorch_ab_city_32ppm.mp4` (+ `.png`), `MASTERS/camfight11_molotov/`, `MASTERS/rocket_scorch_ab_city_32ppm.png`, `MASTERS/camfight11_rocket/` |
 | The range station: `data/tables/arena_stations/gunplay.json` (`--weapon=<id> --bot=gunplay`, `--cam=fight`) | `WT/project/data/tables/arena_stations/gunplay.json` |
 | Other lanes' REQUESTs answered: brutality 1/12, human-reactions 1/2/3 (vertical blood bars, spray floor, `GunFx.shield_test`), showcase 5 (the rocket body and smoke trail; showcase 3, Rivet's hit flash, landed from human-reactions), rivet-arsenal 12 (the aim distance) | JOURNAL "Answers to REQUESTs" lines |
 | Dev capture camera `--cam=fight` (pit only; view only, the sim is identical) | `fight_cam.gd`; `MASTERS/fightcam_hand_cannon_64ppm_ab.mp4` |
@@ -57,7 +58,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 Each one is a single value. The default stands until you answer.
 
 - **gunplay-7:** the electro charged shot. A: holding the trigger fires automatically at full charge (default). B: fire on release. Clip: `MASTERS/arena_electro_charge_64ppm/arena_electro_charge_64ppm.mp4`. Values: `charge_s` 0.6, `charge_damage` 150.
-- **gunplay-8:** the mini-nuke's fire. A: it burns as a ring round the rim (default; ground zero reads burnt out). B: a full 6 m disc. Clips: `MASTERS/arena_nuke_ring_32ppm/` vs `MASTERS/city_nuke_block_32ppm/`. Value: `RING_PATCH_M`.
+- **gunplay-8:** the mini-nuke's fire. A: it burns as a ring round the rim (default; ground zero reads burnt out). B: a full 6 m disc. Clips: `MASTERS/arena_nuke_ring11_32ppm/` (the ring as printed char, 3d85efbe; first cut `arena_nuke_ring_32ppm/`) vs `MASTERS/city_nuke_block_32ppm/`. Value: `RING_PATCH_M`.
 - **gunplay-9:** thrown weapons. A: they land at the mouse cursor (default; 1.2 m steps, up to 18 m). B: the fixed 14 m lob. Clip: `MASTERS/arena_molotov_reach_48ppm/`. Value: `input_actions.json aim.aim_reach_step_m` (0 gives the fixed lob).
 - **gunplay-10:** electro taps on humans. A: the plain taps stay lethal on humans (default; two taps drop a still human in 0.62 s). B: taps stun only, so the charged one-shot is the only electro kill. Evidence: `WT/evidence/n8/ttk-electro.md` and the charge clip. Value: the electro row's damage on humans.
 - **gunplay-11:** pad throws. A: a full stick push gives the old 14 m lob (default). B: a full push gives 18 m. Value: `LiveInput.stick_reach_m`.
