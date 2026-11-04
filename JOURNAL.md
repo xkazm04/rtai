@@ -474,3 +474,21 @@ NEXT (iteration 7, in order):
 - DECISION fight deaths startle: a body drawn on the arena's own rigs startles like a city death
   (one rule for every death the street sees). Alternative: skip extra bodies in _startle_extra
   (one line).
+- 05:16 full scenario suite on 3ad17652 + the street board (dev only): 33/33.
+- MILESTONE 9762ed55 (quality pass on the weakest death): the electro death falls stiff.
+  Before, every death ended in the same X sprawl (legs spread, one arm flung up): sheet
+  death_electro_x_before_64ppm_sheet.png. New CutRig.c_plank channel (RigClips zeroes it each
+  tick, DeathPose._shock sets it with the fall): feet 55 px apart (was 230) and 130 px further
+  back, feet unsplayed, arms along the sides, no torso or body twist. Pass 1 (feet together at
+  the sprawl's 210 px, arms back at 25 px) read as a compact blob from above, because the legs and
+  arms overlapped the torso; pass 2 pushed the feet out and the arms 70 px off the sides; pass 3
+  removed the sprawl's torso twist (one arm still flared). Read at 64 px/m: a body lying at
+  attention, clearly unlike the X. With c_plank 0 every changed formula reduces to the old
+  value, so no other pose and no look golden moves. Touches d5-cast's rig files (cut_rig,
+  rig_clips, rig_gait, rig_arm, rig_pose: one channel, a few lines). Unit 740/740 (planted: a
+  round death keeps c_plank 0), human_react scenario green, lint 13/13. Clips
+  death_electro_stiff_{32,64}ppm_halfspeed.mp4 (the board, half speed: the fall takes 0.14 s in
+  real time) + the after sheet. Live check: the arena bot's electro gun kills 1 cop in 45 s
+  (`--rigs --bot=gunplay --weapon=electro_gun --start=pit`), too slow for a live clip.
+- DECISION electro corpse: the stiff plank (legs together, arms at the sides) rather than the
+  shared X. Alternative: c_plank = 0 in DeathPose._shock (one line) brings back the X.
