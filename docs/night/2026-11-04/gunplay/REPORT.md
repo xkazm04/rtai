@@ -1,6 +1,6 @@
 # REPORT: lane gunplay (`n-gunplay`), night 2026-11-04
 
-DRAFT, written at iteration 11 (06:50). The report phase checks the head, the gates and the clips again.
+Final, iteration 18 (REPORT, 08:40). Code head 83429487; branch head is docs only. Every path cited below was checked to exist at 08:41.
 
 Scope: weapons and projectiles, the weapon table, the shared hit-feel module, aiming, enemy fire and
 its tells, `CombatArena`'s weapon behaviour, the range station. `MASTERS` below means
@@ -75,6 +75,27 @@ Each one is a single value. The default stands until you answer.
 - Quest 1 has no `GunHand` yet, so the quest fight keeps its evening pistol path. `LiveInput.px_per_m` is not wired there.
 - The arena's default weapon is still Gloria. A table gun is armed only with `--weapon=<id>`, so that the arena scenarios do not move.
 - Merge notes for the Director: human-reactions' get-up and brutality's burst kill read right only with n-gunplay 83429487 / 8ea3a2e5 merged. Brutality REQUEST 29 (molotov corpse under the patch flames) is answered by 0b2541a9 + aa471560 (flames shrink, fade and move off a body, from gunplay's own dead list); recheck it in the merged-main re-film in case a brutality kill drops the body from that list while its print stays.
+
+## What blocked me, and for how long
+
+Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost time:
+
+- The bench lock was held by another lane once (05:05, iteration 7), so I skipped that round's bench. About 0 minutes lost; the next round benched.
+- Every bench run shared the machine with five other lanes rendering. So the riot numbers are all CONTENDED. That cost the idle number of record, not time.
+- Tooling, about 10-15 minutes all night: `run_unit.mjs` needs `GODOT_BIN` exported (otherwise it reports "import exit -1"); `--arena` is not a boot arg (the arena runs as `res://dev/arena/arena.tscn -- ...`); Git Bash `timeout` does not kill a windowed Godot child (two hung renders, killed by PID); Windows Python needs `C:/` paths and `newline=''`.
+- The arena molotov never landed at first (01:31: `StagePilot` overrode the throw), and the first impact sweep was one tick short of the body. Both were fixed the same iteration.
+- Iterations 15-17 (08:0x-08:33) built no code because a full unit run does not fit before the 08:30 freeze. In iteration 16 I misread brutality REQUEST 29 as unanswered; it was already done (0b2541a9 + aa471560), and JOURNAL corrects it.
+
+## Next steps (in order)
+
+1. The Director merges n-gunplay. human-reactions' get-up and brutality's burst kill need 83429487 / 8ea3a2e5.
+2. Re-film on merged main: the molotov patch beside a brutality kill (check that a brutality kill never drops the body from `FightAreas`' dead list while its print stays), and human-reactions' get-up with the 29-tick rise hold.
+3. Take the idle riot + drive bench of record on merged main, with no other lane running (`node tools/bench/run.mjs`). Expect the blood to be about 1 % of the riot p99. The remaining riot cost is not the blood, so it needs its own bisect.
+4. Wire `GunHand` and `LiveInput.px_per_m` into quest 1, so the quest fight fires the table guns instead of the evening pistol path.
+5. Split the city camera's view point from the sim focus (`CitySystem.focus`), so the fight camera (gunplay-12) can leave dev and serve the city.
+6. Make a table gun the arena default instead of Gloria, and re-bless the arena scenarios on purpose.
+7. If the burn re-film reads thin, raise `BURN_SCALE` from 0.3 to 0.38. That one value is the alternative.
+8. Apply the owner's answers to gunplay-7 to gunplay-13. Each one is a single value.
 
 ## Gates of record
 

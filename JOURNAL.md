@@ -1209,3 +1209,16 @@ NEXT item 1 now reads: REPORT gates of record on 83429487; REQUEST 29 answered (
 
 NEXT: the Director merges n-gunplay; re-film the molotov patch beside a brutality kill on merged
 main; BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if the burn re-film reads thin.
+
+## Iteration 18 (REPORT, 08:40 - 08:45)
+- 08:40 read: JOURNAL NEXT, git log, the draft REPORT.
+- Checked every MASTERS/ and WT/ path cited in the REPORT: all exist. The commits it cites (0b2541a9,
+  aa471560, 3d85efbe, 83429487, 8ea3a2e5) resolve. `MASTERS/frames.json` is present.
+- REPORT finalised: dropped the DRAFT line, added "What blocked me, and for how long" (nothing was
+  BLOCKED; friction about 10-15 minutes of tooling, one bench skipped in iteration 7) and "Next steps".
+  Copied to `REPORT.md` in the lane cwd, as the phase brief asks.
+- No code, no Godot run, no lock taken, no shared file touched. Gates of record stay on 83429487.
+
+NEXT: the Director merges n-gunplay (83429487 / 8ea3a2e5 are needed by human-reactions and
+brutality). Then on merged main: re-film the molotov beside a brutality kill and take the idle
+riot + drive bench of record. Wire GunHand into quest 1. BURN_SCALE 0.3 -> 0.38 if the burn reads thin.
