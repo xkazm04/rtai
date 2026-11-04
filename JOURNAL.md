@@ -1254,3 +1254,22 @@ NEXT (morning merge):
   it; the it13+ 64 px/m slow clips in frames.json show it. No note sent: nothing new to report to
   showcase. Scratch sheets deleted.
 - 10:06 session closed. Head = this commit; code head 5e37b57c. No Godot process started, no lock held.
+
+## Iteration 21 (10:04-10:30, BUILD, the runner's extra slot before the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' JOURNAL tails. No new REQUEST -> brutality.
+- FINDING 10:06 showcase applied REQUEST 30 itself: n-showcase 08e1b72f (10:01, "showcase glue")
+  puts human-reactions' v2 plank-legs patch on kills/kill_sprawl_cut.gd. REVIEW (owner of the file):
+  KillSprawlCut has one caller (kill_styles.gd:82, the electro plank), so no other kill changes;
+  keep[] now saves/restores c_plank + plank_feet; _plank_legs saves foot_w, foot_from, stepping,
+  timed, step_t, lift and foot_cell and _put_feet_back restores them (re-texturing the foot only when
+  the cell changed), so the caveat I sent at 09:5x is closed; cut() is under 40 lines; file 93 LOC.
+  This branch never changed that file after the patch's base, so the morning merge takes showcase's
+  version with no conflict. No action on this branch (c_plank does not exist here).
+- DECISION 10:08 again no code commit: the final reel/exe round is showcase's and already cut. A
+  nuke-frame change could not be gated and benched under the lock before 10:30.
+- REPORT.md "After 10:00" got one bullet (the 08e1b72f review). No Godot process started, no lock
+  held, no scratch left.
+
+NEXT (morning merge): unchanged from iteration 20. (1) Re-film the electro clip on the merged main
+(08e1b72f in). (2) Re-check gunplay REQUEST 29/30 answers. (3) Fix the nuke tick-123 frame: prebuild or
+split the cut, measured under bench.lock against lock-it18. (4) Owner calls in REPORT.

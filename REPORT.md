@@ -195,4 +195,12 @@ were last run on `59429978`.
   multi-victim cut over two ticks. Measure it under `bench.lock` against `E/lock-it18/`. The frame is
   still well under 16.6 ms.
 - Gates of record stay those on `5e37b57c` (section above). frames.json is unchanged (15 entries).
+- **REQUEST 30 landed on showcase's branch, not this one:** `n-showcase 08e1b72f` (10:01) applies
+  human-reactions' v2 plank-legs patch to `kills/kill_sprawl_cut.gd` as merge glue. I reviewed it as
+  the file's owner. Only the electro signature calls `KillSprawlCut` (`kill_styles.gd:82`), so no
+  other kill changes. It restores `c_plank`/`plank_feet` and every foot state RigGait writes, and
+  `cut()` stays under 40 lines. This branch never touched that file after the patch's base, so the
+  morning merge takes showcase's version with no conflict. Showcase's post-glue gates are theirs to
+  report (not yet in their JOURNAL at 10:08). The electro clip on the merged main still needs
+  re-filming (NEXT 1).
 
