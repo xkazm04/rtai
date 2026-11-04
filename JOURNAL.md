@@ -996,3 +996,10 @@ NEXT:
 2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
    under the patch stars): check both on the merged main.
 3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
+
+## Iteration 17 (08:40, REPORT)
+- REPORT.md written: eleven kills with their evidence, gates of record on 63cc3ce1, open items,
+  calls for the owner. Every cited M/ and E/ path checked to exist. No code touched, no Godot run.
+
+NEXT: unchanged from iteration 16 (electro DeathPose after the merge, gunplay REQUESTs 29/30,
+age-96 stall and the nuke tick under bench.lock, look goldens + parity on the merged main).
