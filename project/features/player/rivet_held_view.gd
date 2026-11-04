@@ -32,6 +32,7 @@ var rivet_id: int = 0
 var art: WeaponArt = WeaponArt.new()
 var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
+var _shown_size: float = 0.0
 var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
 var _mag: RivetMagView = null
@@ -64,8 +65,8 @@ func _process(_delta: float) -> void:
 		if _rag != null:
 			_rag.visible = false
 		return
-	if id != _shown:
-		_swap(id, pilot.hold.held)
+	if id != _shown or rig.plan.size_k != _shown_size:
+		_swap(id, pilot.hold.held, rig.plan.size_k)
 	if arena != null and arena.gun != null and arena.gun.trigger.spec.id == pilot.hold.held:
 		var t: Trigger = arena.gun.trigger
 		HeldTube.apply(_sprite, art, id, HeldTube.is_empty(t.ammo, t.spec.magazine, rig.reload_k))
@@ -87,16 +88,16 @@ func _process(_delta: float) -> void:
 	_light_rag(rig, id)
 
 
-func _swap(id: StringName, weapon: StringName) -> void:
+func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	if _sprite != null:
 		_sprite.queue_free()
 	_sprite = art.make_held(id)
-	var grip: ArsenalTable.Grip = arsenal.grip_of(weapon)
-	_sprite.scale *= grip.held_scale if grip != null else 1.0
+	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_sprite.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 	add_child(_sprite)
 	_shown = id
+	_shown_size = size_k
 
 
 ## A long gun or a tube: carried across the front of the body, and always beside the helmet.

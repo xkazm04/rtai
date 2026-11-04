@@ -336,6 +336,10 @@
       "minLength": 1,
       "type": "string"
     },
+    "held_size_ref": {
+      "minimum": 0,
+      "type": "number"
+    },
     "reload": {
       "additionalProperties": false,
       "properties": {
