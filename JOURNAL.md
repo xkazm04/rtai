@@ -1303,3 +1303,16 @@ NEXT (10:40 REPORT session, then morning merge): REPORT "After 10:00" gets one l
 22-23 (no code). Morning: (1) re-film the electro clip on the merged main (08e1b72f in); (2) re-check
 gunplay REQUEST 29/30 answers; (3) fix the nuke tick-123 frame (prebuild or split the cut), measured
 under bench.lock against lock-it18; (4) owner calls in REPORT.
+
+## Iteration 24 (10:24-10:27, BUILD, 6 minutes to the freeze)
+- Read: JOURNAL NEXT, git log, the REQUEST lines in gunplay, human-reactions, rivet-arsenal,
+  showcase, weapon-art JOURNALs. No new REQUEST -> brutality (gunplay's REQUEST 30, the molotov
+  char rim, was answered by 04c4068b + 5e37b57c). Showcase's newest reel in masters is now reel-1012.
+- DECISION 10:25 no code commit: 6 minutes cannot cover a change plus gates and a filmed clip.
+  Gates of record stay iteration 19's on code head 5e37b57c.
+- No Godot process started, no lock held, no scratch left.
+
+NEXT (10:40 REPORT session, then morning merge): REPORT "After 10:00" line extends to iteration 24
+(no code; reel-1012 is showcase's latest). Morning list unchanged from iteration 23: (1) re-film the
+electro clip on the merged main; (2) re-check gunplay REQUEST 29/30 answers; (3) the nuke tick-123
+frame under bench.lock; (4) owner calls in REPORT.
