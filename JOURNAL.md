@@ -116,6 +116,17 @@ during the riot/drive48vsync part.
   wave-gap idling. Clips: ch18-head-fixedfps.mp4 (drop-in chapter), ch18-ab-reel1012-vs-head.mp4.
 - Gates on this branch: lint 13/13, unit 938/938 (14:10).
 
+### 14:10-14:13 Gates + riot re-run
+- Scenarios 46 ran, 0 failed (14:10). Gates: lint 13/13, unit 938/938, scenarios 46/46. The
+  evidence runner (tools/evidence/run.mjs) was not run this session (it needs the full bench window).
+- Riot alone, exported windows-bench, 2 x 60 s, under the bench lock but CONTENDED (the other lane
+  had a Godot up): p99 12.00 / 11.88 ms, 1 % low 62 / 26 fps, worst 64 / **2633 ms**.
+  evidence/perf/riot-1412-{1,2}.json. Every frame over 60 ms is cause `present` (draw incl. swap
+  60-2632 ms, render CPU 1.0-1.5 ms, game 0.01-0.25 ms). The 2.6 s frame is a present stall: the
+  GPU / compositor is shared (the other lane's renders, the owner's desktop), not riot work.
+  Process ms also rises to 10-57 ms in the worst frames under this load. Our scripts get
+  descheduled, so the riot's steady p99 can only be judged UNCONTENDED.
+
 ## Calls for the owner (draft for REPORT)
 - perf-city-1, reel ch 18: the "lag" is 2.4 s + 0.9 s where no guard stands (between pit waves),
   not frame cost. Options: (a) re-cut ch 18 from a window with no wave gap (film edit only),
