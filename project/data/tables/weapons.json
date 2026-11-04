@@ -168,8 +168,10 @@
     {
       "chain_hops": 3,
       "chain_radius_m": 4,
+      "charge_damage": 150,
+      "charge_s": 0.6,
       "damage": 60,
-      "doc": "An arcing bolt that chains between metal targets and stuns humans.",
+      "doc": "An arcing bolt that chains between metal targets and stuns humans; held on, it charges 0.6 s and lets a charged bolt go that kills a human outright.",
       "dot_dps": 0,
       "dot_s": 0,
       "enabled": true,

@@ -56,13 +56,7 @@ static func draw_over(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) 
 		ci.draw_arc(
 			at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.CREAM, 4.0 * (1.0 - k) + 1.0
 		)
-	if gun.trigger.reloading():
-		var k: float = (
-			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
-		)
-		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5))
-		ci.draw_arc(at, 11.0, 0.0, TAU, 24, Ink.INK, 7.0)
-		ci.draw_arc(at, 11.0, -PI / 2.0, -PI / 2.0 + TAU * k, 24, Ink.CREAM, 3.5)
+	_claw_state(ci, fx, arena, tick)
 
 
 ## A table bullet's tracer at its weapon's weight: ink casing, cream core, a cream head; an enemy
@@ -196,3 +190,17 @@ static func _sun(ci: CanvasItem, at: Vector2, fwd: float, count: int) -> void:
 		sun.append(Ink.px(at + Vector2.from_angle(a) * k))
 	_flash(ci, sun, 3.0)
 	ci.draw_circle(Ink.px(at), fwd * 0.12 * Ink.PX_PER_M, Ink.INK)
+
+
+## The claw's state: a charge gun's gathering crackle; the reload as a ring filling over Rivet.
+static func _claw_state(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) -> void:
+	var gun: GunHand = arena.gun
+	if gun.trigger.charge > 0:
+		FightChargeArt.crackle(ci, fx.muzzle(arena.rivet, 0.45), gun.trigger.charge_frac(), tick)
+	if gun.trigger.reloading():
+		var k: float = (
+			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
+		)
+		var at: Vector2 = Ink.px(arena.rivet.pos + Vector2(0.0, -1.5))
+		ci.draw_arc(at, 11.0, 0.0, TAU, 24, Ink.INK, 7.0)
+		ci.draw_arc(at, 11.0, -PI / 2.0, -PI / 2.0 + TAU * k, 24, Ink.CREAM, 3.5)
