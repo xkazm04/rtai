@@ -89,3 +89,4 @@ NEXT (iteration 5, written 15:48):
 NEXT (iteration 5, replaces the 15:48 list's item 2):
 1. Film the claw jab A/B at 64 px/m 0.4x with a crop centred on the contact (frames 66-90 of claw_combo, `claw_64`/`claw_before_64` in scratch are ready to cut), and a victim further out if the overlap hides it. Run the full gate on 5868a386 first.
 2. Then the 15:48 list: REPORT calls (two-hand grip), the baton smear tail, a city electro chain clip.
+- GATES 16:03 `node tools/evidence/run.mjs --no-bench --no-parity` on dad0073d (`gates/evidence6.log`): lint 13/13, unit 960/960, scenarios 46/46, selftest pass. Parity skipped (time); last bit-exact on 2ba875ae, and since then only view code changed (RigClips), no sim or native change. NEXT 1's 'run the full gate first' is done except parity.
