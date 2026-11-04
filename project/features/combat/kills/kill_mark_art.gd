@@ -8,6 +8,8 @@ extends RefCounted
 const BLOOD: Color = Color("#A30509")
 const BLOOD_DARK: Color = Color("#540005")
 const SOOT: Color = Color(0.09, 0.075, 0.105, 0.55)
+## A drag smear thins from the landing over this much slide (metres).
+const SMEAR_TAPER_M: float = 1.6
 
 
 static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
@@ -56,17 +58,16 @@ static func blot(ci: CanvasItem, c: Vector2, r: float, phase: float) -> void:
 	KillPoly.fill(ci, inner, BLOOD)
 
 
-## A drag smear: blots along the slide, fat where the part landed and thinning to its rest,
-## with gaps, so it reads as a wet streak and never as a ruled line.
-static func smear(ci: CanvasItem, trail: PackedVector2Array, ppm: float) -> void:
-	var n: int = trail.size()
-	for k: int in n:
-		if k % 5 == 4:
-			continue
-		var t: float = float(k) / float(maxi(1, n - 1))
-		var r: float = ppm * (0.13 - 0.08 * t) * (0.75 + 0.25 * sin(float(k) * 2.3))
-		ci.draw_circle(trail[k], r * 1.2, BLOOD_DARK)
-		ci.draw_circle(trail[k], r, BLOOD)
+## One blot of a drag smear (point `k` of the slide, `run_px` from where the part landed),
+## appended to the canvas item `rid` once and never redrawn: fat at the landing, thinning over
+## SMEAR_TAPER_M of slide, every fifth point a gap, so it reads as a wet streak, not a ruled line.
+static func smear_blot(rid: RID, at: Vector2, k: int, run_px: float, ppm: float) -> void:
+	if k % 5 == 4:
+		return
+	var t: float = clampf(run_px / (SMEAR_TAPER_M * ppm), 0.0, 1.0)
+	var r: float = ppm * (0.13 - 0.08 * t) * (0.75 + 0.25 * sin(float(k) * 2.3))
+	RenderingServer.canvas_item_add_circle(rid, at, r * 1.2, BLOOD_DARK)
+	RenderingServer.canvas_item_add_circle(rid, at, r, BLOOD)
 
 
 static func flash(ci: CanvasItem, m: KillMarks.Mark, age: int, ppm: float, hold: int) -> void:
