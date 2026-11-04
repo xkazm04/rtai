@@ -146,3 +146,11 @@ func _fire_cell(cell: Vector2i, w: int, at: Vector2, scale: float) -> void:
 	var size: Vector2 = Vector2(2.5 * w, 2.5) * scale * Ink.PX_PER_M
 	var src: Rect2 = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
 	draw_texture_rect_region(_fire_tex, Rect2(Ink.px(at) - size * 0.5, size), src)
+
+
+## Lane gunplay: the table gun's presentation, made on first use, so another lane can set a hook
+## on it before the first shot (human-reactions: `view.fx_view.gun_fx().shield_test = ...`).
+func gun_fx() -> GunFx:
+	if _gun_fx == null:
+		_gun_fx = GunFx.new()
+	return _gun_fx

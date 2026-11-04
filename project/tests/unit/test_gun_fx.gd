@@ -200,3 +200,11 @@ func test_a_round_a_riot_shield_stopped_sparks_instead_of_a_burst() -> void:
 	assert_eq(int(fx.impacts[0].z), GunFx.Hit.METAL, "human-reactions REQUEST 3: the shield sparks")
 	assert_eq(blocked.size(), 1)
 	assert_gt(blocked[0].x, 0.9, "the test gets the round's travel direction")
+
+
+func test_the_view_hands_out_its_gun_fx_before_the_first_shot() -> void:
+	var view: FxView = FxView.new()
+	var fx: GunFx = view.gun_fx()
+	assert_not_null(fx)
+	assert_eq(view.gun_fx(), fx, "one GunFx per view: a hook set now is the one drawing later")
+	view.free()
