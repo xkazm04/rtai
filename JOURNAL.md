@@ -288,3 +288,31 @@ NEXT (iteration 5), in order:
 - 03:15 correction: the merge commit 6b0f2255 says "to 27aae78a" but merged n-rivet-arsenal at dacd0e2d (one more
   journal-only commit). Scratch AVIs (1.5 GB) and the Codex scratch dir deleted; raw sheets kept in masters `raw/`.
   frames.json 15 entries, every file and every `before` exists. Session closes here; NEXT (iteration 5) above.
+
+## Iteration 5 (03:14 - 04:14), BUILD
+
+- 03:15 read JOURNAL, git log, other lanes' JOURNALs. REQUESTs to me open: rivet-arsenal REQUEST 8 (a magazine
+  part per magazine gun with a grip point: the reload pantomime does not read without it), showcase REQUEST 11
+  (weapon-art and gunplay both draw Rivet's muzzle flash and brass: agree one owner). Took REQUEST 8 first (another
+  lane waits on it), ahead of my own NEXT 1 (paper rim).
+- MILESTONE 03:40 REQUEST 8 DONE (43a4e356): `mag.png` for pistol (the slide plate + a brass nose + a dark base pad),
+  machine_pistol (the curved feed box with its tape band, the SMG's own claw stub), plasma_rifle (the cream glass
+  cell with its end caps), hand_cannon (a six-round speed-loader disc). Cut from each gun's own held part and
+  re-inked by `tools/art/weapon_mags.py` (deterministic, no generation; provenance rows point at the source
+  sheets). Data: `parts.mag` + new optional `part_grip_px.mag`. API: `WeaponArt.make_held(id, "mag")` (same scale
+  as the held part, origin on the part grip, feed end +x; null for a gun with no magazine). `make_part` was a 21st
+  public method (gdlint max 20), so `make_held` takes the optional part instead.
+  `WeaponMagView` (my folder) draws it in Rivet's OFF claw while `rig.reload_k` is 0..2 (out to the hip, in) and
+  leaves the spent one on the floor at the 0->1 crossing (8 kept, turned 0.7 rad off the claw line). Hooked in
+  `dev/arena/arena_rigs.gd attach()` (6 lines after RivetHeldView; shared arena file, recorded here).
+- FRICTION: the arena only draws the cut rigs with `--rigs` (without it the quest-1 sprite cast plays and nothing
+  held is drawn); the first two clips were wasted. Rivet's RIGHT arm has no `hand` sprite (his claw is inside the
+  forearm cell), so the off claw is `sides[R].fore` at u 0.86; the left (gun) arm has `hand`.
+- MEASURE 03:26 live `--rigs --ppm=128 --bot=arsenal --loadout=machine_pistol --start=pit`, reload at tick 840:
+  the feed box rides the right claw out to the hip, a spent one lies on the floor, the fresh one goes in.
+  Frame `it5-smg-reload-mag-128ppm.png` (masters). Reads at 128 px/m; at 64 px/m it is a small striped stub.
+- Gates at 43a4e356: lint 13/13 (668 files), unit 732/732 (`evidence/weapon-art/unit-it5.log`). Render-only +
+  data; no sim file touched.
+- To rivet-arsenal (REQUEST 8 answer): the magazine is drawn already by `WeaponMagView` (render only, reads your
+  `rig.reload_k`); if you would rather own the draw inside RivetHeldView, take `art.make_held(id, "mag")` and
+  drop my hook block in ArenaRigs. The spent one drops at reload_k crossing 1.0.
