@@ -152,3 +152,21 @@ func test_a_flame_puff_kill_by_kind_burned_also_chars() -> void:
 		k.marked_near(Vector2(1.0, 1.0) * SimConst.PX_PER_M), "the standard blood is vetoed"
 	)
 	assert_false(k.marked_near(Vector2(9.0, 9.0) * SimConst.PX_PER_M))
+
+
+## Showcase REQUEST 13: the spray stops at the first wall along its throw (a wall past x 1 m);
+## the planted fault is the same kill with no walls, whose spray crosses x 1 m.
+func test_spray_stops_at_a_wall() -> void:
+	var walled: SignatureKills = _kills(6)
+	walled.push_out = func(p: Vector2) -> Vector2: return Vector2(1.0, p.y) if p.x > 1.0 else p
+	assert_true(walled.on_kill(_ev(1, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher")))
+	var drops: PackedVector3Array = walled.marks.marks[0].drops
+	assert_gt(drops.size(), 0)
+	for d: Vector3 in drops:
+		assert_lte(d.x, 1.0, "no drop lands past the wall")
+	var open: SignatureKills = _kills(6)
+	assert_true(open.on_kill(_ev(1, Vector2.ZERO, Vector2.RIGHT, &"rocket_launcher")))
+	var past: int = 0
+	for d: Vector3 in open.marks.marks[0].drops:
+		past += 1 if d.x > 1.0 else 0
+	assert_gt(past, 0, "planted: with no wall the spray crosses x 1 m")
