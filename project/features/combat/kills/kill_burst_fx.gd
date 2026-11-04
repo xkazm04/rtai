@@ -89,15 +89,17 @@ func _shards(b: Burst, age: int) -> void:
 		_spike(base, -b.dir.rotated(side * 1.2 + jit) * (0.24 + 0.1 * _h(b.serial, n + 120)), 0.08)
 
 
-## One shard: a cream spike in an ink rim from `base` out along `out` (metres), `half_w` m wide.
+## One shard: a cream spike in an ink rim from `base` out along `out` (metres), `half_w` m wide,
+## standing in a red wound.
 func _spike(base: Vector2, out: Vector2, half_w: float) -> void:
 	var tip: Vector2 = base + out * ppm
 	var w: Vector2 = out.orthogonal().normalized() * half_w * ppm
 	var tri: PackedVector2Array = [base + w, tip, base - w]
+	draw_circle(base, half_w * 0.9 * ppm, KillMarkArt.BLOOD)  # the wound it stands in
 	KillPoly.fill(self, tri, SHARD)
 	@warning_ignore("return_value_discarded")
 	tri.append(tri[0])
-	draw_polyline(tri, Ink.INK, 1.2, true)
+	draw_polyline(tri, Ink.INK, 1.6, true)
 
 
 ## The red mist at the pop: a soft blot that swells and thins.
