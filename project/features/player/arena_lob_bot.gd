@@ -36,7 +36,8 @@ func sample(tick: int) -> TickInput:
 	var foe: Fighter = _nearest(at)
 	if foe == null:
 		return TickInput.new()
-	var buttons: int = PlayerCommand.pack_aim((foe.pos - at).normalized(), actions)
+	var to_foe: Vector2 = foe.pos - at  # the cursor's distance too: the bottle lands on him
+	var buttons: int = PlayerCommand.pack_aim(to_foe.normalized(), actions, to_foe.length())
 	if foe.pos.distance_to(at) > TOO_CLOSE_M:
 		buttons |= 1 << actions.bit(&"fire")
 	return TickInput.new(buttons)

@@ -83,3 +83,32 @@ func test_planted_fault_no_windup_throws_on_the_press() -> void:
 	table.grips[&"thrown"].windup_ticks = 0
 	_carry(table)
 	assert_eq(_throws(_held(6)), PackedInt32Array([0]), "windup 0: the bottle leaves at once")
+
+
+## Where the wound-up bottle is sent: the cursor's distance (gunplay's aim reach, decoded aim_m);
+## no reach bits (an old replay, a bot without a reach) falls back to the fixed aim_range_m.
+func _release_at(reach_m: float) -> Vector2:
+	_carry(ArsenalTable.shipped())
+	var aim: int = PlayerCommand.pack_aim(Vector2.RIGHT, _pilot.actions, reach_m)
+	var fire: int = aim | (1 << _pilot.actions.bit(&"fire"))
+	for t: int in 40:
+		_pilot.drive(_stage, TickInput.new(aim, 0, 0))
+		_stage.intent.clear()
+	for t: int in 40:
+		_pilot.drive(_stage, TickInput.new(fire, 0, 0))
+		if _stage.intent.fire_at != Vector2.INF:
+			return _stage.intent.fire_at - _stage.arena.rivet.pos
+		_stage.intent.clear()
+	return Vector2.INF
+
+
+func test_the_wound_up_bottle_lands_at_the_cursor_distance() -> void:
+	var to: Vector2 = _release_at(6.0)
+	assert_almost_eq(to.x, 6.0, _pilot.actions.aim_reach_step_m, "lands near the cursor, 6 m out")
+	assert_almost_eq(to.y, 0.0, 0.01)
+
+
+## Planted fault: no reach in the input sends the bottle the fixed aim_range_m.
+func test_planted_no_reach_lobs_the_fixed_range() -> void:
+	var to: Vector2 = _release_at(0.0)
+	assert_almost_eq(to.x, _pilot.actions.aim_range_m, 0.01)
