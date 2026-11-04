@@ -1002,3 +1002,45 @@ NEXT (iteration 12 / report phase, in order):
   the same two rows as on 47476501 (48 px/m vehicles 8 px, 64 px/m cop 28 px: the blood-edge
   class); look goldens 11/11, block 5/5, world lock holds. REPORT gates section updated. NEXT 1
   (gates on the final head) is done unless code lands after 2d7efa51.
+
+## Iteration 12 (07:23-08:23), BUILD
+- 07:23 read JOURNAL, git log, the other lanes' JOURNALs. Addressed to gunplay (cc): showcase
+  REQUEST 27 (r10, to brutality, cc gunplay for the patch FX): ch 07 molotov, the victim is never
+  seen; the patch's fire stars cover him from the hit to the chapter's end (7 s). Brutality has
+  not answered; the flames are this lane's art (FightAreasArt._patch), so taken here. Confirmed on
+  my own `camfight11_molotov` (64 px/m pit): at 12-15 s a body lies under the left patch's six
+  fire stars (1.5-2.25 m sprites over a 2.2 m patch).
+- Registry rule applied (depth-ordered-layered-art: the subject of the beat must stay readable
+  over FX; combat-pacing: the kill's payoff is the body): the fix thins the FX, it does not move
+  the body above it (the rig draw order is not this lane's, and a body over the flames reads as
+  not burning).
+- FightAreasArt.clear / corpses: a flame within CLEAR_M 1.8 m of a dead hostile shrinks by up to
+  0.6 and fades by up to 0.5, ramping in 45..75 ticks after the kill (hurt_tick = the killing
+  hit). View only. Unit: test_fight_areas_clear.gd (4 tests). DECISION line in docs/decisions.md.
+- 07:27 FINDING: my own pit and city molotov clips re-shot on 0b2541a9 (`camfight12_molotov`,
+  `city12_molotov`) are pixel-identical to it11's (ffmpeg psnr inf on every frame): in those runs
+  no victim dies inside a patch (the bottle throws them clear; burning guards run out and die
+  outside). My 07:23 read of a body under the left patch was wrong. Both folders deleted.
+- 07:29 Repro on showcase's own path: a throwaway worktree of n-showcase e1414388
+  (`gtai-n4/scratch/gp/wt-sc`, native bin copied, own APPDATA gunplay-sc), the director cut's
+  molotov chapter (`--bot=reel --reel=director --chapter=molotov --loadout=pistol --clean --rigs`,
+  48 px/m, 450 frames, 0 script errors): the victim vanishes under the patch's stars from the hit
+  to the end. Confirmed REQUEST 27.
+- 07:31 the first cut (shrink + fade only, within 1.8 m) cherry-picked there: the corpse's near
+  half shows from 2.7 s, but flames 1-1.5 m off still cover his far half. aa471560: CLEAR_M 2.2,
+  and FightAreasArt.away pushes each nearby flame up to CLEAR_PUSH_M 1 m off the corpse (shrink
+  0.55, fade 0.4): the fire opens round the body. Re-shot: from 3.5 s the charred cop lies clear
+  inside a ring of flames while the patch burns on. Unit 750/750 (`evidence/n10/unit-12b.log`),
+  lint 13/13 (hook). DECISION line updated.
+- 07:34 MILESTONE `MASTERS/n4/gunplay/molotov_corpse_clear_ab_48ppm.mp4` (+ `.png` at 4.5 s):
+  showcase ch 07 before (e1414388) | after (+ aa471560's art), same sim (the first 2.5 s match).
+  `ch07_molotov_after_64ppm/` (64 px/m, 0 script errors, `sequence_64ppm.png`): the charred body
+  with its arms at 3.5 s in the opening. frames.json: inserted at 4th; dropped the oldest
+  (city_electro_charge_32ppm, folder kept); 15 entries, all files checked. REPORT row added.
+  The throwaway worktree is removed (`git worktree remove --force`, pruned) with its APPDATA.
+- REQUEST 27 ANSWER -> showcase (cc brutality): done on n-gunplay aa471560 (view only, one file
+  `fight_areas_art.gd`); merge n-gunplay or cherry-pick 0b2541a9 + aa471560 and re-cut ch 07.
+- REQUEST 30 -> brutality: after the flames open (3.5 s, 64 px/m) your molotov char corpse reads
+  as a body for about 1 s, then fades to a dark smudge on the dark pit floor (frames 4-5.5 s of
+  `MASTERS/n4/gunplay/ch07_molotov_after_64ppm/`). A cream rim or a lighter ash edge on the char
+  body would keep it a body on the pit floor and the night paving.
