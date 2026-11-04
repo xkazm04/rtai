@@ -484,3 +484,35 @@ NEXT (iteration 9; freeze 18:30, report 18:40):
   Fixes 1-3 cut 23 draw calls a frame (-4 %), reproducible to 0.3. The 1.2 ms flush gain is mostly GDScript canvas
   command cost, not GPU batches. The machine was still 94-100 % busy at 17:20 (the other lane's Godot from 17:17), so the uncontended re-check was skipped.
 - 17:24 CPU 90-99 % with no Godot up (the Python jobs): still no quiet window. Scratch deleted (/tmp gate logs, the draft). Session ends; NEXT (17:19) stands.
+
+## Iteration 9 (17:23-18:23), BUILD
+
+- 17:23 read JOURNAL + git log. No bench.lock. CPU 94 % (the other lane's arena film, ~23 Python jobs): the uncontended
+  re-check is skipped again.
+- Pipeline compiles re-checked from the logs: the 12 on the first frame are the scene's very first draw (50 ms draw phase,
+  nothing moving yet), and the later ones (ticks 325/391/447) cost 2-4 ms with the cache. Low value, left alone.
+- Rules applied: the brief's "optimise only what the profile proves", "look identical" (an exact pixel compare, so no re-bless),
+  STANDARDS section 20 (bench metrics), AGENTS top rules 2/3/6 (typed, file sizes, no balance data touched). No design fork,
+  so no registry subject was needed.
+
+### 17:25-17:35 MILESTONE: the riot's blood cost is draw calls, not scripts (0ba7998f)
+- city_bench takes `--spans=<json>` (NodeSpans) and `--blood=<mode>`, and logs drawCallsAvg / renderCpuMsAvg / renderCpuMsP99
+  (run.mjs DETAIL lists them).
+- Riot spans (editor, CONTENDED, evidence/perf/riot9/riot-editor.spans.json): city_blood.gd 0.43 ms mean, p99 2.9.
+  Throwaway timers (headless, 1 tick a frame, reverted): drop step 540-840 us (the wall test is 300-480 of it: ~2 us a flying drop through
+  4 GDScript calls), CorpseStains 210-260 us (soak vs walker 170), resolve 150-200.
+  Tried and REVERTED (in noise, not landed): CitySimNative.cell_at as a direct call instead of callv, and a per-cell memo of _solid.
+- Windowed riot A/B (25 s each, editor, CONTENDED), draw calls a frame: noir 1759.8 / 1758.4, ink 623.5 / 622.5,
+  noir with the stains off 658. Render CPU 1.41/1.36 vs 0.56/0.58 ms. **CorpseStains was ~1100 draw calls a frame**: each soak
+  = 11 spots x ~12 draw_circle calls, and each one is its own polygon draw call.
+
+### 17:36-17:48 MILESTONE: fix 5, corpse soaks in one draw call each (721f28ed)
+- Scratch probe first: 400 draw_circle calls vs one triangle array of the engine's 64-segment float32 fan: 0 of 262144 pixels differ.
+- CircleFan (features/fx/noir/circle_fan.gd) + BloodMarks.splat_into (the same expressions as splat(); splat() now draws its
+  circles through a recorder, the same calls). Soak._draw records its circles into a fan and prints it once.
+- Proof on the real code: CorpseStains, 16 soaks, scales 0.3-1.05, 1.5x zoom at city px ~4800,2900, blood print material,
+  CircleFan.batched false vs true: **0 of 921600 pixels differ** (1447 blood pixels; looked at the frame: dark spots, splats, satellites).
+- Riot after: **673 draw calls a frame** (from 1759; the stains-off floor is 658), render CPU 0.73 ms (from 1.38). Frame p99 in that run
+  was 16.6 (the machine: the noir runs were 14-15, so it is noise).
+- test_circle_fan.gd 4/4. Lint 13/13. The DECISION for fx blood is in decisions.md.
+- Not measured: the city fight's draw calls with fix 5 (its soaks are fewer; it was 534 a frame after fixes 1-3).

@@ -1,4 +1,4 @@
-# REPORT (DRAFT, written 17:10 in iteration 8) - day lane perf-city, 2026-11-04
+# REPORT (DRAFT, updated 17:55 in iteration 9) - day lane perf-city, 2026-11-04
 
 Branch `d6-perf-city`, cut from main `a1275c82`. Clips and graphs are in
 `C:\Users\kazda\kiro\gtai-masters\d6\perf-city\` (`frames.json`, newest and best first).
@@ -29,6 +29,7 @@ that is CONTENDED, and the post-fix uncontended re-check is **still owed**.
 | 1 | ArenaFloorView prints the city block's static props and crowd rings once | floor _draw 1.01 -> 0.61 ms a frame | 420 frames identical |
 | 2 | ArenaFloorView culls off-screen target rings and tracks (3 m margin) | floor 0.57 -> 0.25 ms | 420 frames identical |
 | 3 | FxGround: gun ground marks retained, one child per mark, redrawn only while fading | FxView 0.74 -> 0.41 ms, FxView p99 2.4 -> 0.7 | 900 frames identical |
+| 5 | CorpseStains: each corpse soak prints in one draw call (CircleFan, the engine's circle fan as one triangle array) | riot: 1759 -> 673 draw calls a frame (load-independent), render CPU 1.38 -> 0.73 ms | 921600 px identical; test_circle_fan 4/4 |
 | 4 | RivetHeldView.warm(): the carried guns' art loads at load, not on the first draw | tick 2019 process 9.9-19.2 -> 2.7 ms (the spike was in 18 of 18 logs); tick 1528 5.6-8.5 -> 2.8 (editor 22.0 -> 3.3) | 512 frames identical; test_rivet_held_warm 3/3 |
 
 Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With vsync on, the canvas flush fell
@@ -49,6 +50,9 @@ Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With v
 - p99 < 8.3 ms: **met UNCONTENDED before the fixes** (5.9-6.6). After the fixes it is not yet re-measured uncontended.
 - 60 fps: vsync paced; 99.6 % of frames step one tick (UNCONTENDED, before).
 - No frame > 33 ms after the first second: 3 of 6 uncontended vsync-off runs had none. The other 3 had 1-2 present-phase stalls.
+- **The riot regression has a cause, and fix 5 removes it.** The 2026-11-03 bisect put the d-combat step (avg frame 1.13 -> 2.08 ms)
+  on CityBlood. Its scripts are only 0.1-0.3 ms a frame. The rest was ~1100 unbatched circle draw calls a frame from the corpse
+  soaks (A/B: noir 1759, ink 623, stains off 658, fix 5 673). A clean riot p99 against the 7 ms limit is still owed (CONTENDED all day).
 - Riot / drive vs records: riot 7.61 ms p99 (record 6.0; 2.4 idle pre-combat), drive 2.30 (record 3.56).
   PARTLY CONTENDED, 1 run. A clean riot run, and its bisect if it holds, is owed.
 
