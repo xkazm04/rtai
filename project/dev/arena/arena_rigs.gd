@@ -85,6 +85,8 @@ func _process(_delta: float) -> void:
 	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
+		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
+			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
 	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
