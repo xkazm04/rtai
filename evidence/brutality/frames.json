@@ -1,5 +1,55 @@
 [
   {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "clips/flame-char-64ppm-slow-0.4x.mp4",
+    "title": "Flamethrower signature kill (fire death chars), 64 px/m slow close-up 0.4x",
+    "ppm": 64,
+    "note": "Arena hub, --rigs --sig-gun=flamethrower --sig-lab. A guard set ablaze flails in a tethered panic run (gunplay burn + human-reactions flail), the burn kills him: his own rig turns to a charcoal print (kill_char shader), smokes, then crumbles into ash flakes drifting downwind onto an ash heap over a soot scorch. No blood: the standard death pool and corpse stains are vetoed under a signature kill. Small cream flash 2 ticks, hit-stop 2."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "clips/flame-char-arena-32ppm-16s.mp4",
+    "title": "Flamethrower signature kill, real time at 32 px/m (6 burn kills)",
+    "ppm": 32,
+    "note": "Real time, fixed-fps 60, 960 frames. Six guards burn, char and crumble; telemetry by_style burn 6. The fire puffs (starbursts) and burning flail are gunplay's / human-reactions' work merged in."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "clips/flame-char-arena-64ppm-16s.mp4",
+    "title": "Flamethrower signature kill, real time at 64 px/m",
+    "ppm": 64,
+    "note": "Same run at 64 px/m, uncropped, real time."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "frames/flame-char-standing-64ppm.png",
+    "title": "Fire kill: the charred body peeling to ash flakes (64 px/m still)",
+    "ppm": 64,
+    "note": "Detail still from the 64 px/m run, about 1 s after the kill."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "frames/flame-char-heap-and-scorch-64ppm.png",
+    "title": "Fire kill leftovers: ash heap over the soot scorch (64 px/m still)",
+    "ppm": 64,
+    "note": "What a fire kill leaves (counts against the 12-mark leftover budget, like corpse stains)."
+  },
+  {
     "file": "clips/rocket-gib-arena-64ppm-slow-0.4x.mp4",
     "title": "Rocket signature kill, 64 px/m slow close-up (0.4x)",
     "source": "dev-scene",

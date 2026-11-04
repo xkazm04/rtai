@@ -81,3 +81,38 @@ NEXT:
 5. Frame cost of the worst kill (rocket at 6 kills/11 s) under bench.lock.
 6. Then kill #3 flamethrower (burn: run ablaze, charred silhouette, ash) - needs REQUEST 3 art or a
    procedural char tint (multiply the copies to ink + ember flecks).
+
+## Iteration 2 (01:53-02:53), BUILD
+
+- 01:55 Read JOURNAL, git log, the other lanes' JOURNALs. Replies:
+  - gunplay REQUEST 1 (kill_landed payload): AGREED. BrutalityHook now listens to
+    `CombatArena.kill_landed(victim, weapon, dir, at, kind)`; `kind` lands in KillEvent.damage_type.
+  - human-reactions (my REQUEST 2 done as `DeathPipe.add_signature`): wired. BrutalityHook registers
+    `_takes_death(rig) -> kills.consumed.has(rig.actor_id)` on `ArenaRigs.react.pipe`.
+  - weapon-art (my REQUEST 3 delivered, `art/gore/`): taken by path from n-weapon-art 295db1b3
+    (`git checkout n-weapon-art -- project/features/combat/weapons/art/gore`); the provenance lines
+    stay in that commit (they arrive with weapon-art's merge). Used: `ash.png`. Not used: `charred.png`
+    (front view, the rig is top-down), the rest kept for the katana/chainsaw/electro kills.
+  - showcase REQUEST 6 (cc brutality, city rigs): human-reactions 39582854 attaches ArenaRigs on the
+    city view; it is in my branch now with the merge below.
+- MERGE n-human-reactions (8669b5d9, which carries n-gunplay b3b3c92f) into n-brutality: kill_landed,
+  FightAreas burn/stun/knockdown, burning flail on the rigs, DeathPipe. Conflicts: arena_rigs.gd (both
+  fields kept: `hidden` + `react`), test_arena_hooks.gd (theirs), JOURNAL.md (ours).
+- Registry rules applied (realtime-combat-semantics): the fire kill is decided at the damage chokepoint
+  (kill_landed), the char timeline is ticks from the row against the sim tick (replays), the char view
+  shapes come from a hash of the kill serial (no dice in render). motion-quality-gating: judged on
+  sheets of the real-time clips, 32 and 64 px/m.
+- MILESTONE 02:12 kill #3 fire/flamethrower (`burn_char`, style `burn`): the victim, already running
+  ablaze (tethered 1.8 m in the lab so it stays framed), stops as a charcoal print of his own rig
+  (kill_char.gdshader), smoke wisps, ember cracks, then crumbles over 75 ticks into 34 ash flakes
+  drifting downwind onto an ash heap (weapon-art ash.png) over a soot scorch. No blood. Clips 32/64 px/m
+  real time + 64 px/m 0.4x slow. Telemetry 6/6 burn kills (evidence/brutality/lab-flame-32-telemetry.json).
+- MILESTONE standard death blood vetoed under every signature kill (CombatBlood.veto, shared file,
+  +11 lines; deferred bleed only when a veto is set). Fixes NEXT 3 of iteration 1 for rocket + cannon too.
+- FRICTION: the rig copies without print_part showed the raw channel-packed part textures (dark RED
+  silhouettes, read as blood) -> own char shader.
+- FRICTION: CombatBlood bled on actor_killed, which CombatArena emits BEFORE kill_landed, so the veto
+  saw no kill yet -> deferred.
+- FRICTION: python str.replace asserts failed on a file gdformat had written with CRLF; Edit tool works.
+- Shared-file edits: features/fx/combat_blood.gd (veto + deferred bleed), dev/arena/arena_rigs.gd
+  (merge resolution only). Lab: burning guards may leave their mark (KillLab.RUN_M).
