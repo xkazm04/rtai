@@ -278,3 +278,18 @@ NEXT (iteration 3):
    when the machine is quieter; if it holds, bisect over round 3's merges.
 6. The 17 m/s top speed in the plain arena reel: log per-tick moved_m > 0.2 with the beat and
    tick to name the cause.
+- 02:40 reel-0240-mpistol (`--weapon=machine_pistol`, 32 px/m). Looked at 1 fps from 54 s (12
+  frames, centre crop): the bursts read (several light-headed tracers at once), three cops drop
+  in their sprays within about 2 s. Own defect: after the third kill the gun beat's walk-in pins
+  Rivet against a crate for about 8 s while the last guard fires from off screen south (the
+  `APPROACH_M` push has no way round props). Fix next: keep the strafe share while walking in,
+  or step sideways when the walk-in does not close the gap for 30 ticks. frames.json 12 entries.
+- FRICTION 02:45: a `reel_speed_probe.gd` (SceneTree, ArenaSession + the reel headless, print
+  ticks moving > 0.15 m) never returned in 8 minutes (the scenario runner does the same work in
+  about a minute; likely the SceneTree never got its quit, or EventBus/DataStore built bare stalls
+  the session). Stopped (TaskStop, no Godot left), file deleted, not committed. NEXT 6 stands:
+  do it as a scenario-style hook inside run_scenarios instead.
+- 02:47 session end: all work committed; reels in gtai-masters/n4/showcase (12 frames.json
+  entries); scratch sheets deleted. NEXT (iteration 3) list above stands, plus: fix the gun
+  beat's crate pin (top of the list, it is the reel's own defect), then film the machine pistol
+  again.
