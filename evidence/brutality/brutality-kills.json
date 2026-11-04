@@ -15,6 +15,10 @@
     "kills": 6,
     "style_kills": 6
   },
+  "plasma_rifle": {
+    "kills": 6,
+    "style_kills": 6
+  },
   "rocket_launcher": {
     "kills": 12,
     "style_kills": 12
