@@ -149,5 +149,12 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `M/frames/rivet-warm-lineup-ab-64ppm.png`. A full r2_c3 tan (`D5_WARM` above 1 is not meaningful; edit WARM_* in
    `look_d5_part.gdshader`) would darken him further on asphalt. 32 px/m is unchanged either way.
 
+6. The crowd's value at game zoom (new, iteration 10): A, keep today's peds, dark figures on the cream slab
+   with a cream rim on asphalt (built); B, pale-topped peds as in r2_a5 and r2_c6, which needs a plan-view ped
+   redraw (light shoulders as the widest shape, a small head, small shoes; all six looks, D4 and D5), because
+   value tweaks alone do not get there. Stills: `M/frames/crowd-value-vs-r2a5.png` (today beside r2_a5) and
+   `M/frames/crowd-package-trial-32ppm.png` (the best value-only package, reverted). With A, the navy cops and the
+   peds share a dark value and only the cops' blue pads tell them apart at 32 px/m.
+
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
