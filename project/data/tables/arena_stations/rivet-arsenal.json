@@ -1,0 +1,63 @@
+{
+  "doc": "rivet-arsenal's stations (Rivet's live motion, melee and, later, every held weapon). The claw cops are real CombatArena guards that walk at Rivet and never fire (their trigger stays on cooldown): spawns whose id starts with spar_ are sparring cops at hp 4 (the claw combo's 1 + 1 + 2 drops them on the finisher); the others carry the human hp from combat.json (one hit, owner doctrine). A dead cop stands up again at its spawn 150 ticks later. ArenaClawCops (res://features/player/arena_claw_cops.gd) runs them; --bot=rivet plays the station.",
+  "lane": "rivet_arsenal",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "hub",
+      "id": "rivet_claw_cops",
+      "measures": [
+        "claw_hits",
+        "claw_whiffs",
+        "claw_kills",
+        "combo_cadence_ms"
+      ],
+      "name": "Rivet claw cops",
+      "props": [],
+      "script": "res://features/player/arena_claw_cops.gd",
+      "spawns": [
+        {
+          "at": [
+            2,
+            3
+          ],
+          "id": "spar_cop_1",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            6,
+            3
+          ],
+          "id": "spar_cop_2",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            3
+          ],
+          "id": "cop_1",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "rivet_melee.claw.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        }
+      ]
+    }
+  ]
+}

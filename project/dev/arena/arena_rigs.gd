@@ -11,6 +11,8 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 ## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
 ## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
 const FOCUS_AHEAD_M: float = 7.0
+## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
+const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -22,6 +24,9 @@ var _print: PrintStage = null
 var _hurt_seen: Dictionary[int, int] = {}
 ## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
 var _fire_seen: Dictionary[int, Vector2i] = {}
+## rivet-arsenal: the pilot's last seen claw starts and rolls (a change starts the rig clip).
+var _strikes_seen: int = 0
+var _rolls_seen: int = 0
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
@@ -48,6 +53,7 @@ func _process(_delta: float) -> void:
 	var r: Fighter = stage.arena.rivet
 	_put(0, r, BodyPlan.Kind.RIVET)
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
+	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
 		_put(i, h, BodyPlan.Kind.COP)
@@ -89,3 +95,24 @@ static func fired(before: Vector2i, now: Vector2i) -> bool:
 	if now.y < before.y:
 		return true
 	return now.y == 0 and before.y == 0 and now.x > before.x
+
+
+## rivet-arsenal: the live pilot's claw strikes and dodge rolls on Rivet's rig (row 0). While a
+## claw hit plays the gun is put away, so the strike reads on both arms.
+func _rivet_clips(f: RigFeed) -> void:
+	var pilot: StagePilot = stage.pilot
+	if pilot == null or not stage.arena.rivet.alive():
+		return
+	var m: MeleeCombo = pilot.melee.combo
+	if m.starts != _strikes_seen and m.hit_index != 0:
+		var h: MeleeHit = m.current()
+		var arm: int = STRIKE_ARMS[mini(m.hit_index - 1, STRIKE_ARMS.size() - 1)]
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(h.windup, h.active, h.recovery, arm)
+	_strikes_seen = m.starts
+	if pilot.motion.rolls != _rolls_seen:
+		f.clip[0] = RigClips.Clip.ROLL
+		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
+	_rolls_seen = pilot.motion.rolls
+	if pilot.melee.busy() or pilot.motion.phase != PlayerMotion.Phase.FREE:
+		f.flags[0] = 0

@@ -18,9 +18,10 @@
         "active_ticks": 3,
         "cone_dot": 0.5,
         "damage": 1,
-        "doc": "the backhand: shorter windup, same reach",
+        "doc": "the backhand: shorter windup, same reach; Rivet steps in 0.4 m (the jab's knockback) so it connects",
         "id": "claw_2",
         "knockback_m": 0.4,
+        "lunge_m": 0.4,
         "reach_m": 1.4,
         "recovery_ticks": 10,
         "windup_ticks": 4
@@ -29,9 +30,10 @@
         "active_ticks": 4,
         "cone_dot": 0.5,
         "damage": 2,
-        "doc": "the finisher: a lunging two-handed slam; knockback",
+        "doc": "the finisher: a lunging two-handed slam (0.5 m step in); knockback",
         "id": "claw_3",
         "knockback_m": 2.5,
+        "lunge_m": 0.5,
         "reach_m": 1.6,
         "recovery_ticks": 20,
         "windup_ticks": 9
