@@ -645,3 +645,38 @@ NEXT (iteration 9, in order):
 4. CrowdReact still costs 330 us a tick in the riot: the per-row dictionaries (_dead, _fleeing)
    could be packed arrays keyed by feed row. Bench on an idle machine under bench.lock.
 5. A street startle in the live city (iteration 7 NEXT 3).
+
+## Iteration 9 (06:26-07:26), BUILD
+- 06:27 read JOURNAL, git log, other lanes' JOURNALs. Addressed to me: showcase REQUEST 24 (the
+  stiff electro death reads as a standing cop from above, reel-0540 chapter 06; ask: lay it
+  along the shot head away from the shooter, or rotated, plus a scorch/smoke mark). gunplay
+  answered REQUEST 2 (269deba4 spray floor) and REQUEST 3 (5efdc825 GunFx.shield_test, to be
+  wired from ReactLink.blocked).
+- Registry rules applied (motion-quality-gating: judge the pose in motion at the game zoom and a
+  close-up, a transitional frame counts; depth-ordered-layered-art: the floor mark is drawn under
+  every part of the rig, z -20 below the halos at -16).
+- REQUEST 24: the old plank put the feet 340 px behind and the head over the shoulders, so seen
+  from above the shoulders and head sat where a standing cop's do and the legs hid under the arms.
+  Now (a1d541fb + 6445a708): a front hit falls back on its heels (CutRig.plank_feet +1: feet
+  ahead toward the shooter, arms along the sides toward them, starting under the hips), the head
+  thrown PLANK_HEAD_PX 70 past the shoulders away from him, the whole rig turned PLANK_TILT
+  0.3 rad off the shot (HumanReact.turn, a rigid turn after the pose so the legs turn too), over
+  a CorpseScorch (new, features/combat/react: a soot blot along the body, an 11-wedge burn star,
+  3 smoke puffs that swell and fade over 2.4 s; a rig child, hides when a pooled rig stands;
+  shape from the actor id's hash, no RNG). A back hit falls forward (the old layout).
+  FRICTION: pass 1 burns were thin ink lines from the chest: they read as an insect's legs.
+  Pass 2: tapered soot wedges out of the blot's edge (a burn star). Pass 2 film showed a scissor
+  kick in the fall (the feet started at the sprawl's 210 px behind, then swung ahead): the
+  forward plank now starts from under the hips.
+- ReactLink logs each standard death with its process frame (`react: death_shock on 1, frame
+  653`), so a fixed-fps film can be cut at the kill.
+- MILESTONE (REQUEST 24 DONE on my side): live arena pit, `--rigs --bot=gunplay
+  --weapon=electro_gun --start=pit --clean`, the kill at frame 653. Evidence (evidence/ + masters):
+  pit_electro_scorch_64ppm.mp4 / _32ppm.mp4 (13 s), pit_electro_scorch_64ppm_sheet.png (the fall
+  to the corpse), death_electro_plank2_64ppm_board.png + _halfspeed.mp4 (the board: four looks,
+  four sides). Read at 32 px/m: a long body lying with blood and a dark star, not a standing cop.
+  frames.json 15 (the four new first; dropped city_scare_32/64, near_miss_line_32/64).
+- Gates on 6445a708: lint 13/13, unit 745/745 (new test: feet toward the shooter, the tilt,
+  the scorch child; a back hit falls forward; the clip pass resets plank_feet), scenarios 33/33.
+- DECISION electro corpse (docs/decisions.md): see above. Alternative in data: PLANK_TILT 0,
+  PLANK_HEAD_PX 0, plank_feet -1, no scorch.
