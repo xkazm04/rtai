@@ -1503,3 +1503,14 @@ the side approach for the flamethrower capture.
 NEXT (10:40 report phase): nothing owed; REPORT and frames.json are final. Post-freeze:
 `GunplayBot` routing round the centre crates (second lone wave), then the side approach for the
 city flamethrower capture.
+
+## Iteration 25 (10:18-10:30, BUILD; 12 minutes to the freeze)
+- 10:20 Same call as iteration 24: no code change can be built, gated and filmed before 10:30, so
+  none is started. Re-checked: frames.json parses, 15 entries, every file resolves; no tracked
+  file modified. Two Godot processes are running (PIDs 41624, 33040). I started neither this
+  session, so they are left alone. No lock taken.
+  Code head unchanged at 70894746 (gates of record on dfa5f508).
+
+NEXT (10:40 report phase): nothing owed; REPORT and frames.json are final. Post-freeze:
+`GunplayBot` routing round the city block's centre crates (second lone wave), then the side
+approach for the city flamethrower capture.
