@@ -39,6 +39,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - Core sticker fix (fa395f74): the hybrid helmet and torso's seams aliased into ink specks at 32 px/m;
   `tools/art/rivet_seam_thin.py` quiets them under the sticker threshold: `M/frames/rivet-core-seams-ab.png`.
 - Motion: `M/cast-hybrid-motion-48.mp4`, `M/frames/rivet-legs-motion-32ppm.png` (walk, faster sprint, claw combo).
+- The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
+  script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
 
 ### 4. The proof (brief item 5)
 - Director reel, 32 px/m, main | n5-cast side by side: `M/cast-director-ab-32.mp4`, still
@@ -54,7 +56,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Rivet's thin pale limbs are faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`). A darker
   limb tone was tried and rejected (`M/frames/rivet-limb-tone-trial.png`, JOURNAL 18:40).
 - Rivet came out at 1.20x the crowd's shoulder span (planned 1.1x): the hybrid shoulder plates are wide.
-- The Hauler and Gearbox powers were not filmed on the hybrid base yet.
+- Gearbox was not filmed on the hybrid base (the Hauler was: section 3).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner

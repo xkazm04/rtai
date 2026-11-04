@@ -256,3 +256,14 @@ NEXT (iteration 7):
 - 19:03 REPORT.md drafted (marked DRAFT; the REPORT phase rewrites it at 08:40). Every cited path checked to exist.
   NEXT (iteration 7) item 4 is started; items 1-3 stand, plus: film the Hauler (and Gearbox if reachable) on the
   hybrid base (brief item 3, "keep their own body plan unless that breaks"), not yet done.
+- MILESTONE 19:02 the Hauler on the hybrid base (`dev/ghost-powers/powers_clip.tscn -- --cops --every=4`, real
+  city, 32 px/m, 0 script errors): the tank keeps its own size (BODY_SIZE_K) and the d5 arm profile, and now
+  carries the hybrid helmet and torso inside the collar, which read as a cream plate. Transform, drive-through,
+  knockdowns and stomp all play. `frames/hauler-on-hybrid-32ppm.png` (masters). Nothing broke, so no change.
+  Gearbox not checked (no dev clip found in a quick look; `features/souls/power_table.gd` is the place to start).
+
+NEXT (iteration 7), final for this session: (1) Rivet's limbs on dark asphalt at 32 px/m (see the 19:00 NEXT
+item 1); (2) Gearbox on the hybrid base; (3) a main-side Hauler still at the same ticks for the pair (throwaway
+worktree at a1275c82: copy `.godot` and the native DLLs in, `--import` takes 15 s); (4) the held-gun size REQUEST
+to n5-look or a Call; (5) keep the REPORT draft current. Session state 19:03: head = this commit, tree clean,
+image.lock untouched this session, no Godot process of mine running, throwaway worktree removed.
