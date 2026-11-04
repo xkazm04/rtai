@@ -1121,3 +1121,33 @@ NEXT (report phase, in order):
    reads too thin at 32 px/m in their clip, 0.38 is the one-value alternative.
 3. Brutality REQUEST 30 / weapon-art REQUEST 31 still unanswered; the idle riot bench stays the
    Director's.
+
+## Iteration 14 (BUILD, 08:10 - 08:30)
+- Read: JOURNAL NEXT, human-reactions and brutality JOURNALs. Two REQUEST 30s addressed to gunplay.
+  Registry rule applied (realtime-combat-semantics / motion-quality-gating): a fighter's ability to
+  act follows the pose the player sees; no action out of a recovery pose until the pose allows it.
+- 08:12 MILESTONE 8ea3a2e5 (brutality REQUEST 30): `FightShardArt.STUCK_ON_CORPSE` false; the view
+  skips stuck shards on a dead fighter (`shows_stuck`), GunFx keeps the data for brutality's burst.
+  View only. Unit 751/751.
+- 08:15 MILESTONE 83429487 (human-reactions REQUEST 30): `FighterFx.RISE_TICKS` 29: after the
+  54-tick knockdown lie a fighter stays held (brain off, no aim, no shot) while the view plays the
+  rise; `FighterFx.tick_timers()` now owns the stun/down/rise countdown (fight_areas.gd 1 line
+  shorter). One value back to the old timing (0). Unit 752/752 (+1 test), scenarios 29/29 with no
+  golden moved (no scenario hashes a knockdown's tail), lint 13/13.
+- DECISION (docs/decisions.md): the rise hold over snapping the view's rise (a jerk).
+- ANSWER -> human-reactions (REQUEST 30): done on n-gunplay 83429487 (sim side, 29 ticks); keep
+  HOLD knockdown z at 0.78 and re-film pit_knockdown_getup after the merge.
+- ANSWER -> brutality (REQUEST 30): done on n-gunplay 8ea3a2e5; no merge note needed any more.
+- 08:18 gates of record on 83429487 (`evidence/n10/evidence-final-14.log`, still tree): lint 13/13,
+  unit 752/752, scenarios 29/29, parity bit-exact (step 629); selftest the same two known accent
+  rows (48 vehicles 8 px, 64 cop 28 px; identical to iteration 13). REPORT gates and a row updated.
+- No clip this iteration (the get-up is human-reactions' re-film; no time before the freeze).
+- Session end: no Godot process of mine running, no lock taken. Shared files: docs/decisions.md
+  (one DECISION line).
+
+NEXT (report phase, in order):
+1. If code lands after 83429487, re-run `node tools/evidence/run.mjs --no-bench --allow-dirty` on a
+   still tree and update REPORT "Gates of record".
+2. Merge note for the Director: human-reactions' get-up and brutality's burst kill both read right
+   only with n-gunplay 83429487 / 8ea3a2e5 merged.
+3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if human-reactions' burn re-film reads thin.

@@ -51,6 +51,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 | Fire patches print an ink char (a splash burn: soot wedges, floor hatch, a broken edge), and the burnt ground stays 15 s after the fire; a rocket blast scorches the ground it hit (view only) | `fight_scorch.gd`, `fight_scorch_art.gd`; `test_fight_scorch*.gd`; `MASTERS/molotov_scorch_ab_city_32ppm.mp4` (+ `.png`), `MASTERS/camfight11_molotov/`, `MASTERS/rocket_scorch_ab_city_32ppm.png`, `MASTERS/camfight11_rocket/` |
 | A body that falls in a fire patch stays visible: 0.1 s after the kill the flames within 2.2 m shrink and are pushed off it (open by 0.4 s, while brutality's char silhouette still stands), so the fire burns in a ring round the charred corpse (showcase REQUEST 27, the director cut's molotov chapter; view only) | `FightAreasArt.clear/away`, `test_fight_areas_clear.gd`; `MASTERS/molotov_corpse_clear_ab_48ppm.mp4` (showcase ch 07 before / after, same sim), `MASTERS/ch07_molotov_open_64ppm/` |
 | A burning human stays readable: three small flames (0.3x the fire loop) trail off his back against his panic run, where one 2.1 m flame centred on him hid the body (human-reactions NEXT 4; view only, same sim) | `FightAreasArt.burn_flames`, `test_fight_areas_clear.gd`; `MASTERS/burning_human_ab_48ppm.mp4` (arena pit, before over after), `MASTERS/burn_after_64ppm/`, city block 32 px/m `MASTERS/city13_flamethrower/` |
+| A knocked-down human cannot shoot from the half-sprawl: he stays held 29 ticks (0.48 s) after his 0.9 s lie while human-reactions' view plays the rise (human-reactions REQUEST 30; `FighterFx.RISE_TICKS`, 0 = old). Stuck homing shards are no longer drawn on a corpse, so brutality's burst kill pops clean (brutality REQUEST 30; `FightShardArt.STUCK_ON_CORPSE`). No clip yet: human-reactions re-films the get-up | `test_fight_areas.gd` (rise window), `test_gun_fx.gd` (shards); 83429487, 8ea3a2e5 |
 | The range station: `data/tables/arena_stations/gunplay.json` (`--weapon=<id> --bot=gunplay`, `--cam=fight`) | `WT/project/data/tables/arena_stations/gunplay.json` |
 | Other lanes' REQUESTs answered: brutality 1/12, human-reactions 1/2/3 (vertical blood bars, spray floor, `GunFx.shield_test`), showcase 5 (the rocket body and smoke trail; showcase 3, Rivet's hit flash, landed from human-reactions), rivet-arsenal 12 (the aim distance) | JOURNAL "Answers to REQUESTs" lines |
 | Dev capture camera `--cam=fight` (pit only; view only, the sim is identical) | `fight_cam.gd`; `MASTERS/fightcam_hand_cannon_64ppm_ab.mp4` |
@@ -76,11 +77,11 @@ Each one is a single value. The default stands until you answer.
 
 ## Gates of record
 
-`node tools/evidence/run.mjs --no-bench --allow-dirty` on d7820eeb, the final code head of iteration 13 (`WT/evidence/n10/evidence-final-13.log`; the dirty paths are untracked iteration-1 stills only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
+`node tools/evidence/run.mjs --no-bench --allow-dirty` on 83429487, the final code head of iteration 14 (`WT/evidence/n10/evidence-final-14.log`; the dirty paths are untracked evidence stills and logs only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
 
 - lint 13/13 (the pre-commit hook on every commit).
-- unit 751/751 (d7820eeb; the new burn_flames test included).
-- scenarios 29/29 (d7820eeb).
-- parity bit-exact, the planted mutation caught at step 629 (d7820eeb).
-- selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m, the same two rows as on 47476501 and 2d7efa51. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
-- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iterations 12 and 13 changed view code only (no bench run).
+- unit 752/752 (83429487; the new rise-window test included).
+- scenarios 29/29 (83429487).
+- parity bit-exact, the planted mutation caught at step 629 (83429487).
+- selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m, the same two rows as on d7820eeb, 47476501 and 2d7efa51. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
+- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iterations 12 and 13 changed view code only; iteration 14 added the 29-tick rise hold after a knockdown, which is a sim change but costs nothing (no bench run).
