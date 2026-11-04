@@ -99,7 +99,8 @@ bench (the lock was taken by another lane at 07:41 and the session ended at 08:1
 
 - ch 06 electro: after the X-ray strobe the corpse still reads as a standing cop, gun toward Rivet,
   and no scorch shows (REQUEST 29 -> brutality: the electro kill's KillShockFx owns this corpse,
-  so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it).
+  so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it). Re-checked on round 15 at 08:22
+  (evidence/r15/sheet-electro.jpg): unchanged, still open.
 - ch 07 molotov: fixed mid-chapter (REQUEST 27, gunplay aa471560: the fire opens round the corpse); at the chapter's end the victim sinks into the char.
 - ch 13 ray gun: fixed (REQUEST 26, brutality 9c9aaabf): a long dust heap with the crumpled uniform.
 - ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.

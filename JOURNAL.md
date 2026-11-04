@@ -1124,3 +1124,8 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
   the burst and the patch now burns an inked scorch that fades to grey smoke. The burst's ring
   glue held (no ring on a molotov patch). Still wrong: the molotov victim does not read inside the
   fire mid-chapter (REQUEST 27's remainder), and the rocket's thrown parts leave the 64 px/m frame.
+- 08:22 REQUEST 29 re-checked on round 15 (one electro_gun chapter at 48 px/m, 0 SCRIPT ERRORs,
+  evidence/r15/sheet-electro.jpg; the scratch mp4 deleted): after the X-ray strobe the corpse is
+  still an upright blue cop facing Rivet, with no scorch. Still open -> brutality (KillShockFx's corpse).
+- Session end 08:23: n-showcase tip = round 15 + docs; exe = round 15; final reel = reel-0808
+  (round 14) + the round-15 close-up reel-0821-r15-close64. No Godot process of mine left running.
