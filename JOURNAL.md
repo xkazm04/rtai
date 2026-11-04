@@ -357,3 +357,20 @@ Session state 22:28: head = this commit, tree clean, image.lock untouched, no Go
   frames.json or REPORT; kept `frames/director-hybrid-64ppm.png` (my REQUEST in n5-look's JOURNAL) and the legrim
   clips (the before sources of tonight's pairs). Two Godot processes on the machine are not mine (all my runs were
   foreground and exited): left alone. Session end; NEXT is the 22:27 entry (item 1 closed at 22:29).
+
+## Iteration 8 (22:29-23:29, BUILD)
+- 22:29 read JOURNAL, log, n5-look JOURNAL. Their REPLY: held-gun size answered on n5-look 01cd19f2
+  (`held_size_ref` 1.2: our 0.97 Rivet carries 0.81x guns after the merge); nothing for this lane. Their NOTE: the
+  director reel needs `--loadout=pistol` or every chapter fires the base pistol; my iteration 6-7 director checks
+  (`--bot=reel --reel=director --clean --rigs`) lacked it, so chapters 4+ did not exercise their weapons.
+- MILESTONE 22:37 the full director reel WITH `--loadout=pistol` on e0da3ad8 (7200 ticks, 32 px/m, 0 SCRIPT ERROR):
+  all 16 chapters n/n down (claw 2/2, pistol 2/2, machine pistol 4/4, rocket, flamethrower, electro, molotov,
+  katana, chainsaw, plasma deflect, hand cannon, plasma rifle, ray, shard, riot cop, mini nuke 4/4). Contact sheet
+  one frame per chapter `frames/director-loadout-16ch-32ppm.png`: navy slim cops, red blood and gibs, blasts,
+  scorch; Rivet reads in every chapter. Clip of the weapon chapters `cast-loadout-weapons-32.mp4` (rocket ..
+  katana, 37.5 s); the 2-min full file deleted (log kept the telemetry).
+- 22:42 quest 1 on the slim cast (`quest1_clip.gd -- --ppm=32 --rigs --cam=fight --ticks=13560-13860`, 46 s, exit
+  0, 0 SCRIPT ERROR, log "cast rigs: true"): Dock 9 fight `cast-quest1-dock9-32.mp4` (5 s) + still
+  `frames/quest1-dock9-32ppm.png`. Rivet with Gloria reads as the cream hybrid with the vermilion collar, the quest's
+  cops are the navy slim rigs and die in red. Note: quest 1's rigs stay behind the dev flag `--rigs` (rivet-arsenal
+  Call 1), so the default quest 1 still draws the sprite cast; nothing of mine changes that.
