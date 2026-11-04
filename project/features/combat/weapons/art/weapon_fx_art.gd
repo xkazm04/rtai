@@ -136,6 +136,14 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 			_cell(ci, &"blast", 0, Vector2(b.x, b.y), b.y * 0.9, k, fade)
 		WeaponFxShell.glass(ci, b, age)
 		return true
+	_blast_cells(ci, b, age)
+	if b.z < FightNukeArt.NUKE_M:
+		WeaponFxDebris.draw(ci, b, age)  # n5-look (r2_w4): slabs flung over the fireball
+	return true
+
+
+## The rocket blast's cells over its scorch decal (the burst, fireball, smoke ring).
+static func _blast_cells(ci: CanvasItem, b: Vector3, age: int) -> void:
 	var at: Vector2 = Vector2(b.x, b.y)
 	# the scorch decal stays under it for the whole VFX life, fading out
 	var keep: float = float(FightAreas.VFX_KEEP_TICKS)
@@ -145,9 +153,9 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 	while f > 0 and age < BLAST_FRAMES[f]:
 		f -= 1
 	if not blast_beads and WeaponFxShell.wisps(ci, b, age):
-		return true
+		return
 	if age >= BLAST_FRAMES[-1]:
-		return true
+		return
 	var into: float = float(age - BLAST_FRAMES[f]) / float(BLAST_FRAMES[f + 1] - BLAST_FRAMES[f])
 	var fade: float = 1.0 - into * 0.6 if f == 3 else 1.0
 	# frame sizes grow 300 -> 480 part px; the last frame spans the splash diameter
@@ -158,7 +166,6 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 		grow = 1.08 + 0.22 * into
 		fade = 1.0 - into * 0.85
 	_cell(ci, &"blast", f, at, b.y * 0.9, size_k * grow, fade)
-	return true
 
 
 ## A splash whose own fire patch lies under it (same radius, within it): a burst bottle.

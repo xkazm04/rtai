@@ -1,0 +1,74 @@
+{
+  "$id": "gtai.blast-debris/1",
+  "additionalProperties": false,
+  "properties": {
+    "chunk_m": {
+      "items": {
+        "maximum": 2,
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "chunks": {
+      "maximum": 32,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "edge_px": {
+      "maximum": 12,
+      "minimum": 0,
+      "type": "number"
+    },
+    "fill": {
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "type": "string"
+    },
+    "fly_k": {
+      "items": {
+        "maximum": 4,
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.blast-debris/1",
+      "type": "string"
+    },
+    "speck_px": {
+      "maximum": 12,
+      "minimum": 0,
+      "type": "number"
+    },
+    "specks": {
+      "maximum": 64,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "ticks": {
+      "maximum": 240,
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "chunks",
+    "chunk_m",
+    "fly_k",
+    "fill",
+    "edge_px",
+    "specks",
+    "speck_px",
+    "ticks"
+  ],
+  "type": "object"
+}
