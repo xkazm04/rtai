@@ -341,7 +341,8 @@
               "death_melee",
               "death_blast",
               "death_burn",
-              "death_shock"
+              "death_shock",
+              "death_robot"
             ]
           },
           "len_s": {

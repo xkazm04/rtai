@@ -31,6 +31,13 @@ func kill(rig: CutRig, hit_class: StringName, dir: Vector2, weapon: StringName) 
 	return kind
 
 
+## Kills the robot `rig` (the thug) along `dir` (world): the power-down death. No signature
+## and no death_map: brutality's kills and the damage classes are human-only.
+func kill_robot(rig: CutRig, dir: Vector2) -> StringName:
+	HumanReact.on(rig).play(rig, &"death_robot", dir, table)
+	return &"death_robot"
+
+
 ## A wounding hit: picks and plays the wound family; returns it.
 func wound(
 	rig: CutRig, hit_class: StringName, dir: Vector2, shielded: bool, in_cover: bool

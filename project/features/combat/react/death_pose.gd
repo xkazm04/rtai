@@ -19,6 +19,11 @@ const BLAST_TWIST: float = 0.55
 ## that did not face Rivet lay across the shot), see plank_turn().
 const PLANK_HEAD_PX: float = 70.0
 const PLANK_TILT: float = 0.3
+## The robot's power-down: how dark the paint goes (HumanReact's char tint) and how far the
+## knees give (c_tuck) before it pitches forward (c_sprawl).
+const ROBOT_DIM: float = 0.45
+const ROBOT_KNEES: float = 0.5
+const ROBOT_LIE: float = 0.8
 
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
@@ -35,6 +40,8 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			_burn(r, rig, k)
 		&"death_shock":
 			_shock(r, rig, k)
+		&"death_robot":
+			_robot(r, rig, k)
 		_:
 			_bullet(r, rig, k)
 
@@ -88,6 +95,22 @@ static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
 	r.slide = r.dir * r.travel * fall
 	r.head_off += Vector2(-rig.plank_feet * PLANK_HEAD_PX * fall, 0.0)
 	r.turn = plank_turn(r.dir) * fall
+
+
+## The robot thug powers down (never a human death): the knees give first, it pitches forward
+## on the spot (no slide past travel_m), the head drops last, the paint darkens.
+static func _robot(r: HumanReact, rig: CutRig, k: float) -> void:
+	var knees: float = smoothstep(0.0, 0.3, k)
+	var pitch: float = smoothstep(0.25, 0.85, k)
+	var head: float = smoothstep(0.6, 1.0, k)
+	rig.c_hands_up = 0.0
+	rig.c_tuck = ROBOT_KNEES * knees * (1.0 - 0.5 * pitch)
+	rig.c_sprawl = ROBOT_LIE * pitch
+	r.scl = Vector2(1.0, 1.0 - 0.1 * knees * (1.0 - pitch))
+	r.slide = r.dir * r.travel * ReactPose.ease_out(k)
+	r.head_rot = r.side * 0.5 * head
+	r.head_off = Vector2(24.0 * head, 0.0)
+	r.tint = ROBOT_DIM * smoothstep(0.2, 1.0, k)
 
 
 ## The stiff corpse's rig channels at `fall` (0 standing, 1 down) for the shot `dir` (rig-local),
