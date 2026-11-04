@@ -85,9 +85,10 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
+			WeaponFxElectro.ink_under(ci, tick % 3, at - dir * len_m, dir.angle(), span)
 			_cell_v(ci, &"arc", tick % 3, at - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
 			_cell(ci, &"spark", tick % 3, at, float(tick) * 0.5, 1.1, 1.0)
-		WeaponSpec.Kind.THROWN when art().projectile_fx(s.spec.id) == &"rocket":
+		WeaponSpec.Kind.THROWN when WeaponFxShell.SHELLS.has(art().projectile_fx(s.spec.id)):
 			WeaponFxShell.draw_round(ci, s, dir, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
@@ -141,6 +142,8 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 	var f: int = BLAST_FRAMES.size() - 2
 	while f > 0 and age < BLAST_FRAMES[f]:
 		f -= 1
+	if not blast_beads and WeaponFxShell.wisps(ci, b, age):
+		return true
 	if age >= BLAST_FRAMES[-1]:
 		return true
 	var into: float = float(age - BLAST_FRAMES[f]) / float(BLAST_FRAMES[f + 1] - BLAST_FRAMES[f])

@@ -100,6 +100,11 @@ the spent one on the floor.
 - **Electro bolt** (`arc_0..2`, `tools/art/weapon_fx_jet.py`): a jagged lightning bolt (6 sharp kinks on
   alternating sides, tapering to the head) with two kinked forks leaving forward and outward. The iteration-3
   smooth zigzag with backward stubs read as twigs. Same size and anchor, so nothing else changed.
+- **Electro bolt ink** (iteration 20, call 3): on cream paving at 32 px/m the paper bolt read thinnest of the energy
+  rounds. `WeaponFxElectro.ink_under` now draws the same arc frame in ink at 8 offsets 0.06 m out (the held rim's
+  method) before the paper, so the bolt's ink outline thickens and it reads as one bold inked stroke. It applies to
+  Rivet's bolt and the chain arcs. A silhouette 1.6x taller was tried first: its peaks missed the paper's and read as
+  a smudge. `--arc-ink=off` (or `ARC_INK_M` 0) is the before. No new palette token.
 
 ## Character looks made for other lanes (iteration 6)
 
@@ -161,6 +166,21 @@ crops of both grounds.
 - **Rocket blast tail** (iteration 14): the blast sheet's last frame (a ring of cream discs) read as debug beads, so
   the smoke ring (frame 2) holds through the last 10 ticks instead, growing from 1.08 to 1.30 and fading to 15 %.
   `--blast-beads=on` is the before.
+- **Rocket blast tail, torn smoke** (iteration 20, replaces the held ring as the default): from tick 20 (the end of the
+  smoke-ring frame) until the effect's 40-tick life ends, the ring tears into 12 of the rocket's drawn smoke puffs
+  (`WeaponFxShell.wisps`). Each puff is 0.55 x the splash radius across, sits on the ring's line (0.78 of the radius)
+  and drifts out by 0.4 of the radius, easing out. Each stretches along the ring as it grows (an expanding ring tears
+  into arcs), shrinks to 60 % and fades out. Angles come from the blast's place, so a replay draws the same smoke. A
+  radial stretch was tried first and read as flower petals. `--blast-tail=ring` is the iteration 14 held ring;
+  `WISPS` 0 also turns the tail off. A big blast caps a puff at 2.5 m (`WISP_MAX_M`) and tears into more of them, so the
+  mini-nuke's 12 m ring breaks into about 32 puffs instead of 12 puffs 6.6 m wide that hid Rivet. The rocket (3.5 m,
+  1.9 m puffs) is unchanged.
+- **Mini-nuke shell** (iteration 20): the mini-nuke lobbed the rocket cell at 1.5x, so in flight it read as a big
+  rocket. It now flies its own `nuke_shell` cell (`tools/art/nuke_shell.py`, procedural like the other FX cells, so no
+  AI provenance line). The cell is a fat bomb from above: a round-bellied steel body, a boxed dark ring tail, a cream
+  nose cap, and a vermilion hazard band (danger) with two ink stripes. Its silhouette is short, fat and square-tailed,
+  never a dart. It flies on the same lob arc, shadow and exhaust lick (`WeaponFxShell.SHELLS`). `projectile_fx`
+  `rocket` in the table, or `--nuke-shell=rocket`, is the before.
 - **Fire patch ground** (`WeaponFxShell.patch_ground`, `PATCH_SCORCH_K` 1.0 at `PATCH_SCORCH_INK` 0.8): under a
   burning patch the scorch cell (the inked burst) spans the patch's diameter, its turn fixed by its place, fading
   with the patch, instead of gunplay's flat grey disc, which read as a debug circle under the flames. 0 = the disc.

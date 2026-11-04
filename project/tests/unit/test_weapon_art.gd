@@ -177,10 +177,33 @@ func test_hand_cannon_fires_a_fatter_round_than_the_pistol() -> void:
 	assert_gt(cannon_k, 1.2, "the hand cannon's slug")
 	var nuke_k: float = art.round_k.get(&"mini_nuke", 1.0)
 	assert_gt(nuke_k, 1.2, "the mini-nuke's shell")
-	assert_eq(art.projectile_fx(&"mini_nuke"), &"rocket", "a thrown rocket draws as a shell")
+	assert_eq(
+		art.projectile_fx(&"mini_nuke"), &"nuke_shell", "the mini-nuke lobs its own bomb cell"
+	)
+	assert_true(
+		WeaponFxShell.SHELLS.has(art.projectile_fx(&"mini_nuke")), "drawn as a lobbed shell"
+	)
+	assert_gt(art.fx_frames(&"nuke_shell").size(), 0, "the bomb cell resolves")
 
 
 func test_the_thrown_bottle_casts_the_shell_ellipse_at_bottle_size() -> void:
 	var across_m: float = WeaponFxShell.SHADOW_M.x * 2.0 * WeaponFxArt.BOTTLE_SHADOW_K
 	assert_between(across_m, 0.6, 1.2, "a bottle-sized ink ellipse, not the old 28 px dash")
 	assert_lt(WeaponFxArt.BOTTLE_SHADOW_K, 1.0, "smaller than the shell's own shadow")
+
+
+func test_the_rocket_blast_tears_into_smoke_wisps_after_the_ring() -> void:
+	var ci: Node2D = autofree(Node2D.new())
+	var b: Vector3 = Vector3(4.0, 2.0, 3.5)
+	assert_false(WeaponFxShell.wisps(ci, b, WeaponFxShell.WISP_FROM - 1), "the sheet plays first")
+	assert_true(WeaponFxShell.wisps(ci, b, FightAreas.VFX_KEEP_TICKS), "spent: drawn as nothing")
+	assert_lt(WeaponFxShell.WISP_FROM, FightAreas.VFX_KEEP_TICKS, "the tail has ticks to live")
+	WeaponFxShell.wisp_tail = false
+	assert_false(WeaponFxShell.wisps(ci, b, WeaponFxShell.WISP_FROM + 2), "ring tail: the before")
+	WeaponFxShell.wisp_tail = true
+
+
+func test_the_electro_arc_has_a_bold_ink_stroke_under_its_paper() -> void:
+	assert_true(WeaponFxElectro.arc_ink, "on by default (--arc-ink=off is the before)")
+	assert_gt(WeaponFxElectro.ARC_INK_M, 0.0, "the ink outline is thickened round the paper arc")
+	assert_eq(WeaponArt.new().fx_frames(&"arc").size(), 3, "three arc frames to ink")

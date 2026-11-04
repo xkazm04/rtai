@@ -483,6 +483,18 @@
     },
     {
       "anchor_px": [
+        186,
+        48
+      ],
+      "art": "res://features/combat/weapons/art/fx/nuke_shell.png",
+      "id": "nuke_shell",
+      "size_px": [
+        200,
+        96
+      ]
+    },
+    {
+      "anchor_px": [
         252,
         32
       ],
@@ -1196,7 +1208,7 @@
         "small": "res://features/combat/weapons/art/mini_nuke/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
-      "projectile_fx": "rocket",
+      "projectile_fx": "nuke_shell",
       "projectile_k": 1.5,
       "size_px": [
         466,

@@ -1,12 +1,15 @@
 class_name WeaponFxShell
 extends RefCounted
-## weapon-art's lobbed shell: a THROWN weapon whose projectile_fx is `rocket` (the mini-nuke) flies
-## as the rocket cell on the molotov's lob arc (lifted off its ground shadow by FightAreasArt.LOB_M
-## at the apex), nose along the travel, swelling toward the apex so the arc reads from above, with
-## the exhaust lick behind it. Until iteration 9 every THROWN row drew the molotov bottle, so the
-## mini-nuke's shell flew as a burning bottle. projectile_k (WeaponArt.round_k) sets its size.
+## weapon-art's lobbed shell: a THROWN weapon whose projectile_fx is one of SHELLS (the mini-nuke's
+## `nuke_shell`, a fat bomb, since iteration 20) flies as that cell on the molotov's lob arc (lifted
+## off its ground shadow by FightAreasArt.LOB_M at the apex), nose along the travel, swelling toward
+## the apex so the arc reads from above, with the exhaust lick behind it. Until iteration 9 every
+## THROWN row drew the molotov bottle, so the mini-nuke's shell flew as a burning bottle.
+## projectile_k (WeaponArt.round_k) sets its size.
 ## Render only: reads the shot.
 
+## projectile_fx cells that fly as a lobbed shell. `--nuke-shell=rocket` = the rocket cell (before).
+const SHELLS: Array[StringName] = [&"rocket", &"nuke_shell"]
 ## How much bigger the shell draws at the apex than at the ends of the arc.
 const APEX_GROW: float = 0.35
 ## The ground shadow: an ink ellipse SHADOW_M long (x the shell's size), shrinking at the apex.
@@ -24,6 +27,22 @@ const GLASS: int = 7
 const GLASS_M: float = 0.8
 const GLASS_TICKS: int = 16
 const GLASS_REACH: float = 1.1
+## The rocket blast's tail: from WISP_FROM ticks (the blast sheet's smoke-ring frame ends) until
+## FightAreas.VFX_KEEP_TICKS, the ring tears into WISPS smoke puffs (the rocket's drawn smoke cells,
+## WISP_M across x the splash radius) that drift from the ring's line (WISP_RING x the radius) out
+## by WISP_DRIFT of it, easing out, stretched along the ring as it grows (an expanding ring tears
+## into arcs), shrinking and fading. 0 = none. A big blast (the mini-nuke's 12 m) caps a puff at
+## WISP_MAX_M and tears into more of them, keeping the ring covered (12 puffs 6.6 m wide hid Rivet).
+## `--blast-tail=ring` = the held smoke ring of 3a703dbd (the before).
+const WISPS: int = 12
+const WISP_FROM: int = 20
+const WISP_RING: float = 0.78
+const WISP_DRIFT: float = 0.4
+const WISP_M: float = 0.55
+const WISP_MAX_M: float = 2.5
+
+static var nuke_as_rocket: bool = OS.get_cmdline_user_args().has("--nuke-shell=rocket")
+static var wisp_tail: bool = not OS.get_cmdline_user_args().has("--blast-tail=ring")
 
 
 ## Draws shot `s` flying along `dir`, `went` metres from the muzzle.
@@ -38,7 +57,12 @@ static func draw_round(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick:
 	var ang: float = dir.angle()
 	var lick: Vector2 = Vector2.ONE * (0.42 + 0.08 * float(tick % 2)) * size
 	WeaponFxArt.draw_cell(ci, &"flame", tick % 3, up - dir * TAIL_M * size, ang, lick)
-	WeaponFxArt.draw_cell(ci, &"rocket", 0, up, ang, Vector2.ONE * size)
+	WeaponFxArt.draw_cell(ci, shell_cell(s.spec.id), 0, up, ang, Vector2.ONE * size)
+
+
+## The cell weapon `id`'s shell flies as: its projectile_fx (`--nuke-shell=rocket`: the rocket).
+static func shell_cell(id: StringName) -> StringName:
+	return &"rocket" if nuke_as_rocket else WeaponFxArt.art().projectile_fx(id)
 
 
 ## The ink ellipse a lobbed round casts on `at` (m), SHADOW_M x `k` (the molotov uses it too).
@@ -80,3 +104,28 @@ static func glass(ci: CanvasItem, b: Vector3, age: int) -> void:
 		WeaponFxArt.draw_cell(
 			ci, &"shard", 0, at, spin, Vector2.ONE * k * (1.0 - 0.15 * float(i % 2)), a
 		)
+
+
+## The torn smoke of rocket blast `b` (x, y, splash radius m), `age` ticks old; false = before
+## the tail (or the ring tail is asked for). Angles come from the blast's place: replay-stable.
+static func wisps(ci: CanvasItem, b: Vector3, age: int) -> bool:
+	if not wisp_tail or WISPS <= 0 or age < WISP_FROM:
+		return false
+	var span: float = float(FightAreas.VFX_KEEP_TICKS - WISP_FROM)
+	var f: float = clampf(float(age - WISP_FROM) / span, 0.0, 1.0)
+	if f >= 1.0:
+		return true
+	var out_k: float = 1.0 - (1.0 - f) * (1.0 - f)
+	var a: float = (1.0 - f) * (1.0 - 0.4 * f)
+	var puff_m: float = minf(WISP_M * b.z, WISP_MAX_M)
+	var n: int = maxi(WISPS, roundi(float(WISPS) * WISP_M * b.z / puff_m))
+	var k: float = puff_m * Ink.PX_PER_M / 120.0 / WeaponFxArt.cell_scale()
+	var seed_ang: float = b.x * 1.9 + b.y * 0.7
+	for i: int in n:
+		var ang: float = seed_ang + TAU * float(i) / float(n) + 0.25 * sin(float(i) * 3.1)
+		var r: float = b.z * (WISP_RING + WISP_DRIFT * out_k * (0.75 + 0.25 * float(i % 3)))
+		var at: Vector2 = Vector2(b.x, b.y) + Vector2.from_angle(ang) * r
+		var size: float = k * (1.0 - 0.4 * f) * (1.0 - 0.12 * float(i % 2))
+		var stretch: Vector2 = Vector2(1.0 + 0.35 * out_k, 1.0 - 0.15 * out_k) * size
+		WeaponFxArt.draw_cell(ci, &"smoke", i % 3, at, ang + PI * 0.5, stretch, a)
+	return true
