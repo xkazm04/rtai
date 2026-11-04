@@ -97,11 +97,11 @@ func step(stage: ArenaStage, tick: int) -> void:
 	if claw != null:
 		_step_claw(stage, tick)
 		return
-	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY != 0:
+	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY >= _held_ticks(stage):
 		return
 	var target: Fighter = _target()
 	if target == null:
-		if solo == Vector2.INF:
+		if solo == Vector2.INF and (tick - FIRST_SHOT) % SHOT_EVERY == 0:
 			_line(stage)
 		return
 	if not blade.is_empty():
@@ -154,6 +154,16 @@ func _step_claw(stage: ArenaStage, tick: int) -> void:
 func _burning(stage: ArenaStage, g: Fighter) -> bool:
 	var areas: FightAreas = stage.arena.areas
 	return areas != null and areas.fx.has(g.id) and areas.fx[g.id].burn_ticks > 0
+
+
+## Ticks the fire button stays held from each shot: 1 (a tap), or for a charge gun (the electro
+## gun, gunplay 0c0465fd) the tap's plain round, its cooldown and the full charge, so the charged
+## round that kills in one leaves by itself.
+func _held_ticks(stage: ArenaStage) -> int:
+	var gun: GunHand = stage.arena.gun
+	if not blade.is_empty() or gun == null or gun.trigger.spec.charge_ticks <= 0:
+		return 1
+	return gun.trigger.spec.interval_ticks + gun.trigger.spec.charge_ticks + 3
 
 
 func _target() -> Fighter:
