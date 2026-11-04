@@ -19,6 +19,9 @@ var save_path: String = ""
 var press_continue: bool = false
 ## rivet-arsenal: the camera leans toward the cop Rivet fights (dev/rivet_arsenal/quest_fight_cam).
 var fight_cam: bool = false
+## rivet-arsenal: clip only the ticks [x, y] (Vector2i.ZERO = the WINDOWS); the sim runs through
+## the rest with no frame drawn, so a Dock 9 close-up does not wait on the opening's frames.
+var tick_window: Vector2i = Vector2i.ZERO
 var _game: Quest1Game
 var _driver: CollectCallInputDriver = null
 var _frame: int = 0
@@ -56,16 +59,14 @@ func _run() -> void:
 		var beat: String = s.beat_id()
 		if not stills.is_empty():
 			if stills.has(s.tick()):
-				await _warm()
-				await _save("still_%d_%d" % [s.tick(), px_per_m])
-				if s.tick() == stills[0]:
-					_game.set_paused(true)
-					await _settle()
-					await _save("pause_%d" % px_per_m)
-					_game.set_paused(false)
-					_game.session.world.set_process(false)
+				await _still(s.tick())
 			if s.tick() > stills.max():
 				break
+			continue
+		if tick_window != Vector2i.ZERO:
+			if s.tick() > tick_window.y:
+				break
+			await _in_window(s.tick())
 			continue
 		if _keep(beat):
 			await _save("clip_%05d" % _frame)
@@ -111,6 +112,24 @@ func _continue_frames() -> void:
 		get_tree().call(&"finish")
 	else:
 		get_tree().quit(0)
+
+
+func _still(tick: int) -> void:
+	await _warm()
+	await _save("still_%d_%d" % [tick, px_per_m])
+	if tick == stills[0]:
+		_game.set_paused(true)
+		await _settle()
+		await _save("pause_%d" % px_per_m)
+		_game.set_paused(false)
+		_game.session.world.set_process(false)
+
+
+## --ticks: a clip frame only inside the window.
+func _in_window(tick: int) -> void:
+	if tick >= tick_window.x:
+		await _save("clip_%05d" % _frame)
+		_frame += 1
 
 
 func _keep(beat: String) -> bool:

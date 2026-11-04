@@ -8,6 +8,9 @@ extends Node
 
 ## A jump of more ticks than this between two frames (stills mode) snaps instead of easing.
 const SNAP_TICKS: int = 10
+## The framed point sits this fraction of the screen height above its centre: quest 1's dialogue
+## box covers the lower third, and the cops Rivet fights fell under it (Dock 9 stills 13740-13780).
+const FRAME_UP: float = 0.12
 
 var session: Quest1Session = null
 var city_view: CityView = null
@@ -30,3 +33,5 @@ func _process(_delta: float) -> void:
 	_last = session.tick()
 	var at: Vector2 = _cam.step(arena, session.tick())
 	city_view.kick_px += (at - arena.rivet.pos) * SimConst.PX_PER_M
+	var screen_h: float = city_view.get_viewport_rect().size.y
+	city_view.kick_px.y += FRAME_UP * screen_h / maxf(city_view.zoom, 0.01)
