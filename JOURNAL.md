@@ -349,3 +349,7 @@ NEXT (iteration 8), replaces the 22:13 NEXT:
 3. A city clip of the navy cops at 64 px/m on asphalt (32 px/m done) and quest 1 once (live path not filmed tonight).
 4. Keep REPORT current (rewritten at 08:40).
 Session state 22:28: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.
+- 22:29 NEXT (iteration 8) item 1 checked against tonight's frames: the "cream torso centre" was the patrol cap and
+  riot helmet crowns seen from above (plan view: the head sits over the torso), and both are navy now
+  (`frames/riot-helmet-navy-ab.png`, `frames/director-navy-64ppm.png`); the torso art is already navy (48,64,96).
+  Item 1 is closed; iteration 8 starts at item 2 (held-gun size with n5-look) and item 3 (64 px/m city, quest 1).
