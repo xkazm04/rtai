@@ -88,3 +88,13 @@ NEXT (iteration 3, in order):
 - DECISION melee weapon input: fire (held) and melee (press) both swing a drawn melee weapon; the shock stays on held melee after a swing. Rejected: melee key only (the gun trigger would do nothing with a katana drawn). Alternative: drop the `fire` branch in StagePilot._melee_press.
 - FLAW seen: the blade stays on the aim line through a swing (RivetHeldView turns non-one-hand parts onto the aim), so a slash reads as the body turning, not a blade arc. NEXT 1.
 - REQUEST 9 -> brutality: claw hits now come as weapon `claw`, katana hits as `katana`, baton as `electro_baton`, the charged shock as `claw_shock` (kind `shot` for all). Key the katana's kill (the headless drop in the clip is d5-combat's) and the shock's electro kill on these ids if you want them.
+- 03:09 the blade sweeps (RivetHeldView._sweep, view only): during a drawn melee weapon's strike the held part winds to one side of the aim line over the windup, crosses SWEEP_RAD 1.2 rad to the other through the active ticks, and eases back over the recovery; the combo's hits alternate the side. Seen at 20 fps (`frames/katana-sweep-before-after-64ppm.png`, same deterministic run): before, the blade pointed at the cop through the cut; after, it sweeps across him. Clip `arena-katana-claw-cops-64ppm.mp4` re-shot with it. Unit 735/735, lint 13/13 (no sim change, scenarios not re-run for it).
+- Gates on 9df457b0 (melee weapons): lint 13/13, unit 735/735, scenarios 32/32.
+
+NEXT (iteration 4, in order):
+1. The baton in a clip (`--loadout=electro_baton`), and the katana's thrust (hit 3, lunge 2.5 m) checked at 64 px/m; a scenario for a melee weapon on the claw cops (`--bot=rivet --loadout=katana`, judge hits/kills/weapon id, replay identical, planted fault).
+2. Chainsaw and plasma sword combo rows (melee_weapons.json; grip heavy_two_hand / two_hand_long): the chainsaw's grind needs a hold mode (MeleeCombo has none).
+3. The shock's crackle is weak at 64 px/m: a ring or brighter arcs around both claws growing with charge01 (view only).
+4. The reload: weapon-art's magazine part once REQUEST 8 lands; until then a placeholder ink block in the off claw from MAG_OUT to MAG_IN.
+5. The flamethrower (tank part on the back, RigGrip.HIP) and the molotov wind-up and release (thrown: no throw animation yet).
+6. The claw-cop line at y 4.4 sits on the hub's south edge: the fallen lie across the paper strip. Agree a roomier spot with human-reactions and showcase (REQUEST 8 thread).

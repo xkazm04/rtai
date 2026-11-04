@@ -6,6 +6,9 @@ extends Node2D
 ## switches from the drawn-in pistol to the closed claw. Hidden while the gun is away (a claw
 ## hit, a roll, a stow past halfway). Reads StagePilot.hold; writes nothing to the sim.
 
+## A melee weapon's blade sweeps this far either side of the aim line during a swing (radians);
+## the combo's hits alternate the side.
+const SWEEP_RAD: float = 1.2
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
 
@@ -45,6 +48,8 @@ func _process(_delta: float) -> void:
 	_sprite.global_rotation = hand.global_rotation
 	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
+	if pilot.wielding() and rig.clips.strike_t >= 0.0:
+		_sprite.global_rotation += _sweep(rig.clips)
 	_sprite.visible = true
 
 
@@ -72,3 +77,18 @@ func _reload_k() -> float:
 	if t < arsenal.in_k:
 		return 1.0 + t / arsenal.in_k
 	return 2.0 + minf((t - arsenal.in_k) / maxf(arsenal.cock_k, 0.001), 0.999)
+
+
+## The blade's angle off the aim line during a strike: wound back to one side over the windup,
+## across to the other through the active ticks, easing back over the recovery.
+func _sweep(clips: RigClips) -> float:
+	var ph: Vector3 = clips.strike_ph
+	var t: float = clips.strike_t
+	var side: float = 1.0 if pilot.melee.combo.last_index % 2 == 1 else -1.0
+	if t < ph.x:
+		return side * SWEEP_RAD * smoothstep(0.0, 1.0, t / maxf(ph.x, 0.001))
+	if t < ph.x + ph.y:
+		var k: float = (t - ph.x) / maxf(ph.y, 0.001)
+		return side * SWEEP_RAD * (1.0 - 2.0 * k)
+	var r: float = (t - ph.x - ph.y) / maxf(ph.z, 0.001)
+	return -side * SWEEP_RAD * (1.0 - smoothstep(0.0, 1.0, r))
