@@ -9,12 +9,16 @@ const SPAR_HP: float = 4.0
 const RESPAWN_TICKS: int = 150
 const NEVER: int = 1 << 30
 const FIRST_ID: int = 3000
-## A standing claw cop keeps this far from Rivet's centre (m), inside every claw and melee reach
-## (1.4 m and up), and the cops keep SPACING_M apart: GuardBrain walks them straight in, so four
-## stacked onto Rivet's body in a chainsaw grind (REQUEST 26 -> enemy-ai had no taker tonight).
-## STANDOFF_M 0 = the old pile-up.
+## A standing claw cop keeps this far from Rivet's centre (m), inside every melee reach (a hit
+## lands to reach + the body's radius: the claw's 1.4 + 0.45), and the cops keep SPACING_M apart:
+## GuardBrain walks them straight in (REQUEST 26 -> enemy-ai had no taker tonight). PASSES lets the
+## ring and the spacing settle together. STANDOFF_M 0 = the old pile-up. NOT ENOUGH for the look:
+## a drawn cop is about 1.27 m across, so 1.0 m still overlaps their rigs at 64 px/m; 1.3 m costs
+## scenario_rivet_chainsaw a kill (2 < 3 in its window), so 1.0 stays until that is understood.
 const STANDOFF_M: float = 1.25
 const SPACING_M: float = 1.0
+const PASSES: int = 3
+const PIN_TICKS: int = 30
 
 var cops: Array[Fighter] = []
 var homes: PackedVector2Array = PackedVector2Array()
@@ -59,22 +63,42 @@ func step(stage: ArenaStage, tick: int) -> void:
 			f.hp = hp_of[i]
 			f.pos = homes[i]
 			dead_since[i] = -1
-	stand_off(cops, stage.arena.rivet.pos, STANDOFF_M, SPACING_M)
+	stand_off(cops, stage.arena.rivet.pos, STANDOFF_M, SPACING_M, tick)
 
 
 ## Push standing cops apart to `spacing`, then out to `ring` round `me` (the ring wins, last).
-static func stand_off(fs: Array[Fighter], me: Vector2, ring: float, spacing: float) -> void:
+## A cop hit in the last PIN_TICKS is left where the hit put him (the knockback, the grind's
+## teeth); the other cop of a pair takes the whole push.
+static func stand_off(
+	fs: Array[Fighter], me: Vector2, ring: float, spacing: float, tick: int
+) -> void:
+	var free: Array[bool] = []
+	for f: Fighter in fs:
+		free.append(f.alive() and tick - f.hurt_tick > PIN_TICKS)
+	for n: int in PASSES:
+		_spread(fs, free, spacing)
+		_ring(fs, free, me, ring)
+
+
+static func _spread(fs: Array[Fighter], free: Array[bool], spacing: float) -> void:
 	for i: int in fs.size():
 		for j: int in range(i + 1, fs.size()):
 			var gap: Vector2 = fs[j].pos - fs[i].pos
 			var d: float = gap.length()
-			if fs[i].alive() and fs[j].alive() and d < spacing and d > 0.001:
-				var push: Vector2 = gap / d * (spacing - d) * 0.5
+			var movers: int = int(free[i]) + int(free[j])
+			if movers == 0 or not fs[i].alive() or not fs[j].alive() or d >= spacing or d < 0.001:
+				continue
+			var push: Vector2 = gap / d * (spacing - d) / movers
+			if free[i]:
 				fs[i].pos -= push
+			if free[j]:
 				fs[j].pos += push
+
+
+static func _ring(fs: Array[Fighter], free: Array[bool], me: Vector2, ring: float) -> void:
 	for i: int in fs.size():
 		var to: Vector2 = fs[i].pos - me
-		if fs[i].alive() and to.length() < ring:
+		if free[i] and to.length() < ring:
 			var dir: Vector2 = to.normalized() if to.length() > 0.001 else Vector2.from_angle(i)
 			fs[i].pos = me + dir * ring
 
