@@ -180,3 +180,10 @@ NEXT (the 18:40 report, written 18:16):
 NEXT (the 18:40 report, written 18:21):
 1. REPORT.md is final for the report: gates on 34bc64e6 green, frames.json 12 entries newest/best first, every clip cross-checked.
 2. First build after the report (next day run): the non-lethal melee wound, per the 18:15 DESIGN in iteration 10 (a view-only `wounded` signal from CombatArena.damage, a small MeleeWound class beside ReactLink, chainsaw re-entry gate, unit test with a planted no-wound, filmed claw vs riot cop at 48 real + 64 at 0.4x, `--soft-swing` = before).
+
+## Iteration 12 (18:21-18:30, freeze 18:30)
+
+- 18:22 read JOURNAL, git log. No REQUEST for this lane in d6-perf-city's JOURNAL. Branch since 34bc64e6 (last green gates): JOURNAL.md and REPORT.md only, so REPORT's gates line still holds. Masters folder: 21 files, as at the 18:13 cross-check.
+- DECISION 18:23: no code again, same reason as iteration 11 (9 min before the freeze cannot hold build + test + film + look + gate for the melee wound; an unfilmed view change would silently change the filmed "after" clips). No Godot process started.
+
+NEXT (the 18:40 report, written 18:23): unchanged from iteration 11. REPORT.md is final; the first build of the next run is the non-lethal melee wound per the iteration 10 DESIGN (18:15).
