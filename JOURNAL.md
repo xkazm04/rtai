@@ -569,3 +569,30 @@ NEXT (iteration 11):
    line), provenance lines for shipped parts.
 3. Calls 1-6 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
 Session end 00:17: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+
+## Iteration 11 (00:17-01:17, BUILD)
+- 00:17 read JOURNAL, log, n5-look JOURNAL (no REQUEST to n5-cast; no locks held). NEXT 1: the crowd's value.
+  Picked the plan-view proportions as data before any redraw: the earlier trials changed one or two values at a
+  time; a plan view needs all of them together. Measured the D4 ped parts: heads 124-161 px across a 133 px deep,
+  213 px wide torso (a head is about 0.4 of the span from above, ours about 0.75), the head placed 0.22 of the
+  depth forward (it overhangs the coat's front), the standing knees bent forward (hip_z 0.86 of the leg) and the
+  143 px shoes pushed 10 px ahead. print_part inks anything below lum ~0.58 at 32 px/m, so the grey coat fills
+  (~145) print black.
+- 00:30 TRIAL (all together): new `BodyPlan.head_k` and `foot_k` (render scale of the head and the shoe cells,
+  1 = the art), and `HumanPlan` PED_HEAD_K 0.62, PED_HEAD_DX 0.12, PED_FOOT_K 0.7, PED_FOOT_FWD 0, PED_HIP_Z 0.98,
+  plus `ped_pale.py` (+42 L on low-saturation fills above L 90) on the D4 ped torsos and grey sleeves.
+  `cast_lineup.gd -- --crowd [--road] [--walk]`, before (clean tree) and after, 0 SCRIPT ERROR:
+  standing, coat-hat, coat-hood, vest and overalls now read as pale tops with small dark heads, on slab and on
+  asphalt; jacket and hoodie stay dark (their fills are below the lift's L 90: a mix of pale and dark, as r2_a5's
+  crowd). Walking is unchanged (dark trouser legs striding, as r2_a5's runners). 64 px/m (D5): smaller heads,
+  coats show. `scratch-cast/i11/crowd-planview-ab-vs-r2a5.png`. GO: building it as the item.
+  Registry `sprite-and-atlas-production` applied again: judged at the minified size; the head scale is a render
+  value (art kept, one constant back).
+- MILESTONE 00:27 64efadb6: plan-view peds built (the 00:30 trial values, a unit test
+  `test_ped_plan_view_head_and_feet` pins head < 0.5 of the span, the standing shoe inside the chest, cop head 1.0).
+  Unit 941/0 before the new test, the new test 3/3 alone; lint 13/13. React board before/after at 64 px/m
+  (`react_board_run.gd -- --zoom=2 --every=4`, 481 frames each, 0 SCRIPT ERROR): cower, trip, every ped death and
+  corpse still read, cops unchanged; the standing coat ped reads as a pale figure with a small head.
+  `M/frames/react-board-planview-ab-64ppm.png`, `M/cast-react-board-planview-ab-64ppm.mp4`,
+  `M/frames/crowd-planview-ab-vs-r2a5.png`. Gib cuts copy each sprite's global transform (gib_cut.gd), so the
+  head scale carries into the splits.
