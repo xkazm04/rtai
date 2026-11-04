@@ -158,8 +158,10 @@ static func _flash(ci: CanvasItem, pts: PackedVector2Array, rim: float) -> void:
 static func _bolt(ci: CanvasItem, tail: Vector2, head: Vector2, w: float, went: float) -> void:
 	var r: float = w * 0.5 * (1.0 + 0.22 * sin(went * 5.0))
 	var hp: Vector2 = Ink.px(head)
-	ci.draw_circle(hp, r * 2.4, Color(Ink.CREAM, 0.3))
-	ci.draw_colored_polygon(_drop(hp, Ink.px(tail), r + 4.0), Ink.INK)
+	# an ink halo under a cream glow: the bolt reads on the cream paving and on grey concrete
+	ci.draw_circle(hp, r * 2.8, Color(Ink.INK, 0.2))
+	ci.draw_circle(hp, r * 2.1, Color(Ink.CREAM, 0.35))
+	ci.draw_colored_polygon(_drop(hp, Ink.px(tail), r + 7.0), Ink.INK)
 	ci.draw_colored_polygon(_drop(hp, Ink.px(tail.lerp(head, 0.12)), r), Ink.CREAM)
 	ci.draw_circle(hp, r * 0.35, Color(Ink.INK, 0.6))
 	var back: Vector2 = (Ink.px(tail) - hp).normalized()

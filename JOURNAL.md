@@ -353,3 +353,39 @@ NEXT (iteration 5, in order; supersedes the list above):
   dummy, `evidence/n4/ray_range_64ppm_sizzle.png`. Unit test extended. Gates: unit 711/711
   (`unit-h.log`), scenarios 29/29 (`scenarios-h.log`), lint 13/13. NEXT for iteration 5 is now items
   1, 3, 4, 5 of the list above.
+
+## Iteration 5 (03:20-04:20)
+- Read: JOURNAL, git log, REQUESTs to gunplay (new: showcase REQUEST 11 -> weapon-art, gunplay: one
+  owner for Rivet's muzzle flash and brass). Registry rules applied (realtime-combat-semantics,
+  motion-quality-gating): sim rules stay tick math with no RNG and only the new rows take the new
+  branch (hashes of the other nine guns unchanged); presentation reads the sim; judged in motion at
+  32 / 48 / 64 px/m on the cast rigs, in the pit and the city block.
+- 03:26 MILESTONE mini-nuke, the fourth unique gun, enabled (1c0aa98f): `FightNukeArt` draws the
+  shell (fat finned capsule, lobbed 4.5 m over its shadow, small vermilion nose) and the blast (one
+  cream flash over the 12 m circle for 5 ticks, jagged fireball, two ink shock rings, a mushroom of
+  smoke, a dust ring); then the 6 m fire patch. Pit 32 px/m: 5 shells, 8 kills
+  (`MASTERS/n4/gunplay/arena_nuke_pit_32ppm/`, `blast_sequence.png`); city block 32 px/m: 4 shells,
+  5 kills, the flash disc visible on the cream paving (`city_nuke_block_32ppm/overview_2fps.png`).
+- 03:33 MILESTONE homing shard gun, the fifth unique gun, enabled (12dfc10d): `homing_dps` column,
+  `FightReach.home` (240 deg/s, 60 deg cone, 12 m), one shard drops a human, a small burst where it
+  stops; `FightShardArt`: a cream crystal in an ink rim, a scratch trail along the flown curve. The
+  first cut at 48 px/m was mostly ink (rim ate the cream) -> 0.62 x 0.2 m, rim 6 px. Pit 48 + 64
+  px/m (`arena_shard_pit_48ppm/`, `arena_shard_pit_64ppm/shard_sequence.png`), city 32 px/m: 16
+  shards, 5 kills (`city_shard_block_32ppm/`). NOT shown in a clip yet: a shard visibly curving (the
+  bot aims dead at its target); the unit test and the scenario prove the turn.
+- Determinism: `scenario_gunplay_fight` now runs all eleven table guns (the core six + the unique
+  five), twice on a seed + a planted fault each: all identical, all faults caught; shards aimed 2 m
+  off the knot still kill all five (11 shots), one nuke shell kills all five. Gates at 12dfc10d: lint
+  13/13, unit 714/714 (`evidence/n4/unit-i.log`), scenarios 29/29 (`scenarios-i.log`).
+- FRICTION: the `run_unit.mjs` runner needs `GODOT_BIN` in the environment; without it it prints
+  "exit -1" and the counts of the previous run (looked green, was stale).
+- 03:38 plasma bolt on cream paving (NEXT 1): the frames of `city_plasma_block_32ppm` show the bolt as
+  a thin outline that sinks into the cream (its glow is cream, its rim 4 px). Fix: an ink halo under
+  the cream glow, rim r + 7 (gun_fx_art `_bolt`). Re-shoot after the bench.
+- Answer to showcase REQUEST 11 (cc weapon-art): gunplay agrees with the split showcase's merge r4
+  wrote (decisions.md there): weapon-art's `WeaponFxArt` owns Rivet's muzzle flash and brass for any
+  gun with weapon-art art; GunFx draws them only for a gun without art and always draws the smoke,
+  the impacts, the magazines and the hostiles' muzzle stars and shells. No second path to delete on
+  this branch. Merge note: my new `FightAreasArt.shot` branch (homing round -> `FightShardArt`) sits
+  before the `match`; weapon-art's hook ("asked first") stays above it, so weapon-art's `shard` cell
+  wins when it has one and my crystal is the fallback. The nuke's `_blast` branch is the same.
