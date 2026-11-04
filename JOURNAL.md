@@ -613,3 +613,34 @@ the tree). Then NEXT 2-5 above.
   test_rig_variant_swat.gd.uid (human-reactions took REQUEST 20: theirs, uid://4ho61ofhybgt).
   REQUESTs 19 and 20 closed.
 - 04:54 filming reel-0520-director (cut.sh, 16 fresh runs at 48 px/m) and gates r7 in parallel.
+- GATES r7 (15b48cb4, private APPDATAs, parallel): unit 825/825, scenarios 41/41
+  (scratch-showcase/unit-r7.log, scen-r7.log). Lint 13/13 (750 files) on every commit since.
+- MILESTONE 05:05 reel-0520-director (cut.sh: 16 fresh runs at 48 px/m, fixed-fps 60, 107 s,
+  title cards burned by ffmpeg; build 15b48cb4 + the director fixes c0bf84e2..scenario).
+  scenario_showcase_director (new): all 16 chapters' victims down, replay identical, planted
+  fault (buttons off) kills nobody, 11.7 s.
+  Looked at 5 frames per chapter (+ a 6 fps strip for electro and plasma rifle). Reads well:
+  clean floor per kill, Rivet on the left third, the title card; pistol two cops fall with
+  sprays; machine pistol drops the group of 4 (they fall in one column: stiff but readable);
+  rocket smoke trail -> scorch -> six parts thrown with blood trails; flamer jet -> body in
+  flames -> char -> ash heap; electro arcs + one X-ray frame -> collapse; molotov ring of fire
+  on the victim; katana lunge + cut + blood; chainsaw grind -> halves part up/down; deflect:
+  the shooter's round goes back and he drops in blood; hand cannon blows him 6 m back on a long
+  smear (the strongest gun chapter); ray gun glow -> pale husk; shards stick -> burst into parts;
+  riot cop takes the machine pistol burst and drops; mini-nuke: lob, the comic blast star fills
+  the right half, then a ring of fire round four charcoal shadows (the finale reads).
+  Wrong: (i) plasma rifle: the bolt rings the chest, the hole shows as a dark disc, and the
+  victim reads as still standing for the whole chapter (5 s; brutality's row says he "drops
+  back along the shot"); (ii) the riot cop's shield is not readable at 48 px/m (a thin line in
+  front of him; nothing blocks); (iii) a figure walks in at the frame's right edge about 5-6 s
+  into several chapters (pistol, machine pistol, katana): an arena station actor, not mine to
+  move: next cut I trim each chapter at 5 s or find it; (iv) the katana's halves land on
+  Rivet's own feet (he lunges to 1.0 m): the cut reads better from 1.6 m (mine: BLADE_M).
+- REQUEST 21 -> brutality (cc human-reactions): the plasma rifle `hole` kill does not read as a
+  death at 48 px/m: in reel-0520-director chapter 12 (gtai-masters/n4/showcase, 31-36 s of the
+  reel; scratch strip gtai-n4/scratch-showcase/sheets/strip-plasma_rifle.png) the victim keeps
+  his standing silhouette with a dark disc on the chest for 5 s. A visible drop back along the
+  shot (the body flat on the floor, legs toward Rivet) is what the row promises.
+- REQUEST 22 -> human-reactions: the riot cop's shield (RIOT_LOOK on an ArenaPit.riot id) is a
+  thin line at 48 px/m in reel-0520-director chapter 15; a shield that reads (a slab in front of
+  the body, rounds sparking off it before the burst gets round) would sell the armored hp.
