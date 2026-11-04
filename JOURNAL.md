@@ -549,3 +549,27 @@ NEXT (iteration 7), in order:
 - weapon-art-11: the ray gun's round: a ring train (shipped) vs a straight paper beam with the rings only at the
   muzzle. Frame `it8-ray-gun-rings-abc-64ppm.png` (row 1 = the old lightning, to show it was a bug). Default:
   the ring train.
+- MEASURE 05:00 ray rings on cream in the city block at 4f186eae (`--arena=city --loadout=ray_gun`, 32 px/m): two
+  dark hoops leave the claw toward the guard. Small but readable. `it8-ray-rings-city-32ppm-2x-strip.png`, clip
+  `it8-ray-gun-city-block-32ppm.mp4`.
+- To gunplay (INFO, no action needed): the ray gun's rounds now draw weapon-art's ring train (WeaponFxArt is
+  asked first, as before); the electro gun keeps the arc. Plasma and shard rounds have new cells (same ids, new
+  size/anchor rows in weapon_art.json). Your plasma halo A/B predates the comet: re-check it when you merge.
+- Gates of record: lint 13/13 (673 files) at every commit; unit 733/733 + scenarios 32/32 at 4f186eae
+  (`evidence/weapon-art/unit-it8c.log`, `scenarios-it8b.log`); unit 733/733 at 41002e84 (`unit-it8b.log`). Later
+  commits are docs only. Render-only + art + data: no sim file, no replay or parity golden touched. No bench.
+- frames.json 15 entries, it8 first (ray A/B/C + clip, ray in the city, plasma A/B + clip, shard A/B, chain strip +
+  48 clip, SWAT live, thug live), then it6. Dropped: the it6 electro bolt clip (the chain clip supersedes it), the
+  64 px/m chain quarter-speed clip. Scratch (wa8, ~5 GB of AVIs) deleted; both throwaway worktrees removed.
+
+NEXT (iteration 9), in order:
+1. The other rounds through the same 32 px/m city check (single-gun runs, one at a time): pistol tracer, machine
+   pistol, hand cannon, Gloria's nail, the rocket, the mini-nuke. Fix any that vanish on cream with the two-tone rule.
+2. Muzzle flashes at 32 px/m on cream: `flash_energy` is paper_2 on paper (the ray, plasma and shard flash is a
+   pale star at the claw; see the ray crops). Probably the same fix.
+3. The 64 px/m chain clip lands at the frame's edge; ask showcase for a capture camera that frames Rivet + target,
+   or shoot the hop at 48.
+4. The weapon wall vs the melee-line dummies (rivet-motion): a REQUEST to move their y -3 line south by 0.6 m, or
+   accept the overlap.
+5. Brutality still uses the front-view X-ray; offer the `gore_*_top` stickers again (their JOURNAL).
+- Session close 05:03: 7 commits this iteration (583613dc..), gates green, worktree clean except evidence logs.
