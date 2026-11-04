@@ -1365,3 +1365,23 @@ NEXT is unchanged, except item 2 (done).
   side_by_side_city_six_32ppm_it11.mp4 (it is the city reel's "before") and the rocket scorch
   still (15 entries, all exist). Deleted the unreferenced Rivet-camera runs and the 4 m runs.
 - 09:43 rendering the other four unique guns in the city (plasma, ray, shard, mini-nuke).
+- 09:43 the unique four in the city (plasma, ray, shard, nuke; `citylone21h_48_<gun>/`, 0 script
+  errors): `MASTERS/city_lone_kills_unique_four_48ppm.mp4`, frames.json entry 4 (replaced the
+  electro charge still). Its mini-nuke cut uses the first kill: the second blast fell half off the
+  bottom edge.
+- FINDING: with the bot at its own reach (up to 9 m), the city guards died 10-12 m out, at 80-90 %
+  of the frame's height, even with the 6 m lean.
+  DECISION (dev capture) 70894746: `--reach=<m>` closes GunplayBot's firing reach (one line in
+  dev/arena/arena_game.gd; no arg = unchanged, so the pit reels reproduce). The city reels are
+  re-filmed with `--reach=6` (`citylone21r_48_<gun>/`, 0 script errors each): the pistol kill
+  falls at about 40 % across and 60-67 % down, the rocket blast at 45 % / 53 %; electro, plasma,
+  ray and hand cannon the same, mid-left; the molotov's victim runs out of the fire near the
+  centre; the nuke's ring catches its victim in the upper middle. Kill ticks: pistol 780, machine
+  pistol 790, rocket 802, electro 914, molotov 609, hand cannon 778, plasma 790, ray 778, shard
+  806, nuke 519. The flamethrower run is kept (its own reach 5.25 m < 6, so `--reach=6` is a
+  no-op for it). Both city reels re-cut in place, and frames.json notes updated. Deleted the
+  superseded `citylone21h_*` runs, keeping the pistol for the A/B.
+- Rejected: a lean cap over 6 m (Rivet would leave the 48 px/m frame vertically; the frame's half
+  height is 8.3 m).
+- 09:50 gates of record running on 70894746 (`node tools/evidence/run.mjs --no-bench --allow-dirty`
+  -> `evidence/n12/evidence-21.log`).
