@@ -1095,3 +1095,30 @@ NEXT (replaces the list above):
   it18 clips decode (78 s reel, 8 s, 15 s slow). No code change after the gates of record, so none
   lands right before showcase's 09:45 final merge. No Godot process of mine running; scratch holds
   only the capture scripts; bench.lock released at 09:20.
+
+## Iteration 19 (09:20-, BUILD, extension to 11:00)
+- Read: JOURNAL NEXT, the other lanes' JOURNALs. One REQUEST to me was never answered: gunplay's
+  REQUEST 30 (07:3x) "the molotov char corpse reads as a body ~1 s, then a dark smudge on the dark
+  pit floor; a cream rim or lighter ash edge would keep it a body". Showcase's 08:57 notes on my
+  kills (ray-gun victim small and quick at 48 px/m; rocket parts leave the frame) are known.
+- MILESTONE 09:23 REQUEST 30 answered (04c4068b, render only): kill_char.gdshader prints a light
+  ash rim (#CCC1B2, rim_px 1.6 SCREEN px via fwidth(UV), so the same width at 32/48/64 px/m) where
+  a texel within that distance falls outside the part's alpha cut. Every part gets its own rim, so
+  the head, shoulders and arms read as separate shapes. The mini-nuke's vaporise shadow uses a
+  second material with rim_px 0 (a shadow burnt into the street has no lit edge). The burn row is
+  shared by flamethrower, molotov, fire patch and gunplay's `burn`, so all fire deaths get it.
+- FRICTION: a canvas_item shader function cannot read TEXTURE (Unknown identifier); passed it as a
+  sampler2D argument. fwidth() is taken before the discard (derivatives need the whole quad).
+- Before/after (arena pit, 64 px/m, flamethrower solo, 0 script errors):
+  evidence/brutality/burn-rim-before-after-it19.png (top before, bottom after, 0.5 s apart).
+- Registry rules: motion-quality-gating (judged on a before/after strip at the readability zoom
+  before committing); depth-ordered-layered-art (the rim is per part, so overlap stays readable).
+- GATES 09:23: lint 13/13 (719 files).
+- GATES 09:26 on 04c4068b (private APPDATA, CONTENDED: two of my captures ran alongside): unit
+  790/790 (evidence/brutality/unit-it19.log).
+- Clips (city block, open street start:-22,0, `--clean --rigs`, one isolated cop, 0 script/shader
+  errors): `clips/flame-char-rim-city-48ppm-10s-it19.mp4` (real time) and
+  `clips/flame-char-rim-city-64ppm-slow-0.4x-it19.mp4`; strip
+  evidence/brutality/flame-char-rim-city-64-strip-it19.png (looked at it: ablaze, the rimmed char
+  body, the crumble, the ash heap). frames.json: the it8 dev-pit flame clip replaced by these two
+  (entries 3-4); the it9 electro charged clip dropped (superseded by the it18 plank clip): 15 entries.
