@@ -3,12 +3,15 @@ extends RefCounted
 ## rivet-arsenal: the plasma sword's timed deflect. During a deflecting weapon's active ticks
 ## (MeleeTable.deflect_m > 0), every hostile round within deflect_m of Rivet and in front of him
 ## goes back: it flies at its shooter (or straight back if the shooter is gone) at its own speed,
-## now Rivet's round (it hits hostiles, BACK_DAMAGE: a human drops) with a fresh range.
+## now Rivet's round (it hits hostiles, BACK_DAMAGE: a human drops) with a fresh range. Each bat
+## leaves a spark (two short crossing arcs on FightAreas' VFX list, as the shock's crackle; view
+## only, not replay state) where the blade met the round.
 
 const BACK_DAMAGE: float = 1.0
 const BACK_RANGE_M: float = 20.0
 ## In front: the round's offset from Rivet within this of his facing (dot).
 const FRONT_DOT: float = 0.0
+const SPARK_M: float = 0.45
 
 
 ## Bats every hostile round in reach back; returns how many.
@@ -32,8 +35,17 @@ static func bat(arena: CombatArena, facing: Vector2, reach_m: float) -> int:
 		s.damage = BACK_DAMAGE
 		s.left_m = BACK_RANGE_M
 		s.origin = s.pos
+		_spark(arena, s.pos, back)
 		n += 1
 	return n
+
+
+static func _spark(arena: CombatArena, at: Vector2, back: Vector2) -> void:
+	var areas: FightAreas = PlayerShock.areas_of(arena)
+	for turn: float in [0.6, -0.6]:
+		var d: Vector2 = back.rotated(turn) * SPARK_M * 0.5
+		areas.chain_arcs.append(PackedVector2Array([at - d, at + d]))
+		areas.arc_ticks.append(arena.tick)
 
 
 static func _fighter(arena: CombatArena, id: int) -> Fighter:
