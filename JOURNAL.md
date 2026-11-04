@@ -1211,3 +1211,12 @@ NEXT (morning merge), in order:
   A change now could not be gated (unit ~6 min, scenarios ~4 min) and filmed by 10:30. The branch head
   stays at the gated commit 1623e625 plus docs (lint 13/13, unit 755/755, scenarios 33/33).
 NEXT: unchanged from iteration 23 (morning merge items 1-3 above). At 10:40 REPORT: no code after 1623e625.
+
+## Iteration 25 (10:17-10:30, BUILD, freeze 10:30)
+- 10:17 re-read JOURNAL, git log, the showcase/brutality/rivet-arsenal JOURNAL tails: no new REQUEST -> human-reactions
+  since iteration 24. Showcase cut the FINAL reel (reel-1012) and re-exported RTAI.exe on round 19 at 10:12; its
+  electro chapter carries REQUEST 30 (closed).
+- DECISION 10:18: keep iteration 24's call, no code before the freeze (13 min left; a change cannot be gated and filmed,
+  and the final reel is already cut). Branch head code stays 1623e625 (lint 13/13, unit 755/755, scenarios 33/33).
+NEXT: unchanged (morning merge items 1-3 of iteration 23). At 10:40 REPORT: no code after 1623e625; mention showcase's
+  final reel-1012 carries the electro corpse fix.
