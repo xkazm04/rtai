@@ -1174,3 +1174,13 @@ NEXT (after the freeze / morning merge), in order:
   _land; hit_class_of maps the melee weapon ids to `melee` (absent from weapons.json, so `light`
   today); check HitLink for a doubled melee feel. REPORT next 7 rewritten. Not touched tonight:
   another lane's file, and showcase's final reel was running.
+- 10:06 started proving the melee fix on a scratch of showcase 08e1b72f, and stopped: emitting
+  struck from PlayerMelee also fires HitLink._on_struck (a feel.land hit-stop hold plus counters),
+  which stacks on melee's own feel. That is a design call with rivet-arsenal (HitLink skips the
+  melee ids, or a separate melee signal for ReactLink), not a pre-freeze glue. REPORT next 7 says
+  so.
+- Session close: no Godot process of mine running. Scratch worktree hr-scratch3 is unregistered
+  from git (`worktree prune`), but its directory C:\Users\kazda\kiro\gtai-wt\hr-scratch3 is held
+  open by a shell, so delete it once the session ends. hr-scratch and hr-scratch2 are gone.
+  frames.json has 15 entries, 0 missing. Since 09:49 there is no code on this branch, only docs and
+  evidence; the one code change (REQUEST 30) landed on showcase round 19 as glue.

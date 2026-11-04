@@ -228,5 +228,7 @@ Each call is one value or flag. A is what is live now.
      (rivet-arsenal, as `PlayerShock` does);
    - in `ReactLink.hit_class_of`, return `melee` for the melee table's weapon ids (they are not in `weapons.json`, so
      today they fall back to `light`);
-   - check `HitLink` does not double its melee feel;
+   - but `struck` also drives `HitLink._on_struck` (a `feel.land` hit-stop hold plus hit/kill counters), which would
+     stack on melee's own feel. Pick one with rivet-arsenal: HitLink skips the melee ids, or ReactLink gets its own
+     melee signal;
    - film the claw chapter A/B.
