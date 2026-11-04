@@ -1220,3 +1220,11 @@ NEXT: unchanged from iteration 23 (morning merge items 1-3 above). At 10:40 REPO
   and the final reel is already cut). Branch head code stays 1623e625 (lint 13/13, unit 755/755, scenarios 33/33).
 NEXT: unchanged (morning merge items 1-3 of iteration 23). At 10:40 REPORT: no code after 1623e625; mention showcase's
   final reel-1012 carries the electro corpse fix.
+
+## Iteration 26 (10:23-10:30, BUILD, freeze 10:30)
+- 10:23 re-read the JOURNAL tail, git log and the other lanes' JOURNALs for REQUEST -> human-reactions: nothing new
+  since iteration 25. The tree is clean apart from untracked evidence, and none of my Godot processes are running.
+- DECISION 10:24: no code before the freeze. 7 minutes is not enough to gate a change (unit about 6 min, scenarios about 4 min)
+  and film it. The branch's code head stays 1623e625 (lint 13/13, unit 755/755, scenarios 33/33).
+NEXT: unchanged (morning merge items 1-3 of iteration 23). At 10:40 REPORT: update in place. No code after 1623e625.
+  Name showcase's final reel-1012 (electro corpse fix) as the clip of record.
