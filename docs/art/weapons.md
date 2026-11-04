@@ -108,6 +108,24 @@ the spent one on the floor.
   (human-reactions REQUEST 2), `tools/art/thug_parts.py`.
 Both are scripted derivations of existing AI parts, so footprints and pivots are the rig's own.
 
+## Energy rounds in flight (iteration 8)
+
+Judged frame by frame in the city proving block at 32 px/m (cream paving) and in the arena at 64 px/m.
+The rule is the tracer's: **two tones per round**. A charcoal (`INK_2`) part reads on cream paving, a paper
+part reads on asphalt, and the whole round sits inside an ink ring.
+
+- **Plasma bolt** (`fx/plasma_bolt`, 260 x 64, anchor at the head's tip): an ink comet. A charcoal tail
+  tapers back, the fat head has a steel halo and a paper core, and a paper speed streak runs down the tail.
+  The iteration-1 steel oval printed as a pale pill on cream.
+- **Homing shard** (`fx/shard`, 190 x 44, anchor at the tip): the pale crystal head stays and gains a
+  charcoal speed tail.
+- **Ray gun** (`fx/ray_ring_0..2`, `WeaponFxRay`): a train of 4 hoops strung back along the beam from its
+  head. Each is squashed to 0.42 along the travel (seen edge-on), and they widen and fade toward the tail.
+  Each cell is a charcoal band with a paper stripe. Until iteration 8 every BOLT row drew the electro
+  arc, so the ray gun fired lightning.
+- Generator: `tools/art/energy_round_tails.py <fx_dir>` (deterministic). It prints the size and anchor
+  for the table rows.
+
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,
