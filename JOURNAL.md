@@ -356,3 +356,5 @@ NEXT (iteration 6):
 - Real-time "after" film of ch 18 for perf-city-1: desktop capture only when the owner's desktop is idle.
 - First frame's 12 pipeline compiles (35-58 ms, inside the first second): pre-warm like
   World._prewarm, only if the owner's first second matters.
+- 15:53 No quiet window for the uncontended re-check: CPU 88 %, and two Godot processes from the other
+  lane started 15:50. Skipped; the bench lock was never taken this session (no bench run).
