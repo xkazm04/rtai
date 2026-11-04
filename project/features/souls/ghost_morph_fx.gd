@@ -16,7 +16,6 @@ const STEAM: Color = Color(0.93, 0.9, 0.84)
 const SPARK: Color = Color(1.0, 0.86, 0.45)
 const INK: Color = Color(0.106, 0.082, 0.09)
 const SPOKES: int = 14
-const SEAMS: int = 7
 const BEAT_ZOOM: float = 0.06
 
 var reduced_motion: bool = false
@@ -60,35 +59,53 @@ func _draw() -> void:
 	_sparks(r, fade)
 
 
-## Teal cracks across the body: they open through stage 0 and close through stage 1.
+## Teal cracks along the plate lines (the crown's own seam layout: a cross through the centre and
+## an inset square): they open through stage 0 and close through stage 1.
 func _seams(r: float) -> void:
 	var open: float = 1.0 - absf(_k - 0.5) * 2.0
 	if open <= 0.0:
 		return
-	for i: int in SEAMS:
-		var a: float = TAU * float(i) / float(SEAMS) + 0.4
-		var a2: float = a + 0.35 * (1.0 if i % 2 == 0 else -1.0)
-		var p0: Vector2 = Vector2.from_angle(a) * r * 0.08
-		var p1: Vector2 = Vector2.from_angle(a) * r * 0.3 * open
-		var p2: Vector2 = p1 + Vector2.from_angle(a2) * r * 0.15 * open
-		var w: float = 3.0 * open + 1.0
-		draw_polyline(PackedVector2Array([p0, p1, p2]), INK, w + 2.0)
-		draw_polyline(PackedVector2Array([p0, p1, p2]), TEAL_HI, w)
+	var w: float = 3.0 * open + 1.0
+	var arm: float = r * 0.36 * open
+	var sq: float = r * 0.2 * open
+	var lines: Array[PackedVector2Array] = [
+		PackedVector2Array([Vector2(-arm, 0.0), Vector2(arm, 0.0)]),
+		PackedVector2Array([Vector2(0.0, -arm), Vector2(0.0, arm)]),
+		PackedVector2Array(
+			[
+				Vector2(-sq, -sq),
+				Vector2(sq, -sq),
+				Vector2(sq, sq),
+				Vector2(-sq, sq),
+				Vector2(-sq, -sq)
+			]
+		),
+	]
+	for pl: PackedVector2Array in lines:
+		draw_polyline(pl, INK, w + 2.0)
+	for pl: PackedVector2Array in lines:
+		draw_polyline(pl, TEAL_HI, w)
 
 
-## Steam rolls out from the swap (past the midpoint) as pale puffs with an ink rim.
+## Steam rolls out from the swap (past the midpoint): lumpy paper puffs (three lobes each) under
+## one shared ink rim, shrinking away instead of fading (a faded puff printed as a grey disc).
 func _steam(r: float) -> void:
 	var t: float = clampf((_k - 0.4) / 0.6, 0.0, 1.0)
 	if t <= 0.0 or t >= 1.0:
 		return
+	var lobes: Array[Vector3] = []
 	for i: int in 8:
 		var a: float = TAU * (float(i) + 0.5) / 8.0
 		var travel: float = 0.35 if reduced_motion else 0.3 + 0.5 * t
 		var at: Vector2 = Vector2.from_angle(a) * r * travel
-		var rad: float = r * (0.09 + 0.08 * t) * (1.0 if i % 2 == 0 else 0.75)
-		var alpha: float = 0.85 * (1.0 - t)
-		draw_circle(at, rad + 1.5, Color(INK, alpha * 0.6))
-		draw_circle(at, rad, Color(STEAM, alpha))
+		var rad: float = r * 0.1 * (1.0 - t) * (1.0 if i % 2 == 0 else 0.75)
+		var side: Vector2 = Vector2.from_angle(a + PI * 0.5) * rad * 0.8
+		for o: Vector2 in [Vector2.ZERO, side, -side * 0.9]:
+			lobes.append(Vector3(at.x + o.x, at.y + o.y, rad * (1.0 if o == Vector2.ZERO else 0.7)))
+	for l: Vector3 in lobes:
+		draw_circle(Vector2(l.x, l.y), l.z + 2.0, INK)
+	for l: Vector3 in lobes:
+		draw_circle(Vector2(l.x, l.y), l.z, STEAM)
 
 
 ## Sparks fly out along fixed spokes as short streaks (static dots under reduced motion).
