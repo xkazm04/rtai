@@ -140,9 +140,11 @@ NEXT (iteration 4, in order) - supersedes the 03:09 list:
 - 04:04 MILESTONE flamethrower tank (5eb1c3c5): weapon-art's `tank` part rides across Rivet's shoulders 0.22 m behind the torso, turning with it, while a backpack-class weapon is in the claw (RivetHeldView._back_tank, view only). Seen at 64 px/m (`flamethrower-tank-closeup-64ppm.png` at 3x, clip `arena-flamethrower-tank-64ppm.mp4`): twin canisters behind the shoulders, the wand opposite. Every grip class now has its carry art on Rivet. Unit 746/746 and lint 13/13 on 5eb1c3c5.
 
 NEXT (iteration 5, in order):
-1. The flamer sway (backpack_hose kick 0.3 is still a recoil kick: replace with a slow side-to-side wand sway while the flame runs) and the tank's hose: a Line2D from the tank to the wand's grip.
+1. The flamer sway (backpack_hose kick 0.3 is still a recoil kick: replace with a slow side-to-side wand sway while the flame runs; the sway must move the sim's flame line too, or the wand and the jet part ways, so it belongs in the aim, not only the sprite).
 2. A real molotov wind-up (hold to wind, release throws): needs the bottle held back in gunplay's trigger for thrown specs; REQUEST to gunplay or a pilot-side hold (WeaponHold gating fire like the draw). The throw clip today is a follow-through only, at point blank (GunplayBot's range).
 3. The chainsaw rip (hit 2) and the plasma spin in close-ups at 64 px/m (a full-rate strip each); a plasma deflect scenario in the pit (deflects > 0, replay identical, planted deflect_m 0).
 4. Reload per class: the rocket (a rocket, not a box), the plasma rifle cell, the hand cannon's cylinder; weapon-art's magazine parts if REQUEST 8 lands (swap the ink block for the part).
 5. The claw-cop line at y 4.4: the dead fall across the paper strip (see the 32 px/m chainsaw clip); agree a roomier spot with showcase and human-reactions.
 6. One 64 px/m clip per grip class (carry, aim, fire, reload, switch) as frames.json's lead set.
+- 04:07 the flamethrower's hose (3364b525): an ink line with a cream core curves (8 points) from the tank's end nearest the wand, out past the body, to the wand's grip. First try was a 3-point V kinked across the torso (seen, replaced). Close-up and clip re-shot (looked at). Lint 13/13.
+- Session end 04:08: all work committed (last 3364b525). Gates of record: lint 13/13 (3364b525), unit 746/746 (5eb1c3c5), scenarios 34/34 (e491cd1a; everything after is view-only). frames.json 15 entries. Scratch renders deleted.
