@@ -132,3 +132,14 @@ NEXT (iteration 6):
 - 22:52 COMBAT CHECK director reel `--bot=reel --reel=director --loadout=pistol` 7200 ticks: all 17 chapters n/n down (claw_combo 2/2 .. mini_nuke 4/4). One SCRIPT ERROR at exit, pre-existing and not this lane's: `ArenaStage.telemetry_dict` reads `hook.station.id` but the reel's ReelDirector hook is appended without a station (combat_reel.gd:79), so `--telemetry` + `--reel=director` crashes the telemetry write at quit. Main has it too (no change of mine there). Left for the showcase owner; noted for REPORT.
 - 22:56 scenarios 46 ran / 0 failed on 192b7e8c. Unit 949/950 earlier (the 1 = test_noir_shadows flake, 2/2 alone); test_gatling 7/7.
 - 22:59 armory `--armory --ppm=32`: 16 weapons laid; the gatling sits after the mini-nuke (row 2, col 5): its side view lies longer than its disc at its 1.55 m drawn length, brown with the barrel rings, and reads as the heaviest pickup on the floor. (First read it as the thin sliver at the row's end: that is the electro baton.)
+- 23:00 MILESTONE 1a2659e8 the gatling's tracer a thinner, shorter streak (weapon_art.json projectile_k 0.6): before|after folded into `gatling-belt-tracer-ab-128ppm.png` (frames.json still 15).
+- 23:02 item 2b started (judge only): core lineup `dev/weapon_art/weapon_lineup.gd` at 64 px/m beside r1_w1. At game zoom the pistol, SMG and electro gun read as small grey bars in the claw; r1_w1's top views differ mostly by the SMG's perforated shroud, the revolver's cylinder bulge (hand cannon) and the pistol's slide serrations. Plan: regenerate the hand cannon and SMG top views first (TEXT + style ref, gadget wording), keep grip/muzzle measured by weapon_ingest.measure, judge in the claw at 32 px/m before swapping.
+- 23:05 REPORT.md draft written (insurance; rewrite at 08:40).
+
+NEXT (iteration 7):
+1. Item 3b held parts: hand cannon + machine pistol top views toward r1_w1 (one image job under image.lock, 3-prop sheet, TEXT + style ref = the current held.png of a NON-gun part, e.g. the flamer tank; never a gun edit), cut with weapon_cut.py, a small ingest like tools/art/gatling_ingest.py that rewrites only those rows' held/held_small (re-measure grip/muzzle; tests test_weapon_art / test_held_size), held_small.py; before|after in the claw at 32 + 64 px/m beside r1_w1; director reel check (hand_cannon chapter).
+2. Gatling: chunkier tan housing (r1_w6) if the print keeps greying it: check PartMaterials/held_small tone; maybe a held_small lift for the housing only.
+3. 3c pickups toward r2_w8 (judge the armory at 48 px/m beside r2_w8 first).
+4. FX polish (blast core + debris, ray ring alpha floor); bench-lock cost of riso + look_d5_fx.
+5. Keep REPORT.md current; the evidence gate once more before 08:30.
+Session state 23:06: head = this commit, tree clean, no Godot process of mine running, image.lock released at 22:36.
