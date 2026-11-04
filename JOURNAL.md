@@ -981,3 +981,21 @@ NEXT (iteration 8, the final round; freeze 08:30):
   rocket_launcher,molotov` (600 ticks, before any plasma kill, so REQUEST 28 is not hit). Bench r11 skipped: a 12 min bench
   would outrun the session while holding bench.lock; the final round benches. Scratch cleaned
   (stale, redo, r9-check, 0540 cuts deleted; their reels are in masters).
+
+## Iteration 8 (the final round), 07:12-08:12
+
+- 07:12 read JOURNAL, git log, the lanes' tips and JOURNALs. Answers: human-reactions 3a8d3931
+  (REQUEST 24b: the electro plank turns onto the shot line, CorpseScorch inked for 48 px/m);
+  brutality 584b3f77 (Topple skips a holed body with no rig cut: REQUEST 28's null, render only).
+  REQUESTs 26 (ray pile) and 27 (molotov victim under the stars) have no answer yet.
+- MILESTONE 07:15 merge round 12 (the final round starts early: this session ends at 08:12, so the
+  last merge is now; a later lane commit gets a round 13 only if the gates allow it):
+  weapon-art up to date (a957f888); rivet-arsenal 908c4a9f -> 5ca1ca6b (JOURNAL ours; add/add on
+  test_claw_cops_stand_off.gd.uid: took rivet-arsenal's committed uid, ours was the import's);
+  gunplay 25a6eb27 (rocket scorch, nuke ring as char) -> 38ebcd87 (JOURNAL ours); human-reactions
+  f752d10f -> 909b13c3 (JOURNAL ours; look goldens ours: their 7 re-blessed slab frames were
+  already in our r10 re-bless, the selftest decides); brutality 584b3f77 -> 9c52b656 (JOURNAL
+  ours). No code conflicts. `--import` at once: exit 0, 0 errors, no new .uid.
+- 07:16 gates r12 started (`evidence/run.mjs --no-bench`, APPDATA showcase-e, log
+  scratch-showcase/evidence-r12.txt) and the final director cut in parallel (cut.sh
+  reel-0716-final 48, APPDATA showcase-film). Bench afterwards, alone, under bench.lock.
