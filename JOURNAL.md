@@ -500,3 +500,36 @@ NEXT (iteration 4):
   160 times too (a small scorch_m). Log: gtai-n4/scratch-showcase/film-reel-0417-city-riot.log.
 - REQUEST 18 -> gunplay: GunFxArt._flash (gun_fx_art.gd:159) fails triangulation 26 times in the
   same reel (a degenerate flare at 32 px/m, probably the pistol's side jets at a small age).
+- GATES of record r5 (04:27, evidence run --no-bench --no-parity on 461819e7, private APPDATA):
+  lint 13/13, unit 802/802, scenarios 39/39, selftest PASS (look goldens 11/11 worst 1.52, block
+  5/5, no new off-doctrine accents; the 48 px/m debt rows hold). Parity not re-run: no city-sim
+  or native change since r4's bit-exact run (ArenaPit is the arena's fight, not the city sim).
+  FRICTION: the evidence run refuses a dirty tree; my first two tries wrote their own log into
+  evidence/r5. Logs now go to gtai-n4/scratch-showcase and are copied in after.
+- 04:23 replies seen on the lane tips (not merged yet): REQUEST 14 taken by rivet-arsenal
+  (412e0906: RivetMagView draws only for a gun without weapon-art's mag part); REQUEST 15 taken
+  (rivet-arsenal 1138f143 = my cd49e9fa; brutality 136a8e9a took the react_line spot); REQUEST
+  16 taken by gunplay (c4a1aa7b: mini-nuke min_lob_m 13 m). New on the tips: weapon-art's weapon
+  wall station (7629aae7) and jagged electro arcs; human-reactions' SWAT look and the robot
+  thug's own parts (a27c786b: arena --rigs pit squads mix patrol, riot and SWAT by actor id:
+  check against my --riot look next round); brutality's solo kill lab; rivet-arsenal's flamer
+  sway.
+- Session close: merge round 6 deferred to the next session (12-26 new commits per lane; the
+  merge + gates do not fit before 04:42).
+
+NEXT (iteration 5):
+1. Merge round 6 (brief order, ONE lane at a time, stop at each conflict). Expect: arena_rigs.gd
+   (human-reactions' squad looks vs my RIOT_LOOK/_pit_look: keep one rule; if their pit mix
+   already dresses riot cops, --riot keeps only the armored hp), my cd49e9fa vs rivet-arsenal's
+   1138f143 (identical hunk), fx_view/gun_fx_art (my mag glue vs gunplay's REQUEST 5 answer, if
+   any). Gates under private APPDATAs; run the evidence run with logs OUTSIDE the tree (it
+   refuses a dirty tree).
+2. Re-film the uniques reel (the nuke now lobs >= 13 m; the stall switch; the zone fix) and the
+   64 px/m riot reel; look at 1 fps over each weapon turn.
+3. The robot thug beat: human-reactions' ThugPlan + art/thug parts exist now; still no thug in
+   CombatArena (robots resolved later per the owner). Film the react_line / enemy rig fight
+   thug as a dev-scene insert if the arena cannot host it.
+4. Corpse cap (REQUEST 12) and gibs past the wall (REQUEST 13): check the tips for answers.
+5. The final round plan (07:45-08:30): export `build/export/windows/RTAI.exe` with the release
+   DLL; boot into the arena with every finished weapon (a default --loadout or pickups); write
+   the exact play commands for the arena and the city block in REPORT.
