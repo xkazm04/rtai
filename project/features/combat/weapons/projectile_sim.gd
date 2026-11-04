@@ -37,7 +37,10 @@ func fire(
 	if aim == Vector2.ZERO:
 		return
 	for i: int in w.pellets:
-		var p: Projectile = Projectile.launch(w, muzzle, trigger.shot_dir(aim, _rng), team)
+		var dir: Vector2 = trigger.shot_dir(aim, _rng)
+		if w.homing_rad_per_tick > 0.0:  # the real fight's fan (GunHand), so the TTK is its
+			dir = dir.rotated(GunHand.HOMING_FAN_RAD * (1.0 if shots_fired % 2 == 0 else -1.0))
+		var p: Projectile = Projectile.launch(w, muzzle, dir, team)
 		p.shooter_id = shooter_id
 		p.born_tick = tick
 		if w.kind == WeaponSpec.Kind.THROWN or w.kind == WeaponSpec.Kind.ROCKET:
@@ -97,6 +100,8 @@ func digest() -> int:
 
 
 func _step_projectile(p: Projectile) -> void:
+	if p.spec.homing_rad_per_tick > 0.0:
+		_home(p)
 	var from: Vector2 = p.advance()
 	var best_t: float = 2.0
 	var victim: RangeTarget = null
@@ -115,6 +120,25 @@ func _step_projectile(p: Projectile) -> void:
 		_end(p, victim, from.lerp(p.pos, best_t))
 	elif p.spent():
 		_end(p, null, p.pos)
+
+
+## A homing round turns toward the nearest living target of the other side ahead of it, by at
+## most its turn rate (the real fight's FightReach.home, on range targets).
+func _home(p: Projectile) -> void:
+	var dir: Vector2 = p.vel.normalized()
+	var best: RangeTarget = null
+	var best_d: float = FightReach.HOME_RANGE_M
+	for t: RangeTarget in targets:
+		var to: Vector2 = t.pos - p.pos
+		var d: float = to.length()
+		var ahead: bool = d > 0.01 and dir.dot(to / d) >= FightReach.HOME_CONE_COS
+		if t.alive() and t.team != p.team and d < best_d and ahead:
+			best_d = d
+			best = t
+	if best != null:
+		var turn: float = dir.angle_to(best.pos - p.pos)
+		var most: float = p.spec.homing_rad_per_tick
+		p.vel = p.vel.rotated(clampf(turn, -most, most))
 
 
 func _end(p: Projectile, victim: RangeTarget, at: Vector2) -> void:
