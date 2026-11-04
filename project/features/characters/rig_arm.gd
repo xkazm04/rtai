@@ -9,6 +9,14 @@ extends RefCounted
 ## counter-swing grows by SPRINT_PUMP and the hands pull in toward the body by SPRINT_TUCK.
 const SPRINT_PUMP: float = 0.5
 const SPRINT_TUCK: float = 0.35
+## The riot shield's print scale over its part (thickness across the arm, span along the body):
+## at 1:1 the crescent read as a thin line at 48 px/m (showcase REQUEST 22); 1.9 x 1.45 is a slab.
+const SHIELD_THICK: float = 1.9
+const SHIELD_SPAN: float = 1.45
+## Where the slab's centre sits (arm-parent px): this far ahead of the hand, pulled this share of
+## the way from the hand's line to the body's midline, so it covers the chest, not the shoulder.
+const SHIELD_AHEAD: float = 40.0
+const SHIELD_MID: float = 0.75
 
 
 static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
@@ -123,8 +131,10 @@ static func _hand(rig: CutRig, side: RigLimbs, fore_draw: float) -> void:
 			cell = p.hand_closed
 		_cell(rig, side.hand, cell, 2, side)
 	if side.shield != null:
-		side.shield.scale = Vector2(1.0 / maxf(fs, 0.3), 1.0)
+		side.shield.scale = Vector2(SHIELD_THICK / maxf(fs, 0.3), SHIELD_SPAN)
 		side.shield.rotation = -side.fore.rotation
+		var at: Vector2 = Vector2(side.j_hand.x + SHIELD_AHEAD, side.j_hand.y * (1.0 - SHIELD_MID))
+		side.shield.position = side.fore.transform.affine_inverse() * at
 		side.shield.visible = rig.variant.shield and rig.c_sprawl < 0.5
 
 
