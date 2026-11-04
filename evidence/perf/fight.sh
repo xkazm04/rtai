@@ -1,7 +1,7 @@
 #!/bin/bash
 # fight.sh <label> [extra engine args...]: reel chapter 18's city block fight (the reel's bot and
 # loadout, 32 px/m), real time, FightFrames log -> evidence/perf/<label>.json (+ .log).
-# EXE=1 runs the exported release (build/export/windows/RTAI.exe) instead of the editor binary;
+# EXE=1 runs the exported release (build/export/$EXE_DIR/RTAI.exe, default windows) instead of the editor binary;
 # TICKS=<n> (default 2100, the reel film's length) ends the run at that sim tick.
 # UARGS="--spans=<json>" adds game (user) args, e.g. the per-node span probe.
 set -u
@@ -14,7 +14,7 @@ USER_ARGS=(--bot=reel --ppm=32 --clean --rigs --arena=city --reel=pit --riot
   --loadout=pistol,plasma_rifle,rocket_launcher,molotov
   --frames=$(pwd -W)/evidence/perf/$L.json --frames-ticks=${TICKS:-2100} ${UARGS:-})
 if [ "${EXE:-0}" = 1 ]; then
-  build/export/windows/RTAI.exe --rendering-driver d3d12 --resolution 1280x720 "$@" -- "${USER_ARGS[@]}" > evidence/perf/$L.log 2>&1
+  build/export/${EXE_DIR:-windows}/RTAI.exe --rendering-driver d3d12 --resolution 1280x720 "$@" -- "${USER_ARGS[@]}" > evidence/perf/$L.log 2>&1
 else
   "$G" --rendering-driver d3d12 --resolution 1280x720 "$@" --path project res://dev/arena/arena.tscn -- "${USER_ARGS[@]}" > evidence/perf/$L.log 2>&1
 fi

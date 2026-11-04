@@ -171,3 +171,68 @@ NEXT:
   DELETED, not kept. Desktop capture on the shared machine is not safe for evidence while the owner
   is at the desk. Next: film real time only when the desktop is idle, or capture inside the
   engine (a viewport-texture grab every frame costs ~ms, so measure it, then label the film with that cost).
+
+## Iteration 3 (14:19-15:19), BUILD
+
+Rules applied: STANDARDS section 20 (bench), AGENTS top rules (dev-only probe code in `project/dev/`,
+typed GDScript), the brief's "optimise only what the profile proves" and "look unchanged".
+Bench lock held by perf-city from 14:20. The machine is about 52 % CPU busy without any Godot
+(docker, three node runners, launchers), so **every number below is CONTENDED** even though no
+other Godot ran.
+
+### 14:20 Cold shader cache: not the hitch source (exported release, vsync off, CONTENDED)
+- cold-exe-1 (fresh APPDATA, empty shader cache): first frame 59.8 ms (12 pipelines), the later
+  pipeline compiles at ticks 20/324/389/390/448 cost 2-8 ms frames, same as warm. Hitches of
+  28-76 ms had 0 pipelines (draw/present or pump). warm-exe-1 straight after: p99 10.7 (5.9 at
+  13:40 uncontended): the background load, not the cache.
+
+### 14:25-14:50 MILESTONE: per-system profile (NodeSpans, `--spans=<json>`, commit 47774726 + fix)
+- `project/dev/bench/node_spans.gd`: every processing node gets a strictly increasing priority in
+  its own process order, with a mark before each one (the order and so the fight are unchanged).
+  The flush is split on the CanvasItem `draw` signal; hooks are added on `node_added`.
+- FRICTION/lesson: Godot 4 emits `draw` BEFORE the script's `_draw`, so the first cut charged each
+  redraw to the NEXT item (kill_char_fx looked like 1 ms; stubbing its _draw out did not move
+  the row). Fixed: an interval belongs to the item whose signal opened it.
+- The city fight, editor, vsync on (60 fps, 1500 ticks), mean / p99 ms per frame (spans-fixed):
+  | system | mean | p99 |
+  |---|---|---|
+  | world.gd (sim tick + nav, the World loop) | 1.27 | 1.64 |
+  | draw: arena_floor_view.gd (the city block's barriers, cones, rings) | **1.00** | 1.70 |
+  | draw: fx_view.gd (gun FX: shells, smoke, tracers, impacts) | 0.91 | 2.87 |
+  | character_rigs.gd (rig posing) | 0.72 | 1.21 |
+  | city_view.gd | 0.59 | 0.90 |
+  | arena_rigs.gd | 0.33 | 0.45 |
+  | collect_call_view.gd | 0.15 | 0.23 |
+  | city_blood / kill_view / blood_fx / corpse_fade / kill_char_fx | < 0.1 each | |
+- A tried `KillCharFx` skip for spent burns showed no gain, so it was reverted (the cost was never there).
+
+### 14:50 Fix 1: ArenaFloorView prints the city block's static props once
+- The floor `_draw` issued 27 props (barrier runs with a joint every 2 m, cones) and the crowd rings
+  every frame: 0.43-0.64 ms, plus 19 target rings at 0.32-0.44 ms (editor build).
+- On the city block (only there) the props and crowd rings now draw once on a `show_behind_parent`
+  child with `use_parent_material` (the same draw order under the cars and rings, the same print).
+  The dock arena keeps the old path. Props and spawns are built at load and never mutated.
+- Pixel check: 420 fixed-fps frames (reel ch 18 args, 1280x720) rendered with the old and the
+  new file are **pixel-identical** (0 frames with any differing pixel); frame 398 looked at: the
+  barrier runs, joints, crate rows and cones are there. Commit 6b41019f; decisions line added.
+- Editor spans (CONTENDED, CPU 93 % mid-run): floor 1.00 -> 0.69 ms mean, p99 1.70 -> 1.18; every
+  other row rose 8-10 % in the same run.
+- **Exported release** (windows-showcase, vsync on, 1500 ticks, interleaved pre/post exes that both
+  carry NodeSpans; CONTENDED), evidence/perf/rel-*.json:
+  | run | floor _draw mean | p99 | all spans mean | frame p99 | > 33 ms after 1 s |
+  |---|---|---|---|---|---|
+  | pre | 1.006 | 1.46 | 5.09 | 21.8 | 0 |
+  | post | **0.612** | 0.98 | 4.52 | 24.9 | 0 |
+  | pre2 | 0.767 | 1.27 | 3.92 | 20.2 | 2 |
+  | post2 | **0.483** | 0.90 | 3.65 | 20.6 | 2 |
+  -0.29 to -0.39 ms per frame on the floor (about -38 %). The vsync-on frame p99 (20-25 ms) is
+  the machine (93 % CPU from other processes), not this fight's work, so it cannot move with a
+  0.3 ms fix. Unit 938/938 after the fix (one throwaway FxView probe was in the tree for part of
+  that run and has been restored; lint runs on every commit: 13/13).
+
+### 14:46 FxView: where its 0.9 ms goes (throwaway probe, not committed)
+- draw_under (ground scuffs <= 24, live 240 ticks; shells/mags <= 48) grows over the fight to
+  ~0.4 ms+; draw_over (smoke, impact sparks, muzzle) ~0.1; GunFx.step ~0.02. FightScorch had
+  0 marks in this stretch (checked, so no scorch work). Scuffs and shells are many small native draw calls:
+  no identical-pixel shortcut found in the time left. Candidate next: print each scuff once to a
+  ground layer while it holds full alpha (it fades only in its last 60 ticks).
