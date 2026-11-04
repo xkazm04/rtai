@@ -109,20 +109,28 @@ during the riot/drive48vsync part.
 6. Film: BEFORE real-time film + graph done (before-rt-vsync). There is no "after": no code change
    to the fight. The owner's ch 18 "lag" is the still stretch (clip + Call for the owner).
 
+### 14:06-14:12 MILESTONE: on main the ch 18 dead time is mostly gone already
+- Fixed-fps film of HEAD (a1275c82) with reel.sh's exact args, cut at reel.sh's 16 s offset:
+  **49 still frames (0.8 s) in 15 s vs 210 (3.5 s) in reel-1012's chapter 18** (same metric:
+  YDIF < 2.5 over the play area). Rivet's 50 % speed-up (6e3b5fa5) took out most of the
+  wave-gap idling. Clips: ch18-head-fixedfps.mp4 (drop-in chapter), ch18-ab-reel1012-vs-head.mp4.
+- Gates on this branch: lint 13/13, unit 938/938 (14:10).
+
 ## Calls for the owner (draft for REPORT)
 - perf-city-1, reel ch 18: the "lag" is 2.4 s + 0.9 s where no guard stands (between pit waves),
   not frame cost. Options: (a) re-cut ch 18 from a window with no wave gap (film edit only),
   (b) the reel bot walks Rivet toward the next wave's door during the gap (dev bot only),
-  (c) shorter pit wave gap on the city block (gameplay data). Default if no answer: (a).
+  (c) shorter pit wave gap on the city block (gameplay data). Default if no answer: (a), and on
+  main (a) is nearly free: the same cut is down to 0.8 s of stillness (ch18-ab-reel1012-vs-head.mp4).
   Clip: gtai-masters/d6/perf-city/ch18-still-stretch-reel1012.mp4 vs before-rt-vsync.mp4.
 
 NEXT:
 - Riot re-run ALONE under the bench lock with nothing else running (`node tools/bench/run.mjs --runs=3`
   or the riot scenario only). 7.61 ms was partly contended; if it holds clean, bisect 9ebc5918..a1275c82
   on the riot (evidence/riot-bisect has the old tooling).
-- Build option (a) for perf-city-1: find a 15-20 s window of the city fight with no wave gap
-  (FightFrames tick log + the pit wave log), film it in real time (film_rt.sh) and fixed-fps, and
-  put the pair in frames.json.
+- perf-city-1 (a): the fixed-fps HEAD cut exists (ch18-head-fixedfps.mp4). Still to do: film the
+  same window in REAL TIME (film_rt.sh, mapping ticks 960-1860 to wall time via the FightFrames
+  tick log) UNCONTENDED, and tell the Director the next reel can use the HEAD cut.
 - If a hitch shows flush > 10 ms again: find the deferred call (CombatBlood `_bleed_killed.call_deferred`
   and friends) with a --verbose run.
 - The first frame's 12 pipeline compiles in the arena-city path (35-58 ms): pre-warm like
