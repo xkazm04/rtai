@@ -207,3 +207,4 @@ func test_the_electro_arc_has_a_bold_ink_stroke_under_its_paper() -> void:
 	assert_true(WeaponFxElectro.arc_ink, "on by default (--arc-ink=off is the before)")
 	assert_gt(WeaponFxElectro.ARC_INK_M, 0.0, "the ink outline is thickened round the paper arc")
 	assert_eq(WeaponArt.new().fx_frames(&"arc").size(), 3, "three arc frames to ink")
+	assert_true(WeaponFxRay.ray_ink, "the ray hoops get the same ink (--ray-ink=off is the before)")
