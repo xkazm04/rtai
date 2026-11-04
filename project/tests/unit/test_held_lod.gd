@@ -1,9 +1,24 @@
 extends GutTest
-## features/combat/weapons/art/held_lod.gd: the kinetic guns draw their re-toned `small` cell in
+## features/combat/weapons/art/held_lod.gd: the held weapons (all but the molotov, the
+## flamethrower and the plasma sword, which print light already) draw their re-toned `small` cell in
 ## the claw below held_small_below_ppm (the print's posterize zoom) and their full art above it,
 ## on the same canvas and grip, rim included; `--held-small=off` keeps the full art.
 
-const KINETIC: Array[StringName] = [&"pistol", &"machine_pistol", &"hand_cannon", &"gloria"]
+const RETONED: Array[StringName] = [
+	&"pistol",
+	&"machine_pistol",
+	&"hand_cannon",
+	&"gloria",
+	&"rocket_launcher",
+	&"electro_gun",
+	&"katana",
+	&"electro_baton",
+	&"plasma_rifle",
+	&"chainsaw",
+	&"ray_gun",
+	&"homing_shard",
+	&"mini_nuke"
+]
 
 var _view_was: float = 0.0
 
@@ -17,11 +32,11 @@ func after_each() -> void:
 	HeldLod.enabled = true
 
 
-func test_kinetic_guns_swap_to_the_small_cell_at_gameplay_zoom() -> void:
+func test_held_weapons_swap_to_the_small_cell_at_gameplay_zoom() -> void:
 	var art: WeaponArt = WeaponArt.new()
 	assert_gt(art.held_small_below_ppm, 48.0, "48 px/m draws the small cell")
 	assert_lt(art.held_small_below_ppm, 64.0, "64 px/m keeps the full art")
-	for id: StringName in KINETIC:
+	for id: StringName in RETONED:
 		var held: HeldLod = art.make_held(id) as HeldLod
 		assert_not_null(held, "%s held part is a HeldLod" % id)
 		if held == null:
@@ -45,9 +60,31 @@ func test_off_flag_and_other_weapons_keep_the_full_art() -> void:
 	held._pick()
 	assert_eq(held.texture, held.full, "--held-small=off")
 	held.free()
-	var tube: Sprite2D = art.make_held(&"rocket_launcher")
-	assert_false(tube is HeldLod, "no small cell: a plain sprite")
-	tube.free()
+	var bottle: Sprite2D = art.make_held(&"molotov")
+	assert_false(bottle is HeldLod, "no small cell: a plain sprite")
+	bottle.free()
 	var mag: Sprite2D = art.make_held(&"pistol", "mag")
 	assert_false(mag is HeldLod, "extra parts stay plain")
 	mag.free()
+
+
+func test_an_empty_tube_set_by_a_view_maps_to_its_small_cell() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	var held: HeldLod = art.make_held(&"rocket_launcher") as HeldLod
+	var hollow: Texture2D = art.part_texture(&"rocket_launcher", "empty")
+	var hollow_small: Texture2D = art.part_texture(&"rocket_launcher", "empty_small")
+	assert_not_null(hollow_small, "the empty tube has a small cell")
+	PartMaterials.view_px = CutRig.SC * 1.5
+	held._pick()
+	held.texture = hollow  # what HeldTube.apply does after the shot
+	held._pick()
+	assert_eq(held.texture, hollow_small, "the empty tube, small at 48 px/m")
+	held._pick()
+	assert_eq(held.texture, hollow_small, "stable frame to frame")
+	held.texture = art.held_texture(&"rocket_launcher")  # reloaded
+	held._pick()
+	assert_eq(held.texture, held.small, "loaded again: the small loaded tube")
+	PartMaterials.view_px = CutRig.SC * 2.0
+	held._pick()
+	assert_eq(held.texture, held.full, "64 px/m: full art")
+	held.free()

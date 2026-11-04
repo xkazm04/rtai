@@ -11,7 +11,8 @@ with the body lifted into Rivet's tone budget: a luminance curve that keeps the 
 red lead (never crosses the vermilion gate) and real vermilion (hazard bands) stays vermilion.
 WeaponArt.make_held swaps to it below `held_small_below_ppm` (weapon_art.json).
 
-    python tools/art/held_small.py <weapon_art_dir> [ids...]
+    python tools/art/held_small.py <weapon_art_dir> [ids...]   (default: every row but SKIP;
+        a held_empty.png gets a held_empty_small.png lifted by its held part's median)
     python tools/art/held_small.py --sim <out.png> <weapon_art_dir> [ids...]   (print preview)
 """
 
@@ -27,14 +28,23 @@ SOFT = 34.0  # luminance band over which the lift fades in above KEEP_INK
 FLAT = 0.45  # the body's tone spread around TARGET_MID (1 = as drawn): flatter reads cleaner small
 EDGE = 9  # part px of ink inked along the silhouette (about 1 screen px at 48 px/m)
 LW = np.array([0.299, 0.587, 0.114])
+# Already light at 48 px/m (print sim, iteration 12): the molotov's bottle and the plasma sword's
+# blade. The flamethrower's thin wand prints DARKER re-toned (the ink edge swallows it).
+SKIP = ("molotov", "flamethrower", "plasma_sword")
 
 
-def retone(rgba):
+def body_mid(rgba):
+    a = rgba.astype(float)
+    lum = a[..., :3] @ LW
+    return float(np.median(lum[(a[..., 3] > 128) & (lum > KEEP_INK)]))
+
+
+def retone(rgba, mid=None):
+    """mid: the body median to lift from (default this part's own; the empty tube uses its held's)."""
     a = rgba.astype(float)
     rgb, alpha = a[..., :3], a[..., 3]
     lum = rgb @ LW
-    body = (alpha > 128) & (lum > KEEP_INK)
-    mid = float(np.median(lum[body]))
+    mid = body_mid(rgba) if mid is None else mid
     want = TARGET_MID + (lum - mid) * FLAT
     w = np.clip((lum - KEEP_INK) / SOFT, 0.0, 1.0)
     out = rgb + ((want - lum) * w)[..., None]
@@ -89,10 +99,10 @@ def main(argv):
     if argv and argv[0] == "--sim":
         sim, argv = argv[1], argv[2:]
     root = Path(argv[0])
-    ids = argv[1:] or ["pistol", "machine_pistol", "hand_cannon", "gloria"]
     import json
 
     rows = {r["id"]: r for r in json.loads((root.parents[3] / "data/tables/weapon_art.json").read_text())["weapons"]}
+    ids = argv[1:] or [w for w in rows if w not in SKIP]
     tiles = []
     for wid in ids:
         src = root / wid / "held.png"
@@ -100,6 +110,10 @@ def main(argv):
         small, lift = retone(rgba)
         if sim is None:
             Image.fromarray(small).save(root / wid / "held_small.png", optimize=True)
+            empty = root / wid / "held_empty.png"
+            if empty.exists():
+                hollow = np.asarray(Image.open(empty).convert("RGBA"))
+                Image.fromarray(retone(hollow, body_mid(rgba))[0]).save(root / wid / "held_empty_small.png", optimize=True)
             print(f"{wid}: lift {lift:+.0f}")
             continue
         r = rows[wid]
