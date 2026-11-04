@@ -399,3 +399,7 @@ NEXT (iteration 4):
 5. City reel again with the floor glue (`--arena=city`, 32 px/m), and decide the walls.
 6. The 17 m/s snap in the plain reel (old NEXT 6): a scenario-side probe.
 - 03:40 session end: all work committed; frames.json 14 entries; scratch sheets deleted.
+- 03:44 GATES of record r4 (HEAD 6b1de248, evidence run --no-bench --no-parity): lint 13/13,
+  unit 773/773, scenarios 37/37, selftest PASS (look goldens 11/11, block 5/5, the two new 48 px/m
+  debt rows hold the flicker: 8 px <= 12, 16 px <= 24). Parity bit-exact from the 03:20 run (no
+  sim change since). NEXT 1 done; evidence/r4/selftest-r4b.json.
