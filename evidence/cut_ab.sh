@@ -10,4 +10,4 @@ lab() { echo "drawtext=fontfile=$FONT:text='$1':x=12:y=10:fontsize=22:fontcolor=
 V="trim=start_frame=$F0:end_frame=$F1,setpts=$SL*(PTS-STARTPTS),crop=640:360:$X:$Y"
 ffmpeg -loglevel error -y -i "$B" -i "$A" -filter_complex \
 "[0:v]$V,$(lab BEFORE)[b];[1:v]$V,$(lab AFTER)[a];[b][a]hstack,drawtext=fontfile=$FONT:text='$CAP':x=(w-tw)/2:y=h-34:fontsize=20:fontcolor=white:box=1:boxcolor=black@0.6:boxborderw=6,fps=60,format=yuv420p" \
--c:v libx264 -crf 18 -preset medium "$O"
+-an -c:v libx264 -crf 18 -preset medium "$O"
