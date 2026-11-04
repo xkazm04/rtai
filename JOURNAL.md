@@ -62,6 +62,11 @@ Evidence: `evidence/n5-cast/` (in git) and `C:\Users\kazda\kiro\gtai-masters\n5\
   - Watch out: `test_hauler_form` asserts that tank.size_k / base.size_k = the body-table radius ratio. Changing the
     base size_k means scaling `FORM_HAULER`'s 2.6 with it (2.6 = 1.2 x 0.9 / 0.42).
 
+- 17:30 parity at 54465125: native == GDScript bit for bit over 1200 steps, and the planted mutation was caught at
+  step 629 (render-only, as expected). Gates on this head: lint 13/13, unit 940/0, scenarios 46/0 (at 28becde8;
+  leg_w is a no-op since), parity exact, look goldens re-blessed. Not run: the full `tools/evidence/run.mjs` and the
+  bench.
+
 NEXT (iteration 3):
 1. Run `node tools/evidence/run.mjs --no-bench` on the committed head (parity should be exact: render only). If the
    block goldens fail, check them the same way as the look goldens.
@@ -76,3 +81,15 @@ NEXT (iteration 3):
    cells; the slicers are `d4/cutout/tools/slice_v2.py` and `night/d5-close/tools/slice_d5.py`). Codex edit of those
    sheets toward r2_c3 (lean piston limbs, a work-plated torso), under `gtai-n5/image.lock`, and copy gen.mjs into
    scratch. The D5 overlay must keep the D4 alpha (RigDetail silhouette lock): regenerate or drop the D5 rivet set.
+   - Pipeline notes (read 17:30): `slice_v2.py` assigns parts by TEMPLATE CELL (grid 3x2 per sheet; roles in
+     `d4/cutout/tools/parts_v2.json`), so components can change shape. It re-measures the joints from the shapes
+     (`slice.joints`) and rescales the whole sheet so the anchor torso spans 297 px. So a Codex edit that keeps every
+     part in its cell (limbs horizontal, joint LEFT) re-slices without hand pivots.
+     - The torso is `reuse_v1` (from v1). A work-plated torso needs that flag dropped and a torso cell.
+     - The arms sheet cells: anchor, upperarm, forearm, forearm_torch, upperarm_endon, forearm_endon. The legs: anchor,
+       thigh, shin, foot_flat, foot_toeoff. The hands: anchor, claw_open, claw_closed, claw_pistol, pistol, hose.
+     - Copy slice_v2.py and slice.py into `gtai-masters/n5/cast/tools/`; never edit the d4 originals. Write the output
+       to this worktree's `art/rivet/` (D4) and handle `art/d5/rivet/` (restyle with slice_d5's alpha lock, or delete
+       the D5 rivet parts so RigDetail falls back to D4 per part).
+   - Do not start a Codex job in the last 15 min of a session: a killed session leaves `gtai-n5/image.lock` held.
+
