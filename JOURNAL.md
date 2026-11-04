@@ -129,3 +129,25 @@ NEXT (iteration 2), Tonnage first (depth before breadth), then Dent:
 Session state 00:38: head = this commit, tree clean, no Godot process of mine running, image.lock released by the
   runner at 00:03 (one job, 58 s). NEXT (iteration 2) is the list above (00:27), item 3 now: the in-between pose as
   plates folding + stamp dust; steam and seams are done (v2).
+
+## Iteration 2 (00:39-01:39, BUILD)
+- 00:40 MERGE n5-cast 91aac1aa (18f49782: plan-view peds, re-blessed look goldens) and n6-ghost-powers b4634624
+  (087898ae: Dent's attacks, DentView, DentBeat). JOURNAL.md/REPORT.md kept ours both times; lint 13/13 on both.
+- MILESTONE 56406f67 GhostPilot (features/souls/ghost_pilot.gd) on StagePilot: one SoulPowers behind GhostForms,
+  HaulerStage + DentStage `share()` it (their own activate/tick skipped; Dent's let-go never ends the form).
+  Q = transform / back, G = pick next (base) / switch (form). Attacks only while settled (ghost-powers REQUEST 2
+  items 1-3 done here: the Tonnage gate, Dent seize on fire, one power at a time). DentBeat re-timed: G at 40,
+  Q at 42, fire at 80. test_hauler_stage waits enter_s before the stomp; new test_ghost_pilot 4/4 (enter/settle,
+  switch + exit + check(), mid-morph refusal, Kerf faster than the walk). scenario_ghost_attacks 1/0.
+  DECISIONs (decisions.md): the input (Q/G, rejected radial + key-per-form), one SoulPowers for every ghost.
+- GhostFormView (features/souls/ghost_form_view.gd) attached by ArenaRigs (one line): TonnageRig + GhostMorphFx on
+  the actor layer at Rivet's pose; Rivet's CutRig + RivetHeldView/WeaponMagView hidden while the big body stands in;
+  the gait on sim ticks (lint SIM-01 caught a frame-delta read).
+- 00:52 PROOF Tonnage live, `--bot=ghosts` windowed 1000 frames: arena 32 and 64 px/m and `--arena=city` 32 px/m,
+  each 10/10 down, 0 SCRIPT ERROR (`E/ghosts-tonnage-live-32.json`, `-64`, `E/ghosts-tonnage-city-32.json`).
+  M: `tonnage-live-arena-32ppm.mp4` (16 s), `tonnage-live-arena-64ppm-slow3x.mp4`, `tonnage-live-city-32ppm.mp4`,
+  `frames/tonnage-live-before-after-target-32ppm.png` (ghost-powers' before at the same ticks | after | concept),
+  `frames/tonnage-live-arena-64ppm-keys.png`, `frames/tonnage-live-city-wave2-32ppm.png`. First film showed Rivet's
+  gun drawn on top of the press: fixed (held/mag views hidden while big). Judged: the press reads as a 3x body among
+  the cops at 32 px/m and turns onto wave 2 in the city; the slam now lands ~54 ticks later than before (attacks
+  wait for the settled form). Not done: the camera beat (GhostFormView.beat_zoom is computed, no host reads it yet).

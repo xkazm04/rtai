@@ -98,3 +98,6 @@ func _hide_rivet(hide: bool, rivet_id: int) -> void:
 	_hidden_rig = rig
 	if rig != null:
 		rig.visible = not hide
+	for n: Node in get_parent().get_children():  # the claw's weapon and magazine views
+		if n is RivetHeldView or n is WeaponMagView:
+			(n as CanvasItem).visible = not hide
