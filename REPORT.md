@@ -20,7 +20,8 @@ Paths below are relative to the masters folder unless they start with `evidence/
 - The pit's dev camera keeps a fresh corpse in frame for 3 s (the 04:00 aftermath rule); `--zoom=` films 48/64 px/m.
 - 48 px/m re-films for the 04:00 rule: `pit_burn_death_48ppm.mp4` (+ sheet; the victims die near the frame edge
   because Rivet stands still, and the old flame stars still hide the burning body) and `riot_crowd_48ppm.mp4` (the city
-  riot: 20 cowers, 3 trips, 12 deaths, the same counts as before).
+  riot: 20 cowers, 3 trips, 12 deaths, the same counts as before). `pit_blast_death_48ppm_sheet.png` replaces the 32 px/m
+  blast sheet (thrown, a twisted landing, red, 2 s of aftermath).
 - Full evidence on `035435e7` (code = `530830e9`; `tools/evidence/run.mjs --no-bench --allow-dirty`): lint 13/13, unit
   754/754 (the run's verdict reads FAIL only because I edited REPORT.md during it: "tree changed during run"),
   scenarios 33/33, parity bit-exact (mutation caught at step 629), look goldens 11/11 (worst 1.87), block 5/5 (worst
