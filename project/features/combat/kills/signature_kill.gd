@@ -4,12 +4,15 @@ extends RefCounted
 ## a human. Speeds in m/s, spin in deg/s, timings in 60 Hz ticks. Missing optional fields keep
 ## the defaults below, so a new style can land with only its own keys.
 
-## Gib parts (0-5), or the whole body in one piece plus the cap knocked off it (6-7).
+## Gib parts (0-5), or the whole body in one piece plus the cap knocked off it (6-7), or the
+## body cut in two along a blade's line (8-9, the split style).
 const PIECE_IDS: PackedStringArray = [
-	"head", "torso", "arm_l", "arm_r", "leg_l", "leg_r", "body", "hat"
+	"head", "torso", "arm_l", "arm_r", "leg_l", "leg_r", "body", "hat", "half_a", "half_b"
 ]
 const BODY: int = 6
 const HAT: int = 7
+const HALF_A: int = 8
+const HALF_B: int = 9
 
 var id: StringName = &""
 var weapon: StringName = &""
@@ -32,6 +35,12 @@ var spray_cone_deg: float = 0.0
 var stand_ticks: int = 0
 var crumble_ticks: int = 0
 var ash_m: float = 0.0
+## The split style's cut: degrees between the blow's approach and the cut line (the slash runs
+## diagonally shoulder to hip; the sign alternates kill by kill).
+var cut_deg: float = 0.0
+## The chainsaw's grind: ticks the cut body stays held together, shaking and spraying, before
+## the halves fall apart (0 = they leave at once).
+var grind_ticks: int = 0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -58,6 +67,8 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.stand_ticks = roundi(_num(t, d, "stand_ticks", 0.0))
 	k.crumble_ticks = roundi(_num(t, d, "crumble_ticks", 0.0))
 	k.ash_m = _num(t, d, "ash_m", 0.0)
+	k.cut_deg = _num(t, d, "cut_deg", 0.0)
+	k.grind_ticks = roundi(_num(t, d, "grind_ticks", 0.0))
 	return k
 
 

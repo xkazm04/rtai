@@ -3,7 +3,10 @@
     "by_style": {
       "gib": 17
     },
-    "signature_kills": 17
+    "signature_kills": 17,
+    "view_avg_us": 3497,
+    "view_frames": 780,
+    "view_worst_us": 60596
   },
   "cars": {
     "damaged": 0,

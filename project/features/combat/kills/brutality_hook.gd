@@ -30,7 +30,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if not gun.is_empty():
 		arm(stage, ctx, StringName(gun))
 	if ArenaArgs.parse().has("--sig-lab"):
-		open_lab(stage)
+		open_lab(stage, StringName(gun))
 
 
 ## Hands Rivet the weapons.json gun `weapon` (the dev arg --sig-gun, or a scenario).
@@ -41,9 +41,14 @@ func arm(stage: ArenaStage, ctx: WorldContext, weapon: StringName) -> void:
 		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
 
 
-## Lines the KillLab guards up in front of Rivet (the dev arg --sig-lab, or a scenario).
-func open_lab(stage: ArenaStage) -> void:
+## Lines the KillLab guards up in front of Rivet (the dev arg --sig-lab, or a scenario); with a
+## melee `weapon` (melee_weapons.json) Rivet lunges and slashes instead of firing.
+func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab = KillLab.new()
+	var row: SignatureKill = kills.table.for_weapon(weapon)
+	var blade: bool = MeleeTable.weapon_ids().has(weapon) or (row != null and row.style == &"split")
+	_lab.blade = weapon if blade else &""  # a split row's weapon is a blade (the plasma sword)
+	_lab.hold_ticks = row.hitstop_ticks + row.grind_ticks if row != null else 0
 	_lab.setup(stage)
 
 
