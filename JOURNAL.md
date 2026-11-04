@@ -970,3 +970,21 @@ NEXT (iteration 11, in order):
   15 s, 0 script errors; still `ring_char_13s_32ppm.png`): looked at: a ragged burnt band under the
   flames; the edge strokes are a little busy at this size, read as ink. Unit 745/745
   (`evidence/n10/unit-b.log`). REPORT gunplay-8 points at the new clip.
+- 07:16 scenarios 29/29 at 3d85efbe (`evidence/n10/scenarios-c.log`). REPORT draft: gates
+  section filled as of 3d85efbe (lint 13/13, unit 745/745, scenarios 29/29, parity bit-exact on
+  47476501 with no native/city-sim change since, selftest's accent audit = the known blood-edge
+  class, bench CONTENDED only).
+- Session end ~07:17: every Godot run of mine was foreground or a finished background job and
+  has exited; no bench.lock or image.lock taken this iteration; scratch holds only cap.sh,
+  city.sh, reel.sh, grid.py, sheet.py, killsheet.py. frames.json: 15 entries, all files checked.
+- Shared files touched this iteration: none (gun_fx.gd / gun_fx_art.gd / fight_areas_art.gd are
+  this lane's; docs/decisions.md one DECISION line).
+
+NEXT (iteration 12 / report phase, in order):
+1. REPORT: re-run the gates on the final head and update "Gates of record"; check every
+   MASTERS path in the REPORT exists; calls gunplay-7..13 stand as drafted.
+2. If time: the burnt marks' lifetime (HOLD_TICKS 900) in a long fight: watch a 40 s molotov city
+   run for clutter (24 marks cap); lower HOLD_TICKS if the paving reads dirty.
+3. If human-reactions still sees blood columns on their board after cherry-picking 269deba4:
+   raise spray_tilt_min_deg (one value).
+4. The idle riot bench of record stays the Director's (the machine was contended all night).
