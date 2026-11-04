@@ -414,3 +414,27 @@ windows-pre (before fixes 1-3) vs windows-gnd (= f1c15f46, fixes 1-3), 2100 tick
   (the evidence above). A test would need a full RivetCarry; it is owed.
 - 16:33 Gates with fix 4: lint 13/13, unit 938/938, scenarios 46/46 (exit 0). The pixel compare (fixed7 =
   HEAD before fix 4 vs fixed7w, the same fixed-fps run with fix 4) is rendering.
+- 16:44 Fix 4 pixel check: fixed7 (before) vs fixed7w (after), 512 frames (every 5th, plus every frame
+  from 1985, which covers the first draw at tick 2019): **0 differing**. Release with fix 4 (build/export/windows-warm),
+  vsync on, rt7-warm-1: tick 2019 process **2.7 ms** (9.9-19.2 in the four rt7 release runs). That run's
+  other numbers (p99 24.7, 8 frames over 33 ms) are void: it ran beside my own pixel compare
+  and the other lane (SELF-CONTENDED).
+- Scratch deleted: /tmp/fx7, /tmp/fx7w (4.2k PNGs), the probes, build/export/windows-{age,cull}. Kept
+  (git-ignored): windows-pre (before 1-3), windows-gnd (1-3), windows-warm (1-4). Bench lock released 16:45.
+- Rules applied: STANDARDS section 20, AGENTS top rules 2/3 (typed, warm() <= 40 lines, file 271 < 300),
+  the brief's "look identical" (exact pixel compare, so no re-bless), "optimise only what the profile proves" (18/18
+  logs + NodeSpans). There was no design fork, so no registry subject was needed.
+
+NEXT (iteration 8):
+- UNCONTENDED re-check, still owed (the machine was 59-97 % busy all day): release windows-warm, vsync off, 3 runs
+  (`EXE=1 EXE_DIR=windows-warm bash evidence/perf/fight.sh <l> --disable-vsync`), and the riot + drive
+  bench against their records (`node tools/bench/run.mjs`) under the bench lock.
+- Fix 4 has no unit test yet: RivetHeldView.warm() with a real RivetCarry (ArenaArsenal.arm) should leave
+  `art._tex` holding the carried guns' held paths.
+- Ground pickups are not warmed (not in the slots at load). If a pickup is filmed, warm the
+  carry.ground drops the same way.
+- Run `node tools/evidence/run.mjs --no-bench` once (selftest look goldens 11/11 + block 5/5) on 60c225ad.
+- Re-film ch18-rt-ab with fix 4 (rt_recon.py; fixed-fps PNG render ~10 min contended, then rt7-warm on
+  a quiet machine). Validate rt_recon against a real desktop capture taken on the primary display only.
+- REPORT Calls for the owner: perf-city-1 (ch 18 still stretch) stands. Add: the 35 ms frame ~4 s after
+  launch (process age, not the fight), informational.
