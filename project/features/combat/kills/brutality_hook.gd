@@ -110,6 +110,8 @@ func attach_view(p_view: Node) -> void:
 	view.reduced_motion = LaunchArgs.has("--reduced-motion")
 	view.rig_lookup = _rig_of
 	view.bind(kills)
+	view.styles.burst_fx.flinch = not ArenaArgs.parse().has("--no-shard-flinch")  # the A/B's before
+	FightShardArt.own_pop = view.styles.burst_fx.flinch
 	layer.add_child(view)
 
 
