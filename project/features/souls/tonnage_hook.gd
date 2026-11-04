@@ -6,6 +6,8 @@ extends ArenaHook
 ## HaulerStage through StagePilot, so quest 1 and the arena share one code path.
 
 var view: TonnageView = null
+## Dent's tether, heat and blast (the same pad hosts the ghosts' views until each has its own).
+var dent_view: DentView = null
 var _stage: ArenaStage = null
 
 
@@ -31,3 +33,11 @@ func attach_view(p_view: Node) -> void:
 	view.hauler = _stage.pilot.hauler
 	view.stage = _stage
 	layer.add_child(view)
+	if _stage.pilot.dent != null:
+		dent_view = DentView.new()
+		dent_view.z_index = RenderLayers.z(&"actors") + 1
+		dent_view.ppm = SimConst.PX_PER_M
+		dent_view.reduced_motion = view.reduced_motion
+		dent_view.dent = _stage.pilot.dent
+		dent_view.stage = _stage
+		layer.add_child(dent_view)
