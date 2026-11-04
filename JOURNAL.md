@@ -252,3 +252,32 @@ other Godot ran.
   | static2 | 0.581 | 1.00 | 4.36 |
   | cull2 | **0.261** | 0.61 | 4.03 |
 - Floor total over both fixes: 0.77-1.01 -> 0.24-0.26 ms a frame (about -0.6 ms, -70 %), release.
+
+### 15:03 Housekeeping
+- d6-combat-notes JOURNAL: no REQUEST addressed to perf-city. The pixel-check renders (/tmp/px-*)
+  and the cold APPDATA dir are deleted. build/export/{windows,windows-pre,windows-cull} are kept
+  (git-ignored): windows-pre has NodeSpans + the old floor, windows-cull = f60cd1f5.
+- There was no design fork, so no registry subject. Rules applied: STANDARDS section 20 + the brief
+  ("look identical": proven by exact pixel compare, so no golden re-bless was needed).
+- No masters clip this iteration. Both fixes are pixel-identical by construction and by the
+  420-frame compare, so a before/after film would show the same pixels. The gain is CPU time
+  (evidence/perf/rel-*.json).
+
+NEXT:
+- Gates on f60cd1f5: see the line below (unit + scenarios were running at 15:03). If they were not
+  logged green, re-run them first. Also run `node tools/evidence/run.mjs --no-bench` once: the
+  selftest's look goldens 11/11 + block 5/5 are the brief's look gate.
+- Profile order now (release, per 60 fps frame): World loop ~1.0 ms, FxView _draw ~0.9 (ground
+  scuffs <= 24 live 240 ticks + shells <= 48: many small native draw calls), CharacterRigs ~0.7,
+  CityView ~0.6, ArenaRigs ~0.3, floor 0.25. Candidate next: FxView's scuffs printed once while
+  at full alpha (they only fade in their last 60 ticks). It must stay pixel-identical: use the
+  /tmp/pxcmp.py method (fixed-fps --write-movie of the reel ch 18 args, exact compare; script text
+  is in this session's log; re-create it, 20 lines of PIL+numpy).
+- The machine was 52-93 % CPU busy without any Godot all session: riot/drive bench vs records
+  still needs a quiet window (bench lock, nothing else heavy). Same for the uncontended
+  frame p99 re-check of the city fight after fixes 1+2 (fight.sh EXE=1 EXE_DIR=windows-cull --disable-vsync).
+- Real-time film of ch 18 (perf-city-1 "after"): desktop capture only when the owner's desktop is idle.
+- (15:06) Gates on f60cd1f5: lint 13/13, unit 938/938, scenarios 46/46 (exit 0). Not run: the
+  evidence runner's selftest (look goldens 11/11, block 5/5). The 420-frame exact pixel compare
+  stands in for it this iteration; run it first next session.
+- Bench lock released 15:07.
