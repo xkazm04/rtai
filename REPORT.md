@@ -1,4 +1,4 @@
-# REPORT (DRAFT, updated 17:55 in iteration 9) - day lane perf-city, 2026-11-04
+# REPORT (final, 18:20 in iteration 10) - day lane perf-city, 2026-11-04
 
 Branch `d6-perf-city`, cut from main `a1275c82`. Clips and graphs are in
 `C:\Users\kazda\kiro\gtai-masters\d6\perf-city\` (`frames.json`, newest and best first).
@@ -33,8 +33,8 @@ that is CONTENDED, and the post-fix uncontended re-check is **still owed**.
 | 1 | ArenaFloorView prints the city block's static props and crowd rings once | floor _draw 1.01 -> 0.61 ms a frame | 420 frames identical |
 | 2 | ArenaFloorView culls off-screen target rings and tracks (3 m margin) | floor 0.57 -> 0.25 ms | 420 frames identical |
 | 3 | FxGround: gun ground marks retained, one child per mark, redrawn only while fading | FxView 0.74 -> 0.41 ms, FxView p99 2.4 -> 0.7 | 900 frames identical |
-| 5 | CorpseStains: each corpse soak prints in one draw call (CircleFan, the engine's circle fan as one triangle array) | riot: 1759 -> 673 draw calls a frame (load-independent), render CPU 1.38 -> 0.73 ms; city fight (reel ch 18): 535 -> 443 draw calls a frame | 921600 px identical; test_circle_fan 4/4 |
 | 4 | RivetHeldView.warm(): the carried guns' art loads at load, not on the first draw | tick 2019 process 9.9-19.2 -> 2.7 ms (the spike was in 18 of 18 logs); tick 1528 5.6-8.5 -> 2.8 (editor 22.0 -> 3.3) | 512 frames identical; test_rivet_held_warm 3/3 |
+| 5 | CorpseStains: each corpse soak prints in one draw call (CircleFan, the engine's circle fan as one triangle array) | riot: 1759 -> 673 draw calls a frame (load-independent), render CPU 1.38 -> 0.73 ms; city fight (reel ch 18): 535 -> 443 draw calls a frame | 921600 px identical; test_circle_fan 4/4 |
 
 Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With vsync on, the canvas flush fell
 2.06 -> 0.86 ms a frame, and frames that skip or repeat a tick (the visible stutter) went from 13/8 to 6/5 per 35 s. Draw calls a frame on the city fight
@@ -70,5 +70,8 @@ Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With v
 - (Informational) The ~35 ms frame ~4 s after launch is process age, not the fight. No action proposed.
 
 ## Owed
-- An UNCONTENDED re-check of fixes 1-4 (release, vsync off, 3 runs), plus riot and drive under the bench lock.
+- An UNCONTENDED re-check of fixes 1-5 (release, vsync off, 3 runs), plus riot and drive under the bench lock
+  (`node tools/bench/run.mjs --runs=1`; the riot JSON now carries drawCallsAvg). The machine never went idle after 13:50.
+- The riot blood's script cost (headless editor, a tick): drop step 540-840 us, CorpseStains 210-260, resolve 150-200.
+  Next lever: a solid-cell grid for BloodFx's wall test (the native cell_at is a copy of the same cells, so identity holds).
 - Validate rt_recon against a real desktop capture on an idle desktop.

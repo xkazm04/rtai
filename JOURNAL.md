@@ -540,3 +540,17 @@ NEXT (report slot 18:40; freeze 18:30):
 - 18:12 MILESTONE: fix 5 on the owner's city fight (reel ch 18, fight.sh, editor, 2100 ticks, 0 script errors): draw calls a frame
   (ticks > 120) **534.7 -> 442.9** (-17 %), p50 572 -> 477, max 704 -> 581. Before = rt7-warm-1 / t2019-warm (fixes 1-4, 534.7 both).
   Draw calls are a count, so this holds under load. Fixes 1-5 together: 557 -> 443 a frame. NEXT's "fix 5 not measured on the city fight" is done.
+
+## Iteration 10 (18:14-18:30), BUILD (16 min to freeze)
+
+- 18:15 read JOURNAL + git log. No bench.lock, but CPU 100 % and the other lane's Godot is up (PIDs 55344/61948, not mine):
+  the uncontended re-check is skipped again. Too little time before the freeze for a new optimisation (the BloodFx solid-cell
+  grid needs a parity-safe build + a pixel compare), so this slot finalises the report.
+- 18:20 MILESTONE: REPORT.md final (no longer DRAFT): fix rows in order 1-5, Owed covers fixes 1-5 uncontended + the riot under
+  the bench lock + the blood script lever. No code changed, so the 18:09 gates on 95936dac + fix 5 stand (60ebabf7 was journal/REPORT only).
+
+NEXT (the report slot, or the next lane session):
+- The report slot only needs a time stamp, unless a later run lands. REPORT is final as of 18:20.
+- First, on an idle machine (bench lock): `node tools/bench/run.mjs --runs=1` (riot + drive, with drawCallsAvg) and 3 release vsync-off
+  runs of the city fight (fight.sh). Compare against the 13:36-13:50 uncontended numbers (p99 5.9-6.6) and the riot's 7 ms limit.
+- Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot). Prove identity with parity + a fixed-fps pixel compare.
