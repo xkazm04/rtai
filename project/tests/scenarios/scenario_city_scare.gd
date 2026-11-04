@@ -7,11 +7,14 @@ extends Scenario
 
 const TICKS: int = 20 * SimClock.TICK_RATE
 const NEAR_M: float = 20.0
-const MIN_FLED: int = 3
+const MIN_FLED: int = 4
+## A fuller street than the block's 120 (the pit plaza is thin), as the --crowd clips.
+const CROWD: int = 420
 
 
 func run(_tree: SceneTree) -> String:
 	var s: ArenaSession = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, true)
+	s.city.spawner.targets = CityTargets.street(CROWD, 0, 0)
 	s.world.loop().set_input(ArenaRangeBot.new(s.stage, s.actions))
 	s.world.loop().start_recording()
 	var fled: int = _play(s)
@@ -28,6 +31,7 @@ func run(_tree: SceneTree) -> String:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var again: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, true)
+	again.city.spawner.targets = CityTargets.street(CROWD, 0, 0)
 	var divergence: String = again.world.verify_replay(log)
 	again.world.free()
 	bus.free()
@@ -62,6 +66,7 @@ func _deaf() -> int:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
 	var s: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, true)
+	s.city.spawner.targets = CityTargets.street(CROWD, 0, 0)
 	s.scare.on = false
 	s.world.loop().set_input(ArenaRangeBot.new(s.stage, s.actions))
 	var fled: int = _play(s)
