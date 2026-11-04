@@ -10,7 +10,8 @@ extends ArenaHook
 
 ## The open mark (brutality's solo-lab spot, checked open on 48 px/m stills).
 const MARK: Vector2 = Vector2(-36.0, 2.0)
-## The previous chapter's dead lie here, out of every frame.
+## The previous chapter's dead move here (their print and blood stay: film one chapter per run,
+## `--chapter=<id>`, for a clean floor).
 const MORGUE: Vector2 = Vector2(-400.0, -400.0)
 const HOLD_FIRE: int = 100000
 ## Ticks Rivet faces the new victims before the first shot (the beat reads).
@@ -34,6 +35,12 @@ var _next_tick: int = 0
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	var only: String = ArenaArgs.parse().text("--chapter")
+	if not only.is_empty():  # one fresh run per chapter: a clean floor under every kill
+		var keep: PackedStringArray = only.split(",", false)
+		chapters = chapters.filter(
+			func(c: ReelChapters.Chapter) -> bool: return keep.has(String(c.id))
+		)
 
 
 ## Total ticks of the cut (a capture's --quit-after at 60 fps).
