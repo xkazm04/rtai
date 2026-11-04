@@ -67,6 +67,11 @@ func progress() -> float:
 	return clampf(t / length, 0.0, 1.0)
 
 
+## Jumps to the family's last frame (a corpse redrawn on a fresh rig).
+func settle() -> void:
+	t = length
+
+
 func clear() -> void:
 	kind = &""
 	dying = false

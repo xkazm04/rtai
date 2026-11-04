@@ -22,6 +22,9 @@ var _weapons: WeaponTable
 ## Hits since the last apply(): [victim id, dir, lethal, hit class, in cover, weapon]. Cover is
 ## false here: CombatArena lands no hit on a fighter in cover (Fighter.exposed).
 var _pending: Array[Array] = []
+## The standard deaths played, by fighter id: [death kind, dir]. A corpse whose rig left the
+## LOD bubble and came back (a fresh pooled rig) lies down again in the same final pose.
+var _corpses: Dictionary[int, Array] = {}
 
 
 static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
@@ -60,11 +63,28 @@ func apply(rigs: CharacterRigs) -> void:
 			var kind: StringName = pipe.kill(rig, hit_class, dir, weapon)
 			signatures += 1 if kind == &"signature" else 0
 			deaths += 0 if kind == &"signature" else 1
+			if kind != &"signature":
+				_corpses[id] = [kind, dir]
 		else:
 			@warning_ignore("return_value_discarded")
 			pipe.wound(rig, hit_class, dir, false, cover)
 			wounds += 1
 	_pending.clear()
+	_relay(rigs)
+
+
+func _relay(rigs: CharacterRigs) -> void:
+	for id: int in _corpses:
+		var rig: CutRig = rigs.rig_for(id)
+		if rig == null or (rig.react != null and rig.react.dying):
+			continue
+		var c: Array = _corpses[id]
+		var kind: StringName = c[0]
+		var dir: Vector2 = c[1]
+		var r: HumanReact = HumanReact.on(rig)
+		r.carry = DEATH_CARRY
+		r.play(rig, kind, dir, pipe.table)
+		r.settle()
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
