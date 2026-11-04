@@ -76,11 +76,11 @@ Each one is a single value. The default stands until you answer.
 
 ## Gates of record
 
-`node tools/evidence/run.mjs --no-bench --allow-dirty` on 7ca493c9, the final code head of iteration 12 (`WT/evidence/n10/evidence-final-12.log`; the dirty paths are untracked iteration-1 stills only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
+`node tools/evidence/run.mjs --no-bench --allow-dirty` on d7820eeb, the final code head of iteration 13 (`WT/evidence/n10/evidence-final-13.log`; the dirty paths are untracked iteration-1 stills only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
 
 - lint 13/13 (the pre-commit hook on every commit).
-- unit 750/750 (7ca493c9; also `WT/evidence/n10/unit-12c.log`).
-- scenarios 29/29 (7ca493c9).
-- parity bit-exact, the planted mutation caught at step 629 (7ca493c9).
+- unit 751/751 (d7820eeb; the new burn_flames test included).
+- scenarios 29/29 (d7820eeb).
+- parity bit-exact, the planted mutation caught at step 629 (d7820eeb).
 - selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m, the same two rows as on 47476501 and 2d7efa51. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
-- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iteration 12 changed view code only (no bench run).
+- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iterations 12 and 13 changed view code only (no bench run).
