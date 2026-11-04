@@ -1,6 +1,6 @@
 # Weapon art: the design language and the contract (weapon-art lane, 2026-11-04)
 
-Reference sheets (masters, outside git): `gtai-masters/n4/weapon-art/frames/design-sheet-all15.png`
+Reference sheets (masters, outside git): `gtai-masters/n4/weapon-art/frames/design-sheet-all16.png`
 (each weapon: the held top-down part with grip and muzzle marked, the side-view pickup, the HUD icon,
 the muzzle-flash frames and the held part at its true 32 and 64 px/m size, next to the T2 concept),
 `lineup-core-*.png` / `lineup-adv-*.png` (held on the real Rivet rig beside a cop). Raw Codex sheets
@@ -40,7 +40,8 @@ and prompts are in `gtai-masters/n4/weapon-art/raw/`.
 
 ## The contract (`data/tables/weapon_art.json`, schema `gtai.weapon-art/1`, loader `WeaponArt`)
 
-Per weapon id (the ids of `weapons.json` / `melee_weapons.json`, plus `chainsaw` and `plasma_sword`):
+Per weapon id (the ids of `weapons.json` incl. the canon nail gun `gloria`, `melee_weapons.json`, plus
+`chainsaw` and `plasma_sword`; 16 rows):
 `held`, `pickup`, `icon`, `parts`, `size_px`, `grip_px` (where the claw closes), `muzzle_px` (the
 bore tip; the blade tip for melee), `length_px` (tail-to-tip span), `length_m`, `grip_class`
 (`one_hand`, `two_hand_long`, `shoulder`, `backpack_hose`, `thrown`, `heavy_two_hand`),
@@ -54,7 +55,15 @@ var muzzle: Vector2 = art.muzzle_m(&"pistol")   # metres from the grip along the
 var flash: Array[Texture2D] = art.fx_frames(art.muzzle_fx(&"pistol"))  # 3 frames, anchor fx_anchor()
 ```
 
-`rig_scale(id)` gives the same scale in the cutout rig's part px (CutRig.SC = 0.1).
+`rig_scale(id)` gives the same scale in the cutout rig's part px (CutRig.SC = 0.1). FX cells draw at
+`fx_scale()` = `fx_draw_scale` (2.0) x the part scale: at 1.0 a pistol flash was a speck at 32 px/m.
+
+## Gore stickers (`art/gore/`, for the brutality kills)
+
+`stump_round`, `stump_oval`, `chunks_3`, `chunk`, `bone`, `splash`, `charred` (overlay), `xray` (overlay),
+`ash`. Blood tokens only (`#A30509` / `#540005`), comic ink, never photoreal. Not in the table yet: load
+`res://features/combat/weapons/art/gore/<id>.png`. Authored at about 300 px per sticker: draw at the
+part scale (0.1 world px per px) or larger.
 
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 

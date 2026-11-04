@@ -45,3 +45,30 @@
   Use `PartMaterials.get_mat(PartKind.PART, false, 0)` on it so it prints like the rig.
 - To gunplay: shots and flashes spawn at `muzzle_m(id)` from the grip; flash frames `fx_frames(muzzle_fx(id))`,
   anchor `fx_anchor()`; projectile `fx_frames(projectile_fx(id))`; casing `casing_fx(id)`.
+- MILESTONE 01:35 gore stickers for brutality REQUEST 3 (`art/gore/`: stump_round, stump_oval, chunks_3, chunk,
+  bone, splash, charred, xray, ash; blood tokens only, comic ink). Not in weapon_art.json yet: load by path
+  `res://features/combat/weapons/art/gore/<id>.png`. Lineup `--fire`: flashes cycle on the muzzles,
+  projectiles ahead. Commit 295db1b3.
+- MEASURE 01:36 FX at 1x part scale were specks at 64 px/m; at 2x they read at 64. At 32 px/m the cream flash
+  and the cream tracer still wash out on cream paving (frame `lineup-core-fire-32ppm-2x.png`).
+- 01:37 started the canon nail gun "Gloria" (side + top in one sheet, img06).
+
+NEXT (iteration 2):
+1. FX at game scale: regenerate `weapon_fx.py` with a thicker ink ring (about 14 part px) and an ink-dark tracer
+   core or ink streak so flashes and tracers read on cream paving at 32 px/m; add `fx_draw_scale` (2.0) to the
+   table + `WeaponArt.fx_scale()` so gunplay draws at the same size as the lineup. Re-shoot `--fire` at 32 + 64.
+2. Ingest Gloria (img06 out/gloria.png: cut the 2 rows as side / top; add a ROWS entry, one_hand, ~0.75 m,
+   flash_pistol, tracer -> a `nail` projectile cell), provenance, test count 16.
+3. Add the gore cells to the table (a `gore` array in gtai.weapon-art/1 + `WeaponArt.gore_texture(id)`), tell
+   brutality in JOURNAL. Consider top-down redraws of charred/xray if they read wrong on the rig.
+4. Fold the `*.png.import` mipmaps sed + re-import into a tool step.
+5. Arena station `data/tables/arena_stations/weapon-art.json` (a weapon rack of pickups); check the arena schema.
+6. A real-time clip (not a still) of a Rivet firing each core weapon in the arena once rivet-arsenal's socket and
+   gunplay's FX hookup land (merge their branches); until then a lineup clip with the flash cycling.
+7. Read REQUESTs from brutality / gunplay / rivet-arsenal / human-reactions / showcase JOURNALs.
+- MILESTONE 01:41 Gloria (canon nail gun, painted heart; downscaled 0.45 to the family's resolution, icon redone),
+  FX thicker ink ring, `fx_draw_scale` 2.0 + `WeaponArt.fx_scale()` (NEXT item 1 half done: the 32 px/m read on
+  cream is still weak). Commit f4abd9a5. Unit 703/703, scenarios 28/28, lint 13/13.
+- Scratch sources for re-running the ingest live in `C:\Users\kazda\kiro\gtai-spike\weapon-art\{top,side,fx,img0N}`
+  (outside git; raw sheets + prompts are also in masters `raw/`). Keep them until the art is final.
+- frames.json: 13 entries (design-sheet-all16 replaces all15).
