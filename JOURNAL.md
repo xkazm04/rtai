@@ -34,3 +34,36 @@ no authored key poses or sprite art yet; every family is procedural on the cutou
 - showcase REQUEST 2: the flinch/stagger toward the hit and deaths by kind are live on the pit
   cops under `--rigs` from this commit (ReactLink in ArenaRigs). Shock from the jab maps to
   stun/death_shock when its weapon row's hit_class is `shock`.
+- MILESTONE 01:28 f6813fe4/f9eff12b: `scenario_human_react` (every wound family clears within 1
+  tick of its table length; knockdown lies 1.57 s flat; stagger + round kill carry along the round
+  from 4 sides, min dot 1.0; burn kill chars; two runs same digest). Planted faults all caught:
+  inverted direction (dot -1.0), no burn row (char 0.0), signature takes the death.
+- FRICTION 01:25: in the live arena the corpses vanished when Rivet turned: CharacterRigs keeps
+  full rigs only within 14 m of a focus 7 m ahead of Rivet. Fixed in ArenaRigs (focus = centre of
+  the box around Rivet, his aim point and hostiles within 20 m) and ReactLink (a corpse whose rig
+  comes back re-plays its death at the last frame, `HumanReact.settle`).
+- MILESTONE 01:32 4a2d9e3c: arena station `react_line` (4 never-dying dummies in the hub).
+- MILESTONE 01:37 39582854: `--rigs` on the city block (`--arena=city`): ArenaRigs attaches to the
+  CityView actor layer (before: no rigs at all there). Clip `city_pit_rigs_32ppm.mp4` = game-city.
+- Gates 01:42 on 39582854: lint 13/13, unit 706/706, scenarios 29/29. Parity/replay untouched
+  (render-only layer, no sim change).
+- Evidence: `gtai-masters/n4/human-reactions/` (frames.json, 7 entries): city block 32 px/m,
+  arena pit 32 px/m, reaction board 64 and 32 px/m, three contact sheets.
+- Rejected clip: city block at 64 px/m (camera on Rivet, the deaths happen off-frame).
+
+NEXT (iteration 2, in order):
+1. Crowd reactions (brief item 4): pedestrians under fire in the city (duck, cover head, flee away
+   from the shooter, trip over bodies). The city sim owns ped motion (native); start render-side:
+   a `cower` family on CityCharacters' full rigs from the FLEE flag + nearest shot, then ask what
+   the sim already exposes (panic state) before touching native.
+2. "Shoot each cop type from four directions" in the arena itself: a bot for the `react_line`
+   station (or `--start=hub` + a scripted walk around a dummy), clip at 32 + 64 px/m.
+3. Riot shield + SWAT in the arena: Fighter has no shield/archetype; the arena pit spawns
+   GuardBrain contractors only. Feed EnemyRigFeed looks (riot = look 6) through ArenaRigs when the
+   enemy-ai pit is hooked into the arena (enemy-ai NEXT 2), so `shield` plays in the live game.
+4. Switch deaths to gunplay's `CombatArena.kill_landed` once it merges (kind shot/blown/burned ->
+   death family); hook brutality's SignatureKills through `ReactLink.pipe.add_signature`.
+5. Quality: the drawn carry ignores cover (a body can slide onto a crate); board blood drag streak
+   is a hard rectangle when `slide_px` is large (clamp it); electro death reads close to the round
+   death at 32 px/m (stiffer plank: arms locked to the sides); the robot thug skeleton (item 5).
+6. A 64 px/m close-up in the arena/city needs a camera on the victim (`--start` or a dev cam).
