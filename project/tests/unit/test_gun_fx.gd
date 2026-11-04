@@ -141,3 +141,26 @@ func test_one_ray_drops_a_human() -> void:
 	assert_false(g.alive(), "one ray drops a human")
 	assert_eq(fx.impacts.size(), 1, "a ray marks where it stopped")
 	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a ray sizzles")
+
+
+func test_no_magazine_drop_when_weapon_art_draws_the_magazine() -> void:
+	var path: String = "user://test_weapon_art_mags.json"
+	var f: FileAccess = FileAccess.open(path, FileAccess.WRITE)
+	@warning_ignore("return_value_discarded")
+	f.store_string('{"weapons": [{"id": "pistol", "parts": {"mag": "a.png"}}, {"id": "molotov"}]}')
+	f.close()
+	var owned: Dictionary = GunFx.read_art_mags(path)
+	assert_true(owned.has(&"pistol"))
+	assert_false(owned.has(&"molotov"))
+	assert_true(GunFx.read_art_mags("user://no_such_table.json").is_empty())
+	var arena: CombatArena = _arena(&"pistol")
+	var fx: GunFx = GunFx.new()
+	fx.art_mags = owned
+	assert_true(arena.rivet_fire(Vector2(10.0, 0.0)))
+	_run(arena, fx, 1, 2)
+	arena.gun.trigger.start_reload()
+	_run(arena, fx, 3, 2)
+	for b: Vector4 in fx.bits:
+		assert_true(b.w >= 0.0, "weapon-art's view drops the magazine, GunFx none")
+	@warning_ignore("return_value_discarded")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
