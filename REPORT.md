@@ -2,7 +2,7 @@
 
 Branch `d6-combat-notes`, cut from main `a1275c82`. Clips are in
 `C:\Users\kazda\kiro\gtai-masters\d6\combat-notes\` (`frames.json`: 12 entries, newest and best first).
-Gates on 060bc6dc: lint 13/13, unit 974/974, scenarios 46/46, parity bit-exact (planted mutation
+Gates on 34bc64e6: lint 13/13, unit 974/974, scenarios 46/46, parity bit-exact (planted mutation
 caught at step 629), selftest pass. No bench was run: this lane makes no performance claim.
 Everything is view-only: no sim, replay or native change.
 
@@ -72,6 +72,10 @@ the judging scale, real time, with the night's look on the left and now on the r
   inside the victim. The arm now draws over the victim (a grey bar across the blue chest at
   32 px/m), and the body now topples clear after the kill, but the approach still overlaps.
   Spacing between fighters is sim/AI (a replay change), so it is not touched.
+- **A melee hit that does not kill plays no wound.** Riot cops and SWAT have 2 hp against the
+  claw's 1 and the katana's 1.5, so their first cut or jab shows no flinch, spin or fold (the
+  baton's stun does show). Found at the end of the day, not built: the fix is view only, like the
+  melee death.
 - **Quest 1 shows none of this lane's work.** Rivet fights with the pistol there.
 - **The electro chain is filmed in the arena only.** The city pit spreads its cops beyond the
   chain's jump range.
