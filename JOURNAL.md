@@ -373,3 +373,37 @@ NEXT (iteration 6, in order):
   Selftest FAIL only on the same accent-audit line as at 03:46 (4 px vermilion on vehicles / cop
   at 32 px/m while the blood_flicker_* debt rows read "no longer seen": the known gunplay blood
   flicker moving rows); look goldens 11/11, block 5/5. NEXT 1 is done; NEXT 2-5 stand.
+
+## Iteration 6 (04:13-05:13), BUILD
+- 04:13 read JOURNAL, git log, the other lanes' JOURNALs. weapon-art answered both REQUESTs:
+  REQUEST 1 DONE d9102db7 (head_swat / torso_swat, D4 + D5 cop sets), REQUEST 2 DONE dae102b7
+  (art/thug + art/d5/thug in Rivet's part names). No new REQUESTs to me. Registry rules as before
+  (motion-quality-gating: judged in motion at 32 and 64 px/m, every sheet looked at).
+- MERGE: cherry-picked weapon-art d9102db7 -> c4f562a3 and dae102b7 -> 81f98dd3 (clean; parts,
+  parts.json rows, their swat_lineup dev scene, provenance rows).
+- MILESTONE a27c786b: the SWAT look. RigVariant.SWAT = 8 (full rigs only), atlas_look() prints it
+  as patrol in the 8-row baked atlas (CrowdAtlas.cell_for clamps). ArenaRigs dresses the pit's
+  guards patrol/riot/SWAT by actor id (squad_index_for, no RNG); enemy-ai's rig fight draws its
+  `swat` archetype in it; the reaction line's fourth dummy is SWAT (was the hoodie pedestrian).
+  Unit 735/735 (test_rig_variant_swat: 3 tests), lint 13/13, react/arena/human scenarios green.
+- MILESTONE c819d6be: ThugPlan.ART_DIR king -> thug (own parts), unit test checks they exist.
+- DECISION SWAT on the line: swap the hoodie pedestrian for SWAT rather than a fifth dummy (no
+  layout move next to rivet-arsenal's claw cops and showcase's REQUEST 10 spot; scenario_react_line
+  keeps 16 shots). Alternative: a fifth spawn at x 15.5.
+- Evidence: react_line_cops4_32ppm / _64ppm.mp4 (36 s each, 16 shots, 16 wounds, 7 ducks: the
+  neighbours duck at rounds passing them) + react_line_swat_{32,64}ppm_sheet.png. Read: at 64
+  px/m the SWAT is the dark helmet with a visor bar and a dark vest, the flinch reads; at 32 px/m it
+  is the dark-headed cop beside the white cap (patrol) and white helmet + shield (riot).
+  thug_parts_32ppm.mp4 (+ sheet): two thugs + a SWAT in enemy-ai's dev fight; the thug prints as a
+  dark body with one pale optic; its arms still print steel at 32 px/m (shader limb LOD).
+- MILESTONE 738c3d67: trip in a live crowd (NEXT 3). city_bench logs CrowdReact at exit: a 30 s
+  `--scenario=riot` = 0 cowers, 4 trips, 15 deaths (headless the same: 4 trips at process frames
+  182, 189, 276, 584, deterministic); 16 s at zoom 2 = 4 trips, 12 deaths. 0 cowers is right:
+  rioters carry FLEE from their spawn, so there is no rising edge. Honest: in a 300-person riot a
+  single trip is not picked out by eye (scanned frames 150-290 at 32 and 64 px/m). Clips
+  riot_crowd_32ppm.mp4 (30 s) / riot_crowd_64ppm.mp4 (16 s): the crowd, the blue shield line, the
+  standard deaths with red pools.
+- pit_squads_32ppm.mp4 (+ sheet): the live pit (`--rigs --bot=gunplay --weapon=pistol --start=pit
+  --clean`, 11 deaths) on the mixed squads; at 32 px/m the looks differ mainly by the head.
+- frames.json: 15 entries, the four new ones first; dropped thug_plan_32ppm and react_line_4sides
+  (superseded, files stay). Scratch AVIs deleted.
