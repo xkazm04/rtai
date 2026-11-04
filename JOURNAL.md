@@ -1036,3 +1036,32 @@ NEXT (iteration 8, the final round; freeze 08:30):
   molotov` (1800 ticks).
 - 07:28 bench r12 started alone under bench.lock (scratch-showcase/bench_final.sh; the lock is
   removed by the script when the bench ends).
+- BENCH r12 (bench.lock 07:28-07:41, exported release of 9c52b656+journal, 3 x 60 s,
+  CONTENDED: other lanes' Godot, and my own round-13 merges (git + the lint pre-commit hook) ran
+  07:40-07:43 during the last (riot) runs): aggregate p99 11.63 ms, 1 % low 50 fps, worst frame
+  93.9 ms, 11 hitches > 50 ms (3 unexplained), MISSES p99CpuMs + over50.unexplained. Per scenario
+  (frame_ms, the r10 method, re-checked on evidence/r10's files -> 3.39/108, 2.17/376, 5.58/118
+  again; scratch-showcase/bsum.py): drive 2.00 ms / 280 fps (best of the night; record 3.56),
+  drive48 2.21 / 252, riot 8.50 / 73 (r10 5.58 / 118; record 6.0 / 124). Read: the riot number is
+  not clean (my own load in its window); drive is well inside its band. Files evidence/r12/bench-*.
+  No r13 bench: human-reactions took the lock at 07:41 and the session ends 08:12.
+- MILESTONE 07:43 merge round 13 (lanes answered after 07:15): weapon-art c5210bef (Gloria draws
+  her own held art; two-tone held_small) -> f170666b; rivet-arsenal c55b6984 (melee bot walks in on
+  the city block) -> caf6f4ca; gunplay ae2587ee (REQUEST 27: the fire opens round a corpse) ->
+  93d1173c; human-reactions c3749b0d (burned kill leaves no red, burnt soot) -> 2ec5d5d5, GLUE:
+  combat_blood._on_killed keeps human-reactions' DRY_KILLS early return before brutality's
+  deferred veto (_bleed_killed), both kept; brutality cfc7fa10 (REQUEST 26: the ray dust heap;
+  plasma hole at game zoom) -> 2643fbbd. All JOURNAL conflicts kept ours. `--import` 0 errors.
+- GATES r13 (evidence --no-bench on 2643fbbd, CONTENDED, no commit during the run this time):
+  lint 13/13 (787 files), unit 903/903, scenarios 45/45, parity bit-exact (planted caught at 629),
+  selftest PASS: look 11/11 (worst 0.00), block 5/5 (worst 1.81). No re-bless. evidence/r13/.
+- MILESTONE 07:52 the final reel **reel-0751.mp4** (masters, 122 s; frames.json first entry):
+  cut.sh reel-0745-final 48 on 2643fbbd (16 chapters, 0 SCRIPT ERRORs, every chapter down) +
+  17 CITY BLOCK (0 SCRIPT ERRORs). Checked (evidence/r13/sheet-r13-a/b.jpg, strips-r13.png):
+  ch 13 ray gun now leaves a long dust heap with the crumpled blue uniform and the cap knocked
+  aside (REQUEST 26 DONE); ch 07 molotov: the charred victim now shows in the opened fire mid-
+  chapter (REQUEST 27 DONE as far as the flames; at the chapter's end he is under the char);
+  ch 06 electro unchanged (REQUEST 29 open).
+- MILESTONE 07:53 exe re-exported on round 13 (2643fbbd): build/export/windows/RTAI.exe (236 MB)
+  + release DLL, export exit 0, 0 errors; boot tests 0 SCRIPT ERRORs each (no args: armory 15
+  weapons, arena 16 stations; director: chapters down; city block with the loadout).

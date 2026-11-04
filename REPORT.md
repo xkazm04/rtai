@@ -1,8 +1,8 @@
 # Showcase lane: night run 2026-11-04, report
 
-Status: FINAL on merge round 12 (9c52b656, merged 07:15; the showcase session ends at 08:12, so
-the final round ran 07:15-08:12). Final reel **reel-0722**, gates r12 green, exe re-exported 07:27.
-A lane commit after 07:15 is not in this build.
+Status: FINAL on merge round 13 (2643fbbd, merged 07:43; the showcase session ends at 08:12, so
+the final round ran 07:15-08:12). Final reel **reel-0751**, gates r13 green, exe re-exported 07:53.
+A lane commit after 07:43 is not in this build.
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -19,7 +19,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 chapters, deterministic) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 234 MB) with the release
-sim DLL beside it (re-exported on round 12, 07:27). Round 12 boot tests (headless, 0 script errors): the arena opens with 16
+sim DLL beside it (re-exported on round 13, 07:53). Round 13 boot tests (headless, 0 script errors): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 
@@ -41,7 +41,8 @@ city block loads with the loadout.
 | reel-0640 | morning-reel draft on round 10, 122 s: 16 chapters + 17 CITY BLOCK |
 | reel-0700-close64 | 64 px/m close-ups of the round 9-10 changes |
 | reel-0710 | morning-reel draft on round 11, 122 s: 16 chapters + 17 CITY BLOCK |
-| **reel-0722** | **the final morning reel on round 12, 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
+| reel-0722 | morning reel on round 12, 122 s, 0 script errors (the city block's plasma error fixed) |
+| **reel-0751** | **the final morning reel on round 13, 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors; ray gun dust heap and the molotov victim in the opened fire are new** |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 
@@ -57,7 +58,8 @@ city block loads with the loadout.
 | r9 | 54a7d5c0 | 13/13 | 868/868 | 43/44 (REQUEST 25) | exact | 4/11 (shield slab + spray tilt, intended) |
 | r10b | ef43fb36 | 13/13 | 871/871 | 44/44 | exact | 11/11 (re-blessed, decisions line) + 5/5 |
 | r11 | 9f6b2fbe | 13/13 | 889/889 | 44/44 | exact | 11/11 + 5/5 |
-| **r12 (final)** | **9c52b656** | **13/13** | **893/893** | **44/44** | **exact** | **11/11 (worst 0.00) + 5/5** |
+| r12 | 9c52b656 | 13/13 | 893/893 | 44/44 | exact | 11/11 (worst 0.00) + 5/5 |
+| **r13 (final)** | **2643fbbd** | **13/13** | **903/903** | **45/45** | **exact** | **11/11 (worst 0.00) + 5/5** |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 
@@ -66,25 +68,28 @@ city block loads with the loadout.
 | record (main 9ebc5918) | 3.56 ms | - | 6.0 ms / 124 fps |
 | r7 | 3.45 / 158 | 3.69 / 166 | 11.48 / 63 |
 | r8 | 4.33 / 140 | 2.54 / 224 | 10.37 / 71 |
-| **r10** | **3.39 / 108** | **2.17 / 376** | **5.58 / 118** |
+| r10 | 3.39 / 108 | 2.17 / 376 | 5.58 / 118 |
+| **r12 (final bench)** | **2.00 / 280** | **2.21 / 252** | **8.50 / 73 (my own merge load in its window)** |
 
-The riot is back under its p99 record after human-reactions trimmed the trip scan (REQUEST 23).
+The riot went back under its p99 record on r10 after human-reactions trimmed the trip scan (REQUEST 23).
+The r12 riot number is not clean: my round-13 merges (git + the lint hook) ran during it. No r13
+bench (the lock was taken by another lane at 07:41 and the session ended at 08:12).
 
 ## Calls for the owner
 
 - **showcase-1, electro death pose:** the stiff "plank" corpse vs a lying fall along the shot
-  (reel-0722 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in
+  (reel-0751 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in
   human-reactions 3a8d3931 on the pit path).
 - **showcase-2, hub crowding:** the melee-line dummies stand in front of the weapon wall's base,
   and the hub has no free row left (evidence/r8/armory-48ppm.png).
 - **showcase-3, pit wall bars on the city plaza:** the pit's wall bars still draw on the city
-  block (reel-0722 chapter 17).
+  block (reel-0751 chapter 17).
 
 ## Known wrong in the current reel (REQUESTs out)
 
 - ch 06 electro: after the X-ray strobe the corpse still reads as a standing cop, gun toward Rivet,
   and no scorch shows (REQUEST 29 -> brutality: the electro kill's KillShockFx owns this corpse,
   so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it).
-- ch 07 molotov: the victim is hidden under the fire stars to the end (REQUEST 27 -> brutality, cc gunplay).
-- ch 13 ray gun: the dust pile reads as a round cream token (REQUEST 26 -> brutality).
+- ch 07 molotov: fixed mid-chapter (REQUEST 27, gunplay aa471560: the fire opens round the corpse); at the chapter's end the victim sinks into the char.
+- ch 13 ray gun: fixed (REQUEST 26, brutality 9c9aaabf): a long dust heap with the crumpled uniform.
 - ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.
