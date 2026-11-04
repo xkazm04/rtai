@@ -1,9 +1,9 @@
 # REPORT: night lane `brutality` (2026-11-04, 01:xx-08:40, updated for the 09:00-11:00 extension)
 
-Branch `n-brutality`, head of record `88ff881d` (code; was `63cc3ce1` at 08:40) + docs commits. Evidence in two places:
+Branch `n-brutality`, head of record `b03f04ac` (code; `88ff881d` at 09:20, `63cc3ce1` at 08:40) + docs commits. Evidence in two places:
 `M` = `C:\Users\kazda\kiro\gtai-masters\n4\brutality\` (clips, frames, `frames.json`, 15 entries)
 and `E` = `evidence/brutality/` in this worktree (logs, telemetry, sheets). What changed after
-09:00 is collected under **After 09:00** at the end. All performance numbers
+09:00 is collected under **After 09:00** and **After 09:20** at the end. All performance numbers
 are **CONTENDED** (six lanes on one GPU); none was taken under `bench.lock`.
 
 ## What works
@@ -77,6 +77,7 @@ were last run on `59429978`.
   resource work), most likely on the canvas items the previous tick's cut queued. Not fixed.
 - **Claw-shock lab:** the lab drives its own `PlayerShock`, so Rivet's thrust clip does not play in
   that clip. In the real game the pilot path plays it.
+- Gunplay's REQUEST 30 to me (the molotov char corpse fading to a smudge) is answered after 09:20 (see below).
 - REQUESTs to gunplay: both answered on `n-gunplay` (REQUEST 30 stuck shards: `8ea3a2e5`; REQUEST 29
   molotov corpse: `0b2541a9` + `aa471560`). Re-check both on the merged main.
 - Art: the gore stickers (REQUEST 3/4 from weapon-art, `art/gore/`) are front views over a top-down
@@ -151,3 +152,27 @@ were last run on `59429978`.
 - Not done: merging `n-human-reactions` (110 commits, with conflicts in shared arena and rig files) for
   its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: a fix for that
   RenderingServer wait.
+
+## After 09:20 (iteration 19, 09:20-10:20)
+- **Burn char rim (gunplay REQUEST 30), `04c4068b`:** every fire death (flamethrower, molotov, fire
+  patch, gunplay's `burn`) used to fade to a dark smudge on the dark pit floor and night paving. The
+  char print now draws a light ash rim (#CCC1B2, 1.6 screen px at any zoom via `fwidth(UV)`) around
+  each part, so the head, shoulders and arms read until the crumble. The mini-nuke's shadow keeps no
+  rim (second material, `rim_px` 0). Before/after: `E/burn-rim-before-after-it19.png`. Clips:
+  `M/clips/flame-char-rim-city-64ppm-slow-0.4x-it19.mp4`, `M/clips/flame-char-rim-city-48ppm-10s-it19.mp4`.
+- **Ray-gun lock and timing (showcase's "small and quick at 48 px/m"), `b03f04ac`:** the lock was
+  0.2 s with a faint arc, and the kill was over in ~1.2 s. Now a pulsing hot cream wash and rim sit
+  over the body during the lock (steady under reduced motion), and the row runs `stand_ticks` 30 and
+  `crumble_ticks` 80, ~2 s in all. A modulate tint was tried and rejected: the D5 part print maps
+  input colours to fixed inks, so a tint cannot brighten the body. Strips: before
+  `E/ray-dissolve-48-before-strip-it19.png`, after `E/ray-dissolve-glow-city-64-strip-it19.png`. Clips:
+  `M/clips/ray-dissolve-glow-city-64ppm-slow-0.4x-it19.mp4`, `M/clips/ray-dissolve-glow-city-48ppm-9s-it19.mp4`.
+  Owner call (one data value): the ray lock `stand_ticks` 30 (default) or 12 (the snappier old beat).
+- **City reel re-cut:** `M/clips/city-reel-all-11-kills-clean-48ppm-it19.mp4` (80 s, frames.json entry 1):
+  the flamethrower and ray-gun chapters are the it19 takes; the other nine are unchanged.
+- **Gates on `b03f04ac`** (private APPDATA, CONTENDED): lint 13/13, unit 790/790 (`E/unit-it19b.log`),
+  scenarios 34/35. The red one is `scenario_rig_stress`, a CPU budget (rig p50 1.017 ms over 1.0 ms)
+  measured while one of my captures ran. It passed when re-run alone (`E/scenarios-it19.log`,
+  `E/scenarios-it19-rig-stress-rerun.log`). Both changes are render only: they move no golden.
+- **Checked, not changed:** the rocket's thrown parts stay inside the 48 px/m city frame (the farthest
+  stops ~6 m out). Changing the launch speeds would move the gib sim goldens this close to the freeze.
