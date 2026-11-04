@@ -281,3 +281,42 @@ NEXT:
   evidence runner's selftest (look goldens 11/11, block 5/5). The 420-frame exact pixel compare
   stands in for it this iteration; run it first next session.
 - Bench lock released 15:07.
+
+## Iteration 5 (15:08-16:08), BUILD
+
+- 15:08 read JOURNAL + git log. No bench.lock, no Godot running, but the machine is at 90 % CPU
+  (docker, node runners, launchers): every number this session is CONTENDED. No REQUEST in
+  d6-combat-notes' JOURNAL. First: the look gate (selftest) on f60cd1f5, then FxView scuffs.
+- 15:20 Look gate on f60cd1f5 (fixes 1+2): `node tools/selftest/run.mjs` exit 0: look goldens
+  11/11 (worst 0.00), block goldens 5/5 (worst 1.81), world lock holds, no new off-doctrine accents.
+
+### 15:10-15:40 FxView: where its 0.9 ms goes (throwaway probe in fx_view/gun_fx_art, restored)
+Editor, vsync off, CONTENDED (the other lane's Godot renders + 90 % CPU), ~11.5k frames each.
+Means / p99 in ms: draw_under 0.56 / 1.9 (fxprobe-a), all in the impacts loop (u_impacts 0.56 / 2.05;
+u_scorch 0.01 / 0.4; the shells are drawn by weapon-art here, u_bits ~0). draw_over 0.11 / 0.36,
+shots 0.02 / 0.15, the rest < 0.02. Up to ~31 live impacts.
+- Math only (draw calls stubbed, fxprobe-c): the impacts loop drops to 0.14 / 0.98. So the ~100
+  circle polygons a frame (4 per scuff + a line) are the cost, not the GDScript math.
+- Culling: none possible. 96847 of 96847 impact checks were inside the on-screen rect + 3 m (fxprobe-d).
+
+### 15:20-15:40 Fix 3: FxGround, the retained ground-mark layer (DECISION in docs/decisions.md)
+- `boot/collect_call/view/fx_ground.gd` + `fx_ground_mark.gd`: a behind-parent child of FxView
+  (use_parent_material) draws the rifle drops and the fire scorch each frame (as FxView did), and holds one
+  child per scuff / plasma scorch. A mark redraws only when its fade changes (the last 60 of 240
+  ticks). The same GunFxMarks calls run in the same order. `FxGround.enabled = false` = the old path.
+- Pixel proof: 900 fixed-fps frames (reel ch 18 args, 1280x720, flag off vs on) **0 differing**.
+  I looked at frame 850: a live fight, tracers, scuffs on the asphalt.
+- Editor, vsync on, 1500 ticks, NodeSpans, 2 interleaved pairs, CONTENDED (evidence/perf/gnd-*.spans.json):
+  | run | FxView _draw | marks | FxGround | FxView total | all spans |
+  |---|---|---|---|---|---|
+  | off1 | 0.912 / p99 2.78 | - | - | 0.91 | 4.41 |
+  | on1 | 0.314 / 0.77 | 0.183 / 0.90 | 0.032 | 0.53 | 4.04 |
+  | off2 | 0.914 / 2.92 | - | - | 0.91 | 4.42 |
+  | on2 | 0.324 / 0.82 | 0.203 / 1.03 | 0.033 | 0.56 | 4.07 |
+  -0.35 to -0.38 ms per frame, and FxView's own p99 2.8-2.9 -> 0.8.
+- Rules applied: STANDARDS section 20, AGENTS top rules 2/3 (typed, functions <= 40 lines: _draw split
+  into _under), the brief's "look identical" rule (exact pixel compare, so no re-bless).
+- 15:44 Gates on fix 3: lint 13/13, scenarios 46/46 (exit 0), unit 937/938 twice. The 1 failure is
+  `test_noir_shadows` ("Parameter t is null", CityChunk shadow RIDs: the brief's known flake under load;
+  it does not touch FxView/GunFx). FRICTION: `-gtest=` on gut_cmdln still ran the whole suite,
+  so the flake was not re-run alone. Next session: re-run it alone (`-gselect=test_noir_shadows`).

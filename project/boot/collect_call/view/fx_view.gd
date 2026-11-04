@@ -17,6 +17,14 @@ var _ball_tex: Texture2D = null
 var _arc_seen: int = 0
 ## Lane gunplay: shells, smoke, impacts and per-weapon muzzles of a table bullet gun.
 var _gun_fx: GunFx = null
+## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
+var _ground: FxGround = null
+
+
+func _ready() -> void:
+	if FxGround.enabled:
+		_ground = FxGround.new()
+		add_child(_ground)
 
 
 func _process(_delta: float) -> void:
@@ -27,14 +35,10 @@ func _draw() -> void:
 	if stage == null:
 		return
 	var arena: CombatArena = stage.arena
-	for d: Vector2 in arena.rifle_drops:
-		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
-	if arena.gun != null:
-		if _gun_fx == null:
-			_gun_fx = GunFx.new()
-		_gun_fx.step(arena, stage.tick)
-		var gun: GunHand = arena.gun
-		GunFxArt.draw_under(self, _gun_fx, stage.tick, not _art_gun(gun), not _art_mag(gun))
+	if _ground == null:
+		for d: Vector2 in arena.rifle_drops:
+			draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
+	_under(arena)
 	for s: Shot in arena.shots:
 		if arena.gun != null:
 			if WeaponFxArt.shot(self, s, stage.tick):  # weapon-art's cells first
@@ -58,6 +62,20 @@ func _draw() -> void:
 	_whispers()
 	if stage.crates_burning:
 		_fire()
+
+
+## The table gun's floor (shells, scuffs, scorch) under everything else; the retained ground
+## layer (FxGround) holds the scuffs and scorch when it is on.
+func _under(arena: CombatArena) -> void:
+	if arena.gun != null:
+		if _gun_fx == null:
+			_gun_fx = GunFx.new()
+		_gun_fx.step(arena, stage.tick)
+		var gun: GunHand = arena.gun
+		var art: bool = _art_gun(gun)
+		GunFxArt.draw_under(self, _gun_fx, stage.tick, not art, not _art_mag(gun), _ground == null)
+	if _ground != null:
+		_ground.sync(arena, _gun_fx if arena.gun != null else null, stage.tick)
 
 
 ## Lane gunplay: a contractor's tell (GuardTell). Tracking: a thin dashed vermilion aim line
