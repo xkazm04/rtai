@@ -7,8 +7,7 @@
         "flash_smg_",
         "flash_tube_",
         "flash_nuke_",
-        "spark_",
-        "tracer"
+        "spark_"
       ],
       "id": "muzzle",
       "note": "hot yellow-orange",
@@ -18,6 +17,19 @@
         "paper_2": "#FFD45A",
         "vermilion": "#FF9A2A",
         "wash": "#E07A22"
+      }
+    },
+    {
+      "files": [
+        "tracer"
+      ],
+      "id": "tracer",
+      "note": "a thin hot-yellow streak, light orange tail (the sheet's SMG rounds)",
+      "tokens": {
+        "ink_2": "#FFB43C",
+        "paper": "#FFF4B0",
+        "paper_2": "#FFE680",
+        "wash": "#F5A030"
       }
     },
     {
