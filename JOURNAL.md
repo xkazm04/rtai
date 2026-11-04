@@ -848,3 +848,26 @@ NEXT (iteration 7, from about 06:30):
   NOT re-blessed: first read build/evidence/selftest.json for which 7 goldens and why, then
   bisect by lane merge (be6e0167 .. 54a7d5c0) before any re-bless. Log evidence/r8/evidence-r9.txt.
   This is NEXT 1 for iteration 7, before the re-cut.
+
+## Iteration 7 (06:23-07:23, BUILD)
+- 06:23 read JOURNAL, git log, lanes' tips. Look goldens first (NEXT 1): selftest's 7 OFF frames
+  fail MAX_FAR (2.1-2.6 % of pixels off by > 48, limit 2 %), not the mean (worst 2.43 < 4). Diff
+  images (evidence/r8/look-diff-d4-64ppm.png, look-cmp-d4-64.png, evidence/r10/look-diff-2.png):
+  the riot cops' shields print as solid inked slabs (were ghosted arcs) = human-reactions' answer
+  to my REQUEST 22, plus kill sprays turned off the blow axis = gunplay's spray_tilt_min_deg
+  (human-reactions REQUEST 2). Both intended; no bisect needed.
+- MILESTONE 06:26 merge round 10 (brief order; only JOURNAL conflicts, ours kept; pre-commit lint
+  13/13 on each): weapon-art 6e284042 (journal only), rivet-arsenal b11fa9e2 (molotov rag light,
+  next-bottle rag, flamer tank swap stays solid) -> 3382b7d3, gunplay b64251b8 (FightCam
+  --cam=fight, corpse hold 60) -> 0a8de0dc, human-reactions 4679056e (shield count in the exit
+  log) -> 5b3ea15f, brutality d52cf4ca (homing shard wounds + fan) -> ea04bbe7; then 10b:
+  rivet-arsenal efb5d023 (REQUEST 25 DONE 1a7453ef: GunplayBot.flank_after + never_close_in)
+  -> ef43fb36.
+- 06:27 look_golden on round 10 (no bless): identical numbers to r9, so round 10 moved nothing.
+  RE-BLESSED the 11 junction goldens (bc9caaa7, decisions line; block 5/5 untouched; replay and
+  parity untouched).
+- 06:27 director cut started on round 10 (cut.sh reel-0635-director 48, FILM_APPDATA
+  showcase-film); evidence --no-bench on ef43fb36 (APPDATA showcase-e). bench.lock held by
+  another lane since 06:27: bench waits.
+- FRICTION: evidence/run.mjs refuses untracked files under evidence/; logs now go to
+  gtai-n4/scratch-showcase/ and are copied in after.
