@@ -448,3 +448,35 @@ NEXT (iteration 6), in order:
 - Registry rules applied: sprite-and-atlas-production (looks derived from the same sheets, part sizes and pivots
   unchanged), depth-ordered-layered-art (the wall under the actors, z actors-2), motion-quality-gating (the bolt
   judged in a live fight on fixed ticks against the it4 frame). No deviation.
+- MEASURE 04:21 the weapon wall in motion: `--rigs --ppm=48 --bot=rivet` (the claw fight in the hub), 20 s clip
+  `it6-weapon-wall-hub-48ppm.mp4`: the board stays on screen behind the fight the whole time.
+- 04:22 chain arc still NOT filmed. Tried twice: (1) `--bot=arsenal --loadout=electro_gun --start=pit` 35 s,
+  wave 1 = 2 guards, never within 4 m of each other; the bolts seen are shots at an off-screen guard; (2) the same
+  without `--start=pit`: the arsenal bot walks to the pit anyway (the react_line dummies 4 m apart are never shot).
+  Needs a station that puts two hostiles within chain_radius_m 4 of each other (NEXT 1).
+- Gates of record this session: lint 13/13 (672 files) at every commit (pre-commit hook), unit 733/733 and
+  scenarios 32/32 at 7629aae7 (`evidence/weapon-art/unit-it6b.log`, `scenarios-it6b.log`); later commits are
+  docs only. Render-only + art + data; no sim file, no replay or parity golden touched. No bench (render-only:
+  16 sprites + 1 rect on the hub board).
+- frames.json 15 entries, it6 first (weapon wall still + clip, electro bolt A/B + clip, SWAT, thug). Dropped:
+  it4 electro live (now the A/B's before), it4 SMG feed box A/B, it4 flame nozzle, it4 claw clip A, it4 claw lineup
+  (core seven; the it5 rim lineup supersedes it), it5 SMG 128 close-up. Their files stay. Scratch deleted.
+- FRICTION: the sandbox also refuses `rm` of the shell's current directory (and drops the whole command); cd out first.
+
+## Calls for the owner (adds, iteration 6)
+- weapon-art-9: the weapon wall in the hub (all 16 on a board, live) vs no wall (the hub as before). Frame
+  `it6-weapon-wall-hub-64-32ppm.png`, clip `it6-weapon-wall-hub-48ppm.mp4`. Default: on; `--weapon-rack=off`.
+- weapon-art-10: the SWAT and thug looks are scripted derivations (same cuts, new tones + optic/pouches) vs new
+  generated sheets (more distinct shapes, about an hour each). Frames `it6-swat-look-128-48-32ppm.png`,
+  `it6-thug-parts-and-lineup.png`. Default: the derivations.
+
+NEXT (iteration 7), in order:
+1. Film the electro chain: a hub station row in `arena_stations/weapon-art.json` with two `target` spawns 2 m
+   apart (check ArenaTargets makes them Fighters the chain can reach), and a way to make the arsenal bot shoot
+   them (or a scripted aim). Show the bolt hopping.
+2. The weapon wall at 128 px/m: a teleport or `--start=` to the hub's north band so the close-up shows the art.
+3. Read human-reactions' JOURNAL: did they wire `head_swat`/`torso_swat` and `ThugPlan.ART_DIR = "thug"`? Film
+   both in the live arena (cherry-pick their wiring if needed) at 64 px/m with D5 detail.
+4. The reload close-up with the rim at 128 px/m (the it5 128 frame predates the rim).
+5. Brutality still uses the front-view X-ray; offer the `gore_*_top` stickers again (their JOURNAL).
+- Session close 04:25: 6 commits this iteration (d9102db7..), gates green, worktree clean except evidence logs.
