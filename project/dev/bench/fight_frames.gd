@@ -111,6 +111,15 @@ func _sample(wall_ms: float) -> void:
 	_last_pipes = pipes
 
 
+## Engine time (ms since start, so about the window's age) of the first logged frame: tells a
+## stall bound to the window's age from one bound to the fight.
+func _engine_ms_at_first() -> float:
+	var total: float = 0.0
+	for ms: float in _wall:
+		total += ms
+	return Time.get_ticks_msec() - total
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_PREDELETE:
 		write()
@@ -124,6 +133,7 @@ func write() -> void:
 		"schema": "gtai.fight-frames/1",
 		"summary": summary(),
 		"hitches": _hitches(),
+		"engine_ms_at_first": _engine_ms_at_first(),
 		"wall_ms": Array(_wall),
 		"loop_ms": Array(_loop),
 		"process_ms": Array(_proc),
