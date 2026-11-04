@@ -115,3 +115,11 @@ NEXT (iteration 2), Tonnage first (depth before breadth), then Dent:
   started (`--quit-after 24000`, `E/director-reel-iter1-full.log`).
 - 00:30 unit `test_ghost_forms` 8/8: + determinism (one Q/G script run twice gives the same history tick for
   tick). Not yet in the replay path (GhostForms is not wired into the sim; NEXT item 4).
+- 00:32 COMBAT CHECK (full) `E/director-reel-iter1-full.log` (`--quit-after 24000`, headless, on 513376e6 = the
+  merged ghost-powers tree + all of this lane): 16 chapters started, 16 down (claw_combo 2/2, pistol 2/2,
+  machine_pistol 4/4, rocket .. riot_cop 1/1, mini_nuke 4/4), 0 SCRIPT ERROR, exit 0. Combat holds.
+- 00:33 MILESTONE morph v2 (GhostMorphFx): steam as lumpy cream puffs under one ink rim, shrinking (v1's fading
+  puffs printed as grey discs); seams along the crown's plate grid (a cross + an inset square) instead of radial
+  spokes. A/B `M:frames/tonnage-morph-64ppm-keys-ab.png` (v1 top, v2 bottom, same ticks); both clips and the
+  32 px/m strip re-cut on v2. Still weak: the late steam lobes shrink to small ink rings (frame 3); the in-between
+  pose is still the scaled-down press (no plate folding). frames.json 8 entries, every file checked present.
