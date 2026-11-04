@@ -21,7 +21,9 @@ Paths below are relative to the masters folder unless they start with `evidence/
     on this branch and showcase's main. With their OK, I sent it to showcase as glue for the final round. Patch v2
     (`9e5ab448`) also puts back every foot state `RigGait` writes, after the cut. A first try restored the shoe
     texture before the cut and the copy got the toe-off shoe; the film caught that and v2 fixes it. v2 was re-filmed
-    with the same result as v1, unit 929/929. Whether it is in the 10:30 reel is showcase's call.
+    with the same result as v1, unit 929/929. **Showcase applied it in round 19 (`08e1b72f`)** for the final reel.
+    Showcase also split `cut()`: v2 failed the repo's `gd-size` lint (44 > 40 lines), which I had not run on the
+    patch. Behaviour is unchanged.
   - Also checked the reel's pistol and riot-cop chapters: the standard bullet sprawl with red and the shield sparks
     read cleanly. Nothing changed.
   - **Open, found at 10:00 in the claw chapter:** the claw's kills lie in the bullet X sprawl, and the second one

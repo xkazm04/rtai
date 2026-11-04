@@ -1162,3 +1162,8 @@ NEXT (after the freeze / morning merge), in order:
    melee weapon names to `melee` in hit_class_of; film the claw chapter A/B.
 3. Then REPORT next steps 1-6 as listed (gunplay shield_test line, robot Fighter.Kind, idle bench,
    directed kill camera, dry electro kills).
+- 10:03 showcase applied REQUEST 30 v2 as glue in round 19 (08e1b72f), for the final reel at about
+  10:15. FRICTION: v2 failed the repo's gd-size lint (cut() 44 lines > 40). I had run gdformat
+  and gdlint on the file, not tools/lint/lint.mjs on the scratch tree. Showcase split the
+  restore into _restore(). Lesson: run the full lint on any patch handed to another lane.
+  NEXT item 1 is done.
