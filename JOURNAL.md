@@ -1043,3 +1043,37 @@ age-96 stall and the nuke tick under bench.lock, look goldens + parity on the me
   label strip (electro = 22.06-29.08 s); the electro chapter replaced by the it18 48 px/m clip with
   the same label style; the other ten chapters are the it12 takes, untouched. 78 s. Looked at the
   sheet (evidence/brutality/city-reel-all-11-clean-it18-sheet.png): the chapter joins are clean.
+- 09:12 REQUEST check: gunplay answered both of mine (REQUEST 30 stuck shards: 8ea3a2e5; REQUEST 29
+  molotov corpse: 0b2541a9 + aa471560), both on n-gunplay. Human-reactions answered showcase
+  REQUEST 29 with DeathPose.stiff_channels/plank_turn (8fe505a0, the stiff plank: c_plank, plank_feet,
+  CorpseScorch), only on n-human-reactions.
+- DECISION 09:13 not merging n-human-reactions now: `git merge-tree` shows conflicts in
+  arena_rigs.gd, rig_gait.gd, combat_blood.gd, test_fight_areas.gd (110 commits); not resolvable,
+  gated and filmed before the freeze. My plank uses this branch's DeathPose._shock channels; the
+  merge glue for the stiff plank is the docs/decisions.md line of today (KillSprawlCut: save/restore
+  c_plank + plank_feet, call stiff_channels with the rig-local dir; KillShockFx: plank_turn instead
+  of DROP_TURN). REPORT updated in place (After 09:00 section).
+- MEASURED 09:15-09:20 under bench.lock (taken, released at 09:20; windowed, no movie writer,
+  --fixed-fps 60, city 48 px/m, two runs each; telemetry evidence/brutality/lock-it18/):
+  * mini-nuke: the five kill-tick cuts are 250-390 us each (~1.6 ms together), NOT the 4.3 ms of
+    record. The worst frame is 4.45 ms at tick 123 in BOTH runs (age 18 after the nuke, one tick
+    after a 6th cut at 122): deterministic, so not contention.
+  * flamethrower: a 4.27 ms frame at age 103 in run 2 only (run 1 worst 373 us): the "age-96 stall"
+    is intermittent, so it is contention or the platform, not the kill's code. LEAD closed as
+    "not reproducible under the lock".
+  * electro (with the plank cut): 0.8-1.2 ms on the cut tick, nothing over 2 ms.
+- LEAD 09:22 (temporary probe, reverted): the nuke's tick-123 frame is KillView._draw = 2.4 ms (the
+  rest of the 4.4 ms is the ground print, add_us). _draw is only the 72 gib shadows and the marks'
+  flash stars (KillMarkArt.flash: a 24-point star via KillPoly.fill per mark), which should not cost
+  that. Next probe: time each KillMarkArt.flash / KillPoly.fill at tick 123 (6 marks, nuke
+  flash_scale).
+- Clean-up: scratch renders deleted (only the capture scripts remain); no Godot process of mine
+  running.
+
+NEXT:
+1. After the morning merge: apply the stiff-plank glue (docs/decisions.md, electro corpse line),
+   re-film the electro clip, and re-check REQUEST 29 (showcase) on main.
+2. The nuke's tick-123 frame (4.4 ms, deterministic): probe KillMarkArt.flash / KillPoly.fill per
+   mark; if the fill is the cost, draw the star with draw_colored_polygon on a precomputed fan.
+3. Re-check gunplay's REQUEST 29/30 answers on the merged main (molotov corpse, stuck shards).
+4. Gates on the merged main: look goldens + parity (both green on this branch at 88ff881d).

@@ -143,6 +143,12 @@ were last run on `59429978`.
   35/35 with 0 script errors (`E/scenarios-it18.log`), look goldens 11/11, worst mean 1.54 of 4.0
   (`E/look-golden-it18.json`), parity bit for bit over 1200 steps, with the planted mutation caught at
   step 629 (`E/parity-it18.log`). Next step 4 is done on this branch. Repeat it on the merged main.
+- **Measured under `bench.lock`** (09:15-09:20, windowed, no movie writer, two runs each; `E/lock-it18/`):
+  the nuke's five kill-tick cuts cost about 1.6 ms together (not 4.3 ms). Its worst frame is 4.45 ms at
+  tick 123 (age 18) in both runs, so it is deterministic. A temporary probe puts 2.4 ms of it in
+  `KillView._draw` (the marks' flash stars). The flame's age-96 stall showed up in one run of two, so
+  it is contention, not the kill's code. The electro kill with the plank cut costs 0.8-1.2 ms. Every
+  frame stays well inside 16.6 ms.
 - Not done: merging `n-human-reactions` (110 commits, with conflicts in shared arena and rig files) for
-  its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: the age-96
-  stall and the nuke tick under `bench.lock`.
+  its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: the fix for the nuke's
+  tick-123 frame (next probe: `KillMarkArt.flash` per mark).
