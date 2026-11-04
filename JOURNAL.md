@@ -564,8 +564,8 @@ NEXT (iteration 11):
 1. The crowd's value: the package of value tweaks is a no-go (00:14). Either a plan-view ped redraw (Codex from
    r1_c6 + r2_a5: light shoulders widest, small head, small shoes; all six looks, D4 + D5) as a full item with the
    react board, corpses, gibs and goldens, or leave it as REPORT Call 6 (pale vs dark crowd) if the time goes to
-   the weakest cast item instead. Write Call 6 with `frames/crowd-value-vs-r2a5.png` + the package trial still.
+   the weakest cast item instead. Call 6 is written (00:16, 4453e747).
 2. With a redraw: judge the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated
    line), provenance lines for shipped parts.
-3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session end 00:16: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+3. Calls 1-6 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
+Session end 00:17: head = this commit, tree clean, image.lock released, no Godot process of mine running.
