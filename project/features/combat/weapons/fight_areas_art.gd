@@ -23,6 +23,14 @@ const CLEAR_RAMP: int = 18
 const CLEAR_M: float = 2.2
 ## How far a flame over a corpse is pushed out of its way (the fire opens round the body).
 const CLEAR_PUSH_M: float = 1.0
+## A burning human runs trailing small flames off his back (human-reactions NEXT 4: one 2.1 m
+## flame centred on him hid the body): BURN_FLAMES of BURN_SCALE x the fire loop, the nearest
+## BURN_BACK_M behind him, spaced BURN_STEP_M back and fanned BURN_FAN_M to the sides.
+const BURN_FLAMES: int = 3
+const BURN_SCALE: float = 0.3
+const BURN_BACK_M: float = 0.42
+const BURN_STEP_M: float = 0.22
+const BURN_FAN_M: float = 0.2
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
@@ -34,7 +42,7 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
 			if e.burn_ticks > 0:
-				_fire(ci, h.pos + Vector2(0.0, -0.45), 0.85, tick + h.id * 3, 1.0)
+				_burning(ci, burn_flames(h.pos, e.flee), tick + h.id * 3)
 			if e.stun_ticks > 0:
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
@@ -44,6 +52,23 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 			var arc: PackedVector2Array = a.chain_arcs[i]
 			_bolt(ci, arc[0], arc[1], tick / 2 + i, 11.0, Ink.INK)
 			_bolt(ci, arc[0], arc[1], tick / 2 + i, 4.5, Ink.CREAM)
+
+
+## Where a burning human's flames sit: behind him against his run (`flee`), off the body.
+static func burn_flames(pos: Vector2, flee: Vector2) -> PackedVector2Array:
+	var back: Vector2 = -flee.normalized() if flee.length_squared() > 0.0 else Vector2.DOWN
+	var side: Vector2 = back.orthogonal()
+	var out: Array[Vector2] = []
+	for k: int in BURN_FLAMES:
+		var fan: float = BURN_FAN_M * float(k - 1)
+		out.append(pos + back * (BURN_BACK_M + BURN_STEP_M * float(k)) + side * fan)
+	return PackedVector2Array(out)
+
+
+static func _burning(ci: CanvasItem, flames: PackedVector2Array, tick: int) -> void:
+	for k: int in flames.size():
+		var size: float = BURN_SCALE * (1.0 - 0.15 * float(k)) + 0.03 * float((tick / 4 + k) % 2)
+		_fire(ci, flames[k], size, tick + k * 7, 1.0 - 0.2 * float(k))
 
 
 ## A table round that is not a plain bullet; false when the kind is drawn as a tracer instead.
