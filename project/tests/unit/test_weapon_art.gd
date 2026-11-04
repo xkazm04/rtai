@@ -141,3 +141,20 @@ func test_held_part_has_a_paper_rim_under_it_unless_off() -> void:
 	assert_eq(held.get_child_count(), 0, "--weapon-rim=off: no rim")
 	held.free()
 	WeaponArt.rim = was
+
+
+func test_rocket_tubes_have_an_empty_part_on_the_same_grip() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	for id: StringName in [&"rocket_launcher", &"mini_nuke"]:
+		var held: Sprite2D = art.make_held(id)
+		var empty: Sprite2D = art.make_held(id, "empty")
+		assert_not_null(empty, "%s has an empty tube" % id)
+		if empty == null:
+			held.free()
+			continue
+		assert_eq(empty.texture.get_size(), held.texture.get_size(), "%s same canvas" % id)
+		assert_eq(empty.offset, held.offset, "%s empty tube on the held grip" % id)
+		assert_eq(empty.scale, held.scale, "%s empty tube at the held scale" % id)
+		held.free()
+		empty.free()
+	assert_null(art.make_held(&"pistol", "empty"), "a pistol has no empty tube")

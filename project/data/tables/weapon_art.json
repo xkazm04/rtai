@@ -737,7 +737,15 @@
         549,
         81
       ],
-      "parts": {},
+      "part_grip_px": {
+        "empty": [
+          277,
+          81
+        ]
+      },
+      "parts": {
+        "empty": "res://features/combat/weapons/art/rocket_launcher/held_empty.png"
+      },
       "pickup": "res://features/combat/weapons/art/rocket_launcher/pickup.png",
       "projectile_fx": "rocket",
       "size_px": [
@@ -1080,7 +1088,15 @@
         459,
         68
       ],
-      "parts": {},
+      "part_grip_px": {
+        "empty": [
+          187,
+          68
+        ]
+      },
+      "parts": {
+        "empty": "res://features/combat/weapons/art/mini_nuke/held_empty.png"
+      },
       "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
       "projectile_fx": "rocket",
       "size_px": [
