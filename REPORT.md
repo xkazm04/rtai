@@ -189,6 +189,9 @@ Each call is one value or flag. A is what is live now.
 4. Check brutality's REQUEST 29 electro drop on a director reel (48 px/m).
 5. A directed arena camera that leans to a kill, so a victim who falls about 11 m from a standing Rivet sits in the
    middle third at 48 px/m.
-6. Dry electro kills, render-only, in 3 lines: `CombatArena.damage` sets `kill_weapon` before `actor_killed`,
-   `CombatBlood` gets a `dry_kill` Callable, and the collect_call composition returns true for `electro_gun`. This
-   waits on brutality: `electro_shock` is their signature, and it would lose its red.
+6. Dry electro kills, render-only, on the merged build. There, `CombatBlood._on_killed` defers to `_bleed_killed` once
+   a signature `veto` is set, and by then `CombatArena.kill_weapon` is already set. So the fix is one more early
+   return in `_bleed_killed`: a `dry_kill` Callable that the collect_call composition answers with
+   `arena.kill_weapon == &"electro_gun"`. `combat_arena` needs no change, and brutality's `electro_shock` signature
+   is untouched because its veto already skips this path. Not done tonight: it edits the same lines as showcase's
+   final merge.

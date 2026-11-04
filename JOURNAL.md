@@ -1133,3 +1133,8 @@ NEXT (morning merge / next night), in order:
   board at 48 px/m with an A/B on the same take (old / new, every 5th frame from 104): no
   difference I could read at this sample, as the runner crosses over the body's arm. Not committed
   (unproven). The trip stays hard to pick out live (REPORT gap stands). Scratch deleted.
+- 09:50 read n-showcase's combat_blood: `_on_killed` defers to `_bleed_killed` when brutality's
+  signature veto is set, and kill_weapon is set by then, so dry electro kills need only an early
+  return there (no combat_arena change) and cannot touch the electro_shock signature (its veto
+  skips that path). Not coded: it edits the lines showcase's final merge is resolving. REPORT
+  Next 6 rewritten with the exact plan.
