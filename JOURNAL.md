@@ -1304,3 +1304,12 @@ NEXT (10:40 report phase):
 2. If time allows before the freeze: the flamethrower's burning victim dies off frame at 48 px/m.
    A lone-capture GunplayBot that follows a burning target (dev only) would film the death.
 3. Merge notes stand: human-reactions and brutality need 83429487 / 8ea3a2e5.
+- 09:27 MILESTONE d35ffdf3: with --lone the bot walks after a burning guard once no other foe
+  stands (`GunplayBot.follow_burning`, fire held, stops 4 m short; default off, so no other run
+  changes). Unit 756/756 (`evidence/n11/unit-19e.log`), lint 13/13. Scenarios were not re-run:
+  no scenario uses GunplayBot, and nothing in the sim changed. Re-filmed the flamethrower
+  (`lone19_flamethrower/`, kills 573 / 1073, 0 script errors) and re-cut the six-gun reel (the
+  flamethrower cut runs 6.2-11.7 s). Looked at the 2 fps sheet: stream, ignition, panic run out of
+  the pit, the fall, and the corpse with blood, all in frame (the corpse in the bottom third).
+  The GAP above is closed. frames.json note updated.
+NEXT is unchanged, except item 2 (done).
