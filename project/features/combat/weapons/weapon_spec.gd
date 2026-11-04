@@ -43,6 +43,8 @@ var knockback_mps: float = 0.0
 var tracer_len_m: float = 0.0
 ## Display scale of the held gun in the claw (REQUEST 9 -> rivet-motion reads it; 1.0 = model size).
 var held_scale: float = 1.0
+## Lane gunplay: how fast a homing round turns onto a target (radians a tick; 0 = flies straight).
+var homing_rad_per_tick: float = 0.0
 
 
 static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
@@ -76,6 +78,8 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.knockback_mps = t.num(row, "knockback_mps")
 	w.tracer_len_m = t.num(row, "tracer_len_m")
 	w.held_scale = t.num(row, "held_scale") if row.has("held_scale") else 1.0
+	var homing: float = t.num(row, "homing_dps") if row.has("homing_dps") else 0.0
+	w.homing_rad_per_tick = deg_to_rad(homing) * SimClock.TICK_DT
 	return w
 
 

@@ -41,17 +41,24 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	var dir: Vector2 = s.vel.normalized()
 	var went: float = s.origin.distance_to(s.pos)
+	if s.spec.homing_rad_per_tick > 0.0:
+		FightShardArt.shard(ci, s, tick)
+		return true
 	match s.spec.kind:
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, s.pos, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
+		WeaponSpec.Kind.BOLT when s.spec.chain_hops == 0:  # a ray: no chain, a straight beam
+			_ray(ci, s.pos - dir * minf(went, s.spec.tracer_len_m), s.pos, tick)
 		WeaponSpec.Kind.BOLT:
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 10.0, Ink.INK)
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
 			ci.draw_circle(Ink.px(s.pos), 7.0, Ink.INK)
 			ci.draw_circle(Ink.px(s.pos), 4.0, Ink.CREAM)
+		WeaponSpec.Kind.THROWN when s.spec.splash_radius_m >= FightNukeArt.NUKE_M:
+			FightNukeArt.shell(ci, s, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
@@ -111,6 +118,9 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 ## A rocket blast as a comic burst: a jagged cream star in a heavy ink rim (6 ticks), then an
 ## ink shock ring that grows and thins, smoke puffs rolling out and ink debris flung wide.
 static func _blast(ci: CanvasItem, b: Vector3, age: int) -> void:
+	if b.z >= FightNukeArt.NUKE_M:
+		FightNukeArt.blast(ci, b, age)
+		return
 	if age >= BLAST_TICKS:
 		return
 	var c: Vector2 = Vector2(b.x, b.y)
@@ -169,3 +179,17 @@ static func _bolt(
 		var jag: float = 0.0 if end else sin(float(phase * 7 + i * 13)) * 0.22
 		pts.append(Ink.px(a.lerp(b, t) + normal * jag))
 	ci.draw_polyline(PackedVector2Array(pts), c, width, true)
+
+
+## The ray gun's round: a dead-straight thin beam (cream core in ink, unlike the electro gun's
+## jagged arc), three ripple rings running down it toward the tip, a bright tip.
+static func _ray(ci: CanvasItem, a: Vector2, b: Vector2, tick: int) -> void:
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.INK, 8.0)
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.CREAM, 3.0)
+	for k: int in 3:
+		var t: float = fmod(float(k) / 3.0 + float(tick % 12) / 12.0, 1.0)
+		var at: Vector2 = Ink.px(a.lerp(b, t))
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.INK, 4.0)
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.CREAM, 1.5)
+	ci.draw_circle(Ink.px(b), 8.0, Ink.INK)
+	ci.draw_circle(Ink.px(b), 5.0, Ink.CREAM)

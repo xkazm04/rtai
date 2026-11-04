@@ -94,3 +94,50 @@ func test_a_hostile_round_flashes_at_its_gun_and_drops_a_shell() -> void:
 	fx.step(arena, 1)
 	assert_eq(fx.enemy_flashes.size(), 1)
 	assert_eq(fx.bits.size(), 1)
+
+
+func test_the_hand_cannon_dumps_six_shells_on_reload_and_drops_an_armored_human() -> void:
+	var arena: CombatArena = _arena(&"hand_cannon")
+	var fx: GunFx = GunFx.new()
+	assert_true(arena.gun.trigger.spec.enabled, "the hand cannon is in the arsenal")
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 20)
+	assert_false(g.alive(), "one hand cannon round drops a human")
+	assert_eq(fx.bits.size(), 0, "a revolver keeps its shells until the reload")
+	arena.gun.trigger.start_reload()
+	_run(arena, fx, 21, 2)
+	assert_eq(fx.bits.size(), 6, "the reload dumps six spent shells")
+	var ring_m: float = fx.look(&"hand_cannon").get("ring_m", 0.0)
+	assert_gt(ring_m, 0.0)
+
+
+func test_a_plasma_bolt_scorches_where_it_stops_and_ejects_no_shell() -> void:
+	var arena: CombatArena = _arena(&"plasma_rifle")
+	var fx: GunFx = GunFx.new()
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 30)
+	assert_false(g.alive(), "one plasma bolt drops a human")
+	assert_eq(fx.impacts.size(), 1)
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a bolt's impact scorches")
+	assert_eq(fx.bits.size(), 0, "an energy gun ejects no shell")
+
+
+func test_one_ray_drops_a_human() -> void:
+	var arena: CombatArena = _arena(&"ray_gun")
+	var fx: GunFx = GunFx.new()
+	assert_true(arena.gun.trigger.spec.enabled, "the ray gun is in the arsenal")
+	assert_eq(arena.gun.trigger.spec.chain_hops, 0, "a ray never chains (drawn as a beam)")
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 20)
+	assert_false(g.alive(), "one ray drops a human")
+	assert_eq(fx.impacts.size(), 1, "a ray marks where it stopped")
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a ray sizzles")

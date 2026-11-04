@@ -207,8 +207,10 @@ func _step_hostile(h: Fighter) -> void:
 
 func _step_shots() -> void:
 	for s: Shot in shots.duplicate():
-		var from: Vector2 = s.advance()
 		var lands: bool = s.spec != null and areas != null
+		if lands and s.spec.homing_rad_per_tick > 0.0:
+			FightReach.home(self, s)
+		var from: Vector2 = s.advance()
 		# A thrown bottle flies over bodies and lands at the aimed point.
 		var over: bool = lands and s.spec.kind == WeaponSpec.Kind.THROWN
 		var victim: Fighter = null if over else _struck(s, from)

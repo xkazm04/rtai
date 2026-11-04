@@ -8,22 +8,25 @@ extends RefCounted
 ## the combat blood). The reload shows as a ring filling around the claw.
 
 const SMOKE: Color = Color(0.090, 0.075, 0.106, 0.55)
-const SCUFF: Color = Color(0.090, 0.075, 0.106, 0.55)
 ## A tracer's tail never reaches back past the muzzle (a round leaves radius + 0.1 m out; the
 ## flash sits at radius + 0.45 m), and its head meets the sim's line CONVERGE_M out.
 const MUZZLE_BACK_M: float = 0.35
 const CONVERGE_M: float = 3.0
+## A heavy gun's shock ring (gun_fx.json ring_m) opens over this many ticks.
+const RING_TICKS: int = 9
 
 
 ## `shells` false = only the magazines (another art lane draws the brass).
 static func draw_under(ci: CanvasItem, fx: GunFx, tick: int, shells: bool = true) -> void:
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
-		if int(im.z) == GunFx.Hit.GROUND:
-			_scuff(ci, Vector2(im.x, im.y), fx.impact_dir[i], tick - int(im.w), int(im.w))
+		if int(im.z) >= GunFx.SCORCH:
+			GunFxMarks.scorch(ci, Vector2(im.x, im.y), tick - int(im.w))
+		elif int(im.z) == GunFx.Hit.GROUND:
+			GunFxMarks.scuff(ci, Vector2(im.x, im.y), fx.impact_dir[i], tick - int(im.w), int(im.w))
 	for i: int in fx.bits.size():
 		if shells or fx.bits[i].w < 0.0:
-			_bit(ci, fx, i)
+			GunFxMarks.bit(ci, fx, i)
 
 
 ## `muzzle` false = Rivet's flash is drawn by another art lane (smoke, impacts stay).
@@ -39,7 +42,10 @@ static func draw_over(
 		var im: Vector4 = fx.impacts[i]
 		var age: int = tick - int(im.w)
 		if age < GunFx.IMPACT_TICKS:
-			_impact(ci, fx, Vector2(im.x, im.y), fx.impact_dir[i], int(im.z), age)
+			var at: Vector2 = Vector2(im.x, im.y)
+			GunFxMarks.impact(ci, fx, at, fx.impact_dir[i], int(im.z) % GunFx.SCORCH, age)
+			if int(im.z) >= GunFx.SCORCH:
+				GunFxMarks.pop(ci, at, age)
 	for ef: Vector4 in fx.enemy_flashes:
 		_star(ci, Vector2(ef.x, ef.y), ef.w, 0.45 - 0.1 * float(tick - int(ef.z)), tick)
 	var gun: GunHand = arena.gun
@@ -47,6 +53,14 @@ static func draw_over(
 	var flash: int = row.get("muzzle_ticks", 2)
 	if muzzle and tick - fx.fired_tick < flash and fx.fired_count > 0:
 		_muzzle(ci, fx, arena.rivet, row, tick - fx.fired_tick)
+	var ring_m: float = row.get("ring_m", 0.0)
+	if ring_m > 0.0 and tick - fx.fired_tick < RING_TICKS and fx.fired_count > 0:
+		var k: float = float(tick - fx.fired_tick + 1) / float(RING_TICKS)
+		var at_px: Vector2 = Ink.px(fx.muzzle(arena.rivet, 0.45))
+		ci.draw_arc(at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.INK, 14.0 * (1.0 - k) + 3.0)
+		ci.draw_arc(
+			at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.CREAM, 4.0 * (1.0 - k) + 1.0
+		)
 	if gun.trigger.reloading():
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
@@ -73,6 +87,10 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 		var side: float = fx.p.get("claw_side_m", 0.0)
 		head -= dir.orthogonal() * side * clampf(1.0 - went / CONVERGE_M, 0.0, 1.0)
 	var tail: Vector2 = head - dir * tail_m
+	var bolt: float = row.get("bolt_px", 0.0) if s.from_rivet else 0.0
+	if bolt > 0.0:
+		_bolt(ci, tail, head, bolt, s.origin.distance_to(s.pos))
+		return
 	ci.draw_line(Ink.px(tail), Ink.px(head), Ink.INK, w)
 	ci.draw_line(Ink.px(tail.lerp(head, 0.3)), Ink.px(head), core, core_w)
 	ci.draw_circle(Ink.px(head), core_w + 1.0, core)
@@ -83,28 +101,31 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age: int) -> void:
 	var f: Vector2 = r.facing.normalized()
 	var at: Vector2 = fx.muzzle(r, 0.45)
-	var count: int = fx.fired_count
 	var shrink: float = 1.0 - 0.25 * float(age)
 	var fwd: float = row.get("muzzle_m", 0.7)
 	var side: float = row.get("muzzle_side_m", 0.3)
 	fwd *= shrink
 	side *= shrink
 	var spikes: int = row.get("spikes", 4)
+	if spikes == 0:  # an energy gun
+		_sun(ci, at, fwd, fx.fired_count)
+		return
 	var star: Array[Vector2] = []
 	if spikes == 3:
+		var fat: float = row.get("fat", 1.0)
 		for a: Vector2 in [
 			Vector2(0.0, fwd),
-			Vector2(0.3, 0.16),
+			Vector2(0.3, 0.16 * fat),
 			Vector2(PI / 2.0, side),
-			Vector2(2.3, 0.12),
+			Vector2(2.3, 0.12 * fat),
 			Vector2(PI, 0.14),
-			Vector2(-2.3, 0.12),
+			Vector2(-2.3, 0.12 * fat),
 			Vector2(-PI / 2.0, side),
-			Vector2(-0.3, 0.16)
+			Vector2(-0.3, 0.16 * fat)
 		]:
 			star.append(a)
 	else:
-		var turn: float = (PI / float(spikes)) * float(count % 2)
+		var turn: float = (PI / float(spikes)) * float(fx.fired_count % 2)
 		for i: int in spikes * 2:
 			var k: float = (fwd if i == 0 else side) if i % 2 == 0 else 0.15
 			star.append(Vector2(TAU * float(i) / float(spikes * 2) + turn, k))
@@ -137,59 +158,43 @@ static func _flash(ci: CanvasItem, pts: PackedVector2Array, rim: float) -> void:
 	ci.draw_polyline(ring, Ink.INK, rim, true)
 
 
-static func _bit(ci: CanvasItem, fx: GunFx, i: int) -> void:
-	var b: Vector4 = fx.bits[i]
-	var age: int = fx.bit_life[i]
-	var fade: float = clampf(1.0 - float(age - int(b.z)) / 30.0, 0.0, 1.0)
-	var hop: float = 0.0
-	if age < GunFx.HOP_TICKS:
-		var t: float = float(age) / float(GunFx.HOP_TICKS)
-		hop = 0.55 * 4.0 * t * (1.0 - t)
-	elif age < GunFx.HOP_TICKS + 8:
-		var t2: float = float(age - GunFx.HOP_TICKS) / 8.0
-		hop = 0.12 * 4.0 * t2 * (1.0 - t2)
-	var at: Vector2 = Vector2(b.x, b.y - hop)
-	var spin: float = float(mini(age, GunFx.HOP_TICKS + 8)) * 0.7 + float(i)
-	var half: Vector2 = Vector2.from_angle(spin) * absf(b.w) * 0.5
-	var mag: bool = b.w < 0.0
-	var body: Color = Ink.INK if mag else fx.color("casing")
-	ci.draw_line(Ink.px(at - half), Ink.px(at + half), Color(Ink.INK, fade), 12.0 if mag else 9.0)
-	ci.draw_line(Ink.px(at - half * 0.7), Ink.px(at + half * 0.7), Color(body, fade), 5.0)
+## A plasma bolt: a cream teardrop (fat hot head, tail tapering back to a point) in an ink rim
+## inside a soft cream glow, swelling and thinning on the distance flown, two sparks trailing.
+static func _bolt(ci: CanvasItem, tail: Vector2, head: Vector2, w: float, went: float) -> void:
+	var r: float = w * 0.5 * (1.0 + 0.22 * sin(went * 5.0))
+	var hp: Vector2 = Ink.px(head)
+	# an ink halo under a cream glow: the bolt reads on the cream paving and on grey concrete
+	ci.draw_circle(hp, r * 2.8, Color(Ink.INK, 0.2))
+	ci.draw_circle(hp, r * 2.1, Color(Ink.CREAM, 0.35))
+	ci.draw_colored_polygon(_drop(hp, Ink.px(tail), r + 7.0), Ink.INK)
+	ci.draw_colored_polygon(_drop(hp, Ink.px(tail.lerp(head, 0.12)), r), Ink.CREAM)
+	ci.draw_circle(hp, r * 0.35, Color(Ink.INK, 0.6))
+	var back: Vector2 = (Ink.px(tail) - hp).normalized()
+	for k: int in 2:
+		var off: Vector2 = back.orthogonal() * r * (1.2 if k == 0 else -1.0) * sin(went * 7.0 + k)
+		ci.draw_circle(Ink.px(tail) + back * r * float(k + 1) + off, 2.5, Ink.CREAM)
 
 
-static func _scuff(ci: CanvasItem, at: Vector2, dir: Vector2, age: int, seed_tick: int) -> void:
-	var fade: float = clampf(float(GunFx.SCUFF_TICKS - age) / 60.0, 0.0, 1.0)
-	var c: Color = Color(SCUFF, SCUFF.a * fade)
-	ci.draw_line(Ink.px(at - dir * 0.25), Ink.px(at + dir * 0.1), c, 6.0)
-	for k: int in 4:
-		var h: float = NoirPack.hash01(seed_tick * 31 + k)
-		var off: Vector2 = dir.rotated(-0.9 + 1.8 * h) * (0.18 + 0.12 * float(k % 2))
-		ci.draw_circle(Ink.px(at + off), 2.0 + 1.5 * float(k % 2), c)
+## A teardrop: a half disc of radius r round `head` facing away from `tip`, closed at `tip`.
+static func _drop(head: Vector2, tip: Vector2, r: float) -> PackedVector2Array:
+	var back: float = (tip - head).angle()
+	var pts: PackedVector2Array = PackedVector2Array()
+	for i: int in 11:
+		var a: float = back + PI / 2.0 + PI * float(i) / 10.0
+		@warning_ignore("return_value_discarded")
+		pts.append(head + Vector2.from_angle(a) * r)
+	@warning_ignore("return_value_discarded")
+	pts.append(tip)
+	return pts
 
 
-## The moment a round stops: dust kicked back along the shot on the ground, cream sparks on
-## metal and on Rivet's plating, a small ink burst on a body.
-static func _impact(
-	ci: CanvasItem, fx: GunFx, at: Vector2, dir: Vector2, kind: int, age: int
-) -> void:
-	var k: float = float(age) / float(GunFx.IMPACT_TICKS)
-	if kind == GunFx.Hit.GROUND:
-		var dust: Color = fx.color("dust")
-		for j: int in 4:
-			var d: Vector2 = (-dir).rotated(-0.8 + 0.53 * float(j)) * (0.15 + 0.5 * k)
-			ci.draw_circle(
-				Ink.px(at + d), (0.1 + 0.12 * k) * Ink.PX_PER_M, Color(dust, 0.8 * (1.0 - k))
-			)
-		return
-	if kind == GunFx.Hit.BODY:
-		if age < 4:
-			ci.draw_circle(Ink.px(at), (0.22 - 0.03 * float(age)) * Ink.PX_PER_M, Ink.INK)
-		return
-	var spark: Color = fx.color("spark")
-	for j: int in 6:
-		var d: Vector2 = (-dir).rotated(-1.3 + 0.52 * float(j)) * (0.2 + 0.7 * k)
-		var tip: Vector2 = at + d
-		ci.draw_line(Ink.px(at + d * 0.55), Ink.px(tip), Ink.INK, 5.0)
-		ci.draw_line(Ink.px(at + d * 0.6), Ink.px(tip), spark, 2.5)
-	if age < 3:
-		ci.draw_circle(Ink.px(at), 0.18 * Ink.PX_PER_M, spark)
+## An energy gun's muzzle: a 10-point cream burst in ink that turns every shot, a hot core.
+static func _sun(ci: CanvasItem, at: Vector2, fwd: float, count: int) -> void:
+	var sun: PackedVector2Array = PackedVector2Array()
+	for i: int in 20:
+		var k: float = fwd * (0.55 if i % 2 == 0 else 0.3)
+		var a: float = TAU * float(i) / 20.0 + 0.3 * float(count % 3)
+		@warning_ignore("return_value_discarded")
+		sun.append(Ink.px(at + Vector2.from_angle(a) * k))
+	_flash(ci, sun, 3.0)
+	ci.draw_circle(Ink.px(at), fwd * 0.12 * Ink.PX_PER_M, Ink.INK)

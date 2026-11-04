@@ -8,6 +8,31 @@ extends RefCounted
 ## TickInput carries the aim as a direction only, so a thrown bottle lands on the living hostile
 ## closest to the aim line within this angle (and its range), else at the aim point.
 const LOB_CONE_RAD: float = 0.2
+## A homing round looks for the nearest living hostile this far ahead, within this half-angle.
+const HOME_RANGE_M: float = 12.0
+const HOME_CONE_COS: float = 0.5
+const TRAIL_POINTS: int = 10
+
+
+## Turns a homing round `s` toward the nearest living hostile ahead by at most its turn rate.
+static func home(arena: CombatArena, s: Shot) -> void:
+	@warning_ignore("return_value_discarded")
+	s.trail.append(s.pos)
+	if s.trail.size() > TRAIL_POINTS:
+		s.trail.remove_at(0)
+	var dir: Vector2 = s.vel.normalized()
+	var best: Fighter = null
+	var best_d: float = HOME_RANGE_M
+	for h: Fighter in arena.hostiles:
+		var to: Vector2 = h.pos - s.pos
+		var d: float = to.length()
+		if h.alive() and h.exposed and d < best_d and d > 0.01 and dir.dot(to / d) >= HOME_CONE_COS:
+			best_d = d
+			best = h
+	if best == null:
+		return
+	var turn: float = dir.angle_to(best.pos - s.pos)
+	s.vel = s.vel.rotated(clampf(turn, -s.spec.homing_rad_per_tick, s.spec.homing_rad_per_tick))
 
 
 ## Where a bottle thrown from `from` toward `at` lands (see LOB_CONE_RAD).
