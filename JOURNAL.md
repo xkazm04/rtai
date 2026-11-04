@@ -745,9 +745,16 @@ NEXT (iteration 10):
   telemetry before guessing at the cost); realtime-combat-semantics (no sim change: the camera fix
   is in the dev lab, the prewarm is render only).
 
+- 06:55 LEAD narrowed (probes reverted): the age-96 cost is inside KillView._draw's gib-shadow loop
+  (72 slots, a draw_circle per live gib): 2.0-4.1 ms there at tick 443, and once 2.0 ms at tick 160
+  with no kill yet. 72 iterations cannot cost that: a main-thread stall (six lanes on the machine,
+  or a render sync) landing in whichever timed block runs, not the kill's own work. The thread
+  model is the default (single-safe). Unresolved.
+
 NEXT (iteration 11):
-1. The age-96 frame of a burn/vaporise kill (LEAD above): probe KillView._draw; if it is not there,
-   the measure itself (worst_tick is the tick of the frame the cost is added to).
+1. The age-96 stall (LEAD above): run the same flame capture --headless with the gib-loop probe; if
+   it vanishes it is a render sync (then look at what the crumble starts drawing at age 96:
+   KillCharFx flakes + smoke), if not, contention (re-measure under bench.lock).
 2. Re-shoot the eleven-kill city reel with the follow fix (each kill at its own clear spot; the
    start:-22,0 street works for the gun kills too).
 3. The claw-shock lab: press melee through TickInput so the pilot's own PlayerShock fires (it9 NEXT 2).
