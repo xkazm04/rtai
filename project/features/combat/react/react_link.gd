@@ -21,6 +21,10 @@ const LIMP_GAIN: float = 1.6
 ## gunplay's death kinds (CombatArena.kill_landed) over the weapon's hit class: a fire kill
 ## chars, a blast kill throws; `shot` keeps the weapon's own class.
 const KILL_KIND_CLASS: Dictionary[StringName, StringName] = {&"burned": &"burn", &"blown": &"blast"}
+## Rivet's melee weapons (rivet-arsenal's PlayerMelee ids; absent from weapons.json) hit as melee.
+const MELEE_IDS: Array[StringName] = [
+	&"claw", &"chainsaw", &"electro_baton", &"katana", &"plasma_sword"
+]
 ## The lasting area states (FightAreas FighterFx) hold their family while they last: the share
 ## of the family the hold loops inside (start, end) and where the release resumes.
 const HOLD: Dictionary[StringName, Vector3] = {
@@ -64,10 +68,13 @@ static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
 	return link
 
 
-## The damage class a weapon id hits with (weapons.json hit_class; `burn` for fire, else light).
+## The damage class a weapon id hits with (weapons.json hit_class; `burn` for fire, `melee` for
+## MELEE_IDS, else light).
 func hit_class_of(weapon: StringName) -> StringName:
 	if weapon == &"burn":
 		return &"burn"
+	if weapon in MELEE_IDS:
+		return &"melee"
 	var spec: WeaponSpec = _weapons.weapons.get(weapon, null)
 	return spec.hit_class if spec != null else &"light"
 

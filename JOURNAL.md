@@ -1186,3 +1186,8 @@ NEXT (after the freeze / morning merge), in order:
   evidence; the one code change (REQUEST 30) landed on showcase round 19 as glue.
 - CORRECTION 10:07: the hr-scratch3 directory is deleted now (the shell let go of it). No scratch worktree or directory of mine is left.
 - MILESTONE 10:08 verified in showcase's final round 19 cut (scratch-showcase/cut-r19-dir/electro_gun.mp4, filmed 10:05): the electro signature corpse lies full length along the shot, arms at the sides and shoes toward Rivet, from the drop to the last frame, so REQUEST 30 is in the final reel. Before (r17): arms flung across the shot, stub legs.
+- MILESTONE 10:11 the in-lane half of REPORT next 7: `ReactLink.hit_class_of` returns `melee` for MELEE_IDS
+  (claw, chainsaw, electro_baton, katana, plasma_sword); claw_shock stays `light`. Unit test added to
+  test_react_link. Lint 13/13, unit 755/755 (this branch's count). Inert here: no struck on this branch carries a
+  melee id (shots, areas and burn only), so scenarios/replay cannot move. DECISION line in docs/decisions.md.
+  Rules applied (realtime-combat-semantics): the hit class is decided once at the link, not per rig.

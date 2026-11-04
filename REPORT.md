@@ -227,8 +227,9 @@ Each call is one value or flag. A is what is live now.
 7. Melee hits reach the reaction layer:
    - in `PlayerMelee._land`, add `arena.struck.emit(f, dir, not f.alive(), weapon_id)` after `arena.damage`
      (rivet-arsenal, as `PlayerShock` does);
-   - in `ReactLink.hit_class_of`, return `melee` for the melee table's weapon ids (they are not in `weapons.json`, so
-     today they fall back to `light`);
+   - ~~in `ReactLink.hit_class_of`, return `melee` for the melee weapon ids~~ **done 10:11** on this branch
+     (`ReactLink.MELEE_IDS`: claw, chainsaw, electro_baton, katana, plasma_sword -> `melee`; `claw_shock` unchanged;
+     unit-tested, lint 13/13, unit 755/755). Inert until the `struck` emit above lands; not filmed;
    - but `struck` also drives `HitLink._on_struck` (a `feel.land` hit-stop hold plus hit/kill counters), which would
      stack on melee's own feel. Pick one with rivet-arsenal: HitLink skips the melee ids, or ReactLink gets its own
      melee signal;
