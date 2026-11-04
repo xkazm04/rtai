@@ -1,0 +1,86 @@
+{
+  "electro_gun": {
+    "chain_hits": 10,
+    "hash": 1084902990,
+    "ignitions": 0,
+    "kills": 5,
+    "knockdowns": 0,
+    "peak": {
+      "burning": 0,
+      "patches": 0,
+      "stunned": 4
+    },
+    "planted_hash": 1273534192,
+    "shots": 4
+  },
+  "flamethrower": {
+    "chain_hits": 0,
+    "hash": 2929630705,
+    "ignitions": 5,
+    "kills": 5,
+    "knockdowns": 0,
+    "peak": {
+      "burning": 5,
+      "patches": 10,
+      "stunned": 0
+    },
+    "planted_hash": 550606758,
+    "shots": 32
+  },
+  "machine_pistol": {
+    "chain_hits": 0,
+    "hash": 450732963,
+    "ignitions": 0,
+    "kills": 5,
+    "knockdowns": 0,
+    "peak": {
+      "burning": 0,
+      "patches": 0,
+      "stunned": 0
+    },
+    "planted_hash": 921849415,
+    "shots": 20
+  },
+  "molotov": {
+    "chain_hits": 0,
+    "hash": 2207266851,
+    "ignitions": 5,
+    "kills": 5,
+    "knockdowns": 0,
+    "peak": {
+      "burning": 5,
+      "patches": 2,
+      "stunned": 0
+    },
+    "planted_hash": 3711701329,
+    "shots": 2
+  },
+  "pistol": {
+    "chain_hits": 0,
+    "hash": 1991811444,
+    "ignitions": 0,
+    "kills": 5,
+    "knockdowns": 0,
+    "peak": {
+      "burning": 0,
+      "patches": 0,
+      "stunned": 0
+    },
+    "planted_hash": 1368379484,
+    "shots": 5
+  },
+  "rocket_launcher": {
+    "chain_hits": 0,
+    "hash": 428836822,
+    "ignitions": 0,
+    "kills": 5,
+    "knockdowns": 8,
+    "peak": {
+      "burning": 0,
+      "patches": 0,
+      "stunned": 0
+    },
+    "planted_hash": 1502843608,
+    "shots": 2
+  }
+}

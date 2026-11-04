@@ -98,18 +98,25 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	@warning_ignore("return_value_discarded")
 	f.put(i, who.id, kind, at, vel)
 	f.face[i] = who.facing.angle()
-	if who.weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
+	var weapon: StringName = who.weapon
+	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
+	var gun: GunHand = null
+	if stage != null and who == stage.arena.rivet:
+		gun = stage.arena.gun
+	if gun != null:  # lane gunplay: a table gun counts its own rounds (Rivet's cooldown is idle)
+		weapon = gun.trigger.spec.id
+		mark = Vector2i(gun.shots_fired, 0)
+	if weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
 		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
 		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
-	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
 	var before: Vector2i = _fire_seen.get(who.id, mark)
 	var shot: bool = fired(before, mark)
 	_fire_seen[who.id] = mark
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
-	elif shot and who.weapon != &"":
+	elif shot and weapon != &"":
 		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
-		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
+		f.clip_arg[i] = plan.kick(weapon) if plan != null else 1.0
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick) and react == null:
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()

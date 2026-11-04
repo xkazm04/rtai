@@ -12,11 +12,19 @@ var blocked: int = 0
 var _near: Dictionary[Shot, bool] = {}
 
 
+## Lane gunplay: a table gun's lobbed bottle flies over the props (it lands at its aim point), and
+## a table rocket bursts on the prop it hits (FightAreas.land: blast, splash, knockdown) instead
+## of vanishing.
 func cull(arena: CombatArena, walls: ArenaWalls) -> void:
 	for s: Shot in arena.shots.duplicate():
+		var kind: int = s.spec.kind if s.spec != null else -1
+		if kind == WeaponSpec.Kind.THROWN:
+			continue
 		if walls.blocks(s.pos, s.pos + s.vel * SimClock.TICK_DT):
 			arena.shots.erase(s)
 			blocked += 1
+			if kind == WeaponSpec.Kind.ROCKET and arena.areas != null:
+				arena.areas.land(arena, s, null, s.pos)
 
 
 ## After the arena stepped: near shots marked, the ones now past Rivet counted.
