@@ -839,3 +839,12 @@ NEXT (iteration 7, from about 06:30):
    rocket_launcher,molotov` (city block), `build\export\windows\RTAI.exe -- --bot=reel
    --reel=director --loadout=pistol` (the director cut live). Calls for the owner: the electro
    death pose, the pit wall bars on the city plaza, the hub crowding (dummies vs weapon wall).
+- 06:22 EVIDENCE r9 (--no-bench, on f3b27c70, CONTENDED): lint PASS, unit 868 PASS, parity PASS
+  bit-exact, scenarios FAIL 43/44 (scenario_rivet_city_fight, REQUEST 25), selftest FAIL: look
+  goldens 4/11 "within mean 4" while the worst mean is 2.43 (so 7 fail on another measure, not
+  read yet); block goldens 5/5, no new off-doctrine accents, world lock holds. Round 8 was 11/11
+  (worst 1.58), so a round-9 merge moved the look: suspects weapon-art's molotov shadow,
+  human-reactions' shield slab / sparks, brutality's incremental smears, gunplay's spray floor.
+  NOT re-blessed: first read build/evidence/selftest.json for which 7 goldens and why, then
+  bisect by lane merge (be6e0167 .. 54a7d5c0) before any re-bless. Log evidence/r8/evidence-r9.txt.
+  This is NEXT 1 for iteration 7, before the re-cut.

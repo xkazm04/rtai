@@ -1,0 +1,12 @@
+PASS lint: lint: all 13 checks pass over 771 GDScript files
+     -> C:\Users\kazda\kiro\gtai-wt\n-showcase\build\evidence\lint.json
+PASS unit-tests: unit-tests: 868 passed, 0 failed, 0 skipped (GUT, headless)
+     -> C:\Users\kazda\kiro\gtai-wt\n-showcase\build\evidence\unit-tests.json
+FAIL scenario-tests: scenario-tests: exit 1, 1 of 44 failed (scenario_rivet_city_fight.gd)
+     -> C:\Users\kazda\kiro\gtai-wt\n-showcase\build\evidence\scenario-tests.json
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3516 floats); planted mutation caught at step 629
+     -> C:\Users\kazda\kiro\gtai-wt\n-showcase\build\evidence\parity.json
+FAIL selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 100 colours; 48 px/m ok, 89 actors, 103 colours); 86 art textures, 0 placeholders, prewarm 25 ms; look goldens 4/11 within mean 4 (worst 2.43); OFF: d4@32, d4@48, d4@64, d5@64, auto@56, auto@64, d4@48-night; accent pixels 32: 0.85 %, 48: 1.93 %, 64: 3.53 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 32 px/m blood on vehicles: 4 px (debt blood_flicker_vehicles_32, <= 12, d5-city); 48 px/m vermilion on vehicles: 12 px (debt blood_flicker_vehicles_vermilion_48, <= 12, d5-city); 48 px/m blood on vehicles: 16 px (debt blood_flicker_vehicles_48, <= 24, d5-city); 48 px/m vermilion on cop: 12 px (debt blood_flicker_cop_48, <= 12, d5-city); debt rows no longer seen (delete them): blood_flicker_cop_block_64, blood_flicker_cop_vermilion_32, blood_flicker_vehicles_vermilion_32; block goldens 5/5 within mean 4 (worst 1.81); block accent pixels 32: 0.72 %, 48: 1.56 %, 64: 1.35 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; no new off-doctrine accents; known debt: 64 px/m vermilion on cop: 8 px (debt blood_flicker_cop_block_64, <= 24, d5-city); world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %)
+     -> C:\Users\kazda\kiro\gtai-wt\n-showcase\build\evidence\selftest.json
+evidence: commit f3b27c70563f4f817da98e6b2ca8fa9b636889e8, godot 4.7.2.stable.official.ed1daf0bf
+evidence exit 1
