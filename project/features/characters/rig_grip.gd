@@ -12,10 +12,12 @@ extends RefCounted
 
 enum Kind { ONE_HAND, TWO_HAND_LONG, SHOULDER, HIP, THROWN }
 
-## The reload: the gun claw low and in at the chest; the off claw pulls the magazine down to the
-## hip, brings the new one up, then racks back along the weapon by RACK_PX.
+## The reload: the gun claw low and in at the chest; the off claw pulls the magazine down and
+## back (MAG_DROP), brings the new one up, then racks back along the weapon by RACK_PX.
 const RELOAD_GUN: Vector3 = Vector3(0.45, 0.35, -30.0)
 const RACK_PX: float = 80.0
+## Where the off claw takes the magazine: down and back from the gun claw, toward the chest.
+const MAG_DROP: Vector3 = Vector3(-70.0, 0.0, -50.0)
 
 ## Per kind: x = the gun hand along the aim as a share of the arm's reach, y = the off hand's
 ## share, z = the hands' height (part px; below 0 is toward the hip).
@@ -71,7 +73,7 @@ static func _reload(rig: CutRig, aim_arm: bool, reach: float) -> Vector3:
 	var gun: Vector3 = Vector3(gs.x + reach * RELOAD_GUN.x, gs.y * RELOAD_GUN.y, RELOAD_GUN.z)
 	if aim_arm:
 		return gun
-	var hip: Vector3 = Vector3(gs.x - 20.0, -gs.y * 0.6, -90.0)
+	var hip: Vector3 = gun + MAG_DROP  # short of the hip: a deeper fold flings the elbow out
 	var k: float = rig.reload_k
 	if k < 1.0:
 		return gun.lerp(hip, smoothstep(0.0, 1.0, k))

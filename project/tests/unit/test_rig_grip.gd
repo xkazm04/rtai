@@ -29,12 +29,18 @@ func test_shoulder_pulls_the_gun_claw_in() -> void:
 	assert_lt(_gun_reach(RigGrip.Kind.SHOULDER), _gun_reach(RigGrip.Kind.ONE_HAND) * 0.6)
 
 
-func test_reload_pulls_the_magazine_to_the_hip_and_back() -> void:
+func test_reload_pulls_the_magazine_and_comes_back() -> void:
 	var out: float = _reload_gap(0.95)
 	var back: float = _reload_gap(1.95)
-	gut.p("reload: off claw to gun claw %.0f px at the hip, %.0f px back at the gun" % [out, back])
-	assert_gt(out, back * 2.0, "the off claw leaves the gun for the magazine and comes back")
-	assert_lt(_reload_gap(-1.0), out, "planted: no reload keeps the claws together (one-hand aim)")
+	gut.p(
+		(
+			"reload: off claw to gun claw %.0f px at the magazine, %.0f px back at the gun"
+			% [out, back]
+		)
+	)
+	assert_gt(out, 60.0, "the off claw leaves the gun for the magazine")
+	assert_lt(back, 10.0, "and brings the new one back to the gun")
+	assert_lt(_reload_gap(0.0), 10.0, "planted: a reload stuck at phase 0 shows no magazine")
 
 
 func _reload_gap(k: float) -> float:
