@@ -568,3 +568,4 @@ the tree). Then NEXT 2-5 above.
   outside the tree), then re-film the uniques and riot reels on the round 6 build (nuke >= 13 m,
   SWAT/riot squad mix, weapon wall, jagged electro, flamer sway), the bench, then NEXT 3-5 of
   the 04:23 list.
+- Glue: committed project/tests/unit/test_rig_variant_swat.gd.uid (Godot made it on import; human-reactions' a27c786b has the .gd without it). REQUEST 20 -> human-reactions: commit your own .uid for it; on a merge conflict the showcase takes yours.
