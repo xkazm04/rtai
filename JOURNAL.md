@@ -591,3 +591,16 @@ NEXT (unchanged; idle machine first):
 - Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and
   `node tools/bench/run.mjs --runs=1`. Compare to the 13:36-13:50 uncontended p99 5.9-6.6 and the riot's 7 ms limit.
 - Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
+
+## Iteration 14 (18:40), REPORT
+
+- 18:40 checked every evidence path REPORT cites: the 6 clips/graphs + frames.json in gtai-masters/d6/perf-city,
+  evidence/perf (131 files incl. fight.sh), tools/bench/rt_recon.py and run.mjs. All present. No bench.lock held.
+- Appended to REPORT a Director summary: works / not proven / blocked (contention 13:50-18:30, ~4 h 40 min; the lint
+  command-line limit, ~20 min) / next steps. No code change, no bench.
+
+NEXT (unchanged; idle machine first):
+- Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and
+  `node tools/bench/run.mjs --runs=1`. Compare to the 13:36-13:50 uncontended p99 5.9-6.6 and the riot's 7 ms limit.
+- Real-time re-film of ch 18 on that export, plus a desktop capture to validate rt_recon.
+- Then the BloodFx solid-cell grid; identity via parity + a fixed-fps pixel compare.

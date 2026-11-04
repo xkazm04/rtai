@@ -1,4 +1,4 @@
-# REPORT (final, 18:20 in iteration 10) - day lane perf-city, 2026-11-04
+# REPORT (final, 18:40 in iteration 14; body as of 18:20) - day lane perf-city, 2026-11-04
 
 Branch `d6-perf-city`, cut from main `a1275c82`. Clips and graphs are in
 `C:\Users\kazda\kiro\gtai-masters\d6\perf-city\` (`frames.json`, newest and best first).
@@ -75,3 +75,28 @@ Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With v
 - The riot blood's script cost (headless editor, a tick): drop step 540-840 us, CorpseStains 210-260, resolve 150-200.
   Next lever: a solid-cell grid for BloodFx's wall test (the native cell_at is a copy of the same cells, so identity holds).
 - Validate rt_recon against a real desktop capture on an idle desktop.
+
+## Summary for the Director (iteration 14, 18:40)
+**Works (evidenced):**
+- Fixes 1-5 are on the branch, each a separate commit, and each is pixel-identical with no re-bless (fix table above). The raw
+  logs are in `evidence/perf/*.json` and `*.log` (131 files). The fight runner is `evidence/perf/fight.sh`; the bench is `tools/bench/run.mjs`.
+- Gates on 95936dac + fix 5: lint 13/13, unit 945/945, parity bit-exact, look goldens 11/11, block 5/5, scenarios 45/46
+  (the miss is the rig_stress p50 budget at CPU 100 %; it passed 2/2 run alone). Reproduce: `node tools/evidence/run.mjs --no-bench`.
+- Film: `gtai-masters/d6/perf-city/frames.json` has 12 entries, and every file was checked present at 18:40.
+
+**Does not work / not proven:**
+- The post-fix p99 has no UNCONTENDED number. Every after-fix figure is CONTENDED or a load-independent draw-call count.
+- No riot p99 under the bench lock against the 7 ms limit (last: 7.61 ms, partly contended, 1 run).
+- The real-time before/after film is a reconstruction (`tools/bench/rt_recon.py`). It has not been checked against a desktop capture.
+- Present-phase stalls over 33 ms still appear in 3 of 6 vsync-off runs. They sit outside the game's work and track the machine's load.
+
+**Blocked:**
+- Machine contention from 13:50 to the 18:30 freeze (about 4 h 40 min): CPU 52-100 % from processes that were not the lane's. All
+  uncontended re-measurement waited on that the whole time. The fixes were built and proven by pixel identity and draw counts instead.
+- The lint gate failed for about 20 min when the tree crossed the Windows command-line limit. Fixed in 95936dac (batched lint).
+
+**Next steps** (in order; same as JOURNAL NEXT):
+1. Take the bench lock on an idle machine. Export `windows` with fixes 1-5. Run `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3
+   and `node tools/bench/run.mjs --runs=1`. Compare to 13:36-13:50 (p99 5.9-6.6) and the riot's 7 ms limit.
+2. Re-film reel ch 18 in real time on that export, with a real desktop capture to validate rt_recon.
+3. BloodFx solid-cell grid (drop step 540-840 us a tick in the riot). Prove identity with parity + a fixed-fps pixel compare.
