@@ -62,6 +62,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
   - electro baton: strikes;
   - chainsaw: a committed 3-bite grind, then the rip;
   - plasma sword: slashes, a full spin, and the timed deflect during any slash's active ticks.
+- On the city block (since 37dbfeab): with a melee weapon drawn, the arsenal bot closes into claw reach and swings there. Before that, it held gun reach and cut air (407 swings, 0 hits in 15 s). The live fight: `M\clips\city-block-melee-katana-chainsaw-baton-32ppm-x2.mp4` (30 s, 3 waves, 5 cops dead in red blood, 0 deaths, 0 script errors) and `M\frames\city-block-melee-32ppm-3x.png` (the chainsaw grind, the katana pinning a cop on a kerb car). Scenario: scenario_rivet_city_melee (2 guards in 30 s, the replay identical, the planted stand-off drops none).
 - Clips in `M\clips\`: `arena-rocket-empty-tube-reload-64ppm-x2`, `arena-molotov-lob-claw-cops-32ppm-x2`, `arena-chainsaw-grind-64ppm`, `arena-katana-claw-cops-64ppm`, `arena-plasma-sword-claw-cops-64ppm`, `arena-plasma-deflect-64ppm-quarter-speed`, `arena-flamer-sway-64ppm`, `arena-claw-shock-64ppm`.
 
 ### 4. Switching and pickups
@@ -85,7 +86,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 
 ### 6. The real game paths
 - Arena: on the rigs by default (`--sprites` for the old look).
-- City proving block: `--arena=city --bot=arsenal`, in `M\clips\city-block-arsenal-fight-32ppm.mp4` (3 waves, 7 kills).
+- City proving block: `--arena=city --bot=arsenal --loadout=...`. Three live fights: the kinetic guns (`city-block-kinetic-held-32ppm-x2`), the long guns and the tube (`city-block-long-guns-held-32ppm-x2`: 3 waves, 7 kills) and the melee weapons (`city-block-melee-katana-chainsaw-baton-32ppm-x2`: 3 waves, 5 kills).
 - Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fightcam-32ppm.mp4` (8.3 s: both cop waves die in red blood) and, at 64 px/m, `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
 
 ## Calls for the owner
