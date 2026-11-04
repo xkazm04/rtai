@@ -1040,3 +1040,18 @@ NEXT (after the night run):
 2. A drawn glass-and-fuel splash sheet for the molotov (image route, under image.lock).
 3. Redraw the blast sheet's frame 3 as torn smoke wisps (replaces the held smoke ring of 3a703dbd).
 4. Answer owner calls weapon-art-15 (molotov landing) and weapon-art-16 (rocket blast tail) once judged.
+
+## Iteration 16 (08:21-08:30, BUILD; 9 minutes to freeze)
+- 08:21 read JOURNAL tail, git status, other lanes' JOURNALs for REQUESTs to weapon-art. Nothing new since it15:
+  brutality REQUEST 4 (top-down X-ray + charred) was delivered earlier (`gore_*_top`, l.632). Gunplay REQUEST 31
+  was answered by 3a703dbd and 8d727846. Human-reactions REQUESTs 1-2 were answered. REQUEST 12 -> rivet-arsenal
+  was closed by their merge.
+- DECISION 08:23 no code this iteration, same reason as it15: a render change needs a same-tick A/B plus unit
+  (~6 min) and scenarios (~3 min), and that does not fit before the 08:30 freeze. Gates of record stay at
+  3a703dbd (unit 741/741, scenarios 32/32, lint 13/13; parity untouched).
+- No Godot process of mine running. The two Godot PIDs on the machine (46852, 47704) belong to other lanes; I
+  left them alone. `evidence/weapon-art/` stays untracked (scratch; the stills of record are in gtai-masters).
+
+NEXT (after the night run): unchanged from it15. (1) The melee four in the claw on rivet-arsenal's path. (2) A
+drawn glass-and-fuel molotov splash sheet. (3) Redraw blast frame 3 as torn smoke wisps. (4) Owner calls
+weapon-art-15 and -16 once judged.
