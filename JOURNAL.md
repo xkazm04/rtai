@@ -124,3 +124,9 @@ NEXT (iteration 2, ghost-powers):
    gate the attacks on GhostForms once REQUEST 2 lands; city block clip.
 6. The full director reel (16 chapters) windowed or `--chapter=` batches, and the full scenario suite on the
    final head. Delete masters scratch AVIs (`n6/ghost-powers/scratch/`) once the clips are final.
+- 00:34 MILESTONE (DentView) the car bomb's blast was a pale disc beside the target's fireball: now a jagged
+  ink-rimmed amber burst (#E9A23B, 9 points) with a cream core, swelling and burning down over 0.45 s (none
+  under reduced motion; the ink ring stays). First try parse-failed (`append()` return discarded, warnings are
+  errors) and drew nothing: caught by the 3 SCRIPT ERRORs in the run log and the empty after-row, fixed.
+  Before|after `M/frames/dent-blast-ab-32ppm.png` (same ticks 133/137/142, 32 px/m), clip re-cut, 0 SCRIPT
+  ERROR. frames.json 10.

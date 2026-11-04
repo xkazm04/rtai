@@ -3,8 +3,8 @@ extends Node2D
 ## Dent on the arena's actor layer (lane ghost-powers), render only. While a car is seized: a
 ## soul-teal tether from Rivet's hands (HANDS_M ahead) to the car, sagging and trembling, and a
 ## heat halo round the car that climbs from a dull amber to white-hot with DentStage.heat (the
-## pulse quickens once the overload is armed). On the blast: an ink shock ring with a hot core
-## over BLAST_S (reduced motion: no core flash, the ring only). Reads the DentStage only.
+## pulse quickens once the overload is armed). On the blast: an ink shock ring and an amber
+## fireball with a hot core over BLAST_S (reduced motion: the ring only). Reads DentStage only.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -14,6 +14,8 @@ const HANDS_M: float = 0.5
 const SAG_M: float = 0.6
 const SEGMENTS: int = 14
 const BLAST_S: float = 0.45
+const FIRE: Color = Color("#E9A23B")
+const BURST_POINTS: int = 9
 
 var dent: DentStage = null
 var stage: CollectCallStage = null
@@ -66,5 +68,22 @@ func _halo(c: Vector2, heat: float) -> void:
 func _blast(c: Vector2, k: float) -> void:
 	var r: float = dent.num(&"blast_radius_m") * ppm * (1.0 - pow(1.0 - k, 3.0))
 	if not reduced_motion:
-		draw_circle(c, r * 0.55, Color(HOT, 0.85 * (1.0 - k)))
+		_fireball(c, r * 0.7, k)
 	draw_arc(c, r, 0.0, TAU, 48, Color(INK, 1.0 - k), lerpf(10.0, 2.0, k))
+
+
+## The car bomb's fireball: a jagged ink-rimmed burst, amber outside and cream-hot inside, that
+## swells and burns down over BLAST_S (no red: red is blood only).
+func _fireball(c: Vector2, r: float, k: float) -> void:
+	var fade: float = 1.0 - k
+	var pts: PackedVector2Array = PackedVector2Array()
+	for i: int in BURST_POINTS * 2:
+		var a: float = TAU * i / (BURST_POINTS * 2) + 0.2 * sin(i * 2.3)
+		var reach: float = r * (1.0 if i % 2 == 0 else 0.62 + 0.1 * sin(i * 1.7))
+		@warning_ignore("return_value_discarded")
+		pts.push_back(c + Vector2.from_angle(a) * reach)
+	draw_colored_polygon(pts, Color(FIRE, 0.9 * fade))
+	@warning_ignore("return_value_discarded")
+	pts.append(pts[0])
+	draw_polyline(pts, Color(INK, fade), 3.0)
+	draw_circle(c, r * 0.45 * (1.0 - 0.5 * k), Color(HOT, fade))
