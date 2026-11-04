@@ -1,0 +1,98 @@
+{
+  "doc": "fx_colour.py families: files = PNG name prefixes in the weapon FX folder; tokens = palette token -> the sheet's colour (r2_w4_fx_colour.jpg). Tokens not listed keep their colour (the ink outline always stays ink).",
+  "families": [
+    {
+      "files": [
+        "flash_pistol_",
+        "flash_smg_",
+        "flash_tube_",
+        "flash_nuke_",
+        "spark_",
+        "tracer"
+      ],
+      "id": "muzzle",
+      "note": "hot yellow-orange",
+      "tokens": {
+        "ink_2": "#E5822A",
+        "paper": "#FFE27A",
+        "paper_2": "#FFD45A",
+        "vermilion": "#FF9A2A",
+        "wash": "#E07A22"
+      }
+    },
+    {
+      "files": [
+        "blast_",
+        "flame_"
+      ],
+      "id": "explosion",
+      "note": "orange-yellow, white core",
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFF9E8",
+        "paper_2": "#FFE58A",
+        "vermilion": "#FFA21C",
+        "wash": "#E8781E"
+      }
+    },
+    {
+      "files": [
+        "arc_"
+      ],
+      "id": "arc",
+      "note": "pale violet-white",
+      "tokens": {
+        "ink_2": "#6A4FD0",
+        "paper": "#E4D6FF",
+        "paper_2": "#CBB6FF",
+        "steel": "#B9A6FF",
+        "wash": "#8C72E6"
+      }
+    },
+    {
+      "files": [
+        "flash_energy_",
+        "plasma_bolt"
+      ],
+      "id": "plasma",
+      "note": "white-hot, gold rim",
+      "tokens": {
+        "ink_2": "#D79A1E",
+        "paper": "#FFFDF4",
+        "paper_2": "#FFF2C2",
+        "steel": "#F2C14A",
+        "vermilion": "#F2B632",
+        "wash": "#E6A82A"
+      }
+    },
+    {
+      "files": [
+        "ray_ring_"
+      ],
+      "id": "ray",
+      "note": "acid green",
+      "tokens": {
+        "ink_2": "#4FA61C",
+        "paper": "#E2FF8A",
+        "paper_2": "#C8F65A",
+        "steel": "#8EDB2E",
+        "wash": "#6CC424"
+      }
+    },
+    {
+      "files": [
+        "shard"
+      ],
+      "id": "shard",
+      "note": "pale crystal, cyan-white glint (teal is souls only)",
+      "tokens": {
+        "ink_2": "#7FA3B8",
+        "paper": "#F0FBFF",
+        "paper_2": "#D6EEF8",
+        "steel": "#B8D4E2",
+        "wash": "#9DBBCC"
+      }
+    }
+  ],
+  "schema": "gtai.fx-colour/1"
+}

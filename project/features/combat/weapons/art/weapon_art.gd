@@ -68,10 +68,11 @@ func _init(path: String = TABLE) -> void:
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
 		if r.has("projectile_k"):
 			round_k[StringName(t.text(r, "id"))] = t.num(r, "projectile_k")
+	var colour_dir: String = t.text(t.raw, "fx_colour_dir") if t.raw.has("fx_colour_dir") else ""
 	for row: Variant in t.array(t.raw, "fx"):
 		var r: Dictionary = row if row is Dictionary else {}
 		var c: Cell = Cell.new()
-		c.art = t.text(r, "art")
+		c.art = _coloured(t.text(r, "art"), colour_dir)
 		c.anchor = t.vec(r, "anchor_px")
 		_fx[StringName(t.text(r, "id"))] = c
 	if not t.ok():
@@ -167,6 +168,15 @@ func make_held(id: StringName, part: String = "") -> Sprite2D:
 	if rim:
 		_add_rim(s)
 	return s
+
+
+## n5-look: the round 2 colour sheet's FX (tools/art/fx_colour.py) when `fx_colour_dir` names a
+## folder holding a cell of the same file name; "" = the ink-print FX (the A/B is that one value).
+static func _coloured(path: String, dir: String) -> String:
+	if dir == "":
+		return path
+	var alt: String = dir.path_join(path.get_file())
+	return alt if ResourceLoader.exists(alt) else path
 
 
 ## The frames of an fx id: `<id>_0..n` when they exist, else the single cell `<id>`.

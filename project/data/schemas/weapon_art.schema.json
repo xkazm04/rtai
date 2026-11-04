@@ -147,6 +147,9 @@
       "minItems": 1,
       "type": "array"
     },
+    "fx_colour_dir": {
+      "type": "string"
+    },
     "fx_draw_scale": {
       "maximum": 8,
       "minimum": 0.1,
