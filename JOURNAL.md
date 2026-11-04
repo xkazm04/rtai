@@ -550,3 +550,12 @@ NEXT (iteration 5):
 NEXT (iteration 5) supersedes the list above: 1 = read gtai-n4/scratch-showcase/unit-r6.log and
 scen-r6.log (or re-run both), fix reds, copy to evidence/r6, then the evidence run (logs outside
 the tree). Then NEXT 2-5 above.
+- Unit r6 (f8c0f817): 820/821, FAIL test_gun_fx test_a_reload_drops_the_magazine_and_rows_differ
+  (0 magazines, want 1). Cause: gunplay answered weapon-art's REQUEST 5 with GunFx.art_mags (no
+  ink stick for a gun whose weapon-art row has a mag part); gunplay's older test assumed the
+  pistol has none, true on their branch, not on the merged one. Glue: the test sets
+  art_mags = {} (the fallback it means to test); test_gun_fx 9/9. My round-5 FxView mag glue is
+  now redundant with gunplay's rule (both skip the same stick); remove it next round once the
+  64 px/m reload shows one magazine.
+- REQUEST 19 -> gunplay: take the one-line art_mags = {} in test_a_reload_drops_the_magazine...
+  (showcase commit after c9a2f1a1), or it fails on every build with weapon-art's magazines.
