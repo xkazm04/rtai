@@ -166,3 +166,6 @@ func test_hand_cannon_fires_a_fatter_round_than_the_pistol() -> void:
 	var cannon_k: float = art.round_k.get(&"hand_cannon", 1.0)
 	assert_eq(pistol_k, 1.0, "rows without projectile_k draw at 1")
 	assert_gt(cannon_k, 1.2, "the hand cannon's slug")
+	var nuke_k: float = art.round_k.get(&"mini_nuke", 1.0)
+	assert_gt(nuke_k, 1.2, "the mini-nuke's shell")
+	assert_eq(art.projectile_fx(&"mini_nuke"), &"rocket", "a thrown rocket draws as a shell")

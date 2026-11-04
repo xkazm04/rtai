@@ -1100,6 +1100,7 @@
       },
       "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
       "projectile_fx": "rocket",
+      "projectile_k": 1.5,
       "size_px": [
         466,
         137
