@@ -1456,3 +1456,11 @@ NEXT (10:40 report phase):
   The cause is the panic heading (`FightAreas.holds`: `e.flee` points away from the flame, so north
   from Rivet's southern approach), not the follow distance; the fix is a bot approach from the
   side, not freeze-safe today. REPORT's "still weak" line stands.
+- 10:12 REPORT line 117 (still weak) gains the FOLLOW_M try; docs/night copy synced (8a9d543e).
+  Code head unchanged at 70894746 since the gates of record on dfa5f508 (lint 13/13, unit 757,
+  scenarios 29, parity bit-exact); everything after it is docs and logs. No Godot process of mine
+  running, no lock taken, no scratch left (the f25 run folder deleted by exact file names).
+
+NEXT (10:40 report phase): unchanged from iteration 21. Re-check that the REPORT paths exist and
+frames.json parses (15 entries, all present at 10:08). After the freeze: the city flamethrower
+capture needs a side approach (bot entry from the east or west) so the panic run crosses the frame.
