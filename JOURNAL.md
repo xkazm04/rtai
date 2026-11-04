@@ -997,3 +997,24 @@ riot p99 bench).
 NEXT: unchanged from iteration 16 (gunplay merge: shield_test line + react_line 64 px/m and the
 burn re-film; pit_knockdown_getup re-film over RISE_TICKS 29; robot thug power-down death; idle
 riot p99 bench).
+
+## Iteration 19 (08:44-, BUILD, extension to 11:00)
+- Read: JOURNAL NEXT, git log, REPORT. Chose NEXT 3 (the robot thug's power-down death) over the
+  n-gunplay merge: a test merge-tree shows 3 code conflicts (arena_rigs, combat_blood,
+  blood_fx.json) and the showcase does the last merge at 09:45; a second resolution here would
+  only give the Director two to reconcile. Registry rules applied as before
+  (motion-quality-gating: judged at 32/48/64 in motion, key frame held by the kill hold;
+  realtime-combat-semantics: view only, no sim or golden change).
+- MILESTONE fbfa406b: `death_robot` (human_reactions.json row + schema id enum only, not in
+  death_map), `DeathPose._robot`, `DeathPipe.kill_robot`; tests/unit/test_robot_death.gd (3 tests:
+  on the spot within travel_m, knees before the pitch, never a human death). Unit 753/753, lint 13/13.
+- MILESTONE 3cf3ce29: the dev pit calls kill_robot on the thug's died tick; `--zoom=` on
+  enemy_rig_fight_run (1.5 = 48 px/m, 2.0 = 64); the camera keeps a corpse in frame 3 s.
+- Evidence: robot_powerdown_{32,48,64}ppm.mp4 + 48/64 sheets (evidence/ and masters). The thug
+  alone, Rivet 12 m off, 6 nails, death frame 138 at every zoom (deterministic across runs).
+  Honest read: at 48 px/m the thug is an ink mass (weapon-art's intended look), so the fall reads
+  by silhouette (crouch, then flat X); at 64 the plates visibly go dark (lights out) with the pale
+  optic left; at 32 the steel arms dim slightly. The oil spray field from six hits is busy.
+- frames.json: + robot_powerdown_48ppm.mp4 and _64ppm_sheet (before: thug_plan_32ppm.mp4); dropped
+  riot_shield_48ppm_sheet (a REQUEST answer, the arena shield clip carries it) and
+  pit_electro_scorch_64ppm_sheet (the 48 px/m electro pair carries it). 15 entries, 0 missing.
