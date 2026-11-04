@@ -51,8 +51,17 @@ func test_the_stage_steps_and_reports_its_hooks() -> void:
 	world.add_system(stage)
 	for i: int in 30:
 		world.loop().step()
-	assert_eq(stage.hooks.size(), 1)
-	var hook: ArenaTickHook = stage.hooks[0] as ArenaTickHook
+	# the shipped stations bring their lanes' own hooks too (brutality, rivet-arsenal): find the probe
+	var hook: ArenaTickHook = null
+	var probes: int = 0
+	for h: ArenaHook in stage.hooks:
+		if h is ArenaTickHook:
+			hook = h as ArenaTickHook
+			probes += 1
+	assert_eq(probes, 1)
+	if hook == null:
+		world.free()
+		return
 	assert_true(hook.set_up)
 	assert_eq(hook.ticks, 30)
 	var tel: Dictionary = stage.telemetry_dict()
