@@ -1288,3 +1288,18 @@ split the cut, measured under bench.lock against lock-it18. (4) Owner calls in R
 - No Godot process started, no lock held, no scratch left.
 
 NEXT (morning merge): unchanged from iteration 20/21.
+
+## Iteration 23 (10:12-10:30, BUILD, 18 minutes to the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' JOURNAL tails (gunplay, human-reactions,
+  rivet-arsenal, showcase, weapon-art). No new REQUEST -> brutality since iteration 22.
+  human-reactions verified (10:08) that showcase's round 19 cut shows the electro corpse full
+  length (REQUEST 30 closed on n-showcase 08e1b72f). Latest reel in masters is still reel-0954.
+- DECISION 10:13 no code commit: 17 minutes cannot cover a change plus lint/unit/scenarios/replay
+  and a filmed clip; the final reel/exe round is showcase's. Gates of record stay iteration 19's on
+  code head 5e37b57c.
+- No Godot process started, no lock held, no scratch left.
+
+NEXT (10:40 REPORT session, then morning merge): REPORT "After 10:00" gets one line for iterations
+22-23 (no code). Morning: (1) re-film the electro clip on the merged main (08e1b72f in); (2) re-check
+gunplay REQUEST 29/30 answers; (3) fix the nuke tick-123 frame (prebuild or split the cut), measured
+under bench.lock against lock-it18; (4) owner calls in REPORT.
