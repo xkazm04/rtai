@@ -17,6 +17,8 @@ class Grip:
 	var kick: float = 1.0
 	var move_mult: float = 1.0
 	var held_scale: float = 1.0
+	## The carry slot (1 sidearm, 2 long, 3 heavy, 4 thrown) a weapon of this class sits in.
+	var slot: int = 1
 
 
 var grips: Dictionary[StringName, Grip] = {}
@@ -45,6 +47,7 @@ static func from_table(t: DataTable) -> ArsenalTable:
 		g.kick = t.num(row, "kick")
 		g.move_mult = t.num(row, "move_mult")
 		g.held_scale = t.num(row, "held_scale")
+		g.slot = t.integer(row, "slot")
 		a.grips[g.id] = g
 	var r: Dictionary = t.object(t.raw, "reload")
 	a.out_k = t.num(r, "out_k")
@@ -81,6 +84,8 @@ func _check() -> void:
 	for g: Grip in grips.values():
 		if g.draw_ticks < 1 or g.stow_ticks < 1:
 			errors.append("rivet_arsenal.json: %s must take at least one tick each way" % g.id)
+		if g.slot < 1 or g.slot > 4:
+			errors.append("rivet_arsenal.json: %s must sit in carry slot 1-4" % g.id)
 	for w: StringName in weapon_grip:
 		if not grips.has(weapon_grip[w]):
 			errors.append("rivet_arsenal.json: %s has no grip class %s" % [w, weapon_grip[w]])
