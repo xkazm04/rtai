@@ -79,11 +79,7 @@ func _process(_delta: float) -> void:
 	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
 	_place_long(rig)
-	if pilot.wielding() and pilot.melee.combo.ground > 0:
-		_grind(rig)
-	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
-		_sweep_arc = _arc()
-		_sprite.global_rotation += _sweep(rig.clips)
+	_pose_melee(rig)
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)
@@ -142,6 +138,19 @@ func _reload_k() -> float:
 func _sweep(clips: RigClips) -> float:
 	var side: float = 1.0 if pilot.melee.combo.last_index % 2 == 1 else -1.0
 	return MeleeSwing.angle(clips.strike_t, clips.strike_ph, side, _sweep_arc)
+
+
+## A melee weapon's pose this frame: the chainsaw's bite, a strike's swing, the idle judder.
+func _pose_melee(rig: CutRig) -> void:
+	if pilot.wielding() and pilot.melee.combo.ground > 0:
+		_grind(rig)
+	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
+		_sweep_arc = _arc()
+		_sprite.global_rotation += _sweep(rig.clips)
+	elif pilot.hold.held == &"chainsaw" and arena != null:  # combat-notes: the engine runs
+		var j: Vector2 = MeleeSwing.idle_judder(arena.tick)
+		_sprite.global_rotation += j.x
+		_sprite.global_position += Vector2.from_angle(_sprite.global_rotation + PI * 0.5) * j.y
 
 
 ## combat-notes: the cut's smear under the blade (MeleeSmearView), fed every shown frame.

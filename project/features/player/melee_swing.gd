@@ -13,6 +13,8 @@ const FOLLOW: float = 1.35
 const HOLD: float = 0.35
 ## Ticks of the cut before the hit tick (the blade's travel into the target).
 const CUT_TICKS: float = 2.0
+## The held chainsaw's idle shake (rad at the extreme step).
+const IDLE_JUDDER: float = 0.04
 
 ## False (`--soft-swing`): the night's sweep (RivetHeldView before), no smear.
 static var sharp: bool = not OS.get_cmdline_user_args().has("--soft-swing")
@@ -38,6 +40,16 @@ static func angle(t: float, ph: Vector3, side: float, arc: float) -> float:
 	if r < HOLD:  # follow-through: the blade stays out past the target
 		return -side * arc * FOLLOW
 	return -side * arc * FOLLOW * (1.0 - smoothstep(0.0, 1.0, (r - HOLD) / (1.0 - HOLD)))
+
+
+## The chainsaw's idle judder while it is held and not biting (the engine running): a
+## tick-locked shake off rhythm with itself, (rotation rad, sideways px); zero under --soft-swing.
+static func idle_judder(tick: int) -> Vector2:
+	if not sharp:
+		return Vector2.ZERO
+	var a: int = tick % 5 - 2
+	var b: int = (tick % 3) - 1
+	return Vector2(IDLE_JUDDER * float(a) * 0.5, float(b))
 
 
 ## When the cut starts (s): CUT_TICKS before the windup ends, never before half of it.
