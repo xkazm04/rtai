@@ -654,3 +654,23 @@ NEXT (iteration 8, in order):
    human-reactions with HitLink.lean as the source, or build it in ArenaRigs if nobody takes it.
 4. Idle riot bench of record under the lock on a quiet machine.
 5. REQUEST 3 (it5, victim camera) still open: the kill close-ups crop on the frame edge.
+- 05:24 a5a890b1 NEXT 2 (first half) DONE: a charged bolt lands as a `blast` in the hit feel
+  (HitLink.CHARGED_CLASS: boss_hit stop, knockdown reaction, explosion shake; `heavy` was tried
+  first and has the same melee_hit stop as `shock`, so it added nothing); CombatArena.struck_charged
+  marks the round being landed (FightAreas emits struck itself for bolts, so a flag, not a signal
+  change). A lethal hit still uses the kill stop. Unit 727/727 (`evidence/n7/unit-h.log`), scenarios
+  29/29 (`scenarios-h.log`). Charge strip re-cut from a HEAD clip (same sim: 4 bolts, 2 kills).
+- Gates of record at a5a890b1: lint 13/13, unit 727/727, scenarios 29/29. Parity not re-run (no
+  native/city-sim change). Bench skipped (lock held by another lane).
+- Session end 05:27: every Godot run of mine was foreground and exited (the three Godot PIDs in
+  tasklist are other lanes'); no bench.lock or image.lock taken; scratch emptied except cap.sh and
+  sheet.py. frames.json: 15 entries, all files checked to exist.
+
+NEXT (iteration 8, supersedes the list above):
+1. The charged bolt in a side-by-side reel with the other finished guns (sound off, 5 s each).
+2. A pad reach for thrown weapons (stick deflection -> aim_m); quest 1's LiveInput.px_per_m when
+   quest 1 gets a GunHand.
+3. Rivet's own flinch on his rig (the vermilion tint is in from another lane): REQUEST to
+   rivet-motion / human-reactions with HitLink.lean as the source, or build it in ArenaRigs.
+4. Idle riot bench of record under the lock on a quiet machine.
+5. REQUEST 3 (it5, victim camera) still open.
