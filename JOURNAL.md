@@ -1129,3 +1129,7 @@ NEXT (morning merge / next night), in order:
 3. After the gunplay merge: `gun_fx.shield_test = link.shield_test`; re-film the burn death with
    the thin flames.
 4. A robot Fighter.Kind in CombatArena (DeathPipe.kill_robot live); the idle riot p99 bench.
+- 09:52 tried a longer held trip (trip len_s 0.5 -> 0.75, the dip held to 60 % of it) on the street
+  board at 48 px/m with an A/B on the same take (old / new, every 5th frame from 104): no
+  difference I could read at this sample, as the runner crosses over the body's arm. Not committed
+  (unproven). The trip stays hard to pick out live (REPORT gap stands). Scratch deleted.
