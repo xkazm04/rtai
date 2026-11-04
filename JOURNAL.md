@@ -320,3 +320,17 @@ shots 0.02 / 0.15, the rest < 0.02. Up to ~31 live impacts.
   `test_noir_shadows` ("Parameter t is null", CityChunk shadow RIDs: the brief's known flake under load;
   it does not touch FxView/GunFx). FRICTION: `-gtest=` on gut_cmdln still ran the whole suite,
   so the flake was not re-run alone. Next session: re-run it alone (`-gselect=test_noir_shadows`).
+
+### 15:45-15:50 Fix 3 in the exported release (windows-showcase -> build/export/windows-gnd; CONTENDED:
+the other lane was rendering, CPU ~90 %), interleaved against windows-cull (fixes 1+2 only), 1500 ticks.
+- Spans, vsync on (evidence/perf/rel3-*.spans.json):
+  | run | FxView total mean | FxView p99 | all spans mean | frame p99 | > 33 ms after 1 s |
+  |---|---|---|---|---|---|
+  | cull1 | 0.740 | 2.39 | 3.62 | 21.2 | 1 |
+  | gnd1 | **0.408** | 0.64 (+ marks 0.91) | **2.84** | 20.7 | 1 |
+  | cull2 | 0.757 | 2.32 | 3.36 | 20.9 | 1 |
+  | gnd2 | **0.424** | 0.69 (+ marks 0.88) | **2.75** | 21.1 | 0 |
+- Vsync off, frame p99 (evidence/perf/rel3v-*.json): cull 8.31 / 11.41, gnd 7.47 / 9.66 ms; p50 1.8-2.0.
+  The hitches (34-116 ms, 1-14 per run) came and went with the other lane's renders. Both pairs
+  improved, but the size of the gain is not readable under this load. The uncontended re-check is still owed.
+- Fixes 1-3 together, release, mean script+draw spans: 5.09 / 3.92 (pre, 13:xx) -> 2.75-2.84 ms a frame.

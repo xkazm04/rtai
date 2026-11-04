@@ -1,0 +1,41 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 84.2 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 7.3 ms
+[INFO] bench: HITCH 61.2 ms (process 5.6 flush 1.2 draw 54.2 pump 0.2) tick 7
+[INFO] bench: HITCH 43.0 ms (process 4.2 flush 0.6 draw 33.7 pump 4.5) tick 20
+[INFO] bench: HITCH 33.9 ms (process 4.4 flush 0.5 draw 28.9 pump 0.1) tick 65
+[INFO] bench: HITCH 65.4 ms (process 6.8 flush 0.5 draw 57.6 pump 0.5) tick 91
+[INFO] arena: pit wave 1: 2 guards
+[INFO] bench: HITCH 67.6 ms (process 6.5 flush 0.3 draw 60.5 pump 0.3) tick 169
+[INFO] bench: HITCH 115.9 ms (process 6.9 flush 7.3 draw 100.7 pump 1.0) tick 191
+[INFO] bench: HITCH 87.7 ms (process 6.9 flush 0.3 draw 80.0 pump 0.5) tick 200
+[INFO] bench: HITCH 46.6 ms (process 5.5 flush 0.3 draw 40.5 pump 0.4) tick 245
+[INFO] bench: HITCH 48.4 ms (process 5.3 flush 0.3 draw 42.1 pump 0.7) tick 269
+[INFO] bench: HITCH 51.9 ms (process 5.8 flush 0.5 draw 45.3 pump 0.3) tick 389
+[INFO] bench: HITCH 34.9 ms (process 4.3 flush 0.4 draw 30.1 pump 0.1) tick 492
+[INFO] bench: HITCH 41.3 ms (process 4.4 flush 0.4 draw 6.7 pump 29.8) tick 570
+[INFO] bench: HITCH 35.6 ms (process 4.4 flush 0.3 draw 30.7 pump 0.2) tick 625
+[INFO] arena: pit wave 2: 3 guards
+[INFO] showcase: reel beat pit_gun at tick 900
+[INFO] react: death_bullet on 4, frame 7059
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/rel3v-gnd2.json {"frames":9834,"low1_fps":53.1264942557727,"over33_settled":10,"over50_settled":5,"p50_ms":1.96800005435944,"p99_ms":9.6560001373291,"ticks":1493,"worst_ms":115.875999450684,"worst_settled_ms":115.875999450684}
+[INFO] arena: react: 2 wounds (2 on a shield), 1 deaths, 0 ducks
+[INFO] arena: crowd: 4 cowers (0 at a death), 2 trips, 0 deaths
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 580 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 95 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
