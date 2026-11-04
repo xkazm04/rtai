@@ -755,14 +755,19 @@ NEXT (iteration 8, supersedes the list above):
 NEXT (iteration 10, in order):
 1. Owner calls gunplay-10 (electro taps lethal on humans) and gunplay-11 (pad full push) as
    REPORT entries; build nothing until the owner answers (both are one value).
-2. (done 06:08, see below) the 64 px/m city charge close-up; the kill itself is still off-frame.
+2. (done 06:00, see below) the 64 px/m city charge close-up; the kill itself is still off-frame.
 3. The idle riot bench of record on a quiet machine (the Director's at the merge otherwise).
 4. REQUEST 3 (it5, victim camera) still open for the arena owner / showcase.
 5. Re-cut the six-gun pit reel on longer windows once the flank bot fights all waves (the
    current windows sit before the first blocked lane, so they are unchanged by 4e737ba1).
-- 06:08 NEXT 2 DONE early: `MASTERS/n4/gunplay/city9_electro_64ppm/` (city block, --clean, 64 px/m,
+- 06:00 NEXT 2 DONE early: `MASTERS/n4/gunplay/city9_electro_64ppm/` (city block, --clean, 64 px/m,
   20 s, 2 kills, Rivet 0 deaths) + `charge_sequence_64ppm.png` (5 fps: gather, ring, the zigzag
   bolt toward the stunned cop). Looked at: the charge reads at 64 px/m on the cream paving; the
   victim dies just above the frame (camera on Rivet; REQUEST 3). Observation, not a REQUEST: the
   city block's guards draw black-and-white at 64 px/m (the same in the it7 city clip, so not new;
   likely the SWAT/thug kit of enemy-ai's roster, not a cop-blue regression).
+- 06:03 NOTE for the Director / the morning page: Rivet still flashes solid vermilion when hit in
+  n-gunplay's clips (flank9_electro_gun at 13 s, the hand cannon close-up) because this branch does
+  not carry human-reactions' 8669b5d9 (cream hit flash, rivet-arsenal REQUEST 1 / showcase
+  REQUEST 3). The merge brings it; not cherry-picked this late (it also carries their area-state rig
+  work, a wider change than the flash).
