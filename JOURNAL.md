@@ -433,3 +433,10 @@ NEXT (iteration 7, in order):
 3. scenario for the startle (planted fault: STARTLE_M 0 -> no cowers at deaths in the riot feed).
 4. The arena city exit log (arena_game.gd) could also print startles (one line, the arena lane's
    dev file).
+- 04:55 bench (exported release, windowed, 3 x 4 x 60 s, lock held, CONTENDED: six lanes on one
+  GPU): p99 19.947 ms, 1 % low 35 fps (MISSES), drive p99 3.975 ms, drive48 3.706 ms; rigs p99
+  1.309 ms per frame in the riot. Idle record is 6.0 ms / 124 fps, so this number is contention
+  until shown otherwise. Headless A/B of my riot change (30 s riot, back to back): STARTLE_M 2.5 ->
+  p99 9.281 ms, 0.0 -> 8.854 ms, 2.5 again -> 8.829 ms: within run-to-run noise, the startle is
+  not the cost. (Startle off = 6 trips, on = 4: the startled are mid-cower when they pass a body
+  and trip later or not at all.) NEXT 1 is answered; the riot needs an idle-machine bench.
