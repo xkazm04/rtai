@@ -1064,3 +1064,6 @@ NEXT (the morning merge / the next night), in order:
 3. The idle bench of the riot p99 (CrowdReact observe mean 214 us CONTENDED today).
 4. The merge note: 117152b6 is gunplay 83429487 cherry-picked (same 4 files), so the merge sees
    it twice; take gunplay's side on fighter_fx.gd / fight_areas.gd / test_fight_areas.gd.
+- 04:00-rule pass on the blast death: pit_blast_death_48ppm_sheet.png (the rise29 run at 48 px/m,
+  frames 944-1084; death 962 again) replaces the 32 px/m sheet in frames.json. 15 entries, 0
+  missing. Scratch deleted.
