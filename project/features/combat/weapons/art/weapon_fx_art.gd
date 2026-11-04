@@ -141,6 +141,8 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 	var f: int = BLAST_FRAMES.size() - 2
 	while f > 0 and age < BLAST_FRAMES[f]:
 		f -= 1
+	if not blast_beads and WeaponFxShell.wisps(ci, b, age):
+		return true
 	if age >= BLAST_FRAMES[-1]:
 		return true
 	var into: float = float(age - BLAST_FRAMES[f]) / float(BLAST_FRAMES[f + 1] - BLAST_FRAMES[f])

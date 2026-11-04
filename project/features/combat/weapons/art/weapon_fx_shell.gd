@@ -24,6 +24,19 @@ const GLASS: int = 7
 const GLASS_M: float = 0.8
 const GLASS_TICKS: int = 16
 const GLASS_REACH: float = 1.1
+## The rocket blast's tail: from WISP_FROM ticks (the blast sheet's smoke-ring frame ends) until
+## FightAreas.VFX_KEEP_TICKS, the ring tears into WISPS smoke puffs (the rocket's drawn smoke cells,
+## WISP_M across x the splash radius) that drift from the ring's line (WISP_RING x the radius) out
+## by WISP_DRIFT of it, easing out, stretched along the ring as it grows (an expanding ring tears
+## into arcs), shrinking and fading. 0 = none.
+## `--blast-tail=ring` = the held smoke ring of 3a703dbd (the before).
+const WISPS: int = 12
+const WISP_FROM: int = 20
+const WISP_RING: float = 0.78
+const WISP_DRIFT: float = 0.4
+const WISP_M: float = 0.55
+
+static var wisp_tail: bool = not OS.get_cmdline_user_args().has("--blast-tail=ring")
 
 
 ## Draws shot `s` flying along `dir`, `went` metres from the muzzle.
@@ -80,3 +93,26 @@ static func glass(ci: CanvasItem, b: Vector3, age: int) -> void:
 		WeaponFxArt.draw_cell(
 			ci, &"shard", 0, at, spin, Vector2.ONE * k * (1.0 - 0.15 * float(i % 2)), a
 		)
+
+
+## The torn smoke of rocket blast `b` (x, y, splash radius m), `age` ticks old; false = before
+## the tail (or the ring tail is asked for). Angles come from the blast's place: replay-stable.
+static func wisps(ci: CanvasItem, b: Vector3, age: int) -> bool:
+	if not wisp_tail or WISPS <= 0 or age < WISP_FROM:
+		return false
+	var span: float = float(FightAreas.VFX_KEEP_TICKS - WISP_FROM)
+	var f: float = clampf(float(age - WISP_FROM) / span, 0.0, 1.0)
+	if f >= 1.0:
+		return true
+	var out_k: float = 1.0 - (1.0 - f) * (1.0 - f)
+	var a: float = (1.0 - f) * (1.0 - 0.4 * f)
+	var k: float = WISP_M * b.z * Ink.PX_PER_M / 120.0 / WeaponFxArt.cell_scale()
+	var seed_ang: float = b.x * 1.9 + b.y * 0.7
+	for i: int in WISPS:
+		var ang: float = seed_ang + TAU * float(i) / float(WISPS) + 0.25 * sin(float(i) * 3.1)
+		var r: float = b.z * (WISP_RING + WISP_DRIFT * out_k * (0.75 + 0.25 * float(i % 3)))
+		var at: Vector2 = Vector2(b.x, b.y) + Vector2.from_angle(ang) * r
+		var size: float = k * (1.0 - 0.4 * f) * (1.0 - 0.12 * float(i % 2))
+		var stretch: Vector2 = Vector2(1.0 + 0.35 * out_k, 1.0 - 0.15 * out_k) * size
+		WeaponFxArt.draw_cell(ci, &"smoke", i % 3, at, ang + PI * 0.5, stretch, a)
+	return true

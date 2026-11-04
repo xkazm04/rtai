@@ -184,3 +184,14 @@ func test_the_thrown_bottle_casts_the_shell_ellipse_at_bottle_size() -> void:
 	var across_m: float = WeaponFxShell.SHADOW_M.x * 2.0 * WeaponFxArt.BOTTLE_SHADOW_K
 	assert_between(across_m, 0.6, 1.2, "a bottle-sized ink ellipse, not the old 28 px dash")
 	assert_lt(WeaponFxArt.BOTTLE_SHADOW_K, 1.0, "smaller than the shell's own shadow")
+
+
+func test_the_rocket_blast_tears_into_smoke_wisps_after_the_ring() -> void:
+	var ci: Node2D = autofree(Node2D.new())
+	var b: Vector3 = Vector3(4.0, 2.0, 3.5)
+	assert_false(WeaponFxShell.wisps(ci, b, WeaponFxShell.WISP_FROM - 1), "the sheet plays first")
+	assert_true(WeaponFxShell.wisps(ci, b, FightAreas.VFX_KEEP_TICKS), "spent: drawn as nothing")
+	assert_lt(WeaponFxShell.WISP_FROM, FightAreas.VFX_KEEP_TICKS, "the tail has ticks to live")
+	WeaponFxShell.wisp_tail = false
+	assert_false(WeaponFxShell.wisps(ci, b, WeaponFxShell.WISP_FROM + 2), "ring tail: the before")
+	WeaponFxShell.wisp_tail = true

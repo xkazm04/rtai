@@ -161,6 +161,13 @@ crops of both grounds.
 - **Rocket blast tail** (iteration 14): the blast sheet's last frame (a ring of cream discs) read as debug beads, so
   the smoke ring (frame 2) holds through the last 10 ticks instead, growing from 1.08 to 1.30 and fading to 15 %.
   `--blast-beads=on` is the before.
+- **Rocket blast tail, torn smoke** (iteration 20, replaces the held ring as the default): from tick 20 (the end of the
+  smoke-ring frame) until the effect's 40-tick life ends, the ring tears into 12 of the rocket's drawn smoke puffs
+  (`WeaponFxShell.wisps`). Each puff is 0.55 x the splash radius across, sits on the ring's line (0.78 of the radius)
+  and drifts out by 0.4 of the radius, easing out. Each stretches along the ring as it grows (an expanding ring tears
+  into arcs), shrinks to 60 % and fades out. Angles come from the blast's place, so a replay draws the same smoke. A
+  radial stretch was tried first and read as flower petals. `--blast-tail=ring` is the iteration 14 held ring;
+  `WISPS` 0 also turns the tail off.
 - **Fire patch ground** (`WeaponFxShell.patch_ground`, `PATCH_SCORCH_K` 1.0 at `PATCH_SCORCH_INK` 0.8): under a
   burning patch the scorch cell (the inked burst) spans the patch's diameter, its turn fixed by its place, fading
   with the patch, instead of gunplay's flat grey disc, which read as a debug circle under the flames. 0 = the disc.
