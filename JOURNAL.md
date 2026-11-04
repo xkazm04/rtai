@@ -699,3 +699,21 @@ NEXT (iteration 6) = the NEXT list of 05:10 above (merge round 8 + gates; re-cut
 and concat the city chapter: `ffmpeg -f concat` over the chapter list + city_free; check
 REQUESTs 21-23 on the tips; a 64 px/m close-up pass of the signature chapters; final-round
 export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 21, 22, 23.
+
+## Iteration 6 (05:29-06:29)
+- 05:29 read JOURNAL, git log, lane tips. REQUESTs 21 (plasma rifle drop), 22 (riot shield),
+  23 (riot p99) not answered on the tips yet.
+- MILESTONE 05:40 merge round 8 (brief order): weapon-art 5cfbfc38 (hand cannon slug
+  projectile_k, empty tubes, heavier tracer and nail) -> a38ae469; rivet-arsenal 69dab95d
+  (arena on the cast rigs by default, --sprites opts out; quest 1 --rigs; --bot=lob) -> 770ca6c9;
+  gunplay a41b332e (electro charged shot, thrown weapon lands at the cursor, shot cues, stuck
+  shards, charged-bolt hit feel) -> db4a9ff4; human-reactions a649b7c0 (melee curl death, stiff
+  electro death, fight deaths startle the street, spray turn) -> 996a14a9; brutality 95316aff
+  (KillPoly fills, claw_shock X-ray, --sig-solo offsets, nuke ring patch) -> c55c4a5a.
+  Resolutions (integration glue): launch_args KNOWN_FLAGS keeps --gore and --rigs; arena_game
+  takes rivet-arsenal's rigs-by-default on showcase's `cast` member; ArenaRigs.attach takes a
+  CollectCallStage (quest 1) and reads ArenaStage-only fields (plan, targets, pit.riot) through
+  `stage as ArenaStage` (null in quest 1); StagePilot keeps showcase's merged _fire (throw
+  wind-up, flamer sway) and takes gunplay's _reach for the fire point (a thrown weapon lands at
+  the cursor), gunplay's old _jab dropped (the claw combo replaced it); LiveInput keeps the
+  wheel latch and packs gunplay's cursor reach. JOURNAL kept ours each time.
