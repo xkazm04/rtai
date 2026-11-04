@@ -50,6 +50,8 @@ const PACK: PackedVector2Array = [
 ## SHOCK_HOLD ticks (past the full charge) and releases on him: a full-charge one-shot.
 const SHOCK_OFF: Vector2 = Vector2(1.5, 0.1)
 const SHOCK_HOLD: int = 66
+## The claw's line off the solo spot: three guards round Rivet in claw reach, one charge each.
+const CLAW_LINE: PackedVector2Array = [Vector2(1.5, 0.1), Vector2(-1.5, -0.1), Vector2(0.1, 1.5)]
 
 var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
@@ -95,11 +97,11 @@ func step(stage: ArenaStage, tick: int) -> void:
 	if claw != null:
 		_step_claw(stage, tick)
 		return
-	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY != 0:
+	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY >= _held_ticks(stage):
 		return
 	var target: Fighter = _target()
 	if target == null:
-		if solo == Vector2.INF:
+		if solo == Vector2.INF and (tick - FIRST_SHOT) % SHOT_EVERY == 0:
 			_line(stage)
 		return
 	if not blade.is_empty():
@@ -134,19 +136,34 @@ func _step_blade(stage: ArenaStage) -> void:
 		_strike_t = -1 if k >= 1.0 else _strike_t
 
 
-## Holds the charge from FIRST_SHOT for SHOCK_HOLD ticks, facing the guard, then lets go.
+## Each SHOT_EVERY: faces the next guard, holds the charge SHOCK_HOLD ticks, then lets go.
 func _step_claw(stage: ArenaStage, tick: int) -> void:
+	var k: int = tick - FIRST_SHOT
+	if k < 0:
+		return
+	if k % SHOT_EVERY == 0:
+		_victim = _target()
+	if _victim == null:
+		return
 	var r: Fighter = stage.arena.rivet
-	if not guards.is_empty():
-		r.facing = (guards[0].pos - r.pos).normalized()
-	var held: bool = tick >= FIRST_SHOT and tick < FIRST_SHOT + SHOCK_HOLD
-	if claw.step(stage.arena, held, true, r.facing):
+	r.facing = (_victim.pos - r.pos).normalized()
+	if claw.step(stage.arena, k % SHOT_EVERY < SHOCK_HOLD, true, r.facing):
 		shots += 1
 
 
 func _burning(stage: ArenaStage, g: Fighter) -> bool:
 	var areas: FightAreas = stage.arena.areas
 	return areas != null and areas.fx.has(g.id) and areas.fx[g.id].burn_ticks > 0
+
+
+## Ticks the fire button stays held from each shot: 1 (a tap), or for a charge gun (the electro
+## gun, gunplay 0c0465fd) the tap's plain round, its cooldown and the full charge, so the charged
+## round that kills in one leaves by itself.
+func _held_ticks(stage: ArenaStage) -> int:
+	var gun: GunHand = stage.arena.gun
+	if not blade.is_empty() or gun == null or gun.trigger.spec.charge_ticks <= 0:
+		return 1
+	return gun.trigger.spec.interval_ticks + gun.trigger.spec.charge_ticks + 3
 
 
 func _target() -> Fighter:
@@ -163,6 +180,7 @@ func _line(stage: ArenaStage) -> void:
 	spots.clear()
 	_next = 0
 	var line: PackedVector2Array = BLADE_LINE if spread or not blade.is_empty() else LINE
+	line = CLAW_LINE if claw != null else line
 	var origin: Vector2 = stage.plan.rivet_start if solo == Vector2.INF else solo
 	var solo_line: PackedVector2Array = PACK if pack else PackedVector2Array([SOLO_OFF])
 	if claw != null:

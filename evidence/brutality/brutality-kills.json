@@ -3,9 +3,13 @@
     "kills": 6,
     "style_kills": 6
   },
+  "claw_shock": {
+    "kills": 3,
+    "style_kills": 3
+  },
   "electro_gun": {
-    "kills": 6,
-    "style_kills": 6
+    "kills": 12,
+    "style_kills": 12
   },
   "flamethrower": {
     "kills": 4,

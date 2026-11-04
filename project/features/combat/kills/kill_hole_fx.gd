@@ -13,6 +13,17 @@ const MASK_M: float = 2.0
 const INK: Color = Color(0.07, 0.06, 0.07)
 const HOT: Color = Color(1.0, 0.96, 0.78)
 const COOL: Color = Color(0.3, 0.2, 0.14)
+## The drop (showcase REQUEST 21): the victim stands LOOK_TICKS after the hit-stop, looking at the
+## hole, then falls flat back along the shot over TOPPLE_TICKS (eased in, like a fall). Seen
+## straight down, a fall reads as the body laid out along the shot: it slides back FALL_M, stretches
+## LIE_STRETCH along the fall line (the head going away from the feet), narrows across it and
+## twists a little.
+const LOOK_TICKS: int = 8
+const TOPPLE_TICKS: int = 12
+const FALL_M: float = 0.45
+const LIE_STRETCH: float = 0.55
+const LIE_NARROW: float = 0.12
+const LIE_TWIST: float = 0.35
 
 static var _holed: ImageTexture = null
 
@@ -21,15 +32,18 @@ var tick0: int = 0
 var radius_px: float = 4.0
 
 
-## The body group with a hole punched through its centre (the group's origin is the centroid).
+## The body group with a hole punched through its centre (the group's origin is the centroid);
+## its one child is the lay node Topple bends, holding the clipped body and the ring.
 static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Node2D:
 	var root: Node2D = Node2D.new()
 	root.name = body.name
+	var lay: Node2D = Node2D.new()  # the fall's lay-out (Topple), under KillView's placement
+	root.add_child(lay)
 	var mask: Sprite2D = Sprite2D.new()
 	mask.texture = _mask_texture()
 	mask.scale = Vector2.ONE * MASK_M * view_ppm / MASK_PX
 	mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-	root.add_child(mask)
+	lay.add_child(mask)
 	body.position = Vector2.ZERO
 	body.transform = mask.transform.affine_inverse()
 	KillSplitFx.flatten(body)
@@ -39,8 +53,35 @@ static func punch(body: Node2D, p_kills: SignatureKills, view_ppm: float) -> Nod
 	ring.tick0 = p_kills.tick
 	ring.radius_px = HOLE_M * view_ppm
 	ring.z_index = 30
-	root.add_child(ring)
+	lay.add_child(ring)
 	return root
+
+
+## A holed body toppling (KillStyles keeps one per plasma kill).
+class Topple:
+	extends RefCounted
+	var serial: int = 0
+	var body: Node2D = null
+	var born: int = 0
+	var row: SignatureKill = null
+	var dir: Vector2 = Vector2.RIGHT
+
+	## After KillView placed the body this frame: `tick` is the sim tick.
+	func pose(tick: int, ppm: float) -> void:
+		var t: float = float(tick - born - row.hitstop_ticks - LOOK_TICKS) / TOPPLE_TICKS
+		var k: float = clampf(t, 0.0, 1.0)
+		k *= k  # eased in: slow off balance, fast to the street
+		var axis: Vector2 = dir.normalized() if dir != Vector2.ZERO else Vector2.RIGHT
+		axis = axis.rotated(-body.rotation)  # into the body's frame (KillView turns it)
+		var turn: Transform2D = Transform2D(axis.angle(), Vector2.ZERO)
+		var lay: Transform2D = Transform2D(
+			0.0, Vector2(1.0 + LIE_STRETCH * k, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
+		)
+		var side: float = -1.0 if axis.y < 0.0 else 1.0
+		var twist: Transform2D = Transform2D(side * LIE_TWIST * k, Vector2.ZERO)
+		var t2: Transform2D = turn * lay * turn.affine_inverse() * twist
+		var inner: Node2D = body.get_child(0) as Node2D
+		inner.transform = t2.translated(axis * FALL_M * ppm * k)
 
 
 ## A white square with a transparent disc in the middle (HOLE_M of MASK_M).

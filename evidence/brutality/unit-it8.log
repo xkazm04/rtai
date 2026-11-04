@@ -1,2 +1,2 @@
-unit-tests: gut exit 1; 1 failing (778 passed, 1 failed, 0 skipped)
-unit exit 1
+unit-tests: 779 passed, 0 failed, 0 skipped (GUT, headless)
+unit exit 0

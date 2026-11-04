@@ -17,6 +17,8 @@ var dissolve_fx: KillDissolveFx = KillDissolveFx.new()
 ## The homing shard kill (shards stuck in the frozen body, the red mist at the pop).
 var burst_fx: KillBurstFx = KillBurstFx.new()
 
+## The plasma kills' bodies (the topple).
+var _holes: Array[KillHoleFx.Topple] = []
 var _kills: SignatureKills = null
 var _ppm: float = 32.0
 
@@ -47,6 +49,8 @@ func pose() -> void:
 	shock_fx.pose()
 	split_fx.pose()
 	dissolve_fx.pose()
+	for h: KillHoleFx.Topple in _holes:
+		h.pose(_kills.tick, _ppm)
 
 
 func forget(serial: int) -> void:
@@ -54,6 +58,7 @@ func forget(serial: int) -> void:
 	shock_fx.forget(serial)
 	split_fx.forget(serial)
 	dissolve_fx.forget(serial)
+	_holes = _holes.filter(func(h: KillHoleFx.Topple) -> bool: return h.serial != serial)
 
 
 ## The victim's parts by the row's style: the gib or whole-body cut, the blade's two halves, or
@@ -84,3 +89,11 @@ func take(serial: int, body: Node2D, row: SignatureKill, at: Vector2, dir: Vecto
 		shock_fx.add(serial, body, row, dir)
 	elif row.style == &"dissolve" and body != null:
 		dissolve_fx.add(serial, body, row, at)
+	elif row.style == &"hole" and body != null:
+		var h: KillHoleFx.Topple = KillHoleFx.Topple.new()
+		h.serial = serial
+		h.body = body
+		h.born = _kills.tick
+		h.row = row
+		h.dir = dir
+		_holes.append(h)

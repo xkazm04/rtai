@@ -18,10 +18,9 @@ var reduced_motion: bool = false
 var rig_lookup: Callable = Callable()
 var gib_layer: Node2D = Node2D.new()
 ## The leftovers: one KillGround per kill (spray, smears, scorch, ash heap), each reprinted only
-## when its own kill changes (a full reprint of twelve kills was the kill-frame spike).
+## when its own kill changes (a full reprint of twelve kills was the kill-frame spike); the smears
+## grow blot by blot into their kill's print as the parts slide.
 var ground: Node2D = Node2D.new()
-## The smears of the kills whose parts still slide (redrawn every frame while any moves).
-var fresh: Node2D = Node2D.new()
 ## The per-style overlays (char, X-ray, blade streak, dissolve, shard burst) and the cut dispatch.
 var styles: KillStyles = KillStyles.new()
 ## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
@@ -29,6 +28,11 @@ var styles: KillStyles = KillStyles.new()
 var frames: int = 0
 var spent_us: int = 0
 var worst_us: int = 0
+## The sim tick of the worst frame, the ticks the kills landed on, and frames over 2 ms: a spike
+## on a kill tick is this view's; one far from any kill is the machine (CONTENDED).
+var worst_tick: int = -1
+var kill_ticks: PackedInt32Array = PackedInt32Array()
+var over_2ms: int = 0
 ## Microseconds of each kill's cut (_on_killed), in kill order: is only the first one slow?
 var kill_us: PackedInt32Array = PackedInt32Array()
 var _groups: Dictionary[int, Array] = {}
@@ -38,8 +42,8 @@ var _trail: Array[PackedVector2Array] = []
 ## Kill serials that bleed no smear (a row with no spray: the burn).
 var _dry: Dictionary[int, bool] = {}
 var _frame_us: int = 0
+var _frame_tick: int = 0
 var _grounds: Dictionary[int, KillGround] = {}
-var _moving: Dictionary[int, bool] = {}
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -52,10 +56,6 @@ func bind(p_kills: SignatureKills) -> void:
 		_trail.append(PackedVector2Array())
 	ground.z_index = -1
 	add_child(ground)
-	fresh.z_index = -1
-	@warning_ignore("return_value_discarded")
-	fresh.draw.connect(_draw_fresh)
-	add_child(fresh)
 	gib_layer.z_index = 3
 	add_child(gib_layer)
 	styles.bind(kills, ppm, reduced_motion)
@@ -67,7 +67,11 @@ func _process(_delta: float) -> void:
 		return
 	frames += 1
 	spent_us += _frame_us
-	worst_us = maxi(worst_us, _frame_us)
+	if _frame_us > worst_us:
+		worst_us = _frame_us
+		worst_tick = _frame_tick
+	over_2ms += 1 if _frame_us > 2000 else 0
+	_frame_tick = kills.tick
 	var t0: int = Time.get_ticks_usec()
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
@@ -79,7 +83,6 @@ func _process(_delta: float) -> void:
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	styles.pose()
-	_track_moving()
 	for kg: KillGround in _grounds.values():
 		if kg.needs_reprint(kills.tick):
 			kg.queue_redraw()
@@ -87,45 +90,9 @@ func _process(_delta: float) -> void:
 	_frame_us = Time.get_ticks_usec() - t0
 
 
-## The smears of `serial`'s parts that came to rest (its KillGround prints them).
-func settled_smears(serial: int) -> Array[PackedVector2Array]:
-	var out: Array[PackedVector2Array] = []
-	if _moving.has(serial):
-		return out
-	var g: GibSim = kills.gibs
-	for i: int in GibSim.CAPACITY:
-		if g.kill_of[i] == serial and g.live(i) and _trail[i].size() > 1:
-			out.append(_trail[i])
-	return out
-
-
 ## A KillGround's print time joins this frame's cost.
 func add_us(us: int) -> void:
 	_frame_us += us
-
-
-func _draw_fresh() -> void:
-	var t0: int = Time.get_ticks_usec()
-	var g: GibSim = kills.gibs
-	for i: int in GibSim.CAPACITY:
-		if g.live(i) and _trail[i].size() > 1 and _moving.has(g.kill_of[i]):
-			KillMarkArt.smear(fresh, _trail[i], ppm)
-	_frame_us += Time.get_ticks_usec() - t0
-
-
-## The kills with a part still moving; one coming to rest hands its smears to the ground.
-func _track_moving() -> void:
-	var moving: Dictionary[int, bool] = {}
-	var g: GibSim = kills.gibs
-	for i: int in GibSim.CAPACITY:
-		if g.live(i) and not g.at_rest(i):
-			moving[g.kill_of[i]] = true
-	for serial: int in _moving.keys():  # came to rest: its smears move onto its own print
-		if not moving.has(serial) and _grounds.has(serial):
-			_grounds[serial].queue_redraw()
-	if not moving.is_empty() or not _moving.is_empty():
-		fresh.queue_redraw()
-	_moving = moving
 
 
 ## Every frame: the flying parts' shadows and the kill flash only.
@@ -188,6 +155,8 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
 	_frame_us += Time.get_ticks_usec() - t0
 	@warning_ignore("return_value_discarded")
 	kill_us.append(Time.get_ticks_usec() - t0)
+	@warning_ignore("return_value_discarded")
+	kill_ticks.append(kills.tick)
 
 
 ## A sliding part paints the street behind it (a point every few px, at most TRAIL_MAX).
@@ -199,6 +168,9 @@ func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
 		@warning_ignore("return_value_discarded")
 		t.append(at)
 		_trail[i] = t
+		var serial: int = kills.gibs.kill_of[i]
+		if _grounds.has(serial):
+			_grounds[serial].smear_blot(at, t.size() - 1, at.distance_to(t[0]))
 
 
 ## The new kill's print (its mark is the newest); prints whose mark was recycled are freed.

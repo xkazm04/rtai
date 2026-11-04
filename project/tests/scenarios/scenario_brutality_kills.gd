@@ -22,6 +22,7 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"ray_gun": &"dissolve",
 	&"homing_shard": &"burst",
 	&"mini_nuke": &"vaporise",
+	&"claw_shock": &"shock",  # Rivet's full-charge claw shock: the one-shot electro kill
 }
 
 
