@@ -71,6 +71,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - City block at 64 px/m on dark asphalt: `M/cast-navy-city-64.mp4` (15 s), still `M/frames/city-navy-64ppm.png`.
 - Quest 1, Dock 9 fight on the cast rigs (`--rigs`, the dev flag): `M/cast-quest1-dock9-32.mp4`, still
   `M/frames/quest1-dock9-32ppm.png`, 0 script errors.
+  At 64 px/m with the warm close-up Rivet and the visor (iteration 9): `M/cast-quest1-dock9-64.mp4`,
+  `M/frames/quest1-dock9-64ppm.png`, 0 script errors.
 
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,

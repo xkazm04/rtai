@@ -468,3 +468,10 @@ Session state 23:28: head = this commit, tree clean, image.lock never taken, no 
   option D. frames.json 15 (D replaces the C still in the list; C's file kept, REPORT cites it).
 Session state 23:35: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.
 NEXT (iteration 10) is the 23:27 list; its item 2 is now done (Call 4 option D).
+- 23:40 quest 1 at 64 px/m on head 9f195730 (`quest1_clip.gd -- --ppm=64 --rigs --cam=fight --ticks=13560-13860`,
+  151 frames, exit 0, 0 SCRIPT ERROR): `cast-quest1-dock9-64.mp4` + `frames/quest1-dock9-64ppm.png`. The warm tan
+  limbs and core and the visor's dark front edge read in the live quest path; navy cops die in red. frames.json 15
+  (+ this; cops-navy-vs-r2c5 dropped from the list, file kept: REPORT cites it).
+Session end 23:42: head = this commit, tree clean, image.lock never taken, no Godot process of mine running. The
+  quest PNG frames (`gtai-n5/scratch-cast/q1/`, 153 files) are scratch, delete them next session if still there.
+NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
