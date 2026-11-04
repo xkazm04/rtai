@@ -11,6 +11,8 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 ## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
 ## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
 const FOCUS_AHEAD_M: float = 7.0
+## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
+const FOCUS_REACH_M: float = 20.0
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -52,7 +54,7 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
-	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
+	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom
 
 
@@ -87,6 +89,19 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
 	_hurt_seen[who.id] = who.hurt_tick
+
+
+## The LOD bubble's centre (m). human-reactions: the middle of the box around Rivet, the point
+## ahead of him and every hostile within FOCUS_REACH_M, the dead included, so a corpse keeps
+## its full rig while it is on screen (the old focus, FOCUS_AHEAD_M along the aim, dropped
+## bodies behind him).
+static func focus_m(arena: CombatArena) -> Vector2:
+	var r: Fighter = arena.rivet
+	var box: Rect2 = Rect2(r.pos, Vector2.ZERO).expand(r.pos + r.facing * FOCUS_AHEAD_M)
+	for h: Fighter in arena.hostiles:
+		if h.pos.distance_to(r.pos) <= FOCUS_REACH_M:
+			box = box.expand(h.pos)
+	return box.get_center()
 
 
 ## True when a fighter fired between two frames, from its (cooldown, burst_left): a guard's burst
