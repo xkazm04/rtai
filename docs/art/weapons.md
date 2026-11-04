@@ -61,15 +61,27 @@ var flash: Array[Texture2D] = art.fx_frames(art.muzzle_fx(&"pistol"))  # 3 frame
 ## Gore stickers (`art/gore/`, for the brutality kills)
 
 `stump_round`, `stump_oval`, `chunks_3`, `chunk`, `bone`, `splash`, `charred` (overlay), `xray` (overlay),
-`ash`. Blood tokens only (`#A30509` / `#540005`), comic ink, never photoreal. Not in the table yet: load
-`res://features/combat/weapons/art/gore/<id>.png`. Authored at about 300 px per sticker: draw at the
-part scale (0.1 world px per px) or larger.
+`ash`, and the TOP-DOWN body overlays `xray_top`, `xray_top_jolt`, `charred_top`, `charred_top_slump`
+(drawn on the human rig's layout from above: head disc, shoulder oval, arms forward to +x; anchor = the head
+disc = the rig origin; rotate by the body's facing). The front-view `xray` / `charred` stay for a comic flash.
+Blood tokens only (`#A30509` / `#540005`), comic ink, never photoreal. All are fx cells `gore_<name>`
+(`WeaponArt.fx_frames(&"gore_xray_top")`). Authored at about 300-450 px per sticker: draw at the part scale
+(0.1 world px per px) or larger.
+
+## Silhouette check in the claw (iteration 4)
+
+Judged in a live fight (`res://dev/arena/arena.tscn -- --rigs --clean --start=pit --bot=arsenal
+--loadout=...`), the held parts print dark through `print_part`. At 32 px/m only the outline survives, so a
+weapon must differ in OUTLINE from above, not in plates or colour. The machine pistol got a long curved side
+feed box (`tools/art/smg_feed_box.py`) because it printed as the pistol's blob. A throw has no muzzle flash
+(`muzzle_fx` ""). The flame jet starts long and thin at the nozzle and fans out (round puffs near the gun
+read as red drops).
 
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,
 `tracer`, `casing`, `rocket`, `plasma_bolt`, `shard`, `ray_ring_0..2`, `smoke_0..2`, `flame_0..2`,
-`arc_0..2`. Each has `anchor_px`: the point placed on the muzzle (flash) or the head (projectile).
+`arc_0..2`, `spark_0..2` (also the chain-arc landing and the stun daze: `WeaponFxElectro`). Each has `anchor_px`: the point placed on the muzzle (flash) or the head (projectile).
 
 ## Pipeline (re-run any step; all deterministic except the Codex call)
 
