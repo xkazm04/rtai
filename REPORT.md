@@ -79,22 +79,19 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   footprint's authority; cops sit at 0.90 m, Rivet at 1.00 m. No ped rig scale change was needed. In the live game
   (quest 1 `--rigs`, 48 px/m) the peds are about Rivet's core size: `M/frames/crowd-quest1-vs-r1c6-48ppm.png`
   (beside r1_c6, with the plan-view lineup).
-- Open (iteration 10, diagnosed, not built): at 32 px/m every ped look prints as a dark mass, on slab and on
-  asphalt (`M/frames/crowd-value-vs-r2a5.png`, from `cast_lineup.gd -- --crowd [--road]`, 2d6bb3b8). In r2_a5 and
-  r2_c6 the peds are the palest figures (white shirts, pale coats, dark hair), so our peds and navy cops share one
-  dark value at game zoom; only the cops' blue pads tell them apart. The cause is the ped art from above, not one
-  print value: two dark lobes ahead of the chest dominate the 32 px/m read, and they are the ped's whole dark leg
-  stack in the standing pose: thigh over shin over shoe (dark trousers, a 143 px dark shoe pushed ahead by
-  `foot_fwd`), each covering part of the lobe. Evidence: single-part markers (thigh = the lobes' edges, shoes =
-  their tips; `M/frames/crowd-part-markers-32ppm.png`), every part marked at once turns them red
-  (`...-b-32ppm.png`), all-but-one markers (`...-c-32ppm.png`), and hiding the thighs and shins (leg_w 0.01) just
-  exposes the dark shoes underneath. Not the print: discarding print_part's translucent ink dots changed nothing.
-  The coat torso shows only as a rim around the head (heads 161 px vs a 133 px torso). Trials, each
-  reverted: coat fill +42 L, a 0.72 head scale, straighter standing legs, a thinned coat outline, ped leg_w 0.7,
-  all together (`M/frames/crowd-trials-32ppm.png`), and a new Codex ped sheet with a pale trench coat and smaller
-  heads installed in D4 (`M/frames/crowd-sheet-trial-32ppm.png`, sheet `masters:n5/cast/gen/r4/out/ped_pale_a.png`,
-  not shipped): all marginal. Next run: smaller ped shoes and a shorter `foot_fwd`, the standing feet under the
-  coat (ped plan values), then re-try the r4 sheet on top.
+- Built (iteration 11, 64efadb6): plan-view peds toward r2_a5. From straight above our ped art had 3/4-view
+  proportions: heads about 0.75 of the shoulder span placed over the coat's front, standing knees bent forward and
+  large shoes pushed ahead, and grey coat fills just under print_part's 32 px/m ink cut (lum ~0.58), so every ped
+  printed as a dark mass. The ped plan now takes plan-view values together: head 0.62 (`BodyPlan.head_k`), placed
+  0.12 of the depth forward, shoes 0.7 (`foot_k`) under the coat, straight standing legs (hip_z 0.98), and the D4
+  coat, overalls, vest and grey sleeve fills lifted +42 L. Standing coat, hood, vest and overalls peds now read
+  pale-topped with a small dark head on slab and asphalt; jacket and hoodie stay dark (a mixed crowd, as r2_a5's);
+  walking peds are unchanged (dark trouser legs striding like r2_a5's runners). Before/after lineups at 32 px/m
+  (slab, asphalt, walking) and 64 px/m beside r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. Reactions, deaths
+  and corpses before/after on the react board at 64 px/m: `M/frames/react-board-planview-ab-64ppm.png`,
+  `M/cast-react-board-planview-ab-64ppm.mp4` (0 script errors, cops unchanged). Render only, no sim change.
+  The iteration 10 diagnosis and trials that led here: `M/frames/crowd-value-vs-r2a5.png`,
+  `M/frames/crowd-part-markers-32ppm.png` (and `-b`, `-c`), `M/frames/crowd-package-trial-32ppm.png`.
 
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
@@ -115,7 +112,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   Fixed in iteration 7 (e1f848a5), see section 2; the cap is now navy (Call 4).
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
-- The crowd prints dark at 32 px/m against r2_a5's pale peds (section 5): diagnosed, needs a ped part sheet.
+- The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
+  art is still 3/4-view art scaled for the plan view (a plan-view ped sheet would sharpen the 64 px/m close-up).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
@@ -149,12 +147,11 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `M/frames/rivet-warm-lineup-ab-64ppm.png`. A full r2_c3 tan (`D5_WARM` above 1 is not meaningful; edit WARM_* in
    `look_d5_part.gdshader`) would darken him further on asphalt. 32 px/m is unchanged either way.
 
-6. The crowd's value at game zoom (new, iteration 10): A, keep today's peds, dark figures on the cream slab
-   with a cream rim on asphalt (built); B, pale-topped peds as in r2_a5 and r2_c6, which needs a plan-view ped
-   redraw (light shoulders as the widest shape, a small head, small shoes; all six looks, D4 and D5), because
-   value tweaks alone do not get there. Stills: `M/frames/crowd-value-vs-r2a5.png` (today beside r2_a5) and
-   `M/frames/crowd-package-trial-32ppm.png` (the best value-only package, reverted). With A, the navy cops and the
-   peds share a dark value and only the cops' blue pads tell them apart at 32 px/m.
+6. The crowd's value at game zoom: A, pale-topped standing peds (built in iteration 11, plan-view values and a
+   +42 L fill lift; four looks pale, jacket and hoodie dark), or B, the earlier dark crowd (the five
+   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24). Before/after beside
+   r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
+   32 px/m and only the cops' blue pads tell them apart.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
