@@ -7,3 +7,8 @@
 - Pan (shimmer): `city_frame --foci=4 --zooms=1 --pan=600` per look; residual after the camera shift (rows 250-550, 60 frame pairs): today and riso both 1.29 % of pixels > 24 (moving actors), median 0. Clip: `gtai-masters/n5/look/print-pan-today-vs-riso-32ppm.mp4`.
 - Arena: `res://dev/arena/arena.tscn --write-movie --fixed-fps 60 --quit-after 1500 -- --bot=reel --reel=director --look=today|auto`, clip `gtai-masters/n5/look/arena-reel-today-vs-riso-32ppm.mp4` (first 25 s of the reel only).
 - Look goldens: block site over the gate with this change only (main's tables restored: pass); re-blessed, decisions line.
+
+## Iteration 2 (2026-11-04 17:36-18:15)
+- `after-it2/`: the same city_frame shots with `tan_k` 1.0 + `stain_k` 0.35 (`world_riso`). Paper (crop 100,40-500,170 of city-0): 32 px/m 231.0/214.2/191.1 -> 207.7/188.5/157.9, 64 px/m 225.1/202.3/174.7 -> 199.4/180.4/150.9; target r2_a5 149/131/109.
+- CORRECTION: iteration 1's arena A/B was invalid. The dev arena ignored `--look=` (only boot/world.gd read it), so both halves were the riso print. Fixed in 4c42f589 (arena_game sets the print stage's look id); the A/B was re-filmed: `gtai-masters/n5/look/arena-reel-today-vs-riso-it2-32ppm.mp4` (40 s, 76 % of pixels differ, the fight identical). The city pan check (city_frame honours --look) stands.
+- `cost/`: the riso layer's frame cost (CONTENDED, unresolved under the noise; static fetch count). See cost/README.md.
