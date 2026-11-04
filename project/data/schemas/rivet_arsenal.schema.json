@@ -120,6 +120,55 @@
           ],
           "type": "object"
         },
+        "hip_belt": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "slot": {
+              "maximum": 4,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale",
+            "slot"
+          ],
+          "type": "object"
+        },
         "one_hand": {
           "additionalProperties": false,
           "properties": {
@@ -374,6 +423,7 @@
         "enum": [
           "backpack_hose",
           "heavy_two_hand",
+          "hip_belt",
           "one_hand",
           "shoulder",
           "thrown",

@@ -169,6 +169,11 @@
               "auto"
             ]
           },
+          "fire_move_mult": {
+            "maximum": 1,
+            "minimum": 0.1,
+            "type": "number"
+          },
           "held_scale": {
             "maximum": 3,
             "minimum": 0.5,
@@ -244,6 +249,11 @@
             "type": "string"
           },
           "speed_mps": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spin_s": {
+            "maximum": 3,
             "minimum": 0,
             "type": "number"
           },

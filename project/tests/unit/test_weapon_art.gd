@@ -41,9 +41,9 @@ func test_make_held_origin_is_the_grip_at_drawn_length() -> void:
 	s.free()
 
 
-func test_all_sixteen_have_held_art_with_the_muzzle_forward() -> void:
+func test_all_seventeen_have_held_art_with_the_muzzle_forward() -> void:
 	var art: WeaponArt = WeaponArt.new()
-	assert_eq(art.ids().size(), 16)
+	assert_eq(art.ids().size(), 17)
 	for id: StringName in art.ids():
 		assert_gt(art.held_texture(id).get_width(), 64, "%s held" % id)
 		assert_gt(art.muzzle_m(id).x, 0.2, "%s tip ahead of the grip" % id)

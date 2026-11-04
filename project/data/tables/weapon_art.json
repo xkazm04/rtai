@@ -1215,6 +1215,40 @@
         466,
         137
       ]
+    },
+    {
+      "casing": "casing",
+      "grip_class": "hip_belt",
+      "grip_px": [
+        134,
+        89
+      ],
+      "held": "res://features/combat/weapons/art/gatling/held.png",
+      "icon": "res://features/combat/weapons/art/gatling/icon.png",
+      "id": "gatling",
+      "length_m": 1.55,
+      "length_px": 802,
+      "muzzle_fx": "flash_smg",
+      "muzzle_px": [
+        808,
+        89
+      ],
+      "part_grip_px": {
+        "small": [
+          134,
+          89
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/gatling/held_small.png",
+        "tank": "res://features/combat/weapons/art/gatling/tank.png"
+      },
+      "pickup": "res://features/combat/weapons/art/gatling/pickup.png",
+      "projectile_fx": "tracer",
+      "size_px": [
+        815,
+        170
+      ]
     }
   ]
 }

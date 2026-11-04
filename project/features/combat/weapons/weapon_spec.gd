@@ -53,6 +53,10 @@ var charge_ticks: int = 0
 var charge_damage: float = 0.0
 ## Lane gunplay: the audio_cues.json cue a round of this gun plays as it leaves (&"" = default).
 var shot_cue: StringName = &""
+## n5-look (the gatling): the barrels spin this many ticks before the first round (0 = none), and
+## Rivet walks at fire_move_mult of his pace while they spin (1 = no slow).
+var spin_ticks: int = 0
+var fire_move_mult: float = 1.0
 
 
 static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
@@ -92,6 +96,8 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.charge_ticks = ticks(t.num(row, "charge_s")) if row.has("charge_s") else 0
 	w.charge_damage = t.num(row, "charge_damage") if row.has("charge_damage") else w.damage
 	w.shot_cue = StringName(t.text(row, "shot_cue")) if row.has("shot_cue") else &""
+	w.spin_ticks = ticks(t.num(row, "spin_s")) if row.has("spin_s") else 0
+	w.fire_move_mult = t.num(row, "fire_move_mult") if row.has("fire_move_mult") else 1.0
 	return w
 
 

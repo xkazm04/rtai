@@ -16,7 +16,10 @@ const GRIND_JUDDER: float = 0.07
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
 ## Grip classes whose reload is not a magazine (the molotov's next bottle, the flamer's tank).
-const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
+const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose", &"hip_belt"]
+## Grip classes with a part on Rivet's back (weapon-art's `tank`): the flamer's tank, the
+## gatling's belt box (n5-look); the line from it to the weapon is the hose or the belt.
+const ON_BACK: Array[StringName] = [&"backpack_hose", &"hip_belt"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
 ## The flamer's reload is a tank swap: the spent tank slides this far back off him and fades
@@ -58,7 +61,7 @@ func _process(_delta: float) -> void:
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
-		_back_tank(rig, grip != null and grip.id == &"backpack_hose")
+		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false

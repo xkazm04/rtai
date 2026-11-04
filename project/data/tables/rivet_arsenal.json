@@ -23,6 +23,15 @@
       "slot": 3,
       "stow_ticks": 20
     },
+    "hip_belt": {
+      "doc": "the gatling at the hip in both hands, the belt box on the back (n5-look): the barrels lie on the aim line, a heavy kick on every round",
+      "draw_ticks": 28,
+      "held_scale": 1.2,
+      "kick": 1.3,
+      "move_mult": 0.8,
+      "slot": 3,
+      "stow_ticks": 22
+    },
     "one_hand": {
       "doc": "pistol grip in the claw, low ready at the hip; aims with the claw arm only",
       "draw_ticks": 12,
@@ -75,6 +84,7 @@
     "electro_baton": "one_hand",
     "electro_gun": "two_hand_long",
     "flamethrower": "backpack_hose",
+    "gatling": "hip_belt",
     "gloria": "one_hand",
     "hand_cannon": "one_hand",
     "homing_shard": "two_hand_long",

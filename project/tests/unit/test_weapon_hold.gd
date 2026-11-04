@@ -17,7 +17,7 @@ func _ticks_until_ready(h: WeaponHold) -> int:
 func test_table_is_valid() -> void:
 	var t: ArsenalTable = ArsenalTable.shipped()
 	assert_true(t.ok(), str(t.errors))
-	assert_eq(t.grips.size(), 6, "six grip classes")
+	assert_eq(t.grips.size(), 7, "seven grip classes")
 
 
 func test_draw_time_per_class_is_the_tables() -> void:

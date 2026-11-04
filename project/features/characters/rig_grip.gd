@@ -48,6 +48,7 @@ const BY_CLASS: Dictionary[StringName, int] = {
 	&"shoulder": Kind.SHOULDER,
 	&"backpack_hose": Kind.HIP,
 	&"heavy_two_hand": Kind.HIP,
+	&"hip_belt": Kind.HIP,
 	&"thrown": Kind.THROWN,
 }
 
