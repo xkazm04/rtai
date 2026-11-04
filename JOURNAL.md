@@ -771,3 +771,41 @@ NEXT (iteration 10, in order):
   not carry human-reactions' 8669b5d9 (cream hit flash, rivet-arsenal REQUEST 1 / showcase
   REQUEST 3). The merge brings it; not cherry-picked this late (it also carries their area-state rig
   work, a wider change than the flash).
+
+## Iteration 10 (06:02 - 07:02), BUILD
+- 06:02 read JOURNAL, git log, other lanes' JOURNALs. Addressed to me and open: human-reactions
+  REQUEST 2 (the N/S kill spray still a column on their board) and REQUEST 3 (ReactLink.blocked:
+  spark a shield-stopped round instead of a wound mark). weapon-art FRICTION 05:45 (the pit molotov
+  never throws in 440 ticks) is on their branch without my bot fixes: on n-gunplay the pit molotov
+  throws and kills (reel9_molotov: 5 kills in 25 s; flank fix 4e737ba1). No action.
+- 06:06 269deba4 REQUEST 2 DONE: blood_fx.json game.spray_tilt_min_deg 6: every kill spray turns
+  6-14 deg off its blow (sign from the spot's hash); 0 = the old 0-14 spread exactly. Unit test with
+  a planted 0 floor. First run FAILED on my own typing slip (a Variant into deg_to_rad, warnings are
+  errors: 14 failing, `evidence/n9/unit-a.log`); fixed, 731/731 (`unit-b.log`).
+  A/B `evidence/n9/blood_spray_floor_ab.png` (dev/gunplay/blood_dirs.gd, four kills due south, min
+  0 vs 6). Looked at: the columns lean now, but the change is subtle; the spray still reads as a
+  narrow fan. If the board still reads ruler-straight, raise the floor (one value) or widen the
+  hit's cone_deg; DECISION in docs/decisions.md.
+- 06:08 5efdc825 REQUEST 3 DONE (gunplay side): GunFx.shield_test (fighter, dir) -> bool, a
+  render-side hook; a round it says a riot shield stopped draws as METAL (cream sparks) instead of
+  the body's ink burst, and no shard sticks. Not wired here: ReactLink is not on this branch.
+  For human-reactions: in ArenaRigs (or wherever ShieldSparks is wired) set
+  `view.gun_fx.shield_test = func(f, dir): return <ReactLink says f blocked dir>` (FxView builds
+  the GunFx lazily: fx_view.gd:34). Unit 732/732 (`unit-c.log`).
+- FightCam (REQUEST 3 of it5, the victim camera, built in my own hook): `--cam=fight` in the arena
+  pit frames Rivet and the hostile he fights (half way, at most 4.5 m off Rivet, eased 5 % a tick, a
+  fresh corpse held 150 ticks). GunplayHook.attach_view sets CollectCallView.focus each tick; the
+  city is left alone (city.focus also streams the chunks). View only, dev capture flag. Unit tests
+  (lean half way, hold on the body, let go; a far foe never pushes Rivet out). Unit 734/734
+  (`unit-d.log`), lint 13/13.
+- 06:12 MEASURE FightCam A/B, hand cannon in the pit at 64 px/m, 15 s, same seed: both runs 4 shots,
+  4 kills, 8 hits, 0 deaths, identical HUD ticks (the camera is view only). `MASTERS/n4/gunplay/
+  fightcam_hand_cannon_64ppm_ab.mp4` (+ `_still.png`, `camfight_hand_cannon/`, `camrivet_hand_cannon/`).
+  FINDING on the first cut (150-tick corpse hold): at tick 456 the camera still sat on the first
+  corpse while Rivet shot a cop to the north-east, so the new fight left the frame. Fixed in
+  eeec4d97 (hold 60 ticks; the faced foe wins). Looked at the re-cut (2 fps strip, 5-14.5 s): Rivet
+  and his foe share the frame through most of the fight and the last two kills fall in frame with
+  their spurts. LIMIT: a 64 px/m frame is 12.5 m tall; a kill 10 m south still lands at the bottom
+  edge with Rivet at the top (tick 417 in the still). It helps; it is not a director camera.
+- Gates of record at eeec4d97: lint 13/13, unit 735/735 (`evidence/n9/unit-e.log`), scenarios 29/29
+  (`evidence/n9/scenarios-a.log`, on 099b9bab: the later commit touches FightCam and its test only).
