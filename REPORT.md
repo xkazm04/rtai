@@ -107,6 +107,14 @@ Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost ti
 - The flamethrower's burning cop runs more than 14 m. With `--lone`, the bot now walks after him (`GunplayBot.follow_burning`, d35ffdf3), so the reel shows the stream, the ignition, the panic run, the fall and the corpse (in the bottom third). A 30 m camera hold was tried first and rejected, because it framed empty ground.
 - Gates on 265b7f37: lint 13/13, unit 756/756 (+4; also on the follow_burning commit), scenarios 29/29 (on 23f0fe22; 265b7f37 touches only the dev camera and its test), parity unchanged (no sim or native change since 83429487).
 
+## After 09:30 (iteration 21)
+
+- **The lone kills now play in the city proving block too** (`source: game-city`). `--lone` already worked on `--arena=city`. The city camera stayed on Rivet, though, so the pistol's second kill fell below the frame. `--cam=fight` on the city now leans the view only (9a1bec62, 3c472354): `CollectCallView.city_lean_m` feeds `CityView.kick_px`. `city.focus`, which streams the chunks and steers the spawner, stays on Rivet. The lean is 0.65 toward the victim, at most 6 m, and holds the corpse 2.5 s. `CityView` widens its actor window by the offset, so no edge pedestrian drops (one line in a city file; a zero offset gives the same window). The kill ticks are identical with and without the lean. This is a dev view only, with no sim, replay or golden change.
+- Clips (48 px/m, no HUD, sound off, 0 script errors): `MASTERS/city_lone_kills_seven_48ppm.mp4` (35 s: pistol, machine pistol, rocket, flamethrower from the ignition, electro, molotov, hand cannon), `MASTERS/city_lone_kills_unique_four_48ppm.mp4` (20 s: plasma, ray gun, homing shard, mini-nuke) and the A/B `MASTERS/city_lone_lean_ab_pistol_48ppm.mp4` (camera on Rivet vs the lean, the same kill). The full 25 s runs are in `MASTERS/citylone21h_48_<gun>/`.
+- What still falls short: in the city the guards come from the south-west, 10-12 m from Rivet. With the lean stopping at 6 m, most kills land in the left or lower third rather than the middle. The corpse stays in frame for the aftermath. In the first second of the plasma and ray cuts, the previous corpse is still in frame before the pan.
+- Cherry-picked showcase 8a8215a3 (2c27580e): on the city, the pit's high walls print as grey concrete instead of black debug bars.
+- Gates: lint 13/13, unit 757/757 on 3c472354 (`WT/evidence/n12/unit-21b.log`, +1 test: the city lean cap), scenarios 29/29 on 9a1bec62 (`WT/evidence/n12/scen-21.log`).
+
 ## Gates of record
 
 `node tools/evidence/run.mjs --no-bench --allow-dirty` on 83429487, the final code head of iteration 14 (`WT/evidence/n10/evidence-final-14.log`; the dirty paths are untracked evidence stills and logs only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.

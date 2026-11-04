@@ -1348,3 +1348,20 @@ NEXT is unchanged, except item 2 (done).
   (one view file, `arena_floor_view.gd`).
 - FRICTION: killing a background batch's Godot children let the shell's `wait` start its second
   half; stopped the task itself first next time (TaskStop, then the PIDs).
+- 09:40 MILESTONE `MASTERS/city_lone_kills_seven_48ppm.mp4` (35 s, no HUD, sound off): pistol,
+  machine pistol, rocket, flamethrower (from the ignition), electro, molotov and hand cannon, each
+  killing one lone cop in the city proving block at 48 px/m, on 3c472354
+  (`citylone21h_48_<gun>/`, 25 s runs, 0 script errors each). Cut points (kill ticks): pistol 663,
+  machine pistol 673, rocket 741, flamethrower 604 (cut from 620 so the ignition shows), electro
+  802, molotov 563, hand cannon 661; 2.5 s before to 2.5 s after (at +3 s the camera eases back to
+  Rivet). Looked at a 1 fps sheet of the reel and at 2 fps sheets per gun: one victim each, a
+  city pedestrian or two walking past (not lab dummies), the corpse framed about 2.5 s. The kills
+  sit in the left or lower third more often than in the pit: the guards come from the
+  south-west, about 10-12 m from Rivet, and the lean stops at 6 m. The flamethrower's victim dies
+  at the top edge by the (now grey) barrier.
+- `MASTERS/city_lone_lean_ab_pistol_48ppm.mp4`: the same pistol kill (tick 663) with the camera on
+  Rivet (left: the cop dies below the frame) and with the view lean (right: he falls by the
+  parked car, in frame). frames.json: the city reel is entry 2, the A/B entry 5; dropped
+  side_by_side_city_six_32ppm_it11.mp4 (it is the city reel's "before") and the rocket scorch
+  still (15 entries, all exist). Deleted the unreferenced Rivet-camera runs and the 4 m runs.
+- 09:43 rendering the other four unique guns in the city (plasma, ray, shard, mini-nuke).
