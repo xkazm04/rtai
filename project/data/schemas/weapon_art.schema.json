@@ -160,6 +160,11 @@
       "minimum": 0,
       "type": "number"
     },
+    "pickup_min_span_m": {
+      "maximum": 3,
+      "minimum": 0,
+      "type": "number"
+    },
     "rig_px_per_m": {
       "minimum": 1,
       "type": "integer"

@@ -35,3 +35,12 @@ func test_print_flag_keeps_the_before() -> void:
 	assert_not_null(s.material, "--pickup-print=on: the PART print")
 	assert_eq(s.get_child_count(), 0)
 	s.free()
+
+
+## n5-look (r2_w8): the small pickups grow to fill the loot ring, never past it; the big ones
+## keep their own length.
+func test_min_span_fills_the_ring_and_spares_big_guns() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	assert_gt(art.pickup_min_span_m, art.length_m(&"pistol"))
+	assert_lt(art.pickup_min_span_m, PickupsView.DISC_M * 2.0)
+	assert_gt(art.length_m(&"rocket_launcher"), art.pickup_min_span_m)

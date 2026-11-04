@@ -28,6 +28,8 @@ var held_small_below_ppm: float = 0.0
 var round_k: Dictionary[StringName, float] = {}
 ## n5-look: the colour FX folder (weapon_art.json fx_colour_dir; "" = the ink FX).
 var fx_colour_dir: String = ""
+## n5-look (r2_w8): a pickup lying in its loot ring draws at least this span (m); 0 = true size.
+var pickup_min_span_m: float = 0.0
 
 var _rows: Dictionary[StringName, Row] = {}
 var _fx: Dictionary[StringName, Cell] = {}
@@ -65,6 +67,8 @@ func _init(path: String = TABLE) -> void:
 	fx_draw_scale = t.num(t.raw, "fx_draw_scale")
 	if t.raw.has("held_small_below_ppm"):
 		held_small_below_ppm = t.num(t.raw, "held_small_below_ppm")
+	if t.raw.has("pickup_min_span_m"):
+		pickup_min_span_m = t.num(t.raw, "pickup_min_span_m")
 	for row: Variant in t.array(t.raw, "weapons"):
 		var r: Dictionary = row if row is Dictionary else {}
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
