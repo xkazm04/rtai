@@ -1189,3 +1189,12 @@ NEXT (report phase, in order):
 2. Merge note: human-reactions' get-up and brutality's burst kill read right only with n-gunplay
    83429487 / 8ea3a2e5 merged.
 3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if the burn re-film reads thin.
+- 08:24 CORRECTION to the FRICTION above: brutality REQUEST 29 is already covered on n-gunplay by
+  0b2541a9 (showcase REQUEST 27: `FightAreasArt.clear` shrinks and fades a patch's flames within
+  1.8 m of a dead hostile, ramping 45..75 ticks after the kill) and aa471560 (`FightAreasArt.away`
+  pushes a flame up to 1 m off the body). It uses gunplay's own dead list (`dead: Array[Vector3]`),
+  so brutality's KillMarks is not needed (and KillMarks / SignatureKills are not on this branch).
+  ANSWER -> brutality (REQUEST 29): done on n-gunplay 0b2541a9 + aa471560; no merge glue needed.
+  Open only if a brutality kill removes the body from the dead list while its print stays (check
+  in the merged-main re-film).
+NEXT item 1 now reads: REPORT gates of record on 83429487; REQUEST 29 answered (0b2541a9, aa471560).
