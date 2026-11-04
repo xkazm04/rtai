@@ -896,3 +896,50 @@ NEXT (iteration 11, in order):
   sequence strip (its folder stays), 15 entries, all files checked.
 - Session end 06:45: no Godot process of mine running, no lock held, scratch holds only the six
   scripts. NEXT list above stands (1, 2, 4).
+
+## Iteration 11 (06:45 - 07:45), BUILD
+- 06:45 read JOURNAL, git log, other lanes' JOURNALs (human-reactions, brutality, weapon-art): no
+  new REQUEST to gunplay since it10 (REQUEST 2/3 answered at 06:06/06:26; weapon-art's 05:45 pit
+  molotov FRICTION is their branch without the flank fix, as noted at 06:02).
+- Registry rules applied (motion-quality-gating: judge in motion at the game zoom and a close-up;
+  depth-ordered-layered-art: the char prints under the flames and the bodies, same draw slot as the
+  old disc).
+- 06:47 4e11100b NEXT 1 DONE: `docs/night/2026-11-04/gunplay/REPORT.md` DRAFT (summary, proofs
+  table, calls gunplay-7..13 with their clips, gaps); gates of record to fill at the report phase.
+- 06:46 full gates started on 4e11100b (`node tools/evidence/run.mjs --no-bench --allow-dirty`,
+  log `evidence/n10/evidence.log`).
+- 06:48 FINDING (weakest visual item, from the city six-gun reel at 32 px/m and city9_molotov at
+  9.2 s): a fire patch prints on a flat translucent grey disc with a crisp edge: it reads as a debug
+  area circle, not an ink scorch. Fix in a new view-only file `FightScorchArt` (fight_areas_art.gd
+  is 199 lines): a ragged soot blotch (18 points, tongues every third licking past the rim), a
+  darker char core, a broken ink edge (about half the sides), seven cinder specks past the rim;
+  shape from a hash of the patch centre (stable per patch, no RNG stream). The mini-nuke's ring
+  patch is untouched (gunplay-8's evidence). Hook held back until the running gates finish
+  (editing a script mid-run fails it).
+- 06:49 MEASURE gates on 47476501 (the run started before 4e11100b, a docs-only commit; log
+  `evidence/n10/evidence.log`): lint 13/13, unit 736/736, scenarios 29/29, parity bit-exact
+  (planted mutation caught at step 629). Selftest FAIL on the accent audit only (NEW off-doctrine
+  48 px/m vermilion on vehicles 8 px, 64 px/m vermilion on cop 28 px; look goldens 11/11, block 5/5,
+  world lock holds): the blood-edge flicker class of showcase REQUEST 7 (04:xx above: the audit
+  compares a full capture with a layer-hidden capture of a later frame; d5-city owns the fix). Not
+  one of this lane's four gates.
+- 06:50 ec17e8de FightScorchArt + hook (the 06:48 FINDING). First check-only failed on
+  `append()`'s discarded bool (warnings are errors): `@warning_ignore` as city_blood.gd does.
+- 06:53 9113de63 MILESTONE burnt ground stays: `FightScorch` (view state on GunFx, stepped in
+  GunFx.step, drawn first in GunFxArt.draw_under = under the bodies): when a patch leaves
+  FightAreas.patches its char stays 900 ticks, fades over 120, 24 marks max; ring patches (nuke)
+  leave none. The live char runs 0.7..1.0 strength and the burnt one starts at 0.7, so no pop.
+  Second look pass (city at 13 s): the first char was a flat grey stain, its edge invisible at half
+  strength -> splash-burn streaks out of the core + floor hatch + firmer edge (0.85, 3 px).
+- 06:59 46d87a70 FINDING from the 64 px/m pit close-up: on the dark pit floor the thin streaks and
+  long straight edge runs read as cracks / a spider web. Streaks are now flat ink wedges (broad
+  base to a point, mostly inside the blotch), the outline 26 points, two edges in five inked.
+  Looked at again at 12 s and 16 s: a jagged splash-burn star, dark on dark, no web.
+- 07:00 MILESTONE `MASTERS/n4/gunplay/molotov_scorch_ab_city_32ppm.mp4` (+ `.png`): before (city9,
+  flat disc, gone with the fire) vs after (city11_molotov, fresh on 46d87a70's look, 25 s, 0 script
+  errors) side by side, same sim (flames and bodies match at 9.2 s across the commits: view-only
+  change confirmed by eye). `camfight11_molotov/` 64 px/m pit close-up, 20 s, 0 script errors.
+  frames.json: the A/B pair + the close-up at 4-6; dropped the old unique kill sheet (superseded by
+  the fight-cam one), the stuck-shard still and the flank electro clip; 15 entries, all checked.
+- Unit 744/744 at 46d87a70 (`evidence/n10/unit-a.log`; 8 new tests in test_fight_scorch_art.gd and
+  test_fight_scorch.gd), lint 13/13 (hook). DECISION line in docs/decisions.md.
