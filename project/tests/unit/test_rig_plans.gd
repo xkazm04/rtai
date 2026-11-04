@@ -18,7 +18,8 @@ func test_human_plans_come_from_parts_json() -> void:
 		assert_gt(p.thigh_len, 100.0, "%s thigh" % p.name)
 		assert_gt(p.shin_len, 100.0, "%s shin" % p.name)
 		assert_gt(p.shoulder[BodyPlan.R].y, 40.0, "%s shoulder span" % p.name)
-		assert_almost_eq(p.thigh_len, p.thigh_draw * HumanPlan.LEG_K, 0.01)
+		var limb_k: float = HumanPlan.COP_LIMB_K if p.kind == BodyPlan.Kind.COP else 1.0
+		assert_almost_eq(p.thigh_len, p.thigh_draw * HumanPlan.LEG_K * limb_k, 0.01)
 		assert_false(p.limb_lod, "flat human limbs keep their own print")
 	assert_eq(HumanPlan.cop().shield_part, "shield")
 	assert_false(HumanPlan.ped().ready_stance, "civilians' arms hang")

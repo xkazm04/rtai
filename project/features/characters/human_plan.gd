@@ -6,11 +6,20 @@ extends RefCounted
 
 const LEG_K: float = 1.5
 const ARM_K: float = 1.15
+## n5-cast (2026-11-04, the owner: "cops ... closer to crowd in their default state"): one human
+## footprint. The cop art is drawn broader than the ped's (torso 288 vs 213 part px across), so
+## the cop scale drops 1.45 -> 1.0 (shoulder span 1.31 -> 0.90 m, the ped's 0.83 m) and the cop
+## limbs are lengthened by LIMB_K (= the ped's size_k / the cop's) to the ped's limb lengths:
+## the same height and stride, narrower everywhere. Back to the old cop: COP_SIZE_K 1.45 and
+## COP_LIMB_K 1.0. The ped is the footprint's one authority (PED_SIZE_K).
+const PED_SIZE_K: float = 1.25
+const COP_SIZE_K: float = 1.0
+const COP_LIMB_K: float = PED_SIZE_K / COP_SIZE_K
 
 
 static func cop() -> BodyPlan:
-	var p: BodyPlan = _human(BodyPlan.Kind.COP, "cop", "head_cap", 0.30)
-	p.size_k = 1.45
+	var p: BodyPlan = _human(BodyPlan.Kind.COP, "cop", "head_cap", 0.30, COP_LIMB_K)
+	p.size_k = COP_SIZE_K
 	p.gait_scale = 0.8
 	p.gun_arm = BodyPlan.R
 	p.gun_cell = "forearm_pistol"
@@ -21,14 +30,16 @@ static func cop() -> BodyPlan:
 
 
 static func ped() -> BodyPlan:
-	var p: BodyPlan = _human(BodyPlan.Kind.PED, "ped", "head_hair", 0.22)
-	p.size_k = 1.25
+	var p: BodyPlan = _human(BodyPlan.Kind.PED, "ped", "head_hair", 0.22, 1.0)
+	p.size_k = PED_SIZE_K
 	p.gait_scale = 0.72
 	p.ready_stance = false
 	return p
 
 
-static func _human(kind: BodyPlan.Kind, who: String, head: String, head_dx: float) -> BodyPlan:
+static func _human(
+	kind: BodyPlan.Kind, who: String, head: String, head_dx: float, limb_k: float
+) -> BodyPlan:
 	var lib: PartLibrary = PartLibrary.of(who)
 	var p: BodyPlan = BodyPlan.new()
 	p.kind = kind
@@ -41,27 +52,28 @@ static func _human(kind: BodyPlan.Kind, who: String, head: String, head_dx: floa
 	p.head_pos = Vector2(depth * head_dx, 0)
 	p.pelvis_pos = Vector2(-depth * 0.05, 0)
 	p.hip_y = lib.size("pelvis").y * 0.28
-	_legs(p, lib)
-	_arms(p, lib, tsz.y * 0.5 - tsz.y * 0.14, depth)
+	_legs(p, lib, limb_k)
+	_arms(p, lib, tsz.y * 0.5 - tsz.y * 0.14, depth, limb_k)
 	return p
 
 
-static func _legs(p: BodyPlan, lib: PartLibrary) -> void:
+static func _legs(p: BodyPlan, lib: PartLibrary, limb_k: float) -> void:
 	p.thigh_draw = lib.span("thigh")
-	p.thigh_len = p.thigh_draw * LEG_K
+	p.thigh_len = p.thigh_draw * LEG_K * limb_k
 	p.shin_draw = lib.span("shin")
-	p.shin_len = p.shin_draw * LEG_K
+	p.shin_len = p.shin_draw * LEG_K * limb_k
 	p.hip_z = (p.thigh_len + p.shin_len) * 0.86
 	p.foot_toeoff = PackedStringArray(["foot_toeoff", "foot_toeoff"])
 	p.foot_fwd = 10.0
 
 
-static func _arms(p: BodyPlan, lib: PartLibrary, sy: float, depth: float) -> void:
+static func _arms(p: BodyPlan, lib: PartLibrary, sy: float, depth: float, limb_k: float) -> void:
 	p.upper_draw = lib.span("upperarm")
-	p.upper_len = p.upper_draw * ARM_K
+	p.upper_len = p.upper_draw * ARM_K * limb_k
 	var fd: float = lib.span("forearm")
 	p.fore_draw = PackedFloat32Array([fd, fd])
-	p.fore_len = PackedFloat32Array([fd * ARM_K, fd * ARM_K])
+	var fl: float = fd * ARM_K * limb_k
+	p.fore_len = PackedFloat32Array([fl, fl])
 	p.shoulder = [Vector3(-depth * 0.06, -sy, 0), Vector3(-depth * 0.06, sy, 0)]
 	p.endon_upper = PackedStringArray(["upperarm_endon", "upperarm_endon"])
 	p.endon_fore = PackedStringArray(["forearm_endon", "forearm_endon"])
