@@ -18,8 +18,8 @@ const RING_PATCH_M: float = 4.0
 ## victim was never seen): from CLEAR_AFTER ticks after the kill, over CLEAR_RAMP ticks, a flame
 ## within CLEAR_M of the corpse shrinks, fades and is pushed off it: the fire opens round the
 ## body, so the char corpse reads inside a ring of flames.
-const CLEAR_AFTER: int = 45
-const CLEAR_RAMP: int = 30
+const CLEAR_AFTER: int = 6
+const CLEAR_RAMP: int = 18
 const CLEAR_M: float = 2.2
 ## How far a flame over a corpse is pushed out of its way (the fire opens round the body).
 const CLEAR_PUSH_M: float = 1.0

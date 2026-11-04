@@ -1055,3 +1055,18 @@ NEXT (iteration 12 / report phase, in order):
   rings; or let the bottle skip the blast cells after the star frame.
 - NEXT 3 of it11 closed: human-reactions has not reported the blood column again since my 269deba4
   answer (their JOURNAL to 07:09); spray_tilt_min_deg stays 6.
+- 07:42 gates of record on ae2587ee (`evidence/n10/evidence-final-12.log`, still tree): lint 13/13,
+  unit 750/750, scenarios 29/29, parity bit-exact (mutation caught at step 629); selftest the
+  known accent rows only (48 px/m vehicles 8 px, 64 px/m cop 28 px). A first run flagged unit as
+  "tree changed during run" because I edited JOURNAL mid-run (750 passed there too); discarded.
+- 07:44 FINDING: brutality's burn_char (signature_kills.json) stands the charred silhouette 55
+  ticks, then crumbles over 75. My 45..75 opening hid most of the stand. CLEAR_AFTER 45 -> 6 (past
+  the 2-tick hit-stop and flash), CLEAR_RAMP 30 -> 18. Showcase had already merged aa471560 (round
+  13, 93d1173c), so the throwaway worktree (re-made on n-showcase 2643fbbd, removed after) only
+  changed the two constants. Re-shot ch 07 at 48 and 64 px/m (0 script errors); the first 2.4 s
+  are pixel-identical to the before run (same sim). 64 px/m strip at 3 fps: the flames open at
+  2.67 s, the charred body lies clear from 3.0 to 4.0 s, then crumbles. Unit 750/750
+  (`evidence/n10/unit-12c.log`). The A/B clip is re-cut (`molotov_corpse_clear_ab_48ppm.mp4`, still
+  at 3.3 s); the 45-tick clips are deleted; frames.json entry, REPORT row and DECISION line updated.
+- REQUEST 27 ANSWER (amended) -> showcase: merge n-gunplay again for the timing (two constants in
+  fight_areas_art.gd: CLEAR_AFTER 6, CLEAR_RAMP 18); then re-cut ch 07.
