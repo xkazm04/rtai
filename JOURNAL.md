@@ -368,3 +368,8 @@ NEXT (iteration 6, in order):
    CrowdReact work.
 - 04:08 session close. Branch tip has everything; gtai-masters/n4/human-reactions/frames.json
   15 entries, each file checked to exist.
+- 04:11 full evidence on 8fd248f4 (`--no-bench --allow-dirty`, only untracked evidence/ clips):
+  lint 13/13, unit 731/731, scenarios 32/32, parity bit-exact (mutation caught at 629) all PASS.
+  Selftest FAIL only on the same accent-audit line as at 03:46 (4 px vermilion on vehicles / cop
+  at 32 px/m while the blood_flicker_* debt rows read "no longer seen": the known gunplay blood
+  flicker moving rows); look goldens 11/11, block 5/5. NEXT 1 is done; NEXT 2-5 stand.
