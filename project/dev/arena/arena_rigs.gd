@@ -13,6 +13,9 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 const FOCUS_AHEAD_M: float = 7.0
 ## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
+## The molotov's throw on Rivet's gun claw (rivet_plan: BodyPlan.L) as strike ticks: a 1-tick
+## wind-back, the whip out to full reach, a slow return (view only; the bottle left this tick).
+const THROW: Vector3i = Vector3i(1, 6, 18)
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -133,6 +136,9 @@ func _rivet_clips(f: RigFeed) -> void:
 		var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
 		f.clip_arg[0] = grip.kick if grip != null else 1.0
+		if grip != null and grip.id == &"thrown":  # the bottle leaves: the claw whips through
+			f.clip[0] = RigClips.Clip.STRIKE
+			f.clip_arg[0] = RigInput.pack_strike(THROW.x, THROW.y, THROW.z, BodyPlan.L)
 	_shots_seen = gun.shots_fired if gun != null else 0
 	var claws: bool = (pilot.melee.busy() and not pilot.wielding()) or pilot.shock.busy()
 	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):

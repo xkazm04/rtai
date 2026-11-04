@@ -14,6 +14,8 @@ const SWEEP_MIN: float = 0.35
 const GRIND_JUDDER: float = 0.07
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
+## Grip classes whose reload is not a magazine (the molotov's next bottle, the flamer's tank).
+const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
 
 var rigs: CharacterRigs = null
 var pilot: StagePilot = null
@@ -39,7 +41,8 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
-		_mag_view().feed(rig, rig.reload_k, arena.tick if arena != null else 0)
+		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
+		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0)
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
