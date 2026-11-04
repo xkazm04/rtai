@@ -461,3 +461,9 @@ NEXT (iteration 6, supersedes the list above):
   rays / 4 kills): claw burst, the rippled beam, cream pop ring + red spray, burnt ring, crumple.
   frames.json 15 (dropped the city shard clip; the shard is in the 64 px/m sequence + side-by-side).
   NEXT 1 is now: kill close-ups for plasma, shard and nuke.
+- 04:06 plasma kill close-up at 64 px/m (`arena_plasma_pit_64ppm/kill_closeup.png`, 7 bolts / 4 kills).
+  frames.json 15 (dropped the pistol range clip; the pistol stays in the four-gun side-by-side).
+  NEXT 1 is now: kill close-ups for the shard and the nuke only.
+- Session end 04:07: no Godot process of mine running (the four Godot PIDs in tasklist are other
+  lanes'), no lock held, scratch emptied. Gates of record unchanged since 605eae59 (docs/evidence only
+  after it, plus the nuke flash and station doc, both linted at commit).
