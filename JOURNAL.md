@@ -699,3 +699,39 @@ NEXT (iteration 10), in order:
 - Registry rules applied: motion-quality-gating (same deterministic tick before/after from --fixed-fps 60 captures;
   the frames differ only in the change), depth-ordered-layered-art (the shadow sits on the ground layer under the
   lifted bottle). No deviation.
+- Gates of record at 378590f3: scenarios 32/32 (`scenarios-it10.log`), unit 736/736, lint 13/13.
+- FRICTION 06:07 NEXT 3 (kinetic family at 48 px/m): the first capture on the city block (`--arena=city
+  --bot=arsenal`, no `--rigs`) drew Rivet as quest 1's sprite with NO gun in the claw; with `--rigs` the city
+  logs `cast rigs: false` on this branch (rivet-arsenal fixed both on theirs: c912aec2 rigs on the city path,
+  5cda9e7f rigs by default in the arena; not merged here). Both city runs thrown away. The molotov shadow A/B
+  above was shot on the sprite path, which is fine for a projectile (the shadow and bottle are WeaponFxArt, drawn
+  the same either way), but its Rivet is the sprite. Re-shot in the arena pit with `--rigs` (`cast rigs: true`).
+- MILESTONE 06:14 NEXT 3: kinetic family in a live pit fight at 48 px/m (`--rigs --start=pit --bot=arsenal
+  --loadout=pistol,machine_pistol,hand_cannon,gloria --clean`, `--fixed-fps 60`, `cast rigs: true`): clip
+  `it10-kinetic-family-carry-arena-pit-48ppm.mp4` (ticks 380-959, real time, the band names the carried slot by
+  the bot's 240-tick schedule; at 620 the hand cannon's burst toward the SWAT cop) + strip
+  `it10-kinetic-family-held-arena-pit-48ppm-2x.png` (two ticks per gun). Looked at. The bot mostly takes fire and
+  idles between waves after tick 790, so Rivet's own shots are few (rivet-arsenal's known bot flaw).
+- FINDING 06:15 (the weakest item now, mine): in the claw at 48 px/m the four kinetic guns print as the SAME dark
+  ink lozenge in a paper rim. They differ in length (pistol about 0.7 m, Gloria about 0.95 m), not in shape.
+  Cause: RivetHeldView (`rivet_held_view.gd:58`, rivet-arsenal's) gives the held sprite the rigs' PART print
+  material. Rivet's light steel prints light, but the guns' mid-tone rust brown collapses to near-black and takes
+  the inner shapes (feed box, drum, Gloria's bulb and coil) with it. This breaks design rule 2 ("the silhouette
+  identifies the weapon") in the claw, though not on the wall or the pickups (flat, at 64 px/m).
+- frames.json 15: it10 molotov clip + A/B first, then the it10 kinetic clip + strip, then it9/it8/it6. Dropped the
+  Gloria A/B still (its clip stays) and the ray lightning-vs-rings clip (the A/B/C still stays).
+
+NEXT (iteration 11), in order:
+1. Held-weapon tone in the print (FINDING 06:15): a tools/art pass that lifts each `held.png` (and `held_empty`,
+   the mags) into the print's light-steel band while keeping the ink lines and darkest accents (the grip tape, the
+   muzzle), so the PART material prints the gun's inner shapes the way it prints Rivet's arms. Bake it as a new
+   `held_print.png` with a `weapon_art.json` field (the old art stays the alternative, one value). Judge it as a
+   same-tick A/B with the it10 command above at 48 px/m (strip ticks 150/418/622/852) and at 32 px/m. Do not touch
+   rivet_held_view.gd (rivet-arsenal's); if a material change is needed instead, REQUEST it there.
+2. Re-film the kinetic clip on the city block once rivet-arsenal's c912aec2 (rigs on the city path) is in my
+   branch or main. `--arena=city` without `--rigs` draws quest 1's sprite with no gun.
+3. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): still unanswered.
+- Session close 06:18: 3 commits this iteration (378590f3 molotov shadow + 2 journal). Gates of record at
+  378590f3: lint 13/13 (674 files), unit 736/736 (`unit-it10b.log`), scenarios 32/32 (`scenarios-it10.log`).
+  Render only: no sim file, no replay or parity golden touched. No bench (render-only change). No Godot process of
+  mine left running. Scratch wa10 deleted after the evidence was copied to masters.
