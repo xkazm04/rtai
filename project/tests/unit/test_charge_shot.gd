@@ -106,3 +106,22 @@ func test_a_charged_bolt_lands_as_a_blast_a_plain_one_as_shock() -> void:
 			link.hold = 0
 	assert_gte(holds.size(), 2, "the plain bolt, then charged ones, landed")
 	assert_lt(holds[0], holds[1], "the charged bolt holds the play longer")
+
+
+func test_the_range_model_holds_the_charge_gun_and_the_charged_bolt_kills() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	var lane: RangeDrill.Lane = RangeDrill.Lane.new()
+	lane.weapon = &"electro_gun"
+	lane.distance_m = 5.0
+	lane.target_hp = table.target_hp[&"human"]
+	lane.target_radius_m = 0.3
+	lane.hold_charge = true
+	var res: RangeDrill.Result = RangeDrill.run(table, lane, RngRegistry.new(3).stream(&"t"))
+	assert_true(res.killed, "the TTK table sees the charged kill")
+	assert_eq(res.shots, 2, "the tap bolt stuns, the held charged bolt kills")
+	# planted: a gun without the charge column keeps the plain bolt's damage (no one-shot)
+	var plain: Trigger = Trigger.new(table.weapon(&"pistol"))
+	var sim: ProjectileSim = ProjectileSim.new(RngRegistry.new(3).stream(&"t"), table)
+	assert_true(plain.pull(true))
+	sim.fire(plain, Vector2.ZERO, Vector2(5.0, 0.0), Projectile.TEAM_PLAYER, 0)
+	assert_eq(sim.projectiles[0].damage, table.weapon(&"pistol").damage)

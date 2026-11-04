@@ -182,3 +182,21 @@ func test_a_homing_shard_stays_stuck_in_the_body_a_pistol_round_does_not() -> vo
 		if want == 1:
 			var v: Vector3 = fx.stuck_shards(g.id)[0]
 			assert_lt(Vector2(v.x, v.y).length(), g.radius_m, "stuck inside his outline")
+
+
+func test_a_round_a_riot_shield_stopped_sparks_instead_of_a_burst() -> void:
+	var arena: CombatArena = _arena(&"pistol")
+	var fx: GunFx = GunFx.new()
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	var blocked: Array[Vector2] = []
+	fx.shield_test = func(f: Fighter, dir: Vector2) -> bool:
+		blocked.append(dir)
+		return f == g
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 20)
+	assert_eq(fx.impacts.size(), 1)
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.METAL, "human-reactions REQUEST 3: the shield sparks")
+	assert_eq(blocked.size(), 1)
+	assert_gt(blocked[0].x, 0.9, "the test gets the round's travel direction")

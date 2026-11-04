@@ -28,15 +28,16 @@ func run() -> int:
 		[table.target_hp[&"human"], bodies.radius(&"human"), bodies.run_mps(&"human")],
 		"robot_still": [table.target_hp[&"robot"], bodies.radius(&"robot"), 0.0],
 	}
+	var rivet: Array = [100.0, bodies.radius(&"rivet_base"), RIVET_STRAFE_MPS]
 	for id: StringName in table.playable():
-		var rows: Dictionary = {}
-		for key: String in targets:
-			var spec: Array = targets[key]
-			rows[key] = _ranges(table, id, spec, false)
-		rows["enemy_vs_rivet_strafe"] = _ranges(
-			table, id, [100.0, bodies.radius(&"rivet_base"), RIVET_STRAFE_MPS], true
-		)
-		report["weapons"][String(id)] = rows
+		# a charge gun gets a second row held on for the charged round (`<id>:charged`)
+		for hold: bool in [false, true] if table.weapon(id).charge_ticks > 0 else [false]:
+			var rows: Dictionary = {}
+			for key: String in targets:
+				var spec: Array = targets[key]
+				rows[key] = _ranges(table, id, spec, false, hold)
+			rows["enemy_vs_rivet_strafe"] = _ranges(table, id, rivet, true, hold)
+			report["weapons"][String(id) + (":charged" if hold else "")] = rows
 		Log.info("gunplay", "ttk bench: %s done" % id)
 	var f: FileAccess = FileAccess.open(out_path, FileAccess.WRITE)
 	if f == null:
@@ -48,7 +49,9 @@ func run() -> int:
 	return 0
 
 
-func _ranges(table: WeaponTable, id: StringName, spec: Array, enemy: bool) -> Dictionary:
+func _ranges(
+	table: WeaponTable, id: StringName, spec: Array, enemy: bool, hold: bool
+) -> Dictionary:
 	var out: Dictionary = {}
 	for d: float in RANGES:
 		var lane: RangeDrill.Lane = RangeDrill.Lane.new()
@@ -58,6 +61,7 @@ func _ranges(table: WeaponTable, id: StringName, spec: Array, enemy: bool) -> Di
 		lane.target_radius_m = spec[1]
 		lane.strafe_mps = spec[2]
 		lane.enemy_shooter = enemy
+		lane.hold_charge = hold
 		out["%d" % int(d)] = _trials(table, lane)
 	return out
 

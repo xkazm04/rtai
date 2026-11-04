@@ -43,6 +43,8 @@ func fire(
 		var p: Projectile = Projectile.launch(w, muzzle, dir, team)
 		p.shooter_id = shooter_id
 		p.born_tick = tick
+		if trigger.charged:  # the held charge gun's round (GunHand: charge_damage)
+			p.damage = w.charge_damage
 		if w.kind == WeaponSpec.Kind.THROWN or w.kind == WeaponSpec.Kind.ROCKET:
 			# Bottles land and rockets burst at the aimed point (or the first body, for rockets).
 			p.left_m = minf(maxf(muzzle.distance_to(aim_point), 1.0), w.range_m)

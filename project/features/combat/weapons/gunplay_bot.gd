@@ -5,18 +5,23 @@ extends InputSource
 ## standing guard until inside `reach_m` (a share of the table row's range, never past 9 m, so a
 ## 48 or 64 px/m close-up following Rivet frames the impact), fires after a human's reaction
 ## time, and strafes across the guard's line. So the 7 m flamethrower gets into the flame. It
-## holds fire while a prop stands in the line (rockets would burst in its own cover).
+## holds fire while a prop stands in the line (rockets would burst in its own cover); blocked for
+## FLANK_AFTER ticks it commits to one side and closes in, so it rounds the cover instead of
+## rocking on the spot while a guard shoots over the crates.
 
 const STRAFE_TICKS: int = 45
 const REACT_TICKS: int = 30
 const REACH_SHARE: float = 0.75
 const MAX_REACH_M: float = 9.0
+const FLANK_AFTER: int = 30
 
 var stage: ArenaStage
 var actions: PlayerActions
 var reach_m: float = MAX_REACH_M
 var _next: int = 0
 var _in_range_since: int = -1
+var _blocked_since: int = -1
+var _flank: float = 1.0
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions, range_m: float) -> void:
@@ -48,6 +53,14 @@ func sample(tick: int) -> TickInput:
 	var approach: Vector2 = aim if not close else Vector2.ZERO
 	# a prop in the line: no shot into its own cover, a wider sidestep to find a lane
 	var strafe: float = 0.6 if lane else 1.0
+	if lane:
+		_blocked_since = -1
+	elif _blocked_since < 0:
+		_blocked_since = tick
+		_flank = side
+	if not lane and tick - _blocked_since >= FLANK_AFTER:
+		side = _flank  # one way round the cover, and in
+		approach = aim * 0.5
 	return _input(aim.orthogonal() * side * strafe + approach, aim, fire, to_foe.length())
 
 

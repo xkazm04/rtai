@@ -51,7 +51,9 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 		if c.distance_to(h.pos) <= h.radius_m + 0.3:
 			kind = GunFx.Hit.BODY if last[2] else GunFx.Hit.PLATING
 			at = c
-			if last[2] and arena.gun.trigger.spec.homing_rad_per_tick > 0.0:
+			if last[2] and _shielded(fx, h, hop):
+				kind = GunFx.Hit.METAL
+			elif last[2] and arena.gun.trigger.spec.homing_rad_per_tick > 0.0:
 				fx.stick(h, c, hop.normalized())
 			break
 	if kind == GunFx.Hit.GROUND:
@@ -64,6 +66,14 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 	fx.impacts.append(Vector4(at.x, at.y, float(code), float(tick)))
 	@warning_ignore("return_value_discarded")
 	fx.impact_dir.append(hop.normalized())
+
+
+## Human-reactions' riot shield took this round (GunFx.shield_test); a shard does not stick.
+static func _shielded(fx: GunFx, h: Fighter, hop: Vector2) -> bool:
+	if not fx.shield_test.is_valid():
+		return false
+	var hit: bool = fx.shield_test.call(h, hop.normalized())
+	return hit
 
 
 ## Rivet's rounds GunFx marks: bullets, and a ray (a bolt with no chain; the electro gun's chain
