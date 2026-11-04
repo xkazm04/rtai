@@ -49,7 +49,7 @@ The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 - **The Gatling:**
   - its housing prints grey and slimmer than the target's chunky tan body;
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the fireball is a flat orange ring rather than r2_w4's dark smoke with orange pockets. (Debris landed f0987078; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
+- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the smoke frame is a fire band inside dark smoke but not yet r2_w4's ragged orange pockets. (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
@@ -64,5 +64,5 @@ The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 ## Next steps
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL).
 - **Weapon art:** a chunkier tan Gatling housing (judge after the n5-cast merge: their warm-tan steel may carry it). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
-- **FX:** the blast's smoke ring toward r2_w4 (dark smoke with orange pockets).
+- **FX:** the blast's smoke ring from a clean band toward r2_w4's ragged orange pockets.
 - **Costs:** measure the frame cost under the bench lock.
