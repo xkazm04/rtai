@@ -32,7 +32,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png`.
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 17 chapters after the Gatling change.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 2b9f6b38 after the alley change.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
@@ -55,6 +55,7 @@ The last full evidence gate was green on 27c48341.
 - **Riso dial:** `world_riso.riso` at its default or lower (`print-3way-city-32ppm-it2.png`).
 - **FX colour vs ink:** `fx_colour_dir` (`fx-colour-reel-ab-32ppm.mp4`).
 - **Held size:** `held_size_ref` 1.2 vs off (`held-size-ab-cast-merge.png`).
+- **Alley value structure:** the light lane between dark mass (iteration 7) vs the dark lane between pale roofs (iteration 3); every fill is `alley_decor.json tones`, the old values in `tones.doc` (`alley-it7-ab-48ppm-vs-r2a6.png`).
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
