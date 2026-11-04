@@ -8,16 +8,17 @@ extends Node2D
 ## shape comes from the actor id's hash), never read by the sim (lane human-reactions).
 
 const NAME: StringName = &"Scorch"
-const SOOT: Color = Color(0.090, 0.075, 0.106, 0.5)
-const CORE: Color = Color(0.090, 0.075, 0.106, 0.32)
-const BURN: Color = Color(0.090, 0.075, 0.106, 0.5)
+const SOOT: Color = Color(0.090, 0.075, 0.106, 0.7)
+const CORE: Color = Color(0.090, 0.075, 0.106, 0.55)
+const BURN: Color = Color(0.090, 0.075, 0.106, 0.8)
 const SMOKE: Color = Color(0.80, 0.78, 0.72, 0.38)
+## Inked to read at 48 px/m (REQUEST 24b: 0.5 / 0.32 / 0.5 and 22 px burns did not show).
 ## The blot runs from FEET_PX past the feet to HEAD_PX past the head (part px), HALF_W across.
 const FEET_PX: float = 400.0
 const HEAD_PX: float = 280.0
 const HALF_W: float = 170.0
 const BURNS: int = 11
-const BURN_W: float = 22.0
+const BURN_W: float = 32.0
 const SMOKE_S: float = 2.4
 const Z: int = -20
 
@@ -92,7 +93,7 @@ func _burn(i: int, mid: float, half_l: float) -> PackedVector2Array:
 	var base: Vector2 = Vector2(mid + c.x * half_l * 0.85, c.y * HALF_W * 0.85) * _amount
 	var dir: Vector2 = Vector2(c.x / half_l, c.y / HALF_W).normalized()
 	var side: Vector2 = dir.orthogonal() * BURN_W * (0.7 + 0.6 * _n(i * 11))
-	var reach: float = (70.0 + 110.0 * _n(i * 5)) * _amount
+	var reach: float = (95.0 + 130.0 * _n(i * 5)) * _amount
 	var bend: Vector2 = dir.rotated((_n(i * 13) - 0.5) * 0.9)
 	var knee: Vector2 = base + dir * reach * 0.5
 	var tip: Vector2 = knee + bend * reach * 0.5
