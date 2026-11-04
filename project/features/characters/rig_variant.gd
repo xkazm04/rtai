@@ -6,6 +6,10 @@ extends RefCounted
 ## SimConst.CLIP_VARIANTS = 8), so the baked atlas and the full rigs agree on who wears what.
 
 const CROWD_COUNT: int = 8
+## Looks past the crowd cast: full rigs only (the arena pit, the reaction line, dev scenes). The
+## baked atlas has CROWD_COUNT rows, so atlas_look() prints these as their nearest crowd look.
+const SWAT: int = 8
+const LOOK_COUNT: int = 9
 
 var tag: String = ""
 var kind: BodyPlan.Kind = BodyPlan.Kind.PED
@@ -55,11 +59,25 @@ static func crowd(index: int) -> RigVariant:
 			return make(BodyPlan.Kind.COP, "patrol", "head_cap", "torso", false)
 		6:
 			return make(BodyPlan.Kind.COP, "riot", "head_helmet", "torso", true)
+		SWAT:  # weapon-art d9102db7: the dark helmet with a visor, the plate carrier
+			return make(BodyPlan.Kind.COP, "swat", "head_swat", "torso_swat", false)
 		_:
 			return _sleeved(
 				make(BodyPlan.Kind.PED, "overalls-bald", "head_bald", "torso_overalls", false),
 				"_grey"
 			)
+
+
+## The baked atlas row a look prints as at LOD 1 (the atlas holds the crowd cast only): SWAT
+## prints as the patrol cop (same body, a blue shirt) until the city bakes a ninth row.
+static func atlas_look(index: int) -> int:
+	return 5 if index == SWAT else clampi(index, 0, CROWD_COUNT - 1)
+
+
+## The pit's rifle squads (arena --rigs): patrol, riot and SWAT by actor id, no RNG draw.
+static func squad_index_for(actor_id: int) -> int:
+	var h: int = ((actor_id * 2654435761) >> 13) & 0x7FFFFFFF
+	return [5, 6, SWAT][h % 3]
 
 
 static func _sleeved(v: RigVariant, p_sleeve: String) -> RigVariant:

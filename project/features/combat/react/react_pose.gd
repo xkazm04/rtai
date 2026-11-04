@@ -13,7 +13,7 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			_flinch(r, rig, snap(k, 0.15), 1.0)
 		&"cover":
 			_flinch(r, rig, snap(k, 0.15), 0.5)
-			r.scl = Vector2.ONE * lerpf(1.0, 0.84, snap(k, 0.1))
+			r.scl = Vector2.ONE * lerpf(1.0, 0.78, snap(k, 0.1))
 		&"cower":
 			_cower(r, rig, k)
 		&"trip":

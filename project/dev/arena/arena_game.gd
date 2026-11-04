@@ -11,7 +11,8 @@ extends Node
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
-## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
+## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides
+## (--wide=<m> aims that far beside each, so every round is a near miss).
 ## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 ## Lane showcase: --riot makes each pit wave's first guard (from wave 2) a riot cop with a shield.
@@ -24,6 +25,8 @@ var px_per_m: float = 32.0
 var hud: ArenaHud = ArenaHud.new()
 var panel: ArenaPanel = ArenaPanel.new()
 var tuning: ArenaTuning = null
+## The cast rigs under --rigs (null without).
+var cast: ArenaRigs = null
 var _shot: String = ""
 var _shot_tick: int = 600
 var _telemetry: String = ""
@@ -69,17 +72,7 @@ func _ready() -> void:
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
 	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
-	if on_city and args.has("--crowd"):  # lane human-reactions: a fuller street for the crowd clips
-		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
-	if args.has("--armored"):  # lane human-reactions: pit humans live through hits (the limp)
-		var t: WeaponTable = WeaponTable.shipped()
-		var k: float = t.target_hp[&"armored"] / t.target_hp[&"human"]
-		session.stage.arena.tuning.human["hp"] = k
-		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
-		r.max_hp *= k
-		r.hp = r.max_hp
-	if args.has("--riot"):  # lane showcase: riot cops in the pit (armored hp, the shield look)
-		session.stage.pit.riot_hp = ArenaPit.armored_hp()
+	_dev_fight(args, on_city)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":
@@ -98,11 +91,28 @@ func _open(args: ArenaArgs) -> void:
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 		session.world.loop().set_input(bot)
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
-		session.world.loop().set_input(ReactLineBot.new(session.stage, session.actions))
+		var line: ReactLineBot = ReactLineBot.new(session.stage, session.actions)
+		line.wide_m = args.number("--wide", 0.0)  # aim beside each dummy: near misses
+		session.world.loop().set_input(line)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):
 			teleport(a)
+
+
+## Dev flags that dress the fight before the bot takes it: --crowd, --armored, --riot.
+func _dev_fight(args: ArenaArgs, on_city: bool) -> void:
+	if on_city and args.has("--crowd"):  # lane human-reactions: a fuller street for the crowd clips
+		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
+	if args.has("--armored"):  # lane human-reactions: pit humans live through hits (the limp)
+		var t: WeaponTable = WeaponTable.shipped()
+		var k: float = t.target_hp[&"armored"] / t.target_hp[&"human"]
+		session.stage.arena.tuning.human["hp"] = k
+		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
+		r.max_hp *= k
+		r.hp = r.max_hp
+	if args.has("--riot"):  # lane showcase: riot cops in the pit (armored hp, the shield look)
+		session.stage.pit.riot_hp = ArenaPit.armored_hp()
 
 
 ## Quest 1's view on the arena's floor; on the city its CityView and baked characters as well.
@@ -118,7 +128,6 @@ func _add_view() -> void:
 	add_child(view)
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
-	var cast: ArenaRigs = null
 	if ArenaArgs.parse().has("--rigs"):  # the cast rigs instead of quest 1's sprites (dev)
 		cast = ArenaRigs.new()
 		add_child(cast)
@@ -200,6 +209,12 @@ func _notification(what: int) -> void:
 	if leaving and _telemetry != "" and session != null:
 		@warning_ignore("return_value_discarded")
 		session.write_telemetry(_telemetry)
+	if leaving and cast != null and cast.react != null:  # human-reactions: the fight's reactions
+		var r: ReactLink = cast.react
+		Log.info(
+			"arena", "react: %d wounds, %d deaths, %d ducks" % [r.wounds, r.deaths, r.near.ducks]
+		)
+		cast = null
 	if leaving and _characters != null:  # lane human-reactions: the street's reactions, counted
 		var c: CrowdReact = _characters.crowd
 		Log.info("arena", "crowd: %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])

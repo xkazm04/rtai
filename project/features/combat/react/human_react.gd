@@ -124,15 +124,16 @@ func _rest() -> void:
 
 
 ## A hurt body between families: hunched, and on the bad leg's step (once a stride) it drops,
-## tips toward that side and the head bobs; standing, only the hunch.
+## tips toward that side and the head bobs; standing, only the hunch. Sized to read at 32 px/m
+## (part px: the step drops the body 6 world px, about the flinch's head snap).
 func _limp(rig: CutRig) -> void:
 	_rest()
 	if limp <= 0.0:
 		return
 	var step: float = maxf(0.0, sin(rig.phase * TAU)) if rig.vel_in.length_squared() > 1.0 else 0.0
 	var a: float = clampf(limp, 0.0, 1.0)
-	scl = Vector2.ONE * (1.0 - 0.05 * a - 0.1 * a * step)
-	rot = 0.08 * a + 0.16 * a * step
-	off = Vector2(-12.0 * a, 26.0 * a * step)
-	head_off = Vector2(18.0 * a, 22.0 * a * step)
-	head_rot = 0.2 * a * step
+	scl = Vector2.ONE * (1.0 - 0.06 * a - 0.14 * a * step)
+	rot = 0.1 * a + 0.34 * a * step
+	off = Vector2(-24.0 * a, 60.0 * a * step)
+	head_off = Vector2(30.0 * a, 48.0 * a * step)
+	head_rot = 0.4 * a * step

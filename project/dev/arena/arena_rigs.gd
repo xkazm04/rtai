@@ -13,6 +13,7 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 const FOCUS_AHEAD_M: float = 7.0
 ## The riot cop's look (RigVariant.crowd: the shield), worn by the pit's --riot guards.
 const RIOT_LOOK: int = 6
+const PATROL_LOOK: int = 5
 ## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
@@ -121,8 +122,15 @@ func _process(_delta: float) -> void:
 				crowd.extra_bodies[-1 - h.id] = h.pos * SimConst.PX_PER_M
 
 
+## human-reactions' patrol/riot/SWAT mix by actor id; under --riot the shield is worn only by
+## the pit's armored riot cops (the mix's other riot picks dress as patrol).
 func _pit_look(id: int) -> int:
-	return RIOT_LOOK if stage.pit != null and stage.pit.riot.has(id) else RigFeed.LOOK_AUTO
+	var squad: int = RigVariant.squad_index_for(id)
+	if stage.pit == null or stage.pit.riot_hp <= 0.0:
+		return squad
+	if stage.pit.riot.has(id):
+		return RIOT_LOOK
+	return PATROL_LOOK if squad == RIOT_LOOK else squad
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:

@@ -47,8 +47,10 @@ static func clip_table() -> PackedInt32Array:
 
 
 ## The cell for a look playing clip c at clip time t (s): looping clips wrap, hit and death hold
-## their last frame (the same rule as the city's CitySimClips.frame_of).
-static func cell_for(look: int, c: Clip, t: float) -> int:
+## their last frame (the same rule as the city's CitySimClips.frame_of). A look past the crowd
+## cast (RigVariant.SWAT) prints as its atlas_look.
+static func cell_for(p_look: int, c: Clip, t: float) -> int:
+	var look: int = RigVariant.atlas_look(p_look)
 	var n: int = FRAMES[c]
 	var f: int = int(t * FPS[c])
 	f = mini(f, n - 1) if c == Clip.HIT or c == Clip.DEATH else f % n
