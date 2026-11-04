@@ -106,3 +106,17 @@ func test_a_bottle_aimed_past_a_guard_lands_on_him() -> void:
 	_run(arena, 1, 50)
 	assert_not_null(arena.areas.effect(g), "the bottle found the guard under the aim line")
 	assert_gt(arena.areas.effect(g).burn_ticks, 0)
+
+
+func test_a_knocked_down_human_stays_held_while_he_rises() -> void:
+	var e: FighterFx = FighterFx.new()
+	e.down_ticks = 3
+	for i: int in 3:
+		e.tick_timers()
+	assert_eq(e.down_ticks, 0, "the lie is over")
+	assert_eq(e.rise_ticks, FighterFx.RISE_TICKS, "the rise opens as the lie ends")
+	for i: int in FighterFx.RISE_TICKS - 1:
+		e.tick_timers()
+	assert_true(e.holds(), "no shot from the half-sprawl")
+	e.tick_timers()
+	assert_false(e.holds(), "up: his brain is back")

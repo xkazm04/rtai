@@ -91,8 +91,7 @@ func step(arena: CombatArena) -> void:
 		var e: FighterFx = fx.get(h.id, null)
 		if e == null or not h.alive():
 			continue
-		e.stun_ticks = maxi(e.stun_ticks - 1, 0)
-		e.down_ticks = maxi(e.down_ticks - 1, 0)
+		e.tick_timers()
 		if e.burn_ticks > 0:
 			e.burn_ticks -= 1
 			_burn(arena, h, e)
