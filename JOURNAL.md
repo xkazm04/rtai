@@ -677,3 +677,25 @@ NEXT (iteration 10), in order:
   13/13 (674 files), unit 735/735 (`unit-it9d.log`), scenarios 32/32 (`scenarios-it9c.log`). Render + art + data
   only: no sim file, no replay or parity golden touched. No bench (render-only changes; bench.lock was held by
   another lane). Worktree clean except the evidence logs.
+
+## Iteration 10 (05:43 - 06:43)
+- 05:43 read: JOURNAL NEXT, git log, other lanes' JOURNALs. No new REQUEST to weapon-art. rivet-arsenal wired the
+  empty tube (b8d51a5b, HeldTube) and filmed it (`rivet-arsenal/frames/rocket-empty-tube-strip-64ppm.png`): looked
+  at it, the open inked mouth reads after the shot and the striped warhead returns at reload. NEXT 1 closed by them.
+- NEXT 5 closed with no change: the it9 true-scale sheet (`it9-round-cells-at-32ppm-cream-asphalt-3x.png`) already
+  holds the flame comet and the arc zigzag at 0.2 on cream and asphalt. Both read (vermilion comet; paper zigzag in
+  its ink ring).
+- FRICTION 05:45 the pit (`--start=pit --bot=gunplay --weapon=molotov`) never throws in 440 ticks: the cops line the
+  pit's north rim behind the wall, and the bot only draws an aim line at 438. The city block throws at tick ~404
+  (blast 438). The machine was at 0.6 fps per 1280 capture (CONTENDED); `--resolution 960x540` still writes 1280x800.
+- MILESTONE 05:59 molotov shadow (378590f3, NEXT 2 of it9): the bottle casts the shell's ink ellipse
+  (`WeaponFxShell.shadow`, now public, with an optional ink opacity) at `BOTTLE_SHADOW_K` 0.8 and 60 % ink,
+  shrinking at the apex. First try, 0.55 at the scorch's 35 % ink: it nearly vanished under the small bottle (26x12
+  px pale grey at the apex, A/B looked at); raised. A/B located by diffing before/after frames at the same tick
+  (they differ only in the shadow): `it10-molotov-shadow-ab-city-64ppm-2x.png` (ticks 398-416) + clip
+  `it10-molotov-shadow-ab-city-64ppm-halfspeed.mp4`. The shell keeps its judged 35 %.
+- DECISION weapon-art lob shadows: as above (docs/decisions.md). Alternative = the two constants.
+- Gates: lint 13/13 (674 files), unit 736/736 (`unit-it10b.log`). Render only: no sim file, no golden touched.
+- Registry rules applied: motion-quality-gating (same deterministic tick before/after from --fixed-fps 60 captures;
+  the frames differ only in the change), depth-ordered-layered-art (the shadow sits on the ground layer under the
+  lifted bottle). No deviation.
