@@ -88,6 +88,15 @@ func left_k() -> float:
 	return float(active_left) / float(maxi(1, table.row(active).duration_ticks))
 
 
+## Ends the running power by the player's own choice (GhostForms exits or switches); it cools down
+## as if it expired. True when a power was running.
+func release() -> bool:
+	if active == &"":
+		return false
+	_end(&"released")
+	return true
+
+
 func _end(reason: StringName) -> void:
 	var p: PowerDef = table.row(active)
 	var id: StringName = active

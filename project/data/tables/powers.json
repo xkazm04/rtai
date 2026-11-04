@@ -67,6 +67,35 @@
         "car"
       ],
       "madness_cost": 25
+    },
+    {
+      "action": "power_hauler",
+      "bark_off": "soul_kerf_off",
+      "bark_on": "soul_kerf_on",
+      "cooldown_s": 10,
+      "duration_s": 6,
+      "id": "kerf",
+      "interrupt_on": [
+        "car",
+        "knocked_down",
+        "stunned"
+      ],
+      "madness_cost": 20
+    },
+    {
+      "action": "power_hauler",
+      "bark_off": "soul_ohm_off",
+      "bark_on": "soul_ohm_on",
+      "cooldown_s": 14,
+      "duration_s": 8,
+      "id": "ohm",
+      "interrupt_on": [
+        "car",
+        "hit",
+        "knocked_down",
+        "stunned"
+      ],
+      "madness_cost": 20
     }
   ],
   "schema": "gtai.powers/1"
