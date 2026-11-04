@@ -664,8 +664,10 @@ NEXT (iteration 10), in order:
 1. rivet-arsenal wires `make_held(id, "empty")` (their REQUEST 11, delivered b98ae259). When it lands, film the
    rocket reload at 64 px/m: the tube goes empty at the shot and loads again in phase 2.
 2. DONE 05:37 (f255cffc) for the shell: an ink ellipse shadow that shrinks at the apex, A/B
-   `it9-nuke-shell-shadow-ab-64ppm.png`. Still open: the molotov bottle keeps the old dash; give it the same
-   ellipse (WeaponFxArt._bottle) and check it at 32 px/m.
+   `it9-nuke-shell-shadow-ab-64ppm.png`. Still open: the molotov bottle keeps the old dash. Tried at 05:41 (a public
+   `WeaponFxShell.draw_shadow` at k 0.6 called from `_bottle`) and reverted unjudged: at 32 px/m in the city the
+   bottle rides about 70 px above its shadow, so my crop missed it. Re-try with a crop that spans bottle and
+   ground, or judge it at 64 px/m in the pit (`--bot=gunplay --weapon=molotov --loadout=molotov --start=pit`).
 3. A 48 px/m clip of the kinetic family in one run (pistol, machine pistol, hand cannon, Gloria) via the arsenal
    switch bot, for the morning page's "weapons in motion" row.
 4. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): check their answer.
