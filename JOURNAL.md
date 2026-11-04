@@ -699,3 +699,6 @@ NEXT (iteration 10):
   commit, minus the `min_lob_m` line).
 - 06:24 session closed. Scratch renders of this iteration deleted (all kept clips are in masters
   or evidence/brutality); masters frames.json 15 entries. No Godot process of mine left running.
+6. (from 06:24) A capture now ends with "1 RID of type CanvasItem was leaked": the smear canvas
+   item of a KillGround that is never freed at quit (the arena already leaks ~465 ObjectDB
+   instances at exit). Free the smear RIDs from KillView's NOTIFICATION_PREDELETE / _exit_tree too.
