@@ -65,6 +65,8 @@ func _ready() -> void:
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
 	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	if on_city and args.has("--crowd"):  # lane human-reactions: a fuller street for the crowd clips
+		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":
