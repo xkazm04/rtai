@@ -99,8 +99,14 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 12. **The flamer hose sway** (0.14 rad / 52 ticks) vs none (`arena-flamer-sway-64ppm` vs `arena-flamethrower-tank-64ppm`).
 13. **The molotov's 14-tick wind-up** vs a throw on the press (`arena-molotov-windup-64ppm` vs `arena-molotov-throw-64ppm`).
 
+14. **Melee bodies overlap the art.** A cop in claw contact stands 1.2 m from Rivet. The drawn rigs are wider than the sim bodies (Rivet radius 0.6 vs about 0.84 drawn half-width; cop 0.45 vs about 0.64), so in a chainsaw grind the bodies overlap on screen. The options:
+    - accept it as a brawl read;
+    - grow the human sim radius toward the drawn size. That is a `combat.json` value and moves every lane's fights, so it is a Director call at the merge.
+
+    Clip: `arena-chainsaw-grind-64ppm`. A ring wide enough to clear the art (about 1.5 m) makes the claw whiff, so it was not taken.
+
 ## Open / known flaws
-- The claw cops still read crowded in the chainsaw grind at 64 px/m. There was no enemy-ai lane tonight, so this lane added a stand-off to its own station (d6618606): the cops keep 1.25 m from Rivet and 1.0 m apart, and a cop just hit is not moved. A drawn cop is about 1.27 m across, so they still overlap. A 1.3 m spacing would fix the look, but it costs scenario_rivet_chainsaw a kill, so it was not taken.
+- The claw cops still read crowded in the chainsaw grind at 64 px/m. There was no enemy-ai lane tonight, so this lane added a stand-off to its own station (d6618606): the cops keep 1.25 m from Rivet and 1.0 m apart, and a cop just hit is not moved. The drawn rigs are wider than the sim bodies, so in contact they still overlap (call 14). scenario_rivet_chainsaw's ">= 3 kills" bar is met only because two hp-4 cops stand stacked and one grind kills both. A wider spacing separates them and drops the count to 2. The bar was left unchanged.
 - At 64 px/m quest 1's dialogue box covers the lower third. The dev fight cam (`quest1_clip.gd --cam=fight`) now lifts the framed point above it (a67bff25).
 - No boss rig: quest 1's boss, Mertz, keeps the cast view's drawing under `--rigs`.
 - Display latency (swapchain + monitor) is UNMEASURED.
