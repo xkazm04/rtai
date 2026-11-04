@@ -21,7 +21,7 @@ const PLANK_HEAD_PX: float = 70.0
 const PLANK_TILT: float = 0.3
 ## The robot's power-down: how dark the paint goes (HumanReact's char tint) and how far the
 ## knees give (c_tuck) before it pitches forward (c_sprawl).
-const ROBOT_DIM: float = 0.45
+const ROBOT_DIM: float = 0.7
 const ROBOT_KNEES: float = 0.5
 const ROBOT_LIE: float = 0.8
 

@@ -11,7 +11,8 @@ Paths below are relative to the masters folder unless they start with `evidence/
   blood. `death_robot` is outside `death_map` and the signature hooks, so no human can ever play it. Dev pit only (the
   live `CombatArena` has no robot fighter). Clips: `robot_powerdown_48ppm.mp4` (follow camera), `robot_powerdown_64ppm.mp4`
   + `_64ppm_sheet.png`, `robot_powerdown_32ppm.mp4`; death frame 138 at every zoom. Honest read: at 48 px/m the thug is
-  weapon-art's ink mass, so the fall reads by silhouette (crouch, then a flat X); the "lights out" darkening shows at 64.
+  weapon-art's ink mass, so the fall reads by silhouette (crouch, then a flat X); the plates go dark and the pale
+  optic goes out at every zoom (dim 0.7; 0.45 was filmed first and left the optic lit at 32 px/m).
   The oil spray from six hits is busy.
 - **Knockdown: no shot from the floor** (`e41fb9c6`, gunplay `83429487` cherry-picked, `FighterFx.RISE_TICKS` 29):
   re-filmed `pit_knockdown_rise29_48ppm.mp4` (follows Rivet) and `_64ppm.mp4` + `_64ppm_sheet.png`. The guard is blown

@@ -1032,3 +1032,8 @@ riot p99 bench).
   at 936); no shot from the half-sprawl. Death frame 962 as before. 48 px/m follows Rivet, the
   guard alone 6+ m from the second guard. frames.json: these replace pit_knockdown_getup_32 and
   _64 (kept as `before`). 15 entries, 0 missing.
+- Polish: `DeathPose.ROBOT_DIM` 0.45 -> 0.7. Filmed both (scratch, 32 and 48 px/m at frame 200):
+  at 0.45 the thug's pale optic stayed lit at 32 px/m (the corpse read as alive); at 0.7 the optic
+  goes out and the cream rim still holds the silhouette. Corrected my decision line: the earlier
+  "0.7 sank into the asphalt" was written before filming it (wrong; now measured). Re-rendered
+  robot_powerdown_{32,48,64}ppm.mp4 + sheets at 0.7 (death frame 138 again). Unit 754/754.
