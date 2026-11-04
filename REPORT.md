@@ -28,6 +28,8 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - The art was generated from text plus a non-gun style reference, because moderation blocks gun edits.
    - It is in the armory, the weapon wall and `--weapon=gatling`.
    - Evidence: `gatling-128ppm-vs-r1w6.png`, `gatling-range-32ppm.mp4` (mean TTK 0.25 s over 13), `gatling-pit-32ppm.mp4` (3 waves, 8 kills, 0 deaths), `gatling-belt-tracer-ab-128ppm.png`.
+8. **Pickups lie inside a dashed paper loot ring** over a faint wash, as in r2_w8, instead of an opaque paper disc. `--pickup-disc=on` brings the disc back for A/B.
+   - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png`.
 7. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
 **Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 17 chapters after the Gatling change.
@@ -40,7 +42,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 The last full evidence gate was green on 27c48341.
 
 ## What doesn't (yet)
-- **Pickups:** they don't yet follow r2_w8.
+- **Pickups:** the ring now follows r2_w8 (see item 8 above); the side views themselves don't yet.
 - **Held parts:** in design they are close to r1_w1-w3 (the hand cannon's cylinder, the SMG's feed box, the pistol's slide); only the tone differs, rust-tan against gunmetal.
 - **The Gatling:**
   - its housing prints grey and slimmer than the target's chunky tan body;
@@ -53,6 +55,7 @@ The last full evidence gate was green on 27c48341.
 - **Riso dial:** `world_riso.riso` at its default or lower (`print-3way-city-32ppm-it2.png`).
 - **FX colour vs ink:** `fx_colour_dir` (`fx-colour-reel-ab-32ppm.mp4`).
 - **Held size:** `held_size_ref` 1.2 vs off (`held-size-ab-cast-merge.png`).
+- **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-range-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
 ## Next steps
