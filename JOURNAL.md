@@ -232,3 +232,11 @@ NEXT (iteration 4, in order):
   NOT seen in a clip yet: the one check render (pistol pit, 11 s) had no cop firing in its window.
   First thing next iteration: a pit clip at 48 px/m with the cops' flash in frame.
 - gun_fx.gd is 201 lines (soft 200): next GunFx change splits the enemy part out.
+- 02:41 Verified in a clip: the cops' muzzle star shows at their gun on every round of the locked
+  burst (`MASTERS/n4/gunplay/arena_cop_fire_48ppm/cop_burst_sequence.png`, row 1), then Rivet's rounds
+  land with the hit flash and red spray. Their shells are too small to read at 48 px/m.
+- Session end: no Godot processes of mine running, no bench.lock held, scratch renders deleted
+  (only clips referenced in frames.json kept under MASTERS/n4/gunplay).
+NEXT (iteration 4): items 2-5 of the NEXT list above (Rivet's hit flash call, the vertical blood
+streak, a clustered electro chain clip, then the unique five starting with the plasma rifle); split
+the enemy part out of gun_fx.gd (201 lines) first if GunFx grows.
