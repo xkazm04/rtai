@@ -51,6 +51,7 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab.hold_ticks = row.hitstop_ticks + row.grind_ticks if row != null else 0
 	_lab.spread = row != null and row.style == &"dissolve"
 	_lab.pack = row != null and row.style == &"vaporise"
+	_lab.claw = PlayerShock.shipped() if weapon == PlayerShock.WEAPON else null
 	var solo: String = ArenaArgs.parse().text("--sig-solo")
 	if solo == "start":  # Rivet's own start (the city block, where arena points mean nothing)
 		_lab.solo = stage.plan.rivet_start
