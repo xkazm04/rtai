@@ -82,10 +82,24 @@ func _latch_wheel(event: InputEventMouseButton) -> void:
 			_latched |= 1 << actions.bits[action]
 
 
-## The cursor's distance from Rivet in metres while the mouse aims (0 with the pad or no scale).
+## The cursor's distance from Rivet in metres while the mouse aims; with the pad, how far the right
+## stick is pushed (0 with no scale or a released stick).
 func _reach_m() -> float:
+	var stick: Vector2 = Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
+	if stick.length() >= actions.stick_deadzone:
+		return stick_reach_m(stick.length(), actions)
 	var from: Vector2 = origin_px.call()
 	var ppm: float = px_per_m.call()
 	if not mouse_aims or viewport == null or from == Vector2.INF or ppm <= 0.0:
 		return 0.0
 	return viewport.get_mouse_position().distance_to(from) / ppm
+
+
+## Lane gunplay: a pad throws by how far the right stick is pushed: just past the deadzone lands
+## one reach step out, a full push the fixed aim_range_m lob (so a pad player who flicks the
+## stick all the way throws as before). 0 when the reach bits are off.
+static func stick_reach_m(deflection: float, a: PlayerActions) -> float:
+	if a.aim_reach_step_m <= 0.0:
+		return 0.0
+	var t: float = clampf((deflection - a.stick_deadzone) / (1.0 - a.stick_deadzone), 0.0, 1.0)
+	return lerpf(a.aim_reach_step_m, a.aim_range_m, t)

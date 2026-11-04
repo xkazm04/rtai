@@ -1,0 +1,72 @@
+extends Scenario
+## rivet-arsenal: the arsenal's fight on the city proving block (--arena=city --bot=arsenal). On
+## the 12 m city a pit guard holds behind a kerb car or a corner; the bot then walks straight at
+## him after stuck_ticks in reach without a shot, so the block's fight keeps moving. With a pistol
+## it must reach the third wave and drop five guards in 40 s, and the run replays identical
+## (SIM-05). TST-05: a planted fault (stuck_ticks never runs out) must stall in the first wave.
+
+const LIMIT_TICKS: int = 40 * SimClock.TICK_RATE
+const LOADOUT: Array[StringName] = [&"pistol"]
+const EVIDENCE_FILE: String = "rivet-city-fight-telemetry.json"
+const MIN_WAVE: int = 3
+const MIN_KILLS: int = 5
+
+
+func run(_tree: SceneTree) -> String:
+	var s: ArenaSession = _open(Events, Data)
+	s.world.loop().set_input(ArenaArsenalBot.new(s.stage, s.actions))
+	s.world.loop().start_recording()
+	var tel: Dictionary = _play(s)
+	var log: ReplayLog = s.world.loop().finish_recording()
+	s.world.free()
+	@warning_ignore("return_value_discarded")
+	write_evidence(EVIDENCE_FILE, tel)
+	if tel["wave"] < MIN_WAVE or tel["kills"] < MIN_KILLS:
+		return "the city fight stalled: %s" % tel
+	var divergence: String = _replay(log)
+	return divergence if divergence != "" else _planted()
+
+
+static func _open(bus: EventBus, data: DataStore) -> ArenaSession:
+	var s: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, true)
+	for h: ArenaHook in s.stage.hooks:
+		if h is ArenaArsenal:
+			@warning_ignore("return_value_discarded")
+			(h as ArenaArsenal).arm(LOADOUT, true)
+	return s
+
+
+static func _play(s: ArenaSession) -> Dictionary:
+	while s.tick() < LIMIT_TICKS:
+		s.step()
+	return {"wave": s.stage.pit.wave, "kills": s.stage.pit.kills, "ticks": s.tick()}
+
+
+func _replay(log: ReplayLog) -> String:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var again: ArenaSession = _open(bus, data)
+	var divergence: String = again.world.verify_replay(log)
+	again.world.free()
+	bus.free()
+	data.free()
+	return "" if divergence == "" else "city fight replay diverged: %s" % divergence
+
+
+func _planted() -> String:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var s: ArenaSession = _open(bus, data)
+	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
+	bot.stuck_ticks = LIMIT_TICKS * 2
+	s.world.loop().set_input(bot)
+	var tel: Dictionary = _play(s)
+	s.world.free()
+	bus.free()
+	data.free()
+	if tel["wave"] >= MIN_WAVE:
+		return (
+			"planted fault not caught: a bot that never closes in still reached wave %d"
+			% tel["wave"]
+		)
+	return ""

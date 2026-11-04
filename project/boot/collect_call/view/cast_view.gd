@@ -36,7 +36,7 @@ var port: CollectCallWorld
 ## figure (null in quest 1 until a gun is wired).
 var hit_link: HitLink = null
 ## rivet-arsenal (dev --rigs in quest 1): the cast rigs draw Rivet and the fighters, so this view
-## keeps only the allies, the patrol, the hiding peek and the Hauler's marks.
+## keeps only the allies, the patrol, the boss (no boss rig yet) and the Hauler's marks.
 var fighters_on_rigs: bool = false
 
 
@@ -53,6 +53,9 @@ func _draw() -> void:
 		for p: Vector2 in stage.patrol_pos:
 			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
 	if fighters_on_rigs:
+		for h: Fighter in stage.arena.hostiles:
+			if h.kind == Fighter.Kind.BOSS:
+				_mertz(h)
 		if stage.hidden_in == "":
 			_hauler_marks()
 		return

@@ -106,6 +106,8 @@ func _process(_delta: float) -> void:
 	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
+		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
+			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
 		if hidden.has(h.id):
 			continue
 		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
