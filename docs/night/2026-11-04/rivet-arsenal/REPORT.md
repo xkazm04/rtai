@@ -16,8 +16,8 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 | Gate | Result | Where |
 |---|---|---|
 | lint | 13/13 (717 files) | 37dbfeab and c55b6984 (the last code change: the bot slides round props; the rivet scenarios 9/9 on it, `E/it10d-rivet-scenarios.log`; no other scenario or unit test drives that bot) |
-| unit | 814/814, exit 0 | 37dbfeab, `E/it10b-unit.log` |
-| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 37dbfeab, `E/it10b-scenarios.log` |
+| unit | 814/814, exit 0 | 8a1537df (the branch tip's code), `E/it10e-unit.log` |
+| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 8a1537df, `E/it10e-scenarios.log` |
 | evidence run | lint, unit 814, parity bit-exact (mutation caught at step 629) PASS. Scenarios 36/37 in that run: scenario_rivet_deflect failed because the run overlapped the bot edit; it was fixed in 37dbfeab and passes in the scenario row above. The selftest has look goldens 11/11 and block 5/5, but exits 1 on the accent audit: the known blood-flicker vermilion class, the same findings as on n-gunplay (gunplay's) | 4cc6e8a0, `E/it10-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
