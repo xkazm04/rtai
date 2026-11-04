@@ -606,3 +606,51 @@ read as lightning). No deviation.
 - Gates on the bot change: unit 723/724 under load (the known test_noir_shadows flake), re-run
   724/724 (`evidence/n7/noir-shadows-alone.log`, gut ran the whole suite); scenarios 29/29
   (`scenarios-e.log`).
+- 05:12 NEXT 2 (hand cannon close-up on the bubble fix) re-shot: `arena_hand_cannon_kill_64ppm/
+  kill_closeup.png` (3 rounds, 3 kills): the cop's burst, the flare + heavy tracer, the hit, his
+  blood, and his body stays after Rivet turns away. frames.json points at it (before = the it5 one).
+  The victim still sits at the frame's top edge: REQUEST 3 (it5, victim camera) stands.
+- FINDING in that clip: Rivet flashes vermilion all over when a round hits him (another lane's
+  merge carries a whole-body hit tint): my it5 REQUEST 1 to human-reactions looks answered in
+  part; a flinch of Rivet's rig is still not there (rig views are ArenaRigs / CityCharacters, not
+  this lane's; cast_view's HitLink lean is only wired in dev/gunplay/pistol_fight).
+- 05:16 89c5fac9 brutality REQUEST 13 (second ask) DONE: homing shards stay stuck in the body
+  (GunFx.stuck, at most 4 per fighter id; `GunFx.stuck_shards(id) -> Array[Vector3(off.x, off.y,
+  flight angle)]`, offset from Fighter.pos in m); FightShardArt draws the crystal's back half
+  standing out of the corpse. `arena_shard_stuck_64ppm/stuck_closeup.png` (looked at: the crystal
+  stands out of the chest on the side the swarm came from). Unit 725/725 (`evidence/n7/unit-f.log`).
+- Bench: skipped this iteration (bench.lock held by another lane since 05:05, under 20 minutes).
+- Answers posted here for the other lanes (they read this JOURNAL):
+  - -> brutality: REQUEST 11 answered by 5b51da41 (it6); REQUEST 12 DONE 0c0465fd (hold fire on the
+    electro gun: kill_landed weapon electro_gun from one charged bolt; a tap still only stuns);
+    REQUEST 13 DONE a1eb709f (ring patch) + 89c5fac9 (stuck shards: read GunFx.stuck_shards(id)
+    from the FxView's GunFx; the list lives as long as the GunFx).
+  - -> rivet-arsenal: REQUEST 12 DONE b48ec24a (StagePilot side included): PlayerCommand.aim_m is
+    the cursor's distance; pass a reach to pack_aim (third arg) from ArenaArsenalBot to throw short.
+  - -> showcase: REQUEST 18 DONE, REQUEST 19 DONE (a1eb709f).
+- 05:17 18cbcebe sound hooks per weapon: weapons.json `shot_cue` (every gun names an existing
+  audio_cues.json cue; test_charge_shot checks they exist), StageAudio plays it per round (shared
+  file features/audio/stage_audio.gd: two small hunks, logged here); the charge-up cues
+  `tazer_charge`. Placeholder mapping on tonight's cues, no new assets.
+- Gates of record at 18cbcebe: lint 13/13, unit 726/726 (`evidence/n7/unit-g.log`), scenarios
+  29/29 (`evidence/n7/scenarios-g.log`). Parity not re-run: no native or city-sim file changed
+  this iteration (last bit-exact run it5, `evidence/n4/parity-l.log`). Bench skipped (lock held).
+
+## Calls for the owner (iteration 7 additions, REPORT draft)
+- gunplay-7: electro charged shot = held trigger auto-fires at full charge (default; clip
+  arena_electro_charge_64ppm) vs release-to-fire. One value each: `charge_s` (0.6), `charge_damage`
+  (150; absent = the old two-bolt gun).
+- gunplay-8: the mini-nuke's fire burns as a ring round the rim (default, ground zero reads burnt
+  out; arena_nuke_ring_32ppm) vs a full 6 m disc (city_nuke_block_32ppm). One value: RING_PATCH_M.
+- gunplay-9: a thrown weapon lands at the mouse cursor (default; 1.2 m steps, up to 18 m) vs the
+  fixed 14 m lob. One value: input_actions.json aim.aim_reach_step_m (0 = the fixed lob).
+
+NEXT (iteration 8, in order):
+1. A pad reach for thrown weapons (the right stick's deflection -> aim_m) and quest 1's
+   LiveInput.px_per_m (when quest 1 gets a GunHand).
+2. A heavier hit-feel for a charged bolt (needs the charged flag on CombatArena.struck: a shared
+   signal; or HitLink reading the shot) and the charged bolt in the side-by-side reel.
+3. Rivet's own flinch on his rig (the tint is in from another lane): REQUEST to rivet-motion /
+   human-reactions with HitLink.lean as the source, or build it in ArenaRigs if nobody takes it.
+4. Idle riot bench of record under the lock on a quiet machine.
+5. REQUEST 3 (it5, victim camera) still open: the kill close-ups crop on the frame edge.
