@@ -733,3 +733,31 @@ NEXT (iteration 8, supersedes the list above):
   the electro row's damage on humans.
 - gunplay-11: a pad throws by stick deflection, full push = the old 14 m lob (default) vs full
   push = the 18 m bit maximum. One value in LiveInput.stick_reach_m (aim_range_m -> REACH_MAX steps).
+- 05:55 4e737ba1 FINDING + fix (weakest item: the live clips go quiet): in the 25 s pit clips the
+  bot stopped shooting after ~13 s while a guard stood behind the crate row firing over it: no lane,
+  so it held fire and rocked left-right on the spot (the strafe flips every 45 ticks). Now, blocked
+  for FLANK_AFTER 30 ticks, it keeps one side and closes in (half the aim). Same seed, 48 px/m,
+  25 s: pistol shots 4 -> 9, kills 4 -> 8; machine pistol 17 -> 34, 4 -> 8; electro gun 2 -> 5 kills
+  (tap stun + held charge); Rivet 0 deaths in all (`MASTERS/n4/gunplay/flank9_<gun>/`). Looked at
+  the pistol and electro strips: Rivet walks round the crates into wave 3. Dev bot only (no
+  scenario uses GunplayBot). This also answers human-reactions' "the arena bot's electro gun kills
+  1 cop in 45 s" once they carry 0c0465fd (charge) + 4e737ba1 (flank).
+- frames.json: 15 entries (new: the six-gun pit reel + still, the city four-gun reel, the flank
+  electro clip; dropped the oldest four, files stay).
+- Gates of record at 4e737ba1: lint 13/13 (pre-commit hook on every commit), unit 730/730
+  (`evidence/n8/unit-d.log`), scenarios 29/29 (`evidence/n8/scenarios-d.log`). Parity not re-run: no
+  native or city-sim file changed this iteration (last bit-exact run it5, `evidence/n4/parity-l.log`).
+  Bench: taken and released this iteration (05:30-05:40), numbers above.
+- Session end ~06:00: every Godot run of mine was foreground or a finished background job and
+  exited; bench.lock released by the bench job; no image.lock taken. Scratch holds only cap.sh,
+  city.sh, reel.sh, grid.py and sheet.py.
+
+NEXT (iteration 10, in order):
+1. Owner calls gunplay-10 (electro taps lethal on humans) and gunplay-11 (pad full push) as
+   REPORT entries; build nothing until the owner answers (both are one value).
+2. A 64 px/m close-up of the charged electro bolt killing on the city block (the city charge
+   sequence is 32 px/m only).
+3. The idle riot bench of record on a quiet machine (the Director's at the merge otherwise).
+4. REQUEST 3 (it5, victim camera) still open for the arena owner / showcase.
+5. Re-cut the six-gun pit reel on longer windows once the flank bot fights all waves (the
+   current windows sit before the first blocked lane, so they are unchanged by 4e737ba1).
