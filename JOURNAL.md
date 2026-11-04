@@ -945,3 +945,6 @@ NEXT:
 2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
    under the patch stars) stay open; check both on the merged main.
 3. The age-96 stall: measure windowed under bench.lock; calls for the owner unchanged (brutality-ray-cap).
+- GATES 08:22 on 63cc3ce1 (private APPDATA, CONTENDED): scenarios 35/35, 0 script errors
+  (evidence/brutality/scenarios-it13.log). Parity and bench not run (render-only change). Session
+  closed 08:23; no Godot process of mine running; scratch capture moved to masters.
