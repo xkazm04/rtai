@@ -1158,3 +1158,21 @@ NEXT (replaces the list above):
   KillCharFx (gunplay maps the payload to weapon `burn`), so it gets the rim with no own change.
 - 09:40 `node tools/evidence/run.mjs --no-bench` started on 5c1ea8a9 (clean tree); no capture of
   mine runs alongside it (the rig_stress budget flaked under my last capture).
+- GATES 09:44 `node tools/evidence/run.mjs --no-bench` on 5c1ea8a9 (CONTENDED, nothing of mine
+  alongside): lint 13/13, unit 790/790, scenarios 35/35, parity bit for bit (planted caught at 629),
+  selftest FAIL on accent rows only (look goldens 11/11 worst 1.54, block 5/5 worst 0.71; NEW
+  off-doctrine: 48 px/m vermilion on vehicles 12 px, blood on vehicles 4 px, 64 px/m vermilion on
+  vehicles 4 px / on a cop 40 px). evidence/brutality/evidence-run-it19.log.
+- FIX 09:48 (5e37b57c) the 32 px/m check of the burn rim failed: a fixed 1.6 px rim covers most of
+  a ~20 px body and the corpse read pale, not charred (top row of
+  evidence/brutality/burn-rim-32ppm-before-after-scale-it19.png). The rim now scales with the zoom
+  (RIM_PX_64 1.6 * ppm / 64: 1.2 at 48, 0.8 at 32; bottom row: dark char, thin ash edge). The 64 px/m
+  clip is unchanged by this; the 48 px/m clip and the reel's flame chapter were re-filmed / re-spliced
+  on 5e37b57c (looked at the strip and a reel frame at 17 s).
+- GATES 09:52 evidence run on 5e37b57c: the same as above (lint, unit 790/790, scenarios 35/35,
+  parity bit for bit; selftest the same accent rows, pixel counts identical).
+  evidence/brutality/evidence-run-it19b.log.
+- CHECKED 09:53 the selftest accent rows are not mine: selftest alone on 88ff881d (throwaway
+  worktree, removed) fails with the identical rows and pixel counts
+  (evidence/brutality/selftest-88ff881d-baseline-it19.log). Showcase's merged main passes selftest
+  (their JOURNAL, r16+), so the debt rows there are newer than this branch's.

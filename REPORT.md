@@ -1,6 +1,6 @@
 # REPORT: night lane `brutality` (2026-11-04, 01:xx-08:40, updated for the 09:00-11:00 extension)
 
-Branch `n-brutality`, head of record `b03f04ac` (code; `88ff881d` at 09:20, `63cc3ce1` at 08:40) + docs commits. Evidence in two places:
+Branch `n-brutality`, head of record `5e37b57c` (code; `88ff881d` at 09:20, `63cc3ce1` at 08:40) + docs commits. Evidence in two places:
 `M` = `C:\Users\kazda\kiro\gtai-masters\n4\brutality\` (clips, frames, `frames.json`, 15 entries)
 and `E` = `evidence/brutality/` in this worktree (logs, telemetry, sheets). What changed after
 09:00 is collected under **After 09:00** and **After 09:20** at the end. All performance numbers
@@ -158,7 +158,9 @@ were last run on `59429978`.
   patch, gunplay's `burn`) used to fade to a dark smudge on the dark pit floor and night paving. The
   char print now draws a light ash rim (#CCC1B2, 1.6 screen px at any zoom via `fwidth(UV)`) around
   each part, so the head, shoulders and arms read until the crumble. The mini-nuke's shadow keeps no
-  rim (second material, `rim_px` 0). Before/after: `E/burn-rim-before-after-it19.png`. Clips:
+  rim (second material, `rim_px` 0). The rim scales with the zoom (`5e37b57c`: 1.6 px at 64 px/m,
+  1.2 at 48, 0.8 at 32; a fixed 1.6 px made the corpse read pale at 32 px/m,
+  `E/burn-rim-32ppm-before-after-scale-it19.png`). Before/after: `E/burn-rim-before-after-it19.png`. Clips:
   `M/clips/flame-char-rim-city-64ppm-slow-0.4x-it19.mp4`, `M/clips/flame-char-rim-city-48ppm-10s-it19.mp4`.
 - **Ray-gun lock and timing (showcase's "small and quick at 48 px/m"), `b03f04ac`:** the lock was
   0.2 s with a faint arc, and the kill was over in ~1.2 s. Now a pulsing hot cream wash and rim sit
@@ -170,9 +172,13 @@ were last run on `59429978`.
   Owner call (one data value): the ray lock `stand_ticks` 30 (default) or 12 (the snappier old beat).
 - **City reel re-cut:** `M/clips/city-reel-all-11-kills-clean-48ppm-it19.mp4` (80 s, frames.json entry 1):
   the flamethrower and ray-gun chapters are the it19 takes; the other nine are unchanged.
-- **Gates on `b03f04ac`** (private APPDATA, CONTENDED): lint 13/13, unit 790/790 (`E/unit-it19b.log`),
-  scenarios 34/35. The red one is `scenario_rig_stress`, a CPU budget (rig p50 1.017 ms over 1.0 ms)
-  measured while one of my captures ran. It passed when re-run alone (`E/scenarios-it19.log`,
-  `E/scenarios-it19-rig-stress-rerun.log`). Both changes are render only: they move no golden.
+- **Gates of record on `5e37b57c`** (`node tools/evidence/run.mjs --no-bench`, private APPDATA,
+  CONTENDED; `E/evidence-run-it19b.log`): lint 13/13, unit 790/790, scenarios 35/35, parity bit for bit
+  over 1200 steps (planted mutation caught at step 629). Selftest is red on accent rows only (look goldens 11/11,
+  block 5/5 pass; vermilion/blood pixels on vehicles at 48/64 px/m and on a cop at 64 px/m). Those
+  rows are identical on `88ff881d`, before this iteration (`E/selftest-88ff881d-baseline-it19.log`).
+  Showcase's merged main passes selftest. Every change after 09:20 is render only and moves no golden.
+  An earlier scenario run had `scenario_rig_stress` over its CPU budget during a capture of mine. It
+  passed when re-run alone.
 - **Checked, not changed:** the rocket's thrown parts stay inside the 48 px/m city frame (the farthest
   stops ~6 m out). Changing the launch speeds would move the gib sim goldens this close to the freeze.
