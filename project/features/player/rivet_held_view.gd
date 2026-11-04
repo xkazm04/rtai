@@ -38,6 +38,7 @@ var _mag: RivetMagView = null
 var _tank: Sprite2D = null
 ## The tank's hose to the wand: an ink line with a cream core.
 var _hose: Array[Line2D] = []
+var _rag: RagLight = null
 
 
 func _ready() -> void:
@@ -59,6 +60,8 @@ func _process(_delta: float) -> void:
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
+		if _rag != null:
+			_rag.visible = false
 		return
 	if id != _shown:
 		_swap(id, pilot.hold.held)
@@ -79,6 +82,7 @@ func _process(_delta: float) -> void:
 		_sweep_arc = _arc()
 		_sprite.global_rotation += _sweep(rig.clips)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
+	_light_rag(rig, id)
 
 
 func _swap(id: StringName, weapon: StringName) -> void:
@@ -207,3 +211,16 @@ func _route_hose(fwd: Vector2) -> void:
 		pts.append(to_local(from.lerp(sag, t).lerp(sag.lerp(to, t), t)))
 	for line: Line2D in _hose:
 		line.points = pts
+
+
+## The molotov's draw lights the rag at the bottle's muzzle point (RagLight); hidden otherwise.
+func _light_rag(rig: CutRig, id: StringName) -> void:
+	var on: bool = rig.grip == RigGrip.Kind.THROWN and pilot.hold.state == WeaponHold.State.DRAWING
+	if _rag == null:
+		_rag = RagLight.new()
+		_rag.z_index = 2
+		add_child(_rag)
+	_rag.visible = on and _sprite.visible
+	if _rag.visible:
+		var at: Vector2 = _sprite.to_global(art.muzzle_px(id) + _sprite.offset)
+		_rag.light(at, pilot.hold.progress(), Engine.get_process_frames())
