@@ -1003,3 +1003,38 @@ NEXT:
 
 NEXT: unchanged from iteration 16 (electro DeathPose after the merge, gunplay REQUESTs 29/30,
 age-96 stall and the nuke tick under bench.lock, look goldens + parity on the merged main).
+
+## Iteration 18 (08:45-, BUILD, extension to 11:00)
+- Read: REPORT open items. human-reactions' DeathPose is already on this branch
+  (`features/combat/react/death_pose.gd`), so report next step 1 does not need the morning merge.
+- MILESTONE 09:1x the electro corpse is the real rig pose (88ff881d, showcase REQUEST 29): new
+  `KillSprawlCut.cut(rig)` poses the victim's rig at DeathPose._shock's end (c_sprawl 1.05, hands
+  down, dead, not aiming; RigPose.step only), takes GibCut's whole-body cut, then puts back every
+  channel and every Node2D transform of the rig (test: the rig is bit-for-bit as it was). The plank
+  waits hidden under KillShockFx's lay node and replaces the standing copy at k^2 >= 0.45 of the
+  drop, opening from 0.75x to full (the body unfolding onto the street) with a light 0.18 stretch
+  along the shot. Render only: the 60 Hz kill sim, its RNG and the goldens are untouched.
+  Why it looks bigger than the standing copy: top-down foreshortening (a standing cop shows head and
+  shoulders; lying, the full body with arms flung). Checked: the body transform scale is 1.0 in both
+  cuts (temporary probe, removed), and the plank matches the live cops walking in at the same zoom.
+- FRICTION the first plank cut leaked GibCut's 7 other groups per electro kill (GUT orphans caught it);
+  fixed before the commit (KillSprawlCut frees all but BODY).
+- Clips (city block, open street at start:-22,0, `--clean --rigs`, one isolated cop, 0 script errors):
+  `clips/electro-plank-city-48ppm-8s-it18.mp4` (real time) and
+  `clips/electro-plank-city-64ppm-slow-0.4x-it18.mp4`; strip `evidence/brutality/electro-plank-64-strip-it18.png`
+  (looked at it: arcs, held X-ray star, strobe, then the plank on the street). frames.json entry 2
+  replaced (before = the it13 stretched lie-out).
+- GATES (private APPDATA, CONTENDED): lint 13/13; unit 790/790 (evidence/brutality/unit-it18.log;
+  the first run had test_noir_shadows, the known load flake; the re-run passed).
+- Registry rules applied: motion-quality-gating (judged on the strip before publishing; measured the
+  size jump before calling it a bug); realtime-combat-semantics (render only; the corpse pose comes
+  from the same DeathPose table the standard deaths use, so one corpse language in the game).
+- Cost of the second cut (city block 48 px/m, 1 electro kill, CONTENDED: my scenario run was going
+  at the same time): kill cut 677 us on tick 127, worst kill-view frame 748 us, 0 frames over 2 ms
+  (telemetry in gtai-n4/scratch, numbers here). it9 electro worst was 1320 us over 6 kills, so the
+  plank cut stays well under 1 ms.
+- GATES 09:09-09:14 on 88ff881d (private APPDATA, CONTENDED): scenarios 35/35, 0 script errors
+  (evidence/brutality/scenarios-it18.log); look goldens 11/11, worst mean 1.54 of 4.0
+  (evidence/brutality/look-golden-it18.json; first look run since 59429978); parity bit for bit,
+  1200 steps, planted mutation caught at step 629 (evidence/brutality/parity-it18.log). Report
+  next step 4 is done on this branch (still to repeat on the merged main).
