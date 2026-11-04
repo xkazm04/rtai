@@ -120,6 +120,20 @@ func test_one_mini_nuke_clears_every_human_in_its_circle_and_leaves_fire() -> vo
 	assert_false(near.alive(), "and every human 6 m out")
 	assert_true(far.alive(), "a human 30 m out is outside the blast")
 	assert_eq(arena.areas.patches.size(), 1, "a fire patch where it landed")
+	assert_eq(FightAreas.kind_of(arena.gun.trigger.spec), &"blown", "a nuke kill is a blast death")
+	assert_eq(FightAreas.kind_of(_arena(&"molotov").gun.trigger.spec), &"burned")
+
+
+func test_a_mini_nuke_lobbed_at_a_close_guard_lands_past_its_floor() -> void:
+	var arena: CombatArena = _arena(&"mini_nuke")
+	var w: WeaponSpec = arena.gun.trigger.spec
+	assert_gt(w.min_lob_m, w.splash_radius_m, "the blast circle stays off the thrower")
+	var close: Fighter = _guard(arena, arena.rivet.pos + Vector2(5.0, 0.0))
+	var lands: Vector2 = FightReach.lob_target(arena, arena.rivet.pos, close.pos, w)
+	assert_almost_eq(lands.distance_to(arena.rivet.pos), w.min_lob_m, 0.01)
+	assert_almost_eq(lands.y, arena.rivet.pos.y, 0.01, "along the aim")
+	var bottle: WeaponSpec = _arena(&"molotov").gun.trigger.spec
+	assert_eq(FightReach.lob_target(arena, arena.rivet.pos, close.pos, bottle), close.pos)
 
 
 func test_a_homing_shard_curves_onto_a_human_off_the_aim_line() -> void:

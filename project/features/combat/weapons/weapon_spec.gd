@@ -32,6 +32,8 @@ var reload_ticks: int = 0
 var pellets: int = 1
 var splash_damage: float = 0.0
 var splash_radius_m: float = 0.0
+## A thrown shell never lands closer than this to the thrower (0 = no floor; the mini-nuke).
+var min_lob_m: float = 0.0
 var dot_dps: float = 0.0
 var dot_ticks: int = 0
 var patch_radius_m: float = 0.0
@@ -80,6 +82,7 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.held_scale = t.num(row, "held_scale") if row.has("held_scale") else 1.0
 	var homing: float = t.num(row, "homing_dps") if row.has("homing_dps") else 0.0
 	w.homing_rad_per_tick = deg_to_rad(homing) * SimClock.TICK_DT
+	w.min_lob_m = t.num(row, "min_lob_m") if row.has("min_lob_m") else 0.0
 	return w
 
 

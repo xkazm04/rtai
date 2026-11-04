@@ -10,6 +10,9 @@ extends RefCounted
 enum Hit { GROUND, METAL, BODY, PLATING }
 
 const PARAMS: String = "res://features/combat/weapons/gun_fx.json"
+## weapon-art's table: a gun with a `mag` part has its real magazine dropped by weapon-art's
+## WeaponMagView, so GunFx drops none for it (weapon-art REQUEST 5; absent file = GunFx drops).
+const ART_TABLE: String = "res://data/tables/weapon_art.json"
 const MAX_BITS: int = 48
 const HOP_TICKS: int = 14
 const IMPACT_TICKS: int = 10
@@ -19,6 +22,8 @@ const SMOKE_TICKS: int = 28
 const SCORCH: int = 10
 
 var p: Dictionary = {}
+## Weapon ids whose magazine weapon-art draws (ART_TABLE rows with parts.mag).
+var art_mags: Dictionary = {}
 ## Shells and dropped magazines: x, y (m), the ticks they lie before fading, the size (m;
 ## < 0 = a magazine); bit_life = their age in ticks.
 var bits: Array[Vector4] = []
@@ -44,6 +49,25 @@ var _last_tick: int = -1
 
 func _init() -> void:
 	p = NoirLook.read_params(PARAMS)
+	art_mags = read_art_mags(ART_TABLE)
+
+
+static func read_art_mags(path: String) -> Dictionary:
+	var out: Dictionary = {}
+	if not FileAccess.file_exists(path):
+		return out
+	var rows: Variant = NoirLook.read_params(path).get("weapons", [])
+	if not rows is Array:
+		return out
+	for row: Variant in rows:
+		if not row is Dictionary:
+			continue
+		var d: Dictionary = row
+		var parts: Variant = d.get("parts", {})
+		var part_ids: Dictionary = parts if parts is Dictionary else {}
+		if part_ids.has("mag"):
+			out[StringName(str(d.get("id", "")))] = true
+	return out
 
 
 ## The presentation row of a weapon (gun_fx.json weapons.<id>, else default).
@@ -75,7 +99,7 @@ func step(arena: CombatArena, tick: int) -> void:
 		fired_count = gun.shots_fired
 	var reloading: bool = gun.trigger.reloading()
 	if reloading and not _was_reloading:
-		_reload_drop(arena.rivet, row)
+		_reload_drop(arena.rivet, row, gun.trigger.spec.id)
 	_was_reloading = reloading
 	GunFxRounds.track(self, arena, tick)
 	for _t: int in n:
@@ -112,8 +136,8 @@ func _eject(r: Fighter, row: Dictionary, tick: int, count: int) -> void:
 
 ## A reload starts: an empty magazine falls from the claw (mag_drop), or a revolver dumps its
 ## spent shells all at once (dump = how many; they fan out under the claw).
-func _reload_drop(r: Fighter, row: Dictionary) -> void:
-	if row.get("mag_drop", true):
+func _reload_drop(r: Fighter, row: Dictionary, weapon: StringName) -> void:
+	if row.get("mag_drop", true) and not art_mags.has(weapon):
 		add_bit(_claw(r), r.facing.rotated(2.2) * 1.2 * SimClock.TICK_DT, 240, -0.22)
 	var dump: int = row.get("dump", 0)
 	var size: float = row.get("casing_m", 0.0)

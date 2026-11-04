@@ -35,8 +35,17 @@ static func home(arena: CombatArena, s: Shot) -> void:
 	s.vel = s.vel.rotated(clampf(turn, -s.spec.homing_rad_per_tick, s.spec.homing_rad_per_tick))
 
 
-## Where a bottle thrown from `from` toward `at` lands (see LOB_CONE_RAD).
-static func lob_target(arena: CombatArena, from: Vector2, at: Vector2, range_m: float) -> Vector2:
+## Where a bottle thrown from `from` toward `at` lands (see LOB_CONE_RAD). A shell with a
+## `min_m` (weapons.json min_lob_m: the mini-nuke) never lands closer than that along the aim, so
+## its blast circle stays off the thrower (showcase REQUEST 16).
+static func lob_target(arena: CombatArena, from: Vector2, at: Vector2, w: WeaponSpec) -> Vector2:
+	var lands: Vector2 = _lob_pick(arena, from, at, w.range_m)
+	if from.distance_to(lands) >= w.min_lob_m:
+		return lands
+	return from + (lands - from).normalized() * w.min_lob_m
+
+
+static func _lob_pick(arena: CombatArena, from: Vector2, at: Vector2, range_m: float) -> Vector2:
 	var aim: Vector2 = (at - from).normalized()
 	var best: Vector2 = at
 	var best_off: float = INF
