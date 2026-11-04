@@ -573,6 +573,12 @@ NEXT (iteration 8):
   load flake: `Parameter "t" is null`), 2/2 alone (unit-noir-shadows-alone-it8.log); scenarios
   35/35 (scenarios-it8.log).
 
+- MILESTONE 05:34 city reel re-shot on the open spot (start:-7,0): nine kills incl. katana and
+  plasma sword, one isolated cop each, labelled, 61 s, 48 px/m, one signature kill per clip
+  (telemetry). Masters clips/city-block-reel-9-kills-open-spot-48ppm-61s-it8.mp4 (frames.json
+  entry 5; the hub-row reel kept as `before`); sheet in evidence/brutality/. Weak: the victims sit
+  left of centre (the city camera holds the start) and the burning cop runs out of the open spot.
+
 NEXT (iteration 9):
 1. The claw-shock lab plays the pilot's shock so Rivet's thrust clip shows with the X-ray.
 2. City camera: follow Rivet at his solo spot (the city camera holds the start); add the chainsaw
