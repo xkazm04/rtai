@@ -12,9 +12,10 @@ const SHORT_K: float = 0.38
 const DROP_LINGER_S: float = 1.4
 const DROP_FADE_S: float = 0.4
 const MAX_DROPPED: int = 4
-## Above the rig's arms (they reach z 9) for the held block; just under the held view, dropped.
-const HELD_Z: int = 12
-const FLOOR_Z: int = -1
+## The held block draws at an absolute top z (relative to the held view it sat under the claw cell
+## at the same joint and never showed); the floor child sits 4001 under it (absolute -1).
+const HELD_Z: int = 4000
+const FLOOR_Z: int = -4001
 const INK: Color = Color("1b1517")
 const FILL: Color = Color("5a5560")
 const SHINE: Color = Color("efe6d4")
@@ -34,6 +35,7 @@ var _floor: Node2D = null
 
 func _ready() -> void:
 	top_level = true
+	z_as_relative = false
 	z_index = HELD_Z
 	_floor = Node2D.new()
 	_floor.top_level = true
