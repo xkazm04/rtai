@@ -1231,3 +1231,35 @@ while gates.sh's evidence step runs.
   round's merge (round 18) is real work, not a no-op. A round 18 now would not finish gates +
   reel (about 25 min) before this session's 09:46 stop; left for the 09:45 final round. No Godot
   process of mine running; scratch cut-r16-dir and cut-r17-dir kept (r17 = reel-0930's chapters).
+
+## Session 09:36 (iteration 14, BUILD, the final round)
+- 09:36 read JOURNAL + log. No new REQUEST -> showcase; brutality NOTE (04c4068b burn char rim,
+  b03f04ac ray-gun lock longer) and human-reactions (electro corpse lighter soot, thug lighter
+  spray) are what round 18 should show.
+- MILESTONE 09:40 merge round 18 (the final round): weapon-art 838c0d6a -> f8058948,
+  rivet-arsenal 9e49ea93 -> 7ecf53ea, gunplay 3c472354 -> deb5f6c3, human-reactions 38b0f3df ->
+  0732727b, brutality 5c1ea8a9 -> 9c9f59a5. JOURNAL/REPORT kept ours. One real conflict:
+  project/features/combat/weapons/gunplay_bot.gd, two new vars on the same line (rivet-arsenal's
+  `flank_after`, showcase REQUEST 25, and gunplay's `follow_burning`, d35ffdf3): GLUE, both kept
+  (117 lines). `--import` 0 errors.
+- GATES r18 (gates.sh on 9c9f59a5, CONTENDED; the cut filmed alongside under its own APPDATA):
+  lint 13/13 (794), unit 929/929, scenarios 45/45, parity bit-exact (planted caught at 629),
+  selftest PASS (look 11/11 worst 0.00, block 5/5 worst 1.81). No re-bless. evidence/r18/.
+- 09:50 cut.sh r18-dir 48: 17 chapters, 0 SCRIPT ERRORs. Checked sheets: ch 13 ray gun now shows
+  the cream lock wash on the standing victim (about 1 s) before the dust heap (brutality b03f04ac;
+  still small at 48 px/m, but it now reads as a beat); ch 06 electro corpse lies with both legs
+  to the feet (human-reactions 907d7282, the "low lump" note closed); ch 05 flamethrower burn
+  death ends in a dark char body in the scorch, the ash rim thin at 48 px/m.
+- MILESTONE 09:53 exe re-exported on round 18 (9c9f59a5): RTAI.exe 236 MB + release DLL, exit 0,
+  0 errors (evidence/r18/export.log). Boot tests headless, 0 SCRIPT ERRORs each: no args
+  (armory 15 weapons, 16 stations), director (claw_combo at tick 0), city block (4-gun loadout).
+- MILESTONE 09:56 reel-0954 (masters, frames.json first; reel-0530 draft dropped from the 15):
+  cut r18-dir + reel.sh 18 CITY BLOCK (0 SCRIPT ERRORs), 128.5 s. 36-frame sheet checked: all 17
+  chapters + city as in reel-0930, plus the round 18 fixes above. THE FINAL REEL unless a round 19
+  lands before 10:15.
+- 09:58 REPORT extension status rewritten in place (round 18 final, reel-0954, exe 09:53, play
+  commands for this exe; r18 gates row, reel-0954 row).
+- 09:59 NOTE from human-reactions: REQUEST 30 -> brutality (the electro signature corpse,
+  KillSprawlCut, lies with arms spread and stub legs; a one-file render-only patch proved on our
+  9c9f59a5). If n-brutality lands it before about 10:12: round 19 = merge brutality only, gates,
+  re-cut electro_gun + reel.sh, re-export.
