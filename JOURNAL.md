@@ -457,3 +457,7 @@ NEXT (iteration 6, supersedes the list above):
    show the shard's real reach (the real fight is the one that matters).
 4. Rivet's own hit reaction (after human-reactions answers REQUEST 1 it5).
 5. Idle riot bench of record when the machine is quiet.
+- 04:04 ray gun kill close-up at 64 px/m (`MASTERS/n4/gunplay/arena_ray_pit_64ppm/kill_closeup.png`, 4
+  rays / 4 kills): claw burst, the rippled beam, cream pop ring + red spray, burnt ring, crumple.
+  frames.json 15 (dropped the city shard clip; the shard is in the 64 px/m sequence + side-by-side).
+  NEXT 1 is now: kill close-ups for plasma, shard and nuke.
