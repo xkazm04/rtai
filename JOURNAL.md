@@ -1189,3 +1189,12 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
   glass + scorch, city walls grey barriers. Still weak: ch 13 ray gun's victim is small and
   quick at 48 px/m; the rocket's thrown parts leave the frame (known).
 - 08:59 BENCH r16 started under bench.lock (taken 08:59), `node tools/bench/run.mjs`.
+- BENCH r16 (bench.lock 08:59-09:12, no Godot of mine during it; CONTENDED: other lanes active):
+  `node tools/bench/run.mjs` on 8a8215a3, exported release, 3 x 60 s: aggregate p99 8.515 ms,
+  1 % low 88 fps, worst frame 60.9 ms (1 hitch > 50 ms), MISSES p99CpuMs. Per scenario p99 / 1 %
+  low: drive 3.72 / 166, drive48 2.47 / 260, riot 8.52 / 88 (drive48vsync 21.3 / 41, the vsync
+  pass). evidence/r16/bench/*.json, evidence/r16/bench.log. Lock removed.
+- 09:05 cut.sh grows a ROBOT THUG chapter (before the mini-nuke finale): no live robot fighter
+  exists, so it films human-reactions' dev pit (enemy_rig_fight_run, --squad=robot_thug,
+  --zoom=P/32, every tick) with its power-down death (3cf3ce29); needs round 17. reel.sh numbers
+  the CITY BLOCK chapter from the cut's list (18 with the thug).

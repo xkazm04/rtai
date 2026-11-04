@@ -12,7 +12,8 @@ M=C:/Users/kazda/kiro/gtai-masters/n4/showcase
 bash evidence/film.sh city-raw-$N 32 2100 --arena=city --reel=pit --riot \
   --loadout=pistol,plasma_rifle,rocket_launcher,molotov
 mv $M/city-raw-$N.mp4 $S/city-raw-$N.mp4
-cap="drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='17   CITY BLOCK':x=28:y=28:fontsize=30:fontcolor=0x1B1A17:box=1:boxcolor=0xF2E8D5:boxborderw=14"
+K=$(( $(wc -l < $D/list.txt) + 1 ))
+cap="drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='$K   CITY BLOCK':x=28:y=28:fontsize=30:fontcolor=0x1B1A17:box=1:boxcolor=0xF2E8D5:boxborderw=14"
 ffmpeg -y -loglevel error -f lavfi -i anullsrc=r=44100:cl=stereo -ss $OFF -t 15 -i $S/city-raw-$N.mp4 \
   -map 1:v -map 0:a -shortest -vf "$cap" -c:v libx264 -pix_fmt yuv420p -crf 20 -r 60 -c:a aac \
   $D/city_free.mp4

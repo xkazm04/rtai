@@ -1,5 +1,10 @@
 # Showcase lane: night run 2026-11-04, report
 
+**Extension (09:00-11:00), in progress:** merge round 16 (all five lanes' tips at 08:41 plus
+showcase glue 8a8215a3) is gated green and filmed in **reel-0857** (122 s, 0 script errors). The
+final round (last merge, gates, final reel, exe) runs 09:45-10:30; this section is rewritten then.
+The text below is the 08:40 report.
+
 Status: FINAL on merge round 15 (06051f21, merged 08:14: the lane tips up to 08:10). Gates r15
 green; exe re-exported 08:19 on round 15. The final reel **reel-0808** is round 14 (e13dc36b): no
 time for another reel before the 08:30 freeze. Round 15 adds only small fixes, not filmed by the
@@ -52,6 +57,7 @@ city block loads with the loadout.
 | reel-0756-close64 | 64 px/m close-ups on round 13: molotov, ray gun, rocket, mini-nuke, flamethrower |
 | **reel-0808** | **the final morning reel on round 14 (the exe's build), 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
 | reel-0821-r15-close64 | round 15 (the exe build), 64 px/m: the molotov's glass slivers and inked scorch patch; the rocket tube carried at Rivet's side; 0 script errors |
+| reel-0857 | extension, round 16 (8a8215a3), 122 s, 0 script errors: the rocket blast thins out as smoke; the electro victim lies along the shot (REQUEST 29 closed); the city block's pit walls are grey concrete barriers, not black bars (showcase-3 closed) |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 
@@ -70,7 +76,8 @@ city block loads with the loadout.
 | r12 | 9c52b656 | 13/13 | 893/893 | 44/44 | exact | 11/11 (worst 0.00) + 5/5 |
 | r13 | 2643fbbd | 13/13 | 903/903 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 |
 | r14 | e13dc36b | 13/13 | 906/906 | 45/45 | exact | 11/11 + 5/5 |
-| **r15 (final, the exe)** | **06051f21** | **13/13** | **912/912** | **45/45** | **exact** | **11/11 (worst 0.00) + 5/5 (worst 1.81)** |
+| r15 (08:19 exe) | 06051f21 | 13/13 | 912/912 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
+| r16 (extension) | 8a8215a3 | 13/13 | 913/913 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 
@@ -80,7 +87,8 @@ city block loads with the loadout.
 | r7 | 3.45 / 158 | 3.69 / 166 | 11.48 / 63 |
 | r8 | 4.33 / 140 | 2.54 / 224 | 10.37 / 71 |
 | r10 | 3.39 / 108 | 2.17 / 376 | 5.58 / 118 |
-| **r12 (final bench)** | **2.00 / 280** | **2.21 / 252** | **8.50 / 73 (my own merge load in its window)** |
+| r12 | 2.00 / 280 | 2.21 / 252 | 8.50 / 73 (my own merge load in its window) |
+| **r16 (extension, latest bench)** | **3.72 / 166** | **2.47 / 260** | **8.52 / 88 (no Godot of mine during it; other lanes busy)** |
 
 The riot went back under its p99 record on r10 after human-reactions trimmed the trip scan (REQUEST 23).
 The r12 riot number is not clean: my round-13 merges (git + the lint hook) ran during it. No r13
@@ -98,11 +106,9 @@ bench (the lock was taken by another lane at 07:41 and the session ended at 08:1
 
 ## Known wrong in the current reel (REQUESTs out)
 
-- ch 06 electro: after the X-ray strobe the corpse still reads as a standing cop, gun toward Rivet,
-  and no scorch shows (REQUEST 29 -> brutality: the electro kill's KillShockFx owns this corpse,
-  so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it). Re-checked on round 15 at 08:22
-  (evidence/r15/sheet-electro.jpg): unchanged, because brutality's answer `63cc3ce1` (08:20, the
-  body lies out long along the shot) is not in round 15. Close after the Director's merge.
+- ch 06 electro: CLOSED on round 16 (reel-0857). Brutality's `63cc3ce1` lays the body out along the
+  shot after the X-ray (REQUEST 29). At 48 px/m it still reads as a low blue lump; brutality
+  `88ff881d` (08:57, the corpse lands in the shock death plank) lands in the final round.
 - ch 07 molotov: fixed mid-chapter (REQUEST 27, gunplay aa471560: the fire opens round the corpse); at the chapter's end the victim sinks into the char.
 - ch 13 ray gun: fixed (REQUEST 26, brutality 9c9aaabf): a long dust heap with the crumpled uniform.
 - ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.
