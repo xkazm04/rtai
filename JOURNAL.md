@@ -1022,3 +1022,21 @@ NEXT (iteration 15):
   bead ring (`--blast-beads=on`). Clip above, B left. Recommendation: A; a redrawn frame 3 (smoke wisps) would be best.
 - Session close 08:19. NEXT unchanged from 08:13 (REQUEST 12, the melee four on rivet-arsenal's path, long guns over
   the helmet, a drawn glass-and-fuel sheet) plus 5: redraw the blast sheet's frame 3 as torn smoke wisps.
+
+## Iteration 15 (08:19-08:30, BUILD; 11 minutes to freeze)
+- 08:20 read JOURNAL tail, git log, other lanes' JOURNALs for REQUESTs to weapon-art. No new REQUEST since it14.
+- REQUEST 12 -> rivet-arsenal CLOSED: they merged n-weapon-art at 07:50 (552add84 -> ceee3a88); `art_stand_in` no
+  longer maps gloria -> pistol, and their guard in test_held_lod.gd keeps it so (n-rivet-arsenal JOURNAL l.360).
+- Long guns over the helmet (NEXT 3): rivet-arsenal owns it and has ruled out the grip-origin lead (08:14, 1-2 px);
+  the fix is an authored carry pose per long gun in their view. Nothing for the art to change: closed as a watch.
+- DECISION 08:22 no code change this iteration: a render change needs a same-tick A/B and gate runs (unit ~6 min,
+  scenarios ~3 min) that do not fit before the 08:30 freeze. The branch stays at its gates of record (3a703dbd:
+  unit 741/741, scenarios 32/32, lint 13/13; parity untouched).
+- `evidence/weapon-art/` stays untracked (scratch logs and stills of record are mirrored in gtai-masters).
+
+NEXT (after the night run):
+1. The melee four in the claw on rivet-arsenal's path (merge n-rivet-arsenal into a throwaway worktree, film katana /
+   baton / chainsaw / plasma sword at 32 and 64 px/m; decide whether held art replaces MeleeWeaponView's bars).
+2. A drawn glass-and-fuel splash sheet for the molotov (image route, under image.lock).
+3. Redraw the blast sheet's frame 3 as torn smoke wisps (replaces the held smoke ring of 3a703dbd).
+4. Answer owner calls weapon-art-15 (molotov landing) and weapon-art-16 (rocket blast tail) once judged.
