@@ -105,3 +105,29 @@ NEXT (iteration 2, in order):
   shot), `react_line_4sides_64ppm_sheet.png` (rows = looks, cols = W N E S) in gtai-masters.
 - Gap: no SWAT look exists in d5-cast (RigVariant.crowd has patrol and riot only); adding index 8
   breaks CrowdAtlas (LOOKS = CROWD_COUNT). SWAT stays out of the line until the cast has it.
+- 02:04 board-side REQUEST check: no new REQUESTs to human-reactions (showcase REQUEST 6 was
+  withdrawn by showcase itself; gunplay 1/2, brutality 2, rivet-arsenal 1 all answered).
+- MILESTONE 02:08 8e93389a: crowd startle. `cower` family (crouch drawn smaller, both hands over
+  the head, head tucked, a 0.3 m hop away from the bang, 0.7 s) + `CrowdReact` on CityCharacters
+  (boot/city_characters.gd, a 2-line shared-file change: `crowd.observe(rigs, steps)` after the
+  feed fill): a pedestrian whose FLEE flag switches on cowers DELAY_TICKS 3 later along its new
+  flight, then the sim's flight runs on (RigClips already raises the hands while fleeing). Already
+  fleeing when first seen = no startle; cops never cower. Unit 720/720.
+- MILESTONE 02:10 bf5300e7: reaction board segment "pedestrians startled by a shot"; clip
+  `crowd_cower_64ppm.mp4` + sheet. It reads (a small knot, arms over the head) but is subtle at
+  32 px/m: quality item for later (scale 0.8 -> 0.72, hop 0.3 -> 0.45 m).
+- FINDING 02:12: the arena's own gunfire on the city block (`--arena=city`) never reaches the
+  city sim: the sim scares pedestrians only when ITS rounds kill one (sim_shots._scare), on a car
+  strike, or in a riot (M_RIOT, already FLEE). So the crowd round the arena fight does not flee
+  or cower. Needs a `scare(x, y, r)` entry: CitySimState + CityCore (native) + the binding + the
+  backend abstract + parity (NAT-06). Not started tonight at 02:12 (35 min left; other lanes'
+  DLL copies would lack the method). Iteration 4 item 1.
+- MILESTONE 02:13 b3f7ded6: the city's own kills play the standard deaths. CrowdReact turns each
+  DEAD onset on a full rig into DeathPipe.kill along the sim's slide (the snapshot heading at
+  death = the round's travel; slide speed > 4 m/s = a car = blast death, thrown). DeathPipe, so
+  brutality's signature hook works in the city too (CityCharacters.crowd.pipe.add_signature).
+  Carry 0.3 (the sim slides the body itself). Unit 722/722.
+- Evidence 02:16: `riot_deaths_32ppm.mp4` (city_bench --scenario=riot, 25 s): 15 standard deaths
+  on full rigs, measured with a temporary log (reverted). Honest read: the riot is so dense that
+  a single death does not read in a still; a sparser street fight will show them better.
+- Gates on bf5300e7: lint 13/13, unit 720/720, scenarios 30/30. On b3f7ded6: lint, unit 722/722.
