@@ -44,6 +44,8 @@ var shots: int = 0
 var blade: StringName = &""
 ## Ticks Rivet stays on the victim after the blow (the chainsaw's grind) before he steps back.
 var hold_ticks: int = 0
+## Stand the guards on the spread line (a kill that leaves its body in place reads alone).
+var spread: bool = false
 var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
@@ -120,7 +122,7 @@ func _line(stage: ArenaStage) -> void:
 	guards.clear()
 	spots.clear()
 	_next = 0
-	for off: Vector2 in BLADE_LINE if not blade.is_empty() else LINE:
+	for off: Vector2 in BLADE_LINE if spread or not blade.is_empty() else LINE:
 		var g: Fighter = stage.arena.spawn_guard(stage.plan.rivet_start + off)
 		g.pos = stage.plan.rivet_start + off
 		g.cooldown = HOLD_FIRE
