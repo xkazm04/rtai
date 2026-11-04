@@ -18,7 +18,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 chapters, deterministic) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 234 MB) with the release
-sim DLL beside it. Round 10 boot tests (headless, 0 script errors): the arena opens with 16
+sim DLL beside it (re-exported on round 11, 07:11). Round 11 boot tests (headless, 0 script errors): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 

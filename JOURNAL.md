@@ -974,3 +974,10 @@ NEXT (iteration 8, the final round; freeze 08:30):
    `-- --arena=city --loadout=...`), each 0 script errors.
 6. Bench under bench.lock if free (r10: riot 5.58 / 118, drive 3.39 ms).
 7. REPORT.md: replace the DRAFT status, add the final round's gates/reel/bench/exe rows.
+- 07:12 exe re-exported on round 11 (98685d5e tree): build/export/windows/RTAI.exe (236 MB) +
+  the release DLL, export exit 0; boot tests headless, 0 script errors each: no args ("armory:
+  15 weapons on the hub floor", "arena open: 16 stations"), `-- --bot=reel --reel=director
+  --loadout=pistol` (claw combo 2/2 down...), `-- --arena=city --loadout=pistol,plasma_rifle,
+  rocket_launcher,molotov` (600 ticks, before any plasma kill, so REQUEST 28 is not hit). Bench r11 skipped: a 12 min bench
+  would outrun the session while holding bench.lock; the final round benches. Scratch cleaned
+  (stale, redo, r9-check, 0540 cuts deleted; their reels are in masters).
