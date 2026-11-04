@@ -40,6 +40,26 @@
     "note": "Ticks 176-330 of the 64 px/m clip."
   },
   {
+    "file": "clips/plasma-hole-64ppm-slow-0.4x.mp4",
+    "title": "Plasma rifle signature kill: a glowing hole burned through the torso, 64 px/m slow (0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": null,
+    "note": "The body copy is clipped by a holed mask, so the street shows through; the edge glows hot cream in an ink rim and cools to charred brown over 1.5 s; the body drops back along the shot; no blood."
+  },
+  {
+    "file": "clips/plasma-hole-city-block-48ppm-12s.mp4",
+    "title": "Plasma rifle kill on the city block (48 px/m)",
+    "source": "game-city",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 48,
+    "before": null,
+    "note": "6 hole kills on the city's cast rigs."
+  },
+  {
     "file": "clips/flame-char-city-block-48ppm-14s.mp4",
     "title": "Flamethrower kill on the city block: char, ash, NO red (fixed)",
     "source": "game-city",
@@ -128,25 +148,5 @@
     "ppm": 64,
     "before": "",
     "note": "Arena hub, --sig-gun=hand_cannon --sig-lab. The cop is blown off the line in one piece (whole-rig copy) along the shot, lands and slides on a blotchy blood smear; small cream flash, 3-tick hit-stop, exit spray in a 34 deg fan. Not yet: the body flies in its standing pose (no sprawl), the cap does not visibly separate (it overlaps the head), no wall collision."
-  },
-  {
-    "file": "clips/rocket-gore-reduced-arena-48ppm-10s.mp4",
-    "title": "--gore=reduced: the same rocket lab, no signature kill (the victims fall whole)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": "clips/rocket-gib-arena-32ppm-15s.mp4",
-    "note": "Ratings proof: telemetry signature_kills 0; every lethal rocket plays human-reactions' standard blown death with the standard d5-combat blood. No dismemberment."
-  },
-  {
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "before": "",
-    "file": "clips/flame-char-arena-32ppm-16s.mp4",
-    "title": "Flamethrower signature kill, real time at 32 px/m (6 burn kills)",
-    "ppm": 32,
-    "note": "Real time, fixed-fps 60, 960 frames. Six guards burn, char and crumble; telemetry by_style burn 6. The fire puffs (starbursts) and burning flail are gunplay's / human-reactions' work merged in. Re-rendered 02:39 with the stronger smoke (alpha 0.62, wider wisps); the 64 px/m slow clip predates it."
   }
 ]

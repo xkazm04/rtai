@@ -239,3 +239,42 @@ NEXT (supersedes the list above; iteration 3):
 - Registry rules applied (realtime-combat-semantics): kill decided at the damage chokepoint, the
   cut side from the kill serial (no dice in render), the halves on the 60 Hz tick from the
   `brutality` stream. motion-quality-gating: judged on frame sheets of real-time clips.
+- 03:09 katana tuned (halves 3-3.8 m/s, drag 2.6: they now clearly slide apart on dotted red
+  smears; cut edge bolder) and added to scenario_brutality_kills (6 split kills, replay
+  identical). Clips: katana 32 px/m (14 s), 64 px/m (12 s), 64 px/m 0.4x slow, city block 48 px/m.
+- MILESTONE 03:14 kill #6 plasma rifle (`plasma_hole`, style `hole`, 2bd5c4d9): KillHoleFx clips
+  the victim's body copy with a mask that has a 0.2 m round hole at the torso (the street shows
+  through), a ring on the edge (ink rim, hot cream glow cooling to charred brown over 90 ticks),
+  the body drops back along the shot, no blood (cauterised). weapons.json has plasma_rifle
+  `enabled: false` (gunplay's), but GunHand.make fires it for the lab. "The bolt continues" is
+  gunplay's projectile (pierce), not done here. In the scenario (6 hole kills, replay identical).
+  Clips 32/64 px/m, 64 px/m 0.4x slow, city block 48 px/m.
+- MEASURED 03:15 under bench.lock (taken and released; my own city capture still ran beside it,
+  so CONTENDED), 32 px/m labs, 900 frames: KillView avg / worst frame:
+  rocket 18 kills 4.1 ms / 74 ms; katana 7 kills 0.8 / 18 ms; plasma 7 kills 0.27 / 1.0 ms.
+  The worst kill frame is the rocket's (six GibCut groups + the ground reprint of every mark;
+  possibly first-use pipeline compiles). Evidence evidence/brutality/cost-*-32-it4.json.
+- Gates on f7249c44+: lint 13/13 every commit, unit 725/725 (unit-it4.log), scenarios 31/31
+  (scenarios-it4.log); scenario_brutality_kills re-run alone after katana + plasma (7 weapons).
+- Shared-file edits this iteration: features/fx/combat_blood.gd (+4: the cue-path bleed defers
+  when a veto is set). Nothing else shared.
+
+## Calls for the owner (iteration 4 additions)
+- brutality-6: the katana cut runs diagonally (55 deg off the swing's approach, alternating side)
+  vs. straight across the swing. Default: diagonal (katana-split clips). One value: `cut_deg`.
+- brutality-7: the plasma kill is cauterised (no blood, a glowing hole) vs. a hole with a red
+  exit spray behind. Default: no blood (plasma-hole clips). One value: `spray`.
+
+NEXT (iteration 5):
+1. The rocket kill frame spike (74 ms CONTENDED): log per phase (GibCut copy vs ground reprint vs
+   first-draw pipeline compile: does only the FIRST kill spike?); pre-warm the copy materials at
+   attach, or cut over two frames inside the hit-stop.
+2. Plasma: thinner glow so more street shows through the hole; a short cream bolt streak that
+   flies on past the body (the "bolt continues" read, render only).
+3. Kill #7 chainsaw (the grind: victim held and shaking, continuous spray, then a split): reuse
+   KillSplitFx.cut with a straight cut + KillShockFx-like shake; lab driver like the katana.
+4. Kill #8 plasma sword = katana split + KillHoleFx's glow on the cut edges and spray 0.
+5. A reel of all six finished kills at 32 px/m (ffmpeg concat of the lab clips, labelled).
+6. KillView is 277 lines (hard stop 300): move _parts/_cut/_blobs into kill_parts.gd first.
+7. Katana live: when rivet-arsenal's melee weapons land (their NEXT 5), merge and re-shoot with
+   the real swing instead of the lab lunge.
