@@ -21,6 +21,8 @@ var landed: int = 0
 var whiffs: int = 0
 var last_land_tick: int = -1000000
 var last_land_index: int = 0
+## Hostile rounds the blade sent back (the plasma sword's deflect).
+var deflects: int = 0
 ## Shoves in flight: fighter id -> the metres still to slide (a vector).
 var _shoves: Dictionary[int, Vector2] = {}
 
@@ -41,6 +43,8 @@ func step(arena: CombatArena, press: bool, facing: Vector2) -> Vector2:
 	_slide(arena)
 	if combo.lands():
 		_land(arena, combo.current(), facing)
+	if combo.table.deflect_m > 0.0 and combo.phase() == MeleeCombo.Phase.ACTIVE:
+		deflects += PlayerDeflect.bat(arena, facing, combo.table.deflect_m)
 	return facing * combo.lunge_step_m()
 
 
@@ -62,6 +66,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(landed)
 	if combo.table.grinds():  # only a grinding weapon carries it: the claw's goldens hold
 		out.put_32(combo.ground)
+	if combo.table.deflect_m > 0.0:
+		out.put_32(deflects)
 	var ids: Array = _shoves.keys()
 	ids.sort()
 	out.put_32(ids.size())

@@ -17,6 +17,9 @@ const RIOT_LOOK: int = 6
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
 const FOCUS_REACH_M: float = 20.0
+## The molotov's throw on Rivet's gun claw (rivet_plan: BodyPlan.L) as strike ticks: a 1-tick
+## wind-back, the whip out to full reach, a slow return (view only; the bottle left this tick).
+const THROW: Vector3i = Vector3i(1, 6, 18)
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -40,6 +43,7 @@ var _strikes_seen: int = 0
 var _shocks_seen: int = 0
 var _rolls_seen: int = 0
 var _shots_seen: int = 0
+var _winds_seen: int = 0
 var _arsenal: ArsenalTable = ArsenalTable.shipped()
 ## human-reactions: the (body plan, look) of the dummies that carry one (ReactLineBot.LOOKS).
 var _looks: Dictionary[int, Vector2i] = {}
@@ -92,7 +96,8 @@ func _process(_delta: float) -> void:
 	f.count = 0
 	var r: Fighter = stage.arena.rivet
 	_put(0, r, BodyPlan.Kind.RIVET)
-	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
+	var sway: float = stage.pilot.sway_rad if stage.pilot != null else 0.0  # the flamer's hose
+	f.aim[0] = (r.pos + r.facing.rotated(sway) * 4.0) * SimConst.PX_PER_M
 	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
@@ -198,10 +203,19 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
 	_rolls_seen = pilot.motion.rolls
 	var gun: GunHand = stage.arena.gun
+	var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
+	if pilot.throw.winds != _winds_seen and grip != null:  # the arm draws back, then whips through
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(grip.windup_ticks, THROW.y, THROW.z, BodyPlan.L)
+	_winds_seen = pilot.throw.winds
 	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
-		var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
 		f.clip_arg[0] = grip.kick if grip != null else 1.0
+		if grip != null and grip.windup_ticks > 0:  # the wind-up's clip is already throwing
+			f.clip[0] = RigClips.Clip.NONE
+		elif grip != null and grip.id == &"thrown":  # the bottle leaves: the claw whips through
+			f.clip[0] = RigClips.Clip.STRIKE
+			f.clip_arg[0] = RigInput.pack_strike(THROW.x, THROW.y, THROW.z, BodyPlan.L)
 	_shots_seen = gun.shots_fired if gun != null else 0
 	var claws: bool = (pilot.melee.busy() and not pilot.wielding()) or pilot.shock.busy()
 	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):

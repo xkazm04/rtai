@@ -48,6 +48,16 @@
               "maximum": 120,
               "minimum": 1,
               "type": "integer"
+            },
+            "sway_rad": {
+              "maximum": 0.6,
+              "minimum": 0,
+              "type": "number"
+            },
+            "sway_ticks": {
+              "maximum": 600,
+              "minimum": 2,
+              "type": "integer"
             }
           },
           "required": [
@@ -243,6 +253,11 @@
             "stow_ticks": {
               "maximum": 120,
               "minimum": 1,
+              "type": "integer"
+            },
+            "windup_ticks": {
+              "maximum": 60,
+              "minimum": 0,
               "type": "integer"
             }
           },

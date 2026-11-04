@@ -153,7 +153,8 @@
       "cancel_ticks": 3,
       "chain_radius_m": 0,
       "combo_window_ticks": 12,
-      "doc": "the hot blade: two very fast slashes that cut any human in one pass, then a full spin that cuts everything around Rivet; lighter in the claws than the katana",
+      "deflect_m": 1.6,
+      "doc": "the hot blade: two very fast slashes that cut any human in one pass, then a full spin that cuts everything around Rivet; lighter in the claws than the katana; during any slash's active ticks the blade bats hostile rounds within 1.6 m in front back at their shooter (the timed deflect)",
       "grip": "two_hand",
       "hits": [
         {

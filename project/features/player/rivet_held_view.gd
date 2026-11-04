@@ -4,7 +4,8 @@ extends Node2D
 ## CharacterRigs posed him, the held part (weapon-art's WeaponArt.make_held: origin on the grip,
 ## +x along the barrel) sits on the gun claw's closing point along the claw, and the claw cell
 ## switches from the drawn-in pistol to the closed claw. Hidden while the gun is away (a claw
-## hit, a roll, a stow past halfway). Reads StagePilot.hold; writes nothing to the sim.
+## hit, a roll, a stow past halfway; a thrown bottle from its release until the next one comes
+## up at reload phase 1). Reads StagePilot.hold; writes nothing to the sim.
 
 ## A melee weapon's blade sweeps either side of the aim line during a swing by the hit's own arc
 ## (acos of its cone_dot: the katana's slash 1.27 rad, its thrust 0.72, the plasma spin a full
@@ -14,6 +15,11 @@ const SWEEP_MIN: float = 0.35
 const GRIND_JUDDER: float = 0.07
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
+## Grip classes whose reload is not a magazine (the molotov's next bottle, the flamer's tank).
+const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
+## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
+const TANK_BACK_M: float = 0.22
+const HOSE_POINTS: int = 8
 
 var rigs: CharacterRigs = null
 var pilot: StagePilot = null
@@ -25,6 +31,10 @@ var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
 var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
+var _mag: RivetMagView = null
+var _tank: Sprite2D = null
+## The tank's hose to the wand: an ink line with a cream core.
+var _hose: Array[Line2D] = []
 
 
 func _ready() -> void:
@@ -38,6 +48,10 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
+		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
+		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
+		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0)
+		_back_tank(rig, grip != null and grip.id == &"backpack_hose")
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -57,7 +71,7 @@ func _process(_delta: float) -> void:
 	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
 		_sweep_arc = _arc()
 		_sprite.global_rotation += _sweep(rig.clips)
-	_sprite.visible = true
+	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 
 
 func _swap(id: StringName, weapon: StringName) -> void:
@@ -120,3 +134,66 @@ func _grind(rig: CutRig) -> void:
 	var step3: int = pilot.melee.combo.ground % 3 - 1
 	_sprite.global_rotation += GRIND_JUDDER * float(step3)
 	_sprite.global_position += Vector2.from_angle(_sprite.global_rotation + PI * 0.5) * float(step3)
+
+
+func _mag_view() -> RivetMagView:
+	if _mag == null:
+		_mag = RivetMagView.new()
+		add_child(_mag)
+	return _mag
+
+
+## weapon-art's `tank` part on Rivet's back while a backpack weapon (the flamethrower) is carried in
+## the claw: across the shoulders, TANK_BACK_M behind the torso, turning with it.
+func _back_tank(rig: CutRig, on: bool) -> void:
+	var id: StringName = arsenal.art_id(pilot.hold.held)
+	if on and _tank == null:
+		var tex: Texture2D = art.part_texture(id, "tank") if art.has(id) else null
+		if tex == null:
+			return
+		_tank = Sprite2D.new()
+		_tank.texture = tex
+		_tank.scale = Vector2.ONE * art.world_scale(id)
+		_tank.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		add_child(_tank)
+	if _tank == null:
+		return
+	_tank.visible = on
+	for line: Line2D in _hose:
+		line.visible = on and _sprite != null and _sprite.visible
+	if on:
+		var fwd: Vector2 = rig.torso.global_transform.x.normalized()
+		var back_px: float = TANK_BACK_M * WeaponArt.WORLD_PX_PER_M
+		_tank.global_position = rig.torso.global_position - fwd * back_px
+		_tank.global_rotation = fwd.angle() + PI * 0.5
+		if _sprite != null and _sprite.visible:
+			_route_hose(fwd)
+
+
+## The hose leaves the tank's end nearest the wand, curves out past the body and meets the grip.
+func _route_hose(fwd: Vector2) -> void:
+	if _hose.is_empty():
+		for spec: Vector2 in [Vector2(3.2, 0.0), Vector2(1.4, 1.0)]:  # width, ink (0) or cream (1)
+			var line: Line2D = Line2D.new()
+			line.width = spec.x
+			line.default_color = RivetMagView.SHINE if spec.y > 0.5 else RivetMagView.INK
+			line.joint_mode = Line2D.LINE_JOINT_ROUND
+			line.z_index = 1
+			add_child(line)
+			_hose.append(line)
+	var side: Vector2 = fwd.orthogonal() * _tank.texture.get_width() * _tank.scale.x * 0.45
+	var to: Vector2 = _sprite.global_position
+	var from: Vector2 = _tank.global_position + side
+	if (_tank.global_position - side).distance_to(to) < from.distance_to(to):
+		from = _tank.global_position - side
+	var mid: Vector2 = (from + to) * 0.5
+	var out: Vector2 = (mid - _tank.global_position - fwd * side.length()).normalized()
+	var sag: Vector2 = mid + out * side.length() * 0.7
+	var pts: PackedVector2Array = PackedVector2Array()
+	for k: int in HOSE_POINTS:
+		var t: float = float(k) / float(HOSE_POINTS - 1)
+		@warning_ignore("return_value_discarded")
+		pts.append(to_local(from.lerp(sag, t).lerp(sag.lerp(to, t), t)))
+	for line: Line2D in _hose:
+		line.points = pts

@@ -17,6 +17,10 @@ var shock: PlayerShock = PlayerShock.shipped()
 var hold: WeaponHold = WeaponHold.new()
 ## rivet-arsenal: the carried guns and the switch keys (null: quest 1 keeps its own weapons).
 var carry: RivetCarry = null
+## rivet-arsenal: this tick's sway of the fire line off the aim (rad; the flamer's hose, else 0).
+var sway_rad: float = 0.0
+## rivet-arsenal: the molotov's wind-up before the bottle leaves.
+var throw: PlayerThrow = PlayerThrow.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
@@ -52,9 +56,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		motion.stop()
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
-	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy() and not wielding()
-	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed:
-		stage.intent.fire_at = rivet.pos + c.aim * actions.aim_range_m
+	_fire(stage, c)
 	var press: bool = _melee_press(c)
 	if hauler != null:
 		var power: bool = c.was_pressed(actions, &"power_hauler")
@@ -92,6 +94,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	hold.write_state(out)
 	if carry != null:
 		carry.write_state(out)
+		throw.write_state(out)
 	out.put_32(_previous)
 	if hauler != null:
 		hauler.write_state(out)
@@ -150,3 +153,20 @@ func _melee_press(c: PlayerCommand) -> bool:
 ## The attack is held down: melee, or a held fire with a melee weapon drawn (the chainsaw grinds).
 func _attack_held(c: PlayerCommand) -> bool:
 	return c.is_held(actions, &"melee") or (wielding() and c.is_held(actions, &"fire"))
+
+
+## A held fire shoots along the aim; the flamer's hose sways the line (ArsenalTable.Grip.sway).
+func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
+	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy() and not wielding()
+	var grip: ArsenalTable.Grip = hold.table.grip_of(hold.held)
+	var firing: bool = c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed
+	if grip != null and grip.windup_ticks > 0:  # the molotov: wind up, then the bottle leaves
+		var gun: GunHand = stage.arena.gun
+		var ready: bool = gun != null and gun.trigger.cooldown == 0 and not gun.trigger.reloading()
+		var at: Vector2 = throw.step(grip.windup_ticks, firing, armed, ready, c.aim)
+		if at != Vector2.ZERO:
+			stage.intent.fire_at = stage.arena.rivet.pos + at * actions.aim_range_m
+		return
+	sway_rad = grip.sway(stage.tick) if firing and grip != null else 0.0
+	if firing:
+		stage.intent.fire_at = stage.arena.rivet.pos + c.aim.rotated(sway_rad) * actions.aim_range_m
