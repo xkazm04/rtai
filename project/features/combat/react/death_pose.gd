@@ -83,13 +83,22 @@ static func _burn(r: HumanReact, rig: CutRig, k: float) -> void:
 static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
 	var fall: float = smoothstep(0.5, 0.64, k)
 	ReactPose.convulse(r, rig, 1.0 - fall)
-	rig.c_sprawl = maxf(rig.c_sprawl, 1.05 * fall)
-	rig.c_plank = fall  # stiff: legs together, arms along the sides
-	rig.plank_feet = 1.0 if r.dir.x < 0.0 else -1.0
+	stiff_channels(rig, r.dir, fall)
 	r.scl = Vector2(1.0, 1.0 - 0.12 * fall)
 	r.slide = r.dir * r.travel * fall
 	r.head_off += Vector2(-rig.plank_feet * PLANK_HEAD_PX * fall, 0.0)
 	r.turn = plank_turn(r.dir) * fall
+
+
+## The stiff corpse's rig channels at `fall` (0 standing, 1 down) for the shot `dir` (rig-local),
+## plus the scorch. Public for a death that owns its body outside HumanReact (showcase REQUEST
+## 29: brutality's KillShockFx sets these on the live rig before it copies it, then turns the
+## copy by plank_turn(dir) * fall and moves the head by -plank_feet * PLANK_HEAD_PX).
+static func stiff_channels(rig: CutRig, dir: Vector2, fall: float) -> void:
+	rig.dead = true
+	rig.c_sprawl = maxf(rig.c_sprawl, 1.05 * fall)
+	rig.c_plank = fall  # stiff: legs together, arms along the sides
+	rig.plank_feet = 1.0 if dir.x < 0.0 else -1.0
 	if fall > 0.5:
 		rig.c_hands_up = 0.0
 	CorpseScorch.ensure(rig)
