@@ -267,3 +267,6 @@ item 1); (2) Gearbox on the hybrid base; (3) a main-side Hauler still at the sam
 worktree at a1275c82: copy `.godot` and the native DLLs in, `--import` takes 15 s); (4) the held-gun size REQUEST
 to n5-look or a Call; (5) keep the REPORT draft current. Session state 19:03: head = this commit, tree clean,
 image.lock untouched this session, no Godot process of mine running, throwaway worktree removed.
+- 19:06 Gearbox read, not filmed: `powers.json` gearbox is a remote car hijack; Rivet stays on foot as the base
+  (hybrid) plan, his move scaled by `rivet_move_k`. No own body plan, so nothing for this lane to keep or break;
+  NEXT item (2) shrinks to "film it once for the REPORT".

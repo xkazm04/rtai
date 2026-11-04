@@ -56,7 +56,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Rivet's thin pale limbs are faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`). A darker
   limb tone was tried and rejected (`M/frames/rivet-limb-tone-trial.png`, JOURNAL 18:40).
 - Rivet came out at 1.20x the crowd's shoulder span (planned 1.1x): the hybrid shoulder plates are wide.
-- Gearbox was not filmed on the hybrid base (the Hauler was: section 3).
+- Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
+  Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
