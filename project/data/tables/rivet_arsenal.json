@@ -1,7 +1,6 @@
 {
   "art_stand_in": {
-    "assault-rifle": "machine_pistol",
-    "gloria": "pistol"
+    "assault-rifle": "machine_pistol"
   },
   "classes": {
     "backpack_hose": {

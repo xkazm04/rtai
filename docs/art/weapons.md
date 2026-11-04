@@ -180,6 +180,15 @@ from an ink density of about 0.43 (luminance about 140). The held guns' body ton
   `--held-small=off` keeps the full art at every zoom (A/B). A view that sets the texture to a full art (the
   empty tube from rivet-arsenal's HeldTube) is mapped to its small cell: HeldLod runs at process priority 20,
   after the claw view.
+- **Gloria is two-tone, not re-toned** (iteration 13): re-toned pale, she printed as the pistol's twin at
+  32 px/m (the same pale lozenge with inner marks; her tank sits behind the grip, against the claw). Her cell is
+  ink with the drawn cream tape and plate kept as paper (source luminance over 170), so the pistol reads as the
+  pale gun and Gloria as the dark banded one. Both tones sit outside the print's wash band (it12's tone-target
+  measure). `TWO_TONE` in the generator. Measured in the arena pit: `it13-held-gloria-two-tone-ab-arena-pit-32ppm-3x.png`.
+- **Printed like a limb (call 14 C) was tried and rejected** (iteration 13): with the LIMB print kind at
+  32 px/m every held gun turns into a grey sticker in the arm's own tone. It reads as a third forearm, the hand
+  cannon's drum and Gloria's tip are gone, and only the machine pistol's T survives
+  (`it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png`).
 - The pickups, the HUD icons and the weapon wall are unchanged: they print flat at their own size.
 - Generator: `tools/art/held_small.py <art_dir> [ids]`. `--sim <out.png>` previews the print offline (box
   minification + the shader's D4 thresholds) before a Godot run: `it12-held-small-print-sim.png`.
