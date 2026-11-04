@@ -123,3 +123,9 @@ NEXT (iteration 2), Tonnage first (depth before breadth), then Dent:
   spokes. A/B `M:frames/tonnage-morph-64ppm-keys-ab.png` (v1 top, v2 bottom, same ticks); both clips and the
   32 px/m strip re-cut on v2. Still weak: the late steam lobes shrink to small ink rings (frame 3); the in-between
   pose is still the scaled-down press (no plate folding). frames.json 8 entries, every file checked present.
+- 00:37 SCENARIOS on 58e885ac: 46 ran, 0 failed, exit 0, 0 SCRIPT ERROR (`E/scenarios-iter1.log`; replay identical
+  where reported). Gates this session: lint 13/13, unit 952/0 (merge tree) + test_ghost* 11/11 after, scenarios
+  46/0, director reel 16/16. Parity and the evidence runner not run (no native or sim change by this lane).
+Session state 00:38: head = this commit, tree clean, no Godot process of mine running, image.lock released by the
+  runner at 00:03 (one job, 58 s). NEXT (iteration 2) is the list above (00:27), item 3 now: the in-between pose as
+  plates folding + stamp dust; steam and seams are done (v2).
