@@ -46,6 +46,15 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - Leg rim (85b912e5): a cream sticker halo under the piston legs at gameplay scale only, so they read on dark
   asphalt at 32 px/m: `M/frames/rivet-legrim-ab-32ppm.png`.
 - Motion: `M/cast-hybrid-motion-48.mp4`, `M/frames/rivet-legs-motion-32ppm.png` (walk, faster sprint, claw combo).
+- Close-up tone (5ae6aa3f, iteration 9): the hybrid art was already tan, but both part prints threw the hue away,
+  so Rivet printed cream-white with violet-grey hatching. `BodyPlan.d5_warm` moves his D5 (56+ px/m) steel ramp to
+  a warm tan halfway to r2_c3; at 32 px/m he stays cream as in r2_a5. Live city at 64 px/m, same ticks, beside r2_c3:
+  `M/frames/rivet-warm-ab-vs-r2c3-64ppm.png` (clip `M/cast-warm-city-64.mp4`); director reel at 64 px/m
+  `M/cast-warm-director-64.mp4` (claw 2/2, pistol 2/2, machine pistol 4/4, the same ticks as before). Call 5.
+- Welder visor (0bcc34c6): a dark visor band with two cream eye slits on the helmet front, both tiers, alpha kept:
+  `M/frames/rivet-visor-ab-64ppm.png`. It reads at 64 px/m and does not show at 32 px/m (the head is ~8 px).
+- The D5 hit flash printed vermilion at 56+ px/m (missed when human-reactions moved print_part's flash to cream);
+  now cream. React board at 64 px/m re-shot: 0 vermilion px over 481 frames, every family reads.
 - The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
   script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
 
@@ -96,6 +105,12 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    d5-cast's cream "T1" crowns, a stronger head mark at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right;
    `M/frames/riot-helmet-navy-ab.png`). Revert = `git revert e1f848a5` (limbs too) or
    restore only `art/cop/head_cap.png` and `art/d5/cop/head_cap.png` from 29a853be.
+
+5. Rivet's close-up tone: A, warm tan metal at 56+ px/m (built, `RivetPlan.D5_WARM` 1.0, halfway to r2_c3's tan), or
+   B, the d5 lane's violet-grey steel (`D5_WARM` 0.0; `cast_lineup.gd -- --warm=0` renders it). Same ticks in the
+   city at 64 px/m beside r2_c3: `M/frames/rivet-warm-ab-vs-r2c3-64ppm.png`; on the pale slab
+   `M/frames/rivet-warm-lineup-ab-64ppm.png`. A full r2_c3 tan (`D5_WARM` above 1 is not meaningful; edit WARM_* in
+   `look_d5_part.gdshader`) would darken him further on asphalt. 32 px/m is unchanged either way.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

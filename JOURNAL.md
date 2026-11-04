@@ -417,3 +417,25 @@ Session state 23:20: head = this commit, tree clean, image.lock untouched, no Go
   Built: `BodyPlan.d5_warm` (0 = violet steel), `RivetPlan.D5_WARM` 1.0 / `static var d5_warm` (A/B), RigDetail
   materials [plain, tint] x [violet, warm], look_d5_part `warm` + WARM_HI/MID/LO halfway between the violet steel's
   values and r2_c3's sampled tan. `cast_lineup.gd -- --warm=<f>` for the A/B.
+- 23:00 evidence gate on c714f3f3 GREEN: lint 13/13, unit 940/0, scenarios 46, parity exact (mutation caught at
+  629), selftest goldens 11/11 (worst 1.06), block 5/5, world lock 0.00 %. (My warm edits landed in the tree while
+  it ran; the selftest after the commit gives the same numbers.) NEXT 1 done.
+- MILESTONE 23:03 NEXT 2 done, 5ae6aa3f: Rivet's D5 steel warm tan. Lineup A/B (`cast_lineup.gd -- --warm=0|1`,
+  `frames/rivet-warm-lineup-ab-64ppm.png`): tan limbs separate from the pale slab better. Live city 64 px/m same
+  ticks (`cast-warm-city-64.mp4`, 0 script errors; `frames/rivet-warm-ab-vs-r2c3-64ppm.png` beside r2_c3): tan
+  limbs and core, value held on asphalt, cream rim still outlines him. Still lighter than r2_c3 on purpose (middle
+  ground). Also: the D5 hit flash printed vermilion; now cream (react board 64 px/m, 481 frames, 0 vermilion px,
+  0 script errors, every family reads). Goldens unmoved, lint 13/13, unit 940/0. DECISION x2 in decisions.md;
+  REPORT Call 5.
+- 23:06 combat check at 64 px/m (`cast-warm-director-64.mp4`, `--bot=reel --reel=director --clean --rigs`, 1200
+  frames, 0 script errors): claw 2/2, pistol 2/2, machine pistol 4/4, identical to `cast-navy-director-64.mp4`.
+- MILESTONE 23:12 NEXT 3 done without Codex, 0bcc34c6: the helmet art was already the boxy welder plate; what was
+  missing was the visor. `helmet_visor.py` (masters tools) paints a dark band + two cream eye slits on the front
+  panel in both tiers, alpha kept. At 64 px/m: a dark visor bar with two pale spots (`frames/rivet-visor-ab-64ppm.png`
+  beside r2_c3); at 32 px/m no visible change (`cast-visor-city-32.mp4`, tick 420 crop). 2 provenance lines,
+  goldens unmoved, unit 940/0. Originals in `masters:n5/cast/scratch/helmet-orig/`.
+  Registry rules applied (`sprite-and-atlas-production`): source-part edit in both tiers with alpha locked;
+  (`shader-budget-authoring`) for the warm ramp: no new pass, no extra fetch, one more shared material pair.
+- 23:15 frames.json 15 (+ warm vs r2_c3, visor, warm lineup; dropped from the list, files kept: cast-director-ab-32
+  mp4, lineup-hybrid-ab, city-navy-ab-32 (REPORT cites them)). REPORT: section 3 + Call 5.
+- 23:16 scenarios on 0bcc34c6: 46 ran / 0 failed. frames/cast-ingame-vs-r2c6.png re-shot on 0bcc34c6 (was fa395f74, pre-navy).
