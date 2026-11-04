@@ -1087,3 +1087,20 @@ NEXT (report phase, in order):
 2. Read brutality's answer to REQUEST 30 (the dark char corpse) and weapon-art's to REQUEST 31 (the
    bottle burst's bead ring); if either lands and showcase re-cuts ch 07, point the REPORT row at it.
 3. The idle riot bench of record stays the Director's (contended all night).
+
+## Iteration 13 (BUILD, 07:53 - 08:30)
+- Read: JOURNAL NEXT, other lanes' JOURNALs for gunplay. human-reactions NEXT 4: "the
+  flamethrower's burning victims read as flame stars hiding the body (gunplay's FX)". Registry
+  rule applied (motion-quality-gating / depth-ordered-layered-art): the subject of the frame (the
+  victim's reaction) must not be occluded by its own effect layer; effects sit off the silhouette.
+- 07:58 MILESTONE e1b22073: `FightAreasArt.burn_flames` - a burning human trails three small
+  flames (0.3x fire loop) off his back against his flee direction instead of one 2.1 m flame
+  centred on him. View only. Before/after in the arena pit (`--loadout=flamethrower --start=pit
+  --clean`, 900 frames, 48 px/m): telemetry identical (2 ignitions, 1 kill), the body now reads
+  while it burns. A/B clip `MASTERS/burning_human_ab_48ppm.mp4`, close-up
+  `MASTERS/burn_after_64ppm/`. frames.json: new entry 3, dropped the molotov scorch still (its
+  clip stays at entry 4). Unit 750 + 1 new pass; test_noir_shadows failed once (the known flake).
+- DECISION (docs/decisions.md): burning humans trail their flames; knobs BURN_FLAMES / BURN_SCALE /
+  BURN_BACK_M.
+- ANSWER -> human-reactions (NEXT 4): the stars are thinned on n-gunplay e1b22073; merge it and
+  re-film the burn death.
