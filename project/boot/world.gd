@@ -117,6 +117,11 @@ func hitches() -> HitchRecorder:
 	return _hitches
 
 
+## The sim loop's share of the last frame (ms): perf-city's fight frame log reads it.
+func frame_loop_ms() -> float:
+	return _loop_ms
+
+
 ## Builds the context (the autoloads in the game, fakes in tests) and an empty sim loop.
 func start(events: EventBus, data: DataStore, master_seed: int) -> void:
 	_ctx = build_context(events, data, master_seed)
