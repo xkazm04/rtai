@@ -87,7 +87,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Part markers (one D4 ped part at a time recoloured vermilion, `M/frames/crowd-part-markers-32ppm.png`): the
   thighs show at the lobes' edges and the shoes at their tips, the upper arms end-on are the patches beside the
   head, the coat torso is only a rim around the head; forearm, pelvis, shin and foot_toeoff barely show. The lobes'
-  dark interior is still unassigned (it sits above the thighs and did not move when the legs were hidden). Trials, each
+  dark interior is ped body art (all parts marked at once turn it red, `M/frames/crowd-part-markers-b-32ppm.png`) but
+  no single part fills it: an overlap still to assign. Trials, each
   reverted: coat fill +42 L, a 0.72 head scale, straighter standing legs, a thinned coat outline, ped leg_w 0.7,
   all together (`M/frames/crowd-trials-32ppm.png`), and a new Codex ped sheet with a pale trench coat and smaller
   heads installed in D4 (`M/frames/crowd-sheet-trial-32ppm.png`, sheet `masters:n5/cast/gen/r4/out/ped_pale_a.png`,

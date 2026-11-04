@@ -527,13 +527,18 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   Note: 64 px/m shows the D5 overlay on top, so D4 markers only read at 32 px/m. REPORT and the decisions line
   corrected again.
 
+- 00:06 more markers (each reverted; tree clean): every D4 ped body part vermilion at once (heads kept) turns the
+  lobes fully red, so they are ped body art, not a post or shadow pass; forearm_endon alone = the hand circles at
+  the sides. No single part fills the lobes, so the interior is an overlap (thigh under something drawn above it
+  for the standing pose). Still `frames/crowd-part-markers-b-32ppm.png`. Halos are cream silhouettes (rig_build
+  `_halo`), not the cause.
+
 NEXT (iteration 11):
-1. Assign the lobes' dark interior: markers still to run at 32 px/m: head_hat (and the head/torso HALO_BODY copies,
-   rig_build.gd 42-43), torso_jacket for the jacket look, thigh at z (does a second thigh draw, e.g. the D5
-   overlay at 32 px/m?), forearm_endon. Read rig_build.gd `_halo` and RigDetail's tier switch first.
-2. Fix that part (art via the d4 chars sheets ped_b/ped_c + `cut_ped_sheet.py`/`install_ped_sheet.py`, or the ped
-   rest pose), then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at 32 px/m, then the
-   react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated line), and a
-   provenance line per shipped part.
+1. Assign the lobes by PAIR markers at 32 px/m (two parts vermilion at once: thigh+pelvis, thigh+torso,
+   thigh+shin, pelvis+torso), or the inverse (all parts red except one); then print the standing-pose sprite list
+   of one ped (z_index, position, texture) from a tiny dev script to see what overlaps the thighs ahead of the chest.
+2. Fix that part (art via the d4 chars sheets + `cut_ped_sheet.py`/`install_ped_sheet.py`, or the ped rest pose),
+   then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at 32 px/m, then the react board,
+   ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated line), provenance lines.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session state 00:07: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session end 00:09: head = this commit, tree clean, image.lock released, no Godot process of mine running.
