@@ -100,7 +100,8 @@ bench (the lock was taken by another lane at 07:41 and the session ended at 08:1
 - ch 06 electro: after the X-ray strobe the corpse still reads as a standing cop, gun toward Rivet,
   and no scorch shows (REQUEST 29 -> brutality: the electro kill's KillShockFx owns this corpse,
   so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it). Re-checked on round 15 at 08:22
-  (evidence/r15/sheet-electro.jpg): unchanged, still open.
+  (evidence/r15/sheet-electro.jpg): unchanged, because brutality's answer `63cc3ce1` (08:20, the
+  body lies out long along the shot) is not in round 15. Close after the Director's merge.
 - ch 07 molotov: fixed mid-chapter (REQUEST 27, gunplay aa471560: the fire opens round the corpse); at the chapter's end the victim sinks into the char.
 - ch 13 ray gun: fixed (REQUEST 26, brutality 9c9aaabf): a long dust heap with the crumpled uniform.
 - ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.
@@ -112,4 +113,7 @@ gates plus re-export did not fit before the 08:40 report):
 - weapon-art `3a703dbd`: the rocket blast ends in smoke, not a ring of cream beads (render only).
 - gunplay `83429487`: a knocked-down fighter is held 29 ticks while his rise plays (sim-side; the
   Director's merge must re-run parity and scenarios).
-- brutality: docs only after round 15. rivet-arsenal, human-reactions: nothing new.
+- brutality `63cc3ce1`: the electro kill lays the body out long along the shot instead of the
+  standing rig (REQUEST 29's answer; render only). Landed 08:20, after round 15's merge, so the
+  08:22 re-check could not show it.
+- rivet-arsenal, human-reactions: docs only.

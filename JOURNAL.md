@@ -1136,7 +1136,17 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
 - DECISION 08:31: no merge round 16. Post-round-15 lane tips: weapon-art 3a703dbd (rocket blast
   ends in smoke, render only), gunplay 83429487 (knockdown rise hold, sim-side). Gates (~7 min) +
   export do not fit before 08:40, and the freeze forbids new builds; listed in REPORT "After the freeze".
-- NEXT (Director): merge n-weapon-art and n-gunplay tips into n-showcase, run the four gates
+- NEXT (Director, superseded by the 08:31 NEXT): merge n-weapon-art and n-gunplay tips into n-showcase, run the four gates
   (gunplay's change is sim-side: parity + scenarios matter), re-export, then film round 16 with
   cut.sh + reel.sh and bench under bench.lock. Open: REQUEST 29 -> brutality (electro corpse
   upright), showcase-3 (pit wall bars on the city plaza).
+
+## Session 08:31 (iteration 11, STABILIZE, past freeze)
+- 08:32 tree clean; exe round 15 present (08:19). Lane tips since: docs only, except the three
+  post-round-15 code commits. FRICTION: REPORT said "brutality: docs only after round 15", wrong:
+  brutality `63cc3ce1` (08:20, electro body lies out along the shot = REQUEST 29's answer) is not
+  in n-showcase; that is why the 08:22 re-check still showed the upright corpse. REPORT corrected
+  ("After the freeze" + "Known wrong" ch 06). No build, no merge (freeze).
+- NEXT (Director): merge n-weapon-art (3a703dbd), n-gunplay (83429487, sim-side: parity +
+  scenarios), n-brutality (63cc3ce1) into n-showcase, run the four gates, re-export, film round 16
+  (cut.sh + reel.sh, electro chapter first to close REQUEST 29), bench under bench.lock.
