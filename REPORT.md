@@ -40,7 +40,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on 27c48341.
+The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
