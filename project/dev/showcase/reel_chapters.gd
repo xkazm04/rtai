@@ -57,6 +57,7 @@ static func all() -> Array[Chapter]:
 		Chapter.new(&"mini_nuke", &"mini_nuke", &"gun", 480, _group(15.0)),
 		_armored(),
 		Chapter.new(&"electro_baton", &"electro_baton", &"blade", 330, [Vector2(2.4, 0.0)]),
+		Chapter.new(&"electro_chain", &"electro_gun", &"tap", 300, _group(5.0)),
 	]
 	return out
 
