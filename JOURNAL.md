@@ -948,3 +948,18 @@ NEXT:
 - GATES 08:22 on 63cc3ce1 (private APPDATA, CONTENDED): scenarios 35/35, 0 script errors
   (evidence/brutality/scenarios-it13.log). Parity and bench not run (render-only change). Session
   closed 08:23; no Godot process of mine running; scratch capture moved to masters.
+
+## Iteration 14 (08:23-08:30, BUILD)
+- 08:23 session opened 7 minutes before the freeze; too short to build, capture and gate a change,
+  so no code was touched. Checked the open REQUESTs to brutality: showcase's REQUEST 29 (the
+  electro corpse reads standing) is the one they list as still open (n-showcase JOURNAL lines
+  1092, 1117), but those lines were written before 63cc3ce1 landed the lie-out. For the Director:
+  REQUEST 29 was answered by 63cc3ce1 (clip `clips/electro-lie-down-city-48ppm-it13.mp4`).
+- Gates of record unchanged: 63cc3ce1, lint 13/13, unit 787/787, scenarios 35/35 (CONTENDED).
+
+NEXT (unchanged from iteration 13):
+1. Electro corpse: replace the stretched lie-out with human-reactions' DeathPose._shock channels
+   once that is on the merged main.
+2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
+   under the patch stars): check both on the merged main.
+3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
