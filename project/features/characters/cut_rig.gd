@@ -17,6 +17,10 @@ const STRIDE_RUN: float = 92.0
 const COLLAR_K: float = 0.22
 ## The sticker rim (cream halo under each part), as a fraction of its old width (0.5 = halved).
 const RIM_K: float = 0.5
+## n5-cast: the leg rim's extra width across the bone at gameplay scale (1 = twice the
+## part's width): the lean piston legs print ~2 screen px at 32 px/m, mostly outline,
+## so they vanish on asphalt.
+const LEG_RIM_W: float = 0.9
 
 var plan: BodyPlan = null
 var lib: PartLibrary = null
@@ -228,7 +232,9 @@ func _on_view(px: float) -> void:
 		collar_spr.scale = Vector2.ONE * (1.0 + COLLAR_K * (1.0 - smoothstep(0.11, 0.14, px)))
 	for i: int in halos.size():
 		halos[i].visible = hk > 0.01
-		if halo_limb[i] == 1:
+		if halo_limb[i] == RigBuild.HALO_LEG:
+			halos[i].scale = Vector2(1.0 + 0.04 * RIM_K * hk, 1.0 + LEG_RIM_W * hk)
+		elif halo_limb[i] == RigBuild.HALO_ARM:
 			halos[i].scale = Vector2(1.0 + 0.04 * RIM_K * hk, 1.0 + 0.45 * RIM_K * hk)
 		else:
 			halos[i].scale = Vector2.ONE * (1.0 + 0.22 * RIM_K * hk)

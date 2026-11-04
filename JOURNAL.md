@@ -277,3 +277,14 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
   uniform held-scale factor on Rivet's carry (or a smaller held length per weapon) would restore the hand-to-gun
   ratio of the approved combat night. If you decide to keep them, I will list it as a Call for the owner in REPORT.
   Grips follow the new hand joints; nothing on my side blocks either choice.
+
+## Iteration 7 (21:42-22:42), resumed after the 19:12 stop
+
+- 21:43 Read JOURNAL, git log, the diff. The four uncommitted rig files are NEXT item 1 (Rivet's limbs on dark
+  asphalt): a LOD-gated cream leg rim (BodyPlan.leg_rim, RigBuild.HALO_LEG, CutRig.LEG_RIM_W 0.9) under the
+  thigh, shin and foot, Rivet only. Plan: finish (lint), judge at 32 px/m on asphalt and slab, commit or revert.
+- 21:46 lint failed on one 101-char comment line in cut_rig.gd (that was the stop's gdlint failure); rewrapped,
+  lint 13/13. Unit 940/0. The 19:11-19:13 legrim A/B already in masters (`frames/rivet-legrim-ab-32ppm.png`,
+  `cast-legrim{,-before}-city-32.mp4`): legs read as pale pistons on asphalt and slab. Decided: FINISH and commit.
+  - FRICTION: ran look_golden without `--fixed-fps 60` first: the fight runs in wall time and every frame "fails"
+    (means 2-7, Rivet dead in one). With `--fixed-fps 60`: junction 11/11 (worst mean 0.57), block 5/5.

@@ -101,6 +101,9 @@ var hip_follow: float = 0.0
 var hip_twist_max: float = deg_to_rad(70.0)
 ## Rivet's cream rods print as one flat value at gameplay scale; flat bold human limbs do not.
 var limb_lod: bool = true
+## n5-cast: a cream sticker rim under the thigh, shin and foot at gameplay scale
+## (Rivet's lean piston legs).
+var leg_rim: bool = false
 
 
 func has_collar() -> bool:
