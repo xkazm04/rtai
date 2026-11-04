@@ -439,3 +439,9 @@ Session state 23:20: head = this commit, tree clean, image.lock untouched, no Go
 - 23:15 frames.json 15 (+ warm vs r2_c3, visor, warm lineup; dropped from the list, files kept: cast-director-ab-32
   mp4, lineup-hybrid-ab, city-navy-ab-32 (REPORT cites them)). REPORT: section 3 + Call 5.
 - 23:16 scenarios on 0bcc34c6: 46 ran / 0 failed. frames/cast-ingame-vs-r2c6.png re-shot on 0bcc34c6 (was fa395f74, pre-navy).
+- 23:18 TRIAL (rejected, not committed): cop crowns in bright police blue, as the helmets of r2_c6 and r2_a5
+  (`cop_crown_hi.py` in masters tools on the LFS pre-navy originals, `git show <rev>:<png> | git lfs smudge`).
+  Live city 32 px/m, same ticks (`frames/cop-crown-trial-32ppm.png`): the bright crown merges with the bright
+  upper-arm sleeves (upperarm.png carries the cop_blue_hi, not the torso) into one blue cluster; navy keeps the head a
+  distinct dark centre. Reverted (git checkout of the 4 files + re-import). REPORT Call 4 gains option C.
+  FRICTION: `git show rev:file.png` yields the LFS pointer; pipe it through `git lfs smudge`.
