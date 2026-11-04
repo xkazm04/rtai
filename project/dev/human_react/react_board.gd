@@ -24,6 +24,7 @@ const SEGMENTS: Array[Array] = [
 	["electro stun", &"shock", false, false, 110],
 	["burning", &"burn", false, false, 180],
 	["hit in cover", &"light", false, true, 90],
+	["pedestrians startled by a shot: cower away from it (cops hold)", &"cower", false, false, 80],
 	["death: round (back from the front, crumple from behind)", &"light", true, false, 150],
 	["death: melee (fold, topple)", &"melee", true, false, 150],
 	["death: blast (thrown, tumbling)", &"blast", true, false, 150],
@@ -152,7 +153,10 @@ func _hit_all(seg: Array) -> void:
 		var dir: Vector2 = DIRS[i % DIRS.size()]
 		var shielded: bool = LOOKS[i] == 6 and hit_class in [&"light", &"heavy", &"melee"]
 		_tracer(i, f.pos[i], dir)
-		if lethal:
+		if hit_class == CrowdReact.COWER:  # CrowdReact's startle: pedestrians only
+			if LOOKS[i] < 5:
+				HumanReact.on(rig).play(rig, CrowdReact.COWER, dir, _pipe.table)
+		elif lethal:
 			var kind: StringName = _pipe.kill(rig, hit_class, dir, &"")
 			if hit_class != &"burn" and hit_class != &"shock":
 				var slide: float = minf(_pipe.table.travel(kind) * PX, POOL_LEAD_MAX_PX)

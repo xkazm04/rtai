@@ -1,7 +1,7 @@
 import json,subprocess,sys
 d,out,title=sys.argv[1],sys.argv[2],sys.argv[3]
 tl=json.load(open(d+"/timeline.json"))
-total=811/30.0
+import glob; total=len(glob.glob(d+"/f_*.jpg"))/30.0
 f=[]
 font="C\:/Windows/Fonts/arialbd.ttf"
 f.append(f"drawtext=fontfile='{font}':text='{title}':x=24:y=20:fontsize=22:fontcolor=0xF2EBCC:box=1:boxcolor=0x17131Bcc:boxborderw=8")

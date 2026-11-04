@@ -56,12 +56,12 @@ func _blocked_or_hit(k: int, x: float, y: float) -> bool:
 	_s.hx[hit] = _s.qvx[k] / l
 	_s.hy[hit] = _s.qvy[k] / l
 	_s.counters[SimConst.CN_KILLED] += 1
-	_scare(x, y)
+	scare(x, y)
 	_s.qalive[k] = 0
 	return true
 
 
-func _scare(x: float, y: float) -> void:
+func scare(x: float, y: float) -> void:
 	for j: int in _h.query(x, y, 2):
 		if _s.kind[j] != SimConst.K_PED or _s.mode[j] == SimConst.M_DEAD:
 			continue

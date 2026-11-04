@@ -71,6 +71,12 @@ func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
 	_call(&"strike", [i, vx, vy, lethal])
 
 
+func scare(x: float, y: float) -> void:
+	# A DLL built before the entry (other lanes' copies) skips it; parity catches the drift.
+	if _o != null and _o.has_method(&"scare"):
+		_call(&"scare", [x, y])
+
+
 func set_obstacles(xy: PackedFloat64Array) -> void:
 	_call(&"set_obstacles", [xy])
 

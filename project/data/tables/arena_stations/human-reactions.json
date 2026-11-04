@@ -1,19 +1,19 @@
 {
-  "doc": "human-reactions stations: the reaction line, four standing human dummies 2.5 m apart in the hub (x 6..13.5, y 2.5) that never die, so every hit plays a wound family on its cast rig (run the arena with --rigs): walk around one and shoot it from the front, behind and both sides to see the flinch follow the round. The standard deaths play in the pit (enemy_pit / arena_pit), where hits kill. Dev scene with every family and death on patrol, riot and pedestrian rigs: res://dev/human_react/react_board_run.gd.",
+  "doc": "human-reactions stations: the reaction line, four standing human dummies 4 m apart in the hub (x 1..13, y 1.5) that never die, so every hit plays a wound family on its cast rig (run the arena with --rigs): --bot=react_line walks Rivet round each and shoots it from the west, north, east and south; or walk around one and shoot it from the front, behind and both sides to see the flinch follow the round. The standard deaths play in the pit (enemy_pit / arena_pit), where hits kill. Dev scene with every family and death on patrol, riot and pedestrian rigs: res://dev/human_react/react_board_run.gd.",
   "lane": "human-reactions",
   "schema": "gtai.arena-station/1",
   "stations": [
     {
       "area": "hub",
-      "doc": "Four human dummies in a line: shoot or claw each from four sides; the reaction follows the hit (flinch for light rounds, stagger for heavy, spin or fold for melee, stun for the shock).",
+      "doc": "Four human dummies in a line (patrol cop, riot cop facing east with the shield, two pedestrians): shoot or claw each from four sides; the reaction follows the hit (flinch for light rounds, stagger for heavy, spin or fold for melee, stun for the shock, the riot cop recoils behind the shield from the east).",
       "id": "react_line",
       "measures": [],
       "name": "Reaction line",
       "spawns": [
         {
           "at": [
-            6,
-            2.5
+            1,
+            1.5
           ],
           "id": "react_dummy_1",
           "kind": "target",
@@ -23,8 +23,8 @@
         },
         {
           "at": [
-            8.5,
-            2.5
+            5,
+            1.5
           ],
           "id": "react_dummy_2",
           "kind": "target",
@@ -34,8 +34,8 @@
         },
         {
           "at": [
-            11,
-            2.5
+            9,
+            1.5
           ],
           "id": "react_dummy_3",
           "kind": "target",
@@ -45,8 +45,8 @@
         },
         {
           "at": [
-            13.5,
-            2.5
+            13,
+            1.5
           ],
           "id": "react_dummy_4",
           "kind": "target",

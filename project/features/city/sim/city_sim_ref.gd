@@ -73,6 +73,10 @@ func strike(i: int, vx: float, vy: float, lethal: bool) -> void:
 	CitySimStrike.strike(_s, i, vx, vy, lethal)
 
 
+func scare(x: float, y: float) -> void:
+	_shots.scare(x, y)
+
+
 func set_obstacles(xy: PackedFloat64Array) -> void:
 	_s.obst = xy.slice(0, mini(xy.size() >> 1, SimConst.OBST_MAX) * 2)
 

@@ -14,6 +14,8 @@ const STRIKE_EVERY: int = 97
 ## is re-placed 9 m ahead of the first cars of side a's snapshot, so traffic brakes for it, stands
 ## longer than CitySimCarPass.PASS_WAIT_S and pulls out into the oncoming lane to pass.
 const OBST_EVERY: int = 300
+## Every SCARE_EVERY steps a bang 1.5 m off the first live person (scare(), lane human-reactions).
+const SCARE_EVERY: int = 61
 const SIM_SEED: int = 4242
 const SPAWN_SEED: int = 99
 const RIOT: Vector2 = Vector2(64.0 * 8 + 12.0, 64.0 * 8 + 12.0)
@@ -123,6 +125,11 @@ static func _vehicle_inputs(a: CitySimBackend, b: CitySimBackend, st: int) -> vo
 	if st % STRIKE_EVERY == 48:
 		_strike(a, st)
 		_strike(b, st)
+	if st % SCARE_EVERY == 20:
+		var snap: PackedFloat64Array = a.snapshot()
+		if snap.size() >= SimConst.SNAP_STRIDE and snap[0] < SimConst.SNAP_PROJ_BASE:
+			a.scare(snap[4] + 1.5, snap[5])
+			b.scare(snap[4] + 1.5, snap[5])
 	if st % OBST_EVERY == 7:
 		var xy: PackedFloat64Array = _obstacles(a.snapshot())
 		a.set_obstacles(xy)
