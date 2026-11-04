@@ -11,6 +11,12 @@ const MELEE_CURL: float = 0.55
 const MELEE_LIE: float = 0.7
 ## The blast corpse's thrown leg (c_kick): it lands twisted, not in the round's X.
 const BLAST_TWIST: float = 0.55
+## The stiff electro corpse (showcase REQUEST 24: from above the old plank read as a standing
+## cop): hit from the front it falls back on its heels, feet toward the shooter and the head
+## thrown PLANK_HEAD_PX (part px) past the shoulders away from him, turned PLANK_TILT (rad) off
+## the shot, over a soot scorch (CorpseScorch). Hit from behind it falls forward, mirrored.
+const PLANK_HEAD_PX: float = 70.0
+const PLANK_TILT: float = 0.3
 
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
@@ -76,7 +82,11 @@ static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
 	ReactPose.convulse(r, rig, 1.0 - fall)
 	rig.c_sprawl = maxf(rig.c_sprawl, 1.05 * fall)
 	rig.c_plank = fall  # stiff: legs together, arms along the sides
+	rig.plank_feet = 1.0 if r.dir.x < 0.0 else -1.0
 	r.scl = Vector2(1.0, 1.0 - 0.12 * fall)
 	r.slide = r.dir * r.travel * fall
+	r.head_off += Vector2(-rig.plank_feet * PLANK_HEAD_PX * fall, 0.0)
+	r.turn = r.side * PLANK_TILT * fall
 	if fall > 0.5:
 		rig.c_hands_up = 0.0
+	CorpseScorch.ensure(rig)

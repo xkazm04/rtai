@@ -29,6 +29,8 @@ var carry: float = 1.0
 ## What post() draws: body offset (part px), body turn, body scale, head turn/offset/scale.
 var off: Vector2 = Vector2.ZERO
 var rot: float = 0.0
+## The whole rig (legs too) turned this far (rad) after the pose: a rigid corpse lands off-axis.
+var turn: float = 0.0
 var scl: Vector2 = Vector2.ONE
 var head_rot: float = 0.0
 var head_off: Vector2 = Vector2.ZERO
@@ -110,12 +112,14 @@ func post(rig: CutRig) -> void:
 	h.origin += head_off
 	rig.head.transform = h
 	rig.modulate = Color.WHITE.lerp(CHAR, tint)
+	rig.rotation += turn
 
 
 func _rest() -> void:
 	slide = Vector2.ZERO
 	off = Vector2.ZERO
 	rot = 0.0
+	turn = 0.0
 	scl = Vector2.ONE
 	head_rot = 0.0
 	head_off = Vector2.ZERO

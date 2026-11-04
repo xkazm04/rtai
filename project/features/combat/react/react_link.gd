@@ -48,6 +48,8 @@ var _corpses: Dictionary[int, Array] = {}
 var _kill_kind: Dictionary[int, StringName] = {}
 ## The state family each fighter held last frame (released when its state ends).
 var _held: Dictionary[int, StringName] = {}
+## The rigs the last apply() played on (shield_test reads them; render side).
+var _rigs: CharacterRigs = null
 
 
 static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
@@ -72,6 +74,7 @@ func hit_class_of(weapon: StringName) -> StringName:
 
 ## Plays every hit since the last call on its victim's rig (skipped when it has no full rig).
 func apply(rigs: CharacterRigs) -> void:
+	_rigs = rigs
 	for h: Array in _pending:
 		var id: int = h[0]
 		var rig: CutRig = rigs.rig_for(id)
@@ -90,6 +93,7 @@ func apply(rigs: CharacterRigs) -> void:
 			deaths += 0 if kind == &"signature" else 1
 			if kind != &"signature":
 				_corpses[id] = [kind, dir]
+				Log.info("react", "%s on %d, frame %d" % [kind, id, Engine.get_process_frames()])
 		elif _held.get(id, &"") != &"knockdown":
 			_wound(rig, id, hit_class, dir, cover)
 	_pending.clear()
@@ -106,6 +110,24 @@ func _wound(rig: CutRig, id: int, hit_class: StringName, dir: Vector2, cover: bo
 	if kind == &"shield":
 		blocks += 1
 		blocked.emit(id, dir)
+
+
+## gunplay's GunFx.shield_test (render side; wire `gun_fx.shield_test = link.shield_test`): true
+## when a riot shield stops a round along `dir` (world) into `f`: alive, on a full rig with the
+## shield look, hit from its front. The same test that plays the shield family and emits blocked.
+func shield_test(f: Fighter, dir: Vector2) -> bool:
+	if _rigs == null or f == null or not f.alive():
+		return false
+	return blocks_round(_rigs.rig_for(f.id), dir, pipe.table)
+
+
+## True when `rig` (null = no full rig) wears the riot shield and a round along `dir` (world)
+## comes at its front: the shield family, never a body hit.
+static func blocks_round(rig: CutRig, dir: Vector2, table: ReactTable) -> bool:
+	if rig == null or not shielded(rig):
+		return false
+	var local: Vector2 = dir.normalized().rotated(-rig.facing)
+	return table.reaction_for(&"light", local, true, false) == &"shield"
 
 
 ## True when the rig carries the riot shield (its look): a round from the front then recoils

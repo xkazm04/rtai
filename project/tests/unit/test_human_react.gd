@@ -111,6 +111,22 @@ func test_an_electro_death_lies_stiff_a_round_death_sprawls() -> void:
 	assert_eq(rig2.c_plank, 0.0, "a round death keeps the X sprawl")
 
 
+func test_the_stiff_corpse_falls_back_on_its_heels_over_a_scorch() -> void:
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"death_shock", Vector2.LEFT, _table)  # from the front
+	for i: int in 300:
+		r.pre(_rig, SimClock.TICK_DT)
+	assert_eq(_rig.plank_feet, 1.0, "feet toward the shooter, the head thrown away")
+	assert_almost_eq(absf(r.turn), DeathPose.PLANK_TILT, 0.01, "lands off the shot's axis")
+	assert_true(_rig.get_node_or_null(NodePath(CorpseScorch.NAME)) is CorpseScorch, "scorched")
+	var rig2: CutRig = autofree(CutRig.new())
+	var r2: HumanReact = HumanReact.on(rig2)
+	r2.play(rig2, &"death_shock", Vector2.RIGHT, _table)  # from behind
+	for i: int in 300:
+		r2.pre(rig2, SimClock.TICK_DT)
+	assert_eq(rig2.plank_feet, -1.0, "shot in the back it falls forward")
+
+
 func test_a_melee_death_lies_curled_not_in_the_x() -> void:
 	var r: HumanReact = HumanReact.on(_rig)
 	r.play(_rig, &"death_melee", Vector2.LEFT, _table)
@@ -132,6 +148,8 @@ func test_a_blast_death_lands_twisted() -> void:
 func test_the_clip_pass_clears_the_corpse_channels() -> void:
 	_rig.c_plank = 1.0
 	_rig.c_kick = 0.55
+	_rig.plank_feet = 1.0
 	RigClips.new().sample(_rig, SimClock.TICK_DT)
 	assert_eq(_rig.c_plank, 0.0, "a reused rig does not lie stiff")
 	assert_eq(_rig.c_kick, 0.0, "nor keep a leg thrown up")
+	assert_eq(_rig.plank_feet, -1.0, "nor its stiff feet's side")
