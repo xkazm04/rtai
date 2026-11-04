@@ -19,7 +19,10 @@ func test_table_loads_the_core_six_and_gloria() -> void:
 		assert_true(_table.playable().has(id), str(id))
 	for id: StringName in [&"electro_gun", &"molotov", &"gloria"]:
 		assert_true(_table.playable().has(id), str(id))
-	assert_false(_table.playable().has(&"mini_nuke"), "unique rows wait")
+	for id: StringName in [
+		&"hand_cannon", &"plasma_rifle", &"ray_gun", &"homing_shard", &"mini_nuke"
+	]:
+		assert_true(_table.playable().has(id), "the unique five are built: %s" % id)
 
 
 func test_enemy_rounds_are_slower_than_the_players() -> void:

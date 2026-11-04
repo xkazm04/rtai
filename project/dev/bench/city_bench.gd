@@ -105,7 +105,7 @@ func _finish() -> void:
 		"vsync": _args["--vsync"],
 		"label": _args["--label"] if _args["--label"] != "" else _args["--scenario"],
 		"frames": _stats.frames,
-		"metrics": _with_hitches(_stats.metrics()),
+		"metrics": _with_blood(_with_hitches(_stats.metrics())),
 		"hitches": _world.hitches().records,
 		"cpu": OS.get_processor_name(),
 		"processor_count": OS.get_processor_count(),
@@ -147,6 +147,20 @@ func _with_hitches(m: Dictionary[String, float]) -> Dictionary[String, float]:
 	for cause: String in ["outside", "pipeline", "game", "render", "present", "unexplained"]:
 		m["over50." + cause] = over50.get(cause, 0)
 		m["hitchesOver50"] += over50.get(cause, 0)
+	return m
+
+
+## The combat blood's own cost (lane gunplay, riot REQUEST 2): CombatBlood step + BloodFx redraw
+## microseconds per frame, and how many frames redrew the pools and the flying drops.
+func _with_blood(m: Dictionary[String, float]) -> Dictionary[String, float]:
+	var glue: CityBlood = _characters.blood
+	if glue == null or glue.blood.frames == 0:
+		return m
+	var cb: CombatBlood = glue.blood
+	m["bloodUsPerFrame"] = float(cb.spent_us) / cb.frames
+	m["bloodFrames"] = cb.frames
+	m["bloodPoolDraws"] = cb.blood.draws
+	m["bloodDropDraws"] = cb.blood.drops_draws
 	return m
 
 

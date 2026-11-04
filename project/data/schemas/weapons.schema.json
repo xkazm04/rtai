@@ -175,6 +175,11 @@
               "shock"
             ]
           },
+          "homing_dps": {
+            "maximum": 720,
+            "minimum": 0,
+            "type": "number"
+          },
           "id": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"

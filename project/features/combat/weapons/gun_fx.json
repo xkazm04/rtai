@@ -1,0 +1,99 @@
+{
+  "claw_side_m": 0.3,
+  "default": {
+    "casing_m": 0,
+    "casing_s": 2.5,
+    "mag_drop": false,
+    "muzzle_m": 1.0,
+    "muzzle_side_m": 0.45,
+    "muzzle_ticks": 0,
+    "smoke": 0.8,
+    "spikes": 4,
+    "tracer_core_px": 4,
+    "tracer_px": 9
+  },
+  "doc": "Lane gunplay (night 2026-11-04): how each bullet gun of weapons.json reads in the real fight (GunFx + GunFxArt, drawn by FxView). Metres and seconds; claw_side_m = how far right of Rivet's centre line his rig holds the gun (the flash, smoke and shells leave there; measured on the 64 px/m range clip); the view steps it on the stage tick, never on frame delta, and it never touches the sim. casing_m = the ejected shell's length (0 = none); casing_s = how long a shell lies before it fades. muzzle_m = the forward flare; muzzle_side_m = the side jets; spikes = 3 for a forward flare with two side jets (a heavy single shot), 4+ for a star that turns 45 degrees every shot (an automatic's strobe); muzzle_ticks = how long the flash holds. smoke = the gun smoke puff's scale after a shot (an automatic's small puffs pile into a haze). tracer_px / tracer_core_px = the ink casing and the cream core of the tracer (its length is weapons.json tracer_len_m). mag_drop = an empty magazine falls from the claw when a reload starts. default = every other table gun (rocket, flame, electro, molotov draw their own projectile in FightAreasArt): no shells, no magazine, no star flash, only the smoke puff. Shell colour: casing (a muted brass; red is blood only). dump = a revolver: no shell per shot; this many spent shells fall from the claw at once when a reload starts. ring_m = a heavy gun's shock ring: an ink-and-cream ring opening to this radius at the muzzle over 9 ticks (0 = none). fat = a heavy flare's body: how many times wider its base lobes are than the pistol's (1 = the pistol). Energy guns: spikes 0 = a round bloom with an ink ring instead of a flare; bolt_px = the round is a fat pulsing cream capsule this wide (a plasma bolt) instead of a tracer line; scorch = where it stops it leaves a burnt ring and bursts in a ring (GunFxMarks.scorch, pop).",
+  "palette": {
+    "casing": "#b8913f",
+    "dust": "#8c8375",
+    "spark": "#f2e8d5"
+  },
+  "weapons": {
+    "hand_cannon": {
+      "casing_m": 0.3,
+      "casing_s": 4,
+      "dump": 6,
+      "fat": 3.0,
+      "mag_drop": false,
+      "muzzle_m": 2.2,
+      "muzzle_side_m": 0.9,
+      "muzzle_ticks": 4,
+      "ring_m": 1.2,
+      "smoke": 2.4,
+      "spikes": 3,
+      "tracer_core_px": 7,
+      "tracer_px": 16
+    },
+    "homing_shard": {
+      "casing_m": 0,
+      "mag_drop": true,
+      "muzzle_m": 0.6,
+      "muzzle_side_m": 0.3,
+      "muzzle_ticks": 2,
+      "scorch": true,
+      "smoke": 0.25,
+      "spikes": 0,
+      "tracer_core_px": 3,
+      "tracer_px": 7
+    },
+    "machine_pistol": {
+      "casing_m": 0.17,
+      "casing_s": 2,
+      "mag_drop": true,
+      "muzzle_m": 0.85,
+      "muzzle_side_m": 0.5,
+      "muzzle_ticks": 2,
+      "smoke": 0.7,
+      "spikes": 4,
+      "tracer_core_px": 3,
+      "tracer_px": 7
+    },
+    "pistol": {
+      "casing_m": 0.24,
+      "casing_s": 3,
+      "mag_drop": true,
+      "muzzle_m": 1.5,
+      "muzzle_side_m": 0.6,
+      "muzzle_ticks": 3,
+      "smoke": 1.4,
+      "spikes": 3,
+      "tracer_core_px": 5,
+      "tracer_px": 12
+    },
+    "plasma_rifle": {
+      "bolt_px": 13,
+      "casing_m": 0,
+      "mag_drop": true,
+      "muzzle_m": 1.0,
+      "muzzle_side_m": 0.4,
+      "muzzle_ticks": 3,
+      "scorch": true,
+      "smoke": 0.5,
+      "spikes": 0,
+      "tracer_core_px": 5,
+      "tracer_px": 10
+    },
+    "ray_gun": {
+      "casing_m": 0,
+      "mag_drop": false,
+      "muzzle_m": 0.7,
+      "muzzle_side_m": 0.3,
+      "muzzle_ticks": 2,
+      "scorch": true,
+      "smoke": 0.3,
+      "spikes": 0,
+      "tracer_core_px": 3,
+      "tracer_px": 8
+    }
+  }
+}

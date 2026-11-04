@@ -1,0 +1,58 @@
+{
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "gunplay_range": {
+    "chain_hits": 0,
+    "hits": 20,
+    "ignitions": 0,
+    "kills": 0,
+    "knockdowns": 0,
+    "shots": 36,
+    "weapon": "pistol"
+  },
+  "hit_rate": 0.555555555555556,
+  "hits": 20,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 36,
+  "ticks": 899,
+  "top_speed_mps": 4.50000286102295,
+  "ttk_s": {
+    "dummy_human_1": [
+      0.0
+    ],
+    "static_05m": [
+      2.15
+    ],
+    "static_10m": [
+      0.183333333333333,
+      0.166666666666667,
+      0.133333333333333
+    ],
+    "static_20m": [
+      0.3,
+      0.0666666666666667
+    ],
+    "strafe_10m": [
+      0.166666666666667
+    ],
+    "strafe_20m": [
+      0.616666666666667,
+      0.0666666666666667
+    ]
+  },
+  "turn_rate_peak_dps": 720.000122488663
+}

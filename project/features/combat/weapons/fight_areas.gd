@@ -21,11 +21,11 @@ const PANIC_TURN_RAD: float = 0.015
 ## bridge it; false = the range model's metal-only chain.
 const CHAIN_THROUGH_HUMANS: bool = true
 const CHAIN_FALLOFF: float = 0.7
-## TickInput carries the aim as a direction only, so a thrown bottle lands on the living hostile
-## closest to the aim line within this angle (and its range), else at the aim point.
-const LOB_CONE_RAD: float = 0.2
 ## Views see blasts and chain arcs for this long (VFX only; not in the replay state).
 const VFX_KEEP_TICKS: int = 40
+## A round whose splash is this wide kills by the blast even when it is thrown (the mini-nuke is
+## "blown", the molotov stays "burned").
+const BLAST_KILL_M: float = 6.0
 
 ## Table hp points -> Fighter hp (a human is 1; GunHand.hp_scale).
 var hp_scale: float = 0.01
@@ -44,24 +44,9 @@ var ignitions: int = 0
 var chain_hits: int = 0
 
 
-## Where a bottle thrown from `from` toward `at` lands (see LOB_CONE_RAD).
-static func lob_target(arena: CombatArena, from: Vector2, at: Vector2, range_m: float) -> Vector2:
-	var aim: Vector2 = (at - from).normalized()
-	var best: Vector2 = at
-	var best_off: float = INF
-	for h: Fighter in arena.hostiles:
-		var to: Vector2 = h.pos - from
-		var off: float = absf(aim.cross(to))
-		var in_cone: bool = absf(aim.angle_to(to)) <= LOB_CONE_RAD
-		if h.alive() and to.length() <= range_m and in_cone and off < best_off:
-			best_off = off
-			best = h.pos
-	return best
-
-
 ## The events.json death kind of a weapon's hits.
 static func kind_of(w: WeaponSpec) -> StringName:
-	if w.kind == WeaponSpec.Kind.ROCKET:
+	if w.kind == WeaponSpec.Kind.ROCKET or w.splash_radius_m >= BLAST_KILL_M:
 		return &"blown"
 	if w.kind == WeaponSpec.Kind.CONE or w.kind == WeaponSpec.Kind.THROWN:
 		return &"burned"
@@ -179,8 +164,10 @@ func _chain(arena: CombatArena, s: Shot, first: Fighter) -> void:
 	var from: Vector2 = first.pos
 	var used: PackedVector2Array = PackedVector2Array()
 	for hop: int in s.spec.chain_hops:
-		var next: Fighter = _nearest(arena, from, s.spec.chain_radius_m, done)
-		var to: Vector2 = next.pos if next != null else _metal(arena, from, s, used)
+		var next: Fighter = FightReach.nearest(arena, from, s.spec.chain_radius_m, done)
+		var to: Vector2 = (
+			next.pos if next != null else FightReach.metal(arena, from, s.spec.chain_radius_m, used)
+		)
 		if to == from:
 			return
 		chain_arcs.append(PackedVector2Array([from, to]))
@@ -194,29 +181,6 @@ func _chain(arena: CombatArena, s: Shot, first: Fighter) -> void:
 			var amount: float = s.damage * pow(CHAIN_FALLOFF, hop + 1)
 			_strike(arena, s, next, amount, (to - from).normalized())
 		from = to
-
-
-func _nearest(arena: CombatArena, from: Vector2, r: float, skip: Array[Fighter]) -> Fighter:
-	var best: Fighter = null
-	var best_d: float = r
-	for h: Fighter in arena.hostiles:
-		if h.alive() and h.exposed and not skip.has(h):
-			var d: float = h.pos.distance_to(from)
-			if d <= best_d:
-				best_d = d
-				best = h
-	return best
-
-
-func _metal(arena: CombatArena, from: Vector2, s: Shot, used: PackedVector2Array) -> Vector2:
-	var best: Vector2 = from
-	var best_d: float = s.spec.chain_radius_m
-	for m: Vector2 in arena.metal:
-		var d: float = m.distance_to(from)
-		if d <= best_d and d > 0.01 and not used.has(m):
-			best_d = d
-			best = m
-	return best
 
 
 func _burn(arena: CombatArena, h: Fighter, e: FighterFx) -> void:

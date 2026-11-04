@@ -69,6 +69,7 @@
   "rig_kick": {
     "assault-rifle": 1.4,
     "gloria": 0.8,
+    "hand_cannon": 1.6,
     "robo-tazer": 1.1
   },
   "rivet_start": [
