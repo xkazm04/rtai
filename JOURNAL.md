@@ -1161,3 +1161,40 @@ NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final
   each hoop and they read as rings, not tyres. Frame `frames/it20-ray-hoop-ink-lighter-ab-city-48ppm.png`. Gates: lint
   13/13, scenarios 32/32 (`scenarios-it20h.log`), unit 743/743 (`unit-it20i.log`). The run before it (`unit-it20h.log`)
   failed only test_noir_shadows again, the known flake, unrelated to weapon FX; it passed when re-run alone.
+
+## Iteration 21 (09:25-10:25, BUILD, extension)
+- 09:25 read JOURNAL NEXT, git log, the other lanes' JOURNAL tails (gunplay, brutality, human-reactions,
+  showcase, rivet-arsenal). No new REQUEST -> weapon-art (31 and brutality 4 were answered earlier).
+  REPORT Next step 5 (fold the mipmaps import step) is stale: `weapon_fx_table.py` did it in iteration 2.
+- FINDING 09:30 (brief item 4's floor half, never filmed in the live game): the arena pit with
+  `--rigs --start=pit --bot=arsenal --loadout=pistol --pickups=hand_cannon,rocket_launcher --clean --ppm=48`
+  (480 frames, `--fixed-fps 60`, 0 script errors). Looked at, tick 140 at 3x: the hand cannon on rivet-arsenal's
+  paper disc prints as a black ink smudge. Cause: `PickupsView` gives the pickup the rigs' PART print, the same
+  collapse of mid-tone rust and steel that the held guns had at 06:15.
+- TRY 09:35 (rejected): the pickup's flat fills, no material. The drum and grip read, but with no edge the gun
+  faded into the cream disc.
+- MILESTONE 09:40 `PickupLook.dress` (new, `features/combat/weapons/art/pickup_look.gd`): flat fills over 8 ink
+  silhouettes 1 world px out (modulate = the ink token, `show_behind_parent`). One hook line in rivet-arsenal's
+  `pickups_view.gd` (`PickupLook.dress(s)` replacing the material line). `--pickup-print=on` = before.
+  Test `test_pickup_look.gd` (default: no material, 8 ink children 1 world px out; flag: the print, no children).
+  Same-tick A/B in the live arena pit at 32 and 48 px/m, looked at: the after is the hand cannon (drum, grip, rust)
+  in a crisp ink line. Honest read: at 32 px/m it has less contrast at a glance than the black blob, but it's
+  recognisably the gun. Evidence (masters): `clips/it21-pickup-ink-ab-arena-pit-48ppm.mp4` (5.5 s, left before / right after),
+  `frames/it21-pickup-ink-ab-arena-pit-32-48ppm.png` (2x and 12x). frames.json entry 5 (dropped the it6 weapon wall
+  still; its file stays for call 9). DECISION line in docs/decisions.md, doc paragraph in docs/art/weapons.md.
+- Registry rules applied: motion-quality-gating (same deterministic ticks, one flag, looked at before keeping; the
+  first try rejected on the frame); depth-ordered-layered-art (the outline is a layer behind the sprite, not baked).
+  No deviation.
+- FRICTION 09:37 `--check-only -s` on a GutTest script hung (it is not a MainLoop); the task was stopped after ~6 min.
+  Lint caught the one long line instead. For test files, run lint + unit, not `-s --check-only`.
+- Gates at 57ee8615: lint 13/13 (`lint-it21.log`, and the pre-commit hook), unit 745/745 (`unit-it21.log`),
+  scenarios 32/32 (`scenarios-it21.log`). Render only; parity and goldens untouched.
+- MILESTONE 09:51 (384883b1) the dev weapon lineup (`dev/weapon_art/weapon_lineup_run.gd`) lays its pickups through
+  `PickupLook.dress` too, so the lineup shows the game's pickup look. Re-rendered core six + nine adv at 32 and 64
+  px/m, 0 script errors, looked at: every pickup silhouette is distinct in its ink line beside the cop. Masters
+  `frames/it21-lineup-{core,adv}-{64ppm,32ppm-2x}-pickup-ink.png`; frames.json entry 6 (dropped the it9 Gloria
+  half-speed clip; its full-speed sibling and the strip stay).
+- To showcase / Director: weapon-art's tip is now 384883b1 (+ docs). If round 17 already took a1a819d3, the delta is
+  the pickup look (PickupLook + one line in rivet-arsenal's pickups_view.gd), render only.
+- 09:53 REPORT updated in place: after-09:00 heading covers iteration 21, two bullets, call weapon-art-17, the merge
+  note for pickups_view.gd, stale Next step 5 marked.

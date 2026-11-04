@@ -4,9 +4,11 @@ Head of the build: `a1a819d3` (see "After 09:00"; at 08:40 it was `3a703dbd`).
 `M` below stands for `C:\Users\kazda\kiro\gtai-masters\n4\weapon-art\`. `E` stands for `evidence/weapon-art/` in this worktree, which is untracked scratch.
 The owner's page is `M\frames.json` (15 entries, newest and best first). Every file it lists exists on disk.
 
-## After 09:00 (extension, iteration 20)
+## After 09:00 (extension, iterations 20 and 21)
 
 The build moved to `a1a819d3`. All six changes since `3a703dbd` are render only: no sim file and no golden touched. Gates at `a1a819d3`: lint 13/13, unit 743/743 (`E\unit-it20i.log`), scenarios 32/32 (`E\scenarios-it20h.log`). Parity is untouched.
+
+Iteration 21 moved the build to `384883b1` (render and dev only). Gates at `57ee8615`: lint 13/13, unit 745/745 (`E\unit-it21.log`), scenarios 32/32 (`E\scenarios-it21.log`). The pre-commit lint passed again at `384883b1`.
 - **The rocket blast's tail tears into smoke wisps** (`51d42adf`). From tick 20 to the effect's end at 40, the smoke ring tears into 12 drawn smoke puffs that drift out, stretch along the ring and fade. Before, it held the ring, which dimmed into a grey blob; the tail now lasts 20 ticks instead of 10, so the aftermath reads. The before is `--blast-tail=ring`. Clip: `M\clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4` (+ `-quarterspeed`); strip: `M\frames\it20-rocket-blast-wisps-ab-city-48ppm.png`.
 - **The mini-nuke lobs its own fat bomb** (`5d453958`). The cell has a boxed tail, a cream nose and a vermilion hazard band; before, it flew the rocket cell at 1.5x. It is `tools/art/nuke_shell.py`, procedural like the other FX cells, so it has no AI provenance line. The before is `--nuke-shell=rocket`. Clip: `M\clips\it20-mini-nuke-shell-ab-city-48ppm.mp4` (+ `-halfspeed`); strip: `M\frames\it20-mini-nuke-shell-ab-city-48ppm.png`.
 - **At the nuke's 12 m scale, the smoke puffs are capped at 2.5 m** (`9a66ac6c`), and the ring tears into about 32 of them. Uncapped, 12 puffs 6.6 m wide drifted over Rivet. The rocket is unchanged. Clip: `M\clips\it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`.
@@ -14,6 +16,8 @@ The build moved to `a1a819d3`. All six changes since `3a703dbd` are render only:
 - **The electro bolt gets a bold ink outline** (call 3, inside the palette). The arc is drawn in ink at 8 offsets 0.06 m out, then in paper, for Rivet's bolt and the chain arcs. It was the thinnest energy read on cream at 32 px/m. The before is `--arc-ink=off`. Clip: `M\clips\it20-electro-arc-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-electro-arc-ink-ab-city-32ppm.png` (with the rejected try); zoom: `M\frames\it20-electro-arc-ink-zoom-t395-city-32ppm-3x.png`.
 - **The ray gun's hoops get the same ink outline** (call 3), lighter at 0.035 m: at the bolt's 0.06 they read as dark tyres at 48 px/m (`M\frames\it20-ray-hoop-ink-lighter-ab-city-48ppm.png`). The before is `--ray-ink=off`. Clip: `M\clips\it20-ray-rings-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-ray-rings-ink-ab-city-32ppm.png`; zoom: `M\frames\it20-ray-rings-ink-zoom-t398-city-32ppm-3x.png`.
 - **No molotov fuel-splash sheet.** The landing already reads (star, glass, fire, scorch), and a fuel stain would lie under the flames.
+- **Iteration 21: a gun on the ground reads as that gun** (`PickupLook`). In the live arena pit, the hand cannon on rivet-arsenal's paper disc printed as a black ink smudge at 48 and 32 px/m: the rigs' PART print collapsed its rust and steel, the same problem the held guns had. Now it draws its own flat fills inside a 1 px ink outline: drum, grip and rust read. At 32 px/m it has less contrast at a glance than the blob had, which is call 17. The before is `--pickup-print=on`. Clip: `M\clips\it21-pickup-ink-ab-arena-pit-48ppm.mp4` (left before, right after). Sheet: `Mrames\it21-pickup-ink-ab-arena-pit-32-48ppm.png`. There is one hook line in rivet-arsenal's `pickups_view.gd`.
+- **Iteration 21: the weapon lineup's pickups use the same look** (`384883b1`). Re-rendered at 32 and 64 px/m: the core six and the nine melee and advanced weapons, held above and lying below, beside a cop. Every pickup silhouette is distinct in its ink line. Frames: `M\frames\it21-lineup-{core,adv}-{64ppm,32ppm-2x}-pickup-ink.png`.
 
 ## Gates of record
 
@@ -111,6 +115,7 @@ Each call has a clip or frame in `M`. The default is what ships now, and every a
 | weapon-art-14 | A: `held_small` | B: full art (`--held-small=off`); C: printed like Rivet's limbs, filmed and rejected (a grey third forearm) | `frames\it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png` |
 | weapon-art-15 | molotov landing: star + glass + scorch | B: the rocket's full blast (`--fire-burst=off`) | `clips\it14-molotov-landing-glass-scorch-ab-city-48ppm-2x.mp4` |
 | weapon-art-16 | since 09:00, rocket blast tail: the ring tears into smoke wisps | B: the ring holds and thins (`--blast-tail=ring`); C: the bead ring (`--blast-beads=on`) | `clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4`, `clips\it14-rocket-blast-tail-ab-city-48ppm-2x-quarterspeed.mp4` |
+| weapon-art-17 | since iteration 21: a pickup in its own flat fills inside a 1 px ink outline (it reads as the gun) | B: the PART print, a bold black blob (`--pickup-print=on`) | `clips\it21-pickup-ink-ab-arena-pit-48ppm.mp4`, `frames\it21-pickup-ink-ab-arena-pit-32-48ppm.png` |
 
 Call 3's option B, a new accent ink, is not built; its frames show the current read. The 08:40 version of this line said the frames for calls 5 and 8 were missing from `M\frames\`. That was wrong: both were there, and both are cited now.
 
@@ -118,10 +123,11 @@ Call 3's option B, a new accent ink, is not built; its frames show the current r
 
 - **Hooks in gunplay's files.** There is one hook line each in gunplay's `fight_areas_art.gd` and FxView. The fallbacks keep gunplay's shapes.
 - **Data lines in other lanes' tables.** I removed the `gloria -> pistol` line from `rivet_arsenal.json` `art_stand_in`. rivet-arsenal merged this branch at 07:50 and keeps that line out with a test. I also added an optional `projectile_k` to the weapon rows (it's in the schema).
+- **Iteration 21: one hook line in rivet-arsenal's `pickups_view.gd`.** `PickupLook.dress(s)` replaces the PART material line. rivet-arsenal hasn't changed that file since `cca57a4a`, so the merge takes ours.
 - **No conflicts expected** with `n-rivet-arsenal`: it already contains this branch up to ceee3a88.
 
 ## Next steps
 
 1. (Done after 09:00: the melee four by rivet-arsenal, the torn smoke tail and the mini-nuke shell. The fuel sheet was dropped.)
-5. Fold the mipmaps import step into `tools/art/`.
+5. (Stale: the mipmaps import step was already folded into `tools/art/weapon_fx_table.py` in iteration 2.)
 6. Answer calls 3, 12, 14, 15 and 16 once the owner has judged them.
