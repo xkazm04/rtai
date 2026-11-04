@@ -485,3 +485,18 @@ NEXT (iteration 4):
   pit: flame patches lie on paper (40-60 s). Own fix next: anchor the gun beat inside the pit.
   (f) a long vermilion line crosses the frame through Rivet at some shots (a cop's told line;
   fine by the palette, but it reads as a laser at 64 px/m).
+- 04:16-04:21 reel-0417-city-riot (32 px/m, `--arena=city --reel=pit --riot --loadout=pistol,
+  plasma_rifle,rocket_launcher,molotov`, 80 s; filmed on a4b33221, before the zone fix). Looked
+  at 0.4 fps from 15 s (24 frames): the fight reads on the cream paving, rocket ring + gib, blood,
+  molotov fire; no firing lines on the street (r4 glue holds); crowd 7 cowers. Wrong: (g) the
+  pit's black wall bars stand on the plaza (solid in the sim; DECISION kept for now: removing
+  them is a sim change to the city proving block, owner call); (h) the film log carries 4,646
+  "Invalid polygon data, triangulation failed" errors: kill_char_fx._flakes 4,462,
+  kill_mark_art.scorch 160, gun_fx_art._flash 26 (the arena 64 px/m film: 1). Tiny polygons
+  (a char flake is about 1 px at 32 px/m) fail Godot's triangulation and are not drawn.
+- REQUEST 17 -> brutality: KillCharFx._flakes draws 4-point quads about 1 px across at 32 px/m
+  and Godot rejects most of them (4,462 errors in an 80 s city reel; the flakes do not draw);
+  draw_primitive (no triangulation) or a minimum size would fix it. KillMarkArt.scorch fails
+  160 times too (a small scorch_m). Log: gtai-n4/scratch-showcase/film-reel-0417-city-riot.log.
+- REQUEST 18 -> gunplay: GunFxArt._flash (gun_fx_art.gd:159) fails triangulation 26 times in the
+  same reel (a degenerate flare at 32 px/m, probably the pistol's side jets at a small age).
