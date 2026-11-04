@@ -943,3 +943,18 @@ NEXT (iteration 11, in order):
   the fight-cam one), the stuck-shard still and the flank electro clip; 15 entries, all checked.
 - Unit 744/744 at 46d87a70 (`evidence/n10/unit-a.log`; 8 new tests in test_fight_scorch_art.gd and
   test_fight_scorch.gd), lint 13/13 (hook). DECISION line in docs/decisions.md.
+- 07:03 scenarios 29/29 at 46d87a70 (`evidence/n10/scenarios-a.log`).
+- 07:05 2f520b56 MILESTONE a rocket blast scorches the ground it hit: FightScorch also reads
+  FightAreas.blasts (new born ticks only): a char 0.4 x the splash radius at the blast tick, printed
+  under the starburst, held 15 s; bursts under MIN_BLAST_M 2 m (homing shard 1.2) and the nuke
+  leave none, and a bottle's burst (a live patch at the same centre) is left to its fire patch.
+  Unit test (rocket once, bottle and shard none). Evidence: `city11_rocket_launcher/` (32 px/m,
+  25 s, 0 script errors), `camfight11_rocket/` (64 px/m pit, 15 s, 0 script errors, still
+  `scorch_12s_64ppm.png`), `rocket_scorch_ab_city_32ppm.png` (old it9 clip vs new at 9 and 14 s;
+  NOT the same sim: city9 predates the flank fix). Looked at: a dark blast star under the corpse
+  and its blood on the cream paving; dark on dark on the pit floor (a burn, not a decal).
+- 07:07 checked the flamethrower in the city (`city11_flamethrower/`, 32 px/m, 25 s, 0 script
+  errors, still `char_11s_32ppm.png`): its 0.8 m run-off patches leave small overlapping char stars
+  along where the flame landed, read as scorched ground; no change needed.
+- frames.json: + the rocket A/B still after the molotov close-up; dropped the six-gun reel's still
+  (the reel is first). 15 entries, all files checked.
