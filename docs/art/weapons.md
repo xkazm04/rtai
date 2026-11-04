@@ -91,6 +91,23 @@ rifle = the glass cell, hand cannon = a six-round speed-loader. Drawn at the hel
 `WeaponMagView` carries one in Rivet's off claw through the reload (out to the hip, a fresh one in) and leaves
 the spent one on the floor.
 
+## Weapon wall and the electro bolt (iteration 6)
+
+- **Weapon wall** (`arena_stations/weapon-art.json`, station `weapon_art_rack`, `ArenaWeaponRack` +
+  `WeaponRackView`): every weapon with art hangs muzzle up on a paper-wash board along the arena hub's north
+  wall, in the brief's order, as its pickup side view at its drawn length. Render only (no sim state, nothing
+  hashed); `--weapon-rack=off` hides it. Frame: `it6-weapon-wall-hub-64-32ppm.png`.
+- **Electro bolt** (`arc_0..2`, `tools/art/weapon_fx_jet.py`): a jagged lightning bolt (6 sharp kinks on
+  alternating sides, tapering to the head) with two kinked forks leaving forward and outward. The iteration-3
+  smooth zigzag with backward stubs read as twigs. Same size and anchor, so nothing else changed.
+
+## Character looks made for other lanes (iteration 6)
+
+- `art/cop/` + `art/d5/cop/` `head_swat`, `torso_swat` (human-reactions REQUEST 1), `tools/art/swat_parts.py`.
+- `art/thug/` + `art/d5/thug/`, Rivet's 25 parts as a dark gunmetal street-gang robot with one paper optic
+  (human-reactions REQUEST 2), `tools/art/thug_parts.py`.
+Both are scripted derivations of existing AI parts, so footprints and pivots are the rig's own.
+
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,

@@ -1,0 +1,19 @@
+{
+  "doc": "weapon-art's station: the weapon wall in the hub. Every weapon with art (the brief's order: pistol .. mini-nuke, 16) hangs muzzle up on a paper board along the hub's north edge (x -2.5..12.5, y -3.15..-4.95), as its pickup side view at its drawn length, so the owner sees the whole arsenal in the live print beside the cops at 32-128 px/m. Render only (WeaponRackView): nothing stepped or hashed. --weapon-rack=off hides it.",
+  "lane": "weapon_art",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "hub",
+      "id": "weapon_art_rack",
+      "measures": [
+        "rack"
+      ],
+      "name": "Weapon wall",
+      "props": [],
+      "script": "res://features/combat/weapons/art/arena_weapon_rack.gd",
+      "spawns": [],
+      "tuning": []
+    }
+  ]
+}
