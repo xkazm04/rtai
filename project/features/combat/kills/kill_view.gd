@@ -74,7 +74,8 @@ func bind(p_kills: SignatureKills) -> void:
 	add_child(shock_fx)
 	split_fx.kills = kills
 	split_fx.ppm = ppm
-	split_fx.z_index = 40
+	split_fx.reduced_motion = reduced_motion
+	split_fx.z_index = KillSplitFx.HELD_Z + 5  # over a body held on the saw (gib_layer + HELD_Z)
 	add_child(split_fx)
 
 
@@ -258,7 +259,7 @@ func _parts(
 		else GibCut.parts(rig, row.whole_body(), ppm)
 	)
 	if row.style == &"split":
-		split_fx.add(serial, at, dir)
+		split_fx.add(serial, at, dir, row, groups)
 	elif row.style == &"hole" and rig != null:
 		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], kills, ppm)
 	return groups

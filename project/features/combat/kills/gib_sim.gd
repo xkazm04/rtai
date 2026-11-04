@@ -30,6 +30,8 @@ var piece: PackedInt32Array = PackedInt32Array()
 var kill_of: PackedInt32Array = PackedInt32Array()
 var bounce: PackedFloat32Array = PackedFloat32Array()
 var drag: PackedFloat32Array = PackedFloat32Array()
+## Ticks a slot still waits before it flies (the chainsaw's grind holds the halves together).
+var wait: PackedInt32Array = PackedInt32Array()
 var kills: int = 0
 var _next: int = 0
 
@@ -49,6 +51,8 @@ func _init() -> void:
 	piece.resize(CAPACITY)
 	@warning_ignore("return_value_discarded")
 	kill_of.resize(CAPACITY)
+	@warning_ignore("return_value_discarded")
+	wait.resize(CAPACITY)
 	kill_of.fill(-1)
 
 
@@ -85,6 +89,7 @@ func throw(
 		kill_of[i] = serial
 		bounce[i] = row.bounce
 		drag[i] = row.ground_drag
+		wait[i] = row.grind_ticks
 	return serial
 
 
@@ -93,6 +98,9 @@ func step() -> void:
 	var dt: float = SimClock.TICK_DT
 	for i: int in CAPACITY:
 		if kill_of[i] < 0:
+			continue
+		if wait[i] > 0:
+			wait[i] -= 1
 			continue
 		if z[i] > 0.0 or vz[i] > 0.0:
 			_fly(i, dt)

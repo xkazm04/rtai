@@ -213,6 +213,38 @@
         0.8
       ],
       "weapon": "plasma_sword"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 10,
+      "cut_deg": 0,
+      "doc": "Chainsaw: the grind. The saw bites into the victim, who stays held on it shaking for most of a second while blood spurts back off the chain in a continuous spray and cream sparks fly off the teeth; then the body falls apart in two halves, cut straight along the saw's push, on red smears with a raw red edge. Under --gore=reduced the victim falls whole.",
+      "flash_ticks": 0,
+      "grind_ticks": 54,
+      "ground_drag": 2.8,
+      "hitstop_ticks": 2,
+      "id": "chainsaw_grind",
+      "launch_mps": [
+        2.2,
+        2.8
+      ],
+      "pieces": [
+        "half_a",
+        "half_b"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        15,
+        50
+      ],
+      "spray": 24,
+      "spray_cone_deg": 70,
+      "style": "split",
+      "up_mps": [
+        0.3,
+        0.5
+      ],
+      "weapon": "chainsaw"
     }
   ],
   "leftover_budget": 12,

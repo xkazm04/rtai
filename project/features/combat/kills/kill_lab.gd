@@ -42,6 +42,8 @@ var spots: PackedVector2Array = PackedVector2Array()
 var shots: int = 0
 ## The melee weapon Rivet swings (empty: he fires his gun).
 var blade: StringName = &""
+## Ticks Rivet stays on the victim after the blow (the chainsaw's grind) before he steps back.
+var hold_ticks: int = 0
 var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
@@ -94,8 +96,8 @@ func _step_blade(stage: ArenaStage) -> void:
 		stage.arena.hit_at = _victim.pos
 		stage.arena.damage(_victim, BLADE_DAMAGE, r.id, blade)
 		shots += 1
-	elif _strike_t > LUNGE_TICKS:
-		var k: float = float(_strike_t - LUNGE_TICKS) / BACK_TICKS
+	elif _strike_t > LUNGE_TICKS + hold_ticks:
+		var k: float = float(_strike_t - LUNGE_TICKS - hold_ticks) / BACK_TICKS
 		r.pos = spot.lerp(_home, minf(k, 1.0))
 		_strike_t = -1 if k >= 1.0 else _strike_t
 

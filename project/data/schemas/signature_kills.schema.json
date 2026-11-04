@@ -41,6 +41,10 @@
             "minimum": 0,
             "type": "integer"
           },
+          "grind_ticks": {
+            "minimum": 0,
+            "type": "integer"
+          },
           "ground_drag": {
             "minimum": 0,
             "type": "number"

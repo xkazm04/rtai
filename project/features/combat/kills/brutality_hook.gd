@@ -48,6 +48,7 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	var row: SignatureKill = kills.table.for_weapon(weapon)
 	var blade: bool = MeleeTable.weapon_ids().has(weapon) or (row != null and row.style == &"split")
 	_lab.blade = weapon if blade else &""  # a split row's weapon is a blade (the plasma sword)
+	_lab.hold_ticks = row.hitstop_ticks + row.grind_ticks if row != null else 0
 	_lab.setup(stage)
 
 
