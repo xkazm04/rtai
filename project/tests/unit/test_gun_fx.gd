@@ -126,3 +126,16 @@ func test_a_plasma_bolt_scorches_where_it_stops_and_ejects_no_shell() -> void:
 	assert_eq(fx.impacts.size(), 1)
 	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a bolt's impact scorches")
 	assert_eq(fx.bits.size(), 0, "an energy gun ejects no shell")
+
+
+func test_one_ray_drops_a_human() -> void:
+	var arena: CombatArena = _arena(&"ray_gun")
+	var fx: GunFx = GunFx.new()
+	assert_true(arena.gun.trigger.spec.enabled, "the ray gun is in the arsenal")
+	assert_eq(arena.gun.trigger.spec.chain_hops, 0, "a ray never chains (drawn as a beam)")
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 20)
+	assert_false(g.alive(), "one ray drops a human")

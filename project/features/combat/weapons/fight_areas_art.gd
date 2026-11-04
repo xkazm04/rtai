@@ -44,6 +44,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
+		WeaponSpec.Kind.BOLT when s.spec.chain_hops == 0:  # a ray: no chain, a straight beam
+			_ray(ci, s.pos - dir * minf(went, s.spec.tracer_len_m), s.pos, tick)
 		WeaponSpec.Kind.BOLT:
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 10.0, Ink.INK)
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
@@ -166,3 +168,17 @@ static func _bolt(
 		var jag: float = 0.0 if end else sin(float(phase * 7 + i * 13)) * 0.22
 		pts.append(Ink.px(a.lerp(b, t) + normal * jag))
 	ci.draw_polyline(PackedVector2Array(pts), c, width, true)
+
+
+## The ray gun's round: a dead-straight thin beam (cream core in ink, unlike the electro gun's
+## jagged arc), three ripple rings running down it toward the tip, a bright tip.
+static func _ray(ci: CanvasItem, a: Vector2, b: Vector2, tick: int) -> void:
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.INK, 8.0)
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.CREAM, 3.0)
+	for k: int in 3:
+		var t: float = fmod(float(k) / 3.0 + float(tick % 12) / 12.0, 1.0)
+		var at: Vector2 = Ink.px(a.lerp(b, t))
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.INK, 4.0)
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.CREAM, 1.5)
+	ci.draw_circle(Ink.px(b), 8.0, Ink.INK)
+	ci.draw_circle(Ink.px(b), 5.0, Ink.CREAM)

@@ -321,3 +321,10 @@ NEXT (iteration 5, in order):
 - Session end 03:1x: gates of record at the last code commit: lint 13/13, unit 710/710
   (`evidence/n4/unit-e.log`), scenarios 29/29 (`evidence/n4/scenarios-d.log`, before the size-only
   refactor of `_muzzle`). Replay/parity untouched (view-only changes; blood_fx.json view params).
+- 03:11 MILESTONE ray gun, the third unique gun, enabled: a bolt with no chain hops draws as a
+  straight beam with ripple rings and a bright tip (`FightAreasArt._ray`); damage 40 -> 100 (one ray,
+  one human). Range 64 px/m: 61 rays / 18 hits (`MASTERS/n4/gunplay/arena_ray_range_64ppm/`). Unit
+  test (one ray drops a human). Pit 48 px/m: 4 rays / 4 kills (`arena_ray_pit_48ppm/`). Gates: unit
+  711/711 (`evidence/n4/unit-g.log`), scenarios 29/29 (`scenarios-f.log`). Not yet seen in the city; no impact mark yet (bolts are
+  not tracked by GunFxRounds). NEXT item 2 above becomes: ray in the pit + city at 32 px/m, an impact
+  sizzle; then homing shard gun, mini-nuke.
