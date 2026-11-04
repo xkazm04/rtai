@@ -4,10 +4,7 @@ extends Node2D
 ## the Robo-tazer's arc ball (the inked fx_arcball loop with an ink + cream zigzag tether back to
 ## the muzzle), the burst's chained arcs, the radio-static whisper rings, and the crate fire.
 
-const TRACER_TAIL_M: float = 2.5
 const ENEMY_TAIL_M: float = 1.2
-## A table gun's muzzle flash holds this many ticks after the trigger breaks.
-const MUZZLE_TICKS: int = 2
 
 var stage: CollectCallStage
 ## Whisper rings hold still (no growth, no spin) when set (the settings flag).
@@ -18,6 +15,8 @@ var _fire_tex: Texture2D = null
 var _atlas: Texture2D = null
 var _ball_tex: Texture2D = null
 var _arc_seen: int = 0
+## Lane gunplay: shells, smoke, impacts and per-weapon muzzles of a table bullet gun.
+var _gun_fx: GunFx = null
 
 
 func _process(_delta: float) -> void:
@@ -30,15 +29,20 @@ func _draw() -> void:
 	var arena: CombatArena = stage.arena
 	for d: Vector2 in arena.rifle_drops:
 		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
+	if arena.gun != null:
+		if _gun_fx == null:
+			_gun_fx = GunFx.new()
+		_gun_fx.step(arena, stage.tick)
+		GunFxArt.draw_under(self, _gun_fx, stage.tick)
 	for s: Shot in arena.shots:
 		if arena.gun != null:
 			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
-				_tracer(s)
+				GunFxArt.tracer(self, _gun_fx, s, ENEMY_TAIL_M)
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
 	if arena.gun != null:
-		_muzzle(arena.rivet, arena.gun)
+		GunFxArt.draw_over(self, _gun_fx, arena, stage.tick)
 	if arena.guard_tell != null:
 		for h: Fighter in arena.hostiles:
 			if h.alive() and GuardTell.telling(h):
@@ -51,36 +55,6 @@ func _draw() -> void:
 	_whispers()
 	if stage.crates_burning:
 		_fire()
-
-
-## Lane gunplay: with a table gun wired, every round is a tracer readable at 32 px/m: Rivet's a
-## 2.5 m tail, cream core in an ink casing, a cream head; an enemy round (danger) is vermilion in
-## the same casing, shorter (ENEMY_TAIL_M), so a strafe can beat it.
-func _tracer(s: Shot) -> void:
-	var tail_m: float = TRACER_TAIL_M if s.from_rivet else ENEMY_TAIL_M
-	var core: Color = Ink.CREAM if s.from_rivet else Ink.VERMILION
-	var tail: Vector2 = s.pos - s.vel.normalized() * tail_m
-	draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK, 9.0)
-	draw_line(Ink.px(tail.lerp(s.pos, 0.3)), Ink.px(s.pos), core, 4.0)
-	draw_circle(Ink.px(s.pos), 5.0, core)
-
-
-## Lane gunplay: the muzzle flash, a small cream star in an ink rim off the claw for the first
-## MUZZLE_TICKS ticks after a round leaves (the trigger's cooldown has just been set).
-func _muzzle(r: Fighter, gun: GunHand) -> void:
-	var t: Trigger = gun.trigger
-	if gun.shots_fired == 0 or t.cooldown < t.spec.interval_ticks - MUZZLE_TICKS:
-		return
-	var at: Vector2 = r.pos + r.facing.normalized() * (r.radius_m + 0.5)
-	var pts: PackedVector2Array = PackedVector2Array()
-	@warning_ignore("return_value_discarded")
-	pts.resize(11)
-	for i: int in 10:
-		var k: float = 0.55 if i % 2 == 0 else 0.2
-		pts[i] = Ink.px(at + Vector2.from_angle(r.facing.angle() + TAU * i / 10.0) * k)
-	pts[10] = pts[0]
-	draw_colored_polygon(pts.slice(0, 10), Ink.CREAM)
-	draw_polyline(pts, Ink.INK, 2.5, true)
 
 
 ## Lane gunplay: a contractor's tell (GuardTell). Tracking: a thin dashed vermilion aim line

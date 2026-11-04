@@ -1,0 +1,44 @@
+{
+  "default": {
+    "casing_m": 0.2,
+    "casing_s": 2.5,
+    "mag_drop": true,
+    "muzzle_m": 1.0,
+    "muzzle_side_m": 0.45,
+    "muzzle_ticks": 2,
+    "smoke": 1.0,
+    "spikes": 4,
+    "tracer_core_px": 4,
+    "tracer_px": 9
+  },
+  "doc": "Lane gunplay (night 2026-11-04): how each bullet gun of weapons.json reads in the real fight (GunFx + GunFxArt, drawn by FxView). Metres and seconds; the view steps it on the stage tick, never on frame delta, and it never touches the sim. casing_m = the ejected shell's length (0 = none); casing_s = how long a shell lies before it fades. muzzle_m = the forward flare; muzzle_side_m = the side jets; spikes = 3 for a forward flare with two side jets (a heavy single shot), 4+ for a star that turns 45 degrees every shot (an automatic's strobe); muzzle_ticks = how long the flash holds. smoke = the gun smoke puff's scale after a shot (an automatic's small puffs pile into a haze). tracer_px / tracer_core_px = the ink casing and the cream core of the tracer (its length is weapons.json tracer_len_m). mag_drop = an empty magazine falls from the claw when a reload starts. Shell colour: casing (a muted brass; red is blood only).",
+  "palette": {
+    "casing": "#b8913f",
+    "dust": "#8c8375",
+    "spark": "#f2e8d5"
+  },
+  "weapons": {
+    "machine_pistol": {
+      "casing_m": 0.17,
+      "casing_s": 2,
+      "muzzle_m": 0.85,
+      "muzzle_side_m": 0.5,
+      "muzzle_ticks": 2,
+      "smoke": 0.7,
+      "spikes": 4,
+      "tracer_core_px": 3,
+      "tracer_px": 7
+    },
+    "pistol": {
+      "casing_m": 0.24,
+      "casing_s": 3,
+      "muzzle_m": 1.5,
+      "muzzle_side_m": 0.6,
+      "muzzle_ticks": 3,
+      "smoke": 1.4,
+      "spikes": 3,
+      "tracer_core_px": 5,
+      "tracer_px": 12
+    }
+  }
+}
