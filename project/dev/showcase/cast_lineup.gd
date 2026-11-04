@@ -1,0 +1,32 @@
+extends SceneTree
+## n5-cast: the cast lineup frames launcher (windowed, d3d12); see CastLineupRun.
+## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/cast_lineup.gd
+##        -- --out=<dir> [--walk]
+
+
+func _initialize() -> void:
+	var out: String = ProjectSettings.globalize_path("res://").path_join("../build/evidence/frames")
+	var walk: bool = false
+	for arg: String in OS.get_cmdline_user_args():
+		if arg == "--walk":
+			walk = true
+		elif arg.begins_with("--out="):
+			out = arg.substr(6)
+		else:
+			printerr("cast_lineup: unknown argument %s" % arg)
+			quit(2)
+			return
+	var script: GDScript = load("res://dev/showcase/cast_lineup_run.gd")
+	var node: Node = script.new()
+	node.set("out_dir", out)
+	node.set("walk", walk)
+	root.add_child(node)
+	_run(node)
+
+
+func _run(node: Node) -> void:
+	await process_frame
+	var code: Variant = await node.call("shoot")
+	var exit_code: int = code if code is int else 1
+	printerr("cast_lineup: exit %d" % exit_code)
+	quit(exit_code)

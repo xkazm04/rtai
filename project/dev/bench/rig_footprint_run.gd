@@ -8,41 +8,48 @@ const TICKS: int = 90
 
 static func measure(root: Node) -> Dictionary:
 	var out: Dictionary = {}
-	var plans: Dictionary[String, BodyPlan] = {
-		"rivet": RigPool.plan_of(BodyPlan.Kind.RIVET),
-		"rivet_mild": RivetPlan.build(RivetPlan.FORM_MILD),
-		"rivet_day": RivetPlan.build(RivetPlan.FORM_DAY),
-		"cop": RigPool.plan_of(BodyPlan.Kind.COP),
-		"ped": RigPool.plan_of(BodyPlan.Kind.PED),
-		"king": KingPlan.build(),
-		"king_1_2": KingPlan.build(1.2),
+	var cop: BodyPlan = RigPool.plan_of(BodyPlan.Kind.COP)
+	var ped: BodyPlan = RigPool.plan_of(BodyPlan.Kind.PED)
+	## n5-cast: one row per cast member the lineup draws, [plan, look].
+	var rows: Dictionary[String, Array] = {
+		"rivet": [RigPool.plan_of(BodyPlan.Kind.RIVET), RigVariant.rivet()],
+		"cop": [cop, RigVariant.crowd(5)],
+		"cop_riot": [cop, RigVariant.crowd(6)],
+		"cop_swat": [cop, RigVariant.crowd(RigVariant.SWAT)],
+		"ped": [ped, RigVariant.crowd(0)],
+		"ped_jacket": [ped, RigVariant.crowd(1)],
+		"ped_hoodie": [ped, RigVariant.crowd(3)],
+		"king": [KingPlan.build(), RigVariant.rivet()],
 	}
-	for name: String in plans:
+	for name: String in rows:
 		var rig: CutRig = CutRig.new()
 		root.add_child(rig)
-		var look: RigVariant = RigVariant.crowd(0)
-		if name.begins_with("rivet") or name.begins_with("king"):
-			look = RigVariant.rivet()
-		elif name == "cop":
-			look = RigVariant.crowd(5)
-		rig.setup(plans[name], look)
+		var plan: BodyPlan = rows[name][0]
+		var look: RigVariant = rows[name][1]
+		rig.setup(plan, look)
 		for i: int in TICKS:
 			rig.drive(1.0 / 60.0)
-		var box: Rect2 = _bounds(rig)
+		var box: Rect2 = _bounds(rig, false)
+		var torso: Rect2 = _bounds(rig, true)
 		out[name] = {
 			"length_m": snappedf(box.size.x / PX_PER_M, 0.01),
 			"width_m": snappedf(box.size.y / PX_PER_M, 0.01),
+			"torso_depth_m": snappedf(torso.size.x / PX_PER_M, 0.01),
+			"shoulder_m": snappedf(torso.size.y / PX_PER_M, 0.01),
 			"size_k": rig.plan.size_k,
 		}
 		rig.queue_free()
 	return out
 
 
-static func _bounds(rig: CutRig) -> Rect2:
+## torso_only: the torso part alone (its plan-view span across = the shoulder span).
+static func _bounds(rig: CutRig, torso_only: bool) -> Rect2:
 	var box: Rect2 = Rect2()
 	var first: bool = true
 	for spr: Sprite2D in rig.sprites:
 		if not _shown(spr, rig) or spr.texture == null:
+			continue
+		if torso_only and spr != rig.torso_spr:
 			continue
 		var r: Rect2 = spr.global_transform * spr.get_rect()
 		box = r if first else box.merge(r)
