@@ -483,14 +483,14 @@
     },
     {
       "anchor_px": [
-        155,
-        30
+        252,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/plasma_bolt.png",
       "id": "plasma_bolt",
       "size_px": [
-        170,
-        60
+        260,
+        64
       ]
     },
     {
@@ -555,13 +555,13 @@
     },
     {
       "anchor_px": [
-        112,
+        182,
         22
       ],
       "art": "res://features/combat/weapons/art/fx/shard.png",
       "id": "shard",
       "size_px": [
-        120,
+        190,
         44
       ]
     },
