@@ -550,3 +550,59 @@ NEXT (iteration 7, in order):
 4. Rivet's own hit reaction: human-reactions has not answered REQUEST 1 (it5) (vermilion whole-body
    hit tint on Rivet); check their JOURNAL again; GunFx's plating sparks are in.
 5. Idle riot bench of record on a quiet machine (the Director's at the merge otherwise).
+
+## Iteration 7 (session 04:44-05:44)
+Read: JOURNAL, git log, other lanes' JOURNALs for REQUESTs to gunplay. New since it6: brutality
+REQUEST 11 (ray mark on the dissolve pile), 12 (electro charged shot), 13 (nuke patch hides the
+vaporise shadows); rivet-arsenal REQUEST 12 (aim distance for thrown weapons); showcase REQUEST 18
+(GunFxArt._flash triangulation failures), 19 (test_gun_fx needs art_mags = {}). My NEXT 1 (molotov
+wind-up) was built by rivet-arsenal (60802820, PlayerThrow): closed here, not duplicated.
+Registry rules applied: realtime-combat-semantics (no dead trigger: the press always fires, the
+charge only adds; the throw lands where the input says, decided on the tick), motion-quality-gating
+(every visual claim below has frames I looked at; the charged bolt was re-shot three times until it
+read as lightning). No deviation.
+- 04:50 a1eb709f: showcase REQUEST 18 DONE (a flare shrunk to a sliver draws nothing:
+  Geometry2D.triangulate_polygon checked first); REQUEST 19 DONE (the test sets art_mags = {});
+  brutality REQUEST 13 DONE view-only: the nuke's 6 m patch burns as a ring round its rim, ground
+  zero burnt out (`MASTERS/n4/gunplay/arena_nuke_ring_32ppm/ring_patch_sequence.png`, 2 shells, 2
+  kills). Unit 717/717 (`evidence/n7/unit-a.log`).
+- brutality REQUEST 11 (ray mark over the dissolve pile): already answered by 5b51da41 (it6): an
+  energy round leaves no burnt ring where it stopped on a body; only the transient pop (12 ticks)
+  bursts there. If the pop still covers the pile in brutality's lab, say so with a frame.
+- 05:00 0c0465fd MILESTONE the electro gun's charged shot (brutality REQUEST 12): tap = the plain
+  60-damage stun bolt at once; held on, it charges 0.6 s once ready (arcs gather onto the claw, a
+  cream core swells, a ring snaps at full) and a 150-damage charged bolt leaves by itself, a fat
+  double lightning bolt with a hot head; one drops a fresh human (kill_landed electro_gun, so
+  brutality's electro_shock fires). test_charge_shot 4/4 (planted: a pistol never charges).
+  Evidence: `arena_electro_charge_64ppm/charge_strip_64ppm.png` + the clip (plain bolt stuns at
+  9.15 s, charge 9.95-10.12 s, charged bolt 10.25 s, kill 10.45 s); city block regression
+  `city_electro_charge_32ppm/` (5 kills, 2 chain hops, 0 script errors, Rivet 0 deaths; no 32 px/m
+  charged-bolt still judged yet).
+- FINDING + fix in the same commit: every electro bolt and chain arc drew as a smooth wave, not a
+  zigzag: `sin(phase * 7 + i * 13)` steps 13 rad = 0.43 rad a kink, so consecutive kinks trace a
+  slow sine. Now the kinks alternate sides with a varied depth (FightChargeArt.zap, shared by the
+  plain bolt and the chain arcs). LESSON: a "random" sin(i * k) needs k far from a multiple of 2 pi.
+  The same pattern lives in Ink.zigzag (boot, shared; stun sparks, 3 kinks, reads OK): not touched.
+- Gates at 0c0465fd: lint 13/13, unit 721/721 (`evidence/n7/unit-c.log`), scenarios 29/29
+  (`scenarios-c.log`; the electro rows' hashes moved: scenarios check same-seed identity + the
+  planted fault, not stored hashes, so no re-bless).
+- 05:10 rivet-arsenal REQUEST 12 built (see the DECISION): the cursor's distance in TickInput bits
+  25-28 (input_actions.json `aim.aim_reach_step_m` 1.2, shared file, one key + doc); PlayerCommand
+  .aim_m; LiveInput.px_per_m (the arena wires it; quest 1 has no GunHand, so not wired there);
+  StagePilot lands a thrown weapon at aim_m. test_aim_reach 3/3. Old replays decode aim_m 0.
+  Shared files touched: input_actions.json, boot/collect_call/stage_pilot.gd, dev/arena/arena_game.gd,
+  features/player/{player_actions,player_command,live_input}.gd. rivet-arsenal: the StagePilot side
+  is done; ArenaArsenalBot can now throw short by passing a reach (pack_aim's third arg).
+- Gates at b48ec24a (aim reach): lint 13/13, unit 724/724 (`evidence/n7/unit-d.log`), scenarios
+  29/29 incl. the 60 s replay (`scenarios-d.log`): old input decodes identically.
+- 05:08 GunplayBot sends the foe's distance as the cursor's (pack_aim third arg), so its molotov
+  lands on the guard: arena pit 48 px/m, 20 s, 5 bottles -> 5 ignitions, 4 kills, Rivet 0 deaths
+  (before, `arena_molotov_pit_48ppm`: 6 bottles -> 4 ignitions, 3 kills). Clip + sheet
+  `MASTERS/n4/gunplay/arena_molotov_reach_48ppm/` (looked at: the fire patches sit on the cops).
+  The nuke keeps its 13 m floor (FightReach.lob_target). FRICTION: a parameter named like a
+  class member (`reach_m`) is a Godot shadowing warning = parse error, and lint (gdlint) does not
+  see it; the windowed run silently fell back to nothing (telemetry 0 ticks). Run a Godot load
+  (a unit run or the capture's run.log) after every signature change.
+- Gates on the bot change: unit 723/724 under load (the known test_noir_shadows flake), re-run
+  724/724 (`evidence/n7/noir-shadows-alone.log`, gut ran the whole suite); scenarios 29/29
+  (`scenarios-e.log`).
