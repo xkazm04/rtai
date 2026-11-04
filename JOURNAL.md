@@ -834,7 +834,7 @@ NEXT (iteration 11):
   in the it9 reel and their 64 px/m solo clips.
 - FRICTION 07:51 the first 3 frames of every city capture show the hub (the follow moves to the solo
   spot on tick 1-2): trimmed by starting each chapter at frame 3 (camera break rejected).
-- 07:52 scratch it11 (gtai-n4/scratch-brutality/it11): frame dumps, deletable; the published clips
+- 07:56 scratch it11 frame dumps (7.9 GB) and the it10 scratch deleted; the published clips
   are in masters.
 
 NEXT (iteration 12 / the report):
@@ -847,3 +847,11 @@ NEXT (iteration 12 / the report):
 4. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check it against KillBurstFx.
 5. Calls for the owner (new): brutality-ray-cap: the ray gun's cap knocked aside (now) vs left on the
    heap (`hat_kick_mps: 0`); clips: ray-dissolve-city-64ppm-slow-0.4x-it11 vs ray-gun-dissolve-solo-64ppm-slow-0.4x.
+- LEAD 07:57 for NEXT 2 (melee on the city): KillLab.step re-places Rivet at the solo spot every
+  tick only for guns (`if solo != Vector2.INF and blade.is_empty()`, kill_lab.gd:107), because the
+  blade lunge moves him itself; on the city the body then pulls him back to follow.target. Fix shape:
+  for a blade, re-place the follow (target = the lunge's current pos) instead of Rivet. Not landed
+  this late (08:30 freeze).
+- 07:58 session closed. Gates of record on 70af17b3 (private APPDATA, CONTENDED): lint 13/13 (every
+  commit), unit 787/787, scenarios 35/35, brutality 1/1, gunplay 2/2. Parity and bench not run (no
+  city-sim change; the cap kick is in the kills' own gib sim). No Godot process of mine running.
