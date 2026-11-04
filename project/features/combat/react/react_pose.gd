@@ -15,7 +15,7 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			_flinch(r, rig, snap(k, 0.15), 0.5)
 			r.scl = Vector2.ONE * lerpf(1.0, 0.84, snap(k, 0.1))
 		&"cower":
-			_cower(r, rig, smoothstep(0.0, 0.18, k) * (1.0 - smoothstep(0.6, 1.0, k)))
+			_cower(r, rig, k)
 		&"stagger":
 			_stagger(r, rig, k)
 		&"knockdown":
@@ -44,16 +44,19 @@ static func _flinch(r: HumanReact, rig: CutRig, e: float, amt: float) -> void:
 	r.head_off = r.dir * 40.0 * e * amt
 
 
-## Startled by a bang: crouches (drawn smaller from above), both hands over the head, the head
-## tucked, a hop away from the shot (r.dir points away from it).
-static func _cower(r: HumanReact, rig: CutRig, e: float) -> void:
+## Startled by a bang: a glance back at it, then crouches (drawn smaller from above), both
+## hands over the head, the head tucked, a hop away from the shot (r.dir points away from it).
+static func _cower(r: HumanReact, rig: CutRig, k: float) -> void:
+	var e: float = smoothstep(0.0, 0.18, k) * (1.0 - smoothstep(0.6, 1.0, k))
+	var glance: float = smoothstep(0.0, 0.08, k) * (1.0 - smoothstep(0.12, 0.3, k))
 	r.off = r.dir * r.travel * e
-	r.scl = Vector2.ONE * lerpf(1.0, 0.8, e)
+	r.scl = Vector2.ONE * lerpf(1.0, 0.72, e)
 	rig.c_hands_up = maxf(rig.c_hands_up, e)
-	rig.c_tuck = maxf(rig.c_tuck, 0.35 * e)
+	rig.c_tuck = maxf(rig.c_tuck, 0.45 * e)
 	rig.twist = r.side * 0.3 * e
+	r.head_rot = -r.side * 0.7 * glance
 	r.head_off = r.dir * 30.0 * e
-	r.head_s = 1.0 - 0.12 * e
+	r.head_s = 1.0 - 0.14 * e
 
 
 ## Steps back along the hit, the torso tips with it, the weapon arm drops.
