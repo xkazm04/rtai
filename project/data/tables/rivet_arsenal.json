@@ -43,13 +43,14 @@
       "stow_ticks": 22
     },
     "thrown": {
-      "doc": "one bottle in the claw; draw is lighting the rag",
+      "doc": "one bottle in the claw; draw is lighting the rag; a press winds the arm back windup_ticks, the bottle leaves on the last tick as the claw whips through (0 = it leaves on the press)",
       "draw_ticks": 8,
       "held_scale": 1.5,
       "kick": 0,
       "move_mult": 1,
       "slot": 4,
-      "stow_ticks": 6
+      "stow_ticks": 6,
+      "windup_ticks": 14
     },
     "two_hand_long": {
       "doc": "stock at the shoulder, the off hand under the barrel; carried across the chest",

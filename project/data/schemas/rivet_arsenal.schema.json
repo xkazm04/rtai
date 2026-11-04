@@ -254,6 +254,11 @@
               "maximum": 120,
               "minimum": 1,
               "type": "integer"
+            },
+            "windup_ticks": {
+              "maximum": 60,
+              "minimum": 0,
+              "type": "integer"
             }
           },
           "required": [

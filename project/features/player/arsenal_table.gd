@@ -22,6 +22,8 @@ class Grip:
 	## The flamer's sway: the fire line swings sway_rad either side of the aim over sway_ticks.
 	var sway_rad: float = 0.0
 	var sway_ticks: int = 60
+	## A thrown class's wind-up before the bottle leaves (0 = it leaves on the press).
+	var windup_ticks: int = 0
 
 	## The sway off the aim line at fight tick `tick` (rad; 0 for a class that does not sway).
 	func sway(tick: int) -> float:
@@ -57,6 +59,7 @@ static func from_table(t: DataTable) -> ArsenalTable:
 		g.slot = t.integer(row, "slot")
 		g.sway_rad = t.num(row, "sway_rad") if row.has("sway_rad") else 0.0
 		g.sway_ticks = maxi(2, t.integer(row, "sway_ticks")) if row.has("sway_ticks") else 60
+		g.windup_ticks = t.integer(row, "windup_ticks") if row.has("windup_ticks") else 0
 		a.grips[g.id] = g
 	var r: Dictionary = t.object(t.raw, "reload")
 	a.out_k = t.num(r, "out_k")

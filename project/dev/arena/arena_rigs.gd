@@ -32,6 +32,7 @@ var _strikes_seen: int = 0
 var _shocks_seen: int = 0
 var _rolls_seen: int = 0
 var _shots_seen: int = 0
+var _winds_seen: int = 0
 var _arsenal: ArsenalTable = ArsenalTable.shipped()
 
 
@@ -139,11 +140,17 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
 	_rolls_seen = pilot.motion.rolls
 	var gun: GunHand = stage.arena.gun
+	var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
+	if pilot.throw.winds != _winds_seen and grip != null:  # the arm draws back, then whips through
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(grip.windup_ticks, THROW.y, THROW.z, BodyPlan.L)
+	_winds_seen = pilot.throw.winds
 	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
-		var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
 		f.clip_arg[0] = grip.kick if grip != null else 1.0
-		if grip != null and grip.id == &"thrown":  # the bottle leaves: the claw whips through
+		if grip != null and grip.windup_ticks > 0:  # the wind-up's clip is already throwing
+			f.clip[0] = RigClips.Clip.NONE
+		elif grip != null and grip.id == &"thrown":  # the bottle leaves: the claw whips through
 			f.clip[0] = RigClips.Clip.STRIKE
 			f.clip_arg[0] = RigInput.pack_strike(THROW.x, THROW.y, THROW.z, BodyPlan.L)
 	_shots_seen = gun.shots_fired if gun != null else 0

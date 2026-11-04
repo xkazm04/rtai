@@ -4,7 +4,8 @@ extends Node2D
 ## CharacterRigs posed him, the held part (weapon-art's WeaponArt.make_held: origin on the grip,
 ## +x along the barrel) sits on the gun claw's closing point along the claw, and the claw cell
 ## switches from the drawn-in pistol to the closed claw. Hidden while the gun is away (a claw
-## hit, a roll, a stow past halfway). Reads StagePilot.hold; writes nothing to the sim.
+## hit, a roll, a stow past halfway; a thrown bottle from its release until the next one comes
+## up at reload phase 1). Reads StagePilot.hold; writes nothing to the sim.
 
 ## A melee weapon's blade sweeps either side of the aim line during a swing by the hit's own arc
 ## (acos of its cone_dot: the katana's slash 1.27 rad, its thrust 0.72, the plasma spin a full
@@ -70,7 +71,7 @@ func _process(_delta: float) -> void:
 	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
 		_sweep_arc = _arc()
 		_sprite.global_rotation += _sweep(rig.clips)
-	_sprite.visible = true
+	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 
 
 func _swap(id: StringName, weapon: StringName) -> void:
