@@ -1,7 +1,8 @@
 # Showcase lane: night run 2026-11-04, report
 
-Status: DRAFT written at 07:00, updated 07:12 on round 11. The final round (07:45-08:30) updates it with the
-last merge, its gates, the final reel and the final exe.
+Status: FINAL on merge round 12 (9c52b656, merged 07:15; the showcase session ends at 08:12, so
+the final round ran 07:15-08:12). Final reel **reel-0722**, gates r12 green, exe re-exported 07:27.
+A lane commit after 07:15 is not in this build.
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -18,7 +19,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 chapters, deterministic) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 234 MB) with the release
-sim DLL beside it (re-exported on round 11, 07:11). Round 11 boot tests (headless, 0 script errors): the arena opens with 16
+sim DLL beside it (re-exported on round 12, 07:27). Round 12 boot tests (headless, 0 script errors): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 
@@ -39,7 +40,8 @@ city block loads with the loadout.
 | reel-0615-r9-fixes | round 9 check: electro, plasma rifle, riot cop after the lanes' fixes |
 | reel-0640 | morning-reel draft on round 10, 122 s: 16 chapters + 17 CITY BLOCK |
 | reel-0700-close64 | 64 px/m close-ups of the round 9-10 changes |
-| **reel-0710** | **morning-reel draft on round 11, 122 s: 16 chapters + 17 CITY BLOCK** |
+| reel-0710 | morning-reel draft on round 11, 122 s: 16 chapters + 17 CITY BLOCK |
+| **reel-0722** | **the final morning reel on round 12, 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 
@@ -54,7 +56,8 @@ city block loads with the loadout.
 | r8 | e3d3567d | 13/13 | 848/848 | 43/43 | exact | 11/11 + 5/5 |
 | r9 | 54a7d5c0 | 13/13 | 868/868 | 43/44 (REQUEST 25) | exact | 4/11 (shield slab + spray tilt, intended) |
 | r10b | ef43fb36 | 13/13 | 871/871 | 44/44 | exact | 11/11 (re-blessed, decisions line) + 5/5 |
-| **r11** | **9f6b2fbe** | **13/13** | **889/889** | **44/44** | **exact** | **11/11 + 5/5** |
+| r11 | 9f6b2fbe | 13/13 | 889/889 | 44/44 | exact | 11/11 + 5/5 |
+| **r12 (final)** | **9c52b656** | **13/13** | **893/893** | **44/44** | **exact** | **11/11 (worst 0.00) + 5/5** |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 
@@ -70,15 +73,18 @@ The riot is back under its p99 record after human-reactions trimmed the trip sca
 ## Calls for the owner
 
 - **showcase-1, electro death pose:** the stiff "plank" corpse vs a lying fall along the shot
-  (reel-0710 chapter 06; REQUEST 24/24b -> human-reactions).
+  (reel-0722 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in
+  human-reactions 3a8d3931 on the pit path).
 - **showcase-2, hub crowding:** the melee-line dummies stand in front of the weapon wall's base,
   and the hub has no free row left (evidence/r8/armory-48ppm.png).
 - **showcase-3, pit wall bars on the city plaza:** the pit's wall bars still draw on the city
-  block (reel-0710 chapter 17).
+  block (reel-0722 chapter 17).
 
 ## Known wrong in the current reel (REQUESTs out)
 
-- ch 06 electro: the corpse now lies long, but across the shot; the scorch does not read at 48 px/m (REQUEST 24b -> human-reactions).
+- ch 06 electro: after the X-ray strobe the corpse still reads as a standing cop, gun toward Rivet,
+  and no scorch shows (REQUEST 29 -> brutality: the electro kill's KillShockFx owns this corpse,
+  so human-reactions' plank fix 3a8d3931 (REQUEST 24b) does not reach it).
 - ch 07 molotov: the victim is hidden under the fire stars to the end (REQUEST 27 -> brutality, cc gunplay).
 - ch 13 ray gun: the dust pile reads as a round cream token (REQUEST 26 -> brutality).
-- ch 17 city block: the plasma topple logs a script error every frame there (REQUEST 28 -> brutality).
+- ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.
