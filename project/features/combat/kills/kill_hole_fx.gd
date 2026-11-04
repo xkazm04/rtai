@@ -80,7 +80,9 @@ class Topple:
 		var side: float = -1.0 if axis.y < 0.0 else 1.0
 		var twist: Transform2D = Transform2D(side * LIE_TWIST * k, Vector2.ZERO)
 		var t2: Transform2D = turn * lay * turn.affine_inverse() * twist
-		var inner: Node2D = body.get_child(0) as Node2D
+		var inner: Node2D = body.get_child(0) as Node2D if body.get_child_count() > 0 else null
+		if inner == null:  # no rig was cut (the city block at 32 px/m): nothing to topple
+			return
 		inner.transform = t2.translated(axis * FALL_M * ppm * k)
 
 
