@@ -20,6 +20,8 @@ var stage: ArenaStage = null
 var plan: ArenaPlan = null
 ## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
 var react: ReactLink = null
+## Fighter ids a signature kill consumed (lane brutality): their body is gibs now, no rig.
+var hidden: Dictionary[int, bool] = {}
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 ## Each fighter's last hurt tick already played as a HIT clip.
@@ -59,6 +61,8 @@ func _process(_delta: float) -> void:
 	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
+		if hidden.has(h.id):
+			continue
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
 	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M

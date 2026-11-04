@@ -1,0 +1,17 @@
+{
+  "doc": "The brutality lane's station (features/combat/kills): the signature one-shot kills of the advanced weapons on humans, shown on the pit's real waves. The hook feeds lethal hits into SignatureKills (signature_kills.json) and draws gibs, scorch and spray on the print stage. Capture: --bot=pit --rigs --sig-gun=rocket_launcher (Rivet holds the weapons.json rocket launcher); --gore=reduced = the standard death.",
+  "lane": "brutality",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "pit",
+      "id": "brutality_pit",
+      "measures": [
+        "signature_kills",
+        "by_style"
+      ],
+      "name": "Signature kills",
+      "script": "res://features/combat/kills/brutality_hook.gd"
+    }
+  ]
+}
