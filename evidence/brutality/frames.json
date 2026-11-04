@@ -120,14 +120,14 @@
     "note": "Real-time, fixed-fps 60, 900 frames. Rivet fires the weapons.json rocket launcher at a line of six contractors (KillLab); every lethal rocket replaces the standard death with the gib kill. Other stations' dummies stand in the hub row above."
   },
   {
-    "file": "clips/rocket-gib-arena-64ppm-12s.mp4",
-    "title": "Rocket signature kill, real time at 64 px/m",
+    "file": "clips/rocket-gore-reduced-arena-48ppm-10s.mp4",
+    "title": "--gore=reduced: the same rocket lab, no signature kill (the victims fall whole)",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Same run at 64 px/m, uncropped, real time."
+    "ppm": 48,
+    "before": "clips/rocket-gib-arena-32ppm-15s.mp4",
+    "note": "Ratings proof: telemetry signature_kills 0; every lethal rocket plays human-reactions' standard blown death with the standard d5-combat blood. No dismemberment."
   },
   {
     "file": "clips/hand-cannon-blowback-64ppm-slow-0.4x.mp4",

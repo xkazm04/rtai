@@ -168,3 +168,8 @@ NEXT:
 4. City clips for the fire and electro kills (`--arena=city`), and a reel of all four kills.
 5. Hand cannon polish (iteration 1 NEXT 1): sprawl pose before the cut, cap visibly leaves.
 6. `--gore=reduced` clip (each kill falls with the standard death) for the ratings proof.
+- 02:36 Gates on the final tree: lint 13/13 (every commit), unit 725/725
+  (evidence/brutality/unit-it2.log), scenarios 31/31 incl. scenario_brutality_kills
+  (evidence/brutality/scenarios-it2.log). No bench this iteration (bench.lock held by another lane).
+- 02:37 `--gore=reduced` clip (rocket lab, 48 px/m): signature_kills 0, victims fall whole with the
+  standard death (clips/rocket-gore-reduced-arena-48ppm-10s.mp4). NEXT 6 done.
