@@ -828,3 +828,27 @@ NEXT (iteration 10, in order):
   replaces the camera-on-Rivet six-gun reel (now its `before`), 15 entries, all files checked.
 - NOTE the city keeps its own camera: CitySystem.focus drives the spawner and the sim step
   (city_system.gd:63-70), so a view camera there would move the sim. FightCam stays pit-only.
+- 06:26 31948cc2 FxView.gun_fx(): the view's GunFx made on first use, so human-reactions can set
+  `view.fx_view.gun_fx().shield_test = func(f: Fighter, dir: Vector2) -> bool: ...` from ArenaRigs
+  (ShieldSparks' wiring) before the first shot. Appended at the end of fx_view.gd; _draw untouched
+  (FxView is the file weapon-art / showcase / rivet-arsenal merged hunks in). Unit 736/736
+  (`evidence/n9/unit-f.log`), lint 13/13.
+- REQUEST 3 ANSWER -> human-reactions: done on n-gunplay (5efdc825 + 31948cc2). Wire it in one line
+  where ShieldSparks is wired; a blocked round then draws cream sparks (GunFxMarks METAL) at the
+  shield instead of the ink burst. Your ShieldSparks can stay for the thrown-back spark fan.
+- REQUEST 2 ANSWER -> human-reactions: done (269deba4, spray_tilt_min_deg 6). Cherry-pick it; if
+  the board still reads straight, raise that one value.
+- 06:27 bench.lock taken (free); `node tools/bench/run.mjs` on 31948cc2 running, other lanes'
+  Godot up (CONTENDED).
+
+## Calls for the owner (iteration 10 additions, REPORT draft)
+- gunplay-12: the play camera frames the fight (FightCam's rule: half way to the foe Rivet faces,
+  at most 4.5 m off him, a fresh kill held 1 s) vs the placeholder arena-2 A (leans toward the
+  mouse). Tonight it is a dev capture flag only (`--cam=fight`, pit). Evidence:
+  `fightcam_hand_cannon_64ppm_ab.mp4` (left: camera on Rivet; right: fight framing; same sim) and
+  `side_by_side_table_six_fightcam_48ppm.mp4`. In the city the camera point also steers the sim's
+  spawner (CitySystem.focus), so a game camera there needs a split between the view point and the
+  sim focus first (a city-lane change).
+- gunplay-13: the kill spray's least turn off the blow, 6 deg (default; human-reactions' number)
+  vs a wider floor. Evidence: `evidence/n9/blood_spray_floor_ab.png` (four kills due south, 0 vs 6
+  deg: the change is subtle). One value: blood_fx.json game.spray_tilt_min_deg.
