@@ -918,3 +918,10 @@ NEXT (iteration 14), in order:
    rivet-motion's melee path) and add them to the lineup at 32 and 64 px/m.
 4. FINDING to watch: long guns drawn over Rivet's helmet in the carry pose (tick 394); rivet-arsenal's view.
 5. Delete `C:\Users\kazda\kiro\gtai-n4\scratch\wa13` (raw frames).
+- CORRECTION 07:47 (re-filming NEXT 2): `--loadout=pistol,machine_pistol,hand_cannon,gloria` logs "Rivet carries
+  [gloria, '', '', '']": `--loadout` keeps one gun per carry slot and the four kinetic guns all sit in slot 1, so
+  the last wins. So it10's kinetic-family clip and it12's 32/48 px/m kinetic A/B strips and clip showed ONLY
+  Gloria, drawn with the pistol's art, in every frame. The it12 claims "the hand cannon's drum survives" were a
+  misread of the pistol. The it12 held_small result (dark lozenge -> pale steel) holds for the pistol art; the
+  per-gun truth is the it13 lineups (one run per gun). frames.json it12 notes corrected. NEXT 2 now = film the
+  family as four one-gun runs cut into one clip (the lineup runs in scratch wa13 have 400 ticks each).
