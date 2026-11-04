@@ -77,6 +77,7 @@ static func _burn(r: HumanReact, rig: CutRig, k: float) -> void:
 	rig.c_sprawl = 0.8 * down
 	rig.c_tuck = 0.3 * down
 	r.tint = smoothstep(0.0, 0.8, k)
+	CorpseScorch.ensure(rig)  # soot and smoke under the charred body
 
 
 static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
