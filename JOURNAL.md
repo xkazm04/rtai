@@ -27,3 +27,38 @@ worktree, export, drive bench 2 x 40 s).
   combo / PlayerMotion (rivet-motion's dev scenes only), the enemy-ai archetypes (riot shield,
   robot thug run only in `dev/enemy_ai/enemy_rig_fight_run.gd`), weapon switching. The reel gets
   those beats as the night lanes land them in the arena.
+- 01:22 FIX (own defect, seen in the reel's frames): the walk beat at y -3 ran Rivet through
+  rivet-motion's melee line (targets x 0/2/4, metal 6-14 on y -3) and the range-to-pit path cut
+  through its west end. The hub loop moved to y 1.5-4; a new `melee_line` beat rounds the west
+  end and jabs each dummy (60 t each). Reel now 6 beats, 3840 t = 64 s.
+- MILESTONE 01:24: `scenario_showcase_reel` (every beat runs, melee and gun beats each drop pit
+  guards, 0 deaths, replay identical, planted no-buttons fault kills nobody): 1 ran, 0 failed.
+  Telemetry `evidence/r1/showcase-reel-telemetry.json` (45 shots, 32 hits, 13 pit kills: 2 by
+  melee, 11 by gun).
+- MILESTONE 01:14: reels `reel-0130.mp4` (32 px/m, 53 s) and `reel-0130-64ppm.mp4` (64 px/m,
+  33 s), fixed-fps 60, `--rigs --clean`, in gtai-masters/n4/showcase; frames.json 2 entries.
+  Frame sheets looked at (16 frames at 32, 9 + 8 at 64). What looks wrong:
+  1. No melee swing exists: the jab kills with no arm motion (rivet-arsenal is replacing the
+     jab with the claw combo in StagePilot, their DECISION live-melee).
+  2. A jab kill: the cop drops straight into the generic sprawl, red blood; no flinch toward
+     the hit, no stagger. Rifle kills at 32 px/m read only as the blood splash.
+  3. Rivet hit by a guard round: his whole body fills solid vermilion for a frame or two
+     (64 px/m, 27 s). Loud; the palette allows vermilion for danger, so it is legal, but the
+     owner may read it as "Rivet turned red". Call for gunplay (HitFeel owner).
+  4. The arena dummies (range, melee line) are drawn as cops with the ring and a number under
+     `--rigs` (arena REPORT gap; no arena lane tonight). DEBT for the showcase: they read as
+     victims, not dummies.
+  5. At 64 px/m the pit guards shoot from off screen (no camera lead: arena-2 A placeholder).
+- REQUEST 1 -> rivet-arsenal: the reel presses `melee` (press edge) once per 32 ticks on a pit
+  cop and once per melee-line dummy; please keep the claw combo chaining on repeated press
+  edges of the `melee` bit (no hold-only input), so the reel shows the full combo with no
+  change on my side. Tell me in your JOURNAL if the combo needs a different press rhythm.
+- REQUEST 2 -> human-reactions: the first thing the reel needs from you is a visible flinch /
+  stagger toward the hit on the pit cops (GuardBrain contractors drawn by ArenaRigs as COP),
+  and a death by damage kind (`shock` from the jab, `shot` from gloria). Clip to compare:
+  `gtai-masters/n4/showcase/reel-0130-64ppm.mp4`, 26-28 s.
+- REQUEST 3 -> gunplay: Rivet's own hit flash is a full-body solid vermilion fill
+  (reel-0130-64ppm.mp4, 27 s). Consider a vermilion rim or a paper flash instead; your call,
+  record it. Also: is the pistol / machine pistol selectable in the arena tonight? The reel
+  needs a deterministic way to switch weapons (an input bit or a station tuning), not a poke
+  at `arena.rivet.weapon`.
