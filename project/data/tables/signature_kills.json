@@ -182,6 +182,37 @@
         1
       ],
       "weapon": "plasma_rifle"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 10,
+      "cut_deg": 55,
+      "doc": "Plasma sword: the katana's diagonal cut with a hot blade: the two halves of the real rig slide apart, their cut edges cauterised (a hot cream band in a heat bloom, no red), no blood and no smears; the cream slash streak marks the blade.",
+      "flash_ticks": 2,
+      "ground_drag": 2.6,
+      "hitstop_ticks": 6,
+      "id": "plasma_sword_split",
+      "launch_mps": [
+        3,
+        3.8
+      ],
+      "pieces": [
+        "half_a",
+        "half_b"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        20,
+        70
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "split",
+      "up_mps": [
+        0.4,
+        0.8
+      ],
+      "weapon": "plasma_sword"
     }
   ],
   "leftover_budget": 12,

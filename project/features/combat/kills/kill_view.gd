@@ -253,7 +253,9 @@ func _parts(
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
 	var groups: Array[Node2D] = (
-		KillSplitFx.cut(rig, dir, ppm) if split else GibCut.parts(rig, row.whole_body(), ppm)
+		KillSplitFx.cut(rig, dir, ppm, row.spray == 0)
+		if split
+		else GibCut.parts(rig, row.whole_body(), ppm)
 	)
 	if row.style == &"split":
 		split_fx.add(serial, at, dir)

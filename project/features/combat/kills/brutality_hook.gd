@@ -45,7 +45,9 @@ func arm(stage: ArenaStage, ctx: WorldContext, weapon: StringName) -> void:
 ## melee `weapon` (melee_weapons.json) Rivet lunges and slashes instead of firing.
 func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab = KillLab.new()
-	_lab.blade = weapon if MeleeTable.weapon_ids().has(weapon) else &""
+	var row: SignatureKill = kills.table.for_weapon(weapon)
+	var blade: bool = MeleeTable.weapon_ids().has(weapon) or (row != null and row.style == &"split")
+	_lab.blade = weapon if blade else &""  # a split row's weapon is a blade (the plasma sword)
 	_lab.setup(stage)
 
 
