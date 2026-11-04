@@ -58,8 +58,9 @@ NEXT (iteration 2, in order):
 
 NEXT (iteration 3, in order):
 1. The charged shock live (MeleeShock): hold melee charges; keep the claw combo on the press edge (showcase REQUEST 1) by starting the charge only after the jab's recovery while the button stays down; a scenario with a planted fault.
-2. The off arm's walk swing while strafing with a one-hand gun flings it out sideways: damp the counter-swing when gun_out (RigArm._target), check at 64 px/m (clips/arena-switch-grip-classes-64ppm.mp4 ~6 s shows it).
+2. The arm flung out sideways at 64 px/m is Rivet's own HIT flinch when a pit cop's round lands (a tracer through him and an impact star in the same frames; deterministic, ticks 354-372 of `--bot=arsenal --loadout=machine_pistol,plasma_rifle`). Make his flinch keep the gun (or both claws) on the weapon and twist the torso instead (RigClips.hit on the RIVET plan). 02:34 tried damping the walk counter-swing while armed: pixel-identical frames, reverted.
 3. Reload readability: a 64 px/m full-rate close-up of the machine pistol reload (`--bot=arsenal --loadout=machine_pistol`, reload at tick 120 of each 240); if it does not read, REQUEST a magazine part from weapon-art and drop it.
 4. The flamethrower (backpack tank part `tank` from weapon-art, RigGrip.HIP) and the molotov wind-up and release (thrown class: no throw animation yet; the bottle just leaves).
 5. Melee weapons live (katana, baton, chainsaw, plasma sword) via MeleeTable.weapon(id) on PlayerMelee when the held weapon is a melee id; RivetCarry only carries guns today.
 6. A per-class clip set for frames.json (one 64 px/m clip per grip class, carry + aim + fire + reload), replacing the mixed switch clip as the lead.
+- 02:34 CORRECTION: the flung arm is not the walk swing either: the frames carry a tracer through Rivet and an impact star, so it is his HIT flinch. A damped armed walk swing made pixel-identical frames and was reverted (not shipped). NEXT 2 updated.
