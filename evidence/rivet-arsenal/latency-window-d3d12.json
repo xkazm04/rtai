@@ -1,0 +1,34 @@
+{
+  "fps": 60.0,
+  "frames": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "ms": [
+    30.991,
+    33.314,
+    33.444,
+    27.468,
+    33.057,
+    33.396,
+    33.167,
+    30.4,
+    33.49,
+    34.101,
+    31.19,
+    33.558
+  ],
+  "note": "engine-side; the swapchain and the display add frames on top (CONTENDED machine)",
+  "schema": "gtai.rivet-latency/1",
+  "what": "frames and ms from Input.parse_input_event(move_right) to Rivet's sim move"
+}

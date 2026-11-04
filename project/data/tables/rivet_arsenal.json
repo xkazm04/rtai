@@ -1,0 +1,88 @@
+{
+  "art_stand_in": {
+    "assault-rifle": "machine_pistol",
+    "gloria": "pistol"
+  },
+  "classes": {
+    "backpack_hose": {
+      "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking",
+      "draw_ticks": 18,
+      "held_scale": 1.2,
+      "kick": 0.3,
+      "move_mult": 0.9,
+      "slot": 3,
+      "stow_ticks": 16
+    },
+    "heavy_two_hand": {
+      "doc": "the chainsaw at the hip in both hands; draw is the pull start",
+      "draw_ticks": 26,
+      "held_scale": 1.2,
+      "kick": 0.4,
+      "move_mult": 0.85,
+      "slot": 3,
+      "stow_ticks": 20
+    },
+    "one_hand": {
+      "doc": "pistol grip in the claw, low ready at the hip; aims with the claw arm only",
+      "draw_ticks": 12,
+      "held_scale": 1.5,
+      "kick": 0.8,
+      "move_mult": 1,
+      "slot": 1,
+      "stow_ticks": 8
+    },
+    "shoulder": {
+      "doc": "the tube on the claw shoulder, both hands on it; a heavy shoulder kick",
+      "draw_ticks": 30,
+      "held_scale": 1.1,
+      "kick": 1.6,
+      "move_mult": 0.85,
+      "slot": 3,
+      "stow_ticks": 22
+    },
+    "thrown": {
+      "doc": "one bottle in the claw; draw is lighting the rag",
+      "draw_ticks": 8,
+      "held_scale": 1.5,
+      "kick": 0,
+      "move_mult": 1,
+      "slot": 4,
+      "stow_ticks": 6
+    },
+    "two_hand_long": {
+      "doc": "stock at the shoulder, the off hand under the barrel; carried across the chest",
+      "draw_ticks": 20,
+      "held_scale": 1.2,
+      "kick": 1,
+      "move_mult": 0.95,
+      "slot": 2,
+      "stow_ticks": 14
+    }
+  },
+  "doc": "How Rivet holds each weapon (rivet-arsenal, night 2026-11-04). Ticks are 60 Hz frames. classes = the grip classes (weapon-art's weapon_art.json grip_class names, plus heavy_two_hand for the chainsaw): stow_ticks puts the held weapon away, draw_ticks brings the next one up (a switch is stow then draw; no shot leaves until the draw ends), kick scales the rig's recoil, move_mult scales the walk while it is held, held_scale draws weapon-art's held part larger in Rivet's claw (the claw covers a human-size grip). reload splits a weapon's reload_s (weapons.json) into the magazine out, the magazine in and the cock or charge, as fractions that sum to 1. weapons maps every weapon id (guns from weapons.json, melee from melee_weapons.json) to its grip class. The live tuning panel edits these rows. art_stand_in draws a weapon without its own held art (weapon_art.json) with another's until it lands. slot is the carry slot a class sits in (1 sidearm, 2 long, 3 heavy, 4 thrown): number keys 1-4 pick a slot, the wheel cycles the carried slots (RivetCarry).",
+  "reload": {
+    "cock_k": 0.25,
+    "in_k": 0.45,
+    "out_k": 0.3
+  },
+  "schema": "gtai.rivet-arsenal/1",
+  "weapons": {
+    "assault-rifle": "two_hand_long",
+    "chainsaw": "heavy_two_hand",
+    "electro_baton": "one_hand",
+    "electro_gun": "two_hand_long",
+    "flamethrower": "backpack_hose",
+    "gloria": "one_hand",
+    "hand_cannon": "one_hand",
+    "homing_shard": "two_hand_long",
+    "katana": "two_hand_long",
+    "machine_pistol": "one_hand",
+    "mini_nuke": "shoulder",
+    "molotov": "thrown",
+    "pistol": "one_hand",
+    "plasma_rifle": "two_hand_long",
+    "plasma_sword": "two_hand_long",
+    "ray_gun": "two_hand_long",
+    "rocket_launcher": "shoulder"
+  }
+}

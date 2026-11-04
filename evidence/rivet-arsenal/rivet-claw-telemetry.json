@@ -1,0 +1,41 @@
+{
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "finished_tick": 1214,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 10,
+    "claw_kills": 4,
+    "claw_swings": 24,
+    "claw_whiffs": 0,
+    "shock_discharges": 1,
+    "shock_landed": 1
+  },
+  "rolls": 2,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 0,
+  "sprint_top_mps": 6.19999980926514,
+  "ticks": 1214,
+  "top_speed_mps": 17.0578765869141,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 10800.0003005374
+}

@@ -1,0 +1,102 @@
+{
+  "doc": "rivet-arsenal's stations (Rivet's live motion, melee and, later, every held weapon). The claw cops are real CombatArena guards that walk at Rivet and never fire (their trigger stays on cooldown): spawns whose id starts with spar_ are sparring cops at hp 4 (the claw combo's 1 + 1 + 2 drops them on the finisher); the others carry the human hp from combat.json (one hit, owner doctrine). A dead cop stands up again at its spawn 150 ticks later. ArenaClawCops (res://features/player/arena_claw_cops.gd) runs them; --bot=rivet plays the station: the combo on the sparring cops, one jab on the plain cop, then the charged shock (hold melee after the jab) on spar_shock_1, the arc hopping to spar_shock_2, and the combo on the stunned cop. The cops stand on y 4.4 and the bot walks y 2.85 (clear of human-reactions' react_line on y 1.5). The carry station (rivet_arsenal_carry, ArenaArsenal) arms Rivet with --loadout=<gun ids> in their carry slots: number keys 1-4, the wheel and reload work on the arena's real fight; --bot=arsenal fights the pit and switches every 4 s. Without --loadout it does nothing. --pickups=<gun ids> lays guns along the pit's way in: walking over one takes it into an empty slot (or refills the same gun); interact over a gun for an occupied slot swaps and drops the held one.",
+  "lane": "rivet_arsenal",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "hub",
+      "id": "rivet_claw_cops",
+      "measures": [
+        "claw_hits",
+        "claw_whiffs",
+        "claw_kills",
+        "combo_cadence_ms",
+        "shock_discharges"
+      ],
+      "name": "Rivet claw cops",
+      "props": [],
+      "script": "res://features/player/arena_claw_cops.gd",
+      "spawns": [
+        {
+          "at": [
+            2,
+            4.4
+          ],
+          "id": "spar_cop_1",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            6,
+            4.4
+          ],
+          "id": "spar_cop_2",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            10,
+            4.4
+          ],
+          "id": "cop_1",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            13,
+            4.4
+          ],
+          "id": "spar_shock_1",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            14.8,
+            4.4
+          ],
+          "id": "spar_shock_2",
+          "kind": "prop",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ],
+      "tuning": [
+        {
+          "key": "rivet_melee.claw.hits.2.knockback_m",
+          "max": 5,
+          "min": 0,
+          "step": 0.1
+        }
+      ]
+    },
+    {
+      "area": "pit",
+      "id": "rivet_arsenal_carry",
+      "measures": [
+        "switches",
+        "hold_switches",
+        "weapon",
+        "picked",
+        "swapped"
+      ],
+      "name": "Rivet carry and switch",
+      "props": [],
+      "script": "res://features/player/arena_arsenal.gd",
+      "spawns": [],
+      "tuning": []
+    }
+  ]
+}

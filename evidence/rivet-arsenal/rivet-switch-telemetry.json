@@ -1,0 +1,12 @@
+{
+  "draw_ms": 633.333333333333,
+  "expected_tick": 68,
+  "first_rocket_tick": 68,
+  "slot_order": [
+    0,
+    2,
+    3,
+    0
+  ],
+  "switches": 4
+}

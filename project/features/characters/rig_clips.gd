@@ -7,7 +7,8 @@ extends RefCounted
 ##   cops:  SHOOT (recoil kick on the gun arm), HIT (shove + twist + flash)
 ## Durations are the spike pack's (24 fps clips): punch 10 f, third hit 14 f, roll 0.45 s.
 
-enum Clip { NONE, PUNCH, ROLL, DEATH, SHOOT, HIT }
+## STRIKE (rivet-arsenal): a timed claw or weapon swing fed from the live pilot (RigInput packs it).
+enum Clip { NONE, PUNCH, ROLL, DEATH, SHOOT, HIT, STRIKE }
 
 const PUNCH_S: float = 0.42
 const PUNCH3_S: float = 0.58

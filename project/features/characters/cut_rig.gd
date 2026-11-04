@@ -31,6 +31,11 @@ var face_to: float = 0.0
 var aiming: bool = false
 var aim_at: Vector2 = Vector2.ZERO
 var gun_out: bool = false
+## rivet-arsenal: how both arms hold the weapon while aiming (RigGrip.Kind; 0 = one hand).
+var grip: int = 0
+## rivet-arsenal: the reload pantomime (RigGrip): -1 none, else phase + fraction (0 magazine out,
+## 1 magazine in, 2 the cock or charge).
+var reload_k: float = -1.0
 var dead: bool = false
 
 var c_tuck: float = 0.0
@@ -109,6 +114,8 @@ func reset_state(at_facing: float) -> void:
 	dead = false
 	gun_out = false
 	aiming = false
+	grip = 0
+	reload_k = -1.0
 	vel_in = Vector2.ZERO
 	clips.reset()
 	if react != null:

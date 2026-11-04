@@ -13,6 +13,8 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 const FOCUS_AHEAD_M: float = 7.0
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
 const FOCUS_REACH_M: float = 20.0
+## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
+const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -29,6 +31,12 @@ var _city: CityView = null
 var _hurt_seen: Dictionary[int, int] = {}
 ## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
 var _fire_seen: Dictionary[int, Vector2i] = {}
+## rivet-arsenal: the pilot's last seen claw starts and rolls (a change starts the rig clip).
+var _strikes_seen: int = 0
+var _shocks_seen: int = 0
+var _rolls_seen: int = 0
+var _shots_seen: int = 0
+var _arsenal: ArsenalTable = ArsenalTable.shipped()
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
@@ -49,6 +57,13 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
 	rigs.setup(ctx)
+	var held: RivetHeldView = RivetHeldView.new()  # rivet-arsenal: the weapon in his claw
+	held.rigs = rigs
+	held.pilot = p_stage.pilot
+	held.arena = p_stage.arena
+	held.rivet_id = p_stage.arena.rivet.id
+	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
+	view.print_stage.actor_layer().add_child(held)
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
 	return true
@@ -62,6 +77,7 @@ func _process(_delta: float) -> void:
 	var r: Fighter = stage.arena.rivet
 	_put(0, r, BodyPlan.Kind.RIVET)
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
+	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
 		if hidden.has(h.id):
@@ -120,3 +136,46 @@ static func fired(before: Vector2i, now: Vector2i) -> bool:
 	if now.y < before.y:
 		return true
 	return now.y == 0 and before.y == 0 and now.x > before.x
+
+
+## rivet-arsenal: the live pilot's claw strikes and dodge rolls on Rivet's rig (row 0). While a
+## claw hit plays the gun is put away, so the strike reads on both arms.
+func _rivet_clips(f: RigFeed) -> void:
+	var pilot: StagePilot = stage.pilot
+	if pilot == null or not stage.arena.rivet.alive():
+		return
+	var m: MeleeCombo = pilot.melee.combo
+	if m.starts != _strikes_seen and m.hit_index != 0:
+		var h: MeleeHit = m.current()
+		var arm: int = STRIKE_ARMS[mini(m.hit_index - 1, STRIKE_ARMS.size() - 1)]
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(h.windup, h.active, h.recovery, arm)
+	_strikes_seen = m.starts
+	if pilot.shock.discharges != _shocks_seen:  # the discharge: both claws thrust
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(2, 5, pilot.shock.recovery_ticks, 2)
+	_shocks_seen = pilot.shock.discharges
+	if pilot.motion.rolls != _rolls_seen:
+		f.clip[0] = RigClips.Clip.ROLL
+		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
+	_rolls_seen = pilot.motion.rolls
+	var gun: GunHand = stage.arena.gun
+	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
+		var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
+		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
+		f.clip_arg[0] = grip.kick if grip != null else 1.0
+	_shots_seen = gun.shots_fired if gun != null else 0
+	var claws: bool = (pilot.melee.busy() and not pilot.wielding()) or pilot.shock.busy()
+	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
+		f.flags[0] = 0
+
+
+## The gun is in the claw from halfway through the draw until halfway through the stow.
+static func _gun_shown(pilot: StagePilot) -> bool:
+	var h: WeaponHold = pilot.hold
+	match h.state:
+		WeaponHold.State.DRAWING:
+			return h.progress() >= 0.5
+		WeaponHold.State.STOWING:
+			return h.progress() < 0.5
+	return h.held != &""
