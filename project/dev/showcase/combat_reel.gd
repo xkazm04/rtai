@@ -34,10 +34,15 @@ var actions: PlayerActions
 var beats: Array[Beat] = []
 ## The beat each tick ran (index), for the HUD and the log.
 var beat_i: int = 0
+## Pit kills credited to the beat that was running (beat id -> kills), for the scenario.
+var kills_by_beat: Dictionary[StringName, int] = {}
+## False plants the scenario's fault: every button off (aim and walk only).
+var trigger: bool = true
 var _beat_start: int = 0
 var _next: int = 0
 var _range: ArenaRangeBot
 var _seen_since: int = -1
+var _kills_before: int = 0
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
@@ -73,7 +78,11 @@ func length() -> int:
 
 
 func sample(tick: int) -> TickInput:
+	if beat_i < beats.size():
+		var b_id: StringName = beats[beat_i].id
+		kills_by_beat[b_id] = stage.pit.kills - _kills_before
 	while beat_i < beats.size() and tick - _beat_start >= beats[beat_i].ticks:
+		_kills_before = stage.pit.kills
 		_beat_start += beats[beat_i].ticks
 		beat_i += 1
 		_next = 0
@@ -153,5 +162,5 @@ func _bit(action: StringName, on: bool) -> int:
 
 func _input(move: Vector2, aim: Vector2, extra: int) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
-	var buttons: int = PlayerCommand.pack_aim(aim, actions) | extra
+	var buttons: int = PlayerCommand.pack_aim(aim, actions) | (extra if trigger else 0)
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))
