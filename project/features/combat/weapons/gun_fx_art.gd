@@ -20,6 +20,7 @@ const RING_TICKS: int = 9
 ## round stopped on the ground or metal: on a body it would print over the corpse's chest (the
 ## body's mark is its blood; the pop still bursts there in draw_over).
 static func draw_under(ci: CanvasItem, fx: GunFx, tick: int) -> void:
+	fx.scorch.draw(ci, tick)
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
 		if int(im.z) >= GunFx.SCORCH and int(im.z) % GunFx.SCORCH != GunFx.Hit.BODY:
