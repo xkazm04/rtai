@@ -14,6 +14,7 @@ Run from the repo root:
 """
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -68,6 +69,29 @@ def recolour(src, dst, mapping):
     img.save(dst, optimize=True)
 
 
+def inner_band(path, colour, px, sectors=180):
+    """r2_w4's fire inside the smoke: non-ink pixels within `px` of the ring's inner edge (per
+    angle sector round the cell's centre, the nearest opaque pixel) take the flat `colour`."""
+    img = Image.open(path).convert("RGBA")
+    pix = img.load()
+    cx, cy = img.width / 2, img.height / 2
+    inner = [1e9] * sectors
+    polar = {}
+    for y in range(img.height):
+        for x in range(img.width):
+            if pix[x, y][3] >= 128:
+                d = math.hypot(x - cx, y - cy)
+                k = int((math.atan2(y - cy, x - cx) + math.pi) / (2 * math.pi) * sectors) % sectors
+                polar[(x, y)] = (d, k)
+                inner[k] = min(inner[k], d)
+    ink = TOKENS["ink"]
+    for (x, y), (d, k) in polar.items():
+        r, g, b, a = pix[x, y]
+        if d - inner[k] < px and sum(abs(c - t) for c, t in zip((r, g, b), ink)) >= 60:
+            pix[x, y] = tuple(colour) + (a,)
+    img.save(path, optimize=True)
+
+
 def main(src_dir, out_dir):
     table = json.loads((Path(__file__).parent / "fx_colour.json").read_text("utf8"))
     out = Path(out_dir)
@@ -78,6 +102,8 @@ def main(src_dir, out_dir):
         for prefix in fam["files"]:
             for src in sorted(Path(src_dir).glob(prefix + "*.png")):
                 recolour(src, out / src.name, mapping)
+                if "inner" in fam:
+                    inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
                 done += 1
     print(f"fx_colour: {done} PNGs -> {out}")
 

@@ -118,6 +118,24 @@
         "steel": "#B8D4E2",
         "wash": "#9DBBCC"
       }
+    },
+    {
+      "files": [
+        "blast_2"
+      ],
+      "id": "blast_smoke",
+      "inner": {
+        "colour": "#F08A24",
+        "px": 45
+      },
+      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before.",
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFF9E8",
+        "paper_2": "#FFE58A",
+        "vermilion": "#FFA21C",
+        "wash": "#5E524C"
+      }
     }
   ],
   "schema": "gtai.fx-colour/1"
