@@ -101,6 +101,11 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
+	var arcs: ShockArcsView = ShockArcsView.new()  # combat-notes: arcs over a stunned body
+	arcs.arena = p_stage.arena
+	arcs.rigs = rigs
+	arcs.z_index = held.z_index
+	layer.add_child(arcs)
 
 
 func _process(_delta: float) -> void:

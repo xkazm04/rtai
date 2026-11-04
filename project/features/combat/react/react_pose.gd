@@ -118,6 +118,9 @@ static func _fold(r: HumanReact, rig: CutRig, e: float) -> void:
 
 ## Electro: the body jitters in place, the torso twitches, the hat jolts (head scale pulses).
 static func convulse(r: HumanReact, rig: CutRig, env: float) -> void:
+	if ShockJolt.hard:  # the stepped, off-rhythm jolts (owner note 2026-11-04)
+		ShockJolt.pose(r, rig, env)
+		return
 	var f: float = r.t * TAU
 	var j: Vector2 = Vector2(sin(f * 9.1 + r.phase), sin(f * 7.3 + r.phase * 2.0))
 	r.off = j * r.travel * env
