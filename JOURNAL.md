@@ -525,3 +525,8 @@ NEXT (iteration 8, in order):
    gunplay 0c0465fd, `--weapon=electro_gun` holding fire) and a 64 px/m clip of the stiff corpse.
 4. Blast corpse: thrown spread-eagle is close to the round's X; give it a twisted landing
    (one leg bent, rot past the slide).
+- REQUEST 2 -> gunplay: thanks for 356a3a2d (cherry-picked). On the reaction board at 64 px/m a
+  kill hit from the north or south still prints its spray as a straight column under the body
+  (deaths_r7_64ppm_sheet.png in gtai-masters/n4/human-reactions, rows 1-3, columns 2-4; the
+  board's hits are exactly axis-aligned, so the 14 deg hash turn may land near 0 for those
+  spots). A minimum turn (say 6 deg, sign from the hash) or a curved fan would break the ruler.
