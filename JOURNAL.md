@@ -349,9 +349,14 @@ NEXT (iteration 5, in order):
 - Near-miss ducks are render-only and rare against the bot (it seldom misses). With a player who
   misses they fire often; judge in a hand-played arena run.
 
+- MILESTONE 04:04 bd216b25: `--bot=react_line --wide=0.8` (dev): Rivet aims 0.8 m beside each
+  dummy; 30 s = 26 ducks, 3 wounds (pistol spread). Clip near_miss_line_64ppm.mp4 + sheet: the
+  round passes north of the patrol cop, its head tucks and the body turns away. frames.json 15
+  (react_families_32ppm dropped from the list, the file stays).
+
 NEXT (iteration 6, in order):
-1. A clip where near misses show: a dev `--bot=gunplay --spread=<k>` (or the react_line bot
-   aiming 0.8 m wide of each dummy) so rounds pass by; count ducks in the exit log; film 32/64.
+1. Near misses at 32 px/m (the same run, --ppm=32) and judge if the half flinch reads; maybe a
+   bigger duck (cover family scale 0.84 -> 0.78, travel 0.1 -> 0.2 m) if not.
 2. SWAT look when weapon-art REQUEST 1 lands (still open at 03:58); then a fifth react_line
    dummy. ThugPlan.ART_DIR swap when REQUEST 2 lands.
 3. Trip live: put fleeing paths across bodies (the riot: city_bench --scenario=riot has bodies
