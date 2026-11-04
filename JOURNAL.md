@@ -991,3 +991,8 @@ NEXT (iteration 12 / report phase, in order):
   errors, fresh on 6d22873a). Looked at the 0.5 fps strip: the block carries 3-5 chars at a time
   (the 15 s hold), the oldest fading as new bottles land; the cap of 24 is never near. Reads as a
   fought-over block, not dirty paving. HOLD_TICKS 900 stays.
+- 07:18 REPORT draft: every MASTERS/WT path checked to exist (the bench log paths fixed,
+  c2bc844b). Scanned the weapon art for the rest of the flat translucent discs: the only one left
+  is the nuke fireball's core shade (lasts the blast's few ticks, not a floor mark): no change.
+- Session end 07:18: no Godot process of mine running, no lock held, scratch holds only the six
+  scripts. The NEXT list above stands (1 REPORT gates on the final head, 3, 4).
