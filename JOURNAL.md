@@ -126,3 +126,30 @@ NEXT (iteration 3):
 - 17:58 composites: `frames/lineup-hybrid-ab-64ppm.png` (with r2_c3), `cast-ingame-vs-r2c6.png`,
   `director-hybrid-ab-32ppm.png`, `city-hybrid-ab-32ppm.png`, `director-hybrid-64ppm.png`; frames.json 15 entries.
   r2_c6 check: car-to-figure scale and the Rivet:cop ratio match; the remaining gap is the camera (3/4 view vs plan).
+- 18:00 scenarios at 433fc9a9: 46 ran, 1 failed = `scenario_city_chase` 2 ms nav budget (6.1 ms max, the known
+  flake); re-run alone 18:14: 1 ran, 0 failed.
+- MILESTONE 18:00 Codex job `rivet_hybrid_arms` (89 s, under image.lock, released): lean sleeve-and-rod pistons.
+  Sliced (copy of slice_v2, `gen/r2/stage/`), installed by `tools/install_rivet_arms.py` (long parts rescaled to
+  the d4 bone lengths), arm_w 0.6 -> 0.9. `frames/rivet-arms-ab-64ppm.png`. Commit 903bfd02.
+  - FRICTION: my earlier 940/940 unit run had not seen the new helmet (no re-import), so
+    `test_rivet_aim_clear` only failed after the import: it used the helmet texture WIDTH (front to back) as the
+    half-width. Fixed to the height (across the barrel line); the planted fault is still caught. Unit 940/0.
+- 18:10 look goldens at 903bfd02: junction 11/11 pass (means 0.10-0.58). Block site 1/5 (d4@48, auto@64 day and
+  night, d4@48 night fail on the far share, means 1.9-3.0). The diff mask has blobs on Rivet and the cops (mine:
+  the block goldens were NOT re-blessed for the slim cops in iteration 2), plus a thin speckle along building edges
+  across the whole frame that may come from main (the block goldens were last blessed at 53f4c72f, before main's
+  corpse decay and Rivet speed). NOT blessed: bisect first.
+
+NEXT (iteration 5):
+1. Block look goldens: in a throwaway worktree at main a1275c82 (budget the ~4 min import), run
+   `look_golden.tscn -- --out=<dir> --site=block`. If main already fails 4/5 with the same edge speckle, bless on
+   this branch with a decisions line naming both causes; if main passes, find what of mine moves the edges.
+2. Rivet's legs sheet: Codex edit of `d4/cutout/parts-v2/rivet_legs.png` (cells: anchor, thigh, shin, foot_flat,
+   foot_toeoff) in the r2 arms style, slicer copy + an install script like install_rivet_arms.py (bone lengths
+   166/137 x leg_k), then leg_w 0.65 -> ~0.95. Then film `--bot=rivet` (walk, strafe, sprint, roll, claw combo) at
+   48 px/m: not filmed yet on the hybrid.
+3. The brutality signature splits on the slim cops and the hybrid (director chapters katana and chainsaw at 64 px/m)
+   and a react-board before clip (still owed from iteration 2).
+4. Calls for the owner (REPORT): held guns are metres-sized (pistol 0.7, machine pistol 0.9 m), so they now read
+   large on the slimmer Rivet (frames/director-hybrid-64ppm.png); the camera gap vs r2_c6 (3/4 vs plan view).
+5. The full `node tools/evidence/run.mjs --no-bench` on the head; parity should stay exact (render only).
