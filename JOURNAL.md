@@ -160,7 +160,9 @@ table; (4) the mipmaps import step folded into a tool; (5) a clip in motion once
   parts and grip/muzzle points for all 16 are in `weapon_art.json`; nothing else is missing on the art side.
 
 NEXT (iteration 4), in order:
-1. Electro gun in the live fight: the arc + spark are drawn but NOT yet seen in a clip (the bot's electro timing does
+1. DONE 02:33 (`--weapon=electro_gun --bot=range` gives repeatable bolts at the dummies; frame
+   `it3-electro-arc-64ppm.png`: the bold arc reads; its forks look a little like twigs -> a jaggier redraw).
+   Was: the electro gun in the live fight: the arc + spark are drawn but NOT yet seen in a clip (the bot's electro timing does
    not repeat across windowed runs). Use the arena range station (static dummies) or `--start=range` + a longer
    capture, find frames by tiling every frame around Rivet; judge the bold arc at 64 and 32 px/m.
 2. Molotov in the live fight: the spinning bottle (`molotov` held part) + wick flame + the fire patch; same hunt.
@@ -177,3 +179,5 @@ NEXT (iteration 4), in order:
   change; no sim file edited). No bench this iteration (render-only; the cells replace shapes of similar cost).
 - 02:29 n-brutality uses `gore/ash.png`; `gore/charred.png` is a front view and unusable on the top-down rig.
   NEXT 8: redraw `charred` (and check `xray`) top-down, matching the human cutout rig's silhouette from above.
+- MEASURE 02:33 electro arc in the live arena (range bot, 64 px/m): reads as a bold paper bolt with a spark head.
+  TIP: `--bot=range` is the repeatable way to film a gun at static dummies (the gunplay bot's timing drifts).
