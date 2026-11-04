@@ -1,8 +1,8 @@
 class_name SwatLineupRun
 extends Node
-## weapon-art: the cop looks lineup for human-reactions REQUEST 1 (the SWAT parts): patrol, riot,
-## SWAT (head_swat + torso_swat) and Rivet for scale, idle and walking, under look_d4 at 32, 48 and
-## 128 px/m. Writes lineup-<idle|walk>-<ppm>.png.
+## weapon-art: the looks lineup for human-reactions REQUESTs 1 and 2: patrol, riot, SWAT
+## (head_swat + torso_swat), Rivet and the robot thug's own parts (art/thug), idle and walking,
+## under look_d4 at 32, 48 and 128 px/m. Writes lineup-<idle|walk>-<ppm>.png.
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
@@ -35,19 +35,23 @@ func _ready() -> void:
 	rect.material = _look
 	_post.add_child(rect)
 	var plans: Array[BodyPlan] = [
-		HumanPlan.cop(), HumanPlan.cop(), HumanPlan.cop(), RivetPlan.build(RivetPlan.FORM_BASE)
+		HumanPlan.cop(),
+		HumanPlan.cop(),
+		HumanPlan.cop(),
+		RivetPlan.build(RivetPlan.FORM_BASE),
+		_thug()
 	]
 	var swat: RigVariant = RigVariant.make(
 		BodyPlan.Kind.COP, "swat", "head_swat", "torso_swat", false
 	)
 	var looks: Array[RigVariant] = [
-		RigVariant.crowd(5), RigVariant.crowd(6), swat, RigVariant.rivet()
+		RigVariant.crowd(5), RigVariant.crowd(6), swat, RigVariant.rivet(), RigVariant.rivet()
 	]
 	for i: int in plans.size():
 		var rig: CutRig = CutRig.new()
 		_actors.add_child(rig)
 		rig.setup(plans[i], looks[i])
-		rig.position = Vector2((i - 1.5) * GAP_M, 0.0) * PX
+		rig.position = Vector2((i - 2) * GAP_M, 0.0) * PX
 		rig.snap_facing(-PI * 0.5)
 		_rigs.append(rig)
 
@@ -95,3 +99,12 @@ func _save(name: String) -> bool:
 	if img == null or img.is_empty():
 		return false
 	return img.save_png(out_dir.path_join(name + ".png")) == OK
+
+
+## Rivet's open form on the thug's own parts (human-reactions' ThugPlan swaps only its art_dir).
+func _thug() -> BodyPlan:
+	var p: BodyPlan = RivetPlan.build(RivetPlan.FORM_OPEN)
+	p.art_dir = "thug"
+	p.collar_part = ""
+	p.hose_tex = ""
+	return p
