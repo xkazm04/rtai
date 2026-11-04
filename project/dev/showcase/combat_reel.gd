@@ -17,6 +17,8 @@ const DWELL_LINE: int = 60
 const FIRE_M: float = 13.0
 const REACT_TICKS: int = 30
 const PULSE: int = 12
+## The gun beat walks in on a guard farther than this (the 64 px/m frame is +-10 x 5.6 m).
+const APPROACH_M: float = 6.0
 const PIT_ENTRY: Array[Vector2] = [Vector2(3.0, 3.0), Vector2(3.0, 10.0), Vector2(14.0, 17.0)]
 
 
@@ -169,7 +171,10 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 	# a pulsed trigger (press edges), as a player shoots a semi-auto: held fire stalls a reload
 	var fire: bool = close and local - _seen_since >= REACT_TICKS and local % PULSE < PULSE / 2
 	var side: float = 1.0 if (local / 45) % 2 == 0 else -1.0
-	var drift: Vector2 = aim.orthogonal() * side * 0.8 + (spot - rivet).limit_length(1.0) * 0.4
+	# walk in on a guard beyond APPROACH_M while firing, so the kill lands inside a close-up frame
+	var fwd: float = clampf((gap.length() - APPROACH_M) / 3.0, 0.0, 1.0)
+	var drift: Vector2 = aim.orthogonal() * side * 0.8 * (1.0 - fwd) + aim * fwd
+	drift += (spot - rivet).limit_length(1.0) * 0.4 * (1.0 - fwd)
 	return _input(drift, aim, _bit(&"fire", fire))
 
 
