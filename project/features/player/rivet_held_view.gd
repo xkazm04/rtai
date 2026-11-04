@@ -19,6 +19,9 @@ const GRIP_U: float = 0.62
 const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
+## The flamer's reload is a tank swap: the spent tank slides this far back off him and fades
+## (reload phase 0), the fresh one slides in (phase 1); the hose follows the tank.
+const TANK_SWAP_M: float = 0.45
 const HOSE_POINTS: int = 8
 
 var rigs: CharacterRigs = null
@@ -168,7 +171,10 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		line.visible = on and _sprite != null and _sprite.visible
 	if on:
 		var fwd: Vector2 = rig.torso.global_transform.x.normalized()
-		var back_px: float = TANK_BACK_M * WeaponArt.WORLD_PX_PER_M
+		var k: float = rig.reload_k
+		var swap: float = clampf(k if k < 1.0 else 2.0 - k, 0.0, 1.0) if k >= 0.0 else 0.0
+		_tank.modulate.a = 1.0 - 0.7 * swap
+		var back_px: float = (TANK_BACK_M + TANK_SWAP_M * swap) * WeaponArt.WORLD_PX_PER_M
 		_tank.global_position = rig.torso.global_position - fwd * back_px
 		_tank.global_rotation = fwd.angle() + PI * 0.5
 		if _sprite != null and _sprite.visible:
