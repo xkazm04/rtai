@@ -1315,3 +1315,13 @@ while gates.sh's evidence step runs.
   REPORT (10:34 update) stands as the final report.
 - NEXT (Director): final build = n-showcase 08e1b72f + docs; reel-1012; exe 10:12. Merge
   n-showcase, then n-human-reactions (1623e625) and re-run unit.
+
+## Iteration 17 (REPORT, 10:40-10:45)
+- 10:42 REPORT.md updated in place: a "10:40 final summary (extension)" block (what works with
+  evidence paths, what does not, blocked, next steps); 08:40 sections marked superseded; the reel
+  and gate tables put in time order. Evidence paths re-checked: reel-0808/0821/0857/0930/0954/1012
+  in masters, frames.json (15, reel-1012 first), evidence/r19/*, evidence/r15/*,
+  evidence/r8/armory-48ppm.png, build/export/windows/RTAI.exe + release DLL (10:12). No Godot
+  process running.
+- NEXT (Director): final build = n-showcase 08e1b72f + docs; reel-1012; exe 10:12. Merge
+  n-showcase, then n-human-reactions 1623e625, re-run unit + scenarios; bench merged main alone.

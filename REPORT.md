@@ -33,7 +33,44 @@ one unit test). It is **not in this build**: it landed after the round 19 merge,
 what the claw, katana and chainsaw chapters show, so taking it would leave reel-1012 out of date
 with no time to re-film. The Director's morning merge takes it along with the lane's branch.
 
-The text below is the 08:40 report.
+### 10:40 final summary (extension)
+
+**What works (each with its evidence):**
+- One merged build of all five night lanes, round 19 `08e1b72f`: gates green
+  (`evidence/r19/summary.log`, `lint.log`, `unit.log`, `scenarios.log`, `evidence.log`).
+- The final directed reel: `C:\Users\kazda\kiro\gtai-masters\n4\showcase\reel-1012.mp4` (128.5 s,
+  17 chapters at 48 px/m + the 32 px/m CITY BLOCK), first entry of `frames.json` (15 entries).
+- The exe: `build\export\windows\RTAI.exe` + `gtai_sim.windows.template_release.x86_64.dll` (10:12),
+  `evidence/r19/export.log`; boot tests `evidence/r19/boot-arena.log`, `boot-director.log`,
+  `boot-city.log` (0 script errors each).
+- The bench on the final exe: `evidence/r19/bench.log` (CONTENDED).
+
+**What does not work / is not in the build:**
+- No live robot thug fighter: the ROBOT THUG chapter is filmed in human-reactions' dev pit only, and
+  the exe's `--bot=reel` director cannot play it.
+- showcase-2 (hub crowding) is open: the melee-line dummies still stand in front of the weapon
+  wall's base.
+- human-reactions `1623e625` (melee ids react as melee) is held out of the build (see above).
+- The r19 bench misses p99CpuMs (8.79 ms, 1 % low 74 fps) and has one 424 ms worst frame. It is
+  one CONTENDED run and was not bisected, so it is not a clean regression call against r16
+  (8.52 / 88).
+
+**What blocked the lane in the extension:** nothing for long. The bench lock was free at 10:16. The
+only cost was time: rounds 17-18 were not benched because a 12-minute bench did not fit between
+merge, gates, cut and export within a 60-minute session.
+
+**Next steps (Director, morning):**
+1. Merge `n-showcase` (final tree `08e1b72f` + docs), then `n-human-reactions` (`1623e625`). Re-run
+   unit and scenarios, and re-cut the claw, katana and chainsaw chapters if you want the melee folds
+   on film.
+2. Bench the merged main alone (not contended) to settle whether r19's p99 miss is real.
+3. Open for the owning lanes: a live robot thug in the arena (human-reactions), and the hub layout
+   for showcase-2 (arena).
+
+Evidence paths in this section checked at 10:42: all exist; no Godot process of mine is running.
+
+The text below is the 08:40 report. Its "After the freeze", "What blocked" and "Next steps"
+sections are superseded: everything they list was merged by round 19.
 
 Status: FINAL on merge round 15 (06051f21, merged 08:14: the lane tips up to 08:10). Gates r15
 green; exe re-exported 08:19 on round 15. The final reel **reel-0808** is round 14 (e13dc36b): no
@@ -87,10 +124,10 @@ city block loads with the loadout.
 | reel-0756-close64 | 64 px/m close-ups on round 13: molotov, ray gun, rocket, mini-nuke, flamethrower |
 | **reel-0808** | **the final morning reel on round 14 (the exe's build), 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
 | reel-0821-r15-close64 | round 15 (the exe build), 64 px/m: the molotov's glass slivers and inked scorch patch; the rocket tube carried at Rivet's side; 0 script errors |
-| reel-0930 | extension, round 17 (e977a394, the 09:30 exe), 128.5 s, 0 script errors: + 16 ROBOT THUG (power-down death, filmed in human-reactions' dev pit), the electro corpse in the shock plank, the mini-nuke's own bomb |
-| **reel-1012** | **the final morning reel, extension round 19 (08e1b72f, the 10:12 exe), 128.5 s, 0 script errors: the electro signature corpse lies full length in the plank (REQUEST 30), the char rim scales with the zoom** |
-| reel-0954 | extension, round 18 (9c9f59a5), 128.5 s, 0 script errors: the ray gun lock wash, the electro corpse's legs reading to the feet, the lighter thug spray, the burn char's ash rim |
 | reel-0857 | extension, round 16 (8a8215a3), 122 s, 0 script errors: the rocket blast thins out as smoke; the electro victim lies along the shot (REQUEST 29 closed); the city block's pit walls are grey concrete barriers, not black bars (showcase-3 closed) |
+| reel-0930 | extension, round 17 (e977a394, the 09:30 exe), 128.5 s, 0 script errors: + 16 ROBOT THUG (power-down death, filmed in human-reactions' dev pit), the electro corpse in the shock plank, the mini-nuke's own bomb |
+| reel-0954 | extension, round 18 (9c9f59a5), 128.5 s, 0 script errors: the ray gun lock wash, the electro corpse's legs reading to the feet, the lighter thug spray, the burn char's ash rim |
+| **reel-1012** | **the final morning reel, extension round 19 (08e1b72f, the 10:12 exe), 128.5 s, 0 script errors: the electro signature corpse lies full length in the plank (REQUEST 30), the char rim scales with the zoom** |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 
@@ -110,10 +147,10 @@ city block loads with the loadout.
 | r13 | 2643fbbd | 13/13 | 903/903 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 |
 | r14 | e13dc36b | 13/13 | 906/906 | 45/45 | exact | 11/11 + 5/5 |
 | r15 (08:19 exe) | 06051f21 | 13/13 | 912/912 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
-| r17 (extension, the 09:30 exe, superseded) | e977a394 | 13/13 | 927/927 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
-| **r19 (extension, the final 10:12 exe)** | **08e1b72f** | **13/13** | **931/931** | **45/45** | **exact (planted caught at 629)** | **11/11 (worst 0.00) + 5/5** |
-| r18 (extension, 09:53 exe, superseded) | 9c9f59a5 | 13/13 | 929/929 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
 | r16 (extension) | 8a8215a3 | 13/13 | 913/913 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
+| r17 (extension, the 09:30 exe, superseded) | e977a394 | 13/13 | 927/927 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
+| r18 (extension, 09:53 exe, superseded) | 9c9f59a5 | 13/13 | 929/929 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
+| **r19 (extension, the final 10:12 exe)** | **08e1b72f** | **13/13** | **931/931** | **45/45** | **exact (planted caught at 629)** | **11/11 (worst 0.00) + 5/5** |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 
