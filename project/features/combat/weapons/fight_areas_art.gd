@@ -117,7 +117,7 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 			Ink.px(c), p.z * 0.85 * Ink.PX_PER_M, 0.0, TAU, 64, scorch, p.z * 0.3 * Ink.PX_PER_M
 		)
 	else:
-		ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, scorch)
+		FightScorchArt.blotch(ci, c, p.z, 0.5 + fade * 0.5)
 	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7
