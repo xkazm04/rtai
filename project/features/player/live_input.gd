@@ -17,6 +17,9 @@ var mouse_aims: bool = true
 ## true once a pad was used last, false once a key or the mouse was: the prompts name the pad's
 ## buttons or the keys (aim is not affected; that is mouse_aims).
 var pad_last: bool = false
+## rivet-arsenal: a wheel notch presses and releases inside one frame, so polling misses it; the
+## notch's action bits are latched here and ride the next sampled tick as one press.
+var _latched: int = 0
 
 
 func _init(p_actions: PlayerActions) -> void:
@@ -31,6 +34,8 @@ func sample(_tick: int) -> TickInput:
 	for action: StringName in actions.bits:
 		if Input.is_action_pressed(action):
 			buttons |= 1 << actions.bits[action]
+	buttons |= _latched
+	_latched = 0
 	buttons |= PlayerCommand.pack_aim(_aim(), actions)
 	var k: float = float(TickInput.AXIS_MAX)
 	return TickInput.new(buttons, roundi(move.x * k), roundi(move.y * k))
@@ -41,6 +46,7 @@ func note_event(event: InputEvent) -> void:
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		mouse_aims = true
 		pad_last = false
+		_latch_wheel(event as InputEventMouseButton)
 	elif event is InputEventKey:
 		pad_last = false
 	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
@@ -59,3 +65,16 @@ func _aim() -> Vector2:
 		return Vector2.ZERO
 	var d: Vector2 = viewport.get_mouse_position() - from
 	return d.normalized() if d.length() > 4.0 else Vector2.ZERO
+
+
+func _latch_wheel(event: InputEventMouseButton) -> void:
+	if event == null or not event.pressed:
+		return
+	if (
+		event.button_index != MOUSE_BUTTON_WHEEL_UP
+		and event.button_index != MOUSE_BUTTON_WHEEL_DOWN
+	):
+		return
+	for action: StringName in actions.bits:
+		if event.is_action(action):
+			_latched |= 1 << actions.bits[action]

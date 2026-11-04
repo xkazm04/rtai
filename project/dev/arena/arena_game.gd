@@ -72,6 +72,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "rivet":  # rivet-arsenal: walk, strafe, sprint, roll, claw combo
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "arsenal":  # rivet-arsenal: the pit fight, a switch every 4 s
+		session.world.loop().set_input(ArenaArsenalBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
 		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
@@ -116,6 +118,11 @@ func _process(_delta: float) -> void:
 	if _shot != "" and not _taken and session.tick() >= _shot_tick:
 		_taken = true
 		_save_shot.call_deferred()
+
+
+func _input(event: InputEvent) -> void:
+	if session != null:
+		session.live.note_event(event)  # rivet-arsenal: the wheel's weapon switch latches here
 
 
 func _unhandled_input(event: InputEvent) -> void:
