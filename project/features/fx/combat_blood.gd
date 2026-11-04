@@ -156,8 +156,17 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 
 
 func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
+	if veto.is_valid():  # the signature kill lands after actor_killed: ask once the step is done
+		_bleed_killed.call_deferred(killer, victim)
+	else:
+		_bleed_killed(killer, victim)
+
+
+func _bleed_killed(killer: int, victim: int) -> void:
 	var at: Vector2 = _locate.call(victim)
 	if at == Vector2.INF or not bleeds():
+		return
+	if veto.is_valid() and veto.call(at * SimConst.PX_PER_M):
 		return
 	var from: Vector2 = _locate.call(killer)
 	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT

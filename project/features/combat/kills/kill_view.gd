@@ -78,7 +78,7 @@ func _draw() -> void:
 			draw_circle(g.pos[i] * ppm, r, SOOT)
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
-		var soot: int = 2 if m.scorch_m > 0.0 else 0
+		var soot: int = 2 if m.flash_scale >= 1.0 else 0
 		if not reduced_motion and age >= 0 and age < m.flash_ticks + soot:
 			KillMarkArt.flash(self, m, age, ppm, m.flash_ticks)
 

@@ -7,7 +7,6 @@ extends Node2D
 ## crumble_ticks) against the sim tick, so a replay shows the same frames. Shapes vary by a hash
 ## of the kill serial, never dice. World px at `ppm`, drawn above the gib layer.
 
-const CHAR: Color = Color(0.17, 0.14, 0.14)
 const ASH: Color = Color("#5E5652")
 const EMBER: Color = Color("#F4E3B5")
 const EMBER_CORE: Color = Color("#E9A23B")
@@ -19,6 +18,10 @@ const FLAKE_LIFE: float = 70.0
 ## One wind over the whole street (screen right and up a little), so every heap leans the same way.
 const WIND: Vector2 = Vector2(0.94, -0.34)
 const ASH_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/ash.png")
+## One shared char print for every burnt copy (the fade rides on the group's modulate alpha).
+const CHAR_SHADER: Shader = preload("res://features/combat/kills/kill_char.gdshader")
+
+static var _char_mat: ShaderMaterial = null
 
 
 class Burn:
@@ -149,14 +152,17 @@ func _flakes(b: Burn, p: Vector2, age: int) -> void:
 		draw_polyline(q, Color(Ink.INK, a * 0.8), 1.0)
 
 
-## The sprites of a burnt body: off the print material, multiplied to char (halos to ink).
+## The sprites of a burnt body: the print material swapped for the char print.
 static func _char(n: Node) -> void:
+	if _char_mat == null:
+		_char_mat = ShaderMaterial.new()
+		_char_mat.shader = CHAR_SHADER
 	for ch: Node in n.get_children():
 		var s: Sprite2D = ch as Sprite2D
 		if s != null:
-			s.material = null
+			s.material = _char_mat
 			s.self_modulate = Color.WHITE
-			s.modulate = Ink.INK if s.name == RigBuild.HALO else CHAR
+			s.modulate = Color.WHITE
 		_char(ch)
 
 
