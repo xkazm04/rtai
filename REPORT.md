@@ -6,6 +6,14 @@ after it changes only JOURNAL. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\hu
 Paths below are relative to the masters folder unless they start with `evidence/` or `project/`.
 
 ## After 09:00 (extension, updated in place)
+- **10:40 status (final).** The last code commit is `1623e625` (10:11). Iterations 24-27 (10:16-10:40) changed docs only:
+  no REQUEST to this lane was still open, and a new change could not be gated and filmed before the freeze.
+  Gates of record on `1623e625`: lint 13/13, unit 755/755, scenarios 33/33 (full evidence with parity and look on
+  `38b0f3df`, same sim code, see below). No Godot process of mine is running.
+  **Clip of record for the morning:** showcase's final `reel-1012.mp4` (`gtai-masters/n4/showcase/`). Its electro
+  chapter carries the REQUEST 30 corpse fix (full-length plank), and its pistol and riot-cop chapters play this lane's
+  bullet sprawl and shield sparks. Open for the merge: next step 7 (the claw/blade `struck` emit in rivet-arsenal's
+  `PlayerMelee`, plus the HitLink double hit-stop call), and moving `ReactLink.MELEE_IDS` into the melee table.
 - **09:49-10:30 (iteration 21): the reel's electro signature corpse, checked and a fix handed over.** Showcase's
   round 17 electro chapter (48 px/m, 3x crop) shows brutality's signature corpse lying with the arms flung wide across
   the shot and stub legs, so it reads as a cop seen from above with the arms out, not as my stiff plank. The cause is in

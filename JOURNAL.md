@@ -1228,3 +1228,14 @@ NEXT: unchanged (morning merge items 1-3 of iteration 23). At 10:40 REPORT: no c
   and film it. The branch's code head stays 1623e625 (lint 13/13, unit 755/755, scenarios 33/33).
 NEXT: unchanged (morning merge items 1-3 of iteration 23). At 10:40 REPORT: update in place. No code after 1623e625.
   Name showcase's final reel-1012 (electro corpse fix) as the clip of record.
+
+## Iteration 27 (10:30-10:40, STABILIZE, past the freeze)
+- 10:30 re-read the JOURNAL tail and git log, and checked the other lanes' JOURNALs for REQUEST -> human-reactions. Nothing new.
+  The tree is clean apart from untracked evidence. No code since 1623e625 (`git diff 1623e625 HEAD -- project` is empty).
+- 10:33 MILESTONE: REPORT.md updated in place with a 10:40 final-status block: no code after 1623e625, its gates
+  (lint 13/13, unit 755/755, scenarios 33/33), showcase reel-1012 as the clip of record, and the two open merge items.
+NEXT (morning merge), unchanged from iteration 23:
+1. rivet-arsenal: `PlayerMelee._land` should emit `arena.struck`. Decide how HitLink avoids a second hit-stop on melee.
+   ReactLink already maps the melee ids (1623e625). Film the claw chapter A/B at 48 px/m.
+2. Move MELEE_IDS to data once the melee table is merged.
+3. REPORT next steps 1-6.
