@@ -41,8 +41,10 @@ const HEAD_LEAN_PX: float = 24.0
 ## aim, a two-hand hold leads with the weapon instead of reaching the off claw behind the back.
 const MAX_SWING_RAD: float = PI / 3.0
 const RECOIL_PX: float = 60.0
-## The off claw's place on a two-handed melee hilt: this far behind the gun claw (part px).
+## The off claw's place on a two-handed melee hilt: this far ahead of the gun claw (part px),
+## at this height.
 const HILT_PX: float = 46.0
+const HILT_Z: float = -10.0
 
 const BY_CLASS: Dictionary[StringName, int] = {
 	&"one_hand": Kind.ONE_HAND,
@@ -78,15 +80,17 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 
 
 ## combat-notes (owner note 2026-11-04, "player's hold of melee weapons"): with a two-handed
-## melee weapon (CutRig.two_hand_melee) the off claw closes on the hilt HILT_PX behind the gun
-## claw's hand this frame (the gun arm solves first), toward the chest, so both claws hold it.
+## melee weapon (CutRig.two_hand_melee) the off claw closes on the hilt HILT_PX ahead of the gun
+## claw's hand this frame (the gun arm solves first), along the gun arm's line, at its height,
+## so both claws hold it one above the other.
 static func melee_off_hand(rig: CutRig, s: int, tgt: Vector3) -> Vector3:
 	var g: int = rig.plan.gun_arm
 	if not rig.two_hand_melee or g < 0 or s == g:
 		return tgt
 	var gh: Vector2 = rig.sides[g].j_hand
-	var h: Vector2 = gh - gh.normalized() * HILT_PX
-	return Vector3(h.x, h.y, tgt.z)
+	var gs: Vector3 = rig.plan.shoulder[g]
+	var h: Vector2 = gh + (gh - Vector2(gs.x, gs.y)).normalized() * HILT_PX
+	return Vector3(h.x, h.y, HILT_Z)
 
 
 ## The helmet's lean across (part px) while aiming a long gun or a tube: away from the gun side.
