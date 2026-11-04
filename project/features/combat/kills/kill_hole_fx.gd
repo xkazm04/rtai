@@ -19,12 +19,18 @@ const EMBER: Color = Color("#E9A23B")
 ## straight down, a fall reads as the body laid out along the shot: it slides back FALL_M, stretches
 ## LIE_STRETCH along the fall line (the head going away from the feet), narrows across it and
 ## twists a little.
-const LOOK_TICKS: int = 8
+const LOOK_TICKS: int = 3
 const TOPPLE_TICKS: int = 12
-const FALL_M: float = 0.45
+const FALL_M: float = 0.85
 const LIE_STRETCH: float = 0.55
 const LIE_NARROW: float = 0.12
 const LIE_TWIST: float = 0.35
+## Smoke out of the burned hole (owner note 2026-11-04: "hot and heavy"): SMOKE_PUFFS ash puffs
+## rising out of the ring, each living SMOKE_CYCLE ticks, for SMOKE_TICKS after the hit (0 = none).
+const SMOKE_TICKS: int = 300
+const SMOKE_PUFFS: int = 5
+const SMOKE_CYCLE: int = 48
+const SMOKE: Color = Color(0.84, 0.8, 0.74, 0.9)
 
 static var _holed: ImageTexture = null
 
@@ -104,12 +110,14 @@ static func _mask_texture() -> ImageTexture:
 
 
 func _process(_delta: float) -> void:
-	if kills != null and kills.tick - tick0 <= GLOW_TICKS + 1:
+	if kills != null and kills.tick - tick0 <= maxi(GLOW_TICKS, SMOKE_TICKS) + 1:
 		queue_redraw()
 
 
 func _draw() -> void:
 	var k: float = clampf(float(kills.tick - tick0) / GLOW_TICKS, 0.0, 1.0) if kills else 1.0
+	if kills != null:
+		_smoke(kills.tick - tick0)
 	var glow: Color = HOT.lerp(COOL, k)
 	var halo: Color = Color(HOT, 0.55 * (1.0 - k))  # the heat bloom reads at 32 px/m, then cools
 	draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
@@ -117,3 +125,19 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.3, 2.0), true)
 	# a thin ember lip that never quite goes out, so the hole still reads at 32 px/m once cooled
 	draw_arc(Vector2.ZERO, radius_px * 0.82, 0.0, TAU, 24, Color(EMBER, 0.9 - 0.45 * k), 1.5, true)
+
+
+## The wound smokes: puffs rise out of the hole (the ring's -y), swell and thin, the column
+## fading out over SMOKE_TICKS. Phases from the age only: a replay draws the same smoke.
+func _smoke(age: int) -> void:
+	if age < 0 or age >= SMOKE_TICKS:
+		return
+	var fade: float = 1.0 - float(age) / float(SMOKE_TICKS)
+	for i: int in SMOKE_PUFFS:
+		var p: float = float((age + i * SMOKE_CYCLE / SMOKE_PUFFS) % SMOKE_CYCLE) / SMOKE_CYCLE
+		var sway: float = sin(float(age) * 0.07 + float(i) * 2.1) * radius_px * 0.5
+		var at: Vector2 = Vector2(sway, -p * radius_px * 5.0)
+		var a: float = SMOKE.a * (1.0 - p) * fade
+		var r: float = radius_px * (0.6 + 1.3 * p)
+		draw_circle(at, r, Color(SMOKE, a))
+		draw_arc(at, r, 0.0, TAU, 16, Color(INK, a * 0.8), 1.5, true)
