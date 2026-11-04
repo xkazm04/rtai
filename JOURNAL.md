@@ -310,3 +310,51 @@ NEXT (iteration 5, in order):
   later).
 - DECISION thug proportions: a squat brawler with long arms (reads apart from Rivet's hunched
   base and King's squared boss at a glance) over a scaled King (rejected: same silhouette).
+- MILESTONE 323ce44c: trip in game, measured (NEXT 4): a 40 s `--arena=city --rigs --bot=gunplay
+  --weapon=pistol --start=pit --crowd=420` run logged 11 cowers, 0 trips, 0 deaths. Cause found:
+  the fight's dead are drawn on ArenaRigs' own rig set, so CrowdReact (the city feed) never saw
+  them as bodies. Fix: CrowdReact.extra_bodies, filled by ArenaRigs with the arena's dead. Re-run:
+  still 0 trips. People flee AWAY from the fight, so they rarely pass within 0.6 m of a corpse; only
+  the 16 full rigs can trip. Honest state: trip is proven on the board and in unit tests, not yet
+  seen in a live fight. The arena exit now logs `crowd: cowers, trips, deaths` and `react: wounds,
+  deaths, ducks`.
+- 03:46 full `node tools/evidence/run.mjs --no-bench --allow-dirty` (only the untracked
+  evidence/ clips dirty): lint PASS 13/13, unit PASS 728/728, parity PASS (bit-exact, mutation at
+  629), scenarios 31/32: scenario_city_chase failed under load, green alone (the known 2 ms nav
+  flake). Selftest FAIL on the accent audit only: "NEW off-doctrine 32 px/m vermilion on vehicles
+  4 px / on cop 4 px" while the debt rows blood_flicker_* were "no longer seen": the known gunplay
+  blood flicker moving between rows; look goldens 11/11 worst 0.00, block 5/5 worst 0.39. Nothing
+  this iteration touches the D4 frames it audits.
+- MILESTONE fb70cc84: limp pass 2 (my read of the arena clip: too small at 32 px/m): drop 26 ->
+  60 part px, tip 0.16 -> 0.34, head bob 48. Board re-filmed (limp2_64ppm.mp4 + sheet), both
+  armored arena clips re-filmed after it (the same fight frame for frame: deterministic).
+- MILESTONE 3717f2d2 + fb32a2c1: near misses (brief item 2, "a hit while in cover" made live):
+  NearMiss plays the cover duck on a human a round of Rivet's passes within 1.1 m (once per round
+  per human, judged after the round passed, up to 8 m past: a 60 m/s round moves 2-4 m a frame).
+  Unit 731/731 (3 new tests). Live counts: pistol pit 40 s = 0 wounds, 11 deaths, 0 ducks (the
+  bot rarely misses); machine pistol + armored 30 s = 16 wounds, 4 deaths, 0 ducks (the target
+  is still in its wound flinch when a burst's miss passes, and a busy body does not duck);
+  city machine pistol 40 s = 4 wounds, 4 deaths, 1 duck. No clip filed: not enough misses to see.
+- Evidence this iteration (gtai-masters/n4/human-reactions, frames.json 15 entries, each file
+  checked): arena_armored_limp_32ppm / _64ppm (live fight, limp pass 2), limp2_64ppm (+ sheet),
+  thug_plan_32ppm (+ sheet). Scratch AVIs deleted.
+- Gates at fb32a2c1: lint 13/13, unit 731/731; scenarios react/arena_pit/human/arena_stations
+  green after the near-miss change (full suite at 03:46: 31/32 + the city_chase flake green
+  alone). Bench not run (render-only work and dev flags; no sim change).
+
+### Calls for the owner (adds to the list)
+- Limp strength: pass 2 is visible at 64 px/m and small at 32 px/m (arena_armored_limp_32ppm vs
+  _64ppm). Option A: keep it (a wound is mostly told by the flinch and the blood); B: also slow
+  the wounded human's sim walk (moves replays, a gameplay change: wounded enemies are easier).
+- Near-miss ducks are render-only and rare against the bot (it seldom misses). With a player who
+  misses they fire often; judge in a hand-played arena run.
+
+NEXT (iteration 6, in order):
+1. A clip where near misses show: a dev `--bot=gunplay --spread=<k>` (or the react_line bot
+   aiming 0.8 m wide of each dummy) so rounds pass by; count ducks in the exit log; film 32/64.
+2. SWAT look when weapon-art REQUEST 1 lands (still open at 03:58); then a fifth react_line
+   dummy. ThugPlan.ART_DIR swap when REQUEST 2 lands.
+3. Trip live: put fleeing paths across bodies (the riot: city_bench --scenario=riot has bodies
+   amid the crowd); count CrowdReact.trips there and film one.
+4. Full evidence run again after the next change; bench once (the lock) since the riot gets
+   CrowdReact work.
