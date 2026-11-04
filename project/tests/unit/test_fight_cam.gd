@@ -52,8 +52,7 @@ func test_the_foe_he_faces_wins_over_a_nearer_one_behind() -> void:
 	assert_eq(cam.subject, ahead)
 
 
-func test_the_city_lean_stays_inside_the_views_actor_margin() -> void:
-	assert_true(FightCam.CITY_MAX_LEAN_M <= CityView.VIEW_MARGIN_M, "no edge actor drops")
+func test_the_city_lean_is_capped() -> void:
 	var arena: CombatArena = _arena()
 	var g: Fighter = arena.spawn_guard(arena.rivet.pos + Vector2(0.0, 13.0))
 	g.pos = arena.rivet.pos + Vector2(0.0, 13.0)

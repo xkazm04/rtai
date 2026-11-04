@@ -78,7 +78,7 @@ func attach_view(view: Node) -> void:
 			_cam.lean = FightCam.LONE_LEAN
 			_cam.max_lean_m = FightCam.LONE_MAX_LEAN_M
 			_cam.hold_ticks = FightCam.LONE_HOLD_TICKS
-		if cc.city != null:  # leans the view only (city_lean_m), inside the actor margin
+		if cc.city != null:  # leans the view only (city_lean_m)
 			_cam.max_lean_m = minf(_cam.max_lean_m, FightCam.CITY_MAX_LEAN_M)
 
 

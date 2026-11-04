@@ -23,8 +23,8 @@ const LONE_MAX_LEAN_M: float = 6.0
 ## the longer hold drags no fight off the frame there).
 const LONE_HOLD_TICKS: int = 150
 ## On the city block the lean rides the CityView's camera offset while the sim focus stays on
-## Rivet: kept inside the view's actor margin (CityView.VIEW_MARGIN_M) so no edge actor drops.
-const CITY_MAX_LEAN_M: float = 4.0
+## Rivet; the view's actor window grows by that offset (CityView), so no edge actor drops.
+const CITY_MAX_LEAN_M: float = 6.0
 
 var lean: float = LEAN
 var max_lean_m: float = MAX_LEAN_M
