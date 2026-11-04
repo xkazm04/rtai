@@ -100,3 +100,11 @@ NEXT (iteration 2, in order):
    that bunches. Rockets burst on arena walls (ArenaDodges.cull removes them silently today).
 4. Split fight_areas.gd (254 lines): patches + lob into their own file.
 5. Re-render molotov/electro 32 px/m with the new patch flames and thick bolts; side-by-side clip.
+- 01:45 MILESTONE riot blood redraw split (brief item 5, first cut, NOT benched yet): `BloodFx` drew every
+  pool and decal again on each tick while any droplet flew (in a riot: always). The flying drops now
+  draw on their own child canvas item (`_drops_view`, parent's material, redrawn every tick while
+  drops fly); the pools/decals redraw only when busy or every `settled_redraw_ticks` (6, unchanged).
+  `BloodFx.drops_us/drops_draws` added; `CombatBlood.spent_us` now includes the drops' redraw.
+  Look goldens 11/11 unchanged (worst mean 0.020 of 4.0; `evidence/n1/look/run.log`), unit 700/701
+  with the known `test_noir_shadows` load flake (2/2 alone), scenarios 29/29 (`scenarios-g.log`).
+  NEXT: bench riot before/after under bench.lock, then settled 6 -> 30 and bake settled pools.
