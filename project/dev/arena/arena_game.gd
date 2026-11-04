@@ -74,6 +74,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "arsenal":  # rivet-arsenal: the pit fight, a switch every 4 s
 		session.world.loop().set_input(ArenaArsenalBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "lob":  # rivet-arsenal: molotovs at the claw cops from 9-14 m
+		session.world.loop().set_input(ArenaLobBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
 		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
