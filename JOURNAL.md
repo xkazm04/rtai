@@ -480,3 +480,29 @@ NEXT (iteration 7), in order:
 4. The reload close-up with the rim at 128 px/m (the it5 128 frame predates the rim).
 5. Brutality still uses the front-view X-ray; offer the `gore_*_top` stickers again (their JOURNAL).
 - Session close 04:25: 6 commits this iteration (d9102db7..), gates green, worktree clean except evidence logs.
+
+## Iteration 8 (04:24-05:24), BUILD
+- Read: JOURNAL (no iteration 7 entry: that session left no trace), git log, other lanes' JOURNALs. New REQUESTs
+  to weapon-art: none (brutality REQUEST 4 was delivered in it3; human-reactions wired REQUESTs 1-2 in a27c786b /
+  c819d6be). Plan = NEXT 1 (chain), NEXT 3 (SWAT/thug live), NEXT 2 (wall 128), NEXT 4 (reload 128).
+- Registry rules applied: motion-quality-gating (claims judged on frames cut from `--fixed-fps 60` real-time
+  captures, the hop shown frame by frame), realtime-combat-semantics (nothing changed in the sim: the chain is
+  gunplay's FightAreas._chain on the arena's real fight; I only found and filmed it). No deviation.
+- MILESTONE 04:31 the electro chain FILMED in the live arena (NEXT 1, no code): `--rigs --bot=arsenal
+  --loadout=electro_gun --weapon=electro_gun` (the last flag only adds gunplay's measures). Located by bisecting
+  headless runs on `--quit-after` (deterministic; telemetry `gunplay_range.chain_hits`): 0 at tick 2510, 1 at 2550,
+  2 at 2650 (wave 4: guards bunch within chain_radius_m 4). Then one windowed `--write-movie` to tick 2720 at 64 and
+  at 48 px/m. Seen: the bolt hits a guard and a jagged cream arc jumps to the guard beside him for about 5 frames
+  (the stunned guard tints vermilion on the hop frame). Evidence (masters): `it8-electro-chain-hop-strip-64ppm.png`
+  (8 frames 50 ms apart), clips `it8-electro-chain-arena-64ppm.mp4` / `-48ppm.mp4` (7 s real time, the hop at
+  about 5.7 s), `it8-electro-chain-hop-64ppm-quarter-speed.mp4`. No station needed; the it6 plan (two targets)
+  dropped: the pit's own wave 4 does it.
+- FRICTION: the 64 px/m camera centres Rivet and the hop lands at the top-right edge of the frame (Rivet fights at
+  8 m); 48 px/m keeps the whole bunch in frame. A capture camera that frames Rivet + target is showcase's area.
+- FRICTION: cherry-picking human-reactions a27c786b into n-weapon-art conflicts (their react_line files are not
+  on my branch: DU react_line_bot.gd, human-reactions.json; UU arena_rigs.gd). Aborted cleanly. Filmed instead on
+  a throwaway detached worktree at their tip c819d6be (scratch/wa8-hr, native bin copied, deleted after).
+- MEASURE 04:38 SWAT live (human-reactions c819d6be, arena `--rigs --ppm=64 --bot=gunplay --weapon=pistol
+  --start=pit`): the reaction line's fourth dummy wears head_swat + torso_swat: a dark shell with the pale visor
+  band and ink rails over the darker plate carrier, beside patrol (cream cap, blue band) and riot (cream helmet,
+  shield): told apart at 64 px/m. `it8-swat-live-react-line-64ppm-2x.png`, clip `it8-swat-live-arena-64ppm.mp4`.
