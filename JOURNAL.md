@@ -106,3 +106,13 @@ Session state 19:19: tree clean after this commit, no Godot process of mine runn
 - NOT MEASURED: the frame cost of look_d5_fx (no bench lock taken this session). Static: 0 extra screen fetches, 1 texture fetch + a hash per FX pixel, only while FX cells are on screen.
 - 22:16 director reel on fc15adce with --loadout=pistol (7200 ticks, 32 px/m): all 17 chapters n/n down (claw_combo .. mini_nuke 4/4), 0 SCRIPT ERROR.
 - 22:22 MILESTONE plasma sword blade +20 % (tools/art/blade_longer.py -> held_long.png, row length 1.44 m / 526 px); reach data kept (tip ~2.07 m vs reach 2.0-2.2). Provenance line added (derived from the AI held.png; test_weapon_art caught it). Unit 944/944. Still `plasma-blade-ab-64ppm.png` (deflect chapter, ticks 60/125, before | after). DECISION in docs/decisions.md.
+- 22:24 evidence gate `node tools/evidence/run.mjs --no-bench` started (first run of the lane). FRICTION: launching it with a shell `&` inside the tool started two copies; killed the duplicate by PID (taskkill /T on its timeout chain), kept one.
+
+NEXT (iteration 6):
+1. Read the evidence gate result (/tmp is not durable: re-run `node tools/evidence/run.mjs --no-bench` if this entry has no result line below); fix anything red.
+2. Item 3 continues, in order: (a) the Gatling (r1_w6, barrels +50 %): generate held/pickup/icon from TEXT + a style reference under image.lock (moderation blocks gun edits), cut with weapon_cut.py like the weapon-art lane, `weapons.json` row (spin-up, high rate, heavy recoil, slow move while firing; TTK in the table), grip class (hip-held, belt to a backpack: reuse backpack_hose's tank/hose path), tracers (the tracer family), pickup, armory + range station entry, a clip in the range and the pit; (b) held parts redrawn toward r1_w1..w3 (the current held art is the weapon-art lane's; judge each in the claw at 32 px/m before regenerating); (c) pickups toward r2_w8.
+3. FX polish: the blast's graded white-hot centre + debris (r2_w4); ray rings fade to olive over the dark slab (try alpha floor or a lighter ring core); the frame cost of look_d5_fx under the bench lock.
+4. Alley polish (clutter density, the brick lip value, a 64 px/m still).
+5. The look goldens will need ONE re-bless after the Director merges n5-cast + n5-look (they conflict only in goldens + JOURNAL); note it in REPORT.
+6. REPORT.md (08:40): held size, colour FX, blade, the --loadout=pistol finding, lint batching; Calls: held_size_ref 1.2 vs off; colour FX vs ink (fx_colour_dir).
+- 22:26 FRICTION (my error): a stray command made a --no-verify commit and soft-reset it away at once; nothing reached history (verified: HEAD unchanged at 61ce16b5), and this JOURNAL commit goes through the hook. Never again.
