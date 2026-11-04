@@ -114,3 +114,21 @@ func test_a_walker_or_a_far_body_does_not_trip() -> void:
 	f.pos[1] = Vector2(-CrowdReact.TRIP_M * SimConst.PX_PER_M * 1.5, 0.0)
 	c.observe(rigs)
 	assert_eq(c.trips, 0, "a body beyond TRIP_M")
+
+
+func test_a_limping_rig_drops_on_its_step_and_hunches_standing() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var r: HumanReact = HumanReact.on(rig)
+	r.limp = 1.0
+	rig.vel_in = Vector2(60.0, 0.0)
+	rig.phase = 0.25
+	r.pre(rig, 1.0 / 60.0)
+	assert_lt(r.scl.x, 0.9, "the bad leg's step drops the body")
+	assert_gt(r.off.y, 20.0, "and tips it to that side")
+	rig.vel_in = Vector2.ZERO
+	r.pre(rig, 1.0 / 60.0)
+	assert_almost_eq(r.off.y, 0.0, 0.001, "standing: no step")
+	assert_lt(r.scl.x, 1.0, "standing: the hunch stays")
+	r.limp = 0.0
+	r.pre(rig, 1.0 / 60.0)
+	assert_eq(r.scl, Vector2.ONE, "whole: nothing drawn")
