@@ -118,3 +118,41 @@ worktree, export, drive bench 2 x 40 s).
 - REQUEST 4 -> weapon-art: the reel shows Rivet holding a long white stick for the rocket
   launcher (reel-0145-rocket.mp4); when your held top-down sprites are ready, which lane puts
   them on the rig (arena_rigs / the cast rig's hand)? Tell me if it is glue I should wire.
+- GATES r2 of record (clean tree 3ec…, `evidence/r2/evidence-run.txt`, `node tools/evidence/run.mjs
+  --no-bench`, exit 0): lint 13/13 (662 files), unit 732/732, scenarios 30/30, parity bit-exact
+  (planted caught at 629), selftest look 11/11 + block 5/5 worst 0.00. No re-bless this round.
+- 01:41 reel-0145-rocket-64ppm (64 px/m, 64 s, 3 fps sheet from 54 s, 12 frames). Craft: the
+  orange streaks are the guards' rounds (danger vermilion, right); Rivet's rocket draws as a long
+  white lance (the 3 m tracer) with no smoke trail, no flame, no blast ring caught; the
+  signature kills happen at the frame edge or off screen (the guards stop at engage 12 m, the
+  64 px/m frame is +-10 x 5.6 m). Tried a close-in option (`--reel-close-m=7`: the gun beat
+  walks in on the guard): 1 shot, 2 kills, 28.8 damage taken: reverted, not debugged (NEXT 2).
+- 01:45 reel-0145-city-rocket (`--arena=city`, 32 px/m, 73.5 s; 1/4 fps sheet, 19 frames):
+  integrity holds (all beats, no camera break), but the look is wrong: on the city block the
+  arena's fighters (claw cops, dummies, pit guards) draw as quest 1's round guard discs with a
+  vermilion centre, NOT the cast rigs, although `--rigs` is passed (the arena view shows rigs).
+  That breaks "cops are blue" and "vermilion only for danger" in the city clip. Also tall
+  vermilion bars at the top edge of the junction frames (unknown source: objective markers?),
+  and the 17 m/s top-speed snap is not located yet.
+- REQUEST 5 -> gunplay (cc weapon-art): the rocket's flight reads as a white 3 m lance; the
+  hit chain asks for a rocket body with a smoke trail and a blast flash/ring at impact
+  (reel-0145-rocket-64ppm.mp4, 54-58 s).
+- REQUEST 6 -> human-reactions (cc brutality): on `--arena=city --rigs` the hostiles are not on
+  the cast rigs (quest 1 guard discs, vermilion centre), so neither the reactions nor the
+  signature cut show in the city proving block (reel-0145-city-rocket.mp4). Whoever owns
+  ArenaRigs on the city view tonight: tell me, or I take it as integration glue next round.
+
+NEXT (iteration 2):
+1. Merge round 3 (the five tips, brief order), the four gates under the private APPDATA,
+   re-bless only if the look goldens move (decisions line).
+2. Close-up pass that keeps the kill in frame: debug `--reel-close-m` (why the walk-in never
+   fires: wall push, the guards' cover, or `_seen_since` reset), or capture at 48 px/m.
+3. City block: find why `--rigs` does not draw the arena fighters on the city (ArenaGame
+   `_add_view` adds ArenaRigs; on the city CityCharacters may hide it) and the 17 m/s snap.
+4. The reel's weapon list grows: pistol and machine pistol beats (needs a deterministic weapon
+   switch from gunplay/rivet-arsenal: REQUEST 3), riot shield and robot thug (enemy-ai has no
+   night lane: check whether any lane brings them into the arena).
+5. Final round prep: a `windows-showcase` export preset that includes dev/arena + dev/showcase
+   (all shipped presets exclude dev/*), test whether the exported exe takes
+   `res://dev/arena/arena.tscn` as its scene argument.
+6. Bench in the arena fight and the riot (only the drive was benched in iteration 1).
