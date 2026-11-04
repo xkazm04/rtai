@@ -446,3 +446,17 @@ Session state 23:20: head = this commit, tree clean, image.lock untouched, no Go
   distinct dark centre. Reverted (git checkout of the 4 files + re-import). REPORT Call 4 gains option C.
   FRICTION: `git show rev:file.png` yields the LFS pointer; pipe it through `git lfs smudge`.
 - 23:21 new unit test `test_only_rivet_prints_warm_close_up_steel` caught King and the thugs inheriting d5_warm from RivetPlan.build(FORM_OPEN); both set 0 now (DECISION). Unit 941/0.
+- 23:27 evidence gate on 2f833a0b: lint 13/13, unit 940/1 (the 1 = `test_noir_shadows` "Parameter t is null", the
+  known flake: 2/2 alone, twice; the standalone suite at 23:21 on the same tree was 941/0), scenarios 46, parity
+  exact (mutation caught at 629), selftest goldens 11/11 (worst 1.06), block 5/5. REPORT gates updated.
+
+NEXT (iteration 10):
+1. Calls 1-5 in REPORT stand; nothing is blocked on them. Call 5 (warm tone) is new tonight.
+2. If time: the full r2_c6 cop read (bright helmet over a navy body) needs navy upper-arm sleeves (`upperarm.png`,
+   `upperarm_endon.png` carry the cop_blue_hi) plus bright crowns; trial C showed crowns alone merge with the
+   sleeves. Build it only as an A/B still for Call 4 (the targets disagree: r2_c5 navy, r2_a5 bright shirts).
+3. Rivet's core at 64 px/m is still lighter than r2_c3 (warm 1.0 is the halfway ramp on purpose); if the owner
+   wants more, edit WARM_* in look_d5_part, judge on asphalt.
+4. After n5-look lands print changes on main, re-check the warm ramp and the visor at 64 px/m on the merge.
+5. REPORT rewrite at 08:40; frames.json 15, all files exist.
+Session state 23:28: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.

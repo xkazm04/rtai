@@ -72,6 +72,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - Quest 1, Dock 9 fight on the cast rigs (`--rigs`, the dev flag): `M/cast-quest1-dock9-32.mp4`, still
   `M/frames/quest1-dock9-32ppm.png`, 0 script errors.
 
+### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
+known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
+parity exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.06), block 5/5, no re-bless.)
 ### Gates (iteration 7, `tools/evidence/run.mjs --no-bench` on cc4cb843: lint 13/13, unit 940/0, scenarios 46/0,
 parity exact, selftest with look goldens 11/11 (worst 1.07) and block 5/5, no re-bless; iteration 6 on 850c543a:)
 lint 13/13, unit 940/0, scenarios 46/0, parity exact (planted mutation caught at 629), look goldens junction 11/11
