@@ -401,3 +401,15 @@ NEXT (unchanged):
 2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
 3. ArenaArsenalBot's melee walk-in: a nav-grid path.
 4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
+
+## Iteration 14 (08:17 - 08:30 freeze), BUILD (short: 13 minutes)
+- 08:17 read JOURNAL and git log; tip 19162dd6 clean (only the untracked `evidence/rivet-arsenal/*` scenario outputs, left untracked on purpose, see iteration 13).
+- 08:19 checks, read-only: frames.json has 15 entries and every `file` exists. The REPORT (`docs/night/2026-11-04/rivet-arsenal/REPORT.md`) names 8a7fd9a1 as the gates of record and has the sections Gates of record / What works / Calls for the owner / Open / known flaws. Two Godot console processes (PIDs 3520, 10304) are running; they are not mine (I started none this session), so I left them alone.
+- DECISION (time): same as iteration 13, no code change. The gates (about 10 minutes on a loaded machine) cannot finish before the 08:30 freeze, and the gates of record at 8a7fd9a1 stay valid only while no code moves.
+- Session end 08:20: journal only. No Godot process started. bench.lock and image.lock never taken.
+
+NEXT (unchanged; the lane is final at this tip for the morning merge):
+1. The Director: call 1 (quest 1 on the rigs by default) is the lead call.
+2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
+3. ArenaArsenalBot's melee walk-in: a nav-grid path.
+4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
