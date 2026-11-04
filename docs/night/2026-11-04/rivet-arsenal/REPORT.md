@@ -15,10 +15,10 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
-| lint | 13/13 (716 files) | 8465d548 (the merge of n-weapon-art, the last code change) |
-| unit | 814/814, exit 0 | 8465d548, `E/it10-unit.log` |
-| scenarios | 37/37, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | 8465d548, `E/it10-scenarios.log` (before the merge, at d6618606: 36/37 with scenario_city_chase's known nav-budget flake, which passed alone) |
-| evidence run | lint, unit 813, scenarios 37, parity bit-exact (mutation caught at step 629) PASS; selftest: look goldens 11/11 and block 5/5, but exit 1 on the accent audit (the known blood-flicker vermilion class, NEW 64 px/m "vermilion on cop 28 px"; not bisected) | 908c4a9f, `E/it9-evidence.log` |
+| lint | 13/13 (717 files) | 37dbfeab (the last code change: the city melee bot) |
+| unit | 814/814, exit 0 | 37dbfeab, `E/it10b-unit.log` |
+| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 37dbfeab, `E/it10b-scenarios.log` |
+| evidence run | lint, unit 814, parity bit-exact (mutation caught at step 629) PASS. Scenarios 36/37 in that run: scenario_rivet_deflect failed because the run overlapped the bot edit; it was fixed in 37dbfeab and passes in the scenario row above. The selftest has look goldens 11/11 and block 5/5, but exits 1 on the accent audit: the known blood-flicker vermilion class, the same findings as on n-gunplay (gunplay's) | 4cc6e8a0, `E/it10-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
 
@@ -62,7 +62,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
   - electro baton: strikes;
   - chainsaw: a committed 3-bite grind, then the rip;
   - plasma sword: slashes, a full spin, and the timed deflect during any slash's active ticks.
-- On the city block (since 37dbfeab): with a melee weapon drawn, the arsenal bot closes into claw reach and swings there. Before that, it held gun reach and cut air (407 swings, 0 hits in 15 s). The live fight: `M\clips\city-block-melee-katana-chainsaw-baton-32ppm-x2.mp4` (30 s, 3 waves, 5 cops dead in red blood, 0 deaths, 0 script errors) and `M\frames\city-block-melee-32ppm-3x.png` (the chainsaw grind, the katana pinning a cop on a kerb car). Scenario: scenario_rivet_city_melee (2 guards in 30 s, the replay identical, the planted stand-off drops none).
+- On the city block (since 37dbfeab): with a melee weapon drawn, the arsenal bot closes into claw reach and swings there. Before that, it held gun reach and cut air (407 swings, 0 hits in 15 s). The live fight: `M\clips\city-block-melee-katana-chainsaw-baton-32ppm-x2.mp4` (30 s, 3 waves, 5 cops dead in red blood, 0 deaths, 0 script errors) and `M\frames\city-block-melee-32ppm-3x.png` (the chainsaw grind, the katana pinning a cop on a kerb car). Close-up at 64 px/m: `M\clips\city-block-melee-64ppm.mp4` (10 s, 2 kills) and `M\frames\city-block-melee-64ppm-2x.png` (the baton, the katana over a dead cop, the chainsaw grind as a cop falls). Scenario: scenario_rivet_city_melee (2 guards in 30 s, the replay identical, the planted stand-off drops none).
 - Clips in `M\clips\`: `arena-rocket-empty-tube-reload-64ppm-x2`, `arena-molotov-lob-claw-cops-32ppm-x2`, `arena-chainsaw-grind-64ppm`, `arena-katana-claw-cops-64ppm`, `arena-plasma-sword-claw-cops-64ppm`, `arena-plasma-deflect-64ppm-quarter-speed`, `arena-flamer-sway-64ppm`, `arena-claw-shock-64ppm`.
 
 ### 4. Switching and pickups
