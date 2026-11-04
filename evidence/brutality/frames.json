@@ -1,33 +1,113 @@
 [
   {
-    "file": "clips/signature-kills-reel-9-32ppm-45s.mp4",
-    "title": "Reel: the nine signature kills at 32 px/m, real time, labelled (rocket, hand cannon, flamethrower, electro, katana, plasma rifle, plasma sword, chainsaw, ray gun)",
+    "file": "clips/signature-kills-solo-reel-48ppm-39s.mp4",
+    "title": "Reel: the nine signature kills, one isolated cop each, 48 px/m real time, labelled",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
-    "ppm": 32,
-    "before": "clips/signature-kills-reel-32ppm-36s.mp4",
-    "note": "5 s per kill from the arena lab clips. The ray gun is a first pass. At 32 px/m the full-arena camera keeps the kills small; the 64 px/m slow clips show the detail."
+    "ppm": 48,
+    "before": "clips/signature-kills-reel-9-32ppm-45s.mp4",
+    "note": "Solo lab (--sig-solo=-36,2): Rivet and one guard on open course floor, no dummy rows. The camera stops at the course's west edge, so Rivet sits left of centre. Electro: the first round stuns, the second kills (the gun is 60 dmg; REQUEST 12 -> gunplay for a charged shot)."
   },
   {
-    "file": "clips/chainsaw-grind-64ppm-slow-0.4x.mp4",
-    "title": "Chainsaw signature kill: the grind (victim held on the saw, shaking, blood spurting, sparks), then the split, 64 px/m slow close-up",
+    "file": "clips/katana-split-solo-64ppm-slow-0.4x.mp4",
+    "title": "Katana: two clearly separated halves part sideways over the blood fan (64 px/m, 0.4x)",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
     "ppm": 64,
-    "before": "",
-    "note": "Kill #7 (row chainsaw_grind). Lab driver: Rivet lunges, holds 56 ticks on the victim, steps back. Rivet does not hold the chainsaw art yet (not a carried weapon in melee_weapons.json; REQUEST to rivet-arsenal)."
+    "before": "clips/katana-split-64ppm-slow-0.4x.mp4",
+    "note": "Iteration 7: the halves leave across the cut (SPLIT_FOLLOW 0.6 -> 0.25) at 2.4-3 m/s and rest about 2 m apart, both in frame. Before: the cut was hidden in a crowd and the halves flew off together."
   },
   {
-    "file": "clips/chainsaw-grind-arena-32ppm-14s.mp4",
-    "title": "Chainsaw signature kill, real time at 32 px/m (lab line, 6 kills)",
+    "file": "frames/electro-xray-held-flash-64ppm-60fps-strip.png",
+    "title": "Electro: the skeleton flash, 12 consecutive 60 fps frames (64 px/m)",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
-    "ppm": 32,
-    "before": "",
-    "note": "Scenario: 6 split kills, replay identical, same seed same halves."
+    "ppm": 64,
+    "before": "clips/electro-xray-64ppm-slow-0.4x.mp4",
+    "note": "Iteration 7: cream bones on ink held 4 frames in a jagged cream zap burst (1.6 m), then strobing 2 of 6 frames, then the stiff drop. Before: 2 of every 5 frames at 1.3 m under the arcs; only the arcs read."
+  },
+  {
+    "file": "clips/electro-xray-solo-64ppm-slow-0.4x.mp4",
+    "title": "Electro: convulsion, held X-ray flash, stiff drop, collar smoke (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/electro-xray-64ppm-slow-0.4x.mp4",
+    "note": "One isolated cop. The kill round is the second (the first only stuns)."
+  },
+  {
+    "file": "clips/plasma-sword-split-solo-64ppm-slow-0.4x.mp4",
+    "title": "Plasma sword: two cauterised halves with glowing edges, no blood (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/plasma-sword-split-arena-64ppm-10s.mp4",
+    "note": "Same split as the katana; the cut edges glow and cool, no spray."
+  },
+  {
+    "file": "clips/rocket-gib-solo-64ppm-slow-0.4x.mp4",
+    "title": "Rocket launcher: one cop blown into six parts, spray, splat, scorch (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/rocket-gib-arena-64ppm-slow-0.4x.mp4",
+    "note": "Isolated. Kill-frame cost: the cut is 0.9 ms; the 74 ms spike came from reprinting every leftover and is now 20.5 ms worst over 24 kills (CONTENDED, cost-rocket-it7-*.json)."
+  },
+  {
+    "file": "clips/chainsaw-grind-solo-64ppm-slow-0.4x.mp4",
+    "title": "Chainsaw: the grind (held, shaking, spurting) then a straight split (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/chainsaw-grind-64ppm-slow-0.4x.mp4",
+    "note": "Isolated cop; the halves part sideways."
+  },
+  {
+    "file": "clips/ray-gun-dissolve-solo-64ppm-slow-0.4x.mp4",
+    "title": "Ray gun: rings eat the body into a glowing dust pile and the empty uniform (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/ray-gun-dissolve-64ppm-slow-0.4x.mp4",
+    "note": "Isolated cop. Still a first pass (pile colour, the ray mark on top: REQUEST 11)."
+  },
+  {
+    "file": "clips/flame-char-solo-64ppm-slow-0.4x.mp4",
+    "title": "Flamethrower: ablaze, charred silhouette, crumble to ash (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/flame-char-64ppm-slow-0.4x.mp4",
+    "note": "Isolated cop; the first burst lands off him, the second sets him alight."
+  },
+  {
+    "file": "clips/hand-cannon-blowback-solo-64ppm-slow-0.4x.mp4",
+    "title": "Hand cannon: blown off his feet, flies back, slides on a smear, cap spins off (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/hand-cannon-blowback-64ppm-slow-0.4x.mp4",
+    "note": "Isolated cop; the body lands near the right edge of the 64 px/m frame (see the 48 px/m reel)."
+  },
+  {
+    "file": "clips/plasma-hole-solo-64ppm-slow-0.4x.mp4",
+    "title": "Plasma rifle: a hole burned through the torso, glowing edge, drop (64 px/m, 0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "clips/plasma-hole-64ppm-slow-0.4x.mp4",
+    "note": "Isolated cop."
   },
   {
     "file": "clips/chainsaw-grind-city-block-48ppm-12s.mp4",
@@ -40,66 +120,6 @@
     "note": "--arena=city --rigs --sig-gun=chainsaw --sig-lab: 6 split kills."
   },
   {
-    "file": "clips/ray-gun-dissolve-64ppm-slow-0.4x.mp4",
-    "title": "Ray gun signature kill: the body eaten by a shrinking glowing ring into a dust pile with the empty uniform, 64 px/m slow (FIRST PASS)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Kill #9 (row ray_gun_dissolve). First pass: gunplay's ray scorch mark draws over the pile and the body darkens inside the mask; polish next iteration."
-  },
-  {
-    "file": "clips/ray-gun-dissolve-arena-32ppm-12s.mp4",
-    "title": "Ray gun signature kill, real time at 32 px/m (spread lab line, 6 kills)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 32,
-    "before": "",
-    "note": "Ray gun 100 damage = one shot (gunplay's value, merged)."
-  },
-  {
-    "file": "frames/chainsaw-grind-strip-64ppm.png",
-    "title": "Chainsaw grind at 20 fps, 64 px/m: the cut body held over Rivet's claws, drops and sparks",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Detail strip."
-  },
-  {
-    "file": "clips/katana-split-64ppm-slow-0.4x.mp4",
-    "title": "Katana signature kill: the body cut in two, 64 px/m slow close-up (0.4x)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": null,
-    "note": "Rivet lunges, one diagonal slash (cream streak), the cop's own rig splits into two clipped halves that slide apart on red smears, raw red edge on each cut, blood fans along the cut. Lab driver until melee weapons are live."
-  },
-  {
-    "file": "clips/plasma-sword-split-arena-64ppm-10s.mp4",
-    "title": "Plasma sword signature kill: cut in two, cauterised glowing edges, no blood (64 px/m)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": null,
-    "note": "The katana's cut with a hot blade: halves slide apart, cream-hot cut edges in a heat bloom, no red, no smears. 32 px/m clip: clips/plasma-sword-split-arena-32ppm-12s.mp4."
-  },
-  {
-    "file": "clips/katana-split-arena-32ppm-14s.mp4",
-    "title": "Katana signature kill, real time at 32 px/m (lab line, 6 kills)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 32,
-    "before": null,
-    "note": "The game zoom. Halves 3-3.8 m/s, drag 2.6, hit-stop 6 ticks."
-  },
-  {
     "file": "clips/katana-split-city-block-48ppm-12s.mp4",
     "title": "Katana signature kill on the city proving block (48 px/m)",
     "source": "game-city",
@@ -110,43 +130,13 @@
     "note": "--arena=city --rigs --sig-gun=katana --sig-lab: 6 split kills on the city's cast rigs."
   },
   {
-    "file": "frames/katana-split-64ppm-sheet.png",
-    "title": "Katana kill, 6 frames from the slash to the halves at rest (64 px/m)",
+    "file": "clips/signature-kills-reel-9-32ppm-45s.mp4",
+    "title": "Reel: the nine signature kills at 32 px/m, real time, labelled (rocket, hand cannon, flamethrower, electro, katana, plasma rifle, plasma sword, chainsaw, ray gun)",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
-    "ppm": 64,
-    "before": null,
-    "note": "Ticks 176-330 of the 64 px/m clip."
-  },
-  {
-    "file": "clips/plasma-hole-64ppm-slow-0.4x.mp4",
-    "title": "Plasma rifle signature kill: a glowing hole burned through the torso, 64 px/m slow (0.4x)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": null,
-    "note": "The body copy is clipped by a holed mask, so the street shows through; the edge glows hot cream in an ink rim and cools to charred brown over 1.5 s; the body drops back along the shot; no blood."
-  },
-  {
-    "file": "clips/plasma-hole-city-block-48ppm-12s.mp4",
-    "title": "Plasma rifle kill on the city block (48 px/m)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": null,
-    "note": "6 hole kills on the city's cast rigs."
-  },
-  {
-    "file": "clips/flame-char-city-block-48ppm-14s.mp4",
-    "title": "Flamethrower kill on the city block: char, ash, NO red (fixed)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": "evidence/brutality (iteration 2 BUG sheet, removed)",
-    "note": "Iteration 2 bled red here and showed no char at all: the kill view never attached on the city and CityBlood had no veto. Fixed 55791625."
+    "ppm": 32,
+    "before": "clips/signature-kills-reel-32ppm-36s.mp4",
+    "note": "5 s per kill from the arena lab clips. The ray gun is a first pass. At 32 px/m the full-arena camera keeps the kills small; the 64 px/m slow clips show the detail."
   }
 ]

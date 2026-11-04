@@ -393,3 +393,56 @@ NEXT (iteration 7):
 - FRICTION: a background unit run without `GODOT_BIN` exported reported "exit -1" on every phase
   and the previous junit count (762). Read the exit codes, not only the count.
 - 04:13 final gates on 136a8e9a: lint 13/13, unit 775/775, scenarios 35/35. Session closed.
+
+## Iteration 7 (04:14-05:14), BUILD (Director's 04:00 checkpoint: no new kills; make the nine read)
+- Read: JOURNAL, git log, the Director's checkpoint (isolated re-shoots at 48 follow + 64 slow,
+  two separated halves, a visible skeleton flash, the rocket first-frame spike).
+- Registry rules applied: motion-quality-gating (every claim judged on frame sheets cut from
+  real-time `--fixed-fps 60` captures; one isolated subject per clip so the read is not
+  confounded by a crowd), realtime-combat-semantics (the solo lab only moves where Rivet and the
+  guard stand; the kill is still decided at CombatArena's damage chokepoint).
+- FINDING 04:16 the hub is crowded: three stations' dummy rows sit at y -3 (rivet-motion), 1.5
+  (human-reactions react_line) and 4.4 (rivet-arsenal claw cops), right where the lab line stood.
+  That is why the cuts were "hidden among bodies".
+- MILESTONE 04:20 solo lab (8218d423): `--sig-solo=x,y` stands Rivet at that arena point with ONE
+  guard 3 m in front (KillLab.SOLO_OFF), no refill. Spot (-36, 2) in the course is open floor
+  (checked on 48 px/m stills of five candidate spots; the pad, range and course-east all have
+  props or dummies in frame).
+- MILESTONE 04:22 two clearly separated halves (katana, plasma sword, chainsaw): the halves used to
+  leave mostly along the blade (SPLIT_FOLLOW 0.6) and slide ~2.2 m, so both flew off the same way
+  and out of the close-up. Now SPLIT_FOLLOW 0.25 (they part sideways from each other) and the
+  katana/plasma-sword rows launch at 2.4-3 m/s: the halves come to rest about 2 m apart on either
+  side of the blood fan, both in the 64 px/m frame (sheet seen).
+- MILESTONE 04:24 the electro skeleton flash reads: the X-ray now HOLDS 4 ticks right after the
+  hit-stop (XRAY_HOLD) over a jagged cream zap burst in an ink rim, at 1.6 m (was 2 of every 5
+  ticks, 1.3 m, under the arcs), then strobes 2 of every 6. 60 fps sheet: four frames of cream
+  bones on ink in the burst, then the strobe, then the stiff drop. Reduced motion: no flash (as
+  before).
+- FINDING: in the solo lab the electro gun's first round only stuns the guard (gunplay's stun);
+  the kill lands on the second round, 110 ticks later. Not a one-shot on a fresh human today.
+- REQUEST 12 -> gunplay: the brief's electro kill is "the charged shot", but the electro gun is
+  60 damage with a stun (two rounds to drop a fresh 100 hp human). A charged shot (hold to charge,
+  >= 100 damage, kill_landed weapon `electro_gun`) would make it the one-shot the owner asked for;
+  `electro_shock` keys on the weapon id, so no brutality change is needed.
+- MEASURED 04:23 the rocket spike is not a first-kill warm-up: a solo rocket kill (the first and
+  only kill of the session) costs 0.9 ms to cut (new telemetry `kill_cut_us`, per kill) and 4.7 ms
+  worst frame at 48 px/m, 7.3 ms at 64 (CONTENDED), against 74 ms worst after 18 lab kills. The
+  cost grows with the leftovers: every kill and every part coming to rest reprinted ALL twelve
+  kills' spray, smears, scorches and heaps on one ground canvas.
+- MILESTONE 04:29 per-kill ground print (39dd2d0f): KillGround, one node per kill (its spray,
+  settled smears, scorch, ash heap), reprinted only when its own kill changes; prints whose mark
+  was recycled are freed. Rocket lab, 20 s at 32 px/m, CONTENDED, same command before/after:
+  worst kill-view frame 67.7 ms (26 kills) -> 20.5 ms (24 kills); avg 4.3 ms unchanged (the
+  per-frame cost is the fresh smears of moving parts). Evidence
+  evidence/brutality/cost-rocket-it7-{before,after}-ground-per-kill.json. Still drawn: every
+  leftover (still checked at tick 1150).
+- MILESTONE 04:31 isolated re-shoots, all nine kills: one cop, solo lab at (-36, 2), 48 px/m real
+  time 8 s + 64 px/m 0.4x slow (`<kill>-solo-48ppm-8s.mp4`, `<kill>-solo-64ppm-slow-0.4x.mp4`), and
+  a labelled 39 s solo reel at 48 px/m. Sheets seen for all nine; electro 60 fps strip in frames/.
+  frames.json rewritten (14 entries, solo clips first, the old crowd clips as `before`).
+- FRICTION: an ffmpeg in a `while read` loop eats the loop's stdin (every other reel entry
+  vanished); `-nostdin`.
+- FRICTION: the camera stops at the course's west edge, so at (-36, 2) Rivet sits left of centre
+  at 48 px/m. (-30, 2) would centre him; not re-shot.
+- Gates 04:32: unit 775/775 (unit-it7.log).
+- Gates 04:34 on 39dd2d0f: unit 775/775, scenarios 35/35 (scenarios-it7.log).
