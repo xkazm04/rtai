@@ -388,3 +388,18 @@ Session state 22:28: head = this commit, tree clean, image.lock untouched, no Go
   hide under the body and only the arms differ; walking, B's legs reach a pedestrian's leg width. DECISION: keep A
   (lean pistons as r2_c3; the owner asked for slimmer), decisions line. Base unchanged: no golden moves. Lint 13/13,
   unit 940/0. frames.json 15 (+ limb call; hauler-on-hybrid dropped, file kept: REPORT cites it).
+- 23:19 scenarios on 2c447d27: 46 ran / 0 failed (2 min 38 s). Gates this session: lint 13/13, unit 940/0,
+  scenarios 46/0; parity and the look goldens not re-run (no sim or base-rig change since cc4cb843's full
+  evidence run).
+
+NEXT (iteration 9):
+1. Run `node tools/evidence/run.mjs --no-bench` once on the head (last full run cc4cb843; only FORM_HEAVY data and
+   docs since).
+2. Weakest remaining gap vs r2_c3: Rivet's tone. The target hybrid is a warm tan-grey metal with rust; ours prints
+   cream-white with grey hatching (the D4 item print's cream; LIMB_FILL trial at 18:40 rejected). Try a warm tan
+   only on the D5 (close-up) parts first, the way cop_navy.py did navy (both tiers, alpha kept), judge at 64 px/m on
+   slab and asphalt; keep the cream at 32 px/m if the tan loses value on asphalt. Owner call if it is a fork.
+3. Rivet's welder-visor head: at 64 px/m the head is a round cream disc in the collar ring; r2_c3's head is a boxy
+   visor with two eye slits. A head part redraw (Codex, under image.lock, from r2_c3 + ref-4) if 2 does not cover it.
+4. Keep REPORT current (rewritten at 08:40); frames.json is 15, all files exist.
+Session state 23:20: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.
