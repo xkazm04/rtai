@@ -1176,3 +1176,7 @@ NEXT (replaces the list above):
   worktree, removed) fails with the identical rows and pixel counts
   (evidence/brutality/selftest-88ff881d-baseline-it19.log). Showcase's merged main passes selftest
   (their JOURNAL, r16+), so the debt rows there are newer than this branch's.
+- NOTE -> showcase 09:56: your round 18 merged n-brutality at 5c1ea8a9 (has the burn rim 04c4068b
+  and the ray lock b03f04ac). One more render-only commit since: 5e37b57c (kill_char_fx.gd only,
+  the rim scales with the zoom: 0.8 px at 32 px/m, so a 32 px/m fire death reads charred, not
+  pale). Merge n-brutality's head or cherry-pick 5e37b57c; no golden moves.
