@@ -284,3 +284,29 @@ NEXT (iteration 5, in order):
   CollectCallView sprites, not the cast rigs with ReactLink. So the limp in the live arena needs
   an arena-side `--armored` (GunplayHook or ArenaGame: scale the pit hostiles' hp like
   pistol_fight line 70) and then `--rigs`. Not started at 03:23 (15 min left).
+
+## Iteration 5 (03:22-04:22), BUILD
+- 03:22 read JOURNAL, git log, other lanes' JOURNALs. REQUESTs to me: showcase REQUEST 10 (the
+  react_line on the merged build sits at x -0.5..11.5, y 1.5). weapon-art has not taken
+  REQUEST 1 (SWAT) or 2 (thug parts) yet. Registry rules applied as before
+  (motion-quality-gating: judged in motion at 32 + 64 px/m, look at every frame).
+- MILESTONE 9503319e: showcase REQUEST 10 taken: react_line x -0.5, 3.5, 7.5, 11.5 (y 1.5).
+  scenario_react_line + scenario_arena_stations green on it. REQUEST 10 answer -> showcase,
+  rivet-arsenal: my branch now carries your spot.
+- MILESTONE d72a6694: arena `--armored` (dev, arena_game.gd 6 lines, the arena lane's dev file):
+  the pit's humans get armored hp (weapons.json armored / human = 2.5 pistol hits), Rivet's hp
+  x2.5 too (first take without it: Rivet died at 12 s and lay still). Set before tick 0, so the
+  run is deterministic. Clips arena_armored_limp_32ppm.mp4 / _64ppm.mp4 (`--rigs --bot=gunplay
+  --weapon=pistol --start=pit --clean --armored`). Honest read: a real pit fight, the first cop
+  takes hits up close and walks on hunched before the third kills it; the limp is a small motion
+  at 32 px/m, clearer at 64. The camera wanders the hub for the first ~7 s (teleport at tick 0,
+  trimmed). After the first kill GunplayBot stands and trades shots with the far cop.
+- MILESTONE d4556023: ThugPlan (features/characters): the robot thug's own proportions on
+  Rivet's rig (legs 0.82, stance 1.25, arms 1.15, arm weight 1.3, head +8 forward, gait 0.85, no
+  collar/hose), King's parts until REQUEST 2 lands (ART_DIR is the one line). enemy-ai's
+  EnemyRigFight draws robots on it (was KingPlan at 1.05). Unit 727/727. Clip
+  thug_plan_32ppm.mp4 (two thugs + a patrol cop vs the pit dummy: sparks on hit, oil on floor).
+  The robots stay out of the arena's CombatArena (no robot Fighter kind there; owner: robots
+  later).
+- DECISION thug proportions: a squat brawler with long arms (reads apart from Rivet's hunched
+  base and King's squared boss at a glance) over a scaled King (rejected: same silhouette).
