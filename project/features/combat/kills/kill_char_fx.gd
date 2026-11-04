@@ -10,7 +10,7 @@ extends Node2D
 const ASH: Color = Color("#5E5652")
 const EMBER: Color = Color("#F4E3B5")
 const EMBER_CORE: Color = Color("#E9A23B")
-const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.42)
+const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.62)
 const FLAKES: int = 34
 const WISPS: int = 6
 const SMOKE_TAIL: int = 150
@@ -100,17 +100,17 @@ func _end(b: Burn) -> int:
 
 
 func _embers(b: Burn, p: Vector2, age: int, strength: float) -> void:
-	for n: int in 8:
+	for n: int in 10:
 		var h1: float = _h(b.serial, n)
 		var h2: float = _h(b.serial, n + 40)
 		var o: Vector2 = Vector2.from_angle(h1 * TAU) * (0.06 + 0.22 * h2) * ppm
 		var c: Vector2 = p + o.rotated(b.body.rotation)
 		var flick: float = 1.0 if reduced_motion else 0.55 + 0.45 * sin(float(age) * 0.45 + n * 1.9)
 		var a: float = clampf(strength * flick, 0.0, 1.0)
-		var d: Vector2 = Vector2.from_angle(h2 * TAU + b.body.rotation) * 0.06 * ppm
+		var d: Vector2 = Vector2.from_angle(h2 * TAU + b.body.rotation) * 0.1 * ppm
 		var crack: PackedVector2Array = [c - d, c + d.rotated(0.9) * 0.6, c + d]
-		draw_polyline(crack, Color(EMBER_CORE, a * 0.8), 2.4)
-		draw_polyline(crack, Color(EMBER, a), 1.1)
+		draw_polyline(crack, Color(EMBER_CORE, a * 0.9), 3.6)
+		draw_polyline(crack, Color(EMBER, a), 1.6)
 
 
 func _smoke(b: Burn, p: Vector2, age: int, strength: float) -> void:
@@ -119,7 +119,7 @@ func _smoke(b: Burn, p: Vector2, age: int, strength: float) -> void:
 		var t: float = fposmod(float(age) + n * 9.0, period) / period
 		var jx: float = (_h(b.serial, n + 90) - 0.5) * 0.4
 		var at: Vector2 = p + (Vector2(jx, -1.3 * t) + WIND * 0.5 * t) * ppm
-		var r: float = (0.1 + 0.26 * t) * ppm
+		var r: float = (0.14 + 0.34 * t) * ppm
 		var a: float = (1.0 - t) * strength
 		draw_circle(at, r, Color(SMOKE, SMOKE.a * a))
 		draw_arc(at, r, 0.0, TAU, 14, Color(Ink.INK, 0.35 * a), 1.0)

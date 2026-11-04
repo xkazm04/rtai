@@ -67,7 +67,7 @@
     "file": "clips/flame-char-arena-32ppm-16s.mp4",
     "title": "Flamethrower signature kill, real time at 32 px/m (6 burn kills)",
     "ppm": 32,
-    "note": "Real time, fixed-fps 60, 960 frames. Six guards burn, char and crumble; telemetry by_style burn 6. The fire puffs (starbursts) and burning flail are gunplay's / human-reactions' work merged in."
+    "note": "Real time, fixed-fps 60, 960 frames. Six guards burn, char and crumble; telemetry by_style burn 6. The fire puffs (starbursts) and burning flail are gunplay's / human-reactions' work merged in. Re-rendered 02:39 with the stronger smoke (alpha 0.62, wider wisps); the 64 px/m slow clip predates it."
   },
   {
     "file": "clips/hand-cannon-blowback-arena-32ppm-13s.mp4",

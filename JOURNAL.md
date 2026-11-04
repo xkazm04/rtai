@@ -173,3 +173,6 @@ NEXT:
   (evidence/brutality/scenarios-it2.log). No bench this iteration (bench.lock held by another lane).
 - 02:37 `--gore=reduced` clip (rocket lab, 48 px/m): signature_kills 0, victims fall whole with the
   standard death (clips/rocket-gore-reduced-arena-48ppm-10s.mp4). NEXT 6 done.
+- 02:39 fire char polish (NEXT 2, part): smoke alpha 0.42 -> 0.62 and wider wisps (now reads at
+  32 px/m; the 32 px/m clip re-rendered), ember cracks longer and thicker, but they still do not read
+  at 32 px/m over the charcoal (keep in NEXT 2: a brighter cream core, or fewer, bigger cracks).
