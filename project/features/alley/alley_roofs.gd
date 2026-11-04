@@ -7,11 +7,8 @@ extends Node2D
 ## band over the floor view's flat wall slabs (the station's wall_high props stay the collision).
 ## Reads data only (alley_decor.json "roofs" + the station's walls), never the sim.
 
-const TAR: Color = Color("#C9AB8A")
-const BRICK: Color = Color("#A4664A")
 const STONE: Color = Color("#D9CDB6")
 const RECESS: Color = Color("#5C544D")
-const LIP_M: float = 0.95
 const COPING_M: float = 0.32
 const COURSE_M: float = 0.16
 const STONE_M: float = 0.6
@@ -22,6 +19,10 @@ var _roofs: Array[Rect2] = []
 var _walls: Array[Rect2] = []
 var _mid_px: Vector2 = Vector2.ZERO
 var _along_x: bool = false
+var _tar_c: Color = Color("#C9AB8A")
+var _brick: Color = Color("#A4664A")
+var _mortar: Color = Color(Ink.INK, 0.55)
+var _lip_m: float = 0.95
 
 
 ## mid_px = the alley floor's centre; along_x = the lane runs east-west (faces on the long walls'
@@ -32,6 +33,12 @@ func _init(
 	for r: Variant in rows.get("roofs", []):
 		_roofs.append(AlleyDecor.rect_px(r, base))
 	_walls = walls
+	_tar_c = AlleyDecor.tone(rows, "tar", _tar_c)
+	_brick = AlleyDecor.tone(rows, "brick", _brick)
+	_mortar = AlleyDecor.tone(rows, "mortar", _mortar)
+	var tones: Dictionary = rows.get("tones", {})
+	var lip: float = tones.get("lip_m", _lip_m)
+	_lip_m = lip
 	_mid_px = mid_px
 	_along_x = along_x
 
@@ -62,7 +69,7 @@ func _draw() -> void:
 
 
 func _tar(r: Rect2) -> void:
-	draw_rect(r, TAR, true)
+	draw_rect(r, _tar_c, true)
 	var step: float = 0.9 * Ink.PX_PER_M
 	var y: float = r.position.y + fposmod(-r.position.y, step)
 	while y < r.end.y:  # sparse diagonal hatch, world-locked
@@ -104,18 +111,18 @@ func _vent(c: Vector2) -> void:
 ## The alley face of a building: a brick lip (courses, staggered joints), the coping stones on
 ## top of it, and a drainpipe with brackets every PIPE_EVERY_M.
 func _face(w: Rect2, east: bool) -> void:
-	var lip_w: float = LIP_M * Ink.PX_PER_M
+	var lip_w: float = _lip_m * Ink.PX_PER_M
 	var x_lip: float = w.end.x - lip_w if east else w.position.x
 	var lip: Rect2 = Rect2(x_lip, w.position.y, lip_w, w.size.y)
-	draw_rect(lip, BRICK, true)
+	draw_rect(lip, _brick, true)
 	var course: float = COURSE_M * Ink.PX_PER_M
 	var row: int = 0
 	var y: float = lip.position.y
 	while y < lip.end.y:
-		draw_line(Vector2(lip.position.x, y), Vector2(lip.end.x, y), Color(Ink.INK, 0.55), 1.0)
+		draw_line(Vector2(lip.position.x, y), Vector2(lip.end.x, y), _mortar, 1.0)
 		var jx: float = lip.position.x + lip_w * (0.33 if row % 2 == 0 else 0.72)
 		var y1: float = minf(y + course, lip.end.y)
-		draw_line(Vector2(jx, y), Vector2(jx, y1), Color(Ink.INK, 0.5), 1.0)
+		draw_line(Vector2(jx, y), Vector2(jx, y1), _mortar, 1.0)
 		y += course
 		row += 1
 	var cw: float = COPING_M * Ink.PX_PER_M

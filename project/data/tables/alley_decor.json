@@ -1,4 +1,54 @@
 {
+  "bags": [
+    [
+      3.4,
+      -39.8,
+      1.6,
+      1.1
+    ],
+    [
+      7.4,
+      -36.1,
+      1.2,
+      1
+    ],
+    [
+      24,
+      -36,
+      1.4,
+      1
+    ],
+    [
+      28.4,
+      -39.7,
+      1.2,
+      1
+    ],
+    [
+      36.4,
+      -39.8,
+      1.6,
+      1.1
+    ],
+    [
+      40.8,
+      -36.1,
+      1.4,
+      1
+    ],
+    [
+      46.4,
+      -39.8,
+      1.1,
+      1
+    ],
+    [
+      12.4,
+      -36,
+      1,
+      0.9
+    ]
+  ],
   "cans": [
     [
       10.6,
@@ -87,7 +137,7 @@
       2
     ]
   ],
-  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). roofs = the buildings either side seen from straight above (AlleyRoofs: tar roof, brick lip and coping on the alley face, AC boxes, vents); cracks/stains/drains/puddles = the asphalt; cans = trash cans; fences = the chain-link mesh drawn over the station's thin wall; escapes = fire escapes over the cast. waves = the alley's ArenaPit rule (both ends: spawns north and south).",
+  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). roofs = the buildings either side seen from straight above (AlleyRoofs: tar roof, brick lip and coping on the alley face, AC boxes, vents); cracks/stains/drains/puddles = the asphalt; cans = trash cans; fences = the chain-link mesh drawn over the station's thin wall; escapes = fire escapes over the cast. waves = the alley's ArenaPit rule (both ends: spawns north and south). bags = decor-only bag piles (no collision); litter = flat cardboard and paper [x, y, w, h, degrees]; tones = fills (see tones.doc).",
   "drains": [
     [
       20.2,
@@ -136,30 +186,122 @@
       5
     ]
   ],
-  "puddles": [
+  "litter": [
     [
-      13,
+      5.2,
+      -38.3,
+      0.9,
+      0.7,
+      18
+    ],
+    [
+      9.6,
+      -37.9,
+      0.7,
+      0.6,
+      -25
+    ],
+    [
+      14.6,
+      -38.9,
+      0.8,
+      0.6,
+      40
+    ],
+    [
+      23.8,
+      -36.9,
+      0.9,
+      0.7,
+      -12
+    ],
+    [
+      27.6,
+      -37.6,
+      0.6,
+      0.5,
+      30
+    ],
+    [
+      35.4,
+      -36.9,
+      0.8,
+      0.7,
+      -35
+    ],
+    [
+      40.2,
       -38.4,
       0.9,
-      1.6
-    ],
-    [
-      32,
-      -37.5,
-      1.1,
-      2
-    ],
-    [
-      47,
-      -39,
-      0.7,
-      1.2
-    ],
-    [
-      3,
-      -37,
       0.6,
+      10
+    ],
+    [
+      45.2,
+      -36.9,
+      0.7,
+      0.6,
+      -20
+    ],
+    [
+      19.2,
+      -38.8,
+      0.4,
+      0.3,
+      15
+    ],
+    [
+      31.4,
+      -38.9,
+      0.35,
+      0.28,
+      -40
+    ],
+    [
+      43.4,
+      -37.4,
+      0.4,
+      0.3,
+      60
+    ],
+    [
+      2.6,
+      -36.6,
+      0.4,
+      0.3,
+      -10
+    ]
+  ],
+  "puddles": [
+    [
+      11.5,
+      -38.8,
+      2.4,
+      1.3
+    ],
+    [
+      31,
+      -38.2,
+      2.8,
+      1.5
+    ],
+    [
+      45.5,
+      -39.3,
+      1.8,
+      1.1
+    ],
+    [
+      2.2,
+      -37.4,
+      1.6,
       1
+    ],
+    [
+      20.6,
+      -36.7,
+      1.7,
+      0.9
     ]
   ],
   "roofs": [
@@ -277,6 +419,17 @@
       1.4
     ]
   ],
+  "tones": {
+    "asphalt": "#A39C91",
+    "brick": "#6A3A2A",
+    "doc": "n5-look iteration 7 (toward r2_a6: a light concrete lane between dark brick): ground and roof fills, the brick lip width in m, the puddle fill (\"\" = the city puddle decal), the oil-stain alpha and the dumpster tint. Before (iteration 3): asphalt #6F6964, tar #C9AB8A, brick #A4664A, mortar #17131B8C, lip_m 0.95, puddle \"\", stain_a 0.8, dumpster #FFFFFF.",
+    "dumpster": "#7E8E86",
+    "lip_m": 1.4,
+    "mortar": "#C9B8A0C0",
+    "puddle": "#7D8A93",
+    "stain_a": 0.45,
+    "tar": "#7D6656"
+  },
   "waves": {
     "first_wave": 2,
     "gap_s": 2,

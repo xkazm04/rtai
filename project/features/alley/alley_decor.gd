@@ -8,7 +8,7 @@ extends Node2D
 ## the cast) draws the city's fire-escape art: 3 m+ up, always over a 1.8 m fighter, so one order
 ## holds in every pose (registry depth-ordered-layered-art). Reads data only, never the sim.
 
-const ASPHALT: Color = Color("#6F6964")
+const CARD: Color = Color("#B8976C")
 const BAG_DARK: Color = Color("#2E2833")
 const BAG_PALE: Color = Color("#C9BCA4")
 const MESH_STEP_M: float = 0.16
@@ -33,6 +33,13 @@ func _init(rows: Dictionary, base: Vector2, overhead: bool) -> void:
 	_overhead = overhead
 
 
+## A fill from alley_decor.json "tones" (fallback when the key is absent or "").
+static func tone(rows: Dictionary, key: String, fallback: Color) -> Color:
+	var t: Dictionary = rows.get("tones", {})
+	var v: String = str(t.get(key, ""))
+	return Color(v) if v != "" else fallback
+
+
 ## The ground pass's extra inputs: the alley area (asphalt) and the station's cover props.
 func set_ground(floor_m: Rect2, props: Array[ArenaStation.Prop]) -> void:
 	_floor = Rect2(Ink.px(floor_m.position), floor_m.size * Ink.PX_PER_M)
@@ -50,18 +57,28 @@ func _draw() -> void:
 		for e: Variant in _rows.get("escapes", []):
 			_turned(ESCAPE, rect_px(e, _base))
 		return
-	draw_rect(_floor, ASPHALT, true)
-	_decals("stains", OIL, Color(1, 1, 1, 0.8))
+	draw_rect(_floor, tone(_rows, "asphalt", Color("#6F6964")), true)
+	var tones: Dictionary = _rows.get("tones", {})
+	var stain_a: float = tones.get("stain_a", 0.8)
+	_decals("stains", OIL, Color(1, 1, 1, stain_a))
 	_decals("cracks", CRACKS, Color(1, 1, 1, 0.75))
-	_decals("puddles", PUDDLE, Color(0.86, 0.9, 1.0, 0.95))
+	var pool: Color = tone(_rows, "puddle", Color.TRANSPARENT)
+	if pool.a == 0.0:
+		_decals("puddles", PUDDLE, Color(0.86, 0.9, 1.0, 0.95))
+	for v: Variant in _rows.get("puddles", []) if pool.a > 0.0 else []:
+		_puddle(rect_px(v, _base), pool)
+	for v: Variant in _rows.get("litter", []):
+		_litter(v)
 	for g: Variant in _rows.get("drains", []):
 		_drain(rect_px(g, _base))
 	for p: ArenaStation.Prop in _props:
 		var r: Rect2 = Rect2(Ink.px(_base + p.at - p.size * 0.5), p.size * Ink.PX_PER_M)
 		if p.kind == "cover_high":
-			_turned(DUMPSTER, r)
+			_turned(DUMPSTER, r, tone(_rows, "dumpster", Color.WHITE))
 		elif p.kind == "cover_low":
 			_bags(r)
+	for v: Variant in _rows.get("bags", []):
+		_bags(rect_px(v, _base))
 	_decals("cans", CAN, Color.WHITE)
 	for f: Variant in _rows.get("fences", []):
 		_fence(rect_px(f, _base))
@@ -73,12 +90,13 @@ func _decals(key: String, tex: Texture2D, tint: Color) -> void:
 
 
 ## Landscape art (nose to +x) laid along a tall rect: turned a quarter so it fills the rect.
-func _turned(tex: Texture2D, r: Rect2) -> void:
+func _turned(tex: Texture2D, r: Rect2, tint: Color = Color.WHITE) -> void:
 	if r.size.x >= r.size.y:
-		draw_texture_rect(tex, r, false)
+		draw_texture_rect(tex, r, false, tint)
 		return
 	draw_set_transform(r.get_center(), PI * 0.5)
-	draw_texture_rect(tex, Rect2(-r.size.y * 0.5, -r.size.x * 0.5, r.size.y, r.size.x), false)
+	var l: Rect2 = Rect2(-r.size.y * 0.5, -r.size.x * 0.5, r.size.y, r.size.x)
+	draw_texture_rect(tex, l, false, tint)
 	draw_set_transform(Vector2.ZERO)
 
 
@@ -132,3 +150,38 @@ func _drain(r: Rect2) -> void:
 		var x: float = r.position.x + r.size.x * i / n
 		draw_line(Vector2(x, r.position.y + 3.0), Vector2(x, r.end.y - 3.0), Color("#8E867C"), 2.0)
 	draw_rect(r, Color("#8E867C"), false, 2.0)
+
+
+## A rain puddle (r2_a6): a sky-grey pool a value below the lane, a soft lumpy rim, two glints.
+func _puddle(r: Rect2, fill: Color) -> void:
+	var c: Vector2 = r.get_center()
+	var pts: PackedVector2Array = PackedVector2Array()
+	var grown: int = pts.resize(25)
+	assert(grown == OK)
+	for k: int in 24:
+		var a: float = TAU * k / 24.0
+		var wob: float = 1.0 + 0.13 * sin(a * 3.0 + c.x * 0.01) + 0.08 * cos(a * 5.0)
+		pts[k] = c + Vector2(cos(a) * r.size.x, sin(a) * r.size.y) * 0.5 * wob
+	pts[24] = pts[0]
+	draw_colored_polygon(pts.slice(0, 24), fill)
+	draw_polyline(pts, Color(Ink.INK, 0.45), 1.5)
+	var g: Vector2 = Vector2(r.size.x, r.size.y) * 0.18
+	draw_line(c - g, c - g + Vector2(g.x * 0.9, -g.y * 0.5), Color(Ink.CREAM, 0.9), 2.0)
+	draw_line(c + g * 0.4, c + g * 0.4 + Vector2(g.x * 0.6, -g.y * 0.3), Color(Ink.CREAM, 0.7), 2.0)
+
+
+## Flat litter [x, y, w, h, deg]: a squashed cardboard box (taped seam) or, under 0.5 m, paper.
+func _litter(v: Variant) -> void:
+	var raw: Array = v if v is Array else [0, 0, 0, 0, 0]
+	var a: PackedFloat32Array = PackedFloat32Array(raw)
+	var r: Rect2 = rect_px([a[0], a[1], a[2], a[3]], _base)
+	draw_set_transform(r.get_center(), deg_to_rad(a[4]))
+	var l: Rect2 = Rect2(-r.size * 0.5, r.size)
+	var card: bool = a[2] >= 0.5
+	draw_rect(Rect2(l.position + Vector2(2.0, 2.0), l.size), Color(Ink.INK, 0.3), true)
+	draw_rect(l, CARD if card else Ink.CREAM, true)
+	if card:
+		draw_line(Vector2(l.position.x, 0.0), Vector2(l.end.x, 0.0), Color("#8A6C48"), 3.0)
+		draw_line(Vector2(0.0, l.position.y), Vector2(0.0, l.end.y), Color(Ink.INK, 0.5), 1.0)
+	draw_rect(l, Ink.INK, false, 1.5)
+	draw_set_transform(Vector2.ZERO)

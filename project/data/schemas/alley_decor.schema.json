@@ -2,6 +2,17 @@
   "$id": "gtai.alley-decor/1",
   "additionalProperties": false,
   "properties": {
+    "bags": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
     "cans": {
       "items": {
         "items": {
@@ -61,6 +72,17 @@
       },
       "type": "array"
     },
+    "litter": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "type": "array"
+      },
+      "type": "array"
+    },
     "puddles": {
       "items": {
         "items": {
@@ -109,6 +131,57 @@
         "type": "array"
       },
       "type": "array"
+    },
+    "tones": {
+      "additionalProperties": false,
+      "properties": {
+        "asphalt": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "brick": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "dumpster": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "lip_m": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "mortar": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "puddle": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "stain_a": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "tar": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asphalt",
+        "tar",
+        "brick",
+        "mortar",
+        "lip_m",
+        "puddle"
+      ],
+      "type": "object"
     },
     "waves": {
       "additionalProperties": false,
