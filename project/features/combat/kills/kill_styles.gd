@@ -78,6 +78,8 @@ func parts(
 		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], _kills, _ppm)
 	elif row.style == &"dissolve" and rig != null:
 		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
+	elif row.style == &"shock" and rig != null and groups[SignatureKill.BODY] != null:
+		groups[SignatureKill.BODY] = KillShockFx.wrap(groups[SignatureKill.BODY])
 	return groups
 
 
