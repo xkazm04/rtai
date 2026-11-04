@@ -1,8 +1,12 @@
 # Showcase lane: night run 2026-11-04, report
 
-Status: FINAL on merge round 14 (e13dc36b, merged 08:00; the showcase session ended at 08:12, so
-the final round ran 07:15-08:12). Gates r14 green; exe re-exported 08:02 on round 14; final reel
-**reel-0808** on the same build. A lane commit after 08:00 is not in this build.
+Status: FINAL on merge round 15 (06051f21, merged 08:14: the lane tips up to 08:10). Gates r15
+green; exe re-exported 08:19 on round 15. The final reel **reel-0808** is round 14 (e13dc36b): no
+time for another reel before the 08:30 freeze. Round 15 adds only small fixes, not filmed by the
+showcase lane: the molotov's glass slivers and inked scorch patch (weapon-art), long guns and tubes
+carried beside Rivet's helmet instead of across his face (rivet-arsenal), no stuck homing shards on
+a corpse (gunplay), a steadier blade solo frame (brutality) and `--armored=k` in the arena
+(human-reactions). Each owning lane filmed its fix in its own clips.
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -19,7 +23,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 chapters, deterministic) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 234 MB) with the release
-sim DLL beside it (re-exported on round 14, 08:02). Round 14 boot tests (headless, 0 script errors): the arena opens with 16
+sim DLL beside it (re-exported on round 15, 08:19). Round 15 boot tests (headless, 0 script errors): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 
@@ -62,7 +66,8 @@ city block loads with the loadout.
 | r11 | 9f6b2fbe | 13/13 | 889/889 | 44/44 | exact | 11/11 + 5/5 |
 | r12 | 9c52b656 | 13/13 | 893/893 | 44/44 | exact | 11/11 (worst 0.00) + 5/5 |
 | r13 | 2643fbbd | 13/13 | 903/903 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 |
-| **r14 (final)** | **e13dc36b** | **13/13** | **906/906** | **45/45** | **exact** | **11/11 + 5/5** |
+| r14 | e13dc36b | 13/13 | 906/906 | 45/45 | exact | 11/11 + 5/5 |
+| **r15 (final, the exe)** | **06051f21** | **13/13** | **912/912** | **45/45** | **exact** | **11/11 (worst 0.00) + 5/5 (worst 1.81)** |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 

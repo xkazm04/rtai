@@ -1101,3 +1101,20 @@ NEXT (after 08:12; freeze 08:30, report 08:40):
   (no stuck shards on a corpse) -> cb00bac7; human-reactions 28b1c78b -> GLUE arena_game:
   `--armored=k` lands in showcase's `_dev_fight` (that block had moved there); brutality
   a334f6c3 (steady blade solo frame) -> 06051f21. JOURNALs ours. `--import` 0 errors.
+- GATES r15 (evidence --no-bench on 06051f21, CONTENDED): lint 13/13 (789), unit 912/912,
+  scenarios 45/45, parity bit-exact (planted caught at 629), selftest PASS (look 11/11 worst 0.00,
+  block 5/5 worst 1.81). No re-bless. evidence/r15/evidence.log. (The journal commit 08:16 landed
+  during the run; docs only, the evidence names 06051f21.)
+- MILESTONE 08:19 exe re-exported on round 15 (06051f21): RTAI.exe (236 MB) + release DLL, exit 0,
+  0 errors (evidence/r15/export.log). Boot tests headless, 0 SCRIPT ERRORs each: no args (Rivet
+  carries the pistol, "armory: 15 weapons on the hub floor", "arena open: 16 stations"); director
+  (claw_combo 2/2 down); city block with pistol, plasma rifle, rocket and molotov.
+- DECISION 08:20: no reel on round 15. A cut plus the city film takes about 9 min and the freeze
+  is 08:30. reel-0808 (round 14) stays the final reel; REPORT names the round-15 differences
+  (render-only fixes, filmed by their own lanes).
+
+NEXT (morning / Director): the n-showcase tip is the merged, gated build of all five lanes (round
+15). Open: REQUEST 29 -> brutality (the electro corpse still reads as standing after the X-ray; the
+human-reactions answer DeathPose.stiff_channels is in its JOURNAL, but the corpse is not verified
+in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session films round 15 first
+(cut.sh + reel.sh) and benches it under bench.lock.
