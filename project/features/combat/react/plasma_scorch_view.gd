@@ -7,7 +7,8 @@ extends Node2D
 ## ReactLink.scorched holds the marks (fighter id -> [[tick, hit dir in rig space]]); a dead
 ## fighter's marks go (the kill's hole takes over). Phases from the age only; render only, no RNG.
 
-const SPOT_M: float = 0.1
+## 0.1 m was 5 px at 48 px/m and read only through its smoke (journal 14:29); 0.13 m = 6 px.
+const SPOT_M: float = 0.13
 const ENTRY_M: float = 0.07
 const SIDE_M: float = 0.06
 const GLOW_TICKS: int = 120
