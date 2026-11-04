@@ -954,3 +954,25 @@ NEXT (the morning merge / the next night), in order:
    or the view snaps HOLD knockdown z 0.78 -> 0.9); then re-film pit_knockdown_getup.
 3. The robot thug's power-down death per the spec above, plus a pit clip at 32 and 64 px/m.
 4. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
+
+## Iteration 16 (08:19-08:30, BUILD, 11 min to the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' tips. No new REQUEST to human-reactions since
+  iteration 15 (the showcase's REQUESTs 12/20/22/23/24/24b were answered in earlier iterations).
+- MILESTONE (other lane): gunplay landed human-reactions REQUEST 30 at 83429487
+  (`FighterFx.RISE_TICKS` = 29: a knocked-down fighter stays held 29 ticks after his lie ends
+  while the view plays the rise; 0 = the old behaviour; unit 752/752, scenarios 29/29 on gunplay).
+  This closes the gameplay side of NEXT 2. Not cherry-picked: it touches gunplay's FighterFx and
+  arrives with the morning merge, and a cherry-pick 10 minutes before the freeze could not be
+  gated and re-filmed.
+- DECISION: no code change this session (same reasoning as iteration 15: the edit, unit,
+  scenarios and a 32/64 px/m clip do not fit in 11 minutes, and a pose with no clip is not done).
+  The tip of record stays fdff7990 for code. The two Godot processes running (PIDs 13692, 47640)
+  are not mine; I left them alone.
+
+NEXT (the morning merge / the next night), in order:
+1. After the merge with n-gunplay: `gun_fx.shield_test = link.shield_test` (one line, fx_view),
+   film react_line at 64 px/m; re-film the burn death with gunplay's thin flames (e1b22073).
+2. With gunplay 83429487 merged, re-film pit_knockdown_getup (32 + 64 px/m) and check that the
+   rise reads with no shot from the half-sprawl (frame by frame over the 29 RISE_TICKS).
+3. The robot thug's power-down death per the iteration 15 spec, plus a pit clip at 32 and 64 px/m.
+4. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
