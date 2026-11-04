@@ -1,0 +1,108 @@
+{
+  "death_map": {
+    "blast": "death_blast",
+    "burn": "death_burn",
+    "heavy": "death_bullet",
+    "light": "death_bullet",
+    "medium": "death_bullet",
+    "melee": "death_melee",
+    "shock": "death_shock"
+  },
+  "doc": "Human reactions (lane human-reactions): the cutout rig's reaction and death families. len_s is the length of the animation (a death holds its last pose as the corpse), travel_m how far the body is drawn along the hit at the peak. View only: never sim state, never hashed.",
+  "map": {
+    "blast": "knockdown",
+    "burn": "burn",
+    "heavy": "stagger",
+    "light": "flinch",
+    "medium": "flinch",
+    "melee": "spin",
+    "shock": "stun"
+  },
+  "reactions": [
+    {
+      "doc": "Light round: head and torso snap away from the hit, an arm comes up.",
+      "id": "flinch",
+      "len_s": 0.24,
+      "travel_m": 0.25
+    },
+    {
+      "doc": "Heavy round: steps back along the hit, the weapon arm drops.",
+      "id": "stagger",
+      "len_s": 0.55,
+      "travel_m": 0.45
+    },
+    {
+      "doc": "Blast or tackle: falls along the hit, slides, lies 1.4 s, gets up.",
+      "id": "knockdown",
+      "len_s": 2.2,
+      "travel_m": 0.9
+    },
+    {
+      "doc": "Riot shield block from the front: recoils behind the shield.",
+      "id": "shield",
+      "len_s": 0.3,
+      "travel_m": 0.15
+    },
+    {
+      "doc": "Melee from the side: a half spin away from the blow.",
+      "id": "spin",
+      "len_s": 0.45,
+      "travel_m": 0.2
+    },
+    {
+      "doc": "Melee from the front: folds over the blow.",
+      "id": "fold",
+      "len_s": 0.5,
+      "travel_m": 0.2
+    },
+    {
+      "doc": "Electro: convulses in place, the hat jolting.",
+      "id": "stun",
+      "len_s": 1.2,
+      "travel_m": 0.08
+    },
+    {
+      "doc": "Burning: flails, arms up, head thrashing (the host runs the body).",
+      "id": "burn",
+      "len_s": 2.5,
+      "travel_m": 0.1
+    },
+    {
+      "doc": "Hit while in cover: ducks and flinches small.",
+      "id": "cover",
+      "len_s": 0.35,
+      "travel_m": 0.1
+    },
+    {
+      "doc": "Round kill: falls back from the front, crumples forward from behind.",
+      "id": "death_bullet",
+      "len_s": 0.45,
+      "travel_m": 0.7
+    },
+    {
+      "doc": "Melee kill: folds over, then topples along the blow.",
+      "id": "death_melee",
+      "len_s": 0.7,
+      "travel_m": 0.5
+    },
+    {
+      "doc": "Blast kill: thrown along the blast, tumbling.",
+      "id": "death_blast",
+      "len_s": 0.8,
+      "travel_m": 1.6
+    },
+    {
+      "doc": "Burn kill: flails, then collapses charred.",
+      "id": "death_burn",
+      "len_s": 1.3,
+      "travel_m": 0.3
+    },
+    {
+      "doc": "Electro kill: convulses, then falls stiff as a plank.",
+      "id": "death_shock",
+      "len_s": 0.7,
+      "travel_m": 0.4
+    }
+  ],
+  "schema": "gtai.human_reactions/1"
+}

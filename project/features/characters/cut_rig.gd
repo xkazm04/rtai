@@ -23,6 +23,8 @@ var lib: PartLibrary = null
 var variant: RigVariant = null
 var actor_id: int = -1
 var clips: RigClips = RigClips.new()
+## The human reaction layer (features/combat/react): null until the first hit.
+var react: HumanReact = null
 
 var vel_in: Vector2 = Vector2.ZERO
 var face_to: float = 0.0
@@ -109,6 +111,9 @@ func reset_state(at_facing: float) -> void:
 	aiming = false
 	vel_in = Vector2.ZERO
 	clips.reset()
+	if react != null:
+		react.clear()
+		modulate = Color.WHITE
 	shove = Vector2.ZERO
 	shove_v = Vector2.ZERO
 	twist = 0.0
@@ -130,10 +135,14 @@ func drive(dt: float) -> void:
 	speed_now = vel_in.length()
 	clips.sample(self, dt)
 	RigSprings.step(self, dt)
+	if react != null:
+		react.pre(self, dt)
 	RigHips.step(self, dt)
 	rotation = facing
 	RigGait.step(self, dt)
 	RigPose.step(self)
+	if react != null:
+		react.post(self)
 	if hose != null:
 		RigHose.step(self, dt)
 	if absf(PartMaterials.view_px - _last_px) > 0.002:

@@ -18,6 +18,8 @@ var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
 ## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
 var plan: ArenaPlan = null
+## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
+var react: ReactLink = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 ## Each fighter's last hurt tick already played as a HIT clip.
@@ -42,6 +44,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	view.print_stage.actor_layer().add_child(rigs)
 	rigs.setup(ctx)
 	view.cast_view.visible = false
+	react = ReactLink.make(p_stage.arena)
 	return true
 
 
@@ -60,6 +63,8 @@ func _process(_delta: float) -> void:
 		i += 1
 	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom
+	if react != null:
+		react.apply(rigs)
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
@@ -82,7 +87,7 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	elif shot and who.weapon != &"":
 		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
 		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
-	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
+	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick) and react == null:
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
 	_hurt_seen[who.id] = who.hurt_tick

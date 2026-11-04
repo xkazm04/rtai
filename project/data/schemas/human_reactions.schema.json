@@ -1,0 +1,349 @@
+{
+  "$id": "gtai.human_reactions/1",
+  "additionalProperties": false,
+  "properties": {
+    "death_map": {
+      "additionalProperties": false,
+      "properties": {
+        "blast": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "burn": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "heavy": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "light": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "medium": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "melee": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "shock": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        }
+      },
+      "required": [
+        "blast",
+        "burn",
+        "heavy",
+        "light",
+        "medium",
+        "melee",
+        "shock"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "map": {
+      "additionalProperties": false,
+      "properties": {
+        "blast": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "burn": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "heavy": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "light": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "medium": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "melee": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        },
+        "shock": {
+          "enum": [
+            "flinch",
+            "stagger",
+            "knockdown",
+            "shield",
+            "spin",
+            "fold",
+            "stun",
+            "burn",
+            "cover",
+            "death_bullet",
+            "death_melee",
+            "death_blast",
+            "death_burn",
+            "death_shock"
+          ]
+        }
+      },
+      "required": [
+        "blast",
+        "burn",
+        "heavy",
+        "light",
+        "medium",
+        "melee",
+        "shock"
+      ],
+      "type": "object"
+    },
+    "reactions": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "enum": [
+              "flinch",
+              "stagger",
+              "knockdown",
+              "shield",
+              "spin",
+              "fold",
+              "stun",
+              "burn",
+              "cover",
+              "death_bullet",
+              "death_melee",
+              "death_blast",
+              "death_burn",
+              "death_shock"
+            ]
+          },
+          "len_s": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "travel_m": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "doc",
+          "id",
+          "len_s",
+          "travel_m"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.human_reactions/1"
+    }
+  },
+  "required": [
+    "death_map",
+    "doc",
+    "map",
+    "reactions",
+    "schema"
+  ],
+  "type": "object"
+}
