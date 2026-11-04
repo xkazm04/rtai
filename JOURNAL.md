@@ -893,3 +893,32 @@ NEXT (iteration 14 / morning merge, in order):
 - 08:09 session close. All code committed; frames.json 15 (knockdown get-up on top), every file
   present; no Godot process of mine running; scratch-hr holds only logs + 3 small sheets.
   NEXT unchanged from the iteration-13 list above.
+
+## Iteration 14 (08:09-08:30, BUILD, 21 min to the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' JOURNALs for REQUESTs to me. Every REQUEST
+  addressed to human-reactions is answered (rivet-arsenal 1, brutality 2, showcase 22-24b,
+  gunplay 1-3); showcase merged my branch into its round 14 (10fde6a3), gates green there
+  (unit 906/906, scenarios 45/45, parity bit-exact).
+- REQUEST 30 -> gunplay (the knockdown fire hold) is still unanswered in n-gunplay/JOURNAL.md.
+  Note the numbering: gunplay's own "REQUEST 30 -> brutality" (the char corpse) is a different
+  request; mine is "human-reactions REQUEST 30". The hold belongs in FightAreas
+  (fight_areas.gd:95/156, gunplay's sim file); I did not edit it in the last 20 minutes of the
+  night. DECISION (view, kept): the guard can aim as it rises (owner call A/B in the report).
+- DECISION: no bench this iteration. bench.lock was free at 08:10, but a 12-minute run on a
+  machine where every lane is filming its final reel gives another CONTENDED number like
+  07:42's (riot 8.6 ms), says nothing about CrowdReact 244 -> 150 us, and slows showcase's final
+  reel. The idle bench stays owed to the morning (the Director's or showcase's idle run).
+- State at the freeze for the REPORT session: tip 679d713b (docs only after fdff7990, the
+  evidence of record: lint 13/13, unit 750/750, scenarios 33/33, parity bit-exact, look 11/11,
+  block 5/5; selftest FAIL only on the known accent rows). frames.json 15 entries, all present
+  in gtai-masters/n4/human-reactions (75 files). No Godot process of mine running.
+  Calls for the owner to carry into the REPORT: the knockdown length (A aims while rising / B
+  holds fire until up, pit_knockdown_getup_64ppm.mp4), plus the earlier calls in this journal.
+
+NEXT (the morning merge / the next night):
+1. After the merge with n-gunplay: `gun_fx.shield_test = link.shield_test` (one line, fx_view),
+   film react_line at 64 px/m; re-film the burn death with gunplay's thin flames (e1b22073).
+2. human-reactions REQUEST 30 (gunplay: about 29 rising ticks with no fire after down_ticks ends,
+   or the view snaps HOLD knockdown z 0.78 -> 0.9); then re-film pit_knockdown_getup.
+3. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
+4. The robot thug's own skeleton and its spark/oil reactions (brief item 5, still light).
