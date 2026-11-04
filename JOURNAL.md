@@ -543,7 +543,7 @@ NEXT (iteration 8):
   ONE-SHOT electro X-ray kill on a fresh human today (unit test). Not shown live: `--bot=rivet`
   plays the claw combo on the react dummies and never lands a full-charge shock kill in 19 s
   (signature_kills 0); a lab hook that fires the charged shock would show it.
-- Gates 05:21-05:30 on 7c-alias HEAD: lint 13/13, unit 779/779, scenarios 35/35 (scenarios-it8.log).
+- Gates 05:21-05:25 after the claw_shock alias: lint 13/13, unit 779/779, scenarios 35/35 (scenarios-it8.log).
 - Shared files touched this iteration: dev/arena/arena_rigs.gd (one line, showcase's identical
   glue); tests/unit/test_gun_fx.gd (dropped the cherry-picked art_mags line, net zero vs main).
 - Registry rules applied: motion-quality-gating (every kill judged on clips and strips at 64 px/m,
@@ -557,11 +557,26 @@ NEXT (iteration 8):
 - (brutality-12 holds: mini-nuke charcoal shadows; now shown on a pack of five,
   mini-nuke-pack-48ppm-9s-it8.mp4.)
 
+- MILESTONE 05:27 the electro one-shot has a clip (d46ad8b3): `--sig-gun=claw_shock` makes the solo
+  lab drive Rivet's own PlayerShock: one guard at 1.5 m (reach 1.6), the charge held 66 ticks
+  (full at 54), released on him: crackle, the cream zap burst with the X-ray skeleton, the stiff
+  drop (strip evidence/brutality/claw-shock-electro-oneshot-64ppm-it8-strip.png; masters
+  claw-shock-electro-oneshot-solo-64ppm-{5s,slow-0.4x}-it8.mp4, frames.json entry 2). At 1.2 m
+  the body overlapped Rivet; 1.5 m parts them. The rig's own thrust clip does not play (the lab
+  steps its own PlayerShock, not the pilot's).
+- MILESTONE 05:28 open city spot (95316aff): `--sig-solo=start:dx,dy`; the lab pins a gun-armed
+  Rivet to the spot every tick (the city block re-placed him at the start after setup, so he
+  fired from the start). At start:-9,0 the victim stands alone on open asphalt; the city camera
+  stays at the start, so Rivet sits near the frame edge. Re-shooting the reel at start:-7,0.
+
+- Gates 05:31 on 95316aff: lint 13/13, unit 778/779 with test_noir_shadows (the brief's known
+  load flake: `Parameter "t" is null`), 2/2 alone (unit-noir-shadows-alone-it8.log); scenarios
+  35/35 (scenarios-it8.log).
+
 NEXT (iteration 9):
-1. A lab hook for the charged claw shock (KillLab fires PlayerShock at full charge) and a 64 px/m
-   clip of the one-shot electro kill.
-2. An open city spot for the solo lab (`--sig-solo=x,y` in city metres clear of the hub rows), then
-   re-shoot the city reel; add katana and chainsaw (blades) to it.
+1. The claw-shock lab plays the pilot's shock so Rivet's thrust clip shows with the X-ray.
+2. City camera: follow Rivet at his solo spot (the city camera holds the start); add the chainsaw
+   and the nuke pack to the city reel.
 3. The rocket on the city block: 6.2 ms worst kill-view frame (CONTENDED); split the fresh-smear
    layer per kill like KillGround and measure again.
 4. Homing shard: more shards on the near side when Rivet is far.
