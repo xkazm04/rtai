@@ -3,10 +3,18 @@ extends Node2D
 ## rivet-arsenal: the guns on the ground (RivetCarry.ground) in the print: weapon-art's pickup
 ## side view on a paper disc with an ink ring, slowly turning so it reads as loot, not decor.
 ## Render only: reads the sim each frame, writes nothing back.
+## n5-look (r2_w8): the loot ring is a dashed paper ring over a faint paper wash, the gun on the
+## ground inside it, instead of an opaque paper disc; `--pickup-disc=on` = the disc (before).
 
 const DISC_M: float = 0.55
 const RING_PX: float = 2.0
 const TURN_RAD_S: float = 0.6
+const DASHES: int = 14
+## The dash's share of its step round the ring, and the wash's alpha under the gun.
+const DASH_K: float = 0.6
+const WASH_A: float = 0.2
+
+static var disc: bool = OS.get_cmdline_user_args().has("--pickup-disc=on")
 
 var carry: RivetCarry = null
 var art: WeaponArt = WeaponArt.new()
@@ -37,8 +45,20 @@ func _draw() -> void:
 	var r: float = DISC_M * SimConst.PX_PER_M
 	for it: WeaponPickups.Item in carry.ground.items:
 		var at: Vector2 = it.pos * SimConst.PX_PER_M
-		draw_circle(at, r, _paper)
-		draw_arc(at, r, 0.0, TAU, 32, _ink, RING_PX, true)
+		if disc:
+			draw_circle(at, r, _paper)
+			draw_arc(at, r, 0.0, TAU, 32, _ink, RING_PX, true)
+		else:
+			_dashed(at, r)
+
+
+## r2_w8's loot ring: a faint paper wash and a ring of paper dashes.
+func _dashed(at: Vector2, r: float) -> void:
+	draw_circle(at, r, Color(_paper, WASH_A))
+	var step: float = TAU / float(DASHES)
+	for k: int in DASHES:
+		var a0: float = step * float(k)
+		draw_arc(at, r, a0, a0 + step * DASH_K, 4, _paper, RING_PX, true)
 
 
 func _rebuild(ids: Array[StringName]) -> void:
