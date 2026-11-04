@@ -31,6 +31,8 @@ var victims: Array[Fighter] = []
 var spots: PackedVector2Array = PackedVector2Array()
 ## Victims killed per chapter id (the scenario's and the log's telemetry).
 var kills: Dictionary[StringName, int] = {}
+## False plants the scenario's fault: every button off (aim and walk only).
+var trigger: bool = true
 var _next_tick: int = 0
 
 
@@ -186,5 +188,5 @@ func _bit(action: StringName, on: bool) -> int:
 
 func _input(move: Vector2, aim: Vector2, extra: int) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
-	var buttons: int = PlayerCommand.pack_aim(aim, actions) | extra
+	var buttons: int = PlayerCommand.pack_aim(aim, actions) | (extra if trigger else 0)
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))
