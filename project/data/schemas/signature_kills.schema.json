@@ -10,6 +10,10 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "ash_m": {
+            "minimum": 0,
+            "type": "number"
+          },
           "bounce": {
             "maximum": 1,
             "minimum": 0,
@@ -19,6 +23,10 @@
             "maximum": 360,
             "minimum": 0,
             "type": "number"
+          },
+          "crumble_ticks": {
+            "minimum": 0,
+            "type": "integer"
           },
           "doc": {
             "minLength": 1,
@@ -85,6 +93,10 @@
             "maximum": 360,
             "minimum": 0,
             "type": "number"
+          },
+          "stand_ticks": {
+            "minimum": 0,
+            "type": "integer"
           },
           "style": {
             "enum": [

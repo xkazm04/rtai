@@ -63,6 +63,37 @@
         2.8
       ],
       "weapon": "hand_cannon"
+    },
+    {
+      "ash_m": 0.62,
+      "bounce": 0.1,
+      "cone_deg": 20,
+      "crumble_ticks": 75,
+      "doc": "Fire (the flamethrower's long burst, and every fire death: molotov, fire patch, burning; gunplay's payload weapon `burn`): the victim, already running ablaze, stops as a charred ink silhouette with cream ember cracks, smokes where it stands, then crumbles into drifting ash flakes onto an ash heap over a soot scorch. No blood.",
+      "flash_ticks": 2,
+      "ground_drag": 7,
+      "hitstop_ticks": 2,
+      "id": "burn_char",
+      "launch_mps": [
+        0.4,
+        0.8
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.75,
+      "spin_dps": [
+        10,
+        40
+      ],
+      "spray": 0,
+      "stand_ticks": 55,
+      "style": "burn",
+      "up_mps": [
+        0,
+        0.3
+      ],
+      "weapon": "burn"
     }
   ],
   "leftover_budget": 12,

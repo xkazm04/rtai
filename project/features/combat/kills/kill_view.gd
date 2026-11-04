@@ -17,10 +17,14 @@ var reduced_motion: bool = false
 ## Callable(victim_id: int) -> CutRig (null when the victim has no posed rig).
 var rig_lookup: Callable = Callable()
 var gib_layer: Node2D = Node2D.new()
+## The burn char (smoke, embers, ash flakes) over the burnt bodies.
+var char_fx: KillCharFx = KillCharFx.new()
 var _groups: Dictionary[int, Array] = {}
 var _ang0: PackedFloat32Array = PackedFloat32Array()
 ## Each slot's drag smear (px), grown while its part slides on the street.
 var _trail: Array[PackedVector2Array] = []
+## Kill serials that bleed no smear (a row with no spray: the burn).
+var _dry: Dictionary[int, bool] = {}
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -33,6 +37,11 @@ func bind(p_kills: SignatureKills) -> void:
 		_trail.append(PackedVector2Array())
 	gib_layer.z_index = 3
 	add_child(gib_layer)
+	char_fx.kills = kills
+	char_fx.ppm = ppm
+	char_fx.reduced_motion = reduced_motion
+	char_fx.z_index = 4
+	add_child(char_fx)
 
 
 func _process(_delta: float) -> void:
@@ -47,6 +56,7 @@ func _process(_delta: float) -> void:
 		node.rotation = g.ang[i] - _ang0[i]
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
+	char_fx.pose()
 	queue_redraw()
 
 
@@ -61,6 +71,7 @@ func _draw() -> void:
 			KillMarkArt.smear(self, _trail[i], ppm)
 	for m: KillMarks.Mark in kills.marks.marks:
 		KillMarkArt.scorch(self, m, ppm)
+		KillCharFx.pile(self, m, kills.tick, ppm)
 	for i: int in GibSim.CAPACITY:
 		if g.live(i):
 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
@@ -90,7 +101,12 @@ func _on_killed(
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var whole: bool = row.whole_body()
 	var groups: Array[Node2D] = GibCut.cut(rig, whole) if rig != null else _blobs()
-	for gr: Node2D in groups:
+	for i: int in groups.size():
+		var gr: Node2D = groups[i]
+		if not row.pieces.has(i):  # a group the row does not throw (the burn keeps no cap)
+			gr.queue_free()
+			groups[i] = null
+			continue
 		if not row.whole_body():
 			var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
 			stump.radius = 0.1 * ppm
@@ -98,6 +114,10 @@ func _on_killed(
 			gr.add_child(stump)
 		gib_layer.add_child(gr)
 	_groups[serial] = groups
+	if row.spray == 0:
+		_dry[serial] = true
+	if row.style == &"burn":
+		char_fx.add(serial, groups[SignatureKill.BODY], row)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.kill_of[i] == serial:
@@ -109,7 +129,7 @@ func _on_killed(
 ## A sliding part paints the street behind it (a point every few px, at most TRAIL_MAX).
 func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
 	var t: PackedVector2Array = _trail[i]
-	if not grounded or t.size() >= TRAIL_MAX:
+	if not grounded or t.size() >= TRAIL_MAX or _dry.has(kills.gibs.kill_of[i]):
 		return
 	if t.is_empty() or t[t.size() - 1].distance_to(at) > ppm * 0.08:
 		@warning_ignore("return_value_discarded")
@@ -126,9 +146,13 @@ func _drop_unused() -> void:
 		if not used.has(serial):
 			for gr: Variant in _groups[serial]:
 				var dead: Node2D = gr
-				dead.queue_free()
+				if dead != null:
+					dead.queue_free()
 			@warning_ignore("return_value_discarded")
 			_groups.erase(serial)
+			@warning_ignore("return_value_discarded")
+			_dry.erase(serial)
+			char_fx.forget(serial)
 
 
 ## No rig to cut (a headless or sprite-cast run): inked blobs stand in for the parts.

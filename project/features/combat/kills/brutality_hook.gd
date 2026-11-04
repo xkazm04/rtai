@@ -25,7 +25,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	kills = SignatureKills.new(table, ctx.rng.stream(&"brutality"))
 	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
-	stage.arena.struck.connect(_on_struck)
+	stage.arena.kill_landed.connect(_on_kill_landed)
 	var gun: String = ArenaArgs.parse().text("--sig-gun")
 	var weapons: WeaponTable = WeaponTable.shipped() if not gun.is_empty() else null
 	if weapons != null and weapons.weapons.has(StringName(gun)):
@@ -74,10 +74,14 @@ func attach_view(p_view: Node) -> void:
 	cc.print_stage.actor_layer().add_child(view)
 
 
-func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
-	if not lethal:
-		return
-	if kills.on_kill(KillEvent.of_fighter(victim, dir, weapon)):
+## gunplay's kill payload (JOURNAL REQUEST 1, agreed): every lethal hit on a non-Rivet fighter;
+## a fire death carries the weapon `burn`.
+func _on_kill_landed(
+	victim: Fighter, weapon: StringName, dir: Vector2, _at: Vector2, kind: StringName
+) -> void:
+	var e: KillEvent = KillEvent.of_fighter(victim, dir, weapon)
+	e.damage_type = kind
+	if kills.on_kill(e):
 		_hide(victim.id)
 
 
@@ -103,4 +107,10 @@ func _find_rigs() -> ArenaRigs:
 		for ch: Node in _game.get_children():
 			if ch is ArenaRigs:
 				_rigs = ch as ArenaRigs
+				if _rigs.react != null:  # human-reactions' DeathPipe: our kills skip the standard death
+					_rigs.react.pipe.add_signature(_takes_death)
 	return _rigs
+
+
+func _takes_death(rig: CutRig, _hit: StringName, _dir: Vector2, _weapon: StringName) -> bool:
+	return kills.consumed.has(rig.actor_id)
