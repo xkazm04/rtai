@@ -5,6 +5,22 @@ after it changes only JOURNAL. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\hu
 (`frames.json`, 15 entries, all files present) plus `evidence/` in the lane cwd (untracked clips).
 Paths below are relative to the masters folder unless they start with `evidence/` or `project/`.
 
+## After 09:00 (extension, updated in place)
+- **Robot thug power-down death** (`fbfa406b`, `3cf3ce29`): its own death, no longer the human fall. The knees give into a
+  crouch, it pitches flat on the spot (0.2 m, no slide), the head drops last, the plates darken; sparks and oil, no
+  blood. `death_robot` is outside `death_map` and the signature hooks, so no human can ever play it. Dev pit only (the
+  live `CombatArena` has no robot fighter). Clips: `robot_powerdown_48ppm.mp4` (follow camera), `robot_powerdown_64ppm.mp4`
+  + `_64ppm_sheet.png`, `robot_powerdown_32ppm.mp4`; death frame 138 at every zoom. Honest read: at 48 px/m the thug is
+  weapon-art's ink mass, so the fall reads by silhouette (crouch, then a flat X); the "lights out" darkening shows at 64.
+  The oil spray from six hits is busy.
+- **Knockdown: no shot from the floor** (`e41fb9c6`, gunplay `83429487` cherry-picked, `FighterFx.RISE_TICKS` 29):
+  re-filmed `pit_knockdown_rise29_48ppm.mp4` (follows Rivet) and `_64ppm.mp4` + `_64ppm_sheet.png`. The guard is blown
+  flat, lies, rises, and his next aim tell starts only once he stands. Call 4 is now answered B on this branch.
+- The pit's dev camera keeps a fresh corpse in frame for 3 s (the 04:00 aftermath rule); `--zoom=` films 48/64 px/m.
+- Gates on the code tip `e41fb9c6`: lint 13/13, unit 754/754, scenarios 33/33 (city_chase nav flake under load, green
+  alone), parity bit-exact (mutation caught at step 629). Look goldens not re-run (no render path changed: the robot
+  pose is dev-pit only and the RISE hold is sim-side in the arena fight).
+
 ## Gates of record (on `fdff7990`)
 `node tools/evidence/run.mjs --no-bench --allow-dirty` (the only dirt was the untracked clips in `evidence/`):
 - lint 13/13
@@ -83,9 +99,9 @@ All six live in `project/tests/scenarios/` and are part of the 33/33.
 - The thug lives in enemy-ai's dev pit only. Clip: `evidence/thug_plan_32ppm.mp4` (King's parts, before `c819d6be`).
 
 ## What does not work / honest gaps
-- **No robot death pose.** The thug still falls with the human bullet set. The live `CombatArena` has no robot `Fighter.Kind`. The spec for the fix is in JOURNAL iteration 15 (a `death_robot` row and `DeathPipe.kill_robot`).
+- ~~No robot death pose~~: done after 09:00 (see the top). It still lives only in the dev pit: the live `CombatArena` has no robot `Fighter.Kind`.
 - **The riot shield is render-only.** The sim still takes the hp of a round the shield "blocked".
-- **A knocked-down guard can fire as it rises** (`pit_knockdown_getup_64ppm.mp4`, half-sprawl aiming). Gunplay fixed this on their branch (`83429487`, `FighterFx.RISE_TICKS` 29), but it is not merged here and not re-filmed.
+- ~~A knocked-down guard can fire as it rises~~: fixed after 09:00 (gunplay `83429487` cherry-picked, re-filmed).
 - **Gunplay's shield sparks are not wired in.** `ReactLink.shield_test` exists to plug into gunplay's `GunFx.shield_test`, but the one wiring line waits for the merge.
 - **The burn death clip shows gunplay's old 2.1 m flame stars.** The cherry-pick of their thinner flames (`e1b22073`) conflicted and was aborted.
 - **Trip over bodies is hard to see live.** It is proven on the board, in unit tests and in the riot log (4 trips in 30 s), but one trip in a 300-person riot is hard to pick out by eye.
@@ -116,7 +132,7 @@ Each call is one value or flag. A is what is live now.
    - Sim: should the shield also stop the hp (replay re-bless)?
 4. **Knockdown** (`pit_knockdown_getup_64ppm.mp4`):
    - A: the guard aims while rising (this branch);
-   - B: fire held until fully up (gunplay `83429487`, merges in the morning).
+   - B: fire held until fully up (gunplay `83429487`; live on this branch since 09:00, `pit_knockdown_rise29_64ppm.mp4`).
 5. **Corpse variety** (`evidence/deaths_r7_64ppm_sheet.png`):
    - A: five distinct corpses;
    - B: one shared sprawl.
@@ -133,8 +149,7 @@ Each call is one value or flag. A is what is live now.
 ## Next steps (in order)
 1. After the merge with n-gunplay:
    - add `gun_fx.shield_test = link.shield_test` (one line in `fx_view`) and film `react_line` at 64 px/m;
-   - re-film the burn death with the thin flames;
-   - re-film `pit_knockdown_getup` and check the 29 `RISE_TICKS` frame by frame.
-2. The robot thug's power-down death (JOURNAL iteration 15 spec), with a pit clip at 32 and 64 px/m.
+   - re-film the burn death with the thin flames.
+2. A robot `Fighter.Kind` in the live fight, so the thug's power-down death plays in the arena, not only the dev pit.
 3. An idle bench of the riot p99.
 4. Check brutality's REQUEST 29 electro drop on a director reel (48 px/m).
