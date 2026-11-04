@@ -825,3 +825,55 @@ NEXT (iteration 12, in order):
 
 NEXT (iteration 12): unchanged from the list above (1 gunplay shield_test wiring on merge,
 2 idle bench, 3 a live knockdown survivor, 4 re-film the burn death if gunplay thins its stars).
+
+## Iteration 13 (07:55-08:30, BUILD; freeze 08:30)
+- 07:55 read JOURNAL NEXT, git log, other lanes' REQUESTs. New for me: showcase REQUEST 29
+  (-> brutality, cc human-reactions): KillShockFx's electro drop turns the standing rig copy
+  instead of laying it down. Gunplay answered my NEXT 4 (e1b22073: a burning human trails
+  three small flames instead of one 2.1 m star).
+- MILESTONE 8fe505a0: DeathPose.stiff_channels(rig, dir, fall), the stiff corpse's rig
+  channels (dead, c_sprawl, c_plank, plank_feet, hands down, CorpseScorch) as a public static;
+  _shock calls it (no pose change, goldens untouched). Unit test; unit 750/750.
+  REQUEST 29 ANSWER -> brutality (cc showcase): call `DeathPose.stiff_channels(rig, dir, fall)`
+  on the live rig before GibCut copies it (fall 0 -> 1 over your DROP_TICKS), then turn the copy
+  by `DeathPose.plank_turn(dir) * fall` instead of DROP_TURN and move it `dir * 0.35 * ppm * k`
+  as now. `dir` is rig-local (the shot in the victim's frame, as HumanReact gets it). I did
+  not edit KillShockFx (brutality owns the kill's look).
+- MILESTONE 6728cfe1: arena `--armored=k` takes an hp multiple (bare flag = the armored ratio
+  2.5 as before). Dev only, one line in arena_game.gd (the arena lane's dev file, still 201 lines).
+- NEXT 3 DONE, the knockdown get-up LIVE: `arena.tscn -- --arena --rigs --bot=gunplay
+  --weapon=rocket_launcher --start=pit --clean --armored=12 --ppm=32|64` (movie writer, fixed
+  60 fps): the first guard takes 2 rocket splashes and is blown flat each time (X sprawl along
+  the blast), lies, gets up, aims and fires again, and the 3rd rocket kills it (death_blast,
+  frame 962 in both runs: deterministic). Headless probes: molotov --armored (2.5) = 2-3
+  wounds, 0 deaths, no knockdown (burn family); rocket k=6 = 1 wound then death; k=12 = 3
+  wounds. Clips pit_knockdown_getup_32ppm.mp4 (10.5 s) + _zoom.png (2x crop, 2 fps),
+  pit_knockdown_getup_64ppm.mp4 (8 s) + _sheet.png. Honest read: the lie and the rise read at
+  both zooms; at 64 the guard is already aiming from a half-sprawl (row 2, frame 4 of the sheet):
+  the brain's fire resumes before the get-up pose ends. Candidate fix: hold the guard's fire
+  while ReactLink holds `knockdown` (needs the brain to read the view state = no, sim must not
+  read view; the right fix is FighterFx.down_ticks covering the get-up, gunplay's number).
+- FRICTION: cherry-pick of gunplay e1b22073 (the thinner burn flames) conflicts here
+  (fight_areas_art.gd diverged, test_fight_areas_clear.gd absent on my base): aborted, clean
+  tree. The burn-death re-film waits for the merge.
+- Gates on 6728cfe1: lint 13/13; unit 750/750 (on 8fe505a0; 6728cfe1 is a dev-only line);
+  scenarios 33/33. Bench not run (no idle window; the morning showcase bench is the record).
+- frames.json 15: the knockdown get-up zoom + 32 + 64 clips on top; dropped the electro board
+  sheet (superseded by the live along-shot film), the 32 px/m shield sparks and the electro
+  scorch 64 clip (the sheet stays).
+
+### Calls for the owner (adds)
+- Knockdown length (pit_knockdown_getup_64ppm.mp4): A, now: the guard can aim as it rises; B, it
+  cannot fire until fully up (REQUEST 30 -> gunplay: FighterFx.down_ticks + the get-up time).
+
+REQUEST 30 -> gunplay: a blast knockdown's FighterFx.down_ticks ends before human-reactions'
+get-up pose (human_reactions.json knockdown len_s), so a knocked-down guard fires from the floor.
+Either lengthen down_ticks by the get-up (about 0.5 s) or say the number and I match the pose.
+
+NEXT (iteration 14 / morning merge, in order):
+1. After the merge with n-gunplay: wire `gun_fx.shield_test = link.shield_test` (one line in
+   fx_view, see gunplay fx_view.gd:152) and film react_line at 64 px/m (a front round on the
+   riot cop sparks only); re-film the burn death with gunplay's thin flames (e1b22073).
+2. REQUEST 30 (knockdown fire hold), then re-film pit_knockdown_getup.
+3. The idle bench of riot p99 (CrowdReact 244 -> 150 us unbenched on an idle machine).
+4. Check brutality's answer to REQUEST 29 on a director reel (ch 06 electro at 48 px/m).
