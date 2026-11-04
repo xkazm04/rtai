@@ -4,13 +4,14 @@
 # -> masters/d6/perf-city/<label>.mp4 + evidence/perf/<label>.json.
 # Capture: Desktop Duplication (ddagrab) of the window's client rect (client_rect.ps1). gdigrab's
 # title mode grabs a D3D12 flip-model window black. The window is --always-on-top because the
-# desktop is shared (the owner works on it): anything above the window would be filmed.
+# desktop is shared (the owner works on it): anything above the window would be filmed. --screen 0
+# keeps it on the primary display (ddagrab output 0); a window on the second display failed.
 set -u
 L=$1; shift
 cd /c/Users/kazda/kiro/gtai-wt/d6-perf-city
 M=C:/Users/kazda/kiro/gtai-masters/d6/perf-city
 mkdir -p $M
-EXE=1 bash evidence/perf/fight.sh $L --always-on-top "$@" &
+EXE=1 bash evidence/perf/fight.sh $L --screen 0 --always-on-top "$@" &
 FP=$!
 sleep ${LEAD:-6}
 read X Y W H < <(powershell -NoProfile -ExecutionPolicy Bypass -File evidence/perf/client_rect.ps1)

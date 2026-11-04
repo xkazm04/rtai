@@ -134,6 +134,15 @@ during the riot/drive48vsync part.
 - Registry: the brief's rules (STANDARDS section 20, contention labels) governed every call here.
   There was no design fork, so no game-production registry subject was needed this iteration.
 
+### 14:16-14:20 FRICTION: real-time capture of HEAD failed twice
+- The exe window opened on the second display (client rect 402,1696). ddagrab output 0 covers
+  only the primary display, so the grab failed ("Picture size invalid"). Adding `--screen 0` did
+  not fix it on the retry. The frame log of that run is still valid: head-rt-vsync.json (vsync on,
+  no other Godot at start): p50 16.68, p99 19.93, 1 frame over 33 ms after 1 s (38.2).
+- Fix next: in client_rect.ps1, print the DXGI output index plus output-relative offsets (the
+  Screen bounds: primary 3440x1440 at 0,0; DISPLAY5 1920x1080 at 0,1440), or move the window with
+  SetWindowPos before grabbing.
+
 ## Calls for the owner (draft for REPORT)
 - perf-city-1, reel ch 18: the "lag" is 2.4 s + 0.9 s where no guard stands (between pit waves),
   not frame cost. Options: (a) re-cut ch 18 from a window with no wave gap (film edit only),
@@ -153,3 +162,6 @@ NEXT:
   and friends) with a --verbose run.
 - The first frame's 12 pipeline compiles in the arena-city path (35-58 ms): pre-warm like
   World._prewarm does for the city, if the owner sees the first second.
+- (14:20) Fix the film_rt.sh second-display capture (see the FRICTION above), then film the HEAD ch 18
+  window in real time (ticks 960-1860 start 15.9 s after the probe's first frame) as the "after"
+  of perf-city-1.
