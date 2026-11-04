@@ -25,6 +25,16 @@ var _draws: PackedInt32Array = PackedInt32Array()
 var _pipes: PackedInt32Array = PackedInt32Array()
 var _ticks: PackedInt32Array = PackedInt32Array()
 var _proc: PackedFloat32Array = PackedFloat32Array()
+## The rest of the frame, split at the draw: flush = probe end -> frame_pre_draw (deferred calls),
+## draw = pre -> post draw, pump = post draw -> the next frame's first _process (the OS event pump
+## and the physics step), physics = the physics frames' own _physics_process span.
+var _flush: PackedFloat32Array = PackedFloat32Array()
+var _draw: PackedFloat32Array = PackedFloat32Array()
+var _pump: PackedFloat32Array = PackedFloat32Array()
+var _phys: PackedFloat32Array = PackedFloat32Array()
+var _pre_us: int = 0
+var _post_us: int = 0
+var _phys_us: int = 0
 var _last_us: int = 0
 var _first: FirstMark = FirstMark.new()
 var _last_pipes: int = 0
@@ -47,6 +57,16 @@ func _ready() -> void:
 	RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	_first.process_priority = -4096  # before every other node: the frame's script work starts
 	add_child(_first)
+	process_physics_priority = 4096
+	_first.process_physics_priority = -4096
+	@warning_ignore_start("return_value_discarded")
+	RenderingServer.frame_pre_draw.connect(func() -> void: _pre_us = Time.get_ticks_usec())
+	RenderingServer.frame_post_draw.connect(func() -> void: _post_us = Time.get_ticks_usec())
+	@warning_ignore_restore("return_value_discarded")
+
+
+func _physics_process(_delta: float) -> void:
+	_phys_us += Time.get_ticks_usec() - _first.phys_us
 
 
 func _process(_delta: float) -> void:
@@ -54,8 +74,10 @@ func _process(_delta: float) -> void:
 	if _last_us > 0:
 		_sample((now - _last_us) / 1000.0)
 		if _wall[_wall.size() - 1] > HITCH_MS:  # live, so a --verbose log shows what came before
-			var at: Array = [_wall[-1], _proc[-1], _ticks[-1]]
-			Log.info("bench", "HITCH %.1f ms (process %.1f) at tick %d" % at)
+			var at: Array = [_wall[-1], _proc[-1], _flush[-1], _draw[-1], _pump[-1], _ticks[-1]]
+			Log.info(
+				"bench", "HITCH %.1f ms (process %.1f flush %.1f draw %.1f pump %.1f) tick %d" % at
+			)
 	_last_us = now
 	if quit_tick > 0 and world != null and world.context().clock.tick() >= quit_tick:
 		write()
@@ -68,6 +90,11 @@ func _sample(wall_ms: float) -> void:
 	@warning_ignore_start("return_value_discarded")
 	_wall.append(wall_ms)
 	_proc.append((Time.get_ticks_usec() - _first.us) / 1000.0)
+	_flush.append(maxi(0, _pre_us - _last_us) / 1000.0)
+	_draw.append(maxi(0, _post_us - _pre_us) / 1000.0)
+	_pump.append(maxi(0, _first.us - _post_us) / 1000.0)
+	_phys.append(_phys_us / 1000.0)
+	_phys_us = 0
 	_loop.append(world.frame_loop_ms() if world != null else 0.0)
 	_rcpu.append(
 		(
@@ -99,6 +126,10 @@ func write() -> void:
 		"wall_ms": Array(_wall),
 		"loop_ms": Array(_loop),
 		"process_ms": Array(_proc),
+		"flush_ms": Array(_flush),
+		"draw_ms": Array(_draw),
+		"pump_ms": Array(_pump),
+		"physics_ms": Array(_phys),
 		"render_cpu_ms": Array(_rcpu),
 		"render_gpu_ms": Array(_rgpu),
 		"draw_calls": Array(_draws),
@@ -152,6 +183,10 @@ func _hitches() -> Array[Dictionary]:
 						"wall_ms": snappedf(_wall[i], 0.01),
 						"loop_ms": snappedf(_loop[i], 0.01),
 						"process_ms": snappedf(_proc[i], 0.01),
+						"flush_ms": snappedf(_flush[i], 0.01),
+						"draw_ms": snappedf(_draw[i], 0.01),
+						"pump_ms": snappedf(_pump[i], 0.01),
+						"physics_ms": snappedf(_phys[i], 0.01),
 						"render_cpu_ms": snappedf(_rcpu[i], 0.01),
 						"render_gpu_ms": snappedf(_rgpu[i], 0.01),
 						"pipelines": _pipes[i],
@@ -189,6 +224,10 @@ static func _count_over(a: PackedFloat32Array, ms: float) -> int:
 class FirstMark:
 	extends Node
 	var us: int = 0
+	var phys_us: int = 0
 
 	func _process(_delta: float) -> void:
 		us = Time.get_ticks_usec()
+
+	func _physics_process(_delta: float) -> void:
+		phys_us = Time.get_ticks_usec()
