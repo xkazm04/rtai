@@ -81,6 +81,8 @@ func _process(_delta: float) -> void:
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
 	_place_long(rig)
 	_pose_melee(rig)
+	var blade: Vector2 = Vector2.from_angle(_sprite.global_rotation)
+	rig.hilt_dir = rig.torso.global_transform.basis_xform_inv(blade).normalized()
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)

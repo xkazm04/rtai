@@ -20,7 +20,7 @@ const TWO_HAND: Array[StringName] = [&"katana", &"plasma_sword", &"chainsaw"]
 
 ## False (`--soft-swing`): the night's sweep (RivetHeldView before), no smear.
 static var sharp: bool = not OS.get_cmdline_user_args().has("--soft-swing")
-## True (`--two-hand-grip`): the off claw rides a two-handed melee hilt (RigGrip.melee_off_hand).
+## True (`--two-hand-grip`): the off claw rides a two-handed melee hilt (RigGrip.melee_hilt).
 static var grip_on: bool = OS.get_cmdline_user_args().has("--two-hand-grip")
 
 
@@ -57,8 +57,9 @@ static func idle_judder(tick: int) -> Vector2:
 
 
 ## True for a melee weapon both claws hold (the off claw on the hilt). Off unless
-## `--two-hand-grip`: at 64 px/m the off claw folds in under the torso and does not yet read as a
-## claw on the hilt (combat-notes iteration 3, being tuned).
+## `--two-hand-grip`: the off wrist closes on the hilt (test_two_hand_hilt), but Rivet's off arm
+## ends in a torch tool, not a claw, which draws across the blade (dev/combat_notes/hilt_probe.gd);
+## it waits for the redesigned rig's off hand (combat-notes iteration 4).
 static func two_handed(weapon: StringName) -> bool:
 	return sharp and grip_on and weapon in TWO_HAND
 

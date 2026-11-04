@@ -42,9 +42,14 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 		side.upper.scale.y = p.arm_w
 		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
-	var behind: bool = h2.x < sh.x - 40.0
+	var behind: bool = h2.x < sh.x - 40.0 and not hilt_hand(rig, s)
 	side.upper.z_index = p.arm_below if behind else p.arm_above
 	side.fore.z_index = p.arm_below if behind else p.arm_above + 1
+
+
+## combat-notes: the off claw on a two-handed melee hilt (drawn side-on, over the torso).
+static func hilt_hand(rig: CutRig, s: int) -> bool:
+	return rig.two_hand_melee and s != rig.plan.gun_arm and rig.plan.gun_arm >= 0
 
 
 static func _pole(p: BodyPlan, s: int) -> Vector3:
@@ -75,7 +80,7 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 	var striking: bool = rig.strike_arm == s or rig.strike_arm == 2
 	if (striking or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
-	tgt = RigGrip.melee_off_hand(rig, s, tgt)  # combat-notes: both claws on a two-hand hilt
+	tgt = RigGrip.melee_hilt(rig, s, tgt, reach)  # combat-notes: both claws on a two-hand hilt
 	if rig.c_hands_up > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 30.0, sh.y * 0.55, 160.0), rig.c_hands_up)
 	if rig.c_tuck > 0.0:
@@ -102,8 +107,9 @@ static func _place(rig: CutRig, s: int, aim_arm: bool) -> float:
 		RigGait.place(side.upper, s2, e2, p.upper_draw)
 		RigGait.place(side.fore, e2, h2, d2)
 		return d2
-	var end1: bool = e2.distance_to(s2) / p.upper_len < p.endon_below and not aim_arm
-	var end2: bool = h2.distance_to(e2) / p.fore_len[s] < p.endon_below and not aim_arm
+	var side_on: bool = aim_arm or hilt_hand(rig, s)  # a claw on a hilt keeps its side cells
+	var end1: bool = e2.distance_to(s2) / p.upper_len < p.endon_below and not side_on
+	var end2: bool = h2.distance_to(e2) / p.fore_len[s] < p.endon_below and not side_on
 	_cell(rig, side.upper, p.endon_upper[s] if end1 else p.upper_part[s], 0, side)
 	_cell(rig, side.fore, p.endon_fore[s] if end2 else fore_cell, 1, side)
 	RigGait.place(side.upper, s2, e2, p.endon_upper_len if end1 else p.upper_draw)

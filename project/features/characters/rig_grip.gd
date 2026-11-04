@@ -45,6 +45,12 @@ const RECOIL_PX: float = 60.0
 ## at this height.
 const HILT_PX: float = 46.0
 const HILT_Z: float = -10.0
+## The gun claw brings a two-handed hilt in front of the chest: this share of the arm's reach
+## ahead (at rest, and at the strike's full reach), and this share of the way out toward the gun
+## shoulder (Rivet's shoulders are 316 part px apart, his reach 246: a hilt held at the gun side
+## is out of the off claw's reach, which is why it folded or pointed away in iteration 3).
+const HILT_FWD: Vector2 = Vector2(0.46, 0.56)
+const HILT_ACROSS: float = 0.08
 
 const BY_CLASS: Dictionary[StringName, int] = {
 	&"one_hand": Kind.ONE_HAND,
@@ -80,16 +86,20 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 
 
 ## combat-notes (owner note 2026-11-04, "player's hold of melee weapons"): with a two-handed
-## melee weapon (CutRig.two_hand_melee) the off claw closes on the hilt HILT_PX ahead of the gun
-## claw's hand this frame (the gun arm solves first), along the gun arm's line, at its height,
-## so both claws hold it one above the other.
-static func melee_off_hand(rig: CutRig, s: int, tgt: Vector3) -> Vector3:
+## melee weapon (CutRig.two_hand_melee) the gun claw holds the hilt in front of the chest
+## (HILT_FWD, HILT_ACROSS) and the off claw closes on the hilt HILT_PX ahead of the gun
+## claw's hand this frame (the gun arm solves first), along the blade (CutRig.hilt_dir), at its
+## height, so both claws close on the hilt one above the other.
+static func melee_hilt(rig: CutRig, s: int, tgt: Vector3, reach: float) -> Vector3:
 	var g: int = rig.plan.gun_arm
-	if not rig.two_hand_melee or g < 0 or s == g:
+	if not rig.two_hand_melee or g < 0:
 		return tgt
+	if s == g:
+		var gs: Vector3 = rig.plan.shoulder[g]
+		var fwd: float = lerpf(HILT_FWD.x, HILT_FWD.y, rig.c_reach)
+		return Vector3(gs.x + reach * fwd, gs.y * HILT_ACROSS, HILT_Z)
 	var gh: Vector2 = rig.sides[g].j_hand
-	var gs: Vector3 = rig.plan.shoulder[g]
-	var h: Vector2 = gh + (gh - Vector2(gs.x, gs.y)).normalized() * HILT_PX
+	var h: Vector2 = gh + rig.hilt_dir.normalized() * HILT_PX
 	return Vector3(h.x, h.y, HILT_Z)
 
 
