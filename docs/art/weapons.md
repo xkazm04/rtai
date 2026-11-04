@@ -145,6 +145,11 @@ crops of both grounds.
   THROWN row whose `projectile_fx` is `rocket` flies as the rocket cell with its exhaust lick, on the bottle's lob
   arc and ground shadow, nose along the travel, swelling 35 % toward the apex, at `projectile_k` 1.5. Until
   iteration 9 it drew the molotov bottle.
+- **Lob shadows** (`WeaponFxShell.shadow`): every lobbed round casts an ink ellipse 0.62 x 0.26 m (half axes)
+  times its size, shrinking 40 % at the apex, so the arc's height reads from above. The shell uses its
+  `projectile_k` at the scorch's 35 % ink; the small molotov bottle uses `BOTTLE_SHADOW_K` 0.8 (about 1 m across,
+  0.6 m at the apex) at 60 % ink (`BOTTLE_SHADOW_INK`), because at 0.55 and 35 % it vanished on cream. Before
+  iteration 10 the bottle cast a fixed 28 x 12 px dash, the same in pixels at every zoom.
 - **Energy muzzle flashes** need no change. The pale star inside its 13 px ink ring reads on cream at 32 px/m.
 - **Empty tubes** (`parts.empty` = `held_empty.png` for the rocket launcher and the mini-nuke): the held part
   with the striped warhead cut away just past the front band, and an inked open mouth. It uses the same canvas,
