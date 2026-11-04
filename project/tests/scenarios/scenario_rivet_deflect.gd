@@ -5,6 +5,8 @@ extends Scenario
 ## meet a slash's active ticks in front of him fly back as his (PlayerDeflect). Judged: at least
 ## one deflect, the swings dealt as `plasma_sword`, and the run replays identical (SIM-05).
 ## TST-05: a planted fault (the plasma sword row with deflect_m 0) must never deflect.
+## The bot keeps gunplay's stand-off at reach (melee_close_in false): the deflect is judged on
+## rounds flying in, not on the walk into claw reach that scenario_rivet_city_melee judges.
 
 const LIMIT_TICKS: int = 40 * SimClock.TICK_RATE
 const LOADOUT: Array[StringName] = [&"plasma_sword"]
@@ -13,7 +15,7 @@ const EVIDENCE_FILE: String = "rivet-deflect-telemetry.json"
 
 func run(_tree: SceneTree) -> String:
 	var s: ArenaSession = _open(Events, Data)
-	s.world.loop().set_input(ArenaArsenalBot.new(s.stage, s.actions))
+	s.world.loop().set_input(_bot(s))
 	s.world.loop().start_recording()
 	var tel: Dictionary = _play(s)
 	var log: ReplayLog = s.world.loop().finish_recording()
@@ -72,7 +74,7 @@ func _planted() -> String:
 	var t: MeleeTable = MeleeTable.weapon(&"plasma_sword")
 	t.deflect_m = 0.0
 	s.stage.pilot._melees[&"plasma_sword"] = PlayerMelee.new(t)
-	s.world.loop().set_input(ArenaArsenalBot.new(s.stage, s.actions))
+	s.world.loop().set_input(_bot(s))
 	var tel: Dictionary = _play(s)
 	s.world.free()
 	bus.free()
@@ -80,3 +82,9 @@ func _planted() -> String:
 	if tel["deflects"] > 0:
 		return "the planted deflect_m 0 sword still deflected: %s" % tel
 	return ""
+
+
+static func _bot(s: ArenaSession) -> ArenaArsenalBot:
+	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
+	bot.melee_close_in = false
+	return bot

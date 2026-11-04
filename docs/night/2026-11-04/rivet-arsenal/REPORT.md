@@ -1,6 +1,8 @@
 # REPORT: lane rivet-arsenal (branch `n-rivet-arsenal`), night run 2026-11-04
 
-DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of record, the last clips, the frames.json order.
+Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merged n-gunplay (b11fa9e2) and n-weapon-art (a957f888) work; nothing is pushed.
+
+**Read first:** call 1 (quest 1 on the cast rigs), then the owner page `M\frames.json` top to bottom (newest and best first).
 
 **Scope (the owner, 00:05):** "Equiped design on player". Rivet holds, carries and uses every weapon, in the live game.
 
@@ -13,9 +15,10 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
-| lint | 13/13 (716 files) | d6618606 |
-| unit | 813/813, exit 0 | d6618606, `E/it9f-unit.log` |
-| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | d6618606: 36/37 on the full run (`E/it9f-scenarios.log`). The red one is scenario_city_chase's 2 ms nav budget under load, the known flake; it passes alone (`E/it9f-city-chase-alone.log`) |
+| lint | 13/13 (717 files) | 37dbfeab and 919adc96 (the last code change: the bot's side-step keeps its side; the rivet scenarios 9/9 on it, `E/it10c-rivet-scenarios.log`; no other scenario or unit test drives that bot) |
+| unit | 814/814, exit 0 | 37dbfeab, `E/it10b-unit.log` |
+| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 37dbfeab, `E/it10b-scenarios.log` |
+| evidence run | lint, unit 814, parity bit-exact (mutation caught at step 629) PASS. Scenarios 36/37 in that run: scenario_rivet_deflect failed because the run overlapped the bot edit; it was fixed in 37dbfeab and passes in the scenario row above. The selftest has look goldens 11/11 and block 5/5, but exits 1 on the accent audit: the known blood-flicker vermilion class, the same findings as on n-gunplay (gunplay's) | 4cc6e8a0, `E/it10-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
 
@@ -39,7 +42,8 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
   - the flamer's tank rides on Rivet's back and the hose follows;
   - the rocket tube shows empty after the shot (weapon-art's `empty` part);
   - the molotov's rag lights on the draw and on each next bottle.
-- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `Mrames\city-block-kinetic-held-32ppm-3x.png`.
+- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `M\frames\city-block-kinetic-held-32ppm-3x.png`.
+- Since the n-weapon-art merge of iteration 10 (8465d548), every held weapon but three (molotov, plasma sword and flamethrower, which already print light) uses `held_small` under 56 px/m: the long guns, both tubes (incl. the empty tube) and the melee weapons. Seen on the city block at 32 px/m in a live fight (plasma rifle, ray gun, rocket launcher, electro gun; 3 waves, 7 kills, 8 switches, 0 deaths, 0 script errors): `M\clips\city-block-long-guns-held-32ppm-x2.mp4` and `M\frames\city-block-long-guns-held-32ppm-3x.png`. The rocket tube reads light with its warhead. The electro gun still prints mostly dark at 32 px/m (weapon-art's call 14). The teal tip next to a long barrel is Rivet's torch forearm, his one doctrine teal; it shows when the off arm rides the barrel.
 - Clips:
   - `M\clips\arena-arsenal-cycle-pistol-rifle-rocket-molotov-64ppm-x2.mp4`
   - `...cycle-cannon-ray-flamer-64ppm-x2.mp4`
@@ -58,6 +62,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
   - electro baton: strikes;
   - chainsaw: a committed 3-bite grind, then the rip;
   - plasma sword: slashes, a full spin, and the timed deflect during any slash's active ticks.
+- On the city block (since 37dbfeab): with a melee weapon drawn, the arsenal bot closes into claw reach and swings there. Before that, it held gun reach and cut air (407 swings, 0 hits in 15 s). The live fight: `M\clips\city-block-melee-katana-chainsaw-baton-32ppm-x2.mp4` (30 s, 3 waves, 5 cops dead in red blood, 0 deaths, 0 script errors) and `M\frames\city-block-melee-32ppm-3x.png` (the chainsaw grind, the katana pinning a cop on a kerb car). Close-up at 64 px/m: `M\clips\city-block-melee-64ppm.mp4` (10 s, 2 kills) and `M\frames\city-block-melee-64ppm-2x.png` (the baton, the katana over a dead cop, the chainsaw grind as a cop falls). Scenario: scenario_rivet_city_melee (2 guards in 30 s, the replay identical, the planted stand-off drops none).
 - Clips in `M\clips\`: `arena-rocket-empty-tube-reload-64ppm-x2`, `arena-molotov-lob-claw-cops-32ppm-x2`, `arena-chainsaw-grind-64ppm`, `arena-katana-claw-cops-64ppm`, `arena-plasma-sword-claw-cops-64ppm`, `arena-plasma-deflect-64ppm-quarter-speed`, `arena-flamer-sway-64ppm`, `arena-claw-shock-64ppm`.
 
 ### 4. Switching and pickups
@@ -81,7 +86,8 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 
 ### 6. The real game paths
 - Arena: on the rigs by default (`--sprites` for the old look).
-- City proving block: `--arena=city --bot=arsenal`, in `M\clips\city-block-arsenal-fight-32ppm.mp4` (3 waves, 7 kills).
+- The thrown and hose classes on the city block: `M\clips\city-block-molotov-burn-32ppm-x2.mp4` and `M\frames\city-block-molotov-burn-32ppm-3x.png`. They show the flamer carried on its back tank, the molotov's lit rag, and a guard set ablaze by the bottle, then dead in red blood. The flamer does not fire in that window.
+- City proving block: `--arena=city --bot=arsenal --loadout=...`. Three live fights: the kinetic guns (`city-block-kinetic-held-32ppm-x2`), the long guns and the tube (`city-block-long-guns-held-32ppm-x2`: 3 waves, 7 kills) and the melee weapons (`city-block-melee-katana-chainsaw-baton-32ppm-x2`: 3 waves, 5 kills).
 - Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fightcam-32ppm.mp4` (8.3 s: both cop waves die in red blood) and, at 64 px/m, `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
 
 ## Calls for the owner
@@ -106,6 +112,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
     Clip: `arena-chainsaw-grind-64ppm`. A ring wide enough to clear the art (about 1.5 m) makes the claw whiff, so it was not taken.
 
 ## Open / known flaws
+- The arsenal bot's melee walk-in on the city block is a straight line plus side-steps, not a nav path. With the plasma sword it can stall pressed on a crate, so in the flamer, molotov and sword run wave 2 never falls (2 kills in 30 s). A nav-grid walk-in is the fix; it was not done tonight. It is the bot only: a player walks round the crate.
 - The claw cops still read crowded in the chainsaw grind at 64 px/m. There was no enemy-ai lane tonight, so this lane added a stand-off to its own station (d6618606): the cops keep 1.25 m from Rivet and 1.0 m apart, and a cop just hit is not moved. The drawn rigs are wider than the sim bodies, so in contact they still overlap (call 14). scenario_rivet_chainsaw's ">= 3 kills" bar is met only because two hp-4 cops stand stacked and one grind kills both. A wider spacing separates them and drops the count to 2. The bar was left unchanged.
 - At 64 px/m quest 1's dialogue box covers the lower third. The dev fight cam (`quest1_clip.gd --cam=fight`) now lifts the framed point above it (a67bff25).
 - No boss rig: quest 1's boss, Mertz, keeps the cast view's drawing under `--rigs`.
