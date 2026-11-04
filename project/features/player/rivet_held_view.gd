@@ -39,6 +39,7 @@ var _tank: Sprite2D = null
 ## The tank's hose to the wand: an ink line with a cream core.
 var _hose: Array[Line2D] = []
 var _rag: RagLight = null
+var _carry: RivetCarryAngle = RivetCarryAngle.new()
 
 
 func _ready() -> void:
@@ -76,6 +77,7 @@ func _process(_delta: float) -> void:
 	_sprite.global_rotation = hand.global_rotation
 	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
+	_place_long(rig)
 	if pilot.wielding() and pilot.melee.combo.ground > 0:
 		_grind(rig)
 	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
@@ -95,6 +97,28 @@ func _swap(id: StringName, weapon: StringName) -> void:
 	_sprite.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 	add_child(_sprite)
 	_shown = id
+
+
+## A long gun or a tube: carried across the front of the body, and always beside the helmet.
+func _place_long(rig: CutRig) -> void:
+	var across: bool = RivetCarryAngle.applies(rig.grip) and not rig.aiming and not pilot.wielding()
+	var fwd: Vector2 = rig.torso.global_transform.x.normalized()
+	var g: Vector2 = _sprite.global_position
+	_sprite.global_rotation += _carry.step(
+		across, fwd, g, rig.torso.global_position, _sprite.global_rotation
+	)
+	if RivetCarryAngle.applies(rig.grip) and not pilot.wielding():
+		_sprite.global_position += _beside(rig)
+
+
+## The shift that puts a long gun or a tube beside Rivet's helmet (RivetCarryAngle.beside_head).
+func _beside(rig: CutRig) -> Vector2:
+	var head: Sprite2D = rig.head_spr
+	var head_half: float = head.texture.get_width() * absf(head.global_scale.x) * 0.5
+	var gun_half: float = _sprite.texture.get_height() * absf(_sprite.global_scale.y) * 0.5
+	var at: Vector2 = _sprite.global_position
+	var rot: float = _sprite.global_rotation
+	return RivetCarryAngle.beside_head(at, rot, head.global_position, head_half, gun_half)
 
 
 ## The gun's reload as the rig's phase + fraction (rivet_arsenal.json out/in/cock), or -1.
