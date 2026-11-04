@@ -26,6 +26,9 @@ const BURNT_SMOKE_S: float = 4.5
 const BURNT_PUFFS: int = 5
 ## The burnt body is near black itself: its soot is this much fainter, so the legs read on it.
 const BURNT_SOOT: float = 0.6
+## The electro body's navy trousers sank into the full blot at 48 px/m (the legs read short,
+## showcase r16): its blot and core are this much fainter; the burn star keeps BURN.
+const SHOCK_SOOT: float = 0.6
 const Z: int = -20
 
 var _rig: CutRig = null
@@ -72,11 +75,12 @@ func _draw() -> void:
 		mid = 0.0
 		draw_set_transform(Vector2.ZERO, PI / 2.0)
 	var half_l: float = (FEET_PX + HEAD_PX) * 0.5
-	draw_colored_polygon(_blot(mid, half_l * _amount, HALF_W * _amount, 0), _a(SOOT))
-	draw_colored_polygon(_blot(mid, half_l * 0.6, HALF_W * 0.55, 7), _a(CORE))
+	var soft: float = BURNT_SOOT if _burnt else SHOCK_SOOT
+	draw_colored_polygon(_blot(mid, half_l * _amount, HALF_W * _amount, 0), _a(SOOT, soft))
+	draw_colored_polygon(_blot(mid, half_l * 0.6, HALF_W * 0.55, 7), _a(CORE, soft))
 	if not _burnt:
 		for i: int in BURNS:
-			draw_colored_polygon(_burn(i, mid, half_l), _a(BURN))
+			draw_colored_polygon(_burn(i, mid, half_l), _a(BURN, 1.0))
 	_smoke(_rig.t_alive - _t0)
 
 
@@ -91,8 +95,8 @@ func _amount_now() -> float:
 	return _rig.c_plank
 
 
-func _a(c: Color) -> Color:
-	return Color(c, c.a * _amount * (BURNT_SOOT if _burnt else 1.0))
+func _a(c: Color, soft: float) -> Color:
+	return Color(c, c.a * _amount * soft)
 
 
 ## An irregular blot (ink edge, not a clean ellipse) centred `mid` along x.
