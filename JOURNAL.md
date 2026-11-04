@@ -425,3 +425,26 @@ NEXT (iteration 6), in order:
   rather than a new generated sheet (a Codex sheet needs the layout template + slicer + silhouette lock, about an
   hour, and risks pivots that do not fit ThugPlan). Alternative: a generated "street-gang robot" sheet through
   the d5-close slicer, one art_dir swap. Same call for SWAT (derived from the cop cap/torso).
+- MILESTONE 04:08 electro bolt (e00fe838, NEXT 2): `arc_0..2` redrawn as jagged lightning (6 sharp kinks on
+  alternating sides with seeded jitter, tapering to the head, mitre gaps filled) with two kinked forks leaving
+  forward and outward. First try (12 kinks) read as a spring, second (uneven spacing) clumped; the third reads
+  as lightning. Live: `--rigs --ppm=64 --bot=arsenal --loadout=electro_gun --start=pit`, ticks 621/650:
+  `it6-electro-bolt-ab-64ppm.png` (before = the it4 live frame), clip `it6-electro-bolt-64ppm.mp4`. A chain
+  between two guards is still not filmed (no station 1.5 m apart; the rack took that slot this session).
+- MILESTONE 04:15 the weapon wall (7629aae7, NEXT 3): station `weapon_art_rack` in my own
+  `arena_stations/weapon-art.json` + `ArenaWeaponRack` hook + `WeaponRackView` (my folder): the 16 weapons hung
+  muzzle up on a paper-wash board along the hub's north wall (x -2.5..12.5, y -3.15..-4.95), brief order,
+  pickup side views at drawn length. Render only (nothing stepped/hashed), `--weapon-rack=off`. Live frame
+  `it6-weapon-wall-hub-64-32ppm.png`: at 64 px/m each gun reads (rocket's vermilion nose, flamethrower tank,
+  katana, chainsaw); at 32 px/m the wall reads as the arsenal with the cops in front for scale. The first pass
+  had a paper board that merged with the wall paper and crossed the hub wall: now a 0.14 ink wash, 1.8 m tall.
+  FRICTION: the hub is crowded (gunplay's dummies at y -3, react_line y 1.5, claw cops y 4.4); the north band is
+  the one free strip, so the dummies stand in front of the wall's foot. At 128 px/m the camera centres on
+  Rivet at the start and the wall is off screen.
+- NEXT 4 closed by showcase (their glue cd4b518f: FxView skips GunFx's magazine bits when WeaponMagView is live;
+  `mag_drop: false` rejected, it breaks test_gun_fx). Nothing to do here.
+- FRICTION: a Bash call that the sandbox refuses (an `rm -f $S/*`) drops the WHOLE command, including a python
+  edit earlier in it; the next render showed the old board. Use `"${S:?}"/*` and keep edits in their own call.
+- Registry rules applied: sprite-and-atlas-production (looks derived from the same sheets, part sizes and pivots
+  unchanged), depth-ordered-layered-art (the wall under the actors, z actors-2), motion-quality-gating (the bolt
+  judged in a live fight on fixed ticks against the it4 frame). No deviation.
