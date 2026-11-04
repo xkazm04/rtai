@@ -35,6 +35,9 @@ var port: CollectCallWorld
 ## Lane gunplay: the shared hit feel's flash, drawn as an inked impact star behind the struck
 ## figure (null in quest 1 until a gun is wired).
 var hit_link: HitLink = null
+## rivet-arsenal (dev --rigs in quest 1): the cast rigs draw Rivet and the fighters, so this view
+## keeps only the allies, the patrol, the hiding peek and the Hauler's marks.
+var fighters_on_rigs: bool = false
 
 
 func _process(_delta: float) -> void:
@@ -49,6 +52,10 @@ func _draw() -> void:
 	if stage.heat.level > 0:
 		for p: Vector2 in stage.patrol_pos:
 			_sprite("cop", p, _size(&"cop"), Vector2.DOWN)
+	if fighters_on_rigs:
+		if stage.hidden_in == "":
+			_hauler_marks()
+		return
 	for h: Fighter in stage.arena.hostiles:
 		_impact(h)
 		if h.kind == Fighter.Kind.BOSS:

@@ -68,7 +68,8 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
-	view.cast_view.visible = false
+	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
+	view.cast_view.visible = not (p_stage is ArenaStage)
 	return true
 
 
