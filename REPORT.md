@@ -13,7 +13,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - The look goldens were re-blessed once, with a decisions line.
    - Frame cost was CONTENDED, so the riso delta is unresolved below the ~0.1 ms noise. Statically it adds 2 screen fetches plus about 5 lattice fetches, with no new full-screen pass.
 2. **The alley stage** (`--arena=alley`, 48 px/m). It's an east-west lane north of the range: asphalt, puddles, dumpsters, bag piles, fire escapes from above, roofs with a brick lip, and a chain-link fence. Cop waves come in from both ends (AlleyHook).
-   - Evidence: `alley-fight-vs-r2a6-48ppm.mp4` (20 s beside r2_a6).
+   - Evidence: `alley-it7-ab-48ppm-vs-r2a6.png` (iteration 3 | iteration 7 | target) and `alley-fight-vs-r2a6-48ppm-it7.mp4` (20 s beside r2_a6). Iteration 7 flipped the value structure toward the target: a light concrete lane between dark roofs and a dark brick lip, dark dumpsters, grey pools, bags and litter; every fill is `alley_decor.json tones`; bags are tied sacks, and the south side passage is closed (hub cops had queued in it).
 3. **Weapon FX in the sheet's colours** (r2_w4).
    - The colours: muzzle yellow-orange; blast orange-yellow with a white core; arc violet-white; plasma white-hot with gold; ray acid green; shards pale crystal with a cyan-white glint. The tracer is its own hot-yellow family.
    - No blood red and no teal in any of them. In the live fight the cells draw on their own canvas under `look_d5_fx`; `fx_colour_dir ""` switches back to ink.
@@ -27,7 +27,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - The hold (`hip_belt`): hip-held, with a box on his back and a brass ammo belt.
    - The art was generated from text plus a non-gun style reference, because moderation blocks gun edits.
    - It is in the armory, the weapon wall and `--weapon=gatling`.
-   - Evidence: `gatling-128ppm-vs-r1w6.png`, `gatling-range-32ppm.mp4` (mean TTK 0.25 s over 13), `gatling-pit-32ppm.mp4` (3 waves, 8 kills, 0 deaths), `gatling-belt-tracer-ab-128ppm.png`.
+   - Evidence: `gatling-128ppm-vs-r1w6.png`, `gatling-pit-32ppm.mp4` (3 waves, 8 kills, 0 deaths), `gatling-belt-tracer-ab-128ppm.png`.
 7. **Pickups lie inside a dashed paper loot ring** over a faint wash, as in r2_w8, instead of an opaque paper disc. `--pickup-disc=on` brings the disc back for A/B.
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png`.
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
@@ -56,7 +56,7 @@ The last full evidence gate was green on 27c48341.
 - **FX colour vs ink:** `fx_colour_dir` (`fx-colour-reel-ab-32ppm.mp4`).
 - **Held size:** `held_size_ref` 1.2 vs off (`held-size-ab-cast-merge.png`).
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
-- **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-range-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
+- **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
 ## Next steps
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL).
