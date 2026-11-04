@@ -708,3 +708,29 @@ NEXT (iteration 9, in order):
   the shooter), head past the shoulders, turned 0.3 rad, over a soot scorch with a burn star and
   smoke; B, the old plank (feet behind, head over the shoulders: reads as standing from above);
   C, A without the scorch (CorpseScorch.ensure off: the body alone, blood only).
+- 06:57 evidence on d8933ebc (`--no-bench --allow-dirty`, only untracked evidence/ clips): lint
+  13/13, unit 746/746, scenarios 33/33, parity bit-exact (mutation caught at 629) PASS; selftest
+  FAIL: look goldens 5/11 (worst 2.23), block 4/5, plus the known accent rows (48 px/m
+  vermilion / blood on vehicles: the gunplay / d5-city blood flicker since iteration 5).
+- CORRECTION to iteration 8: the look goldens do NOT drift. A second selftest run gave the same
+  numbers exactly. Bisected in a throwaway worktree (scratch-hr/bisect, removed): f4ef483f
+  11/11 + 5/5, 1982044c 11/11 + 5/5, 3e7cae59 (the riot shield slab) 5/11 + 4/5, the tip's
+  numbers. The iteration 8 "shield off" run was the wrong test (probably not re-imported).
+  Compared golden vs new d5@64: the diff is the riot squads' slab shields (intended).
+- MILESTONE 0f6d3c9b: re-blessed only the 7 frames the slab moved (d4@32/48/64, d5@64-ov,
+  auto@56/64-ov, block auto@64-ov-night), left the 9 within tolerance alone (the bless writes
+  all 16; restored 9 per path). After: look 11/11 (worst 1.87), block 5/5. Decisions line.
+  FRICTION: the bless writes every frame, so a minimal re-bless is bless then restore per path.
+- 07:08 session close. All code committed (tip 0f6d3c9b + this journal). frames.json 15 entries,
+  each file present. No Godot process of mine running (the ones in tasklist are other lanes').
+
+NEXT (iteration 10, in order):
+1. On the merge with n-gunplay: wire `gun_fx.shield_test = link.shield_test` where the gunplay
+   hook and ArenaRigs meet (one line), then film react_line at 64 px/m: a front round on the
+   riot cop sparks only, no ink burst.
+2. Bench on an idle machine under bench.lock: the riot p99 after CrowdReact 244 -> 150 us
+   (one export + 3 x 60 s, about 13 min).
+3. The burn death and the knockdown get-up are the least seen families: film each in the live
+   pit (flamethrower / rocket, `--rigs --bot=gunplay --weapon=<id> --start=pit`; the death log
+   line gives the frame to cut at) and judge them like the electro corpse.
+4. A street startle in the live city (iteration 7 NEXT 3).
