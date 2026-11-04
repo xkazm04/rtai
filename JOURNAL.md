@@ -137,7 +137,9 @@ NEXT (iteration 4, in order):
    sim_shots._scare with a radius), CityCore::scare in native/sim_core (spawn.cpp next to
    strike), binding (city_sim.cpp/.h bind_method), CitySimBackend abstract + CitySimNative;
    `scons platform=windows arch=x86_64 target=template_debug` + template_release, then
-   `--import`; parity gate (`node tools/tests/run_parity.mjs`). Then the arena on the city block
+   `--import` (my native/godot-cpp is an empty submodule: build against int-day's
+   native/godot-cpp, which has the prebuilt libs; CityCore::scare(x, y) ALREADY exists in
+   projectiles.cpp, private: make it public + bind it, that is all the native work); parity gate (`node tools/tests/run_parity.mjs`). Then the arena on the city block
    calls it on every shot Rivet fires and every landing (ArenaSession/ArenaStage when
    `city != null`; it IS a sim write, so it goes through the input-driven tick and the replay
    golden may move: a dated decisions line + re-bless). Clip: `--arena=city --rigs --bot=gunplay`
@@ -152,3 +154,15 @@ NEXT (iteration 4, in order):
 5. Robot thug (brief item 5): own skeleton, sparks/oil per hit, light.
 6. SWAT look: none in d5-cast (RigVariant.crowd 0..7; CrowdAtlas sizes by CROWD_COUNT). Write a
    REQUEST to whoever owns the cast tonight, or add index 8 arena-only with an atlas clamp.
+- FRICTION 02:20: the evidence gate's selftest showed look goldens 8/11 (d4@64, auto@56, auto@64
+  off on the far share). Bisected by disabling the CrowdReact hook: 11/11 worst 0.02, so mine.
+  Side-by-side of d4@64 (scaled to the golden size): only the junction riot's corpses differ (the
+  standard death poses along the round instead of the generic X sprawl). Deliberate: RE-BLESS
+  592b5ae0 + decisions line. After: look 11/11 (worst 0.00), block 5/5.
+- Gate 02:30 on 592b5ae0 (`node tools/evidence/run.mjs --no-bench --allow-dirty`): lint 13/13,
+  unit 722/722, scenarios 30/30, parity bit-exact (planted mutation caught at 629), selftest FAIL
+  only on the accent audit: NEW 32 px/m vermilion on vehicles 4 px + on cop 4 px. NOT mine: same
+  with my hook off; showcase traced it to gunplay's blood flicker round (their REQUEST 7 ->
+  gunplay, debt rows to move). Bench not run (render-only lane work this iteration).
+- Lesson: never edit a tracked file while the evidence run is going (it flags "tree changed
+  during run" and fails the unit kind even at 722/722).
