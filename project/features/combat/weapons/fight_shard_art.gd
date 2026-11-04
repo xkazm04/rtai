@@ -8,6 +8,9 @@ extends RefCounted
 const LEN_M: float = 0.62
 const WIDE_M: float = 0.2
 const TRAIL_PX: float = 7.0
+## Stuck shards stay drawn on a corpse. Off: brutality's burst kill pops the body and flies its
+## own shards out (KillBurstFx), so ours must not hang in the red mist (REQUEST 30, brutality).
+const STUCK_ON_CORPSE: bool = false
 
 
 static func shard(ci: CanvasItem, s: Shot, tick: int) -> void:
@@ -43,6 +46,8 @@ static func _trail(ci: CanvasItem, s: Shot) -> void:
 ## the body against its flight, so the corpse reads as hit by the swarm. View only.
 static func stuck(ci: CanvasItem, fx: GunFx, arena: CombatArena) -> void:
 	for h: Fighter in arena.hostiles:
+		if not shows_stuck(h):
+			continue
 		for v: Vector3 in fx.stuck_shards(h.id):
 			var dir: Vector2 = Vector2.from_angle(v.z)
 			var root: Vector2 = h.pos + Vector2(v.x, v.y)
@@ -54,3 +59,8 @@ static func stuck(ci: CanvasItem, fx: GunFx, arena: CombatArena) -> void:
 			)
 			ci.draw_polyline(gem, Ink.INK, 5.0, true)
 			ci.draw_colored_polygon(gem.slice(0, 4), Ink.CREAM)
+
+
+## Whether the view draws the shards stuck in `h` (GunFx keeps them for brutality either way).
+static func shows_stuck(h: Fighter) -> bool:
+	return STUCK_ON_CORPSE or h.alive()
