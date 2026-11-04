@@ -1,6 +1,6 @@
 # REPORT: lane gunplay (`n-gunplay`), night 2026-11-04
 
-DRAFT, written at iteration 11 (06:50). The report phase checks the head, the gates and the clips again.
+Final, iteration 18 (REPORT, 08:40). Code head 83429487; branch head is docs only. Every path cited below was checked to exist at 08:41.
 
 Scope: weapons and projectiles, the weapon table, the shared hit-feel module, aiming, enemy fire and
 its tells, `CombatArena`'s weapon behaviour, the range station. `MASTERS` below means
@@ -51,6 +51,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 | Fire patches print an ink char (a splash burn: soot wedges, floor hatch, a broken edge), and the burnt ground stays 15 s after the fire; a rocket blast scorches the ground it hit (view only) | `fight_scorch.gd`, `fight_scorch_art.gd`; `test_fight_scorch*.gd`; `MASTERS/molotov_scorch_ab_city_32ppm.mp4` (+ `.png`), `MASTERS/camfight11_molotov/`, `MASTERS/rocket_scorch_ab_city_32ppm.png`, `MASTERS/camfight11_rocket/` |
 | A body that falls in a fire patch stays visible: 0.1 s after the kill the flames within 2.2 m shrink and are pushed off it (open by 0.4 s, while brutality's char silhouette still stands), so the fire burns in a ring round the charred corpse (showcase REQUEST 27, the director cut's molotov chapter; view only) | `FightAreasArt.clear/away`, `test_fight_areas_clear.gd`; `MASTERS/molotov_corpse_clear_ab_48ppm.mp4` (showcase ch 07 before / after, same sim), `MASTERS/ch07_molotov_open_64ppm/` |
 | A burning human stays readable: three small flames (0.3x the fire loop) trail off his back against his panic run, where one 2.1 m flame centred on him hid the body (human-reactions NEXT 4; view only, same sim) | `FightAreasArt.burn_flames`, `test_fight_areas_clear.gd`; `MASTERS/burning_human_ab_48ppm.mp4` (arena pit, before over after), `MASTERS/burn_after_64ppm/`, city block 32 px/m `MASTERS/city13_flamethrower/` |
+| A knocked-down human cannot shoot from the half-sprawl: he stays held 29 ticks (0.48 s) after his 0.9 s lie while human-reactions' view plays the rise (human-reactions REQUEST 30; `FighterFx.RISE_TICKS`, 0 = old). Stuck homing shards are no longer drawn on a corpse, so brutality's burst kill pops clean (brutality REQUEST 30; `FightShardArt.STUCK_ON_CORPSE`). No clip yet: human-reactions re-films the get-up | `test_fight_areas.gd` (rise window), `test_gun_fx.gd` (shards); 83429487, 8ea3a2e5 |
 | The range station: `data/tables/arena_stations/gunplay.json` (`--weapon=<id> --bot=gunplay`, `--cam=fight`) | `WT/project/data/tables/arena_stations/gunplay.json` |
 | Other lanes' REQUESTs answered: brutality 1/12, human-reactions 1/2/3 (vertical blood bars, spray floor, `GunFx.shield_test`), showcase 5 (the rocket body and smoke trail; showcase 3, Rivet's hit flash, landed from human-reactions), rivet-arsenal 12 (the aim distance) | JOURNAL "Answers to REQUESTs" lines |
 | Dev capture camera `--cam=fight` (pit only; view only, the sim is identical) | `fight_cam.gd`; `MASTERS/fightcam_hand_cannon_64ppm_ab.mp4` |
@@ -73,14 +74,36 @@ Each one is a single value. The default stands until you answer.
 - The fight camera is a dev flag in the pit only. The city camera stays on Rivet (see gunplay-12).
 - Quest 1 has no `GunHand` yet, so the quest fight keeps its evening pistol path. `LiveInput.px_per_m` is not wired there.
 - The arena's default weapon is still Gloria. A table gun is armed only with `--weapon=<id>`, so that the arena scenarios do not move.
+- Merge notes for the Director: human-reactions' get-up and brutality's burst kill read right only with n-gunplay 83429487 / 8ea3a2e5 merged. Brutality REQUEST 29 (molotov corpse under the patch flames) is answered by 0b2541a9 + aa471560 (flames shrink, fade and move off a body, from gunplay's own dead list); recheck it in the merged-main re-film in case a brutality kill drops the body from that list while its print stays.
+
+## What blocked me, and for how long
+
+Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost time:
+
+- The bench lock was held by another lane once (05:05, iteration 7), so I skipped that round's bench. About 0 minutes lost; the next round benched.
+- Every bench run shared the machine with five other lanes rendering. So the riot numbers are all CONTENDED. That cost the idle number of record, not time.
+- Tooling, about 10-15 minutes all night: `run_unit.mjs` needs `GODOT_BIN` exported (otherwise it reports "import exit -1"); `--arena` is not a boot arg (the arena runs as `res://dev/arena/arena.tscn -- ...`); Git Bash `timeout` does not kill a windowed Godot child (two hung renders, killed by PID); Windows Python needs `C:/` paths and `newline=''`.
+- The arena molotov never landed at first (01:31: `StagePilot` overrode the throw), and the first impact sweep was one tick short of the body. Both were fixed the same iteration.
+- Iterations 15-17 (08:0x-08:33) built no code because a full unit run does not fit before the 08:30 freeze. In iteration 16 I misread brutality REQUEST 29 as unanswered; it was already done (0b2541a9 + aa471560), and JOURNAL corrects it.
+
+## Next steps (in order)
+
+1. The Director merges n-gunplay. human-reactions' get-up and brutality's burst kill need 83429487 / 8ea3a2e5.
+2. Re-film on merged main: the molotov patch beside a brutality kill (check that a brutality kill never drops the body from `FightAreas`' dead list while its print stays), and human-reactions' get-up with the 29-tick rise hold.
+3. Take the idle riot + drive bench of record on merged main, with no other lane running (`node tools/bench/run.mjs`). Expect the blood to be about 1 % of the riot p99. The remaining riot cost is not the blood, so it needs its own bisect.
+4. Wire `GunHand` and `LiveInput.px_per_m` into quest 1, so the quest fight fires the table guns instead of the evening pistol path.
+5. Split the city camera's view point from the sim focus (`CitySystem.focus`), so the fight camera (gunplay-12) can leave dev and serve the city.
+6. Make a table gun the arena default instead of Gloria, and re-bless the arena scenarios on purpose.
+7. If the burn re-film reads thin, raise `BURN_SCALE` from 0.3 to 0.38. That one value is the alternative.
+8. Apply the owner's answers to gunplay-7 to gunplay-13. Each one is a single value.
 
 ## Gates of record
 
-`node tools/evidence/run.mjs --no-bench --allow-dirty` on d7820eeb, the final code head of iteration 13 (`WT/evidence/n10/evidence-final-13.log`; the dirty paths are untracked iteration-1 stills only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
+`node tools/evidence/run.mjs --no-bench --allow-dirty` on 83429487, the final code head of iteration 14 (`WT/evidence/n10/evidence-final-14.log`; the dirty paths are untracked evidence stills and logs only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
 
 - lint 13/13 (the pre-commit hook on every commit).
-- unit 751/751 (d7820eeb; the new burn_flames test included).
-- scenarios 29/29 (d7820eeb).
-- parity bit-exact, the planted mutation caught at step 629 (d7820eeb).
-- selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m, the same two rows as on 47476501 and 2d7efa51. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
-- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iterations 12 and 13 changed view code only (no bench run).
+- unit 752/752 (83429487; the new rise-window test included).
+- scenarios 29/29 (83429487).
+- parity bit-exact, the planted mutation caught at step 629 (83429487).
+- selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m, the same two rows as on d7820eeb, 47476501 and 2d7efa51. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
+- bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record. Iterations 12 and 13 changed view code only; iteration 14 added the 29-tick rise hold after a knockdown, which is a sim change but costs nothing (no bench run).

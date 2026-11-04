@@ -152,3 +152,17 @@ func test_a_homing_shard_ignores_a_human_behind_it() -> void:
 	assert_true(arena.rivet_fire(Vector2(20.0, 0.0)))
 	_run(arena, 1, 60)
 	assert_true(g.alive(), "a shard never turns around")
+
+
+func test_a_knocked_down_human_stays_held_while_he_rises() -> void:
+	var e: FighterFx = FighterFx.new()
+	e.down_ticks = 3
+	for i: int in 3:
+		e.tick_timers()
+	assert_eq(e.down_ticks, 0, "the lie is over")
+	assert_eq(e.rise_ticks, FighterFx.RISE_TICKS, "the rise opens as the lie ends")
+	for i: int in FighterFx.RISE_TICKS - 1:
+		e.tick_timers()
+	assert_true(e.holds(), "no shot from the half-sprawl")
+	e.tick_timers()
+	assert_false(e.holds(), "up: his brain is back")
