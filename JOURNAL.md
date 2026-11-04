@@ -1008,3 +1008,17 @@ NEXT (iteration 15):
    (a hook in melee_weapon_view.gd, rivet-arsenal's call).
 3. Long guns drawn over Rivet's helmet in the carry pose (rivet-arsenal's view; watch).
 4. A drawn glass-and-fuel splash sheet for the molotov (image route, under image.lock) to replace the shard reuse.
+- MILESTONE 08:17 the rocket blast's tail (3a703dbd): the blast sheet's last frame (16 cream discs in ink rims) was
+  the same debug-bead ring on the rocket; `WeaponFxArt.blast` now holds the smoke ring (frame 2) through those 10
+  ticks, growing 1.08 -> 1.30 and fading to 15 %. `--blast-beads=on` = before. Same-tick city A/B (`--weapon=
+  rocket_launcher --loadout=rocket_launcher`, blast ~415, ticks 435-444 differ), looked at: before, hollow ink
+  rings scattered round the kill; after, the smoke ring swells and thins out, the cop's red death stays readable.
+  Evidence (masters): `clips/it14-rocket-blast-tail-ab-city-48ppm-2x-quarterspeed.mp4`, strip
+  `frames/it14-rocket-blast-tail-ab-city-48ppm.png`; frames.json 15 (entry 2; dropped the REQUEST-31-only strip,
+  covered by the combined molotov clip). DECISION line in docs/decisions.md.
+- Gates at 3a703dbd: unit 741/741 (`unit-it14d.log`), scenarios 32/32 (`scenarios-it14b.log`), lint 13/13 (hook).
+  Parity untouched (render only). Scratch wa14r deleted. No Godot process of mine running.
+- Calls for the owner (add): weapon-art-16 rocket blast tail: A (now) the smoke ring holds and thins / B the cream
+  bead ring (`--blast-beads=on`). Clip above, B left. Recommendation: A; a redrawn frame 3 (smoke wisps) would be best.
+- Session close 08:19. NEXT unchanged from 08:13 (REQUEST 12, the melee four on rivet-arsenal's path, long guns over
+  the helmet, a drawn glass-and-fuel sheet) plus 5: redraw the blast sheet's frame 3 as torn smoke wisps.
