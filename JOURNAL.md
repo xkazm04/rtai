@@ -222,3 +222,4 @@ NEXT (iteration 7), final for this session: (1) the chainsaw rip, the plasma spi
 
 ## Iteration 7 (05:38 - 06:38)
 - 05:38 read JOURNAL, git log, other lanes' JOURNALs. Answers to me: gunplay REQUEST 16 (no Trigger wind exists, ours stays: closed); gunplay built REQUEST 12 after all (b48ec24a, aim_m from the cursor's distance); weapon-art REQUEST 11 DONE (b98ae259, `make_held(id, "empty")`). Plan: merge n-weapon-art, wire the empty tube, then the chainsaw rip strip and quest 1 close-ups.
+- 05:44 MILESTONE empty rocket tube (b8d51a5b, after merging n-weapon-art to f255cffc): HeldTube swaps RivetHeldView's art to weapon-art's `empty` part from the shot until reload phase 2. test_held_tube 4/4. Clip `arena-rocket-empty-tube-reload-64ppm-x2.mp4`, strip `rocket-empty-tube-strip-64ppm.png` (looked at). REQUEST 11 closed.
