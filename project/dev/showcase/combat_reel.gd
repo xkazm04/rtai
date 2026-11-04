@@ -165,7 +165,8 @@ func _line(b: Beat) -> TickInput:
 
 
 ## The pit: through the doors, then the nearest standing guard: melee closes in and jabs; the gun
-## strafes across its line and fires once it has been in range REACT_TICKS.
+## strafes across its line and fires once it has been in range REACT_TICKS. The gun beat walks in
+## only on a guard inside the pit's zone and steps back in when it leaves it (no fight on paper).
 func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 	var rivet: Vector2 = stage.arena.rivet.pos
 	if _next < b.points.size():
@@ -189,11 +190,14 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 	var fire: bool = close and local - _seen_since >= REACT_TICKS and local % PULSE < PULSE / 2
 	var side: float = 1.0 if (local / 45) % 2 == 0 else -1.0
 	# walk in on a guard beyond APPROACH_M while firing, so the kill lands inside a close-up frame
-	var fwd: float = _unpin(rivet, local, clampf((gap.length() - APPROACH_M) / 3.0, 0.0, 1.0))
+	var walk: float = clampf((gap.length() - APPROACH_M) / 3.0, 0.0, 1.0)
+	var fwd: float = _unpin(rivet, local, walk if stage.pit.zone.has_point(foe.pos) else 0.0)
 	if local < _dodge_until:
 		side = _dodge_side
 	var drift: Vector2 = aim.orthogonal() * side * 0.8 * (1.0 - fwd) + aim * fwd
 	drift += (spot - rivet).limit_length(1.0) * 0.4 * (1.0 - fwd)
+	if not stage.pit.zone.has_point(rivet):  # never chase out of a door onto the paper
+		drift = (spot - rivet).limit_length(1.0)
 	return _input(drift, aim, _bit(&"fire", fire) | ReelArsenal.press(stage, actions, _turn(local)))
 
 
