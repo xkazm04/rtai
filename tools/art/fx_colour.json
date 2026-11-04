@@ -82,13 +82,13 @@
         "ray_ring_"
       ],
       "id": "ray",
-      "note": "acid green",
+      "note": "acid green (iteration 5: ink_2 and wash brightened; the rings printed a dull olive at 32 px/m)",
       "tokens": {
-        "ink_2": "#4FA61C",
+        "ink_2": "#7BD92B",
         "paper": "#E2FF8A",
         "paper_2": "#C8F65A",
-        "steel": "#8EDB2E",
-        "wash": "#6CC424"
+        "steel": "#B4F04A",
+        "wash": "#9AEC3C"
       }
     },
     {
