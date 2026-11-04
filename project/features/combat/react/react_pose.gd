@@ -62,14 +62,15 @@ static func _cower(r: HumanReact, rig: CutRig, k: float) -> void:
 
 
 ## Runs over a body: pitches forward along the flight (r.dir), arms thrown out ahead to catch the
-## fall, dips (drawn smaller from above), then rights itself; the sim keeps running the body.
+## fall, the body stretched along the lunge and narrowed (a fall seen from above), then rights
+## itself; the sim keeps running the body.
 static func _trip(r: HumanReact, rig: CutRig, k: float) -> void:
 	var e: float = smoothstep(0.0, 0.22, k) * (1.0 - smoothstep(0.5, 1.0, k))
-	r.off = r.dir * 70.0 * e
-	r.scl = Vector2.ONE * lerpf(1.0, 0.8, e)
-	r.rot = r.side * 0.3 * e
+	r.off = r.dir * 120.0 * e
+	r.scl = Vector2(lerpf(1.0, 1.12, e), lerpf(1.0, 0.78, e))
+	r.rot = r.side * 0.45 * e
 	rig.c_hands_up = maxf(rig.c_hands_up, 0.9 * e)
-	r.head_off = r.dir * 60.0 * e
+	r.head_off = r.dir * 90.0 * e
 	r.head_s = 1.0 - 0.1 * e
 
 
