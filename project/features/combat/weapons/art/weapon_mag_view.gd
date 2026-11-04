@@ -14,6 +14,10 @@ const SPENT_KEEP: int = 8
 ## The dropped one lands turned a little off the claw's line, so it reads as dropped, not placed.
 const SPENT_TURN_RAD: float = 0.7
 
+## Showcase glue: how many of these views are in a tree (FxView then drops gunplay's ink-stick
+## magazine for a gun with a `mag` part: one magazine per reload, not two).
+static var live: int = 0
+
 var rigs: CharacterRigs = null
 var pilot: StagePilot = null
 var rivet_id: int = 0
@@ -24,6 +28,14 @@ var _mag: Sprite2D = null
 var _last_k: float = -1.0
 var _floor: Node2D = Node2D.new()
 var _spent: Array[Sprite2D] = []
+
+
+func _enter_tree() -> void:
+	live += 1
+
+
+func _exit_tree() -> void:
+	live -= 1
 
 
 func _ready() -> void:

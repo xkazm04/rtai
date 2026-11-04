@@ -16,8 +16,10 @@ const CONVERGE_M: float = 3.0
 const RING_TICKS: int = 9
 
 
-## `shells` false = only the magazines (another art lane draws the brass).
-static func draw_under(ci: CanvasItem, fx: GunFx, tick: int, shells: bool = true) -> void:
+## `shells` false = another art lane draws the brass; `mags` false = it draws the magazine too.
+static func draw_under(
+	ci: CanvasItem, fx: GunFx, tick: int, shells: bool = true, mags: bool = true
+) -> void:
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
 		if int(im.z) >= GunFx.SCORCH:
@@ -25,7 +27,7 @@ static func draw_under(ci: CanvasItem, fx: GunFx, tick: int, shells: bool = true
 		elif int(im.z) == GunFx.Hit.GROUND:
 			GunFxMarks.scuff(ci, Vector2(im.x, im.y), fx.impact_dir[i], tick - int(im.w), int(im.w))
 	for i: int in fx.bits.size():
-		if shells or fx.bits[i].w < 0.0:
+		if mags if fx.bits[i].w < 0.0 else shells:
 			GunFxMarks.bit(ci, fx, i)
 
 

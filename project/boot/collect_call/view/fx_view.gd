@@ -33,7 +33,8 @@ func _draw() -> void:
 		if _gun_fx == null:
 			_gun_fx = GunFx.new()
 		_gun_fx.step(arena, stage.tick)
-		GunFxArt.draw_under(self, _gun_fx, stage.tick, not _art_gun(arena.gun))
+		var gun: GunHand = arena.gun
+		GunFxArt.draw_under(self, _gun_fx, stage.tick, not _art_gun(gun), not _art_mag(gun))
 	for s: Shot in arena.shots:
 		if arena.gun != null:
 			if WeaponFxArt.shot(self, s, stage.tick):  # weapon-art's cells first
@@ -165,3 +166,10 @@ func _art_gun(gun: GunHand) -> bool:
 	if not WeaponFxArt.enabled or gun.trigger == null or gun.trigger.spec == null:
 		return false
 	return WeaponFxArt.art().has(gun.trigger.spec.id)
+
+
+## Showcase glue: weapon-art's WeaponMagView drops this gun's own magazine (under --rigs).
+func _art_mag(gun: GunHand) -> bool:
+	if WeaponMagView.live <= 0 or not _art_gun(gun):
+		return false
+	return WeaponFxArt.art().part_texture(gun.trigger.spec.id, "mag") != null
