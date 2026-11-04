@@ -533,3 +533,20 @@ NEXT (iteration 5):
 5. The final round plan (07:45-08:30): export `build/export/windows/RTAI.exe` with the release
    DLL; boot into the arena with every finished weapon (a default --loadout or pickups); write
    the exact play commands for the arena and the city block in REPORT.
+- MERGE ROUND 6 started early (04:27-04:33, one lane at a time): weapon-art d33db75b, rivet-arsenal
+  412e0906, gunplay acbb8c0c, human-reactions c819d6be, brutality 8218d423 -> f8c0f817.
+  Conflicts: JOURNAL.md (ours, every lane); arena_rigs.gd x3 (consts: RIOT_LOOK + rivet-arsenal's
+  THROW + FOCUS_REACH_M; gunplay's older focus hunk -> ours; human-reactions' squad looks vs my
+  --riot look -> one rule, below); gun_fx_art.gd (gunplay's floor-mark doc + my shells/mags
+  signature; their body-scorch filter kept); arena_stations/human-reactions.json doc (ours = the
+  human-reactions tip's newer doc). Glue: arena_game._open hit 42 lines (their --crowd/--armored +
+  my --riot): the dev flags move to _dev_fight (the pre-commit lint caught it).
+  DECISION pit looks: human-reactions' patrol/riot/SWAT mix by actor id stays the default; under
+  --riot the shield is worn only by the pit's armored riot cops, and the mix's other riot picks
+  dress as patrol (a shield that dies to one pistol round would lie about the armor).
+- Gates r6 (f8c0f817): running at session end (unit -> scratch-showcase/unit-r6.log, scenarios ->
+  scen-r6.log); results below if they land before 04:42, else NEXT 1.
+
+NEXT (iteration 5) supersedes the list above: 1 = read gtai-n4/scratch-showcase/unit-r6.log and
+scen-r6.log (or re-run both), fix reds, copy to evidence/r6, then the evidence run (logs outside
+the tree). Then NEXT 2-5 above.
