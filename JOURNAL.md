@@ -1069,3 +1069,13 @@ weapon-art-15 and -16 once judged.
 NEXT (after the night run): unchanged from it15. (1) The melee four in the claw on rivet-arsenal's path. (2) A drawn
 glass-and-fuel molotov splash sheet. (3) Redraw blast frame 3 as torn smoke wisps. (4) Owner calls weapon-art-15 and
 -16 once judged.
+
+## Iteration 18 (08:40-08:50, REPORT)
+- MILESTONE 08:45 REPORT.md written: gates of record (3a703dbd: unit 741/741, scenarios 32/32, lint 13/13; parity
+  bit-exact at 8d727846; selftest accent FAIL = tree-wide blood flicker), what works with evidence paths, what does not
+  (melee four still procedural bars in the claw on this branch; reused FX cells), friction, calls weapon-art-1..16,
+  merge notes, next steps. Every masters path cited in REPORT.md checked to exist (scripted check, none missing).
+- No code, no Godot run. `evidence/weapon-art/` stays untracked (scratch).
+
+NEXT (after the night run): as in REPORT.md "Next steps": (1) melee four in the claw via n-rivet-arsenal; (2) drawn
+glass-and-fuel molotov sheet; (3) blast frame 3 as torn smoke wisps; (4) owner calls once judged.
