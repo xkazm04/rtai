@@ -1,0 +1,36 @@
+{
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "damage_taken": 3.59999999999997,
+  "deaths": 0,
+  "dodges": 13,
+  "gunplay_range": {
+    "chain_hits": 0,
+    "hits": 9,
+    "ignitions": 0,
+    "kills": 3,
+    "knockdowns": 3,
+    "shots": 3,
+    "weapon": "rocket_launcher"
+  },
+  "hit_rate": 1.0,
+  "hits": 3,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 3,
+  "pit_waves": 2,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 3,
+  "ticks": 1199,
+  "top_speed_mps": 4.50002521276474,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.0002249415
+}
