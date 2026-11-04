@@ -108,6 +108,15 @@ func test_impact_cells_and_gore_stickers_resolve() -> void:
 	assert_gt(art.fx_anchor(&"blast").x, 0.0)
 
 
+func test_a_bottle_burst_is_told_from_a_rocket_blast_by_its_fire_patch() -> void:
+	var areas: FightAreas = FightAreas.new()
+	areas.add_patch(Vector2(4.0, 2.0), 2.2, 300, 10.0)
+	assert_true(WeaponFxArt.is_fire_burst(Vector3(4.0, 2.0, 2.2), areas), "molotov: patch = splash")
+	assert_false(WeaponFxArt.is_fire_burst(Vector3(9.0, 2.0, 3.5), areas), "rocket elsewhere")
+	assert_false(WeaponFxArt.is_fire_burst(Vector3(4.0, 2.0, 12.0), areas), "nuke: patch 6 != 12")
+	assert_false(WeaponFxArt.is_fire_burst(Vector3(4.0, 2.0, 2.2), null), "no areas: rocket look")
+
+
 func test_magazine_guns_have_a_mag_part_held_inside_it() -> void:
 	var art: WeaponArt = WeaponArt.new()
 	for id: StringName in [&"pistol", &"machine_pistol", &"plasma_rifle", &"hand_cannon"]:
