@@ -53,9 +53,14 @@ lint 13/13, unit 940/0, scenarios 46/0, parity exact (planted mutation caught at
 and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; decisions line). Bench not run.
 
 ## What does not work / is open
-- Rivet's thin pale limbs are faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`). A darker
-  limb tone was tried and rejected (`M/frames/rivet-limb-tone-trial.png`, JOURNAL 18:40).
-- Rivet came out at 1.20x the crowd's shoulder span (planned 1.1x): the hybrid shoulder plates are wide.
+- Fixed (85b912e5): Rivet's thin pale legs were faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`).
+  A cream leg rim at gameplay scale now carries them (`M/frames/rivet-legrim-ab-32ppm.png`); the arms keep their
+  existing halo. A darker limb tone was tried and rejected (`M/frames/rivet-limb-tone-trial.png`, JOURNAL 18:40).
+- Rivet came out at 1.20x the crowd's shoulder span (planned 1.1x): the hybrid shoulder plates are wide. Kept on
+  purpose (Call 1, `M/frames/rivet-size-call-64ppm.png`).
+- The cops match r2_c5's footprint, not its colour mass (`M/frames/cops-vs-r2c5-64ppm.png`): the target is navy
+  all over (cap, sleeves, trousers); the game cop is black ink limbs, a cream cap disc and bright blue shoulder pads.
+  That is the approved built look, so it was left alone; a navy-sleeve variant behind a flag is a next step.
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.

@@ -297,3 +297,8 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
   cop-sized. REPORT Call 1 now carries this still. frames.json: + legrim A/B, + size call; dropped
   `rivet-legs-motion-32ppm` (superseded, file kept: REPORT cites it) and `city-hybrid-ab-32ppm` (file deleted).
   Unit 940/0, lint 13/13.
+- 22:02 `frames/cops-vs-r2c5-64ppm.png` (the react board's cop columns beside r2_c5; the target composite owed for
+  the cops): footprint and slimness track; the gap is colour mass (target navy cap, sleeves, trousers; game black
+  ink limbs, cream cap disc, bright blue pads). Not changed tonight: the black-limb cop is the approved built look
+  and a recolour needs every reaction re-checked and a golden bless. REPORT "open" updated.
+- 22:06 scenarios 46/0 on 29a853be.
