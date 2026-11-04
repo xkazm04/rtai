@@ -23,6 +23,11 @@ const BODY_M: float = 0.2
 const ARC_M: float = 0.26
 const KINKS: int = 4
 const WOBBLE_M: float = 0.07
+## The spits: short arcs from the body's edge outward past its silhouette, so a 20 px body at
+## 32 px/m reads as live (the crawling arcs alone stayed inside it). Count, start and end (m).
+const SPITS: int = 3
+const SPIT_IN_M: float = 0.16
+const SPIT_OUT_M: float = 0.5
 
 ## False (`--soft-shock`): the old smooth shiver and no crawling arcs (the A/B's before).
 static var hard: bool = not OS.get_cmdline_user_args().has("--soft-shock")
@@ -68,8 +73,27 @@ static func arcs(ci: CanvasItem, at: Vector2, ppm: float, tick: int) -> void:
 			var w: float = 0.0 if edge else _u(n + k, i * 9 + k) * WOBBLE_M
 			@warning_ignore("return_value_discarded")
 			pts.append(at + (a + d * ARC_M * float(k) / float(KINKS) + nrm * w) * ppm)
-		ci.draw_polyline(pts, Ink.INK, 6.0, true)
-		ci.draw_polyline(pts, Ink.CREAM, 2.5, true)
+		_spark(ci, pts)
+	for j: int in SPITS:
+		_spark(ci, spit(at, ppm, n, j))
+
+
+## Spit `j` of arc frame `n`: a kinked line from SPIT_IN_M to SPIT_OUT_M off the body centre,
+## its direction re-picked with the frame (px).
+static func spit(at: Vector2, ppm: float, n: int, j: int) -> PackedVector2Array:
+	var d: Vector2 = Vector2.from_angle(PI * _u(n, 60 + j * 3))
+	var pts: PackedVector2Array = PackedVector2Array()
+	for k: int in KINKS + 1:
+		var r: float = lerpf(SPIT_IN_M, SPIT_OUT_M, float(k) / float(KINKS))
+		var w: float = 0.0 if k == 0 else _u(n + k, 61 + j * 3) * WOBBLE_M
+		@warning_ignore("return_value_discarded")
+		pts.append(at + (d * r + d.orthogonal() * w) * ppm)
+	return pts
+
+
+static func _spark(ci: CanvasItem, pts: PackedVector2Array) -> void:
+	ci.draw_polyline(pts, Ink.INK, 6.0, true)
+	ci.draw_polyline(pts, Ink.CREAM, 2.5, true)
 
 
 static func _u(a: int, b: int) -> float:
