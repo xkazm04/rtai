@@ -80,10 +80,17 @@ func _draw() -> void:
 		var col: Color = Color(tint, tint.a * (1.0 - 0.5 * age) * fade())
 		# an ink band under a pale core: the ink reads on the cream pavement, the core on the dark
 		# arena floor (a pale smear alone vanished on the city's light ground)
-		draw_colored_polygon(_band(a0, a1, HILT_U, 1.0), Color(Ink.INK, INK_A * col.a / tint.a))
+		_fill(_band(a0, a1, HILT_U, 1.0), Color(Ink.INK, INK_A * col.a / tint.a))
 		var core: PackedVector2Array = _band(a0, a1, CORE_IN, CORE_OUT)
-		draw_colored_polygon(core, col)
+		_fill(core, col)
 		draw_polyline(core.slice(0, STEPS + 1), Color(Ink.INK, col.a), EDGE_PX, true)  # the rim
+
+
+## A band near zero width (a held angle, a sheathed blade) fails to triangulate and logs an
+## engine error every frame: it is skipped (it would draw nothing).
+func _fill(pts: PackedVector2Array, col: Color) -> void:
+	if not Geometry2D.triangulate_polygon(pts).is_empty():
+		draw_colored_polygon(pts, col)
 
 
 ## The sector band between angles a0 and a1 from radius u0 to u1 (shares of the blade's length).

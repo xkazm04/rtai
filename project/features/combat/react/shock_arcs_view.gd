@@ -88,7 +88,8 @@ func _gun(d: Array, id: int) -> void:
 		at - fwd * l * 0.45 + nrm * w * 1.9,
 		at - fwd * l * 0.5 + nrm * w * 0.5,
 	]
-	draw_colored_polygon(body, Ink.INK)
+	if not Geometry2D.triangulate_polygon(body).is_empty():  # a degenerate one logs an error
+		draw_colored_polygon(body, Ink.INK)
 	var rim: PackedVector2Array = body.duplicate()
 	@warning_ignore("return_value_discarded")
 	rim.append(body[0])
