@@ -68,7 +68,14 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func telemetry() -> Dictionary:
-	return {"signature_kills": kills.consumed.size(), "by_style": kills.by_style.duplicate()}
+	var out: Dictionary = {
+		"signature_kills": kills.consumed.size(), "by_style": kills.by_style.duplicate()
+	}
+	if view != null and view.frames > 0:  # the kill view's CPU cost (CONTENDED machine)
+		out["view_frames"] = view.frames
+		out["view_avg_us"] = view.spent_us / view.frames
+		out["view_worst_us"] = view.worst_us
+	return out
 
 
 func attach_view(p_view: Node) -> void:

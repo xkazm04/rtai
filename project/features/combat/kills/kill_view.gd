@@ -17,16 +17,26 @@ var reduced_motion: bool = false
 ## Callable(victim_id: int) -> CutRig (null when the victim has no posed rig).
 var rig_lookup: Callable = Callable()
 var gib_layer: Node2D = Node2D.new()
+## The leftovers (spray, smears, scorch, ash heaps), printed only when one changes: redrawing
+## twelve kills' marks every frame cost ~20 ms (CONTENDED, iteration 2 telemetry).
+var ground: Node2D = Node2D.new()
 ## The burn char (smoke, embers, ash flakes) over the burnt bodies.
 var char_fx: KillCharFx = KillCharFx.new()
 ## The electro kill (convulsion, X-ray strobe, stiff drop, collar smoke).
 var shock_fx: KillShockFx = KillShockFx.new()
+## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
+## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
+var frames: int = 0
+var spent_us: int = 0
+var worst_us: int = 0
 var _groups: Dictionary[int, Array] = {}
 var _ang0: PackedFloat32Array = PackedFloat32Array()
 ## Each slot's drag smear (px), grown while its part slides on the street.
 var _trail: Array[PackedVector2Array] = []
 ## Kill serials that bleed no smear (a row with no spray: the burn).
 var _dry: Dictionary[int, bool] = {}
+var _frame_us: int = 0
+var _ground_dirty: bool = false
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -37,6 +47,10 @@ func bind(p_kills: SignatureKills) -> void:
 	_ang0.resize(GibSim.CAPACITY)
 	for i: int in GibSim.CAPACITY:
 		_trail.append(PackedVector2Array())
+	ground.z_index = -1
+	@warning_ignore("return_value_discarded")
+	ground.draw.connect(_draw_ground)
+	add_child(ground)
 	gib_layer.z_index = 3
 	add_child(gib_layer)
 	char_fx.kills = kills
@@ -54,6 +68,10 @@ func bind(p_kills: SignatureKills) -> void:
 func _process(_delta: float) -> void:
 	if kills == null:
 		return
+	frames += 1
+	spent_us += _frame_us
+	worst_us = maxi(worst_us, _frame_us)
+	var t0: int = Time.get_ticks_usec()
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		var node: Node2D = _node(i)
@@ -65,21 +83,33 @@ func _process(_delta: float) -> void:
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	char_fx.pose()
 	shock_fx.pose()
+	if _ground_dirty or _heap_growing():
+		ground.queue_redraw()
+		_ground_dirty = false
 	queue_redraw()
+	_frame_us = Time.get_ticks_usec() - t0
 
 
-func _draw() -> void:
-	if kills == null:
-		return
+func _draw_ground() -> void:
+	var t0: int = Time.get_ticks_usec()
 	for m: KillMarks.Mark in kills.marks.marks:
-		KillMarkArt.spray(self, m, ppm)
+		KillMarkArt.spray(ground, m, ppm)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.live(i) and _trail[i].size() > 1:
-			KillMarkArt.smear(self, _trail[i], ppm)
+			KillMarkArt.smear(ground, _trail[i], ppm)
 	for m: KillMarks.Mark in kills.marks.marks:
-		KillMarkArt.scorch(self, m, ppm)
-		KillCharFx.pile(self, m, kills.tick, ppm)
+		KillMarkArt.scorch(ground, m, ppm)
+		KillCharFx.pile(ground, m, kills.tick, ppm)
+	_frame_us += Time.get_ticks_usec() - t0
+
+
+## Every frame: the flying parts' shadows and the kill flash only.
+func _draw() -> void:
+	if kills == null:
+		return
+	var t0: int = Time.get_ticks_usec()
+	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.live(i):
 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
@@ -89,6 +119,7 @@ func _draw() -> void:
 		var soot: int = 2 if m.flash_scale >= 1.0 else 0
 		if not reduced_motion and age >= 0 and age < m.flash_ticks + soot:
 			KillMarkArt.flash(self, m, age, ppm, m.flash_ticks)
+	_frame_us += Time.get_ticks_usec() - t0
 
 
 func _node(i: int) -> Node2D:
@@ -106,6 +137,7 @@ func _node(i: int) -> Node2D:
 func _on_killed(
 	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, dir: Vector2
 ) -> void:
+	var t0: int = Time.get_ticks_usec()
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var whole: bool = row.whole_body()
 	var groups: Array[Node2D] = GibCut.cut(rig, whole) if rig != null else _blobs()
@@ -134,6 +166,8 @@ func _on_killed(
 			_ang0[i] = g.ang[i]
 			_trail[i] = PackedVector2Array()
 	_drop_unused()
+	_ground_dirty = true
+	_frame_us += Time.get_ticks_usec() - t0
 
 
 ## A sliding part paints the street behind it (a point every few px, at most TRAIL_MAX).
@@ -145,6 +179,16 @@ func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
 		@warning_ignore("return_value_discarded")
 		t.append(at)
 		_trail[i] = t
+		_ground_dirty = true
+
+
+## An ash heap still growing in (KillCharFx.pile's 45 ticks) needs the ground reprinted.
+func _heap_growing() -> bool:
+	for m: KillMarks.Mark in kills.marks.marks:
+		var age: int = kills.tick - m.tick - m.ash_from
+		if m.ash_m > 0.0 and age >= 0 and age <= 46:
+			return true
+	return false
 
 
 ## Frees the parts of kills whose pool slots were all reused (the leftover budget).
