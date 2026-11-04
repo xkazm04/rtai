@@ -471,14 +471,14 @@
     },
     {
       "anchor_px": [
-        140,
-        20
+        228,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/nail.png",
       "id": "nail",
       "size_px": [
-        150,
-        40
+        240,
+        64
       ]
     },
     {
@@ -639,14 +639,14 @@
     },
     {
       "anchor_px": [
-        266,
-        24
+        310,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/tracer.png",
       "id": "tracer",
       "size_px": [
-        280,
-        48
+        320,
+        64
       ]
     }
   ],
@@ -737,7 +737,15 @@
         549,
         81
       ],
-      "parts": {},
+      "part_grip_px": {
+        "empty": [
+          277,
+          81
+        ]
+      },
+      "parts": {
+        "empty": "res://features/combat/weapons/art/rocket_launcher/held_empty.png"
+      },
       "pickup": "res://features/combat/weapons/art/rocket_launcher/pickup.png",
       "projectile_fx": "rocket",
       "size_px": [
@@ -925,6 +933,7 @@
       },
       "pickup": "res://features/combat/weapons/art/hand_cannon/pickup.png",
       "projectile_fx": "tracer",
+      "projectile_k": 1.6,
       "size_px": [
         456,
         211
@@ -1080,7 +1089,15 @@
         459,
         68
       ],
-      "parts": {},
+      "part_grip_px": {
+        "empty": [
+          187,
+          68
+        ]
+      },
+      "parts": {
+        "empty": "res://features/combat/weapons/art/mini_nuke/held_empty.png"
+      },
       "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
       "projectile_fx": "rocket",
       "size_px": [

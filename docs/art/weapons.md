@@ -108,6 +108,46 @@ the spent one on the floor.
   (human-reactions REQUEST 2), `tools/art/thug_parts.py`.
 Both are scripted derivations of existing AI parts, so footprints and pivots are the rig's own.
 
+## Energy rounds in flight (iteration 8)
+
+Judged frame by frame in the city proving block at 32 px/m (cream paving) and in the arena at 64 px/m.
+The rule is the tracer's: **two tones per round**. A charcoal (`INK_2`) part reads on cream paving, a paper
+part reads on asphalt, and the whole round sits inside an ink ring.
+
+- **Plasma bolt** (`fx/plasma_bolt`, 260 x 64, anchor at the head's tip): an ink comet. A charcoal tail
+  tapers back, the fat head has a steel halo and a paper core, and a paper speed streak runs down the tail.
+  The iteration-1 steel oval printed as a pale pill on cream.
+- **Homing shard** (`fx/shard`, 190 x 44, anchor at the tip): the pale crystal head stays and gains a
+  charcoal speed tail.
+- **Ray gun** (`fx/ray_ring_0..2`, `WeaponFxRay`): a train of 4 hoops strung back along the beam from its
+  head. Each is squashed to 0.42 along the travel (seen edge-on), and they widen and fade toward the tail.
+  Each cell is a charcoal band with a paper stripe. Until iteration 8 every BOLT row drew the electro
+  arc, so the ray gun fired lightning.
+- Generator: `tools/art/energy_round_tails.py <fx_dir>` (deterministic). It prints the size and anchor
+  for the table rows.
+
+## Kinetic rounds and the empty tube (iteration 9)
+
+The same read as iteration 8: every round at 32 px/m on the city block's cream paving and on asphalt. The cells
+draw at 0.2 of their part size there (`fx_draw_scale` 2 x 32 / 320), so a feature under about 20 part px is a
+hairline. `it9-round-cells-at-32ppm-cream-asphalt-3x.png` puts every round and flash cell at that true scale on
+crops of both grounds.
+
+- **Tracer** (`fx/tracer`, 320 x 64, anchor at the tip): a charcoal needle 44 px across at the head, with a paper
+  streak and the 13 px ink ring. The iteration-1 needle (18 px across) printed as a pale hairline beside the guard's
+  vermilion-headed rounds. Rivet's rounds stay ink and paper. The vermilion head is the enemy's danger mark.
+- **Gloria's nail** (`fx/nail`, 240 x 64, anchor at the point): a steel shank 22 px across with a paper glint, a
+  broad paper head, and a charcoal speed tail behind the head (the shard's rule). Head, shank and point still say
+  "nail". The old 150 x 40 nail was a 30 x 2 px sliver.
+- **Per-gun weight** (`projectile_k`, optional per weapon row, 0.5..3, absent = 1): the round's cell is drawn
+  k times thicker and sqrt(k) times longer. The hand cannon is 1.6: a slug on the same tracer cell.
+- **Energy muzzle flashes** need no change. The pale star inside its 13 px ink ring reads on cream at 32 px/m.
+- **Empty tubes** (`parts.empty` = `held_empty.png` for the rocket launcher and the mini-nuke): the held part
+  with the striped warhead cut away just past the front band, and an inked open mouth. It uses the same canvas,
+  and `part_grip_px.empty` = `grip_px`, so `make_held(id, "empty")` lands exactly on the loaded tube. A view shows
+  it from the shot until the reload's load phase (rivet-arsenal REQUEST 11).
+- Generators: `tools/art/bullet_tracer.py <fx_dir>` (tracer, nail) and `tools/art/empty_tubes.py <art_dir>`.
+
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,

@@ -62,11 +62,15 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	match s.spec.kind:
 		WeaponSpec.Kind.BULLET:
 			var fx: StringName = art().projectile_fx(s.spec.id)
-			_cell(ci, fx if fx != &"" else &"tracer", 0, at, dir.angle(), 1.0, 1.0)
+			var k: float = art().round_k.get(s.spec.id, 1.0)
+			var fx_k: Vector2 = Vector2(sqrt(k), k)
+			_cell_v(ci, fx if fx != &"" else &"tracer", 0, at, dir.angle(), fx_k, 1.0)
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, at, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			_jet(ci, s, dir, went, tick)
+		WeaponSpec.Kind.BOLT when art().projectile_fx(s.spec.id) == &"ray_ring":
+			WeaponFxRay.draw_round(ci, at, dir, went, tick)
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
@@ -180,9 +184,15 @@ static func _cell(
 
 ## Draws fx cell `id` (frame `frame`) at `at` (m), rotated, scaled per axis (cell px), alpha `a`.
 static func draw_cell(
-	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2
+	ci: CanvasItem,
+	id: StringName,
+	frame: int,
+	at: Vector2,
+	angle: float,
+	scale: Vector2,
+	a: float = 1.0,
 ) -> void:
-	_cell_v(ci, id, frame, at, angle, scale, 1.0)
+	_cell_v(ci, id, frame, at, angle, scale, a)
 
 
 ## As _cell with a per-axis `scale` (x along the cell's +x: a jet or a bolt stretched to length).
