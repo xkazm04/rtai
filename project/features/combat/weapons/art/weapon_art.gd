@@ -11,6 +11,12 @@ const TABLE: String = "res://data/tables/weapon_art.json"
 const SCHEMA: String = "gtai.weapon-art/1"
 const WORLD_PX_PER_M: float = 32.0
 const INK: Color = Color("1b1517")
+## The paper rim under a held part (the rigs' cream sticker halo, which the weapons lacked: at
+## 32 px/m a gun in the claw printed as a dark blob). World px; `--weapon-rim=off` drops it.
+const RIM_WORLD_PX: float = 1.0
+const RIM_DIRS: int = 8
+
+static var rim: bool = not OS.get_cmdline_user_args().has("--weapon-rim=off")
 
 var rig_px_per_m: float = 320.0
 ## FX cells draw at this many times the rig part scale (fx_scale()).
@@ -149,6 +155,8 @@ func make_held(id: StringName, part: String = "") -> Sprite2D:
 	if part != "":
 		s.offset = -(r.part_grip[part] if r.part_grip.has(part) else Vector2.ZERO)
 	s.scale = Vector2.ONE * world_scale(id)
+	if rim:
+		_add_rim(s)
 	return s
 
 
@@ -173,6 +181,20 @@ func fx_scale() -> float:
 func fx_anchor(id: StringName) -> Vector2:
 	var key: StringName = id if _fx.has(id) else StringName("%s_0" % id)
 	return _fx[key].anchor if _fx.has(key) else Vector2.ZERO
+
+
+## Cream silhouettes of the part, RIM_WORLD_PX out in RIM_DIRS directions, drawn under it.
+func _add_rim(s: Sprite2D) -> void:
+	for i: int in RIM_DIRS:
+		var h: Sprite2D = Sprite2D.new()
+		h.name = "Rim%d" % i
+		h.texture = s.texture
+		h.centered = false
+		h.offset = s.offset
+		h.position = Vector2.from_angle(TAU * i / RIM_DIRS) * RIM_WORLD_PX / s.scale.x
+		h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
+		h.z_index = -1
+		s.add_child(h)
 
 
 func _read_weapon(t: DataTable, r: Dictionary) -> Row:

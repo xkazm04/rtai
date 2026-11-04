@@ -20,7 +20,7 @@ from PIL import Image, ImageChops, ImageDraw
 
 INK = (27, 21, 23, 255)
 PAPER = (242, 232, 213, 255)
-BRASS = (214, 176, 112, 255)
+BRASS = (233, 220, 195, 255)  # paper_2: the palette tokens only (docs/art/weapons.md rule 3)
 INK_W = 5
 
 

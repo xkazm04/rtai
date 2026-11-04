@@ -116,7 +116,9 @@ def casing(out, seed):
     m = _canvas(w, h)
     ImageDraw.Draw(m).rounded_rectangle([8 * SS, 8 * SS, 40 * SS, 22 * SS], radius=5 * SS, fill=255)
     rim = _poly(_canvas(w, h), [(8, 7), (14, 7), (14, 23), (8, 23)])
-    _save(_compose([(m, INK_2), (rim, PAPER)], w, h, seed, outline=8), out / "casing.png")
+    # a paper glint with a charcoal rim end (it was charcoal with a paper rim: at 64 px/m the brass on
+    # the asphalt read as dark bricks the size of a magazine; it-5)
+    _save(_compose([(m, PAPER_2), (rim, INK_2)], w, h, seed, outline=8), out / "casing.png")
     return [w, h], [w // 2, h // 2]
 
 

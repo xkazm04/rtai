@@ -124,3 +124,20 @@ func test_magazine_guns_have_a_mag_part_held_inside_it() -> void:
 		assert_eq(mag.scale, Vector2.ONE * art.world_scale(id), "%s mag at the held scale" % id)
 		mag.free()
 	assert_null(art.make_held(&"rocket_launcher", "mag"), "a rocket tube has no magazine")
+
+
+func test_held_part_has_a_paper_rim_under_it_unless_off() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	var was: bool = WeaponArt.rim
+	WeaponArt.rim = true
+	var held: Sprite2D = art.make_held(&"pistol")
+	assert_eq(held.get_child_count(), WeaponArt.RIM_DIRS, "one cream copy per direction")
+	var rim: Sprite2D = held.get_child(0) as Sprite2D
+	assert_eq(rim.z_index, -1, "under the part")
+	assert_almost_eq(rim.position.length() * held.scale.x, WeaponArt.RIM_WORLD_PX, 0.001)
+	held.free()
+	WeaponArt.rim = false
+	held = art.make_held(&"pistol")
+	assert_eq(held.get_child_count(), 0, "--weapon-rim=off: no rim")
+	held.free()
+	WeaponArt.rim = was
