@@ -31,6 +31,9 @@ var trips: int = 0
 var deaths: int = 0
 var startles: int = 0
 var pipe: DeathPipe
+## The live radii (metres); the consts are the shipped values, a scenario plants 0 as a fault.
+var startle_m: float = STARTLE_M
+var trip_m: float = TRIP_M
 ## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
 ## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
 var extra_bodies: Dictionary[int, Vector2] = {}
@@ -97,7 +100,7 @@ func _die(rig: CutRig, vel: Vector2) -> void:
 ## The living pedestrians within STARTLE_M of feed row `body` (just died) cower away from it.
 func _startle(rigs: CharacterRigs, body: int) -> void:
 	var feed: RigFeed = rigs.feed
-	var reach: float = STARTLE_M * SimConst.PX_PER_M
+	var reach: float = startle_m * SimConst.PX_PER_M
 	for j: int in feed.count:
 		if j == body or feed.kinds[j] != BodyPlan.Kind.PED:
 			continue
@@ -132,7 +135,7 @@ func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
 			bodies[feed.ids[i]] = feed.pos[i]
 	if bodies.is_empty():
 		return
-	var reach: float = TRIP_M * SimConst.PX_PER_M
+	var reach: float = trip_m * SimConst.PX_PER_M
 	for i: int in feed.count:
 		if feed.kinds[i] != BodyPlan.Kind.PED or not feed.has_flag(i, RigFeed.Flag.FLEE):
 			continue
