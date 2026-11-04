@@ -130,3 +130,9 @@ NEXT (iteration 2, ghost-powers):
   errors) and drew nothing: caught by the 3 SCRIPT ERRORs in the run log and the empty after-row, fixed.
   Before|after `M/frames/dent-blast-ab-32ppm.png` (same ticks 133/137/142, 32 px/m), clip re-cut, 0 SCRIPT
   ERROR. frames.json 10.
+- 00:38 GATES on ffffc6d7 (final code head): scenarios 47 ran / 0 failed (incl. scenario_ghost_attacks;
+  `evidence/scenarios-it1-final.log`), unit 954/0 on 38bcc40c (DentView change after it is render-only),
+  lint 13/13 on every commit. Masters scratch AVIs deleted; frames.json 10 entries, every file present.
+Session state 00:39: head = this commit, tree clean, image.lock never taken, bench never run, no Godot
+process of mine running. NEXT (iteration 2) is the 00:31 list above (item 1 done: unit 954/0; the Dent blast
+colour from item 2 done at 00:34).
