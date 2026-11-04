@@ -1198,3 +1198,32 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
   exists, so it films human-reactions' dev pit (enemy_rig_fight_run, --squad=robot_thug,
   --zoom=P/32, every tick) with its power-down death (3cf3ce29); needs round 17. reel.sh numbers
   the CITY BLOCK chapter from the cut's list (18 with the thug).
+- MILESTONE 09:16 merge round 17 (lane tips about 09:12): weapon-art a1400ae2 -> 02dcefa2,
+  rivet-arsenal 97b91ffb -> 0e7fc252, gunplay 99a69034 -> 2c4dfc7a, human-reactions 035435e7 ->
+  226f0873 (one real conflict: tests/unit/test_fight_areas.gd, their side is the cherry-picked
+  gunplay RISE test only -> ours, which already has it), brutality 56eceaf2 -> bb9b6134.
+  GLUE 4cb55af1: docs/decisions.md had the gunplay RISE_TICKS line twice (the cherry-pick), one
+  dropped. `--import` 0 errors.
+- GATES r17 (gates.sh on e977a394, CONTENDED): lint 13/13 (794), unit 927/927, scenarios 45/45,
+  parity bit-exact (planted caught at 629), selftest PASS (look 11/11 worst 0.00, block 5/5
+  worst 1.81). No re-bless. evidence/r17/evidence.log.
+- 09:20 cut.sh's ROBOT THUG chapter trimmed round `robot_death_frame_1` from the dev pit's
+  stats.json (4 s before, 2.5 s after; e977a394). The first try ended at the death, no aftermath.
+- MILESTONE 09:30 reel-0930 (masters, frames.json first): cut.sh r17-dir 48 (17 runs, 0 SCRIPT
+  ERRORs) + reel.sh (18 CITY BLOCK, 0 SCRIPT ERRORs), 128.5 s. Checked (36-frame sheet, the thug
+  and electro crops): electro corpse lies full length in the shock plank with a scorch (best
+  read tonight); the thug kneels, pitches flat and goes dark, but on the dev pit's plain grey
+  floor (not the slab), and the oil spray from six nails is busy; the mini-nuke throws its own bomb.
+- MILESTONE 09:30 exe re-exported on round 17 (e977a394): RTAI.exe 236 MB + release DLL, exit 0,
+  0 errors (evidence/r17/export.log). Boot tests headless, 0 SCRIPT ERRORs each: no args
+  ("armory: 15 weapons on the hub floor", "arena open: 16 stations"), director (claw_combo
+  starts), city block with the 4-gun loadout.
+
+NEXT (final round, 09:45-10:30): merge the five lane tips (round 18) the same way, `--import`,
+`bash evidence/gates.sh r18`, then (FILM_APPDATA=.../showcase-film) `bash evidence/cut.sh
+r18-dir 48` + `bash evidence/reel.sh reel-<HHMM> r18-dir` (now 18 chapters + city, about 13 min),
+re-export (`cd project && "$G" --headless --path . --export-release windows-showcase
+../build/export/windows/RTAI.exe`), boot tests into evidence/r18/, frames.json first entry,
+REPORT status rewritten at 10:40 (final reel, exe round, play commands). If a lane tip has not
+moved since 09:15, round 17 + reel-0930 + the 09:30 exe are the final build. Never edit the tree
+while gates.sh's evidence step runs.
