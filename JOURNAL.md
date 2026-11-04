@@ -1308,3 +1308,13 @@ needs an arena bot that walks to pickups.
 NEXT (morning, owner): judge calls 3, 12, 14, 15, 16, 17 in the REPORT. Call 17 B = `--pickup-print=on` /
 `PickupLook.printed = true`. Build the riot-shield part only if human-reactions' call B is picked. A floor-to-claw
 pickup clip needs an arena bot that walks to pickups.
+
+## Iteration 28 (10:40-10:45, REPORT, past the freeze)
+- 10:40 read JOURNAL NEXT and the REPORT (already updated in place for 10:40 in iteration 27).
+- 10:41 MILESTONE audit: every path the REPORT cites resolves (M = masters\n4\weapon-art, E = evidence/weapon-art,
+  repo files, n4\rivet-arsenal frames), and frames.json lists 15 files, all present. REPORT gets one line for iteration 28.
+- No code, no lock, no Godot process. `evidence/weapon-art/` stays untracked (gate logs, scratch PNGs).
+
+NEXT (morning, owner): judge calls 3, 12, 14, 15, 16, 17 in the REPORT. Call 17 B = `--pickup-print=on` /
+`PickupLook.printed = true`. Build the riot-shield part only if human-reactions' call B is picked. A floor-to-claw
+pickup clip needs an arena bot that walks to pickups.
