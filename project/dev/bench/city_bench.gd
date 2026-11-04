@@ -123,10 +123,17 @@ func _finish() -> void:
 			% [_args["--scenario"], JSON.stringify(res["metrics"]), _args["--out"]]
 		)
 	)
-	var c: CrowdReact = _characters.crowd  # human-reactions: the riot's crowd reactions
+	_log_crowd()
+	get_tree().quit(0 if ok else 1)
+
+
+## human-reactions: the riot's crowd reactions and what CrowdReact cost the frame (REQUEST 23).
+func _log_crowd() -> void:
+	var c: CrowdReact = _characters.crowd
 	var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
 	printerr("city_bench: crowd %d cowers (%d at a death), %d trips, %d deaths" % n)
-	get_tree().quit(0 if ok else 1)
+	var us: Array[int] = [c.cost_us / maxi(c.cost_calls, 1), c.cost_max_us, c.cost_calls]
+	printerr("city_bench: crowd observe mean %d us, worst %d us over %d calls" % us)
 
 
 ## Adds the TEL-03 hitch counts: over 25 ms, over 50 ms, and over 50 ms by cause.
