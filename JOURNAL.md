@@ -597,7 +597,7 @@ NEXT (unchanged; idle machine first):
 - 18:40 checked every evidence path REPORT cites: the 6 clips/graphs + frames.json in gtai-masters/d6/perf-city,
   evidence/perf (131 files incl. fight.sh), tools/bench/rt_recon.py and run.mjs. All present. No bench.lock held.
 - Appended to REPORT a Director summary: works / not proven / blocked (contention 13:50-18:30, ~4 h 40 min; the lint
-  command-line limit, ~20 min) / next steps. No code change, no bench.
+  command-line limit, 17:51-18:12 incl. the gate re-run) / next steps. No code change, no bench.
 
 NEXT (unchanged; idle machine first):
 - Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and

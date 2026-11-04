@@ -93,7 +93,7 @@ Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With v
 **Blocked:**
 - Machine contention from 13:50 to the 18:30 freeze (about 4 h 40 min): CPU 52-100 % from processes that were not the lane's. All
   uncontended re-measurement waited on that the whole time. The fixes were built and proven by pixel identity and draw counts instead.
-- The lint gate failed for about 20 min when the tree crossed the Windows command-line limit. Fixed in 95936dac (batched lint).
+- The lint gate broke when the tree crossed the Windows command-line limit. The fix and the gate re-run took 17:51-18:12 (about 20 min). Fixed in 95936dac (batched lint).
 
 **Next steps** (in order; same as JOURNAL NEXT):
 1. Take the bench lock on an idle machine. Export `windows` with fixes 1-5. Run `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3
