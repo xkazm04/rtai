@@ -1,0 +1,134 @@
+{
+  "$id": "gtai.signature_kills/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kills": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bounce": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "cone_deg": {
+            "maximum": 360,
+            "minimum": 0,
+            "type": "number"
+          },
+          "doc": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "flash_ticks": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "ground_drag": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "hitstop_ticks": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "launch_mps": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "pieces": {
+            "items": {
+              "enum": [
+                "head",
+                "torso",
+                "arm_l",
+                "arm_r",
+                "leg_l",
+                "leg_r"
+              ]
+            },
+            "type": "array"
+          },
+          "scorch_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "spin_dps": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "spray": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "style": {
+            "enum": [
+              "gib",
+              "blowback",
+              "burn",
+              "shock",
+              "split",
+              "hole",
+              "dissolve",
+              "burst",
+              "vaporise"
+            ]
+          },
+          "up_mps": {
+            "items": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "weapon": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc",
+          "id",
+          "style",
+          "weapon"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "leftover_budget": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.signature_kills/1"
+    }
+  },
+  "required": [
+    "doc",
+    "kills",
+    "leftover_budget",
+    "schema"
+  ],
+  "type": "object"
+}

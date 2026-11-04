@@ -16,6 +16,8 @@ var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
 ## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
 var plan: ArenaPlan = null
+## Fighter ids a signature kill consumed (lane brutality): their body is gibs now, no rig.
+var hidden: Dictionary[int, bool] = {}
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 ## Each fighter's last hurt tick already played as a HIT clip.
@@ -50,6 +52,8 @@ func _process(_delta: float) -> void:
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
+		if hidden.has(h.id):
+			continue
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
 	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M

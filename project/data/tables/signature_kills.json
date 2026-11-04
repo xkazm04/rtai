@@ -1,0 +1,40 @@
+{
+  "doc": "Lane brutality: the one-shot signature kills of the advanced weapons on humans (features/combat/kills). A row fires when a lethal hit from `weapon` lands on a human; style picks the kill (gib = the body blown into its rig parts). Speeds in m/s, spin in deg/s, timings in 60 Hz ticks. Under --gore=reduced no row dismembers: the victim falls with the standard death.",
+  "kills": [
+    {
+      "bounce": 0.35,
+      "cone_deg": 75,
+      "doc": "Rocket launcher: the body blown apart along the blast into its six rig parts (head with the hat, torso, both arms, both legs) that spin, bounce and slide, a red spray fan and ink splat, a scorch mark at the burst.",
+      "flash_ticks": 3,
+      "ground_drag": 6,
+      "hitstop_ticks": 4,
+      "id": "rocket_gib",
+      "launch_mps": [
+        5,
+        10
+      ],
+      "pieces": [
+        "head",
+        "torso",
+        "arm_l",
+        "arm_r",
+        "leg_l",
+        "leg_r"
+      ],
+      "scorch_radius_m": 1.3,
+      "spin_dps": [
+        360,
+        1080
+      ],
+      "spray": 18,
+      "style": "gib",
+      "up_mps": [
+        3,
+        6.5
+      ],
+      "weapon": "rocket_launcher"
+    }
+  ],
+  "leftover_budget": 12,
+  "schema": "gtai.signature_kills/1"
+}
