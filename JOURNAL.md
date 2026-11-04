@@ -279,3 +279,9 @@ NEXT (iteration 5), in order:
    `gloria,homing_shard,...` (slots: 1 sidearm, 2 long, 3 heavy, 4 thrown), 64 + 32 px/m, one sheet.
 5. Read brutality's JOURNAL: do they use `gore_*_top`? Re-check the X-ray strobe with the top-down sticker.
 6. A magazine part if rivet-arsenal REQUESTs it (reload readability).
+- MILESTONE 03:13 in-game lineup of the advanced guns in the claw (`--loadout=hand_cannon,ray_gun,mini_nuke`,
+  `gloria,homing_shard`): `it4-lineup-claw-adv-64-32ppm.png`, clip `it4-claw-loadC-64ppm.mp4`. With the core seven
+  (`it4-lineup-claw-64-32ppm.png`) every gun is now shown held in a live fight at 64 and 32 px/m. Melee weapons
+  are not carried (RivetCarry takes weapons.json guns only): their held parts stay in the iteration-1 lineup.
+  FINDING: ray gun and homing shard look alike along the arm (long, pale); at 32 px/m only the mini-nuke's
+  vermilion nose and the hand cannon's bulk survive. NEXT 1 (paper rim) + a silhouette pass on those two.
