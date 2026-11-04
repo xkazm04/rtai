@@ -1464,3 +1464,10 @@ NEXT (10:40 report phase):
 NEXT (10:40 report phase): unchanged from iteration 21. Re-check that the REPORT paths exist and
 frames.json parses (15 entries, all present at 10:08). After the freeze: the city flamethrower
 capture needs a side approach (bot entry from the east or west) so the panic run crosses the frame.
+
+## Iteration 23 (10:11-10:30, BUILD; 19 minutes to the freeze)
+- 10:16 the city flamethrower's top-edge death, no-code try: `ArenaPit._spawn_wave` rotates the
+  spawn point per wave (`points[(wave + i) % size]`), and the 21r capture (1500 frames) filmed
+  only kill 1 (tick 604; wave 2 spawned at the end). One longer capture (`TAG=w2`, 2400 frames,
+  48 px/m, same script `evidence/n12/city_lone_run.sh`) to see whether kill 2, from the next spawn
+  point, dies inside the frame's middle. Code head unchanged (70894746).
