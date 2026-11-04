@@ -72,9 +72,6 @@ the judging scale, real time, with the night's look on the left and now on the r
   inside the victim. The arm now draws over the victim (a grey bar across the blue chest at
   32 px/m), and the body now topples clear after the kill, but the approach still overlaps.
   Spacing between fighters is sim/AI (a replay change), so it is not touched.
-- **The 32 px/m overview reel predates the melee death** (`all_notes_ab_32ppm`: the claw and
-  baton chapters show the old X-sprawl on both sides); `claw_death_ab_48ppm_64slow_32` has the
-  32 px/m A/B.
 - **Quest 1 shows none of this lane's work.** Rivet fights with the pistol there.
 - **The electro chain is filmed in the arena only.** The city pit spreads its cops beyond the
   chain's jump range.

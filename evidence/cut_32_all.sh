@@ -13,7 +13,7 @@ while read -r c f0 f1 x y cap; do
   V="trim=start_frame=$f0:end_frame=$f1,setpts=PTS-STARTPTS,crop=640:360:$x:$y"
   ffmpeg -loglevel error -y -i r32_${c}_before.avi -i r32_$c.avi -filter_complex \
   "[0:v]$V,$(lab BEFORE)[b];[1:v]$V,$(lab AFTER)[a];[b][a]hstack,drawtext=fontfile=$FONT:text='32 px per m real time - ${cap//_/ }':x=(w-tw)/2:y=h-34:fontsize=20:fontcolor=white:box=1:boxcolor=black@0.6:boxborderw=6,fps=60,format=yuv420p" \
-  -c:v libx264 -crf 18 -preset medium $T/$i.mp4
+  -an -c:v libx264 -crf 18 -preset medium $T/$i.mp4
   echo "file '$T/$i.mp4'" >> $T/l.txt
   i=$((i+1))
 done < "${LIST:-/dev/stdin}"
