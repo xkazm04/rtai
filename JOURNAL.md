@@ -721,13 +721,30 @@ NEXT (iteration 10), in order:
 - frames.json 15: it10 molotov clip + A/B first, then the it10 kinetic clip + strip, then it9/it8/it6. Dropped the
   Gloria A/B still (its clip stays) and the ray lightning-vs-rings clip (the A/B/C still stays).
 
+- MEASURE 06:19 (two hypotheses for the dark held guns, both refuted):
+  (a) Tone: per-pixel print bands (cream < 0.30 ink density, solid > 0.78, wash between, vermilion where r leads by
+  62) are the SAME for the guns as for Rivet's parts: pistol 26/41/30 % cream/wash/solid, machine pistol 11/48/36,
+  hand cannon 18/53/28, Gloria 25/52/24; Rivet's claw 6/56/33, helmet 4/58/32. So the guns are not darker art.
+  (b) Material kind: the held sprite as `PartKind.LIMB` instead of `PART` (one token in rivet_held_view.gd:58,
+  local edit, reverted, not committed; same-tick A/B at 48 px/m, ticks 150-622):
+  `evidence/weapon-art/it10-held-part-vs-limb-48ppm-2x.png`. LIMB prints the gun MORE solid (the limb LOD prints
+  solid ink at gameplay scale). Rejected.
+  Left: minification. The held art is drawn at about 0.1 of its 330-494 px source (34-45 px on screen at 48 px/m),
+  so the paper tape, rivets and slots average into a mid-dark blend that the print posterizes toward ink. Rivet's
+  parts are drawn larger relative to their sources.
+
 NEXT (iteration 11), in order:
-1. Held-weapon tone in the print (FINDING 06:15): a tools/art pass that lifts each `held.png` (and `held_empty`,
-   the mags) into the print's light-steel band while keeping the ink lines and darkest accents (the grip tape, the
-   muzzle), so the PART material prints the gun's inner shapes the way it prints Rivet's arms. Bake it as a new
-   `held_print.png` with a `weapon_art.json` field (the old art stays the alternative, one value). Judge it as a
-   same-tick A/B with the it10 command above at 48 px/m (strip ticks 150/418/622/852) and at 32 px/m. Do not touch
-   rivet_held_view.gd (rivet-arsenal's); if a material change is needed instead, REQUEST it there.
+1. Held guns in the claw read as one dark lozenge at 48 px/m (FINDING 06:15, MEASURE 06:19). Try in this order,
+   each a same-tick A/B with the it10 command (`--rigs --ppm=48 --start=pit --bot=arsenal --loadout=pistol,
+   machine_pistol,hand_cannon,gloria --clean --quit-after 640`, strip ticks 150/210/418/466/610/622; run before
+   and after in parallel, swap the file once the first run has 15 frames):
+   (i) a small-scale held cell per gun (`held_small.png`, about 64-96 px long, drawn by a tools/art script from the
+   held part: ink outline + flat steel fill + the one unique feature in paper: the SMG feed box, the hand cannon's
+   drum bands, Gloria's bulb and coil, the pistol's taped grip) that WeaponArt.make_held picks below a px/m
+   threshold. Data: a `weapon_art.json` field; alternative = absent field.
+   (ii) If (i) is not enough, the print's `px_scale` for weapons only (a REQUEST to rivet-arsenal or d5-cast, not
+   my file).
+   Do not edit rivet_held_view.gd (rivet-arsenal's).
 2. Re-film the kinetic clip on the city block once rivet-arsenal's c912aec2 (rigs on the city path) is in my
    branch or main. `--arena=city` without `--rigs` draws quest 1's sprite with no gun.
 3. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): still unanswered.
