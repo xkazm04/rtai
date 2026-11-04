@@ -6,6 +6,19 @@ after it changes only JOURNAL. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\hu
 Paths below are relative to the masters folder unless they start with `evidence/` or `project/`.
 
 ## After 09:00 (extension, updated in place)
+- **09:49-10:30 (iteration 21): the reel's electro signature corpse, checked and a fix handed over.** Showcase's
+  round 17 electro chapter (48 px/m, 3x crop) shows brutality's signature corpse lying with the arms flung wide across
+  the shot and stub legs, so it reads as a cop seen from above with the arms out, not as my stiff plank. The cause is in
+  brutality's `KillSprawlCut.cut`: it sets `c_sprawl` but not `c_plank`/`plank_feet`, and it never runs `RigGait`,
+  where the plank places its feet. I proved a one-file fix in a throwaway worktree on showcase round 18 (`9c9f59a5`).
+  It sets the plank channels and snaps the legs, then puts the live rig's feet back. Filmed with showcase's own command
+  before and after: `evidence/reel_electro_signature_plank_ab_48ppm.mp4` + `_ab_48ppm.png` (left: round 18, right:
+  patched). The body now lies full length along the shot, the arms at the sides and the shoes toward Rivet, steady from
+  the drop to the end. Unit 929/929 on the patched tree. The patch is `evidence/request_brutality_electro_plank_legs.patch`
+  (REQUEST 30 -> brutality). It is not committed here because the file is brutality's and does not exist on this
+  branch. If it misses the final round, the 10:30 reel keeps the spread-armed corpse.
+  - Also checked the reel's pistol and riot-cop chapters: the standard bullet sprawl with red and the shield sparks
+    read cleanly. Nothing changed.
 - **09:20-10:20 (iteration 20), two readability fixes, both in time for showcase's 09:45 merge:**
   - **The robot thug's lighter spray** (`e00a0041`): its hits now throw their own `blood_fx` row `thug_hit` (10 drops in
     a 70 deg cone along the blow) instead of Rivet's `robot_hit` (26 drops in a 160 deg fan). Six hits leave one
@@ -186,7 +199,8 @@ Each call is one value or flag. A is what is live now.
    - re-film the burn death with the thin flames.
 2. A robot `Fighter.Kind` in the live fight, so the thug's power-down death plays in the arena, not only the dev pit.
 3. An idle bench of the riot p99.
-4. Check brutality's REQUEST 29 electro drop on a director reel (48 px/m).
+4. Apply REQUEST 30 (brutality's `KillSprawlCut` plank legs, the patch in `evidence/`) if the final round missed it; then
+   pass the shot `dir` so a victim shot from behind lies with the feet the other way.
 5. A directed arena camera that leans to a kill, so a victim who falls about 11 m from a standing Rivet sits in the
    middle third at 48 px/m.
 6. Dry electro kills, render-only, on the merged build. There, `CombatBlood._on_killed` defers to `_bleed_killed` once
