@@ -6,13 +6,14 @@ extends Node2D
 ## charred brown, and an inner bright lip. The ring is a child of the body (it falls with it).
 ## No RNG.
 
-const HOLE_M: float = 0.2
-const GLOW_TICKS: int = 90
+const HOLE_M: float = 0.26
+const GLOW_TICKS: int = 150
 const MASK_PX: int = 64
 const MASK_M: float = 2.0
 const INK: Color = Color(0.07, 0.06, 0.07)
 const HOT: Color = Color(1.0, 0.96, 0.78)
 const COOL: Color = Color(0.3, 0.2, 0.14)
+const EMBER: Color = Color("#E9A23B")
 ## The drop (showcase REQUEST 21): the victim stands LOOK_TICKS after the hit-stop, looking at the
 ## hole, then falls flat back along the shot over TOPPLE_TICKS (eased in, like a fall). Seen
 ## straight down, a fall reads as the body laid out along the shot: it slides back FALL_M, stretches
@@ -114,3 +115,5 @@ func _draw() -> void:
 	draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
 	draw_arc(Vector2.ZERO, radius_px + 2.0, 0.0, TAU, 24, INK, 3.0, true)
 	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.3, 2.0), true)
+	# a thin ember lip that never quite goes out, so the hole still reads at 32 px/m once cooled
+	draw_arc(Vector2.ZERO, radius_px * 0.82, 0.0, TAU, 24, Color(EMBER, 0.9 - 0.45 * k), 1.5, true)
