@@ -852,3 +852,31 @@ NEXT (iteration 10, in order):
 - gunplay-13: the kill spray's least turn off the blow, 6 deg (default; human-reactions' number)
   vs a wider floor. Evidence: `evidence/n9/blood_spray_floor_ab.png` (four kills due south, 0 vs 6
   deg: the change is subtle). One value: blood_fx.json game.spray_tilt_min_deg.
+- 06:40 MEASURE riot + drive on 31948cc2 under bench.lock (06:27-06:39, `node tools/bench/run.mjs`,
+  log `evidence/n9/bench.log`, raw `evidence/n9/bench/`), heavily CONTENDED (two other lanes'
+  windowed Godot runs up the whole time): riot p99 CPU 13.09 ms (it9 7.09), 1 % low 42 fps (it9
+  99), combat blood 132 us a frame (it9 57) = 1.0 % of the p99; the blood's work is the same as it9
+  (3400 drop draws / 599 pool draws vs 3442 / 601), so its time doubled with the machine, not with
+  a change. Drive p99 3.53 ms (it9 3.73), drive48 3.36 ms (3.63); rigs p99 1.15 ms. Summary line p99
+  13.09 ms MISSES p99CpuMs and low1Fps (exit 1, as every contended run). Not a number of record:
+  the idle riot bench stays the Director's at the merge. Brief item 5's finding stands: the blood
+  is about 1 % of the riot frame.
+- Session end ~06:42: every Godot run of mine was foreground or a finished background job and has
+  exited; bench.lock released by the bench job (06:39); no image.lock taken. Scratch
+  (gtai-n4/scratch/gp) holds only cap.sh, city.sh, reel.sh, grid.py, sheet.py, killsheet.py.
+  frames.json: 15 entries, every file checked to exist.
+- Gates of record at a857bfe1: lint 13/13 (pre-commit hook), unit 736/736 (`evidence/n9/unit-f.log`,
+  at 31948cc2; a857bfe1 changes a station doc string only), scenarios 29/29
+  (`evidence/n9/scenarios-b.log`, at 31948cc2). Parity not re-run: no native or city-sim file
+  changed this iteration (last bit-exact run it5, `evidence/n4/parity-l.log`).
+
+NEXT (iteration 11, in order):
+1. REPORT: calls gunplay-7..13 with their clips (JOURNAL "Calls for the owner" sections); the
+   frames.json top three are the fight-cam six-gun reel, its still and the unique kill sheet.
+2. If human-reactions cherry-picks 269deba4 and still sees columns on their board: raise
+   spray_tilt_min_deg (one value) and re-shoot evidence/n9's A/B.
+3. A 32 px/m city clip per gun is in MASTERS for pistol, rocket, flamethrower, molotov, electro
+   (city9_*) and the uniques (city_*_block_32ppm); machine pistol's city clip is
+   city_mpistol_block_32ppm (older, pre flank bot): re-shoot it fresh if time allows.
+4. The idle riot bench of record stays the Director's (two contended runs tonight: 7.09, 13.09 ms;
+   blood 0.8-1.0 % of the p99 both times).
