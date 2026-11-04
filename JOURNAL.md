@@ -774,3 +774,51 @@ NEXT (iteration 11):
   brutality 1/1, look goldens 11/11 (59429978). No Godot process of mine left running. Scratch
   gtai-n4/scratch-brutality/it10 (frame dumps, not referenced) left for deletion: the tool blocks rm
   on that folder.
+
+## Iteration 11 (07:14-08:14, BUILD, the last before the 08:30 freeze)
+- 07:15 read JOURNAL, git log, the lanes' JOURNALs. Open to brutality: showcase REQUEST 26 (ray pile
+  reads as a round cream token), 27 (molotov victim hidden under the fire-patch stars), 28 (plasma
+  topple null on the city block).
+- REQUEST 28: already DONE by 584b3f77 (it10, 07:06): `Topple.pose` returns when the body has no
+  child 0 (exactly showcase's suggested guard, kill_hole_fx.gd:83-85). NOTE -> showcase: no glue needed.
+- REQUEST 27 -> not mine to draw: the fire patch is FightAreasArt._patch, drawn by fx_view at the
+  `fx` band (z 400 on the actors canvas); the kill view sits at `actors - 1` (z 99) with its char
+  overlay at +4. Lifting the corpse to z 400 would lift every gib over vehicles and roofs.
+  REQUEST 29 -> gunplay (cc showcase): in `FightAreasArt._patch`, skip (or shrink to 0.3x) the fire
+  stars whose centre is within 0.5 m of a corpse older than 60 ticks; brutality exposes the corpse
+  spots as `SignatureKills.marks` (KillMarks rows with the kill tick). If not in by the merge,
+  showcase's suggested z option is NOT safe (see above); the thin-stars option is.
+- MILESTONE 07:30 REQUEST 26 answered (render + one data column): the ray gun's remains are now
+  KillDustPile (new file): a lumpy hashed heap drawn out along the ray (1.24 m x 0.52 m, blown
+  0.22 m downstream), a darker drift on its far side so it reads as a mound, an ink under-print in
+  the heap's own shape (no circle anywhere), the empty uniform crumpled flat across its near half
+  with ink fold lines, ink crumbs and cooling sparks scattered along the ray. The round thing that
+  read as "a cop seen from above" was the cap gib lying on the pile: new optional row column
+  `hat_kick_mps` (signature_kills schema; ray row 1.8) throws the hat alone off to one side of the
+  shot (alternating by kill serial; no extra dice, so the RNG stream is unchanged), so it lands
+  ~0.5 m off the heap on bare street. Sim note: only ray kills' hat positions change (in the world
+  hash); every other row has kick 0.
+- DECISION brutality ray remains: an elongated heap along the ray with the cap knocked aside, over
+  showcase's "uniform crumpled flat and cap half a metre off" both taken; rejected keeping the cap on
+  the pile (it is the token). Alternative = `hat_kick_mps: 0` (one data value).
+- Clips 07:32 (looked at the crops/sheets: evidence/brutality/ray-remains-city-64ppm-it11-sheet.png,
+  ray-remains-city-32ppm-it11-crops.png): ray gun on the city block, cast rigs, start:-22,0, 48 px/m
+  real time, 32 px/m real time, 64 px/m 0.4x; 0 script errors each. The remains now read as the
+  blue uniform on a pale dust drift along the ray with the cap lying aside on bare street.
+  Committed 9c9aaabf (+ test_kill_dust_pile 2/2: the ray row kicks, the cap lands > 0.3 m to the
+  side and < 2 m away).
+- MILESTONE 07:38 NEXT 5 (70af17b3): plasma hole 0.2 -> 0.26 m, the bloom cools over 150 ticks,
+  a thin gold ember lip stays lit. City block 32 px/m and 64 px/m 0.4x (0 script errors): the lying
+  cop keeps a ringed hole to the end of the clip (evidence/brutality/plasma-hole-city-32ppm-it11-sheet.png).
+  Showcase's "plasma victim is a dark blob at 64" is partly this: the hole now has a lit rim.
+- GATES 07:37 (private APPDATA, CONTENDED): lint 13/13 (pre-commit, both commits); unit 787/787
+  (on 9c9aaabf's tree); scenarios --filter=brutality 1/1, --filter=gunplay 2/2 (the gunplay fight
+  fires the ray gun: no golden moved by the cap kick); full suite 35/35 on the 70af17b3 tree
+  (evidence/brutality/scenarios-it11.log).
+- Masters frames.json 07:40: four new city entries on top (ray 64 slow, ray 32, plasma 32, plasma
+  64 slow); dropped the old ray solo, the it9 plasma solo, the it8 claw-shock and the nuke 32 (the
+  nuke 48 and 64 stay). 15 entries.
+- Registry rules applied: motion-quality-gating (judged on the frames at all three zooms before each
+  commit; rejected the first heap pass because the cap still sat on it); depth-ordered-layered-art
+  (the heap's ink under-print, the drift, then the cloth and the cap on top, not one disc);
+  realtime-combat-semantics (the cap kick is on the 60 Hz gib sim with no new dice).
