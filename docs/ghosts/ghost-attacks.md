@@ -16,6 +16,16 @@ Base Rivet for comparison: pistol / claw, one human per hit, robots in 4-6 hits.
 Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):
 - Tonnage: 10 of 10 down (3 + riot + car, far pair, wave 2 of 3 + riot + car), 2 slams, 2 cars crushed,
   1 activation of 8 s, Rivet never under 92 hp (`evidence/ghosts-tonnage-32.json`).
-- Dent: see JOURNAL (filled when the clip lands).
+- Dent: 5 of 5 down (2 struck in group A, 2 struck + 1 gibbed in group B), 1 seize, 1 blast, the car stopped on
+  the wall line (`evidence/ghosts-dent-32.json`, `scenario_ghost_attacks`).
 
 Madness cost and cooldowns are unchanged from powers.json tonight (Tonnage 25 / 20 s, Dent 15 / 12 s).
+
+## Planned (not built yet): Kerf and Ohm
+
+| Ghost | Role | Attack | Damage | Reach | Cadence | Humans | Robots | Cars |
+|---|---|---|---|---|---|---|---|---|
+| **Kerf** | the assassin: pick one target out of a group | dash (fire while moving) | 0 | 4 m blink | 0.6 s | | | |
+| | | blink-slice (melee on a target in a 9 m cone) | 99 human / 4 robot | blink to 0.8 m behind the target along a straight teal line | chain of 3, one charge back per 1.5 s | one-shot (brutality split, teal-white cauterised edge) | thug in 2 | no |
+| **Ohm** | the machine killer | forked bolt (fire) | 1 human (+ 1.2 s stun) / 2 x machine_k 3 = 6 robot or car | 11 m, forks to 2 more within 3 m | 0.5 s | stun, burns, then the electro X-ray kill in teal | thug in 1 | 6 of 100 per bolt |
+| | | mass (upgrade_tier 1, data hook only) | as single | arcs to up to 6 machines within 8 m | | | | |
