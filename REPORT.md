@@ -6,7 +6,8 @@ time for another reel before the 08:30 freeze. Round 15 adds only small fixes, n
 showcase lane: the molotov's glass slivers and inked scorch patch (weapon-art), long guns and tubes
 carried beside Rivet's helmet instead of across his face (rivet-arsenal), no stuck homing shards on
 a corpse (gunplay), a steadier blade solo frame (brutality) and `--armored=k` in the arena
-(human-reactions). Each owning lane filmed its fix in its own clips.
+(human-reactions). Each owning lane filmed its fix in its own clips; the showcase lane filmed the molotov and the
+rocket on round 15 in **reel-0821-r15-close64** (64 px/m, 0 script errors).
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -49,6 +50,7 @@ city block loads with the loadout.
 | reel-0751 | morning reel on round 13, 122 s, 0 script errors; ray gun dust heap, molotov victim in the opened fire |
 | reel-0756-close64 | 64 px/m close-ups on round 13: molotov, ray gun, rocket, mini-nuke, flamethrower |
 | **reel-0808** | **the final morning reel on round 14 (the exe's build), 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
+| reel-0821-r15-close64 | round 15 (the exe build), 64 px/m: the molotov's glass slivers and inked scorch patch; the rocket tube carried at Rivet's side; 0 script errors |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 

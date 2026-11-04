@@ -1118,3 +1118,9 @@ NEXT (morning / Director): the n-showcase tip is the merged, gated build of all 
 human-reactions answer DeathPose.stiff_channels is in its JOURNAL, but the corpse is not verified
 in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session films round 15 first
 (cut.sh + reel.sh) and benches it under bench.lock.
+- MILESTONE 08:21 reel-0821-r15-close64 (masters, frames.json 2nd entry): `cut.sh` molotov +
+  rocket_launcher at 64 px/m on round 15 (46 s render, 0 SCRIPT ERRORs). Checked
+  (evidence/r15/sheet-molotov.jpg, sheet-rocket.jpg): weapon-art's cream glass slivers fly out of
+  the burst and the patch now burns an inked scorch that fades to grey smoke. The burst's ring
+  glue held (no ring on a molotov patch). Still wrong: the molotov victim does not read inside the
+  fire mid-chapter (REQUEST 27's remainder), and the rocket's thrown parts leave the 64 px/m frame.
