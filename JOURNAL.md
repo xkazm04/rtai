@@ -537,3 +537,6 @@ NEXT (report slot 18:40; freeze 18:30):
 - The blood's script cost in the riot is left (headless editor, per tick): drop step 540-840 us (wall test ~2 us a drop through 4
   GDScript calls), CorpseStains 210-260, resolve 150-200. Next lever: give BloodFx a solid-cell grid (from the resident chunks'
   cells) so the wall test needs no calls. Identity holds by construction (native cell_at = memcpy of the same cells).
+- 18:12 MILESTONE: fix 5 on the owner's city fight (reel ch 18, fight.sh, editor, 2100 ticks, 0 script errors): draw calls a frame
+  (ticks > 120) **534.7 -> 442.9** (-17 %), p50 572 -> 477, max 704 -> 581. Before = rt7-warm-1 / t2019-warm (fixes 1-4, 534.7 both).
+  Draw calls are a count, so this holds under load. Fixes 1-5 together: 557 -> 443 a frame. NEXT's "fix 5 not measured on the city fight" is done.

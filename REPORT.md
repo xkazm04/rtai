@@ -33,12 +33,12 @@ that is CONTENDED, and the post-fix uncontended re-check is **still owed**.
 | 1 | ArenaFloorView prints the city block's static props and crowd rings once | floor _draw 1.01 -> 0.61 ms a frame | 420 frames identical |
 | 2 | ArenaFloorView culls off-screen target rings and tracks (3 m margin) | floor 0.57 -> 0.25 ms | 420 frames identical |
 | 3 | FxGround: gun ground marks retained, one child per mark, redrawn only while fading | FxView 0.74 -> 0.41 ms, FxView p99 2.4 -> 0.7 | 900 frames identical |
-| 5 | CorpseStains: each corpse soak prints in one draw call (CircleFan, the engine's circle fan as one triangle array) | riot: 1759 -> 673 draw calls a frame (load-independent), render CPU 1.38 -> 0.73 ms | 921600 px identical; test_circle_fan 4/4 |
+| 5 | CorpseStains: each corpse soak prints in one draw call (CircleFan, the engine's circle fan as one triangle array) | riot: 1759 -> 673 draw calls a frame (load-independent), render CPU 1.38 -> 0.73 ms; city fight (reel ch 18): 535 -> 443 draw calls a frame | 921600 px identical; test_circle_fan 4/4 |
 | 4 | RivetHeldView.warm(): the carried guns' art loads at load, not on the first draw | tick 2019 process 9.9-19.2 -> 2.7 ms (the spike was in 18 of 18 logs); tick 1528 5.6-8.5 -> 2.8 (editor 22.0 -> 3.3) | 512 frames identical; test_rivet_held_warm 3/3 |
 
 Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With vsync on, the canvas flush fell
-2.06 -> 0.86 ms a frame, and frames that skip or repeat a tick (the visible stutter) went from 13/8 to 6/5 per 35 s. Draw calls a frame
-(a count, not affected by load): 557 -> 534 (-4 %). Most of the gain is GDScript canvas work, not GPU batches.
+2.06 -> 0.86 ms a frame, and frames that skip or repeat a tick (the visible stutter) went from 13/8 to 6/5 per 35 s. Draw calls a frame on the city fight
+(a count, not affected by load): 557 -> 534 with fixes 1-3, -> 443 with fix 5 (-20 % in all). Most of the gain is GDScript canvas work, not GPU batches.
 
 ## The hitches (424 ms worst, 50 ms hitches in r19)
 - Every mid-fight hitch logged over 33 ms was in the **draw/present phase**: render CPU < 1 ms, game
