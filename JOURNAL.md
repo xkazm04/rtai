@@ -172,3 +172,4 @@ and the hybrid at 64 px/m (gib cuts use the new arm/leg parts: check the cut pie
 reel's 64 px/m close-up again on the final arms and legs, and the r2_c6 composite re-shot; (4) `tools/evidence/run.mjs
 --no-bench` on the head; (5) the REPORT's Calls for the owner (held-gun size on the slimmer Rivet; limb weight at
 32 px/m; the 3/4 vs plan camera gap).
+- 18:25 junction look goldens re-run on 6fb10e9a (the legs): 11/11, worst mean 0.57. NEXT (1) is now block only.
