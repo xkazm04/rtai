@@ -25,6 +25,11 @@ const FALL_M: float = 0.85
 const LIE_STRETCH: float = 0.55
 const LIE_NARROW: float = 0.12
 const LIE_TWIST: float = 0.35
+## The kick (combat-notes, "thrown back along the bolt"): on the hit tick the body snaps KICK_M back
+## along the shot, stretched KICK_STRETCH (the bolt's shove), and holds it while it looks; the
+## topple then carries it on to FALL_M. Off under --no-plasma-heat.
+const KICK_M: float = 0.3
+const KICK_STRETCH: float = 0.14
 ## Smoke out of the burned hole (owner note 2026-11-04: "hot and heavy"): SMOKE_PUFFS ash puffs
 ## rising out of the ring, each living SMOKE_CYCLE ticks, for SMOKE_TICKS after the hit (0 = none).
 const SMOKE_TICKS: int = 300
@@ -88,8 +93,10 @@ class Topple:
 		var axis: Vector2 = dir.normalized() if dir != Vector2.ZERO else Vector2.RIGHT
 		axis = axis.rotated(-body.rotation)  # into the body's frame (KillView turns it)
 		var turn: Transform2D = Transform2D(axis.angle(), Vector2.ZERO)
+		var kick: float = 1.0 - k if KillHoleFx.heat and tick >= born else 0.0
+		var stretch: float = LIE_STRETCH * k + KICK_STRETCH * kick
 		var lay: Transform2D = Transform2D(
-			0.0, Vector2(1.0 + LIE_STRETCH * k, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
+			0.0, Vector2(1.0 + stretch, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
 		)
 		var side: float = -1.0 if axis.y < 0.0 else 1.0
 		var twist: Transform2D = Transform2D(side * LIE_TWIST * k, Vector2.ZERO)
@@ -98,7 +105,7 @@ class Topple:
 		if inner == null:  # no rig was cut (the city block at 32 px/m): nothing to topple
 			return
 		var fall: float = FALL_M if KillHoleFx.heat else OLD_FALL_M
-		inner.transform = t2.translated(axis * fall * ppm * k)
+		inner.transform = t2.translated(axis * (fall * k + KICK_M * kick) * ppm)
 
 
 ## A white square with a transparent disc in the middle (HOLE_M of MASK_M).
