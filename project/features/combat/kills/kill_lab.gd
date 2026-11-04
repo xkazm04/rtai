@@ -36,6 +36,20 @@ const BACK_TICKS: int = 30
 const STRIKE_M: float = 1.0
 const BLADE_DAMAGE: float = 999.0
 const SOLO_OFF: Vector2 = Vector2(3.0, 0.4)
+## The solo pack for a blast that takes everyone in its radius (the mini-nuke): five guards in a
+## loose knot 8-10 m out, the first one the shell's target.
+const PACK: PackedVector2Array = [
+	Vector2(9.0, 0.4),
+	Vector2(8.0, -1.2),
+	Vector2(8.2, 1.9),
+	Vector2(10.2, -0.6),
+	Vector2(10.0, 1.5)
+]
+
+## The charged claw shock (--sig-gun=claw_shock): one guard in claw reach, Rivet holds the charge
+## SHOCK_HOLD ticks (past the full charge) and releases on him: a full-charge one-shot.
+const SHOCK_OFF: Vector2 = Vector2(1.5, 0.1)
+const SHOCK_HOLD: int = 66
 
 var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
@@ -50,6 +64,10 @@ var spread: bool = false
 ## Solo (the dev arg --sig-solo=x,y): Rivet stands at that arena point and one guard SOLO_OFF in
 ## front of him is the only victim, away from every station's dummy row; no refill.
 var solo: Vector2 = Vector2.INF
+## Solo with the PACK instead of one guard (a vaporise kill: one shell, several shadows).
+var pack: bool = false
+## Rivet's own charged shock (rivet-arsenal's PlayerShock), driven by the lab; null: he fires.
+var claw: PlayerShock = null
 var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
@@ -63,6 +81,8 @@ func setup(stage: ArenaStage) -> void:
 
 
 func step(stage: ArenaStage, tick: int) -> void:
+	if solo != Vector2.INF and blade.is_empty():  # the city block re-places Rivet after setup
+		stage.arena.rivet.pos = solo
 	for n: int in guards.size():
 		var g: Fighter = guards[n]
 		g.cooldown = HOLD_FIRE
@@ -72,6 +92,9 @@ func step(stage: ArenaStage, tick: int) -> void:
 			g.pos = spots[n] + (g.pos - spots[n]).limit_length(run)
 	if not blade.is_empty():
 		_step_blade(stage)
+	if claw != null:
+		_step_claw(stage, tick)
+		return
 	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY != 0:
 		return
 	var target: Fighter = _target()
@@ -111,6 +134,16 @@ func _step_blade(stage: ArenaStage) -> void:
 		_strike_t = -1 if k >= 1.0 else _strike_t
 
 
+## Holds the charge from FIRST_SHOT for SHOCK_HOLD ticks, facing the guard, then lets go.
+func _step_claw(stage: ArenaStage, tick: int) -> void:
+	var r: Fighter = stage.arena.rivet
+	if not guards.is_empty():
+		r.facing = (guards[0].pos - r.pos).normalized()
+	var held: bool = tick >= FIRST_SHOT and tick < FIRST_SHOT + SHOCK_HOLD
+	if claw.step(stage.arena, held, true, r.facing):
+		shots += 1
+
+
 func _burning(stage: ArenaStage, g: Fighter) -> bool:
 	var areas: FightAreas = stage.arena.areas
 	return areas != null and areas.fx.has(g.id) and areas.fx[g.id].burn_ticks > 0
@@ -131,7 +164,10 @@ func _line(stage: ArenaStage) -> void:
 	_next = 0
 	var line: PackedVector2Array = BLADE_LINE if spread or not blade.is_empty() else LINE
 	var origin: Vector2 = stage.plan.rivet_start if solo == Vector2.INF else solo
-	for off: Vector2 in PackedVector2Array([SOLO_OFF]) if solo != Vector2.INF else line:
+	var solo_line: PackedVector2Array = PACK if pack else PackedVector2Array([SOLO_OFF])
+	if claw != null:
+		solo_line = PackedVector2Array([SHOCK_OFF])
+	for off: Vector2 in solo_line if solo != Vector2.INF else line:
 		var g: Fighter = stage.arena.spawn_guard(origin + off)
 		g.pos = origin + off
 		g.cooldown = HOLD_FIRE

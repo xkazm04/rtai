@@ -23,8 +23,8 @@ static func scorch(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
 		halo.append(c + Vector2.from_angle(a) * m.scorch_m * ppm * jag)
 		@warning_ignore("return_value_discarded")
 		core.append(c + Vector2.from_angle(a) * m.scorch_m * ppm * 0.42 * (0.8 + 0.2 * jag))
-	ci.draw_colored_polygon(halo, SOOT)
-	ci.draw_colored_polygon(core, Ink.INK)
+	KillPoly.fill(ci, halo, SOOT)
+	KillPoly.fill(ci, core, Ink.INK)
 
 
 static func spray(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
@@ -48,12 +48,12 @@ static func blot(ci: CanvasItem, c: Vector2, r: float, phase: float) -> void:
 		var lobe: float = 0.72 + 0.28 * sin(a * 4.0 + phase) + (0.18 if k % 3 == 0 else 0.0)
 		@warning_ignore("return_value_discarded")
 		pts.append(c + Vector2.from_angle(a) * r * lobe)
-	ci.draw_colored_polygon(pts, BLOOD_DARK)
+	KillPoly.fill(ci, pts, BLOOD_DARK)
 	var inner: PackedVector2Array = PackedVector2Array()
 	for p: Vector2 in pts:
 		@warning_ignore("return_value_discarded")
 		inner.append(c + (p - c) * 0.82)
-	ci.draw_colored_polygon(inner, BLOOD)
+	KillPoly.fill(ci, inner, BLOOD)
 
 
 ## A drag smear: blots along the slide, fat where the part landed and thinning to its rest,
@@ -77,7 +77,7 @@ static func flash(ci: CanvasItem, m: KillMarks.Mark, age: int, ppm: float, hold:
 		var r: float = (1.6 if k % 2 == 0 else 0.8) * ppm * grow
 		@warning_ignore("return_value_discarded")
 		pts.append(c + Vector2.from_angle(TAU * float(k) / 24.0 + 0.2) * r)
-	ci.draw_colored_polygon(pts, Ink.CREAM if age < hold else SOOT)
+	KillPoly.fill(ci, pts, Ink.CREAM if age < hold else SOOT)
 	@warning_ignore("return_value_discarded")
 	pts.append(pts[0])
 	ci.draw_polyline(pts, Ink.INK, maxf(2.0, ppm * 0.08))

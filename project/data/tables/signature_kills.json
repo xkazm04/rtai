@@ -96,6 +96,9 @@
       "weapon": "burn"
     },
     {
+      "also_weapons": [
+        "claw_shock"
+      ],
       "bounce": 0.1,
       "cone_deg": 10,
       "doc": "Electro gun: the bolt locks the victim in a stiff convulsion while an X-ray flash strobes his skeleton (weapon-art's sticker) inside cream arcs, then he drops stiff along the shot, scorched, smoke rising from the collar. No blood. Under --reduced-motion no strobe and no shake.",

@@ -22,16 +22,8 @@ var gib_layer: Node2D = Node2D.new()
 var ground: Node2D = Node2D.new()
 ## The smears of the kills whose parts still slide (redrawn every frame while any moves).
 var fresh: Node2D = Node2D.new()
-## The burn char (smoke, embers, ash flakes) over the burnt bodies.
-var char_fx: KillCharFx = KillCharFx.new()
-## The electro kill (convulsion, X-ray strobe, stiff drop, collar smoke).
-var shock_fx: KillShockFx = KillShockFx.new()
-## The blade kill's slash streak (the halves themselves are KillSplitFx.cut groups).
-var split_fx: KillSplitFx = KillSplitFx.new()
-## The ray gun kill (the body eaten by rings into a glowing dust pile and its empty clothes).
-var dissolve_fx: KillDissolveFx = KillDissolveFx.new()
-## The homing shard kill (shards stuck in the frozen body, the red mist at the pop).
-var burst_fx: KillBurstFx = KillBurstFx.new()
+## The per-style overlays (char, X-ray, blade streak, dissolve, shard burst) and the cut dispatch.
+var styles: KillStyles = KillStyles.new()
 ## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
 ## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
 var frames: int = 0
@@ -66,29 +58,8 @@ func bind(p_kills: SignatureKills) -> void:
 	add_child(fresh)
 	gib_layer.z_index = 3
 	add_child(gib_layer)
-	char_fx.kills = kills
-	char_fx.ppm = ppm
-	char_fx.reduced_motion = reduced_motion
-	char_fx.z_index = 4
-	add_child(char_fx)
-	shock_fx.kills = kills
-	shock_fx.ppm = ppm
-	shock_fx.reduced_motion = reduced_motion
-	shock_fx.z_index = 40  # the X-ray over the living rigs crowding the victim (parts reach +30)
-	add_child(shock_fx)
-	split_fx.kills = kills
-	split_fx.ppm = ppm
-	split_fx.reduced_motion = reduced_motion
-	split_fx.z_index = KillSplitFx.HELD_Z + 5  # over a body held on the saw (gib_layer + HELD_Z)
-	add_child(split_fx)
-	dissolve_fx.kills = kills
-	dissolve_fx.ppm = ppm
-	dissolve_fx.reduced_motion = reduced_motion
-	dissolve_fx.z_index = 4
-	add_child(dissolve_fx)
-	burst_fx.bind(kills, ppm, reduced_motion)
-	burst_fx.z_index = 40
-	add_child(burst_fx)
+	styles.bind(kills, ppm, reduced_motion)
+	add_child(styles)
 
 
 func _process(_delta: float) -> void:
@@ -107,13 +78,10 @@ func _process(_delta: float) -> void:
 		node.rotation = g.ang[i] - _ang0[i]
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
-	char_fx.pose()
-	shock_fx.pose()
-	split_fx.pose()
-	dissolve_fx.pose()
+	styles.pose()
 	_track_moving()
 	for kg: KillGround in _grounds.values():
-		if kg.heap_growing(kills.tick):
+		if kg.needs_reprint(kills.tick):
 			kg.queue_redraw()
 	queue_redraw()
 	_frame_us = Time.get_ticks_usec() - t0
@@ -209,12 +177,7 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
 	_groups[serial] = groups
 	if row.spray == 0:
 		_dry[serial] = true
-	if row.style == &"burn" or row.style == &"vaporise":
-		char_fx.add(serial, groups[SignatureKill.BODY], row)
-	elif row.style == &"shock":
-		shock_fx.add(serial, groups[SignatureKill.BODY], row, dir)
-	elif row.style == &"dissolve" and groups[SignatureKill.BODY] != null:
-		dissolve_fx.add(serial, groups[SignatureKill.BODY], row, at)
+	styles.take(serial, groups[SignatureKill.BODY], row, at, dir)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.kill_of[i] == serial:
@@ -268,28 +231,12 @@ func _drop_unused() -> void:
 			_groups.erase(serial)
 			@warning_ignore("return_value_discarded")
 			_dry.erase(serial)
-			char_fx.forget(serial)
-			shock_fx.forget(serial)
-			split_fx.forget(serial)
-			dissolve_fx.forget(serial)
+			styles.forget(serial)
 
 
-## The victim's parts by the row's style: the gib or whole-body cut, the blade's two halves, or
-## the body with the plasma hole punched through.
+## The victim's parts, cut by the row's style (KillStyles.parts).
 func _parts(
 	victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2
 ) -> Array[Node2D]:
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
-	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
-	var groups: Array[Node2D] = (
-		KillSplitFx.cut(rig, dir, ppm, row.spray == 0)
-		if split
-		else GibCut.parts(rig, row.whole_body(), ppm)
-	)
-	if row.style == &"split":
-		split_fx.add(serial, at, dir, row, groups)
-	elif row.style == &"hole" and rig != null:
-		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], kills, ppm)
-	elif row.style == &"dissolve" and rig != null:
-		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
-	return groups
+	return styles.parts(rig, serial, row, at, dir)

@@ -50,8 +50,13 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab.blade = weapon if blade else &""  # a split row's weapon is a blade (the plasma sword)
 	_lab.hold_ticks = row.hitstop_ticks + row.grind_ticks if row != null else 0
 	_lab.spread = row != null and row.style == &"dissolve"
+	_lab.pack = row != null and row.style == &"vaporise"
+	_lab.claw = PlayerShock.shipped() if weapon == PlayerShock.WEAPON else null
 	var solo: String = ArenaArgs.parse().text("--sig-solo")
-	if not solo.is_empty():
+	if solo.begins_with("start"):  # Rivet's start (+ start:dx,dy), the city block's frame
+		var d: PackedStringArray = (solo.trim_prefix("start").trim_prefix(":") + ",").split(",")
+		_lab.solo = stage.plan.rivet_start + Vector2(d[0].to_float(), d[1].to_float())
+	elif not solo.is_empty():
 		var xy: PackedStringArray = solo.split(",")
 		_lab.solo = Vector2(xy[0].to_float(), xy[1].to_float())
 	_lab.setup(stage)

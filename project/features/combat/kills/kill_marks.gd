@@ -19,6 +19,8 @@ class Mark:
 	## The burn char's ash heap (metres; 0 = none), grown in from tick + ash_from.
 	var ash_m: float = 0.0
 	var ash_from: int = 0
+	## Ticks after the kill before the spray prints (a burst sprays at the pop, not the hit).
+	var spray_from: int = 0
 
 
 const WALL_STEP_M: float = 0.15
@@ -45,6 +47,7 @@ func leave(
 	m.tick = tick
 	m.ash_m = row.ash_m
 	m.ash_from = row.hitstop_ticks + row.stand_ticks
+	m.spray_from = row.hitstop_ticks + row.grind_ticks if row.style == &"burst" else 0
 	var cone: float = row.spray_cone_deg if row.spray_cone_deg > 0.0 else row.cone_deg
 	var half: float = deg_to_rad(cone) * 0.5
 	for n: int in row.spray:

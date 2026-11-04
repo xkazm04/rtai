@@ -170,3 +170,10 @@ func test_spray_stops_at_a_wall() -> void:
 	for d: Vector3 in open.marks.marks[0].drops:
 		past += 1 if d.x > 1.0 else 0
 	assert_gt(past, 0, "planted: with no wall the spray crosses x 1 m")
+
+
+func test_the_charged_claw_shock_takes_the_electro_kill() -> void:
+	var table: SignatureKillTable = SignatureKillTable.load_table()
+	var row: SignatureKill = table.for_weapon(&"claw_shock")
+	assert_not_null(row)
+	assert_eq(row.id, &"electro_shock")
