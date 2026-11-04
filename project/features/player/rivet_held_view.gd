@@ -59,6 +59,9 @@ func _process(_delta: float) -> void:
 		return
 	if id != _shown:
 		_swap(id, pilot.hold.held)
+	if arena != null and arena.gun != null and arena.gun.trigger.spec.id == pilot.hold.held:
+		var t: Trigger = arena.gun.trigger
+		HeldTube.apply(_sprite, art, id, HeldTube.is_empty(t.ammo, t.spec.magazine, rig.reload_k))
 	rig.plan.hand_pistol = rig.plan.hand_closed
 	var hand: Sprite2D = rig.sides[rig.plan.gun_arm].hand
 	var tex: Vector2 = hand.texture.get_size()
