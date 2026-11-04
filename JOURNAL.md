@@ -554,3 +554,17 @@ NEXT (iteration 8, in order):
   05:33 run, so the blast change moved nothing); the accent audit FAIL is the 48 px/m blood
   flicker rows that came with gunplay's spray tilt (see 05:33). Bench not run (render-only
   changes; the riot needs an idle machine). NEXT 1 is done; NEXT 2-3 stand.
+- b8a08137: unit test that the clip pass clears c_plank / c_kick (a pooled rig reused after a
+  stiff or twisted corpse stands normally). Unit 743/743.
+- 05:43 session close. Branch tip has everything; gtai-masters/n4/human-reactions/frames.json
+  15 entries, each file checked to exist. No Godot process of mine left running.
+
+NEXT (iteration 8, in order):
+1. REQUEST 2 -> gunplay (the north/south spray column): read their answer; cherry-pick it.
+2. The electro death live: cherry-pick gunplay 0c0465fd (the charged shot, a one-hit electro
+   kill; touches weapons.json + schema, check for conflicts) and film the stiff corpse in the pit
+   at 32 and 64 px/m (`--rigs --bot=gunplay --weapon=electro_gun --start=pit --clean`).
+3. A street startle in the live city: the pit plaza empties before the cops die (1 startle in
+   30 s at 900 walkers). Try a station on a pavement (range or course with --crowd) or quest 1's
+   street fight, and count startles in the exit log.
+4. Bench once on an idle machine (the lock) for the riot p99 with CrowdReact.
