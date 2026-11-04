@@ -1,7 +1,7 @@
 class_name ReactPose
 extends RefCounted
 ## The wound families on a cutout rig (human_reactions.json): flinch, stagger, knockdown, shield,
-## spin, fold, stun, burn, cover. pre() writes the rig's clip envelopes for this step and the
+## spin, fold, stun, burn, cover, cower. pre() writes the rig's clip envelopes for this step and the
 ## drawn offsets HumanReact.post() applies. Directions are rig space: r.dir is the way the blow
 ## travels, so the body moves along it and the head snaps with it.
 
@@ -14,6 +14,8 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 		&"cover":
 			_flinch(r, rig, snap(k, 0.15), 0.5)
 			r.scl = Vector2.ONE * lerpf(1.0, 0.84, snap(k, 0.1))
+		&"cower":
+			_cower(r, rig, smoothstep(0.0, 0.18, k) * (1.0 - smoothstep(0.6, 1.0, k)))
 		&"stagger":
 			_stagger(r, rig, k)
 		&"knockdown":
@@ -40,6 +42,18 @@ static func _flinch(r: HumanReact, rig: CutRig, e: float, amt: float) -> void:
 	rig.c_hands_up = maxf(rig.c_hands_up, 0.75 * e * amt)
 	r.head_rot = r.side * 0.55 * e * amt
 	r.head_off = r.dir * 40.0 * e * amt
+
+
+## Startled by a bang: crouches (drawn smaller from above), both hands over the head, the head
+## tucked, a hop away from the shot (r.dir points away from it).
+static func _cower(r: HumanReact, rig: CutRig, e: float) -> void:
+	r.off = r.dir * r.travel * e
+	r.scl = Vector2.ONE * lerpf(1.0, 0.8, e)
+	rig.c_hands_up = maxf(rig.c_hands_up, e)
+	rig.c_tuck = maxf(rig.c_tuck, 0.35 * e)
+	rig.twist = r.side * 0.3 * e
+	r.head_off = r.dir * 30.0 * e
+	r.head_s = 1.0 - 0.12 * e
 
 
 ## Steps back along the hit, the torso tips with it, the weapon arm drops.

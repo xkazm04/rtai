@@ -17,6 +17,8 @@ var rigs: CharacterRigs = CharacterRigs.new()
 var skipped_frames: int = 0
 ## The combat blood on the city (noir's blood, the D4/D5 default; boot/city_blood.gd).
 var blood: CityBlood = null
+## human-reactions: pedestrians whose flight just began cower first (features/combat/react).
+var crowd: CrowdReact = CrowdReact.make()
 var _primed: bool = false
 var _city: CitySystem
 var _view: CityView
@@ -66,6 +68,7 @@ func _before_render(focus: Vector2) -> void:
 		return
 	_primed = true
 	_fill_feed(focus)
+	crowd.observe(rigs, maxi(steps, 1))  # human-reactions: a startled pedestrian cowers
 	if _view.look_params != null:
 		PartMaterials.set_flat_below(_view.look_params.parts_flat_below)
 	rigs.focus = focus * SimConst.PX_PER_M

@@ -74,6 +74,12 @@
       "travel_m": 0.1
     },
     {
+      "doc": "A pedestrian startled by gunfire (the sim's FLEE onset, CrowdReact): ducks, hands over the head, hops away from the bang, then the flight runs on.",
+      "id": "cower",
+      "len_s": 0.7,
+      "travel_m": 0.3
+    },
+    {
       "doc": "Round kill: falls back from the front, crumples forward from behind.",
       "id": "death_bullet",
       "len_s": 0.45,
