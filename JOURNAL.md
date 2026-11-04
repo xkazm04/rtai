@@ -1104,3 +1104,20 @@ NEXT (report phase, in order):
   BURN_BACK_M.
 - ANSWER -> human-reactions (NEXT 4): the stars are thinned on n-gunplay e1b22073; merge it and
   re-film the burn death.
+- 08:03 gates of record on d7820eeb (`evidence/n10/evidence-final-13.log`, still tree): lint 13/13,
+  unit 751/751 (noir_shadows passed: the earlier failure was the flake), scenarios 29/29, parity
+  bit-exact (step 629); selftest the same two known accent rows. REPORT gates updated (c2d3e961).
+- 08:05 city proof: `--arena=city --clean --loadout=flamethrower` at 32 px/m, 1500 frames, 0 script
+  errors, 4 ignitions, 4 kills (`MASTERS/city13_flamethrower/`; strip 20-23 s
+  `burning_city_32ppm_crop.png`): the burning pedestrians' bodies read among the fire patches.
+  frames.json entry and REPORT row point at it.
+- Session end: no Godot process of mine running (all captures foreground and finished), no lock
+  taken; scratch avis deleted. Shared files touched: none (docs/decisions.md one DECISION line).
+
+NEXT (report phase, in order):
+1. If code lands after d7820eeb, re-run `node tools/evidence/run.mjs --no-bench --allow-dirty` on a
+   still tree and update REPORT "Gates of record".
+2. Read human-reactions' re-film of the burn death after they merge e1b22073; if BURN_SCALE 0.3
+   reads too thin at 32 px/m in their clip, 0.38 is the one-value alternative.
+3. Brutality REQUEST 30 / weapon-art REQUEST 31 still unanswered; the idle riot bench stays the
+   Director's.
