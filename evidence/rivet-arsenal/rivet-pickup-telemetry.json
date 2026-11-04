@@ -1,0 +1,25 @@
+{
+  "after_walk": {
+    "ground": [
+      "machine_pistol"
+    ],
+    "slots": [
+      "pistol",
+      "",
+      "rocket_launcher",
+      ""
+    ]
+  },
+  "ground": [
+    "pistol"
+  ],
+  "picked": 1,
+  "slots": [
+    "machine_pistol",
+    "",
+    "rocket_launcher",
+    ""
+  ],
+  "swapped": 1,
+  "weapon": "machine_pistol"
+}

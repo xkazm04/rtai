@@ -19,6 +19,8 @@ var current: int = -1
 var switches: int = 0
 ## A bot holds the trigger: a semi gun re-taps (GunHand.tap).
 var tap: bool = false
+## Guns on the ground that walking over picks up (WeaponPickups).
+var ground: WeaponPickups = WeaponPickups.new()
 var _hands: Dictionary[StringName, GunHand] = {}
 var _table: WeaponTable
 var _arsenal: ArsenalTable
@@ -55,6 +57,24 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
 		select(want, arena)
 	if c.was_pressed(actions, &"reload") and arena.gun != null:
 		arena.gun.trigger.start_reload()
+	ground.step(c, actions, arena, self)
+
+
+## The slot `id` would sit in (-1: not a carried gun).
+func slot_of(id: StringName) -> int:
+	var grip: ArsenalTable.Grip = _arsenal.grip_of(id)
+	return grip.slot - 1 if grip != null and _table.weapons.has(id) else -1
+
+
+## A picked-up gun into its slot and into the claw; the same gun again refills its magazine.
+func take(id: StringName, arena: CombatArena) -> void:
+	var hand: GunHand = _hands.get(id, null)
+	if hand != null:
+		hand.trigger.ammo = hand.trigger.spec.magazine
+		hand.trigger.reload_left = 0
+	var slot: int = add(id)
+	if slot >= 0 and (slot != current or arena.rivet.weapon != id):
+		select(slot, arena)
 
 
 ## Puts the gun in slot `i` in the claw (the fight's GunHand and rivet.weapon).
@@ -83,6 +103,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 		var hand: GunHand = _hands.get(id, null)
 		out.put_32(hand.trigger.ammo if hand != null else -1)
 		out.put_32(hand.trigger.reload_left if hand != null else -1)
+	ground.write_state(out)
 
 
 ## The next carried slot after the current one in `dir` (wraps; the current when alone).

@@ -4,6 +4,8 @@ extends ArenaHook
 ## `--loadout=pistol,plasma_rifle,rocket_launcher,molotov` gives Rivet those table guns in their
 ## carry slots (RivetCarry on the live StagePilot); number keys 1-4, the wheel (weapon_next /
 ## weapon_prev) and reload then work in the arena's real fight, with WeaponHold's stow and draw.
+## `--pickups=hand_cannon,rocket_launcher` lays those guns along the pit's way in (ArenaPitBot's
+## entry), so a bot walking in picks them up (WeaponPickups). Shown by PickupsView.
 ## Without --loadout nothing changes (the arena keeps Gloria and its scenarios do not move).
 ## A bot (--bot=...) holds the trigger, so a semi gun re-taps.
 
@@ -17,14 +19,18 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_stage = stage
 	var ids: Array[StringName] = []
 	var bot: bool = false
+	var ground: PackedStringArray = PackedStringArray()
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--loadout="):
 			for id: String in arg.substr(10).split(",", false):
 				ids.append(StringName(id))
+		elif arg.begins_with("--pickups="):
+			ground = arg.substr(10).split(",", false)
 		bot = bot or arg.begins_with("--bot=")
-	if not ids.is_empty():
-		@warning_ignore("return_value_discarded")
-		arm(ids, bot)
+	if not ids.is_empty() and arm(ids, bot) != null:
+		for k: int in ground.size():
+			var at: Vector2 = ArenaPitBot.ENTRY[mini(k + 1, ArenaPitBot.ENTRY.size() - 1)]
+			carry.ground.drop(StringName(ground[k]), stage.plan.base + at)
 
 
 ## Gives Rivet `ids` (each into its class's slot) and draws the first one.
@@ -50,6 +56,16 @@ func arm(ids: Array[StringName], bot: bool) -> RivetCarry:
 	return carry
 
 
+func attach_view(view: Node) -> void:
+	var v: CollectCallView = view as CollectCallView
+	if carry == null or v == null or v.print_stage == null:
+		return
+	var p: PickupsView = PickupsView.new()
+	p.carry = carry
+	p.z_index = RenderLayers.z(&"actors") - 1
+	v.print_stage.actor_layer().add_child(p)
+
+
 func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(carry.switches if carry != null else -1)
 
@@ -59,4 +75,6 @@ func telemetry() -> Dictionary:
 		return {}
 	var out: Dictionary = {"switches": carry.switches, "weapon": String(carry.weapon())}
 	out["hold_switches"] = _stage.pilot.hold.switches
+	out["picked"] = carry.ground.picked
+	out["swapped"] = carry.ground.swapped
 	return out
