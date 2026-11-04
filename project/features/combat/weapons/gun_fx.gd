@@ -49,6 +49,8 @@ var stuck: Dictionary[int, Array] = {}
 ## instead of the body's ink burst. Unset = every body hit is a body hit.
 var shield_test: Callable = Callable()
 var fired_count: int = 0
+## The burnt ground fire patches leave when they go out.
+var scorch: FightScorch = FightScorch.new()
 ## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet].
 var shots_seen: Dictionary = {}
 var _seen_fired: int = 0
@@ -114,6 +116,7 @@ func step(arena: CombatArena, tick: int) -> void:
 	for _t: int in n:
 		_fly()
 	_expire(tick)
+	scorch.step(arena.areas, tick)
 
 
 func _claw(r: Fighter) -> Vector2:

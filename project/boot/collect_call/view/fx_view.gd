@@ -173,3 +173,11 @@ func _art_mag(gun: GunHand) -> bool:
 	if WeaponMagView.live <= 0 or not _art_gun(gun):
 		return false
 	return WeaponFxArt.art().part_texture(gun.trigger.spec.id, "mag") != null
+
+
+## Lane gunplay: the table gun's presentation, made on first use, so another lane can set a hook
+## on it before the first shot (human-reactions: `view.fx_view.gun_fx().shield_test = ...`).
+func gun_fx() -> GunFx:
+	if _gun_fx == null:
+		_gun_fx = GunFx.new()
+	return _gun_fx
