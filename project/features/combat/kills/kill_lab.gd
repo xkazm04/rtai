@@ -36,6 +36,15 @@ const BACK_TICKS: int = 30
 const STRIKE_M: float = 1.0
 const BLADE_DAMAGE: float = 999.0
 const SOLO_OFF: Vector2 = Vector2(3.0, 0.4)
+## The solo pack for a blast that takes everyone in its radius (the mini-nuke): five guards in a
+## loose knot 8-10 m out, the first one the shell's target.
+const PACK: PackedVector2Array = [
+	Vector2(9.0, 0.4),
+	Vector2(8.0, -1.2),
+	Vector2(8.2, 1.9),
+	Vector2(10.2, -0.6),
+	Vector2(10.0, 1.5)
+]
 
 var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
@@ -50,6 +59,8 @@ var spread: bool = false
 ## Solo (the dev arg --sig-solo=x,y): Rivet stands at that arena point and one guard SOLO_OFF in
 ## front of him is the only victim, away from every station's dummy row; no refill.
 var solo: Vector2 = Vector2.INF
+## Solo with the PACK instead of one guard (a vaporise kill: one shell, several shadows).
+var pack: bool = false
 var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
@@ -131,7 +142,8 @@ func _line(stage: ArenaStage) -> void:
 	_next = 0
 	var line: PackedVector2Array = BLADE_LINE if spread or not blade.is_empty() else LINE
 	var origin: Vector2 = stage.plan.rivet_start if solo == Vector2.INF else solo
-	for off: Vector2 in PackedVector2Array([SOLO_OFF]) if solo != Vector2.INF else line:
+	var solo_line: PackedVector2Array = PACK if pack else PackedVector2Array([SOLO_OFF])
+	for off: Vector2 in solo_line if solo != Vector2.INF else line:
 		var g: Fighter = stage.arena.spawn_guard(origin + off)
 		g.pos = origin + off
 		g.cooldown = HOLD_FIRE
