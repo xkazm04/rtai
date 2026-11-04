@@ -888,3 +888,11 @@ NEXT (iteration 11, in order):
   rocket's blast ring, flame bursts, the electro kill, the bottles' patches); small at the game
   zoom, as at 32 px/m. frames.json: it replaces the city four-gun reel (now its `before`), 15
   entries, all files checked. NEXT list above stands without item 3.
+- 06:44 MILESTONE `MASTERS/n4/gunplay/side_by_side_pistol_mpistol_fightcam_64ppm.mp4`: pistol and
+  machine pistol in the pit at 64 px/m with --cam=fight, fresh on ca765ba8 (`camfight_pistol/`,
+  `camfight_machine_pistol/`, 15 s, 0 script errors, Rivet 0 deaths; 4/4 and 13/3). Looked at the
+  2 fps strips and a still (tick 516): Rivet with his shells on the floor and the cop down with his
+  spurt in one frame; every kill falls in frame. frames.json: added at 4th, dropped the nuke ring
+  sequence strip (its folder stays), 15 entries, all files checked.
+- Session end 06:45: no Godot process of mine running, no lock held, scratch holds only the six
+  scripts. NEXT list above stands (1, 2, 4).
