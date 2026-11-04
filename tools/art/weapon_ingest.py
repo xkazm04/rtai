@@ -32,7 +32,7 @@ ROWS = {
     "rocket_launcher": ("shoulder", 1.70, 0.50, "flash_tube", "rocket", "", {}),
     "flamethrower": ("backpack_hose", 1.15, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
     "electro_gun": ("two_hand_long", 1.00, 0.32, "arc", "arc", "", {}),
-    "molotov": ("thrown", 0.48, 0.40, "flame", "flame", "", {}),
+    "molotov": ("thrown", 0.48, 0.40, "", "flame", "", {}),
     "gloria": ("one_hand", 0.80, 0.30, "flash_pistol", "tracer", "", {}),
     "katana": ("two_hand_long", 1.30, 0.12, "", "", "", {}),
     "electro_baton": ("one_hand", 0.80, 0.14, "arc", "", "", {}),

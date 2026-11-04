@@ -23,6 +23,8 @@ const GUN_SIDE_M: float = 0.35
 const CONVERGE_M: float = 3.0
 ## The thrown molotov draws this much bigger than the held one (at 1.0 it was a speck in flight).
 const BOTTLE_K: float = 1.8
+## The flamethrower's nozzle lick: the jet's tongue cell at this scale (1.0 read as a balloon).
+const NOZZLE_K: float = 0.45
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -90,10 +92,13 @@ static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> bool:
 	if gun.shots_fired == 0 or age < 0 or age >= FLASH_TICKS or not art().has(spec.id):
 		return true
 	var fx: StringName = art().muzzle_fx(spec.id)
+	if fx == &"":  # a throw (the molotov) has no flash: the wick already burns on the bottle
+		return true
 	var aim: Vector2 = r.facing.normalized()
 	var reach: float = r.radius_m + FLASH_AHEAD_M + art().muzzle_m(spec.id).x * 0.5
 	var at: Vector2 = r.pos + aim * reach + aim.orthogonal() * GUN_SIDE_M
-	_cell(ci, fx, age, at, aim.angle(), 1.0, 1.0)
+	# the flame cell is the jet's full tongue: at the nozzle only a small lick
+	_cell(ci, fx, age, at, aim.angle(), NOZZLE_K if fx == &"flame" else 1.0, 1.0)
 	return true
 
 
@@ -124,7 +129,8 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 	var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 	var f: int = (tick / 3 + int(went * 4.0)) % 3
 	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * 0.18
-	var grow: Vector2 = Vector2(0.75 + 0.9 * k, 0.6 + 1.3 * k)
+	# long and thin at the nozzle, fanning out with distance (round puffs near it read as drops)
+	var grow: Vector2 = Vector2(1.15 + 0.6 * k, 0.32 + 1.5 * k)
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
 	if went > gap + CLEAR_M:

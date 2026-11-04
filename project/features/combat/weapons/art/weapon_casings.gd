@@ -47,12 +47,11 @@ static func track(r: Fighter, gun: GunHand, tick: int, cell: StringName) -> void
 
 ## Draws every casing in flight or on the floor (`cell` from WeaponArt.casing_fx).
 static func draw(ci: CanvasItem, tick: int, cell: StringName) -> void:
-	var tex: Texture2D = null
-	var frames: Array[Texture2D] = WeaponFxArt.art().fx_frames(cell) if cell != &"" else []
-	if not frames.is_empty():
-		tex = frames[0]
-	if tex == null:
-		tex = WeaponFxArt.art().fx_frames(&"casing")[0]
+	# A gun without brass (cell "") still draws the brass an earlier gun left on the floor.
+	var frames: Array[Texture2D] = WeaponFxArt.art().fx_frames(cell if cell != &"" else &"casing")
+	if frames.is_empty():
+		frames = WeaponFxArt.art().fx_frames(&"casing")
+	var tex: Texture2D = frames[0]
 	var k: float = WeaponFxArt.cell_scale() * SCALE
 	for i: int in _born.size():
 		var age: int = tick - _born[i]

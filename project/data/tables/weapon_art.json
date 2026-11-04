@@ -793,7 +793,7 @@
       "id": "molotov",
       "length_m": 0.48,
       "length_px": 462,
-      "muzzle_fx": "flame",
+      "muzzle_fx": "",
       "muzzle_px": [
         468,
         85
