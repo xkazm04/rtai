@@ -988,3 +988,12 @@ NEXT (the morning merge / the next night), in order:
 NEXT: unchanged from iteration 16 (gunplay merge: shield_test line + react_line 64 px/m and the
 burn re-film; pit_knockdown_getup re-film over RISE_TICKS 29; robot thug power-down death; idle
 riot p99 bench).
+
+## Iteration 18 (08:40-08:45, REPORT)
+- MILESTONE: REPORT.md written (works / gaps / blocked / 8 calls for the owner / next). Every
+  evidence path it cites checked present (masters folder or evidence/). Code tip of record
+  stays fdff7990; no build, no Godot process started.
+
+NEXT: unchanged from iteration 16 (gunplay merge: shield_test line + react_line 64 px/m and the
+burn re-film; pit_knockdown_getup re-film over RISE_TICKS 29; robot thug power-down death; idle
+riot p99 bench).
