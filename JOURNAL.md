@@ -871,3 +871,35 @@ NEXT (iteration 7, from about 06:30):
   another lane since 06:27: bench waits.
 - FRICTION: evidence/run.mjs refuses untracked files under evidence/; logs now go to
   gtai-n4/scratch-showcase/ and are copied in after.
+- GATES r10b (evidence --no-bench on ef43fb36, CONTENDED): lint 13/13 (774 files), unit 871/871,
+  scenarios 44/44 (REQUEST 25 in: scenario_rivet_city_fight green), parity bit-exact (planted
+  caught at 629), selftest PASS: look goldens 11/11 (re-blessed), block 5/5, no new off-doctrine
+  accents, world lock holds. Log evidence/r10/evidence-r10.txt.
+- FRICTION 06:30: the first director cut (started before any `--import` on round 10) ran
+  chapters 01-10 with gunplay_hook.gd failing to parse ("Could not find type FightCam": the new
+  class_name is not in the class cache until an import), 14 script errors each, i.e. without
+  gunplay's hook. The evidence run's headless import fixed the cache from chapter 11 on. Chapters
+  01-10 re-cut clean (0 errors, cut-reel-0635-redo); the stale ones kept in stale/. RULE for
+  later rounds: after a merge, `--headless --import` once before any film.
+- 06:36 the clean chapters looked at (evidence/r10/sheet-r10-a..d.jpg, 5 frames each):
+  claw, pistol, rocket, flamethrower, katana, chainsaw, deflect, hand cannon, plasma rifle,
+  homing, riot cop, mini-nuke read well. Machine pistol: the four dead piled into one heap (my
+  layout, 1.2-1.4 m apart): fixed (spread ~1.7 m, evidence/r10/sheet-machine-pistol-spread.png,
+  4/4 down, scenario_showcase_* 2/2).
+- MILESTONE 06:39 reel-0640.mp4 (122 s, masters; frames.json first entry): 16 director chapters
+  at 48 px/m on round 10 + the spread fix, then 17 CITY BLOCK (15 s, 32 px/m; the pit's wall bars
+  still stand on the plaza).
+- REQUEST 24 -> human-reactions (re-sent, still open on 4679056e): ch 06 electro, the stiff
+  c_plank corpse still reads as a standing cop at 48 px/m (sheet-r10-b row 1, frames 3-5).
+  Suggest: the plank falls flat and long along the shot (feet toward Rivet), with the
+  smoke/scorch on the ground around it, so the silhouette is a lying body.
+- REQUEST 26 -> brutality: ch 13 ray gun, the dissolve's dust pile reads as a round cream token
+  with a ring (like a cop seen from above standing still), not as remains
+  (evidence/r10/ray-gun-pile-48ppm.png, left 1.3 s, right 4.5 s). Suggest: an irregular,
+  longer heap drawn out along the ray, the blue uniform crumpled flat and the cap knocked a
+  half metre off, a few dark ink crumbs; no circle outline.
+- REQUEST 27 -> brutality (cc gunplay for the patch FX): ch 07 molotov, the victim is never
+  seen: the patch's fire stars cover him from the hit to the chapter's end (7 s,
+  sheet-r10-b row 2). The flamethrower's char corpse shows (row 1 of sheet a); the molotov's
+  does not. Suggest: draw the charred corpse above the patch (z), or thin the stars over a
+  fresh corpse after about 1 s.
