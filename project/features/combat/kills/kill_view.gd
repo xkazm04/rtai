@@ -113,7 +113,7 @@ func _process(_delta: float) -> void:
 	dissolve_fx.pose()
 	_track_moving()
 	for kg: KillGround in _grounds.values():
-		if kg.heap_growing(kills.tick):
+		if kg.needs_reprint(kills.tick):
 			kg.queue_redraw()
 	queue_redraw()
 	_frame_us = Time.get_ticks_usec() - t0

@@ -12,7 +12,8 @@ var serial: int = -1
 
 func _draw() -> void:
 	var t0: int = Time.get_ticks_usec()
-	KillMarkArt.spray(self, mark, view.ppm)
+	if view.kills.tick - mark.tick >= mark.spray_from:
+		KillMarkArt.spray(self, mark, view.ppm)
 	for trail: PackedVector2Array in view.settled_smears(serial):
 		KillMarkArt.smear(self, trail, view.ppm)
 	KillMarkArt.scorch(self, mark, view.ppm)
@@ -20,7 +21,10 @@ func _draw() -> void:
 	view.add_us(Time.get_ticks_usec() - t0)
 
 
-## An ash heap still growing in (KillCharFx.pile's 45 ticks) is reprinted every frame.
-func heap_growing(tick: int) -> bool:
+## An ash heap still growing in (KillCharFx.pile's 45 ticks) is reprinted every frame; a burst's
+## print once more on the tick its spray lands (the pop).
+func needs_reprint(tick: int) -> bool:
+	if mark.spray_from > 0 and tick - mark.tick == mark.spray_from:
+		return true
 	var age: int = tick - mark.tick - mark.ash_from
 	return mark.ash_m > 0.0 and age >= 0 and age <= 46
