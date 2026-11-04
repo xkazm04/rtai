@@ -23,6 +23,9 @@ Paths below are relative to the masters folder unless they start with `evidence/
     they fall. The arena view scales to the window, so a 2560x1440 render shows the same 26.7 m. At 48 px/m, no crop
     can centre the victim without losing the scale. Fixing it needs a directed camera that leans to the kill (the
     arena camera, not this lane).
+  - **The city block** (`--arena=city`, 48 px/m): the standard electro corpse on the cream paving, both legs and the
+    star readable: `city_electro_corpse_48ppm_zoom.png` (clip `city_electro_death_48ppm.mp4`, kills near the frame edge).
+  - Showcase round 18 already holds all of this code (`38b0f3df`); only JOURNAL/REPORT differ.
   - No golden, sim or replay change. Full evidence on `38b0f3df` (`--no-bench --allow-dirty`): lint 13/13, unit 755/755,
     scenarios 33/33, parity bit-exact (mutation caught at step 629), look 11/11 (worst 1.87), block 5/5 (worst 1.77).
     The selftest FAIL is the same known accent-audit rows as before (48 px/m vermilion/blood on vehicles).
@@ -184,3 +187,8 @@ Each call is one value or flag. A is what is live now.
 2. A robot `Fighter.Kind` in the live fight, so the thug's power-down death plays in the arena, not only the dev pit.
 3. An idle bench of the riot p99.
 4. Check brutality's REQUEST 29 electro drop on a director reel (48 px/m).
+5. A directed arena camera that leans to a kill, so a victim who falls about 11 m from a standing Rivet sits in the
+   middle third at 48 px/m.
+6. Dry electro kills, render-only, in 3 lines: `CombatArena.damage` sets `kill_weapon` before `actor_killed`,
+   `CombatBlood` gets a `dry_kill` Callable, and the collect_call composition returns true for `electro_gun`. This
+   waits on brutality: `electro_shock` is their signature, and it would lose its red.

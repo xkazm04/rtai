@@ -1108,3 +1108,24 @@ NEXT (the morning merge / the next night), in order:
 - Electro kills still spray red: the kill kind is gunplay's `FightAreas.kind_of` (`shot` for the
   electro gun), a sim event string (events.json, replay); not touched in the last hour.
 - Evidence on 38b0f3df (code 907d7282): lint 13/13, unit 755/755, scenarios 33/33, parity bit-exact (629), look 11/11 (1.87), block 5/5 (1.77); selftest FAIL on the known accent rows only. REPORT updated in place (after 09:00).
+- 09:43 merge check: `git merge-tree n-showcase n-human-reactions` -> showcase round 18 already
+  holds 38b0f3df (all my code from this session); only JOURNAL/REPORT differ (they keep ours).
+- Considered and not done: electro kills still bleed red. A render-only fix is 3 lines
+  (CombatArena.damage sets kill_weapon before actor_killed; CombatBlood.dry_kill Callable checked
+  in _on_killed; the collect_call composition returns true for electro_gun). Rejected tonight:
+  electro_gun is also brutality's electro_shock signature, so it would strip the red off their
+  kill in the merged build with no one filming it before the freeze. In REPORT Next steps.
+- Evidence (game-city): `--arena=city --rigs --bot=gunplay --weapon=electro_gun --start=pit
+  --clean --ppm=48`, kills at 434 / 642 (deterministic). On the cream paving the lighter soot reads
+  clean: both legs, the shoes, the star. city_electro_corpse_48ppm_zoom.png (frame 700, 3x) in
+  frames.json (replaces pit_burn_death_32ppm_zoom); the clip city_electro_death_48ppm.mp4 is not
+  listed (both kills near the frame edge: Rivet's follow camera, victims about 11 m off). 15, 0
+  missing. Scratch AVIs deleted; no Godot process of mine running.
+
+NEXT (morning merge / next night), in order:
+1. A directed arena camera that leans to a kill (the burn/electro victims fall about 11 m from a
+   standing Rivet, so the 04:00 middle-third rule fails at 48 px/m with no crop room).
+2. Electro kills dry (the 3-line plan above), once brutality says whether electro_shock wants red.
+3. After the gunplay merge: `gun_fx.shield_test = link.shield_test`; re-film the burn death with
+   the thin flames.
+4. A robot Fighter.Kind in CombatArena (DeathPipe.kill_robot live); the idle riot p99 bench.
