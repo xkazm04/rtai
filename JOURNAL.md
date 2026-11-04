@@ -1157,3 +1157,35 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
   listed. Every cited evidence path checked present. No build (report phase).
 - NEXT (Director): as REPORT "Next steps": merge weapon-art 3a703dbd, gunplay 83429487,
   brutality 63cc3ce1; gates; --import; film electro first (REQUEST 29); re-export; bench alone.
+
+## Session 08:46 (iteration 13, BUILD, extension 09:00-11:00)
+- 08:46 read: extension until 11:00 (freeze 10:30, report 10:40, final round 09:45-10:30). Open
+  from the 08:40 REPORT: merge round 16 (weapon-art 3a703dbd, gunplay 83429487, brutality
+  63cc3ce1), REQUEST 29, showcase-3, bench. No REQUEST -> showcase open (weapon-art REQUEST 6 was
+  answered at 05:55, the melee line moved 0.6 m south).
+- MILESTONE 08:48 merge round 16: weapon-art c1898b92 -> d7f40ba8, rivet-arsenal ed87eb61 ->
+  c2ed900e, gunplay d1f06e5c -> 26d497dd, human-reactions 90cbff04 -> a1c1ec23, brutality
+  9c995b1b -> fe86a981. Only conflicts: root JOURNAL.md and the lanes' new root REPORT.md (both
+  kept ours). `--import` 0 errors.
+- 08:50 REQUEST 29 re-checked on round 16 (electro_gun chapter, 48 px/m, 0 SCRIPT ERRORs): after
+  the X-ray the body drops and lies along the shot, matching brutality's own crop
+  (evidence/brutality/electro-lie-down-crop-it13.png). REQUEST 29 CLOSED. Remainder (not a
+  REQUEST, too late): at 48 px/m the lie-out reads as a low blue lump with the legs short; a
+  longer stretch would read more clearly as "lying".
+- GLUE 08:52 showcase-3 (8a8215a3): on `--arena=city` the pit's `wall_high` props drew as flat
+  ink bars across the plaza (reel-0808 ch 17). ArenaFloorView now draws them on the city as a
+  concrete barrier run (warm grey #8E867C, ink rim, cream top edge, a joint every 2 m); still
+  solid (ArenaWalls unchanged), the arena pit look unchanged. Checked in a 32 px/m city film and
+  in reel-0857 ch 17. DECISION: grey concrete, not the city's barricade.png (vermilion stripes:
+  vermilion is for danger/objectives only, and a wall run of it would shout on the plaza).
+- FRICTION: gates.sh wrote evidence/r16/summary.txt into the tree, so the evidence run refused
+  (dirty tree); the summary is now summary.log (git-ignored), evidence re-run alone.
+- GATES r16 (on 8a8215a3, CONTENDED): lint 13/13 (789), unit 913/913, scenarios 45/45, parity
+  bit-exact (planted caught at 629), selftest PASS (look 11/11 worst 0.00, block 5/5 worst
+  1.81). No re-bless. evidence/r16/evidence.log.
+- MILESTONE 08:57 reel-0857 (masters, frames.json first): cut.sh r16-dir at 48 px/m (16 fresh
+  runs, 0 SCRIPT ERRORs) + reel.sh 17 CITY BLOCK at 32 px/m, 122 s. Looked at a 35-frame sheet
+  and a 15-frame city sheet: rocket blast ends in smoke (no beads), electro victim down, molotov
+  glass + scorch, city walls grey barriers. Still weak: ch 13 ray gun's victim is small and
+  quick at 48 px/m; the rocket's thrown parts leave the frame (known).
+- 08:59 BENCH r16 started under bench.lock (taken 08:59), `node tools/bench/run.mjs`.
