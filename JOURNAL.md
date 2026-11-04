@@ -279,3 +279,8 @@ NEXT (iteration 5, in order):
 4. Trip in game: count CrowdReact.trips in an --arena=city --crowd=420 run (temporary log) and
    film one; the board has no body underfoot.
 5. Run the full `node tools/evidence/run.mjs --no-bench` once (it was not run this iteration).
+- 03:23 FINDING for NEXT 3: gunplay's armored humans exist only in dev/gunplay/pistol_fight
+  (`--armored`, Fighter hp = table armored / human = 2.5 rounds), which draws quest 1's
+  CollectCallView sprites, not the cast rigs with ReactLink. So the limp in the live arena needs
+  an arena-side `--armored` (GunplayHook or ArenaGame: scale the pit hostiles' hp like
+  pistol_fight line 70) and then `--rigs`. Not started at 03:23 (15 min left).
