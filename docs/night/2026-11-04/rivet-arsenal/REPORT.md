@@ -15,9 +15,9 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
-| lint | 13/13 (717 files) | 37dbfeab and 919adc96 (the last code change: the bot's side-step keeps its side; the rivet scenarios 9/9 on it, `E/it10c-rivet-scenarios.log`; no other scenario or unit test drives that bot) |
-| unit | 814/814, exit 0 | 37dbfeab, `E/it10b-unit.log` |
-| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 37dbfeab, `E/it10b-scenarios.log` |
+| lint | 13/13 (717 files) | 37dbfeab and c55b6984 (the last code change: the bot slides round props; the rivet scenarios 9/9 on it, `E/it10d-rivet-scenarios.log`; no other scenario or unit test drives that bot) |
+| unit | 814/814, exit 0 | 8a1537df (the branch tip's code), `E/it10e-unit.log` |
+| scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 8a1537df, `E/it10e-scenarios.log` |
 | evidence run | lint, unit 814, parity bit-exact (mutation caught at step 629) PASS. Scenarios 36/37 in that run: scenario_rivet_deflect failed because the run overlapped the bot edit; it was fixed in 37dbfeab and passes in the scenario row above. The selftest has look goldens 11/11 and block 5/5, but exits 1 on the accent audit: the known blood-flicker vermilion class, the same findings as on n-gunplay (gunplay's) | 4cc6e8a0, `E/it10-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
@@ -86,7 +86,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 
 ### 6. The real game paths
 - Arena: on the rigs by default (`--sprites` for the old look).
-- The thrown and hose classes on the city block: `M\clips\city-block-molotov-burn-32ppm-x2.mp4` and `M\frames\city-block-molotov-burn-32ppm-3x.png`. They show the flamer carried on its back tank, the molotov's lit rag, and a guard set ablaze by the bottle, then dead in red blood. The flamer does not fire in that window.
+- The thrown and hose classes on the city block: `M\clips\city-block-molotov-burn-32ppm-x2.mp4` and `M\frames\city-block-molotov-burn-32ppm-3x.png`. The run is 30 s: 2 waves, 4 cops dead in red blood, 0 deaths. The clips show the flamer carried on its back tank, the molotov's lit rag and throw, a guard ablaze next to the plasma sword, and two cops dead by a kerb car. Its "before" (`...-x2-before.mp4`, the same seed) stalls pressed on a crate after wave 1. Close-up at 64 px/m: `M\clips\city-block-flamer-molotov-64ppm.mp4` (10 s of a 4-kill run) and `M\frames\city-block-flamer-molotov-64ppm.png`, showing the hose's flame stream with the tank on Rivet's back and a guard ablaze.
 - City proving block: `--arena=city --bot=arsenal --loadout=...`. Three live fights: the kinetic guns (`city-block-kinetic-held-32ppm-x2`), the long guns and the tube (`city-block-long-guns-held-32ppm-x2`: 3 waves, 7 kills) and the melee weapons (`city-block-melee-katana-chainsaw-baton-32ppm-x2`: 3 waves, 5 kills).
 - Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fightcam-32ppm.mp4` (8.3 s: both cop waves die in red blood) and, at 64 px/m, `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
 
@@ -112,7 +112,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
     Clip: `arena-chainsaw-grind-64ppm`. A ring wide enough to clear the art (about 1.5 m) makes the claw whiff, so it was not taken.
 
 ## Open / known flaws
-- The arsenal bot's melee walk-in on the city block is a straight line plus side-steps, not a nav path. With the plasma sword it can stall pressed on a crate, so in the flamer, molotov and sword run wave 2 never falls (2 kills in 30 s). A nav-grid walk-in is the fix; it was not done tonight. It is the bot only: a player walks round the crate.
+- The arsenal bot's melee walk-in on the city block is a straight line that slides round a prop in the way (c55b6984), not a nav path. This lifted the flamer, molotov and sword run from 2 to 4 kills in 30 s, but a building corner can still hold it. It affects the bot only: a player walks round.
 - The claw cops still read crowded in the chainsaw grind at 64 px/m. There was no enemy-ai lane tonight, so this lane added a stand-off to its own station (d6618606): the cops keep 1.25 m from Rivet and 1.0 m apart, and a cop just hit is not moved. The drawn rigs are wider than the sim bodies, so in contact they still overlap (call 14). scenario_rivet_chainsaw's ">= 3 kills" bar is met only because two hp-4 cops stand stacked and one grind kills both. A wider spacing separates them and drops the count to 2. The bar was left unchanged.
 - At 64 px/m quest 1's dialogue box covers the lower third. The dev fight cam (`quest1_clip.gd --cam=fight`) now lifts the framed point above it (a67bff25).
 - No boss rig: quest 1's boss, Mertz, keeps the cast view's drawing under `--rigs`.
