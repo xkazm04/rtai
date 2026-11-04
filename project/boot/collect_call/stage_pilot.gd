@@ -24,10 +24,12 @@ var throw: PlayerThrow = PlayerThrow.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
-## features/souls: the Hauler for the bound player (Q / LB); the bot never builds a pilot.
-var hauler: HaulerStage = HaulerStage.shipped()
-## lane ghost-powers: Dent (G / RB) seizes a car on an arena stage (a no-op on quest 1's stage).
-var dent: DentStage = DentStage.shipped()
+## features/souls: the four ghost forms for the bound player (GhostPilot: Q / LB transforms, G / RB
+## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage) and dent (Dent) are
+## its attack stages (lane ghost-powers), kept here for the views and the tests.
+var ghosts: GhostPilot = GhostPilot.shipped()
+var hauler: HaulerStage = ghosts.hauler
+var dent: DentStage = ghosts.dent
 ## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0
@@ -77,18 +79,13 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
 
 
-## The ghost powers (features/souls): the Hauler / Tonnage (Q / LB) and Dent (G / RB); true when
-## one owns the melee press this tick (the pilot skips the claw).
+## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
+## (the pilot skips the claw).
 func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
-	if hauler != null:
-		var power: bool = c.was_pressed(actions, &"power_hauler")
-		stage.intent.move_by = hauler.drive(stage, power, press, stage.intent.move_by)
-		if hauler.owns_melee():
-			return true
-	if dent != null:
-		dent.drive(stage, c.was_pressed(actions, &"power_gearbox"), press, stage.arena.rivet.facing)
-		return dent.owns_melee()
-	return false
+	if ghosts == null:
+		return false
+	stage.intent.move_by = ghosts.drive(stage, c, actions, press)
+	return ghosts.owns_melee()
 
 
 func facing() -> Vector2:
@@ -109,10 +106,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 		carry.write_state(out)
 		throw.write_state(out)
 	out.put_32(_previous)
-	if hauler != null:
-		hauler.write_state(out)
-	if dent != null:
-		dent.write_state(out)
+	if ghosts != null:
+		ghosts.write_state(out)
 
 
 ## The walk, sprint and roll; a claw hit slows the walk (move_mult) and the roll's i-frames close

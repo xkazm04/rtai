@@ -34,6 +34,8 @@ var hidden: Dictionary[int, bool] = {}
 var gone: Dictionary[int, bool] = {}
 ## human-reactions: the city crowd's reactions (--arena=city), told where the fight's dead lie.
 var crowd: CrowdReact = null
+## ghost-forms: the bound player's ghost form over the rigs (null without a pilot).
+var ghost_view: GhostFormView = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 var _city: CityView = null
@@ -101,6 +103,7 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
+	ghost_view = GhostFormView.attach(layer, p_stage, rigs)  # ghost-forms: the ghost bodies
 
 
 func _process(_delta: float) -> void:

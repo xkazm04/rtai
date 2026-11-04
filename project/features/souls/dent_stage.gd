@@ -24,6 +24,9 @@ var strikes: int = 0
 var blasts: int = 0
 var seizes: int = 0
 var _struck: Dictionary[int, bool] = {}
+## ghost-forms: GhostPilot owns the shared SoulPowers; the Dent form is the running gearbox power,
+## so a seize needs it running and a let-go never ends it (the form keeps its own clock).
+var _shared: bool = false
 
 
 func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
@@ -31,6 +34,13 @@ func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	powers = SoulPowers.new(table)
 	link = GearboxLink.new(table.gearbox)
 	link.bind(powers)
+
+
+## ghost-forms: run on GhostPilot's SoulPowers (GhostForms activates the form and ticks it).
+func share(p_powers: SoulPowers) -> void:
+	powers = p_powers
+	link.bind(powers)
+	_shared = true
 
 
 static func shipped() -> DentStage:
@@ -48,9 +58,10 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 		return
 	var rivet: Fighter = stage.arena.rivet
 	var reticle: Vector2 = rivet.pos + aim.normalized() * num(&"aim_m")
-	if power and car == null and rivet.alive() and powers.try_activate(ID) == &"ok":
+	if power and car == null and rivet.alive() and _may_seize():
 		_seize(arena_stage, reticle)
-	powers.tick()
+	if not _shared:
+		powers.tick()
 	if car == null:
 		return
 	if not link.linked() or car.state == VehicleBody.State.WRECK:
@@ -72,6 +83,12 @@ func owns_melee() -> bool:
 	return car != null
 
 
+func _may_seize() -> bool:
+	if _shared:
+		return powers.is_active(ID)
+	return powers.try_activate(ID) == &"ok"
+
+
 func _seize(stage: ArenaStage, reticle: Vector2) -> void:
 	var spots: PackedVector2Array = PackedVector2Array()
 	var live: Array[VehicleBody] = []
@@ -83,8 +100,9 @@ func _seize(stage: ArenaStage, reticle: Vector2) -> void:
 	var i: int = pick_on_line(stage.arena.rivet.pos, reticle, spots)
 	var linked: bool = i >= 0 and link.link(i, spots[i], live[i].head.angle())
 	if not linked:
-		@warning_ignore("return_value_discarded")
-		powers.interrupt(&"car")  # nothing in reach: the soul lets go at once
+		if not _shared:
+			@warning_ignore("return_value_discarded")
+			powers.interrupt(&"car")  # nothing in reach: the soul lets go at once
 		return
 	car = live[i]
 	stage.vehicles.soul_hijack(car.id)
@@ -157,7 +175,7 @@ func _blast(stage: ArenaStage) -> void:
 
 
 func _let_go() -> void:
-	if powers.active == ID:
+	if powers.active == ID and not _shared:
 		@warning_ignore("return_value_discarded")
 		powers.interrupt(&"car")
 	link.release()

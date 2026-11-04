@@ -3,14 +3,18 @@ extends RefCounted
 ## The Dent beat of GhostReel (`--bot=ghosts --ghost=dent`), lane ghost-powers: a police
 ## cruiser parked beside Rivet, a pair of cops ahead (A) and a riot cop with two cops farther on
 ## and to the right (B), in the open lane between the course's props and its south wall. He
-## seizes the cruiser (G), drives it through A, changes direction onto B (the owner's "change
-## direction"), and the overloaded car blows up in B on impact.
+## seizes the cruiser (G picks Dent, Q, fire), drives it through A, changes direction onto B
+## (the owner's "change direction"), and the overloaded car blows up in B on impact.
 
 const CAR: Vector2 = Vector2(3.0, -2.5)
 const GROUP_A: Array[Vector2] = [Vector2(8.0, -0.6), Vector2(8.6, 0.8)]
 const GROUP_B: Array[Vector2] = [Vector2(14.2, 3.4), Vector2(14.0, 2.3), Vector2(15.1, 3.0)]
 const RIOT_B: int = 0
-const SEIZE_AT: int = 40
+## ghost-forms (GhostPilot): G picks Dent (Tonnage is first in the order), Q transforms (Dent's
+## enter_s 0.6 = 36 ticks), then the fire press seizes (ghost-powers REQUEST 2).
+const SELECT_AT: int = 40
+const ENTER_AT: int = 42
+const SEIZE_AT: int = 80
 
 var group_a: Array[Fighter] = []
 var group_b: Array[Fighter] = []
@@ -38,7 +42,14 @@ func want(stage: ArenaStage, local: int) -> Array:
 	var aim: Vector2 = (_centre(target, rivet) - rivet).normalized()
 	if local <= SEIZE_AT and car != null:  # look at the cruiser to seize it
 		aim = (car.pos - rivet).normalized()
-	return [Vector2.ZERO, aim, &"power_gearbox" if local == SEIZE_AT else &""]
+	var act: StringName = &""
+	if local == SELECT_AT:
+		act = &"power_gearbox"
+	elif local == ENTER_AT:
+		act = &"power_hauler"
+	elif local == SEIZE_AT:
+		act = &"fire"
+	return [Vector2.ZERO, aim, act]
 
 
 static func _centre(group: Array[Fighter], fallback: Vector2) -> Vector2:
