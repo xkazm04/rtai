@@ -10,10 +10,22 @@ import { checkAll as styleChecks } from '../style/check_gd.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 
-const tool = (name, cmd, args) => {
-  const res = run(cmd, args, { cwd: ROOT });
-  const issues = res.status === 0 ? [] : res.out.split('\n').filter((l) => l.trim()).slice(0, 40);
-  return { name, ok: res.status === 0, issues };
+// Windows caps a command line at 32767 chars and the gdtoolkit launchers fail silently past it
+// (exit 1, no output: 810 files were 32633 chars), so file lists go in batches of FILE_BATCH.
+const FILE_BATCH = 200;
+const tool = (name, cmd, flags, files = null) => {
+  const batches = [];
+  for (let i = 0; files && i < files.length; i += FILE_BATCH) batches.push(files.slice(i, i + FILE_BATCH));
+  const issues = [];
+  let ok = true;
+  for (const batch of files ? batches : [[]]) {
+    const res = run(cmd, [...flags, ...batch], { cwd: ROOT });
+    if (res.status === 0) continue;
+    ok = false;
+    const out = res.out.split('\n').filter((l) => l.trim());
+    issues.push(...(out.length ? out : [`${cmd} exit ${res.status} with no output`]));
+  }
+  return { name, ok, issues: issues.slice(0, 40) };
 };
 
 function jsonCanonical() {
@@ -102,8 +114,8 @@ export function runLint() {
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
-    tool('gdformat', 'gdformat', ['--check', '--line-length', '100', ...gd]),
-    tool('gdlint', 'gdlint', gd),
+    tool('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
+    tool('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
