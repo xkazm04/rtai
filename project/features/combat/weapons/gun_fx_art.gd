@@ -60,6 +60,7 @@ static func draw_over(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) 
 			at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.CREAM, 4.0 * (1.0 - k) + 1.0
 		)
 	_claw_state(ci, fx, arena, tick)
+	FightShardArt.stuck(ci, fx, arena)
 
 
 ## A table bullet's tracer at its weapon's weight: ink casing, cream core, a cream head; an enemy
