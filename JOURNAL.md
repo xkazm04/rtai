@@ -125,3 +125,52 @@ NEXT (iteration 2, in order):
   3. Electro chain clip (clustered targets); rockets burst on arena walls (ArenaDodges.cull).
   4. Split fight_areas.gd (now ~258 lines).
   5. Side-by-side clip of the core six (5 s each, sound off) once 2 lands; re-render molotov/electro.
+
+## Iteration 3 (01:53-02:53)
+- Read: JOURNAL, git log, REQUESTs addressed to gunplay in n-brutality, n-human-reactions, n-showcase.
+- Registry rules applied (realtime-combat-semantics, motion-quality-gating): presentation reads the sim,
+  never writes it (GunFx is view-only, stepped on the stage tick, hash-varied, no RNG stream), so the
+  replay and parity goldens cannot move; judged in motion at 48 and 32 px/m on the cast rigs.
+- 01:57 MEASURE riot blood A/B (brief item 5), riot only, 4 x 30 s back to back under bench.lock,
+  CONTENDED: settled 6 / 30 / 6 / 30 -> p99 8.68 / 6.33 / 6.47 / 7.16 ms; the combat blood itself is
+  59 / 41 / 50 / 49 us a frame (CPU: step + pool + drop redraw), pool redraws 301 vs 61 in 30 s.
+  `evidence/n3/riot-blood-ab.md`, raw `evidence/n3/bench/`. The bench JSON now carries
+  `bloodUsPerFrame`, `bloodPoolDraws`, `bloodDropDraws` (01b034aa).
+- DECISION settled_redraw_ticks stays 6: after the drop split the blood is 0.04-0.06 ms a frame (~1 % of
+  the riot p99); 30 saves ~5-10 us, inside the noise, and would step the pool growth visibly and move
+  the look goldens. Alternative = one value in blood_fx.json. The riot p99 is not the blood any more:
+  the next suspect is the 400 actors' canvas / rigs, not this lane's.
+- 02:12 MILESTONE GunFx + GunFxArt (features/combat/weapons, data gun_fx.json): every bullet gun reads
+  as its weapon in the real fight (arena pit, city block, quest path through FxView when a table gun
+  is wired): pistol = a long forward flare with two side jets (3 ticks), heavy 12 px tracer, 0.24 m
+  brass shells, a big smoke puff; machine pistol = a 4-point star that turns half a step every shot
+  (a strobe), 7 px tracer, small shells piling up, small puffs that haze; a magazine drops on reload
+  and a ring fills over Rivet; impacts by surface: ground = dust kicked back + an ink scuff (4 s),
+  metal = cream sparks, Rivet's plating (enemy rounds) = cream sparks, a body = a short ink burst
+  (the red comes from the combat blood). Unit `test_gun_fx.gd` 4/4.
+- DECISION shell colour `#b8913f` (a muted brass; red is blood only, vermilion is danger): one palette
+  value in gun_fx.json.
+- FRICTION: the first impact sweep used the round's last seen position, a tick (1 m) before the body,
+  so every body hit read as ground: the test caught it; the last step is now swept. Then a ternary
+  built an untyped `Array` for Rivet's plating and dropped every enemy-round impact at runtime (seen
+  in the city clip's log, 15 SCRIPT ERRORs): fixed + test (ec047559). Lesson: grep the run log of
+  every clip for SCRIPT ERROR before looking at frames.
+- FRICTION: `--arena` is not a boot arg; the arena runs as `res://dev/arena/arena.tscn -- ...`.
+  New class_names need `--headless --import` once before a windowed run.
+- Gates: lint 13/13, unit 704/704 (`evidence/n3/unit-a.log`), scenarios 29/29 (`scenarios-a.log`).
+- Clips: `MASTERS/n4/gunplay/arena_mpistol_pit_48ppm/` (15 s, 30 shots, 3 kills; burst_sequence.png
+  shows the strobe, tracer, smoke and shells). City block 32 px/m (machine pistol, 20 shots, 5 kills,
+  blood) re-rendering with the plating fix.
+
+### Answers to REQUESTs addressed to gunplay
+- brutality REQUEST 1: done already: `FightAreas._strike` emits `struck(victim, dir, lethal, weapon)` for
+  every area hit incl. rocket splash (dir = blast centre -> victim), weapon = the weapons.json id; burn
+  deaths emit `struck(h, flee, true, &"burn")`. `kill_landed` (REQUEST 1 of mine) carries the same.
+- showcase REQUEST 3 (Rivet's full-body vermilion hit flash): taken; next iteration (a cream paper flash
+  + plating sparks; the sparks landed tonight in GunFx). Weapons ARE selectable deterministically:
+  `res://dev/arena/arena.tscn -- --weapon=<weapons.json id>` (GunplayHook) + `--bot=gunplay`.
+- showcase REQUEST 5 (rocket reads as a white lance): the rocket body, wobbling smoke trail and the
+  starburst blast are drawn by FightAreasArt only with `--weapon=rocket_launcher` (the table gun);
+  without it the arena keeps quest 1's Gloria and the old tracer. Use the flag for the reel.
+- human-reactions REQUEST 1 (vertical rectangular blood streak on N/S hits): open, next iteration
+  (CombatBlood.kill_human spray along a vertical dir).
