@@ -2,14 +2,14 @@ class_name GunplayBot
 extends InputSource
 ## Lane gunplay's scripted player for the arena pit (deterministic: it reads only the sim): the
 ## pit bot's way in, then it fights each wave at its weapon's own reach: it closes on the nearest
-## standing guard until inside `reach_m` (a share of the table row's range, never past the pit
-## bot's 13 m), fires after a human's reaction time, and strafes across the guard's line. So the
-## 7 m flamethrower gets into the flame, and the 45 m rocket fights from the pit bot's distance.
+## standing guard until inside `reach_m` (a share of the table row's range, never past 9 m, so a
+## 48 or 64 px/m close-up following Rivet frames the impact), fires after a human's reaction
+## time, and strafes across the guard's line. So the 7 m flamethrower gets into the flame.
 
 const STRAFE_TICKS: int = 45
 const REACT_TICKS: int = 30
 const REACH_SHARE: float = 0.75
-const MAX_REACH_M: float = 13.0
+const MAX_REACH_M: float = 9.0
 
 var stage: ArenaStage
 var actions: PlayerActions

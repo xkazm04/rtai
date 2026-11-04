@@ -60,3 +60,11 @@ Agree by replying in your JOURNAL; I will not change the shape without a line he
   2.5 m fire cell over the puff's life) and fire on burning humans 0.85: at 32 px/m the old puffs read as dots.
 - Gates after the fix: lint 13/13, scenarios 29/29 (`evidence/n1/scenarios-e.log`), unit 701/701 (`unit-e.log`).
 - DEBT: fight_areas.gd is 254 lines (soft 200): split the patches + lob into their own file next.
+- 01:36 Panic run bends (`PANIC_TURN_RAD` 0.015/tick, side by id): in the 32 px/m flame clip burning
+  cops ran straight out of the pit and off the floor. GunplayBot max reach 13 -> 9 m so a 48/64 px/m
+  camera that follows Rivet frames the impact (the 64 px/m rocket clip had its blasts at the edge).
+  Molotov patch flames: 2.5 cells per metre of radius at 0.6-0.9 x a fire cell (they read as dots).
+- Arena electro: stuns and kills (7 at 64 px/m) but no chain hops in the pit: the pit's guards stand
+  > 4 m apart (chain_radius_m 4). The chain is proven in scenario_gunplay_fight (10 hops, 4 stunned
+  at once). Needs a clustered station (range dummies on a metal post line) for the clip.
+- 01:40 Gates: lint 13/13, scenarios 29/29 (`evidence/n1/scenarios-f.log`), unit 701/701 (`unit-f.log`). Electro bolt + chain arcs now a 10-11 px ink zigzag with a 4 px cream core (`FightAreasArt._bolt`).

@@ -30,8 +30,8 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 	for i: int in a.chain_arcs.size():
 		if tick - a.arc_ticks[i] < ARC_TICKS:
 			var arc: PackedVector2Array = a.chain_arcs[i]
-			Ink.zigzag(ci, arc[0], arc[1], 9, tick / 2 + i, Ink.INK)
-			Ink.zigzag(ci, arc[0], arc[1], 9, tick / 2 + i + 5, Ink.CREAM)
+			_bolt(ci, arc[0], arc[1], tick / 2 + i, 11.0, Ink.INK)
+			_bolt(ci, arc[0], arc[1], tick / 2 + i, 4.5, Ink.CREAM)
 
 
 ## A table round that is not a plain bullet; false when the kind is drawn as a tracer instead.
@@ -45,8 +45,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
 		WeaponSpec.Kind.BOLT:
-			Ink.zigzag(ci, s.pos - dir * 1.6, s.pos, 6, tick, Ink.INK)
-			Ink.zigzag(ci, s.pos - dir * 1.6, s.pos, 6, tick + 3, Ink.CREAM)
+			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 10.0, Ink.INK)
+			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
 			ci.draw_circle(Ink.px(s.pos), 7.0, Ink.INK)
 			ci.draw_circle(Ink.px(s.pos), 4.0, Ink.CREAM)
 		WeaponSpec.Kind.THROWN:
@@ -98,11 +98,11 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
 	ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5)))
-	var n: int = maxi(ceili(p.z * 1.6), 1)
+	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7
 		var off: Vector2 = Vector2.from_angle(ang) * p.z * (0.25 + 0.4 * float(i % 2))
-		_fire(ci, c + off, 0.32 + 0.1 * float(i % 3), tick + i * 5, fade)
+		_fire(ci, c + off, 0.6 + 0.15 * float(i % 3), tick + i * 5, fade)
 
 
 ## A rocket blast as a comic burst: a jagged cream star in a heavy ink rim (6 ticks), then an
@@ -151,3 +151,18 @@ static func _fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: f
 	ci.draw_texture_rect_region(
 		tex, Rect2(Ink.px(at) - size * 0.5, size), src, Color(1, 1, 1, alpha)
 	)
+
+
+## An electric zigzag of `width` px (kinks every ~0.3 m, re-jagged every tick by `phase`).
+static func _bolt(
+	ci: CanvasItem, a: Vector2, b: Vector2, phase: int, width: float, c: Color
+) -> void:
+	var normal: Vector2 = (b - a).orthogonal().normalized()
+	var kinks: int = maxi(ceili(a.distance_to(b) / 0.3), 2)
+	var pts: Array[Vector2] = []
+	for i: int in kinks + 1:
+		var t: float = float(i) / float(kinks)
+		var end: bool = i == 0 or i == kinks
+		var jag: float = 0.0 if end else sin(float(phase * 7 + i * 13)) * 0.22
+		pts.append(Ink.px(a.lerp(b, t) + normal * jag))
+	ci.draw_polyline(PackedVector2Array(pts), c, width, true)

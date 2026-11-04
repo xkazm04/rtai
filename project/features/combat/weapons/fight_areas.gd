@@ -14,6 +14,9 @@ const PATCH_IGNITE_TICKS: int = 30
 ## Burning humans run at walk speed x this, weaving off the line away from the fire.
 const PANIC_SPEED_X: float = 1.7
 const PANIC_WEAVE_RAD: float = 0.7
+## ...and the run bends (radians a tick, the side by fighter id), so a burning man flails in a
+## wide curve near where he caught fire instead of leaving the fight in a straight line.
+const PANIC_TURN_RAD: float = 0.015
 ## DECISION 2026-11-04: in the fight the bolt jumps body to body (humans conduct) and metal props
 ## bridge it; false = the range model's metal-only chain.
 const CHAIN_THROUGH_HUMANS: bool = true
@@ -106,6 +109,7 @@ func holds(arena: CombatArena, h: Fighter) -> bool:
 		var weave: float = sin(float(arena.tick) * 0.2 + float(h.id)) * PANIC_WEAVE_RAD
 		var run: Vector2 = e.flee.rotated(weave)
 		h.facing = run
+		e.flee = e.flee.rotated(PANIC_TURN_RAD if h.id % 2 == 0 else -PANIC_TURN_RAD)
 		h.pos += run * float(arena.tuning.human["walk_mps"]) * PANIC_SPEED_X * SimClock.TICK_DT
 	return true
 
