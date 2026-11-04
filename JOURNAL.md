@@ -499,3 +499,23 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   (`masters:n5/cast/scratch/ped-orig/`).
 - 23:50 frames.json 15 (+ crowd-value-vs-r2a5, crowd-quest1-vs-r1c6; dropped from the list, files kept, REPORT cites
   them: riot-helmet-navy-ab, cop-navy-ab).
+- 23:50 unit on 2d6bb3b8: 941/0.
+- 23:52 more trials toward pale peds, all reverted (tree clean, re-imported): (d) a vermilion marker on the D4 coat
+  torso showed that, from above at 32 px/m, only the torso's rim shows around the head, and that rim is mostly
+  outline ink; (e) `ped_thin_outline.py` (masters tools, outline kept at 4 px) + the +42 L lift + head 0.72 + ped
+  leg_w 0.7 together: marginal (`frames/crowd-trials-32ppm.png`, REPORT cites it). DECISION in decisions.md: keep
+  the shipped ped art; the fix is a new ped part sheet. Scratch lineups deleted.
+  FRICTION: a `-s` main script cannot touch HumanPlan (it needs the Log autoload): a dev flag that sets a HumanPlan
+  static must go through the run node (cast_lineup_run.gd), as quest1_clip does.
+
+NEXT (iteration 11):
+1. The ped part sheet toward r2_a5 and r1_c6 (Codex, under image.lock, not in the last 15 min of a session).
+   Sources: `gtai-masters/d4/chars/sheets/ped_a.png` (torso, jacket, hat, hair, hood cells; ped_b limbs, ped_c
+   endon + pelvis + vest; d4n_ped_d hoodie/overalls/cap/bald/beanie), slicer `d4/chars/tools/slice_chars.py` +
+   `parts_chars.json` (copy into masters `n5/cast/tools/`, never edit the d4 originals). Ask for: pale shirt/coat
+   torsos whose shoulders reach well past a small dark head (head about half the shoulder width, as r1_c6), thinner
+   outlines, the same cells and scale reference. Then the D5 set (alpha lock) or drop the D5 ped parts.
+   Judge with `cast_lineup.gd -- --crowd [--road]` at 32 px/m first; then the react board, corpses and gib cuts on
+   peds, the city at 32 px/m, and the goldens (re-bless once with a dated line).
+2. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
+Session state 23:55: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.

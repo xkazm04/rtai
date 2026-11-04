@@ -84,10 +84,12 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   r2_c6 the peds are the palest figures (white shirts, pale coats, dark hair), so our peds and navy cops share one
   dark value at game zoom; only the cops' blue pads tell them apart. The cause is the ped art from above, not one
   value: the bent standing knees put the dark trousers ahead of the chest, the head and hat art (161 px) are wider
-  than the torso (133 px), and the coat's grey fill sits just past the small-scale ink cut. Trials, each reverted:
-  lifting the coat fill +42 L (no visible change: the hat covers the torso), a 0.72 head scale (shows more dark
-  leg), straighter standing legs (hip_z 0.97: lobes a little smaller). The fix is a new ped part sheet toward
-  r2_a5 (pale shoulders, small dark heads, legs tucked under), a next-run item.
+  than the torso (133 px), and the coat's grey fill sits just past the small-scale ink cut. From above, only the
+  torso's rim shows around the head (a vermilion marker render proved it), and that rim is mostly outline ink.
+  Trials, each reverted: lifting the coat fill +42 L (no visible change), a 0.72 head scale (shows more dark leg),
+  straighter standing legs (hip_z 0.97: the lobes a little smaller), and all at once with a thinned coat outline
+  and ped leg_w 0.7: marginal (`M/frames/crowd-trials-32ppm.png`). The fix is a new ped part sheet toward r2_a5
+  (pale shoulders that reach past a small dark head, thin outlines, legs tucked under the coat), a next-run item.
 
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
