@@ -32,6 +32,9 @@ public:
 	// A car hit person i at (vx, vy) m/s: lethal = dead (body slides along the hit), else a
 	// knockdown (shoved 1 m along the hit, then flees 3 s). Called by the vehicles feature only.
 	void strike(int i, double vx, double vy, bool lethal);
+	// A bang at (x, y) outside the sim (the arena's gunfire on the city block): every walking
+	// pedestrian within 9 m flees from it for 2.5-4.5 s (one rnd() each). projectiles.cpp.
+	void scare(double x, double y);
 	// Points outside the sim (the vehicles feature's cars: three hull circles each) that traffic
 	// brakes for like a car ahead. xy holds n (x, y) pairs, capped at OBST_MAX; a sim input set
 	// before step() and kept until the next call.
@@ -154,7 +157,6 @@ private:
 	void car_hull(Car &c);                            // car_hit.cpp
 	void projectiles(double dt);                      // projectiles.cpp
 	bool projectile_sub(int k, double &x, double &y, double h);
-	void scare(double x, double y);                   // projectiles.cpp
 	int frame_of(int i, int &cell) const;             // render.cpp
 	bool police_alive() const;                        // flow.cpp
 	int map_cell(int gx, int gy) const;               // flow.cpp

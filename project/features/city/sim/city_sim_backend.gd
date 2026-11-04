@@ -19,6 +19,9 @@ extends RefCounted
 @abstract func kill(i: int) -> void
 ## A car hit person i at (vx, vy) m/s (the vehicles feature): lethal = dead, else a knockdown.
 @abstract func strike(i: int, vx: float, vy: float, lethal: bool) -> void
+## A bang at (x, y) from outside the sim (the arena's gunfire on the city block): walking
+## pedestrians within 9 m flee from it. A sim write (one rnd() per ped): call it from the tick.
+@abstract func scare(x: float, y: float) -> void
 ## Render only: a car slot's state for the atlas pick (custom.y; VehicleBody.State).
 @abstract func set_car_state(i: int, state: int) -> void
 ## Sim input: points outside the sim (service cars' hull circles, x y pairs, at most
