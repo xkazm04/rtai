@@ -442,3 +442,18 @@ NEXT (iteration 6, in order):
   29/29 (`scenarios-l.log`), parity bit-exact over 1200 steps + planted mutation caught at 629
   (`parity-l.log`). The full `tools/evidence/run.mjs` was not run this iteration (the bench part ran
   separately under the lock at 03:37).
+- 04:01 kill close-up at 64 px/m (NEXT 1, partly): `MASTERS/n4/gunplay/arena_hand_cannon_pit_64ppm/`
+  (4 rounds, 4 kills); `kill_closeup.png` cropped on the victim: shock ring, heavy tracer, red burst,
+  knockdown. The arena camera follows Rivet, so a victim-centred camera needs an arena arg (shared
+  dev code, not mine): REQUEST 3 (it5) -> arena owner / showcase: a `--cam=victim` (or `--cam-at=x,y`)
+  for kill close-ups. frames.json: 15 entries, all files checked to exist.
+- Session end ~04:02: no Godot process of mine running (every windowed run used --quit-after, all
+  exited), no bench.lock or image.lock held, scratch under gtai-n4/scratch/gp emptied.
+
+NEXT (iteration 6, supersedes the list above):
+1. Kill close-ups for plasma, ray, shard, nuke at 64 px/m cropped on the victim (as the hand cannon's).
+2. Plasma bolt: weapon-art's energy cell when it lands; else a stronger halo (ink alpha 0.2 -> 0.3).
+3. The range model (ProjectileSim) has no homing: port `FightReach.home` there if the TTK table should
+   show the shard's real reach (the real fight is the one that matters).
+4. Rivet's own hit reaction (after human-reactions answers REQUEST 1 it5).
+5. Idle riot bench of record when the machine is quiet.
