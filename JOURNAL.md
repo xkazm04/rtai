@@ -1432,3 +1432,8 @@ NEXT (10:40 report phase):
    resolves to one copy). The `CityView` window line is the one city-file change.
 3. Open (not before the freeze): the city flamethrower's death at the frame's top edge; the play
    camera's city split (gunplay-12) can reuse `city_lean_m`.
+- 10:06 the three city reels re-cut 1.8 s before to 2.5 s after each kill
+  (`PRE=1.8 DUR=4.3`; seven 30 s, unique four 17 s, close-up 13 s). The fight camera's hold on the
+  previous corpse ends about 2.85 s before the next kill, so the 2.5 s lead opened mid-pan. Looked
+  at 2 fps sheets: every cut opens on the guard's approach and the shot; the flamethrower cut opens
+  on the flame burst. frames.json titles and notes and REPORT updated.

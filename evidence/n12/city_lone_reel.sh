@@ -9,7 +9,7 @@ T=$(cygpath -m "$(mktemp -d)")
 i=0; : > "$T/list.txt"
 for spec in "$@"; do
   w=${spec%%:*}; k=${spec#*:}; i=$((i+1))
-  ss=$(python -c "print(max(0.0,$k/60-2.5))")
+  ss=$(python -c "print(max(0.0,$k/60-${PRE:-2.5}))")
   label=$(echo "$w" | tr '_' ' ')
   ffmpeg -v error -y -ss "$ss" -t ${DUR:-5.5} -i "$M/citylone21${TAG:-}_${PPM:-48}_$w/citylone21${TAG:-}_${PPM:-48}_$w.mp4" \
     -vf "drawtext=fontfile='C\:/Windows/Fonts/arialbd.ttf':text='$label  (one guard, city block, ${PPM:-48} px/m)':fontcolor=white:fontsize=30:box=1:boxcolor=black@0.6:boxborderw=8:x=16:y=16" \
