@@ -1,5 +1,5 @@
 {
-  "doc": "human-reactions stations: the reaction line, four standing human dummies 4 m apart in the hub (x 1..13, y 1.5) that never die, so every hit plays a wound family on its cast rig (run the arena with --rigs): --bot=react_line walks Rivet round each and shoots it from the west, north, east and south; or walk around one and shoot it from the front, behind and both sides to see the flinch follow the round. The standard deaths play in the pit (enemy_pit / arena_pit), where hits kill. Dev scene with every family and death on patrol, riot and pedestrian rigs: res://dev/human_react/react_board_run.gd.",
+  "doc": "human-reactions stations: the reaction line, four standing human dummies 4 m apart in the hub (x -0.5..11.5, y 1.5: the last dummy 3.3 m from rivet-arsenal's shock cop at 13, 4.4, outside the shock's 3 m chain radius) that never die, so every hit plays a wound family on its cast rig (run the arena with --rigs): --bot=react_line walks Rivet round each and shoots it from the west, north, east and south; or walk around one and shoot it from the front, behind and both sides to see the flinch follow the round. The standard deaths play in the pit (enemy_pit / arena_pit), where hits kill. Dev scene with every family and death on patrol, riot and pedestrian rigs: res://dev/human_react/react_board_run.gd.",
   "lane": "human-reactions",
   "schema": "gtai.arena-station/1",
   "stations": [
@@ -12,7 +12,7 @@
       "spawns": [
         {
           "at": [
-            1,
+            -0.5,
             1.5
           ],
           "id": "react_dummy_1",
@@ -23,7 +23,7 @@
         },
         {
           "at": [
-            5,
+            3.5,
             1.5
           ],
           "id": "react_dummy_2",
@@ -34,7 +34,7 @@
         },
         {
           "at": [
-            9,
+            7.5,
             1.5
           ],
           "id": "react_dummy_3",
@@ -45,7 +45,7 @@
         },
         {
           "at": [
-            13,
+            11.5,
             1.5
           ],
           "id": "react_dummy_4",
