@@ -8,4 +8,4 @@ var radius: float = 4.0
 
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius * 1.25, Ink.INK)
-	draw_circle(Vector2.ZERO, radius, KillView.BLOOD)
+	draw_circle(Vector2.ZERO, radius, KillMarkArt.BLOOD)

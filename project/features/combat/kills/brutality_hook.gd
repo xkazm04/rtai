@@ -5,13 +5,15 @@ extends ArenaHook
 ## the `brutality` RNG stream, folds them into the replay hash and draws them with KillView on the
 ## print stage's actor layer. Arena args (after --): --sig-gun=<weapon id> hands Rivet that
 ## weapons.json gun (the rocket launcher, until the arsenal lane's weapon wheel lands);
-## --gore=reduced turns every signature kill into the standard death.
+## --sig-lab lines guards up in front of him (KillLab, a framed capture); --gore=reduced turns
+## every signature kill into the standard death.
 
 var kills: SignatureKills = null
 var view: KillView = null
 var _stage: ArenaStage = null
 var _rigs: ArenaRigs = null
 var _game: Node = null
+var _lab: KillLab = null
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -26,10 +28,15 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if weapons != null and weapons.weapons.has(StringName(gun)):
 		stage.arena.gun = GunHand.make(weapons, StringName(gun), ctx.rng.stream(&"brutality_gun"))
 		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+	if ArenaArgs.parse().has("--sig-lab"):
+		_lab = KillLab.new()
+		_lab.setup(stage)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
 	kills.step(tick)
+	if _lab != null:
+		_lab.step(stage, tick)
 	if kills.consumed.is_empty():
 		return
 	for h: Fighter in stage.arena.hostiles:  # a revived or re-spawned body is whole again

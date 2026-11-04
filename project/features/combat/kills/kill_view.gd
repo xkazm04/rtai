@@ -6,11 +6,11 @@ extends Node2D
 ## and the kill's ink flash (a cream starburst for flash_ticks, none under reduced motion).
 ## World px at `ppm` in the actor layer's space. Reads the sim, writes nothing back, no RNG.
 
-const BLOOD: Color = Color("#A30509")
-const BLOOD_DARK: Color = Color("#540005")
-const SOOT: Color = Color(0.09, 0.075, 0.105, 0.55)
+const BLOOD: Color = KillMarkArt.BLOOD
+const SOOT: Color = KillMarkArt.SOOT
 const LIFT_SCALE: float = 0.22
 const FLASH_HOLD: int = 4
+const TRAIL_MAX: int = 40
 
 var kills: SignatureKills = null
 var ppm: float = 32.0
@@ -20,6 +20,8 @@ var rig_lookup: Callable = Callable()
 var gib_layer: Node2D = Node2D.new()
 var _groups: Dictionary[int, Array] = {}
 var _ang0: PackedFloat32Array = PackedFloat32Array()
+## Each slot's drag smear (px), grown while its part slides on the street.
+var _trail: Array[PackedVector2Array] = []
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -28,6 +30,8 @@ func bind(p_kills: SignatureKills) -> void:
 	kills.killed.connect(_on_killed)
 	@warning_ignore("return_value_discarded")
 	_ang0.resize(GibSim.CAPACITY)
+	for i: int in GibSim.CAPACITY:
+		_trail.append(PackedVector2Array())
 	gib_layer.z_index = 3
 	add_child(gib_layer)
 
@@ -43,6 +47,7 @@ func _process(_delta: float) -> void:
 		node.position = g.pos[i] * ppm
 		node.rotation = g.ang[i] - _ang0[i]
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
+		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	queue_redraw()
 
 
@@ -50,9 +55,13 @@ func _draw() -> void:
 	if kills == null:
 		return
 	for m: KillMarks.Mark in kills.marks.marks:
-		_draw_scorch(m)
-		_draw_spray(m)
+		KillMarkArt.spray(self, m, ppm)
 	var g: GibSim = kills.gibs
+	for i: int in GibSim.CAPACITY:
+		if g.live(i) and _trail[i].size() > 1:
+			KillMarkArt.smear(self, _trail[i], ppm)
+	for m: KillMarks.Mark in kills.marks.marks:
+		KillMarkArt.scorch(self, m, ppm)
 	for i: int in GibSim.CAPACITY:
 		if g.live(i):
 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
@@ -60,7 +69,7 @@ func _draw() -> void:
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
 		if not reduced_motion and age >= 0 and age < FLASH_HOLD + 2:
-			_draw_flash(m, age)
+			KillMarkArt.flash(self, m, age, ppm, FLASH_HOLD)
 
 
 func _node(i: int) -> Node2D:
@@ -81,13 +90,29 @@ func _on_killed(
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var groups: Array[Node2D] = GibCut.cut(rig) if rig != null else _blobs()
 	for gr: Node2D in groups:
+		var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
+		stump.radius = 0.1 * ppm
+		stump.z_index = -1
+		gr.add_child(stump)
 		gib_layer.add_child(gr)
 	_groups[serial] = groups
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.kill_of[i] == serial:
 			_ang0[i] = g.ang[i]
+			_trail[i] = PackedVector2Array()
 	_drop_unused()
+
+
+## A sliding part paints the street behind it (a point every few px, at most TRAIL_MAX).
+func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
+	var t: PackedVector2Array = _trail[i]
+	if not grounded or t.size() >= TRAIL_MAX:
+		return
+	if t.is_empty() or t[t.size() - 1].distance_to(at) > ppm * 0.08:
+		@warning_ignore("return_value_discarded")
+		t.append(at)
+		_trail[i] = t
 
 
 ## Frees the parts of kills whose pool slots were all reused (the leftover budget).
@@ -113,40 +138,3 @@ func _blobs() -> Array[Node2D]:
 		@warning_ignore("return_value_discarded")
 		out.append(b)
 	return out
-
-
-func _draw_scorch(m: KillMarks.Mark) -> void:
-	if m.scorch_m <= 0.0:
-		return
-	var c: Vector2 = m.at * ppm
-	var pts: PackedVector2Array = PackedVector2Array()
-	for k: int in 18:
-		var a: float = TAU * float(k) / 18.0
-		var r: float = m.scorch_m * ppm * (0.75 + 0.25 * sin(a * 5.0 + m.at.x))
-		@warning_ignore("return_value_discarded")
-		pts.append(c + Vector2.from_angle(a) * r)
-	draw_colored_polygon(pts, SOOT)
-	draw_circle(c, m.scorch_m * ppm * 0.45, Ink.INK)
-
-
-func _draw_spray(m: KillMarks.Mark) -> void:
-	var c: Vector2 = m.at * ppm
-	for d: Vector3 in m.drops:
-		var p: Vector2 = c + Vector2(d.x, d.y) * ppm
-		draw_circle(p, d.z * ppm * 1.15, BLOOD_DARK)
-		draw_circle(p, d.z * ppm, BLOOD)
-	draw_circle(c + m.dir * 0.3 * ppm, 0.42 * ppm, BLOOD)
-
-
-func _draw_flash(m: KillMarks.Mark, age: int) -> void:
-	var c: Vector2 = m.at * ppm
-	var grow: float = 1.0 + 0.25 * float(age)
-	var pts: PackedVector2Array = PackedVector2Array()
-	for k: int in 24:
-		var r: float = (1.6 if k % 2 == 0 else 0.8) * ppm * grow
-		@warning_ignore("return_value_discarded")
-		pts.append(c + Vector2.from_angle(TAU * float(k) / 24.0 + 0.2) * r)
-	draw_colored_polygon(pts, Ink.CREAM if age < FLASH_HOLD else SOOT)
-	@warning_ignore("return_value_discarded")
-	pts.append(pts[0])
-	draw_polyline(pts, Ink.INK, maxf(2.0, ppm * 0.08))
