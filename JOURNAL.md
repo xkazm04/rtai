@@ -73,3 +73,9 @@ NEXT (iteration 2, in order):
   CityBlood/CombatBlood fixes tonight): `CombatBlood.kill_human(pos, Vector2.UP/DOWN)` draws a
   rectangular streak; see `gtai-masters/n4/human-reactions/react_families_64ppm_sheet.png` rows
   8-10, columns 3-4.
+- 01:46 tried an electro "plank" death (tuck to pull the feet together, squash undone): it read as
+  a curled huddle at 64 px/m, worse than the X; reverted. The plank needs the legs straight and
+  together, which RigGait's sprawl spread cannot do: a `c_plank` envelope in RigGait._clip_feet
+  (feet at (-210, +-60) instead of +-230) is the d5-cast-side change to ask for or make.
+- Scratch cleaned (board frames deleted; clips stay in evidence/ and in gtai-masters). Encoder for
+  the captioned board clips: `evidence/enc_clip.py <frames dir> <out.mp4> <title>`.
