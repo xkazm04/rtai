@@ -158,3 +158,17 @@ NEXT (iteration 5):
 - MILESTONE 18:18 Codex job `rivet_hybrid_legs` (94 s, image.lock released): thigh, shin and feet as lean pistons in
   the arms' style; installed by `tools/install_rivet_legs.py` (bone lengths kept), leg_w 0.65 -> 1.0.
   `frames/rivet-legs-ab-64ppm.png`. The NEXT item 2 above is done except a 48 px/m motion clip on the new legs.
+- 18:23 the piston legs at 32 px/m (`--bot=rivet`, `cast-hybrid-legs-motion-32.mp4`, 0 script errors,
+  `frames/rivet-legs-motion-32ppm.png`): Rivet reads as the collar ring with thin ink limbs, lanky and clear on the
+  slab, faint on dark asphalt. Watch item for the owner's eye: arm_w 1.0 / leg_w 1.2 are the one-value fixes.
+- Session state 18:24: head 6fb10e9a + this JOURNAL commit. image.lock free; no Godot process of mine running.
+  Gates: lint 13/13, unit 940/0 (6fb10e9a), scenarios 46 with 1 known flake (city_chase, green alone), junction
+  look goldens 11/11 at 903bfd02 (not re-run after the legs), block look goldens 1/5 (bisect, NEXT 1). Parity and
+  the full evidence run not re-run this session (render-only changes).
+
+NEXT (iteration 5), updated: (1) block goldens bisect, then one bless covering the cops and Rivet, with a
+decisions line; re-run junction goldens after the legs; (2) the brutality splits and react board on the slim cops
+and the hybrid at 64 px/m (gib cuts use the new arm/leg parts: check the cut pieces look right); (3) the director
+reel's 64 px/m close-up again on the final arms and legs, and the r2_c6 composite re-shot; (4) `tools/evidence/run.mjs
+--no-bench` on the head; (5) the REPORT's Calls for the owner (held-gun size on the slimmer Rivet; limb weight at
+32 px/m; the 3/4 vs plan camera gap).
