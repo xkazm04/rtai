@@ -976,3 +976,15 @@ NEXT (the morning merge / the next night), in order:
    rise reads with no shot from the half-sprawl (frame by frame over the 29 RISE_TICKS).
 3. The robot thug's power-down death per the iteration 15 spec, plus a pit clip at 32 and 64 px/m.
 4. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
+
+## Iteration 17 (08:30-08:33, STABILIZE, past the freeze)
+- Read: JOURNAL NEXT, git log. Tracked tree clean at f6f71498 (only untracked evidence/ clips).
+- Checked: frames.json 15 entries, 0 missing files. No Godot process started this session.
+- DECISION: no code change and no gate re-run. The code tip of record stays fdff7990 (gates
+  green there: lint 13/13, unit 750/750, scenarios 33/33, parity bit-exact); every commit since
+  is JOURNAL-only, so the evidence still matches the build. Ten minutes before the report cannot
+  hold a full gate pass, and a partial one would add nothing over the record.
+
+NEXT: unchanged from iteration 16 (gunplay merge: shield_test line + react_line 64 px/m and the
+burn re-film; pit_knockdown_getup re-film over RISE_TICKS 29; robot thug power-down death; idle
+riot p99 bench).
