@@ -1,0 +1,8 @@
+fixes-run1.json          p99  5.448 ms  avg 1.138  low1  119.7  visible 38.6  rig p99 0.227  sim/tick 0.078
+fixes-run2.json          p99  3.225 ms  avg 1.032  low1  172.7  visible 38.9  rig p99 0.203  sim/tick 0.067
+pre-fixes-run1.json      p99  4.066 ms  avg 1.067  low1  133.7  visible 36.5  rig p99 0.182  sim/tick 0.070
+pre-fixes-run2.json      p99  4.155 ms  avg 1.074  low1  145.3  visible 37.1  rig p99 0.181  sim/tick 0.070
+pre-powers-run1.json     p99  5.084 ms  avg 1.134  low1  132.9  visible 37.6  rig p99 0.258  sim/tick 0.082
+pre-powers-run2.json     p99  3.675 ms  avg 1.022  low1  161.0  visible 38.7  rig p99 0.215  sim/tick 0.070
+tip-run1.json            p99  4.262 ms  avg 1.104  low1  148.6  visible 38.9  rig p99 0.246  sim/tick 0.074
+tip-run2.json            p99  3.561 ms  avg 1.105  low1  170.5  visible 39.3  rig p99 0.241  sim/tick 0.075

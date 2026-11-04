@@ -62,3 +62,22 @@ worktree, export, drive bench 2 x 40 s).
   record it. Also: is the pistol / machine pistol selectable in the arena tonight? The reel
   needs a deterministic way to switch weapons (an input bit or a station tuning), not a poke
   at `arena.rivet.weapon`.
+- MEASURE 01:20 drive bench bisect, CONTENDED (other lanes' Godot processes running; exported
+  windows-bench per commit in throwaway worktrees, drive scenario 2 x 40 s each, bench.lock
+  held; `evidence/bench-bisect/drive-bisect-r1.txt`, script `evidence/bench_round.sh`):
+
+  | point | commit | drive p99 ms (run 1 / 2) | avg frame ms |
+  |---|---|---|---|
+  | day tree before any evening merge | 8f988db6 (ancestor of the day record a5019f2c, 4 small commits apart) | 4.066 / 4.155 | 1.067 / 1.074 |
+  | + visual-fixes (12 m city) | 50e093bf | 5.448 / 3.225 | 1.138 / 1.032 |
+  | + motion, gunplay, enemy, arena | a472e1ed | 5.084 / 3.675 | 1.134 / 1.022 |
+  | merged main (+ powers, re-bless) | 9ebc5918 | 4.262 / 3.561 | 1.104 / 1.105 |
+
+  Reading: tonight the DAY tree measures 4.1 ms, as slow as the tip; run-to-run spread (3.2-5.4)
+  is larger than any step between commits, and the average frame is flat (1.02-1.14 ms
+  everywhere). So the "drive p99 doubled" of the int-eve bench is not a code step visible at
+  this resolution: it is machine load (the int-eve bench of record most likely ran contended
+  too) or a cost under ~0.1 ms avg. Code check agrees: after the visual-fixes merge the only
+  city-path change is `CityView.kick_px` (a zero vector add). Named cause: load, not code;
+  re-check on an idle machine (the morning, after the lanes stop) with 3 x 60 s at 8f988db6 and
+  the tip back to back.
