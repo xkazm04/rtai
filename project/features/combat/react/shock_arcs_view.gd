@@ -4,7 +4,8 @@ extends Node2D
 ## under them, where arcs on the body were hidden): arcs crawling over the body (ShockJolt.arcs)
 ## centred on the rig's drawn torso so they ride its convulsion, and the pistol his fingers let go
 ## (the rig's hand cell drops the gun while he convulses): tossed out of the gun hand on the first
-## stun tick, it lies beside him until the stun ends; an electro corpse keeps it. Reads the
+## stun tick, it lies beside him until the stun ends; an electro corpse keeps it, and it inks out
+## and sinks with the body (CorpseDecay via ArenaRigs.decay), gone with it. Reads the
 ## arena's stun state on its tick; render only, no RNG.
 
 ## The toss: ticks in the air, how far it lands from the torso (m, ahead and to the gun side),
@@ -18,6 +19,7 @@ const GUN_WIDE_M: float = 0.06
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
+var host: ArenaRigs = null
 ## Fighter id -> [from px, to px, the stun's first tick, rest angle, px per metre].
 var _drops: Dictionary[int, Array] = {}
 
@@ -36,7 +38,7 @@ func _draw() -> void:
 				@warning_ignore("return_value_discarded")
 				_drops.erase(h.id)
 			else:
-				_gun(_drops[h.id])
+				_gun(_drops[h.id], h.id)
 			continue
 		var e: FighterFx = arena.areas.effect(h)
 		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
@@ -50,7 +52,7 @@ func _draw() -> void:
 			@warning_ignore("return_value_discarded")
 			_drops.erase(h.id)
 		if _drops.has(h.id):
-			_gun(_drops[h.id])
+			_gun(_drops[h.id], h.id)
 
 
 func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
@@ -61,9 +63,12 @@ func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
 
 
 ## The pistol in flight (a little hop, spinning) or lying where it landed.
-func _gun(d: Array) -> void:
+func _gun(d: Array, id: int) -> void:
+	var decay: CorpseDecay = host.decay if host != null else null
+	if host != null and host.gone.has(id):
+		return
 	var t0: int = d[2]
-	var ppm: float = d[4]
+	var ppm: float = d[4] * (decay.sink_of(id) if decay != null else 1.0)
 	var rest: float = d[3]
 	var k: float = clampf(float(arena.tick - t0) / float(TOSS_TICKS), 0.0, 1.0)
 	var from: Vector2 = d[0]
@@ -87,4 +92,5 @@ func _gun(d: Array) -> void:
 	var rim: PackedVector2Array = body.duplicate()
 	@warning_ignore("return_value_discarded")
 	rim.append(body[0])
-	draw_polyline(rim, Ink.CREAM, 1.5, true)
+	var ink: float = decay.ink_of(id) if decay != null else 0.0
+	draw_polyline(rim, Ink.CREAM.lerp(Ink.INK, ink), 1.5, true)
