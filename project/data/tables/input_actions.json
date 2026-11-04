@@ -4,7 +4,7 @@
     "aim_reach_step_m": 1.2,
     "aim_shift": 16,
     "aim_steps": 256,
-    "doc": "The aim is a heading quantised to aim_steps steps, packed into TickInput.buttons from bit aim_shift (8 bits + an aim-valid bit); a held fire shoots aim_range_m along it. The mouse cursor's distance rides in the next 4 bits in aim_reach_step_m steps (0 = none: the fixed aim_range_m); a thrown weapon lands there.",
+    "doc": "The aim is a heading quantised to aim_steps steps, packed into TickInput.buttons from bit aim_shift (8 bits + an aim-valid bit); a held fire shoots aim_range_m along it. The mouse cursor's distance rides in the next 4 bits in aim_reach_step_m steps (0 = none: the fixed aim_range_m); a thrown weapon lands there. On the pad, how far the right stick is pushed sets it instead (just past stick_deadzone = one step, a full push = aim_range_m).",
     "stick_deadzone": 0.25
   },
   "doc": "Quest 1's gameplay actions as data (STM-09): the bit each takes in TickInput.buttons, its default keys (physical key names), mouse buttons and gamepad buttons/axes. Registered into the InputMap at boot (PlayerActions.install), rebindable later. Bits 0 (car: enter/exit, VehicleService.BIT_USE) and 1 (handbrake, VehicleService.BIT_HANDBRAKE) are the vehicles lane's contract; Space is both melee (on foot) and handbrake (driving).",
