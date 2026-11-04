@@ -40,7 +40,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
 	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO:
-		stage.intent.fire_at = stage.arena.rivet.pos + c.aim * actions.aim_range_m
+		stage.intent.fire_at = stage.arena.rivet.pos + c.aim * _reach(stage, c)
 	melee_cooldown = maxi(melee_cooldown - 1, 0)
 	if hauler != null:
 		var melee: bool = c.was_pressed(actions, &"melee")
@@ -77,3 +77,12 @@ func _jab(stage: CollectCallStage, heading: Vector2) -> void:
 		if h.alive() and to.length() <= MELEE_REACH_M + h.radius_m:
 			if to.normalized().dot(heading) >= MELEE_CONE_DOT:
 				stage.arena.damage(h, MELEE_DAMAGE, stage.arena.rivet.id, &"shock")
+
+
+## How far along the aim the fire point sits: a thrown weapon lands where the cursor was (lane
+## gunplay, rivet-arsenal REQUEST 12); everything else aims aim_range_m out (direction only).
+func _reach(stage: CollectCallStage, c: PlayerCommand) -> float:
+	var gun: GunHand = stage.arena.gun
+	if c.aim_m > 0.0 and gun != null and gun.trigger.spec.kind == WeaponSpec.Kind.THROWN:
+		return c.aim_m
+	return actions.aim_range_m
