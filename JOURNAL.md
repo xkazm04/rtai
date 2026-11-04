@@ -552,11 +552,20 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   read as figures with dark trouser legs striding, as r2_a5's running peds do. So the dark standing blob mostly
   matters for idle crowds; the pale-top read still needs the torso to show past the head (r4 sheet + smaller head).
 
+- 00:14 the whole package as one trial (r4 sheet in D4 with its D5 overlays aside, ped head 0.75, foot_fwd 3,
+  leg_w 0.8; all reverted, tree clean, re-imported): coat-hood and vest show more cream, coat-hat darker (the r4 hat
+  is dark), jacket and hoodie unchanged; overall still dark (`frames/crowd-package-trial-32ppm.png`). NO-GO for value
+  tweaks: at 32 px/m a ped is ~26 px across, and from straight above the art is mostly dark head, legs and shoes;
+  r2_a5 is a 3/4 view where the shirt faces the camera (the known camera gap). A pale crowd from above needs a
+  ped redraw for the plan view (light shoulders as the widest shape, hair/hat small, shoes small) or an owner call
+  that dark-on-cream peds are fine at game zoom.
+
 NEXT (iteration 11):
-1. Peds' standing legs toward r1_c6: foot_fwd 3 + leg_w 0.8 helped a little (00:13); add a render-only `foot_k`
-   (smaller shoes) and try with the r4 sheet + head_k ~0.75 together (the pale coat must show past the head).
-2. Then re-try the r4 sheet (`gen/r4/cut/` via `install_ped_sheet.py`) on top, plus a smaller head if needed.
-   Judge: the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated
+1. The crowd's value: the package of value tweaks is a no-go (00:14). Either a plan-view ped redraw (Codex from
+   r1_c6 + r2_a5: light shoulders widest, small head, small shoes; all six looks, D4 + D5) as a full item with the
+   react board, corpses, gibs and goldens, or leave it as REPORT Call 6 (pale vs dark crowd) if the time goes to
+   the weakest cast item instead. Write Call 6 with `frames/crowd-value-vs-r2a5.png` + the package trial still.
+2. With a redraw: judge the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated
    line), provenance lines for shipped parts.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session end 00:15: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session end 00:16: head = this commit, tree clean, image.lock released, no Godot process of mine running.
