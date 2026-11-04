@@ -23,6 +23,7 @@ var _shown: Array[StringName] = []
 var _paper: Color = PaletteTokens.shared().color(&"paper")
 var _ink: Color = PaletteTokens.shared().color(&"ink")
 var _t: float = 0.0
+var _outline: float = PickupLook.outline_px(art.pickup_outline_px)
 
 
 func _process(_delta: float) -> void:
@@ -71,7 +72,7 @@ func _rebuild(ids: Array[StringName]) -> void:
 		var w: float = s.texture.get_width() if s.texture != null else 1.0
 		var span_m: float = maxf(art.length_m(id), art.pickup_min_span_m)  # r2_w8: fills the ring
 		s.scale = Vector2.ONE * span_m * SimConst.PX_PER_M / maxf(w, 1.0)
-		PickupLook.dress(s)  # weapon-art: flat fills in ink (--pickup-print=on = before)
+		PickupLook.dress(s, _outline)  # flat fills in ink (--pickup-print=on = before)
 		add_child(s)
 		_sprites.append(s)
 	_shown = ids

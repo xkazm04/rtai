@@ -17,14 +17,14 @@ func after_each() -> void:
 
 func test_default_is_flat_fills_in_an_ink_outline() -> void:
 	var s: Sprite2D = _pickup(&"hand_cannon")
-	PickupLook.dress(s)
+	PickupLook.dress(s, 2.0)
 	assert_null(s.material, "no print material on the pickup")
 	assert_eq(s.get_child_count(), PickupLook.OUTLINE_DIRS)
 	var ink: Sprite2D = s.get_child(0) as Sprite2D
 	assert_true(ink.show_behind_parent, "the outline draws under the gun")
 	assert_eq(ink.modulate, PaletteTokens.shared().color(&"ink"))
 	var reach: float = ink.position.length() * s.scale.x
-	assert_almost_eq(reach, PickupLook.OUTLINE_WORLD_PX, 0.001, "1 world px out")
+	assert_almost_eq(reach, 2.0, 0.001, "the asked world px out")
 	s.free()
 
 
@@ -44,3 +44,10 @@ func test_min_span_fills_the_ring_and_spares_big_guns() -> void:
 	assert_gt(art.pickup_min_span_m, art.length_m(&"pistol"))
 	assert_lt(art.pickup_min_span_m, PickupsView.DISC_M * 2.0)
 	assert_gt(art.length_m(&"rocket_launcher"), art.pickup_min_span_m)
+
+
+## n5-look (r2_w8): the outline width is data; the CLI override falls back to the JSON value.
+func test_outline_width_is_data() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	assert_gt(art.pickup_outline_px, 0.0)
+	assert_eq(PickupLook.outline_px(1.5), 1.5, "no --pickup-outline: the JSON value")

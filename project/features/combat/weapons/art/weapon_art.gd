@@ -30,6 +30,8 @@ var round_k: Dictionary[StringName, float] = {}
 var fx_colour_dir: String = ""
 ## n5-look (r2_w8): a pickup lying in its loot ring draws at least this span (m); 0 = true size.
 var pickup_min_span_m: float = 0.0
+## n5-look (r2_w8): world px of ink round a pickup's silhouette (1 = before).
+var pickup_outline_px: float = 1.0
 
 var _rows: Dictionary[StringName, Row] = {}
 var _fx: Dictionary[StringName, Cell] = {}
@@ -65,10 +67,9 @@ func _init(path: String = TABLE) -> void:
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	rig_px_per_m = t.num(t.raw, "rig_px_per_m")
 	fx_draw_scale = t.num(t.raw, "fx_draw_scale")
-	if t.raw.has("held_small_below_ppm"):
-		held_small_below_ppm = t.num(t.raw, "held_small_below_ppm")
-	if t.raw.has("pickup_min_span_m"):
-		pickup_min_span_m = t.num(t.raw, "pickup_min_span_m")
+	held_small_below_ppm = _opt(t, "held_small_below_ppm", 0.0)
+	pickup_min_span_m = _opt(t, "pickup_min_span_m", 0.0)
+	pickup_outline_px = _opt(t, "pickup_outline_px", pickup_outline_px)
 	for row: Variant in t.array(t.raw, "weapons"):
 		var r: Dictionary = row if row is Dictionary else {}
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
@@ -84,6 +85,10 @@ func _init(path: String = TABLE) -> void:
 		_fx[StringName(t.text(r, "id"))] = c
 	if not t.ok():
 		Log.error("weapon_art", str(t.errors()))
+
+
+static func _opt(t: DataTable, key: String, absent: float) -> float:
+	return t.num(t.raw, key) if t.raw.has(key) else absent
 
 
 func has(id: StringName) -> bool:
