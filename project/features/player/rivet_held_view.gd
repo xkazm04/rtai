@@ -213,14 +213,19 @@ func _route_hose(fwd: Vector2) -> void:
 		line.points = pts
 
 
-## The molotov's draw lights the rag at the bottle's muzzle point (RagLight); hidden otherwise.
+## The molotov's draw lights the rag at the bottle's muzzle point (RagLight), and so does each
+## next bottle as it comes up after a throw (reload phase 1); hidden otherwise.
 func _light_rag(rig: CutRig, id: StringName) -> void:
-	var on: bool = rig.grip == RigGrip.Kind.THROWN and pilot.hold.state == WeaponHold.State.DRAWING
+	var k: float = -1.0
+	if rig.grip == RigGrip.Kind.THROWN and pilot.hold.state == WeaponHold.State.DRAWING:
+		k = pilot.hold.progress()
+	elif rig.grip == RigGrip.Kind.THROWN and rig.reload_k >= 1.0 and rig.reload_k < 2.0:
+		k = rig.reload_k - 1.0
 	if _rag == null:
 		_rag = RagLight.new()
 		_rag.z_index = 2
 		add_child(_rag)
-	_rag.visible = on and _sprite.visible
+	_rag.visible = k >= 0.0 and _sprite.visible
 	if _rag.visible:
 		var at: Vector2 = _sprite.to_global(art.muzzle_px(id) + _sprite.offset)
-		_rag.light(at, pilot.hold.progress(), Engine.get_process_frames())
+		_rag.light(at, k, Engine.get_process_frames())
