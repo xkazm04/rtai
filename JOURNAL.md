@@ -999,3 +999,40 @@ NEXT (iteration 8, the final round; freeze 08:30):
 - 07:16 gates r12 started (`evidence/run.mjs --no-bench`, APPDATA showcase-e, log
   scratch-showcase/evidence-r12.txt) and the final director cut in parallel (cut.sh
   reel-0716-final 48, APPDATA showcase-film). Bench afterwards, alone, under bench.lock.
+- MILESTONE 07:22 the final director cut (cut.sh reel-0716-final 48 on 9c52b656, APPDATA
+  showcase-film): 16 chapters, 0 SCRIPT ERRORs, every chapter down (claw 2/2, pistol 2/2, machine
+  pistol 4/4, mini-nuke 4/4, the rest 1/1). 07:24 reel-0722.mp4 (masters, 122 s) = the 16
+  chapters + 17 CITY BLOCK (`--arena=city --reel=pit --riot`, 0 SCRIPT ERRORs: REQUEST 28 is
+  fixed by brutality 584b3f77; reel-0710's city film had 1445).
+- 07:24 chapter check (evidence/r12/sheet-r12-a/b.jpg, 3 frames per chapter at 45/70/95 %):
+  flamethrower and molotov leave the inked soot char; the mini-nuke's ring is gunplay's char band
+  with fire stars; riot cop, homing, hand cannon, pistol and machine pistol read as in r11.
+  Still open: ch 13 ray gun = a round cream token (REQUEST 26), ch 07 molotov victim under the
+  stars (REQUEST 27).
+- FINDING 07:25 (evidence/r12/electro-r12-strip.png vs electro-r11-strip.png, 2 fps crops of
+  chapter 06): the electro chapter is pixel-identical to r11. Human-reactions' 3a8d3931 (plank
+  along the shot, inked scorch) is not on this path: the director's electro kill is brutality's
+  KillShockFx (signature row electro_shock), which owns the corpse. After the X-ray strobe (2.0 s)
+  the dropped body still reads as a standing cop seen from above (head mid-body, gun arm forward,
+  shoulders north-south), turned DROP_TURN 0.5 rad; no scorch on the floor at 48 px/m.
+- REQUEST 29 -> brutality (cc human-reactions): KillShockFx's drop must lay the body down, not
+  turn the standing rig: hand the dropped body human-reactions' shock pose (DeathPose._shock:
+  c_plank, c_sprawl, plank_turn(dir), CorpseScorch.ensure) or set the same rig channels yourself,
+  so the corpse lies long along the shot with the inked scorch. Repro: n-showcase 9c52b656,
+  `res://dev/arena/arena.tscn -- --bot=reel --reel=director --chapter=electro_gun --loadout=pistol
+  --ppm=48 --clean --rigs`, frames 2.5-6 s. Showcase will not glue this (it is the kill's look).
+- GATES r12 (evidence --no-bench on 9c52b656, CONTENDED, APPDATA showcase-e): lint 13/13 (783
+  files), unit 893/893 (the evidence run flagged "tree changed during run": my own JOURNAL commit
+  at 07:16 mid-run; re-run alone on a still tree 07:25: 893 passed, 0 failed), scenarios 44/44,
+  parity bit-exact (planted caught at 629), selftest PASS: look 11/11 (worst 0.00) with our
+  goldens, block 5/5 (worst 1.81). Round 12 needs no re-bless. Logs evidence/r12/.
+  FRICTION: never commit while evidence/run.mjs runs (it checks the tree after unit).
+- MILESTONE 07:27 exe re-exported on round 12 (9c52b656 tree + journal): build/export/windows/
+  RTAI.exe (236 MB) + the release DLL, export exit 0, 0 errors (the first try at 07:25 logged 4
+  ERRORs: the debug DLL was locked by my running unit test; re-exported after it ended). Boot
+  tests headless, 0 SCRIPT ERRORs each: no args ("armory: 15 weapons on the hub floor", "arena
+  open: 16 stations"), `-- --bot=reel --reel=director --loadout=pistol` (claw 2/2, pistol 2/2,
+  machine pistol 4/4 down...), `-- --arena=city --loadout=pistol,plasma_rifle,rocket_launcher,
+  molotov` (1800 ticks).
+- 07:28 bench r12 started alone under bench.lock (scratch-showcase/bench_final.sh; the lock is
+  removed by the script when the bench ends).
