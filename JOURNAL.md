@@ -79,3 +79,29 @@ NEXT (iteration 2, in order):
   (feet at (-210, +-60) instead of +-230) is the d5-cast-side change to ask for or make.
 - Scratch cleaned (board frames deleted; clips stay in evidence/ and in gtai-masters). Encoder for
   the captioned board clips: `evidence/enc_clip.py <frames dir> <out.mp4> <title>`.
+
+## Iteration 2 (reconstructed from git, the session left no journal lines)
+- 68e13449 merged n-gunplay (b3b3c92f): kill_landed payload + FightAreas states.
+- 8669b5d9: gunplay REQUEST 2 answered: stun convulses / burn flails / knockdown lies for as long
+  as the FighterFx state lasts (`ReactLink.hold`, HOLD spans), then runs out; kill_landed kind
+  picks the death (burned -> death_burn, blown -> death_blast). rivet-arsenal REQUEST 1 DONE: the
+  hit flash is cream, not vermilion (print_part.gdshader).
+
+## Iteration 3 (01:53-02:53), BUILD
+- FRICTION 02:00: the line's dummies are GUARD fighters whose GuardBrain turns them to Rivet, so
+  every round landed from the front in the victim's own space: "four sides" would be the same
+  flinch four times. Fix, render-only: ArenaRigs feeds the line's dummies a fixed east facing.
+  Also: the 2.5 m line put Rivet on top of the dummy on W/E (the rigs are wider than the 0.45 m
+  collision radius); respaced to 4 m (x 1, 5, 9, 13; y 1.5), W/E shots from 2 m, N/S from 2.8 m.
+- MILESTONE 02:03 d0b230b6: `--bot=react_line` (ReactLineBot): Rivet walks round each dummy and
+  shoots it once from W, N, E, S (16 shots, 16 hits, deterministic); the line wears looks
+  (patrol cop, riot cop, ped coat, ped hoodie; peds unarmed); `ReactLink.shielded(rig)`: the riot
+  look blocks a front round in the live arena (before: `shielded` was always false). Unit 717/717,
+  lint 13/13.
+- DECISION human-reactions: the riot shield is render-only tonight (the sim's hp still drops on a
+  shield block; Fighter has no shield). Rejected: a shield in CombatArena (gunplay's sim, moves
+  the replay goldens). Alternative = one flag when enemy-ai's riot archetype reaches the arena.
+- Evidence: `react_line_4sides_32ppm.mp4`, `react_line_4sides_64ppm.mp4` (35 s, captioned per
+  shot), `react_line_4sides_64ppm_sheet.png` (rows = looks, cols = W N E S) in gtai-masters.
+- Gap: no SWAT look exists in d5-cast (RigVariant.crowd has patrol and riot only); adding index 8
+  breaks CrowdAtlas (LOOKS = CROWD_COUNT). SWAT stays out of the line until the cast has it.
