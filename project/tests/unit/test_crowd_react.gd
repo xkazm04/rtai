@@ -98,6 +98,20 @@ func test_a_fleeing_person_trips_over_a_body_once() -> void:
 	assert_eq(c.trips, 1, "one trip per body")
 
 
+func test_a_fleeing_person_trips_over_the_fights_dead_drawn_elsewhere() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	rigs.feed = _feed(true)
+	c.extra_bodies[-1 - 3] = Vector2(-10.0, 0.0)  # a dead cop on the arena's own rigs
+	c.observe(rigs)
+	assert_eq(c.trips, 1)
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.trips, 1, "one trip per body")
+
+
 func test_a_walker_or_a_far_body_does_not_trip() -> void:
 	var c: CrowdReact = CrowdReact.make()
 	var rigs: CharacterRigs = autofree(CharacterRigs.new())

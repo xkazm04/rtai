@@ -20,6 +20,8 @@ var stage: ArenaStage = null
 var plan: ArenaPlan = null
 ## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
 var react: ReactLink = null
+## human-reactions: the city crowd's reactions (--arena=city), told where the fight's dead lie.
+var crowd: CrowdReact = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
 var _city: CityView = null
@@ -79,6 +81,11 @@ func _process(_delta: float) -> void:
 	rigs.zoom = _print.zoom if _print != null else _city.zoom
 	if react != null:
 		react.apply(rigs)
+	if crowd != null:
+		crowd.extra_bodies.clear()
+		for h: Fighter in stage.arena.hostiles:
+			if not h.alive():
+				crowd.extra_bodies[-1 - h.id] = h.pos * SimConst.PX_PER_M
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:

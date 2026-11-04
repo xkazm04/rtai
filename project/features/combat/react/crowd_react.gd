@@ -27,6 +27,9 @@ var cowers: int = 0
 var trips: int = 0
 var deaths: int = 0
 var pipe: DeathPipe
+## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
+## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
+var extra_bodies: Dictionary[int, Vector2] = {}
 ## Each person's DEAD flag at the last observed tick, by actor id.
 var _dead: Dictionary[int, bool] = {}
 ## Each person's FLEE flag at the last observed tick, by actor id.
@@ -102,10 +105,10 @@ func _cower(rig: CutRig, away: Vector2) -> void:
 ## Fleeing people within TRIP_M of a body trip over it (once per body), along their flight.
 func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
 	var feed: RigFeed = rigs.feed
-	var bodies: Array[int] = []
+	var bodies: Dictionary[int, Vector2] = extra_bodies.duplicate()
 	for i: int in feed.count:
 		if dead.get(feed.ids[i], false):
-			bodies.append(i)
+			bodies[feed.ids[i]] = feed.pos[i]
 	if bodies.is_empty():
 		return
 	var reach: float = TRIP_M * SimConst.PX_PER_M
@@ -113,9 +116,9 @@ func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
 		if feed.kinds[i] != BodyPlan.Kind.PED or not feed.has_flag(i, RigFeed.Flag.FLEE):
 			continue
 		for b: int in bodies:
-			var key: Vector2i = Vector2i(feed.ids[i], feed.ids[b])
-			var near: bool = feed.pos[i].distance_squared_to(feed.pos[b]) < reach * reach
-			if b != i and near and not _tripped.has(key):
+			var key: Vector2i = Vector2i(feed.ids[i], b)
+			var near: bool = feed.pos[i].distance_squared_to(bodies[b]) < reach * reach
+			if b != feed.ids[i] and near and not _tripped.has(key):
 				_tripped[key] = true
 				_trip(rigs.rig_for(feed.ids[i]), feed.vel[i])
 
