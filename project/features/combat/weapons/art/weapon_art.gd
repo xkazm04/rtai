@@ -21,6 +21,8 @@ static var rim: bool = not OS.get_cmdline_user_args().has("--weapon-rim=off")
 var rig_px_per_m: float = 320.0
 ## FX cells draw at this many times the rig part scale (fx_scale()).
 var fx_draw_scale: float = 2.0
+## Below this many px/m the claw draws a weapon's `small` part (HeldLod); 0 = never.
+var held_small_below_ppm: float = 0.0
 ## projectile_k by weapon id (rows that set it): the round's cell drawn k thicker and sqrt(k)
 ## longer (the hand cannon's slug); absent = 1.
 var round_k: Dictionary[StringName, float] = {}
@@ -59,6 +61,8 @@ func _init(path: String = TABLE) -> void:
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	rig_px_per_m = t.num(t.raw, "rig_px_per_m")
 	fx_draw_scale = t.num(t.raw, "fx_draw_scale")
+	if t.raw.has("held_small_below_ppm"):
+		held_small_below_ppm = t.num(t.raw, "held_small_below_ppm")
 	for row: Variant in t.array(t.raw, "weapons"):
 		var r: Dictionary = row if row is Dictionary else {}
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
@@ -152,7 +156,7 @@ func make_held(id: StringName, part: String = "") -> Sprite2D:
 	var r: Row = _row(id)
 	if part != "" and not r.parts.has(part):
 		return null
-	var s: Sprite2D = Sprite2D.new()
+	var s: Sprite2D = _held_sprite(r) if part == "" else Sprite2D.new()
 	s.name = "Held_%s%s" % [id, "" if part == "" else "_" + part]
 	s.texture = held_texture(id) if part == "" else _load(r.parts[part])
 	s.centered = false
@@ -186,6 +190,17 @@ func fx_scale() -> float:
 func fx_anchor(id: StringName) -> Vector2:
 	var key: StringName = id if _fx.has(id) else StringName("%s_0" % id)
 	return _fx[key].anchor if _fx.has(key) else Vector2.ZERO
+
+
+## A plain Sprite2D, or a HeldLod when the weapon has a `small` part and the table a threshold.
+func _held_sprite(r: Row) -> Sprite2D:
+	if held_small_below_ppm <= 0.0 or not r.parts.has("small"):
+		return Sprite2D.new()
+	var lod: HeldLod = HeldLod.new()
+	lod.full = _load(r.held)
+	lod.small = _load(r.parts["small"])
+	lod.below_view_px = held_small_below_ppm / WORLD_PX_PER_M * CutRig.SC
+	return lod
 
 
 ## Cream silhouettes of the part, RIM_WORLD_PX out in RIM_DIRS directions, drawn under it.
