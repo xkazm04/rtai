@@ -66,7 +66,7 @@ func _judge_faults(o: Dictionary) -> String:
 	var burnt: float = o["burn_char"]
 	var planted_char: float = o["planted_no_burn_row_char"]
 	var d: Array = o["digest"]
-	var bad: PackedStringArray = PackedStringArray()
+	var bad: Array[String] = []
 	if dot < 0.95:
 		bad.append("a reaction does not follow the round (min dot %.2f)" % dot)
 	if planted_dot >= 0.95:
@@ -77,7 +77,7 @@ func _judge_faults(o: Dictionary) -> String:
 		bad.append("two runs of every family differ: %s" % [d])
 	if not o["planted_signature_took"]:
 		bad.append("a signature kill did not replace the standard death")
-	return "; ".join(bad)
+	return "; ".join(PackedStringArray(bad))
 
 
 func _rig() -> CutRig:
