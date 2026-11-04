@@ -1407,3 +1407,9 @@ NEXT is unchanged, except item 2 (done).
   reels (iteration 19) still say "one cop" in their burned-in labels. OBSERVATION for the owner:
   the guards' orange reads close to the vermilion that is reserved for danger, objectives and
   Rivet's collar (the arena lane's guard look, not gunplay's).
+- 10:03 CORRECTION of the CORRECTION above: in the arena pit the victims ARE blue cop rigs (the
+  re-cut sheet shows them), so the arena lone reels keep "one cop" (re-cut back, identical
+  labels; `evidence/n11/lone_reel.sh` unchanged). In the city the live victim is quest 1's inked
+  guard sprite (orange hi-vis, hard hat): `--rigs` (ArenaRigs) only runs on the pit's printed
+  path, and the quest's city fight draws the same sprite. So "one guard" is right for the city
+  reels only.
