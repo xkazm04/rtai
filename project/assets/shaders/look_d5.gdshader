@@ -39,6 +39,10 @@ uniform float plate_k = 0.5;       // colour-plate misregistration: ghost + pape
 uniform vec2 plate_mis = vec2(1.0, -1.0); // the colour plate's offset in screen px
 uniform float fibre_k = 0.5;       // paper fibre strength (dark and light strands)
 uniform float fibre_scale = 0.09;  // fibre lattice frequency per screen px
+uniform float stain_k = 0.0;       // low-frequency grey-brown stains on the paper (the target's mottled sheet)
+uniform float stain_scale = 0.011; // stain lattice frequency per screen px
+uniform float tan_k = 0.0;         // the ground's light neutral print toned toward the target's tan sheet (actors untouched)
+const vec3 TAN = vec3(0.92, 0.875, 0.8);
 
 // the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
@@ -95,6 +99,16 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 	float f2 = strand(w.yx * fibre_scale * 1.6 + 9.1) * smoothstep(0.55, 0.8, vnoise(w * 0.05 + 4.2));
 	o = mix(o, ink_tone, f1 * fibre_k * riso * 0.2 * (1.0 - d));
 	o = mix(o, paper_tone, f2 * fibre_k * riso * 0.18 * (0.35 + d));
+	// tan sheet: only the light neutral ground (the cream actors draw above this layer and pop more)
+	float neu = 1.0 - smoothstep(0.12, 0.22, chroma(o));
+	o = mix(o, o * TAN, tan_k * riso * neu * (1.0 - smoothstep(0.3, 0.7, d)));
+	// stains: soft blotches with a darker tide line, on the paper and light fills only (never a red: a neutral dirt)
+	if (stain_k > 0.0 && d < 0.5) {
+		float sn = vnoise(w * stain_scale + 11.3) * 0.65 + vnoise(w * stain_scale * 3.7 + 6.1) * 0.35;
+		float st = smoothstep(0.6, 0.68, sn) * (0.5 + 0.5 * vnoise(w * 0.11 + 2.9));
+		st += smoothstep(0.02, 0.0, abs(sn - 0.6)) * 0.7;
+		o = mix(o, o * vec3(0.84, 0.81, 0.78), clamp(st, 0.0, 1.0) * stain_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
 	return o;
 }
 
