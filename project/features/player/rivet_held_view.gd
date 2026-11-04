@@ -18,6 +18,7 @@ const GRIP_U: float = 0.62
 const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
+const HOSE_POINTS: int = 8
 
 var rigs: CharacterRigs = null
 var pilot: StagePilot = null
@@ -31,6 +32,8 @@ var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
 var _mag: RivetMagView = null
 var _tank: Sprite2D = null
+## The tank's hose to the wand: an ink line with a cream core.
+var _hose: Array[Line2D] = []
 
 
 func _ready() -> void:
@@ -155,8 +158,40 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 	if _tank == null:
 		return
 	_tank.visible = on
+	for line: Line2D in _hose:
+		line.visible = on and _sprite != null and _sprite.visible
 	if on:
 		var fwd: Vector2 = rig.torso.global_transform.x.normalized()
 		var back_px: float = TANK_BACK_M * WeaponArt.WORLD_PX_PER_M
 		_tank.global_position = rig.torso.global_position - fwd * back_px
 		_tank.global_rotation = fwd.angle() + PI * 0.5
+		if _sprite != null and _sprite.visible:
+			_route_hose(fwd)
+
+
+## The hose leaves the tank's end nearest the wand, curves out past the body and meets the grip.
+func _route_hose(fwd: Vector2) -> void:
+	if _hose.is_empty():
+		for spec: Vector2 in [Vector2(3.2, 0.0), Vector2(1.4, 1.0)]:  # width, ink (0) or cream (1)
+			var line: Line2D = Line2D.new()
+			line.width = spec.x
+			line.default_color = RivetMagView.SHINE if spec.y > 0.5 else RivetMagView.INK
+			line.joint_mode = Line2D.LINE_JOINT_ROUND
+			line.z_index = 1
+			add_child(line)
+			_hose.append(line)
+	var side: Vector2 = fwd.orthogonal() * _tank.texture.get_width() * _tank.scale.x * 0.45
+	var to: Vector2 = _sprite.global_position
+	var from: Vector2 = _tank.global_position + side
+	if (_tank.global_position - side).distance_to(to) < from.distance_to(to):
+		from = _tank.global_position - side
+	var mid: Vector2 = (from + to) * 0.5
+	var out: Vector2 = (mid - _tank.global_position - fwd * side.length()).normalized()
+	var sag: Vector2 = mid + out * side.length() * 0.7
+	var pts: PackedVector2Array = PackedVector2Array()
+	for k: int in HOSE_POINTS:
+		var t: float = float(k) / float(HOSE_POINTS - 1)
+		@warning_ignore("return_value_discarded")
+		pts.append(to_local(from.lerp(sag, t).lerp(sag.lerp(to, t), t)))
+	for line: Line2D in _hose:
+		line.points = pts
