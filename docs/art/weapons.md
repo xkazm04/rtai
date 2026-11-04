@@ -141,6 +141,10 @@ crops of both grounds.
   "nail". The old 150 x 40 nail was a 30 x 2 px sliver.
 - **Per-gun weight** (`projectile_k`, optional per weapon row, 0.5..3, absent = 1): the round's cell is drawn
   k times thicker and sqrt(k) times longer. The hand cannon is 1.6: a slug on the same tracer cell.
+- **Mini-nuke shell** (`WeaponFxShell`): the mini-nuke is a THROWN row in `weapons.json` (a lobbed shell). A
+  THROWN row whose `projectile_fx` is `rocket` flies as the rocket cell with its exhaust lick, on the bottle's lob
+  arc and ground shadow, nose along the travel, swelling 35 % toward the apex, at `projectile_k` 1.5. Until
+  iteration 9 it drew the molotov bottle.
 - **Energy muzzle flashes** need no change. The pale star inside its 13 px ink ring reads on cream at 32 px/m.
 - **Empty tubes** (`parts.empty` = `held_empty.png` for the rocket launcher and the mini-nuke): the held part
   with the striped warhead cut away just past the front band, and an inked open mouth. It uses the same canvas,

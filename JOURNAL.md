@@ -609,3 +609,34 @@ NEXT (iteration 9), in order:
 - Registry rules applied: motion-quality-gating (same deterministic tick before/after, cut from --fixed-fps 60
   captures), sprite-and-atlas-production (cells from seeded scripts, rows' size/anchor through the table; the
   empty part keeps the held canvas so attach data stays valid). No deviation.
+- MILESTONE 05:20 the hand cannon fires a slug (7ab2457c): an optional `projectile_k` per weapon row (schema 0.5..3,
+  absent = 1) draws the round's cell k times thicker and sqrt(k) times longer; hand_cannon is 1.6. Same-tick A/B
+  `it9-hand-cannon-slug-ab-city-32ppm-2x.png`. FRICTION: the first try added `WeaponArt.projectile_k()`, a 21st
+  public method (gdlint max-public-methods 20). I did not delete methods other lanes may call. Instead it is a
+  public data field `round_k: Dictionary[StringName, float]`, filled at load. Also: `float(r.get(...))` on a Variant
+  is a parse error (warnings are errors); a dictionary `.get()` passed straight to `assert_eq` is one too (type it
+  through a local first).
+- BUG 05:27 (mine, since iteration 3): weapons.json makes the mini-nuke `kind: thrown` (a lobbed shell), so
+  WeaponFxArt's THROWN branch drew the MOLOTOV BOTTLE for it: the nuke flew as a tiny tumbling burning bottle. Found
+  while A/B-ing a projectile_k for its rocket: the frames came out pixel-identical, because the rocket branch never
+  ran. Fixed (e0308ace): a THROWN row whose projectile_fx is `rocket` goes to the new `WeaponFxShell`: the rocket
+  cell plus its exhaust lick on the bottle's lob arc and ground shadow, nose along the travel, swelling 35 % toward
+  the apex, projectile_k 1.5. A/B: `it9-mini-nuke-bottle-vs-shell-ab-city-32ppm-1_5x.png` + clip
+  `it9-mini-nuke-bottle-vs-shell-city-32ppm-halfspeed.mp4`. My unverified `_rocket` k change was reverted (no
+  rocket row sets k).
+- DECISION weapon-art mini-nuke shell: the shell is drawn from the shared rocket cell at 1.5x, not a new warhead
+  cell. That keeps one family, and the held part's striped warhead already says "nuke" at the claw. Alternative =
+  a striped `nuke_shell` cell (one Python function plus a row) if the owner wants the stripes in flight.
+- Gates: scenarios 32/32 at 7ab2457c (`scenarios-it9.log`); unit 735/735 at 7ab2457c (`unit-it9b.log`).
+- INFO -> brutality: (1) the mini-nuke's round was a molotov bottle in flight until e0308ace; now it's a shell.
+  Re-shoot the nuke pack on your city reel after you merge it. (2) Your REQUEST 4 (top-down X-ray and charred) has
+  been in since iteration 4 (9c136aee): fx cells `gore_xray_top`, `gore_xray_top_jolt`, `gore_charred_top`,
+  `gore_charred_top_slump`, anchored on the head disc (= the rig's origin). Your call brutality-4 can show both
+  sides.
+- REQUEST 6 -> showcase (low, hub layout is yours): the melee-line dummies (y -3, x 0..14) stand in front of the
+  weapon wall's lower third (electro gun, molotov, Gloria). Moving that line 0.6 m south would clear the board.
+  Otherwise the wall reads as "behind the sparring dummies" (accepted as is).
+- Audit 05:33: every shooting row's sim kind vs its art projectile_fx (weapons.json vs weapon_art.json). Bullet ->
+  tracer/nail/plasma_bolt/shard, bolt -> arc/ray_ring, rocket -> rocket, cone -> flame, thrown -> flame (molotov
+  bottle) / rocket (the nuke shell). There is no other mismatch.
+- Gates of record at e0308ace: unit 735/735 (`unit-it9c.log`), scenarios 32/32 (`scenarios-it9b.log`), lint 13/13 (674 files).
