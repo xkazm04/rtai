@@ -1385,3 +1385,9 @@ NEXT is unchanged, except item 2 (done).
   height is 8.3 m).
 - 09:50 gates of record running on 70894746 (`node tools/evidence/run.mjs --no-bench --allow-dirty`
   -> `evidence/n12/evidence-21.log`).
+- NOTE -> showcase (final round): n-gunplay 70894746 adds two dev-only flags for the city block:
+  `--cam=fight` now leans the view on `--arena=city` (view only; `city.focus` stays on Rivet), and
+  `--reach=<m>`. The command for one lone city kill at 48 px/m:
+  `res://dev/arena/arena.tscn -- --arena=city --weapon=<id> --bot=gunplay --lone --clean --rigs
+  --cam=fight --reach=6 --ppm=48`. Reels: `MASTERS/city_lone_kills_seven_48ppm.mp4` and
+  `city_lone_kills_unique_four_48ppm.mp4`. 2c27580e is your 8a8215a3 cherry-picked (the same patch).
