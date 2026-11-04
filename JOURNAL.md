@@ -1055,3 +1055,17 @@ NEXT (after the night run):
 NEXT (after the night run): unchanged from it15. (1) The melee four in the claw on rivet-arsenal's path. (2) A
 drawn glass-and-fuel molotov splash sheet. (3) Redraw blast frame 3 as torn smoke wisps. (4) Owner calls
 weapon-art-15 and -16 once judged.
+
+## Iteration 17 (08:30-08:40, STABILIZE; past freeze)
+- 08:30 read JOURNAL tail, git log, git status. No project file changed since 3a703dbd (`git diff --stat 3a703dbd HEAD
+  -- project` is empty), so the gates of record still describe the build: unit 741/741, scenarios 32/32, lint 13/13,
+  parity untouched (render only since the merge base).
+- Evidence check: all 15 entries in `gtai-masters/n4/weapon-art/frames.json` resolve to files on disk; the newest
+  (it14 molotov glass/scorch, it14 rocket blast tail) were filmed on 3a703dbd/8d727846, which match the current build.
+- No Godot process running on the machine; nothing of mine to free. `evidence/weapon-art/` stays untracked (scratch).
+- DECISION 08:32 no code and no gate re-run: nothing changed since the gates of record, and a full unit + scenarios run
+  (~9 min) would not finish before the 08:40 stop.
+
+NEXT (after the night run): unchanged from it15. (1) The melee four in the claw on rivet-arsenal's path. (2) A drawn
+glass-and-fuel molotov splash sheet. (3) Redraw blast frame 3 as torn smoke wisps. (4) Owner calls weapon-art-15 and
+-16 once judged.
