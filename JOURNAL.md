@@ -809,3 +809,12 @@ NEXT (iteration 10, in order):
   edge with Rivet at the top (tick 417 in the still). It helps; it is not a director camera.
 - Gates of record at eeec4d97: lint 13/13, unit 735/735 (`evidence/n9/unit-e.log`), scenarios 29/29
   (`evidence/n9/scenarios-a.log`, on 099b9bab: the later commit touches FightCam and its test only).
+- 06:18 MILESTONE `MASTERS/n4/gunplay/fightcam_unique_kills_64ppm.png`: hand cannon, plasma rifle,
+  ray gun, homing shard, electro gun in the pit at 64 px/m with --cam=fight, fresh on eeec4d97
+  (`camfight_<gun>/`, 15 s each, 0 script errors, Rivet 0 deaths; shots / kills 4/4, 7/4, 4/4,
+  13/3, 4/2). Looked at: the hand cannon, plasma and ray kills fall in frame with their spurts
+  (the old unique_kills sheet had to crop on a victim at the frame's edge); the shard and electro
+  corpses stay in shot. frames.json: the sheet + the hand cannon A/B clip on top, dropped the two
+  electro strips whose clips stay (15 entries, every file checked).
+- 06:19 re-shooting the six table guns' pit reel at 48 px/m with --cam=fight (`reel10_<gun>/`, 25 s
+  each) so the morning's side-by-side shows each victim fall (NEXT 5 of it9).
