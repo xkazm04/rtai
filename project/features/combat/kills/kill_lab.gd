@@ -74,6 +74,7 @@ var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
 var _strike_t: int = -1
+var _focus: Vector2 = Vector2.ZERO
 
 
 func setup(stage: ArenaStage) -> void:
@@ -93,7 +94,8 @@ func _place_rivet(stage: ArenaStage) -> void:
 	for at: Vector2 in spots:
 		centre += (at - solo) / spots.size()
 	stage.follow.target = solo
-	stage.follow.focus = solo.lerp(centre, 0.5)
+	_focus = solo.lerp(centre, 0.5)
+	stage.follow.focus = _focus
 
 
 func step(stage: ArenaStage, tick: int) -> void:
@@ -110,6 +112,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_step_blade(stage)
 		if solo != Vector2.INF and stage.follow != null:  # the city keeps him where the lunge is
 			stage.follow.target = stage.arena.rivet.pos
+			stage.follow.focus = _focus  # and the frame holds still through the lunge
 	if claw != null:
 		_step_claw(stage, tick)
 		return
