@@ -533,12 +533,20 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   for the standing pose). Still `frames/crowd-part-markers-b-32ppm.png`. Halos are cream silhouettes (rig_build
   `_halo`), not the cause.
 
+- 00:09 inverse markers (all D4 ped parts vermilion except one; reverted, tree clean, re-imported): except thigh =
+  only the lobes' top edges dark; except shin = dark specks; except pelvis or torso = lobes fully red. No single
+  part fills the lobes: they need several leg parts dark at once. Lead (unproven): at 32 px/m the thin leg parts are
+  mostly mip-blended edge texels, and print_part prints `c.a < alpha_cut` texels as ink dots ("translucent =
+  shadow ink"), so overlapping thigh/shin/foot edges ahead of the chest stack into two ink lobes. Still
+  `frames/crowd-part-markers-c-32ppm.png`.
+
 NEXT (iteration 11):
-1. Assign the lobes by PAIR markers at 32 px/m (two parts vermilion at once: thigh+pelvis, thigh+torso,
-   thigh+shin, pelvis+torso), or the inverse (all parts red except one); then print the standing-pose sprite list
-   of one ped (z_index, position, texture) from a tiny dev script to see what overlaps the thighs ahead of the chest.
-2. Fix that part (art via the d4 chars sheets + `cut_ped_sheet.py`/`install_ped_sheet.py`, or the ped rest pose),
-   then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at 32 px/m, then the react board,
-   ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated line), provenance lines.
+1. Test the lead: in cast_lineup only, raise print_part `alpha_cut` or skip the translucent-dot branch for LIMB
+   parts at small scale (a uniform on the shared material; the print shader is the look lane's, so build any real
+   change as a REQUEST to n5-look or a ped-only material, with a DECISION). Also check why the 23:58 leg_w 0.01 trial
+   left the lobes (does rig_gait apply leg_w on the standing pose, and are the foot parts scaled?).
+2. If the lead holds: fix it, then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at
+   32 px/m, then the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a
+   dated line), provenance lines.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session end 00:09: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session end 00:11: head = this commit, tree clean, image.lock released, no Godot process of mine running.
