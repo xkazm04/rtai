@@ -40,12 +40,12 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 The last full evidence gate was green on 27c48341.
 
 ## What doesn't (yet)
-- **Held parts:** they are still the weapon-art lane's art. I have not yet compared each one against r1_w1-w3 in the claw.
 - **Pickups:** they don't yet follow r2_w8.
+- **Held parts:** in design they are close to r1_w1-w3 (the hand cannon's cylinder, the SMG's feed box, the pistol's slide); only the tone differs, rust-tan against gunmetal.
 - **The Gatling:**
   - its housing prints grey and slimmer than the target's chunky tan body;
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gaps to r2_w4:** the blast has no graded white-hot centre and no debris, and older ray rings fade to olive over the dark slab.
+- **FX gap to r2_w4:** the blast has no graded white-hot centre and no debris. (The ray rings' olive tail is fixed: e7bccb95.)
 - **Not this lane's code:** `--telemetry` together with `--reel=director` crashes at quit. The ReelDirector hook has no station, and `ArenaStage.telemetry_dict` reads `hook.station.id`. Main has the same bug.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
@@ -57,6 +57,6 @@ The last full evidence gate was green on 27c48341.
 
 ## Next steps
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL).
-- **Weapon art:** the held parts toward r1_w1-w3 (first the hand cannon's cylinder and the SMG's shroud from above), pickups toward r2_w8, and a chunkier tan Gatling housing.
-- **FX:** a graded core and debris for the blast, and an alpha floor for the ray rings.
+- **Weapon art:** pickups toward r2_w8 and a chunkier tan Gatling housing. In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
+- **FX:** a graded core and debris for the blast.
 - **Costs:** measure the frame cost under the bench lock.
