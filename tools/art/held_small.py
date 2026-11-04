@@ -31,6 +31,13 @@ LW = np.array([0.299, 0.587, 0.114])
 # Already light at 48 px/m (print sim, iteration 12): the molotov's bottle and the plasma sword's
 # blade. The flamethrower's thin wand prints DARKER re-toned (the ink edge swallows it).
 SKIP = ("molotov", "flamethrower", "plasma_sword")
+# Two-tone instead (iteration 13): re-toned pale, Gloria printed as the pistol's twin at 32 px/m (same
+# pale lozenge, her tank hidden by the claw). Her cell is ink with the drawn cream tape and plate kept
+# as paper, so she reads as the dark banded gun beside the pale pistol (no tone in the wash band).
+TWO_TONE = ("gloria",)
+PAPER_ABOVE = 170.0  # source luminance above which a pixel is tape / plate (Gloria's cream sits at 215)
+INK_RGB = np.array([27.0, 21.0, 23.0])
+PAPER_RGB = np.array([238.0, 228.0, 208.0])
 
 
 def body_mid(rgba):
@@ -51,6 +58,15 @@ def retone(rgba, mid=None):
     out = np.where(_edge(alpha)[..., None], np.array([27.0, 21.0, 23.0]), out)
     out = np.clip(out, 0, 255)
     return np.dstack([out, alpha]).astype(np.uint8), TARGET_MID - mid
+
+
+def two_tone(rgba):
+    """Ink body, paper where the drawing is cream (tape, plate); the silhouette edge stays ink."""
+    a = rgba.astype(float)
+    lum = a[..., :3] @ LW
+    paper = (lum > PAPER_ABOVE) & ~_edge(a[..., 3])
+    out = np.where(paper[..., None], PAPER_RGB, INK_RGB)
+    return np.dstack([out, a[..., 3]]).astype(np.uint8)
 
 
 def _edge(alpha):
@@ -107,7 +123,7 @@ def main(argv):
     for wid in ids:
         src = root / wid / "held.png"
         rgba = np.asarray(Image.open(src).convert("RGBA"))
-        small, lift = retone(rgba)
+        small, lift = (two_tone(rgba), 0.0) if wid in TWO_TONE else retone(rgba)
         if sim is None:
             Image.fromarray(small).save(root / wid / "held_small.png", optimize=True)
             empty = root / wid / "held_empty.png"

@@ -88,3 +88,12 @@ func test_an_empty_tube_set_by_a_view_maps_to_its_small_cell() -> void:
 	held._pick()
 	assert_eq(held.texture, held.full, "64 px/m: full art")
 	held.free()
+
+
+func test_no_stand_in_hides_a_weapons_own_held_art() -> void:
+	# it13: a stale art_stand_in (gloria -> pistol) drew the pistol for her after her art landed.
+	var art: WeaponArt = WeaponArt.new()
+	var arsenal: ArsenalTable = ArsenalTable.shipped()
+	for weapon: StringName in arsenal.art_stand_in:
+		assert_false(art.has(weapon), "%s has its own held art; drop its art_stand_in" % weapon)
+	assert_eq(arsenal.art_id(&"gloria"), &"gloria", "Gloria draws her own art")
