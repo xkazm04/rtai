@@ -48,9 +48,12 @@ static func blast(ci: CanvasItem, b: Vector3, age: int) -> void:
 	var c: Vector2 = Vector2(b.x, b.y)
 	var k: float = float(age) / float(NUKE_TICKS)
 	var r: float = b.z * Ink.PX_PER_M
-	if age < FLASH_TICKS:
-		var fl: float = 1.0 - float(age) / float(FLASH_TICKS)
-		ci.draw_circle(Ink.px(c), r * (0.7 + 0.3 * fl), Color(Ink.CREAM, 0.85 * fl))
+	if age < 2:  # opaque: a see-through cream reads grey on the pit's concrete
+		ci.draw_circle(Ink.px(c), r * 0.85, Ink.CREAM)
+		ci.draw_arc(Ink.px(c), r * 0.85, 0.0, TAU, 72, Ink.INK, 6.0)
+	elif age < FLASH_TICKS:  # then the flash's edge thins out as an opaque cream ring
+		var w: float = r * 0.25 * float(FLASH_TICKS - age) / float(FLASH_TICKS - 2)
+		ci.draw_arc(Ink.px(c), r * 0.85 - w * 0.5, 0.0, TAU, 72, Ink.CREAM, w)
 	_dust(ci, c, b.z, k)
 	_rings(ci, c, r, age)
 	if age < 16:
