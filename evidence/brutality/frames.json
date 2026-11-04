@@ -91,13 +91,13 @@
   },
   {
     "file": "clips/homing-shard-burst-solo-64ppm-slow-0.4x.mp4",
-    "title": "Homing shard gun (FIRST PASS): the cop freezes on the shard, then bursts into parts in a ring of red mist (64 px/m, 0.4x)",
+    "title": "Homing shard gun (FIRST PASS): shards stuck through the frozen cop, then he bursts into parts in a red mist puff (64 px/m, 0.4x)",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
     "ppm": 64,
     "before": null,
-    "note": "Kill #10, data row on the gib path with a 36-tick hold. The shards themselves do not show stuck in the body yet, and the red ring lands at the hit, before the pop."
+    "note": "Kill #10: GibSim holds the parts 36 ticks while cream shards in an ink rim stick out of the far side (KillBurstFx), then the parts pop forward and a red mist swells. The red spray ring still lands at the hit, before the pop."
   },
   {
     "file": "clips/mini-nuke-vaporise-solo-48ppm-8s.mp4",

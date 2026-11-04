@@ -51,21 +51,21 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] arena: arena open: 14 stations
 [INFO] arena: powers pad: 2 cars parked
 [INFO] arena: arena open: 14 stations
-[INFO] quest1: city cells: 2 chunks in 19 ms
+[INFO] quest1: city cells: 2 chunks in 33 ms
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
 [INFO] payphone: Patch connected the call at Factory Row corner
-[INFO] quest1: city cells: 2 chunks in 21 ms
+[INFO] quest1: city cells: 2 chunks in 30 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b4-dock (tick 13080)
-[INFO] quest1: city cells: 2 chunks in 25 ms
+[INFO] quest1: city cells: 2 chunks in 35 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b3-toner-room (tick 5564)
 [WARN] save: auto_a corrupt (payload hash mismatch): quarantined (OK)
-[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: city cells: 2 chunks in 37 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b3-toner-room (tick 5564)
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
-[INFO] quest1: city cells: 2 chunks in 26 ms
+[INFO] quest1: city cells: 2 chunks in 39 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b3-toner-room (tick 5609)
 [INFO] payphone: Patch connected the call at Factory Row corner
@@ -143,8 +143,20 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] arena: arena open: 14 stations
 [INFO] arena: powers pad: 2 cars parked
 [INFO] arena: arena open: 14 stations
-[INFO] scenario: chase (native): cops 60.5 -> 6.4 m, nearest police car 3.2 m, 49 fields, max 169 us, last 130 us
-[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"body_knockdowns":0,"checks":10,"counters_a":[150,70,24,6,139,111,8,43,355,45],"counters_b":[150,70,24,6,139,111,8,43,355,45],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"snapshot_floats":3524,"step_ms_a":4.72195666666667,"step_ms_b":4.62541,"steps":300}
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 14 stations
+[INFO] scenario: chase (native): cops 60.5 -> 6.4 m, nearest police car 3.2 m, 49 fields, max 162 us, last 158 us
+[INFO] scenario: city parity (ref vs ref): {"backends":["gdscript","gdscript"],"body_knockdowns":0,"checks":10,"counters_a":[150,70,24,6,139,111,8,43,355,45],"counters_b":[150,70,24,6,139,111,8,43,355,45],"debug_build":true,"exact":true,"first_mismatch_step":-1,"max_abs_diff":0.0,"snapshot_floats":3524,"step_ms_a":4.33193333333333,"step_ms_b":4.28275333333333,"steps":300}
 [INFO] scenario: city focus moved 65 m, 16 chunks stamped
 [INFO] scenario: city replay: 1200 ticks, 20 checkpoints identical
 [INFO] scenario: enemy pit: { "archetypes": { "patrol_cop": { "rivet_damage": 0.0, "shots": 22.0, "shot_hits": 0.0, "swings": 0.0, "swing_hits": 0.0, "tells": 13.0, "kills": 3.0, "max_attackers": 2.0, "nails": 4.0, "nail_hits": 3.0, "flinches": 1.0, "tells_broken": 0.0, "seconds": 18.83, "cleared": true, "rivet_hp": 100.0, "hit_rate": 0.0, "digest": "2278425bd72395d5" }, "riot_cop": { "rivet_damage": 36.0, "shots": 0.0, "shot_hits": 0.0, "swings": 4.0, "swing_hits": 3.0, "tells": 9.0, "kills": 3.0, "max_attackers": 2.0, "nails": 33.0, "nail_hits": 33.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 17.47, "cleared": true, "rivet_hp": 64.0, "hit_rate": 0.0, "digest": "7506d3b598f6f0bb" }, "swat": { "rivet_damage": 12.0, "shots": 95.0, "shot_hits": 3.0, "swings": 0.0, "swing_hits": 0.0, "tells": 32.0, "kills": 0.0, "max_attackers": 2.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 40.0, "cleared": false, "rivet_hp": 88.0, "hit_rate": 0.032, "digest": "afb807e2771a2bea" }, "robot_thug": { "rivet_damage": 0.0, "shots": 0.0, "shot_hits": 0.0, "swings": 1.0, "swing_hits": 0.0, "tells": 2.0, "kills": 3.0, "max_attackers": 1.0, "nails": 18.0, "nail_hits": 18.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 13.72, "cleared": true, "rivet_hp": 100.0, "hit_rate": 0.0, "digest": "24091d6db6911a32" }, "robot_gunner": { "rivet_damage": 0.0, "shots": 23.0, "shot_hits": 0.0, "swings": 0.0, "swing_hits": 0.0, "tells": 30.0, "kills": 3.0, "max_attackers": 2.0, "nails": 12.0, "nail_hits": 12.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 38.32, "cleared": true, "rivet_hp": 100.0, "hit_rate": 0.0, "digest": "3466f303a4b24a84" } }, "squad": { "rivet_damage": 108.0, "shots": 32.0, "shot_hits": 18.0, "swings": 0.0, "swing_hits": 0.0, "tells": 16.0, "kills": 0.0, "max_attackers": 2.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 14.52, "cleared": false, "rivet_hp": -8.0, "hit_rate": 0.563, "digest": "7c19364dca3c7832", "max_shooters": 2 }, "planted_no_squad": { "rivet_damage": 108.0, "shots": 36.0, "shot_hits": 18.0, "swings": 0.0, "swing_hits": 0.0, "tells": 18.0, "kills": 0.0, "max_attackers": 6.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 10.45, "cleared": false, "rivet_hp": -8.0, "hit_rate": 0.5, "digest": "eb97fd1d072baffa", "max_shooters": 2 }, "dodge": { "rivet_damage": 0.0, "shots": 38.0, "shot_hits": 0.0, "swings": 0.0, "swing_hits": 0.0, "tells": 18.0, "kills": 0.0, "max_attackers": 2.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 20.0, "cleared": false, "rivet_hp": 100000.0, "hit_rate": 0.0, "digest": "4bb94517ab15696b" }, "stand": { "rivet_damage": 142.0, "shots": 38.0, "shot_hits": 19.0, "swings": 0.0, "swing_hits": 0.0, "tells": 19.0, "kills": 0.0, "max_attackers": 2.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 20.0, "cleared": false, "rivet_hp": 99858.0, "hit_rate": 0.5, "digest": "0bcd9f994b3d745a" }, "planted_no_lock": { "rivet_damage": 8.0, "shots": 38.0, "shot_hits": 2.0, "swings": 0.0, "swing_hits": 0.0, "tells": 18.0, "kills": 0.0, "max_attackers": 2.0, "nails": 0.0, "nail_hits": 0.0, "flinches": 0.0, "tells_broken": 0.0, "seconds": 20.0, "cleared": false, "rivet_hp": 99992.0, "hit_rate": 0.053, "digest": "43fc1f7c974d7167" }, "flank": { "spread_deg": 111.3 }, "cover": { "hidden_frac": 0.711 }, "panic": { "patrol_cop": 2, "robot_thug": 0 }, "suppress": { "told": true, "alive": true, "flinches": 1.0, "tells_broken": 1.0, "nail_hits": 0.0, "shots": 0.0 }, "planted_no_flinch": { "told": true, "alive": true, "flinches": 0.0, "tells_broken": 0.0, "nail_hits": 0.0, "shots": 0.0 }, "determinism": { "a": "c706f7c549ec2a9d", "b": "c706f7c549ec2a9d", "other_seed": "dbdd12d071feee47" } }
@@ -152,32 +164,32 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] scenario: gunplay fight: {"electro_gun":{"chain_hits":10,"hash":1084902990,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":4},"planted_hash":1273534192,"shots":4},"flamethrower":{"chain_hits":0,"hash":747572592,"ignitions":5,"kills":5,"knockdowns":0,"peak":{"burning":5,"patches":11,"stunned":0},"planted_hash":2264190562,"shots":32},"hand_cannon":{"chain_hits":0,"hash":2399307619,"ignitions":0,"kills":5,"knockdowns":5,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":2208908452,"shots":5},"homing_shard":{"chain_hits":0,"hash":3379145750,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":3241634103,"shots":10},"machine_pistol":{"chain_hits":0,"hash":450732963,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":921849415,"shots":20},"mini_nuke":{"chain_hits":0,"hash":2679048065,"ignitions":5,"kills":5,"knockdowns":5,"peak":{"burning":0,"patches":1,"stunned":0},"planted_hash":726503599,"shots":1},"molotov":{"chain_hits":0,"hash":85510301,"ignitions":5,"kills":5,"knockdowns":0,"peak":{"burning":5,"patches":2,"stunned":0},"planted_hash":1063101711,"shots":2},"pistol":{"chain_hits":0,"hash":1991811444,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":1368379484,"shots":5},"plasma_rifle":{"chain_hits":0,"hash":4014426350,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":4029282047,"shots":9},"ray_gun":{"chain_hits":0,"hash":1894322676,"ignitions":0,"kills":5,"knockdowns":0,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":1687248755,"shots":8},"rocket_launcher":{"chain_hits":0,"hash":428836822,"ignitions":0,"kills":5,"knockdowns":8,"peak":{"burning":0,"patches":0,"stunned":0},"planted_hash":1502843608,"shots":2}}
 [INFO] scenario: gunplay fire: determinism { "mismatch": "", "pistol": [314566697, 314566697, 697145214], "machine_pistol": [1829670528, 1829670528, 747632813], "flamethrower": [886076436, 886076436, 1784422757], "rocket_launcher": [2390821752, 2390821752, 2435003715], "electro_gun": [4080357602, 4080357602, 2639321056], "molotov": [62522396, 62522396, 3514076845] }; dodge { "pistol": { "stand": { "volleys": 5, "rounds": 15, "hits": 15, "hit_rate": 1.0, "damage": 375.0 }, "strafe": { "volleys": 5, "rounds": 15, "hits": 2, "hit_rate": 0.133, "damage": 50.0 }, "react": { "volleys": 5, "rounds": 15, "hits": 0, "hit_rate": 0.0, "damage": 0.0 }, "react_250ms": { "volleys": 5, "rounds": 15, "hits": 0, "hit_rate": 0.0, "damage": 0.0 }, "react_no_lock": { "volleys": 5, "rounds": 15, "hits": 11, "hit_rate": 0.733, "damage": 275.0 } }, "machine_pistol": { "stand": { "volleys": 7, "rounds": 18, "hits": 14, "hit_rate": 0.778, "damage": 175.0 }, "strafe": { "volleys": 7, "rounds": 18, "hits": 10, "hit_rate": 0.556, "damage": 125.0 }, "react": { "volleys": 7, "rounds": 18, "hits": 0, "hit_rate": 0.0, "damage": 0.0 }, "react_250ms": { "volleys": 7, "rounds": 18, "hits": 0, "hit_rate": 0.0, "damage": 0.0 }, "react_no_lock": { "volleys": 7, "rounds": 18, "hits": 11, "hit_rate": 0.611, "damage": 137.5 } } }
 [INFO] scenario: human_react: { "ticks_to_clear": { &"flinch": 15, &"stagger": 33, &"knockdown": 133, &"shield": 18, &"spin": 28, &"fold": 31, &"stun": 72, &"burn": 151, &"cover": 21 }, "knockdown_lie_s": 1.56666666666667, "direction_dot_min": 1.0, "planted_inverted_dot_min": -1.0, "burn_char": 1.0, "planted_no_burn_row_char": 0.0, "digest": [3112031704, 3112031704], "planted_signature_took": true }
-[INFO] quest1: city cells: 2 chunks in 21 ms
+[INFO] quest1: city cells: 2 chunks in 18 ms
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] stage: TUCK-IN crates on fire at tick 16464
 [INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
 [INFO] payphone: Patch connected the call at Harbor Road
-[INFO] quest1: city cells: 2 chunks in 23 ms
+[INFO] quest1: city cells: 2 chunks in 16 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] stage: TUCK-IN crates on fire at tick 16464
 [INFO] payphone: Patch refused a hot caller at Harbor Road (heat 3)
 [INFO] payphone: Patch connected the call at Harbor Road
-[INFO] quest1: city cells: 2 chunks in 20 ms
+[INFO] quest1: city cells: 2 chunks in 21 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b4-dock (tick 13080)
-[INFO] quest1: city cells: 2 chunks in 18 ms
+[INFO] quest1: city cells: 2 chunks in 24 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [WARN] save: checkpoint at b4-dock did not re-simulate to its hash
-[INFO] quest1: city cells: 2 chunks in 23 ms
+[INFO] quest1: city cells: 2 chunks in 20 ms
 [INFO] payphone: Patch connected the call at Factory Row corner
 [INFO] save: resumed quest 1 at b4-dock (tick 13080)
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
 [INFO] scenario: quest1 input: {"beats":["b1-dumpster","b2-payphone","b3-toner-room","b4-dock","b5-quartermaster","b6-hot-walk"],"checkpoint_load":{"beat":"b4-dock","resumed":true,"tamper_refused":true},"checkpoints":["b2-payphone@768","b3-toner-room@5564","b4-dock@13080","b5-quartermaster@15517","b6-hot-walk@16465"],"deaths":0,"final_hash":"e66f3cfbe8641ddd32e633ea0528e255c4dc025f42c67ab025d34d7d6f559e5e","hints":["SLICE__HINT_HIDE","SLICE__HINT_STAY","SLICE__HINT_PHONE","SLICE__HINT_MEET","SLICE__HINT_LISTEN","SLICE__HINT_FIGHT","SLICE__HINT_RIFLE","SLICE__HINT_BOSS","SLICE__HINT_TORCH","SLICE__HINT_COOL","SLICE__HINT_PAID"],"input_changes":1334,"input_events":98332,"interact_presses":11,"kills":49,"log":"C:/Users/kazda/kiro/gtai-n4/appdata/brutality/RTAI Uprising/test_tmp/quest1/input-run.replay.json","log_saved":true,"paid":1500,"path":"simulated InputEvents -> InputMap -> LiveInput -> TickInput -> StagePilot","replay":"identical","scene":"res://boot/quest1.tscn","seconds":327.683333333333,"shots":65,"state":"succeeded","ticks":19661,"verdict":"pass"}
-[INFO] quest1: city cells: 2 chunks in 20 ms
+[INFO] quest1: city cells: 2 chunks in 19 ms
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
 [INFO] scenario: quest1 keys: walked 40 ticks, hidden in 'dumpster'
-[INFO] quest1: city cells: 2 chunks in 22 ms
+[INFO] quest1: city cells: 2 chunks in 21 ms
 [INFO] quest1: started: Rivet is the player's (seed 20261102)
 [INFO] scenario: quest1 keys: walked 40 ticks, hidden in ''
 [INFO] payphone: Patch connected the call at Factory Row corner
@@ -195,10 +207,10 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] scenario: quest collect-call: succeeded in 19781 ticks, 23 lines shown, cash 1500, 3 stubbed, planted faults caught by ["succeeded", "patchRefusedHot"]
 [INFO] scenario: quest _selftest: succeeded in 2388 ticks, 9 lines shown, cash 500, 3 stubbed, planted faults caught by ["succeeded"]
 [INFO] scenario: replay_60s: 3600 ticks, 184 events, 142 input changes, 60 checkpoints, final cbeb734ff9b97c41
-[INFO] characters: prewarmed 33 rigs in 102.0 ms
-[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.109185185185185,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":102.036,"rigMsAvg":0.654833333333333,"rigMsMax":1.569,"rigMsP50":0.656,"rigMsP99":1.072,"rigsBuilt":33.0,"ticks":540.0}
-[INFO] characters: prewarmed 33 rigs in 11.4 ms
-[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.497575925925926,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":11.372,"rigMsAvg":0.645035185185185,"rigMsMax":1.149,"rigMsP50":0.643,"rigMsP99":1.004,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 116.0 ms
+[INFO] rig_stress: 50 people: {"bakedLookupMsAvg":0.098812962962963,"fullRigsMax":16.0,"people":50.0,"poolGrown":0.0,"prewarmMs":115.995,"rigMsAvg":0.600537037037037,"rigMsMax":0.957,"rigMsP50":0.633,"rigMsP99":0.841,"rigsBuilt":33.0,"ticks":540.0}
+[INFO] characters: prewarmed 33 rigs in 8.1 ms
+[INFO] rig_stress: 200 people: {"bakedLookupMsAvg":0.502753703703704,"fullRigsMax":16.0,"people":200.0,"poolGrown":0.0,"prewarmMs":8.134,"rigMsAvg":0.651185185185185,"rigMsMax":1.778,"rigMsP50":0.661,"rigMsP99":1.004,"rigsBuilt":33.0,"ticks":540.0}
 [INFO] arena: powers pad: 2 cars parked
 [INFO] arena: arena open: 14 stations
 [INFO] arena: powers pad: 2 cars parked
@@ -234,10 +246,10 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 [INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
 [INFO] scenario: souls: { "human": { "knocks": 1, "downed": true, "class": "rivet_ghost" }, "planted_no_class": { "knocks": 0, "downed": false, "class": "rivet_base" }, "robot": { "result": "knockdown", "at_mps": 4.19999980926514, "t_s": 1.31666666666667 }, "planted_robot_base": { "result": "blocked", "at_mps": 4.19999980926514, "t_s": 1.43333333333333 }, "stomp": { "hits": 6 }, "planted_stomp_r0": { "hits": 0 }, "stomp_city": { "knocks": 6, "outside_down": 0 }, "planted_no_pulse": { "knocks": 0, "outside_down": 0 }, "gearbox": { "crashed": true, "t_s": 1.41666666666667, "mps": 14.0 }, "planted_no_turn": { "crashed": false, "closest_m": 70.1504516601563 } }
 [INFO] scenario: vehicle carnage: {"cues":{"crash":4,"horn":2},"hijacked":["taxi"],"player_hp_lost":91.5900018215179,"result":"pass","states":[2,2]}
-[INFO] scenario: vehicle drive: {"final_hp_lost":12.44,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":74.0805555555555,"service_us_max":265,"struck":1,"ticks":720,"timing":"CONTENDED (shared machine, headless, native sim)"}
+[INFO] scenario: vehicle drive: {"final_hp_lost":12.44,"final_state":0,"hijacked":["taxi"],"max_slip_deg":90.0,"peak_speed_mps":28.0,"replay":"identical","service_us_avg":80.1763888888889,"service_us_max":141,"struck":1,"ticks":720,"timing":"CONTENDED (shared machine, headless, native sim)"}
 [INFO] scenario: vehicle yield: {"blind":{"at":[437.829742431641,270.0],"cars_alive":40,"first_pass_s":-0.0166666666666667,"horns":1,"hp_lost":0.361510276794434,"passed":0,"queued_s":0.416666666666667,"rear_ends":2,"ticks_near":1149},"result":"pass","ticks":2400,"yield":{"at":[300.0,270.0],"cars_alive":40,"first_pass_s":17.15,"horns":16,"hp_lost":0.0,"passed":2,"queued_s":25.1666666666667,"rear_ends":0,"ticks_near":2039}}
 run_scenarios: 35 ran, 0 failed
-WARNING: 24972 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+WARNING: 27612 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 114 resources still in use at exit (run with --verbose for details).
    at: clear (core/io/resource.cpp:822)

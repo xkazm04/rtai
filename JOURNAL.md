@@ -475,8 +475,8 @@ NEXT (iteration 7):
   Default: charcoal (mini-nuke clip, first pass).
 
 NEXT (iteration 8):
-1. Homing shard: draw the shards stuck in the body during the hold (cream slivers on the body
-   copy, from the hit direction) and move the mist spray to the pop (marks at tick + grind).
+1. Homing shard: the shards and the mist puff are in (c8a26ff6). Still to do: move the red spray
+   ring to the pop (marks at tick + grind), and add more shards on the near side when Rivet is far.
 2. Mini-nuke: once gunplay answers REQUEST 13, a clean clip of several shadows on the street; a
    paler, slightly larger shadow; a solo spot clear of the course walkers ((-36, 2) is clear).
 3. Re-shoot the solo set at (-30, 2) (Rivet centred), and in the city block with --sig-solo.
@@ -484,3 +484,13 @@ NEXT (iteration 8):
    smear redrawn every frame); split fresh per kill like KillGround.
 5. KillView is 290 lines (hard stop 300): move the style dispatch into a KillStyles helper first.
 6. Electro is two rounds (REQUEST 12 -> gunplay: a charged shot).
+- MILESTONE 04:47 homing shard view (c8a26ff6, KillBurstFx, render only): cream shards in an ink
+  rim stick out of the frozen body's FAR side and tremble harder toward the pop; at the pop a red
+  mist puff swells and thins over the flying parts. Clips re-shot (homing-shard-burst-solo-64ppm-*).
+- FRICTION: the first shards were invisible. A magenta debug probe showed the hold branch drew,
+  but the shards sat on Rivet's side under his claw, and as thin cream slivers on a cream torso.
+  Fixed by moving them through to the far side and making them longer and wider (0.4-0.58 m,
+  0.2 m base) with a 1.2 px rim (a 2.4 px rim swallowed the cream fill). The probe was reverted
+  before commit.
+- FRICTION: gdformat writes CRLF here, so python `\n` replaces miss after it runs. Use the Edit tool.
+- 04:52 final gates on c8a26ff6: lint 13/13, unit 775/775, scenarios 35/35 (unit-it7.log, scenarios-it7.log). Session closed.
