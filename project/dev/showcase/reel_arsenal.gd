@@ -7,6 +7,9 @@ extends RefCounted
 ## input a player gives, so the reel still records and replays. Without a carry it does nothing.
 
 const SWITCH_KILLS: int = 2
+## A weapon that lands no kill this long hands over to the next (the 03:55 reel stalled 13 s on
+## one weapon that could not score: a switch on kills alone never came).
+const STALL_TICKS: int = 480
 ## The gun beat's length with a carry (every weapon needs its turn): 60 s.
 const GUN_TICKS: int = 3600
 
@@ -16,8 +19,9 @@ static func carry_of(stage: ArenaStage) -> RivetCarry:
 	return stage.pilot.carry if stage.pilot != null else null
 
 
-## The slot bit to press this tick (0: none), after `kills` pit kills in the gun beat.
-static func press(stage: ArenaStage, actions: PlayerActions, kills: int) -> int:
+## The slot bit to press this tick (0: none) on the gun beat's `turn` (CombatReel counts it:
+## one per SWITCH_KILLS pit kills, one per STALL_TICKS without a kill).
+static func press(stage: ArenaStage, actions: PlayerActions, turn: int) -> int:
 	var carry: RivetCarry = carry_of(stage)
 	if carry == null:
 		return 0
@@ -27,7 +31,7 @@ static func press(stage: ArenaStage, actions: PlayerActions, kills: int) -> int:
 			filled.append(i)
 	if filled.size() < 2:
 		return 0
-	var want: int = filled[(kills / SWITCH_KILLS) % filled.size()]
+	var want: int = filled[turn % filled.size()]
 	if want == carry.current:
 		return 0
 	return 1 << actions.bit(RivetCarry.SLOT_ACTIONS[want])

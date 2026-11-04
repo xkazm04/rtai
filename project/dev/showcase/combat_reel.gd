@@ -59,6 +59,9 @@ var _kills_before: int = 0
 var _pin: Vector3 = Vector3(INF, INF, 0.0)  # (x, y, tick) where the walk-in last made progress
 var _dodge_until: int = -1
 var _dodge_side: float = 1.0
+var _kills_seen: int = 0
+var _calm_since: int = 0  # the gun beat's local tick of its last kill (or stall switch)
+var _stalls: int = 0
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
@@ -191,8 +194,19 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 		side = _dodge_side
 	var drift: Vector2 = aim.orthogonal() * side * 0.8 * (1.0 - fwd) + aim * fwd
 	drift += (spot - rivet).limit_length(1.0) * 0.4 * (1.0 - fwd)
+	return _input(drift, aim, _bit(&"fire", fire) | ReelArsenal.press(stage, actions, _turn(local)))
+
+
+## The weapon turn: one per SWITCH_KILLS kills, one more each STALL_TICKS without a kill.
+func _turn(local: int) -> int:
 	var kills: int = stage.pit.kills - _kills_before
-	return _input(drift, aim, _bit(&"fire", fire) | ReelArsenal.press(stage, actions, kills))
+	if kills != _kills_seen:
+		_kills_seen = kills
+		_calm_since = local
+	elif local - _calm_since >= ReelArsenal.STALL_TICKS:
+		_stalls += 1
+		_calm_since = local
+	return kills / ReelArsenal.SWITCH_KILLS + _stalls
 
 
 ## The walk-in's forward share, or 0 while a side-step runs (pinned on a prop PIN_TICKS ticks).
