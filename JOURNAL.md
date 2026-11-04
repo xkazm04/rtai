@@ -494,3 +494,41 @@ NEXT (iteration 8):
   before commit.
 - FRICTION: gdformat writes CRLF here, so python `\n` replaces miss after it runs. Use the Edit tool.
 - 04:52 final gates on c8a26ff6: lint 13/13, unit 775/775, scenarios 35/35 (unit-it7.log, scenarios-it7.log). Session closed.
+
+## Iteration 8 (04:52-05:52, BUILD)
+- 04:53 read JOURNAL, git log, other lanes' JOURNALs. For brutality: showcase REQUEST 17 (char
+  flakes and scorch fail Godot triangulation: 4,462 errors in one city reel, flakes never drew);
+  gunplay answered my REQUEST 13 in a1eb709f (the nuke's fire patch burns as a ring round its rim).
+  REQUEST 12 (electro charged shot) not answered yet.
+- MILESTONE 05:00 showcase REQUEST 17 fixed (11781168): KillPoly.fill draws every kill fill
+  (flakes, shards, scorch, blots, zap star, cloth pile) as a triangle fan with explicit indices via
+  RenderingServer.canvas_item_add_triangle_array, so nothing is triangulated. Flame solo 64 px/m:
+  0 triangulation errors, the ash flakes now peel off downwind (strip in
+  evidence/brutality/shard-pop-and-flame-flakes-it8-strips.png). Unit test test_kill_poly.
+- 05:01 cherry-picked gunplay a1eb709f (nuke fire patch as a ring, clean).
+- MILESTONE 05:02 homing shard spray at the pop (31e69dc5): Mark.spray_from = hitstop + grind for
+  style burst; the frozen cop stands on a clean floor, then parts, mist and spray land together.
+  Render only, mark state of record unchanged.
+- MILESTONE 05:06 nuke pack (6e0f8f23): --sig-solo with a vaporise row stands KillLab.PACK, five
+  guards 8-10 m out; one shell, five charcoal shadows that stay (48 px/m clip
+  mini-nuke-pack-48ppm-10s-it8.mp4, sheet in evidence/brutality/).
+- FRICTION: my first three clips this session lacked `--rigs`: the arena then draws quest 1's
+  sprites, the kill finds no rig to cut (rig_lookup null) and the victims fall as plain corpses.
+  Found with a temporary Log line in _on_kill_landed (rigs=false), reverted. Every kill capture
+  needs `--rigs`.
+- 05:08 gates on 6e0f8f23: unit 770 + script error: the gunplay cherry-pick's test line `fx.art_mags`
+  needs gunplay 4953ee25 (not in this branch). Dropped that one line (bf177d50; it comes back
+  with gunplay's merge, net zero against main). Unit re-run 778/778 (unit-it8.log).
+- Scenarios 34/35 on the same run: scenario_rig_stress rig p50 1.105 ms > 1.0 ms while a capture
+  ran in parallel; alone 1/1 (scenario-rig-stress-alone-it8.log). Load flake, not this lane.
+- MILESTONE 05:09 the city block works with rigs again (647a9622): `--arena=city --rigs` crashed in
+  ArenaRigs.attach (rivet-arsenal's held-weapon view went on view.print_stage, null on the city);
+  took showcase's identical glue line (layer.add_child(held)). Shared file: dev/arena/arena_rigs.gd,
+  one line. `--sig-solo=start` puts the solo lab at Rivet's city start (the hub dummy rows still
+  stand around; the city has no open course floor near the start).
+- MILESTONE 05:15 KillStyles (ac274158): the style dispatch and the five overlays leave KillView
+  (295 -> 242 lines). Katana halves and electro X-ray re-seen at 64 px/m after the move.
+- MEASURED 05:16 kill-view cost from the clips' telemetry (CONTENDED, captures at 60 fps fixed):
+  rocket on the city block 6.2 ms worst frame, avg 0.63 ms, cut 0.52 ms; nuke pack (5 kills in one
+  tick) 3.4 ms worst, cuts 1.6/0.4/0.3/0.5/0.5 ms; shard 2.2 ms worst; flame 3.5 ms worst = its
+  first cut (3.4 ms, the char material's first build).
