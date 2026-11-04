@@ -1226,3 +1226,13 @@ NEXT (after the 10:30 freeze; the REPORT is already updated in place for iterati
 - FRICTION 10:00 REPORT.md held a raw form feed where `M\frames` had been written (a `\f` escape eaten by a script
   in iteration 21). Fixed with String.fromCharCode, since this shell tool collapses `\` in command text (daa42ef4).
   frames.json is clean (15 entries, every file exists, no control chars).
+- MILESTONE 10:03 gates on the tip daa42ef4 (code 384883b1): lint 13/13 (pre-commit), unit 745/745
+  (`unit-it22.log`), scenarios 32/32 (`scenarios-it22.log`), private APPDATA. The ObjectDB leak warnings at exit are
+  the usual ones (exit 0). REPORT line added under "After 09:00".
+- No Godot process of mine running; no lock taken; no scratch renders this session.
+
+NEXT (after the 10:30 freeze, unchanged from iteration 21):
+1. Call 17 B (the bold print blob on the ground) = `--pickup-print=on` or `PickupLook.printed = true`.
+2. Human-reactions' riot-shield call B needs a flat rectangular shield part; build it only if the owner picks B.
+3. Calls to answer once judged: 3, 12, 14, 15, 16, 17. A floor-to-claw pickup clip needs an arena bot that walks
+   to the pickups (rivet-arsenal's ArenaArsenalBot only switches slots).
