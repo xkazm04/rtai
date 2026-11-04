@@ -1138,3 +1138,11 @@ NEXT (morning merge / next night), in order:
   return there (no combat_arena change) and cannot touch the electro_shock signature (its veto
   skips that path). Not coded: it edits the lines showcase's final merge is resolving. REPORT
   Next 6 rewritten with the exact plan.
+- 09:58 brutality answered REQUEST 30 by message: they agree, but it cannot land on n-brutality
+  (no c_plank/plank_feet there; they did not merge this branch). Route it to showcase as merge glue,
+  with their OK, as their docs/decisions.md line for 88ff881d already names. Their note:
+  RigGait.step also writes stepping/timed/step_t/lift/foot_from. Patch v2 (same file name,
+  evidence/request_brutality_electro_plank_legs.patch) saves all of them plus foot_cell and puts
+  them back AFTER GibCut.cut (a first try restored the foot texture before the cut and the copy
+  got the toe-off shoe: filmed, caught, fixed). Re-filmed on 9c9f59a5: identical to v1. Unit
+  929/929 on the patched tree; gdformat/gdlint clean. Sent to showcase as REQUEST 30 glue.
