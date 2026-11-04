@@ -215,3 +215,6 @@ were last run on `59429978`.
 - **Morning list:** (1) re-film the electro clip on the merged main (with `08e1b72f`); (2) re-check
   that gunplay's REQUEST 29/30 answers survive the merge; (3) the nuke tick-123 frame, measured under
   `bench.lock` against `E/lock-it18/`; (4) the owner calls above.
+- **Iteration 26 (10:40, REPORT check):** every path cited above was re-resolved (`E/` =
+  `evidence/brutality/`, `M/` = `gtai-masters/n4/brutality/`, the repo files via `git ls-files`):
+  all 63 exist. No code, no Godot run, no lock held. Code head stays `5e37b57c`.

@@ -1327,3 +1327,13 @@ frame under bench.lock; (4) owner calls in REPORT.
 NEXT (morning merge): (1) re-film the electro clip on the merged main (08e1b72f in); (2) re-check
 gunplay REQUEST 29/30 answers after the merge; (3) the nuke tick-123 frame under bench.lock against
 lock-it18; (4) owner calls in REPORT.
+
+## Iteration 26 (10:40-10:45, REPORT)
+- Read: JOURNAL NEXT, git log, REPORT. REPORT was already final from iteration 25.
+- Checked every backticked path in REPORT (E/ and M/ aliases resolved, repo files via git ls-files):
+  63/63 exist. The only non-match was the command `node tools/evidence/run.mjs --no-bench`.
+- REPORT gets one iteration 26 line. No code, no Godot process, no lock, no scratch.
+
+NEXT (morning merge): unchanged: (1) re-film the electro clip on the merged main (08e1b72f in);
+(2) re-check gunplay REQUEST 29/30 answers after the merge; (3) the nuke tick-123 frame under
+bench.lock against lock-it18; (4) owner calls in REPORT.
