@@ -17,6 +17,8 @@ var stills: Array[int] = []
 ## Continue on the title and saves continue_f1 .. continue_f6 (the first frames after it).
 var save_path: String = ""
 var press_continue: bool = false
+## rivet-arsenal: the camera leans toward the cop Rivet fights (dev/rivet_arsenal/quest_fight_cam).
+var fight_cam: bool = false
 var _game: Quest1Game
 var _driver: CollectCallInputDriver = null
 var _frame: int = 0
@@ -50,6 +52,7 @@ func _run() -> void:
 		for i: int in every:
 			_driver.act()
 			s.step()
+		_attach_fight_cam()
 		var beat: String = s.beat_id()
 		if not stills.is_empty():
 			if stills.has(s.tick()):
@@ -78,6 +81,19 @@ func _run() -> void:
 		get_tree().call(&"finish")
 	else:
 		get_tree().quit(0)
+
+
+## --cam=fight: once the city view exists (it is built after the Start press).
+func _attach_fight_cam() -> void:
+	if not fight_cam or _game.view == null or _game.view.city_view == null:
+		return
+	fight_cam = false
+	var cam: Node = (load("res://dev/rivet_arsenal/quest_fight_cam.gd") as GDScript).new()
+	cam.set("session", _game.session)
+	cam.set("city_view", _game.view.city_view)
+	add_child(cam)
+	move_child(cam, 0)  # before the CityView in tree order, both at process_priority 1
+	Log.info("clip", "fight cam on the city view at tick %d" % _game.session.tick())
 
 
 func _continue_frames() -> void:
