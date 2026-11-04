@@ -14,12 +14,19 @@ const TRAIL_M: float = 4.0
 const LOB_M: float = 2.2
 ## A fire patch this wide or wider burns as a ring (see _patch).
 const RING_PATCH_M: float = 4.0
+## Over a body that fell in the fire the flames thin out (showcase REQUEST 27: the molotov's
+## victim was never seen): from CLEAR_AFTER ticks after the kill, over CLEAR_RAMP ticks, a flame
+## within CLEAR_M of the corpse shrinks and fades, so the char corpse reads under a few licks.
+const CLEAR_AFTER: int = 45
+const CLEAR_RAMP: int = 30
+const CLEAR_M: float = 1.8
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 	var a: FightAreas = arena.areas
+	var dead: Array[Vector3] = corpses(arena.hostiles, tick)
 	for i: int in a.patches.size():
-		_patch(ci, a.patches[i], a.patch_ticks[i], tick)
+		_patch(ci, a.patches[i], a.patch_ticks[i], tick, dead)
 	for h: Fighter in arena.hostiles:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
@@ -107,7 +114,7 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 
 ## A patch of RING_PATCH_M or more (the mini-nuke's) burns only round its rim: ground zero is
 ## burnt out, so the vaporised shadows printed there stay readable (brutality REQUEST 13).
-static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
+static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int, dead: Array[Vector3]) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
 	var ring: bool = p.z >= RING_PATCH_M
@@ -120,7 +127,30 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7
 		var reach: float = (0.78 + 0.14 * float(i % 2)) if ring else (0.25 + 0.4 * float(i % 2))
 		var off: Vector2 = Vector2.from_angle(ang) * p.z * reach
-		_fire(ci, c + off, 0.6 + 0.15 * float(i % 3), tick + i * 5, fade)
+		var thin: float = clear(c + off, dead)
+		var size: float = (0.6 + 0.15 * float(i % 3)) * (1.0 - 0.6 * thin)
+		_fire(ci, c + off, size, tick + i * 5, fade * (1.0 - 0.5 * thin))
+
+
+## The dead hostiles as (x, y, clear strength 0..1), strength rising CLEAR_AFTER ticks after
+## the killing hurt (hurt_tick is the last hit, so the kill) over CLEAR_RAMP ticks.
+static func corpses(hostiles: Array[Fighter], tick: int) -> Array[Vector3]:
+	var out: Array[Vector3] = []
+	for h: Fighter in hostiles:
+		if not h.alive():
+			var k: float = float(tick - h.hurt_tick - CLEAR_AFTER) / float(CLEAR_RAMP)
+			if k > 0.0:
+				out.append(Vector3(h.pos.x, h.pos.y, minf(k, 1.0)))
+	return out
+
+
+## How much a flame at `at` thins (0 none .. 1 full) for the nearest strong corpse.
+static func clear(at: Vector2, dead: Array[Vector3]) -> float:
+	var t: float = 0.0
+	for d: Vector3 in dead:
+		var near: float = 1.0 - at.distance_to(Vector2(d.x, d.y)) / CLEAR_M
+		t = maxf(t, d.z * clampf(near, 0.0, 1.0))
+	return t
 
 
 ## A rocket blast as a comic burst: a jagged cream star in a heavy ink rim (6 ticks), then an
