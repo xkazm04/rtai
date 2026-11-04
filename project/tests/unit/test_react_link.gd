@@ -51,3 +51,50 @@ func test_a_victim_without_a_full_rig_is_skipped_and_the_queue_drains() -> void:
 	link.apply(rigs)
 	assert_eq(link._pending.size(), 0)
 	assert_eq(link.wounds, 0, "no rig, nothing played")
+
+
+func test_a_burned_kill_chars_and_a_blown_kill_throws() -> void:
+	var arena: CombatArena = _arena()
+	var link: ReactLink = ReactLink.make(arena)
+	var a: Fighter = arena.spawn_guard(Vector2(4.0, 0.0))
+	var b: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	arena.kill_landed.emit(a, &"pistol", Vector2.RIGHT, a.pos, &"burned")
+	arena.struck.emit(a, Vector2.RIGHT, true, &"pistol")
+	arena.kill_landed.emit(b, &"pistol", Vector2.RIGHT, b.pos, &"blown")
+	arena.struck.emit(b, Vector2.RIGHT, true, &"pistol")
+	var ca: StringName = link._pending[0][3]
+	var cb: StringName = link._pending[1][3]
+	assert_eq(ca, &"burn")
+	assert_eq(cb, &"blast")
+
+
+func test_area_states_name_their_family_stun_over_burn_over_down() -> void:
+	var arena: CombatArena = _arena()
+	var link: ReactLink = ReactLink.make(arena)
+	var g: Fighter = arena.spawn_guard(Vector2(4.0, 0.0))
+	assert_eq(link.state_family(g), &"", "no areas yet")
+	arena.areas = FightAreas.new()
+	var e: FighterFx = FighterFx.new()
+	arena.areas.fx[g.id] = e
+	e.down_ticks = 10
+	assert_eq(link.state_family(g), &"knockdown")
+	e.burn_ticks = 10
+	assert_eq(link.state_family(g), &"burn")
+	e.stun_ticks = 10
+	assert_eq(link.state_family(g), &"stun")
+
+
+func test_a_held_stun_outlasts_its_family_then_runs_out() -> void:
+	var arena: CombatArena = _arena()
+	var link: ReactLink = ReactLink.make(arena)
+	var rig: CutRig = CutRig.new()
+	rig.actor_id = 7
+	var r: HumanReact = HumanReact.on(rig)
+	for i: int in 240:
+		link.hold(rig, &"stun", &"stun", Vector2.LEFT)
+		r.t += SimClock.TICK_DT
+	assert_eq(r.kind, &"stun", "4 s of stun on a 1.2 s family still convulses")
+	assert_lt(r.progress(), 0.75)
+	link.hold(rig, &"", &"stun", Vector2.LEFT)
+	assert_almost_eq(r.progress(), 0.7, 0.05, "the release resumes at the run-out")
+	rig.free()

@@ -22,7 +22,7 @@ uniform float px_scale = 0.34;    // screen px per part px. Small (gameplay, ~0.
 uniform float verm_gate = 62.0;   // r - max(g,b) (0..255) above which a pixel is vermilion
 uniform float alpha_cut = 0.45;
 uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px (PartMaterials.set_world_px): tooth + dots world-locked
-uniform float tint = 0.0;         // 1 = print everything vermilion (hit flash)
+uniform float tint = 0.0;         // 1 = hit flash: everything but the ink prints cream (red is blood only; human-reactions 2026-11-04)
 uniform float silhouette = 0.0;
 uniform int swap = 0;           // crowd palette variants: 1 vermilion->ink, 2 vermilion->cream, 3 cream->vermilion, 4 ink->vermilion (a cop's solid plate)
 uniform float lod_fill = 0.0;     // D1 sticker LOD fill: 0 = the limb_fill tint (limbs), 1 = flat vermilion (Rivet's collar), 2 = cream core
@@ -115,7 +115,7 @@ void fragment() {
 		else if (swap == 2 && o == VERM) o = CREAM;
 		else if (swap == 3 && o == CREAM) o = VERM;
 		else if (swap == 4 && o == INK) o = VERM;
-		if (tint > 0.5 && o != INK) o = VERM;
+		if (tint > 0.5 && o != INK) o = CREAM;
 		if (noir > 0.5) o = dot(c.rgb, vec3(0.299, 0.587, 0.114)) > noir_keep ? CREAM : INK;
 		COLOR = vec4(o * g, 1.0);
 	}
