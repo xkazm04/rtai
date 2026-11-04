@@ -74,6 +74,7 @@ Each one is a single value. The default stands until you answer.
 - The fight camera is a dev flag in the pit only. The city camera stays on Rivet (see gunplay-12).
 - Quest 1 has no `GunHand` yet, so the quest fight keeps its evening pistol path. `LiveInput.px_per_m` is not wired there.
 - The arena's default weapon is still Gloria. A table gun is armed only with `--weapon=<id>`, so that the arena scenarios do not move.
+- Merge notes for the Director: human-reactions' get-up and brutality's burst kill read right only with n-gunplay 83429487 / 8ea3a2e5 merged. Brutality REQUEST 29 (molotov corpse under the patch flames) is answered by 0b2541a9 + aa471560 (flames shrink, fade and move off a body, from gunplay's own dead list); recheck it in the merged-main re-film in case a brutality kill drops the body from that list while its print stays.
 
 ## Gates of record
 

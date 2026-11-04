@@ -1198,3 +1198,14 @@ NEXT (report phase, in order):
   Open only if a brutality kill removes the body from the dead list while its print stays (check
   in the merged-main re-film).
 NEXT item 1 now reads: REPORT gates of record on 83429487; REQUEST 29 answered (0b2541a9, aa471560).
+
+## Iteration 17 (STABILIZE, 08:30 - 08:33)
+- 08:30 read: JOURNAL NEXT, git log, REPORT. No code after 83429487, so the gates of record stand
+  (lint 13/13, unit 752/752, scenarios 29/29, parity bit-exact; `evidence/n10/evidence-final-14.log`).
+- REPORT: added the merge notes (83429487 / 8ea3a2e5 needed by human-reactions and brutality;
+  brutality REQUEST 29 answered by 0b2541a9 + aa471560, recheck in the merged-main re-film).
+- frames.json parses; no evidence refresh needed (no visual change since the last captures).
+- Session end: no Godot process started, no lock taken, no shared file touched.
+
+NEXT: the Director merges n-gunplay; re-film the molotov patch beside a brutality kill on merged
+main; BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if the burn re-film reads thin.
