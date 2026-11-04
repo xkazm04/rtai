@@ -663,12 +663,15 @@ NEXT (iteration 9), in order:
 NEXT (iteration 10), in order:
 1. rivet-arsenal wires `make_held(id, "empty")` (their REQUEST 11, delivered b98ae259). When it lands, film the
    rocket reload at 64 px/m: the tube goes empty at the shot and loads again in phase 2.
-2. The lobbed shell's ground shadow: make it a soft ink ellipse that scales with the shell, so the height reads at
-   32 px/m. The bottle shares the shadow; check the molotov too.
+2. DONE 05:37 (f255cffc) for the shell: an ink ellipse shadow that shrinks at the apex, A/B
+   `it9-nuke-shell-shadow-ab-64ppm.png`. Still open: the molotov bottle keeps the old dash; give it the same
+   ellipse (WeaponFxArt._bottle) and check it at 32 px/m.
 3. A 48 px/m clip of the kinetic family in one run (pistol, machine pistol, hand cannon, Gloria) via the arsenal
    switch bot, for the morning page's "weapons in motion" row.
 4. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): check their answer.
 5. The energy flashes stay as they are (read in the true-scale sheet). Look at the flame and arc cells at 32 px/m
    on cream next, in the same composite.
-- Session close 05:36: 7 commits this iteration (3405df7c..), gates green at e0308ace, worktree clean except the
-  evidence logs.
+- Session close 05:40: 10 commits this iteration (3405df7c..f255cffc + this). Gates of record at f255cffc: lint
+  13/13 (674 files), unit 735/735 (`unit-it9d.log`), scenarios 32/32 (`scenarios-it9c.log`). Render + art + data
+  only: no sim file, no replay or parity golden touched. No bench (render-only changes; bench.lock was held by
+  another lane). Worktree clean except the evidence logs.
