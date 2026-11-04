@@ -595,3 +595,35 @@ NEXT (iteration 9):
 4. Homing shard: more shards on the near side when Rivet is far.
 5. Electro gun charged shot (REQUEST 12 -> gunplay) when it lands: key nothing new, re-shoot.
 - 05:38 session closed. Scratch renders not in frames.json deleted; masters frames.json 15 entries.
+
+## Iteration 9 (05:39-06:39, BUILD)
+- 05:40 read JOURNAL, git log, other lanes' JOURNALs. For brutality: showcase REQUEST 21 (the plasma
+  `hole` victim keeps his standing silhouette with a dark disc for 5 s at 48 px/m: not read as a
+  death); gunplay REQUEST 12 DONE (0c0465fd, the electro gun's charged shot) and REQUEST 13 second
+  ask DONE (89c5fac9, stuck shards; not picked yet).
+- MILESTONE 05:44 REQUEST 21 answered (eb04a301, KillHoleFx.Topple): the victim stands 8 ticks after
+  the hit-stop with the glowing hole, then over 12 ticks (eased in) falls flat back along the shot.
+  Seen straight down a fall is a lay-out, not a turn: slid 0.45 m along the shot, stretched 1.55x
+  along the fall line, narrowed 0.88x across, twisted 0.35 rad. Render only. Unit test (stands
+  while looking; lies along the shot; the pose is absolute).
+- FRICTION: the first try rotated the body 90 deg and shifted it screen-down: in the straight-down
+  view that read as a spin and slid him out of frame. The second wrote a stretched transform into
+  KillView's node: KillView resets position/rotation/scale each frame but not skew, so the skew
+  compounded and the body collapsed into a needle in 3 frames. Fix: punch() puts a `lay` node
+  under the body root; Topple writes its transform absolutely each frame.
+- 05:45 gates on eb04a301: lint 13/13, unit 781/781 (gut ran the whole suite), scenarios 35/35
+  (evidence/brutality/scenarios-it9.log).
+- MILESTONE 05:50 electro gun one-shot: cherry-picked gunplay 0c0465fd as 5473194f (conflict in
+  weapon_spec.gd: dropped gunplay's `min_lob_m` line, which needs a gunplay commit this branch
+  does not carry; net zero at the merge). KillLab._held_ticks (22649e3f) holds a charge gun's
+  trigger through its tap, cooldown and full charge (30 + 36 + 3 ticks), so the plain bolt stuns,
+  the charge gathers on the claw, and the 150-damage charged bolt lands the electro_shock kill.
+  Needed one `--import` for the new class_name FightChargeArt (else 370 parse errors in a capture).
+- Determinism: scenario_brutality_kills electro_gun 12 kills (12 signature) where 6 two-round kills
+  stood, same seed same state, replay identical (evidence/brutality/brutality-kills.json).
+- Clips 05:55 (looked at strips of each): electro gun charged one-shot solo 48 px/m + 64 px/m 0.4x
+  slow + city block 48 px/m; plasma topple solo 48 + 64 slow + city 48. One signature kill per
+  clip (telemetry), 0 script errors. Masters frames.json: 3 new entries on top; dropped the old
+  electro strip, the old electro solo and the it7 solo reel (superseded), 15 entries.
+- On the city block the tap bolt chains into the hub dummy row behind the victim (gunplay's 3
+  chain hops). Reads as the gun working; it pulls the eye off the victim for half a second.
