@@ -16,6 +16,9 @@ const SOOT_A: float = 0.24
 const CORE_A: float = 0.50
 const EDGE_A: float = 0.85
 const EDGE_PX: float = 3.0
+## The nuke ring's blotches: one per this much rim (m), each this share of the patch radius.
+const RING_STEP_M: float = 2.2
+const RING_BLOTCH_K: float = 0.24
 
 
 ## The char of a patch of radius r_m metres at c (metres); k fades it (1 = fresh, 0 = gone).
@@ -37,6 +40,16 @@ static func blotch(ci: CanvasItem, c: Vector2, r_m: float, k: float) -> void:
 		var dist: float = r * (1.08 + 0.32 * _h(key + 320 + i))
 		var size: float = 1.5 + 3.0 * _h(key + 340 + i)
 		ci.draw_circle(at + Vector2.from_angle(ang) * dist, size, Color(Ink.INK, 0.7 * k))
+
+
+## The mini-nuke's burning ring: a band of char blotches round 0.85 of the radius (one per
+## RING_STEP_M of rim, each RING_BLOTCH_K of the radius), ground zero left bare.
+static func ring(ci: CanvasItem, c: Vector2, r_m: float, k: float) -> void:
+	var n: int = maxi(ceili(TAU * r_m * 0.85 / RING_STEP_M), 3)
+	var turn: float = TAU * _h(_seed(c) + 600)
+	for i: int in n:
+		var ang: float = turn + TAU * float(i) / float(n)
+		blotch(ci, c + Vector2.from_angle(ang) * r_m * 0.85, r_m * RING_BLOTCH_K, k)
 
 
 ## A star-shaped ring of n points round at: each point's reach varies, and with tongues every
