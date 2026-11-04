@@ -578,3 +578,34 @@ NEXT (iteration 9), in order:
   Pistol / hand cannon: their tracers are too fast to judge on a 5 fps contact sheet; next time crop at 20-60 fps
   around Rivet, as for the plasma. Scratch files deleted; an empty `gtai-n4/scratch/wa8b` folder is left (the
   sandbox refuses rmdir on it).
+
+## Iteration 9 (05:00 - 06:00)
+- 05:00 read: JOURNAL NEXT, git log. REQUESTs to weapon-art in the other journals: rivet-arsenal REQUEST 11 (an
+  empty rocket tube) open; the rest answered earlier.
+- FINDING 05:04 pistol in the city block (`res://dev/arena/arena.tscn -- --arena=city --loadout=pistol --bot=arsenal
+  --clean`, 1280x720, `--fixed-fps 60 --write-movie`, frames cut at 30-60 fps around Rivet): the charcoal bars
+  with vermilion heads are the GUARD's rounds coming in (gunplay's enemy rounds); Rivet's own pistol round is the
+  thin pale needle, a hairline loop at 32 px/m (the 280x48 cell draws at 0.2 = 3-4 px tall).
+- MILESTONE 05:05 heavier tracer (3405df7c, `tools/art/bullet_tracer.py`, 320x64, 44 px across at the head, paper
+  streak, ink ring 13). Same-tick A/B: `it9-pistol-tracer-ab-city-32ppm-4x.png`; 60 fps strip with the head toward
+  the guard: `it9-pistol-tracer-new-city-32ppm-60fps-3x.png`. Now a grey needle with a paper streak, apart from the
+  guard's vermilion-headed bars. Applies to the machine pistol and hand cannon too (same cell).
+- MEASURE 05:08 every round and flash cell at its true 32 px/m draw scale (0.2) composited on crops of the city
+  block's cream paving and asphalt: `it9-round-cells-at-32ppm-cream-asphalt-3x.png`. Weakest: Gloria's nail (a
+  30x2 px sliver, nearly gone on asphalt). The energy flashes (NEXT 2) hold up: their 13 px ink ring keeps the pale
+  star readable on cream. NEXT 2 closed with no change.
+- MILESTONE 05:11 Gloria's nail (007ec1c2): 240x64, steel shank 22 px across with a paper glint, a broad paper
+  head, a charcoal speed tail. Same-tick A/B (old cell + old row restored for the before run, then put back):
+  `it9-gloria-nail-ab-city-32ppm-2x.png` + clip `it9-gloria-nail-old-vs-new-city-32ppm-2x-halfspeed.mp4`.
+  `--bot=gunplay --weapon=gloria` on the city fires; `--bot=arsenal` with Gloria mostly backs off (no shots in 3 s).
+- MILESTONE 05:15 rivet-arsenal REQUEST 11 DONE (b98ae259): `parts.empty` = `held_empty.png` for rocket_launcher
+  and mini_nuke, the warhead cut away past the front band and an inked open mouth, same canvas, `part_grip_px.empty`
+  = grip_px. `make_held(id, "empty")` lands exactly on the loaded tube (unit test). `tools/art/empty_tubes.py`,
+  provenance lines. Sheet `it9-rocket-tubes-loaded-vs-empty-sheet.png`.
+- INFO -> rivet-arsenal: the empty tube is in (b98ae259). Swap RivetHeldView's sprite to `make_held(id, "empty")`
+  from the shot until reload phase 2 (when your RivetMagView rocket goes in). Not wired by me (your file).
+- Gates: lint 13/13 at every commit (pre-commit hook); unit 733/733 at 007ec1c2 (`evidence/weapon-art/unit-it9.log`),
+  734/734 with the empty-tube test. Render-only + art + data: no sim file, no golden touched.
+- Registry rules applied: motion-quality-gating (same deterministic tick before/after, cut from --fixed-fps 60
+  captures), sprite-and-atlas-production (cells from seeded scripts, rows' size/anchor through the table; the
+  empty part keeps the held canvas so attach data stays valid). No deviation.
