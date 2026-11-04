@@ -16,6 +16,16 @@ const tool = (name, cmd, args) => {
   return { name, ok: res.status === 0, issues };
 };
 
+/** `tool` over `files` in chunks: one command line stays under Windows' 32 KB limit. */
+const CHUNK = 200;
+const toolChunked = (name, cmd, flags, files) => {
+  const results = [];
+  for (let i = 0; i < files.length; i += CHUNK) {
+    results.push(tool(name, cmd, [...flags, ...files.slice(i, i + CHUNK)]));
+  }
+  return { name, ok: results.every((r) => r.ok), issues: results.flatMap((r) => r.issues).slice(0, 40) };
+};
+
 function jsonCanonical() {
   const files = [
     ...walk(join(PROJECT, 'data'), (n) => n.endsWith('.json')),
@@ -102,8 +112,8 @@ export function runLint() {
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
-    tool('gdformat', 'gdformat', ['--check', '--line-length', '100', ...gd]),
-    tool('gdlint', 'gdlint', gd),
+    toolChunked('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
+    toolChunked('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
