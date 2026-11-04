@@ -16,6 +16,19 @@ const tool = (name, cmd, args) => {
   return { name, ok: res.status === 0, issues };
 };
 
+// gdformat / gdlint over every file in batches: one command line with all ~810 paths passed
+// Windows' 32767-character limit, the spawn failed and the check FAILed naming no file (perf-city).
+const BATCH = 200;
+const toolBatched = (name, cmd, pre, files) => {
+  const issues = [];
+  for (let i = 0; i < files.length; i += BATCH) {
+    const res = tool(name, cmd, [...pre, ...files.slice(i, i + BATCH)]);
+    issues.push(...res.issues);
+    if (!res.ok && res.issues.length === 0) issues.push(`${name} failed on files ${i}-${i + BATCH} with no output`);
+  }
+  return { name, ok: issues.length === 0, issues: issues.slice(0, 40) };
+};
+
 function jsonCanonical() {
   const files = [
     ...walk(join(PROJECT, 'data'), (n) => n.endsWith('.json')),
@@ -102,8 +115,8 @@ export function runLint() {
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
-    tool('gdformat', 'gdformat', ['--check', '--line-length', '100', ...gd]),
-    tool('gdlint', 'gdlint', gd),
+    toolBatched('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
+    toolBatched('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
