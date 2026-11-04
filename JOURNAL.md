@@ -173,3 +173,23 @@ reel's 64 px/m close-up again on the final arms and legs, and the r2_c6 composit
 --no-bench` on the head; (5) the REPORT's Calls for the owner (held-gun size on the slimmer Rivet; limb weight at
 32 px/m; the 3/4 vs plan camera gap).
 - 18:25 junction look goldens re-run on 6fb10e9a (the legs): 11/11, worst mean 0.57. NEXT (1) is now block only.
+
+## Iteration 6 (18:26-19:26)
+
+- 18:26 Read JOURNAL, git log. No REQUESTs from n5-look. image.lock free.
+- MILESTONE 18:29 block look goldens bisected and blessed (commit 618d6eb8). A throwaway worktree at main a1275c82
+  (copy this worktree's `.godot` + native DLLs in, then `--import` takes 15 s, not 4 min) passes block 5/5, but with
+  the far share already at 1.1-2.0 % (limit 2 %) from an edge speckle along the buildings. My head failed 4/5 at
+  2.0-2.9 %. The head-vs-main diff mask holds only bodies (slim cops, hybrid Rivet, a corpse): so the cast change
+  tipped an already-marginal frame. Blessed once, unblessed re-run 5/5, decisions line.
+  - FRICTION: `git worktree remove` fails with "Permission denied" when the tool's cwd sits inside that worktree;
+    run it from the lane cwd.
+- MILESTONE 18:33 brutality A/B at 64 px/m (`--bot=reel --reel=director --loadout=pistol
+  --chapter=katana,chainsaw,electro_gun,flamethrower,riot_cop`, 2000 frames): main (throwaway worktree) vs head,
+  5/5 chapters down on both, identical sim, 0 script errors. Katana and chainsaw splits cut the slim cop parts
+  cleanly (blue torso half, legs half), the electro skeleton flash and the charred corpse, the burn, the riot cop
+  with his shield all read. `frames/brutal-ab-64ppm.png`, clips `cast-{before,hybrid}-brutal-64.mp4`.
+- MILESTONE 18:36 react board A/B (owed since iteration 2): `react_board_run.gd -- --zoom=2 --every=4` on main and
+  on head, 481 frames each, 0 script errors. Every family (stagger, knockdown, melee spin/fold, electro, burning,
+  round/melee/blast deaths) reads at the same frame; the cops now sit on the ped footprint.
+  `frames/react-board-ab-64ppm.png`, `cast-react-board-ab-64ppm.mp4` (side by side). NEXT items 2 done.
