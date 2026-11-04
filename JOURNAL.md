@@ -51,7 +51,7 @@ NEXT (iteration 2, written 14:02):
 - MILESTONE 15:04 (NEXT 1 done in this session): the smear is an ink band (0.35) under a pale core (1182e8fe). Looked: a grey wedge on the cream city pavement, a pale core on the dark arena floor. City A/B re-cut with it (`city_melee_swing_ab_48ppm.mp4`, 920 frames = 15.3 s; the container's duration tag says 25 s). Unit on 1182e8fe: 955/955 (`gates/unit5.log`). Scenarios/parity last on ffd3de22 (green); the later commits are view-only (smear drawing, a grip that is off by default).
 
 NEXT (iteration 4, written 15:02, item 1 done at 15:04):
-1. (done) The smear on light ground. Still to check: the melee_swing 48/64 arena clip was cut before the two-tone smear; re-cut it from fresh renders.
+1. (done) The smear on light ground. 15:07: `melee_swing_ab_48ppm_64slow.mp4` re-cut from fresh renders of 1182e8fe (17 s); looked at the katana 0.4x sheet: the two-tone wedges show through both slashes.
 2. Item 4 grip (`--two-hand-grip`, off by default): the off forearm draws its end-on cell (RigArm._place: `end2` when the hand-to-elbow distance is short) and z-orders under the torso. Try: the off target further out (HILT_PX 70-90 ahead along the BLADE direction from RivetHeldView, not the arm line), force the side cell (not end-on) and arm_above while two_hand_melee. Film katana + plasma sword at 64 px/m before turning it on by default. The chainsaw already looks two-handed (hip class).
 3. Item 4 leftovers: the guard at the claw (the bare claw combo, chapter claw_combo, uses the claw clip not RivetHeldView); the electro baton has no director chapter (add `baton` = &"electro_baton", &"blade", ~330 ticks).
 4. Item 3b (optional): a kick on the plasma kill's hit tick itself.
