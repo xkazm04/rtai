@@ -403,3 +403,50 @@ NEXT (iteration 4):
   unit 773/773, scenarios 37/37, selftest PASS (look goldens 11/11, block 5/5, the two new 48 px/m
   debt rows hold the flicker: 8 px <= 12, 16 px <= 24). Parity bit-exact from the 03:20 run (no
   sim change since). NEXT 1 done; evidence/r4/selftest-r4b.json.
+
+## Iteration 4 (session 03:42-04:42)
+- 03:42 read JOURNAL, git log, other lanes' JOURNALs. Replies: REQUEST 9 confirmed by brutality
+  (cbb38461 takes the 30-tick planted check); REQUEST 10 taken by human-reactions (9503319e:
+  react_line x -0.5..11.5 y 1.5); REQUEST 11 agreed by weapon-art and gunplay (weapon-art owns
+  Rivet's flash + brass + magazine for a gun with art; GunFx the rest). REQUESTs 12 (corpse cap)
+  and 13 (gibs past the pit wall) not answered yet.
+- MERGE ROUND 5 (brief order, one at a time): weapon-art 934b7ded, rivet-arsenal 44f20481, gunplay
+  743dd3f6, human-reactions 7683a343, brutality cbb38461 -> 90c56455. Conflicts: JOURNAL.md every
+  time (kept ours); arena_rigs.gd x3 (held weapon on `layer` + weapon-art's WeaponMagView on the
+  same layer; `hidden` + human-reactions' `crowd` both kept; const order); gun_fx_art.gd (our
+  `shells` gate around gunplay's moved GunFxMarks.bit); arena_stations/human-reactions.json doc
+  (kept ours, same coordinates). FRICTION: my first loop ran all five `git merge`s past the first
+  conflict (the later four refused, nothing lost); merge one lane at a time from now on.
+- GATES r5 (tree 90c56455, private APPDATA): lint 13/13 (727 files), unit 799/799.
+- Scenarios r5 (90c56455): 38/39, FAIL scenario_rivet_katana ("dropped too few cops": claw_kills 3,
+  hits 9); deterministic (same alone). Cause: rivet-arsenal 44f20481 aims a drawn melee weapon at
+  the nearest live hostile within 2.6 m; on the merged build human-reactions' react_line dummies
+  (never die, y 1.5) sit 1.35 m off the bot lane (y 2.85), closer than the claw cops (y 4.4), so
+  the katana chopped dummies. Glue cd49e9fa: the aim skips station targets (ArenaTargets
+  fighters). The five rivet_* scenarios green alone after it.
+- Glue cd4b518f: one magazine per reload. weapon-art's WeaponMagView (under --rigs) drops the
+  gun's own magazine and gunplay's GunFx dropped its ink stick too (weapon-art's REQUEST 5 ->
+  gunplay, not answered on gunplay's tip). WeaponMagView.live counts views in a tree; FxView
+  then skips GunFx's magazine bits for a gun with a `mag` part (the same rule as the brass).
+  Without --rigs gunplay's stick still shows. A data change (mag_drop false) was rejected: it
+  breaks test_gun_fx's magazine row and drops the stick on the plain arena.
+- REQUEST 14 -> rivet-arsenal: your 5adbd26e RivetMagView (placeholder ink block) will be a THIRD
+  magazine once merged: weapon-art's WeaponMagView landed (43a4e356) and the showcase build has
+  it with one-magazine glue. Please retire RivetMagView or gate it off when WeaponMagView.live > 0.
+- REQUEST 15 -> rivet-arsenal (cc human-reactions): take cd49e9fa (ArenaRivetBot._foe_aim skips
+  ArenaTargets dummies) into your branch, or your next scenario_rivet_katana on a merged build
+  fails again.
+- DECISION reel riot/thug beats: the real fight (CombatArena + ArenaPit) has no riot shield block
+  and no robot thug; both live only in enemy-ai's dev pit (EnemyPit, not an ArenaHook) and the
+  owner's verdict says robots and bosses are resolved later. The reel does not fake them; the
+  riot look exists only on the react_line dummy (render-side shield recoil). Candidate next: an
+  arena `--riot` flag that dresses each pit wave's first guard in the riot look with gunplay's
+  armored hp (a sim change behind a flag: the default reel and goldens do not move).
+- Scenarios r5b (cd4b518f, the two glue fixes): 39/39 (evidence/r5/scenarios-r5b.log).
+- MILESTONE 04:05 arena --riot (760b0616): ArenaPit.riot_hp (from wave 2, each wave's first guard
+  takes gunplay's armored hp 2.5x: three pistol rounds, one hand-cannon round) and ArenaRigs
+  dresses those ids in the riot look (RigVariant.crowd 6, the shield), so human-reactions'
+  frontal shield recoil plays in a live pit fight. Off by default. test_arena_pit_riot 3/3.
+  DECISION riot cop in the arena: armored hp + the shield look, the shield's block stays render
+  only (no sim block in CombatArena; enemy-ai's EnemyPit shield is not in the real fight).
+  Alternative: one data value (riot_hp) or a real block as an enemy-ai/gunplay item.
