@@ -90,6 +90,7 @@ func apply(rigs: CharacterRigs) -> void:
 			deaths += 0 if kind == &"signature" else 1
 			if kind != &"signature":
 				_corpses[id] = [kind, dir]
+				Log.info("react", "%s on %d, frame %d" % [kind, id, Engine.get_process_frames()])
 		elif _held.get(id, &"") != &"knockdown":
 			_wound(rig, id, hit_class, dir, cover)
 	_pending.clear()

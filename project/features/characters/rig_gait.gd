@@ -83,7 +83,8 @@ static func _stand(rig: CutRig, side: RigLimbs, other: RigLimbs, rest: Vector2, 
 static func _clip_feet(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, dt: float) -> void:
 	if rig.c_sprawl > 0.0:
 		var wide: float = lerpf(230.0, 55.0, rig.c_plank)
-		var back: float = lerpf(-210.0, PLANK_FEET_PX * rig.plank_feet, rig.c_plank)
+		var from: float = -210.0 if rig.plank_feet < 0.0 else 0.0  # ahead: from under the hips
+		var back: float = lerpf(from, PLANK_FEET_PX * rig.plank_feet, rig.c_plank)
 		var spread: Vector2 = rig.xf * Vector2(back, rig.plan.side_sign(s) * wide)
 		side.foot_w = side.foot_w.lerp(spread, minf(rig.c_sprawl * dt * 8.0, 1.0))
 		side.lift = 0.0
