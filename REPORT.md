@@ -17,8 +17,18 @@ Paths below are relative to the masters folder unless they start with `evidence/
   the drop to the end. Unit 929/929 on the patched tree. The patch is `evidence/request_brutality_electro_plank_legs.patch`
   (REQUEST 30 -> brutality). It is not committed here because the file is brutality's and does not exist on this
   branch. If it misses the final round, the 10:30 reel keeps the spread-armed corpse.
+  - **Routed as merge glue (10:00).** Brutality agreed but cannot land it: n-brutality has no `c_plank`, which exists only
+    on this branch and showcase's main. With their OK, I sent it to showcase as glue for the final round. Patch v2
+    (`9e5ab448`) also puts back every foot state `RigGait` writes, after the cut. A first try restored the shoe
+    texture before the cut and the copy got the toe-off shoe; the film caught that and v2 fixes it. v2 was re-filmed
+    with the same result as v1, unit 929/929. Whether it is in the 10:30 reel is showcase's call.
   - Also checked the reel's pistol and riot-cop chapters: the standard bullet sprawl with red and the shield sparks
     read cleanly. Nothing changed.
+  - **Open, found at 10:00 in the claw chapter:** the claw's kills lie in the bullet X sprawl, and the second one
+    folds under Rivet's feet. Raising `death_melee.travel_m` from 0.5 to 0.9 changed nothing on film (A/B on round 18,
+    not kept), so these kills do not play my melee death. The likely cause: `ReactLink.hit_class_of` falls back to
+    `light` for any weapon name missing from `weapons.json`, and no melee weapon is in that table. The claw path itself
+    (`player/melee_combo` / `melee_hit`, rivet-arsenal) was not traced in time. Next step 7.
 - **09:20-10:20 (iteration 20), two readability fixes, both in time for showcase's 09:45 merge:**
   - **The robot thug's lighter spray** (`e00a0041`): its hits now throw their own `blood_fx` row `thug_hit` (10 drops in
     a 70 deg cone along the blow) instead of Rivet's `robot_hit` (26 drops in a 160 deg fan). Six hits leave one
@@ -209,3 +219,5 @@ Each call is one value or flag. A is what is live now.
    `arena.kill_weapon == &"electro_gun"`. `combat_arena` needs no change, and brutality's `electro_shock` signature
    is untouched because its veto already skips this path. Not done tonight: it edits the same lines as showcase's
    final merge.
+7. Melee kills play the melee fold: trace the claw's strike into `ReactLink` and map melee weapon names to the
+   `melee` class in `hit_class_of` (or carry `hit_class` on the melee table rows). Film the claw chapter A/B.

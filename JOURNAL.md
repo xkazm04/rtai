@@ -1146,3 +1146,19 @@ NEXT (morning merge / next night), in order:
   them back AFTER GibCut.cut (a first try restored the foot texture before the cut and the copy
   got the toe-off shoe: filmed, caught, fixed). Re-filmed on 9c9f59a5: identical to v1. Unit
   929/929 on the patched tree; gdformat/gdlint clean. Sent to showcase as REQUEST 30 glue.
+- 10:00 claw chapter (showcase r17): both kills lie in the bullet X sprawl, and the second folds
+  under Rivet's feet. Tried death_melee.travel_m 0.5 -> 0.9 on a scratch round 18 and filmed A/B:
+  identical, so the claw kills do not play death_melee. Likely cause: ReactLink.hit_class_of
+  returns `light` for any weapon not in weapons.json (no melee weapon is there). The claw path
+  (player/melee_combo, melee_hit; rivet-arsenal) was not traced before the freeze. Not changed.
+  Scratch worktrees hr-scratch and hr-scratch2 removed; AVIs deleted; no Godot process of mine
+  running.
+- Brutality's session ended before my v2 thank-you reached them (it was not delivered).
+
+NEXT (after the freeze / morning merge), in order:
+1. Showcase applies REQUEST 30 v2 (evidence/request_brutality_electro_plank_legs.patch) if the
+   final round missed it.
+2. Melee kills play the melee fold (REPORT next 7): trace the claw strike into ReactLink and map
+   melee weapon names to `melee` in hit_class_of; film the claw chapter A/B.
+3. Then REPORT next steps 1-6 as listed (gunplay shield_test line, robot Fighter.Kind, idle bench,
+   directed kill camera, dry electro kills).
