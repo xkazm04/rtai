@@ -9,6 +9,8 @@ extends RefCounted
 
 signal killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2)
 
+## A part's speed kept off a wall it hit (the rest is lost into the wall).
+const WALL_REBOUND: float = 0.3
 ## The body-local start of each piece (metres; x along the facing, y to the right).
 const OFFSETS: PackedVector2Array = [
 	Vector2(0.05, 0.0),
@@ -27,6 +29,8 @@ var consumed: Dictionary[int, int] = {}
 var tick: int = 0
 var hold: int = 0
 var by_style: Dictionary[StringName, int] = {}
+## Callable(pos_m: Vector2) -> Vector2: the stage's wall push-out for a part (none = no walls).
+var push_out: Callable = Callable()
 var _rng: RandomNumberGenerator = null
 
 
@@ -66,6 +70,25 @@ func step(p_tick: int) -> void:
 		hold -= 1
 		return
 	gibs.step()
+	if push_out.is_valid():
+		_collide()
+
+
+## Walls stop the parts: a piece pushed out of a wall loses the speed it had into it and
+## rebounds a little (deterministic: the stage's own push-out, no dice).
+func _collide() -> void:
+	for i: int in GibSim.CAPACITY:
+		if not gibs.live(i) or gibs.at_rest(i):
+			continue
+		var p: Vector2 = gibs.pos[i]
+		var out: Vector2 = push_out.call(p)
+		if out == p:
+			continue
+		var n: Vector2 = (out - p).normalized()
+		var into: float = gibs.vel[i].dot(n)
+		gibs.pos[i] = out
+		if into < 0.0:
+			gibs.vel[i] -= n * into * (1.0 + WALL_REBOUND)
 
 
 func write_state(out: StreamPeerBuffer) -> void:
