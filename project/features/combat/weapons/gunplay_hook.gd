@@ -6,11 +6,14 @@ extends ArenaHook
 ## knockdown, burn panic, fire patches, chain, stun), the pit's contractors tell their bursts
 ## (GuardTell) and every landed round goes through the shared HitLink (knockback slide). Without
 ## --weapon the arena keeps its own Gloria and GuardBrain, so the arena's scenarios do not move.
-## A bot (--bot=...) holds the trigger, so a semi gun re-taps (GunHand.tap).
+## A bot (--bot=...) holds the trigger, so a semi gun re-taps (GunHand.tap). `--cam=fight` (dev
+## capture, the pit only) frames Rivet and the hostile he fights (FightCam), view only.
 
 var weapon: StringName = &""
 var link: HitLink = null
 var _arena: CombatArena = null
+var _cam: FightCam = null
+var _view: CollectCallView = null
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -34,10 +37,21 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	Log.info("gunplay", "arena: Rivet holds the table %s" % weapon)
 
 
-func step(_stage: ArenaStage, _tick: int) -> void:
+func step(_stage: ArenaStage, tick: int) -> void:
 	if link != null:
 		link.step()
 		link.hold = 0
+	if _cam != null:
+		_view.focus = _cam.step(_arena, tick)
+
+
+func attach_view(view: Node) -> void:
+	var cc: CollectCallView = view as CollectCallView
+	if _arena == null or cc == null or cc.city != null:
+		return  # the city's camera follows city.focus, which also streams the chunks: left alone
+	if "--cam=fight" in OS.get_cmdline_user_args():
+		_view = cc
+		_cam = FightCam.new()
 
 
 func write_state(out: StreamPeerBuffer) -> void:
