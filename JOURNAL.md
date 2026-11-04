@@ -483,3 +483,4 @@ NEXT (iteration 9; freeze 18:30, report 18:40):
   rt7-pre-1/2 mean 557.3 / 557.1 (p50 595) -> rt7-gnd-1/2 534.3 / 534.4 (p50 571), rt7-warm-1 534.7.
   Fixes 1-3 cut 23 draw calls a frame (-4 %), reproducible to 0.3. The 1.2 ms flush gain is mostly GDScript canvas
   command cost, not GPU batches. The machine was still 94-100 % busy at 17:20 (the other lane's Godot from 17:17), so the uncontended re-check was skipped.
+- 17:24 CPU 90-99 % with no Godot up (the Python jobs): still no quiet window. Scratch deleted (/tmp gate logs, the draft). Session ends; NEXT (17:19) stands.
