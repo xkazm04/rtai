@@ -1285,3 +1285,11 @@ while gates.sh's evidence step runs.
 - MILESTONE 10:12 RTAI.exe re-exported on round 19 (08e1b72f), 236 MB + release DLL, exit 0, 0
   errors; boot tests 0 SCRIPT ERRORs (arena 15 weapons / 16 stations, director claw_combo, city).
 - 10:16 REPORT extension status rewritten in place for round 19 (final).
+- BENCH r19 (bench.lock 10:16-10:28, CONTENDED: other lanes active; exported release, 3 x 4 x
+  60 s): aggregate p99 8.792 ms, 1 % low 74 fps, MISSES p99CpuMs (as r16: 8.515 / 88); worst
+  frame 424 ms, hitches > 50 ms 26 (unexplained 0). Not bisected (freeze). evidence/r19/bench.log.
+- NEXT (Director, after the freeze): round 19 (08e1b72f) + reel-1012 + the 10:12 exe are the
+  final build. Merge n-showcase into main as usual. Open items: no live robot thug (dev pit
+  only), showcase-2 hub crowding, the r19 bench's 424 ms worst frame (contended, one run).
+  Scratch kept: scratch-showcase/cut-r19-dir (reel-1012's chapters). Delete cut-r16/r17/r18-dir.
+- 10:29 session end (freeze). No Godot process of mine running.
