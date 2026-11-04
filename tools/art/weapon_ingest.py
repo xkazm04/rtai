@@ -13,6 +13,7 @@ row's `grip_u` fraction of the length. Both are data, so rivet-arsenal attaches 
 
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -26,12 +27,12 @@ TABLE = Path("project/data/tables/weapon_art.json")
 # id: grip class, drawn length in metres (held, the read at 32 px/m), grip_u along the length,
 # muzzle fx, projectile fx, casing (or ""), extra parts {name: file in top_dir}
 ROWS = {
-    "pistol": ("one_hand", 0.46, 0.40, "flash_pistol", "tracer", "casing", {}),
-    "machine_pistol": ("one_hand", 0.62, 0.50, "flash_smg", "tracer", "casing", {}),
-    "rocket_launcher": ("shoulder", 1.30, 0.50, "flash_tube", "rocket", "", {}),
-    "flamethrower": ("backpack_hose", 0.86, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
-    "electro_gun": ("two_hand_long", 0.70, 0.32, "arc", "arc", "", {}),
-    "molotov": ("thrown", 0.34, 0.40, "flame", "flame", "", {}),
+    "pistol": ("one_hand", 0.70, 0.40, "flash_pistol", "tracer", "casing", {}),
+    "machine_pistol": ("one_hand", 0.90, 0.50, "flash_smg", "tracer", "casing", {}),
+    "rocket_launcher": ("shoulder", 1.70, 0.50, "flash_tube", "rocket", "", {}),
+    "flamethrower": ("backpack_hose", 1.15, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
+    "electro_gun": ("two_hand_long", 1.00, 0.32, "arc", "arc", "", {}),
+    "molotov": ("thrown", 0.48, 0.40, "flame", "flame", "", {}),
 }
 
 
@@ -95,6 +96,7 @@ def main(top, side, fx):
     )
     table = {"doc": doc, "fx": fx_rows(fx), "rig_px_per_m": 320, "schema": "gtai.weapon-art/1", "weapons": weapons}
     TABLE.write_bytes((json.dumps(table, indent=2, sort_keys=True) + "\n").encode())
+    subprocess.run(["node", "tools/art/canon_json.mjs", str(TABLE)], check=True)
     print(f"wrote {len(weapons)} weapons, {len(table['fx'])} fx cells")
 
 

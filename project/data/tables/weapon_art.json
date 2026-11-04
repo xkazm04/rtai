@@ -267,7 +267,7 @@
       "held": "res://features/combat/weapons/art/pistol/held.png",
       "icon": "res://features/combat/weapons/art/pistol/icon.png",
       "id": "pistol",
-      "length_m": 0.46,
+      "length_m": 0.7,
       "length_px": 317,
       "muzzle_fx": "flash_pistol",
       "muzzle_px": [
@@ -292,7 +292,7 @@
       "held": "res://features/combat/weapons/art/machine_pistol/held.png",
       "icon": "res://features/combat/weapons/art/machine_pistol/icon.png",
       "id": "machine_pistol",
-      "length_m": 0.62,
+      "length_m": 0.9,
       "length_px": 481,
       "muzzle_fx": "flash_smg",
       "muzzle_px": [
@@ -317,7 +317,7 @@
       "held": "res://features/combat/weapons/art/rocket_launcher/held.png",
       "icon": "res://features/combat/weapons/art/rocket_launcher/icon.png",
       "id": "rocket_launcher",
-      "length_m": 1.3,
+      "length_m": 1.7,
       "length_px": 543,
       "muzzle_fx": "flash_tube",
       "muzzle_px": [
@@ -342,7 +342,7 @@
       "held": "res://features/combat/weapons/art/flamethrower/held.png",
       "icon": "res://features/combat/weapons/art/flamethrower/icon.png",
       "id": "flamethrower",
-      "length_m": 0.86,
+      "length_m": 1.15,
       "length_px": 390,
       "muzzle_fx": "flame",
       "muzzle_px": [
@@ -369,7 +369,7 @@
       "held": "res://features/combat/weapons/art/electro_gun/held.png",
       "icon": "res://features/combat/weapons/art/electro_gun/icon.png",
       "id": "electro_gun",
-      "length_m": 0.7,
+      "length_m": 1,
       "length_px": 462,
       "muzzle_fx": "arc",
       "muzzle_px": [
@@ -394,7 +394,7 @@
       "held": "res://features/combat/weapons/art/molotov/held.png",
       "icon": "res://features/combat/weapons/art/molotov/icon.png",
       "id": "molotov",
-      "length_m": 0.34,
+      "length_m": 0.48,
       "length_px": 462,
       "muzzle_fx": "flame",
       "muzzle_px": [
