@@ -1524,3 +1524,13 @@ approach for the city flamethrower capture.
 NEXT (10:40 report phase): nothing owed; REPORT and frames.json are final. Post-freeze:
 `GunplayBot` routing round the city block's centre crates (second lone wave), then the side
 approach for the city flamethrower capture.
+
+## Iteration 27 (10:30-10:40, STABILIZE; past the freeze)
+- 10:31 Stabilize check: frames.json parses, 15 entries, every file resolves. `git diff dfa5f508
+  70894746 -- project/ tools/` is empty, so the gates of record on dfa5f508 cover the final code head.
+  No Godot process running, no lock taken. REPORT gets one in-place line, "At the freeze (10:30)",
+  above Gates of record. No code touched.
+
+NEXT (post-run): `GunplayBot` routing round the city block's centre crates (second lone wave), then
+the side approach for the city flamethrower capture. Untracked evidence/n1, n10, n5 logs and stills
+stay uncommitted (cited nowhere).
