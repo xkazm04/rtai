@@ -75,6 +75,7 @@ func _open(args: ArenaArgs) -> void:
 		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
+		bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
 		session.world.loop().set_input(bot)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:

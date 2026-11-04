@@ -14,10 +14,14 @@ const REACT_TICKS: int = 30
 const REACH_SHARE: float = 0.75
 const MAX_REACH_M: float = 9.0
 const FLANK_AFTER: int = 30
+const FOLLOW_M: float = 4.0
 
 var stage: ArenaStage
 var actions: PlayerActions
 var reach_m: float = MAX_REACH_M
+## Dev capture (`--lone`): with no foe left to shoot, walk after a burning guard (fire held), so
+## the camera keeps his panic run and his death in frame.
+var follow_burning: bool = false
 var _next: int = 0
 var _in_range_since: int = -1
 var _blocked_since: int = -1
@@ -42,6 +46,11 @@ func sample(tick: int) -> TickInput:
 	var foe: Fighter = _nearest(rivet)
 	if foe == null:
 		_in_range_since = -1
+		var lit: Fighter = _burning() if follow_burning else null
+		if lit != null:
+			var to_lit: Vector2 = lit.pos - rivet
+			var walk: Vector2 = to_lit.normalized() if to_lit.length() > FOLLOW_M else Vector2.ZERO
+			return _input(walk, to_lit.normalized(), false)
 		return _input((spot - rivet).limit_length(1.0), Vector2.DOWN, false)
 	var to_foe: Vector2 = foe.pos - rivet
 	var aim: Vector2 = to_foe.normalized()
@@ -83,6 +92,18 @@ func _nearest(at: Vector2) -> Fighter:
 		if best == null or at.distance_to(f.pos) < at.distance_to(best.pos):
 			best = f
 	return best
+
+
+## A standing guard still on fire (the lone capture follows him), or null.
+func _burning() -> Fighter:
+	var areas: FightAreas = stage.arena.areas
+	if areas == null:
+		return null
+	for f: Fighter in stage.pit.standing:
+		var fx: FighterFx = areas.effect(f)
+		if f.alive() and fx != null and fx.burn_ticks > 0:
+			return f
+	return null
 
 
 ## `foe_m`: the foe's distance, sent as the cursor's (a thrown weapon lands on him).
