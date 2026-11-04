@@ -1,5 +1,5 @@
 {
-  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m).",
+  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m). parts = loose extra parts (the flamethrower's tank; mag = the reload magazine the off claw carries, drawn at the held part's scale, feed end +x); part_grip_px = where the claw holds a part.",
   "fx": [
     {
       "anchor_px": [
@@ -671,7 +671,15 @@
         323,
         59
       ],
-      "parts": {},
+      "part_grip_px": {
+        "mag": [
+          40,
+          26
+        ]
+      },
+      "parts": {
+        "mag": "res://features/combat/weapons/art/pistol/mag.png"
+      },
       "pickup": "res://features/combat/weapons/art/pistol/pickup.png",
       "projectile_fx": "tracer",
       "size_px": [
@@ -684,7 +692,7 @@
       "grip_class": "one_hand",
       "grip_px": [
         246,
-        83
+        167
       ],
       "held": "res://features/combat/weapons/art/machine_pistol/held.png",
       "icon": "res://features/combat/weapons/art/machine_pistol/icon.png",
@@ -694,14 +702,22 @@
       "muzzle_fx": "flash_smg",
       "muzzle_px": [
         487,
-        83
+        167
       ],
-      "parts": {},
+      "part_grip_px": {
+        "mag": [
+          34,
+          47
+        ]
+      },
+      "parts": {
+        "mag": "res://features/combat/weapons/art/machine_pistol/mag.png"
+      },
       "pickup": "res://features/combat/weapons/art/machine_pistol/pickup.png",
       "projectile_fx": "tracer",
       "size_px": [
         494,
-        166
+        250
       ]
     },
     {
@@ -898,7 +914,15 @@
         449,
         105
       ],
-      "parts": {},
+      "part_grip_px": {
+        "mag": [
+          54,
+          54
+        ]
+      },
+      "parts": {
+        "mag": "res://features/combat/weapons/art/hand_cannon/mag.png"
+      },
       "pickup": "res://features/combat/weapons/art/hand_cannon/pickup.png",
       "projectile_fx": "tracer",
       "size_px": [
@@ -923,7 +947,15 @@
         491,
         62
       ],
-      "parts": {},
+      "part_grip_px": {
+        "mag": [
+          42,
+          27
+        ]
+      },
+      "parts": {
+        "mag": "res://features/combat/weapons/art/plasma_rifle/mag.png"
+      },
       "pickup": "res://features/combat/weapons/art/plasma_rifle/pickup.png",
       "projectile_fx": "plasma_bolt",
       "size_px": [

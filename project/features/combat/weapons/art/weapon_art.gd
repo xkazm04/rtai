@@ -11,6 +11,12 @@ const TABLE: String = "res://data/tables/weapon_art.json"
 const SCHEMA: String = "gtai.weapon-art/1"
 const WORLD_PX_PER_M: float = 32.0
 const INK: Color = Color("1b1517")
+## The paper rim under a held part (the rigs' cream sticker halo, which the weapons lacked: at
+## 32 px/m a gun in the claw printed as a dark blob). World px; `--weapon-rim=off` drops it.
+const RIM_WORLD_PX: float = 1.0
+const RIM_DIRS: int = 8
+
+static var rim: bool = not OS.get_cmdline_user_args().has("--weapon-rim=off")
 
 var rig_px_per_m: float = 320.0
 ## FX cells draw at this many times the rig part scale (fx_scale()).
@@ -37,6 +43,7 @@ class Row:
 	var projectile_fx: StringName = &""
 	var casing: StringName = &""
 	var parts: Dictionary[String, String] = {}
+	var part_grip: Dictionary[String, Vector2] = {}
 
 
 class Cell:
@@ -134,13 +141,22 @@ func part_texture(id: StringName, part: String) -> Texture2D:
 
 
 ## The held part as a Sprite2D: origin on the grip, +x along the barrel, scaled to world px.
-func make_held(id: StringName) -> Sprite2D:
+## With `part` (`mag`: the reload magazine, feed end +x) the extra part at the same scale, origin
+## where the claw holds it (part_grip_px); null when the weapon has no such part.
+func make_held(id: StringName, part: String = "") -> Sprite2D:
+	var r: Row = _row(id)
+	if part != "" and not r.parts.has(part):
+		return null
 	var s: Sprite2D = Sprite2D.new()
-	s.name = "Held_%s" % id
-	s.texture = held_texture(id)
+	s.name = "Held_%s%s" % [id, "" if part == "" else "_" + part]
+	s.texture = held_texture(id) if part == "" else _load(r.parts[part])
 	s.centered = false
 	s.offset = -grip_px(id)
+	if part != "":
+		s.offset = -(r.part_grip[part] if r.part_grip.has(part) else Vector2.ZERO)
 	s.scale = Vector2.ONE * world_scale(id)
+	if rim:
+		_add_rim(s)
 	return s
 
 
@@ -167,6 +183,20 @@ func fx_anchor(id: StringName) -> Vector2:
 	return _fx[key].anchor if _fx.has(key) else Vector2.ZERO
 
 
+## Cream silhouettes of the part, RIM_WORLD_PX out in RIM_DIRS directions, drawn under it.
+func _add_rim(s: Sprite2D) -> void:
+	for i: int in RIM_DIRS:
+		var h: Sprite2D = Sprite2D.new()
+		h.name = "Rim%d" % i
+		h.texture = s.texture
+		h.centered = false
+		h.offset = s.offset
+		h.position = Vector2.from_angle(TAU * i / RIM_DIRS) * RIM_WORLD_PX / s.scale.x
+		h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
+		h.z_index = -1
+		s.add_child(h)
+
+
 func _read_weapon(t: DataTable, r: Dictionary) -> Row:
 	var w: Row = Row.new()
 	w.grip_class = StringName(t.text(r, "grip_class"))
@@ -183,6 +213,10 @@ func _read_weapon(t: DataTable, r: Dictionary) -> Row:
 	var parts: Dictionary = t.object(r, "parts")
 	for k: Variant in parts:
 		w.parts[str(k)] = str(parts[k])
+	var g: Variant = r.get("part_grip_px", {})
+	var grips: Dictionary = g if g is Dictionary else {}
+	for k: Variant in grips:
+		w.part_grip[str(k)] = t.vec(grips, str(k))
 	return w
 
 

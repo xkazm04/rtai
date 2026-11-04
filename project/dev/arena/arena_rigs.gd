@@ -66,6 +66,12 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	held.rivet_id = p_stage.arena.rivet.id
 	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
 	layer.add_child(held)  # showcase glue: the city view has no print stage
+	var mag: WeaponMagView = WeaponMagView.new()  # weapon-art: the reload magazine in the off claw
+	mag.rigs = rigs
+	mag.pilot = p_stage.pilot
+	mag.rivet_id = held.rivet_id
+	mag.z_index = held.z_index
+	layer.add_child(mag)
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
 	for t: ArenaTargets.Target in p_stage.targets.targets:
