@@ -196,3 +196,54 @@ NEXT (iteration 4), first three: (a) read rivet-arsenal's JOURNAL for REQUEST 1;
 my branch (RivetHeldView reads `arena.gun.trigger.spec.id` when armed) and re-shoot the core six in the claw at
 32 + 64 px/m (brief item 4, the in-game lineup); (b) top-down `charred` (+ `xray`) for brutality; (c) the weapon-rack
 arena station. Then items 5-8 above.
+
+## Iteration 4 (02:34 - 03:34)
+- 02:34 read: rivet-arsenal took REQUEST 1 in substance: its weapon switch (RivetCarry, `--loadout=`,
+  `--bot=arsenal`) sets the held weapon, so the claw holds the gun that fires. Brutality REQUEST 4 (top-down X-ray
+  + charred) open. Rivet-arsenal NEXT mentions a magazine part (not requested yet) and the flamethrower tank on HIP
+  (my `flamethrower/tank.png` exists; their wiring).
+- MERGE 02:36 n-rivet-arsenal (to 27aae78a) into n-weapon-art (6b0f2255). JOURNAL kept ours. A headless `--import`
+  is needed after the merge (new class_names: RigGrip) or windowed runs fail to compile `world.gd`.
+- MILESTONE 02:44 brutality REQUEST 4: `gore/xray_top`, `xray_top_jolt`, `charred_top`, `charred_top_slump`
+  (9c136aee). One Codex sheet with a crop of the cop rig from above (64 px/m lineup) as reference: the model kept
+  the rig's layout (head disc, shoulder oval, arms forward to the right). Cells `gore_*_top`, anchor = the head disc
+  centre (so they sit on the rig's origin). Provenance lines. Raw + prompt in masters `raw/gore_topdown4.*`.
+- FRICTION: `--arena` is not a flag: the arena is the scene `res://dev/arena/arena.tscn` before `--`; with the flag
+  the run plays the default city (first clip wasted). `--write-movie` needs an absolute path.
+- BUG 02:41 (mine, from iteration 3): `WeaponCasings.draw` errored every frame on a casing-less gun (`x if c else []`
+  is an untyped Array assigned to Array[Texture2D]). Only seen now because the switch moves from the pistol to the
+  electro gun with brass still on the floor. Fixed: typed fallback, the lying brass still draws (073780ed).
+- MEASURE 02:47 the arsenal clips at 64 px/m, fired weapon in the claw: pistol, electro gun (two-hand), rocket
+  launcher (shoulder), molotov (bottle with burning wick), machine pistol, plasma rifle, flamethrower + hose.
+  Defects seen: (1) the flame jet fired upward = a stack of round vermilion balloons with drips (reads as blood
+  drops); (2) the molotov flashed the full flame cell at the claw on each throw.
+  Fix (073780ed): jet tongues long and thin at the nozzle, fanning out with distance (grow (1.15+0.6k, 0.32+1.5k));
+  molotov `muzzle_fx` "" (a throw has no flash); the flamethrower's nozzle lick at `NOZZLE_K` 0.45. Re-shot: the jet
+  reads as one stream from the nozzle. Frames `it4-flame-balloons-before-64ppm.png` / `it4-flame-jet-nozzle-64ppm.png`.
+- MEASURE 02:53 gates at 8ad641de: lint 13/13 (664 files), unit 730/731: the one failure is the known flake
+  `test_noir_shadows` ("Parameter t is null"), re-run alone 2/2 pass (`evidence/weapon-art/noir-alone-it4.log`);
+  scenarios 32/32. Unit failure before that was my own test pinning the molotov's muzzle frames: updated (a thrown
+  weapon has no flash), plus the top-down gore cells.
+- MILESTONE 02:55 brief item 4, the in-game lineup in the claw: `it4-lineup-claw-64-32ppm.png` (7 weapons, live arena
+  pit, 64 px/m and 32 px/m) and clips `it4-claw-loadA/B-64ppm.mp4`, `-32ppm.mp4` (15 s each, the arsenal bot
+  switching every 4 s in a real fight).
+- FINDING 02:56: pistol and machine pistol have the same shape in the claw (the SMG's wire stock hides under the
+  forearm, its side feed box is a small tab); at 32 px/m both are a dark blob. Breaks "a unique silhouette per
+  weapon". Started a held-view redraw: the side feed box long and curved (an edit of the existing top view).
+- FRICTION 02:57 Codex refused the SMG held-view edit (violence filter; the reference images are gun-shaped,
+  the prompt avoided weapon words). Did it by hand instead: `tools/art/smg_feed_box.py` repeats the cut part's
+  feed-box tab, adds a tape band and curves it toward the muzzle (deterministic; grip/muzzle y +84 for the pad).
+- MILESTONE 02:59 SMG feed box (6b7ff079): A/B on the same ticks `it4-smg-feedbox-ab.png`: at 64 px/m a side stub
+  that the pistol does not have; at 32 px/m only a notch (modest). Weapon tests 18/18.
+- DECISION weapon-art SMG silhouette: lengthen the side feed box (a sideways stub reads from above) rather than
+  a longer barrel (the length already differs 0.70 vs 0.90 m and did not read in the claw). Alternative = revert
+  `machine_pistol/held.png` + its grip/muzzle rows (one commit).
+- frames.json: 15 entries, it4 first (claw lineup, loadout clips, flame fix, gore top-down, SMG A/B).
+
+### Notes for other lanes (iteration 4)
+- To brutality (REQUEST 4 delivered): `WeaponArt.new().fx_frames(&"gore_xray_top")` (+ `_jolt` for the strobe's
+  alternate frame), `gore_charred_top`, `gore_charred_top_slump`; `fx_anchor()` is the head-disc centre = the rig
+  origin, drawn facing +x (rotate by the body's facing). Sheet: masters `frames/it4-gore-topdown-sheet.png`.
+- To rivet-arsenal: your weapon switch is the in-game lineup now (thanks). The flamethrower tank is
+  `art().part_texture(&"flamethrower", "tank")`. A magazine part for the reload: say so in a REQUEST and I draw it.
+- To gunplay: `muzzle_fx` of the molotov is "" now (a throw has no flash); `WeaponFxArt.muzzle` returns early on "".
