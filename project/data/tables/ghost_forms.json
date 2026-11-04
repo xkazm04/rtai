@@ -1,0 +1,113 @@
+{
+  "doc": "The four ghost forms Rivet transforms into (features/souls GhostForms; the owner, 2026-11-04: Tonnage, Dent, Kerf, Ohm). Each row is one form: power = its cost row in powers.json (madness_cost, duration_s, cooldown_s; tonnage -> hauler and dent -> gearbox keep the old power ids as aliases until the morning merge, so saves and quest 1 keep working). radius_m is the body's footprint radius and body_class its collision class (bodies.json); top_mps, accel_mps2 and turn_dps its locomotion (Rivet walks 6.75 and sprints 9.3 m/s). size_k is the drawn height against base Rivet (Tonnage about 3x, Ohm smaller than Rivet). enter_s is base Rivet into the form, exit_s the form back to base (each 0.5-0.9 s, two stages: the midpoint is the one in-between pose); switch_s (top level) is form to form through a teal flash, no base pass. anchors are the attack emit points in metres in the body frame (+x forward, +y right) for the ghost-powers lane. gait names the locomotion cycle. upgrade_tier is the per-act quest upgrade level (0 tonight; quest rewards land later). name_key is the Loc key of the player-facing name.",
+  "forms": [
+    {
+      "accel_mps2": 14,
+      "anchors": {
+        "hand_l": [
+          0.42,
+          -0.36
+        ],
+        "hand_r": [
+          0.42,
+          0.36
+        ]
+      },
+      "body_class": "rivet_base",
+      "enter_s": 0.6,
+      "exit_s": 0.5,
+      "gait": "stagger",
+      "id": "dent",
+      "name_key": "ghost.dent.name",
+      "power": "gearbox",
+      "radius_m": 0.45,
+      "size_k": 1.05,
+      "top_mps": 7,
+      "turn_dps": 300,
+      "upgrade_tier": 0
+    },
+    {
+      "accel_mps2": 40,
+      "anchors": {
+        "emitter_l": [
+          0.55,
+          -0.32
+        ],
+        "emitter_r": [
+          0.55,
+          0.32
+        ],
+        "lens": [
+          0.3,
+          0
+        ]
+      },
+      "body_class": "rivet_base",
+      "enter_s": 0.5,
+      "exit_s": 0.5,
+      "gait": "hover",
+      "id": "kerf",
+      "name_key": "ghost.kerf.name",
+      "power": "kerf",
+      "radius_m": 0.38,
+      "size_k": 0.95,
+      "top_mps": 12,
+      "turn_dps": 720,
+      "upgrade_tier": 0
+    },
+    {
+      "accel_mps2": 12,
+      "anchors": {
+        "electrode_l": [
+          0.38,
+          -0.1
+        ],
+        "electrode_r": [
+          0.38,
+          0.1
+        ]
+      },
+      "body_class": "rivet_base",
+      "enter_s": 0.7,
+      "exit_s": 0.6,
+      "gait": "cane",
+      "id": "ohm",
+      "name_key": "ghost.ohm.name",
+      "power": "ohm",
+      "radius_m": 0.34,
+      "size_k": 0.8,
+      "top_mps": 4.5,
+      "turn_dps": 260,
+      "upgrade_tier": 0
+    },
+    {
+      "accel_mps2": 5,
+      "anchors": {
+        "press_head": [
+          1.55,
+          0
+        ]
+      },
+      "body_class": "rivet_ghost",
+      "enter_s": 0.9,
+      "exit_s": 0.7,
+      "gait": "stamp",
+      "id": "tonnage",
+      "name_key": "ghost.tonnage.name",
+      "power": "hauler",
+      "radius_m": 1.3,
+      "size_k": 3,
+      "top_mps": 4.2,
+      "turn_dps": 120,
+      "upgrade_tier": 0
+    }
+  ],
+  "order": [
+    "tonnage",
+    "dent",
+    "kerf",
+    "ohm"
+  ],
+  "schema": "gtai.ghost_forms/1",
+  "switch_s": 0.35
+}
