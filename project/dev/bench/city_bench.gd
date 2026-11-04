@@ -123,6 +123,8 @@ func _finish() -> void:
 			% [_args["--scenario"], JSON.stringify(res["metrics"]), _args["--out"]]
 		)
 	)
+	var c: CrowdReact = _characters.crowd  # human-reactions: the riot's crowd reactions
+	printerr("city_bench: crowd %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])
 	get_tree().quit(0 if ok else 1)
 
 
