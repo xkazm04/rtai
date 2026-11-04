@@ -822,3 +822,28 @@ NEXT (iteration 11):
   commit; rejected the first heap pass because the cap still sat on it); depth-ordered-layered-art
   (the heap's ink under-print, the drift, then the cloth and the cap on top, not one disc);
   realtime-combat-semantics (the cap kick is on the 60 Hz gib sim with no new dice).
+- MILESTONE 07:53 NEXT 2 (re-shot city reel): `clips/city-reel-8-kills-48ppm-it11.mp4` (masters,
+  frames.json first entry, replaces the it9 reel entry which stays as `before`): rocket, hand cannon,
+  flamethrower, electro (charged), plasma rifle, ray gun, homing shard, each with one isolated cast
+  cop on the open street (`--arena=city --rigs --sig-lab --sig-gun=<gun> --sig-solo=start:-22,0
+  --ppm=48`), then the it10 mini-nuke clip; labelled, 57 s, 0 script errors in every capture. Looked
+  at the sheet (evidence/brutality/city-reel-8-kills-it11-sheet.png): every kill lands in frame.
+- FRICTION 07:50 the melee kills (katana, plasma sword, chainsaw) do not stage on the city spot:
+  `--sig-gun=katana --sig-solo=start:-22,0` ran the plain hub (Rivet among the dummy rows, no lab,
+  no kill in 6 s). Killed my plasma_sword and chainsaw captures (by PID) to save the time. They stay
+  in the it9 reel and their 64 px/m solo clips.
+- FRICTION 07:51 the first 3 frames of every city capture show the hub (the follow moves to the solo
+  spot on tick 1-2): trimmed by starting each chapter at frame 3 (camera break rejected).
+- 07:52 scratch it11 (gtai-n4/scratch-brutality/it11): frame dumps, deletable; the published clips
+  are in masters.
+
+NEXT (iteration 12 / the report):
+1. REQUEST 29 -> gunplay (molotov corpse under the patch stars) is open; if gunplay does not take it,
+   the safe glue is thinning `FightAreasArt._patch` stars within 0.5 m of a KillMarks.Mark (`at`,
+   `tick`) older than 60 ticks. Do NOT lift KillView to the fx band (gibs would draw over vehicles).
+2. The melee kills on the city: make KillLab stage a melee weapon at --sig-solo (Rivet steps in and
+   swings), then shoot katana, plasma sword and chainsaw on the open street for the reel.
+3. The age-96 stall (it10 LEAD) still unmeasured headless.
+4. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check it against KillBurstFx.
+5. Calls for the owner (new): brutality-ray-cap: the ray gun's cap knocked aside (now) vs left on the
+   heap (`hat_kick_mps: 0`); clips: ray-dissolve-city-64ppm-slow-0.4x-it11 vs ray-gun-dissolve-solo-64ppm-slow-0.4x.
