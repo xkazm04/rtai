@@ -19,7 +19,7 @@ func test_table_loads_the_core_six_and_gloria() -> void:
 		assert_true(_table.playable().has(id), str(id))
 	for id: StringName in [&"electro_gun", &"molotov", &"gloria"]:
 		assert_true(_table.playable().has(id), str(id))
-	assert_false(_table.playable().has(&"mini_nuke"), "unique rows wait")
+	assert_false(_table.playable().has(&"homing_shard"), "unique rows wait until built")
 
 
 func test_enemy_rounds_are_slower_than_the_players() -> void:

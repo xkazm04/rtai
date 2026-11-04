@@ -106,3 +106,17 @@ func test_a_bottle_aimed_past_a_guard_lands_on_him() -> void:
 	_run(arena, 1, 50)
 	assert_not_null(arena.areas.effect(g), "the bottle found the guard under the aim line")
 	assert_gt(arena.areas.effect(g).burn_ticks, 0)
+
+
+func test_one_mini_nuke_clears_every_human_in_its_circle_and_leaves_fire() -> void:
+	var arena: CombatArena = _arena(&"mini_nuke")
+	assert_true(arena.gun.trigger.spec.enabled, "the mini-nuke is in the arsenal")
+	var target: Fighter = _guard(arena, Vector2(14.0, 0.0))
+	var near: Fighter = _guard(arena, Vector2(14.0, 6.0))
+	var far: Fighter = _guard(arena, Vector2(14.0, 30.0))
+	assert_true(arena.rivet_fire(target.pos))
+	_run(arena, 1, 120)
+	assert_false(target.alive(), "the shell drops the human it lands on")
+	assert_false(near.alive(), "and every human 6 m out")
+	assert_true(far.alive(), "a human 30 m out is outside the blast")
+	assert_eq(arena.areas.patches.size(), 1, "a fire patch where it landed")

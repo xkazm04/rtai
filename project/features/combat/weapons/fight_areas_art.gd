@@ -51,6 +51,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
 			ci.draw_circle(Ink.px(s.pos), 7.0, Ink.INK)
 			ci.draw_circle(Ink.px(s.pos), 4.0, Ink.CREAM)
+		WeaponSpec.Kind.THROWN when s.spec.splash_radius_m >= FightNukeArt.NUKE_M:
+			FightNukeArt.shell(ci, s, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
@@ -110,6 +112,9 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 ## A rocket blast as a comic burst: a jagged cream star in a heavy ink rim (6 ticks), then an
 ## ink shock ring that grows and thins, smoke puffs rolling out and ink debris flung wide.
 static func _blast(ci: CanvasItem, b: Vector3, age: int) -> void:
+	if b.z >= FightNukeArt.NUKE_M:
+		FightNukeArt.blast(ci, b, age)
+		return
 	if age >= BLAST_TICKS:
 		return
 	var c: Vector2 = Vector2(b.x, b.y)
