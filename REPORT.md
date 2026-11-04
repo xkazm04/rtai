@@ -1,18 +1,28 @@
 # Showcase lane: night run 2026-11-04, report
 
-**Extension (09:00-11:00), FINAL (written 09:58):** the final round is merge round 18
-(`9c9f59a5`, the five lane tips at about 09:40), gated green (lint 13/13, unit 929/929,
-scenarios 45/45, parity bit-exact, look 11/11 + block 5/5, no re-bless). It is filmed in
-**reel-0954**, the final morning reel: 128.5 s, 17 director chapters at 48 px/m plus 18 CITY BLOCK
-at 32 px/m, with 0 script errors. `build\export\windows\RTAI.exe` was re-exported on it at 09:53,
-and its three boot tests (arena, director, city block) ran with 0 script errors. Since the 08:40
-report, merge rounds 16, 17 and 18 are in and the earlier "After the freeze" list is merged.
-REQUEST 29 is closed: the electro corpse lies full length with both legs reading. So is
-showcase-3: the pit walls on the city block are grey concrete barriers. A ROBOT THUG chapter was
-added (filmed in human-reactions' dev pit: there is no live robot fighter). The ray gun's lock
-wash now holds the victim for about 1 s before the dust heap. Bench of record is r16 (08:59,
-CONTENDED); rounds 17 and 18 are render-side or dev-bot changes, not benched (no time before the
-freeze). The play commands below are for this exe.
+**Extension (09:00-11:00), FINAL (written 10:16):** the final build is merge round 19
+(`08e1b72f`, the five lane tips at about 10:00 plus REQUEST 30 as merge glue). It is gated green:
+lint 13/13, unit 931/931, scenarios 45/45, parity bit-exact, look 11/11 + block 5/5, no
+re-bless. It is filmed in **reel-1012**, the final morning reel: 128.5 s, 17 director chapters at
+48 px/m plus 18 CITY BLOCK at 32 px/m, with 0 script errors. `build\export\windows\RTAI.exe`
+was re-exported on it at 10:12, and its three boot tests (arena, director, city block) ran with 0
+script errors.
+
+Since the 08:40 report, merge rounds 16-19 are in, and so is everything the "After the freeze"
+list below names. REQUEST 29 and REQUEST 30 are closed: the electro victim falls along the shot,
+and its signature corpse now lies full length, legs together, shoes toward Rivet. showcase-1 is
+answered by that (the plank won) and showcase-3 is closed (the city's pit walls are grey concrete
+barriers). Other changes:
+- A ROBOT THUG chapter, filmed in human-reactions' dev pit (there is no live robot fighter).
+- The ray gun's cream lock wash holds the victim for about 1 s before the dust heap.
+- The fire-death char keeps a zoom-scaled ash rim.
+- Weapon-art's inked ground pickups in the hub armory.
+
+Bench of record is r16 (08:59, CONTENDED). Rounds 17-19 are render-side or dev-bot changes and
+were not benched: there was no time before the freeze. Reels in this window: reel-0857 (r16),
+reel-0930 (r17), reel-0954 (r18), **reel-1012 (r19, final)**. The play commands below are for
+this exe.
+
 The text below is the 08:40 report.
 
 Status: FINAL on merge round 15 (06051f21, merged 08:14: the lane tips up to 08:10). Gates r15
@@ -39,7 +49,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 arena chapters, deterministic; the robot thug chapter is filmed in a dev pit, not in the exe) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 236 MB) with the release
-sim DLL beside it (re-exported on round 18, 09:53; evidence/r18/export.log). Round 18 boot tests (headless, 0 script errors, evidence/r18/boot-*.log): the arena opens with 16
+sim DLL beside it (re-exported on round 19, 10:12; evidence/r19/export.log). Round 19 boot tests (headless, 0 script errors, evidence/r19/boot-*.log): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 
@@ -68,7 +78,8 @@ city block loads with the loadout.
 | **reel-0808** | **the final morning reel on round 14 (the exe's build), 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
 | reel-0821-r15-close64 | round 15 (the exe build), 64 px/m: the molotov's glass slivers and inked scorch patch; the rocket tube carried at Rivet's side; 0 script errors |
 | reel-0930 | extension, round 17 (e977a394, the 09:30 exe), 128.5 s, 0 script errors: + 16 ROBOT THUG (power-down death, filmed in human-reactions' dev pit), the electro corpse in the shock plank, the mini-nuke's own bomb |
-| **reel-0954** | **the final morning reel, extension round 18 (9c9f59a5, the 09:53 exe), 128.5 s, 0 script errors: the ray gun lock wash, the electro corpse's legs reading to the feet, the lighter thug spray, the burn char's ash rim** |
+| **reel-1012** | **the final morning reel, extension round 19 (08e1b72f, the 10:12 exe), 128.5 s, 0 script errors: the electro signature corpse lies full length in the plank (REQUEST 30), the char rim scales with the zoom** |
+| reel-0954 | extension, round 18 (9c9f59a5), 128.5 s, 0 script errors: the ray gun lock wash, the electro corpse's legs reading to the feet, the lighter thug spray, the burn char's ash rim |
 | reel-0857 | extension, round 16 (8a8215a3), 122 s, 0 script errors: the rocket blast thins out as smoke; the electro victim lies along the shot (REQUEST 29 closed); the city block's pit walls are grey concrete barriers, not black bars (showcase-3 closed) |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
@@ -90,7 +101,8 @@ city block loads with the loadout.
 | r14 | e13dc36b | 13/13 | 906/906 | 45/45 | exact | 11/11 + 5/5 |
 | r15 (08:19 exe) | 06051f21 | 13/13 | 912/912 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
 | r17 (extension, the 09:30 exe, superseded) | e977a394 | 13/13 | 927/927 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
-| **r18 (extension, the final 09:53 exe)** | **9c9f59a5** | **13/13** | **929/929** | **45/45** | **exact (planted caught at 629)** | **11/11 (worst 0.00) + 5/5 (worst 1.81)** |
+| **r19 (extension, the final 10:12 exe)** | **08e1b72f** | **13/13** | **931/931** | **45/45** | **exact (planted caught at 629)** | **11/11 (worst 0.00) + 5/5** |
+| r18 (extension, 09:53 exe, superseded) | 9c9f59a5 | 13/13 | 929/929 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
 | r16 (extension) | 8a8215a3 | 13/13 | 913/913 | 45/45 | exact (planted caught at 629) | 11/11 (worst 0.00) + 5/5 (worst 1.81) |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
@@ -109,6 +121,8 @@ The r12 riot number is not clean: my round-13 merges (git + the lint hook) ran d
 bench (the lock was taken by another lane at 07:41 and the session ended at 08:12).
 
 ## Calls for the owner
+
+(10:16: showcase-1 and showcase-3 are resolved in reel-1012: the electro corpse lies in the plank, and the city pit walls are grey barriers. showcase-2 stands. The "Known wrong", "After the freeze" and "Next steps" sections below are the 08:40 text; everything they list is merged by round 19.)
 
 - **showcase-1, electro death pose:** the stiff "plank" corpse vs a lying fall along the shot
   (reel-0808 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in

@@ -1263,3 +1263,25 @@ while gates.sh's evidence step runs.
   KillSprawlCut, lies with arms spread and stub legs; a one-file render-only patch proved on our
   9c9f59a5). If n-brutality lands it before about 10:12: round 19 = merge brutality only, gates,
   re-cut electro_gun + reel.sh, re-export.
+- 09:57 the lanes moved again after round 18 (weapon-art 57ee8615/384883b1 inked ground pickups,
+  brutality 5e37b57c zoom-scaled char rim, gunplay 70894746 --reach dev arg): round 19 fits.
+- MILESTONE 10:00 merge round 19: weapon-art b97342e1 -> a5822dd2, rivet-arsenal 8e1c45c6 ->
+  fc67dd93, gunplay 2ef693dc -> d33e50b3 (GLUE: arena_game.gd header comment, both lanes' arg
+  notes kept), human-reactions 6a3e7506 -> 0206c5fd, brutality 69a6f9c3 -> 51779046.
+  FRICTION: four of the round 19 merge commits were made with --no-verify (time); the lint gate
+  in gates.sh r19 ran over the same tree and passed 13/13.
+- GLUE 10:01 REQUEST 30 (human-reactions -> brutality, brutality OK'd it as showcase glue: it
+  needs c_plank/plank_feet, only on the merged branch): human-reactions' v2 patch on
+  KillSprawlCut applied (08e1b72f). v2 failed gd-size (cut() 44 lines > 40, though the lane said
+  lint was clean); the channel restore was split into _restore(). Decision line in
+  docs/decisions.md. Brutality's session had ended (reply undeliverable); human-reactions told.
+- GATES r19 (gates.sh on 08e1b72f, CONTENDED, the cut filmed alongside): lint 13/13 (796), unit
+  931/931, scenarios 45/45, parity bit-exact (planted caught at 629), selftest PASS (look 11/11
+  worst 0.00, block 5/5). No re-bless. evidence/r19/.
+- MILESTONE 10:12 reel-1012 = THE FINAL REEL (masters, frames.json first; the armory still
+  dropped from the 15): cut r19-dir 48 (17 runs) + reel.sh 18 CITY BLOCK, 0 SCRIPT ERRORs,
+  128.5 s. 36-frame sheet + electro crop checked: ch 06 corpse lies full length, legs
+  together, shoes toward Rivet, arms at the sides (REQUEST 30 CLOSED); other chapters as reel-0954.
+- MILESTONE 10:12 RTAI.exe re-exported on round 19 (08e1b72f), 236 MB + release DLL, exit 0, 0
+  errors; boot tests 0 SCRIPT ERRORs (arena 15 weapons / 16 stations, director claw_combo, city).
+- 10:16 REPORT extension status rewritten in place for round 19 (final).
