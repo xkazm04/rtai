@@ -50,7 +50,7 @@ func _rebuild(ids: Array[StringName]) -> void:
 		s.texture = art.pickup_texture(id) if art.has(id) else null
 		var w: float = s.texture.get_width() if s.texture != null else 1.0
 		s.scale = Vector2.ONE * art.length_m(id) * SimConst.PX_PER_M / maxf(w, 1.0)
-		s.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		PickupLook.dress(s)  # weapon-art: flat fills in ink (--pickup-print=on = before)
 		add_child(s)
 		_sprites.append(s)
 	_shown = ids
