@@ -116,3 +116,4 @@ NEXT (iteration 6, written 16:38):
 3. The 32 px/m reel's befores carry all four flags; re-cut with `LIST=$(cygpath -m /tmp/l32.txt)` (the list is in this journal's 16:30 entry: chapter, frames 40-160..280, crop 280/300,200/220).
 4. Tools: film_32_all.sh, cut_32_all.sh, film_city_group.sh (new this iteration); before renders without a flag: git diff > patch, checkout, render, git apply.
 - 16:44 REPORT.md drafted (marked DRAFT) from the journal and decisions, so the 18:40 report starts from checked material; claims cross-checked against the journal entries.
+- 16:45 checked item 1 at 32 px/m in all_notes_ab_32ppm (every 4 frames over the shard landings): before = the orange starburst and a grey smoke cloud over the victim for about 0.3 s; after = the body stays visible with the thin pop ring and the flinches until the burst kill. Item 1 holds at the judging scale. Session ends here; NEXT (16:38) stands.
