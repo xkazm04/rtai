@@ -532,3 +532,37 @@ NEXT (iteration 8):
   rocket on the city block 6.2 ms worst frame, avg 0.63 ms, cut 0.52 ms; nuke pack (5 kills in one
   tick) 3.4 ms worst, cuts 1.6/0.4/0.3/0.5/0.5 ms; shard 2.2 ms worst; flame 3.5 ms worst = its
   first cut (3.4 ms, the char material's first build).
+- MILESTONE 05:19 city proving block reel (game-city): eight signature kills, one cop each at
+  Rivet's city start (`--arena=city --rigs --sig-lab --sig-gun=<gun> --sig-solo=start`, 48 px/m,
+  real time, labelled, 56 s): rocket, hand cannon, flamethrower, electro (2nd round), plasma rifle,
+  ray gun, homing shard, plasma sword. One signature kill per clip (telemetry). Masters:
+  clips/city-block-reel-8-kills-48ppm-56s-it8.mp4 (frames.json entry 4). Weak: the hub's dummy
+  rows crowd the victim at the start; an open city spot would read better.
+- MILESTONE 05:21 rivet-arsenal REQUESTs 7/9 answered: row electro_shock also keys on `claw_shock`
+  (optional `also_weapons` column in my own schema), so Rivet's full-charge claw shock is a
+  ONE-SHOT electro X-ray kill on a fresh human today (unit test). Not shown live: `--bot=rivet`
+  plays the claw combo on the react dummies and never lands a full-charge shock kill in 19 s
+  (signature_kills 0); a lab hook that fires the charged shock would show it.
+- Gates 05:21-05:30 on 7c-alias HEAD: lint 13/13, unit 779/779, scenarios 35/35 (scenarios-it8.log).
+- Shared files touched this iteration: dev/arena/arena_rigs.gd (one line, showcase's identical
+  glue); tests/unit/test_gun_fx.gd (dropped the cherry-picked art_mags line, net zero vs main).
+- Registry rules applied: motion-quality-gating (every kill judged on clips and strips at 64 px/m,
+  rejected three clips shot without rigs); depth-ordered-layered-art (the shard spray waits for
+  the pop so the ground print does not lead the event).
+
+## Calls for the owner (iteration 8)
+- brutality-13: the electro one-shot lives on Rivet's charged claw shock (claw_shock, now keyed)
+  while the electro gun stays two rounds; or also make the gun's shot charged (REQUEST 12 ->
+  gunplay, open). Default: both keyed, gun unchanged.
+- (brutality-12 holds: mini-nuke charcoal shadows; now shown on a pack of five,
+  mini-nuke-pack-48ppm-9s-it8.mp4.)
+
+NEXT (iteration 9):
+1. A lab hook for the charged claw shock (KillLab fires PlayerShock at full charge) and a 64 px/m
+   clip of the one-shot electro kill.
+2. An open city spot for the solo lab (`--sig-solo=x,y` in city metres clear of the hub rows), then
+   re-shoot the city reel; add katana and chainsaw (blades) to it.
+3. The rocket on the city block: 6.2 ms worst kill-view frame (CONTENDED); split the fresh-smear
+   layer per kill like KillGround and measure again.
+4. Homing shard: more shards on the near side when Rivet is far.
+5. Electro gun charged shot (REQUEST 12 -> gunplay) when it lands: key nothing new, re-shoot.
