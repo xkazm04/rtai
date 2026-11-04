@@ -310,3 +310,22 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
   DECISION: r2_c5 (2026-11-04) supersedes d5-cast's cream "T1" cap crown (owner review was pending). 18
   provenance lines (prior line + this edit, new sha256). Registry rule applied (`sprite-and-atlas-production`):
   recolour the source parts in both tiers, alpha untouched, instead of a shader swap that the D5 overlay would hide.
+- 22:11 the navy cops in the live game, 32 px/m, 0 script errors: city block (`cast-navy-city-32.mp4`,
+  `frames/city-navy-ab-32ppm.png`): on dark asphalt the whole cop reads as a blue figure where before only the pads
+  and a cream cap dot showed; the cap dot was the stronger head mark (REPORT Call 4). Director reel
+  (`cast-navy-director-32.mp4`, `frames/director-navy-ab-32ppm.png`): identical sim, every kill chapter reads, navy
+  corpses in red pools. frames.json 15 (all files exist): + cops-navy-vs-r2c5, city-navy, cop-navy-ab,
+  director-navy; dropped cops-vs-r2c5 (kept on disk, REPORT cites it), core-seams, react-board mp4, legs-ab.
+  REPORT: sections 2/3 and the gates updated, Call 4 (navy vs cream cap).
+
+NEXT (iteration 8):
+1. Riot helmet and SWAT head vs r2_c5: the riot dome is still d5-cast's cream T1 dome with a blue band; r2_c5 has a
+   navy helmet. Same `cop_navy.py` approach on `head_helmet` (both tiers) if it reads better at 32 px/m; keep the
+   SWAT head (already dark). Judge on asphalt and slab; react board + director reel after.
+2. The cop torso centre prints cream at 64 px/m (the vest/shirt plate) where r2_c5 is navy with a dark belt: check
+   whether it is the art or the print's flat-tint (look lane) before touching it.
+3. Held-gun size: n5-look took it with their held-weapon redraw (their JOURNAL 19:15); re-check their branch's
+   `weapon_art.json` and our director 64 px/m clip once they land it.
+4. A 64 px/m close-up clip of the navy cops in the director reel (only 32 px/m filmed tonight).
+5. Keep REPORT current (rewritten at 08:40). Full `tools/evidence/run.mjs --no-bench` on the head.
+Session state 22:13: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.

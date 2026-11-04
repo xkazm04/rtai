@@ -30,6 +30,11 @@ reaction family and death still reads at the same frame as main: `M/frames/react
 `M/cast-react-board-ab-64ppm.mp4`. The brutality chapters (burn, electro, katana and chainsaw splits on the slim
 parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.png`,
 `M/cast-before-brutal-64.mp4` / `M/cast-hybrid-brutal-64.mp4`.
+- Navy cops toward r2_c5 (e1f848a5): the limb ink fill and the patrol cap crown recoloured navy in D4 and D5
+  (`masters:n5/cast/tools/cop_navy.py`; outline, hands and alpha kept). Every reaction family still reads, beside
+  the target: `M/frames/cops-navy-vs-r2c5-64ppm.png`; lineup `M/frames/cop-navy-ab.png`; city on dark asphalt
+  `M/frames/city-navy-ab-32ppm.png`; director reel unchanged in sim `M/frames/director-navy-ab-32ppm.png`
+  (`M/cast-navy-director-32.mp4`, `M/cast-navy-city-32.mp4`).
 
 ### 3. Rivet as the hybrid (brief item 3), 516475c9 .. fa395f74
 - Rig: size_k 0.97, lanky legs (leg_k 1.15, gait_k 1.15), arms 0.85 long; `FORM_STOCKY` keeps the old base for A/B
@@ -38,6 +43,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   template cells with the bone lengths kept; provenance lines in `steam/ai-provenance/2026-11.jsonl`.
 - Core sticker fix (fa395f74): the hybrid helmet and torso's seams aliased into ink specks at 32 px/m;
   `tools/art/rivet_seam_thin.py` quiets them under the sticker threshold: `M/frames/rivet-core-seams-ab.png`.
+- Leg rim (85b912e5): a cream sticker halo under the piston legs at gameplay scale only, so they read on dark
+  asphalt at 32 px/m: `M/frames/rivet-legrim-ab-32ppm.png`.
 - Motion: `M/cast-hybrid-motion-48.mp4`, `M/frames/rivet-legs-motion-32ppm.png` (walk, faster sprint, claw combo).
 - The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
   script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
@@ -48,7 +55,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`.
 - Target composite: `M/frames/cast-ingame-vs-r2c6.png`.
 
-### Gates (iteration 6, on 850c543a; only art and docs since)
+### Gates (iteration 7, on e1f848a5: lint 13/13, unit 940/0, scenarios 46/0 at 29a853be, look goldens junction
+11/11 and block 5/5 with no re-bless; iteration 6 on 850c543a:)
 lint 13/13, unit 940/0, scenarios 46/0, parity exact (planted mutation caught at 629), look goldens junction 11/11
 and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; decisions line). Bench not run.
 
@@ -60,7 +68,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   purpose (Call 1, `M/frames/rivet-size-call-64ppm.png`).
 - The cops match r2_c5's footprint, not its colour mass (`M/frames/cops-vs-r2c5-64ppm.png`): the target is navy
   all over (cap, sleeves, trousers); the game cop is black ink limbs, a cream cap disc and bright blue shoulder pads.
-  That is the approved built look, so it was left alone; a navy-sleeve variant behind a flag is a next step.
+  Fixed in iteration 7 (e1f848a5), see section 2; the cap is now navy (Call 4).
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
@@ -72,6 +80,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 2. Limb weight at 32 px/m: as built, or heavier (`ARMS[FORM_BASE].z` 0.9 -> 1.0, `LEGS[FORM_BASE].y` 1.0 -> 1.2).
 3. Held guns are sized in metres (the look lane's `weapon_art.json`), so they read large on the slimmer Rivet:
    `M/cast-hybrid-director-64.mp4`.
+4. The patrol cap crown: navy as in r2_c5 (built, e1f848a5), or d5-cast's cream "T1" crown, a stronger head mark
+   at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right). Revert = `git revert e1f848a5` (limbs too) or
+   restore only `art/cop/head_cap.png` and `art/d5/cop/head_cap.png` from 29a853be.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
