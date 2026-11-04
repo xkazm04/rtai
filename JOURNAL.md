@@ -1282,3 +1282,17 @@ floor-to-claw pickup clip needs an arena bot that walks to pickups.
 NEXT (after the freeze, unchanged): call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield
 part only if the owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a
 floor-to-claw pickup clip needs an arena bot that walks to pickups.
+
+## Iteration 26 (10:23-10:30, BUILD, extension, last before the freeze)
+- 10:23 read JOURNAL NEXT, git log, other lanes' JOURNALs for `weapon-art`. No new REQUEST: the newest hits
+  (rivet-arsenal line 359, showcase line 1164) are about the answered REQUEST 12 and REQUEST 6.
+- 10:24 showcase finished its final round (3bf77c9f: round 19 merged, gated, filmed as reel-1012, exe
+  re-exported). Its n-weapon-art merge `b97342e1` holds every weapon-art code change.
+- DECISION 10:24 no new code, 6 minutes before the freeze (same reason as iterations 22-25). Gates unchanged since
+  iteration 22 (lint 13/13, unit 745/745, scenarios 32/32 on code 384883b1).
+- No lock taken, no Godot process, no renders. `evidence/weapon-art/` stays untracked (gate logs, scratch PNGs).
+
+NEXT (after the freeze, unchanged): at 10:40 update the REPORT in place (no code after 09:00 beyond what showcase
+round 19 merged); call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield part only if the
+owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a floor-to-claw pickup clip
+needs an arena bot that walks to pickups.
