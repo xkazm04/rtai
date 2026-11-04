@@ -152,6 +152,10 @@
       "minimum": 0.1,
       "type": "number"
     },
+    "held_small_below_ppm": {
+      "minimum": 0,
+      "type": "number"
+    },
     "rig_px_per_m": {
       "minimum": 1,
       "type": "integer"

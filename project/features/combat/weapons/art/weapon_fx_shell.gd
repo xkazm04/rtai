@@ -23,7 +23,7 @@ static func draw_round(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick:
 	var lift: float = FightAreasArt.LOB_M * arc
 	var base: float = WeaponFxArt.art().round_k.get(s.spec.id, 1.0)
 	var size: float = base * (1.0 + APEX_GROW * arc)
-	_shadow(ci, s.pos, base * (1.0 - SHADOW_SHRINK * arc))
+	shadow(ci, s.pos, base * (1.0 - SHADOW_SHRINK * arc))
 	var up: Vector2 = s.pos + Vector2(0.0, -lift)
 	var ang: float = dir.angle()
 	var lick: Vector2 = Vector2.ONE * (0.42 + 0.08 * float(tick % 2)) * size
@@ -31,8 +31,10 @@ static func draw_round(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick:
 	WeaponFxArt.draw_cell(ci, &"rocket", 0, up, ang, Vector2.ONE * size)
 
 
-static func _shadow(ci: CanvasItem, at: Vector2, k: float) -> void:
+## The ink ellipse a lobbed round casts on `at` (m), SHADOW_M x `k` (the molotov uses it too).
+## `ink` is its opacity (the shell's own is the scorch's 0.35; a small bottle needs a darker one).
+static func shadow(ci: CanvasItem, at: Vector2, k: float, ink: float = 0.35) -> void:
 	var r: Vector2 = SHADOW_M * Ink.PX_PER_M * k
 	ci.draw_set_transform(Ink.px(at), 0.0, Vector2(1.0, r.y / r.x))
-	ci.draw_circle(Vector2.ZERO, r.x, FightAreasArt.SCORCH)
+	ci.draw_circle(Vector2.ZERO, r.x, Color(FightAreasArt.SCORCH, ink))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
