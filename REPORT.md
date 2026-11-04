@@ -14,6 +14,12 @@ Final for the night (iteration 10, 07:20-08:10; iteration 11 added the n-weapon-
 - `M` = `C:\Users\kazda\kiro\gtai-masters\n4\rivet-arsenal\` holds the owner page `M\frames.json`, `M\clips\` and `M\frames\`.
 - `E` = `evidence/rivet-arsenal/` in this worktree holds the logs, the telemetry and `FEEL-NUMBERS.md`.
 
+## After 09:00 (extension, iteration 18)
+- **Fixed: the long guns and tubes on the helmet at 64 px/m** (the 08:40 open flaw). The cause, measured on the real rig (`test_rivet_aim_clear`): **aimed**, the barrel line started 0.3 of the way to the gun shoulder and ran 47 px off the helmet's centre, inside its 78 px half-width. The BESIDE 0.85 shift partly hid this by pushing the weapon to the far side, off the claw. Now the line starts 0.42 out (`RigGrip.GUN_SIDE_BY`), the helmet leans 24 part px off the stock while aiming (`RigGrip.head_lean`), and BESIDE is 1.0. The line is 90 px off the helmet's centre. The weapon lies along the claw arm, the helmet is clear, and the stock sits on the collar and shoulder. Commits 97b91ffb and 09ef1958.
+  - Clip: `M\clips\arena-pit-aimed-long-guns-off-helmet-ab-64ppm.mp4` (before | after, 13 s). Detail sheet: `M\frames\arena-pit-aimed-long-guns-off-helmet-ab-64ppm-3x.png`. These are frames.json entries 4 and 5; they replace the two clips of the superseded code.
+  - Tried and refuted, not committed: a shoulder-carry claw pose for the **unaimed** carry. The A/B render was near identical, because Rivet aims in almost every pit frame and the carried claw already hangs 170 px out.
+- **Gates of record, now 09ef1958:** lint 13/13 (720 files), unit 823/823 exit 0, scenarios 38/38 exit 0 (`E/it18-lint.log`, `E/it18-unit.log`, `E/it18-scenarios.log`). Render only: no replay or parity golden moved. No bench.
+
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
@@ -50,7 +56,7 @@ Final for the night (iteration 10, 07:20-08:10; iteration 11 added the n-weapon-
 - Since 8a7fd9a1 (iteration 11) the long guns and both tubes ride **beside the helmet**, not across his face. Before, weapon-art's 32 px/m claw lineup (tick 394) showed the rocket launcher, the mini-nuke and the plasma rifle lying along the claw straight over his head, with the nuke covering the face: seen from above, the claw closes just in front of the helmet.
   - The held view now shifts a two-hand-long or shoulder weapon sideways until its axis clears the helmet on the gun side (`RivetCarryAngle.beside_head`, BESIDE 0.85).
   - A long gun that is carried but not aimed eases across the front of the body (ACROSS_RAD 1.2).
-  - Same-tick before and after: `M\frames\arena-pit-long-guns-beside-head-ab-32ppm-3x.png`. In motion: `M\clips\arena-pit-tubes-beside-head-32ppm-x2.mp4`. Looked at: the helmet and the vermilion collar read beside the tube in every frame.
+  - Same-tick before and after: `M\frames\arena-pit-long-guns-beside-head-ab-32ppm-3x.png`. In motion: `M\clips\arena-pit-tubes-beside-head-32ppm-x2.mp4`. Looked at: the helmet and the vermilion collar read beside the tube in every frame. Superseded after 09:00 by the aimed-line fix (see "After 09:00").
   - It is render only, with `test_rivet_carry_angle` 6/6 (the planted BESIDE 0 fails 2).
 - Clips:
   - `M\clips\arena-arsenal-cycle-pistol-rifle-rocket-molotov-64ppm-x2.mp4`
@@ -125,7 +131,7 @@ Final for the night (iteration 10, 07:20-08:10; iteration 11 added the n-weapon-
 - At 64 px/m quest 1's dialogue box covers the lower third. The dev fight cam (`quest1_clip.gd --cam=fight`) now lifts the framed point above it (a67bff25).
 - No boss rig: quest 1's boss, Mertz, keeps the cast view's drawing under `--rigs`.
 - Display latency (swapchain + monitor) is UNMEASURED.
-- At 64 px/m (`M\frames\arena-pit-long-guns-beside-head-strip-64ppm-2x.png`, tick 394), the plasma rifle still clips the left edge of the helmet. BESIDE 1.0 was tried and rejected: it barely helps the rifle, and at tick 330 it floats the rocket off the shoulder. A real fix is an authored carry pose per long gun (the claw at the shoulder, not the chest), not a larger shift. Iteration 12 also ruled out the clearance maths: measuring the head against the barrel's drawn centre instead of the grip origin moves the rifle 1-2 px at the same tick, so the clip comes from the pose itself.
+- FIXED after 09:00 (09ef1958; see "After 09:00"): the plasma rifle clipping the helmet's rim at 64 px/m. The cause was the aimed line starting under the helmet (GUN_SIDE 0.3), not the carry pose. Diagonal aims still lay the stock over the collar and gun shoulder, which reads as a shouldered weapon.
 
 ## Blocked
 - Nothing blocked the lane for more than a few minutes; JOURNAL has no BLOCKED entry. The FRICTION that cost time:
@@ -137,7 +143,7 @@ Final for the night (iteration 10, 07:20-08:10; iteration 11 added the n-weapon-
 
 ## Next steps
 1. **The Director:** call 1, quest 1 on the cast rigs by default, is the lead call. If the answer is yes, promote ArenaRigs' feed from `dev/arena/` into `features/` at the merge.
-2. **An authored carry pose per long gun**, with the claw at the shoulder instead of the chest. This fixes the plasma rifle clipping the helmet at 64 px/m. Two leads are ruled out: BESIDE 1.0, and grip origin vs drawn centre.
+2. Done after 09:00: the long guns beside the helmet (see "After 09:00").
 3. **The arsenal bot's melee walk-in:** a nav-grid path instead of the straight line that slides round props.
 4. **Call 14** (the human sim radius vs the drawn rig width) and the scenario_rivet_chainsaw ">= 3 kills" bar stay for the owner and the Director.
 5. **A boss rig for Mertz** under `--rigs`, and a measurement of display latency (swapchain + monitor).
