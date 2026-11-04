@@ -1180,3 +1180,14 @@ NEXT (replaces the list above):
   and the ray lock b03f04ac). One more render-only commit since: 5e37b57c (kill_char_fx.gd only,
   the rim scales with the zoom: 0.8 px at 32 px/m, so a 32 px/m fire death reads charred, not
   pale). Merge n-brutality's head or cherry-pick 5e37b57c; no golden moves.
+- CHECKED 09:58 ray gun under `--gore=reduced --reduced-motion` (city 48 px/m, 0 script errors):
+  the victim falls whole into the standard death (no dissolve, no glow), as the row says.
+  evidence/brutality/ray-reduced-gore-motion-48-strip-it19.png.
+- 10:00 human-reactions' REQUEST 30 (session message): a patch for KillSprawlCut (c_plank 1,
+  plank_feet 1, RigGait.step for the plank legs; their 5c86ec40,
+  evidence/request_brutality_electro_plank_legs.patch). DECISION: not applied here. n-brutality
+  has no c_plank / plank_feet (only n-human-reactions and showcase's merged main since round 18
+  have them), so it would not parse. Answered: showcase may apply it on its main as the merge glue
+  my docs/decisions.md electro line names, with my OK. Caveat sent: RigGait.step also writes the sides'
+  stepping/lift/timed/step_t/foot_from, which the patch does not restore (harmless on a consumed
+  victim, but the "every channel put back" claim no longer holds strictly).
