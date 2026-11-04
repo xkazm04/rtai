@@ -197,8 +197,17 @@ func kill_human(pos_px: Vector2, dir: Vector2, slide_px: float = 4.0) -> void:
 	kills += 1
 	var kind: String = _game.get("death_hit", "kill")
 	blood.pool_lead_px = slide_px
-	blood.splash(pos_px, dir.normalized(), kind)
+	blood.splash(pos_px, spray_dir(pos_px, dir), kind)
 	bled.emit(pos_px, dir.normalized())
+
+
+## The kill spray's axis: `dir` turned by up to game.spray_tilt_deg, hashed from the spot (lane
+## gunplay): a claw that always strikes due south no longer prints a ruler-straight column.
+func spray_dir(pos_px: Vector2, dir: Vector2) -> Vector2:
+	var tilt_deg: float = _game.get("spray_tilt_deg", 0.0)
+	var tilt: float = deg_to_rad(tilt_deg)
+	var h: float = NoirPack.hash01(roundi(pos_px.x) * 7919 + roundi(pos_px.y) * 104729)
+	return dir.normalized().rotated((h * 2.0 - 1.0) * tilt)
 
 
 ## The blood's print (fx_blood_print): other blood nodes (CorpseStains) print through it.
