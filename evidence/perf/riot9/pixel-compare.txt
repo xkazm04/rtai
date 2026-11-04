@@ -1,0 +1,1 @@
+stains_ab_compare (CorpseStains, 16 soaks, scales 0.3-1.05, 1.5x zoom at city px ~4800,2900, blood print material, d3d12 1280x720): CircleFan.batched false vs true: differing 0 of 921600 pixels, 1447 blood pixels. circle_fan_probe (400 circles r 0.3-9.3, sub-px offset): 0 of 262144.

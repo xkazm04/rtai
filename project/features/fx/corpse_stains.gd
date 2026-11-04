@@ -60,12 +60,15 @@ class Soak:
 	var blood: Color
 	var dark: Color
 
+	# one draw call for the whole soak (CircleFan; ~130 circles were ~130 draw calls, perf-city)
 	func _draw() -> void:
+		var fan: CircleFan = CircleFan.new()
 		for i: int in spots.size():
 			var s: Vector3 = spots[i]
 			var at: Vector2 = Vector2(s.x, s.y)
-			draw_circle(at, s.z * 1.15, dark)
-			BloodMarks.splat(self, at, s.z, dirs[i] * 0.45, blood)
+			fan.add(at, s.z * 1.15, dark)
+			BloodMarks.splat_into(fan, at, s.z, dirs[i] * 0.45, blood)
+		fan.print_on(self)
 
 
 ## `dark` = the spots' shadow (the blood's pool body); transparent = blood_fx.json blood_dark.

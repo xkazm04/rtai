@@ -1,0 +1,99 @@
+extends SceneTree
+## Scratch (perf-city): are N draw_circle calls pixel-identical to one triangle array built
+## from the same 64-segment fan? Writes both images and the differing pixel count.
+
+const SEG: int = 64
+
+
+class Old:
+	extends Node2D
+	var spots: Array = []
+
+	func _draw() -> void:
+		for s: Array in spots:
+			draw_circle(s[0], s[1], s[2])
+
+
+class New:
+	extends Node2D
+	var spots: Array = []
+
+	func _draw() -> void:
+		var pts: PackedVector2Array = PackedVector2Array()
+		var cols: PackedColorArray = PackedColorArray()
+		var idx: PackedInt32Array = PackedInt32Array()
+		var f: PackedFloat32Array = PackedFloat32Array([0.0, 0.0])
+		for s: Array in spots:
+			var at: Vector2 = s[0]
+			var r: float = s[1]
+			var base: int = pts.size()
+			var step: float = TAU / SEG
+			f[0] = step
+			step = f[0]
+			for i: int in SEG + 1:
+				f[0] = i * step
+				var a: float = f[0]
+				f[0] = cos(a)
+				f[1] = sin(a)
+				f[0] = f[0] * r
+				f[1] = f[1] * r
+				var x: float = f[0]
+				var y: float = f[1]
+				f[0] = x + at.x
+				f[1] = y + at.y
+				pts.append(Vector2(f[0], f[1]))
+				cols.append(s[2])
+			pts.append(at)
+			cols.append(s[2])
+			for i: int in SEG:
+				idx.append_array([base + SEG + 1, base + i, base + i + 1])
+		RenderingServer.canvas_item_add_triangle_array(get_canvas_item(), idx, pts, cols)
+
+
+func _initialize() -> void:
+	var spots: Array = []
+	var k: int = 0
+	for n: int in 400:
+		k += 1
+		var h: float = fposmod(sin(k * 91.3458 + 7.13) * 47453.5453, 1.0)
+		var h2: float = fposmod(sin(k * 12.9898 + 1.7) * 43758.5453, 1.0)
+		var h3: float = fposmod(sin(k * 78.233 + 3.1) * 24634.6345, 1.0)
+		var c: Color = Color(0.64, 0.02, 0.035) if n % 3 else Color(0.46, 0.0, 0.03)
+		spots.append([Vector2(20 + h * 470, 20 + h2 * 470), 0.3 + h3 * 9.0, c])
+	var res: Array = []
+	for kind: int in 2:
+		var vp: SubViewport = SubViewport.new()
+		vp.size = Vector2i(512, 512)
+		vp.transparent_bg = false
+		vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+		root.add_child(vp)
+		var node: Node2D = Old.new() if kind == 0 else New.new()
+		node.set("spots", spots)
+		node.position = Vector2(0.37, 0.61)
+		node.scale = Vector2.ONE * 1.0
+		vp.add_child(node)
+		res.append(vp)
+	_res = res
+
+
+var _res: Array = []
+var _n: int = 0
+
+
+func _process(_delta: float) -> bool:
+	_n += 1
+	if _n < 8:
+		return false
+	var res: Array = _res
+	var a: Image = (res[0] as SubViewport).get_texture().get_image()
+	var b: Image = (res[1] as SubViewport).get_texture().get_image()
+	var diff: int = 0
+	for y: int in a.get_height():
+		for x: int in a.get_width():
+			if a.get_pixel(x, y) != b.get_pixel(x, y):
+				diff += 1
+	a.save_png(OS.get_environment("TEMP") + "/circprobe/old.png")
+	b.save_png(OS.get_environment("TEMP") + "/circprobe/new.png")
+	printerr("CIRCPROBE differing pixels: %d of %d" % [diff, a.get_width() * a.get_height()])
+	quit(0)
+	return true

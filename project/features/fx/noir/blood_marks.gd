@@ -8,6 +8,8 @@ const POOL_PTS: int = 56
 const RIM: float = 1.1
 const LOBES: int = 4
 
+static var _scratch: CircleFan = CircleFan.new()
+
 
 ## A spreading pool: a star-shaped wet edge (low-frequency hashed waves, never self-crossing),
 ## run out along `flow` (the hit direction; length = how far it runs): a dark body inside a
@@ -42,23 +44,28 @@ static func pool(
 ## teardrop body stretched along the travel and a tail of shrinking satellite drops ahead of it,
 ## so a spray on the ground shows which way the hit went.
 static func splat(ci: CanvasItem, at: Vector2, r: float, dir: Vector2, c: Color) -> void:
-	ci.draw_circle(at, r * 0.7, c)
+	_scratch.clear()
+	splat_into(_scratch, at, r, dir, c)
+	_scratch.draw_each(ci)
+
+
+## splat()'s circles, recorded in draw order into `fan` (CircleFan prints them in one draw).
+static func splat_into(fan: CircleFan, at: Vector2, r: float, dir: Vector2, c: Color) -> void:
+	fan.add(at, r * 0.7, c)
 	if r < 1.5:
 		return
 	var e: float = clampf(dir.length(), 0.0, 1.0)
 	var d: Vector2 = dir.normalized() if e > 0.0 else Vector2.RIGHT
 	for k: int in 3:
-		ci.draw_circle(at + d * r * 0.4 * k * e, r * (0.66 - 0.14 * k), c)
+		fan.add(at + d * r * 0.4 * k * e, r * (0.66 - 0.14 * k), c)
 	var s: float = seed_of(at)
 	for k: int in 3:
 		var side: Vector2 = d.orthogonal() * (_wave(s, k) - 0.5) * r * 0.8
 		var ahead: Vector2 = d * r * (1.5 + 1.1 * k) * (0.4 + e)
-		ci.draw_circle(at + ahead + side, r * (0.26 - 0.06 * k), c)
+		fan.add(at + ahead + side, r * (0.26 - 0.06 * k), c)
 	for k: int in LOBES:
 		var a: float = TAU * (k + 0.6 * _wave(s, k + 7)) / LOBES
-		ci.draw_circle(
-			at + Vector2.from_angle(a) * r * 0.62, r * (0.16 + 0.18 * _wave(s, k + 3)), c
-		)
+		fan.add(at + Vector2.from_angle(a) * r * 0.62, r * (0.16 + 0.18 * _wave(s, k + 3)), c)
 
 
 ## Where a droplet moving `v` from `at` meets a wall (`solid`: Callable(px) -> bool): the

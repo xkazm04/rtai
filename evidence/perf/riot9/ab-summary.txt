@@ -2,3 +2,5 @@ noir drawCallsAvg=1759.809 renderCpuMsAvg=1.411 renderCpuMsP99=3.810 avgFrameMs=
 ink drawCallsAvg=623.485 renderCpuMsAvg=0.563 renderCpuMsP99=0.719 avgFrameMs=1.639 p99CpuMs=4.741 bloodUsPerFrame=8.071
 noir drawCallsAvg=1758.420 renderCpuMsAvg=1.356 renderCpuMsP99=3.470 avgFrameMs=3.747 p99CpuMs=14.120 bloodUsPerFrame=221.085
 ink drawCallsAvg=622.518 renderCpuMsAvg=0.581 renderCpuMsP99=1.728 avgFrameMs=1.767 p99CpuMs=6.188 bloodUsPerFrame=8.871
+noir-nostains drawCallsAvg=658.217 renderCpuMsAvg=0.592 renderCpuMsP99=0.840 avgFrameMs=1.779 p99CpuMs=6.725 bloodUsPerFrame=104.570
+noir-fan drawCallsAvg=672.776 renderCpuMsAvg=0.730 renderCpuMsP99=2.857 avgFrameMs=2.877 p99CpuMs=16.627 bloodUsPerFrame=190.010
