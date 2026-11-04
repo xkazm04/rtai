@@ -579,6 +579,13 @@ NEXT (iteration 8):
   entry 5; the hub-row reel kept as `before`); sheet in evidence/brutality/. Weak: the victims sit
   left of centre (the city camera holds the start) and the burning cop runs out of the open spot.
 
+- MILESTONE 05:35 determinism for the claw shock (18795a8e): scenario_brutality_kills runs
+  claw_shock on KillLab.CLAW_LINE (three guards in claw reach, one charge per SHOT_EVERY): 3
+  one-shot shock kills in 700 ticks, same seed same state, replay identical (evidence
+  brutality-kills.json, 12 weapons).
+- GATES OF RECORD 05:37 on 18795a8e: lint 13/13, unit 779/779, scenarios 35/35 (unit-it8.log,
+  scenarios-it8.log). Parity and bench not run (no city-sim change; no bench this iteration).
+
 NEXT (iteration 9):
 1. The claw-shock lab plays the pilot's shock so Rivet's thrust clip shows with the X-ray.
 2. City camera: follow Rivet at his solo spot (the city camera holds the start); add the chainsaw
@@ -587,3 +594,4 @@ NEXT (iteration 9):
    layer per kill like KillGround and measure again.
 4. Homing shard: more shards on the near side when Rivet is far.
 5. Electro gun charged shot (REQUEST 12 -> gunplay) when it lands: key nothing new, re-shoot.
+- 05:38 session closed. Scratch renders not in frames.json deleted; masters frames.json 15 entries.
