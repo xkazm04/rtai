@@ -72,6 +72,8 @@ var hand_gap: float = 2.0
 var hand_k: float = 1.0
 ## The arm segments' drawn thickness (scale across the bone; the hand cell is not thinned).
 var arm_w: float = 1.0
+## n5-cast: the leg segments' drawn thickness (scale across the thigh and shin bones), like arm_w.
+var leg_w: float = 1.0
 var gun_arm: int = -1
 var gun_cell: String = ""
 var melee_arm: int = L

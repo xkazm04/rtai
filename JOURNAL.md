@@ -53,6 +53,15 @@ Evidence: `evidence/n5-cast/` (in git) and `C:\Users\kazda\kiro\gtai-masters\n5\
   `cast-after-react-board-64ppm.mp4`. Not filmed yet: the brutality signature splits (the gib cuts use the rig parts)
   and a 64 px/m before clip.
 
+- 17:27 Rivet lanky trial 1, rig numbers only and not committed (`frames/rivet-lanky-trial1-64ppm.png` beside
+  r2_c3). The numbers: size_k 1.2 -> 1.0, arm_k 0.72 -> 0.85, arm_w 0.8 -> 0.6, and a new `leg_w` 0.65. Rivet comes
+  out near a cop's width with lean limbs, which is promising. Still missing: the plated torso and shoulders, the broad
+  collar ring, and the arms hanging at his sides with the claw (the target), not held in the guard.
+  - Committed: the `BodyPlan.leg_w` hook (default 1.0, so a no-op for every plan; `gib_cut` copies the sprite
+    transforms, so it carries into the gibs). Unit 940/0.
+  - Watch out: `test_hauler_form` asserts that tank.size_k / base.size_k = the body-table radius ratio. Changing the
+    base size_k means scaling `FORM_HAULER`'s 2.6 with it (2.6 = 1.2 x 0.9 / 0.42).
+
 NEXT (iteration 3):
 1. Run `node tools/evidence/run.mjs --no-bench` on the committed head (parity should be exact: render only). If the
    block goldens fail, check them the same way as the look goldens.
