@@ -178,3 +178,6 @@ NEXT (iteration 6, in order):
 4. One 64 px/m clip per grip class (carry, aim, fire, reload, switch) as frames.json's lead set: one_hand (pistol), two_hand_long (plasma rifle), shoulder (rocket), backpack (flamer), thrown (molotov), heavy (chainsaw).
 5. Feel numbers in the live game (brief item 5): latency, turn rate, stop distance, combo cadence, draw time per class, into one evidence JSON from the arena telemetry.
 6. The claw-cop line at y 4.4: the dead fall across the paper strip; agree a roomier spot with showcase and human-reactions.
+- Gates of record, iteration 5 end: lint 13/13 (6a85d086), unit 758/758 (92e7c404; later commits add only the throw scenario and docs), scenarios 36/36 on 0ba2439d (scenario_rivet_deflect and scenario_rivet_throw in; evidence/rivet-arsenal/it5-scenarios.log).
+- 04:52 NEXT 1 partly checked: the plasma rifle's reload at 64 px/m (`--loadout=plasma_rifle --start=pit`, frames 560-1100) shows weapon-art's cream-rimmed glass cell in the off claw and one on the floor, one per reload (looked at; render deleted, not in frames.json). The hand cannon's speed-loader is still unchecked.
+- Session end 04:53: all work committed. Scratch empty.
