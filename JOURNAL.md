@@ -131,3 +131,24 @@ NEXT (iteration 2, in order):
   on full rigs, measured with a temporary log (reverted). Honest read: the riot is so dense that
   a single death does not read in a still; a sparser street fight will show them better.
 - Gates on bf5300e7: lint 13/13, unit 720/720, scenarios 30/30. On b3f7ded6: lint, unit 722/722.
+
+NEXT (iteration 4, in order):
+1. City sim `scare(x, y, radius)`: CitySimState/CitySimRef (GDScript reference, the body of
+   sim_shots._scare with a radius), CityCore::scare in native/sim_core (spawn.cpp next to
+   strike), binding (city_sim.cpp/.h bind_method), CitySimBackend abstract + CitySimNative;
+   `scons platform=windows arch=x86_64 target=template_debug` + template_release, then
+   `--import`; parity gate (`node tools/tests/run_parity.mjs`). Then the arena on the city block
+   calls it on every shot Rivet fires and every landing (ArenaSession/ArenaStage when
+   `city != null`; it IS a sim write, so it goes through the input-driven tick and the replay
+   golden may move: a dated decisions line + re-bless). Clip: `--arena=city --rigs --bot=gunplay`
+   with pedestrians cowering and fleeing from the fight, 32 + 64 px/m.
+2. Cower quality: scale 0.8 -> 0.72, hop 0.3 -> 0.45 m, a short look-back toward the bang
+   (head_rot) before the run; re-film the board segment at 32 px/m.
+3. Trip over bodies (brief item 4): the sim knows corpses (M_DEAD slots); a fleeing ped whose path
+   crosses a corpse within 0.5 m -> render-side stumble (stagger family, small); or sim-side
+   later.
+4. A sparse street-fight clip of the city deaths (the riot is too dense to read single deaths):
+   city_bench with fewer rioters, or `--arena=city` once item 1 lands.
+5. Robot thug (brief item 5): own skeleton, sparks/oil per hit, light.
+6. SWAT look: none in d5-cast (RigVariant.crowd 0..7; CrowdAtlas sizes by CROWD_COUNT). Write a
+   REQUEST to whoever owns the cast tonight, or add index 8 arena-only with an atlas clamp.
