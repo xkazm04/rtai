@@ -1267,3 +1267,15 @@ riot + drive bench of record. Wire GunHand into quest 1. BURN_SCALE 0.3 -> 0.38 
   2.5 s after the kill, so the longer hold drags no fight off frame (the reason 150 was rejected
   for the pack pit). The reel cuts run 2.5 s before to 3 s after each kill
   (`evidence/n11/lone_reel.sh`).
+- 09:1x MILESTONE `MASTERS/lone_kills_table_six_48ppm.mp4` (33 s, 1280x720, no HUD, sound off):
+  the six table guns, each killing one lone cop in the arena pit at 48 px/m, on 265b7f37
+  (`lone19_<gun>/`, 20 s runs, 0 script errors). Cut points (kill ticks): pistol 696, machine pistol
+  706, rocket 732, electro 577, molotov 522; flamethrower cut from tick 300 (the ignition), since
+  the kill (573) is off frame. Looked at the 1 fps sheet: each victim stands alone, no dummies in
+  frame; the corpses stay in frame through the 3 s aftermath (pistol and rocket at the right
+  third, by the pit's east wall); the molotov victim runs out of the patch and dies in frame.
+  frames.json: the new reel replaces the HUD-covered six-tile reel at the top (15 entries).
+- Gates on 265b7f37: lint 13/13, unit 756/756 (`evidence/n11/unit-19d.log`), scenarios 29/29 on
+  23f0fe22 (`evidence/n11/scen-19.log`; 265b7f37 changes only the dev camera and its test). Parity
+  not re-run: no sim or native change since 83429487 (bit-exact).
+- 09:16 rendering the unique five lone (hand cannon, plasma rifle, ray gun, homing shard, mini-nuke).

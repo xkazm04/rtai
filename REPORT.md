@@ -99,6 +99,12 @@ Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost ti
 7. If the burn re-film reads thin, raise `BURN_SCALE` from 0.3 to 0.38. That one value is the alternative.
 8. Apply the owner's answers to gunplay-7 to gunplay-13. Each one is a single value.
 
+## After 09:00 (extension, iteration 19)
+
+- **The kills read one at a time.** A dev capture flag, `--lone` (23f0fe22, 265b7f37), makes every arena pit wave one guard. With `--cam=fight`, the camera leans 0.65 toward the victim and holds his corpse 2.5 s. So each table-gun kill is filmed on a cop standing alone, in or near the middle third of a 48 px/m frame, with the aftermath (the 04:00 checkpoint rule). This is a dev view only: no sim, replay or golden change. Clip: `MASTERS/lone_kills_table_six_48ppm.mp4` (33 s: pistol, machine pistol, rocket, electro, flamethrower, molotov; the full 20 s runs are in `MASTERS/lone19_<gun>/`). It replaces the HUD-covered six-tile reel at the top of frames.json.
+- Gap: the flamethrower's burning cop runs more than 14 m and dies off the 48 px/m frame. The cut shows the stream, the ignition and the panic run. A 30 m camera hold was tried and rejected, because it framed empty ground.
+- Gates on 265b7f37: lint 13/13, unit 756/756 (+4), scenarios 29/29 (on 23f0fe22; 265b7f37 touches only the dev camera and its test), parity unchanged (no sim or native change since 83429487).
+
 ## Gates of record
 
 `node tools/evidence/run.mjs --no-bench --allow-dirty` on 83429487, the final code head of iteration 14 (`WT/evidence/n10/evidence-final-14.log`; the dirty paths are untracked evidence stills and logs only): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below.
