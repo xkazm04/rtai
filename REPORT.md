@@ -12,6 +12,7 @@ The build moved to `782344cc`. All four changes since `3a703dbd` are render only
 - **At the nuke's 12 m scale, the smoke puffs are capped at 2.5 m** (`9a66ac6c`), and the ring tears into about 32 of them. Uncapped, 12 puffs 6.6 m wide drifted over Rivet. The rocket is unchanged. Clip: `M\clips\it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`.
 - **The melee four in the claw are closed by rivet-arsenal.** Their RivetHeldView draws this lane's held art for the katana, baton, chainsaw and plasma sword live, with a swept arc. Filmed in `n4\rivet-arsenal\frames\city-block-melee-64ppm-2x.png` and `katana-slash-thrust-sheet-64ppm.png`. MeleeWeaponView's bars remain only in rivet-motion's dev combo clip.
 - **The electro bolt gets a bold ink outline** (call 3, inside the palette). The arc is drawn in ink at 8 offsets 0.06 m out, then in paper, for Rivet's bolt and the chain arcs. It was the thinnest energy read on cream at 32 px/m. The before is `--arc-ink=off`. Clip: `M\clips\it20-electro-arc-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-electro-arc-ink-ab-city-32ppm.png` (with the rejected try); zoom: `M\frames\it20-electro-arc-ink-zoom-t395-city-32ppm-3x.png`.
+- **The ray gun's hoops get the same ink outline** (call 3). The before is `--ray-ink=off`. Clip: `M\clips\it20-ray-rings-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-ray-rings-ink-ab-city-32ppm.png`; zoom: `M\frames\it20-ray-rings-ink-zoom-t398-city-32ppm-3x.png`.
 - **No molotov fuel-splash sheet.** The landing already reads (star, glass, fire, scorch), and a fuel stain would lie under the flames.
 
 ## Gates of record
@@ -76,7 +77,7 @@ The build moved to `782344cc`. All four changes since `3a703dbd` are render only
 - **The muzzle-flash and projectile art is partly reused.**
   - The molotov's glass reuses the shard cell.
   - (Fixed after 09:00: the mini-nuke's own shell and the torn smoke tail. The fuel-splash sheet was dropped.)
-- **Electro, plasma and ray effects read weaker than kinetic ones on cream paving at 32 px/m.** They are paper-white in an ink ring, because teal is reserved for souls and blue for cops. Since 09:00 the electro bolt, the thinnest of them, has a thickened ink outline. Call weapon-art-3 stays open for a new accent ink.
+- **Electro, plasma and ray effects read weaker than kinetic ones on cream paving at 32 px/m.** They are paper-white in an ink ring, because teal is reserved for souls and blue for cops. Since 09:00 the electro bolt and the ray hoops, the two faintest, have a thickened ink outline; the plasma bolt reads as it is. Call weapon-art-3 stays open for a new accent ink.
 - **Long guns lie over Rivet's helmet in the carry pose.** This is rivet-arsenal's view (an authored carry pose per gun), not the art.
 - **No bench numbers** from this lane.
 
@@ -96,7 +97,7 @@ Each call has a clip or frame in `M`. The default is what ships now, and every a
 |---|---|---|---|
 | weapon-art-1 | drawn length 1.5x real (pistol 0.70 m) | real size; `length_m` per row | `frames\lineup-core-64ppm.png` |
 | weapon-art-2 | held parts printed through `print_part` | raw colour | `frames\print-ab-64ppm.png` |
-| weapon-art-3 | energy effects paper-white in an ink ring; since 09:00 the electro bolt has a thickened ink outline | B: a new energy accent ink (a palette token, not built); C: the thin bolt (`--arc-ink=off`) | `clips\it20-electro-arc-ink-ab-city-32ppm-2x.mp4`, `frames\it20-call3-energy-vs-kinetic-city-32ppm.png` |
+| weapon-art-3 | energy effects paper-white in an ink ring; since 09:00 the electro bolt and the ray hoops have a thickened ink outline (`--ray-ink=off` turns the hoops' off) | B: a new energy accent ink (a palette token, not built); C: the thin bolt (`--arc-ink=off`) | `clips\it20-electro-arc-ink-ab-city-32ppm-2x.mp4`, `frames\it20-call3-energy-vs-kinetic-city-32ppm.png` |
 | weapon-art-4 | weapon-art cells | gunplay's procedural shapes (`--weapon-fx=shapes`) | `frames\it3-rocket-ab-64ppm.png` |
 | weapon-art-5 | the SMG's long curved feed box | the small tab | `frames\it4-smg-feedbox-ab.png` |
 | weapon-art-6 | the electro daze as paper spark stars | gunplay's zigzags | `frames\it4-electro-chain-daze-48ppm.png` |

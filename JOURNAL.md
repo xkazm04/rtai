@@ -1134,3 +1134,12 @@ NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so
   `frames/it20-electro-arc-ink-ab-city-32ppm.png` (3 rows incl. the rejected try), zoom `frames/it20-electro-arc-ink-zoom-t395-city-32ppm-3x.png`;
   frames.json entry 4 (dropped the it8 plasma comet clip). Doc, decision, REPORT (call 3 row) updated.
 - Gates at the electro ink commit: lint 13/13, unit 743/743 (`unit-it20e.log`), scenarios 32/32 (`scenarios-it20e.log`).
+- MILESTONE 09:13 the ray gun's hoops get the same ink (call 3). `WeaponFxElectro.ink_cell` (generic: an FX cell placed by a
+  Transform2D, keeping to 5 parameters) draws each hoop in ink at the 8 offsets, fading with the hoop; the electro bolt
+  now calls it too (same math). Same-tick city A/B at 32 px/m (`--weapon=ray_gun`), looked at with a 3x zoom: bold
+  inked rings with a thin paper core, heavy but clearly rings. `--ray-ink=off` = before. Evidence: `clips/it20-ray-rings-ink-ab-city-32ppm-2x.mp4`,
+  `frames/it20-ray-rings-ink-ab-city-32ppm.png`, zoom `frames/it20-ray-rings-ink-zoom-t398-city-32ppm-3x.png` (cited in
+  frames.json entry 4's note). The plasma bolt (a paper comet) reads, so it is left as is.
+- Gates at the ray-ink commit: lint 13/13, scenarios 32/32 (`scenarios-it20f.log`), unit 743/743 (`unit-it20g.log`). The first unit run
+  (`unit-it20f.log`) had 1 failure, test_noir_shadows ("Parameter t is null"): the known flake under load (an ffmpeg encode
+  was running). It passed when re-run alone.
