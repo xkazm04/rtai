@@ -983,8 +983,11 @@ NEXT (iteration 11, in order):
 NEXT (iteration 12 / report phase, in order):
 1. REPORT: re-run the gates on the final head and update "Gates of record"; check every
    MASTERS path in the REPORT exists; calls gunplay-7..13 stand as drafted.
-2. If time: the burnt marks' lifetime (HOLD_TICKS 900) in a long fight: watch a 40 s molotov city
-   run for clutter (24 marks cap); lower HOLD_TICKS if the paving reads dirty.
+2. (done 07:16, see below) the burnt marks' lifetime in a long fight.
 3. If human-reactions still sees blood columns on their board after cherry-picking 269deba4:
    raise spray_tilt_min_deg (one value).
 4. The idle riot bench of record stays the Director's (the machine was contended all night).
+- 07:16 NEXT 2 DONE: `MASTERS/n4/gunplay/city11_molotov_40s/` (city block, 32 px/m, 40 s, 0 script
+  errors, fresh on 6d22873a). Looked at the 0.5 fps strip: the block carries 3-5 chars at a time
+  (the 15 s hold), the oldest fading as new bottles land; the cap of 24 is never near. Reads as a
+  fought-over block, not dirty paving. HOLD_TICKS 900 stays.
