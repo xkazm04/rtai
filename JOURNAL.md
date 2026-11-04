@@ -713,3 +713,44 @@ NEXT (iteration 10):
   item (that one is freed on PREDELETE). Suspect view_prewarm.gd's texture item (not my folder).
   I tried freeing on EXIT_TREE too; the leak stayed; reverted.
 - NOTE -> showcase: brutality 59429978 gives look goldens 11/11 (worst 1.54); bisect elsewhere.
+- FRICTION 06:35 `--sig-gun=mini_nuke_launcher` is not an id (the gun is `mini_nuke`): the lab silently
+  kept the default gun and a standard death. Check telemetry by_style before looking at frames.
+- MILESTONE 06:40 NEXT 1 done (c4883020): the city camera held the start because CollectCallStage.step
+  sets the city follow from Rivet before the hooks step; KillLab then moved Rivet to the solo spot,
+  and on the next tick the city body pulled him back to follow.target (the start). KillLab now
+  moves the follow with him (target = the spot, focus halfway to the guards' centre, so the nuke's
+  pack sits mid-frame). Found `start:-22,0`: an open street with a police car and an ambulance at
+  the kerb, no hub dummies in the nuke radius (at start:-7,0 the hub's dummy row stood on in the
+  flames).
+- Clips 06:47 (looked at the sheet evidence/brutality/nuke-city-it10-sheet.png): mini-nuke pack on the
+  city block, 48 px/m 9 s real time, 64 px/m 0.4x, 32 px/m 8 s; five vaporise kills + one street
+  pedestrian burnt by gunplay's fire patch; 0 script errors. Masters frames.json: the three on top,
+  the it8 nuke clip and the electro city clip dropped (the eleven-kill city reel covers it); hand
+  cannon kept. At 64 px/m the outer ring runs past the right edge; the shadows stay in frame.
+- MEASURED 06:48 NEXT 4 was misread: the nuke's kill tick is not "10 cuts at once": kill_cut_us
+  [1678, 64, 54, 55, 53] = the FIRST cut is cold and every later one is about 55 us. Flame's first
+  kill paid the same (1.9 ms in it9).
+- MILESTONE 06:50 the char print warmed at load (bbc674ee): KillCharFx._ready builds the char
+  material and draws one faint speck with it for 0.1 s. City block 48 px/m, CONTENDED: nuke first
+  cut 1678 -> 79-154 us, the kill-window worst (tick 108, 4.1 ms) gone; flame first kill 75 us.
+- LEAD (unfixed): a burn/vaporise kill has one 2.4-5.4 ms kill-view frame at exactly age 96 (nuke 105
+  -> 201, flame 347 -> 443, four runs, deterministic). Ruled out with temporary probes (reverted):
+  KillGround._draw (spray/scorch/pile all < 0.5 ms) and KillView._process incl. styles.pose().
+  Tried and rejected: a second plain ash speck in the prewarm (no change). Left: KillView._draw.
+- GATES 06:58 on bbc674ee (private APPDATA, CONTENDED): lint 13/13; unit 785/785 (the first run had
+  test_noir_shadows, the known load flake; the re-run passed all 785); scenario brutality 1/1
+  (scenario-brutality-it10.log); look goldens 11/11 (on 59429978; both later commits render only /
+  dev lab). Full scenario suite, parity, bench not run this iteration (no sim change).
+- Registry rules applied: motion-quality-gating (judged on the frames before and after each change;
+  telemetry before guessing at the cost); realtime-combat-semantics (no sim change: the camera fix
+  is in the dev lab, the prewarm is render only).
+
+NEXT (iteration 11):
+1. The age-96 frame of a burn/vaporise kill (LEAD above): probe KillView._draw; if it is not there,
+   the measure itself (worst_tick is the tick of the frame the cost is added to).
+2. Re-shoot the eleven-kill city reel with the follow fix (each kill at its own clear spot; the
+   start:-22,0 street works for the gun kills too).
+3. The claw-shock lab: press melee through TickInput so the pilot's own PlayerShock fires (it9 NEXT 2).
+4. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check against KillBurstFx
+   (showcase's merged reel reads "shards stuck -> burst" fine, so low risk).
+5. The plasma rifle hole at 32 px/m (still the faintest kill at game zoom).
