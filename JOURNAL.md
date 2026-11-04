@@ -1273,3 +1273,18 @@ NEXT (morning merge):
 NEXT (morning merge): unchanged from iteration 20. (1) Re-film the electro clip on the merged main
 (08e1b72f in). (2) Re-check gunplay REQUEST 29/30 answers. (3) Fix the nuke tick-123 frame: prebuild or
 split the cut, measured under bench.lock against lock-it18. (4) Owner calls in REPORT.
+
+## Iteration 22 (10:06-10:30, BUILD, a further runner slot before the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' JOURNAL tails (gunplay, human-reactions,
+  rivet-arsenal, showcase, weapon-art). No new REQUEST -> brutality since iteration 21: gunplay's
+  REQUEST 30 (molotov char corpse rim) was answered by 04c4068b + 5e37b57c, human-reactions'
+  REQUEST 30 (plank legs) is on n-showcase 08e1b72f, rivet-arsenal's 7/9 (weapon ids) were answered
+  earlier in the night. Showcase's latest reel in masters is still reel-0954 (round 19 with
+  08e1b72f, if cut, has not landed in masters at 10:07).
+- DECISION 10:08 no code commit, for the same reason as iterations 20-21: the final reel/exe round
+  is showcase's, and nothing landed on this branch now could be gated, filmed and benched before
+  10:30. The gates of record stay those of iteration 19 on code head 5e37b57c (no code since).
+- The two Godot processes running at 10:07 (PIDs 12612, 54440) are not mine; left alone.
+- No Godot process started, no lock held, no scratch left.
+
+NEXT (morning merge): unchanged from iteration 20/21.
