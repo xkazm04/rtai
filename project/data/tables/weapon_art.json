@@ -1,5 +1,5 @@
 {
-  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile).",
+  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m).",
   "fx": [
     {
       "anchor_px": [
@@ -87,182 +87,182 @@
     },
     {
       "anchor_px": [
-        11,
-        70
+        17,
+        76
       ],
       "art": "res://features/combat/weapons/art/fx/flash_energy_0.png",
       "id": "flash_energy_0",
       "size_px": [
-        158,
-        141
+        170,
+        153
       ]
     },
     {
       "anchor_px": [
-        11,
-        57
+        17,
+        63
       ],
       "art": "res://features/combat/weapons/art/fx/flash_energy_1.png",
       "id": "flash_energy_1",
       "size_px": [
-        131,
-        113
+        143,
+        125
       ]
     },
     {
       "anchor_px": [
-        11,
-        45
+        17,
+        51
       ],
       "art": "res://features/combat/weapons/art/fx/flash_energy_2.png",
       "id": "flash_energy_2",
       "size_px": [
-        101,
-        98
+        113,
+        110
       ]
     },
     {
       "anchor_px": [
-        11,
-        139
+        17,
+        145
       ],
       "art": "res://features/combat/weapons/art/fx/flash_nuke_0.png",
       "id": "flash_nuke_0",
       "size_px": [
-        306,
-        277
+        318,
+        289
       ]
     },
     {
       "anchor_px": [
-        11,
-        112
+        17,
+        118
       ],
       "art": "res://features/combat/weapons/art/fx/flash_nuke_1.png",
       "id": "flash_nuke_1",
       "size_px": [
-        249,
-        219
+        261,
+        231
       ]
     },
     {
       "anchor_px": [
-        11,
-        86
+        17,
+        92
       ],
       "art": "res://features/combat/weapons/art/fx/flash_nuke_2.png",
       "id": "flash_nuke_2",
       "size_px": [
-        187,
-        187
+        199,
+        199
       ]
     },
     {
       "anchor_px": [
-        11,
-        53
+        17,
+        59
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_0.png",
       "id": "flash_pistol_0",
       "size_px": [
-        158,
-        111
+        170,
+        123
       ]
     },
     {
       "anchor_px": [
-        11,
-        46
+        17,
+        52
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_1.png",
       "id": "flash_pistol_1",
       "size_px": [
-        131,
-        93
+        143,
+        105
       ]
     },
     {
       "anchor_px": [
-        11,
-        40
+        17,
+        46
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_2.png",
       "id": "flash_pistol_2",
       "size_px": [
-        101,
-        77
+        113,
+        89
       ]
     },
     {
       "anchor_px": [
-        11,
-        34
+        17,
+        40
       ],
       "art": "res://features/combat/weapons/art/fx/flash_smg_0.png",
       "id": "flash_smg_0",
       "size_px": [
-        133,
-        74
+        145,
+        86
       ]
     },
     {
       "anchor_px": [
-        11,
-        29
+        17,
+        35
       ],
       "art": "res://features/combat/weapons/art/fx/flash_smg_1.png",
       "id": "flash_smg_1",
       "size_px": [
-        111,
-        60
+        123,
+        72
       ]
     },
     {
       "anchor_px": [
-        10,
-        26
+        17,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/flash_smg_2.png",
       "id": "flash_smg_2",
       "size_px": [
-        86,
-        54
+        98,
+        66
       ]
     },
     {
       "anchor_px": [
-        11,
-        91
+        17,
+        97
       ],
       "art": "res://features/combat/weapons/art/fx/flash_tube_0.png",
       "id": "flash_tube_0",
       "size_px": [
-        232,
-        191
+        244,
+        203
       ]
     },
     {
       "anchor_px": [
-        11,
-        78
+        17,
+        84
       ],
       "art": "res://features/combat/weapons/art/fx/flash_tube_1.png",
       "id": "flash_tube_1",
       "size_px": [
-        190,
-        158
+        202,
+        170
       ]
     },
     {
       "anchor_px": [
-        11,
-        66
+        17,
+        72
       ],
       "art": "res://features/combat/weapons/art/fx/flash_tube_2.png",
       "id": "flash_tube_2",
       "size_px": [
-        144,
-        122
+        156,
+        134
       ]
     },
     {
@@ -375,17 +375,18 @@
     },
     {
       "anchor_px": [
-        250,
-        17
+        266,
+        24
       ],
       "art": "res://features/combat/weapons/art/fx/tracer.png",
       "id": "tracer",
       "size_px": [
-        260,
-        34
+        280,
+        48
       ]
     }
   ],
+  "fx_draw_scale": 2,
   "rig_px_per_m": 320,
   "schema": "gtai.weapon-art/1",
   "weapons": [
@@ -539,6 +540,31 @@
       "size_px": [
         475,
         152
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "one_hand",
+      "grip_px": [
+        147,
+        63
+      ],
+      "held": "res://features/combat/weapons/art/gloria/held.png",
+      "icon": "res://features/combat/weapons/art/gloria/icon.png",
+      "id": "gloria",
+      "length_m": 0.8,
+      "length_px": 481,
+      "muzzle_fx": "flash_pistol",
+      "muzzle_px": [
+        484,
+        63
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/gloria/pickup.png",
+      "projectile_fx": "tracer",
+      "size_px": [
+        488,
+        122
       ]
     },
     {

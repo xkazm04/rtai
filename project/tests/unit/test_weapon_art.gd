@@ -41,9 +41,9 @@ func test_make_held_origin_is_the_grip_at_drawn_length() -> void:
 	s.free()
 
 
-func test_all_fifteen_have_held_art_with_the_muzzle_forward() -> void:
+func test_all_sixteen_have_held_art_with_the_muzzle_forward() -> void:
 	var art: WeaponArt = WeaponArt.new()
-	assert_eq(art.ids().size(), 15)
+	assert_eq(art.ids().size(), 16)
 	for id: StringName in art.ids():
 		assert_gt(art.held_texture(id).get_width(), 64, "%s held" % id)
 		assert_gt(art.muzzle_m(id).x, 0.2, "%s tip ahead of the grip" % id)
@@ -64,6 +64,7 @@ func test_fx_frames_resolve() -> void:
 		assert_gt(art.fx_frames(art.projectile_fx(id)).size(), 0, "%s projectile" % id)
 	assert_eq(art.fx_frames(&"casing").size(), 1)
 	assert_gt(art.fx_anchor(&"flash_pistol").x, 0.0)
+	assert_almost_eq(art.fx_scale(), art.fx_draw_scale * 0.1, 0.0001)
 
 
 func test_unknown_id_draws_a_placeholder() -> void:

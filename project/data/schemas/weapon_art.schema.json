@@ -136,6 +136,11 @@
       "minItems": 1,
       "type": "array"
     },
+    "fx_draw_scale": {
+      "maximum": 8,
+      "minimum": 0.1,
+      "type": "number"
+    },
     "rig_px_per_m": {
       "minimum": 1,
       "type": "integer"
@@ -157,7 +162,8 @@
     "doc",
     "rig_px_per_m",
     "weapons",
-    "fx"
+    "fx",
+    "fx_draw_scale"
   ],
   "type": "object"
 }

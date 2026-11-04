@@ -26,7 +26,7 @@ STEEL = (143, 136, 129)
 INK_2 = (81, 71, 72)
 VERMILION = (232, 80, 42)
 SS = 4
-OUTLINE = 7  # part px of ink around every shape
+OUTLINE = 13  # part px of ink around every shape (reads at 32 px/m with fx_draw_scale 2)
 
 
 def _canvas(w, h):
@@ -103,11 +103,11 @@ def muzzle_flash(name, length, width, frame, out, seed, core_rgb=VERMILION):
 
 
 def tracer(out, seed):
-    w, h = 260, 34
-    m = _poly(_canvas(w, h), [(10, h / 2), (w - 26, h / 2 - 7), (w - 10, h / 2), (w - 26, h / 2 + 7)])
-    hot = _poly(_canvas(w, h), [(w - 120, h / 2), (w - 28, h / 2 - 3), (w - 18, h / 2), (w - 28, h / 2 + 3)])
-    _save(_compose([(m, PAPER_2), (hot, PAPER)], w, h, seed, outline=5), out / "tracer.png")
-    return [w, h], [w - 10, h // 2]
+    w, h = 280, 48
+    m = _poly(_canvas(w, h), [(14, h / 2), (w - 30, h / 2 - 9), (w - 14, h / 2), (w - 30, h / 2 + 9)])
+    hot = _poly(_canvas(w, h), [(w - 130, h / 2), (w - 32, h / 2 - 4), (w - 22, h / 2), (w - 32, h / 2 + 4)])
+    _save(_compose([(m, PAPER_2), (hot, PAPER)], w, h, seed, outline=10), out / "tracer.png")
+    return [w, h], [w - 14, h // 2]
 
 
 def casing(out, seed):
@@ -115,7 +115,7 @@ def casing(out, seed):
     m = _canvas(w, h)
     ImageDraw.Draw(m).rounded_rectangle([8 * SS, 8 * SS, 40 * SS, 22 * SS], radius=5 * SS, fill=255)
     rim = _poly(_canvas(w, h), [(8, 7), (14, 7), (14, 23), (8, 23)])
-    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=5), out / "casing.png")
+    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=7), out / "casing.png")
     return [w, h], [w // 2, h // 2]
 
 
