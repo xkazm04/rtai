@@ -876,3 +876,28 @@ NEXT (iteration 12 / the report):
   (evidence/brutality/unit-it12.log), scenarios 35/35 (evidence/brutality/scenarios-it12.log).
 - Registry rules applied: motion-quality-gating (judged on the 48 and 64 frames before publishing;
   rejected the first 3 hub frames of each chapter as a camera break).
+- MILESTONE 08:06 (8020d7f4): the blade solo frame holds still. The stage re-centres the city
+  focus on Rivet at the end of every tick, so the camera lurched 2 m with the lunge and sat forward
+  through the chainsaw's grind (seen on the 08:00 chainsaw sheet: the street jumps at tick 89). The
+  lab now pins the focus to the solo framing each tick, like the gun kills already do. Strip of
+  frames 50-170 checked: the street stays put through lunge, grind and split.
+- Clips re-shot 08:09 on 8020d7f4 (9 captures, 0 script errors each), replacing the 08:00 ones in
+  masters under the same names: melee reels at 48 px/m (27 s) and 32 px/m (21 s, game zoom), and
+  the three 64 px/m 0.4x close-ups (the chainsaw one now covers the grind AND the split).
+  frames.json: 15 entries, the melee reel 48 + 32 and three close-ups right under the 8-gun reel;
+  the plasma-hole 64 slow dropped (the plasma 32 city clip stays). Sheets re-cut in evidence/brutality.
+- GATES 08:10 on 8020d7f4 (private APPDATA, CONTENDED): lint 13/13 (pre-commit), unit 787/787
+  (unit-it12b.log), scenario brutality 1/1 (scenario-brutality-it12.log); full suite 35/35 on
+  94ddeae6 (the later commit is lab-only). Parity and bench not run (no sim change outside the lab).
+- FRICTION 08:02 NEXT 4 (cherry-pick gunplay 89c5fac9, stuck shards) aborted: it conflicts in
+  test_gun_fx.gd because it carries a gunplay test (weapon-art magazines) that needs earlier gunplay
+  commits not on this branch. Restored the five files; tree clean. MERGE NOTE for the Director:
+  after n-gunplay and n-brutality both land, a shard-burst kill (style burst) hides the body but
+  `FightShardArt.stuck` draws the stuck crystals at the dead fighter's pos for as long as he is in
+  `arena.hostiles`, so they may stand in the red mist after the pop. REQUEST 30 -> gunplay: skip
+  `stuck` for a fighter whose `alive()` is false and whose body is hidden (or clear `GunFx.stuck[id]`
+  on death); brutality's burst draws its own shards flying out (KillBurstFx).
+- NOTE 08:03 NEXT 3 (age-96 stall) cannot be measured headless: with no print stage and no
+  CityView, `attach_view` gets no actor layer and KillView never exists, so a headless run has no
+  view telemetry. Only measurable windowed, so contention cannot be ruled out without the machine
+  to myself. Stays a LEAD (one 2-5 ms frame per burn/vaporise kill, well inside 16.6 ms).
