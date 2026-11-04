@@ -60,7 +60,10 @@ func test_rocket_is_longer_than_the_pistol() -> void:
 func test_fx_frames_resolve() -> void:
 	var art: WeaponArt = WeaponArt.new()
 	for id: StringName in CORE:
-		assert_eq(art.fx_frames(art.muzzle_fx(id)).size(), 3, "%s muzzle frames" % id)
+		if art.grip_class(id) == &"thrown":  # a throw has no muzzle flash (the wick burns)
+			assert_eq(art.muzzle_fx(id), &"", "%s has no flash" % id)
+		else:
+			assert_eq(art.fx_frames(art.muzzle_fx(id)).size(), 3, "%s muzzle frames" % id)
 		assert_gt(art.fx_frames(art.projectile_fx(id)).size(), 0, "%s projectile" % id)
 	assert_eq(art.fx_frames(&"casing").size(), 1)
 	assert_gt(art.fx_anchor(&"flash_pistol").x, 0.0)
@@ -98,6 +101,8 @@ func test_impact_cells_and_gore_stickers_resolve() -> void:
 	assert_eq(art.fx_frames(&"spark").size(), 3, "electro spark frames")
 	assert_eq(art.fx_frames(&"scorch").size(), 1, "scorch decal")
 	assert_eq(art.projectile_fx(&"gloria"), &"nail")
-	for g: StringName in [&"gore_stump_round", &"gore_charred", &"gore_ash", &"gore_splash"]:
+	var top: Array[StringName] = [&"gore_xray_top", &"gore_xray_top_jolt", &"gore_charred_top"]
+	top.append(&"gore_charred_top_slump")
+	for g: StringName in top + [&"gore_stump_round", &"gore_charred", &"gore_ash", &"gore_splash"]:
 		assert_eq(art.fx_frames(g).size(), 1, "%s sticker" % g)
 	assert_gt(art.fx_anchor(&"blast").x, 0.0)
