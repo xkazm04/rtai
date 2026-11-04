@@ -88,7 +88,8 @@ func _on_killed(
 	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, _dir: Vector2
 ) -> void:
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
-	var groups: Array[Node2D] = GibCut.cut(rig) if rig != null else _blobs()
+	var whole: bool = row.whole_body()
+	var groups: Array[Node2D] = GibCut.cut(rig, whole) if rig != null else _blobs()
 	for gr: Node2D in groups:
 		if not row.whole_body():
 			var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
