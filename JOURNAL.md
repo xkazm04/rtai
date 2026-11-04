@@ -17,10 +17,11 @@ Branch `n5-look` cut from main `a1275c82`. Evidence: `evidence/look/` (lane) + `
 - 17:22 shimmer: 10 s pan at 32 px/m, residual after camera shift identical today vs riso (1.29 %, actors). World-locked halftone holds under the snapped camera.
 - FRICTION `--arena` is not a launch flag here: the arena is `res://dev/arena/arena.tscn` (project.godot main_scene.showcase). `--write-movie` works on it for in-game clips.
 - 17:26 arena director reel 25 s, both looks, side by side in masters; same fight tick for tick; no SCRIPT ERROR.
-- NOT RUN this iteration: scenarios gate, evidence gate (run.mjs), frame cost.
+- 17:33 scenarios gate on a8e01890+: 46 ran, 0 failed (exit 0). NOT RUN this iteration: the evidence gate (run.mjs), frame cost.
 
 NEXT:
-1. Run the scenarios gate + `node tools/evidence/run.mjs --no-bench` on n5-look; fix anything red.
+1. Run `node tools/evidence/run.mjs --no-bench` on n5-look (lint, unit, scenarios already green this iteration); fix anything red.
 2. Frame cost of the riso layer (bench lock, d5_cost_run.gd / D5 cost at 64 px/m vs `--look=today`), against registry `shader-budget-authoring` (read the subject first).
 3. Tune toward the target: paper warmth (age / age_floor in world_riso), stain mottle at 32 px/m; keep blood the only deep red; a 64 px/m three-way with r2_a5; check the full director reel kill chapters (longer --quit-after, ~4 min) for regressions.
 4. Then item 2: the alley stage (`res://dev/arena/` station or arena site, 48 px/m).
+- Registry `shader-budget-authoring` read (for NEXT 2). Rules to apply when costing: state the class budget, the share consumed and the headroom in one sentence (both halves named); state every feature's cost next to a cheaper substitute and what it gives up (here: the plate pass's 2 extra screen fetches vs dropping the sliver; fibre's 4 lattice fetches vs reusing the tooth's mottle); cost the combination, not the parts. d5-city's bench put look_d5 world at 0.447 ms cumulative at 64 px/m (evidence/d5-city/13-bench).
