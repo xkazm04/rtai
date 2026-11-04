@@ -146,6 +146,19 @@ table; (4) the mipmaps import step folded into a tool; (5) a clip in motion once
   right as a real ejection port would: on the rig the gun sits left of the aim line and brass thrown right crossed
   his torso. Alternative = flip the sign in `WeaponCasings.track`.
 
+- MILESTONE 02:24 casing in ink-2 with a paper rim at 1.3x (0ab63327): the first city pass (pistol, 48 px/m) showed
+  the steel brass vanishing on cream paving; now dark specks that read on cream and on the grey arena.
+  Clip `it3-city-pistol48.mp4`, frame `it3-city-pistol-brass-48ppm.png`. Unit 727/727 at aa414541.
+- MILESTONE 02:27 rounds leave from the held gun (554c8df0): drawn rounds start `GUN_SIDE_M` to the gun side and
+  converge onto the sim's line by `CONVERGE_M` 3 m; the 30 fps strip shows the tube flash at the held gun, then the
+  rocket out of its muzzle. Rocket A/B and the headline clip re-shot with it.
+- FINDING 02:27: in every `--weapon=` clip the claw holds Rivet's default gun, not the weapon he fires:
+  `RivetHeldView` follows `StagePilot.hold.held` (WeaponHold), which GunplayHook's `--weapon` never sets.
+- REQUEST 1 -> rivet-arsenal (cc gunplay): when GunplayHook arms `arena.gun` from `--weapon=<id>`, set the
+  WeaponHold to the same id (or have RivetHeldView read `arena.gun.trigger.spec.id` when a table gun is armed), so
+  the rocket launcher / flamethrower / electro gun are in the claw in the arena and city clips. weapon-art's held
+  parts and grip/muzzle points for all 16 are in `weapon_art.json`; nothing else is missing on the art side.
+
 NEXT (iteration 4), in order:
 1. Electro gun in the live fight: the arc + spark are drawn but NOT yet seen in a clip (the bot's electro timing does
    not repeat across windowed runs). Use the arena range station (static dummies) or `--start=range` + a longer
@@ -153,7 +166,8 @@ NEXT (iteration 4), in order:
 2. Molotov in the live fight: the spinning bottle (`molotov` held part) + wick flame + the fire patch; same hunt.
 3. The pistol end to end at 32 px/m in the city block (`--arena=city --weapon=pistol`): flash on the gun, tracer,
    brass on cream paving (does the cream casing vanish on cream? if so an ink-steel casing variant).
-4. Re-shoot the rocket A/B with the flash on the gun (the 64 px/m clips predate it).
+4. DONE 02:27 (rocket A/B + headline clip re-shot). Next: the held weapon matching the fired one (REQUEST 1 ->
+   rivet-arsenal); once it lands, re-shoot the core six in the claw at 32 and 64 px/m (the in-game lineup, brief item 4).
 5. Gunplay's chain arcs / fire patches / burning humans / stun still draw gunplay's shapes: offer `spark`, `flame`,
    `scorch`, `gore_charred` hooks the same way (one line each in `fight_areas_art.gd`), or REQUEST to gunplay.
 6. The weapon-rack arena station (`arena_stations/weapon-art.json` + an ArenaHook laying the 16 pickups in the hub).
