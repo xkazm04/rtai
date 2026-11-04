@@ -5,12 +5,12 @@ extends RefCounted
 ## Presentation only, never written back to the sim.
 
 
-## Every Rivet bullet (and every enemy round) that left the fight since last tick stopped where
-## it was last seen: on a body, on Rivet's plating, on metal, or on the ground.
+## Every Rivet bullet or ray (and every enemy round) that left the fight since last tick stopped
+## where it was last seen: on a body, on Rivet's plating, on metal, or on the ground.
 static func track(fx: GunFx, arena: CombatArena, tick: int) -> void:
 	var now: Dictionary = {}
 	for s: Shot in arena.shots:
-		if not s.from_rivet or s.spec == null or s.spec.kind == WeaponSpec.Kind.BULLET:
+		if not s.from_rivet or s.spec == null or _marks(s.spec):
 			now[s] = [s.pos, s.vel * SimClock.TICK_DT, s.from_rivet]
 			if not s.from_rivet and not fx.shots_seen.has(s):
 				_enemy_fired(fx, arena, s, tick)
@@ -62,3 +62,10 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 	fx.impacts.append(Vector4(at.x, at.y, float(code), float(tick)))
 	@warning_ignore("return_value_discarded")
 	fx.impact_dir.append(hop.normalized())
+
+
+## Rivet's rounds GunFx marks: bullets, and a ray (a bolt with no chain; the electro gun's chain
+## arcs are FightAreasArt's).
+static func _marks(spec: WeaponSpec) -> bool:
+	var ray: bool = spec.kind == WeaponSpec.Kind.BOLT and spec.chain_hops == 0
+	return spec.kind == WeaponSpec.Kind.BULLET or ray

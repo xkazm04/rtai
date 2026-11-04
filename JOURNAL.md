@@ -348,3 +348,8 @@ NEXT (iteration 5, in order; supersedes the list above):
    hand_cannon_blowback on a scratch merge for the reel.
 5. Riot bench before/after of record under bench.lock (nothing this iteration touched the sim or
    the riot's per-frame cost; render-only).
+- 03:19 DONE NEXT item 2: a ray now marks where it stops (GunFxRounds tracks a bolt with no chain;
+  gun_fx.json `ray_gun`: scorch + a small turning burst at the claw): pop ring + burnt ring on the
+  dummy, `evidence/n4/ray_range_64ppm_sizzle.png`. Unit test extended. Gates: unit 711/711
+  (`unit-h.log`), scenarios 29/29 (`scenarios-h.log`), lint 13/13. NEXT for iteration 5 is now items
+  1, 3, 4, 5 of the list above.

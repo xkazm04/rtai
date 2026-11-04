@@ -139,3 +139,5 @@ func test_one_ray_drops_a_human() -> void:
 	assert_true(arena.rivet_fire(g.pos))
 	_run(arena, fx, 1, 20)
 	assert_false(g.alive(), "one ray drops a human")
+	assert_eq(fx.impacts.size(), 1, "a ray marks where it stopped")
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a ray sizzles")

@@ -70,6 +70,18 @@
       "spikes": 0,
       "tracer_core_px": 5,
       "tracer_px": 10
+    },
+    "ray_gun": {
+      "casing_m": 0,
+      "mag_drop": false,
+      "muzzle_m": 0.7,
+      "muzzle_side_m": 0.3,
+      "muzzle_ticks": 2,
+      "scorch": true,
+      "smoke": 0.3,
+      "spikes": 0,
+      "tracer_core_px": 3,
+      "tracer_px": 8
     }
   }
 }
