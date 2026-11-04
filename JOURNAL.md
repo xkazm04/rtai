@@ -176,3 +176,21 @@ NEXT:
 - 02:39 fire char polish (NEXT 2, part): smoke alpha 0.42 -> 0.62 and wider wisps (now reads at
   32 px/m; the 32 px/m clip re-rendered), ember cracks longer and thicker, but they still do not read
   at 32 px/m over the charcoal (keep in NEXT 2: a brighter cream core, or fewer, bigger cracks).
+- 02:40 BUG found (not fixed, out of time): on the city block (`--arena=city --rigs
+  --sig-gun=flamethrower --sig-lab`, 5 burn kills) the fire kills still bleed RED (pool, spray,
+  corpse soak) although they char correctly; in the arena the veto works. Sheet:
+  evidence/brutality/city-flame-48ppm-BUG-blood-on-fire-kills-sheet.png. Suspect: on the city the
+  collect-call view scales its actor layer (k = SimConst.PX_PER_M / Ink.PX_PER_M), so the px that
+  CombatBlood passes to `veto` are not SimConst px and `SignatureKills.marked_near` misses; or the
+  city path bleeds through CityBlood's own CombatBlood (boot/city_blood.gd) without the veto.
+  Not in frames.json (it shows the wrong look).
+
+NEXT (supersedes the list above; iteration 3):
+1. Fix the city blood veto (above): log the px CombatBlood passes on the city vs the victim's
+   metres, convert with the right scale (or veto by victim id from kill_landed), re-shoot the city
+   fire clip, then city clips for the electro kill.
+2. Kill frame spike (62 ms CONTENDED) + the real bench under bench.lock; split KillView (251 lines).
+3. Fire embers readable at 32 px/m; electro scorch tint on the dropped body.
+4. Kill #5 katana (rivet-arsenal's melee hit event; cut the rig copy along the swing line).
+5. A reel of all four finished kills (rocket, hand cannon, fire, electro) at 32 px/m.
+6. Hand cannon polish (sprawl before the cut, the cap visibly leaves).
