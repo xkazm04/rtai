@@ -1209,3 +1209,7 @@ NEXT (after the 10:30 freeze; the REPORT is already updated in place for iterati
 1. If the owner picks call 17 B (the bold print blob), it is `--pickup-print=on` or `PickupLook.printed = true`.
 2. Human-reactions' riot-shield call B still needs a flat rectangular shield part; build only if the owner picks B.
 3. The calls to answer once judged: 3, 12, 14, 15, 16, 17.
+- 10:00 the pickup look on a second gun: live arena pit, `--pickups=ray_gun,plasma_rifle`, 48 px/m, same ticks with and
+  without `--pickup-print=on` (150 frames each, 0 script errors). Looked at tick 140 at 4x: the print broke the ray
+  gun into ink fragments; the ink look keeps it one coiled gun with its vermilion tip. Masters
+  `frames/it21-pickup-ink-ray-gun-ab-arena-pit-48ppm-4x.png`, cited in frames.json entry 5 and the REPORT bullet.
