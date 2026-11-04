@@ -962,3 +962,11 @@ NEXT (iteration 11, in order):
   with the fresh rocket, flamethrower and molotov clips (city11_*), labelled, 5 s each; looked at the
   4 s still: the molotov cell shows the fire and the char of the bottle before it, the rocket cell
   a scorch. frames.json: it replaces the it10 reel (now its `before`), 15 entries, all checked.
+- 07:10 scenarios 29/29 at 2f520b56 (`evidence/n10/scenarios-b.log`).
+- 07:12 3d85efbe the mini-nuke's burning ring had the same debug look (a smooth translucent
+  annulus, `arena_nuke_ring_32ppm/ring_patch_sequence.png`): now a band of char blotches round
+  0.85 r (FightScorchArt.ring, one per 2.2 m of rim, each 0.24 r), ground zero bare for the
+  vaporised shadows (brutality REQUEST 13's reason holds). `arena_nuke_ring11_32ppm/` (pit 32 px/m,
+  15 s, 0 script errors; still `ring_char_13s_32ppm.png`): looked at: a ragged burnt band under the
+  flames; the edge strokes are a little busy at this size, read as ink. Unit 745/745
+  (`evidence/n10/unit-b.log`). REPORT gunplay-8 points at the new clip.

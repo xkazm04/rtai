@@ -58,7 +58,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 Each one is a single value. The default stands until you answer.
 
 - **gunplay-7:** the electro charged shot. A: holding the trigger fires automatically at full charge (default). B: fire on release. Clip: `MASTERS/arena_electro_charge_64ppm/arena_electro_charge_64ppm.mp4`. Values: `charge_s` 0.6, `charge_damage` 150.
-- **gunplay-8:** the mini-nuke's fire. A: it burns as a ring round the rim (default; ground zero reads burnt out). B: a full 6 m disc. Clips: `MASTERS/arena_nuke_ring_32ppm/` vs `MASTERS/city_nuke_block_32ppm/`. Value: `RING_PATCH_M`.
+- **gunplay-8:** the mini-nuke's fire. A: it burns as a ring round the rim (default; ground zero reads burnt out). B: a full 6 m disc. Clips: `MASTERS/arena_nuke_ring11_32ppm/` (the ring as printed char, 3d85efbe; first cut `arena_nuke_ring_32ppm/`) vs `MASTERS/city_nuke_block_32ppm/`. Value: `RING_PATCH_M`.
 - **gunplay-9:** thrown weapons. A: they land at the mouse cursor (default; 1.2 m steps, up to 18 m). B: the fixed 14 m lob. Clip: `MASTERS/arena_molotov_reach_48ppm/`. Value: `input_actions.json aim.aim_reach_step_m` (0 gives the fixed lob).
 - **gunplay-10:** electro taps on humans. A: the plain taps stay lethal on humans (default; two taps drop a still human in 0.62 s). B: taps stun only, so the charged one-shot is the only electro kill. Evidence: `WT/evidence/n8/ttk-electro.md` and the charge clip. Value: the electro row's damage on humans.
 - **gunplay-11:** pad throws. A: a full stick push gives the old 14 m lob (default). B: a full push gives 18 m. Value: `LiveInput.stick_reach_m`.
