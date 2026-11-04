@@ -35,6 +35,8 @@ var actions: PlayerActions
 var shots: int = 0
 ## The spots walked, in order (a scenario plants a fault by replacing them).
 var sides: Array[Vector2] = SIDES.duplicate()
+## Aim this far beside each dummy (m, dev --wide): every round flies past it, a near miss.
+var wide_m: float = 0.0
 var _homes: Array[Vector2] = []
 var _step: int = 0
 var _arrived: int = -1
@@ -59,7 +61,9 @@ func sample(tick: int) -> TickInput:
 		return _input(Vector2.ZERO, Vector2.RIGHT, false)
 	var home: Vector2 = _homes[_step / SIDES.size()]
 	var spot: Vector2 = home + sides[_step % sides.size()]
-	var aim: Vector2 = (home - rivet).normalized()
+	var aim: Vector2 = (
+		(home + (home - rivet).normalized().orthogonal() * wide_m - rivet).normalized()
+	)
 	if _arrived < 0:
 		if rivet.distance_to(spot) > REACH_M:
 			return _input((spot - rivet).limit_length(1.0), aim, false)

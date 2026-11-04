@@ -10,7 +10,8 @@ extends Node
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
-## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
+## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides
+## (--wide=<m> aims that far beside each, so every round is a near miss).
 ## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 
@@ -90,7 +91,9 @@ func _open(args: ArenaArgs) -> void:
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 		session.world.loop().set_input(bot)
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
-		session.world.loop().set_input(ReactLineBot.new(session.stage, session.actions))
+		var line: ReactLineBot = ReactLineBot.new(session.stage, session.actions)
+		line.wide_m = args.number("--wide", 0.0)  # aim beside each dummy: near misses
+		session.world.loop().set_input(line)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):
