@@ -116,7 +116,7 @@ def casing(out, seed):
     m = _canvas(w, h)
     ImageDraw.Draw(m).rounded_rectangle([8 * SS, 8 * SS, 40 * SS, 22 * SS], radius=5 * SS, fill=255)
     rim = _poly(_canvas(w, h), [(8, 7), (14, 7), (14, 23), (8, 23)])
-    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=7), out / "casing.png")
+    _save(_compose([(m, INK_2), (rim, PAPER)], w, h, seed, outline=8), out / "casing.png")
     return [w, h], [w // 2, h // 2]
 
 

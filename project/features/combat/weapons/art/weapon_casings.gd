@@ -12,7 +12,7 @@ const FADE_TICKS: int = 60
 const MAX_LYING: int = 24
 ## Out to the side of the aim (m) and a little back, plus a per-round spread.
 const THROW_M: float = 1.0
-const SCALE: float = 0.8
+const SCALE: float = 1.3
 
 static var _at: Array[Vector2] = []
 static var _to: Array[Vector2] = []
