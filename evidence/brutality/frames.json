@@ -1,5 +1,15 @@
 [
   {
+    "file": "clips/signature-kills-reel-32ppm-36s.mp4",
+    "title": "Reel: the six finished signature kills at 32 px/m, real time, 6 s each",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": null,
+    "note": "Rocket gib, hand cannon blowback, flamethrower char, electro X-ray, katana split, plasma hole; arena kill lab, labelled. At 32 px/m the plasma hole is the weakest read."
+  },
+  {
     "file": "clips/katana-split-64ppm-slow-0.4x.mp4",
     "title": "Katana signature kill: the body cut in two, 64 px/m slow close-up (0.4x)",
     "source": "dev-scene",
@@ -138,15 +148,5 @@
     "ppm": 64,
     "before": "",
     "note": "Arena hub, --rigs --sig-gun=rocket_launcher --sig-lab. The cop is blown into its own six rig parts (head+cap, torso, arms, legs) that spin, bounce and slide with blood stumps and drag smears; cream ink flash 4 ticks, 4-tick hit-stop, scorch star, red spray fan. The straight red rods are this kill's v1 drag smears (since redrawn as blotchy wet streaks, commit after edcc87e); the dark wedge near the body is the standard d5-combat pool still playing under the kill."
-  },
-  {
-    "file": "clips/hand-cannon-blowback-64ppm-slow-0.4x.mp4",
-    "title": "Hand cannon signature kill, 64 px/m slow close-up (0.4x)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Arena hub, --sig-gun=hand_cannon --sig-lab. The cop is blown off the line in one piece (whole-rig copy) along the shot, lands and slides on a blotchy blood smear; small cream flash, 3-tick hit-stop, exit spray in a 34 deg fan. Not yet: the body flies in its standing pose (no sprawl), the cap does not visibly separate (it overlaps the head), no wall collision."
   }
 ]

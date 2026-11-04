@@ -278,3 +278,4 @@ NEXT (iteration 5):
 6. KillView is 277 lines (hard stop 300): move _parts/_cut/_blobs into kill_parts.gd first.
 7. Katana live: when rivet-arsenal's melee weapons land (their NEXT 5), merge and re-shoot with
    the real swing instead of the lab lunge.
+- 03:20 reel of the six finished kills (32 px/m, 36 s, labelled): gtai-masters/n4/brutality/clips/signature-kills-reel-32ppm-36s.mp4 (NEXT 5 done). Seen on its sheet: the plasma hole barely reads at 32 px/m, and one red dot lies near a plasma victim (spray is 0: check which path drops it).
