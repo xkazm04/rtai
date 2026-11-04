@@ -1,17 +1,21 @@
 class_name BrutalityHook
 extends ArenaHook
-## The brutality lane in the arena (station `brutality_range`, arena_stations/brutality.json): it
+## The brutality lane in the arena (station `brutality_pit`, arena_stations/brutality.json): it
 ## feeds CombatArena.struck lethal hits into SignatureKills, steps the gibs on the 60 Hz tick from
 ## the `brutality` RNG stream, folds them into the replay hash and draws them with KillView on the
 ## print stage's actor layer. Arena args (after --): --sig-gun=<weapon id> hands Rivet that
 ## weapons.json gun (the rocket launcher, until the arsenal lane's weapon wheel lands);
-## --gore=reduced turns every signature kill into the standard death.
+## --sig-lab lines guards up in front of him (KillLab, a framed capture); --gore=reduced turns
+## every signature kill into the standard death.
+
+const PART_RADIUS_M: float = 0.2
 
 var kills: SignatureKills = null
 var view: KillView = null
 var _stage: ArenaStage = null
 var _rigs: ArenaRigs = null
 var _game: Node = null
+var _lab: KillLab = null
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -19,6 +23,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	var table: SignatureKillTable = SignatureKillTable.load_table()
 	table.gore_full = SignatureKillTable.gore_from_args(ArenaArgs.parse().text("--gore", "full"))
 	kills = SignatureKills.new(table, ctx.rng.stream(&"brutality"))
+	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
 	stage.arena.struck.connect(_on_struck)
 	var gun: String = ArenaArgs.parse().text("--sig-gun")
@@ -26,10 +31,15 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if weapons != null and weapons.weapons.has(StringName(gun)):
 		stage.arena.gun = GunHand.make(weapons, StringName(gun), ctx.rng.stream(&"brutality_gun"))
 		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+	if ArenaArgs.parse().has("--sig-lab"):
+		_lab = KillLab.new()
+		_lab.setup(stage)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
 	kills.step(tick)
+	if _lab != null:
+		_lab.step(stage, tick)
 	if kills.consumed.is_empty():
 		return
 	for h: Fighter in stage.arena.hostiles:  # a revived or re-spawned body is whole again
@@ -69,6 +79,12 @@ func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 		return
 	if kills.on_kill(KillEvent.of_fighter(victim, dir, weapon)):
 		_hide(victim.id)
+
+
+## A part against the arena's walls (and the city block's buildings and cars).
+func _push_out(p: Vector2) -> Vector2:
+	var out: Vector2 = _stage.walls.push_out(p, PART_RADIUS_M)
+	return _stage.cells.push_out(out, PART_RADIUS_M) if _stage.cells != null else out
 
 
 func _rig_of(victim_id: int) -> CutRig:

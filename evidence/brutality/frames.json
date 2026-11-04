@@ -1,0 +1,102 @@
+[
+  {
+    "file": "clips/rocket-gib-arena-64ppm-slow-0.4x.mp4",
+    "title": "Rocket signature kill, 64 px/m slow close-up (0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Arena hub, --rigs --sig-gun=rocket_launcher --sig-lab. The cop is blown into its own six rig parts (head+cap, torso, arms, legs) that spin, bounce and slide with blood stumps and drag smears; cream ink flash 4 ticks, 4-tick hit-stop, scorch star, red spray fan. The straight red rods are this kill's v1 drag smears (since redrawn as blotchy wet streaks, commit after edcc87e); the dark wedge near the body is the standard d5-combat pool still playing under the kill."
+  },
+  {
+    "file": "clips/rocket-gib-arena-32ppm-15s.mp4",
+    "title": "Rocket signature kill, real time at 32 px/m (6 kills)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "Real-time, fixed-fps 60, 900 frames. Rivet fires the weapons.json rocket launcher at a line of six contractors (KillLab); every lethal rocket replaces the standard death with the gib kill. Other stations' dummies stand in the hub row above."
+  },
+  {
+    "file": "clips/rocket-gib-arena-64ppm-12s.mp4",
+    "title": "Rocket signature kill, real time at 64 px/m",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Same run at 64 px/m, uncropped, real time."
+  },
+  {
+    "file": "clips/hand-cannon-blowback-64ppm-slow-0.4x.mp4",
+    "title": "Hand cannon signature kill, 64 px/m slow close-up (0.4x)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Arena hub, --sig-gun=hand_cannon --sig-lab. The cop is blown off the line in one piece (whole-rig copy) along the shot, lands and slides on a blotchy blood smear; small cream flash, 3-tick hit-stop, exit spray in a 34 deg fan. Not yet: the body flies in its standing pose (no sprawl), the cap does not visibly separate (it overlaps the head), no wall collision."
+  },
+  {
+    "file": "frames/hand-cannon-bodies-stop-at-wall-32ppm.png",
+    "title": "Hand cannon: bodies stop at the wall (32 px/m crop)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "After the wall push-out: the bodies of the line pile up against the wall with their smears and the stacked standard pools."
+  },
+  {
+    "file": "clips/hand-cannon-blowback-arena-32ppm-13s.mp4",
+    "title": "Hand cannon signature kill, real time at 32 px/m",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "Real time, fixed-fps 60, re-rendered 01:52 with gib/wall collision: the blown-back bodies pile against the hub's south wall; one slides through a gap in the wall (likely a door) into the pit. When the line of six is down, a new line steps in (lab only)."
+  },
+  {
+    "file": "clips/hand-cannon-blowback-arena-64ppm-12s.mp4",
+    "title": "Hand cannon signature kill, real time at 64 px/m",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Uncropped real time."
+  },
+  {
+    "file": "frames/hand-cannon-blowback-64ppm-sheet.png",
+    "title": "Hand cannon blowback, 15 frames every 4 ticks (64 px/m)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Frame sheet: the flash, the spray, the body leaving the line to the lower right and sliding."
+  },
+  {
+    "file": "frames/rocket-gib-64ppm-sheet.png",
+    "title": "Rocket gib kill, 16 frames every 6 ticks (64 px/m)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "frames/rocket-gib-48ppm-pit-hub-sheet-v1.png",
+    "note": "Row 2: the flash, then the parts leave along the blast; rows 3-4: parts at rest on their smears. Frame sheet, not the judged clip."
+  },
+  {
+    "file": "frames/rocket-gib-48ppm-pit-hub-sheet-v1.png",
+    "title": "First pass (before): clean red disc, rod smears, no stumps (48 px/m)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 48,
+    "before": "",
+    "note": "v1 of the same kill, kept as the before for the dressing pass."
+  }
+]

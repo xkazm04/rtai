@@ -11,7 +11,10 @@ const GRAVITY: float = 24.0
 const LAND_VZ: float = 1.2
 const AIR_SPIN_KEEP: float = 0.6
 ## Piece mass feel: the torso flies lower and slower than a limb or the head.
-const HEAVY: PackedFloat32Array = [0.9, 0.55, 1.0, 1.0, 0.85, 0.85]
+## The whole body (blowback) flies as one; its cap pops higher and spins hardest.
+const HEAVY: PackedFloat32Array = [0.9, 0.55, 1.0, 1.0, 0.85, 0.85, 1.0, 1.15]
+## Spin per piece: a blown-back body turns slowly, everything else at the row's spin.
+const SPIN_K: PackedFloat32Array = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.12, 1.4]
 
 var pos: PackedVector2Array = PackedVector2Array()
 var vel: PackedVector2Array = PackedVector2Array()
@@ -69,7 +72,9 @@ func throw(
 		z[i] = 0.6
 		vz[i] = rng.randf_range(row.up_mps.x, row.up_mps.y) * heavy
 		ang[i] = rng.randf_range(-PI, PI)
-		spin[i] = deg_to_rad(rng.randf_range(row.spin_dps.x, row.spin_dps.y)) * _sign(rng)
+		spin[i] = (
+			deg_to_rad(rng.randf_range(row.spin_dps.x, row.spin_dps.y)) * _sign(rng) * SPIN_K[p]
+		)
 		piece[i] = p
 		kill_of[i] = serial
 		bounce[i] = row.bounce
