@@ -1200,3 +1200,14 @@ NEXT (morning merge), in order:
    ReactLink already maps the ids to `melee` (1623e625). Film the claw chapter A/B at 48 px/m.
 2. Move MELEE_IDS to data once the melee table is merged (DECISION line re-check).
 3. REPORT next steps 1-6 as listed.
+
+## Iteration 24 (10:16-10:30, BUILD, last before the freeze)
+- 10:16 read JOURNAL NEXT, git log, other lanes' JOURNALs for REQUESTs -> human-reactions. All are closed:
+  rivet-arsenal REQUEST 1 (cream hit flash, line 88), showcase 2/6/8/10/12/20/22/23/24/24b (answered in
+  earlier iterations; 24b verified in the round-19 cut at 10:08), gunplay ANSWERS 2/3 merged. Tree clean
+  (only untracked evidence), no Godot process of mine running.
+- DECISION 10:17: no new code before the freeze. The two open items need another lane (rivet-arsenal's
+  PlayerMelee emit + the HitLink stacking call) or a table that is not on this branch (the melee ids as data).
+  A change now could not be gated (unit ~6 min, scenarios ~4 min) and filmed by 10:30. The branch head
+  stays at the gated commit 1623e625 plus docs (lint 13/13, unit 755/755, scenarios 33/33).
+NEXT: unchanged from iteration 23 (morning merge items 1-3 above). At 10:40 REPORT: no code after 1623e625.
