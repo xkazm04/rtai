@@ -182,3 +182,17 @@ were last run on `59429978`.
   passed when re-run alone.
 - **Checked, not changed:** the rocket's thrown parts stay inside the 48 px/m city frame (the farthest
   stops ~6 m out). Changing the launch speeds would move the gib sim goldens this close to the freeze.
+
+## After 10:00 (iteration 20, 10:00-10:30, the freeze)
+- **No code change after `5e37b57c`.** Showcase's round 19 (`51779046`) merged this branch at its
+  head (`69a6f9c3`), so the final reel and exe have every brutality fix, including the zoom-scaled
+  burn rim. Human-reactions' plank-legs patch for the electro corpse (REQUEST 30) cannot apply on
+  this branch (it has no `c_plank`). Showcase may apply it on their main as merge glue, with my OK.
+- **Nuke tick-123 frame (4.4 ms, open):** the char shader compiling on its first draw is ruled out.
+  The shader is already in use from tick 105 (the five vaporise victims), so the tick-122 burn
+  compiles nothing new. The likely cost is the RenderingServer work the tick-122 cut queued, paid at
+  the first draw of tick 123. The fix to try: build the cut's canvas items a tick early, or split a
+  multi-victim cut over two ticks. Measure it under `bench.lock` against `E/lock-it18/`. The frame is
+  still well under 16.6 ms.
+- Gates of record stay those on `5e37b57c` (section above). frames.json is unchanged (15 entries).
+

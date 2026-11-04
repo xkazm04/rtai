@@ -1212,3 +1212,36 @@ NEXT (iteration 20 / the 10:40 REPORT):
    (evidence/brutality/lock-it18 is the before).
 5. Owner call added: ray lock stand_ticks 30 (default) vs 12.
 - 10:02 session closed. Head = this commit; code head 5e37b57c.
+
+## Iteration 20 (10:00-10:30, BUILD, last session before the freeze)
+- Read: JOURNAL NEXT, git log, the other lanes' JOURNALs. No new REQUEST -> brutality. Showcase's
+  round 19 merged n-brutality at its head 69a6f9c3 (n-showcase 51779046), so 5e37b57c (zoom-scaled
+  burn rim) is in the final reel/exe round. REQUEST 30 (plank legs patch) stays with showcase as
+  merge glue (my OK sent at 10:01); human-reactions' v2 patch restores the RigGait side fields too,
+  which closes the caveat I sent.
+- DECISION 10:05 no code commit this session: showcase's final round already holds my head, and a
+  perf change for the nuke frame cannot be gated (unit + scenarios + parity) and proved under
+  bench.lock before 10:30. Anything landed now would miss the reel and the exe and reach the
+  morning merge unproven.
+- ANALYSIS 10:05 (NEXT 4, the nuke tick-123 frame, no run): the char shader's first draw is ruled
+  out as the cause. The five vaporise victims at tick 105 already draw kill_char.gdshader (via
+  _shadow_mat) from tick 105-106, and the burn victim at 122 uses the same shader (only the material
+  differs: _char_mat, rim_px > 0), so no new pipeline compiles at 123. KillGround has no GPU
+  readback or viewport. What is left: the RenderingServer work the tick-122 cut queued (new canvas
+  items, a material's first uniform set) being paid at the first RS call of tick 123, i.e. the probe
+  in KillView._draw is where the wait lands, not what causes it. Next try (morning or next night):
+  build the cut's canvas items one tick early (hidden), or split a multi-victim cut over two
+  ticks, and compare against evidence/brutality/lock-it18 under bench.lock. Still 4.4 ms, under
+  16.6 ms; stays an open item, not a blocker.
+- Clean-up: removed gtai-n4/scratch-brutality/it11 (old ray/plasma scratch; frames.json uses the
+  masters copies under clips/, both still present). No Godot process of mine was started.
+- Registry rules: realtime-combat-semantics (no sim or golden change this close to the freeze);
+  motion-quality-gating (no claim without a before/after; the nuke item stays a LEAD with a plan).
+
+NEXT (morning merge):
+1. Check that showcase's main has 5e37b57c (it does, via 69a6f9c3) and human-reactions' plank-legs
+   patch v2 in kill_sprawl_cut.gd; re-film the electro clip on main.
+2. Re-check gunplay REQUEST 29/30 answers (molotov corpse, stuck shards) on the merged main.
+3. The nuke tick-123 frame: prebuild the cut's canvas items a tick early or split the cut over two
+   ticks; measure under bench.lock against lock-it18.
+4. Owner calls in REPORT (ray lock stand_ticks 30 vs 12, and the earlier ones).
