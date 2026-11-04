@@ -33,6 +33,36 @@
         6.5
       ],
       "weapon": "rocket_launcher"
+    },
+    {
+      "bounce": 0.25,
+      "cone_deg": 8,
+      "doc": "Hand cannon: the victim is blown off their feet in one piece, flies back along the shot, lands and slides on a long blood smear while the cap spins off; an exit spray fans out behind the body. No scorch.",
+      "flash_ticks": 2,
+      "ground_drag": 5,
+      "hitstop_ticks": 3,
+      "id": "hand_cannon_blowback",
+      "launch_mps": [
+        7.5,
+        9
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        180,
+        540
+      ],
+      "spray": 14,
+      "spray_cone_deg": 34,
+      "style": "blowback",
+      "up_mps": [
+        2.2,
+        2.8
+      ],
+      "weapon": "hand_cannon"
     }
   ],
   "leftover_budget": 12,

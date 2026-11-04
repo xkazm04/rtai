@@ -96,3 +96,20 @@ func test_leftover_budget_recycles_the_oldest_marks() -> void:
 	for i: int in GibSim.CAPACITY:
 		live += 1 if k.gibs.live(i) else 0
 	assert_eq(live, GibSim.CAPACITY, "the pool never grows past its capacity")
+
+
+func test_hand_cannon_blows_the_body_back_in_one_piece() -> void:
+	var k: SignatureKills = _kills(11)
+	assert_true(k.on_kill(_ev(1, Vector2.ZERO, Vector2.RIGHT, &"hand_cannon")))
+	var row: SignatureKill = k.table.for_weapon(&"hand_cannon")
+	assert_true(row.whole_body())
+	for t: int in 600:
+		k.step(t)
+	var body: int = -1
+	for i: int in GibSim.CAPACITY:
+		if k.gibs.live(i) and k.gibs.piece[i] == SignatureKill.BODY:
+			body = i
+	assert_gt(body, -1)
+	var flew: float = k.gibs.pos[body].x
+	assert_between(flew, 3.0, 9.0, "blown back along the shot, then slid (%.2f m)" % flew)
+	assert_lt(absf(k.gibs.pos[body].y), 1.5, "stays on the shot line")

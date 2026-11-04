@@ -55,14 +55,22 @@ static func blot(ci: CanvasItem, c: Vector2, r: float, phase: float) -> void:
 	ci.draw_colored_polygon(inner, BLOOD)
 
 
+## A drag smear: blots along the slide, fat where the part landed and thinning to its rest,
+## with gaps, so it reads as a wet streak and never as a ruled line.
 static func smear(ci: CanvasItem, trail: PackedVector2Array, ppm: float) -> void:
-	ci.draw_polyline(trail, BLOOD_DARK, 0.16 * ppm, true)
-	ci.draw_polyline(trail, BLOOD, 0.1 * ppm, true)
+	var n: int = trail.size()
+	for k: int in n:
+		if k % 5 == 4:
+			continue
+		var t: float = float(k) / float(maxi(1, n - 1))
+		var r: float = ppm * (0.13 - 0.08 * t) * (0.75 + 0.25 * sin(float(k) * 2.3))
+		ci.draw_circle(trail[k], r * 1.2, BLOOD_DARK)
+		ci.draw_circle(trail[k], r, BLOOD)
 
 
 static func flash(ci: CanvasItem, m: KillMarks.Mark, age: int, ppm: float, hold: int) -> void:
 	var c: Vector2 = m.at * ppm
-	var grow: float = 1.0 + 0.25 * float(age)
+	var grow: float = (1.0 + 0.25 * float(age)) * m.flash_scale
 	var pts: PackedVector2Array = PackedVector2Array()
 	for k: int in 24:
 		var r: float = (1.6 if k % 2 == 0 else 0.8) * ppm * grow

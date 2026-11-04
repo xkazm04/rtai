@@ -9,7 +9,6 @@ extends Node2D
 const BLOOD: Color = KillMarkArt.BLOOD
 const SOOT: Color = KillMarkArt.SOOT
 const LIFT_SCALE: float = 0.22
-const FLASH_HOLD: int = 4
 const TRAIL_MAX: int = 40
 
 var kills: SignatureKills = null
@@ -68,8 +67,9 @@ func _draw() -> void:
 			draw_circle(g.pos[i] * ppm, r, SOOT)
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
-		if not reduced_motion and age >= 0 and age < FLASH_HOLD + 2:
-			KillMarkArt.flash(self, m, age, ppm, FLASH_HOLD)
+		var soot: int = 2 if m.scorch_m > 0.0 else 0
+		if not reduced_motion and age >= 0 and age < m.flash_ticks + soot:
+			KillMarkArt.flash(self, m, age, ppm, m.flash_ticks)
 
 
 func _node(i: int) -> Node2D:
@@ -85,15 +85,16 @@ func _node(i: int) -> Node2D:
 
 
 func _on_killed(
-	victim_id: int, serial: int, _row: SignatureKill, _at: Vector2, _dir: Vector2
+	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, _dir: Vector2
 ) -> void:
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var groups: Array[Node2D] = GibCut.cut(rig) if rig != null else _blobs()
 	for gr: Node2D in groups:
-		var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
-		stump.radius = 0.1 * ppm
-		stump.z_index = -1
-		gr.add_child(stump)
+		if not row.whole_body():
+			var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
+			stump.radius = 0.1 * ppm
+			stump.z_index = -1
+			gr.add_child(stump)
 		gib_layer.add_child(gr)
 	_groups[serial] = groups
 	var g: GibSim = kills.gibs
@@ -134,7 +135,7 @@ func _blobs() -> Array[Node2D]:
 	var out: Array[Node2D] = []
 	for i: int in SignatureKill.PIECE_IDS.size():
 		var b: GibBlob = GibBlob.new()
-		b.radius = (0.16 if i < 2 else 0.1) * ppm
+		b.radius = (0.16 if i < 2 or i == SignatureKill.BODY else 0.1) * ppm
 		@warning_ignore("return_value_discarded")
 		out.append(b)
 	return out

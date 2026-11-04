@@ -57,7 +57,9 @@
                 "arm_l",
                 "arm_r",
                 "leg_l",
-                "leg_r"
+                "leg_r",
+                "body",
+                "hat"
               ]
             },
             "type": "array"
@@ -78,6 +80,11 @@
           "spray": {
             "minimum": 0,
             "type": "integer"
+          },
+          "spray_cone_deg": {
+            "maximum": 360,
+            "minimum": 0,
+            "type": "number"
           },
           "style": {
             "enum": [

@@ -7,8 +7,9 @@ extends RefCounted
 ## Render only: never sim state, no RNG.
 
 
-## Six Node2D groups by SignatureKill.PIECE_IDS index (a group may be empty: no sprites).
-static func cut(rig: CutRig) -> Array[Node2D]:
+## Node2D groups by SignatureKill.PIECE_IDS index (a group may be empty: no sprites). With
+## `whole` the BODY group holds every sprite and the HAT group a copy of the head (the cap).
+static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 	var kind_of: Dictionary[Node, int] = _limb_kinds(rig)
 	var groups: Array[Node2D] = []
 	var sums: PackedVector2Array = PackedVector2Array()
@@ -25,22 +26,38 @@ static func cut(rig: CutRig) -> Array[Node2D]:
 	var inv: Transform2D = (rig.get_parent() as CanvasItem).get_global_transform().affine_inverse()
 	var origin: Vector2 = rig.position
 	for spr: Sprite2D in _sprites(rig):
-		var k: int = _kind(spr, rig, kind_of)
-		var copy: Sprite2D = _copy(spr)
 		var xf: Transform2D = inv * spr.get_global_transform()
 		xf.origin -= origin
-		copy.transform = xf
-		copy.z_index = _z(spr, rig)
-		groups[k].add_child(copy)
-		if spr.name != RigBuild.HALO:
-			sums[k] += xf.origin
-			counts[k] += 1
+		var k: int = SignatureKill.BODY if whole else _kind(spr, rig, kind_of)
+		_place(groups[k], spr, xf, _z(spr, rig))
+		if whole and _under(spr, rig.head, rig):
+			_place(groups[SignatureKill.HAT], spr, xf, _z(spr, rig))
+		for kk: int in [k, SignatureKill.HAT] if whole and _under(spr, rig.head, rig) else [k]:
+			if spr.name != RigBuild.HALO:
+				sums[kk] += xf.origin
+				counts[kk] += 1
 	for i: int in groups.size():
 		var c: Vector2 = sums[i] / float(counts[i]) if counts[i] > 0 else Vector2.ZERO
 		for ch: Node in groups[i].get_children():
 			(ch as Node2D).position -= c
 		groups[i].position = c
 	return groups
+
+
+static func _place(group: Node2D, spr: Sprite2D, xf: Transform2D, z: int) -> void:
+	var copy: Sprite2D = _copy(spr)
+	copy.transform = xf
+	copy.z_index = z
+	group.add_child(copy)
+
+
+static func _under(spr: Node, holder: Node, rig: CutRig) -> bool:
+	var n: Node = spr
+	while n != null and n != rig:
+		if n == holder:
+			return true
+		n = n.get_parent()
+	return false
 
 
 static func _limb_kinds(rig: CutRig) -> Dictionary[Node, int]:

@@ -10,6 +10,9 @@ class Mark:
 	var at: Vector2 = Vector2.ZERO
 	var dir: Vector2 = Vector2.RIGHT
 	var scorch_m: float = 0.0
+	## The ink flash: cream ticks (then a soot tick or two after a blast) and its size.
+	var flash_ticks: int = 0
+	var flash_scale: float = 1.0
 	## Spray drops: x, y in metres from `at`; z = drop radius in metres.
 	var drops: PackedVector3Array = PackedVector3Array()
 	var tick: int = 0
@@ -32,8 +35,11 @@ func leave(
 	m.at = at
 	m.dir = dir
 	m.scorch_m = row.scorch_radius_m
+	m.flash_ticks = row.flash_ticks
+	m.flash_scale = 1.0 if row.scorch_radius_m > 0.0 else 0.55
 	m.tick = tick
-	var half: float = deg_to_rad(row.cone_deg) * 0.5
+	var cone: float = row.spray_cone_deg if row.spray_cone_deg > 0.0 else row.cone_deg
+	var half: float = deg_to_rad(cone) * 0.5
 	for n: int in row.spray:
 		var a: float = dir.angle() + rng.randf_range(-half, half)
 		var reach: float = rng.randf_range(0.4, 3.6)

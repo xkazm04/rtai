@@ -4,7 +4,12 @@ extends RefCounted
 ## a human. Speeds in m/s, spin in deg/s, timings in 60 Hz ticks. Missing optional fields keep
 ## the defaults below, so a new style can land with only its own keys.
 
-const PIECE_IDS: PackedStringArray = ["head", "torso", "arm_l", "arm_r", "leg_l", "leg_r"]
+## Gib parts (0-5), or the whole body in one piece plus the cap knocked off it (6-7).
+const PIECE_IDS: PackedStringArray = [
+	"head", "torso", "arm_l", "arm_r", "leg_l", "leg_r", "body", "hat"
+]
+const BODY: int = 6
+const HAT: int = 7
 
 var id: StringName = &""
 var weapon: StringName = &""
@@ -20,6 +25,8 @@ var hitstop_ticks: int = 0
 var flash_ticks: int = 0
 var scorch_radius_m: float = 0.0
 var spray: int = 0
+## The spray fan's width (degrees); 0 = the pieces' cone.
+var spray_cone_deg: float = 0.0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -42,7 +49,13 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.flash_ticks = roundi(_num(t, d, "flash_ticks", 0.0))
 	k.scorch_radius_m = _num(t, d, "scorch_radius_m", 0.0)
 	k.spray = roundi(_num(t, d, "spray", 0.0))
+	k.spray_cone_deg = _num(t, d, "spray_cone_deg", 0.0)
 	return k
+
+
+## True when the row throws the whole body (blowback) instead of gib parts.
+func whole_body() -> bool:
+	return pieces.has(BODY)
 
 
 static func _num(t: DataTable, d: Dictionary, key: String, fallback: float) -> float:
