@@ -9,9 +9,10 @@ extends RefCounted
 const RINGS: int = 4
 const GAP_M: float = 0.9
 const SQUASH: float = 0.42
-## Each ring further back draws this much wider and this much fainter.
+## Each ring further back draws this much wider and this much fainter (n5-look: FADE 0.2 -> 0.12,
+## the tail ring at 0.64 alpha: at 0.4 the acid green printed olive over the dark slab).
 const GROW: float = 0.18
-const FADE: float = 0.2
+const FADE: float = 0.12
 ## Each hoop is drawn first in ink (WeaponFxElectro.ink_cell, the electro bolt's thickened outline):
 ## the thin paper hoops read faint on cream paving at 32 px/m (call 3). `--ray-ink=off` = before.
 ## The hoops' ink reaches RAY_INK_M out (less than the bolt's: at 0.06 m they read as dark tyres).
