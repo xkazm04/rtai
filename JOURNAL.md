@@ -392,3 +392,4 @@ NEXT (iteration 7):
   filter 4/4, full suite 35/35 (scenarios-it6.log).
 - FRICTION: a background unit run without `GODOT_BIN` exported reported "exit -1" on every phase
   and the previous junit count (762). Read the exit codes, not only the count.
+- 04:13 final gates on 136a8e9a: lint 13/13, unit 775/775, scenarios 35/35. Session closed.
