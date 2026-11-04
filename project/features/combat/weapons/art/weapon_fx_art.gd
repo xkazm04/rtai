@@ -21,6 +21,8 @@ const FLASH_AHEAD_M: float = 0.45
 const GUN_SIDE_M: float = 0.35
 ## A drawn round starts on the gun's side and reaches the sim's line (body centre) this far out.
 const CONVERGE_M: float = 3.0
+## The thrown molotov draws this much bigger than the held one (at 1.0 it was a speck in flight).
+const BOTTLE_K: float = 1.8
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -153,12 +155,14 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	ci.draw_rect(shadow.grow(-2.0 * lift), FightAreasArt.SCORCH)
 	var up: Vector2 = s.pos + Vector2(0.0, -lift)
 	var tex: Texture2D = art().held_texture(&"molotov")
-	var k: float = art().world_scale(&"molotov") * Ink.PX_PER_M / WeaponArt.WORLD_PX_PER_M
+	var k: float = (
+		art().world_scale(&"molotov") * Ink.PX_PER_M / WeaponArt.WORLD_PX_PER_M * BOTTLE_K
+	)
 	ci.draw_set_transform(Ink.px(up), float(tick) * 0.45, Vector2.ONE * k)
 	ci.draw_texture(tex, -tex.get_size() * 0.5)
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var wick: Vector2 = Vector2.from_angle(float(tick) * 0.45) * tex.get_width() * 0.5 * k
-	_cell(ci, &"flame", tick % 3, up + wick / Ink.PX_PER_M, -PI * 0.5, 0.3, 1.0)
+	_cell(ci, &"flame", tick % 3, up + wick / Ink.PX_PER_M, -PI * 0.5, 0.45, 1.0)
 
 
 ## Frame `frame` of fx `id` with its anchor on `at` (m), turned `angle`, `scale` x the cell scale.
