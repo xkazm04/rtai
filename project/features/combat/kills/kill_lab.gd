@@ -17,6 +17,8 @@ const LINE: PackedVector2Array = [
 	Vector2(3.2, 4.2)
 ]
 const HOLD_FIRE: int = 100000
+## How far a burning guard may run from its mark (metres): the panic stays in the camera.
+const RUN_M: float = 1.8
 
 var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
@@ -34,8 +36,9 @@ func step(stage: ArenaStage, tick: int) -> void:
 		var g: Fighter = guards[n]
 		g.cooldown = HOLD_FIRE
 		g.tell_left = 0
-		if g.alive():
-			g.pos = spots[n]
+		if g.alive():  # a burning guard runs ablaze, tethered so the fire kill stays in frame
+			var run: float = RUN_M if _burning(stage, g) else 0.0
+			g.pos = spots[n] + (g.pos - spots[n]).limit_length(run)
 	if tick < FIRST_SHOT or (tick - FIRST_SHOT) % SHOT_EVERY != 0:
 		return
 	var target: Fighter = _target()
@@ -44,6 +47,11 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	if stage.arena.rivet_fire(target.pos):
 		shots += 1
+
+
+func _burning(stage: ArenaStage, g: Fighter) -> bool:
+	var areas: FightAreas = stage.arena.areas
+	return areas != null and areas.fx.has(g.id) and areas.fx[g.id].burn_ticks > 0
 
 
 func _target() -> Fighter:

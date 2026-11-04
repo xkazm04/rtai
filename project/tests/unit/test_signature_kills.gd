@@ -141,3 +141,14 @@ func test_a_fire_death_chars_in_place_with_an_ash_heap_and_no_blood() -> void:
 		if k.gibs.live(i):
 			assert_eq(k.gibs.piece[i], SignatureKill.BODY)
 			assert_lt(k.gibs.pos[i].distance_to(Vector2(2.0, 2.0)), 0.5, "the char stays put")
+
+
+func test_a_flame_puff_kill_by_kind_burned_also_chars() -> void:
+	var k: SignatureKills = _kills(6)
+	var e: KillEvent = _ev(9, Vector2(1.0, 1.0), Vector2.RIGHT, &"flamethrower")
+	e.damage_type = &"burned"
+	assert_true(k.on_kill(e))
+	assert_true(
+		k.marked_near(Vector2(1.0, 1.0) * SimConst.PX_PER_M), "the standard blood is vetoed"
+	)
+	assert_false(k.marked_near(Vector2(9.0, 9.0) * SimConst.PX_PER_M))

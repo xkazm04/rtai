@@ -72,6 +72,8 @@ func attach_view(p_view: Node) -> void:
 	view.rig_lookup = _rig_of
 	view.bind(kills)
 	cc.print_stage.actor_layer().add_child(view)
+	if cc.blood != null:  # the kill prints its own blood (or none, fire): no standard death pool
+		cc.blood.veto = kills.marked_near
 
 
 ## gunplay's kill payload (JOURNAL REQUEST 1, agreed): every lethal hit on a non-Rivet fighter;

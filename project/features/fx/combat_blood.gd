@@ -42,6 +42,9 @@ var frames: int = 0
 var spent_us: int = 0
 ## Where the player is (px), for the oil trail after a hit: Callable() -> Vector2 (INF = unknown).
 var player_px: Callable = Callable()
+## Callable(pos_px: Vector2) -> bool: true skips a death's blood (a signature kill, lane brutality,
+## prints its own marks there).
+var veto: Callable = Callable()
 var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
 var _drop_draws: PackedInt32Array = [0, 0]
@@ -194,6 +197,8 @@ func _pool_from_game() -> void:
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).
 ## `slide_px`: how far the body slides along `dir` after death (its pool starts under it there).
 func kill_human(pos_px: Vector2, dir: Vector2, slide_px: float = 4.0) -> void:
+	if veto.is_valid() and veto.call(pos_px):
+		return
 	kills += 1
 	var kind: String = _game.get("death_hit", "kill")
 	blood.pool_lead_px = slide_px
