@@ -977,3 +977,22 @@ NEXT (unchanged from iteration 13):
 2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
    under the patch stars): check both on the merged main.
 3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
+
+## Iteration 16 (08:30-08:40, STABILIZE)
+- 08:30 session opened at the freeze with 10 minutes to the report; no code touched.
+- frames.json in masters checked: 15 entries, every referenced file exists.
+- For the Director, about showcase REQUEST 29: showcase's 08:22 re-check (n-showcase d7868221, "electro
+  corpse still upright") ran on their round-15 build. The fix 63cc3ce1 (the electro body lies long
+  along the shot) is only on `n-brutality` (`git branch --contains 63cc3ce1` -> n-brutality only),
+  so that build could not include it. The two agree: the corpse is upright without 63cc3ce1 and
+  lies down with it (clip `clips/electro-lie-down-city-48ppm-it13.mp4`). Close REQUEST 29 once
+  n-brutality is merged; re-check on the merged main.
+- Gates of record unchanged: 63cc3ce1, lint 13/13, unit 787/787, scenarios 35/35 (CONTENDED).
+  No Godot process of mine running.
+
+NEXT:
+1. After the morning merge: re-check the electro corpse on main (REQUEST 29), then swap the
+   stretched lie-out for human-reactions' DeathPose._shock channels.
+2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
+   under the patch stars): check both on the merged main.
+3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
