@@ -41,6 +41,9 @@ const ARC_MIN_M: float = 2.0
 
 static var enabled: bool = not OS.get_cmdline_user_args().has("--weapon-fx=shapes")
 static var fire_burst: bool = not OS.get_cmdline_user_args().has("--fire-burst=off")
+## The blast's last frame (a ring of cream discs) read as debug beads; by default the smoke ring
+## (frame 2) holds through it, growing and thinning. `--blast-beads=on` = the before.
+static var blast_beads: bool = OS.get_cmdline_user_args().has("--blast-beads=on")
 static var _art: WeaponArt = null
 static var _frames: Dictionary[StringName, Array] = {}
 
@@ -144,7 +147,12 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 	var fade: float = 1.0 - into * 0.6 if f == 3 else 1.0
 	# frame sizes grow 300 -> 480 part px; the last frame spans the splash diameter
 	var size_k: float = 2.0 * b.z * Ink.PX_PER_M / 480.0 / cell_scale()
-	_cell(ci, &"blast", f, at, b.y * 0.9, size_k * (1.0 + 0.08 * into), fade)
+	var grow: float = 1.0 + 0.08 * into
+	if f == 3 and not blast_beads:
+		f = 2
+		grow = 1.08 + 0.22 * into
+		fade = 1.0 - into * 0.85
+	_cell(ci, &"blast", f, at, b.y * 0.9, size_k * grow, fade)
 	return true
 
 
