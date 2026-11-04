@@ -23,3 +23,15 @@ func test_cop_limbs_are_human_length() -> void:
 	var arm_c: float = (cop.upper_len + cop.fore_len[0]) * cop.size_k
 	var arm_p: float = (ped.upper_len + ped.fore_len[0]) * ped.size_k
 	assert_between(arm_c / arm_p, 0.9, 1.15, "arm length, cop : ped")
+
+
+## Iteration 11 (r2_a5 from straight above): the ped's head is a small mark inside the shoulders
+## and its standing shoes stay under the coat; the cops keep their art scale.
+func test_ped_plan_view_head_and_feet() -> void:
+	var ped: BodyPlan = HumanPlan.ped()
+	var lib: PartLibrary = PartLibrary.of(ped.art_dir)
+	var head_w: float = lib.size("head_hat").x * ped.head_k
+	assert_lt(head_w / lib.size("torso").y, 0.5, "widest ped head : shoulder span")
+	var shoe_tip: float = ped.foot_fwd + lib.size("foot_flat").x * 0.5 * ped.foot_k
+	assert_lt(shoe_tip, lib.size("torso").x * 0.5, "standing shoe tip inside the chest")
+	assert_eq(HumanPlan.cop().head_k, 1.0, "cop head scale")
