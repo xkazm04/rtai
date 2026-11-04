@@ -969,3 +969,42 @@ NEXT (iteration 14), in order:
 - To gunplay (REQUEST 31 answer): done on n-weapon-art 474038b1 (bottle burst = the star only, 10 ticks) and
   27358bfe (the patch's ground is the inked scorch). Both are hooks in your fight_areas_art.gd (one argument, one
   `if not ... :` line); take them at merge.
+- MILESTONE 08:09 the bottle's glass (8d727846), gunplay REQUEST 31's glass-and-fuel half without an image call:
+  `WeaponFxShell.glass` flings 7 cream slivers (the existing `shard` cell, `GLASS_M` 0.8 m) from half the splash
+  radius to 1.1 of it over 16 ticks, easing out, spinning, fading over the last third; angles from the burst's
+  place (replay-stable). Tried 0.45 m first: hairlines at 48 px/m. Looked at in the same-tick city A/B.
+- DECISION weapon-art bottle glass: as above (docs/decisions.md). GLASS 0 = none.
+- Evidence (masters): `clips/it14-molotov-landing-glass-scorch-ab-city-48ppm-2x.mp4` (+ `-quarterspeed`): left the
+  original landing (rocket blast frames, bead ring, flat disc), right all three it14 changes (star + glass, then the
+  fire over an inked scorch), ticks 380-469. Strips: `frames/it14-molotov-glass-ab-city-48ppm.png`,
+  `frames/it14-molotov-fire-ground-ab-city-48ppm.png`, `frames/it14-molotov-burst-ab-city-48ppm.png`. Earlier it14
+  clips replaced by this one. frames.json 15, the three it14 entries first.
+- Gates of record at 8d727846 (`evidence-it14.log`, `node tools/evidence/run.mjs --no-bench --allow-dirty`; dirty
+  = this lane's untracked evidence/ dir): lint 13/13, unit 741/741, scenarios 32/32, parity bit-exact over 1200
+  steps (planted mutation caught at step 629). Selftest: look goldens 11/11 (worst 0.02), block goldens 5/5, world
+  lock holds; FAIL on the accent audit only (32 px/m vermilion on vehicles 4 px, on cop 4 px), the tree-wide
+  blood-flicker class measured in it12 and by rivet-arsenal and gunplay tonight; the selftest's D4 city frames
+  have no molotov in them, and these changes only draw over a blast or a fire patch. An earlier unit run
+  (`unit-it14c.log`, 740/741) failed `test_noir_shadows` only, the known flake under load; green in the gate run.
+- FRICTION 08:04 I edited the tree while my first evidence run was going; stopped it (taskkill /T on its node PID)
+  and re-ran after the commit. Edit nothing tracked while a gate runs.
+- Registry rules applied: realtime-combat-semantics (a bottle reads as glass + fire, a rocket as a blast: one
+  impact read per damage type), motion-quality-gating (same deterministic ticks, one variable per A/B),
+  depth-ordered-layered-art (scorch on the ground layer under the flames). No deviation.
+
+## Calls for the owner (adds, iteration 14)
+- weapon-art-15 molotov landing: A (now) star + glass slivers, then the fire over an inked scorch; B the rocket's
+  full blast for every splash (the before, `--fire-burst=off`). Clip `it14-molotov-landing-glass-scorch-ab-city-
+  48ppm-2x.mp4` (B left, A right). Recommendation: A. A drawn glass-and-fuel sheet (image route) would beat both.
+
+- Session close 08:13: commits 474038b1, 27358bfe, 8d727846 (code) + journal commits. No Godot process of mine
+  running (every capture exited on --quit-after; the first evidence run stopped by PID). Scratch wa8b-wa14 deleted.
+
+NEXT (iteration 15):
+1. REQUEST 12 -> rivet-arsenal (gloria stand-in): still unanswered in their JOURNAL; mine is on this branch.
+2. The melee four in the claw: only on n-rivet-arsenal (StagePilot.wielding, arena_arsenal_bot); MeleeWeaponView is
+   still rivet-motion's procedural bars. Merge n-rivet-arsenal into a throwaway worktree, film katana / baton /
+   chainsaw / plasma sword in Rivet's claw at 32 and 64 px/m, then decide whether the held art replaces the bars
+   (a hook in melee_weapon_view.gd, rivet-arsenal's call).
+3. Long guns drawn over Rivet's helmet in the carry pose (rivet-arsenal's view; watch).
+4. A drawn glass-and-fuel splash sheet for the molotov (image route, under image.lock) to replace the shard reuse.
