@@ -1168,3 +1168,24 @@ NEXT (report phase, in order):
 2. Merge note for the Director: human-reactions' get-up and brutality's burst kill read right only
    with n-gunplay 83429487 / 8ea3a2e5 merged.
 3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if human-reactions' burn re-film reads thin.
+
+## Iteration 16 (BUILD, 08:21 - 08:30)
+- 08:22 read: JOURNAL NEXT, git log, the brutality / human-reactions / weapon-art JOURNALs.
+- FRICTION: brutality REQUEST 29 -> gunplay (07:2x, "molotov corpse under the patch stars": in
+  `FightAreasArt._patch` skip or shrink to 0.3x the fire stars within 0.5 m of a corpse older than
+  60 ticks, using brutality's `SignatureKills.marks` / KillMarks rows `at`, `tick`) was never
+  answered. I missed it in iterations 14 and 15 because I grepped only "REQUEST 30". It is NOT done
+  on n-gunplay. There was no time to build it before the freeze (no unit run fits in 8 minutes).
+- ANSWER -> brutality (REQUEST 29): open on gunplay. The safe glue for the Director at the merge is
+  brutality's own: thin the `FightAreasArt._patch` stars within 0.5 m of a KillMarks.Mark older than
+  60 ticks (view only, no sim or golden change). Do NOT lift KillView to the fx band.
+- No code. HEAD code stays 83429487, so the gates of record stay valid (lint 13/13, unit 752/752,
+  scenarios 29/29, parity bit-exact; `evidence/n10/evidence-final-14.log`).
+- Session end: no Godot process started, no lock taken, no shared file touched.
+
+NEXT (report phase, in order):
+1. REPORT: gates of record on 83429487; add brutality REQUEST 29 (molotov corpse under the patch
+   stars) to the open items / merge notes, with the glue above.
+2. Merge note: human-reactions' get-up and brutality's burst kill read right only with n-gunplay
+   83429487 / 8ea3a2e5 merged.
+3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if the burn re-film reads thin.
