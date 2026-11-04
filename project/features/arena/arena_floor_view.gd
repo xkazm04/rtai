@@ -46,7 +46,8 @@ func _draw() -> void:
 			_floor(a.rect, Color(0, 0, 0, 0), "")
 	for s: ArenaStation in arena.stations.stations:
 		for p: ArenaStation.Prop in s.props:
-			_prop(arena.plan.base + p.at, p)
+			if arena.cells == null or p.kind in ArenaWalls.SOLID or p.kind == "cone":
+				_prop(arena.plan.base + p.at, p)  # on the city only what collides (and cones)
 		for sp: ArenaStation.Spawn in s.spawns:
 			if sp.kind == "crowd":
 				_ring(arena.plan.base + sp.at, sp.span_m, Ink.WASH)
