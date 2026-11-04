@@ -38,6 +38,9 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	var dir: Vector2 = s.vel.normalized()
 	var went: float = s.origin.distance_to(s.pos)
+	if s.spec.homing_rad_per_tick > 0.0:
+		FightShardArt.shard(ci, s, tick)
+		return true
 	match s.spec.kind:
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, s.pos, dir, went, tick)

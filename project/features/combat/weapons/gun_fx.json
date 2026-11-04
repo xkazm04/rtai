@@ -34,6 +34,18 @@
       "tracer_core_px": 7,
       "tracer_px": 16
     },
+    "homing_shard": {
+      "casing_m": 0,
+      "mag_drop": true,
+      "muzzle_m": 0.6,
+      "muzzle_side_m": 0.3,
+      "muzzle_ticks": 2,
+      "scorch": true,
+      "smoke": 0.25,
+      "spikes": 0,
+      "tracer_core_px": 3,
+      "tracer_px": 7
+    },
     "machine_pistol": {
       "casing_m": 0.17,
       "casing_s": 2,
