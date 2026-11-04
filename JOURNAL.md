@@ -116,3 +116,55 @@ NEXT:
 - FRICTION: python str.replace asserts failed on a file gdformat had written with CRLF; Edit tool works.
 - Shared-file edits: features/fx/combat_blood.gd (veto + deferred bleed), dev/arena/arena_rigs.gd
   (merge resolution only). Lab: burning guards may leave their mark (KillLab.RUN_M).
+- MILESTONE 02:15 `scenario_brutality_kills` (tests/scenarios): rocket gib (12 kills), hand cannon
+  blowback (6), fire char (4), electro X-ray (6) in the arena's real fight with the KillLab line:
+  each lands >= 2 kills of its own style, replays identically on a fresh world, the same seed
+  gives the same gib state, and a planted 1 % gib speed fault is caught. 15 s headless.
+  Evidence evidence/brutality/brutality-kills.json + scenario-brutality-kills.log. Hook gained
+  `arm(stage, ctx, weapon)` and `open_lab(stage)` for it.
+- MILESTONE 02:18 city proving block: `--arena=city --rigs --sig-gun=rocket_launcher --sig-lab`,
+  17 gib kills in 13 s on the city's cast-rig contractors (clip rocket-gib-city-block-48ppm-13s.mp4,
+  source game-city). The lab fires point blank, so the parts pile near Rivet.
+- MILESTONE 02:25 kill #4 electro (`electro_shock`, style `shock`, KillShockFx): stiff convulsion
+  (hashed shake), X-ray strobe every 5 ticks (the body blinks out, weapon-art's xray sticker at 1.3 m
+  inside cream ink arcs), then a stiff drop along the shot and collar smoke. No blood. Reduced motion:
+  no strobe, no shake. Clips 32/64 px/m + 64 px/m 0.4x slow; a 12-frame strobe sequence still.
+  DECISION brutality: the X-ray uses weapon-art's front-view skeleton sticker as a comic flash on the
+  top-down body (reads as the gag at 64 px/m). Alternative: a top-down skeleton redraw (REQUEST 4).
+- FRICTION: the X-ray drew under the living guards crowding the victim (rig parts reach z +30):
+  shock_fx z 40. print_part forces alpha 1, so blinking a rig copy needs `visible`, not modulate.
+- MEASURED 02:30 the kill view's CPU cost (new telemetry view_avg_us / view_worst_us; CONTENDED,
+  another lane held bench.lock, so no bench run): rocket lab, 18 kills in 15 s, 900 frames at 32 px/m:
+  before 20.7 ms avg / 47 ms worst (every frame reprinted all leftover marks and smears: ~6k circles);
+  ground cache 10.9 / 59; + fresh-smear layer 4.1 ms avg / 62 ms worst. The worst frame is the kill
+  frame (GibCut copying the rig + the ground reprint). Evidence evidence/brutality/cost-rocket-*.json.
+- KillView is 251 lines now (soft 200, hard 300): split the draw layers into their own file next.
+
+### REQUESTs (iteration 2)
+- REQUEST 4 -> weapon-art (low): a TOP-DOWN X-ray skeleton sticker (seen from above: skull disc,
+  shoulder girdle, ribs, arms along the body) and a top-down charred-body overlay; the current
+  xray/charred stickers are front views. Same chroma route, art/gore/.
+- REQUEST 5 -> gunplay (info): BrutalityHook listens to kill_landed; fire kills by kind `burned`
+  (direct flame puffs carry `flamethrower`, DoT/patch kills `burn`) both char. CombatBlood gained
+  `veto` (+ a deferred actor_killed bleed when it is set): you own CombatBlood, please keep it.
+
+## Calls for the owner (draft, iteration 2)
+- brutality-3: fire deaths: every fire death chars (flamethrower, molotov, patch) vs. only the
+  flamethrower. Default: every fire death (flame-char clips). Alternative = one line in on_kill.
+- brutality-4: the electro X-ray uses a front-view skeleton sticker over a top-down body (comic gag)
+  vs. a top-down skeleton redraw (REQUEST 4). Default: the sticker (electro-xray clips).
+- brutality-5: a signature kill suppresses the standard death pool and corpse soak (the kill prints
+  its own blood; fire and electro none). Default: suppressed. Alternative: keep the pool under gibs.
+
+NEXT:
+1. Kill frame spike (62 ms CONTENDED): pre-cut lazily (copy the rig over 2 frames?), or keep a pooled
+   set of group nodes; measure under bench.lock (the real bench, `node tools/bench/run.mjs`) with a
+   rocket lab run; split KillView's layers into kill_ground.gd (251 lines now).
+2. Fire char polish: ember cracks brighter/longer, smoke stronger at 32 px/m (they barely read);
+   electro: scorch tint on the dropped body (print_part ignores modulate; use a char-like mix shader).
+3. Kill #5 katana (split along the swing): rivet-arsenal owns melee; read their JOURNAL for the
+   melee hit event (weapon id `katana`), cut the rig copy along the swing line (two groups by side
+   of the line), blood fan along the cut; needs a lab mode that swings instead of shooting.
+4. City clips for the fire and electro kills (`--arena=city`), and a reel of all four kills.
+5. Hand cannon polish (iteration 1 NEXT 1): sprawl pose before the cut, cap visibly leaves.
+6. `--gore=reduced` clip (each kill falls with the standard death) for the ratings proof.
