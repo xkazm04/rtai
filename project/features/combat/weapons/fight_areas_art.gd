@@ -12,6 +12,8 @@ const SMOKE: Color = Color(0.090, 0.075, 0.106, 0.55)
 const SCORCH: Color = Color(0.090, 0.075, 0.106, 0.35)
 const TRAIL_M: float = 4.0
 const LOB_M: float = 2.2
+## A fire patch this wide or wider burns as a ring (see _patch).
+const RING_PATCH_M: float = 4.0
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
@@ -41,17 +43,26 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	var dir: Vector2 = s.vel.normalized()
 	var went: float = s.origin.distance_to(s.pos)
+	if s.spec.homing_rad_per_tick > 0.0:
+		FightShardArt.shard(ci, s, tick)
+		return true
 	match s.spec.kind:
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, s.pos, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
+		WeaponSpec.Kind.BOLT when s.spec.chain_hops == 0:  # a ray: no chain, a straight beam
+			_ray(ci, s.pos - dir * minf(went, s.spec.tracer_len_m), s.pos, tick)
+		WeaponSpec.Kind.BOLT when s.charged:
+			FightChargeArt.bolt(ci, s, tick)
 		WeaponSpec.Kind.BOLT:
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 10.0, Ink.INK)
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
 			ci.draw_circle(Ink.px(s.pos), 7.0, Ink.INK)
 			ci.draw_circle(Ink.px(s.pos), 4.0, Ink.CREAM)
+		WeaponSpec.Kind.THROWN when s.spec.splash_radius_m >= FightNukeArt.NUKE_M:
+			FightNukeArt.shell(ci, s, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
@@ -97,20 +108,33 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	_fire(ci, at + spin * 1.3, 0.16, tick, 1.0)
 
 
+## A patch of RING_PATCH_M or more (the mini-nuke's) burns only round its rim: ground zero is
+## burnt out, so the vaporised shadows printed there stay readable (brutality REQUEST 13).
 static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
-	ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5)))
+	var scorch: Color = Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5))
+	var ring: bool = p.z >= RING_PATCH_M
+	if ring:
+		ci.draw_arc(
+			Ink.px(c), p.z * 0.85 * Ink.PX_PER_M, 0.0, TAU, 64, scorch, p.z * 0.3 * Ink.PX_PER_M
+		)
+	else:
+		ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, scorch)
 	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7
-		var off: Vector2 = Vector2.from_angle(ang) * p.z * (0.25 + 0.4 * float(i % 2))
+		var reach: float = (0.78 + 0.14 * float(i % 2)) if ring else (0.25 + 0.4 * float(i % 2))
+		var off: Vector2 = Vector2.from_angle(ang) * p.z * reach
 		_fire(ci, c + off, 0.6 + 0.15 * float(i % 3), tick + i * 5, fade)
 
 
 ## A rocket blast as a comic burst: a jagged cream star in a heavy ink rim (6 ticks), then an
 ## ink shock ring that grows and thins, smoke puffs rolling out and ink debris flung wide.
 static func _blast(ci: CanvasItem, b: Vector3, age: int) -> void:
+	if b.z >= FightNukeArt.NUKE_M:
+		FightNukeArt.blast(ci, b, age)
+		return
 	if age >= BLAST_TICKS:
 		return
 	var c: Vector2 = Vector2(b.x, b.y)
@@ -156,16 +180,23 @@ static func _fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: f
 	)
 
 
-## An electric zigzag of `width` px (kinks every ~0.3 m, re-jagged every tick by `phase`).
+## An electric zigzag of `width` px (kinks every ~0.27 m alternating sides, re-jagged every tick
+## by `phase`; FightChargeArt.zap: the old sine stepped 0.43 rad a kink and read as a wave).
 static func _bolt(
 	ci: CanvasItem, a: Vector2, b: Vector2, phase: int, width: float, c: Color
 ) -> void:
-	var normal: Vector2 = (b - a).orthogonal().normalized()
-	var kinks: int = maxi(ceili(a.distance_to(b) / 0.3), 2)
-	var pts: Array[Vector2] = []
-	for i: int in kinks + 1:
-		var t: float = float(i) / float(kinks)
-		var end: bool = i == 0 or i == kinks
-		var jag: float = 0.0 if end else sin(float(phase * 7 + i * 13)) * 0.22
-		pts.append(Ink.px(a.lerp(b, t) + normal * jag))
-	ci.draw_polyline(PackedVector2Array(pts), c, width, true)
+	FightChargeArt.zap(ci, a, b, phase, width, 0.22, c)
+
+
+## The ray gun's round: a dead-straight thin beam (cream core in ink, unlike the electro gun's
+## jagged arc), three ripple rings running down it toward the tip, a bright tip.
+static func _ray(ci: CanvasItem, a: Vector2, b: Vector2, tick: int) -> void:
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.INK, 8.0)
+	ci.draw_line(Ink.px(a), Ink.px(b), Ink.CREAM, 3.0)
+	for k: int in 3:
+		var t: float = fmod(float(k) / 3.0 + float(tick % 12) / 12.0, 1.0)
+		var at: Vector2 = Ink.px(a.lerp(b, t))
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.INK, 4.0)
+		ci.draw_arc(at, 3.0 + 4.0 * t, 0.0, TAU, 12, Ink.CREAM, 1.5)
+	ci.draw_circle(Ink.px(b), 8.0, Ink.INK)
+	ci.draw_circle(Ink.px(b), 5.0, Ink.CREAM)

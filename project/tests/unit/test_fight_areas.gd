@@ -106,3 +106,49 @@ func test_a_bottle_aimed_past_a_guard_lands_on_him() -> void:
 	_run(arena, 1, 50)
 	assert_not_null(arena.areas.effect(g), "the bottle found the guard under the aim line")
 	assert_gt(arena.areas.effect(g).burn_ticks, 0)
+
+
+func test_one_mini_nuke_clears_every_human_in_its_circle_and_leaves_fire() -> void:
+	var arena: CombatArena = _arena(&"mini_nuke")
+	assert_true(arena.gun.trigger.spec.enabled, "the mini-nuke is in the arsenal")
+	var target: Fighter = _guard(arena, Vector2(14.0, 0.0))
+	var near: Fighter = _guard(arena, Vector2(14.0, 6.0))
+	var far: Fighter = _guard(arena, Vector2(14.0, 30.0))
+	assert_true(arena.rivet_fire(target.pos))
+	_run(arena, 1, 120)
+	assert_false(target.alive(), "the shell drops the human it lands on")
+	assert_false(near.alive(), "and every human 6 m out")
+	assert_true(far.alive(), "a human 30 m out is outside the blast")
+	assert_eq(arena.areas.patches.size(), 1, "a fire patch where it landed")
+	assert_eq(FightAreas.kind_of(arena.gun.trigger.spec), &"blown", "a nuke kill is a blast death")
+	assert_eq(FightAreas.kind_of(_arena(&"molotov").gun.trigger.spec), &"burned")
+
+
+func test_a_mini_nuke_lobbed_at_a_close_guard_lands_past_its_floor() -> void:
+	var arena: CombatArena = _arena(&"mini_nuke")
+	var w: WeaponSpec = arena.gun.trigger.spec
+	assert_gt(w.min_lob_m, w.splash_radius_m, "the blast circle stays off the thrower")
+	var close: Fighter = _guard(arena, arena.rivet.pos + Vector2(5.0, 0.0))
+	var lands: Vector2 = FightReach.lob_target(arena, arena.rivet.pos, close.pos, w)
+	assert_almost_eq(lands.distance_to(arena.rivet.pos), w.min_lob_m, 0.01)
+	assert_almost_eq(lands.y, arena.rivet.pos.y, 0.01, "along the aim")
+	var bottle: WeaponSpec = _arena(&"molotov").gun.trigger.spec
+	assert_eq(FightReach.lob_target(arena, arena.rivet.pos, close.pos, bottle), close.pos)
+
+
+func test_a_homing_shard_curves_onto_a_human_off_the_aim_line() -> void:
+	var arena: CombatArena = _arena(&"homing_shard")
+	assert_true(arena.gun.trigger.spec.enabled, "the homing shard gun is in the arsenal")
+	var g: Fighter = _guard(arena, Vector2(9.0, 2.5))  # 15 deg off the aim line
+	assert_true(arena.rivet_fire(Vector2(20.0, 0.0)))
+	_run(arena, 1, 60)
+	assert_false(g.alive(), "the shard turned onto him and one shard drops a human")
+	assert_eq(arena.areas.blasts.size(), 1, "it bursts where it stops")
+
+
+func test_a_homing_shard_ignores_a_human_behind_it() -> void:
+	var arena: CombatArena = _arena(&"homing_shard")
+	var g: Fighter = _guard(arena, Vector2(-6.0, 0.0))
+	assert_true(arena.rivet_fire(Vector2(20.0, 0.0)))
+	_run(arena, 1, 60)
+	assert_true(g.alive(), "a shard never turns around")

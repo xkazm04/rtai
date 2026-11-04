@@ -4,7 +4,8 @@ extends InputSource
 ## pit bot's way in, then it fights each wave at its weapon's own reach: it closes on the nearest
 ## standing guard until inside `reach_m` (a share of the table row's range, never past 9 m, so a
 ## 48 or 64 px/m close-up following Rivet frames the impact), fires after a human's reaction
-## time, and strafes across the guard's line. So the 7 m flamethrower gets into the flame.
+## time, and strafes across the guard's line. So the 7 m flamethrower gets into the flame. It
+## holds fire while a prop stands in the line (rockets would burst in its own cover).
 
 const STRAFE_TICKS: int = 45
 const REACT_TICKS: int = 30
@@ -41,10 +42,21 @@ func sample(tick: int) -> TickInput:
 	var aim: Vector2 = to_foe.normalized()
 	var close: bool = to_foe.length() <= reach_m
 	_in_range_since = (tick if _in_range_since < 0 else _in_range_since) if close else -1
-	var fire: bool = close and tick - _in_range_since >= REACT_TICKS
+	var lane: bool = _lane(rivet, foe.pos)
+	var fire: bool = close and lane and tick - _in_range_since >= REACT_TICKS
 	var side: float = 1.0 if (tick / STRAFE_TICKS) % 2 == 0 else -1.0
 	var approach: Vector2 = aim if not close else Vector2.ZERO
-	return _input(aim.orthogonal() * side * 0.6 + approach, aim, fire)
+	# a prop in the line: no shot into its own cover, a wider sidestep to find a lane
+	var strafe: float = 0.6 if lane else 1.0
+	return _input(aim.orthogonal() * side * strafe + approach, aim, fire, to_foe.length())
+
+
+## True when a round can fly from Rivet to the foe (a lobbed bottle flies over the props).
+func _lane(from: Vector2, to: Vector2) -> bool:
+	var gun: GunHand = stage.arena.gun
+	if stage.walls == null or (gun != null and gun.trigger.spec.kind == WeaponSpec.Kind.THROWN):
+		return true
+	return not stage.walls.blocks(from, to)
 
 
 ## The nearest standing guard that is not burning, stunned or down (they are already done).
@@ -60,9 +72,10 @@ func _nearest(at: Vector2) -> Fighter:
 	return best
 
 
-func _input(move: Vector2, aim: Vector2, fire: bool) -> TickInput:
+## `foe_m`: the foe's distance, sent as the cursor's (a thrown weapon lands on him).
+func _input(move: Vector2, aim: Vector2, fire: bool, foe_m: float = 0.0) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
-	var buttons: int = PlayerCommand.pack_aim(aim, actions)
+	var buttons: int = PlayerCommand.pack_aim(aim, actions, foe_m)
 	if fire:
 		buttons |= 1 << actions.bit(&"fire")
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))

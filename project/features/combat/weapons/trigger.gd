@@ -8,6 +8,10 @@ var cooldown: int = 0
 var bloom_rad: float = 0.0
 var ammo: int = 0
 var reload_left: int = 0
+## Ticks a held charge gun has charged since it was ready (spec.charge_ticks = full).
+var charge: int = 0
+## The shot pull() let go this tick was a full charge.
+var charged: bool = false
 var _was_held: bool = false
 
 
@@ -35,13 +39,18 @@ func start_reload() -> void:
 
 
 ## Called once per tick with the button state; true when a shot leaves this tick. Semi weapons
-## fire on the press edge only, auto weapons while held.
+## fire on the press edge only, auto weapons while held. A charge gun held on after its shot
+## charges once it is ready and lets the charged round go when full (a press always fires at
+## once: the tap is the plain round; a release drops the charge).
 func pull(held: bool) -> bool:
 	var edge: bool = held and not _was_held
 	_was_held = held
+	charged = false
+	if not held:
+		charge = 0
 	if not held or cooldown > 0 or reloading():
 		return false
-	if not spec.auto and not edge:
+	if not spec.auto and not edge and not _charged_up():
 		return false
 	if spec.magazine > 0 and ammo <= 0:
 		start_reload()
@@ -51,6 +60,22 @@ func pull(held: bool) -> bool:
 		ammo -= 1
 		if ammo == 0:
 			start_reload()
+	return true
+
+
+## The charge as a fraction of full (views: the claw's crackle).
+func charge_frac() -> float:
+	return float(charge) / float(spec.charge_ticks) if spec.charge_ticks > 0 else 0.0
+
+
+func _charged_up() -> bool:
+	if spec.charge_ticks <= 0:
+		return false
+	charge += 1
+	if charge < spec.charge_ticks:
+		return false
+	charge = 0
+	charged = true
 	return true
 
 

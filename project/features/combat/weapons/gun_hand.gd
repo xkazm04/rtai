@@ -6,6 +6,11 @@ extends RefCounted
 ## points (a human is target_hp.human) into Fighter hp (a human is 1). Null in quest 1, so the
 ## quest's own weapons and goldens stay as they are.
 
+## A homing round leaves the claw splayed this far off the aim, alternating sides shot by shot,
+## and curves back onto its target: the shard gun's swarm reads in every shot (DECISION 2026-11-04;
+## 0 = straight out).
+const HOMING_FAN_RAD: float = 0.35
+
 var trigger: Trigger
 var shots_fired: int = 0
 ## A bot's held fire button: a semi gun re-taps as soon as it is ready (dev scenes and bots
@@ -30,7 +35,7 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 	_pulled = true
 	var out: Array[Shot] = []
 	var aim: Vector2 = (at - shooter.pos).normalized()
-	if tap and trigger.cooldown == 0 and not trigger.reloading():
+	if tap and trigger.spec.charge_ticks == 0 and trigger.cooldown == 0 and not trigger.reloading():
 		@warning_ignore("return_value_discarded")
 		trigger.pull(false)
 	if aim == Vector2.ZERO or not trigger.pull(true):
@@ -38,12 +43,15 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 	var w: WeaponSpec = trigger.spec
 	for i: int in w.pellets:
 		var dir: Vector2 = trigger.shot_dir(aim, _rng)
+		if w.homing_rad_per_tick > 0.0:
+			dir = dir.rotated(HOMING_FAN_RAD * (1.0 if shots_fired % 2 == 0 else -1.0))
 		var s: Shot = Shot.new()
 		s.pos = shooter.pos + dir * (shooter.radius_m + 0.1)
 		s.vel = dir * w.speed_mps
 		s.from_rivet = true
 		s.weapon = w.id
-		s.damage = w.damage * _hp_scale
+		s.damage = (w.charge_damage if trigger.charged else w.damage) * _hp_scale
+		s.charged = trigger.charged
 		s.left_m = w.range_m
 		s.shooter_id = shooter.id
 		s.spec = w

@@ -16,6 +16,8 @@ const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## The molotov's throw on Rivet's gun claw (rivet_plan: BodyPlan.L) as strike ticks: a 1-tick
 ## wind-back, the whip out to full reach, a slow return (view only; the bottle left this tick).
 const THROW: Vector3i = Vector3i(1, 6, 18)
+## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
+const FOCUS_REACH_M: float = 20.0
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: CollectCallStage = null
@@ -89,7 +91,7 @@ func _process(_delta: float) -> void:
 			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
-	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
+	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom if _print != null else _city.zoom
 
 
@@ -101,22 +103,42 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	@warning_ignore("return_value_discarded")
 	f.put(i, who.id, kind, at, vel)
 	f.face[i] = who.facing.angle()
-	if who.weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
+	var weapon: StringName = who.weapon
+	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
+	var gun: GunHand = null
+	if stage != null and who == stage.arena.rivet:
+		gun = stage.arena.gun
+	if gun != null:  # lane gunplay: a table gun counts its own rounds (Rivet's cooldown is idle)
+		weapon = gun.trigger.spec.id
+		mark = Vector2i(gun.shots_fired, 0)
+	if weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
 		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
 		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
-	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
 	var before: Vector2i = _fire_seen.get(who.id, mark)
 	var shot: bool = fired(before, mark)
 	_fire_seen[who.id] = mark
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
-	elif shot and who.weapon != &"":
+	elif shot and weapon != &"":
 		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
-		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
+		f.clip_arg[i] = plan.kick(weapon) if plan != null else 1.0
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
 	_hurt_seen[who.id] = who.hurt_tick
+
+
+## The LOD bubble's centre (m). human-reactions: the middle of the box around Rivet, the point
+## ahead of him and every hostile within FOCUS_REACH_M, the dead included, so a corpse keeps
+## its full rig while it is on screen (the old focus, FOCUS_AHEAD_M along the aim, dropped
+## bodies behind him).
+static func focus_m(arena: CombatArena) -> Vector2:
+	var r: Fighter = arena.rivet
+	var box: Rect2 = Rect2(r.pos, Vector2.ZERO).expand(r.pos + r.facing * FOCUS_AHEAD_M)
+	for h: Fighter in arena.hostiles:
+		if h.pos.distance_to(r.pos) <= FOCUS_REACH_M:
+			box = box.expand(h.pos)
+	return box.get_center()
 
 
 ## True when a fighter fired between two frames, from its (cooldown, burst_left): a guard's burst

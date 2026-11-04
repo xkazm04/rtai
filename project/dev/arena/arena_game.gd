@@ -60,6 +60,7 @@ func _ready() -> void:
 	layer.add_child(panel)
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
+	session.live.px_per_m = func() -> float: return px_per_m
 
 
 ## The session (the dev arena, or the city proving block with --arena=city) and the bot.

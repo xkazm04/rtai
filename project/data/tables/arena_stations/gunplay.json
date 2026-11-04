@@ -5,7 +5,7 @@
   "stations": [
     {
       "area": "range",
-      "doc": "Run: arena.tscn -- --weapon=rocket_launcher --bot=pit (the pit's contractors) or --bot=range (the dummies).",
+      "doc": "Run: arena.tscn -- --weapon=<id> --bot=gunplay (the pit's contractors, the bot closes to the gun's reach) or --bot=range (the dummies); add --arena=city for the city proving block. Ids: pistol, machine_pistol, rocket_launcher, flamethrower, electro_gun, molotov, hand_cannon, plasma_rifle, ray_gun, homing_shard, mini_nuke.",
       "id": "gunplay_range",
       "measures": [
         "shots",

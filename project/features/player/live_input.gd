@@ -8,6 +8,8 @@ extends InputSource
 var actions: PlayerActions
 ## Rivet's position in viewport pixels; the mouse aim is the heading from here to the cursor.
 var origin_px: Callable = func() -> Vector2: return Vector2.INF
+## Lane gunplay: screen pixels per world metre (0 = the cursor's distance is not sent).
+var px_per_m: Callable = func() -> float: return 0.0
 var viewport: Viewport = null
 ## false while a menu is open: the sim then sees idle input.
 var enabled: bool = true
@@ -36,7 +38,7 @@ func sample(_tick: int) -> TickInput:
 			buttons |= 1 << actions.bits[action]
 	buttons |= _latched
 	_latched = 0
-	buttons |= PlayerCommand.pack_aim(_aim(), actions)
+	buttons |= PlayerCommand.pack_aim(_aim(), actions, _reach_m())
 	var k: float = float(TickInput.AXIS_MAX)
 	return TickInput.new(buttons, roundi(move.x * k), roundi(move.y * k))
 
@@ -78,3 +80,26 @@ func _latch_wheel(event: InputEventMouseButton) -> void:
 	for action: StringName in actions.bits:
 		if event.is_action(action):
 			_latched |= 1 << actions.bits[action]
+
+
+## The cursor's distance from Rivet in metres while the mouse aims; with the pad, how far the right
+## stick is pushed (0 with no scale or a released stick).
+func _reach_m() -> float:
+	var stick: Vector2 = Input.get_vector(&"aim_left", &"aim_right", &"aim_up", &"aim_down")
+	if stick.length() >= actions.stick_deadzone:
+		return stick_reach_m(stick.length(), actions)
+	var from: Vector2 = origin_px.call()
+	var ppm: float = px_per_m.call()
+	if not mouse_aims or viewport == null or from == Vector2.INF or ppm <= 0.0:
+		return 0.0
+	return viewport.get_mouse_position().distance_to(from) / ppm
+
+
+## Lane gunplay: a pad throws by how far the right stick is pushed: just past the deadzone lands
+## one reach step out, a full push the fixed aim_range_m lob (so a pad player who flicks the
+## stick all the way throws as before). 0 when the reach bits are off.
+static func stick_reach_m(deflection: float, a: PlayerActions) -> float:
+	if a.aim_reach_step_m <= 0.0:
+		return 0.0
+	var t: float = clampf((deflection - a.stick_deadzone) / (1.0 - a.stick_deadzone), 0.0, 1.0)
+	return lerpf(a.aim_reach_step_m, a.aim_range_m, t)

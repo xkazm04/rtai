@@ -19,7 +19,10 @@ func test_table_loads_the_core_six_and_gloria() -> void:
 		assert_true(_table.playable().has(id), str(id))
 	for id: StringName in [&"electro_gun", &"molotov", &"gloria"]:
 		assert_true(_table.playable().has(id), str(id))
-	assert_false(_table.playable().has(&"mini_nuke"), "unique rows wait")
+	for id: StringName in [
+		&"hand_cannon", &"plasma_rifle", &"ray_gun", &"homing_shard", &"mini_nuke"
+	]:
+		assert_true(_table.playable().has(id), "the unique five are built: %s" % id)
 
 
 func test_enemy_rounds_are_slower_than_the_players() -> void:
@@ -134,3 +137,16 @@ func test_pad_aim_assist_bends_toward_a_target_and_the_mouse_stays_raw() -> void
 
 func test_held_scale_defaults_to_model_size() -> void:
 	assert_eq(_table.weapon(&"pistol").held_scale, 1.0, "no held_scale row -> 1.0")
+
+
+func test_the_range_model_homes_a_shard_like_the_real_fight() -> void:
+	for id: StringName in [&"homing_shard", &"pistol"]:
+		var sim: ProjectileSim = ProjectileSim.new(_rng(4), _table)
+		var t: RangeTarget = RangeTarget.make(1, Vector2(9.0, 2.5), 100.0, 0.35)
+		sim.targets.append(t)
+		sim.fire(
+			Trigger.new(_table.weapon(id)), Vector2.ZERO, Vector2(20, 0), Projectile.TEAM_PLAYER, 0
+		)
+		for i: int in 120:
+			sim.step(i + 1)
+		assert_eq(t.alive(), id == &"pistol", "%s: only the shard turns 15 deg onto him" % id)

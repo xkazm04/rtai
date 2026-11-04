@@ -4,11 +4,25 @@ extends Scenario
 ## contractors for 6 s, twice on the same seed, and the fight's state hash must be identical
 ## (replay-identical); a planted fault (one contractor 5 cm off) must move it. Each weapon must
 ## also show its own behaviour: the bullets drop humans, the rocket knocks the living down, the
-## flame and the molotov set fires that kill, the electro bolt chains and stuns.
+## flame and the molotov set fires that kill, the electro bolt chains and stuns. The unique five
+## drop a human per hit; the homing shards are aimed 2 m off the knot and must curve onto it; the
+## mini-nuke clears the whole knot with one shell.
 
 const CORE: Array[StringName] = [
-	&"pistol", &"machine_pistol", &"rocket_launcher", &"flamethrower", &"electro_gun", &"molotov"
+	&"pistol",
+	&"machine_pistol",
+	&"rocket_launcher",
+	&"flamethrower",
+	&"electro_gun",
+	&"molotov",
+	&"hand_cannon",
+	&"plasma_rifle",
+	&"ray_gun",
+	&"homing_shard",
+	&"mini_nuke"
 ]
+## The homing shard gun aims this far to the side of its target (the shard has to turn).
+const HOMING_MISS: Vector2 = Vector2(0.0, 2.0)
 const TICKS: int = 360
 const SEED: int = 20261104
 const KNOT: Array[Vector2] = [
@@ -58,7 +72,7 @@ func _fight(table: WeaponTable, w: StringName, fault_m: float) -> Dictionary:
 		var foe: Fighter = _nearest(arena)
 		if foe != null:
 			@warning_ignore("return_value_discarded")
-			arena.rivet_fire(foe.pos)
+			arena.rivet_fire(foe.pos + (HOMING_MISS if w == &"homing_shard" else Vector2.ZERO))
 		arena.step(t + 1)
 		_peaks(arena, peak)
 		if t % 30 == 29:
@@ -105,8 +119,10 @@ func _nearest(arena: CombatArena) -> Fighter:
 func _judge(w: StringName, r: Dictionary) -> String:
 	var ok: bool = true
 	match w:
-		&"pistol", &"machine_pistol":
+		&"pistol", &"machine_pistol", &"hand_cannon", &"plasma_rifle", &"ray_gun", &"homing_shard":
 			ok = r["kills"] >= 3
+		&"mini_nuke":
+			ok = r["kills"] == KNOT.size() and r["shots"] == 1
 		&"rocket_launcher":
 			ok = r["kills"] >= 2 and r["knockdowns"] >= 1
 		&"flamethrower":

@@ -1,0 +1,111 @@
+{
+  "determinism": {
+    "electro_gun": [
+      4080357602,
+      4080357602,
+      2639321056
+    ],
+    "flamethrower": [
+      886076436,
+      886076436,
+      1784422757
+    ],
+    "machine_pistol": [
+      1829670528,
+      1829670528,
+      747632813
+    ],
+    "mismatch": "",
+    "molotov": [
+      62522396,
+      62522396,
+      3514076845
+    ],
+    "pistol": [
+      314566697,
+      314566697,
+      697145214
+    ],
+    "rocket_launcher": [
+      2390821752,
+      2390821752,
+      2435003715
+    ]
+  },
+  "dodge": {
+    "machine_pistol": {
+      "react": {
+        "damage": 0.0,
+        "hit_rate": 0.0,
+        "hits": 0,
+        "rounds": 18,
+        "volleys": 7
+      },
+      "react_250ms": {
+        "damage": 0.0,
+        "hit_rate": 0.0,
+        "hits": 0,
+        "rounds": 18,
+        "volleys": 7
+      },
+      "react_no_lock": {
+        "damage": 137.5,
+        "hit_rate": 0.611,
+        "hits": 11,
+        "rounds": 18,
+        "volleys": 7
+      },
+      "stand": {
+        "damage": 175.0,
+        "hit_rate": 0.778,
+        "hits": 14,
+        "rounds": 18,
+        "volleys": 7
+      },
+      "strafe": {
+        "damage": 125.0,
+        "hit_rate": 0.556,
+        "hits": 10,
+        "rounds": 18,
+        "volleys": 7
+      }
+    },
+    "pistol": {
+      "react": {
+        "damage": 0.0,
+        "hit_rate": 0.0,
+        "hits": 0,
+        "rounds": 15,
+        "volleys": 5
+      },
+      "react_250ms": {
+        "damage": 0.0,
+        "hit_rate": 0.0,
+        "hits": 0,
+        "rounds": 15,
+        "volleys": 5
+      },
+      "react_no_lock": {
+        "damage": 275.0,
+        "hit_rate": 0.733,
+        "hits": 11,
+        "rounds": 15,
+        "volleys": 5
+      },
+      "stand": {
+        "damage": 375.0,
+        "hit_rate": 1.0,
+        "hits": 15,
+        "rounds": 15,
+        "volleys": 5
+      },
+      "strafe": {
+        "damage": 50.0,
+        "hit_rate": 0.133,
+        "hits": 2,
+        "rounds": 15,
+        "volleys": 5
+      }
+    }
+  }
+}
