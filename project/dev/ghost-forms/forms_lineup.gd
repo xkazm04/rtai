@@ -3,7 +3,7 @@ extends SceneTree
 ## 32 and 64 px/m (FormsLineupRun). Windowed only (needs a GPU).
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/ghost-forms/forms_lineup.gd
 ##        -- --out=<dir> [--walk] [--print] [--morph [--hold=<ticks>] [--reduced-motion]]
-##        [--zoom=<1|2>] [--unfold=<0..1>] [--frames=<n>] [--tag=<name>]
+##        [--zoom=<1|2>] [--full] [--unfold=<0..1>] [--frames=<n>] [--tag=<name>]
 
 
 func _initialize() -> void:
@@ -14,6 +14,8 @@ func _initialize() -> void:
 	for arg: String in args:
 		if arg == "--morph":
 			pass
+		elif arg == "--full":
+			node.set("full", true)
 		elif arg == "--reduced-motion":
 			node.set("reduced_motion", true)
 		elif arg.begins_with("--zoom="):

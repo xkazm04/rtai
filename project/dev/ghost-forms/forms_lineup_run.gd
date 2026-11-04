@@ -16,6 +16,8 @@ var walk: bool = false
 var unfold: float = 1.0
 var frames: int = 0
 var print_parts: bool = false
+## --full: save the whole viewport (the HUD in frame), not the body crop.
+var full: bool = false
 ## The sequence zoom (1 = 32 px/m, 2 = 64 px/m) for --frames runs.
 var _zoom_base: float = 1.0
 var _world: CanvasLayer = CanvasLayer.new()
@@ -122,5 +124,7 @@ func _save(r: Rect2i, file: String) -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
 	if img == null or img.is_empty():
 		return false
+	if full:
+		r = Rect2i(Vector2i.ZERO, img.get_size())
 	r = r.intersection(Rect2i(Vector2i.ZERO, img.get_size()))
 	return img.get_region(r).save_png(out_dir.path_join(file)) == OK

@@ -14,6 +14,7 @@ var _fx: GhostMorphFx = GhostMorphFx.new()
 var _t: int = 0
 var _z: float = 1.0
 var _y_m: float = 0.0
+var _hud: GhostFormHud = GhostFormHud.new()
 
 
 func _ready() -> void:
@@ -26,6 +27,15 @@ func _ready() -> void:
 	_fx.reduced_motion = reduced_motion
 	_fx.reach_m = 2.4
 	_actors.add_child(_fx)
+	var hud_layer: CanvasLayer = CanvasLayer.new()
+	hud_layer.layer = 3
+	add_child(hud_layer)
+	_hud.set_anchors_preset(Control.PRESET_FULL_RECT)
+	hud_layer.add_child(_hud)
+	for id: StringName in _forms.table.order:
+		var key: String = _forms.table.form(id).name_key
+		var word: String = tr(key)
+		_hud.names[id] = word if word != key else String(id).capitalize()
 
 
 func _tick() -> void:
@@ -34,6 +44,7 @@ func _tick() -> void:
 		Log.info(&"ghost-forms", "Q at %d: %s" % [_t, _forms.press_transform()])
 	_forms.powers.tick()
 	_forms.tick()
+	_hud.sync(_forms)
 	var in_form: bool = _forms.current() == &"tonnage"
 	var moving: bool = walk and (in_form or _forms.settled())
 	_y_m -= (2.2 if in_form else 1.4) * SimClock.TICK_DT if moving else 0.0
