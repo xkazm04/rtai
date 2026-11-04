@@ -113,6 +113,10 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    bright upper-arm sleeves into one blue cluster, so the head stops being a distinct mark
    (`M/frames/cop-crown-trial-32ppm.png`). r2_c6's read (bright helmet over a navy body) would need navy sleeves too,
    and the targets disagree there (r2_c5 navy all over, r2_a5 bright shirts): your pick.
+   Option D, also tried and not built: bright crowns AND navy upper-arm sleeves (the r2_c6 hierarchy, a bright head
+   over a navy body): `M/frames/cop-crown-sleeve-trial-32ppm.png` (A | D, same ticks, beside r2_c6). D reads like
+   r2_c6 but the cops get quieter on asphalt. Build = `cop_crown_hi.py` on the pre-navy crowns + the sleeve rule in
+   JOURNAL 23:33 (D4 and D5 `upperarm`, `upperarm_endon`), then the react board and a golden check.
 
 5. Rivet's close-up tone: A, warm tan metal at 56+ px/m (built, `RivetPlan.D5_WARM` 1.0, halfway to r2_c3's tan), or
    B, the d5 lane's violet-grey steel (`D5_WARM` 0.0; `cast_lineup.gd -- --warm=0` renders it). Same ticks in the

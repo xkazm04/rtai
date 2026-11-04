@@ -460,3 +460,11 @@ NEXT (iteration 10):
 4. After n5-look lands print changes on main, re-check the warm ramp and the visor at 64 px/m on the merge.
 5. REPORT rewrite at 08:40; frames.json 15, all files exist.
 Session state 23:28: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.
+- 23:33 NEXT 2 (iteration 10) done early as a still only: option D = bright crowns (`cop_crown_hi.py`) + navy sleeves
+  (D4/D5 `upperarm`, `upperarm_endon`: pixels with b-max(r,g) >= 40, g >= r, L > 90 -> (58,72,104) x min(1.15, L/150)),
+  installed temporarily, city 32 px/m filmed (780 frames, 0 script errors), 8 files reverted with git checkout +
+  re-import (tree clean). `frames/cop-crown-sleeve-trial-32ppm.png` beside r2_c6: D gives the r2_c6 hierarchy (a
+  bright head dot over a navy body) but the cops read quieter on asphalt. Not built (an owner fork): REPORT Call 4
+  option D. frames.json 15 (D replaces the C still in the list; C's file kept, REPORT cites it).
+Session state 23:35: head = this commit, tree clean, image.lock never taken, no Godot process of mine running.
+NEXT (iteration 10) is the 23:27 list; its item 2 is now done (Call 4 option D).
