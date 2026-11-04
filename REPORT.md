@@ -72,11 +72,9 @@ were last run on `59429978`.
 - **Electro corpse pose:** fixed after 09:00 (see below): the drop lands in the rig's own death pose.
   Human-reactions' newer stiff plank (`c_plank`, legs together, arms at the sides) is on
   `n-human-reactions` only; the glue to switch to it after the merge is in `docs/decisions.md`.
-- **The age-96 stall:** a 2-4 ms main-thread block shows up about 96 ticks into some kills (once even
-  with no kill). It sits inside `KillView._draw`'s 72-slot gib-shadow loop, which cannot cost that
-  much by itself. It is most likely contention or a render sync, but it is **unmeasured** under
-  `bench.lock` and headless.
-- **Nuke kill tick 4.3 ms** (CONTENDED): spreading the cuts of one tick over two frames is not done.
+- **The age-96 stall and the nuke's 4.4 ms frame** (measured after 09:00, see below): neither is
+  kill code. One `draw_circle` call blocks inside the RenderingServer (a render sync or deferred
+  resource work), most likely on the canvas items the previous tick's cut queued. Not fixed.
 - **Claw-shock lab:** the lab drives its own `PlayerShock`, so Rivet's thrust clip does not play in
   that clip. In the real game the pilot path plays it.
 - REQUESTs to gunplay: both answered on `n-gunplay` (REQUEST 30 stuck shards: `8ea3a2e5`; REQUEST 29
@@ -119,8 +117,8 @@ were last run on `59429978`.
 1. After the merge: re-check the electro corpse on main (REQUEST 29), then apply the stiff-plank glue
    (`DeathPose.stiff_channels` + `plank_turn` in KillSprawlCut / KillShockFx, see `docs/decisions.md`).
 2. Check gunplay REQUESTs 29 and 30 on the merged main.
-3. Measure the age-96 stall and the nuke tick under `bench.lock` (windowed and headless). Spread the
-   nuke's cuts over two frames if it holds.
+3. The nuke's tick-123 RenderingServer wait: try building the cut groups' canvas items over
+   two frames, or prewarming them, and measure again under `bench.lock`.
 4. Re-run the look goldens and parity on the merged main (the last look run was on `59429978`).
 5. Decide the calls above, then flip the one-value alternatives in `signature_kills.json`.
 
@@ -145,10 +143,11 @@ were last run on `59429978`.
   step 629 (`E/parity-it18.log`). Next step 4 is done on this branch. Repeat it on the merged main.
 - **Measured under `bench.lock`** (09:15-09:20, windowed, no movie writer, two runs each; `E/lock-it18/`):
   the nuke's five kill-tick cuts cost about 1.6 ms together (not 4.3 ms). Its worst frame is 4.45 ms at
-  tick 123 (age 18) in both runs, so it is deterministic. A temporary probe puts 2.4 ms of it in
-  `KillView._draw` (the marks' flash stars). The flame's age-96 stall showed up in one run of two, so
+  tick 123 (age 18) in both runs, so it is deterministic. Temporary probes, since reverted, show that
+  one `draw_circle` call (7 px radius, a gib shadow) blocks for 4.0 ms. That is a RenderingServer
+  wait, not CPU work in the kill code, most likely the canvas items the previous tick's cut queued. The flame's age-96 stall showed up in one run of two, so
   it is contention, not the kill's code. The electro kill with the plank cut costs 0.8-1.2 ms. Every
   frame stays well inside 16.6 ms.
 - Not done: merging `n-human-reactions` (110 commits, with conflicts in shared arena and rig files) for
-  its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: the fix for the nuke's
-  tick-123 frame (next probe: `KillMarkArt.flash` per mark).
+  its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: a fix for that
+  RenderingServer wait.

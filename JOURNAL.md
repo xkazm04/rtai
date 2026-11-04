@@ -1077,3 +1077,17 @@ NEXT:
    mark; if the fill is the cost, draw the star with draw_colored_polygon on a precomputed fan.
 3. Re-check gunplay's REQUEST 29/30 answers on the merged main (molotov corpse, stuck shards).
 4. Gates on the merged main: look goldens + parity (both green on this branch at 88ff881d).
+- MEASURED 09:17 (NEXT 2, probes reverted): at nuke tick 123 KillView._draw's gib-shadow loop takes
+  4.2-6.3 ms, the marks' flashes 0.1 ms; a per-call probe shows ONE draw_circle (slot 4, r 7.0 px,
+  z 0) blocking 4.0 ms. That is a wait inside the RenderingServer (a render sync or deferred
+  resource work), not CPU work in the kill code; most likely the canvas items and materials the
+  tick-122 cut queued. The age-96 stall is the same signature (it also showed in the shadow loop).
+  Not fixed: the candidates (build a cut's groups over two frames, or prewarm their canvas items)
+  need a bench pass to prove. REPORT open item and next step 3 rewritten.
+
+NEXT (replaces the list above):
+1. After the morning merge: the stiff-plank glue (docs/decisions.md), re-film the electro clip,
+   re-check showcase REQUEST 29 on main.
+2. The nuke tick-123 RenderingServer wait: try spreading a multi-victim cut over two frames or
+   prewarming its canvas items; measure under bench.lock (evidence/brutality/lock-it18 is the before).
+3. Re-check gunplay's REQUEST 29/30 answers and the look goldens + parity on the merged main.
