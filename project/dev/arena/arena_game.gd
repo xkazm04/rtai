@@ -9,7 +9,8 @@ extends Node
 ## area at boot (a station's capture; like the T teleport, a dev run that does not replay),
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
-## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
+## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot); --reach=<m> closes that
+## reach for a capture (the city's lone kills land nearer Rivet, inside the frame's middle third).
 
 const TUNE_TICK: int = 300
 
@@ -76,6 +77,7 @@ func _open(args: ArenaArgs) -> void:
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 		bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
+		bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
 		session.world.loop().set_input(bot)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:

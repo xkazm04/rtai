@@ -11,6 +11,6 @@ mkdir -p "$D"
 cd C:/Users/kazda/kiro/gtai-wt/n-gunplay
 "$G" --rendering-driver d3d12 --path project res://dev/arena/arena.tscn --fixed-fps 60 \
   --write-movie "$D/raw.avi" --quit-after "$F" -- --arena=city --weapon="$W" --bot=gunplay \
-  --lone --clean --rigs ${CAM:-} --ppm="$P" --telemetry="$D/telemetry.json" > "$D/run.log" 2>&1
+  --lone --clean --rigs ${CAM:-} ${REACH:+--reach=$REACH} --ppm="$P" --telemetry="$D/telemetry.json" > "$D/run.log" 2>&1
 ffmpeg -v error -y -i "$D/raw.avi" -c:v libx264 -pix_fmt yuv420p -crf 20 "$D/citylone21${TAG:-}_${P}_$W.mp4" && rm -f "$D/raw.avi"
 echo "$W done: $(grep -c 'SCRIPT ERROR' "$D/run.log") script errors; $(grep 'lone kill' "$D/run.log" | tr '\n' ' ')"
