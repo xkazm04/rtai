@@ -51,3 +51,11 @@ func next_after(id: StringName) -> StringName:
 		return &""
 	var i: int = order.find(id)
 	return order[(i + 1) % order.size()]
+
+
+## The form a powers.json row id runs (hauler -> tonnage, gearbox -> dent); &"" when none.
+func form_of_power(power: StringName) -> StringName:
+	for id: StringName in forms:
+		if forms[id].power == power:
+			return id
+	return &""

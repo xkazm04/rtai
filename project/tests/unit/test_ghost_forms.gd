@@ -49,6 +49,8 @@ func test_table_has_the_four_ghosts_in_order_with_their_aliases() -> void:
 	assert_lt(t.form(&"ohm").size_k, 1.0, "Ohm is smaller than Rivet")
 	assert_gt(t.form(&"kerf").top_mps, t.form(&"dent").top_mps, "Kerf is the fastest")
 	assert_ne(t.form(&"tonnage").anchor(&"press_head"), Vector2.ZERO)
+	assert_eq(t.form_of_power(&"hauler"), &"tonnage", "the old id is Tonnage's alias")
+	assert_eq(t.form_of_power(&"gearbox"), &"dent")
 
 
 func test_enter_takes_enter_s_and_lands_through_the_in_between_pose() -> void:

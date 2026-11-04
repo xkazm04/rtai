@@ -52,6 +52,11 @@ func current() -> StringName:
 	return from_id if phase == SETTLED else BASE
 
 
+## The ghost-powers lane's name for current() (their REQUEST 1).
+func form_id() -> StringName:
+	return current()
+
+
 func settled() -> bool:
 	return phase == SETTLED
 
