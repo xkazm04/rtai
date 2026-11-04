@@ -467,3 +467,32 @@ NEXT (iteration 6, supersedes the list above):
 - Session end 04:07: no Godot process of mine running (the four Godot PIDs in tasklist are other
   lanes'), no lock held, scratch emptied. Gates of record unchanged since 605eae59 (docs/evidence only
   after it, plus the nuke flash and station doc, both linted at commit).
+
+## Iteration 6 (session 04:04-05:04)
+Read: JOURNAL, git log, other lanes' JOURNALs for REQUESTs to gunplay. Open ones found: weapon-art
+REQUEST 5 (double magazine after the merge), showcase REQUEST 16 (the nuke lands on Rivet at close
+range). Registry rules applied: realtime-combat-semantics (no dead trigger: a press always yields a
+shot; the floor moves the burst, not the input), motion-quality-gating (every claim below has a
+clip or a sheet I looked at). No deviation.
+- 04:08 weapon-art REQUEST 5 DONE (4953ee25): GunFx reads `data/tables/weapon_art.json` (if present)
+  and drops no magazine for a gun with a `mag` part; unit test. After the merge the pistol, machine
+  pistol, hand cannon (speed-loader; its six-shell dump stays) and plasma rifle show only weapon-art's
+  magazine. FRICTION: strict typing rejects `row.get()` on a Variant and `as Dictionary` casts; read
+  into a typed local first. Python on Windows writes CRLF unless `newline=''`: json-canonical and
+  gdformat fail on it.
+- 04:12 showcase REQUEST 16 DONE (c4a1aa7b): weapons.json `min_lob_m` 13 on the mini-nuke
+  (FightReach.lob_target takes the spec). Unit test: a guard 5 m off, the shell lands 13 m out along
+  the aim; a molotov still lands on the guard. Evidence: `MASTERS/n4/gunplay/arena_nuke_floor_32ppm/`
+  (4 shells, 3 kills, Rivet 0 deaths; overview sheet 4-20 s: every burst at the pit's far edge) and
+  `arena_nuke_floor_48ppm/` (at 48 px/m a burst 13 m off sits on the frame edge: the 32 px/m view is
+  the nuke's view).
+- Gates after both: lint 13/13, unit 716/716 (`evidence/n4/unit-m.log`), scenarios 29/29
+  (`scenarios-m.log`; scenario_gunplay_fight's nuke knot is past 13 m, its hash did not move).
+- 04:16 shard kill close-up at 64 px/m (`arena_shard_kill_64ppm/kill_closeup.png`, 13 shards, 3
+  kills): the fanned shards curve in, cream burst in an ink star, ring + red spray; the body is thrown
+  out of the top of the frame. The grey disc left behind looked like a debug marker; checked: it is
+  GunFxMarks.scorch (0.36 m burnt ring) with a spent shard in it. REQUEST 3 (it5, victim camera)
+  still stands. FRICTION: the arena runs as `res://dev/arena/arena.tscn -- --weapon=.. --bot=gunplay
+  --ppm=.. --rigs --clean`; `-- --arena` is ignored by boot (the city overview gets recorded).
+- frames.json 15: +shard kill close-up, +nuke floor sheet; dropped the shard sequence (superseded) and
+  the plasma halo A/B (modest).
