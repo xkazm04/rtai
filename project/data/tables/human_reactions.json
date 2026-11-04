@@ -92,10 +92,10 @@
       "travel_m": 0.7
     },
     {
-      "doc": "Melee kill: folds over, then topples along the blow.",
+      "doc": "Melee kill: folds over, then topples along the blow. combat-notes 2026-11-04: 0.9 m (was 0.5): the claw kill throws the body clear of Rivet; at 0.5 the cop who walked into him lay under his feet.",
       "id": "death_melee",
       "len_s": 0.7,
-      "travel_m": 0.5
+      "travel_m": 0.9
     },
     {
       "doc": "Blast kill: thrown along the blast, tumbling.",

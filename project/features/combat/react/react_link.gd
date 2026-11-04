@@ -33,6 +33,8 @@ const HOLD: Dictionary[StringName, Vector3] = {
 	&"knockdown": Vector3(0.3, 0.6, 0.78),
 }
 
+## False (`--soft-swing`): a melee kill plays no death here (the night's; the A/B's before).
+static var melee_deaths: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 var pipe: DeathPipe
 ## Rounds that fly past a human make it duck (render only).
 var near: NearMiss = NearMiss.new()
@@ -235,9 +237,21 @@ func _relay(rigs: CharacterRigs) -> void:
 
 
 func _on_kill(
-	victim: Fighter, _weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName
+	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName
 ) -> void:
+	if weapon in MELEE_IDS and melee_deaths:
+		_melee_kill(victim, weapon)
+		return
 	_kill_kind[victim.id] = kind
+
+
+## combat-notes: Rivet's melee (PlayerMelee) kills through CombatArena.damage, which emits
+## kill_landed but no struck (struck drives HitLink's sim knockback), so a claw kill played no
+## death: the body lay where it stood, under Rivet. The death plays here along Rivet -> victim.
+func _melee_kill(victim: Fighter, weapon: StringName) -> void:
+	var d: Vector2 = victim.pos - _arena.rivet.pos
+	d = d.normalized() if d.length() > 0.001 else -victim.facing
+	_pending.append([victim.id, d, true, &"melee", false, weapon])
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
