@@ -19,6 +19,9 @@ const FLASH_AHEAD_M: float = 0.15
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
+## The electro arc cell spans ARC_SPAN_PX part px (tail anchor to head); drawn at least ARC_MIN_M.
+const ARC_SPAN_PX: float = 296.0
+const ARC_MIN_M: float = 2.0
 
 static var enabled: bool = not OS.get_cmdline_user_args().has("--weapon-fx=shapes")
 static var _art: WeaponArt = null
@@ -51,13 +54,12 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, s.pos, dir, went, tick)
 		WeaponSpec.Kind.CONE:
-			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
-			var f: int = (tick / 3 + int(went * 4.0)) % 3
-			_cell(ci, &"flame", f, s.pos, float(tick) * 0.2, 0.9 + 1.6 * k, 1.0 - 0.4 * k)
+			_jet(ci, s, dir, went, tick)
 		WeaponSpec.Kind.BOLT:
-			var tail: Vector2 = s.pos - dir * maxf(s.spec.tracer_len_m, 1.0)
-			_cell(ci, &"arc", tick % 3, tail, dir.angle(), 1.0, 1.0)
-			_cell(ci, &"spark", tick % 3, s.pos, float(tick) * 0.5, 0.6, 1.0)
+			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
+			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
+			_cell_v(ci, &"arc", tick % 3, s.pos - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
+			_cell(ci, &"spark", tick % 3, s.pos, float(tick) * 0.5, 1.1, 1.0)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
@@ -102,6 +104,19 @@ static func blast(ci: CanvasItem, b: Vector3, age: int) -> bool:
 	return true
 
 
+## The flamethrower stream: tongues along the jet, growing and fading with range.
+static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+	var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
+	var f: int = (tick / 3 + int(went * 4.0)) % 3
+	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * 0.18
+	var grow: Vector2 = Vector2(0.75 + 0.9 * k, 0.6 + 1.3 * k)
+	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
+	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
+	if went > gap + CLEAR_M:
+		_cell_v(ci, &"flame", f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), grow * 0.85, 1.0)
+	_cell_v(ci, &"flame", f, s.pos, lick, grow, 1.0 - 0.35 * k)
+
+
 static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick: int) -> void:
 	var side: Vector2 = dir.orthogonal()
 	for k: int in range(PUFFS - 1, -1, -1):
@@ -114,7 +129,7 @@ static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick
 			ci, &"smoke", (k + tick / 4) % 3, at - dir * back + wob, float(k), grow, 1.0 - 0.13 * k
 		)
 	var tail: Vector2 = at - dir * 1.15
-	_cell(ci, &"flame", tick % 3, tail, float(tick), 0.45 + 0.08 * float(tick % 2), 1.0)
+	_cell(ci, &"flame", tick % 3, tail, dir.angle(), 0.42 + 0.08 * float(tick % 2), 1.0)
 	_cell(ci, &"rocket", 0, at, dir.angle(), 1.0, 1.0)
 
 
@@ -130,12 +145,19 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	ci.draw_texture(tex, -tex.get_size() * 0.5)
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var wick: Vector2 = Vector2.from_angle(float(tick) * 0.45) * tex.get_width() * 0.5 * k
-	_cell(ci, &"flame", tick % 3, up + wick / Ink.PX_PER_M, 0.0, 0.35, 1.0)
+	_cell(ci, &"flame", tick % 3, up + wick / Ink.PX_PER_M, -PI * 0.5, 0.3, 1.0)
 
 
 ## Frame `frame` of fx `id` with its anchor on `at` (m), turned `angle`, `scale` x the cell scale.
 static func _cell(
 	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: float, a: float
+) -> void:
+	_cell_v(ci, id, frame, at, angle, Vector2.ONE * scale, a)
+
+
+## As _cell with a per-axis `scale` (x along the cell's +x: a jet or a bolt stretched to length).
+static func _cell_v(
+	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2, a: float
 ) -> void:
 	if not _frames.has(id):
 		_frames[id] = art().fx_frames(id)
@@ -143,7 +165,7 @@ static func _cell(
 	if frames.is_empty():
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame]) if frames.size() > 1 else id
-	ci.draw_set_transform(Ink.px(at), angle, Vector2.ONE * cell_scale() * scale)
+	ci.draw_set_transform(Ink.px(at), angle, scale * cell_scale())
 	var tex: Texture2D = frames[frame % frames.size()]
 	ci.draw_texture(tex, -art().fx_anchor(key), Color(1, 1, 1, a))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

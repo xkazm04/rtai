@@ -4,37 +4,37 @@
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_0.png",
       "id": "arc_0",
       "size_px": [
         320,
-        90
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_1.png",
       "id": "arc_1",
       "size_px": [
         320,
-        90
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_2.png",
       "id": "arc_2",
       "size_px": [
         320,
-        90
+        120
       ]
     },
     {
@@ -99,38 +99,38 @@
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_0.png",
       "id": "flame_0",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_1.png",
       "id": "flame_1",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_2.png",
       "id": "flame_2",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
