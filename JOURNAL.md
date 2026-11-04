@@ -1038,3 +1038,8 @@ age-96 stall and the nuke tick under bench.lock, look goldens + parity on the me
   (evidence/brutality/look-golden-it18.json; first look run since 59429978); parity bit for bit,
   1200 steps, planted mutation caught at step 629 (evidence/brutality/parity-it18.log). Report
   next step 4 is done on this branch (still to repeat on the merged main).
+- MILESTONE 09:11 the all-eleven city reel re-cut: `clips/city-reel-all-11-kills-clean-48ppm-it18.mp4`
+  (masters, frames.json entry 1, before = the it12 reel). Chapter cuts found by scene change on the
+  label strip (electro = 22.06-29.08 s); the electro chapter replaced by the it18 48 px/m clip with
+  the same label style; the other ten chapters are the it12 takes, untouched. 78 s. Looked at the
+  sheet (evidence/brutality/city-reel-all-11-clean-it18-sheet.png): the chapter joins are clean.
