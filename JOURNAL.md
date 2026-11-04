@@ -931,3 +931,25 @@ NEXT (iteration 14), in order:
   kinetic clip in frames.json (15 entries).
 - NEXT (iteration 14) revised: 1 REQUEST 12 answer; 2 the melee four in the claw (lineup); 3 the long guns over the
   helmet (rivet-arsenal, watch); 4 delete scratch wa13. Session closed 07:49, no Godot process of mine running.
+
+## Iteration 14 (07:48 - 08:30)
+- 07:48 read JOURNAL NEXT, git log, other lanes' JOURNALs. New REQUEST to me: gunplay REQUEST 31 (07:37): the
+  molotov's burst plays the rocket's blast cells, ending in a ring of cream discs that reads as debug beads over
+  the fire. rivet-arsenal has not answered REQUEST 12 (gloria stand-in) in its JOURNAL; mine is on this branch.
+- MILESTONE 07:51 REQUEST 31 DONE (474038b1): `WeaponFxArt.blast` tells a bottle's burst by its fire patch (same
+  radius under the splash: molotov 2.2 = 2.2; rocket none; nuke 6 != 12) and draws only the star frame for
+  `FIRE_BURST_TICKS` 10, fading over the last 5. FightAreasArt passes its areas (one argument in gunplay's file).
+  `--fire-burst=off` = before. Unit test. lint 13/13 (`lint-it14.log`), unit 741/741 (`unit-it14.log`).
+- DECISION weapon-art bottle bursts: star only, then the fire (docs/decisions.md). Rejected: a new glass-and-fuel
+  splash sheet (an image call, no time before the freeze); it stays the better long-term answer.
+- MILESTONE 07:53 measured in the city block at 48 px/m (`--arena=city --ppm=48 --bot=gunplay --weapon=molotov
+  --loadout=molotov`, `--fixed-fps 60 --quit-after 480`, before/after runs at the same ticks; burst at 427):
+  clip (masters) `clips/it14-molotov-burst-ab-city-48ppm-2x.mp4` (+ quarter speed) and strip
+  `frames/it14-molotov-burst-ab-city-48ppm.png`. Looked at: before, smoke ring at 442 and the cream bead ring
+  448-456 over the fire; after, the star at 428-432, then only flames. frames.json 15 (dropped the it12 kinetic and
+  long-gun strips: the first carried only Gloria-as-pistol, the second is covered by its clip).
+- Registry rules applied: realtime-combat-semantics (one impact read per hit type: a bottle is fire, not an
+  explosion), motion-quality-gating (same deterministic ticks, one variable). No deviation.
+- NOTE melee in the claw (NEXT 2 of it13): on this branch the melee weapons draw only in rivet-motion's
+  `combo_clip_run` dev scene, as MeleeWeaponView's procedural bars ("a placeholder until weapon art"); the arena
+  wields them only on n-rivet-arsenal (StagePilot.wielding, arena_arsenal_bot). Not merged this late.
