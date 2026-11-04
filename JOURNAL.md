@@ -645,3 +645,42 @@ NEXT (iteration 9):
   stage.pilot.shock.discharges, but the pilot steps its own PlayerShock every tick with the
   player's button, so the lab cannot drive that one without the two drivers fighting; it needs
   an input-level hook (the lab pressing melee through TickInput). rivet-arsenal's ground.
+- 06:05 scenarios 35/35 on 47e38261 (scenarios-it9.log; brutality-kills.json unchanged). Note:
+  `--evidence-dir` makes every scenario write its evidence there; I deleted the extra files.
+- MILESTONE 06:09 city proving block reel, all eleven kills (game-city), 48 px/m, real time, 80 s,
+  labelled: one isolated cop each at start:-7,0, the nuke on its pack. 0 script errors; one
+  signature kill per clip except the nuke (10 bodies in its radius: the pack plus hub dummies).
+  Masters clips/city-block-reel-11-kills-48ppm-80s-it9.mp4 (frames.json, it8 reel as before);
+  sheet evidence/brutality/city-block-reel-11-kills-it9-sheet.png.
+- MEASURED worst kill frame (kill-view CPU, CONTENDED, captures at 60 fps fixed, new telemetry):
+  mini-nuke on the city block 4.3 ms on its kill tick (10 cuts at once); homing shard 2.5 ms;
+  hand cannon 2.2 ms; flame 1.9 ms (its first char build); katana/chainsaw/plasma sword/ray gun
+  1.1-1.4 ms; rocket 1.2 ms (after the smear fix). Every single kill now under 2.5 ms.
+- MILESTONE 06:16 homing shards fan out (85d3609f). FRICTION/finding: a magenta probe in the hold
+  branch showed the five far-side shards were drawn on top all along but stacked into one wedge
+  (hashed sides within +-0.18 m, turns +-0.25 rad), so every clip since it7 showed one spike.
+  Now spread evenly over the far side (turns to +-1.2 rad) plus three short butts on the near
+  side. Tried and rejected first: a z raise to 200 (no change: z was never the problem; reverted).
+  64 px/m slow re-cut in masters (frames.json entry replaced, it8 as before).
+- Registry rules applied: motion-quality-gating (every change judged on 64 px/m strips; the
+  shard probe before guessing at a fix); realtime-combat-semantics (the electro one-shot is the
+  gun's own charged shot, not a lab damage cheat; the lab only holds the trigger).
+
+## Calls for the owner (iteration 9)
+- brutality-14: the plasma victim falls flat back along the shot after an 8-tick look at the
+  hole (clips/plasma-hole-topple-solo-64ppm-slow-0.4x-it9.mp4) vs. dropping at once with no
+  look. Default: the look (one value: KillHoleFx.LOOK_TICKS = 0).
+- brutality-15: the electro gun's one-shot needs the held charge (tap stuns, hold kills;
+  clips/electro-gun-charged-oneshot-solo-64ppm-slow-0.4x-it9.mp4). Default: as gunplay built it.
+
+NEXT (iteration 10):
+1. City camera: follow Rivet at his solo spot (the camera holds the start, so the nuke pack and
+   any start:dx spot sit at the frame edge); then re-shoot the nuke pack on the city block.
+2. The claw-shock lab: press melee through TickInput so the pilot's own PlayerShock fires and
+   Rivet's thrust clip plays with the X-ray (deferred this iteration; see above).
+3. Homing shard: the crystals are cream on a cream torso; try an ink-dark core or a red root so
+   they read at 32 px/m; check the near-side butts under the victim's gun arm.
+4. The nuke's 4.3 ms tick (10 cuts at once): spread the cuts of one tick over two frames, or
+   cache the cut per rig look.
+5. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check it does not double up
+   with KillBurstFx.
