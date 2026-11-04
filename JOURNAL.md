@@ -194,3 +194,8 @@ NEXT (supersedes the list above; iteration 3):
 4. Kill #5 katana (rivet-arsenal's melee hit event; cut the rig copy along the swing line).
 5. A reel of all four finished kills (rocket, hand cannon, fire, electro) at 32 px/m.
 6. Hand cannon polish (sprawl before the cut, the cap visibly leaves).
+- 02:43 tried: give every CombatBlood under the arena game the veto at the first kill (the city's
+  CityBlood glue makes its own CombatBlood after attach_view). Re-shot the city fire run: the red is
+  unchanged frame for frame, so the city's fire-kill blood comes from ANOTHER path (candidates:
+  ghost-powers' city-path blood in quest 1, the human-reactions city rig attach, CityBlood's rig-feed
+  `follow`, or KillBeat). Change reverted (unverified). Start NEXT 1 by logging which node draws it.
