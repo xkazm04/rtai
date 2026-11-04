@@ -22,6 +22,12 @@ const DROP_TURN: float = 0.12
 const LIE_STRETCH: float = 0.6
 const LIE_NARROW: float = 0.15
 const LIE_FALL_M: float = 0.4
+## The plank (KillSprawlCut: human-reactions' shock death pose) replaces the standing copy this far
+## into the drop; it keeps a light stretch along the shot so the fall still reads as a slam.
+const PLANK_AT: float = 0.45
+const PLANK_STRETCH: float = 0.18
+## The plank opens from this scale to full as the drop lands (the body unfolding onto the street).
+const PLANK_FROM: float = 0.75
 const SMOKE_TICKS: int = 200
 
 
@@ -74,15 +80,21 @@ func pose() -> void:
 	queue_redraw()
 
 
-## Wraps the kept BODY group in a root whose one child is the lay node the drop bends.
-static func wrap(body: Node2D) -> Node2D:
+## Wraps the kept BODY group in a root whose one child is the lay node the drop bends; `plank`
+## (the sprawled cut, may be null) waits hidden beside the body under the lay node.
+static func wrap(body: Node2D, plank: Node2D = null) -> Node2D:
 	var root: Node2D = Node2D.new()
 	root.name = body.name
 	var lay: Node2D = Node2D.new()
 	lay.name = "lay"
 	root.add_child(lay)
+	if plank != null:
+		plank.position -= body.position
+		plank.visible = false
 	body.position = Vector2.ZERO
 	lay.add_child(body)
+	if plank != null:
+		lay.add_child(plank)
 	return root
 
 
@@ -92,9 +104,16 @@ func _lie(s: Shock, k: float) -> void:
 		return
 	var axis: Vector2 = s.dir.normalized() if s.dir != Vector2.ZERO else Vector2.RIGHT
 	axis = axis.rotated(-s.body.rotation)
+	var planked: bool = lay.get_child_count() > 1 and k >= PLANK_AT
+	if lay.get_child_count() > 1:
+		(lay.get_child(0) as Node2D).visible = not planked
+		(lay.get_child(1) as Node2D).visible = planked
+		var grow: float = clampf((k - PLANK_AT) / (1.0 - PLANK_AT), 0.0, 1.0)
+		(lay.get_child(1) as Node2D).scale = Vector2.ONE * lerpf(PLANK_FROM, 1.0, grow)
+	var st: float = PLANK_STRETCH if planked else LIE_STRETCH
 	var turn: Transform2D = Transform2D(axis.angle(), Vector2.ZERO)
 	var flat: Transform2D = Transform2D(
-		0.0, Vector2(1.0 + LIE_STRETCH * k, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
+		0.0, Vector2(1.0 + st * k, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
 	)
 	var t2: Transform2D = turn * flat * turn.affine_inverse()
 	lay.transform = t2.translated(axis * LIE_FALL_M * ppm * k)
