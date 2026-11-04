@@ -640,3 +640,35 @@ NEXT (iteration 9), in order:
   tracer/nail/plasma_bolt/shard, bolt -> arc/ray_ring, rocket -> rocket, cone -> flame, thrown -> flame (molotov
   bottle) / rocket (the nuke shell). There is no other mismatch.
 - Gates of record at e0308ace: unit 735/735 (`unit-it9c.log`), scenarios 32/32 (`scenarios-it9b.log`), lint 13/13 (674 files).
+- MEASURE 05:31 the mini-nuke shell close-up in the arena pit (`--ppm=64 --rigs --bot=gunplay --weapon=mini_nuke
+  --loadout=mini_nuke --start=pit`): the shell leaves the claw, rises above its ground shadow, turns along the arc
+  and comes down on the cop into the blast. `it9-mini-nuke-shell-arena-pit-64ppm-30fps.png`, clip
+  `it9-mini-nuke-shell-arena-pit-64ppm-halfspeed.mp4`. The ground shadow is a small dash at 64 px/m; it could be
+  bigger.
+- MEASURE 05:34 machine pistol in the city (`--loadout=machine_pistol --bot=gunplay`, 32 px/m): its needles (the
+  new tracer) and the brass on the paving read. No change. NEXT 1 is closed: pistol, machine pistol, hand cannon,
+  Gloria, rocket and mini-nuke have all been read on cream.
+- frames.json 15: it9 first (nuke bottle-vs-shell clip + A/B, nuke 64 close-up clip + strip, Gloria clip + A/B,
+  hand cannon A/B, empty tubes sheet, round cells at true scale), then it8 (ray A/B/C + clip, plasma clip, chain
+  strip), then it6 (weapon wall frame + clip). The pistol tracer A/B and its 60 fps strip stay in masters/frames
+  (referenced above). Scratch wa9 emptied (the sandbox keeps the empty folder, as with wa8b).
+
+## Calls for the owner (adds, iteration 9)
+- weapon-art-12: the mini-nuke's round is the shared rocket cell at 1.5x (shipped) vs a striped warhead cell that
+  matches the held part. Clip `it9-mini-nuke-bottle-vs-shell-city-32ppm-halfspeed.mp4` shows the shipped shell (and
+  the old bottle bug). Default: the shared rocket at 1.5x.
+- weapon-art-13: the hand cannon's round is the pistol needle at 1.6x (a slug, shipped) vs a pistol-weight needle.
+  Frame `it9-hand-cannon-slug-ab-city-32ppm-2x.png` (top = 1.0, bottom = 1.6). Default: 1.6.
+
+NEXT (iteration 10), in order:
+1. rivet-arsenal wires `make_held(id, "empty")` (their REQUEST 11, delivered b98ae259). When it lands, film the
+   rocket reload at 64 px/m: the tube goes empty at the shot and loads again in phase 2.
+2. The lobbed shell's ground shadow: make it a soft ink ellipse that scales with the shell, so the height reads at
+   32 px/m. The bottle shares the shadow; check the molotov too.
+3. A 48 px/m clip of the kinetic family in one run (pistol, machine pistol, hand cannon, Gloria) via the arsenal
+   switch bot, for the morning page's "weapons in motion" row.
+4. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): check their answer.
+5. The energy flashes stay as they are (read in the true-scale sheet). Look at the flame and arc cells at 32 px/m
+   on cream next, in the same composite.
+- Session close 05:36: 7 commits this iteration (3405df7c..), gates green at e0308ace, worktree clean except the
+  evidence logs.
