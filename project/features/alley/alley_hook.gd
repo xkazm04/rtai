@@ -62,7 +62,9 @@ func attach_view(view: Node) -> void:
 	for p: ArenaStation.Prop in station.props:
 		if p.kind == "wall_high":
 			walls.append(Rect2(Ink.px(_base + p.at - p.size * 0.5), p.size * Ink.PX_PER_M))
-	var roofs: AlleyRoofs = AlleyRoofs.new(decor, _base, walls, Ink.px(_floor_m.get_center()).x)
+	var mid: Vector2 = Ink.px(_floor_m.get_center())
+	var along_x: bool = _floor_m.size.x > _floor_m.size.y
+	var roofs: AlleyRoofs = AlleyRoofs.new(decor, _base, walls, mid, along_x)
 	_lay(v, roofs, RenderLayers.z(&"ground") + 2, v.stage_view.scale)
 	var over: AlleyDecor = AlleyDecor.new(decor, _base, true)
 	over.material = v.print_stage.item_material()

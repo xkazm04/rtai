@@ -7,8 +7,8 @@ extends Node2D
 ## band over the floor view's flat wall slabs (the station's wall_high props stay the collision).
 ## Reads data only (alley_decor.json "roofs" + the station's walls), never the sim.
 
-const TAR: Color = Color("#A48A72")
-const BRICK: Color = Color("#B07F62")
+const TAR: Color = Color("#C9AB8A")
+const BRICK: Color = Color("#A4664A")
 const STONE: Color = Color("#D9CDB6")
 const RECESS: Color = Color("#5C544D")
 const LIP_M: float = 0.95
@@ -20,35 +20,45 @@ const PIPE_EVERY_M: float = 9.0
 
 var _roofs: Array[Rect2] = []
 var _walls: Array[Rect2] = []
-var _mid_px: float = 0.0
+var _mid_px: Vector2 = Vector2.ZERO
+var _along_x: bool = false
 
 
-func _init(rows: Dictionary, base: Vector2, walls: Array[Rect2], mid_px: float) -> void:
+## mid_px = the alley floor's centre; along_x = the lane runs east-west (faces on the long walls'
+## north/south sides) instead of north-south.
+func _init(
+	rows: Dictionary, base: Vector2, walls: Array[Rect2], mid_px: Vector2, along_x: bool
+) -> void:
 	for r: Variant in rows.get("roofs", []):
 		_roofs.append(AlleyDecor.rect_px(r, base))
 	_walls = walls
 	_mid_px = mid_px
+	_along_x = along_x
 
 
 func _draw() -> void:
 	for r: Rect2 in _roofs:
 		draw_rect(r, RECESS, true)  # the side passages: what no wall strip covers
-	for w: Rect2 in _walls:
-		if w.size.y >= 1.0 * Ink.PX_PER_M:  # every building (the fence is the thin cross wall)
-			_tar(_merged(w) if w.size.x < w.size.y else w)
-	for w: Rect2 in _walls:
-		if w.size.x < w.size.y:
-			_face(w)
-
-
-## The wall strip widened out to the roof behind it, so one tar slab spans strip and building.
-func _merged(w: Rect2) -> Rect2:
-	for r: Rect2 in _roofs:
-		if r.grow(1.0).intersects(w):
-			var x0: float = minf(r.position.x, w.position.x)
-			var x1: float = maxf(r.end.x, w.end.x)
-			return Rect2(x0, w.position.y, x1 - x0, w.size.y)
-	return w
+	for face: bool in [false, true]:
+		for w: Rect2 in _walls:
+			if minf(w.size.x, w.size.y) < 1.0 * Ink.PX_PER_M:
+				continue  # the fence's thin wall: AlleyDecor draws its mesh
+			var long: bool = w.size.x >= w.size.y if _along_x else w.size.y >= w.size.x
+			var east: bool = (
+				w.get_center().y < _mid_px.y if _along_x else w.get_center().x < _mid_px.x
+			)
+			# Drawn in the lane's frame: a lane along x is turned a quarter, so local x = across.
+			var local: Rect2 = Rect2(-w.size * 0.5, w.size)
+			if _along_x:
+				draw_set_transform(w.get_center(), PI * 0.5)
+				local = Rect2(-w.size.y * 0.5, -w.size.x * 0.5, w.size.y, w.size.x)
+			else:
+				draw_set_transform(w.get_center())
+			if not face:
+				_tar(local)
+			elif long:
+				_face(local, east)
+	draw_set_transform(Vector2.ZERO)
 
 
 func _tar(r: Rect2) -> void:
@@ -93,8 +103,7 @@ func _vent(c: Vector2) -> void:
 
 ## The alley face of a building: a brick lip (courses, staggered joints), the coping stones on
 ## top of it, and a drainpipe with brackets every PIPE_EVERY_M.
-func _face(w: Rect2) -> void:
-	var east: bool = w.get_center().x < _mid_px  # the west building faces east
+func _face(w: Rect2, east: bool) -> void:
 	var lip_w: float = LIP_M * Ink.PX_PER_M
 	var x_lip: float = w.end.x - lip_w if east else w.position.x
 	var lip: Rect2 = Rect2(x_lip, w.position.y, lip_w, w.size.y)

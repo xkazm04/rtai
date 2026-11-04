@@ -8,7 +8,7 @@ extends Node2D
 ## the cast) draws the city's fire-escape art: 3 m+ up, always over a 1.8 m fighter, so one order
 ## holds in every pose (registry depth-ordered-layered-art). Reads data only, never the sim.
 
-const ASPHALT: Color = Color("#857C71")
+const ASPHALT: Color = Color("#6F6964")
 const BAG_DARK: Color = Color("#2E2833")
 const BAG_PALE: Color = Color("#C9BCA4")
 const MESH_STEP_M: float = 0.16
@@ -87,9 +87,10 @@ func _bags(r: Rect2) -> void:
 	var c: Vector2 = r.get_center()
 	var s: float = minf(r.size.x, r.size.y) * 0.5
 	var offs: Array[Vector2] = [Vector2(-0.35, -0.3), Vector2(0.4, -0.15), Vector2(-0.1, 0.38)]
-	if r.size.y > r.size.x * 1.4:
-		offs.append(Vector2(0.2, 0.95))
-		offs.append(Vector2(-0.3, -0.95))
+	if maxf(r.size.x, r.size.y) > minf(r.size.x, r.size.y) * 1.4:  # a long pile: two more bags
+		var tall: bool = r.size.y > r.size.x
+		offs.append(Vector2(0.2, 0.95) if tall else Vector2(0.95, 0.2))
+		offs.append(Vector2(-0.3, -0.95) if tall else Vector2(-0.95, -0.3))
 	for i: int in offs.size():
 		var at: Vector2 = c + offs[i] * s
 		var rad: float = s * (0.62 if i % 2 == 0 else 0.52)
@@ -101,20 +102,26 @@ func _bags(r: Rect2) -> void:
 		draw_circle(at + Vector2(rad * 0.12, -rad * 0.24), rad * 0.07, Ink.CREAM)
 
 
-## A chain-link run: a fine diamond mesh between two rails, posts every 1.5 m.
+## A chain-link run: a fine diamond mesh between two rails, posts every 1.5 m (drawn along x;
+## a north-south run is turned a quarter).
 func _fence(r: Rect2) -> void:
+	var len: float = maxf(r.size.x, r.size.y)
+	var w: float = minf(r.size.x, r.size.y)
+	draw_set_transform(r.get_center(), 0.0 if r.size.x >= r.size.y else PI * 0.5)
+	var l: Rect2 = Rect2(-len * 0.5, -w * 0.5, len, w)
 	var step: float = MESH_STEP_M * Ink.PX_PER_M
-	var x: float = r.position.x
-	while x < r.end.x:
-		draw_line(Vector2(x, r.position.y), Vector2(x + r.size.y, r.end.y), Ink.INK, 1.0)
-		draw_line(Vector2(x + r.size.y, r.position.y), Vector2(x, r.end.y), Ink.INK, 1.0)
+	var x: float = l.position.x
+	while x < l.end.x:
+		draw_line(Vector2(x, l.position.y), Vector2(x + w, l.end.y), Ink.INK, 1.0)
+		draw_line(Vector2(x + w, l.position.y), Vector2(x, l.end.y), Ink.INK, 1.0)
 		x += step
-	draw_line(r.position, Vector2(r.end.x, r.position.y), Ink.INK, 2.0)
-	draw_line(Vector2(r.position.x, r.end.y), r.end, Ink.INK, 2.0)
-	var post: float = r.position.x
-	while post <= r.end.x + 0.5:
-		draw_circle(Vector2(post, r.get_center().y), 0.11 * Ink.PX_PER_M, Ink.INK)
+	draw_line(l.position, Vector2(l.end.x, l.position.y), Ink.INK, 2.0)
+	draw_line(Vector2(l.position.x, l.end.y), l.end, Ink.INK, 2.0)
+	var post: float = l.position.x
+	while post <= l.end.x + 0.5:
+		draw_circle(Vector2(post, 0.0), 0.11 * Ink.PX_PER_M, Ink.INK)
 		post += 1.5 * Ink.PX_PER_M
+	draw_set_transform(Vector2.ZERO)
 
 
 ## A drain grate: an ink slot box with cream bars (the city decal carries a rust orange).
