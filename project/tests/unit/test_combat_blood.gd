@@ -100,6 +100,19 @@ func test_quest_events_bleed_guards_and_oil_rivet() -> void:
 	bus.free()
 
 
+func test_a_body_burned_to_death_leaves_no_red() -> void:
+	var bus: EventBus = EventBus.new()
+	var b: CombatBlood = _blood("noir")
+	var where: Dictionary[int, Vector2] = {1: Vector2(5, 5), 2: Vector2(8, 5)}
+	b.listen(bus, func(id: int) -> Vector2: return where.get(id, Vector2.INF), 1)
+	bus.actor_killed.emit(1, 2, &"burned")
+	b.step(1, Vector2.ZERO)
+	b.step(80, Vector2.ZERO)
+	assert_eq(b.kills, 0, "charred, not sprayed")
+	assert_false(b.blood.has_pool_at(Vector2(8, 5) * SimConst.PX_PER_M, 16.0), "no pool")
+	bus.free()
+
+
 func test_a_hit_robot_leaves_an_oil_trail_where_it_walks() -> void:
 	var b: CombatBlood = _blood("noir")
 	var at: Array[Vector2] = [Vector2(320, 320)]

@@ -4,7 +4,9 @@ extends Node2D
 ## cop from above): a soot blot along the body, a star of soot burns round it (the current that
 ## went to ground) and a few smoke puffs that swell and fade over SMOKE_S. A child of the
 ## CutRig (part px, x = the facing), drawn under every part; it shows while the rig lies stiff
-## (CutRig.c_plank) and hides itself when a pooled rig stands again. Render only: no RNG (the
+## (CutRig.c_plank) and hides itself when a pooled rig stands again. A body burned to death
+## (death_burn) gets the blot without the burn star and smokes longer (BURNT_SMOKE_S, more
+## puffs): charred, not struck. Render only: no RNG (the
 ## shape comes from the actor id's hash), never read by the sim (lane human-reactions).
 
 const NAME: StringName = &"Scorch"
@@ -20,6 +22,10 @@ const HALF_W: float = 170.0
 const BURNS: int = 11
 const BURN_W: float = 32.0
 const SMOKE_S: float = 2.4
+const BURNT_SMOKE_S: float = 4.5
+const BURNT_PUFFS: int = 5
+## The burnt body is near black itself: its soot is this much fainter, so the legs read on it.
+const BURNT_SOOT: float = 0.6
 const Z: int = -20
 
 var _rig: CutRig = null
@@ -27,6 +33,7 @@ var _seed: int = 0
 var _t0: float = -1.0
 var _feet: float = -1.0
 var _amount: float = 0.0
+var _burnt: bool = false
 
 
 ## Adds the mark under `rig` once (later calls only find it).
@@ -43,14 +50,14 @@ static func ensure(rig: CutRig) -> void:
 
 
 func _process(_delta: float) -> void:
-	var a: float = _rig.c_plank if _rig != null else 0.0
+	var a: float = _amount_now()
 	if a <= 0.01:
 		visible = false
 		_t0 = -1.0
 		return
 	if _t0 < 0.0:
 		_t0 = _rig.t_alive
-	var smoking: bool = _rig.t_alive - _t0 < SMOKE_S
+	var smoking: bool = _rig.t_alive - _t0 < (BURNT_SMOKE_S if _burnt else SMOKE_S)
 	if not visible or smoking or absf(a - _amount) > 0.01 or _feet != _rig.plank_feet:
 		visible = true
 		_amount = a
@@ -61,16 +68,31 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	var f: float = _feet
 	var mid: float = f * (FEET_PX - HEAD_PX) * 0.5
+	if _burnt:  # the burnt body lies tucked: its length is the shoulder line (y), centred
+		mid = 0.0
+		draw_set_transform(Vector2.ZERO, PI / 2.0)
 	var half_l: float = (FEET_PX + HEAD_PX) * 0.5
 	draw_colored_polygon(_blot(mid, half_l * _amount, HALF_W * _amount, 0), _a(SOOT))
 	draw_colored_polygon(_blot(mid, half_l * 0.6, HALF_W * 0.55, 7), _a(CORE))
-	for i: int in BURNS:
-		draw_colored_polygon(_burn(i, mid, half_l), _a(BURN))
+	if not _burnt:
+		for i: int in BURNS:
+			draw_colored_polygon(_burn(i, mid, half_l), _a(BURN))
 	_smoke(_rig.t_alive - _t0)
 
 
+## How far the mark has come in: the stiff fall (c_plank), or a burn death's collapse.
+func _amount_now() -> float:
+	if _rig == null:
+		return 0.0
+	var r: HumanReact = _rig.react
+	_burnt = r != null and r.dying and r.kind == &"death_burn"
+	if _burnt:
+		return clampf(_rig.c_sprawl / 0.8, 0.0, 1.0)
+	return _rig.c_plank
+
+
 func _a(c: Color) -> Color:
-	return Color(c, c.a * _amount)
+	return Color(c, c.a * _amount * (BURNT_SOOT if _burnt else 1.0))
 
 
 ## An irregular blot (ink edge, not a clean ellipse) centred `mid` along x.
@@ -101,10 +123,11 @@ func _burn(i: int, mid: float, half_l: float) -> PackedVector2Array:
 
 
 func _smoke(age: float) -> void:
-	if age >= SMOKE_S:
+	var life: float = BURNT_SMOKE_S if _burnt else SMOKE_S
+	if age >= life:
 		return
-	var k: float = age / SMOKE_S
-	for i: int in 3:
+	var k: float = age / life
+	for i: int in BURNT_PUFFS if _burnt else 3:
 		var at: Vector2 = Vector2((_n(i * 3) - 0.5) * 300.0, (_n(i * 3 + 1) - 0.5) * 160.0)
 		at += Vector2(40.0, -60.0) * k * (1.0 + i)
 		var r: float = 60.0 + 140.0 * k + 20.0 * i

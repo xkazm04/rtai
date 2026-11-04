@@ -139,6 +139,15 @@ func test_the_stiff_corpse_lies_along_the_shot_whichever_way_it_faced() -> void:
 	assert_almost_eq(DeathPose.plank_turn(Vector2.LEFT), DeathPose.PLANK_TILT, 0.001, "head-on")
 
 
+func test_a_burn_death_lies_charred_over_soot() -> void:
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"death_burn", Vector2.LEFT, _table)
+	for i: int in 300:
+		r.pre(_rig, SimClock.TICK_DT)
+	assert_almost_eq(r.tint, 1.0, 0.01, "charred")
+	assert_true(_rig.get_node_or_null(NodePath(CorpseScorch.NAME)) is CorpseScorch, "soot under it")
+
+
 func test_a_melee_death_lies_curled_not_in_the_x() -> void:
 	var r: HumanReact = HumanReact.on(_rig)
 	r.play(_rig, &"death_melee", Vector2.LEFT, _table)
