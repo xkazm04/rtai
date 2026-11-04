@@ -496,3 +496,15 @@ clip or a sheet I looked at). No deviation.
   --ppm=.. --rigs --clean`; `-- --arena` is ignored by boot (the city overview gets recorded).
 - frames.json 15: +shard kill close-up, +nuke floor sheet; dropped the shard sequence (superseded) and
   the plasma halo A/B (modest).
+- 04:20 FINDING in the shard close-up: the victim's body vanished when Rivet turned to the next cop.
+  Cause: the arena's rig LOD bubble (14 m) sat 7 m ahead of Rivet's aim and the arena has no crowd
+  atlas behind it, so anyone outside it is not drawn at all. human-reactions already fixed it
+  (f6813fe4 `ArenaRigs.focus_m`); I took only that file's hunk (acbb8c0c, identical lines, merges
+  clean). Shared dev file: logged here.
+- 04:22 fix (5b51da41): with the body kept, an energy round's grey burnt ring printed over the
+  corpse's chest (FxView draws above the actor layer). The ring is now left only where the round
+  stopped on ground or metal; the pop still bursts on the body, the body's mark is its blood.
+  Re-shot the shard, plasma and ray kill close-ups at 64 px/m (before files kept next to each):
+  each cop now crumples into his own blood with nothing printed on him. The hand cannon has no ring.
+- Gates at 5b51da41: lint 13/13, unit 716/716 (`evidence/n4/unit-n.log`), scenarios 29/29
+  (`scenarios-n.log`). Parity untouched (no native/city-sim file).
