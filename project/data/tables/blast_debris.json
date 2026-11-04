@@ -1,7 +1,7 @@
 {
   "chunk_m": [
-    0.4,
-    0.8
+    0.35,
+    1.3
   ],
   "chunks": 9,
   "doc": "n5-look (r2_w4): the rocket blast flings grey concrete slabs in a bold ink edge and small ink specks out past its fireball (WeaponFxDebris, render only, seeded by the blast's position). chunk_m = slab size range (m); fly_k = [start, end] distance as a share of the splash radius, eased out over ticks; fill = the slab's flat grey; edge_px = its ink edge (world px); specks / speck_px = the ink dots flung with them; chunks 0 = no debris (before); `--blast-debris=off` = the before for an A/B.",
