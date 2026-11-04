@@ -12,7 +12,8 @@ extends Node
 ## since rivet-arsenal 2026-11-04: every weapon, swing and reaction lives on the rigs; --sprites
 ## opts out).
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
-## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
+## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot); --reach=<m> closes that
+## reach for a capture (the city's lone kills land nearer Rivet, inside the frame's middle third).
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides
 ## (--wide=<m> aims that far beside each, so every round is a near miss).
 ## --armored[=k]: the pit's humans take gunplay's armored hp (2.5 hits, or k), so the limp plays;
@@ -96,6 +97,7 @@ func _open(args: ArenaArgs) -> void:
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 		bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
+		bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
 		session.world.loop().set_input(bot)
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
 		var line: ReactLineBot = ReactLineBot.new(session.stage, session.actions)
