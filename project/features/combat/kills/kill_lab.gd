@@ -97,8 +97,8 @@ func _place_rivet(stage: ArenaStage) -> void:
 
 
 func step(stage: ArenaStage, tick: int) -> void:
-	if solo != Vector2.INF and blade.is_empty():  # the city block re-places Rivet after setup
-		_place_rivet(stage)
+	if solo != Vector2.INF and (blade.is_empty() or _home == Vector2.INF):
+		_place_rivet(stage)  # the city block re-places Rivet after setup; a blade only once
 	for n: int in guards.size():
 		var g: Fighter = guards[n]
 		g.cooldown = HOLD_FIRE
@@ -108,6 +108,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 			g.pos = spots[n] + (g.pos - spots[n]).limit_length(run)
 	if not blade.is_empty():
 		_step_blade(stage)
+		if solo != Vector2.INF and stage.follow != null:  # the city keeps him where the lunge is
+			stage.follow.target = stage.arena.rivet.pos
 	if claw != null:
 		_step_claw(stage, tick)
 		return
