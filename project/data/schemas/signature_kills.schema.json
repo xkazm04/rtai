@@ -10,6 +10,13 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "also_weapons": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "array"
+          },
           "ash_m": {
             "minimum": 0,
             "type": "number"

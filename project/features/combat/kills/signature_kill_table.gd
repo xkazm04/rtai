@@ -26,6 +26,8 @@ static func from_table(t: DataTable) -> SignatureKillTable:
 				var d: Dictionary = v
 				var row: SignatureKill = SignatureKill.from_dict(t, d)
 				out._by_weapon[row.weapon] = row
+				for also: Variant in d.get("also_weapons", []):  # e.g. Rivet's charged claw shock
+					out._by_weapon[StringName(str(also))] = row
 	out.problems = t.errors()
 	return out
 
