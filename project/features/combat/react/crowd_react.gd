@@ -34,6 +34,11 @@ var startles: int = 0
 var pipe: DeathPipe
 ## The live radii (metres); the consts are the shipped values, a scenario plants 0 as a fault.
 var startle_m: float = STARTLE_M
+## Wall time spent in observe (usec: the total, the worst call, the calls): render cost evidence
+## (showcase REQUEST 23); read only by city_bench's exit log, never by the sim.
+var cost_us: int = 0
+var cost_max_us: int = 0
+var cost_calls: int = 0
 var trip_m: float = TRIP_M
 ## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
 ## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
@@ -59,19 +64,36 @@ static func make(p_table: ReactTable = null) -> CrowdReact:
 
 ## One call per sim tick that reached the rigs, after the feed is filled and before they pose.
 func observe(rigs: CharacterRigs, ticks: int = 1) -> void:
+	var t0: int = Time.get_ticks_usec()
+	_observe(rigs, ticks)
+	var dt: int = Time.get_ticks_usec() - t0
+	cost_us += dt
+	cost_max_us = maxi(cost_max_us, dt)
+	cost_calls += 1
+
+
+func _observe(rigs: CharacterRigs, ticks: int) -> void:
 	var feed: RigFeed = rigs.feed
+	var ids: PackedInt32Array = feed.ids
+	var kinds: PackedByteArray = feed.kinds
+	var flags: PackedByteArray = feed.flags
 	var seen: Dictionary[int, bool] = {}
 	var dead: Dictionary[int, bool] = {}
+	var bodies: Dictionary[int, Vector2] = extra_bodies.duplicate()
 	for i: int in feed.count:
-		var id: int = feed.ids[i]
-		if feed.kinds[i] != BodyPlan.Kind.RIVET:
-			dead[id] = feed.has_flag(i, RigFeed.Flag.DEAD)
-			if dead[id] and not _dead.get(id, true):
+		var id: int = ids[i]
+		if kinds[i] == BodyPlan.Kind.RIVET:
+			continue
+		var is_dead: bool = (flags[i] & RigFeed.Flag.DEAD) != 0
+		dead[id] = is_dead
+		if is_dead:
+			bodies[id] = feed.pos[i]
+			if not _dead.get(id, true):
 				_die(rigs.rig_for(id), feed.vel[i])
 				_startle(rigs, feed.pos[i], i)
-		if feed.kinds[i] != BodyPlan.Kind.PED:
+		if kinds[i] != BodyPlan.Kind.PED:
 			continue
-		var now: bool = feed.has_flag(i, RigFeed.Flag.FLEE)
+		var now: bool = (flags[i] & RigFeed.Flag.FLEE) != 0
 		seen[id] = now
 		if now and not _fleeing.get(id, true):
 			_due[id] = DELAY_TICKS
@@ -84,7 +106,7 @@ func observe(rigs: CharacterRigs, ticks: int = 1) -> void:
 	_fleeing = seen
 	_dead = dead
 	_startle_extra(rigs)
-	_trip_over(rigs, dead)
+	_trip_over(rigs, bodies)
 
 
 ## The standard death on `rig` along the sim's slide `vel` (px/s); a car's speed throws it.
@@ -141,25 +163,27 @@ func _cower(rig: CutRig, away: Vector2) -> void:
 	cowers += 1
 
 
-## Fleeing people within TRIP_M of a body trip over it (once per body), along their flight.
-func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
-	var feed: RigFeed = rigs.feed
-	var bodies: Dictionary[int, Vector2] = extra_bodies.duplicate()
-	for i: int in feed.count:
-		if dead.get(feed.ids[i], false):
-			bodies[feed.ids[i]] = feed.pos[i]
+## Fleeing people within TRIP_M of a body trip over it (once per body), along their flight. Only a
+## person on a full rig can play the trip, so the rest of the crowd is skipped before the body
+## scan (it was every fleeing person against every body, each tick: 1.7 ms a tick in a riot).
+func _trip_over(rigs: CharacterRigs, bodies: Dictionary[int, Vector2]) -> void:
 	if bodies.is_empty():
 		return
-	var reach: float = trip_m * SimConst.PX_PER_M
+	var feed: RigFeed = rigs.feed
+	var reach2: float = pow(trip_m * SimConst.PX_PER_M, 2.0)
+	var flee: int = RigFeed.Flag.FLEE
 	for i: int in feed.count:
-		if feed.kinds[i] != BodyPlan.Kind.PED or not feed.has_flag(i, RigFeed.Flag.FLEE):
+		if feed.kinds[i] != BodyPlan.Kind.PED or (feed.flags[i] & flee) == 0:
+			continue
+		var rig: CutRig = rigs.rig_for(feed.ids[i])
+		if rig == null:
 			continue
 		for b: int in bodies:
+			if b == feed.ids[i] or feed.pos[i].distance_squared_to(bodies[b]) >= reach2:
+				continue
 			var key: Vector2i = Vector2i(feed.ids[i], b)
-			var near: bool = feed.pos[i].distance_squared_to(bodies[b]) < reach * reach
-			if b != feed.ids[i] and near and not _tripped.has(key):
-				if _trip(rigs.rig_for(feed.ids[i]), feed.vel[i]):
-					_tripped[key] = true  # a busy body (mid-cower) trips on a later tick
+			if not _tripped.has(key) and _trip(rig, feed.vel[i]):
+				_tripped[key] = true  # a busy body (mid-cower) trips on a later tick
 
 
 func _trip(rig: CutRig, along: Vector2) -> bool:

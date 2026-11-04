@@ -69,6 +69,23 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
 	rigs.setup(ctx)
+	_add_hand_views(layer, p_stage)
+	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
+	view.cast_view.visible = arena_stage == null
+	react = ReactLink.make(p_stage.arena)
+	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
+	if arena_stage == null:
+		return true
+	for t: ArenaTargets.Target in arena_stage.targets.targets:
+		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
+		if look.x >= 0:
+			_looks[t.fighter.id] = look
+	return true
+
+
+## Rivet's held weapon (rivet-arsenal) and reload magazine (weapon-art) over the rigs, on the
+## rigs' own layer (showcase glue: the city view has no print stage).
+func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	var held: RivetHeldView = RivetHeldView.new()  # rivet-arsenal: the weapon in his claw
 	held.rigs = rigs
 	held.pilot = p_stage.pilot
@@ -82,16 +99,6 @@ func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext)
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
-	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
-	view.cast_view.visible = arena_stage == null
-	react = ReactLink.make(p_stage.arena)
-	if arena_stage == null:
-		return true
-	for t: ArenaTargets.Target in arena_stage.targets.targets:
-		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
-		if look.x >= 0:
-			_looks[t.fighter.id] = look
-	return true
 
 
 func _process(_delta: float) -> void:

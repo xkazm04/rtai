@@ -9,6 +9,8 @@ extends RefCounted
 ## round's X sprawl.
 const MELEE_CURL: float = 0.55
 const MELEE_LIE: float = 0.7
+## The blast corpse's thrown leg (c_kick): it lands twisted, not in the round's X.
+const BLAST_TWIST: float = 0.55
 
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
@@ -58,6 +60,7 @@ static func _blast(r: HumanReact, rig: CutRig, k: float) -> void:
 	r.rot = r.side * TAU * 1.25 * e
 	rig.c_sprawl = 1.25 * smoothstep(0.0, 0.5, k)
 	rig.c_hands_up = 1.0 - smoothstep(0.3, 0.9, k)
+	rig.c_kick = BLAST_TWIST * smoothstep(0.4, 0.9, k)  # lands twisted: one leg thrown up
 
 
 static func _burn(r: HumanReact, rig: CutRig, k: float) -> void:

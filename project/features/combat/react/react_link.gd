@@ -7,6 +7,10 @@ extends RefCounted
 ## and before CharacterRigs poses (ArenaRigs does). Rivet (the arena's player) never reacts here.
 ## Render only: it reads the arena's signal and writes nothing back.
 
+## A round from the front stopped on a riot shield (the `shield` family played): `victim` is
+## the fighter id, `dir` the round's travel. For the hit FX (sparks off the slab, no blood).
+signal blocked(victim: int, dir: Vector2)
+
 ## The arena's HitLink knockback already slides the victim (sim), so the drawn carry is scaled
 ## down where it would add up: wounds keep a little, deaths most of theirs (the corpse lands
 ## where the blow threw it). DECISION human-reactions in docs/decisions.md.
@@ -29,6 +33,7 @@ var pipe: DeathPipe
 ## Rounds that fly past a human make it duck (render only).
 var near: NearMiss = NearMiss.new()
 var wounds: int = 0
+var blocks: int = 0
 var deaths: int = 0
 var signatures: int = 0
 var _arena: CombatArena
@@ -86,14 +91,21 @@ func apply(rigs: CharacterRigs) -> void:
 			if kind != &"signature":
 				_corpses[id] = [kind, dir]
 		elif _held.get(id, &"") != &"knockdown":
-			@warning_ignore("return_value_discarded")
-			pipe.wound(rig, hit_class, dir, shielded(rig), cover)
-			wounds += 1
+			_wound(rig, id, hit_class, dir, cover)
 	_pending.clear()
 	near.apply(_arena, rigs, pipe)
 	_relay(rigs)
 	_hold_states(rigs)
 	_limps(rigs)
+
+
+## A wound family on `rig` (fighter `id`); a round stopped on the shield is announced (blocked).
+func _wound(rig: CutRig, id: int, hit_class: StringName, dir: Vector2, cover: bool) -> void:
+	var kind: StringName = pipe.wound(rig, hit_class, dir, shielded(rig), cover)
+	wounds += 1
+	if kind == &"shield":
+		blocks += 1
+		blocked.emit(id, dir)
 
 
 ## True when the rig carries the riot shield (its look): a round from the front then recoils
