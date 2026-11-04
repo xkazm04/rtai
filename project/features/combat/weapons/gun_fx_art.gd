@@ -145,7 +145,10 @@ static func _star(ci: CanvasItem, at: Vector2, ang: float, r: float, tick: int) 
 
 
 ## A cream flash polygon in an ink rim of `rim` px.
+## A flare shrunk to a sliver (snapped points collapse) draws nothing (showcase REQUEST 18).
 static func _flash(ci: CanvasItem, pts: PackedVector2Array, rim: float) -> void:
+	if Geometry2D.triangulate_polygon(pts).is_empty():
+		return
 	var ring: PackedVector2Array = pts.duplicate()
 	@warning_ignore("return_value_discarded")
 	ring.append(pts[0])
