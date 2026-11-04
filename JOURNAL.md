@@ -855,3 +855,24 @@ NEXT (iteration 12 / the report):
 - 07:58 session closed. Gates of record on 70af17b3 (private APPDATA, CONTENDED): lint 13/13 (every
   commit), unit 787/787, scenarios 35/35, brutality 1/1, gunplay 2/2. Parity and bench not run (no
   city-sim change; the cap kick is in the kills' own gib sim). No Godot process of mine running.
+
+## Iteration 12 (07:55-08:30), BUILD
+
+- MILESTONE 07:59 NEXT 2 landed (94ddeae6): the melee kills stage on the city block. With
+  `--sig-solo` a blade now places Rivet at the solo spot once (KillLab never placed him for a
+  blade, so he stayed at the hub 22 m from his guard: the it11 "plain hub, no kill" was the camera
+  on the hub while the kill happened off screen), and each tick after the lunge the city's
+  `follow.target` is set to his lunge position so the body does not pull him back. Lab only.
+- Clips 08:00 (looked at every sheet; 0 script errors in all six captures): katana, plasma sword,
+  chainsaw on the open street (`--arena=city --rigs --sig-lab --sig-gun=<blade>
+  --sig-solo=start:-22,0`), 48 px/m real time + 64 px/m 0.4x. Katana: two halves part with a red
+  fan; plasma sword: two halves with glowing edges, no red; chainsaw: the grind under a continuous
+  spray, then the split. Masters: `clips/city-reel-melee-3-kills-48ppm-it12.mp4` (27 s, labelled,
+  first 3 hub frames trimmed per chapter) + three 64 px/m slow city close-ups. frames.json: the
+  melee reel and the three close-ups on top (before = the arena solo clips), dropped the three
+  solo melee clips and the ray 32 city clip; 15 entries. Sheets in evidence/brutality/*-it12-*.png.
+  All eleven kills now play on the city block (8-gun reel it11 + melee reel it12).
+- GATES 08:01 (private APPDATA, CONTENDED) on 94ddeae6: lint 13/13 (pre-commit), unit 787/787
+  (evidence/brutality/unit-it12.log), scenarios 35/35 (evidence/brutality/scenarios-it12.log).
+- Registry rules applied: motion-quality-gating (judged on the 48 and 64 frames before publishing;
+  rejected the first 3 hub frames of each chapter as a camera break).
