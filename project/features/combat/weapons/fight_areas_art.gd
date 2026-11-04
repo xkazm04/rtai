@@ -51,6 +51,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
 		WeaponSpec.Kind.BOLT when s.spec.chain_hops == 0:  # a ray: no chain, a straight beam
 			_ray(ci, s.pos - dir * minf(went, s.spec.tracer_len_m), s.pos, tick)
+		WeaponSpec.Kind.BOLT when s.charged:
+			FightChargeArt.bolt(ci, s, tick)
 		WeaponSpec.Kind.BOLT:
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 10.0, Ink.INK)
 			_bolt(ci, s.pos - dir * 2.0, s.pos, tick, 4.0, Ink.CREAM)
@@ -175,19 +177,12 @@ static func _fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: f
 	)
 
 
-## An electric zigzag of `width` px (kinks every ~0.3 m, re-jagged every tick by `phase`).
+## An electric zigzag of `width` px (kinks every ~0.27 m alternating sides, re-jagged every tick
+## by `phase`; FightChargeArt.zap: the old sine stepped 0.43 rad a kink and read as a wave).
 static func _bolt(
 	ci: CanvasItem, a: Vector2, b: Vector2, phase: int, width: float, c: Color
 ) -> void:
-	var normal: Vector2 = (b - a).orthogonal().normalized()
-	var kinks: int = maxi(ceili(a.distance_to(b) / 0.3), 2)
-	var pts: Array[Vector2] = []
-	for i: int in kinks + 1:
-		var t: float = float(i) / float(kinks)
-		var end: bool = i == 0 or i == kinks
-		var jag: float = 0.0 if end else sin(float(phase * 7 + i * 13)) * 0.22
-		pts.append(Ink.px(a.lerp(b, t) + normal * jag))
-	ci.draw_polyline(PackedVector2Array(pts), c, width, true)
+	FightChargeArt.zap(ci, a, b, phase, width, 0.22, c)
 
 
 ## The ray gun's round: a dead-straight thin beam (cream core in ink, unlike the electro gun's

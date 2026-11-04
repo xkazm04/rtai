@@ -135,6 +135,15 @@
             "minimum": 0,
             "type": "number"
           },
+          "charge_damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "charge_s": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+          },
           "damage": {
             "minimum": 0,
             "type": "number"
