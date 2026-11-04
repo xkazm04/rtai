@@ -134,7 +134,7 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
 		f.clip_arg[0] = grip.kick if grip != null else 1.0
 	_shots_seen = gun.shots_fired if gun != null else 0
-	var claws: bool = pilot.melee.busy() or pilot.shock.busy()
+	var claws: bool = (pilot.melee.busy() and not pilot.wielding()) or pilot.shock.busy()
 	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
 		f.flags[0] = 0
 

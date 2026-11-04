@@ -13,6 +13,8 @@ const SHOVE_TICKS: int = 8
 const EDGE_SLACK_M: float = 0.0
 
 var combo: MeleeCombo
+## The weapon id the hits are dealt with (CombatArena.damage; brutality keys kills on it).
+var weapon_id: StringName = WEAPON
 ## Hit starts (a view compares it with the count it last saw to start the strike clip).
 var starts: int = 0
 var landed: int = 0
@@ -25,6 +27,7 @@ var _shoves: Dictionary[int, Vector2] = {}
 
 func _init(table: MeleeTable = MeleeTable.shipped()) -> void:
 	combo = MeleeCombo.new(table)
+	weapon_id = table.id
 
 
 ## One tick: `press` is this tick's melee press; `facing` is Rivet's heading. Returns the lunge
@@ -75,7 +78,7 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		var dir: Vector2 = to.normalized() if to.length() > 0.001 else facing
 		if dir.dot(facing) < h.cone_dot:
 			continue
-		arena.damage(f, h.damage, arena.rivet.id, WEAPON)
+		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
 		_shoves[f.id] = dir * h.knockback_m
 		hit_any = true
 	if hit_any:

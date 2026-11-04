@@ -25,6 +25,8 @@ var hauler: HaulerStage = HaulerStage.shipped()
 ## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0
+## rivet-arsenal: the claw and each carried melee weapon's combo, by weapon id.
+var _melees: Dictionary[StringName, PlayerMelee] = {}
 
 
 func _init(p_actions: PlayerActions) -> void:
@@ -41,6 +43,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if carry != null and rivet.alive():
 		carry.step(c, actions, stage.arena)
 	_follow_weapon(rivet.weapon)
+	_pick_melee()
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
 	if rivet.alive():
@@ -49,10 +52,10 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		motion.stop()
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
-	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy()
+	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy() and not wielding()
 	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed:
 		stage.intent.fire_at = rivet.pos + c.aim * actions.aim_range_m
-	var press: bool = c.was_pressed(actions, &"melee")
+	var press: bool = _melee_press(c)
 	if hauler != null:
 		var power: bool = c.was_pressed(actions, &"power_hauler")
 		stage.intent.move_by = hauler.drive(stage, power, press, stage.intent.move_by)
@@ -114,3 +117,30 @@ func _follow_weapon(weapon: StringName) -> void:
 		@warning_ignore("return_value_discarded")
 		hold.equip(weapon)
 	hold.step()
+
+
+## rivet-arsenal: a carried melee weapon (katana, baton) is in the claw.
+func wielding() -> bool:
+	return carry != null and carry.melee_ids.has(hold.held)
+
+
+## The melee combo follows the weapon in the claw (the bare claw otherwise); it changes between
+## hits only, never inside one.
+func _pick_melee() -> void:
+	var want: StringName = hold.held if wielding() else MeleeTable.CLAW
+	if want == melee.weapon_id or melee.busy():
+		return
+	_melees[melee.weapon_id] = melee
+	if not _melees.has(want):
+		_melees[want] = PlayerMelee.new(MeleeTable.weapon(want))
+	melee = _melees[want]
+
+
+## The melee key's press; with a melee weapon drawn, a held fire swings too (held = the combo
+## chains, as a mash does). Nothing swings while the weapon is still being drawn.
+func _melee_press(c: PlayerCommand) -> bool:
+	if not wielding():
+		return c.was_pressed(actions, &"melee")
+	if not hold.can_fire():
+		return false
+	return c.was_pressed(actions, &"melee") or c.is_held(actions, &"fire")
