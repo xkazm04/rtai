@@ -4,6 +4,8 @@ extends Scenario
 ## him after stuck_ticks in reach without a shot, so the block's fight keeps moving. With a pistol
 ## it must reach the third wave and drop five guards in 40 s, and the run replays identical
 ## (SIM-05). TST-05: a planted fault (stuck_ticks never runs out) must stall in the first wave.
+## The dev arena's pit must still fight from its entry walk (the close-in once hijacked the walk
+## in, where a guard is already in reach: 0 shots): two guards down in 20 s there.
 
 const LIMIT_TICKS: int = 40 * SimClock.TICK_RATE
 const LOADOUT: Array[StringName] = [&"pistol"]
@@ -24,11 +26,14 @@ func run(_tree: SceneTree) -> String:
 	if tel["wave"] < MIN_WAVE or tel["kills"] < MIN_KILLS:
 		return "the city fight stalled: %s" % tel
 	var divergence: String = _replay(log)
-	return divergence if divergence != "" else _planted()
+	if divergence != "":
+		return divergence
+	var pit: String = _pit()
+	return pit if pit != "" else _planted()
 
 
-static func _open(bus: EventBus, data: DataStore) -> ArenaSession:
-	var s: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, true)
+static func _open(bus: EventBus, data: DataStore, on_city: bool = true) -> ArenaSession:
+	var s: ArenaSession = ArenaSession.open(bus, data, ArenaSession.MASTER_SEED, null, on_city)
 	for h: ArenaHook in s.stage.hooks:
 		if h is ArenaArsenal:
 			@warning_ignore("return_value_discarded")
@@ -70,3 +75,21 @@ func _planted() -> String:
 			% tel["wave"]
 		)
 	return ""
+
+
+## The pit in the dev arena (teleported in, as --start=pit): the bot's entry walk then the fight.
+func _pit() -> String:
+	var bus: EventBus = EventBus.new()
+	var data: DataStore = DataStore.new()
+	var s: ArenaSession = _open(bus, data, false)
+	for a: ArenaPlan.Area in s.plan.areas:
+		if a.id == "pit":
+			s.stage.arena.rivet.pos = a.rect.get_center()
+	s.world.loop().set_input(ArenaArsenalBot.new(s.stage, s.actions))
+	while s.tick() < LIMIT_TICKS / 2:
+		s.step()
+	var kills: int = s.stage.pit.kills
+	s.world.free()
+	bus.free()
+	data.free()
+	return "" if kills >= 2 else "the pit fight never started: %d kills in 20 s" % kills

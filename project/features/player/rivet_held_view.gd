@@ -19,6 +19,9 @@ const GRIP_U: float = 0.62
 const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
+## The flamer's reload is a tank swap: the spent tank slides this far back off him and fades
+## a little (reload phase 0), the fresh one slides in (phase 1); the hose follows the tank.
+const TANK_SWAP_M: float = 0.45
 const HOSE_POINTS: int = 8
 
 var rigs: CharacterRigs = null
@@ -35,6 +38,7 @@ var _mag: RivetMagView = null
 var _tank: Sprite2D = null
 ## The tank's hose to the wand: an ink line with a cream core.
 var _hose: Array[Line2D] = []
+var _rag: RagLight = null
 
 
 func _ready() -> void:
@@ -56,6 +60,8 @@ func _process(_delta: float) -> void:
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
+		if _rag != null:
+			_rag.visible = false
 		return
 	if id != _shown:
 		_swap(id, pilot.hold.held)
@@ -76,6 +82,7 @@ func _process(_delta: float) -> void:
 		_sweep_arc = _arc()
 		_sprite.global_rotation += _sweep(rig.clips)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
+	_light_rag(rig, id)
 
 
 func _swap(id: StringName, weapon: StringName) -> void:
@@ -168,7 +175,10 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		line.visible = on and _sprite != null and _sprite.visible
 	if on:
 		var fwd: Vector2 = rig.torso.global_transform.x.normalized()
-		var back_px: float = TANK_BACK_M * WeaponArt.WORLD_PX_PER_M
+		var k: float = rig.reload_k
+		var swap: float = clampf(k if k < 1.0 else 2.0 - k, 0.0, 1.0) if k >= 0.0 else 0.0
+		_tank.modulate.a = 1.0 - 0.25 * swap
+		var back_px: float = (TANK_BACK_M + TANK_SWAP_M * swap) * WeaponArt.WORLD_PX_PER_M
 		_tank.global_position = rig.torso.global_position - fwd * back_px
 		_tank.global_rotation = fwd.angle() + PI * 0.5
 		if _sprite != null and _sprite.visible:
@@ -201,3 +211,21 @@ func _route_hose(fwd: Vector2) -> void:
 		pts.append(to_local(from.lerp(sag, t).lerp(sag.lerp(to, t), t)))
 	for line: Line2D in _hose:
 		line.points = pts
+
+
+## The molotov's draw lights the rag at the bottle's muzzle point (RagLight), and so does each
+## next bottle as it comes up after a throw (reload phase 1); hidden otherwise.
+func _light_rag(rig: CutRig, id: StringName) -> void:
+	var k: float = -1.0
+	if rig.grip == RigGrip.Kind.THROWN and pilot.hold.state == WeaponHold.State.DRAWING:
+		k = pilot.hold.progress()
+	elif rig.grip == RigGrip.Kind.THROWN and rig.reload_k >= 1.0 and rig.reload_k < 2.0:
+		k = rig.reload_k - 1.0
+	if _rag == null:
+		_rag = RagLight.new()
+		_rag.z_index = 2
+		add_child(_rag)
+	_rag.visible = k >= 0.0 and _sprite.visible
+	if _rag.visible:
+		var at: Vector2 = _sprite.to_global(art.muzzle_px(id) + _sprite.offset)
+		_rag.light(at, k, Engine.get_process_frames())
