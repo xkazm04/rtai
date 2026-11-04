@@ -178,6 +178,13 @@ static func _cell(
 	_cell_v(ci, id, frame, at, angle, Vector2.ONE * scale, a)
 
 
+## Draws fx cell `id` (frame `frame`) at `at` (m), rotated, scaled per axis (cell px), alpha `a`.
+static func draw_cell(
+	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2
+) -> void:
+	_cell_v(ci, id, frame, at, angle, scale, 1.0)
+
+
 ## As _cell with a per-axis `scale` (x along the cell's +x: a jet or a bolt stretched to length).
 static func _cell_v(
 	ci: CanvasItem, id: StringName, frame: int, at: Vector2, angle: float, scale: Vector2, a: float
