@@ -18,6 +18,12 @@ const TAIL_M: float = 1.15
 ## diameters at this ink, in place of gunplay's flat grey disc. 0 = the disc (the before).
 const PATCH_SCORCH_K: float = 1.0
 const PATCH_SCORCH_INK: float = 0.8
+## A bottle's burst flings GLASS shards (the shard cell, GLASS_M long) from half its splash radius
+## out to GLASS_REACH of it over GLASS_TICKS, easing out, fading over the last third. 0 = none.
+const GLASS: int = 7
+const GLASS_M: float = 0.8
+const GLASS_TICKS: int = 16
+const GLASS_REACH: float = 1.1
 
 
 ## Draws shot `s` flying along `dir`, `went` metres from the muzzle.
@@ -53,3 +59,24 @@ static func patch_ground(ci: CanvasItem, p: Vector4, fade: float) -> bool:
 	var a: float = PATCH_SCORCH_INK * (0.5 + 0.5 * fade)
 	WeaponFxArt.draw_cell(ci, &"scorch", 0, Vector2(p.x, p.y), p.x * 1.7 + p.y, Vector2.ONE * k, a)
 	return true
+
+
+## The glass of a bottle burst `b` (x, y, splash radius m), `age` ticks old: cream slivers flung out
+## and spinning. The angles come from the burst's place, so a replay draws the same glass.
+static func glass(ci: CanvasItem, b: Vector3, age: int) -> void:
+	if age >= GLASS_TICKS:
+		return
+	var f: float = float(age) / float(GLASS_TICKS)
+	var out: float = b.z * (0.5 + (GLASS_REACH - 0.5) * (1.0 - (1.0 - f) * (1.0 - f)))
+	var a: float = clampf((1.0 - f) * 3.0, 0.0, 1.0)
+	var k: float = GLASS_M * Ink.PX_PER_M / 190.0 / WeaponFxArt.cell_scale()
+	var seed_ang: float = b.x * 2.3 + b.y * 1.1
+	for i: int in GLASS:
+		var ang: float = seed_ang + TAU * float(i) / float(GLASS) + 0.4 * sin(float(i) * 2.7)
+		var at: Vector2 = (
+			Vector2(b.x, b.y) + Vector2.from_angle(ang) * out * (0.8 + 0.1 * float(i % 3))
+		)
+		var spin: float = ang + float(age) * (0.35 if i % 2 == 0 else -0.3)
+		WeaponFxArt.draw_cell(
+			ci, &"shard", 0, at, spin, Vector2.ONE * k * (1.0 - 0.15 * float(i % 2)), a
+		)

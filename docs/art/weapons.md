@@ -155,6 +155,9 @@ crops of both grounds.
   blast sheet's inked star, held 10 ticks and fading over the last 5, then the fire patch carries the burn. The
   rocket's grey smoke ring and its last frame (a ring of cream discs) read as debug beads over the fire.
   `--fire-burst=off` is the before.
+- **Bottle glass** (`WeaponFxShell.glass`, `GLASS` 7 shards, `GLASS_M` 0.8 m, `GLASS_TICKS` 16): the burst flings the
+  shard cell (cream sliver in ink) from half the splash radius out to 1.1 of it, easing out and spinning, fading over
+  the last third. Angles come from the burst's place (replay-stable). 0.45 m read as hairlines at 48 px/m.
 - **Fire patch ground** (`WeaponFxShell.patch_ground`, `PATCH_SCORCH_K` 1.0 at `PATCH_SCORCH_INK` 0.8): under a
   burning patch the scorch cell (the inked burst) spans the patch's diameter, its turn fixed by its place, fading
   with the patch, instead of gunplay's flat grey disc, which read as a debug circle under the flames. 0 = the disc.
