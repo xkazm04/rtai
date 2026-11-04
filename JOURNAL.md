@@ -389,3 +389,15 @@ NEXT (unchanged from iteration 11):
 2. An authored carry pose per long gun, with the claw at the shoulder. Ruled out tonight: BESIDE 1.0, and measuring from the grip origin versus the texture centre.
 3. ArenaArsenalBot's melee walk-in: a nav-grid path.
 4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
+
+## Iteration 13 (08:15 - 08:30 freeze), BUILD (short: 15 minutes)
+- 08:15 read JOURNAL and git log; tip 944ac026 clean except the untracked `evidence/rivet-arsenal/*.json` + `it6*-gates.done` (scenario outputs from 03:16, written by the scenario runs, never part of a commit; left untracked on purpose so the merge does not pick up stale run output).
+- DECISION (time): no code change this session. 15 minutes cannot carry a code change through lint + unit + scenarios (about 10 minutes of gates on a loaded machine), and the gates of record at 8a7fd9a1 stay valid only while no code moves. The authored per-gun carry pose (NEXT 2) is the next real work and needs a full session.
+- 08:18 REPORT: the open-flaw line (64 px/m rifle on the helmet rim) now also records iteration 12's ruled-out lead (grip origin vs drawn centre: 1-2 px), so the morning reader does not re-try it.
+- Session end 08:19: docs only. No Godot process started. bench.lock and image.lock never taken. Gates of record unchanged (8a7fd9a1).
+
+NEXT (unchanged):
+1. The Director: call 1 (quest 1 on the rigs by default) is the lead call. The REPORT is final at this tip.
+2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
+3. ArenaArsenalBot's melee walk-in: a nav-grid path.
+4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
