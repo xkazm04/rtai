@@ -1,0 +1,2 @@
+unit-tests: import exit -1; load_all exit -1; gut exit -1; no JUnit report; zero tests ran (0 passed, 0 failed, 0 skipped)
+unit 1
