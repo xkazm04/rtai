@@ -627,3 +627,21 @@ NEXT (iteration 9):
   electro strip, the old electro solo and the it7 solo reel (superseded), 15 entries.
 - On the city block the tap bolt chains into the hub dummy row behind the victim (gunplay's 3
   chain hops). Reads as the gun working; it pulls the eye off the victim for half a second.
+- MEASURED 05:58 the rocket's "first-frame spike" on the city block is not the first frame: new
+  telemetry (view_worst_tick, kill_ticks, view_over_2ms) put the worst frame (4.0 ms) at tick 116,
+  50 ticks after the kill at 66, with 48 of 480 frames over 2 ms: the cost was the slide, where
+  the fresh layer redrew every smear blot (six parts x 40 points x 2 circles) every frame.
+- MILESTONE 06:01 smears grow blot by blot (47e38261): KillMarkArt.smear_blot appends each new slide
+  point once to a RenderingServer canvas item under its kill's KillGround (freed with it); the
+  fresh layer, settled_smears and _track_moving are gone (KillView 242 -> 214 lines). Rocket city
+  block 48 px/m, CONTENDED: worst 4.0 -> 1.2 ms (now the cut, tick 67), avg 545 -> 223 us, frames
+  over 2 ms 48 -> 0 (evidence/brutality/rocket-city-48-telemetry-{before,after}-it9.json). Looked
+  at: rocket before/after frames identical (rocket-city-smear-before-after-it9.png); hand cannon
+  64 px/m long smear still tapers off behind the sliding body.
+- FRICTION: a unit run without GODOT_BIN exported printed "exit -1" on every phase with a stale
+  count (779); it is the same trap as iteration 6. Always export GODOT_BIN with APPDATA.
+- Unit 785/785 on the smear change (781 + gunplay's 4 charge tests; unit-it9.log).
+- DEFERRED: Rivet's thrust clip in the claw-shock lab. arena_rigs plays it on
+  stage.pilot.shock.discharges, but the pilot steps its own PlayerShock every tick with the
+  player's button, so the lab cannot drive that one without the two drivers fighting; it needs
+  an input-level hook (the lab pressing melee through TickInput). rivet-arsenal's ground.
