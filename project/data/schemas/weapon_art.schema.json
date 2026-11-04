@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "fx": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_px": {
+          "$ref": "#/$defs/vec2"
+        },
+        "art": {
+          "pattern": "^res://features/combat/weapons/art/fx/[a-z0-9_]+\\.png$",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "size_px": {
+          "$ref": "#/$defs/vec2"
+        }
+      },
+      "required": [
+        "id",
+        "art",
+        "size_px",
+        "anchor_px"
+      ],
+      "type": "object"
+    },
+    "path": {
+      "pattern": "^res://features/combat/weapons/art/[a-z0-9_]+/[a-z0-9_]+\\.png$",
+      "type": "string"
+    },
+    "vec2": {
+      "items": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "weapon": {
+      "additionalProperties": false,
+      "properties": {
+        "casing": {
+          "pattern": "^[a-z0-9_]*$",
+          "type": "string"
+        },
+        "grip_class": {
+          "enum": [
+            "one_hand",
+            "two_hand_long",
+            "shoulder",
+            "backpack_hose",
+            "thrown",
+            "heavy_two_hand",
+            "melee_one_hand",
+            "melee_two_hand"
+          ],
+          "type": "string"
+        },
+        "grip_px": {
+          "$ref": "#/$defs/vec2"
+        },
+        "held": {
+          "$ref": "#/$defs/path"
+        },
+        "icon": {
+          "$ref": "#/$defs/path"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "type": "string"
+        },
+        "length_m": {
+          "maximum": 3,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "length_px": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "muzzle_fx": {
+          "pattern": "^[a-z0-9_]*$",
+          "type": "string"
+        },
+        "muzzle_px": {
+          "$ref": "#/$defs/vec2"
+        },
+        "parts": {
+          "additionalProperties": {
+            "$ref": "#/$defs/path"
+          },
+          "type": "object"
+        },
+        "pickup": {
+          "$ref": "#/$defs/path"
+        },
+        "projectile_fx": {
+          "pattern": "^[a-z0-9_]*$",
+          "type": "string"
+        },
+        "size_px": {
+          "$ref": "#/$defs/vec2"
+        }
+      },
+      "required": [
+        "id",
+        "grip_class",
+        "held",
+        "pickup",
+        "icon",
+        "size_px",
+        "grip_px",
+        "muzzle_px",
+        "length_px",
+        "length_m",
+        "muzzle_fx",
+        "projectile_fx",
+        "casing",
+        "parts"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.weapon-art/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "type": "string"
+    },
+    "fx": {
+      "items": {
+        "$ref": "#/$defs/fx"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "rig_px_per_m": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gtai.weapon-art/1",
+      "type": "string"
+    },
+    "weapons": {
+      "items": {
+        "$ref": "#/$defs/weapon"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "rig_px_per_m",
+    "weapons",
+    "fx"
+  ],
+  "type": "object"
+}
