@@ -1245,3 +1245,12 @@ NEXT (morning merge):
 3. The nuke tick-123 frame: prebuild the cut's canvas items a tick early or split the cut over two
    ticks; measure under bench.lock against lock-it18.
 4. Owner calls in REPORT (ray lock stand_ticks 30 vs 12, and the earlier ones).
+- CHECKED 10:05 showcase's reel-0954 (masters, the current final cut): a 6x6 contact sheet at one
+  frame every 4 s, plus a 4 fps strip of the electro chapter (34-42 s, centre crop). All eleven
+  signature chapters are present, and the chapters at 4 s sampling show no new defect. Electro: the
+  arc, the convulsion (cream sparks at the head), then the corpse lies with spread arms and stub
+  legs. That is exactly the known state REQUEST 30's plank-legs patch fixes on showcase's main. The
+  3-4 frame skeleton flash falls between 4 fps samples, so this strip neither proves nor disproves
+  it; the it13+ 64 px/m slow clips in frames.json show it. No note sent: nothing new to report to
+  showcase. Scratch sheets deleted.
+- 10:06 session closed. Head = this commit; code head 5e37b57c. No Godot process started, no lock held.
