@@ -231,3 +231,51 @@ vermilion), 164 x 288 like torso. I wire the look (RigVariant + the arena line) 
   line, the quest lane's file). Scenarios 32/32; unit 724/724 on a re-run (the first run had 1
   failure under load, not reproduced: a flake, test not identified).
 - DECISION lines for scare + trip in docs/decisions.md.
+- MILESTONE 03:10 539bc2ac: scenario_city_scare on a 420-person street (the pit plaza is thin
+  at 120): 5 fled near the fight vs 0 deaf, want 4; the replay session gets the same crowd
+  (first try diverged at tick 60: the spawner targets are set outside the input, so the fresh
+  world must set them too).
+- 03:11 the riot re-filmed at 64 px/m (city_bench --scenario=riot --zoom=2): too dense to read a
+  single cower or trip; not filed. The sparse read is the city_scare clip.
+- REQUEST 8 (showcase, hub overlap) ack: rivet-arsenal moved its claw cops to y 4.4 and its bot
+  to y 2.85; react_line keeps y 1.5 x 1..13. Nothing to change on my side.
+- MILESTONE 03:13 trip quality pass: lunge 70 -> 120, the body stretched along it (1.12) and
+  narrowed (0.78), roll 0.45, head throw 90. Clips re-filmed (trip_32/64ppm.mp4).
+- MILESTONE 03:18 wounded limp (brief item 2, last family): HumanReact.limp (hunch; once a
+  stride on the gait phase: drop, tip, head bob; standing only the hunch), ReactLink._limps sets
+  it from each hostile's hp lost x LIMP_GAIN 1.6. Board segment 14 + limp_32/64ppm.mp4. Unit
+  725/725, scenarios 32/32, lint 13/13. Decision line written.
+- Evidence this iteration (gtai-masters/n4/human-reactions + evidence/ here): city_scare_32ppm,
+  city_scare_64ppm (+ sheet), trip_32/64ppm (+ sheet), limp_32/64ppm (+ sheet). frames.json 15.
+- Gates at 03:18: lint 13/13, unit 725/725, scenarios 32/32, parity bit-exact (03:00, after the
+  native change), selftest look 11/11 worst 0.00 + block 5/5 (03:01, after trip). Full
+  `tools/evidence/run.mjs` not run this iteration. Bench not run (render-only + one sim entry).
+- Note for the merge: project/native/bin DLLs are rebuilt here with `scare`; the Director must
+  rebuild native on main (scons debug + release, then --import), else CitySimNative skips the
+  scare and parity would show the drift. native/godot-cpp here is a local copy of int-day's (not
+  committed, the submodule pointer is unchanged).
+
+### REQUEST 2 -> weapon-art (03:20, low priority, after the weapons and REQUEST 1)
+The robot thug's own look (brief item 5; today it rides King's restyled parts in enemy-ai's dev
+scene): one chroma-green part sheet in Rivet's part names, sizes and pivots (the layout-template
+technique King used, art/king/), a squat street-gang robot: grey-gunmetal plates, dented, a
+single round optic, no collar (vermilion is Rivet's collar only), no red. I wire it as ThugPlan
+(RivetPlan FORM_OPEN, art_dir "thug") and add sparks/oil per hit on it.
+
+### Calls for the owner (adds to the iteration 3 list)
+- Crowd density round a fight: the city block holds 120 people; the pit plaza then has almost
+  nobody to scare. The clips use `--crowd=420`. Option A: keep 120 (quiet streets, the fight is
+  the event); B: raise the block's CITY_PEDS for the arena (more panic on screen, bench cost).
+  Clip: city_scare_32ppm.mp4 (420).
+
+NEXT (iteration 5, in order):
+1. Robot thug light pass without new art: ThugPlan (own plan name, RivetPlan FORM_OPEN, King art
+   until REQUEST 2 lands, size 1.05), sparks/oil per hit via ReactLink for robot kinds; bring
+   enemy-ai's robot into the arena pit if the roster has it there.
+2. SWAT look when weapon-art REQUEST 1 lands (RigVariant crowd index + CrowdAtlas clamp), then
+   the react_line gets a fifth dummy (SWAT) for "each cop type from four sides".
+3. A limp in the live arena: film gunplay's armored humans (--weapon=pistol vs armored, they
+   live through a hit) on --rigs at 32 px/m to show the limp in the real fight.
+4. Trip in game: count CrowdReact.trips in an --arena=city --crowd=420 run (temporary log) and
+   film one; the board has no body underfoot.
+5. Run the full `node tools/evidence/run.mjs --no-bench` once (it was not run this iteration).
