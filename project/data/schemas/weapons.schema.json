@@ -135,6 +135,15 @@
             "minimum": 0,
             "type": "number"
           },
+          "charge_damage": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "charge_s": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "number"
+          },
           "damage": {
             "minimum": 0,
             "type": "number"
@@ -229,6 +238,10 @@
           "rof_hz": {
             "minimum": 0,
             "type": "number"
+          },
+          "shot_cue": {
+            "minLength": 1,
+            "type": "string"
           },
           "speed_mps": {
             "minimum": 0,

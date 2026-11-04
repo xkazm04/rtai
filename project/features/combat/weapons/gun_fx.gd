@@ -20,6 +20,8 @@ const SCUFF_TICKS: int = 240
 const SMOKE_TICKS: int = 28
 ## Added to an impact's Hit kind when a plasma bolt made it (a scorch ring and a pop).
 const SCORCH: int = 10
+## A body keeps at most this many homing shards stuck in it.
+const MAX_STUCK: int = 4
 
 var p: Dictionary = {}
 ## Weapon ids whose magazine weapon-art draws (ART_TABLE rows with parts.mag).
@@ -39,6 +41,9 @@ var smoke: Array[Vector4] = []
 var enemy_flashes: Array[Vector4] = []
 ## The last tick a round left Rivet's gun (the muzzle flash reads it).
 var fired_tick: int = -100
+## Homing shards stuck in a body, per Fighter id: Vector3(offset from the body's pos (m), the
+## shard's flight angle). Brutality's burst kill reads them (stuck_shards; REQUEST 13).
+var stuck: Dictionary[int, Array] = {}
 var fired_count: int = 0
 ## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet].
 var shots_seen: Dictionary = {}
@@ -184,3 +189,17 @@ func _expire(tick: int) -> void:
 			bits.remove_at(i)
 			bit_vel.remove_at(i)
 			bit_life.remove_at(i)
+
+
+## The shards stuck in fighter `id` (Vector3: offset x, y from his pos in m, flight angle).
+func stuck_shards(id: int) -> Array:
+	return stuck.get(id, [])
+
+
+## A homing shard stopped in body `f` at `at`, flying `dir`: it stays stuck in him.
+func stick(f: Fighter, at: Vector2, dir: Vector2) -> void:
+	var list: Array = stuck.get(f.id, [])
+	if list.size() < MAX_STUCK:
+		var off: Vector2 = (at - f.pos).limit_length(f.radius_m * 0.7)
+		list.append(Vector3(off.x, off.y, dir.angle()))
+		stuck[f.id] = list

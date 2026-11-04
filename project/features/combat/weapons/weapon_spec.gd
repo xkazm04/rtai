@@ -47,6 +47,12 @@ var tracer_len_m: float = 0.0
 var held_scale: float = 1.0
 ## Lane gunplay: how fast a homing round turns onto a target (radians a tick; 0 = flies straight).
 var homing_rad_per_tick: float = 0.0
+## Lane gunplay: a semi gun held past its cooldown charges this many ticks, then lets one charged
+## round of charge_damage go by itself (0 = no charge; the electro gun, brutality REQUEST 12).
+var charge_ticks: int = 0
+var charge_damage: float = 0.0
+## Lane gunplay: the audio_cues.json cue a round of this gun plays as it leaves (&"" = default).
+var shot_cue: StringName = &""
 
 
 static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
@@ -83,6 +89,9 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	var homing: float = t.num(row, "homing_dps") if row.has("homing_dps") else 0.0
 	w.homing_rad_per_tick = deg_to_rad(homing) * SimClock.TICK_DT
 	w.min_lob_m = t.num(row, "min_lob_m") if row.has("min_lob_m") else 0.0
+	w.charge_ticks = ticks(t.num(row, "charge_s")) if row.has("charge_s") else 0
+	w.charge_damage = t.num(row, "charge_damage") if row.has("charge_damage") else w.damage
+	w.shot_cue = StringName(t.text(row, "shot_cue")) if row.has("shot_cue") else &""
 	return w
 
 

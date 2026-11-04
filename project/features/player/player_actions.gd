@@ -13,6 +13,8 @@ var bits: Dictionary[StringName, int] = {}
 var aim_shift: int = 16
 var aim_steps: int = 256
 var aim_range_m: float = 14.0
+## Lane gunplay: one step of the cursor's distance in the aim word (0 = no distance is sent).
+var aim_reach_step_m: float = 0.0
 var stick_deadzone: float = 0.25
 var accel_mps2: float = 30.0
 var brake_mps2: float = 40.0
@@ -32,6 +34,7 @@ static func from_table(t: DataTable) -> PlayerActions:
 	a.aim_shift = t.integer(aim, "aim_shift")
 	a.aim_steps = t.integer(aim, "aim_steps")
 	a.aim_range_m = t.num(aim, "aim_range_m")
+	a.aim_reach_step_m = t.num(aim, "aim_reach_step_m") if aim.has("aim_reach_step_m") else 0.0
 	a.stick_deadzone = t.num(aim, "stick_deadzone")
 	var move: Dictionary = t.object(t.raw, "move")
 	a.accel_mps2 = t.num(move, "accel_mps2")

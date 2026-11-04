@@ -46,6 +46,8 @@ var areas: FightAreas = null
 ## The landing hit's direction and point, set before damage() (kill_landed reads them).
 var hit_dir: Vector2 = Vector2.ZERO
 var hit_at: Vector2 = Vector2.ZERO
+## Lane gunplay: the round being landed is a charge gun's full charge (HitLink lands it heavy).
+var struck_charged: bool = false
 var _events: EventBus
 var _rng: RandomNumberGenerator
 var _next_id: int = 1
@@ -217,6 +219,7 @@ func _step_shots() -> void:
 		var ends: bool = victim != null or s.spent() or _blocked(s, from)
 		if victim != null:
 			hit_at = Geometry2D.get_closest_point_to_segment(victim.pos, from, s.pos)
+		struck_charged = s.charged
 		if lands and ends:
 			areas.land(self, s, victim, hit_at if victim != null else s.pos)
 		elif victim != null:

@@ -165,3 +165,20 @@ func test_no_magazine_drop_when_weapon_art_draws_the_magazine() -> void:
 		assert_true(b.w >= 0.0, "weapon-art's view drops the magazine, GunFx none")
 	@warning_ignore("return_value_discarded")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+
+
+func test_a_homing_shard_stays_stuck_in_the_body_a_pistol_round_does_not() -> void:
+	for weapon: StringName in [&"homing_shard", &"pistol"]:
+		var arena: CombatArena = _arena(weapon)
+		var fx: GunFx = GunFx.new()
+		var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+		g.pos = Vector2(6.0, 0.0)
+		g.cooldown = 9999
+		assert_true(arena.rivet_fire(g.pos))
+		_run(arena, fx, 1, 60)
+		assert_false(g.alive(), "%s drops him" % weapon)
+		var want: int = 1 if weapon == &"homing_shard" else 0
+		assert_eq(fx.stuck_shards(g.id).size(), want, "%s stuck in the body" % weapon)
+		if want == 1:
+			var v: Vector3 = fx.stuck_shards(g.id)[0]
+			assert_lt(Vector2(v.x, v.y).length(), g.radius_m, "stuck inside his outline")

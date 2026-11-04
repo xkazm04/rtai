@@ -42,6 +42,10 @@ func _process(_delta: float) -> void:
 	if _stage == null:
 		return
 	_end_boss_loop()
+	var gun: GunHand = _stage.arena.gun
+	if gun != null and gun.trigger.charge == 1:  # a charge gun starts charging (lane gunplay)
+		@warning_ignore("return_value_discarded")
+		service.cue(&"tazer_charge", _stage.arena.rivet.pos, _stage.tick)
 	var live: Dictionary[Shot, Vector2] = {}
 	for s: Shot in _stage.arena.shots:
 		live[s] = s.pos
@@ -64,4 +68,6 @@ func _end_boss_loop() -> void:
 
 
 func _shot_cue(s: Shot) -> StringName:
+	if s.spec != null and s.spec.shot_cue != &"":  # a table gun's own (lane gunplay)
+		return s.spec.shot_cue
 	return &"shot_gloria" if s.weapon == &"gloria" else &"shot_assault_rifle"

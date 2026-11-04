@@ -165,8 +165,17 @@ func _fire(stage: CollectCallStage, c: PlayerCommand) -> void:
 		var ready: bool = gun != null and gun.trigger.cooldown == 0 and not gun.trigger.reloading()
 		var at: Vector2 = throw.step(grip.windup_ticks, firing, armed, ready, c.aim)
 		if at != Vector2.ZERO:
-			stage.intent.fire_at = stage.arena.rivet.pos + at * actions.aim_range_m
+			stage.intent.fire_at = stage.arena.rivet.pos + at * _reach(stage, c)
 		return
 	sway_rad = grip.sway(stage.tick) if firing and grip != null else 0.0
 	if firing:
 		stage.intent.fire_at = stage.arena.rivet.pos + c.aim.rotated(sway_rad) * actions.aim_range_m
+
+
+## How far along the aim the fire point sits: a thrown weapon lands where the cursor was (lane
+## gunplay, rivet-arsenal REQUEST 12); everything else aims aim_range_m out (direction only).
+func _reach(stage: CollectCallStage, c: PlayerCommand) -> float:
+	var gun: GunHand = stage.arena.gun
+	if c.aim_m > 0.0 and gun != null and gun.trigger.spec.kind == WeaponSpec.Kind.THROWN:
+		return c.aim_m
+	return actions.aim_range_m

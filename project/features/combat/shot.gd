@@ -16,6 +16,8 @@ var spec: WeaponSpec = null
 var origin: Vector2 = Vector2.ZERO
 ## Lane gunplay: where a homing round has been (the curved trail; view only, not replay state).
 var trail: PackedVector2Array = PackedVector2Array()
+## Lane gunplay: a charge gun's full-charge round (damage already set; views draw it fat).
+var charged: bool = false
 
 
 static func fire(shooter: Fighter, dir: Vector2, w: CombatTuning.Weapon) -> Shot:

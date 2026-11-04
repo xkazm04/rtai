@@ -37,3 +37,20 @@ static func _trail(ci: CanvasItem, s: Shot) -> void:
 		ci.draw_line(Ink.px(s.trail[i - 1]), Ink.px(s.trail[i]), Ink.INK, TRAIL_PX * k + 1.0)
 	if n > 0:
 		ci.draw_line(Ink.px(s.trail[n - 1]), Ink.px(s.pos), Ink.INK, TRAIL_PX)
+
+
+## Every shard stuck in a hostile (GunFx.stuck): the back half of the crystal standing out of
+## the body against its flight, so the corpse reads as hit by the swarm. View only.
+static func stuck(ci: CanvasItem, fx: GunFx, arena: CombatArena) -> void:
+	for h: Fighter in arena.hostiles:
+		for v: Vector3 in fx.stuck_shards(h.id):
+			var dir: Vector2 = Vector2.from_angle(v.z)
+			var root: Vector2 = h.pos + Vector2(v.x, v.y)
+			var back: Vector2 = root - dir * LEN_M * 0.55
+			var side: Vector2 = dir.orthogonal() * WIDE_M * 0.6
+			var mid: Vector2 = root - dir * LEN_M * 0.22
+			var gem: PackedVector2Array = PackedVector2Array(
+				[Ink.px(root), Ink.px(mid + side), Ink.px(back), Ink.px(mid - side), Ink.px(root)]
+			)
+			ci.draw_polyline(gem, Ink.INK, 5.0, true)
+			ci.draw_colored_polygon(gem.slice(0, 4), Ink.CREAM)

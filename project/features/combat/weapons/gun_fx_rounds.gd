@@ -51,6 +51,8 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 		if c.distance_to(h.pos) <= h.radius_m + 0.3:
 			kind = GunFx.Hit.BODY if last[2] else GunFx.Hit.PLATING
 			at = c
+			if last[2] and arena.gun.trigger.spec.homing_rad_per_tick > 0.0:
+				fx.stick(h, c, hop.normalized())
 			break
 	if kind == GunFx.Hit.GROUND:
 		for m: Vector2 in arena.metal:

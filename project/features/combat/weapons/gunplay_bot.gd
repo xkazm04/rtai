@@ -48,7 +48,7 @@ func sample(tick: int) -> TickInput:
 	var approach: Vector2 = aim if not close else Vector2.ZERO
 	# a prop in the line: no shot into its own cover, a wider sidestep to find a lane
 	var strafe: float = 0.6 if lane else 1.0
-	return _input(aim.orthogonal() * side * strafe + approach, aim, fire)
+	return _input(aim.orthogonal() * side * strafe + approach, aim, fire, to_foe.length())
 
 
 ## True when a round can fly from Rivet to the foe (a lobbed bottle flies over the props).
@@ -72,9 +72,10 @@ func _nearest(at: Vector2) -> Fighter:
 	return best
 
 
-func _input(move: Vector2, aim: Vector2, fire: bool) -> TickInput:
+## `foe_m`: the foe's distance, sent as the cursor's (a thrown weapon lands on him).
+func _input(move: Vector2, aim: Vector2, fire: bool, foe_m: float = 0.0) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
-	var buttons: int = PlayerCommand.pack_aim(aim, actions)
+	var buttons: int = PlayerCommand.pack_aim(aim, actions, foe_m)
 	if fire:
 		buttons |= 1 << actions.bit(&"fire")
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))

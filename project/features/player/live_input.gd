@@ -8,6 +8,8 @@ extends InputSource
 var actions: PlayerActions
 ## Rivet's position in viewport pixels; the mouse aim is the heading from here to the cursor.
 var origin_px: Callable = func() -> Vector2: return Vector2.INF
+## Lane gunplay: screen pixels per world metre (0 = the cursor's distance is not sent).
+var px_per_m: Callable = func() -> float: return 0.0
 var viewport: Viewport = null
 ## false while a menu is open: the sim then sees idle input.
 var enabled: bool = true
@@ -36,7 +38,7 @@ func sample(_tick: int) -> TickInput:
 			buttons |= 1 << actions.bits[action]
 	buttons |= _latched
 	_latched = 0
-	buttons |= PlayerCommand.pack_aim(_aim(), actions)
+	buttons |= PlayerCommand.pack_aim(_aim(), actions, _reach_m())
 	var k: float = float(TickInput.AXIS_MAX)
 	return TickInput.new(buttons, roundi(move.x * k), roundi(move.y * k))
 
@@ -78,3 +80,12 @@ func _latch_wheel(event: InputEventMouseButton) -> void:
 	for action: StringName in actions.bits:
 		if event.is_action(action):
 			_latched |= 1 << actions.bits[action]
+
+
+## The cursor's distance from Rivet in metres while the mouse aims (0 with the pad or no scale).
+func _reach_m() -> float:
+	var from: Vector2 = origin_px.call()
+	var ppm: float = px_per_m.call()
+	if not mouse_aims or viewport == null or from == Vector2.INF or ppm <= 0.0:
+		return 0.0
+	return viewport.get_mouse_position().distance_to(from) / ppm
