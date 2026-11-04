@@ -143,7 +143,7 @@ func _process(_delta: float) -> void:
 	chunks.update(focus, _city.residency, zoom)
 	prop_lights.update(_city.residency, focus, clock.tick() if clock != null else 0)
 	var half: Vector2 = get_viewport_rect().size * 0.5 / (zoom * SimConst.PX_PER_M)
-	half += Vector2.ONE * VIEW_MARGIN_M
+	half += Vector2.ONE * VIEW_MARGIN_M + kick_px.abs() / SimConst.PX_PER_M  # an offset view
 	if before_render.is_valid():
 		before_render.call(focus)
 	_city.sim.write_render(focus.x - half.x, focus.y - half.y, focus.x + half.x, focus.y + half.y)

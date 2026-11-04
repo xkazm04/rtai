@@ -7,7 +7,8 @@ extends ArenaHook
 ## (GuardTell) and every landed round goes through the shared HitLink (knockback slide). Without
 ## --weapon the arena keeps its own Gloria and GuardBrain, so the arena's scenarios do not move.
 ## A bot (--bot=...) holds the trigger, so a semi gun re-taps (GunHand.tap). `--cam=fight` (dev
-## capture, the pit only) frames Rivet and the hostile he fights (FightCam), view only.
+## capture; in the pit it moves the focus, on the city block it leans the view only) frames Rivet
+## and the hostile he fights (FightCam), view only.
 ## `--lone` (dev capture, the 04:00 readability rule) makes every pit wave one guard, so each
 ## kill is filmed on a victim standing alone (a dev run that does not replay, like --start).
 
@@ -60,13 +61,17 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_kills_seen = stage.pit.kills
 		Log.info("gunplay", "lone kill %d at tick %d" % [_kills_seen, tick])
 	if _cam != null:
-		_view.focus = _cam.step(_arena, tick)
+		var at: Vector2 = _cam.step(_arena, tick)
+		if _view.city != null:  # a view-only lean: city.focus (chunk streaming) stays on Rivet
+			_view.city_lean_m = at - _arena.rivet.pos
+		else:
+			_view.focus = at
 
 
 func attach_view(view: Node) -> void:
 	var cc: CollectCallView = view as CollectCallView
-	if _arena == null or cc == null or cc.city != null:
-		return  # the city's camera follows city.focus, which also streams the chunks: left alone
+	if _arena == null or cc == null:
+		return
 	if "--cam=fight" in OS.get_cmdline_user_args():
 		_view = cc
 		_cam = FightCam.new()
@@ -74,6 +79,8 @@ func attach_view(view: Node) -> void:
 			_cam.lean = FightCam.LONE_LEAN
 			_cam.max_lean_m = FightCam.LONE_MAX_LEAN_M
 			_cam.hold_ticks = FightCam.LONE_HOLD_TICKS
+		if cc.city != null:  # leans the view only (city_lean_m)
+			_cam.max_lean_m = minf(_cam.max_lean_m, FightCam.CITY_MAX_LEAN_M)
 
 
 func write_state(out: StreamPeerBuffer) -> void:

@@ -102,8 +102,10 @@ Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost ti
 ## After 09:00 (extension, iteration 19)
 
 - **The kills read one at a time.** A dev capture flag, `--lone` (23f0fe22, 265b7f37), makes every arena pit wave one guard. With `--cam=fight`, the camera leans 0.65 toward the victim and holds his corpse 2.5 s. So each table-gun kill is filmed on a cop standing alone, in or near the middle third of a 48 px/m frame, with the aftermath (the 04:00 checkpoint rule). This is a dev view only: no sim, replay or golden change. Clip: `MASTERS/lone_kills_table_six_48ppm.mp4` (33 s: pistol, machine pistol, rocket, electro, flamethrower, molotov; the full 20 s runs are in `MASTERS/lone19_<gun>/`). It replaces the HUD-covered six-tile reel at the top of frames.json.
-- Gap: the flamethrower's burning cop runs more than 14 m and dies off the 48 px/m frame. The cut shows the stream, the ignition and the panic run. A 30 m camera hold was tried and rejected, because it framed empty ground.
-- Gates on 265b7f37: lint 13/13, unit 756/756 (+4), scenarios 29/29 (on 23f0fe22; 265b7f37 touches only the dev camera and its test), parity unchanged (no sim or native change since 83429487).
+- The unique five and a close-up, filmed the same way: `MASTERS/lone_kills_unique_five_48ppm.mp4` (27.5 s: hand cannon, plasma rifle, ray gun, homing shard, mini-nuke, each one-shotting a lone cop) and `MASTERS/lone_kills_closeup_64ppm.mp4` (16 s: pistol, rocket, hand cannon at 64 px/m). These clips show gunplay's projectile, impact, blood and fall. Brutality's signature kill animations come with that branch at the merge. These two clips and the six-gun reel are now the top three entries in frames.json, replacing the HUD-covered tiles and the still sheet.
+- At 64 px/m the corpse slides to the frame's right edge about 1.5 s after the kill, as Rivet walks on to the next spawn.
+- The flamethrower's burning cop runs more than 14 m. With `--lone`, the bot now walks after him (`GunplayBot.follow_burning`, d35ffdf3), so the reel shows the stream, the ignition, the panic run, the fall and the corpse (in the bottom third). A 30 m camera hold was tried first and rejected, because it framed empty ground.
+- Gates on 265b7f37: lint 13/13, unit 756/756 (+4; also on the follow_burning commit), scenarios 29/29 (on 23f0fe22; 265b7f37 touches only the dev camera and its test), parity unchanged (no sim or native change since 83429487).
 
 ## Gates of record
 

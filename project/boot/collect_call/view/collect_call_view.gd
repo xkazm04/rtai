@@ -18,6 +18,9 @@ var notice: SaveNotice = SaveNotice.new()
 var objective_view: ObjectiveView = null
 ## Where the camera looks, in metres; Vector2.INF follows Rivet.
 var focus: Vector2 = Vector2.INF
+## On the city: a view-only camera lean off the city focus (m; the dev `--cam=fight`), so the sim
+## focus that streams the chunks stays on Rivet. Zero = bit-identical.
+var city_lean_m: Vector2 = Vector2.ZERO
 ## Draw through the visual engine (core/render/print_stage.gd: camera, print pass, layers, world
 ## lock). Set false before adding the view to keep the raw placeholder ink under a plain camera
 ## (a caller with its own print pass, e.g. dev/noir/quest_fight.gd).
@@ -191,6 +194,7 @@ func _hauler_kick() -> void:
 		clock = city_view.clock
 	var h: HaulerStage = _stage.pilot.hauler
 	if city_view != null:
-		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig)
+		var lean_px: Vector2 = city_lean_m * SimConst.PX_PER_M
+		city_view.kick_px = hauler_kick.step(h, _stage.tick, clock, city_view.rig) + lean_px
 	else:
 		print_stage.kick_px = hauler_kick.step(h, _stage.tick, clock, print_stage.rig)
