@@ -168,6 +168,12 @@ crops of both grounds.
   into arcs), shrinks to 60 % and fades out. Angles come from the blast's place, so a replay draws the same smoke. A
   radial stretch was tried first and read as flower petals. `--blast-tail=ring` is the iteration 14 held ring;
   `WISPS` 0 also turns the tail off.
+- **Mini-nuke shell** (iteration 20): the mini-nuke lobbed the rocket cell at 1.5x, so in flight it read as a big
+  rocket. It now flies its own `nuke_shell` cell (`tools/art/nuke_shell.py`, procedural like the other FX cells, so no
+  AI provenance line). The cell is a fat bomb from above: a round-bellied steel body, a boxed dark ring tail, a cream
+  nose cap, and a vermilion hazard band (danger) with two ink stripes. Its silhouette is short, fat and square-tailed,
+  never a dart. It flies on the same lob arc, shadow and exhaust lick (`WeaponFxShell.SHELLS`). `projectile_fx`
+  `rocket` in the table, or `--nuke-shell=rocket`, is the before.
 - **Fire patch ground** (`WeaponFxShell.patch_ground`, `PATCH_SCORCH_K` 1.0 at `PATCH_SCORCH_INK` 0.8): under a
   burning patch the scorch cell (the inked burst) spans the patch's diameter, its turn fixed by its place, fading
   with the patch, instead of gunplay's flat grey disc, which read as a debug circle under the flames. 0 = the disc.

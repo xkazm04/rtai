@@ -1079,3 +1079,29 @@ glass-and-fuel molotov splash sheet. (3) Redraw blast frame 3 as torn smoke wisp
 
 NEXT (after the night run): as in REPORT.md "Next steps": (1) melee four in the claw via n-rivet-arsenal; (2) drawn
 glass-and-fuel molotov sheet; (3) blast frame 3 as torn smoke wisps; (4) owner calls once judged.
+
+## Iteration 20 (08:42-, BUILD, extension to 11:00; freeze 10:30, session stop 09:42)
+- 08:42 read: JOURNAL tail, git log, REPORT open items, other lanes' JOURNAL tails. No new REQUEST to weapon-art.
+- NEXT 1 (melee four in the claw) CLOSED by rivet-arsenal's own work: RivetHeldView on n-rivet-arsenal draws my held
+  art (WeaponArt.make_held) for katana / baton / chainsaw / plasma sword, with a swept arc and the chainsaw judder. It is
+  filmed live in their masters (`n4/rivet-arsenal/frames/city-block-melee-64ppm-2x.png`, `katana-slash-thrust-sheet-64ppm.png`,
+  `clips/city-block-melee-64ppm.mp4`); I looked at both stills, and the drawn blades read in the claw. MeleeWeaponView's
+  bars are left only in rivet-motion's dev combo_clip_run. Nothing to merge here.
+- MILESTONE 08:48 the rocket blast's tail tears into smoke wisps (51d42adf). From tick 20 to the effect's 40-tick end,
+  `WeaponFxShell.wisps` draws 12 of the rocket's smoke puffs. They start on the ring's line, drift out by 0.4 of the
+  radius, stretch along the ring, shrink and fade. Before, the held ring (3a703dbd) dimmed into a grey blob. The tail
+  now lasts 20 ticks instead of 10. `--blast-tail=ring` = before. A radial stretch was tried first (9 puffs) and read
+  as flower petals; looked at in strip2. Same-tick city A/B, `--weapon=rocket_launcher`, ticks 435-455 differ.
+  Evidence (masters): `clips/it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4` (+ `-quarterspeed`), strip
+  `frames/it20-rocket-blast-wisps-ab-city-48ppm.png`; frames.json entry 2 (replaces the it14 beads/ring entry).
+- Gates at 51d42adf: lint 13/13, unit 742/742 (`unit-it20.log`), scenarios 32/32 (`scenarios-it20.log`). Parity untouched (render only).
+- DECISION 08:50 no molotov fuel-splash sheet: the it14 strip shows the landing already reads (star, glass, fire,
+  scorch), and a fuel stain would lie under the flames. Dropped from NEXT.
+- MILESTONE 08:56 the mini-nuke flies its own bomb cell instead of the rocket at 1.5x (`tools/art/nuke_shell.py`,
+  `fx/nuke_shell.png`, table row + `projectile_fx`, `WeaponFxShell.SHELLS`). `--nuke-shell=rocket` = before.
+  The .import was fixed to mipmaps on (Godot's default import had them off; every FX cell has them on). Same-tick city A/B
+  (`--weapon=mini_nuke --loadout=mini_nuke`, ticks 396-433 differ), looked at: before a slim rocket, after a fat
+  bomb with a boxed tail and a vermilion band, the exhaust lick behind it. Evidence: `clips/it20-mini-nuke-shell-ab-city-48ppm.mp4`
+  (+ `-halfspeed`), strip `frames/it20-mini-nuke-shell-ab-city-48ppm.png`; frames.json entry 3 (replaces the it9 shell clip).
+- Registry rules applied: motion-quality-gating (same deterministic ticks, one variable, looked at before keeping);
+  sprite-and-atlas-production (cells from a seeded script, same import settings as their siblings). No deviation.

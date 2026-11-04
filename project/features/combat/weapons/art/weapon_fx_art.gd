@@ -87,7 +87,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
 			_cell_v(ci, &"arc", tick % 3, at - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
 			_cell(ci, &"spark", tick % 3, at, float(tick) * 0.5, 1.1, 1.0)
-		WeaponSpec.Kind.THROWN when art().projectile_fx(s.spec.id) == &"rocket":
+		WeaponSpec.Kind.THROWN when WeaponFxShell.SHELLS.has(art().projectile_fx(s.spec.id)):
 			WeaponFxShell.draw_round(ci, s, dir, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)

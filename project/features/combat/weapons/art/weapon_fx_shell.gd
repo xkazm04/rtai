@@ -1,12 +1,15 @@
 class_name WeaponFxShell
 extends RefCounted
-## weapon-art's lobbed shell: a THROWN weapon whose projectile_fx is `rocket` (the mini-nuke) flies
-## as the rocket cell on the molotov's lob arc (lifted off its ground shadow by FightAreasArt.LOB_M
-## at the apex), nose along the travel, swelling toward the apex so the arc reads from above, with
-## the exhaust lick behind it. Until iteration 9 every THROWN row drew the molotov bottle, so the
-## mini-nuke's shell flew as a burning bottle. projectile_k (WeaponArt.round_k) sets its size.
+## weapon-art's lobbed shell: a THROWN weapon whose projectile_fx is one of SHELLS (the mini-nuke's
+## `nuke_shell`, a fat bomb, since iteration 20) flies as that cell on the molotov's lob arc (lifted
+## off its ground shadow by FightAreasArt.LOB_M at the apex), nose along the travel, swelling toward
+## the apex so the arc reads from above, with the exhaust lick behind it. Until iteration 9 every
+## THROWN row drew the molotov bottle, so the mini-nuke's shell flew as a burning bottle.
+## projectile_k (WeaponArt.round_k) sets its size.
 ## Render only: reads the shot.
 
+## projectile_fx cells that fly as a lobbed shell. `--nuke-shell=rocket` = the rocket cell (before).
+const SHELLS: Array[StringName] = [&"rocket", &"nuke_shell"]
 ## How much bigger the shell draws at the apex than at the ends of the arc.
 const APEX_GROW: float = 0.35
 ## The ground shadow: an ink ellipse SHADOW_M long (x the shell's size), shrinking at the apex.
@@ -36,6 +39,7 @@ const WISP_RING: float = 0.78
 const WISP_DRIFT: float = 0.4
 const WISP_M: float = 0.55
 
+static var nuke_as_rocket: bool = OS.get_cmdline_user_args().has("--nuke-shell=rocket")
 static var wisp_tail: bool = not OS.get_cmdline_user_args().has("--blast-tail=ring")
 
 
@@ -51,7 +55,12 @@ static func draw_round(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick:
 	var ang: float = dir.angle()
 	var lick: Vector2 = Vector2.ONE * (0.42 + 0.08 * float(tick % 2)) * size
 	WeaponFxArt.draw_cell(ci, &"flame", tick % 3, up - dir * TAIL_M * size, ang, lick)
-	WeaponFxArt.draw_cell(ci, &"rocket", 0, up, ang, Vector2.ONE * size)
+	WeaponFxArt.draw_cell(ci, shell_cell(s.spec.id), 0, up, ang, Vector2.ONE * size)
+
+
+## The cell weapon `id`'s shell flies as: its projectile_fx (`--nuke-shell=rocket`: the rocket).
+static func shell_cell(id: StringName) -> StringName:
+	return &"rocket" if nuke_as_rocket else WeaponFxArt.art().projectile_fx(id)
 
 
 ## The ink ellipse a lobbed round casts on `at` (m), SHADOW_M x `k` (the molotov uses it too).
