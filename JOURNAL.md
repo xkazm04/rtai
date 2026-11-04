@@ -953,3 +953,19 @@ NEXT (iteration 14), in order:
 - NOTE melee in the claw (NEXT 2 of it13): on this branch the melee weapons draw only in rivet-motion's
   `combo_clip_run` dev scene, as MeleeWeaponView's procedural bars ("a placeholder until weapon art"); the arena
   wields them only on n-rivet-arsenal (StagePilot.wielding, arena_arsenal_bot). Not merged this late.
+- MILESTONE 08:01 the fire patch's ground (27358bfe): under the molotov's fire, gunplay's flat grey disc (a debug
+  circle under the flames) becomes the inked scorch cell across the patch's diameter (`WeaponFxShell.patch_ground`,
+  `PATCH_SCORCH_K` 1.0, 80 % ink, fading with the patch, its turn fixed by its place). One hook line in
+  FightAreasArt._patch (gunplay's file, minimal); the disc is the fallback (`PATCH_SCORCH_K` 0, `--weapon-fx=shapes`).
+  Tried 1.15 first: spikes reached past the flames. Same-tick city runs looked at to tick 690 (the scorch stays
+  under the fire, no camera break). Unit 741/741 (`unit-it14b.log`), lint 13/13. Deviation: no unit test
+  (view-only, as the other draw hooks).
+- DECISION weapon-art fire patch ground: as above (docs/decisions.md).
+- Evidence (masters): `clips/it14-molotov-burst-and-ground-ab-city-48ppm-2x.mp4` (+ quarter speed): left the
+  original (rocket blast frames + disc), right both fixes, ticks 380-479; strip
+  `frames/it14-molotov-fire-ground-ab-city-48ppm.png` (disc vs scorch, both with the star-only burst). The earlier
+  it14 REQUEST-31-only clip is replaced by the combined one; its strip stays. frames.json 15 (dropped the it10
+  molotov shadow strip; its clip stays).
+- To gunplay (REQUEST 31 answer): done on n-weapon-art 474038b1 (bottle burst = the star only, 10 ticks) and
+  27358bfe (the patch's ground is the inked scorch). Both are hooks in your fight_areas_art.gd (one argument, one
+  `if not ... :` line); take them at merge.
