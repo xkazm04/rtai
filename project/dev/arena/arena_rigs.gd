@@ -23,7 +23,7 @@ const FOCUS_REACH_M: float = 20.0
 const THROW: Vector3i = Vector3i(1, 6, 18)
 
 var rigs: CharacterRigs = CharacterRigs.new()
-var stage: ArenaStage = null
+var stage: CollectCallStage = null
 ## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
 var plan: ArenaPlan = null
 ## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
@@ -52,7 +52,7 @@ var _looks: Dictionary[int, Vector2i] = {}
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
 ## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
-func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bool:
+func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext) -> bool:
 	var layer: CanvasLayer = null
 	if view.print_stage != null:
 		_print = view.print_stage
@@ -63,7 +63,8 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	else:
 		return false
 	stage = p_stage
-	plan = p_stage.plan
+	var arena_stage: ArenaStage = p_stage as ArenaStage  # null in quest 1 (no plan, no targets)
+	plan = arena_stage.plan if arena_stage != null else null
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)
@@ -81,9 +82,12 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
-	view.cast_view.visible = false
+	view.cast_view.fighters_on_rigs = true  # quest 1 keeps its allies and marks on the cast view
+	view.cast_view.visible = arena_stage == null
 	react = ReactLink.make(p_stage.arena)
-	for t: ArenaTargets.Target in p_stage.targets.targets:
+	if arena_stage == null:
+		return true
+	for t: ArenaTargets.Target in arena_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:
 			_looks[t.fighter.id] = look
@@ -126,9 +130,10 @@ func _process(_delta: float) -> void:
 ## the pit's armored riot cops (the mix's other riot picks dress as patrol).
 func _pit_look(id: int) -> int:
 	var squad: int = RigVariant.squad_index_for(id)
-	if stage.pit == null or stage.pit.riot_hp <= 0.0:
+	var arena_stage: ArenaStage = stage as ArenaStage
+	if arena_stage == null or arena_stage.pit == null or arena_stage.pit.riot_hp <= 0.0:
 		return squad
-	if stage.pit.riot.has(id):
+	if arena_stage.pit.riot.has(id):
 		return RIOT_LOOK
 	return PATROL_LOOK if squad == RIOT_LOOK else squad
 

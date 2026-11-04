@@ -6,8 +6,11 @@ extends SceneTree
 ##   -- --out=<abs dir> [--ppm=32] [--stills=<tick,tick,...>] (stills only: no clip, no title)
 ##   [--save=<abs file>] (the game writes its beat checkpoints there)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
+##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
 
-const KNOWN_FLAGS: PackedStringArray = ["--out", "--ppm", "--stills", "--save", "--continue"]
+const KNOWN_FLAGS: PackedStringArray = [
+	"--out", "--ppm", "--stills", "--save", "--continue", "--rigs"
+]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
 

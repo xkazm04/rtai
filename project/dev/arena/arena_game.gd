@@ -8,7 +8,9 @@ extends Node
 ## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
 ## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
 ## area at boot (a station's capture; like the T teleport, a dev run that does not replay),
-## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
+## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites (the default
+## since rivet-arsenal 2026-11-04: every weapon, swing and reaction lives on the rigs; --sprites
+## opts out).
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides
@@ -86,6 +88,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(CombatReel.new(session.stage, session.actions))
 	elif args.text("--bot") == "arsenal":  # rivet-arsenal: the pit fight, a switch every 4 s
 		session.world.loop().set_input(ArenaArsenalBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "lob":  # rivet-arsenal: molotovs at the claw cops from 9-14 m
+		session.world.loop().set_input(ArenaLobBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
 		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
@@ -129,7 +133,7 @@ func _add_view() -> void:
 	add_child(view)
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
-	if ArenaArgs.parse().has("--rigs"):  # the cast rigs instead of quest 1's sprites (dev)
+	if not ArenaArgs.parse().has("--sprites"):  # the cast rigs (--rigs), not quest 1's sprites
 		cast = ArenaRigs.new()
 		add_child(cast)
 		Log.info(

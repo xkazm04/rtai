@@ -1,0 +1,19 @@
+{
+  "aim_turn_180_ticks": 15,
+  "schema": "gtai.rivet-feel/1",
+  "sprint": {
+    "reverse_ticks": 24,
+    "stop_m": 0.43000003346242,
+    "stop_ticks": 9,
+    "to_90_ticks": 21,
+    "top_mps": 6.20000034570694
+  },
+  "tick_hz": 60,
+  "walk": {
+    "reverse_ticks": 10,
+    "stop_m": 0.216666653752327,
+    "stop_ticks": 6,
+    "to_90_ticks": 9,
+    "top_mps": 4.50000017881393
+  }
+}

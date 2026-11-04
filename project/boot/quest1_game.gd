@@ -114,6 +114,7 @@ func _begin(opened: Quest1Session) -> void:
 			_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 			_characters.rivet_on_foot = false
 			_characters.bake()
+		_dev_rigs()
 		_audio = StageAudio.attach(
 			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
 		)
@@ -221,3 +222,18 @@ func _settings_panel() -> Quest1SettingsPanel:
 		func() -> void: view.fx_view.reduced_motion = settings.reduced_motion if view else false
 	)
 	return panel
+
+
+## rivet-arsenal (dev, debug builds only): `-- --rigs` draws quest 1's fighters on the cast rigs
+## with Rivet's held weapon, swings and reloads (the arena's ArenaRigs, loaded at run time: dev/ is
+## not in release exports). Without the flag quest 1 keeps its sprite cast.
+func _dev_rigs() -> void:
+	if not LaunchArgs.has("--rigs") or not OS.is_debug_build():
+		return
+	var script: GDScript = load("res://dev/arena/arena_rigs.gd") as GDScript
+	if script == null:
+		return
+	var cast: Node = script.new()
+	add_child(cast)
+	var ok: Variant = cast.call("attach", session.stage, view, session.world.context())
+	Log.info("quest1", "cast rigs: %s" % ok)
