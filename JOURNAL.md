@@ -207,3 +207,36 @@ reel's 64 px/m close-up again on the final arms and legs, and the r2_c6 composit
   of the art (`gtai-masters/n5/cast/tools/core_lift.py`, d below 0.75 x 0.3) did not visibly clear it, and no
   interior alpha holes, so the speckle is the minified seams. A real fix is a simplified core LOD part (seams
   thinned or dropped) or a minified-texture fetch in the sticker: the second is the print shader (n5-look).
+- 18:46 gates on 850c543a (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 940/0, scenarios 46/0,
+  parity exact (1200 steps, planted mutation caught at 629), selftest with the junction look goldens 11/11 (worst
+  mean 0.57). Bench not run (CONTENDED machine, not needed for render-only art).
+- MILESTONE 18:51 Rivet's core sticker fixed at 32 px/m (commit fa395f74). The speckle was the thin plate seams and
+  the inner mid tones (belt band, helmet back box) crossing the core sticker's d >= 0.40 ink threshold.
+  `tools/art/rivet_seam_thin.py --mid=0.75` moves only those pixels (more than 10 px inside the alpha edge) to d 0.38
+  along their hue; outline, bold marks, vermilion and alpha are kept, and the D5 set stays full detail. 32 px/m: a
+  cream plate with the helmet outline again; 64 px/m nearly unchanged. Look goldens unmoved (junction 11/11,
+  block 5/5). Provenance lines x2, decisions line. `frames/rivet-core-seams-ab.png`.
+  - Registry rules applied (`sprite-and-atlas-production`, `shader-budget-authoring`): fix the source art for the
+    LOD it actually prints at instead of adding a shader branch the look lane owns; keep the alpha as the
+    silhouette authority (the D5 overlay's lock).
+- MILESTONE 18:56 the proof clips on the finished cast, 32 px/m, 0 script errors:
+  `cast-director-ab-32.mp4` (main | n5-cast side by side, 30 s; claw combo, pistol, machine pistol identical tick
+  for tick) and `cast-city-ab-32.mp4` (15 s). Still: `frames/director-final-ab-32ppm.png`.
+  - FRICTION: iteration 2's director args (`--reel=director --loadout=pistol`, no `--bot=reel`) now play the hub;
+    the working args are `--bot=reel --reel=director --clean --rigs`. Chapter 4 on differs from the before clip
+    (it carried `--loadout=pistol`); the brief's first three chapters match.
+- 18:57 `frames/cast-ingame-vs-r2c6.png` re-shot on the finished cast. Scale and the cop footprint match; the
+  open gaps are the camera (target 3/4, game plan view) and Rivet's pale thin limbs on dark asphalt.
+  frames.json 15 entries, all files exist.
+
+NEXT (iteration 7):
+1. Rivet's limbs on dark asphalt at 32 px/m (the weakest read left): the sticker limb is a 3-5 px pale rod with a
+   1.3 px outline. Darker LIMB_FILL was rejected (asphalt contrast). Try instead a slightly heavier drawn limb at the
+   sticker LOD only: arm_w/leg_w are rig-wide, so look for a LOD-gated width (RigLimbs) or ask n5-look for a
+   thicker `sticker_edge` on LIMB parts (their shader; a REQUEST line in their JOURNAL). Judge on asphalt AND slab.
+2. Held guns read large on the slimmer Rivet (weapon_art.json metres, the look lane's data): Call for the owner
+   with `frames/director-hybrid-64ppm.png`; or a REQUEST to n5-look.
+3. The crowd (brief item 4) is the footprint authority and unchanged; confirm with `dev/bench/rig_footprint.gd`
+   on the head and write `evidence/n5-cast/footprint-after.json` (cops, Rivet, peds) for the REPORT table.
+4. Start REPORT.md (due 08:40): what works with evidence paths (frames.json), Calls for the owner (held-gun size;
+   limb weight at 32 px/m with the one-value levers; 3/4 vs plan camera), what does not.
