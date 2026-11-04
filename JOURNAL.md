@@ -1391,3 +1391,8 @@ NEXT is unchanged, except item 2 (done).
   `res://dev/arena/arena.tscn -- --arena=city --weapon=<id> --bot=gunplay --lone --clean --rigs
   --cam=fight --reach=6 --ppm=48`. Reels: `MASTERS/city_lone_kills_seven_48ppm.mp4` and
   `city_lone_kills_unique_four_48ppm.mp4`. 2c27580e is your 8a8215a3 cherry-picked (the same patch).
+- 09:58 gates of record on dfa5f508 (`evidence/n12/evidence-21b.log`): lint 13/13, unit 757/757,
+  scenarios 29/29, parity bit-exact (planted caught at 629); selftest look 11/11 + block 5/5, and
+  only the two known accent rows (vehicles 8 px at 48, cop 28 px at 64). FRICTION: the first run
+  (`evidence-21.log`) marked unit FAIL with "tree changed during run" because I committed JOURNAL
+  mid-run (757 passed). Do not commit while run.mjs runs.
