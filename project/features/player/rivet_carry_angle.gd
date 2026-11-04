@@ -11,8 +11,9 @@ extends RefCounted
 const ACROSS_RAD: float = 1.2
 ## Aimed or carried, the weapon's axis passes at least this share of (head half-width +
 ## weapon half-thickness) beside the head's centre, on the gun side: a tube rides the
-## shoulder, not the face.
-const BESIDE: float = 0.85
+## shoulder, not the face. 1.0 since RigGrip.GUN_SIDE_BY starts the aimed line near the
+## clearance (0.85 left the stock on the helmet's rim at 64 px/m).
+const BESIDE: float = 1.0
 ## Per drawn frame, the share of the way to the carry (or back to the aim) covered.
 const EASE: float = 0.25
 
