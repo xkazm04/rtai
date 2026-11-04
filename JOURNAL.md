@@ -923,3 +923,34 @@ NEXT (the morning merge / the next night):
 3. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
 4. Robot thug (brief item 5) is in (ThugPlan d4556023 + own parts c819d6be, sparks/oil per hit);
    next is its own death pose (it still falls with the human bullet set) and a city clip.
+
+## Iteration 15 (08:12-08:30, BUILD, 18 min to the freeze)
+- Read: JOURNAL NEXT, git log, n-gunplay / n-brutality / n-showcase JOURNALs. No new REQUEST to
+  human-reactions; human-reactions REQUEST 30 (the knockdown fire hold) is still open on gunplay's
+  side (gunplay's last entries are d7820eeb/c2d3e961/3a8771e8: the burn flames, gates, REPORT).
+- Scoped NEXT 4 (the robot thug's own death pose) in code and did not build it this session:
+  - The live fight code has no robot: `Fighter.Kind` is RIVET / GUARD / BOSS
+    (features/combat/fighter.gd:6), so `ReactLink` -> `DeathPipe.kill` only ever kills humans.
+    The thug exists only in the dev pit (EnemyAgent + `_bot_rig`, dev/enemy_ai/enemy_rig_fight.gd:210).
+  - Spec for the next session (view only, no sim or golden change): a `death_robot` row in
+    human_reactions.json (len_s about 0.9, travel_m about 0.2): the knees give (c_tuck 0.5 by
+    k 0.3), it pitches forward on the spot (c_sprawl 0.8 by k 1.0, no slide past 0.2 m), the head
+    drops last (head_rot 0.5 * side, k 0.6-1.0), then spark/oil (ShieldSparks robot_hit) and no
+    blood. A `DeathPose._robot` arm in the `match`, plus `DeathPipe.kill_robot(rig, dir)` that
+    skips the signatures and `death_map` (brutality's kills are human-only). The pit calls it
+    when a bot's `died_tick == pit.tick`. Test: a unit test that the robot pose holds a corpse
+    with no slide past 0.2 m and that `death_for` never returns it for a human.
+  - DECISION: not started at 08:13. 17 minutes cannot hold the edit, unit 750, scenarios 33 and
+    a 32/64 px/m clip. A pose with no clip is not done (brief: the visual impression is the
+    deliverable), and a half-landed edit would make the tip of record dirty for the morning merge.
+- State at the freeze: unchanged from iteration 14. Code tip fdff7990 (evidence of record: lint
+  13/13, unit 750/750, scenarios 33/33, parity bit-exact, look 11/11, block 5/5; selftest FAIL
+  only on the known accent rows). frames.json 15 entries, all present. No Godot process of mine.
+
+NEXT (the morning merge / the next night), in order:
+1. After the merge with n-gunplay: `gun_fx.shield_test = link.shield_test` (one line, fx_view),
+   film react_line at 64 px/m; re-film the burn death with gunplay's thin flames (e1b22073).
+2. human-reactions REQUEST 30 (gunplay: about 29 rising ticks with no fire after down_ticks ends,
+   or the view snaps HOLD knockdown z 0.78 -> 0.9); then re-film pit_knockdown_getup.
+3. The robot thug's power-down death per the spec above, plus a pit clip at 32 and 64 px/m.
+4. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
