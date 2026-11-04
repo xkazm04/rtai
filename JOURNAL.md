@@ -963,3 +963,17 @@ NEXT (unchanged from iteration 13):
 2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
    under the patch stars): check both on the merged main.
 3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
+
+## Iteration 15 (08:24-08:30, BUILD)
+- 08:24 session opened 6 minutes before the freeze; no code touched (too short to build, capture
+  and gate). Re-checked REQUESTs to brutality across the night JOURNALs: nothing new since
+  showcase REQUEST 29, which 63cc3ce1 answers (clip `clips/electro-lie-down-city-48ppm-it13.mp4`).
+- Gates of record unchanged: 63cc3ce1, lint 13/13, unit 787/787, scenarios 35/35 (CONTENDED).
+  No Godot process of mine running.
+
+NEXT (unchanged from iteration 13):
+1. Electro corpse: swap the stretched lie-out for human-reactions' DeathPose._shock channels once
+   that is on the merged main.
+2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
+   under the patch stars): check both on the merged main.
+3. The age-96 stall: measure windowed under bench.lock. Call for the owner: brutality-ray-cap.
