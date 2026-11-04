@@ -82,3 +82,10 @@ NEXT (iteration 5, written 15:48):
 3. The smear on the baton is modest at real time: try a longer smear tail for short cuts (MeleeSmearView, the last 4 angles -> 6 for cuts under 4 ticks) and film the baton again.
 4. Item 2: a city clip of the electro chain (the city's cops come in groups: `--bot=gunplay --weapon=electro_gun` without `--lone`).
 5. Before renders without a flag: `git diff -- <file> > patch; git checkout -- <file>; render; git apply patch` (used for the pistol decay and the kick). Do not run gates during it.
+- FINDING 15:53 (item 4, the claw): `RigClips._strike_reach` had the same "late" cause as the blades: reach -0.35 (pulled back) on the first active tick, the hit tick, frozen there by the hit-stop.
+- MILESTONE 15:57: 5868a386. The jab starts JAB_TICKS 2 before the windup ends and is at full reach on the hit tick (`--soft-swing` = the night's curve). test_rig_clips 8/8 (new: full reach on the hit tick; planted night curve still < 0 there). Lint 13/13 (the first commit try failed gdlint member order + gd-size 41 lines in `sample` from my longer doc comment; fixed).
+- NOT VERIFIED ON FILM 15:59: claw_combo renders at 64 px/m (`claw_64`, `claw_before_64` in scratch) diverge from frame 72 on (pixel diff), but at contact Rivet overlaps the cop and the 2-frame sheet did not show a readable difference. No clip, no frames.json entry. Gates for 5868a386 not run (last full gate green on 2ba875ae).
+
+NEXT (iteration 5, replaces the 15:48 list's item 2):
+1. Film the claw jab A/B at 64 px/m 0.4x with a crop centred on the contact (frames 66-90 of claw_combo, `claw_64`/`claw_before_64` in scratch are ready to cut), and a victim further out if the overlap hides it. Run the full gate on 5868a386 first.
+2. Then the 15:48 list: REPORT calls (two-hand grip), the baton smear tail, a city electro chain clip.
