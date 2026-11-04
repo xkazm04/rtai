@@ -204,7 +204,7 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
 	_groups[serial] = groups
 	if row.spray == 0:
 		_dry[serial] = true
-	if row.style == &"burn":
+	if row.style == &"burn" or row.style == &"vaporise":
 		char_fx.add(serial, groups[SignatureKill.BODY], row)
 	elif row.style == &"shock":
 		shock_fx.add(serial, groups[SignatureKill.BODY], row, dir)

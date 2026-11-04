@@ -15,6 +15,8 @@ const FLAKES: int = 34
 const WISPS: int = 6
 const SMOKE_TAIL: int = 150
 const FLAKE_LIFE: float = 70.0
+## A vaporised body's shadow: the char print burnt into the street, the paving showing through.
+const SHADOW_A: float = 0.8
 ## One wind over the whole street (screen right and up a little), so every heap leans the same way.
 const WIND: Vector2 = Vector2(0.94, -0.34)
 const ASH_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/ash.png")
@@ -30,6 +32,8 @@ class Burn:
 	var body: Node2D = null
 	var row: SignatureKill = null
 	var born: int = 0
+	## The mini-nuke's vaporise: the char print stays as a shadow (no embers, smoke or crumble).
+	var shadow: bool = false
 
 
 var kills: SignatureKills = null
@@ -45,6 +49,7 @@ func add(serial: int, body: Node2D, row: SignatureKill) -> void:
 	b.body = body
 	b.row = row
 	b.born = kills.tick
+	b.shadow = row.style == &"vaporise"
 	_char(body)
 	@warning_ignore("return_value_discarded")
 	_burns.append(b)
@@ -57,6 +62,9 @@ func forget(serial: int) -> void:
 ## After KillView placed the bodies: the crumble fades and sinks each burnt body.
 func pose() -> void:
 	for b: Burn in _burns:
+		if b.shadow:
+			b.body.modulate.a = SHADOW_A
+			continue
 		var k: float = _crumble(b)
 		b.body.modulate.a = 1.0 - smoothstep(0.15, 1.0, k)
 		b.body.scale *= 1.0 - 0.18 * k
@@ -65,6 +73,8 @@ func pose() -> void:
 
 func _draw() -> void:
 	for b: Burn in _burns:
+		if b.shadow:
+			continue
 		var age: int = kills.tick - b.born
 		var p: Vector2 = b.body.position
 		var k: float = _crumble(b)
