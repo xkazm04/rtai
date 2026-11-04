@@ -1,8 +1,9 @@
 extends Scenario
 ## Lane brutality: the signature kills in the arena's real fight (CombatArena + GunHand +
 ## FightAreas) with the KillLab line, for the finished kills (rocket gib, hand cannon blowback,
-## fire char, electro X-ray). Each weapon must land signature kills of its own style, replay
-## identically on a fresh world (SIM-05: the gibs and marks are in the world hash), and give the
+## fire char, electro X-ray, katana split: the lab lunges and slashes). Each weapon must land
+## signature kills of its own style, replay identically on a fresh world (SIM-05: the gibs and
+## marks are in the world hash), and give the
 ## same gib state on the same seed. TST-05: a planted fault (one gib 1 % faster) must change
 ## the gib state.
 
@@ -14,6 +15,7 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"hand_cannon": &"blowback",
 	&"flamethrower": &"burn",
 	&"electro_gun": &"shock",
+	&"katana": &"split",
 }
 
 
@@ -89,7 +91,7 @@ func _open(bus: EventBus, data: DataStore, weapon: StringName) -> ArenaSession:
 	var s: ArenaSession = ArenaSession.open(bus, data)
 	var hook: BrutalityHook = _hook(s)
 	hook.arm(s.stage, s.world.context(), weapon)
-	hook.open_lab(s.stage)
+	hook.open_lab(s.stage, weapon)
 	return s
 
 
