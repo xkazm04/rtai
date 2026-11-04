@@ -384,6 +384,11 @@ NEXT (iteration 7):
   gtai-masters/n4/brutality/clips/signature-kills-reel-9-32ppm-45s.mp4 (NEXT 4 done). Looked at
   its sheet: every kill reads, but small, because the 32 px/m arena camera frames the whole hub.
 - Gates on f6854d38+: lint 13/13, unit 775/775 (unit-it6.log), scenario_brutality_kills pass
-  (9 weapons). The full scenario suite was not re-run this iteration; it is first in iteration 7.
+  (9 weapons).
+- 04:08 full scenario suite after the merges: 33/35. scenario_rivet_claw and scenario_rivet_katana
+  failed (the bot never finished). Cause: my branch kept human-reactions' old react_line spot,
+  which showcase found blocks the claw station on a merged build (their REQUEST 10). Cherry-picked
+  human-reactions' fix 9503319e as 2107b178 (their station file, taken whole). After it: rivet
+  filter 4/4, full suite 35/35 (scenarios-it6.log).
 - FRICTION: a background unit run without `GODOT_BIN` exported reported "exit -1" on every phase
   and the previous junit count (762). Read the exit codes, not only the count.
