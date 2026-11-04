@@ -306,3 +306,4 @@ NEXT (iteration 5, supersedes the list above):
 5. Re-cut the reel with all seven kills (rocket, cannon, fire, electro, katana, plasma rifle,
    plasma sword) and city clips for the plasma sword.
 6. Katana/plasma sword live: merge rivet-arsenal when their melee weapons land, re-shoot.
+- 03:31 final gates on 37e32e75+: lint 13/13, unit 725/725 (unit-it4.log), scenario_brutality_kills 8 weapons pass (full suite 31/31 at 03:05 before plasma; the brutality scenario re-run alone after each kill).
