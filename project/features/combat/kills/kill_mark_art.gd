@@ -36,7 +36,8 @@ static func spray(ci: CanvasItem, m: KillMarks.Mark, ppm: float) -> void:
 		ci.draw_circle(p, r, BLOOD)
 		if r > 0.12 * ppm:  # a big drop throws a satellite further out along the fan
 			ci.draw_circle(p + m.dir * r * 1.9, r * 0.35, BLOOD)
-	blot(ci, c + m.dir * 0.75 * ppm, 0.5 * ppm, m.at.y)
+	if not m.drops.is_empty():  # a bloodless kill (fire) leaves no splat
+		blot(ci, c + m.dir * 0.75 * ppm, 0.5 * ppm, m.at.y)
 
 
 ## A lobed blood blot (the splash where the body was), lobes set by `phase`.

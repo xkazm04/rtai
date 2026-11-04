@@ -1,0 +1,18 @@
+{
+  "electro_gun": {
+    "kills": 6,
+    "style_kills": 6
+  },
+  "flamethrower": {
+    "kills": 4,
+    "style_kills": 4
+  },
+  "hand_cannon": {
+    "kills": 6,
+    "style_kills": 6
+  },
+  "rocket_launcher": {
+    "kills": 12,
+    "style_kills": 12
+  }
+}

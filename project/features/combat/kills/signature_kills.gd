@@ -11,6 +11,9 @@ signal killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir:
 
 ## A part's speed kept off a wall it hit (the rest is lost into the wall).
 const WALL_REBOUND: float = 0.3
+## The standard death blood is skipped this near a fresh signature kill (metres, ticks).
+const VETO_M: float = 1.2
+const VETO_TICKS: int = 30
 ## The body-local start of each piece (metres; x along the facing, y to the right).
 const OFFSETS: PackedVector2Array = [
 	Vector2(0.05, 0.0),
@@ -44,6 +47,8 @@ func _init(p_table: SignatureKillTable, rng: RandomNumberGenerator) -> void:
 ## turns the piece offsets; a robot never takes a row).
 func on_kill(e: KillEvent) -> bool:
 	var row: SignatureKill = table.for_weapon(e.weapon) if e.human else null
+	if row == null and e.human and e.damage_type == &"burned":  # any fire death (puff, patch)
+		row = table.for_weapon(&"burn")
 	if row == null or consumed.has(e.victim_id):
 		return false
 	var victim_id: int = e.victim_id
@@ -89,6 +94,16 @@ func _collide() -> void:
 		gibs.pos[i] = out
 		if into < 0.0:
 			gibs.vel[i] -= n * into * (1.0 + WALL_REBOUND)
+
+
+## True when a signature kill landed within VETO_M of `pos_px` in the last VETO_TICKS (the
+## standard death blood asks before it splashes; render side, reads only).
+func marked_near(pos_px: Vector2) -> bool:
+	var at: Vector2 = pos_px / SimConst.PX_PER_M
+	for m: KillMarks.Mark in marks.marks:
+		if tick - m.tick <= VETO_TICKS and m.at.distance_to(at) <= VETO_M:
+			return true
+	return false
 
 
 func write_state(out: StreamPeerBuffer) -> void:

@@ -16,6 +16,9 @@ class Mark:
 	## Spray drops: x, y in metres from `at`; z = drop radius in metres.
 	var drops: PackedVector3Array = PackedVector3Array()
 	var tick: int = 0
+	## The burn char's ash heap (metres; 0 = none), grown in from tick + ash_from.
+	var ash_m: float = 0.0
+	var ash_from: int = 0
 
 
 var budget: int = 12
@@ -36,8 +39,10 @@ func leave(
 	m.dir = dir
 	m.scorch_m = row.scorch_radius_m
 	m.flash_ticks = row.flash_ticks
-	m.flash_scale = 1.0 if row.scorch_radius_m > 0.0 else 0.55
+	m.flash_scale = 1.0 if row.style == &"gib" else 0.55  # the big star and soot: blasts only
 	m.tick = tick
+	m.ash_m = row.ash_m
+	m.ash_from = row.hitstop_ticks + row.stand_ticks
 	var cone: float = row.spray_cone_deg if row.spray_cone_deg > 0.0 else row.cone_deg
 	var half: float = deg_to_rad(cone) * 0.5
 	for n: int in row.spray:

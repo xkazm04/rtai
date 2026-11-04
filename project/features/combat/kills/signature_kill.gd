@@ -27,6 +27,11 @@ var scorch_radius_m: float = 0.0
 var spray: int = 0
 ## The spray fan's width (degrees); 0 = the pieces' cone.
 var spray_cone_deg: float = 0.0
+## The burn style's char: ticks the charred body stands smoking, ticks it crumbles to ash,
+## and the ash heap's radius (metres) it leaves.
+var stand_ticks: int = 0
+var crumble_ticks: int = 0
+var ash_m: float = 0.0
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -50,6 +55,9 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.scorch_radius_m = _num(t, d, "scorch_radius_m", 0.0)
 	k.spray = roundi(_num(t, d, "spray", 0.0))
 	k.spray_cone_deg = _num(t, d, "spray_cone_deg", 0.0)
+	k.stand_ticks = roundi(_num(t, d, "stand_ticks", 0.0))
+	k.crumble_ticks = roundi(_num(t, d, "crumble_ticks", 0.0))
+	k.ash_m = _num(t, d, "ash_m", 0.0)
 	return k
 
 

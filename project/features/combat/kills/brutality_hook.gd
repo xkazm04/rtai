@@ -25,15 +25,26 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	kills = SignatureKills.new(table, ctx.rng.stream(&"brutality"))
 	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
-	stage.arena.struck.connect(_on_struck)
+	stage.arena.kill_landed.connect(_on_kill_landed)
 	var gun: String = ArenaArgs.parse().text("--sig-gun")
-	var weapons: WeaponTable = WeaponTable.shipped() if not gun.is_empty() else null
-	if weapons != null and weapons.weapons.has(StringName(gun)):
-		stage.arena.gun = GunHand.make(weapons, StringName(gun), ctx.rng.stream(&"brutality_gun"))
-		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+	if not gun.is_empty():
+		arm(stage, ctx, StringName(gun))
 	if ArenaArgs.parse().has("--sig-lab"):
-		_lab = KillLab.new()
-		_lab.setup(stage)
+		open_lab(stage)
+
+
+## Hands Rivet the weapons.json gun `weapon` (the dev arg --sig-gun, or a scenario).
+func arm(stage: ArenaStage, ctx: WorldContext, weapon: StringName) -> void:
+	var weapons: WeaponTable = WeaponTable.shipped()
+	if weapons.weapons.has(weapon):
+		stage.arena.gun = GunHand.make(weapons, weapon, ctx.rng.stream(&"brutality_gun"))
+		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+
+
+## Lines the KillLab guards up in front of Rivet (the dev arg --sig-lab, or a scenario).
+func open_lab(stage: ArenaStage) -> void:
+	_lab = KillLab.new()
+	_lab.setup(stage)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
@@ -57,27 +68,60 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func telemetry() -> Dictionary:
-	return {"signature_kills": kills.consumed.size(), "by_style": kills.by_style.duplicate()}
+	var out: Dictionary = {
+		"signature_kills": kills.consumed.size(), "by_style": kills.by_style.duplicate()
+	}
+	if view != null and view.frames > 0:  # the kill view's CPU cost (CONTENDED machine)
+		out["view_frames"] = view.frames
+		out["view_avg_us"] = view.spent_us / view.frames
+		out["view_worst_us"] = view.worst_us
+	return out
 
 
 func attach_view(p_view: Node) -> void:
 	var cc: CollectCallView = p_view as CollectCallView
-	if cc == null or cc.print_stage == null:
-		return
 	_game = p_view.get_parent()
+	_veto_bloods.call_deferred(_game)  # the city block's CityBlood lands after the hooks attach
+	var layer: CanvasLayer = _actor_layer(cc)
+	if layer == null:
+		return
 	view = KillView.new()
 	view.z_index = RenderLayers.z(&"actors") - 1
 	view.ppm = SimConst.PX_PER_M
 	view.reduced_motion = LaunchArgs.has("--reduced-motion")
 	view.rig_lookup = _rig_of
 	view.bind(kills)
-	cc.print_stage.actor_layer().add_child(view)
+	layer.add_child(view)
 
 
-func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
-	if not lethal:
-		return
-	if kills.on_kill(KillEvent.of_fighter(victim, dir, weapon)):
+## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the
+## rigs draw too (ArenaRigs.attach); null with neither (headless).
+static func _actor_layer(cc: CollectCallView) -> CanvasLayer:
+	if cc == null:
+		return null
+	if cc.print_stage != null:
+		return cc.print_stage.actor_layer()
+	return cc.city_view.actor_layer() if cc.city_view != null else null
+
+
+## Every standard death blood under the arena game asks the kill first: the kill prints its own
+## blood (or none, fire/electro), so no standard pool, spray or corpse soak under it. On the city
+## block that is CityBlood's CombatBlood as well as the print stage's.
+func _veto_bloods(root: Node) -> void:
+	if root is CombatBlood:
+		(root as CombatBlood).veto = kills.marked_near
+	for c: Node in root.get_children():
+		_veto_bloods(c)
+
+
+## gunplay's kill payload (JOURNAL REQUEST 1, agreed): every lethal hit on a non-Rivet fighter;
+## a fire death carries the weapon `burn`.
+func _on_kill_landed(
+	victim: Fighter, weapon: StringName, dir: Vector2, _at: Vector2, kind: StringName
+) -> void:
+	var e: KillEvent = KillEvent.of_fighter(victim, dir, weapon)
+	e.damage_type = kind
+	if kills.on_kill(e):
 		_hide(victim.id)
 
 
@@ -103,4 +147,10 @@ func _find_rigs() -> ArenaRigs:
 		for ch: Node in _game.get_children():
 			if ch is ArenaRigs:
 				_rigs = ch as ArenaRigs
+				if _rigs.react != null:  # human-reactions' DeathPipe: our kills skip the standard death
+					_rigs.react.pipe.add_signature(_takes_death)
 	return _rigs
+
+
+func _takes_death(rig: CutRig, _hit: StringName, _dir: Vector2, _weapon: StringName) -> bool:
+	return kills.consumed.has(rig.actor_id)

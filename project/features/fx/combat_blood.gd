@@ -42,6 +42,9 @@ var frames: int = 0
 var spent_us: int = 0
 ## Where the player is (px), for the oil trail after a hit: Callable() -> Vector2 (INF = unknown).
 var player_px: Callable = Callable()
+## Callable(pos_px: Vector2) -> bool: true skips a death's blood (a signature kill, lane brutality,
+## prints its own marks there).
+var veto: Callable = Callable()
 var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
 var _drop_draws: PackedInt32Array = [0, 0]
@@ -153,8 +156,17 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 
 
 func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
+	if veto.is_valid():  # the signature kill lands after actor_killed: ask once the step is done
+		_bleed_killed.call_deferred(killer, victim)
+	else:
+		_bleed_killed(killer, victim)
+
+
+func _bleed_killed(killer: int, victim: int) -> void:
 	var at: Vector2 = _locate.call(victim)
 	if at == Vector2.INF or not bleeds():
+		return
+	if veto.is_valid() and veto.call(at * SimConst.PX_PER_M):
 		return
 	var from: Vector2 = _locate.call(killer)
 	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT
@@ -194,6 +206,8 @@ func _pool_from_game() -> void:
 ## A human killed at `pos_px` by a blow travelling along `dir` (quest 1's events feed).
 ## `slide_px`: how far the body slides along `dir` after death (its pool starts under it there).
 func kill_human(pos_px: Vector2, dir: Vector2, slide_px: float = 4.0) -> void:
+	if veto.is_valid() and veto.call(pos_px):
+		return
 	kills += 1
 	var kind: String = _game.get("death_hit", "kill")
 	blood.pool_lead_px = slide_px
@@ -251,7 +265,10 @@ func _resolve() -> void:
 				dir = Vector2.from_angle(e.z)
 				hit = true
 		aimed += 1 if hit else 0
-		kill_human(at, dir, _slide_px)
+		if veto.is_valid():  # the city's death cue can run before the frame's kill_landed
+			kill_human.call_deferred(at, dir, _slide_px)
+		else:
+			kill_human(at, dir, _slide_px)
 	_deaths.clear()
 	_ends.clear()
 

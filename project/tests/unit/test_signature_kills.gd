@@ -124,3 +124,31 @@ func test_a_wall_stops_the_parts() -> void:
 	for i: int in GibSim.CAPACITY:
 		if k.gibs.live(i):
 			assert_lte(k.gibs.pos[i].x, 2.0, "piece %d stopped by the wall at x = 2 m" % i)
+
+
+func test_a_fire_death_chars_in_place_with_an_ash_heap_and_no_blood() -> void:
+	var k: SignatureKills = _kills(5)
+	assert_true(k.on_kill(_ev(4, Vector2(2.0, 2.0), Vector2(0.0, 1.0), &"burn")))
+	var burns: int = k.by_style.get(&"burn", 0)
+	assert_eq(burns, 1)
+	var m: KillMarks.Mark = k.marks.marks[0]
+	assert_eq(m.drops.size(), 0, "a fire death sprays no blood")
+	assert_gt(m.ash_m, 0.0)
+	assert_gt(m.ash_from, 0, "the heap grows in after the char stands")
+	for t: int in 240:
+		k.step(t)
+	for i: int in GibSim.CAPACITY:
+		if k.gibs.live(i):
+			assert_eq(k.gibs.piece[i], SignatureKill.BODY)
+			assert_lt(k.gibs.pos[i].distance_to(Vector2(2.0, 2.0)), 0.5, "the char stays put")
+
+
+func test_a_flame_puff_kill_by_kind_burned_also_chars() -> void:
+	var k: SignatureKills = _kills(6)
+	var e: KillEvent = _ev(9, Vector2(1.0, 1.0), Vector2.RIGHT, &"flamethrower")
+	e.damage_type = &"burned"
+	assert_true(k.on_kill(e))
+	assert_true(
+		k.marked_near(Vector2(1.0, 1.0) * SimConst.PX_PER_M), "the standard blood is vetoed"
+	)
+	assert_false(k.marked_near(Vector2(9.0, 9.0) * SimConst.PX_PER_M))
