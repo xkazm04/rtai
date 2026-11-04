@@ -124,7 +124,8 @@ func _finish() -> void:
 		)
 	)
 	var c: CrowdReact = _characters.crowd  # human-reactions: the riot's crowd reactions
-	printerr("city_bench: crowd %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])
+	var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
+	printerr("city_bench: crowd %d cowers (%d at a death), %d trips, %d deaths" % n)
 	get_tree().quit(0 if ok else 1)
 
 
