@@ -42,6 +42,16 @@
       "source": "not a source: a few lit blood-splat pixels sit on the vermilion/blood gate boundary and flip class between the full capture and the layer-hidden capture 2 frames later; no cop or car is under them (docs/day/2026-11-03/int-day/accent-flicker-*.png)"
     },
     {
+      "accent": "blood",
+      "doc": "measured 2026-11-04 03:22 at the n-showcase merge round 4 (junction 48 px/m: 16 px); the flicker moves between zooms and layers from run to run (round 3 at 32 px/m, round 4 at 48 px/m); the row goes with blood_flicker_cop_48 when the audit compares same-frame captures",
+      "id": "blood_flicker_vehicles_48",
+      "layer": "vehicles",
+      "max_px": 24,
+      "owner": "d5-city",
+      "ppm": 48,
+      "source": "not a source: lit blood-splat pixels on the vermilion/blood gate boundary flip class between the full capture and the layer-hidden capture (the blood_flicker_cop_48 class); no car prints blood or vermilion"
+    },
+    {
       "accent": "vermilion",
       "doc": "measured 2026-11-04 02:04 at the n-showcase merge round 3 (junction 32 px/m: 4 px, reproduced on a second run); suspected, not bisected: gunplay b3b3c92f (new in this round) moved the blood drops onto their own canvas item; the row goes with blood_flicker_cop_48",
       "id": "blood_flicker_vehicles_vermilion_32",
@@ -50,6 +60,16 @@
       "owner": "gunplay",
       "ppm": 32,
       "source": "not a source: lit blood-splat pixels on the vermilion/blood gate boundary flip class between the full capture and the layer-hidden capture (the blood_flicker_cop_48 class); seen at the junction's blood splat round Rivet (build/evidence/accent-32ppm.png)"
+    },
+    {
+      "accent": "vermilion",
+      "doc": "measured 2026-11-04 03:22 at the n-showcase merge round 4 (junction 48 px/m: 8 px); the flicker moves between zooms and layers from run to run (round 3 at 32 px/m, round 4 at 48 px/m); the row goes with blood_flicker_cop_48 when the audit compares same-frame captures",
+      "id": "blood_flicker_vehicles_vermilion_48",
+      "layer": "vehicles",
+      "max_px": 12,
+      "owner": "d5-city",
+      "ppm": 48,
+      "source": "not a source: lit blood-splat pixels on the vermilion/blood gate boundary flip class between the full capture and the layer-hidden capture (the blood_flicker_cop_48 class); no car prints blood or vermilion"
     }
   ],
   "schema": "gtai.accent-debt/1"
