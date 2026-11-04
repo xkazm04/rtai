@@ -9,6 +9,10 @@ const STAND_STEP_S: float = 0.16
 const LIFT_PX: float = 45.0
 ## rivet-motion: the sprint's top (PlayerMotion sprint_mps 6.2 at 32 px/m): sprint_stride is full.
 const SPRINT_SPEED: float = 198.0
+## rivet-arsenal: the stride share of a full backpedal (see backpedal_scale).
+const BACKPEDAL_STRIDE: float = 0.55
+## rivet-arsenal: the planted foot's longest trail behind its hip, in half-stances (see _cap_trail).
+const TRAIL_K: float = 1.2
 
 
 static func step(rig: CutRig, dt: float) -> void:
@@ -18,6 +22,7 @@ static func step(rig: CutRig, dt: float) -> void:
 	var stride: float = lerpf(CutRig.STRIDE_WALK, CutRig.STRIDE_RUN, rig.run_blend) * p.gait_scale
 	if p.sprint_stride > 0.0:
 		stride *= 1.0 + p.sprint_stride * smoothstep(CutRig.RUN_SPEED, SPRINT_SPEED, spd)
+	stride *= backpedal_scale(rig)
 	var moving: bool = spd > 6.0 and not rig.dead and rig.c_tuck < 0.3
 	if moving:
 		rig.phase += spd * dt / stride
@@ -36,6 +41,16 @@ static func step(rig: CutRig, dt: float) -> void:
 		_solve_leg(rig, side, s, hl)
 
 
+## rivet-arsenal: a twin-stick plan (hip_follow > 0) walking away from its aim shuffles: the
+## stride shrinks to BACKPEDAL_STRIDE as the walk turns against the facing, so the trailing foot
+## no longer reaches out past the shoulder (at stride 1.3 it read as a flung arm at 64 px/m).
+static func backpedal_scale(rig: CutRig) -> float:
+	if rig.plan.hip_follow <= 0.0 or rig.vel_in.length() < 0.01:
+		return 1.0
+	var back01: float = clampf(-rig.vel_in.normalized().dot(rig.fwd()), 0.0, 1.0)
+	return lerpf(1.0, BACKPEDAL_STRIDE, smoothstep(0.0, 0.7, back01))
+
+
 static func _swing(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, stride: float) -> void:
 	var swing_frac: float = lerpf(0.42, 0.62, rig.run_blend)
 	var vdir: Vector2 = rig.vel_in.normalized() if rig.speed_now > 0.01 else rig.fwd()
@@ -43,6 +58,7 @@ static func _swing(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, stride: flo
 	if ph >= swing_frac:
 		side.stepping = false
 		side.lift = 0.0
+		_cap_trail(rig, side, hw, (1.0 - swing_frac) * stride)
 		return
 	if not side.stepping or side.timed:
 		side.stepping = true
@@ -53,6 +69,18 @@ static func _swing(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, stride: flo
 	var target: Vector2 = hw + vdir * ((swing_frac - ph) * stride + ext)
 	side.foot_w = side.foot_from.lerp(target, smoothstep(0.0, 1.0, s01))
 	side.lift = sin(PI * s01)
+
+
+## rivet-arsenal: a twin-stick plan's planted foot never trails its hip by more than TRAIL_K of
+## half the stance (a normal step ends at 0.5): slowing out of a run or turning a strafe left the
+## old long-stride foot far out behind, and at 64 px/m it read as a flung arm. It slides instead.
+static func _cap_trail(rig: CutRig, side: RigLimbs, hw: Vector2, stance: float) -> void:
+	if rig.plan.hip_follow <= 0.0:
+		return
+	var trail: Vector2 = side.foot_w - hw
+	var cap: float = TRAIL_K * 0.5 * stance
+	if trail.length() > cap:
+		side.foot_w = hw + trail.normalized() * cap
 
 
 static func _stand(rig: CutRig, side: RigLimbs, other: RigLimbs, rest: Vector2, dt: float) -> void:
