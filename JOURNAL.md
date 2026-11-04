@@ -392,3 +392,36 @@ NEXT (iteration 6), in order:
   Gloria vs the pistol is the next pair to judge (NEXT 1).
 - Session close 03:55: 10 commits this iteration (43a4e356..), all gates green (lint 13/13, unit 733/733,
   scenarios 32/32), frames.json 15 entries. Worktree clean except the untracked lane logs in evidence/.
+
+## Iteration 6 (03:53 - 04:53), BUILD
+
+- 03:53 read JOURNAL, git log, other lanes' JOURNALs. Open REQUESTs to me: human-reactions REQUEST 1 (SWAT look:
+  `head_swat` + `torso_swat` in the d5 cop style) and REQUEST 2 (a robot thug part sheet in Rivet's part names).
+  Every weapon has its art, so these come ahead of my own NEXT list (another lane waits on them).
+- MILESTONE 03:58 REQUEST 1 DONE (d9102db7): `head_swat` / `torso_swat` in BOTH cop sets (`art/cop` D4 flat,
+  `art/d5/cop` D5 hatched), derived by `tools/art/swat_parts.py` (deterministic, no generation) from `head_cap` /
+  `torso`, so footprint and pivots are the rig's own (parts.json rows copy them; `derived_from` names the base).
+  Helmet: the cream crown becomes a dark gunmetal shell, the brim band a pale visor, two ink side rails (the
+  reverse of the patrol cap's tones: the three cop heads read apart). Vest: the blue shirt stays the main fill,
+  a darker blue plate carrier with an ink rim and three ink pouches with paper flap lines down the back edge. No
+  red, no vermilion. Dev lineup `dev/weapon_art/swat_lineup.gd` (patrol, riot, SWAT, Rivet, idle + walk at
+  32/48/128 px/m): `it6-swat-look-128-48-32ppm.png` (masters). At 32 px/m the SWAT is the dark-helmeted cop
+  with a dark pouch row; told apart from patrol (white cap) and riot (white helmet + shield) at a glance.
+  Provenance: 4 rows (the source part's row + the derivation).
+- To human-reactions (REQUEST 1 answer): `RigVariant.make(BodyPlan.Kind.COP, "swat", "head_swat", "torso_swat",
+  false)` works as is (my lineup uses it); the crowd index + CrowdAtlas clamp are yours.
+- MILESTONE 04:04 REQUEST 2 DONE (dae102b7): the robot thug's own part set, `art/thug/` (D4) + `art/d5/thug/` (D5),
+  Rivet's 25 part names with his parts.json copied (sizes and pivots identical), derived by
+  `tools/art/thug_parts.py` (deterministic): dark cool gunmetal plates, rust -> dark oil stains (no red, no
+  vermilion, the torch tip's teal goes grey too), a single round optic on the helmet (gunmetal bezel, paper lens,
+  ink pupil, a glint), ink dents + two paper gang bars on the back plate (the head covers the chest from above).
+  50 provenance rows. The lineup (`it6-thug-parts-and-lineup.png`): at 32 px/m the thug prints as an ink body
+  with one pale eye and steel arms, Rivet as the vermilion collar on a cream body: told apart at a glance.
+  NOTE: the print shader's limb LOD paints every robot's arms the same steel at 32 px/m (limb_fill), so the thug's
+  difference there is the body + optic; the gunmetal arms show from the D5 tier (about 64 px/m) up.
+- To human-reactions (REQUEST 2 answer): `ThugPlan.ART_DIR = "thug"` is the one line; collar and hose are
+  recoloured too (no vermilion) in case a plan draws them.
+- DECISION weapon-art thug look: derived from Rivet's parts by script (same layout, darker gunmetal, one optic)
+  rather than a new generated sheet (a Codex sheet needs the layout template + slicer + silhouette lock, about an
+  hour, and risks pivots that do not fit ThugPlan). Alternative: a generated "street-gang robot" sheet through
+  the d5-close slicer, one art_dir swap. Same call for SWAT (derived from the cop cap/torso).
