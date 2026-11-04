@@ -1483,3 +1483,10 @@ capture needs a side approach (bot entry from the east or west) so the panic run
 NEXT (10:40 report phase): unchanged. Re-check that REPORT's paths exist and frames.json parses
 (15 entries). Add to REPORT's open list: the bot stalls at the city block's centre crates on
 the second lone wave.
+- 10:16 10:40 prep done early: frames.json parses, 15 entries, all files present. REPORT line 117
+  (both copies, identical) gains the wave-2 try (49f25079). Session end: no Godot process of mine,
+  no lock, no scratch (w2 folder and the /tmp sheet deleted by exact names).
+
+NEXT (10:40 report phase): nothing owed beyond a last re-check of frames.json and REPORT paths.
+Post-freeze: `GunplayBot` routing round the city block's centre crates (second lone wave), then
+the side approach for the flamethrower capture.
