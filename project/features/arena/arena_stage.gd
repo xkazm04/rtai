@@ -154,8 +154,14 @@ func telemetry_dict() -> Dictionary:
 	for hook: ArenaHook in hooks:
 		var extra: Dictionary = hook.telemetry()
 		if not extra.is_empty():
-			out[hook.station.id] = extra
+			out[_telemetry_key(hook)] = extra
 	return out
+
+
+## A hook's telemetry key: its station id, or `hook_<n>` for a hook added in code without a
+## station (the showcase's ReelDirector: `--telemetry` with `--reel=director` crashed at quit).
+func _telemetry_key(hook: ArenaHook) -> String:
+	return String(hook.station.id) if hook.station != null else "hook_%d" % hooks.find(hook)
 
 
 ## Every car on the floor (parked, driven by a power, wrecked); empty without a car spawn.

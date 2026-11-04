@@ -48,7 +48,7 @@ The last full evidence gate was green on 27c48341.
   - its housing prints grey and slimmer than the target's chunky tan body;
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
 - **FX gap to r2_w4:** the blast has no graded white-hot centre and no debris. (The ray rings' olive tail is fixed: e7bccb95.)
-- **Not this lane's code:** `--telemetry` together with `--reel=director` crashes at quit. The ReelDirector hook has no station, and `ArenaStage.telemetry_dict` reads `hook.station.id`. Main has the same bug.
+- **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
 ## Calls for the owner
