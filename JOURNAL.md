@@ -1313,3 +1313,7 @@ NEXT (10:40 report phase):
   the pit, the fall, and the corpse with blood, all in frame (the corpse in the bottom third).
   The GAP above is closed. frames.json note updated.
 NEXT is unchanged, except item 2 (done).
+- 09:28 Session end. All my background renders and gate runs have exited. The two small Godot
+  console processes in the task list are not from my tasks (all of mine finished), so I left them.
+  No lock taken. The /tmp scratch frames are deleted. frames.json (15 entries) parses, and its top
+  three are the lone reels. Branch head is 7e45061c (code d35ffdf3).
