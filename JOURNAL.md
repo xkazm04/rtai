@@ -554,3 +554,16 @@ NEXT (the report slot, or the next lane session):
 - First, on an idle machine (bench lock): `node tools/bench/run.mjs --runs=1` (riot + drive, with drawCallsAvg) and 3 release vsync-off
   runs of the city fight (fight.sh). Compare against the 13:36-13:50 uncontended numbers (p99 5.9-6.6) and the riot's 7 ms limit.
 - Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot). Prove identity with parity + a fixed-fps pixel compare.
+
+## Iteration 11 (18:19-18:30), BUILD (11 min to freeze)
+
+- 18:19 read JOURNAL + git log. No bench.lock and no Godot process running, but CPU load reads 100 % (other work on the
+  machine), so any run now is CONTENDED. The newest release export (build/export, 16:34) predates fix 5 (60ebabf7 is 18:12),
+  and an export + 3 vsync-off runs do not fit before the freeze. Decision: no bench this slot (a contended re-run of numbers
+  already on record adds nothing); no code change, so the 18:09 gates on 95936dac + fix 5 stand. REPORT stays final as of 18:20.
+
+NEXT (the next lane session, idle machine first):
+- Take the bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3, plus
+  `node tools/bench/run.mjs --runs=1` (riot + drive with drawCallsAvg). Compare to the 13:36-13:50 uncontended p99 5.9-6.6
+  and the riot's 7 ms limit. Re-film reel ch 18 in real time on that export if the numbers moved.
+- Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
