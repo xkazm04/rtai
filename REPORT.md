@@ -32,7 +32,8 @@ that is CONTENDED, and the post-fix uncontended re-check is **still owed**.
 | 4 | RivetHeldView.warm(): the carried guns' art loads at load, not on the first draw | tick 2019 process 9.9-19.2 -> 2.7 ms (the spike was in 18 of 18 logs); tick 1528 5.6-8.5 -> 2.8 (editor 22.0 -> 3.3) | 512 frames identical; test_rivet_held_warm 3/3 |
 
 Together: scripts + draws went from 5.1 to 2.8 ms a frame in the release. With vsync on, the canvas flush fell
-2.06 -> 0.86 ms a frame, and frames that skip or repeat a tick (the visible stutter) went from 13/8 to 6/5 per 35 s.
+2.06 -> 0.86 ms a frame, and frames that skip or repeat a tick (the visible stutter) went from 13/8 to 6/5 per 35 s. Draw calls a frame
+(a count, not affected by load): 557 -> 534 (-4 %). Most of the gain is GDScript canvas work, not GPU batches.
 
 ## The hitches (424 ms worst, 50 ms hitches in r19)
 - Every mid-fight hitch logged over 33 ms was in the **draw/present phase**: render CPU < 1 ms, game
