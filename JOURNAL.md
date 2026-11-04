@@ -901,3 +901,10 @@ NEXT (iteration 12 / the report):
   CityView, `attach_view` gets no actor layer and KillView never exists, so a headless run has no
   view telemetry. Only measurable windowed, so contention cannot be ruled out without the machine
   to myself. Stays a LEAD (one 2-5 ms frame per burn/vaporise kill, well inside 16.6 ms).
+- MILESTONE 08:16 the full city reel, clean: `clips/city-reel-all-11-kills-clean-48ppm-it12.mp4`
+  (masters, frames.json first entry, before = the it11 8-gun reel, which leaves the list): all
+  eleven kills on the open street at start:-22,0 with `--clean` (the arena already had the flag:
+  it hides the dev HUD that sat top-left in every earlier city clip), 48 px/m real time, 77 s,
+  labelled; 0 script errors in all eleven captures. Looked at the sheet
+  (evidence/brutality/city-reel-all-11-clean-it12-sheet.png): every kill lands in a still frame.
+  The cops that walk in at the right edge are the live city population.
