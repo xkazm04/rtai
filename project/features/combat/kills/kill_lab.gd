@@ -81,6 +81,8 @@ func setup(stage: ArenaStage) -> void:
 
 
 func step(stage: ArenaStage, tick: int) -> void:
+	if solo != Vector2.INF and blade.is_empty():  # the city block re-places Rivet after setup
+		stage.arena.rivet.pos = solo
 	for n: int in guards.size():
 		var g: Fighter = guards[n]
 		g.cooldown = HOLD_FIRE

@@ -53,8 +53,9 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	_lab.pack = row != null and row.style == &"vaporise"
 	_lab.claw = PlayerShock.shipped() if weapon == PlayerShock.WEAPON else null
 	var solo: String = ArenaArgs.parse().text("--sig-solo")
-	if solo == "start":  # Rivet's own start (the city block, where arena points mean nothing)
-		_lab.solo = stage.plan.rivet_start
+	if solo.begins_with("start"):  # Rivet's start (+ start:dx,dy), the city block's frame
+		var d: PackedStringArray = (solo.trim_prefix("start").trim_prefix(":") + ",").split(",")
+		_lab.solo = stage.plan.rivet_start + Vector2(d[0].to_float(), d[1].to_float())
 	elif not solo.is_empty():
 		var xy: PackedStringArray = solo.split(",")
 		_lab.solo = Vector2(xy[0].to_float(), xy[1].to_float())
