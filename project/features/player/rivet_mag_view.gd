@@ -21,7 +21,14 @@ const INK: Color = Color("1b1517")
 const FILL: Color = Color("5a5560")
 const SHINE: Color = Color("efe6d4")
 
+## The rocket's length as a share of the block's long side, and its height over its length.
+const ROCKET_K: float = 2.0
+const ROCKET_ASPECT: float = 0.35
+
 var _held: bool = false
+var _art: WeaponArt = WeaponArt.new()
+var _art_id: StringName = &"-"
+var _tex: Texture2D = null
 var _xf: Transform2D = Transform2D.IDENTITY
 var _size: Vector2 = Vector2.ZERO
 var _last_k: float = -1.0
@@ -47,14 +54,22 @@ func _ready() -> void:
 
 
 ## Called each frame by RivetHeldView after the rig is posed (`k` < 0: no reload; `tick` the
-## fight's tick, which ages the spent magazines).
-func feed(rig: CutRig, k: float, tick: int) -> void:
+## fight's tick, which ages the spent magazines; `art_id` the held weapon's weapon_art id).
+## A rocket-firing tube has nothing to drop: the claw brings weapon-art's rocket cell up in
+## phase 1 only.
+func feed(rig: CutRig, k: float, tick: int, art_id: StringName = &"") -> void:
 	_now = tick
+	if art_id != _art_id:
+		_art_id = art_id
+		var rocket: bool = _art.has(art_id) and _art.projectile_fx(art_id) == &"rocket"
+		_tex = _art.fx_frames(&"rocket")[0] if rocket else null
 	var off: int = 1 - rig.plan.gun_arm if rig.plan.gun_arm >= 0 else -1
-	_held = k >= 0.0 and k < 2.0 and off >= 0 and off < rig.sides.size()
+	var from: float = 1.0 if _tex != null else 0.0
+	_held = k >= from and k < 2.0 and off >= 0 and off < rig.sides.size()
 	if _held:
 		_place(rig, rig.sides[off], rig.plan.fore_len[off])
-	if _last_k >= 0.0 and _last_k < 1.0 and k >= 1.0 and _size != Vector2.ZERO:
+	var spent: bool = _last_k >= 0.0 and _last_k < 1.0 and k >= 1.0
+	if spent and _size != Vector2.ZERO and _tex == null:
 		_drop()
 	_last_k = k
 	_age()
@@ -101,7 +116,12 @@ func _age() -> void:
 
 
 func _draw() -> void:
-	if _held:
+	if _held and _tex != null:  # the rocket across the claw, nose out along the long side
+		var size: Vector2 = Vector2(1.0, ROCKET_ASPECT) * _size.x * ROCKET_K
+		draw_set_transform_matrix(_xf)
+		draw_texture_rect(_tex, Rect2(-size * 0.5, size), false)
+		draw_set_transform_matrix(Transform2D.IDENTITY)
+	elif _held:
 		_block(self, _xf, 1.0)
 
 

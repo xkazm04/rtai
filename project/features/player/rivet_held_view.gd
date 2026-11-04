@@ -50,7 +50,8 @@ func _process(_delta: float) -> void:
 		rig.reload_k = _reload_k()
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
-		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0)
+		var now: int = arena.tick if arena != null else 0
+		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
 		_back_tank(rig, grip != null and grip.id == &"backpack_hose")
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
