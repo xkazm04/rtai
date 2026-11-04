@@ -680,3 +680,31 @@ NEXT (iteration 9, in order):
   the scorch child; a back hit falls forward; the clip pass resets plank_feet), scenarios 33/33.
 - DECISION electro corpse (docs/decisions.md): see above. Alternative in data: PLANK_TILT 0,
   PLANK_HEAD_PX 0, plank_feet -1, no scorch.
+- gunplay REQUEST 3 answer (5efdc825 GunFx.shield_test: a render-side (fighter, dir) -> bool;
+  true = the round sparks as METAL on the shield instead of the body's ink burst). Not
+  cherry-pickable: GunFx (gun_fx.gd, gun_fx_rounds.gd) is not on my branch (the cherry-pick hit
+  DU conflicts; backed out path by path, nothing else touched). MILESTONE 7b8897e0: ReactLink
+  now carries the matching `shield_test(f, dir)` (alive, on a full rig with the shield look,
+  the round at its front: the same test that plays the shield family; static
+  `blocks_round(rig, dir, table)` for tests). MERGE NOTE for the Director: after n-gunplay is in,
+  one line where ArenaRigs / the gunplay hook holds both: `gun_fx.shield_test =
+  link.shield_test`. Until then ShieldSparks draws the sparks and the body burst may still show.
+  Unit 746/746 (new test: front sparks, back bleeds, the shield turns with the facing, no
+  shield / no rig = no block).
+- MEASURE + MILESTONE d8933ebc (NEXT 4, CrowdReact cost; headless `city_bench --scenario=riot
+  --secs=30`, CONTENDED, one sample each, same session): baseline 244 us mean / 1075 worst a
+  tick. Pass 1, id-indexed packed DEAD/FLEE bits stamped per call instead of two dictionaries
+  rebuilt every tick: 237 (no real gain: the dictionaries were not the cost). Pass 2, the trip
+  scan reads the feed arrays as locals: 213. EXPERIMENT (reverted): with the trip scan off, 165,
+  so the trip scan is about 50 us and the main row loop about 165 (about 0.4 us a row at 400
+  actors: the GDScript floor). Pass 3, the per-row read inlined and the due-table lookup skipped
+  while it is empty: 150 us mean, 881 worst. Same 20 cowers / 5 trips / 16 deaths every run.
+  Unit 746/746, scenarios 33/33. Bench (riot p99) not run: no lock taken, a full export + 3 x 60 s
+  is about 13 min; showcase's next round benches it.
+
+### Calls for the owner (adds to the list)
+- Electro corpse (pit_electro_scorch_64ppm_sheet.png, death_electro_plank2_64ppm_board.png vs the
+  before death_electro_stiff_64ppm_halfspeed.mp4): A, now: falls back on the heels (feet toward
+  the shooter), head past the shoulders, turned 0.3 rad, over a soot scorch with a burn star and
+  smoke; B, the old plank (feet behind, head over the shoulders: reads as standing from above);
+  C, A without the scorch (CorpseScorch.ensure off: the body alone, blood only).
