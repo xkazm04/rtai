@@ -23,6 +23,9 @@ const CHAIN_THROUGH_HUMANS: bool = true
 const CHAIN_FALLOFF: float = 0.7
 ## Views see blasts and chain arcs for this long (VFX only; not in the replay state).
 const VFX_KEEP_TICKS: int = 40
+## A round whose splash is this wide kills by the blast even when it is thrown (the mini-nuke is
+## "blown", the molotov stays "burned").
+const BLAST_KILL_M: float = 6.0
 
 ## Table hp points -> Fighter hp (a human is 1; GunHand.hp_scale).
 var hp_scale: float = 0.01
@@ -43,7 +46,7 @@ var chain_hits: int = 0
 
 ## The events.json death kind of a weapon's hits.
 static func kind_of(w: WeaponSpec) -> StringName:
-	if w.kind == WeaponSpec.Kind.ROCKET:
+	if w.kind == WeaponSpec.Kind.ROCKET or w.splash_radius_m >= BLAST_KILL_M:
 		return &"blown"
 	if w.kind == WeaponSpec.Kind.CONE or w.kind == WeaponSpec.Kind.THROWN:
 		return &"burned"

@@ -120,6 +120,8 @@ func test_one_mini_nuke_clears_every_human_in_its_circle_and_leaves_fire() -> vo
 	assert_false(near.alive(), "and every human 6 m out")
 	assert_true(far.alive(), "a human 30 m out is outside the blast")
 	assert_eq(arena.areas.patches.size(), 1, "a fire patch where it landed")
+	assert_eq(FightAreas.kind_of(arena.gun.trigger.spec), &"blown", "a nuke kill is a blast death")
+	assert_eq(FightAreas.kind_of(_arena(&"molotov").gun.trigger.spec), &"burned")
 
 
 func test_a_homing_shard_curves_onto_a_human_off_the_aim_line() -> void:
