@@ -3,7 +3,10 @@
     "by_style": {
       "burn": 5
     },
-    "signature_kills": 5
+    "signature_kills": 5,
+    "view_avg_us": 202,
+    "view_frames": 840,
+    "view_worst_us": 2071
   },
   "cars": {
     "damaged": 0,
@@ -23,7 +26,7 @@
   "pit_waves": 0,
   "schema": "gtai.arena-telemetry/1",
   "shots": 0,
-  "ticks": 899,
+  "ticks": 839,
   "top_speed_mps": 0.0,
   "ttk_s": {},
   "turn_rate_peak_dps": 720.000071262244

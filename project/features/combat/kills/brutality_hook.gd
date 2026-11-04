@@ -80,18 +80,38 @@ func telemetry() -> Dictionary:
 
 func attach_view(p_view: Node) -> void:
 	var cc: CollectCallView = p_view as CollectCallView
-	if cc == null or cc.print_stage == null:
-		return
 	_game = p_view.get_parent()
+	_veto_bloods.call_deferred(_game)  # the city block's CityBlood lands after the hooks attach
+	var layer: CanvasLayer = _actor_layer(cc)
+	if layer == null:
+		return
 	view = KillView.new()
 	view.z_index = RenderLayers.z(&"actors") - 1
 	view.ppm = SimConst.PX_PER_M
 	view.reduced_motion = LaunchArgs.has("--reduced-motion")
 	view.rig_lookup = _rig_of
 	view.bind(kills)
-	cc.print_stage.actor_layer().add_child(view)
-	if cc.blood != null:  # the kill prints its own blood (or none, fire): no standard death pool
-		cc.blood.veto = kills.marked_near
+	layer.add_child(view)
+
+
+## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the
+## rigs draw too (ArenaRigs.attach); null with neither (headless).
+static func _actor_layer(cc: CollectCallView) -> CanvasLayer:
+	if cc == null:
+		return null
+	if cc.print_stage != null:
+		return cc.print_stage.actor_layer()
+	return cc.city_view.actor_layer() if cc.city_view != null else null
+
+
+## Every standard death blood under the arena game asks the kill first: the kill prints its own
+## blood (or none, fire/electro), so no standard pool, spray or corpse soak under it. On the city
+## block that is CityBlood's CombatBlood as well as the print stage's.
+func _veto_bloods(root: Node) -> void:
+	if root is CombatBlood:
+		(root as CombatBlood).veto = kills.marked_near
+	for c: Node in root.get_children():
+		_veto_bloods(c)
 
 
 ## gunplay's kill payload (JOURNAL REQUEST 1, agreed): every lethal hit on a non-Rivet fighter;

@@ -256,7 +256,10 @@ func _resolve() -> void:
 				dir = Vector2.from_angle(e.z)
 				hit = true
 		aimed += 1 if hit else 0
-		kill_human(at, dir, _slide_px)
+		if veto.is_valid():  # the city's death cue can run before the frame's kill_landed
+			kill_human.call_deferred(at, dir, _slide_px)
+		else:
+			kill_human(at, dir, _slide_px)
 	_deaths.clear()
 	_ends.clear()
 
