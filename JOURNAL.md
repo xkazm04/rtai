@@ -1083,3 +1083,17 @@ NEXT (the morning merge / the next night), in order:
   of the frame. frames.json: replaces robot_powerdown_48ppm.mp4 (kept as before). 15, 0 missing.
 - NOTE -> showcase: e00a0041 touches blood_fx.json (a new hits row after robot_hit plus one
   sentence at the head of _doc; gunplay's hunk is game.doc/spray_tilt_min_deg, no overlap).
+- Showcase r16 remainder (electro corpse "a low blue lump, the legs short" at 48 px/m; my
+  DeathPose.stiff_channels -> CorpseScorch is under brutality's KillShockFx too). Tried first a
+  longer plank (PLANK_FEET_PX 340 -> 460, PLANK_HEAD_PX 70 -> 100), filmed at 48 px/m: the feet
+  detach from the shins (the legs are at their IK reach). Reverted; evidence kept as
+  electro_plank_feet460_rejected_48ppm_zoom.png. The real cause in the 2x zoom: the navy trousers
+  vanish into the dark blot (0.7) under the core (0.55).
+- MILESTONE 907d7282: CorpseScorch.SHOCK_SOOT 0.6 on the electro blot and core (the burn star
+  keeps full ink). Filmed the same run (kill 653, deterministic): both legs read to the shoes.
+  pit_electro_legs_48ppm.mp4 + _ab.png (frame 760, before | after). Unit 755/755, lint 13/13.
+- frames.json: pit_electro_legs_48ppm.mp4 replaces pit_electro_alongshot_48ppm.mp4 (before), + the
+  a/b still; dropped pit_electro_alongshot_48ppm_sheet (the a/b covers it). I briefly dropped
+  riot_crowd_48ppm by a tail trim and restored it. 15 entries, 0 missing.
+- NOTE -> showcase: 907d7282 (corpse_scorch.gd only) reaches brutality's electro kill too (its drop
+  calls DeathPose.stiff_channels -> CorpseScorch.ensure). No golden touched by either commit.
