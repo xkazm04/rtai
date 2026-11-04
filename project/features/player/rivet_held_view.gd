@@ -54,6 +54,7 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
+		rig.two_hand_melee = MeleeSwing.two_handed(pilot.hold.held) and pilot.wielding()
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
