@@ -1,8 +1,9 @@
-# REPORT: night lane `brutality` (2026-11-04, 01:xx-08:40)
+# REPORT: night lane `brutality` (2026-11-04, 01:xx-08:40, updated for the 09:00-11:00 extension)
 
-Branch `n-brutality`, head of record `63cc3ce1` (code) + docs commits. Evidence in two places:
+Branch `n-brutality`, head of record `88ff881d` (code; was `63cc3ce1` at 08:40) + docs commits. Evidence in two places:
 `M` = `C:\Users\kazda\kiro\gtai-masters\n4\brutality\` (clips, frames, `frames.json`, 15 entries)
-and `E` = `evidence/brutality/` in this worktree (logs, telemetry, sheets). All performance numbers
+and `E` = `evidence/brutality/` in this worktree (logs, telemetry, sheets). What changed after
+09:00 is collected under **After 09:00** at the end. All performance numbers
 are **CONTENDED** (six lanes on one GPU); none was taken under `bench.lock`.
 
 ## What works
@@ -36,7 +37,7 @@ are **CONTENDED** (six lanes on one GPU); none was taken under `bench.lock`.
 | 1 | Rocket gib (`rocket_gib`): 4-6 rig parts with stumps, spin and bounce, red spray, ink splat, scorch | `M/clips/rocket-gib-solo-64ppm-slow-0.4x.mp4`, `M/clips/rocket-gib-city-block-48ppm-13s.mp4` |
 | 2 | Hand cannon blowback: off his feet, flies back, smear slide, the cap spins off, stops at walls | `M/clips/hand-cannon-blowback-solo-64ppm-slow-0.4x.mp4`, `M/frames/hand-cannon-bodies-stop-at-wall-32ppm.png` |
 | 3 | Flamethrower char: runs ablaze, charred silhouette, ash flakes onto a heap | `M/clips/flame-char-solo-64ppm-slow-0.4x-it8.mp4`, `M/frames/flame-char-ash-heaps-64ppm.png` |
-| 4 | Electro (charged gun shot and claw shock): convulsion, X-ray skeleton held 4 ticks, collar smoke, stiff drop laid long along the shot | `M/clips/electro-gun-charged-oneshot-solo-64ppm-slow-0.4x-it9.mp4`, `M/clips/electro-lie-down-city-48ppm-it13.mp4`, `M/frames/electro-xray-held-flash-64ppm-60fps-strip.png` |
+| 4 | Electro (charged gun shot and claw shock): convulsion, X-ray skeleton held 4 ticks, collar smoke, stiff drop into the death plank (the rig's own death pose) | `M/clips/electro-plank-city-64ppm-slow-0.4x-it18.mp4`, `M/clips/electro-plank-city-48ppm-8s-it18.mp4`, `M/frames/electro-xray-held-flash-64ppm-60fps-strip.png` |
 | 5 | Katana: diagonal cut, two halves clearly apart, blood fanning along the cut | `M/clips/katana-city-64ppm-slow-0.4x-it12.mp4` |
 | 6 | Plasma rifle: ember-ringed hole, a look at the hole, a topple back along the shot, the bolt flies on | `M/clips/plasma-hole-city-32ppm-7s-it11.mp4`, `M/clips/plasma-hole-topple-solo-64ppm-slow-0.4x-it9.mp4` |
 | 7 | Chainsaw: grind (held, shaking, continuous spray), then the split | `M/clips/chainsaw-city-64ppm-slow-0.4x-it12.mp4` |
@@ -45,8 +46,8 @@ are **CONTENDED** (six lanes on one GPU); none was taken under `bench.lock`.
 | 10 | Homing shard: a fan of crystals in red wounds, then a pop into parts, mist and spray | `M/clips/homing-shard-fan-solo-64ppm-slow-0.4x-it9.mp4` |
 | 11 | Mini-nuke: everyone in the radius becomes a charcoal shadow in a scorch ring | `M/clips/mini-nuke-pack-city-48ppm-9s-it10.mp4`, `M/clips/mini-nuke-pack-city-64ppm-slow-0.4x-it10.mp4` |
 
-- Reels: `M/clips/city-reel-all-11-kills-clean-48ppm-it12.mp4` (game-city, all eleven, no dev HUD,
-  77 s, labelled; sheet `E/city-reel-all-11-clean-it12-sheet.png`), the melee kills at game zoom
+- Reels: `M/clips/city-reel-all-11-kills-clean-48ppm-it18.mp4` (game-city, all eleven, no dev HUD,
+  78 s, labelled; the electro chapter re-shot at 09:10; sheet `E/city-reel-all-11-clean-it18-sheet.png`), the melee kills at game zoom
   `M/clips/city-reel-melee-3-kills-32ppm-it12.mp4`, and the arena solo reel
   `M/clips/signature-kills-solo-reel-48ppm-39s.mp4`.
 - The Director's 04:00 checkpoint is done: each kill was re-shot on one isolated victim, the blade
@@ -68,9 +69,9 @@ bench were not re-run after the last changes (render only, no sim path touched).
 were last run on `59429978`.
 
 ## What does not work / open
-- **Electro corpse pose:** the drop is a stretched lie-out on a lay node, not a real rig pose. It
-  should use human-reactions' `DeathPose._shock` channels once those are on main. Showcase's
-  REQUEST 29 ("corpse upright") ran on a build without `63cc3ce1`. Close it after the merge.
+- **Electro corpse pose:** fixed after 09:00 (see below): the drop lands in the rig's own death pose.
+  Human-reactions' newer stiff plank (`c_plank`, legs together, arms at the sides) is on
+  `n-human-reactions` only; the glue to switch to it after the merge is in `docs/decisions.md`.
 - **The age-96 stall:** a 2-4 ms main-thread block shows up about 96 ticks into some kills (once even
   with no kill). It sits inside `KillView._draw`'s 72-slot gib-shadow loop, which cannot cost that
   much by itself. It is most likely contention or a render sync, but it is **unmeasured** under
@@ -78,8 +79,8 @@ were last run on `59429978`.
 - **Nuke kill tick 4.3 ms** (CONTENDED): spreading the cuts of one tick over two frames is not done.
 - **Claw-shock lab:** the lab drives its own `PlayerShock`, so Rivet's thrust clip does not play in
   that clip. In the real game the pilot path plays it.
-- Open REQUESTs to other lanes: REQUEST 30 -> gunplay (stuck shards left after a burst) and
-  REQUEST 29 -> gunplay (the molotov corpse under the patch stars).
+- REQUESTs to gunplay: both answered on `n-gunplay` (REQUEST 30 stuck shards: `8ea3a2e5`; REQUEST 29
+  molotov corpse: `0b2541a9` + `aa471560`). Re-check both on the merged main.
 - Art: the gore stickers (REQUEST 3/4 from weapon-art, `art/gore/`) are front views over a top-down
   body. They read as a comic gag (call brutality-4). A top-down skeleton redraw was not made.
 
@@ -115,9 +116,33 @@ were last run on `59429978`.
   `M/clips/ray-gun-dissolve-solo-64ppm-slow-0.4x.mp4`.
 
 ## Next steps
-1. After the merge: re-check the electro corpse on main (REQUEST 29), then swap in `DeathPose._shock`.
+1. After the merge: re-check the electro corpse on main (REQUEST 29), then apply the stiff-plank glue
+   (`DeathPose.stiff_channels` + `plank_turn` in KillSprawlCut / KillShockFx, see `docs/decisions.md`).
 2. Check gunplay REQUESTs 29 and 30 on the merged main.
 3. Measure the age-96 stall and the nuke tick under `bench.lock` (windowed and headless). Spread the
    nuke's cuts over two frames if it holds.
 4. Re-run the look goldens and parity on the merged main (the last look run was on `59429978`).
 5. Decide the calls above, then flip the one-value alternatives in `signature_kills.json`.
+
+## After 09:00 (extension, iteration 18, 08:45-09:45)
+- **Electro corpse (showcase REQUEST 29, report next step 1), `88ff881d`:** the stiff drop now lands
+  in a second whole-body cut of the victim's rig, posed by human-reactions' `DeathPose._shock` end
+  channels (`c_sprawl` 1.05, hands down). It replaces the standing copy mid-drop and opens from 0.75x.
+  `KillSprawlCut` puts every channel and node transform of the rig back (unit
+  `test_kill_sprawl_cut.gd`, 3/3). It is render only: the kill sim, its RNG and the goldens are untouched.
+  The corpse looks larger than the standing body because seen top-down, a standing cop shows only
+  head and shoulders. It matches the live cops at the same zoom.
+  Clips: `M/clips/electro-plank-city-64ppm-slow-0.4x-it18.mp4` and
+  `M/clips/electro-plank-city-48ppm-8s-it18.mp4` (one isolated cop, open street, `--clean`);
+  strip `E/electro-plank-64-strip-it18.png`. Cost (CONTENDED): 677 us on the cut tick, worst
+  kill-view frame 748 us.
+- **City reel** re-cut with the new electro chapter: `M/clips/city-reel-all-11-kills-clean-48ppm-it18.mp4`
+  (frames.json entry 1).
+- **Gates of record on `88ff881d`** (private APPDATA, CONTENDED): lint 13/13, unit 790/790
+  (`E/unit-it18.log`; the first run hit the known `test_noir_shadows` flake, and the re-run passed), scenarios
+  35/35 with 0 script errors (`E/scenarios-it18.log`), look goldens 11/11, worst mean 1.54 of 4.0
+  (`E/look-golden-it18.json`), parity bit for bit over 1200 steps, with the planted mutation caught at
+  step 629 (`E/parity-it18.log`). Next step 4 is done on this branch. Repeat it on the merged main.
+- Not done: merging `n-human-reactions` (110 commits, with conflicts in shared arena and rig files) for
+  its stiff plank (see the DECISION and merge glue in `docs/decisions.md`). Also not done: the age-96
+  stall and the nuke tick under `bench.lock`.
