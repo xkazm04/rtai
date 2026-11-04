@@ -22,8 +22,9 @@ const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose", &"hip_belt"]
 const ON_BACK: Array[StringName] = [&"backpack_hose", &"hip_belt"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
-## The flamer's reload is a tank swap: the spent tank slides this far back off him and fades
-## a little (reload phase 0), the fresh one slides in (phase 1); the hose follows the tank.
+## The flamer's reload is a tank swap (the gatling's box too): the spent tank slides this far
+## back off him and fades a little (reload phase 0), the fresh one slides in (phase 1); the hose
+## follows the tank.
 const TANK_SWAP_M: float = 0.45
 const HOSE_POINTS: int = 8
 
@@ -42,6 +43,7 @@ var _mag: RivetMagView = null
 var _tank: Sprite2D = null
 ## The tank's hose to the wand: an ink line with a cream core.
 var _hose: Array[Line2D] = []
+var _hose_belt: bool = false
 var _rag: RagLight = null
 var _carry: RivetCarryAngle = RivetCarryAngle.new()
 
@@ -215,15 +217,12 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 
 ## The hose leaves the tank's end nearest the wand, curves out past the body and meets the grip.
 func _route_hose(fwd: Vector2) -> void:
-	if _hose.is_empty():
-		for spec: Vector2 in [Vector2(3.2, 0.0), Vector2(1.4, 1.0)]:  # width, ink (0) or cream (1)
-			var line: Line2D = Line2D.new()
-			line.width = spec.x
-			line.default_color = RivetMagView.SHINE if spec.y > 0.5 else RivetMagView.INK
-			line.joint_mode = Line2D.LINE_JOINT_ROUND
-			line.z_index = 1
-			add_child(line)
-			_hose.append(line)
+	var belt: bool = arsenal.grip_of(pilot.hold.held).id == &"hip_belt"
+	if _hose.is_empty() or belt != _hose_belt:
+		for line: Line2D in _hose:
+			line.queue_free()
+		_hose = HeldFeedLine.make(self, belt)  # the flamer's hose or the gatling's belt
+		_hose_belt = belt
 	var side: Vector2 = fwd.orthogonal() * _tank.texture.get_width() * _tank.scale.x * 0.45
 	var to: Vector2 = _sprite.global_position
 	var from: Vector2 = _tank.global_position + side
