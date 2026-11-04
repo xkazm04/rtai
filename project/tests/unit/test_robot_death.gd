@@ -44,3 +44,18 @@ func test_no_damage_class_kills_a_human_with_the_robot_death() -> void:
 	assert_gt(_table.length(&"death_robot"), 0.5)
 	for c: String in ["light", "medium", "heavy", "melee", "blast", "burn", "shock", "nope"]:
 		assert_ne(_table.death_for(StringName(c)), &"death_robot", c)
+
+
+func test_the_thug_hit_spray_is_lighter_than_rivets() -> void:
+	var f: FileAccess = FileAccess.open("res://features/fx/noir/blood_fx.json", FileAccess.READ)
+	var root: Dictionary = JSON.parse_string(f.get_as_text())
+	var hits: Dictionary = root["hits"]
+	var thug: Dictionary = hits["thug_hit"]
+	var rivet: Dictionary = hits["robot_hit"]
+	var thug_drops: float = thug["drops"]
+	var rivet_drops: float = rivet["drops"]
+	var cone: float = thug["cone_deg"]
+	var pools: bool = thug["pool"]
+	assert_lt(thug_drops, rivet_drops * 0.5, "half the drops or fewer")
+	assert_lt(cone, 90.0, "a cone along the blow, not a fan")
+	assert_false(pools, "a hit never pools")

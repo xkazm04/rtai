@@ -16,6 +16,8 @@ const SHAKE_PX: float = 5.0
 const CAM_EASE: float = 0.06
 ## A near-miss flinch shoves the rig sideways (no tint, no blood: it must not read as a hit).
 const FLINCH_SHOVE: float = 70.0
+## The robot thug's lighter spray per hit (blood_fx.json hits; Rivet keeps robot_hit).
+const THUG_HIT: String = "thug_hit"
 ## The camera keeps a fresh corpse in frame this long (the 04:00 rule: 1-2 s of aftermath).
 const AFTERMATH_TICKS: int = 180
 
@@ -157,7 +159,7 @@ func _impacts() -> void:
 		var at: Vector2 = e.pos * PX
 		if e.arch.body == &"robot":
 			var fx: BloodFx = _blood.oil if _blood.oil != null else _blood.blood
-			fx.splash(at, e.hurt_dir, "robot_hit")
+			fx.splash(at, e.hurt_dir, THUG_HIT)
 			if e.died_tick == pit.tick:
 				stats["robot_death_frame_%d" % e.id] = _frame_no + 1
 				@warning_ignore("return_value_discarded")
