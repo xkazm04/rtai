@@ -921,4 +921,5 @@ NEXT (the morning merge / the next night):
 2. human-reactions REQUEST 30 (gunplay: about 29 rising ticks with no fire after down_ticks ends,
    or the view snaps HOLD knockdown z 0.78 -> 0.9); then re-film pit_knockdown_getup.
 3. The idle bench of the riot p99 (CrowdReact 244 -> 150 us).
-4. The robot thug's own skeleton and its spark/oil reactions (brief item 5, still light).
+4. Robot thug (brief item 5) is in (ThugPlan d4556023 + own parts c819d6be, sparks/oil per hit);
+   next is its own death pose (it still falls with the human bullet set) and a city clip.
