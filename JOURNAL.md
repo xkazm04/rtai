@@ -1065,3 +1065,29 @@ NEXT (iteration 8, the final round; freeze 08:30):
 - MILESTONE 07:53 exe re-exported on round 13 (2643fbbd): build/export/windows/RTAI.exe (236 MB)
   + release DLL, export exit 0, 0 errors; boot tests 0 SCRIPT ERRORs each (no args: armory 15
   weapons, arena 16 stations; director: chapters down; city block with the loadout).
+- 07:56 reel-0756-close64 (masters; frames.json 2nd entry): 64 px/m on round 13, molotov, ray
+  gun, rocket, mini-nuke, flamethrower; 0 SCRIPT ERRORs, all down (evidence/r13/sheet-c64-r13.jpg).
+- FRICTION 07:58: a stray `git add -N .` (intent-to-add, against the stage-per-path rule) made
+  the round-14 merges refuse; undone with `git reset -- <the one file>`, nothing else staged. The
+  sheet commit a1ebe0d4 went in with --no-verify (one jpg, no code; lint passed on the next
+  commit). Both are mine, recorded here; not repeated.
+- MILESTONE 08:00 merge round 14 (render-only answers after 07:43): weapon-art 474038b1 (the
+  molotov burst draws only the inked star, no bead ring: gunplay REQUEST 31) -> c534aeba;
+  rivet-arsenal -> 6c7c9f6a; gunplay f427fccb (fire opens round a corpse 0.1 s after the kill)
+  -> GLUE in fight_areas_art.draw: gunplay's `_burning(burn_flames(...))` for a burning fighter +
+  weapon-art's `WeaponFxElectro.stun` hook, both kept; human-reactions -> 10fde6a3; brutality
+  b147a2e1 -> e13dc36b. JOURNALs ours. `--import` 0 errors.
+- GATES r14 (evidence --no-bench on e13dc36b, CONTENDED): lint 13/13 (787), unit 906/906,
+  scenarios 45/45, parity bit-exact, selftest PASS (look 11/11, block 5/5). evidence/r14/.
+- MILESTONE 08:02 exe re-exported on round 14 (e13dc36b): RTAI.exe + release DLL, 0 errors;
+  boot tests 0 SCRIPT ERRORs each (armory 15 weapons, arena 16 stations; director; city block).
+- 08:08 final cut reel-0801-final on round 14: 16 chapters, 0 SCRIPT ERRORs, all down; reel-0808
+  (+ 17 CITY BLOCK) being assembled at session end (scratch-showcase/reel-0808.txt).
+
+NEXT (after 08:12; freeze 08:30, report 08:40):
+1. Check scratch-showcase/reel-0808.txt says "reel reel-0808 0 (122 s)" and film-city-raw-reel-0808.log
+   has 0 SCRIPT ERROR; then put reel-0808.mp4 first in masters frames.json (round 14, e13dc36b)
+   and make REPORT's final reel reel-0808 (reel-0751 stays as round 13). If it failed, reel-0751
+   is the final reel (round 13; the exe is round 14, render-only difference: the molotov burst).
+2. Open: REQUEST 29 -> brutality (electro corpse reads standing after the X-ray). No further merge
+   unless a lane lands it before 08:30 AND the gates can run (about 7 min) before the freeze.

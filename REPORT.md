@@ -1,8 +1,10 @@
 # Showcase lane: night run 2026-11-04, report
 
-Status: FINAL on merge round 13 (2643fbbd, merged 07:43; the showcase session ends at 08:12, so
-the final round ran 07:15-08:12). Final reel **reel-0751**, gates r13 green, exe re-exported 07:53.
-A lane commit after 07:43 is not in this build.
+Status: FINAL on merge round 14 (e13dc36b, merged 08:00; the showcase session ended at 08:12, so
+the final round ran 07:15-08:12). Gates r14 green; exe re-exported 08:02 on round 14. Final reel
+**reel-0751** (round 13; reel-0808 on round 14 was being assembled at session end: if it is in the
+masters folder it is the newer cut, differing only in the molotov burst). A lane commit after
+08:00 is not in this build.
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -19,7 +21,7 @@ From the `n-showcase` worktree (`C:\Users\kazda\kiro\gtai-wt\n-showcase`):
 | The director cut, live (16 chapters, deterministic) | `build\export\windows\RTAI.exe -- --bot=reel --reel=director --loadout=pistol` |
 
 The exe is a release export (`windows-showcase` preset, embedded pck, 234 MB) with the release
-sim DLL beside it (re-exported on round 13, 07:53). Round 13 boot tests (headless, 0 script errors): the arena opens with 16
+sim DLL beside it (re-exported on round 14, 08:02). Round 14 boot tests (headless, 0 script errors): the arena opens with 16
 stations and "armory: 15 weapons on the hub floor"; the director run kills its chapters; the
 city block loads with the loadout.
 
@@ -59,7 +61,8 @@ city block loads with the loadout.
 | r10b | ef43fb36 | 13/13 | 871/871 | 44/44 | exact | 11/11 (re-blessed, decisions line) + 5/5 |
 | r11 | 9f6b2fbe | 13/13 | 889/889 | 44/44 | exact | 11/11 + 5/5 |
 | r12 | 9c52b656 | 13/13 | 893/893 | 44/44 | exact | 11/11 (worst 0.00) + 5/5 |
-| **r13 (final)** | **2643fbbd** | **13/13** | **903/903** | **45/45** | **exact** | **11/11 (worst 0.00) + 5/5** |
+| r13 | 2643fbbd | 13/13 | 903/903 | 45/45 | exact | 11/11 (worst 0.00) + 5/5 |
+| **r14 (final)** | **e13dc36b** | **13/13** | **906/906** | **45/45** | **exact** | **11/11 + 5/5** |
 
 ## Bench (exported release, 3 x 60 s, CONTENDED; p99 / 1 % low from frame_ms)
 
