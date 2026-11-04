@@ -29,7 +29,8 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - It is in the armory, the weapon wall and `--weapon=gatling`.
    - Evidence: `gatling-128ppm-vs-r1w6.png`, `gatling-pit-32ppm.mp4` (3 waves, 8 kills, 0 deaths), `gatling-belt-tracer-ab-128ppm.png`.
 7. **Pickups lie inside a dashed paper loot ring** over a faint wash, as in r2_w8, instead of an opaque paper disc. `--pickup-disc=on` brings the disc back for A/B.
-   - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png`.
+   - The small pickups draw at least 1.05 m (`weapon_art.json pickup_min_span_m`), so they fill the ring as on the sheet; the big ones keep their length. 0 gives true size.
+   - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (bottom row: the span before and after).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
 **Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 2b9f6b38 after the alley change.
@@ -42,12 +43,12 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 The last full evidence gate was green on 27c48341.
 
 ## What doesn't (yet)
-- **Pickups:** the ring now follows r2_w8 (see item 7 above); the side views themselves don't yet.
+- **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
 - **Held parts:** in design they are close to r1_w1-w3 (the hand cannon's cylinder, the SMG's feed box, the pistol's slide); only the tone differs, rust-tan against gunmetal.
 - **The Gatling:**
   - its housing prints grey and slimmer than the target's chunky tan body;
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gap to r2_w4:** the blast has no graded white-hot centre and no debris. (The ray rings' olive tail is fixed: e7bccb95.)
+- **FX gap to r2_w4:** the blast has no debris chunks. (Its first frame now has the white-hot core inside the orange-yellow burst: c1a6cdaa.) (The ray rings' olive tail is fixed: e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
@@ -61,6 +62,6 @@ The last full evidence gate was green on 27c48341.
 
 ## Next steps
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL).
-- **Weapon art:** pickups toward r2_w8 and a chunkier tan Gatling housing. In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
-- **FX:** a graded core and debris for the blast.
+- **Weapon art:** the pickup side views toward r2_w8 (cleaner gunmetal) and a chunkier tan Gatling housing. In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
+- **FX:** debris chunks for the blast.
 - **Costs:** measure the frame cost under the bench lock.

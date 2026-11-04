@@ -173,3 +173,16 @@ NEXT (iteration 8):
 5. Item 3b held parts (hand cannon, machine pistol toward r1_w1) only after 1-3.
 6. Before 08:30: the evidence gate (`node tools/evidence/run.mjs --no-bench`) once more, REPORT.md rewritten at 08:40 (alley item now cites the it7 still and clip; Calls: alley tones vs iteration 3).
 Session state 23:45: head = 25f8f035, tree clean, no Godot process of mine running, image.lock never taken this session.
+- 23:49 MILESTONE 61229dac (NEXT item 1, pickups toward r2_w8): `weapon_art.json pickup_min_span_m` 1.05 m, so the small pickups fill the 1.1 m loot ring as on the sheet (molotov from a speck to a bottle; pistol, hand cannon, homing shard grow); the big ones keep length_m; 0 = before. 0.95 tried first: only the molotov visibly changed (the texture padding hides the rest). Evidence: bottom row of `pickup-ring-ab-48ppm-vs-r2w8.png` (--armory, tick 90, 0 vs 1.05). Test test_pickup_look +1; unit 952/952. DECISION in docs/decisions.md. FRICTION python text mode on Windows writes CRLF: convert with sed before commit (git normalizes, but gdformat/gdlint run on the working copy).
+- 23:52 MILESTONE c1a6cdaa (NEXT item 3, FX polish): the rocket blast's first frame printed a white star round an orange heart (its source burst is paper with a vermilion heart); `fx_colour.json` family `blast_burst` swaps it to r2_w4's orange-yellow star with the white-hot core, like the later frames. Seen in the director reel's rocket chapter at 64 px/m (movie frames 1204-1214; first run showed the old frame: a changed PNG needs `--import` before a windowed run). Evidence: bottom row of `fx-colour-arena-64ppm-vs-r2w4.png`. Debris chunks still missing (r2_w4). frames.json 15.
+- 23:57 unit 952/0 and scenarios 46/0 on c1a6cdaa. 23:58 evidence gate (`--no-bench`) started on c1a6cdaa; result line below if it lands before 00:20.
+
+NEXT (iteration 8), replaces the 23:45 NEXT:
+1. If no EVIDENCE GATE result line follows this NEXT, re-run `node tools/evidence/run.mjs --no-bench` first and fix anything red (the alley, pickup span and blast swap are in no look golden as far as known; if a golden moves, judge it before any re-bless).
+2. Pickup side views toward r2_w8: the sheet's guns are cleaner gunmetal with a bold ink edge; ours print tan-rust. Try a pickup re-tone like held_small (no image job) and judge at 48 px/m beside r2_w8. image.lock: held by another job since 23:19 ("look-table"); respect it if < 20 min old.
+3. Blast debris chunks (r2_w4): a few dark ink shards flung out on blast_1/blast_2 in tools/art/fx_colour.py or weapon_fx_blast.py (deterministic seed); film the rocket chapter at 64 px/m (`--import` first after any PNG change).
+4. The Gatling housing tone (greys in the print): check after the n5-cast merge (their warm-tan steel 5ae6aa3f) before changing anything.
+5. Bench-lock frame cost of riso + look_d5_fx in a 20-min quiet window (`node tools/bench/run.mjs` under bench.lock).
+6. Alley: a horizontal lane in quest 1 is a later idea; the alley's brick hue is lost in the print (only value carries) - a Call, not a fix.
+7. 08:30 freeze, REPORT.md rewrite at 08:40 (the draft is current to c1a6cdaa).
+Session state 23:59: head = this commit, tree clean except this JOURNAL entry's commit, the evidence gate running (my only Godot/Node job), image.lock never taken this session.
