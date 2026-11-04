@@ -540,13 +540,19 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   shadow ink"), so overlapping thigh/shin/foot edges ahead of the chest stack into two ink lobes. Still
   `frames/crowd-part-markers-c-32ppm.png`.
 
+- 00:10 lead disproved: print_part's translucent ink-dot branch set to discard (trial, reverted): lobes unchanged.
+- 00:12 RESOLVED: `RigGait.step` calls `_solve_leg` on every pose, so the 23:58 leg_w 0.01 trial did hide thigh and
+  shin; it exposed the dark shoes underneath (foot_flat 143 x 71 px, pushed ahead by `HumanPlan` foot_fwd 10 and
+  not scaled by leg_w), which kept the lobes. So the lobes ARE the standing leg stack (thigh over shin over shoe),
+  each covering part of the area, which is why no single marker filled them. The 23:58 "not the legs" was wrong;
+  REPORT section 5 and the decisions line corrected.
+
 NEXT (iteration 11):
-1. Test the lead: in cast_lineup only, raise print_part `alpha_cut` or skip the translucent-dot branch for LIMB
-   parts at small scale (a uniform on the shared material; the print shader is the look lane's, so build any real
-   change as a REQUEST to n5-look or a ped-only material, with a DECISION). Also check why the 23:58 leg_w 0.01 trial
-   left the lobes (does rig_gait apply leg_w on the standing pose, and are the foot parts scaled?).
-2. If the lead holds: fix it, then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at
-   32 px/m, then the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a
-   dated line), provenance lines.
+1. Peds' standing legs from above toward r1_c6 (small shoes just ahead of the body): ped plan values only, no
+   print change: foot_fwd 10 -> ~3, a foot scale (BodyPlan has none: add `foot_k`, render-only, like leg_w), and
+   leg_w ~0.8; check walking and running still read, then `--crowd [--road]` at 32 px/m.
+2. Then re-try the r4 sheet (`gen/r4/cut/` via `install_ped_sheet.py`) on top, plus a smaller head if needed.
+   Judge: the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated
+   line), provenance lines for shipped parts.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session end 00:11: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session end 00:14: head = this commit, tree clean, image.lock released, no Godot process of mine running.

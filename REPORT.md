@@ -83,19 +83,18 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   asphalt (`M/frames/crowd-value-vs-r2a5.png`, from `cast_lineup.gd -- --crowd [--road]`, 2d6bb3b8). In r2_a5 and
   r2_c6 the peds are the palest figures (white shirts, pale coats, dark hair), so our peds and navy cops share one
   dark value at game zoom; only the cops' blue pads tell them apart. The cause is the ped art from above, not one
-  print value, and it is not fully identified: two dark lobes ahead of the chest dominate the 32 px/m read.
-  Part markers (one D4 ped part at a time recoloured vermilion, `M/frames/crowd-part-markers-32ppm.png`): the
-  thighs show at the lobes' edges and the shoes at their tips, the upper arms end-on are the patches beside the
-  head, the coat torso is only a rim around the head; forearm, pelvis, shin and foot_toeoff barely show. The lobes'
-  dark interior is ped body art (all parts marked at once turn it red, `M/frames/crowd-part-markers-b-32ppm.png`) but
-  no single part fills it (inverse markers, `M/frames/crowd-part-markers-c-32ppm.png`): it needs several leg parts
-  dark at once. Lead, unproven: the thin legs' mip-blended edge texels print as ink dots (print_part's translucent
-  branch) and stack ahead of the chest. Trials, each
+  print value: two dark lobes ahead of the chest dominate the 32 px/m read, and they are the ped's whole dark leg
+  stack in the standing pose: thigh over shin over shoe (dark trousers, a 143 px dark shoe pushed ahead by
+  `foot_fwd`), each covering part of the lobe. Evidence: single-part markers (thigh = the lobes' edges, shoes =
+  their tips; `M/frames/crowd-part-markers-32ppm.png`), every part marked at once turns them red
+  (`...-b-32ppm.png`), all-but-one markers (`...-c-32ppm.png`), and hiding the thighs and shins (leg_w 0.01) just
+  exposes the dark shoes underneath. Not the print: discarding print_part's translucent ink dots changed nothing.
+  The coat torso shows only as a rim around the head (heads 161 px vs a 133 px torso). Trials, each
   reverted: coat fill +42 L, a 0.72 head scale, straighter standing legs, a thinned coat outline, ped leg_w 0.7,
   all together (`M/frames/crowd-trials-32ppm.png`), and a new Codex ped sheet with a pale trench coat and smaller
   heads installed in D4 (`M/frames/crowd-sheet-trial-32ppm.png`, sheet `masters:n5/cast/gen/r4/out/ped_pale_a.png`,
-  not shipped): all marginal. Next run: assign the lobe interior (the head and torso halos, the head part, the
-  D5 thigh), fix that part (art or pose), then re-try the r4 sheet on top.
+  not shipped): all marginal. Next run: smaller ped shoes and a shorter `foot_fwd`, the standing feet under the
+  coat (ped plan values), then re-try the r4 sheet on top.
 
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
