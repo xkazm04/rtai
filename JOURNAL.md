@@ -1122,3 +1122,22 @@ NEXT (replaces the list above):
   evidence/brutality/flame-char-rim-city-64-strip-it19.png (looked at it: ablaze, the rimmed char
   body, the crumble, the ash heap). frames.json: the it8 dev-pit flame clip replaced by these two
   (entries 3-4); the it9 electro charged clip dropped (superseded by the it18 plank clip): 15 entries.
+- MILESTONE 09:3x the ray-gun kill reads at 48 px/m (b03f04ac, render only; showcase's 08:57 note
+  "ch 13 ray gun's victim is small and quick at 48 px/m"). Before (48 px/m strip,
+  evidence/brutality/ray-dissolve-48-before-strip-it19.png): the lock was 0.2 s with a faint
+  0.35-alpha arc, the body just looked grey, the whole kill ~1.2 s. Now: a pulsing hot cream wash
+  (GLOW_A 0.62) + hot rim over the body during the lock (steady under reduced motion), and the row
+  timings stand_ticks 12 -> 30, crumble_ticks 55 -> 80 (~2 s). DECISION in docs/decisions.md.
+- FRICTION: the first try tinted the body's modulate over 1.0; nothing showed, because the D5 part
+  print (look_d5_part.gdshader) classifies the input colour into fixed palette inks, so a tint
+  cannot brighten it. The dissolve layer draws above the body (z 4 over the gib layer's 3), so the
+  wash is drawn there instead.
+- Clips (city block, start:-22,0, `--clean --rigs`, one isolated cop, 0 script errors):
+  `clips/ray-dissolve-glow-city-48ppm-9s-it19.mp4` (real time) and
+  `clips/ray-dissolve-glow-city-64ppm-slow-0.4x-it19.mp4`; strip
+  evidence/brutality/ray-dissolve-glow-city-64-strip-it19.png (looked at it: lit lock, gold rings,
+  dust heap + empty uniform + cap). frames.json entry 10 (the it11 ray close-up) replaced.
+- GATES on b03f04ac (CONTENDED): lint 13/13; unit 790/790 (evidence/brutality/unit-it19b.log).
+- NOTE -> showcase (final round 09:45): n-brutality 04c4068b (burn char rim, gunplay REQUEST 30)
+  and b03f04ac (ray lock glow + longer dissolve) are both render only, gated; merging n-brutality
+  at its head picks them up. Neither moves a golden.
