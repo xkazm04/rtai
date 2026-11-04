@@ -166,3 +166,22 @@ NEXT (iteration 4, in order):
   gunplay, debt rows to move). Bench not run (render-only lane work this iteration).
 - Lesson: never edit a tracked file while the evidence run is going (it flags "tree changed
   during run" and fails the unit kind even at 722/722).
+- MILESTONE 655cf163: cower quality: a glance back at the bang (first 0.3 of the family), crouch
+  0.72, head tucked further, hop 0.45 m. Board re-filmed (crowd_cower_32/64ppm.mp4, the sheet is
+  now the two pedestrians only). Look goldens unmoved (11/11 worst 0.00), unit 722/722.
+- MILESTONE bad59551: `scenario_react_line` (the reaction line on the real ArenaSession: 16 shots,
+  16 hits, 4 per dummy, each round travels from the side it was shot from, min dot >= 0.95,
+  replay identical on a fresh world; planted fault: every spot on the west, the direction check
+  fails as it must). Scenarios 31/31.
+- Scratch cleaned: AVIs and board frames under build/hr deleted; clips live in gtai-masters
+  (frames.json 13 entries, every file checked to exist).
+
+### Calls for the owner (draft for the REPORT)
+- Riot shield is render-only tonight: a riot cop shot from the front recoils behind the shield,
+  but the sim still takes the hp. Option B: the shield also stops the round (CombatArena change,
+  re-bless replay goldens). Clip: react_line_4sides_64ppm.mp4 (riot cop, "from the east").
+- City corpses now lie in the standard death poses (along the round) instead of the old X
+  sprawl: look goldens re-blessed. Compare tests/golden/look/d4-64ppm.png before/after 592b5ae0.
+
+NEXT (iteration 4): unchanged list above (sim scare entry first; CityCore::scare exists, private).
+Also: a sparse city street fight to show single deaths; SWAT look; trip over bodies; robot thug.
