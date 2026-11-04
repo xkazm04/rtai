@@ -1119,10 +1119,18 @@ glass-and-fuel molotov sheet; (3) blast frame 3 as torn smoke wisps; (4) owner c
 - 09:03 call 3 (energy rounds paper-white on cream) got its first frame, showing the current read only: pistol / electro / plasma / ray
   in the city block at 32 px/m, same ticks (`frames/it20-call3-energy-vs-kinetic-city-32ppm.png`). Looked at: the plasma
   bolt and the ray rings read, and the electro arc is the thinnest. The long red line is the cop's told aim line (gunplay), not a round.
-- Scratch AVIs (about 1.4 GB) deleted. No Godot process of mine running; no lock taken.
+- Scratch AVIs and frame dumps (4.0 GB) deleted. No Godot process of mine running; no lock taken.
 
 NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so tip 9a66ac6c+ docs is what they take):
 1. If time: the electro arc is the weakest energy read at 32 px/m (call 3 frame). A thicker ink under the arc cell is
    in the lane's palette and needs no new token; build it as a one-value A/B and film it before 10:30.
 2. Keep the gates of record at 9a66ac6c; any code after it needs lint + unit + scenarios before 10:30.
 3. At 10:40, update REPORT.md in place (the "After 09:00" section) with anything later.
+- MILESTONE 09:08 the electro bolt's ink outline is thickened (NEXT 1; call 3, inside the palette). `WeaponFxElectro.ink_under`
+  draws the arc frame in ink at 8 offsets 0.06 m out, then the paper, for Rivet's bolt (WeaponFxArt BOLT branch, one
+  line) and the chain arcs. Tried first: the ink silhouette 1.6x taller. Looked at in a 3x zoom: its peaks missed the
+  paper's, a smudge. Rejected. Same-tick city A/B at 32 px/m (`--weapon=electro_gun`), looked at: the bolt reads as one
+  bold inked stroke. `--arc-ink=off` = before. Evidence: `clips/it20-electro-arc-ink-ab-city-32ppm-2x.mp4`, strip
+  `frames/it20-electro-arc-ink-ab-city-32ppm.png` (3 rows incl. the rejected try), zoom `frames/it20-electro-arc-ink-zoom-t395-city-32ppm-3x.png`;
+  frames.json entry 4 (dropped the it8 plasma comet clip). Doc, decision, REPORT (call 3 row) updated.
+- Gates at the electro ink commit: lint 13/13, unit 743/743 (`unit-it20e.log`), scenarios 32/32 (`scenarios-it20e.log`).

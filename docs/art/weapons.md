@@ -100,6 +100,11 @@ the spent one on the floor.
 - **Electro bolt** (`arc_0..2`, `tools/art/weapon_fx_jet.py`): a jagged lightning bolt (6 sharp kinks on
   alternating sides, tapering to the head) with two kinked forks leaving forward and outward. The iteration-3
   smooth zigzag with backward stubs read as twigs. Same size and anchor, so nothing else changed.
+- **Electro bolt ink** (iteration 20, call 3): on cream paving at 32 px/m the paper bolt read thinnest of the energy
+  rounds. `WeaponFxElectro.ink_under` now draws the same arc frame in ink at 8 offsets 0.06 m out (the held rim's
+  method) before the paper, so the bolt's ink outline thickens and it reads as one bold inked stroke. It applies to
+  Rivet's bolt and the chain arcs. A silhouette 1.6x taller was tried first: its peaks missed the paper's and read as
+  a smudge. `--arc-ink=off` (or `ARC_INK_M` 0) is the before. No new palette token.
 
 ## Character looks made for other lanes (iteration 6)
 

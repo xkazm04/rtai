@@ -201,3 +201,9 @@ func test_the_rocket_blast_tears_into_smoke_wisps_after_the_ring() -> void:
 	WeaponFxShell.wisp_tail = false
 	assert_false(WeaponFxShell.wisps(ci, b, WeaponFxShell.WISP_FROM + 2), "ring tail: the before")
 	WeaponFxShell.wisp_tail = true
+
+
+func test_the_electro_arc_has_a_bold_ink_stroke_under_its_paper() -> void:
+	assert_true(WeaponFxElectro.arc_ink, "on by default (--arc-ink=off is the before)")
+	assert_gt(WeaponFxElectro.ARC_INK_M, 0.0, "the ink outline is thickened round the paper arc")
+	assert_eq(WeaponArt.new().fx_frames(&"arc").size(), 3, "three arc frames to ink")
