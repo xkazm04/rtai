@@ -13,9 +13,9 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
-| lint | 13/13 (715 files) | a67bff25 |
-| unit | 804/804 (`test_noir_shadows` red once under load, green alone: the known flake) | 1a7453ef, `E/it8-unit.log`, `E/it8-noir-shadows-alone.log` |
-| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | 1a7453ef, `E/it8-scenarios.log` |
+| lint | 13/13 (716 files) | d6618606 |
+| unit | 807/807, exit 0 | a67bff25 + the weapon-art merge, `E/it9-unit.log`; then 6/6 for the new test_claw_cops_stand_off |
+| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | a67bff25, `E/it9-scenarios.log`; rivet 8/8 at d6618606 (`E/it9e-rivet-scenarios.log`) |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
 
@@ -39,7 +39,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
   - the flamer's tank rides on Rivet's back and the hose follows;
   - the rocket tube shows empty after the shot (weapon-art's `empty` part);
   - the molotov's rag lights on the draw and on each next bottle.
-- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m.
+- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `Mrames\city-block-kinetic-held-32ppm-3x.png`.
 - Clips:
   - `M\clips\arena-arsenal-cycle-pistol-rifle-rocket-molotov-64ppm-x2.mp4`
   - `...cycle-cannon-ray-flamer-64ppm-x2.mp4`
@@ -82,7 +82,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 ### 6. The real game paths
 - Arena: on the rigs by default (`--sprites` for the old look).
 - City proving block: `--arena=city --bot=arsenal`, in `M\clips\city-block-arsenal-fight-32ppm.mp4` (3 waves, 7 kills).
-- Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fight-32ppm.mp4` and `quest1-rigs-dock9-64ppm.mp4`.
+- Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fight-32ppm.mp4`, and at 64 px/m `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
 
 ## Calls for the owner
 1. **Quest 1 on the cast rigs by default.** Today this is opt-in `--rigs` (debug builds; it loads `dev/arena/arena_rigs.gd`). The alternative is the sprite cast. Clips: `quest1-rigs-dock9-fight-32ppm`, `quest1-rigs-dock9-64ppm`. If yes, the Director promotes ArenaRigs' feed into features/ at the merge.
@@ -100,7 +100,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 13. **The molotov's 14-tick wind-up** vs a throw on the press (`arena-molotov-windup-64ppm` vs `arena-molotov-throw-64ppm`).
 
 ## Open / known flaws
-- The claw cops crowd onto Rivet in the chainsaw grind (four bodies over his). This is GuardBrain's approach (REQUEST 26 -> enemy-ai: a stand-off ring for guards that never fire).
+- The claw cops still read crowded in the chainsaw grind at 64 px/m. There was no enemy-ai lane tonight, so this lane added a stand-off to its own station (d6618606): the cops keep 1.25 m from Rivet and 1.0 m apart, and a cop just hit is not moved. A drawn cop is about 1.27 m across, so they still overlap. A 1.3 m spacing would fix the look, but it costs scenario_rivet_chainsaw a kill, so it was not taken.
 - At 64 px/m quest 1's dialogue box covers the lower third. The dev fight cam (`quest1_clip.gd --cam=fight`) now lifts the framed point above it (a67bff25).
 - No boss rig: quest 1's boss, Mertz, keeps the cast view's drawing under `--rigs`.
 - Display latency (swapchain + monitor) is UNMEASURED.
