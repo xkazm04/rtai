@@ -531,3 +531,22 @@ clip or a sheet I looked at). No deviation.
   scenarios. Brief item 5 stands where iteration 3 left it: the blood redraw is cut (settled 30) and
   is not the riot cost; the idle number of record needs a quiet machine (the Director's at the merge).
 - Gates at the homing commit: lint 13/13, unit 717/717 (`evidence/n6/unit-o.log`), scenarios 29/29 (`scenarios-o.log`).
+- 04:43 city proving block regression check at 32 px/m, shard (`MASTERS/n4/gunplay/city_shard_block_32ppm_it6/`,
+  12 shards, 4 kills, 0 script errors, Rivet 0 deaths): the dead keep their bodies and blood on the
+  cream paving after the bubble take and the ring fix.
+- DECISION plasma halo stays at 0.2 (NEXT 2 closed without a change): see docs/decisions.md.
+- Session end 04:45: no Godot process of mine running (every capture used --quit-after; the bench and
+  gates exited), bench.lock released by the bench script at 04:39, no image.lock taken, scratch AVIs
+  and sheets deleted (only `scratch/gp/cap.sh` and `sheet.py` kept for the next session).
+
+NEXT (iteration 7, in order):
+1. The molotov wind-up per the contract above (Trigger.wind_left, weapons.json `wind_s`, GunHand
+   `winding()` / `wind_frac()`), GunplayBot holding through the wind; re-bless the molotov/nuke
+   scenario hashes with a dated decision line; tell rivet-arsenal the read is in.
+2. The hand cannon and nuke kill close-ups re-shot on the bubble fix (the hand cannon's predates it);
+   the nuke at 32 px/m cropped on a victim.
+3. REQUEST 3 (it5, victim camera) still open: until it lands, crop on the right edge (the bot faces
+   the pit's east side) or run `--start=` at a station that puts the cops mid-screen.
+4. Rivet's own hit reaction: human-reactions has not answered REQUEST 1 (it5) (vermilion whole-body
+   hit tint on Rivet); check their JOURNAL again; GunFx's plating sparks are in.
+5. Idle riot bench of record on a quiet machine (the Director's at the merge otherwise).
