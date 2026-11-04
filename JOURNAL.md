@@ -530,3 +530,21 @@ NEXT (iteration 8, in order):
   (deaths_r7_64ppm_sheet.png in gtai-masters/n4/human-reactions, rows 1-3, columns 2-4; the
   board's hits are exactly axis-aligned, so the 14 deg hash turn may land near 0 for those
   spots). A minimum turn (say 6 deg, sign from the hash) or a curved fan would break the ruler.
+- 05:33 evidence on dbb0f79a (after the gunplay cherry-pick): lint 13/13, unit 741/741 passed
+  (marked FAIL only because I committed JOURNAL.md mid-run: "tree changed during run"), scenarios
+  33/33, parity bit-exact (629). Selftest: look goldens 11/11 worst 1.58 (was 0.34: gunplay's
+  wider spray fan; limit 4), block 5/5; accent audit FAIL on the flicker class gunplay described
+  (their JOURNAL 295-304): the spray tilt moves the rows to 48 px/m (vermilion 8 px + blood 16 px
+  on vehicles, vermilion 8 px on cop within blood_flicker_cop_48), the *_32 / *_block_64 rows no
+  longer seen. Not mine to bless; the real fix stays with d5-city (same-frame captures).
+- MILESTONE c1f90453 (NEXT 4 done early): the blast death lands twisted: one leg thrown up
+  (CutRig.c_kick, DeathPose.BLAST_TWIST 0.55) under the spread arms. c_kick had no per-tick reset
+  (nothing else sets it on this branch), so RigClips now zeroes it like c_plank; a lane that later
+  drives c_kick before RigClips (a Rivet kick) must set it after the clip pass. Unit 742/742,
+  human_react / arena_pit scenarios green. Board re-filmed (react_families_r7_32/64ppm.mp4 +
+  deaths_r7_64ppm_sheet.png): five deaths, five corpses (round X/crumple, melee curl, blast
+  twisted, burn charred, electro stiff). frames.json 15, every file present. Scratch deleted.
+- DECISION blast corpse twisted (c_kick 0.55): thrown bodies land broken, not laid out.
+  Alternative: BLAST_TWIST 0.
+- NEXT 4 above is done; NEXT 1-3 stand (re-run the full evidence on the tip first: the last run
+  was on dbb0f79a, before the blast change; c_kick 0 for every other pose).
