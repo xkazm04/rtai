@@ -26,6 +26,8 @@ var held_small_below_ppm: float = 0.0
 ## projectile_k by weapon id (rows that set it): the round's cell drawn k thicker and sqrt(k)
 ## longer (the hand cannon's slug); absent = 1.
 var round_k: Dictionary[StringName, float] = {}
+## n5-look: the colour FX folder (weapon_art.json fx_colour_dir; "" = the ink FX).
+var fx_colour_dir: String = ""
 
 var _rows: Dictionary[StringName, Row] = {}
 var _fx: Dictionary[StringName, Cell] = {}
@@ -69,6 +71,7 @@ func _init(path: String = TABLE) -> void:
 		if r.has("projectile_k"):
 			round_k[StringName(t.text(r, "id"))] = t.num(r, "projectile_k")
 	var colour_dir: String = t.text(t.raw, "fx_colour_dir") if t.raw.has("fx_colour_dir") else ""
+	fx_colour_dir = colour_dir
 	for row: Variant in t.array(t.raw, "fx"):
 		var r: Dictionary = row if row is Dictionary else {}
 		var c: Cell = Cell.new()

@@ -44,6 +44,8 @@ static var fire_burst: bool = not OS.get_cmdline_user_args().has("--fire-burst=o
 ## The blast's last frame (a ring of cream discs) read as debug beads; by default the smoke ring
 ## (frame 2) holds through it, growing and thinning. `--blast-beads=on` = the before.
 static var blast_beads: bool = OS.get_cmdline_user_args().has("--blast-beads=on")
+## n5-look: while set (FxView's draw), every cell prints in colour on this canvas (WeaponFxColour).
+static var colour: WeaponFxColour = null
 static var _art: WeaponArt = null
 static var _frames: Dictionary[StringName, Array] = {}
 
@@ -247,7 +249,11 @@ static func _cell_v(
 	if frames.is_empty():
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame]) if frames.size() > 1 else id
-	ci.draw_set_transform(Ink.px(at), angle, scale * cell_scale())
 	var tex: Texture2D = frames[frame % frames.size()]
+	if colour != null:
+		var xf: Transform2D = Transform2D(angle, scale * cell_scale(), 0.0, Ink.px(at))
+		colour.cell(tex, xf, art().fx_anchor(key), a)
+		return
+	ci.draw_set_transform(Ink.px(at), angle, scale * cell_scale())
 	ci.draw_texture(tex, -art().fx_anchor(key), Color(1, 1, 1, a))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
