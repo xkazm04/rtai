@@ -27,13 +27,24 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	@warning_ignore("return_value_discarded")
 	stage.arena.kill_landed.connect(_on_kill_landed)
 	var gun: String = ArenaArgs.parse().text("--sig-gun")
-	var weapons: WeaponTable = WeaponTable.shipped() if not gun.is_empty() else null
-	if weapons != null and weapons.weapons.has(StringName(gun)):
-		stage.arena.gun = GunHand.make(weapons, StringName(gun), ctx.rng.stream(&"brutality_gun"))
-		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+	if not gun.is_empty():
+		arm(stage, ctx, StringName(gun))
 	if ArenaArgs.parse().has("--sig-lab"):
-		_lab = KillLab.new()
-		_lab.setup(stage)
+		open_lab(stage)
+
+
+## Hands Rivet the weapons.json gun `weapon` (the dev arg --sig-gun, or a scenario).
+func arm(stage: ArenaStage, ctx: WorldContext, weapon: StringName) -> void:
+	var weapons: WeaponTable = WeaponTable.shipped()
+	if weapons.weapons.has(weapon):
+		stage.arena.gun = GunHand.make(weapons, weapon, ctx.rng.stream(&"brutality_gun"))
+		stage.arena.rivet.weapon = &"gloria"  # the view's armed state (the claw pistol cell)
+
+
+## Lines the KillLab guards up in front of Rivet (the dev arg --sig-lab, or a scenario).
+func open_lab(stage: ArenaStage) -> void:
+	_lab = KillLab.new()
+	_lab.setup(stage)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
