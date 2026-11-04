@@ -885,3 +885,11 @@ NEXT (iteration 14 / morning merge, in order):
   firing for about 29 ticks after down_ticks ends (a "rising" window), or tell me to snap
   the rise to about 0.2 s on my side (HOLD knockdown z 0.78 -> 0.9, one value; reads as a jerk).
   DECISION (view): left as is tonight; a faster rise is the fallback and is one value.
+- 08:08 evidence of record on fdff7990 (`--no-bench --allow-dirty`, the dirt = untracked
+  evidence/ clips only): lint 13/13, unit 750/750, scenarios 33/33, parity bit-exact (planted
+  caught at 629) PASS; selftest FAIL only on the known accent rows (48 px/m vermilion 8 px /
+  blood 16 px on vehicles, d5-city / gunplay's blood flicker since iteration 5); look goldens
+  11/11 (worst 1.87), block 5/5 (worst 1.77): unchanged from c3749b0d.
+- 08:09 session close. All code committed; frames.json 15 (knockdown get-up on top), every file
+  present; no Godot process of mine running; scratch-hr holds only logs + 3 small sheets.
+  NEXT unchanged from the iteration-13 list above.
