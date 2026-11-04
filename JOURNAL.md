@@ -1316,3 +1316,14 @@ NEXT (10:40 REPORT session, then morning merge): REPORT "After 10:00" line exten
 (no code; reel-1012 is showcase's latest). Morning list unchanged from iteration 23: (1) re-film the
 electro clip on the merged main; (2) re-check gunplay REQUEST 29/30 answers; (3) the nuke tick-123
 frame under bench.lock; (4) owner calls in REPORT.
+
+## Iteration 25 (10:30-10:40, STABILIZE, report)
+- Read: JOURNAL NEXT, git log, REPORT. No new REQUEST -> brutality. Showcase's latest reel in
+  masters: reel-1012.
+- REPORT updated in place: the "After 10:00" section now covers iterations 21-25 (no code), the
+  state at 10:40 and the morning list.
+- No code, no Godot process started, no lock held, no scratch left. Code head stays 5e37b57c.
+
+NEXT (morning merge): (1) re-film the electro clip on the merged main (08e1b72f in); (2) re-check
+gunplay REQUEST 29/30 answers after the merge; (3) the nuke tick-123 frame under bench.lock against
+lock-it18; (4) owner calls in REPORT.

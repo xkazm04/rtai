@@ -204,7 +204,14 @@ were last run on `59429978`.
   report (not yet in their JOURNAL at 10:08). The electro clip on the merged main still needs
   re-filming (NEXT 1).
 
-- **Iterations 21-23 (10:04-10:30): no code.** No new REQUEST -> brutality. Human-reactions checked
+- **Iterations 21-25 (10:04-10:40): no code.** No new REQUEST -> brutality. Human-reactions checked
   showcase's round 19 cut (10:08) and saw the electro corpse lying full length along the shot, so
   REQUEST 30 is closed on `n-showcase`. Nothing landed after 10:00 on this branch could have been
-  gated, filmed and benched before the freeze.
+  gated, filmed and benched before the freeze. Showcase's newest reel in masters is `reel-1012.mp4`
+  (their final round; the brutality kills in it are from this branch's head through their merge).
+- **State at the 10:40 report:** code head `5e37b57c`, gates of record from iteration 19 (no code
+  since). Worktree clean, no lock held, no Godot process of mine running. frames.json in
+  `gtai-masters/n4/brutality/` has 15 entries, unchanged since 09:45.
+- **Morning list:** (1) re-film the electro clip on the merged main (with `08e1b72f`); (2) re-check
+  that gunplay's REQUEST 29/30 answers survive the merge; (3) the nuke tick-123 frame, measured under
+  `bench.lock` against `E/lock-it18/`; (4) the owner calls above.
