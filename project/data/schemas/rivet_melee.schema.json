@@ -123,9 +123,19 @@
           "minimum": 1,
           "type": "integer"
         },
+        "cone_dot": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
         "doc": {
           "minLength": 1,
           "type": "string"
+        },
+        "full_damage": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
         },
         "reach_m": {
           "maximum": 6,

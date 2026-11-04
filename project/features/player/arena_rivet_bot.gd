@@ -4,11 +4,14 @@ extends InputSource
 ## (TickInput -> InputTape -> StagePilot -> PlayerMotion + PlayerMelee) it walks, strafes and
 ## backpedals around an aim mark, sprints, rolls both ways, then walks to the claw cops (station
 ## rivet_claw_cops) and mashes the combo on two sparring cops, then one jab on a plain
-## cop. Deterministic: it reads only the sim.
+## cop, then holds melee on a sparring pair for the full charged shock (the arc hops to the
+## second) and mashes the combo on the stunned cop. Deterministic: it reads only the sim.
 ## A step is [ticks or -1 = until reached, move or goto (hub-relative m), aim mark, buttons, mash].
 
 const REACH_M: float = 0.12
 const MASH_EVERY: int = 5
+## Melee held this long: the jab's 18 ticks, then the full charge (54), then the release.
+const SHOCK_HOLD: int = 76
 const MARK: Vector2 = Vector2(6.0, 4.0)
 const STEPS: Array = [
 	[40, Vector2.ZERO, MARK, [], false],
@@ -20,15 +23,21 @@ const STEPS: Array = [
 	[75, Vector2.RIGHT, null, ["sprint"], false],
 	[45, Vector2.RIGHT, null, ["roll"], false],
 	[40, Vector2.LEFT, null, ["roll"], false],
-	[-1, Vector2(2.0, 1.45), Vector2(2.0, 3.0), [], false],
-	[48, Vector2.ZERO, Vector2(2.0, 3.0), [], true],
-	[40, Vector2.ZERO, Vector2(2.0, 3.0), [], false],
-	[-1, Vector2(6.0, 1.45), Vector2(6.0, 3.0), [], false],
-	[48, Vector2.ZERO, Vector2(6.0, 3.0), [], true],
-	[30, Vector2.ZERO, Vector2(6.0, 3.0), [], false],
-	[-1, Vector2(10.0, 1.45), Vector2(10.0, 3.0), [], false],
-	[5, Vector2.ZERO, Vector2(10.0, 3.0), [], true],
-	[90, Vector2.ZERO, Vector2(10.0, 3.0), [], false],
+	[-1, Vector2(2.0, 2.85), Vector2(2.0, 4.4), [], false],
+	[48, Vector2.ZERO, Vector2(2.0, 4.4), [], true],
+	[40, Vector2.ZERO, Vector2(2.0, 4.4), [], false],
+	[-1, Vector2(6.0, 2.85), Vector2(6.0, 4.4), [], false],
+	[48, Vector2.ZERO, Vector2(6.0, 4.4), [], true],
+	[30, Vector2.ZERO, Vector2(6.0, 4.4), [], false],
+	[-1, Vector2(10.0, 2.85), Vector2(10.0, 4.4), [], false],
+	[5, Vector2.ZERO, Vector2(10.0, 4.4), [], true],
+	[60, Vector2.ZERO, Vector2(10.0, 4.4), [], false],
+	[-1, Vector2(13.0, 2.85), Vector2(13.0, 4.4), [], false],
+	[SHOCK_HOLD, Vector2.ZERO, Vector2(13.0, 4.4), ["melee"], false],
+	[30, Vector2.ZERO, Vector2(13.0, 4.4), [], false],
+	[8, Vector2.ZERO, Vector2(13.0, 4.4), [], true],
+	[60, Vector2.ZERO, Vector2(13.0, 4.4), [], false],
+	[90, Vector2.ZERO, Vector2(13.0, 4.4), [], false],
 ]
 
 var stage: ArenaStage

@@ -67,4 +67,6 @@ func telemetry() -> Dictionary:
 		out["claw_hits"] = _host.pilot.melee.landed
 		out["claw_whiffs"] = _host.pilot.melee.whiffs
 		out["claw_swings"] = _host.pilot.melee_swings
+		out["shock_discharges"] = _host.pilot.shock.discharges
+		out["shock_landed"] = _host.pilot.shock.landed
 	return out
