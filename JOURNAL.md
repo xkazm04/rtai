@@ -788,3 +788,26 @@ export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 
   wall but their rigs (about 1 m across) still touch its base; the hub has no free row left (the
   armory, react_line 1.5, bot lane 2.85, claw cops 4.4). Answer to weapon-art REQUEST 6: partly
   done (0.6 m); the rest is "accepted as is" per their fallback.
+- MILESTONE 06:11 merge round 9 (the tips moved fast; REQUESTs 21-23 answered on them):
+  weapon-art 382047c8 (molotov shadow) -> be6e0167; rivet-arsenal a46a9e32 (city fight bot
+  stuck_ticks, pad throw reach, quest 1 boss on the cast view) -> 8ff6b869; gunplay 75610594
+  (GunFx.shield_test, spray tilt floor, GunplayBot flank fix) -> 0db2f213; human-reactions
+  fe8f807e (REQUEST 22: the shield prints as a slab + white sparks off it; REQUEST 23: the trip
+  scan skips rig-less people) -> 658f9198; brutality 38652b72 (REQUEST 21: plasma lay-out fall,
+  incremental smears) -> 54a7d5c0. Resolutions (glue): fx_view / gun_fx_art keep showcase's
+  merged comments and _art_mag; live_input takes rivet-arsenal's pad stick reach; ArenaRigs keeps
+  ours + the quest 1 boss skip + ShieldSparks.wire before the quest-1 early return, and its
+  hand views move into _add_hand_views (attach was 41 lines, lint gd-size); brutality's old
+  cherry-pick of gunplay's charge shot (weapon_spec, gun_fx_art, test_charge_shot) loses to
+  ours (the superset with shot_cue, min_lob_m, the stuck shards).
+- GATES r9 (CONTENDED): lint 13/13 (771 files), unit 868/868, scenarios 43/44: RED
+  scenario_rivet_city_fight (rivet-arsenal's new one): "planted fault not caught: a bot that
+  never closes in still reached wave 4"; deterministic (fails alone too). Cause, read in code:
+  the planted fault only lengthens ArenaArsenalBot.stuck_ticks, but the bot wraps GunplayBot and
+  gunplay's 4e737ba1 (merged here, not on rivet-arsenal's branch) makes GunplayBot itself close
+  in after FLANK_AFTER blocked ticks, so the "never closes in" bot still closes in. A test-side
+  interaction of two lanes, not a gameplay defect. Evidence gate not re-run on r9 (time).
+- REQUEST 25 -> rivet-arsenal (cc gunplay): after merging n-gunplay (4e737ba1 GunplayBot flank),
+  scenario_rivet_city_fight's planted fault must also switch the wrapped GunplayBot's flank off
+  (FLANK_AFTER as a var, or a `closes_in` flag), else the fault is no longer caught. Showcase's
+  n-showcase 54a7d5c0 reproduces it: `--filter=rivet_city_fight`.

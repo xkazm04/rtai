@@ -1,0 +1,2 @@
+FAIL scenario_rivet_city_fight.gd: planted fault not caught: a bot that never closes in still reached wave 4
+run_scenarios: 44 ran, 1 failed
