@@ -1037,3 +1037,9 @@ riot p99 bench).
   goes out and the cream rim still holds the silhouette. Corrected my decision line: the earlier
   "0.7 sank into the asphalt" was written before filming it (wrong; now measured). Re-rendered
   robot_powerdown_{32,48,64}ppm.mp4 + sheets at 0.7 (death frame 138 again). Unit 754/754.
+- Gunplay's thin burn flames (e1b22073) not cherry-picked: 12 gunplay commits touch
+  fight_areas_art.gd before it; it arrives with the merge.
+- 04:00-rule pass on the burn death: re-filmed at 48 px/m (`--weapon=flamethrower --start=pit
+  --clean --ppm=48`, fixed 60 fps): deaths at 753 and 906 again (deterministic).
+  pit_burn_death_48ppm.mp4 + _sheet.png replace the 32 px/m clip in frames.json. Honest: Rivet
+  stands still, so both deaths are near the frame edge; the old flame stars hide the burning body.
