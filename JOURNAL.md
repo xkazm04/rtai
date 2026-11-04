@@ -187,3 +187,10 @@ NEXT (the 18:40 report, written 18:21):
 - DECISION 18:23: no code again, same reason as iteration 11 (9 min before the freeze cannot hold build + test + film + look + gate for the melee wound; an unfilmed view change would silently change the filmed "after" clips). No Godot process started.
 
 NEXT (the 18:40 report, written 18:23): unchanged from iteration 11. REPORT.md is final; the first build of the next run is the non-lethal melee wound per the iteration 10 DESIGN (18:15).
+
+## Iteration 13 (18:30, STABILIZE, past the freeze)
+
+- 18:30 read JOURNAL, git log. Branch since 34bc64e6 (last green gates): JOURNAL.md and REPORT.md only (`git diff --stat 34bc64e6 HEAD`), so the evidence and REPORT's gates line match the current build. Masters folder: 21 files, as cross-checked at 18:13. No REQUEST for this lane in d6-perf-city's JOURNAL.
+- DECISION 18:31: nothing to stabilize. No code moved after the last green gate run, so re-running the gates would only re-measure the same tree on a contended machine. No Godot process started; no bench.lock taken.
+
+NEXT (the 18:40 report, written 18:31): REPORT.md is final. The first build of the next run is the non-lethal melee wound, per the iteration 10 DESIGN (18:15).
