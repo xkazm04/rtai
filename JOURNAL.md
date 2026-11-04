@@ -548,3 +548,9 @@ NEXT (iteration 8, in order):
   Alternative: BLAST_TWIST 0.
 - NEXT 4 above is done; NEXT 1-3 stand (re-run the full evidence on the tip first: the last run
   was on dbb0f79a, before the blast change; c_kick 0 for every other pose).
+- 05:40 evidence on the tip 28af228c (`--no-bench --allow-dirty`, only untracked evidence/ clips):
+  lint 13/13, unit 742/742, scenarios 33/33, parity bit-exact (mutation caught at 629) PASS.
+  Selftest: look goldens 11/11 worst 1.58, block 5/5 worst 1.35 (both within 4; same as the
+  05:33 run, so the blast change moved nothing); the accent audit FAIL is the 48 px/m blood
+  flicker rows that came with gunplay's spray tilt (see 05:33). Bench not run (render-only
+  changes; the riot needs an idle machine). NEXT 1 is done; NEXT 2-3 stand.
