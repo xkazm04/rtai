@@ -71,7 +71,9 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 	if rig.c_tuck > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + 70.0, sh.y - sgn * 70.0, -40.0), rig.c_tuck)
 	if rig.c_sprawl > 0.0:
-		tgt = tgt.lerp(Vector3(sh.x + 60.0, sh.y + sgn * reach * 0.95, -60.0), rig.c_sprawl)
+		var flung: Vector3 = Vector3(sh.x + 60.0, sh.y + sgn * reach * 0.95, -60.0)
+		var stiff: Vector3 = Vector3(sh.x - reach * 0.95, sh.y + sgn * 70.0, -60.0)
+		tgt = tgt.lerp(flung.lerp(stiff, rig.c_plank), rig.c_sprawl)
 	return tgt
 
 

@@ -37,7 +37,7 @@ static func _body(rig: CutRig, walk01: float, ph: float) -> void:
 	var at: Vector2 = Vector2(lean - 25.0 * rig.c_sprawl, sway) + rig.shove
 	var tuck: Vector2 = Vector2(1.0 - 0.34 * rig.c_tuck, 1.0 - 0.22 * rig.c_tuck)
 	var sc: Vector2 = Vector2(bob, bob) * tuck * (1.0 + 0.06 * rig.c_sprawl)
-	rig.body.transform = Transform2D(0.25 * rig.c_sprawl, sc, 0.0, at)
+	rig.body.transform = Transform2D(0.25 * rig.c_sprawl * (1.0 - rig.c_plank), sc, 0.0, at)
 
 
 ## rivet-motion: how far into the sprint a plan with a sprint stride is (0 at the run speed,
@@ -53,7 +53,9 @@ static func _head(rig: CutRig, p: BodyPlan) -> void:
 	if rig.aiming:
 		var to_aim: float = (rig.aim_at - rig.global_position).angle()
 		look = clampf(wrapf(to_aim - rig.facing - rig.torso.rotation, -PI, PI), -0.6, 0.6)
-	var rot: float = -rig.torso.rotation * 0.75 + look * 0.8 + 0.5 * rig.c_sprawl
+	var rot: float = (
+		-rig.torso.rotation * 0.75 + look * 0.8 + 0.5 * rig.c_sprawl * (1.0 - rig.c_plank)
+	)
 	var back: float = -40.0 * rig.c_tuck - 30.0 * rig.c_sprawl
 	var hs: float = 1.0 - 0.18 * rig.c_tuck
 	var at: Vector2 = p.head_pos - p.torso_pos + Vector2(back, 0.0)

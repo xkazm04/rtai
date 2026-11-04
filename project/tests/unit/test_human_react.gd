@@ -95,3 +95,17 @@ func test_same_inputs_same_pose() -> void:
 	assert_eq(a.twist, b.twist)
 	a.free()
 	b.free()
+
+
+func test_an_electro_death_lies_stiff_a_round_death_sprawls() -> void:
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"death_shock", Vector2.LEFT, _table)
+	for i: int in 300:
+		r.pre(_rig, SimClock.TICK_DT)
+	assert_almost_eq(_rig.c_plank, 1.0, 0.01, "legs together, arms along the sides")
+	var rig2: CutRig = autofree(CutRig.new())
+	var r2: HumanReact = HumanReact.on(rig2)
+	r2.play(rig2, &"death_bullet", Vector2.LEFT, _table)
+	for i: int in 300:
+		r2.pre(rig2, SimClock.TICK_DT)
+	assert_eq(rig2.c_plank, 0.0, "a round death keeps the X sprawl")

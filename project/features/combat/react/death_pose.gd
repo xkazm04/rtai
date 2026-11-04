@@ -67,6 +67,7 @@ static func _shock(r: HumanReact, rig: CutRig, k: float) -> void:
 	var fall: float = smoothstep(0.5, 0.64, k)
 	ReactPose.convulse(r, rig, 1.0 - fall)
 	rig.c_sprawl = maxf(rig.c_sprawl, 1.05 * fall)
+	rig.c_plank = fall  # stiff: legs together, arms along the sides
 	r.scl = Vector2(1.0, 1.0 - 0.12 * fall)
 	r.slide = r.dir * r.travel * fall
 	if fall > 0.5:

@@ -126,6 +126,7 @@ func sample(rig: CutRig, dt: float) -> void:
 		clampf(sin(PI * (1.0 - roll_t / roll_len)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
 	)
 	rig.c_recoil = recoil
+	rig.c_plank = 0.0
 	rig.c_hands_up = move_toward(rig.c_hands_up, 0.85 if fleeing else 0.0, dt * 4.0)
 	rig.set_tint(hit_t > HIT_TINT_FROM)
 	if death_t >= 0.0:
