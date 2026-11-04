@@ -156,3 +156,7 @@ NEXT (iteration 2):
    (all shipped presets exclude dev/*), test whether the exported exe takes
    `res://dev/arena/arena.tscn` as its scene argument.
 6. Bench in the arena fight and the riot (only the drive was benched in iteration 1).
+- 01:50 checked reel-0145-rocket-64ppm 6-13 s (1 fps, 8 frames): the claw combo lands on the
+  hub cops at close range and the finisher throws a cop about 3 m with a red trail into the pit
+  wall line; strong read. frames.json now 6 entries (newest first), every file present.
+  Scratch renders deleted; reels kept in gtai-masters/n4/showcase.
