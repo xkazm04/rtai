@@ -1143,3 +1143,16 @@ NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so
 - Gates at the ray-ink commit: lint 13/13, scenarios 32/32 (`scenarios-it20f.log`), unit 743/743 (`unit-it20g.log`). The first unit run
   (`unit-it20f.log`) had 1 failure, test_noir_shadows ("Parameter t is null"): the known flake under load (an ffmpeg encode
   was running). It passed when re-run alone.
+- 09:18 checked the electro and ray ink at 48 px/m (the showcase reel's zoom), after only, city block: the bolt reads as
+  an inked zigzag with a paper core. The hoops are heavy dark rings (tyre-like) but still read as a hoop train. If the
+  owner finds them too heavy, a smaller ARC_INK_M for the hoops is a one-value change, or `--ray-ink=off` turns the hoop ink off. Frame
+  (masters) `frames/it20-electro-ray-ink-city-48ppm.png`.
+- FRICTION 09:16 gdformat on Windows rewrote two .gd files with CRLF in the working tree. The index stayed LF
+  (`.gitattributes eol=lf`), so the commits are clean; the working files were normalized and re-added (no content change).
+- Scratch AVIs deleted; no Godot process of mine running; no lock taken.
+
+NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final merge is 54fb97d1 + docs:
+1. If a re-film of the showcase reel shows the ray hoops too heavy at 48 px/m: ARC_INK_M for hoops only (0.04), A/B, gates.
+2. Human-reactions' riot-shield call B needs a flat rectangular shield part from weapon-art; build it only if the owner picks B.
+3. At 10:40 update REPORT.md in place ("After 09:00") with anything later. Gates of record now: lint 13/13, unit
+   743/743, scenarios 32/32 at 54fb97d1; parity untouched (render only).
