@@ -925,3 +925,9 @@ NEXT (iteration 14), in order:
   misread of the pistol. The it12 held_small result (dark lozenge -> pale steel) holds for the pistol art; the
   per-gun truth is the it13 lineups (one run per gun). frames.json it12 notes corrected. NEXT 2 now = film the
   family as four one-gun runs cut into one clip (the lineup runs in scratch wa13 have 400 ticks each).
+- MILESTONE 07:48 NEXT 2 done from the one-gun runs: clip (masters) `clips/it13-kinetic-family-four-runs-arena-pit-
+  32ppm-2x.mp4` (2x2 grid, same ticks 0-599 real time, a blue cop grappling in frame). Looked at: four shapes,
+  pale pistol, the machine pistol's T, the hand cannon's banded drum, Gloria long and dark. It replaces the it12
+  kinetic clip in frames.json (15 entries).
+- NEXT (iteration 14) revised: 1 REQUEST 12 answer; 2 the melee four in the claw (lineup); 3 the long guns over the
+  helmet (rivet-arsenal, watch); 4 delete scratch wa13. Session closed 07:49, no Godot process of mine running.
