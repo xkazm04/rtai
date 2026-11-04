@@ -106,6 +106,11 @@ func test_a_fleeing_person_trips_over_the_fights_dead_drawn_elsewhere() -> void:
 	rigs.feed = _feed(true)
 	c.extra_bodies[-1 - 3] = Vector2(-10.0, 0.0)  # a dead cop on the arena's own rigs
 	c.observe(rigs)
+	assert_eq(c.startles, 1, "the fight's death underfoot startles first")
+	assert_eq(c.trips, 0, "mid-cower: no trip yet")
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.startles, 1, "a body already seen startles once")
 	assert_eq(c.trips, 1)
 	rig.react.settle()
 	c.observe(rigs)
@@ -201,3 +206,26 @@ func test_a_busy_body_trips_once_its_cower_ends() -> void:
 	rig.react.settle()
 	c.observe(rigs)
 	assert_eq(c.trips, 1, "the body underfoot still trips it after")
+
+
+func test_a_fight_death_drawn_elsewhere_startles_the_street_once() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var f: RigFeed = RigFeed.new()
+	@warning_ignore("return_value_discarded")
+	f.put(0, 42, BodyPlan.Kind.PED, Vector2.ZERO, Vector2.ZERO)
+	rigs.feed = f
+	c.observe(rigs)
+	c.extra_bodies[-1 - 3] = Vector2(-1.5 * SimConst.PX_PER_M, 0.0)  # a cop dies west of it
+	c.observe(rigs)
+	assert_eq(c.startles, 1)
+	assert_gt(rig.react.dir.x, 0.9, "cowers east, away from the body")
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.startles, 1, "the same body does not startle again")
+	c.extra_bodies[-1 - 4] = Vector2(-1.5 * SimConst.PX_PER_M + 1.0, 0.0)
+	c.startle_m = 0.0
+	c.observe(rigs)
+	assert_eq(c.startles, 1, "startle radius 0: the next death is not noticed")
