@@ -77,3 +77,20 @@ func test_an_enemy_round_on_rivet_sparks_off_his_plating() -> void:
 	_run(arena, fx, 1, 30)
 	assert_eq(fx.impacts.size(), 1)
 	assert_eq(int(fx.impacts[0].z), GunFx.Hit.PLATING)
+
+
+func test_a_hostile_round_flashes_at_its_gun_and_drops_a_shell() -> void:
+	var arena: CombatArena = _arena(&"pistol")
+	var fx: GunFx = GunFx.new()
+	var g: Fighter = arena.spawn_guard(Vector2(8.0, 0.0))
+	g.pos = Vector2(8.0, 0.0)
+	var s: Shot = Shot.new()
+	s.from_rivet = false
+	s.shooter_id = g.id
+	s.pos = g.pos + Vector2(-0.5, 0.0)
+	s.vel = Vector2(-20.0, 0.0)
+	s.left_m = 20.0
+	arena.shots.append(s)
+	fx.step(arena, 1)
+	assert_eq(fx.enemy_flashes.size(), 1)
+	assert_eq(fx.bits.size(), 1)

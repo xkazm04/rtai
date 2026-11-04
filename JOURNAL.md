@@ -226,3 +226,9 @@ NEXT (iteration 4, in order):
   flame and molotov pit clips kept so every finished weapon is on the page.
 - Gates after the tracer fix: unit 707/707 (`evidence/n3/unit-f.log`), scenarios 29/29 (`scenarios-f.log`).
 - NEXT (iteration 4) stands as written above, with item 1 done (both range close-ups + side-by-side).
+- 02:36 Cops' rounds now leave a small cream 4-point muzzle star at the shooter's gun (3 ticks) and a
+  shell kicked to its right (`GunFx._enemy_fired`, `GunFxArt._star`; view only). Unit test 5/5 in
+  test_gun_fx.gd; gates unit 708/708 (`evidence/n3/unit-g.log`), scenarios 29/29 (`scenarios-g.log`).
+  NOT seen in a clip yet: the one check render (pistol pit, 11 s) had no cop firing in its window.
+  First thing next iteration: a pit clip at 48 px/m with the cops' flash in frame.
+- gun_fx.gd is 201 lines (soft 200): next GunFx change splits the enemy part out.

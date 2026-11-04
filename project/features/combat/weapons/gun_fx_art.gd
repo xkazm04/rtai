@@ -35,6 +35,8 @@ static func draw_over(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) 
 		var age: int = tick - int(im.w)
 		if age < GunFx.IMPACT_TICKS:
 			_impact(ci, fx, Vector2(im.x, im.y), fx.impact_dir[i], int(im.z), age)
+	for ef: Vector4 in fx.enemy_flashes:
+		_star(ci, Vector2(ef.x, ef.y), ef.w, 0.45 - 0.1 * float(tick - int(ef.z)), tick)
 	var gun: GunHand = arena.gun
 	var row: Dictionary = fx.look(gun.trigger.spec.id)
 	var flash: int = row.get("muzzle_ticks", 2)
@@ -105,12 +107,29 @@ static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age:
 	for a: Vector2 in star:
 		@warning_ignore("return_value_discarded")
 		pts.append(Ink.px(at + Vector2.from_angle(f.angle() + a.x) * a.y))
+	_flash(ci, pts, 3.5)
+	ci.draw_circle(Ink.px(at), 0.16 * Ink.PX_PER_M, Ink.CREAM)
+
+
+## A hostile's muzzle: a small cream 4-point star in an ink rim along its aim.
+static func _star(ci: CanvasItem, at: Vector2, ang: float, r: float, tick: int) -> void:
+	var pts: PackedVector2Array = PackedVector2Array()
+	for i: int in 8:
+		var k: float = r if i % 2 == 0 else r * 0.3
+		@warning_ignore("return_value_discarded")
+		pts.append(
+			Ink.px(at + Vector2.from_angle(ang + TAU * float(i) / 8.0 + 0.1 * float(tick % 2)) * k)
+		)
+	_flash(ci, pts, 3.0)
+
+
+## A cream flash polygon in an ink rim of `rim` px.
+static func _flash(ci: CanvasItem, pts: PackedVector2Array, rim: float) -> void:
 	var ring: PackedVector2Array = pts.duplicate()
 	@warning_ignore("return_value_discarded")
 	ring.append(pts[0])
 	ci.draw_colored_polygon(pts, Ink.CREAM)
-	ci.draw_polyline(ring, Ink.INK, 3.5, true)
-	ci.draw_circle(Ink.px(at), 0.16 * Ink.PX_PER_M, Ink.CREAM)
+	ci.draw_polyline(ring, Ink.INK, rim, true)
 
 
 static func _bit(ci: CanvasItem, fx: GunFx, i: int) -> void:

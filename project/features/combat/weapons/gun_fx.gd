@@ -27,6 +27,8 @@ var impacts: Array[Vector4] = []
 var impact_dir: PackedVector2Array = PackedVector2Array()
 ## Gun smoke: x, y, the born tick, the scale.
 var smoke: Array[Vector4] = []
+## A hostile's shot leaving its gun: x, y (m), the born tick, the aim angle (the cops' muzzle).
+var enemy_flashes: Array[Vector4] = []
 ## The last tick a round left Rivet's gun (the muzzle flash reads it).
 var fired_tick: int = -100
 var fired_count: int = 0
@@ -135,11 +137,27 @@ func _track_shots(arena: CombatArena, tick: int) -> void:
 	for s: Shot in arena.shots:
 		if not s.from_rivet or s.spec == null or s.spec.kind == WeaponSpec.Kind.BULLET:
 			now[s] = [s.pos, s.vel * SimClock.TICK_DT, s.from_rivet]
+			if not s.from_rivet and not _shots.has(s):
+				_enemy_fired(arena, s, tick)
 	for s: Variant in _shots:
 		if not now.has(s):
 			var last: Array = _shots[s]
 			_impact(arena, last, tick)
 	_shots = now
+
+
+## A hostile's round just appeared: a small flash at its gun and a shell kicked to its right.
+func _enemy_fired(arena: CombatArena, s: Shot, tick: int) -> void:
+	var dir: Vector2 = s.vel.normalized()
+	var pistol: float = look(&"pistol").get("casing_m", 0.2)
+	var shell: float = pistol * 0.8
+	for h: Fighter in arena.hostiles:
+		if h.id == s.shooter_id:
+			var at: Vector2 = h.pos + dir * (h.radius_m + 0.35)
+			enemy_flashes.append(Vector4(at.x, at.y, float(tick), dir.angle()))
+			var v: Vector2 = (-dir.orthogonal() * 2.6 - dir * 0.6) * SimClock.TICK_DT
+			_add_bit(h.pos + dir * h.radius_m, v, 120, shell)
+			return
 
 
 ## The round's last step (seen pos -> one tick on) is swept: the first body (or Rivet, for an
@@ -172,6 +190,8 @@ func _expire(tick: int) -> void:
 	while not impacts.is_empty() and tick - int(impacts[0].w) > SCUFF_TICKS:
 		impacts.remove_at(0)
 		impact_dir.remove_at(0)
+	while not enemy_flashes.is_empty() and tick - int(enemy_flashes[0].z) > 3:
+		enemy_flashes.remove_at(0)
 	while not smoke.is_empty() and tick - int(smoke[0].z) > SMOKE_TICKS:
 		smoke.remove_at(0)
 	for i: int in range(bits.size() - 1, -1, -1):
