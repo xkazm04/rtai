@@ -367,6 +367,24 @@
     },
     "schema": {
       "const": "gtai.human_reactions/1"
+    },
+    "weapon_wound": {
+      "additionalProperties": {
+        "enum": [
+          "flinch",
+          "stagger",
+          "knockdown",
+          "shield",
+          "spin",
+          "fold",
+          "stun",
+          "burn",
+          "cover",
+          "cower",
+          "trip"
+        ]
+      },
+      "type": "object"
     }
   },
   "required": [

@@ -106,6 +106,12 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	arcs.rigs = rigs
 	arcs.z_index = held.z_index
 	layer.add_child(arcs)
+	var scorch: PlasmaScorchView = PlasmaScorchView.new()  # combat-notes: a plasma wound's burn
+	scorch.arena = p_stage.arena
+	scorch.rigs = rigs
+	scorch.host = self
+	scorch.z_index = held.z_index
+	layer.add_child(scorch)
 
 
 func _process(_delta: float) -> void:
