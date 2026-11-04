@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] quest1: street filled in 18 chunk passes
+[INFO] characters: prewarmed 33 rigs in 158.3 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 13.5 ms
+[INFO] bench: HITCH 84.8 ms (process 6.1 flush 14.0 draw 64.4 pump 0.3) tick 7
+[INFO] bench: HITCH 38.2 ms (process 6.0 flush 0.8 draw 1.7 pump 29.7) tick 15
+[INFO] arena: pit wave 1: 2 guards
+[INFO] arena: pit wave 2: 3 guards
+[INFO] showcase: reel beat pit_gun at tick 900
+[INFO] react: death_bullet on 4, frame 1035
+[INFO] react: death_bullet on 3, frame 1506
+[INFO] bench: HITCH 35.4 ms (process 22.0 flush 1.9 draw 11.4 pump 0.1) tick 1528
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/t2019.json {"frames":2036,"low1_fps":40.0082417490804,"over33_settled":1,"over50_settled":0,"p50_ms":16.6840000152588,"p99_ms":21.2080001831055,"ticks":2033,"worst_ms":84.7710037231445,"worst_settled_ms":35.3759994506836}
+[INFO] arena: react: 2 wounds (2 on a shield), 2 deaths, 0 ducks
+[INFO] arena: crowd: 4 cowers (0 at a death), 2 trips, 0 deaths
+[INFO] bench: node spans -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/t2019.spans.json (2036 frames, 46 rows)
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 583 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 95 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

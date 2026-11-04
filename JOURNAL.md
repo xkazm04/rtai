@@ -358,3 +358,59 @@ NEXT (iteration 6):
   World._prewarm, only if the owner's first second matters.
 - 15:53 No quiet window for the uncontended re-check: CPU 88 %, and two Godot processes from the other
   lane started 15:50. Skipped; the bench lock was never taken this session (no bench run).
+
+## Iteration 7 (15:53-16:53), BUILD
+
+- 15:53 read JOURNAL + git log. No REQUEST in d6-combat-notes' JOURNAL. CPU 87-97 % all session,
+  and the owner was at the desk (last input 36 s earlier): desktop capture is unsafe and every number is CONTENDED.
+  Bench lock taken 15:55.
+
+### 15:56-16:02 Fixes 1-3 in the exported release, vsync on (as shipped), interleaved, CONTENDED (CPU 97 %)
+windows-pre (before fixes 1-3) vs windows-gnd (= f1c15f46, fixes 1-3), 2100 ticks, no spans
+(evidence/perf/rt7-*.json):
+| run | p99 | 1 % low | > 33 ms after 1 s | flush (canvas _draw) mean | frames not stepping exactly 1 tick |
+|---|---|---|---|---|---|
+| pre-1 | 21.17 | 38 fps | 3 (34-35 ms) | 2.06 | 13 |
+| gnd-1 | 21.40 | 42 | 2 (35.1, 33.3) | **0.87** | 6 |
+| pre-2 | 20.89 | 43 | 1 (35.2) | 2.07 | 8 |
+| gnd-2 | 20.98 | 43 | 1 (33.8) | **0.85** | 5 |
+- The canvas flush is down 1.2 ms a frame in the shipped build. Frames that skip or repeat a tick
+  (the visible stutter under vsync) went from 13/8 to 6/5. Frame p99 under vsync is the machine.
+- Graphs: masters rt7-before-graph.png / rt7-after-graph.png.
+
+### 16:02-16:12 Real-time film without desktop capture (tools/bench/rt_recon.py, commit 7183cf62)
+- The owner was at the desk, so a desktop grab would film their windows. Instead: one --fixed-fps
+  PNG render of the same fight (fixed7, 2101 frames, one tick each) + the real-time frame log.
+  Each live frame shows the PNG of the tick it had on screen, held for the live frame's measured
+  wall time, then the result is encoded at 60 fps CFR. Holds and skips appear as they did live. No frame is drawn or blended.
+- masters ch18-rt-ab-before-after.mp4 (before | after, ticks 840-2080, 20.7 s) + rt7-{before,after}-graph.png.
+  Looked at 12 s in: a live fight on the plaza, both sides.
+- NOT validated against a real capture. The morning's desktop capture (before-rt-vsync.mp4) is framed
+  differently (zoomed out ~5 % and shifted; best frame correlation 0.67-0.69, not a match). The likely cause,
+  unverified, is the DPI change when that window was moved between displays. camera_rig follow/step
+  take only the tick (no frame delta), so a live frame of tick T should equal the fixed-fps frame of T.
+
+### 16:13-16:25 MILESTONE: the "1.2-1.9 s" release stall is bound to process age, not the fight (a5699ca5)
+- Nearly every release run had one 25-95 ms draw-phase frame 1.2-1.9 s after the first fight frame.
+- Scratch probes (/tmp, not committed): an empty ColorRect window in the same project, 3 x 4 s: no
+  stall over 22 ms. 8 s, CONTENDED: random 22-42 ms frames (the machine). Arena loaded 3 s after the
+  window opened: stalls follow the load, none 1.5 s later.
+- FightFrames now logs `engine_ms_at_first`. Release (windows-age export), 4 runs: the stall fell at engine
+  time 3934-4161 ms while its offset from the first frame varied 1176-1547 ms. In the editor the first
+  frame comes ~5 s in, so the stall is hidden in the load (age7-*: none). Not fixed: no game work
+  causes it. In the shipped boot the first ~4 s are title and loading. FINDING in decisions.md.
+- Gates on a5699ca5's tree: lint 13/13, unit 937/938 (test_noir_shadows, the known flake, 2/2 green alone), scenarios exit 0.
+
+### 16:26-16:32 Fix 4: Rivet's first draw of a carried gun loaded its art from disk mid-fight
+- Every frame log (18 of 18, editor + release, all loads) has an 8-19 ms process frame at tick
+  2018/2019, while the World loop was ~1 ms. NodeSpans to tick 2040 (t2019.spans.json):
+  rivet_held_view.gd max 18.4 ms. `_swap` -> `WeaponArt.make_held` -> a synchronous `load()` of the
+  gun's held / small / empty art on first use.
+- RivetHeldView.warm() (in _ready, behind the load) makes and frees the held sprite of every carried
+  gun and touches its mag/tank parts. Same calls, same textures, same pixels.
+- Editor, spans, CONTENDED (t2019-warm): tick 2019 process 15.9 -> 3.8 ms, held view max 18.4 -> 1.9.
+  over33_settled 1 -> 0. The flush of ~7 ms every 30 ticks in span runs is the probe's own rescan.
+- DECISION line for rivet-arsenal in decisions.md. No new unit test: the gain is measured by the frame log
+  (the evidence above). A test would need a full RivetCarry; it is owed.
+- 16:33 Gates with fix 4: lint 13/13, unit 938/938, scenarios 46/46 (exit 0). The pixel compare (fixed7 =
+  HEAD before fix 4 vs fixed7w, the same fixed-fps run with fix 4) is rendering.

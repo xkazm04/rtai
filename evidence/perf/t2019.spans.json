@@ -1,0 +1,341 @@
+{
+  "flush_order": [
+    "flush: before the first queued call (engine work) 0.009",
+    "draw: world_markers.gd 0.028",
+    "draw: arena_floor_view.gd 0.095",
+    "draw: fx_view.gd 0.404",
+    "draw: kill_char_fx.gd 0.010",
+    "draw: kill_shock_fx.gd 0.007",
+    "draw: kill_view.gd 0.091",
+    "draw: Line2D in cut_rig.gd 0.011",
+    "draw: Sprite2D in cut_rig.gd 0.007",
+    "draw: rivet_mag_view.gd 0.006",
+    "draw: Node2D in rivet_mag_view.gd 0.008"
+  ],
+  "frames": 2036,
+  "rows": [
+    {
+      "label": "world.gd",
+      "max_ms": 8.086,
+      "mean_ms": 1.348,
+      "nodes_last_scan": 1,
+      "p99_ms": 1.785
+    },
+    {
+      "label": "character_rigs.gd",
+      "max_ms": 3.745,
+      "mean_ms": 0.766,
+      "nodes_last_scan": 1,
+      "p99_ms": 1.31
+    },
+    {
+      "label": "city_view.gd",
+      "max_ms": 2.806,
+      "mean_ms": 0.584,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.923
+    },
+    {
+      "label": "draw: fx_view.gd",
+      "max_ms": 6.7,
+      "mean_ms": 0.418,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.932
+    },
+    {
+      "label": "arena_rigs.gd",
+      "max_ms": 2.425,
+      "mean_ms": 0.373,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.511
+    },
+    {
+      "label": "draw: fx_ground_mark.gd",
+      "max_ms": 5.028,
+      "mean_ms": 0.323,
+      "nodes_last_scan": 0,
+      "p99_ms": 1.025
+    },
+    {
+      "label": "collect_call_view.gd",
+      "max_ms": 1.333,
+      "mean_ms": 0.167,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.268
+    },
+    {
+      "label": "draw: arena_floor_view.gd",
+      "max_ms": 2.455,
+      "mean_ms": 0.144,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.461
+    },
+    {
+      "label": "rivet_held_view.gd",
+      "max_ms": 18.443,
+      "mean_ms": 0.095,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.122
+    },
+    {
+      "label": "city_blood.gd",
+      "max_ms": 0.309,
+      "mean_ms": 0.08,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.11
+    },
+    {
+      "label": "draw: kill_view.gd",
+      "max_ms": 5.243,
+      "mean_ms": 0.078,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.189
+    },
+    {
+      "label": "kill_view.gd",
+      "max_ms": 2.11,
+      "mean_ms": 0.069,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.088
+    },
+    {
+      "label": "draw: blood_fx.gd",
+      "max_ms": 0.698,
+      "mean_ms": 0.059,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.592
+    },
+    {
+      "label": "draw: fx_ground.gd",
+      "max_ms": 3.349,
+      "mean_ms": 0.042,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.163
+    },
+    {
+      "label": "flush: before the first queued call (engine work)",
+      "max_ms": 0.538,
+      "mean_ms": 0.023,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.12
+    },
+    {
+      "label": "corpse_fade.gd",
+      "max_ms": 0.156,
+      "mean_ms": 0.02,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.034
+    },
+    {
+      "label": "draw: world_markers.gd",
+      "max_ms": 2.067,
+      "mean_ms": 0.018,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.064
+    },
+    {
+      "label": "held_lod.gd",
+      "max_ms": 2.037,
+      "mean_ms": 0.016,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.025
+    },
+    {
+      "label": "weapon_mag_view.gd",
+      "max_ms": 0.493,
+      "mean_ms": 0.008,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.014
+    },
+    {
+      "label": "draw: Sprite2D in Sprite2D",
+      "max_ms": 0.21,
+      "mean_ms": 0.008,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.136
+    },
+    {
+      "label": "draw: Sprite2D in cut_rig.gd",
+      "max_ms": 0.222,
+      "mean_ms": 0.008,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.097
+    },
+    {
+      "label": "save.gd",
+      "max_ms": 0.074,
+      "mean_ms": 0.007,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.012
+    },
+    {
+      "label": "platform.gd",
+      "max_ms": 0.014,
+      "mean_ms": 0.006,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.009
+    },
+    {
+      "label": "arena_game.gd",
+      "max_ms": 0.058,
+      "mean_ms": 0.006,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.01
+    },
+    {
+      "label": "draw: Node2D in rivet_mag_view.gd",
+      "max_ms": 0.03,
+      "mean_ms": 0.005,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.008
+    },
+    {
+      "label": "(new since last scan)",
+      "max_ms": 0.176,
+      "mean_ms": 0.005,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "arena_floor_view.gd",
+      "max_ms": 0.073,
+      "mean_ms": 0.005,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.038
+    },
+    {
+      "label": "draw: Node2D in corpse_stains.gd",
+      "max_ms": 3.154,
+      "mean_ms": 0.005,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.0
+    },
+    {
+      "label": "draw: kill_char_fx.gd",
+      "max_ms": 0.156,
+      "mean_ms": 0.005,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "arena_hud.gd",
+      "max_ms": 0.045,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.006
+    },
+    {
+      "label": "Camera2D",
+      "max_ms": 0.136,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "hud_view.gd",
+      "max_ms": 0.058,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "draw: rivet_mag_view.gd",
+      "max_ms": 0.021,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.006
+    },
+    {
+      "label": "draw: Line2D in cut_rig.gd",
+      "max_ms": 0.053,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "draw: kill_shock_fx.gd",
+      "max_ms": 0.063,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.006
+    },
+    {
+      "label": "kill_burst_fx.gd",
+      "max_ms": 0.07,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.005
+    },
+    {
+      "label": "cast_view.gd",
+      "max_ms": 0.039,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.004
+    },
+    {
+      "label": "fx_view.gd",
+      "max_ms": 0.026,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.005
+    },
+    {
+      "label": "draw: Sprite2D in Node2D",
+      "max_ms": 0.344,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.064
+    },
+    {
+      "label": "draw: Node2D in blood_fx.gd",
+      "max_ms": 0.093,
+      "mean_ms": 0.001,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.006
+    },
+    {
+      "label": "draw: held_lod.gd",
+      "max_ms": 0.004,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.002
+    },
+    {
+      "label": "draw: Sprite2D in held_lod.gd",
+      "max_ms": 0.079,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.017
+    },
+    {
+      "label": "draw: Node2D in Node2D",
+      "max_ms": 0.099,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.008
+    },
+    {
+      "label": "draw: Node2D in cut_rig.gd",
+      "max_ms": 0.028,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.002
+    },
+    {
+      "label": "draw: cut_rig.gd",
+      "max_ms": 0.043,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.004
+    },
+    {
+      "label": "draw: Sprite2D in weapon_mag_view.gd",
+      "max_ms": 0.002,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.0
+    }
+  ],
+  "schema": "gtai.node-spans/1"
+}
