@@ -72,6 +72,7 @@ func attach_view(view: Node) -> void:
 		if _lone:
 			_cam.lean = FightCam.LONE_LEAN
 			_cam.max_lean_m = FightCam.LONE_MAX_LEAN_M
+			_cam.hold_ticks = FightCam.LONE_HOLD_TICKS
 
 
 func write_state(out: StreamPeerBuffer) -> void:

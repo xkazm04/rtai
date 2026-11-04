@@ -31,3 +31,23 @@ func test_the_lone_camera_leans_toward_the_victim_and_keeps_rivet_in_frame() -> 
 	for t: int in range(300, 700):
 		at = cam.step(arena, t)
 	assert_almost_eq(at.distance_to(arena.rivet.pos), FightCam.LONE_MAX_LEAN_M, 0.05)
+
+
+func test_the_lone_camera_holds_the_corpse_through_the_aftermath() -> void:
+	var bus: EventBus = autofree(EventBus.new())
+	var reg: RngRegistry = RngRegistry.new(5)
+	var arena: CombatArena = CombatArena.new(CombatTuning.shipped(), bus, reg.stream(&"combat"))
+	var g: Fighter = arena.spawn_guard(arena.rivet.pos + Vector2(6.0, 0.0))
+	var cam: FightCam = FightCam.new()
+	cam.hold_ticks = FightCam.LONE_HOLD_TICKS
+	var at: Vector2 = Vector2.ZERO
+	for t: int in 100:
+		at = cam.step(arena, t)
+	g.hp = 0.0
+	for t: int in range(100, 100 + FightCam.HOLD_TICKS + 30):
+		at = cam.step(arena, t)
+	assert_eq(cam.subject, g, "past the default 1 s hold, the lone frame keeps the body")
+	for t: int in range(190, 100 + FightCam.LONE_HOLD_TICKS + 5):
+		at = cam.step(arena, t)
+	assert_null(cam.subject, "then lets him go")
+	assert_almost_eq(at.x, arena.rivet.pos.x, 3.0, "and eases back toward Rivet")

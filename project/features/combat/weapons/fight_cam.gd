@@ -19,9 +19,13 @@ const HOLD_TICKS: int = 60
 ## his kill (or his burning run) sits nearer the middle; Rivet stays in a 48 px/m frame.
 const LONE_LEAN: float = 0.65
 const LONE_MAX_LEAN_M: float = 6.0
+## A lone kill's aftermath stays framed 2.5 s (the next lone guard comes 2.5 s after the kill, so
+## the longer hold drags no fight off the frame there).
+const LONE_HOLD_TICKS: int = 150
 
 var lean: float = LEAN
 var max_lean_m: float = MAX_LEAN_M
+var hold_ticks: int = HOLD_TICKS
 var at: Vector2 = Vector2.INF
 var subject: Fighter = null
 var _since: int = 0
@@ -43,7 +47,7 @@ func _pick(arena: CombatArena, tick: int) -> void:
 			_since = tick
 			if subject.pos.distance_to(arena.rivet.pos) <= REACH_M:
 				return
-		elif tick - _since < HOLD_TICKS:
+		elif tick - _since < hold_ticks:
 			return
 	subject = null
 	var best: float = INF

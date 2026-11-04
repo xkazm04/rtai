@@ -1222,3 +1222,48 @@ main; BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if the burn re-film
 NEXT: the Director merges n-gunplay (83429487 / 8ea3a2e5 are needed by human-reactions and
 brutality). Then on merged main: re-film the molotov beside a brutality kill and take the idle
 riot + drive bench of record. Wire GunHand into quest 1. BURN_SCALE 0.3 -> 0.38 if the burn reads thin.
+
+## Iteration 19 (BUILD, extension, 08:44 - 09:44)
+- 08:44 read: JOURNAL NEXT, REPORT open items, every n-* JOURNAL for `-> gunplay`: no new REQUEST.
+- Checked my top 3 frames.json entries against the 04:00 readability rule. All three fail it:
+  the 48 px/m six-gun side-by-side shows the dev HUD over each tile and two kills at the tile
+  edge (rocket, molotov), the 64 px/m still sheet is a sheet, the city six is 32 px/m.
+- DECISION gunplay (dev capture): `--lone` (GunplayHook, the arena pit with --weapon) makes every
+  pit wave one guard (`GunplayHook.lone`: first_wave 1, grow 0, max_wave 1), so each table-gun
+  kill is filmed on a victim standing alone; the hook logs `lone kill <n> at tick <t>` as the
+  cut points. With --cam=fight the camera leans 0.65 toward the victim, at most 6 m off Rivet
+  (`FightCam.LONE_LEAN` / `LONE_MAX_LEAN_M`; the 0.5 / 4.5 m defaults stay for every other run),
+  so the kill sits nearer the middle third and a burning runner stays longer in frame. Dev runs
+  only (like --start): no sim, replay or golden change. Rejected: a new arena station with a lone
+  spawn (the arena lane's file, and the pit already plays the real fight).
+- FRICTION: the first lone run with `--start=pit` walked the bot back out past the lab dummies
+  (its way-in path is absolute), and without `--rigs` the cops draw as quest 1's discs. The reel
+  uses the bot's own walk-in and cuts each gun from its first kill.
+- FINDING (first lone pass, lean 0.5): the burning cop runs south out of the 48 px/m frame and
+  dies off screen (Rivet stays; lean capped 4.5 m). Kills on the 0.5 lean sat in the bottom third.
+- 08:5x MILESTONE 23f0fe22 (`--lone` + the leaning lone camera). Gates on it: lint 13/13, unit
+  755/755 (+3, `evidence/n11/unit-19.log`), scenarios 29/29 (`evidence/n11/scen-19.log`). No native
+  or sim change, so parity was not re-run (still bit-exact on 83429487).
+- Lone renders (`MASTERS/lone19_<gun>/`, 20 s, 48 px/m, --cam=fight --clean --rigs, 0 script
+  errors each). The kill ticks are the same with the 0.5 and the 0.65 lean, so the camera is view
+  only: pistol 389/696/1008, machine pistol 394/706/1010, rocket 407/732/1027, flamethrower
+  573/1074, electro 577/953. Looked at the frame 20 ticks after each kill: with lean 0.65 the
+  victims of pistol k2, machine pistol k2, rocket k2 and electro k1 sit in the middle third.
+- FINDING: the flamethrower's burning cop runs 14 m or more (east, through the pit's gap) and the
+  camera dropped him past `REACH_M` 14, so both burn deaths fell off frame. Fix (dev view only):
+  with `--lone` the camera keeps its subject to 30 m and leans up to 7 m (`LONE_REACH_M`,
+  `LONE_MAX_LEAN_M` 6 -> 7: Rivet stays inside the 48 px/m frame). Re-rendering the flamethrower
+  and the molotov with it.
+- 09:0x CORRECTION: the 30 m hold / 7 m lean for burning runners (above) did not help, and I
+  reverted it before committing it. The burning cop runs more than 14 m (north or east, out through
+  the pit gaps), so with the camera leaning to him the frame showed Rivet at the edge of empty
+  ground. GAP: in the lone reel the flamethrower and molotov victims are filmed lit and running.
+  Their deaths fall off frame at 48 px/m. Fixing that means GunplayBot chasing a burning target,
+  or a wider frame. Not attempted before the freeze.
+- FINDING (first 4-gun cut, 1 fps sheet): with the 1 s hold the camera eased back to Rivet during
+  the aftermath, so each corpse drifted to the frame's edge 1-2 s after the kill.
+  DECISION (dev capture): with --lone the camera holds a fresh corpse 150 ticks
+  (`FightCam.LONE_HOLD_TICKS`, `hold_ticks`; the default 60 stays). The next lone guard spawns
+  2.5 s after the kill, so the longer hold drags no fight off frame (the reason 150 was rejected
+  for the pack pit). The reel cuts run 2.5 s before to 3 s after each kill
+  (`evidence/n11/lone_reel.sh`).
