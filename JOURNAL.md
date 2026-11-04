@@ -1308,3 +1308,10 @@ while gates.sh's evidence step runs.
   n-showcase, then n-human-reactions (1623e625) and re-run unit. Open: no live robot thug,
   showcase-2 hub crowding, r19's 424 ms worst frame (contended, one run).
 - 10:36 session end. No Godot process of mine running.
+
+## Iteration 16 (STABILIZE, 10:32-10:40)
+- 10:32 re-checked lane tips: no project/ commits since 10:00 except human-reactions 1623e625
+  (already held out, see iteration 15). Nothing to fix; no Godot process of mine running.
+  REPORT (10:34 update) stands as the final report.
+- NEXT (Director): final build = n-showcase 08e1b72f + docs; reel-1012; exe 10:12. Merge
+  n-showcase, then n-human-reactions (1623e625) and re-run unit.
