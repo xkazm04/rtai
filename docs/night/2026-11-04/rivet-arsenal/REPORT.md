@@ -82,10 +82,10 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 ### 6. The real game paths
 - Arena: on the rigs by default (`--sprites` for the old look).
 - City proving block: `--arena=city --bot=arsenal`, in `M\clips\city-block-arsenal-fight-32ppm.mp4` (3 waves, 7 kills).
-- Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fight-32ppm.mp4`, and at 64 px/m `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
+- Quest 1: `--rigs`. Clips: `M\clips\quest1-rigs-dock9-fightcam-32ppm.mp4` (8.3 s: both cop waves die in red blood) and, at 64 px/m, `quest1-rigs-dock9-fightcam-64ppm.mp4`. In the second, Rivet with Gloria drops a cop into his blood above the dialogue box. It was shot with the dev fight camera, `quest1_clip.gd --cam=fight --ticks=13580-13860`.
 
 ## Calls for the owner
-1. **Quest 1 on the cast rigs by default.** Today this is opt-in `--rigs` (debug builds; it loads `dev/arena/arena_rigs.gd`). The alternative is the sprite cast. Clips: `quest1-rigs-dock9-fight-32ppm`, `quest1-rigs-dock9-64ppm`. If yes, the Director promotes ArenaRigs' feed into features/ at the merge.
+1. **Quest 1 on the cast rigs by default.** Today this is opt-in `--rigs` (debug builds; it loads `dev/arena/arena_rigs.gd`). The alternative is the sprite cast. Clips: `quest1-rigs-dock9-fightcam-32ppm`, `quest1-rigs-dock9-fightcam-64ppm`. If yes, the Director promotes ArenaRigs' feed into features/ at the merge.
 2. **The first claw jab drops a human cop** (hp 1 doctrine), so the full combo only plays on tougher bodies. The alternative: light claws stagger and only the slam kills. Clips: `arena-motion-claw-32ppm-it7`, `arena-claw-shock-64ppm`.
 3. **One-hand held_scale 1.5** (the pistol slightly oversized so the claw does not hide it) vs true size. Stills: `frames/held-pistol-scale15-64ppm-3x.png` vs `held-pistol-scale1-64ppm-3x.png`.
 4. **The switch:** number keys plus the wheel or d-pad cycle; no radial menu (`arena-arsenal-cycle-*`).
