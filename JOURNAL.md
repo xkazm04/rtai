@@ -357,12 +357,26 @@ NEXT (iteration 5), in order:
   `it5-reload-mags-rim-64ppm.png`. Default: stays (it tells where a fight happened).
 
 NEXT (iteration 6), in order:
-1. The advanced guns with the rim at 32 px/m: `--loadout=hand_cannon,ray_gun,mini_nuke` and `gloria,homing_shard`;
-   then the silhouette pass for the ray gun vs the homing shard gun (both long and pale along the arm): a ring
-   stack that sticks out sideways on the ray gun, a crystal cluster on the shard gun.
+1. The homing shard gun's crystals still sit inside its outline: lift them out (a hand mask; the light-pixel mask
+   also catches the cream plates) and scale x1.35 so they spike past the body; A/B against the ray gun at 32 px/m
+   (`it5-ray-vs-shard-32ppm.png` is the before).
 2. The electro arc forks read as twigs: a jaggier arc (more kinks, forks forward) in `weapon_fx_jet.py`; film a
    chain between two guards (a station row 1.5 m apart in `arena_stations/weapon-art.json`).
 3. The weapon-rack arena station (`arena_stations/weapon-art.json` + `--pickups=` all 16, a label per gun).
 4. If gunplay/showcase merge before REQUEST 5 lands: set `mag_drop: false` for the four magazine guns in
    `gun_fx.json` (two magazines per reload otherwise).
 5. The reload close-up with the rim at 128 px/m (the it5 128 frame predates the rim).
+- MILESTONE 03:47 ray gun silhouette (872adbe9): the emitter rings stretched x1.45 across the bore line
+  (`tools/art/ray_gun_rings.py`, deterministic; grip/muzzle y +37; provenance). Same deterministic ticks at
+  32 px/m, ray gun vs homing shard (`it5-ray-vs-shard-32ppm.png`): the ray gun is now wider with a bumpy outline,
+  the shard gun slim with its funnel; told apart, modestly. The advanced three with the rim at 32 px/m also seen
+  (hand cannon a fat outlined block, mini-nuke's vermilion nose).
+- FRICTION: a crystal mask for the shard gun by luminance also takes the cream body plates; left for NEXT 1.
+- DECISION weapon-art ray gun silhouette: stretch the rings sideways (a ribbed outline reads from above) rather
+  than enlarge the bulb (the tip is under the muzzle flash half the time). Alternative = revert
+  `ray_gun/held.png` + its grip/muzzle rows (one commit).
+- Gates of record this session: lint 13/13 (668 files), unit 733/733 at 872adbe9 (`unit-it5-final.log`; weapon tests 20/20
+  after the ray gun), scenarios 32/32 at 934b7ded (`evidence/weapon-art/scenarios-it5.log`). Render-only + data +
+  one dev arena hook; no sim file, no replay or parity golden touched. No bench (render-only: 8 rim sprites on
+  one held gun + 1 magazine).
+- frames.json 15 entries (it5 first; the design sheet kept). Scratch AVIs and crops deleted.
