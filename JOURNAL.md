@@ -293,3 +293,48 @@ NEXT (iteration 3):
   entries); scratch sheets deleted. NEXT (iteration 3) list above stands, plus: fix the gun
   beat's crate pin (top of the list, it is the reel's own defect), then film the machine pistol
   again.
+
+## Iteration 3 (02:48 - 03:48), BUILD
+
+- 02:49 read JOURNAL, git log, the five lanes' tips and JOURNALs. REQUEST 8 answered by
+  rivet-arsenal (claw cops y 3 -> 4.4, bot lane y 2.85, DECISION in their JOURNAL line 73).
+- MILESTONE 02:58 merge round 4 (brief order): weapon-art 073780ed (conflict arena_game.gd:
+  both bot switches kept), rivet-arsenal 39b89d53 (clean), gunplay 356a3a2d (conflicts fx_view +
+  arena_rigs), human-reactions 2109c74b (conflict arena_rigs), brutality 55791625 (clean), then
+  weapon-art again to 8ad641de (their molotov muzzle test fix). JOURNAL.md kept ours each time.
+  - DECISION glue fx_view: weapon-art's cells own Rivet's flash + brass for a gun with art;
+    gunplay's GunFx draws them otherwise and always its smoke, impacts, magazines, hostile stars
+    (GunFxArt.draw_under/draw_over got a default-true shells/muzzle flag: a 3-line change in
+    gunplay's file). Rejected: both (two flashes and two sets of brass per round).
+  - arena_rigs: union of rivet-arsenal's clip counters + held view, the hidden set, human-
+    reactions' looks; armed = table gun or own weapon, and not a pedestrian.
+  - Native: human-reactions 698c9543 adds CityCore::scare. Our native/ source equals their tip,
+    so I copied their two DLLs (built 02:41/02:44) into project/native/bin (read only from their
+    worktree), then --import.
+- GATES r4 (merged tree): lint 13/13; unit 772/773 (weapon-art's own test_fx_frames_resolve,
+  fixed on their tip 8ad641de -> merged); scenarios 36/37: scenario_rivet_claw "expected 4 cops
+  down" (3). Proof of cause: with human-reactions' station file removed it passes. react_dummy_4
+  (13, 1.5) sits 2.9 m from spar_shock_1 (13, 4.4), inside the shock's 3 m chain radius.
+  - Tried: y 0.5 (claw 8/10: Rivet's sprint/roll lane at y ~0 bumps the dummies), y 1.25 (same),
+    only dummy_4 to x 11.5 (still 3 kills: so it is not only the chain), whole line 1.5 m west
+    x -0.5..11.5 (rivet_claw + react_line green). Took the last (DECISION in decisions.md).
+  - That move made scenario_brutality_kills' planted check miss ("1 % gib speed fault went
+    unseen"; green at the old spot). The check compares only the final state after TICKS, and
+    the faulty gib slot can recycle before then. Glue: the state is also written 30 ticks after
+    the plant (clean and faulty alike). Green; commit 15a5a694.
+- REQUEST 9 -> brutality: please confirm or replace my change to scenario_brutality_kills
+  (15a5a694, the planted gib fault also judged 30 ticks after the plant). The final-state-only
+  check went blind when another lane's hub station moved 1.5 m.
+- REQUEST 10 -> human-reactions, rivet-arsenal: on the merged build the react_line had to move to
+  x -0.5..11.5 (y 1.5) for scenario_rivet_claw; with dummy_4 alone at x 11.5 the claw still lost
+  its fourth kill, so something besides the chain hop (the cops' walk at Rivet past the dummies?)
+  ties the two stations. Please take the new spot into your branches or agree a better one.
+- REQUEST 11 -> weapon-art, gunplay: both of you draw Rivet's muzzle flash and his brass; the
+  merge now lets weapon-art own them when it has art for the gun (decisions.md). Agree on one
+  owner and delete the other path (casings: WeaponCasings vs GunFx bits).
+- 03:03 reel fixes (own): the gun beat side-steps off a prop (pinned < 0.3 m in 30 ticks ->
+  50-tick side-step, alternating; telemetry reel_dodges = 1 in the scenario). Commit 47673e26.
+- MILESTONE 03:14 weapon switch inside the reel (NEXT 4): ReelArsenal presses the next carried
+  slot's `weapon_slot_N` bit every 2 pit kills when a --loadout is given (60 s gun beat);
+  `--reel=pit` films only the pit's two beats. Without --loadout the reel and its scenario do
+  not move. Commit 62f60be4.

@@ -3,7 +3,7 @@
 set -u
 N=$1; P=$2; F=$3; shift 3
 cd /c/Users/kazda/kiro/gtai-wt/n-showcase
-export APPDATA=C:/Users/kazda/kiro/gtai-n4/appdata/showcase
+export APPDATA=${FILM_APPDATA:-C:/Users/kazda/kiro/gtai-n4/appdata/showcase}
 G='C:\Users\kazda\kiro\gtai-spike\tools\godot\Godot_v4.7.2-stable_win64_console.exe'
 S=C:/Users/kazda/kiro/gtai-n4/scratch-showcase
 M=C:/Users/kazda/kiro/gtai-masters/n4/showcase
