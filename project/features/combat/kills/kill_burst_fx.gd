@@ -9,6 +9,8 @@ extends Node2D
 const SHARD: Color = Color("#F4E3B5")
 const MIST: Color = Color(0.72, 0.06, 0.08, 0.55)
 const SHARDS: int = 5
+## The butts of the shards on the near side (the entry: short cream stubs back toward the shooter).
+const BUTTS: int = 3
 const MIST_TICKS: int = 26
 
 
@@ -66,25 +68,38 @@ func _draw() -> void:
 			_mist(b, float(age - b.hold) / MIST_TICKS)
 
 
-## Shards driven through the body, sticking out of its far side along the shot.
+## Shards driven through the body, fanned out of its far side along the shot, their butts
+## standing out of the near side.
 func _shards(b: Burst, age: int) -> void:
 	var c: Vector2 = b.at * ppm
 	var k: float = float(age) / maxf(1.0, float(b.hold))
 	for n: int in SHARDS:
-		var side: float = (_h(b.serial, n) - 0.5) * 0.36
+		var side: float = (float(n) + 0.3 * _h(b.serial, n)) / float(SHARDS) - 0.55  # spread, not bunched
 		var depth: float = 0.12 + 0.1 * _h(b.serial, n + 20)
-		var base: Vector2 = c + (b.dir.orthogonal() * side + b.dir * depth) * ppm
+		var base: Vector2 = c + (b.dir.orthogonal() * side * 0.5 + b.dir * depth) * ppm
 		var jit: float = 0.0 if reduced_motion else (_h(b.serial, n * 7 + age) - 0.5) * 0.06 * k
 		var out: Vector2 = (
-			b.dir.rotated(side * 1.4 + jit * 10.0) * (0.4 + 0.18 * _h(b.serial, n + 40))
+			b.dir.rotated(side * 2.2 + jit * 10.0) * (0.4 + 0.18 * _h(b.serial, n + 40))
 		)
-		var tip: Vector2 = base + out * ppm
-		var w: Vector2 = out.orthogonal().normalized() * 0.1 * ppm
-		var tri: PackedVector2Array = [base + w, tip, base - w]
-		KillPoly.fill(self, tri, SHARD)
-		@warning_ignore("return_value_discarded")
-		tri.append(tri[0])
-		draw_polyline(tri, Ink.INK, 1.2, true)
+		_spike(base, out, 0.1)
+	for n: int in BUTTS:  # the entry side: short butts standing out back along the shot
+		var side: float = (float(n) + 0.5) / float(BUTTS) - 0.5
+		var base: Vector2 = c + (b.dir.orthogonal() * side * 0.3 - b.dir * 0.16) * ppm
+		var jit: float = 0.0 if reduced_motion else (_h(b.serial, n * 5 + age) - 0.5) * 0.4 * k
+		_spike(base, -b.dir.rotated(side * 1.2 + jit) * (0.24 + 0.1 * _h(b.serial, n + 120)), 0.08)
+
+
+## One shard: a cream spike in an ink rim from `base` out along `out` (metres), `half_w` m wide,
+## standing in a red wound.
+func _spike(base: Vector2, out: Vector2, half_w: float) -> void:
+	var tip: Vector2 = base + out * ppm
+	var w: Vector2 = out.orthogonal().normalized() * half_w * ppm
+	var tri: PackedVector2Array = [base + w, tip, base - w]
+	draw_circle(base, half_w * 0.9 * ppm, KillMarkArt.BLOOD)  # the wound it stands in
+	KillPoly.fill(self, tri, SHARD)
+	@warning_ignore("return_value_discarded")
+	tri.append(tri[0])
+	draw_polyline(tri, Ink.INK, 1.6, true)
 
 
 ## The red mist at the pop: a soft blot that swells and thins.
