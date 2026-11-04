@@ -354,12 +354,17 @@ NEXT (iteration 5, in order):
   round passes north of the patrol cop, its head tucks and the body turns away. frames.json 15
   (react_families_32ppm dropped from the list, the file stays).
 
+- MILESTONE 04:06 d7676995: duck pass 2 (the 32 px/m run read too small): cover travel 0.2 m,
+  tuck 0.78. near_miss_line_32ppm.mp4 + the 64 px/m clip re-filmed (26 ducks, 3 wounds each).
+  Unit 731/731, react scenarios green. frames.json 15 (crowd_cower_64ppm dropped from the list).
+
 NEXT (iteration 6, in order):
-1. Near misses at 32 px/m (the same run, --ppm=32) and judge if the half flinch reads; maybe a
-   bigger duck (cover family scale 0.84 -> 0.78, travel 0.1 -> 0.2 m) if not.
+1. Run the full evidence (`node tools/evidence/run.mjs --no-bench --allow-dirty`) on d7676995.
 2. SWAT look when weapon-art REQUEST 1 lands (still open at 03:58); then a fifth react_line
    dummy. ThugPlan.ART_DIR swap when REQUEST 2 lands.
 3. Trip live: put fleeing paths across bodies (the riot: city_bench --scenario=riot has bodies
    amid the crowd); count CrowdReact.trips there and film one.
 4. Full evidence run again after the next change; bench once (the lock) since the riot gets
    CrowdReact work.
+- 04:08 session close. Branch tip has everything; gtai-masters/n4/human-reactions/frames.json
+  15 entries, each file checked to exist.
