@@ -753,3 +753,59 @@ NEXT (iteration 10, in order):
   from W, E, N, S: all six lie down their shot, the N/S ones north-south now). Registry rule
   applied (motion-quality-gating): judged at the asked zoom (48) and in the fall, not only the
   end frame.
+- 07:14 NEXT 3 (the burn death in the live pit): `arena.tscn -- --arena --rigs --bot=gunplay
+  --weapon=flamethrower --start=pit --clean --ppm=32` (movie writer, fixed 60 fps, 1260
+  frames): 2 burn deaths (frames 753, 906), 6-8 wounds. FRICTION: the burn kills sprayed blood
+  and the corpse soak (CorpseStains, SOAK_Z over the body) turned the charred body into a solid
+  red blob by frame 1000 (red is blood only; the char tint never showed). Cause: CombatBlood's
+  _on_killed ignored the events.json kill kind (`burned` from FightAreas).
+- MILESTONE (commit "a body burned to death leaves no red"): CombatBlood.DRY_KILLS [&"burned"] skips the kill spray and the soak (one early
+  return; shared file of d5-combat, also edited by brutality's veto rework: MERGE NOTE, the
+  early return goes first in brutality's _on_killed too). Unit test (a `burned` kill: kills 0,
+  no pool). The flamethrower's burning victims still read as flame stars hiding the body
+  (gunplay's fire FX; showcase REQUEST 27 is the same note for the molotov, to brutality cc
+  gunplay): not mine to redraw.
+- MILESTONE c909ab49 + next: the burnt corpse lies over a faint soot blot and smokes
+  (CorpseScorch's burnt variant: no burn star, soot at 0.6 so the near-black body still reads on
+  it, along the tucked body's shoulder line, 5 puffs over 4.5 s). Pass 1 drew the electro blot
+  (along x) at full ink: the burnt legs vanished into it and the blot lay across the body. Pass 2
+  at 0.4 under the body: invisible at 32. Pass 3 (kept): turned onto the shoulder line, 0.6.
+- Evidence: pit_burn_death_32ppm.mp4 (13 s, the live pit, two flamethrower deaths, no red, soot
+  under the charred bodies) + pit_burn_death_32ppm_zoom.png (6 frames at 2x: burning, the fall,
+  the charred corpse on soot); pit_burn_death_64ppm.mp4.
+- 07:31 the blast death live (`--weapon=rocket_launcher`, 4 kills at frames 629, 961, 1258,
+  1391): thrown, tumbling, a twisted landing with red. FRICTION: the knockdown get-up cannot
+  be filmed in the live pit: a rocket kills every human, armored too (`--armored`: 0 wounds,
+  4 deaths), so a survivor's knockdown never happens there. The board (segment 2) stays its
+  evidence. Clip pit_blast_death_32ppm.mp4 + sheet.
+- 07:36 REQUEST 24b checked live: `--weapon=electro_gun --ppm=48`, kill at 653: the corpse lies
+  down the shot (feet toward Rivet), the scorch star reads at 48. pit_electro_alongshot_48ppm
+  .mp4 + sheet. REQUEST 24b ANSWER -> showcase: done (3a8d3931): the stiff body now turns onto
+  the shot's line whatever way the victim faced (your reel's victim did not face Rivet), and the
+  scorch is inked for 48 (soot 0.7, burns 0.8 and wider). Merge 3a8d3931 (+ 19f2cfd0, c909ab49,
+  9851d4dd for the burn death: no red on a `burned` kill, the burnt corpse on soot).
+- Gates on 9851d4dd: lint 13/13; unit 748/749, the one failure test_noir_shadows (the known
+  flake, "Parameter t is null"), green alone 2/2; scenarios 33/33. Bench skipped: bench.lock held
+  by another lane (07:28).
+- frames.json 15: the electro-along-the-shot pair, the burn death pair, the blast sheet first;
+  kept the shield sparks, react_families, react_line_cops4 (four sides), the riot (game-city).
+- MERGE NOTE (Director): CombatBlood.DRY_KILLS is one early return at the top of _on_killed.
+  n-brutality reworks that function (veto, _bleed_killed): keep their body and put
+  `if _kind in DRY_KILLS: return` first.
+
+### Calls for the owner (adds to the list)
+- Burn corpse (pit_burn_death_32ppm_zoom.png): A, now: no blood on a burn kill, the charred body
+  over a faint soot blot with smoke; B, blood as for any kill (the spray + soak painted the
+  charred body solid red: rejected under "red is blood only" reading; one line,
+  CombatBlood.DRY_KILLS = []).
+- Electro kills still spray red (the electro gun's kill kind is `shot`): A keep (now), B dry
+  like the burn (needs gunplay to pass a `shocked` kind).
+
+NEXT (iteration 12, in order):
+1. On the merge with n-gunplay: wire `gun_fx.shield_test = link.shield_test` (one line) and film
+   react_line at 64 px/m (a front round on the riot cop sparks only).
+2. Bench the riot p99 under bench.lock (CrowdReact 244 -> 150 us is unbenched).
+3. The knockdown get-up live: needs a survivor; the tackle (collisions lane) or a rocket's
+   splash edge on armored humans with less splash damage; check `--armored` with the molotov.
+4. The flamethrower's burning victims read as flame stars hiding the body (gunplay's FX,
+   showcase REQUEST 27 is the molotov twin): if gunplay thins the stars, re-film the burn death.
