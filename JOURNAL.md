@@ -568,3 +568,80 @@ NEXT (iteration 8, in order):
    30 s at 900 walkers). Try a station on a pavement (range or course with --crowd) or quest 1's
    street fight, and count startles in the exit log.
 4. Bench once on an idle machine (the lock) for the riot p99 with CrowdReact.
+
+## Iteration 8 (05:43-06:43), BUILD
+- 05:44 read JOURNAL, git log, other lanes' JOURNALs. REQUEST 2 -> gunplay not answered yet.
+  Addressed to me: showcase REQUEST 22 (the riot shield is a thin line at 48 px/m) and REQUEST 23
+  (time the startle scan: r7 riot p99 8.73 -> 11.48 ms, contended).
+- REQUEST 22: the shield part (126 x 256 crescent) printed 1:1 on the forearm, tilted with the
+  upper arm, and stuck out north of the head. RigArm now prints it SHIELD_THICK 1.9 x SHIELD_SPAN
+  1.45 and seats its centre SHIELD_AHEAD 40 px ahead of the hand, SHIELD_MID 0.75 of the way to
+  the body's midline: a curved slab with the cream face across the chest (board at 64 px/m, the
+  riot cops of the flinch row). Not done: rounds sparking off the shield (the block reaction
+  plays, but the board / live blood still spurts at the body; a spark needs gunplay's GunFx).
+- REQUEST 23 MEASURE (headless city_bench --scenario=riot --secs=30, CONTENDED, one sample each):
+  CrowdReact.observe cost 1744 us mean, 5965 us worst per tick (p99 CPU 9.0 ms). The per-death
+  startle scan was not the cost; _trip_over was: every fleeing person (about 350 in a riot)
+  against every body (up to 15) each tick, with a Vector2i key built per pair. Only a person on a
+  full rig can trip (16 at most), so the scan now skips the rest before the body loop and checks
+  the distance before the key; _observe reads the packed arrays and collects the bodies in its
+  one pass. After: 330 us mean (p99 5.9 ms on the run before the last trim; the last run had a
+  21.8 ms p99 and a 13.9 ms worst call: a stall under load). Same counts: 20 cowers (20 at a
+  death), 4 trips, 15 deaths. city_bench's exit log now prints the observe cost (CrowdReact
+  cost_us / cost_max_us / cost_calls, render-side wall time, never read by the sim).
+- MILESTONE 3e7cae59 (REQUEST 22, first half): the riot shield slab. Evidence
+  riot_shield_48ppm_sheet.png (before: the 1:1 crescent off the shoulder; after: the slab across
+  the chest, standing and in the shield recoil) + riot_shield_48ppm.mp4 (the board's flinch and
+  stagger rows at 48 px/m, 60 fps).
+- MILESTONE b657ca05 (REQUEST 23): the trip-scan fix above. Unit 743/743, scenarios 33/33.
+- MILESTONE 59b971e6 + ShieldSparks (REQUEST 22, second half): ReactLink.blocked(victim, dir)
+  fires when the shield family plays; ShieldSparks (features/combat/react) throws CombatBlood's
+  metal hit (white sparks that land dark, no Rivet oil leak) off the shield's face 0.35 m toward
+  the shooter, fanned back at him. ArenaRigs wires it in one line (view.blood, read lazily).
+  Unit 744/744 (a front round blocks, a back round does not).
+- REQUEST 3 -> gunplay: ReactLink.blocked(victim, dir) now names every round a riot shield
+  stopped (render side). If GunFx draws its own hit mark or spurt on a wound, skip the red for
+  a blocked round and spark there instead; ShieldSparks is the stand-in until then.
+- MILESTONE fe8f807e + 4679056e: the shield sparks live. Arena reaction line (`--rigs
+  --bot=react_line --clean`, res://dev/arena/arena.tscn): Rivet shoots the riot cop from the
+  east, the slab takes it, white sparks fan back at him and land as dark flecks, the cop recoils
+  behind the shield. Exit log: 9 wounds (2 on a shield), 4 ducks at 32 px/m. Evidence (masters +
+  evidence/): arena_shield_sparks_64ppm.mp4 + _sheet.png, arena_shield_sparks_32ppm.mp4 +
+  _sheet.png; frames.json 15 (the three shield entries first, every file present).
+  FRICTION: ShieldSparks first passed a Variant to splash() (warning = error), which broke
+  arena_game's compile; the first film was of a broken arena. Unit's load_all caught it. Fixed
+  before the film of record. Lint does not catch type warnings; always run unit before filming.
+- Gates on fe8f807e: lint 13/13, unit 744/744, scenarios 33/33.
+- NOT DONE this session: cherry-pick gunplay 0c0465fd (electro charged shot). It touches
+  gun_fx_art / fight_areas_art, which carry gunplay commits my branch lacks, so it is a merge,
+  not a pick. The morning merge brings it.
+
+### Calls for the owner (adds to the list)
+- Riot shield (arena_shield_sparks_64ppm_sheet.png): A, the slab (1.9 x 1.45, across the chest);
+  B, a flat rectangular shield, which needs new art from weapon-art. Sparks land as dark flecks
+  (the metal hit kind Rivet uses); A keep, B sparks only (a new blood_fx kind, gunplay's table).
+- 06:17 evidence on 4679056e (`--no-bench --allow-dirty`, only untracked evidence/ clips + this
+  JOURNAL): lint 13/13, unit 744/744, parity bit-exact (629) PASS. Scenarios 32/33: only
+  scenario_city_chase (the known 2 ms nav-budget flake under load; the two full scenario runs
+  this session were 33/33). Selftest FAIL: look goldens 5/11 (means 1.1-2.2, all within 4, but
+  the far-pixel share 0.020-0.025 over its 0.02 limit on six frames, d1 and night included),
+  block 4/5. MEASURE, the shield is not the cause: the look goldens re-run alone with the shield
+  change switched off (SHIELD 1 x 1 and the old position, restored after) came out worse:
+  every frame off, means 2.9-5.2, far 0.035-0.052. So the goldens move from run to run on this
+  loaded machine (six lanes on one GPU), whatever the shield does. Judge them on the Director's
+  quiet machine before any re-bless. Accent audit: the same 48 px/m blood-flicker rows as the
+  05:33 / 05:40 runs.
+- 06:32 session close. All code committed (tip 4679056e + this journal). frames.json 15 entries,
+  each file present. No Godot process of mine running.
+
+NEXT (iteration 9, in order):
+1. The look goldens on a quiet machine (or three runs back to back) to tell drift from a real
+   change; if the riot shield slab moves a city frame, re-bless with a dated decisions line.
+2. REQUEST 3 -> gunplay (blocked rounds spark, no red) and REQUEST 2 (north/south spray
+   column): read their answers; cherry-pick.
+3. The electro death live: merge gunplay's electro charged shot (0c0465fd needs their earlier
+   gun_fx_art / fight_areas_art commits, so a merge, not a pick) and film the stiff corpse in
+   the pit at 32 and 64 px/m.
+4. CrowdReact still costs 330 us a tick in the riot: the per-row dictionaries (_dead, _fleeing)
+   could be packed arrays keyed by feed row. Bench on an idle machine under bench.lock.
+5. A street startle in the live city (iteration 7 NEXT 3).
