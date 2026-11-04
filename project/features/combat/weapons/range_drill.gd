@@ -45,7 +45,8 @@ static func run(table: WeaponTable, lane: Lane, rng: RandomNumberGenerator) -> R
 	for tick: int in TIMEOUT_TICKS:
 		_strafe_turn(target, lane, tick)
 		trig.step()
-		var held: bool = trig.spec.auto or tick % 2 == 0
+		# a charge gun is held on (the tap bolt, then the charged one), like the arena bot
+		var held: bool = trig.spec.auto or trig.spec.charge_ticks > 0 or tick % 2 == 0
 		if trig.pull(held):
 			sim.fire(trig, Vector2(0.4, 0.0), target.pos, team, 0)
 		sim.step(tick)
