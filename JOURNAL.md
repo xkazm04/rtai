@@ -438,3 +438,7 @@ NEXT (iteration 6, in order):
 - 03:56 city shard check at 32 px/m (`city_shard_block_32ppm/shard_tiles_32ppm.png`): the crystals
   read as ink diamonds with dashed trails on the cream paving (their cream fill vanishes there; the
   rim carries them), the burst + blood on the cop reads. Arena station doc lists all eleven ids.
+- 03:58 gates of record at 359b0470: lint 13/13, unit 714/714 (`evidence/n4/unit-l.log`), scenarios
+  29/29 (`scenarios-l.log`), parity bit-exact over 1200 steps + planted mutation caught at 629
+  (`parity-l.log`). The full `tools/evidence/run.mjs` was not run this iteration (the bench part ran
+  separately under the lock at 03:37).
