@@ -791,3 +791,27 @@ NEXT (iteration 11), in order:
 - Registry rules applied: motion-quality-gating (same deterministic tick before/after, frames differ only in the
   change), sprite-and-atlas-production (an LOD cell authored for the scale it is seen at, same canvas and pivot
   so no data moves). No deviation.
+- MILESTONE 06:39 the long guns (bbc416d4): same-tick A/B at 48 px/m (`--loadout=rocket_launcher,plasma_rifle,
+  electro_gun,ray_gun`, 1000 ticks): strip `it12-held-small-long-guns-ab-arena-pit-48ppm-2x.png` + side-by-side
+  clip (masters `clips/it12-held-small-long-guns-ab-arena-pit-48ppm-2x.mp4`, real time). Looked at: the rocket
+  tube reads with its ink bands, sight and striped warhead instead of a black bar; the plasma rifle's coil reads.
+- MEASURE 06:38 the rocket's re-toned body prints near cream (a PART at luminance 186 prints paper; Rivet's limbs
+  print grey only because LIMB kind adds `limb_wash`). Tried tone targets 160/0.35 and 148/0.30 in the sim
+  (`it12-held-small-tone-targets-sim.png`): the body lands in the print's narrow wash band (ink density 0.36-0.43
+  at 48 px/m) and breaks into noise, the pistol goes dark again. Kept 186.
+- MILESTONE 06:46 32 px/m (the judging scale), kinetic four, same-tick A/B, 1000 ticks: strip
+  `it12-held-small-kinetic-ab-arena-pit-32ppm-3x.png` + clip `it12-held-small-kinetic-ab-arena-pit-32ppm-3x.mp4`
+  (blue cops in frame for scale). Looked at: before, black blobs with paper specks; after, pale steel guns with
+  an ink outline and inner marks. FINDING: at 32 px/m Rivet's limbs print as flat grey stickers (LIMB sticker LOD),
+  so the after-guns read LIGHTER than his arms. Owner call 14.
+- frames.json 15: the five it12 entries first. Dropped: it10 kinetic held strip (its before row is the it12 strip's
+  top row), it8 electro chain strip, it8 ray ABC, it9 round cells sheet, it6 wall clip (the wall still stays).
+- Gates of record at bbc416d4: lint 13/13 (676 files), unit 739/739 (`unit-it12c.log`, no load), scenarios
+  32/32 (`scenarios-it12b.log`). Render only: no sim file, no replay or parity golden touched. No bench.
+
+## Calls for the owner (adds, iteration 12)
+- weapon-art-14 held guns at gameplay scale: A = held_small (default: light steel, ink outline, inner shapes
+  survive; lighter than Rivet's grey arm stickers at 32 px/m), B = the full art (`--held-small=off`: one dark
+  lozenge per gun), C = a grey sticker like Rivet's limbs at 32 px/m (silhouette only, no inner shapes; needs
+  rivet-arsenal to print the held sprite as LIMB below 0.13 view_px). Clips: `it12-held-small-kinetic-ab-arena-
+  pit-32ppm-3x.mp4`, `it12-held-small-long-guns-ab-arena-pit-48ppm-2x.mp4` (A right, B left). No clip for C yet.
