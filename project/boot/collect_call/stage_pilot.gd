@@ -13,6 +13,8 @@ var melee: PlayerMelee = PlayerMelee.new()
 ## rivet-arsenal: the weapon in the claw follows the arena's rivet.weapon with a stow and a draw
 ## (rivet_arsenal.json); no shot leaves before the draw ends.
 var hold: WeaponHold = WeaponHold.new()
+## rivet-arsenal: the carried guns and the switch keys (null: quest 1 keeps its own weapons).
+var carry: RivetCarry = null
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
@@ -34,6 +36,8 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.pressed != 0:
 		last_press_tick = stage.tick
 	var rivet: Fighter = stage.arena.rivet
+	if carry != null and rivet.alive():
+		carry.step(c, actions, stage.arena)
 	_follow_weapon(rivet.weapon)
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
@@ -75,6 +79,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	motion.write_state(out)
 	melee.write_state(out)
 	hold.write_state(out)
+	if carry != null:
+		carry.write_state(out)
 	out.put_32(_previous)
 	if hauler != null:
 		hauler.write_state(out)

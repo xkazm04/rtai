@@ -276,6 +276,80 @@
         "G"
       ],
       "mouse": []
+    },
+    {
+      "bit": 9,
+      "id": "weapon_next",
+      "joy_axes": [],
+      "joy_buttons": [
+        4
+      ],
+      "keys": [
+        "Tab"
+      ],
+      "mouse": [
+        5
+      ]
+    },
+    {
+      "bit": 10,
+      "id": "weapon_prev",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [],
+      "mouse": [
+        4
+      ]
+    },
+    {
+      "bit": 11,
+      "id": "weapon_slot_1",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "1"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 12,
+      "id": "weapon_slot_2",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "2"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 13,
+      "id": "weapon_slot_3",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "3"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 14,
+      "id": "weapon_slot_4",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "4"
+      ],
+      "mouse": []
+    },
+    {
+      "bit": 15,
+      "id": "reload",
+      "joy_axes": [],
+      "joy_buttons": [],
+      "keys": [
+        "R"
+      ],
+      "mouse": []
     }
   ],
   "schema": "gtai.input-actions/1"

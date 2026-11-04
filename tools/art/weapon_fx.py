@@ -116,7 +116,7 @@ def casing(out, seed):
     m = _canvas(w, h)
     ImageDraw.Draw(m).rounded_rectangle([8 * SS, 8 * SS, 40 * SS, 22 * SS], radius=5 * SS, fill=255)
     rim = _poly(_canvas(w, h), [(8, 7), (14, 7), (14, 23), (8, 23)])
-    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=7), out / "casing.png")
+    _save(_compose([(m, INK_2), (rim, PAPER)], w, h, seed, outline=8), out / "casing.png")
     return [w, h], [w // 2, h // 2]
 
 
@@ -213,7 +213,7 @@ def _save(img, path):
 def main(dst):
     out = Path(dst)
     rows = []
-    for name, length, width in (("flash_pistol", 110, 70), ("flash_smg", 90, 46), ("flash_tube", 170, 120)):
+    for name, length, width in (("flash_pistol", 150, 96), ("flash_smg", 124, 66), ("flash_tube", 170, 120)):
         for f in range(3):
             size, anchor = muzzle_flash(name, length, width, f, out, 7)
             rows.append({"id": f"{name}_{f}", "size_px": size, "anchor_px": anchor})

@@ -4,37 +4,85 @@
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_0.png",
       "id": "arc_0",
       "size_px": [
         320,
-        90
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_1.png",
       "id": "arc_1",
       "size_px": [
         320,
-        90
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        45
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/arc_2.png",
       "id": "arc_2",
       "size_px": [
         320,
-        90
+        120
+      ]
+    },
+    {
+      "anchor_px": [
+        150,
+        150
+      ],
+      "art": "res://features/combat/weapons/art/fx/blast_0.png",
+      "id": "blast_0",
+      "size_px": [
+        300,
+        300
+      ]
+    },
+    {
+      "anchor_px": [
+        190,
+        190
+      ],
+      "art": "res://features/combat/weapons/art/fx/blast_1.png",
+      "id": "blast_1",
+      "size_px": [
+        380,
+        380
+      ]
+    },
+    {
+      "anchor_px": [
+        220,
+        220
+      ],
+      "art": "res://features/combat/weapons/art/fx/blast_2.png",
+      "id": "blast_2",
+      "size_px": [
+        440,
+        440
+      ]
+    },
+    {
+      "anchor_px": [
+        240,
+        240
+      ],
+      "art": "res://features/combat/weapons/art/fx/blast_3.png",
+      "id": "blast_3",
+      "size_px": [
+        480,
+        480
       ]
     },
     {
@@ -51,38 +99,38 @@
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_0.png",
       "id": "flame_0",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_1.png",
       "id": "flame_1",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
       "anchor_px": [
-        65,
-        65
+        150,
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_2.png",
       "id": "flame_2",
       "size_px": [
-        130,
-        130
+        220,
+        120
       ]
     },
     {
@@ -160,37 +208,61 @@
     {
       "anchor_px": [
         17,
-        59
+        75
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_0.png",
       "id": "flash_pistol_0",
       "size_px": [
-        170,
-        123
+        219,
+        157
       ]
     },
     {
       "anchor_px": [
         17,
-        52
+        65
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_1.png",
       "id": "flash_pistol_1",
       "size_px": [
-        143,
-        105
+        182,
+        132
       ]
     },
     {
       "anchor_px": [
         17,
-        46
+        57
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_2.png",
       "id": "flash_pistol_2",
       "size_px": [
-        113,
-        89
+        141,
+        110
+      ]
+    },
+    {
+      "anchor_px": [
+        17,
+        50
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_smg_0.png",
+      "id": "flash_smg_0",
+      "size_px": [
+        187,
+        109
+      ]
+    },
+    {
+      "anchor_px": [
+        16,
+        44
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_smg_1.png",
+      "id": "flash_smg_1",
+      "size_px": [
+        156,
+        90
       ]
     },
     {
@@ -198,35 +270,11 @@
         17,
         40
       ],
-      "art": "res://features/combat/weapons/art/fx/flash_smg_0.png",
-      "id": "flash_smg_0",
-      "size_px": [
-        145,
-        86
-      ]
-    },
-    {
-      "anchor_px": [
-        17,
-        35
-      ],
-      "art": "res://features/combat/weapons/art/fx/flash_smg_1.png",
-      "id": "flash_smg_1",
-      "size_px": [
-        123,
-        72
-      ]
-    },
-    {
-      "anchor_px": [
-        17,
-        32
-      ],
       "art": "res://features/combat/weapons/art/fx/flash_smg_2.png",
       "id": "flash_smg_2",
       "size_px": [
-        98,
-        66
+        123,
+        81
       ]
     },
     {
@@ -263,6 +311,174 @@
       "size_px": [
         156,
         134
+      ]
+    },
+    {
+      "anchor_px": [
+        173,
+        101
+      ],
+      "art": "res://features/combat/weapons/art/gore/ash.png",
+      "id": "gore_ash",
+      "size_px": [
+        347,
+        203
+      ]
+    },
+    {
+      "anchor_px": [
+        111,
+        61
+      ],
+      "art": "res://features/combat/weapons/art/gore/bone.png",
+      "id": "gore_bone",
+      "size_px": [
+        222,
+        122
+      ]
+    },
+    {
+      "anchor_px": [
+        119,
+        213
+      ],
+      "art": "res://features/combat/weapons/art/gore/charred.png",
+      "id": "gore_charred",
+      "size_px": [
+        238,
+        427
+      ]
+    },
+    {
+      "anchor_px": [
+        166,
+        247
+      ],
+      "art": "res://features/combat/weapons/art/gore/charred_top.png",
+      "id": "gore_charred_top",
+      "size_px": [
+        448,
+        477
+      ]
+    },
+    {
+      "anchor_px": [
+        226,
+        213
+      ],
+      "art": "res://features/combat/weapons/art/gore/charred_top_slump.png",
+      "id": "gore_charred_top_slump",
+      "size_px": [
+        499,
+        431
+      ]
+    },
+    {
+      "anchor_px": [
+        134,
+        114
+      ],
+      "art": "res://features/combat/weapons/art/gore/chunk.png",
+      "id": "gore_chunk",
+      "size_px": [
+        269,
+        229
+      ]
+    },
+    {
+      "anchor_px": [
+        140,
+        122
+      ],
+      "art": "res://features/combat/weapons/art/gore/chunks_3.png",
+      "id": "gore_chunks_3",
+      "size_px": [
+        280,
+        244
+      ]
+    },
+    {
+      "anchor_px": [
+        180,
+        155
+      ],
+      "art": "res://features/combat/weapons/art/gore/splash.png",
+      "id": "gore_splash",
+      "size_px": [
+        360,
+        310
+      ]
+    },
+    {
+      "anchor_px": [
+        192,
+        119
+      ],
+      "art": "res://features/combat/weapons/art/gore/stump_oval.png",
+      "id": "gore_stump_oval",
+      "size_px": [
+        385,
+        238
+      ]
+    },
+    {
+      "anchor_px": [
+        156,
+        152
+      ],
+      "art": "res://features/combat/weapons/art/gore/stump_round.png",
+      "id": "gore_stump_round",
+      "size_px": [
+        313,
+        304
+      ]
+    },
+    {
+      "anchor_px": [
+        112,
+        213
+      ],
+      "art": "res://features/combat/weapons/art/gore/xray.png",
+      "id": "gore_xray",
+      "size_px": [
+        225,
+        427
+      ]
+    },
+    {
+      "anchor_px": [
+        146,
+        200
+      ],
+      "art": "res://features/combat/weapons/art/gore/xray_top.png",
+      "id": "gore_xray_top",
+      "size_px": [
+        439,
+        426
+      ]
+    },
+    {
+      "anchor_px": [
+        208,
+        202
+      ],
+      "art": "res://features/combat/weapons/art/gore/xray_top_jolt.png",
+      "id": "gore_xray_top_jolt",
+      "size_px": [
+        520,
+        427
+      ]
+    },
+    {
+      "anchor_px": [
+        140,
+        20
+      ],
+      "art": "res://features/combat/weapons/art/fx/nail.png",
+      "id": "nail",
+      "size_px": [
+        150,
+        40
       ]
     },
     {
@@ -327,6 +543,18 @@
     },
     {
       "anchor_px": [
+        200,
+        200
+      ],
+      "art": "res://features/combat/weapons/art/fx/scorch.png",
+      "id": "scorch",
+      "size_px": [
+        400,
+        400
+      ]
+    },
+    {
+      "anchor_px": [
         112,
         22
       ],
@@ -371,6 +599,42 @@
       "size_px": [
         120,
         120
+      ]
+    },
+    {
+      "anchor_px": [
+        55,
+        55
+      ],
+      "art": "res://features/combat/weapons/art/fx/spark_0.png",
+      "id": "spark_0",
+      "size_px": [
+        110,
+        110
+      ]
+    },
+    {
+      "anchor_px": [
+        55,
+        55
+      ],
+      "art": "res://features/combat/weapons/art/fx/spark_1.png",
+      "id": "spark_1",
+      "size_px": [
+        110,
+        110
+      ]
+    },
+    {
+      "anchor_px": [
+        55,
+        55
+      ],
+      "art": "res://features/combat/weapons/art/fx/spark_2.png",
+      "id": "spark_2",
+      "size_px": [
+        110,
+        110
       ]
     },
     {
@@ -529,7 +793,7 @@
       "id": "molotov",
       "length_m": 0.48,
       "length_px": 462,
-      "muzzle_fx": "flame",
+      "muzzle_fx": "",
       "muzzle_px": [
         468,
         85
@@ -561,7 +825,7 @@
       ],
       "parts": {},
       "pickup": "res://features/combat/weapons/art/gloria/pickup.png",
-      "projectile_fx": "tracer",
+      "projectile_fx": "nail",
       "size_px": [
         488,
         122

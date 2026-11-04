@@ -7,7 +7,7 @@
           "$ref": "#/$defs/vec2"
         },
         "art": {
-          "pattern": "^res://features/combat/weapons/art/fx/[a-z0-9_]+\\.png$",
+          "pattern": "^res://features/combat/weapons/art/(fx|gore)/[a-z0-9_]+\\.png$",
           "type": "string"
         },
         "id": {

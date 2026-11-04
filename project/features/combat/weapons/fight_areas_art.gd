@@ -26,7 +26,8 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 			if e.stun_ticks > 0:
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
-		_blast(ci, a.blasts[i], tick - a.blast_ticks[i])
+		if not WeaponFxArt.blast(ci, a.blasts[i], tick - a.blast_ticks[i]):
+			_blast(ci, a.blasts[i], tick - a.blast_ticks[i])
 	for i: int in a.chain_arcs.size():
 		if tick - a.arc_ticks[i] < ARC_TICKS:
 			var arc: PackedVector2Array = a.chain_arcs[i]

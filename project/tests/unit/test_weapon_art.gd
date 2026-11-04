@@ -90,3 +90,14 @@ func test_every_ai_weapon_png_has_a_provenance_line() -> void:
 			if file.get_extension() == "png" and not text.contains('"file": "%s"' % rel):
 				missing.append(rel)
 	assert_eq(missing, [] as Array[String], "weapon art without a provenance line")
+
+
+func test_impact_cells_and_gore_stickers_resolve() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	assert_eq(art.fx_frames(&"blast").size(), 4, "rocket blast frames")
+	assert_eq(art.fx_frames(&"spark").size(), 3, "electro spark frames")
+	assert_eq(art.fx_frames(&"scorch").size(), 1, "scorch decal")
+	assert_eq(art.projectile_fx(&"gloria"), &"nail")
+	for g: StringName in [&"gore_stump_round", &"gore_charred", &"gore_ash", &"gore_splash"]:
+		assert_eq(art.fx_frames(g).size(), 1, "%s sticker" % g)
+	assert_gt(art.fx_anchor(&"blast").x, 0.0)
