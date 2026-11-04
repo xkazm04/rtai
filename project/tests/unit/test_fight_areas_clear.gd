@@ -44,3 +44,14 @@ func test_away_points_off_the_strongest_corpse() -> void:
 	var push: Vector2 = FightAreasArt.away(Vector2(0.5, 0.0), dead)
 	assert_almost_eq(push.x, 1.0, 0.001)
 	assert_eq(FightAreasArt.away(Vector2(20.0, 0.0), dead), Vector2.ZERO)
+
+
+func test_burn_flames_trail_behind_the_run_off_the_body() -> void:
+	var pos: Vector2 = Vector2(3.0, 4.0)
+	var flames: PackedVector2Array = FightAreasArt.burn_flames(pos, Vector2(2.0, 0.0))
+	assert_eq(flames.size(), FightAreasArt.BURN_FLAMES)
+	for f: Vector2 in flames:
+		assert_lt(f.x, pos.x, "every flame trails behind a human running +x")
+		assert_gt(f.distance_to(pos), FightAreasArt.BURN_BACK_M - 0.001, "no flame on the body")
+	var still: PackedVector2Array = FightAreasArt.burn_flames(pos, Vector2.ZERO)
+	assert_gt(still[1].y, pos.y, "a standing burner trails his flames down-screen")
