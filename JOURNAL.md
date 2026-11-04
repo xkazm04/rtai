@@ -127,6 +127,13 @@ during the riot/drive48vsync part.
   Process ms also rises to 10-57 ms in the worst frames under this load. Our scripts get
   descheduled, so the riot's steady p99 can only be judged UNCONTENDED.
 
+### 14:14 Housekeeping
+- d6-combat-notes JOURNAL: no REQUEST addressed to perf-city. Scratch (601 MB of raw frames in
+  temp) deleted; masters frames.json has 8 entries and matches the folder. The exported exes in
+  build/export/ (git-ignored) are kept for the next iteration. The bench lock is released.
+- Registry: the brief's rules (STANDARDS section 20, contention labels) governed every call here.
+  There was no design fork, so no game-production registry subject was needed this iteration.
+
 ## Calls for the owner (draft for REPORT)
 - perf-city-1, reel ch 18: the "lag" is 2.4 s + 0.9 s where no guard stands (between pit waves),
   not frame cost. Options: (a) re-cut ch 18 from a window with no wave gap (film edit only),
