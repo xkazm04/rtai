@@ -17,6 +17,9 @@ const SMOKE_TAIL: int = 150
 const FLAKE_LIFE: float = 70.0
 ## A vaporised body's shadow: the char print burnt into the street, the paving showing through.
 const SHADOW_A: float = 0.8
+## The char rim's width in screen px at 64 px/m, scaled with the zoom (0.8 px at 32: a wider rim
+## covers most of a 20 px body and the corpse reads pale instead of charred).
+const RIM_PX_64: float = 1.6
 ## One wind over the whole street (screen right and up a little), so every heap leans the same way.
 const WIND: Vector2 = Vector2(0.94, -0.34)
 const ASH_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/ash.png")
@@ -67,6 +70,7 @@ func add(serial: int, body: Node2D, row: SignatureKill) -> void:
 	b.born = kills.tick
 	b.shadow = row.style == &"vaporise"
 	_char(body, b.shadow)
+	_char_mat.set_shader_parameter(&"rim_px", RIM_PX_64 * ppm / 64.0)
 	@warning_ignore("return_value_discarded")
 	_burns.append(b)
 
