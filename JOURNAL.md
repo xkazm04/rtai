@@ -160,3 +160,11 @@ NEXT (iteration 2):
   hub cops at close range and the finisher throws a cop about 3 m with a red trail into the pit
   wall line; strong read. frames.json now 6 entries (newest first), every file present.
   Scratch renders deleted; reels kept in gtai-masters/n4/showcase.
+- 01:49 FIX (integration glue, NEXT 3 half done): on `--arena=city` CollectCallView draws through
+  CityView and has no print stage, so `ArenaRigs.attach` returned false (`cast rigs: false` in
+  the city film log) and the fighters stayed quest 1's vermilion guard discs. ArenaRigs now
+  attaches to CityView's actor layer and takes its zoom. Proof still:
+  `gtai-masters/n4/showcase/city-rigs-48ppm-0155.png` (tick 601: blue cop rigs round Rivet's rig
+  at the junction). Arena scenarios 5/5, unit 732/732 after it. REQUEST 6 is withdrawn (glue).
+  Left on the city: small vermilion squares and a bar from ArenaFloorView's props (lane marks),
+  and the 17 m/s snap. The city reel is re-filmed next round.
