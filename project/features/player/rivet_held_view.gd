@@ -25,6 +25,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	var rig: CutRig = rigs.rig_for(rivet_id) if rigs != null else null
 	var id: StringName = arsenal.art_id(pilot.hold.held) if pilot != null else &""
+	if rig != null and pilot != null:
+		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
+		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -37,6 +40,8 @@ func _process(_delta: float) -> void:
 	var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
 	_sprite.global_rotation = hand.global_rotation
+	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
+		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
 	_sprite.visible = true
 
 

@@ -29,6 +29,8 @@ var face_to: float = 0.0
 var aiming: bool = false
 var aim_at: Vector2 = Vector2.ZERO
 var gun_out: bool = false
+## rivet-arsenal: how both arms hold the weapon while aiming (RigGrip.Kind; 0 = one hand).
+var grip: int = 0
 var dead: bool = false
 
 var c_tuck: float = 0.0
@@ -107,6 +109,7 @@ func reset_state(at_facing: float) -> void:
 	dead = false
 	gun_out = false
 	aiming = false
+	grip = 0
 	vel_in = Vector2.ZERO
 	clips.reset()
 	shove = Vector2.ZERO
