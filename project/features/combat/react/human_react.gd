@@ -34,6 +34,8 @@ var head_rot: float = 0.0
 var head_off: Vector2 = Vector2.ZERO
 var head_s: float = 1.0
 var tint: float = 0.0
+## Wounded (0 = whole, 1 = badly hurt): between families the body limps on the gait phase.
+var limp: float = 0.0
 
 
 ## The rig's reaction slot (made on first use).
@@ -81,6 +83,7 @@ func clear() -> void:
 
 func pre(rig: CutRig, dt: float) -> void:
 	if kind == &"":
+		_limp(rig)
 		return
 	t += dt
 	if not dying and t >= length:
@@ -97,7 +100,7 @@ func pre(rig: CutRig, dt: float) -> void:
 
 
 func post(rig: CutRig) -> void:
-	if kind == &"":
+	if kind == &"" and limp <= 0.0:
 		return
 	var b: Transform2D = Transform2D(rot, scl, 0.0, off)
 	rig.body.transform = b * rig.body.transform
@@ -118,3 +121,18 @@ func _rest() -> void:
 	head_off = Vector2.ZERO
 	head_s = 1.0
 	tint = 0.0
+
+
+## A hurt body between families: hunched, and on the bad leg's step (once a stride) it drops,
+## tips toward that side and the head bobs; standing, only the hunch.
+func _limp(rig: CutRig) -> void:
+	_rest()
+	if limp <= 0.0:
+		return
+	var step: float = maxf(0.0, sin(rig.phase * TAU)) if rig.vel_in.length_squared() > 1.0 else 0.0
+	var a: float = clampf(limp, 0.0, 1.0)
+	scl = Vector2.ONE * (1.0 - 0.05 * a - 0.1 * a * step)
+	rot = 0.08 * a + 0.16 * a * step
+	off = Vector2(-12.0 * a, 26.0 * a * step)
+	head_off = Vector2(18.0 * a, 22.0 * a * step)
+	head_rot = 0.2 * a * step

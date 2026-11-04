@@ -12,6 +12,8 @@ extends Node
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
+## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
+## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 
 const TUNE_TICK: int = 300
 
@@ -66,6 +68,15 @@ func _ready() -> void:
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
 	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	if on_city and args.has("--crowd"):  # lane human-reactions: a fuller street for the crowd clips
+		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
+	if args.has("--armored"):  # lane human-reactions: pit humans live through hits (the limp)
+		var t: WeaponTable = WeaponTable.shipped()
+		var k: float = t.target_hp[&"armored"] / t.target_hp[&"human"]
+		session.stage.arena.tuning.human["hp"] = k
+		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
+		r.max_hp *= k
+		r.hp = r.max_hp
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":
@@ -104,14 +115,17 @@ func _add_view() -> void:
 	add_child(view)
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
+	var cast: ArenaRigs = null
 	if ArenaArgs.parse().has("--rigs"):  # the cast rigs instead of quest 1's sprites (dev)
-		var cast: ArenaRigs = ArenaRigs.new()
+		cast = ArenaRigs.new()
 		add_child(cast)
 		Log.info(
 			"arena", "cast rigs: %s" % cast.attach(session.stage, view, session.world.context())
 		)
 	if session.city != null:
 		_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
+		if cast != null:  # human-reactions: the street trips over the fight's dead
+			cast.crowd = _characters.crowd
 		_characters.rivet_on_foot = false
 		_characters.bake()
 
@@ -183,3 +197,7 @@ func _notification(what: int) -> void:
 	if leaving and _telemetry != "" and session != null:
 		@warning_ignore("return_value_discarded")
 		session.write_telemetry(_telemetry)
+	if leaving and _characters != null:  # lane human-reactions: the street's reactions, counted
+		var c: CrowdReact = _characters.crowd
+		Log.info("arena", "crowd: %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])
+		_characters = null

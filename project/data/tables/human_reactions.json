@@ -80,6 +80,12 @@
       "travel_m": 0.45
     },
     {
+      "doc": "A fleeing pedestrian runs over a body (CrowdReact): pitches forward along the flight, arms thrown out to catch the fall, dips, and runs on.",
+      "id": "trip",
+      "len_s": 0.5,
+      "travel_m": 0.3
+    },
+    {
       "doc": "Round kill: falls back from the front, crumples forward from behind.",
       "id": "death_bullet",
       "len_s": 0.45,

@@ -2,13 +2,12 @@ class_name EnemyRigFight
 extends D5ShowcaseRun
 ## enemy-ai evidence (owner direction 21:25): the pit fight (PitLayout + PitDummy as Rivet) on the
 ## cast rigs in the D5 look at 32 px/m, never debug circles. Cops are CharacterRigs rows from
-## EnemyRigFeed; robots ride their own rig on King's skeleton (KingPlan at ROBOT_K, a placeholder
-## until a thug plan exists). The full chain on screen: the tell (EnemyFightFx aim line / windup
+## EnemyRigFeed; robots ride their own rig (ThugPlan, the thug's own proportions; King's parts
+## until its sheet lands). The full chain on screen: the tell (EnemyFightFx aim line / windup
 ## arc), the shot (SHOOT recoil, muzzle star, tracer), the impact (HIT clip shoved along the
 ## blow, red blood on humans, sparks and oil on robots, a hit-stop hold on a kill, camera shake
 ## when Rivet is hit), DEATH. One sim tick per step; every `every`-th tick saved as a PNG.
 
-const ROBOT_K: float = 1.05
 const FLOOR_M: Vector2 = Vector2(44.0, 32.0)
 const CRATE: String = "res://features/city/art/props/crate_stack.png"
 const HOLD_FRAMES: int = 3
@@ -212,9 +211,7 @@ func _bot_rig(e: EnemyAgent) -> CutRig:
 	if not _bot_rigs.has(e.id):
 		var rig: CutRig = CutRig.new()
 		_bots.add_child(rig)
-		var plan: BodyPlan = KingPlan.build(ROBOT_K)
-		plan.name = "thug"
-		plan.collar_part = ""  # vermilion is Rivet's collar only
+		var plan: BodyPlan = ThugPlan.build()  # no collar: vermilion is Rivet's only
 		rig.setup(plan, RigVariant.rivet())
 		rig.position = e.pos * PX
 		rig.snap_facing(e.facing.angle())

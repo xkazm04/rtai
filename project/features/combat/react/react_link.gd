@@ -12,6 +12,8 @@ extends RefCounted
 ## where the blow threw it). DECISION human-reactions in docs/decisions.md.
 const WOUND_CARRY: float = 0.4
 const DEATH_CARRY: float = 0.8
+## Limp per hp lost: at 60 % of the hp gone the limp is full.
+const LIMP_GAIN: float = 1.6
 ## gunplay's death kinds (CombatArena.kill_landed) over the weapon's hit class: a fire kill
 ## chars, a blast kill throws; `shot` keeps the weapon's own class.
 const KILL_KIND_CLASS: Dictionary[StringName, StringName] = {&"burned": &"burn", &"blown": &"blast"}
@@ -88,6 +90,7 @@ func apply(rigs: CharacterRigs) -> void:
 	_pending.clear()
 	_relay(rigs)
 	_hold_states(rigs)
+	_limps(rigs)
 
 
 ## True when the rig carries the riot shield (its look): a round from the front then recoils
@@ -143,6 +146,17 @@ func hold(rig: CutRig, fam: StringName, was: StringName, away: Vector2) -> void:
 			r.t = r.length * span.x
 	elif was != &"" and r.kind == was:
 		r.t = maxf(r.t, r.length * HOLD[was].z)
+
+
+## A human that took a hit and lives (gunplay's armored hp) limps by how hurt it is.
+func _limps(rigs: CharacterRigs) -> void:
+	for h: Fighter in _arena.hostiles:
+		var rig: CutRig = rigs.rig_for(h.id)
+		if rig == null:
+			continue
+		var hurt: float = 1.0 - h.hp / h.max_hp if h.alive() and h.max_hp > 0.0 else 0.0
+		if hurt > 0.0 or rig.react != null:
+			HumanReact.on(rig).limp = clampf(hurt * LIMP_GAIN, 0.0, 1.0)
 
 
 func _relay(rigs: CharacterRigs) -> void:

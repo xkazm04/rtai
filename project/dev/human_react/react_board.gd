@@ -25,11 +25,19 @@ const SEGMENTS: Array[Array] = [
 	["burning", &"burn", false, false, 180],
 	["hit in cover", &"light", false, true, 90],
 	["pedestrians startled by a shot: cower away from it (cops hold)", &"cower", false, false, 80],
+	[
+		"fleeing pedestrians trip over a body (pose; in game: within 0.6 m)",
+		&"trip",
+		false,
+		false,
+		70
+	],
 	["death: round (back from the front, crumple from behind)", &"light", true, false, 150],
 	["death: melee (fold, topple)", &"melee", true, false, 150],
 	["death: blast (thrown, tumbling)", &"blast", true, false, 150],
 	["death: burn (flail, charred)", &"burn", true, false, 170],
 	["death: electro (convulse, stiff fall)", &"shock", true, false, 150],
+	["wounded (an armored human that lived through a hit): limps", &"limp", false, false, 150],
 ]
 
 var every: int = 2
@@ -111,10 +119,19 @@ func _step(seg: Array, t: int) -> void:
 		f.face[i] = 0.0
 		f.aim[i] = f.pos[i] + Vector2(6.0 * PX, 0.0)
 		f.flags[i] = (RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING) if LOOKS[i] >= 5 else 0
+		if seg[1] == &"limp":  # walking on the spot, hurt
+			f.vel[i] = DIRS[i % DIRS.size()] * 1.4 * PX
+			f.face[i] = f.vel[i].angle()
+			if _rigs.rig_for(i + 1) != null:
+				HumanReact.on(_rigs.rig_for(i + 1)).limp = 1.0
+		if seg[1] == CrowdReact.TRIP and LOOKS[i] < 5:  # running on the spot along their side
+			f.vel[i] = DIRS[i % DIRS.size()] * 3.5 * PX
+			f.face[i] = f.vel[i].angle()
+			f.flags[i] = RigFeed.Flag.FLEE
 	if t == 0:
 		_reset()
 		_new_blood()
-	if t == HIT_AT:
+	if t == HIT_AT and seg[1] != &"limp":
 		_hit_all(seg)
 	_rigs.step_ticks(1)
 	_tick += 1
@@ -152,10 +169,11 @@ func _hit_all(seg: Array) -> void:
 			continue
 		var dir: Vector2 = DIRS[i % DIRS.size()]
 		var shielded: bool = LOOKS[i] == 6 and hit_class in [&"light", &"heavy", &"melee"]
-		_tracer(i, f.pos[i], dir)
-		if hit_class == CrowdReact.COWER:  # CrowdReact's startle: pedestrians only
+		if hit_class != CrowdReact.TRIP:  # no round: the body underfoot trips them
+			_tracer(i, f.pos[i], dir)
+		if hit_class == CrowdReact.COWER or hit_class == CrowdReact.TRIP:  # CrowdReact: peds only
 			if LOOKS[i] < 5:
-				HumanReact.on(rig).play(rig, CrowdReact.COWER, dir, _pipe.table)
+				HumanReact.on(rig).play(rig, hit_class, dir, _pipe.table)
 		elif lethal:
 			var kind: StringName = _pipe.kill(rig, hit_class, dir, &"")
 			if hit_class != &"burn" and hit_class != &"shock":

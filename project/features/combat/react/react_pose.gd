@@ -1,9 +1,9 @@
 class_name ReactPose
 extends RefCounted
 ## The wound families on a cutout rig (human_reactions.json): flinch, stagger, knockdown, shield,
-## spin, fold, stun, burn, cover, cower. pre() writes the rig's clip envelopes for this step and the
-## drawn offsets HumanReact.post() applies. Directions are rig space: r.dir is the way the blow
-## travels, so the body moves along it and the head snaps with it.
+## spin, fold, stun, burn, cover, cower, trip. pre() writes the rig's clip envelopes for this
+## step and the drawn offsets HumanReact.post() applies. Directions are rig space: r.dir is the
+## way the blow travels, so the body moves along it and the head snaps with it.
 
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
@@ -16,6 +16,8 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			r.scl = Vector2.ONE * lerpf(1.0, 0.84, snap(k, 0.1))
 		&"cower":
 			_cower(r, rig, k)
+		&"trip":
+			_trip(r, rig, k)
 		&"stagger":
 			_stagger(r, rig, k)
 		&"knockdown":
@@ -57,6 +59,19 @@ static func _cower(r: HumanReact, rig: CutRig, k: float) -> void:
 	r.head_rot = -r.side * 0.7 * glance
 	r.head_off = r.dir * 30.0 * e
 	r.head_s = 1.0 - 0.14 * e
+
+
+## Runs over a body: pitches forward along the flight (r.dir), arms thrown out ahead to catch the
+## fall, the body stretched along the lunge and narrowed (a fall seen from above), then rights
+## itself; the sim keeps running the body.
+static func _trip(r: HumanReact, rig: CutRig, k: float) -> void:
+	var e: float = smoothstep(0.0, 0.22, k) * (1.0 - smoothstep(0.5, 1.0, k))
+	r.off = r.dir * 120.0 * e
+	r.scl = Vector2(lerpf(1.0, 1.12, e), lerpf(1.0, 0.78, e))
+	r.rot = r.side * 0.45 * e
+	rig.c_hands_up = maxf(rig.c_hands_up, 0.9 * e)
+	r.head_off = r.dir * 90.0 * e
+	r.head_s = 1.0 - 0.1 * e
 
 
 ## Steps back along the hit, the torso tips with it, the weapon arm drops.

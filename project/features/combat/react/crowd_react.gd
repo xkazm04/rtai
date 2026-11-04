@@ -9,9 +9,14 @@ extends RefCounted
 ## The city's own kills (a cop round in a riot, a car) play the standard death on the full rig
 ## through the DeathPipe (so a signature kill can take it): the sim's heading at death is the
 ## round's travel (or the car's), and its speed tells a car (thrown) from a round.
+## A fleeing pedestrian that runs within TRIP_M of a body trips over it (ReactPose `trip`), once
+## per body.
 
 const DELAY_TICKS: int = 3
 const COWER: StringName = &"cower"
+const TRIP: StringName = &"trip"
+## A fleeing person this close to a body (metres) runs over it.
+const TRIP_M: float = 0.6
 ## A body the sim sends sliding faster than this (m/s) was hit by a car: thrown (blast death).
 const CAR_SPEED_MPS: float = 4.0
 ## The sim slides the body itself: the drawn carry only adds a little.
@@ -19,14 +24,20 @@ const DEATH_CARRY: float = 0.3
 
 var table: ReactTable
 var cowers: int = 0
+var trips: int = 0
 var deaths: int = 0
 var pipe: DeathPipe
+## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
+## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
+var extra_bodies: Dictionary[int, Vector2] = {}
 ## Each person's DEAD flag at the last observed tick, by actor id.
 var _dead: Dictionary[int, bool] = {}
 ## Each person's FLEE flag at the last observed tick, by actor id.
 var _fleeing: Dictionary[int, bool] = {}
 ## People who just started fleeing: actor id -> ticks left before the cower plays.
 var _due: Dictionary[int, int] = {}
+## Who already tripped over which body: (person id, body id).
+var _tripped: Dictionary[Vector2i, bool] = {}
 
 
 static func make(p_table: ReactTable = null) -> CrowdReact:
@@ -61,6 +72,7 @@ func observe(rigs: CharacterRigs, ticks: int = 1) -> void:
 				_cower(rigs.rig_for(id), feed.vel[i])
 	_fleeing = seen
 	_dead = dead
+	_trip_over(rigs, dead)
 
 
 ## The standard death on `rig` along the sim's slide `vel` (px/s); a car's speed throws it.
@@ -88,3 +100,35 @@ func _cower(rig: CutRig, away: Vector2) -> void:
 	r.carry = 1.0
 	r.play(rig, COWER, d, table)
 	cowers += 1
+
+
+## Fleeing people within TRIP_M of a body trip over it (once per body), along their flight.
+func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
+	var feed: RigFeed = rigs.feed
+	var bodies: Dictionary[int, Vector2] = extra_bodies.duplicate()
+	for i: int in feed.count:
+		if dead.get(feed.ids[i], false):
+			bodies[feed.ids[i]] = feed.pos[i]
+	if bodies.is_empty():
+		return
+	var reach: float = TRIP_M * SimConst.PX_PER_M
+	for i: int in feed.count:
+		if feed.kinds[i] != BodyPlan.Kind.PED or not feed.has_flag(i, RigFeed.Flag.FLEE):
+			continue
+		for b: int in bodies:
+			var key: Vector2i = Vector2i(feed.ids[i], b)
+			var near: bool = feed.pos[i].distance_squared_to(bodies[b]) < reach * reach
+			if b != feed.ids[i] and near and not _tripped.has(key):
+				_tripped[key] = true
+				_trip(rigs.rig_for(feed.ids[i]), feed.vel[i])
+
+
+func _trip(rig: CutRig, along: Vector2) -> void:
+	if rig == null or along.length_squared() < 1.0:
+		return
+	var r: HumanReact = HumanReact.on(rig)
+	if r.dying or (r.active() and r.progress() < 1.0):
+		return
+	r.carry = 0.0
+	r.play(rig, TRIP, along, table)
+	trips += 1

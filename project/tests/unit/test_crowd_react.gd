@@ -77,3 +77,72 @@ func test_dead_when_first_seen_is_not_killed_again() -> void:
 	rigs.feed.flags[0] = RigFeed.Flag.DEAD
 	c.observe(rigs)
 	assert_eq(c.deaths, 0)
+
+
+func test_a_fleeing_person_trips_over_a_body_once() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var f: RigFeed = _feed(true)
+	@warning_ignore("return_value_discarded")
+	f.put(1, 7, BodyPlan.Kind.PED, Vector2(-10.0, 0.0), Vector2.ZERO)
+	f.flags[1] = RigFeed.Flag.DEAD
+	rigs.feed = f
+	c.observe(rigs)
+	assert_eq(c.trips, 1)
+	assert_eq(rig.react.kind, &"trip")
+	assert_lt(rig.react.dir.x, -0.9, "pitches along the flight")
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.trips, 1, "one trip per body")
+
+
+func test_a_fleeing_person_trips_over_the_fights_dead_drawn_elsewhere() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	rigs.feed = _feed(true)
+	c.extra_bodies[-1 - 3] = Vector2(-10.0, 0.0)  # a dead cop on the arena's own rigs
+	c.observe(rigs)
+	assert_eq(c.trips, 1)
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.trips, 1, "one trip per body")
+
+
+func test_a_walker_or_a_far_body_does_not_trip() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var f: RigFeed = _feed(false)
+	@warning_ignore("return_value_discarded")
+	f.put(1, 7, BodyPlan.Kind.PED, Vector2(-10.0, 0.0), Vector2.ZERO)
+	f.flags[1] = RigFeed.Flag.DEAD
+	rigs.feed = f
+	c.observe(rigs)
+	assert_eq(c.trips, 0, "walking past a body is not a trip")
+	f.flags[0] = RigFeed.Flag.FLEE
+	f.pos[1] = Vector2(-CrowdReact.TRIP_M * SimConst.PX_PER_M * 1.5, 0.0)
+	c.observe(rigs)
+	assert_eq(c.trips, 0, "a body beyond TRIP_M")
+
+
+func test_a_limping_rig_drops_on_its_step_and_hunches_standing() -> void:
+	var rig: CutRig = autofree(CutRig.new())
+	var r: HumanReact = HumanReact.on(rig)
+	r.limp = 1.0
+	rig.vel_in = Vector2(60.0, 0.0)
+	rig.phase = 0.25
+	r.pre(rig, 1.0 / 60.0)
+	assert_lt(r.scl.x, 0.9, "the bad leg's step drops the body")
+	assert_gt(r.off.y, 20.0, "and tips it to that side")
+	rig.vel_in = Vector2.ZERO
+	r.pre(rig, 1.0 / 60.0)
+	assert_almost_eq(r.off.y, 0.0, 0.001, "standing: no step")
+	assert_lt(r.scl.x, 1.0, "standing: the hunch stays")
+	r.limp = 0.0
+	r.pre(rig, 1.0 / 60.0)
+	assert_eq(r.scl, Vector2.ONE, "whole: nothing drawn")
