@@ -815,3 +815,12 @@ NEXT (iteration 11), in order:
   lozenge per gun), C = a grey sticker like Rivet's limbs at 32 px/m (silhouette only, no inner shapes; needs
   rivet-arsenal to print the held sprite as LIMB below 0.13 view_px). Clips: `it12-held-small-kinetic-ab-arena-
   pit-32ppm-3x.mp4`, `it12-held-small-long-guns-ab-arena-pit-48ppm-2x.mp4` (A right, B left). No clip for C yet.
+- FRICTION 06:52 evidence gate (`node tools/evidence/run.mjs --no-bench --allow-dirty`; the only dirt is the
+  untracked `evidence/weapon-art/` logs): lint, unit 739/739, scenarios 32/32, parity bit-exact PASS; **selftest
+  FAIL**: "NEW off-doctrine: 32 px/m vermilion on vehicles: 4 px; 32 px/m vermilion on cop: 4 px" in the D4
+  junction, and the debt rows blood_flicker_cop_48 / _vehicles_32 / _cop_block_64 "no longer seen". It is
+  deterministic (the same 4 + 4 px on a re-run, `selftest-it12-rerun.log`) and NOT this lane's change: with
+  `held_small_below_ppm` 0 (HeldLod off, the tree renders exactly as before my commits) it fails the same way
+  (data file restored after, not committed). It reads like the blood-splat gate-boundary pixels those debt rows
+  describe, now landing at 32 px/m on the cop and vehicle layers. Owner of the debt: d5-city. Not bisected (it10
+  never ran the evidence gate). INFO -> integration/Director: the accent_debt rows need re-measuring on this tree.
