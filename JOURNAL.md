@@ -644,3 +644,24 @@ the tree). Then NEXT 2-5 above.
 - REQUEST 22 -> human-reactions: the riot cop's shield (RIOT_LOOK on an ArenaPit.riot id) is a
   thin line at 48 px/m in reel-0520-director chapter 15; a shield that reads (a slab in front of
   the body, rounds sparking off it before the burst gets round) would sell the armored hp.
+- 05:08 fix: director chapters hold other live hostiles (station actors) on their spots
+  (the walk-in cop of the 05:20 cut). DECISION r2 line in decisions.md.
+- 05:05-~05:20 BENCH r7 under bench.lock (node tools/bench/run.mjs on 15b48cb4 + director
+  commits, dev-only since the merge; CONTENDED: other lanes' Godot on the GPU; I filmed nothing
+  during it). Log: gtai-n4/scratch-showcase/bench-r7.txt.
+
+NEXT (iteration 6):
+1. Merge round 8 (brief order), gates under private APPDATAs (scenario_showcase_director is
+   now in the suite).
+2. Re-cut: `bash evidence/cut.sh reel-<HHMM>-director 48` (about 8 min, 16 fresh runs); one
+   chapter alone: `bash evidence/cut.sh <name> 48 <chapter_id>`. Look with
+   `python gtai-n4/scratch-showcase/chsheet.py <cutdir> <out.png> <ids...>`. Check REQUESTs 21
+   (plasma rifle drop) and 22 (riot shield) on the lane tips first.
+3. The 15 s city free fight at 32 px/m to close the cut: evidence/film.sh <name> 32 2100
+   --arena=city --reel=pit --riot --loadout=pistol,plasma_rifle,rocket_launcher,molotov, take
+   15 s of the gun beat (from about 17 s) with a "17 CITY BLOCK" ffmpeg title, concat after the
+   director chapters (same 1280x800, 60 fps, h264 settings) -> reel-<HHMM>.mp4.
+4. A 64 px/m close-up pass of the signature chapters (cut.sh <name> 64 rocket_launcher ...).
+5. Final round 07:45-08:30: windows-showcase export (`build/export/windows/RTAI.exe`, release
+   DLL beside it; route of 02:32), boot test with `-- --rigs --loadout=...` and with
+   `--bot=reel --reel=director`; REPORT play commands for the arena and `--arena=city`.
