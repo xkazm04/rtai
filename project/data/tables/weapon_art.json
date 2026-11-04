@@ -639,14 +639,14 @@
     },
     {
       "anchor_px": [
-        266,
-        24
+        310,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/tracer.png",
       "id": "tracer",
       "size_px": [
-        280,
-        48
+        320,
+        64
       ]
     }
   ],
