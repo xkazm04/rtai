@@ -1,6 +1,6 @@
 # REPORT: lane gunplay (`n-gunplay`), night 2026-11-04
 
-Final, iteration 18 (REPORT, 08:40). Code head 83429487; branch head is docs only. Every path cited below was checked to exist at 08:41.
+Final, iteration 18 (REPORT, 08:40). Code head 83429487; branch head is docs only. Every path cited below was checked to exist at 08:41 and re-checked at 10:41 (extension sections below).
 
 (Copy of `docs/night/2026-11-04/gunplay/REPORT.md`; the two files are identical in content.)
 
@@ -118,6 +118,10 @@ Nothing blocked the lane. No BLOCKED entry in JOURNAL. The friction that cost ti
 - Merge note: the city lean is dev only (`--cam=fight`). The play camera's call (gunplay-12) still needs the city's view point split from `city.focus` (a city-lane change). This iteration's `city_lean_m` / `kick_px` path is that split, view side only, and can serve it.
 - Cherry-picked showcase 8a8215a3 (2c27580e): on the city, the pit's high walls print as grey concrete instead of black debug bars.
 - Gates of record now on dfa5f508 (the iteration 21 code head is 70894746; later commits are docs): `node tools/evidence/run.mjs --no-bench --allow-dirty` (`WT/evidence/n12/evidence-21b.log`; the dirty paths are untracked evidence stills and logs). Lint 13/13, unit 757/757 (+1: the city lean cap), scenarios 29/29, parity bit-exact (the planted mutation caught at step 629). The selftest's look goldens hold 11/11 and its block goldens 5/5. It fails only on the same two accent rows as before (vermilion 8 px on vehicles at 48 px/m, 28 px on a cop at 64 px/m: blood edges, see Gates of record below). So the one-line `CityView` change moves no golden. The first run (`evidence-21.log`) flagged unit only because I committed JOURNAL during it; 757 passed there too.
+
+- **At the report (10:40, iteration 28):** REPORT updated in place, with no new work. Every backticked path in this file was re-checked at 10:41 (MASTERS clips and folders, the WT evidence logs, the weapons sources, the station table) and exists. frames.json parses, 15 entries, all files present. `REPORT.md` in the worktree root is again an exact copy of this file. Nothing blocked me after 09:00 except the open item below (the city flamethrower capture and the second lone wave, both bot routing, about 25 minutes on 10:11-10:13 tries).
+
+- **At the freeze (10:30):** no code change after 70894746. `git diff dfa5f508 70894746 -- project/ tools/` is empty, so the gates of record on dfa5f508 hold for the final head. Iterations 22-27 changed docs only. frames.json has 15 entries and every file resolves. No Godot process or lock of this lane is left. The open item stays the post-freeze fix: give `GunplayBot` a path round the city block's centre crates (second lone wave) and a side approach for the city flamethrower capture.
 
 ## Gates of record
 

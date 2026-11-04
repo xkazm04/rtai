@@ -1534,3 +1534,14 @@ approach for the city flamethrower capture.
 NEXT (post-run): `GunplayBot` routing round the city block's centre crates (second lone wave), then
 the side approach for the city flamethrower capture. Untracked evidence/n1, n10, n5 logs and stills
 stay uncommitted (cited nowhere).
+
+## Iteration 28 (10:40-10:50, REPORT)
+- 10:41 REPORT updated in place (docs/night/2026-11-04/gunplay/REPORT.md): one "At the report
+  (10:40)" line plus the header re-check note. The worktree-root REPORT.md was the 10:15 copy
+  (missing the 10:30 freeze line); it is now an exact copy again. Re-checked every backticked
+  path in REPORT (MASTERS clips/folders, WT evidence logs, weapons sources, station table): all
+  exist. frames.json: 15 entries, all files present. No code touched, no Godot run, no lock.
+
+NEXT (post-run): `GunplayBot` routing round the city block's centre crates (second lone wave),
+then the side approach for the city flamethrower capture. Untracked evidence/n1, n10, n5 stay
+uncommitted (cited nowhere).
