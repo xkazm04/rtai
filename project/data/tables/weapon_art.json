@@ -684,7 +684,7 @@
       "grip_class": "one_hand",
       "grip_px": [
         246,
-        83
+        167
       ],
       "held": "res://features/combat/weapons/art/machine_pistol/held.png",
       "icon": "res://features/combat/weapons/art/machine_pistol/icon.png",
@@ -694,14 +694,14 @@
       "muzzle_fx": "flash_smg",
       "muzzle_px": [
         487,
-        83
+        167
       ],
       "parts": {},
       "pickup": "res://features/combat/weapons/art/machine_pistol/pickup.png",
       "projectile_fx": "tracer",
       "size_px": [
         494,
-        166
+        250
       ]
     },
     {
