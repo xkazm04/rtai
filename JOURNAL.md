@@ -193,3 +193,41 @@ parts.json cells), top-down like `head_helmet` / `torso`: (1) `head_swat`: a rou
 helmet with a visor band, about 147 x 134 px like head_cap; (2) `torso_swat`: a plate-carrier
 vest over the blue shirt (pouches as flat ink blocks, cop blue stays the main fill, no red, no
 vermilion), 164 x 288 like torso. I wire the look (RigVariant + the arena line) when it lands.
+
+## Iteration 4 (02:38-03:38), BUILD
+- 02:38 read JOURNAL, git log; no new REQUESTs to human-reactions found in the brief scan.
+- MILESTONE 02:50 698c9543: the city sim's `scare(x, y)` entry. CityCore::scare was private in
+  projectiles.cpp: made public + bound (`CitySim.scare`), `CitySimBackend.scare` abstract,
+  CitySimRef -> CitySimShots.scare (renamed from _scare), CitySimNative guards with has_method so
+  other lanes' DLLs built before it skip the call (parity would show the drift). Built against a
+  copy of int-day's native/godot-cpp (my submodule dir was empty; the copy is not committed):
+  debug 2m17 + release, both DLLs in project/native/bin. Parity now drives a scare every 61 steps
+  on both sides: bit-exact over 1200 steps, planted mutation caught at 629.
+- MILESTONE 02:51 2109c74b: `CityScare` (features/combat/react): a WorldSystem ArenaSession adds
+  between the stage and the city on `--arena=city`: each new round's muzzle and each landing
+  (CombatArena.struck) becomes a sim scare (merged within 1.5 m, at most 4 a tick); the scare
+  count goes into the replay hash. scenario_city_scare: 58 bangs in 20 s, 3 people near the fight
+  fled (0 with the planted scare-off fault), replay identical. Quest 1's own rounds have no
+  `origin` (gunplay sets it only for GunHand rounds): CityScare falls back to the shot's position.
+- FRICTION: run_parity.mjs said "native CitySim not loaded" because GODOT_BIN was a shell var,
+  not exported; `export GODOT_BIN=...` fixes it.
+- Gates on 2109c74b: lint 13/13, unit 722/722, scenarios 32/32, parity bit-exact.
+- Quest 1 on the city (quest1_session.gd) does NOT get CityScare yet: it would move the quest
+  replay goldens; arena first, the quest is a one-line follow-up (+ re-bless) for the Director.
+- 02:56 clips: `city_scare_32ppm.mp4` / `city_scare_64ppm.mp4` (`--arena=city --rigs --bot=gunplay
+  --weapon=pistol --start=pit --clean --crowd=420`, 30 / 25 s, captioned). The pit is a plaza
+  with few walkers at the block's 120 people, so the dev flag `--crowd=<n>` (arena_game.gd, the
+  arena lane's dev file, 2 lines) fills the street for the clip. Read: the walkers by the kerb
+  run with hands up at the first shots, the plaza stays empty round the fight.
+- MILESTONE 03:00 51e53f7c: trip over bodies (brief item 4). ReactPose `trip` + CrowdReact
+  `_trip_over` (fleeing ped within 0.6 m of a DEAD feed entry, once per (person, body)). Schema
+  enums + table row. Unit 724/724 (2 new tests). Look goldens 11/11 worst 0.00, block 5/5
+  (selftest alone, 67 s); the accent audit flag is the known gunplay blood-flicker debt.
+- 03:05 board segment 8 "trip" (`trip_32ppm.mp4`, `trip_64ppm.mp4` + crop sheet). Honest read:
+  the dip and arms-out read, the forward pitch is subtle; no body underfoot on the board.
+- FRICTION: gdformat on Windows rewrites files with CRLF; a later python `replace("...\n")`
+  then silently misses. Detect the newline before editing (git normalises on commit).
+- MILESTONE 03:07 7a3f5516: quest 1 on the city gets CityScare too (quest1_session.gd, one
+  line, the quest lane's file). Scenarios 32/32; unit 724/724 on a re-run (the first run had 1
+  failure under load, not reproduced: a flake, test not identified).
+- DECISION lines for scare + trip in docs/decisions.md.
