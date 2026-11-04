@@ -1073,3 +1073,17 @@ NEXT (iteration 12 / report phase, in order):
 - 07:51 gates of record on 7ca493c9 (the final code head; `evidence/n10/evidence-final-12.log`
   overwritten, still tree): lint 13/13, unit 750/750, scenarios 29/29, parity bit-exact (step
   629); selftest the same two accent rows. REPORT gates updated.
+- Session end 07:53: every Godot run of mine was foreground or a finished background job (none of
+  the Godot processes on the machine has a gunplay path on its command line); no bench.lock or
+  image.lock taken (bench.lock is human-reactions'). The throwaway n-showcase worktree and its
+  APPDATA (gunplay-sc) are removed; scratch holds cap.sh, ch07.sh (new: showcase's ch 07 in a
+  throwaway worktree), city.sh, reel.sh, grid.py, sheet.py, killsheet.py. frames.json: 15 entries,
+  all files checked. Shared files touched this iteration: none (fight_areas_art.gd is this lane's;
+  docs/decisions.md one DECISION line).
+
+NEXT (report phase, in order):
+1. If code lands after 7ca493c9, re-run `node tools/evidence/run.mjs --no-bench --allow-dirty` on a
+   still tree (do not edit JOURNAL while it runs) and update REPORT "Gates of record".
+2. Read brutality's answer to REQUEST 30 (the dark char corpse) and weapon-art's to REQUEST 31 (the
+   bottle burst's bead ring); if either lands and showcase re-cuts ch 07, point the REPORT row at it.
+3. The idle riot bench of record stays the Director's (contended all night).
