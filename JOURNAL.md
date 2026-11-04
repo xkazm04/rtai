@@ -757,3 +757,37 @@ NEXT (iteration 11), in order:
   378590f3: lint 13/13 (674 files), unit 736/736 (`unit-it10b.log`), scenarios 32/32 (`scenarios-it10.log`).
   Render only: no sim file, no replay or parity golden touched. No bench (render-only change). No Godot process of
   mine left running. Scratch wa10 deleted after the evidence was copied to masters.
+
+## Iteration 12 (06:22 - 07:22), BUILD
+- 06:22 read: JOURNAL NEXT (iteration 11 left no entry), git log, other lanes' JOURNALs. No new REQUEST to
+  weapon-art (brutality 3/4, human-reactions 1/2, showcase 4/5/11, rivet-arsenal 11 all answered earlier).
+  Plan = NEXT 1 (i): a small-scale held cell.
+- MEASURE 06:24 the real cause of the dark held guns is TONE at the print's small scale, not the band split of
+  it10 MEASURE (a) (that measured the D5 overlay parts, not Rivet's D4 parts that print at 48 px/m). Rivet's D4
+  parts: median luminance 180-200 (claw 185, helmet 201). Held guns: 101-140. At 48 px/m the print's posterize
+  `hi` drops to about 0.43 ink density (luminance about 140), so the gun bodies go solid ink.
+- TOOL 06:26 `tools/art/held_small.py --sim`: an offline print preview (box minification at the claw's real
+  scale + the shader's D4 thresholds) that reproduced the in-game lozenges, so the re-tone was tuned without
+  Godot runs. First try (lift only) was noisy; the kept one flattens the body spread to 0.45 and inks a 9 px
+  silhouette edge (`it12-held-small-print-sim.png`).
+- MILESTONE 06:30 kinetic four (2eb8e4f8): `held_small.png` + HeldLod (make_held returns it when a row has
+  `parts.small`; swaps on PartMaterials.view_px under `held_small_below_ppm` 56; rim follows; `--held-small=off`).
+  Same-tick A/B in the arena pit at 48 px/m (`--rigs --start=pit --bot=arsenal --loadout=pistol,machine_pistol,
+  hand_cannon,gloria --clean`, `--fixed-fps 60 --quit-after 640`, before = `--held-small=off`, run in parallel):
+  `it12-held-small-ab-arena-pit-48ppm-2x.png`. Looked at: the guns print as light steel with an ink outline in
+  Rivet's own tone, the hand cannon's drum and the pistol's slide survive, no more black lozenge. Still: the
+  pistol and machine pistol top-down shapes are close (length differs most).
+- DECISION weapon-art held guns at gameplay scale (docs/decisions.md). Alternative = `--held-small=off` /
+  dropping `held_small_below_ppm`. Rejected: LIMB kind (it10, measured worse), lightening held.png itself (the
+  64-128 px/m close-ups and reload strips are judged on the full art), a weapons-only print px_scale (not my file).
+- Gates at 2eb8e4f8: lint 13/13 (676 files), unit 738/738 (noir flake failed once under the capture load, passed
+  on the re-run), scenarios 32/32 (`scenarios-it12.log`). Render only, no sim file, no golden touched.
+- 06:31 extended (print sim of every held part at 48 px/m: 54-88 % solid ink, molotov 33 %): re-toned all but the
+  molotov, the plasma sword (light already) and the flamethrower (its thin wand prints DARKER re-toned: the ink
+  edge swallows it). The rocket and mini-nuke get `held_empty_small` too. FRICTION: rivet-arsenal's HeldTube (on
+  their branch, not here) sets the full texture every frame from the priority-10 claw view; HeldLod now runs at
+  priority 20 and maps any full art in `small_of` (loaded or empty tube) to its small cell (unit test simulates
+  HeldTube's set).
+- Registry rules applied: motion-quality-gating (same deterministic tick before/after, frames differ only in the
+  change), sprite-and-atlas-production (an LOD cell authored for the scale it is seen at, same canvas and pivot
+  so no data moves). No deviation.

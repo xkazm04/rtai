@@ -199,6 +199,9 @@ func _held_sprite(r: Row) -> Sprite2D:
 	var lod: HeldLod = HeldLod.new()
 	lod.full = _load(r.held)
 	lod.small = _load(r.parts["small"])
+	lod.small_of[lod.full] = lod.small
+	if r.parts.has("empty") and r.parts.has("empty_small"):
+		lod.small_of[_load(r.parts["empty"])] = _load(r.parts["empty_small"])
 	lod.below_view_px = held_small_below_ppm / WORLD_PX_PER_M * CutRig.SC
 	return lod
 
