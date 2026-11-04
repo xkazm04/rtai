@@ -100,7 +100,8 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
-	ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5)))
+	if not WeaponFxShell.patch_ground(ci, p, fade):
+		ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5)))
 	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7

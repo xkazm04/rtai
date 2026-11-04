@@ -14,6 +14,10 @@ const SHADOW_M: Vector2 = Vector2(0.62, 0.26)
 const SHADOW_SHRINK: float = 0.4
 ## The exhaust lick sits this far behind the head (m, x the shell's size).
 const TAIL_M: float = 1.15
+## A fire patch's ground: the scorch cell (an inked burst, 400 cell px) spanning this many patch
+## diameters at this ink, in place of gunplay's flat grey disc. 0 = the disc (the before).
+const PATCH_SCORCH_K: float = 1.0
+const PATCH_SCORCH_INK: float = 0.8
 
 
 ## Draws shot `s` flying along `dir`, `went` metres from the muzzle.
@@ -38,3 +42,14 @@ static func shadow(ci: CanvasItem, at: Vector2, k: float, ink: float = 0.35) -> 
 	ci.draw_set_transform(Ink.px(at), 0.0, Vector2(1.0, r.y / r.x))
 	ci.draw_circle(Vector2.ZERO, r.x, Color(FightAreasArt.SCORCH, ink))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+## The burnt ground under fire patch `p` (x, y, radius m) at `fade` (1 burning .. 0 out); false =
+## not drawn (the caller's disc). Its turn is fixed by its place, so it never spins.
+static func patch_ground(ci: CanvasItem, p: Vector4, fade: float) -> bool:
+	if not WeaponFxArt.enabled or PATCH_SCORCH_K <= 0.0:
+		return false
+	var k: float = 2.0 * p.z * PATCH_SCORCH_K * Ink.PX_PER_M / 400.0 / WeaponFxArt.cell_scale()
+	var a: float = PATCH_SCORCH_INK * (0.5 + 0.5 * fade)
+	WeaponFxArt.draw_cell(ci, &"scorch", 0, Vector2(p.x, p.y), p.x * 1.7 + p.y, Vector2.ONE * k, a)
+	return true
