@@ -1437,3 +1437,5 @@ NEXT (10:40 report phase):
   previous corpse ends about 2.85 s before the next kill, so the 2.5 s lead opened mid-pan. Looked
   at 2 fps sheets: every cut opens on the guard's approach and the shot; the flamethrower cut opens
   on the flame burst. frames.json titles and notes and REPORT updated.
+- 10:07 Session end. No Godot process of mine running, no lock taken, /tmp scratch deleted.
+  Branch head: docs on top of the code head 70894746. NEXT above stands.
