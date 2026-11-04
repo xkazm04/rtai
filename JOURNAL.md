@@ -913,3 +913,24 @@ NEXT (iteration 7, from about 06:30):
   record after human-reactions' trip-scan trim (b657ca05, REQUEST 23), first merged in round 9
   and benched now; drive inside its 2.5-4.4 ms band (its 1 % low has a tail: 108 fps). One
   sample each, contended. Files: evidence/r10/bench-*.
+- 07:00 reel-0700-close64 (masters; frames.json 2nd entry): 64 px/m on round 10, machine pistol,
+  molotov, plasma rifle, homing, riot cop (0 errors, all down; evidence/r10/sheet-c64-r10.jpg).
+  Homing and riot cop read best; the plasma victim lies back but is a dark blob at 64.
+- MILESTONE 07:00 merge round 11 (answers came in after round 10): weapon-art a957f888
+  (held_small: the held guns read in the claw at gameplay scale) -> 98307ef8; rivet-arsenal
+  0e01f943 (claw cops' stand-off ring; quest 1 fight cam) -> e246e15e; gunplay 9113de63 (fire
+  patch prints an ink char; REPORT draft) -> eaf011a9, GLUE: fx_view.gd keeps ours (_gun_over,
+  _art_gun, _art_mag) + gunplay's gun_fx() getter; gun_fx_art.draw_under keeps our (shells,
+  mags) signature + gunplay's first line fx.scorch.draw(); human-reactions fa2fa049 (REQUEST 24
+  answer, CrowdReact 244 -> 150 us) -> f6458c71, GLUE: rig_gait.gd keeps rivet-arsenal's
+  BACKPEDAL_STRIDE/TRAIL_K + human-reactions' PLANK_FEET_PX (both consts); brutality 01e9ad4f
+  (city follow to the solo spot, char prewarm) -> e02af5ef. `--import` once before any film
+  (0 errors); it generated rivet-arsenal's missing test_claw_cops_stand_off.gd.uid (committed,
+  glue). Evidence --no-bench started on the .uid commit.
+- 07:02 r11 chapters cut (claw, pistol, electro, molotov, flamethrower, ray gun; 0 errors, all
+  down; evidence/r10/sheet-r11-a/b.jpg). Flamethrower and molotov now leave gunplay's inked soot
+  char: good. REQUEST 24 PARTLY done (evidence/r10/electro-r11-48ppm.png): the corpse now lies
+  long, but across the shot (north-south, shot runs east), and the scorch does not show at
+  48 px/m. REQUEST 24b -> human-reactions: lay it along the shot line (feet toward Rivet, head
+  away), and give the scorch enough ink to read at 48. REQUESTs 26 (ray pile) and 27 (molotov
+  victim hidden under the stars) still open on round 11.
