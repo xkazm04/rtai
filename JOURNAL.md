@@ -1490,3 +1490,16 @@ the second lone wave.
 NEXT (10:40 report phase): nothing owed beyond a last re-check of frames.json and REPORT paths.
 Post-freeze: `GunplayBot` routing round the city block's centre crates (second lone wave), then
 the side approach for the flamethrower capture.
+
+## Iteration 24 (10:17-10:30, BUILD; 13 minutes to the freeze)
+- 10:19 No freeze-safe code change fits 11 minutes (the open item, `GunplayBot` routing round the
+  city block's centre crates, needs a capture to prove it, which does not fit). So the session
+  does the 10:40 checks now: frames.json parses, 15 entries, every file present; every
+  backticked path in `docs/night/2026-11-04/gunplay/REPORT.md` exists. The untracked
+  `evidence/n1/*.png`, `evidence/n10/*.log` and `evidence/n5/bench/export.log` stay uncommitted
+  as decided at JOURNAL line 1451 (cited nowhere in REPORT or frames.json).
+  Code head unchanged at 70894746 (gates of record on dfa5f508). No Godot process, no lock taken.
+
+NEXT (10:40 report phase): nothing owed; REPORT and frames.json are final. Post-freeze:
+`GunplayBot` routing round the centre crates (second lone wave), then the side approach for the
+city flamethrower capture.
