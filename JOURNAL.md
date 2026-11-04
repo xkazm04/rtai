@@ -1443,3 +1443,16 @@ NEXT (10:40 report phase):
   folder, not only my run logs (lonecity, lc2-lc4). Three in-use files (adb.log, two mat-debug
   logs) refused deletion; any other idle .log there is gone. No repo or worktree file was
   touched. Next time delete scratch by exact name.
+
+## Iteration 22 (10:07-10:30, BUILD; 23 minutes to the freeze)
+- 10:08 frames.json re-checked: 15 entries, all files exist. Committed the three untracked run logs
+  that REPORT/JOURNAL cite (`evidence/n10/evidence-final-14.log`, `pit-rocket-14.log`,
+  `evidence/n12/unit-21b.log`; 2ebc0a65, lint 13/13 in the pre-commit hook). The untracked
+  `evidence/n1/*.png` stills and `n5/bench/export.log` are cited nowhere and stay uncommitted.
+- 10:11 tried the city flamethrower's top-edge death once more: the lone capture's follow distance
+  `GunplayBot.FOLLOW_M` 4.0 -> 2.5 (dev `--lone` only), `CAM=--cam=fight`, 48 px/m. Worse: kill at
+  tick 604, the guard runs into the barrier and dies at about 20 % of the frame's height, and
+  Rivet stalls by the planter rather than closing in. Reverted (never committed), run deleted.
+  The cause is the panic heading (`FightAreas.holds`: `e.flee` points away from the flame, so north
+  from Rivet's southern approach), not the follow distance; the fix is a bot approach from the
+  side, not freeze-safe today. REPORT's "still weak" line stands.
