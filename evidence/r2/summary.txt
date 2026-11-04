@@ -1,0 +1,4 @@
+lint exit 0
+unit exit 1
+scen exit 0
+evidence exit 2

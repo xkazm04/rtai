@@ -1,0 +1,51 @@
+{
+  "brutality_pit": {
+    "by_style": {},
+    "signature_kills": 0
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "damage_taken": 8.99999999999991,
+  "deaths": 0,
+  "dodges": 7,
+  "hit_rate": 0.91304347826087,
+  "hits": 21,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 14,
+  "pit_waves": 5,
+  "rivet_claw_cops": {
+    "claw_hits": 7,
+    "claw_kills": 1,
+    "claw_swings": 7,
+    "claw_whiffs": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 23,
+  "ticks": 3839,
+  "top_speed_mps": 4.50558632612228,
+  "ttk_s": {
+    "strafe_05m": [
+      0.0833333333333333
+    ]
+  },
+  "turn_rate_peak_dps": 720.0002249415
+}
