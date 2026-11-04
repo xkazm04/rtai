@@ -150,6 +150,11 @@ crops of both grounds.
   `projectile_k` at the scorch's 35 % ink; the small molotov bottle uses `BOTTLE_SHADOW_K` 0.8 (about 1 m across,
   0.6 m at the apex) at 60 % ink (`BOTTLE_SHADOW_INK`), because at 0.55 and 35 % it vanished on cream. Before
   iteration 10 the bottle cast a fixed 28 x 12 px dash, the same in pixels at every zoom.
+- **Bottle bursts** (`WeaponFxArt.FIRE_BURST_TICKS` 10, iteration 14, gunplay REQUEST 31): a splash whose own fire
+  patch lies under it (patch radius = splash radius, so the molotov and not the rocket or the nuke) plays only the
+  blast sheet's inked star, held 10 ticks and fading over the last 5, then the fire patch carries the burn. The
+  rocket's grey smoke ring and its last frame (a ring of cream discs) read as debug beads over the fire.
+  `--fire-burst=off` is the before.
 - **Energy muzzle flashes** need no change. The pale star inside its 13 px ink ring reads on cream at 32 px/m.
 - **Empty tubes** (`parts.empty` = `held_empty.png` for the rocket launcher and the mini-nuke): the held part
   with the striped warhead cut away just past the front band, and an inked open mouth. It uses the same canvas,

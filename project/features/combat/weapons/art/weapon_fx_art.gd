@@ -9,6 +9,10 @@ extends RefCounted
 ## `enabled` false (or `--weapon-fx=shapes`) is the before: gunplay's shapes.
 
 const BLAST_FRAMES: PackedInt32Array = [0, 4, 10, 20, 30]
+## A bottle's burst (its fire patch is the splash) holds only the star frame this long, fading
+## over the last half: the rocket's smoke and bead rings read as debug over the fire (REQUEST 31).
+## `--fire-burst=off` = a bottle plays the rocket's four frames (the before).
+const FIRE_BURST_TICKS: int = 10
 ## Smoke puffs behind the rocket: count and spacing (m).
 const PUFFS: int = 6
 const PUFF_GAP_M: float = 0.45
@@ -36,6 +40,7 @@ const ARC_SPAN_PX: float = 296.0
 const ARC_MIN_M: float = 2.0
 
 static var enabled: bool = not OS.get_cmdline_user_args().has("--weapon-fx=shapes")
+static var fire_burst: bool = not OS.get_cmdline_user_args().has("--fire-burst=off")
 static var _art: WeaponArt = null
 static var _frames: Dictionary[StringName, Array] = {}
 
@@ -112,9 +117,18 @@ static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> bool:
 
 
 ## A rocket blast `b` (x, y, radius m) `age` ticks old; false = not drawn (the caller's shapes).
-static func blast(ci: CanvasItem, b: Vector3, age: int) -> bool:
+## `areas` (optional) tells a bottle's fire burst from a rocket's blast by its patch.
+static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null) -> bool:
 	if not enabled:
 		return false
+	if fire_burst and is_fire_burst(b, areas):
+		if age < FIRE_BURST_TICKS:
+			var k: float = 2.0 * b.z * Ink.PX_PER_M / 480.0 / cell_scale()
+			var fade: float = clampf(
+				float(FIRE_BURST_TICKS - age) / (FIRE_BURST_TICKS * 0.5), 0.0, 1.0
+			)
+			_cell(ci, &"blast", 0, Vector2(b.x, b.y), b.y * 0.9, k, fade)
+		return true
 	var at: Vector2 = Vector2(b.x, b.y)
 	# the scorch decal stays under it for the whole VFX life, fading out
 	var keep: float = float(FightAreas.VFX_KEEP_TICKS)
@@ -131,6 +145,16 @@ static func blast(ci: CanvasItem, b: Vector3, age: int) -> bool:
 	var size_k: float = 2.0 * b.z * Ink.PX_PER_M / 480.0 / cell_scale()
 	_cell(ci, &"blast", f, at, b.y * 0.9, size_k * (1.0 + 0.08 * into), fade)
 	return true
+
+
+## A splash whose own fire patch lies under it (same radius, within it): a burst bottle.
+static func is_fire_burst(b: Vector3, areas: FightAreas) -> bool:
+	if areas == null:
+		return false
+	for p: Vector4 in areas.patches:
+		if is_equal_approx(p.z, b.z) and Vector2(p.x, p.y).distance_to(Vector2(b.x, b.y)) < b.z:
+			return true
+	return false
 
 
 ## The flamethrower stream: tongues along the jet, growing and fading with range.
