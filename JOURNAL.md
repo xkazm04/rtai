@@ -43,15 +43,22 @@ Evidence: `evidence/n5-cast/` (in git) and `C:\Users\kazda\kiro\gtai-masters\n5\
 - Gates at 28becde8: lint 13/13, unit 940/0 (`test_rig_plans` updated for COP_LIMB_K, and the new
   `test_cast_footprint`). The scenarios were running at the session's end (they include the look goldens, which the
   cop change will move).
-- Not yet seen: the cop reaction families one by one (flinch, stagger, knockdown, shield block, melee fold, electro,
-  burn, the brutality splits) at 64 px/m. The 32 px/m reel shows the kills only.
+- 17:22 scenarios at 28becde8: 46 ran, 0 failed. The director scenario kills every chapter: claw 2/2, pistol 2/2,
+  machine pistol 4/4, and the other 13 chapters 1/1.
+- MILESTONE 17:23 look goldens: unblessed, 8 of 11 failed on the far-pixel share only (worst d5-64 mean 4.46). The
+  d4-64 diff mask sits on the junction riot's cops. Re-blessed once (92e8c3fb), with a decisions line.
+- MILESTONE 17:25 reactions at 64 px/m on the real rigs (`dev/human_react/react_board_run.gd --zoom=2 --every=4`, 0
+  script errors): stagger, knockdown, melee spin and fold, electro, burning, and the round, melee, blast and electro
+  deaths all read on the slim cops. Masters: `frames/react-board-slim-cops-64ppm.png`,
+  `cast-after-react-board-64ppm.mp4`. Not filmed yet: the brutality signature splits (the gib cuts use the rig parts)
+  and a 64 px/m before clip.
 
 NEXT (iteration 3):
-1. Read the scenario result in `build/logs/scen.log`. Expect the look goldens to move from the cop change: inspect the
-   diffs, then re-bless once with a dated decisions line ("slim cops"). Then run `node tools/evidence/run.mjs --no-bench`.
-2. Cop reactions at 64 px/m: use `dev/human_react/react_board.gd` (or the director reel at `--ppm=64`). Check flinch,
-   stagger, knockdown, shield block, melee fold, electro, burn, corpses and the brutality splits, before and after.
-   Film it.
+1. Run `node tools/evidence/run.mjs --no-bench` on the committed head (parity should be exact: render only). If the
+   block goldens fail, check them the same way as the look goldens.
+2. Film the brutality signature splits on the slim cops (the brutality lane's dev board, or the director chapters
+   katana and chainsaw at `--ppm=64`), and a react-board before clip (main's cop constants) to pair with
+   `cast-after-react-board-64ppm.mp4`.
 3. Rivet as the hybrid, first the rig: size_k 1.2 -> ~0.97 for a 0.92 m shoulder span (1.1x the ped), lanky limbs
    (a limb-length factor like the cops'), thinner arms (`arm_w`), and add a `leg_w` to BodyPlan (thigh and shin
    thickness, like `arm_w` in rig_arm.gd). Re-measure with `dev/bench/rig_footprint.gd` and look with
