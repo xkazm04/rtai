@@ -1184,3 +1184,4 @@ NEXT (after the freeze / morning merge), in order:
   open by a shell, so delete it once the session ends. hr-scratch and hr-scratch2 are gone.
   frames.json has 15 entries, 0 missing. Since 09:49 there is no code on this branch, only docs and
   evidence; the one code change (REQUEST 30) landed on showcase round 19 as glue.
+- CORRECTION 10:07: the hr-scratch3 directory is deleted now (the shell let go of it). No scratch worktree or directory of mine is left.
