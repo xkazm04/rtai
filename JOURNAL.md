@@ -185,3 +185,11 @@ NEXT (iteration 4, in order):
 
 NEXT (iteration 4): unchanged list above (sim scare entry first; CityCore::scare exists, private).
 Also: a sparse city street fight to show single deaths; SWAT look; trip over bodies; robot thug.
+
+### REQUEST 1 -> weapon-art (02:38, low priority, after the weapons)
+A SWAT look for the cop rig (the brief's third cop type; d5-cast has patrol and riot only):
+two parts on a chroma-green part sheet in the d5 cop style (`features/characters/art/d5/cop/`,
+parts.json cells), top-down like `head_helmet` / `torso`: (1) `head_swat`: a rounded tactical
+helmet with a visor band, about 147 x 134 px like head_cap; (2) `torso_swat`: a plate-carrier
+vest over the blue shirt (pouches as flat ink blocks, cop blue stays the main fill, no red, no
+vermilion), 164 x 288 like torso. I wire the look (RigVariant + the arena line) when it lands.
