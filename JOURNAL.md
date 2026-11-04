@@ -435,3 +435,8 @@ NEXT (final; the lane is ready for the morning merge at this tip):
 2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
 3. ArenaArsenalBot's melee walk-in: a nav-grid path.
 4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
+
+## Iteration 17 (08:40), REPORT
+- 08:40 read JOURNAL and git log; tip 628b9130. Wrote `REPORT.md` in the lane root: a copy of `docs/night/2026-11-04/rivet-arsenal/REPORT.md` plus the Blocked and Next steps sections. Checked all 34 `M\` and 10 `E/` evidence paths it cites: every one exists. `git diff 8a7fd9a1..HEAD -- project tools` is empty, so the gates of record still hold. I started no Godot process and took no lock.
+
+NEXT (final): see REPORT.md, Next steps. The lead is call 1 (quest 1 on the rigs by default) for the Director.
