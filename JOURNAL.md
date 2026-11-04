@@ -403,3 +403,17 @@ NEXT (iteration 9):
    visor with two eye slits. A head part redraw (Codex, under image.lock, from r2_c3 + ref-4) if 2 does not cover it.
 4. Keep REPORT current (rewritten at 08:40); frames.json is 15, all files exist.
 Session state 23:20: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.
+
+## Iteration 9 (22:52-23:52, BUILD)
+- 22:52 read JOURNAL, log, n5-look JOURNAL (no REQUEST to n5-cast; they did not touch the part shaders). Evidence
+  gate `tools/evidence/run.mjs --no-bench` started on c714f3f3 (NEXT 1).
+- 22:56 NEXT 2 (Rivet's tone) diagnosed: the art is already tan (D4 torso mean (183,159,135), D5 (170,145,122)), but
+  both part prints throw the hue away: print_part snaps to cream/ink by luminance, look_d5_part maps luminance to a
+  violet-grey steel ramp. So the fix is a print value, not a recolour (cop_navy.py worked only because the cop blue
+  has its own branch). r2_a5 (the look target at game zoom) shows Rivet cream-white, r2_c3 (the body target, close)
+  tan metal: keep cream at 32 px/m, warm tan only in the D5 close-up tier.
+  Registry `shader-budget-authoring` applied: no new pass or fetch; one uniform and three mixes in the existing D5
+  overlay branch, a second shared material pair (batching kept: one pair for all warm rigs).
+  Built: `BodyPlan.d5_warm` (0 = violet steel), `RivetPlan.D5_WARM` 1.0 / `static var d5_warm` (A/B), RigDetail
+  materials [plain, tint] x [violet, warm], look_d5_part `warm` + WARM_HI/MID/LO halfway between the violet steel's
+  values and r2_c3's sampled tan. `cast_lineup.gd -- --warm=<f>` for the A/B.

@@ -72,6 +72,11 @@ const SPRINT_STRIDE: float = 0.2
 ## sprint 9.3 m/s (combat.json, rivet_motion.json). The gait keeps the evening's pose and stride
 ## at the new speeds (BodyPlan.speed_k), so the cadence rises 1.5x. The Hauler keeps 1.0.
 const SPEED_K: float = 1.5
+## n5-cast iteration 9 (r2_c3): Rivet's close-up steel prints warm tan (BodyPlan.d5_warm); 0 = the
+## violet-grey steel of the d5 lane. Only the 56+ px/m tier: at 32 px/m he stays cream (r2_a5).
+const D5_WARM: float = 1.0
+## The live value (a dev scene's A/B flips it before the pool's first build).
+static var d5_warm: float = D5_WARM
 ## Which form RigPool builds; a dev scene may flip it before the pool's first build.
 static var form: StringName = FORM_BASE
 
@@ -96,6 +101,7 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	_legs(p, legs.x)
 	p.leg_w = legs.y
 	p.leg_rim = true
+	p.d5_warm = d5_warm
 	_arms(p, f.y, f.z)
 	_proportion(p, arms.x, arms.y)
 	p.arm_w = arms.z

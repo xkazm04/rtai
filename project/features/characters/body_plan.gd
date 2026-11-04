@@ -104,6 +104,9 @@ var limb_lod: bool = true
 ## n5-cast: a cream sticker rim under the thigh, shin and foot at gameplay scale
 ## (Rivet's lean piston legs).
 var leg_rim: bool = false
+## n5-cast (r2_c3): how far the D5 close-up print (look_d5_part `warm`) moves this body's steel
+## ramp from the violet-grey toward the hybrid target's warm tan metal; 0 = the violet-grey steel.
+var d5_warm: float = 0.0
 
 
 func has_collar() -> bool:

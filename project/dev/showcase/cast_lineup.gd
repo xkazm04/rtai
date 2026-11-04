@@ -1,7 +1,7 @@
 extends SceneTree
 ## n5-cast: the cast lineup frames launcher (windowed, d3d12); see CastLineupRun.
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/showcase/cast_lineup.gd
-##        -- --out=<dir> [--walk] [--form=<RivetPlan form id>]
+##        -- --out=<dir> [--walk] [--form=<RivetPlan form id>] [--warm=<RivetPlan.d5_warm>]
 
 
 func _initialize() -> void:
@@ -12,6 +12,8 @@ func _initialize() -> void:
 			walk = true
 		elif arg.begins_with("--form="):
 			RivetPlan.form = StringName(arg.substr(7))  # before the pool builds Rivet's plan
+		elif arg.begins_with("--warm="):
+			RivetPlan.d5_warm = float(arg.substr(7))
 		elif arg.begins_with("--out="):
 			out = arg.substr(6)
 		else:
