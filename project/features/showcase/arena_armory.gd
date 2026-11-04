@@ -29,9 +29,9 @@ const ORDER: Array[StringName] = [
 ]
 ## The first item's spot (hub-relative metres) and the grid: rows of PER_ROW, STEP_M apart (twice
 ## the pickup reach, so one step along a row never stands over two guns).
-const FIRST_M: Vector2 = Vector2(1.5, -1.5)
+const FIRST_M: Vector2 = Vector2(1.5, -1.2)
 const STEP_M: float = 1.8
-const ROW_M: float = 1.5
+const ROW_M: float = 1.5  # rows y -1.2 and 0.3: 1.2 m clear of the melee line and react_line
 const PER_ROW: int = 8
 
 var laid: int = 0

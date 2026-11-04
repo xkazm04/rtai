@@ -759,3 +759,32 @@ export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 
   open: 16 stations", "cast rigs: true", 0 script errors; `-- --bot=reel --reel=director
   --loadout=pistol` -> chapters run (claw combo 2/2 down, pistol...). The final round only has
   to re-run this on the last merge.
+- MILESTONE 05:50 reel-0550-close64 (gtai-masters/n4/showcase, 7 chapters at 64 px/m: rocket,
+  flamethrower, katana, chainsaw, plasma sword deflect, hand cannon, homing shards; fresh runs,
+  0 script errors). Looked at 5 frames a chapter (sheets/c64-a, c64-b). Best at 64: the hand
+  cannon's 6 m throw-back on its smear, the deflect's round going home, the chainsaw halves, the
+  shards standing out of the body before the burst. Wrong at 64: the rocket's thrown parts leave
+  the frame top-right (the 48 px/m reel keeps them: the close-up is detail only); the katana's
+  lower half lands beside Rivet's feet (the halves part screen up/down from a victim 1.6 m off;
+  composition, not a defect). frames.json: the close-up second, 15 entries.
+- 05:51-~06:05 BENCH r8 under bench.lock (taken 05:50; lock free when checked). No Godot of mine
+  during it.
+- 05:55 weapon-art REQUEST 6 -> showcase (the melee-line dummies stand in front of the weapon
+  wall's lower third) taken as hub-layout glue: rivet-motion's rivet_melee_line moves 0.6 m south
+  (y -3 -> -2.4, all 7 dummies; arena_stations/rivet-motion.json, a shared evening-lane file:
+  minimal change, doc line updated; no code or test reads those spots) and the armory rows sit
+  at y -1.2 and 0.3 (1.2 m clear of the melee line and of human-reactions' react_line at 1.5).
+- BENCH r8 (bench.lock 05:50-06:03; CONTENDED: other lanes' Godot on the GPU/CPU; no Godot of
+  mine during it). `node tools/bench/run.mjs` on round 8 + the armory (off in the bench),
+  exported release, 3 x 60 s: aggregate p99 10.37 ms, 1 % low 71 fps, worst frame 149.5 ms
+  (3 hitches > 50 ms), MISSES p99CpuMs (r7 11.48 / 63). Per scenario from frame_ms (r4/r5/r7
+  method): drive 4.33 ms / 140 fps (r7 3.45 / 158; record 3.56), drive48 2.54 / 224 (r7 3.69 /
+  166), riot 10.37 / 71 (r7 11.48 / 63; r5 8.73 / 90; record 6.0 / 124). Rigs p99 0.85 ms. Read:
+  drive and drive48 swap places run to run (noise of a shared machine, both inside 2.5-4.4 ms);
+  the riot stays 2-4 ms over the record since r7 (REQUEST 23 -> human-reactions still open: the
+  startle scan's cost is untimed). One sample each; not bisected. Files: evidence/r8/bench-*.
+- 06:06 gates on the hub move: unit 851/851, scenarios 43/43 (CONTENDED). 48 px/m still
+  (evidence/r8/armory-48ppm.png, the masters copy replaced): the dummies now cover less of the
+  wall but their rigs (about 1 m across) still touch its base; the hub has no free row left (the
+  armory, react_line 1.5, bot lane 2.85, claw cops 4.4). Answer to weapon-art REQUEST 6: partly
+  done (0.6 m); the rest is "accepted as is" per their fallback.

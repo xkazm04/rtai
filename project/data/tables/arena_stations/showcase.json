@@ -1,5 +1,5 @@
 {
-  "doc": "The showcase lane's stations. The armory (showcase_armory, ArenaArmory in res://features/showcase/arena_armory.gd) lays every finished table weapon on the hub floor in two rows east of Rivet's start (y -1.5 and 0, x 1.5 to 14.1, 1.8 m apart): walk over a gun to take it into its empty carry slot, interact over one to swap it for the held gun of its class. On with --armory and by default in the showcase export (feature tag showcase) unless a --bot drives Rivet; without a --loadout Rivet starts with the pistol. Off, it lays nothing and hashes nothing.",
+  "doc": "The showcase lane's stations. The armory (showcase_armory, ArenaArmory in res://features/showcase/arena_armory.gd) lays every finished table weapon on the hub floor in two rows east of Rivet's start (y -1.2 and 0.3, x 1.5 to 14.1, 1.8 m apart; 1.2 m clear of rivet-motion's melee line at y -2.4 and human-reactions' react_line at y 1.5): walk over a gun to take it into its empty carry slot, interact over one to swap it for the held gun of its class. On with --armory and by default in the showcase export (feature tag showcase) unless a --bot drives Rivet; without a --loadout Rivet starts with the pistol. Off, it lays nothing and hashes nothing.",
   "lane": "showcase",
   "schema": "gtai.arena-station/1",
   "stations": [
