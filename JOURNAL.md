@@ -407,3 +407,29 @@ NEXT (iteration 6, in order):
   --clean`, 11 deaths) on the mixed squads; at 32 px/m the looks differ mainly by the head.
 - frames.json: 15 entries, the four new ones first; dropped thug_plan_32ppm and react_line_4sides
   (superseded, files stay). Scratch AVIs deleted.
+- 04:40 full evidence (`--no-bench --allow-dirty`) on 738c3d67 (it straddled the startle edit, so
+  unit + react scenarios were re-run on 1da7fd7d below): lint 13/13, unit 735/735, scenarios
+  32/32, parity bit-exact (mutation caught at 629) PASS. Selftest FAIL on the same accent-audit
+  line as iteration 5 (4 px vermilion on vehicles / cop at 32 px/m, blood_flicker_* debt rows "no
+  longer seen": gunplay's blood flicker moving rows); look goldens 11/11 (worst 0.34), block 5/5.
+  One unit run during the evidence run showed 1 failure; alone it was 737/737 (contention flake).
+- MILESTONE 1da7fd7d: a death startles the crowd (brief item 4, "they read in a riot"): living
+  pedestrians within STARTLE_M 2.5 m of a death cower away from the body; a trip skipped on a busy
+  (mid-cower) body fires once it is free (the first version dropped trips 4 -> 1). Riot 30 s:
+  20 startles, 4 trips, 15 deaths (was 0 cowers). Unit 738/738 (3 new tests), react / city_scare /
+  human scenarios green. riot_crowd_64ppm.mp4 re-filmed on it (16 s: 20 startles, 3 trips, 12
+  deaths). Honest read: the startles are small motions inside a dense riot; the clip reads as
+  a crowd, a police line, the dead and pools.
+- DECISION startle radius 2.5 m (about two body widths past arm's reach): the neighbours of a kill,
+  not the street (the street's flight is the sim's scare). Alternative: STARTLE_M = 0 turns it off.
+- 04:46 bench (lock taken): the first try failed at export ("export path doesn't exist": a fresh
+  worktree has no build/export/windows-bench; created it), re-run in the background.
+
+NEXT (iteration 7, in order):
+1. Read the bench result (build/evidence/bench.json) from the 04:46 run; if the riot p99 moved
+   past the idle record (6.0 ms, CONTENDED), profile CrowdReact._startle (O(feed) per death).
+2. Make a single startle and a single trip readable: a 64 px/m close-up on a thinner city street
+   (`--arena=city --crowd=420` pit fight: deaths near walkers) rather than the 300-person riot.
+3. scenario for the startle (planted fault: STARTLE_M 0 -> no cowers at deaths in the riot feed).
+4. The arena city exit log (arena_game.gd) could also print startles (one line, the arena lane's
+   dev file).
