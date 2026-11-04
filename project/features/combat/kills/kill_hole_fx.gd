@@ -67,6 +67,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	var k: float = clampf(float(kills.tick - tick0) / GLOW_TICKS, 0.0, 1.0) if kills else 1.0
 	var glow: Color = HOT.lerp(COOL, k)
+	var halo: Color = Color(HOT, 0.55 * (1.0 - k))  # the heat bloom reads at 32 px/m, then cools
+	draw_arc(Vector2.ZERO, radius_px * 1.55, 0.0, TAU, 24, halo, radius_px * 0.7, true)
 	draw_arc(Vector2.ZERO, radius_px + 2.0, 0.0, TAU, 24, INK, 3.0, true)
-	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.45, 2.0), true)
-	draw_arc(Vector2.ZERO, radius_px * 0.78, 0.0, TAU, 24, HOT.lerp(glow, 0.6), 1.2, true)
+	draw_arc(Vector2.ZERO, radius_px, 0.0, TAU, 24, glow, maxf(radius_px * 0.3, 2.0), true)
