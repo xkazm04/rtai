@@ -49,3 +49,31 @@ func test_already_fleeing_or_a_cop_never_cowers() -> void:
 func test_the_cower_row_is_in_the_table() -> void:
 	var t: ReactTable = ReactTable.shipped()
 	assert_almost_eq(t.length(&"cower"), 0.7, 0.001)
+
+
+func test_a_city_kill_plays_the_standard_death_along_the_round() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	rigs.feed = _feed(false, BodyPlan.Kind.COP)
+	c.observe(rigs)
+	rigs.feed = _feed(false, BodyPlan.Kind.COP)
+	rigs.feed.flags[0] = RigFeed.Flag.DEAD
+	c.observe(rigs)
+	assert_eq(c.deaths, 1)
+	assert_eq(rig.react.kind, &"death_bullet", "3 m/s slide: a round, not a car")
+	assert_lt(rig.react.dir.x, -0.9, "falls along the round")
+	c.observe(rigs)
+	assert_eq(c.deaths, 1, "a corpse dies once")
+
+
+func test_dead_when_first_seen_is_not_killed_again() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	rigs.feed = _feed(false)
+	rigs.feed.flags[0] = RigFeed.Flag.DEAD
+	c.observe(rigs)
+	assert_eq(c.deaths, 0)
