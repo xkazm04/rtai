@@ -1,0 +1,102 @@
+{
+  "$id": "gtai.alley-decor/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "escapes": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "fences": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "puddles": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.alley-decor/1",
+      "type": "string"
+    },
+    "spawns": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "waves": {
+      "additionalProperties": false,
+      "properties": {
+        "first_wave": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "gap_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "grow": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_wave": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "trigger_inset_m": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "first_wave",
+        "gap_s",
+        "grow",
+        "max_wave",
+        "trigger_inset_m"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "spawns",
+    "waves",
+    "escapes",
+    "fences",
+    "puddles"
+  ],
+  "type": "object"
+}

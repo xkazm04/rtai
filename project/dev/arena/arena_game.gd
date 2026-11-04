@@ -43,7 +43,7 @@ var _characters: CityCharacters = null
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Ink.CREAM)
 	var args: ArenaArgs = ArenaArgs.parse()
-	px_per_m = args.number("--ppm", px_per_m)
+	px_per_m = args.number("--ppm", 48.0 if args.text("--arena") == "alley" else px_per_m)
 	_shot = args.text("--shot")
 	_shot_tick = int(args.number("--shot-tick", 600.0))
 	_telemetry = args.text("--telemetry")
@@ -107,7 +107,7 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(line)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
-		if a.id == args.text("--start"):
+		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):
 			teleport(a)
 
 

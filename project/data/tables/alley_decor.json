@@ -1,0 +1,97 @@
+{
+  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). waves = the alley's ArenaPit rule (both ends: spawns north and south).",
+  "escapes": [
+    [
+      43,
+      -19,
+      1.4,
+      3.2
+    ],
+    [
+      46.6,
+      -2,
+      1.4,
+      3.6
+    ],
+    [
+      43,
+      13,
+      1.4,
+      3
+    ],
+    [
+      46.6,
+      24,
+      1.4,
+      3.2
+    ]
+  ],
+  "fences": [
+    [
+      47.7,
+      -21,
+      0.3,
+      7
+    ]
+  ],
+  "puddles": [
+    [
+      44.6,
+      -7,
+      1.6,
+      0.9
+    ],
+    [
+      45.5,
+      12,
+      2,
+      1.1
+    ],
+    [
+      44,
+      27,
+      1.2,
+      0.7
+    ],
+    [
+      46,
+      -17,
+      1,
+      0.6
+    ]
+  ],
+  "schema": "gtai.alley-decor/1",
+  "spawns": [
+    [
+      44.5,
+      -21.5
+    ],
+    [
+      45.5,
+      -21
+    ],
+    [
+      46.5,
+      -21.5
+    ],
+    [
+      44.5,
+      30.5
+    ],
+    [
+      45.5,
+      30
+    ],
+    [
+      46.5,
+      30.5
+    ]
+  ],
+  "waves": {
+    "first_wave": 2,
+    "gap_s": 2,
+    "grow": 1,
+    "max_wave": 6,
+    "trigger_inset_m": 3
+  }
+}
