@@ -252,7 +252,7 @@
     {
       "bounce": 0.15,
       "cone_deg": 30,
-      "crumble_ticks": 55,
+      "crumble_ticks": 80,
       "doc": "Ray gun: the victim locks up glowing, then dissolves in rings: the body is eaten from its outline inward by a hot cream ring while gold echo rings ripple out and glowing motes fall, leaving a heap of glowing dust drawn out along the ray with the empty uniform crumpled flat on it and the cap knocked half a metre off (hat_kick_mps). No blood. Under --gore=reduced the victim falls whole.",
       "flash_ticks": 2,
       "ground_drag": 8,
@@ -273,7 +273,7 @@
         240
       ],
       "spray": 0,
-      "stand_ticks": 12,
+      "stand_ticks": 30,
       "style": "dissolve",
       "up_mps": [
         0.6,
