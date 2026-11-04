@@ -8,7 +8,9 @@ extends Node
 ## the sim's delta is not.
 
 const HITCH_MS: float = 33.0
-const SETTLE_FRAMES: int = 60
+## The target's "after the first second": frames inside the first SETTLE_MS of wall time are
+## left out of the settled stats (vsync off, that is hundreds of frames, not 60).
+const SETTLE_MS: float = 1000.0
 
 var out_path: String = ""
 ## Quit once the sim reaches this tick (0: run until --quit-after or the window closes), so a
@@ -116,7 +118,7 @@ func write() -> void:
 
 
 func summary() -> Dictionary:
-	var settled: PackedFloat32Array = _wall.slice(mini(SETTLE_FRAMES, _wall.size() - 1))
+	var settled: PackedFloat32Array = _wall.slice(mini(_settle_index(), _wall.size() - 1))
 	var s: PackedFloat32Array = settled.duplicate()
 	s.sort()
 	var n: int = s.size()
@@ -157,6 +159,15 @@ func _hitches() -> Array[Dictionary]:
 				)
 			)
 	return out
+
+
+func _settle_index() -> int:
+	var t: float = 0.0
+	for i: int in _wall.size():
+		t += _wall[i]
+		if t >= SETTLE_MS:
+			return i + 1
+	return _wall.size()
 
 
 static func _max(a: PackedFloat32Array) -> float:

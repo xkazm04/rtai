@@ -21,7 +21,12 @@ for i in range(1, len(ticks)):
         if s0 is not None and t[i] - t[s0] > 0.1:
             stalls.append((round(t[s0], 2), round(t[i] - t[s0], 3), ticks[s0]))
         s0 = None
-s = d["summary"]
+s = dict(d["summary"])
+# "after the first second" by wall time (older logs settled after 60 frames)
+k = next((i for i, x in enumerate(t) if x >= 1.0), len(t) - 1) + 1
+settled = w[k:] or w[-1:]
+s["worst_settled_ms"] = max(settled)
+s["over33_settled"] = sum(x > 33.0 for x in settled)
 print(json.dumps(s))
 print("sim holds > 100 ms (start s, length s, tick):", stalls)
 fig, ax = plt.subplots(figsize=(12, 4.2), dpi=110)
@@ -33,6 +38,6 @@ for a, ln, _ in stalls:
 ax.axhline(16.67, color="#999", ls="--", lw=0.7); ax.axhline(33.3, color="#E2532D", ls=":", lw=0.8)
 ax.set_ylim(0, max(40, min(120, max(w) * 1.05)))
 ax.set_xlabel("real time (s)"); ax.set_ylabel("ms")
-ax.set_title(f"{title}\np50 {s['p50_ms']:.2f}  p99 {s['p99_ms']:.2f}  1% low {s['low1_fps']:.0f} fps  worst {s['worst_ms']:.0f} (settled {s['worst_settled_ms']:.0f})  >33ms {s['over33_settled']}  sim holds {len(stalls)} (shaded)", fontsize=9)
+ax.set_title(f"{title}\np50 {s['p50_ms']:.2f}  p99 {s['p99_ms']:.2f}  1% low {s['low1_fps']:.0f} fps  worst {s['worst_ms']:.0f} (after 1 s {s['worst_settled_ms']:.0f})  >33ms after 1 s: {s['over33_settled']}  sim holds {len(stalls)} (shaded)", fontsize=9)
 ax.legend(loc="upper right", fontsize=7)
 fig.tight_layout(); fig.savefig(out)
