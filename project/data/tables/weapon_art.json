@@ -1018,7 +1018,7 @@
       "grip_class": "two_hand_long",
       "grip_px": [
         119,
-        82
+        119
       ],
       "held": "res://features/combat/weapons/art/ray_gun/held.png",
       "icon": "res://features/combat/weapons/art/ray_gun/icon.png",
@@ -1028,14 +1028,14 @@
       "muzzle_fx": "flash_energy",
       "muzzle_px": [
         384,
-        82
+        119
       ],
       "parts": {},
       "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
       "projectile_fx": "ray_ring",
       "size_px": [
         391,
-        161
+        233
       ]
     },
     {
