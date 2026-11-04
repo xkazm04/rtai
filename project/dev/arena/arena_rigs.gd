@@ -11,6 +11,8 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 ## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
 ## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
 const FOCUS_AHEAD_M: float = 7.0
+## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
+const FOCUS_REACH_M: float = 20.0
 
 var rigs: CharacterRigs = CharacterRigs.new()
 var stage: ArenaStage = null
@@ -18,27 +20,37 @@ var stage: ArenaStage = null
 var plan: ArenaPlan = null
 ## Fighter ids a signature kill consumed (lane brutality): their body is gibs now, no rig.
 var hidden: Dictionary[int, bool] = {}
+## human-reactions: the wound families and the deaths by damage class on the hostiles' rigs.
+var react: ReactLink = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
+var _city: CityView = null
 ## Each fighter's last hurt tick already played as a HIT clip.
 var _hurt_seen: Dictionary[int, int] = {}
 ## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
 var _fire_seen: Dictionary[int, Vector2i] = {}
 
 
-## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
-## the printed path (the rigs need its world space).
+## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
+## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
 func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bool:
-	if view.print_stage == null:
+	var layer: CanvasLayer = null
+	if view.print_stage != null:
+		_print = view.print_stage
+		layer = _print.actor_layer()
+	elif view.city_view != null:
+		_city = view.city_view
+		layer = _city.actor_layer()
+	else:
 		return false
 	stage = p_stage
 	plan = p_stage.plan
-	_print = view.print_stage
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
-	view.print_stage.actor_layer().add_child(rigs)
+	layer.add_child(rigs)
 	rigs.setup(ctx)
 	view.cast_view.visible = false
+	react = ReactLink.make(p_stage.arena)
 	return true
 
 
@@ -56,8 +68,10 @@ func _process(_delta: float) -> void:
 			continue
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
-	rigs.focus = (r.pos + r.facing * FOCUS_AHEAD_M) * SimConst.PX_PER_M
-	rigs.zoom = _print.zoom
+	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
+	rigs.zoom = _print.zoom if _print != null else _city.zoom
+	if react != null:
+		react.apply(rigs)
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
@@ -80,10 +94,23 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	elif shot and who.weapon != &"":
 		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
 		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
-	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick):
+	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick) and react == null:
 		f.clip[i] = RigClips.Clip.HIT  # the flinch, away from Rivet
 		f.clip_arg[i] = (who.pos - stage.arena.rivet.pos).angle()
 	_hurt_seen[who.id] = who.hurt_tick
+
+
+## The LOD bubble's centre (m). human-reactions: the middle of the box around Rivet, the point
+## ahead of him and every hostile within FOCUS_REACH_M, the dead included, so a corpse keeps
+## its full rig while it is on screen (the old focus, FOCUS_AHEAD_M along the aim, dropped
+## bodies behind him).
+static func focus_m(arena: CombatArena) -> Vector2:
+	var r: Fighter = arena.rivet
+	var box: Rect2 = Rect2(r.pos, Vector2.ZERO).expand(r.pos + r.facing * FOCUS_AHEAD_M)
+	for h: Fighter in arena.hostiles:
+		if h.pos.distance_to(r.pos) <= FOCUS_REACH_M:
+			box = box.expand(h.pos)
+	return box.get_center()
 
 
 ## True when a fighter fired between two frames, from its (cooldown, burst_left): a guard's burst

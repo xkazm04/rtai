@@ -32,7 +32,8 @@ func _draw() -> void:
 		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
 	for s: Shot in arena.shots:
 		if arena.gun != null:
-			_tracer(s)
+			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
+				_tracer(s)
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
@@ -45,6 +46,8 @@ func _draw() -> void:
 	for b: ArcBall in arena.balls:
 		_ball(b)
 	_arcs(arena)
+	if arena.areas != null:
+		FightAreasArt.draw(self, arena, stage.tick)
 	_whispers()
 	if stage.crates_burning:
 		_fire()

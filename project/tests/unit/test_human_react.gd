@@ -1,0 +1,97 @@
+extends GutTest
+## Lane human-reactions: the reaction table, the family choice by hit direction, the timings,
+## the death pipeline and its signature-kill hook (lane brutality).
+
+var _table: ReactTable
+var _rig: CutRig
+
+
+func before_each() -> void:
+	_table = ReactTable.shipped()
+	_rig = CutRig.new()
+	_rig.actor_id = 7
+	_rig.facing = 0.0
+
+
+func after_each() -> void:
+	_rig.free()
+
+
+func test_table_loads_every_family() -> void:
+	assert_true(_table.ok())
+	for id: String in ["flinch", "stagger", "knockdown", "stun", "burn", "death_blast"]:
+		assert_gt(_table.length(StringName(id)), 0.0, id)
+	assert_almost_eq(_table.length(&"knockdown"), 2.2, 0.001)
+
+
+func test_shield_blocks_only_from_the_front() -> void:
+	# The body faces +x; a round travelling -x arrives from the front.
+	assert_eq(_table.reaction_for(&"light", Vector2.LEFT, true, false), &"shield")
+	assert_eq(_table.reaction_for(&"light", Vector2.RIGHT, true, false), &"flinch")
+
+
+func test_melee_spins_from_the_side_and_folds_from_the_front() -> void:
+	assert_eq(_table.reaction_for(&"melee", Vector2.DOWN, false, false), &"spin")
+	assert_eq(_table.reaction_for(&"melee", Vector2.LEFT, false, false), &"fold")
+
+
+func test_cover_and_class_mapping() -> void:
+	assert_eq(_table.reaction_for(&"heavy", Vector2.LEFT, false, true), &"cover")
+	assert_eq(_table.reaction_for(&"heavy", Vector2.LEFT, false, false), &"stagger")
+	assert_eq(_table.reaction_for(&"shock", Vector2.LEFT, false, false), &"stun")
+	assert_eq(_table.reaction_for(&"blast", Vector2.LEFT, false, false), &"knockdown")
+	assert_eq(_table.death_for(&"burn"), &"death_burn")
+	assert_eq(_table.death_for(&"light"), &"death_bullet")
+
+
+func test_flinch_snaps_away_then_clears_on_time() -> void:
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"flinch", Vector2.DOWN, _table)
+	var ticks: int = 0
+	var peak: float = 0.0
+	while r.active() and ticks < 600:
+		r.pre(_rig, SimClock.TICK_DT)
+		peak = maxf(peak, r.off.y)
+		ticks += 1
+	var want: int = ceili(_table.length(&"flinch") / SimClock.TICK_DT)
+	assert_between(ticks, want - 1, want + 1, "flinch length in ticks")
+	assert_gt(peak, 0.5 * _table.travel(&"flinch") * HumanReact.PX_M, "moves along the hit")
+
+
+func test_death_holds_its_corpse_pose() -> void:
+	var r: HumanReact = HumanReact.on(_rig)
+	r.play(_rig, &"death_bullet", Vector2.LEFT, _table)
+	for i: int in 300:
+		r.pre(_rig, SimClock.TICK_DT)
+	assert_true(r.active(), "a death never clears")
+	assert_true(_rig.dead)
+	assert_almost_eq(_rig.c_sprawl, 1.0, 0.01)
+	r.play(_rig, &"flinch", Vector2.LEFT, _table)
+	assert_eq(r.kind, &"death_bullet", "a corpse does not flinch")
+
+
+func test_signature_kill_replaces_the_standard_death() -> void:
+	var pipe: DeathPipe = DeathPipe.make(_table)
+	assert_eq(pipe.kill(_rig, &"blast", Vector2.LEFT, &"rocket_launcher"), &"death_blast")
+	var rig2: CutRig = CutRig.new()
+	pipe.add_signature(
+		func(_r: CutRig, _c: StringName, _d: Vector2, w: StringName) -> bool:
+			return w == &"plasma_rifle"
+	)
+	assert_eq(pipe.kill(rig2, &"medium", Vector2.LEFT, &"plasma_rifle"), &"signature")
+	assert_null(rig2.react, "the standard death never started")
+	rig2.free()
+
+
+func test_same_inputs_same_pose() -> void:
+	var a: CutRig = CutRig.new()
+	var b: CutRig = CutRig.new()
+	for rig: CutRig in [a, b]:
+		rig.actor_id = 11
+		HumanReact.on(rig).play(rig, &"stun", Vector2.UP, _table)
+		for i: int in 37:
+			rig.react.pre(rig, SimClock.TICK_DT)
+	assert_eq(a.react.off, b.react.off)
+	assert_eq(a.twist, b.twist)
+	a.free()
+	b.free()
