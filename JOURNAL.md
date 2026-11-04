@@ -1052,3 +1052,15 @@ riot p99 bench).
   changed during run": I edited REPORT.md mid-run, my mistake), scenarios 33/33, parity bit-exact,
   look 11/11 (worst 1.87), block 5/5 (worst 1.77); selftest FAIL on the known accent rows only.
 - REPORT: call 9 (robot death A 0.7 / B 0.45 / C old fall) and the gate line updated.
+- Clean: tracked tree clean, scratch AVIs and frame dirs deleted, no Godot process of mine left,
+  no bench.lock or image.lock taken. frames.json 15 entries, 0 missing.
+
+NEXT (the morning merge / the next night), in order:
+1. After the merge with n-gunplay: `gun_fx.shield_test = link.shield_test` (one line, fx_view),
+   film react_line at 64 px/m; re-film the burn death at 48 px/m with gunplay's thin flames
+   (e1b22073), ideally with Rivet moving so the deaths sit in the middle third.
+2. A robot `Fighter.Kind` in CombatArena (owner: robots later) so `DeathPipe.kill_robot` plays in
+   the live arena, not only the dev pit; a lighter oil spray on the thug (six hits fill the frame).
+3. The idle bench of the riot p99 (CrowdReact observe mean 214 us CONTENDED today).
+4. The merge note: e41fb9c6 is gunplay 83429487 cherry-picked (same 4 files), so the merge sees
+   it twice; take gunplay's side on fighter_fx.gd / fight_areas.gd / test_fight_areas.gd.
