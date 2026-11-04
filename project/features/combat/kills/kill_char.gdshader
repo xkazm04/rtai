@@ -15,7 +15,7 @@ void fragment() {
 	if (t.a < alpha_cut) discard;
 	float fade = COLOR.a / max(t.a, 0.001);
 	float lum = dot(t.rgb, vec3(0.299, 0.587, 0.114));
-	float g = 1.0 - 0.08 * hash(floor(FRAGCOORD.xy));
+	float g = 1.0 - 0.08 * hash(floor(UV / TEXTURE_PIXEL_SIZE));  // grain locked to the part
 	vec3 o = lum > 0.62 ? char_hi : char_lo;
 	COLOR = vec4(o * g, clamp(fade, 0.0, 1.0));
 }
