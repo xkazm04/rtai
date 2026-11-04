@@ -612,3 +612,14 @@ Session end 00:17: head = this commit, tree clean, image.lock released, no Godot
   mini_nuke 4/4), 0 SCRIPT ERROR. frames.json 15 (+ crowd-planview-ab-vs-r2a5, react-board-planview-ab,
   city-peds-ab; dropped from the list, files kept as REPORT cites them: crowd-value-vs-r2a5, rivet-warm-lineup-ab,
   rivet-legrim-ab).
+- 00:40 quest 1 live path: `quest1_clip.gd -- --ppm=48 --rigs --stills=900,1500` on HEAD and on the 9f2aac24 ped
+  files (checked out, rendered, restored to HEAD, re-imported; tree clean), 0 SCRIPT ERROR:
+  `M/frames/quest1-peds-ab-48ppm-vs-r1c6.png` (x3 crops under r1_c6): the coat ped shows pale shoulders, the hat
+  peds a smaller head. DECISION (kept): jacket and hoodie stay dark; r1_c6 is a mixed crowd too (a dark suit and a
+  leather jacket among mid and light clothes).
+- 00:42 FINDING, closed: tick 1500 showed lone ped shoes and, at 1100, legs stretched into long dark bars. Cause:
+  stills mode steps the sim thousands of ticks with no frame drawn (quest1_clip_rec.gd: "a still jumps the sim"),
+  so the rigs do not step and the planted feet stay where they were. A per-tick clip window
+  (`--ticks=1000-1200`, 101 frames, 0 SCRIPT ERROR) has no stray feet. Not a game bug; quest stills with moving
+  peds are not motion evidence. `M/frames/quest1-ped-stills-artefact-48ppm.png`. The baked far-crowd atlas
+  (`build/evidence/crowd-atlas.png`) follows the new peds (paler ped rows).
