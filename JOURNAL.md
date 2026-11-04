@@ -508,3 +508,26 @@ clip or a sheet I looked at). No deviation.
   each cop now crumples into his own blood with nothing printed on him. The hand cannon has no ring.
 - Gates at 5b51da41: lint 13/13, unit 716/716 (`evidence/n4/unit-n.log`), scenarios 29/29
   (`scenarios-n.log`). Parity untouched (no native/city-sim file).
+- 04:28 NEXT 3 done in code: the range model (ProjectileSim) homes a shard like the real fight
+  (same fan off the claw, same turn rate, cone and reach from FightReach); unit test: a target 15 deg
+  off the aim dies to one shard, a pistol round passes him. The TTK table can now be re-run with the
+  shard's real reach (`dev/gunplay/ttk_bench_run.gd`).
+- rivet-arsenal NEXT 2 (molotov wind-up, "REQUEST to gunplay or a pilot-side hold"): NOT built this
+  session (it changes the trigger contract and every thrown-weapon scenario hash; too late in the
+  hour to land safely). Proposed contract, for whoever builds it next (gunplay owns Trigger):
+  thrown specs get an optional weapons.json `wind_s` (molotov 0.25, mini-nuke 0.4); a press starts
+  `Trigger.wind_left` (ticks), the throw leaves when it reaches 0 while held, or on release if it is
+  already 0 (no throw when released early = a feint, the bottle stays in the claw); `GunHand.winding()`
+  and `wind_frac()` for the rig's wind-back pose (rivet-arsenal's WeaponHold/RivetHeldView reads them,
+  view only). GunplayBot holds fire through the wind. Replay: the press tick still drives it, so it
+  stays deterministic; scenario hashes for the molotov and nuke move once (a dated re-bless line).
+- 04:40 TTK re-run with the homing range model (`evidence/n6/ttk-shard.md`, raw `ttk.json`): vs a
+  strafing human the shard now kills as fast as vs a still one (5 m 1.70 -> 0.28 s, 20 m 2.17 ->
+  1.25 s); every other weapon's rows identical (checked by diff of the JSON).
+- 04:39 MEASURE riot + drive on HEAD under bench.lock (`node tools/bench/run.mjs`, log
+  `evidence/n6/bench.log`, raw `evidence/n6/bench/`), CONTENDED (other lanes rendering): riot p99
+  CPU 8.04 ms, 1 % low 90 fps, combat blood 68 us a frame (3443 drop draws, 601 pool draws over
+  28.8 k frames) = 0.8 % of the p99; rigs p99 0.76 ms. Summary line p99 11.0 ms over all four
+  scenarios. Brief item 5 stands where iteration 3 left it: the blood redraw is cut (settled 30) and
+  is not the riot cost; the idle number of record needs a quiet machine (the Director's at the merge).
+- Gates at the homing commit: lint 13/13, unit 717/717 (`evidence/n6/unit-o.log`), scenarios 29/29 (`scenarios-o.log`).
