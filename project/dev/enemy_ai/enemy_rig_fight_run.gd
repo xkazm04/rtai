@@ -6,6 +6,7 @@ extends SceneTree
 ##   [--seconds=20] [--seed=31] [--every=2] [--hp=400] [--human=1] [--fire_m=12] [--rivet_x=-5]
 ##   [--spots=x:y,x:y (metres, one per squad id; default the east column)]
 ##   [--aim_lead=0.8 (override enemies.json squad.aim_lead for an A/B clip)]
+##   [--zoom=1.5 (1.0 = 32 px/m, 1.5 = 48, 2.0 = 64)]
 
 const KEYS: Array[String] = [
 	"out",
@@ -18,7 +19,8 @@ const KEYS: Array[String] = [
 	"fire_m",
 	"rivet_x",
 	"spots",
-	"aim_lead"
+	"aim_lead",
+	"zoom"
 ]
 
 
@@ -69,6 +71,7 @@ func _setup(node: Node, args: Dictionary[String, String]) -> void:
 	node.set("pit", pit)
 	node.set("dummy", dummy)
 	node.set("every", int(_a(args, "every", "2")))
+	node.set("zoom", float(_a(args, "zoom", "1.0")))
 	node.set("ticks", roundi(float(_a(args, "seconds", "20")) * 60.0))
 
 

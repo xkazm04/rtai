@@ -16,10 +16,14 @@ const SHAKE_PX: float = 5.0
 const CAM_EASE: float = 0.06
 ## A near-miss flinch shoves the rig sideways (no tint, no blood: it must not read as a hit).
 const FLINCH_SHOVE: float = 70.0
+## The camera keeps a fresh corpse in frame this long (the 04:00 rule: 1-2 s of aftermath).
+const AFTERMATH_TICKS: int = 180
 
 var pit: EnemyPit = null
 var dummy: PitDummy = null
 var every: int = 2
+## The view zoom (1.0 = 32 px/m; 1.5 = the 48 px/m follow camera; 2.0 = the 64 px/m close-up).
+var zoom: float = 1.0
 var ticks: int = 900
 var stats: Dictionary[String, float] = {}
 var _bots: Node2D = Node2D.new()
@@ -27,6 +31,7 @@ var _bot_rigs: Dictionary[int, CutRig] = {}
 var _bot_feed: RigFeed = RigFeed.new(8)
 var _fx: EnemyFightFx = EnemyFightFx.new()
 var _blood: CombatBlood = null
+var _pipe: DeathPipe = DeathPipe.make(ReactTable.shipped())
 var _frame_no: int = 0
 var _nails: float = 0.0
 var _rivet_dmg: float = 0.0
@@ -47,7 +52,7 @@ func _ready() -> void:
 	_fx.ppm = PX
 	_fx.rig_of = _rig_of
 	RigDetail.enabled = true
-	overlay.set_shader_parameter("amount", amount_at(1.0))
+	overlay.set_shader_parameter("amount", amount_at(zoom))
 
 
 func _ground() -> void:
@@ -75,6 +80,7 @@ func _cast() -> void:
 func shoot() -> int:
 	var ok: bool = DirAccess.make_dir_recursive_absolute(out_dir) == OK
 	_fx.pit = pit
+	overlay.set_shader_parameter("amount", amount_at(zoom))  # zoom is set after _ready
 	_cam_m = _mid()
 	while pit.tick < ticks:
 		_step()
@@ -152,6 +158,10 @@ func _impacts() -> void:
 		if e.arch.body == &"robot":
 			var fx: BloodFx = _blood.oil if _blood.oil != null else _blood.blood
 			fx.splash(at, e.hurt_dir, "robot_hit")
+			if e.died_tick == pit.tick:
+				stats["robot_death_frame_%d" % e.id] = _frame_no + 1
+				@warning_ignore("return_value_discarded")
+				_pipe.kill_robot(_bot_rig(e), e.hurt_dir)
 		elif e.died_tick == pit.tick:
 			_blood.kill_human(at, e.hurt_dir)
 		else:
@@ -176,14 +186,14 @@ func _follow() -> void:
 		jolt = Vector2.from_angle(_shake * 2.4) * SHAKE_PX * k
 		_shake -= 1
 	cam = _cam_m * PX + jolt
-	_frame_at(1.0)
+	_frame_at(zoom)
 
 
 func _mid() -> Vector2:
 	var mid: Vector2 = pit.rivet_pos
 	var n: float = 1.0
 	for e: EnemyAgent in pit.agents:
-		if e.alive():
+		if e.alive() or pit.tick - e.died_tick < AFTERMATH_TICKS:
 			mid += e.pos
 			n += 1.0
 	return mid / n
