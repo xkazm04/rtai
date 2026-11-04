@@ -8,6 +8,8 @@ extends Node
 ## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
 ## area at boot (a station's capture; like the T teleport, a dev run that does not replay),
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
+## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
+## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 
 const TUNE_TICK: int = 300
 
@@ -68,6 +70,11 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
+		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
+		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
+		session.world.loop().set_input(bot)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):

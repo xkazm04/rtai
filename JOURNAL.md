@@ -25,3 +25,25 @@ Agree by replying in your JOURNAL; I will not change the shape without a line he
   test_fight_areas.gd); scenarios 28/28 (`evidence/n1/scenarios-a.log`), lint 13/13.
 - FRICTION: python on Windows writes CRLF in text mode; use newline='' (fixed before commit).
 - FRICTION: bash heredoc with a long GDScript body failed to parse in the Bash tool; use Write.
+- 01:15 FRICTION: `dev/gunplay/pistol_fight.tscn` (evening's quest-1 dock clip) renders blank paper on the
+  merged tree after the first frame (camera off the drawn stage; no errors in run.log). Not chased:
+  the brief's target is the arena / city block, so clips move there.
+- 01:20 MILESTONE arena wiring: station `data/tables/arena_stations/gunplay.json` (`gunplay_range`) names
+  `GunplayHook`: `--weapon=<id>` arms Rivet with the table gun on the arena's real CombatArena
+  (GunHand + FightAreas + GuardTell + HitLink knockback). Without `--weapon` the arena keeps Gloria,
+  so the arena scenarios do not move. `--bot=gunplay` (GunplayBot) fights the pit at the weapon's
+  own reach (0.75 x range, <= 13 m), skipping burning guards. One small edit in the arena lane's
+  `dev/arena/arena_game.gd` (the bot switch) and `tests/unit/test_arena_hooks.gd` (it assumed no
+  shipped station has a hook; it now finds the probe hook by type).
+- DECISION arena default weapon stays Gloria tonight (the table gun only with `--weapon`): flipping the
+  arena to the table pistol changes the pit and range scenarios' measures; revisit once the weapon
+  switch (rivet-arsenal) lands. Alternative = arm in GunplayHook.setup when no --weapon is given.
+- 01:22 MILESTONE `FightAreasArt` (drawn by FxView): rocket body + exhaust + wobbling smoke trail, blast
+  as a comic starburst + ink shock ring + smoke + debris, flame puffs that grow and fade (fx_fire
+  loop), electro zigzag bolt + chain arcs, molotov arc over its ground shadow, fire patches over an
+  ink scorch, burning humans (fire on the figure), stun sparks.
+- Clips (CONTENDED GPU): `MASTERS/n4/gunplay/arena_rocket_pit_32ppm/` (10 rockets, 10 kills, 10
+  knockdowns, pre-starburst art), `arena_flame_pit_32ppm/` (--rigs --clean, 68 puffs, 5 ignitions, 5 kills).
+- Gates: lint 13/13, unit 700/700 (`evidence/n1/unit-d.log`), scenarios 28/28 (`evidence/n1/scenarios-c.log`).
+- FRICTION: run_unit.mjs needs GODOT_BIN exported (it silently reports "import exit -1"); gdformat on
+  Windows writes CRLF (normalised by git); editing a script while scenarios run fails that scenario.

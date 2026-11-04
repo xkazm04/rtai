@@ -12,6 +12,8 @@ var shooter_id: int = 0
 ## Lane gunplay: the weapons.json row of a GunHand round (FightAreas lands its area effects); null
 ## for quest 1's own weapons.
 var spec: WeaponSpec = null
+## Where the round left the muzzle (views: the rocket's trail, the bottle's arc).
+var origin: Vector2 = Vector2.ZERO
 
 
 static func fire(shooter: Fighter, dir: Vector2, w: CombatTuning.Weapon) -> Shot:
