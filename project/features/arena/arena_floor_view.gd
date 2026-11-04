@@ -39,6 +39,10 @@ const CAR_COLS: int = 3
 const BARRIER_FILL: Color = Color("#8E867C")
 const BARRIER_M: float = 2.0
 
+## Off-screen margin for the target rings and tracks (m): wider than a ring (0.8 m) plus its line
+## and anything the print pass samples around a pixel.
+const CULL_M: float = 3.0
+
 var _city: bool = false
 ## perf-city: on the city block the props and the crowd rings are drawn once on this child (behind
 ## this node, with its material: the same order and print), not re-issued every frame (0.5 ms of
@@ -68,11 +72,20 @@ func _draw() -> void:
 			Ink.label(
 				self, a.rect.position + Vector2(a.rect.size.x * 0.5, LABEL_M), a.name, 30, Ink.INK
 			)
+	var view: Rect2 = _view_m()
 	for t: ArenaTargets.Target in arena.targets.targets:
 		var up: bool = t.fighter.exposed
-		_ring(t.fighter.pos, 0.8, Ink.INK if up else Ink.WASH)
+		if view.has_point(t.fighter.pos):
+			_ring(t.fighter.pos, 0.8, Ink.INK if up else Ink.WASH)
 		if t.spawn.motion != "static":
-			_track(t)
+			_track(t, view)
+
+
+## perf-city: the world rect on screen in metres, CULL_M wider each side. A target ring or track
+## outside it draws nothing visible, so it is not issued (19 rings were 0.3-0.4 ms a frame).
+func _view_m() -> Rect2:
+	var px: Rect2 = get_global_transform_with_canvas().affine_inverse() * get_viewport_rect()
+	return Rect2(px.position / Ink.PX_PER_M, px.size / Ink.PX_PER_M).grow(CULL_M)
 
 
 func _held(arena: ArenaStage) -> void:
@@ -152,7 +165,7 @@ func _ring(at: Vector2, radius_m: float, color: Color, ci: CanvasItem = self) ->
 
 
 ## A moving dummy's path: the strafe span or the approach lane, as a thin ink line.
-func _track(t: ArenaTargets.Target) -> void:
+func _track(t: ArenaTargets.Target, view: Rect2) -> void:
 	var a: Vector2 = t.home
 	var b: Vector2 = t.home
 	if t.spawn.motion == "strafe":
@@ -160,6 +173,8 @@ func _track(t: ArenaTargets.Target) -> void:
 		b = t.home + Vector2(0.0, t.spawn.span_m * 0.5)
 	else:
 		b = t.home - Vector2(t.spawn.span_m, 0.0)
+	if not view.intersects(Rect2(a, Vector2.ZERO).expand(b)):
+		return
 	draw_line(Ink.px(a), Ink.px(b), Ink.WASH, Ink.LINE_PX)
 
 

@@ -236,3 +236,19 @@ other Godot ran.
   0 marks in this stretch (checked, so no scorch work). Scuffs and shells are many small native draw calls:
   no identical-pixel shortcut found in the time left. Candidate next: print each scuff once to a
   ground layer while it holds full alpha (it fades only in its last 60 ticks).
+
+### 14:52-15:00 Fix 2: ArenaFloorView culls off-screen target rings and tracks
+- 19 target rings (0.8 m, 32-point arcs) plus moving tracks were issued every frame wherever the
+  camera was. Now a ring is drawn only if its target stands inside the on-screen rect grown by
+  3 m, and a track only if its box meets that rect.
+- Pixel check: 420 fixed-fps frames vs the ORIGINAL file (before both fixes): 0 differing frames.
+  (Caveat: whether any target ring was on screen in those 420 frames was not checked. The
+  in-view path is the old code unchanged.)
+- Exported release, interleaved, CONTENDED (evidence/perf/rel-{static,cull}{,2}.json):
+  | run | floor _draw mean | p99 | all spans mean |
+  |---|---|---|---|
+  | static (fix 1 only) | 0.561 | 0.99 | 4.21 |
+  | cull | **0.238** | 0.58 | 3.93 |
+  | static2 | 0.581 | 1.00 | 4.36 |
+  | cull2 | **0.261** | 0.61 | 4.03 |
+- Floor total over both fixes: 0.77-1.01 -> 0.24-0.26 ms a frame (about -0.6 ms, -70 %), release.
