@@ -353,3 +353,7 @@ Session state 22:28: head = this commit, tree clean, image.lock untouched, no Go
   riot helmet crowns seen from above (plan view: the head sits over the torso), and both are navy now
   (`frames/riot-helmet-navy-ab.png`, `frames/director-navy-64ppm.png`); the torso art is already navy (48,64,96).
   Item 1 is closed; iteration 8 starts at item 2 (held-gun size with n5-look) and item 3 (64 px/m city, quest 1).
+- 22:31 masters cleaned: 5 superseded frames and 7 superseded clips (iterations 2-5) deleted, none cited by
+  frames.json or REPORT; kept `frames/director-hybrid-64ppm.png` (my REQUEST in n5-look's JOURNAL) and the legrim
+  clips (the before sources of tonight's pairs). Two Godot processes on the machine are not mine (all my runs were
+  foreground and exited): left alone. Session end; NEXT is the 22:27 entry (item 1 closed at 22:29).
