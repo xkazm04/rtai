@@ -77,3 +77,30 @@ func test_planted_fault_the_bare_claw_does_not_reach() -> void:
 		_stage.intent.clear()
 	assert_eq(_pilot.melee.landed, 0, "the claw at %.1f m whiffs" % COP_M)
 	assert_eq(cop.hp, 100.0)
+
+
+func test_the_baton_locks_the_cop_it_hits() -> void:
+	var carry: RivetCarry = RivetCarry.new(
+		WeaponTable.shipped(), ArsenalTable.shipped(), _ctx.rng.stream(&"gunplay")
+	)
+	assert_eq(carry.add(&"electro_baton"), 0, "the baton rides in the sidearm slot")
+	carry.select(0, _stage.arena)
+	_pilot.carry = carry
+	var cop: Fighter = _cop()
+	cop.pos = _stage.arena.rivet.pos + Vector2.DOWN * 1.2
+	var first: int = _hold_fire(60)
+	assert_gt(first, 0, "a baton jab landed")
+	var e: FighterFx = _stage.arena.areas.effect(cop)
+	assert_not_null(e, "the jab stunned the cop")
+	assert_gt(e.stun_ticks, 0, "the cop's brain is locked")
+
+
+func test_planted_fault_a_claw_jab_does_not_stun() -> void:
+	var cop: Fighter = _cop()
+	cop.pos = _stage.arena.rivet.pos + Vector2.DOWN * 1.2
+	_pilot.drive(_stage, TickInput.new(1 << _pilot.actions.bit(&"melee"), 0, 0))
+	for t: int in 20:
+		_pilot.drive(_stage, TickInput.new(0, 0, 0))
+	assert_eq(_pilot.melee.landed, 1, "the claw jab landed")
+	var areas: FightAreas = _stage.arena.areas
+	assert_true(areas == null or areas.effect(cop) == null, "a claw jab carries no stun")

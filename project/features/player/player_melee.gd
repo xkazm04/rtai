@@ -79,6 +79,8 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		if dir.dot(facing) < h.cone_dot:
 			continue
 		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
+		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
+			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)
 		_shoves[f.id] = dir * h.knockback_m
 		hit_any = true
 	if hit_any:
