@@ -903,3 +903,13 @@ NEXT (iteration 7, from about 06:30):
   sheet-r10-b row 2). The flamethrower's char corpse shows (row 1 of sheet a); the molotov's
   does not. Suggest: draw the charred corpse above the patch (z), or thin the stars over a
   fresh corpse after about 1 s.
+- BENCH r10 (bench.lock 06:40-06:52; CONTENDED: other lanes' Godot on the GPU/CPU; my own
+  Godot runs had ended before it). `node tools/bench/run.mjs` on 9-commit tip (round 10b + the spread
+  fix), exported release, 3 x 60 s: aggregate p99 7.66 ms, 1 % low 89 fps, worst frame 47.3 ms
+  (0 hitches > 50 ms; r8 had 3), MISSES p99CpuMs (r8 10.37 / 71). Per scenario from frame_ms
+  (r4/r5/r7/r8 method, re-checked on evidence/r8's files -> 10.37 / 71 and 4.33 / 140 again):
+  drive 3.39 ms / 108 fps (r8 4.33 / 140; record 3.56), drive48 2.17 / 376 (r8 2.54 / 224),
+  riot 5.58 / 118 (r8 10.37 / 71; record 6.0 / 124). Read: the riot p99 is back under its
+  record after human-reactions' trip-scan trim (b657ca05, REQUEST 23), first merged in round 9
+  and benched now; drive inside its 2.5-4.4 ms band (its 1 % low has a tail: 108 fps). One
+  sample each, contended. Files: evidence/r10/bench-*.
