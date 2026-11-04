@@ -107,7 +107,8 @@ the spent one on the floor.
   a smudge. `--arc-ink=off` (or `ARC_INK_M` 0) is the before. No new palette token.
 - **Ray hoops ink** (iteration 20, call 3): the ray gun's paper hoops read just as faint, so each hoop is drawn first in
   ink with the same thickened outline (`WeaponFxElectro.ink_cell`, the shared helper), fading with its hoop. At 32 px/m
-  the train reads as bold inked rings with a paper core. `--ray-ink=off` is the before.
+  the train reads as bold inked rings with a paper core. `--ray-ink=off` is the before. The hoops' ink reaches 0.035 m
+  (`RAY_INK_M`), less than the bolt's 0.06: at 0.06 they read as dark tyres at 48 px/m.
 
 ## Character looks made for other lanes (iteration 6)
 

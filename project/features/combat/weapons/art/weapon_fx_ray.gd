@@ -14,6 +14,9 @@ const GROW: float = 0.18
 const FADE: float = 0.2
 ## Each hoop is drawn first in ink (WeaponFxElectro.ink_cell, the electro bolt's thickened outline):
 ## the thin paper hoops read faint on cream paving at 32 px/m (call 3). `--ray-ink=off` = before.
+## The hoops' ink reaches RAY_INK_M out (less than the bolt's: at 0.06 m they read as dark tyres).
+const RAY_INK_M: float = 0.035
+
 static var ray_ink: bool = not OS.get_cmdline_user_args().has("--ray-ink=off")
 
 
@@ -30,7 +33,7 @@ static func draw_round(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, t
 		if ray_ink:
 			var scale: Vector2 = Vector2(SQUASH, 1.0) * size * WeaponFxArt.cell_scale()
 			var xf: Transform2D = Transform2D(ang, scale, 0.0, Ink.px(at - dir * back))
-			WeaponFxElectro.ink_cell(ci, &"ray_ring", frame, xf, a)
+			WeaponFxElectro.ink_cell(ci, &"ray_ring", frame, xf, Vector2(RAY_INK_M, a))
 		WeaponFxArt.draw_cell(
 			ci, &"ray_ring", frame, at - dir * back, ang, Vector2(SQUASH, 1.0) * size, a
 		)

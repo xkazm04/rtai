@@ -54,22 +54,24 @@ static func ink_under(ci: CanvasItem, frame: int, at: Vector2, ang: float, span:
 	if not arc_ink:
 		return
 	var scale: Vector2 = Vector2(span, 1.0) * WeaponFxArt.cell_scale()
-	ink_cell(ci, &"arc", frame, Transform2D(ang, scale, 0.0, Ink.px(at)), 1.0)
+	ink_cell(ci, &"arc", frame, Transform2D(ang, scale, 0.0, Ink.px(at)), Vector2(ARC_INK_M, 1.0))
 
 
-## FX cell `id` (frame `frame`) placed by `xf` (view px, cell scale applied) in ink, `a` opaque, at
-## ARC_INK_DIRS offsets ARC_INK_M out: under the paper cell it thickens the cell's ink outline.
-static func ink_cell(ci: CanvasItem, id: StringName, frame: int, xf: Transform2D, a: float) -> void:
+## FX cell `id` (frame `frame`) placed by `xf` (view px, cell scale applied) in ink at ARC_INK_DIRS
+## offsets `ink.x` m out, `ink.y` opaque: under the paper cell it thickens the cell's ink outline.
+static func ink_cell(
+	ci: CanvasItem, id: StringName, frame: int, xf: Transform2D, ink: Vector2
+) -> void:
 	var frames: Array[Texture2D] = WeaponFxArt.art().fx_frames(id)
-	if frames.is_empty() or ARC_INK_M <= 0.0:
+	if frames.is_empty() or ink.x <= 0.0:
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame % frames.size()])
 	var anchor: Vector2 = WeaponFxArt.art().fx_anchor(key)
 	var tex: Texture2D = frames[frame % frames.size()]
 	for i: int in ARC_INK_DIRS:
-		var off: Vector2 = Vector2.from_angle(TAU * float(i) / float(ARC_INK_DIRS)) * ARC_INK_M
+		var off: Vector2 = Vector2.from_angle(TAU * float(i) / float(ARC_INK_DIRS)) * ink.x
 		ci.draw_set_transform_matrix(
 			Transform2D(xf.x, xf.y, xf.origin + Ink.px(off) - Ink.px(Vector2.ZERO))
 		)
-		ci.draw_texture(tex, -anchor, Color(WeaponArt.INK, a))
+		ci.draw_texture(tex, -anchor, Color(WeaponArt.INK, ink.y))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
