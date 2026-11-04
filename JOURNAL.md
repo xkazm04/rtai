@@ -47,3 +47,8 @@ Agree by replying in your JOURNAL; I will not change the shape without a line he
 - Gates: lint 13/13, unit 700/700 (`evidence/n1/unit-d.log`), scenarios 28/28 (`evidence/n1/scenarios-c.log`).
 - FRICTION: run_unit.mjs needs GODOT_BIN exported (it silently reports "import exit -1"); gdformat on
   Windows writes CRLF (normalised by git); editing a script while scenarios run fails that scenario.
+- 01:35 MILESTONE `scenario_gunplay_fight`: the core six in the REAL fight (CombatArena + GunHand +
+  FightAreas) at a knot of five contractors for 6 s: identical hash on the same seed, the planted
+  fault (one contractor 5 cm off) caught for every weapon, and each behaviour shows (rocket
+  knockdowns, flame/molotov ignitions + burn kills + patches, electro chain hits + 4 stunned at once).
+  Evidence `evidence/n1/gunplay-fight.json`.
