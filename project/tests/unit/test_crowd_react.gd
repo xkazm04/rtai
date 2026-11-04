@@ -77,3 +77,40 @@ func test_dead_when_first_seen_is_not_killed_again() -> void:
 	rigs.feed.flags[0] = RigFeed.Flag.DEAD
 	c.observe(rigs)
 	assert_eq(c.deaths, 0)
+
+
+func test_a_fleeing_person_trips_over_a_body_once() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var f: RigFeed = _feed(true)
+	@warning_ignore("return_value_discarded")
+	f.put(1, 7, BodyPlan.Kind.PED, Vector2(-10.0, 0.0), Vector2.ZERO)
+	f.flags[1] = RigFeed.Flag.DEAD
+	rigs.feed = f
+	c.observe(rigs)
+	assert_eq(c.trips, 1)
+	assert_eq(rig.react.kind, &"trip")
+	assert_lt(rig.react.dir.x, -0.9, "pitches along the flight")
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.trips, 1, "one trip per body")
+
+
+func test_a_walker_or_a_far_body_does_not_trip() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var f: RigFeed = _feed(false)
+	@warning_ignore("return_value_discarded")
+	f.put(1, 7, BodyPlan.Kind.PED, Vector2(-10.0, 0.0), Vector2.ZERO)
+	f.flags[1] = RigFeed.Flag.DEAD
+	rigs.feed = f
+	c.observe(rigs)
+	assert_eq(c.trips, 0, "walking past a body is not a trip")
+	f.flags[0] = RigFeed.Flag.FLEE
+	f.pos[1] = Vector2(-CrowdReact.TRIP_M * SimConst.PX_PER_M * 1.5, 0.0)
+	c.observe(rigs)
+	assert_eq(c.trips, 0, "a body beyond TRIP_M")
