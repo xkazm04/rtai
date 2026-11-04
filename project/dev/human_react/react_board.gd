@@ -37,6 +37,7 @@ const SEGMENTS: Array[Array] = [
 	["death: blast (thrown, tumbling)", &"blast", true, false, 150],
 	["death: burn (flail, charred)", &"burn", true, false, 170],
 	["death: electro (convulse, stiff fall)", &"shock", true, false, 150],
+	["wounded (an armored human that lived through a hit): limps", &"limp", false, false, 150],
 ]
 
 var every: int = 2
@@ -118,6 +119,11 @@ func _step(seg: Array, t: int) -> void:
 		f.face[i] = 0.0
 		f.aim[i] = f.pos[i] + Vector2(6.0 * PX, 0.0)
 		f.flags[i] = (RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING) if LOOKS[i] >= 5 else 0
+		if seg[1] == &"limp":  # walking on the spot, hurt
+			f.vel[i] = DIRS[i % DIRS.size()] * 1.4 * PX
+			f.face[i] = f.vel[i].angle()
+			if _rigs.rig_for(i + 1) != null:
+				HumanReact.on(_rigs.rig_for(i + 1)).limp = 1.0
 		if seg[1] == CrowdReact.TRIP and LOOKS[i] < 5:  # running on the spot along their side
 			f.vel[i] = DIRS[i % DIRS.size()] * 3.5 * PX
 			f.face[i] = f.vel[i].angle()
@@ -125,7 +131,7 @@ func _step(seg: Array, t: int) -> void:
 	if t == 0:
 		_reset()
 		_new_blood()
-	if t == HIT_AT:
+	if t == HIT_AT and seg[1] != &"limp":
 		_hit_all(seg)
 	_rigs.step_ticks(1)
 	_tick += 1
