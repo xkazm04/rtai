@@ -65,9 +65,15 @@ func owns_melee() -> bool:
 	return form.on
 
 
+## Where the press head lands now: press_ahead_m ahead of Rivet's facing (metres).
+func slam_point(stage: CollectCallStage) -> Vector2:
+	var rivet: Fighter = stage.arena.rivet
+	return rivet.pos + rivet.facing.normalized() * attacks.num(GHOST, &"press_ahead_m")
+
+
 func _stomp(stage: CollectCallStage) -> void:
 	var rivet: Fighter = stage.arena.rivet
-	var at: Vector2 = rivet.pos + rivet.facing.normalized() * attacks.num(GHOST, &"press_ahead_m")
+	var at: Vector2 = slam_point(stage)
 	_crush_cars(stage, at)
 	var live: Array[Fighter] = []
 	var spots: PackedVector2Array = PackedVector2Array()
