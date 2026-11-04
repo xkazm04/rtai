@@ -142,7 +142,9 @@ func _impact(arena: CombatArena, last: Array, tick: int) -> void:
 	var hop: Vector2 = last[1]
 	var at: Vector2 = from + hop
 	var kind: Hit = Hit.GROUND
-	var bodies: Array[Fighter] = arena.hostiles if last[2] else [arena.rivet]
+	var bodies: Array[Fighter] = [arena.rivet]
+	if last[2]:
+		bodies = arena.hostiles
 	for h: Fighter in bodies:
 		var c: Vector2 = Geometry2D.get_closest_point_to_segment(h.pos, from, from + hop)
 		if c.distance_to(h.pos) <= h.radius_m + 0.3:

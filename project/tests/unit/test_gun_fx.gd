@@ -63,3 +63,17 @@ func test_a_reload_drops_the_magazine_and_rows_differ() -> void:
 	var heavy: int = fx.look(&"pistol")["spikes"]
 	var auto: int = fx.look(&"machine_pistol")["spikes"]
 	assert_ne(heavy, auto, "a single shot and an automatic flash differently")
+
+
+func test_an_enemy_round_on_rivet_sparks_off_his_plating() -> void:
+	var arena: CombatArena = _arena(&"pistol")
+	var fx: GunFx = GunFx.new()
+	var s: Shot = Shot.new()
+	s.from_rivet = false
+	s.pos = Vector2(-4.0, 0.0)
+	s.vel = Vector2(20.0, 0.0)
+	s.left_m = 10.0
+	arena.shots.append(s)
+	_run(arena, fx, 1, 30)
+	assert_eq(fx.impacts.size(), 1)
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.PLATING)
