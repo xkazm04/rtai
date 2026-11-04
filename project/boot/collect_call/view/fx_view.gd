@@ -32,12 +32,14 @@ func _draw() -> void:
 		draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
 	for s: Shot in arena.shots:
 		if arena.gun != null:
+			if WeaponFxArt.shot(self, s, stage.tick):  # weapon-art's cells first
+				continue
 			if s.spec == null or not FightAreasArt.shot(self, s, stage.tick):
 				_tracer(s)
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
-	if arena.gun != null:
+	if arena.gun != null and not WeaponFxArt.muzzle(self, arena.rivet, arena.gun):
 		_muzzle(arena.rivet, arena.gun)
 	if arena.guard_tell != null:
 		for h: Fighter in arena.hostiles:
