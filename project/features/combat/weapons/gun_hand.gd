@@ -46,11 +46,20 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 		s.damage = w.damage * _hp_scale
 		s.left_m = w.range_m
 		s.shooter_id = shooter.id
+		s.spec = w
+		if w.kind == WeaponSpec.Kind.THROWN or w.kind == WeaponSpec.Kind.ROCKET:
+			# Bottles land and rockets burst at the aimed point (or the first body, for rockets).
+			s.left_m = clampf(shooter.pos.distance_to(at), 1.0, w.range_m)
 		out.append(s)
 	trigger.add_bloom()
 	shots_fired += 1
 	shooter.facing = aim
 	return out
+
+
+## Table hp points -> Fighter hp (a human of target_hp.human is 1).
+func hp_scale() -> float:
+	return _hp_scale
 
 
 ## Once per tick after the pulls: a tick without a pull is a release (semi needs the edge), then

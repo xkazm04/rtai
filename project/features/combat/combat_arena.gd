@@ -8,6 +8,10 @@ extends RefCounted
 
 ## A round landed (after damage): the hit-feel hook (features/combat/hit_feel, lane gunplay).
 signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
+## A lethal hit on a non-Rivet fighter, from the chokepoint right after Events.actor_killed: the
+## kill payload for brutality and human-reactions (weapon id or &"burn", hit direction, hit point
+## in metres, the events.json death kind). Lane gunplay, night JOURNAL REQUEST 1.
+signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
 
 const SPAWN_SPREAD_M: float = 2.5
 
@@ -36,6 +40,12 @@ var tick: int = 0
 var gun: GunHand = null
 ## Lane gunplay: readable contractor bursts (tell, lock, slowed rounds); null keeps GuardBrain.
 var guard_tell: GuardTell = null
+## Lane gunplay: the table's area behaviours (splash, chain, stun, burn, fire patches); made with
+## the first GunHand shot, so quest 1 (no gun) never has one and its goldens do not move.
+var areas: FightAreas = null
+## The landing hit's direction and point, set before damage() (kill_landed reads them).
+var hit_dir: Vector2 = Vector2.ZERO
+var hit_at: Vector2 = Vector2.ZERO
 var _events: EventBus
 var _rng: RandomNumberGenerator
 var _next_id: int = 1
@@ -90,6 +100,9 @@ func hostiles_alive() -> int:
 ## Rivet pulls the trigger at `at`; false while the weapon cools or there is none.
 func rivet_fire(at: Vector2) -> bool:
 	if gun != null:
+		if areas == null:
+			areas = FightAreas.new()
+			areas.hp_scale = gun.hp_scale()
 		var fired: Array[Shot] = gun.pull(rivet, at) if rivet.alive() else []
 		shots.append_array(fired)
 		return not fired.is_empty()
@@ -133,16 +146,22 @@ func step(p_tick: int) -> void:
 	_repair()
 	if gun != null:
 		gun.settle()
+	if areas != null:
+		areas.step(self)
 
 
 ## The one damage chokepoint (events.json: the kill payload is decided before the hit lands).
-func damage(victim: Fighter, amount: float, killer_id: int, weapon: StringName) -> void:
+## `kind` is the events.json death kind: quest 1's rounds are `shot`; FightAreas passes `blown`
+## and `burned`.
+func damage(
+	victim: Fighter, amount: float, killer_id: int, weapon: StringName, kind: StringName = &"shot"
+) -> void:
 	if not victim.alive() or not victim.exposed:
 		return
 	var lethal: bool = victim.hp - amount <= 0.0
 	if lethal and victim.kind != Fighter.Kind.RIVET:
-		# Every arena hit is a round (a nail, a rifle bullet): the events.json death kind `shot`.
-		_events.actor_killed.emit(killer_id, victim.id, &"shot")
+		_events.actor_killed.emit(killer_id, victim.id, kind)
+		kill_landed.emit(victim, weapon, hit_dir, hit_at, kind)
 		kills += 1
 		kills_now += 1
 		kill_weapon = weapon
@@ -162,9 +181,13 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(tazer_hits)
 	if tazer != null:
 		tazer.write_state(out)
+	if areas != null:
+		areas.write_state(out)
 
 
 func _step_hostile(h: Fighter) -> void:
+	if areas != null and areas.holds(self, h):
+		return
 	if h.kind == Fighter.Kind.BOSS:
 		var ball: ArcBall = BossBrain.step(h, tazer, rivet.pos, boss_anchor, tuning)
 		if ball != null:
@@ -182,11 +205,20 @@ func _step_hostile(h: Fighter) -> void:
 func _step_shots() -> void:
 	for s: Shot in shots.duplicate():
 		var from: Vector2 = s.advance()
-		var victim: Fighter = _struck(s, from)
+		var lands: bool = s.spec != null and areas != null
+		# A thrown bottle flies over bodies and lands at the aimed point.
+		var over: bool = lands and s.spec.kind == WeaponSpec.Kind.THROWN
+		var victim: Fighter = null if over else _struck(s, from)
+		var ends: bool = victim != null or s.spent() or _blocked(s, from)
 		if victim != null:
+			hit_at = Geometry2D.get_closest_point_to_segment(victim.pos, from, s.pos)
+		if lands and ends:
+			areas.land(self, s, victim, hit_at if victim != null else s.pos)
+		elif victim != null:
+			hit_dir = s.vel.normalized()
 			damage(victim, s.damage, s.shooter_id, s.weapon)
-			struck.emit(victim, s.vel.normalized(), not victim.alive(), s.weapon)
-		if victim != null or s.spent() or _blocked(s, from):
+			struck.emit(victim, hit_dir, not victim.alive(), s.weapon)
+		if ends:
 			shots.erase(s)
 
 

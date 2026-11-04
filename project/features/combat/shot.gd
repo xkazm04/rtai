@@ -9,6 +9,9 @@ var weapon: StringName = &""
 var damage: float = 1.0
 var left_m: float = 20.0
 var shooter_id: int = 0
+## Lane gunplay: the weapons.json row of a GunHand round (FightAreas lands its area effects); null
+## for quest 1's own weapons.
+var spec: WeaponSpec = null
 
 
 static func fire(shooter: Fighter, dir: Vector2, w: CombatTuning.Weapon) -> Shot:
