@@ -191,9 +191,8 @@ func _notification(what: int) -> void:
 		session.write_telemetry(_telemetry)
 	if leaving and cast != null and cast.react != null:  # human-reactions: the fight's reactions
 		var r: ReactLink = cast.react
-		Log.info(
-			"arena", "react: %d wounds, %d deaths, %d ducks" % [r.wounds, r.deaths, r.near.ducks]
-		)
+		var n: Array[int] = [r.wounds, r.blocks, r.deaths, r.near.ducks]
+		Log.info("arena", "react: %d wounds (%d on a shield), %d deaths, %d ducks" % n)
 		cast = null
 	if leaving and _characters != null:  # lane human-reactions: the street's reactions, counted
 		var c: CrowdReact = _characters.crowd
