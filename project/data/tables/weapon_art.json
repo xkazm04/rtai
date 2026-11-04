@@ -471,14 +471,14 @@
     },
     {
       "anchor_px": [
-        140,
-        20
+        228,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/nail.png",
       "id": "nail",
       "size_px": [
-        150,
-        40
+        240,
+        64
       ]
     },
     {
