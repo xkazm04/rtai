@@ -818,3 +818,13 @@ NEXT (iteration 10, in order):
   electro strips whose clips stay (15 entries, every file checked).
 - 06:19 re-shooting the six table guns' pit reel at 48 px/m with --cam=fight (`reel10_<gun>/`, 25 s
   each) so the morning's side-by-side shows each victim fall (NEXT 5 of it9).
+- 06:24 MILESTONE `MASTERS/n4/gunplay/side_by_side_table_six_fightcam_48ppm.mp4` (+ `_still.png`;
+  NEXT 5 of it9 done): the six table guns in the pit at 48 px/m with --cam=fight, fresh on
+  eeec4d97 (`reel10_<gun>/`, 25 s each, 0 script errors, Rivet 0 deaths; shots / kills pistol 9/8,
+  machine pistol 34/8, rocket 7/6, flamethrower 34/4, electro 10/5, molotov 6/5: the flank bot
+  fights all waves now). Windows picked on a kill each from 1 fps strips. Looked at the 1 fps
+  preview of the reel: every cell carries its kill in frame (the spurts, the rocket's blast star
+  and corpses, flame on a guard, the electro bolt's kill, the bottle's patches). frames.json: it
+  replaces the camera-on-Rivet six-gun reel (now its `before`), 15 entries, all files checked.
+- NOTE the city keeps its own camera: CitySystem.focus drives the spawner and the sim step
+  (city_system.gd:63-70), so a view camera there would move the sim. FightCam stays pit-only.
