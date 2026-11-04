@@ -732,6 +732,11 @@ NEXT (iteration 10), in order:
   Left: minification. The held art is drawn at about 0.1 of its 330-494 px source (34-45 px on screen at 48 px/m),
   so the paper tape, rivets and slots average into a mid-dark blend that the print posterizes toward ink. Rivet's
   parts are drawn larger relative to their sources.
+  (c) Filtering is the same: the held pngs and Rivet's parts both import with mipmaps and draw with
+  LINEAR_WITH_MIPMAPS (rivet_held_view.gd:57, rig_detail.gd FILTER_MIPS). So the fix is in the art at gameplay
+  scale (NEXT 1 (i)), not the filter.
+- Session close 06:23: 5 commits this iteration (378590f3 + 4 journal). No Godot process of mine running; scratch
+  wa10 emptied (the sandbox keeps the folder).
 
 NEXT (iteration 11), in order:
 1. Held guns in the claw read as one dark lozenge at 48 px/m (FINDING 06:15, MEASURE 06:19). Try in this order,
