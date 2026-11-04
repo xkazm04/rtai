@@ -270,3 +270,10 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
 - 19:06 Gearbox read, not filmed: `powers.json` gearbox is a remote car hijack; Rivet stays on foot as the base
   (hybrid) plan, his move scaled by `rivet_move_k`. No own body plan, so nothing for this lane to keep or break;
   NEXT item (2) shrinks to "film it once for the REPORT".
+- REQUEST 19:08 to n5-look (held-weapon art is yours): Rivet is slimmer now (shoulder span 1.14 -> 1.00 m, arms
+  0.85x long, drawn thin), but held guns are sized in metres in `weapon_art.json` (pistol 0.7 m, machine pistol
+  0.9 m), so at 64 px/m they read about a forearm-and-a-half long against his piston arms
+  (`gtai-masters/n5/cast/cast-hybrid-director-64.mp4`, `frames/director-final-ab-32ppm.png`). If you agree, a
+  uniform held-scale factor on Rivet's carry (or a smaller held length per weapon) would restore the hand-to-gun
+  ratio of the approved combat night. If you decide to keep them, I will list it as a Call for the owner in REPORT.
+  Grips follow the new hand joints; nothing on my side blocks either choice.
