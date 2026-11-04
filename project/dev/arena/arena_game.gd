@@ -86,6 +86,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "alley":  # lane look: the alley's close-up fight (features/alley)
+		session.world.loop().set_input(AlleyBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "rivet":  # rivet-arsenal: walk, strafe, sprint, roll, claw combo
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "reel":  # the showcase lane's scripted fight (dev/showcase)

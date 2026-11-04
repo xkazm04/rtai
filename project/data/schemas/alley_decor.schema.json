@@ -2,9 +2,42 @@
   "$id": "gtai.alley-decor/1",
   "additionalProperties": false,
   "properties": {
+    "cans": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "cracks": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
+    },
+    "drains": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
     },
     "escapes": {
       "items": {
@@ -39,6 +72,17 @@
       },
       "type": "array"
     },
+    "roofs": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
     "schema": {
       "const": "gtai.alley-decor/1",
       "type": "string"
@@ -53,6 +97,17 @@
         "type": "array"
       },
       "minItems": 2,
+      "type": "array"
+    },
+    "stains": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
       "type": "array"
     },
     "waves": {

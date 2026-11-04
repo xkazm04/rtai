@@ -13,6 +13,7 @@ var waves: ArenaPit = ArenaPit.new()
 var decor: Dictionary = {}
 var _base: Vector2 = Vector2.ZERO
 var _deaths: int = 0
+var _floor_m: Rect2 = Rect2()
 
 
 func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
@@ -20,6 +21,7 @@ func setup(stage: ArenaStage, _ctx: WorldContext) -> void:
 	decor = t.raw
 	_base = stage.plan.base
 	var area: ArenaPlan.Area = stage.plan.area(station.area)
+	_floor_m = area.rect if area != null else Rect2()
 	var rule: Dictionary = t.object(t.raw, "waves")
 	waves.zone = area.rect.grow(-t.num(rule, "trigger_inset_m")) if area != null else Rect2()
 	waves.first_wave = roundi(t.num(rule, "first_wave"))
@@ -54,11 +56,22 @@ func attach_view(view: Node) -> void:
 	if v == null or v.print_stage == null:
 		return
 	var ground: AlleyDecor = AlleyDecor.new(decor, _base, false)
-	ground.z_index = RenderLayers.z(&"ground") + 1
-	ground.scale = v.stage_view.scale
-	v.print_stage.add_child(ground)
+	ground.set_ground(_floor_m, station.props)
+	_lay(v, ground, RenderLayers.z(&"ground") + 1, v.stage_view.scale)
+	var walls: Array[Rect2] = []
+	for p: ArenaStation.Prop in station.props:
+		if p.kind == "wall_high":
+			walls.append(Rect2(Ink.px(_base + p.at - p.size * 0.5), p.size * Ink.PX_PER_M))
+	var roofs: AlleyRoofs = AlleyRoofs.new(decor, _base, walls, Ink.px(_floor_m.get_center()).x)
+	_lay(v, roofs, RenderLayers.z(&"ground") + 2, v.stage_view.scale)
 	var over: AlleyDecor = AlleyDecor.new(decor, _base, true)
+	over.material = v.print_stage.item_material()
 	over.z_index = RenderLayers.z(&"roof_occluders")
 	over.scale = v.cast_view.scale
-	over.material = v.print_stage.item_material()
 	v.print_stage.actor_layer().add_child(over)
+
+
+func _lay(v: CollectCallView, node: Node2D, z: int, s: Vector2) -> void:
+	node.z_index = z
+	node.scale = s
+	v.print_stage.add_child(node)
