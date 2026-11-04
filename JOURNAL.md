@@ -1167,3 +1167,10 @@ NEXT (after the freeze / morning merge), in order:
   and gdlint on the file, not tools/lint/lint.mjs on the scratch tree. Showcase split the
   restore into _restore(). Lesson: run the full lint on any patch handed to another lane.
   NEXT item 1 is done.
+- 10:07 traced the claw path (read-only, n-showcase): PlayerMelee._land (player_melee.gd:89) calls
+  arena.damage but never emits arena.struck (PlayerShock does, player_shock.gd:125). ReactLink
+  plays only from struck, so non-signature melee hits bypass the reaction layer: no spin, no fold,
+  the generic rig fall. Fix (morning, rivet-arsenal + this lane): emit struck after the damage in
+  _land; hit_class_of maps the melee weapon ids to `melee` (absent from weapons.json, so `light`
+  today); check HitLink for a doubled melee feel. REPORT next 7 rewritten. Not touched tonight:
+  another lane's file, and showcase's final reel was running.

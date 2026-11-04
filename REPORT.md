@@ -28,9 +28,11 @@ Paths below are relative to the masters folder unless they start with `evidence/
     read cleanly. Nothing changed.
   - **Open, found at 10:00 in the claw chapter:** the claw's kills lie in the bullet X sprawl, and the second one
     folds under Rivet's feet. Raising `death_melee.travel_m` from 0.5 to 0.9 changed nothing on film (A/B on round 18,
-    not kept), so these kills do not play my melee death. The likely cause: `ReactLink.hit_class_of` falls back to
-    `light` for any weapon name missing from `weapons.json`, and no melee weapon is in that table. The claw path itself
-    (`player/melee_combo` / `melee_hit`, rivet-arsenal) was not traced in time. Next step 7.
+    not kept), so these kills do not play my melee death. Traced at 10:07 (read-only, showcase main): `PlayerMelee._land` (rivet-arsenal,
+    `features/player/player_melee.gd:89`) calls `arena.damage` but never emits `arena.struck`; `PlayerShock` does
+    (`player_shock.gd:125`). `ReactLink` plays reactions and deaths only from `struck`, so claw and blade hits that are
+    not signatures bypass the reaction layer: no melee spin, no fold, and the generic rig fall. Not fixed tonight: it is
+    rivet-arsenal's file, and showcase's final reel was already running. Next step 7.
 - **09:20-10:20 (iteration 20), two readability fixes, both in time for showcase's 09:45 merge:**
   - **The robot thug's lighter spray** (`e00a0041`): its hits now throw their own `blood_fx` row `thug_hit` (10 drops in
     a 70 deg cone along the blow) instead of Rivet's `robot_hit` (26 drops in a 160 deg fan). Six hits leave one
@@ -221,5 +223,10 @@ Each call is one value or flag. A is what is live now.
    `arena.kill_weapon == &"electro_gun"`. `combat_arena` needs no change, and brutality's `electro_shock` signature
    is untouched because its veto already skips this path. Not done tonight: it edits the same lines as showcase's
    final merge.
-7. Melee kills play the melee fold: trace the claw's strike into `ReactLink` and map melee weapon names to the
-   `melee` class in `hit_class_of` (or carry `hit_class` on the melee table rows). Film the claw chapter A/B.
+7. Melee hits reach the reaction layer:
+   - in `PlayerMelee._land`, add `arena.struck.emit(f, dir, not f.alive(), weapon_id)` after `arena.damage`
+     (rivet-arsenal, as `PlayerShock` does);
+   - in `ReactLink.hit_class_of`, return `melee` for the melee table's weapon ids (they are not in `weapons.json`, so
+     today they fall back to `light`);
+   - check `HitLink` does not double its melee feel;
+   - film the claw chapter A/B.
