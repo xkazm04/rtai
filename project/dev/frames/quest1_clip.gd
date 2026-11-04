@@ -7,9 +7,11 @@ extends SceneTree
 ##   [--save=<abs file>] (the game writes its beat checkpoints there)
 ##   [--continue] (with --save: press Continue on the title, save the first frames, quit)
 ##   [--rigs] (rivet-arsenal: the quest drawn on the cast rigs, Quest1Game._dev_rigs)
+##   [--cam=fight] (rivet-arsenal: the camera leans toward the cop Rivet fights, render only)
+##   [--ticks=<from>-<to>] (rivet-arsenal: clip only these ticks, e.g. Dock 9's 13600-13840)
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--out", "--ppm", "--stills", "--save", "--continue", "--rigs"
+	"--out", "--ppm", "--stills", "--save", "--continue", "--rigs", "--cam", "--ticks"
 ]
 const RECORDER: String = "res://dev/frames/quest1_clip_rec.gd"
 const COUNTER: String = "res://tests/support/error_counter.gd"
@@ -45,6 +47,11 @@ func _initialize() -> void:
 		return
 	var rec: Node = script.new()
 	rec.set("out_dir", out)
+	_configure(rec, values)
+	root.add_child(rec)
+
+
+func _configure(rec: Node, values: Dictionary[String, String]) -> void:
 	var ppm: String = values.get("--ppm", "32")
 	rec.set("px_per_m", ppm.to_float())
 	var stills: Array[int] = []
@@ -54,7 +61,11 @@ func _initialize() -> void:
 	rec.set("stills", stills)
 	rec.set("save_path", values.get("--save", ""))
 	rec.set("press_continue", values.has("--continue"))
-	root.add_child(rec)
+	rec.set("fight_cam", values.get("--cam", "") == "fight")
+	var window: String = values.get("--ticks", "")
+	if window.contains("-"):
+		var from: int = window.get_slice("-", 0).to_int()
+		rec.set("tick_window", Vector2i(from, window.get_slice("-", 1).to_int()))
 
 
 ## Called by the recorder when it is done: 0, or 1 when any engine/script error was logged.
