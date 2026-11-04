@@ -1,10 +1,10 @@
 # REPORT: lane weapon-art (night 2026-11-04, branch `n-weapon-art`)
 
-Head of the build: `a1a819d3` (see "After 09:00"; at 08:40 it was `3a703dbd`).
+Head of the build: `384883b1` (code; later commits are docs only). See "After 09:00"; at 08:40 it was `3a703dbd`.
 `M` below stands for `C:\Users\kazda\kiro\gtai-masters\n4\weapon-art\`. `E` stands for `evidence/weapon-art/` in this worktree, which is untracked scratch.
 The owner's page is `M\frames.json` (15 entries, newest and best first). Every file it lists exists on disk.
 
-## After 09:00 (extension, iterations 20 and 21)
+## After 09:00 (extension, iterations 20 to 22)
 
 The build moved to `a1a819d3`. All six changes since `3a703dbd` are render only: no sim file and no golden touched. Gates at `a1a819d3`: lint 13/13, unit 743/743 (`E\unit-it20i.log`), scenarios 32/32 (`E\scenarios-it20h.log`). Parity is untouched.
 
@@ -15,8 +15,9 @@ Iteration 21 moved the build to `384883b1` (render and dev only). Gates at `57ee
 - **The melee four in the claw are closed by rivet-arsenal.** Their RivetHeldView draws this lane's held art for the katana, baton, chainsaw and plasma sword live, with a swept arc. Filmed in `n4\rivet-arsenal\frames\city-block-melee-64ppm-2x.png` and `katana-slash-thrust-sheet-64ppm.png`. MeleeWeaponView's bars remain only in rivet-motion's dev combo clip.
 - **The electro bolt gets a bold ink outline** (call 3, inside the palette). The arc is drawn in ink at 8 offsets 0.06 m out, then in paper, for Rivet's bolt and the chain arcs. It was the thinnest energy read on cream at 32 px/m. The before is `--arc-ink=off`. Clip: `M\clips\it20-electro-arc-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-electro-arc-ink-ab-city-32ppm.png` (with the rejected try); zoom: `M\frames\it20-electro-arc-ink-zoom-t395-city-32ppm-3x.png`.
 - **The ray gun's hoops get the same ink outline** (call 3), lighter at 0.035 m: at the bolt's 0.06 they read as dark tyres at 48 px/m (`M\frames\it20-ray-hoop-ink-lighter-ab-city-48ppm.png`). The before is `--ray-ink=off`. Clip: `M\clips\it20-ray-rings-ink-ab-city-32ppm-2x.mp4`; strip: `M\frames\it20-ray-rings-ink-ab-city-32ppm.png`; zoom: `M\frames\it20-ray-rings-ink-zoom-t398-city-32ppm-3x.png`.
+- **Showcase has all of it.** Showcase round 19 merged `b97342e1` (`a5822dd2` on `n-showcase`, 09:57), which contains every weapon-art code change, the pickup look included. Only docs commits came after it.
 - **No molotov fuel-splash sheet.** The landing already reads (star, glass, fire, scorch), and a fuel stain would lie under the flames.
-- **Iteration 21: a gun on the ground reads as that gun** (`PickupLook`). In the live arena pit, the hand cannon on rivet-arsenal's paper disc printed as a black ink smudge at 48 and 32 px/m: the rigs' PART print collapsed its rust and steel, the same problem the held guns had. Now it draws its own flat fills inside a 1 px ink outline: drum, grip and rust read. At 32 px/m it has less contrast at a glance than the blob had, which is call 17. The before is `--pickup-print=on`. Clip: `M\clips\it21-pickup-ink-ab-arena-pit-48ppm.mp4` (left before, right after). Sheet: `Mrames\it21-pickup-ink-ab-arena-pit-32-48ppm.png`. The ray gun on the ground shows the same thing at the same ticks: before, broken ink fragments; after, the coiled gun in one line (`M\frames\it21-pickup-ink-ray-gun-ab-arena-pit-48ppm-4x.png`). There is one hook line in rivet-arsenal's `pickups_view.gd`.
+- **Iteration 21: a gun on the ground reads as that gun** (`PickupLook`). In the live arena pit, the hand cannon on rivet-arsenal's paper disc printed as a black ink smudge at 48 and 32 px/m: the rigs' PART print collapsed its rust and steel, the same problem the held guns had. Now it draws its own flat fills inside a 1 px ink outline: drum, grip and rust read. At 32 px/m it has less contrast at a glance than the blob had, which is call 17. The before is `--pickup-print=on`. Clip: `M\clips\it21-pickup-ink-ab-arena-pit-48ppm.mp4` (left before, right after). Sheet: `M\frames\it21-pickup-ink-ab-arena-pit-32-48ppm.png`. The ray gun on the ground shows the same thing at the same ticks: before, broken ink fragments; after, the coiled gun in one line (`M\frames\it21-pickup-ink-ray-gun-ab-arena-pit-48ppm-4x.png`). There is one hook line in rivet-arsenal's `pickups_view.gd`.
 - **Iteration 21: the weapon lineup's pickups use the same look** (`384883b1`). Re-rendered at 32 and 64 px/m: the core six and the nine melee and advanced weapons, held above and lying below, beside a cop. Every pickup silhouette is distinct in its ink line. Frames: `M\frames\it21-lineup-{core,adv}-{64ppm,32ppm-2x}-pickup-ink.png`.
 
 ## Gates of record
