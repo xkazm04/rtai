@@ -351,6 +351,30 @@
     },
     {
       "anchor_px": [
+        166,
+        247
+      ],
+      "art": "res://features/combat/weapons/art/gore/charred_top.png",
+      "id": "gore_charred_top",
+      "size_px": [
+        448,
+        477
+      ]
+    },
+    {
+      "anchor_px": [
+        226,
+        213
+      ],
+      "art": "res://features/combat/weapons/art/gore/charred_top_slump.png",
+      "id": "gore_charred_top_slump",
+      "size_px": [
+        499,
+        431
+      ]
+    },
+    {
+      "anchor_px": [
         134,
         114
       ],
@@ -418,6 +442,30 @@
       "id": "gore_xray",
       "size_px": [
         225,
+        427
+      ]
+    },
+    {
+      "anchor_px": [
+        146,
+        200
+      ],
+      "art": "res://features/combat/weapons/art/gore/xray_top.png",
+      "id": "gore_xray_top",
+      "size_px": [
+        439,
+        426
+      ]
+    },
+    {
+      "anchor_px": [
+        208,
+        202
+      ],
+      "art": "res://features/combat/weapons/art/gore/xray_top_jolt.png",
+      "id": "gore_xray_top_jolt",
+      "size_px": [
+        520,
         427
       ]
     },
