@@ -74,11 +74,11 @@ Each one is a single value. The default stands until you answer.
 
 ## Gates of record
 
-As of iteration 11 (3d85efbe); the report phase re-runs them on the final head.
+`node tools/evidence/run.mjs --no-bench` on 2d7efa51 (`WT/evidence/n10/evidence-final.log`): lint, unit, scenarios and parity PASS. The selftest fails on the accent audit only, as below. The report phase re-runs this if code lands after 2d7efa51.
 
 - lint 13/13 (the pre-commit hook on every commit).
-- unit 745/745 at 3d85efbe (`WT/evidence/n10/unit-b.log`).
-- scenarios 29/29 at 3d85efbe (`WT/evidence/n10/scenarios-c.log`).
-- parity bit-exact, the planted mutation caught at step 629 (`node tools/evidence/run.mjs` on 47476501, `WT/evidence/n10/evidence.log`). No native or city-sim file has changed since.
+- unit 745/745 (2d7efa51; also `WT/evidence/n10/unit-b.log` at 3d85efbe).
+- scenarios 29/29 (2d7efa51; also `WT/evidence/n10/scenarios-c.log` at 3d85efbe).
+- parity bit-exact, the planted mutation caught at step 629 (2d7efa51).
 - selftest: look goldens 11/11 and block 5/5 within mean 4, and the world lock holds. The accent audit flags vermilion 8 px on vehicles at 48 px/m and 28 px on a cop at 64 px/m. These are blood edges: the audit compares a full capture with a layer-hidden capture taken a frame later (d5-city's fix; see JOURNAL showcase REQUEST 7). The audit is not one of this lane's four gates.
 - bench: every run tonight was CONTENDED (riot p99 7.09 to 13.09 ms; the blood was 0.8 to 1.0 % of it). There is no idle number of record.

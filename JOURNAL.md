@@ -996,3 +996,9 @@ NEXT (iteration 12 / report phase, in order):
   is the nuke fireball's core shade (lasts the blast's few ticks, not a floor mark): no change.
 - Session end 07:18: no Godot process of mine running, no lock held, scratch holds only the six
   scripts. The NEXT list above stands (1 REPORT gates on the final head, 3, 4).
+- 07:24 MEASURE gates of record on 2d7efa51 (the final code head of this iteration;
+  `evidence/n10/evidence-final.log`, `--no-bench`): lint 13/13, unit 745/745, scenarios 29/29,
+  parity bit-exact (planted mutation caught at step 629). Selftest FAIL on the accent audit only,
+  the same two rows as on 47476501 (48 px/m vehicles 8 px, 64 px/m cop 28 px: the blood-edge
+  class); look goldens 11/11, block 5/5, world lock holds. REPORT gates section updated. NEXT 1
+  (gates on the final head) is done unless code lands after 2d7efa51.
