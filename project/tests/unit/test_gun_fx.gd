@@ -182,6 +182,7 @@ func test_a_homing_shard_stays_stuck_in_the_body_a_pistol_round_does_not() -> vo
 		if want == 1:
 			var v: Vector3 = fx.stuck_shards(g.id)[0]
 			assert_lt(Vector2(v.x, v.y).length(), g.radius_m, "stuck inside his outline")
+			assert_false(FightShardArt.shows_stuck(g), "the view drops them off the corpse")
 
 
 func test_a_round_a_riot_shield_stopped_sparks_instead_of_a_burst() -> void:
