@@ -63,7 +63,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	held.arena = p_stage.arena
 	held.rivet_id = p_stage.arena.rivet.id
 	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
-	view.print_stage.actor_layer().add_child(held)
+	layer.add_child(held)  # showcase glue: the city view has no print stage
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
 	return true
