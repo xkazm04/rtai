@@ -12,6 +12,21 @@
     "upgrade_tier": 0
   },
   "doc": "Lane ghost-powers: each ghost form's attack set beyond the powers.json row (the form's timing, Madness cost and the old hauler/gearbox tuning stay there). One block per ghost (tonnage, dent, kerf, ohm), each with upgrade_tier (0 = base; the per-act quest upgrades raise it later, nothing reads above 0 yet). Metres, seconds, damage in hp (a patrol cop has 1, a riot cop 2 x the pit's armour, a robot thug 6). Anchors are body-local metres (+x = facing, +y = right) until the forms lane's form rows carry them.",
+  "kerf": {
+    "behind_m": 0.9,
+    "charges": 3,
+    "cone_deg": 35,
+    "cut_hang_s": 0.6,
+    "dash_m": 4,
+    "doc": "Kerf (the freed laser-cutter head): power row kerf (Q while the forms lane's switch has Kerf selected; the arena's --ghost=kerf until then). While on, Rivet walks at speed_k. The melee press blinks: the live hostile nearest the aim inside cone_deg (half-angle) and range_m, with a clear line (no wall between), is the target; Rivet blinks along the straight line to behind_m beyond it and the cutting beam slices it (weapon kerf_slice: human_damage on a human = the one-shot split kill with a teal-white cauterised edge, signature_kills.json kerf_split; robot_damage on a robot). No target in the cone: a plain blink dash_m along the aim (the speed move). Each blink spends one of charges; one comes back every recharge_s; blinks are at least gap_s apart. The cut line hangs in the air for cut_hang_s (view only).",
+    "gap_s": 0.3,
+    "human_damage": 99,
+    "range_m": 9,
+    "recharge_s": 1,
+    "robot_damage": 4,
+    "speed_k": 1.5,
+    "upgrade_tier": 0
+  },
   "schema": "gtai.ghost_attacks/1",
   "tonnage": {
     "armor_k": 0.3,

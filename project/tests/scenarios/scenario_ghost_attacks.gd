@@ -1,15 +1,16 @@
 extends Scenario
 ## Lane ghost-powers: the ghosts' attack beats (GhostReel, `--bot=ghosts`) in the arena's real
 ## fight, one fresh ArenaSession per run. Tonnage must slam twice, crush both cars and flatten
-## (signature style crush); Dent must seize the cruiser, strike with it and blow it up. Each beat
+## (signature style crush); Dent must seize the cruiser, strike with it and blow it up; Kerf must
+## blink-slice the whole group (four humans split, the robot in two cuts). Each beat
 ## replays identically on a fresh world (SIM-05) and gives the same state on the same seed.
-## TST-05: a planted fault per ghost (Tonnage's crush_m 0, Dent's blast_damage 0) must change
-## the outcome.
+## TST-05: a planted fault per ghost (Tonnage's crush_m 0, Dent's blast_damage 0, Kerf's
+## human_damage 0) must change the outcome.
 
 const EVIDENCE_FILE: String = "ghost-attacks.json"
-const TICKS: Dictionary[StringName, int] = {&"tonnage": 620, &"dent": 360}
+const TICKS: Dictionary[StringName, int] = {&"tonnage": 620, &"dent": 360, &"kerf": 480}
 const FAULTS: Dictionary[StringName, StringName] = {
-	&"tonnage": &"crush_m", &"dent": &"blast_damage"
+	&"tonnage": &"crush_m", &"dent": &"blast_damage", &"kerf": &"human_damage"
 }
 
 
@@ -42,6 +43,11 @@ func _judge(ghost: StringName, t: Dictionary) -> String:
 		if h.get("slams", 0) < 2 or h.get("cars_crushed", 0) < 2 or t.get("crush", 0) < 3:
 			return "tonnage beat fell short: %s" % JSON.stringify(t)
 		return ""
+	if ghost == &"kerf":
+		var k: Dictionary = t.get("kerf", {})
+		if k.get("slices", 0) < 6 or t.get("split", 0) < 4 or t.get("ghost_dead", 0) < 5:
+			return "kerf beat fell short: %s" % JSON.stringify(t)
+		return ""
 	var d: Dictionary = t.get("dent", {})
 	if d.get("seizes", 0) != 1 or d.get("strikes", 0) < 1 or d.get("blasts", 0) != 1:
 		return "dent beat fell short: %s" % JSON.stringify(t)
@@ -55,13 +61,10 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 	var input: GhostReelInput = GhostReelInput.attach(s.stage, s.actions)
 	input.reel.ghost = ghost
 	s.world.loop().set_input(input)
+	if ghost == &"kerf":
+		s.pilot.kerf = KerfStage.shipped()  # the beat keeps a pilot's Kerf (the fault reaches it)
 	if fault:
-		var block: Dictionary = (
-			s.pilot.hauler.attacks.block(ghost)
-			if ghost == &"tonnage"
-			else s.pilot.dent.attacks.block(ghost)
-		)
-		block[String(FAULTS[ghost])] = 0.0
+		_attacks(s, ghost).block(ghost)[String(FAULTS[ghost])] = 0.0
 	if record:
 		s.world.loop().start_recording()
 	while s.tick() < TICKS[ghost]:
@@ -73,7 +76,8 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 		if h is BrutalityHook:
 			h.write_state(buf)
 	var t: Dictionary = input.reel.telemetry()
-	t["crush"] = _crushes(s)
+	t["crush"] = _style(s, &"crush")
+	t["split"] = _style(s, &"split")
 	var replay: String = ""
 	if record:
 		replay = _replay(ghost, s.world.loop().finish_recording())
@@ -83,10 +87,16 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 	return {"state": buf.data_array, "telemetry": t, "replay": replay}
 
 
-func _crushes(s: ArenaSession) -> int:
+func _attacks(s: ArenaSession, ghost: StringName) -> GhostAttacks:
+	if ghost == &"tonnage":
+		return s.pilot.hauler.attacks
+	return s.pilot.kerf.attacks if ghost == &"kerf" else s.pilot.dent.attacks
+
+
+func _style(s: ArenaSession, style: StringName) -> int:
 	for h: ArenaHook in s.stage.hooks:
 		if h is BrutalityHook:
-			return (h as BrutalityHook).kills.by_style.get(&"crush", 0)
+			return (h as BrutalityHook).kills.by_style.get(style, 0)
 	return 0
 
 

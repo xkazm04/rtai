@@ -46,7 +46,10 @@ var _grinds: Dictionary[int, Grind] = {}
 ## The two halves of `rig` cut along `cut` (unit, world): groups by SignatureKill.PIECE_IDS,
 ## only HALF_A and HALF_B filled, each centred where its piece starts (SignatureKills offsets).
 ## `hot`: a cauterising blade (the plasma sword): the edges glow instead of showing raw red.
-static func cut(rig: CutRig, cut_dir: Vector2, view_ppm: float, hot: bool = false) -> Array[Node2D]:
+## `soul`: Kerf's beam: the cauterised edge in teal-white.
+static func cut(
+	rig: CutRig, cut_dir: Vector2, view_ppm: float, hot: bool = false, soul: bool = false
+) -> Array[Node2D]:
 	var out: Array[Node2D] = []
 	@warning_ignore("return_value_discarded")
 	out.resize(SignatureKill.PIECE_IDS.size())
@@ -72,6 +75,7 @@ static func cut(rig: CutRig, cut_dir: Vector2, view_ppm: float, hot: bool = fals
 		lip.b = o + cut_dir * EDGE_M * view_ppm
 		lip.side = side
 		lip.hot = hot
+		lip.soul = soul
 		lip.z_index = 30
 		root.add_child(lip)
 		out[p] = root

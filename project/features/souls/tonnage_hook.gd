@@ -8,6 +8,8 @@ extends ArenaHook
 var view: TonnageView = null
 ## Dent's tether, heat and blast (the same pad hosts the ghosts' views until each has its own).
 var dent_view: DentView = null
+## Kerf's blink paths and cut lines (reads stage.pilot.kerf when the reel sets it).
+var kerf_view: KerfView = null
 var _stage: ArenaStage = null
 
 
@@ -41,3 +43,9 @@ func attach_view(p_view: Node) -> void:
 		dent_view.dent = _stage.pilot.dent
 		dent_view.stage = _stage
 		layer.add_child(dent_view)
+	kerf_view = KerfView.new()
+	kerf_view.z_index = RenderLayers.z(&"actors") + 1
+	kerf_view.ppm = SimConst.PX_PER_M
+	kerf_view.reduced_motion = view.reduced_motion
+	kerf_view.stage = _stage
+	layer.add_child(kerf_view)

@@ -8,11 +8,37 @@
     },
     "ghost_dead": 5,
     "ghost_victims": 5,
+    "split": 0,
     "tonnage": {
       "activations": 0,
       "cars_crushed": 0,
       "ram_hits": 0,
       "rivet_hp": 100.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    }
+  },
+  "kerf": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "kerf": {
+      "activations": 1,
+      "blinks": 8,
+      "slices": 7
+    },
+    "split": 4,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 54.0,
       "slam_hits": 0,
       "slams": 0,
       "ticks_on": 0
@@ -27,11 +53,37 @@
     },
     "ghost_dead": 4,
     "ghost_victims": 5,
+    "split": 0,
     "tonnage": {
       "activations": 0,
       "cars_crushed": 0,
       "ram_hits": 0,
       "rivet_hp": 96.4,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    }
+  },
+  "planted_kerf": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 1,
+    "ghost_victims": 5,
+    "kerf": {
+      "activations": 1,
+      "blinks": 8,
+      "slices": 7
+    },
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 100.0,
       "slam_hits": 0,
       "slams": 0,
       "ticks_on": 0
@@ -46,6 +98,7 @@
     },
     "ghost_dead": 10,
     "ghost_victims": 10,
+    "split": 0,
     "tonnage": {
       "activations": 1,
       "cars_crushed": 2,
@@ -65,6 +118,7 @@
     },
     "ghost_dead": 10,
     "ghost_victims": 10,
+    "split": 0,
     "tonnage": {
       "activations": 1,
       "cars_crushed": 2,

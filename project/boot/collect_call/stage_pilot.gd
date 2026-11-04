@@ -28,6 +28,8 @@ var car_presses: int = 0
 var hauler: HaulerStage = HaulerStage.shipped()
 ## lane ghost-powers: Dent (G / RB) seizes a car on an arena stage (a no-op on quest 1's stage).
 var dent: DentStage = DentStage.shipped()
+## lane ghost-powers: Kerf (Q / LB in place of the Hauler when set; null = Tonnage keeps Q).
+var kerf: KerfStage = null
 ## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0
@@ -77,10 +79,15 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
 
 
-## The ghost powers (features/souls): the Hauler / Tonnage (Q / LB) and Dent (G / RB); true when
-## one owns the melee press this tick (the pilot skips the claw).
+## The ghost powers (features/souls): the Hauler / Tonnage or Kerf (Q / LB) and Dent (G / RB);
+## true when one owns the melee press this tick (the pilot skips the claw).
 func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
-	if hauler != null:
+	if kerf != null:
+		var q: bool = c.was_pressed(actions, &"power_hauler")
+		stage.intent.move_by = kerf.drive(stage, q, press, c.aim, stage.intent.move_by)
+		if kerf.owns_melee():
+			return true
+	elif hauler != null:
 		var power: bool = c.was_pressed(actions, &"power_hauler")
 		stage.intent.move_by = hauler.drive(stage, power, press, stage.intent.move_by)
 		if hauler.owns_melee():
@@ -113,6 +120,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 		hauler.write_state(out)
 	if dent != null:
 		dent.write_state(out)
+	if kerf != null:
+		kerf.write_state(out)
 
 
 ## The walk, sprint and roll; a claw hit slows the walk (move_mult) and the roll's i-frames close

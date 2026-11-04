@@ -73,6 +73,91 @@
       "minLength": 1,
       "type": "string"
     },
+    "kerf": {
+      "additionalProperties": false,
+      "properties": {
+        "behind_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "charges": {
+          "maximum": 9,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "cone_deg": {
+          "maximum": 180,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_hang_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "dash_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "gap_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "human_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "range_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "recharge_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "robot_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "speed_k": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "behind_m",
+        "charges",
+        "cone_deg",
+        "cut_hang_s",
+        "dash_m",
+        "doc",
+        "gap_s",
+        "human_damage",
+        "range_m",
+        "recharge_s",
+        "robot_damage",
+        "speed_k",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    },
     "schema": {
       "const": "gtai.ghost_attacks/1"
     },
@@ -123,6 +208,7 @@
   "required": [
     "dent",
     "doc",
+    "kerf",
     "schema",
     "tonnage"
   ],

@@ -5,6 +5,7 @@ extends Node2D
 
 const INK: Color = KillSplitFx.INK
 const RAW: Color = KillSplitFx.RAW
+const SOUL_WHITE: Color = Color(0.9, 1.0, 0.97)
 
 var a: Vector2 = Vector2.ZERO
 var b: Vector2 = Vector2.ZERO
@@ -12,6 +13,8 @@ var b: Vector2 = Vector2.ZERO
 var side: Vector2 = Vector2.UP
 ## Cauterised (the plasma sword): a hot cream band in a heat bloom, no red.
 var hot: bool = false
+## With hot: Kerf's soul beam: a teal bloom round a white-hot band (teal is the souls' colour).
+var soul: bool = false
 
 
 func _draw() -> void:
@@ -19,9 +22,10 @@ func _draw() -> void:
 	draw_line(a, b, INK, w * 0.55, true)
 	var inset: Vector2 = side * w * 0.6
 	if hot:
-		var bloom: Color = Color(KillHoleFx.HOT, 0.45)
+		var band: Color = SOUL_WHITE if soul else KillHoleFx.HOT
+		var bloom: Color = Color(HaulerLook.TEAL if soul else KillHoleFx.HOT, 0.45)
 		draw_line(a + inset * 1.5, b + inset * 1.5, bloom, w * 2.6, true)
-		draw_line(a.lerp(b, 0.05) + inset, b.lerp(a, 0.05) + inset, KillHoleFx.HOT, w, true)
+		draw_line(a.lerp(b, 0.05) + inset, b.lerp(a, 0.05) + inset, band, w, true)
 		return
 	draw_line(a.lerp(b, 0.08) + inset, b.lerp(a, 0.08) + inset, RAW, w, true)
 	for i: int in 3:  # the meat shows in three ragged red dabs along the band
