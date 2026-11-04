@@ -85,6 +85,7 @@ func telemetry() -> Dictionary:
 		out["view_frames"] = view.frames
 		out["view_avg_us"] = view.spent_us / view.frames
 		out["view_worst_us"] = view.worst_us
+		out["kill_cut_us"] = Array(view.kill_us)
 	return out
 
 
