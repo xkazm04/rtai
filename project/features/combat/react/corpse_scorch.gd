@@ -25,7 +25,7 @@ const SMOKE_S: float = 2.4
 const BURNT_SMOKE_S: float = 4.5
 const BURNT_PUFFS: int = 5
 ## The burnt body is near black itself: its soot is this much fainter, so the legs read on it.
-const BURNT_SOOT: float = 0.4
+const BURNT_SOOT: float = 0.6
 const Z: int = -20
 
 var _rig: CutRig = null
@@ -68,6 +68,9 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	var f: float = _feet
 	var mid: float = f * (FEET_PX - HEAD_PX) * 0.5
+	if _burnt:  # the burnt body lies tucked: its length is the shoulder line (y), centred
+		mid = 0.0
+		draw_set_transform(Vector2.ZERO, PI / 2.0)
 	var half_l: float = (FEET_PX + HEAD_PX) * 0.5
 	draw_colored_polygon(_blot(mid, half_l * _amount, HALF_W * _amount, 0), _a(SOOT))
 	draw_colored_polygon(_blot(mid, half_l * 0.6, HALF_W * 0.55, 7), _a(CORE))
