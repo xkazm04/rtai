@@ -174,3 +174,11 @@ func test_the_clip_pass_clears_the_corpse_channels() -> void:
 	assert_eq(_rig.c_plank, 0.0, "a reused rig does not lie stiff")
 	assert_eq(_rig.c_kick, 0.0, "nor keep a leg thrown up")
 	assert_eq(_rig.plank_feet, -1.0, "nor its stiff feet's side")
+
+
+func test_a_signature_kill_can_lay_the_stiff_corpse_without_human_react() -> void:
+	DeathPose.stiff_channels(_rig, Vector2.LEFT, 1.0)  # showcase REQUEST 29: KillShockFx
+	assert_true(_rig.dead, "dead")
+	assert_almost_eq(_rig.c_plank, 1.0, 0.001, "stiff")
+	assert_eq(_rig.plank_feet, 1.0, "feet toward the shooter")
+	assert_true(_rig.get_node_or_null(NodePath(CorpseScorch.NAME)) is CorpseScorch, "scorched")
