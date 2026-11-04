@@ -687,3 +687,15 @@ NEXT (iteration 6):
   reel). frames.json: 15 entries, the two oldest dropped.
 - 05:21 the director groups stagger in depth (machine pistol, nuke); re-cut reel-0530-director
   running (with the 05:08 walk-in hold).
+- MILESTONE 05:27 reel-0530 (122 s) = reel-0530-director (16 fresh chapters on HEAD, the walk-in
+  hold and the staggered groups in) + the 05:20 city chapter. Looked at pistol, machine pistol,
+  katana, nuke: no station cop walks in any more; the group of 4 falls spread, not stacked; the
+  nuke finale holds. reel-0525 deleted (superseded, same chapters). frames.json 15 entries,
+  every file present.
+- 05:28 session end. All work committed. Scratch: cut-reel-0530-director/ (chapter mp4s, the
+  re-cut source) and city_free-0525.mp4 kept for the next concat.
+
+NEXT (iteration 6) = the NEXT list of 05:10 above (merge round 8 + gates; re-cut with cut.sh
+and concat the city chapter: `ffmpeg -f concat` over the chapter list + city_free; check
+REQUESTs 21-23 on the tips; a 64 px/m close-up pass of the signature chapters; final-round
+export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 21, 22, 23.
