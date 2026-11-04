@@ -9,6 +9,9 @@ const STAND_STEP_S: float = 0.16
 const LIFT_PX: float = 45.0
 ## rivet-motion: the sprint's top (PlayerMotion sprint_mps 6.2 at 32 px/m): sprint_stride is full.
 const SPRINT_SPEED: float = 198.0
+## human-reactions: the stiff corpse's feet this far (part px) along the facing, on the side
+## CutRig.plank_feet names (-340 behind was the only layout before).
+const PLANK_FEET_PX: float = 340.0
 
 
 static func step(rig: CutRig, dt: float) -> void:
@@ -80,7 +83,7 @@ static func _stand(rig: CutRig, side: RigLimbs, other: RigLimbs, rest: Vector2, 
 static func _clip_feet(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, dt: float) -> void:
 	if rig.c_sprawl > 0.0:
 		var wide: float = lerpf(230.0, 55.0, rig.c_plank)
-		var back: float = -210.0 - 130.0 * rig.c_plank
+		var back: float = lerpf(-210.0, PLANK_FEET_PX * rig.plank_feet, rig.c_plank)
 		var spread: Vector2 = rig.xf * Vector2(back, rig.plan.side_sign(s) * wide)
 		side.foot_w = side.foot_w.lerp(spread, minf(rig.c_sprawl * dt * 8.0, 1.0))
 		side.lift = 0.0

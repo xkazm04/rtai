@@ -43,6 +43,9 @@ var c_hands_up: float = 0.0
 ## A stiff corpse (human-reactions' electro death): the sprawl keeps the legs together and
 ## the arms along the sides. RigClips zeroes it each tick; DeathPose sets it.
 var c_plank: float = 0.0
+## Which way the stiff corpse's feet lie along the facing: -1 behind (it fell forward), +1 ahead
+## (it fell back, pivoting on its feet). RigClips resets it to -1 with c_plank.
+var plank_feet: float = -1.0
 
 var facing: float = 0.0
 var face_w: float = 0.0
