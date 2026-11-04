@@ -1,5 +1,15 @@
 [
   {
+    "file": "clips/signature-kills-reel-9-32ppm-45s.mp4",
+    "title": "Reel: the nine signature kills at 32 px/m, real time, labelled (rocket, hand cannon, flamethrower, electro, katana, plasma rifle, plasma sword, chainsaw, ray gun)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "clips/signature-kills-reel-32ppm-36s.mp4",
+    "note": "5 s per kill from the arena lab clips. The ray gun is a first pass. At 32 px/m the full-arena camera keeps the kills small; the 64 px/m slow clips show the detail."
+  },
+  {
     "file": "clips/chainsaw-grind-64ppm-slow-0.4x.mp4",
     "title": "Chainsaw signature kill: the grind (victim held on the saw, shaking, blood spurting, sparks), then the split, 64 px/m slow close-up",
     "source": "dev-scene",
@@ -58,16 +68,6 @@
     "ppm": 64,
     "before": "",
     "note": "Detail strip."
-  },
-  {
-    "file": "clips/signature-kills-reel-32ppm-36s.mp4",
-    "title": "Reel: the six finished signature kills at 32 px/m, real time, 6 s each",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 32,
-    "before": null,
-    "note": "Rocket gib, hand cannon blowback, flamethrower char, electro X-ray, katana split, plasma hole; arena kill lab, labelled. At 32 px/m the plasma hole is the weakest read."
   },
   {
     "file": "clips/katana-split-64ppm-slow-0.4x.mp4",

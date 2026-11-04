@@ -380,3 +380,10 @@ NEXT (iteration 7):
 6. The rocket kill frame spike (74 ms CONTENDED): per-phase log; pre-warm the copy materials.
 7. KillView is 278 lines (hard stop 300): move the style dispatch (_on_killed's elif chain and
    _parts) into a KillStyles helper before the next style lands.
+- 04:10 reel re-cut with all nine kills (32 px/m, 45 s, labelled):
+  gtai-masters/n4/brutality/clips/signature-kills-reel-9-32ppm-45s.mp4 (NEXT 4 done). Looked at
+  its sheet: every kill reads, but small, because the 32 px/m arena camera frames the whole hub.
+- Gates on f6854d38+: lint 13/13, unit 775/775 (unit-it6.log), scenario_brutality_kills pass
+  (9 weapons). The full scenario suite was not re-run this iteration; it is first in iteration 7.
+- FRICTION: a background unit run without `GODOT_BIN` exported reported "exit -1" on every phase
+  and the previous junit count (762). Read the exit codes, not only the count.
