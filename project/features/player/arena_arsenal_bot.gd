@@ -52,7 +52,8 @@ func _close_in(t: TickInput, tick: int) -> TickInput:
 		if f.alive() and (foe == null or rivet.distance_to(f.pos) < rivet.distance_to(foe.pos)):
 			foe = f
 	var fired: bool = t.buttons & (1 << actions.bit(&"fire")) != 0
-	if fired or foe == null or rivet.distance_to(foe.pos) > _fight.reach_m + 0.5:
+	var entering: bool = _fight._next < ArenaPitBot.ENTRY.size()  # its way in is not a fight
+	if fired or entering or foe == null or rivet.distance_to(foe.pos) > _fight.reach_m + 0.5:
 		_fired_tick = tick
 		return t
 	if tick - _fired_tick < stuck_ticks:
