@@ -174,3 +174,37 @@ NEXT (iteration 2, in order):
   without it the arena keeps quest 1's Gloria and the old tracer. Use the flag for the reel.
 - human-reactions REQUEST 1 (vertical rectangular blood streak on N/S hits): open, next iteration
   (CombatBlood.kill_human spray along a vertical dir).
+- 02:12 FIX Rivet's rig had no recoil with a table gun: `ArenaRigs._put` read Rivet's own cooldown,
+  which GunHand never sets. It now counts `GunHand.shots_fired` for Rivet (weapon = the table id;
+  `ArenaPlan.kick` defaults to 1.0). Small edit in the arena lane's `dev/arena/arena_rigs.gd`;
+  `test_arena_rigs` guarded (stage null in its fixture). 74e296e0.
+- 02:12 REFACTOR `FightReach` (lob target, chain's next hop) out of FightAreas: 259 -> 220 lines.
+- 02:16 MILESTONE rockets burst on arena props: `ArenaDodges.cull` (arena lane's file, small edit) lands
+  a table rocket at the prop (FightAreas.land: blast, splash, knockdown) instead of erasing it; a lobbed
+  bottle flies over props. `test_wall_landing.gd` 2/2. Only bullet guns eject shells / drop magazines
+  (gun_fx.json default row: no shells, no star, smoke only). 8f393b1d.
+- 02:27 GunplayBot holds fire when a prop blocks its line (rocket pit: 7 rockets / 3 kills with 4 into
+  its own cover -> 3 rockets / 3 kills). Trade-off: it waits while cops shoot from behind crates. c280b1dc.
+- Gates after each change: unit 705 -> 707/707 (`evidence/n3/unit-c.log`, `unit-d.log`), scenarios
+  29/29 (`scenarios-c.log`, `scenarios-d.log`), lint 13/13 (pre-commit).
+- Clips this iteration (all CONTENDED GPU; frames.json updated, 15 entries, every file checked):
+  side_by_side_pistol_mpistol_48ppm.mp4, city_mpistol_block_32ppm, city_electro_block_32ppm (2 chain
+  hops), arena_pistol_pit_48ppm, arena_mpistol_pit_48ppm, arena_rocket_walls_48ppm (before),
+  arena_rocket_lane_48ppm (after).
+- FRICTION: the electro city clip still shows brass shells (rendered before the default-row fix);
+  the city hostiles are quest discs, not rigs (showcase REQUEST 6, not mine).
+
+NEXT (iteration 4, in order):
+1. A fixed-camera range drill clip for pistol vs machine pistol (static dummies at 5-10 m, Rivet still,
+   5 s each) so muzzle, tracer, shells, impacts and the recoil read without the bot wandering; 64 px/m
+   close-up of the muzzle and the impact (brief proof item). Then re-cut the side-by-side.
+2. showcase REQUEST 3: Rivet's hit flash is the cast shader's `tint` (vermilion for every rig,
+   `look_d5_part.gdshader:151`, `print_part.gdshader:118`). Proposal: a cream paper flash for Rivet
+   only (tint mode 2), humans keep vermilion; touches d5-cast files: write a REQUEST to whoever owns
+   rigs tonight (human-reactions) or make the minimal param change and record it.
+3. human-reactions REQUEST 1: vertical rectangular blood streak on N/S hits. BloodSplatMesh.put's
+   rotation is correct at every angle, so look at the splat shader's elongation (e) or BloodMarks
+   splat ring for a y-axis special case; reproduce with `CombatBlood.kill_human(p, Vector2.DOWN)`.
+4. Electro chain clip with a cluster (city guards stand > 4 m apart; 2 hops in 20 s).
+5. Shell + smoke for the enemy guns (cops' rounds have the tell and the vermilion tracer, no shell
+   or muzzle star yet), then the unique five (plasma rifle first) with brutality's kill payload.
