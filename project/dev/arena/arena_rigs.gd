@@ -41,6 +41,12 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	rigs.z_index = RenderLayers.z(&"actors")
 	view.print_stage.actor_layer().add_child(rigs)
 	rigs.setup(ctx)
+	var held: RivetHeldView = RivetHeldView.new()  # rivet-arsenal: the weapon in his claw
+	held.rigs = rigs
+	held.pilot = p_stage.pilot
+	held.rivet_id = p_stage.arena.rivet.id
+	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
+	view.print_stage.actor_layer().add_child(held)
 	view.cast_view.visible = false
 	return true
 

@@ -2,6 +2,13 @@
   "$id": "gtai.rivet-arsenal/1",
   "additionalProperties": false,
   "properties": {
+    "art_stand_in": {
+      "additionalProperties": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "type": "object"
+    },
     "classes": {
       "additionalProperties": false,
       "properties": {

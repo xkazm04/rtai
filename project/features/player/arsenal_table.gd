@@ -20,6 +20,8 @@ class Grip:
 
 var grips: Dictionary[StringName, Grip] = {}
 var weapon_grip: Dictionary[StringName, StringName] = {}
+## Weapons drawn with another weapon's held art until their own lands (weapon_art.json).
+var art_stand_in: Dictionary[StringName, StringName] = {}
 var out_k: float = 0.3
 var in_k: float = 0.45
 var cock_k: float = 0.25
@@ -49,9 +51,18 @@ static func from_table(t: DataTable) -> ArsenalTable:
 	var w: Dictionary = t.object(t.raw, "weapons")
 	for key: String in w:
 		a.weapon_grip[StringName(key)] = StringName(t.text(w, key))
+	if t.raw.has("art_stand_in"):
+		var st: Dictionary = t.object(t.raw, "art_stand_in")
+		for key: String in st:
+			a.art_stand_in[StringName(key)] = StringName(t.text(st, key))
 	a.errors = t.errors()
 	a._check()
 	return a
+
+
+## The weapon_art id that draws `weapon_id` in the claw.
+func art_id(weapon_id: StringName) -> StringName:
+	return art_stand_in.get(weapon_id, weapon_id)
 
 
 ## The grip a weapon is held in (null: unknown weapon or bare claw).

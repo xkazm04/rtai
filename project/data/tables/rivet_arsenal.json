@@ -1,4 +1,8 @@
 {
+  "art_stand_in": {
+    "assault-rifle": "machine_pistol",
+    "gloria": "pistol"
+  },
   "classes": {
     "backpack_hose": {
       "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking",
@@ -43,7 +47,7 @@
       "stow_ticks": 14
     }
   },
-  "doc": "How Rivet holds each weapon (rivet-arsenal, night 2026-11-04). Ticks are 60 Hz frames. classes = the grip classes (weapon-art's weapon_art.json grip_class names, plus heavy_two_hand for the chainsaw): stow_ticks puts the held weapon away, draw_ticks brings the next one up (a switch is stow then draw; no shot leaves until the draw ends), kick scales the rig's recoil, move_mult scales the walk while it is held. reload splits a weapon's reload_s (weapons.json) into the magazine out, the magazine in and the cock or charge, as fractions that sum to 1. weapons maps every weapon id (guns from weapons.json, melee from melee_weapons.json) to its grip class. The live tuning panel edits these rows.",
+  "doc": "How Rivet holds each weapon (rivet-arsenal, night 2026-11-04). Ticks are 60 Hz frames. classes = the grip classes (weapon-art's weapon_art.json grip_class names, plus heavy_two_hand for the chainsaw): stow_ticks puts the held weapon away, draw_ticks brings the next one up (a switch is stow then draw; no shot leaves until the draw ends), kick scales the rig's recoil, move_mult scales the walk while it is held. reload splits a weapon's reload_s (weapons.json) into the magazine out, the magazine in and the cock or charge, as fractions that sum to 1. weapons maps every weapon id (guns from weapons.json, melee from melee_weapons.json) to its grip class. The live tuning panel edits these rows. art_stand_in draws a weapon without its own held art (weapon_art.json) with another's until it lands.",
   "reload": {
     "cock_k": 0.25,
     "in_k": 0.45,
