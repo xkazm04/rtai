@@ -24,6 +24,36 @@
     "branch": "n-brutality",
     "look": "d5",
     "before": "",
+    "file": "clips/electro-xray-64ppm-slow-0.4x.mp4",
+    "title": "Electro gun signature kill: X-ray strobe, 64 px/m slow close-up 0.4x",
+    "ppm": 64,
+    "note": "--rigs --sig-gun=electro_gun --sig-lab. The bolt locks the victim in a stiff convulsion; every 5 ticks the body blinks out and his X-ray skeleton (weapon-art sticker, 1.3 m) shows inside cream ink arcs; then he drops stiff along the shot with collar smoke. No blood. The other arcs on the crowd are gunplay's chain stun."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "clips/electro-xray-arena-32ppm-14s.mp4",
+    "title": "Electro gun signature kill, real time at 32 px/m (6 kills)",
+    "ppm": 32,
+    "note": "Real time, 840 frames; telemetry by_style shock 6."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
+    "file": "frames/electro-xray-strobe-64ppm-seq.png",
+    "title": "Electro kill, 12 consecutive frames + 2 later (64 px/m)",
+    "ppm": 64,
+    "note": "Frames 306-317: body / skeleton strobe; last two: the stiff body down."
+  },
+  {
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "before": "",
     "file": "clips/flame-char-64ppm-slow-0.4x.mp4",
     "title": "Flamethrower signature kill (fire death chars), 64 px/m slow close-up 0.4x",
     "ppm": 64,
@@ -40,14 +70,14 @@
     "note": "Real time, fixed-fps 60, 960 frames. Six guards burn, char and crumble; telemetry by_style burn 6. The fire puffs (starbursts) and burning flail are gunplay's / human-reactions' work merged in."
   },
   {
+    "file": "clips/hand-cannon-blowback-arena-32ppm-13s.mp4",
+    "title": "Hand cannon signature kill, real time at 32 px/m",
     "source": "dev-scene",
     "branch": "n-brutality",
     "look": "d5",
+    "ppm": 32,
     "before": "",
-    "file": "clips/flame-char-arena-64ppm-16s.mp4",
-    "title": "Flamethrower signature kill, real time at 64 px/m",
-    "ppm": 64,
-    "note": "Same run at 64 px/m, uncropped, real time."
+    "note": "Iteration 1 clip (re-rendered with wall collision): the victim blown back 3-9 m in one piece on a blood smear, cap spinning off."
   },
   {
     "source": "dev-scene",
@@ -118,35 +148,5 @@
     "ppm": 32,
     "before": "",
     "note": "After the wall push-out: the bodies of the line pile up against the wall with their smears and the stacked standard pools."
-  },
-  {
-    "file": "clips/hand-cannon-blowback-arena-32ppm-13s.mp4",
-    "title": "Hand cannon signature kill, real time at 32 px/m",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 32,
-    "before": "",
-    "note": "Real time, fixed-fps 60, re-rendered 01:52 with gib/wall collision: the blown-back bodies pile against the hub's south wall; one slides through a gap in the wall (likely a door) into the pit. When the line of six is down, a new line steps in (lab only)."
-  },
-  {
-    "file": "clips/hand-cannon-blowback-arena-64ppm-12s.mp4",
-    "title": "Hand cannon signature kill, real time at 64 px/m",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Uncropped real time."
-  },
-  {
-    "file": "frames/hand-cannon-blowback-64ppm-sheet.png",
-    "title": "Hand cannon blowback, 15 frames every 4 ticks (64 px/m)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Frame sheet: the flash, the spray, the body leaving the line to the lower right and sliding."
   }
 ]

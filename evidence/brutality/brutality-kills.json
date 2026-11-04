@@ -1,4 +1,8 @@
 {
+  "electro_gun": {
+    "kills": 6,
+    "style_kills": 6
+  },
   "flamethrower": {
     "kills": 4,
     "style_kills": 4

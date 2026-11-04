@@ -1,9 +1,10 @@
 extends Scenario
 ## Lane brutality: the signature kills in the arena's real fight (CombatArena + GunHand +
 ## FightAreas) with the KillLab line, for the finished kills (rocket gib, hand cannon blowback,
-## fire char). Each weapon must land signature kills of its own style, replay identically on a
-## fresh world (SIM-05: the gibs and marks are in the world hash), and give the same gib state
-## on the same seed. TST-05: a planted fault (one gib 1 % faster) must change the gib state.
+## fire char, electro X-ray). Each weapon must land signature kills of its own style, replay
+## identically on a fresh world (SIM-05: the gibs and marks are in the world hash), and give the
+## same gib state on the same seed. TST-05: a planted fault (one gib 1 % faster) must change
+## the gib state.
 
 const TICKS: int = 700
 const EVIDENCE_FILE: String = "brutality-kills.json"
@@ -12,6 +13,7 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"rocket_launcher": &"gib",
 	&"hand_cannon": &"blowback",
 	&"flamethrower": &"burn",
+	&"electro_gun": &"shock",
 }
 
 
