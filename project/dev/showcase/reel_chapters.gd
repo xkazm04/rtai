@@ -60,10 +60,10 @@ static func all() -> Array[Chapter]:
 ## the 05:20 column fell as one stack).
 static func _group(ahead: float) -> Array:
 	return [
-		Vector2(ahead, -1.5),
-		Vector2(ahead + 1.4, -0.3),
-		Vector2(ahead + 0.3, 1.1),
-		Vector2(ahead + 2.0, 1.8)
+		Vector2(ahead, -2.4),
+		Vector2(ahead + 1.6, -0.8),
+		Vector2(ahead + 0.4, 0.9),
+		Vector2(ahead + 2.2, 2.5)
 	]
 
 
