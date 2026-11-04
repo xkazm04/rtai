@@ -26,6 +26,8 @@ const HOLD: Dictionary[StringName, Vector3] = {
 }
 
 var pipe: DeathPipe
+## Rounds that fly past a human make it duck (render only).
+var near: NearMiss = NearMiss.new()
 var wounds: int = 0
 var deaths: int = 0
 var signatures: int = 0
@@ -88,6 +90,7 @@ func apply(rigs: CharacterRigs) -> void:
 			pipe.wound(rig, hit_class, dir, shielded(rig), cover)
 			wounds += 1
 	_pending.clear()
+	near.apply(_arena, rigs, pipe)
 	_relay(rigs)
 	_hold_states(rigs)
 	_limps(rigs)
