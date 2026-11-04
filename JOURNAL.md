@@ -193,3 +193,17 @@ reel's 64 px/m close-up again on the final arms and legs, and the r2_c6 composit
   on head, 481 frames each, 0 script errors. Every family (stagger, knockdown, melee spin/fold, electro, burning,
   round/melee/blast deaths) reads at the same frame; the cops now sit on the ped footprint.
   `frames/react-board-ab-64ppm.png`, `cast-react-board-ab-64ppm.mp4` (side by side). NEXT items 2 done.
+- 18:40 TRIAL (rejected, not committed): Rivet's limb tone. `PartMaterials.LIMB_FILL` (the 32 px/m flat sticker,
+  0.40) and a new `LIMB_WASH` (full-art wash, shader default 0.24) are Rivet-only knobs (only his plan sets
+  `limb_lod`). Tried 0.55/0.36 and 0.62/0.45 toward r2_c6's mid-grey metal (`frames/rivet-limb-tone-trial.png`
+  in masters). At 64 px/m the change is barely visible (the piston art is mostly line-and-cream, not mid tone); at
+  32 px/m the sticker limbs darken a little on the slab but would lose value contrast on grey asphalt, where the
+  iteration 5 clip already called them faint. Not clearly better -> reverted. The one-value lever stays
+  `LIMB_FILL` if the owner wants heavier limbs.
+- 18:44 WATCH: at 32 px/m Rivet's core sticker (helmet + torso, `lod_fill` 2: cream, only marks with d >= 0.40
+  print ink) is noisier on the hybrid art than on the d4 box helmet: the plate seams, bolts and the tan belt band
+  alias into ink specks inside the collar ring (8x zoom looks like a blot; 1x in the city clips reads as a cream
+  disc with marks). Measured: ink share 0.54 helmet / 0.43 torso vs 0.43 / 0.30 on the d4 parts. A mid-tone lift
+  of the art (`gtai-masters/n5/cast/tools/core_lift.py`, d below 0.75 x 0.3) did not visibly clear it, and no
+  interior alpha holes, so the speckle is the minified seams. A real fix is a simplified core LOD part (seams
+  thinned or dropped) or a minified-texture fetch in the sticker: the second is the print shader (n5-look).
