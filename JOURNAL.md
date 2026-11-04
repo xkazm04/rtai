@@ -1044,7 +1044,7 @@ NEXT (iteration 12 / report phase, in order):
   as a body for about 1 s, then fades to a dark smudge on the dark pit floor (frames 4-5.5 s of
   `MASTERS/n4/gunplay/ch07_molotov_after_64ppm/`). A cream rim or a lighter ash edge on the char
   body would keep it a body on the pit floor and the night paving.
-- 07:40 FINDING (not this lane's art): in showcase's ch 07 the bottle's burst plays weapon-art's
+- 07:37 FINDING (not this lane's art): in showcase's ch 07 the bottle's burst plays weapon-art's
   `blast` cells (WeaponFxArt.blast, on n-showcase, not on this branch): an inked star, then a grey
   puff ring, then a ring of 16 cream discs with ink rims round the burst (frames 2.3-2.9 s of
   `MASTERS/n4/gunplay/ch07_molotov_before_48ppm/`). The cream ring reads as a necklace of beads
