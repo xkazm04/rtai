@@ -1201,7 +1201,7 @@ NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final
 - TRY 09:56 (rejected) `OUTLINE_WORLD_PX` 1.5 against 1.0, same tick 120 in the arena pit at 32 px/m, 4x crop
   (masters `frames/it21-pickup-outline-print-1px-1.5px-arena-pit-32ppm-4x.png`: print / 1.0 / 1.5). The 1.5 line is
   only slightly bolder at 32 px/m and would be 2.25 screen px at 48. Kept 1.0 (no code change).
-- 09:57 showcase's final round 18 started at 09:45 from the lane tips then. If it took a1a819d3+docs, the pickup look
+- 09:54 showcase's final round 18 started at 09:45 from the lane tips then. If it took a1a819d3+docs, the pickup look
   (57ee8615, 384883b1) is the only weapon-art delta for the Director's morning merge (render + dev only).
 - Scratch frame dumps deleted (wa21); no Godot process of mine running; no lock taken.
 
@@ -1209,7 +1209,7 @@ NEXT (after the 10:30 freeze; the REPORT is already updated in place for iterati
 1. If the owner picks call 17 B (the bold print blob), it is `--pickup-print=on` or `PickupLook.printed = true`.
 2. Human-reactions' riot-shield call B still needs a flat rectangular shield part; build only if the owner picks B.
 3. The calls to answer once judged: 3, 12, 14, 15, 16, 17.
-- 10:00 the pickup look on a second gun: live arena pit, `--pickups=ray_gun,plasma_rifle`, 48 px/m, same ticks with and
+- 09:58 the pickup look on a second gun: live arena pit, `--pickups=ray_gun,plasma_rifle`, 48 px/m, same ticks with and
   without `--pickup-print=on` (150 frames each, 0 script errors). Looked at tick 140 at 4x: the print broke the ray
   gun into ink fragments; the ink look keeps it one coiled gun with its vermilion tip. Masters
   `frames/it21-pickup-ink-ray-gun-ab-arena-pit-48ppm-4x.png`, cited in frames.json entry 5 and the REPORT bullet.
