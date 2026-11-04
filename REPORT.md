@@ -3,7 +3,7 @@
 Branch `d6-perf-city`, cut from main `a1275c82`. Clips and graphs are in
 `C:\Users\kazda\kiro\gtai-masters\d6\perf-city\` (`frames.json`, newest and best first).
 Journal: `JOURNAL.md` in the lane worktree. Raw frame logs: `evidence/perf/*.json`.
-Gates on 0fc63919 (`node tools/evidence/run.mjs --no-bench`, 17:11): lint 13/13, unit 941/941, scenarios 46/46,
+Gates on 5e21053a (`node tools/evidence/run.mjs --no-bench`, all PASS): lint 13/13, unit 941/941, scenarios 46/46,
 parity bit-exact (planted mutation caught at step 629), selftest pass (look goldens 11/11 worst 0.00, block 5/5 worst 1.81).
 
 **Contention.** The machine was 52-100 % CPU busy all day: docker, node runners, many Python jobs,

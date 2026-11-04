@@ -465,3 +465,17 @@ NEXT (iteration 8):
   world lock holds). The runner marked unit FAIL only for "tree changed during run: M JOURNAL.md": I appended to the
   journal mid-run. FRICTION/lesson: no edits at all in the worktree while run.mjs runs. Re-run on the commit below.
 - 17:12 REPORT.md (DRAFT) landed in the worktree from the 17:10 draft, plus the gates line and the tick 1528 finding.
+- 17:19 GATES re-run on 5e21053a with no edits during the run: lint 13/13, unit 941/941, scenarios 46/46, parity bit-exact (mutation caught at step 629), selftest pass (look goldens 11/11, block 5/5). All PASS, so build/evidence/*.json is the clean record for 5e21053a.
+- Machine 94-100 % CPU at 17:13 (my own gate run + the other lane + ~40 Python jobs): no uncontended window
+  this iteration either. Bench lock never taken.
+
+NEXT (iteration 9; freeze 18:30, report 18:40):
+- REPORT.md is a DRAFT in the worktree: finalise it at the report slot (check that the frames.json entries match
+  the folder, add the gates line of the last run, keep the Calls for the owner as they are).
+- UNCONTENDED re-check, still owed, only if CPU < 30 % with no other Godot: release windows-warm, vsync off,
+  3 runs (`EXE=1 EXE_DIR=windows-warm bash evidence/perf/fight.sh <l> --disable-vsync`), then
+  `node tools/bench/run.mjs --runs=1` (riot + drive vs records) under the bench lock. If there is no quiet window
+  before the freeze, the REPORT says so (it already does).
+- No edits in the worktree while `tools/evidence/run.mjs` runs (it fails unit on any tree change).
+- Optional, only if time: the first frame's 12 pipeline compiles (35-58 ms) on the arena-city path. They fall
+  inside the first second, which the target exempts. Pre-warm the same way World._prewarm does, and only with an exact pixel compare.
