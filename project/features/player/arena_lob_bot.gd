@@ -11,6 +11,9 @@ const REACH_M: float = 0.12
 const AIM_MAX_M: float = 16.0
 ## The nearest cop this close is a melee matter: the bot holds its fire (the patch would reach it).
 const TOO_CLOSE_M: float = 5.0
+## Only cops south of this hub-relative y are thrown at: the patch then stays off the hub's north
+## side, where other stations' dummy lines stand.
+const SOUTH_OF_Y: float = 1.0
 
 var stage: ArenaStage
 var actions: PlayerActions
@@ -49,7 +52,7 @@ func _nearest(at: Vector2) -> Fighter:
 			continue
 		for f: Fighter in station.cops:
 			var d: float = f.pos.distance_to(at)
-			if f.alive() and d < best:
+			if f.alive() and d < best and f.pos.y > stage.plan.base.y + SOUTH_OF_Y:
 				best = d
 				out = f
 	return out
