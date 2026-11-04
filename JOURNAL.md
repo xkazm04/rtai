@@ -880,3 +880,11 @@ NEXT (iteration 11, in order):
    city_mpistol_block_32ppm (older, pre flank bot): re-shoot it fresh if time allows.
 4. The idle riot bench of record stays the Director's (two contended runs tonight: 7.09, 13.09 ms;
    blood 0.8-1.0 % of the p99 both times).
+- 06:43 NEXT 3 DONE early: `MASTERS/n4/gunplay/city10_machine_pistol/` (city block, --clean, 32 px/m,
+  25 s, fresh on a4df459e: 20 shots, 5 kills, Rivet 0 deaths, 0 script errors) and
+  `side_by_side_city_six_32ppm.mp4`: the six table guns in the city at 32 px/m, 5 s each from 6 s
+  (pistol, rocket, flamethrower, molotov from city9_*; electro from city_electro_charge_32ppm).
+  Looked at the 1 fps preview: each cell shows its gun's work (tracer kills and blood, the
+  rocket's blast ring, flame bursts, the electro kill, the bottles' patches); small at the game
+  zoom, as at 32 px/m. frames.json: it replaces the city four-gun reel (now its `before`), 15
+  entries, all files checked. NEXT list above stands without item 3.
