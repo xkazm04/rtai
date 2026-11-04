@@ -40,6 +40,11 @@ const BARRIER_FILL: Color = Color("#8E867C")
 const BARRIER_M: float = 2.0
 
 var _city: bool = false
+## perf-city: on the city block the props and the crowd rings are drawn once on this child (behind
+## this node, with its material: the same order and print), not re-issued every frame (0.5 ms of
+## a 60 fps frame in the city fight). Props and spawns never change after the stations load.
+var _static: Node2D = null
+var _static_of: ArenaStage = null
 
 
 func _draw() -> void:
@@ -51,13 +56,10 @@ func _draw() -> void:
 		if arena.cells == null:  # on the city proving block the city is the floor
 			_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
 			_floor(a.rect, Color(0, 0, 0, 0), "")
-	for s: ArenaStation in arena.stations.stations:
-		for p: ArenaStation.Prop in s.props:
-			if arena.cells == null or p.kind in ArenaWalls.SOLID or p.kind == "cone":
-				_prop(arena.plan.base + p.at, p)  # on the city only what collides (and cones)
-		for sp: ArenaStation.Spawn in s.spawns:
-			if sp.kind == "crowd":
-				_ring(arena.plan.base + sp.at, sp.span_m, Ink.WASH)
+	if _city:
+		_held(arena)
+	else:
+		_props(self, arena)
 	for b: VehicleBody in arena.cars():
 		_car(b)
 	draw_set_transform(Vector2.ZERO)
@@ -73,54 +75,80 @@ func _draw() -> void:
 			_track(t)
 
 
-func _prop(at: Vector2, p: ArenaStation.Prop) -> void:
+func _held(arena: ArenaStage) -> void:
+	if _static == null:
+		_static = Node2D.new()
+		_static.show_behind_parent = true
+		_static.use_parent_material = true
+		add_child(_static)
+		@warning_ignore("return_value_discarded")
+		_static.draw.connect(func() -> void: _props(_static, _static_of))
+	if _static_of != arena:
+		_static_of = arena
+		_static.queue_redraw()
+
+
+## The stations' props (on the city only what collides, and cones) and the crowd spawn rings.
+func _props(ci: CanvasItem, arena: ArenaStage) -> void:
+	if arena == null:
+		return
+	for s: ArenaStation in arena.stations.stations:
+		for p: ArenaStation.Prop in s.props:
+			if not _city or p.kind in ArenaWalls.SOLID or p.kind == "cone":
+				_prop(ci, arena.plan.base + p.at, p)
+		for sp: ArenaStation.Spawn in s.spawns:
+			if sp.kind == "crowd":
+				_ring(arena.plan.base + sp.at, sp.span_m, Ink.WASH, ci)
+
+
+func _prop(ci: CanvasItem, at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
 	if _city and p.kind == "wall_high":
-		_barrier(r)
+		_barrier(ci, r)
 		return
 	match p.kind:
 		"cone":
-			draw_texture_rect(CONE, r, false)
+			ci.draw_texture_rect(CONE, r, false)
 			return
 		"cover_high":
-			draw_texture_rect(DUMPSTER, r, false)
+			ci.draw_texture_rect(DUMPSTER, r, false)
 			return
 		"cover_low":
-			_crate_row(r)
+			_crate_row(ci, r)
 			return
-	draw_rect(r, fill, true)
-	draw_rect(r, Ink.INK, false, Ink.LINE_PX)
+	ci.draw_rect(r, fill, true)
+	ci.draw_rect(r, Ink.INK, false, Ink.LINE_PX)
 
 
 ## A concrete barrier run: fill, ink rim, a cream top edge and a joint line every BARRIER_M.
-func _barrier(r: Rect2) -> void:
-	draw_rect(r, BARRIER_FILL, true)
+func _barrier(ci: CanvasItem, r: Rect2) -> void:
+	ci.draw_rect(r, BARRIER_FILL, true)
 	var long_x: bool = r.size.x >= r.size.y
 	var step: float = BARRIER_M * Ink.PX_PER_M
 	var n: int = int(maxf(r.size.x, r.size.y) / step)
 	for i: int in range(1, n + 1):
 		var off: Vector2 = Vector2(step * i, 0.0) if long_x else Vector2(0.0, step * i)
 		var end: Vector2 = Vector2(0.0, r.size.y) if long_x else Vector2(r.size.x, 0.0)
-		draw_line(r.position + off, r.position + off + end, Ink.INK, Ink.LINE_PX * 0.5)
+		ci.draw_line(r.position + off, r.position + off + end, Ink.INK, Ink.LINE_PX * 0.5)
 	var edge: Rect2 = r.grow(-Ink.LINE_PX * 1.5)
 	var top: Vector2 = Vector2(edge.size.x, 0.0) if long_x else Vector2(0.0, edge.size.y)
-	draw_line(edge.position, edge.position + top, Ink.CREAM, Ink.LINE_PX)
-	draw_rect(r, Ink.INK, false, Ink.LINE_PX)
+	ci.draw_line(edge.position, edge.position + top, Ink.CREAM, Ink.LINE_PX)
+	ci.draw_rect(r, Ink.INK, false, Ink.LINE_PX)
 
 
 ## Square crates along the box's long side (the last one squeezed to fit).
-func _crate_row(r: Rect2) -> void:
+func _crate_row(ci: CanvasItem, r: Rect2) -> void:
 	var side: float = minf(r.size.x, r.size.y)
 	var along: Vector2 = Vector2(side, 0.0) if r.size.x >= r.size.y else Vector2(0.0, side)
 	var n: int = maxi(roundi(maxf(r.size.x, r.size.y) / side), 1)
 	for i: int in n:
 		var cell: Rect2 = Rect2(r.position + along * i, Vector2(side, side))
-		draw_texture_rect_region(CRATES, cell.intersection(r), CRATE_PX)
+		ci.draw_texture_rect_region(CRATES, cell.intersection(r), CRATE_PX)
 
 
-func _ring(at: Vector2, radius_m: float, color: Color) -> void:
-	draw_arc(Ink.px(at), radius_m * Ink.PX_PER_M, 0.0, TAU, 32, color, Ink.LINE_PX)
+func _ring(at: Vector2, radius_m: float, color: Color, ci: CanvasItem = self) -> void:
+	ci.draw_arc(Ink.px(at), radius_m * Ink.PX_PER_M, 0.0, TAU, 32, color, Ink.LINE_PX)
 
 
 ## A moving dummy's path: the strafe span or the approach lane, as a thin ink line.
