@@ -50,6 +50,8 @@ var kills_by_beat: Dictionary[StringName, int] = {}
 var trigger: bool = true
 ## Side-steps the gun beat's walk-in took off a prop (the scenario's telemetry).
 var dodges: int = 0
+## The director cut (--reel=director, ReelDirector), or null: the beats.
+var director: ReelDirector = null
 var _beat_start: int = 0
 var _next: int = 0
 var _range: ArenaRangeBot
@@ -72,6 +74,9 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 	beats = default_beats()
 	if OS.get_cmdline_user_args().has("--reel=pit"):  # the film of the pit's two beats only
 		beats = beats.slice(beats.size() - 2)
+	if OS.get_cmdline_user_args().has("--reel=director"):  # chapters, one weapon each (sim hook)
+		director = ReelDirector.new(p_actions)
+		p_stage.hooks.append(director)
 
 
 static func default_beats() -> Array[Beat]:
@@ -99,6 +104,8 @@ func beat() -> Beat:
 
 ## Total ticks of the reel (a capture's --quit-after at 60 fps).
 func length() -> int:
+	if director != null:
+		return director.length()
 	var n: int = 0
 	for b: Beat in beats:
 		n += b.ticks
@@ -106,6 +113,10 @@ func length() -> int:
 
 
 func sample(tick: int) -> TickInput:
+	return director.sample(stage, tick) if director != null else _sample_beats(tick)
+
+
+func _sample_beats(tick: int) -> TickInput:
 	if beat_i < beats.size():
 		var b_id: StringName = beats[beat_i].id
 		kills_by_beat[b_id] = stage.pit.kills - _kills_before

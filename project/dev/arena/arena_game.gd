@@ -56,6 +56,7 @@ func _ready() -> void:
 	hud.session = session
 	hud.px_per_m = px_per_m
 	layer.add_child(hud)
+	ReelCaption.attach(layer, session.stage)  # the showcase director cut's title card
 	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
