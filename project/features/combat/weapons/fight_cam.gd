@@ -12,8 +12,9 @@ const LEAN: float = 0.5
 const MAX_LEAN_M: float = 4.5
 ## Per tick, how much of the way to the wanted point the camera moves (no snap on a new subject).
 const EASE: float = 0.05
-## A dead subject stays framed this long (ticks) so the fall and the blood are seen.
-const HOLD_TICKS: int = 150
+## A dead subject stays framed this long (ticks) so the fall and the spurt are seen; longer held
+## the camera dragged Rivet's next fight off the frame (150 ticks, hand cannon pit A/B).
+const HOLD_TICKS: int = 60
 
 var at: Vector2 = Vector2.INF
 var subject: Fighter = null
@@ -39,10 +40,14 @@ func _pick(arena: CombatArena, tick: int) -> void:
 		elif tick - _since < HOLD_TICKS:
 			return
 	subject = null
-	var best: float = REACH_M
+	var best: float = INF
 	for h: Fighter in arena.hostiles:
-		var d: float = h.pos.distance_to(arena.rivet.pos)
-		if h.alive() and d < best:
-			best = d
+		var to: Vector2 = h.pos - arena.rivet.pos
+		if not h.alive() or to.length() > REACH_M:
+			continue
+		# the foe he faces wins: a guard behind him counts as three times as far
+		var score: float = to.length() * (2.0 - arena.rivet.facing.dot(to.normalized()))
+		if score < best:
+			best = score
 			subject = h
 	_since = tick
