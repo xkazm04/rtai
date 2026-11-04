@@ -44,6 +44,7 @@ var spent_us: int = 0
 var player_px: Callable = Callable()
 var leak: OilLeak = null
 var _draws: PackedInt32Array = [0, 0]
+var _drop_draws: PackedInt32Array = [0, 0]
 var _game: Dictionary = {}
 ## The city's dead slide this far (px) along the blow (blood_fx.json game.pool_lead_m).
 var _slide_px: float = 4.0
@@ -254,4 +255,7 @@ func _new_draw_us() -> int:
 		if fxs[k] != null and fxs[k].draws != _draws[k]:
 			us += fxs[k].draw_us
 			_draws[k] = fxs[k].draws
+		if fxs[k] != null and fxs[k].drops_draws != _drop_draws[k]:
+			us += fxs[k].drops_us
+			_drop_draws[k] = fxs[k].drops_draws
 	return us

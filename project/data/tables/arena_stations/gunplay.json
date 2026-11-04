@@ -1,0 +1,22 @@
+{
+  "doc": "Lane gunplay: the weapon range hook. `--weapon=<weapons.json id>` arms Rivet with that table gun on the arena's real fight (GunplayHook: GunHand, FightAreas, GuardTell, HitLink); without it the arena keeps Gloria. The evening draft's range lanes and tuning keys stay in evidence/gunplay/station-draft until they are checked against the merged arena.",
+  "lane": "gunplay",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "range",
+      "doc": "Run: arena.tscn -- --weapon=rocket_launcher --bot=pit (the pit's contractors) or --bot=range (the dummies).",
+      "id": "gunplay_range",
+      "measures": [
+        "shots",
+        "hits",
+        "kills",
+        "knockdowns",
+        "ignitions",
+        "chain_hits"
+      ],
+      "name": "Weapon range (gunplay)",
+      "script": "res://features/combat/weapons/gunplay_hook.gd"
+    }
+  ]
+}

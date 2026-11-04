@@ -20,6 +20,9 @@ var wall_hits: int = 0
 var draw_us: int = 0
 ## Redraws since boot (the per-frame cost average: draw_us summed over draws / frames).
 var draws: int = 0
+## Microseconds the last flying-drops redraw took (its own canvas item; lane gunplay, riot cost).
+var drops_us: int = 0
+var drops_draws: int = 0
 ## Redraw cadence (ticks) once nothing flies or grows and only the slow fade moves; 1 = every
 ## tick (noir's own scenes). The combat blood sets blood_fx.json game.settled_redraw_ticks.
 var settled_every: int = 1
@@ -40,6 +43,11 @@ var _n: int = 0
 var _k: int = 0
 ## What is drawn: blood, or another fluid (use_fluid).
 var _fluid: NoirFluid = null
+## The flying drops on their own canvas item (parent's material), redrawn every tick while any
+## fly, so the pools and decals under them redraw only when they change (lane gunplay: the riot
+## re-recorded every pool each tick while 100 cops kept killing).
+var _drops_view: Node2D = Node2D.new()
+var _drops_drawn: bool = false
 
 
 func _init() -> void:
@@ -56,6 +64,10 @@ func _init() -> void:
 	_life = NoirPack.ints(max_drops)
 	var colour: Dictionary = p["colour"]
 	_fluid = NoirFluid.from(colour)
+	_drops_view.use_parent_material = true
+	@warning_ignore("return_value_discarded")
+	_drops_view.draw.connect(_draw_drops)
+	add_child(_drops_view)
 
 
 ## Draws another fluid of the `fluids` table (e.g. "oil": white sparks in the air, black on the
@@ -170,7 +182,9 @@ func step_ticks(n: int) -> void:
 				_ring.set_dir(d, _vel[i].normalized() * clampf(_vel[i].length() / 1.5, 0.3, 1.0))
 	# with the splat mesh a landing splat needs no redraw: only drops, pools and the fade do
 	var busy: bool = tick <= _busy_until and _ring.mesh == null
-	if drops > 0 or busy or tick - _drawn_at >= settled_every:
+	if drops > 0 or _drops_drawn:
+		_drops_view.queue_redraw()
+	if busy or tick - _drawn_at >= settled_every:
 		_drawn_at = tick
 		queue_redraw()
 
@@ -220,14 +234,21 @@ func _draw() -> void:
 	var t0: int = Time.get_ticks_usec()
 	var dc: Dictionary = p["decal"]
 	_ring.draw(self, tick, decals, _fluid, dc)
-	var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
-	if drops > 0:
-		var fx: Array = [_pos, _vel, _size, _life]
-		if _fluid.case_px > 0.0:
-			BloodBatch.drops(self, fx, trail, Color.BLACK, _fluid.case_px * 2.0)
-		BloodBatch.drops(self, fx, trail, _fluid.flight, 0.0)
 	draw_us = Time.get_ticks_usec() - t0
 	draws += 1
+
+
+func _draw_drops() -> void:
+	var t0: int = Time.get_ticks_usec()
+	_drops_drawn = drops > 0
+	if drops > 0:
+		var trail: float = _fluid.trail if _fluid.trail >= 0.0 else p["physics"]["trail"]
+		var fx: Array = [_pos, _vel, _size, _life]
+		if _fluid.case_px > 0.0:
+			BloodBatch.drops(_drops_view, fx, trail, Color.BLACK, _fluid.case_px * 2.0)
+		BloodBatch.drops(_drops_view, fx, trail, _fluid.flight, 0.0)
+	drops_us = Time.get_ticks_usec() - t0
+	drops_draws += 1
 
 
 func _rand() -> float:
