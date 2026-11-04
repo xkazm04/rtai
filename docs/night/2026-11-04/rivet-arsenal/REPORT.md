@@ -16,6 +16,7 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 | lint | 13/13 (716 files) | d6618606 |
 | unit | 813/813, exit 0 | d6618606, `E/it9f-unit.log` |
 | scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | d6618606: 36/37 on the full run (`E/it9f-scenarios.log`). The red one is scenario_city_chase's 2 ms nav budget under load, the known flake; it passes alone (`E/it9f-city-chase-alone.log`) |
+| evidence run | lint, unit 813, scenarios 37, parity bit-exact (mutation caught at step 629) PASS; selftest: look goldens 11/11 and block 5/5, but exit 1 on the accent audit (the known blood-flicker vermilion class, NEW 64 px/m "vermilion on cop 28 px"; not bisected) | 908c4a9f, `E/it9-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
 
