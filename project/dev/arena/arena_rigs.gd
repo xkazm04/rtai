@@ -11,6 +11,8 @@ const DOWN_FLAGS: int = RigFeed.Flag.DEAD | RigFeed.Flag.DOWN
 ## city's crowd atlas, which the arena has not got: the focus sits this far ahead of Rivet along
 ## his aim, so the rigs cover the screen he faces (the range's 20 m lane), Rivet still inside.
 const FOCUS_AHEAD_M: float = 7.0
+## The riot cop's look (RigVariant.crowd: the shield), worn by the pit's --riot guards.
+const RIOT_LOOK: int = 6
 ## rivet-arsenal: the claw combo's arm per hit (left jab, right backhand, both-hands slam).
 const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 ## Hostiles farther than this from Rivet (another station's) do not pull the bubble.
@@ -96,7 +98,7 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		if hidden.has(h.id):
 			continue
-		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, RigFeed.LOOK_AUTO))
+		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
@@ -112,6 +114,10 @@ func _process(_delta: float) -> void:
 		for h: Fighter in stage.arena.hostiles:
 			if not h.alive():
 				crowd.extra_bodies[-1 - h.id] = h.pos * SimConst.PX_PER_M
+
+
+func _pit_look(id: int) -> int:
+	return RIOT_LOOK if stage.pit != null and stage.pit.riot.has(id) else RigFeed.LOOK_AUTO
 
 
 func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:

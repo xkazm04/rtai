@@ -14,6 +14,7 @@ extends Node
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
 ## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
+## Lane showcase: --riot makes each pit wave's first guard (from wave 2) a riot cop with a shield.
 
 const TUNE_TICK: int = 300
 
@@ -77,6 +78,8 @@ func _open(args: ArenaArgs) -> void:
 		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
 		r.max_hp *= k
 		r.hp = r.max_hp
+	if args.has("--riot"):  # lane showcase: riot cops in the pit (armored hp, the shield look)
+		session.stage.pit.riot_hp = ArenaPit.armored_hp()
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":

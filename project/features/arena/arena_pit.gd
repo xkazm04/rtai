@@ -18,6 +18,11 @@ var wave: int = 0
 var kills: int = 0
 var waves_cleared: int = 0
 var standing: Array[Fighter] = []
+## Lane showcase (arena --riot): from wave 2 each wave's first guard is a riot cop, this many
+## times a human's hp (gunplay's armored row; the rigs draw it with the shield); 0 = off.
+var riot_hp: float = 0.0
+## Fighter ids of the riot cops (ArenaRigs dresses them).
+var riot: Dictionary[int, bool] = {}
 var _due_tick: int = -1
 
 
@@ -48,6 +53,12 @@ static func from_plan(
 			if cells == null or cells.clear(plan.base + sp.at, 0.5):
 				p.points.append(plan.base + sp.at)
 	return p
+
+
+## gunplay's armored target hp over a human's (weapons.json target_hp): 2.5 pistol rounds.
+static func armored_hp() -> float:
+	var t: WeaponTable = WeaponTable.shipped()
+	return t.target_hp[&"armored"] / t.target_hp[&"human"]
 
 
 static func _num(rule: Dictionary, key: String, fallback: float) -> float:
@@ -91,7 +102,12 @@ func _spawn_wave(arena: CombatArena) -> void:
 	wave += 1
 	var n: int = mini(first_wave + grow * (wave - 1), max_wave)
 	for i: int in n:
-		standing.append(arena.spawn_guard(points[(wave + i) % points.size()]))
+		var g: Fighter = arena.spawn_guard(points[(wave + i) % points.size()])
+		if riot_hp > 0.0 and i == 0 and wave >= 2:
+			g.max_hp *= riot_hp
+			g.hp = g.max_hp
+			riot[g.id] = true
+		standing.append(g)
 	arena.announce_wave(&"arena_pit", wave)
 	_due_tick = -1
 	Log.info("arena", "pit wave %d: %d guards" % [wave, n])
