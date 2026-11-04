@@ -1,8 +1,8 @@
-# REPORT (DRAFT, written 16:40 in iteration 5) - day lane combat-notes, 2026-11-04
+# REPORT (DRAFT, written 16:40 in iteration 5, updated 17:55 in iteration 8) - day lane combat-notes, 2026-11-04
 
 Branch `d6-combat-notes`, cut from main `a1275c82`. Clips are in
 `C:\Users\kazda\kiro\gtai-masters\d6\combat-notes\` (`frames.json`: 12 entries, newest and best first).
-Gates on 341d08e0: lint 13/13, unit 967/967, scenarios 46/46, parity bit-exact (planted mutation
+Gates on 060bc6dc: lint 13/13, unit 974/974, scenarios 46/46, parity bit-exact (planted mutation
 caught at step 629), selftest pass. No bench was run: this lane makes no performance claim.
 Everything is view-only: no sim, replay or native change.
 
@@ -47,10 +47,15 @@ the judging scale, real time, with the night's look on the left and now on the r
   and a held follow-through. A two-tone smear stays 4 frames after the cut. The chainsaw judders
   at the hip. The claw is at full reach on the hit tick, and while a strike extends the striking
   arm draws over the victim (at contact Rivet stands inside the cop, whose head used to cover it).
-- **Tests.** `test_melee_swing`, `test_melee_smear_linger`, `test_rig_clips` and
-  `test_strike_over` each catch the night's behaviour, planted as a fault.
+- **The melee kill.** No claw or baton kill played a death before: the sim lands Rivet's melee kills
+  without the event the reaction layer listened to, so the victim dropped into the rig's default
+  X-sprawl where he stood, often under Rivet. Now he folds over the blow and topples 0.9 m clear,
+  along Rivet -> victim. (Katana, chainsaw and plasma sword keep their signature kills.)
+- **Tests.** `test_melee_swing`, `test_melee_smear_linger`, `test_rig_clips`,
+  `test_strike_over` and `test_melee_kill_death` each catch the night's behaviour, planted as a fault.
 - **Clips.** `melee_swing_ab_48ppm_64slow`, `melee_baton_ab_48ppm_64slow`,
-  `baton_smear_linger_ab_48ppm_64slow`, `claw_over_ab_64ppm_32ppm`, `city_melee_swing_ab_48ppm`.
+  `baton_smear_linger_ab_48ppm_64slow`, `claw_over_ab_64ppm_32ppm`, `claw_death_ab_48ppm_64slow_32`,
+  `city_melee_swing_ab_48ppm`, `city_melee_death_ab_48ppm`.
 
 ## Calls for the owner
 1. **The two-handed grip on the katana and the plasma sword.** It is built and OFF
@@ -65,8 +70,11 @@ the judging scale, real time, with the night's look on the left and now on the r
 ## Weak or not done
 - **The claw jab reads only on the hit frames.** The cops walk into Rivet, so at contact he stands
   inside the victim. The arm now draws over the victim (a grey bar across the blue chest at
-  32 px/m), but the approach still overlaps. Spacing between fighters is sim/AI (a replay
-  change), so it is not touched.
+  32 px/m), and the body now topples clear after the kill, but the approach still overlaps.
+  Spacing between fighters is sim/AI (a replay change), so it is not touched.
+- **The 32 px/m overview reel predates the melee death** (`all_notes_ab_32ppm`: the claw and
+  baton chapters show the old X-sprawl on both sides); `claw_death_ab_48ppm_64slow_32` has the
+  32 px/m A/B.
 - **Quest 1 shows none of this lane's work.** Rivet fights with the pistol there.
 - **The electro chain is filmed in the arena only.** The city pit spreads its cops beyond the
   chain's jump range.
