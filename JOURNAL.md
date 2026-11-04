@@ -199,3 +199,43 @@ NEXT (supersedes the list above; iteration 3):
   unchanged frame for frame, so the city's fire-kill blood comes from ANOTHER path (candidates:
   ghost-powers' city-path blood in quest 1, the human-reactions city rig attach, CityBlood's rig-feed
   `follow`, or KillBeat). Change reverted (unverified). Start NEXT 1 by logging which node draws it.
+
+## Iteration 4 (02:44-03:44), BUILD
+
+(Iteration 3 left no commits after be2dcb9d; this session picked up its NEXT list.)
+- 02:46 Capture recipe kept at `gtai-n4/scratch/brutality/cap.sh <name> <s> <ppm> [arena args]`
+  (the arena is its own scene: `res://dev/arena/arena.tscn -- <args>`; `--arena=city` alone at
+  boot only warns "unknown launch arg"). FRICTION: lost 5 min to that.
+- ROOT CAUSE of the city fire-kill blood (iteration 2 BUG): two faults, both fixed (55791625):
+  1. On the city block `CollectCallView.print_stage` is null, so `BrutalityHook.attach_view`
+     returned early: NO KillView on the city at all. The iteration 2 city rocket clip showed the
+     standard deaths + pools, never the gibs (I misread it then). KillView now goes on the
+     CityView's actor layer when there is no print stage (like ArenaRigs.attach).
+  2. The red came from CityBlood's own CombatBlood (city view fx_triggers `death` cue), which had
+     no veto, and its cue resolved BEFORE the frame's `kill_landed` (logged order). Every
+     CombatBlood under the arena game now gets the veto (deferred tree walk after attach), and
+     the cue path defers its bleed past kill_landed when a veto is set (shared file
+     features/fx/combat_blood.gd, +4 lines; the arena path already deferred).
+  Evidence: city clips re-shot at 48 px/m for fire (5 burn kills, char + ash, no red), rocket (17),
+  electro (6), hand cannon (6); `evidence/brutality/city-*-48-telemetry.json` now carry
+  view_frames (the view really draws on the city).
+- MILESTONE 03:25 kill #5 katana (`katana_split`, style `split`, e68008ac): one diagonal slash
+  (55 deg off the approach, side alternates kill by kill) cuts the real rig in two: KillSplitFx
+  copies the posed body twice, each clipped to a half-plane, the halves leave off their own side
+  of the cut (+0.6 along the blade) and slide on red smears; KillCutEdge draws an ink lip + raw
+  red band on each cut; blood fans along the cut (spray 16, 26 deg); a cream slash streak with
+  an ink rim marks the blade for 12 ticks; hit-stop 6. Sim side: two new piece ids half_a/half_b
+  (GibSim HEAVY/SPIN_K extended; the other rows' dice unchanged). Lab: `--sig-gun=katana
+  --sig-lab` makes Rivet lunge 7 ticks to 1 m short of the guard, hit through
+  CombatArena.damage (weapon `katana`, so the real melee hit will take the same row), walk back;
+  the blade line is spread (2.4 m+) so each cut body lies clear.
+- FRICTION (Godot 4.7): a Polygon2D with clip_children clipped nothing over the print-part
+  sprites; a stretched white Sprite2D works, but its children inherit the stretch (undo with
+  the mask's inverse transform), and children with their own z_index escape the clip (flatten z
+  into tree order).
+- DECISION brutality: the katana kill is driven in the lab by a brutality-owned lunge-slash until
+  rivet-arsenal wires the melee weapons live (their NEXT 5); the kill keys on weapon id `katana`
+  at the damage chokepoint, so the live swing needs no change here. Rejected: waiting.
+- Registry rules applied (realtime-combat-semantics): kill decided at the damage chokepoint, the
+  cut side from the kill serial (no dice in render), the halves on the 60 Hz tick from the
+  `brutality` stream. motion-quality-gating: judged on frame sheets of real-time clips.
