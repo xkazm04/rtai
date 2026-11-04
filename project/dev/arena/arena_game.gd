@@ -11,6 +11,8 @@ extends Node
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
+## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
+## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 
 const TUNE_TICK: int = 300
 
@@ -67,6 +69,13 @@ func _open(args: ArenaArgs) -> void:
 	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
 	if on_city and args.has("--crowd"):  # lane human-reactions: a fuller street for the crowd clips
 		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
+	if args.has("--armored"):  # lane human-reactions: pit humans live through hits (the limp)
+		var t: WeaponTable = WeaponTable.shipped()
+		var k: float = t.target_hp[&"armored"] / t.target_hp[&"human"]
+		session.stage.arena.tuning.human["hp"] = k
+		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
+		r.max_hp *= k
+		r.hp = r.max_hp
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "course":
