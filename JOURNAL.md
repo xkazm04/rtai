@@ -293,3 +293,6 @@ NEXT (iteration 9, in order):
 2. REQUEST 26 -> enemy-ai (claw cops crowding Rivet) stands; the claw-cop line's spot (y 4.4, the dead across the paper strip) still to agree with showcase / human-reactions.
 3. REPORT: owner calls 1-14 (consolidated at 06:02 above) with their clips; call 13 (quest 1 on the rigs by default) first. Mention REQUEST 25 done (1a7453ef) and the merged n-gunplay (b11fa9e2).
 4. weapon-art's FINDING 06:15 (held kinetic guns read as one dark lozenge at 48 px/m): if their small held cell (their NEXT 1 (i)) is not enough, they will ask for a weapons-only print px_scale in rivet_held_view.gd; take it when asked.
+
+## Iteration 9 (06:37 - 07:37)
+- 06:37 read JOURNAL, git log, other lanes' JOURNALs. No new REQUEST to rivet-arsenal. weapon-art 2eb8e4f8 answers my NEXT 4 (held kinetic guns as one dark lozenge at 48 px/m: held_small.png + HeldLod under 56 px/m). Plan: merge n-weapon-art, then the quest fight cam (NEXT 1), then the REPORT draft.
