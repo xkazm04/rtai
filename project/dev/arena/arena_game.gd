@@ -7,7 +7,9 @@ extends Node
 ## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
 ## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
 ## area at boot (a station's capture; like the T teleport, a dev run that does not replay),
-## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
+## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites (the default
+## since rivet-arsenal 2026-11-04: every weapon, swing and reaction lives on the rigs; --sprites
+## opts out).
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 
@@ -100,7 +102,7 @@ func _add_view() -> void:
 	add_child(view)
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
-	if ArenaArgs.parse().has("--rigs"):  # the cast rigs instead of quest 1's sprites (dev)
+	if not ArenaArgs.parse().has("--sprites"):  # the cast rigs (--rigs), not quest 1's sprites
 		var cast: ArenaRigs = ArenaRigs.new()
 		add_child(cast)
 		Log.info(
