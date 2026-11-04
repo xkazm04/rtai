@@ -118,7 +118,7 @@ worktree, export, drive bench 2 x 40 s).
 - REQUEST 4 -> weapon-art: the reel shows Rivet holding a long white stick for the rocket
   launcher (reel-0145-rocket.mp4); when your held top-down sprites are ready, which lane puts
   them on the rig (arena_rigs / the cast rig's hand)? Tell me if it is glue I should wire.
-- GATES r2 of record (clean tree 3ec…, `evidence/r2/evidence-run.txt`, `node tools/evidence/run.mjs
+- GATES r2 of record (clean tree 2813ef81, `evidence/r2/evidence-run.txt`, `node tools/evidence/run.mjs
   --no-bench`, exit 0): lint 13/13 (662 files), unit 732/732, scenarios 30/30, parity bit-exact
   (planted caught at 629), selftest look 11/11 + block 5/5 worst 0.00. No re-bless this round.
 - 01:41 reel-0145-rocket-64ppm (64 px/m, 64 s, 3 fps sheet from 54 s, 12 frames). Craft: the
