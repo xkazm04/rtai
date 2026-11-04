@@ -1,0 +1,32 @@
+{
+  "brutality_pit": {
+    "by_style": {
+      "gib": 1
+    },
+    "signature_kills": 1
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 2,
+    "wrecked": 0
+  },
+  "damage_taken": 13.7999999999999,
+  "deaths": 0,
+  "dodges": 15,
+  "hit_rate": 1.0,
+  "hits": 1,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 1,
+  "pit_waves": 1,
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 1,
+  "ticks": 1499,
+  "top_speed_mps": 4.50002521276474,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.0002249415
+}
