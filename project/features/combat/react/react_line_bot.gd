@@ -33,6 +33,8 @@ const WATCH_TICKS: int = 54
 var stage: ArenaStage
 var actions: PlayerActions
 var shots: int = 0
+## The spots walked, in order (a scenario plants a fault by replacing them).
+var sides: Array[Vector2] = SIDES.duplicate()
 var _homes: Array[Vector2] = []
 var _step: int = 0
 var _arrived: int = -1
@@ -56,7 +58,7 @@ func sample(tick: int) -> TickInput:
 	if done():
 		return _input(Vector2.ZERO, Vector2.RIGHT, false)
 	var home: Vector2 = _homes[_step / SIDES.size()]
-	var spot: Vector2 = home + SIDES[_step % SIDES.size()]
+	var spot: Vector2 = home + sides[_step % sides.size()]
 	var aim: Vector2 = (home - rivet).normalized()
 	if _arrived < 0:
 		if rivet.distance_to(spot) > REACH_M:
