@@ -89,3 +89,20 @@ func test_every_gun_names_a_shot_cue_that_exists() -> void:
 		assert_ne(w.shot_cue, &"", "%s has a sound hook" % id)
 		assert_has(ids, str(w.shot_cue), "%s: cue %s exists" % [id, w.shot_cue])
 	assert_has(ids, "tazer_charge", "the charge-up cue exists")
+
+
+func test_a_charged_bolt_lands_as_a_blast_a_plain_one_as_shock() -> void:
+	var arena: CombatArena = _arena()
+	var link: HitLink = HitLink.make(arena, HitFeel.shipped(CameraRig.new()), WeaponTable.shipped())
+	var g: Fighter = _guard(arena, Vector2(9.0, 0.0))
+	g.hp = g.max_hp * 100.0  # he takes both bolts
+	var holds: Array[int] = []
+	for t: int in 160:
+		@warning_ignore("return_value_discarded")
+		arena.rivet_fire(g.pos)
+		arena.step(t)
+		if link.hold > 0:
+			holds.append(link.hold)
+			link.hold = 0
+	assert_gte(holds.size(), 2, "the plain bolt, then charged ones, landed")
+	assert_lt(holds[0], holds[1], "the charged bolt holds the play longer")

@@ -11,6 +11,8 @@ const KNOCK_STOP_MPS: float = 0.05
 ## The drawn flinch (until enemy-ai animates HitFeel.reaction): the figure leans this far along
 ## the hit, easing back over the reaction's ticks. View only; the sim position does not move.
 const LEAN_M: float = 0.3
+## The hit class a charge gun's full-charge round lands as (the electro gun's charged bolt).
+const CHARGED_CLASS: StringName = &"blast"
 
 var feel: HitFeel
 ## Hit-stop ticks owed to the caller (it holds the play, then sets this back to 0).
@@ -74,6 +76,8 @@ func _on_reaction(target_id: int, _kind: StringName, dir: Vector2, ticks: int) -
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
 	var spec: WeaponSpec = _table.weapons.get(weapon, null)
 	var hit_class: StringName = spec.hit_class if spec != null else &"light"
+	if _arena.struck_charged:  # a full charge lands as a blast: a long stop, a knockdown
+		hit_class = CHARGED_CLASS
 	var knock_mps: float = spec.knockback_mps if spec != null else 0.0
 	hits += 1
 	kills += 1 if lethal else 0
