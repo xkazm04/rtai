@@ -58,5 +58,5 @@ static func _head(rig: CutRig, p: BodyPlan) -> void:
 	)
 	var back: float = -40.0 * rig.c_tuck - 30.0 * rig.c_sprawl
 	var hs: float = 1.0 - 0.18 * rig.c_tuck
-	var at: Vector2 = p.head_pos - p.torso_pos + Vector2(back, 0.0)
+	var at: Vector2 = p.head_pos - p.torso_pos + Vector2(back, RigGrip.head_lean(rig))
 	rig.head.transform = Transform2D(rot, Vector2(hs, hs), 0.0, at)
