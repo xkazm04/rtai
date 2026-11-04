@@ -51,7 +51,8 @@ function runScenario(sc, mode, secs, outDir) {
 
 const DETAIL = ['p99CpuMs', 'low1Fps', 'worstSwapMs', 'worstFrameMs', 'visibleAvg', 'visibleMax',
   'actorsAvg', 'simStepMsPerTick', 'streamSpawnMsPerTick', 'hitches25', 'hitchesOver50', 'over50.unexplained',
-  'avgFrameMs', 'rigMsP50', 'rigMsP99', 'rigMsPerTick', 'fullRigsMax', 'bloodUsPerFrame'];
+  'avgFrameMs', 'rigMsP50', 'rigMsP99', 'rigMsPerTick', 'fullRigsMax', 'bloodUsPerFrame',
+  'drawCallsAvg', 'renderCpuMsAvg', 'renderCpuMsP99'];
 const round3 = (v) => Math.round(v * 1000) / 1000;
 
 /** Worst case over every run and scenario, plus per-scenario detail (worst over runs). */

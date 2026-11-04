@@ -15,6 +15,10 @@ var actors: PackedInt32Array = PackedInt32Array()
 var visible: PackedInt32Array = PackedInt32Array()
 var frames: int = 0
 var rig_ms: PackedFloat64Array = PackedFloat64Array()
+## perf-city: draw calls and the render server's CPU ms per frame (windowed runs only; a draw
+## call count does not move with the machine's load, so it A/Bs on a busy machine).
+var draws: PackedInt32Array = PackedInt32Array()
+var render_cpu_ms: PackedFloat64Array = PackedFloat64Array()
 var _rig_us: int = 0
 var _rig_ticks: int = 0
 var _rigs_max: int = 0
@@ -51,6 +55,16 @@ func add_rig(us: int, ticks: int, full: int) -> void:
 	rig_ms.append(us / 1000.0)
 
 
+## One frame's draw calls and render CPU ms (call after add(); skipped in the warm-up).
+func add_render(draw_calls: int, cpu_ms: float) -> void:
+	if frames <= WARMUP_FRAMES:
+		return
+	@warning_ignore("return_value_discarded")
+	draws.append(draw_calls)
+	@warning_ignore("return_value_discarded")
+	render_cpu_ms.append(cpu_ms)
+
+
 func metrics() -> Dictionary[String, float]:
 	var n: int = frame_ms.size()
 	if n == 0:
@@ -79,6 +93,9 @@ func metrics() -> Dictionary[String, float]:
 		"rigMsPerTick": _rig_us / 1000.0 / maxi(1, _rig_ticks),
 		"fullRigsMax": float(_rigs_max),
 		"swapFrames": float(_count(swap)),
+		"drawCallsAvg": _mean_i(draws),
+		"renderCpuMsAvg": _mean(render_cpu_ms),
+		"renderCpuMsP99": _pct(render_cpu_ms, 0.99),
 	}
 
 
