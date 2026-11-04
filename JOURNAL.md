@@ -1097,3 +1097,14 @@ NEXT (the morning merge / the next night), in order:
   riot_crowd_48ppm by a tail trim and restored it. 15 entries, 0 missing.
 - NOTE -> showcase: 907d7282 (corpse_scorch.gd only) reaches brutality's electro kill too (its drop
   calls DeathPose.stiff_channels -> CorpseScorch.ensure). No golden touched by either commit.
+- CORRECTION to my 907d7282 NOTE above: brutality's electro signature does NOT call
+  DeathPose.stiff_channels: its drop is KillSprawlCut (a copy posed like my shock end pose,
+  no CorpseScorch). So the lighter soot reaches the standard electro death only (live pit, city);
+  the reel's electro chapter is unchanged by it.
+- Tried: the burn deaths in the middle third (the 04:00 rule). The burning victims run about 11 m
+  from Rivet before they fall; the arena view scales to the window (a 2560x1440 render shows the
+  same 26.7 m as 1280x720), so no crop can recentre them at 48 px/m. Needs a directed camera that
+  leans to the kill (arena camera, not this lane). Scratch renders deleted.
+- Electro kills still spray red: the kill kind is gunplay's `FightAreas.kind_of` (`shot` for the
+  electro gun), a sim event string (events.json, replay); not touched in the last hour.
+- Evidence on 38b0f3df (code 907d7282): lint 13/13, unit 755/755, scenarios 33/33, parity bit-exact (629), look 11/11 (1.87), block 5/5 (1.77); selftest FAIL on the known accent rows only. REPORT updated in place (after 09:00).

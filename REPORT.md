@@ -6,6 +6,26 @@ after it changes only JOURNAL. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\hu
 Paths below are relative to the masters folder unless they start with `evidence/` or `project/`.
 
 ## After 09:00 (extension, updated in place)
+- **09:20-10:20 (iteration 20), two readability fixes, both in time for showcase's 09:45 merge:**
+  - **The robot thug's lighter spray** (`e00a0041`): its hits now throw their own `blood_fx` row `thug_hit` (10 drops in
+    a 70 deg cone along the blow) instead of Rivet's `robot_hit` (26 drops in a 160 deg fan). Six hits leave one
+    streak behind the thug instead of an oil field over a third of the frame, so the power-down silhouette reads on
+    clean ground. Filmed with showcase's own ROBOT THUG command: `robot_powerdown_light_48ppm.mp4` + `_sheet.png`
+    (before: `robot_powerdown_48ppm.mp4`). Rivet keeps `robot_hit`.
+  - **The electro corpse reads as lying** (`907d7282`, showcase r16 remainder: "a low blue lump, the legs short"): the
+    navy trousers sank into the dark soot blot. Its blot and core now draw at 0.6 (`CorpseScorch.SHOCK_SOOT`), and
+    the burn star keeps full ink. Both legs now read to the shoes. `pit_electro_legs_48ppm.mp4` +
+    `pit_electro_legs_48ppm_ab.png` (frame 760, before on the left, after on the right). This is the standard
+    electro death (live arena pit, city). Brutality's signature electro kill lays its own cut
+    (`KillSprawlCut`, my end pose without the scorch), so the reel's electro chapter keeps its look. A longer plank (feet 460 px) was filmed
+    and rejected because the feet come off the shins (`evidence/electro_plank_feet460_rejected_48ppm_zoom.png`).
+  - **Tried and not done: the burn deaths in the middle third.** The burning victims run about 11 m from Rivet before
+    they fall. The arena view scales to the window, so a 2560x1440 render shows the same 26.7 m. At 48 px/m, no crop
+    can centre the victim without losing the scale. Fixing it needs a directed camera that leans to the kill (the
+    arena camera, not this lane).
+  - No golden, sim or replay change. Full evidence on `38b0f3df` (`--no-bench --allow-dirty`): lint 13/13, unit 755/755,
+    scenarios 33/33, parity bit-exact (mutation caught at step 629), look 11/11 (worst 1.87), block 5/5 (worst 1.77).
+    The selftest FAIL is the same known accent-audit rows as before (48 px/m vermilion/blood on vehicles).
 - **Robot thug power-down death** (`fbfa406b`, `3cf3ce29`): its own death, no longer the human fall. The knees give into a
   crouch, it pitches flat on the spot (0.2 m, no slide), the head drops last, the plates darken; sparks and oil, no
   blood. `death_robot` is outside `death_map` and the signature hooks, so no human can ever play it. Dev pit only (the
@@ -13,7 +33,7 @@ Paths below are relative to the masters folder unless they start with `evidence/
   + `_64ppm_sheet.png`, `robot_powerdown_32ppm.mp4`; death frame 138 at every zoom. Honest read: at 48 px/m the thug is
   weapon-art's ink mass, so the fall reads by silhouette (crouch, then a flat X); the plates go dark and the pale
   optic goes out at every zoom (dim 0.7; 0.45 was filmed first and left the optic lit at 32 px/m).
-  The oil spray from six hits is busy.
+  The oil spray from six hits was busy (fixed at 09:25, see above).
 - **Knockdown: no shot from the floor** (`117152b6`, gunplay `83429487` cherry-picked, `FighterFx.RISE_TICKS` 29):
   re-filmed `pit_knockdown_rise29_48ppm.mp4` (follows Rivet) and `_64ppm.mp4` + `_64ppm_sheet.png`. The guard is blown
   flat, lies, rises, and his next aim tell starts only once he stands. Call 4 is now answered B on this branch.
