@@ -52,7 +52,7 @@ func test_a_round_on_the_ground_leaves_a_scuff_and_on_a_body_a_burst() -> void:
 func test_a_reload_drops_the_magazine_and_rows_differ() -> void:
 	var arena: CombatArena = _arena(&"pistol")
 	var fx: GunFx = GunFx.new()
-	fx.art_mags = {}  # showcase merge r6: the fallback (weapon-art's pistol has its own magazine)
+	fx.art_mags = {}  # the fallback: no weapon-art magazine (showcase REQUEST 19)
 	assert_true(arena.rivet_fire(Vector2(10.0, 0.0)))
 	_run(arena, fx, 1, 2)
 	arena.gun.trigger.start_reload()
