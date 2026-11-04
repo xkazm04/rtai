@@ -16,6 +16,7 @@ const DWELL_LINE: int = 60
 ## Guns: fire inside this distance, after the guard was inside it REACT_TICKS (a readable beat).
 const FIRE_M: float = 13.0
 const REACT_TICKS: int = 30
+const PULSE: int = 12
 const PIT_ENTRY: Array[Vector2] = [Vector2(3.0, 3.0), Vector2(3.0, 10.0), Vector2(14.0, 17.0)]
 
 
@@ -168,7 +169,8 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 		return _input(aim if gap.length() > JAB_M * 0.7 else Vector2.ZERO, aim, _bit(&"melee", jab))
 	var close: bool = gap.length() <= FIRE_M
 	_seen_since = (local if _seen_since < 0 else _seen_since) if close else -1
-	var fire: bool = close and local - _seen_since >= REACT_TICKS
+	# a pulsed trigger (press edges), as a player shoots a semi-auto: held fire stalls a reload
+	var fire: bool = close and local - _seen_since >= REACT_TICKS and local % PULSE < PULSE / 2
 	var side: float = 1.0 if (local / 45) % 2 == 0 else -1.0
 	var drift: Vector2 = aim.orthogonal() * side * 0.8 + (spot - rivet).limit_length(1.0) * 0.4
 	return _input(drift, aim, _bit(&"fire", fire))
