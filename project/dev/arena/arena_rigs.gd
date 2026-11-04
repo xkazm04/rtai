@@ -26,6 +26,7 @@ var _hurt_seen: Dictionary[int, int] = {}
 var _fire_seen: Dictionary[int, Vector2i] = {}
 ## rivet-arsenal: the pilot's last seen claw starts and rolls (a change starts the rig clip).
 var _strikes_seen: int = 0
+var _shocks_seen: int = 0
 var _rolls_seen: int = 0
 var _shots_seen: int = 0
 var _arsenal: ArsenalTable = ArsenalTable.shipped()
@@ -119,6 +120,10 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip[0] = RigClips.Clip.STRIKE
 		f.clip_arg[0] = RigInput.pack_strike(h.windup, h.active, h.recovery, arm)
 	_strikes_seen = m.starts
+	if pilot.shock.discharges != _shocks_seen:  # the discharge: both claws thrust
+		f.clip[0] = RigClips.Clip.STRIKE
+		f.clip_arg[0] = RigInput.pack_strike(2, 5, pilot.shock.recovery_ticks, 2)
+	_shocks_seen = pilot.shock.discharges
 	if pilot.motion.rolls != _rolls_seen:
 		f.clip[0] = RigClips.Clip.ROLL
 		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
@@ -129,7 +134,8 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
 		f.clip_arg[0] = grip.kick if grip != null else 1.0
 	_shots_seen = gun.shots_fired if gun != null else 0
-	if pilot.melee.busy() or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
+	var claws: bool = pilot.melee.busy() or pilot.shock.busy()
+	if claws or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
 		f.flags[0] = 0
 
 

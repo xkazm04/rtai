@@ -10,6 +10,8 @@ extends RefCounted
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
 var melee: PlayerMelee = PlayerMelee.new()
+## rivet-arsenal: hold melee after the jab to charge the electroshock, release to discharge.
+var shock: PlayerShock = PlayerShock.shipped()
 ## rivet-arsenal: the weapon in the claw follows the arena's rivet.weapon with a stow and a draw
 ## (rivet_arsenal.json); no shot leaves before the draw ends.
 var hold: WeaponHold = WeaponHold.new()
@@ -47,7 +49,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		motion.stop()
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
-	var armed: bool = hold.can_fire() and not melee.busy()
+	var armed: bool = hold.can_fire() and not melee.busy() and not shock.busy()
 	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed:
 		stage.intent.fire_at = rivet.pos + c.aim * actions.aim_range_m
 	var press: bool = c.was_pressed(actions, &"melee")
@@ -56,7 +58,11 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		stage.intent.move_by = hauler.drive(stage, power, press, stage.intent.move_by)
 		if hauler.owns_melee():
 			return
-	if press and motion.phase == PlayerMotion.Phase.FREE:
+	var free: bool = motion.phase == PlayerMotion.Phase.FREE
+	var down: bool = c.is_held(actions, &"melee") and rivet.alive()
+	@warning_ignore("return_value_discarded")
+	shock.step(stage.arena, down, free and not melee.busy(), rivet.facing)
+	if press and free and not shock.busy():
 		var before: int = melee.combo.starts
 		melee.combo.press()
 		melee_swings += 1 if melee.combo.starts != before or melee.combo.buffered else 0
@@ -78,6 +84,7 @@ func stop() -> void:
 func write_state(out: StreamPeerBuffer) -> void:
 	motion.write_state(out)
 	melee.write_state(out)
+	shock.write_state(out)
 	hold.write_state(out)
 	if carry != null:
 		carry.write_state(out)
