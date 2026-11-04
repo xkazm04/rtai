@@ -3,7 +3,8 @@ extends Node
 ## n5-cast: the cast lineup from straight above (Rivet, patrol, riot, SWAT, three pedestrians),
 ## standing in a row facing up (screen -y), through CharacterRigs with look_d4 over the pavement,
 ## at 32 and 64 px/m. Optionally walking (--walk): every body strides in place up the frame.
-## Writes <out>/lineup-<ppm>ppm.png (the row crop). Windowed only (needs a GPU).
+## --crowd: Rivet, patrol and the six pedestrian looks instead; --road: on asphalt, not the slab.
+## Writes <out>/lineup-<tags><ppm>ppm.png (the row crop). Windowed only (needs a GPU).
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
@@ -12,9 +13,15 @@ const SETTLE_TICKS: int = 90
 const GAP_M: float = 2.3
 ## Rivet, patrol, riot, SWAT, coat-hat, jacket-hair, hoodie-cap.
 const LOOKS: Array[int] = [RigFeed.LOOK_AUTO, 5, 6, RigVariant.SWAT, 0, 1, 3]
+## Rivet, patrol, coat-hat, jacket-hair, coat-hood, hoodie-cap, vest-hair, overalls-bald.
+const CROWD_LOOKS: Array[int] = [RigFeed.LOOK_AUTO, 5, 0, 1, 2, 3, 4, 7]
+const COP_LOOKS: Array[int] = [5, 6, RigVariant.SWAT]
 
 var out_dir: String = ""
 var walk: bool = false
+var crowd: bool = false
+var road: bool = false
+var _looks: Array[int] = LOOKS
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
@@ -30,8 +37,9 @@ func _ready() -> void:
 	_actors.layer = 2
 	for n: Node in [_world, _post, _actors, _bus, _data]:
 		add_child(n)
+	_looks = CROWD_LOOKS if crowd else LOOKS
 	for x: int in range(-3, 3):
-		_tile("sidewalk_tone", Vector2(x * 8 + 4, 0) * PX)
+		_tile("road_box_plain" if road else "sidewalk_tone", Vector2(x * 8 + 4, 0) * PX)
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_look.shader = load("res://assets/shaders/look_d4.gdshader") as Shader
@@ -77,16 +85,16 @@ func _tile(tile: String, at: Vector2) -> void:
 func _cast() -> void:
 	var f: RigFeed = _rigs.feed
 	f.count = 0
-	for i: int in LOOKS.size():
+	for i: int in _looks.size():
 		var kind: BodyPlan.Kind = BodyPlan.Kind.PED
 		if i == 0:
 			kind = BodyPlan.Kind.RIVET
-		elif i <= 3:
+		elif COP_LOOKS.has(_looks[i]):
 			kind = BodyPlan.Kind.COP
-		var at: Vector2 = Vector2((i - (LOOKS.size() - 1) * 0.5) * GAP_M, 0.0) * PX
+		var at: Vector2 = Vector2((i - (_looks.size() - 1) * 0.5) * GAP_M, 0.0) * PX
 		@warning_ignore("return_value_discarded")
 		f.put(i, i + 1, kind, at, Vector2.ZERO)
-		f.looks[i] = LOOKS[i]
+		f.looks[i] = _looks[i]
 
 
 func _pose() -> void:
@@ -104,8 +112,10 @@ func _save(ppm: int, z: float) -> bool:
 	if img == null or img.is_empty():
 		return false
 	var view: Vector2 = Vector2(img.get_size())
-	var half: Vector2 = Vector2(LOOKS.size() * GAP_M * 0.5 + 0.2, 1.6) * PX * z
+	var half: Vector2 = Vector2(_looks.size() * GAP_M * 0.5 + 0.2, 1.6) * PX * z
 	var r: Rect2i = Rect2i(Vector2i(view * 0.5 - half), Vector2i(half * 2.0))
 	r = r.intersection(Rect2i(Vector2i.ZERO, img.get_size()))
-	var tag: String = "walk-" if walk else ""
+	var tag: String = (
+		("walk-" if walk else "") + ("crowd-" if crowd else "") + ("road-" if road else "")
+	)
 	return img.get_region(r).save_png(out_dir.path_join("lineup-%s%dppm.png" % [tag, ppm])) == OK
