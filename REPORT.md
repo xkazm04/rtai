@@ -34,6 +34,10 @@ Paths below are relative to the masters folder unless they start with `evidence/
     (`player_shock.gd:125`). `ReactLink` plays reactions and deaths only from `struck`, so claw and blade hits that are
     not signatures bypass the reaction layer: no melee spin, no fold, and the generic rig fall. Not fixed tonight: it is
     rivet-arsenal's file, and showcase's final reel was already running. Next step 7.
+  - **10:11, the in-lane half (`1623e625`):** `ReactLink.hit_class_of` now maps the melee ids (claw, chainsaw,
+    electro_baton, katana, plasma_sword) to `melee`, unit-tested. It changes nothing on screen until `PlayerMelee`
+    emits `struck` (rivet-arsenal, plus the HitLink stacking call), so it is not filmed. Gates: lint 13/13, unit
+    755/755, scenarios 33/33.
 - **09:20-10:20 (iteration 20), two readability fixes, both in time for showcase's 09:45 merge:**
   - **The robot thug's lighter spray** (`e00a0041`): its hits now throw their own `blood_fx` row `thug_hit` (10 drops in
     a 70 deg cone along the blow) instead of Rivet's `robot_hit` (26 drops in a 160 deg fan). Six hits leave one
