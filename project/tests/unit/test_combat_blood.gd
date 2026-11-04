@@ -151,3 +151,23 @@ func test_pool_body_is_the_doctrine_blood_dark() -> void:
 	b.blood.set_dark(Color(0.2, 0.0, 0.0))
 	assert_eq(b.blood._fluid.dark, Color(0.2, 0.0, 0.0), "set_dark recolours the pool body")
 	b.free()
+
+
+func test_a_blow_due_south_always_tilts_its_spray() -> void:
+	var b: CombatBlood = CombatBlood.new()
+	var least: float = 180.0
+	var most: float = 0.0
+	for i: int in 200:
+		var at: Vector2 = Vector2(64 * (i % 20), 96 * (i / 20))
+		var turn: float = absf(rad_to_deg(Vector2.DOWN.angle_to(b.spray_dir(at, Vector2.DOWN))))
+		least = minf(least, turn)
+		most = maxf(most, turn)
+	assert_gt(least, 5.99, "every spray turns at least spray_tilt_min_deg (REQUEST 2)")
+	assert_lt(most, 14.01, "and at most spray_tilt_deg")
+	b._game["spray_tilt_min_deg"] = 0.0  # planted: the old spread lets some columns stand
+	least = 180.0
+	for i: int in 200:
+		var at: Vector2 = Vector2(64 * (i % 20), 96 * (i / 20))
+		least = minf(least, absf(rad_to_deg(Vector2.DOWN.angle_to(b.spray_dir(at, Vector2.DOWN)))))
+	assert_lt(least, 6.0, "without the floor a spot sprays near straight down")
+	b.free()
