@@ -46,7 +46,7 @@ JOURNAL: `WT/JOURNAL.md` (every claim below has its dated line there).
 | Thrown weapons land at the cursor (aim distance in TickInput bits 25-28; pad: stick deflection) | `test_aim_reach.gd`; `MASTERS/arena_molotov_reach_48ppm/` |
 | A charged bolt lands as a blast in the hit feel (stop, knockdown, shake) | `HitLink.CHARGED_CLASS`, `CombatArena.struck_charged` |
 | Readable enemy fire: tell, lock, muzzle star, slowed round, sparks on Rivet | `guard_tell.gd`, `test_guard_tell.gd`; `MASTERS/arena_cop_fire_48ppm/` |
-| Riot blood: drop redraw split, A/B of settled 6 vs 30 (kept at 6: within noise), bench metrics | `WT/evidence/n3/riot-blood-ab.md`; bench runs `WT/evidence/n{1,3,6,8,9}/bench.log` |
+| Riot blood: drop redraw split, A/B of settled 6 vs 30 (kept at 6: within noise), bench metrics | `WT/evidence/n3/riot-blood-ab.md`; bench runs `WT/evidence/n1/bench-after.log`, `WT/evidence/n3/bench/`, `WT/evidence/n{6,8,9}/bench.log` |
 | Time to kill per weapon, range and target (24 seeds a cell); the shard's reach, and the electro tap vs charge | `WT/evidence/n6/ttk-shard.md`, `WT/evidence/n8/ttk-electro.md`, raw `ttk.json` |
 | Fire patches print an ink char (a splash burn: soot wedges, floor hatch, a broken edge), and the burnt ground stays 15 s after the fire; a rocket blast scorches the ground it hit (view only) | `fight_scorch.gd`, `fight_scorch_art.gd`; `test_fight_scorch*.gd`; `MASTERS/molotov_scorch_ab_city_32ppm.mp4` (+ `.png`), `MASTERS/camfight11_molotov/`, `MASTERS/rocket_scorch_ab_city_32ppm.png`, `MASTERS/camfight11_rocket/` |
 | The range station: `data/tables/arena_stations/gunplay.json` (`--weapon=<id> --bot=gunplay`, `--cam=fight`) | `WT/project/data/tables/arena_stations/gunplay.json` |
