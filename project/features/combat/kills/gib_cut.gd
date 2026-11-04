@@ -44,6 +44,19 @@ static func cut(rig: CutRig, whole: bool = false) -> Array[Node2D]:
 	return groups
 
 
+## The rig's cut, or (no rig: a headless or sprite-cast run) inked blobs for the parts.
+static func parts(rig: CutRig, whole: bool, ppm: float) -> Array[Node2D]:
+	if rig != null:
+		return cut(rig, whole)
+	var out: Array[Node2D] = []
+	for i: int in SignatureKill.PIECE_IDS.size():
+		var b: GibBlob = GibBlob.new()
+		b.radius = (0.16 if i < 2 or i == SignatureKill.BODY else 0.1) * ppm
+		@warning_ignore("return_value_discarded")
+		out.append(b)
+	return out
+
+
 static func _place(group: Node2D, spr: Sprite2D, xf: Transform2D, z: int) -> void:
 	var copy: Sprite2D = _copy(spr)
 	copy.transform = xf

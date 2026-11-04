@@ -253,25 +253,10 @@ func _parts(
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
 	var groups: Array[Node2D] = (
-		KillSplitFx.cut(rig, dir, ppm) if split else _cut(rig, row.whole_body())
+		KillSplitFx.cut(rig, dir, ppm) if split else GibCut.parts(rig, row.whole_body(), ppm)
 	)
 	if row.style == &"split":
 		split_fx.add(serial, at, dir)
 	elif row.style == &"hole" and rig != null:
 		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], kills, ppm)
 	return groups
-
-
-func _cut(rig: CutRig, whole: bool) -> Array[Node2D]:
-	return GibCut.cut(rig, whole) if rig != null else _blobs()
-
-
-## No rig to cut (a headless or sprite-cast run): inked blobs stand in for the parts.
-func _blobs() -> Array[Node2D]:
-	var out: Array[Node2D] = []
-	for i: int in SignatureKill.PIECE_IDS.size():
-		var b: GibBlob = GibBlob.new()
-		b.radius = (0.16 if i < 2 or i == SignatureKill.BODY else 0.1) * ppm
-		@warning_ignore("return_value_discarded")
-		out.append(b)
-	return out
