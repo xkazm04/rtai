@@ -702,3 +702,34 @@ NEXT (iteration 8, supersedes the list above):
   729/729 (`evidence/n8/unit-a.log`), lint 13/13. DECISION in docs/decisions.md. Live input only:
   no replay or scenario input changes. Quest 1's LiveInput.px_per_m stays unset until quest 1
   gets a GunHand (its throw falls back to the fixed lob; nothing to wire tonight).
+- 05:44 MILESTONE `MASTERS/n4/gunplay/side_by_side_table_six_48ppm.mp4` (NEXT 1 of it8): the six
+  table guns in the arena pit at 48 px/m, 3x2, 5 s each, sound off, labelled: pistol, machine
+  pistol, rocket launcher, flamethrower, electro gun (tap stun then the held charged zigzag),
+  molotov (lands at the cursor). All six captured fresh on 29da90ec (`reel9_<gun>/`, 25 s each,
+  0 script errors, Rivet 0 deaths; kills 4 / 4 / 3 / 4 / 2 / 5). Windows picked from 1 and 4 fps
+  contact strips on each gun's first shots. Looked at: every cell reads as its own gun in one
+  frame (`side_by_side_table_six_48ppm_still.png`). Cells are at half size (the full clips sit
+  beside them).
+- 05:50 MILESTONE `side_by_side_city_four_32ppm.mp4`: pistol, rocket, flamethrower, molotov in the
+  city proving block (`--arena=city --clean`) at 32 px/m, fresh (`city9_<gun>/`, 0 script errors,
+  Rivet 0 deaths, kills 5 / 7 / 4 / 5): the city clips the brief asked for and that were missing
+  from MASTERS for these four guns. Looked at: blood on the cream paving, fire patches, a rocket's
+  blast ring, tracers; small at the game zoom, as at 32 px/m.
+- 05:48 51422333 + fc86e070 FINDING and fix: the range model (TTK table, range station) clicked the
+  electro gun and never charged, and ProjectileSim ignored `charge_damage`, so the TTK table showed
+  stun taps only. Now RangeDrill.Lane.hold_charge holds a charge gun on and the charged round lands
+  charge_damage (GunHand's rule); the TTK bench writes a second row `electro_gun:charged`. The clicked
+  rows are identical to it6 cell for cell (checked by diff). `evidence/n8/ttk-electro.md`: the charge
+  wins on strafers (10 m 0 -> 100 % kills) and robots (5.6 -> 4.5 s) but two taps beat it on a
+  still human (0.62 vs 1.20 s). Owner call gunplay-10 below. Unit 730/730 (`evidence/n8/unit-c.log`),
+  scenarios 29/29 on 29da90ec (`scenarios-a.log`; the range-model change touches no scenario golden:
+  scenario_gunplay_fire compares a run to itself).
+
+## Calls for the owner (iteration 9 additions, REPORT draft)
+- gunplay-10: the electro gun's plain tap bolts stay lethal on humans (default: two taps drop a
+  still human in 0.62 s, faster than the 1.2 s held charge) vs stun-only taps on humans so the
+  charged one-shot (brutality's electro kill) is the only electro kill. Evidence:
+  evidence/n8/ttk-electro.md + arena_electro_charge_64ppm (tap vs charge in one clip). One value:
+  the electro row's damage on humans.
+- gunplay-11: a pad throws by stick deflection, full push = the old 14 m lob (default) vs full
+  push = the 18 m bit maximum. One value in LiveInput.stick_reach_m (aim_range_m -> REACH_MAX steps).
