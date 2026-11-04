@@ -113,7 +113,7 @@ func _burst(s: Shock, p: Vector2, r: float) -> void:
 		var rr: float = r * (1.0 if k % 2 == 0 else 0.62 + 0.18 * _h(s.serial, k + 40))
 		@warning_ignore("return_value_discarded")
 		pts.append(p + Vector2.from_angle(TAU * k / 18.0) * rr)
-	draw_colored_polygon(pts, ARC)
+	KillPoly.fill(self, pts, ARC)
 	@warning_ignore("return_value_discarded")
 	pts.append(pts[0])
 	draw_polyline(pts, Ink.INK, 3.0, true)

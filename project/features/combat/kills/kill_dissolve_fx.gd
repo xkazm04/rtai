@@ -144,7 +144,7 @@ func _pile(d: Dissolve, e: float) -> void:
 		cloth.append(p + Vector2(cos(a) * rr * 1.3, sin(a) * rr * 0.8))
 	draw_circle(p, PILE_M * ppm * g + 1.5, INK)
 	draw_circle(p, PILE_M * ppm * g, DUST)
-	draw_colored_polygon(cloth, CLOTH)
+	KillPoly.fill(self, cloth, CLOTH)
 	@warning_ignore("return_value_discarded")
 	cloth.append(cloth[0])
 	draw_polyline(cloth, INK, 2.0, true)

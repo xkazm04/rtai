@@ -81,7 +81,7 @@ func _shards(b: Burst, age: int) -> void:
 		var tip: Vector2 = base + out * ppm
 		var w: Vector2 = out.orthogonal().normalized() * 0.1 * ppm
 		var tri: PackedVector2Array = [base + w, tip, base - w]
-		draw_colored_polygon(tri, SHARD)
+		KillPoly.fill(self, tri, SHARD)
 		@warning_ignore("return_value_discarded")
 		tri.append(tri[0])
 		draw_polyline(tri, Ink.INK, 1.2, true)

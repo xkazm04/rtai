@@ -156,7 +156,7 @@ func _flakes(b: Burn, p: Vector2, age: int) -> void:
 			)
 		var hot: bool = n % 6 == 0 and t < 0.5
 		var a: float = 1.0 - smoothstep(0.75, 1.0, t)
-		draw_colored_polygon(q, Color(EMBER if hot else ASH, a))
+		KillPoly.fill(self, q, Color(EMBER if hot else ASH, a))
 		@warning_ignore("return_value_discarded")
 		q.append(q[0])
 		draw_polyline(q, Color(Ink.INK, a * 0.8), 1.0)
