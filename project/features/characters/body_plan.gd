@@ -74,6 +74,9 @@ var hand_k: float = 1.0
 var arm_w: float = 1.0
 ## n5-cast: the leg segments' drawn thickness (scale across the thigh and shin bones), like arm_w.
 var leg_w: float = 1.0
+## n5-cast (plan view, r2_a5): the head and the shoe cells' drawn scale (1 = the part art).
+var head_k: float = 1.0
+var foot_k: float = 1.0
 var gun_arm: int = -1
 var gun_cell: String = ""
 var melee_arm: int = L

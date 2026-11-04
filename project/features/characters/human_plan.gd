@@ -15,6 +15,16 @@ const ARM_K: float = 1.15
 const PED_SIZE_K: float = 1.25
 const COP_SIZE_K: float = 1.0
 const COP_LIMB_K: float = PED_SIZE_K / COP_SIZE_K
+## n5-cast (iteration 11, r2_a5 / r1_c6 from straight above): the ped's plan-view stance. A head
+## is about 0.4 of the shoulder span from above (the art's 0.75 hid the coat), the standing feet
+## sit under the coat and the legs stand straight, so the pale shoulders are the widest shape.
+## Back to the shipped ped: PED_HEAD_K 1.0, PED_HEAD_DX 0.22, PED_FOOT_K 1.0, PED_FOOT_FWD 10,
+## PED_HIP_Z 0.86.
+const PED_HEAD_K: float = 0.62
+const PED_HEAD_DX: float = 0.12
+const PED_FOOT_K: float = 0.7
+const PED_FOOT_FWD: float = 0.0
+const PED_HIP_Z: float = 0.98
 
 
 static func cop() -> BodyPlan:
@@ -30,8 +40,12 @@ static func cop() -> BodyPlan:
 
 
 static func ped() -> BodyPlan:
-	var p: BodyPlan = _human(BodyPlan.Kind.PED, "ped", "head_hair", 0.22, 1.0)
+	var p: BodyPlan = _human(BodyPlan.Kind.PED, "ped", "head_hair", PED_HEAD_DX, 1.0)
 	p.size_k = PED_SIZE_K
+	p.head_k = PED_HEAD_K
+	p.foot_k = PED_FOOT_K
+	p.foot_fwd = PED_FOOT_FWD
+	p.hip_z = (p.thigh_len + p.shin_len) * PED_HIP_Z
 	p.gait_scale = 0.72
 	p.ready_stance = false
 	return p
