@@ -453,3 +453,11 @@ NEXT (final): see REPORT.md, Next steps. The lead is call 1 (quest 1 on the rigs
 - 09:17 Gates on BESIDE 1.0: lint 13/13, unit 823/823 exit 0, scenarios 38/38 exit 0 (`E/it18-{lint,unit,scenarios}.log`).
 - 09:18 Evidence: clip `M\clips\arena-pit-aimed-long-guns-off-helmet-ab-64ppm.mp4` (13 s at 60 fps, before | after side by side, rocket then plasma rifle, 2x crop on Rivet); strip `M\frames\arena-pit-aimed-long-guns-off-helmet-ab-64ppm-3x.png`. Looked at frames 30 and 240 of the clip and the strip's 16 cells.
 - 09:22 frames.json: the new A/B clip and sheet are entries 4 and 5. They replace the 32 px/m tubes clip and the flawed 64 px/m close-up, which both showed the superseded code; their files stay in M\clips. 15 entries; every path exists. REPORT (lane root and docs/night copy): a new "After 09:00" section, the open-flaw line marked FIXED, and Next steps item 2 done.
+- 09:27 MILESTONE: the city melee at 48 px/m with the follow camera (the 04:00 rule; entry 1 had been 32 px/m with a 2x crop). `--arena=city --rigs --bot=arsenal --loadout=katana,chainsaw,electro_baton --ppm=48`, 1500 frames at --fixed-fps 60, 0 script errors. Contact sheet looked at every 90 frames, and the kill frames 930 and 1300 at 1:1: the katana kill and the chainsaw kill each land on a cop standing alone in red blood. Clip: frames 840-1500 (the hub's lab-cop rows before 300 are cut), `M\clips\city-block-melee-katana-chainsaw-48ppm-follow.mp4`. This is frames.json entry 1; the cannon/ray/flamer cycle fell off the 15. Scratch frames deleted.
+- Session end 09:29: all work committed. No Godot process of mine running (every capture exited on --quit-after). bench.lock and image.lock never taken.
+
+NEXT (the next session, before the 10:30 freeze; the REPORT update at 10:40 goes in the same file):
+1. The other top entries against the 04:00 rule: entry 3 (city melee 64 px/m, full frame) is fine for detail. Entry 2 (32 px/m 2x crop) is the overview.
+2. A 48 px/m follow clip of the long guns on the city block (`--loadout=plasma_rifle,rocket_launcher --ppm=48`) to show the aimed-line fix in the live city.
+3. ArenaArsenalBot's melee walk-in: a nav-grid path (dev bot only).
+4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
