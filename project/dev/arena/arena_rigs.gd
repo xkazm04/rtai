@@ -22,23 +22,30 @@ var plan: ArenaPlan = null
 var react: ReactLink = null
 var _last: Dictionary[int, Vector2] = {}
 var _print: PrintStage = null
+var _city: CityView = null
 ## Each fighter's last hurt tick already played as a HIT clip.
 var _hurt_seen: Dictionary[int, int] = {}
 ## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
 var _fire_seen: Dictionary[int, Vector2i] = {}
 
 
-## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
-## the printed path (the rigs need its world space).
+## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
+## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
 func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bool:
-	if view.print_stage == null:
+	var layer: CanvasLayer = null
+	if view.print_stage != null:
+		_print = view.print_stage
+		layer = _print.actor_layer()
+	elif view.city_view != null:
+		_city = view.city_view
+		layer = _city.actor_layer()
+	else:
 		return false
 	stage = p_stage
 	plan = p_stage.plan
-	_print = view.print_stage
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
-	view.print_stage.actor_layer().add_child(rigs)
+	layer.add_child(rigs)
 	rigs.setup(ctx)
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
@@ -58,7 +65,7 @@ func _process(_delta: float) -> void:
 		_put(i, h, BodyPlan.Kind.COP)
 		i += 1
 	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
-	rigs.zoom = _print.zoom
+	rigs.zoom = _print.zoom if _print != null else _city.zoom
 	if react != null:
 		react.apply(rigs)
 
