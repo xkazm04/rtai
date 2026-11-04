@@ -34,12 +34,19 @@ const CAR_ATLAS: Array[Texture2D] = [
 ]
 const CAR_CELL_PX: Vector2 = Vector2(512.0, 256.0)
 const CAR_COLS: int = 3
+## On the city block a pit wall is a row of inked concrete barrier segments (still solid), not
+## the arena's flat ink bar: the street's warm grey, a cream top edge, a joint every BARRIER_M.
+const BARRIER_FILL: Color = Color("#8E867C")
+const BARRIER_M: float = 2.0
+
+var _city: bool = false
 
 
 func _draw() -> void:
 	var arena: ArenaStage = stage as ArenaStage
 	if arena == null:
 		return
+	_city = arena.cells != null
 	for a: ArenaPlan.Area in arena.plan.areas:
 		if arena.cells == null:  # on the city proving block the city is the floor
 			_tiled(a.rect, "dock_floor", FLOOR_TILE_M)
@@ -69,6 +76,9 @@ func _draw() -> void:
 func _prop(at: Vector2, p: ArenaStation.Prop) -> void:
 	var fill: Color = PROP_FILL.get(p.kind, Ink.WASH)
 	var r: Rect2 = Rect2(Ink.px(at - p.size * 0.5), p.size * Ink.PX_PER_M)
+	if _city and p.kind == "wall_high":
+		_barrier(r)
+		return
 	match p.kind:
 		"cone":
 			draw_texture_rect(CONE, r, false)
@@ -80,6 +90,22 @@ func _prop(at: Vector2, p: ArenaStation.Prop) -> void:
 			_crate_row(r)
 			return
 	draw_rect(r, fill, true)
+	draw_rect(r, Ink.INK, false, Ink.LINE_PX)
+
+
+## A concrete barrier run: fill, ink rim, a cream top edge and a joint line every BARRIER_M.
+func _barrier(r: Rect2) -> void:
+	draw_rect(r, BARRIER_FILL, true)
+	var long_x: bool = r.size.x >= r.size.y
+	var step: float = BARRIER_M * Ink.PX_PER_M
+	var n: int = int(maxf(r.size.x, r.size.y) / step)
+	for i: int in range(1, n + 1):
+		var off: Vector2 = Vector2(step * i, 0.0) if long_x else Vector2(0.0, step * i)
+		var end: Vector2 = Vector2(0.0, r.size.y) if long_x else Vector2(r.size.x, 0.0)
+		draw_line(r.position + off, r.position + off + end, Ink.INK, Ink.LINE_PX * 0.5)
+	var edge: Rect2 = r.grow(-Ink.LINE_PX * 1.5)
+	var top: Vector2 = Vector2(edge.size.x, 0.0) if long_x else Vector2(0.0, edge.size.y)
+	draw_line(edge.position, edge.position + top, Ink.CREAM, Ink.LINE_PX)
 	draw_rect(r, Ink.INK, false, Ink.LINE_PX)
 
 
