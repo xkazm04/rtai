@@ -146,3 +146,4 @@ NEXT (iteration 7):
 4. FX polish (blast core + debris; the ray ring fade is done e7bccb95); bench-lock cost of riso + look_d5_fx.
 5. Keep REPORT.md current; the evidence gate once more before 08:30.
 Session state 23:06: head = this commit, tree clean, no Godot process of mine running, image.lock released at 22:36.
+- 23:11 EVIDENCE GATE green on 08e78758 (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 951/0, scenarios 46 passed, parity bit-exact 1200 steps (mutation caught at 629), selftest look goldens 11/11 within mean 4 (worst 0.00). The gatling, belt, tracer and ray fade moved no golden (none is in a golden frame). NEXT (iteration 7) above stands, starting at item 2 (the Gatling housing tone) then 3 (pickups toward r2_w8). Session state 23:11: tree clean after this commit, no Godot process of mine running, image.lock released at 22:36, scratch AVIs deleted.
