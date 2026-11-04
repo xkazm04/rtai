@@ -1091,3 +1091,7 @@ NEXT (replaces the list above):
 2. The nuke tick-123 RenderingServer wait: try spreading a multi-victim cut over two frames or
    prewarming its canvas items; measure under bench.lock (evidence/brutality/lock-it18 is the before).
 3. Re-check gunplay's REQUEST 29/30 answers and the look goldens + parity on the merged main.
+- 09:20 session closed. Head 88ff881d (code) + docs. frames.json: 15 entries, all files exist; the
+  it18 clips decode (78 s reel, 8 s, 15 s slow). No code change after the gates of record, so none
+  lands right before showcase's 09:45 final merge. No Godot process of mine running; scratch holds
+  only the capture scripts; bench.lock released at 09:20.
