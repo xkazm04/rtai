@@ -253,3 +253,6 @@ NEXT (iteration 7):
   "only slightly larger"; kept. One-value lever if the owner wants exactly 1.1x the crowd:
   `RivetPlan.FORMS[FORM_BASE].x` 0.97 -> 0.89 (re-bless the look goldens after). Call for the owner in REPORT.
   Brief item 4 (the crowd on one footprint): the three peds sit within 0.82-0.84 m, no change needed.
+- 19:03 REPORT.md drafted (marked DRAFT; the REPORT phase rewrites it at 08:40). Every cited path checked to exist.
+  NEXT (iteration 7) item 4 is started; items 1-3 stand, plus: film the Hauler (and Gearbox if reachable) on the
+  hybrid base (brief item 3, "keep their own body plan unless that breaks"), not yet done.
