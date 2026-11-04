@@ -67,6 +67,8 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 	_range = ArenaRangeBot.new(p_stage, p_actions)
 	_rivet = ArenaRivetBot.new(p_stage, p_actions)
 	beats = default_beats()
+	if OS.get_cmdline_user_args().has("--reel=pit"):  # the film of the pit's two beats only
+		beats = beats.slice(beats.size() - 2)
 
 
 static func default_beats() -> Array[Beat]:
@@ -114,6 +116,8 @@ func sample(tick: int) -> TickInput:
 		_seen_since = -1
 		_dodge_until = -1
 		var id: StringName = beats[beat_i].id if beat_i < beats.size() else &"end"
+		if id == &"pit_gun" and ReelArsenal.carry_of(stage) != null:
+			beats[beat_i].ticks = ReelArsenal.GUN_TICKS  # a --loadout: every weapon gets a turn
 		Log.info("showcase", "reel beat %s at tick %d" % [id, tick])
 	if beat_i >= beats.size():
 		return _input(Vector2.ZERO, Vector2.DOWN, 0)
@@ -187,7 +191,8 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 		side = _dodge_side
 	var drift: Vector2 = aim.orthogonal() * side * 0.8 * (1.0 - fwd) + aim * fwd
 	drift += (spot - rivet).limit_length(1.0) * 0.4 * (1.0 - fwd)
-	return _input(drift, aim, _bit(&"fire", fire))
+	var kills: int = stage.pit.kills - _kills_before
+	return _input(drift, aim, _bit(&"fire", fire) | ReelArsenal.press(stage, actions, kills))
 
 
 ## The walk-in's forward share, or 0 while a side-step runs (pinned on a prop PIN_TICKS ticks).
