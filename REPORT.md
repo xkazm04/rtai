@@ -1,7 +1,7 @@
-# human-reactions: night report (2026-11-04, 01:10-08:30)
+# human-reactions: night report (2026-11-04, 01:10-10:40)
 
-Branch `n-human-reactions` (118 commits over main `9ebc5918`). The last code commit is `fdff7990`. Every commit
-after it changes only JOURNAL. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\human-reactions\`
+Branch `n-human-reactions` (158 commits over main `9ebc5918`). The last code commit is `1623e625` (10:11; see "After 09:00"). Every commit
+after it changes only JOURNAL and REPORT. Evidence: `C:\Users\kazda\kiro\gtai-masters\n4\human-reactions\`
 (`frames.json`, 15 entries, all files present) plus `evidence/` in the lane cwd (untracked clips).
 Paths below are relative to the masters folder unless they start with `evidence/` or `project/`.
 
@@ -30,7 +30,7 @@ Paths below are relative to the masters folder unless they start with `evidence/
     (`9e5ab448`) also puts back every foot state `RigGait` writes, after the cut. A first try restored the shoe
     texture before the cut and the copy got the toe-off shoe; the film caught that and v2 fixes it. v2 was re-filmed
     with the same result as v1, unit 929/929. **Showcase applied it in round 19 (`08e1b72f`)**. I checked it at 10:08 in their final
-    round 19 cut (`electro_gun.mp4`): the corpse lies full length to the last frame.
+    round 19 cut (`gtai-n4/scratch-showcase/cut-r19-dir/electro_gun.mp4`): the corpse lies full length to the last frame.
     Showcase also split `cut()`: v2 failed the repo's `gd-size` lint (44 > 40 lines), which I had not run on the
     patch. Behaviour is unchanged.
   - Also checked the reel's pistol and riot-cop chapters: the standard bullet sprawl with red and the shield sparks

@@ -1239,3 +1239,13 @@ NEXT (morning merge), unchanged from iteration 23:
    ReactLink already maps the melee ids (1623e625). Film the claw chapter A/B at 48 px/m.
 2. Move MELEE_IDS to data once the melee table is merged.
 3. REPORT next steps 1-6.
+
+## Iteration 28 (10:40, REPORT)
+- 10:40 checked every evidence path in REPORT.md: 55 cited files, all present (suffix shorthands resolve to the named
+  clips). Two fixes: `electro_gun.mp4` now cites its real place (`gtai-n4/scratch-showcase/cut-r19-dir/`), and the
+  frames.json entry `reel_electro_signature_plank_ab_48ppm.mp4` was only in the lane `evidence/`, so I copied it (+ png)
+  into the masters folder and updated its note (showcase applied the patch in r19). frames.json: 15/15 files present.
+  The REPORT header now names the code head `1623e625` (it said `fdff7990`) and the span 01:10-10:40.
+- No code since 1623e625; no Godot process of mine running.
+NEXT (morning merge): 1. rivet-arsenal `PlayerMelee._land` emits `arena.struck` + the HitLink single hit-stop call, then
+  film the claw A/B at 48 px/m; 2. MELEE_IDS into the melee table; 3. REPORT next steps 1-6.
