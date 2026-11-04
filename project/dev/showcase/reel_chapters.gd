@@ -56,6 +56,7 @@ static func all() -> Array[Chapter]:
 		_riot(),
 		Chapter.new(&"mini_nuke", &"mini_nuke", &"gun", 480, _group(15.0)),
 		_armored(),
+		Chapter.new(&"electro_baton", &"electro_baton", &"blade", 330, [Vector2(2.4, 0.0)]),
 	]
 	return out
 
