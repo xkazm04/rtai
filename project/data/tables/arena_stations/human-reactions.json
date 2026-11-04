@@ -5,7 +5,7 @@
   "stations": [
     {
       "area": "hub",
-      "doc": "Four human dummies in a line (patrol cop, riot cop facing east with the shield, two pedestrians): shoot or claw each from four sides; the reaction follows the hit (flinch for light rounds, stagger for heavy, spin or fold for melee, stun for the shock, the riot cop recoils behind the shield from the east).",
+      "doc": "Four human dummies in a line (patrol cop, riot cop facing east with the shield, a pedestrian, SWAT): shoot or claw each from four sides; the reaction follows the hit (flinch for light rounds, stagger for heavy, spin or fold for melee, stun for the shock, the riot cop recoils behind the shield from the east).",
       "id": "react_line",
       "measures": [],
       "name": "Reaction line",

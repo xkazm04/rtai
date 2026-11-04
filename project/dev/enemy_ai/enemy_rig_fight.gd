@@ -135,7 +135,7 @@ func _feed_rows() -> void:
 			RigInput.apply(_bot_rig(e), _bot_feed, b)
 			continue
 		EnemyRigFeed.row(e, pit.tick, f, n, PX)
-		f.looks[n] = 6 if e.melee() else 5
+		f.looks[n] = RigVariant.SWAT if e.arch.id == &"swat" else (6 if e.melee() else 5)
 		n += 1
 
 

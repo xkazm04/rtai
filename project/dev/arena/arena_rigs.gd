@@ -70,7 +70,8 @@ func _process(_delta: float) -> void:
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
-		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, RigFeed.LOOK_AUTO))
+		var squad: Vector2i = Vector2i(BodyPlan.Kind.COP, RigVariant.squad_index_for(h.id))
+		var look: Vector2i = _looks.get(h.id, squad)
 		_put(i, h, look.x as BodyPlan.Kind)
 		f.looks[i] = look.y
 		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
