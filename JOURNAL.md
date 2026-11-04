@@ -72,3 +72,58 @@ during the riot/drive48vsync part.
   Recomputed (after 1 s): exe-a 2 frames over 33 ms (95.7, 45.5), exe-verbose 1 (73.6 at tick
   1199, right after the first death), exe-b/c/editor 0.
 - Evidence: `gtai-masters/d6/perf-city/` frames.json (6 entries).
+
+### 13:58-14:02 MILESTONE: the hitches are attributed (exported release, CONTENDED: other lane 2-4 Godot)
+- contended-exe-d/e (vsync off): p99 6.72 / 10.73 ms, hitches 34-208 ms with all-scripts process
+  only 3.5-6 ms, draw (HitchRecorder) about 1 ms, canary on time. So the stall is outside _process.
+- FightFrames now splits the rest of the frame: flush (probe end -> frame_pre_draw), draw (pre ->
+  post draw, includes the present), pump (post draw -> next first _process: OS events + physics),
+  physics. contended-exe-f/g: **every mid-fight hitch is in the draw phase** (23-46 ms, render CPU
+  < 1 ms, process 2-4, pump 0.1). The swap chain / present blocks; the game's work does not.
+  One hitch also had flush 12.5 ms (deferred calls), worth a look if it recurs.
+- p99 under contention: 6.7-10.7 ms (vsync off). UNCONTENDED: 5.9-6.6 ms.
+
+### 14:03-14:07 A/B rejected: swapchain_image_count 3 -> 4 (override.cfg beside the exe, vsync on, as shipped)
+| run | p99 | 1 % low | > 33 ms after 1 s |
+|---|---|---|---|
+| swap-A1 (default 3) | 18.98 | 47 | 1 (34.6) |
+| swap-B1 (4) | 18.90 | 46 | 1 (34.7) |
+| swap-A2 (3) | 19.74 | 47 | 1 (33.7) |
+| swap-B2 (4) | 18.76 | 39 | 4 (worst 56.7) |
+- No gain: DECISION keep the engine default (no project setting changed). The vsync-on fight has
+  about one missed vsync (~34 ms) per 35 s after the first second, CONTENDED.
+
+### Where the brief stands (14:08)
+1. Reproduce + measure: DONE (editor + release, uncontended + contended, frame log + graphs).
+2. Profile: sim loop / all scripts / flush / draw+present / pump / physics / render CPU+GPU split
+   per frame. Per-system spans inside the scripts' 2.5-4 ms were NOT done: at 15-25 % of a
+   16.7 ms frame they are not where the hitches are. The 9ebc5918 -> a1275c82 bisect was NOT done:
+   uncontended there is no regression in this fight to bisect (p99 under target).
+3. 424 ms worst / 50 ms hitches: present-phase stalls under load plus the first frame's 12
+   pipeline compiles (35-58 ms, inside the first second). No game-side hot spot found.
+4. Fixes: none needed for the targets uncontended; the swap chain A/B was rejected.
+5. Targets (release, UNCONTENDED): p99 5.9-6.6 < 8.3 MET; 60 fps MET (vsync paced, 2083/2092
+   frames one tick each); "no frame > 33 ms after the first second": 3 of 6 vsync-off runs had
+   0, run a had 2 (96/46 ms), the verbose run had 1 (74 ms), all present-phase / outside game work.
+   Riot 7.61 (record 6.0 / 2.4 idle) and drive 2.30 (record 3.56), PARTLY CONTENDED, 1 run.
+6. Film: BEFORE real-time film + graph done (before-rt-vsync). There is no "after": no code change
+   to the fight. The owner's ch 18 "lag" is the still stretch (clip + Call for the owner).
+
+## Calls for the owner (draft for REPORT)
+- perf-city-1, reel ch 18: the "lag" is 2.4 s + 0.9 s where no guard stands (between pit waves),
+  not frame cost. Options: (a) re-cut ch 18 from a window with no wave gap (film edit only),
+  (b) the reel bot walks Rivet toward the next wave's door during the gap (dev bot only),
+  (c) shorter pit wave gap on the city block (gameplay data). Default if no answer: (a).
+  Clip: gtai-masters/d6/perf-city/ch18-still-stretch-reel1012.mp4 vs before-rt-vsync.mp4.
+
+NEXT:
+- Riot re-run ALONE under the bench lock with nothing else running (`node tools/bench/run.mjs --runs=3`
+  or the riot scenario only). 7.61 ms was partly contended; if it holds clean, bisect 9ebc5918..a1275c82
+  on the riot (evidence/riot-bisect has the old tooling).
+- Build option (a) for perf-city-1: find a 15-20 s window of the city fight with no wave gap
+  (FightFrames tick log + the pit wave log), film it in real time (film_rt.sh) and fixed-fps, and
+  put the pair in frames.json.
+- If a hitch shows flush > 10 ms again: find the deferred call (CombatBlood `_bleed_killed.call_deferred`
+  and friends) with a --verbose run.
+- The first frame's 12 pipeline compiles in the arena-city path (35-58 ms): pre-warm like
+  World._prewarm does for the city, if the owner sees the first second.
