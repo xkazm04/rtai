@@ -56,13 +56,14 @@ static func all() -> Array[Chapter]:
 	return out
 
 
-## Four standing close together `ahead` metres out (the machine pistol's group, the nuke's).
+## Four standing staggered in depth `ahead` metres out (the machine pistol's group, the nuke's;
+## the 05:20 column fell as one stack).
 static func _group(ahead: float) -> Array:
 	return [
-		Vector2(ahead, -1.8),
-		Vector2(ahead + 0.6, -0.4),
-		Vector2(ahead, 1.0),
-		Vector2(ahead + 1.2, 2.2)
+		Vector2(ahead, -1.5),
+		Vector2(ahead + 1.4, -0.3),
+		Vector2(ahead + 0.3, 1.1),
+		Vector2(ahead + 2.0, 1.8)
 	]
 
 
