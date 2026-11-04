@@ -14,7 +14,7 @@ Paths below are relative to the masters folder unless they start with `evidence/
   weapon-art's ink mass, so the fall reads by silhouette (crouch, then a flat X); the plates go dark and the pale
   optic goes out at every zoom (dim 0.7; 0.45 was filmed first and left the optic lit at 32 px/m).
   The oil spray from six hits is busy.
-- **Knockdown: no shot from the floor** (`e41fb9c6`, gunplay `83429487` cherry-picked, `FighterFx.RISE_TICKS` 29):
+- **Knockdown: no shot from the floor** (`117152b6`, gunplay `83429487` cherry-picked, `FighterFx.RISE_TICKS` 29):
   re-filmed `pit_knockdown_rise29_48ppm.mp4` (follows Rivet) and `_64ppm.mp4` + `_64ppm_sheet.png`. The guard is blown
   flat, lies, rises, and his next aim tell starts only once he stands. Call 4 is now answered B on this branch.
 - The pit's dev camera keeps a fresh corpse in frame for 3 s (the 04:00 aftermath rule); `--zoom=` films 48/64 px/m.

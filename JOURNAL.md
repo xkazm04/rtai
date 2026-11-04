@@ -1020,7 +1020,7 @@ riot p99 bench).
   pit_electro_scorch_64ppm_sheet (the 48 px/m electro pair carries it). 15 entries, 0 missing.
 - Gates on 3cf3ce29: lint 13/13, unit 753/753, scenarios 33/33 (city_chase 2 ms nav flake
   under load: 3262 us in the full run, green alone).
-- MILESTONE e41fb9c6: cherry-picked gunplay 83429487 (FighterFx.RISE_TICKS 29, my REQUEST 30).
+- MILESTONE 117152b6: cherry-picked gunplay 83429487 (FighterFx.RISE_TICKS 29, my REQUEST 30).
   Conflict in test_fight_areas.gd: kept only the RISE test (the other hunks test the mini-nuke and
   homing shard, not on this branch); docs/decisions.md auto-merged 25 unrelated gunplay lines:
   reverted to HEAD + the RISE line only. Gates: lint 13/13, unit 754/754, scenarios 33/33.
@@ -1062,5 +1062,5 @@ NEXT (the morning merge / the next night), in order:
 2. A robot `Fighter.Kind` in CombatArena (owner: robots later) so `DeathPipe.kill_robot` plays in
    the live arena, not only the dev pit; a lighter oil spray on the thug (six hits fill the frame).
 3. The idle bench of the riot p99 (CrowdReact observe mean 214 us CONTENDED today).
-4. The merge note: e41fb9c6 is gunplay 83429487 cherry-picked (same 4 files), so the merge sees
+4. The merge note: 117152b6 is gunplay 83429487 cherry-picked (same 4 files), so the merge sees
    it twice; take gunplay's side on fighter_fx.gd / fight_areas.gd / test_fight_areas.gd.
