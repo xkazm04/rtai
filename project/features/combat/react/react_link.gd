@@ -12,6 +12,16 @@ extends RefCounted
 ## where the blow threw it). DECISION human-reactions in docs/decisions.md.
 const WOUND_CARRY: float = 0.4
 const DEATH_CARRY: float = 0.8
+## gunplay's death kinds (CombatArena.kill_landed) over the weapon's hit class: a fire kill
+## chars, a blast kill throws; `shot` keeps the weapon's own class.
+const KILL_KIND_CLASS: Dictionary[StringName, StringName] = {&"burned": &"burn", &"blown": &"blast"}
+## The lasting area states (FightAreas FighterFx) hold their family while they last: the share
+## of the family the hold loops inside (start, end) and where the release resumes.
+const HOLD: Dictionary[StringName, Vector3] = {
+	&"stun": Vector3(0.3, 0.7, 0.7),
+	&"burn": Vector3(0.3, 0.8, 0.8),
+	&"knockdown": Vector3(0.3, 0.6, 0.78),
+}
 
 var pipe: DeathPipe
 var wounds: int = 0
@@ -22,6 +32,13 @@ var _weapons: WeaponTable
 ## Hits since the last apply(): [victim id, dir, lethal, hit class, in cover, weapon]. Cover is
 ## false here: CombatArena lands no hit on a fighter in cover (Fighter.exposed).
 var _pending: Array[Array] = []
+## The standard deaths played, by fighter id: [death kind, dir]. A corpse whose rig left the
+## LOD bubble and came back (a fresh pooled rig) lies down again in the same final pose.
+var _corpses: Dictionary[int, Array] = {}
+## kill_landed's kind by victim id, read by the struck of the same landing (it fires first).
+var _kill_kind: Dictionary[int, StringName] = {}
+## The state family each fighter held last frame (released when its state ends).
+var _held: Dictionary[int, StringName] = {}
 
 
 static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
@@ -31,6 +48,8 @@ static func make(arena: CombatArena, p_pipe: DeathPipe = null) -> ReactLink:
 	link.pipe = p_pipe if p_pipe != null else DeathPipe.make(ReactTable.shipped())
 	@warning_ignore("return_value_discarded")
 	arena.struck.connect(link._on_struck)
+	@warning_ignore("return_value_discarded")
+	arena.kill_landed.connect(link._on_kill)
 	return link
 
 
@@ -60,15 +79,93 @@ func apply(rigs: CharacterRigs) -> void:
 			var kind: StringName = pipe.kill(rig, hit_class, dir, weapon)
 			signatures += 1 if kind == &"signature" else 0
 			deaths += 0 if kind == &"signature" else 1
-		else:
+			if kind != &"signature":
+				_corpses[id] = [kind, dir]
+		elif _held.get(id, &"") != &"knockdown":
 			@warning_ignore("return_value_discarded")
 			pipe.wound(rig, hit_class, dir, false, cover)
 			wounds += 1
 	_pending.clear()
+	_relay(rigs)
+	_hold_states(rigs)
+
+
+## The family a fighter's lasting area state holds (&"" when none): stun over burn over down.
+func state_family(h: Fighter) -> StringName:
+	if _arena.areas == null:
+		return &""
+	var e: FighterFx = _arena.areas.effect(h)
+	if e == null:
+		return &""
+	if e.stun_ticks > 0:
+		return &"stun"
+	if e.burn_ticks > 0:
+		return &"burn"
+	return &"knockdown" if e.down_ticks > 0 else &""
+
+
+func _hold_states(rigs: CharacterRigs) -> void:
+	for h: Fighter in _arena.hostiles:
+		var fam: StringName = state_family(h) if h.alive() else &""
+		var rig: CutRig = rigs.rig_for(h.id)
+		var was: StringName = _held.get(h.id, &"")
+		if rig == null or (rig.react != null and rig.react.dying):
+			@warning_ignore("return_value_discarded")
+			_held.erase(h.id)
+			continue
+		if fam != &"":
+			_held[h.id] = fam
+		else:
+			@warning_ignore("return_value_discarded")
+			_held.erase(h.id)
+		hold(rig, fam, was, -h.facing)
+
+
+## Holds `fam` on `rig` while its state lasts (looping inside HOLD's span), and lets the family
+## run out from the release point once the state `was` ended (fam = &""). `away` is the fall
+## direction when nothing is playing yet.
+func hold(rig: CutRig, fam: StringName, was: StringName, away: Vector2) -> void:
+	if fam == &"" and was == &"":
+		return
+	var r: HumanReact = HumanReact.on(rig)
+	if fam != &"":
+		if r.kind != fam:
+			r.carry = WOUND_CARRY
+			r.play(rig, fam, away if r.kind == &"" else r.dir.rotated(rig.facing), pipe.table)
+		var span: Vector3 = HOLD[fam]
+		if r.progress() > span.y:
+			r.t = r.length * span.x
+	elif was != &"" and r.kind == was:
+		r.t = maxf(r.t, r.length * HOLD[was].z)
+
+
+func _relay(rigs: CharacterRigs) -> void:
+	for id: int in _corpses:
+		var rig: CutRig = rigs.rig_for(id)
+		if rig == null or (rig.react != null and rig.react.dying):
+			continue
+		var c: Array = _corpses[id]
+		var kind: StringName = c[0]
+		var dir: Vector2 = c[1]
+		var r: HumanReact = HumanReact.on(rig)
+		r.carry = DEATH_CARRY
+		r.play(rig, kind, dir, pipe.table)
+		r.settle()
+
+
+func _on_kill(
+	victim: Fighter, _weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName
+) -> void:
+	_kill_kind[victim.id] = kind
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
 	if victim == _arena.rivet:
 		return
 	var d: Vector2 = dir if dir != Vector2.ZERO else -victim.facing
-	_pending.append([victim.id, d, lethal, hit_class_of(weapon), false, weapon])
+	var hit_class: StringName = hit_class_of(weapon)
+	if lethal and _kill_kind.has(victim.id):
+		hit_class = KILL_KIND_CLASS.get(_kill_kind[victim.id], hit_class)
+		@warning_ignore("return_value_discarded")
+		_kill_kind.erase(victim.id)
+	_pending.append([victim.id, d, lethal, hit_class, false, weapon])

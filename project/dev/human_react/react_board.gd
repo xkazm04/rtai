@@ -12,6 +12,8 @@ const DIRS: Array[Vector2] = [Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN, Vector2
 const HIT_AT: int = 24
 const TRACER_TICKS: int = 5
 const TRACER_M: float = 2.5
+## The blood pool's drag lead: past about 10 px CombatBlood draws it as a hard streak.
+const POOL_LEAD_MAX_PX: float = 10.0
 const CREAM: Color = Color(0.95, 0.92, 0.8)
 ## [label, hit class, lethal, in cover, ticks]
 const SEGMENTS: Array[Array] = [
@@ -153,7 +155,7 @@ func _hit_all(seg: Array) -> void:
 		if lethal:
 			var kind: StringName = _pipe.kill(rig, hit_class, dir, &"")
 			if hit_class != &"burn" and hit_class != &"shock":
-				var slide: float = _pipe.table.travel(kind) * PX
+				var slide: float = minf(_pipe.table.travel(kind) * PX, POOL_LEAD_MAX_PX)
 				_blood.kill_human(f.pos[i], dir, slide)
 		else:
 			var fam: StringName = _pipe.wound(rig, hit_class, dir, shielded, cover)
