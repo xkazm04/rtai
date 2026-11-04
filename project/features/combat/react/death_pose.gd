@@ -5,6 +5,11 @@ extends RefCounted
 ## then topples), blast (thrown along the blast, tumbling), burn (flails, collapses charred),
 ## shock (convulses, falls stiff). The brutality lane replaces these through DeathPipe.
 
+## The melee corpse: how curled (c_tuck) and how flat (c_sprawl) it lies; 0.2 / 1.0 was the
+## round's X sprawl.
+const MELEE_CURL: float = 0.55
+const MELEE_LIE: float = 0.7
+
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
 	var k: float = r.progress()
@@ -40,8 +45,8 @@ static func _bullet(r: HumanReact, rig: CutRig, k: float) -> void:
 static func _melee(r: HumanReact, rig: CutRig, k: float) -> void:
 	var fold: float = smoothstep(0.0, 0.35, k)
 	var top: float = smoothstep(0.4, 1.0, k)
-	rig.c_tuck = lerpf(0.6 * fold, 0.2, top)
-	rig.c_sprawl = top
+	rig.c_tuck = lerpf(0.6 * fold, MELEE_CURL, top)  # lies curled round the blow
+	rig.c_sprawl = MELEE_LIE * top
 	r.slide = r.dir * r.travel * (0.3 * fold + 0.7 * top)
 	r.head_off = Vector2(55.0 * fold * (1.0 - top), 0.0)
 	r.rot = r.side * 0.6 * top
