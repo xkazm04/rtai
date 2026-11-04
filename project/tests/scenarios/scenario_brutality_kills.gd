@@ -74,13 +74,16 @@ func _state_of(weapon: StringName, fault_slot: int) -> PackedByteArray:
 
 func _play(s: ArenaSession, fault_slot: int) -> PackedByteArray:
 	var hook: BrutalityHook = _hook(s)
-	var planted: bool = false
+	var planted: int = -1
+	var buf: StreamPeerBuffer = StreamPeerBuffer.new()
 	while s.tick() < TICKS:
 		s.step()
-		if fault_slot >= 0 and not planted and hook.kills.gibs.live(fault_slot):
-			hook.kills.gibs.vel[fault_slot] *= 1.01
-			planted = true
-	var buf: StreamPeerBuffer = StreamPeerBuffer.new()
+		if planted < 0 and hook.kills.gibs.live(maxi(fault_slot, 0)):
+			planted = s.tick()
+			if fault_slot >= 0:
+				hook.kills.gibs.vel[fault_slot] *= 1.01
+		elif planted >= 0 and s.tick() == planted + 30:  # showcase r4: before the slot recycles
+			hook.write_state(buf)
 	hook.write_state(buf)
 	return buf.data_array
 
