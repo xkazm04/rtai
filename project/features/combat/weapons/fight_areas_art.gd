@@ -16,10 +16,13 @@ const LOB_M: float = 2.2
 const RING_PATCH_M: float = 4.0
 ## Over a body that fell in the fire the flames thin out (showcase REQUEST 27: the molotov's
 ## victim was never seen): from CLEAR_AFTER ticks after the kill, over CLEAR_RAMP ticks, a flame
-## within CLEAR_M of the corpse shrinks and fades, so the char corpse reads under a few licks.
+## within CLEAR_M of the corpse shrinks, fades and is pushed off it: the fire opens round the
+## body, so the char corpse reads inside a ring of flames.
 const CLEAR_AFTER: int = 45
 const CLEAR_RAMP: int = 30
-const CLEAR_M: float = 1.8
+const CLEAR_M: float = 2.2
+## How far a flame over a corpse is pushed out of its way (the fire opens round the body).
+const CLEAR_PUSH_M: float = 1.0
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
@@ -128,8 +131,22 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int, dead: Array
 		var reach: float = (0.78 + 0.14 * float(i % 2)) if ring else (0.25 + 0.4 * float(i % 2))
 		var off: Vector2 = Vector2.from_angle(ang) * p.z * reach
 		var thin: float = clear(c + off, dead)
-		var size: float = (0.6 + 0.15 * float(i % 3)) * (1.0 - 0.6 * thin)
-		_fire(ci, c + off, size, tick + i * 5, fade * (1.0 - 0.5 * thin))
+		var at: Vector2 = c + off + away(c + off, dead) * thin * CLEAR_PUSH_M
+		var size: float = (0.6 + 0.15 * float(i % 3)) * (1.0 - 0.55 * thin)
+		_fire(ci, at, size, tick + i * 5, fade * (1.0 - 0.4 * thin))
+
+
+## The unit push away from the corpse that thins the flame at `at` most (zero when none).
+static func away(at: Vector2, dead: Array[Vector3]) -> Vector2:
+	var best: float = 0.0
+	var out: Vector2 = Vector2.ZERO
+	for d: Vector3 in dead:
+		var from: Vector2 = Vector2(d.x, d.y)
+		var near: float = d.z * clampf(1.0 - at.distance_to(from) / CLEAR_M, 0.0, 1.0)
+		if near > best:
+			best = near
+			out = (at - from).normalized() if at != from else Vector2.RIGHT
+	return out
 
 
 ## The dead hostiles as (x, y, clear strength 0..1), strength rising CLEAR_AFTER ticks after

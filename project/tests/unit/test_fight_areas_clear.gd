@@ -37,3 +37,10 @@ func test_corpses_ramp_after_the_kill() -> void:
 	var late: Array[Vector3] = FightAreasArt.corpses(hostiles, 100 + 600)
 	assert_almost_eq(late[0].z, 1.0, 0.001)
 	assert_eq(Vector2(late[0].x, late[0].y), g.pos)
+
+
+func test_away_points_off_the_strongest_corpse() -> void:
+	var dead: Array[Vector3] = [Vector3(0.0, 0.0, 1.0), Vector3(5.0, 0.0, 1.0)]
+	var push: Vector2 = FightAreasArt.away(Vector2(0.5, 0.0), dead)
+	assert_almost_eq(push.x, 1.0, 0.001)
+	assert_eq(FightAreasArt.away(Vector2(20.0, 0.0), dead), Vector2.ZERO)
