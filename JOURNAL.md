@@ -338,3 +338,32 @@ NEXT (iteration 3):
   slot's `weapon_slot_N` bit every 2 pit kills when a --loadout is given (60 s gun beat);
   `--reel=pit` films only the pit's two beats. Without --loadout the reel and its scenario do
   not move. Commit 62f60be4.
+- GATES r4c (tree 62f60be4, private APPDATAs): lint 13/13, unit 773/773, scenarios 37/37.
+  Evidence run (--no-bench, caa641b2): lint, unit, scenarios PASS; parity bit-exact over 1200
+  steps, planted mutation caught at step 629 (the scare is in both sides); selftest FAIL on the
+  accent audit only: NEW 48 px/m vermilion on vehicles 8 px and blood on vehicles 16 px; round
+  3's four debt rows not seen this time. Same flicker class as REQUEST 7 (it moves between zooms
+  from run to run; gunplay measured 32 px/m clean on their HEAD and says the audit is not their
+  gate). Logs in evidence/r4/.
+- 03:15 reel-0315-arsenal (32 px/m, `--reel=pit --loadout=pistol,electro_gun,rocket_launcher,
+  molotov`, 76 s). Looked at 0.4 fps from 15 s (24 frames on two sheets): the switch cycle works
+  on film (pistol kills, then rocket smoke rings + scorch + gib throws, then molotov fire
+  patches); six pit waves; sprays now fan off the blow (gunplay 356a3a2d). Wrong:
+  (a) about 20 corpses heap at the pit's east door by 60 s (bodies never clear; the pile reads
+      as a blob at 32 px/m);
+  (b) a fan of red drops lands outside the pit's south wall on the cream paper margin (gib or
+      spray thrown through the wall);
+  (c) Rivet is small at 32 px/m among 25 bodies; the weapon he holds can't be read at this zoom.
+- 03:20 reel-0320-arsenal-64ppm (64 px/m, same args). Looked at 0.2 fps from 15 s (12 frames):
+  the launcher sits on Rivet's shoulder, the rocket blast is a big orange comic star with a cream
+  core (orange, not red: fine), the molotov fire is orange flame cells, burnt kills leave grey
+  ash-heap star stickers (eight of them litter the floor by 60 s), cop rounds are vermilion
+  dashes (danger). Not seen on the sampled frames: the electro X-ray kill (sampling may miss
+  it; next round: 2 fps over the electro turn).
+- frames.json 14 entries (2 new on top), every file present.
+- REQUEST 12 -> human-reactions (cc gunplay): the pit's corpses never clear; after six waves
+  about 20 bodies lie piled at the east door (reel-0315-arsenal 55-75 s). A cap with a fade or a
+  slide-off for the oldest body would keep the fight readable.
+- REQUEST 13 -> brutality: gib throws (or their sprays) land outside the pit wall on the paper
+  margin below the south wall (reel-0315-arsenal 45-75 s, the red fan below the frame's wall);
+  stop gibs and drops at the arena walls.
