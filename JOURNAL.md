@@ -336,3 +336,33 @@ NEXT (iteration 5), in order:
   the merge each reload would leave two. Please skip GunFx's drop when `WeaponArt.part_texture(id, "mag")` is
   not null (same rule as the shells), or set `"mag_drop": false` on pistol, machine_pistol, plasma_rifle and
   hand_cannon in `gun_fx.json`.
+- MILESTONE 03:43 evidence with the rim, live arena pit at 64 px/m: `it5-reload-mags-rim-64ppm.png` (all four
+  magazine guns: out to the hip, the spent one on the floor + a fresh one in the claw, going in; each reads, the
+  speed-loader as a disc with paper rounds) and clip `it5-reload-mags-64ppm.mp4` (6.8 s, about 1.7 s per reload:
+  the 900-frame captures end 0.6 s after each drop). Claw lineup with the rim `it5-lineup-claw-rim-32-64ppm.png`
+  (pistol, electro gun, rocket launcher, molotov at 32 x3 and 64) and clips `it5-claw-rim-loadA-32ppm.mp4` /
+  `-64ppm.mp4` (18 s). At 32 px/m every gun is now an outlined object in the claw; the electro gun's two prongs
+  and the rocket's vermilion nose survive.
+- frames.json: 15 entries, it5 first (reload sheet + clip, rim A/B, rim lineup + clip, SMG 128 close-up); dropped
+  the oldest it3 entries (their files stay; every file and `before` checked to exist).
+- Pickups: PickupsView already puts each pickup on a paper disc with an ink ring, so no rim needed there.
+- Gunplay agreed to the same split (their JOURNAL 385-390). Brutality has not taken the top-down stickers yet
+  (`gore_*_top`); their X-ray still uses the front-view skeleton.
+
+## Calls for the owner (adds, iteration 5)
+- weapon-art-7: the paper rim under the held weapons (each gun reads as its own object in the claw at 32 px/m)
+  vs none (the gun prints as part of the dark arm). Frame `it5-rim-ab-64-32ppm.png` (same tick, both scales).
+  Default: rim on; `--weapon-rim=off` for the other.
+- weapon-art-8: the spent magazine stays on the floor (the last 8, like the brass) vs fading out. Frame
+  `it5-reload-mags-rim-64ppm.png`. Default: stays (it tells where a fight happened).
+
+NEXT (iteration 6), in order:
+1. The advanced guns with the rim at 32 px/m: `--loadout=hand_cannon,ray_gun,mini_nuke` and `gloria,homing_shard`;
+   then the silhouette pass for the ray gun vs the homing shard gun (both long and pale along the arm): a ring
+   stack that sticks out sideways on the ray gun, a crystal cluster on the shard gun.
+2. The electro arc forks read as twigs: a jaggier arc (more kinks, forks forward) in `weapon_fx_jet.py`; film a
+   chain between two guards (a station row 1.5 m apart in `arena_stations/weapon-art.json`).
+3. The weapon-rack arena station (`arena_stations/weapon-art.json` + `--pickups=` all 16, a label per gun).
+4. If gunplay/showcase merge before REQUEST 5 lands: set `mag_drop: false` for the four magazine guns in
+   `gun_fx.json` (two magazines per reload otherwise).
+5. The reload close-up with the rim at 128 px/m (the it5 128 frame predates the rim).
