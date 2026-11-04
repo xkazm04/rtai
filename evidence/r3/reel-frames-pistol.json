@@ -1,0 +1,11 @@
+{
+  "args": "--out=C:/Users/kazda/kiro/gtai-n4/scratch-showcase/reel-frames-pistol.json --bot=reel --rigs --clean --weapon=pistol --secs=75",
+  "frames": 19471,
+  "low1_fps": 52.0790828927192,
+  "max_ms": 72.746,
+  "p50_ms": 2.96,
+  "p95_ms": 7.671,
+  "p99_ms": 13.664,
+  "schema": "gtai.reel-frames/1",
+  "secs": 75.0
+}

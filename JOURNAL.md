@@ -220,3 +220,23 @@ NEXT (iteration 2):
   6..13.5 vs claw cops y 3 x 2/6/10; ArenaRivetBot walks y 1.45). Please agree a free spot
   between you (the hub is x -3..15, y -5..5; the melee line holds y -3); the reel films whatever
   you settle. reel-0210-pistol.mp4 0-40 s shows the clump.
+- 02:15 reel-0215-pistol-64ppm (64 px/m, `--weapon=pistol`, 73 s). Looked at 2 fps from 53 s
+  (12 frames): the walk-in works: the cop rigs fall in their sprays inside the frame; Rivet
+  reads (white body, collar, claws), the held pistol is small but there; the guards' told line is
+  a thin vermilion line (danger, right). frames.json now 9 entries (2 new on top), all present.
+- MILESTONE 02:16 arena-fight bench tool: `dev/showcase/reel_frames.gd` (SceneTree: the arena
+  scene in a real window, vsync off, the reel driving, per-frame wall time after 120 warmup
+  frames -> p50/p95/p99/max + 1 % low JSON). Commit d1c68958.
+- BENCH r3 (bench.lock held 02:15-02:30, CONTENDED: five other lanes render on the same GPU):
+  - arena reel (`reel_frames.gd`, EDITOR binary not the export, 1920x1080, `--rigs --clean
+    --weapon=pistol`, 75 s, 19471 frames): p50 2.96 ms, p95 7.67, **p99 13.66 ms, 1 % low 52
+    fps**, max 72.7 ms. No before (first arena measure); the editor binary is slower than the
+    release export, so this is an upper bound. `evidence/r3/reel-frames-pistol.json`.
+  - city bench (`node tools/bench/run.mjs`, exported release, 3 x 60 s): drive p99 3.63 ms,
+    1 % low 137 fps (record 3.56: flat, the drive doubling is still not bisected); drive48 p99
+    3.39; **riot p99 9.91 ms, 1 % low 60 fps** (record 6.0 / 124): MISSES p99CpuMs. Blood is
+    not it (77 us/frame, 0.08 ms; gunplay's split works); rigs p99 0.84 ms. Contention suspected
+    (other lanes' captures), not proven: re-run alone before naming a code cause.
+    `evidence/r3/bench-*.json`, `bench-r3.txt`.
+- FRICTION: `tools/bench/run.mjs` fails "the given export path doesn't exist" in a fresh
+  worktree: `mkdir -p build/export/windows-bench` first (lost one run).
