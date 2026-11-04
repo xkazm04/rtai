@@ -424,3 +424,14 @@ NEXT (unchanged; the lane is final at this tip for the morning merge):
 2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
 3. ArenaArsenalBot's melee walk-in: a nav-grid path.
 4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
+
+## Iteration 16 (08:30 - 08:40), STABILIZE (past freeze)
+- 08:30 read JOURNAL and git log; tip 442832fe clean apart from the untracked `evidence/rivet-arsenal/*` scenario outputs (left untracked on purpose, see iteration 13).
+- 08:31 checks, read-only: frames.json has 15 entries, every `file` exists. `git diff 8a7fd9a1..HEAD -- project tools` is empty, so the gates of record at 8a7fd9a1 still describe this tip exactly; no re-run needed and the evidence matches the build.
+- No bug to fix, no code change. I started no Godot process and never took bench.lock or image.lock.
+
+NEXT (final; the lane is ready for the morning merge at this tip):
+1. The Director: call 1 (quest 1 on the rigs by default) is the lead call. REPORT: `docs/night/2026-11-04/rivet-arsenal/REPORT.md`.
+2. An authored carry pose per long gun, the claw at the shoulder (ruled out: BESIDE 1.0; grip origin vs drawn centre).
+3. ArenaArsenalBot's melee walk-in: a nav-grid path.
+4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
