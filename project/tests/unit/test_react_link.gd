@@ -122,3 +122,20 @@ func test_the_reaction_line_looks_cover_both_cop_looks_and_two_peds() -> void:
 	assert_eq(ReactLineBot.look_of("react_dummy_2"), Vector2i(BodyPlan.Kind.COP, 6))
 	assert_eq(ReactLineBot.look_of("react_dummy_3").x, BodyPlan.Kind.PED)
 	assert_eq(ReactLineBot.look_of("dummy_human_1"), Vector2i(-1, -1))
+
+
+func test_a_front_round_on_a_riot_shield_is_announced_a_back_round_is_not() -> void:
+	var link: ReactLink = ReactLink.make(_arena())
+	var rig: CutRig = CutRig.new()
+	rig.variant = RigVariant.crowd(6)
+	watch_signals(link)
+	link._wound(rig, 7, &"light", Vector2.LEFT, false)
+	assert_signal_emitted_with_parameters(link, "blocked", [7, Vector2.LEFT])
+	assert_eq(link.blocks, 1)
+	var bare: CutRig = CutRig.new()
+	bare.variant = RigVariant.crowd(6)
+	link._wound(bare, 8, &"light", Vector2.RIGHT, false)
+	assert_eq(link.blocks, 1, "a round from behind is no block")
+	assert_eq(link.wounds, 2)
+	rig.free()
+	bare.free()
