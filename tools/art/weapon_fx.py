@@ -26,7 +26,7 @@ STEEL = (143, 136, 129)
 INK_2 = (81, 71, 72)
 VERMILION = (232, 80, 42)
 SS = 4
-OUTLINE = 7  # part px of ink around every shape
+OUTLINE = 13  # part px of ink around every shape (reads at 32 px/m with fx_draw_scale 2)
 
 
 def _canvas(w, h):
@@ -86,7 +86,7 @@ def _star(cx, cy, length, width, spikes, rng, back=0.25):
     return pts
 
 
-def muzzle_flash(name, length, width, frame, out, seed):
+def muzzle_flash(name, length, width, frame, out, seed, core_rgb=VERMILION):
     rng = random.Random(seed * 31 + frame)
     k = (1.0, 0.8, 0.58)[frame]
     body = _star(0.0, 0.0, length * k, width * k, 7, rng)
@@ -97,17 +97,18 @@ def muzzle_flash(name, length, width, frame, out, seed):
     h = int(max(y for _, y in body) - y0 + m)
     layers = [(_poly(_canvas(w, h), [(x - x0, y - y0) for x, y in body]), PAPER)]
     if frame < 2:
-        layers.append((_poly(_canvas(w, h), [(x - x0, y - y0) for x, y in core]), VERMILION))
+        layers.append((_poly(_canvas(w, h), [(x - x0, y - y0) for x, y in core]), core_rgb))
     _save(_compose(layers, w, h, seed + frame), out / f"{name}_{frame}.png")
     return [w, h], [int(-x0 - length * k * 0.25), int(-y0)]
 
 
 def tracer(out, seed):
-    w, h = 260, 34
-    m = _poly(_canvas(w, h), [(10, h / 2), (w - 26, h / 2 - 7), (w - 10, h / 2), (w - 26, h / 2 + 7)])
-    hot = _poly(_canvas(w, h), [(w - 120, h / 2), (w - 28, h / 2 - 3), (w - 18, h / 2), (w - 28, h / 2 + 3)])
-    _save(_compose([(m, PAPER_2), (hot, PAPER)], w, h, seed, outline=5), out / "tracer.png")
-    return [w, h], [w - 10, h // 2]
+    w, h = 280, 48
+    m = _poly(_canvas(w, h), [(14, h / 2), (w - 30, h / 2 - 9), (w - 14, h / 2), (w - 30, h / 2 + 9)])
+    hot = _poly(_canvas(w, h), [(w - 130, h / 2), (w - 32, h / 2 - 4), (w - 22, h / 2), (w - 32, h / 2 + 4)])
+    # charcoal body (reads on cream paving) with a paper hot head (reads on asphalt), ink ring
+    _save(_compose([(m, INK_2), (hot, PAPER)], w, h, seed, outline=10), out / "tracer.png")
+    return [w, h], [w - 14, h // 2]
 
 
 def casing(out, seed):
@@ -115,7 +116,7 @@ def casing(out, seed):
     m = _canvas(w, h)
     ImageDraw.Draw(m).rounded_rectangle([8 * SS, 8 * SS, 40 * SS, 22 * SS], radius=5 * SS, fill=255)
     rim = _poly(_canvas(w, h), [(8, 7), (14, 7), (14, 23), (8, 23)])
-    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=5), out / "casing.png")
+    _save(_compose([(m, STEEL), (rim, PAPER)], w, h, seed, outline=7), out / "casing.png")
     return [w, h], [w // 2, h // 2]
 
 
@@ -173,6 +174,37 @@ def rocket(out, seed):
     return [w, h], [178, int(cy)]
 
 
+def plasma_bolt(out, seed):
+    w, h = 170, 60
+    halo = _canvas(w, h)
+    ImageDraw.Draw(halo).ellipse([10 * SS, 8 * SS, 160 * SS, 52 * SS], fill=255)
+    core = _canvas(w, h)
+    ImageDraw.Draw(core).ellipse([60 * SS, 20 * SS, 155 * SS, 40 * SS], fill=255)
+    _save(_compose([(halo, STEEL), (core, PAPER)], w, h, seed), out / "plasma_bolt.png")
+    return [w, h], [155, h // 2]
+
+
+def ray_ring(frame, out, seed):
+    s = 70 + 30 * frame
+    ring = _canvas(s, s)
+    d = ImageDraw.Draw(ring)
+    m = OUTLINE + 2
+    d.ellipse([m * SS, m * SS, (s - m) * SS, (s - m) * SS], fill=255)
+    t = 7 + frame
+    d.ellipse([(m + t) * SS, (m + t) * SS, (s - m - t) * SS, (s - m - t) * SS], fill=0)
+    img = _compose([(ring, PAPER)], s, s, seed + frame, outline=5)
+    _save(img, out / f"ray_ring_{frame}.png")
+    return [s, s], [s // 2, s // 2]
+
+
+def shard(out, seed):
+    w, h = 120, 44
+    body = _poly(_canvas(w, h), [(10, 22), (40, 8), (112, 22), (40, 36)])
+    facet = _poly(_canvas(w, h), [(40, 8), (112, 22), (46, 22)])
+    _save(_compose([(body, PAPER_2), (facet, PAPER)], w, h, seed), out / "shard.png")
+    return [w, h], [112, 22]
+
+
 def _save(img, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     img.save(path, optimize=False)
@@ -185,7 +217,14 @@ def main(dst):
         for f in range(3):
             size, anchor = muzzle_flash(name, length, width, f, out, 7)
             rows.append({"id": f"{name}_{f}", "size_px": size, "anchor_px": anchor})
-    for fn in (tracer, casing, rocket):
+    for name, length, width, core in (("flash_energy", 110, 80, PAPER_2), ("flash_nuke", 230, 170, VERMILION)):
+        for f in range(3):
+            size, anchor = muzzle_flash(name, length, width, f, out, 41, core)
+            rows.append({"id": f"{name}_{f}", "size_px": size, "anchor_px": anchor})
+    for f in range(3):
+        size, anchor = ray_ring(f, out, 43)
+        rows.append({"id": f"ray_ring_{f}", "size_px": size, "anchor_px": anchor})
+    for fn in (tracer, casing, rocket, plasma_bolt, shard):
         size, anchor = fn(out, 11)
         rows.append({"id": fn.__name__, "size_px": size, "anchor_px": anchor})
     for f in range(3):

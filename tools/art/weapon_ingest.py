@@ -13,6 +13,7 @@ row's `grip_u` fraction of the length. Both are data, so rivet-arsenal attaches 
 
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -26,12 +27,22 @@ TABLE = Path("project/data/tables/weapon_art.json")
 # id: grip class, drawn length in metres (held, the read at 32 px/m), grip_u along the length,
 # muzzle fx, projectile fx, casing (or ""), extra parts {name: file in top_dir}
 ROWS = {
-    "pistol": ("one_hand", 0.46, 0.40, "flash_pistol", "tracer", "casing", {}),
-    "machine_pistol": ("one_hand", 0.62, 0.50, "flash_smg", "tracer", "casing", {}),
-    "rocket_launcher": ("shoulder", 1.30, 0.50, "flash_tube", "rocket", "", {}),
-    "flamethrower": ("backpack_hose", 0.86, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
-    "electro_gun": ("two_hand_long", 0.70, 0.32, "arc", "arc", "", {}),
-    "molotov": ("thrown", 0.34, 0.40, "flame", "flame", "", {}),
+    "pistol": ("one_hand", 0.70, 0.40, "flash_pistol", "tracer", "casing", {}),
+    "machine_pistol": ("one_hand", 0.90, 0.50, "flash_smg", "tracer", "casing", {}),
+    "rocket_launcher": ("shoulder", 1.70, 0.50, "flash_tube", "rocket", "", {}),
+    "flamethrower": ("backpack_hose", 1.15, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
+    "electro_gun": ("two_hand_long", 1.00, 0.32, "arc", "arc", "", {}),
+    "molotov": ("thrown", 0.48, 0.40, "flame", "flame", "", {}),
+    "gloria": ("one_hand", 0.80, 0.30, "flash_pistol", "tracer", "", {}),
+    "katana": ("two_hand_long", 1.30, 0.12, "", "", "", {}),
+    "electro_baton": ("one_hand", 0.80, 0.14, "arc", "", "", {}),
+    "hand_cannon": ("one_hand", 0.85, 0.30, "flash_tube", "tracer", "casing", {}),
+    "plasma_rifle": ("two_hand_long", 1.35, 0.40, "flash_energy", "plasma_bolt", "", {}),
+    "chainsaw": ("heavy_two_hand", 1.30, 0.22, "", "", "", {}),
+    "plasma_sword": ("two_hand_long", 1.30, 0.10, "", "", "", {}),
+    "ray_gun": ("two_hand_long", 0.90, 0.30, "flash_energy", "ray_ring", "", {}),
+    "homing_shard": ("two_hand_long", 1.00, 0.35, "flash_energy", "shard", "", {}),
+    "mini_nuke": ("shoulder", 1.50, 0.40, "flash_nuke", "rocket", "", {}),
 }
 
 
@@ -91,10 +102,12 @@ def main(top, side, fx):
         "pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the "
         "muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world "
         "(the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. "
-        "fx anchor_px = the point placed on the muzzle (flash) or the head (projectile)."
+        "fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at "
+        "fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m)."
     )
-    table = {"doc": doc, "fx": fx_rows(fx), "rig_px_per_m": 320, "schema": "gtai.weapon-art/1", "weapons": weapons}
+    table = {"doc": doc, "fx": fx_rows(fx), "fx_draw_scale": 2.0, "rig_px_per_m": 320, "schema": "gtai.weapon-art/1", "weapons": weapons}
     TABLE.write_bytes((json.dumps(table, indent=2, sort_keys=True) + "\n").encode())
+    subprocess.run(["node", "tools/art/canon_json.mjs", str(TABLE)], check=True)
     print(f"wrote {len(weapons)} weapons, {len(table['fx'])} fx cells")
 
 

@@ -13,6 +13,8 @@ const WORLD_PX_PER_M: float = 32.0
 const INK: Color = Color("1b1517")
 
 var rig_px_per_m: float = 320.0
+## FX cells draw at this many times the rig part scale (fx_scale()).
+var fx_draw_scale: float = 2.0
 
 var _rows: Dictionary[StringName, Row] = {}
 var _fx: Dictionary[StringName, Cell] = {}
@@ -46,6 +48,7 @@ class Cell:
 func _init(path: String = TABLE) -> void:
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	rig_px_per_m = t.num(t.raw, "rig_px_per_m")
+	fx_draw_scale = t.num(t.raw, "fx_draw_scale")
 	for row: Variant in t.array(t.raw, "weapons"):
 		var r: Dictionary = row if row is Dictionary else {}
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
@@ -151,6 +154,11 @@ func fx_frames(id: StringName) -> Array[Texture2D]:
 	if out.is_empty() and _fx.has(id):
 		out.append(_load(_fx[id].art))
 	return out
+
+
+## Sprite scale for an fx cell in world px (32 per m).
+func fx_scale() -> float:
+	return fx_draw_scale * WORLD_PX_PER_M / rig_px_per_m
 
 
 ## The point of an fx cell that sits on the muzzle (a flash) or is the head (a projectile).
