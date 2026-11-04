@@ -81,3 +81,40 @@ worktree, export, drive bench 2 x 40 s).
   city-path change is `CityView.kick_px` (a zero vector add). Named cause: load, not code;
   re-check on an idle machine (the morning, after the lanes stop) with 3 x 60 s at 8f988db6 and
   the tip back to back.
+- 01:22 MERGE round 2 (in brief order) of the lanes' first commits: weapon-art caff378f,
+  rivet-arsenal 2df4f3b8, gunplay e816065e, human-reactions 69cd92e3, brutality a931e688.
+  Conflicts: every JOURNAL.md (kept ours); `dev/arena/arena_game.gd` (rivet-arsenal's
+  `--bot=rivet` and our `--bot=reel`: both kept); `dev/arena/arena_rigs.gd` (human-reactions'
+  `react` ReactLink and brutality's `hidden` ids: both kept; ReactLink looks rigs up by fighter
+  id, so brutality's skipped rigs do not shift it).
+- GATES r2 (merged tree 4dd91db0): lint 13/13 (662 files), scenarios all pass, unit 730/732:
+  `test_arena_hooks.test_the_stage_steps_and_reports_its_hooks` assumed the probe is the only
+  hook; the shipped stations now bring brutality's and rivet-arsenal's hooks. FIX (merge glue):
+  the test finds the probe by type; unit 732/732 after it.
+- 01:27 FIX (own defect): the reel held the trigger; semi-auto magazine weapons (rocket: magazine
+  1, reload 1.8 s) fired twice in the whole reel. The reel now pulses the trigger (6 on / 6 off
+  ticks). Headless with `--sig-gun=rocket_launcher` (brutality's dev arg): 9 shots, 10 pit
+  kills, 8 signature kills (style gib), 0 deaths; with `--sig-gun=pistol`: 23 shots, 14 kills.
+  The claw combo is live (rivet-arsenal): 7 swings, 7 hits, 1 kill on the claw-cops station.
+- Registry applied (motion-quality-gating): the reel findings keep craft, responsiveness and
+  integrity apart; every frame sheet says its sampling (fps, start, count).
+- 01:33 the reel now opens with rivet-arsenal's `ArenaRivetBot` (walk, strafe, backpedal, sprint,
+  roll, claw combo on the claw-cops station in the hub), then a `go_range` beat round the melee
+  line's east end (the old path cut through its metal dummies), range, melee line, pit melee,
+  pit gun. 4410 t = 73.5 s. Scenario green: 29 claw swings, 4 claw kills, 13 pit kills, 0 deaths.
+- GATES r2 evidence run (cf0ad514): lint PASS, scenarios 30/30, parity exact (planted caught at
+  629), look goldens 11/11 + block 5/5 worst 0.00: NO re-bless needed this round. Unit 732/732
+  but the row reads FAIL "tree changed during run" (my own JOURNAL/reel edits mid-run); re-run on
+  a quiet tree next.
+- 01:35 reel-0145-rocket (32 px/m, `--sig-gun=rocket_launcher`, pulse fix, old beat order):
+  1 fps sheet from 40 s, 12 frames. Craft: the rocket reads (an orange streak); the signature
+  gib reads even at 32 px/m (a dark scorch disc, a red burst, the helmet and blue chunks
+  thrown). Missing: no blast flash or ring caught at 1 fps (check the 64 px/m pass); Rivet's
+  held weapon is a long white stick (the weapon-art held sprites are not on the rig yet).
+- City reel headless (`--arena=city --bot=reel --sig-gun=rocket_launcher`): all beats, 8
+  signature kills, 3 claw kills, 0 deaths, BUT top speed 17.06 m/s (walk 4.5, roll about 8.7):
+  a collision snap somewhere on the block; to find in the city clip. Five station spawns land
+  in buildings and are dropped (incl. the arena's known `range/strafe_05m`).
+- REQUEST 4 -> weapon-art: the reel shows Rivet holding a long white stick for the rocket
+  launcher (reel-0145-rocket.mp4); when your held top-down sprites are ready, which lane puts
+  them on the rig (arena_rigs / the cast rig's hand)? Tell me if it is glue I should wire.
