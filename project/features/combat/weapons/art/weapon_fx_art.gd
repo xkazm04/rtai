@@ -23,6 +23,9 @@ const GUN_SIDE_M: float = 0.35
 const CONVERGE_M: float = 3.0
 ## The thrown molotov draws this much bigger than the held one (at 1.0 it was a speck in flight).
 const BOTTLE_K: float = 1.8
+## The bottle's ground shadow: the shell's ink ellipse at this size and ink (was a 28x12 px dash).
+const BOTTLE_SHADOW_K: float = 0.8
+const BOTTLE_SHADOW_INK: float = 0.6
 ## The flamethrower's nozzle lick: the jet's tongue cell at this scale (1.0 read as a balloon).
 const NOZZLE_K: float = 0.45
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
@@ -76,6 +79,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
 			_cell_v(ci, &"arc", tick % 3, at - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
 			_cell(ci, &"spark", tick % 3, at, float(tick) * 0.5, 1.1, 1.0)
+		WeaponSpec.Kind.THROWN when art().projectile_fx(s.spec.id) == &"rocket":
+			WeaponFxShell.draw_round(ci, s, dir, went, tick)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
@@ -160,9 +165,10 @@ static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick
 
 static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	var f: float = clampf(went / maxf(went + s.left_m, 0.1), 0.0, 1.0)
-	var lift: float = 4.0 * FightAreasArt.LOB_M * f * (1.0 - f)
-	var shadow: Rect2 = Rect2(Ink.px(s.pos) - Vector2(14.0, 6.0), Vector2(28.0, 12.0))
-	ci.draw_rect(shadow.grow(-2.0 * lift), FightAreasArt.SCORCH)
+	var arc: float = 4.0 * f * (1.0 - f)
+	var lift: float = FightAreasArt.LOB_M * arc
+	var shade: float = BOTTLE_SHADOW_K * (1.0 - WeaponFxShell.SHADOW_SHRINK * arc)
+	WeaponFxShell.shadow(ci, s.pos, shade, BOTTLE_SHADOW_INK)
 	var up: Vector2 = s.pos + Vector2(0.0, -lift)
 	var tex: Texture2D = art().held_texture(&"molotov")
 	var k: float = (
