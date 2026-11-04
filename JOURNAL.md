@@ -438,3 +438,30 @@ NEXT (iteration 8):
   a quiet machine). Validate rt_recon against a real desktop capture taken on the primary display only.
 - REPORT Calls for the owner: perf-city-1 (ch 18 still stretch) stands. Add: the 35 ms frame ~4 s after
   launch (process age, not the fight), informational.
+
+## Iteration 8 (16:47-17:47), BUILD
+
+- 16:48 read JOURNAL + git log. No bench.lock. No REQUEST for perf-city in d6-combat-notes' JOURNAL.
+  CPU 100 % (the other lane's Godot + ~40 Python processes, some of them days old): the UNCONTENDED re-check is
+  skipped again. Bench lock not taken.
+- 16:59 MILESTONE (owed from iteration 7): `test_rivet_held_warm.gd` 3/3 (0fc63919): warm() loads every
+  carried gun's held art + mag/tank parts (the same paths a cold WeaponArt loads on first draw), a first
+  draw after warm adds no texture, and no carry is a no-op. A planted no-op warm() fails 2/3.
+  The first version found that `shotgun` and `assault-rifle` are not table guns (carry.add -> -1); the test now asserts each carried id has a slot.
+  Loadout tested: pistol, plasma_rifle, flamethrower (tank part), molotov (all four slots).
+- Ground pickups: reel ch 18 runs `--bot=reel`, and ArenaArmory is off under a bot, so no pickup reaches
+  the claw mid-fight. Not warmed (no profile shows it). Revisit if a pickup is filmed.
+- 17:02 `node tools/evidence/run.mjs --no-bench` on 0fc63919 (the first two tries refused a dirty tree: my own
+  log dir under evidence/; the log now goes to /tmp/evidence8.log).
+- REPORT draft for 18:40 written to %TEMP%/perf-report-draft.md, to land as REPORT.md after the gate.
+- 17:08 FINDING from the existing frame logs (no new run): fix 4 also took out a second spike, at **tick 1528**.
+  Process ms there (sim loop 0.8-0.9 ms): release rt7-pre-1/2 8.5/6.6, rt7-gnd-1/2 6.2/5.6 -> rt7-warm-1 **2.8**;
+  editor t2019 **22.0** -> t2019-warm 3.3. The neighbouring ticks are 2-4 ms in every log. The span log is aggregate only
+  (rivet_held_view max 18.4 -> 1.9), so it cannot tell which tick that max came from. That 1528 is another gun's first
+  draw is INFERRED: it went away with warm() alone. One more release process spike recurs (tick 1292: 9.2 in rt7-pre-1 only):
+  1 of 5 runs, so not a game hot spot.
+- 17:11 GATES on 0fc63919 (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 941/941 (0 failed), scenarios 46/46,
+  parity bit-exact (mutation caught at step 629), selftest pass (look goldens 11/11 worst 0.00, block 5/5 worst 1.81,
+  world lock holds). The runner marked unit FAIL only for "tree changed during run: M JOURNAL.md": I appended to the
+  journal mid-run. FRICTION/lesson: no edits at all in the worktree while run.mjs runs. Re-run on the commit below.
+- 17:12 REPORT.md (DRAFT) landed in the worktree from the 17:10 draft, plus the gates line and the tick 1528 finding.
