@@ -136,10 +136,13 @@ NEXT (iteration 6):
 - 23:02 item 2b started (judge only): core lineup `dev/weapon_art/weapon_lineup.gd` at 64 px/m beside r1_w1. At game zoom the pistol, SMG and electro gun read as small grey bars in the claw; r1_w1's top views differ mostly by the SMG's perforated shroud, the revolver's cylinder bulge (hand cannon) and the pistol's slide serrations. Plan: regenerate the hand cannon and SMG top views first (TEXT + style ref, gadget wording), keep grip/muzzle measured by weapon_ingest.measure, judge in the claw at 32 px/m before swapping.
 - 23:05 REPORT.md draft written (insurance; rewrite at 08:40).
 
+- 23:03 item 2b judged (no redraw yet): the current held tops already carry r1_w1's top-view features (the hand cannon's cylinder bulge, the SMG's feed box, the pistol's slide); the delta is tone (rust-tan vs the sheet's gunmetal), which the print maps anyway. Lower value than planned; NEXT 1 demoted below the pickups and the Gatling housing.
+- 23:04 MILESTONE e7bccb95 ray rings keep the acid green to the tail (WeaponFxRay FADE 0.2 -> 0.12): before|after at 64 px/m tick 306 (--weapon=ray_gun --bot=range), folded as the bottom row of `fx-colour-energy-ab-32ppm-2x.png`. test_weapon_art 17/17.
+
 NEXT (iteration 7):
-1. Item 3b held parts: hand cannon + machine pistol top views toward r1_w1 (one image job under image.lock, 3-prop sheet, TEXT + style ref = the current held.png of a NON-gun part, e.g. the flamer tank; never a gun edit), cut with weapon_cut.py, a small ingest like tools/art/gatling_ingest.py that rewrites only those rows' held/held_small (re-measure grip/muzzle; tests test_weapon_art / test_held_size), held_small.py; before|after in the claw at 32 + 64 px/m beside r1_w1; director reel check (hand_cannon chapter).
+1. (demoted, see 23:03) Item 3b held parts: hand cannon + machine pistol top views toward r1_w1 (one image job under image.lock, 3-prop sheet, TEXT + style ref = the current held.png of a NON-gun part, e.g. the flamer tank; never a gun edit), cut with weapon_cut.py, a small ingest like tools/art/gatling_ingest.py that rewrites only those rows' held/held_small (re-measure grip/muzzle; tests test_weapon_art / test_held_size), held_small.py; before|after in the claw at 32 + 64 px/m beside r1_w1; director reel check (hand_cannon chapter).
 2. Gatling: chunkier tan housing (r1_w6) if the print keeps greying it: check PartMaterials/held_small tone; maybe a held_small lift for the housing only.
 3. 3c pickups toward r2_w8 (judge the armory at 48 px/m beside r2_w8 first).
-4. FX polish (blast core + debris, ray ring alpha floor); bench-lock cost of riso + look_d5_fx.
+4. FX polish (blast core + debris; the ray ring fade is done e7bccb95); bench-lock cost of riso + look_d5_fx.
 5. Keep REPORT.md current; the evidence gate once more before 08:30.
 Session state 23:06: head = this commit, tree clean, no Godot process of mine running, image.lock released at 22:36.
