@@ -3,7 +3,8 @@ extends Scenario
 ## the 12 m city a pit guard holds behind a kerb car or a corner; the bot then walks straight at
 ## him after stuck_ticks in reach without a shot, so the block's fight keeps moving. With a pistol
 ## it must reach the third wave and drop five guards in 40 s, and the run replays identical
-## (SIM-05). TST-05: a planted fault (stuck_ticks never runs out) must stall in the first wave.
+## (SIM-05). TST-05: a planted fault (neither stuck_ticks nor GunplayBot's flank ever runs
+## out) must stall in the first wave.
 ## The dev arena's pit must still fight from its entry walk (the close-in once hijacked the walk
 ## in, where a guard is already in reach: 0 shots): two guards down in 20 s there.
 
@@ -63,7 +64,7 @@ func _planted() -> String:
 	var data: DataStore = DataStore.new()
 	var s: ArenaSession = _open(bus, data)
 	var bot: ArenaArsenalBot = ArenaArsenalBot.new(s.stage, s.actions)
-	bot.stuck_ticks = LIMIT_TICKS * 2
+	bot.never_close_in(LIMIT_TICKS * 2)
 	s.world.loop().set_input(bot)
 	var tel: Dictionary = _play(s)
 	s.world.free()

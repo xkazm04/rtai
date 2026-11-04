@@ -28,6 +28,13 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 	_fight = GunplayBot.new(p_stage, p_actions, REACH_M / GunplayBot.REACH_SHARE)
 
 
+## A bot that never closes in: neither its own walk at the guard nor GunplayBot's flank round
+## the cover (a scenario's planted fault).
+func never_close_in(ticks: int) -> void:
+	stuck_ticks = ticks
+	_fight.flank_after = ticks
+
+
 func sample(tick: int) -> TickInput:
 	var t: TickInput = _close_in(_fight.sample(tick), tick)
 	var carry: RivetCarry = stage.pilot.carry if stage.pilot != null else null
