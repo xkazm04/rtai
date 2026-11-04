@@ -5,7 +5,7 @@ extends RefCounted
 ## tip. make_held() returns a Sprite2D whose origin IS the grip, already scaled to world px
 ## (32 per m), so a socket only parents and rotates it, and muzzle_m() is where shots spawn.
 ## Unknown ids and missing files draw a flat ink bar and log once (a later art landing must not
-## break the fight). Frames of an fx id `flash_pistol` are `flash_pistol_0..n`, or the id itself.
+## break the fight). The fx cells live in WeaponFxCells (`fx_cells`).
 
 const TABLE: String = "res://data/tables/weapon_art.json"
 const SCHEMA: String = "gtai.weapon-art/1"
@@ -28,13 +28,13 @@ var held_small_below_ppm: float = 0.0
 var round_k: Dictionary[StringName, float] = {}
 ## n5-look: the colour FX folder (weapon_art.json fx_colour_dir; "" = the ink FX).
 var fx_colour_dir: String = ""
+var fx_cells: WeaponFxCells = WeaponFxCells.new()
 ## n5-look (r2_w8): a pickup lying in its loot ring draws at least this span (m); 0 = true size.
 var pickup_min_span_m: float = 0.0
 ## n5-look (r2_w8): world px of ink round a pickup's silhouette (1 = before).
 var pickup_outline_px: float = 1.0
 
 var _rows: Dictionary[StringName, Row] = {}
-var _fx: Dictionary[StringName, Cell] = {}
 var _tex: Dictionary[String, Texture2D] = {}
 var _missing: Dictionary[StringName, bool] = {}
 var _placeholder: Texture2D = null
@@ -57,12 +57,6 @@ class Row:
 	var part_grip: Dictionary[String, Vector2] = {}
 
 
-class Cell:
-	extends RefCounted
-	var art: String = ""
-	var anchor: Vector2 = Vector2.ZERO
-
-
 func _init(path: String = TABLE) -> void:
 	var t: DataTable = DataTable.open(path, SCHEMA)
 	rig_px_per_m = t.num(t.raw, "rig_px_per_m")
@@ -75,14 +69,8 @@ func _init(path: String = TABLE) -> void:
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
 		if r.has("projectile_k"):
 			round_k[StringName(t.text(r, "id"))] = t.num(r, "projectile_k")
-	var colour_dir: String = t.text(t.raw, "fx_colour_dir") if t.raw.has("fx_colour_dir") else ""
-	fx_colour_dir = colour_dir
-	for row: Variant in t.array(t.raw, "fx"):
-		var r: Dictionary = row if row is Dictionary else {}
-		var c: Cell = Cell.new()
-		c.art = _coloured(t.text(r, "art"), colour_dir)
-		c.anchor = t.vec(r, "anchor_px")
-		_fx[StringName(t.text(r, "id"))] = c
+	fx_cells.read(t)
+	fx_colour_dir = fx_cells.colour_dir
 	if not t.ok():
 		Log.error("weapon_art", str(t.errors()))
 
@@ -182,24 +170,11 @@ func make_held(id: StringName, part: String = "") -> Sprite2D:
 	return s
 
 
-## n5-look: the round 2 colour sheet's FX (tools/art/fx_colour.py) when `fx_colour_dir` names a
-## folder holding a cell of the same file name; "" = the ink-print FX (the A/B is that one value).
-static func _coloured(path: String, dir: String) -> String:
-	if dir == "":
-		return path
-	var alt: String = dir.path_join(path.get_file())
-	return alt if ResourceLoader.exists(alt) else path
-
-
 ## The frames of an fx id: `<id>_0..n` when they exist, else the single cell `<id>`.
 func fx_frames(id: StringName) -> Array[Texture2D]:
 	var out: Array[Texture2D] = []
-	var i: int = 0
-	while _fx.has(StringName("%s_%d" % [id, i])):
-		out.append(_load(_fx[StringName("%s_%d" % [id, i])].art))
-		i += 1
-	if out.is_empty() and _fx.has(id):
-		out.append(_load(_fx[id].art))
+	for path: String in fx_cells.frame_paths(id):
+		out.append(_load(path))
 	return out
 
 
@@ -210,8 +185,7 @@ func fx_scale() -> float:
 
 ## The point of an fx cell that sits on the muzzle (a flash) or is the head (a projectile).
 func fx_anchor(id: StringName) -> Vector2:
-	var key: StringName = id if _fx.has(id) else StringName("%s_0" % id)
-	return _fx[key].anchor if _fx.has(key) else Vector2.ZERO
+	return fx_cells.anchor(id)
 
 
 ## A plain Sprite2D, or a HeldLod when the weapon has a `small` part and the table a threshold.
