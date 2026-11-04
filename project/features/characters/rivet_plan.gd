@@ -23,10 +23,17 @@ const FORM_OPEN: StringName = &"open"
 const FORM_DAY: StringName = &"day"
 ## The owner's ASK rivet-motion-1 options: T2's ratio (base), a milder cut, the day's arms.
 const FORM_MILD: StringName = &"mild"
-## The Hauler ghost tank (features/souls): 2.6 = base 1.2 x (0.9 / 0.42), the rivet_ghost radius.
+## The Hauler ghost tank (features/souls): 2.6 = BODY_SIZE_K x (0.9 / 0.42), the rivet_ghost radius.
 const FORM_HAULER: StringName = &"hauler"
+## n5-cast (2026-11-04): the pre-hybrid base (size 1.2, the d5 arms), kept for the A/B frames.
+const FORM_STOCKY: StringName = &"stocky"
+## The size_k at which the art matched the rivet_base body radius (d5); the Hauler tank's absolute
+## size hangs off this, not off FORM_BASE, so slimming the base does not shrink the tank.
+const BODY_SIZE_K: float = 1.2
+## n5-cast: the lanky + android hybrid (r2_c3) is about 1.1x the crowd's 0.83 m shoulder span.
 const FORMS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(1.2, 0.7, -250.0),
+	FORM_BASE: Vector3(0.97, 0.7, -250.0),
+	FORM_STOCKY: Vector3(1.2, 0.7, -250.0),
 	FORM_OPEN: Vector3(1.1, 0.85, -30.0),
 	FORM_NIGHT: Vector3(1.3, 1.0, -30.0),
 	FORM_DAY: Vector3(1.2, 0.7, -250.0),
@@ -35,10 +42,17 @@ const FORMS: Dictionary[StringName, Vector3] = {
 }
 ## [arm_k, hand_k, arm_w] per form; a form missing here keeps 1.0 (King, the night and day forms).
 const ARMS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(0.72, 0.78, 0.8),
+	FORM_BASE: Vector3(0.85, 0.9, 0.6),
+	FORM_STOCKY: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
 	## The tank is base Rivet grown (HaulerLook bulks the arms further from these).
 	FORM_HAULER: Vector3(0.72, 0.78, 0.8),
+}
+## n5-cast: [leg_k, leg_w, gait_k] per form (missing = 1.0): leg_k lengthens the thigh and shin and
+## raises the hip with them (the lanky gait), leg_w thins them (lean piston legs), gait_k scales
+## GAIT_SCALE so the slimmer body keeps a long stride in metres.
+const LEGS: Dictionary[StringName, Vector3] = {
+	FORM_BASE: Vector3(1.15, 0.65, 1.15),
 }
 ## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
 ## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.
@@ -56,6 +70,7 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	var key: StringName = form if p_form == &"" else p_form
 	var f: Vector3 = FORMS.get(key, FORMS[FORM_BASE])
 	var arms: Vector3 = ARMS.get(key, Vector3.ONE)
+	var legs: Vector3 = LEGS.get(key, Vector3.ONE)
 	var p: BodyPlan = BodyPlan.new()
 	p.kind = BodyPlan.Kind.RIVET
 	p.name = "rivet"
@@ -68,7 +83,8 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	p.collar_pos = Vector2(-14, 0)
 	p.hip_y = 78.0
 	p.hip_z = 250.0
-	_legs(p)
+	_legs(p, legs.x)
+	p.leg_w = legs.y
 	_arms(p, f.y, f.z)
 	_proportion(p, arms.x, arms.y)
 	p.arm_w = arms.z
@@ -80,19 +96,20 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	p.hose_tex = "hose"
 	p.hose_from = Vector2(-95, 70)
 	p.hip_follow = 1.0
-	p.gait_scale = GAIT_SCALE
+	p.gait_scale = GAIT_SCALE * legs.z
 	p.sprint_stride = SPRINT_STRIDE
 	p.speed_k = 1.0 if key == FORM_HAULER else SPEED_K
 	return p
 
 
-static func _legs(p: BodyPlan) -> void:
+static func _legs(p: BodyPlan, leg_k: float) -> void:
+	p.hip_z *= leg_k
 	p.thigh_part = PackedStringArray(["l_thigh", "r_thigh"])
-	p.thigh_len = 166.0
-	p.thigh_draw = 166.0
+	p.thigh_len = 166.0 * leg_k
+	p.thigh_draw = 166.0 * leg_k
 	p.shin_part = PackedStringArray(["l_shin", "r_shin"])
-	p.shin_len = 137.0
-	p.shin_draw = 137.0
+	p.shin_len = 137.0 * leg_k
+	p.shin_draw = 137.0 * leg_k
 	p.foot_part = PackedStringArray(["l_foot", "r_foot"])
 	p.foot_toeoff = PackedStringArray(["l_foot_toeoff", "r_foot_toeoff"])
 

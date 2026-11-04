@@ -76,10 +76,10 @@ func test_no_stomp_in_base_form() -> void:
 
 func test_tank_rig_scale_matches_the_ghost_body_radius() -> void:
 	var b: BodyTable = BodyTable.load_default()
-	var base: BodyPlan = RivetPlan.build(RivetPlan.FORM_BASE)
 	var tank: BodyPlan = RivetPlan.build(RivetPlan.FORM_HAULER)
 	var body_k: float = b.radius(&"rivet_ghost") / b.radius(&"rivet_base")
-	assert_almost_eq(tank.size_k / base.size_k, body_k, 0.05, "the art grows with the body")
+	var k: float = tank.size_k / RivetPlan.BODY_SIZE_K
+	assert_almost_eq(k, body_k, 0.05, "the art grows with the body")
 
 
 func test_stomp_telegraphs_inside_the_readable_band_before_it_lands() -> void:
