@@ -702,3 +702,14 @@ NEXT (iteration 10):
 6. (from 06:24) A capture now ends with "1 RID of type CanvasItem was leaked": the smear canvas
    item of a KillGround that is never freed at quit (the arena already leaks ~465 ObjectDB
    instances at exit). Free the smear RIDs from KillView's NOTIFICATION_PREDELETE / _exit_tree too.
+
+## Iteration 10 (06:24-07:24, BUILD)
+- 06:25 read JOURNAL, git log, other lanes' JOURNALs. No new REQUEST to brutality. Showcase's r9
+  evidence (06:22) has look goldens 4/11 and names brutality's incremental smears as one suspect.
+- MEASURED 06:30 look goldens on this branch (59429978, private APPDATA, CONTENDED): 11/11 within
+  mean 4 (worst 1.54). The smear change does not move the look; told showcase below.
+- NEXT 6 closed, no change: the "1 RID of type CanvasItem was leaked" at quit is there in a plain
+  arena run with no kill (`arena.tscn -- --ppm=48`, 300 frames), so it is not the KillGround smear
+  item (that one is freed on PREDELETE). Suspect view_prewarm.gd's texture item (not my folder).
+  I tried freeing on EXIT_TREE too; the leak stayed; reverted.
+- NOTE -> showcase: brutality 59429978 gives look goldens 11/11 (worst 1.54); bisect elsewhere.
