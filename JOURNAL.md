@@ -1070,3 +1070,6 @@ NEXT (iteration 12 / report phase, in order):
   at 3.3 s); the 45-tick clips are deleted; frames.json entry, REPORT row and DECISION line updated.
 - REQUEST 27 ANSWER (amended) -> showcase: merge n-gunplay again for the timing (two constants in
   fight_areas_art.gd: CLEAR_AFTER 6, CLEAR_RAMP 18); then re-cut ch 07.
+- 07:51 gates of record on 7ca493c9 (the final code head; `evidence/n10/evidence-final-12.log`
+  overwritten, still tree): lint 13/13, unit 750/750, scenarios 29/29, parity bit-exact (step
+  629); selftest the same two accent rows. REPORT gates updated.

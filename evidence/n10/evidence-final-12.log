@@ -1,12 +1,12 @@
-PASS lint: lint: all 13 checks pass over 656 GDScript files [dirty tree: 19 uncommitted paths]
+PASS lint: lint: all 13 checks pass over 656 GDScript files [dirty tree: 18 uncommitted paths]
      -> C:\Users\kazda\kiro\gtai-wt\n-gunplay\build\evidence\lint.json
-PASS unit-tests: unit-tests: 750 passed, 0 failed, 0 skipped (GUT, headless) [dirty tree: 19 uncommitted paths]
+PASS unit-tests: unit-tests: 750 passed, 0 failed, 0 skipped (GUT, headless) [dirty tree: 18 uncommitted paths]
      -> C:\Users\kazda\kiro\gtai-wt\n-gunplay\build\evidence\unit-tests.json
-PASS scenario-tests: scenario-tests: 29 passed (headless) [dirty tree: 19 uncommitted paths]
+PASS scenario-tests: scenario-tests: 29 passed (headless) [dirty tree: 18 uncommitted paths]
      -> C:\Users\kazda\kiro\gtai-wt\n-gunplay\build\evidence\scenario-tests.json
-PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3516 floats); planted mutation caught at step 629 [dirty tree: 19 uncommitted paths]
+PASS parity: parity: native == GDScript reference bit for bit over 1200 steps (40 snapshot checks, 3516 floats); planted mutation caught at step 629 [dirty tree: 18 uncommitted paths]
      -> C:\Users\kazda\kiro\gtai-wt\n-gunplay\build\evidence\parity.json
-FAIL selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 101 colours; 48 px/m ok, 89 actors, 102 colours); 86 art textures, 0 placeholders, prewarm 11 ms; look goldens 11/11 within mean 4 (worst 1.82); accent pixels 32: 0.83 %, 48: 1.92 %, 64: 3.56 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; NEW off-doctrine: 48 px/m vermilion on vehicles: 8 px; known debt: 48 px/m vermilion on cop: 8 px (debt blood_flicker_cop_48, <= 12, d5-city); debt rows no longer seen (delete them): blood_flicker_vehicles_32, blood_flicker_cop_block_64; block goldens 5/5 within mean 4 (worst 0.75); block accent pixels 32: 0.70 %, 48: 1.58 %, 64: 1.38 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; NEW off-doctrine: 64 px/m vermilion on cop: 28 px; world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %) [dirty tree: 19 uncommitted paths]
+FAIL selftest: selftest: D4 city frames rendered (32 px/m ok, 100 actors, 101 colours; 48 px/m ok, 89 actors, 102 colours); 86 art textures, 0 placeholders, prewarm 21 ms; look goldens 11/11 within mean 4 (worst 1.82); accent pixels 32: 0.83 %, 48: 1.92 %, 64: 3.56 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; NEW off-doctrine: 48 px/m vermilion on vehicles: 8 px; known debt: 48 px/m vermilion on cop: 8 px (debt blood_flicker_cop_48, <= 12, d5-city); debt rows no longer seen (delete them): blood_flicker_vehicles_32, blood_flicker_cop_block_64; block goldens 5/5 within mean 4 (worst 0.75); block accent pixels 32: 0.70 %, 48: 1.58 %, 64: 1.38 %; crowd atlas 6/6 pedestrian looks on doctrine, cop looks still vermilion (debt, cops go cop_blue): none; NEW off-doctrine: 64 px/m vermilion on cop: 28 px; world lock holds (32: 0.00 %, 48: 0.00 %, 64: 0.00 % of the overlap differs after a pan, max 0.5 %) [dirty tree: 18 uncommitted paths]
      -> C:\Users\kazda\kiro\gtai-wt\n-gunplay\build\evidence\selftest.json
-evidence: commit ae2587eeca21028b2c5ade48c626c954ba533063, godot 4.7.2.stable.official.ed1daf0bf
+evidence: commit 7ca493c9067a6012f1e3c144c4333d7b2d7f53b4, godot 4.7.2.stable.official.ed1daf0bf
 exit 1
