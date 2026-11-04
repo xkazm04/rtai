@@ -32,6 +32,12 @@ const SMOKE_PUFFS: int = 5
 const SMOKE_CYCLE: int = 48
 const SMOKE: Color = Color(0.84, 0.8, 0.74, 0.9)
 
+## The night's throw (the A/B's before, with no smoke).
+const OLD_LOOK_TICKS: int = 8
+const OLD_FALL_M: float = 0.45
+
+## False (`--no-plasma-heat`): the night's throw and no wound smoke (the A/B's before).
+static var heat: bool = not OS.get_cmdline_user_args().has("--no-plasma-heat")
 static var _holed: ImageTexture = null
 
 var kills: SignatureKills = null
@@ -75,7 +81,8 @@ class Topple:
 
 	## After KillView placed the body this frame: `tick` is the sim tick.
 	func pose(tick: int, ppm: float) -> void:
-		var t: float = float(tick - born - row.hitstop_ticks - LOOK_TICKS) / TOPPLE_TICKS
+		var look: int = LOOK_TICKS if KillHoleFx.heat else OLD_LOOK_TICKS
+		var t: float = float(tick - born - row.hitstop_ticks - look) / TOPPLE_TICKS
 		var k: float = clampf(t, 0.0, 1.0)
 		k *= k  # eased in: slow off balance, fast to the street
 		var axis: Vector2 = dir.normalized() if dir != Vector2.ZERO else Vector2.RIGHT
@@ -90,7 +97,8 @@ class Topple:
 		var inner: Node2D = body.get_child(0) as Node2D if body.get_child_count() > 0 else null
 		if inner == null:  # no rig was cut (the city block at 32 px/m): nothing to topple
 			return
-		inner.transform = t2.translated(axis * FALL_M * ppm * k)
+		var fall: float = FALL_M if KillHoleFx.heat else OLD_FALL_M
+		inner.transform = t2.translated(axis * fall * ppm * k)
 
 
 ## A white square with a transparent disc in the middle (HOLE_M of MASK_M).
@@ -130,7 +138,7 @@ func _draw() -> void:
 ## The wound smokes: puffs rise out of the hole (the ring's -y), swell and thin, the column
 ## fading out over SMOKE_TICKS. Phases from the age only: a replay draws the same smoke.
 func _smoke(age: int) -> void:
-	if age < 0 or age >= SMOKE_TICKS:
+	if age < 0 or age >= SMOKE_TICKS or not heat:
 		return
 	var fade: float = 1.0 - float(age) / float(SMOKE_TICKS)
 	for i: int in SMOKE_PUFFS:
