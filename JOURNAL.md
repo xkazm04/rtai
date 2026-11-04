@@ -1413,3 +1413,22 @@ NEXT is unchanged, except item 2 (done).
   guard sprite (orange hi-vis, hard hat): `--rigs` (ArenaRigs) only runs on the pit's printed
   path, and the quest's city fight draws the same sprite. So "one guard" is right for the city
   reels only.
+- 10:03 tried `--reach=4` on the city flamethrower (kill 675, 0 script errors): the burning guard
+  still runs north to the barrier and dies at about 28 % of the frame's height, no better than the
+  kept run, so it is deleted. REPORT "After 09:30" lists it as still weak.
+- Session state 10:04: code head 70894746 (the --reach arg), gates of record on dfa5f508 (lint,
+  unit 757, scenarios 29, parity bit-exact; selftest the two known accent rows). frames.json has
+  15 entries, all exist; the top six are the lone reels (pit six, city seven, pit unique five, city
+  unique four, pit close-up 64, city close-up 64), then the city lean A/B. No Godot process of mine
+  running, no lock taken. Shared files touched this iteration: `boot/collect_call/view/
+  collect_call_view.gd` (city_lean_m, zero = identical), `features/city/view/city_view.gd` (one
+  line: the actor window grows by kick_px), `dev/arena/arena_game.gd` (--reach), docs/decisions.md
+  (three DECISION lines). Cherry-pick: showcase 8a8215a3 as 2c27580e.
+
+NEXT (10:40 report phase):
+1. REPORT "After 09:30 (iteration 21)" is written in place. At 10:40, re-check that its paths
+   exist and that frames.json still parses; nothing else is owed.
+2. Merge notes: showcase's 8a8215a3 is in n-gunplay as 2c27580e (the same patch, so a merge
+   resolves to one copy). The `CityView` window line is the one city-file change.
+3. Open (not before the freeze): the city flamethrower's death at the frame's top edge; the play
+   camera's city split (gunplay-12) can reuse `city_lean_m`.
