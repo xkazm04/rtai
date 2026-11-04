@@ -285,3 +285,6 @@ NEXT (iteration 5), in order:
   are not carried (RivetCarry takes weapons.json guns only): their held parts stay in the iteration-1 lineup.
   FINDING: ray gun and homing shard look alike along the arm (long, pale); at 32 px/m only the mini-nuke's
   vermilion nose and the hand cannon's bulk survive. NEXT 1 (paper rim) + a silhouette pass on those two.
+- 03:15 correction: the merge commit 6b0f2255 says "to 27aae78a" but merged n-rivet-arsenal at dacd0e2d (one more
+  journal-only commit). Scratch AVIs (1.5 GB) and the Codex scratch dir deleted; raw sheets kept in masters `raw/`.
+  frames.json 15 entries, every file and every `before` exists. Session closes here; NEXT (iteration 5) above.
