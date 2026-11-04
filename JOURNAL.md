@@ -247,3 +247,35 @@ arena station. Then items 5-8 above.
 - To rivet-arsenal: your weapon switch is the in-game lineup now (thanks). The flamethrower tank is
   `art().part_texture(&"flamethrower", "tank")`. A magazine part for the reload: say so in a REQUEST and I draw it.
 - To gunplay: `muzzle_fx` of the molotov is "" now (a throw has no flash); `WeaponFxArt.muzzle` returns early on "".
+- MILESTONE 03:06 `WeaponFxElectro` (5ffe58af): gunplay's chain arcs drawn with the electro arc cell (end to end, a
+  spark star where it lands) and the stun daze as two spark stars circling the head; FightAreasArt asks first
+  (2 one-line hooks in gunplay's `fight_areas_art.gd`), zigzags remain the fallback. Dev still before/after
+  `it4-electro-chain-daze-48ppm.png` (`dev/weapon_art/electro_cells.gd`; the window stretch makes it 48 px/m).
+  First pass sparks were specks (SPARK_K 0.8 / 0.55) -> 1.6 / 1.3.
+- MEASURE 03:08 live: `--bot=arsenal --loadout=electro_gun --start=pit` at 64 px/m: the bolt lands on the riot
+  guard, the daze stars circle his head, a second bolt, he drops in red. `it4-electro-daze-live-64ppm.png`, clip
+  `it4-electro-daze-64ppm.mp4`. A chain between two victims is still not filmed (the guards spread out).
+- TIP: `--bot=arsenal --loadout=<one gun>` is the way to film one weapon in a real fight with it in the claw;
+  `--bot=gunplay --weapon=` still shows the default gun in the claw (REQUEST 1 path untouched) and missed a lot.
+- MEASURE 03:08 gates of record at 81d45fd7: lint 13/13 (667 files), unit 731/731, scenarios 32/32
+  (`evidence/weapon-art/{unit,scenarios}-it4-final.log`). Render-only changes + data rows; no sim file, no replay
+  or parity golden touched. No bench (render-only; cells replace shapes of similar cost).
+
+## Calls for the owner (adds, iteration 4)
+- weapon-art-5: the SMG's long curved side feed box (unique outline in the claw) vs the original small tab.
+  Frame `it4-smg-feedbox-ab.png` (same ticks, 64 + 32 px/m). Default: the feed box.
+- weapon-art-6: the electro daze as paper spark stars circling the head (weapon-art) vs gunplay's zigzag
+  chevrons. Frames `it4-electro-chain-daze-48ppm.png` (side by side), `it4-electro-daze-live-64ppm.png`.
+
+NEXT (iteration 5), in order:
+1. At 32 px/m the one-hand guns print as dark blobs in the claw (print_part): try a paper rim (1-2 px cream
+   outline) on held parts or a lighter print for weapons only; A/B at 32 px/m on the arena and the city block.
+2. The electro arc forks read as twigs: a jaggier arc (more kinks, forks forward not backward) in
+   `weapon_fx_jet.py`; film a chain between two guards (the range dummies are too far apart: maybe a station row
+   1.5 m apart in `arena_stations/weapon-art.json`).
+3. The weapon-rack arena station (`arena_stations/weapon-art.json`; rivet-arsenal's `--pickups=` already lays
+   pickups, so the rack may just be a station that passes `--pickups=` ids + a label).
+4. The in-game lineup for the advanced nine in the claw: `--loadout=hand_cannon,ray_gun,mini_nuke` and
+   `gloria,homing_shard,...` (slots: 1 sidearm, 2 long, 3 heavy, 4 thrown), 64 + 32 px/m, one sheet.
+5. Read brutality's JOURNAL: do they use `gore_*_top`? Re-check the X-ray strobe with the top-down sticker.
+6. A magazine part if rivet-arsenal REQUESTs it (reload readability).
