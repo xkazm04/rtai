@@ -1,6 +1,8 @@
 # REPORT: lane rivet-arsenal (branch `n-rivet-arsenal`), night run 2026-11-04
 
-DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of record, the last clips, the frames.json order.
+Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merged n-gunplay (b11fa9e2) and n-weapon-art (a957f888) work; nothing is pushed.
+
+**Read first:** call 1 (quest 1 on the cast rigs), then the owner page `M\frames.json` top to bottom (newest and best first).
 
 **Scope (the owner, 00:05):** "Equiped design on player". Rivet holds, carries and uses every weapon, in the live game.
 
@@ -13,9 +15,9 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
-| lint | 13/13 (716 files) | d6618606 |
-| unit | 813/813, exit 0 | d6618606, `E/it9f-unit.log` |
-| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | d6618606: 36/37 on the full run (`E/it9f-scenarios.log`). The red one is scenario_city_chase's 2 ms nav budget under load, the known flake; it passes alone (`E/it9f-city-chase-alone.log`) |
+| lint | 13/13 (716 files) | 8465d548 (the merge of n-weapon-art, the last code change) |
+| unit | 814/814, exit 0 | 8465d548, `E/it10-unit.log` |
+| scenarios | 37/37, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | 8465d548, `E/it10-scenarios.log` (before the merge, at d6618606: 36/37 with scenario_city_chase's known nav-budget flake, which passed alone) |
 | evidence run | lint, unit 813, scenarios 37, parity bit-exact (mutation caught at step 629) PASS; selftest: look goldens 11/11 and block 5/5, but exit 1 on the accent audit (the known blood-flicker vermilion class, NEW 64 px/m "vermilion on cop 28 px"; not bisected) | 908c4a9f, `E/it9-evidence.log` |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
@@ -40,7 +42,8 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
   - the flamer's tank rides on Rivet's back and the hose follows;
   - the rocket tube shows empty after the shot (weapon-art's `empty` part);
   - the molotov's rag lights on the draw and on each next bottle.
-- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `Mrames\city-block-kinetic-held-32ppm-3x.png`.
+- Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `M\frames\city-block-kinetic-held-32ppm-3x.png`.
+- Since the n-weapon-art merge of iteration 10 (8465d548), every held weapon but three (molotov, plasma sword and flamethrower, which already print light) uses `held_small` under 56 px/m: the long guns, both tubes (incl. the empty tube) and the melee weapons. Seen on the city block at 32 px/m in a live fight (plasma rifle, ray gun, rocket launcher, electro gun; 3 waves, 7 kills, 8 switches, 0 deaths, 0 script errors): `M\clips\city-block-long-guns-held-32ppm-x2.mp4` and `M\frames\city-block-long-guns-held-32ppm-3x.png`. The rocket tube reads light with its warhead. The electro gun still prints mostly dark at 32 px/m (weapon-art's call 14). The teal tip next to a long barrel is Rivet's torch forearm, his one doctrine teal; it shows when the off arm rides the barrel.
 - Clips:
   - `M\clips\arena-arsenal-cycle-pistol-rifle-rocket-molotov-64ppm-x2.mp4`
   - `...cycle-cannon-ray-flamer-64ppm-x2.mp4`
