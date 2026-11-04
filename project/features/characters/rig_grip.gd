@@ -28,6 +28,9 @@ const SHAPE: Dictionary[int, Vector3] = {
 const OFF_RECOIL: float = 0.7
 ## Where the weapon's line starts across the chest: 0 = the centre, 1 = the gun shoulder.
 const GUN_SIDE: float = 0.3
+## The weapon's line stays within this of the torso's forward: while the torso turns behind a fast
+## aim, a two-hand hold leads with the weapon instead of reaching the off claw behind the back.
+const MAX_SWING_RAD: float = PI / 3.0
 const RECOIL_PX: float = 60.0
 
 const BY_CLASS: Dictionary[StringName, int] = {
@@ -55,6 +58,7 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 	var g2: Vector2 = Vector2(gs.x, gs.y * GUN_SIDE)
 	var tl: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	var dv: Vector2 = (tl - g2).normalized()
+	dv = Vector2.from_angle(clampf(dv.angle(), -MAX_SWING_RAD, MAX_SWING_RAD))
 	var shape: Vector3 = SHAPE[rig.grip]
 	var h: Vector2 = g2 + dv * reach * (shape.x if aim_arm else shape.y)
 	h -= dv * RECOIL_PX * rig.c_recoil * (1.0 if aim_arm else OFF_RECOIL)
