@@ -367,3 +367,35 @@ NEXT (iteration 3):
 - REQUEST 13 -> brutality: gib throws (or their sprays) land outside the pit wall on the paper
   margin below the south wall (reel-0315-arsenal 45-75 s, the red fan below the frame's wall);
   stop gibs and drops at the arena walls.
+- BENCH r4 (bench.lock held 03:21-03:35; CONTENDED: other lanes on the GPU; I filmed nothing
+  during it). `node tools/bench/run.mjs`, exported release, 3 x 60 s: aggregate p99 10.09 ms,
+  1 % low 70 fps, MISSES p99CpuMs (worst frame 63.5 ms, 2 hitches > 50 ms). My recompute from
+  frame_ms per scenario: drive p99 5.73 ms / 1 % low 115 fps (r3 3.63 / 137, record 3.56),
+  drive48 3.83 / 137, riot 7.23 / 101 (r3 9.91 / 60, record 6.0 / 124). Riot blood 60 us/frame
+  (not it); rigs p99 0.89 ms. The drive moved the other way from the riot between rounds with
+  no city-path code change in between except human-reactions' CityScare (inactive without
+  gunfire) -> run-to-run contention is the leading explanation, still not proven.
+  evidence/r4/bench-*.json, bench-r4.txt.
+- 03:38 city glue (NEXT 3): on `--arena=city` ArenaFloorView draws only the props that collide
+  (ArenaWalls.SOLID) and cones; the firing lines and door marks are gone from the street. The
+  black wall bars stay: they are solid in the sim on the city too (hiding them would leave
+  invisible walls). DECISION pending: should the city proving block build the pit's walls at
+  all (a sim change; city scenarios to check)? evidence/r4/city-floor-glue.png. Commit 4045032b.
+- Accent debt rows for this round's 48 px/m flicker committed (5faaceea); the selftest was NOT
+  re-run on them (out of session time): first thing next round.
+
+NEXT (iteration 4):
+1. Re-run the selftest alone (`node tools/selftest/run.mjs` or `tools/evidence/run.mjs
+   --no-bench`) to confirm the two new debt rows turn it green; delete round 3's four rows if
+   they stay unseen twice.
+2. Merge round 5 (brief order); read replies to REQUESTs 9-13. Watch for human-reactions and
+   rivet-arsenal adopting the react_line spot (x -0.5..11.5) and brutality's view of the
+   planted-check change.
+3. Reel: film the electro turn at 64 px/m and look at 2 fps to find the X-ray kill; add the
+   hand cannon (blowback kill) and the flamethrower: a second loadout run, e.g.
+   `--loadout=hand_cannon,plasma_rifle,flamethrower,molotov`, or pickups on the way in.
+4. Reel beats still missing from the brief: riot cop with a shield, robot thug. Look at
+   enemy-ai's archetype spawns (the pit waves are patrol cops only) for a `--pit=` mix.
+5. City reel again with the floor glue (`--arena=city`, 32 px/m), and decide the walls.
+6. The 17 m/s snap in the plain reel (old NEXT 6): a scenario-side probe.
+- 03:40 session end: all work committed; frames.json 14 entries; scratch sheets deleted.
