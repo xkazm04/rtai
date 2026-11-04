@@ -23,6 +23,8 @@ var actions: PlayerActions
 var started_tick: int = -1
 var victims: Array[Fighter] = []
 var car: VehicleBody = null
+var car_two: VehicleBody = null
+var wave: int = 1
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
 var _anchor: Vector2 = Vector2.ZERO
@@ -36,11 +38,26 @@ func _init(p_actions: PlayerActions) -> void:
 func step(stage: ArenaStage, tick: int) -> void:
 	if started_tick < 0:
 		_begin(stage, tick)
+	elif wave == 1 and _nearest(stage.arena.rivet.pos) == null:
+		_wave_two(stage, tick)
+
+
+## The second wave behind him: he turns the press round (the turn limit) and slams again.
+func _wave_two(stage: ArenaStage, tick: int) -> void:
+	wave = 2
+	var at: Vector2 = stage.arena.rivet.pos
+	for off: Vector2 in CLUSTER:
+		victims.append(_spawn(stage, at - off - Vector2(1.0, 0.0), false))
+	victims.append(_spawn(stage, at - RIOT - Vector2(1.0, 0.0), true))
+	if stage.vehicles != null:
+		car_two = stage.vehicles.spawn_parked(&"sedan", at - CAR - Vector2(1.0, 0.0), Vector2.UP)
+	Log.info("ghosts", "ghost reel: tonnage wave 2 at tick %d" % tick)
 
 
 func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(victims.size())
 	out.put_32(1 if car != null and car.state == VehicleBody.State.WRECK else 0)
+	out.put_32(wave)
 
 
 func telemetry() -> Dictionary:
