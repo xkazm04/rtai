@@ -18,8 +18,9 @@ mkdir -p $S; : > $S/list.txt; : > $S/film.log
 for id in $IDS; do
   q=$(( ${T[$id]} + 30 ))
   if [ $id = robot_thug ]; then  # no live robot fighter: human-reactions' dev pit (power-down death)
-    rm -rf $S/robot; "$G" --rendering-driver d3d12 --resolution 1280x720 --path project -s res://dev/enemy_ai/enemy_rig_fight_run.gd -- --out=$S/robot --squad=robot_thug --seconds=$((q / 60)) --every=1 --zoom=$(awk "BEGIN{print $P/32}") >> $S/film.log 2>&1
-    ffmpeg -y -loglevel error -framerate 60 -i $S/robot/f%05d.png -vf "scale=1280:800:force_original_aspect_ratio=decrease,pad=1280:800:(ow-iw)/2:(oh-ih)/2" -c:v rawvideo -pix_fmt bgr24 $S/$id.avi
+    rm -rf $S/robot; "$G" --rendering-driver d3d12 --resolution 1280x720 --path project -s res://dev/enemy_ai/enemy_rig_fight_run.gd -- --out=$S/robot --squad=robot_thug --seconds=11 --every=1 --zoom=$(awk "BEGIN{print $P/32}") >> $S/film.log 2>&1
+    dth=$(grep -o '"robot_death_frame_1": [0-9]*' $S/robot/stats.json | grep -o '[0-9]*$'); a=$(( dth > 240 ? dth - 240 : 0 ))
+    ffmpeg -y -loglevel error -framerate 60 -i $S/robot/f%05d.png -vf "trim=start_frame=$a:end_frame=$((dth + 150)),setpts=PTS-STARTPTS,scale=-2:800,crop=1280:800" -c:v rawvideo -pix_fmt bgr24 $S/$id.avi
   else
   "$G" --rendering-driver d3d12 --fixed-fps 60 --resolution 1280x720 --write-movie $S/$id.avi --quit-after $q --path project res://dev/arena/arena.tscn -- --bot=reel --reel=director --chapter=$id --loadout=pistol --ppm=$P --clean --rigs >> $S/film.log 2>&1
   fi
