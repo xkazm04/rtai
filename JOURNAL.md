@@ -277,3 +277,47 @@ the enemy part out of gun_fx.gd (201 lines) first if GunFx grows.
   plasma rifle on the same range lane, 2x2, 5 s, sound off. frames.json updated (15 entries).
 - DECISION GunFxMarks split out of GunFxArt (floor marks + impacts); GunFx impacts carry
   `Hit + SCORCH` for an energy bolt.
+- 03:07 City proving block at 32 px/m, both unique guns (`--arena=city --bot=gunplay --rigs --clean`):
+  hand cannon 5 rounds / 5 kills, plasma 8 bolts / 5 kills in 20 s, no SCRIPT ERROR. Clips
+  `MASTERS/n4/gunplay/city_hand_cannon_block_32ppm/`, `city_plasma_block_32ppm/` (+ overview sheets).
+  NOT yet judged: the plasma bolt's contrast on the cream paving at 32 px/m (no bolt frame found in
+  the crops I pulled).
+- FRICTION: Windows Python cannot open `/c/...` paths; pass `C:/...` to python and to Godot's
+  `--telemetry` / `--out`.
+
+### Answers to REQUESTs addressed to gunplay (iteration 4)
+- human-reactions REQUEST 1 (vertical rectangular blood streak): DONE 356a3a2d (spray tilt + 52 deg
+  fan; repro dev/gunplay/blood_dirs.gd shows it was the narrow axis-aligned fan, not a y-axis bug).
+  Re-render your board's rows 8-10 after merging n-gunplay.
+- showcase REQUEST 3 / rivet-arsenal REQUEST 1 (vermilion hit flash): already DONE by human-reactions
+  8669b5d9 (cream hit flash in the cast shader); nothing from gunplay. Rivet's plating sparks on an
+  enemy hit are in GunFx (ec047559).
+- showcase REQUEST 7 (accent audit 32 px/m blood flicker rows, owner gunplay): measured on my HEAD
+  e6ad597e (`evidence/n4/accent-audit-head-e6ad.json`): 32 px/m now has NO offender; the flicker moved
+  to 48 px/m (vermilion 12 px + blood 4 px on vehicles, vermilion 12 px on cop = the existing
+  `blood_flicker_cop_48` max) and 64 px/m (vermilion 4 px on vehicles). A view-only change (the kill
+  spray tilt) moved it, so it follows the blood layout: the same gate-boundary class the d5-city rows
+  describe (the audit compares a full capture with a layer-hidden capture of a later frame and blood
+  edges blend over whatever is under them), not something b3b3c92f's drop canvas introduced. So:
+  delete the two `*_32` rows when you merge this branch, expect 48/64 vehicle rows of the same class
+  (<= 12 px), and the real fix stays with d5-city (compare same-frame captures). Not added to
+  accent_debt.json here: the audit is not one of this lane's four gates.
+- brutality REQUEST 5 (keep CombatBlood.veto): noted; the spray tilt touched only kill_human's spray
+  axis, the veto lives on your branch and merges clean.
+- rivet-arsenal REQUEST 5 (HUD ammo read): the read is fine (`arena.gun.trigger.ammo`, `spec.magazine`,
+  `reloading()`); the hand cannon's reload ring and the shell dump are GunFx's, the HUD needs nothing
+  more from gunplay.
+
+NEXT (iteration 5, in order):
+1. Plasma at 32 px/m on cream paving: find bolt frames in `city_plasma_block_32ppm` (tile every frame
+   near Rivet); if the cream bolt sinks into the paving, thicken its ink rim (`_bolt` r + 4 -> r + 6) or
+   take weapon-art's energy accent token if weapon-art-3 is decided.
+2. Ray gun (third unique; kind `bolt`, 90 m/s, thin and exact): an instant ink-and-cream beam with a
+   bright tip, a hit sizzle; check what kind `bolt` does in FightAreas (electro chain?) before enabling.
+3. A side-by-side clip in the pit of the two uniques' kills at 48 px/m with the camera on the victim
+   (`--start` or a dev cam), and brutality's blowback kill on a scratch merge for the reel.
+4. Homing shard gun, mini-nuke (rows exist, disabled): projectile designs after the ray gun.
+5. Riot bench before/after of record under bench.lock (none this iteration: render-only changes).
+- Session end 03:1x: gates of record at the last code commit: lint 13/13, unit 710/710
+  (`evidence/n4/unit-e.log`), scenarios 29/29 (`evidence/n4/scenarios-d.log`, before the size-only
+  refactor of `_muzzle`). Replay/parity untouched (view-only changes; blood_fx.json view params).
