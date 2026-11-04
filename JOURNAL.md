@@ -519,14 +519,21 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   either. The lobes are not identified yet. REPORT section 5 and the decisions line corrected. All trials
   reverted, tree clean, re-imported, scratch deleted.
 
+- 00:02 NEXT item 1 started: D4 part markers (solid vermilion, one part per run, `cast_lineup.gd -- --crowd`, each
+  reverted with git checkout + `--import`; tree clean): thigh = the lobes' edges, foot_flat = their tips,
+  upperarm_endon = the patches beside the head, pelvis a sliver below, shin specks, forearm / upperarm /
+  foot_toeoff nothing. The lobes' dark interior is above the thighs and unassigned (the 23:58 "not the legs" was too
+  strong: the legs make the lobes' outline, something else fills them). Still `frames/crowd-part-markers-32ppm.png`.
+  Note: 64 px/m shows the D5 overlay on top, so D4 markers only read at 32 px/m. REPORT and the decisions line
+  corrected again.
+
 NEXT (iteration 11):
-1. Find the two dark lobes ahead of each ped's chest at 32 px/m: recolour ONE ped part at a time solid vermilion
-   (230,60,30) in D4 (the way the 23:52 torso marker worked), `cast_lineup.gd -- --crowd`, crop col 3 x5; suspects
-   in order: forearm / forearm_dark (an elbow-bent forearm projected forward), pelvis, foot_flat/toeoff, thigh,
-   shin, the halo/shadow sprite (rig_build `_halo`). Revert each with git checkout + `--import`.
+1. Assign the lobes' dark interior: markers still to run at 32 px/m: head_hat (and the head/torso HALO_BODY copies,
+   rig_build.gd 42-43), torso_jacket for the jacket look, thigh at z (does a second thigh draw, e.g. the D5
+   overlay at 32 px/m?), forearm_endon. Read rig_build.gd `_halo` and RigDetail's tier switch first.
 2. Fix that part (art via the d4 chars sheets ped_b/ped_c + `cut_ped_sheet.py`/`install_ped_sheet.py`, or the ped
    rest pose), then re-try the r4 sheet (`gen/r4/cut/`) on top. Judge with `--crowd [--road]` at 32 px/m, then the
    react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated line), and a
    provenance line per shipped part.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session state 00:02: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session state 00:07: head = this commit, tree clean, image.lock released, no Godot process of mine running.
