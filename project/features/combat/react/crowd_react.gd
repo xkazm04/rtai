@@ -11,7 +11,8 @@ extends RefCounted
 ## round's travel (or the car's), and its speed tells a car (thrown) from a round.
 ## A fleeing pedestrian that runs within TRIP_M of a body trips over it (ReactPose `trip`), once
 ## per body. A death startles the living pedestrians within STARTLE_M: they cower away from the
-## body (in a riot everyone already flees, so this is the crowd's reaction to each kill).
+## body (in a riot everyone already flees, so this is the crowd's reaction to each kill). The
+## fight's dead drawn on another rig set (extra_bodies) startle the street the same way.
 
 const DELAY_TICKS: int = 3
 const COWER: StringName = &"cower"
@@ -31,9 +32,14 @@ var trips: int = 0
 var deaths: int = 0
 var startles: int = 0
 var pipe: DeathPipe
+## The live radii (metres); the consts are the shipped values, a scenario plants 0 as a fault.
+var startle_m: float = STARTLE_M
+var trip_m: float = TRIP_M
 ## Bodies drawn outside this feed (the fight's dead on another rig set), world px by a key that
 ## no feed id uses (ArenaRigs: -1 - fighter id); the host refills it each frame.
 var extra_bodies: Dictionary[int, Vector2] = {}
+## The extra bodies already seen (a new key is a fresh death in the fight: it startles too).
+var _extra_seen: Dictionary[int, bool] = {}
 ## Each person's DEAD flag at the last observed tick, by actor id.
 var _dead: Dictionary[int, bool] = {}
 ## Each person's FLEE flag at the last observed tick, by actor id.
@@ -62,7 +68,7 @@ func observe(rigs: CharacterRigs, ticks: int = 1) -> void:
 			dead[id] = feed.has_flag(i, RigFeed.Flag.DEAD)
 			if dead[id] and not _dead.get(id, true):
 				_die(rigs.rig_for(id), feed.vel[i])
-				_startle(rigs, i)
+				_startle(rigs, feed.pos[i], i)
 		if feed.kinds[i] != BodyPlan.Kind.PED:
 			continue
 		var now: bool = feed.has_flag(i, RigFeed.Flag.FLEE)
@@ -77,6 +83,7 @@ func observe(rigs: CharacterRigs, ticks: int = 1) -> void:
 				_cower(rigs.rig_for(id), feed.vel[i])
 	_fleeing = seen
 	_dead = dead
+	_startle_extra(rigs)
 	_trip_over(rigs, dead)
 
 
@@ -94,16 +101,27 @@ func _die(rig: CutRig, vel: Vector2) -> void:
 	deaths += 1
 
 
-## The living pedestrians within STARTLE_M of feed row `body` (just died) cower away from it.
-func _startle(rigs: CharacterRigs, body: int) -> void:
+## A fight death drawn on another rig set (a new extra body) startles the street like a feed death.
+func _startle_extra(rigs: CharacterRigs) -> void:
+	var seen: Dictionary[int, bool] = {}
+	for key: int in extra_bodies:
+		seen[key] = true
+		if not _extra_seen.has(key):
+			_startle(rigs, extra_bodies[key], -1)
+	_extra_seen = seen
+
+
+## The living pedestrians within startle_m of `at` (world px; feed row `body` just died there, -1
+## for a body drawn elsewhere) cower away from it.
+func _startle(rigs: CharacterRigs, at: Vector2, body: int) -> void:
 	var feed: RigFeed = rigs.feed
-	var reach: float = STARTLE_M * SimConst.PX_PER_M
+	var reach: float = startle_m * SimConst.PX_PER_M
 	for j: int in feed.count:
 		if j == body or feed.kinds[j] != BodyPlan.Kind.PED:
 			continue
 		if feed.has_flag(j, RigFeed.Flag.DEAD) or feed.has_flag(j, RigFeed.Flag.DOWN):
 			continue
-		var away: Vector2 = feed.pos[j] - feed.pos[body]
+		var away: Vector2 = feed.pos[j] - at
 		if away.length_squared() < reach * reach:
 			var before: int = cowers
 			_cower(rigs.rig_for(feed.ids[j]), away)
@@ -132,7 +150,7 @@ func _trip_over(rigs: CharacterRigs, dead: Dictionary[int, bool]) -> void:
 			bodies[feed.ids[i]] = feed.pos[i]
 	if bodies.is_empty():
 		return
-	var reach: float = TRIP_M * SimConst.PX_PER_M
+	var reach: float = trip_m * SimConst.PX_PER_M
 	for i: int in feed.count:
 		if feed.kinds[i] != BodyPlan.Kind.PED or not feed.has_flag(i, RigFeed.Flag.FLEE):
 			continue

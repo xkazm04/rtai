@@ -107,7 +107,9 @@ static func _stand(rig: CutRig, side: RigLimbs, other: RigLimbs, rest: Vector2, 
 
 static func _clip_feet(rig: CutRig, side: RigLimbs, s: int, hw: Vector2, dt: float) -> void:
 	if rig.c_sprawl > 0.0:
-		var spread: Vector2 = rig.xf * Vector2(-210, rig.plan.side_sign(s) * 230)
+		var wide: float = lerpf(230.0, 55.0, rig.c_plank)
+		var back: float = -210.0 - 130.0 * rig.c_plank
+		var spread: Vector2 = rig.xf * Vector2(back, rig.plan.side_sign(s) * wide)
 		side.foot_w = side.foot_w.lerp(spread, minf(rig.c_sprawl * dt * 8.0, 1.0))
 		side.lift = 0.0
 	if rig.c_tuck > 0.0:
@@ -133,7 +135,8 @@ static func _solve_leg(rig: CutRig, side: RigLimbs, s: int, hl: Vector2) -> void
 	place(side.thigh, hl, knee, p.thigh_draw)
 	place(side.shin, knee, fl, p.shin_draw)
 	var fs: float = 1.0 + 0.08 * lift
-	side.foot.transform = Transform2D(p.side_sign(s) * 0.8 * rig.c_sprawl, Vector2(fs, fs), 0.0, fl)
+	var splay: float = p.side_sign(s) * 0.8 * rig.c_sprawl * (1.0 - 0.8 * rig.c_plank)
+	side.foot.transform = Transform2D(splay, Vector2(fs, fs), 0.0, fl)
 	if p.has_toeoff():
 		var cell: String = p.foot_toeoff[s] if lift > 0.12 else p.foot_part[s]
 		if cell != side.foot_cell:

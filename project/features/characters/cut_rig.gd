@@ -45,6 +45,9 @@ var c_recoil: float = 0.0
 var c_lean: float = 0.0
 var c_kick: float = 0.0
 var c_hands_up: float = 0.0
+## A stiff corpse (human-reactions' electro death): the sprawl keeps the legs together and
+## the arms along the sides. RigClips zeroes it each tick; DeathPose sets it.
+var c_plank: float = 0.0
 
 var facing: float = 0.0
 var face_w: float = 0.0

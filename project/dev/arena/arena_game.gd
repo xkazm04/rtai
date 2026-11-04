@@ -223,5 +223,6 @@ func _notification(what: int) -> void:
 		cast = null
 	if leaving and _characters != null:  # lane human-reactions: the street's reactions, counted
 		var c: CrowdReact = _characters.crowd
-		Log.info("arena", "crowd: %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])
+		var n: Array[int] = [c.cowers, c.startles, c.trips, c.deaths]
+		Log.info("arena", "crowd: %d cowers (%d at a death), %d trips, %d deaths" % n)
 		_characters = null
