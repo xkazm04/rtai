@@ -19,6 +19,8 @@ const FLASH_AHEAD_M: float = 0.45
 ## The gun claw sits this far to the left of the aim line (aim.orthogonal()) on the cast rig
 ## (measured in the 64 px/m arena clip: the flash on the centre line missed the held gun).
 const GUN_SIDE_M: float = 0.35
+## A drawn round starts on the gun's side and reaches the sim's line (body centre) this far out.
+const CONVERGE_M: float = 3.0
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -50,19 +52,22 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	var went: float = s.origin.distance_to(s.pos)
 	if went < CLEAR_M and s.spec.kind != WeaponSpec.Kind.CONE:
 		return true
+	# drawn out of the held gun (left of the aim line), converging onto the sim's line by CONVERGE_M
+	var side: float = GUN_SIDE_M * clampf(1.0 - (went - CLEAR_M) / CONVERGE_M, 0.0, 1.0)
+	var at: Vector2 = s.pos + dir.orthogonal() * side
 	match s.spec.kind:
 		WeaponSpec.Kind.BULLET:
 			var fx: StringName = art().projectile_fx(s.spec.id)
-			_cell(ci, fx if fx != &"" else &"tracer", 0, s.pos, dir.angle(), 1.0, 1.0)
+			_cell(ci, fx if fx != &"" else &"tracer", 0, at, dir.angle(), 1.0, 1.0)
 		WeaponSpec.Kind.ROCKET:
-			_rocket(ci, s.pos, dir, went, tick)
+			_rocket(ci, at, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			_jet(ci, s, dir, went, tick)
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
-			_cell_v(ci, &"arc", tick % 3, s.pos - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
-			_cell(ci, &"spark", tick % 3, s.pos, float(tick) * 0.5, 1.1, 1.0)
+			_cell_v(ci, &"arc", tick % 3, at - dir * len_m, dir.angle(), Vector2(span, 1.0), 1.0)
+			_cell(ci, &"spark", tick % 3, at, float(tick) * 0.5, 1.1, 1.0)
 		WeaponSpec.Kind.THROWN:
 			_bottle(ci, s, went, tick)
 		_:
