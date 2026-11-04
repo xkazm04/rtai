@@ -1141,6 +1141,8 @@ NEXT (report phase, in order):
 - 08:18 gates of record on 83429487 (`evidence/n10/evidence-final-14.log`, still tree): lint 13/13,
   unit 752/752, scenarios 29/29, parity bit-exact (step 629); selftest the same two known accent
   rows (48 vehicles 8 px, 64 cop 28 px; identical to iteration 13). REPORT gates and a row updated.
+- 08:20 smoke: `--arena --loadout=rocket_launcher --start=pit --clean`, headless, 900 frames: exit 0,
+  0 script errors (`evidence/n10/pit-rocket-14.log`; no bot, so no shots: a load check only).
 - No clip this iteration (the get-up is human-reactions' re-film; no time before the freeze).
 - Session end: no Godot process of mine running, no lock taken. Shared files: docs/decisions.md
   (one DECISION line).
