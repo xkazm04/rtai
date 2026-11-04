@@ -98,3 +98,27 @@ func test_a_held_stun_outlasts_its_family_then_runs_out() -> void:
 	link.hold(rig, &"", &"stun", Vector2.LEFT)
 	assert_almost_eq(r.progress(), 0.7, 0.05, "the release resumes at the run-out")
 	rig.free()
+
+
+func test_a_riot_rig_blocks_a_front_round_and_flinches_from_behind() -> void:
+	var rig: CutRig = CutRig.new()
+	rig.variant = RigVariant.crowd(6)
+	assert_true(ReactLink.shielded(rig), "the riot look carries the shield")
+	var table: ReactTable = ReactTable.shipped()
+	var front: StringName = table.reaction_for(
+		&"light", Vector2.LEFT, ReactLink.shielded(rig), false
+	)
+	var back: StringName = table.reaction_for(
+		&"light", Vector2.RIGHT, ReactLink.shielded(rig), false
+	)
+	assert_eq(front, &"shield")
+	assert_ne(back, &"shield")
+	rig.variant = RigVariant.crowd(5)
+	assert_false(ReactLink.shielded(rig), "the patrol look has none")
+	rig.free()
+
+
+func test_the_reaction_line_looks_cover_both_cop_looks_and_two_peds() -> void:
+	assert_eq(ReactLineBot.look_of("react_dummy_2"), Vector2i(BodyPlan.Kind.COP, 6))
+	assert_eq(ReactLineBot.look_of("react_dummy_3").x, BodyPlan.Kind.PED)
+	assert_eq(ReactLineBot.look_of("dummy_human_1"), Vector2i(-1, -1))

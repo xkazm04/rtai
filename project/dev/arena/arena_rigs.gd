@@ -27,6 +27,8 @@ var _city: CityView = null
 var _hurt_seen: Dictionary[int, int] = {}
 ## Each fighter's (cooldown, burst_left) last frame: a shot shows as one of them moving (fired()).
 var _fire_seen: Dictionary[int, Vector2i] = {}
+## human-reactions: the (body plan, look) of the dummies that carry one (ReactLineBot.LOOKS).
+var _looks: Dictionary[int, Vector2i] = {}
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
@@ -49,6 +51,10 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	rigs.setup(ctx)
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
+	for t: ArenaTargets.Target in p_stage.targets.targets:
+		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
+		if look.x >= 0:
+			_looks[t.fighter.id] = look
 	return true
 
 
@@ -62,7 +68,12 @@ func _process(_delta: float) -> void:
 	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
-		_put(i, h, BodyPlan.Kind.COP)
+		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, RigFeed.LOOK_AUTO))
+		_put(i, h, look.x as BodyPlan.Kind)
+		f.looks[i] = look.y
+		if _looks.has(h.id):  # the reaction line stands still facing east: the four sides differ
+			f.face[i] = 0.0
+			f.aim[i] = f.pos[i] + Vector2.RIGHT * 4.0 * SimConst.PX_PER_M
 		i += 1
 	rigs.focus = focus_m(stage.arena) * SimConst.PX_PER_M
 	rigs.zoom = _print.zoom if _print != null else _city.zoom
@@ -78,7 +89,8 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	@warning_ignore("return_value_discarded")
 	f.put(i, who.id, kind, at, vel)
 	f.face[i] = who.facing.angle()
-	if who.weapon != &"":  # armed: the gun out and aimed along the facing (Rivet's pistol, rifles)
+	var armed: bool = who.weapon != &"" and kind != BodyPlan.Kind.PED  # a pedestrian holds none
+	if armed:  # the gun out and aimed along the facing (Rivet's pistol, rifles)
 		f.flags[i] = RigFeed.Flag.GUN_OUT | RigFeed.Flag.AIMING
 		f.aim[i] = at + who.facing * 4.0 * SimConst.PX_PER_M
 	var mark: Vector2i = Vector2i(who.cooldown, who.burst_left)
@@ -87,7 +99,7 @@ func _put(i: int, who: Fighter, kind: BodyPlan.Kind) -> void:
 	_fire_seen[who.id] = mark
 	if not who.alive():
 		f.flags[i] = DOWN_FLAGS
-	elif shot and who.weapon != &"":
+	elif shot and armed:
 		f.clip[i] = RigClips.Clip.SHOOT  # the recoil kick on the gun arm, rifle > pistol
 		f.clip_arg[i] = plan.kick(who.weapon) if plan != null else 1.0
 	elif who.hurt_tick > _hurt_seen.get(who.id, who.hurt_tick) and react == null:

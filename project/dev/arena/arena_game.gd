@@ -10,6 +10,7 @@ extends Node
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
 ## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
+## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides.
 
 const TUNE_TICK: int = 300
 
@@ -75,6 +76,8 @@ func _open(args: ArenaArgs) -> void:
 		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
 		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
 		session.world.loop().set_input(bot)
+	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
+		session.world.loop().set_input(ReactLineBot.new(session.stage, session.actions))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):

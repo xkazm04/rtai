@@ -83,11 +83,17 @@ func apply(rigs: CharacterRigs) -> void:
 				_corpses[id] = [kind, dir]
 		elif _held.get(id, &"") != &"knockdown":
 			@warning_ignore("return_value_discarded")
-			pipe.wound(rig, hit_class, dir, false, cover)
+			pipe.wound(rig, hit_class, dir, shielded(rig), cover)
 			wounds += 1
 	_pending.clear()
 	_relay(rigs)
 	_hold_states(rigs)
+
+
+## True when the rig carries the riot shield (its look): a round from the front then recoils
+## behind the shield (ReactTable decides by the hit's side; render only, the sim's hp is untouched).
+static func shielded(rig: CutRig) -> bool:
+	return rig.variant != null and rig.variant.shield
 
 
 ## The family a fighter's lasting area state holds (&"" when none): stun over burn over down.
