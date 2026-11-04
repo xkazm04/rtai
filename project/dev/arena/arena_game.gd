@@ -2,7 +2,7 @@ class_name ArenaGame
 extends Node
 ## The dev arena's scene (dev/arena/arena.tscn): ArenaSession under the player's hands, drawn
 ## by quest 1's CollectCallView (print pass, D5 look, blood) with ArenaFloorView as its floor.
-## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
+## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit|reel plays that station's
 ## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
 ## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
 ## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
@@ -68,6 +68,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "reel":  # the showcase lane's scripted fight (dev/showcase)
+		session.world.loop().set_input(CombatReel.new(session.stage, session.actions))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):
