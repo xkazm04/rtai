@@ -90,6 +90,13 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (slab, asphalt, walking) and 64 px/m beside r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. Reactions, deaths
   and corpses before/after on the react board at 64 px/m: `M/frames/react-board-planview-ab-64ppm.png`,
   `M/cast-react-board-planview-ab-64ppm.mp4` (0 script errors, cops unchanged). Render only, no sim change.
+  The crowd's kill scene (`react_board_run.gd -- --board=street`, 64 px/m) before/after:
+  `M/frames/street-board-planview-ab-64ppm.png`, `M/cast-street-board-planview-ab-64ppm.mp4` (flee, the kill and
+  the corpse read as before). Live paths: the city block at 32 px/m (`M/frames/city-peds-ab-32ppm.png`,
+  `M/cast-peds-city-ab-32.mp4`, same sim) and quest 1 `--rigs` at 48 px/m under r1_c6
+  (`M/frames/quest1-peds-ab-48ppm-vs-r1c6.png`); director reel 16/16 chapters down; goldens re-blessed once
+  (decisions, diff mask `M/frames/golden-diff-planview-peds.png`). Quest stills with moving peds show stray shoes:
+  a capture artefact of stills mode, absent in a per-tick clip (`M/frames/quest1-ped-stills-artefact-48ppm.png`).
   The iteration 10 diagnosis and trials that led here: `M/frames/crowd-value-vs-r2a5.png`,
   `M/frames/crowd-part-markers-32ppm.png` (and `-b`, `-c`), `M/frames/crowd-package-trial-32ppm.png`.
 

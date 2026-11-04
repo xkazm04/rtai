@@ -623,3 +623,8 @@ Session end 00:17: head = this commit, tree clean, image.lock released, no Godot
   (`--ticks=1000-1200`, 101 frames, 0 SCRIPT ERROR) has no stray feet. Not a game bug; quest stills with moving
   peds are not motion evidence. `M/frames/quest1-ped-stills-artefact-48ppm.png`. The baked far-crowd atlas
   (`build/evidence/crowd-atlas.png`) follows the new peds (paler ped rows).
+- 00:46 the crowd's kill scene: `react_board_run.gd -- --zoom=2 --every=4 --board=street` on HEAD and on the
+  9f2aac24 ped files (restored, re-imported, tree clean), 240 frames each, 0 SCRIPT ERROR:
+  `M/frames/street-board-planview-ab-64ppm.png`, `M/cast-street-board-planview-ab-64ppm.mp4`. Flee, the kill and
+  the corpse read as before; running peds keep their dark striding legs, heads smaller, a few more cream tops.
+  REPORT section 5 cites every A/B.
