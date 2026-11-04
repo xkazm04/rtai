@@ -1439,3 +1439,7 @@ NEXT (10:40 report phase):
   on the flame burst. frames.json titles and notes and REPORT updated.
 - 10:07 Session end. No Godot process of mine running, no lock taken, /tmp scratch deleted.
   Branch head: docs on top of the code head 70894746. NEXT above stands.
+- MISTAKE 10:07: my scratch cleanup ran `rm /tmp/*.log`, which matched every .log in the user temp
+  folder, not only my run logs (lonecity, lc2-lc4). Three in-use files (adb.log, two mat-debug
+  logs) refused deletion; any other idle .log there is gone. No repo or worktree file was
+  touched. Next time delete scratch by exact name.
