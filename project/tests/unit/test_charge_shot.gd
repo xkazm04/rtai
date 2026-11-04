@@ -74,3 +74,18 @@ func test_one_charged_bolt_drops_a_fresh_human_and_a_plain_one_does_not() -> voi
 	assert_eq(charged, 1, "one charged bolt left")
 	assert_false(g.alive(), "the charged bolt drops him")
 	assert_eq(kills, [&"electro_gun"] as Array[StringName])
+
+
+func test_every_gun_names_a_shot_cue_that_exists() -> void:
+	var table: WeaponTable = WeaponTable.shipped()
+	var cues: Dictionary = JSON.parse_string(
+		FileAccess.get_file_as_string("res://data/tables/audio_cues.json")
+	)
+	var ids: Array[String] = []
+	for row: Dictionary in cues["cues"]:
+		ids.append(str(row["id"]))
+	for id: StringName in table.weapons:
+		var w: WeaponSpec = table.weapon(id)
+		assert_ne(w.shot_cue, &"", "%s has a sound hook" % id)
+		assert_has(ids, str(w.shot_cue), "%s: cue %s exists" % [id, w.shot_cue])
+	assert_has(ids, "tazer_charge", "the charge-up cue exists")

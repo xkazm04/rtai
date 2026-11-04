@@ -51,6 +51,8 @@ var homing_rad_per_tick: float = 0.0
 ## round of charge_damage go by itself (0 = no charge; the electro gun, brutality REQUEST 12).
 var charge_ticks: int = 0
 var charge_damage: float = 0.0
+## Lane gunplay: the audio_cues.json cue a round of this gun plays as it leaves (&"" = default).
+var shot_cue: StringName = &""
 
 
 static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
@@ -89,6 +91,7 @@ static func from_row(t: DataTable, row: Dictionary) -> WeaponSpec:
 	w.min_lob_m = t.num(row, "min_lob_m") if row.has("min_lob_m") else 0.0
 	w.charge_ticks = ticks(t.num(row, "charge_s")) if row.has("charge_s") else 0
 	w.charge_damage = t.num(row, "charge_damage") if row.has("charge_damage") else w.damage
+	w.shot_cue = StringName(t.text(row, "shot_cue")) if row.has("shot_cue") else &""
 	return w
 
 

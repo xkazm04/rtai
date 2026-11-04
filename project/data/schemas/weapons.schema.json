@@ -239,6 +239,10 @@
             "minimum": 0,
             "type": "number"
           },
+          "shot_cue": {
+            "minLength": 1,
+            "type": "string"
+          },
           "speed_mps": {
             "minimum": 0,
             "type": "number"
