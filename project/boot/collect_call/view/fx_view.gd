@@ -39,7 +39,7 @@ func _draw() -> void:
 			continue
 		var tail: Vector2 = s.pos - s.vel.normalized() * (0.5 if s.from_rivet else 0.25)
 		draw_line(Ink.px(tail), Ink.px(s.pos), Ink.INK if s.from_rivet else Ink.VERMILION, 4.0)
-	if arena.gun != null and not WeaponFxArt.muzzle(self, arena.rivet, arena.gun):
+	if arena.gun != null and not WeaponFxArt.muzzle(self, arena.rivet, arena.gun, stage.tick):
 		_muzzle(arena.rivet, arena.gun)
 	if arena.guard_tell != null:
 		for h: Fighter in arena.hostiles:

@@ -15,7 +15,10 @@ const PUFF_GAP_M: float = 0.45
 ## The muzzle flash plays one frame per tick for this many ticks after a round leaves.
 const FLASH_TICKS: int = 3
 ## Where the flash sits ahead of the body edge along the aim (m), plus the gun's muzzle_m.
-const FLASH_AHEAD_M: float = 0.15
+const FLASH_AHEAD_M: float = 0.45
+## The gun claw sits this far to the left of the aim line (aim.orthogonal()) on the cast rig
+## (measured in the 64 px/m arena clip: the flash on the centre line missed the held gun).
+const GUN_SIDE_M: float = 0.35
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -68,17 +71,22 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 
 
 ## The muzzle flash cell on Rivet's gun for FLASH_TICKS ticks after a round; false = not drawn.
-static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand) -> bool:
+## Also throws and draws the spent brass (WeaponCasings) of casing guns.
+static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> bool:
 	if not enabled or gun.trigger == null or gun.trigger.spec == null:
 		return false
 	var spec: WeaponSpec = gun.trigger.spec
+	var brass: StringName = art().casing_fx(spec.id) if art().has(spec.id) else &""
+	WeaponCasings.track(r, gun, tick, brass)
+	WeaponCasings.draw(ci, tick, brass)
 	var age: int = spec.interval_ticks - gun.trigger.cooldown
 	if gun.shots_fired == 0 or age < 0 or age >= FLASH_TICKS or not art().has(spec.id):
 		return true
 	var fx: StringName = art().muzzle_fx(spec.id)
 	var aim: Vector2 = r.facing.normalized()
 	var reach: float = r.radius_m + FLASH_AHEAD_M + art().muzzle_m(spec.id).x * 0.5
-	_cell(ci, fx, age, r.pos + aim * reach, aim.angle(), 1.0, 1.0)
+	var at: Vector2 = r.pos + aim * reach + aim.orthogonal() * GUN_SIDE_M
+	_cell(ci, fx, age, at, aim.angle(), 1.0, 1.0)
 	return true
 
 
