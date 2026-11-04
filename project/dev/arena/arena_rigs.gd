@@ -114,5 +114,16 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip[0] = RigClips.Clip.ROLL
 		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
 	_rolls_seen = pilot.motion.rolls
-	if pilot.melee.busy() or pilot.motion.phase != PlayerMotion.Phase.FREE:
+	if pilot.melee.busy() or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
 		f.flags[0] = 0
+
+
+## The gun is in the claw from halfway through the draw until halfway through the stow.
+static func _gun_shown(pilot: StagePilot) -> bool:
+	var h: WeaponHold = pilot.hold
+	match h.state:
+		WeaponHold.State.DRAWING:
+			return h.progress() >= 0.5
+		WeaponHold.State.STOWING:
+			return h.progress() < 0.5
+	return h.held != &""

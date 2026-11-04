@@ -10,6 +10,9 @@ extends RefCounted
 var actions: PlayerActions
 var motion: PlayerMotion = PlayerMotion.shipped()
 var melee: PlayerMelee = PlayerMelee.new()
+## rivet-arsenal: the weapon in the claw follows the arena's rivet.weapon with a stow and a draw
+## (rivet_arsenal.json); no shot leaves before the draw ends.
+var hold: WeaponHold = WeaponHold.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
@@ -31,6 +34,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.pressed != 0:
 		last_press_tick = stage.tick
 	var rivet: Fighter = stage.arena.rivet
+	_follow_weapon(rivet.weapon)
 	if stage.hidden_in != "" and c.move == Vector2.ZERO:
 		motion.stop()
 	if rivet.alive():
@@ -39,7 +43,8 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		motion.stop()
 	if c.was_pressed(actions, &"interact"):
 		stage.intent.interact = true
-	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and not melee.busy():
+	var armed: bool = hold.can_fire() and not melee.busy()
+	if c.is_held(actions, &"fire") and c.aim != Vector2.ZERO and armed:
 		stage.intent.fire_at = rivet.pos + c.aim * actions.aim_range_m
 	var press: bool = c.was_pressed(actions, &"melee")
 	if hauler != null:
@@ -69,6 +74,7 @@ func stop() -> void:
 func write_state(out: StreamPeerBuffer) -> void:
 	motion.write_state(out)
 	melee.write_state(out)
+	hold.write_state(out)
 	out.put_32(_previous)
 	if hauler != null:
 		hauler.write_state(out)
@@ -86,3 +92,12 @@ func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	c.aim = aim
 	rivet.facing = motion.facing()
 	rivet.exposed = not motion.invulnerable()
+
+
+## Starts a stow and draw when the arena changed Rivet's weapon (a pickup, the rifle running dry).
+func _follow_weapon(weapon: StringName) -> void:
+	var coming: StringName = hold.pending if hold.state == WeaponHold.State.STOWING else hold.held
+	if weapon != coming:
+		@warning_ignore("return_value_discarded")
+		hold.equip(weapon)
+	hold.step()

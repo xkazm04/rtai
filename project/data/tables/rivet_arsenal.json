@@ -51,6 +51,7 @@
   },
   "schema": "gtai.rivet-arsenal/1",
   "weapons": {
+    "assault-rifle": "two_hand_long",
     "chainsaw": "heavy_two_hand",
     "electro_baton": "one_hand",
     "electro_gun": "two_hand_long",
