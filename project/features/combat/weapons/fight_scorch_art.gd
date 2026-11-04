@@ -7,7 +7,7 @@ extends RefCounted
 ## two patches never match. View only: it reads the sim, never writes it, and takes no RNG
 ## stream. Lane gunplay.
 
-const POINTS: int = 18
+const POINTS: int = 26
 const CORE_POINTS: int = 12
 const CINDERS: int = 7
 const STREAKS: int = 9
@@ -55,27 +55,26 @@ static func _ring(at: Vector2, r: float, n: int, key: int, tongues: bool) -> Pac
 	return out
 
 
-## The blotch's ink edge, broken: about half the sides are inked, so it prints like a hand
+## The blotch's ink edge, broken: about two sides in five are inked, so it prints like a hand
 ## line, not a stencilled circle.
 static func _edge(ci: CanvasItem, rim: PackedVector2Array, key: int, k: float) -> void:
 	var n: int = rim.size()
 	for i: int in n:
-		if _h(key + 200 + i) < 0.5:
+		if _h(key + 200 + i) < 0.6:
 			continue
 		ci.draw_line(rim[i], rim[(i + 1) % n], Color(Ink.INK, EDGE_A * k), EDGE_PX)
 
 
-## The splash burn: soot streaks thrown out of the core where the fire ran, each a heavy ink
-## stroke that thins toward its tip.
+## The splash burn: soot tongues thrown out of the core where the fire ran, each a flat ink
+## wedge from a broad base to a point (not a line: thin lines read as cracks).
 static func _streaks(ci: CanvasItem, at: Vector2, r: float, key: int, k: float) -> void:
-	var c: Color = Color(Ink.INK, 0.6 * k)
+	var c: Color = Color(Ink.INK, 0.45 * k)
 	for i: int in STREAKS:
 		var dir: Vector2 = Vector2.from_angle(TAU * (float(i) + 0.6 * _h(key + 400 + i)) / STREAKS)
-		var from: Vector2 = at + dir * r * (0.25 + 0.2 * _h(key + 420 + i))
-		var tip: Vector2 = at + dir * r * (0.85 + 0.45 * _h(key + 440 + i))
-		var mid: Vector2 = from.lerp(tip, 0.55)
-		ci.draw_line(from, mid, c, 5.0)
-		ci.draw_line(mid, tip, c, 2.0)
+		var from: Vector2 = at + dir * r * (0.3 + 0.15 * _h(key + 420 + i))
+		var tip: Vector2 = at + dir * r * (0.8 + 0.3 * _h(key + 440 + i))
+		var side: Vector2 = dir.orthogonal() * r * (0.07 + 0.05 * _h(key + 460 + i))
+		ci.draw_colored_polygon(PackedVector2Array([from - side, from + side, tip]), c)
 
 
 ## A few short diagonal hatch strokes over the char, the print's own floor hatch.
