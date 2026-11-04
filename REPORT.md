@@ -229,7 +229,7 @@ Each call is one value or flag. A is what is live now.
      (rivet-arsenal, as `PlayerShock` does);
    - ~~in `ReactLink.hit_class_of`, return `melee` for the melee weapon ids~~ **done 10:11** on this branch
      (`ReactLink.MELEE_IDS`: claw, chainsaw, electro_baton, katana, plasma_sword -> `melee`; `claw_shock` unchanged;
-     unit-tested, lint 13/13, unit 755/755). Inert until the `struck` emit above lands; not filmed;
+     unit-tested; on `1623e625`: lint 13/13, unit 755/755, scenarios 33/33). Inert until the `struck` emit above lands; not filmed;
    - but `struck` also drives `HitLink._on_struck` (a `feel.land` hit-stop hold plus hit/kill counters), which would
      stack on melee's own feel. Pick one with rivet-arsenal: HitLink skips the melee ids, or ReactLink gets its own
      melee signal;

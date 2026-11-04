@@ -1191,3 +1191,12 @@ NEXT (after the freeze / morning merge), in order:
   test_react_link. Lint 13/13, unit 755/755 (this branch's count). Inert here: no struck on this branch carries a
   melee id (shots, areas and burn only), so scenarios/replay cannot move. DECISION line in docs/decisions.md.
   Rules applied (realtime-combat-semantics): the hit class is decided once at the link, not per rig.
+- 10:14 scenarios on 1623e625: 33 ran, 0 failed (exit 0). Gates of this commit: lint 13/13, unit 755/755,
+  scenarios 33/33. No Godot process of mine left running.
+
+NEXT (morning merge), in order:
+1. rivet-arsenal: `PlayerMelee._land` emits `arena.struck` after `arena.damage`; decide with them how HitLink
+   avoids stacking a second hit-stop on melee (skip MELEE_IDS in `HitLink._on_struck`, or a melee-only signal).
+   ReactLink already maps the ids to `melee` (1623e625). Film the claw chapter A/B at 48 px/m.
+2. Move MELEE_IDS to data once the melee table is merged (DECISION line re-check).
+3. REPORT next steps 1-6 as listed.
