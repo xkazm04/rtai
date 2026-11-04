@@ -168,3 +168,55 @@ NEXT (iteration 2):
   at the junction). Arena scenarios 5/5, unit 732/732 after it. REQUEST 6 is withdrawn (glue).
   Left on the city: small vermilion squares and a bar from ArenaFloorView's props (lane marks),
   and the 17 m/s snap. The city reel is re-filmed next round.
+
+## Iteration 2 (01:54 - 02:54), BUILD
+
+- 01:55 read JOURNAL, git log, the five lanes' tips and JOURNALs. Replies: human-reactions
+  answered showcase REQUEST 2 (flinch/stagger and deaths by kind live under `--rigs`) and fixed
+  ArenaRigs on the city itself (39582854, same fix as my eb1c52f1); rivet-arsenal DECISION:
+  number keys 1-4 select carry slots, wheel/d-pad cycle (input bits not bound yet); gunplay
+  REQUEST 4 -> rivet-arsenal says how a live switch is done (`arena.gun = GunHand.make(...)`).
+- MERGE round 3 (brief order): weapon-art ac581d9d, rivet-arsenal 8395e276, gunplay 01b034aa,
+  human-reactions 8669b5d9, brutality d59f9c9c -> d1c2db74, 9c764635, 4d139f45, 6378b4ca,
+  daa79fce. Conflicts: JOURNAL.md every time (kept ours); `arena_game.gd` bot switch (kept both
+  the reel and gunplay's bot); `test_arena_hooks.gd` (kept ours, the stricter one-probe count);
+  `arena_rigs.gd` twice: human-reactions' city attach (kept theirs, it replaces my eb1c52f1),
+  rivet-arsenal's RivetHeldView added to `view.print_stage.actor_layer()` which is null on the
+  city -> FIX (glue): it goes on the same layer as the rigs. brutality's field order: kept ours.
+- GATES r3 first run (daa79fce): lint 13/13, unit 745/745, scenarios 32/32, parity exact, but
+  selftest FAIL: NEW off-doctrine 32 px/m vermilion on vehicles 4 px and on cop 4 px, the 48
+  px/m rows no longer seen. Reproduced on a second run (deterministic). The pixels sit on the
+  junction's blood splat round Rivet (build/evidence/accent-32ppm.png looked at): the known
+  gate-boundary flicker class moved from 48 to 32 px/m. Suspect: gunplay b3b3c92f (blood drops
+  on their own canvas item, new this round); not bisected. DECISION (decisions.md): two dated
+  debt rows (owner gunplay, max 12). REQUEST 7 below.
+- FIX (own): the reel's gun beat now walks in on a guard farther than 6 m while it fires
+  (`APPROACH_M`), so kills land inside a 64 px/m frame (NEXT 2 of iteration 1). Scenario green:
+  pit_gun 12 kills, pit_melee 2, claw 15 hits / 4 kills, 0 deaths, damage taken 9.6.
+- GATES r3 of record (clean tree d7632ac1, `node tools/evidence/run.mjs --no-bench`, exit 0):
+  lint 13/13 (678 files), unit 745/745, scenarios 32/32, parity bit-exact (planted caught at
+  629), selftest look 11/11 + block 5/5 (worst 0.02), accent audit green with the two rows.
+- The 17 m/s top speed is in the plain arena run too (scenario telemetry 17.06), so it is not a
+  city collision. The claw lunge is spread over windup+active (MeleeCombo.lunge_step_m), so the
+  suspect is a one-tick collision push-out; not located yet.
+- Registry applied: combat-pacing-and-dramatic-arc ("the opening is a gate of its own", beats
+  mined from the curve): the reel's order stays an arc that builds (motion -> claw -> range ->
+  melee line -> pit melee -> pit gun with the signature kills as the climax). Deviation: no
+  tension curve is computed for the reel yet; its beats are scripted, not mined.
+- 02:10 reel-0210-pistol (32 px/m, `--weapon=pistol`, gunplay's table pistol on the real fight,
+  73 s). Looked at 1 fps from 53 s (12 frames) and 1/4 fps from 0 (12 frames). Good: blue cop
+  rigs drop in red sprays, corpses keep their poses, Rivet's tracer is weapon-art's charcoal
+  body with a light head; the guards' rounds are vermilion streaks (danger). Wrong:
+  (a) the hub: human-reactions' `react_line` (y 2.5, x 6..13.5) and rivet-arsenal's
+  `rivet_claw_cops` (y 3, x 2/6/10) spawn 0.5-1.1 m apart, so 7 cop rigs clump into one blob
+  where the claw combo plays (frames 4-9 of the opening sheet); (b) every claw-cop death leaves
+  a pool with straight vertical red streaks below it (the d5-combat drop spray along a vertical
+  `dir`, human-reactions' REQUEST 1 -> gunplay, still open); (c) pit corpses thrown onto the
+  pit's north wall line lie half inside the wall.
+- REQUEST 7 -> gunplay: the accent audit's 32 px/m blood flicker moved with this round (two debt
+  rows `blood_flicker_*_vermilion_32`, owner you, decisions.md); confirm it is your b3b3c92f or
+  bisect it, and delete the rows when the audit is fixed.
+- REQUEST 8 -> human-reactions, rivet-arsenal: your hub stations overlap (react_line y 2.5 x
+  6..13.5 vs claw cops y 3 x 2/6/10; ArenaRivetBot walks y 1.45). Please agree a free spot
+  between you (the hub is x -3..15, y -5..5; the melee line holds y -3); the reel films whatever
+  you settle. reel-0210-pistol.mp4 0-40 s shows the clump.
