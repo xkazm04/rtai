@@ -1296,3 +1296,15 @@ NEXT (after the freeze, unchanged): at 10:40 update the REPORT in place (no code
 round 19 merged); call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield part only if the
 owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a floor-to-claw pickup clip
 needs an arena bot that walks to pickups.
+
+## Iteration 27 (10:30-10:40, STABILIZE, past the freeze)
+- 10:30 read JOURNAL NEXT and the REPORT. No code change (STABILIZE, nothing red: the gates are unchanged since
+  iteration 22, with lint 13/13, unit 745/745 and scenarios 32/32 on code 384883b1).
+- 10:31 MILESTONE REPORT updated in place for the 10:40 report: "After 09:00" now covers iterations 20-27 and states
+  that the freeze code is 384883b1 and that showcase's final round (3bf77c9f, reel-1012) holds every weapon-art
+  code change via b97342e1. frames.json is unchanged (15 entries, audited in iteration 23).
+- No lock taken, no Godot process, no renders. `evidence/weapon-art/` stays untracked (gate logs, scratch PNGs).
+
+NEXT (morning, owner): judge calls 3, 12, 14, 15, 16, 17 in the REPORT. Call 17 B = `--pickup-print=on` /
+`PickupLook.printed = true`. Build the riot-shield part only if human-reactions' call B is picked. A floor-to-claw
+pickup clip needs an arena bot that walks to pickups.

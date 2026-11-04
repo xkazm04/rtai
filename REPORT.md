@@ -4,13 +4,14 @@ Head of the build: `384883b1` (code; later commits are docs only). See "After 09
 `M` below stands for `C:\Users\kazda\kiro\gtai-masters\n4\weapon-art\`. `E` stands for `evidence/weapon-art/` in this worktree, which is untracked scratch.
 The owner's page is `M\frames.json` (15 entries, newest and best first). Every file it lists exists on disk.
 
-## After 09:00 (extension, iterations 20 to 23)
+## After 09:00 (extension, iterations 20 to 27)
 
 The build moved to `a1a819d3`. All six changes since `3a703dbd` are render only: no sim file and no golden touched. Gates at `a1a819d3`: lint 13/13, unit 743/743 (`E\unit-it20i.log`), scenarios 32/32 (`E\scenarios-it20h.log`). Parity is untouched.
 
 Iteration 21 moved the build to `384883b1` (render and dev only). Gates at `57ee8615`: lint 13/13, unit 745/745 (`E\unit-it21.log`), scenarios 32/32 (`E\scenarios-it21.log`). The pre-commit lint passed again at `384883b1`.
 Iteration 22 re-ran the gates on the docs tip `daa42ef4` (code = `384883b1`): lint 13/13 (pre-commit hook), unit 745/745 (`E\unit-it22.log`), scenarios 32/32 (`E\scenarios-it22.log`), 10:03. No code changed after 09:51.
 Iteration 23 (10:08) audited what the owner reads: every file cited by this REPORT (43) and by frames.json (15) exists in the masters folder, and the provenance file holds 1038 valid lines. No code change.
+Iterations 24 to 27 (10:07-10:40) changed no code: a change in that window could not have been gated, filmed and merged into showcase's final reel before the 10:30 freeze. Showcase's final round (`3bf77c9f`, reel-1012, exe re-exported) contains every weapon-art code change via `b97342e1`. At the freeze the code is `384883b1`, with the gates as listed in iteration 22. frames.json was not changed.
 - **The rocket blast's tail tears into smoke wisps** (`51d42adf`). From tick 20 to the effect's end at 40, the smoke ring tears into 12 drawn smoke puffs that drift out, stretch along the ring and fade. Before, it held the ring, which dimmed into a grey blob; the tail now lasts 20 ticks instead of 10, so the aftermath reads. The before is `--blast-tail=ring`. Clip: `M\clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4` (+ `-quarterspeed`); strip: `M\frames\it20-rocket-blast-wisps-ab-city-48ppm.png`.
 - **The mini-nuke lobs its own fat bomb** (`5d453958`). The cell has a boxed tail, a cream nose and a vermilion hazard band; before, it flew the rocket cell at 1.5x. It is `tools/art/nuke_shell.py`, procedural like the other FX cells, so it has no AI provenance line. The before is `--nuke-shell=rocket`. Clip: `M\clips\it20-mini-nuke-shell-ab-city-48ppm.mp4` (+ `-halfspeed`); strip: `M\frames\it20-mini-nuke-shell-ab-city-48ppm.png`.
 - **At the nuke's 12 m scale, the smoke puffs are capped at 2.5 m** (`9a66ac6c`), and the ring tears into about 32 of them. Uncapped, 12 puffs 6.6 m wide drifted over Rivet. The rocket is unchanged. Clip: `M\clips\it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`.
