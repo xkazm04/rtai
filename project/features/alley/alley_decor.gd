@@ -66,9 +66,9 @@ func _draw() -> void:
 	if pool.a == 0.0:
 		_decals("puddles", PUDDLE, Color(0.86, 0.9, 1.0, 0.95))
 	for v: Variant in _rows.get("puddles", []) if pool.a > 0.0 else []:
-		_puddle(rect_px(v, _base), pool)
+		AlleyProps.puddle(self, rect_px(v, _base), pool)
 	for v: Variant in _rows.get("litter", []):
-		_litter(v)
+		AlleyProps.litter(self, v, _base)
 	for g: Variant in _rows.get("drains", []):
 		_drain(rect_px(g, _base))
 	for p: ArenaStation.Prop in _props:
@@ -110,14 +110,10 @@ func _bags(r: Rect2) -> void:
 		offs.append(Vector2(0.2, 0.95) if tall else Vector2(0.95, 0.2))
 		offs.append(Vector2(-0.3, -0.95) if tall else Vector2(-0.95, -0.3))
 	for i: int in offs.size():
-		var at: Vector2 = c + offs[i] * s
-		var rad: float = s * (0.62 if i % 2 == 0 else 0.52)
-		draw_circle(at + Vector2(3.0, 3.0), rad, Color(Ink.INK, 0.4))
-		draw_circle(at, rad, BAG_DARK if i % 3 != 1 else BAG_PALE)
-		draw_arc(at, rad, 0.0, TAU, 18, Ink.INK, 2.0)
-		draw_arc(at, rad * 0.62, PI * 1.1, PI * 1.5, 6, Color(Ink.CREAM, 0.55), 2.0)
-		draw_circle(at + Vector2(rad * 0.15, -rad * 0.2), rad * 0.16, Ink.INK)
-		draw_circle(at + Vector2(rad * 0.12, -rad * 0.24), rad * 0.07, Ink.CREAM)
+		var rad: float = s * (0.66 if i % 2 == 0 else 0.56)
+		AlleyProps.sack(
+			self, c + offs[i] * s, rad, BAG_DARK if i % 3 != 1 else BAG_PALE, 1.3 + i * 2.1
+		)
 
 
 ## A chain-link run: a fine diamond mesh between two rails, posts every 1.5 m (drawn along x;
@@ -150,38 +146,3 @@ func _drain(r: Rect2) -> void:
 		var x: float = r.position.x + r.size.x * i / n
 		draw_line(Vector2(x, r.position.y + 3.0), Vector2(x, r.end.y - 3.0), Color("#8E867C"), 2.0)
 	draw_rect(r, Color("#8E867C"), false, 2.0)
-
-
-## A rain puddle (r2_a6): a sky-grey pool a value below the lane, a soft lumpy rim, two glints.
-func _puddle(r: Rect2, fill: Color) -> void:
-	var c: Vector2 = r.get_center()
-	var pts: PackedVector2Array = PackedVector2Array()
-	var grown: int = pts.resize(25)
-	assert(grown == OK)
-	for k: int in 24:
-		var a: float = TAU * k / 24.0
-		var wob: float = 1.0 + 0.13 * sin(a * 3.0 + c.x * 0.01) + 0.08 * cos(a * 5.0)
-		pts[k] = c + Vector2(cos(a) * r.size.x, sin(a) * r.size.y) * 0.5 * wob
-	pts[24] = pts[0]
-	draw_colored_polygon(pts.slice(0, 24), fill)
-	draw_polyline(pts, Color(Ink.INK, 0.45), 1.5)
-	var g: Vector2 = Vector2(r.size.x, r.size.y) * 0.18
-	draw_line(c - g, c - g + Vector2(g.x * 0.9, -g.y * 0.5), Color(Ink.CREAM, 0.9), 2.0)
-	draw_line(c + g * 0.4, c + g * 0.4 + Vector2(g.x * 0.6, -g.y * 0.3), Color(Ink.CREAM, 0.7), 2.0)
-
-
-## Flat litter [x, y, w, h, deg]: a squashed cardboard box (taped seam) or, under 0.5 m, paper.
-func _litter(v: Variant) -> void:
-	var raw: Array = v if v is Array else [0, 0, 0, 0, 0]
-	var a: PackedFloat32Array = PackedFloat32Array(raw)
-	var r: Rect2 = rect_px([a[0], a[1], a[2], a[3]], _base)
-	draw_set_transform(r.get_center(), deg_to_rad(a[4]))
-	var l: Rect2 = Rect2(-r.size * 0.5, r.size)
-	var card: bool = a[2] >= 0.5
-	draw_rect(Rect2(l.position + Vector2(2.0, 2.0), l.size), Color(Ink.INK, 0.3), true)
-	draw_rect(l, CARD if card else Ink.CREAM, true)
-	if card:
-		draw_line(Vector2(l.position.x, 0.0), Vector2(l.end.x, 0.0), Color("#8A6C48"), 3.0)
-		draw_line(Vector2(0.0, l.position.y), Vector2(0.0, l.end.y), Color(Ink.INK, 0.5), 1.0)
-	draw_rect(l, Ink.INK, false, 1.5)
-	draw_set_transform(Vector2.ZERO)
