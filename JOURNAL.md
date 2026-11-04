@@ -734,3 +734,22 @@ NEXT (iteration 10, in order):
    pit (flamethrower / rocket, `--rigs --bot=gunplay --weapon=<id> --start=pit`; the death log
    line gives the frame to cut at) and judge them like the electro corpse.
 4. A street startle in the live city (iteration 7 NEXT 3).
+
+## Iteration 11 (07:08-08:08), BUILD
+- 07:09 read JOURNAL, git log, the other lanes' JOURNALs. Addressed to me: showcase REQUEST 24b
+  (r11, evidence/r10/electro-r11-48ppm.png on their branch: the electro corpse lies across the
+  shot, north-south while the shot runs east, and the scorch does not show at 48 px/m). Gunplay
+  REQUESTs 2/3 were answered in iteration 9. No iteration 10 entry in this JOURNAL (the slot's
+  session left nothing; git shows no commits between b81fe9bf and now).
+- Cause: the plank lays the body along the rig's own x (its facing). In the pit the cops face
+  Rivet, so it lay along the shot; the reel's victim does not face him, so it lay across. The
+  dev board showed it too (its north / south shots lay east-west).
+- MILESTONE 3a8d3931: DeathPose.plank_turn(dir) turns the stiff body (rigidly, as it falls) so
+  its head end runs down the blow's line, then PLANK_TILT 0.3 off it. CorpseScorch inked to
+  read at 48 (soot 0.5 -> 0.7, core 0.32 -> 0.55, burns 0.5 -> 0.8 and 22 -> 32 px wide, reach
+  +25 px). Unit: new test (faces north, shot from the west: the head end within the tilt of
+  the shot). Lint 13/13; test_human_react green.
+- Evidence: death_electro_alongshot_48ppm_board.mp4 + _sheet.png (the dev board, six looks shot
+  from W, E, N, S: all six lie down their shot, the N/S ones north-south now). Registry rule
+  applied (motion-quality-gating): judged at the asked zoom (48) and in the fall, not only the
+  end frame.
