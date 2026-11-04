@@ -17,6 +17,12 @@ const SHIELD_SPAN: float = 1.45
 ## the way from the hand's line to the body's midline, so it covers the chest, not the shoulder.
 const SHIELD_AHEAD: float = 40.0
 const SHIELD_MID: float = 0.75
+## combat-notes: while a strike extends (c_reach > 0) the striking arm draws this far above its
+## usual z, over every part of another rig (a human's head is z 12): at contact Rivet stands in
+## the victim and the claw was drawn under the victim's head and arms. Under RivetHeldView (+60).
+const STRIKE_Z: int = 20
+## False (`--soft-swing`): the night's z (the A/B's before).
+static var strike_over: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 
 
 static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
@@ -43,8 +49,14 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
 	var behind: bool = h2.x < sh.x - 40.0 and not hilt_hand(rig, s)
-	side.upper.z_index = p.arm_below if behind else p.arm_above
-	side.fore.z_index = p.arm_below if behind else p.arm_above + 1
+	var lift: int = STRIKE_Z if strike_over and striking(rig, s) and rig.c_reach > 0.0 else 0
+	side.upper.z_index = (p.arm_below if behind else p.arm_above) + lift
+	side.fore.z_index = (p.arm_below if behind else p.arm_above + 1) + lift
+
+
+## The arm a timed strike drives (RigClips.strike: one side, or 2 = both).
+static func striking(rig: CutRig, s: int) -> bool:
+	return rig.strike_arm == s or rig.strike_arm == 2
 
 
 ## combat-notes: the off claw on a two-handed melee hilt (drawn side-on, over the torso).
@@ -77,8 +89,7 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 		tgt = Vector3(sh.x + dv.x * reach * 0.97, sh.y + dv.y * reach * 0.97, -10.0)
 		tgt.x -= 60.0 * rig.c_recoil
 	tgt = RigGrip.target(rig, tgt, aim_arm, reach)  # rivet-arsenal: two-hand, shoulder, hip
-	var striking: bool = rig.strike_arm == s or rig.strike_arm == 2
-	if (striking or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
+	if (striking(rig, s) or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
 	tgt = RigGrip.melee_hilt(rig, s, tgt, reach)  # combat-notes: both claws on a two-hand hilt
 	if rig.c_hands_up > 0.0:
