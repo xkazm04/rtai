@@ -12,6 +12,7 @@ const REACH_M: float = 0.6
 ## Melee: jab from this close (StagePilot's reach is 1.6 m plus the guard's radius).
 const JAB_M: float = 1.5
 const JAB_EVERY: int = 32
+const DWELL_LINE: int = 60
 ## Guns: fire inside this distance, after the guard was inside it REACT_TICKS (a readable beat).
 const FIRE_M: float = 13.0
 const REACT_TICKS: int = 30
@@ -23,6 +24,8 @@ class Beat:
 	var ticks: int
 	var points: Array[Vector2] = []
 	var aim: Vector2 = Vector2.ZERO
+	## The first `lead` points are walked; a melee line beat jabs at each point after them.
+	var lead: int = 0
 
 	func _init(p_id: StringName, p_ticks: int) -> void:
 		id = p_id
@@ -54,15 +57,21 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 
 static func default_beats() -> Array[Beat]:
 	var walk: Beat = Beat.new(&"walk", 300)
-	walk.points = [Vector2(4.0, -3.0), Vector2(12.0, -3.0), Vector2(12.0, 3.0), Vector2(4.0, 3.0)]
+	walk.points = [Vector2(4.0, 1.5), Vector2(13.0, 1.5), Vector2(13.0, 4.0), Vector2(4.0, 4.0)]
 	var strafe: Beat = Beat.new(&"strafe", 240)
-	strafe.points = [Vector2(4.0, 0.0), Vector2(12.0, 0.0)]
+	strafe.points = [Vector2(4.0, 1.0), Vector2(12.0, 1.0)]
 	strafe.aim = Vector2.UP
+	# rivet-motion's melee line (targets at x 0/2/4, metal at 6/8/10/14 on y -3), round its west end
+	var line: Beat = Beat.new(&"melee_line", 660)
+	line.points = [Vector2(-1.8, -6.0), Vector2(-1.8, -1.6)]
+	line.lead = line.points.size()
+	for x: float in [0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 14.0]:
+		line.points.append(Vector2(x, -1.6))
 	var melee: Beat = Beat.new(&"pit_melee", 900)
 	melee.points = PIT_ENTRY
 	var gun: Beat = Beat.new(&"pit_gun", 1200)
 	gun.points = [PIT_ENTRY[PIT_ENTRY.size() - 1]]
-	return [walk, strafe, Beat.new(&"range", 540), melee, gun]
+	return [walk, strafe, Beat.new(&"range", 540), line, melee, gun]
 
 
 func beat() -> Beat:
@@ -100,6 +109,8 @@ func sample(tick: int) -> TickInput:
 			return _strafe(b, local)
 		&"range":
 			return _range.sample(local)
+		&"melee_line":
+			return _line(b)
 		_:
 			return _pit(b, local, b.id == &"pit_melee")
 
@@ -119,6 +130,21 @@ func _strafe(b: Beat, local: int) -> TickInput:
 	var leg: int = (local / 80) % 2
 	var to: Vector2 = stage.plan.base + b.points[leg] - stage.arena.rivet.pos
 	return _input(to.limit_length(1.0), b.aim, 0)
+
+
+## Walk the lead-in, then at each line point face north (the dummies) and jab DWELL_LINE ticks.
+func _line(b: Beat) -> TickInput:
+	if _next < b.lead:
+		return _path(b, false)
+	var rivet: Vector2 = stage.arena.rivet.pos
+	var to: Vector2 = stage.plan.base + b.points[mini(_next, b.points.size() - 1)] - rivet
+	if to.length() > REACH_M:
+		_seen_since = -1
+		return _input(to.limit_length(1.0), to.normalized(), 0)
+	_seen_since += 1
+	if _seen_since >= DWELL_LINE and _next < b.points.size() - 1:
+		_next += 1
+	return _input(Vector2.ZERO, Vector2.UP, _bit(&"melee", _seen_since == DWELL_LINE / 3))
 
 
 ## The pit: through the doors, then the nearest standing guard: melee closes in and jabs; the gun
