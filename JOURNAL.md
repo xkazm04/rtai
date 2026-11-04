@@ -547,12 +547,16 @@ NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
   each covering part of the area, which is why no single marker filled them. The 23:58 "not the legs" was wrong;
   REPORT section 5 and the decisions line corrected.
 
+- 00:13 NEXT 1 trial (reverted): ped foot_fwd 10 -> 3 and leg_w 0.8, `cast_lineup -- --crowd [--walk]`
+  (`frames/crowd-feet-trial-32ppm.png`): standing, the lobes shrink a little; walking, built or trial, the peds
+  read as figures with dark trouser legs striding, as r2_a5's running peds do. So the dark standing blob mostly
+  matters for idle crowds; the pale-top read still needs the torso to show past the head (r4 sheet + smaller head).
+
 NEXT (iteration 11):
-1. Peds' standing legs from above toward r1_c6 (small shoes just ahead of the body): ped plan values only, no
-   print change: foot_fwd 10 -> ~3, a foot scale (BodyPlan has none: add `foot_k`, render-only, like leg_w), and
-   leg_w ~0.8; check walking and running still read, then `--crowd [--road]` at 32 px/m.
+1. Peds' standing legs toward r1_c6: foot_fwd 3 + leg_w 0.8 helped a little (00:13); add a render-only `foot_k`
+   (smaller shoes) and try with the r4 sheet + head_k ~0.75 together (the pale coat must show past the head).
 2. Then re-try the r4 sheet (`gen/r4/cut/` via `install_ped_sheet.py`) on top, plus a smaller head if needed.
    Judge: the react board, ped corpses and gib cuts, the city at 32 px/m, the goldens (one re-bless with a dated
    line), provenance lines for shipped parts.
 3. Calls 1-5 in REPORT stand. REPORT rewrite at 08:40; frames.json 15, all files exist.
-Session end 00:14: head = this commit, tree clean, image.lock released, no Godot process of mine running.
+Session end 00:15: head = this commit, tree clean, image.lock released, no Godot process of mine running.
