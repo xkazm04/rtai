@@ -354,3 +354,6 @@ NEXT (after the freeze; for the morning merge / the next night):
 4. weapon-art call 14 (the electro gun still prints mostly dark at 32 px/m): if the owner picks option C (grey sticker), the held sprite's LIMB kind below view_px 0.13 is one token in rivet_held_view.gd.
 - 07:47 MILESTONE the flamer and molotov close-up on the city block at 64 px/m (1500 frames on the tip: 2 waves, 4 kills, 0 deaths, 0 errors): clip `clips/city-block-flamer-molotov-64ppm.mp4` (frames 450-1050), stills `frames/city-block-flamer-molotov-64ppm.png` (looked at: the hose's flame stream with the tank on Rivet's back, a guard ablaze next to the plasma sword, two cops dead in red blood by the kerb car). frames.json entry 3 (the plasma deflect entry fell off the 15; its clip stays in clips/ for call 11). Scratch AVI and MP4 deleted.
 - Session end 07:48 (supersedes 07:45): all committed (last 510e4bab + this line). No Godot process of mine running (checked: the three left belong to showcase and other lanes). Scratch clean. NEXT as in the 07:45 list.
+
+## Iteration 11 (07:48 - 08:30 freeze), BUILD
+- 07:50 read JOURNAL, git log, other lanes' JOURNALs. REQUEST 12 from weapon-art (drop `"gloria": "pistol"` from art_stand_in) + their watch item: long guns drawn over Rivet's helmet in the carry pose. Plan: merge n-weapon-art (answers REQUEST 12), then the helmet overlap.
