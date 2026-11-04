@@ -814,3 +814,14 @@ NEXT (iteration 12, in order):
   FAIL only on the known accent rows (48 px/m vermilion 8 px / blood 16 px on vehicles: the
   d5-city / gunplay blood flicker since iteration 5); look goldens 11/11 (worst 1.87), block
   5/5 (worst 1.77): the scorch and dry-kill changes move no golden.
+- 07:42-07:54 BENCH under bench.lock (taken 07:42, free; released by the run's tail), exported
+  release, 3 x 4 scenarios x 60 s, on c3749b0d+journal. CONTENDED (other lanes filming on the
+  one GPU; one Godot of mine at a time, none else): riot p99 8.606 ms, 1 % low 92 fps, rigs p99
+  0.901 ms; drive p99 4.834 ms, 1 % low 92; drive48 p99 2.769 ms. Verdict MISSES p99CpuMs. Not
+  comparable with the idle record (riot 6.007): it says nothing yet about CrowdReact 244 -> 150
+  us (0.1 ms of a 8.6 ms p99). An idle-machine bench is still owed (the morning's showcase run).
+- 07:56 session close. All code committed; frames.json 15, every file present; no Godot process
+  of mine running; scratch-hr holds only logs + 3 sheets.
+
+NEXT (iteration 12): unchanged from the list above (1 gunplay shield_test wiring on merge,
+2 idle bench, 3 a live knockdown survivor, 4 re-film the burn death if gunplay thins its stars).
