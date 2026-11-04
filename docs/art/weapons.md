@@ -24,7 +24,8 @@ and prompts are in `gtai-masters/n4/weapon-art/raw/`.
    Never teal (souls only), never cop blue, never red (blood only).
 4. **Bold ink outline, flat fills, print grain** (the D5 sticker parts, e.g. the cop's
    `forearm_pistol`). In game the held part draws through the rig's `print_part` material, so it
-   prints as a dark ink silhouette like Rivet's parts.
+   prints as a dark ink silhouette like Rivet's parts, on a 1 world px paper rim (`WeaponArt.make_held`
+   adds 8 cream silhouettes under it, the rigs' sticker halo; `--weapon-rim=off` drops it).
 5. **Readable at 32 px/m.** Held weapons are drawn about 1.5x real size (pistol 0.70 m = 22 px,
    rocket launcher 1.70 m = 54 px), so they stick out of the claw beside a 2 m Rivet. One value per
    row (`length_m`).
@@ -76,6 +77,19 @@ weapon must differ in OUTLINE from above, not in plates or colour. The machine p
 feed box (`tools/art/smg_feed_box.py`) because it printed as the pistol's blob. A throw has no muzzle flash
 (`muzzle_fx` ""). The flame jet starts long and thin at the nozzle and fans out (round puffs near the gun
 read as red drops).
+
+## Paper rim and magazines (iteration 5)
+
+At 32 px/m the held gun printed as a dark blob on Rivet's dark arm. Every held part (and magazine) now sits
+on a 1 world px paper rim, the same cream sticker edge the rigs draw: the gun reads as its own object at
+32 px/m (`it5-rim-ab-64-32ppm.png`). Brass is a small paper glint (casing at 0.75 scale): charcoal casings at
+1.3 read as bricks the size of a magazine.
+
+Magazines (`parts.mag`, `part_grip_px.mag`; `tools/art/weapon_mags.py`, cut from each gun's own held part):
+pistol = the slide plate with a paper nose, machine pistol = the curved feed box with its tape band, plasma
+rifle = the glass cell, hand cannon = a six-round speed-loader. Drawn at the held part's scale, feed end +x.
+`WeaponMagView` carries one in Rivet's off claw through the reload (out to the hip, a fresh one in) and leaves
+the spent one on the floor.
 
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
