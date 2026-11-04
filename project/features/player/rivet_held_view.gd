@@ -25,6 +25,7 @@ var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
 var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
+var _mag: RivetMagView = null
 
 
 func _ready() -> void:
@@ -38,6 +39,7 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
+		_mag_view().feed(rig, rig.reload_k, arena.tick if arena != null else 0)
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -120,3 +122,10 @@ func _grind(rig: CutRig) -> void:
 	var step3: int = pilot.melee.combo.ground % 3 - 1
 	_sprite.global_rotation += GRIND_JUDDER * float(step3)
 	_sprite.global_position += Vector2.from_angle(_sprite.global_rotation + PI * 0.5) * float(step3)
+
+
+func _mag_view() -> RivetMagView:
+	if _mag == null:
+		_mag = RivetMagView.new()
+		add_child(_mag)
+	return _mag
