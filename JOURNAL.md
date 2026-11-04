@@ -594,3 +594,22 @@ the tree). Then NEXT 2-5 above.
   the nuke finale; a beat of LOOK_TICKS 45 before each first shot so the victim reads first);
   motion-quality-gating (judge in motion, fixed-fps 60, look at frames of every chapter).
 - 04:44 filming reel-0500-director (48 px/m, 5940 ticks).
+- 04:44-04:49 reel-0500-director (48 px/m, 99 s, one run on 70a1e691, before the camera).
+  Looked at 4 frames per chapter (scratch sheets). Right: every chapter's kill lands and the title
+  card reads; claw combo blood fans, pistol two cops drop with sprays, machine pistol drops the
+  group of 4, rocket gibs, flamer burns, electro X-ray frame, molotov ring of fire at 7 m (the
+  bottle reached the victim on the held fire), deflect: the shooter dies on his own batted round.
+  WRONG (mine): (a) the dead and the blood of every earlier chapter stay on the mark (moving a
+  dead Fighter does not move its print or its blood), so from chapter 4 every kill plays on a
+  gore carpet among old corpses: not isolated; (b) Rivet stands at the frame's left quarter with
+  cream paper beyond the arena's west edge in frame; (c) the mini-nuke's blast lands at the
+  frame's right edge (15 m), mostly out of frame. Fixes: c0bf84e2 (camera halfway to the
+  victims: b and c) and 451f3cd5 (`--chapter=<id>` + evidence/cut.sh: one fresh run per
+  chapter, concatenated: a clean floor per kill, and one chapter re-filmable alone).
+  Unclear at 640 px: katana/chainsaw halves, hand cannon, ray gun dissolve: judge on the re-cut.
+- MERGE ROUND 7 (04:51-04:53): weapon-art 583613dc, rivet-arsenal d58a5c44 (aed92d01), gunplay
+  fa4c6cb6, human-reactions 1da7fd7d, brutality c4da86e2 -> 15b48cb4. Conflicts: JOURNAL.md
+  (ours); test_gun_fx.gd (gunplay took REQUEST 19 with the same line: theirs);
+  test_rig_variant_swat.gd.uid (human-reactions took REQUEST 20: theirs, uid://4ho61ofhybgt).
+  REQUESTs 19 and 20 closed.
+- 04:54 filming reel-0520-director (cut.sh, 16 fresh runs at 48 px/m) and gates r7 in parallel.
