@@ -404,6 +404,69 @@
         3.5
       ],
       "weapon": "ram"
+    },
+    {
+      "bounce": 0.35,
+      "cone_deg": 75,
+      "doc": "Dent's overloaded car bomb (lane ghost-powers, weapon dent_blast): the rocket's gib, thrown out of the car's blast: the body blown into its six rig parts with a red spray fan, ink splat and a scorch mark.",
+      "flash_ticks": 3,
+      "ground_drag": 6,
+      "hitstop_ticks": 4,
+      "id": "dent_blast_gib",
+      "launch_mps": [
+        5,
+        10
+      ],
+      "pieces": [
+        "head",
+        "torso",
+        "arm_l",
+        "arm_r",
+        "leg_l",
+        "leg_r"
+      ],
+      "scorch_radius_m": 1.3,
+      "spin_dps": [
+        360,
+        1080
+      ],
+      "spray": 18,
+      "style": "gib",
+      "up_mps": [
+        3,
+        6.5
+      ],
+      "weapon": "dent_blast"
+    },
+    {
+      "bounce": 0.3,
+      "cone_deg": 25,
+      "doc": "Dent's seized car hits a human (lane ghost-powers, weapon dent_car): thrown off the bonnet in one piece along the car's nose, tumbling, landing on a smear, the cap spinning off.",
+      "flash_ticks": 0,
+      "ground_drag": 4.5,
+      "hitstop_ticks": 3,
+      "id": "dent_car_hit",
+      "launch_mps": [
+        6.5,
+        8.5
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        240,
+        720
+      ],
+      "spray": 10,
+      "spray_cone_deg": 40,
+      "style": "blowback",
+      "up_mps": [
+        2.5,
+        3.5
+      ],
+      "weapon": "dent_car"
     }
   ],
   "leftover_budget": 12,

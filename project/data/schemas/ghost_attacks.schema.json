@@ -2,6 +2,73 @@
   "$id": "gtai.ghost_attacks/1",
   "additionalProperties": false,
   "properties": {
+    "dent": {
+      "additionalProperties": false,
+      "properties": {
+        "aim_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "arm_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blast_damage": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blast_radius_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_damage": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_knock_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_reach_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "overload_s": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "aim_m",
+        "arm_k",
+        "blast_damage",
+        "blast_radius_m",
+        "car_damage",
+        "car_knock_m",
+        "car_reach_m",
+        "doc",
+        "overload_s",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -54,6 +121,7 @@
     }
   },
   "required": [
+    "dent",
     "doc",
     "schema",
     "tonnage"

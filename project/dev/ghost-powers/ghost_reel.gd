@@ -25,6 +25,9 @@ var victims: Array[Fighter] = []
 var car: VehicleBody = null
 var car_two: VehicleBody = null
 var wave: int = 1
+## The ghost whose beat runs (--ghost=<tonnage|dent>, default tonnage).
+var ghost: StringName = &"tonnage"
+var dent_beat: DentBeat = null
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
 var _anchor: Vector2 = Vector2.ZERO
@@ -33,12 +36,13 @@ var _stage: ArenaStage = null
 
 func _init(p_actions: PlayerActions) -> void:
 	actions = p_actions
+	ghost = StringName(ArenaArgs.parse().text("--ghost", "tonnage"))
 
 
 func step(stage: ArenaStage, tick: int) -> void:
 	if started_tick < 0:
 		_begin(stage, tick)
-	elif wave == 1 and _nearest(stage.arena.rivet.pos) == null:
+	elif ghost == &"tonnage" and wave == 1 and _nearest(stage.arena.rivet.pos) == null:
 		_wave_two(stage, tick)
 
 
@@ -47,8 +51,8 @@ func _wave_two(stage: ArenaStage, tick: int) -> void:
 	wave = 2
 	var at: Vector2 = stage.arena.rivet.pos
 	for off: Vector2 in CLUSTER:
-		victims.append(_spawn(stage, at - off - Vector2(1.0, 0.0), false))
-	victims.append(_spawn(stage, at - RIOT - Vector2(1.0, 0.0), true))
+		victims.append(spawn(stage, at - off - Vector2(1.0, 0.0), false))
+	victims.append(spawn(stage, at - RIOT - Vector2(1.0, 0.0), true))
 	if stage.vehicles != null:
 		car_two = stage.vehicles.spawn_parked(&"sedan", at - CAR - Vector2(1.0, 0.0), Vector2.UP)
 	Log.info("ghosts", "ghost reel: tonnage wave 2 at tick %d" % tick)
@@ -74,6 +78,9 @@ func telemetry() -> Dictionary:
 			"ticks_on": h.ticks_on,
 			"rivet_hp": _stage.arena.rivet.hp,
 		}
+	var d: DentStage = _stage.pilot.dent if _stage != null and _stage.pilot != null else null
+	if d != null:
+		out["dent"] = {"seizes": d.seizes, "strikes": d.strikes, "blasts": d.blasts}
 	return out
 
 
@@ -83,6 +90,12 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 	var local: int = tick - started_tick
 	if started_tick < 0 or local < LOOK_TICKS:
 		return _input(Vector2.ZERO, Vector2.RIGHT, 0)
+	if dent_beat != null:
+		var w: Array = dent_beat.want(stage, local)
+		var move: Vector2 = w[0]
+		var look: Vector2 = w[1]
+		var act: StringName = w[2]
+		return _input(move, look, _bit(act, act != &""))
 	if local == LOOK_TICKS:
 		return _input(Vector2.ZERO, Vector2.RIGHT, _bit(&"power_hauler", true))
 	var foe: Fighter = _nearest(rivet.pos)
@@ -105,17 +118,22 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	var arena: CombatArena = stage.arena
 	arena.rivet.pos = _anchor
 	arena.rivet.facing = Vector2.RIGHT
+	if ghost == &"dent":
+		dent_beat = DentBeat.new()
+		dent_beat.begin(self, stage, _anchor)
+		Log.info("ghosts", "ghost reel: dent beat at tick %d" % tick)
+		return
 	for off: Vector2 in CLUSTER:
-		victims.append(_spawn(stage, _anchor + off, false))
-	victims.append(_spawn(stage, _anchor + RIOT, true))
+		victims.append(spawn(stage, _anchor + off, false))
+	victims.append(spawn(stage, _anchor + RIOT, true))
 	for off: Vector2 in FAR:
-		victims.append(_spawn(stage, _anchor + off, false))
+		victims.append(spawn(stage, _anchor + off, false))
 	if stage.vehicles != null:
 		car = stage.vehicles.spawn_parked(&"police_cruiser", _anchor + CAR, Vector2.UP)
 	Log.info("ghosts", "ghost reel: tonnage beat at tick %d" % tick)
 
 
-func _spawn(stage: ArenaStage, at: Vector2, riot: bool) -> Fighter:
+func spawn(stage: ArenaStage, at: Vector2, riot: bool) -> Fighter:
 	var g: Fighter = stage.arena.spawn_guard(at)
 	g.pos = at
 	g.facing = Vector2.LEFT
