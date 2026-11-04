@@ -228,6 +228,11 @@ from an ink density of about 0.43 (luminance about 140). The held guns' body ton
   cannon's drum and Gloria's tip are gone, and only the machine pistol's T survives
   (`it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png`).
 - The pickups, the HUD icons and the weapon wall are unchanged: they print flat at their own size.
+- **A gun on the ground** (rivet-arsenal's `PickupsView`, iteration 21): it had the rigs' PART print too, and
+  at 48 and 32 px/m the hand cannon on its paper disc printed as a black ink smudge (the held-gun finding again).
+  `PickupLook.dress` now draws the pickup's own flat fills, unprinted, over 8 ink silhouettes 1 world px out (the
+  D5 line the print would have given it). `--pickup-print=on` = before. Measured in the live arena pit:
+  `it21-pickup-ink-ab-arena-pit-32-48ppm.png`, `it21-pickup-ink-ab-arena-pit-48ppm.mp4`.
 - Generator: `tools/art/held_small.py <art_dir> [ids]`. `--sim <out.png>` previews the print offline (box
   minification + the shader's D4 thresholds) before a Godot run: `it12-held-small-print-sim.png`.
 

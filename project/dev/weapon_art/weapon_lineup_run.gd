@@ -117,6 +117,7 @@ func _props() -> void:
 		pick.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		pick.scale = Vector2.ONE * _art.world_scale(id)
 		pick.position = _spot(i) + Vector2(0.0, 2.4) * PX
+		PickupLook.dress(pick)  # the live game's pickup look (flat fills in an ink outline)
 		_world.add_child(pick)
 	if not ids.has(&"flamethrower"):
 		return
