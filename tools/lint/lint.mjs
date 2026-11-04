@@ -13,7 +13,22 @@ import { validate } from '../lib/mini_schema.mjs';
 const tool = (name, cmd, args) => {
   const res = run(cmd, args, { cwd: ROOT });
   const issues = res.status === 0 ? [] : res.out.split('\n').filter((l) => l.trim()).slice(0, 40);
+  if (res.status !== 0 && issues.length === 0) issues.push(`${cmd} exited ${res.status} with no output`);
   return { name, ok: res.status === 0, issues };
+};
+
+// A per-file tool over many files, in batches: one Windows command line holds 32767 characters,
+// and the GDScript file list passed that at about 810 files (the tool then failed with no output).
+export const FILE_BATCH = 200;
+const toolFiles = (name, cmd, pre, files) => {
+  const out = { name, ok: true, issues: [] };
+  for (let i = 0; i < files.length; i += FILE_BATCH) {
+    const r = tool(name, cmd, [...pre, ...files.slice(i, i + FILE_BATCH)]);
+    out.ok = out.ok && r.ok;
+    out.issues.push(...r.issues);
+  }
+  out.issues = out.issues.slice(0, 40);
+  return out;
 };
 
 function jsonCanonical() {
@@ -102,8 +117,8 @@ export function runLint() {
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
-    tool('gdformat', 'gdformat', ['--check', '--line-length', '100', ...gd]),
-    tool('gdlint', 'gdlint', gd),
+    toolFiles('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
+    toolFiles('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
