@@ -3,10 +3,10 @@ extends InputSource
 ## The showcase's scripted fight (`--bot=reel` in the arena, also on `--arena=city`): one
 ## deterministic run of the real Rivet through every finished combat piece, in beats. It reads
 ## only the sim, and its TickInputs go through the same InputTape as live play, so a reel records
-## and replays. Beats (metres from the arena hub, ticks at 60 Hz): walk a loop of the hub, strafe
-## across it aiming one way, the range dummies (static, strafing, approaching) through the range
-## bot, then the pit: the first wave by melee (close in, jab), the next by the gun. The beats grow
-## as the night lanes land (weapon switch, signature kills, riot shield, robot thug).
+## and replays. Beats (metres from the arena hub, ticks at 60 Hz): rivet-arsenal's motion and
+## claw showcase (ArenaRivetBot), the range dummies (ArenaRangeBot), rivet-motion's melee line,
+## then the pit: the first wave by melee, the next by the gun (pulsed trigger). The beats grow as
+## the night lanes land (weapon switch, signature kills, riot shield, robot thug).
 
 const REACH_M: float = 0.6
 ## Melee: jab from this close (StagePilot's reach is 1.6 m plus the guard's radius).
@@ -45,6 +45,7 @@ var trigger: bool = true
 var _beat_start: int = 0
 var _next: int = 0
 var _range: ArenaRangeBot
+var _rivet: ArenaRivetBot
 var _seen_since: int = -1
 var _kills_before: int = 0
 
@@ -53,15 +54,14 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 	stage = p_stage
 	actions = p_actions
 	_range = ArenaRangeBot.new(p_stage, p_actions)
+	_rivet = ArenaRivetBot.new(p_stage, p_actions)
 	beats = default_beats()
 
 
 static func default_beats() -> Array[Beat]:
-	var walk: Beat = Beat.new(&"walk", 300)
-	walk.points = [Vector2(4.0, 1.5), Vector2(13.0, 1.5), Vector2(13.0, 4.0), Vector2(4.0, 4.0)]
-	var strafe: Beat = Beat.new(&"strafe", 240)
-	strafe.points = [Vector2(4.0, 1.0), Vector2(12.0, 1.0)]
-	strafe.aim = Vector2.UP
+	# rivet-arsenal's own showcase (ArenaRivetBot): walk, strafe, backpedal round a mark, sprint,
+	# roll both ways, the claw combo on two sparring cops and one jab on a plain cop (hub)
+	var rivet: Beat = Beat.new(&"rivet", 1200)
 	# rivet-motion's melee line (targets at x 0/2/4, metal at 6/8/10/14 on y -3), round its west end
 	var line: Beat = Beat.new(&"melee_line", 660)
 	line.points = [Vector2(-1.8, -6.0), Vector2(-1.8, -1.6)]
@@ -72,7 +72,9 @@ static func default_beats() -> Array[Beat]:
 	melee.points = PIT_ENTRY
 	var gun: Beat = Beat.new(&"pit_gun", 1200)
 	gun.points = [PIT_ENTRY[PIT_ENTRY.size() - 1]]
-	return [walk, strafe, Beat.new(&"range", 540), line, melee, gun]
+	var go: Beat = Beat.new(&"go_range", 150)  # round the melee line's east end
+	go.points = [Vector2(16.0, -1.0), Vector2(16.0, -8.0)]
+	return [rivet, go, Beat.new(&"range", 540), line, melee, gun]
 
 
 func beat() -> Beat:
@@ -91,6 +93,8 @@ func sample(tick: int) -> TickInput:
 	if beat_i < beats.size():
 		var b_id: StringName = beats[beat_i].id
 		kills_by_beat[b_id] = stage.pit.kills - _kills_before
+	if beat_i < beats.size() and beats[beat_i].id == &"rivet" and _rivet.finished_tick >= 0:
+		beats[beat_i].ticks = mini(beats[beat_i].ticks, tick - _beat_start)  # its bot is done
 	while beat_i < beats.size() and tick - _beat_start >= beats[beat_i].ticks:
 		_kills_before = stage.pit.kills
 		_beat_start += beats[beat_i].ticks
@@ -104,10 +108,10 @@ func sample(tick: int) -> TickInput:
 	var b: Beat = beats[beat_i]
 	var local: int = tick - _beat_start
 	match b.id:
-		&"walk":
-			return _path(b, true)
-		&"strafe":
-			return _strafe(b, local)
+		&"rivet":
+			return _rivet.sample(local)
+		&"go_range":
+			return _path(b, false)
 		&"range":
 			return _range.sample(local)
 		&"melee_line":
@@ -116,7 +120,7 @@ func sample(tick: int) -> TickInput:
 			return _pit(b, local, b.id == &"pit_melee")
 
 
-## Walk the beat's points in a loop (the facing follows the walk unless `aim` is set).
+## Walk the beat's points (in a loop if `loop`; the facing follows the walk unless `aim` is set).
 func _path(b: Beat, loop: bool) -> TickInput:
 	var rivet: Vector2 = stage.arena.rivet.pos
 	var to: Vector2 = stage.plan.base + b.points[_next % b.points.size()] - rivet
@@ -124,13 +128,6 @@ func _path(b: Beat, loop: bool) -> TickInput:
 		_next += 1
 	var aim: Vector2 = b.aim if b.aim != Vector2.ZERO else to.normalized()
 	return _input(to.normalized(), aim, 0)
-
-
-## Side to side between the two points while the aim holds one heading (the twin-stick read).
-func _strafe(b: Beat, local: int) -> TickInput:
-	var leg: int = (local / 80) % 2
-	var to: Vector2 = stage.plan.base + b.points[leg] - stage.arena.rivet.pos
-	return _input(to.limit_length(1.0), b.aim, 0)
 
 
 ## Walk the lead-in, then at each line point face north (the dummies) and jab DWELL_LINE ticks.
