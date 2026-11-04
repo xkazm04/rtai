@@ -139,3 +139,20 @@ func test_a_front_round_on_a_riot_shield_is_announced_a_back_round_is_not() -> v
 	assert_eq(link.wounds, 2)
 	rig.free()
 	bare.free()
+
+
+func test_the_gunfx_shield_test_matches_the_shield_family() -> void:
+	var table: ReactTable = ReactTable.shipped()
+	var rig: CutRig = CutRig.new()
+	rig.variant = RigVariant.crowd(6)
+	rig.facing = 0.0
+	assert_true(ReactLink.blocks_round(rig, Vector2.LEFT, table), "a front round sparks")
+	assert_false(ReactLink.blocks_round(rig, Vector2.RIGHT, table), "a back round bleeds")
+	rig.facing = PI
+	assert_true(ReactLink.blocks_round(rig, Vector2.RIGHT, table), "the shield turns with him")
+	rig.variant = RigVariant.crowd(5)
+	assert_false(ReactLink.blocks_round(rig, Vector2.RIGHT, table), "no shield, no block")
+	assert_false(ReactLink.blocks_round(null, Vector2.LEFT, table), "no full rig, no block")
+	var link: ReactLink = ReactLink.make(_arena())
+	assert_false(link.shield_test(null, Vector2.LEFT), "nothing played yet")
+	rig.free()
