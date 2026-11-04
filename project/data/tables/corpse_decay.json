@@ -1,0 +1,20 @@
+{
+  "bodies": {
+    "cap": 16,
+    "doc": "The dead on the floor: standard corpses (human-reactions' death poses on the cast rigs) and the signature kills' body leftovers (brutality: gibs, halves, the plasma topple, the dust pile, the charred silhouettes). Each lies linger_s, then over fade_s it inks out (tinted to ink by ink_k of the fade) and sinks into its stain (shrinks by sink, to 5 %), then is released. Alpha is never faded: the D5 part print discards a part under alpha 0.45 and stipples it above (the first try read as a cream checker, then a pop). Early fade: while more than cap - room lie solid, the oldest starts its fade at once; hard cap: never more than cap drawn (the most faded goes; counted as forced).",
+    "fade_s": 1.2,
+    "ink_k": 0.5,
+    "linger_s": 6,
+    "room": 4,
+    "sink": 0.95
+  },
+  "doc": "Corpse decay in the live fight (CorpseDecayHook on the arena, the pit and the city block), so hordes can come without the floor filling up (the owner, 2026-11-04). Two ledgers stepped on the 60 Hz sim tick, keyed by fighter id, no RNG: bodies, and stains (the kill prints under signature kills: spray, scorch, ash heap, drag smears; and the blood decals and pools, whose fade starts after the stains' linger_s and takes their fade_s). Stains outlive the bodies and fade slower. A released body leaves the sim (CombatArena.hostiles) unless it is a reviving dummy, and its rig, soak and gib nodes go back to their pools, so a long fight costs the same as a short one.",
+  "schema": "gtai.corpse-decay/1",
+  "stains": {
+    "cap": 16,
+    "doc": "The floor marks: linger_s (longer than a body), then a slow fade_s; at most cap kill prints, oldest fading early past cap - room.",
+    "fade_s": 4,
+    "linger_s": 12,
+    "room": 4
+  }
+}

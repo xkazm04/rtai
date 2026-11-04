@@ -29,6 +29,8 @@ var missed: int = 0
 var walkers: PackedVector2Array = PackedVector2Array()
 ## False draws the soaks over the walkers too (the before frame of that change).
 var fade_walkers: bool = true
+## Callable(body id) -> float: the body's own fade (CorpseDecay in the live fight); unset = 1.
+var body_alpha: Callable = Callable()
 ## The first tick a walker stood on a soaked body (evidence captures; -1 = not yet).
 var first_cover: int = -1
 ## CPU microseconds spent in step since boot, and the steps (the riot budget, STANDARDS 20).
@@ -128,6 +130,9 @@ func step_bodies(tick: int, dead: Dictionary[int, Vector2]) -> void:
 		s.position = dead[s.slot]
 		s.scale = Vector2.ONE * clampf(float(tick - s.born) / maxf(_grow, 1.0), 0.3, 1.0)
 		s.modulate.a = _uncovered(s.position) if fade_walkers else 1.0
+		if body_alpha.is_valid():
+			var k: float = body_alpha.call(s.slot)
+			s.modulate.a *= k
 
 
 ## 0 while a walker stands on the body at `at` (px), 1 once every walker is CLEAR_M away.

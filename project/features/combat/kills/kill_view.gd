@@ -35,6 +35,9 @@ var kill_ticks: PackedInt32Array = PackedInt32Array()
 var over_2ms: int = 0
 ## Microseconds of each kill's cut (_on_killed), in kill order: is only the first one slow?
 var kill_us: PackedInt32Array = PackedInt32Array()
+## CorpseDecay (set by CorpseFade): a kill's parts fade with its victim's body, its print with
+## the victim's stain, and both are freed on release; null keeps them until their slots recycle.
+var decay: CorpseDecay = null
 var _groups: Dictionary[int, Array] = {}
 var _ang0: PackedFloat32Array = PackedFloat32Array()
 ## Each slot's drag smear (px), grown while its part slides on the street.
@@ -44,6 +47,9 @@ var _dry: Dictionary[int, bool] = {}
 var _frame_us: int = 0
 var _frame_tick: int = 0
 var _grounds: Dictionary[int, KillGround] = {}
+## Each kill's parts under one holder (its alpha is the body's fade), the kill's victim by serial.
+var _holders: Dictionary[int, Node2D] = {}
+var _victim: Dictionary[int, int] = {}
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -80,9 +86,10 @@ func _process(_delta: float) -> void:
 			continue
 		node.position = g.pos[i] * ppm
 		node.rotation = g.ang[i] - _ang0[i]
-		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
+		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE) * body_sink(g.kill_of[i])
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	styles.pose()
+	_fade()
 	for kg: KillGround in _grounds.values():
 		if kg.needs_reprint(kills.tick):
 			kg.queue_redraw()
@@ -102,9 +109,9 @@ func _draw() -> void:
 	var t0: int = Time.get_ticks_usec()
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
-		if g.live(i):
+		if g.live(i) and _holders.has(g.kill_of[i]):
 			var r: float = 0.22 * ppm / (1.0 + g.z[i] * 0.6)
-			draw_circle(g.pos[i] * ppm, r, SOOT)
+			draw_circle(g.pos[i] * ppm, r * body_sink(g.kill_of[i]), SOOT)
 	for m: KillMarks.Mark in kills.marks.marks:
 		var age: int = kills.tick - m.tick
 		var soot: int = 2 if m.flash_scale >= 1.0 else 0
@@ -128,6 +135,10 @@ func _node(i: int) -> Node2D:
 func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var groups: Array[Node2D] = _parts(victim_id, serial, row, at, dir)
+	var holder: Node2D = Node2D.new()
+	gib_layer.add_child(holder)
+	_holders[serial] = holder
+	_victim[serial] = victim_id
 	for i: int in groups.size():
 		var gr: Node2D = groups[i]
 		if gr == null or not row.pieces.has(i):  # a group the row does not throw (burn: no cap)
@@ -140,7 +151,7 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
 			stump.radius = 0.1 * ppm
 			stump.z_index = -1
 			gr.add_child(stump)
-		gib_layer.add_child(gr)
+		holder.add_child(gr)
 	_groups[serial] = groups
 	if row.spray == 0:
 		_dry[serial] = true
@@ -199,11 +210,7 @@ func _drop_unused() -> void:
 				var dead: Node2D = gr
 				if dead != null:
 					dead.queue_free()
-			@warning_ignore("return_value_discarded")
-			_groups.erase(serial)
-			@warning_ignore("return_value_discarded")
-			_dry.erase(serial)
-			styles.forget(serial)
+			_free_parts(serial)
 
 
 ## The victim's parts, cut by the row's style (KillStyles.parts).
@@ -212,3 +219,64 @@ func _parts(
 ) -> Array[Node2D]:
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	return styles.parts(rig, serial, row, at, dir)
+
+
+## The victim's body is gone (CorpseDecay released it): its kill's parts and overlays are freed.
+func release_body(victim_id: int) -> void:
+	for serial: int in _victim.keys():
+		if _victim[serial] == victim_id and _groups.has(serial):
+			for gr: Variant in _groups[serial]:
+				var n: Node2D = gr
+				if n != null:
+					n.queue_free()
+			_free_parts(serial)
+
+
+## The victim's stain is gone: its kill's print on the street is freed.
+func release_stain(victim_id: int) -> void:
+	for serial: int in _victim.keys():
+		if _victim[serial] == victim_id and _grounds.has(serial):
+			_grounds[serial].queue_free()
+			@warning_ignore("return_value_discarded")
+			_grounds.erase(serial)
+			if not _holders.has(serial):
+				@warning_ignore("return_value_discarded")
+				_victim.erase(serial)
+
+
+## 1, or the kill's victim body's sink (CorpseDecay: its scale while it decays) for `serial`.
+func body_sink(serial: int) -> float:
+	return decay.sink_of(_victim_of(serial)) if decay != null else 1.0
+
+
+func _victim_of(serial: int) -> int:
+	return _victim[serial] if _victim.has(serial) else -1
+
+
+## Each kill's parts ink out with its body (and sink: _process scales them), each print fades
+## with its stain.
+func _fade() -> void:
+	if decay == null:
+		return
+	if not styles.dissolve_fx.fade.is_valid():
+		styles.dissolve_fx.fade = body_sink
+	for serial: int in _holders:
+		var ink: float = decay.ink_of(_victim_of(serial))  # the part print discards low alpha
+		_holders[serial].modulate = Color.WHITE.lerp(ArtIds.INK, ink)
+	for serial: int in _grounds:
+		_grounds[serial].modulate.a = decay.stains.alpha(_victim_of(serial))
+
+
+func _free_parts(serial: int) -> void:
+	if _holders.has(serial):
+		_holders[serial].queue_free()
+		@warning_ignore("return_value_discarded")
+		_holders.erase(serial)
+	@warning_ignore("return_value_discarded")
+	_groups.erase(serial)
+	@warning_ignore("return_value_discarded")
+	_dry.erase(serial)
+	styles.forget(serial)
+	if not _grounds.has(serial):
+		@warning_ignore("return_value_discarded")
+		_victim.erase(serial)

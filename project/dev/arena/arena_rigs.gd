@@ -30,6 +30,8 @@ var plan: ArenaPlan = null
 var react: ReactLink = null
 ## Fighter ids a signature kill consumed (lane brutality): their body is gibs now, no rig.
 var hidden: Dictionary[int, bool] = {}
+## Fixtures whose body decayed (CorpseDecayHook.gone): undrawn until they stand up again.
+var gone: Dictionary[int, bool] = {}
 ## human-reactions: the city crowd's reactions (--arena=city), told where the fight's dead lie.
 var crowd: CrowdReact = null
 var _last: Dictionary[int, Vector2] = {}
@@ -115,7 +117,7 @@ func _process(_delta: float) -> void:
 	for h: Fighter in stage.arena.hostiles:
 		if h.kind == Fighter.Kind.BOSS and not stage is ArenaStage:
 			continue  # quest 1's Mertz keeps the cast view's own drawing (no boss rig yet)
-		if hidden.has(h.id):
+		if hidden.has(h.id) or gone.has(h.id):
 			continue
 		var look: Vector2i = _looks.get(h.id, Vector2i(BodyPlan.Kind.COP, _pit_look(h.id)))
 		_put(i, h, look.x as BodyPlan.Kind)
@@ -131,8 +133,15 @@ func _process(_delta: float) -> void:
 	if crowd != null:
 		crowd.extra_bodies.clear()
 		for h: Fighter in stage.arena.hostiles:
-			if not h.alive():
+			if not h.alive() and not gone.has(h.id):
 				crowd.extra_bodies[-1 - h.id] = h.pos * SimConst.PX_PER_M
+
+
+## A decayed body left the fight (CorpseFade): its per-fighter bookkeeping goes with it.
+func forget(id: int) -> void:
+	for d: Dictionary in [_last, _hurt_seen, _fire_seen, hidden]:
+		@warning_ignore("return_value_discarded")
+		d.erase(id)
 
 
 ## human-reactions' patrol/riot/SWAT mix by actor id; under --riot the shield is worn only by

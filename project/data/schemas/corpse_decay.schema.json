@@ -1,0 +1,105 @@
+{
+  "$id": "gtai.corpse-decay/1",
+  "additionalProperties": false,
+  "properties": {
+    "bodies": {
+      "additionalProperties": false,
+      "properties": {
+        "cap": {
+          "maximum": 256,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fade_s": {
+          "maximum": 10,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "ink_k": {
+          "maximum": 1,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "linger_s": {
+          "maximum": 600,
+          "minimum": 0,
+          "type": "number"
+        },
+        "room": {
+          "maximum": 64,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sink": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cap",
+        "fade_s",
+        "ink_k",
+        "linger_s",
+        "room",
+        "sink"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.corpse-decay/1",
+      "type": "string"
+    },
+    "stains": {
+      "additionalProperties": false,
+      "properties": {
+        "cap": {
+          "maximum": 256,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fade_s": {
+          "maximum": 60,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "linger_s": {
+          "maximum": 600,
+          "minimum": 0,
+          "type": "number"
+        },
+        "room": {
+          "maximum": 64,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cap",
+        "fade_s",
+        "linger_s",
+        "room"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "bodies",
+    "doc",
+    "schema",
+    "stains"
+  ],
+  "type": "object"
+}

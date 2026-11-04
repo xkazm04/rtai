@@ -34,6 +34,8 @@ class Dissolve:
 var kills: SignatureKills = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+## Callable(serial: int) -> float: the kill's body sink (KillView.body_sink): the pile shrinks.
+var fade: Callable = Callable()
 var _all: Array[Dissolve] = []
 
 
@@ -145,7 +147,8 @@ func _rings(d: Dissolve, c: Vector2, e: float) -> void:
 
 ## The dust heap grows with the eating, drawn out along the ray (KillDustPile).
 func _pile(d: Dissolve, e: float) -> void:
-	var g: float = clampf(e * 1.4, 0.0, 1.0)
+	var f: float = fade.call(d.serial) if fade.is_valid() else 1.0  # CorpseDecay: sinks away
+	var g: float = clampf(e * 1.4, 0.0, 1.0) * f
 	if g <= 0.0:
 		return
 	var glow: float = clampf(1.6 - e * 0.6 - float(kills.tick - d.born) / 900.0, 0.25, 1.0)

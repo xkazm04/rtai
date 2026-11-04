@@ -60,6 +60,8 @@ func _ready() -> void:
 	hud.px_per_m = px_per_m
 	layer.add_child(hud)
 	ReelCaption.attach(layer, session.stage, view)  # the showcase director cut's title card
+	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
+		HordeOverlay.attach(layer, session.stage)
 	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
@@ -122,6 +124,11 @@ func _dev_fight(args: ArenaArgs, on_city: bool) -> void:
 		r.hp = r.max_hp
 	if args.has("--riot"):  # lane showcase: riot cops in the pit (armored hp, the shield look)
 		session.stage.pit.riot_hp = ArenaPit.armored_hp()
+	if args.has("--horde"):  # corpse decay: back-to-back pit hordes, Rivet hard to kill
+		session.stage.pit.horde()
+		var rivet: Fighter = session.stage.arena.rivet
+		rivet.max_hp *= ArenaPit.HORDE_RIVET_HP
+		rivet.hp = rivet.max_hp
 
 
 ## Quest 1's view on the arena's floor; on the city its CityView and baked characters as well.

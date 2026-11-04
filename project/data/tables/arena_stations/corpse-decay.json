@@ -1,0 +1,22 @@
+{
+  "doc": "Corpse decay in the live fight (features/combat/decay, data/tables/corpse_decay.json): the hook books every death, steps the body and stain ledgers on the 60 Hz tick, takes decayed bodies out of the fight and folds the ledgers into the replay hash; its view side (CorpseFade) fades the rigs, soaks, gibs, dust piles and kill prints and frees their nodes. Station-only: no props, no spawns. Dev: --horde (bigger pit waves back to back, Rivet hard to kill, an on-screen body counter), --no-decay (off: the before frame).",
+  "lane": "corpse-decay",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "pit",
+      "id": "corpse_decay",
+      "measures": [
+        "bodies_now",
+        "bodies_peak",
+        "died",
+        "pruned"
+      ],
+      "name": "Corpse decay",
+      "props": [],
+      "script": "res://features/combat/decay/corpse_decay_hook.gd",
+      "spawns": [],
+      "tuning": []
+    }
+  ]
+}

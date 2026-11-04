@@ -121,6 +121,18 @@ func use_splat_mesh() -> BloodSplatMesh:
 	return _ring.mesh
 
 
+## The live fight's stain life (CorpseDecay stains): splats and pools start fading `after` ticks
+## after they land and are gone `fade` ticks later (the table's decal row stays as shipped).
+func set_decal_life(after: int, fade: int) -> void:
+	p = p.duplicate(true)
+	var dc: Dictionary = p["decal"]
+	dc["fade_after_ticks"] = after
+	dc["fade_ticks"] = maxi(fade, 1)
+	if _ring.mesh != null:
+		var floor_a: float = dc["min_alpha"]
+		_ring.mesh.set_fade(after, maxi(fade, 1), floor_a)
+
+
 ## A hit at `at` (px) travelling along `dir`: hit kind `kind` from the `hits` table.
 func splash(at: Vector2, dir: Vector2, kind: String) -> void:
 	var h: Dictionary = p["hits"][kind]

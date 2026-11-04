@@ -48,6 +48,8 @@ func acquire(kind: BodyPlan.Kind, look: RigVariant, at: Vector2, facing: float) 
 	rig.apply_variant(look)
 	rig.global_position = at
 	rig.reset_state(facing)
+	rig.modulate = Color.WHITE  # CorpseFade left a decayed corpse faded and sunk
+	rig.scale = Vector2.ONE * CutRig.SC * rig.plan.size_k
 	rig.visible = true
 	return rig
 

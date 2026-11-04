@@ -8,6 +8,10 @@ extends RefCounted
 ## only the arena lane's own enemy spawns, and stands down when another lane's station declares
 ## enemies in the pit (that lane's wave spawner owns the pit then).
 
+## Corpse decay's horde: [first_wave, grow, max_wave, gap_ticks], and Rivet's hp multiple for it.
+const HORDE: Vector4i = Vector4i(4, 2, 10, 30)
+const HORDE_RIVET_HP: float = 50.0
+
 var points: Array[Vector2] = []
 var zone: Rect2 = Rect2()
 var first_wave: int = 2
@@ -87,6 +91,15 @@ func step(arena: CombatArena, tick: int) -> void:
 		_due_tick = tick + (gap_ticks if wave > 0 else 0)
 	if tick >= _due_tick:
 		_spawn_wave(arena)
+
+
+## Corpse decay's horde (dev --horde, scenario_corpse_horde): bigger waves back to back, so the
+## dead pile up faster than they decay.
+func horde() -> void:
+	first_wave = HORDE.x
+	grow = HORDE.y
+	max_wave = HORDE.z
+	gap_ticks = HORDE.w
 
 
 ## Rivet went down: the standing guards leave (no kill counted) and the pit starts over.
