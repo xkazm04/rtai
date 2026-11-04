@@ -22,6 +22,9 @@ var move_mult: float = 1.0
 var chain_radius_m: float = 0.0
 var length_m: float = 0.0
 var grip: StringName = &"none"
+## The plasma sword's timed deflect: hostile rounds within this of Rivet, in front, during a hit's
+## active ticks go back at their shooter (0 = none).
+var deflect_m: float = 0.0
 var errors: Array[String] = []
 
 
@@ -58,6 +61,8 @@ static func weapon_from(t: DataTable, weapon_id: StringName) -> MeleeTable:
 	m.chain_radius_m = t.num(row, "chain_radius_m")
 	m.length_m = t.num(row, "length_m")
 	m.grip = StringName(t.text(row, "grip"))
+	if row.has("deflect_m"):
+		m.deflect_m = t.num(row, "deflect_m")
 	m.errors = t.errors()
 	if m.hits.is_empty():
 		m.errors.append("melee_weapons.json: %s.hits is empty" % weapon_id)
