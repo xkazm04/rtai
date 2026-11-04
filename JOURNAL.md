@@ -67,3 +67,9 @@ NEXT (iteration 2, in order):
    is a hard rectangle when `slide_px` is large (clamp it); electro death reads close to the round
    death at 32 px/m (stiffer plank: arms locked to the sides); the robot thug skeleton (item 5).
 6. A 64 px/m close-up in the arena/city needs a camera on the victim (`--start` or a dev cam).
+- 01:44 board re-rendered with the pool lead clamped to 10 px (`POOL_LEAD_MAX_PX`). FINDING: the
+  hard vertical red bars under victims hit from north/south remain, so they are CombatBlood's
+  spray along a vertical `dir` (d5-combat blood), not the pool lead. REQUEST 1 -> gunplay (owns the
+  CityBlood/CombatBlood fixes tonight): `CombatBlood.kill_human(pos, Vector2.UP/DOWN)` draws a
+  rectangular streak; see `gtai-masters/n4/human-reactions/react_families_64ppm_sheet.png` rows
+  8-10, columns 3-4.
