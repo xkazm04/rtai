@@ -475,3 +475,27 @@ NEXT (iteration 10) is the 23:27 list; its item 2 is now done (Call 4 option D).
 Session end 23:42: head = this commit, tree clean, image.lock never taken, no Godot process of mine running. The
   quest PNG frames (`gtai-n5/scratch-cast/q1/`, 153 files) are scratch, delete them next session if still there.
 NEXT (iteration 10) is the 23:27 list (item 2 done at 23:33).
+
+## Iteration 10 (23:35-00:35, BUILD)
+- 23:35 read JOURNAL, log, n5-look JOURNAL (no REQUEST to n5-cast). Brief items 1-5 and iteration 9's NEXT are done;
+  the crowd (brief item 4) had no evidence of its own, only the footprint table: picked it as the weakest item.
+  Deleted the stale quest scratch (`scratch-cast/q1` was already gone).
+- 23:40 crowd in the live game: quest 1 `--rigs --ppm=48 --stills=900,...` (0 SCRIPT ERROR) -> composite beside
+  r1_c6 with the plan-view lineup `frames/crowd-quest1-vs-r1c6-48ppm.png`. Footprint holds (peds 0.83 m, the
+  authority; no rig scale change needed).
+- MILESTONE 23:42 2d6bb3b8: `cast_lineup.gd -- --crowd` (Rivet, patrol, the six ped looks) and `--road` (asphalt).
+- 23:44 FINDING: at 32 px/m every ped look prints as a dark mass (slab and asphalt); r2_a5/r2_c6 peds are the palest
+  figures (pale tops, dark hair). Our peds and the navy cops share one dark value at game zoom.
+  Diagnosis by trials (all reverted, tree clean): (a) `ped_pale.py` (masters tools) lifted the coat/vest fills
+  +42 L: no visible change at 32 px/m, the hat art (161 px) covers the torso (133 px); (b) a render-only
+  `BodyPlan.head_k` 0.72 for peds: the head shrinks but more dark leg shows; (c) ped hip_z 0.97 (straighter
+  standing legs): the two dark knee lobes ahead of the chest shrink a little. Cause = the ped art from above (dark
+  trousers ahead of the chest, oversized heads, dark sleeves), not one print value. The fix is a new ped part
+  sheet (Codex, r2_a5 + r1_c6 refs): pale shoulders, small dark heads, legs tucked under. Not started tonight:
+  under an hour left, and it touches every ped reaction, corpse and gib cut (depth before breadth).
+  Evidence `frames/crowd-value-vs-r2a5.png`. REPORT section 5 + open item.
+  Registry `sprite-and-atlas-production` applied: judge the part at its minified size (the 32 px/m print sees an
+  ~11 px mip average, so a fill lift under an occluding head is invisible); originals kept
+  (`masters:n5/cast/scratch/ped-orig/`).
+- 23:50 frames.json 15 (+ crowd-value-vs-r2a5, crowd-quest1-vs-r1c6; dropped from the list, files kept, REPORT cites
+  them: riot-helmet-navy-ab, cop-navy-ab).

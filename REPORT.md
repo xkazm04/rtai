@@ -74,6 +74,21 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   At 64 px/m with the warm close-up Rivet and the visor (iteration 9): `M/cast-quest1-dock9-64.mp4`,
   `M/frames/quest1-dock9-64ppm.png`, 0 script errors.
 
+### 5. The crowd (brief item 4)
+- Footprint: the six pedestrian looks share one rig (`HumanPlan.ped`, size_k 1.25, span 0.83 m) and are the
+  footprint's authority; cops sit at 0.90 m, Rivet at 1.00 m. No ped rig scale change was needed. In the live game
+  (quest 1 `--rigs`, 48 px/m) the peds are about Rivet's core size: `M/frames/crowd-quest1-vs-r1c6-48ppm.png`
+  (beside r1_c6, with the plan-view lineup).
+- Open (iteration 10, diagnosed, not built): at 32 px/m every ped look prints as a dark mass, on slab and on
+  asphalt (`M/frames/crowd-value-vs-r2a5.png`, from `cast_lineup.gd -- --crowd [--road]`, 2d6bb3b8). In r2_a5 and
+  r2_c6 the peds are the palest figures (white shirts, pale coats, dark hair), so our peds and navy cops share one
+  dark value at game zoom; only the cops' blue pads tell them apart. The cause is the ped art from above, not one
+  value: the bent standing knees put the dark trousers ahead of the chest, the head and hat art (161 px) are wider
+  than the torso (133 px), and the coat's grey fill sits just past the small-scale ink cut. Trials, each reverted:
+  lifting the coat fill +42 L (no visible change: the hat covers the torso), a 0.72 head scale (shows more dark
+  leg), straighter standing legs (hip_z 0.97: lobes a little smaller). The fix is a new ped part sheet toward
+  r2_a5 (pale shoulders, small dark heads, legs tucked under), a next-run item.
+
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
 parity exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.06), block 5/5, no re-bless.)
@@ -93,6 +108,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   Fixed in iteration 7 (e1f848a5), see section 2; the cap is now navy (Call 4).
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
+- The crowd prints dark at 32 px/m against r2_a5's pale peds (section 5): diagnosed, needs a ped part sheet.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
