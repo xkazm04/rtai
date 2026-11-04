@@ -717,3 +717,27 @@ export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 
   wind-up, flamer sway) and takes gunplay's _reach for the fire point (a thrown weapon lands at
   the cursor), gunplay's old _jab dropped (the claw combo replaced it); LiveInput keeps the
   wheel latch and packs gunplay's cursor reach. JOURNAL kept ours each time.
+- GATES r8 (round-8 merge, private APPDATAs; CONTENDED): lint 13/13 (763 files), unit 848/848,
+  scenarios 43/43 (scenario_showcase_director 16/16 chapters down), evidence (--no-bench) on
+  e3d3567d: lint, unit, scenarios, parity bit-exact, selftest (look 11/11 worst 1.58, block 5/5
+  worst 1.35, world lock holds) all PASS; no golden moved, no re-bless. Logs evidence/r8/.
+  Bench skipped this round: bench.lock held by another lane since 05:27.
+- FRICTION: tools/evidence/run.mjs refuses a dirty tree, so a script written into evidence/
+  while it starts costs a re-run (twice this round). Commit first, then start it.
+- 05:43 reel-0540-director (16 fresh chapters on round 8, 0 script errors). Looked at 5 frames
+  a chapter (sheets r8-a..d) + a 2.5 fps electro strip and a 2x zoom. Still good: claw combo,
+  pistol pair, machine pistol group (spread), rocket gibs, flamer char -> ash, molotov ring,
+  katana, chainsaw halves, deflect, hand cannon throw-back, shards stuck -> burst, nuke finale.
+  Wrong: (i) NEW electro gun: the victim dies (log "1/1 down") but human-reactions' stiff
+  electro death (9762ed55, c_plank) lays him straight north-south, across a west-to-east shot,
+  arms at the sides, no red: top-down at 48 px/m the corpse reads as a cop still standing for
+  the last 3.5 s of the chapter (the 05:30 cut's X sprawl read as a death); (ii) plasma rifle
+  still stands with the dark disc (REQUEST 21 open); (iii) riot cop's shield still not
+  readable (REQUEST 22 open); (iv) homing shard: a stray shard flies into the south wall bars
+  (a black ring at the bars 2-3 s in): harmless, reads as a miss.
+- REQUEST 24 -> human-reactions: the stiff electro death (c_plank) reads as a standing cop from
+  above: reel-0540-director chapter 06 (gtai-masters/n4/showcase, scratch zoom
+  gtai-n4/scratch-showcase/sheets/r8-electro-zoom.png, 4th panel). Ask: lay the plank along the
+  shot (head away from the shooter, so the body's length reads across the frame), or keep the
+  feet-together plank but let it land rotated off the vertical, plus a scorch/smoke mark under
+  it so the floor says "dead". The owner sees this chapter at 48 px/m.
