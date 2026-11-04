@@ -357,9 +357,8 @@ NEXT (iteration 5), in order:
   `it5-reload-mags-rim-64ppm.png`. Default: stays (it tells where a fight happened).
 
 NEXT (iteration 6), in order:
-1. The homing shard gun's crystals still sit inside its outline: lift them out (a hand mask; the light-pixel mask
-   also catches the cream plates) and scale x1.35 so they spike past the body; A/B against the ray gun at 32 px/m
-   (`it5-ray-vs-shard-32ppm.png` is the before).
+1. (done 03:52, see below) Next silhouette check: gloria (nail gun) vs plasma rifle, both long with a skeleton
+   stock; at 32 px/m with the rim, `--loadout=gloria,plasma_rifle`.
 2. The electro arc forks read as twigs: a jaggier arc (more kinks, forks forward) in `weapon_fx_jet.py`; film a
    chain between two guards (a station row 1.5 m apart in `arena_stations/weapon-art.json`).
 3. The weapon-rack arena station (`arena_stations/weapon-art.json` + `--pickups=` all 16, a label per gun).
@@ -380,3 +379,10 @@ NEXT (iteration 6), in order:
   one dev arena hook; no sim file, no replay or parity golden touched. No bench (render-only: 8 rim sprites on
   one held gun + 1 magazine).
 - frames.json 15 entries (it5 first; the design sheet kept). Scratch AVIs and crops deleted.
+- MILESTONE 03:52 homing shard silhouette (973a383d): the crystal cluster lifted by a hand polygon and stretched
+  x2 across the bore line (`tools/art/shard_crystals.py`; grip/muzzle y +16; provenance). Same ticks at 32 px/m:
+  `it5-ray-vs-shard-b-32ppm.png` (before `it5-ray-vs-shard-32ppm.png`): the shard gun prints as a lumpy pale
+  crystal mass, the ray gun as a ribbed ink shape; told apart by tone and outline now. Weapon tests 20/20, lint 13/13.
+  frames.json entry replaced by the -b frame (15 entries). Scratch AVIs deleted.
+- DECISION weapon-art shard gun silhouette: a crystal mass bulging past the body (stretch x2 of the lifted cluster)
+  rather than separate spikes pasted on (more seams, slower). Alternative = revert `homing_shard/held.png` + rows.
