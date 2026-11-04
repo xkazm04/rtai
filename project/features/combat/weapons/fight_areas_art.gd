@@ -12,6 +12,8 @@ const SMOKE: Color = Color(0.090, 0.075, 0.106, 0.55)
 const SCORCH: Color = Color(0.090, 0.075, 0.106, 0.35)
 const TRAIL_M: float = 4.0
 const LOB_M: float = 2.2
+## A fire patch this wide or wider burns as a ring (see _patch).
+const RING_PATCH_M: float = 4.0
 
 
 static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
@@ -101,14 +103,24 @@ static func _bottle(ci: CanvasItem, s: Shot, went: float, tick: int) -> void:
 	_fire(ci, at + spin * 1.3, 0.16, tick, 1.0)
 
 
+## A patch of RING_PATCH_M or more (the mini-nuke's) burns only round its rim: ground zero is
+## burnt out, so the vaporised shadows printed there stay readable (brutality REQUEST 13).
 static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int) -> void:
 	var c: Vector2 = Vector2(p.x, p.y)
 	var fade: float = clampf(float(left) / 30.0, 0.0, 1.0)
-	ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5)))
+	var scorch: Color = Color(SCORCH, SCORCH.a * (0.5 + fade * 0.5))
+	var ring: bool = p.z >= RING_PATCH_M
+	if ring:
+		ci.draw_arc(
+			Ink.px(c), p.z * 0.85 * Ink.PX_PER_M, 0.0, TAU, 64, scorch, p.z * 0.3 * Ink.PX_PER_M
+		)
+	else:
+		ci.draw_circle(Ink.px(c), p.z * Ink.PX_PER_M, scorch)
 	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:
 		var ang: float = TAU * float(i) / float(n) + float(i) * 0.7
-		var off: Vector2 = Vector2.from_angle(ang) * p.z * (0.25 + 0.4 * float(i % 2))
+		var reach: float = (0.78 + 0.14 * float(i % 2)) if ring else (0.25 + 0.4 * float(i % 2))
+		var off: Vector2 = Vector2.from_angle(ang) * p.z * reach
 		_fire(ci, c + off, 0.6 + 0.15 * float(i % 3), tick + i * 5, fade)
 
 
