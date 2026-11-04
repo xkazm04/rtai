@@ -19,6 +19,8 @@ var rig_lookup: Callable = Callable()
 var gib_layer: Node2D = Node2D.new()
 ## The burn char (smoke, embers, ash flakes) over the burnt bodies.
 var char_fx: KillCharFx = KillCharFx.new()
+## The electro kill (convulsion, X-ray strobe, stiff drop, collar smoke).
+var shock_fx: KillShockFx = KillShockFx.new()
 var _groups: Dictionary[int, Array] = {}
 var _ang0: PackedFloat32Array = PackedFloat32Array()
 ## Each slot's drag smear (px), grown while its part slides on the street.
@@ -42,6 +44,11 @@ func bind(p_kills: SignatureKills) -> void:
 	char_fx.reduced_motion = reduced_motion
 	char_fx.z_index = 4
 	add_child(char_fx)
+	shock_fx.kills = kills
+	shock_fx.ppm = ppm
+	shock_fx.reduced_motion = reduced_motion
+	shock_fx.z_index = 40  # the X-ray over the living rigs crowding the victim (parts reach +30)
+	add_child(shock_fx)
 
 
 func _process(_delta: float) -> void:
@@ -57,6 +64,7 @@ func _process(_delta: float) -> void:
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE)
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	char_fx.pose()
+	shock_fx.pose()
 	queue_redraw()
 
 
@@ -96,7 +104,7 @@ func _node(i: int) -> Node2D:
 
 
 func _on_killed(
-	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, _dir: Vector2
+	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, dir: Vector2
 ) -> void:
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var whole: bool = row.whole_body()
@@ -118,6 +126,8 @@ func _on_killed(
 		_dry[serial] = true
 	if row.style == &"burn":
 		char_fx.add(serial, groups[SignatureKill.BODY], row)
+	elif row.style == &"shock":
+		shock_fx.add(serial, groups[SignatureKill.BODY], row, dir)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.kill_of[i] == serial:
@@ -153,6 +163,7 @@ func _drop_unused() -> void:
 			@warning_ignore("return_value_discarded")
 			_dry.erase(serial)
 			char_fx.forget(serial)
+			shock_fx.forget(serial)
 
 
 ## No rig to cut (a headless or sprite-cast run): inked blobs stand in for the parts.
