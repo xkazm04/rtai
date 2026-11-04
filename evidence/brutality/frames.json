@@ -20,6 +20,16 @@
     "note": "Rivet lunges, one diagonal slash (cream streak), the cop's own rig splits into two clipped halves that slide apart on red smears, raw red edge on each cut, blood fans along the cut. Lab driver until melee weapons are live."
   },
   {
+    "file": "clips/plasma-sword-split-arena-64ppm-10s.mp4",
+    "title": "Plasma sword signature kill: cut in two, cauterised glowing edges, no blood (64 px/m)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": null,
+    "note": "The katana's cut with a hot blade: halves slide apart, cream-hot cut edges in a heat bloom, no red, no smears. 32 px/m clip: clips/plasma-sword-split-arena-32ppm-12s.mp4."
+  },
+  {
     "file": "clips/katana-split-arena-32ppm-14s.mp4",
     "title": "Katana signature kill, real time at 32 px/m (lab line, 6 kills)",
     "source": "dev-scene",
@@ -138,15 +148,5 @@
     "title": "Flamethrower signature kill (fire death chars), 64 px/m slow close-up 0.4x",
     "ppm": 64,
     "note": "Arena hub, --rigs --sig-gun=flamethrower --sig-lab. A guard set ablaze flails in a tethered panic run (gunplay burn + human-reactions flail), the burn kills him: his own rig turns to a charcoal print (kill_char shader), smokes, then crumbles into ash flakes drifting downwind onto an ash heap over a soot scorch. No blood: the standard death pool and corpse stains are vetoed under a signature kill. Small cream flash 2 ticks, hit-stop 2."
-  },
-  {
-    "file": "clips/rocket-gib-arena-64ppm-slow-0.4x.mp4",
-    "title": "Rocket signature kill, 64 px/m slow close-up (0.4x)",
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 64,
-    "before": "",
-    "note": "Arena hub, --rigs --sig-gun=rocket_launcher --sig-lab. The cop is blown into its own six rig parts (head+cap, torso, arms, legs) that spin, bounce and slide with blood stumps and drag smears; cream ink flash 4 ticks, 4-tick hit-stop, scorch star, red spray fan. The straight red rods are this kill's v1 drag smears (since redrawn as blotchy wet streaks, commit after edcc87e); the dark wedge near the body is the standard d5-combat pool still playing under the kill."
   }
 ]
