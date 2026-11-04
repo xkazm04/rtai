@@ -94,3 +94,6 @@ NEXT (iteration 2), in order: (1) the 32 px/m read of the flashes and tracers on
 core / ink streak; re-shoot `--fire`); (2) the arena weapon rack station (findings above); (3) gore cells into the
 table; (4) the mipmaps import step folded into a tool; (5) a clip in motion once rivet-arsenal's socket lands
 (merge n-rivet-arsenal); (6) read the other lanes' JOURNALs for new REQUESTs (brutality REQUEST 3 delivered; tell them).
+- 01:50 tracer: charcoal body + paper hot head + ink ring; at 32 px/m it now reads as a dark streak on cream paving
+  (`lineup-core-fire-32ppm-2x.png` re-shot). The pistol flash is still small at 32 px/m: next pass = bigger
+  frame 0 (or fx_draw_scale per family) and a 1-tick paper bloom.

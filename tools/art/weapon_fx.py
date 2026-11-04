@@ -106,7 +106,8 @@ def tracer(out, seed):
     w, h = 280, 48
     m = _poly(_canvas(w, h), [(14, h / 2), (w - 30, h / 2 - 9), (w - 14, h / 2), (w - 30, h / 2 + 9)])
     hot = _poly(_canvas(w, h), [(w - 130, h / 2), (w - 32, h / 2 - 4), (w - 22, h / 2), (w - 32, h / 2 + 4)])
-    _save(_compose([(m, PAPER_2), (hot, PAPER)], w, h, seed, outline=10), out / "tracer.png")
+    # charcoal body (reads on cream paving) with a paper hot head (reads on asphalt), ink ring
+    _save(_compose([(m, INK_2), (hot, PAPER)], w, h, seed, outline=10), out / "tracer.png")
     return [w, h], [w - 14, h // 2]
 
 
