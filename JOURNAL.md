@@ -569,3 +569,28 @@ the tree). Then NEXT 2-5 above.
   SWAT/riot squad mix, weapon wall, jagged electro, flamer sway), the bench, then NEXT 3-5 of
   the 04:23 list.
 - Glue: committed project/tests/unit/test_rig_variant_swat.gd.uid (Godot made it on import; human-reactions' a27c786b has the .gd without it). REQUEST 20 -> human-reactions: commit your own .uid for it; on a merge conflict the showcase takes yours.
+
+## Iteration 5 (04:37-05:37)
+- 04:38 read JOURNAL, git log, the lane tips. Unit r6 on HEAD c497bc60 (the test_gun_fx glue in):
+  821/821 (scratch-showcase/unit-r6b.log). GATES r6 complete: lint 13/13, unit 821/821,
+  scenarios 39/39.
+- MILESTONE 04:43 the director cut (70a1e691), the 04:00 checkpoint's ask:
+  `--bot=reel --reel=director --loadout=pistol`. ReelChapters = 16 chapters in the checkpoint's
+  order (claw combo, pistol x2 cops, machine pistol on a group of 4, rocket, flamer, electro,
+  molotov, katana, chainsaw, plasma sword deflect (the victim shoots, the batted round kills
+  him), hand cannon, plasma rifle, ray gun, shards, riot cop (armored hp + shield look, machine
+  pistol), mini-nuke on 4 at 15 m), 300-480 ticks each, 5940 ticks = 99 s. ReelDirector is a
+  sim-side ArenaHook (CombatReel appends it to stage.hooks): at a chapter's tick it moves the
+  last chapter's dead out of frame, stands Rivet on brutality's open solo-lab mark (-36, 2),
+  hands him the weapon through RivetCarry.take (the pickup path), spawns the victims singly,
+  holds their fire (except the deflect's shooter) and tethers them (1.8 m, the burning run).
+  The inputs only read that state, so a director run replays. ReelCaption burns "NN  WEAPON"
+  into the top-left corner (ink on cream). Headless: every chapter's victims down (2/2, 2/2,
+  4/4, 1 each, riot 1/1, nuke 4/4).
+  DECISION director: one mark for every chapter (the dead leave the frame at each chapter start;
+  the blood and gibs stay on the floor) over a walk between marks: the checkpoint wants each
+  kill isolated, and only (-36, 2) is checked open. Alternative = a mark per chapter (one const).
+  Registry: combat-pacing-and-dramatic-arc applied as the checkpoint's order (light -> heavy ->
+  the nuke finale; a beat of LOOK_TICKS 45 before each first shot so the victim reads first);
+  motion-quality-gating (judge in motion, fixed-fps 60, look at frames of every chapter).
+- 04:44 filming reel-0500-director (48 px/m, 5940 ticks).
