@@ -201,6 +201,11 @@
             "minimum": 0,
             "type": "number"
           },
+          "min_lob_m": {
+            "maximum": 40,
+            "minimum": 0,
+            "type": "number"
+          },
           "patch_radius_m": {
             "minimum": 0,
             "type": "number"
