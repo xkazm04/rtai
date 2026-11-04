@@ -240,3 +240,41 @@ NEXT (iteration 2):
     `evidence/r3/bench-*.json`, `bench-r3.txt`.
 - FRICTION: `tools/bench/run.mjs` fails "the given export path doesn't exist" in a fresh
   worktree: `mkdir -p build/export/windows-bench` first (lost one run).
+- MILESTONE 02:32 the morning exe route works: release templates refuse a scene path ("compiled
+  without support for path overrides"), so a `windows-showcase` preset with the feature tag
+  `showcase` and `run/main_scene.showcase = res://dev/arena/arena.tscn` (DECISION in
+  decisions.md; project.godot + export_presets.cfg, shared files, one line + one preset).
+  `build/export/windows/RTAI.exe` (embedded pck, release DLL beside it) booted headless with
+  `-- --bot=reel --rigs --weapon=pistol`: "arena open: 13 stations", "cast rigs: true", "Rivet
+  holds the table pistol", reel beats ran. Commit 80dd992b. Play command for REPORT:
+  `build\export\windows\RTAI.exe -- --rigs --weapon=pistol` (city: add `--arena=city`).
+- 02:35 reel-0235-rocket-64ppm (`--weapon=rocket_launcher`, 64 px/m). Looked at 2 fps from 53 s
+  (12 frames): the full rocket chain is in frame now: rocket body with grey smoke puffs, the ink
+  blast ring, scorch star, red spray, the gib throws the helmet and parts (REQUEST 5 answered by
+  gunplay's FightAreasArt; withdrawn). Craft note: the scorch star's grey reads a little flat
+  against the grey pit floor.
+- 02:35 reel-0235-city-pistol (`--arena=city`, 32 px/m). Looked at 1/6 fps (12 frames): the
+  fighters are blue cop rigs on the city now (the 01:45 discs are gone). Wrong on the city:
+  (a) the hub clump (REQUEST 8); (b) vertical red streaks under the claw-cop deaths; (c) the
+  arena plan's walls draw as thick black bars across the junction's crosswalks and its lane marks
+  as small vermilion squares and bars on the street (ArenaFloorView on the city). No night lane
+  owns the arena floor: glue for me next round (hide the floor marks on `--arena=city`, keep the
+  walls only if they collide).
+- frames.json 11 entries (4 new this iteration on top), every file present.
+
+NEXT (iteration 3):
+1. Merge round 4 (five tips, brief order), the four gates under the private APPDATA, evidence
+   run of record on a clean tree (logs to gtai-n4/scratch-showcase, then copy into evidence/rN).
+2. Read the replies to REQUESTs 7 (gunplay: accent flicker rows) and 8 (human-reactions +
+   rivet-arsenal: the hub station overlap); if no reply by round 4, move react_line myself to a
+   spot that keeps `scenario_rivet_claw`, `scenario_human_react` and the reel green.
+3. City glue: ArenaFloorView on `--arena=city` draws the arena walls over the crosswalks and the
+   lane marks in vermilion; decide what the city proving block should show.
+4. The reel's weapon list: switch weapons inside one reel once rivet-arsenal binds the carry-slot
+   input bits (DECISION in their JOURNAL); until then one film per `--weapon=`. Machine pistol
+   on the pit group next (`--weapon=machine_pistol`), then each signature weapon brutality has
+   finished (rocket gib, hand cannon blowback).
+5. Riot p99 9.91 ms / 1 % low 60 (record 6.0 / 124): re-run the riot alone under the bench lock
+   when the machine is quieter; if it holds, bisect over round 3's merges.
+6. The 17 m/s top speed in the plain arena reel: log per-tick moved_m > 0.2 with the beat and
+   tick to name the cause.
