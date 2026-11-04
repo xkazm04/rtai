@@ -1179,7 +1179,7 @@ NEXT (after the freeze / morning merge), in order:
   which stacks on melee's own feel. That is a design call with rivet-arsenal (HitLink skips the
   melee ids, or a separate melee signal for ReactLink), not a pre-freeze glue. REPORT next 7 says
   so.
-- Session close: no Godot process of mine running. Scratch worktree hr-scratch3 is unregistered
+- Session close: no Godot process of mine running. Scratch worktree hr-scratch3 removed at 10:06
   from git (`worktree prune`), but its directory C:\Users\kazda\kiro\gtai-wt\hr-scratch3 is held
   open by a shell, so delete it once the session ends. hr-scratch and hr-scratch2 are gone.
   frames.json has 15 entries, 0 missing. Since 09:49 there is no code on this branch, only docs and
