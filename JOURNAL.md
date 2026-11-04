@@ -445,3 +445,4 @@ Session state 23:20: head = this commit, tree clean, image.lock untouched, no Go
   upper-arm sleeves (upperarm.png carries the cop_blue_hi, not the torso) into one blue cluster; navy keeps the head a
   distinct dark centre. Reverted (git checkout of the 4 files + re-import). REPORT Call 4 gains option C.
   FRICTION: `git show rev:file.png` yields the LFS pointer; pipe it through `git lfs smudge`.
+- 23:21 new unit test `test_only_rivet_prints_warm_close_up_steel` caught King and the thugs inheriting d5_warm from RivetPlan.build(FORM_OPEN); both set 0 now (DECISION). Unit 941/0.

@@ -25,6 +25,7 @@ static func build(size_k: float = SIZE_K) -> BodyPlan:
 	p.size_k = size_k
 	p.collar_part = ""
 	p.hose_tex = ""
+	p.d5_warm = 0.0  # the warm tan close-up steel is Rivet's own read (n5-cast)
 	p.thigh_len *= LEG_K
 	p.thigh_draw *= LEG_K
 	p.shin_len *= LEG_K

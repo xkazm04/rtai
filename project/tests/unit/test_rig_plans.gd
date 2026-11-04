@@ -131,3 +131,9 @@ func _parts(p: BodyPlan) -> PackedStringArray:
 			@warning_ignore("return_value_discarded")
 			out.append(extra)
 	return out
+
+
+func test_only_rivet_prints_warm_close_up_steel() -> void:
+	assert_almost_eq(RivetPlan.build().d5_warm, RivetPlan.D5_WARM, 0.001, "r2_c3 tan metal")
+	for p: BodyPlan in [HumanPlan.cop(), HumanPlan.ped(), KingPlan.build(), ThugPlan.build()]:
+		assert_eq(p.d5_warm, 0.0, "%s keeps the violet steel" % p.name)
