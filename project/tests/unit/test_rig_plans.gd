@@ -68,7 +68,7 @@ func test_rivet_arms_match_t2_ratio() -> void:
 	assert_almost_eq(arm / leg, 0.81, 0.03, "T2: arm (shoulder to wrist) is about 0.8 of the leg")
 	var day_leg: float = day.thigh_len + day.shin_len
 	assert_gt(day.upper_len + day.fore_len[0], day_leg, "the day form keeps the long arms (A/B)")
-	assert_lt(base.leg_w, 1.0, "n5-cast: the hybrid's legs are lean pistons")
+	assert_lte(base.leg_w, 1.0, "n5-cast: lean legs come from the piston art, never a widening")
 	assert_lt(base.hand_k, 1.0, "the claw is smaller than the day art")
 	assert_lt(base.arm_w, 1.0, "the arms are drawn thinner")
 	var reach: float = arm

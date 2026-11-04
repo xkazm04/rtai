@@ -153,3 +153,8 @@ NEXT (iteration 5):
 4. Calls for the owner (REPORT): held guns are metres-sized (pistol 0.7, machine pistol 0.9 m), so they now read
    large on the slimmer Rivet (frames/director-hybrid-64ppm.png); the camera gap vs r2_c6 (3/4 vs plan view).
 5. The full `node tools/evidence/run.mjs --no-bench` on the head; parity should stay exact (render only).
+- MILESTONE 18:18 `--bot=rivet` filmed on the hybrid at 48 px/m (`cast-hybrid-motion-48.mp4`, 25 s, 0 script
+  errors): walk, sprint at the faster baseline and the claw combo kills read.
+- MILESTONE 18:18 Codex job `rivet_hybrid_legs` (94 s, image.lock released): thigh, shin and feet as lean pistons in
+  the arms' style; installed by `tools/install_rivet_legs.py` (bone lengths kept), leg_w 0.65 -> 1.0.
+  `frames/rivet-legs-ab-64ppm.png`. The NEXT item 2 above is done except a 48 px/m motion clip on the new legs.

@@ -52,7 +52,7 @@ const ARMS: Dictionary[StringName, Vector3] = {
 ## raises the hip with them (the lanky gait), leg_w thins them (lean piston legs), gait_k scales
 ## GAIT_SCALE so the slimmer body keeps a long stride in metres.
 const LEGS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(1.15, 0.65, 1.15),
+	FORM_BASE: Vector3(1.15, 1.0, 1.15),
 }
 ## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
 ## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.

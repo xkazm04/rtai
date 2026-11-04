@@ -69,138 +69,138 @@
  },
  "l_thigh": {
   "size": [
-   276,
-   131
+   221,
+   63
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 1,
-  "scale": 0.9966,
+  "scale": 0.7941,
   "pivot_a": [
-   66.0,
-   65.0
+   31.8,
+   31.0
   ],
   "pivot_b": [
-   228.0,
-   65.5
+   193.8,
+   31.0
   ]
  },
  "r_thigh": {
   "size": [
-   276,
-   131
+   221,
+   63
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 1,
-  "scale": 0.9966,
+  "scale": 0.7941,
   "pivot_a": [
-   66.0,
-   65.0
+   31.8,
+   31.0
   ],
   "pivot_b": [
-   228.0,
-   65.5
+   193.8,
+   31.0
   ]
  },
  "l_shin": {
   "size": [
-   238,
-   121
+   182,
+   51
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 2,
-  "scale": 0.9966,
+  "scale": 0.5862,
   "pivot_a": [
-   60.0,
-   60.0
+   24.6,
+   25.8
   ],
   "pivot_b": [
-   196.0,
-   60.5
+   160.6,
+   25.8
   ]
  },
  "r_shin": {
   "size": [
-   238,
-   121
+   182,
+   51
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 2,
-  "scale": 0.9966,
+  "scale": 0.5862,
   "pivot_a": [
-   60.0,
-   60.0
+   24.6,
+   25.8
   ],
   "pivot_b": [
-   196.0,
-   60.5
+   160.6,
+   25.8
   ]
  },
  "l_foot": {
   "size": [
-   207,
-   99
+   206,
+   85
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 3,
-  "scale": 0.9966,
+  "scale": 1.0,
   "pivot_a": [
-   50.0,
-   48.5
+   45.0,
+   42.5
   ],
   "pivot_b": [
-   157.0,
-   48.5
+   170.0,
+   42.5
   ]
  },
  "r_foot": {
   "size": [
-   207,
-   99
+   206,
+   85
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 3,
-  "scale": 0.9966,
+  "scale": 1.0,
   "pivot_a": [
-   50.0,
-   48.5
+   45.0,
+   42.5
   ],
   "pivot_b": [
-   157.0,
-   48.5
+   170.0,
+   42.5
   ]
  },
  "l_foot_toeoff": {
   "size": [
-   168,
-   102
+   167,
+   86
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 4,
-  "scale": 0.9966,
+  "scale": 1.0,
   "pivot_a": [
-   52.0,
-   51.0
+   42.0,
+   41.5
   ],
   "pivot_b": [
-   124.0,
-   52.0
+   131.0,
+   42.5
   ]
  },
  "r_foot_toeoff": {
   "size": [
-   168,
-   102
+   167,
+   86
   ],
-  "sheet": "parts-v2/rivet_legs.png",
+  "sheet": "n5/cast/gen/r3/out/rivet_hybrid_legs.png",
   "cell": 4,
-  "scale": 0.9966,
+  "scale": 1.0,
   "pivot_a": [
-   52.0,
-   51.0
+   42.0,
+   41.5
   ],
   "pivot_b": [
-   124.0,
-   52.0
+   131.0,
+   42.5
   ]
  },
  "l_upperarm": {
