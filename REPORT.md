@@ -1,8 +1,17 @@
 # REPORT: lane weapon-art (night 2026-11-04, branch `n-weapon-art`)
 
-Head of the build: `3a703dbd`. Every commit after it only touches the journal or docs (`git diff --stat 3a703dbd HEAD -- project` is empty).
+Head of the build: `9a66ac6c` (see "After 09:00"; at 08:40 it was `3a703dbd`).
 `M` below stands for `C:\Users\kazda\kiro\gtai-masters\n4\weapon-art\`. `E` stands for `evidence/weapon-art/` in this worktree, which is untracked scratch.
 The owner's page is `M\frames.json` (15 entries, newest and best first). Every file it lists exists on disk.
+
+## After 09:00 (extension, iteration 20)
+
+The build moved to `9a66ac6c`. All three changes since `3a703dbd` are render only: no sim file and no golden touched. Gates at `9a66ac6c`: lint 13/13, unit 742/742 (`E\unit-it20c.log`). Scenarios are 32/32 at `5d453958` (`E\scenarios-it20b.log`); the cap commit after it only changes a render constant.
+- **The rocket blast's tail tears into smoke wisps** (`51d42adf`). From tick 20 to the effect's end at 40, the smoke ring tears into 12 drawn smoke puffs that drift out, stretch along the ring and fade. Before, it held the ring, which dimmed into a grey blob; the tail now lasts 20 ticks instead of 10, so the aftermath reads. The before is `--blast-tail=ring`. Clip: `M\clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4` (+ `-quarterspeed`); strip: `M\frames\it20-rocket-blast-wisps-ab-city-48ppm.png`.
+- **The mini-nuke lobs its own fat bomb** (`5d453958`). The cell has a boxed tail, a cream nose and a vermilion hazard band; before, it flew the rocket cell at 1.5x. It is `tools/art/nuke_shell.py`, procedural like the other FX cells, so it has no AI provenance line. The before is `--nuke-shell=rocket`. Clip: `M\clips\it20-mini-nuke-shell-ab-city-48ppm.mp4` (+ `-halfspeed`); strip: `M\frames\it20-mini-nuke-shell-ab-city-48ppm.png`.
+- **At the nuke's 12 m scale, the smoke puffs are capped at 2.5 m** (`9a66ac6c`), and the ring tears into about 32 of them. Uncapped, 12 puffs 6.6 m wide drifted over Rivet. The rocket is unchanged. Clip: `M\clips\it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`.
+- **The melee four in the claw are closed by rivet-arsenal.** Their RivetHeldView draws this lane's held art for the katana, baton, chainsaw and plasma sword live, with a swept arc. Filmed in `n4\rivet-arsenal\frames\city-block-melee-64ppm-2x.png` and `katana-slash-thrust-sheet-64ppm.png`. MeleeWeaponView's bars remain only in rivet-motion's dev combo clip.
+- **No molotov fuel-splash sheet.** The landing already reads (star, glass, fire, scorch), and a fuel stain would lie under the flames.
 
 ## Gates of record
 
@@ -64,10 +73,8 @@ The owner's page is `M\frames.json` (15 entries, newest and best first). Every f
   - On this branch, Rivet still swings rivet-motion's procedural bars (`MeleeWeaponView`).
   - Wielding melee weapons in the arena exists only on `n-rivet-arsenal`. Neither the merge nor the filming was done.
 - **The muzzle-flash and projectile art is partly reused.**
-  - The mini-nuke fires the rocket cell at 1.5x.
   - The molotov's glass reuses the shard cell.
-  - The rocket blast's tail holds frame 2 of the sheet instead of a drawn smoke frame.
-  - A drawn glass-and-fuel sheet and torn smoke wisps are still owed.
+  - (Fixed after 09:00: the mini-nuke's own shell and the torn smoke tail. The fuel-splash sheet was dropped.)
 - **Electro, plasma and ray effects read weaker than kinetic ones on cream paving at 32 px/m.** They are paper-white in an ink ring, because teal is reserved for souls and blue for cops. Call weapon-art-3 is open.
 - **Long guns lie over Rivet's helmet in the carry pose.** This is rivet-arsenal's view (an authored carry pose per gun), not the art.
 - **No bench numbers** from this lane.
@@ -97,11 +104,11 @@ Each call has a clip or frame in `M`. The default is what ships now, and every a
 | weapon-art-9 | the weapon wall in the hub | none (`--weapon-rack=off`) | `frames\it6-weapon-wall-hub-64-32ppm.png` |
 | weapon-art-10 | SWAT and thug as scripted derivations | newly generated sheets | `frames\it6-swat-look-128-48-32ppm.png` |
 | weapon-art-11 | the ray gun's round as a ring train | a straight beam | `frames\it8-ray-gun-rings-abc-64ppm.png` |
-| weapon-art-12 | the mini-nuke round is the rocket cell at 1.5x | a striped warhead cell | `clips\it9-mini-nuke-bottle-vs-shell-city-32ppm-halfspeed.mp4` |
+| weapon-art-12 | since 09:00: the mini-nuke's own fat bomb cell (`nuke_shell`) | the rocket cell at 1.5x (`--nuke-shell=rocket`) | `clips\it20-mini-nuke-shell-ab-city-48ppm.mp4` |
 | weapon-art-13 | the hand-cannon slug at 1.6x | 1.0 | `frames\it9-hand-cannon-slug-ab-city-32ppm-2x.png` |
 | weapon-art-14 | A: `held_small` | B: full art (`--held-small=off`); C: printed like Rivet's limbs, filmed and rejected (a grey third forearm) | `frames\it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png` |
 | weapon-art-15 | molotov landing: star + glass + scorch | B: the rocket's full blast (`--fire-burst=off`) | `clips\it14-molotov-landing-glass-scorch-ab-city-48ppm-2x.mp4` |
-| weapon-art-16 | rocket blast tail: the smoke ring thins out | B: the bead ring (`--blast-beads=on`) | `clips\it14-rocket-blast-tail-ab-city-48ppm-2x-quarterspeed.mp4` |
+| weapon-art-16 | since 09:00, rocket blast tail: the ring tears into smoke wisps | B: the ring holds and thins (`--blast-tail=ring`); C: the bead ring (`--blast-beads=on`) | `clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4`, `clips\it14-rocket-blast-tail-ab-city-48ppm-2x-quarterspeed.mp4` |
 
 Calls 3, 5 and 8 have no frame cited here. Call 5 has one in the journal (`it4-smg-feedbox-ab.png`) but it isn't in `M\frames\`, and call 8's (`it5-reload-mags-rim-64ppm.png`) isn't there either.
 
@@ -113,9 +120,6 @@ Calls 3, 5 and 8 have no frame cited here. Call 5 has one in the journal (`it4-s
 
 ## Next steps
 
-1. Merge `n-rivet-arsenal` and film the melee four in the claw at 32 and 64 px/m. Then replace `MeleeWeaponView`'s bars with the held art: a hook that is rivet-arsenal's call.
-2. Draw a glass-and-fuel splash sheet for the molotov through the image route.
-3. Redraw the blast sheet's frame 3 as torn smoke wisps.
-4. Draw a striped warhead cell for the mini-nuke, if call 12 says B.
+1. (Done after 09:00: the melee four by rivet-arsenal, the torn smoke tail and the mini-nuke shell. The fuel sheet was dropped.)
 5. Fold the mipmaps import step into `tools/art/`.
 6. Answer calls 3, 12, 14, 15 and 16 once the owner has judged them.
