@@ -19,7 +19,7 @@ const REACH_M: float = 8.0
 const MELEE_IN_M: float = 1.1
 const MELEE_SWING_M: float = 1.6
 ## A walk-in that moved less than STALL_M over STALL_TICKS (cover in the way) side-steps for
-## SIDESTEP_TICKS, the side flipping each time.
+## SIDESTEP_TICKS, keeping its side round the cover; only a blocked side-step flips the side.
 const STALL_TICKS: int = 20
 const STALL_M: float = 0.15
 const SIDESTEP_TICKS: int = 45
@@ -85,9 +85,10 @@ func _melee_in(t: TickInput, tick: int) -> TickInput:
 		_walk_from = at
 		return TickInput.new(b, 0, 0)
 	if tick - _walk_tick >= STALL_TICKS:
-		if at.distance_to(_walk_from) < STALL_M and tick >= _side_until:
+		if at.distance_to(_walk_from) < STALL_M:
+			if tick < _side_until:
+				_side = -_side  # the side-step itself is blocked: try the other way round
 			_side_until = tick + SIDESTEP_TICKS
-			_side = -_side
 		_walk_tick = tick
 		_walk_from = at
 	var dir: Vector2 = to.normalized()
