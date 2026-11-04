@@ -35,7 +35,7 @@ static func draw_over(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) 
 	var row: Dictionary = fx.look(gun.trigger.spec.id)
 	var flash: int = row.get("muzzle_ticks", 2)
 	if tick - fx.fired_tick < flash and fx.fired_count > 0:
-		_muzzle(ci, arena.rivet, row, fx.fired_count, tick - fx.fired_tick)
+		_muzzle(ci, fx, arena.rivet, row, tick - fx.fired_tick)
 	if gun.trigger.reloading():
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
@@ -61,9 +61,10 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 
 ## A heavy single shot (spikes 3): a long forward flare, two side jets, a short back lip. An
 ## automatic (spikes 4+): a star whose points turn half a step every shot, so a burst strobes.
-static func _muzzle(ci: CanvasItem, r: Fighter, row: Dictionary, count: int, age: int) -> void:
+static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age: int) -> void:
 	var f: Vector2 = r.facing.normalized()
-	var at: Vector2 = r.pos + f * (r.radius_m + 0.45)
+	var at: Vector2 = fx.muzzle(r, 0.45)
+	var count: int = fx.fired_count
 	var shrink: float = 1.0 - 0.25 * float(age)
 	var fwd: float = row.get("muzzle_m", 0.7)
 	var side: float = row.get("muzzle_side_m", 0.3)

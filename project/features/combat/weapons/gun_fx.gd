@@ -79,13 +79,21 @@ func step(arena: CombatArena, tick: int) -> void:
 
 
 func _claw(r: Fighter) -> Vector2:
-	return r.pos + r.facing.normalized() * (r.radius_m + 0.15)
+	return muzzle(r, 0.15)
+
+
+## A point `ahead_m` past Rivet's body along the aim, on his gun claw's side (claw_side_m: the
+## rig holds the gun right of the centre line, so the flash, smoke and shells leave the claw).
+func muzzle(r: Fighter, ahead_m: float) -> Vector2:
+	var f: Vector2 = r.facing.normalized()
+	var side: float = p.get("claw_side_m", 0.0)
+	return r.pos + f * (r.radius_m + ahead_m) - f.orthogonal() * side
 
 
 func _eject(r: Fighter, row: Dictionary, tick: int, count: int) -> void:
 	var f: Vector2 = r.facing.normalized()
 	var h: float = NoirPack.hash01(count * 7919 + 13)
-	var at: Vector2 = r.pos + f * (r.radius_m + 0.55)
+	var at: Vector2 = muzzle(r, 0.55)
 	var puff: float = row.get("smoke", 0.6)
 	smoke.append(Vector4(at.x, at.y, float(tick), puff))
 	var size: float = row.get("casing_m", 0.0)
