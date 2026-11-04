@@ -146,3 +146,58 @@ func test_a_limping_rig_drops_on_its_step_and_hunches_standing() -> void:
 	r.limp = 0.0
 	r.pre(rig, 1.0 / 60.0)
 	assert_eq(r.scl, Vector2.ONE, "whole: nothing drawn")
+
+
+func _pair(dead: bool, gap_px: float) -> RigFeed:
+	var f: RigFeed = RigFeed.new()
+	@warning_ignore("return_value_discarded")
+	f.put(0, 7, BodyPlan.Kind.PED, Vector2.ZERO, Vector2.ZERO)
+	f.flags[0] = RigFeed.Flag.DEAD if dead else 0
+	@warning_ignore("return_value_discarded")
+	f.put(1, 42, BodyPlan.Kind.PED, Vector2(gap_px, 0.0), Vector2.ZERO)
+	return f
+
+
+func test_a_death_startles_the_neighbours_away_from_the_body() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var gap: float = 1.0 * SimConst.PX_PER_M
+	rigs.feed = _pair(false, gap)
+	c.observe(rigs)
+	rigs.feed = _pair(true, gap)
+	c.observe(rigs)
+	assert_eq(c.startles, 1)
+	assert_eq(rig.react.kind, &"cower")
+	assert_gt(rig.react.dir.x, 0.9, "away from the body (east of it)")
+	c.observe(rigs)
+	assert_eq(c.startles, 1, "one startle per death")
+
+
+func test_a_death_beyond_startle_m_is_not_noticed() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	var gap: float = (CrowdReact.STARTLE_M + 0.5) * SimConst.PX_PER_M
+	rigs.feed = _pair(false, gap)
+	c.observe(rigs)
+	rigs.feed = _pair(true, gap)
+	c.observe(rigs)
+	assert_eq(c.startles, 0)
+
+
+func test_a_busy_body_trips_once_its_cower_ends() -> void:
+	var c: CrowdReact = CrowdReact.make()
+	var rigs: CharacterRigs = autofree(CharacterRigs.new())
+	var rig: CutRig = autofree(CutRig.new())
+	rigs._by_actor[42] = rig
+	rigs.feed = _feed(true)
+	HumanReact.on(rig).play(rig, CrowdReact.COWER, Vector2.LEFT, c.table)
+	c.extra_bodies[-1 - 3] = Vector2(-10.0, 0.0)
+	c.observe(rigs)
+	assert_eq(c.trips, 0, "mid-cower: no trip yet")
+	rig.react.settle()
+	c.observe(rigs)
+	assert_eq(c.trips, 1, "the body underfoot still trips it after")
