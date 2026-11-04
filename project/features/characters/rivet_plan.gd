@@ -42,7 +42,7 @@ const FORMS: Dictionary[StringName, Vector3] = {
 }
 ## [arm_k, hand_k, arm_w] per form; a form missing here keeps 1.0 (King, the night and day forms).
 const ARMS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(0.85, 0.9, 0.6),
+	FORM_BASE: Vector3(0.85, 0.9, 0.9),
 	FORM_STOCKY: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
 	## The tank is base Rivet grown (HaulerLook bulks the arms further from these).
