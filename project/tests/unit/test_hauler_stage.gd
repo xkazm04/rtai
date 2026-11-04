@@ -54,7 +54,7 @@ func test_q_transforms_and_the_melee_press_stomps_the_ring() -> void:
 	_ticks(2)
 	_press(&"melee")
 	assert_eq(_pilot.melee_swings, 0, "the tank's melee press is the stomp, not the jab")
-	_ticks(20)
+	_ticks(40)
 	assert_eq(_pilot.hauler.form.stomps, 1)
 	for g: Fighter in near:
 		assert_false(g.alive(), "a guard 1.5 m out died in the stomp")

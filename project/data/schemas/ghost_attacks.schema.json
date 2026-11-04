@@ -1,0 +1,62 @@
+{
+  "$id": "gtai.ghost_attacks/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.ghost_attacks/1"
+    },
+    "tonnage": {
+      "additionalProperties": false,
+      "properties": {
+        "armor_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_crush_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crush_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "press_ahead_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "armor_k",
+        "car_crush_m",
+        "crush_m",
+        "doc",
+        "press_ahead_m",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "schema",
+    "tonnage"
+  ],
+  "type": "object"
+}
