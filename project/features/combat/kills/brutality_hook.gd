@@ -44,6 +44,8 @@ func arm(stage: ArenaStage, ctx: WorldContext, weapon: StringName) -> void:
 ## Lines the KillLab guards up in front of Rivet (the dev arg --sig-lab, or a scenario).
 func open_lab(stage: ArenaStage) -> void:
 	_lab = KillLab.new()
+	var gun: StringName = StringName(ArenaArgs.parse().text("--sig-gun"))
+	_lab.blade = gun if MeleeTable.weapon_ids().has(gun) else &""
 	_lab.setup(stage)
 
 

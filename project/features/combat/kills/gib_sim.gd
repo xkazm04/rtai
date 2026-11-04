@@ -12,9 +12,12 @@ const LAND_VZ: float = 1.2
 const AIR_SPIN_KEEP: float = 0.6
 ## Piece mass feel: the torso flies lower and slower than a limb or the head.
 ## The whole body (blowback) flies as one; its cap pops higher and spins hardest.
-const HEAVY: PackedFloat32Array = [0.9, 0.55, 1.0, 1.0, 0.85, 0.85, 1.0, 1.15]
+## The two halves of a split body slide apart heavily.
+const HEAVY: PackedFloat32Array = [0.9, 0.55, 1.0, 1.0, 0.85, 0.85, 1.0, 1.15, 1.0, 1.0]
 ## Spin per piece: a blown-back body turns slowly, everything else at the row's spin.
-const SPIN_K: PackedFloat32Array = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.12, 1.4]
+const SPIN_K: PackedFloat32Array = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.12, 1.4, 1.0, 1.0]
+## A split half leaves along its own side of the cut, carried this much along the blade.
+const SPLIT_FOLLOW: float = 0.6
 
 var pos: PackedVector2Array = PackedVector2Array()
 var vel: PackedVector2Array = PackedVector2Array()
@@ -65,7 +68,10 @@ func throw(
 		var i: int = _next
 		_next = (_next + 1) % CAPACITY
 		var heavy: float = HEAVY[p]
-		var a: float = dir.angle() + rng.randf_range(-half, half)
+		var base: Vector2 = dir
+		if p >= SignatureKill.HALF_A and p < offsets.size():  # off its side of the cut
+			base = offsets[p].normalized() + dir * SPLIT_FOLLOW
+		var a: float = base.angle() + rng.randf_range(-half, half)
 		var speed: float = rng.randf_range(row.launch_mps.x, row.launch_mps.y) * heavy
 		pos[i] = at + (offsets[p] if p < offsets.size() else Vector2.ZERO)
 		vel[i] = Vector2.from_angle(a) * speed

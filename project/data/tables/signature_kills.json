@@ -123,6 +123,37 @@
         0
       ],
       "weapon": "electro_gun"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 10,
+      "cut_deg": 55,
+      "doc": "Katana: one clean diagonal slash cuts the body in two along the blade's line (shoulder to hip). Both halves of the real rig slide apart off the cut on red smears, a raw red edge on each, the blood fanning out along the cut in the swing's direction; a cream slash streak marks the blade's path. Under --gore=reduced the victim falls whole.",
+      "flash_ticks": 2,
+      "ground_drag": 3.2,
+      "hitstop_ticks": 6,
+      "id": "katana_split",
+      "launch_mps": [
+        1.6,
+        2.4
+      ],
+      "pieces": [
+        "half_a",
+        "half_b"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        20,
+        70
+      ],
+      "spray": 16,
+      "spray_cone_deg": 26,
+      "style": "split",
+      "up_mps": [
+        0.4,
+        0.8
+      ],
+      "weapon": "katana"
     }
   ],
   "leftover_budget": 12,

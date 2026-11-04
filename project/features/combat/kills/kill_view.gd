@@ -26,6 +26,8 @@ var fresh: Node2D = Node2D.new()
 var char_fx: KillCharFx = KillCharFx.new()
 ## The electro kill (convulsion, X-ray strobe, stiff drop, collar smoke).
 var shock_fx: KillShockFx = KillShockFx.new()
+## The blade kill's slash streak (the halves themselves are KillSplitFx.cut groups).
+var split_fx: KillSplitFx = KillSplitFx.new()
 ## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
 ## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
 var frames: int = 0
@@ -70,6 +72,10 @@ func bind(p_kills: SignatureKills) -> void:
 	shock_fx.reduced_motion = reduced_motion
 	shock_fx.z_index = 40  # the X-ray over the living rigs crowding the victim (parts reach +30)
 	add_child(shock_fx)
+	split_fx.kills = kills
+	split_fx.ppm = ppm
+	split_fx.z_index = 40
+	add_child(split_fx)
 
 
 func _process(_delta: float) -> void:
@@ -90,6 +96,7 @@ func _process(_delta: float) -> void:
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	char_fx.pose()
 	shock_fx.pose()
+	split_fx.pose()
 	_track_moving()
 	if _ground_dirty or _heap_growing():
 		ground.queue_redraw()
@@ -165,20 +172,22 @@ func _node(i: int) -> Node2D:
 	return n
 
 
-func _on_killed(
-	victim_id: int, serial: int, row: SignatureKill, _at: Vector2, dir: Vector2
-) -> void:
+func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
 	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
 	var whole: bool = row.whole_body()
-	var groups: Array[Node2D] = GibCut.cut(rig, whole) if rig != null else _blobs()
+	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
+	var groups: Array[Node2D] = KillSplitFx.cut(rig, dir, ppm) if split else _cut(rig, whole)
+	if row.style == &"split":
+		split_fx.add(serial, at, dir)
 	for i: int in groups.size():
 		var gr: Node2D = groups[i]
-		if not row.pieces.has(i):  # a group the row does not throw (the burn keeps no cap)
-			gr.queue_free()
+		if gr == null or not row.pieces.has(i):  # a group the row does not throw (burn: no cap)
+			if gr != null:
+				gr.queue_free()
 			groups[i] = null
 			continue
-		if not row.whole_body():
+		if not row.whole_body() and row.style != &"split":
 			var stump: GibBlob = GibBlob.new()  # the ragged red cap under each torn-off part
 			stump.radius = 0.1 * ppm
 			stump.z_index = -1
@@ -238,6 +247,11 @@ func _drop_unused() -> void:
 			_dry.erase(serial)
 			char_fx.forget(serial)
 			shock_fx.forget(serial)
+			split_fx.forget(serial)
+
+
+func _cut(rig: CutRig, whole: bool) -> Array[Node2D]:
+	return GibCut.cut(rig, whole) if rig != null else _blobs()
 
 
 ## No rig to cut (a headless or sprite-cast run): inked blobs stand in for the parts.

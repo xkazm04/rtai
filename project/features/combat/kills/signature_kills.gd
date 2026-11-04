@@ -14,6 +14,8 @@ const WALL_REBOUND: float = 0.3
 ## The standard death blood is skipped this near a fresh signature kill (metres, ticks).
 const VETO_M: float = 1.2
 const VETO_TICKS: int = 30
+## A split half starts this far off the cut line (metres).
+const SPLIT_GAP_M: float = 0.04
 ## The body-local start of each piece (metres; x along the facing, y to the right).
 const OFFSETS: PackedVector2Array = [
 	Vector2(0.05, 0.0),
@@ -58,6 +60,10 @@ func on_kill(e: KillEvent) -> bool:
 	for o: Vector2 in OFFSETS:
 		@warning_ignore("return_value_discarded")
 		offs.append(o.rotated(e.facing.angle()))
+	if row.style == &"split":  # the cut line runs diagonally across the blow; d = along it
+		var side: float = 1.0 if gibs.kills % 2 == 0 else -1.0
+		d = d.rotated(side * deg_to_rad(row.cut_deg))
+		offs = split_offsets(d)
 	var serial: int = gibs.throw(row, at, d, offs, _rng)
 	@warning_ignore("return_value_discarded")
 	marks.leave(row, at, d, tick, _rng)
@@ -66,6 +72,18 @@ func on_kill(e: KillEvent) -> bool:
 	hold = maxi(hold, row.hitstop_ticks)
 	killed.emit(victim_id, serial, row, at, d)
 	return true
+
+
+## Piece offsets (metres) of a body cut along `cut` (unit): the two halves sit a hair off each
+## side of the line, which is also the way each one leaves.
+static func split_offsets(cut: Vector2) -> PackedVector2Array:
+	var offs: PackedVector2Array = PackedVector2Array()
+	@warning_ignore("return_value_discarded")
+	offs.resize(SignatureKill.PIECE_IDS.size())
+	var n: Vector2 = cut.orthogonal() * SPLIT_GAP_M
+	offs[SignatureKill.HALF_A] = n
+	offs[SignatureKill.HALF_B] = -n
+	return offs
 
 
 ## One 60 Hz tick: the hit-stop holds, then the gibs fly.

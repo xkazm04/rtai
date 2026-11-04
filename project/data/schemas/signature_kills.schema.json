@@ -28,6 +28,11 @@
             "minimum": 0,
             "type": "integer"
           },
+          "cut_deg": {
+            "maximum": 90,
+            "minimum": 0,
+            "type": "number"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
@@ -67,7 +72,9 @@
                 "leg_l",
                 "leg_r",
                 "body",
-                "hat"
+                "hat",
+                "half_a",
+                "half_b"
               ]
             },
             "type": "array"
