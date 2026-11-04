@@ -677,3 +677,13 @@ NEXT (iteration 6):
 - REQUEST 23 -> human-reactions (cc gunplay, owner of the riot budget): the r7 riot p99 rose
   8.73 -> 11.48 ms (contended, one sample) the round CrowdReact's startle landed; please time the
   startle scan (STARTLE_M 2.5 per death over the living crowd) in your city_bench riot run.
+- MILESTONE 05:20 reel-0525 (gtai-masters/n4/showcase, 122 s): the first full morning-reel
+  draft = the 05:20 director chapters + chapter 17, 15 s of the pit fight on the city block at
+  32 px/m (film.sh reel-0525-city 32 2100 --arena=city --reel=pit --riot --loadout=pistol,
+  plasma_rifle,rocket_launcher,molotov; seconds 16-31 of the gun beat, ffmpeg title). Looked at
+  9 frames of the city part: cops and their dead in blood on the cream paving, rocket blast
+  stars and smoke among a group, Rivet small at the game's zoom; the pit's black wall bars
+  still stand on the plaza (known, owner call). Raw city film deleted (the segment is in the
+  reel). frames.json: 15 entries, the two oldest dropped.
+- 05:21 the director groups stagger in depth (machine pistol, nuke); re-cut reel-0530-director
+  running (with the 05:08 walk-in hold).
