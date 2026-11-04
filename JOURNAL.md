@@ -67,6 +67,10 @@ Evidence: `evidence/n5-cast/` (in git) and `C:\Users\kazda\kiro\gtai-masters\n5\
   leg_w is a no-op since), parity exact, look goldens re-blessed. Not run: the full `tools/evidence/run.mjs` and the
   bench.
 
+- MILESTONE 17:34 city block (`--arena=city`), 15 s at 32 px/m, before and after, 0 script errors. At t=12 s
+  (`frames/city-slim-cops-ab-32ppm.png`) the sim is identical and the cops now sit on the ped footprint inside their
+  rings. `frames.json` has 10 entries and every file exists.
+
 NEXT (iteration 3):
 1. Run `node tools/evidence/run.mjs --no-bench` on the committed head (parity should be exact: render only). If the
    block goldens fail, check them the same way as the look goldens.
