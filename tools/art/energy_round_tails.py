@@ -14,6 +14,10 @@ The homing shard's pale crystal diamond printed as the same pale seed on cream p
 the city block). It keeps its crystal head (paper_2 body, paper facet) and gains a charcoal speed tail
 behind it, so the crystal reads on asphalt and the tail on cream.
 
+The ray gun's rings (`ray_ring_0..2`, first drawn in flight in iteration 8 by WeaponFxRay) were a thin
+paper band in a 5 px ink line: two hairlines at 64 px/m. Now a fat charcoal band in the ink ring with
+a paper stripe along it, the band widening per frame; same sizes and anchors.
+
     python tools/art/energy_round_tails.py <fx_dir>
 then set the `plasma_bolt` and `shard` rows' size_px / anchor_px in data/tables/weapon_art.json to the printed
 values and canonicalise it with tools/art/canon_json.mjs.
@@ -58,7 +62,23 @@ def shard(out, seed):
     return [w, h], [x0 + 112, 22]
 
 
+def ray_ring(frame, out, seed):
+    s = 70 + 30 * frame
+    m, band = 8, 12 + 3 * frame
+    ring = _ellipse(s, s, s / 2, s / 2, s / 2 - m, s / 2 - m)
+    hole = _ellipse(s, s, s / 2, s / 2, s / 2 - m - band, s / 2 - m - band)
+    ring.paste(0, (0, 0), hole)
+    r_mid = s / 2 - m - band / 2
+    stripe = _ellipse(s, s, s / 2, s / 2, r_mid + 2.5, r_mid + 2.5)
+    stripe.paste(0, (0, 0), _ellipse(s, s, s / 2, s / 2, r_mid - 2.5, r_mid - 2.5))
+    img = _compose([(ring, INK_2), (stripe, PAPER)], s, s, seed + frame, outline=6)
+    _save(img, out / f"ray_ring_{frame}.png")
+    return [s, s], [s // 2, s // 2]
+
+
 if __name__ == "__main__":
+    for f in range(3):
+        print(f"ray_ring_{f}", *ray_ring(f, Path(sys.argv[1]), 43))
     for fn in (plasma_bolt, shard):
         size, anchor = fn(Path(sys.argv[1]), 11)
         print(f"{fn.__name__} size_px {size} anchor_px {anchor}")
