@@ -54,20 +54,40 @@ def tongue(frame, out, seed):
     return [w, h], [150, int(cy)]
 
 
+def _kinked(rng, x0, y0, x1, y1, n, amp):
+    """A lightning polyline from (x0, y0) to (x1, y1): n sharp kinks on alternating sides, each
+    step jittered and each kink's depth varied, so it never reads as a regular spring."""
+    pts, side = [(x0, y0)], rng.choice((-1, 1))
+    for i in range(1, n):
+        t = (i + rng.uniform(-0.3, 0.3)) / n
+        side = -side
+        pts.append((x0 + (x1 - x0) * t, y0 + (y1 - y0) * t + side * rng.uniform(0.5, 1.0) * amp))
+    pts.append((x1, y1))
+    return pts
+
+
 def bolt(frame, out, seed):
+    """Iteration 6: a jagged lightning bolt (6 sharp kinks, mitred, no curve joints) with two
+    kinked forks that leave FORWARD (toward +x, the travel direction) and thin out; iteration 3's
+    smooth zigzag with straight backward stubs read as twigs at 64 px/m."""
     w, h = 320, 120
     cy = h / 2
     rng = random.Random(seed * 13 + frame)
     m = _canvas(w, h)
     d = ImageDraw.Draw(m)
-    pts = [(12, cy)]
-    for i in range(1, 8):
-        pts.append((12 + (w - 24) * i / 7, cy + (rng.uniform(-34, 34) if i < 7 else 0)))
-    d.line([(x * SS, y * SS) for x, y in pts], fill=255, width=20 * SS, joint="curve")
-    for x, y in pts[1:6:2]:
-        a = rng.choice((-1, 1)) * rng.uniform(0.6, 1.1)
-        bx, by = x + math.cos(a) * 46, y + math.sin(a) * 46
-        d.line([(x * SS, y * SS), (bx * SS, by * SS)], fill=255, width=10 * SS)
+    pts = _kinked(rng, 12, cy, w - 12, cy, 6, 30)
+    sc = [(x * SS, y * SS) for x, y in pts]
+    d.line(sc[:5], fill=255, width=17 * SS)
+    d.line(sc[4:], fill=255, width=12 * SS)  # the head end is thinner: the bolt tapers
+    for k, (x, y) in enumerate(sc[1:-1]):
+        r = 7 if k < 3 else 5
+        _ellipse(d, x / SS, y / SS, r, r)  # fill the mitre gaps at the kinks
+    for i in (2, 4):
+        x, y = pts[i]
+        a = (1 if y > cy else -1) * rng.uniform(0.3, 0.5)  # forward and outward, never across
+        reach = rng.uniform(48, 64)
+        fork = _kinked(rng, x, y, x + math.cos(a) * reach, y + math.sin(a) * reach, 3, 9)
+        d.line([(fx * SS, fy * SS) for fx, fy in fork], fill=255, width=7 * SS)
     _save(_compose([(m, PAPER)], w, h, seed + frame, outline=10), out / f"arc_{frame}.png")
     return [w, h], [12, int(cy)]
 
