@@ -377,3 +377,15 @@ NEXT (after the freeze; for the morning merge or the next night):
 2. An authored carry pose per long gun, with the claw at the shoulder rather than the chest. The plasma rifle still clips the helmet's rim at 64 px/m (tick 394), and BESIDE 1.0 was rejected.
 3. ArenaArsenalBot's melee walk-in: a nav-grid path instead of a straight line plus the prop slide.
 4. Call 14 (melee bodies overlap the drawn rigs) and the scenario_rivet_chainsaw ">= 3 kills" bar stay for the owner.
+
+## Iteration 12 (08:12 - 08:30 freeze), BUILD (short: 18 minutes)
+- 08:12 read JOURNAL and git log. The tip (72c0c696) is clean. frames.json has 15 entries; every `file` and every `before` path exists (checked by script; `before` = path + note).
+- 08:14 TRIED AND REVERTED (not committed): a lead on the plasma rifle clipping the helmet's rim at 64 px/m (NEXT 2). The held sprite's origin is the grip point (`centered = false`, `offset = -grip_px`), so `_beside` measured the head against a line through the grip rather than the barrel's drawn centre line. The change measured from `to_global(offset + texture_size / 2)`. A/B at the same tick (arena pit, `res://dev/arena/arena.tscn -- --bot=pit --loadout=plasma_rifle --ppm=64 --shot-tick=394`, --fixed-fps 60, 0 script errors): the rifle moves 1-2 px and the frame is otherwise unchanged. The grip-to-centre offset across the gun is near zero for this art, so this is not the cause. Reverted. That supports the 08:06 finding: the clip comes from the pose (the claw sits just in front of the head), not from the clearance maths. The authored per-gun carry pose stays the fix. The scratch stills were deleted.
+- FRICTION: the arena's dev args (`--shot`, `--ppm`, `--loadout`, `--bot`) only parse when the scene `res://dev/arena/arena.tscn` is passed. Booting with `-- --arena=pit` warns "unknown launch arg" and ignores them.
+- Session end 08:17: nothing new to commit except this journal. No Godot process of mine running (both shots exited on --quit-after). bench.lock and image.lock were never taken. Gates of record stay those at 8a7fd9a1 (no code changed since).
+
+NEXT (unchanged from iteration 11):
+1. The Director: call 1 (quest 1 on the rigs by default) is the lead call. The REPORT is final at this tip.
+2. An authored carry pose per long gun, with the claw at the shoulder. Ruled out tonight: BESIDE 1.0, and measuring from the grip origin versus the texture centre.
+3. ArenaArsenalBot's melee walk-in: a nav-grid path.
+4. Call 14 and the scenario_rivet_chainsaw bar stay for the owner.
