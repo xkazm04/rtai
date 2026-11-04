@@ -240,3 +240,30 @@ NEXT (iteration 4, in order):
 NEXT (iteration 4): items 2-5 of the NEXT list above (Rivet's hit flash call, the vertical blood
 streak, a clustered electro chain clip, then the unique five starting with the plasma rifle); split
 the enemy part out of gun_fx.gd (201 lines) first if GunFx grows.
+
+## Iteration 4 (02:38-03:38)
+- Read: JOURNAL, git log, REQUESTs to gunplay in n-brutality (5: keep CombatBlood.veto, info),
+  n-human-reactions (1: vertical blood bars), n-showcase (3, 5, 7), n-rivet-arsenal (1: cop hit flash
+  vermilion -> cream; 4 answer; 5 HUD ammo), n-weapon-art (1 -> rivet-arsenal cc gunplay: the claw
+  holds the default gun under --weapon).
+- Registry rules applied (realtime-combat-semantics, motion-quality-gating): presentation reads the
+  sim, never writes it; every change judged in motion at 64 and 48 px/m on the cast rigs; a weapon
+  must read apart from its neighbours with the sound off (silhouette of the flash, tracer weight,
+  what falls from the gun).
+- 02:45 MILESTONE vertical blood bars (human-reactions REQUEST 1, showcase reel 0210 (b)): repro
+  `dev/gunplay/blood_dirs.gd` (CombatBlood.kill_human, 8 directions on a plain floor) shows every
+  direction sprays the same: no y-axis bug. The bar is the kill fan itself: 34 deg (effectively about
+  +-8 deg), always due south for a claw from the north, printed next to the axis-aligned grid. Fix:
+  the spray axis turns up to 14 deg (hash of the spot) and the fan widens to 52 deg (356a3a2d).
+  A/B `evidence/n4/blood_spray_down_ab_32ppm.png` (top before, bottom after; row 1 four blows due
+  south). Unit 708/708 (`evidence/n4/unit-a.log`).
+- FRICTION: `timeout` in Git Bash does not kill the windowed Godot child (two of my renders hung on a
+  parse error until killed by PID). Use `--quit-after <frames>` on every windowed run.
+- 02:52 MILESTONE hand cannon, the first unique gun, in the real fight (enabled; gun_fx.json row):
+  fat flare + shock ring + 16 px tracer + smoke cloud + six shells dumped on reload; rig kick 1.6 (the arena schema max).
+  Range 64 px/m: the first cut showed a thin needle flare and a reticle-thin ring -> `fat` 3 and a
+  bolder ring (shot_sequence.png). Pit 48 px/m: 4 rounds, 4 kills; kill_sequence.png shows the cop's
+  told line and burst, Rivet's flare + ring, the heavy tracer into the cop, then the spray.
+  Clips `MASTERS/n4/gunplay/arena_hand_cannon_range_64ppm/`, `arena_hand_cannon_pit_48ppm/`.
+  brutality's `hand_cannon_blowback` kill is on n-brutality; my branch shows the standard death until
+  the Director merges (kill_landed carries weapon `hand_cannon`).

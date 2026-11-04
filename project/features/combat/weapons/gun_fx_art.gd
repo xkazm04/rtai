@@ -13,6 +13,8 @@ const SCUFF: Color = Color(0.090, 0.075, 0.106, 0.55)
 ## flash sits at radius + 0.45 m), and its head meets the sim's line CONVERGE_M out.
 const MUZZLE_BACK_M: float = 0.35
 const CONVERGE_M: float = 3.0
+## A heavy gun's shock ring (gun_fx.json ring_m) opens over this many ticks.
+const RING_TICKS: int = 9
 
 
 static func draw_under(ci: CanvasItem, fx: GunFx, tick: int) -> void:
@@ -42,6 +44,14 @@ static func draw_over(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int) 
 	var flash: int = row.get("muzzle_ticks", 2)
 	if tick - fx.fired_tick < flash and fx.fired_count > 0:
 		_muzzle(ci, fx, arena.rivet, row, tick - fx.fired_tick)
+	var ring_m: float = row.get("ring_m", 0.0)
+	if ring_m > 0.0 and tick - fx.fired_tick < RING_TICKS and fx.fired_count > 0:
+		var k: float = float(tick - fx.fired_tick + 1) / float(RING_TICKS)
+		var at_px: Vector2 = Ink.px(fx.muzzle(arena.rivet, 0.45))
+		ci.draw_arc(at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.INK, 14.0 * (1.0 - k) + 3.0)
+		ci.draw_arc(
+			at_px, ring_m * k * Ink.PX_PER_M, 0.0, TAU, 32, Ink.CREAM, 4.0 * (1.0 - k) + 1.0
+		)
 	if gun.trigger.reloading():
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)
@@ -87,15 +97,16 @@ static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age:
 	var spikes: int = row.get("spikes", 4)
 	var star: Array[Vector2] = []
 	if spikes == 3:
+		var fat: float = row.get("fat", 1.0)
 		for a: Vector2 in [
 			Vector2(0.0, fwd),
-			Vector2(0.3, 0.16),
+			Vector2(0.3, 0.16 * fat),
 			Vector2(PI / 2.0, side),
-			Vector2(2.3, 0.12),
+			Vector2(2.3, 0.12 * fat),
 			Vector2(PI, 0.14),
-			Vector2(-2.3, 0.12),
+			Vector2(-2.3, 0.12 * fat),
 			Vector2(-PI / 2.0, side),
-			Vector2(-0.3, 0.16)
+			Vector2(-0.3, 0.16 * fat)
 		]:
 			star.append(a)
 	else:
