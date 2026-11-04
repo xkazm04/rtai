@@ -17,6 +17,8 @@ class Lane:
 	var strafe_mps: float = 0.0
 	## A hostile holds the gun (enemy_fire scale: slower, weaker rounds); the target is Rivet.
 	var enemy_shooter: bool = false
+	## A charge gun is held on (the tap round, then charged ones) instead of clicked.
+	var hold_charge: bool = false
 
 
 class Result:
@@ -45,8 +47,7 @@ static func run(table: WeaponTable, lane: Lane, rng: RandomNumberGenerator) -> R
 	for tick: int in TIMEOUT_TICKS:
 		_strafe_turn(target, lane, tick)
 		trig.step()
-		# a charge gun is held on (the tap bolt, then the charged one), like the arena bot
-		var held: bool = trig.spec.auto or trig.spec.charge_ticks > 0 or tick % 2 == 0
+		var held: bool = trig.spec.auto or lane.hold_charge or tick % 2 == 0
 		if trig.pull(held):
 			sim.fire(trig, Vector2(0.4, 0.0), target.pos, team, 0)
 		sim.step(tick)

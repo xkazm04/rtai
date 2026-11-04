@@ -115,6 +115,7 @@ func test_the_range_model_holds_the_charge_gun_and_the_charged_bolt_kills() -> v
 	lane.distance_m = 5.0
 	lane.target_hp = table.target_hp[&"human"]
 	lane.target_radius_m = 0.3
+	lane.hold_charge = true
 	var res: RangeDrill.Result = RangeDrill.run(table, lane, RngRegistry.new(3).stream(&"t"))
 	assert_true(res.killed, "the TTK table sees the charged kill")
 	assert_eq(res.shots, 2, "the tap bolt stuns, the held charged bolt kills")
