@@ -12,19 +12,21 @@ extends InputSource
 ## walked in); the bare claw keeps its marks.
 
 const REACH_M: float = 0.12
+## The slowest arrive stick (a share of the walk), so the last centimetres still close.
+const ARRIVE_MIN: float = 0.15
 const MASH_EVERY: int = 5
 ## Melee held this long: the jab's 18 ticks, then the full charge (54), then the release.
 const SHOCK_HOLD: int = 76
 const MARK: Vector2 = Vector2(6.0, 4.0)
 const FOE_AIM_M: float = 2.6
 const STEPS: Array = [
-	[40, Vector2.ZERO, MARK, [], false],
+	[20, Vector2.ZERO, MARK, [], false],
 	[90, Vector2.RIGHT, MARK, [], false],
 	[90, Vector2.LEFT, MARK, [], false],
 	[25, Vector2.DOWN, MARK, [], false],
 	[30, Vector2.UP, MARK, [], false],
 	[30, Vector2.ZERO, MARK, [], false],
-	[75, Vector2.RIGHT, null, ["sprint"], false],
+	[50, Vector2.RIGHT, null, ["sprint"], false],  # 4.6 m at the 9.3 m/s sprint (75 at 6.2)
 	[45, Vector2.RIGHT, null, ["roll"], false],
 	[40, Vector2.LEFT, null, ["roll"], false],
 	[-1, Vector2(2.0, 2.85), Vector2(2.0, 4.4), [], false],
@@ -66,8 +68,7 @@ func sample(tick: int) -> TickInput:
 	var at: Vector2 = stage.arena.rivet.pos
 	var move: Vector2 = s[1]
 	if ticks < 0:
-		var to: Vector2 = stage.plan.base + move - at
-		move = to.normalized() if to.length() > REACH_M else Vector2.ZERO
+		move = arrive(stage.plan.base + move - at, stage.arena.tuning.rivet["walk_mps"], actions)
 	var buttons: int = _buttons(s, ticks < 0)
 	if s[2] != null:
 		var mark: Vector2 = s[2]
@@ -82,6 +83,17 @@ func sample(tick: int) -> TickInput:
 		_in_step = 0
 	var m: Vector2 = move * TickInput.AXIS_MAX
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))
+
+
+## The stick toward a point `to` away (m): full until the brake can no longer stop on it, then
+## eased (v = sqrt(2 brake d), never under ARRIVE_MIN), zero within REACH_M. At the 6.75 m/s walk
+## (2026-11-04) a full stick to REACH_M slides 0.57 m past the mark, out of the claw's reach.
+static func arrive(to: Vector2, walk_mps: float, p_actions: PlayerActions) -> Vector2:
+	var d: float = to.length()
+	if d <= REACH_M:
+		return Vector2.ZERO
+	var v: float = sqrt(2.0 * p_actions.brake_mps2 * (d - REACH_M))
+	return to / d * clampf(v / maxf(walk_mps, 0.01), ARRIVE_MIN, 1.0)
 
 
 ## Held buttons; a roll is a press on the step's first tick; a mash taps melee every MASH_EVERY.

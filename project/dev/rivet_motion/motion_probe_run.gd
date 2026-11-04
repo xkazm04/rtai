@@ -5,7 +5,7 @@ extends RefCounted
 ## and the roll's distance, i-frames and lockout. Sim-true only: the display latency (input
 ## sampling to the presented frame) is not measured here.
 
-const WALK_MPS: float = 4.5
+const WALK_MPS: float = 6.75  # combat.json rivet walk_mps (the 2026-11-04 baseline)
 
 var actions: PlayerActions = PlayerActions.shipped()
 var _drop: Vector2 = Vector2.ZERO
@@ -43,7 +43,7 @@ func _run(held: Array) -> Dictionary:
 		if t == 0:
 			first_tick_m = d.length()
 		var v: float = m.velocity().length()
-		if t90 < 0 and v >= 0.9 * (6.2 if held.size() > 0 else WALK_MPS):
+		if t90 < 0 and v >= 0.9 * (9.3 if held.size() > 0 else WALK_MPS):
 			t90 = t + 1
 	var top: float = m.velocity().length()
 	var stop_m: float = 0.0

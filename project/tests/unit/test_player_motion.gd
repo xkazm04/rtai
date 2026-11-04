@@ -1,11 +1,11 @@
 extends GutTest
-## rivet-motion: sprint and the dodge roll (rivet_motion.json). The held sprint crosses the 5.0 m/s
+## rivet-motion: sprint and the dodge roll (rivet_motion.json). The held sprint crosses the 7.5 m/s
 ## tackle line (bodies.json); the roll covers exactly roll_m, is invulnerable only on its window,
 ## damps the stick in recovery and cannot be chained before the cooldown. Planted faults: an
 ## i-frame window outside the roll is a table error; a sprint at walk speed misses the line.
 
-const TACKLE_LINE_MPS: float = 5.0
-const WALK_MPS: float = 4.5
+const TACKLE_LINE_MPS: float = 7.5
+const WALK_MPS: float = 6.75
 
 var actions: PlayerActions
 var motion: PlayerMotion

@@ -11,7 +11,7 @@ const WALK: Vector2 = Vector2(1.4, 0.0)
 const TICKS: int = 14 * SimClock.TICK_RATE
 const MIN_PROGRESS: float = 0.6
 ## Rivet's top walk in quest 1 (combat.json rivet walk_mps): still a walk, so still no knockdown.
-const QUEST_WALK_MPS: float = 4.5
+const QUEST_WALK_MPS: float = 6.75
 
 
 func run(_tree: SceneTree) -> String:

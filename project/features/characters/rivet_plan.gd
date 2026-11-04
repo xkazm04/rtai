@@ -44,6 +44,10 @@ const ARMS: Dictionary[StringName, Vector3] = {
 ## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.
 const GAIT_SCALE: float = 1.3
 const SPRINT_STRIDE: float = 0.2
+## The owner's 2026-11-04 baseline ("increase baseline of main character with 50%"): walk 6.75,
+## sprint 9.3 m/s (combat.json, rivet_motion.json). The gait keeps the evening's pose and stride
+## at the new speeds (BodyPlan.speed_k), so the cadence rises 1.5x. The Hauler keeps 1.0.
+const SPEED_K: float = 1.5
 ## Which form RigPool builds; a dev scene may flip it before the pool's first build.
 static var form: StringName = FORM_BASE
 
@@ -78,6 +82,7 @@ static func build(p_form: StringName = &"") -> BodyPlan:
 	p.hip_follow = 1.0
 	p.gait_scale = GAIT_SCALE
 	p.sprint_stride = SPRINT_STRIDE
+	p.speed_k = 1.0 if key == FORM_HAULER else SPEED_K
 	return p
 
 

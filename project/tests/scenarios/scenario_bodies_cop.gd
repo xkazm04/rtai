@@ -5,7 +5,7 @@ extends Scenario
 ## Rivet never overlaps him. Planted fault (TST-05): the knockdown time 0 in the spec must fail
 ## the same verdict (no lying; he is re-tackled every tick instead).
 
-const SPRINT: Vector2 = Vector2(6.0, 0.0)
+const SPRINT: Vector2 = Vector2(9.0, 0.0)  # under the 9.3 m/s sprint top, over the 7.5 line
 const TOL: float = 0.02
 
 

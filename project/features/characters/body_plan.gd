@@ -90,6 +90,10 @@ var gait_scale: float = 1.0
 ## rivet-motion: extra stride above the run speed (0 = the stride stops growing at RUN_SPEED);
 ## at SPRINT_SPEED the stride is (1 + sprint_stride) x the run stride.
 var sprint_stride: float = 0.0
+## The plan's gait speeds over CutRig's (WALK/RUN_SPEED, RigGait.SPRINT_SPEED): a body that moves
+## k x faster blends to the run and the sprint k x later, so its walk wears the same pose and only
+## the cadence rises (the feet stay planted: the phase follows the distance). Rivet: 1.5.
+var speed_k: float = 1.0
 ## Twin-stick hips (RigHips): 0 = the hips stay on the facing; 1 = they turn to the walk.
 var hip_follow: float = 0.0
 var hip_twist_max: float = deg_to_rad(70.0)

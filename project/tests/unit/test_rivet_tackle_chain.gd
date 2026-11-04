@@ -5,7 +5,7 @@ extends GutTest
 ## same human never does. Planted faults: a run_mps above the sprint top (bodies.json) and a
 ## run-up shorter than the acceleration both miss the knockdown.
 
-const WALK_MPS: float = 4.5
+const WALK_MPS: float = 6.75
 ## The reel's run-up is 4.6 m; a sprint must tackle well inside an arena lane.
 const MAX_RUN_UP_M: float = 3.0
 const TICKS: int = 240

@@ -48,9 +48,9 @@ func _judge(tel: Dictionary, bot: ArenaRivetBot) -> String:
 	if claw.get("claw_kills", 0) != 4:
 		return "expected 4 cops down (2 finishers, 1 jab, the shocked cop's combo): %s" % claw
 	var shocked: bool = claw.get("shock_discharges", 0) == 1 and claw.get("shock_landed", 0) == 1
-	if tel["sprint_top_mps"] <= 5.0 or not shocked:
+	if tel["sprint_top_mps"] <= 7.5 or not shocked:
 		return (
-			"no sprint over 5 m/s (%.2f) or no single landed shock: %s"
+			"no sprint over 7.5 m/s (%.2f) or no single landed shock: %s"
 			% [tel["sprint_top_mps"], claw]
 		)
 	if tel["rolls"] != 2:

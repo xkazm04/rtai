@@ -22,7 +22,7 @@
       "mass_kg": 160,
       "radius_m": 0.42,
       "reserved": false,
-      "run_mps": 5
+      "run_mps": 7.5
     },
     {
       "doc": "Rivet as the Hauler ghost tank (features/souls, powers.json hauler): 0.9 m, 600 kg. Its run line is 3.0 m/s (the tank's ram_mps), so a ram knocks down humans AND robots; bosses still block.",
@@ -41,7 +41,7 @@
       "run_mps": 3.2
     }
   ],
-  "doc": "Body size classes and the tackle matrix (features/bodies/README.md). Bodies are circles of radius_m; on contact the overlap is split by mass (a body of mass m against M moves M/(m+M) of it). A contact whose closing speed (the attacker's own velocity along the line to the defender) is above the ATTACKER's run_mps is a run (a tackle), else a walk: Rivet runs above 5.0 m/s (his 4.5 m/s quest walk shoves), a human above 3.2 m/s (a 4.5 m/s flee or riot is a run). rules: attacker class against defender class: walk and run results (shove = the mass split only; stagger = shoved knockback_m with no fall; knockdown = slides knockback_m, lies down_s, gets up and flees flee_s; blocked = the attacker stops at contact and the defender holds (the closing speed is removed, the tangent kept), the neutral rule for robots and bosses until the owner designs them). can_hurt: the contact may damage the defender (no tackle hurts anyone today).",
+  "doc": "Body size classes and the tackle matrix (features/bodies/README.md). Bodies are circles of radius_m; on contact the overlap is split by mass (a body of mass m against M moves M/(m+M) of it). A contact whose closing speed (the attacker's own velocity along the line to the defender) is above the ATTACKER's run_mps is a run (a tackle), else a walk: Rivet runs above 7.5 m/s (his 6.75 m/s walk shoves, his 9.3 m/s sprint tackles; 1.5x the evening's 5.0 / 4.5 / 6.2 since the owner's 2026-11-04 baseline), a human above 3.2 m/s (a 4.5 m/s flee or riot is a run). rules: attacker class against defender class: walk and run results (shove = the mass split only; stagger = shoved knockback_m with no fall; knockdown = slides knockback_m, lies down_s, gets up and flees flee_s; blocked = the attacker stops at contact and the defender holds (the closing speed is removed, the tangent kept), the neutral rule for robots and bosses until the owner designs them). can_hurt: the contact may damage the defender (no tackle hurts anyone today).",
   "flee_s": 3,
   "rules": [
     {

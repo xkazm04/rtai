@@ -8,6 +8,7 @@ extends RefCounted
 const STAND_STEP_S: float = 0.16
 const LIFT_PX: float = 45.0
 ## rivet-motion: the sprint's top (PlayerMotion sprint_mps 6.2 at 32 px/m): sprint_stride is full.
+## A plan's speed_k scales it (Rivet 1.5: his 9.3 m/s sprint top since 2026-11-04).
 const SPRINT_SPEED: float = 198.0
 ## rivet-arsenal: the stride share of a full backpedal (see backpedal_scale).
 const BACKPEDAL_STRIDE: float = 0.55
@@ -21,10 +22,11 @@ const PLANK_FEET_PX: float = 340.0
 static func step(rig: CutRig, dt: float) -> void:
 	var p: BodyPlan = rig.plan
 	var spd: float = rig.speed_now
-	rig.run_blend = smoothstep(CutRig.WALK_SPEED * 1.1, CutRig.RUN_SPEED * 0.95, spd)
+	var k: float = p.speed_k
+	rig.run_blend = smoothstep(CutRig.WALK_SPEED * 1.1 * k, CutRig.RUN_SPEED * 0.95 * k, spd)
 	var stride: float = lerpf(CutRig.STRIDE_WALK, CutRig.STRIDE_RUN, rig.run_blend) * p.gait_scale
 	if p.sprint_stride > 0.0:
-		stride *= 1.0 + p.sprint_stride * smoothstep(CutRig.RUN_SPEED, SPRINT_SPEED, spd)
+		stride *= 1.0 + p.sprint_stride * smoothstep(CutRig.RUN_SPEED * k, SPRINT_SPEED * k, spd)
 	stride *= backpedal_scale(rig)
 	var moving: bool = spd > 6.0 and not rig.dead and rig.c_tuck < 0.3
 	if moving:

@@ -41,11 +41,13 @@ static func _body(rig: CutRig, walk01: float, ph: float) -> void:
 
 
 ## rivet-motion: how far into the sprint a plan with a sprint stride is (0 at the run speed,
-## 5 m/s, 1 at the sprint top, 6.2 m/s); 0 for everyone else. Drives the lean and the shoulder.
+## 5 m/s, 1 at the sprint top, 6.2 m/s; both x plan.speed_k); 0 for everyone else. Drives the
+## lean and the shoulder.
 static func sprint01(rig: CutRig) -> float:
 	if rig.plan.sprint_stride <= 0.0:
 		return 0.0
-	return smoothstep(CutRig.RUN_SPEED, RigGait.SPRINT_SPEED, rig.speed_now)
+	var k: float = rig.plan.speed_k
+	return smoothstep(CutRig.RUN_SPEED * k, RigGait.SPRINT_SPEED * k, rig.speed_now)
 
 
 static func _head(rig: CutRig, p: BodyPlan) -> void:

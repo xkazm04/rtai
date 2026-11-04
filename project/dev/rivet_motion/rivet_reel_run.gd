@@ -10,7 +10,7 @@ extends Node
 const PX: float = 32.0
 const ARENA: String = "res://features/city/art/d5/arena/king_arena.png"
 const ARENA_M: float = 12.0
-const WALK_MPS: float = 4.5
+const WALK_MPS: float = 6.75  # combat.json rivet walk_mps (the 2026-11-04 baseline)
 const MARK: Vector2 = Vector2(-2.0, -1.5)
 const PED_AT: Vector2 = Vector2(-0.6, 3.2)
 const COP_A: Vector2 = Vector2(3.6, -1.8)

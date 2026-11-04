@@ -136,8 +136,8 @@ func test_sprint_crosses_the_tackle_line_and_walk_does_not() -> void:
 	for t: int in 40:
 		_drive(0, 127)
 	assert_lt(
-		_last_by.length() / SimClock.TICK_DT, 5.0, "walking stays under the 5 m/s tackle line"
+		_last_by.length() / SimClock.TICK_DT, 7.5, "walking stays under the 7.5 m/s tackle line"
 	)
 	for t: int in 40:
 		_drive(_bit(&"sprint"), 127)
-	assert_gt(_last_by.length() / SimClock.TICK_DT, 5.0, "the sprint crosses it")
+	assert_gt(_last_by.length() / SimClock.TICK_DT, 7.5, "the sprint crosses it")

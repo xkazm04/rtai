@@ -1,6 +1,6 @@
 extends Scenario
 ## features/souls: both ghost powers against bodies. Hauler: the tank walks at its top speed
-## (4.2 m/s, under base Rivet's 5.0 tackle line) into a standing human in the real city sim and
+## (4.2 m/s, under base Rivet's 7.5 tackle line) into a standing human in the real city sim and
 ## knocks him down, then into a robot (BodyContact) and knocks it down; its stomp floors a ring.
 ## Gearbox: a linked car turns onto a robot 17 m off-axis and wrecks on it.
 ## Planted faults (TST-05): the class switch dropped (base Rivet at the same speed must only

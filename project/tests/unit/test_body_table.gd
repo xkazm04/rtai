@@ -43,7 +43,7 @@ func test_a_missing_rule_is_a_load_error() -> void:
 ## rioting human (4.5 m/s in the sim) must be a run into Rivet, so it is blocked, never a shove.
 func test_run_line_is_per_class() -> void:
 	var t: BodyTable = BodyTable.load_default()
-	assert_gt(t.run_mps(&"rivet_base"), 4.5, "Rivet's 4.5 m/s quest walk is a walk")
+	assert_gt(t.run_mps(&"rivet_base"), 6.75, "Rivet's 6.75 m/s walk is a walk")
 	assert_lt(t.run_mps(&"human"), 4.5, "a 4.5 m/s fleeing human is a run")
 	var runner: BodyContact = BodyContact.resolve(
 		t,
@@ -105,7 +105,7 @@ func test_arena_sprint_knocks_a_guard_back() -> void:
 	var guard: Fighter = arena.spawn_guard(Vector2.ZERO)
 	guard.pos = arena.rivet.pos + Vector2(0.5, 0.0)
 	@warning_ignore("return_value_discarded")
-	ArenaBodies.resolve(arena, Vector2(6.0, 0.0))
+	ArenaBodies.resolve(arena, Vector2(9.0, 0.0))  # a sprint over the 7.5 m/s line
 	assert_gt(arena.rivet.pos.distance_to(guard.pos), 1.5, "knocked back by the rule's 1.6 m")
 
 

@@ -7,7 +7,7 @@ extends Node
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
-const WALK_MPS: float = 4.5
+const WALK_MPS: float = 6.75  # combat.json rivet walk_mps (the 2026-11-04 baseline)
 const MARK: Vector2 = Vector2(0.0, -4.5)
 ## [seconds, move, held actions (comma list), aim at the mark?]
 const COURSE: Array[Array] = [

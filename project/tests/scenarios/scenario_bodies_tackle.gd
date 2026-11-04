@@ -6,7 +6,7 @@ extends Scenario
 ## Planted faults (TST-05): the tackle disabled in the spec (no knockdown must be seen), and a
 ## table without the rivet_base -> robot row (load error and Rivet passes into the robot).
 
-const SPRINT: Vector2 = Vector2(6.0, 0.0)
+const SPRINT: Vector2 = Vector2(9.0, 0.0)  # under the 9.3 m/s sprint top, over the 7.5 line
 const TOL: float = 0.02
 
 

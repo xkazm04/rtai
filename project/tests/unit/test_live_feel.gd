@@ -21,7 +21,8 @@ func test_walk_stops_in_the_braking_distance() -> void:
 	var stop_m: float = walk["stop_m"]
 	var stop_ticks: int = walk["stop_ticks"]
 	assert_almost_eq(stop_m, top * top / (2.0 * brake), 0.06, "v^2 / 2 brake")
-	assert_lt(stop_ticks, 10, "stopped within 10 ticks")
+	var want_ticks: int = ceili(top / brake * SimClock.TICK_RATE) + 1  # v / brake, one settle tick
+	assert_lte(stop_ticks, want_ticks, "stopped within v / brake (%d ticks)" % want_ticks)
 
 
 func test_sprint_is_faster_and_stops_longer() -> void:
