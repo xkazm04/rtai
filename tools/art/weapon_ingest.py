@@ -33,6 +33,15 @@ ROWS = {
     "flamethrower": ("backpack_hose", 1.15, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
     "electro_gun": ("two_hand_long", 1.00, 0.32, "arc", "arc", "", {}),
     "molotov": ("thrown", 0.48, 0.40, "flame", "flame", "", {}),
+    "katana": ("two_hand_long", 1.30, 0.12, "", "", "", {}),
+    "electro_baton": ("one_hand", 0.80, 0.14, "arc", "", "", {}),
+    "hand_cannon": ("one_hand", 0.85, 0.30, "flash_tube", "tracer", "casing", {}),
+    "plasma_rifle": ("two_hand_long", 1.35, 0.40, "flash_energy", "plasma_bolt", "", {}),
+    "chainsaw": ("heavy_two_hand", 1.30, 0.22, "", "", "", {}),
+    "plasma_sword": ("two_hand_long", 1.30, 0.10, "", "", "", {}),
+    "ray_gun": ("two_hand_long", 0.90, 0.30, "flash_energy", "ray_ring", "", {}),
+    "homing_shard": ("two_hand_long", 1.00, 0.35, "flash_energy", "shard", "", {}),
+    "mini_nuke": ("shoulder", 1.50, 0.40, "flash_nuke", "rocket", "", {}),
 }
 
 

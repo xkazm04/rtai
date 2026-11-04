@@ -8,16 +8,29 @@ extends Node
 
 const PX: float = 32.0
 const GROUND: String = "res://features/city/art/ground/"
-const IDS: Array[StringName] = [
+const CORE: Array[StringName] = [
 	&"pistol", &"machine_pistol", &"electro_gun", &"flamethrower", &"rocket_launcher", &"molotov"
 ]
-const STEP_M: float = 2.55
+const ADV: Array[StringName] = [
+	&"katana",
+	&"electro_baton",
+	&"hand_cannon",
+	&"plasma_rifle",
+	&"chainsaw",
+	&"plasma_sword",
+	&"ray_gun",
+	&"homing_shard",
+	&"mini_nuke"
+]
 const SETTLE_TICKS: int = 90
 const GRIP_U: float = 0.62  # where the claw closes along the claw cell
 const TANK_M: float = 0.8
 const PRINT: bool = true  # held parts through the rig's print_part material
 
 var out_dir: String = ""
+var weapon_set: String = "core"  # core | adv (set by the launcher before _ready)
+var ids: Array[StringName] = CORE
+var step_m: float = 2.55
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _under: CanvasLayer = CanvasLayer.new()
@@ -49,6 +62,9 @@ func _ready() -> void:
 	_post.add_child(rect)
 	_actors.add_child(_rigs)
 	_rigs.setup(World.build_context(_bus, _data, 3))
+	if weapon_set == "adv":
+		ids = ADV
+		step_m = 1.9
 	_cast()
 	_props()
 
@@ -68,22 +84,22 @@ func shoot() -> int:
 
 
 func _spot(i: int) -> Vector2:
-	return Vector2((i - 3.0) * STEP_M, -0.9) * PX
+	return Vector2((i - ids.size() * 0.5) * step_m, -0.9) * PX
 
 
 func _cast() -> void:
 	var f: RigFeed = _rigs.feed
 	f.count = 0
-	for i: int in IDS.size() + 1:
-		var kind: BodyPlan.Kind = BodyPlan.Kind.RIVET if i < IDS.size() else BodyPlan.Kind.COP
+	for i: int in ids.size() + 1:
+		var kind: BodyPlan.Kind = BodyPlan.Kind.RIVET if i < ids.size() else BodyPlan.Kind.COP
 		@warning_ignore("return_value_discarded")
 		f.put(i, i + 1, kind, _spot(i), Vector2.ZERO)
-		f.looks[i] = RigFeed.LOOK_AUTO if i < IDS.size() else 5
+		f.looks[i] = RigFeed.LOOK_AUTO if i < ids.size() else 5
 
 
 func _props() -> void:
-	for i: int in IDS.size():
-		var id: StringName = IDS[i]
+	for i: int in ids.size():
+		var id: StringName = ids[i]
 		var held: Sprite2D = _art.make_held(id)
 		held.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		if PRINT:
@@ -96,6 +112,8 @@ func _props() -> void:
 		pick.scale = Vector2.ONE * _art.world_scale(id)
 		pick.position = _spot(i) + Vector2(0.0, 2.4) * PX
 		_world.add_child(pick)
+	if not ids.has(&"flamethrower"):
+		return
 	_tank = Sprite2D.new()
 	_tank.texture = _art.part_texture(&"flamethrower", "tank")
 	_tank.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -120,7 +138,7 @@ func _pose() -> void:
 
 ## Puts each held part on its Rivet's claw (grip on the closing point, barrel along the claw).
 func _attach() -> void:
-	for i: int in IDS.size():
+	for i: int in ids.size():
 		var rig: CutRig = _rigs.rig_for(i + 1)
 		if rig == null:
 			continue
@@ -130,7 +148,7 @@ func _attach() -> void:
 		var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
 		_held[i].position = hand.global_transform * local
 		_held[i].rotation = hand.global_rotation
-		if IDS[i] == &"flamethrower":
+		if ids[i] == &"flamethrower" and _tank != null:
 			_backpack(rig, _held[i])
 
 
@@ -171,7 +189,7 @@ func _save(ppm: int) -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
 	if img == null or img.is_empty():
 		return false
-	var base: String = out_dir.path_join("lineup-%dppm" % ppm)
+	var base: String = out_dir.path_join("lineup-%s-%dppm" % [weapon_set, ppm])
 	var ok: bool = img.save_png(base + ".png") == OK
 	if ppm == 32:
 		var view: Vector2 = Vector2(img.get_size())

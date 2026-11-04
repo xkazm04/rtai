@@ -88,6 +88,78 @@
     {
       "anchor_px": [
         11,
+        70
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_energy_0.png",
+      "id": "flash_energy_0",
+      "size_px": [
+        158,
+        141
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
+        57
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_energy_1.png",
+      "id": "flash_energy_1",
+      "size_px": [
+        131,
+        113
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
+        45
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_energy_2.png",
+      "id": "flash_energy_2",
+      "size_px": [
+        101,
+        98
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
+        139
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_nuke_0.png",
+      "id": "flash_nuke_0",
+      "size_px": [
+        306,
+        277
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
+        112
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_nuke_1.png",
+      "id": "flash_nuke_1",
+      "size_px": [
+        249,
+        219
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
+        86
+      ],
+      "art": "res://features/combat/weapons/art/fx/flash_nuke_2.png",
+      "id": "flash_nuke_2",
+      "size_px": [
+        187,
+        187
+      ]
+    },
+    {
+      "anchor_px": [
+        11,
         53
       ],
       "art": "res://features/combat/weapons/art/fx/flash_pistol_0.png",
@@ -195,6 +267,54 @@
     },
     {
       "anchor_px": [
+        155,
+        30
+      ],
+      "art": "res://features/combat/weapons/art/fx/plasma_bolt.png",
+      "id": "plasma_bolt",
+      "size_px": [
+        170,
+        60
+      ]
+    },
+    {
+      "anchor_px": [
+        35,
+        35
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_ring_0.png",
+      "id": "ray_ring_0",
+      "size_px": [
+        70,
+        70
+      ]
+    },
+    {
+      "anchor_px": [
+        50,
+        50
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_ring_1.png",
+      "id": "ray_ring_1",
+      "size_px": [
+        100,
+        100
+      ]
+    },
+    {
+      "anchor_px": [
+        65,
+        65
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_ring_2.png",
+      "id": "ray_ring_2",
+      "size_px": [
+        130,
+        130
+      ]
+    },
+    {
+      "anchor_px": [
         178,
         35
       ],
@@ -203,6 +323,18 @@
       "size_px": [
         200,
         70
+      ]
+    },
+    {
+      "anchor_px": [
+        112,
+        22
+      ],
+      "art": "res://features/combat/weapons/art/fx/shard.png",
+      "id": "shard",
+      "size_px": [
+        120,
+        44
       ]
     },
     {
@@ -407,6 +539,231 @@
       "size_px": [
         475,
         152
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        61,
+        55
+      ],
+      "held": "res://features/combat/weapons/art/katana/held.png",
+      "icon": "res://features/combat/weapons/art/katana/icon.png",
+      "id": "katana",
+      "length_m": 1.3,
+      "length_px": 466,
+      "muzzle_fx": "",
+      "muzzle_px": [
+        472,
+        55
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/katana/pickup.png",
+      "projectile_fx": "",
+      "size_px": [
+        482,
+        107
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "one_hand",
+      "grip_px": [
+        59,
+        43
+      ],
+      "held": "res://features/combat/weapons/art/electro_baton/held.png",
+      "icon": "res://features/combat/weapons/art/electro_baton/icon.png",
+      "id": "electro_baton",
+      "length_m": 0.8,
+      "length_px": 382,
+      "muzzle_fx": "arc",
+      "muzzle_px": [
+        388,
+        43
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/electro_baton/pickup.png",
+      "projectile_fx": "",
+      "size_px": [
+        395,
+        88
+      ]
+    },
+    {
+      "casing": "casing",
+      "grip_class": "one_hand",
+      "grip_px": [
+        138,
+        105
+      ],
+      "held": "res://features/combat/weapons/art/hand_cannon/held.png",
+      "icon": "res://features/combat/weapons/art/hand_cannon/icon.png",
+      "id": "hand_cannon",
+      "length_m": 0.85,
+      "length_px": 443,
+      "muzzle_fx": "flash_tube",
+      "muzzle_px": [
+        449,
+        105
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/hand_cannon/pickup.png",
+      "projectile_fx": "tracer",
+      "size_px": [
+        456,
+        211
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        200,
+        62
+      ],
+      "held": "res://features/combat/weapons/art/plasma_rifle/held.png",
+      "icon": "res://features/combat/weapons/art/plasma_rifle/icon.png",
+      "id": "plasma_rifle",
+      "length_m": 1.35,
+      "length_px": 485,
+      "muzzle_fx": "flash_energy",
+      "muzzle_px": [
+        491,
+        62
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/plasma_rifle/pickup.png",
+      "projectile_fx": "plasma_bolt",
+      "size_px": [
+        498,
+        128
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "heavy_two_hand",
+      "grip_px": [
+        102,
+        92
+      ],
+      "held": "res://features/combat/weapons/art/chainsaw/held.png",
+      "icon": "res://features/combat/weapons/art/chainsaw/icon.png",
+      "id": "chainsaw",
+      "length_m": 1.3,
+      "length_px": 437,
+      "muzzle_fx": "",
+      "muzzle_px": [
+        443,
+        92
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/chainsaw/pickup.png",
+      "projectile_fx": "",
+      "size_px": [
+        450,
+        179
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        53,
+        48
+      ],
+      "held": "res://features/combat/weapons/art/plasma_sword/held.png",
+      "icon": "res://features/combat/weapons/art/plasma_sword/icon.png",
+      "id": "plasma_sword",
+      "length_m": 1.3,
+      "length_px": 474,
+      "muzzle_fx": "",
+      "muzzle_px": [
+        480,
+        48
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/plasma_sword/pickup.png",
+      "projectile_fx": "",
+      "size_px": [
+        487,
+        100
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        119,
+        82
+      ],
+      "held": "res://features/combat/weapons/art/ray_gun/held.png",
+      "icon": "res://features/combat/weapons/art/ray_gun/icon.png",
+      "id": "ray_gun",
+      "length_m": 0.9,
+      "length_px": 378,
+      "muzzle_fx": "flash_energy",
+      "muzzle_px": [
+        384,
+        82
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
+      "projectile_fx": "ray_ring",
+      "size_px": [
+        391,
+        161
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "two_hand_long",
+      "grip_px": [
+        143,
+        77
+      ],
+      "held": "res://features/combat/weapons/art/homing_shard/held.png",
+      "icon": "res://features/combat/weapons/art/homing_shard/icon.png",
+      "id": "homing_shard",
+      "length_m": 1,
+      "length_px": 393,
+      "muzzle_fx": "flash_energy",
+      "muzzle_px": [
+        399,
+        77
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/homing_shard/pickup.png",
+      "projectile_fx": "shard",
+      "size_px": [
+        406,
+        145
+      ]
+    },
+    {
+      "casing": "",
+      "grip_class": "shoulder",
+      "grip_px": [
+        187,
+        68
+      ],
+      "held": "res://features/combat/weapons/art/mini_nuke/held.png",
+      "icon": "res://features/combat/weapons/art/mini_nuke/icon.png",
+      "id": "mini_nuke",
+      "length_m": 1.5,
+      "length_px": 453,
+      "muzzle_fx": "flash_nuke",
+      "muzzle_px": [
+        459,
+        68
+      ],
+      "parts": {},
+      "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
+      "projectile_fx": "rocket",
+      "size_px": [
+        466,
+        137
       ]
     }
   ]
