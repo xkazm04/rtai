@@ -49,6 +49,20 @@
     },
     {
       "files": [
+        "blast_0"
+      ],
+      "id": "blast_burst",
+      "note": "the first blast frame: its burst was paper with a vermilion core, so the explosion family printed a white star round an orange heart; r2_w4 wants the white-hot core inside the orange-yellow, so this frame swaps them (applied after explosion, which it overrides)",
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFB52E",
+        "paper_2": "#FFC94A",
+        "vermilion": "#FFF9E8",
+        "wash": "#E8781E"
+      }
+    },
+    {
+      "files": [
         "arc_"
       ],
       "id": "arc",
