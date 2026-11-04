@@ -4,7 +4,9 @@ extends RefCounted
 ## plays; a buffered hit starts `cancel_ticks` into the current hit's recovery. After the last
 ## hit's recovery, a press within the combo window continues the chain; later, it restarts at
 ## hit 1, and the finisher (the last row) always ends the chain. lands() is true on exactly one
-## tick per hit (the first active tick): the host runs its hit test there.
+## tick per hit (the first active tick): the host runs its hit test there. A grinding hit (the
+## chainsaw, grind_ticks > 0) holds its last active tick for grind_min_ticks and on while the host
+## sets `holding`, landing again every grind_ticks; a release lets it run into its recovery.
 
 enum Phase { NONE, WINDUP, ACTIVE, RECOVERY }
 
@@ -18,6 +20,10 @@ var since_end: int = 1 << 20
 var last_index: int = 0
 ## Counts hit starts: a host that poses the rig compares it with the count it last saw.
 var starts: int = 0
+## Set by the host each tick: the attack is held down (a grinding hit keeps grinding).
+var holding: bool = false
+## Ticks the current hit has held its grind (0 = not grinding yet).
+var ground: int = 0
 
 
 func _init(p_table: MeleeTable) -> void:
@@ -39,8 +45,12 @@ func step() -> void:
 	if hit_index == 0:
 		since_end += 1
 		return
-	tick_in += 1
 	var h: MeleeHit = current()
+	if grinding():
+		ground += 1
+		buffered = false  # a held trigger is the grind, not a queued next hit
+		return
+	tick_in += 1
 	var cancel_at: int = h.windup + h.active + table.cancel_ticks
 	if buffered and tick_in >= cancel_at and hit_index < table.hits.size():
 		_start(hit_index + 1)
@@ -51,6 +61,7 @@ func step() -> void:
 		tick_in = 0
 		since_end = 0
 		buffered = false
+		ground = 0
 
 
 func current() -> MeleeHit:
@@ -68,10 +79,24 @@ func phase() -> Phase:
 	return Phase.RECOVERY
 
 
-## True on the first active tick of the current hit: run the hit test now.
+## True while a grinding hit holds its last active tick: the attack is held down, or the bite has
+## not yet held its grind_min_ticks.
+func grinding() -> bool:
+	var h: MeleeHit = current()
+	if h == null or h.grind_ticks <= 0 or tick_in != h.windup + h.active - 1:
+		return false
+	return holding or ground < h.grind_min_ticks
+
+
+## True on the first active tick of the current hit, and every grind_ticks of a held grind: run
+## the hit test now.
 func lands() -> bool:
 	var h: MeleeHit = current()
-	return h != null and tick_in == h.windup
+	if h == null:
+		return false
+	if ground > 0:
+		return ground % h.grind_ticks == 0 and tick_in == h.windup + h.active - 1
+	return tick_in == h.windup
 
 
 ## 0..1 progress through the current hit (for the rig's reach envelope); 0 when idle.
@@ -84,7 +109,7 @@ func progress() -> float:
 ## windup and active ticks (the katana's thrust); 0 in recovery, idle, or for a hit without one.
 func lunge_step_m() -> float:
 	var h: MeleeHit = current()
-	if h == null or h.lunge_m <= 0.0 or tick_in >= h.windup + h.active:
+	if h == null or h.lunge_m <= 0.0 or tick_in >= h.windup + h.active or ground > 0:
 		return 0.0
 	return h.lunge_m / float(h.windup + h.active)
 
@@ -99,3 +124,4 @@ func _start(index: int) -> void:
 	starts += 1
 	tick_in = 0
 	buffered = false
+	ground = 0

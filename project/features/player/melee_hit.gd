@@ -2,7 +2,8 @@ class_name MeleeHit
 extends RefCounted
 ## One melee hit's timing (60 Hz ticks) and effect, a row of MeleeTable. The claw rows leave the
 ## weapon-only fields at 0: stun_ticks (a hit stun), chain_hops (arcs to metal targets within the
-## weapon's chain_radius_m) and lunge_m (Rivet travels this far over windup + active).
+## weapon's chain_radius_m), lunge_m (Rivet travels this far over windup + active) and grind_ticks
+## (the chainsaw: while the attack is held the last active tick holds and lands every grind_ticks).
 
 var id: StringName = &""
 var windup: int = 1
@@ -15,6 +16,9 @@ var knockback_m: float = 0.0
 var stun_ticks: int = 0
 var chain_hops: int = 0
 var lunge_m: float = 0.0
+var grind_ticks: int = 0
+## The bite always holds this long, held or not (a tap of the chainsaw still grinds).
+var grind_min_ticks: int = 0
 
 
 func length() -> int:

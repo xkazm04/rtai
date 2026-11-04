@@ -27,6 +27,16 @@
           "minLength": 1,
           "type": "string"
         },
+        "grind_min_ticks": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "grind_ticks": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "integer"
+        },
         "id": {
           "pattern": "^[a-z][a-z0-9_]*$",
           "type": "string"

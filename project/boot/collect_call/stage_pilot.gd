@@ -69,6 +69,7 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		var before: int = melee.combo.starts
 		melee.combo.press()
 		melee_swings += 1 if melee.combo.starts != before or melee.combo.buffered else 0
+	melee.combo.holding = _attack_held(c) and rivet.alive()
 	stage.intent.move_by += melee.step(stage.arena, false, rivet.facing)
 	if c.was_pressed(actions, &"car"):
 		car_presses += 1
@@ -144,3 +145,8 @@ func _melee_press(c: PlayerCommand) -> bool:
 	if not hold.can_fire():
 		return false
 	return c.was_pressed(actions, &"melee") or c.is_held(actions, &"fire")
+
+
+## The attack is held down: melee, or a held fire with a melee weapon drawn (the chainsaw grinds).
+func _attack_held(c: PlayerCommand) -> bool:
+	return c.is_held(actions, &"melee") or (wielding() and c.is_held(actions, &"fire"))

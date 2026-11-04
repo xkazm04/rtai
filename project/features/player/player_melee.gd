@@ -60,6 +60,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(mini(combo.since_end, 1 << 20))
 	out.put_32(combo.last_index)
 	out.put_32(landed)
+	if combo.table.grinds():  # only a grinding weapon carries it: the claw's goldens hold
+		out.put_32(combo.ground)
 	var ids: Array = _shoves.keys()
 	ids.sort()
 	out.put_32(ids.size())

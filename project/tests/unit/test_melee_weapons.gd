@@ -7,11 +7,14 @@ extends GutTest
 
 
 func test_shipped_weapons_load() -> void:
-	assert_eq(MeleeTable.weapon_ids(), [&"electro_baton", &"katana"] as Array[StringName])
+	# rivet-arsenal (night): the chainsaw (2 hits: the grind and the rip) and the plasma sword
+	var ids: Array[StringName] = [&"chainsaw", &"electro_baton", &"katana", &"plasma_sword"]
+	assert_eq(MeleeTable.weapon_ids(), ids)
 	for wid: StringName in MeleeTable.weapon_ids():
 		var w: MeleeTable = MeleeTable.weapon(wid)
 		assert_true(w.ok(), "%s: %s" % [wid, w.errors])
-		assert_eq(w.hits.size(), 3, "%s is a 3-hit combo" % wid)
+		var n: int = 2 if wid == &"chainsaw" else 3
+		assert_eq(w.hits.size(), n, "%s is a %d-hit combo" % [wid, n])
 		assert_eq(w.id, wid)
 
 
@@ -82,8 +85,8 @@ func test_view_sweeps_slashes_and_never_a_thrust() -> void:
 
 
 func test_planted_fault_missing_weapon_is_an_error() -> void:
-	var w: MeleeTable = MeleeTable.weapon(&"chainsaw")
-	assert_false(w.ok(), "no chainsaw row tonight: an error, not a crash")
+	var w: MeleeTable = MeleeTable.weapon(&"no_such_blade")
+	assert_false(w.ok(), "a missing row is an error, not a crash")
 	assert_true(w.hits.is_empty())
 
 

@@ -6,9 +6,12 @@ extends Node2D
 ## switches from the drawn-in pistol to the closed claw. Hidden while the gun is away (a claw
 ## hit, a roll, a stow past halfway). Reads StagePilot.hold; writes nothing to the sim.
 
-## A melee weapon's blade sweeps this far either side of the aim line during a swing (radians);
-## the combo's hits alternate the side.
-const SWEEP_RAD: float = 1.2
+## A melee weapon's blade sweeps either side of the aim line during a swing by the hit's own arc
+## (acos of its cone_dot: the katana's slash 1.27 rad, its thrust 0.72, the plasma spin a full
+## turn), never less than SWEEP_MIN; the combo's hits alternate the side.
+const SWEEP_MIN: float = 0.35
+## The chainsaw's grind: the blade judders this far (radians) while the bite holds.
+const GRIND_JUDDER: float = 0.07
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
 
@@ -21,6 +24,7 @@ var art: WeaponArt = WeaponArt.new()
 var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
 var _sprite: Sprite2D = null
+var _sweep_arc: float = 1.2
 
 
 func _ready() -> void:
@@ -48,7 +52,10 @@ func _process(_delta: float) -> void:
 	_sprite.global_rotation = hand.global_rotation
 	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
-	if pilot.wielding() and rig.clips.strike_t >= 0.0:
+	if pilot.wielding() and pilot.melee.combo.ground > 0:
+		_grind(rig)
+	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
+		_sweep_arc = _arc()
 		_sprite.global_rotation += _sweep(rig.clips)
 	_sprite.visible = true
 
@@ -85,10 +92,31 @@ func _sweep(clips: RigClips) -> float:
 	var ph: Vector3 = clips.strike_ph
 	var t: float = clips.strike_t
 	var side: float = 1.0 if pilot.melee.combo.last_index % 2 == 1 else -1.0
+	var arc: float = _sweep_arc
 	if t < ph.x:
-		return side * SWEEP_RAD * smoothstep(0.0, 1.0, t / maxf(ph.x, 0.001))
+		return side * arc * smoothstep(0.0, 1.0, t / maxf(ph.x, 0.001))
 	if t < ph.x + ph.y:
 		var k: float = (t - ph.x) / maxf(ph.y, 0.001)
-		return side * SWEEP_RAD * (1.0 - 2.0 * k)
+		return side * arc * (1.0 - 2.0 * k)
 	var r: float = (t - ph.x - ph.y) / maxf(ph.z, 0.001)
-	return -side * SWEEP_RAD * (1.0 - smoothstep(0.0, 1.0, r))
+	return -side * arc * (1.0 - smoothstep(0.0, 1.0, r))
+
+
+## The current (or just ended) hit's sweep half-angle from its cone.
+func _arc() -> float:
+	var c: MeleeCombo = pilot.melee.combo
+	var h: MeleeHit = c.current()
+	if h == null and c.last_index > 0 and c.last_index <= c.table.hits.size():
+		h = c.table.hits[c.last_index - 1]
+	return maxf(SWEEP_MIN, acos(clampf(h.cone_dot, -1.0, 1.0))) if h != null else _sweep_arc
+
+
+## The chainsaw's held bite: the arm stays at full reach (the strike clip parked at the end of its
+## active phase) and the blade judders on the aim line, a tick-locked three-step shake.
+func _grind(rig: CutRig) -> void:
+	var ph: Vector3 = rig.clips.strike_ph
+	if rig.clips.strike_t >= 0.0:
+		rig.clips.strike_t = ph.x + ph.y * 0.95
+	var step3: int = pilot.melee.combo.ground % 3 - 1
+	_sprite.global_rotation += GRIND_JUDDER * float(step3)
+	_sprite.global_position += Vector2.from_angle(_sprite.global_rotation + PI * 0.5) * float(step3)
