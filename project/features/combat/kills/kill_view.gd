@@ -20,6 +20,8 @@ var gib_layer: Node2D = Node2D.new()
 ## The leftovers (spray, smears, scorch, ash heaps), printed only when one changes: redrawing
 ## twelve kills' marks every frame cost ~20 ms (CONTENDED, iteration 2 telemetry).
 var ground: Node2D = Node2D.new()
+## The smears of the kills whose parts still slide (redrawn every frame while any moves).
+var fresh: Node2D = Node2D.new()
 ## The burn char (smoke, embers, ash flakes) over the burnt bodies.
 var char_fx: KillCharFx = KillCharFx.new()
 ## The electro kill (convulsion, X-ray strobe, stiff drop, collar smoke).
@@ -37,6 +39,7 @@ var _trail: Array[PackedVector2Array] = []
 var _dry: Dictionary[int, bool] = {}
 var _frame_us: int = 0
 var _ground_dirty: bool = false
+var _moving: Dictionary[int, bool] = {}
 
 
 func bind(p_kills: SignatureKills) -> void:
@@ -51,6 +54,10 @@ func bind(p_kills: SignatureKills) -> void:
 	@warning_ignore("return_value_discarded")
 	ground.draw.connect(_draw_ground)
 	add_child(ground)
+	fresh.z_index = -1
+	@warning_ignore("return_value_discarded")
+	fresh.draw.connect(_draw_fresh)
+	add_child(fresh)
 	gib_layer.z_index = 3
 	add_child(gib_layer)
 	char_fx.kills = kills
@@ -83,6 +90,7 @@ func _process(_delta: float) -> void:
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	char_fx.pose()
 	shock_fx.pose()
+	_track_moving()
 	if _ground_dirty or _heap_growing():
 		ground.queue_redraw()
 		_ground_dirty = false
@@ -96,12 +104,35 @@ func _draw_ground() -> void:
 		KillMarkArt.spray(ground, m, ppm)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
-		if g.live(i) and _trail[i].size() > 1:
+		if g.live(i) and _trail[i].size() > 1 and not _moving.has(g.kill_of[i]):
 			KillMarkArt.smear(ground, _trail[i], ppm)
 	for m: KillMarks.Mark in kills.marks.marks:
 		KillMarkArt.scorch(ground, m, ppm)
 		KillCharFx.pile(ground, m, kills.tick, ppm)
 	_frame_us += Time.get_ticks_usec() - t0
+
+
+func _draw_fresh() -> void:
+	var t0: int = Time.get_ticks_usec()
+	var g: GibSim = kills.gibs
+	for i: int in GibSim.CAPACITY:
+		if g.live(i) and _trail[i].size() > 1 and _moving.has(g.kill_of[i]):
+			KillMarkArt.smear(fresh, _trail[i], ppm)
+	_frame_us += Time.get_ticks_usec() - t0
+
+
+## The kills with a part still moving; one coming to rest hands its smears to the ground.
+func _track_moving() -> void:
+	var moving: Dictionary[int, bool] = {}
+	var g: GibSim = kills.gibs
+	for i: int in GibSim.CAPACITY:
+		if g.live(i) and not g.at_rest(i):
+			moving[g.kill_of[i]] = true
+	if moving.size() != _moving.size() or not moving.has_all(_moving.keys()):
+		_ground_dirty = true
+	if not moving.is_empty() or not _moving.is_empty():
+		fresh.queue_redraw()
+	_moving = moving
 
 
 ## Every frame: the flying parts' shadows and the kill flash only.
@@ -179,7 +210,6 @@ func _grow_trail(i: int, at: Vector2, grounded: bool) -> void:
 		@warning_ignore("return_value_discarded")
 		t.append(at)
 		_trail[i] = t
-		_ground_dirty = true
 
 
 ## An ash heap still growing in (KillCharFx.pile's 45 ticks) needs the ground reprinted.
