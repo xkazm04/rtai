@@ -579,3 +579,15 @@ NEXT (unchanged from iteration 11; idle machine first):
 - Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and
   `node tools/bench/run.mjs --runs=1`. Compare to the 13:36-13:50 uncontended p99 5.9-6.6 and the riot's 7 ms limit.
 - Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
+
+## Iteration 13 (18:30-18:40), STABILIZE (past freeze, report slot)
+
+- 18:30 read JOURNAL + git log. No code change since 60ebabf7 (only JOURNAL/REPORT in 99adcaab..5b399c96), so the 18:09
+  gates on 95936dac + fix 5 still describe the build. Evidence check: gtai-masters/d6/perf-city/frames.json has 12 entries,
+  and every file exists. The folder holds no other renders (nothing to delete). REPORT.md stays final as of 18:20 and matches
+  the build. No bench (report slot, machine loaded).
+
+NEXT (unchanged; idle machine first):
+- Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and
+  `node tools/bench/run.mjs --runs=1`. Compare to the 13:36-13:50 uncontended p99 5.9-6.6 and the riot's 7 ms limit.
+- Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
