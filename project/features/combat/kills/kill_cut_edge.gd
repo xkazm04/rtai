@@ -13,7 +13,7 @@ var side: Vector2 = Vector2.UP
 
 
 func _draw() -> void:
-	var w: float = (b - a).length() * 0.09
+	var w: float = (b - a).length() * 0.13
 	draw_line(a, b, INK, w * 0.55, true)
 	var inset: Vector2 = side * w * 0.6
 	draw_line(a.lerp(b, 0.08) + inset, b.lerp(a, 0.08) + inset, RAW, w, true)
