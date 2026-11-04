@@ -332,3 +332,20 @@ Session state 22:13: head = this commit, tree clean, image.lock untouched, no Go
 - MILESTONE 22:17 NEXT 1 done: riot helmet navy (cop_navy.py now takes a part list; run each part once). Lineup
   `frames/riot-helmet-navy-ab.png`, react board re-shot (0 script errors), goldens 11/11 (worst 1.07) and 5/5,
   unit 940/0. 2 provenance lines, decisions line. REPORT Call 4 widened to the helmet.
+- 22:25 `tools/evidence/run.mjs --no-bench` on cc4cb843: lint 13/13, unit 940/0, scenarios 46/0, parity exact
+  (mutation caught at 629), selftest with goldens 11/11 (worst 1.07) and block 5/5. Note for d5-city (not mine):
+  the selftest says the debt rows blood_flicker_cop_block_64, blood_flicker_cop_vermilion_32 and
+  blood_flicker_vehicles_vermilion_32 are no longer seen. Bench not run (render-only art, CONTENDED machine).
+- 22:27 the navy cops at 64 px/m in the director reel (`cast-navy-director-64.mp4`, 1200 frames, 0 script errors,
+  `frames/director-navy-64ppm.png`): navy cops and riot shields read, navy corpses in red pools, Rivet's vermilion
+  collar the one warm accent. NEXT 4 done. frames.json 15, all files exist.
+
+NEXT (iteration 8), replaces the 22:13 NEXT:
+1. The cop torso centre prints cream at 64 px/m (the shirt/vest plate) where r2_c5 is navy with a dark belt: check
+   if it is the art (`art/cop/torso.png`, `art/d5/cop/torso.png`) or the print's flat tint (n5-look) before touching
+   it; if art, `cop_navy.py` with a torso rule, then react board + goldens + director reel.
+2. Held-gun size: n5-look took it with their held-weapon redraw (their JOURNAL 19:15); re-check their branch and our
+   director 64 px/m clip once they land it.
+3. A city clip of the navy cops at 64 px/m on asphalt (32 px/m done) and quest 1 once (live path not filmed tonight).
+4. Keep REPORT current (rewritten at 08:40).
+Session state 22:28: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.

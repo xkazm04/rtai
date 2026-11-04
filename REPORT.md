@@ -52,11 +52,12 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 ### 4. The proof (brief item 5)
 - Director reel, 32 px/m, main | n5-cast side by side: `M/cast-director-ab-32.mp4`, still
   `M/frames/director-final-ab-32ppm.png` (claw combo, pistol, machine pistol identical tick for tick).
-- City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`.
+- City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`; with the navy cops
+  `M/cast-navy-director-64.mp4` (still `M/frames/director-navy-64ppm.png`).
 - Target composite: `M/frames/cast-ingame-vs-r2c6.png`.
 
-### Gates (iteration 7, on e1f848a5: lint 13/13, unit 940/0, scenarios 46/0 at 29a853be, look goldens junction
-11/11 and block 5/5 with no re-bless; iteration 6 on 850c543a:)
+### Gates (iteration 7, `tools/evidence/run.mjs --no-bench` on cc4cb843: lint 13/13, unit 940/0, scenarios 46/0,
+parity exact, selftest with look goldens 11/11 (worst 1.07) and block 5/5, no re-bless; iteration 6 on 850c543a:)
 lint 13/13, unit 940/0, scenarios 46/0, parity exact (planted mutation caught at 629), look goldens junction 11/11
 and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; decisions line). Bench not run.
 
