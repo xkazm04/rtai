@@ -72,3 +72,9 @@ NEXT (iteration 2):
 - Scratch sources for re-running the ingest live in `C:\Users\kazda\kiro\gtai-spike\weapon-art\{top,side,fx,img0N}`
   (outside git; raw sheets + prompts are also in masters `raw/`). Keep them until the art is final.
 - frames.json: 13 entries (design-sheet-all16 replaces all15).
+- 01:43 arena station deferred (not enough time left to verify a capture). Findings for iteration 2: stations are
+  `data/tables/arena_stations/<lane>.json` (gtai.arena-station/1, areas range|pit|course|pad|hub; the hub rect is
+  [-3,-5,18,10] m in `arena.json`); lane code is an `ArenaHook` script named by the row's `script`
+  (res://features/...gd); `attach_view(view)` receives the `CollectCallView` (`px_per_m`), called from
+  `dev/arena/arena_game.gd:89`. Plan: `features/combat/weapons/art/weapon_rack_hook.gd` lays the 16 pickups as a
+  rack in the hub (props `weapon_rack`), shot in `--arena` and `--arena=city` at 32 + 64 px/m.
