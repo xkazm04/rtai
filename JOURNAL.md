@@ -1185,3 +1185,4 @@ NEXT (after the freeze / morning merge), in order:
   frames.json has 15 entries, 0 missing. Since 09:49 there is no code on this branch, only docs and
   evidence; the one code change (REQUEST 30) landed on showcase round 19 as glue.
 - CORRECTION 10:07: the hr-scratch3 directory is deleted now (the shell let go of it). No scratch worktree or directory of mine is left.
+- MILESTONE 10:08 verified in showcase's final round 19 cut (scratch-showcase/cut-r19-dir/electro_gun.mp4, filmed 10:05): the electro signature corpse lies full length along the shot, arms at the sides and shoes toward Rivet, from the drop to the last frame, so REQUEST 30 is in the final reel. Before (r17): arms flung across the shot, stub legs.
