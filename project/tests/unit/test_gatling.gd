@@ -80,3 +80,15 @@ func test_art_grip_and_stations() -> void:
 	assert_true(RivetHeldView.ON_BACK.has(&"hip_belt"))
 	assert_true(ArenaArmory.ORDER.has(&"gatling"))
 	assert_true(WeaponRackView.ORDER.has(&"gatling"))
+
+
+func test_the_feed_line_is_a_brass_belt_for_the_gatling_and_a_hose_for_the_flamer() -> void:
+	var owner: Node2D = autofree(Node2D.new())
+	var belt: Array[Line2D] = HeldFeedLine.make(owner, true)
+	var hose: Array[Line2D] = HeldFeedLine.make(owner, false)
+	assert_eq(belt.size(), 2)
+	assert_eq(belt[1].default_color, HeldFeedLine.BRASS, "brass core")
+	assert_not_null(belt[1].texture, "cut into links")
+	assert_gt(belt[0].width, hose[0].width, "the belt is wider than the hose")
+	assert_eq(hose[1].default_color, RivetMagView.SHINE, "the flamer keeps its cream hose")
+	assert_null(hose[1].texture)
