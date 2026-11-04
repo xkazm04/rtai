@@ -1,6 +1,6 @@
 # REPORT: lane rivet-arsenal (branch `n-rivet-arsenal`), night run 2026-11-04
 
-Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merged n-gunplay (b11fa9e2) and n-weapon-art (a957f888) work; nothing is pushed.
+Final for the night (iteration 10, 07:20-08:10; iteration 11 added the n-weapon-art merge to ceee3a88, which makes Gloria draw her own art, and the long guns beside the helmet). The branch tip carries the merged n-gunplay (b11fa9e2) and n-weapon-art (ceee3a88) work; nothing is pushed.
 
 **Read first:** call 1 (quest 1 on the cast rigs), then the owner page `M\frames.json` top to bottom (newest and best first).
 
@@ -15,6 +15,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 ## Gates of record
 | Gate | Result | Where |
 |---|---|---|
+| **iteration 11 (the tip's code, 8a7fd9a1: the n-weapon-art merge 552add84 + long guns beside the helmet)** | lint 13/13 (719 files), unit 821/821 exit 0, scenarios 38/38 exit 0 | `E/it11-lint.log`, `E/it11-unit.log`, `E/it11-scenarios.log`. The lint log shows a first red run (a long comment line and `_process` over 40 lines). It was fixed before the commit, and the pre-commit hook passed 13/13 on 8a7fd9a1. The rows below are iteration 10's. |
 | lint | 13/13 (717 files) | 37dbfeab and c55b6984 (the last code change: the bot slides round props; the rivet scenarios 9/9 on it, `E/it10d-rivet-scenarios.log`; no other scenario or unit test drives that bot) |
 | unit | 814/814, exit 0 | 8a1537df (the branch tip's code), `E/it10e-unit.log` |
 | scenarios | 38/38, exit 0, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight and the new _city_melee | 8a1537df, `E/it10e-scenarios.log` |
@@ -44,6 +45,11 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
   - the molotov's rag lights on the draw and on each next bottle.
 - Since 17cd8409 the held kinetic guns use weapon-art's re-toned `held_small` part under 56 px/m. Before that they printed as one dark lozenge at 32-48 px/m. Seen on the city block at 32 px/m: `M\clips\city-block-kinetic-held-32ppm-x2.mp4` (a nearest-neighbour 2x crop) and `M\frames\city-block-kinetic-held-32ppm-3x.png`.
 - Since the n-weapon-art merge of iteration 10 (8465d548), every held weapon but three (molotov, plasma sword and flamethrower, which already print light) uses `held_small` under 56 px/m: the long guns, both tubes (incl. the empty tube) and the melee weapons. Seen on the city block at 32 px/m in a live fight (plasma rifle, ray gun, rocket launcher, electro gun; 3 waves, 7 kills, 8 switches, 0 deaths, 0 script errors): `M\clips\city-block-long-guns-held-32ppm-x2.mp4` and `M\frames\city-block-long-guns-held-32ppm-3x.png`. The rocket tube reads light with its warhead. The electro gun still prints mostly dark at 32 px/m (weapon-art's call 14). The teal tip next to a long barrel is Rivet's torch forearm, his one doctrine teal; it shows when the off arm rides the barrel.
+- Since 8a7fd9a1 (iteration 11) the long guns and both tubes ride **beside the helmet**, not across his face. Before, weapon-art's 32 px/m claw lineup (tick 394) showed the rocket launcher, the mini-nuke and the plasma rifle lying along the claw straight over his head, with the nuke covering the face: seen from above, the claw closes just in front of the helmet.
+  - The held view now shifts a two-hand-long or shoulder weapon sideways until its axis clears the helmet on the gun side (`RivetCarryAngle.beside_head`, BESIDE 0.85).
+  - A long gun that is carried but not aimed eases across the front of the body (ACROSS_RAD 1.2).
+  - Same-tick before and after: `M\frames\arena-pit-long-guns-beside-head-ab-32ppm-3x.png`. In motion: `M\clips\arena-pit-tubes-beside-head-32ppm-x2.mp4`. Looked at: the helmet and the vermilion collar read beside the tube in every frame.
+  - It is render only, with `test_rivet_carry_angle` 6/6 (the planted BESIDE 0 fails 2).
 - Clips:
   - `M\clips\arena-arsenal-cycle-pistol-rifle-rocket-molotov-64ppm-x2.mp4`
   - `...cycle-cannon-ray-flamer-64ppm-x2.mp4`
@@ -96,7 +102,7 @@ Final for the night (iteration 10, 07:20-08:10). The branch tip carries the merg
 3. **One-hand held_scale 1.5** (the pistol slightly oversized so the claw does not hide it) vs true size. Stills: `frames/held-pistol-scale15-64ppm-3x.png` vs `held-pistol-scale1-64ppm-3x.png`.
 4. **The switch:** number keys plus the wheel or d-pad cycle; no radial menu (`arena-arsenal-cycle-*`).
 5. **Pickups:** auto-take only into an empty slot or the same gun; a swap needs `interact`.
-6. **The shoulder launcher** is held over the shoulder (the only shape built) vs at the hip.
+6. **The shoulder launcher** is held over the shoulder (the only shape built) vs at the hip. Since 8a7fd9a1 the tube rides beside the helmet. The other option for long guns at rest is to carry them along the claw (ACROSS_RAD 0, one value in `rivet_carry_angle.gd`) rather than across the chest. Before and after: `frames/arena-pit-long-guns-beside-head-ab-32ppm-3x.png`.
 7. **The charged shock:** hold after the jab. A full charge kills the first human; the chained bodies are stunned (`arena-claw-shock-64ppm`).
 8. **The electro baton:** a stun stick (a cop drops on the second strike) vs a killer.
 9. **The chainsaw:** a committed 3-bite grind on a tap vs hold-only (`arena-chainsaw-grind-64ppm`).
