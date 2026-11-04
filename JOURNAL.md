@@ -926,3 +926,22 @@ NEXT (for the report / a later session):
   unit 787/787, scenario brutality 1/1; full suite 35/35 on 94ddeae6 (later changes are lab-only).
   Parity and bench not run (no city-sim change). No Godot process of mine running; scratch cleaned
   (only the capture scripts remain in gtai-n4/scratch/brutality).
+
+## Iteration 13 (08:17-08:30, BUILD)
+- MILESTONE 08:23 showcase REQUEST 29 (the electro corpse reads standing after the X-ray): the
+  shock body is now wrapped (`KillShockFx.wrap`, root -> `lay` -> body, as KillHoleFx.punch) and
+  the drop lays it out like KillHoleFx.Topple: stretched 1.6x along the shot, narrowed 0.85x across,
+  slid 0.4 m along it, eased in over DROP_TICKS; the upright turn cut from 0.5 to 0.12 rad. Render
+  only (the 60 Hz kill sim, its RNG and the goldens are untouched). Checked in the city at 48 px/m
+  (`clips/electro-lie-down-city-48ppm-it13.mp4`, crop sheet `evidence/brutality/electro-lie-down-crop-it13.png`):
+  the convulsion and X-ray read as before, the corpse then lies long along the street. It is a
+  stretched lie-out, not DeathPose._shock's posed plank (c_plank/c_sprawl channels); taking that
+  pose is the better fix once human-reactions' DeathPose is on this branch. 0 script errors.
+- GATES 08:22 (private APPDATA, CONTENDED): lint 13/13, unit 787/787 (evidence/brutality/unit-it13.log).
+
+NEXT:
+1. Electro corpse: replace the stretch lie-out with human-reactions' DeathPose._shock rig channels
+   when that lands on the merged main (showcase REQUEST 29 closed by the stretch for now).
+2. REQUEST 30 -> gunplay (stuck shards after a burst) and REQUEST 29 -> gunplay (molotov corpse
+   under the patch stars) stay open; check both on the merged main.
+3. The age-96 stall: measure windowed under bench.lock; calls for the owner unchanged (brutality-ray-cap).

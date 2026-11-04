@@ -16,7 +16,12 @@ const XRAY_M: float = 1.6
 const XRAY_HOLD: int = 4
 const STROBE: int = 6
 const DROP_TICKS: int = 7
-const DROP_TURN: float = 0.5
+const DROP_TURN: float = 0.12
+## The lie-out of the drop (showcase REQUEST 29): the body is laid long along the shot (stretched
+## along it, narrowed across it, as KillHoleFx.Topple), not a standing rig turned.
+const LIE_STRETCH: float = 0.6
+const LIE_NARROW: float = 0.15
+const LIE_FALL_M: float = 0.4
 const SMOKE_TICKS: int = 200
 
 
@@ -65,7 +70,34 @@ func pose() -> void:
 			s.body.visible = true
 			s.body.position += s.dir * 0.35 * ppm * k
 			s.body.rotation += DROP_TURN * k
+			_lie(s, k * k)
 	queue_redraw()
+
+
+## Wraps the kept BODY group in a root whose one child is the lay node the drop bends.
+static func wrap(body: Node2D) -> Node2D:
+	var root: Node2D = Node2D.new()
+	root.name = body.name
+	var lay: Node2D = Node2D.new()
+	lay.name = "lay"
+	root.add_child(lay)
+	body.position = Vector2.ZERO
+	lay.add_child(body)
+	return root
+
+
+func _lie(s: Shock, k: float) -> void:
+	var lay: Node2D = s.body.get_child(0) as Node2D if s.body.get_child_count() > 0 else null
+	if lay == null or lay.name != &"lay":
+		return
+	var axis: Vector2 = s.dir.normalized() if s.dir != Vector2.ZERO else Vector2.RIGHT
+	axis = axis.rotated(-s.body.rotation)
+	var turn: Transform2D = Transform2D(axis.angle(), Vector2.ZERO)
+	var flat: Transform2D = Transform2D(
+		0.0, Vector2(1.0 + LIE_STRETCH * k, 1.0 - LIE_NARROW * k), 0.0, Vector2.ZERO
+	)
+	var t2: Transform2D = turn * flat * turn.affine_inverse()
+	lay.transform = t2.translated(axis * LIE_FALL_M * ppm * k)
 
 
 func _draw() -> void:
