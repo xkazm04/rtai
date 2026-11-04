@@ -1,0 +1,21 @@
+{
+  "deaths": 0,
+  "kills": {
+    "chainsaw": 1,
+    "claw_combo": 2,
+    "electro_gun": 1,
+    "flamethrower": 1,
+    "hand_cannon": 1,
+    "homing_shard": 1,
+    "katana": 1,
+    "machine_pistol": 4,
+    "mini_nuke": 4,
+    "molotov": 1,
+    "pistol": 2,
+    "plasma_rifle": 1,
+    "plasma_sword_deflect": 1,
+    "ray_gun": 1,
+    "riot_cop": 1,
+    "rocket_launcher": 1
+  }
+}

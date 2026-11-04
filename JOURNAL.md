@@ -665,3 +665,15 @@ NEXT (iteration 6):
 5. Final round 07:45-08:30: windows-showcase export (`build/export/windows/RTAI.exe`, release
    DLL beside it; route of 02:32), boot test with `-- --rigs --loadout=...` and with
    `--bot=reel --reel=director`; REPORT play commands for the arena and `--arena=city`.
+- BENCH r7 (bench.lock 05:05-05:17; CONTENDED: other lanes on the GPU/CPU; I ran no Godot of my
+  own during it). `node tools/bench/run.mjs`, exported release, 3 x 60 s: aggregate p99 11.48 ms,
+  1 % low 63 fps, worst frame 56.4 ms (2 hitches > 50 ms), MISSES p99CpuMs (r5: 10.77 / 67).
+  Recompute from frame_ms (r4/r5 method: p99, 1 % low = mean of the worst 1 %): drive 3.45 ms /
+  158 fps (r5 3.33 / 185; record 3.56), drive48 3.69 / 166 (r5 2.73 / 187), riot 11.48 / 63
+  (r5 8.73 / 90; record 6.0 / 124). Rigs p99 0.93 ms. The drive holds its record; the riot is
+  2.7 ms worse than r5. New on the riot path since r5: human-reactions' CrowdReact startle
+  (1da7fd7d: 20 startles in a 30 s riot) and trips, brutality's per-kill KillGround print
+  (39dd2d0f, should be cheaper). Not bisected (contended; one sample). Files: evidence/r7/.
+- REQUEST 23 -> human-reactions (cc gunplay, owner of the riot budget): the r7 riot p99 rose
+  8.73 -> 11.48 ms (contended, one sample) the round CrowdReact's startle landed; please time the
+  startle scan (STARTLE_M 2.5 per death over the living crowd) in your city_bench riot run.
