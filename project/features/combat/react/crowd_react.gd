@@ -45,10 +45,13 @@ var trip_m: float = TRIP_M
 var extra_bodies: Dictionary[int, Vector2] = {}
 ## The extra bodies already seen (a new key is a fresh death in the fight: it startles too).
 var _extra_seen: Dictionary[int, bool] = {}
-## Each person's DEAD flag at the last observed tick, by actor id.
-var _dead: Dictionary[int, bool] = {}
-## Each person's FLEE flag at the last observed tick, by actor id.
-var _fleeing: Dictionary[int, bool] = {}
+## Each person's DEAD / FLEE bits at the last observed tick, indexed by actor id (packed: two
+## dictionaries rebuilt per tick cost about a third of observe in a riot), and the observe call
+## that wrote them (a person missing from the last call has no previous state).
+var _prev: PackedByteArray = []
+var _stamp: PackedInt32Array = []
+## Observe calls so far; starts at 1 so a fresh stamp (0) never reads as the last call's.
+var _calls: int = 1
 ## People who just started fleeing: actor id -> ticks left before the cower plays.
 var _due: Dictionary[int, int] = {}
 ## Who already tripped over which body: (person id, body id).
@@ -77,36 +80,47 @@ func _observe(rigs: CharacterRigs, ticks: int) -> void:
 	var ids: PackedInt32Array = feed.ids
 	var kinds: PackedByteArray = feed.kinds
 	var flags: PackedByteArray = feed.flags
-	var seen: Dictionary[int, bool] = {}
-	var dead: Dictionary[int, bool] = {}
 	var bodies: Dictionary[int, Vector2] = extra_bodies.duplicate()
+	_calls += 1
+	var call: int = _calls
+	var dead_f: int = RigFeed.Flag.DEAD
+	var flee_f: int = RigFeed.Flag.FLEE
+	var dues: bool = not _due.is_empty()
 	for i: int in feed.count:
 		var id: int = ids[i]
-		if kinds[i] == BodyPlan.Kind.RIVET:
+		if kinds[i] == BodyPlan.Kind.RIVET or id < 0:
 			continue
-		var is_dead: bool = (flags[i] & RigFeed.Flag.DEAD) != 0
-		dead[id] = is_dead
-		if is_dead:
+		if id >= _stamp.size():
+			_grow(id)
+		var f: int = flags[i]
+		var was: int = _prev[id] if _stamp[id] == call - 1 else -1  # -1: unseen, no edge
+		_stamp[id] = call
+		_prev[id] = f & (dead_f | flee_f)
+		if (f & dead_f) != 0:
 			bodies[id] = feed.pos[i]
-			if not _dead.get(id, true):
+			if was >= 0 and (was & dead_f) == 0:
 				_die(rigs.rig_for(id), feed.vel[i])
 				_startle(rigs, feed.pos[i], i)
 		if kinds[i] != BodyPlan.Kind.PED:
 			continue
-		var now: bool = (flags[i] & RigFeed.Flag.FLEE) != 0
-		seen[id] = now
-		if now and not _fleeing.get(id, true):
+		if (f & flee_f) != 0 and was >= 0 and (was & flee_f) == 0:
 			_due[id] = DELAY_TICKS
-		if _due.has(id):
+			dues = true
+		if dues and _due.has(id):
 			_due[id] -= ticks
 			if _due[id] <= 0:
 				@warning_ignore("return_value_discarded")
 				_due.erase(id)
 				_cower(rigs.rig_for(id), feed.vel[i])
-	_fleeing = seen
-	_dead = dead
 	_startle_extra(rigs)
 	_trip_over(rigs, bodies)
+
+
+func _grow(id: int) -> void:
+	@warning_ignore("return_value_discarded")
+	_stamp.resize(id + 64)
+	@warning_ignore("return_value_discarded")
+	_prev.resize(id + 64)
 
 
 ## The standard death on `rig` along the sim's slide `vel` (px/s); a car's speed throws it.
@@ -172,16 +186,20 @@ func _trip_over(rigs: CharacterRigs, bodies: Dictionary[int, Vector2]) -> void:
 	var feed: RigFeed = rigs.feed
 	var reach2: float = pow(trip_m * SimConst.PX_PER_M, 2.0)
 	var flee: int = RigFeed.Flag.FLEE
+	var kinds: PackedByteArray = feed.kinds
+	var flags: PackedByteArray = feed.flags
+	var ids: PackedInt32Array = feed.ids
 	for i: int in feed.count:
-		if feed.kinds[i] != BodyPlan.Kind.PED or (feed.flags[i] & flee) == 0:
+		if kinds[i] != BodyPlan.Kind.PED or (flags[i] & flee) == 0:
 			continue
-		var rig: CutRig = rigs.rig_for(feed.ids[i])
+		var rig: CutRig = rigs.rig_for(ids[i])
 		if rig == null:
 			continue
+		var at: Vector2 = feed.pos[i]
 		for b: int in bodies:
-			if b == feed.ids[i] or feed.pos[i].distance_squared_to(bodies[b]) >= reach2:
+			if b == ids[i] or at.distance_squared_to(bodies[b]) >= reach2:
 				continue
-			var key: Vector2i = Vector2i(feed.ids[i], b)
+			var key: Vector2i = Vector2i(ids[i], b)
 			if not _tripped.has(key) and _trip(rig, feed.vel[i]):
 				_tripped[key] = true  # a busy body (mid-cower) trips on a later tick
 
