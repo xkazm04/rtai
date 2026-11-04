@@ -62,7 +62,9 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 	match s.spec.kind:
 		WeaponSpec.Kind.BULLET:
 			var fx: StringName = art().projectile_fx(s.spec.id)
-			_cell(ci, fx if fx != &"" else &"tracer", 0, at, dir.angle(), 1.0, 1.0)
+			var k: float = art().round_k.get(s.spec.id, 1.0)
+			var fx_k: Vector2 = Vector2(sqrt(k), k)
+			_cell_v(ci, fx if fx != &"" else &"tracer", 0, at, dir.angle(), fx_k, 1.0)
 		WeaponSpec.Kind.ROCKET:
 			_rocket(ci, at, dir, went, tick)
 		WeaponSpec.Kind.CONE:

@@ -933,6 +933,7 @@
       },
       "pickup": "res://features/combat/weapons/art/hand_cannon/pickup.png",
       "projectile_fx": "tracer",
+      "projectile_k": 1.6,
       "size_px": [
         456,
         211

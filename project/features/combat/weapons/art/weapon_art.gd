@@ -21,6 +21,9 @@ static var rim: bool = not OS.get_cmdline_user_args().has("--weapon-rim=off")
 var rig_px_per_m: float = 320.0
 ## FX cells draw at this many times the rig part scale (fx_scale()).
 var fx_draw_scale: float = 2.0
+## projectile_k by weapon id (rows that set it): the round's cell drawn k thicker and sqrt(k)
+## longer (the hand cannon's slug); absent = 1.
+var round_k: Dictionary[StringName, float] = {}
 
 var _rows: Dictionary[StringName, Row] = {}
 var _fx: Dictionary[StringName, Cell] = {}
@@ -59,6 +62,8 @@ func _init(path: String = TABLE) -> void:
 	for row: Variant in t.array(t.raw, "weapons"):
 		var r: Dictionary = row if row is Dictionary else {}
 		_rows[StringName(t.text(r, "id"))] = _read_weapon(t, r)
+		if r.has("projectile_k"):
+			round_k[StringName(t.text(r, "id"))] = t.num(r, "projectile_k")
 	for row: Variant in t.array(t.raw, "fx"):
 		var r: Dictionary = row if row is Dictionary else {}
 		var c: Cell = Cell.new()
