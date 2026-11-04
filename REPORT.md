@@ -1,4 +1,4 @@
-# REPORT (DRAFT, written 16:40 in iteration 5, updated 17:55 in iteration 8) - day lane combat-notes, 2026-11-04
+# REPORT (written 16:40 in iteration 5, updated 17:55 in iteration 8, checked 18:16 in iteration 10) - day lane combat-notes, 2026-11-04
 
 Branch `d6-combat-notes`, cut from main `a1275c82`. Clips are in
 `C:\Users\kazda\kiro\gtai-masters\d6\combat-notes\` (`frames.json`: 12 entries, newest and best first).
@@ -74,8 +74,10 @@ the judging scale, real time, with the night's look on the left and now on the r
   Spacing between fighters is sim/AI (a replay change), so it is not touched.
 - **A melee hit that does not kill plays no wound.** Riot cops and SWAT have 2 hp against the
   claw's 1 and the katana's 1.5, so their first cut or jab shows no flinch, spin or fold (the
-  baton's stun does show). Found at the end of the day, not built: the fix is view only, like the
-  melee death.
+  baton's stun does show). I found this at the end of the day and did not build it, because there
+  was no time to film and gate it before the freeze. The fix is view only, like the melee death: a
+  `wounded` signal from CombatArena.damage on a non-lethal hit, played once per strike so the
+  chainsaw grind does not restart it every tick. The design is in JOURNAL (18:15).
 - **Quest 1 shows none of this lane's work.** Rivet fights with the pistol there.
 - **The electro chain is filmed in the arena only.** The city pit spreads its cops beyond the
   chain's jump range.
