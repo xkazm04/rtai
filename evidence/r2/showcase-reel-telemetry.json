@@ -9,11 +9,11 @@
     "total": 2,
     "wrecked": 0
   },
-  "damage_taken": 9.59999999999991,
+  "damage_taken": 8.99999999999991,
   "deaths": 0,
   "dodges": 7,
-  "hit_rate": 1.0,
-  "hits": 32,
+  "hit_rate": 0.604651162790698,
+  "hits": 26,
   "input_latency_mean_ticks": 0.0,
   "input_latency_ticks": [
     0,
@@ -27,38 +27,37 @@
     0,
     0,
     0,
+    0,
+    0,
+    0,
     0
   ],
+  "kills_go_range": 0,
   "kills_melee_line": 0,
-  "kills_pit_gun": 17,
+  "kills_pit_gun": 11,
   "kills_pit_melee": 2,
   "kills_range": 0,
-  "kills_strafe": 0,
-  "kills_walk": 0,
+  "kills_rivet": 0,
   "knockdowns": 0,
-  "pit_kills": 19,
-  "pit_waves": 5,
+  "pit_kills": 13,
+  "pit_waves": 4,
   "rivet_claw_cops": {
-    "claw_hits": 7,
-    "claw_kills": 1,
-    "claw_swings": 7,
+    "claw_hits": 15,
+    "claw_kills": 4,
+    "claw_swings": 29,
     "claw_whiffs": 0
   },
   "schema": "gtai.arena-telemetry/1",
-  "shots": 32,
-  "ticks": 3839,
-  "top_speed_mps": 4.50558632612228,
+  "shots": 43,
+  "ticks": 4410,
+  "top_speed_mps": 17.0578765869141,
   "ttk_s": {
     "static_10m": [
       0.183333333333333
     ],
-    "strafe_05m": [
-      0.116666666666667,
-      0.1
-    ],
     "strafe_10m": [
-      0.6
+      0.216666666666667
     ]
   },
-  "turn_rate_peak_dps": 720.0002249415
+  "turn_rate_peak_dps": 10800.0003005374
 }
