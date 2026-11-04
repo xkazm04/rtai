@@ -40,6 +40,16 @@
     "note": "Arena hub, --sig-gun=hand_cannon --sig-lab. The cop is blown off the line in one piece (whole-rig copy) along the shot, lands and slides on a blotchy blood smear; small cream flash, 3-tick hit-stop, exit spray in a 34 deg fan. Not yet: the body flies in its standing pose (no sprawl), the cap does not visibly separate (it overlaps the head), no wall collision."
   },
   {
+    "file": "frames/hand-cannon-bodies-stop-at-wall-32ppm.png",
+    "title": "Hand cannon: bodies stop at the wall (32 px/m crop)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "After the wall push-out: the bodies of the line pile up against the wall with their smears and the stacked standard pools."
+  },
+  {
     "file": "clips/hand-cannon-blowback-arena-32ppm-13s.mp4",
     "title": "Hand cannon signature kill, real time at 32 px/m",
     "source": "dev-scene",
@@ -47,7 +57,7 @@
     "look": "d5",
     "ppm": 32,
     "before": "",
-    "note": "Real time, fixed-fps 60. Honest flaw: blown-back bodies slide through the hub's south wall into the pit (gibs do not collide yet)."
+    "note": "Real time, fixed-fps 60, re-rendered 01:52 with gib/wall collision: the blown-back bodies pile against the hub's south wall; one slides through a gap in the wall (likely a door) into the pit. When the line of six is down, a new line steps in (lab only)."
   },
   {
     "file": "clips/hand-cannon-blowback-arena-64ppm-12s.mp4",
