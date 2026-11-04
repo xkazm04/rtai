@@ -148,3 +148,6 @@ NEXT (iteration 5, in order):
 6. One 64 px/m clip per grip class (carry, aim, fire, reload, switch) as frames.json's lead set.
 - 04:07 the flamethrower's hose (3364b525): an ink line with a cream core curves (8 points) from the tank's end nearest the wand, out past the body, to the wand's grip. First try was a 3-point V kinked across the torso (seen, replaced). Close-up and clip re-shot (looked at). Lint 13/13.
 - Session end 04:08: all work committed (last 3364b525). Gates of record: lint 13/13 (3364b525), unit 746/746 (5eb1c3c5), scenarios 34/34 (e491cd1a; everything after is view-only). frames.json 15 entries. Scratch renders deleted.
+
+## Iteration 5 (04:08 - 05:08)
+- 04:10 read JOURNAL, git log, other lanes' JOURNALs. REQUESTs to me: showcase 14 (retire/gate RivetMagView when weapon-art's WeaponMagView is live), showcase 15 (take cd49e9fa: the melee aim skips station dummies). Brutality 10 (chainsaw + plasma rows) was done in iteration 4. Plan: merge n-weapon-art (magazines 43a4e356, paper rim), cherry-pick cd49e9fa, gate my magazine, then NEXT 1 (flamer sway).
