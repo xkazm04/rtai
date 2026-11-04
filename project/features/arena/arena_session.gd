@@ -18,6 +18,8 @@ var tape: InputTape
 var actions: PlayerActions
 ## The generated city under the proving block (--arena=city); null in the dev arena.
 var city: CitySystem = null
+## The fight's gunfire into the city's crowd (lane human-reactions); null in the dev arena.
+var scare: CityScare = null
 
 
 ## `input` overrides the live devices (a scripted source for the station scenarios); `on_city`
@@ -68,6 +70,8 @@ func _add_city() -> void:
 	stage.follow = city
 	city.focus = stage.layout.rivet_start
 	city.target = city.focus
+	scare = CityScare.new(stage, city)
+	world.add_system(scare)
 	world.add_system(city)
 	city.residency.update(city.focus)
 	city.spawner.targets = CityTargets.street(CITY_PEDS, 0, 0)
