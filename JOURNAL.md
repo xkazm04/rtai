@@ -567,3 +567,15 @@ NEXT (the next lane session, idle machine first):
   `node tools/bench/run.mjs --runs=1` (riot + drive with drawCallsAvg). Compare to the 13:36-13:50 uncontended p99 5.9-6.6
   and the riot's 7 ms limit. Re-film reel ch 18 in real time on that export if the numbers moved.
 - Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
+
+## Iteration 12 (18:21-18:30), BUILD (9 min to freeze)
+
+- 18:21 read JOURNAL + git log. No bench.lock, no Godot running, but CPU load 96 % (long-running node processes + docker,
+  not mine): any run is CONTENDED. An export with fix 5 + 3 vsync-off fight runs does not fit in 9 minutes, and the BloodFx
+  solid-cell grid needs a parity build + pixel compare (well over 9 minutes). Decision: no bench, no code change this slot;
+  the 18:09 gates on 95936dac + fix 5 stand, REPORT stays final as of 18:20.
+
+NEXT (unchanged from iteration 11; idle machine first):
+- Bench lock; export `windows` with fixes 1-5; `EXE=1 evidence/perf/fight.sh <label> --disable-vsync` x3 and
+  `node tools/bench/run.mjs --runs=1`. Compare to the 13:36-13:50 uncontended p99 5.9-6.6 and the riot's 7 ms limit.
+- Then the BloodFx solid-cell grid (drop step 540-840 us a tick in the riot); identity via parity + a fixed-fps pixel compare.
