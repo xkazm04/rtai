@@ -16,10 +16,13 @@ const CONVERGE_M: float = 3.0
 const RING_TICKS: int = 9
 
 
+## Floor marks. FxView draws above the actor layer, so a burnt ring is left only where an energy
+## round stopped on the ground or metal: on a body it would print over the corpse's chest (the
+## body's mark is its blood; the pop still bursts there in draw_over).
 static func draw_under(ci: CanvasItem, fx: GunFx, tick: int) -> void:
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
-		if int(im.z) >= GunFx.SCORCH:
+		if int(im.z) >= GunFx.SCORCH and int(im.z) % GunFx.SCORCH != GunFx.Hit.BODY:
 			GunFxMarks.scorch(ci, Vector2(im.x, im.y), tick - int(im.w))
 		elif int(im.z) == GunFx.Hit.GROUND:
 			GunFxMarks.scuff(ci, Vector2(im.x, im.y), fx.impact_dir[i], tick - int(im.w), int(im.w))
