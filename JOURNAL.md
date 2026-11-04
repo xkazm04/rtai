@@ -21,3 +21,27 @@
   flame is vermilion with a paper core; electro arcs are paper with an ink ring, NOT teal (teal = souls only) and not
   cop blue. Procedural and seeded (`tools/art/weapon_fx.py`), so they stay byte-stable. Alternative for the owner: an
   energy accent ink for electro/plasma (a new palette token).
+- MILESTONE 01:20 `data/tables/weapon_art.json` (gtai.weapon-art/1) + `WeaponArt` loader + `test_weapon_art.gd`:
+  grip_px / muzzle_px measured from the held part (bore line), `make_held()` returns a Sprite2D whose
+  origin is the grip at the drawn length (32 px/m), `muzzle_m()` = shot spawn offset, `fx_frames()`.
+  Commit caff378f. Unit 702/702, lint 13/13.
+- MILESTONE 01:25 lineup dev scene `dev/weapon_art/weapon_lineup.gd` (real cutout rig, look_d4, a cop):
+  first frame showed the weapons hidden under the arm and too small. DECISION: held layer over the actors,
+  drawn lengths 1.5x real (pistol 0.70 m), held parts through `print_part` (A/B frame). Commit 9723d420.
+- MILESTONE 01:30 the nine melee/advanced weapons (side + top sheets), energy/nuke flashes, plasma bolt, ray
+  rings, shard. All 15 rows. Commit 3e10c534. Unit 703/703. Answers rivet-arsenal REQUEST 2 (except gloria).
+- `docs/art/weapons.md`: the design language, views, the contract (API), the pipeline.
+- frames.json written (10 entries) at `gtai-masters/n4/weapon-art/frames.json`.
+- FRICTION: Windows python writes CRLF and `1.0`; the table goes through `tools/art/canon_json.mjs` (the lint's
+  own canonicalJson). New PNG imports default to no mipmaps; the rig parts use mipmaps, so the ingest needs a
+  sed on `*.png.import` + a re-import (TODO: fold into a tool).
+- 01:32 started brutality REQUEST 3 (gore bits sheet: stump caps, chunks, bone, splash, charred overlay,
+  x-ray skeleton, ash), worded as "comic effect stickers" to pass moderation.
+
+### Notes for other lanes
+- To rivet-arsenal: merge or cherry-pick caff378f..HEAD. `WeaponArt.new().make_held(id)` parents to a socket;
+  the dev lineup puts it at `hand.global_transform * (claw_w * 0.62, claw_h * 0.5)` and sets
+  `plan.hand_pistol = plan.hand_closed` so the baked `claw_pistol` cell does not double the gun.
+  Use `PartMaterials.get_mat(PartKind.PART, false, 0)` on it so it prints like the rig.
+- To gunplay: shots and flashes spawn at `muzzle_m(id)` from the grip; flash frames `fx_frames(muzzle_fx(id))`,
+  anchor `fx_anchor()`; projectile `fx_frames(projectile_fx(id))`; casing `casing_fx(id)`.
