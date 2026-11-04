@@ -17,6 +17,7 @@ func run(_tree: SceneTree) -> String:
 	var tel: Dictionary = s.stage.telemetry_dict()
 	for id: StringName in reel.kills_by_beat:
 		tel["kills_" + String(id)] = reel.kills_by_beat[id]
+	tel["reel_dodges"] = reel.dodges
 	@warning_ignore("return_value_discarded")
 	write_evidence(EVIDENCE_FILE, tel)
 	var problem: String = _judge(s, reel)

@@ -19,6 +19,10 @@ const REACT_TICKS: int = 30
 const PULSE: int = 12
 ## The gun beat walks in on a guard farther than this (the 64 px/m frame is +-10 x 5.6 m).
 const APPROACH_M: float = 6.0
+## The walk-in has no way round props: less than PIN_M progress in PIN_TICKS = side-step DODGE.
+const PIN_M: float = 0.3
+const PIN_TICKS: int = 30
+const DODGE_TICKS: int = 50
 const PIT_ENTRY: Array[Vector2] = [Vector2(3.0, 3.0), Vector2(3.0, 10.0), Vector2(14.0, 17.0)]
 
 
@@ -44,12 +48,17 @@ var beat_i: int = 0
 var kills_by_beat: Dictionary[StringName, int] = {}
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
+## Side-steps the gun beat's walk-in took off a prop (the scenario's telemetry).
+var dodges: int = 0
 var _beat_start: int = 0
 var _next: int = 0
 var _range: ArenaRangeBot
 var _rivet: ArenaRivetBot
 var _seen_since: int = -1
 var _kills_before: int = 0
+var _pin: Vector3 = Vector3(INF, INF, 0.0)  # (x, y, tick) where the walk-in last made progress
+var _dodge_until: int = -1
+var _dodge_side: float = 1.0
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
@@ -103,6 +112,7 @@ func sample(tick: int) -> TickInput:
 		beat_i += 1
 		_next = 0
 		_seen_since = -1
+		_dodge_until = -1
 		var id: StringName = beats[beat_i].id if beat_i < beats.size() else &"end"
 		Log.info("showcase", "reel beat %s at tick %d" % [id, tick])
 	if beat_i >= beats.size():
@@ -172,10 +182,28 @@ func _pit(b: Beat, local: int, melee: bool) -> TickInput:
 	var fire: bool = close and local - _seen_since >= REACT_TICKS and local % PULSE < PULSE / 2
 	var side: float = 1.0 if (local / 45) % 2 == 0 else -1.0
 	# walk in on a guard beyond APPROACH_M while firing, so the kill lands inside a close-up frame
-	var fwd: float = clampf((gap.length() - APPROACH_M) / 3.0, 0.0, 1.0)
+	var fwd: float = _unpin(rivet, local, clampf((gap.length() - APPROACH_M) / 3.0, 0.0, 1.0))
+	if local < _dodge_until:
+		side = _dodge_side
 	var drift: Vector2 = aim.orthogonal() * side * 0.8 * (1.0 - fwd) + aim * fwd
 	drift += (spot - rivet).limit_length(1.0) * 0.4 * (1.0 - fwd)
 	return _input(drift, aim, _bit(&"fire", fire))
+
+
+## The walk-in's forward share, or 0 while a side-step runs (pinned on a prop PIN_TICKS ticks).
+func _unpin(rivet: Vector2, local: int, fwd: float) -> float:
+	if local < _dodge_until:
+		return 0.0
+	if fwd <= 0.0 or Vector2(_pin.x, _pin.y).distance_to(rivet) > PIN_M:
+		_pin = Vector3(rivet.x, rivet.y, local)
+		return fwd
+	if local - int(_pin.z) < PIN_TICKS:
+		return fwd
+	_dodge_until = local + DODGE_TICKS
+	_dodge_side = -_dodge_side
+	dodges += 1
+	_pin = Vector3(rivet.x, rivet.y, _dodge_until)
+	return 0.0
 
 
 func _nearest(at: Vector2) -> Fighter:
