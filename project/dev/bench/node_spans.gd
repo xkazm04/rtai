@@ -9,14 +9,16 @@ extends Node
 ## script (or engine class) per frame. Measurement only: the marks and the re-sort add their own
 ## cost, so take frame times from a run without --spans.
 ## The flush after _process (deferred calls, tweens, timers and every queued CanvasItem redraw)
-## is split on the CanvasItem `draw` signal, which fires right after that item's _draw: the time
-## since the previous signal (or since the last _process) is that item's "draw:" row. Deferred
-## work queued between two redraws lands on the next one; what follows the last redraw up to the
-## render server's pre-draw is the FLUSH_REST row.
+## is split on the CanvasItem `draw` signal. Godot emits it right BEFORE the script's _draw, so
+## the time from one item's signal to the next one's is that first item's "draw:" row (its _draw,
+## plus the next item's canvas clear and any deferred call queued between them); the last item's
+## row runs to the render server's pre-draw (tweens and timers included). The time before the
+## first signal is the FLUSH_HEAD row.
 
 const RESCAN_FRAMES: int = 30
+const SEQ_FRAME: int = 900
 const NEW_LABEL: String = "(new since last scan)"
-const FLUSH_REST: String = "flush: after the last redraw (deferred calls, tweens, timers)"
+const FLUSH_HEAD: String = "flush: before the first queued call (engine work)"
 
 var out_path: String = ""
 var _marks: Array[SpanMark] = []
@@ -27,7 +29,10 @@ var _nodes: Dictionary[String, int] = {}
 var _frames: int = 0
 var _frame: Dictionary[String, float] = {}
 var _ref_us: int = 0
+var _open: String = FLUSH_HEAD
 var _hooked: Dictionary[int, bool] = {}
+## One frame's flush in order (label, ms since the previous stamp): SEQ_FRAME's, in the json.
+var _seq: Array[String] = []
 var _written: bool = false
 
 
@@ -42,9 +47,12 @@ static func attach(parent: Node, args: ArenaArgs) -> void:
 func _ready() -> void:
 	process_priority = 8192  # after every node, FightFrames' probe included
 	_start.process_priority = -8000
+	_start.head = _flush_head  # queued first, so the flush's own head is split off the redraws
 	add_child(_start)
 	@warning_ignore("return_value_discarded")
 	RenderingServer.frame_pre_draw.connect(_on_pre_draw)
+	@warning_ignore("return_value_discarded")
+	get_tree().node_added.connect(_hook)
 
 
 func _process(_delta: float) -> void:
@@ -59,18 +67,30 @@ func _add(label: String, ms: float) -> void:
 	_frame[label] = _frame.get(label, 0.0) + ms
 
 
+func _flush_head() -> void:
+	if _ref_us != 0:
+		var now: int = Time.get_ticks_usec()
+		_add(FLUSH_HEAD, (now - _ref_us) / 1000.0)
+		_ref_us = now
+	_open = FLUSH_HEAD
+
+
 func _on_draw(label: String) -> void:
 	if _ref_us == 0:
 		return
 	var now: int = Time.get_ticks_usec()
-	_add(label, (now - _ref_us) / 1000.0)
+	_add(_open, (now - _ref_us) / 1000.0)
+	if _frames == SEQ_FRAME:
+		_seq.append("%s %.3f" % [_open, (now - _ref_us) / 1000.0])
+	_open = label
 	_ref_us = now
 
 
 func _on_pre_draw() -> void:
 	if _ref_us != 0:
-		_add(FLUSH_REST, (Time.get_ticks_usec() - _ref_us) / 1000.0)
+		_add(_open, (Time.get_ticks_usec() - _ref_us) / 1000.0)
 	_ref_us = 0
+	_open = FLUSH_HEAD
 
 
 func _collect() -> void:
@@ -123,6 +143,14 @@ func _walk(node: Node, found: Array[Array]) -> void:
 	mine = mine or node.get_parent() is FightFrames
 	if not mine and (node.is_processing() or node.is_processing_internal()):
 		found.append([node.process_priority, found.size(), node])
+	_hook(node)
+	for child: Node in node.get_children():
+		_walk(child, found)
+
+
+## Every CanvasItem's redraw is timed from the moment it joins the tree (node_added), so a
+## short-lived FX node's first frames are its own and do not land on the next redraw.
+func _hook(node: Node) -> void:
 	if node is CanvasItem and not _hooked.has(node.get_instance_id()):
 		_hooked[node.get_instance_id()] = true
 		var label: String = "draw: " + _label(node)
@@ -130,8 +158,6 @@ func _walk(node: Node, found: Array[Array]) -> void:
 			label += " in " + _label(node.get_parent())
 		@warning_ignore("return_value_discarded")
 		(node as CanvasItem).draw.connect(_on_draw.bind(label))
-	for child: Node in node.get_children():
-		_walk(child, found)
 
 
 ## Process order: priority, then tree order.
@@ -159,7 +185,9 @@ func write() -> void:
 	for label: String in _series:
 		rows.append(_row(label, _series[label]))
 	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["mean_ms"] > b["mean_ms"])
-	var doc: Dictionary = {"schema": "gtai.node-spans/1", "frames": _frames, "rows": rows}
+	var doc: Dictionary = {
+		"schema": "gtai.node-spans/1", "frames": _frames, "rows": rows, "flush_order": _seq
+	}
 	@warning_ignore("return_value_discarded")
 	DirAccess.make_dir_recursive_absolute(out_path.get_base_dir())
 	var f: FileAccess = FileAccess.open(out_path, FileAccess.WRITE)
@@ -192,6 +220,9 @@ func _row(label: String, s: PackedFloat32Array) -> Dictionary:
 class SpanMark:
 	extends Node
 	var us: int = 0
+	var head: Callable = Callable()
 
 	func _process(_delta: float) -> void:
 		us = Time.get_ticks_usec()
+		if head.is_valid():
+			head.call_deferred()
