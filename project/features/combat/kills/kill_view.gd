@@ -28,6 +28,8 @@ var char_fx: KillCharFx = KillCharFx.new()
 var shock_fx: KillShockFx = KillShockFx.new()
 ## The blade kill's slash streak (the halves themselves are KillSplitFx.cut groups).
 var split_fx: KillSplitFx = KillSplitFx.new()
+## The ray gun kill (the body eaten by rings into a glowing dust pile and its empty clothes).
+var dissolve_fx: KillDissolveFx = KillDissolveFx.new()
 ## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
 ## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
 var frames: int = 0
@@ -77,6 +79,11 @@ func bind(p_kills: SignatureKills) -> void:
 	split_fx.reduced_motion = reduced_motion
 	split_fx.z_index = KillSplitFx.HELD_Z + 5  # over a body held on the saw (gib_layer + HELD_Z)
 	add_child(split_fx)
+	dissolve_fx.kills = kills
+	dissolve_fx.ppm = ppm
+	dissolve_fx.reduced_motion = reduced_motion
+	dissolve_fx.z_index = 4
+	add_child(dissolve_fx)
 
 
 func _process(_delta: float) -> void:
@@ -98,6 +105,7 @@ func _process(_delta: float) -> void:
 	char_fx.pose()
 	shock_fx.pose()
 	split_fx.pose()
+	dissolve_fx.pose()
 	_track_moving()
 	if _ground_dirty or _heap_growing():
 		ground.queue_redraw()
@@ -196,6 +204,8 @@ func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, di
 		char_fx.add(serial, groups[SignatureKill.BODY], row)
 	elif row.style == &"shock":
 		shock_fx.add(serial, groups[SignatureKill.BODY], row, dir)
+	elif row.style == &"dissolve" and groups[SignatureKill.BODY] != null:
+		dissolve_fx.add(serial, groups[SignatureKill.BODY], row, at)
 	var g: GibSim = kills.gibs
 	for i: int in GibSim.CAPACITY:
 		if g.kill_of[i] == serial:
@@ -244,6 +254,7 @@ func _drop_unused() -> void:
 			char_fx.forget(serial)
 			shock_fx.forget(serial)
 			split_fx.forget(serial)
+			dissolve_fx.forget(serial)
 
 
 ## The victim's parts by the row's style: the gib or whole-body cut, the blade's two halves, or
@@ -262,4 +273,6 @@ func _parts(
 		split_fx.add(serial, at, dir, row, groups)
 	elif row.style == &"hole" and rig != null:
 		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], kills, ppm)
+	elif row.style == &"dissolve" and rig != null:
+		groups[SignatureKill.BODY] = KillDissolveFx.wrap(groups[SignatureKill.BODY])
 	return groups

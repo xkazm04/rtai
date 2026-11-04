@@ -245,6 +245,37 @@
         0.5
       ],
       "weapon": "chainsaw"
+    },
+    {
+      "bounce": 0.15,
+      "cone_deg": 30,
+      "crumble_ticks": 55,
+      "doc": "Ray gun: the victim locks up glowing, then dissolves in rings: the body is eaten from its outline inward by a hot cream ring while gold echo rings ripple out and glowing motes fall, leaving a pile of glowing dust with the empty uniform crumpled on it and the cap beside it. No blood. Under --gore=reduced the victim falls whole.",
+      "flash_ticks": 2,
+      "ground_drag": 8,
+      "hitstop_ticks": 3,
+      "id": "ray_gun_dissolve",
+      "launch_mps": [
+        0.1,
+        0.3
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        90,
+        240
+      ],
+      "spray": 0,
+      "stand_ticks": 12,
+      "style": "dissolve",
+      "up_mps": [
+        0.6,
+        1
+      ],
+      "weapon": "ray_gun"
     }
   ],
   "leftover_budget": 12,
