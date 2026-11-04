@@ -559,3 +559,12 @@ the tree). Then NEXT 2-5 above.
   64 px/m reload shows one magazine.
 - REQUEST 19 -> gunplay: take the one-line art_mags = {} in test_a_reload_drops_the_magazine...
   (showcase commit after c9a2f1a1), or it fails on every build with weapon-art's magazines.
+- GATES r6 (f8c0f817 + the test_gun_fx glue): lint 13/13 (743 files), unit 820/821 before the
+  glue (test_gun_fx 9/9 after it; the full suite not re-run), scenarios 39/39
+  (evidence/r6/). Not run yet on r6: the full unit suite after the glue, the evidence run
+  (selftest), parity (no native change in round 6), the bench, the reels.
+- 04:36 session end: all work committed; scratch sheets deleted; frames.json 14 entries, every
+  file present. NEXT (iteration 5): 1 = the full unit suite + the evidence run on HEAD (logs
+  outside the tree), then re-film the uniques and riot reels on the round 6 build (nuke >= 13 m,
+  SWAT/riot squad mix, weapon wall, jagged electro, flamer sway), the bench, then NEXT 3-5 of
+  the 04:23 list.
