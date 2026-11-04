@@ -61,8 +61,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
-1. Rivet's size: 1.20x the crowd's span (1.04x a cop's width) as built, or exactly 1.1x:
-   `RivetPlan.FORMS[FORM_BASE].x` 0.97 -> 0.89. Still: `M/frames/lineup-hybrid-ab-64ppm.png`.
+1. Rivet's size: A, as built, 1.20x the crowd's span (1.11x a cop's), his core clearly larger than a cop's as
+   in `r1_c7`; or B, exactly 1.1x the crowd (`RivetPlan.FORM_TRIM`, size_k 0.89; switch with
+   `FORMS[FORM_BASE].x` 0.97 -> 0.89). Still with the scale chart: `M/frames/rivet-size-call-64ppm.png`.
 2. Limb weight at 32 px/m: as built, or heavier (`ARMS[FORM_BASE].z` 0.9 -> 1.0, `LEGS[FORM_BASE].y` 1.0 -> 1.2).
 3. Held guns are sized in metres (the look lane's `weapon_art.json`), so they read large on the slimmer Rivet:
    `M/cast-hybrid-director-64.mp4`.

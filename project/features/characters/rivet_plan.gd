@@ -27,6 +27,8 @@ const FORM_MILD: StringName = &"mild"
 const FORM_HAULER: StringName = &"hauler"
 ## n5-cast (2026-11-04): the pre-hybrid base (size 1.2, the d5 arms), kept for the A/B frames.
 const FORM_STOCKY: StringName = &"stocky"
+## n5-cast: the hybrid at 1.1x the crowd span (0.91 m), the owner call vs the built 1.00 m.
+const FORM_TRIM: StringName = &"trim"
 ## The size_k at which the art matched the rivet_base body radius (d5); the Hauler tank's absolute
 ## size hangs off this, not off FORM_BASE, so slimming the base does not shrink the tank.
 const BODY_SIZE_K: float = 1.2
@@ -34,6 +36,7 @@ const BODY_SIZE_K: float = 1.2
 const FORMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(0.97, 0.7, -250.0),
 	FORM_STOCKY: Vector3(1.2, 0.7, -250.0),
+	FORM_TRIM: Vector3(0.89, 0.7, -250.0),
 	FORM_OPEN: Vector3(1.1, 0.85, -30.0),
 	FORM_NIGHT: Vector3(1.3, 1.0, -30.0),
 	FORM_DAY: Vector3(1.2, 0.7, -250.0),
@@ -45,6 +48,7 @@ const ARMS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(0.85, 0.9, 0.9),
 	FORM_STOCKY: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
+	FORM_TRIM: Vector3(0.85, 0.9, 0.9),
 	## The tank is base Rivet grown (HaulerLook bulks the arms further from these).
 	FORM_HAULER: Vector3(0.72, 0.78, 0.8),
 }
@@ -53,6 +57,7 @@ const ARMS: Dictionary[StringName, Vector3] = {
 ## GAIT_SCALE so the slimmer body keeps a long stride in metres.
 const LEGS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(1.15, 1.0, 1.15),
+	FORM_TRIM: Vector3(1.15, 1.0, 1.15),
 }
 ## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
 ## guard at a walk (0.68 m vs 0.53 m at 1.0); the sprint stride adds 20 % above the run speed.

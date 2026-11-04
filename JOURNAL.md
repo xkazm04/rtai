@@ -288,3 +288,12 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
   `cast-legrim{,-before}-city-32.mp4`): legs read as pale pistons on asphalt and slab. Decided: FINISH and commit.
   - FRICTION: ran look_golden without `--fixed-fps 60` first: the fight runs in wall time and every frame "fails"
     (means 2-7, Rivet dead in one). With `--fixed-fps 60`: junction 11/11 (worst mean 0.57), block 5/5.
+- 21:50 director reel on 85b912e5 (`cast-legrim-director-32.mp4`, 1800 frames, 0 script errors) vs
+  `cast-final-director-32.mp4` (fa395f74): every kill chapter identical tick for tick; on the pale arena slab the
+  rim is nearly invisible (cream on pale grey), so it only shows where it is needed (asphalt). Item done.
+- DECISION 21:56 Rivet's size kept at size_k 0.97 (1.00 m span, 1.20x ped, 1.11x cop). New `RivetPlan.FORM_TRIM`
+  (0.89 = exactly 1.1x ped) and `cast_lineup.gd -- --form=<id>` render both; beside r1_c7 at 64 px/m
+  (`frames/rivet-size-call-64ppm.png`): A's core is clearly larger than the cop's like the chart; B's core is
+  cop-sized. REPORT Call 1 now carries this still. frames.json: + legrim A/B, + size call; dropped
+  `rivet-legs-motion-32ppm` (superseded, file kept: REPORT cites it) and `city-hybrid-ab-32ppm` (file deleted).
+  Unit 940/0, lint 13/13.
