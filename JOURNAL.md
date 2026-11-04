@@ -267,3 +267,13 @@ the enemy part out of gun_fx.gd (201 lines) first if GunFx grows.
   Clips `MASTERS/n4/gunplay/arena_hand_cannon_range_64ppm/`, `arena_hand_cannon_pit_48ppm/`.
   brutality's `hand_cannon_blowback` kill is on n-brutality; my branch shows the standard death until
   the Director merges (kill_landed carries weapon `hand_cannon`).
+- 03:00 MILESTONE plasma rifle, the second unique gun, enabled in the real fight: round 10-point
+  burst at the muzzle (turns every shot), slow (30 m/s) pulsing teardrop bolts with a soft glow and
+  trailing sparks, a ring burst + burnt ring where they stop, no shells, a cell on reload. The first
+  cut (`burst_sequence_before.png`) read as a chalk stick and a frying pan; redrawn as a comet.
+  Range 64 px/m: 40 bolts / 18 hits; pit 48 px/m: 7 bolts / 4 kills. Unit test (scorch, no shells).
+  Gates: unit 710/710 (`evidence/n4/unit-d.log`), scenarios 29/29 (`scenarios-d.log`).
+- `MASTERS/n4/gunplay/side_by_side_four_guns_range_64ppm.mp4`: pistol, machine pistol, hand cannon,
+  plasma rifle on the same range lane, 2x2, 5 s, sound off. frames.json updated (15 entries).
+- DECISION GunFxMarks split out of GunFxArt (floor marks + impacts); GunFx impacts carry
+  `Hit + SCORCH` for an energy bolt.

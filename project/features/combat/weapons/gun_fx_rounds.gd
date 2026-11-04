@@ -56,6 +56,9 @@ static func _impact(fx: GunFx, arena: CombatArena, last: Array, tick: int) -> vo
 		for m: Vector2 in arena.metal:
 			if m.distance_to(at) <= 0.9:
 				kind = GunFx.Hit.METAL
-	fx.impacts.append(Vector4(at.x, at.y, float(kind), float(tick)))
+	# a plasma bolt (gun_fx.json scorch) adds SCORCH to the kind: a burn ring and a pop
+	var scorch: bool = last[2] and fx.look(arena.gun.trigger.spec.id).get("scorch", false)
+	var code: int = int(kind) + (GunFx.SCORCH if scorch else 0)
+	fx.impacts.append(Vector4(at.x, at.y, float(code), float(tick)))
 	@warning_ignore("return_value_discarded")
 	fx.impact_dir.append(hop.normalized())

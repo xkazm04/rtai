@@ -15,6 +15,8 @@ const HOP_TICKS: int = 14
 const IMPACT_TICKS: int = 10
 const SCUFF_TICKS: int = 240
 const SMOKE_TICKS: int = 28
+## Added to an impact's Hit kind when a plasma bolt made it (a scorch ring and a pop).
+const SCORCH: int = 10
 
 var p: Dictionary = {}
 ## Shells and dropped magazines: x, y (m), the ticks they lie before fading, the size (m;
@@ -22,7 +24,8 @@ var p: Dictionary = {}
 var bits: Array[Vector4] = []
 var bit_vel: PackedVector2Array = PackedVector2Array()
 var bit_life: PackedInt32Array = PackedInt32Array()
-## Where rounds stopped: x, y, Hit, the born tick; and the round's travel direction.
+## Where rounds stopped: x, y, Hit (+ SCORCH for a plasma bolt), the born tick; and the
+## round's travel direction.
 var impacts: Array[Vector4] = []
 var impact_dir: PackedVector2Array = PackedVector2Array()
 ## Gun smoke: x, y, the born tick, the scale.

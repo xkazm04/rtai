@@ -112,3 +112,17 @@ func test_the_hand_cannon_dumps_six_shells_on_reload_and_drops_an_armored_human(
 	assert_eq(fx.bits.size(), 6, "the reload dumps six spent shells")
 	var ring_m: float = fx.look(&"hand_cannon").get("ring_m", 0.0)
 	assert_gt(ring_m, 0.0)
+
+
+func test_a_plasma_bolt_scorches_where_it_stops_and_ejects_no_shell() -> void:
+	var arena: CombatArena = _arena(&"plasma_rifle")
+	var fx: GunFx = GunFx.new()
+	var g: Fighter = arena.spawn_guard(Vector2(6.0, 0.0))
+	g.pos = Vector2(6.0, 0.0)
+	g.cooldown = 9999
+	assert_true(arena.rivet_fire(g.pos))
+	_run(arena, fx, 1, 30)
+	assert_false(g.alive(), "one plasma bolt drops a human")
+	assert_eq(fx.impacts.size(), 1)
+	assert_eq(int(fx.impacts[0].z), GunFx.Hit.BODY + GunFx.SCORCH, "a bolt's impact scorches")
+	assert_eq(fx.bits.size(), 0, "an energy gun ejects no shell")
