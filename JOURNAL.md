@@ -108,3 +108,20 @@ NEXT (iteration 2, in order):
   Look goldens 11/11 unchanged (worst mean 0.020 of 4.0; `evidence/n1/look/run.log`), unit 700/701
   with the known `test_noir_shadows` load flake (2/2 alone), scenarios 29/29 (`scenarios-g.log`).
   NEXT: bench riot before/after under bench.lock, then settled 6 -> 30 and bake settled pools.
+- 01:50 MEASURE bench after the blood split (b3b3c92f; exported windows-bench, 1 run x 4 x 30 s, under
+  bench.lock) - CONTENDED (other lanes rendering; not an idle number): riot p99 7.305 ms, avg 1.926 ms,
+  1 % low 104 fps, rigs p99 0.648; drive p99 5.336 / avg 1.094; drive48 p99 2.565. The gate line says
+  MISSES p99CpuMs (7.305 > 7) under this load. NO before was taken on the same load, so this proves
+  nothing yet about the split (the bisect's contended tip avg was 2.06 ms; idle record riot p99 6.007).
+  Raw: `evidence/n1/bench/bench-*.json`, log `evidence/n1/bench-after.log`. FRICTION: the bench export
+  needs `build/export/windows-bench/` to exist in a fresh worktree (mkdir it first).
+- NEXT (replaces the 01:45 list, in order):
+  1. Riot A/B on the SAME load, back to back under bench.lock: this tree vs `git worktree` at 3bf98d63
+     (before the split), riot only if run.mjs allows, else all 4 x 30 s; add `CombatBlood.spent_us /
+     frames`, `BloodFx.draw_us`, `drops_us` into the bench JSON (dev/bench/city_bench.gd metrics);
+     then settled_redraw_ticks 6 -> 30 and re-check look goldens (junction + `--site=block`).
+  2. Pistol + machine pistol finished in the arena and city block (`--arena=city --weapon=pistol
+     --bot=gunplay --rigs --clean`, 32 + 64 px/m): casings, wall/ground impact decals, per-weapon muzzle.
+  3. Electro chain clip (clustered targets); rockets burst on arena walls (ArenaDodges.cull).
+  4. Split fight_areas.gd (now ~258 lines).
+  5. Side-by-side clip of the core six (5 s each, sound off) once 2 lands; re-render molotov/electro.
