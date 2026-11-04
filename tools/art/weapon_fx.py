@@ -213,7 +213,7 @@ def _save(img, path):
 def main(dst):
     out = Path(dst)
     rows = []
-    for name, length, width in (("flash_pistol", 110, 70), ("flash_smg", 90, 46), ("flash_tube", 170, 120)):
+    for name, length, width in (("flash_pistol", 150, 96), ("flash_smg", 124, 66), ("flash_tube", 170, 120)):
         for f in range(3):
             size, anchor = muzzle_flash(name, length, width, f, out, 7)
             rows.append({"id": f"{name}_{f}", "size_px": size, "anchor_px": anchor})
