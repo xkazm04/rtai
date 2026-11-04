@@ -1018,3 +1018,17 @@ riot p99 bench).
 - frames.json: + robot_powerdown_48ppm.mp4 and _64ppm_sheet (before: thug_plan_32ppm.mp4); dropped
   riot_shield_48ppm_sheet (a REQUEST answer, the arena shield clip carries it) and
   pit_electro_scorch_64ppm_sheet (the 48 px/m electro pair carries it). 15 entries, 0 missing.
+- Gates on 3cf3ce29: lint 13/13, unit 753/753, scenarios 33/33 (city_chase 2 ms nav flake
+  under load: 3262 us in the full run, green alone).
+- MILESTONE e41fb9c6: cherry-picked gunplay 83429487 (FighterFx.RISE_TICKS 29, my REQUEST 30).
+  Conflict in test_fight_areas.gd: kept only the RISE test (the other hunks test the mini-nuke and
+  homing shard, not on this branch); docs/decisions.md auto-merged 25 unrelated gunplay lines:
+  reverted to HEAD + the RISE line only. Gates: lint 13/13, unit 754/754, scenarios 33/33.
+- FRICTION: two unit runs printed "753 passed" with `exit -1`: GODOT_BIN was not exported in
+  that shell, Godot never launched and the tally was the stale JUnit file. Re-run with
+  GODOT_BIN: 754/754. (Read `exit -1` in run_unit as "did not run", never as green.)
+- Re-film NEXT 2: pit_knockdown_rise29_{48,64}ppm.mp4 (+ 64 sheet, frames 640-975): the guard is
+  blown flat, lies, rises, and the next aim tell starts only once he stands (about 824 up, tell
+  at 936); no shot from the half-sprawl. Death frame 962 as before. 48 px/m follows Rivet, the
+  guard alone 6+ m from the second guard. frames.json: these replace pit_knockdown_getup_32 and
+  _64 (kept as `before`). 15 entries, 0 missing.
