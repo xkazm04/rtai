@@ -8,12 +8,16 @@ extends ArenaHook
 ## --weapon the arena keeps its own Gloria and GuardBrain, so the arena's scenarios do not move.
 ## A bot (--bot=...) holds the trigger, so a semi gun re-taps (GunHand.tap). `--cam=fight` (dev
 ## capture, the pit only) frames Rivet and the hostile he fights (FightCam), view only.
+## `--lone` (dev capture, the 04:00 readability rule) makes every pit wave one guard, so each
+## kill is filmed on a victim standing alone (a dev run that does not replay, like --start).
 
 var weapon: StringName = &""
 var link: HitLink = null
 var _arena: CombatArena = null
 var _cam: FightCam = null
 var _view: CollectCallView = null
+var _lone: bool = false
+var _kills_seen: int = 0
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -24,6 +28,9 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 		bot = bot or arg.begins_with("--bot=")
 	if weapon == &"":
 		return
+	if "--lone" in OS.get_cmdline_user_args() and stage.pit != null:
+		lone(stage.pit)
+		_lone = true
 	var table: WeaponTable = WeaponTable.shipped()
 	if not table.weapons.has(weapon):
 		Log.warn("gunplay", "arena: no weapon %s in weapons.json; the arena keeps Gloria" % weapon)
@@ -38,10 +45,20 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	Log.info("gunplay", "arena: Rivet holds the table %s" % weapon)
 
 
-func step(_stage: ArenaStage, tick: int) -> void:
+## One guard per pit wave, every wave (the lone-victim capture).
+static func lone(pit: ArenaPit) -> void:
+	pit.first_wave = 1
+	pit.grow = 0
+	pit.max_wave = 1
+
+
+func step(stage: ArenaStage, tick: int) -> void:
 	if link != null:
 		link.step()
 		link.hold = 0
+	if _lone and stage.pit.kills > _kills_seen:  # the capture's cut points
+		_kills_seen = stage.pit.kills
+		Log.info("gunplay", "lone kill %d at tick %d" % [_kills_seen, tick])
 	if _cam != null:
 		_view.focus = _cam.step(_arena, tick)
 
@@ -53,6 +70,10 @@ func attach_view(view: Node) -> void:
 	if "--cam=fight" in OS.get_cmdline_user_args():
 		_view = cc
 		_cam = FightCam.new()
+		if _lone:
+			_cam.lean = FightCam.LONE_LEAN
+			_cam.max_lean_m = FightCam.LONE_MAX_LEAN_M
+			_cam.hold_ticks = FightCam.LONE_HOLD_TICKS
 
 
 func write_state(out: StreamPeerBuffer) -> void:

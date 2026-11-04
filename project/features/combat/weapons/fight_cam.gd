@@ -15,7 +15,17 @@ const EASE: float = 0.05
 ## A dead subject stays framed this long (ticks) so the fall and the spurt are seen; longer held
 ## the camera dragged Rivet's next fight off the frame (150 ticks, hand cannon pit A/B).
 const HOLD_TICKS: int = 60
+## The lone-victim capture (`--lone`): the victim stands alone, so the frame leans toward him and
+## his kill (or his burning run) sits nearer the middle; Rivet stays in a 48 px/m frame.
+const LONE_LEAN: float = 0.65
+const LONE_MAX_LEAN_M: float = 6.0
+## A lone kill's aftermath stays framed 2.5 s (the next lone guard comes 2.5 s after the kill, so
+## the longer hold drags no fight off the frame there).
+const LONE_HOLD_TICKS: int = 150
 
+var lean: float = LEAN
+var max_lean_m: float = MAX_LEAN_M
+var hold_ticks: int = HOLD_TICKS
 var at: Vector2 = Vector2.INF
 var subject: Fighter = null
 var _since: int = 0
@@ -26,7 +36,7 @@ func step(arena: CombatArena, tick: int) -> Vector2:
 	var me: Vector2 = arena.rivet.pos
 	var want: Vector2 = me
 	if subject != null:
-		want = me + ((subject.pos - me) * LEAN).limit_length(MAX_LEAN_M)
+		want = me + ((subject.pos - me) * lean).limit_length(max_lean_m)
 	at = want if at == Vector2.INF else at.lerp(want, EASE)
 	return at
 
@@ -37,7 +47,7 @@ func _pick(arena: CombatArena, tick: int) -> void:
 			_since = tick
 			if subject.pos.distance_to(arena.rivet.pos) <= REACH_M:
 				return
-		elif tick - _since < HOLD_TICKS:
+		elif tick - _since < hold_ticks:
 			return
 	subject = null
 	var best: float = INF
