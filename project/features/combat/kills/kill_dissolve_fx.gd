@@ -14,6 +14,8 @@ const MASK_PX: int = 64
 ## The mask's starting radius (metres): the whole posed body fits inside.
 const BODY_R_M: float = 0.62
 const ECHOES: int = 3
+## The stiff lock's glow over the body (the part print ignores modulate tints): a hot cream wash.
+const GLOW_A: float = 0.62
 const MOTES: int = 26
 
 static var _disc: ImageTexture = null
@@ -100,6 +102,16 @@ func _eat(d: Dissolve) -> float:
 	return clampf(float(kills.tick - t0) / maxf(1.0, float(d.row.crumble_ticks)), 0.0, 1.0)
 
 
+## The lock's glow: rises over the first half of the lock, pulsing (steady under reduced motion).
+func _glow(d: Dissolve) -> float:
+	var age: int = kills.tick - d.born - d.row.hitstop_ticks
+	if age < 0:
+		return 0.0
+	var k: float = clampf(float(age) / maxf(1.0, float(d.row.stand_ticks) * 0.5), 0.0, 1.0)
+	var pulse: float = 1.0 if reduced_motion else 0.75 + 0.25 * sin(float(age) * 0.6)
+	return k * pulse
+
+
 func _draw() -> void:
 	for d: Dissolve in _all:
 		var e: float = _eat(d)
@@ -115,8 +127,11 @@ func _rings(d: Dissolve, c: Vector2, e: float) -> void:
 	var r: float = BODY_R_M * ppm * (1.0 - e)
 	var age: int = kills.tick - d.born
 	var pulse: float = 1.0 if reduced_motion else 0.8 + 0.2 * sin(float(age) * 0.7)
-	if e <= 0.0:  # the stiff glow before the rings start
-		draw_arc(c, r * 0.9, 0.0, TAU, 32, Color(HOT, 0.35 * pulse), r * 0.35, true)
+	if e <= 0.0:  # the stiff glow before the rings start: the body lit from inside
+		var g: float = _glow(d)
+		draw_circle(c, r * 0.82, Color(HOT, GLOW_A * g))
+		draw_arc(c, r * 0.9, 0.0, TAU, 32, Color(HOT, 0.85 * g), maxf(0.06 * ppm, 2.0), true)
+		draw_arc(c, r * 0.9 + 2.0, 0.0, TAU, 32, Color(INK, 0.7 * g), 2.0, true)
 		return
 	draw_arc(c, r + 2.0, 0.0, TAU, 32, INK, 3.5, true)
 	draw_arc(c, r, 0.0, TAU, 32, Color(HOT, pulse), maxf(0.07 * ppm, 2.0), true)

@@ -24,6 +24,8 @@ const ASH_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/ash.p
 const CHAR_SHADER: Shader = preload("res://features/combat/kills/kill_char.gdshader")
 
 static var _char_mat: ShaderMaterial = null
+## The vaporise shadow's print: the same char, no lit rim (a shadow burnt into the street).
+static var _shadow_mat: ShaderMaterial = null
 
 
 class Burn:
@@ -64,7 +66,7 @@ func add(serial: int, body: Node2D, row: SignatureKill) -> void:
 	b.row = row
 	b.born = kills.tick
 	b.shadow = row.style == &"vaporise"
-	_char(body)
+	_char(body, b.shadow)
 	@warning_ignore("return_value_discarded")
 	_burns.append(b)
 
@@ -177,17 +179,20 @@ func _flakes(b: Burn, p: Vector2, age: int) -> void:
 
 
 ## The sprites of a burnt body: the print material swapped for the char print.
-static func _char(n: Node) -> void:
+static func _char(n: Node, shadow: bool = false) -> void:
 	if _char_mat == null:
 		_char_mat = ShaderMaterial.new()
 		_char_mat.shader = CHAR_SHADER
+		_shadow_mat = ShaderMaterial.new()
+		_shadow_mat.shader = CHAR_SHADER
+		_shadow_mat.set_shader_parameter(&"rim_px", 0.0)
 	for ch: Node in n.get_children():
 		var s: Sprite2D = ch as Sprite2D
 		if s != null:
-			s.material = _char_mat
+			s.material = _shadow_mat if shadow else _char_mat
 			s.self_modulate = Color.WHITE
 			s.modulate = Color.WHITE
-		_char(ch)
+		_char(ch, shadow)
 
 
 static func _h(a: int, b: int) -> float:
