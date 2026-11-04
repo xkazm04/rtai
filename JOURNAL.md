@@ -329,3 +329,6 @@ NEXT (iteration 8):
 4. A 64 px/m close-up clip of the navy cops in the director reel (only 32 px/m filmed tonight).
 5. Keep REPORT current (rewritten at 08:40). Full `tools/evidence/run.mjs --no-bench` on the head.
 Session state 22:13: head = this commit, tree clean, image.lock untouched, no Godot process of mine running.
+- MILESTONE 22:17 NEXT 1 done: riot helmet navy (cop_navy.py now takes a part list; run each part once). Lineup
+  `frames/riot-helmet-navy-ab.png`, react board re-shot (0 script errors), goldens 11/11 (worst 1.07) and 5/5,
+  unit 940/0. 2 provenance lines, decisions line. REPORT Call 4 widened to the helmet.

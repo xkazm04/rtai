@@ -80,8 +80,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 2. Limb weight at 32 px/m: as built, or heavier (`ARMS[FORM_BASE].z` 0.9 -> 1.0, `LEGS[FORM_BASE].y` 1.0 -> 1.2).
 3. Held guns are sized in metres (the look lane's `weapon_art.json`), so they read large on the slimmer Rivet:
    `M/cast-hybrid-director-64.mp4`.
-4. The patrol cap crown: navy as in r2_c5 (built, e1f848a5), or d5-cast's cream "T1" crown, a stronger head mark
-   at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right). Revert = `git revert e1f848a5` (limbs too) or
+4. The patrol cap and riot helmet crowns: navy as in r2_c5 (built, e1f848a5 and the helmet commit after it), or
+   d5-cast's cream "T1" crowns, a stronger head mark at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right;
+   `M/frames/riot-helmet-navy-ab.png`). Revert = `git revert e1f848a5` (limbs too) or
    restore only `art/cop/head_cap.png` and `art/d5/cop/head_cap.png` from 29a853be.
 
 ## Next steps
