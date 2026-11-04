@@ -1141,3 +1141,15 @@ NEXT (replaces the list above):
 - NOTE -> showcase (final round 09:45): n-brutality 04c4068b (burn char rim, gunplay REQUEST 30)
   and b03f04ac (ray lock glow + longer dissolve) are both render only, gated; merging n-brutality
   at its head picks them up. Neither moves a golden.
+- GATES 09:3x on b03f04ac (CONTENDED: my rocket capture ran alongside): scenarios 34/35, the one
+  red is `scenario_rig_stress` "200 people: rig p50 1.017 ms > 1.0 ms" (a CPU budget, nothing of
+  the kills); re-run alone: 1/1 pass (evidence/brutality/scenarios-it19.log,
+  evidence/brutality/scenarios-it19-rig-stress-rerun.log).
+- Rocket "parts leave the frame" (showcase 08:57) checked on the city at 48 px/m: the farthest
+  part stops ~6 m out, inside the frame edge; no change (a launch change would move the gib sim
+  goldens this close to the freeze).
+- MILESTONE 09:37 the all-eleven city reel re-cut: `clips/city-reel-all-11-kills-clean-48ppm-it19.mp4`
+  (80 s, masters, frames.json entry 1, before = the it18 reel). The flamethrower chapter
+  (13.03-22.03 s of it18) and the ray-gun chapter (36.0-44.0 s) replaced by the it19 takes with the
+  same label style; the other nine untouched. Looked at the sheet
+  (evidence/brutality/city-reel-all-11-clean-it19-sheet.png): order and labels right, joins clean.
