@@ -628,3 +628,19 @@ Session end 00:17: head = this commit, tree clean, image.lock released, no Godot
   `M/frames/street-board-planview-ab-64ppm.png`, `M/cast-street-board-planview-ab-64ppm.mp4`. Flee, the kill and
   the corpse read as before; running peds keep their dark striding legs, heads smaller, a few more cream tops.
   REPORT section 5 cites every A/B.
+- 00:53 EVIDENCE GATE on 1d4abaa6 (`node tools/evidence/run.mjs --no-bench`, no edits during the run): lint 13/13,
+  unit 941/1 = the known flake `test_noir_shadows` ("Parameter t is null"; 2/2 alone, twice), scenarios 46, parity
+  bit-exact (mutation caught at 629), look goldens 11/11 + block 5/5 (worst mean 0.00), world lock holds. REPORT
+  gates line added.
+  Registry rules applied this iteration (`sprite-and-atlas-production`, `motion-quality-gating`): judge parts at
+  their minified size; judge motion from per-tick frames, not from stills that jump the sim (the stray shoes).
+
+NEXT (iteration 12):
+1. The crowd item is built and evidenced (64efadb6 .. 1d4abaa6). Open: a plan-view ped part sheet (Codex, r1_c6 +
+   r2_a5 refs, under image.lock) would sharpen the 64 px/m close-up, where the D5 ped art is still 3/4-view art
+   scaled; do it only as a full item (six looks, D4 + D5, react + street boards, goldens, provenance lines).
+2. Weakest items left: Call 1 (Rivet 1.20x vs the planned 1.1x) and Call 2 (limb weight) wait on the owner; the
+   camera gap (3/4 targets vs plan view) is a Call, not a fix. Consider the patrol cop's 32 px/m read on asphalt
+   beside the new pale peds (the cops are now the darker figures, as in r2_a5).
+3. REPORT rewrite at 08:40 (draft current to 1d4abaa6; Calls 1-6 stand, Call 6 now A = built pale crowd).
+   frames.json 15, every file exists.

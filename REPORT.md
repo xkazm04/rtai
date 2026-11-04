@@ -100,6 +100,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   The iteration 10 diagnosis and trials that led here: `M/frames/crowd-value-vs-r2a5.png`,
   `M/frames/crowd-part-markers-32ppm.png` (and `-b`, `-c`), `M/frames/crowd-package-trial-32ppm.png`.
 
+### Gates (iteration 11, `tools/evidence/run.mjs --no-bench` on 1d4abaa6: lint 13/13, unit 941/1 where the 1 is the
+known flake `test_noir_shadows` (2/2 alone, twice), scenarios 46, parity exact (mutation caught at 629), selftest
+look goldens 11/11 and block 5/5 (worst mean 0.00, after the one re-bless for the plan-view peds), world lock holds.)
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
 parity exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.06), block 5/5, no re-bless.)
