@@ -1129,3 +1129,14 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
   still an upright blue cop facing Rivet, with no scorch. Still open -> brutality (KillShockFx's corpse).
 - Session end 08:23: n-showcase tip = round 15 + docs; exe = round 15; final reel = reel-0808
   (round 14) + the round-15 close-up reel-0821-r15-close64. No Godot process of mine left running.
+
+## Session 08:30 (iteration 10, STABILIZE, past freeze)
+- 08:30 tree clean; exe round 15 (08:19, 236 MB + release DLL) present; masters frames.json 15
+  entries, reel-0808 + reel-0821-r15-close64 first.
+- DECISION 08:31: no merge round 16. Post-round-15 lane tips: weapon-art 3a703dbd (rocket blast
+  ends in smoke, render only), gunplay 83429487 (knockdown rise hold, sim-side). Gates (~7 min) +
+  export do not fit before 08:40, and the freeze forbids new builds; listed in REPORT "After the freeze".
+- NEXT (Director): merge n-weapon-art and n-gunplay tips into n-showcase, run the four gates
+  (gunplay's change is sim-side: parity + scenarios matter), re-export, then film round 16 with
+  cut.sh + reel.sh and bench under bench.lock. Open: REQUEST 29 -> brutality (electro corpse
+  upright), showcase-3 (pit wall bars on the city plaza).

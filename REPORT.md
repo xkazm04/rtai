@@ -104,3 +104,12 @@ bench (the lock was taken by another lane at 07:41 and the session ended at 08:1
 - ch 07 molotov: fixed mid-chapter (REQUEST 27, gunplay aa471560: the fire opens round the corpse); at the chapter's end the victim sinks into the char.
 - ch 13 ray gun: fixed (REQUEST 26, brutality 9c9aaabf): a long dust heap with the crumpled uniform.
 - ch 17 city block: fixed (REQUEST 28, brutality 584b3f77): 0 script errors on the city film.
+
+## After the freeze (08:30): lane commits NOT in this build
+
+The exe and the gates are round 15 (`06051f21`). Landed on lane tips after it, not merged (freeze;
+gates plus re-export did not fit before the 08:40 report):
+- weapon-art `3a703dbd`: the rocket blast ends in smoke, not a ring of cream beads (render only).
+- gunplay `83429487`: a knocked-down fighter is held 29 ticks while his rise plays (sim-side; the
+  Director's merge must re-run parity and scenarios).
+- brutality: docs only after round 15. rivet-arsenal, human-reactions: nothing new.
