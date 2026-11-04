@@ -1279,3 +1279,28 @@ riot + drive bench of record. Wire GunHand into quest 1. BURN_SCALE 0.3 -> 0.38 
   23f0fe22 (`evidence/n11/scen-19.log`; 265b7f37 changes only the dev camera and its test). Parity
   not re-run: no sim or native change since 83429487 (bit-exact).
 - 09:16 rendering the unique five lone (hand cannon, plasma rifle, ray gun, homing shard, mini-nuke).
+- 09:20 MILESTONE `MASTERS/lone_kills_unique_five_48ppm.mp4` (27.5 s): hand cannon, plasma rifle,
+  ray gun, homing shard and mini-nuke, each one-shotting a lone cop at 48 px/m, on 265b7f37
+  (`lone19_<gun>/`, 0 script errors; kill ticks: hand cannon 388/695/1010, plasma 397/712/1024,
+  ray 387/693/974, shard 418/746/1044, nuke 418/783/1117). Cut on each second kill: the first
+  kills sit in the bottom third (Rivet walks in from the north), the second ones in or at the edge
+  of the middle third. Looked at the 1 fps sheet: lone victim, kill, corpse held about 2.5 s; in the
+  last second of two cuts the next lone guard walks in. This shows gunplay's projectile, impact and
+  fall only; brutality's signature animations come with the brutality branch. frames.json: it is
+  entry 2, replacing side_by_side_unique_five.mp4 (15 entries).
+- 09:21 rendering a 64 px/m lone close-up (pistol, rocket, hand cannon).
+- 09:23 MILESTONE `MASTERS/lone_kills_closeup_64ppm.mp4` (16 s: pistol 696, rocket 732, hand
+  cannon 695 at 64 px/m; `lone19_64_<gun>/`, 0 script errors; the same kill ticks as at 48 px/m,
+  so the ppm does not move the sim). Looked at the 2 fps sheet: muzzle, tracer or rocket smoke,
+  blast ring and scorch, blood and fall are all readable on a lone victim. About 1.5 s after the
+  kill the corpse slides to the right edge (Rivet walks on). frames.json: the three lone reels
+  are the top three entries; dropped `fightcam_unique_kills_64ppm.png` (a still sheet, superseded).
+  All 15 files exist.
+- Session end: no Godot process of mine running, no lock taken. Shared files: docs/decisions.md
+  (two DECISION lines). No sim, replay, golden or native change in this iteration.
+
+NEXT (10:40 report phase):
+1. REPORT "After 09:00" is written. Re-check that its paths exist; nothing else is owed.
+2. If time allows before the freeze: the flamethrower's burning victim dies off frame at 48 px/m.
+   A lone-capture GunplayBot that follows a burning target (dev only) would film the death.
+3. Merge notes stand: human-reactions and brutality need 83429487 / 8ea3a2e5.
