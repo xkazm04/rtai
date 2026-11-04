@@ -71,7 +71,7 @@
       "doc": "Hit while in cover: ducks and flinches small.",
       "id": "cover",
       "len_s": 0.35,
-      "travel_m": 0.1
+      "travel_m": 0.2
     },
     {
       "doc": "A pedestrian startled by gunfire (the sim's FLEE onset, CrowdReact): a glance back at the bang, ducks, hands over the head, hops away from it, then the flight runs on.",
