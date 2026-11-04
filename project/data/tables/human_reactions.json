@@ -114,6 +114,12 @@
       "id": "death_shock",
       "len_s": 0.7,
       "travel_m": 0.4
+    },
+    {
+      "doc": "Robot kill (the thug, never a human; not in death_map): powers down. The knees give, it pitches forward on the spot, the head drops last, the paint darkens; sparks and oil, no blood.",
+      "id": "death_robot",
+      "len_s": 0.9,
+      "travel_m": 0.2
     }
   ],
   "schema": "gtai.human_reactions/1"
