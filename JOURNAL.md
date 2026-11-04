@@ -877,3 +877,11 @@ NEXT (iteration 14 / morning merge, in order):
 2. REQUEST 30 (knockdown fire hold), then re-film pit_knockdown_getup.
 3. The idle bench of riot p99 (CrowdReact 244 -> 150 us unbenched on an idle machine).
 4. Check brutality's answer to REQUEST 29 on a director reel (ch 06 electro at 48 px/m).
+- 08:07 REQUEST 30 checked in code (correction of the numbers above): gunplay's
+  FightAreas.DOWN_TICKS = 54 (0.9 s); ReactLink.hold keeps the knockdown lie looping while
+  down_ticks > 0 and, on release, jumps the pose to 0.78 of its 2.2 s (HOLD z) and rises over the
+  remaining 0.48 s. The sim lets the guard aim and fire from the first tick of that rise: that is
+  the half-sprawl shot at 64 px/m. REQUEST 30 -> gunplay (precise): keep the fighter from
+  firing for about 29 ticks after down_ticks ends (a "rising" window), or tell me to snap
+  the rise to about 0.2 s on my side (HOLD knockdown z 0.78 -> 0.9, one value; reads as a jerk).
+  DECISION (view): left as is tonight; a faster rise is the fallback and is one value.
