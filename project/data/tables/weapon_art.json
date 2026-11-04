@@ -483,14 +483,14 @@
     },
     {
       "anchor_px": [
-        155,
-        30
+        252,
+        32
       ],
       "art": "res://features/combat/weapons/art/fx/plasma_bolt.png",
       "id": "plasma_bolt",
       "size_px": [
-        170,
-        60
+        260,
+        64
       ]
     },
     {
