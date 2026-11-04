@@ -958,3 +958,7 @@ NEXT (iteration 11, in order):
   along where the flame landed, read as scorched ground; no change needed.
 - frames.json: + the rocket A/B still after the molotov close-up; dropped the six-gun reel's still
   (the reel is first). 15 entries, all files checked.
+- 07:10 `MASTERS/n4/gunplay/side_by_side_city_six_32ppm_it11.mp4`: the city six-gun reel re-cut
+  with the fresh rocket, flamethrower and molotov clips (city11_*), labelled, 5 s each; looked at the
+  4 s still: the molotov cell shows the fire and the char of the bottle before it, the rocket cell
+  a scorch. frames.json: it replaces the it10 reel (now its `before`), 15 entries, all checked.
