@@ -316,3 +316,23 @@ NEXT (iteration 5), in order:
 - To rivet-arsenal (REQUEST 8 answer): the magazine is drawn already by `WeaponMagView` (render only, reads your
   `rig.reload_k`); if you would rather own the draw inside RivetHeldView, take `art.make_held(id, "mag")` and
   drop my hook block in ArenaRigs. The spent one drops at reload_k crossing 1.0.
+- MILESTONE 03:37 paper rim + brass (551a2467): every held part and magazine sits on a 1 world px cream rim
+  (`WeaponArt.make_held` adds 8 HALO-material silhouettes under it; `--weapon-rim=off` for the A/B). A/B on the
+  same tick (850, pistol reload) at 64 and 32 px/m: `it5-rim-ab-64-32ppm.png`. At 32 px/m the pistol had merged
+  into the dark arm; with the rim it is its own outlined object, and the magazine in the off claw reads too.
+  FINDING on the way: my brass was a charcoal 0.4 m brick (casing cell INK_2 at SCALE 1.3), as big as the
+  magazine. Now a paper glint with a charcoal rim end at 0.75 (before: `it5-rim-ab-oldbrass-64-32ppm.png`).
+  The magazines' cartridge marks were a brass colour outside the palette tokens: now paper_2.
+  Unit 732/732 + the new rim test (weapon_art 11/11); lint 13/13. Docs: weapons.md section, 3 DECISION lines.
+- Registry rules applied: sprite-and-atlas-production (parts cut from the same source sheet, one px-per-metre per
+  weapon, the grip as data), depth-ordered-layered-art (the rim at z -1 under its part, the spent mags under the
+  rigs, the carried one above), motion-quality-gating (each claim judged in the live arena on the same
+  deterministic tick, A/B by one flag). No deviation.
+- REQUEST 11 (showcase) answer: agreed with the r4 merge rule. weapon-art draws Rivet's muzzle flash, brass AND
+  now the reload magazine for any gun with weapon-art art; gunplay's GunFx keeps smoke, impacts, the hostiles'
+  muzzle stars and the fallback for guns without art.
+- REQUEST 5 -> gunplay (cc showcase, Director at merge): GunFx drops its own ink-stick magazine at reload start
+  (`gun_fx.gd` `mag_drop`), and weapon-art's WeaponMagView now drops the gun's real magazine at the hip: after
+  the merge each reload would leave two. Please skip GunFx's drop when `WeaponArt.part_texture(id, "mag")` is
+  not null (same rule as the shells), or set `"mag_drop": false` on pistol, machine_pistol, plasma_rifle and
+  hand_cannon in `gun_fx.json`.
