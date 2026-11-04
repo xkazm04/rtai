@@ -18,7 +18,7 @@ const STRIKE_ARMS: Array[int] = [BodyPlan.L, BodyPlan.R, 2]
 const THROW: Vector3i = Vector3i(1, 6, 18)
 
 var rigs: CharacterRigs = CharacterRigs.new()
-var stage: ArenaStage = null
+var stage: CollectCallStage = null
 ## The floor plan whose rig_kick sets a shot's recoil strength (null: every weapon kicks 1.0).
 var plan: ArenaPlan = null
 var _last: Dictionary[int, Vector2] = {}
@@ -39,7 +39,7 @@ var _arsenal: ArsenalTable = ArsenalTable.shipped()
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast: the printed path's, or
 ## (human-reactions) the CityView's on the city block (--arena=city); false with neither.
-func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bool:
+func attach(p_stage: CollectCallStage, view: CollectCallView, ctx: WorldContext) -> bool:
 	var layer: CanvasLayer = null
 	if view.print_stage != null:
 		_print = view.print_stage
@@ -50,7 +50,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	else:
 		return false
 	stage = p_stage
-	plan = p_stage.plan
+	plan = (p_stage as ArenaStage).plan if p_stage is ArenaStage else null  # quest 1: no plan
 	process_priority = -1  # the feed is filled before CharacterRigs poses this frame
 	rigs.z_index = RenderLayers.z(&"actors")
 	layer.add_child(rigs)

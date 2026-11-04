@@ -10,7 +10,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--look",
 	"--reduced-motion",
 	"--blood",
-	"--kill-beat"
+	"--kill-beat",
+	"--rigs"
 ]
 
 var _values: Dictionary[String, String] = {}
