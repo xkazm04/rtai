@@ -16,6 +16,8 @@ const GRIND_JUDDER: float = 0.07
 const GRIP_U: float = 0.62
 ## Grip classes whose reload is not a magazine (the molotov's next bottle, the flamer's tank).
 const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
+## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
+const TANK_BACK_M: float = 0.22
 
 var rigs: CharacterRigs = null
 var pilot: StagePilot = null
@@ -28,6 +30,7 @@ var _shown: StringName = &""
 var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
 var _mag: RivetMagView = null
+var _tank: Sprite2D = null
 
 
 func _ready() -> void:
@@ -43,6 +46,7 @@ func _process(_delta: float) -> void:
 		rig.reload_k = _reload_k()
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, arena.tick if arena != null else 0)
+		_back_tank(rig, grip != null and grip.id == &"backpack_hose")
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -132,3 +136,27 @@ func _mag_view() -> RivetMagView:
 		_mag = RivetMagView.new()
 		add_child(_mag)
 	return _mag
+
+
+## weapon-art's `tank` part on Rivet's back while a backpack weapon (the flamethrower) is carried in
+## the claw: across the shoulders, TANK_BACK_M behind the torso, turning with it.
+func _back_tank(rig: CutRig, on: bool) -> void:
+	var id: StringName = arsenal.art_id(pilot.hold.held)
+	if on and _tank == null:
+		var tex: Texture2D = art.part_texture(id, "tank") if art.has(id) else null
+		if tex == null:
+			return
+		_tank = Sprite2D.new()
+		_tank.texture = tex
+		_tank.scale = Vector2.ONE * art.world_scale(id)
+		_tank.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		add_child(_tank)
+	if _tank == null:
+		return
+	_tank.visible = on
+	if on:
+		var fwd: Vector2 = rig.torso.global_transform.x.normalized()
+		var back_px: float = TANK_BACK_M * WeaponArt.WORLD_PX_PER_M
+		_tank.global_position = rig.torso.global_position - fwd * back_px
+		_tank.global_rotation = fwd.angle() + PI * 0.5
