@@ -90,6 +90,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "reel":  # the showcase lane's scripted fight (dev/showcase)
 		session.world.loop().set_input(CombatReel.new(session.stage, session.actions))
+	elif args.text("--bot") == "ghosts":  # lane ghost-powers: the ghost attacks' beat
+		session.world.loop().set_input(GhostReelInput.attach(session.stage, session.actions))
 	elif args.text("--bot") == "arsenal":  # rivet-arsenal: the pit fight, a switch every 4 s
 		session.world.loop().set_input(ArenaArsenalBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "lob":  # rivet-arsenal: molotovs at the claw cops from 9-14 m

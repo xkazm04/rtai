@@ -343,6 +343,67 @@
         0
       ],
       "weapon": "mini_nuke"
+    },
+    {
+      "bounce": 0,
+      "cone_deg": 180,
+      "doc": "Tonnage's press slam (lane ghost-powers, weapon stomp: a kill inside ghost_attacks.json tonnage.crush_m): the victim is flattened where he stood, the whole body pressed wide and dark into the street (KillCrushFx) on a wide red splat, the cap squirting off to one side. No flight, no scorch: the press is cold steel.",
+      "flash_ticks": 0,
+      "ground_drag": 20,
+      "hat_kick_mps": 3.5,
+      "hitstop_ticks": 4,
+      "id": "tonnage_crush",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 22,
+      "spray_cone_deg": 330,
+      "style": "crush",
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "stomp"
+    },
+    {
+      "bounce": 0.3,
+      "cone_deg": 25,
+      "doc": "Tonnage's ram (lane ghost-powers, weapon ram): the press body hits like a truck: the victim is thrown aside in one piece along the charge, tumbles, lands and slides on a smear, the cap spinning off.",
+      "flash_ticks": 0,
+      "ground_drag": 4.5,
+      "hitstop_ticks": 3,
+      "id": "tonnage_ram",
+      "launch_mps": [
+        6.5,
+        8.5
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        240,
+        720
+      ],
+      "spray": 10,
+      "spray_cone_deg": 40,
+      "style": "blowback",
+      "up_mps": [
+        2.5,
+        3.5
+      ],
+      "weapon": "ram"
     }
   ],
   "leftover_budget": 12,

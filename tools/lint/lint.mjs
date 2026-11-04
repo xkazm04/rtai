@@ -10,22 +10,20 @@ import { checkAll as styleChecks } from '../style/check_gd.mjs';
 import { check as constantsCheck } from '../gen_constants/gen.mjs';
 import { validate } from '../lib/mini_schema.mjs';
 
-// Files go in chunks: one command line over all ~900 .gd paths passes Windows' 32 767-char limit
-// (the spawn then fails with no output and the check reads as a silent FAIL).
+const tool = (name, cmd, args) => {
+  const res = run(cmd, args, { cwd: ROOT });
+  const issues = res.status === 0 ? [] : res.out.split('\n').filter((l) => l.trim()).slice(0, 40);
+  return { name, ok: res.status === 0, issues };
+};
+
+/** `tool` over `files` in chunks: one command line stays under Windows' 32 KB limit. */
 const CHUNK = 200;
-const tool = (name, cmd, args, files = null) => {
-  const lists = [];
-  if (files === null) lists.push(args);
-  for (let i = 0; files !== null && i < files.length; i += CHUNK) lists.push([...args, ...files.slice(i, i + CHUNK)]);
-  const issues = [];
-  let ok = true;
-  for (const list of lists) {
-    const res = run(cmd, list, { cwd: ROOT });
-    if (res.status === 0) continue;
-    ok = false;
-    issues.push(...(res.out || `${cmd}: exit ${res.status}`).split('\n').filter((l) => l.trim()));
+const toolChunked = (name, cmd, flags, files) => {
+  const results = [];
+  for (let i = 0; i < files.length; i += CHUNK) {
+    results.push(tool(name, cmd, [...flags, ...files.slice(i, i + CHUNK)]));
   }
-  return { name, ok, issues: issues.slice(0, 40) };
+  return { name, ok: results.every((r) => r.ok), issues: results.flatMap((r) => r.issues).slice(0, 40) };
 };
 
 function jsonCanonical() {
@@ -114,8 +112,8 @@ export function runLint() {
   const node = process.execPath;
   const gen = join('tools', 'achievements', 'gen.mjs');
   const checks = [
-    tool('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
-    tool('gdlint', 'gdlint', [], gd),
+    toolChunked('gdformat', 'gdformat', ['--check', '--line-length', '100'], gd),
+    toolChunked('gdlint', 'gdlint', [], gd),
     ...styleChecks(),
     jsonCanonical(),
     eventsRegistry(),
