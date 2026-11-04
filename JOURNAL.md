@@ -357,8 +357,8 @@ NEXT (iteration 5), in order:
   `it5-reload-mags-rim-64ppm.png`. Default: stays (it tells where a fight happened).
 
 NEXT (iteration 6), in order:
-1. (done 03:52, see below) Next silhouette check: gloria (nail gun) vs plasma rifle, both long with a skeleton
-   stock; at 32 px/m with the rim, `--loadout=gloria,plasma_rifle`.
+1. (done 03:52-03:54, see below) Next silhouette check: gloria vs the PISTOL at 32 px/m (both one-hand at the side,
+   both a dark bottle with a pale spot); if they merge, give gloria's nail drum a wider round outline.
 2. The electro arc forks read as twigs: a jaggier arc (more kinks, forks forward) in `weapon_fx_jet.py`; film a
    chain between two guards (a station row 1.5 m apart in `arena_stations/weapon-art.json`).
 3. The weapon-rack arena station (`arena_stations/weapon-art.json` + `--pickups=` all 16, a label per gun).
@@ -386,3 +386,9 @@ NEXT (iteration 6), in order:
   frames.json entry replaced by the -b frame (15 entries). Scratch AVIs deleted.
 - DECISION weapon-art shard gun silhouette: a crystal mass bulging past the body (stretch x2 of the lifted cluster)
   rather than separate spikes pasted on (more seams, slower). Alternative = revert `homing_shard/held.png` + rows.
+- CHECK 03:54 gloria vs plasma rifle at 32 px/m with the rim (`--loadout=gloria,plasma_rifle`): told apart by grip
+  and length already (gloria one-hand at the side, a short bottle with a pale drum; the plasma rifle long on the
+  aim line with its pale cell). No edit. Frame (masters, not in frames.json) `it5-gloria-vs-plasma-32ppm.png`.
+  Gloria vs the pistol is the next pair to judge (NEXT 1).
+- Session close 03:55: 10 commits this iteration (43a4e356..), all gates green (lint 13/13, unit 733/733,
+  scenarios 32/32), frames.json 15 entries. Worktree clean except the untracked lane logs in evidence/.
