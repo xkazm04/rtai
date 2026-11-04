@@ -97,3 +97,32 @@ NEXT (iteration 3):
        the D5 rivet parts so RigDetail falls back to D4 per part).
    - Do not start a Codex job in the last 15 min of a session: a killed session leaves `gtai-n5/image.lock` held.
 
+
+## Iteration 4 (17:35-18:35)
+
+- 17:36 Read JOURNAL, git log, the r2_c3 target, trial 1 frames. Image lock free. No REQUESTs from n5-look.
+- Registry rules applied (`generated-asset-world-scale`): "one authority per quantity" again, the ped's span is the
+  footprint and Rivet's size_k is derived from it (0.92 / 1.14 x 1.2 = 0.97); "size is not proportion": separate
+  leg_k / leg_w / arm_w factors on top of the uniform size cut. (`sprite-and-atlas-production`): parts generated
+  as one layout-locked chroma sheet, cut per template cell, one scale per character via the anchor cell.
+- MILESTONE 17:38 Codex job `rivet_hybrid_head` (78 s, under image.lock, released): an edit of the d4 rivet_head
+  sheet with r2_c3 + the concept as refs. Came back clean: welder-visor helmet with a vermilion cable loop, a thicker
+  hazard collar, a work-plated torso with shoulder plates, a narrower pelvis. Masters `gen/r1/`.
+- MILESTONE 17:40 rig: size_k 0.97, ARMS 0.85/0.9/0.6, new LEGS [1.15, 0.65, 1.15], FORM_STOCKY for A/B, Hauler via
+  BODY_SIZE_K. Measured: shoulder 0.92 m (1.1x ped), torso depth 0.60 m, bbox 1.38 x 1.53 m (cop 1.01 x 1.45).
+  Unit 940/0 after fixing two test_rig_plans asserts (thigh_len now x leg_k; the day-arms A/B compares day legs).
+  Commit 516475c9.
+- FRICTION: a windowed run does not re-import changed PNGs; the first lineup still showed the old helmet. Run
+  `--headless --import` after any art swap (about 1 min here, the cache was warm).
+- MILESTONE 17:44 parts installed (sizes in decisions), provenance lines x8, commit a419cce0.
+- MILESTONE 17:48-17:56 combat check: director reel 30 s at 32 px/m and 25 s at 64 px/m, city block 15 s at 32 px/m
+  (`--bot=reel --arena=city --loadout=pistol,machine_pistol`, the iteration 2 args), 0 script errors in all three;
+  the sim is identical to the before clips at the same tick. Claw combo, pistol and machine pistol kills all read;
+  the grips and hose follow the new hand joints.
+  - Noted for the owner: held guns are sized in metres (weapon_art.json: pistol 0.7, machine pistol 0.9 m, the look
+    lane's data), so they now read large against the slimmer Rivet.
+  - FRICTION: my first city clip forgot `--bot=reel --loadout`, and the sim looked diverged. Always copy the before
+    clip's args (`gtai-n5/logs/cast/iter-002.jsonl` has them).
+- 17:58 composites: `frames/lineup-hybrid-ab-64ppm.png` (with r2_c3), `cast-ingame-vs-r2c6.png`,
+  `director-hybrid-ab-32ppm.png`, `city-hybrid-ab-32ppm.png`, `director-hybrid-64ppm.png`; frames.json 15 entries.
+  r2_c6 check: car-to-figure scale and the Rivet:cop ratio match; the remaining gap is the camera (3/4 view vs plan).
