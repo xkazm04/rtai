@@ -824,3 +824,23 @@ NEXT (iteration 11), in order:
   (data file restored after, not committed). It reads like the blood-splat gate-boundary pixels those debt rows
   describe, now landing at 32 px/m on the cop and vehicle layers. Owner of the debt: d5-city. Not bisected (it10
   never ran the evidence gate). INFO -> integration/Director: the accent_debt rows need re-measuring on this tree.
+- MEASURE 06:58 other lanes' latest `build/evidence/selftest.json`: n-gunplay (06:49) and n-human-reactions
+  (06:17) FAIL the same audit with blood-flicker variants ("48 px/m vermilion on vehicles: 8 px", "48 px/m blood
+  on vehicles: 16 px"); n-showcase (06:34) passes. So it is tree-wide blood-splat flicker (d5-city's debt rows),
+  moving between zooms and layers with each lane's blood, not a weapon-art regression.
+- Session close 07:00: 4 commits this iteration (2eb8e4f8 kinetic four, bbc416d4 all held weapons, 2 journal).
+  Gates of record at bbc416d4: lint 13/13, unit 739/739, scenarios 32/32, parity bit-exact; selftest FAIL
+  (tree-wide blood flicker, above). No Godot process of mine running. Scratch wa12 frames deleted; the clips and
+  strips are in masters + `evidence/weapon-art/`.
+
+NEXT (iteration 13), in order:
+1. Owner call 14 option C as a clip: the held sprite as a grey sticker at 32 px/m (LIMB kind below view_px 0.13,
+   one token in rivet_held_view.gd:58, rivet-arsenal's file: local edit for the A/B only, never committed), so
+   the morning page shows A/B/C side by side. If C wins, it is a REQUEST to rivet-arsenal.
+2. Pistol vs machine pistol in the claw are close top-down shapes even now (length differs most). Give the
+   machine pistol's held_small a wider side feed box (cut from held.png's own box, pushed 6-8 part px out) so it
+   reads at 32 px/m. Same-tick A/B with the it12 kinetic command.
+3. Gloria at 48 px/m in the claw was not in the it12 strips (her slot falls past tick 880 with the 4-gun
+   loadout): `--loadout=gloria` alone, A/B, one strip.
+4. Re-film the kinetic clip on the city block once rivet-arsenal's c912aec2 (rigs on the city path) is merged.
+5. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): still unanswered.
