@@ -3,8 +3,12 @@
 Branch `d6-perf-city`, cut from main `a1275c82`. Clips and graphs are in
 `C:\Users\kazda\kiro\gtai-masters\d6\perf-city\` (`frames.json`, newest and best first).
 Journal: `JOURNAL.md` in the lane worktree. Raw frame logs: `evidence/perf/*.json`.
-Gates on 5e21053a (`node tools/evidence/run.mjs --no-bench`, all PASS): lint 13/13, unit 941/941, scenarios 46/46,
-parity bit-exact (planted mutation caught at step 629), selftest pass (look goldens 11/11 worst 0.00, block 5/5 worst 1.81).
+Gates on 95936dac (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 945/945, parity bit-exact (planted mutation
+caught at step 629), selftest pass (look goldens 11/11 worst 0.00, block 5/5 worst 1.81), scenarios 45/46. The one failure was
+scenario_rig_stress's 1.0 ms rig p50 budget (1.031) at CPU 100 %; run alone it passed 2 of 2 (0.745 / 0.746). The rigs are untouched.
+
+**For the Director:** `95936dac fix(lint)` batches gdformat/gdlint. At ~810 .gd files one command line passes Windows' 32767-char
+limit and the lint gate FAILs naming no file. Every lane hits it once its tree grows past that.
 
 **Contention.** The machine was 52-100 % CPU busy all day: docker, node runners, many Python jobs,
 and the other lane's Godot renders. Only the 13:36-13:50 runs were UNCONTENDED. Every number after

@@ -516,3 +516,24 @@ NEXT (iteration 9; freeze 18:30, report 18:40):
   was 16.6 (the machine: the noir runs were 14-15, so it is noise).
 - test_circle_fan.gd 4/4. Lint 13/13. The DECISION for fx blood is in decisions.md.
 - Not measured: the city fight's draw calls with fix 5 (its soaks are fewer; it was 534 a frame after fixes 1-3).
+
+### 17:51-18:12 FRICTION fixed: the lint gate broke at 810 .gd files (95936dac)
+- Adding test_circle_fan.gd made `lint.mjs` FAIL gdformat naming no file. The joined list was 32582 chars, so the
+  command line passed Windows' 32767 limit and the spawn failed. gdformat and gdlint now run in batches of 200. A planted
+  misformatted file is still caught (FAIL names it). DECISION tooling in decisions.md. **Every lane's lint hits this
+  once its tree passes ~810 .gd files.** The Director should take this commit first at the merge.
+- Masters: riot-drawcalls-fix5.png (bar chart: 1759 / 673 / 658 / 623, looked at), frames.json now 12 entries = the folder.
+- 18:09 GATES on 95936dac (`node tools/evidence/run.mjs --no-bench`, no edits during the run): lint 13/13, unit 945/945,
+  scenarios 45/46. scenario_rig_stress FAILed on a budget: 50 people, rig p50 1.031 > 1.0 ms with CPU at 100 %. Alone, 2 of 2 green
+  (p50 0.745 / 0.746), so it is load, not this change: the rigs are untouched. Parity bit-exact (mutation caught at step 629),
+  selftest pass (look goldens 11/11 worst 0.00, block 5/5 worst 1.81, world lock holds).
+
+NEXT (report slot 18:40; freeze 18:30):
+- REPORT.md is still marked DRAFT: finalise it at the report slot (gates line above, fix 5 row, the lint fix under a
+  "for the Director" line, Calls unchanged).
+- Owed, needs an idle machine: the riot under the bench lock (`node tools/bench/run.mjs --runs=1`), now with drawCallsAvg
+  in the JSON, against the 7 ms p99 limit. Expect the d-combat step (avg 1.13 -> 2.08 ms) to be gone with fix 5.
+- Fix 5 is not measured on the city fight (reel ch 18): run `fight.sh` once and compare draw calls to 534.
+- The blood's script cost in the riot is left (headless editor, per tick): drop step 540-840 us (wall test ~2 us a drop through 4
+  GDScript calls), CorpseStains 210-260, resolve 150-200. Next lever: give BloodFx a solid-cell grid (from the resident chunks'
+  cells) so the wall test needs no calls. Identity holds by construction (native cell_at = memcpy of the same cells).
