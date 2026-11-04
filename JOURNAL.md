@@ -573,3 +573,8 @@ NEXT (iteration 9), in order:
    accept the overlap.
 5. Brutality still uses the front-view X-ray; offer the `gore_*_top` stickers again (their JOURNAL).
 - Session close 05:03: 7 commits this iteration (583613dc..), gates green, worktree clean except evidence logs.
+- MEASURE 05:08 NEXT 1 started (read only, no fix): single-gun city runs at 32 px/m for pistol, hand cannon and
+  rocket (780 ticks each). Rocket: the smoke-puff trail and the blast (vermilion burst, smoke ring) read on cream.
+  Pistol / hand cannon: their tracers are too fast to judge on a 5 fps contact sheet; next time crop at 20-60 fps
+  around Rivet, as for the plasma. Scratch files deleted; an empty `gtai-n4/scratch/wa8b` folder is left (the
+  sandbox refuses rmdir on it).
