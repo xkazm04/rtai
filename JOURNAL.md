@@ -71,8 +71,9 @@ NEXT:
 1. Hand cannon polish: sprawl the body before the cut (set the rig's death clip, let one `drive()`
    pose it, then cut; calling RigPose.step alone flattened the copies), make the cap visibly leave
    (hide the head's cap on the body copy, or offset the hat copy), longer smear.
-2. Gib/wall collision: pieces slide through the hub's walls (use stage walls.push_out on each
-   piece in SignatureKills.step via a Callable the hook passes in; keeps it deterministic).
+2. DONE 01:50 (gib/wall collision via SignatureKills.push_out, the stage's walls + cells; unit
+   test; frame gtai-masters/n4/brutality/frames/hand-cannon-bodies-stop-at-wall-32ppm.png). Not in
+   frames.json yet; the hand cannon 32 px/m clip there predates it (bodies pass the wall).
 3. Suppress the standard d5-combat death blood (pool wedge, spurts) under a signature kill, or keep
    only the pool; decide after looking side by side.
 4. Determinism scenario in tests/scenarios (arena lab with rocket: replay identical + planted fault)
