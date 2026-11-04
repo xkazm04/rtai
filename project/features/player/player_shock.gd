@@ -14,6 +14,7 @@ const ARC_FROM_M: float = 0.55
 ## While the charge holds, a short arc jumps off the claws every few ticks (view only), longer as
 ## the charge fills.
 const CRACKLE_EVERY: int = 4
+const CLAW_SPREAD_M: float = 0.3
 
 var shock: MeleeShock
 var full_damage: float = 1.0
@@ -94,7 +95,7 @@ func _discharge(arena: CombatArena, stun: int, facing: Vector2) -> void:
 		bodies.append(f)
 		@warning_ignore("return_value_discarded")
 		pos.append(f.pos)
-	var areas: FightAreas = _areas(arena)
+	var areas: FightAreas = areas_of(arena)
 	var from: Vector2 = arena.rivet.pos + facing * ARC_FROM_M
 	if first < 0:  # a whiff: the arc snaps into the air at the reach
 		_arc(areas, arena.tick, from, arena.rivet.pos + facing * shock.reach_m)
@@ -113,10 +114,7 @@ func _discharge(arena: CombatArena, stun: int, facing: Vector2) -> void:
 
 
 func _stun(arena: CombatArena, areas: FightAreas, f: Fighter, stun: int, first: bool) -> void:
-	if not areas.fx.has(f.id):
-		areas.fx[f.id] = FighterFx.new()
-	var e: FighterFx = areas.fx[f.id]
-	e.stun_ticks = maxi(e.stun_ticks, stun)
+	stun_on(areas, f, stun)
 	var dir: Vector2 = (f.pos - arena.rivet.pos).normalized()
 	arena.hit_dir = dir
 	arena.hit_at = f.pos - dir * f.radius_m
@@ -127,11 +125,16 @@ func _stun(arena: CombatArena, areas: FightAreas, f: Fighter, stun: int, first: 
 	arena.struck.emit(f, dir, not f.alive(), WEAPON)
 
 
+## Two arcs, one off each claw (CLAW_SPREAD_M either side of the facing), jumping outward and
+## growing with the charge, so the held charge reads at 32 px/m.
 func _crackle(arena: CombatArena, facing: Vector2) -> void:
-	var at: Vector2 = arena.rivet.pos + facing * ARC_FROM_M
-	var turn: float = float((arena.tick / CRACKLE_EVERY) % 5 - 2) * 0.7
-	var length: float = 0.25 + 0.45 * charging01()
-	_arc(_areas(arena), arena.tick, at, at + facing.rotated(turn) * length)
+	var beat: int = arena.tick / CRACKLE_EVERY
+	var length: float = 0.3 + 0.6 * charging01()
+	for side: float in [-1.0, 1.0]:
+		var at: Vector2 = arena.rivet.pos + facing * ARC_FROM_M
+		at += facing.orthogonal() * side * CLAW_SPREAD_M
+		var turn: float = side * (0.5 + 0.35 * float(beat % 3))
+		_arc(areas_of(arena), arena.tick, at, at + facing.rotated(turn) * length)
 
 
 func _arc(areas: FightAreas, tick: int, from: Vector2, to: Vector2) -> void:
@@ -140,8 +143,16 @@ func _arc(areas: FightAreas, tick: int, from: Vector2, to: Vector2) -> void:
 
 
 ## The arena's area model, made here when no table gun has fired yet (quest 1 starts without one).
-static func _areas(arena: CombatArena) -> FightAreas:
+static func areas_of(arena: CombatArena) -> FightAreas:
 	if arena.areas == null:
 		arena.areas = FightAreas.new()
 		arena.areas.hp_scale = arena.gun.hp_scale() if arena.gun != null else 0.01
 	return arena.areas
+
+
+## Locks `f`'s brain for `ticks` (the FightAreas stun the electro gun uses; FxView draws sparks).
+static func stun_on(areas: FightAreas, f: Fighter, ticks: int) -> void:
+	if not areas.fx.has(f.id):
+		areas.fx[f.id] = FighterFx.new()
+	var e: FighterFx = areas.fx[f.id]
+	e.stun_ticks = maxi(e.stun_ticks, ticks)

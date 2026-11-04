@@ -13,6 +13,8 @@ const SHOVE_TICKS: int = 8
 const EDGE_SLACK_M: float = 0.0
 
 var combo: MeleeCombo
+## The weapon id the hits are dealt with (CombatArena.damage; brutality keys kills on it).
+var weapon_id: StringName = WEAPON
 ## Hit starts (a view compares it with the count it last saw to start the strike clip).
 var starts: int = 0
 var landed: int = 0
@@ -25,6 +27,7 @@ var _shoves: Dictionary[int, Vector2] = {}
 
 func _init(table: MeleeTable = MeleeTable.shipped()) -> void:
 	combo = MeleeCombo.new(table)
+	weapon_id = table.id
 
 
 ## One tick: `press` is this tick's melee press; `facing` is Rivet's heading. Returns the lunge
@@ -57,6 +60,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(mini(combo.since_end, 1 << 20))
 	out.put_32(combo.last_index)
 	out.put_32(landed)
+	if combo.table.grinds():  # only a grinding weapon carries it: the claw's goldens hold
+		out.put_32(combo.ground)
 	var ids: Array = _shoves.keys()
 	ids.sort()
 	out.put_32(ids.size())
@@ -75,7 +80,9 @@ func _land(arena: CombatArena, h: MeleeHit, facing: Vector2) -> void:
 		var dir: Vector2 = to.normalized() if to.length() > 0.001 else facing
 		if dir.dot(facing) < h.cone_dot:
 			continue
-		arena.damage(f, h.damage, arena.rivet.id, WEAPON)
+		arena.damage(f, h.damage, arena.rivet.id, weapon_id)
+		if h.stun_ticks > 0 and f.alive():  # the electro baton's lock
+			PlayerShock.stun_on(PlayerShock.areas_of(arena), f, h.stun_ticks)
 		_shoves[f.id] = dir * h.knockback_m
 		hit_any = true
 	if hit_any:

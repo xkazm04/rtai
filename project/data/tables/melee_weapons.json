@@ -1,7 +1,48 @@
 {
-  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). move_mult scales Rivet's top speed while a hit plays. Tonight: electro_baton and katana; the chainsaw and the plasma sword land in the night run. Placeholder numbers until the owner judges a clip in the D5 look.",
+  "doc": "Rivet's melee weapons as timing data (rivet-motion, 2026-11-03 eve; the owner's first set, 20:00). Each weapon is a combo in the rivet_melee.json claw shape (ticks are 60 Hz; windup -> active -> recovery, cancel_ticks into the recovery a buffered press chains, combo_window_ticks after a hit a press continues) plus per-hit stun_ticks, chain_hops (arcs to metal targets within the weapon's chain_radius_m) and lunge_m (Rivet travels this far over the hit's windup and active ticks). move_mult scales Rivet's top speed while a hit plays. grind_ticks and grind_min_ticks (optional, the chainsaw): the hit's last active tick holds for grind_min_ticks and on while the attack is held, landing again every grind_ticks. Evening: electro_baton and katana; night (rivet-arsenal): chainsaw and plasma_sword. Placeholder numbers until the owner judges a clip in the D5 look.",
   "schema": "gtai.melee-weapons/1",
   "weapons": {
+    "chainsaw": {
+      "cancel_ticks": 4,
+      "chain_radius_m": 0,
+      "combo_window_ticks": 16,
+      "doc": "the heavy grinder: a rev-in thrust whose bite always holds 16 ticks (the chain bites every 8: three bites, a human dies in the teeth) and holds on while the attack is held, then an upward rip that throws the body off",
+      "grip": "two_hand",
+      "hits": [
+        {
+          "active_ticks": 4,
+          "chain_hops": 0,
+          "cone_dot": 0.5,
+          "damage": 0.34,
+          "doc": "the rev-in thrust: steps in and grinds while held",
+          "grind_min_ticks": 16,
+          "grind_ticks": 8,
+          "id": "chainsaw_1",
+          "knockback_m": 0.05,
+          "lunge_m": 0.6,
+          "reach_m": 1.6,
+          "recovery_ticks": 16,
+          "stun_ticks": 16,
+          "windup_ticks": 12
+        },
+        {
+          "active_ticks": 4,
+          "chain_hops": 0,
+          "cone_dot": 0.4,
+          "damage": 2,
+          "doc": "the upward rip: tears out and throws the body back",
+          "id": "chainsaw_2",
+          "knockback_m": 1.4,
+          "lunge_m": 0,
+          "reach_m": 1.7,
+          "recovery_ticks": 24,
+          "stun_ticks": 0,
+          "windup_ticks": 10
+        }
+      ],
+      "length_m": 0.9,
+      "move_mult": 0.55
+    },
     "electro_baton": {
       "cancel_ticks": 3,
       "chain_radius_m": 2.5,
@@ -107,6 +148,59 @@
       ],
       "length_m": 1,
       "move_mult": 0.7
+    },
+    "plasma_sword": {
+      "cancel_ticks": 3,
+      "chain_radius_m": 0,
+      "combo_window_ticks": 12,
+      "doc": "the hot blade: two very fast slashes that cut any human in one pass, then a full spin that cuts everything around Rivet; lighter in the claws than the katana",
+      "grip": "two_hand",
+      "hits": [
+        {
+          "active_ticks": 3,
+          "chain_hops": 0,
+          "cone_dot": 0.25,
+          "damage": 3,
+          "doc": "a fast flat slash",
+          "id": "plasma_1",
+          "knockback_m": 0.5,
+          "lunge_m": 0,
+          "reach_m": 2,
+          "recovery_ticks": 8,
+          "stun_ticks": 0,
+          "windup_ticks": 4
+        },
+        {
+          "active_ticks": 3,
+          "chain_hops": 0,
+          "cone_dot": 0.25,
+          "damage": 3,
+          "doc": "the backhand return",
+          "id": "plasma_2",
+          "knockback_m": 0.5,
+          "lunge_m": 0,
+          "reach_m": 2,
+          "recovery_ticks": 8,
+          "stun_ticks": 0,
+          "windup_ticks": 3
+        },
+        {
+          "active_ticks": 6,
+          "chain_hops": 0,
+          "cone_dot": -1,
+          "damage": 3,
+          "doc": "the spin: a full circle at arm's length",
+          "id": "plasma_3",
+          "knockback_m": 1.5,
+          "lunge_m": 0,
+          "reach_m": 2.2,
+          "recovery_ticks": 20,
+          "stun_ticks": 0,
+          "windup_ticks": 6
+        }
+      ],
+      "length_m": 1.1,
+      "move_mult": 0.8
     }
   }
 }

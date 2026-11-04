@@ -99,7 +99,19 @@ static func _read_combo(t: DataTable, combo: Dictionary, m: MeleeTable) -> void:
 			h.chain_hops = t.integer(row, "chain_hops")
 		if row.has("lunge_m"):
 			h.lunge_m = t.num(row, "lunge_m")
+		if row.has("grind_ticks"):
+			h.grind_ticks = t.integer(row, "grind_ticks")
+		if row.has("grind_min_ticks"):
+			h.grind_min_ticks = t.integer(row, "grind_min_ticks")
 		m.hits.append(h)
+
+
+## True when a hit of this combo grinds (the chainsaw): its hold counter is replay state.
+func grinds() -> bool:
+	for h: MeleeHit in hits:
+		if h.grind_ticks > 0:
+			return true
+	return false
 
 
 func ok() -> bool:

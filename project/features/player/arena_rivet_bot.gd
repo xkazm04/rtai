@@ -7,12 +7,16 @@ extends InputSource
 ## cop, then holds melee on a sparring pair for the full charged shock (the arc hops to the
 ## second) and mashes the combo on the stunned cop. Deterministic: it reads only the sim.
 ## A step is [ticks or -1 = until reached, move or goto (hub-relative m), aim mark, buttons, mash].
+## With a melee weapon drawn (--loadout=chainsaw, katana...) an attacking step aims at the nearest
+## live hostile within FOE_AIM_M instead of its mark (a player turns the blade onto the cop who
+## walked in); the bare claw keeps its marks.
 
 const REACH_M: float = 0.12
 const MASH_EVERY: int = 5
 ## Melee held this long: the jab's 18 ticks, then the full charge (54), then the release.
 const SHOCK_HOLD: int = 76
 const MARK: Vector2 = Vector2(6.0, 4.0)
+const FOE_AIM_M: float = 2.6
 const STEPS: Array = [
 	[40, Vector2.ZERO, MARK, [], false],
 	[90, Vector2.RIGHT, MARK, [], false],
@@ -67,7 +71,11 @@ func sample(tick: int) -> TickInput:
 	var buttons: int = _buttons(s, ticks < 0)
 	if s[2] != null:
 		var mark: Vector2 = s[2]
-		buttons |= PlayerCommand.pack_aim((stage.plan.base + mark - at).normalized(), actions)
+		var aim: Vector2 = (stage.plan.base + mark - at).normalized()
+		var held: Array = s[3]
+		if (s[4] or not held.is_empty()) and ticks >= 0:
+			aim = _foe_aim(at, aim)
+		buttons |= PlayerCommand.pack_aim(aim, actions)
 	_in_step += 1
 	if (ticks >= 0 and _in_step >= ticks) or (ticks < 0 and move == Vector2.ZERO):
 		index += 1
@@ -87,3 +95,16 @@ func _buttons(s: Array, goto: bool) -> int:
 	if mash and not goto and _in_step % MASH_EVERY == 0:
 		b |= 1 << actions.bit(&"melee")
 	return b
+
+
+## Toward the nearest live hostile within FOE_AIM_M while a melee weapon is drawn, else `aim`.
+func _foe_aim(at: Vector2, aim: Vector2) -> Vector2:
+	if stage.pilot == null or not stage.pilot.wielding():
+		return aim
+	var best: float = FOE_AIM_M
+	for f: Fighter in stage.arena.hostiles:
+		var d: float = f.pos.distance_to(at)
+		if f.alive() and d < best and d > 0.01:
+			best = d
+			aim = (f.pos - at) / d
+	return aim

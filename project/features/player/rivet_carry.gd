@@ -21,6 +21,9 @@ var switches: int = 0
 var tap: bool = false
 ## Guns on the ground that walking over picks up (WeaponPickups).
 var ground: WeaponPickups = WeaponPickups.new()
+## rivet-arsenal: melee_weapons.json ids carried like guns (the katana in the long slot, the baton
+## in the sidearm slot); selecting one puts the gun away (arena.gun = null).
+var melee_ids: Array[StringName] = MeleeTable.weapon_ids()
 var _hands: Dictionary[StringName, GunHand] = {}
 var _table: WeaponTable
 var _arsenal: ArsenalTable
@@ -37,7 +40,7 @@ func _init(table: WeaponTable, arsenal: ArsenalTable, rng: RandomNumberGenerator
 ## or -1 for an id that is not a weapons.json gun with a grip class.
 func add(id: StringName) -> int:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(id)
-	if grip == null or not _table.weapons.has(id):
+	if grip == null or not carries(id):
 		return -1
 	slots[grip.slot - 1] = id
 	return grip.slot - 1
@@ -63,7 +66,12 @@ func step(c: PlayerCommand, actions: PlayerActions, arena: CombatArena) -> void:
 ## The slot `id` would sit in (-1: not a carried gun).
 func slot_of(id: StringName) -> int:
 	var grip: ArsenalTable.Grip = _arsenal.grip_of(id)
-	return grip.slot - 1 if grip != null and _table.weapons.has(id) else -1
+	return grip.slot - 1 if grip != null and carries(id) else -1
+
+
+## A weapons.json gun or a melee_weapons.json weapon.
+func carries(id: StringName) -> bool:
+	return _table.weapons.has(id) or melee_ids.has(id)
 
 
 ## A picked-up gun into its slot and into the claw; the same gun again refills its magazine.
@@ -81,6 +89,12 @@ func take(id: StringName, arena: CombatArena) -> void:
 func select(i: int, arena: CombatArena) -> void:
 	var id: StringName = slots[i]
 	if id == &"":
+		return
+	if melee_ids.has(id):
+		arena.gun = null
+		arena.rivet.weapon = id
+		current = i
+		switches += 1
 		return
 	if not _hands.has(id):
 		_hands[id] = GunHand.make(_table, id, _rng)
