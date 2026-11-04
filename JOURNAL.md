@@ -194,3 +194,12 @@ NEXT (the 18:40 report, written 18:23): unchanged from iteration 11. REPORT.md i
 - DECISION 18:31: nothing to stabilize. No code moved after the last green gate run, so re-running the gates would only re-measure the same tree on a contended machine. No Godot process started; no bench.lock taken.
 
 NEXT (the 18:40 report, written 18:31): REPORT.md is final. The first build of the next run is the non-lethal melee wound, per the iteration 10 DESIGN (18:15).
+
+## Iteration 14 (18:40, REPORT)
+
+- 18:40 read JOURNAL, git log, REPORT. Branch since 34bc64e6: docs only. No Godot process started; no bench.lock taken.
+- MILESTONE 18:47: REPORT.md final. Added: a test per item (shock, plasma), the gate log path and a frames.json copy under `evidence/combat-notes/` (copied from scratch `gates/evidence10.log` and the masters), "What blocked me, and for how long" (friction from this journal, none blocking), and "Next steps". Every clip named in REPORT was checked against gtai-masters/d6/combat-notes: 0 missing.
+
+NEXT (next day run, written 18:47):
+1. Build the non-lethal melee wound per the iteration 10 DESIGN (18:15), end to end: test with a planted no-wound, film the claw against a riot cop (48 px/m real time + 64 px/m 0.4x, `--soft-swing` = before), gate.
+2. The two-hand grip call waits on the owner and the redesigned Rivet; the plasma sword's asset waits on the image rounds.
