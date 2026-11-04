@@ -11,8 +11,7 @@ extends ArenaHook
 ## The open mark (2 m east of brutality's solo-lab spot (-36, 2): the course's west edge stays
 ## out of the 48 px/m frame; checked on the 05:20 chapter frames).
 const MARK: Vector2 = Vector2(-34.0, 2.0)
-## The previous chapter's dead move here (their print and blood stay: film one chapter per run,
-## `--chapter=<id>`, for a clean floor).
+## The last chapter's dead move here (print and blood stay: cut.sh films one chapter per run).
 const MORGUE: Vector2 = Vector2(-400.0, -400.0)
 const HOLD_FIRE: int = 100000
 ## Ticks Rivet faces the new victims before the first shot (the beat reads).
@@ -34,6 +33,8 @@ var kills: Dictionary[StringName, int] = {}
 ## False plants the scenario's fault: every button off (aim and walk only).
 var trigger: bool = true
 var _next_tick: int = 0
+## Other live hostiles (station actors) held where they stood at the chapter's start.
+var _extras: Dictionary[Fighter, Vector2] = {}
 
 
 func _init(p_actions: PlayerActions) -> void:
@@ -79,6 +80,10 @@ func step(stage: ArenaStage, tick: int) -> void:
 	var c: ReelChapters.Chapter = chapter()
 	if c == null:
 		return
+	for e: Fighter in _extras:
+		e.pos = _extras[e]
+		e.cooldown = HOLD_FIRE
+		e.tell_left = 0
 	for n: int in victims.size():
 		var g: Fighter = victims[n]
 		if not c.shoots:
@@ -127,9 +132,12 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	started_tick = tick
 	_next_tick = tick + c.ticks
 	var arena: CombatArena = stage.arena
+	_extras.clear()
 	for h: Fighter in arena.hostiles:  # the last chapter's dead leave the frame
 		if not h.alive():
 			h.pos = MORGUE
+		else:
+			_extras[h] = h.pos
 	var mark: Vector2 = stage.plan.base + MARK
 	arena.rivet.pos = mark
 	arena.rivet.facing = Vector2.RIGHT
