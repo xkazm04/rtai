@@ -443,10 +443,34 @@ NEXT (iteration 4):
   arena `--riot` flag that dresses each pit wave's first guard in the riot look with gunplay's
   armored hp (a sim change behind a flag: the default reel and goldens do not move).
 - Scenarios r5b (cd4b518f, the two glue fixes): 39/39 (evidence/r5/scenarios-r5b.log).
-- MILESTONE 04:05 arena --riot (760b0616): ArenaPit.riot_hp (from wave 2, each wave's first guard
+- MILESTONE 03:56 arena --riot (760b0616): ArenaPit.riot_hp (from wave 2, each wave's first guard
   takes gunplay's armored hp 2.5x: three pistol rounds, one hand-cannon round) and ArenaRigs
   dresses those ids in the riot look (RigVariant.crowd 6, the shield), so human-reactions'
   frontal shield recoil plays in a live pit fight. Off by default. test_arena_pit_riot 3/3.
   DECISION riot cop in the arena: armored hp + the shield look, the shield's block stays render
   only (no sim block in CombatArena; enemy-ai's EnemyPit shield is not in the real fight).
   Alternative: one data value (riot_hp) or a real block as an enemy-ai/gunplay item.
+- 03:53-03:58 reel-0355-uniques (32 px/m, `--reel=pit --loadout=hand_cannon,plasma_rifle,ray_gun,
+  mini_nuke`, 80 s, tree cd4b518f; first named 0410 from a wrong clock guess, renamed). The carry
+  kept hand_cannon, ray_gun, mini_nuke (plasma_rifle shares the ray gun's slot class). Looked at
+  0.4 fps from 15 s (24 frames), 1 fps over 48-60 s, and full frames at 36 s and 66 s:
+  (a) the mini-nuke reads: a cream flash, ink shock rings, a cream mushroom ring, a 6 m patch of
+      ORANGE flame stars with cream cores (not red; fine), ash stickers where the knot stood;
+  (b) the second nuke (about 55 s) lands about 5 m from Rivet: its mushroom covers a quarter of
+      the 32 px/m frame around him and he walks through it unharmed;
+  (c) 62-75 s: no kill and no switch (the reel switched on kills only; one weapon could not
+      score). Own fix: ReelArsenal switches after STALL_TICKS 480 without a kill as well;
+  (d) corpses pile at the pit's south door, half over the wall onto the paper (REQUEST 12, 13
+      still open).
+- REQUEST 16 -> gunplay: the mini-nuke fires at any range: the reel's lob at a guard about 5 m off
+  puts the blast and its quarter-frame mushroom on Rivet (reel-0355-uniques 54-58 s). A minimum
+  lob range (the 12 m circle) or a refusal tell under it would keep it a long-range weapon.
+- BENCH r5 (bench.lock held 03:59-04:11; CONTENDED: other lanes on the GPU/CPU; I ran no Godot of
+  my own during it). Tree cd4b518f + the --riot commit (riot off in the bench). `node
+  tools/bench/run.mjs`, exported release, 3 x 60 s: aggregate p99 10.77 ms, 1 % low 67 fps,
+  worst frame 119 ms (1 hitch > 50 ms), MISSES p99CpuMs (r4: 10.09 / 70). My recompute from
+  frame_ms (same method as r4): drive p99 3.33 ms / 1 % low 185 fps (r4 5.73 / 115; record
+  3.56), drive48 2.73 / 187 (r4 3.83 / 137), riot 8.72 / 90 (r4 7.23 / 101; record 6.0 / 124).
+  Rigs p99 0.94 ms. The drive is back at its record with no city-path change since r4, which
+  supports the r4 reading that the drive swings were contention; the riot drifts the other way
+  between rounds. Files: evidence/r5/bench-*.json, bench-r5.txt.
