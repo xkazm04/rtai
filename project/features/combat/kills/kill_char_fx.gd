@@ -42,6 +42,20 @@ var reduced_motion: bool = false
 var _burns: Array[Burn] = []
 
 
+## The char print warmed at load: the first burn or vaporise kill built the material and drew
+## the shader's first sprite on its kill frame (1.6-1.9 ms, CONTENDED). One faint speck, 6 frames.
+func _ready() -> void:
+	var s: Sprite2D = Sprite2D.new()
+	s.texture = ASH_TEX
+	s.scale = Vector2.ONE * 0.02
+	s.self_modulate.a = 0.02
+	add_child(s)
+	_char(self)
+	var t: SceneTreeTimer = get_tree().create_timer(0.1)
+	@warning_ignore("return_value_discarded")
+	t.timeout.connect(s.queue_free)
+
+
 ## Takes over the BODY group of a burn kill: its sprites turn to char now.
 func add(serial: int, body: Node2D, row: SignatureKill) -> void:
 	var b: Burn = Burn.new()

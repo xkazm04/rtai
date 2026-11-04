@@ -78,13 +78,27 @@ var _strike_t: int = -1
 
 func setup(stage: ArenaStage) -> void:
 	if solo != Vector2.INF:
-		stage.arena.rivet.pos = solo
+		_place_rivet(stage)
 	_line(stage)
+
+
+## Rivet to the solo spot, and on the city block the city's follow with him: the stage sets the
+## follow from Rivet before the hooks step, so without this the camera held the start. The focus
+## (the camera) sits halfway to the guards' centre, so the nuke's pack is not at the frame edge.
+func _place_rivet(stage: ArenaStage) -> void:
+	stage.arena.rivet.pos = solo
+	if stage.follow == null:
+		return
+	var centre: Vector2 = solo
+	for at: Vector2 in spots:
+		centre += (at - solo) / spots.size()
+	stage.follow.target = solo
+	stage.follow.focus = solo.lerp(centre, 0.5)
 
 
 func step(stage: ArenaStage, tick: int) -> void:
 	if solo != Vector2.INF and blade.is_empty():  # the city block re-places Rivet after setup
-		stage.arena.rivet.pos = solo
+		_place_rivet(stage)
 	for n: int in guards.size():
 		var g: Fighter = guards[n]
 		g.cooldown = HOLD_FIRE
