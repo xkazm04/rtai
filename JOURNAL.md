@@ -1191,3 +1191,24 @@ NEXT (replaces the list above):
   my docs/decisions.md electro line names, with my OK. Caveat sent: RigGait.step also writes the sides'
   stepping/lift/timed/step_t/foot_from, which the patch does not restore (harmless on a consumed
   victim, but the "every channel put back" claim no longer holds strictly).
+- 10:01 sent the same notes to showcase directly (session message): merge 5e37b57c; my OK to apply
+  human-reactions' plank-legs patch on their main as merge glue.
+- Registry rules this iteration: motion-quality-gating (every change judged on a before/after strip
+  at the zoom it was reported at, and re-checked at 32 px/m; the 32 px/m check caught the pale
+  corpse and led to 5e37b57c); realtime-combat-semantics (all three code commits are render only:
+  the 60 Hz kill sim, its RNG and the goldens are untouched; parity bit-exact).
+- Clean-up: scratch renders deleted (only the capture scripts remain); the throwaway 88ff881d
+  worktree and its APPDATA removed; no Godot process of mine running. frames.json: 15 entries, all
+  files exist; the it19 clips decode (reel 80 s, flame 10 s / 16 s, ray 9 s / 12.5 s).
+
+NEXT (iteration 20 / the 10:40 REPORT):
+1. REPORT.md is already updated in place for iteration 19 (head of record 5e37b57c, "After 09:20").
+   At 10:40 add only what changes after 10:20 (likely nothing from this lane).
+2. After the morning merge: check that showcase took 5e37b57c and applied human-reactions' plank-legs
+   patch (kill_sprawl_cut.gd: c_plank/plank_feet + _plank_legs). Re-film the electro clip on main.
+3. Re-check gunplay's REQUEST 29/30 answers (molotov corpse, stuck shards) on the merged main.
+4. The nuke tick-123 RenderingServer wait (4.4 ms, deterministic, under 16.6 ms): try spreading a
+   multi-victim cut over two frames or prewarming its canvas items; measure under bench.lock
+   (evidence/brutality/lock-it18 is the before).
+5. Owner call added: ray lock stand_ticks 30 (default) vs 12.
+- 10:02 session closed. Head = this commit; code head 5e37b57c.
