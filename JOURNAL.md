@@ -240,3 +240,16 @@ NEXT (iteration 7):
    on the head and write `evidence/n5-cast/footprint-after.json` (cops, Rivet, peds) for the REPORT table.
 4. Start REPORT.md (due 08:40): what works with evidence paths (frames.json), Calls for the owner (held-gun size;
    limb weight at 32 px/m with the one-value levers; 3/4 vs plan camera), what does not.
+- 19:00 footprint on the head (`dev/bench/rig_footprint.gd`, `evidence/n5-cast/footprint-after.json`), plan view:
+
+  | who | shoulder span | torso depth | bbox length x width | vs iteration 2 |
+  |---|---|---|---|---|
+  | ped (coat / jacket / hoodie), the authority | 0.83 m (0.82-0.84) | 0.52 m | 0.69 x 1.34 m | unchanged |
+  | cop (patrol, SWAT; riot 1.39 m long with the shield) | 0.90 m (1.08x ped) | 0.51 m | 1.01 x 1.45 m | was 1.31 m span |
+  | Rivet (hybrid) | 1.00 m (1.20x ped, 1.11x cop) | 0.54 m | 1.47 x 1.51 m | was 1.14 m span, 1.68 x 1.97 m |
+
+  Rivet's span came out 1.00 m, not the 0.92 m planned in iteration 4: the hybrid torso's shoulder plates (330 part
+  px) are wider than the d4 torso the size_k was derived on. His bbox width is 1.04x a cop's, so he still reads
+  "only slightly larger"; kept. One-value lever if the owner wants exactly 1.1x the crowd:
+  `RivetPlan.FORMS[FORM_BASE].x` 0.97 -> 0.89 (re-bless the look goldens after). Call for the owner in REPORT.
+  Brief item 4 (the crowd on one footprint): the three peds sit within 0.82-0.84 m, no change needed.
