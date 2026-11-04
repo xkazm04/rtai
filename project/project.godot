@@ -13,6 +13,7 @@ config/custom_user_dir_name="RTAI Uprising"
 run/main_scene="res://boot/main.tscn"
 run/main_scene.bench="res://dev/bench/city_bench.tscn"
 run/main_scene.slice="res://boot/quest1.tscn"
+run/main_scene.showcase="res://dev/arena/arena.tscn"
 
 [autoload]
 
