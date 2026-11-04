@@ -492,3 +492,9 @@ NEXT (after the run): a city-path claw beat for ArenaRivetBot (one lone cop, 2+ 
 - 10:24 read JOURNAL and git log; tip fb51be83. Six minutes to the freeze: no code change or capture fits (a capture alone takes 5-7 minutes on the loaded machine, and a code change needs about 10 minutes of gates).
 - 10:25 check: all 15 frames.json entries point at files that exist. No Godot process is running on the machine (tasklist). No lock taken; no code changed (the gates of record stay at 09ef1958).
 NEXT (for the 10:40 REPORT session): REPORT is current to 10:09. Add the two rejected 48 px/m claw tries (iterations 20 and 21) under open items. After the run: a city-path claw beat for ArenaRivetBot (one lone cop, 2+ m clear); the nav-grid walk-in for the dev bot; call 14.
+
+## Iteration 23 (10:30, STABILIZE / REPORT)
+- 10:30 read JOURNAL and git log; tip 0b7a148a. Code unchanged since 09ef1958, so the gates of record hold; no gate re-run (nothing to verify that moved).
+- REPORT updated in place (lane root + docs/night copy): the "After 09:00" header now gives the 10:40 status; one line for the two rejected 48 px/m bare-claw tries (iterations 20-21); one open-flaw line; Next steps item 7 (lane root only; the docs copy has no Next steps section and points at the lane-root file). Edited with the Edit tool and a quoted Python heredoc, then checked: 0 form-feed bytes in either file.
+- No Godot process of mine running; no lock taken; frames.json unchanged (15 entries, checked at 10:25).
+NEXT (after the run): a city-path claw beat for ArenaRivetBot (one lone cop, 2+ m clear) for a 48 px/m bare-claw clip; the nav-grid walk-in for the dev bot; call 14 and the scenario_rivet_chainsaw bar for the owner.
