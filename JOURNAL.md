@@ -1396,3 +1396,14 @@ NEXT is unchanged, except item 2 (done).
   only the two known accent rows (vehicles 8 px at 48, cop 28 px at 64). FRICTION: the first run
   (`evidence-21.log`) marked unit FAIL with "tree changed during run" because I committed JOURNAL
   mid-run (757 passed). Do not commit while run.mjs runs.
+- 10:00 MILESTONE `MASTERS/city_lone_kills_closeup_64ppm.mp4` (15 s): pistol, rocket and hand
+  cannon in the city at 64 px/m (`citylone21r_64_<gun>/`, `--reach=6`, 0 script errors; the same
+  kill ticks as at 48 px/m). Looked at a 2 fps sheet and stills: the rocket with its smoke puffs on
+  the told line beside Rivet's launcher, the blast ring, the fall and the blood, the victim
+  mid-left; the corpse drifts to the lower left about 1.5 s after the kill. frames.json entry 6
+  (dropped side_by_side_pistol_mpistol_fightcam_64ppm.mp4, superseded by the lone close-ups).
+- CORRECTION: the pit's victims are the arena's guards (orange hi-vis), not blue cops. The three
+  city reels are re-cut with "one guard" labels and the frames.json titles fixed. The arena lone
+  reels (iteration 19) still say "one cop" in their burned-in labels. OBSERVATION for the owner:
+  the guards' orange reads close to the vermilion that is reserved for danger, objectives and
+  Rivet's collar (the arena lane's guard look, not gunplay's).
