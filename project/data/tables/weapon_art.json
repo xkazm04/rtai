@@ -1245,6 +1245,7 @@
       },
       "pickup": "res://features/combat/weapons/art/gatling/pickup.png",
       "projectile_fx": "tracer",
+      "projectile_k": 0.6,
       "size_px": [
         815,
         170
