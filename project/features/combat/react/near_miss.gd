@@ -8,6 +8,7 @@ extends RefCounted
 ## Lane human-reactions.
 
 const NEAR_M: float = 1.1
+const PAST_M: float = 8.0
 
 var ducks: int = 0
 ## The humans each live round already ducked: shot -> {fighter id: true}.
@@ -28,10 +29,14 @@ func apply(arena: CombatArena, rigs: CharacterRigs, pipe: DeathPipe) -> void:
 	_seen = now
 
 
-## True when the round is past the body and its line went by within NEAR_M (but missed it).
+## True when the round is past the body (by at most PAST_M: a fast round moves metres a frame),
+## the body was ahead of its muzzle, and its line went by within NEAR_M (but missed it).
 static func passed(s: Shot, h: Fighter) -> bool:
 	var to: Vector2 = h.pos - s.pos
-	if to.dot(s.vel) >= 0.0 or to.length() > NEAR_M * 2.0:
+	var along: float = to.dot(s.vel.normalized())
+	if along >= 0.0 or along < -PAST_M:
+		return false
+	if s.origin != Vector2.ZERO and (h.pos - s.origin).dot(s.vel) <= 0.0:
 		return false
 	var side: float = absf(to.cross(s.vel.normalized()))
 	return side > h.radius_m and side <= NEAR_M

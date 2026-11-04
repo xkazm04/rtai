@@ -24,6 +24,10 @@ func test_a_round_still_coming_or_far_or_through_the_body_is_not() -> void:
 	assert_false(NearMiss.passed(_shot(Vector2(4.5, 0.0), Vector2(40.0, 0.0)), h), "not past yet")
 	assert_false(NearMiss.passed(_shot(Vector2(5.5, -1.0), Vector2(40.0, 0.0)), h), "too far off")
 	assert_false(NearMiss.passed(_shot(Vector2(5.5, 0.6), Vector2(40.0, 0.0)), h), "a hit line")
+	assert_false(NearMiss.passed(_shot(Vector2(14.0, 0.0), Vector2(40.0, 0.0)), h), "long gone")
+	var behind: Shot = _shot(Vector2(6.0, 0.0), Vector2(40.0, 0.0))
+	behind.origin = Vector2(5.5, 0.0)
+	assert_false(NearMiss.passed(behind, h), "fired from past the body")
 
 
 func test_a_near_miss_ducks_the_human_once_per_round() -> void:

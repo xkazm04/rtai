@@ -22,6 +22,8 @@ var px_per_m: float = 32.0
 var hud: ArenaHud = ArenaHud.new()
 var panel: ArenaPanel = ArenaPanel.new()
 var tuning: ArenaTuning = null
+## The cast rigs under --rigs (null without).
+var cast: ArenaRigs = null
 var _shot: String = ""
 var _shot_tick: int = 600
 var _telemetry: String = ""
@@ -108,7 +110,6 @@ func _add_view() -> void:
 	add_child(view)
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
-	var cast: ArenaRigs = null
 	if ArenaArgs.parse().has("--rigs"):  # the cast rigs instead of quest 1's sprites (dev)
 		cast = ArenaRigs.new()
 		add_child(cast)
@@ -185,6 +186,12 @@ func _notification(what: int) -> void:
 	if leaving and _telemetry != "" and session != null:
 		@warning_ignore("return_value_discarded")
 		session.write_telemetry(_telemetry)
+	if leaving and cast != null and cast.react != null:  # human-reactions: the fight's reactions
+		var r: ReactLink = cast.react
+		Log.info(
+			"arena", "react: %d wounds, %d deaths, %d ducks" % [r.wounds, r.deaths, r.near.ducks]
+		)
+		cast = null
 	if leaving and _characters != null:  # lane human-reactions: the street's reactions, counted
 		var c: CrowdReact = _characters.crowd
 		Log.info("arena", "crowd: %d cowers, %d trips, %d deaths" % [c.cowers, c.trips, c.deaths])
