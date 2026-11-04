@@ -302,3 +302,11 @@ image.lock untouched this session, no Godot process of mine running, throwaway w
   ink limbs, cream cap disc, bright blue pads). Not changed tonight: the black-limb cop is the approved built look
   and a recolour needs every reaction re-checked and a golden bless. REPORT "open" updated.
 - 22:06 scenarios 46/0 on 29a853be.
+- MILESTONE 22:08 navy cops toward r2_c5. `cop_navy.py` (masters tools) recolours the cop limb ink fill and the
+  patrol cap crown navy in D4 and D5 (D5 darker, since look_d5_part lifts it; the first D5 pass merged sleeves with
+  the pads). Lineup A/B `frames/cop-navy-ab.png` (32 and 64 px/m), react board on the navy cops
+  `frames/react-board-navy-64ppm.png` (481 frames, 0 script errors, every family reads, blood still red). Look
+  goldens within tolerance (junction 11/11 worst mean 0.91, block 5/5): no bless. Unit 940/0, lint 13/13.
+  DECISION: r2_c5 (2026-11-04) supersedes d5-cast's cream "T1" cap crown (owner review was pending). 18
+  provenance lines (prior line + this edit, new sha256). Registry rule applied (`sprite-and-atlas-production`):
+  recolour the source parts in both tiers, alpha untouched, instead of a shader swap that the D5 overlay would hide.
