@@ -15,3 +15,11 @@ func test_thug_wears_no_collar_and_no_hose() -> void:
 	var thug: BodyPlan = ThugPlan.build()
 	assert_eq(thug.collar_part, "", "vermilion is Rivet's collar only")
 	assert_eq(thug.hose_tex, "")
+
+
+func test_thug_wears_its_own_parts() -> void:
+	var thug: BodyPlan = ThugPlan.build()
+	assert_eq(thug.art_dir, "thug")
+	for part: String in ["helmet", "torso", "claw_open", "l_shin"]:
+		var path: String = "res://features/characters/art/thug/%s.png" % part
+		assert_true(ResourceLoader.exists(path), path)

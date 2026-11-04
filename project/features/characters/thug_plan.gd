@@ -4,11 +4,11 @@ extends RefCounted
 ## its own proportions, no longer King's plan at a smaller size (lane human-reactions, brief
 ## item 5). Short legs on a wide stance, long heavy arms that reach for the claw swing, the head
 ## carried low and forward, short heavy steps. No collar (vermilion is Rivet's collar only), no
-## hose. It still wears King's restyled parts (art/king/, Rivet's layout) until its own part
-## sheet lands (REQUEST 2 -> weapon-art in the lane JOURNAL); the art_dir is the one line to swap.
+## hose. It wears its own parts (art/thug/, weapon-art dae102b7: Rivet's layout in dark gunmetal,
+## one round optic, no red, no vermilion), so ART_DIR is the one line to swap back to "king".
 
 const SIZE_K: float = 1.05
-const ART_DIR: String = "king"
+const ART_DIR: String = "thug"
 const LEG_K: float = 0.82
 const STANCE_K: float = 1.25
 const ARM_K: float = 1.15
