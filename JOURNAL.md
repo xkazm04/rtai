@@ -1227,3 +1227,7 @@ re-export (`cd project && "$G" --headless --path . --export-release windows-show
 REPORT status rewritten at 10:40 (final reel, exe round, play commands). If a lane tip has not
 moved since 09:15, round 17 + reel-0930 + the 09:30 exe are the final build. Never edit the tree
 while gates.sh's evidence step runs.
+- 09:35 session end. Every lane has 1-2 code commits past round 17 (09:35 count), so the final
+  round's merge (round 18) is real work, not a no-op. A round 18 now would not finish gates +
+  reel (about 25 min) before this session's 09:46 stop; left for the 09:45 final round. No Godot
+  process of mine running; scratch cut-r16-dir and cut-r17-dir kept (r17 = reel-0930's chapters).
