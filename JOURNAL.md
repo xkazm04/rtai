@@ -684,3 +684,18 @@ NEXT (iteration 10):
    cache the cut per rig look.
 5. Cherry-pick gunplay 89c5fac9 (stuck shards on the corpse) and check it does not double up
    with KillBurstFx.
+- MILESTONE 06:20 homing shards stand in red wounds (59429978): a blood dot at each shard's base
+  and a 1.6 px ink rim; at 64 and 32 px/m the red now leads the eye to the cream crystals
+  (evidence/brutality/homing-shard-wounds-64-32ppm-it9.png). Masters slow cut re-made, 32 px/m
+  real-time clip added.
+- 06:23 32 px/m real-time clips for the plasma fall and the electro charged one-shot (one
+  signature kill each, 0 script errors; strips evidence/brutality/plasma-electro-32ppm-it9-strips.png).
+- GATES OF RECORD 06:21 on 59429978: lint 13/13, unit 785/785 (unit-it9.log), scenario
+  brutality 1/1 (scenario-brutality-it9.log); full suite 35/35 on 47e38261 (the commits after it
+  are render-only: KillBurstFx). Parity and bench not run (no city-sim change; no bench taken).
+- Shared files touched this iteration: none outside my folder, except the gunplay cherry-pick
+  (5473194f: weapons.json, weapons.schema.json, weapon_spec.gd, trigger.gd, gun_hand.gd, shot.gd,
+  gun_fx_art.gd, fight_areas_art.gd, fight_charge_art.gd, test_charge_shot.gd; gunplay's own
+  commit, minus the `min_lob_m` line).
+- 06:24 session closed. Scratch renders of this iteration deleted (all kept clips are in masters
+  or evidence/brutality); masters frames.json 15 entries. No Godot process of mine left running.
