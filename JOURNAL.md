@@ -430,3 +430,11 @@ NEXT (iteration 6, in order):
 4. Rivet's own hit reaction in the real fight (brief item 4): a flinch toward the hit on the rig is
    human-reactions' cast work; GunFx sparks are in. Check after REQUEST 1 (it5).
 5. Idle riot bench of record when the machine is quiet (the Director's at the merge otherwise).
+- 03:54 fix: the nuke's flash read grey on the pit's concrete at 48 px/m (a see-through cream darkens
+  on this layer; `arena_nuke_pit_48ppm/blast_sequence_before.png`). Now opaque cream in an ink rim for 2
+  ticks, then a thinning opaque cream band (`flash_frames.png`, 8f4838bc). City clip re-shot; the
+  side-by-side rebuilt with the 48 px/m pit cell. LESSON: on the FX layer use opaque cream for any
+  flash; translucent cream reads as grey over the dark ground.
+- 03:56 city shard check at 32 px/m (`city_shard_block_32ppm/shard_tiles_32ppm.png`): the crystals
+  read as ink diamonds with dashed trails on the cream paving (their cream fill vanishes there; the
+  rim carries them), the burst + blood on the cop reads. Arena station doc lists all eleven ids.
