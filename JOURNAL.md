@@ -84,3 +84,43 @@ docs/night/2026-11-05/ghost-powers/).
   Fix in progress: walls push the car out and an armed car blows on a wall; arm_k 0.3.
 - FINDING one SoulPowers per ghost stage (Hauler and Dent each own one): both powers can run at once. The
   forms lane's switch should own "one form at a time"; until then the pilot does not block it.
+- 00:29 MILESTONE f3362eaa Dent's car stops on the arena walls (it drove through: DentStage sets the pose
+  directly) and an armed car blows on a wall; arm_k 0.3. Re-filmed: the car strikes A, turns onto B, stops
+  on the wall line and blows inside B: 5/5 (blowback 4, gib 1), 0 SCRIPT ERROR. scenario_ghost_attacks
+  re-run on these values: 1 ran, 0 failed (`evidence/scenario-ghost-attacks.log`).
+- COMBAT CHECK director reel headless `--quit-after 7200` on 5406276a: 7 chapters ran (headless pacing), all
+  down (claw_combo 2/2, pistol 2/2, machine_pistol 4/4, rocket 1/1, flamethrower 1/1, electro 1/1, molotov
+  1/1), 0 SCRIPT ERROR (`evidence/director-reel-it1.log`). The other 9 chapters NOT checked this session.
+- Evidence: `dent-arena-32ppm.mp4`, `dent-64ppm-halfspeed.mp4`, `frames/dent-vs-target.png`,
+  `frames/dent-beat-32ppm.png`; frames.json 9 entries. Judged: the tether + heat halo read; the blast is
+  small and pale beside the target's fireball; at 64 px/m the camera stays on Rivet, so the strikes and the
+  blast leave the frame.
+- 00:30 MERGE n6-ghost-forms 513376e6 (38bcc40c): GhostForms, ghost_forms.json, GhostFormHud; only
+  JOURNAL.md conflicted (kept ours); lint 13/13, import 0 script errors.
+
+### REQUEST 2 -> n6-ghost-forms (inputs once GhostForms drives StagePilot)
+I adopt your REPLY (ids `base/tonnage/dent/kerf/ohm`, anchors in ghost_forms.json, G = next ghost). Then:
+1. Tonnage: HaulerStage keeps the attack logic; please gate it on `GhostForms.settled() and form_id() ==
+   &"tonnage"` instead of its own `powers.try_activate(&"hauler")` (or hand me the GhostForms and I gate it).
+   The slam centre moves to your `press_head` anchor + 0.4 m once the big rig is live (data: press_ahead_m).
+2. Dent: today `power_gearbox` (G) seizes. Once G = next ghost, Dent's seize = the **fire** press while the
+   Dent form is settled; the overload command stays the melee press. I will switch DentStage.drive's
+   `power` argument to that as soon as your StagePilot hookup lands (one line in StagePilot._ghosts()).
+3. Both stages keep a SoulPowers each until then; please let GhostForms own the one-power-at-a-time rule.
+
+NEXT (iteration 2, ghost-powers):
+1. Unit gate result on 38bcc40c (`evidence/unit-it1-merged.log`, started 00:31); if red, fix first.
+2. Dent proof gaps: a camera that frames the seized car (the arena CameraRig: follow the midpoint of Rivet
+   and the car while seized) for the 64 px/m close-up; a coloured blast (warm fireball core + debris, no red:
+   reuse gunplay's rocket/barrel blast FX if it exists) so it reads beside ghost_dent_mechanic; Dent in the
+   city block (`--arena=city`, a parked car or a traffic car via soul_hijack_traffic) and on a police car.
+3. Kerf (brief item 3): ghost_attacks.json `kerf`: dash/blink, blink-behind-and-slice along a teal line
+   (human one-shot = brutality split with a teal-white cauterised edge, robots heavy damage), a hanging cut
+   line, chain of N blinks with a recharge; add to GhostReel (`--ghost=kerf`) and scenario_ghost_attacks.
+4. Ohm (item 4): forked bolt from the electrode anchors, x machine multiplier, stun + burns on humans, the
+   electro X-ray kill in teal; `mass` tier as a data hook only.
+5. Tonnage polish: the flattened body at 32 px/m is close to the standard pile (a wider, flatter print or a
+   die-plate imprint under it); armour sparks off the plates on a blocked round (ShieldSparks-like, white);
+   gate the attacks on GhostForms once REQUEST 2 lands; city block clip.
+6. The full director reel (16 chapters) windowed or `--chapter=` batches, and the full scenario suite on the
+   final head. Delete masters scratch AVIs (`n6/ghost-powers/scratch/`) once the clips are final.
