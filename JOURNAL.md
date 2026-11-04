@@ -365,3 +365,15 @@ NEXT (after the freeze; for the morning merge / the next night):
 - 08:00 Gates of record on 8a7fd9a1: lint 13/13 (719 files), unit 821/821 exit 0, scenarios 38/38 exit 0 (`E/it11-*.log`). No replay or parity golden was touched (render only). No bench taken.
 - Registry rules applied: motion-quality-gating (the claim comes from looked-at renders at the same tick, before vs after; the first try was refuted by the render and is reported so; there is a planted fault in the new test); depth-ordered-layered-art (I rejected a z swap that would hide the stock under the helmet in favour of moving the weapon off the head, so no layer passes through another). Deviation: none.
 - 08:04 MILESTONE: the 64 px/m close-up of the long guns beside the helmet, on the tip's code (the same three arena pit runs at --ppm=64, 420 frames each, 0 script errors). Clip `M\clips\arena-pit-tubes-beside-head-64ppm.mp4`, strip `M\frames\arena-pit-long-guns-beside-head-strip-64ppm-2x.png`. Looked at: the rocket launcher and the nuke ride the shoulder, and the helmet and collar stay clear at every tick. FLAW: at tick 394 the plasma rifle still clips the left edge of the helmet; BESIDE 0.85 is below 1 on purpose, to keep the gun near the claw. This is frames.json entry 5. Scratch renders deleted (only the run logs are kept in gtai-n4/scratch/ra11).
+- 08:06 TRIED AND REVERTED (not committed): BESIDE 1.0. In a 64 px/m run (plasma rifle + rocket) the rifle still touches the helmet's rim at tick 394, and at tick 330 the rocket floats off the shoulder (it detaches from the body). Kept 0.85. The REPORT lists this as an open flaw: the real fix is an authored per-gun carry pose with the claw at the shoulder.
+- 08:11 Evidence run on the tip's code (`E/it11-evidence.log`, --no-bench --allow-dirty):
+  - PASS: lint 13/13, scenarios 38/38, parity bit-exact (mutation caught at step 629).
+  - Unit: 821 passed, 0 failed. The runner still marks it FAIL with "tree changed during run" because I edited REPORT and JOURNAL mid-run (lesson: do not touch the tree during an evidence run).
+  - Selftest: look goldens 11/11 and block goldens 5/5. It exits 1 on the accent audit with the same NEW findings as in iteration 10, gunplay's blood-flicker class. Not this lane's change.
+- Session end 08:12: all work committed. No Godot process of mine running: every capture exited on --quit-after and the evidence run finished. Scratch renders deleted. bench.lock and image.lock were never taken.
+
+NEXT (after the freeze; for the morning merge or the next night):
+1. The Director: call 1 (quest 1 on the rigs by default) is the lead call. The REPORT is final at this tip.
+2. An authored carry pose per long gun, with the claw at the shoulder rather than the chest. The plasma rifle still clips the helmet's rim at 64 px/m (tick 394), and BESIDE 1.0 was rejected.
+3. ArenaArsenalBot's melee walk-in: a nav-grid path instead of a straight line plus the prop slide.
+4. Call 14 (melee bodies overlap the drawn rigs) and the scenario_rivet_chainsaw ">= 3 kills" bar stay for the owner.
