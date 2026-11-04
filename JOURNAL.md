@@ -1151,7 +1151,7 @@ NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so
   (`.gitattributes eol=lf`), so the commits are clean; the working files were normalized and re-added (no content change).
 - Scratch AVIs deleted; no Godot process of mine running; no lock taken.
 
-NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final merge is 54fb97d1 + docs:
+NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final merge is a1a819d3 + docs:
 1. If a re-film of the showcase reel shows the ray hoops too heavy at 48 px/m: ARC_INK_M for hoops only (0.04), A/B, gates.
 2. Human-reactions' riot-shield call B needs a flat rectangular shield part from weapon-art; build it only if the owner picks B.
 3. At 10:40 update REPORT.md in place ("After 09:00") with anything later. Gates of record now: lint 13/13, unit
