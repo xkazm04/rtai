@@ -1085,9 +1085,10 @@ NEXT (iteration 8, the final round; freeze 08:30):
   (+ 17 CITY BLOCK) being assembled at session end (scratch-showcase/reel-0808.txt).
 
 NEXT (after 08:12; freeze 08:30, report 08:40):
-1. Check scratch-showcase/reel-0808.txt says "reel reel-0808 0 (122 s)" and film-city-raw-reel-0808.log
+1. DONE 08:10: reel-0808 (122 s, 0 SCRIPT ERRORs incl. the city film) is the final reel: first in
    has 0 SCRIPT ERROR; then put reel-0808.mp4 first in masters frames.json (round 14, e13dc36b)
    and make REPORT's final reel reel-0808 (reel-0751 stays as round 13). If it failed, reel-0751
    is the final reel (round 13; the exe is round 14, render-only difference: the molotov burst).
 2. Open: REQUEST 29 -> brutality (electro corpse reads standing after the X-ray). No further merge
    unless a lane lands it before 08:30 AND the gates can run (about 7 min) before the freeze.
+- MILESTONE 08:10 reel-0808.mp4 (masters, frames.json first entry, REPORT final reel): round 14, the exe's build, 122 s, 0 SCRIPT ERRORs in all 17 chapters.

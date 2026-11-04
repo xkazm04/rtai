@@ -1,10 +1,8 @@
 # Showcase lane: night run 2026-11-04, report
 
 Status: FINAL on merge round 14 (e13dc36b, merged 08:00; the showcase session ended at 08:12, so
-the final round ran 07:15-08:12). Gates r14 green; exe re-exported 08:02 on round 14. Final reel
-**reel-0751** (round 13; reel-0808 on round 14 was being assembled at session end: if it is in the
-masters folder it is the newer cut, differing only in the molotov burst). A lane commit after
-08:00 is not in this build.
+the final round ran 07:15-08:12). Gates r14 green; exe re-exported 08:02 on round 14; final reel
+**reel-0808** on the same build. A lane commit after 08:00 is not in this build.
 
 The showcase lane merges the five night lanes (weapon-art, rivet-arsenal, gunplay,
 human-reactions, brutality) into `n-showcase` each round, runs the gates, cuts the director reel
@@ -44,7 +42,9 @@ city block loads with the loadout.
 | reel-0700-close64 | 64 px/m close-ups of the round 9-10 changes |
 | reel-0710 | morning-reel draft on round 11, 122 s: 16 chapters + 17 CITY BLOCK |
 | reel-0722 | morning reel on round 12, 122 s, 0 script errors (the city block's plasma error fixed) |
-| **reel-0751** | **the final morning reel on round 13, 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors; ray gun dust heap and the molotov victim in the opened fire are new** |
+| reel-0751 | morning reel on round 13, 122 s, 0 script errors; ray gun dust heap, molotov victim in the opened fire |
+| reel-0756-close64 | 64 px/m close-ups on round 13: molotov, ray gun, rocket, mini-nuke, flamethrower |
+| **reel-0808** | **the final morning reel on round 14 (the exe's build), 122 s: 16 chapters at 48 px/m + 17 CITY BLOCK at 32 px/m, 0 script errors** |
 
 ## Gates per merge round (all under private APPDATAs, CONTENDED machine)
 
@@ -81,12 +81,12 @@ bench (the lock was taken by another lane at 07:41 and the session ended at 08:1
 ## Calls for the owner
 
 - **showcase-1, electro death pose:** the stiff "plank" corpse vs a lying fall along the shot
-  (reel-0751 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in
+  (reel-0808 chapter 06 shows neither yet: REQUEST 29 -> brutality; the plank exists in
   human-reactions 3a8d3931 on the pit path).
 - **showcase-2, hub crowding:** the melee-line dummies stand in front of the weapon wall's base,
   and the hub has no free row left (evidence/r8/armory-48ppm.png).
 - **showcase-3, pit wall bars on the city plaza:** the pit's wall bars still draw on the city
-  block (reel-0751 chapter 17).
+  block (reel-0808 chapter 17).
 
 ## Known wrong in the current reel (REQUESTs out)
 
