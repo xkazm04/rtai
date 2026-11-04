@@ -28,6 +28,7 @@ const TANK_M: float = 0.8
 const PRINT: bool = true  # held parts through the rig's print_part material
 
 var out_dir: String = ""
+var fire: bool = false  # --fire: flashes on the muzzles, projectiles ahead
 var weapon_set: String = "core"  # core | adv (set by the launcher before _ready)
 var ids: Array[StringName] = CORE
 var step_m: float = 2.55
@@ -42,6 +43,7 @@ var _bus: EventBus = EventBus.new()
 var _data: DataStore = DataStore.new()
 var _art: WeaponArt = WeaponArt.new()
 var _held: Array[Sprite2D] = []
+var _flashes: Array[Sprite2D] = []
 var _tank: Sprite2D = null
 var _hose: Line2D = Line2D.new()
 
@@ -77,6 +79,8 @@ func shoot() -> int:
 			_pose()
 			_rigs.step_ticks(1)
 			_attach()
+			for fl: Sprite2D in _flashes:
+				WeaponLineupFire.tick(fl, t)
 			await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		ok = _save(roundi(z * PX)) and ok
@@ -106,6 +110,8 @@ func _props() -> void:
 			held.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 		_over.add_child(held)
 		_held.append(held)
+		if fire:
+			_flashes.append(WeaponLineupFire.arm(_art, id, held))
 		var pick: Sprite2D = Sprite2D.new()
 		pick.texture = _art.pickup_texture(id)
 		pick.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -189,7 +195,8 @@ func _save(ppm: int) -> bool:
 	var img: Image = get_viewport().get_texture().get_image()
 	if img == null or img.is_empty():
 		return false
-	var base: String = out_dir.path_join("lineup-%s-%dppm" % [weapon_set, ppm])
+	var tag: String = weapon_set + ("-fire" if fire else "")
+	var base: String = out_dir.path_join("lineup-%s-%dppm" % [tag, ppm])
 	var ok: bool = img.save_png(base + ".png") == OK
 	if ppm == 32:
 		var view: Vector2 = Vector2(img.get_size())
