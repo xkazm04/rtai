@@ -62,3 +62,25 @@ docs/night/2026-11-05/ghost-powers/).
   body reads at 64 but at 32 px/m it is close to the standard pile; the tank body is still base Rivet (forms lane).
 - No before pair yet: the old Hauler never ran in the arena on rigs (eve clips are quest 1 captures,
   `masters/eve/ghost-powers/clips/quest-hauler-ram2/`). Before = eve still in a later composite.
+- 00:20 scenarios 46 ran / 0 failed on the Tonnage head (`evidence/scenarios-it1.log`).
+
+### Dent (item 2)
+- MILESTONE 5406276a DentStage on StagePilot (G / RB, a no-op off an arena stage; StagePilot `_ghosts()`
+  helper keeps drive() under 40 lines): seize = the car nearest the aim LINE (pick_on_line, gearbox lock
+  radius 3 m, range 22 m), soul_hijack (the teal plate), GearboxLink.step drives it where Rivet aims (aim
+  point 14 m: at 9 m the turn-limited car circled the point, turn radius ~5.7 m at 14 m/s), each fighter it
+  touches is struck once (2 dmg, thrown 2.5 m along the nose; row dent_car_hit = blowback), heat over 4 s,
+  armed at 0.3, blows on impact / melee / full heat: 4.5 m, 6 dmg (row dent_blast_gib = rocket's gib), car
+  wrecked. DentView: teal tether from Rivet's hands sagging and trembling, amber -> white heat halo (pulse
+  quickens when armed), ink blast ring with a hot core (none under reduced motion).
+- DECISION Dent's heat is amber-to-white, not vermilion or teal: teal stays on the tether (the soul's link),
+  vermilion is reserved for danger/objectives and the owner wants coloured effects without blood red.
+- MILESTONE scenario_ghost_attacks (1 ran, 0 failed, `evidence/ghost-attacks.json`): Tonnage 10/10, 5 crush,
+  2 cars; Dent seize 1, strikes 5, blast 1, 5/5; replay identical; same seed same state; planted crush_m 0
+  (crush 5 -> 0) and blast_damage 0 (dead 5 -> 4) caught.
+- Clip `dent-arena-32ppm.mp4` (7 s, --bot=ghosts --ghost=dent). Judged: the tether and heat halo read at
+  32 px/m, A and B are thrown off the bonnet; BUT the car drove through the south wall (position set
+  directly) and B died to car hits before it armed, so the blast came late at full heat on the riot cop.
+  Fix in progress: walls push the car out and an armed car blows on a wall; arm_k 0.3.
+- FINDING one SoulPowers per ghost stage (Hauler and Dent each own one): both powers can run at once. The
+  forms lane's switch should own "one form at a time"; until then the pilot does not block it.

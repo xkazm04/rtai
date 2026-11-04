@@ -5,25 +5,25 @@
       "gib": 1
     },
     "kill_cut_us": [
-      595,
-      634,
-      545,
-      573,
-      706
+      596,
+      475,
+      630,
+      459,
+      628
     ],
     "kill_ticks": [
       76,
       85,
       100,
       101,
-      279
+      129
     ],
     "signature_kills": 5,
-    "view_avg_us": 572,
+    "view_avg_us": 589,
     "view_frames": 420,
-    "view_over_2ms": 3,
-    "view_worst_tick": 325,
-    "view_worst_us": 2482
+    "view_over_2ms": 0,
+    "view_worst_tick": 130,
+    "view_worst_us": 1851
   },
   "cars": {
     "damaged": 0,
@@ -45,7 +45,7 @@
   },
   "damage_taken": 2.39999999999998,
   "deaths": 0,
-  "dodges": 4,
+  "dodges": 1,
   "hit_rate": 0.0,
   "hits": 0,
   "hook_8": {

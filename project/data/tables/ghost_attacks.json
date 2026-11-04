@@ -1,7 +1,7 @@
 {
   "dent": {
     "aim_m": 14,
-    "arm_k": 0.45,
+    "arm_k": 0.3,
     "blast_damage": 6,
     "blast_radius_m": 4.5,
     "car_damage": 2,

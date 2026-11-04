@@ -4,15 +4,15 @@
     "dent": {
       "blasts": 1,
       "seizes": 1,
-      "strikes": 1
+      "strikes": 5
     },
-    "ghost_dead": 2,
+    "ghost_dead": 5,
     "ghost_victims": 5,
     "tonnage": {
       "activations": 0,
       "cars_crushed": 0,
       "ram_hits": 0,
-      "rivet_hp": 95.8,
+      "rivet_hp": 100.0,
       "slam_hits": 0,
       "slams": 0,
       "ticks_on": 0
@@ -23,15 +23,15 @@
     "dent": {
       "blasts": 1,
       "seizes": 1,
-      "strikes": 1
+      "strikes": 5
     },
-    "ghost_dead": 1,
+    "ghost_dead": 4,
     "ghost_victims": 5,
     "tonnage": {
       "activations": 0,
       "cars_crushed": 0,
       "ram_hits": 0,
-      "rivet_hp": 95.2,
+      "rivet_hp": 96.4,
       "slam_hits": 0,
       "slams": 0,
       "ticks_on": 0

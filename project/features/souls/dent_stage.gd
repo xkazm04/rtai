@@ -1,13 +1,13 @@
 class_name DentStage
 extends RefCounted
 ## Dent (the crash-test ghost; the old gearbox soul), lane ghost-powers, for the bound player on
-## an arena stage with cars. power_gearbox (G / RB) seizes the car nearest Rivet's aim point
-## (GearboxLink's soft lock, the teal tether: the car's soul plate shows), and the car drives where
-## he aims (Steer: GearboxLink.step, turn-limited). Every fighter the car hits is struck
-## (car_damage, thrown along its nose). Overload: the car heats over overload_s while seized; once
-## past arm_k it blows on the next impact, on a melee press (the command) or at full heat: a
-## car-bomb blast of blast_radius_m (blast_damage, weapon dent_blast: the gib kill) and the car is
-## wrecked. Tuning: ghost_attacks.json `dent` + powers.json `gearbox`.
+## an arena stage with cars. power_gearbox (G / RB) seizes the car nearest Rivet's aim line
+## (pick_on_line; the teal tether: the car's soul plate shows), and the car drives where he aims
+## (Steer: GearboxLink.step, turn-limited; the arena's walls stop it). Every fighter the car hits
+## is struck (car_damage, thrown along its nose). Overload: the car heats over overload_s while
+## seized; once past arm_k it blows on the next impact (a body or a wall), on a melee press (the
+## command) or at full heat: a car-bomb blast of blast_radius_m (blast_damage, weapon dent_blast:
+## the gib kill) and the car is wrecked. Tuning: ghost_attacks.json `dent` + powers.json `gearbox`.
 
 const ID: StringName = &"gearbox"
 const GHOST: StringName = &"dent"
@@ -57,11 +57,12 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 		_let_go()
 		return
 	link.step(reticle)
+	var wall: bool = _wall(arena_stage)
 	car.pos = link.pos
 	car.head = Vector2.from_angle(link.heading)
 	car.vel = car.head * link.speed
 	heat = minf(1.0, heat + SimClock.TICK_DT / maxf(0.1, num(&"overload_s")))
-	var hit: bool = _strike(stage)
+	var hit: bool = _strike(stage) or wall
 	if heat >= 1.0 or (heat >= num(&"arm_k") and (hit or melee)):
 		_blast(arena_stage)
 
@@ -107,6 +108,15 @@ func pick_on_line(rivet: Vector2, reticle: Vector2, cars: PackedVector2Array) ->
 			best = i
 			best_d = d
 	return best
+
+
+## The arena's walls stop the car (it slides along them); true on a contact this tick.
+func _wall(stage: ArenaStage) -> bool:
+	var out: Vector2 = stage.walls.push_out(link.pos, num(&"car_reach_m") * 0.5)
+	if out == link.pos:
+		return false
+	link.pos = out
+	return true
 
 
 func _strike(stage: CollectCallStage) -> bool:
