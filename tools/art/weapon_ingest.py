@@ -32,7 +32,8 @@ ROWS = {
     "rocket_launcher": ("shoulder", 1.70, 0.50, "flash_tube", "rocket", "", {}),
     "flamethrower": ("backpack_hose", 1.15, 0.22, "flame", "flame", "", {"tank": "flamethrower_tank"}),
     "electro_gun": ("two_hand_long", 1.00, 0.32, "arc", "arc", "", {}),
-    "molotov": ("thrown", 0.48, 0.40, "flame", "flame", "", {}),
+    "molotov": ("thrown", 0.48, 0.40, "", "flame", "", {}),
+    "gloria": ("one_hand", 0.80, 0.30, "flash_pistol", "tracer", "", {}),
     "katana": ("two_hand_long", 1.30, 0.12, "", "", "", {}),
     "electro_baton": ("one_hand", 0.80, 0.14, "arc", "", "", {}),
     "hand_cannon": ("one_hand", 0.85, 0.30, "flash_tube", "tracer", "casing", {}),
@@ -101,9 +102,10 @@ def main(top, side, fx):
         "pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the "
         "muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world "
         "(the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. "
-        "fx anchor_px = the point placed on the muzzle (flash) or the head (projectile)."
+        "fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at "
+        "fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m)."
     )
-    table = {"doc": doc, "fx": fx_rows(fx), "rig_px_per_m": 320, "schema": "gtai.weapon-art/1", "weapons": weapons}
+    table = {"doc": doc, "fx": fx_rows(fx), "fx_draw_scale": 2.0, "rig_px_per_m": 320, "schema": "gtai.weapon-art/1", "weapons": weapons}
     TABLE.write_bytes((json.dumps(table, indent=2, sort_keys=True) + "\n").encode())
     subprocess.run(["node", "tools/art/canon_json.mjs", str(TABLE)], check=True)
     print(f"wrote {len(weapons)} weapons, {len(table['fx'])} fx cells")

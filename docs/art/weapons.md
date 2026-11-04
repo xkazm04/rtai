@@ -1,6 +1,6 @@
 # Weapon art: the design language and the contract (weapon-art lane, 2026-11-04)
 
-Reference sheets (masters, outside git): `gtai-masters/n4/weapon-art/frames/design-sheet-all15.png`
+Reference sheets (masters, outside git): `gtai-masters/n4/weapon-art/frames/design-sheet-all16.png`
 (each weapon: the held top-down part with grip and muzzle marked, the side-view pickup, the HUD icon,
 the muzzle-flash frames and the held part at its true 32 and 64 px/m size, next to the T2 concept),
 `lineup-core-*.png` / `lineup-adv-*.png` (held on the real Rivet rig beside a cop). Raw Codex sheets
@@ -24,7 +24,8 @@ and prompts are in `gtai-masters/n4/weapon-art/raw/`.
    Never teal (souls only), never cop blue, never red (blood only).
 4. **Bold ink outline, flat fills, print grain** (the D5 sticker parts, e.g. the cop's
    `forearm_pistol`). In game the held part draws through the rig's `print_part` material, so it
-   prints as a dark ink silhouette like Rivet's parts.
+   prints as a dark ink silhouette like Rivet's parts, on a 1 world px paper rim (`WeaponArt.make_held`
+   adds 8 cream silhouettes under it, the rigs' sticker halo; `--weapon-rim=off` drops it).
 5. **Readable at 32 px/m.** Held weapons are drawn about 1.5x real size (pistol 0.70 m = 22 px,
    rocket launcher 1.70 m = 54 px), so they stick out of the claw beside a 2 m Rivet. One value per
    row (`length_m`).
@@ -40,7 +41,8 @@ and prompts are in `gtai-masters/n4/weapon-art/raw/`.
 
 ## The contract (`data/tables/weapon_art.json`, schema `gtai.weapon-art/1`, loader `WeaponArt`)
 
-Per weapon id (the ids of `weapons.json` / `melee_weapons.json`, plus `chainsaw` and `plasma_sword`):
+Per weapon id (the ids of `weapons.json` incl. the canon nail gun `gloria`, `melee_weapons.json`, plus
+`chainsaw` and `plasma_sword`; 16 rows):
 `held`, `pickup`, `icon`, `parts`, `size_px`, `grip_px` (where the claw closes), `muzzle_px` (the
 bore tip; the blade tip for melee), `length_px` (tail-to-tip span), `length_m`, `grip_class`
 (`one_hand`, `two_hand_long`, `shoulder`, `backpack_hose`, `thrown`, `heavy_two_hand`),
@@ -54,13 +56,46 @@ var muzzle: Vector2 = art.muzzle_m(&"pistol")   # metres from the grip along the
 var flash: Array[Texture2D] = art.fx_frames(art.muzzle_fx(&"pistol"))  # 3 frames, anchor fx_anchor()
 ```
 
-`rig_scale(id)` gives the same scale in the cutout rig's part px (CutRig.SC = 0.1).
+`rig_scale(id)` gives the same scale in the cutout rig's part px (CutRig.SC = 0.1). FX cells draw at
+`fx_scale()` = `fx_draw_scale` (2.0) x the part scale: at 1.0 a pistol flash was a speck at 32 px/m.
+
+## Gore stickers (`art/gore/`, for the brutality kills)
+
+`stump_round`, `stump_oval`, `chunks_3`, `chunk`, `bone`, `splash`, `charred` (overlay), `xray` (overlay),
+`ash`, and the TOP-DOWN body overlays `xray_top`, `xray_top_jolt`, `charred_top`, `charred_top_slump`
+(drawn on the human rig's layout from above: head disc, shoulder oval, arms forward to +x; anchor = the head
+disc = the rig origin; rotate by the body's facing). The front-view `xray` / `charred` stay for a comic flash.
+Blood tokens only (`#A30509` / `#540005`), comic ink, never photoreal. All are fx cells `gore_<name>`
+(`WeaponArt.fx_frames(&"gore_xray_top")`). Authored at about 300-450 px per sticker: draw at the part scale
+(0.1 world px per px) or larger.
+
+## Silhouette check in the claw (iteration 4)
+
+Judged in a live fight (`res://dev/arena/arena.tscn -- --rigs --clean --start=pit --bot=arsenal
+--loadout=...`), the held parts print dark through `print_part`. At 32 px/m only the outline survives, so a
+weapon must differ in OUTLINE from above, not in plates or colour. The machine pistol got a long curved side
+feed box (`tools/art/smg_feed_box.py`) because it printed as the pistol's blob. A throw has no muzzle flash
+(`muzzle_fx` ""). The flame jet starts long and thin at the nozzle and fans out (round puffs near the gun
+read as red drops).
+
+## Paper rim and magazines (iteration 5)
+
+At 32 px/m the held gun printed as a dark blob on Rivet's dark arm. Every held part (and magazine) now sits
+on a 1 world px paper rim, the same cream sticker edge the rigs draw: the gun reads as its own object at
+32 px/m (`it5-rim-ab-64-32ppm.png`). Brass is a small paper glint (casing at 0.75 scale): charcoal casings at
+1.3 read as bricks the size of a magazine.
+
+Magazines (`parts.mag`, `part_grip_px.mag`; `tools/art/weapon_mags.py`, cut from each gun's own held part):
+pistol = the slide plate with a paper nose, machine pistol = the curved feed box with its tape band, plasma
+rifle = the glass cell, hand cannon = a six-round speed-loader. Drawn at the held part's scale, feed end +x.
+`WeaponMagView` carries one in Rivet's off claw through the reload (out to the hip, a fresh one in) and leaves
+the spent one on the floor.
 
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,
 `tracer`, `casing`, `rocket`, `plasma_bolt`, `shard`, `ray_ring_0..2`, `smoke_0..2`, `flame_0..2`,
-`arc_0..2`. Each has `anchor_px`: the point placed on the muzzle (flash) or the head (projectile).
+`arc_0..2`, `spark_0..2` (also the chain-arc landing and the stun daze: `WeaponFxElectro`). Each has `anchor_px`: the point placed on the muzzle (flash) or the head (projectile).
 
 ## Pipeline (re-run any step; all deterministic except the Codex call)
 

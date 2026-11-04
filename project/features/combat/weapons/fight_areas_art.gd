@@ -23,13 +23,16 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 		if e != null and h.alive():
 			if e.burn_ticks > 0:
 				_fire(ci, h.pos + Vector2(0.0, -0.45), 0.85, tick + h.id * 3, 1.0)
-			if e.stun_ticks > 0:
+			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id):
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
-		_blast(ci, a.blasts[i], tick - a.blast_ticks[i])
+		if not WeaponFxArt.blast(ci, a.blasts[i], tick - a.blast_ticks[i]):
+			_blast(ci, a.blasts[i], tick - a.blast_ticks[i])
 	for i: int in a.chain_arcs.size():
 		if tick - a.arc_ticks[i] < ARC_TICKS:
 			var arc: PackedVector2Array = a.chain_arcs[i]
+			if WeaponFxElectro.chain(ci, arc[0], arc[1], tick / 2 + i):
+				continue
 			_bolt(ci, arc[0], arc[1], tick / 2 + i, 11.0, Ink.INK)
 			_bolt(ci, arc[0], arc[1], tick / 2 + i, 4.5, Ink.CREAM)
 

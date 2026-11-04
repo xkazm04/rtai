@@ -7,7 +7,7 @@
           "$ref": "#/$defs/vec2"
         },
         "art": {
-          "pattern": "^res://features/combat/weapons/art/fx/[a-z0-9_]+\\.png$",
+          "pattern": "^res://features/combat/weapons/art/(fx|gore)/[a-z0-9_]+\\.png$",
           "type": "string"
         },
         "id": {
@@ -87,6 +87,12 @@
         "muzzle_px": {
           "$ref": "#/$defs/vec2"
         },
+        "part_grip_px": {
+          "additionalProperties": {
+            "$ref": "#/$defs/vec2"
+          },
+          "type": "object"
+        },
         "parts": {
           "additionalProperties": {
             "$ref": "#/$defs/path"
@@ -136,6 +142,11 @@
       "minItems": 1,
       "type": "array"
     },
+    "fx_draw_scale": {
+      "maximum": 8,
+      "minimum": 0.1,
+      "type": "number"
+    },
     "rig_px_per_m": {
       "minimum": 1,
       "type": "integer"
@@ -157,7 +168,8 @@
     "doc",
     "rig_px_per_m",
     "weapons",
-    "fx"
+    "fx",
+    "fx_draw_scale"
   ],
   "type": "object"
 }
