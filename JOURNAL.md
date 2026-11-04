@@ -1251,3 +1251,20 @@ NEXT (after the 10:30 freeze, unchanged from iteration 21):
 NEXT (after the freeze, unchanged): call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield
 part only if the owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a
 floor-to-claw pickup clip needs an arena bot that walks to pickups.
+
+## Iteration 24 (10:06-10:30, BUILD, extension, last before the freeze)
+- 10:06 read JOURNAL NEXT, git log, other lanes' JOURNALs for `weapon-art`. No new REQUEST: the hits are the
+  answered ones (brutality 3 and 4, gunplay 31, human-reactions 1 and 2, rivet-arsenal 12, showcase 11).
+- 10:07 showcase is on its final round (round 19: brutality + human-reactions merges, 08e1b72f the electro corpse
+  patch). Its last n-weapon-art merge is `b97342e1`, which holds every weapon-art code change; only docs came after.
+- DECISION 10:07 no new code (same reason as iterations 22 and 23): a change now could not be gated, filmed, looked
+  at and merged into showcase's final reel before 10:30. The tip's gates are unchanged since iteration 22
+  (lint 13/13, unit 745/745, scenarios 32/32 on code 384883b1).
+- 10:08 `docs/art/weapons.md` already documents the pickup ink look and the `--pickup-print=on` before (lines
+  233-234), matching `pickup_look.gd`. `evidence/weapon-art/` stays untracked (gate logs and scratch PNGs, as in
+  every iteration since 1; the masters copies are the record).
+- No Godot process of mine; no lock taken; no renders this session.
+
+NEXT (after the freeze, unchanged): call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield
+part only if the owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a
+floor-to-claw pickup clip needs an arena bot that walks to pickups.
