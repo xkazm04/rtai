@@ -934,3 +934,43 @@ NEXT (iteration 7, from about 06:30):
   48 px/m. REQUEST 24b -> human-reactions: lay it along the shot line (feet toward Rivet, head
   away), and give the scorch enough ink to read at 48. REQUESTs 26 (ray pile) and 27 (molotov
   victim hidden under the stars) still open on round 11.
+- GATES r11 (evidence --no-bench on 9f6b2fbe, CONTENDED): lint 13/13 (783 files), unit 889/889,
+  scenarios 44/44, parity bit-exact (planted caught at 629), selftest PASS (look 11/11 with the
+  r10 goldens: round 11 needs no re-bless; block 5/5). Log evidence/r10/evidence-r11.txt.
+- MILESTONE 07:09 reel-0710.mp4 (masters, frames.json first entry): all 16 chapters fresh on
+  round 11 (0 script errors, every chapter down; mini-nuke 4/4) + 17 CITY BLOCK, 122 s.
+- FINDING 07:10: the city film (chapter 17, `--arena=city --reel=pit --riot`) logs 1445 SCRIPT
+  ERRORs, all one line: kill_hole_fx.gd:84 Topple.pose `inner.transform = ...` on a null
+  instance (`body.get_child(0)` is null for a plasma kill on the city block). reel-0545's city
+  film (before eb04a301, round 9) had 0. The frames look right; the plasma victim just does not
+  topple there.
+- REQUEST 28 -> brutality: KillHoleFx.Topple.pose (kill_hole_fx.gd:84) needs the body's inner
+  node to exist: on the city block a plasma kill's body has no child 0 (null every frame, 1445
+  errors in 35 s). Guard it (`if inner == null: return`) or hand the topple the node KillView
+  actually draws in the city. Repro: n-showcase 9f6b2fbe, `-- --arena=city --reel=pit --riot
+  --loadout=pistol,plasma_rifle,rocket_launcher,molotov --rigs`. If it is not in by the final
+  merge, showcase applies the one-line null guard as integration glue (recorded here).
+- 07:13 session end. Everything committed. Scratch kept (gtai-n4/scratch-showcase):
+  cut-reel-0710-r11/ (the 16 r11 chapters + city_free), cut-reel-0705-r11, -r11b, cut-mp-spread,
+  cut-reel-0700-close64. Deletable: cut-reel-0635-director/stale, cut-reel-0635-redo,
+  cut-reel-0540-director, cut-r9-check.
+
+NEXT (iteration 8, the final round; freeze 08:30):
+1. Read the lanes' JOURNALs for REQUESTs 24b (electro across the shot), 26 (ray pile), 27
+   (molotov victim hidden), 28 (plasma topple null on the city block). If 28 is not in by the
+   last merge, add the one-line null guard in kill_hole_fx.gd Topple.pose as glue (JOURNAL line).
+2. 07:45 last merge (brief order; resolve JOURNAL/REPORT with ours; code conflicts keep both
+   sides as in round 11). Then IMMEDIATELY `"$GODOT_BIN" --headless --path project --import`
+   (0 errors) and commit any generated .uid, BEFORE any film (the FightCam lesson).
+3. Gates: `node tools/evidence/run.mjs --no-bench` under APPDATA showcase-e, logs to
+   gtai-n4/scratch-showcase/ (it refuses untracked files under evidence/). If the look goldens
+   move, read diff images first (python diff vs project/tests/golden/look, resized to 320x200),
+   re-bless only for intended changes + a decisions line.
+4. The final reel: `FILM_APPDATA=.../showcase-film bash evidence/cut.sh reel-<HHMM>-final 48`
+   (~6 min), check `grep -c "SCRIPT ERROR"` in its film.log = 0, then
+   `bash evidence/reel.sh reel-<HHMM> reel-<HHMM>-final 16` (~3 min); chsheet every chapter.
+5. Export: `--export-release windows-showcase ../build/export/windows/RTAI.exe` under APPDATA
+   showcase (~1 min); boot tests (no args; `-- --bot=reel --reel=director --loadout=pistol`;
+   `-- --arena=city --loadout=...`), each 0 script errors.
+6. Bench under bench.lock if free (r10: riot 5.58 / 118, drive 3.39 ms).
+7. REPORT.md: replace the DRAFT status, add the final round's gates/reel/bench/exe rows.
