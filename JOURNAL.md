@@ -136,3 +136,25 @@ table; (4) the mipmaps import step folded into a tool; (5) a clip in motion once
 ## Calls for the owner (adds)
 - weapon-art-4: weapon-art cells (comic burst, vermilion fireball, smoke ring, scorch) vs gunplay's procedural
   shapes for the live fight. Frame `it3-rocket-ab-64ppm.png`, clips `it3-rocket64_after/before.mp4`. Default: cells.
+- MILESTONE 02:19 spent brass + flash on the gun (782f7c6a): `WeaponCasings` (render-only, deterministic from the
+  round count, cleared when the tick runs backwards, at most 24 on the floor) throws the `casing` cell off the gun
+  claw's side; the muzzle flash moved from the body centre line onto the held gun's muzzle (`GUN_SIDE_M` 0.35 m,
+  ahead 0.45 m), both measured in the 64 px/m machine-pistol clip (`it3-smg-flash-brass-64ppm.png`). The tracers
+  (charcoal + paper head) read on the grey arena floor. `test_weapon_casings.gd` (3 tests).
+- NOTE the rocket/flame clips in masters were shot before the flash moved onto the gun (flash on the centre line).
+- DECISION brass side: casings fly to the gun claw's side (aim.orthogonal()), away from the body, not to Rivet's
+  right as a real ejection port would: on the rig the gun sits left of the aim line and brass thrown right crossed
+  his torso. Alternative = flip the sign in `WeaponCasings.track`.
+
+NEXT (iteration 4), in order:
+1. Electro gun in the live fight: the arc + spark are drawn but NOT yet seen in a clip (the bot's electro timing does
+   not repeat across windowed runs). Use the arena range station (static dummies) or `--start=range` + a longer
+   capture, find frames by tiling every frame around Rivet; judge the bold arc at 64 and 32 px/m.
+2. Molotov in the live fight: the spinning bottle (`molotov` held part) + wick flame + the fire patch; same hunt.
+3. The pistol end to end at 32 px/m in the city block (`--arena=city --weapon=pistol`): flash on the gun, tracer,
+   brass on cream paving (does the cream casing vanish on cream? if so an ink-steel casing variant).
+4. Re-shoot the rocket A/B with the flash on the gun (the 64 px/m clips predate it).
+5. Gunplay's chain arcs / fire patches / burning humans / stun still draw gunplay's shapes: offer `spark`, `flame`,
+   `scorch`, `gore_charred` hooks the same way (one line each in `fight_areas_art.gd`), or REQUEST to gunplay.
+6. The weapon-rack arena station (`arena_stations/weapon-art.json` + an ArenaHook laying the 16 pickups in the hub).
+7. Brutality: check n-brutality's JOURNAL for how the gore cells are used; redraw any that read wrong on the rig.
