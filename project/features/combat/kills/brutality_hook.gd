@@ -49,6 +49,11 @@ func open_lab(stage: ArenaStage, weapon: StringName = &"") -> void:
 	var blade: bool = MeleeTable.weapon_ids().has(weapon) or (row != null and row.style == &"split")
 	_lab.blade = weapon if blade else &""  # a split row's weapon is a blade (the plasma sword)
 	_lab.hold_ticks = row.hitstop_ticks + row.grind_ticks if row != null else 0
+	_lab.spread = row != null and row.style == &"dissolve"
+	var solo: String = ArenaArgs.parse().text("--sig-solo")
+	if not solo.is_empty():
+		var xy: PackedStringArray = solo.split(",")
+		_lab.solo = Vector2(xy[0].to_float(), xy[1].to_float())
 	_lab.setup(stage)
 
 
@@ -80,6 +85,7 @@ func telemetry() -> Dictionary:
 		out["view_frames"] = view.frames
 		out["view_avg_us"] = view.spent_us / view.frames
 		out["view_worst_us"] = view.worst_us
+		out["kill_cut_us"] = Array(view.kill_us)
 	return out
 
 

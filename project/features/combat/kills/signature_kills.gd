@@ -65,8 +65,9 @@ func on_kill(e: KillEvent) -> bool:
 		d = d.rotated(side * deg_to_rad(row.cut_deg))
 		offs = split_offsets(d)
 	var serial: int = gibs.throw(row, at, d, offs, _rng)
-	@warning_ignore("return_value_discarded")
-	marks.leave(row, at, d, tick, _rng)
+	var mark: KillMarks.Mark = marks.leave(row, at, d, tick, _rng)
+	if push_out.is_valid():
+		KillMarks.clip(mark, push_out)
 	consumed[victim_id] = serial
 	by_style[row.style] = by_style.get(row.style, 0) + 1
 	hold = maxi(hold, row.hitstop_ticks)

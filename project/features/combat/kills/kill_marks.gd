@@ -21,6 +21,8 @@ class Mark:
 	var ash_from: int = 0
 
 
+const WALL_STEP_M: float = 0.15
+
 var budget: int = 12
 var marks: Array[Mark] = []
 var serial: int = 0
@@ -58,6 +60,25 @@ func leave(
 	marks.append(m)
 	serial += 1
 	return m
+
+
+## Stops each spray drop at the first wall along its throw (showcase REQUEST 13: blood crossed
+## the pit wall onto the paper margin): the ray from the kill is walked in WALL_STEP_M steps and
+## a drop lands on the last free step. `push_out` is the stage's (metres in, metres out).
+static func clip(m: Mark, push_out: Callable) -> void:
+	for n: int in m.drops.size():
+		var d: Vector3 = m.drops[n]
+		var v: Vector2 = Vector2(d.x, d.y)
+		var reach: float = v.length()
+		var free: float = 0.0
+		while free + WALL_STEP_M <= reach:
+			var p: Vector2 = m.at + v * ((free + WALL_STEP_M) / reach)
+			if push_out.call(p) != p:
+				break
+			free += WALL_STEP_M
+		if free + WALL_STEP_M <= reach:
+			var w: Vector2 = v * (free / reach) if reach > 0.0 else v
+			m.drops[n] = Vector3(w.x, w.y, d.z)
 
 
 func write_state(out: StreamPeerBuffer) -> void:
