@@ -85,7 +85,10 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 1. Rivet's size: A, as built, 1.20x the crowd's span (1.11x a cop's), his core clearly larger than a cop's as
    in `r1_c7`; or B, exactly 1.1x the crowd (`RivetPlan.FORM_TRIM`, size_k 0.89; switch with
    `FORMS[FORM_BASE].x` 0.97 -> 0.89). Still with the scale chart: `M/frames/rivet-size-call-64ppm.png`.
-2. Limb weight at 32 px/m: as built, or heavier (`ARMS[FORM_BASE].z` 0.9 -> 1.0, `LEGS[FORM_BASE].y` 1.0 -> 1.2).
+2. Limb weight at 32 px/m: A, as built (arm_w 0.9, leg_w 1.0), or B, heavier (`RivetPlan.FORM_HEAVY`: arm_w 1.0,
+   leg_w 1.2; switch with `ARMS[FORM_BASE].z` 0.9 -> 1.0 and `LEGS[FORM_BASE].y` 1.0 -> 1.2, or render it with
+   `cast_lineup.gd -- --form=heavy`). Walk and stand at 64 and 32 px/m: `M/frames/rivet-limb-call-ab.png`. B's
+   legs reach a pedestrian's leg width; A keeps the lean pistons of r2_c3. Built: A (the owner asked for slimmer).
 3. Held guns: n5-look answered my REQUEST (n5-look 01cd19f2, `rivet_arsenal.json held_size_ref` 1.2): after the
    merge the held gun follows `plan.size_k`, so this 0.97 Rivet carries 0.81x guns (their still
    `gtai-masters/n5/look/held-size-ab-cast-merge.png`; before: `M/cast-hybrid-director-64.mp4`). Off = 0.

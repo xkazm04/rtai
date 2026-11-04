@@ -383,3 +383,8 @@ Session state 22:28: head = this commit, tree clean, image.lock untouched, no Go
   cites them) director-final-ab, brutal-ab, cast-city-ab. REPORT: proof section + Call 3 (held guns answered by
   n5-look 01cd19f2). Rings around the city cops at 64 px/m = ArenaFloorView target markers (proving block only,
   `arena_floor_view.gd` 71), not cast art: left alone.
+- 23:14 REPORT Call 2 (limb weight) had no still: new `RivetPlan.FORM_HEAVY` (arm_w 1.0, leg_w 1.2, base otherwise)
+  and `frames/rivet-limb-call-ab.png` (cast_lineup walk + stand, 64 and 32 px/m, A built vs B). Standing, the legs
+  hide under the body and only the arms differ; walking, B's legs reach a pedestrian's leg width. DECISION: keep A
+  (lean pistons as r2_c3; the owner asked for slimmer), decisions line. Base unchanged: no golden moves. Lint 13/13,
+  unit 940/0. frames.json 15 (+ limb call; hauler-on-hybrid dropped, file kept: REPORT cites it).
