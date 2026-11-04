@@ -741,3 +741,21 @@ export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 
   shot (head away from the shooter, so the body's length reads across the frame), or keep the
   feet-together plank but let it land rotated off the vertical, plus a scorch/smoke mark under
   it so the floor says "dead". The owner sees this chapter at 48 px/m.
+- MILESTONE 05:45 reel-0545 (gtai-masters/n4/showcase, 122 s) = reel-0540-director (round 8)
+  + a fresh chapter 17 (the city block at 32 px/m, 15 s from 16 s of `--arena=city --reel=pit
+  --riot --loadout=pistol,plasma_rifle,rocket_launcher,molotov`), built in one command by the
+  new evidence/reel.sh. City frames (sheets/r8-city.png): rocket blast star and red throw among
+  a group, cops dead in blood on the cream paving, Rivet small at the game's zoom; the pit's
+  black wall bars still stand on the plaza (known). frames.json 15 entries (reel-0545 first,
+  the armory still second; the two oldest dropped); the -director component mp4s of 0530 and
+  0540 deleted (each lives inside its reel).
+- MILESTONE 05:46 the armory (ArenaArmory, features/showcase, arena_stations/showcase.json):
+  every finished weapon on the hub floor so the morning exe plays all of them. DECISION in
+  docs/decisions.md. 48 px/m still (evidence/r8/armory-48ppm.png): 15 guns on paper discs in
+  two rows under weapon-art's wall, Rivet with the pistol; unit 851/851 with its 3 tests.
+- MILESTONE 05:48 trial export on round 8 + armory: `--export-release windows-showcase` ->
+  build/export/windows/RTAI.exe (234 MB, embedded pck) + the release DLL; exit 0. Boot tests
+  (headless): no args -> "Rivet carries pistol", "armory: 15 weapons on the hub floor", "arena
+  open: 16 stations", "cast rigs: true", 0 script errors; `-- --bot=reel --reel=director
+  --loadout=pistol` -> chapters run (claw combo 2/2 down, pistol...). The final round only has
+  to re-run this on the last merge.
