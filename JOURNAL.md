@@ -307,3 +307,76 @@ NEXT (iteration 5, supersedes the list above):
    plasma sword) and city clips for the plasma sword.
 6. Katana/plasma sword live: merge rivet-arsenal when their melee weapons land, re-shoot.
 - 03:31 final gates on 37e32e75+: lint 13/13, unit 725/725 (unit-it4.log), scenario_brutality_kills 8 weapons pass (full suite 31/31 at 03:05 before plasma; the brutality scenario re-run alone after each kill).
+
+## Iteration 6 (03:29-04:29)
+- Read: JOURNAL, git log, REQUESTs to brutality (rivet-arsenal 7 and 9: claw_shock / katana ids;
+  showcase 9: the scenario's 30-tick plant check; showcase 13: spray across the pit wall).
+- MERGE 03:33 n-rivet-arsenal (to 58c69b54; conflicts: JOURNAL kept ours, arena_rigs.gd kept both
+  consts). Melee weapons are live: the katana swing is dealt as `katana` through CombatArena.damage.
+  Unit 761/761 after it.
+- FINDING 03:52 live katana (`--rigs --bot=rivet --loadout=katana`, 16 s, 64 px/m): the real swing
+  fires `katana_split` (by_style split 1), with no lab code involved. The one victim in that run
+  had no posed rig (an off-rig hostile near the wall), so blobs stood in for it. The pipeline
+  works; a framed live-katana clip is still owed.
+- MILESTONE 03:39 kill #7 chainsaw (`chainsaw_grind`, ae85d5d7): style split with a new
+  `grind_ticks` (54): GibSim.wait keeps the two halves together; KillSplitFx shakes them on a tick
+  hash, lifts them over Rivet's claws (z 40), and blood drops spurt out through the body (away
+  from the saw, where Rivet does not cover them) with cream sparks off the teeth, then the halves
+  fall apart along a straight cut (cut_deg 0) on red smears. The lab holds Rivet on the victim
+  through the grind (hold_ticks). Scenario: 6 split kills, replay identical. Clips 64 px/m, 32 px/m,
+  48 px/m city block, 64 px/m 0.4x slow, strip.
+- FRICTION: the first grind showed no drops; they flew back toward Rivet and were drawn under his
+  rig. Fixed by spraying out through the far side and drawing split_fx over HELD_Z.
+- REQUEST 9 (showcase) confirmed: their 30-tick planted-fault check is cherry-picked (93c17a88).
+- FIX 03:58 showcase REQUEST 13 (23f927df): KillMarks.clip walks each spray drop's ray on the
+  stage push-out and lands it on the last free step before a wall (sim side, no dice). Unit test
+  with a planted no-wall run.
+- MERGE 03:57 n-gunplay (to 1c0aa98f; conflicts: JOURNAL ours, arena_rigs.gd gunplay's held-weapon
+  kick + human-reactions' react gate). Brings the ray gun at 100 damage (a one-shot) and the
+  mini-nuke.
+- MILESTONE 04:00 kill #9 ray gun (`ray_gun_dissolve`, style `dissolve`, KillDissolveFx): the body
+  copy sits under a round clip mask; it glows stiff for 12 ticks, then the mask shrinks over
+  55 ticks. A hot cream ring eats the body from its outline inward, gold echo rings ripple out
+  and motes fall. What is left: a dust pile, the crumpled blue uniform on it and the cap beside
+  it. No blood. Reduced motion drops the echoes, motes and pulse. The lab stands the guards on
+  the spread line for it. Scenario: 5 dissolve kills, replay identical. FIRST PASS, seen on the
+  64 px/m strip: gunplay's ray scorch mark draws over the pile, the body darkens inside the mask,
+  and the pile reads grey, not tan.
+- Registry rules applied: realtime-combat-semantics (the kill is still decided at the damage
+  chokepoint; the grind is a sim hold on the 60 Hz tick with no dice; the wall clip is
+  deterministic). motion-quality-gating: every look claim judged on strips cut from real-time
+  clips; the wall clip and the grind each have a planted fault (unit no-wall run; scenario 1 %
+  gib fault).
+- Shared files touched this iteration: arena_rigs.gd (both merge resolutions only). Nothing else.
+- REQUEST 10 -> rivet-arsenal: please add `chainsaw` (heavy_two_hand is already in
+  rivet_arsenal.json) and `plasma_sword` rows to melee_weapons.json, so `--loadout=chainsaw` puts
+  the saw in Rivet's claws. The chainsaw kill keys on weapon `chainsaw`; a hit lands it, and
+  holding Rivet in place for about 56 ticks after the lethal hit sells the grind (the lab does
+  this now).
+- REQUEST 11 -> gunplay: the ray gun's stop mark (scorch ring + pop, 54e3c280) lands on top of
+  the dissolve's dust pile. Could the ray mark skip a hit whose victim died (kill_landed with
+  weapon `ray_gun`), or draw under z 4?
+
+## Calls for the owner (iteration 6 additions)
+- brutality-8: the chainsaw cut runs straight along the saw's push vs. diagonally like the katana.
+  Default: straight (chainsaw-grind clips). One value: `cut_deg`.
+- brutality-9: the chainsaw grind lasts 54 ticks (0.9 s) vs. a shorter 30. Default 54. One value:
+  `grind_ticks`.
+
+NEXT (iteration 7):
+1. Ray gun polish: find out why the body darkens inside the mask (flatten + the part material?),
+   make the pile tan/cream glowing and bigger at 32 px/m, and keep gunplay's ray mark off a
+   dissolve kill (REQUEST 11, or veto it the way CombatBlood is vetoed).
+2. Kill #10 homing shard gun: shards stick in (cream slivers on the body copy), then after a
+   delay burst into a pop of red mist (spray + a big soft red disc that fades). Check whether
+   gunplay has a homing_shard_gun weapon id.
+3. Kill #11 mini-nuke (gunplay enabled `mini_nuke`, kind thrown, 2000 damage): everyone in the
+   radius vaporised to ink shadows on the ground (a `shadow` style: the body copy flattened to
+   ink at alpha 0.85 that never fades, plus a flash under the screen-flash budget; reduced motion:
+   no flash).
+4. Re-cut the reel with all nine kills (add plasma sword, chainsaw, ray gun).
+5. A framed live-katana clip (`--bot=rivet --loadout=katana` with the rigs focused) and the
+   chainsaw live once rivet-arsenal adds the row.
+6. The rocket kill frame spike (74 ms CONTENDED): per-phase log; pre-warm the copy materials.
+7. KillView is 278 lines (hard stop 300): move the style dispatch (_on_killed's elif chain and
+   _parts) into a KillStyles helper before the next style lands.

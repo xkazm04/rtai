@@ -1,5 +1,65 @@
 [
   {
+    "file": "clips/chainsaw-grind-64ppm-slow-0.4x.mp4",
+    "title": "Chainsaw signature kill: the grind (victim held on the saw, shaking, blood spurting, sparks), then the split, 64 px/m slow close-up",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Kill #7 (row chainsaw_grind). Lab driver: Rivet lunges, holds 56 ticks on the victim, steps back. Rivet does not hold the chainsaw art yet (not a carried weapon in melee_weapons.json; REQUEST to rivet-arsenal)."
+  },
+  {
+    "file": "clips/chainsaw-grind-arena-32ppm-14s.mp4",
+    "title": "Chainsaw signature kill, real time at 32 px/m (lab line, 6 kills)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "Scenario: 6 split kills, replay identical, same seed same halves."
+  },
+  {
+    "file": "clips/chainsaw-grind-city-block-48ppm-12s.mp4",
+    "title": "Chainsaw signature kill on the city proving block (48 px/m)",
+    "source": "game-city",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 48,
+    "before": "",
+    "note": "--arena=city --rigs --sig-gun=chainsaw --sig-lab: 6 split kills."
+  },
+  {
+    "file": "clips/ray-gun-dissolve-64ppm-slow-0.4x.mp4",
+    "title": "Ray gun signature kill: the body eaten by a shrinking glowing ring into a dust pile with the empty uniform, 64 px/m slow (FIRST PASS)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Kill #9 (row ray_gun_dissolve). First pass: gunplay's ray scorch mark draws over the pile and the body darkens inside the mask; polish next iteration."
+  },
+  {
+    "file": "clips/ray-gun-dissolve-arena-32ppm-12s.mp4",
+    "title": "Ray gun signature kill, real time at 32 px/m (spread lab line, 6 kills)",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 32,
+    "before": "",
+    "note": "Ray gun 100 damage = one shot (gunplay's value, merged)."
+  },
+  {
+    "file": "frames/chainsaw-grind-strip-64ppm.png",
+    "title": "Chainsaw grind at 20 fps, 64 px/m: the cut body held over Rivet's claws, drops and sparks",
+    "source": "dev-scene",
+    "branch": "n-brutality",
+    "look": "d5",
+    "ppm": 64,
+    "before": "",
+    "note": "Detail strip."
+  },
+  {
     "file": "clips/signature-kills-reel-32ppm-36s.mp4",
     "title": "Reel: the six finished signature kills at 32 px/m, real time, 6 s each",
     "source": "dev-scene",
@@ -88,65 +148,5 @@
     "ppm": 48,
     "before": "evidence/brutality (iteration 2 BUG sheet, removed)",
     "note": "Iteration 2 bled red here and showed no char at all: the kill view never attached on the city and CityBlood had no veto. Fixed 55791625."
-  },
-  {
-    "file": "clips/rocket-gib-city-block-48ppm-13s.mp4",
-    "title": "Rocket signature kill on the city block, re-shot with the kill view on the city (48 px/m)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": null,
-    "note": "17 gib kills: ink flash star, scorch, gib parts. The iteration 2 clip of this name showed standard deaths (the view was missing on the city)."
-  },
-  {
-    "file": "clips/electro-xray-city-block-48ppm-13s.mp4",
-    "title": "Electro X-ray kill on the city block (48 px/m)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": null,
-    "note": "6 shock kills on the city's cast rigs."
-  },
-  {
-    "file": "clips/hand-cannon-blowback-city-block-48ppm-12s.mp4",
-    "title": "Hand cannon blowback on the city block (48 px/m)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": null,
-    "note": "6 blowback kills; bodies stop at the city cells."
-  },
-  {
-    "file": "frames/flame-char-city-block-48ppm-seq.png",
-    "title": "Fire kill on the city block, 6 frames: ablaze, char, ash heaps (48 px/m)",
-    "source": "game-city",
-    "branch": "n-brutality",
-    "look": "d5",
-    "ppm": 48,
-    "before": null,
-    "note": "No red anywhere on the fire kills."
-  },
-  {
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "before": "",
-    "file": "clips/electro-xray-64ppm-slow-0.4x.mp4",
-    "title": "Electro gun signature kill: X-ray strobe, 64 px/m slow close-up 0.4x",
-    "ppm": 64,
-    "note": "--rigs --sig-gun=electro_gun --sig-lab. The bolt locks the victim in a stiff convulsion; every 5 ticks the body blinks out and his X-ray skeleton (weapon-art sticker, 1.3 m) shows inside cream ink arcs; then he drops stiff along the shot with collar smoke. No blood. The other arcs on the crowd are gunplay's chain stun."
-  },
-  {
-    "source": "dev-scene",
-    "branch": "n-brutality",
-    "look": "d5",
-    "before": "",
-    "file": "clips/flame-char-64ppm-slow-0.4x.mp4",
-    "title": "Flamethrower signature kill (fire death chars), 64 px/m slow close-up 0.4x",
-    "ppm": 64,
-    "note": "Arena hub, --rigs --sig-gun=flamethrower --sig-lab. A guard set ablaze flails in a tethered panic run (gunplay burn + human-reactions flail), the burn kills him: his own rig turns to a charcoal print (kill_char shader), smokes, then crumbles into ash flakes drifting downwind onto an ash heap over a soot scorch. No blood: the standard death pool and corpse stains are vetoed under a signature kill. Small cream flash 2 ticks, hit-stop 2."
   }
 ]
