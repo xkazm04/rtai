@@ -1,7 +1,8 @@
 class_name RivetMagView
 extends Node2D
 ## rivet-arsenal: the magazine in Rivet's off claw through a reload (render only), a placeholder
-## ink block until weapon-art's magazine parts land (REQUEST 8). RivetHeldView feeds it the rig's
+## ink block for a gun with no weapon-art `mag` part (WeaponMagView carries the real one: showcase
+## REQUEST 14, one magazine per reload). RivetHeldView feeds it the rig's
 ## reload_k each frame: phase 0 (0..1) the spent magazine rides the off claw from the gun down to
 ## the drop point and falls there (it lies on the floor DROP_LINGER_S, then fades); phase 1 (1..2)
 ## a fresh one rides the claw back up into the gun; phase 2 (the rack) shows none.

@@ -19,6 +19,13 @@ class Grip:
 	var held_scale: float = 1.0
 	## The carry slot (1 sidearm, 2 long, 3 heavy, 4 thrown) a weapon of this class sits in.
 	var slot: int = 1
+	## The flamer's sway: the fire line swings sway_rad either side of the aim over sway_ticks.
+	var sway_rad: float = 0.0
+	var sway_ticks: int = 60
+
+	## The sway off the aim line at fight tick `tick` (rad; 0 for a class that does not sway).
+	func sway(tick: int) -> float:
+		return sway_rad * sin(TAU * float(tick % sway_ticks) / float(sway_ticks))
 
 
 var grips: Dictionary[StringName, Grip] = {}
@@ -48,6 +55,8 @@ static func from_table(t: DataTable) -> ArsenalTable:
 		g.move_mult = t.num(row, "move_mult")
 		g.held_scale = t.num(row, "held_scale")
 		g.slot = t.integer(row, "slot")
+		g.sway_rad = t.num(row, "sway_rad") if row.has("sway_rad") else 0.0
+		g.sway_ticks = maxi(2, t.integer(row, "sway_ticks")) if row.has("sway_ticks") else 60
 		a.grips[g.id] = g
 	var r: Dictionary = t.object(t.raw, "reload")
 	a.out_k = t.num(r, "out_k")

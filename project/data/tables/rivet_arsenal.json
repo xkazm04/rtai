@@ -5,13 +5,15 @@
   },
   "classes": {
     "backpack_hose": {
-      "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking",
+      "doc": "the tank on the back, the wand in both hands at the hip; the flame sways instead of kicking (sway_rad either side of the aim over sway_ticks while the trigger is held: the sim's flame line and the wand both follow it)",
       "draw_ticks": 18,
       "held_scale": 1.2,
-      "kick": 0.3,
+      "kick": 0,
       "move_mult": 0.9,
       "slot": 3,
-      "stow_ticks": 16
+      "stow_ticks": 16,
+      "sway_rad": 0.14,
+      "sway_ticks": 52
     },
     "heavy_two_hand": {
       "doc": "the chainsaw at the hip in both hands; draw is the pull start",

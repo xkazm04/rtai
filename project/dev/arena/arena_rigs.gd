@@ -71,7 +71,8 @@ func _process(_delta: float) -> void:
 	f.count = 0
 	var r: Fighter = stage.arena.rivet
 	_put(0, r, BodyPlan.Kind.RIVET)
-	f.aim[0] = (r.pos + r.facing * 4.0) * SimConst.PX_PER_M
+	var sway: float = stage.pilot.sway_rad if stage.pilot != null else 0.0  # the flamer's hose
+	f.aim[0] = (r.pos + r.facing.rotated(sway) * 4.0) * SimConst.PX_PER_M
 	_rivet_clips(f)
 	var i: int = 1
 	for h: Fighter in stage.arena.hostiles:
