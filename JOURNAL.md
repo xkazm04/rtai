@@ -908,3 +908,21 @@ NEXT (iteration 12 / the report):
   labelled; 0 script errors in all eleven captures. Looked at the sheet
   (evidence/brutality/city-reel-all-11-clean-it12-sheet.png): every kill lands in a still frame.
   The cops that walk in at the right edge are the live city population.
+- Registry rules applied this iteration: motion-quality-gating (every published clip judged on its
+  sheet or strip first; rejected the camera lurch on the blade lunge and fixed it, rejected the
+  first 3 hub frames per chapter); realtime-combat-semantics (no sim change: both fixes are in the
+  dev lab's staging, the 60 Hz kill sim and its RNG stream are untouched, unit/scenarios unchanged).
+
+NEXT (for the report / a later session):
+1. REQUEST 30 -> gunplay (stuck shards after a burst kill, see the 08:02 merge note) and REQUEST 29
+   (molotov corpse under the patch stars) are open; check both on the merged main.
+2. The age-96 stall: measure windowed under bench.lock with the rest of the machine idle; it is not
+   measurable headless (no KillView there).
+3. Calls for the owner (unchanged from it11): brutality-ray-cap (cap knocked aside vs left on the
+   heap, `hat_kick_mps: 0`); clips ray-dissolve-city-64ppm-slow-0.4x-it11 vs
+   ray-gun-dissolve-solo-64ppm-slow-0.4x.
+4. Use `--clean` for every future capture (it hides the dev HUD).
+- 08:18 session closed. Gates of record on 8020d7f4 (private APPDATA, CONTENDED): lint 13/13,
+  unit 787/787, scenario brutality 1/1; full suite 35/35 on 94ddeae6 (later changes are lab-only).
+  Parity and bench not run (no city-sim change). No Godot process of mine running; scratch cleaned
+  (only the capture scripts remain in gtai-n4/scratch/brutality).
