@@ -2,12 +2,14 @@ class_name ArenaGame
 extends Node
 ## The dev arena's scene (dev/arena/arena.tscn): ArenaSession under the player's hands, drawn
 ## by quest 1's CollectCallView (print pass, D5 look, blood) with ArenaFloorView as its floor.
-## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit plays that station's
+## Args (after --): --ppm=<32|48|64|128> the zoom, --bot=range|course|pit|rivet plays that station's
 ## scripted player, --shot=<png> saves one frame after --shot-tick=<tick> and quits,
 ## --telemetry=<json> writes the session's telemetry on exit, --arena=city the city proving block,
 ## --clean hides the dev HUD (clips of the game only), --start=<area id> stands Rivet in that
 ## area at boot (a station's capture; like the T teleport, a dev run that does not replay),
 ## --rigs draws the fighters on the cast rigs (ArenaRigs) instead of quest 1's sprites.
+## Lane gunplay: --weapon=<weapons.json id> arms Rivet with a table gun (GunplayHook);
+## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 
 const TUNE_TICK: int = 300
 
@@ -68,6 +70,13 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "rivet":  # rivet-arsenal: walk, strafe, sprint, roll, claw combo
+		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
+		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
+		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
+		session.world.loop().set_input(bot)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start"):
@@ -133,7 +142,7 @@ func set_zoom(ppm: float) -> void:
 ## Dev teleport (outside the input tape: a live run that teleports does not replay; logged).
 func teleport(area: ArenaPlan.Area) -> void:
 	session.stage.arena.rivet.pos = area.rect.get_center()
-	session.pilot.mover.stop()
+	session.pilot.stop()
 	hud.note = "teleported to %s (this run no longer replays)" % area.name
 	Log.info("arena", "teleport to %s at tick %d" % [area.id, session.tick()])
 

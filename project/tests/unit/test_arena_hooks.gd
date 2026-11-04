@@ -40,7 +40,9 @@ func test_bad_hook_paths_are_dropped() -> void:
 
 
 func test_the_stage_steps_and_reports_its_hooks() -> void:
-	var stations: ArenaStations = ArenaStations.shipped()
+	# the arena's own file only: other lanes' stations (rivet-arsenal's claw cops) bring hooks too
+	var stations: ArenaStations = ArenaStations.new()
+	stations.add_file(ArenaStations.DIR + "/arena.json")
 	stations.add_text(HOOKED % HOOK, "zz-probe.json")
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
@@ -51,8 +53,11 @@ func test_the_stage_steps_and_reports_its_hooks() -> void:
 	world.add_system(stage)
 	for i: int in 30:
 		world.loop().step()
-	assert_eq(stage.hooks.size(), 1)
-	var hook: ArenaTickHook = stage.hooks[0] as ArenaTickHook
+	# the shipped stations bring their own hooks too (gunplay's GunplayHook): find the probe
+	var hook: ArenaTickHook = null
+	for h: ArenaHook in stage.hooks:
+		hook = h as ArenaTickHook if h is ArenaTickHook else hook
+	assert_not_null(hook, "the probe station's hook was built")
 	assert_true(hook.set_up)
 	assert_eq(hook.ticks, 30)
 	var tel: Dictionary = stage.telemetry_dict()
