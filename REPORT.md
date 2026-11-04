@@ -46,6 +46,7 @@ city block loads with the loadout.
 | reel-0640 | morning-reel draft on round 10, 122 s: 16 chapters + 17 CITY BLOCK |
 | reel-0700-close64 | 64 px/m close-ups of the round 9-10 changes |
 | reel-0710 | morning-reel draft on round 11, 122 s: 16 chapters + 17 CITY BLOCK |
+| reel-0716-final, reel-0745-final, reel-0801-final | intermediate final-reel assemblies (superseded by reel-0722, reel-0751, reel-0808; not in frames.json) |
 | reel-0722 | morning reel on round 12, 122 s, 0 script errors (the city block's plasma error fixed) |
 | reel-0751 | morning reel on round 13, 122 s, 0 script errors; ray gun dust heap, molotov victim in the opened fire |
 | reel-0756-close64 | 64 px/m close-ups on round 13: molotov, ray gun, rocket, mini-nuke, flamethrower |
@@ -117,3 +118,32 @@ gates plus re-export did not fit before the 08:40 report):
   standing rig (REQUEST 29's answer; render only). Landed 08:20, after round 15's merge, so the
   08:22 re-check could not show it.
 - rivet-arsenal, human-reactions: docs only.
+
+## What blocked the lane, and for how long
+
+- **The bench lock** (shared, one bench at a time): skipped r6 (held by another lane from 05:27),
+  r9, r11 (a 12 min bench would outrun the session) and r13-r15 (held by another lane at 07:41;
+  then the freeze). Final bench of record is r12; r15 (the exe) is **unbenched**.
+- **Stale class cache after a merge** (06:30, ~10 min lost): a director cut started before the
+  `--import` ran chapters 01-10 without gunplay's hook (14 script errors each); re-cut clean.
+  Rule since then: `--import` once after every merge, before any capture.
+- **evidence/run.mjs refuses a dirty tree** (three times, ~5-10 min each): logs moved out of the
+  worktree during the run; never commit while it runs.
+- **Bench export path** in a fresh worktree (02:30, one run lost): `mkdir -p build/export/windows-bench` first.
+- Nothing blocked the merges themselves: 15 rounds, every conflict was JOURNAL/REPORT (kept ours) or
+  one-line glue (listed per round in JOURNAL.md).
+
+## Next steps (for the Director)
+
+1. Merge `n-weapon-art` (3a703dbd), `n-gunplay` (83429487, sim-side), `n-brutality` (63cc3ce1)
+   into `n-showcase`; run the four gates (parity and scenarios matter for gunplay's rise hold).
+2. `--import` once, then film the electro chapter first (`cut.sh`) to close REQUEST 29, then the
+   full director reel (`reel.sh`), and look at every frame.
+3. Re-export `RTAI.exe` and bench it alone under `bench.lock` (r15/r16 have no bench).
+4. Open for the owning lanes: showcase-3 (pit wall bars on the city plaza), the molotov victim
+   not reading inside the fire mid-chapter (REQUEST 27 remainder), the rocket's thrown parts
+   leaving the 64 px/m frame, and no live robot thug fighter (human-reactions scoped it, pit-only).
+
+Evidence paths in this report checked 08:42: the masters reels listed above, `evidence/r15/*`
+(boot logs, export log, evidence log, the three sheets), `evidence/r8/armory-48ppm.png`,
+`build/export/windows/RTAI.exe` + the release DLL (08:19).

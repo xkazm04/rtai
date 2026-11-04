@@ -1150,3 +1150,10 @@ in a reel), showcase-3 (pit wall bars draw on the city plaza). A next session fi
 - NEXT (Director): merge n-weapon-art (3a703dbd), n-gunplay (83429487, sim-side: parity +
   scenarios), n-brutality (63cc3ce1) into n-showcase, run the four gates, re-export, film round 16
   (cut.sh + reel.sh, electro chapter first to close REQUEST 29), bench under bench.lock.
+
+## Session 08:40 (iteration 12, REPORT)
+- 08:42 REPORT.md completed: "What blocked the lane" (bench lock skips, stale class cache,
+  dirty-tree evidence refusals) and "Next steps" sections; the three intermediate -final reels
+  listed. Every cited evidence path checked present. No build (report phase).
+- NEXT (Director): as REPORT "Next steps": merge weapon-art 3a703dbd, gunplay 83429487,
+  brutality 63cc3ce1; gates; --import; film electro first (REQUEST 29); re-export; bench alone.
