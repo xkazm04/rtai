@@ -30,6 +30,13 @@ const SHAPE: Dictionary[int, Vector3] = {
 const OFF_RECOIL: float = 0.7
 ## Where the weapon's line starts across the chest: 0 = the centre, 1 = the gun shoulder.
 const GUN_SIDE: float = 0.3
+## Per kind, the same share for a long gun or a tube: further out, so the stock lies beside the
+## helmet instead of under it (at 0.3 the barrel line ran 46 px off his centre, inside the
+## helmet's 78 px half-width: the 64 px/m rim clip).
+const GUN_SIDE_BY: Dictionary[int, float] = {Kind.TWO_HAND_LONG: 0.42, Kind.SHOULDER: 0.42}
+## Aimed with a long gun or a tube, the helmet leans this far (part px) toward the off side, off
+## the stock (RigPose._head reads head_lean).
+const HEAD_LEAN_PX: float = 24.0
 ## The weapon's line stays within this of the torso's forward: while the torso turns behind a fast
 ## aim, a two-hand hold leads with the weapon instead of reaching the off claw behind the back.
 const MAX_SWING_RAD: float = PI / 3.0
@@ -57,7 +64,8 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 		return tgt
 	var p: BodyPlan = rig.plan
 	var gs: Vector3 = p.shoulder[p.gun_arm]
-	var g2: Vector2 = Vector2(gs.x, gs.y * GUN_SIDE)
+	var out: float = GUN_SIDE_BY[rig.grip] if GUN_SIDE_BY.has(rig.grip) else GUN_SIDE
+	var g2: Vector2 = Vector2(gs.x, gs.y * out)
 	var tl: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	var dv: Vector2 = (tl - g2).normalized()
 	dv = Vector2.from_angle(clampf(dv.angle(), -MAX_SWING_RAD, MAX_SWING_RAD))
@@ -65,6 +73,13 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 	var h: Vector2 = g2 + dv * reach * (shape.x if aim_arm else shape.y)
 	h -= dv * RECOIL_PX * rig.c_recoil * (1.0 if aim_arm else OFF_RECOIL)
 	return Vector3(h.x, h.y, shape.z)
+
+
+## The helmet's lean across (part px) while aiming a long gun or a tube: away from the gun side.
+static func head_lean(rig: CutRig) -> float:
+	if not rig.aiming or not GUN_SIDE_BY.has(rig.grip) or rig.plan.gun_arm < 0:
+		return 0.0
+	return -signf(rig.plan.shoulder[rig.plan.gun_arm].y) * HEAD_LEAN_PX
 
 
 ## The reload pantomime's hand target (the gun claw holds, the off claw works the magazine).
