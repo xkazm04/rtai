@@ -809,3 +809,8 @@ NEXT (iteration 12, in order):
    splash edge on armored humans with less splash damage; check `--armored` with the molotov.
 4. The flamethrower's burning victims read as flame stars hiding the body (gunplay's FX,
    showcase REQUEST 27 is the molotov twin): if gunplay thins the stars, re-film the burn death.
+- 07:40 evidence on c3749b0d (`--no-bench --allow-dirty`, only untracked evidence/ clips): lint
+  13/13, unit 749/749, scenarios 33/33, parity bit-exact (mutation caught at 629) PASS; selftest
+  FAIL only on the known accent rows (48 px/m vermilion 8 px / blood 16 px on vehicles: the
+  d5-city / gunplay blood flicker since iteration 5); look goldens 11/11 (worst 1.87), block
+  5/5 (worst 1.77): the scorch and dry-kill changes move no golden.
