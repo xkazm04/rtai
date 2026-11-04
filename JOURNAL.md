@@ -1152,10 +1152,10 @@ NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so
 - Scratch AVIs deleted; no Godot process of mine running; no lock taken.
 
 NEXT (iteration 21, before the 10:30 freeze). The tip for showcase's 09:45 final merge is a1a819d3 + docs:
-1. If a re-film of the showcase reel shows the ray hoops too heavy at 48 px/m: ARC_INK_M for hoops only (0.04), A/B, gates.
+1. (Done 09:21, a1a819d3: hoops at RAY_INK_M 0.035.) Watch the showcase reel's ray gun chapter for the hoops' read.
 2. Human-reactions' riot-shield call B needs a flat rectangular shield part from weapon-art; build it only if the owner picks B.
 3. At 10:40 update REPORT.md in place ("After 09:00") with anything later. Gates of record now: lint 13/13, unit
-   743/743, scenarios 32/32 at 54fb97d1; parity untouched (render only).
+   743/743, scenarios 32/32 at a1a819d3; parity untouched (render only).
 - MILESTONE 09:21 the ray hoops' ink is lighter (NEXT 1): `RAY_INK_M` 0.035 m, while the bolt keeps 0.06. `ink_cell` now
   takes `ink: Vector2` (reach m, alpha). Same ticks at 48 px/m against the 54fb97d1 frame, looked at: the paper shows in
   each hoop and they read as rings, not tyres. Frame `frames/it20-ray-hoop-ink-lighter-ab-city-48ppm.png`. Gates: lint
