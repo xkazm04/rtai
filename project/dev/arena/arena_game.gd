@@ -12,7 +12,7 @@ extends Node
 ## --bot=gunplay plays the pit at that weapon's own reach (GunplayBot).
 ## Lane human-reactions: --bot=react_line shoots each reaction-line dummy from four sides
 ## (--wide=<m> aims that far beside each, so every round is a near miss).
-## --armored: the pit's humans take gunplay's armored hp (2.5 hits), so the wounded limp plays;
+## --armored[=k]: the pit's humans take gunplay's armored hp (2.5 hits, or k), so the limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 
 const TUNE_TICK: int = 300
@@ -74,7 +74,7 @@ func _open(args: ArenaArgs) -> void:
 		session.city.spawner.targets = CityTargets.street(int(args.number("--crowd", 120.0)), 0, 0)
 	if args.has("--armored"):  # lane human-reactions: pit humans live through hits (the limp)
 		var t: WeaponTable = WeaponTable.shipped()
-		var k: float = t.target_hp[&"armored"] / t.target_hp[&"human"]
+		var k: float = args.number("--armored", t.target_hp[&"armored"] / t.target_hp[&"human"])
 		session.stage.arena.tuning.human["hp"] = k
 		var r: Fighter = session.stage.arena.rivet  # and Rivet by as much: the same fight, longer
 		r.max_hp *= k
