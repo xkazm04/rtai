@@ -174,12 +174,7 @@ func _node(i: int) -> Node2D:
 
 func _on_killed(victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2) -> void:
 	var t0: int = Time.get_ticks_usec()
-	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
-	var whole: bool = row.whole_body()
-	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
-	var groups: Array[Node2D] = KillSplitFx.cut(rig, dir, ppm) if split else _cut(rig, whole)
-	if row.style == &"split":
-		split_fx.add(serial, at, dir)
+	var groups: Array[Node2D] = _parts(victim_id, serial, row, at, dir)
 	for i: int in groups.size():
 		var gr: Node2D = groups[i]
 		if gr == null or not row.pieces.has(i):  # a group the row does not throw (burn: no cap)
@@ -248,6 +243,23 @@ func _drop_unused() -> void:
 			char_fx.forget(serial)
 			shock_fx.forget(serial)
 			split_fx.forget(serial)
+
+
+## The victim's parts by the row's style: the gib or whole-body cut, the blade's two halves, or
+## the body with the plasma hole punched through.
+func _parts(
+	victim_id: int, serial: int, row: SignatureKill, at: Vector2, dir: Vector2
+) -> Array[Node2D]:
+	var rig: CutRig = rig_lookup.call(victim_id) if rig_lookup.is_valid() else null
+	var split: bool = row.style == &"split" and rig != null  # the blade's halves, cut along dir
+	var groups: Array[Node2D] = (
+		KillSplitFx.cut(rig, dir, ppm) if split else _cut(rig, row.whole_body())
+	)
+	if row.style == &"split":
+		split_fx.add(serial, at, dir)
+	elif row.style == &"hole" and rig != null:
+		groups[SignatureKill.BODY] = KillHoleFx.punch(groups[SignatureKill.BODY], kills, ppm)
+	return groups
 
 
 func _cut(rig: CutRig, whole: bool) -> Array[Node2D]:

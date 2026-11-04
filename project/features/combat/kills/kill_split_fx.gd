@@ -42,7 +42,7 @@ static func cut(rig: CutRig, cut_dir: Vector2, view_ppm: float) -> Array[Node2D]
 				g.free()
 		body.position += o
 		body.transform = mask.transform.affine_inverse() * body.transform  # undo the stretch
-		_flatten(body)
+		flatten(body)
 		mask.add_child(body)
 		var lip: KillCutEdge = KillCutEdge.new()
 		lip.a = o - cut_dir * EDGE_M * view_ppm
@@ -55,7 +55,7 @@ static func cut(rig: CutRig, cut_dir: Vector2, view_ppm: float) -> Array[Node2D]
 
 
 ## A clip mask only holds children on its own z: the copies' z order becomes tree order.
-static func _flatten(body: Node2D) -> void:
+static func flatten(body: Node2D) -> void:
 	var parts: Array[Node] = body.get_children()
 	parts.sort_custom(
 		func(x: Node, y: Node) -> bool: return (x as CanvasItem).z_index < (y as CanvasItem).z_index
