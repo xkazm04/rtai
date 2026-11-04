@@ -811,3 +811,31 @@ export plan). Open REQUESTs from me: 17 (brutality flakes), 18 (gunplay flash), 
   scenario_rivet_city_fight's planted fault must also switch the wrapped GunplayBot's flank off
   (FLANK_AFTER as a var, or a `closes_in` flag), else the fault is no longer caught. Showcase's
   n-showcase 54a7d5c0 reproduces it: `--filter=rivet_city_fight`.
+- 06:16 r9 check cut (electro, plasma rifle, riot cop; fresh runs on 54a7d5c0, 0 script errors,
+  each 1/1 down) -> gtai-masters/n4/showcase/reel-0615-r9-fixes.mp4, frames.json first entry.
+  Looked at 5 frames a chapter (sheets/r9-check.png): REQUEST 21 DONE in the picture (the plasma
+  victim lies back along the shot); REQUEST 22 DONE in the picture (white sparks spray off the
+  shield back at Rivet, then the burst gets round and he drops in blood); REQUEST 24 open (the
+  electro plank still reads as standing). REQUEST 23: human-reactions trimmed the trip scan
+  (b657ca05); the riot p99 is to be re-benched on the next round.
+- 06:18 session end. Everything committed. Scratch kept: cut-reel-0540-director/ (round 8
+  chapters + city_free.mp4), cut-r9-check/.
+
+NEXT (iteration 7, from about 06:30):
+1. Read the lanes' JOURNALs for REQUEST 24 (electro plank) and 25 (city_fight planted fault);
+   merge round 10 (brief order); gates under private APPDATAs incl. `node tools/evidence/run.mjs
+   --no-bench` (commit first: it refuses a dirty tree). If REQUEST 25 is not in, the 43/44 is the
+   known interaction, say so.
+2. The full re-cut on round 10: `bash evidence/cut.sh reel-<HHMM>-director 48` (~6 min), then
+   `bash evidence/reel.sh reel-<HHMM> reel-<HHMM>-director 16` (city chapter + concat, ~3 min).
+   Look at every chapter (chsheet.py), REQUESTs for what reads badly.
+3. Bench r9 under bench.lock (riot after REQUEST 23's trim).
+4. Final round 07:45-08:30: last merge, gates, the final reel (cut.sh + reel.sh), then
+   `--export-release windows-showcase ../build/export/windows/RTAI.exe` (+ the release DLL,
+   copied by the export), boot test headless (no args: "armory: 15 weapons on the hub floor";
+   `-- --bot=reel --reel=director --loadout=pistol`), and REPORT.md with the play commands:
+   `build\export\windows\RTAI.exe` (arena + armory: walk over a gun, E swaps, 1-4 / wheel
+   switch), `build\export\windows\RTAI.exe -- --arena=city --loadout=pistol,plasma_rifle,
+   rocket_launcher,molotov` (city block), `build\export\windows\RTAI.exe -- --bot=reel
+   --reel=director --loadout=pistol` (the director cut live). Calls for the owner: the electro
+   death pose, the pit wall bars on the city plaza, the hub crowding (dummies vs weapon wall).
