@@ -44,6 +44,10 @@ var fired_tick: int = -100
 ## Homing shards stuck in a body, per Fighter id: Vector3(offset from the body's pos (m), the
 ## shard's flight angle). Brutality's burst kill reads them (stuck_shards; REQUEST 13).
 var stuck: Dictionary[int, Array] = {}
+## Render-side (fighter: Fighter, dir: Vector2) -> bool: true when a riot shield stopped the
+## round (human-reactions' ReactLink.blocked wires it); such a round sparks as METAL on the shield
+## instead of the body's ink burst. Unset = every body hit is a body hit.
+var shield_test: Callable = Callable()
 var fired_count: int = 0
 ## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet].
 var shots_seen: Dictionary = {}
