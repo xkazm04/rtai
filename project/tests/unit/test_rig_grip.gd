@@ -29,6 +29,19 @@ func test_shoulder_pulls_the_gun_claw_in() -> void:
 	assert_lt(_gun_reach(RigGrip.Kind.SHOULDER), _gun_reach(RigGrip.Kind.ONE_HAND) * 0.6)
 
 
+func test_reload_pulls_the_magazine_to_the_hip_and_back() -> void:
+	var out: float = _reload_gap(0.95)
+	var back: float = _reload_gap(1.95)
+	gut.p("reload: off claw to gun claw %.0f px at the hip, %.0f px back at the gun" % [out, back])
+	assert_gt(out, back * 2.0, "the off claw leaves the gun for the magazine and comes back")
+	assert_lt(_reload_gap(-1.0), out, "planted: no reload keeps the claws together (one-hand aim)")
+
+
+func _reload_gap(k: float) -> float:
+	var rig: CutRig = _aimed(RigGrip.Kind.TWO_HAND_LONG, k)
+	return rig.sides[0].j_hand.distance_to(rig.sides[1].j_hand)
+
+
 ## (distance of the off claw from the barrel line through the gun claw, how far ahead of the
 ## gun claw along it), part px
 ## in the torso's frame (RigLimbs joints).
@@ -49,7 +62,7 @@ func _gun_reach(kind: int) -> float:
 	return side.j_hand.distance_to(side.j_shoulder)
 
 
-func _aimed(kind: int) -> CutRig:
+func _aimed(kind: int, reload_k: float = -1.0) -> CutRig:
 	var rig: CutRig = CutRig.new()
 	add_child_autofree(rig)
 	rig.setup(RivetPlan.build(), RigVariant.rivet())
@@ -59,6 +72,7 @@ func _aimed(kind: int) -> CutRig:
 		rig.gun_out = true
 		rig.aiming = true
 		rig.grip = kind
+		rig.reload_k = reload_k
 		rig.aim_at = rig.position + Vector2(0, -AIM_PX)
 		rig.face_to = -PI * 0.5
 		rig.drive(SimClock.TICK_DT)

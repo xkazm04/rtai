@@ -12,10 +12,15 @@ extends RefCounted
 
 enum Kind { ONE_HAND, TWO_HAND_LONG, SHOULDER, HIP, THROWN }
 
+## The reload: the gun claw low and in at the chest; the off claw pulls the magazine down to the
+## hip, brings the new one up, then racks back along the weapon by RACK_PX.
+const RELOAD_GUN: Vector3 = Vector3(0.45, 0.35, -30.0)
+const RACK_PX: float = 80.0
+
 ## Per kind: x = the gun hand along the aim as a share of the arm's reach, y = the off hand's
 ## share, z = the hands' height (part px; below 0 is toward the hip).
 const SHAPE: Dictionary[int, Vector3] = {
-	Kind.TWO_HAND_LONG: Vector3(0.35, 0.8, -10.0),
+	Kind.TWO_HAND_LONG: Vector3(0.4, 0.8, -10.0),
 	Kind.SHOULDER: Vector3(0.32, 0.78, 20.0),
 	Kind.HIP: Vector3(0.5, 0.85, -60.0),
 }
@@ -41,6 +46,8 @@ static func kind_of(grip_class: StringName) -> int:
 
 ## The hand target of arm `s` for the rig's grip while aiming; `tgt` unchanged otherwise.
 static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Vector3:
+	if rig.reload_k >= 0.0 and rig.plan.gun_arm >= 0:
+		return _reload(rig, aim_arm, reach)
 	if not rig.aiming or not SHAPE.has(rig.grip) or rig.plan.gun_arm < 0:
 		return tgt
 	var p: BodyPlan = rig.plan
@@ -52,3 +59,18 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 	var h: Vector2 = g2 + dv * reach * (shape.x if aim_arm else shape.y)
 	h -= dv * RECOIL_PX * rig.c_recoil * (1.0 if aim_arm else OFF_RECOIL)
 	return Vector3(h.x, h.y, shape.z)
+
+
+## The reload pantomime's hand target (the gun claw holds, the off claw works the magazine).
+static func _reload(rig: CutRig, aim_arm: bool, reach: float) -> Vector3:
+	var gs: Vector3 = rig.plan.shoulder[rig.plan.gun_arm]
+	var gun: Vector3 = Vector3(gs.x + reach * RELOAD_GUN.x, gs.y * RELOAD_GUN.y, RELOAD_GUN.z)
+	if aim_arm:
+		return gun
+	var hip: Vector3 = Vector3(gs.x - 20.0, -gs.y * 0.6, -90.0)
+	var k: float = rig.reload_k
+	if k < 1.0:
+		return gun.lerp(hip, smoothstep(0.0, 1.0, k))
+	if k < 2.0:
+		return hip.lerp(gun, smoothstep(0.0, 1.0, k - 1.0))
+	return gun - Vector3(RACK_PX * sin(PI * clampf(k - 2.0, 0.0, 1.0)), 0.0, 0.0)

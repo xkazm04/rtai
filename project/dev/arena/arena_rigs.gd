@@ -27,6 +27,8 @@ var _fire_seen: Dictionary[int, Vector2i] = {}
 ## rivet-arsenal: the pilot's last seen claw starts and rolls (a change starts the rig clip).
 var _strikes_seen: int = 0
 var _rolls_seen: int = 0
+var _shots_seen: int = 0
+var _arsenal: ArsenalTable = ArsenalTable.shipped()
 
 
 ## Puts the rigs on the view's actor layer and hides the sprite cast; false when the view is not
@@ -44,6 +46,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	var held: RivetHeldView = RivetHeldView.new()  # rivet-arsenal: the weapon in his claw
 	held.rigs = rigs
 	held.pilot = p_stage.pilot
+	held.arena = p_stage.arena
 	held.rivet_id = p_stage.arena.rivet.id
 	held.z_index = rigs.z_index + 60  # above every rig part (they stack their own z offsets)
 	view.print_stage.actor_layer().add_child(held)
@@ -120,6 +123,12 @@ func _rivet_clips(f: RigFeed) -> void:
 		f.clip[0] = RigClips.Clip.ROLL
 		f.clip_arg[0] = pilot.motion.roll_ticks * SimClock.TICK_DT
 	_rolls_seen = pilot.motion.rolls
+	var gun: GunHand = stage.arena.gun
+	if gun != null and gun.shots_fired != _shots_seen and f.clip[0] == RigClips.Clip.NONE:
+		var grip: ArsenalTable.Grip = _arsenal.grip_of(pilot.hold.held)
+		f.clip[0] = RigClips.Clip.SHOOT  # the class's kick (rivet_arsenal.json)
+		f.clip_arg[0] = grip.kick if grip != null else 1.0
+	_shots_seen = gun.shots_fired if gun != null else 0
 	if pilot.melee.busy() or pilot.motion.phase != PlayerMotion.Phase.FREE or not _gun_shown(pilot):
 		f.flags[0] = 0
 
