@@ -1153,3 +1153,18 @@ NEXT (report phase, in order):
 2. Merge note for the Director: human-reactions' get-up and brutality's burst kill both read right
    only with n-gunplay 83429487 / 8ea3a2e5 merged.
 3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if human-reactions' burn re-film reads thin.
+
+## Iteration 15 (BUILD, 08:20 - 08:30)
+- 08:21 read: JOURNAL NEXT, every n-* JOURNAL for `-> gunplay` REQUESTs. All answered (showcase
+  16/18/19, rivet-arsenal 12 withdrawn / 16 answered, human-reactions 30, brutality 30). No new one.
+- No code: 9 minutes to the freeze is less than one unit run (about 6 min under load) plus a commit,
+  and a change without the gates breaks the "gates of record" rule. HEAD stays 83429487 (code) and
+  the gates of record in REPORT stay valid (lint 13/13, unit 752/752, scenarios 29/29, parity
+  bit-exact; `evidence/n10/evidence-final-14.log`).
+- Session end: no Godot process started, no lock taken, no shared file touched.
+
+NEXT (report phase, in order):
+1. REPORT: gates of record are on 83429487 (no code after it); no re-run needed.
+2. Merge note for the Director: human-reactions' get-up and brutality's burst kill read right only
+   with n-gunplay 83429487 / 8ea3a2e5 merged.
+3. BURN_SCALE 0.3 -> 0.38 stays the one-value alternative if human-reactions' burn re-film reads thin.
