@@ -21,9 +21,10 @@ Paths below are relative to the masters folder unless they start with `evidence/
 - 48 px/m re-films for the 04:00 rule: `pit_burn_death_48ppm.mp4` (+ sheet; the victims die near the frame edge
   because Rivet stands still, and the old flame stars still hide the burning body) and `riot_crowd_48ppm.mp4` (the city
   riot: 20 cowers, 3 trips, 12 deaths, the same counts as before).
-- Gates on the code tip `e41fb9c6`: lint 13/13, unit 754/754, scenarios 33/33 (city_chase nav flake under load, green
-  alone), parity bit-exact (mutation caught at step 629). Look goldens not re-run (no render path changed: the robot
-  pose is dev-pit only and the RISE hold is sim-side in the arena fight).
+- Full evidence on `035435e7` (code = `530830e9`; `tools/evidence/run.mjs --no-bench --allow-dirty`): lint 13/13, unit
+  754/754 (the run's verdict reads FAIL only because I edited REPORT.md during it: "tree changed during run"),
+  scenarios 33/33, parity bit-exact (mutation caught at step 629), look goldens 11/11 (worst 1.87), block 5/5 (worst
+  1.77). Selftest FAIL only on the known accent-audit rows (48 px/m vermilion/blood on vehicles, gunplay's blood flicker).
 
 ## Gates of record (on `fdff7990`)
 `node tools/evidence/run.mjs --no-bench --allow-dirty` (the only dirt was the untracked clips in `evidence/`):
@@ -149,6 +150,11 @@ Each call is one value or flag. A is what is live now.
 8. **Crowd density around a fight** (`city_scare_32ppm.mp4` at 420 people):
    - A: keep the block's 120;
    - B: raise it for the arena.
+
+9. **Robot thug death** (`robot_powerdown_48ppm.mp4`, `robot_powerdown_64ppm_sheet.png`; before: `thug_plan_32ppm.mp4`):
+   - A: power-down: knees give, flat on the spot, the plates darken and the optic goes out (`DeathPose.ROBOT_DIM` 0.7);
+   - B: the same at dim 0.45 (the optic stays lit at 32 px/m);
+   - C: the old generic rig fall (as before tonight; one line: drop the `kill_robot` call in the dev pit).
 
 ## Next steps (in order)
 1. After the merge with n-gunplay:

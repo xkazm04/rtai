@@ -1048,3 +1048,7 @@ riot p99 bench).
   blank before the city loads). CrowdReact 20 cowers, 3 trips, 12 deaths, the same as the 64 px/m
   run (deterministic); observe mean 214 us (CONTENDED). Replaces riot_crowd_64ppm in frames.json
   (kept as `before`/detail). Scratch AVIs deleted.
+- Evidence on 035435e7 (code 530830e9): lint 13/13, unit 754/754 (verdict FAIL only for "tree
+  changed during run": I edited REPORT.md mid-run, my mistake), scenarios 33/33, parity bit-exact,
+  look 11/11 (worst 1.87), block 5/5 (worst 1.77); selftest FAIL on the known accent rows only.
+- REPORT: call 9 (robot death A 0.7 / B 0.45 / C old fall) and the gate line updated.
