@@ -20,6 +20,8 @@ const KILLS: Dictionary[StringName, StringName] = {
 	&"plasma_sword": &"split",
 	&"chainsaw": &"split",
 	&"ray_gun": &"dissolve",
+	&"homing_shard": &"burst",
+	&"mini_nuke": &"vaporise",
 }
 
 

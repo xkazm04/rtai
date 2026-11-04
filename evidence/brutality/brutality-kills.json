@@ -12,12 +12,20 @@
     "style_kills": 4
   },
   "hand_cannon": {
-    "kills": 6,
-    "style_kills": 6
+    "kills": 5,
+    "style_kills": 5
+  },
+  "homing_shard": {
+    "kills": 3,
+    "style_kills": 3
   },
   "katana": {
     "kills": 6,
     "style_kills": 6
+  },
+  "mini_nuke": {
+    "kills": 18,
+    "style_kills": 22
   },
   "plasma_rifle": {
     "kills": 6,

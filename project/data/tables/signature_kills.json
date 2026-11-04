@@ -276,6 +276,69 @@
         1
       ],
       "weapon": "ray_gun"
+    },
+    {
+      "bounce": 0.3,
+      "cone_deg": 200,
+      "doc": "Homing shard gun: the shards stick in, the victim freezes on them for grind_ticks (the body held whole), then bursts into its six rig parts thrown forward along the shot (200 deg) in a full ring of red mist (spray 360 deg). No scorch.",
+      "flash_ticks": 2,
+      "grind_ticks": 36,
+      "ground_drag": 6,
+      "hitstop_ticks": 3,
+      "id": "homing_shard_burst",
+      "launch_mps": [
+        2.5,
+        5
+      ],
+      "pieces": [
+        "head",
+        "torso",
+        "arm_l",
+        "arm_r",
+        "leg_l",
+        "leg_r"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        360,
+        900
+      ],
+      "spray": 30,
+      "spray_cone_deg": 360,
+      "style": "burst",
+      "up_mps": [
+        2,
+        4
+      ],
+      "weapon": "homing_shard"
+    },
+    {
+      "bounce": 0,
+      "cone_deg": 0,
+      "doc": "Mini-nuke: everyone in the radius is vaporised where they stand, the body burnt into the street as a flat charcoal shadow that stays (the char print at 0.8 alpha, no embers, smoke or crumble), on a soot ring. No blood, no flash of its own: the shell's flash is gunplay's (under the screen-flash budget and --reduced-motion).",
+      "flash_ticks": 0,
+      "ground_drag": 20,
+      "hitstop_ticks": 2,
+      "id": "mini_nuke_vaporise",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.7,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "style": "vaporise",
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "mini_nuke"
     }
   ],
   "leftover_budget": 12,
