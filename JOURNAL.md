@@ -1236,3 +1236,18 @@ NEXT (after the 10:30 freeze, unchanged from iteration 21):
 2. Human-reactions' riot-shield call B needs a flat rectangular shield part; build it only if the owner picks B.
 3. Calls to answer once judged: 3, 12, 14, 15, 16, 17. A floor-to-claw pickup clip needs an arena bot that walks
    to the pickups (rivet-arsenal's ArenaArsenalBot only switches slots).
+
+## Iteration 23 (10:04-10:30, BUILD, extension, before the freeze)
+- 10:04 read JOURNAL NEXT, git log, other lanes' JOURNALs for `weapon-art`. No open REQUEST: gunplay 31 was done at
+  07:51 (474038b1) and 08:09 (8d727846); brutality 4 was delivered (`gore_*_top`).
+- DECISION 10:04 no new code (same reason as iteration 22): showcase's final reel is cut from `b97342e1`, which holds
+  every weapon-art code change; a change now could not be gated, filmed and looked at before 10:30.
+- MILESTONE 10:08 consistency audit of what the owner reads: masters frames.json 15 entries, every file exists;
+  REPORT.md cites 43 masters files (`M\...`, `n4\...`), every one exists (the brace-expanded lineup set too); no
+  control characters in REPORT.md; `steam/ai-provenance/2026-11.jsonl` 1038 lines, all valid JSON. Top 3 entries
+  are 48 px/m game-city A/B clips (molotov landing, rocket wisps, nuke shell), inside the 04:00 rule.
+- No Godot process of mine; no lock taken; no renders this session.
+
+NEXT (after the freeze, unchanged): call 17 B = `--pickup-print=on` / `PickupLook.printed = true`; the riot-shield
+part only if the owner picks human-reactions' call B; calls 3, 12, 14, 15, 16, 17 to answer once judged; a
+floor-to-claw pickup clip needs an arena bot that walks to pickups.
