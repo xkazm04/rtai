@@ -18,7 +18,7 @@ const GUN_WIDE_M: float = 0.06
 
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
-## Fighter id -> [from px, to px, the stun's first tick, rest angle].
+## Fighter id -> [from px, to px, the stun's first tick, rest angle, px per metre].
 var _drops: Dictionary[int, Array] = {}
 
 
@@ -32,8 +32,11 @@ func _draw() -> void:
 	for h: Fighter in arena.hostiles:
 		var rig: CutRig = rigs.rig_for(h.id)
 		if rig == null or rig.torso == null:
-			@warning_ignore("return_value_discarded")
-			_drops.erase(h.id)
+			if h.alive() or not _drops.has(h.id):  # a cut corpse (the charged kill) keeps it
+				@warning_ignore("return_value_discarded")
+				_drops.erase(h.id)
+			else:
+				_gun(_drops[h.id])
 			continue
 		var e: FighterFx = arena.areas.effect(h)
 		var stunned: bool = e != null and h.alive() and e.stun_ticks > 0
@@ -47,19 +50,20 @@ func _draw() -> void:
 			@warning_ignore("return_value_discarded")
 			_drops.erase(h.id)
 		if _drops.has(h.id):
-			_gun(_drops[h.id], ppm)
+			_gun(_drops[h.id])
 
 
 func _toss(c: Vector2, ppm: float, facing: float, id: int) -> Array:
 	var fwd: Vector2 = Vector2.from_angle(facing)
 	var side: Vector2 = fwd.orthogonal() * (1.0 if id % 2 == 0 else -1.0)
 	var to: Vector2 = c + (fwd * TOSS_AHEAD_M + side * TOSS_SIDE_M) * ppm
-	return [c + fwd * 0.2 * ppm, to, arena.tick, facing + 0.9 * float(id % 3 - 1)]
+	return [c + fwd * 0.2 * ppm, to, arena.tick, facing + 0.9 * float(id % 3 - 1), ppm]
 
 
 ## The pistol in flight (a little hop, spinning) or lying where it landed.
-func _gun(d: Array, ppm: float) -> void:
+func _gun(d: Array) -> void:
 	var t0: int = d[2]
+	var ppm: float = d[4]
 	var rest: float = d[3]
 	var k: float = clampf(float(arena.tick - t0) / float(TOSS_TICKS), 0.0, 1.0)
 	var from: Vector2 = d[0]
