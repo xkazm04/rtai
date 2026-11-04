@@ -43,6 +43,7 @@ var _written: bool = false
 
 ## The dev arena's hook: with --frames=<json> (and --frames-ticks=<n>) a probe joins `parent`.
 static func attach(parent: Node, args: ArenaArgs, on: World) -> void:
+	NodeSpans.attach(parent, args)  # --spans=<json>: per-node _process cost
 	if not args.has("--frames"):
 		return
 	var probe: FightFrames = FightFrames.new()
