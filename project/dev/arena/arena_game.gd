@@ -142,6 +142,8 @@ func _add_view() -> void:
 		view.city_view.clock = session.world.context().clock
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
+	if view.print_stage != null and ArenaArgs.parse().has("--look"):  # n5-look: A/B of the print
+		view.print_stage.look_id = StringName(ArenaArgs.parse().text("--look"))
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
 	if not ArenaArgs.parse().has("--sprites"):  # the cast rigs (--rigs), not quest 1's sprites
