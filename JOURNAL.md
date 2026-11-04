@@ -1043,3 +1043,8 @@ riot p99 bench).
   --clean --ppm=48`, fixed 60 fps): deaths at 753 and 906 again (deterministic).
   pit_burn_death_48ppm.mp4 + _sheet.png replace the 32 px/m clip in frames.json. Honest: Rivet
   stands still, so both deaths are near the frame edge; the old flame stars hide the burning body.
+- 04:00-rule pass on the riot: riot_crowd_48ppm.mp4 (`city_bench.tscn -- --scenario=riot
+  --secs=16 --zoom=1.5`, movie writer, fixed 60 fps, trimmed from frame 60: the first frames are
+  blank before the city loads). CrowdReact 20 cowers, 3 trips, 12 deaths, the same as the 64 px/m
+  run (deterministic); observe mean 214 us (CONTENDED). Replaces riot_crowd_64ppm in frames.json
+  (kept as `before`/detail). Scratch AVIs deleted.
