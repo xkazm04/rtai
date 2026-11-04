@@ -389,3 +389,44 @@ NEXT (iteration 5, in order; supersedes the list above):
   this branch. Merge note: my new `FightAreasArt.shot` branch (homing round -> `FightShardArt`) sits
   before the `match`; weapon-art's hook ("asked first") stays above it, so weapon-art's `shard` cell
   wins when it has one and my crystal is the fallback. The nuke's `_blast` branch is the same.
+- 03:40 MEASURE riot + drive on HEAD under bench.lock, CONTENDED (`evidence/n5/riot-head.md`, raw
+  `evidence/n5/bench/`): riot p99 10.28 / 8.73 ms, 1 % low 66 / 72 fps, combat blood 80 / 67 us a frame
+  (under 1 % of the p99); drive p99 3.69 / 5.29 ms. The riot p99 follows the machine's load (01:55
+  same method: 8.68 / 6.47), nothing in the riot path changed. Brief item 5 stays where iteration 3
+  left it: the blood is not the riot cost; the idle bench of record (6.007 ms) is the Director's.
+- 03:41 plasma halo A/B (`evidence/n4/plasma_bolt_cream_paving_ab_32ppm.png`, same frame): the bolt
+  now reads as an ink teardrop with a halo on the cream paving (was a thin outline). Modest change.
+- 03:44 DECISION homing fan (a071c7b0): shards leave the claw 20 deg off the aim, alternating, and
+  curve back in: the swarm's curve shows in every shot (with a dead-on aim they flew straight and the
+  gun read as a slow pistol). `arena_shard_pit_64ppm/shard_sequence.png` shows the bent trails.
+- 03:46 `MASTERS/n4/gunplay/side_by_side_unique_five.mp4` (3x2, 5 s, sound off, every cell labelled):
+  hand cannon, plasma, ray (pit 48), shard (pit 64), nuke pit + nuke city (32). frames.json: 15
+  entries, the six new ones first; dropped the superseded uniques side-by-side and four older stills.
+- 03:49 fix: a mini-nuke kill is "blown", not "burned" (b97fc382): `FightAreas.BLAST_KILL_M` 6 m.
+- 03:52 TTK table of every playable weapon incl. the unique five (`evidence/n5/ttk.md`, range model,
+  24 trials a cell). Note: the range model flies the shard straight; its curve is the real fight's.
+- Gates at b97fc382: lint 13/13, unit 714/714 (`evidence/n4/unit-k.log`), scenarios 29/29
+  (`scenarios-k.log`; scenario_gunplay_fight covers all eleven table guns). Parity untouched (no
+  native or city-sim file); the quest replay untouched (quest 1 has no GunHand, the new branches are
+  behind `homing_rad_per_tick > 0` and a 6 m splash).
+- OBSERVED (not mine): when a cop round lands Rivet's whole rig flashes vermilion for a few frames
+  (`arena_shard_pit_64ppm/shard_sequence.png`, top row). That is the shared rig HIT tint on Rivet.
+  REQUEST 1 (it5) -> human-reactions (cc rivet-arsenal): Rivet's own hit flash is vermilion over the
+  whole body; vermilion is for danger/objectives/the collar, and the cops already flash cream. Suggest
+  cream like the cops, or vermilion only on the collar; GunFx already throws cream sparks off his
+  plating on the hit.
+- REQUEST 2 (it5) -> brutality (info): two more unique guns are live on n-gunplay: `homing_shard`
+  (kill_landed weapon `homing_shard`, kind `shot`, hit direction = the shard's curved final heading)
+  and `mini_nuke` (weapon `mini_nuke`, kind `blown`, direction = out from the blast centre, up to five
+  kills in one tick). If you add signature kills for them, key on the weapon id; the nuke's many
+  same-tick kills may want a cheaper variant than a per-victim cut.
+
+NEXT (iteration 6, in order):
+1. The kill close-ups with the camera on the victim (48-64 px/m) for the unique five; brutality's
+   hand_cannon_blowback on a scratch merge for the reel (not on this branch).
+2. The nuke at 48 px/m (the flash, the mushroom read; is the 12 m ring too thin at 32?), and the
+   cream flash checked against the reduced-motion budget in `hit_feel.json` (one flash, 5 ticks).
+3. Plasma bolt: take weapon-art's energy cell when it lands (their hook is asked first anyway).
+4. Rivet's own hit reaction in the real fight (brief item 4): a flinch toward the hit on the rig is
+   human-reactions' cast work; GunFx sparks are in. Check after REQUEST 1 (it5).
+5. Idle riot bench of record when the machine is quiet (the Director's at the merge otherwise).
