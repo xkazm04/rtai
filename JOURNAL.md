@@ -334,3 +334,25 @@ the other lane was rendering, CPU ~90 %), interleaved against windows-cull (fixe
   The hitches (34-116 ms, 1-14 per run) came and went with the other lane's renders. Both pairs
   improved, but the size of the gain is not readable under this load. The uncontended re-check is still owed.
 - Fixes 1-3 together, release, mean script+draw spans: 5.09 / 3.92 (pre, 13:xx) -> 2.75-2.84 ms a frame.
+- 15:52 `test_noir_shadows` alone (`gut_cmdln -gdir=res://tests/unit -gselect=test_noir_shadows`):
+  2/2 pass, so it was the known flake. Gates on f1c15f46: lint 13/13, unit 938/938 (937 + the flake
+  green alone), scenarios 46/46, look goldens 11/11 + block 5/5 (selftest on f60cd1f5; fix 3 is
+  pixel-identical by the 900-frame compare, and the selftest's city render does not load FxView).
+- Scratch cleaned: /tmp/pxw-* (1.8k PNGs), the fxprobe frame logs. build/export/windows-gnd (= f1c15f46)
+  and windows-cull (= f60cd1f5) are kept for the next interleaved A/B (git-ignored).
+- No masters clip: fix 3 is pixel-identical, so a before/after film would show the same pixels.
+  There was no design fork, so no registry subject was needed.
+
+NEXT (iteration 6):
+- Release profile now (rel3-gnd2, mean / p99 ms a frame): world.gd (sim + nav) 0.77 / 1.21,
+  character_rigs 0.44 / 0.74, city_view 0.39 / 0.62, FxView 0.24 / 0.69 + marks 0.16 / 0.88,
+  arena_rigs 0.21, floor 0.11. Scripts + draws total ~2.8 ms a frame (5.1 at the start of the day).
+  The steady cost is far under the 8.3 ms target, so the remaining work is the hitches and proving it uncontended.
+- The FxGroundMark p99 (0.9 ms) is the frames where many marks fade at once. If it matters: hold
+  a mark's redraw to every 2nd fade step? NO: that changes pixels. Leave it.
+- UNCONTENDED re-check still owed (the machine was 52-93 % busy all day): city fight release
+  vsync off (fight.sh EXE=1 EXE_DIR=windows-gnd --disable-vsync, 3 runs), the riot + drive bench
+  vs records (node tools/bench/run.mjs) under the bench lock in a quiet window.
+- Real-time "after" film of ch 18 for perf-city-1: desktop capture only when the owner's desktop is idle.
+- First frame's 12 pipeline compiles (35-58 ms, inside the first second): pre-warm like
+  World._prewarm, only if the owner's first second matters.
