@@ -8,8 +8,9 @@ extends ArenaHook
 ## The chapter state moves on the 60 Hz tick as a hook (sim side, after the stage's step); the
 ## inputs (CombatReel.sample delegates here) only read it, so a director run replays.
 
-## The open mark (brutality's solo-lab spot, checked open on 48 px/m stills).
-const MARK: Vector2 = Vector2(-36.0, 2.0)
+## The open mark (2 m east of brutality's solo-lab spot (-36, 2): the course's west edge stays
+## out of the 48 px/m frame; checked on the 05:20 chapter frames).
+const MARK: Vector2 = Vector2(-34.0, 2.0)
 ## The previous chapter's dead move here (their print and blood stay: film one chapter per run,
 ## `--chapter=<id>`, for a clean floor).
 const MORGUE: Vector2 = Vector2(-400.0, -400.0)
@@ -49,6 +50,18 @@ func length() -> int:
 	for c: ReelChapters.Chapter in chapters:
 		n += c.ticks
 	return n
+
+
+## The running chapter's number in the full cut (1-based; a --chapter run keeps its number).
+func number() -> int:
+	var c: ReelChapters.Chapter = chapter()
+	if c == null:
+		return 0
+	var ids: Array[ReelChapters.Chapter] = ReelChapters.all()
+	for i: int in ids.size():
+		if ids[i].id == c.id:
+			return i + 1
+	return index + 1
 
 
 func chapter() -> ReelChapters.Chapter:

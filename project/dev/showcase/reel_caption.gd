@@ -1,14 +1,13 @@
 class_name ReelCaption
 extends Control
-## The director cut's title card (dev capture only): the running chapter's number and weapon in
-## the top-left corner, ink on a cream plate, burned into the film; and its camera: the view's
+## The director cut's camera (dev capture only; evidence/cut.sh burns each chapter's title card
+## with ffmpeg, from ReelChapters' ids and the number() order): the view's
 ## focus sits FRAME_K of the way from Rivet to the chapter's victims, so Rivet and the kill share
 ## the frame (the nuke's 15 m lob too). It reads ReelDirector only; render side, not replay state.
 
-const FONT_PX: int = 26
-const PAD: Vector2 = Vector2(14.0, 10.0)
-const AT: Vector2 = Vector2(24.0, 24.0)
 const FRAME_K: float = 0.5
+## The lean toward the victims is at least this (m): Rivet on the frame's left third.
+const LEAN_MIN_M: float = 5.0
 
 var director: ReelDirector = null
 var view: CollectCallView = null
@@ -31,7 +30,6 @@ static func attach(layer: CanvasLayer, p_stage: ArenaStage, p_view: CollectCallV
 
 
 func _process(_delta: float) -> void:
-	queue_redraw()
 	if view == null or director == null or director.spots.is_empty():
 		return
 	var mid: Vector2 = Vector2.ZERO
@@ -39,18 +37,5 @@ func _process(_delta: float) -> void:
 		mid += p
 	mid /= director.spots.size()
 	var rivet: Vector2 = stage.arena.rivet.pos
-	view.focus = rivet + (mid - rivet) * FRAME_K
-
-
-func _draw() -> void:
-	var c: ReelChapters.Chapter = director.chapter() if director != null else null
-	if c == null:
-		return
-	var font: Font = ThemeDB.fallback_font
-	var line: String = "%02d  %s" % [director.index + 1, c.title()]
-	var size: Vector2 = font.get_string_size(line, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_PX)
-	var plate: Rect2 = Rect2(AT, size + PAD * 2.0)
-	draw_rect(plate, Ink.CREAM)
-	draw_rect(plate, Ink.INK, false, 3.0)
-	var base: Vector2 = AT + PAD + Vector2(0.0, font.get_ascent(FONT_PX))
-	draw_string(font, base, line, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_PX, Ink.INK)
+	var lean: Vector2 = (mid - (stage.plan.base + ReelDirector.MARK)) * FRAME_K  # from the mark
+	view.focus = rivet + lean.normalized() * maxf(lean.length(), LEAN_MIN_M)
