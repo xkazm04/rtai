@@ -52,3 +52,11 @@ Agree by replying in your JOURNAL; I will not change the shape without a line he
   fault (one contractor 5 cm off) caught for every weapon, and each behaviour shows (rocket
   knockdowns, flame/molotov ignitions + burn kills + patches, electro chain hits + 4 stunned at once).
   Evidence `evidence/n1/gunplay-fight.json`.
+- 01:31 FRICTION->fix: in the arena the molotov never landed (24 throws, 0 ignitions): `StagePilot` sets
+  `fire_at = rivet + aim * aim_range_m` because TickInput carries a direction only, so bottles flew to
+  full range. DECISION: a thrown weapon lands on the living hostile closest to the aim line within
+  0.2 rad and its range (`FightAreas.lob_target`), else at the aim point. Alternative (a real aim
+  distance in TickInput) is an input-schema change for later. Flame puffs enlarged (0.4 -> 1.15 x a
+  2.5 m fire cell over the puff's life) and fire on burning humans 0.85: at 32 px/m the old puffs read as dots.
+- Gates after the fix: lint 13/13, scenarios 29/29 (`evidence/n1/scenarios-e.log`), unit 701/701 (`unit-e.log`).
+- DEBT: fight_areas.gd is 254 lines (soft 200): split the patches + lob into their own file next.

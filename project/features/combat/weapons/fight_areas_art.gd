@@ -22,7 +22,7 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
 			if e.burn_ticks > 0:
-				_fire(ci, h.pos + Vector2(0.0, -0.35), 0.5, tick + h.id * 3, 1.0)
+				_fire(ci, h.pos + Vector2(0.0, -0.45), 0.85, tick + h.id * 3, 1.0)
 			if e.stun_ticks > 0:
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
@@ -43,7 +43,7 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_rocket(ci, s.pos, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
-			_fire(ci, s.pos, 0.18 + 0.4 * k, tick + int(went * 10.0), 1.0 - k * 0.6)
+			_fire(ci, s.pos, 0.4 + 0.75 * k, tick + int(went * 10.0), 1.0 - k * 0.5)
 		WeaponSpec.Kind.BOLT:
 			Ink.zigzag(ci, s.pos - dir * 1.6, s.pos, 6, tick, Ink.INK)
 			Ink.zigzag(ci, s.pos - dir * 1.6, s.pos, 6, tick + 3, Ink.CREAM)

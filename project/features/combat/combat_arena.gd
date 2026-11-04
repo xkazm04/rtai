@@ -103,6 +103,9 @@ func rivet_fire(at: Vector2) -> bool:
 		if areas == null:
 			areas = FightAreas.new()
 			areas.hp_scale = gun.hp_scale()
+		var w: WeaponSpec = gun.trigger.spec
+		if w.kind == WeaponSpec.Kind.THROWN:
+			at = FightAreas.lob_target(self, rivet.pos, at, w.range_m)
 		var fired: Array[Shot] = gun.pull(rivet, at) if rivet.alive() else []
 		shots.append_array(fired)
 		return not fired.is_empty()
