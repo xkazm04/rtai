@@ -844,3 +844,77 @@ NEXT (iteration 13), in order:
    loadout): `--loadout=gloria` alone, A/B, one strip.
 4. Re-film the kinetic clip on the city block once rivet-arsenal's c912aec2 (rigs on the city path) is merged.
 5. REQUEST 6 -> showcase (melee-line dummies in front of the weapon wall): still unanswered.
+## Iteration 13 (06:56 - 07:56), BUILD
+- 06:57 read: JOURNAL NEXT, git log, other lanes' JOURNALs. No new REQUEST to weapon-art. Plan = NEXT 2 (machine
+  pistol held_small reads apart from the pistol at 32 px/m), then NEXT 3 (Gloria strip), then NEXT 1 (call 14 C).
+- FRICTION 07:00 the first 4 captures were thrown away: `--arena` is not a flag (the arena is the scene
+  `res://dev/arena/arena.tscn` before `--`; it2 wrote this down, I forgot). Boot also warns "unknown launch arg
+  --ppm" in the arena; that is boot's list, the arena reads it (`arena_game.gd:35`).
+- MEASURE 07:05 NEXT 2 (machine pistol vs pistol in the claw at 32 px/m): the arena pit, `--loadout=<one gun>`,
+  same 600 ticks per gun. The machine pistol's side feed box (smg_feed_box.py, it6) prints as a clear T at
+  32 px/m. The it12 "pistol and machine pistol look alike" read came from strip ticks in the pistol's slot. No art
+  change needed: NEXT 2 closed by measure.
+- MILESTONE 07:12 NEXT 1, owner call 14 option C filmed: RivetHeldView's print kind PART -> LIMB (line 58, local
+  edit, reverted after the runs loaded, never committed), the four kinetic guns, same ticks as A. Strip
+  `it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png`. Looked at: C turns every gun into a grey sticker in the
+  arm's own tone (it reads as a third forearm); the hand cannon's drum and the pistol's slide go, and only the
+  machine pistol's T survives. A keeps the gun apart from the limb. Recommendation stays A; C rejected on evidence.
+- FINDING 07:16 (the real cause of NEXT 3): **Gloria has never drawn her own art in Rivet's claw.**
+  `rivet_arsenal.json` `art_stand_in` still maps `gloria -> pistol` (from before her art landed; its doc says a
+  stand-in holds "until it lands"), and `ArsenalTable.art_id` applies it unconditionally. So every "Gloria in the
+  claw" frame drawn through RivetHeldView (it10 kinetic family, it12 strips) shows the pistol. The it13 A rows for pistol
+  and Gloria are pixel-identical at the same ticks.
+- FIX 07:17 removed the one line `"gloria": "pistol"` from `art_stand_in` (rivet-arsenal's table; a minimal
+  shared-file change). REQUEST 12 -> rivet-arsenal: please drop the same line on your branch (or take mine at
+  merge); `assault-rifle -> machine_pistol` stays (no assault-rifle art).
+- Gloria's held_small is now two-tone (ink body, the drawn cream tape and plate kept as paper,
+  `TWO_TONE` in held_small.py) so she reads as the dark banded gun beside the pale pistol. Print sim:
+  `sim_gl` (scratch). DECISION line in docs/decisions.md; doc section updated; provenance line re-hashed.
+- MILESTONE 07:21 NEXT 3: Gloria in the claw with her own art, 32 px/m, same ticks (one run per gun,
+  `res://dev/arena/arena.tscn -- --rigs --start=pit --bot=arsenal --loadout=<gun> --clean --ppm=32`, `--fixed-fps 60
+  --quit-after 600`): strip `it13-held-gloria-own-art-ab-arena-pit-32ppm-3x.png` (pistol / Gloria before = pistol /
+  Gloria after / Gloria full art via `--held-small=off` / machine pistol / hand cannon) + clip (masters)
+  `clips/it13-held-gloria-own-art-ab-arena-pit-32ppm-2x.mp4` (before left, real time, blue cops in frame). Looked at:
+  the four kinetic guns now print as four shapes: the pale stubby pistol, Gloria long and dark with a pale nail
+  tip, the machine pistol's T, the hand cannon's banded drum. Two-tone vs her full art: nearly the same print (her
+  full art is already dark), two-tone a touch cleaner. Kept two-tone.
+- Registry rules applied: motion-quality-gating (same deterministic ticks per gun; one variable per row),
+  sprite-and-atlas-production (the LOD cell is authored for the scale it is seen at, same canvas and grip, so no
+  data moves). No deviation.
+- frames.json 15: three it13 entries first; dropped it12 48 px/m kinetic strip (superseded), it10 kinetic carry
+  clip (its Gloria slot was the pistol), it9 hand cannon slug strip. The it12 kinetic entries carry a CORRECTION
+  note (their Gloria slot drew the pistol).
+
+## Calls for the owner (adds, iteration 13)
+- weapon-art-14 update: option C is now filmed (`it13-held-call14-AC-kinetic-arena-pit-32ppm-3x.png`, A and C rows
+  per gun at the same ticks). Recommendation: A. C reads as a third grey forearm.
+- Commit f0cfcd9b (Gloria's own art in the claw + two-tone cell + guard test). Gates at f0cfcd9b: lint 13/13
+  (676 files, also the pre-commit hook), unit 740/740 (`unit-it13b.log`, +1 test: no art_stand_in may hide a
+  weapon's own held art), scenarios 32/32 (`scenarios-it13.log`, run before the test was added; the test is
+  unit-only). Render + one data line; no sim file, no golden touched.
+- MILESTONE 07:28 brief item 4, the claw lineup refreshed for every gun at 32 px/m: `it13-claw-lineup-12-guns-arena-
+  pit-32ppm-3x.png` (12 guns, one run each, ticks 142 and 394, held_small in force). Looked at: twelve distinct
+  shapes; vermilion only on the rocket and nuke warheads and the molotov wick (danger, on doctrine). The melee four
+  are not in it: `--loadout` skips them ("not a carried gun"); their claw art is the rig's melee path.
+- FINDING 07:29 -> rivet-arsenal (INFO, theirs): at tick 394 (carry, not aiming) the long guns (rocket, mini-nuke,
+  plasma rifle, ray gun) lie across Rivet's helmet and collar, drawn over his head. A shoulder tube reads, but the
+  nuke covers his face. Draw order or carry angle of RivetHeldView; not changed here.
+- MILESTONE 07:42 the 64 px/m claw lineup: `it13-claw-lineup-12-guns-arena-pit-64ppm-2x.png` (12 guns, full art,
+  tick 142). Looked at: every gun its own silhouette at Rivet's scale; Gloria now long and dark with her tank.
+- FRICTION 07:40 lost about 10 min: my wait loop's glob `Z_*` also matched the `.log` files (never 148 lines), so
+  it waited out its timeout after the renders had finished. Glob directories as `Z_*/`.
+- frames.json 15: the two it13 lineups after the Gloria clip; dropped the it9 rocket tubes sheet and the it9
+  mini-nuke bottle-vs-shell clip (both superseded by the lineups and the it9 pit nuke clip).
+- Session close 07:44: 1 code commit (f0cfcd9b) + this journal commit. No Godot process of mine running (two melee
+  runs stopped by PID at 07:25; the rest exited on --quit-after). Scratch `gtai-n4/scratch/wa13` holds the raw
+  frames only (not referenced by frames.json; delete next session).
+
+NEXT (iteration 14), in order:
+1. REQUEST 12 -> rivet-arsenal: drop `"gloria": "pistol"` from `art_stand_in` on their branch (or take mine at
+   merge). Check their JOURNAL for the answer; the guard test in test_held_lod.gd catches a reintroduction.
+2. Re-film the kinetic-family clip (it12's 32 px/m A/B) now that Gloria draws her own art: one run with
+   `--loadout=pistol,machine_pistol,hand_cannon,gloria`, real time, cops in frame. Replace the it12 clip in frames.json.
+3. The melee four in the claw: find how the arena puts a melee weapon in Rivet's hand (not `--loadout`; read
+   rivet-motion's melee path) and add them to the lineup at 32 and 64 px/m.
+4. FINDING to watch: long guns drawn over Rivet's helmet in the carry pose (tick 394); rivet-arsenal's view.
+5. Delete `C:\Users\kazda\kiro\gtai-n4\scratch\wa13` (raw frames).
