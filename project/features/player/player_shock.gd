@@ -14,6 +14,7 @@ const ARC_FROM_M: float = 0.55
 ## While the charge holds, a short arc jumps off the claws every few ticks (view only), longer as
 ## the charge fills.
 const CRACKLE_EVERY: int = 4
+const CLAW_SPREAD_M: float = 0.3
 
 var shock: MeleeShock
 var full_damage: float = 1.0
@@ -124,11 +125,16 @@ func _stun(arena: CombatArena, areas: FightAreas, f: Fighter, stun: int, first: 
 	arena.struck.emit(f, dir, not f.alive(), WEAPON)
 
 
+## Two arcs, one off each claw (CLAW_SPREAD_M either side of the facing), jumping outward and
+## growing with the charge, so the held charge reads at 32 px/m.
 func _crackle(arena: CombatArena, facing: Vector2) -> void:
-	var at: Vector2 = arena.rivet.pos + facing * ARC_FROM_M
-	var turn: float = float((arena.tick / CRACKLE_EVERY) % 5 - 2) * 0.7
-	var length: float = 0.25 + 0.45 * charging01()
-	_arc(areas_of(arena), arena.tick, at, at + facing.rotated(turn) * length)
+	var beat: int = arena.tick / CRACKLE_EVERY
+	var length: float = 0.3 + 0.6 * charging01()
+	for side: float in [-1.0, 1.0]:
+		var at: Vector2 = arena.rivet.pos + facing * ARC_FROM_M
+		at += facing.orthogonal() * side * CLAW_SPREAD_M
+		var turn: float = side * (0.5 + 0.35 * float(beat % 3))
+		_arc(areas_of(arena), arena.tick, at, at + facing.rotated(turn) * length)
 
 
 func _arc(areas: FightAreas, tick: int, from: Vector2, to: Vector2) -> void:
