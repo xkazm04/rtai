@@ -441,3 +441,36 @@ NEXT (iteration 7, in order):
   not the cost. (Startle off = 6 trips, on = 4: the startled are mid-cower when they pass a body
   and trip later or not at all.) NEXT 1 is answered; the riot needs an idle-machine bench.
 - 04:58 gates on the tip (0204a090): lint 13/13, unit 738/738 (04:44), scenarios 32/32 (full suite, 04:58), parity bit-exact (04:40 evidence run; no sim change since). Branch tip has everything; gtai-masters/n4/human-reactions/frames.json 15 entries, each file checked to exist. Session close.
+
+## Iteration 7 (04:59-05:59), BUILD
+- 04:59 read JOURNAL, git log, the other lanes' JOURNALs: no open REQUESTs to human-reactions
+  (showcase REQUEST 20, the test_rig_variant_swat .uid, was already closed in their round 6).
+  Registry rules as before (motion-quality-gating: judged in motion, every sheet looked at).
+- MILESTONE c034af76 (NEXT 3): scenario_crowd_react. A scripted street (5 x 3 walkers, two deaths,
+  a fleeing runner) stepped on the 60 Hz tick through CrowdReact: exactly the 15 living walkers
+  within STARTLE_M startle (0 further out), each away from the body (min dot 1.0), the cower clears
+  in 41 ticks (table 42), the runner trips once, two runs give the same pose digest. Planted
+  faults caught: startle radius 0 (0 startles) and trip radius 0 (0 trips). CrowdReact.startle_m
+  / trip_m are now live vars defaulting to the consts. FRICTION: the cower timer first read 82
+  ticks because the same walker is startled again by the second death; the timer now covers only
+  the first death's window.
+- MILESTONE 3ad17652 (NEXT 4 + a gap): the fight's dead (arena rigs, CrowdReact.extra_bodies on
+  `--arena=city`) now startle the street too, once per new body (before, they only tripped
+  walkers). The arena exit log prints the startles. Unit 739/739, crowd_react / city_scare /
+  arena_city scenarios green. Measured in the live pit (`--arena=city --rigs --bot=gunplay
+  --weapon=pistol --start=pit --clean`, 30 s headless): --crowd=420 -> 11 cowers, 0 at a death;
+  --crowd=900 -> 15 cowers, 1 at a death. CityScare empties the plaza before the cops die, so in
+  the pit a startle is rare. That is right for the sim; it is why the readable close-up is a board.
+- MILESTONE a76284b2 (NEXT 2): StreetBoard (`react_board_run.gd --board=street`): a patrol
+  cop's round kills one walker of a 4 x 3 knot; the 9 within 2.5 m cower away from the body, then
+  scatter, and a fleeing runner trips over the body; four takes from four sides (9 startles, 1
+  trip each). Pass 1 read as a perfect ring with the west walker running past the cop. Pass 2:
+  each walker on its own beat and pace (by index, no RNG), away from the body and the gun, and a
+  walker on the line of fire breaks sideways. Clips street_startle_32ppm / _64ppm.mp4 (16 s) +
+  street_startle_64ppm_sheet.png. Read at 64 px/m: the tracer, the fall with red along the round,
+  the knot hunched with hands over their heads, the break, the runner pitching over the body. At
+  32 px/m the duck reads as the knot going dark (arms over heads), the trip is small.
+  frames.json 15 (street_startle_64ppm second; arena_pit_rigs_32ppm dropped, the file stays).
+- DECISION fight deaths startle: a body drawn on the arena's own rigs startles like a city death
+  (one rule for every death the street sees). Alternative: skip extra bodies in _startle_extra
+  (one line).
