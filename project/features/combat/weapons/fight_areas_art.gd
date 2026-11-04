@@ -151,7 +151,7 @@ static func _patch(ci: CanvasItem, p: Vector4, left: int, tick: int, dead: Array
 	var ring: bool = p.z >= RING_PATCH_M
 	if ring:
 		FightScorchArt.ring(ci, c, p.z, 0.7 + fade * 0.3)
-	else:
+	elif not WeaponFxShell.patch_ground(ci, p, fade):
 		FightScorchArt.blotch(ci, c, p.z, 0.7 + fade * 0.3)
 	var n: int = maxi(ceili(p.z * 2.5), 1)
 	for i: int in n:

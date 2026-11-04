@@ -128,6 +128,7 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 				float(FIRE_BURST_TICKS - age) / (FIRE_BURST_TICKS * 0.5), 0.0, 1.0
 			)
 			_cell(ci, &"blast", 0, Vector2(b.x, b.y), b.y * 0.9, k, fade)
+		WeaponFxShell.glass(ci, b, age)
 		return true
 	var at: Vector2 = Vector2(b.x, b.y)
 	# the scorch decal stays under it for the whole VFX life, fading out
