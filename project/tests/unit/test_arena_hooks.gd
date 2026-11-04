@@ -40,7 +40,9 @@ func test_bad_hook_paths_are_dropped() -> void:
 
 
 func test_the_stage_steps_and_reports_its_hooks() -> void:
-	var stations: ArenaStations = ArenaStations.shipped()
+	# the arena's own file only: other lanes' stations (rivet-arsenal's claw cops) bring hooks too
+	var stations: ArenaStations = ArenaStations.new()
+	stations.add_file(ArenaStations.DIR + "/arena.json")
 	stations.add_text(HOOKED % HOOK, "zz-probe.json")
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()

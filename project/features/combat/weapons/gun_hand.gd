@@ -47,6 +47,7 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 		s.left_m = w.range_m
 		s.shooter_id = shooter.id
 		s.spec = w
+		s.origin = s.pos
 		if w.kind == WeaponSpec.Kind.THROWN or w.kind == WeaponSpec.Kind.ROCKET:
 			# Bottles land and rockets burst at the aimed point (or the first body, for rockets).
 			s.left_m = clampf(shooter.pos.distance_to(at), 1.0, w.range_m)

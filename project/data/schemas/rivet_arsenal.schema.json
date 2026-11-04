@@ -1,0 +1,342 @@
+{
+  "$id": "gtai.rivet-arsenal/1",
+  "additionalProperties": false,
+  "properties": {
+    "art_stand_in": {
+      "additionalProperties": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "classes": {
+      "additionalProperties": false,
+      "properties": {
+        "backpack_hose": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        },
+        "heavy_two_hand": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        },
+        "one_hand": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        },
+        "shoulder": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        },
+        "thrown": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        },
+        "two_hand_long": {
+          "additionalProperties": false,
+          "properties": {
+            "doc": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "draw_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "held_scale": {
+              "maximum": 3,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "kick": {
+              "maximum": 3,
+              "minimum": 0,
+              "type": "number"
+            },
+            "move_mult": {
+              "maximum": 1.5,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "stow_ticks": {
+              "maximum": 120,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "doc",
+            "draw_ticks",
+            "stow_ticks",
+            "kick",
+            "move_mult",
+            "held_scale"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "backpack_hose",
+        "heavy_two_hand",
+        "one_hand",
+        "shoulder",
+        "thrown",
+        "two_hand_long"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reload": {
+      "additionalProperties": false,
+      "properties": {
+        "cock_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "in_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "out_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "out_k",
+        "in_k",
+        "cock_k"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.rivet-arsenal/1"
+    },
+    "weapons": {
+      "additionalProperties": {
+        "enum": [
+          "backpack_hose",
+          "heavy_two_hand",
+          "one_hand",
+          "shoulder",
+          "thrown",
+          "two_hand_long"
+        ]
+      },
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_-]*$"
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "doc",
+    "schema",
+    "classes",
+    "reload",
+    "weapons"
+  ],
+  "type": "object"
+}

@@ -77,7 +77,7 @@ func test_electro_bolt_chains_body_to_body_and_stuns() -> void:
 
 func test_molotov_flies_over_a_body_and_leaves_fire() -> void:
 	var arena: CombatArena = _arena(&"molotov")
-	var between: Fighter = _guard(arena, Vector2(4.0, 0.0))
+	var between: Fighter = _guard(arena, Vector2(4.0, 0.3))  # on the path, off the aim
 	var behind: Fighter = _guard(arena, Vector2(9.0, 0.0))
 	assert_true(arena.rivet_fire(Vector2(9.0, 0.0)))
 	_run(arena, 1, 50)
@@ -96,3 +96,13 @@ func test_quest_weapons_never_build_the_area_model() -> void:
 	_run(arena, 1, 30)
 	assert_false(g.alive())
 	assert_null(arena.areas, "quest 1 (no GunHand) keeps its own model and goldens")
+
+
+func test_a_bottle_aimed_past_a_guard_lands_on_him() -> void:
+	var arena: CombatArena = _arena(&"molotov")
+	var g: Fighter = _guard(arena, Vector2(9.0, 0.8))
+	# the arena's aim point is the aim direction x aim_range_m: far past the guard
+	assert_true(arena.rivet_fire(Vector2(25.0, 0.0)))
+	_run(arena, 1, 50)
+	assert_not_null(arena.areas.effect(g), "the bottle found the guard under the aim line")
+	assert_gt(arena.areas.effect(g).burn_ticks, 0)

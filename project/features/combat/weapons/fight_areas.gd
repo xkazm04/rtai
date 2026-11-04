@@ -14,10 +14,16 @@ const PATCH_IGNITE_TICKS: int = 30
 ## Burning humans run at walk speed x this, weaving off the line away from the fire.
 const PANIC_SPEED_X: float = 1.7
 const PANIC_WEAVE_RAD: float = 0.7
+## ...and the run bends (radians a tick, the side by fighter id), so a burning man flails in a
+## wide curve near where he caught fire instead of leaving the fight in a straight line.
+const PANIC_TURN_RAD: float = 0.015
 ## DECISION 2026-11-04: in the fight the bolt jumps body to body (humans conduct) and metal props
 ## bridge it; false = the range model's metal-only chain.
 const CHAIN_THROUGH_HUMANS: bool = true
 const CHAIN_FALLOFF: float = 0.7
+## TickInput carries the aim as a direction only, so a thrown bottle lands on the living hostile
+## closest to the aim line within this angle (and its range), else at the aim point.
+const LOB_CONE_RAD: float = 0.2
 ## Views see blasts and chain arcs for this long (VFX only; not in the replay state).
 const VFX_KEEP_TICKS: int = 40
 
@@ -36,6 +42,21 @@ var blast_ticks: Array[int] = []
 var knockdowns: int = 0
 var ignitions: int = 0
 var chain_hits: int = 0
+
+
+## Where a bottle thrown from `from` toward `at` lands (see LOB_CONE_RAD).
+static func lob_target(arena: CombatArena, from: Vector2, at: Vector2, range_m: float) -> Vector2:
+	var aim: Vector2 = (at - from).normalized()
+	var best: Vector2 = at
+	var best_off: float = INF
+	for h: Fighter in arena.hostiles:
+		var to: Vector2 = h.pos - from
+		var off: float = absf(aim.cross(to))
+		var in_cone: bool = absf(aim.angle_to(to)) <= LOB_CONE_RAD
+		if h.alive() and to.length() <= range_m and in_cone and off < best_off:
+			best_off = off
+			best = h.pos
+	return best
 
 
 ## The events.json death kind of a weapon's hits.
@@ -88,6 +109,7 @@ func holds(arena: CombatArena, h: Fighter) -> bool:
 		var weave: float = sin(float(arena.tick) * 0.2 + float(h.id)) * PANIC_WEAVE_RAD
 		var run: Vector2 = e.flee.rotated(weave)
 		h.facing = run
+		e.flee = e.flee.rotated(PANIC_TURN_RAD if h.id % 2 == 0 else -PANIC_TURN_RAD)
 		h.pos += run * float(arena.tuning.human["walk_mps"]) * PANIC_SPEED_X * SimClock.TICK_DT
 	return true
 
