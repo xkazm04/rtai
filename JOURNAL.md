@@ -328,3 +328,23 @@ NEXT (iteration 5, in order):
   711/711 (`evidence/n4/unit-g.log`), scenarios 29/29 (`scenarios-f.log`). Not yet seen in the city; no impact mark yet (bolts are
   not tracked by GunFxRounds). NEXT item 2 above becomes: ray in the pit + city at 32 px/m, an impact
   sizzle; then homing shard gun, mini-nuke.
+- 03:16 Ray gun in the city proving block at 32 px/m: 5 rays / 5 kills, no SCRIPT ERROR
+  (`MASTERS/n4/gunplay/city_ray_block_32ppm/`). `side_by_side_uniques_64ppm.mp4`: hand cannon, plasma,
+  ray (range lane) + electro gun (pit) 2x2, 5 s, sound off. frames.json: 15 entries, every file checked
+  to exist; the four-gun and uniques side-by-sides first.
+- Session end 03:18: no Godot process of mine running (all windowed runs used --quit-after), no
+  bench.lock or image.lock held, scratch renders under gtai-n4/scratch/gp deleted (only the clips
+  in MASTERS/n4/gunplay and the stills in evidence/n4 kept).
+
+NEXT (iteration 5, in order; supersedes the list above):
+1. Plasma bolt contrast at 32 px/m on cream paving (find bolt frames in city_plasma_block_32ppm; if it
+   sinks, thicken the `_bolt` ink rim or take weapon-art's energy accent once weapon-art-3 is decided).
+2. Ray gun impact: rays are not tracked by GunFxRounds (BOLT kind) so they leave no mark; add a
+   sizzle (small cream ring + scorch) where a ray stops, view-only.
+3. Homing shard gun, then mini-nuke (rows exist, disabled): projectile designs (shards that curve
+   onto a target with a scratch trail; a slow fat shell, a huge blast ring and a fire patch), damage
+   one-shot for humans, tests, range + pit + city clips.
+4. Kill close-ups with the camera on the victim (48-64 px/m) for the three uniques; brutality's
+   hand_cannon_blowback on a scratch merge for the reel.
+5. Riot bench before/after of record under bench.lock (nothing this iteration touched the sim or
+   the riot's per-frame cost; render-only).
