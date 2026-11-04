@@ -165,3 +165,9 @@ NEXT:
 - (14:20) Fix the film_rt.sh second-display capture (see the FRICTION above), then film the HEAD ch 18
   window in real time (ticks 960-1860 start 15.9 s after the probe's first frame) as the "after"
   of perf-city-1.
+- (14:18) client_rect.ps1 now moves the window to 200,200 on the primary display (SetWindowPos),
+  and the grab worked. But the owner's own terminal windows sat above the game for part of the
+  44 s (--always-on-top did not hold against them), so the mp4 showed the owner's screen. It is
+  DELETED, not kept. Desktop capture on the shared machine is not safe for evidence while the owner
+  is at the desk. Next: film real time only when the desktop is idle, or capture inside the
+  engine (a viewport-texture grab every frame costs ~ms, so measure it, then label the film with that cost).
