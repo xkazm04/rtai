@@ -1293,3 +1293,18 @@ while gates.sh's evidence step runs.
   only), showcase-2 hub crowding, the r19 bench's 424 ms worst frame (contended, one run).
   Scratch kept: scratch-showcase/cut-r19-dir (reel-1012's chapters). Delete cut-r16/r17/r18-dir.
 - 10:29 session end (freeze). No Godot process of mine running.
+
+## Iteration 15 (STABILIZE, 10:30-10:40)
+- 10:31 read JOURNAL/log. Lane tips after round 19: weapon-art, rivet-arsenal, gunplay, brutality
+  = docs/evidence logs only. human-reactions 1623e625 (10:11) ReactLink.MELEE_IDS (melee ids hit as
+  `melee`: spin wound + fold death; render only + 1 unit assert). DECISION showcase: NOT merged
+  after the freeze: it changes the claw/katana/chainsaw chapters, reel-1012 would no longer match
+  the build, and no time for gates + re-cut + re-export before 10:40. The Director's morning merge
+  takes it with n-human-reactions (in REPORT).
+- 10:34 REPORT updated in place: r19 bench (10:16-10:28, CONTENDED) replaces "17-19 not benched";
+  bench table row r19; the 10:35 stabilize note. cut-r16/r17/r18-dir already gone; scratch keeps
+  cut-r19-dir (reel-1012's chapters) and cut-r16-electro48.
+- NEXT (Director): final build = n-showcase 08e1b72f + docs; reel-1012; exe 10:12. Merge
+  n-showcase, then n-human-reactions (1623e625) and re-run unit. Open: no live robot thug,
+  showcase-2 hub crowding, r19's 424 ms worst frame (contended, one run).
+- 10:36 session end. No Godot process of mine running.

@@ -18,10 +18,20 @@ barriers). Other changes:
 - The fire-death char keeps a zoom-scaled ash rim.
 - Weapon-art's inked ground pickups in the hub armory.
 
-Bench of record is r16 (08:59, CONTENDED). Rounds 17-19 are render-side or dev-bot changes and
-were not benched: there was no time before the freeze. Reels in this window: reel-0857 (r16),
+Bench of record is now **r19** (10:16-10:28, CONTENDED: other lanes active; the exported
+release, 3 x 4 x 60 s): aggregate p99 8.792 ms, 1 % low 74 fps, MISSES p99CpuMs (about r16's
+8.515 / 88); worst frame 424 ms, 26 hitches over 50 ms (0 unexplained). One run, not bisected
+(freeze); evidence/r19/bench.log. Rounds 17-18 were not benched. Reels in this window: reel-0857 (r16),
 reel-0930 (r17), reel-0954 (r18), **reel-1012 (r19, final)**. The play commands below are for
 this exe.
+
+**10:35 stabilize check (after the freeze):** no gate, reel or exe changed after reel-1012. The
+lane tips moved after round 19 with docs and evidence logs only, with one exception:
+human-reactions `1623e625` (10:11, `ReactLink.MELEE_IDS`: claw, chainsaw, baton, katana and
+plasma sword hits play the melee wound and fold death instead of the light fallback; render only,
+one unit test). It is **not in this build**: it landed after the round 19 merge, and it changes
+what the claw, katana and chainsaw chapters show, so taking it would leave reel-1012 out of date
+with no time to re-film. The Director's morning merge takes it along with the lane's branch.
 
 The text below is the 08:40 report.
 
@@ -114,7 +124,8 @@ city block loads with the loadout.
 | r8 | 4.33 / 140 | 2.54 / 224 | 10.37 / 71 |
 | r10 | 3.39 / 108 | 2.17 / 376 | 5.58 / 118 |
 | r12 | 2.00 / 280 | 2.21 / 252 | 8.50 / 73 (my own merge load in its window) |
-| **r16 (extension, latest bench)** | **3.72 / 166** | **2.47 / 260** | **8.52 / 88 (no Godot of mine during it; other lanes busy)** |
+| r16 (extension) | 3.72 / 166 | 2.47 / 260 | 8.52 / 88 (no Godot of mine during it; other lanes busy) |
+| **r19 (final exe, 10:16-10:28)** | **aggregate only: p99 8.79 ms / 1 % low 74 fps, MISSES p99CpuMs; worst frame 424 ms (CONTENDED)** | | |
 
 The riot went back under its p99 record on r10 after human-reactions trimmed the trip scan (REQUEST 23).
 The r12 riot number is not clean: my round-13 merges (git + the lint hook) ran during it. No r13
