@@ -1,0 +1,110 @@
+[
+  {
+    "file": "all_notes_ab_32ppm.mp4",
+    "title": "Every combat note at 32 px/m, the judging scale: shard, electro tap, electro chain, plasma kill, plasma on armor, katana, chainsaw, baton, claw (the night's look / now)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 32,
+    "before": "--no-shard-flinch --soft-shock --no-plasma-heat --soft-swing (all the lane's before flags), same build",
+    "note": "27.7 s, native 32 px/m crops (no scaling), real time, arena director chapters (dev/arena/arena.tscn --bot=reel). Reads clearly at 32: the shard victim no longer buried in smoke, the chain's arcs and tossed pistols, the plasma smoke column and scorch, the melee smear fan across the victim on the cut frames. Melee chapters re-rendered on 9dca555b: the striking arm draws over the victim, so the claw jab shows as a grey arm across the blue chest on the hit frames. Smallest at 32: the single-tap electro jolt (the body is about 20 px; the spits carry it). The baton's 48/64 slow A/B is melee_baton_ab_48ppm_64slow.mp4 and baton_smear_linger_ab_48ppm_64slow.mp4. Re-cut 17:58 (iteration 8): electro_baton and claw_combo re-rendered on 1ec9b8a6 (the melee kill death: the body folds and topples clear; the before, --soft-swing, keeps the X-sprawl); every master re-encoded without the render audio (no frozen gaps): 1660 frames = 27.7 s."
+  },
+  {
+    "file": "claw_death_ab_48ppm_64slow_32.mp4",
+    "title": "Claw kills: the victim folds over the blow and topples clear of Rivet instead of dropping into an X-sprawl under his feet (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "64050b28 as committed (rendered before 060bc6dc)",
+    "note": "Arena director chapter claw_combo. 48 px/m real time A/B, 64 px/m 0.4x A/B, 32 px/m real time A/B. Rivet's melee kills never played a death (PlayerMelee kills through CombatArena.damage: kill_landed, no struck), so the body fell into the rig's default sprawl where it stood. Now ReactLink plays death_melee from kill_landed along Rivet -> victim, travel 0.9 m. Also has the striking arm drawn over the victim (claw_over_ab_64ppm_32ppm.mp4, out of this list, still in REPORT)."
+  },
+  {
+    "file": "city_melee_death_ab_48ppm.mp4",
+    "title": "City block: the electro baton kill folds and topples along the blow (before / after)",
+    "source": "game-city",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "9dca555b, the same fight (--arena=city --bot=arsenal, QUIT 1320)",
+    "note": "Live city melee fight (katana, chainsaw, electro baton). 48 px/m real time A/B, then 0.4x on the baton kill. Before = the instant X-sprawl at Rivet's feet; after = the melee death. Katana and chainsaw kills keep their signature kills (brutality)."
+  },
+  {
+    "file": "plasma_kick_ab_48ppm_64slow.mp4",
+    "title": "Plasma kill: the holed body is kicked back along the bolt on the hit frame, then topples (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "commit d218402d (iteration 1's throw with smoke: the body stands under the impact flash for the look ticks, then topples)",
+    "note": "Arena director chapter plasma_rifle. 48 px/m real time A/B, then 64 px/m 0.4x A/B of the hit. After: on the hit frame the body sits 0.3 m back and stretched along the shot beside the impact ring, holds, then falls on to 0.85 m."
+  },
+  {
+    "file": "city_plasma_ab_48ppm.mp4",
+    "title": "City block, live fight: plasma rifle kill - the night's throw vs now (kick on the hit frame, thrown back further, wound smoke)",
+    "source": "game-city",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "same build with --no-plasma-heat (the night's throw, no kick, no smoke)",
+    "note": "--arena=city --weapon=plasma_rifle --bot=gunplay --lone --cam=fight --reach=6 --rigs --ppm=48, frames 300-600 real time, then 0.4x of the kill (frames 370-450). The smoke reads as grey ink-rimmed rings on the cream pavement. Replaces the arena-only plasma_throw_smoke A/B (the arena kick clip covers the 64 px/m close-up)."
+  },
+  {
+    "file": "call_two_hand_grip_katana_64ppm.mp4",
+    "title": "Call for the owner: two-handed katana grip - one claw (default) vs --two-hand-grip",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 64,
+    "before": "left = the default (night's one-claw hold with the new swing); right = --two-hand-grip",
+    "note": "Arena director chapter katana, 64 px/m real time, then 0.4x. The right holds the hilt in front of the chest with the off wrist on it (0-4 px, unit-tested), but Rivet's off arm ends in a torch tool, not a claw, and the tool draws across or away from the blade. Waits for the redesigned rig's off hand. Still frame of the rig alone: two_hand_grip_probe_rig.png."
+  },
+  {
+    "file": "melee_swing_ab_48ppm_64slow.mp4",
+    "title": "Rivet's melee swings: anticipation, the blade in the body on the hit frame, a smear, follow-through; the chainsaw's idle judder (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 64,
+    "before": "main a1275c82 behaviour (same build with --soft-swing: the night's linear sweep, no smear, no idle judder)",
+    "note": "Arena director chapters katana (48 px/m real time, then 64 px/m 0.4x), chainsaw (64 px/m 0.4x) and plasma_sword_deflect (64 px/m real time). Before: on the hit frame the blade is still cocked (the cut started on the hit tick and the hit-stop froze it). The two-handed grip (off claw on the hilt) is not built yet; the baton and the claw have no chapter filmed."
+  },
+  {
+    "file": "city_melee_swing_ab_48ppm.mp4",
+    "title": "City block, live fight: Rivet's katana/chainsaw/baton swings - smear, and the striking arm drawn over the victim (before / after)",
+    "source": "game-city",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "same build with --soft-swing (the night's sweep; the sim is identical, view-only change)",
+    "note": "--arena=city --rigs --bot=arsenal --loadout=katana,chainsaw,electro_baton --ppm=48, frames 380-1300 real time (both full frames at half scale side by side), then 0.25x at 2x zoom on two baton strikes (frames 636-690). After (re-rendered on 9dca555b) = the two-tone smear (a grey wedge on the cream pavement) and the baton arm across the cop on the strike frames; before = no smear, the arm under the cop."
+  },
+  {
+    "file": "plasma_armored_stagger_ab_48ppm_64slow.mp4",
+    "title": "Plasma rifle on an armored cop: the bolt that does not kill staggers him and leaves a glowing, smoking scorch, the next bolt holes him (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "main a1275c82 behaviour (same build with --no-plasma-heat: the medium-class flinch, no scorch)",
+    "note": "New arena director chapter plasma_armored (tap fire, one bolt per 50 ticks, armored hp: 2 bolts). 48 px/m real-time A/B, then 64 px/m 0.4x A/B, then 48 again. Not filmed in the city block: the city has no armored humans (every plasma hit there kills). Companion clip plasma_scorch_size_ab_48ppm_64slow.mp4: the scorch is now 0.13 m (6 px at 48 px/m) instead of 0.1 m."
+  },
+  {
+    "file": "city_shard_electro_ab_48ppm.mp4",
+    "title": "City block: homing shard flinch and electro stun (before / after)",
+    "source": "game-city",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "main a1275c82 (same build with --no-shard-flinch / --soft-shock)",
+    "note": "--arena=city --bot=gunplay --lone --cam=fight --reach=6 --rigs. Shard at 48 px/m real time, then 0.4x close of the landing; electro tap stun 0.4x close (arcs, jolts, pistol dropped). The electro kill itself leaves the crop as the camera follows Rivet (not shown)."
+  },
+  {
+    "file": "electro_jolt_ab_48ppm_64slow.mp4",
+    "title": "Electro gun: hard off-rhythm jolts, arcs crawling over the body, the pistol dropped (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "main a1275c82 (same build with --soft-shock)",
+    "note": "Arena director chapter electro_gun: tap stun, then the charged kill (X-ray flash and stiff plank fall kept). 48 px/m real-time A/B, then 64 px/m 0.4x A/B of the stun. The dropped pistol vanishes with the body on the charged kill (next). Companion clip electro_spits_ab_32ppm_64slow.mp4: the arcs now spit out past the body (32 px/m real time, 64 px/m 0.4x)."
+  },
+  {
+    "file": "shard_flinch_ab_48ppm_64slow.mp4",
+    "title": "Homing shard: the victim reacts on the landing frame (before / after)",
+    "source": "dev-scene",
+    "branch": "d6-combat-notes",
+    "ppm": 48,
+    "before": "main a1275c82 (same build with --no-shard-flinch)",
+    "note": "Arena director chapter homing_shard. 48 px/m real time A/B, then 64 px/m at 0.4x A/B. Before: the shard pop drew as the rocket burst + smoke ring over the body for 0.6 s, so only the late burst showed. After: a small splinter pop, the body flinches on each shard's tick (5), then bursts."
+  }
+]

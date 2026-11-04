@@ -1,9 +1,12 @@
-# REPORT (written 16:40 in iteration 5, updated 17:55 in iteration 8, checked 18:16 in iteration 10) - day lane combat-notes, 2026-11-04
+# REPORT (written 16:40 in iteration 5, updated 17:55 in iteration 8, final 18:45 in iteration 14) - day lane combat-notes, 2026-11-04
 
 Branch `d6-combat-notes`, cut from main `a1275c82`. Clips are in
 `C:\Users\kazda\kiro\gtai-masters\d6\combat-notes\` (`frames.json`: 12 entries, newest and best first).
 Gates on 34bc64e6: lint 13/13, unit 974/974, scenarios 46/46, parity bit-exact (planted mutation
-caught at step 629), selftest pass. No bench was run: this lane makes no performance claim.
+caught at step 629), selftest pass (log: `evidence/combat-notes/gates-34bc64e6.log`; re-run with
+`node tools/evidence/run.mjs --no-bench`). Everything after 34bc64e6 is JOURNAL/REPORT/evidence only
+(`git diff --stat 34bc64e6 HEAD`). A copy of `frames.json` is in `evidence/combat-notes/`.
+No bench was run: this lane makes no performance claim.
 Everything is view-only: no sim, replay or native change.
 
 Every change has a flag that restores the night's look. The flags are the A/B befores:
@@ -28,6 +31,7 @@ the judging scale, real time, with the night's look on the left and now on the r
   the silhouette.
 - **The charged kill.** The skeleton flash and the plank are unchanged. The dropped pistol stays
   by the body, then inks out and sinks with it.
+- **Tests.** `test_shock_jolt`, `test_shock_spits` (`--soft-shock` = the night's, planted).
 - **Clips.** `electro_jolt_ab_48ppm_64slow`, `electro_spits_ab_32ppm_64slow`,
   `electro_chain_ab_48ppm_64slow`, `electro_drop_decay_ab_48ppm`.
 
@@ -36,6 +40,7 @@ the judging scale, real time, with the night's look on the left and now on the r
   further. The wound smokes.
 - **A bolt that does not kill.** The body staggers for 0.55 s from the hit frame instead of a
   0.24 s flinch, and a 0.13 m glowing, smoking scorch appears on the chest.
+- **Tests.** `test_plasma_wound` (`--no-plasma-heat` = the night's, planted).
 - **Clips.** `plasma_kick_ab_48ppm_64slow`, `plasma_armored_stagger_ab_48ppm_64slow`,
   `plasma_scorch_size_ab_48ppm_64slow`, `city_plasma_ab_48ppm`.
 
@@ -59,7 +64,7 @@ the judging scale, real time, with the night's look on the left and now on the r
 
 ## Calls for the owner
 1. **The two-handed grip on the katana and the plasma sword.** It is built and OFF
-   (`--two-hand-grip`). The off wrist closes on the hilt (0-4 px), but Rivet's off arm ends in a
+   (`--two-hand-grip`; `test_two_hand_hilt`). The off wrist closes on the hilt (0-4 px), but Rivet's off arm ends in a
    torch tool, not a claw, so the tool draws across the blade. The options:
    - the redesigned Rivet gets an off claw, and the grip turns on;
    - one-claw blades are accepted, and the flag is deleted.
@@ -82,3 +87,33 @@ the judging scale, real time, with the night's look on the left and now on the r
 - **The electro chain is filmed in the arena only.** The city pit spreads its cops beyond the
   chain's jump range.
 - **The plasma sword's visual asset** waits for the image rounds (not this lane's).
+
+## What blocked me, and for how long
+Nothing blocked the lane outright. The friction, from JOURNAL:
+- **About 15 min (13:40-13:58).** The unit gate would not start ("import exit -1"). First, two runs
+  had no `GODOT_BIN` set (my mistake). Then one ran in parallel with renders. The fix was to re-run it
+  alone. A new `class_name` also needed a `--headless --import` before film runs saw it.
+- **About 20 min (14:33).** Lint failed with no output: the 810 `.gd` paths went past the Windows
+  command-line cap. Fixed in `tools/lint/lint.mjs` (batches of 200).
+- **About 15 min (17:39-17:58).** 14 masters had frozen video gaps: `cut_ab.sh` trimmed the video but
+  not the audio. All 14 were re-encoded as video only, and both cut scripts now drop the audio.
+- **Lost time.** The first shard A/B came out byte-identical (`LaunchArgs` does not see arena args
+  after `--`). `timeout` around the film scripts exits 127 in this shell. Arcs were drawn under the rigs.
+- **The last 4 iterations (18:12-18:40).** No code: there was too little time before the freeze to
+  film and gate the melee wound (see below).
+
+## Next steps
+1. **The non-lethal melee wound.** Follow the JOURNAL DESIGN (iteration 10, 18:15):
+   - a view-only `wounded` signal from CombatArena.damage;
+   - a small MeleeWound class beside ReactLink;
+   - a re-entry gate for the chainsaw grind;
+   - a unit test with a planted no-wound;
+   - film the claw against a riot cop at 48 px/m real time and at 64 px/m 0.4x, with
+     `--soft-swing` as the before.
+2. **The two-hand grip call.** Once the redesigned Rivet lands, either turn the grip on (if he gets an
+   off claw) or delete the flag.
+3. **The plasma sword's visual asset.** Once the image rounds deliver it, re-film the plasma sword's
+   combo with the current swing and smear.
+4. **The claw approach overlap.** This needs fighter spacing in the sim/AI, a replay change. Leave it
+   to a lane that owns the AI.
+5. **Quest 1.** Give Rivet a melee weapon there, so this lane's work is seen in the quest path.
