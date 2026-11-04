@@ -3,9 +3,10 @@ extends SceneTree
 ## global classes at parse time). Usage:
 ##   <godot> --rendering-driver d3d12 --resolution 1280x720 --path project
 ##     -s res://dev/human_react/react_board_run.gd -- --out=<dir>
-##     [--zoom=1] [--every=2] [--only=<n>]
+##     [--zoom=1] [--every=2] [--only=<n>] [--board=street]
+## --board=street plays StreetBoard (a crowd's reaction to a kill) instead of the board.
 
-const KEYS: Array[String] = ["out", "zoom", "every", "only"]
+const KEYS: Array[String] = ["out", "zoom", "every", "only", "board"]
 
 
 func _initialize() -> void:
@@ -17,7 +18,8 @@ func _initialize() -> void:
 			quit(2)
 			return
 		args[key] = a.get_slice("=", 1)
-	var node: Node = (load("res://dev/human_react/react_board.gd") as GDScript).new()
+	var board: String = "street_board" if args.get("board", "") == "street" else "react_board"
+	var node: Node = (load("res://dev/human_react/%s.gd" % board) as GDScript).new()
 	node.set("out_dir", args.get("out", "user://react_board"))
 	node.set("zoom", str(args.get("zoom", "1")).to_float())
 	node.set("every", str(args.get("every", "2")).to_int())
