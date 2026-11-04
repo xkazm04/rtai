@@ -20,6 +20,7 @@ const MELEE_IN_M: float = 1.1
 const MELEE_SWING_M: float = 1.6
 ## A walk-in that moved less than STALL_M over STALL_TICKS (cover in the way) side-steps for
 ## SIDESTEP_TICKS, keeping its side round the cover; only a blocked side-step flips the side.
+## A prop in the straight line (stage.walls) slides it round on that side at once.
 const STALL_TICKS: int = 20
 const STALL_M: float = 0.15
 const SIDESTEP_TICKS: int = 45
@@ -92,7 +93,8 @@ func _melee_in(t: TickInput, tick: int) -> TickInput:
 		_walk_tick = tick
 		_walk_from = at
 	var dir: Vector2 = to.normalized()
-	if tick < _side_until:
+	var covered: bool = stage.walls != null and stage.walls.blocks(at, foe.pos)
+	if tick < _side_until or covered:
 		dir = (dir * 0.35 + dir.orthogonal() * _side).normalized()
 	var m: Vector2 = dir * TickInput.AXIS_MAX
 	return TickInput.new(b, roundi(m.x), roundi(m.y))
