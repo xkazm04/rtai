@@ -30,6 +30,8 @@ var shock_fx: KillShockFx = KillShockFx.new()
 var split_fx: KillSplitFx = KillSplitFx.new()
 ## The ray gun kill (the body eaten by rings into a glowing dust pile and its empty clothes).
 var dissolve_fx: KillDissolveFx = KillDissolveFx.new()
+## The homing shard kill (shards stuck in the frozen body, the red mist at the pop).
+var burst_fx: KillBurstFx = KillBurstFx.new()
 ## CPU cost of this view (place, cut, draw; the char and shock overlays' own draws excluded):
 ## frames counted, microseconds in total and in the worst frame (telemetry, CONTENDED).
 var frames: int = 0
@@ -84,6 +86,9 @@ func bind(p_kills: SignatureKills) -> void:
 	dissolve_fx.reduced_motion = reduced_motion
 	dissolve_fx.z_index = 4
 	add_child(dissolve_fx)
+	burst_fx.bind(kills, ppm, reduced_motion)
+	burst_fx.z_index = 40
+	add_child(burst_fx)
 
 
 func _process(_delta: float) -> void:
