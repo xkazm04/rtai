@@ -2,14 +2,25 @@ extends SceneTree
 ## ghost-forms: base Rivet beside a ghost form from straight above, look_d4 over the pavement, at
 ## 32 and 64 px/m (FormsLineupRun). Windowed only (needs a GPU).
 ## Usage: <godot> --rendering-driver d3d12 --path project -s res://dev/ghost-forms/forms_lineup.gd
-##        -- --out=<dir> [--walk] [--print] [--unfold=<0..1>] [--frames=<n>] [--tag=<name>]
+##        -- --out=<dir> [--walk] [--print] [--morph [--hold=<ticks>] [--reduced-motion]]
+##        [--zoom=<1|2>] [--unfold=<0..1>] [--frames=<n>] [--tag=<name>]
 
 
 func _initialize() -> void:
 	var out: String = ProjectSettings.globalize_path("res://").path_join("../build/evidence/frames")
-	var node: Node = (load("res://dev/ghost-forms/forms_lineup_run.gd") as GDScript).new()
-	for arg: String in OS.get_cmdline_user_args():
-		if arg == "--walk":
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	var run: String = "forms_morph_run" if args.has("--morph") else "forms_lineup_run"
+	var node: Node = (load("res://dev/ghost-forms/%s.gd" % run) as GDScript).new()
+	for arg: String in args:
+		if arg == "--morph":
+			pass
+		elif arg == "--reduced-motion":
+			node.set("reduced_motion", true)
+		elif arg.begins_with("--zoom="):
+			node.set("_zoom_base", float(arg.substr(7)))
+		elif arg.begins_with("--hold="):
+			node.set("hold_ticks", int(arg.substr(7)))
+		elif arg == "--walk":
 			node.set("walk", true)
 		elif arg == "--print":
 			node.set("print_parts", true)

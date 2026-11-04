@@ -16,6 +16,8 @@ var walk: bool = false
 var unfold: float = 1.0
 var frames: int = 0
 var print_parts: bool = false
+## The sequence zoom (1 = 32 px/m, 2 = 64 px/m) for --frames runs.
+var _zoom_base: float = 1.0
 var _world: CanvasLayer = CanvasLayer.new()
 var _post: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
@@ -33,7 +35,7 @@ func _ready() -> void:
 	for n: Node in [_world, _post, _actors, _bus, _data]:
 		add_child(n)
 	for x: int in range(-2, 2):
-		for y: int in range(-1, 1):
+		for y: int in range(-3, 1):
 			_tile("sidewalk_tone", Vector2(x * 8 + 4, y * 8 + 4) * PX)
 	var rect: ColorRect = ColorRect.new()
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -70,11 +72,12 @@ func shoot() -> int:
 
 func _sequence() -> int:
 	_frame(1.0)
+	var ppm: int = roundi(_zoom_base * PX)
 	var ok: bool = true
 	for i: int in frames:
 		await _tick()
 		await RenderingServer.frame_post_draw
-		ok = _save(_crop(1.0), "%s-32-%04d.png" % [tag, i]) and ok
+		ok = _save(_crop(1.0), "%s-%d-%04d.png" % [tag, ppm, i]) and ok
 	return 0 if ok else 1
 
 
