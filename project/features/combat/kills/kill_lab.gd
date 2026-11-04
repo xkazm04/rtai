@@ -35,6 +35,7 @@ const LUNGE_TICKS: int = 7
 const BACK_TICKS: int = 30
 const STRIKE_M: float = 1.0
 const BLADE_DAMAGE: float = 999.0
+const SOLO_OFF: Vector2 = Vector2(3.0, 0.4)
 
 var guards: Array[Fighter] = []
 ## Each guard's mark (they stand on it: no walk-in, no spawn spread).
@@ -46,6 +47,9 @@ var blade: StringName = &""
 var hold_ticks: int = 0
 ## Stand the guards on the spread line (a kill that leaves its body in place reads alone).
 var spread: bool = false
+## Solo (the dev arg --sig-solo=x,y): Rivet stands at that arena point and one guard SOLO_OFF in
+## front of him is the only victim, away from every station's dummy row; no refill.
+var solo: Vector2 = Vector2.INF
 var _next: int = 0
 var _home: Vector2 = Vector2.INF
 var _victim: Fighter = null
@@ -53,6 +57,8 @@ var _strike_t: int = -1
 
 
 func setup(stage: ArenaStage) -> void:
+	if solo != Vector2.INF:
+		stage.arena.rivet.pos = solo
 	_line(stage)
 
 
@@ -70,7 +76,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	var target: Fighter = _target()
 	if target == null:
-		_line(stage)
+		if solo == Vector2.INF:
+			_line(stage)
 		return
 	if not blade.is_empty():
 		_victim = target
@@ -122,9 +129,11 @@ func _line(stage: ArenaStage) -> void:
 	guards.clear()
 	spots.clear()
 	_next = 0
-	for off: Vector2 in BLADE_LINE if spread or not blade.is_empty() else LINE:
-		var g: Fighter = stage.arena.spawn_guard(stage.plan.rivet_start + off)
-		g.pos = stage.plan.rivet_start + off
+	var line: PackedVector2Array = BLADE_LINE if spread or not blade.is_empty() else LINE
+	var origin: Vector2 = stage.plan.rivet_start if solo == Vector2.INF else solo
+	for off: Vector2 in PackedVector2Array([SOLO_OFF]) if solo != Vector2.INF else line:
+		var g: Fighter = stage.arena.spawn_guard(origin + off)
+		g.pos = origin + off
 		g.cooldown = HOLD_FIRE
 		@warning_ignore("return_value_discarded")
 		spots.append(g.pos)

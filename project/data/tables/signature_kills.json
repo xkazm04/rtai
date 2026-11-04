@@ -134,8 +134,8 @@
       "hitstop_ticks": 6,
       "id": "katana_split",
       "launch_mps": [
-        3,
-        3.8
+        2.4,
+        3
       ],
       "pieces": [
         "half_a",
@@ -193,8 +193,8 @@
       "hitstop_ticks": 6,
       "id": "plasma_sword_split",
       "launch_mps": [
-        3,
-        3.8
+        2.4,
+        3
       ],
       "pieces": [
         "half_a",

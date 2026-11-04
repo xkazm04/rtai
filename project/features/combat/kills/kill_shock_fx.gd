@@ -10,9 +10,11 @@ extends Node2D
 const XRAY_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/xray.png")
 const ARC: Color = Color("#F4E3B5")
 const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.5)
-## The skeleton's height on the street (metres) and how often the X-ray strobes (ticks).
-const XRAY_M: float = 1.3
-const STROBE: int = 5
+## The skeleton's height on the street (metres, a comic oversize), the held first flash right
+## after the hit-stop (ticks: cream bones on ink, the beat that reads) and the strobe after it.
+const XRAY_M: float = 1.6
+const XRAY_HOLD: int = 4
+const STROBE: int = 6
 const DROP_TICKS: int = 7
 const DROP_TURN: float = 0.5
 const SMOKE_TICKS: int = 200
@@ -76,6 +78,8 @@ func _draw() -> void:
 			if _xray(s, age):
 				var h: float = XRAY_M * ppm
 				var size: Vector2 = Vector2(h * 0.53, h)
+				if age - s.row.hitstop_ticks < XRAY_HOLD:
+					_burst(s, p, h * 0.62)
 				draw_set_transform(p, s.dir.angle() + PI * 0.5, Vector2.ONE)
 				draw_texture_rect(XRAY_TEX, Rect2(-size * 0.5, size), false)
 				draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -83,9 +87,10 @@ func _draw() -> void:
 			_smoke(s, p - s.dir * 0.2 * ppm, age, 1.0 - float(age - lock) / SMOKE_TICKS)
 
 
-## The strobe: on for 2 of every STROBE ticks (steady off under reduced motion: no flashing).
+## The flash: held XRAY_HOLD ticks, then on for 2 of every STROBE ticks (off under reduced motion).
 func _xray(s: Shock, age: int) -> bool:
-	return not reduced_motion and age >= s.row.hitstop_ticks and age % STROBE < 2
+	var a: int = age - s.row.hitstop_ticks
+	return not reduced_motion and a >= 0 and (a < XRAY_HOLD or (a - XRAY_HOLD) % STROBE < 2)
 
 
 func _arcs(s: Shock, p: Vector2, age: int) -> void:
@@ -99,6 +104,19 @@ func _arcs(s: Shock, p: Vector2, age: int) -> void:
 			pts.append(p + Vector2.from_angle(a0 + jag + k * 0.18) * r)
 		draw_polyline(pts, Ink.INK, 3.2)
 		draw_polyline(pts, ARC, 1.4)
+
+
+## The zap panel behind the held flash: a jagged cream star in an ink rim, so the bones pop.
+func _burst(s: Shock, p: Vector2, r: float) -> void:
+	var pts: PackedVector2Array = []
+	for k: int in 18:
+		var rr: float = r * (1.0 if k % 2 == 0 else 0.62 + 0.18 * _h(s.serial, k + 40))
+		@warning_ignore("return_value_discarded")
+		pts.append(p + Vector2.from_angle(TAU * k / 18.0) * rr)
+	draw_colored_polygon(pts, ARC)
+	@warning_ignore("return_value_discarded")
+	pts.append(pts[0])
+	draw_polyline(pts, Ink.INK, 3.0, true)
 
 
 func _smoke(s: Shock, p: Vector2, age: int, strength: float) -> void:

@@ -17,7 +17,7 @@ const HEAVY: PackedFloat32Array = [0.9, 0.55, 1.0, 1.0, 0.85, 0.85, 1.0, 1.15, 1
 ## Spin per piece: a blown-back body turns slowly, everything else at the row's spin.
 const SPIN_K: PackedFloat32Array = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.12, 1.4, 1.0, 1.0]
 ## A split half leaves along its own side of the cut, carried this much along the blade.
-const SPLIT_FOLLOW: float = 0.6
+const SPLIT_FOLLOW: float = 0.25
 
 var pos: PackedVector2Array = PackedVector2Array()
 var vel: PackedVector2Array = PackedVector2Array()
