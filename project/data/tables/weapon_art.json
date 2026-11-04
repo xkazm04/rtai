@@ -1,5 +1,5 @@
 {
-  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m). parts = loose extra parts (the flamethrower's tank; mag = the reload magazine the off claw carries, drawn at the held part's scale, feed end +x); part_grip_px = where the claw holds a part.",
+  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m). parts = loose extra parts (the flamethrower's tank; mag = the reload magazine the off claw carries, drawn at the held part's scale, feed end +x); part_grip_px = where the claw holds a part. parts.small = the held part re-toned for gameplay scale (tools/art/held_small.py: Rivet's tone budget, an inked silhouette, the same canvas and grip), parts.empty_small the same for the empty tube; drawn in the claw while the view is under held_small_below_ppm px/m (absent = never).",
   "fx": [
     {
       "anchor_px": [
@@ -651,6 +651,7 @@
     }
   ],
   "fx_draw_scale": 2,
+  "held_small_below_ppm": 56,
   "rig_px_per_m": 320,
   "schema": "gtai.weapon-art/1",
   "weapons": [
@@ -675,10 +676,15 @@
         "mag": [
           40,
           26
+        ],
+        "small": [
+          132,
+          59
         ]
       },
       "parts": {
-        "mag": "res://features/combat/weapons/art/pistol/mag.png"
+        "mag": "res://features/combat/weapons/art/pistol/mag.png",
+        "small": "res://features/combat/weapons/art/pistol/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/pistol/pickup.png",
       "projectile_fx": "tracer",
@@ -708,10 +714,15 @@
         "mag": [
           34,
           47
+        ],
+        "small": [
+          246,
+          167
         ]
       },
       "parts": {
-        "mag": "res://features/combat/weapons/art/machine_pistol/mag.png"
+        "mag": "res://features/combat/weapons/art/machine_pistol/mag.png",
+        "small": "res://features/combat/weapons/art/machine_pistol/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/machine_pistol/pickup.png",
       "projectile_fx": "tracer",
@@ -741,10 +752,20 @@
         "empty": [
           277,
           81
+        ],
+        "empty_small": [
+          277,
+          81
+        ],
+        "small": [
+          277,
+          81
         ]
       },
       "parts": {
-        "empty": "res://features/combat/weapons/art/rocket_launcher/held_empty.png"
+        "empty": "res://features/combat/weapons/art/rocket_launcher/held_empty.png",
+        "empty_small": "res://features/combat/weapons/art/rocket_launcher/held_empty_small.png",
+        "small": "res://features/combat/weapons/art/rocket_launcher/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/rocket_launcher/pickup.png",
       "projectile_fx": "rocket",
@@ -797,7 +818,15 @@
         468,
         105
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          153,
+          105
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/electro_gun/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/electro_gun/pickup.png",
       "projectile_fx": "arc",
       "size_px": [
@@ -847,7 +876,15 @@
         484,
         63
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          147,
+          63
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/gloria/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/gloria/pickup.png",
       "projectile_fx": "nail",
       "size_px": [
@@ -872,7 +909,15 @@
         472,
         55
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          61,
+          55
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/katana/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/katana/pickup.png",
       "projectile_fx": "",
       "size_px": [
@@ -897,7 +942,15 @@
         388,
         43
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          59,
+          43
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/electro_baton/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/electro_baton/pickup.png",
       "projectile_fx": "",
       "size_px": [
@@ -926,10 +979,15 @@
         "mag": [
           54,
           54
+        ],
+        "small": [
+          138,
+          105
         ]
       },
       "parts": {
-        "mag": "res://features/combat/weapons/art/hand_cannon/mag.png"
+        "mag": "res://features/combat/weapons/art/hand_cannon/mag.png",
+        "small": "res://features/combat/weapons/art/hand_cannon/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/hand_cannon/pickup.png",
       "projectile_fx": "tracer",
@@ -960,10 +1018,15 @@
         "mag": [
           42,
           27
+        ],
+        "small": [
+          200,
+          62
         ]
       },
       "parts": {
-        "mag": "res://features/combat/weapons/art/plasma_rifle/mag.png"
+        "mag": "res://features/combat/weapons/art/plasma_rifle/mag.png",
+        "small": "res://features/combat/weapons/art/plasma_rifle/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/plasma_rifle/pickup.png",
       "projectile_fx": "plasma_bolt",
@@ -989,7 +1052,15 @@
         443,
         92
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          102,
+          92
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/chainsaw/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/chainsaw/pickup.png",
       "projectile_fx": "",
       "size_px": [
@@ -1039,7 +1110,15 @@
         384,
         119
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          119,
+          119
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/ray_gun/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
       "projectile_fx": "ray_ring",
       "size_px": [
@@ -1064,7 +1143,15 @@
         399,
         93
       ],
-      "parts": {},
+      "part_grip_px": {
+        "small": [
+          143,
+          93
+        ]
+      },
+      "parts": {
+        "small": "res://features/combat/weapons/art/homing_shard/held_small.png"
+      },
       "pickup": "res://features/combat/weapons/art/homing_shard/pickup.png",
       "projectile_fx": "shard",
       "size_px": [
@@ -1093,10 +1180,20 @@
         "empty": [
           187,
           68
+        ],
+        "empty_small": [
+          187,
+          68
+        ],
+        "small": [
+          187,
+          68
         ]
       },
       "parts": {
-        "empty": "res://features/combat/weapons/art/mini_nuke/held_empty.png"
+        "empty": "res://features/combat/weapons/art/mini_nuke/held_empty.png",
+        "empty_small": "res://features/combat/weapons/art/mini_nuke/held_empty_small.png",
+        "small": "res://features/combat/weapons/art/mini_nuke/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/mini_nuke/pickup.png",
       "projectile_fx": "rocket",

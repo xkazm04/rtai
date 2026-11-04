@@ -157,6 +157,33 @@ crops of both grounds.
   it from the shot until the reload's load phase (rivet-arsenal REQUEST 11).
 - Generators: `tools/art/bullet_tracer.py <fx_dir>` (tracer, nail) and `tools/art/empty_tubes.py <art_dir>`.
 
+## Held guns at gameplay scale (iteration 12)
+
+In the claw at 32-48 px/m the four kinetic guns printed as the same dark ink lozenge (iteration 10 finding). The
+cause is tone, measured at the print's real scale: at 48 px/m `print_part.gdshader` posterizes a part to solid ink
+from an ink density of about 0.43 (luminance about 140). The held guns' body tones sit at a median luminance of
+101-123. Rivet's own D4 parts sit at 180-200. So the gun's body went solid and took its inner shapes with it.
+
+- **`parts.small`** (`held_small.png`, every held weapon but three): the held part on the same
+  canvas, re-toned into Rivet's tone budget. The darkest ink (luminance 52 and under: outlines, bores, slots) is
+  kept as drawn. The body's median lands at 186, at 0.45 of its drawn spread, by an additive shift, so the rust
+  keeps its red lead and never crosses the vermilion gate. A 9 part-px ink edge runs along the silhouette (about
+  1 screen px at 48 px/m). What survives the print: the hand cannon's drum bands, the machine pistol's side feed
+  box, Gloria's rear bulb and long barrel, and the pistol's slide.
+- **Not re-toned:** the molotov and the plasma sword print light already, and the flamethrower's thin wand
+  prints darker re-toned (the ink edge swallows it). The print sim measured every held part at 48 px/m first:
+  54-88 % solid ink for the rest. The rocket launcher and the mini-nuke also get `parts.empty_small`
+  (`held_empty_small.png`, lifted by the loaded tube's median so both tubes match).
+- **The swap** (`HeldLod`, a Sprite2D that `make_held(id)` returns when the row has `parts.small`): it draws the
+  small cell while `PartMaterials.view_px` (the print's own zoom) is under `held_small_below_ppm` (56, the zoom
+  where RigDetail's D5 tier switches on). At 64 px/m and closer it draws the full art. The paper rim swaps with it.
+  `--held-small=off` keeps the full art at every zoom (A/B). A view that sets the texture to a full art (the
+  empty tube from rivet-arsenal's HeldTube) is mapped to its small cell: HeldLod runs at process priority 20,
+  after the claw view.
+- The pickups, the HUD icons and the weapon wall are unchanged: they print flat at their own size.
+- Generator: `tools/art/held_small.py <art_dir> [ids]`. `--sim <out.png>` previews the print offline (box
+  minification + the shader's D4 thresholds) before a Godot run: `it12-held-small-print-sim.png`.
+
 ## FX cells (`features/combat/weapons/art/fx/`, procedural, seeded: `tools/art/weapon_fx.py`)
 
 `flash_pistol_0..2`, `flash_smg_0..2`, `flash_tube_0..2`, `flash_energy_0..2`, `flash_nuke_0..2`,
