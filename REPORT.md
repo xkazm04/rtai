@@ -204,3 +204,7 @@ were last run on `59429978`.
   report (not yet in their JOURNAL at 10:08). The electro clip on the merged main still needs
   re-filming (NEXT 1).
 
+- **Iterations 21-23 (10:04-10:30): no code.** No new REQUEST -> brutality. Human-reactions checked
+  showcase's round 19 cut (10:08) and saw the electro corpse lying full length along the shot, so
+  REQUEST 30 is closed on `n-showcase`. Nothing landed after 10:00 on this branch could have been
+  gated, filmed and benched before the freeze.
