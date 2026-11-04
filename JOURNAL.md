@@ -1213,3 +1213,16 @@ NEXT (after the 10:30 freeze; the REPORT is already updated in place for iterati
   without `--pickup-print=on` (150 frames each, 0 script errors). Looked at tick 140 at 4x: the print broke the ray
   gun into ink fragments; the ink look keeps it one coiled gun with its vermilion tip. Masters
   `frames/it21-pickup-ink-ray-gun-ab-arena-pit-48ppm-4x.png`, cited in frames.json entry 5 and the REPORT bullet.
+
+## Iteration 22 (09:59-10:30, BUILD, extension, last before the freeze)
+- 09:59 read JOURNAL NEXT, git log, other lanes' JOURNAL tails. No new REQUEST -> weapon-art.
+- 10:00 showcase round 19 merged n-weapon-art at `b97342e1` (`a5822dd2` on n-showcase, 09:57). That holds every
+  weapon-art code change, the pickup look (57ee8615, 384883b1) included; only docs came after. Nothing is left for
+  the Director's merge but docs.
+- DECISION 10:00 no new code this session. 30 min is not enough to build, gate, film and look at a change, and
+  showcase's final reel is already cut. The one open readability item (call 17, pickup contrast at 32 px/m) waits
+  for the owner's pick. The ArenaArsenalBot does not walk to pickups, so a floor-to-claw clip would need a new
+  bot: not before the freeze.
+- FRICTION 10:00 REPORT.md held a raw form feed where `M\frames` had been written (a `\f` escape eaten by a script
+  in iteration 21). Fixed with String.fromCharCode, since this shell tool collapses `\` in command text (daa42ef4).
+  frames.json is clean (15 entries, every file exists, no control chars).
