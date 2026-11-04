@@ -39,6 +39,9 @@ func test_rivet_never_reacts_and_burn_is_burn() -> void:
 	assert_eq(link._pending.size(), 0)
 	assert_eq(link.hit_class_of(&"burn"), &"burn")
 	assert_eq(link.hit_class_of(&"no-such-gun"), &"light")
+	assert_eq(link.hit_class_of(&"claw"), &"melee")
+	assert_eq(link.hit_class_of(&"katana"), &"melee")
+	assert_eq(link.hit_class_of(&"claw_shock"), &"light")
 
 
 func test_a_victim_without_a_full_rig_is_skipped_and_the_queue_drains() -> void:
