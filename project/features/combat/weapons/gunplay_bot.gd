@@ -18,6 +18,8 @@ const FLANK_AFTER: int = 30
 var stage: ArenaStage
 var actions: PlayerActions
 var reach_m: float = MAX_REACH_M
+## Blocked ticks before it rounds the cover (a test can switch the flank off with a huge value).
+var flank_after: int = FLANK_AFTER
 var _next: int = 0
 var _in_range_since: int = -1
 var _blocked_since: int = -1
@@ -58,7 +60,7 @@ func sample(tick: int) -> TickInput:
 	elif _blocked_since < 0:
 		_blocked_since = tick
 		_flank = side
-	if not lane and tick - _blocked_since >= FLANK_AFTER:
+	if not lane and tick - _blocked_since >= flank_after:
 		side = _flank  # one way round the cover, and in
 		approach = aim * 0.5
 	return _input(aim.orthogonal() * side * strafe + approach, aim, fire, to_foe.length())
