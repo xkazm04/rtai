@@ -474,3 +474,14 @@ NEXT (iteration 4):
   Rigs p99 0.94 ms. The drive is back at its record with no city-path change since r4, which
   supports the r4 reading that the drive swings were contention; the riot drifts the other way
   between rounds. Files: evidence/r5/bench-*.json, bench-r5.txt.
+- Unit r5c (a4b33221: glue, --riot, stall switch): 802/802. Reel scenario green alone after the
+  stall switch (evidence/r5/scen-reel-stall.log).
+- 04:11-04:16 reel-0412-riot-64ppm (64 px/m, `--reel=pit --riot --loadout=hand_cannon,
+  plasma_rifle,flamethrower,molotov`, 80 s). Looked at 0.4 fps from 15 s (24 frames) and a full
+  frame at 54 s: the riot cop reads at 64 px/m (helmet, the shield's curved edge); the
+  flamethrower's tank on Rivet's back and its orange tongues; ash stickers for burn kills; the
+  hand cannon's flare. Wrong: (e) the gun beat's anchor is PIT_ENTRY's last point (the south
+  door), so Rivet drifts out of the door and the fight spills onto the blank paper south of the
+  pit: flame patches lie on paper (40-60 s). Own fix next: anchor the gun beat inside the pit.
+  (f) a long vermilion line crosses the frame through Rivet at some shots (a cop's told line;
+  fine by the palette, but it reads as a laser at 64 px/m).
