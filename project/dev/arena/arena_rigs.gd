@@ -53,6 +53,7 @@ func attach(p_stage: ArenaStage, view: CollectCallView, ctx: WorldContext) -> bo
 	rigs.setup(ctx)
 	view.cast_view.visible = false
 	react = ReactLink.make(p_stage.arena)
+	ShieldSparks.wire(react, p_stage.arena, func() -> CombatBlood: return view.blood)
 	for t: ArenaTargets.Target in p_stage.targets.targets:
 		var look: Vector2i = ReactLineBot.look_of(t.spawn.id)
 		if look.x >= 0:
