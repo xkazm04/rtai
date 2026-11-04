@@ -14,8 +14,8 @@ DRAFT written in iteration 9 (06:50). The report phase finalises it: gates of re
 | Gate | Result | Where |
 |---|---|---|
 | lint | 13/13 (716 files) | d6618606 |
-| unit | 807/807, exit 0 | a67bff25 + the weapon-art merge, `E/it9-unit.log`; then 6/6 for the new test_claw_cops_stand_off |
-| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | a67bff25, `E/it9-scenarios.log`; rivet 8/8 at d6618606 (`E/it9e-rivet-scenarios.log`) |
+| unit | 813/813, exit 0 | d6618606, `E/it9f-unit.log` |
+| scenarios | 37/37, incl. scenario_rivet_claw, _switch, _pickup, _throw, _deflect, _chainsaw, _katana, _city_fight | d6618606: 36/37 on the full run (`E/it9f-scenarios.log`). The red one is scenario_city_chase's 2 ms nav budget under load, the known flake; it passes alone (`E/it9f-city-chase-alone.log`) |
 | replay / parity | untouched: every carry, pilot and rig change is arena-pilot state (written only with a carry) or render-only; quest 1's bytes do not move | |
 | bench | not taken (no sim cost added; bench.lock never held) | |
 
