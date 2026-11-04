@@ -1111,3 +1111,18 @@ glass-and-fuel molotov sheet; (3) blast frame 3 as torn smoke wisps; (4) owner c
   the ring tears into more of them (about 32); the rocket at 3.5 m (1.9 m puffs) is unchanged. Same ticks against the
   5d453958 run, looked at: Rivet reads through the torn ring. Evidence: `clips/it20-nuke-blast-wisps-capped-ab-city-48ppm.mp4`,
   `frames/it20-nuke-blast-wisps-capped-ab-city-48ppm.png` (cited in frames.json entry 2's note).
+- Gates at 9a66ac6c: lint 13/13, unit 742/742 (`unit-it20c.log`), scenarios 32/32 (`scenarios-it20c.log`). Parity untouched
+  (render only since the merge base).
+- 09:00 REPORT.md updated in place: an "After 09:00" section, calls 12 and 16 re-stated (12 now ships the bomb cell, the
+  rocket is `--nuke-shell=rocket`; 16 now has three options: wisps / ring / beads), and Next steps trimmed. FRICTION: the
+  08:40 REPORT said the frames for calls 5 and 8 were missing from masters. Both were there; the REPORT now cites them.
+- 09:03 call 3 (energy rounds paper-white on cream) got its first frame, showing the current read only: pistol / electro / plasma / ray
+  in the city block at 32 px/m, same ticks (`frames/it20-call3-energy-vs-kinetic-city-32ppm.png`). Looked at: the plasma
+  bolt and the ray rings read, and the electro arc is the thinnest. The long red line is the cop's told aim line (gunplay), not a round.
+- Scratch AVIs (about 1.4 GB) deleted. No Godot process of mine running; no lock taken.
+
+NEXT (iteration 21, before the 10:30 freeze; showcase's final merge is 09:45, so tip 9a66ac6c+ docs is what they take):
+1. If time: the electro arc is the weakest energy read at 32 px/m (call 3 frame). A thicker ink under the arc cell is
+   in the lane's palette and needs no new token; build it as a one-value A/B and film it before 10:30.
+2. Keep the gates of record at 9a66ac6c; any code after it needs lint + unit + scenarios before 10:30.
+3. At 10:40, update REPORT.md in place (the "After 09:00" section) with anything later.

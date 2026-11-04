@@ -95,12 +95,12 @@ Each call has a clip or frame in `M`. The default is what ships now, and every a
 |---|---|---|---|
 | weapon-art-1 | drawn length 1.5x real (pistol 0.70 m) | real size; `length_m` per row | `frames\lineup-core-64ppm.png` |
 | weapon-art-2 | held parts printed through `print_part` | raw colour | `frames\print-ab-64ppm.png` |
-| weapon-art-3 | energy effects paper-white in an ink ring | a new energy accent ink (a palette token) | no frame |
+| weapon-art-3 | energy effects paper-white in an ink ring | a new energy accent ink (a palette token) | `frames\it20-call3-energy-vs-kinetic-city-32ppm.png` (the current read only) |
 | weapon-art-4 | weapon-art cells | gunplay's procedural shapes (`--weapon-fx=shapes`) | `frames\it3-rocket-ab-64ppm.png` |
-| weapon-art-5 | the SMG's long curved feed box | the small tab | no frame |
+| weapon-art-5 | the SMG's long curved feed box | the small tab | `frames\it4-smg-feedbox-ab.png` |
 | weapon-art-6 | the electro daze as paper spark stars | gunplay's zigzags | `frames\it4-electro-chain-daze-48ppm.png` |
 | weapon-art-7 | a paper rim under the held guns | none (`--weapon-rim=off`) | `frames\it5-rim-ab-64-32ppm.png` |
-| weapon-art-8 | spent magazines stay on the floor (the last 8) | they fade | no frame |
+| weapon-art-8 | spent magazines stay on the floor (the last 8) | they fade | `frames\it5-reload-mags-rim-64ppm.png`, `clips\it5-reload-mags-64ppm.mp4` |
 | weapon-art-9 | the weapon wall in the hub | none (`--weapon-rack=off`) | `frames\it6-weapon-wall-hub-64-32ppm.png` |
 | weapon-art-10 | SWAT and thug as scripted derivations | newly generated sheets | `frames\it6-swat-look-128-48-32ppm.png` |
 | weapon-art-11 | the ray gun's round as a ring train | a straight beam | `frames\it8-ray-gun-rings-abc-64ppm.png` |
@@ -110,7 +110,7 @@ Each call has a clip or frame in `M`. The default is what ships now, and every a
 | weapon-art-15 | molotov landing: star + glass + scorch | B: the rocket's full blast (`--fire-burst=off`) | `clips\it14-molotov-landing-glass-scorch-ab-city-48ppm-2x.mp4` |
 | weapon-art-16 | since 09:00, rocket blast tail: the ring tears into smoke wisps | B: the ring holds and thins (`--blast-tail=ring`); C: the bead ring (`--blast-beads=on`) | `clips\it20-rocket-blast-wisps-ab-city-48ppm-1.5x.mp4`, `clips\it14-rocket-blast-tail-ab-city-48ppm-2x-quarterspeed.mp4` |
 
-Calls 3, 5 and 8 have no frame cited here. Call 5 has one in the journal (`it4-smg-feedbox-ab.png`) but it isn't in `M\frames\`, and call 8's (`it5-reload-mags-rim-64ppm.png`) isn't there either.
+Call 3's frame shows only the current read: its alternative, a new accent ink, is not built. The 08:40 version of this line said the frames for calls 5 and 8 were missing from `M\frames\`. That was wrong: both were there, and both are cited now.
 
 ## Merge notes for the Director
 
