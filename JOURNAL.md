@@ -596,3 +596,19 @@ Session end 00:17: head = this commit, tree clean, image.lock released, no Godot
   `M/frames/react-board-planview-ab-64ppm.png`, `M/cast-react-board-planview-ab-64ppm.mp4`,
   `M/frames/crowd-planview-ab-vs-r2a5.png`. Gib cuts copy each sprite's global transform (gib_cut.gd), so the
   head scale carries into the splits.
+- 00:29-00:33 EVIDENCE GATE on 25eec84a (`node tools/evidence/run.mjs --no-bench`): lint 13/13, unit 942/0 (marked
+  FAIL only for "tree changed during run": my own REPORT/decisions edits while it ran; FRICTION, do not edit
+  tracked files during the gate), scenarios 46, parity exact (mutation caught at 629), selftest junction 9/11 and
+  block 4/5: d1@48, d4@64, block d4@48 over the far share only (2.11-2.22 % vs 2 %, means <= 2.33 vs 4). Diff mask
+  looked at (`M/frames/golden-diff-planview-peds.png`): peds and ped corpses, plus the usual speckle; nothing else.
+- MILESTONE 00:36 91aac1aa: goldens re-blessed once (junction 11 + block 5, dated decisions line), REPORT section 5
+  and Call 6 rewritten (A = built pale-topped crowd, B = the dark crowd, one set of constants + the art back).
+- 00:37 live game: city block `film.sh cast-peds-city-32 32 900 --bot=reel --arena=city
+  --loadout=pistol,machine_pistol` (0 SCRIPT ERROR), A/B against `cast-navy-city-32.mp4` (same sim):
+  `M/cast-peds-city-ab-32.mp4`, `M/frames/city-peds-ab-32ppm.png` (t=3/8/13 s + x3 crops): the coat ped is a pale
+  figure with a small dark head where it was a dark disc. The arena city block has few peds (mostly cops).
+- 00:38 COMBAT CHECK director reel headless (`--fixed-fps 60 --quit-after 7200 ... --bot=reel --reel=director
+  --loadout=pistol`) on 91aac1aa: 16 chapters started, 16 down (claw_combo 2/2, pistol 2/2, machine_pistol 4/4 ..
+  mini_nuke 4/4), 0 SCRIPT ERROR. frames.json 15 (+ crowd-planview-ab-vs-r2a5, react-board-planview-ab,
+  city-peds-ab; dropped from the list, files kept as REPORT cites them: crowd-value-vs-r2a5, rivet-warm-lineup-ab,
+  rivet-legrim-ab).
