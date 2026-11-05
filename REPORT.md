@@ -220,6 +220,9 @@ Merged n6-ghost-powers d439f520 (scenario_quest1_dent) and n5-cast 84ed1bd1 (que
 slim rigs): unit 1016/0, director reel 16/16 (E:director-reel-it13-merged.log). On 45c69934 (the keyline),
 still tree (E:evidence-run-it13.log): evidence runner `--no-bench` all PASS: lint 13/13, unit 1018/0,
 scenarios 48, parity bit-exact, look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
+Then merged n6-ghost-powers a30a5ce3 (Tonnage crushes the quest car, Ohm burns cars out) and n5-cast 473a405e
+(docs): on ebc5ed9d, still tree (E:evidence-run-it13-final.log): all PASS, lint 13/13, unit 1019/0, scenarios 48,
+parity bit-exact; director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it13-final.log).
 
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged

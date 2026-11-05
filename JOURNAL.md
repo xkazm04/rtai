@@ -832,3 +832,12 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
 - 07:22 CHECK the keyline on the shipped quest 1 (q1lift.sh, 1060 frames, 0 SCRIPT ERROR): Dent on asphalt reads
   as before, the keyline a thin dark edge on the teal pool: `M:frames/dent-keyline-quest1-32ppm-x3.png` (named in
   the keyline entry). Scratch renders deleted. REPORT section 10 + iteration 13 gates.
+- 07:19 CHECK Ohm on the pale kerb (`--form=ohm --side=120`, 480 frames, 0 SCRIPT ERROR): he is slower and walks
+  the cream crossing stripes rather than the slab; his rust shell is darker than the cream and reads with its
+  teal seams. No keyline needed; scratch deleted.
+- 07:20 MERGE n6-ghost-powers a30a5ce3 (quest_crush_rec, Ohm burns cars out) as fc341d84; MERGE n5-cast 473a405e
+  (docs) as ebc5ed9d; JOURNAL/REPORT/it7 logs kept ours. FRICTION: the evidence runner refuses a dirty tree, and a
+  log written into evidence/ makes it dirty: write the log to masters scratch, copy it in after.
+- 07:28 FINAL GATES on ebc5ed9d, still tree (E:evidence-run-it13-final.log): PASS lint 13/13, unit 1019/0,
+  scenarios 48, parity bit-exact, look/block goldens PASS; director reel 16/16, 0 SCRIPT ERROR
+  (E:director-reel-it13-final.log).
