@@ -677,3 +677,7 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   after: the lash toward the guards, then dashes), clip `M/quest1-dent-miss-32ppm.mp4` (4.5 s). test_dent_miss 2/2.
   Gates: lint 13/13, unit 1009/0 (`E/unit-it8b-powers.log`), scenario ghost 1/0 (`E/scenario-ghost-it8-powers.log`).
   DECISION in decisions.md (feedback, not the fix: the REPORT row stays).
+- 05:41 GATES evidence runner `--no-bench` on cefbcf8b, still tree: PASS lint 13/13, unit 1009/0, scenarios 47,
+  parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), no re-bless
+  (`E/evidence-run-it8-powers.log`). REPORT iteration-8 rows (reach telegraph, Dent miss, reel it8, gates).
+  frames.json 15 (all present; + quest1-dent-miss-ab, - kerf-body-keys, still in REPORT).
