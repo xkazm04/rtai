@@ -826,3 +826,29 @@ Read: JOURNAL, git log, n7-king's JOURNAL it7 (target comparison at 32, plain th
 numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to servo open.
 - 00:30 MERGE n7-king ad428713 (f448dbce car_goal takes BossHook.bounds; gang helmets; king
   evidence). JOURNAL conflict, ours; boss_bot.gd auto-merged.
+- 00:31 MILESTONE 97492d77 merge committed (lint 13/13); unit **1181/0** (`unit-it8.log`).
+  Committed the it7 evidence left untracked (cf8fa7ea).
+- 00:30 MILESTONE 4b2d7ce3 **the rack seam is gone**: each 3-row wing is one frame. No image
+  job: `tools/art/servo_rack3.py` composes `rack3.png` from the installed 2-row wing (the centre
+  repeats a whole bay row with its cross bar; the striped side panels stretch to the new height).
+  ServoRig._wing_art draws it bottom-aligned with the 2-row wing for rows 3 (other row counts keep
+  `_extra_rows`). Looked at p2 seed 2 at 48 px/m: `M/frames/servo_target_vs_arena_rack3_seam_48ppm_it8.png`
+  (target | it4 2-row | it4 3-row with the seam | it8). DECISION in docs/decisions.md.
+- 00:36 MILESTONE f442c3c8 **the rush-hour horn** (`ServoHorn`, Servo's folder, render side):
+  phase_changed to index 1 cues `audio_cues.json servo_horn` (horn_01 at pitch 0.62, not
+  positional). Unit test_servo_horn; **unit 1182/0** (`unit-it8b.log`). FRICTION: the first unit
+  run passed 1182 but load_all failed: `ServoHorn.attach(...)` discarded its return (warning =
+  error), which would have broken Servo's whole view in the game. `run_unit.mjs` prints it only as
+  "load_all exit 1"; run `-s res://tests/load_all.gd` to see the line. Not heard (headless).
+- 00:40 MILESTONE 41075551 **the central spine** (`ServoSpine`, render only): the target's top
+  view is wing | spine | wing; ours had the wings meeting in the middle. A cream column with shaded
+  rivet bands (0.56 m, over the wings' inner striped panels only, so `cell_pos` and the numbers do
+  not move) from the rack's back edge to under the torso, capped past the back edge by the head
+  part's panel box with its copper hose loops. Two looks: a flat strap with tiny hoses inside the
+  rack outline (rejected), then the shaded bands and the cap pushed out 0.08 m past the edge.
+  `M/frames/servo_spine_ab_48ppm_it8.png`. DECISION in docs/decisions.md.
+- "Bigger pads": measured against the sheet (pad ~0.48 of a wing's width there; ours 1.3 m of
+  2.6 m = 0.5): already matched. Dropped from NEXT.
+- frames.json 15: the it8 target still and spine A/B in, the it7 phase clips replace the it3 ones
+  (it3 clips, the it3 keys still and the it4 target stills deleted: superseded, the it4 A/B is
+  inside the it8 still).
