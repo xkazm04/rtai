@@ -250,6 +250,9 @@ func _casts() -> void:
 	_dev_rigs()
 	@warning_ignore("return_value_discarded")
 	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)
+	if _story != null:  # n7-melee: the sprite cast draws the carried blade (rigs: RivetHeldView)
+		@warning_ignore("return_value_discarded")
+		CastBladeView.attach(view, session.stage)
 
 
 ## The live input's screen frame: Rivet at the centre, and the view's px/m so a thrown aim lands

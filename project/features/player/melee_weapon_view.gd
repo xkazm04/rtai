@@ -31,15 +31,20 @@ var _zap_ticks: int = 0
 
 ## Places the prop on `rig`'s weapon hand, swept by `combo`'s current hit.
 func track(rig: CutRig, combo: MeleeCombo) -> void:
-	var hot: bool = combo.phase() == MeleeCombo.Phase.ACTIVE
 	var side: RigLimbs = rig.sides[maxi(rig.plan.gun_arm, 0)]
 	var spr: Sprite2D = side.hand if side.hand != null else side.fore
 	var ts: Vector2 = spr.texture.get_size()
 	var host: Node2D = get_parent() as Node2D
 	var g: Vector2 = spr.global_transform * (ts * 0.5 + spr.offset)
-	var dir: Vector2 = spr.global_transform.x.normalized().rotated(sweep_of(combo))
-	_grip = host.to_local(g) if host != null else g
-	_tip = _grip + dir * length_px
+	track_at(host.to_local(g) if host != null else g, spr.global_transform.x.normalized(), combo)
+
+
+## Places the prop at `grip` (host space) along `forearm`, swept by `combo`'s current hit (n7-melee:
+## quest 1's sprite cast has no rig hand, CastBladeView passes the sprite's hand point).
+func track_at(grip: Vector2, forearm: Vector2, combo: MeleeCombo) -> void:
+	var hot: bool = combo.phase() == MeleeCombo.Phase.ACTIVE
+	_grip = grip
+	_tip = _grip + forearm.rotated(sweep_of(combo)) * length_px
 	_hot = hot
 	if hot:
 		@warning_ignore("return_value_discarded")
