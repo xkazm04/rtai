@@ -1,0 +1,2095 @@
+WorkerThreadPool: 16 threads, 4 max low-priority.
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Accessibility: AccessKit driver loaded.
+Accessibility: window 0 adapter created.
+Devices:
+  #0: NVIDIA NVIDIA GeForce RTX 4090 - Supported, Discrete
+  #1: AMD AMD Radeon(TM) Graphics - Supported, Discrete
+  #2: Microsoft Microsoft Basic Render Driver - Supported, CPU
+- Shader:
+  model: 6.6
+- D3D12 Variable Rate Shading supported:
+  Draw call
+  Primitive
+  Screen-space image (tile size: 16)
+- D3D12 multiview supported:
+  max view count: 4
+- Relaxed casting supported (but disabled for now)
+- D3D12 16-bit ops supported: yes
+- Depth bounds test supported
+D3D12: Device supports GPU UPLOAD heap.
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+SDL: Init OK!
+Using "winink" pen tablet driver...
+Shader 'CanvasSdfShaderRD' (group 0) SHA256: a4f6d732dba9a4cc0c37a1ca52936369e2ee148e9d03efe1b81bfed822adb1eb
+Loading cache for shader CanvasSdfShaderRD, variant 0
+Loading cache for shader CanvasSdfShaderRD, variant 1
+Loading cache for shader CanvasSdfShaderRD, variant 2
+Loading cache for shader CanvasSdfShaderRD, variant 3
+Loading cache for shader CanvasSdfShaderRD, variant 4
+Loading cache for shader CanvasSdfShaderRD, variant 5
+Shader 'SkeletonShaderRD' (group 0) SHA256: e6bc641e2a094416c99b1294ac5e453c55d24e0b62c1da47c8f7f93ae7877bfa
+Loading cache for shader SkeletonShaderRD, variant 0
+Loading cache for shader SkeletonShaderRD, variant 1
+Shader 'SortShaderRD' (group 0) SHA256: d8d77897b86870d358bf870233e14233981c2db9ff06641cd8f405379ac8872f
+Loading cache for shader SortShaderRD, variant 0
+Loading cache for shader SortShaderRD, variant 1
+Loading cache for shader SortShaderRD, variant 2
+Shader 'ParticlesShaderRD' (group 0) SHA256: f645828ab356b17f1478c77373935ecd2417e1c227a96b62417396293d13970e
+Loading cache for shader ParticlesShaderRD, variant 0
+Shader 'ParticlesCopyShaderRD' (group 0) SHA256: ce2b95c8a6b9e21f14c989c3ca095de77d9bb5e86213ae4180fb97cbd2c02a10
+Loading cache for shader ParticlesCopyShaderRD, variant 0
+Loading cache for shader ParticlesCopyShaderRD, variant 1
+Loading cache for shader ParticlesCopyShaderRD, variant 2
+Loading cache for shader ParticlesCopyShaderRD, variant 3
+Loading cache for shader ParticlesCopyShaderRD, variant 4
+Loading cache for shader ParticlesCopyShaderRD, variant 5
+Loading cache for shader ParticlesCopyShaderRD, variant 6
+Loading cache for shader ParticlesCopyShaderRD, variant 7
+Loading cache for shader ParticlesCopyShaderRD, variant 8
+Loading cache for shader ParticlesCopyShaderRD, variant 9
+Loading cache for shader ParticlesCopyShaderRD, variant 10
+Loading cache for shader ParticlesCopyShaderRD, variant 11
+Loading cache for shader ParticlesCopyShaderRD, variant 12
+Loading cache for shader ParticlesCopyShaderRD, variant 13
+Loading cache for shader ParticlesCopyShaderRD, variant 14
+Loading cache for shader ParticlesCopyShaderRD, variant 15
+Loading cache for shader ParticlesCopyShaderRD, variant 16
+Loading cache for shader ParticlesCopyShaderRD, variant 17
+Loading cache for shader ParticlesCopyShaderRD, variant 18
+Loading cache for shader ParticlesCopyShaderRD, variant 19
+Loading cache for shader ParticlesCopyShaderRD, variant 20
+Shader 'CanvasShaderRD' (group 0) SHA256: 5454ca85157b6953b76bf324ebe90594c466e36301bf1b3e6adcce117d705c79
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Shader 'CanvasOcclusionShaderRD' (group 0) SHA256: 606df5c981910bc4bc719cf497719273e80d1f314f65e68820bf8e2111368cdb
+Loading cache for shader CanvasOcclusionShaderRD, variant 0
+Loading cache for shader CanvasOcclusionShaderRD, variant 1
+Loading cache for shader CanvasOcclusionShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Shader 'TexBlitShaderRD' (group 0) SHA256: fd9c885eab1da0d330a04ebfd7796019cde57f82208202f3bfc96cae74155212
+Loading cache for shader TexBlitShaderRD, variant 0
+Loading cache for shader TexBlitShaderRD, variant 1
+Loading cache for shader TexBlitShaderRD, variant 2
+Loading cache for shader TexBlitShaderRD, variant 3
+Shader 'ClusterRenderShaderRD' (group 0) SHA256: 092c9f39b8c42523662d45db394a8d4f7f068d617876866d55d9fd69e5afb357
+Loading cache for shader ClusterRenderShaderRD, variant 0
+Loading cache for shader ClusterRenderShaderRD, variant 1
+Shader 'ClusterStoreShaderRD' (group 0) SHA256: 77e74456f71eccced2f4bd06086f33d4ae56a013ce717690f960759226272eb4
+Loading cache for shader ClusterStoreShaderRD, variant 0
+Shader 'ClusterDebugShaderRD' (group 0) SHA256: 25eb5280da03a5dfefcf122ab21c9f6184c2a0d8edfb398d0b9e784c99ede8d6
+Loading cache for shader ClusterDebugShaderRD, variant 0
+Shader 'SceneForwardClusteredShaderRD' (group 0) SHA256: cdfe2a8d86deff48154b1cd0d6e857301f5e37f0d8930754f63ff9c2c85045a6
+Shader 'SceneForwardClusteredShaderRD' (group 1) SHA256: 073f74b951c9d31091a21a83f7ed2a449ca9faa4f0b5a7052db58dd352175ef7
+Shader 'SceneForwardClusteredShaderRD' (group 2) SHA256: 0e2560bbe3adf526b738f6b3c67897e10ea21a0e17c56f7a5ecbf6797f8e6991
+Shader 'SceneForwardClusteredShaderRD' (group 3) SHA256: 6cb1159e6a2acf7ea3d926a7f1b088c77adebfa34de42d2b2b3c59641632a4d3
+Loading cache for shader SceneForwardClusteredShaderRD, variant 0
+Loading cache for shader SceneForwardClusteredShaderRD, variant 1
+Loading cache for shader SceneForwardClusteredShaderRD, variant 2
+Loading cache for shader SceneForwardClusteredShaderRD, variant 3
+Loading cache for shader SceneForwardClusteredShaderRD, variant 4
+Loading cache for shader SceneForwardClusteredShaderRD, variant 5
+Loading cache for shader SceneForwardClusteredShaderRD, variant 6
+Loading cache for shader SceneForwardClusteredShaderRD, variant 7
+Loading cache for shader SceneForwardClusteredShaderRD, variant 0
+Loading cache for shader SceneForwardClusteredShaderRD, variant 1
+Loading cache for shader SceneForwardClusteredShaderRD, variant 2
+Loading cache for shader SceneForwardClusteredShaderRD, variant 3
+Loading cache for shader SceneForwardClusteredShaderRD, variant 4
+Loading cache for shader SceneForwardClusteredShaderRD, variant 5
+Loading cache for shader SceneForwardClusteredShaderRD, variant 6
+Loading cache for shader SceneForwardClusteredShaderRD, variant 7
+Loading cache for shader SceneForwardClusteredShaderRD, variant 0
+Loading cache for shader SceneForwardClusteredShaderRD, variant 1
+Loading cache for shader SceneForwardClusteredShaderRD, variant 2
+Loading cache for shader SceneForwardClusteredShaderRD, variant 3
+Loading cache for shader SceneForwardClusteredShaderRD, variant 4
+Loading cache for shader SceneForwardClusteredShaderRD, variant 5
+Loading cache for shader SceneForwardClusteredShaderRD, variant 6
+Loading cache for shader SceneForwardClusteredShaderRD, variant 7
+Shader 'BestFitNormalShaderRD' (group 0) SHA256: c4b1d2e5a1d6f84559f49734aae94706b402e2be89eae7753b8b413800d96d42
+Loading cache for shader BestFitNormalShaderRD, variant 0
+Shader 'IntegrateDfgShaderRD' (group 0) SHA256: 4d699e26d43b88b86cb33c2b829767ea8e935055bb48dea880f66eb29760577a
+Loading cache for shader IntegrateDfgShaderRD, variant 0
+Shader 'TaaResolveShaderRD' (group 0) SHA256: a1ca2d745847530de0720910ad5bfa2466e0ab33647b7a631f2900d7b4617a60
+Loading cache for shader TaaResolveShaderRD, variant 0
+Shader 'Fsr2DepthClipPassShaderRD' (group 0) SHA256: 4a735c315dc3644fbdbbe70afdfe9bce327e4a10441982ebb38e87c22d502c41
+Shader 'Fsr2ReconstructPreviousDepthPassShaderRD' (group 0) SHA256: c41c89f4fe2f3dc313a48a2ae22a3c88e6ce5e90f5f660b5484d53a3360ab28d
+Shader 'Fsr2LockPassShaderRD' (group 0) SHA256: ba10724396561abfafe1196b0531eeb403087c1e05c5656de71d642bab4d8d3b
+Shader 'Fsr2AccumulatePassShaderRD' (group 0) SHA256: cb0552a6babfc28ea4bdf33f963848da4261ac9b71b063ca392b2e970b4e0680
+Shader 'Fsr2RcasPassShaderRD' (group 0) SHA256: f03d67b5589dcb7ff3abc9fb2a85d5345f179d8e38be7157a9ea142344aa89b1
+Shader 'Fsr2ComputeLuminancePyramidPassShaderRD' (group 0) SHA256: 57b9d245efe60faebf93a8eee4616627480b31f632f2022b12f9fa7b9cf988af
+Shader 'Fsr2AutogenReactivePassShaderRD' (group 0) SHA256: 5aebe0a8d7f2d8328a9a028998145d3b09c1e863870f7b14623d7b876278e897
+Shader 'Fsr2TcrAutogenPassShaderRD' (group 0) SHA256: 5e552f2c8d02cc61ac623cb99ef41218c906a66d96895d32e0e33d953ec53436
+Shader 'SsEffectsDownsampleShaderRD' (group 0) SHA256: d2ccd37f99a0b00eca4ba6f53cddf8d03f02119a69a0b02dc777026129561703
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 0
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 1
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 2
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 3
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 4
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 5
+Loading cache for shader SsEffectsDownsampleShaderRD, variant 6
+Shader 'SsilShaderRD' (group 0) SHA256: 17c51ec55574b54c0834b41688f478d19599eb3f90a1230981e06d74d89473e1
+Loading cache for shader SsilShaderRD, variant 0
+Loading cache for shader SsilShaderRD, variant 1
+Loading cache for shader SsilShaderRD, variant 2
+Shader 'SsilImportanceMapShaderRD' (group 0) SHA256: bf370911d6b5be81e5fbf6014d236deb74697ee1b3e2eeb870f5140913d9bee6
+Loading cache for shader SsilImportanceMapShaderRD, variant 0
+Loading cache for shader SsilImportanceMapShaderRD, variant 1
+Loading cache for shader SsilImportanceMapShaderRD, variant 2
+Shader 'SsilBlurShaderRD' (group 0) SHA256: 4f0d60ba5581090f5efc9941b040e46832bf6864d77d52e8631cea227b5d8279
+Loading cache for shader SsilBlurShaderRD, variant 0
+Loading cache for shader SsilBlurShaderRD, variant 1
+Loading cache for shader SsilBlurShaderRD, variant 2
+Shader 'SsilInterleaveShaderRD' (group 0) SHA256: 0f78dde6bc33a0264706f9a466ae77f41b24641381aa171c2b1ee40923f6547c
+Loading cache for shader SsilInterleaveShaderRD, variant 0
+Loading cache for shader SsilInterleaveShaderRD, variant 1
+Loading cache for shader SsilInterleaveShaderRD, variant 2
+Shader 'SsaoShaderRD' (group 0) SHA256: 40091d5cef6924b0632dfb92dbf5a6c61f97edd6dd653d20e2c7662009912eed
+Loading cache for shader SsaoShaderRD, variant 0
+Loading cache for shader SsaoShaderRD, variant 1
+Loading cache for shader SsaoShaderRD, variant 2
+Shader 'SsaoImportanceMapShaderRD' (group 0) SHA256: 72382d26e5b22e99ee9ed29670565e78ff7ee01c960072119a5be86db2ee0fc8
+Loading cache for shader SsaoImportanceMapShaderRD, variant 0
+Loading cache for shader SsaoImportanceMapShaderRD, variant 1
+Loading cache for shader SsaoImportanceMapShaderRD, variant 2
+Shader 'SsaoBlurShaderRD' (group 0) SHA256: 379e714dbee2f412e6657f0557a56dd9f4a00c93ed1aef7af78b047b59ef4bcb
+Loading cache for shader SsaoBlurShaderRD, variant 0
+Loading cache for shader SsaoBlurShaderRD, variant 1
+Loading cache for shader SsaoBlurShaderRD, variant 2
+Shader 'SsaoInterleaveShaderRD' (group 0) SHA256: cb27e637ffea15e2c6c4ae1b2c90deac962dae9481ef866601d8ecb863d6a9b6
+Loading cache for shader SsaoInterleaveShaderRD, variant 0
+Loading cache for shader SsaoInterleaveShaderRD, variant 1
+Loading cache for shader SsaoInterleaveShaderRD, variant 2
+Shader 'ScreenSpaceReflectionDownsampleShaderRD' (group 0) SHA256: f6b46656954490c0153a8a5200455cc0834ec5881821ec7bf328b4c688fc4f6f
+Loading cache for shader ScreenSpaceReflectionDownsampleShaderRD, variant 0
+Loading cache for shader ScreenSpaceReflectionDownsampleShaderRD, variant 1
+Loading cache for shader ScreenSpaceReflectionDownsampleShaderRD, variant 2
+Loading cache for shader ScreenSpaceReflectionDownsampleShaderRD, variant 3
+Shader 'ScreenSpaceReflectionHizShaderRD' (group 0) SHA256: 4c407c9b5cd4f954c012a0de78629e18a5e9268536eb1d78853c8a247ef0a772
+Loading cache for shader ScreenSpaceReflectionHizShaderRD, variant 0
+Loading cache for shader ScreenSpaceReflectionHizShaderRD, variant 1
+Loading cache for shader ScreenSpaceReflectionHizShaderRD, variant 2
+Loading cache for shader ScreenSpaceReflectionHizShaderRD, variant 3
+Shader 'ScreenSpaceReflectionShaderRD' (group 0) SHA256: a2d0cb08973e8562ed3b82d74b6f0f1ecf1dbd2ac788049eaa06925ad6c28bed
+Loading cache for shader ScreenSpaceReflectionShaderRD, variant 0
+Shader 'ScreenSpaceReflectionFilterShaderRD' (group 0) SHA256: fda60a18cb83e7ff26ce7ee2f43dce1d37326b2767d06922b0e5f9356abd1a1e
+Loading cache for shader ScreenSpaceReflectionFilterShaderRD, variant 0
+Shader 'ScreenSpaceReflectionResolveShaderRD' (group 0) SHA256: b29422945b4d1600883d0fcf89124633e34efb678505e5bcb9fdb6623fbfb8d4
+Loading cache for shader ScreenSpaceReflectionResolveShaderRD, variant 0
+Shader 'SubsurfaceScatteringShaderRD' (group 0) SHA256: 4870fb4fc36514a7031473d566046fc2841628db992f9421056a8dfbc0830d97
+Loading cache for shader SubsurfaceScatteringShaderRD, variant 0
+Loading cache for shader SubsurfaceScatteringShaderRD, variant 1
+Loading cache for shader SubsurfaceScatteringShaderRD, variant 2
+Shader 'SkyShaderRD' (group 0) SHA256: 25c4162ba5ed1f15e722f73bf07201837a6ae7b301288dd32ff9f71634118d9c
+Loading cache for shader SkyShaderRD, variant 0
+Loading cache for shader SkyShaderRD, variant 1
+Loading cache for shader SkyShaderRD, variant 2
+Loading cache for shader SkyShaderRD, variant 3
+Loading cache for shader SkyShaderRD, variant 4
+Loading cache for shader SkyShaderRD, variant 5
+Loading cache for shader SkyShaderRD, variant 0
+Loading cache for shader SkyShaderRD, variant 1
+Loading cache for shader SkyShaderRD, variant 2
+Loading cache for shader SkyShaderRD, variant 3
+Loading cache for shader SkyShaderRD, variant 4
+Loading cache for shader SkyShaderRD, variant 5
+Shader 'VoxelGiShaderRD' (group 0) SHA256: cf478b2dd85c8c4b0519274ac94659b26ee34e27a1714122915056a7010b4b7c
+Loading cache for shader VoxelGiShaderRD, variant 0
+Loading cache for shader VoxelGiShaderRD, variant 1
+Loading cache for shader VoxelGiShaderRD, variant 2
+Loading cache for shader VoxelGiShaderRD, variant 3
+Loading cache for shader VoxelGiShaderRD, variant 4
+Loading cache for shader VoxelGiShaderRD, variant 5
+Loading cache for shader VoxelGiShaderRD, variant 6
+Loading cache for shader VoxelGiShaderRD, variant 7
+Shader 'VoxelGiDebugShaderRD' (group 0) SHA256: e7afc074bea566006e261dd7312ae8e5c1a6a22e1eab6aa29b590ca925df679b
+Loading cache for shader VoxelGiDebugShaderRD, variant 0
+Loading cache for shader VoxelGiDebugShaderRD, variant 1
+Loading cache for shader VoxelGiDebugShaderRD, variant 2
+Loading cache for shader VoxelGiDebugShaderRD, variant 3
+Shader 'SdfgiPreprocessShaderRD' (group 0) SHA256: 548b5bca0563ad9662e1e9577ac4921dfc156154487ba331733b0283ce26fcb9
+Loading cache for shader SdfgiPreprocessShaderRD, variant 0
+Loading cache for shader SdfgiPreprocessShaderRD, variant 1
+Loading cache for shader SdfgiPreprocessShaderRD, variant 2
+Loading cache for shader SdfgiPreprocessShaderRD, variant 3
+Loading cache for shader SdfgiPreprocessShaderRD, variant 4
+Loading cache for shader SdfgiPreprocessShaderRD, variant 5
+Loading cache for shader SdfgiPreprocessShaderRD, variant 6
+Loading cache for shader SdfgiPreprocessShaderRD, variant 7
+Loading cache for shader SdfgiPreprocessShaderRD, variant 8
+Shader 'SdfgiDirectLightShaderRD' (group 0) SHA256: 59245d18d90efd79551ef5eda25bbda9867cb893341a1d23b0f75db5d4490716
+Loading cache for shader SdfgiDirectLightShaderRD, variant 0
+Loading cache for shader SdfgiDirectLightShaderRD, variant 1
+Shader 'SdfgiIntegrateShaderRD' (group 0) SHA256: f20a6d93247c8e2db82979d4e6477fa070ed91e03db2b1320e32dffabdb4ff23
+Loading cache for shader SdfgiIntegrateShaderRD, variant 0
+Loading cache for shader SdfgiIntegrateShaderRD, variant 1
+Loading cache for shader SdfgiIntegrateShaderRD, variant 2
+Loading cache for shader SdfgiIntegrateShaderRD, variant 3
+Shader 'GiShaderRD' (group 0) SHA256: 3fa2391092c717dea4bdf7f4f65ccf42ffd4018c158c431a4e234d9fa17737a6
+Shader 'GiShaderRD' (group 1) SHA256: 87dc8f2e3eb0653ed625d759392e8a08fcd79fe90d61dcc8f6ce34a8cfe35f7f
+Loading cache for shader GiShaderRD, variant 0
+Loading cache for shader GiShaderRD, variant 1
+Loading cache for shader GiShaderRD, variant 2
+Loading cache for shader GiShaderRD, variant 3
+Loading cache for shader GiShaderRD, variant 4
+Loading cache for shader GiShaderRD, variant 0
+Loading cache for shader GiShaderRD, variant 1
+Loading cache for shader GiShaderRD, variant 2
+Loading cache for shader GiShaderRD, variant 3
+Loading cache for shader GiShaderRD, variant 4
+Shader 'SdfgiDebugShaderRD' (group 0) SHA256: 365142e07e83cbbda433d4ed971a1c8413d3a400e8646e2ed2a0f7dda127068a
+Loading cache for shader SdfgiDebugShaderRD, variant 0
+Shader 'SdfgiDebugProbesShaderRD' (group 0) SHA256: 05e9a03efe957bf14f0a60730a97ab25e037f5a3f347b3427feb9723fd82fb1c
+Loading cache for shader SdfgiDebugProbesShaderRD, variant 0
+Loading cache for shader SdfgiDebugProbesShaderRD, variant 1
+Loading cache for shader SdfgiDebugProbesShaderRD, variant 2
+Loading cache for shader SdfgiDebugProbesShaderRD, variant 3
+Shader 'VolumetricFogShaderRD' (group 0) SHA256: 69e78fd970058cf62da4f8df24a6d7f3acd2d0effbade0dc171226be830ee241
+Shader 'VolumetricFogShaderRD' (group 1) SHA256: fa6cfa14ca66356dd4818ce06073abdefc4058f2531727ea90fe9ea340cc66e5
+Shader 'VolumetricFogShaderRD' (group 2) SHA256: 8454dc7c2a5c9574b6123e01388a4c83969bb236ab7422fd0eb06b91dd9f7449
+Shader 'VolumetricFogShaderRD' (group 3) SHA256: d5ef183ef6e53033bfb50eb7047a431514f4d6533e95530b67e06839ff9676a1
+Loading cache for shader VolumetricFogShaderRD, variant 0
+Shader 'VolumetricFogProcessShaderRD' (group 0) SHA256: ee9496dfb3b0e489158503ab6e3539129bf5f78706cdb7c9ed4d8701f17f14ec
+Shader 'VolumetricFogProcessShaderRD' (group 1) SHA256: 9828e14ae2e94efc4823f8b077ba661a03ef3ba9726264ff7e359144a9b1214b
+Shader 'VolumetricFogProcessShaderRD' (group 2) SHA256: 7ac17802c709a8ec8fb2d47fade023ddd95a3c675451c8e53ce81469b4ce8b5d
+Shader 'VolumetricFogProcessShaderRD' (group 3) SHA256: c75a607ad6ee761bd49d7318ec8f4a39798fcc3822b7360641394f5dc36f0c2a
+Loading cache for shader VolumetricFogProcessShaderRD, variant 0
+Loading cache for shader VolumetricFogProcessShaderRD, variant 1
+Loading cache for shader VolumetricFogProcessShaderRD, variant 2
+Loading cache for shader VolumetricFogProcessShaderRD, variant 3
+Loading cache for shader VolumetricFogProcessShaderRD, variant 4
+Shader 'BokehDofShaderRD' (group 0) SHA256: 8c692c9cd2f46f54f2c82d9a4a12be5f889d873a3c9698546a6eb5ec0c263647
+Loading cache for shader BokehDofShaderRD, variant 0
+Loading cache for shader BokehDofShaderRD, variant 1
+Loading cache for shader BokehDofShaderRD, variant 3
+Loading cache for shader BokehDofShaderRD, variant 5
+Loading cache for shader BokehDofShaderRD, variant 6
+Shader 'CopyShaderRD' (group 0) SHA256: c374588e7ae9bf64919d0186bea3104b4f721cc0691d284a9998e1e7d06c5eb8
+Loading cache for shader CopyShaderRD, variant 0
+Loading cache for shader CopyShaderRD, variant 1
+Loading cache for shader CopyShaderRD, variant 2
+Loading cache for shader CopyShaderRD, variant 3
+Loading cache for shader CopyShaderRD, variant 4
+Loading cache for shader CopyShaderRD, variant 5
+Loading cache for shader CopyShaderRD, variant 6
+Loading cache for shader CopyShaderRD, variant 7
+Loading cache for shader CopyShaderRD, variant 8
+Loading cache for shader CopyShaderRD, variant 9
+Loading cache for shader CopyShaderRD, variant 10
+Loading cache for shader CopyShaderRD, variant 11
+Loading cache for shader CopyShaderRD, variant 12
+Shader 'CopyToFbShaderRD' (group 0) SHA256: 72456b3a82af4da12c412275d4c8ffa4a6a5447d9daffeeef86bc16965803813
+Loading cache for shader CopyToFbShaderRD, variant 0
+Loading cache for shader CopyToFbShaderRD, variant 1
+Loading cache for shader CopyToFbShaderRD, variant 2
+Loading cache for shader CopyToFbShaderRD, variant 3
+Shader 'CubeToDpShaderRD' (group 0) SHA256: da14e2c9b701a4bd7336b87667bf4f3b4f645de09781824763d2bbceead56c83
+Loading cache for shader CubeToDpShaderRD, variant 0
+Shader 'CubeToOctmapShaderRD' (group 0) SHA256: 7a5a6871c4fae131d3fef2e125ac23cbe81a1a042028f8c294461282de463c9a
+Loading cache for shader CubeToOctmapShaderRD, variant 0
+Shader 'OctmapDownsamplerShaderRD' (group 0) SHA256: 17404978f453a0a0388dfb81b2d08f173476d2c3b680e2e6aa35bcf438e24f11
+Loading cache for shader OctmapDownsamplerShaderRD, variant 0
+Loading cache for shader OctmapDownsamplerShaderRD, variant 1
+Shader 'OctmapFilterShaderRD' (group 0) SHA256: cd03c4ea34362e2724f4d4536156039ee5ca21c31167b8840dfc65dad2d6bb11
+Loading cache for shader OctmapFilterShaderRD, variant 0
+Loading cache for shader OctmapFilterShaderRD, variant 1
+Loading cache for shader OctmapFilterShaderRD, variant 2
+Loading cache for shader OctmapFilterShaderRD, variant 3
+Loading cache for shader OctmapFilterShaderRD, variant 4
+Loading cache for shader OctmapFilterShaderRD, variant 5
+Loading cache for shader OctmapFilterShaderRD, variant 6
+Loading cache for shader OctmapFilterShaderRD, variant 7
+Shader 'OctmapRoughnessShaderRD' (group 0) SHA256: 8470960c68b74292e24251e3b7e41d28e9a5054dce0cd1d77c2a2a865a10af43
+Loading cache for shader OctmapRoughnessShaderRD, variant 0
+Loading cache for shader OctmapRoughnessShaderRD, variant 1
+Shader 'SpecularMergeShaderRD' (group 0) SHA256: 70920fc883de48dd253fbc2503dd8f4e65941df0da07e074541df12df090de98
+Loading cache for shader SpecularMergeShaderRD, variant 0
+Loading cache for shader SpecularMergeShaderRD, variant 1
+Loading cache for shader SpecularMergeShaderRD, variant 2
+Loading cache for shader SpecularMergeShaderRD, variant 3
+Shader 'ShadowFrustumShaderRD' (group 0) SHA256: 248bc9deb54d10af912f2da1bd4b006bc43cfe08659a206fa573baf48e4050e0
+Loading cache for shader ShadowFrustumShaderRD, variant 0
+Shader 'MotionVectorsShaderRD' (group 0) SHA256: 4d3ba0c01e8b64c74a0f2f0fd20ddc8099d56cfbb3ee9e7dbe6dc3c54c174725
+Loading cache for shader MotionVectorsShaderRD, variant 0
+Shader 'LuminanceReduceShaderRD' (group 0) SHA256: c759f2761a12e9ff1fa625818963f94aa0ff511eb314a313ea89c615c37dd078
+Loading cache for shader LuminanceReduceShaderRD, variant 0
+Loading cache for shader LuminanceReduceShaderRD, variant 1
+Loading cache for shader LuminanceReduceShaderRD, variant 2
+Shader 'SmaaEdgeDetectionShaderRD' (group 0) SHA256: 8879d099a2601bd01d4582b1e86a091c5f89a7bc46aecc9e805410f75bcda245
+Loading cache for shader SmaaEdgeDetectionShaderRD, variant 0
+Shader 'SmaaWeightCalculationShaderRD' (group 0) SHA256: de1d49d5ff947e8b8382f43a79f57c4cceb02eed6f86d5175093ca63e94052bf
+Loading cache for shader SmaaWeightCalculationShaderRD, variant 0
+Shader 'SmaaBlendingShaderRD' (group 0) SHA256: d7b7c8cec00f24f9aa8db356b4df88c5fe032d38ce38673bd520c280c936fb80
+Loading cache for shader SmaaBlendingShaderRD, variant 0
+Shader 'TonemapShaderRD' (group 0) SHA256: 1b9049fef136690ef56085339cc9ad699de6d63e5d3afa1677201c6dedd6f2a8
+Loading cache for shader TonemapShaderRD, variant 0
+Loading cache for shader TonemapShaderRD, variant 1
+Loading cache for shader TonemapShaderRD, variant 2
+Loading cache for shader TonemapShaderRD, variant 3
+Shader 'VrsShaderRD' (group 0) SHA256: fa59a74699f8241cd3f8174eaef045dc8d40f3b29bf36af5414713c289f82717
+Loading cache for shader VrsShaderRD, variant 0
+Loading cache for shader VrsShaderRD, variant 2
+Loading cache for shader VrsShaderRD, variant 3
+Shader 'FsrUpscaleShaderRD' (group 0) SHA256: a8da3dfed3e309742ca78c4162d15f2ab08af4f694a51407089ecec1d1be54be
+Loading cache for shader FsrUpscaleShaderRD, variant 0
+Loading cache for shader FsrUpscaleShaderRD, variant 1
+Shader 'ResolveShaderRD' (group 0) SHA256: 58e536c56eaff31a31ef93f224579af7b242a06469b7b0a7736cdeb7e16898b6
+Loading cache for shader ResolveShaderRD, variant 0
+Loading cache for shader ResolveShaderRD, variant 1
+Loading cache for shader ResolveShaderRD, variant 2
+Shader 'BlitShaderRD' (group 0) SHA256: ae4daaa7a60bb17ebd7e9de5db9422fb448b52ad89776ae7aa53fee442f7cc60
+WASAPI: Activated output_device using IAudioClient3 interface
+WASAPI: wFormatTag = 65534
+WASAPI: nChannels = 2
+WASAPI: nSamplesPerSec = 48000
+WASAPI: nAvgBytesPerSec = 384000
+WASAPI: nBlockAlign = 8
+WASAPI: wBitsPerSample = 32
+WASAPI: cbSize = 22
+WASAPI: mix_rate = 48000
+WASAPI: fundamental_period_frames = 480
+WASAPI: min_period_frames = 480
+WASAPI: max_period_frames = 480
+WASAPI: selected a period frame size of 480
+WASAPI: detected 2 channels
+WASAPI: audio buffer frames: 480 calculated latency: 10ms
+
+Loading cache for shader BlitShaderRD, variant 0
+Loading cache for shader BlitShaderRD, variant 1
+Loading cache for shader BlitShaderRD, variant 2
+Loading cache for shader BlitShaderRD, variant 3
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 0
+EDITOR API HASH: 0
+SceneTreeFTI: traversal method DEFAULT
+Loaded system CA certificates
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+WARNING: Image format RGB8 not supported by hardware, converting to RGBA8.
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+[INFO] quest1: street filled in 16 chunk passes
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+[INFO] characters: prewarmed 33 rigs in 69.6 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 4.5 ms
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+Loading cache for shader CanvasShaderRD, variant 0
+Loading cache for shader CanvasShaderRD, variant 1
+Loading cache for shader CanvasShaderRD, variant 2
+Loading cache for shader CanvasShaderRD, variant 3
+Loading cache for shader CanvasShaderRD, variant 4
+Loading cache for shader CanvasShaderRD, variant 5
+[INFO] bench: HITCH 37.8 ms at tick 7
+[INFO] arena: pit wave 1: 2 guards
+[INFO] arena: pit wave 2: 3 guards
+[INFO] showcase: reel beat pit_gun at tick 900
+[INFO] react: death_bullet on 4, frame 8824
+[INFO] bench: HITCH 73.6 ms at tick 1199
+[INFO] react: death_bullet on 3, frame 10878
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/exe-verbose.json {"frames":13744,"low1_fps":128.592132002402,"over33_settled":1,"over50_settled":1,"p50_ms":2.29699993133545,"p99_ms":6.13100004196167,"ticks":2093,"worst_ms":73.6370010375977,"worst_settled_ms":73.6370010375977}
+[INFO] arena: react: 2 wounds (2 on a shield), 2 deaths, 0 ducks
+[INFO] arena: crowd: 4 cowers (0 at a death), 2 trips, 0 deaths
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"
+Freeing Default Tex_Blit Shader
+MultiUmaBuffer '{DEBUG_ENABLED unavailable}' used a total of 0 buffers. A large number may indicate a waste of VRAM and can be brought down by tweaking MAX_EXTRA_BUFFERS for this buffer.
+MultiUmaBuffer '{DEBUG_ENABLED unavailable}' used a total of 0 buffers. A large number may indicate a waste of VRAM and can be brought down by tweaking MAX_EXTRA_BUFFERS for this buffer.
+MultiUmaBuffer '{DEBUG_ENABLED unavailable}' used a total of 0 buffers. A large number may indicate a waste of VRAM and can be brought down by tweaking MAX_EXTRA_BUFFERS for this buffer.
+MultiUmaBuffer '{DEBUG_ENABLED unavailable}' used a total of 0 buffers. A large number may indicate a waste of VRAM and can be brought down by tweaking MAX_EXTRA_BUFFERS for this buffer.
+MultiUmaBuffer '{DEBUG_ENABLED unavailable}' used a total of 1 buffers. A large number may indicate a waste of VRAM and can be brought down by tweaking MAX_EXTRA_BUFFERS for this buffer.
+Accessibility: window 0 adapter destroyed.
+Leaked instance: GDScriptNativeClass:9223372055427154581 - Reference count: 1
+Leaked instance: GDScriptNativeClass:9223372058514162509 - Reference count: 108
+Leaked instance: GDScript:9223372077036209561 - Reference count: 1
+Leaked instance: GDScript:9223372077086541210 - Reference count: 6
+Leaked instance: RefCounted:9223372209039345052 - Reference count: 1
+Leaked instance: GDScript:9223372084619511259 - Reference count: 1
+Leaked instance: GDScript:9223372085139604960 - Reference count: 1
+Leaked instance: GDScript:9223372085223491041 - Reference count: 1
+Leaked instance: GDScript:9223372085273822690 - Reference count: 3
+Leaked instance: GDScript:9223372085324154339 - Reference count: 1
+Leaked instance: GDScript:9223372085441594852 - Reference count: 8
+Leaked instance: GDScript:9223372085525480933 - Reference count: 1
+Leaked instance: GDScript:9223372086649554416 - Reference count: 13
+Leaked instance: GDScript:9223372086817326578 - Reference count: 1
+Leaked instance: GDScript:9223372087085762036 - Reference count: 1
+Leaked instance: GDScript:9223372087169648117 - Reference count: 1
+Leaked instance: GDScript:9223372087253534198 - Reference count: 1
+Leaked instance: GDScript:9223372087370974711 - Reference count: 29
+Leaked instance: GDScript:9223372087488415224 - Reference count: 1
+Leaked instance: GDScript:9223372087874291195 - Reference count: 1
+Leaked instance: GDScript:9223372087958177276 - Reference count: 1
+Leaked instance: GDScript:9223372088427939328 - Reference count: 1
+Leaked instance: GDScript:9223372090206324238 - Reference count: 1
+Leaked instance: GDScript:9223372090357319183 - Reference count: 1
+Leaked instance: GDScript:9223372090541868560 - Reference count: 18
+Leaked instance: GDScript:9223372090592200209 - Reference count: 56
+Leaked instance: GDScript:9223372090608977426 - Reference count: 61
+Leaked instance: GDScript:9223372090625754643 - Reference count: 127
+Leaked instance: GDScript:9223372090709640724 - Reference count: 1
+Leaked instance: GDScript:9223372090759972373 - Reference count: 1
+Leaked instance: GDScript:9223372090843858454 - Reference count: 1
+Leaked instance: GDScript:9223372093175891497 - Reference count: 1
+Leaked instance: GDScript:9223372093226223146 - Reference count: 7
+Leaked instance: GDScript:9223372093410772525 - Reference count: 1
+Leaked instance: GDScript:9223372093461104174 - Reference count: 7
+Leaked instance: GDScript:9223372093477881391 - Reference count: 5
+Leaked instance: GDScript:9223372093494658608 - Reference count: 3
+Leaked instance: GDScript:9223372094115415605 - Reference count: 1
+Leaked instance: GDScript:9223372094199301686 - Reference count: 3
+Leaked instance: GDScript:9223372094283187767 - Reference count: 1
+Leaked instance: GDScript:9223372094367073848 - Reference count: 1
+Leaked instance: GDScript:9223372094450959929 - Reference count: 1
+Leaked instance: GDScript:9223372094534846010 - Reference count: 1
+Leaked instance: GDScript:9223372094702618172 - Reference count: 1
+Leaked instance: GDScript:9223372094752949821 - Reference count: 20
+Leaked instance: GDScript:9223372094803281470 - Reference count: 1
+Leaked instance: GDScript:9223372094887167551 - Reference count: 1
+Leaked instance: GDScript:9223372094971053632 - Reference count: 1
+Leaked instance: GDScript:9223372095054939713 - Reference count: 1
+Leaked instance: GDScript:9223372095390484035 - Reference count: 3
+Leaked instance: GDScript:9223372095809914436 - Reference count: 1
+Leaked instance: GDScript:9223372096044795462 - Reference count: 1
+Leaked instance: GDScript:9223372111429502544 - Reference count: 2
+Leaked instance: GDScript:9223372111546943057 - Reference count: 24
+Leaked instance: GDScript:9223372111899264594 - Reference count: 2
+Leaked instance: GDScript:9223372112318694996 - Reference count: 2
+Leaked instance: GDScript:9223372113342105175 - Reference count: 1
+Leaked instance: GDScript:9223372098276165209 - Reference count: 2
+Leaked instance: GDScript:9223372098360051290 - Reference count: 1
+Leaked instance: GDScript:9223372098527823452 - Reference count: 4
+Leaked instance: GDScript:9223372098611709533 - Reference count: 1
+Leaked instance: GDScript:9223372098695595614 - Reference count: 1
+Leaked instance: GDScript:9223372098913699423 - Reference count: 3
+Leaked instance: GDScript:9223372099601565284 - Reference count: 1
+Leaked instance: GDScript:9223372100608198246 - Reference count: 1
+Leaked instance: GDScript:9223372101614831207 - Reference count: 4
+Leaked instance: GDScript:9223372103359661672 - Reference count: 2
+Leaked instance: GDScript:9223372103409993323 - Reference count: 14
+Leaked instance: GDScript:9223372103695205998 - Reference count: 1
+Leaked instance: GDScript:9223372103779092079 - Reference count: 2
+Leaked instance: GDScript:9223372103862978160 - Reference count: 1
+Leaked instance: GDScript:9223372103946864241 - Reference count: 1
+Leaked instance: GDScript:9223372104030750322 - Reference count: 1
+Leaked instance: GDScript:9223372104114636403 - Reference count: 1
+Leaked instance: GDScript:9223372104198522484 - Reference count: 1
+Leaked instance: GDScript:9223372104399849078 - Reference count: 1
+Leaked instance: GDScript:9223372104483735159 - Reference count: 1
+Leaked instance: GDScript:9223372105054160505 - Reference count: 1
+Leaked instance: GDScript:9223372113425991290 - Reference count: 1
+Leaked instance: GDScript:9223372105758803580 - Reference count: 4
+Leaked instance: GDScript:9223372106346006143 - Reference count: 1
+Leaked instance: GDScript:9223372107402970752 - Reference count: 1
+Leaked instance: GDScript:9223372107453302402 - Reference count: 1
+Leaked instance: GDScript:9223372113610540676 - Reference count: 1
+Leaked instance: GDScript:9223372108174722694 - Reference count: 1
+Leaked instance: GDScript:9223372108258608775 - Reference count: 1
+Leaked instance: GDScript:9223372108342494856 - Reference count: 1
+Leaked instance: GDScript:9223372108527044233 - Reference count: 1
+Leaked instance: GDScript:9223372108795479691 - Reference count: 3
+Leaked instance: GDScript:9223372109902775952 - Reference count: 26
+Leaked instance: GDScript:9223372124482176689 - Reference count: 1
+Leaked instance: GDScript:9223372124566062770 - Reference count: 8
+Leaked instance: GDScript:9223372124649948851 - Reference count: 1
+Leaked instance: GDScript:9223372124733834932 - Reference count: 1
+Leaked instance: GDScript:9223372124817721013 - Reference count: 1
+Leaked instance: GDScript:9223372124901607094 - Reference count: 1
+Leaked instance: GDScript:9223372204861818574 - Reference count: 1
+Leaked instance: GDScript:9223372162583234291 - Reference count: 1
+Leaked instance: GDScript:9223372190836066146 - Reference count: 1
+Leaked instance: GDScript:9223372190919952227 - Reference count: 2
+Leaked instance: GDScript:9223372191003838310 - Reference count: 1
+Leaked instance: RefCounted:9223372209962092398 - Reference count: 1
+Leaked instance: RefCounted:9223372210364745583 - Reference count: 1
+Leaked instance: GDScript:9223372192211797875 - Reference count: 1
+Leaked instance: RefCounted:9223372209978869621 - Reference count: 1
+Leaked instance: RefCounted:9223372210515740534 - Reference count: 2
+Leaked instance: RefCounted:9223372210196973431 - Reference count: 1
+Leaked instance: RefCounted:9223372209945315192 - Reference count: 2
+Leaked instance: RefCounted:9223372210482186105 - Reference count: 2
+Leaked instance: RefCounted:9223372210498963322 - Reference count: 1
+Leaked instance: GDScript:9223372193151321979 - Reference count: 1
+Leaked instance: GDScript:9223372193201653628 - Reference count: 2
+Leaked instance: RefCounted:9223372210465408894 - Reference count: 1
+Leaked instance: GDScript:9223372193486866303 - Reference count: 1
+Leaked instance: GDScript:9223372193738524546 - Reference count: 1
+Leaked instance: GDScript:9223372193939851140 - Reference count: 12
+Leaked instance: GDScript:9223372195080701835 - Reference count: 1
+Leaked instance: RefCounted:9223372214659712910 - Reference count: 4
+Leaked instance: RefCounted:9223372210532517775 - Reference count: 2
+Leaked instance: RefCounted:9223372210280859556 - Reference count: 1
+Leaked instance: RefCounted:9223372210314413989 - Reference count: 1
+Leaked instance: RefCounted:9223372210331191206 - Reference count: 1
+Leaked instance: RefCounted:9223372210347968423 - Reference count: 1
+Leaked instance: RefCounted:9223372210549295016 - Reference count: 2
+Leaked instance: RefCounted:9223372210566072233 - Reference count: 2
+Leaked instance: RefCounted:9223372210582849450 - Reference count: 2
+Leaked instance: RefCounted:9223372210599626667 - Reference count: 2
+Leaked instance: RefCounted:9223372210616403884 - Reference count: 2
+Leaked instance: RefCounted:9223372210297636783 - Reference count: 1
+Leaked instance: RefCounted:9223372210633181105 - Reference count: 1
+Leaked instance: RefCounted:9223372210649958322 - Reference count: 1
+Leaked instance: RefCounted:9223372210666735539 - Reference count: 1
+Leaked instance: RefCounted:9223372210683512756 - Reference count: 1
+Leaked instance: RefCounted:9223372210700289973 - Reference count: 1
+Leaked instance: RefCounted:9223372210717067190 - Reference count: 1
+Leaked instance: RefCounted:9223372210733844407 - Reference count: 1
+Leaked instance: RefCounted:9223372210750621624 - Reference count: 1
+Leaked instance: RefCounted:9223372210767398841 - Reference count: 1
+Leaked instance: RefCounted:9223372210784176058 - Reference count: 1
+Leaked instance: RefCounted:9223372210800953275 - Reference count: 1
+Leaked instance: RefCounted:9223372210817730492 - Reference count: 1
+Leaked instance: RefCounted:9223372210834507709 - Reference count: 1
+Leaked instance: RefCounted:9223372210851284926 - Reference count: 1
+Leaked instance: RefCounted:9223372210868062143 - Reference count: 1
+Leaked instance: RefCounted:9223372210884839360 - Reference count: 1
+Leaked instance: RefCounted:9223372210901616577 - Reference count: 1
+Leaked instance: RefCounted:9223372210918393794 - Reference count: 1
+Leaked instance: RefCounted:9223372210935171011 - Reference count: 1
+Leaked instance: RefCounted:9223372210951948228 - Reference count: 1
+Leaked instance: RefCounted:9223372210968725445 - Reference count: 1
+Leaked instance: RefCounted:9223372210985502662 - Reference count: 1
+Leaked instance: RefCounted:9223372211002279879 - Reference count: 1
+Leaked instance: RefCounted:9223372211019057096 - Reference count: 1
+Leaked instance: RefCounted:9223372211035834313 - Reference count: 1
+Leaked instance: RefCounted:9223372211052611530 - Reference count: 1
+Leaked instance: RefCounted:9223372211069388747 - Reference count: 1
+Leaked instance: RefCounted:9223372211086165964 - Reference count: 1
+Leaked instance: RefCounted:9223372211102943181 - Reference count: 1
+Leaked instance: RefCounted:9223372211119720398 - Reference count: 1
+Leaked instance: RefCounted:9223372211136497615 - Reference count: 1
+Leaked instance: RefCounted:9223372211153274832 - Reference count: 1
+Leaked instance: RefCounted:9223372211170052049 - Reference count: 1
+Leaked instance: RefCounted:9223372211186829266 - Reference count: 1
+Leaked instance: RefCounted:9223372211203606483 - Reference count: 1
+Leaked instance: RefCounted:9223372211220383700 - Reference count: 1
+Leaked instance: RefCounted:9223372211237160917 - Reference count: 1
+Leaked instance: RefCounted:9223372211253938134 - Reference count: 1
+Leaked instance: RefCounted:9223372211270715351 - Reference count: 1
+Leaked instance: RefCounted:9223372211287492568 - Reference count: 1
+Leaked instance: RefCounted:9223372211304269785 - Reference count: 1
+Leaked instance: RefCounted:9223372211321047002 - Reference count: 1
+Leaked instance: RefCounted:9223372211337824219 - Reference count: 1
+Leaked instance: RefCounted:9223372211354601436 - Reference count: 1
+Leaked instance: RefCounted:9223372211371378653 - Reference count: 1
+Leaked instance: RefCounted:9223372211388155870 - Reference count: 1
+Leaked instance: RefCounted:9223372211404933087 - Reference count: 1
+Leaked instance: RefCounted:9223372211421710304 - Reference count: 1
+Leaked instance: RefCounted:9223372211438487521 - Reference count: 1
+Leaked instance: RefCounted:9223372211455264738 - Reference count: 1
+Leaked instance: RefCounted:9223372211472041955 - Reference count: 1
+Leaked instance: RefCounted:9223372211488819172 - Reference count: 1
+Leaked instance: RefCounted:9223372211505596389 - Reference count: 1
+Leaked instance: RefCounted:9223372211522373606 - Reference count: 1
+Leaked instance: RefCounted:9223372211539150823 - Reference count: 1
+Leaked instance: RefCounted:9223372211623036904 - Reference count: 2
+Leaked instance: RefCounted:9223372211706922985 - Reference count: 2
+Leaked instance: RefCounted:9223372211790809066 - Reference count: 1
+Leaked instance: RefCounted:9223372211807586283 - Reference count: 1
+Leaked instance: RefCounted:9223372211891472364 - Reference count: 1
+Leaked instance: RefCounted:9223372211908249581 - Reference count: 1
+Leaked instance: RefCounted:9223372211925026798 - Reference count: 1
+Leaked instance: RefCounted:9223372211941804015 - Reference count: 1
+Leaked instance: RefCounted:9223372211958581232 - Reference count: 1
+Leaked instance: RefCounted:9223372211975358449 - Reference count: 1
+Leaked instance: RefCounted:9223372211992135666 - Reference count: 1
+Leaked instance: RefCounted:9223372212008912883 - Reference count: 1
+Leaked instance: RefCounted:9223372212025690100 - Reference count: 1
+Leaked instance: RefCounted:9223372212042467317 - Reference count: 1
+Leaked instance: RefCounted:9223372212059244534 - Reference count: 1
+Leaked instance: RefCounted:9223372212076021751 - Reference count: 1
+Leaked instance: RefCounted:9223372212092798968 - Reference count: 1
+Leaked instance: RefCounted:9223372212109576185 - Reference count: 1
+Leaked instance: RefCounted:9223372212126353402 - Reference count: 1
+Leaked instance: RefCounted:9223372212143130619 - Reference count: 1
+Leaked instance: RefCounted:9223372212159907836 - Reference count: 1
+Leaked instance: RefCounted:9223372212176685053 - Reference count: 1
+Leaked instance: RefCounted:9223372212193462270 - Reference count: 1
+Leaked instance: RefCounted:9223372212210239487 - Reference count: 1
+Leaked instance: RefCounted:9223372212294125568 - Reference count: 2
+Leaked instance: RefCounted:9223372212378011649 - Reference count: 1
+Leaked instance: RefCounted:9223372212394788866 - Reference count: 2
+Leaked instance: RefCounted:9223372212411566083 - Reference count: 2
+Leaked instance: RefCounted:9223372212428343300 - Reference count: 2
+Leaked instance: RefCounted:9223372212445120517 - Reference count: 2
+Leaked instance: RefCounted:9223372212529006598 - Reference count: 2
+Leaked instance: RefCounted:9223372212545783815 - Reference count: 1
+Leaked instance: RefCounted:9223372212562561032 - Reference count: 1
+Leaked instance: RefCounted:9223372212579338249 - Reference count: 1
+Leaked instance: RefCounted:9223372212596115466 - Reference count: 1
+Leaked instance: RefCounted:9223372212612892683 - Reference count: 1
+Leaked instance: RefCounted:9223372212629669900 - Reference count: 1
+Leaked instance: RefCounted:9223372212646447117 - Reference count: 2
+Leaked instance: RefCounted:9223372212730333198 - Reference count: 1
+Leaked instance: RefCounted:9223372212747110415 - Reference count: 1
+Leaked instance: RefCounted:9223372212763887632 - Reference count: 1
+Leaked instance: RefCounted:9223372212780664849 - Reference count: 1
+Leaked instance: RefCounted:9223372212797442066 - Reference count: 1
+Leaked instance: RefCounted:9223372212814219283 - Reference count: 1
+Leaked instance: RefCounted:9223372212830996500 - Reference count: 1
+Leaked instance: RefCounted:9223372212847773717 - Reference count: 1
+Leaked instance: RefCounted:9223372212864550934 - Reference count: 1
+Leaked instance: RefCounted:9223372212881328151 - Reference count: 1
+Leaked instance: RefCounted:9223372212898105368 - Reference count: 1
+Leaked instance: RefCounted:9223372212914882585 - Reference count: 1
+Leaked instance: RefCounted:9223372212931659802 - Reference count: 1
+Leaked instance: RefCounted:9223372212948437019 - Reference count: 1
+Leaked instance: RefCounted:9223372212965214236 - Reference count: 1
+Leaked instance: RefCounted:9223372212981991453 - Reference count: 1
+Leaked instance: RefCounted:9223372212998768670 - Reference count: 1
+Leaked instance: RefCounted:9223372213015545887 - Reference count: 1
+Leaked instance: RefCounted:9223372213032323104 - Reference count: 1
+Leaked instance: RefCounted:9223372213049100321 - Reference count: 1
+Leaked instance: RefCounted:9223372213065877538 - Reference count: 1
+Leaked instance: RefCounted:9223372213082654755 - Reference count: 1
+Leaked instance: RefCounted:9223372213099431972 - Reference count: 1
+Leaked instance: RefCounted:9223372213116209189 - Reference count: 1
+Leaked instance: RefCounted:9223372213132986406 - Reference count: 1
+Leaked instance: RefCounted:9223372213149763623 - Reference count: 1
+Leaked instance: RefCounted:9223372213166540840 - Reference count: 2
+Leaked instance: RefCounted:9223372213183318057 - Reference count: 2
+Leaked instance: RefCounted:9223372213200095274 - Reference count: 2
+Leaked instance: RefCounted:9223372213216872491 - Reference count: 2
+Leaked instance: RefCounted:9223372213233649708 - Reference count: 2
+Leaked instance: RefCounted:9223372213250426925 - Reference count: 2
+Leaked instance: RefCounted:9223372213267204142 - Reference count: 2
+Leaked instance: RefCounted:9223372213283981359 - Reference count: 1
+Leaked instance: RefCounted:9223372213300758576 - Reference count: 1
+Leaked instance: RefCounted:9223372213317535793 - Reference count: 1
+Leaked instance: RefCounted:9223372213334313010 - Reference count: 1
+Leaked instance: RefCounted:9223372213351090227 - Reference count: 1
+Leaked instance: RefCounted:9223372213367867444 - Reference count: 1
+Leaked instance: RefCounted:9223372213384644661 - Reference count: 1
+Leaked instance: RefCounted:9223372213401421878 - Reference count: 1
+Leaked instance: RefCounted:9223372213418199095 - Reference count: 1
+Leaked instance: RefCounted:9223372213434976312 - Reference count: 1
+Leaked instance: RefCounted:9223372213451753529 - Reference count: 1
+Leaked instance: RefCounted:9223372213468530746 - Reference count: 1
+Leaked instance: RefCounted:9223372213485307963 - Reference count: 1
+Leaked instance: RefCounted:9223372213502085180 - Reference count: 1
+Leaked instance: RefCounted:9223372213518862397 - Reference count: 1
+Leaked instance: RefCounted:9223372213535639614 - Reference count: 1
+Leaked instance: RefCounted:9223372213552416831 - Reference count: 1
+Leaked instance: RefCounted:9223372213569194048 - Reference count: 1
+Leaked instance: RefCounted:9223372213585971265 - Reference count: 1
+Leaked instance: RefCounted:9223372213602748482 - Reference count: 1
+Leaked instance: RefCounted:9223372213619525699 - Reference count: 1
+Leaked instance: RefCounted:9223372213636302916 - Reference count: 1
+Leaked instance: RefCounted:9223372213653080133 - Reference count: 1
+Leaked instance: RefCounted:9223372213669857350 - Reference count: 1
+Leaked instance: RefCounted:9223372213686634567 - Reference count: 1
+Leaked instance: RefCounted:9223372213703411784 - Reference count: 1
+Leaked instance: RefCounted:9223372213720189001 - Reference count: 1
+Leaked instance: RefCounted:9223372213736966218 - Reference count: 1
+Leaked instance: RefCounted:9223372213753743435 - Reference count: 1
+Leaked instance: RefCounted:9223372213770520652 - Reference count: 1
+Leaked instance: RefCounted:9223372213787297869 - Reference count: 1
+Leaked instance: RefCounted:9223372213804075086 - Reference count: 1
+Leaked instance: RefCounted:9223372213820852303 - Reference count: 1
+Leaked instance: RefCounted:9223372213837629520 - Reference count: 1
+Leaked instance: RefCounted:9223372213854406737 - Reference count: 1
+Leaked instance: RefCounted:9223372213871183954 - Reference count: 1
+Leaked instance: RefCounted:9223372213887961171 - Reference count: 1
+Leaked instance: RefCounted:9223372213904738388 - Reference count: 1
+Leaked instance: RefCounted:9223372213921515605 - Reference count: 1
+Leaked instance: RefCounted:9223372213938292822 - Reference count: 1
+Leaked instance: RefCounted:9223372213955070039 - Reference count: 1
+Leaked instance: RefCounted:9223372213971847256 - Reference count: 1
+Leaked instance: RefCounted:9223372213988624473 - Reference count: 1
+Leaked instance: RefCounted:9223372214005401690 - Reference count: 1
+Leaked instance: RefCounted:9223372214022178907 - Reference count: 1
+Leaked instance: RefCounted:9223372214038956124 - Reference count: 1
+Leaked instance: RefCounted:9223372214055733341 - Reference count: 1
+Leaked instance: RefCounted:9223372214072510558 - Reference count: 1
+Leaked instance: RefCounted:9223372214089287775 - Reference count: 1
+Leaked instance: RefCounted:9223372214106064992 - Reference count: 1
+Leaked instance: RefCounted:9223372214122842209 - Reference count: 1
+Leaked instance: RefCounted:9223372214139619426 - Reference count: 1
+Leaked instance: RefCounted:9223372214156396643 - Reference count: 1
+Leaked instance: RefCounted:9223372214173173860 - Reference count: 1
+Leaked instance: RefCounted:9223372214189951077 - Reference count: 1
+Leaked instance: RefCounted:9223372214206728294 - Reference count: 1
+Leaked instance: RefCounted:9223372214223505511 - Reference count: 1
+Leaked instance: RefCounted:9223372214240282728 - Reference count: 1
+Leaked instance: RefCounted:9223372214257059945 - Reference count: 1
+Leaked instance: RefCounted:9223372214273837162 - Reference count: 1
+Leaked instance: RefCounted:9223372214290614379 - Reference count: 1
+Leaked instance: RefCounted:9223372214307391596 - Reference count: 1
+Leaked instance: RefCounted:9223372214324168813 - Reference count: 1
+Leaked instance: RefCounted:9223372214340946030 - Reference count: 1
+Leaked instance: RefCounted:9223372214357723247 - Reference count: 1
+Leaked instance: RefCounted:9223372214374500464 - Reference count: 1
+Leaked instance: RefCounted:9223372214391277681 - Reference count: 1
+Leaked instance: RefCounted:9223372214408054898 - Reference count: 1
+Leaked instance: RefCounted:9223372214424832115 - Reference count: 1
+Leaked instance: RefCounted:9223372214441609332 - Reference count: 1
+Leaked instance: RefCounted:9223372214458386549 - Reference count: 1
+Leaked instance: RefCounted:9223372214475163766 - Reference count: 1
+Leaked instance: RefCounted:9223372214559049847 - Reference count: 2
+Leaked instance: RefCounted:9223372214642935928 - Reference count: 2
+Leaked instance: RefCounted:9223372214676490361 - Reference count: 1
+Leaked instance: RefCounted:9223372214693267578 - Reference count: 1
+Leaked instance: RefCounted:9223372214710044795 - Reference count: 1
+Leaked instance: RefCounted:9223372214726822012 - Reference count: 1
+Leaked instance: RefCounted:9223372214743599229 - Reference count: 1
+Leaked instance: RefCounted:9223372214793930878 - Reference count: 1
+Leaked instance: RefCounted:9223372214827485311 - Reference count: 1
+Leaked instance: RefCounted:9223372214844262528 - Reference count: 1
+Leaked instance: RefCounted:9223372214861039745 - Reference count: 1
+Leaked instance: RefCounted:9223372214877816962 - Reference count: 1
+Leaked instance: RefCounted:9223372214894594179 - Reference count: 1
+Leaked instance: RefCounted:9223372214911371396 - Reference count: 1
+Leaked instance: RefCounted:9223372214928148613 - Reference count: 1
+Leaked instance: RefCounted:9223372214944925830 - Reference count: 1
+Leaked instance: RefCounted:9223372214961703047 - Reference count: 1
+Leaked instance: RefCounted:9223372214978480264 - Reference count: 1
+Leaked instance: RefCounted:9223372214995257481 - Reference count: 1
+Leaked instance: RefCounted:9223372215012034698 - Reference count: 1
+Leaked instance: RefCounted:9223372215465019531 - Reference count: 1
+Leaked instance: RefCounted:9223372215347579020 - Reference count: 1
+Leaked instance: RefCounted:9223372216689756301 - Reference count: 1
+Leaked instance: RefCounted:9223372215314024590 - Reference count: 1
+Leaked instance: RefCounted:9223372215196584079 - Reference count: 1
+Leaked instance: RefCounted:9223372215213361296 - Reference count: 1
+Leaked instance: RefCounted:9223372215230138513 - Reference count: 1
+Leaked instance: RefCounted:9223372215246915730 - Reference count: 1
+Leaked instance: RefCounted:9223372215263692947 - Reference count: 1
+Leaked instance: RefCounted:9223372215280470164 - Reference count: 1
+Leaked instance: RefCounted:9223372215297247381 - Reference count: 1
+Leaked instance: RefCounted:9223372215431465110 - Reference count: 1
+Leaked instance: RefCounted:9223372215448242327 - Reference count: 1
+Leaked instance: RefCounted:9223372215616014488 - Reference count: 1
+Leaked instance: RefCounted:9223372215548905625 - Reference count: 1
+Leaked instance: RefCounted:9223372215565682842 - Reference count: 1
+Leaked instance: RefCounted:9223372215582460059 - Reference count: 1
+Leaked instance: RefCounted:9223372215599237276 - Reference count: 1
+Leaked instance: RefCounted:9223372215733455005 - Reference count: 1
+Leaked instance: RefCounted:9223372215699900574 - Reference count: 1
+Leaked instance: RefCounted:9223372215716677791 - Reference count: 1
+Leaked instance: RefCounted:9223372215934781600 - Reference count: 1
+Leaked instance: RefCounted:9223372215817341089 - Reference count: 1
+Leaked instance: RefCounted:9223372215834118306 - Reference count: 1
+Leaked instance: RefCounted:9223372215850895523 - Reference count: 1
+Leaked instance: RefCounted:9223372215867672740 - Reference count: 1
+Leaked instance: RefCounted:9223372215884449957 - Reference count: 1
+Leaked instance: RefCounted:9223372215901227174 - Reference count: 1
+Leaked instance: RefCounted:9223372215918004391 - Reference count: 1
+Leaked instance: RefCounted:9223372215985113256 - Reference count: 1
+Leaked instance: RefCounted:9223372216018667689 - Reference count: 1
+Leaked instance: RefCounted:9223372216035444906 - Reference count: 1
+Leaked instance: RefCounted:9223372216052222123 - Reference count: 1
+Leaked instance: RefCounted:9223372216068999340 - Reference count: 1
+Leaked instance: RefCounted:9223372216085776557 - Reference count: 1
+Leaked instance: RefCounted:9223372216102553774 - Reference count: 1
+Leaked instance: RefCounted:9223372216219994287 - Reference count: 1
+Leaked instance: RefCounted:9223372216236771504 - Reference count: 1
+Leaked instance: RefCounted:9223372216253548721 - Reference count: 1
+Leaked instance: RefCounted:9223372216270325938 - Reference count: 1
+Leaked instance: RefCounted:9223372216287103155 - Reference count: 1
+Leaked instance: RefCounted:9223372216370989236 - Reference count: 1
+Leaked instance: RefCounted:9223372216454875317 - Reference count: 1
+Leaked instance: RefCounted:9223372216471652534 - Reference count: 1
+Leaked instance: RandomNumberGenerator:9223372216589093047 - Reference count: 2
+Leaked instance: RefCounted:9223372216555538616 - Reference count: 1
+Leaked instance: RefCounted:9223372216572315833 - Reference count: 1
+Leaked instance: RefCounted:9223372216605870266 - Reference count: 1
+Leaked instance: RefCounted:9223372216622647483 - Reference count: 1
+Leaked instance: RefCounted:9223372216639424700 - Reference count: 1
+Leaked instance: RefCounted:9223372216773642429 - Reference count: 2
+Leaked instance: RefCounted:9223372216706533566 - Reference count: 2
+Leaked instance: RefCounted:9223372216756865215 - Reference count: 1
+Leaked instance: RefCounted:9223372216790419648 - Reference count: 1
+Leaked instance: RefCounted:9223372216807196865 - Reference count: 2
+Leaked instance: RefCounted:9223372216823974082 - Reference count: 1
+Leaked instance: RefCounted:9223372216840751299 - Reference count: 2
+Leaked instance: RefCounted:9223372216857528516 - Reference count: 1
+Leaked instance: RefCounted:9223372216874305733 - Reference count: 2
+Leaked instance: RefCounted:9223372216891082950 - Reference count: 1
+Leaked instance: RefCounted:9223372216907860167 - Reference count: 2
+Leaked instance: RefCounted:9223372216924637384 - Reference count: 1
+Leaked instance: RefCounted:9223372216941414601 - Reference count: 2
+Leaked instance: RefCounted:9223372216958191818 - Reference count: 1
+Leaked instance: RefCounted:9223372216974969035 - Reference count: 2
+Leaked instance: RefCounted:9223372217042077900 - Reference count: 2
+Leaked instance: RefCounted:9223372217025300685 - Reference count: 1
+Leaked instance: RefCounted:9223372217058855118 - Reference count: 1
+Leaked instance: RefCounted:9223372217075632335 - Reference count: 2
+Leaked instance: RefCounted:9223372217092409552 - Reference count: 1
+Leaked instance: RefCounted:9223372217109186769 - Reference count: 2
+Leaked instance: RefCounted:9223372217125963986 - Reference count: 1
+Leaked instance: RefCounted:9223372217142741203 - Reference count: 2
+Leaked instance: RefCounted:9223372217159518420 - Reference count: 1
+Leaked instance: RefCounted:9223372217176295637 - Reference count: 2
+Leaked instance: RefCounted:9223372217193072854 - Reference count: 1
+Leaked instance: RefCounted:9223372217209850071 - Reference count: 2
+Leaked instance: RefCounted:9223372217226627288 - Reference count: 1
+Leaked instance: RefCounted:9223372217243404505 - Reference count: 2
+Leaked instance: RefCounted:9223372217260181722 - Reference count: 1
+Leaked instance: RefCounted:9223372217276958939 - Reference count: 2
+Leaked instance: RefCounted:9223372217293736156 - Reference count: 1
+Leaked instance: RefCounted:9223372217310513373 - Reference count: 2
+Leaked instance: RefCounted:9223372217327290590 - Reference count: 1
+Leaked instance: RefCounted:9223372217344067807 - Reference count: 2
+Leaked instance: RefCounted:9223372217360845024 - Reference count: 1
+Leaked instance: RefCounted:9223372217377622241 - Reference count: 2
+Leaked instance: RefCounted:9223372217411176674 - Reference count: 1
+Leaked instance: RandomNumberGenerator:9223372217713166563 - Reference count: 2
+Leaked instance: RefCounted:9223372217495062756 - Reference count: 1
+Leaked instance: RefCounted:9223372217511839973 - Reference count: 1
+Leaked instance: RefCounted:9223372217528617190 - Reference count: 1
+Leaked instance: RefCounted:9223372217545394407 - Reference count: 1
+Leaked instance: RefCounted:9223372217562171624 - Reference count: 2
+Leaked instance: RefCounted:9223372217578948841 - Reference count: 1
+Leaked instance: RefCounted:9223372217595726058 - Reference count: 1
+Leaked instance: RefCounted:9223372217612503275 - Reference count: 1
+Leaked instance: RefCounted:9223372217629280492 - Reference count: 1
+Leaked instance: RefCounted:9223372217646057709 - Reference count: 1
+Leaked instance: RefCounted:9223372217662834926 - Reference count: 1
+Leaked instance: RefCounted:9223372217679612143 - Reference count: 1
+Leaked instance: RefCounted:9223372217729943792 - Reference count: 1
+Leaked instance: RefCounted:9223372217746721009 - Reference count: 1
+Leaked instance: RefCounted:9223372217763498226 - Reference count: 1
+Leaked instance: RefCounted:9223372217830607091 - Reference count: 1
+Leaked instance: RefCounted:9223372219424442612 - Reference count: 1
+Leaked instance: RefCounted:9223372217914493173 - Reference count: 1
+Leaked instance: RefCounted:9223372217981602038 - Reference count: 1
+Leaked instance: GDScript:9223372218182928631 - Reference count: 1
+Leaked instance: RefCounted:9223372217964824824 - Reference count: 1
+Leaked instance: RefCounted:9223372219457997049 - Reference count: 1
+Leaked instance: RefCounted:9223372219508328698 - Reference count: 2
+Leaked instance: RefCounted:9223372219525105915 - Reference count: 2
+Leaked instance: RefCounted:9223372219491551484 - Reference count: 2
+Leaked instance: RefCounted:9223372219474774269 - Reference count: 2
+Leaked instance: RefCounted:9223372219541883135 - Reference count: 2
+Leaked instance: RefCounted:9223372221924247808 - Reference count: 1
+Leaked instance: GDScript:9223372219726432513 - Reference count: 1
+Leaked instance: RandomNumberGenerator:9223372222427564290 - Reference count: 5
+Leaked instance: RefCounted:9223372222008133891 - Reference count: 1
+Leaked instance: RefCounted:9223372222024911109 - Reference count: 2
+Leaked instance: RefCounted:9223372222041688326 - Reference count: 1
+Leaked instance: RefCounted:9223372222058465543 - Reference count: 1
+Leaked instance: RefCounted:9223372222075242760 - Reference count: 2
+Leaked instance: RefCounted:9223372222092019978 - Reference count: 1
+Leaked instance: RefCounted:9223372222108797195 - Reference count: 1
+Leaked instance: RefCounted:9223372222125574412 - Reference count: 1
+Leaked instance: RefCounted:9223372222142351630 - Reference count: 2
+Leaked instance: RefCounted:9223372222159128847 - Reference count: 1
+Leaked instance: RefCounted:9223372222175906064 - Reference count: 1
+Leaked instance: RefCounted:9223372222192683281 - Reference count: 1
+Leaked instance: RefCounted:9223372222209460498 - Reference count: 1
+Leaked instance: RefCounted:9223372222226237715 - Reference count: 1
+Leaked instance: RefCounted:9223372222310123796 - Reference count: 1
+Leaked instance: RefCounted:9223372222326901013 - Reference count: 1
+Leaked instance: RefCounted:9223372222343678230 - Reference count: 1
+Leaked instance: RefCounted:9223372222360455447 - Reference count: 1
+Leaked instance: RefCounted:9223372222377232664 - Reference count: 1
+Leaked instance: RefCounted:9223372222394009881 - Reference count: 1
+Leaked instance: RefCounted:9223372222410787098 - Reference count: 1
+Leaked instance: RefCounted:9223372222444341531 - Reference count: 2
+Leaked instance: RefCounted:9223372222461118748 - Reference count: 1
+Leaked instance: RefCounted:9223372222545004829 - Reference count: 1
+Leaked instance: RefCounted:9223372222561782046 - Reference count: 1
+Leaked instance: RefCounted:9223372222578559263 - Reference count: 1
+Leaked instance: RefCounted:9223372223148984608 - Reference count: 1
+Leaked instance: GDScript:9223372222763108641 - Reference count: 1
+Leaked instance: RefCounted:9223372224675711266 - Reference count: 1
+Leaked instance: GDScript:9223372223333533987 - Reference count: 1
+Leaked instance: RefCounted:9223372224692488484 - Reference count: 1
+Leaked instance: RefCounted:9223372224826706214 - Reference count: 2
+Leaked instance: RefCounted:9223372224843483431 - Reference count: 1
+Leaked instance: RefCounted:9223372224860260649 - Reference count: 1
+Leaked instance: RefCounted:9223372224877037866 - Reference count: 2
+Leaked instance: Mutex:9223372224893815083 - Reference count: 1
+Leaked instance: RefCounted:9223372224910592300 - Reference count: 3
+Leaked instance: :9223372224927369517
+Leaked instance: RandomNumberGenerator:9223372224944146734 - Reference count: 1
+Leaked instance: RefCounted:9223372224960923951 - Reference count: 2
+Leaked instance: RandomNumberGenerator:9223372224977701168 - Reference count: 2
+Leaked instance: RefCounted:9223372224994478385 - Reference count: 1
+Leaked instance: RefCounted:9223372225548126514 - Reference count: 1
+Leaked instance: RefCounted:9223372226923858227 - Reference count: 1
+Leaked instance: RefCounted:9223372225111918900 - Reference count: 1
+Leaked instance: RefCounted:9223372225128696117 - Reference count: 1
+Leaked instance: RefCounted:9223372225145473334 - Reference count: 1
+Leaked instance: RefCounted:9223372225162250551 - Reference count: 1
+Leaked instance: RefCounted:9223372225179027768 - Reference count: 1
+Leaked instance: RefCounted:9223372225195804985 - Reference count: 1
+Leaked instance: RefCounted:9223372225212582202 - Reference count: 1
+Leaked instance: RefCounted:9223372225229359419 - Reference count: 1
+Leaked instance: RefCounted:9223372225246136636 - Reference count: 1
+Leaked instance: RefCounted:9223372225262913853 - Reference count: 1
+Leaked instance: RefCounted:9223372225279691070 - Reference count: 1
+Leaked instance: RefCounted:9223372225296468287 - Reference count: 1
+Leaked instance: RefCounted:9223372225313245504 - Reference count: 1
+Leaked instance: RefCounted:9223372225330022721 - Reference count: 1
+Leaked instance: RefCounted:9223372225346799938 - Reference count: 1
+Leaked instance: RefCounted:9223372225363577155 - Reference count: 1
+Leaked instance: RefCounted:9223372225380354372 - Reference count: 1
+Leaked instance: RefCounted:9223372225397131589 - Reference count: 1
+Leaked instance: RefCounted:9223372225413908806 - Reference count: 1
+Leaked instance: RefCounted:9223372225430686023 - Reference count: 1
+Leaked instance: RefCounted:9223372225447463240 - Reference count: 1
+Leaked instance: RefCounted:9223372225464240457 - Reference count: 1
+Leaked instance: RefCounted:9223372225481017674 - Reference count: 1
+Leaked instance: RefCounted:9223372225497794891 - Reference count: 1
+Leaked instance: RefCounted:9223372225514572108 - Reference count: 1
+Leaked instance: RefCounted:9223372225531349325 - Reference count: 1
+Leaked instance: RefCounted:9223372225833339214 - Reference count: 1
+Leaked instance: RefCounted:9223372226219215183 - Reference count: 1
+Leaked instance: RefCounted:9223372225816562000 - Reference count: 1
+Leaked instance: RefCounted:9223372225883670865 - Reference count: 1
+Leaked instance: RefCounted:9223372226084997458 - Reference count: 1
+Leaked instance: RefCounted:9223372225950779731 - Reference count: 1
+Leaked instance: RefCounted:9223372226017888596 - Reference count: 1
+Leaked instance: RefCounted:9223372226001111381 - Reference count: 1
+Leaked instance: RefCounted:9223372226152106326 - Reference count: 1
+Leaked instance: RefCounted:9223372225934002519 - Reference count: 1
+Leaked instance: RefCounted:9223372226286324056 - Reference count: 1
+Leaked instance: RefCounted:9223372226353432921 - Reference count: 1
+Leaked instance: RefCounted:9223372226420541786 - Reference count: 1
+Leaked instance: RefCounted:9223372226487650651 - Reference count: 1
+Leaked instance: RefCounted:9223372226554759516 - Reference count: 1
+Leaked instance: RefCounted:9223372226621868381 - Reference count: 1
+Leaked instance: RefCounted:9223372226688977246 - Reference count: 1
+Leaked instance: RefCounted:9223372226756086111 - Reference count: 1
+Leaked instance: RefCounted:9223372226823194976 - Reference count: 1
+Leaked instance: RefCounted:9223372226890303841 - Reference count: 1
+Leaked instance: RefCounted:9223372226907081058 - Reference count: 1
+Leaked instance: RefCounted:9223372226940635491 - Reference count: 2
+Leaked instance: RefCounted:9223372227175516516 - Reference count: 3
+Leaked instance: RefCounted:9223372226974189925 - Reference count: 1
+Leaked instance: RefCounted:9223372227058076006 - Reference count: 1
+Leaked instance: RefCounted:9223372227074853223 - Reference count: 1
+Leaked instance: RefCounted:9223372227091630440 - Reference count: 1
+Leaked instance: RefCounted:9223372227108407657 - Reference count: 1
+Leaked instance: RefCounted:9223372227125184874 - Reference count: 3
+Leaked instance: RefCounted:9223372227141962091 - Reference count: 1
+Leaked instance: RefCounted:9223372227158739308 - Reference count: 1
+Leaked instance: RefCounted:9223372227259402605 - Reference count: 1
+Leaked instance: RefCounted:9223372227276179822 - Reference count: 1
+Leaked instance: RefCounted:9223372227292957039 - Reference count: 1
+Leaked instance: RefCounted:9223372227309734256 - Reference count: 1
+Leaked instance: Node2D:191042161020 - Node path: 
+Leaked instance: RefCounted:9223373328499084239 - Reference count: 2
+Leaked instance: RefCounted:9223372695310175299 - Reference count: 2
+Leaked instance: RefCounted:9223372863552097942 - Reference count: 1
+Leaked instance: RefCounted:9223372413201290061 - Reference count: 1
+Leaked instance: RefCounted:9223372429324194639 - Reference count: 1
+Leaked instance: RefCounted:9223373328515863388 - Reference count: 1
+Leaked instance: RefCounted:9223373098735113055 - Reference count: 1
+Leaked instance: RefCounted:9223373098751890276 - Reference count: 1
+Leaked instance: RefCounted:9223373045232571238 - Reference count: 1
+Leaked instance: RefCounted:9223372867595408233 - Reference count: 1
+Leaked instance: RefCounted:9223373360761674426 - Reference count: 1
+Leaked instance: RefCounted:9223373360728119995 - Reference count: 1
+Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).
+Resource still in use: res://core/clock/sim_clock.gd (GDScript)
+Resource still in use: res://core/rng/rng_registry.gd (GDScript)
+Resource still in use: res://core/world_context.gd (GDScript)
+Resource still in use: res://core/world_system.gd (GDScript)
+Resource still in use: res://core/data/data_table.gd (GDScript)
+Resource still in use: res://features/combat/combat_tuning.gd (GDScript)
+Resource still in use: res://features/combat/fighter.gd (GDScript)
+Resource still in use: res://features/combat/weapons/weapon_spec.gd (GDScript)
+Resource still in use: res://features/combat/shot.gd (GDScript)
+Resource still in use: res://features/combat/arc_ball.gd (GDScript)
+Resource still in use: res://features/combat/weapons/trigger.gd (GDScript)
+Resource still in use: res://features/combat/weapons/aim_assist.gd (GDScript)
+Resource still in use: res://features/combat/weapons/weapon_table.gd (GDScript)
+Resource still in use: res://features/combat/weapons/gun_hand.gd (GDScript)
+Resource still in use: res://features/combat/weapons/guard_tell.gd (GDScript)
+Resource still in use: res://features/combat/weapons/fighter_fx.gd (GDScript)
+Resource still in use: res://features/combat/weapons/fight_areas.gd (GDScript)
+Resource still in use: res://features/combat/combat_arena.gd (GDScript)
+Resource still in use: res://features/player/player_actions.gd (GDScript)
+Resource still in use: res://features/player/top_down_mover.gd (GDScript)
+Resource still in use: res://features/player/player_motion.gd (GDScript)
+Resource still in use: res://features/player/melee_hit.gd (GDScript)
+Resource still in use: res://features/player/melee_shock.gd (GDScript)
+Resource still in use: res://features/player/melee_table.gd (GDScript)
+Resource still in use: res://features/player/melee_combo.gd (GDScript)
+Resource still in use: res://features/player/player_shock.gd (GDScript)
+Resource still in use: res://features/player/player_melee.gd (GDScript)
+Resource still in use: res://features/player/arsenal_table.gd (GDScript)
+Resource still in use: res://features/player/weapon_hold.gd (GDScript)
+Resource still in use: res://features/player/weapon_pickups.gd (GDScript)
+Resource still in use: res://features/player/rivet_carry.gd (GDScript)
+Resource still in use: res://features/player/player_throw.gd (GDScript)
+Resource still in use: res://features/souls/power_def.gd (GDScript)
+Resource still in use: res://features/souls/power_table.gd (GDScript)
+Resource still in use: res://features/souls/soul_powers.gd (GDScript)
+Resource still in use: res://features/souls/hauler_form.gd (GDScript)
+Resource still in use: res://features/bodies/body_rule.gd (GDScript)
+Resource still in use: res://features/bodies/body_table.gd (GDScript)
+Resource still in use: res://features/bodies/rivet_body.gd (GDScript)
+Resource still in use: res://features/souls/hauler_stage.gd (GDScript)
+Resource still in use: res://boot/collect_call/stage_intent.gd (GDScript)
+Resource still in use: res://boot/collect_call/stage_pilot.gd (GDScript)
+Resource still in use: res://features/city/city_chunk.gd (GDScript)
+Resource still in use: res://features/city/gen/kerb_dresser.gd (GDScript)
+Resource still in use: res://features/city/gen/tile_painter.gd (GDScript)
+Resource still in use: res://features/city/gen/city_gen.gd (GDScript)
+Resource still in use: res://features/city/city_targets.gd (GDScript)
+Resource still in use: res://features/city/sim/city_sim_backend.gd (GDScript)
+Resource still in use: res://features/city/stream/chunk_source.gd (GDScript)
+Resource still in use: res://features/city/stream/city_residency.gd (GDScript)
+Resource still in use: res://features/city/city_spawner.gd (GDScript)
+Resource still in use: res://features/city/sim/city_sim_native.gd (GDScript)
+Resource still in use: res://features/city/city_system.gd (GDScript)
+Resource still in use: res://boot/collect_call/stage_cells.gd (GDScript)
+Resource still in use: res://features/combat/wave_director.gd (GDScript)
+Resource still in use: res://features/quest/quest_places.gd (GDScript)
+Resource still in use: res://boot/collect_call/stage_layout.gd (GDScript)
+Resource still in use: res://features/police/heat_meter.gd (GDScript)
+Resource still in use: res://features/missions/payphone_router.gd (GDScript)
+Resource still in use: res://features/economy/wallet.gd (GDScript)
+Resource still in use: res://boot/collect_call/collect_call_stage.gd (GDScript)
+Resource still in use: res://features/arena/arena_station.gd (GDScript)
+Resource still in use: res://features/arena/arena_hook.gd (GDScript)
+Resource still in use: res://features/arena/arena_plan.gd (GDScript)
+Resource still in use: res://features/arena/arena_stations.gd (GDScript)
+Resource still in use: res://features/arena/arena_pit.gd (GDScript)
+Resource still in use: res://features/arena/arena_targets.gd (GDScript)
+Resource still in use: res://features/arena/arena_telemetry.gd (GDScript)
+Resource still in use: res://features/arena/arena_walls.gd (GDScript)
+Resource still in use: res://features/arena/arena_dodges.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_profile.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_body.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_world.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_damage.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_traffic.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_cues.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_contacts.gd (GDScript)
+Resource still in use: res://features/vehicles/vehicle_service.gd (GDScript)
+Resource still in use: res://features/arena/arena_stage.gd (GDScript)
+Resource still in use: res://features/arena/arena_cars.gd (GDScript)
+Resource still in use: res://boot/collect_call/view/stage_view.gd (GDScript)
+Resource still in use: res://features/combat/decay/decay_ledger.gd (GDScript)
+Resource still in use: res://features/combat/decay/corpse_decay.gd (GDScript)
+Resource still in use: res://features/combat/kills/signature_kill.gd (GDScript)
+Resource still in use: res://features/combat/kills/kill_marks.gd (GDScript)
+Resource still in use: res://features/combat/kills/gib_sim.gd (GDScript)
+Resource still in use: res://features/combat/kills/signature_kill_table.gd (GDScript)
+Resource still in use: res://features/combat/kills/signature_kills.gd (GDScript)
+Resource still in use: res://features/combat/kills/brutality_hook.gd (GDScript)
+Resource still in use: res://features/combat/decay/corpse_decay_hook.gd (GDScript)
+Resource still in use: res://features/player/arena_claw_cops.gd (GDScript)
+Resource still in use: res://features/combat/weapons/gunplay_hook.gd (GDScript)
+Resource still in use: res://features/player/arena_arsenal.gd (GDScript)
+Resource still in use: res://features/showcase/arena_armory.gd (GDScript)
+Resource still in use: res://features/combat/weapons/art/arena_weapon_rack.gd (GDScript)
+Orphan StringName: _on_started (static: 0, total: 3)
+Orphan StringName: riot_c (static: 0, total: 1)
+Orphan StringName: scorch_m (static: 0, total: 1)
+Orphan StringName: hp_of (static: 0, total: 1)
+Orphan StringName: standing (static: 0, total: 1)
+Orphan StringName: heavy (static: 0, total: 1)
+Orphan StringName: _rules (static: 0, total: 3)
+Orphan StringName: station (static: 0, total: 1)
+Orphan StringName: max_wave (static: 0, total: 1)
+Orphan StringName: stun_full (static: 0, total: 1)
+Orphan StringName: PlayerShock (static: 0, total: 2)
+Orphan StringName: released (static: 0, total: 1)
+Orphan StringName: rivet_base>rivet_ghost (static: 0, total: 1)
+Orphan StringName: cars (static: 0, total: 2)
+Orphan StringName: cash (static: 0, total: 1)
+Orphan StringName: places (static: 0, total: 1)
+Orphan StringName: chainsaw (static: 0, total: 5)
+Orphan StringName: _hold (static: 0, total: 1)
+Orphan StringName: last_press_tick (static: 0, total: 1)
+Orphan StringName: enemy_tell_ticks (static: 0, total: 1)
+Orphan StringName: _host (static: 0, total: 1)
+Orphan StringName: CityTargets (static: 0, total: 2)
+Orphan StringName: piece (static: 0, total: 1)
+Orphan StringName: boss_anchor (static: 0, total: 1)
+Orphan StringName: deflects (static: 0, total: 1)
+Orphan StringName: Spawn (static: 0, total: 1)
+Orphan StringName: spec (static: 0, total: 2)
+Orphan StringName: min_lob_m (static: 0, total: 1)
+Orphan StringName: spin (static: 0, total: 2)
+Orphan StringName: max_hp (static: 0, total: 1)
+Orphan StringName: plasma_hole (static: 0, total: 1)
+Orphan StringName: bloom_rad (static: 0, total: 2)
+Orphan StringName: speed_scale (static: 0, total: 1)
+Orphan StringName: forced (static: 0, total: 1)
+Orphan StringName: max_us (static: 0, total: 1)
+Orphan StringName: name (static: 0, total: 2)
+Orphan StringName: reach_m (static: 0, total: 2)
+Orphan StringName: stick_deadzone (static: 0, total: 1)
+Orphan StringName: rivet_base>human (static: 0, total: 1)
+Orphan StringName: enemy_speed_scale (static: 0, total: 1)
+Orphan StringName: SimClock (static: 0, total: 2)
+Orphan StringName: MeleeCombo (static: 0, total: 2)
+Orphan StringName: span_m (static: 0, total: 1)
+Orphan StringName: DataTable (static: 0, total: 2)
+Orphan StringName: _length (static: 0, total: 1)
+Orphan StringName: GunplayHook (static: 0, total: 2)
+Orphan StringName: duration_ticks (static: 0, total: 1)
+Orphan StringName: Item (static: 0, total: 1)
+Orphan StringName: d1_at (static: 0, total: 1)
+Orphan StringName: blasts (static: 0, total: 1)
+Orphan StringName: boss>rivet_ghost (static: 0, total: 1)
+Orphan StringName: PlayerActions (static: 0, total: 2)
+Orphan StringName: Knob (static: 0, total: 1)
+Orphan StringName: vehicles (static: 0, total: 2)
+Orphan StringName: _table (static: 0, total: 1)
+Orphan StringName: last_tick (static: 0, total: 1)
+Orphan StringName: robot>rivet_ghost (static: 0, total: 1)
+Orphan StringName: police_cruiser (static: 0, total: 2)
+Orphan StringName: down_ticks (static: 0, total: 1)
+Orphan StringName: _melees (static: 0, total: 1)
+Orphan StringName: Encounter (static: 0, total: 1)
+Orphan StringName: dead_since (static: 0, total: 1)
+Orphan StringName: _name (static: 0, total: 1)
+Orphan StringName: activations (static: 0, total: 1)
+Orphan StringName: ArenaTelemetry (static: 0, total: 2)
+Orphan StringName: VehicleWorld (static: 0, total: 2)
+Orphan StringName: link (static: 0, total: 1)
+Orphan StringName: throw (static: 0, total: 1)
+Orphan StringName: hits_now (static: 0, total: 1)
+Orphan StringName: brutality (static: 0, total: 1)
+Orphan StringName: ram_per_dv (static: 0, total: 1)
+Orphan StringName: electro_baton (static: 0, total: 3)
+Orphan StringName: total_released (static: 0, total: 1)
+Orphan StringName: started (static: 0, total: 4)
+Orphan StringName: _use_was (static: 0, total: 1)
+Orphan StringName: knocks (static: 0, total: 1)
+Orphan StringName: spawn (static: 0, total: 1)
+Orphan StringName: sprinting (static: 0, total: 1)
+Orphan StringName: fade_ticks (static: 0, total: 1)
+Orphan StringName: leftover_budget (static: 0, total: 1)
+Orphan StringName: spawned (static: 0, total: 1)
+Orphan StringName: spawner (static: 0, total: 1)
+Orphan StringName: _res (static: 0, total: 1)
+Orphan StringName: step (static: 0, total: 1)
+Orphan StringName: ally (static: 0, total: 1)
+Orphan StringName: discharges (static: 0, total: 1)
+Orphan StringName: sedan (static: 0, total: 2)
+Orphan StringName: patrols (static: 0, total: 1)
+Orphan StringName: _rng (static: 0, total: 5)
+Orphan StringName: _run (static: 0, total: 1)
+Orphan StringName: FightAreas (static: 0, total: 2)
+Orphan StringName: stomps (static: 0, total: 1)
+Orphan StringName: arc_ticks (static: 0, total: 1)
+Orphan StringName: forced_alpha (static: 0, total: 1)
+Orphan StringName: art_stand_in (static: 0, total: 1)
+Orphan StringName: dodges (static: 0, total: 3)
+Orphan StringName: tell_ticks (static: 0, total: 1)
+Orphan StringName: PlayerMotion (static: 0, total: 2)
+Orphan StringName: _resident (static: 0, total: 1)
+Orphan StringName: _morph_ticks (static: 0, total: 1)
+Orphan StringName: shot_cue (static: 0, total: 1)
+Orphan StringName: ammo (static: 0, total: 1)
+Orphan StringName: strafe_scale (static: 0, total: 1)
+Orphan StringName: cone_rad (static: 0, total: 1)
+Orphan StringName: soul_hauler_off (static: 0, total: 1)
+Orphan StringName: _sim (static: 0, total: 2)
+Orphan StringName: killed (static: 0, total: 2)
+Orphan StringName: _hands (static: 0, total: 1)
+Orphan StringName: _slide (static: 0, total: 1)
+Orphan StringName: FighterFx (static: 0, total: 2)
+Orphan StringName: chainsaw_grind (static: 0, total: 1)
+Orphan StringName: QuestPlaces (static: 0, total: 2)
+Orphan StringName: ash_m (static: 0, total: 2)
+Orphan StringName: ArenaHook (static: 0, total: 2)
+Orphan StringName: bark_off (static: 0, total: 1)
+Orphan StringName: ArenaTargets (static: 0, total: 2)
+Orphan StringName: stun_ticks (static: 0, total: 3)
+Orphan StringName: RandomNumberGenerator (static: 0, total: 1)
+Orphan StringName: exit_speed_k (static: 0, total: 1)
+Orphan StringName: has_phone (static: 0, total: 1)
+Orphan StringName: script_path (static: 0, total: 1)
+Orphan StringName: slots (static: 0, total: 1)
+Orphan StringName: homing_shard (static: 0, total: 7)
+Orphan StringName: props (static: 0, total: 1)
+Orphan StringName: hide_r (static: 0, total: 1)
+Orphan StringName: waves_cleared (static: 0, total: 1)
+Orphan StringName: _windup (static: 0, total: 1)
+Orphan StringName: _source (static: 0, total: 1)
+Orphan StringName: VehicleTraffic (static: 0, total: 2)
+Orphan StringName: _near (static: 0, total: 1)
+Orphan StringName: dv_min (static: 0, total: 1)
+Orphan StringName: rivet_base>rivet_base (static: 0, total: 1)
+Orphan StringName: zoom_ppm (static: 0, total: 1)
+Orphan StringName: stomp_hits (static: 0, total: 1)
+Orphan StringName: ground (static: 0, total: 2)
+Orphan StringName: radius_m (static: 0, total: 2)
+Orphan StringName: rivet_ghost>boss (static: 0, total: 1)
+Orphan StringName: vaporise (static: 0, total: 1)
+Orphan StringName: _next_id (static: 0, total: 2)
+Orphan StringName: pilot (static: 0, total: 1)
+Orphan StringName: wheel (static: 0, total: 1)
+Orphan StringName: mini_nuke (static: 0, total: 7)
+Orphan StringName: _next (static: 0, total: 1)
+Orphan StringName: _fade_from (static: 0, total: 1)
+Orphan StringName: ArenaCars (static: 0, total: 2)
+Orphan StringName: PowerTable (static: 0, total: 2)
+Orphan StringName: WaveDirector (static: 0, total: 2)
+Orphan StringName: pad_only (static: 0, total: 1)
+Orphan StringName: SoulPowers (static: 0, total: 2)
+Orphan StringName: boss>human (static: 0, total: 1)
+Orphan StringName: _accumulator (static: 0, total: 1)
+Orphan StringName: drift_at (static: 0, total: 1)
+Orphan StringName: latency_ticks (static: 0, total: 1)
+Orphan StringName: refusal_left (static: 0, total: 1)
+Orphan StringName: PlayerThrow (static: 0, total: 2)
+Orphan StringName: TilePainter (static: 0, total: 2)
+Orphan StringName: chain_arcs (static: 0, total: 1)
+Orphan StringName: _rammed (static: 0, total: 1)
+Orphan StringName: refusals (static: 0, total: 1)
+Orphan StringName: human>boss (static: 0, total: 1)
+Orphan StringName: sway_rad (static: 0, total: 2)
+Orphan StringName: grips (static: 0, total: 1)
+Orphan StringName: charged (static: 0, total: 2)
+Orphan StringName: CitySystem (static: 0, total: 2)
+Orphan StringName: _radius (static: 0, total: 1)
+Orphan StringName: exposed (static: 0, total: 1)
+Orphan StringName: Wallet (static: 0, total: 2)
+Orphan StringName: uses (static: 0, total: 1)
+Orphan StringName: enemy_lock_ticks (static: 0, total: 1)
+Orphan StringName: active_left (static: 0, total: 1)
+Orphan StringName: rivet_ghost>robot (static: 0, total: 1)
+Orphan StringName: whiffs (static: 0, total: 1)
+Orphan StringName: traffic_hits (static: 0, total: 1)
+Orphan StringName: human>rivet_base (static: 0, total: 1)
+Orphan StringName: VehicleCues (static: 0, total: 2)
+Orphan StringName: SignatureKills (static: 0, total: 2)
+Orphan StringName: claw (static: 0, total: 2)
+Orphan StringName: PayphoneRouter (static: 0, total: 2)
+Orphan StringName: arcs (static: 0, total: 1)
+Orphan StringName: ink_k (static: 0, total: 1)
+Orphan StringName: area (static: 0, total: 1)
+Orphan StringName: telemetry (static: 0, total: 1)
+Orphan StringName: _quiet_until (static: 0, total: 1)
+Orphan StringName: ArenaWeaponRack (static: 0, total: 2)
+Orphan StringName: down_until (static: 0, total: 1)
+Orphan StringName: weapon_next (static: 0, total: 1)
+Orphan StringName: riot_hp (static: 0, total: 1)
+Orphan StringName: markers (static: 0, total: 1)
+Orphan StringName: traffic (static: 0, total: 1)
+Orphan StringName: tracer_len_m (static: 0, total: 1)
+Orphan StringName: _pulled (static: 0, total: 1)
+Orphan StringName: peak (static: 0, total: 1)
+Orphan StringName: StageIntent (static: 0, total: 2)
+Orphan StringName: encounter (static: 0, total: 1)
+Orphan StringName: combo (static: 0, total: 1)
+Orphan StringName: peds (static: 0, total: 1)
+Orphan StringName: rocket_gib (static: 0, total: 1)
+Orphan StringName: _last_facing (static: 0, total: 1)
+Orphan StringName: world (static: 0, total: 1)
+Orphan StringName: weapon_slot_1 (static: 0, total: 1)
+Orphan StringName: weapon_slot_2 (static: 0, total: 1)
+Orphan StringName: weapon_slot_3 (static: 0, total: 1)
+Orphan StringName: weapon_slot_4 (static: 0, total: 1)
+Orphan StringName: generated (static: 0, total: 1)
+Orphan StringName: max_value (static: 0, total: 1)
+Orphan StringName: vehicle_headings (static: 0, total: 1)
+Orphan StringName: spawns (static: 0, total: 2)
+Orphan StringName: can_hurt (static: 0, total: 1)
+Orphan StringName: _lone (static: 0, total: 1)
+Orphan StringName: _lost (static: 0, total: 2)
+Orphan StringName: min_forward_dot (static: 0, total: 1)
+Orphan StringName: boss>boss (static: 0, total: 1)
+Orphan StringName: _holder (static: 0, total: 1)
+Orphan StringName: ambulance (static: 0, total: 2)
+Orphan StringName: bounce (static: 0, total: 2)
+Orphan StringName: failures (static: 0, total: 1)
+Orphan StringName: last_index (static: 0, total: 1)
+Orphan StringName: velocity (static: 0, total: 1)
+Orphan StringName: target_metal (static: 0, total: 1)
+Orphan StringName: _game (static: 0, total: 1)
+Orphan StringName: rivet_ghost>rivet_base (static: 0, total: 1)
+Orphan StringName: CollectCallStage (static: 0, total: 2)
+Orphan StringName: KillMarks (static: 0, total: 2)
+Orphan StringName: serial (static: 0, total: 1)
+Orphan StringName: draw_ticks (static: 0, total: 1)
+Orphan StringName: _shoves (static: 0, total: 1)
+Orphan StringName: start_heat (static: 0, total: 1)
+Orphan StringName: attempts (static: 0, total: 1)
+Orphan StringName: cops (static: 0, total: 2)
+Orphan StringName: core (static: 0, total: 6)
+Orphan StringName: soul_gearbox_off (static: 0, total: 1)
+Orphan StringName: two_hand_long (static: 0, total: 18)
+Orphan StringName: auto (static: 0, total: 1)
+Orphan StringName: by_style (static: 0, total: 1)
+Orphan StringName: wallet (static: 0, total: 1)
+Orphan StringName: wound (static: 0, total: 1)
+Orphan StringName: player_hit_robo_tazer (static: 0, total: 3)
+Orphan StringName: out_bodies (static: 0, total: 1)
+Orphan StringName: _tick_in (static: 0, total: 1)
+Orphan StringName: madness_decay_per_s (static: 0, total: 1)
+Orphan StringName: press_left (static: 0, total: 1)
+Orphan StringName: RngRegistry (static: 0, total: 2)
+Orphan StringName: madness_cost (static: 0, total: 1)
+Orphan StringName: accel (static: 0, total: 1)
+Orphan StringName: up_mps (static: 0, total: 1)
+Orphan StringName: _asked (static: 0, total: 1)
+Orphan StringName: lock_ticks (static: 0, total: 1)
+Orphan StringName: split (static: 0, total: 3)
+Orphan StringName: stow_ticks (static: 0, total: 1)
+Orphan StringName: blast (static: 0, total: 2)
+Orphan StringName: RivetBody (static: 0, total: 2)
+Orphan StringName: soul_hauler_on (static: 0, total: 1)
+Orphan StringName: shots_fired (static: 0, total: 2)
+Orphan StringName: splash_radius_m (static: 0, total: 1)
+Orphan StringName: enemies (static: 0, total: 1)
+Orphan StringName: spread_rad (static: 0, total: 2)
+Orphan StringName: rivet_ghost>rivet_ghost (static: 0, total: 1)
+Orphan StringName: shot_assault_rifle (static: 0, total: 1)
+Orphan StringName: none (static: 0, total: 1)
+Orphan StringName: magazine (static: 0, total: 2)
+Orphan StringName: profiles (static: 0, total: 1)
+Orphan StringName: stage (static: 0, total: 1)
+Orphan StringName: trail (static: 0, total: 1)
+Orphan StringName: knockdown (static: 0, total: 3)
+Orphan StringName: aim_range_m (static: 0, total: 1)
+Orphan StringName: claw_1 (static: 0, total: 1)
+Orphan StringName: claw_2 (static: 0, total: 1)
+Orphan StringName: claw_3 (static: 0, total: 1)
+Orphan StringName: stamped (static: 0, total: 1)
+Orphan StringName: traffic_art (static: 0, total: 1)
+Orphan StringName: fired (static: 0, total: 1)
+Orphan StringName: VehicleService (static: 0, total: 2)
+Orphan StringName: state (static: 0, total: 3)
+Orphan StringName: molotov (static: 0, total: 6)
+Orphan StringName: hp_lost (static: 0, total: 1)
+Orphan StringName: attacker (static: 0, total: 1)
+Orphan StringName: splash_damage (static: 0, total: 1)
+Orphan StringName: boxes (static: 0, total: 1)
+Orphan StringName: boss>rivet_base (static: 0, total: 1)
+Orphan StringName: strength (static: 0, total: 1)
+Orphan StringName: action (static: 0, total: 1)
+Orphan StringName: burn_by (static: 0, total: 1)
+Orphan StringName: rect (static: 0, total: 1)
+Orphan StringName: defender (static: 0, total: 1)
+Orphan StringName: _dropped_seconds (static: 0, total: 1)
+Orphan StringName: active (static: 0, total: 2)
+Orphan StringName: WeaponTable (static: 0, total: 2)
+Orphan StringName: sprint (static: 0, total: 1)
+Orphan StringName: rioters (static: 0, total: 1)
+Orphan StringName: torch_reach_m (static: 0, total: 1)
+Orphan StringName: mover (static: 0, total: 1)
+Orphan StringName: ticks_in (static: 0, total: 1)
+Orphan StringName: ticks_on (static: 0, total: 1)
+Orphan StringName: robot>boss (static: 0, total: 1)
+Orphan StringName: plan (static: 0, total: 1)
+Orphan StringName: robot>human (static: 0, total: 1)
+Orphan StringName: robot>rivet_base (static: 0, total: 1)
+Orphan StringName: ram_hits (static: 0, total: 1)
+Orphan StringName: scorch_radius_m (static: 0, total: 1)
+Orphan StringName: _on (static: 0, total: 1)
+Orphan StringName: focus (static: 0, total: 1)
+Orphan StringName: gibs (static: 0, total: 1)
+Orphan StringName: slide_grip (static: 0, total: 1)
+Orphan StringName: last_charge01 (static: 0, total: 1)
+Orphan StringName: knockdowns (static: 0, total: 2)
+Orphan StringName: taxi (static: 0, total: 2)
+Orphan StringName: cues (static: 0, total: 1)
+Orphan StringName: dissolve (static: 0, total: 1)
+Orphan StringName: count (static: 0, total: 1)
+Orphan StringName: machine_pistol (static: 0, total: 7)
+Orphan StringName: grind_ticks (static: 0, total: 2)
+Orphan StringName: servo (static: 0, total: 2)
+Orphan StringName: StageLayout (static: 0, total: 2)
+Orphan StringName: _morph (static: 0, total: 1)
+Orphan StringName: windup_ticks (static: 0, total: 1)
+Orphan StringName: service (static: 0, total: 1)
+Orphan StringName: _viewed (static: 0, total: 1)
+Orphan StringName: shoulder (static: 0, total: 8)
+Orphan StringName: StagePilot (static: 0, total: 2)
+Orphan StringName: fighter (static: 0, total: 1)
+Orphan StringName: motion (static: 0, total: 2)
+Orphan StringName: crates_label (static: 0, total: 1)
+Orphan StringName: damage_taken (static: 0, total: 1)
+Orphan StringName: _tasks (static: 0, total: 1)
+Orphan StringName: burst_gap (static: 0, total: 1)
+Orphan StringName: Shot (static: 0, total: 2)
+Orphan StringName: age (static: 0, total: 1)
+Orphan StringName: hitstop_ticks (static: 0, total: 1)
+Orphan StringName: stains (static: 0, total: 1)
+Orphan StringName: ang (static: 0, total: 1)
+Orphan StringName: spray (static: 0, total: 1)
+Orphan StringName: art (static: 0, total: 1)
+Orphan StringName: speaker (static: 0, total: 1)
+Orphan StringName: budget (static: 0, total: 1)
+Orphan StringName: tazer (static: 0, total: 2)
+Orphan StringName: riot (static: 0, total: 1)
+Orphan StringName: errors (static: 0, total: 6)
+Orphan StringName: flamethrower (static: 0, total: 5)
+Orphan StringName: _cued (static: 0, total: 1)
+Orphan StringName: _stage (static: 0, total: 3)
+Orphan StringName: ticks (static: 0, total: 1)
+Orphan StringName: VehicleContacts (static: 0, total: 2)
+Orphan StringName: _state (static: 0, total: 1)
+Orphan StringName: aim_reach_step_m (static: 0, total: 1)
+Orphan StringName: SignatureKillTable (static: 0, total: 2)
+Orphan StringName: pending (static: 0, total: 1)
+Orphan StringName: _first (static: 0, total: 1)
+Orphan StringName: hp_scale (static: 0, total: 1)
+Orphan StringName: _encounter (static: 0, total: 1)
+Orphan StringName: dropped (static: 0, total: 2)
+Orphan StringName: flash_scale (static: 0, total: 1)
+Orphan StringName: cap (static: 0, total: 1)
+Orphan StringName: car (static: 0, total: 3)
+Orphan StringName: roll_ticks (static: 0, total: 1)
+Orphan StringName: push_out (static: 0, total: 1)
+Orphan StringName: items (static: 0, total: 1)
+Orphan StringName: power_hauler (static: 0, total: 2)
+Orphan StringName: handbrake_grip (static: 0, total: 1)
+Orphan StringName: actors (static: 0, total: 1)
+Orphan StringName: _stomp_wait (static: 0, total: 1)
+Orphan StringName: _rigs (static: 0, total: 1)
+Orphan StringName: PowerDef (static: 0, total: 2)
+Orphan StringName: measures (static: 0, total: 1)
+Orphan StringName: tazer_hit_now (static: 0, total: 1)
+Orphan StringName: swapped (static: 0, total: 1)
+Orphan StringName: ArenaArmory (static: 0, total: 2)
+Orphan StringName: move_by (static: 0, total: 1)
+Orphan StringName: powers (static: 0, total: 1)
+Orphan StringName: fire_at (static: 0, total: 1)
+Orphan StringName: spray_cone_deg (static: 0, total: 1)
+Orphan StringName: dir (static: 0, total: 2)
+Orphan StringName: spawn_points (static: 0, total: 1)
+Orphan StringName: bloom_recover_per_tick (static: 0, total: 1)
+Orphan StringName: move_to (static: 0, total: 1)
+Orphan StringName: gunplay (static: 0, total: 1)
+Orphan StringName: _on_kill_landed (static: 0, total: 3)
+Orphan StringName: gore_full (static: 0, total: 1)
+Orphan StringName: phase (static: 0, total: 1)
+Orphan StringName: homing_rad_per_tick (static: 0, total: 1)
+Orphan StringName: balls (static: 0, total: 1)
+Orphan StringName: stations (static: 0, total: 2)
+Orphan StringName: zones (static: 0, total: 1)
+Orphan StringName: hidden_ticks (static: 0, total: 1)
+Orphan StringName: weapon_id (static: 0, total: 1)
+Orphan StringName: sway_ticks (static: 0, total: 1)
+Orphan StringName: walls (static: 0, total: 1)
+Orphan StringName: problems (static: 0, total: 2)
+Orphan StringName: combo_window_ticks (static: 0, total: 1)
+Orphan StringName: sight_m (static: 0, total: 1)
+Orphan StringName: burn_ticks (static: 0, total: 2)
+Orphan StringName: human>human (static: 0, total: 1)
+Orphan StringName: Wave (static: 0, total: 1)
+Orphan StringName: consumed (static: 0, total: 1)
+Orphan StringName: gone (static: 0, total: 1)
+Orphan StringName: stand_ticks (static: 0, total: 1)
+Orphan StringName: damage_vs_rivet (static: 0, total: 1)
+Orphan StringName: enemy_volley (static: 0, total: 1)
+Orphan StringName: aim_shift (static: 0, total: 1)
+Orphan StringName: hit_index (static: 0, total: 1)
+Orphan StringName: ArenaArsenal (static: 0, total: 2)
+Orphan StringName: ArenaPlan (static: 0, total: 2)
+Orphan StringName: knobs (static: 0, total: 1)
+Orphan StringName: CitySpawner (static: 0, total: 2)
+Orphan StringName: gen (static: 0, total: 1)
+Orphan StringName: _o (static: 0, total: 1)
+Orphan StringName: gib (static: 0, total: 2)
+Orphan StringName: _t (static: 0, total: 2)
+Orphan StringName: electro_shock (static: 0, total: 1)
+Orphan StringName: at (static: 0, total: 5)
+Orphan StringName: robot (static: 0, total: 21)
+Orphan StringName: tick (static: 0, total: 4)
+Orphan StringName: refusal_ticks (static: 0, total: 1)
+Orphan StringName: _fixtures (static: 0, total: 1)
+Orphan StringName: cx (static: 0, total: 1)
+Orphan StringName: cy (static: 0, total: 1)
+Orphan StringName: tier (static: 0, total: 1)
+Orphan StringName: _filled (static: 0, total: 1)
+Orphan StringName: fx (static: 0, total: 1)
+Orphan StringName: ArcBall (static: 0, total: 2)
+Orphan StringName: rifles_grabbed (static: 0, total: 1)
+Orphan StringName: hp (static: 0, total: 3)
+Orphan StringName: id (static: 0, total: 16)
+Orphan StringName: _profiles (static: 0, total: 1)
+Orphan StringName: cock_k (static: 0, total: 1)
+Orphan StringName: base (static: 0, total: 1)
+Orphan StringName: ArenaStation (static: 0, total: 2)
+Orphan StringName: gun (static: 0, total: 1)
+Orphan StringName: _previous (static: 0, total: 1)
+Orphan StringName: on (static: 0, total: 3)
+Orphan StringName: whisper_now (static: 0, total: 1)
+Orphan StringName: roll (static: 0, total: 1)
+Orphan StringName: rb (static: 0, total: 1)
+Orphan StringName: ground_drag (static: 0, total: 1)
+Orphan StringName: room (static: 0, total: 1)
+Orphan StringName: HeatMeter (static: 0, total: 2)
+Orphan StringName: vz (static: 0, total: 1)
+Orphan StringName: ray_gun_dissolve (static: 0, total: 1)
+Orphan StringName: landed (static: 0, total: 2)
+Orphan StringName: xf (static: 0, total: 1)
+Orphan StringName: human>rivet_ghost (static: 0, total: 1)
+Orphan StringName: rows (static: 0, total: 2)
+Orphan StringName: rifle_ammo (static: 0, total: 1)
+Orphan StringName: _horn_until (static: 0, total: 1)
+Orphan StringName: melee_swings (static: 0, total: 1)
+Orphan StringName: hit (static: 0, total: 1)
+Orphan StringName: HaulerStage (static: 0, total: 2)
+Orphan StringName: sprint_turn_dps (static: 0, total: 1)
+Orphan StringName: weapons (static: 0, total: 2)
+Orphan StringName: bark_on (static: 0, total: 1)
+Orphan StringName: crates_count (static: 0, total: 1)
+Orphan StringName: grip (static: 0, total: 2)
+Orphan StringName: burst (static: 0, total: 3)
+Orphan StringName: min_value (static: 0, total: 1)
+Orphan StringName: grow (static: 0, total: 1)
+Orphan StringName: rivet_ghost (static: 0, total: 13)
+Orphan StringName: Actor (static: 0, total: 1)
+Orphan StringName: pit_waves (static: 0, total: 1)
+Orphan StringName: phones (static: 0, total: 1)
+Orphan StringName: muzzle (static: 0, total: 1)
+Orphan StringName: _tick (static: 0, total: 2)
+Orphan StringName: weapon_prev (static: 0, total: 1)
+Orphan StringName: mass (static: 0, total: 1)
+Orphan StringName: rivet (static: 0, total: 2)
+Orphan StringName: _base (static: 0, total: 1)
+Orphan StringName: spray_from (static: 0, total: 1)
+Orphan StringName: stun_min (static: 0, total: 1)
+Orphan StringName: spin_dps (static: 0, total: 1)
+Orphan StringName: _kerb (static: 0, total: 1)
+Orphan StringName: madness (static: 0, total: 1)
+Orphan StringName: struck_charged (static: 0, total: 1)
+Orphan StringName: _keys (static: 0, total: 1)
+Orphan StringName: refuse_line (static: 0, total: 1)
+Orphan StringName: GibSim (static: 0, total: 2)
+Orphan StringName: CorpseDecay (static: 0, total: 2)
+Orphan StringName: ray_gun (static: 0, total: 7)
+Orphan StringName: in_k (static: 0, total: 1)
+Orphan StringName: ArsenalTable (static: 0, total: 2)
+Orphan StringName: VehicleDamage (static: 0, total: 2)
+Orphan StringName: one_hand (static: 0, total: 14)
+Orphan StringName: _errors (static: 0, total: 8)
+Orphan StringName: fire_crackle (static: 0, total: 1)
+Orphan StringName: starts (static: 0, total: 2)
+Orphan StringName: gloria (static: 0, total: 8)
+Orphan StringName: _prefer_native (static: 0, total: 1)
+Orphan StringName: ArenaDodges (static: 0, total: 2)
+Orphan StringName: pellets (static: 0, total: 1)
+Orphan StringName: areas (static: 0, total: 2)
+Orphan StringName: began (static: 0, total: 1)
+Orphan StringName: ArenaPit (static: 0, total: 2)
+Orphan StringName: tiles (static: 0, total: 1)
+Orphan StringName: key (static: 0, total: 1)
+Orphan StringName: kick (static: 0, total: 1)
+Orphan StringName: trigger (static: 0, total: 1)
+Orphan StringName: arena (static: 0, total: 1)
+Orphan StringName: CorpseDecayHook (static: 0, total: 2)
+Orphan StringName: _mass (static: 0, total: 1)
+Orphan StringName: kind (static: 0, total: 5)
+Orphan StringName: electro_gun (static: 0, total: 7)
+Orphan StringName: ttk_s (static: 0, total: 1)
+Orphan StringName: recovery_ticks (static: 0, total: 2)
+Orphan StringName: VehicleBody (static: 0, total: 2)
+Orphan StringName: ArenaStations (static: 0, total: 2)
+Orphan StringName: stomp_at (static: 0, total: 1)
+Orphan StringName: hide_at (static: 0, total: 1)
+Orphan StringName: WeaponHold (static: 0, total: 2)
+Orphan StringName: cooldown_ticks (static: 0, total: 3)
+Orphan StringName: rivet_base>robot (static: 0, total: 1)
+Orphan StringName: sprint_accel_mps2 (static: 0, total: 1)
+Orphan StringName: car_presses (static: 0, total: 1)
+Orphan StringName: kill_landed (static: 0, total: 4)
+Orphan StringName: turn_dps_peak (static: 0, total: 1)
+Orphan StringName: lunge_m (static: 0, total: 1)
+Orphan StringName: tell_left (static: 0, total: 1)
+Orphan StringName: use_density (static: 0, total: 1)
+Orphan StringName: canon (static: 0, total: 1)
+Orphan StringName: intent (static: 0, total: 1)
+Orphan StringName: _was_held (static: 0, total: 1)
+Orphan StringName: brake (static: 0, total: 1)
+Orphan StringName: Patrol (static: 0, total: 1)
+Orphan StringName: Node2D (static: 0, total: 1)
+Orphan StringName: katana (static: 0, total: 5)
+Orphan StringName: view (static: 0, total: 1)
+Orphan StringName: first_wave (static: 0, total: 1)
+Orphan StringName: recovery_move_scale (static: 0, total: 1)
+Orphan StringName: knockback_m (static: 0, total: 2)
+Orphan StringName: data (static: 0, total: 1)
+Orphan StringName: mps (static: 0, total: 1)
+Orphan StringName: weapon_grip (static: 0, total: 1)
+Orphan StringName: police_cars (static: 0, total: 1)
+Orphan StringName: _lever_a (static: 0, total: 1)
+Orphan StringName: _lever_b (static: 0, total: 1)
+Orphan StringName: pit_kills (static: 0, total: 1)
+Orphan StringName: gearbox (static: 0, total: 3)
+Orphan StringName: marks (static: 0, total: 2)
+Orphan StringName: _hp_scale (static: 0, total: 1)
+Orphan StringName: facing (static: 0, total: 2)
+Orphan StringName: _frame_delta (static: 0, total: 1)
+Orphan StringName: claw_shock (static: 0, total: 1)
+Orphan StringName: _push_out (static: 0, total: 1)
+Orphan StringName: city_sim (static: 0, total: 1)
+Orphan StringName: VehicleProfile (static: 0, total: 2)
+Orphan StringName: last_land_index (static: 0, total: 1)
+Orphan StringName: ChunkSource (static: 0, total: 2)
+Orphan StringName: cut_deg (static: 0, total: 1)
+Orphan StringName: WeaponSpec (static: 0, total: 2)
+Orphan StringName: DecayLedger (static: 0, total: 2)
+Orphan StringName: tick_in (static: 0, total: 1)
+Orphan StringName: charge_min (static: 0, total: 1)
+Orphan StringName: patrol_leg (static: 0, total: 1)
+Orphan StringName: waves (static: 0, total: 3)
+Orphan StringName: clock (static: 0, total: 2)
+Orphan StringName: _view (static: 0, total: 1)
+Orphan StringName: steer_rate (static: 0, total: 1)
+Orphan StringName: _contacts (static: 0, total: 1)
+Orphan StringName: on_city (static: 0, total: 1)
+Orphan StringName: Weapon (static: 0, total: 1)
+Orphan StringName: AimAssist (static: 0, total: 2)
+Orphan StringName: bits (static: 0, total: 1)
+Orphan StringName: per_dv (static: 0, total: 1)
+Orphan StringName: CityChunk (static: 0, total: 2)
+Orphan StringName: max_level (static: 0, total: 1)
+Orphan StringName: enemy_rest_ticks (static: 0, total: 1)
+Orphan StringName: damage (static: 0, total: 4)
+Orphan StringName: pit (static: 0, total: 2)
+Orphan StringName: events (static: 0, total: 1)
+Orphan StringName: iframe_to (static: 0, total: 1)
+Orphan StringName: pos (static: 0, total: 7)
+Orphan StringName: brake_mps2 (static: 0, total: 1)
+Orphan StringName: d2_at (static: 0, total: 1)
+Orphan StringName: carry (static: 0, total: 2)
+Orphan StringName: burst_left (static: 0, total: 1)
+Orphan StringName: _roll_tick (static: 0, total: 1)
+Orphan StringName: _tiles (static: 0, total: 1)
+Orphan StringName: medium (static: 0, total: 2)
+Orphan StringName: _kills_seen (static: 0, total: 1)
+Orphan StringName: enemy_lock_spread (static: 0, total: 1)
+Orphan StringName: _arena (static: 0, total: 1)
+Orphan StringName: vmax (static: 0, total: 1)
+Orphan StringName: rolls (static: 0, total: 1)
+Orphan StringName: StageView (static: 0, total: 2)
+Orphan StringName: unique (static: 0, total: 5)
+Orphan StringName: last_land_tick (static: 0, total: 1)
+Orphan StringName: _phones (static: 0, total: 1)
+Orphan StringName: _timer (static: 0, total: 1)
+Orphan StringName: peak_dead_listed (static: 0, total: 1)
+Orphan StringName: residency (static: 0, total: 1)
+Orphan StringName: raw (static: 0, total: 1)
+Orphan StringName: profile (static: 0, total: 1)
+Orphan StringName: stats_us (static: 0, total: 1)
+Orphan StringName: down_s (static: 0, total: 1)
+Orphan StringName: stomp_knocks (static: 0, total: 1)
+Orphan StringName: handbrake (static: 0, total: 1)
+Orphan StringName: tape_bill (static: 0, total: 1)
+Orphan StringName: rng (static: 0, total: 1)
+Orphan StringName: Area (static: 0, total: 1)
+Orphan StringName: phone (static: 0, total: 1)
+Orphan StringName: cooldown (static: 0, total: 2)
+Orphan StringName: decay (static: 0, total: 1)
+Orphan StringName: CombatArena (static: 0, total: 2)
+Orphan StringName: boss>robot (static: 0, total: 1)
+Orphan StringName: run (static: 0, total: 1)
+Orphan StringName: GuardTell (static: 0, total: 2)
+Orphan StringName: flee_s (static: 0, total: 1)
+Orphan StringName: spread_scale (static: 0, total: 1)
+Orphan StringName: assault-rifle (static: 0, total: 32)
+Orphan StringName: HaulerForm (static: 0, total: 2)
+Orphan StringName: steer_by_input (static: 0, total: 1)
+Orphan StringName: _on_ended (static: 0, total: 3)
+Orphan StringName: sim (static: 0, total: 1)
+Orphan StringName: aim_assist (static: 0, total: 1)
+Orphan StringName: melee (static: 0, total: 2)
+Orphan StringName: sizes (static: 0, total: 1)
+Orphan StringName: patrol_pos (static: 0, total: 1)
+Orphan StringName: shot_gloria (static: 0, total: 2)
+Orphan StringName: _mutex (static: 0, total: 1)
+Orphan StringName: reload_left (static: 0, total: 1)
+Orphan StringName: dens_car (static: 0, total: 1)
+Orphan StringName: targets (static: 0, total: 3)
+Orphan StringName: _arsenal (static: 0, total: 1)
+Orphan StringName: kills (static: 0, total: 6)
+Orphan StringName: whisper_cues (static: 0, total: 1)
+Orphan StringName: _queued (static: 0, total: 1)
+Orphan StringName: tap (static: 0, total: 2)
+Orphan StringName: tex (static: 0, total: 1)
+Orphan StringName: light (static: 0, total: 3)
+Orphan StringName: weapon (static: 0, total: 4)
+Orphan StringName: interrupt_on (static: 0, total: 1)
+Orphan StringName: style (static: 0, total: 1)
+Orphan StringName: homes (static: 0, total: 1)
+Orphan StringName: line_hooks (static: 0, total: 1)
+Orphan StringName: engaged_tick (static: 0, total: 1)
+Orphan StringName: CombatTuning (static: 0, total: 2)
+Orphan StringName: grind_min_ticks (static: 0, total: 1)
+Orphan StringName: rivet_ghost>human (static: 0, total: 1)
+Orphan StringName: died (static: 0, total: 1)
+Orphan StringName: cancel_ticks (static: 0, total: 1)
+Orphan StringName: last_line (static: 0, total: 1)
+Orphan StringName: city_spawn (static: 0, total: 1)
+Orphan StringName: body (static: 0, total: 1)
+Orphan StringName: layout (static: 0, total: 1)
+Orphan StringName: ended (static: 0, total: 4)
+Orphan StringName: _wave_gap (static: 0, total: 1)
+Orphan StringName: boss (static: 0, total: 16)
+Orphan StringName: hurt_tick (static: 0, total: 1)
+Orphan StringName: heavy_two_hand (static: 0, total: 6)
+Orphan StringName: gap_ticks (static: 0, total: 1)
+Orphan StringName: hatchback (static: 0, total: 2)
+Orphan StringName: backpack_hose (static: 0, total: 6)
+Orphan StringName: van (static: 0, total: 2)
+Orphan StringName: cells (static: 0, total: 2)
+Orphan StringName: z (static: 0, total: 1)
+Orphan StringName: vel (static: 0, total: 6)
+Orphan StringName: GunHand (static: 0, total: 2)
+Orphan StringName: top_speed_mps (static: 0, total: 1)
+Orphan StringName: stunned (static: 0, total: 1)
+Orphan StringName: soul_hijacked (static: 0, total: 1)
+Orphan StringName: stomp_tick (static: 0, total: 1)
+Orphan StringName: roll_dir (static: 0, total: 1)
+Orphan StringName: crumble_ticks (static: 0, total: 1)
+Orphan StringName: target_hp (static: 0, total: 1)
+Orphan StringName: hooks (static: 0, total: 1)
+Orphan StringName: solid (static: 0, total: 1)
+Orphan StringName: ash_from (static: 0, total: 1)
+Orphan StringName: _cleared (static: 0, total: 1)
+Orphan StringName: deaths (static: 0, total: 2)
+Orphan StringName: wreck_s (static: 0, total: 1)
+Orphan StringName: wreck_t (static: 0, total: 1)
+Orphan StringName: MeleeHit (static: 0, total: 2)
+Orphan StringName: pulse (static: 0, total: 1)
+Orphan StringName: SignatureKill (static: 0, total: 3)
+Orphan StringName: one_slot (static: 0, total: 1)
+Orphan StringName: sliding (static: 0, total: 1)
+Orphan StringName: level (static: 0, total: 1)
+Orphan StringName: left_m (static: 0, total: 1)
+Orphan StringName: _born (static: 0, total: 1)
+Orphan StringName: rivet_base>boss (static: 0, total: 1)
+Orphan StringName: patch_ticks (static: 0, total: 2)
+Orphan StringName: hit_class (static: 0, total: 1)
+Orphan StringName: madness_max (static: 0, total: 1)
+Orphan StringName: plasma_sword (static: 0, total: 5)
+Orphan StringName: pruned (static: 0, total: 1)
+Orphan StringName: CitySimNative (static: 0, total: 2)
+Orphan StringName: body_class (static: 0, total: 2)
+Orphan StringName: sprint_mps (static: 0, total: 1)
+Orphan StringName: _unseen_ticks (static: 0, total: 1)
+Orphan StringName: tuning (static: 0, total: 1)
+Orphan StringName: PlayerMelee (static: 0, total: 2)
+Orphan StringName: ArenaStage (static: 0, total: 2)
+Orphan StringName: blocked (static: 0, total: 41)
+Orphan StringName: kill_weapon (static: 0, total: 1)
+Orphan StringName: _master_seed (static: 0, total: 1)
+Orphan StringName: _events (static: 0, total: 6)
+Orphan StringName: reverse_max (static: 0, total: 1)
+Orphan StringName: Fighter (static: 0, total: 4)
+Orphan StringName: out_k (static: 0, total: 1)
+Orphan StringName: patches (static: 0, total: 1)
+Orphan StringName: TopDownMover (static: 0, total: 2)
+Orphan StringName: burn_char (static: 0, total: 1)
+Orphan StringName: _started (static: 0, total: 1)
+Orphan StringName: RivetCarry (static: 0, total: 2)
+Orphan StringName: power_gearbox (static: 0, total: 2)
+Orphan StringName: from_rivet (static: 0, total: 1)
+Orphan StringName: district_id (static: 0, total: 1)
+Orphan StringName: length_m (static: 0, total: 1)
+Orphan StringName: enemy_damage_scale (static: 0, total: 1)
+Orphan StringName: rounds (static: 0, total: 1)
+Orphan StringName: _sprint_actions (static: 0, total: 1)
+Orphan StringName: RefCounted (static: 1, total: 85)
+Orphan StringName: accel_mps2 (static: 0, total: 1)
+Orphan StringName: bloom_max_rad (static: 0, total: 1)
+Orphan StringName: route (static: 0, total: 1)
+Orphan StringName: MeleeShock (static: 0, total: 2)
+Orphan StringName: seed_value (static: 0, total: 1)
+Orphan StringName: ArenaClawCops (static: 0, total: 2)
+Orphan StringName: city_base (static: 0, total: 1)
+Orphan StringName: soul_gearbox_on (static: 0, total: 1)
+Orphan StringName: metal (static: 0, total: 2)
+Orphan StringName: fire (static: 0, total: 1)
+Orphan StringName: encounters (static: 0, total: 1)
+Orphan StringName: out_stains (static: 0, total: 1)
+Orphan StringName: range_m (static: 0, total: 3)
+Orphan StringName: thrown (static: 0, total: 6)
+Orphan StringName: roll_m (static: 0, total: 1)
+Orphan StringName: burn (static: 0, total: 5)
+Orphan StringName: _shots_before (static: 0, total: 1)
+Orphan StringName: burst_arcs (static: 0, total: 1)
+Orphan StringName: knockback_mps (static: 0, total: 1)
+Orphan StringName: combat (static: 0, total: 1)
+Orphan StringName: iframe_from (static: 0, total: 1)
+Orphan StringName: _quest (static: 0, total: 1)
+Orphan StringName: mini_nuke_vaporise (static: 0, total: 1)
+Orphan StringName: early (static: 0, total: 1)
+Orphan StringName: flash_ticks (static: 0, total: 2)
+Orphan StringName: hit_at (static: 0, total: 1)
+Orphan StringName: hauler (static: 0, total: 4)
+Orphan StringName: _by_weapon (static: 0, total: 1)
+Orphan StringName: plasma_sword_split (static: 0, total: 1)
+Orphan StringName: plasma_rifle (static: 0, total: 9)
+Orphan StringName: head (static: 0, total: 1)
+Orphan StringName: heat (static: 0, total: 1)
+Orphan StringName: robot>robot (static: 0, total: 1)
+Orphan StringName: _aim (static: 0, total: 1)
+Orphan StringName: blowback (static: 0, total: 1)
+Orphan StringName: CityResidency (static: 0, total: 2)
+Orphan StringName: charge (static: 0, total: 2)
+Orphan StringName: held (static: 0, total: 2)
+Orphan StringName: _art (static: 0, total: 1)
+Orphan StringName: crates_at (static: 0, total: 1)
+Orphan StringName: blast_ticks (static: 0, total: 1)
+Orphan StringName: BodyTable (static: 0, total: 2)
+Orphan StringName: bodies (static: 0, total: 1)
+Orphan StringName: enemy_flash_ticks (static: 0, total: 1)
+Orphan StringName: MeleeTable (static: 0, total: 2)
+Orphan StringName: buffered (static: 0, total: 1)
+Orphan StringName: _done (static: 0, total: 1)
+Orphan StringName: linger_ticks (static: 0, total: 1)
+Orphan StringName: _recovery_left (static: 0, total: 1)
+Orphan StringName: recovery (static: 0, total: 1)
+Orphan StringName: current (static: 0, total: 2)
+Orphan StringName: _cooldown (static: 0, total: 2)
+Orphan StringName: charge_damage (static: 0, total: 1)
+Orphan StringName: flee (static: 0, total: 1)
+Orphan StringName: drag (static: 0, total: 2)
+Orphan StringName: shooter_id (static: 0, total: 1)
+Orphan StringName: kills_now (static: 0, total: 1)
+Orphan StringName: stagger (static: 0, total: 2)
+Orphan StringName: WeaponPickups (static: 0, total: 2)
+Orphan StringName: robo-tazer (static: 0, total: 1)
+Orphan StringName: winds (static: 0, total: 1)
+Orphan StringName: _cam (static: 0, total: 1)
+Orphan StringName: _was_moving_stick (static: 0, total: 1)
+Orphan StringName: order (static: 0, total: 1)
+Orphan StringName: cash_phone (static: 0, total: 1)
+Orphan StringName: rivet_base (static: 0, total: 15)
+Orphan StringName: move_mult (static: 0, total: 2)
+Orphan StringName: _ctx (static: 0, total: 1)
+Orphan StringName: zone (static: 0, total: 1)
+Orphan StringName: kill_at (static: 0, total: 1)
+Orphan StringName: melee_ids (static: 0, total: 1)
+Orphan StringName: hand_cannon (static: 0, total: 8)
+Orphan StringName: CityGen (static: 0, total: 2)
+Orphan StringName: Marker (static: 0, total: 1)
+Orphan StringName: _chunks (static: 0, total: 2)
+Orphan StringName: kill_of (static: 0, total: 1)
+Orphan StringName: chain_hits (static: 0, total: 1)
+Orphan StringName: homing_shard_burst (static: 0, total: 1)
+Orphan StringName: steer_in_s (static: 0, total: 1)
+Orphan StringName: hit_rivet (static: 0, total: 1)
+Orphan StringName: r_min (static: 0, total: 1)
+Orphan StringName: track_through_lock (static: 0, total: 1)
+Orphan StringName: router (static: 0, total: 1)
+Orphan StringName: hit_dir (static: 0, total: 1)
+Orphan StringName: KerbDresser (static: 0, total: 2)
+Orphan StringName: dot_dps (static: 0, total: 1)
+Orphan StringName: Prop (static: 0, total: 1)
+Orphan StringName: struck (static: 0, total: 3)
+Orphan StringName: burst_gap_ticks (static: 0, total: 1)
+Orphan StringName: points (static: 0, total: 1)
+Orphan StringName: crates_burning (static: 0, total: 1)
+Orphan StringName: _seen (static: 0, total: 1)
+Orphan StringName: BrutalityHook (static: 0, total: 2)
+Orphan StringName: dens_ped (static: 0, total: 1)
+Orphan StringName: holding (static: 0, total: 1)
+Orphan StringName: rifle_drops (static: 0, total: 1)
+Orphan StringName: _press_tick (static: 0, total: 1)
+Orphan StringName: cone_deg (static: 0, total: 1)
+Orphan StringName: hat_kick_mps (static: 0, total: 1)
+Orphan StringName: pistol (static: 0, total: 7)
+Orphan StringName: origin (static: 0, total: 2)
+Orphan StringName: tazer_hits (static: 0, total: 1)
+Orphan StringName: hostiles (static: 0, total: 1)
+Orphan StringName: ignitions (static: 0, total: 1)
+Orphan StringName: cone_dot (static: 0, total: 2)
+Orphan StringName: hits (static: 0, total: 3)
+Orphan StringName: reload (static: 0, total: 1)
+Orphan StringName: katana_split (static: 0, total: 1)
+Orphan StringName: last_us (static: 0, total: 1)
+Orphan StringName: form (static: 0, total: 1)
+Orphan StringName: ArenaWalls (static: 0, total: 2)
+Orphan StringName: charge_ticks (static: 0, total: 1)
+Orphan StringName: drain_ticks (static: 0, total: 1)
+Orphan StringName: rise_ticks (static: 0, total: 1)
+Orphan StringName: follow (static: 0, total: 1)
+Orphan StringName: shot (static: 0, total: 3)
+Orphan StringName: Target (static: 0, total: 1)
+Orphan StringName: enabled (static: 0, total: 1)
+Orphan StringName: StageCells (static: 0, total: 2)
+Orphan StringName: squash (static: 0, total: 1)
+Orphan StringName: rig_kick (static: 0, total: 1)
+Orphan StringName: rules (static: 0, total: 1)
+Orphan StringName: _spawn_gap (static: 0, total: 1)
+Orphan StringName: _gen (static: 0, total: 2)
+Orphan StringName: sink (static: 0, total: 2)
+Orphan StringName: CitySimBackend (static: 0, total: 2)
+Orphan StringName: pieces (static: 0, total: 1)
+Orphan StringName: _phase_tick (static: 0, total: 1)
+Orphan StringName: _due_tick (static: 0, total: 1)
+Orphan StringName: actions (static: 0, total: 1)
+Orphan StringName: size (static: 0, total: 1)
+Orphan StringName: human>robot (static: 0, total: 1)
+Orphan StringName: BodyRule (static: 0, total: 2)
+Orphan StringName: since_end (static: 0, total: 1)
+Orphan StringName: shock (static: 0, total: 6)
+Orphan StringName: guard_tell (static: 0, total: 1)
+Orphan StringName: reload_ticks (static: 0, total: 1)
+Orphan StringName: Trigger (static: 0, total: 2)
+Orphan StringName: shots (static: 0, total: 2)
+Orphan StringName: shove (static: 0, total: 5)
+Orphan StringName: Grip (static: 0, total: 1)
+Orphan StringName: launch_mps (static: 0, total: 1)
+Orphan StringName: WorldContext (static: 0, total: 2)
+Orphan StringName: full_damage (static: 0, total: 1)
+Orphan StringName: patch_radius_m (static: 0, total: 1)
+Orphan StringName: charge_full (static: 0, total: 1)
+Orphan StringName: laid (static: 0, total: 1)
+Orphan StringName: deflect_m (static: 0, total: 1)
+Orphan StringName: turn_dps (static: 0, total: 1)
+Orphan StringName: lane (static: 0, total: 1)
+Orphan StringName: _streams (static: 0, total: 1)
+Orphan StringName: Mark (static: 0, total: 1)
+Orphan StringName: knocked_down (static: 0, total: 1)
+Orphan StringName: interact (static: 0, total: 2)
+Orphan StringName: picked (static: 0, total: 1)
+Orphan StringName: WorldSystem (static: 0, total: 2)
+Orphan StringName: rocket_launcher (static: 0, total: 12)
+Orphan StringName: chain_hops (static: 0, total: 3)
+Orphan StringName: pickup (static: 0, total: 2)
+Orphan StringName: hand_cannon_blowback (static: 0, total: 1)
+Orphan StringName: slip (static: 0, total: 1)
+Orphan StringName: aim_steps (static: 0, total: 1)
+Orphan StringName: speed_mps (static: 0, total: 3)
+Orphan StringName: slot (static: 0, total: 1)
+Orphan StringName: dot_ticks (static: 0, total: 1)
+Orphan StringName: human (static: 0, total: 19)
+Orphan StringName: armored (static: 0, total: 3)
+Orphan StringName: table (static: 0, total: 5)
+Orphan StringName: wait (static: 0, total: 1)
+Orphan StringName: target_body (static: 0, total: 1)
+Orphan StringName: walk (static: 0, total: 1)
+Orphan StringName: burn_dps (static: 0, total: 1)
+Orphan StringName: per_tick (static: 0, total: 1)
+Orphan StringName: interval_ticks (static: 0, total: 1)
+Orphan StringName: hidden_in (static: 0, total: 1)
+Orphan StringName: drops (static: 0, total: 1)
+Orphan StringName: wave (static: 0, total: 1)
+Orphan StringName: hold (static: 0, total: 2)
+Orphan StringName: target (static: 0, total: 1)
+Orphan StringName: hole (static: 0, total: 1)
+Orphan StringName: rivet_start (static: 0, total: 2)
+Orphan StringName: home (static: 0, total: 1)
+Orphan StringName: held_scale (static: 0, total: 2)
+Orphan StringName: switches (static: 0, total: 2)
+Orphan StringName: windup (static: 0, total: 1)
+Orphan StringName: driving (static: 0, total: 1)
+Orphan StringName: source (static: 0, total: 2)
+Orphan StringName: chain_radius_m (static: 0, total: 3)
+Orphan StringName: _lab (static: 0, total: 1)
+StringName: 897 unclaimed string names at exit.
+WARNING: 1 RID of type "CanvasItem" was leaked.
+WARNING: 584 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+ERROR: Cannot get path of node as it is not in a scene tree.
+ERROR: 95 resources still in use at exit.

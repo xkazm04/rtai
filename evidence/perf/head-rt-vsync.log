@@ -1,0 +1,33 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 57.8 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 4.4 ms
+[INFO] bench: HITCH 42.4 ms (process 4.1 flush 0.9 draw 37.2 pump 0.2) tick 7
+[INFO] arena: pit wave 1: 2 guards
+[INFO] bench: HITCH 41.7 ms (process 2.8 flush 0.6 draw 38.3 pump 0.1) tick 117
+[INFO] arena: pit wave 2: 3 guards
+[INFO] bench: HITCH 120.5 ms (process 6.2 flush 18.8 draw 1.9 pump 93.6) tick 754
+[INFO] showcase: reel beat pit_gun at tick 900
+[INFO] bench: HITCH 34.1 ms (process 2.2 flush 3.0 draw 27.1 pump 1.9) tick 905
+[INFO] react: death_bullet on 4, frame 1035
+[INFO] react: death_bullet on 3, frame 1506
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/head-rt-vsync.json {"frames":2096,"low1_fps":35.4871200977731,"over33_settled":3,"over50_settled":1,"p50_ms":16.673999786377,"p99_ms":20.1229991912842,"ticks":2093,"worst_ms":120.52799987793,"worst_settled_ms":120.52799987793}
+[INFO] arena: react: 2 wounds (2 on a shield), 2 deaths, 0 ducks
+[INFO] arena: crowd: 4 cowers (0 at a death), 2 trips, 0 deaths
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 584 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 95 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

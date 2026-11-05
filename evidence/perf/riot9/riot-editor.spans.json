@@ -1,0 +1,176 @@
+{
+  "flush_order": [
+    "flush: before the first queued call (engine work) 0.005",
+    "draw: MultiMeshInstance2D in light_layer.gd 0.011",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.004",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.004",
+    "draw: MultiMeshInstance2D in fx_system.gd 0.004",
+    "draw: world_markers.gd 0.121",
+    "draw: Line2D in cut_rig.gd 0.167"
+  ],
+  "frames": 5432,
+  "rows": [
+    {
+      "label": "city_view.gd",
+      "max_ms": 9.9,
+      "mean_ms": 0.965,
+      "nodes_last_scan": 1,
+      "p99_ms": 4.884
+    },
+    {
+      "label": "city_blood.gd",
+      "max_ms": 8.765,
+      "mean_ms": 0.432,
+      "nodes_last_scan": 1,
+      "p99_ms": 2.933
+    },
+    {
+      "label": "draw: Node2D in corpse_stains.gd",
+      "max_ms": 24.261,
+      "mean_ms": 0.173,
+      "nodes_last_scan": 0,
+      "p99_ms": 4.583
+    },
+    {
+      "label": "world.gd",
+      "max_ms": 14.034,
+      "mean_ms": 0.108,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.596
+    },
+    {
+      "label": "draw: world_markers.gd",
+      "max_ms": 5.128,
+      "mean_ms": 0.061,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.278
+    },
+    {
+      "label": "draw: blood_fx.gd",
+      "max_ms": 9.059,
+      "mean_ms": 0.058,
+      "nodes_last_scan": 0,
+      "p99_ms": 1.491
+    },
+    {
+      "label": "draw: Node2D in blood_fx.gd",
+      "max_ms": 4.203,
+      "mean_ms": 0.043,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.777
+    },
+    {
+      "label": "city_bench.gd",
+      "max_ms": 10.89,
+      "mean_ms": 0.026,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.088
+    },
+    {
+      "label": "draw: Sprite2D in cut_rig.gd",
+      "max_ms": 2.34,
+      "mean_ms": 0.026,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.25
+    },
+    {
+      "label": "draw: Line2D in cut_rig.gd",
+      "max_ms": 2.258,
+      "mean_ms": 0.014,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.186
+    },
+    {
+      "label": "flush: before the first queued call (engine work)",
+      "max_ms": 2.039,
+      "mean_ms": 0.007,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.015
+    },
+    {
+      "label": "save.gd",
+      "max_ms": 0.252,
+      "mean_ms": 0.004,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.013
+    },
+    {
+      "label": "Camera2D",
+      "max_ms": 1.978,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.006
+    },
+    {
+      "label": "platform.gd",
+      "max_ms": 0.178,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 1,
+      "p99_ms": 0.009
+    },
+    {
+      "label": "draw: MultiMeshInstance2D in fx_system.gd",
+      "max_ms": 0.158,
+      "mean_ms": 0.003,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.011
+    },
+    {
+      "label": "draw: Sprite2D in Node2D",
+      "max_ms": 0.294,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.133
+    },
+    {
+      "label": "draw: Sprite2D in Sprite2D",
+      "max_ms": 0.575,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.027
+    },
+    {
+      "label": "draw: MultiMeshInstance2D in light_layer.gd",
+      "max_ms": 2.025,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.005
+    },
+    {
+      "label": "(new since last scan)",
+      "max_ms": 0.375,
+      "mean_ms": 0.002,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.004
+    },
+    {
+      "label": "draw: cut_rig.gd",
+      "max_ms": 0.085,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.004
+    },
+    {
+      "label": "draw: Node2D in cut_rig.gd",
+      "max_ms": 0.071,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.002
+    },
+    {
+      "label": "draw: Node2D in Node2D",
+      "max_ms": 0.08,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.007
+    },
+    {
+      "label": "draw: muzzle_pop.gd",
+      "max_ms": 0.618,
+      "mean_ms": 0.0,
+      "nodes_last_scan": 0,
+      "p99_ms": 0.0
+    }
+  ],
+  "schema": "gtai.node-spans/1"
+}

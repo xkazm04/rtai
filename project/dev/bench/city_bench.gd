@@ -4,9 +4,19 @@ extends Node
 ## only) or as an exported build (windowed, vsync off, uncapped). Writes gtai.bench/1 JSON.
 ## Usage: <godot|exe> [--headless --fixed-fps 60] [--path project] res://dev/bench/city_bench.tscn
 ##        -- --scenario=drive|riot --secs=60 --zoom=0.4 --out=<json path> [--fx-feed=off]
+##        [--blood=noir|ink] [--spans=<json>] (perf-city: NodeSpans' per-node cost, slows
+##        the frame: profile only)
 
 const KNOWN_FLAGS: PackedStringArray = [
-	"--scenario", "--secs", "--zoom", "--out", "--label", "--vsync", "--fx-feed"
+	"--scenario",
+	"--secs",
+	"--zoom",
+	"--out",
+	"--label",
+	"--vsync",
+	"--fx-feed",
+	"--spans",
+	"--blood"
 ]
 const VSYNC: Dictionary[String, DisplayServer.VSyncMode] = {
 	"disabled": DisplayServer.VSYNC_DISABLED,
@@ -23,7 +33,9 @@ var _args: Dictionary[String, String] = {
 	"--out": "user://bench.json",
 	"--label": "",
 	"--vsync": "disabled",
-	"--fx-feed": "on"
+	"--fx-feed": "on",
+	"--spans": "",
+	"--blood": "",  # read by CombatBlood (LaunchArgs): ink = the riot without the noir blood
 }
 var _world: World = null
 var _city: CitySystem = null
@@ -49,6 +61,7 @@ func _ready() -> void:
 			_args["--vsync"], DisplayServer.VSYNC_DISABLED
 		)
 		DisplayServer.window_set_vsync_mode(mode)
+		RenderingServer.viewport_set_measure_render_time(get_viewport().get_viewport_rid(), true)
 	var world: World = World.new()
 	world.start(Events, Data, MASTER_SEED)
 	_city = CitySystem.new(true)
@@ -68,6 +81,8 @@ func _ready() -> void:
 	printerr("city_bench: prewarm %.1f ms" % (prewarm_us / 1000.0))
 	add_child(world)
 	_world = world
+	if _args["--spans"] != "":
+		NodeSpans.attach(self, ArenaArgs.parse(["--spans=" + _args["--spans"]]))
 	_last_us = Time.get_ticks_usec()
 
 
@@ -84,6 +99,9 @@ func _process(_delta: float) -> void:
 	var counts: PackedInt32Array = _city.sim.get_counters()
 	var live: int = counts[0] + counts[1] + counts[2] + counts[3]
 	_stats.add(ms, _city.take_stats(), swapped, Vector2i(live, _view.visible_actors))
+	var vp: RID = get_viewport().get_viewport_rid()
+	var dc: int = int(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+	_stats.add_render(dc, RenderingServer.viewport_get_measured_render_time_cpu(vp))
 	var stepped: int = _characters.rigs.ticks_stepped
 	_stats.add_rig(_characters.rigs.last_us, stepped - _rig_ticks, _characters.rigs.full_count())
 	_rig_ticks = stepped

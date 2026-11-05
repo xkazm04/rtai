@@ -31,6 +31,7 @@ function prepare(headless) {
   const bake = godot(['--headless', '--path', 'project', '-s', 'res://dev/bake_city.gd']);
   if (bake.status !== 0) return { error: `bake failed: ${bake.out.slice(-300)}` };
   if (headless) return { mode: 'headless' };
+  mkdirSync(join(ROOT, 'build', 'export', 'windows-bench'), { recursive: true }); // Godot will not create it
   const exp = godot(['--headless', '--path', 'project', '--export-release', 'windows-bench',
     '../build/export/windows-bench/RTAI-bench.exe']);
   if (exp.status !== 0 || !existsSync(EXE)) return { error: `export failed: ${exp.out.slice(-300)}` };
@@ -50,7 +51,8 @@ function runScenario(sc, mode, secs, outDir) {
 
 const DETAIL = ['p99CpuMs', 'low1Fps', 'worstSwapMs', 'worstFrameMs', 'visibleAvg', 'visibleMax',
   'actorsAvg', 'simStepMsPerTick', 'streamSpawnMsPerTick', 'hitches25', 'hitchesOver50', 'over50.unexplained',
-  'avgFrameMs', 'rigMsP50', 'rigMsP99', 'rigMsPerTick', 'fullRigsMax', 'bloodUsPerFrame'];
+  'avgFrameMs', 'rigMsP50', 'rigMsP99', 'rigMsPerTick', 'fullRigsMax', 'bloodUsPerFrame',
+  'drawCallsAvg', 'renderCpuMsAvg', 'renderCpuMsP99'];
 const round3 = (v) => Math.round(v * 1000) / 1000;
 
 /** Worst case over every run and scenario, plus per-scenario detail (worst over runs). */

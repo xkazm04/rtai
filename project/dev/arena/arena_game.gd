@@ -62,6 +62,7 @@ func _ready() -> void:
 	ReelCaption.attach(layer, session.stage, view)  # the showcase director cut's title card
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
+	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
 	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks

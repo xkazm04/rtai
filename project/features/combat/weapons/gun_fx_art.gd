@@ -20,9 +20,23 @@ const RING_TICKS: int = 9
 ## round stopped on the ground or metal: on a body it would print over the corpse's chest (the
 ## body's mark is its blood; the pop still bursts there in draw_over).
 ## `shells` false = another art lane draws the brass; `mags` false = it draws the magazine too.
+## `ground` false = FxGround keeps the scorch and scuffs (perf-city), only the bits draw here.
 static func draw_under(
-	ci: CanvasItem, fx: GunFx, tick: int, shells: bool = true, mags: bool = true
+	ci: CanvasItem,
+	fx: GunFx,
+	tick: int,
+	shells: bool = true,
+	mags: bool = true,
+	ground: bool = true
 ) -> void:
+	if ground:
+		_ground(ci, fx, tick)
+	for i: int in fx.bits.size():
+		if mags if fx.bits[i].w < 0.0 else shells:
+			GunFxMarks.bit(ci, fx, i)
+
+
+static func _ground(ci: CanvasItem, fx: GunFx, tick: int) -> void:
 	fx.scorch.draw(ci, tick)
 	for i: int in fx.impacts.size():
 		var im: Vector4 = fx.impacts[i]
@@ -30,9 +44,6 @@ static func draw_under(
 			GunFxMarks.scorch(ci, Vector2(im.x, im.y), tick - int(im.w))
 		elif int(im.z) == GunFx.Hit.GROUND:
 			GunFxMarks.scuff(ci, Vector2(im.x, im.y), fx.impact_dir[i], tick - int(im.w), int(im.w))
-	for i: int in fx.bits.size():
-		if mags if fx.bits[i].w < 0.0 else shells:
-			GunFxMarks.bit(ci, fx, i)
 
 
 ## `muzzle` false = Rivet's flash is drawn by another art lane (smoke, impacts stay).

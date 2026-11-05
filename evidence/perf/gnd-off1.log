@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] rivet_arsenal: arena: Rivet carries [&"pistol", &"plasma_rifle", &"rocket_launcher", &"molotov"]
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 128.8 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 10.0 ms
+[INFO] bench: HITCH 83.9 ms (process 6.9 flush 13.6 draw 63.1 pump 0.3) tick 7
+[INFO] arena: pit wave 1: 2 guards
+[INFO] arena: pit wave 2: 3 guards
+[INFO] showcase: reel beat pit_gun at tick 900
+[INFO] react: death_bullet on 4, frame 1036
+[INFO] bench: fight frames -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/gnd-off1.json {"frames":1497,"low1_fps":48.8889177336686,"over33_settled":0,"over50_settled":0,"p50_ms":16.6709995269775,"p99_ms":19.117000579834,"ticks":1493,"worst_ms":83.8899993896484,"worst_settled_ms":26.7789993286133}
+[INFO] arena: react: 2 wounds (2 on a shield), 1 deaths, 0 ducks
+[INFO] arena: crowd: 4 cowers (0 at a death), 2 trips, 0 deaths
+[INFO] bench: node spans -> C:/Users/kazda/kiro/gtai-wt/d6-perf-city/evidence/perf/gnd-off1.spans.json (1497 frames, 44 rows)
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 580 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 95 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
