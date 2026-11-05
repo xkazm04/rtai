@@ -302,6 +302,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "kerf_line_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
         "move_mps": {
           "maximum": 20,
           "minimum": 0,

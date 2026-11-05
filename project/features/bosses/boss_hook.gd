@@ -24,6 +24,8 @@ var rolled: Dictionary[StringName, int] = {}
 var dealt: float = 0.0
 ## New stuns on the boss body, and those that dazed it (telemetry: Ohm's bolt on the fight).
 var stuns: int = 0
+## Kerf's blink line on the boss script's bodies (bosses.json kerf_line_m).
+var kerf_line: BossKerfLine = BossKerfLine.new()
 var dazes: int = 0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
@@ -81,6 +83,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_clear_claw_cops(stage)
 		_park(stage, fight.spec.arena)  # the car service is attached after the stage's setup
 	BossAdds.route(fight, _last_hp, _ghost_k(stage))
+	@warning_ignore("return_value_discarded")
+	kerf_line.step(stage, fight)
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
@@ -197,6 +201,7 @@ func telemetry() -> Dictionary:
 		"rolled": rolled.duplicate(),
 		"dealt": dealt,
 		"stuns": stuns,
+		"kerf_line_cuts": kerf_line.cuts,
 		"dazes": dazes,
 		"adds_spawned": adds.fights.size(),
 		"adds_tries": adds.tries,

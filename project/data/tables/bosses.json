@@ -354,6 +354,7 @@
       },
       "doc": "Act 2: Servo, the courier-hub robot whose back is a launch rack of delivery drones (targets-2026-11-05-bosses/img/boss_servo.jpg). Moveset: docs/bosses/servo.md. The drones, parcels and rack are his own (features/bosses/servo/, data/tables/servo.json).",
       "hp": 220,
+      "kerf_line_m": 0.6,
       "move_mps": 2,
       "phases": [
         {
