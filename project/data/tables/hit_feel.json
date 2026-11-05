@@ -91,6 +91,66 @@
       "reaction": "flinch",
       "shake": "hit",
       "stagger_ticks": 12
+    },
+    {
+      "doc": "Melee (n7-melee REQUEST 1): the combo finisher, a katana or sword cut: a longer stop and a bigger kick than a jab.",
+      "flash_ticks": 8,
+      "hitstop": "melee_hit",
+      "id": "melee_heavy",
+      "kick_px": 4,
+      "kick_ticks": 9,
+      "knockback_scale": 1.2,
+      "reaction": "stagger",
+      "shake": "hit",
+      "stagger_ticks": 20
+    },
+    {
+      "doc": "Ghosts (n7-melee REQUEST 1): the Tonnage press or a boss slam: the long stop, the explosion shake, a radial kick per victim (strength by distance).",
+      "flash_ticks": 10,
+      "hitstop": "boss_hit",
+      "id": "slam",
+      "kick_px": 6,
+      "kick_ticks": 14,
+      "knockback_scale": 1.5,
+      "reaction": "knockdown",
+      "shake": "explosion",
+      "stagger_ticks": 60
+    },
+    {
+      "doc": "Ghosts (n7-melee REQUEST 1): a body ram (Gearbox, a charging boss): the crash shake, strength by speed.",
+      "flash_ticks": 8,
+      "hitstop": "melee_hit",
+      "id": "ram",
+      "kick_px": 5,
+      "kick_ticks": 10,
+      "knockback_scale": 1.5,
+      "reaction": "knockdown",
+      "shake": "crash",
+      "stagger_ticks": 40
+    },
+    {
+      "doc": "Ghosts (n7-melee REQUEST 1): one Kerf cut in a chain: a 2-tick stop and no shake, so the chain reads cut by cut.",
+      "flash_ticks": 4,
+      "hitstop": "slice_hit",
+      "id": "slice",
+      "kick_px": 1.5,
+      "kick_ticks": 5,
+      "knockback_scale": 0.5,
+      "reaction": "flinch",
+      "shake": "",
+      "stagger_ticks": 8
+    },
+    {
+      "doc": "Ghosts (n7-melee REQUEST 1): an Ohm arc past its first victim: the flash and a small kick only (the first victim takes `shock`).",
+      "flash_ticks": 4,
+      "hitstop": "",
+      "id": "chain",
+      "kick_px": 1,
+      "kick_ticks": 4,
+      "knockback_scale": 0,
+      "reaction": "none",
+      "shake": "",
+      "stagger_ticks": 0
     }
   ],
   "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6). Lane n7-ranged: kick_px / kick_ticks are a directional camera kick along the hit (screen px at any zoom, easing back over the ticks; FeelCam), kill_kick_scale makes a kill kick harder, `weapons` overrides a class's hitstop / shake / kick per weapon id, and `cap` is the restraint (FeelBudget). --feel=off turns every camera effect of a hit off (before clips).",

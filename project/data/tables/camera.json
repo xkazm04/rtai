@@ -17,6 +17,10 @@
     {
       "id": "rivet_hit",
       "ticks": 3
+    },
+    {
+      "id": "slice_hit",
+      "ticks": 2
     }
   ],
   "look_ahead_ease": 0.06,
