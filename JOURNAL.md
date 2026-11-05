@@ -756,3 +756,38 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals.
 - Registry rule applied: motion-quality-gating (judge per frame on the live path at 32 and 48;
   the fix sized against what competes in the same frame, the cop's flash, not in isolation);
   realtime-combat-semantics (the shooter's own action must read before its consequence).
+
+### FYI -> n7-melee (00:02): a new feel-layer commit to merge
+- `d79c5278` (hit_feel.json `weapons` row `pistol` with the new optional field `muzzle_k`, the
+  schema field, `HitFeel.muzzle_k`, `WeaponFxIgnite.muzzle_k`, one line in `WeaponFxArt.muzzle`,
+  `test_muzzle_k.gd`). In hit_feel.json the pistol row sorts after mini_nuke, away from your rows
+  (chainsaw ... electro_baton). Any melee weapon that draws a muzzle cell can take a `muzzle_k`.
+- Your `7ce7b33d` (stun_crowd) closes your REQUEST 4; I build nothing on those views.
+
+### GATE 00:10: both director reels with `--loadout=pistol` on `d79c5278`
+- Pit and city block (`--arena=city`): 19/19 chapters each, every one fully down (14x 1/1, 2x 2/2,
+  3x 4/4), 0 SCRIPT ERROR (`evidence/ranged/it7-reel-{director,city}-d79c5278.log`; headless,
+  run in parallel by `scratch/ranged/reels.sh`, my own PIDs stopped after electro_chain's line).
+
+NEXT (iteration 8):
+1. Gates on head with docs committed first and nothing touched during the run:
+   `GODOT_BIN=... node tools/evidence/run.mjs --no-bench` (lint, unit, scenarios, parity, selftest).
+2. Gloria's flash: it draws the same `flash_pistol` cell (weapon_art.json gloria muzzle_fx), so it
+   is the same 15 px speck, and Gloria is quest 1's sidearm. Film `--weapon=gloria` lone at 32
+   (`--reach=6`), then try `muzzle_k` 1.6 (maybe 1.8: the heavier sidearm) with the same A/B; then
+   look at quest 1 Dock 9 at 32 px/m (StageGuns uses Gloria's row, so the change reaches quest 1).
+3. Machine pistol muzzle (audit row 12): film first; at about 10 rounds a second a bigger cell
+   every round may be noise; try 1.2 only if a single round reads as nothing.
+4. Gatling spin-up at 48 px/m: judge by eye (measured only so far).
+5. City combined clip retake (`--cam=fight`, the whole nuke blast), now with the pistol flash,
+   flamer flare and the throw twist.
+6. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
+   `build/export/windows/RTAI.exe`; REPORT command lines + befores (`--feel=off`,
+   `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--silent`, `--shard-pop=12`).
+7. Reels: `scratch/ranged/reels.sh <tag>` runs pit + city director reels headless in parallel and
+   stops each after electro_chain's line (about 8 min contended).
+
+STOP 00:11 iteration 7. Code commit: `d79c5278` (pistol muzzle_k 1.6, reads at 32 px/m). Gates on
+it: unit 1145/1145, lint 13/13, pit + city reels 19/19 fully down. Closed without code: NEXT 1 (the
+ray kill is the approved dissolve), REQUEST 4 (melee's `7ce7b33d`). Scenarios/parity not re-run
+this iteration (NEXT 1 of it8); the change is view only (WeaponFxArt draw scale, no sim read).
