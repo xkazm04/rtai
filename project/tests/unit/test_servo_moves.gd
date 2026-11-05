@@ -62,7 +62,7 @@ func test_phase_three_breaks_a_wing() -> void:
 	var f: BossFight = _servo(7)
 	f.start(2)
 	var m: ServoMoves = f.moves as ServoMoves
-	assert_eq(m.swarm.rack.count(ServoRack.Cell.BROKEN), 6)
+	assert_eq(m.swarm.rack.count(ServoRack.Cell.BROKEN), 9)
 	assert_eq(m.swarm.phase, 3)
 
 

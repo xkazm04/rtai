@@ -21,8 +21,9 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   muted orange-brown** on the rack ends and pads (not vermilion: vermilion is reserved for danger,
   so it appears only on the scanner beam, the drop markers and the kamikaze drones' tells).
 - Layers (depth order, top-down): legs (lowest) < pads + arms < belly + head < rack wings
-  (top) < drones docked in the rack cells (the rack is its own animated layer: each of the 12
-  cells shows a docked drone, empty after launch, refilled during the dock window).
+  (top) < drones docked in the rack cells (the rack is its own animated layer: each of the 18
+  cells, 3 rows of 6 like the sheet's wings since iteration 4, shows a docked drone, empty after
+  launch, refilled during the dock window; `servo.json rack.rows` 2 / `cells` 12 = the it3 rack).
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.

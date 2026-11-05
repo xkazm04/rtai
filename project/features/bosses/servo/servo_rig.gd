@@ -118,12 +118,23 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)
 		draw_texture(wing, -wing.get_size() * 0.5, tint)
+		_extra_rows(wing, tint)
 	draw_set_transform(Vector2.ZERO)
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
 			draw_circle(rack.cell_pos(i) * px, 0.3 * px, bay)
+
+
+## The wing art is two bay rows deep (its +y faces forward); each further rack row repeats its
+## back row (the texture's top half) one row further back, so the bays sit on rack.cell_pos.
+func _extra_rows(wing: Texture2D, tint: Color) -> void:
+	var sz: Vector2 = wing.get_size()
+	var row_px: float = sz.y * 0.5
+	for r: int in range(2, rack.rows()):
+		var dst: Rect2 = Rect2(-sz.x * 0.5, -sz.y * 0.5 - row_px * (r - 1), sz.x, row_px)
+		draw_texture_rect_region(wing, dst, Rect2(0.0, 0.0, sz.x, row_px), tint)
 
 
 func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> void:

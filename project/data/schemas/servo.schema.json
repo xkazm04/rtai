@@ -287,12 +287,18 @@
           "maximum": 3,
           "minimum": 0,
           "type": "number"
+        },
+        "rows": {
+          "maximum": 4,
+          "minimum": 1,
+          "type": "integer"
         }
       },
       "required": [
         "cell_dx_m",
         "cells",
-        "row_dy_m"
+        "row_dy_m",
+        "rows"
       ],
       "type": "object"
     },

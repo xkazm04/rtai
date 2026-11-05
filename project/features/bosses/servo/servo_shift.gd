@@ -95,7 +95,7 @@ func _burst(c: CanvasItem, rack: ServoRack, dt: int) -> void:
 
 ## The blown wing's centre: the mean of ServoRack.break_wing's cells.
 static func _socket(rack: ServoRack) -> Vector2:
-	var per_row: int = maxi(ceili(rack.state.size() * 0.5), 1)
+	var per_row: int = rack.cols()
 	var sum: Vector2 = Vector2.ZERO
 	var n: int = 0
 	for i: int in rack.state.size():

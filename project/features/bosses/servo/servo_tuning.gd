@@ -54,6 +54,8 @@ var belt_to: Vector2 = Vector2.ZERO
 var belt_w_m: float = 1.3
 var belt_mps: float = 1.5
 var cells: int = 12
+## Rows of cells across the back (the target sheet's wings are 3 bays deep).
+var rows: int = 2
 var cell_dx_m: float = 0.9
 var row_dy_m: float = 0.5
 var phases: Array[Phase] = []
@@ -90,6 +92,7 @@ static func from_table(t: DataTable) -> ServoTuning:
 	_read_depot(t, s)
 	var r: Dictionary = t.object(t.raw, "rack")
 	s.cells = t.integer(r, "cells")
+	s.rows = t.integer(r, "rows")
 	s.cell_dx_m = t.num(r, "cell_dx_m")
 	s.row_dy_m = t.num(r, "row_dy_m")
 	for row: Variant in t.array(t.raw, "phases"):

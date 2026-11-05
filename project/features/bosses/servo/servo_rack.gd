@@ -1,6 +1,6 @@
 class_name ServoRack
 extends RefCounted
-## The launch rack across Servo's back: `cells` docking cells in two rows across the body. A cell
+## The launch rack across Servo's back: `cells` docking cells in `rows` rows across the body. A cell
 ## is FULL (a drone docked, drawn in it), OUT (its drone is flying), REFILL (its drone died; a new
 ## one is loaded from inside the hub after refill_ticks) or BROKEN (phase 3: the wing blew off).
 ## The rig's rack layer draws straight from `state`.
@@ -25,11 +25,11 @@ func setup(tuning: ServoTuning) -> void:
 
 
 ## Where cell `i` sits on the ground: columns run across the back (perpendicular to facing),
-## the two rows a little behind the body.
+## the rows behind the body, row_dy_m apart.
 func cell_pos(i: int) -> Vector2:
-	var per_row: int = maxi(ceili(state.size() * 0.5), 1)
+	var per_row: int = cols()
 	var col: int = i % per_row
-	var row: int = 1 if i >= per_row else 0
+	var row: int = floori(float(i) / per_row)
 	var across: float = (col - (per_row - 1) * 0.5) * _tuning.cell_dx_m
 	var back: float = -0.4 - row * _tuning.row_dy_m
 	var fwd: Vector2 = Vector2.from_angle(facing)
@@ -39,7 +39,7 @@ func cell_pos(i: int) -> Vector2:
 
 ## The next full cell, outermost columns first (the wings empty from the tips in), or -1.
 func take() -> int:
-	var per_row: int = maxi(ceili(state.size() * 0.5), 1)
+	var per_row: int = cols()
 	var best: int = -1
 	var best_out: float = -1.0
 	for i: int in state.size():
@@ -67,7 +67,7 @@ func lost(i: int) -> void:
 
 ## Phase 3: one wing (the first half of every row) blows off; its cells never refill.
 func break_wing() -> void:
-	var per_row: int = maxi(ceili(state.size() * 0.5), 1)
+	var per_row: int = cols()
 	for i: int in state.size():
 		if (i % per_row) < per_row * 0.5 and state[i] != Cell.OUT:
 			state[i] = Cell.BROKEN
@@ -79,6 +79,15 @@ func step() -> void:
 			_refill_left[i] -= 1
 			if _refill_left[i] <= 0:
 				state[i] = Cell.FULL
+
+
+## Rows of cells (servo.json rack.rows; 2 before the target pass) and cells per row.
+func rows() -> int:
+	return maxi(_tuning.rows, 1) if _tuning != null else 2
+
+
+func cols() -> int:
+	return maxi(ceili(state.size() / float(rows())), 1)
 
 
 func count(kind: int) -> int:

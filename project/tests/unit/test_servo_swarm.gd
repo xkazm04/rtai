@@ -21,7 +21,18 @@ func test_table_reads_clean() -> void:
 	var t: ServoTuning = ServoTuning.shipped()
 	assert_eq(t.errors, [] as Array[String])
 	assert_eq(t.phases.size(), 3)
-	assert_eq(t.cells, 12)
+	assert_eq(t.cells, 18)
+	assert_eq(t.rows, 3, "the target's wings are 3 bays deep")
+
+
+func test_three_rows_sit_one_row_dy_apart_and_one_wing_breaks() -> void:
+	var t: ServoTuning = ServoTuning.shipped()
+	var r: ServoRack = ServoRack.new()
+	r.setup(t)
+	assert_eq(r.cols(), 6)
+	assert_almost_eq(r.cell_pos(0).x - r.cell_pos(12).x, 2.0 * t.row_dy_m, 0.001)
+	r.break_wing()
+	assert_eq(r.count(ServoRack.Cell.BROKEN), 9, "half of every row")
 	assert_true(t.ring_from_launch, "the shipped default: rings from the launch (owner call)")
 
 
@@ -41,7 +52,7 @@ func test_wave_drops_on_its_rings_then_docks() -> void:
 	assert_gte(first_land, t.launch_ticks + t.hover_ticks + t.fall_ticks - 1)
 	assert_eq(s.parcels.landed_total, 3)
 	assert_eq(s.alive(), 0, "every drone flew home and docked")
-	assert_eq(s.rack.count(ServoRack.Cell.FULL), 12)
+	assert_eq(s.rack.count(ServoRack.Cell.FULL), 18)
 	for c: ServoParcels.Parcel in s.parcels.crates:
 		assert_true(goals.has(c.pos), "a crate lands exactly on its drop ring")
 
