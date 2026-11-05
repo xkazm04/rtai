@@ -429,3 +429,46 @@ Session state 02:54: head = this commit, tree clean, no Godot process of mine ru
   rim; re-film the arena clip if a slot frees).
   NEXT for iteration 5 is above (items 3b and 3c are now done: start at 3a, Dent's 32 px/m read).
 Session state 02:59: head = this commit, tree clean, no Godot process of mine running, no lock held.
+
+## Iteration 5 (02:58-03:58, BUILD)
+- 02:59 read JOURNAL, git log, ghost-powers JOURNAL: REQUEST 5 (KerfView instances KerfRig: keep FAST_MPS,
+  PX_PER_M, speed_mps, advance(dt): kept, unchanged) and REQUEST 6 (Ohm's electrode anchors moved in our
+  ghost_forms.json to OhmRig's copper fingers (0.52, -0.17)/(0.52, -0.07)). REPLY to 6: GUARD_HAND not moved this
+  session; if it moves, the anchors move in the same commit.
+- MERGE n5-cast b16becfb (D5 ped heads, bald head, hoodie cap size) and n6-ghost-powers d3ca8581 (Ohm prongs on the
+  copper fingers, city proofs); JOURNAL/REPORT keep ours; lint 13/13 both; one `--import` after.
+- 03:02 NEXT 3a answered: Dent rides Rivet's CutRig, which builds RigBuild's cream halos (HALO_BODY/ARM/LEG) and scales
+  them in `_on_view` like the cops'. Looked at the city at 32 px/m (`M:frames/dent-city-halo-32ppm-x3.png`, x3): the
+  tan dummy has the cream edge on the teal pool, arms and disc read beside the cops. No change needed.
+
+### The voice moments (brief item: ghost apparitions), started 03:04
+- Registry rules applied: `depth-ordered-layered-art` (the apparition's parts keep their rig's own z order: the reason
+  for per-part materials instead of a group), `shader-budget-authoring` (one tiny unshaded canvas shader, two
+  materials shared by every part, drawn only while a voice speaks), `motion-quality-gating` (judged in motion at 32
+  and 64 px/m, envelope unit-tested).
+- GhostApparition (render-only, in GhostFormView above the rigs): the speaking ghost's own rig copy (TonnageRig,
+  DentBody, KerfRig, OhmRig) at Rivet's left shoulder, turned in; teal tether to Rivet; 18-tick flicker-in, 150
+  held, 36 out; Tonnage at 0.6 scale. Cue: `stage.events().whispers_spiked` while Rivet is in base (the selected
+  ghost speaks); dev `--apparition` cycles the four every 240 ticks; `--bot=forms --form=voices` just walks.
+- FRICTION/FINDING first try was a CanvasGroup washing the group teal: Kerf/Ohm/Tonnage went teal but Dent drew in
+  full colour. Cause: CutRig parts carry their own z_index (RigBuild, RigArm), and z-indexed children escape a
+  CanvasGroup. Fix: every part of the copies draws through `ghost_apparition.gdshader` (ink -> deep teal, paper and
+  steel -> pale teal, the sticker rims -> a pale-teal glow edge, scan bands), alpha by the node's modulate (0.8,
+  so overlaps barely double). Then the teal ramp lifted (deep 0.04/0.27/0.28, smoothstep 0.04..0.62): the first
+  ramp read as dark blobs at 32.
+- MILESTONE 633fb9d7 GhostApparition + shader + test_ghost_apparition 4/4 + DECISION (decisions.md). Unit suite on
+  that tree 979/1: the 1 is the known `test_noir_shadows` flake (alone: 2/2 pass). Lint 13/13.
+- PROOF (0 SCRIPT ERROR each): `M:ghost-voices-arena-64ppm.mp4` (17 s, the four in turn), `M:ghost-voices-city-32ppm.mp4`
+  (17 s, `--arena=city`), `M:frames/voices-four-64ppm-keys.png`, before/after at the same tick
+  `M:frames/voice-dent-ab-64ppm.png`. Judged: at 64 each ghost is its own printed body in teal (press, dummy with
+  the target disc, the cutter's claws, the dome); at 32 on asphalt all four hold as teal figures beside Rivet, the
+  tether is a hairline (fine: it is a hint, not a beam); Ohm's is the smallest read.
+- frames.json (15): + the three voice entries; dent-gait A/B, the Tonnage city tour and the Kerf slow morph are now
+  named in their related entries' notes (files kept).
+- 03:20 COMBAT CHECK director reel on 633fb9d7 + the voice log line (`--quit-after 24000` headless, 2 m 48 s):
+  16/16 chapters down (claw_combo 2/2 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-iter5.log`). No whisper
+  fired in the reel (no "ghost voice" line): the reel never cues the voices, so it neither shows nor tests them.
+- test_ghost_apparition 5/5 (+ the whisper cue: in base the selected ghost speaks, in a form none). A Log.info
+  line "ghost voice: <id> beside Rivet" on each cue, for headless checks.
+- REPORT.md: section 6 (the voices), the open point (not yet filmed on a real quest 1 whisper), two Calls (fully
+  teal forms: the apparitions show that look on the same bodies; voices in quest 1 before the ghosts are met).

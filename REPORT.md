@@ -68,6 +68,21 @@ The owner's order for this lane: "create these characters, animate transformatio
   Tonnage in the city: `M:frames/tonnage-city-z-ab-32ppm-x2.png`.
 - Tonnage re-filmed on the live path: `M:tonnage-morph-64ppm-slow3x.mp4`, `M:tonnage-tour-city-32ppm.mp4`.
 
+### 6. The voice moments (iteration 5): a teal apparition beside Rivet
+- **GhostApparition** (`features/souls/ghost_apparition.gd`, DECISION): when a ghost speaks, its own body (a copy
+  of its form rig) appears at Rivet's left shoulder, turned in to him and tethered by a teal hairline. Every part
+  draws through `ghost_apparition.gdshader`: ink becomes deep teal, paper and steel pale teal, the sticker rims
+  a teal glow edge, with faint scan bands. It flickers in (0.3 s), holds 2.5 s and fades (0.6 s). Tonnage's is
+  drawn at 0.6 scale, as a voice rather than the 3x body.
+- The cue is the stage's `whispers_spiked` (quest 1's whisper beats, Kilohm's line, the tazer hit, the fire)
+  while Rivet is in base; the selected ghost speaks. In a form the ghost is Rivet, so nothing shows. The dev
+  flag `--apparition` cycles the four every 4 s.
+- Proof: `M:frames/voices-four-64ppm-keys.png` and `M:ghost-voices-arena-64ppm.mp4` (all four in turn),
+  `M:ghost-voices-city-32ppm.mp4` (they hold on asphalt at 32), and the before/after at the same tick,
+  `M:frames/voice-dent-ab-64ppm.png`. Unit test_ghost_apparition (envelope, one body, the whisper cue).
+- Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
+  was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
+
 ### Gates (iteration 4)
 - On 25b040bb: lint 13/13; unit 974/0 (`E:unit-iter4.log`); scenarios 47/0 (`E:scenarios-iter4.log`).
 - On 70a6297a: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter4.log`).
@@ -78,17 +93,21 @@ The owner's order for this lane: "create these characters, animate transformatio
 - On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
 
 ## What does not work / is open
-- Dent at 32 px/m has not yet been judged beside the rimmed Kerf and Ohm. He rides Rivet's CutRig, which has its
-  own halo; check it.
-- Ghost apparitions for the voice moments are not started.
+- The apparition has not been filmed on a real whisper in quest 1 (only the dev cue). The live cue is wired and
+  unit-tested.
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
   the machine body (gunmetal, rust, Dent's yellow discs) with teal seams, glow and a soul pool, which follows
   the brief's "machine body printed in the game's ink look, with teal soul seams and glow". Compare
   `M:frames/ohm-live-vs-target-64ppm.png`, `M:frames/dent-live-vs-target-64ppm.png` and
-  `M:frames/kerf-live-vs-target-64ppm.png`. The alternative is one modulate per rig.
+  `M:frames/kerf-live-vs-target-64ppm.png`. The voice apparitions (`M:frames/voices-four-64ppm-keys.png`) show
+  the fully teal look on the same four bodies, so the two can be compared directly. Switching the forms to it
+  would mean giving the form rigs the apparition's material.
+- **Should the voice apparitions show in quest 1?** They are cued by every whisper while Rivet is in base,
+  including quest 1's whisper beats, where the player has not yet met the ghosts by name. The alternative is
+  to cue them only from the scientist's questline lines; that change is one connect in GhostApparition.bind.
 
 ## Next steps
-- Dent's 32 px/m read beside the rimmed light forms.
-- Final gates (evidence runner, director reel), then the apparitions if time allows.
+- Film the apparition on a real quest 1 whisper (b1, the dumpster).
+- Final gates on a still tree (the evidence runner).

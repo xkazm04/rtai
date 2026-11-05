@@ -68,6 +68,7 @@ func say(p_id: StringName, hold: int = HOLD) -> void:
 	id = p_id
 	_hold = hold
 	_age = 0
+	Log.info("souls", "ghost voice: %s beside Rivet" % p_id)
 	_wash(self)
 
 

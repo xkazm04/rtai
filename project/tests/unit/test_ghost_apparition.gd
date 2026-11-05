@@ -49,3 +49,23 @@ func test_the_parts_draw_through_the_ghost_material() -> void:
 			var m: ShaderMaterial = (n as Sprite2D).material
 			washed += 1 if m.shader == GhostApparition.SHADER else 0
 	assert_gt(washed, 4, "Kerf's parts are washed teal")
+
+
+func test_a_whisper_in_base_shows_the_selected_ghost_and_none_in_a_form() -> void:
+	var t: GhostFormTable = GhostFormTable.load_default()
+	var forms: GhostForms = GhostForms.new(t, SoulPowers.new(PowerTable.load_default()))
+	var bus: EventBus = EventBus.new()
+	add_child_autofree(bus)
+	var app: GhostApparition = GhostApparition.new()
+	add_child_autofree(app)
+	app.bind(forms, bus)
+	bus.whispers_spiked.emit()
+	assert_true(app.speaking(), "a whisper in base: a ghost speaks")
+	assert_eq(app.id, forms.selected, "the selected ghost")
+	var forms2: GhostForms = GhostForms.new(t, SoulPowers.new(PowerTable.load_default()))
+	var app2: GhostApparition = GhostApparition.new()
+	add_child_autofree(app2)
+	app2.bind(forms2, bus)
+	assert_eq(forms2.press_transform(), SoulPowers.OK, "into the selected form")
+	bus.whispers_spiked.emit()
+	assert_false(app2.speaking(), "in a form the ghost is Rivet: no apparition")
