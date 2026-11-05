@@ -73,7 +73,9 @@ func say(p_id: StringName, hold: int = HOLD) -> void:
 ## `rim_mat` (the glow-edge variant). Parts a rig adds later are not covered: re-run (each voice).
 static func wash(n: Node, mat: ShaderMaterial, rim_mat: ShaderMaterial) -> void:
 	for c: Node in n.get_children():
-		if c is CanvasItem:
+		if c is CanvasItem and c.name == GhostRim.KEYLINE:
+			(c as CanvasItem).visible = false  # the ghost has its glow edge, no ink die-cut
+		elif c is CanvasItem:
 			(c as CanvasItem).material = rim_mat if c.name == RigBuild.HALO else mat
 		wash(c, mat, rim_mat)
 

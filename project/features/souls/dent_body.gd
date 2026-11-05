@@ -34,6 +34,7 @@ func setup(row: GhostFormDef) -> void:
 	add_child(_aura)  # under the body
 	add_child(_rig)
 	_rig.setup(DentPlan.build(row.size_k if row else 1.05), RigVariant.rivet())
+	GhostRim.keyline(_rig)  # the beige dummy holds on the cream kerb
 	_aura.radius_px = (row.radius_m if row else 0.45) * SimConst.PX_PER_M
 	_rig.reset_state(0.0)
 
@@ -60,6 +61,7 @@ func step(show: bool, at: Vector2, facing: float, steps: int, tick: int) -> void
 	_place(at, facing)
 	for i: int in steps:
 		_rig.drive(SimClock.TICK_DT)
+	GhostRim.sync_keyline(_rig)
 	_aura.sync(tick, clampf(_rig.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
 
 
