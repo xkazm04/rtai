@@ -509,3 +509,21 @@ NEXT (iteration 4, in order):
 - `BossMusic` (stinger + boss_loop on engage, loop off + stinger on defeat) and `BossCam`
   (`--boss-cam`) are attached by `BossView.attach` for every boss; `BossHook.rivet_pos()`.
 - Shared rig: print_part swap 5 (gold leaf), `BodyPlan.arm_swap` (default -1: nothing changes).
+
+### 21:22: court clip at 32 px/m looked at
+`gtai-masters/n7/king/king_phase2_court_decree_32ppm_it3.mp4` (30 s, --phase=2, dodging bot, 0
+script errors; frames.json 13). The decree's rings and the buffed gang's danger rings read.
+FOUND, NOT fixed: the stalled car pivots on the spot to aim at Rivet (the body's facing tracks
+him in the court). Fix first in iteration 4: KingMoves keeps the stall facing at phase_entered(1);
+KingBodyView draws the car on it and swivels only the hood cannon to `fight.aim`; KingBeats.king_px
+and KingRigs place the throne on the stall facing.
+NEXT (iteration 4): 0. that fix; then the list above (1. Ohm's daze live, 2. human-like bot +
+seeds, 3. wreck as cover, 4. 48 px/m clips, 5. gang on the car's sides, 6. exe + REPORT).
+
+### 21:25: the stalled car holds, the cannon swivels (fixed after all)
+KingMoves keeps `stall_facing` at the court; `KingBeats.car_dir` gives the car's heading (the
+body's while it drives, the stall's after); KingBodyView draws the car on it and swivels only the
+hood cannon to `fight.aim`; the throne and the step-down follow the car's heading. Looked at
+`evidence/king/shots/court_car_holds_cannon_swivels_32ppm.png` (court, t900 | t1500: same heading,
+cannon turned to the cone). test_king* 5/5, test_boss* 25/25; scenarios 52 ran / 0 failed at
+fbe2d97f (`scenarios-it3b.log`). NEXT item 0 is done; NEXT starts at item 1.
