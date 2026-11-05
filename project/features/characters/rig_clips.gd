@@ -15,6 +15,9 @@ const PUNCH3_S: float = 0.58
 const ROLL_S: float = 0.45
 const DEATH_RAMP_S: float = 0.42
 const RECOIL_DECAY: float = 6.0
+## n7-ranged: a throw (negative recoil) leans the torso into the release this much per unit (the
+## arm is already at its reach when aimed, so the follow-through shows in the body).
+const THROW_LEAN: float = 0.5
 const HIT_S: float = 0.18
 const HIT_TINT_FROM: float = 0.10
 const HIT_SHOVE: float = 90.0
@@ -130,7 +133,7 @@ func sample(rig: CutRig, dt: float) -> void:
 		if strike_t > strike_ph.x + strike_ph.y + strike_ph.z:
 			strike_t = -1.0
 			rig.strike_arm = -1
-	rig.c_lean = 0.6 * rig.c_reach
+	rig.c_lean = maxf(0.6 * rig.c_reach, -THROW_LEAN * recoil)
 	rig.c_tuck = (
 		clampf(sin(PI * (1.0 - roll_t / roll_len)) * 1.7, 0.0, 1.0) if roll_t > 0.0 else 0.0
 	)
