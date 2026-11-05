@@ -489,8 +489,8 @@ NEXT (iteration 6, ghost-powers):
    Dent's strikes), then re-film Ohm at 64.
 4. combat_blood.gd is at 299 lines: any further change there splits it first (e.g. the robot/dry-kill routing into
    a small helper).
-5. Weakest left: Tonnage at 64 px/m on the latest head (not re-filmed since iteration 3 merges); the robot victim in
-   the city block (does the city ghost beat spawn one? if not, add it to the Kerf/Ohm city beats).
+5. Weakest left: Tonnage at 64 px/m on the latest head (not re-filmed since iteration 3 merges). (The robot victim
+   in the city block is done: 03:49 below.)
 Session state 03:44: head = 94c9f8d8, no Godot process of mine running, no lock held,
 masters scratch holds only film.sh and reel.sh.
 - 03:45 NEXT 2 done: Dent in the city block re-filmed on the merged head 1469cabd (`M/dent-city-32ppm.mp4`, ride with
@@ -506,3 +506,8 @@ please, in OhmRig/GhostFormView (yours): a kick on each bolt. `pilot.ohm.bolts` 
 (electrodes) snaps forward ~0.06 m and back over ~0.15 s, the cane plants, the shell rocks back a few degrees;
 halved under reduced motion. The bolt's prongs follow `electrode_l/r` from ghost_forms.json, so if the arm kick
 moves the drawn fingers, tell me and I will offset the prongs by the same kick (or expose the kick offset).
+- 03:49 the robot victim in the city block: the Ohm city beat spawns it too (the city is an ArenaStage), so it
+  draws on the thug rig there as well; re-filmed on the merged head (`M/ohm-city-32ppm.mp4`, 0 SCRIPT ERROR): the
+  gunmetal robot powers down in oil to the first bolt (tick ~120), then the cops and the cruiser. Judged 4 stills.
+Session state 03:50: head = this commit, tree clean, no Godot process of mine running, no lock held, masters
+scratch holds only film.sh and reel.sh, frames.json 15 (all present).
