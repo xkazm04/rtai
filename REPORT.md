@@ -92,6 +92,10 @@ The owner's order for this lane: "create these characters, animate transformatio
   `M:frames/dent-ride-braced-ab-32ppm-x1.5.png`; clip `M:dent-ride-braced-city-32ppm.mp4`.
 
 ### Gates (iteration 5)
+- Final, on 8b6327f3 (the voices, `--teal-forms`, Dent's ride, both merges), still tree: evidence runner
+  `--no-bench` all PASS: lint 13/13, unit 986/0, scenarios 47, parity bit-exact (mutation caught at 629), look
+  goldens 11/11 in tolerance, no re-bless (`E:evidence-run-iter5-final.log`). Director reel 16/16 chapters down,
+  0 SCRIPT ERROR (`E:director-reel-iter5-final.log`).
 - On 56dae388 (the voices), the evidence runner `--no-bench` on a still tree (`E:evidence-run-iter5.log`): lint
   13/13, unit 981/0, scenarios 47, parity bit-exact (planted mutation caught at step 629), selftest with look
   goldens 11/11 in tolerance (worst 1.21), so no re-bless.

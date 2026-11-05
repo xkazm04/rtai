@@ -513,6 +513,11 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
   bottom: braced, arms out, the pop) and `M:dent-ride-braced-city-32ppm.mp4` (12 s, `--bot=ghosts --ghost=dent
   --arena=city`, 0 SCRIPT ERROR). The mid-hop frame is not in the stills (20-tick sampling); see the clip.
 
+- 03:48 FINAL GATES on 8b6327f3, still tree: director reel 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-iter5-final.log`); evidence runner `--no-bench` all PASS: lint 13/13, unit 986/0, scenarios 47,
+  parity bit-exact (mutation caught at 629), look goldens 11/11 in tolerance, no re-bless
+  (`E/evidence-run-iter5-final.log`).
+
 NEXT (iteration 6):
 1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
 2. The shipped quest 1 (sprite cast, no `--rigs`) has no ghost view, so no voices there. Either give it the
@@ -521,6 +526,6 @@ NEXT (iteration 6):
 3. Apparition scale is settled (0.6 Tonnage, A/B 03:28); `--teal-forms` A/B done (03:32). Weakest left: Ohm's
    arms at 32 px/m (thin even with the rim): try 0.28 m arms or a copper-bright forearm, A/B at the same ticks.
 4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)"). The director reel and evidence runner
-   last ran on 633fb9d7 / 56dae388: re-run both on the head (since then: --teal-forms, the two merges, DentBody ride).
-Session state 03:40: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
+   last ran on 8b6327f3 (all PASS); re-run after the next change.
+Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
   not taken this session), masters scratch holds only film.sh.
