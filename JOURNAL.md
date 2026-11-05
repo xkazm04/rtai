@@ -278,3 +278,14 @@
 - DECISION (stabilize): no project/ change, so no bug to fix and no gate re-run. Evidence and REPORT match the build.
 - NEXT (the next lane day): owner verdicts on REPORT's calls; call 8 B first if picked (per-weapon gun outline,
   iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.
+
+## Iteration 11 (REPORT, 18:40-19:00)
+- 18:40 Started. Tree clean at 3c6d4dbb. `git diff 6179bf2d HEAD -- project` empty; exes current. Nothing built.
+- 18:42 CHECK every evidence path REPORT cites exists: 33 M/ files + frames.json, the cast-quest1 stills, 13
+  evidence/ logs, both exes, scenario_quest1_dent_lock.gd and test_ghost_locks.gd. None missing.
+- 18:45 MILESTONE REPORT final: status line (report, exes on 6179bf2d), test files cited by path, new section
+  "What blocked or slowed the lane" (no hard block; ~45 min lost to the iteration 3 gap, the 16:45 restart, a
+  mixed scenario log and an LFS pointer; bench never run, machine contended).
+- NEXT (the next lane day): owner verdicts on REPORT's 8 calls drive the work; call 8 B first if picked (per-weapon
+  gun outline, iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha. When
+  act quests land, Quest1Session.acts_done must come from the save.

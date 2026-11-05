@@ -5,8 +5,10 @@ the two unbuilt picks. Branch `d7-calls`, cut from main `1028c15d`. Evidence: `M
 `C:\Users\kazda\kiro\gtai-masters\d7\calls\` (`frames.json` lists the stills and clips, newest first).
 Every old default stays one flag or one data value away.
 
-**Status (iteration 6, 18:08): complete.** Every call in the brief is built, gated and filmed; the exe is
-exported. After that, the weakest item was raised: the Gatling now prints tan steel, not an ink bar (6179bf2d).
+**Status (report, 18:45): complete.** Every call in the brief is built, gated and filmed. Both exes are
+exported on 6179bf2d, the last `project/` commit (`git diff 6179bf2d HEAD -- project` is empty: everything after it
+is docs). After that, the weakest item was improved: the Gatling now prints tan steel, not an ink bar (6179bf2d).
+At 18:42 I checked that every evidence path cited below exists (M/, `evidence/`, both exes, the test files).
 
 **For the merge (18:14):** `d7-held` already holds every `project/` change of this branch (its merge 1550dfb0
 took d7-calls bf7386aa, which is after 6179bf2d, the last `project/` commit here). A trial
@@ -27,7 +29,7 @@ took d7-calls bf7386aa, which is after 6179bf2d, the last `project/` commit here
 | look-14 flame tongues | 42feb65c | `projectile_fx flame` | `flame_cone` | `look-reel-after-32.mp4` |
 | look-18 Gatling true width | 42feb65c | `cross_k` 1.0 | `cross_k` 1.3 | `frames/look-18-gatling-ab-32ppm.png` |
 | ghost-powers-3 Dent steers from afar | e419a047 | `ghost_attacks.json dent.ride` 0, the car drives to the aimed point | `dent.ride` 1 | `frames/ghost-powers-3-dent-ride-ab-32ppm.png`, `dent-standoff-city-32ppm.mp4`, `-64ppm-halfspeed.mp4`, `frames/ghost-powers-3-dent-tether-32ppm.png` |
-| ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-quest1-live.png` + `quest1-dent-locked-live.mp4` (shipped quest 1, real input: G goes Tonnage -> Kerf, Dent's slot a padlock), `frames/ghost-powers-5-hud-lock-ab.png` (vs `--ghosts-free`); scenario `scenario_quest1_dent_lock` (planted `plant_ignore` caught), unit `test_ghost_locks` 6/6 |
+| ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-quest1-live.png` + `quest1-dent-locked-live.mp4` (shipped quest 1, real input: G goes Tonnage -> Kerf, Dent's slot a padlock), `frames/ghost-powers-5-hud-lock-ab.png` (vs `--ghosts-free`); scenario `project/tests/scenarios/scenario_quest1_dent_lock.gd` (planted `plant_ignore` caught), unit `project/tests/unit/test_ghost_locks.gd` 6/6 |
 | look-8 x Gatling small art (follow-up) | 6179bf2d | `held_small.py` `EDGE_OF`/`CLOSE_OF` gatling 3/6: barrels print tan steel inside one ink outline | the old art at 2a28d331 (`git show`) | `frames/look-8-gatling-city-ab-48ppm.png`, `-city-ab-32ppm.png` (city block), `look-8-gatling-small-ab-48ppm.png`, `-ab-32ppm.png` (arena), `look-8-gatling-edge-steps-32ppm.png`, `look-8-gatling-firing-48ppm-closeup.png`, `look-8-gatling-range-{32,48}ppm.mp4`, `look-8-gatling-city-32ppm.mp4` (25 s, city block, `--bot=gunplay`, 5 kills) + `frames/look-8-gatling-city-firing-32ppm-x3.png` |
 | look-8 warm tan ink for held guns | 83fe0d5c | `PartKind.GUN`, `print_part gun_tan` 1, `gun_ink_hi` 0.90, `gun_edge` 2.2 px ink outline | `--gun-grey` | `frames/look-8-gun-tan-ab-32ppm.png`, `-ab-48ppm.png`, `look-8-gun-tan-closeup-steps.png`, `look-8-gun-tan-reel-32ppm.mp4` |
 
@@ -76,6 +78,24 @@ chapters fully down, 0 SCRIPT ERROR (`evidence/reel-director-arena-it6.log`).
   default).
 - Bench not run (contended machine all day; no perf claim from this lane: every change is view or data only,
   except Dent's steer point, which is sim and covered by the quest 1 and ghost scenarios).
+
+## What blocked or slowed the lane
+Nothing hard-blocked the lane (no BLOCKED entry in JOURNAL; this lane needed no image lock). Time lost:
+- Iteration 3 (about 16:00) left no journal lines and no commits; iteration 4 picked up from iteration 2's NEXT.
+  About 10 min lost.
+- The 16:45 restart stopped iteration 4 with look-8 written but not committed. Iteration 5 checked it, gated it and
+  committed it (83fe0d5c). About 15 min of re-checking.
+- 16:10: I ran the scenario suite on a tree I was still editing, so the log mixed in my half-written Dent files. I
+  deleted that log and re-ran the suite (about 10 min).
+- 17:30: a void before-pair for the Gatling. `git show` wrote the Git LFS pointer instead of the PNG; the fix was
+  `| git lfs smudge` (about 10 min).
+- Small tooling friction, each fixed in minutes (full notes in JOURNAL):
+  - the evidence run refuses a dirty tree (`--allow-dirty`);
+  - `--write-movie` needs an absolute path;
+  - the headless reel needs `--quit-after`;
+  - `combo_clip.gd` is melee-only;
+  - arena args need the scene path, or they reach the boot scene as unknown args.
+- Bench: never run. The machine was contended all day, so this lane makes no performance claim.
 
 ## Calls for the owner
 1. **look-8 gun tan.** A (built): tan plates, ink grip/muzzle, 2.2 px ink outline. B: the old grey print
