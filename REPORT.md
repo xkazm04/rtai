@@ -1,6 +1,6 @@
 # REPORT: lane n6-ghost-forms (branch `n6-ghost-forms`), night run 2026-11-04 -> 11-05
 
-Written through the night (first draft in iteration 4, 02:30); final as of the 08:30 freeze (iteration 14). Until iteration 4 the
+Written through the night (first draft in iteration 4, 02:30); final as of the 08:30 freeze (iteration 14), gate line updated in iteration 17 (08:37). Until iteration 4 the
 root REPORT.md on this branch was n5-cast's (it came in through a merge); n5-cast's own copy is on its
 branch. `M:` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-forms\`, `E:` = `evidence/` here.
 
@@ -255,7 +255,10 @@ goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless. Director reel 1
 (E:director-reel-it14-merged3.log). Quest 1 at 32 px/m is unchanged from the re-filmed clip. **0b738cbc is
 the lane's final gated head.** Iteration 15 then merged n5-cast efa29d38 (2cc15c5f: `_lod_art(id, grow = 1.0)`,
 a compatible default parameter) as 52ce7f31: lint 13/13, unit 1020/0 (E:unit-it15-merged.log), director reel
-16/16, 0 SCRIPT ERROR (E:director-reel-it15-merged.log); the full evidence runner was not re-run on 52ce7f31.
+16/16, 0 SCRIPT ERROR (E:director-reel-it15-merged.log). Iteration 17 ran the full evidence runner (`--no-bench`)
+on the tip 0592825f (same project tree as 52ce7f31), still tree (E:evidence-run-it17-tip.log): **all PASS**, lint 13/13,
+unit 1020/0, scenarios 51, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.33), block 5/5
+(worst 1.53); no re-bless. **The tip is the lane's final gated head.**
 
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
@@ -278,7 +281,7 @@ a compatible default parameter) as 52ce7f31: lint 13/13, unit 1020/0 (E:unit-it1
   off (A/B `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`).
 
 ## Next steps
-- The final gates ran on 0b738cbc (all PASS, iteration 14). If n5-cast or n6-ghost-powers move again before the
+- The final gates ran on the tip 0592825f (all PASS, iteration 17). If n5-cast or n6-ghost-powers move again before the
   morning merge, merge them in and re-run the evidence runner and the director reel.
 - Note for the HUD owner: quest 1's longest subtitle line runs past the bottom of its box (seen in
   `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`, "where you think." on the box's lower edge).

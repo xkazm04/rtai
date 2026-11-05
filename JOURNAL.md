@@ -948,3 +948,16 @@ NEXT (report session / Director): unchanged from iteration 15. The lane's tip ca
 green); last full gated head is 0b738cbc. Run `node tools/evidence/run.mjs --no-bench` on the tip if a full gate is
 wanted. Calls for the owner unchanged (`--teal-forms`, `story_voice`).
 FREEZE 08:26: tree clean after this commit, no Godot process of mine running, no lock held; frames.json 15, all present.
+
+## Iteration 17 (08:30-08:40, STABILIZE)
+- 08:30 CHECK upstream: n5-cast 8d83f472 and n6-ghost-powers dd5c6b3c add no project/native/tools changes over what
+  we carry. Nothing to merge. No lock held, no Godot running.
+- 08:36 FULL GATES on tip 0592825f (project tree = 52ce7f31), still tree, `--no-bench` (E:evidence-run-it17-tip.log):
+  PASS lint 13/13, unit 1020/0, scenarios 51, parity bit-exact (mutation at 629), look 11/11 (worst 1.33),
+  block 5/5 (worst 1.53); no re-bless. FRICTION: first attempt logged into evidence/ and the runner refused the
+  dirty tree; re-ran with the log under build/, then copied it in.
+- REPORT: the tip is now the final gated head (closes the open "runner not re-run on 52ce7f31" note).
+
+NEXT (Director): branch tip is fully gated (all PASS). Merge as is. Calls for the owner unchanged (`--teal-forms`,
+`story_voice`). If n5-cast/ghost-powers land code before merge, re-run `node tools/evidence/run.mjs --no-bench`.
+FREEZE 08:37: no Godot process of mine running, no lock held; frames.json 15, all present.
