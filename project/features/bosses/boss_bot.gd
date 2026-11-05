@@ -17,6 +17,8 @@ const REACT_TICKS: int = 18
 const CLEAR_M: float = 1.2
 ## Still in the zone this close to the active window: roll (its i-frames cover the hit).
 const ROLL_LEFT: int = 8
+## Closer than this to the fight floor's edge, the bot heads back toward its middle.
+const EDGE_M: float = 3.0
 ## An add this close is shot before King.
 const ADD_M: float = 7.0
 
@@ -47,8 +49,11 @@ func sample(_tick: int) -> TickInput:
 	var aim: Vector2 = foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
 	var band: float = to_boss.length() - HOLD_M
+	var off_floor: bool = not hook.bounds.grow(-EDGE_M).has_point(me)
+	var home: Vector2 = (hook.bounds.get_center() - me).normalized()
 	if standing:  # holds the same band, never strafes, never dodges
-		return _input(aim * clampf(band, -1.0, 1.0), aim, fire, false, false)
+		var hold: Vector2 = home if off_floor else aim * clampf(band, -1.0, 1.0)
+		return _input(hold, aim, fire, false, false)
 	for threat: BossFight in [f] + hook.adds.fights:
 		if threat.state == BossFight.State.DEFEATED:
 			continue
@@ -59,6 +64,8 @@ func sample(_tick: int) -> TickInput:
 			)
 			return _input(dodge, aim, fire and not roll, true, roll)
 	var move: Vector2 = aim * clampf(band, -1.0, 1.0) + aim.orthogonal() * _side * 0.35
+	if off_floor:  # drifting off the floor: head back in
+		move = home
 	return _input(move, aim, fire, false, false)
 
 

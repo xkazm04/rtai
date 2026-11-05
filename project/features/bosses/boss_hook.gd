@@ -14,6 +14,8 @@ var fight: BossFight = null
 ## The adds the boss called in (each a one-phase bosses.json row on its own BossFight).
 var adds: BossAdds = BossAdds.new()
 var origin: Vector2 = Vector2.ZERO
+## The fight's floor (the arena record's area): the boss and its adds never leave it.
+var bounds: Rect2 = Rect2()
 var defeated_tick: int = -1
 ## Hit counts for the bot's numbers: attacks begun / that landed, per attack id.
 var tries: Dictionary[StringName, int] = {}
@@ -23,6 +25,7 @@ var dealt: float = 0.0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
 var _rng: RngRegistry = null
+var _hooks_cleared: bool = false
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -38,6 +41,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_clear_floor(stage)
 	var area: ArenaPlan.Area = stage.plan.area(String(spec.arena.area))
 	origin = area.rect.get_center() if area != null else stage.arena.rivet.pos
+	bounds = area.rect if area != null else Rect2(origin - Vector2(20, 20), Vector2(40, 40))
 	stage.arena.rivet.pos = origin + spec.arena.rivet_at
 	fight = BossFight.new(spec, ctx.rng.stream(spec.rng), origin + spec.arena.boss_at)
 	fight.body.brain_owned = true
@@ -51,9 +55,12 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	Log.info("bosses", "%s engaged in %s, phase %d" % [boss_id, spec.arena.id, fight.phase + 1])
 
 
-func step(_stage: ArenaStage, tick: int) -> void:
+func step(stage: ArenaStage, tick: int) -> void:
 	if fight == null:
 		return
+	if not _hooks_cleared:  # hooks set up after this one (station files load in name order)
+		_hooks_cleared = true
+		_clear_claw_cops(stage)
 	BossAdds.route(fight, _last_hp)
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
@@ -61,6 +68,9 @@ func step(_stage: ArenaStage, tick: int) -> void:
 	if not r.alive():
 		return
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
+	_keep_in(fight)
+	for f: BossFight in adds.fights:
+		_keep_in(f)
 	fight.body.exposed = fight.state != BossFight.State.TRANSITION
 	_last_hp = fight.body.hp
 	if hit > 0.0 and not r.exposed:  # rolled through it (the roll's i-frames)
@@ -73,6 +83,21 @@ func step(_stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## rivet-arsenal's claw cops (real guards that walk at Rivet and respawn) leave the boss floor:
+## out of the hostiles, nothing steps, draws or hits them (their hook still ticks, harmlessly).
+func _clear_claw_cops(stage: ArenaStage) -> void:
+	for h: ArenaHook in stage.hooks:
+		if h is ArenaClawCops:
+			for f: Fighter in (h as ArenaClawCops).cops:
+				_arena.hostiles.erase(f)
+
+
+## A body stays on the fight's floor (a ram or a charge stops at its edge).
+func _keep_in(f: BossFight) -> void:
+	var inner: Rect2 = bounds.grow(-f.body.radius_m)
+	f.body.pos = f.body.pos.clamp(inner.position, inner.end)
 
 
 ## The boss owns the floor: the stations' dummies leave and the pit's own waves never start.

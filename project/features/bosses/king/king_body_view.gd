@@ -14,21 +14,53 @@ const FUR: Color = Color("#EFE6D2")
 const PLUM: Color = Color("#5A2335")
 const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
+const WINDUP_BACK_M: float = 0.6
+const COINS: int = 30
 
 
 func _draw() -> void:
 	if fight == null:
 		return
-	draw_set_transform(Ink.px(fight.body.pos), fight.body.facing.angle(), Vector2.ONE)
+	draw_set_transform(
+		Ink.px(fight.body.pos) + _windup_px(), fight.body.facing.angle(), Vector2.ONE
+	)
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
 		_car()
 	else:
 		_on_foot()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	_coins()
 	for g: BossFight in standing_adds():  # the gang off the car (phase 2's adds)
 		draw_set_transform(Ink.px(g.body.pos), g.body.facing.angle(), Vector2.ONE * 1.3)
 		_gangster(Vector2.ZERO)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+## A charge's anticipation: through the tell the body rocks back (up to WINDUP_BACK_M against the
+## aim) and shakes harder as the lock nears; render only, the sim body does not move.
+func _windup_px() -> Vector2:
+	var a: BossAttack = fight.attack
+	if a == null or fight.state != BossFight.State.WINDUP or a.shape != BossAttack.Shape.CHARGE:
+		return Vector2.ZERO
+	var k: float = float(fight.t) / float(maxi(a.windup, 1))
+	var shake: Vector2 = fight.aim.orthogonal() * sin(float(fight.t) * 1.9) * 2.5 * k
+	return Ink.px(-fight.aim * WINDUP_BACK_M * k) + shake
+
+
+## The coin fan's hail in its active window: gold coins flying out down the locked cone, spread by
+## a fixed golden-ratio scatter (render only, no RNG).
+func _coins() -> void:
+	var a: BossAttack = fight.attack
+	if a == null or a.shape != BossAttack.Shape.CONE or fight.state != BossFight.State.ACTIVE:
+		return
+	var k: float = float(fight.t) / float(maxi(a.active, 1))
+	var half: float = deg_to_rad(a.arc_deg) * 0.5
+	for i: int in COINS:
+		var ang: float = -half + 2.0 * half * fposmod(float(i) * 0.618034, 1.0)
+		var reach: float = clampf(k * (0.6 + 0.8 * fposmod(float(i) * 0.381966, 1.0)), 0.0, 1.0)
+		var at: Vector2 = Ink.px(fight.origin + fight.aim.rotated(ang) * a.range_m * reach)
+		draw_circle(at, 5.0, Ink.INK)
+		draw_circle(at, 3.8, GOLD)
 
 
 ## The throne-car along +x (its nose), centred on the body.
