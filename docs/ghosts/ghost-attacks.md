@@ -58,3 +58,17 @@ Iteration 3 (2026-11-05 02:00, GhostPilot drives all four; the attacks wait for 
 - Ohm upgrade_tier 1 (mass arc, `--tier=1`): the three-cop knot down at tick 119 (tier 0: 149), 5/5
   (`evidence/ghosts-ohm-mass-32.json`): the tier is worth one bolt on a group of five; a quest reward can also
   raise human_damage if it should feel bigger.
+
+Quest 1 on the city (iteration 11, the four `scenario_quest1_<ghost>` scenarios: the shipped quest session, dock
+guards spawned beside Rivet after a 420-tick warm-up, a scripted pad through the bound actions, 60 Hz):
+
+| Ghost | Pad | Outcome (one seed, replayed twice: same counts and state hash) | Planted fault caught |
+|---|---|---|---|
+| Tonnage | Q; walk to the start-side ghost car; melee every 20 in reach | 1 slam, 3 bodies hit, the car flattened (WRECK), 4 kills | `car_crush_m` 0: the car stands |
+| Dent | G; Q; fire every 20 (stick on the nearest guard); melee at 200 | 1 seize, 4 strikes, 4 kills, 1 blast, 131 riding ticks | `ghost_cars` []: 0 seizes, 12 frayed misses |
+| Kerf | G G; Q; melee every 20 (stick on the nearest guard) | 6 blinks, 5 slices, 5 kills (all five guards) | `human_damage` 0: 0 kills |
+| Ohm | G G G; Q; melee every 20 (guards, then the nearest car) | 9 bolts, 10 struck, 5 kills, 3 car bolts, the car WRECK | `machine_k` 0: the car stands |
+
+Read across: Kerf clears five spread guards fastest and alone (one per press), Tonnage takes a group and a car
+in one slam but must walk to it, Dent needs a car on the line, Ohm is the slowest on humans and the only one
+that wrecks a car from range.

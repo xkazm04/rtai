@@ -104,3 +104,18 @@ func test_no_target_is_a_dash_and_the_chain_runs_dry_then_recharges() -> void:
 	assert_eq(_stage.arena.rivet.pos, at, "no blink at zero charges")
 	_wait(PowerDef.ticks(kerf.num(&"recharge_s")))
 	assert_eq(kerf.charges, 1, "one charge back after recharge_s")
+
+
+## The owner's call (path_cut_m): the built 0 cuts only the target; above 0 the body standing on
+## the blink line falls to the same pass.
+func test_path_cut_spares_the_body_on_the_line_unless_set() -> void:
+	for width: float in [0.0, 0.6]:
+		var target: Fighter = _guard(Vector2(6.0, 0.0))
+		var on_line: Fighter = _guard(Vector2(3.0, 0.3))  # 5.7 deg off the aim: not the pick
+		_pilot.kerf.attacks.block(KerfStage.GHOST)["path_cut_m"] = width
+		_take()
+		_wait(2)
+		_press(&"melee")
+		assert_false(target.alive(), "the pick is cut (path_cut_m %s)" % width)
+		assert_eq(on_line.alive(), width == 0.0, "the body on the line (path_cut_m %s)" % width)
+		before_each()

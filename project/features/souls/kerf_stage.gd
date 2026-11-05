@@ -110,6 +110,7 @@ func _blink(stage: CollectCallStage, aim: Vector2) -> void:
 		to = target.pos + dir * (num(&"behind_m") + target.radius_m)
 		cut = target.pos
 		_slice(stage, target, dir)
+		_cut_path(stage, from, to, target, dir)
 	var walls: ArenaWalls = _walls(stage)
 	if walls != null:
 		to = walls.push_out(to, rivet.radius_m)
@@ -150,6 +151,22 @@ func _slice(stage: CollectCallStage, target: Fighter, dir: Vector2) -> void:
 	var dmg: float = num(&"robot_damage") if robot else num(&"human_damage")
 	stage.arena.damage(target, dmg, stage.arena.rivet.id, &"kerf_slice", KILL_KIND)
 	slices += 1
+
+
+## The crowd-tool alternative (an owner's call): path_cut_m > 0 also slices every other live
+## hostile within that many metres (plus its radius) of the blink line. 0 (built) = the target only.
+func _cut_path(
+	stage: CollectCallStage, from: Vector2, to: Vector2, target: Fighter, dir: Vector2
+) -> void:
+	var width: float = num(&"path_cut_m")
+	if width <= 0.0:
+		return
+	for h: Fighter in stage.arena.hostiles.duplicate():
+		if h == target or not h.alive():
+			continue
+		var near: Vector2 = Geometry2D.get_closest_point_to_segment(h.pos, from, to)
+		if h.pos.distance_to(near) <= width + h.radius_m:
+			_slice(stage, h, dir)
 
 
 static func _walls(stage: CollectCallStage) -> ArenaWalls:
