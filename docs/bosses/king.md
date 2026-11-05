@@ -53,12 +53,13 @@ and rules. Every 14 s, if fewer than 6 stand, more gang arrive.
 | **Decree** (no zone; buffs the gang 6 s: x1.3 damage, x1.2 speed) | 1.2 s: King raises the megaphone, a vermilion shout ring pulses | 0.5 s: the shout | 1.8 s, all of it punish x1.5 | interrupt nothing (hits never cancel), so kill gang before it lands or step away from them | the longest punish window in the fight: the best moment to hit King |
 
 ## Phase 3: the king on foot (hp 33-0 %)
-**Transition (2.5 s):** King stands, the cape falls behind him, he steps down off the car (the car
-stays as cover); the remaining gang flees or stays (they are not refreshed).
+**Transition (2.5 s):** King stands and, from 45 % into the transition, steps down off the car's
+right side with his cape (`KingBeats`, `KingMoves.step_down`); the car stays where it stalled,
+smoking (render only so far: not yet cover); the remaining gang stays (they are not refreshed).
 
 | Attack | Tell | Active | Recovery (punish) | Counterplay | Punish |
 |---|---|---|---|---|---|
-| **Press slam** (circle 3.2 m round the plates' landing point, 28 dmg; coins shower out of the ring) | 1.1 s / 0.35 s: both plates rise over the head, the ring draws on the floor | 0.25 s | 1.3 s (1.0 s x1.5): plates stuck in the cracked street | leave the ring (3.2 m) after the lock | the plates are stuck: free hits from close range |
+| **Press slam** (a leaping circle: the 3.2 m ring tracks Rivet up to 6 m out, `leap_m`; 28 dmg; a shockwave ring and a coin shower on impact) | 1.1 s / 0.35 s: both plates rise over the head while the thin ring follows Rivet; at the lock the ring fills and King hops onto it | 0.25 s | 1.3 s (1.0 s x1.5): plates down in the cracked street | leave the filled ring after the lock (a 3.6 m step, or a roll) | the plates are down: free hits from close range |
 | **Charge** (10 m x 2 m lane, 11 m/s, 24 dmg) | 1.0 s / 0.35 s: shoulder dips, cape flares | 0.9 s | 1.4 s (1.0 s x1.5): he stumbles | sidestep after the lock | shoot his back while he stumbles |
 | **Coin fan** (from the megaphone hand: a shorter, faster fan; first pass reuses phase 1's row) | 1.0 s / 0.3 s | 0.6 s | 0.9 s | as above | as above |
 
@@ -111,7 +112,11 @@ reads about 70 % of tells) is still unmeasured, so this is not called balanced.
    2): King on `KingPlan(1.55)` and the gang on `GangPlan` (the thug in gold chains and a black
    visor, `tools/art/gang_parts.py`) through `KingRigs`; the car, the cape, the coins and the gold
    accents at game zoom (`KingAccents`) are drawn; `--boss-shapes` is the drawn first pass.
-   Still to do: King's own wealth parts (gold plates and chest, jewelled crown, fur cape).
+   Iteration 3: King's chest and press arms print gold (print swap 5, `KingRigs.king_plan`, a
+   DECISION instead of a part sheet: the sheet's gold is lost to the stickers at 32 px/m); every
+   attack plays on the rig from its windup; the leaping slam with `KingShock`; the stall smoke,
+   the step-down and the car left behind (`KingBeats`); the crown falls on the defeat; the boss
+   music in the arena (`BossMusic`).
 3. Phase 1, 2, 3 as above; the arena: King's boulevard (dev-arena area `boulevard`, 80 x 30 m:
    planters, centre line, plaza plinths; iteration 2); the bot's numbers; clips.
 

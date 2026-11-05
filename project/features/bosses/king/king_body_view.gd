@@ -44,11 +44,17 @@ func _draw() -> void:
 	draw_set_transform(
 		Ink.px(fight.body.pos) + _windup_px(), fight.body.facing.angle(), Vector2.ONE
 	)
+	var stepping: bool = KingBeats.step_k(fight) > 0.0
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
-		_car()
+		_car(not stepping)
 	else:
 		_on_foot()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	_wreck()
+	if stepping:  # the cape goes down with him
+		draw_set_transform(KingBeats.king_px(fight, Vector2.ZERO), fight.body.facing.angle())
+		_king(Vector2.ZERO, 1.25)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	_coins()
 	KingShock.draw(self, fight)
 	for g: BossFight in standing_adds() if _rigs == null else []:  # first pass: drawn gang
@@ -90,7 +96,7 @@ func _coins() -> void:
 
 
 ## The throne-car along +x (its nose), centred on the body.
-func _car() -> void:
+func _car(with_king: bool = true) -> void:
 	var p: float = Ink.PX_PER_M
 	var l: float = CAR_LEN_M * p
 	var w: float = CAR_W_M * p
@@ -111,7 +117,24 @@ func _car() -> void:
 		for sx: float in [-0.36, 0.3]:
 			for sy: float in [-1.0, 1.0]:
 				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
-	_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
+	if with_king:
+		_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
+
+
+## The car's smoke (the stall, the court) and, from phase 3, the stalled car left where it stood.
+func _wreck() -> void:
+	var km: KingMoves = fight.moves as KingMoves
+	var at: Vector2 = fight.body.pos
+	var dir: Vector2 = fight.body.facing
+	if fight.phase >= 2 and km != null and km.car_at != Vector2.INF:
+		at = km.car_at
+		dir = km.car_facing
+		draw_set_transform(Ink.px(at), dir.angle(), Vector2.ONE)
+		_car(false)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	var hood: Vector2 = Ink.px(at + dir * CAR_LEN_M * 0.36)
+	var drift: Vector2 = (-dir + dir.orthogonal() * 0.35).normalized()
+	KingBeats.smoke(self, hood, drift, fight.now(), KingBeats.smoke_amount(fight))
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.

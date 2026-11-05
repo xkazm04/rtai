@@ -45,10 +45,8 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 	_steps = 0 if _tick < 0 else clampi(fight.now() - _tick, 0, MAX_STEPS)
 	_tick = fight.now()
 	var b: Fighter = fight.body
-	var on_car: bool = fight.phase <= 1
-	var at: Vector2 = Ink.px(b.pos) + windup_px
-	if on_car:
-		at += b.facing * THRONE_M * Ink.PX_PER_M
+	var on_car: bool = fight.phase <= 1 and KingBeats.step_k(fight) <= 0.0
+	var at: Vector2 = KingBeats.king_px(fight, windup_px)  # the throne, the step-down, on foot
 	var king: CutRig = _rig(b.id, true, at, b.facing)
 	_place(king, b.id, at, b.facing, Vector2.ZERO if on_car else Vector2.INF)
 	_react(king, b, fight)
