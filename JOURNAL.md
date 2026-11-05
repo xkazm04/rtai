@@ -1333,3 +1333,7 @@ Session end 07:04: tree clean after this commit, no Godot process of mine runnin
   scenarios 46, parity exact, look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). Bench skipped (contended).
 Session end 07:09: tree clean after this commit, no Godot process of mine running, locks never taken. NEXT as of 07:04
   stands (item 3's gate is done on b88d329b; re-run only if anything but docs lands).
+- 07:12 the second hide spot: quest stills 16800-18600 (the quest ends before 19200; 0 SCRIPT ERROR); at 17400 the bot
+  hides in the harbor skip: the new peek reads as the collar ring round the pale helmet on the skip (after only,
+  `M/frames/quest1-skip-peek-32ppm-x4.png`). REPORT section 2. Scratch stills deleted.
+Session end 07:13: tree clean after this commit, no Godot process of mine running, locks never taken.
