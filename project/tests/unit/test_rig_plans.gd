@@ -6,7 +6,8 @@ extends GutTest
 func test_rivet_plan_is_the_cutout_lanes() -> void:
 	var p: BodyPlan = RivetPlan.build()
 	assert_eq(p.kind, BodyPlan.Kind.RIVET)
-	assert_almost_eq(p.thigh_len, 166.0, 0.01)
+	assert_almost_eq(p.thigh_len, 166.0 * RivetPlan.LEGS[RivetPlan.FORM_BASE].x, 0.01)
+	assert_almost_eq(RivetPlan.build(RivetPlan.FORM_STOCKY).thigh_len, 166.0, 0.01)
 	assert_almost_eq(RivetPlan.build(RivetPlan.FORM_DAY).upper_len, 159.0, 0.01)
 	assert_almost_eq(p.upper_len, 159.0 * RivetPlan.ARMS[RivetPlan.FORM_BASE].x, 0.01)
 	assert_true(p.has_collar() and p.has_hand() and p.has_hose() and p.has_endon())
@@ -18,7 +19,8 @@ func test_human_plans_come_from_parts_json() -> void:
 		assert_gt(p.thigh_len, 100.0, "%s thigh" % p.name)
 		assert_gt(p.shin_len, 100.0, "%s shin" % p.name)
 		assert_gt(p.shoulder[BodyPlan.R].y, 40.0, "%s shoulder span" % p.name)
-		assert_almost_eq(p.thigh_len, p.thigh_draw * HumanPlan.LEG_K, 0.01)
+		var limb_k: float = HumanPlan.COP_LIMB_K if p.kind == BodyPlan.Kind.COP else 1.0
+		assert_almost_eq(p.thigh_len, p.thigh_draw * HumanPlan.LEG_K * limb_k, 0.01)
 		assert_false(p.limb_lod, "flat human limbs keep their own print")
 	assert_eq(HumanPlan.cop().shield_part, "shield")
 	assert_false(HumanPlan.ped().ready_stance, "civilians' arms hang")
@@ -64,7 +66,9 @@ func test_rivet_arms_match_t2_ratio() -> void:
 	var leg: float = base.thigh_len + base.shin_len
 	var arm: float = base.upper_len + base.fore_len[0]
 	assert_almost_eq(arm / leg, 0.81, 0.03, "T2: arm (shoulder to wrist) is about 0.8 of the leg")
-	assert_gt(day.upper_len + day.fore_len[0], leg, "the day form keeps the long arms (A/B)")
+	var day_leg: float = day.thigh_len + day.shin_len
+	assert_gt(day.upper_len + day.fore_len[0], day_leg, "the day form keeps the long arms (A/B)")
+	assert_lte(base.leg_w, 1.0, "n5-cast: lean legs come from the piston art, never a widening")
 	assert_lt(base.hand_k, 1.0, "the claw is smaller than the day art")
 	assert_lt(base.arm_w, 1.0, "the arms are drawn thinner")
 	var reach: float = arm
@@ -127,3 +131,9 @@ func _parts(p: BodyPlan) -> PackedStringArray:
 			@warning_ignore("return_value_discarded")
 			out.append(extra)
 	return out
+
+
+func test_only_rivet_prints_warm_close_up_steel() -> void:
+	assert_almost_eq(RivetPlan.build().d5_warm, RivetPlan.D5_WARM, 0.001, "r2_c3 tan metal")
+	for p: BodyPlan in [HumanPlan.cop(), HumanPlan.ped(), KingPlan.build(), ThugPlan.build()]:
+		assert_eq(p.d5_warm, 0.0, "%s keeps the violet steel" % p.name)

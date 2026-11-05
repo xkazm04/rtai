@@ -72,6 +72,11 @@ var hand_gap: float = 2.0
 var hand_k: float = 1.0
 ## The arm segments' drawn thickness (scale across the bone; the hand cell is not thinned).
 var arm_w: float = 1.0
+## n5-cast: the leg segments' drawn thickness (scale across the thigh and shin bones), like arm_w.
+var leg_w: float = 1.0
+## n5-cast (plan view, r2_a5): the head and the shoe cells' drawn scale (1 = the part art).
+var head_k: float = 1.0
+var foot_k: float = 1.0
 var gun_arm: int = -1
 var gun_cell: String = ""
 var melee_arm: int = L
@@ -99,6 +104,18 @@ var hip_follow: float = 0.0
 var hip_twist_max: float = deg_to_rad(70.0)
 ## Rivet's cream rods print as one flat value at gameplay scale; flat bold human limbs do not.
 var limb_lod: bool = true
+## n5-cast: a cream sticker rim under the thigh, shin and foot at gameplay scale
+## (Rivet's lean piston legs).
+var leg_rim: bool = false
+## n5-cast (r2_c7): the head prints the welder-visor slot at gameplay scale (PartMaterials HEAD;
+## the helmet art must face +x). Rivet only; King's crown has no visor.
+var head_visor: bool = false
+## n5-cast (r2_c3): the core sticker at gameplay scale prints the tan work plates
+## (PartMaterials TAN_CORE, CORE_TAN). Rivet only; King's core stays cream.
+var core_tan: bool = false
+## n5-cast (r2_c3): how far the D5 close-up print (look_d5_part `warm`) moves this body's steel
+## ramp from the violet-grey toward the hybrid target's warm tan metal; 0 = the violet-grey steel.
+var d5_warm: float = 0.0
 
 
 func has_collar() -> bool:

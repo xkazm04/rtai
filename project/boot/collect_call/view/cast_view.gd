@@ -22,6 +22,11 @@ const CAST_DRAW: float = 1.5
 const GUARD_DRAW: float = 1.7
 ## Knocked-out bodies stay quiet (the placeholder drew them as faint discs).
 const DOWN_FADE: Color = Color(1.0, 1.0, 1.0, 0.8)
+## n5-cast: Rivet and his peek switch to the gameplay-scale sticker captures below ~42 px/m
+## (`_lod_art`); false = the art captures at every zoom (the cream sprite Rivet before 2026-11-05).
+const LOD_SPRITES: bool = true
+## The grown Hauler cross-fades sticker -> art over +-LOD_FADE of the threshold (0 = the hard swap).
+const LOD_FADE: float = 0.12
 ## Art by id from data/tables/collect_call_art.json (QuestArt). The rig captures (rivet: idle,
 ## facing -y, 120 px/m, arms included; rivet_peek: its round cut for the hide spots; cop: gun
 ## out) carry their drawn size there (size_m x draw_k; Rivet is d5-cast's base form, the T2
@@ -74,7 +79,8 @@ func _draw() -> void:
 func _rivet(r: Fighter) -> void:
 	var at: Vector2 = r.pos
 	if stage.hidden_in != "":
-		_sprite("rivet_peek", at + Vector2(0.0, -0.75), _size(&"rivet_peek"), Vector2.UP)
+		var peek: String = _lod_art("rivet_peek")
+		_sprite(peek, at + Vector2(0.0, -0.75), _size(StringName(peek)), Vector2.UP)
 		return
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
@@ -83,10 +89,38 @@ func _rivet(r: Fighter) -> void:
 	if k > 0.0:  # features/souls: the Hauler grows and tints Rivet by the morph
 		var grow: float = HaulerLook.sprite_k(k, h.windup_k())
 		var tint: Color = HaulerLook.tint(h.num(&"look_tint_k"), k)
-		_sprite("rivet", at, _size(&"rivet") * grow, r.facing, tint)
+		var w: float = _art_w(grow)
+		if w < 1.0:
+			_sprite("rivet_lod", at, _size(&"rivet_lod") * grow, r.facing, tint)
+		if w > 0.0:
+			_sprite("rivet", at, _size(&"rivet") * grow, r.facing, Color(tint, tint.a * w))
 	else:
-		_sprite("rivet", at, _size(&"rivet"), r.facing)
+		var art: String = _lod_art("rivet")
+		_sprite(art, at, _size(StringName(art)), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
+
+
+## n5-cast: below the rigs' flat-sticker threshold (PartMaterials.flat_below, about 42 px/m) the
+## rig Rivet prints his gameplay stickers (tan core, visor slot, hazard collar), so the sprite
+## Rivet and his peek draw from the capture of that tier (`<id>_lod`), the art capture above it.
+## `grow` (the Hauler's sprite_k) scales the drawn px too (`_art_w` fades across it): the grown
+## Hauler keeps the art's plates past the threshold (a grown sticker is a flat mass, a black slab).
+func _lod_art(id: String, grow: float = 1.0) -> String:
+	return id + "_lod" if LOD_SPRITES and _view_px(grow) < PartMaterials.flat_below else id
+
+
+## The art capture's weight at `grow`: a smooth band across the threshold, so the morph does not
+## pop at the frame the grown sprite crosses it.
+func _art_w(grow: float) -> float:
+	var fb: float = PartMaterials.flat_below
+	if not LOD_SPRITES or LOD_FADE <= 0.0:
+		return 1.0 if not LOD_SPRITES or _view_px(grow) >= fb else 0.0
+	return smoothstep(fb * (1.0 - LOD_FADE), fb * (1.0 + LOD_FADE), _view_px(grow))
+
+
+func _view_px(grow: float) -> float:
+	var ppm: float = get_global_transform_with_canvas().get_scale().x * Ink.PX_PER_M * grow
+	return CutRig.SC * ppm / SimConst.PX_PER_M
 
 
 func _ally(tag: String, at: Vector2) -> void:

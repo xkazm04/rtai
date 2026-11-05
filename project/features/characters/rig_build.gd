@@ -5,6 +5,11 @@ extends RefCounted
 ## readability halos (the sticker rim) under the core and along the arms.
 
 const HALO: StringName = &"halo"
+## CutRig.halo_limb values: how a halo widens at gameplay scale (CutRig._on_view).
+const HALO_BODY: int = 0
+const HALO_ARM: int = 1
+## n5-cast: the leg rim (BodyPlan.leg_rim): Rivet's piston shins are ~2 screen px at 32 px/m.
+const HALO_LEG: int = 2
 
 
 static func build(rig: CutRig) -> void:
@@ -18,9 +23,7 @@ static func build(rig: CutRig) -> void:
 	rig.pelvis = _node(rig.body, p.pelvis_pos)
 	rig.torso = _node(rig.body, p.torso_pos)
 	rig.head = _node(rig.torso, p.head_pos - p.torso_pos)
-	var core: PartMaterials.PartKind = (
-		PartMaterials.PartKind.CORE if p.has_collar() else PartMaterials.PartKind.PART
-	)
+	var core: PartMaterials.PartKind = _core_kind(p)
 	rig.pelvis_spr = _part(rig, p.pelvis_part, core, true, -1)
 	_attach(rig.pelvis, rig.pelvis_spr, p.pelvis_z)
 	rig.torso_spr = _part(rig, p.torso_part, core, true, p.torso_swap)
@@ -29,17 +32,21 @@ static func build(rig: CutRig) -> void:
 		rig.collar_spr = _part(rig, p.collar_part, PartMaterials.PartKind.COLLAR, true, -1)
 		rig.collar_spr.position = p.collar_pos - p.torso_pos
 		_attach(rig.torso, rig.collar_spr, p.collar_z)
-	rig.head_spr = _part(rig, p.head_part, core, true, p.head_swap)
+	rig.head_spr = _part(rig, p.head_part, _head_kind(p, core), true, p.head_swap)
 	_attach(rig.head, rig.head_spr, p.head_z)
 	_arms(rig, p)
 	if p.has_hose():
 		_hose(rig, p)
-	_halo(rig, rig.torso_spr, -1, false)
-	_halo(rig, rig.head_spr, -1, false)
+	_halo(rig, rig.torso_spr, -1, HALO_BODY)
+	_halo(rig, rig.head_spr, -1, HALO_BODY)
 	for s: int in 2:
-		for spr: Sprite2D in [rig.sides[s].upper, rig.sides[s].fore, rig.sides[s].hand]:
+		var side: RigLimbs = rig.sides[s]
+		for spr: Sprite2D in [side.upper, side.fore, side.hand]:
 			if spr != null:
-				_halo(rig, spr, -16, true)
+				_halo(rig, spr, -16, HALO_ARM)
+		if p.leg_rim:
+			for spr: Sprite2D in [side.thigh, side.shin, side.foot]:
+				_halo(rig, spr, -16, HALO_LEG)
 
 
 ## Swaps a part's texture and pivot; body parts stay centred; limb halos follow their part.
@@ -59,6 +66,20 @@ static func set_tex(rig: CutRig, spr: Sprite2D, part: String) -> void:
 			var h: Sprite2D = c as Sprite2D
 			h.texture = t
 			h.offset = spr.offset
+
+
+## n5-cast: a collar robot's torso and pelvis print the core sticker; Rivet's is tan (core_tan).
+static func _core_kind(p: BodyPlan) -> PartMaterials.PartKind:
+	if not p.has_collar():
+		return PartMaterials.PartKind.PART
+	return PartMaterials.PartKind.TAN_CORE if p.core_tan else PartMaterials.PartKind.CORE
+
+
+## n5-cast: Rivet's helmet prints the welder-visor sticker at gameplay scale (BodyPlan.head_visor).
+static func _head_kind(p: BodyPlan, core: PartMaterials.PartKind) -> PartMaterials.PartKind:
+	if p.head_visor and core != PartMaterials.PartKind.PART:
+		return PartMaterials.PartKind.HEAD
+	return core
 
 
 static func _arms(rig: CutRig, p: BodyPlan) -> void:
@@ -131,7 +152,7 @@ static func _node(parent: Node2D, at: Vector2) -> Node2D:
 	return n
 
 
-static func _halo(rig: CutRig, src: Sprite2D, z: int, limb: bool) -> void:
+static func _halo(rig: CutRig, src: Sprite2D, z: int, mode: int) -> void:
 	var h: Sprite2D = Sprite2D.new()
 	h.name = HALO
 	h.texture = src.texture
@@ -139,10 +160,10 @@ static func _halo(rig: CutRig, src: Sprite2D, z: int, limb: bool) -> void:
 	h.offset = src.offset
 	h.material = PartMaterials.get_mat(PartMaterials.PartKind.HALO, false, 0)
 	h.z_index = z
-	if limb:
+	if mode != HALO_BODY:
 		src.add_child(h)
 	else:
 		src.get_parent().add_child(h)
 	rig.halos.append(h)
 	@warning_ignore("return_value_discarded")
-	rig.halo_limb.append(1 if limb else 0)
+	rig.halo_limb.append(mode)

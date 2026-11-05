@@ -140,7 +140,10 @@ static func _solve_leg(rig: CutRig, side: RigLimbs, s: int, hl: Vector2) -> void
 	var knee: Vector2 = Vector2(knee3.x, knee3.y)
 	place(side.thigh, hl, knee, p.thigh_draw)
 	place(side.shin, knee, fl, p.shin_draw)
-	var fs: float = 1.0 + 0.08 * lift
+	if p.leg_w != 1.0:
+		side.thigh.scale.y = p.leg_w
+		side.shin.scale.y = p.leg_w
+	var fs: float = (1.0 + 0.08 * lift) * p.foot_k
 	var splay: float = p.side_sign(s) * 0.8 * rig.c_sprawl * (1.0 - 0.8 * rig.c_plank)
 	side.foot.transform = Transform2D(splay, Vector2(fs, fs), 0.0, fl)
 	if p.has_toeoff():

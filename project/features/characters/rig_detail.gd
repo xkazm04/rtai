@@ -21,6 +21,7 @@ static var active: bool = false
 ## false = the D5 tier never switches on (A/B evidence frames, a settings toggle).
 static var enabled: bool = true
 static var _mats: Array[ShaderMaterial] = []
+static var _warm: float = 0.0
 static var _has: Dictionary[String, bool] = {}
 static var _has_part: Dictionary[String, bool] = {}
 static var _on: Dictionary[int, bool] = {}
@@ -83,7 +84,7 @@ static func sync(rig: CutRig) -> void:
 ## The hit flash: the D5 overlays print the tint too.
 static func on_tint(rig: CutRig, tint: bool) -> void:
 	for o: Sprite2D in _over.get(rig.get_instance_id(), []):
-		o.material = _mats[1 if tint else 0]
+		o.material = _mat(rig, tint)
 
 
 static func _make(rig: CutRig) -> void:
@@ -93,7 +94,7 @@ static func _make(rig: CutRig) -> void:
 		o.name = OVERLAY
 		o.centered = false
 		o.texture_filter = FILTER_MIPS
-		o.material = _mats[1 if rig.is_tinted() else 0]
+		o.material = _mat(rig, rig.is_tinted())
 		spr.add_child(o)
 		_point(o, rig, spr.texture)
 		over.append(o)
@@ -109,10 +110,22 @@ static func _point(o: Sprite2D, rig: CutRig, src: Texture2D) -> void:
 	o.offset = (o.get_parent() as Sprite2D).offset
 
 
+## The overlay material for a rig: [plain, tint] x [violet steel, the plan's warm steel]. Shared,
+## so the warm pair is built for one d5_warm value (Rivet's); other plans keep 0.
+static func _mat(rig: CutRig, tint: bool) -> ShaderMaterial:
+	var w: int = 2 if rig.plan.d5_warm > 0.0 else 0
+	if w > 0 and not is_equal_approx(_warm, rig.plan.d5_warm):
+		_warm = rig.plan.d5_warm
+		_mats[2].set_shader_parameter("warm", _warm)
+		_mats[3].set_shader_parameter("warm", _warm)
+	return _mats[w + (1 if tint else 0)]
+
+
 static func _build() -> void:
 	var sh: Shader = load(SHADER_PATH) as Shader
-	for t: int in 2:
+	for i: int in 4:
 		var m: ShaderMaterial = ShaderMaterial.new()
 		m.shader = sh
-		m.set_shader_parameter("tint", float(t))
+		m.set_shader_parameter("tint", float(i % 2))
+		m.set_shader_parameter("warm", 0.0)
 		_mats.append(m)

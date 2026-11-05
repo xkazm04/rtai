@@ -20,12 +20,19 @@ uniform float px_scale = 0.34;    // screen px per part px. Small (gameplay, ~0.
                                   // grey blends, so the screen posterizes (thin ink outlines print SOLID, light
                                   // shading prints cream) instead of dithering into noise. Large: full halftone.
 uniform float verm_gate = 62.0;   // r - max(g,b) (0..255) above which a pixel is vermilion
+uniform float collar_stripes = 6.0;  // D1 collar (lod_fill 3): ink breaks round the ring (r2_c3 hazard collar; r2_c6/c7 at game scale: an orange band with a few dark gaps)
+uniform float collar_ink = 0.3;      // D1 collar: the ink share of each stripe period (vermilion stays the dominant read)
+uniform float visor_x0 = 0.66;   // D1 head (lod_fill 4): the welder visor slot starts here (helmet UV.x; the art faces +x)
+uniform float visor_hy = 0.25;   // D1 head: the slot's half height in UV.y about the centre line
+uniform float core_tan = 0.0;   // D1 core/head sticker (lod_fill 2, 4): 0 = cream, 1 = TAN (r2_c3's lit work plates)
 uniform float alpha_cut = 0.45;
 uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px (PartMaterials.set_world_px): tooth + dots world-locked
 uniform float tint = 0.0;         // 1 = hit flash: everything but the ink prints cream (red is blood only; human-reactions 2026-11-04)
 uniform float silhouette = 0.0;
 uniform int swap = 0;           // crowd palette variants: 1 vermilion->ink, 2 vermilion->cream, 3 cream->vermilion, 4 ink->vermilion (a cop's solid plate)
-uniform float lod_fill = 0.0;     // D1 sticker LOD fill: 0 = the limb_fill tint (limbs), 1 = flat vermilion (Rivet's collar), 2 = cream core
+uniform float lod_fill = 0.0;     // D1 sticker LOD fill: 0 = the limb_fill tint (limbs), 1 = flat vermilion (Rivet's collar), 2 = cream core,
+                                  // 3 = vermilion with coarse ink hazard ticks (collar_stripes, collar_ink), 4 = cream core
+                                  // with an ink welder-visor slot at the front (visor_x0, visor_hy; r2_c7 at game scale)
 uniform float limb_fill = 0.40;   // D1 sticker LOD: the flat ink tint a limb prints at (0 = cream, 0.4 = steel)
 uniform float sticker_edge = 1.3; // D1 sticker LOD: the ink outline width, screen px (taken from the part's alpha edge)
 uniform float d4_flat = 1.0;     // D4 (look_d4): mid tones print as a flat wash tint, never a dot screen
@@ -38,6 +45,7 @@ uniform float noir = 0.0;        // D-Noir (lane noir): 1 = the body prints as o
 uniform float noir_keep = 0.97;   // D-Noir: source luminance above which a body pixel stays paper (visor glints)
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM  = vec3(0.910, 0.314, 0.165);
+const vec3 TAN   = vec3(0.800, 0.700, 0.565);
 const vec3 TEAL  = vec3(0.122, 0.710, 0.659);
 const vec3 INK   = vec3(0.090, 0.075, 0.106);
 // d5-cast (2026-11-03): the police inks (palette.json cop_blue #3A4766, cop_blue_hi #4F86E0) replace vermilion
@@ -91,7 +99,9 @@ void fragment() {
 				e = max(e, step(texture(TEXTURE, UV + vec2(cos(an), sin(an)) * r).a, alpha_cut));
 			}
 			if (e > 0.5) o = INK;
-			else if (lod_fill > 1.5) o = (d >= hi) ? INK : CREAM;   // core: cream sticker, only its darkest marks stay
+			else if (lod_fill > 3.5) o = (d >= hi || (UV.x > visor_x0 && abs(UV.y - 0.5) < visor_hy)) ? INK : mix(CREAM, TAN, core_tan);
+			else if (lod_fill > 2.5) o = (fract(atan(UV.y - 0.5, UV.x - 0.5) * collar_stripes / 6.28318) < collar_ink) ? INK : VERM;
+			else if (lod_fill > 1.5) o = (d >= hi) ? INK : mix(CREAM, TAN, core_tan);   // core sticker, only its darkest marks stay
 			else if (lod_fill > 0.5) o = VERM;
 			else o = mix(CREAM, INK, limb_fill);
 		} else if (vr > verm_gate) {

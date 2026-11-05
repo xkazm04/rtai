@@ -31,8 +31,11 @@ func test_helmet_leans_off_the_stock_only_when_aiming_long() -> void:
 	assert_eq(RigGrip.head_lean(_rig(RigGrip.Kind.ONE_HAND, true)), 0.0, "a pistol: no lean")
 
 
+## The helmet's half-extent ACROSS the barrel line: the line runs forward (+x, the part's texture
+## width), so the clearance is half the texture height (n5-cast: the hybrid's welder helmet is
+## long front to back, 207 x 150 part px; the d4 helmet was about square).
 func _half(rig: CutRig) -> float:
-	return rig.head_spr.texture.get_width() * 0.5
+	return rig.head_spr.texture.get_height() * 0.5
 
 
 ## The aimed barrel line (through the gun claw toward the aim point): its distance from the

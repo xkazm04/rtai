@@ -39,7 +39,10 @@ uniform float fringe_dry = 0.2;   // the misprint's vermilion mixed this far tow
 uniform float dots_k = 0.0;       // OPTION (owner A/B, iteration 8): the concept's halftone dot screen in the steel
                                   // mid-tones (violet-grey dots, part space: no swim), fading in with fringe_fade
 uniform float dots_period = 3.0;  // screen px between dots
-uniform float tint = 0.0;         // 1 = hit flash (everything not ink prints vermilion)
+uniform float tint = 0.0;         // 1 = hit flash: everything not ink prints cream, as print_part (red is blood
+                                  // only; n5-cast iteration 9: this tier still flashed vermilion at 56+ px/m)
+uniform float warm = 0.0;         // n5-cast (r2_c3): 0 = the violet-grey steel ramp, 1 = the hybrid target's warm
+                                  // tan metal (Rivet's BodyPlan.d5_warm; the cops and the crowd keep 0)
 
 const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM = vec3(0.910, 0.314, 0.165);
@@ -51,6 +54,11 @@ const vec3 COP_BLUE_HI = vec3(0.310, 0.525, 0.878);
 const vec3 STEEL_HI = vec3(0.915, 0.880, 0.890);
 const vec3 STEEL_MID = vec3(0.740, 0.700, 0.760);
 const vec3 STEEL_LO = vec3(0.420, 0.385, 0.450);
+// n5-cast: the warm ramp, halfway from the violet steel's values to r2_c3's sampled tan metal (light ~(190,160,130),
+// mid ~(140,115,95)): the owner's "middle ground between this variant and the current game"
+const vec3 WARM_HI = vec3(0.860, 0.790, 0.690);
+const vec3 WARM_MID = vec3(0.660, 0.570, 0.480);
+const vec3 WARM_LO = vec3(0.380, 0.320, 0.270);
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
 
@@ -118,15 +126,18 @@ void fragment() {
 			o = d > 0.86 ? mix(o, INK, 0.6) : o;
 			o = mix(o, INK, strokes(q, 0.785, shade * shade_k * verm_shade));
 		} else {
-			o = mix(CREAM, STEEL_HI, smoothstep(0.08, 0.16, d));
-			o = mix(o, STEEL_MID, smoothstep(0.42, 0.50, d));
-			o = mix(o, STEEL_LO, smoothstep(0.62, 0.70, d));
+			vec3 st_hi = mix(STEEL_HI, WARM_HI, warm);
+			vec3 st_mid = mix(STEEL_MID, WARM_MID, warm);
+			vec3 st_lo = mix(STEEL_LO, WARM_LO, warm);
+			o = mix(CREAM, st_hi, smoothstep(0.08, 0.16, d));
+			o = mix(o, st_mid, smoothstep(0.42, 0.50, d));
+			o = mix(o, st_lo, smoothstep(0.62, 0.70, d));
 			float ink = smoothstep(ink_at, ink_at + 0.06, d);
 			ink = max(ink, strokes(q, 0.785, smoothstep(hatch_lo, hatch_lo + 0.25, d) * 0.36) * step(hatch_lo, d));
 			ink = max(ink, strokes(q, 2.356, smoothstep(hatch_hi, hatch_hi + 0.2, d) * 0.34) * step(hatch_hi, d));
 			float lit = 1.0 - step(alpha_cut, texture(TEXTURE, UV - off_s * 0.45).a);
 			o = mix(o, CREAM, lit * (1.0 - shade) * lit_k * (1.0 - smoothstep(0.5, 0.7, d)));
-			o = mix(o, STEEL_MID, shade * 0.12);
+			o = mix(o, st_mid, shade * 0.12);
 			ink = max(ink, strokes(q, 0.785, shade * shade_k));
 			o = mix(o, INK, ink);
 			// the off-register plate: vermilion that should be under a nearby edge, printed here
@@ -143,12 +154,12 @@ void fragment() {
 			vec2 cell = fract(mat2(vec2(0.966, 0.259), vec2(-0.259, 0.966)) * q / dots_period) - 0.5;
 			float rad = 0.5 * sqrt(band * 0.55);
 			float dot = 1.0 - smoothstep(rad - 0.1, rad + 0.1, length(cell));
-			o = mix(o, STEEL_LO, dot * dots_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale) * (1.0 - ink));
+			o = mix(o, st_lo, dot * dots_k * smoothstep(fringe_fade.x, fringe_fade.y, px_scale) * (1.0 - ink));
 			// paper grime: blotchy dry-brush in part space
 			float gr = vnoise(q * 0.35) * vnoise(q * 1.7 + 3.0);
 			o = mix(o, INK, smoothstep(0.48, 0.66, gr) * grime);
 		}
-		if (tint > 0.5 && o != INK) o = VERM;
+		if (tint > 0.5 && o != INK) o = CREAM;
 		COLOR = vec4(o * g, amount);
 	}
 }

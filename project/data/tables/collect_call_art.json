@@ -24,8 +24,8 @@
       "art": "res://features/quest/art/collect_call/cast_cop.png",
       "id": "cop",
       "size_m": [
-        1.85,
-        3.23
+        1.45,
+        2.833333
       ]
     },
     {
@@ -88,16 +88,32 @@
       "art": "res://features/quest/art/collect_call/cast_rivet.png",
       "id": "rivet",
       "size_m": [
-        2.733333,
-        2.9
+        2.366667,
+        2.066667
+      ]
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_rivet_lod.png",
+      "id": "rivet_lod",
+      "size_m": [
+        2.366667,
+        2.083333
       ]
     },
     {
       "art": "res://features/quest/art/collect_call/cast_rivet_peek.png",
       "id": "rivet_peek",
       "size_m": [
-        1.03,
-        1.03
+        0.966667,
+        0.966667
+      ]
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_rivet_peek_lod.png",
+      "id": "rivet_peek_lod",
+      "size_m": [
+        0.966667,
+        0.966667
       ]
     },
     {
