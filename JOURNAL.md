@@ -1060,3 +1060,7 @@ Session end 04:44: tree clean after this commit, no Godot process of mine runnin
   in JOURNAL/REPORT. Semantic: n6's DentPlan is built on RivetPlan.build() but has no collar and raw parts, so it gets
   neither the visor slot nor the tan (both gated on the collar core); n6's set_tint edit still calls get_mat(kind)
   and takes TAN_CORE. REPORT merge note extended.
+- 04:55 measured the tan against r2_c3 (pixels, lit 60-95 % of each box): fig 2 shoulder plates (189,156,128) sat 0.32;
+  built 0.6 = (219,200,172) sat 0.21; 1.0 = (204,178,144) sat 0.29; r2_c3's ground (133,117,103). C (1.0) is the
+  closer colour, A (0.6) the lighter sticker for our dark asphalt / cream slab. Kept A (judged in motion on both
+  grounds), numbers added to REPORT Call 9 for the owner.

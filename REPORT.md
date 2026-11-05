@@ -271,6 +271,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    beside the targets: `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`; lineup slab and road at 0 / 0.5 / 1.0:
    `M/frames/rivet-core-tan-lineup-32ppm.png`; live A/B: `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
    Quest 1 Dock 9: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`.
+   Measured: r2_c3's lit shoulder plates sample about RGB (189,156,128), saturation 0.32; A prints (219,200,172), 0.21;
+   C prints (204,178,144), 0.29. C is the closer colour; A is lighter so the body holds on the dark asphalt (the
+   target's own ground is a mid value, about (133,117,103), which our asphalt and slab are not).
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
