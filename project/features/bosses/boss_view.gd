@@ -39,6 +39,8 @@ static func attach(view: Node, hook: BossHook) -> void:
 	var bar: BossBar = BossBar.new()
 	bar.fight = hook.fight
 	layer.add_child(bar)
+	@warning_ignore("return_value_discarded")
+	BossMusic.attach(v, hook.fight)
 	if BossCam.wanted():
 		var cam: BossCam = BossCam.new()
 		cam.view = v
