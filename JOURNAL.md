@@ -358,3 +358,31 @@ NEXT (written 21:40, for iteration 4):
   keyed to the contact tick and scaled by the hit's class; the cap via FeelBudget stays ranged's).
 - DECISION 22:03: Dent's blow takes the `ram` class (a vehicle striking a body = a ram), not `blast`
   (that is the car's explosion, a separate, bigger beat). Alternative: delete the row (not felt).
+- GATES 22:11 `node tools/evidence/run.mjs --no-bench` on `29d44643` (clean tree): lint 13/13 over
+  952 files, unit 1164/1164, scenarios 52/52, parity bit-exact (planted caught at step 629), selftest
+  pass (look goldens 11/11). `evidence/n7-melee/gates-29d44643.log`. No bench: no performance claim.
+  FRICTION: the first try refused a dirty tree (JOURNAL edits); commit docs before the evidence run.
+- MILESTONE 22:18 `806a657e` Dock 9's fight hint adds ", [2] for the blade" when quest 1 carries one
+  (ObjectiveHint; `[slotN]` -> the bound key). test_quest_blade 5/5 (hint absent without a blade);
+  unit 1165/1165. Hint key unchanged (SLICE__HINT_FIGHT), so the scenario's hint list does not move.
+  Limit: a pad user reads "[2]" (the slot actions have no pad button; weapon_next draws it on a pad).
+- Scratch cleaned (quest 1 frames, Dent films; frames.json references only the masters mp4s).
+- CHECK 22:16 director reel WITH `--loadout=pistol` on `29d44643` (arena): 19/19 chapters fully down,
+  0 SCRIPT ERROR, nothing skipped (`evidence/n7-melee/director-arena-loadout-29d44643.log`). The reel
+  does not quit by itself: run it with `--quit-after 7400` (my run hit the 10-min background limit
+  after the last chapter, so the city reel never started; re-run on `806a657e`, result below).
+
+NEXT (written 22:20, for iteration 5):
+1. Read the city reel + scenarios results appended below (on `806a657e`); re-run a known flake alone.
+2. Quest 1 blade hand point (HAND_AHEAD_M 0.45 / HAND_SIDE_M 0.4) puts the grip at his shoulder side
+   on the sprite; look at 64 px/m and try the sprite's claw side. quest1_clip `--blade=13570-13880`.
+3. Tonnage plates: film a cop firing at Tonnage at 48 px/m every frame; measure whether a spark
+   prints at the press (`armor_k`); if nothing reads, a small ink spark per deflected round.
+4. Ohm's mass arc: find how to reach upgrade_tier 1 in the ghosts reel, film through a crowd at 32,
+   judge "without drowning the screen". Then Ohm's bolt victim impact; Tonnage ram heap at the car.
+5. Merge n7-ranged feel commits as they land (record each).
+6. Before freeze: the combined city-block clip of the polished set (30-90 s), the exe (int-day recipe
+   in docs/decisions.md), REPORT with calls for the owner: (a) quest 1 carries the katana on key 2
+   (`--quest-blade=off` / `=electro_baton`; clip `M/quest1_katana_ab_32ppm.mp4`); (b) Tonnage stomp's
+   HaulerKick ignores `--feel=off`; (c) no per-attack sound cues exist (needs sound assets); (d) Dent's
+   blow feel (`dent_car` row, class ram; delete the row = the before; `M/dent_car_blow_ab_32ppm_04x.mp4`).
