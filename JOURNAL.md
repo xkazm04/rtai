@@ -939,3 +939,14 @@ Session state 08:21: head = this commit, tree clean, no Godot process of mine ru
 NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
 the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls in
 REPORT). Session state 08:27: head = this commit, tree clean, no Godot process of mine running, no lock held.
+
+## Iteration 15 (08:30-08:33, STABILIZE)
+- 08:30 CHECK: n5-cast 8d83f472 and n6-ghost-forms 0592825f moved docs only (`git diff efa29d38 n5-cast -- project`
+  and `git diff HEAD n6-ghost-forms -- project` both empty; efa29d38 is our ancestor). Nothing merged.
+- 08:31 GATE lint 13/13 over 880 GDScript files on the head (`E/lint-it15-powers.log`). No code change since
+  it13b (unit 1020/0, director reel 16/16), so no other gate re-run.
+- 08:32 REPORT: header to iterations 13-15, a stabilize-check row.
+
+NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
+the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls in
+REPORT). Session state 08:33: head = this commit, tree clean, no Godot process of mine running, no lock held.
