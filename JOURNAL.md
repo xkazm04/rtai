@@ -1426,3 +1426,9 @@ Session end 07:54: tree clean after this commit, no Godot process of mine runnin
   "a sprite is a set": both captures share the rig-root anchor, so the blend does not ghost-shift.
 - FRICTION: the first unit run went without GODOT_BIN set: exit -1 on every step, with a stale "954 passed" summary.
   Re-run with GODOT_BIN: 954/0.
+- 08:05 EVIDENCE GATE on 10607e11 (`--no-bench`; only docs commits landed during the run): ALL PASS: lint 13/13,
+  unit 954/0, scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless needed.
+- 08:06 COMBAT CHECK on 10607e11: director reel headless (`--headless --fixed-fps 60 --quit-after 7200 --path project
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director --clean --rigs --loadout=pistol`): 16/16 chapters n/n down,
+  0 SCRIPT ERROR. (FRICTION: the scene path is required; `--arena` as a boot arg is "unknown launch arg".)
+  Scratch PNG sequences in `gtai-n5/scratch-cast/i23` deleted (logs kept).
