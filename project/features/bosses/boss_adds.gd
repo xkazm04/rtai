@@ -67,6 +67,33 @@ func step(arena: CombatArena, tick: int) -> void:
 		_last_hp[f.body.id] = f.body.hp
 
 
+## Standing adds never stack on one spot (they all walk at Rivet): each overlapping pair parts
+## half the overlap each, and an add overlapping the boss steps fully out of it.
+func separate(boss: BossFight) -> void:
+	var up: Array[Fighter] = []
+	for f: BossFight in fights:
+		if f.state != BossFight.State.DEFEATED:
+			up.append(f.body)
+	for i: int in up.size():
+		up[i].pos = _part(up[i].pos, boss.body.pos, up[i].radius_m + boss.body.radius_m, 1.0)
+		for j: int in range(i + 1, up.size()):
+			var a: Fighter = up[i]
+			var b: Fighter = up[j]
+			var na: Vector2 = _part(a.pos, b.pos, a.radius_m + b.radius_m, 0.5)
+			b.pos -= na - a.pos
+			a.pos = na
+
+
+## `p` pushed off `other` by `share` of their overlap (no overlap: unchanged).
+static func _part(p: Vector2, other: Vector2, min_d: float, share: float) -> Vector2:
+	var d: Vector2 = p - other
+	var len: float = d.length()
+	if len >= min_d:
+		return p
+	var away: Vector2 = d / len if len > 0.001 else Vector2.RIGHT
+	return p + away * (min_d - len) * share
+
+
 func write_state(out: StreamPeerBuffer) -> void:
 	out.put_32(fights.size())
 	for f: BossFight in fights:

@@ -180,6 +180,7 @@ func phase_entered(_f: BossFight, phase: int) -> void:
 
 
 func write_state(out: StreamPeerBuffer) -> void:
+	super.write_state(out)
 	out.put_float(mark.x)
 	out.put_float(mark.y)
 	if _armed:

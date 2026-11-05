@@ -38,6 +38,7 @@ var _ready_at: Dictionary[StringName, int] = {}
 var _pending: int = -1
 var _tick: int = 0
 var _adds_t: int = 0
+var _adds_asked: int = 0
 
 
 func _init(p_spec: BossSpec, rng: RandomNumberGenerator, at: Vector2) -> void:
@@ -45,6 +46,7 @@ func _init(p_spec: BossSpec, rng: RandomNumberGenerator, at: Vector2) -> void:
 	_rng = rng
 	body = Fighter.make(Fighter.Kind.BOSS, 900, at, spec.hp)
 	body.radius_m = spec.radius_m
+	body.body_class = spec.body_class
 	moves = BossMoves.make(spec.script_path)
 	if spec.keep_m >= 0.0:
 		moves.keep_m = spec.keep_m
@@ -113,6 +115,11 @@ func hit_id() -> StringName:
 	return attack.id if attack != null and state == State.ACTIVE else spec.id
 
 
+## The sim tick of the last step (views pose rigs on it, never on the frame delta).
+func now() -> int:
+	return _tick
+
+
 func hp_frac() -> float:
 	return body.hp / spec.hp
 
@@ -130,6 +137,7 @@ func write_state(out: StreamPeerBuffer) -> void:
 	out.put_float(body.pos.y)
 	out.put_float(body.hp)
 	out.put_32(hits)
+	out.put_32(_adds_asked)
 	moves.write_state(out)
 
 
@@ -202,11 +210,10 @@ func _after_attack() -> void:
 
 func _begin_phase() -> void:
 	_adds_t = 0
+	_adds_asked = 0
 	moves.phase_entered(self, phase)
 	phase_changed.emit(phase, spec.phases[phase].id)
-	var p: BossSpec.Phase = spec.phases[phase]
-	if p.adds_count > 0:
-		adds_wanted.emit(p.adds_archetype, p.adds_count)
+	_ask_adds()
 
 
 func _step_adds() -> void:
@@ -216,7 +223,18 @@ func _step_adds() -> void:
 	_adds_t += 1
 	if _adds_t >= p.adds_every:
 		_adds_t = 0
-		adds_wanted.emit(p.adds_archetype, p.adds_count)
+		_ask_adds()
+
+
+## The phase's adds, never past its max_total (a phase is a pressure, not a wall of adds).
+func _ask_adds() -> void:
+	var p: BossSpec.Phase = spec.phases[phase]
+	var n: int = p.adds_count
+	if p.adds_max > 0:
+		n = mini(n, p.adds_max - _adds_asked)
+	if n > 0:
+		_adds_asked += n
+		adds_wanted.emit(p.adds_archetype, n)
 
 
 func _enter(s: State) -> void:

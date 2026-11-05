@@ -59,6 +59,16 @@
         55,
         9
       ]
+    },
+    {
+      "id": "boulevard",
+      "name": "KING'S BOULEVARD",
+      "rect": [
+        60,
+        -30,
+        80,
+        30
+      ]
     }
   ],
   "city": {

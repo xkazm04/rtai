@@ -3,8 +3,9 @@ extends BossView
 ## King from straight above, after the 90-degree panel of boss_king.jpg: phase 1 the gilded
 ## throne-car (a long black stretch body, gold trim and grille, the hood cannon forward, the throne
 ## mid-car with King under a vermilion fur-trimmed cape); phases 2-3 King on foot (squat grey
-## press body, two gold press plates, the jewelled crown, the cape behind). FIRST PASS, drawn
-## shapes: the cutout rig from part sheets replaces this (docs/bosses/king.md, "The body").
+## press body, two gold press plates, the jewelled crown, the cape behind). King and the gang are
+## the cutout rigs (KingRigs, a child: drawn over the car and the cape); `--boss-shapes` keeps the
+## first-pass drawn shapes (A/B). The car, the cape, the coins stay drawn here.
 
 const GOLD: Color = Color("#D9A933")
 const GOLD_DARK: Color = Color("#8A6418")
@@ -16,6 +17,19 @@ const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
 const COINS: int = 30
+
+var _rigs: KingRigs = null
+
+
+func _process(_delta: float) -> void:
+	super._process(0.0)
+	if fight == null:
+		return
+	if _rigs == null and not OS.get_cmdline_user_args().has("--boss-shapes"):
+		_rigs = KingRigs.new()
+		add_child(_rigs)
+	if _rigs != null:
+		_rigs.pose(fight, adds, _windup_px())
 
 
 func _draw() -> void:
@@ -30,7 +44,7 @@ func _draw() -> void:
 		_on_foot()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	_coins()
-	for g: BossFight in standing_adds():  # the gang off the car (phase 2's adds)
+	for g: BossFight in standing_adds() if _rigs == null else []:  # first pass: drawn gang
 		draw_set_transform(Ink.px(g.body.pos), g.body.facing.angle(), Vector2.ONE * 1.3)
 		_gangster(Vector2.ZERO)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -77,9 +91,10 @@ func _car() -> void:
 	draw_rect(Rect2(l * 0.12, -10.0, l * 0.3, 20.0), GOLD)  # the hood cannon
 	draw_circle(Vector2(l * 0.42, 0.0), 13.0, GOLD_DARK)
 	draw_rect(Rect2(-l * 0.28, -w * 0.5, l * 0.18, w), PLUM)  # the rear cabin's plush
-	for sx: float in [-0.36, 0.3]:  # the gang at the four corners
-		for sy: float in [-1.0, 1.0]:
-			_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
+	if _rigs == null:  # first pass: the gang at the four corners, King on the throne
+		for sx: float in [-0.36, 0.3]:
+			for sy: float in [-1.0, 1.0]:
+				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
 	_king(Vector2(-l * 0.08, 0.0), 1.0)
 
 
@@ -104,6 +119,8 @@ func _king(at: Vector2, k: float) -> void:
 	)
 	draw_colored_polygon(cape, Ink.VERMILION)  # the King's cape: vermilion by verdict
 	draw_polyline(cape, FUR, 0.16 * p)
+	if _rigs != null:  # the rig is King's body; the cape spreads under it
+		return
 	draw_circle(at, 0.62 * p, Ink.INK)
 	draw_circle(at, 0.56 * p, STEEL)
 	for sy: float in [-1.0, 1.0]:  # the gold press plates

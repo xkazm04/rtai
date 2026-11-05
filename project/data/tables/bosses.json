@@ -16,30 +16,31 @@
     "king_boulevard": {
       "add_spawns": [
         [
-          12,
-          -8
+          -2.6,
+          -1.9
         ],
         [
-          12,
-          8
+          2.6,
+          -1.9
         ],
         [
-          -12,
-          -8
+          -2.6,
+          1.9
         ],
         [
-          -12,
-          8
+          2.6,
+          1.9
         ]
       ],
-      "area": "pit",
+      "adds_from": "boss",
+      "area": "boulevard",
       "boss_at": [
-        10,
+        -30,
         0
       ],
-      "doc": "King's district: a long boulevard for the procession, its plaza for phases 2-3 (first pass: the arena pit).",
+      "doc": "King's district (dev arena area `boulevard`, 80 x 30 m): the procession enters from the west end down a 20 m clear street between planters; the plaza's plinths at the east end. The gang leaps off the car's four corners (adds_from boss).",
       "rivet_at": [
-        -8,
+        8,
         0
       ]
     }
@@ -154,7 +155,8 @@
           "adds": {
             "archetype": "king_gang",
             "count": 4,
-            "every_s": 14
+            "every_s": 14,
+            "max_total": 8
           },
           "attacks": [
             "coin_fan",
@@ -205,6 +207,7 @@
           "windup_s": 0.8
         }
       },
+      "body_class": "robot",
       "doc": "King's bodyguard bots (the rich robot thug: gold chains, visor shades). Phase 2's adds. The swipe is enemy-ai's thug claw: a 0.8 s windup, the aim locks 0.2 s before, a 3 m lunge along the locked aim.",
       "hp": 6,
       "keep_m": 1.6,

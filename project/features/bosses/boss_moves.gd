@@ -6,15 +6,36 @@ extends RefCounted
 ## throne-car, Servo's rotor dash) names a script in bosses.json (`features/bosses/<id>/`) that
 ## extends this class and overrides only what differs.
 
+## A walk that made less than this share of its step (cover pushed it back) is blocked.
+const STUCK_K: float = 0.3
+## Ticks a blocked walk sidesteps around what blocks it (a crate row, the stalled car).
+const DETOUR_TICKS: int = 45
+
 ## The distance the default walk stops at.
 var keep_m: float = 4.0
+var _from: Vector2 = Vector2.ZERO
+var _want: float = 0.0
+var _t: int = -2
+var _detour: int = 0
+var _side: float = 1.0
 
 
-## Between attacks (IDLE): close in on the target.
+## Between attacks (IDLE): close in on the target, sidestepping when cover blocks the way.
 func idle_step(f: BossFight, target: Vector2) -> void:
 	var d: Vector2 = target - f.body.pos
+	if f.t == _t + 1 and _want > 0.0 and _from.distance_to(f.body.pos) < _want * STUCK_K:
+		_side = -_side if _detour > 0 else (1.0 if f.body.id % 2 == 0 else -1.0)
+		_detour = DETOUR_TICKS
+	_t = f.t
+	_want = 0.0
+	_from = f.body.pos
 	if d.length() > keep_m:
-		f.body.pos += d.normalized() * f.spec.move_mps * SimClock.TICK_DT
+		var dir: Vector2 = d.normalized()
+		if _detour > 0:
+			_detour -= 1
+			dir = (dir * 0.3 + dir.orthogonal() * _side).normalized()
+		_want = f.spec.move_mps * SimClock.TICK_DT
+		f.body.pos += dir * _want
 	if d.length() > 0.01:
 		f.body.facing = d.normalized()
 
@@ -67,9 +88,10 @@ func telemetry() -> Dictionary:
 	return {}
 
 
-## Extra state for the replay hash.
-func write_state(_out: StreamPeerBuffer) -> void:
-	pass
+## Extra state for the replay hash (a boss script that overrides it calls super first).
+func write_state(out: StreamPeerBuffer) -> void:
+	out.put_32(_detour)
+	out.put_float(_side)
 
 
 ## The per-boss moves `path` names, or the default (logged when the path is broken).
