@@ -28,6 +28,8 @@ var blast_hits: int = 0
 var dive_hits: int = 0
 var dives: int = 0
 ## The bay hop's landing ring once its tell locked (the bot's read), else none.
+## The arena record's centre (the depot's dressing is laid round it): set once by bind().
+var depot_origin: Vector2 = Vector2.ZERO
 var _hop_locked: bool = false
 var _hop_r: float = 0.0
 var _armed: bool = false
@@ -53,7 +55,8 @@ func idle_step(f: BossFight, target: Vector2) -> void:
 
 
 ## BossHook binds once: the swarm takes its own named stream (`ServoSwarm.STREAM`).
-func bind(_f: BossFight, rng: RngRegistry) -> void:
+func bind(f: BossFight, rng: RngRegistry) -> void:
+	depot_origin = f.body.pos - f.spec.arena.boss_at
 	setup_swarm(rng.stream(ServoSwarm.STREAM))
 
 

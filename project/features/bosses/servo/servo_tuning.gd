@@ -44,6 +44,13 @@ var dive_lock_ticks: int = 27
 var dive_mps: float = 18.0
 var dive_blast_m: float = 2.2
 var dive_damage: float = 18.0
+## The depot's dressing round the arena centre (servo.json `depot`).
+var bays: Array[Vector2] = []
+var bay_w_m: float = 4.5
+var belt_from: Vector2 = Vector2.ZERO
+var belt_to: Vector2 = Vector2.ZERO
+var belt_w_m: float = 1.3
+var belt_mps: float = 1.5
 var cells: int = 12
 var cell_dx_m: float = 0.9
 var row_dy_m: float = 0.5
@@ -78,6 +85,7 @@ static func from_table(t: DataTable) -> ServoTuning:
 	s.refill_ticks = ticks(t.num(d, "refill_s"))
 	_read_parcels(t, s)
 	_read_dive(t, s)
+	_read_depot(t, s)
 	var r: Dictionary = t.object(t.raw, "rack")
 	s.cells = t.integer(r, "cells")
 	s.cell_dx_m = t.num(r, "cell_dx_m")
@@ -112,6 +120,19 @@ static func _read_dive(t: DataTable, s: ServoTuning) -> void:
 	s.dive_mps = t.num(k, "dive_mps")
 	s.dive_blast_m = t.num(k, "blast_m")
 	s.dive_damage = t.num(k, "damage")
+
+
+static func _read_depot(t: DataTable, s: ServoTuning) -> void:
+	var dp: Dictionary = t.object(t.raw, "depot")
+	for b: Variant in t.array(dp, "bays"):
+		s.bays.append(t.vec({"xy": b}, "xy"))
+	var belt: Array = t.array(dp, "conveyor")
+	if belt.size() == 2:
+		s.belt_from = t.vec({"xy": belt[0]}, "xy")
+		s.belt_to = t.vec({"xy": belt[1]}, "xy")
+	s.bay_w_m = t.num(dp, "bay_w_m")
+	s.belt_w_m = t.num(dp, "belt_w_m")
+	s.belt_mps = t.num(dp, "belt_mps")
 
 
 ## Phase 1..3 (clamped), so a bad phase number never indexes out.

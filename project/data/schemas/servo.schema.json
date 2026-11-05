@@ -2,6 +2,64 @@
   "$id": "gtai.servo/1",
   "additionalProperties": false,
   "properties": {
+    "depot": {
+      "additionalProperties": false,
+      "properties": {
+        "bay_w_m": {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "number"
+        },
+        "bays": {
+          "items": {
+            "items": {
+              "maximum": 60,
+              "minimum": -60,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "type": "array"
+        },
+        "belt_mps": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "belt_w_m": {
+          "maximum": 4,
+          "minimum": 0.4,
+          "type": "number"
+        },
+        "conveyor": {
+          "items": {
+            "items": {
+              "maximum": 60,
+              "minimum": -60,
+              "type": "number"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "bay_w_m",
+        "bays",
+        "belt_mps",
+        "belt_w_m",
+        "conveyor"
+      ],
+      "type": "object"
+    },
     "doc": {
       "minLength": 1,
       "type": "string"
@@ -240,6 +298,7 @@
     }
   },
   "required": [
+    "depot",
     "doc",
     "drone",
     "kamikaze",
