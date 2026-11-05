@@ -70,3 +70,18 @@ func _run(g: GhostForms, n: int) -> void:
 	for i: int in n:
 		g.powers.tick()
 		g.tick()
+
+
+func test_the_card_folds_to_one_chip_while_a_line_is_up() -> void:
+	var view: CollectCallView = _view()
+	var s: StoryForms = StoryForms.attach(_host(), view, _stage(true), false)
+	var hud: GhostFormHud = s.form_view.hud
+	hud.sync(s.form_view.pilot.ghosts.forms)
+	view.hud_view.state.say("Rivet", "Okay.")
+	s._process(0.0)
+	assert_true(hud.compact, "a line is up: folded")
+	assert_eq(hud.shown_chips(), [hud.selected] as Array[StringName], "in base: the selected ghost")
+	view.hud_view.state.silent()
+	s._process(0.0)
+	assert_false(hud.compact, "the line closed")
+	assert_eq(hud.shown_chips().size(), 4, "all four again")
