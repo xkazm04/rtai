@@ -34,6 +34,11 @@
           "minimum": 0.3,
           "type": "number"
         },
+        "hp": {
+          "maximum": 2000,
+          "minimum": 1,
+          "type": "number"
+        },
         "launch_s": {
           "maximum": 3,
           "minimum": 0,
@@ -69,12 +74,57 @@
         "cruise_mps",
         "fly_h_m",
         "hover_s",
+        "hp",
         "launch_s",
         "life_s",
         "radius_m",
         "refill_s",
         "ring_from_launch",
         "sep_m"
+      ],
+      "type": "object"
+    },
+    "kamikaze": {
+      "additionalProperties": false,
+      "properties": {
+        "blast_m": {
+          "maximum": 6,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "damage": {
+          "maximum": 200,
+          "minimum": 0,
+          "type": "number"
+        },
+        "dive_mps": {
+          "maximum": 60,
+          "minimum": 2,
+          "type": "number"
+        },
+        "lock_s": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "standoff_m": {
+          "maximum": 15,
+          "minimum": 1,
+          "type": "number"
+        },
+        "track_s": {
+          "maximum": 3,
+          "minimum": 0.1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "blast_m",
+        "damage",
+        "dive_mps",
+        "lock_s",
+        "standoff_m",
+        "track_s"
       ],
       "type": "object"
     },
@@ -192,6 +242,7 @@
   "required": [
     "doc",
     "drone",
+    "kamikaze",
     "parcels",
     "phases",
     "rack",

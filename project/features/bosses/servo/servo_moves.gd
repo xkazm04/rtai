@@ -13,13 +13,23 @@ const BAND_M: float = 2.0
 const CARPET_STEP_M: float = 1.5
 ## A bay hop never jumps further than this.
 const HOP_MAX_M: float = 18.0
+## A player's read of a new drop ring (BossBot.REACT_TICKS: about 0.3 s).
+const SEEN_TICKS: int = 18
 
 var swarm: ServoSwarm = ServoSwarm.new()
+## The live drones as arena bodies (shootable, seizable; BossHook keeps them in the hostiles).
+var drone_bodies: ServoDroneBodies = ServoDroneBodies.new()
 ## Where Rivet stood when the tell locked (the drop target); follows him until the lock.
 var mark: Vector2 = Vector2.ZERO
 var marks_made: int = 0
 ## Parcel blasts that caught the target (the bot's hit table).
 var blast_hits: int = 0
+## Of those, the kamikaze dives' (the rest are parcels), and the dives flown.
+var dive_hits: int = 0
+var dives: int = 0
+## The bay hop's landing ring once its tell locked (the bot's read), else none.
+var _hop_locked: bool = false
+var _hop_r: float = 0.0
 var _armed: bool = false
 
 
@@ -50,6 +60,8 @@ func bind(_f: BossFight, rng: RngRegistry) -> void:
 ## The swarm's own stream. Without it the rack never launches: no hidden unseeded dice.
 func setup_swarm(rng: RandomNumberGenerator, tuning: ServoTuning = null) -> void:
 	swarm.setup(tuning if tuning != null else ServoTuning.shipped(), rng)
+	drone_bodies.hp = swarm.tuning.drone_hp
+	drone_bodies.radius_m = swarm.tuning.radius_m
 	_armed = true
 
 
@@ -58,25 +70,79 @@ func setup_swarm(rng: RandomNumberGenerator, tuning: ServoTuning = null) -> void
 func tick(f: BossFight, target: Vector2, target_r: float) -> float:
 	if f.state == BossFight.State.WINDUP and not f.locked:
 		mark = target
+	_hop_locked = f.state == BossFight.State.WINDUP and f.locked and f.attack.id == &"bay_hop"
+	_hop_r = f.attack.range_m if _hop_locked else 0.0
 	if not _armed:
 		return 0.0
 	swarm.rack.origin = f.body.pos
 	swarm.rack.facing = f.body.facing.angle()
+	swarm.aim_at = target
 	swarm.step()
+	drone_bodies.sync(swarm)
 	var dealt: float = 0.0
 	for b: ServoParcels.Blast in swarm.parcels.blasts:
 		if b.pos.distance_to(target) <= b.radius_m + target_r:
 			dealt += b.damage
 			blast_hits += 1
+			dive_hits += 1 if b.radius_m == swarm.tuning.dive_blast_m else 0
 	return dealt
+
+
+## Away from every drop ring that would catch a body at `at` (radius r): the rings of carried
+## parcels once a player has seen them for SEEN_TICKS (a drone's age), and every falling parcel.
+func threat_away(at: Vector2, r: float) -> Vector2:
+	if not _armed:
+		return Vector2.ZERO
+	var ring: float = swarm.tuning.ring_m + r
+	var out: Vector2 = Vector2.ZERO
+	var spots: Array[Vector2] = []
+	for d: ServoDrone in swarm.drones:
+		if d.carrying() and d.age >= SEEN_TICKS:
+			spots.append(d.goal)
+	for p: ServoParcels.Parcel in swarm.parcels.falling:
+		spots.append(p.pos)
+	if _hop_locked and at.distance_to(mark) < _hop_r + r:
+		out += (at - mark).normalized() if at.distance_to(mark) > 0.05 else Vector2.UP
+	var dive_r: float = swarm.tuning.dive_blast_m + r
+	for d: ServoDrone in swarm.drones:  # a locked dive's blast ring
+		if ServoDive.locked(swarm, d) and at.distance_to(d.strike) < dive_r:
+			out += (at - d.strike).normalized() if at.distance_to(d.strike) > 0.05 else Vector2.UP
+	for spot: Vector2 in spots:
+		var off: Vector2 = at - spot
+		if off.length() < ring:
+			out += off.normalized() if off.length() > 0.05 else Vector2.RIGHT
+	return out.normalized() if out.length() > 0.01 else Vector2.ZERO
+
+
+## Servo's own numbers for the bot's table (BossHook puts them under `moves`).
+func telemetry() -> Dictionary:
+	return {
+		"marks": marks_made,
+		"drones_launched": swarm.launched_total if _armed else 0,
+		"drones_shot": drone_bodies.shot,
+		"parcels_landed": swarm.parcels.landed_total if _armed else 0,
+		"parcel_hits": blast_hits - dive_hits,
+		"dives": dives,
+		"dive_hits": dive_hits,
+	}
+
+
+func bodies() -> Array[Fighter]:
+	return drone_bodies.list()
 
 
 func active_step(f: BossFight, target: Vector2, target_r: float) -> bool:
 	var first: bool = f.t == 1
 	match f.attack.id:
-		&"scan_drop", &"kamikaze":
+		&"scan_drop":
 			if first and _armed:
 				_launched(swarm.launch_wave(mark))
+			return false
+		&"kamikaze":
+			if first and _armed:
+				var n: int = swarm.launch_dives(mark)
+				dives += n
+				_launched(n)
 			return false
 		&"package_carpet":
 			if first and _armed:

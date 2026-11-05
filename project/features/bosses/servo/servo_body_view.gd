@@ -36,6 +36,9 @@ func moves() -> ServoMoves:
 
 func _process(_delta: float) -> void:
 	super._process(0.0)  # the base reads no delta (render only)
+	if blood != null:  # the drones are robots too: oil, never red
+		for b: Fighter in moves().bodies():
+			blood.victims.robot_ids[b.id] = true
 	_frame += 1
 	_rig.pose(_frame)
 	_ground.queue_redraw()

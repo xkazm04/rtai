@@ -15,6 +15,8 @@ var drones: Array[ServoDrone] = []
 ## The drones that went on the last step (the view drops a wreck for &"shot").
 var gone: Array[ServoDrone] = []
 var phase: int = 1
+## Where the fight's target stands this tick (the kamikaze tells track it; ServoMoves sets it).
+var aim_at: Vector2 = Vector2.ZERO
 var launched_total: int = 0
 var shot_total: int = 0
 var _rng: RandomNumberGenerator = null
@@ -101,6 +103,11 @@ func _advance(d: ServoDrone) -> void:
 			_fly(d, d.goal)
 			if d.pos.distance_to(d.goal) <= tuning.arrive_m:
 				_enter(d, ServoDrone.State.HOVER)
+		ServoDrone.State.HOVER when d.dive:
+			_fly(d, d.goal)
+			ServoDive.hover(self, d)
+		ServoDrone.State.DIVE:
+			ServoDive.dive(self, d)
 		ServoDrone.State.HOVER:
 			_fly(d, d.goal)
 			if d.timer >= tuning.hover_ticks:
@@ -155,6 +162,11 @@ func kill(d: ServoDrone) -> void:
 		d.parcel = &""
 	shot_total += 1
 	_finish(d, &"shot")
+
+
+## Phase 3: kamikaze drones to a standoff ring round `mark` (the ring turned by the stream).
+func launch_dives(mark: Vector2) -> int:
+	return ServoDive.launch(self, mark, tuning.phase(phase).wave, _rng.randf() * TAU)
 
 
 ## Every live drone whose ground shadow is within `radius_m` of `pos` (Ohm's fork, a blast).

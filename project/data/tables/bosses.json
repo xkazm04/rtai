@@ -229,10 +229,10 @@
       "attacks": {
         "bay_hop": {
           "active_s": 0.2,
-          "aim_lock_s": 0.4,
+          "aim_lock_s": 0.75,
           "cooldown_s": 6,
           "damage": 20,
-          "doc": "Rotors lift Servo to the loading bay nearest Rivet; the 3 m landing ring fills during the tell; the landing hurts inside it.",
+          "doc": "Rotors lift Servo to the loading bay nearest Rivet; the 3 m landing ring follows Rivet, locks 0.75 s before the jump (a step clears it), and the landing hurts inside it.",
           "max_m": 30,
           "min_m": 0,
           "punish_k": 1.25,
@@ -330,7 +330,7 @@
         }
       },
       "doc": "Act 2: Servo, the courier-hub robot whose back is a launch rack of delivery drones (targets-2026-11-05-bosses/img/boss_servo.jpg). Moveset: docs/bosses/servo.md. The drones, parcels and rack are his own (features/bosses/servo/, data/tables/servo.json).",
-      "hp": 4200,
+      "hp": 220,
       "move_mps": 2,
       "phases": [
         {

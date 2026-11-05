@@ -78,3 +78,29 @@ func _hash(seed_v: int) -> PackedByteArray:
 	f.write_state(out)
 	out.put_float(taken)
 	return out.data_array
+
+
+func test_drones_are_bodies_and_a_downed_body_shoots_its_drone() -> void:
+	var f: BossFight = _servo(7)
+	var m: ServoMoves = f.moves as ServoMoves
+	f.start(0)
+	var t: int = 0
+	while m.swarm.alive() == 0 and t < 1200:
+		@warning_ignore("return_value_discarded")
+		f.step(t, SPOT, 0.6)
+		t += 1
+	assert_gt(m.swarm.alive(), 0, "a wave went up")
+	@warning_ignore("return_value_discarded")
+	f.step(t, SPOT, 0.6)  # the launch is in the active step, the bodies follow on the next tick
+	t += 1
+	assert_eq(m.bodies().size(), m.swarm.alive(), "one body per live drone")
+	var body: Fighter = m.bodies()[0]
+	assert_true(body.brain_owned)
+	assert_eq(body.max_hp, m.swarm.tuning.drone_hp)
+	var before: int = m.swarm.alive()
+	body.hp = 0.0  # the arena's chokepoint downed it
+	@warning_ignore("return_value_discarded")
+	f.step(t, SPOT, 0.6)
+	assert_eq(m.swarm.shot_total, 1, "the drone went down with its body")
+	assert_false(m.bodies().has(body), "its body left the list")
+	assert_lt(m.swarm.alive(), before + 1)

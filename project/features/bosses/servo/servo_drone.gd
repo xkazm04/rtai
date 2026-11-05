@@ -3,7 +3,7 @@ extends RefCounted
 ## One delivery drone: plain state, stepped by ServoSwarm. Ground-plane metres; `height` is how
 ## far above its shadow it flies (the view draws the shadow at `pos`, the drone up by height).
 
-enum State { LAUNCH, TRANSIT, HOVER, RETURN, GONE }
+enum State { LAUNCH, TRANSIT, HOVER, RETURN, GONE, DIVE }
 
 var id: int = 0
 var cell: int = -1
@@ -18,7 +18,10 @@ var parcel: StringName = &""
 ## Ticks in the current state, and alive in total (the fail-safe despawn).
 var timer: int = 0
 var age: int = 0
-## Why it went: &"docked", &"shot", &"expired".
+## A kamikaze (phase 3, ServoDive): no parcel, it dives at `strike` and is spent.
+var dive: bool = false
+var strike: Vector2 = Vector2.ZERO
+## Why it went: &"docked", &"shot", &"expired", &"spent".
 var gone_by: StringName = &""
 
 

@@ -23,6 +23,9 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 	for d: ServoDrone in s.drones:
 		if d.carrying() and (s.tuning.ring_from_launch or d.state == ServoDrone.State.HOVER):
 			_dashed_ring(c, d.goal, s.tuning.ring_m, Color(verm, 0.7), 2.0)
+	for d: ServoDrone in s.drones:
+		if d.dive and (d.state == ServoDrone.State.HOVER or d.state == ServoDrone.State.DIVE):
+			_dive_tell(c, s, d)
 	for p: ServoParcels.Parcel in s.parcels.falling:
 		var k: float = 1.0 - float(p.fall_left) / p.fall_total
 		c.draw_circle(p.pos * px, s.tuning.ring_m * px * k, Color(verm, 0.28))
@@ -44,6 +47,17 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 			font_px,
 			pal.color(&"ink")
 		)
+
+
+## A kamikaze's dive line: thin while its strike point tracks Rivet, thick with the blast ring
+## once it locks (the dodge cue).
+func _dive_tell(c: CanvasItem, s: ServoSwarm, d: ServoDrone) -> void:
+	var verm: Color = pal.color(&"vermilion")
+	var lock: bool = ServoDive.locked(s, d)
+	c.draw_line(d.pos * px, d.strike * px, Color(verm, 0.95 if lock else 0.5), 4.0 if lock else 1.5)
+	if lock:
+		c.draw_circle(d.strike * px, s.tuning.dive_blast_m * px, Color(verm, 0.18))
+		_dashed_ring(c, d.strike, s.tuning.dive_blast_m, verm, 3.0)
 
 
 ## Servo's own telegraphs (attacks with shape "none" in bosses.json; the framework's BossTellView
@@ -83,6 +97,9 @@ func drones(c: CanvasItem, s: ServoSwarm) -> void:
 		var p: Vector2 = d.pos * px
 		var rot: float = d.vel.angle() - PI / 2 if d.vel.length() > 0.5 else 0.0
 		_sprite(c, drone_tex, p, rot, DRONE_K)
+		if d.dive:  # the broken rack's drones spark (danger)
+			var spark: Vector2 = Vector2.from_angle(float(d.age) * 2.3) * px * 0.3
+			c.draw_circle(p + spark, px * 0.07, pal.color(&"vermilion"))
 		if d.carrying():
 			var h: float = px * 0.2
 			c.draw_rect(Rect2(p - Vector2(h, h), Vector2(h, h) * 2.0), pal.color(&"paper_2"))

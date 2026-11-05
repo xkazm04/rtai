@@ -22,6 +22,8 @@ var sep_m: float = 1.3
 var fly_h_m: float = 3.0
 var arrive_m: float = 0.35
 var radius_m: float = 0.35
+## A drone's hp (one arena round downs it, as a human).
+var drone_hp: float = 1.0
 ## The drop ring from the drone's launch (true) or only over its hover (the owner call).
 var ring_from_launch: bool = true
 var launch_ticks: int = 30
@@ -35,6 +37,13 @@ var ring_m: float = 1.6
 var crate_hp: int = 3
 var crate_life_ticks: int = 720
 var crate_m: float = 0.9
+## Phase 3's kamikaze dive (servo.json `kamikaze`).
+var dive_standoff_m: float = 5.0
+var dive_track_ticks: int = 36
+var dive_lock_ticks: int = 27
+var dive_mps: float = 18.0
+var dive_blast_m: float = 2.2
+var dive_damage: float = 18.0
 var cells: int = 12
 var cell_dx_m: float = 0.9
 var row_dy_m: float = 0.5
@@ -61,12 +70,14 @@ static func from_table(t: DataTable) -> ServoTuning:
 	s.fly_h_m = t.num(d, "fly_h_m")
 	s.arrive_m = t.num(d, "arrive_m")
 	s.radius_m = t.num(d, "radius_m")
+	s.drone_hp = t.num(d, "hp")
 	s.ring_from_launch = d.get("ring_from_launch", true) == true
 	s.launch_ticks = ticks(t.num(d, "launch_s"))
 	s.hover_ticks = ticks(t.num(d, "hover_s"))
 	s.life_ticks = ticks(t.num(d, "life_s"))
 	s.refill_ticks = ticks(t.num(d, "refill_s"))
 	_read_parcels(t, s)
+	_read_dive(t, s)
 	var r: Dictionary = t.object(t.raw, "rack")
 	s.cells = t.integer(r, "cells")
 	s.cell_dx_m = t.num(r, "cell_dx_m")
@@ -91,6 +102,16 @@ static func _read_parcels(t: DataTable, s: ServoTuning) -> void:
 	s.crate_hp = t.integer(p, "crate_hp")
 	s.crate_life_ticks = ticks(t.num(p, "crate_life_s"))
 	s.crate_m = t.num(p, "crate_m")
+
+
+static func _read_dive(t: DataTable, s: ServoTuning) -> void:
+	var k: Dictionary = t.object(t.raw, "kamikaze")
+	s.dive_standoff_m = t.num(k, "standoff_m")
+	s.dive_track_ticks = ticks(t.num(k, "track_s"))
+	s.dive_lock_ticks = ticks(t.num(k, "lock_s"))
+	s.dive_mps = t.num(k, "dive_mps")
+	s.dive_blast_m = t.num(k, "blast_m")
+	s.dive_damage = t.num(k, "damage")
 
 
 ## Phase 1..3 (clamped), so a bad phase number never indexes out.
