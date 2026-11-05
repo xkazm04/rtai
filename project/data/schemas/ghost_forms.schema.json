@@ -130,6 +130,9 @@
     "story_forms": {
       "type": "boolean"
     },
+    "story_lift": {
+      "type": "boolean"
+    },
     "story_voice": {
       "type": "boolean"
     },

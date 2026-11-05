@@ -179,6 +179,13 @@ The owner's order for this lane: "create these characters, animate transformatio
   bit-exact, look and block goldens in tolerance, no re-bless (`E:evidence-run-it9-final.log`). Director reel on
   b540f1aa: 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-it9-ease.log`).
 
+### 8. The camera keeps Tonnage clear of quest 1's subtitle box (iteration 11, DECISION)
+While a subtitle line is up, the shipped quest 1 camera eases down just enough that the form's reach
+(`bar_m`) clears the box (StoryForms.lift_goal_m, view only). Zero at the shipped 32 px/m and for base Rivet;
+about 0.8 m for Tonnage at 64 px/m. A/B same input: `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`
+(before, the press's lower legs sit under the box's tape; after, the whole press reads). `ghost_forms.json`
+`story_lift` false = before. Unit 1013/0; director reel 16/16 on the merged head.
+
 ## What does not work / is open
 - Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
   the ghost-powers REPORT.
@@ -201,5 +208,5 @@ The owner's order for this lane: "create these characters, animate transformatio
 ## Next steps
 - Final gates on a still tree before the 08:30 freeze (the evidence runner, the director reel) after any
   further merge.
-- Polish candidate: Tonnage at 64 px/m sits partly under quest 1's subtitle box while a line is up (HUD
-  layout).
+- Note for the HUD owner: quest 1's longest subtitle line runs past the bottom of its box (seen in
+  `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`, "where you think." on the box's lower edge).

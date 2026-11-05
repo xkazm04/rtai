@@ -37,6 +37,12 @@ func _draw() -> void:
 		_subtitle(screen, state.speaker, state.words)
 
 
+## The top of the subtitle box's paper (its tape strip included), in screen px: what a camera
+## keeps the player's body above while a line is up.
+static func subtitle_top(screen_h: float) -> float:
+	return screen_h - MARGIN - 236.0 - 28.0
+
+
 func _top_left() -> void:
 	_panel(Rect2(MARGIN, MARGIN, 640, 96))
 	_say(Vector2(MARGIN + 18, MARGIN + 38), state.head, 30)

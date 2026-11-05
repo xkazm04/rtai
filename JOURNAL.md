@@ -722,3 +722,24 @@ Session state 05:56: head = this commit, tree clean after it, no Godot process o
   13/13, unit 1011/0, scenarios 47, parity bit-exact, look/block goldens in tolerance, no re-bless. NEXT 2 above is
   done for this head; repeat it only after further merges or changes. Session ends: tree clean after this commit,
   no Godot process of mine running, no lock held.
+
+## Iteration 11 (BUILD, 06:02 - 07:02)
+- 06:02 read JOURNAL, git log, the ghost-powers and cast JOURNALs. Iteration 10 left no entry here (head was still
+  2d57fcbb). ghost-powers NOTICE (05:46): Dent in quest 1 has no car; selectability is our data. Their NEXT 2 is a
+  quest-side VehicleService, so Dent stays selectable (its missed reach reads); no change from us.
+- 06:04 MERGE n6-ghost-powers e1283d9c (docs only) as 9542be71; MERGE n5-cast 2329c483 (cop crowns bright police
+  blue over navy sleeves) as 3ce12ee1. JOURNAL/REPORT and our it7 logs keep ours. `--import`, unit, reel next.
+- 06:10 On the merged head: unit (with import) 1011/0 (E:unit-it11-merged.log); COMBAT CHECK director reel 16/16
+  chapters down, 0 SCRIPT ERROR (E:director-reel-it11-merged.log). FRICTION: the reel needs the arena scene
+  (`--path project --quit-after 24000 res://dev/arena/arena.tscn -- --bot=reel --reel=director`); the main scene
+  ignores `--arena` (boot warns "unknown launch arg"). First try wasted 2 min.
+- 06:16 MILESTONE (this commit) the camera keeps a big form clear of quest 1's subtitle box (REPORT's polish
+  candidate): StoryForms.lift_goal_m (bar_m reach vs HudView.subtitle_top), eased on the sim tick at 3 m/s, written
+  to CollectCallView.forms_lift_m (view only, zero = bit-identical). Zero at the shipped 32 px/m and for base
+  Rivet; Tonnage at 64 lifts about 0.8 m. ghost_forms.json `story_lift` (false = before). DECISION. A/B same input
+  (quest1_forms_main `-- --ppm=64`, 440 frames, story_lift flipped for the before and restored):
+  `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`. Judged: before, the press's lower legs under the box's
+  tape; after, the press clear with paper between. 0 SCRIPT ERROR both runs. Unit 1013/0 (2 new tests), lint
+  13/13. frames.json 15: + the lift A/B third; the card-fold A/B named in it (file kept). Seen, not ours: the
+  longest quest 1 line overflows its subtitle box (REPORT note for the HUD owner).
+  Registry rule applied (motion-quality-gating): same input, same frames A/B on the shipped path.

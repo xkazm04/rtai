@@ -14,6 +14,8 @@ var switch_ticks: int = 1
 var story_voice: bool = false
 ## story_forms: the shipped story's sprite cast draws the ghost bodies, the morph and the HUD card.
 var story_forms: bool = false
+## story_lift: the shipped story's camera lifts a big form clear of the subtitle box (view only).
+var story_lift: bool = false
 var _errors: Array[String] = []
 
 
@@ -32,6 +34,7 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	g.switch_ticks = maxi(1, PowerDef.ticks(t.num(t.raw, "switch_s")))
 	g.story_voice = t.raw.get("story_voice", false) == true
 	g.story_forms = t.raw.get("story_forms", false) == true
+	g.story_lift = t.raw.get("story_lift", false) == true
 	g._errors = t.errors()
 	for id: StringName in g.order:
 		if not g.forms.has(id):

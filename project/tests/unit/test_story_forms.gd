@@ -111,3 +111,17 @@ func test_the_bar_eases_through_a_transformation() -> void:
 		last = now
 	assert_almost_eq(last, f.bar_m, 0.001, "settled at the form's height")
 	assert_lt(top_step, (f.bar_m - StoryForms.BAR_LIFT_M) * 0.25, "no snap at the midpoint")
+
+
+func test_the_subtitle_lift_is_zero_at_32_ppm_and_clears_tonnage_at_64() -> void:
+	var tonnage: float = 2.35
+	assert_eq(StoryForms.lift_goal_m(tonnage, 32.0, 800.0), 0.0, "shipped zoom: untouched")
+	assert_eq(StoryForms.lift_goal_m(StoryForms.BAR_LIFT_M, 64.0, 800.0), 0.0, "base Rivet")
+	var lift: float = StoryForms.lift_goal_m(tonnage, 64.0, 800.0)
+	assert_gt(lift, 0.0)
+	var room: float = HudView.subtitle_top(800.0) - 400.0 - StoryForms.LIFT_PAD_PX
+	assert_almost_eq((tonnage - lift) * 64.0, room, 0.01, "the reach ends on the box's edge")
+
+
+func test_the_shipped_table_turns_the_subtitle_lift_on() -> void:
+	assert_true(GhostFormTable.load_default().story_lift)
