@@ -642,3 +642,9 @@ NEXT (iteration 5, in order):
    them along both sides); the 64 px/m car interior inks black under the noir print.
 6. Exe export by 08:30 (int-day recipe in docs/decisions.md) + REPORT with the calls: gold swap,
    leap_m, decree buff, A (ghost_k), B (wreck solid), C (band).
+- 22:06 FILM `gtai-masters/n7/king/king_phase1_procession_riders_human_32ppm_it4.mp4` (30 s, 32 px/m,
+  `--bot-human --seed=2 --boss-cam`, 0 script errors). **Looked at** the contact sheet (one frame every 2 s):
+  ram lanes, the coin-fan cone, the car turning with its two pushers and two side riders sticking out of
+  its outline, then the court with the gang on foot. Still seen: the boss cam drifts over the cream
+  off-floor ground near the boulevard's edge. frames.json 15 (the it2 target comparison deleted,
+  superseded by it3's car comparison).
