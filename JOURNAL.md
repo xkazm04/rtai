@@ -266,3 +266,22 @@ Session state 01:24: head = this commit, tree clean, no Godot process of mine ru
 2. Ohm's bolt anchor: `electrode_l/r` in ghost_forms.json sit at 0.38 m forward; HANDS_M 0.45 is close: read the
    anchor when you like (I did not change OhmStage's emit point).
 3. Kerf's blink snaps: the form rig is fed rivet.pos each whole sim tick (no tween), so the blink reads as a snap.
+- MILESTONE fb3e6a98 `--bot=forms [--form=<id>|all]` (dev/ghost-forms/forms_tour_bot.gd, one branch in arena_game):
+  Rivet walks a square, G picks the form, Q transforms while walking, the square in the form, Q back; `all` =
+  Tonnage then G through Dent, Kerf, Ohm. The proof bot for every form's clip (the attack beats stand still).
+- MILESTONE 669f3352 + fix: Dent polish. DentLurch (roll 0.12 m + yaw 15 deg per 1.5 m stride, the limp as
+  sin(phase/2) warp: halves 42/58, idle sway 2.5 deg), Dent's raw parts mipmapped (the 32 px/m crack speckle),
+  GhostAura (a breathing teal pool, 2.4x the footprint, under the light forms: the target's possessed read).
+  First film caught a stray foot ~2 m behind Dent for 30 ticks after the morph: the rig was reset before its root
+  moved (planted foot at the old spot), fixed by placing first. City film caught the glow staying after the exit
+  (root not hidden): fixed. `--no-lurch` is the A/B before (read from the user args: LaunchArgs drops unknown
+  flags, the first "before" was silently the after). DECISION in decisions.md (rejected: a teal modulate, a
+  separate stagger cycle). test_dent_lurch 3/3.
+- 01:55 PROOF Dent (all windowed, 0 SCRIPT ERROR each): `M:dent-gait-ab-32ppm.mp4` (before | after, same ticks),
+  `M:frames/dent-gait-ab-32ppm-x2.png`, `M:dent-tour-arena-32ppm.mp4` (16 s), `M:dent-tour-city-32ppm.mp4`
+  (17 s, `--arena=city`), `M:dent-morph-64ppm-slow3x.mp4`, `M:frames/dent-morph-64ppm-keys.png`,
+  `M:frames/dent-live-vs-target-64ppm.png`, `M:frames/dent-tour-city-32ppm-keys.png`. Judged: the stagger
+  reads at 32 px/m as a lurching dummy (yaw clear, the roll subtle), the cracks no longer speckle, the teal pool
+  says "possessed" on asphalt and on the pale kerb; the transformation reads in two stages at 64. Weak: the target
+  is a fully teal ghost, ours is a beige dummy on a teal pool (deliberate: the yellow discs are the read; Call for
+  the owner candidate). frames.json rebuilt (15, Dent first), superseded masters files and scratch deleted.
