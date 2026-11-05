@@ -21,7 +21,10 @@ static func step(rig: CutRig) -> void:
 	tw_amp *= 1.0 - SPRINT_SWING_CUT * s01
 	var reach_tw: float = 0.32 * rig.c_reach * (-1.0 if rig.strike_arm == BodyPlan.R else 1.0)
 	reach_tw *= 0.0 if rig.strike_arm == 2 else 1.0
-	rig.torso.rotation = tw_amp * sin(ph) + rig.twist + reach_tw + SHOULDER_LEAD * s01
+	# n7-ranged: a throw (negative recoil) whips the gun shoulder through, decaying with the recoil
+	var throw_tw: float = RigClips.THROW_TWIST * maxf(0.0, -rig.c_recoil)
+	throw_tw *= -1.0 if p.gun_arm == BodyPlan.R else 1.0
+	rig.torso.rotation = tw_amp * sin(ph) + rig.twist + reach_tw + throw_tw + SHOULDER_LEAD * s01
 	rig.pelvis.rotation = -0.55 * tw_amp * sin(ph) + rig.twist * 0.4 + rig.hip_yaw
 	_body(rig, walk01, ph)
 	_head(rig, p)

@@ -18,6 +18,8 @@ const RECOIL_DECAY: float = 6.0
 ## n7-ranged: a throw (negative recoil) leans the torso into the release this much per unit (the
 ## arm is already at its reach when aimed, so the follow-through shows in the body).
 const THROW_LEAN: float = 0.5
+## ...and turns the torso this far (rad) per unit, the gun shoulder leading (RigPose).
+const THROW_TWIST: float = 0.3
 const HIT_S: float = 0.18
 const HIT_TINT_FROM: float = 0.10
 const HIT_SHOVE: float = 90.0
