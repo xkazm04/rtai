@@ -58,6 +58,8 @@ chapters fully down, 0 SCRIPT ERROR (`evidence/reel-director-arena-it6.log`).
   - Dent from afar: `RTAI.exe -- --arena=city --bot=ghosts --ghost=dent` (every ghost free in the arena).
   - The Gatling's tan print: `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48` (and
     `--ppm=32`); headless boot 0 SCRIPT ERROR, "Rivet holds the table gatling" (`evidence/exe-boot-it5b-*.log`).
+    In the city block: `RTAI.exe -- --arena=city --loadout=gatling --weapon=gatling --bot=gunplay --ppm=32`
+    (headless 600 ticks: 0 SCRIPT ERROR, 0 unknown arg, `evidence/exe-boot-it6-gatling-city.log`).
 - Quest 1 (Dent locked, no parked ghost cars): `build\export\windows-quest1\RTAI.exe` (preset `windows-slice`;
   boots to the title, 0 SCRIPT ERROR). Title -> Start, tap G: Dent is skipped and shows a padlock.
   `RTAI.exe -- --ghosts-free` = the old default (every ghost pickable).

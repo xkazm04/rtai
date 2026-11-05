@@ -235,3 +235,9 @@
 - 18:04 MEASURE arena director reel on fcaec312 (project/ = 6179bf2d; `res://dev/arena/arena.tscn -- --bot=reel
   --reel=director --loadout=pistol`, headless --fixed-fps 60 --quit-after 7000): 19/19 chapters, every one fully
   down, 0 SCRIPT ERROR, 0 unknown arg (evidence/reel-director-arena-it6.log). Combat holds in both the arena and the city.
+- 18:07 PROOF exe (6179bf2d): `RTAI.exe -- --arena=city --loadout=gatling --weapon=gatling --bot=gunplay --ppm=32`
+  headless 600 ticks: exit 0, 0 SCRIPT ERROR, 0 unknown arg, Rivet holds the gatling (5 "spawn in a building,
+  dropped" lines are the same in the dev run: pre-existing). Line added to REPORT's exe section.
+- NEXT (any later session): nothing owed. Branch head docs-only since 6179bf2d; exes current; arena + city reels
+  19/19; full evidence green on f41346c2. Owner verdicts on REPORT's calls drive the next lane day (call 8 B first
+  if picked: per-weapon gun outline, see iteration 5b NEXT (3)).
