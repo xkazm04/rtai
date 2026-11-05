@@ -676,3 +676,29 @@ NEXT (written 23:55, for iteration 7):
 - DECISION 00:49 (docs/decisions.md): ghost_wound is data; Dent's car and Ohm's bolt are left out (the
   car's direction is not Rivet -> victim; the bolt stuns through FightAreas). Alternative = add a row.
 - Audit: ram victim sync 3 -> 4; read stays 2 (the heap is the sim's shove).
+- MERGE 00:51 cherry-picked n7-ranged `50c0883b` (Gloria muzzle_k 1.8) as `f1e9c76e` (clean) and
+  `193bc529` (machine pistol muzzle_k 1.3) as `f17890ef` (-x). One conflict in hit_feel.json
+  `weapons`: kept my `katana` and `kerf_slice` rows, took their machine_pistol doc. Lint 13/13, unit
+  1197/1197 on `f17890ef` (`evidence/n7-melee/{lint,unit}-f17890ef.log`).
+- READ 00:57 n7-king / n7-servo journals: no REQUEST to melee.
+- REPORT draft updated (`3e4ab417`): hit sounds, claw rakes, ghost wounds rows; call (g) (a ghost blow
+  past the riot slab); "does not" rewritten (sounds reuse the bank; the heap tries; plates unfilmed in
+  quest 1).
+- Scratch: this iteration's AVIs deleted (747 MB); 13 older AVIs kept as possible re-cut sources.
+
+NEXT (written 00:58, for iteration 9):
+1. Read n7-ranged's JOURNAL to its end; cherry-pick any new hit_feel commit (-x; on a `weapons`
+   conflict keep my melee/ghost rows, take theirs for guns) and record it here.
+2. The ram heap is still read 2, the weakest craft score. A view-only fix has to draw *on* the
+   bodies (the shove's speed lines lie under the press; reverted). Candidates: a per-body ink outline
+   pop on the contact frame so each rammed cop separates from the pile, or the knockdown family's
+   travel along the shove (human_reactions `knockdown` travel_m) if it is short at 32. Film the city
+   reel (`--arena=city --bot=ghosts --ghost=tonnage --rigs`, contact ~142) before building.
+3. Dent's seized-car blow on a body that lives: no ghost_wound row (the direction is the car's, not
+   Rivet -> victim). If it matters on film, give MeleeWound.hit a dir from arena.hit_dir for that
+   weapon, then add `dent_car` to ghost_wound.
+4. Before the freeze (08:30): re-cut `M/melee_polished_set_city_32ppm.mp4` on the final head (claw
+   rakes and the ghost wounds changed what is seen); export the exe (the int-day recipe in
+   docs/decisions.md) to build/export/windows/RTAI.exe; finish REPORT.md (exe line, command lines
+   per call a-g); gates on the final head (lint, unit, scenarios, director arena + city,
+   `node tools/evidence/run.mjs`).
