@@ -644,3 +644,12 @@ NEXT (iteration 12):
    beside the new pale peds (the cops are now the darker figures, as in r2_a5).
 3. REPORT rewrite at 08:40 (draft current to 1d4abaa6; Calls 1-6 stand, Call 6 now A = built pale crowd).
    frames.json 15, every file exists.
+- 01:03 the 64 px/m live close-up: quest 1 `--rigs --ppm=64 --ticks=900-1800` (one tick per frame, 451 frames) on
+  HEAD and on the 9f2aac24 ped files (restored, re-imported, tree clean): `M/cast-quest1-peds-ab-64.mp4` (15 s,
+  before | after, centre crop). 0 SCRIPT ERROR both; the after run exited 1 on a `WASAPI: GetBufferSize` audio
+  device error only (FRICTION: the shared machine's audio device, not the game). The quest camera stays tight on
+  Rivet at the payphone, so only one ped crosses the frame edge (smaller head, a lighter top): weak close-up
+  evidence; the react and street boards carry the 64 px/m judgement. Not in frames.json.
+  Two Godot processes running at 00:54 (PIDs 10744, 40076) belong to the n6 ghost-forms lane: left alone.
+Session end 01:05: head = this commit, tree clean, image.lock and bench.lock never taken, no Godot process of mine
+  running, scratch deleted (masters keeps only frames.json files and files REPORT cites). NEXT is the 00:53 list.
