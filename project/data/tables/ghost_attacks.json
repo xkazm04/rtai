@@ -32,9 +32,9 @@
   "ohm": {
     "bolt_damage": 2,
     "bolt_gap_s": 0.5,
-    "car_damage": 20,
+    "car_damage": 12,
     "cone_deg": 30,
-    "doc": "Ohm (the elder spot-welder, the mage): power row ohm (GhostPilot: G selects Ohm, Q transforms). While the form is settled, the melee press (every bolt_gap_s) throws a forked bolt from the electrode fingertips: the live hostile nearest the aim inside cone_deg (half-angle) and range_m is struck, then the bolt forks to up to forks more within fork_radius_m of the last one (MeleeShock.chain_path, the claw shock's walk). Each body struck is stunned stun_s (the electro gun's FightAreas stun) and takes human_damage (a human: stun and burns; the kill is the electro gun's X-ray shock in soul teal, row ohm_shock, weapon ohm_bolt) or bolt_damage x machine_k (a robot). Nothing in the cone: the car nearest the aim in the cone takes car_damage (machines burn out). upgrade_tier 1 (the act quest; data hook, the reel's --tier=1 shows it): the mass arc, up to mass_targets bodies within mass_radius_m of the first.",
+    "doc": "Ohm (the elder spot-welder, the mage): power row ohm (GhostPilot: G selects Ohm, Q transforms). While the form is settled, the melee press (every bolt_gap_s) throws a forked bolt from the electrode fingertips: the live hostile nearest the aim inside cone_deg (half-angle) and range_m is struck, then the bolt forks to up to forks more within fork_radius_m of the last one (MeleeShock.chain_path, the claw shock's walk). Each body struck is stunned stun_s (the electro gun's FightAreas stun) and takes human_damage (a human: stun and burns; the kill is the electro gun's X-ray shock in soul teal, row ohm_shock, weapon ohm_bolt) or bolt_damage x machine_k (a robot). Nothing in the cone: the car nearest the aim in the cone takes car_damage x machine_k (a car is a machine: 36 of 100, so D1, D2, then the wreck on the third bolt). upgrade_tier 1 (the act quest; data hook, the reel's --tier=1 shows it): the mass arc, up to mass_targets bodies within mass_radius_m of the first.",
     "fork_radius_m": 3,
     "forks": 2,
     "human_damage": 0.5,
