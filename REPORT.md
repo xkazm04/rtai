@@ -1,8 +1,7 @@
 # n5-look REPORT (2026-11-05 08:47, iteration 27, final)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
-Final build state: the last code or data change is `176c48f4`; everything after it is docs. On `176c48f4` the evidence gate is green (lint 13/13, unit 964/0, scenarios 46, parity bit-exact, look goldens 11/11) and the director reel shows 16/16 chapters with 0 script errors. At 08:45 (iteration 27) every evidence file this report cites was re-checked and exists in that folder (all 15 `frames.json` entries too), every commit it names resolves, and no lock or Godot process of this lane is running. (The lane's evidence lives in `gtai-masters
-5\look\` per the brief; the repo's `evidence/` folder holds only the shared gate JSON.)
+Final build state: the last code or data change is `176c48f4`; everything after it is docs. On `176c48f4` the evidence gate is green (lint 13/13, unit 964/0, scenarios 46, parity bit-exact, look goldens 11/11) and the director reel shows 16/16 chapters with 0 script errors. At 08:45 (iteration 27) every evidence file this report cites was re-checked and exists in that folder (all 15 `frames.json` entries too), every commit it names resolves, and no lock or Godot process of this lane is running. (The lane's evidence lives in `gtai-masters/n5/look/` per the brief; the repo's `evidence/` folder holds only the shared gate JSON.)
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
 
 ## What works (with its evidence)
