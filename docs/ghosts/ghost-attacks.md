@@ -24,6 +24,12 @@ Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):
 - Dent: 5 of 5 down (2 struck in group A, 2 struck + 1 gibbed in group B), 1 seize, 1 blast, the car stopped on
   the wall line (`evidence/ghosts-dent-32.json`, `scenario_ghost_attacks`).
 
+- Dent rides (iteration 5, `dent.ride` 1): Rivet sits on the seized car's roof for the whole link (>= 30 ticks
+  in the scenario beat) and hops 4 m clear as it blows; the blast still hits hostiles only, so riding costs him
+  nothing but the tether's reach: he takes the fire aimed at the car's path instead of standing back.
+- The robot victim (iteration 5) is drawn on the robot thug's rig and dies the power-down death in oil: Ohm's
+  machine_k bolt (1 bolt) and Kerf's robot cut (2 cuts) now land on a visible machine.
+
 Madness cost and cooldowns are unchanged from powers.json tonight (Tonnage 25 / 20 s, Dent 15 / 12 s).
 
 Kerf per activation (measured, `--bot=ghosts --ghost=kerf`, arena 32 px/m, windowed, 60 Hz): 5 of 5 down
