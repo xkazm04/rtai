@@ -718,3 +718,7 @@ NEXT (iteration 10):
 Session state 05:56: head = this commit, tree clean after it, no Godot process of mine running, no lock held
   (image.lock and bench.lock not taken this session); masters scratch holds film.sh, logs and ohm_x3.png;
   frames.json 15, all present.
+- 06:01 FINAL GATES evidence runner `--no-bench` on d41ff115, still tree (E:evidence-run-it9-final.log): PASS lint
+  13/13, unit 1011/0, scenarios 47, parity bit-exact, look/block goldens in tolerance, no re-bless. NEXT 2 above is
+  done for this head; repeat it only after further merges or changes. Session ends: tree clean after this commit,
+  no Godot process of mine running, no lock held.

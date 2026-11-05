@@ -174,6 +174,10 @@ The owner's order for this lane: "create these characters, animate transformatio
   caught at 629), look goldens 11/11 (worst 1.22), block goldens 5/5 (worst 1.38), no re-bless
   (`E:evidence-run-it9.log`). Director reel on d5e2f3e5: 16/16 chapters down, 0 SCRIPT ERROR
   (`E:director-reel-it9.log`).
+- **Final for this session, on d41ff115** (+ the n6-ghost-powers cefbcf8b and n5-cast 551ed9c6 merges and the
+  bar ease), still tree: evidence runner `--no-bench` all PASS: lint 13/13, unit 1011/0, scenarios 47, parity
+  bit-exact, look and block goldens in tolerance, no re-bless (`E:evidence-run-it9-final.log`). Director reel on
+  b540f1aa: 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-it9-ease.log`).
 
 ## What does not work / is open
 - Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
