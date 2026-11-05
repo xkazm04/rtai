@@ -5,6 +5,7 @@ extends RefCounted
 ## GhostPilot's order, Q transforms, the attack waits for the settled form). It presses melee
 ## at most every CADENCE ticks with the boss inside the ghost's REACH_M, first whenever the boss
 ## (or an add) is in a windup: Ohm's bolt dazes a boss's tell (BossFight.daze).
+## `--ghost-tells` keeps it for the tells only.
 
 const ORDER: Array[StringName] = [&"tonnage", &"dent", &"kerf", &"ohm"]
 const REACH_M: Dictionary = {&"tonnage": 3.2, &"dent": 6.0, &"kerf": 8.0, &"ohm": 10.5}
@@ -14,6 +15,9 @@ const FIRST_AT: int = 100
 const CADENCE: int = 30
 
 var ghost: StringName
+## `--ghost-tells`: the power is saved for the boss's tells (a reader interrupts with Ohm's bolt);
+## default: used on cooldown whenever the boss is in reach.
+var save_for_tells: bool = OS.get_cmdline_user_args().has("--ghost-tells")
 var presses: int = 0
 var _start: int = -1
 var _last: int = -1000
@@ -50,9 +54,4 @@ func _wants(hook: BossHook, me: Vector2) -> bool:
 	for a: BossFight in hook.adds.fights:
 		if a.state != BossFight.State.DEFEATED and me.distance_to(a.body.pos) <= reach:
 			return true
-	return tick_free(hook)
-
-
-## Off a tell, the ghost still attacks the boss (a human uses the power on cooldown).
-static func tick_free(hook: BossHook) -> bool:
-	return hook.fight.state != BossFight.State.TRANSITION
+	return not save_for_tells and f.state != BossFight.State.TRANSITION
