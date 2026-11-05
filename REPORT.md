@@ -43,7 +43,6 @@
 | Combat no-regress (iteration 6, after the Ohm dry kill): director reel 16/16 chapters down, 0 script errors, the same chapter counts as iteration 5 | `E/director-reel-it6.log` |
 
 ## What does not work yet
-- In the Kerf beat the robot takes Kerf's two cuts (robot_damage 4 each) but its death reports kind `shot` from Rivet (the scenario's kill log), so its finisher is probably the base claw after the form ends. Robots leak oil whatever the kind, so nothing reads wrong; the attribution is unexplained.
 - The robot is a dev stand-in: CombatArena has no robot fighter kind, so the quest boss's brain plays it (Ohm's beat holds it exposed). The look (iteration 5) and the numbers are real; the brain is not a robot thug's.
 
 ## Calls for the owner

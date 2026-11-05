@@ -46,6 +46,8 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_begin(stage, tick)
 	elif ohm_beat != null:
 		ohm_beat.hold()
+	elif kerf_beat != null:
+		kerf_beat.hold()
 	elif ghost == &"tonnage" and wave == 1 and _nearest(stage.arena.rivet.pos) == null:
 		_wave_two(stage, tick)
 

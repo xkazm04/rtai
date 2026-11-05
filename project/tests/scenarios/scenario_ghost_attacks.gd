@@ -3,7 +3,8 @@ extends Scenario
 ## fight, one fresh ArenaSession per run. Tonnage must slam twice, crush both cars and flatten
 ## (signature style crush); Dent must seize the cruiser, strike with it and blow it up; Kerf must
 ## blink-slice the whole group (four humans split, the robot in two cuts); Ohm's forked bolts must
-## stun and burn down the group, kill the robot and burn the cruiser. Each beat
+## stun and burn down the group, kill the robot and burn the cruiser (both robots must fall to the
+## ghost's own kill kind, `robot_ghost`, not the claw after the form). Each beat
 ## replays identically on a fresh world (SIM-05) and gives the same state on the same seed.
 ## TST-05: a planted fault per ghost (Tonnage's crush_m 0, Dent's blast_damage 0, Kerf's
 ## human_damage 0, Ohm's machine_k 0) must change the outcome. Kerf's and Ohm's kills must all
@@ -22,11 +23,16 @@ const NEEDS: Dictionary[StringName, Array] = {
 	&"tonnage": [["tonnage", "slams", 2], ["tonnage", "cars_crushed", 2], ["", "crush", 3]],
 	&"dent":
 	[["dent", "seizes", 1], ["dent", "strikes", 1], ["dent", "blasts", 1], ["dent", "rides", 30]],
-	&"kerf": [["kerf", "slices", 6], ["", "split", 4], ["", "ghost_dead", 5]],
-	&"ohm": [["ohm", "struck", 8], ["ohm", "cars_hit", 1], ["", "ghost_dead", 5]],
+	&"kerf":
+	[["kerf", "slices", 6], ["", "split", 4], ["", "ghost_dead", 5], ["", "robot_ghost", 1]],
+	&"ohm":
+	[["ohm", "struck", 8], ["ohm", "cars_hit", 1], ["", "ghost_dead", 5], ["", "robot_ghost", 1]],
 }
 ## The ghosts whose every kill must be dry (cauterised, electrocuted).
 const DRY_GHOSTS: Array[StringName] = [&"kerf", &"ohm"]
+## The kill kinds of the ghosts' own attacks on a robot (`robot_ghost`: the robot fell to Kerf's
+## cut or Ohm's bolt, not to the base claw after the form ended).
+const GHOST_KINDS: Array[StringName] = [KerfStage.KILL_KIND, OhmStage.KILL_KIND]
 
 
 func run(_tree: SceneTree) -> String:
@@ -109,7 +115,7 @@ func _attacks(s: ArenaSession, ghost: StringName) -> GhostAttacks:
 ## Counts Rivet's human kills by dry / wet kind (robots leak oil, never counted); `kinds` lists all.
 func _watch_kills(bus: EventBus, arena: CombatArena) -> Dictionary:
 	var seen: Array[String] = []
-	var kinds: Dictionary = {"wet_kills": 0, "dry_kills": 0, "kinds": seen}
+	var kinds: Dictionary = {"wet_kills": 0, "dry_kills": 0, "robot_ghost": 0, "kinds": seen}
 	var rivet: int = arena.rivet.id
 	@warning_ignore("return_value_discarded")
 	bus.actor_killed.connect(
@@ -119,6 +125,8 @@ func _watch_kills(bus: EventBus, arena: CombatArena) -> Dictionary:
 			seen.append("%d>%d%s:%s" % [by, victim, "r" if robot else "", kind])
 			if by == rivet and not robot:
 				kinds["dry_kills" if dry else "wet_kills"] += 1
+			elif by == rivet and kind in GHOST_KINDS:
+				kinds["robot_ghost"] += 1
 	)
 	return kinds
 
