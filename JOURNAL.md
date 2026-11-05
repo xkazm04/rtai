@@ -542,3 +542,61 @@ NEXT (iteration 5): items 2-7 of the 22:08 list (item 1 is done). Start with 2 (
 when its sidestep is blocked; re-measure the dodging dash and the fight length), and re-run
 scenarios + the director reel on the head first.
 - 22:14 GATES: scenarios 52 ran / 0 failed, 0 SCRIPT ERROR (`evidence/servo/scenarios-it4b.log`), started on 15346f87 (the dash smash; the render-only debris landed while it ran). Lint 13/13 and unit 1161/0 on 15346f87. Session ends with everything committed.
+
+## Iteration 5 (22:15-23:15), BUILD
+
+Read: JOURNAL NEXT, git log, n7-king's JOURNAL (FYI 22:07: REQUEST 5 done, --bot-human, --ghost,
+stuns/dazes). Registry rules applied: encounter-balance-simulation (three bots as ceiling / human /
+floor, the cap is game time not frames, n seeds before a claim), realtime-combat-semantics (a
+dodge is judged on the i-frame window meeting the hit, not the tell).
+- 22:18 MERGE n7-king 5eb4e47e (3d939696): --bot-human (BossBotRead), --ghost (BossBotGhost),
+  BossBot walks round cover, stuns/dazes telemetry, King's wreck cover. boss_hook.gd got a second
+  `_solids` declaration from the merge (both sides added it): kept one. JOURNAL ours. Unit 1167/0.
+- 22:20 FRICTION: king's `boss_numbers.mjs` caps runs with `--quit-after` frames and no
+  `--fixed-fps`: on a contended machine 15000 frames were 6400 ticks, so every Servo fight was cut
+  at 107 s. My copy (`evidence/servo/boss_numbers.mjs`) adds `--fixed-fps 60` (one frame = one
+  tick, 14400 = 240 s). King's numbers end on the defeat, so theirs were not cut, but they are
+  CONTENDED in wall time only.
+- 22:28 MILESTONE 66a94020 the boss bot reads a charge on its body. Why the dodging bot ate the
+  rotor dash: it rolled at the tell's end, about 22 ticks before a 14 m / 22 m/s dash body
+  reached it, so the i-frames (2-14) were spent; and its sidestep walked into crates. Now it rolls
+  when the body is 7 ticks away along the lane, and takes the open side when a box is within
+  1.8 m. MEASURED (`evidence/servo/numbers-it5/`, seeds 1-3, 0 SCRIPT ERROR):
+
+  | bot | downed | time to kill | Rivet took (mean) | deaths | rotor dash | hot dash | parcels hit |
+  |---|---|---|---|---|---|---|---|
+  | dodge | 3/3 | 112-122 s (118) | 6.7 | 0 | 0/19 | 0/7 | 0 |
+  | human | 3/3 | 115-133 s (126) | 174 | 0 | 13/23 | 3/11 | 0-1 |
+  | stand | 1/3 | 202 s | 1329 | 14 | 44/51 | 3/3 | 29-47 |
+
+  The fight is now inside the 60-150 s envelope for both reading bots; every stander loses. The
+  dodging bot is the ceiling (King's dodge took 4.8). The human bot's dash rate (57 %) includes
+  the 30 % of tells it never reads by design; a judgement call for the windup (0.9 s), not called
+  fair yet. Sweep note: the seed-2/3 jobs ran on the tree with the parked van (below); a van
+  nobody seizes changes nothing (seed 1, 40 s: same hp 0.807, same damage, checked).
+- 22:30 MILESTONE e55ef095 the depot's **delivery van** (servo.md promised Dent a vehicle):
+  generic `bosses.json arenas.<id>.parked` (kind, at, head, art), parked by BossHook on its first
+  step (FOUND: at setup the stage's car service is not attached yet, the first try parked
+  nothing). The van backs into bay 3 (vehicle_handling `van`, traffic atlas cell 4).
+- 22:33 FOUND: `--ghost` was read twice after the merge (king's BossBotGhost inside BossBot and my
+  ServoGhostBot wrapper): both would press the ghost picks. Mine is now `--servo-ghost=<id>`.
+- 22:34 MILESTONE 692e6ba5 dev `--servo-ghost=dent` (ServoDentBot): seize the nearest parked car,
+  steer it into Servo, blow it within 3 m. Seed 1: seized at tick 121, strikes 3 at 176-181
+  (Servo and two drones), blows at 337 (full heat, off the top of the yard: the car overshoots
+  Servo because Dent steers to a point 14 m along the aim; the bot cannot set the cursor reach).
+- 22:35 **Looked at** the film (48 px/m, boss cam): the teal tether to the van at bay 3, the van
+  swings down into Servo's rack, Servo rocks. FOUND + FIXED 42d04f84: the two drones the van
+  killed took the *human* `dent_car_hit` signature kill: a red spray fan and drag smears off
+  Servo's rack (red is blood only). `KillEvent.human` was `kind != BOSS`, and drones are GUARD
+  bodies. Now `Fighter.machine` (drones set it) makes the kill a robot's. Re-filmed: no red, same
+  ticks. `M/servo_ghost_dent_van_48ppm_it5.mp4`, `M/frames/servo_dent_van_drone_kill_ab_48ppm_it5.png`
+  (before | after). Unit 1167/0 (`unit-it5b.log`).
+
+### FYI to king (22:38): framework changes on n7-servo (the Director merges both)
+- `BossBot`: a CHARGE is rolled on the body (`CHARGE_ROLL_TICKS` 7 before contact) and the
+  sidestep switches side when a solid box is within 1.8 m (`_roll_now`, end of `_dodge`). King's
+  ram is a charge: your dodging numbers will move on the merged tree.
+- `bosses.json arenas.<id>.parked` + `BossSpec.Parked` + `BossHook._park` (first step): park cars
+  for Dent in King's boulevard if you want Dent's cars (your NEXT 2).
+- `Fighter.machine` + `KillEvent.human` (combat): a non-boss robot gets no human kill.
+- `boss_numbers.mjs`: add `--fixed-fps 60` before `--quit-after`, or a contended run is cut short.
