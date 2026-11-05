@@ -24,6 +24,12 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--gun-off-claw",
 	# n7-ranged: --feel=off turns the shared hit feel's camera effects off (before clips)
 	"--feel",
+	# n7-ranged: --react-snap=off drops the hit snap of a reaction family (the electro bolt's before)
+	"--react-snap",
+	# n7-ranged: --shard-pop=<ticks> the homing shard victim's freeze before the pop (owner call)
+	"--shard-pop",
+	# n7-ranged: --end-cue=off drops the weapons rows' end_cue (the rocket and nuke blast sound)
+	"--end-cue",
 ]
 
 var _values: Dictionary[String, String] = {}

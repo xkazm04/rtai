@@ -5,6 +5,10 @@ extends RefCounted
 ## step and the drawn offsets HumanReact.post() applies. Directions are rig space: r.dir is the
 ## way the blow travels, so the body moves along it and the head snaps with it.
 
+## The hit snap's attack and release (s): on the hit frame (2 ticks), gone in a third of a second.
+const SNAP_IN_S: float = 0.034
+const SNAP_OUT_S: float = 0.3
+
 
 static func pre(r: HumanReact, rig: CutRig) -> void:
 	var k: float = r.progress()
@@ -33,6 +37,7 @@ static func pre(r: HumanReact, rig: CutRig) -> void:
 			_fold(r, rig, snap(k, 0.25))
 		&"stun":
 			convulse(r, rig, 1.0 - smoothstep(0.85, 1.0, k))
+			_hit_snap(r, rig, r.t)
 		&"burn":
 			flail(r, rig, 1.0 - smoothstep(0.9, 1.0, k))
 
@@ -140,6 +145,21 @@ static func flail(r: HumanReact, rig: CutRig, env: float) -> void:
 	r.head_rot = sin(f * 4.1 + r.phase) * 0.5 * env
 	r.off = Vector2(0.0, sin(f * 2.6) * r.travel) * env
 	rig.gun_out = false
+
+
+## The blow's throw (snap_m): the body and head jump along r.dir in SNAP_IN_S, ease back by
+## SNAP_OUT_S, over whatever the family draws; so a jolt in place still reads along the hit.
+static func _hit_snap(r: HumanReact, rig: CutRig, t: float) -> void:
+	if r.snap_px <= 0.0 or t >= SNAP_OUT_S:
+		return
+	var e: float = (
+		smoothstep(0.0, SNAP_IN_S, t)
+		if t < SNAP_IN_S
+		else 1.0 - smoothstep(SNAP_IN_S, SNAP_OUT_S, t)
+	)
+	r.off += r.dir * r.snap_px * e
+	r.head_off += r.dir * r.snap_px * 0.5 * e
+	rig.twist += r.side * 0.5 * e
 
 
 ## Fast attack (to 1 at `attack`), smooth ease back to 0 by k = 1.

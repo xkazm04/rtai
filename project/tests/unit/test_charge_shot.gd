@@ -88,7 +88,12 @@ func test_every_gun_names_a_shot_cue_that_exists() -> void:
 		var w: WeaponSpec = table.weapon(id)
 		assert_ne(w.shot_cue, &"", "%s has a sound hook" % id)
 		assert_has(ids, str(w.shot_cue), "%s: cue %s exists" % [id, w.shot_cue])
+		if w.end_cue != &"":  # n7-ranged: the blast's own sound
+			assert_has(ids, str(w.end_cue), "%s: end cue %s exists" % [id, w.end_cue])
 	assert_has(ids, "tazer_charge", "the charge-up cue exists")
+	assert_eq(
+		table.weapon(&"rocket_launcher").end_cue, &"blast", "the rocket booms where it bursts"
+	)
 
 
 func test_a_charged_bolt_lands_as_a_blast_a_plain_one_as_shock() -> void:

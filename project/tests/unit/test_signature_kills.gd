@@ -177,3 +177,13 @@ func test_the_charged_claw_shock_takes_the_electro_kill() -> void:
 	var row: SignatureKill = table.for_weapon(&"claw_shock")
 	assert_not_null(row)
 	assert_eq(row.id, &"electro_shock")
+
+
+func test_shard_pop_sets_only_the_shard_freeze() -> void:
+	var table: SignatureKillTable = SignatureKillTable.load_table()
+	var saw: int = table.for_weapon(&"chainsaw").grind_ticks
+	BrutalityHook.shard_pop(table, "")
+	assert_eq(table.for_weapon(&"homing_shard").grind_ticks, 36, "no flag: the approved look")
+	BrutalityHook.shard_pop(table, "12")
+	assert_eq(table.for_weapon(&"homing_shard").grind_ticks, 12, "--shard-pop=12")
+	assert_eq(table.for_weapon(&"chainsaw").grind_ticks, saw, "the chainsaw's grind is untouched")
