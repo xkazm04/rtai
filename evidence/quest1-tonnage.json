@@ -1,0 +1,24 @@
+{
+  "again": {
+    "cars_crushed": 1,
+    "kills": 4,
+    "stomp_hits": 3,
+    "stomps": 1,
+    "wrecks": 1
+  },
+  "clean": {
+    "cars_crushed": 1,
+    "kills": 4,
+    "stomp_hits": 3,
+    "stomps": 1,
+    "wrecks": 1
+  },
+  "hash": "5a9f46dacae2b5cf9bb2bd446cf8d701809ee359b41a399c58b7464556d64196",
+  "planted_car_crush_m_0": {
+    "cars_crushed": 0,
+    "kills": 4,
+    "stomp_hits": 3,
+    "stomps": 1,
+    "wrecks": 0
+  }
+}

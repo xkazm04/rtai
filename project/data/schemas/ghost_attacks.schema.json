@@ -1,0 +1,323 @@
+{
+  "$id": "gtai.ghost_attacks/1",
+  "additionalProperties": false,
+  "properties": {
+    "dent": {
+      "additionalProperties": false,
+      "properties": {
+        "aim_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "arm_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blast_damage": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "blast_radius_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_damage": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_knock_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_reach_m": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "overload_s": {
+          "maximum": 50,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ride": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ride_hop_m": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "aim_m",
+        "arm_k",
+        "blast_damage",
+        "blast_radius_m",
+        "car_damage",
+        "car_knock_m",
+        "car_reach_m",
+        "doc",
+        "overload_s",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "kerf": {
+      "additionalProperties": false,
+      "properties": {
+        "behind_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "charges": {
+          "maximum": 9,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "cone_deg": {
+          "maximum": 180,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cut_hang_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "dash_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "gap_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "human_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "path_cut_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "range_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "recharge_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "robot_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "speed_k": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "behind_m",
+        "charges",
+        "cone_deg",
+        "cut_hang_s",
+        "dash_m",
+        "doc",
+        "gap_s",
+        "human_damage",
+        "range_m",
+        "recharge_s",
+        "robot_damage",
+        "speed_k",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    },
+    "ohm": {
+      "additionalProperties": false,
+      "properties": {
+        "bolt_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "bolt_gap_s": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "cone_deg": {
+          "maximum": 180,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fork_radius_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "forks": {
+          "maximum": 9,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "human_damage": {
+          "maximum": 999,
+          "minimum": 0,
+          "type": "number"
+        },
+        "machine_k": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "mass_radius_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "mass_targets": {
+          "maximum": 32,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "range_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "stun_s": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "bolt_damage",
+        "bolt_gap_s",
+        "car_damage",
+        "cone_deg",
+        "doc",
+        "fork_radius_m",
+        "forks",
+        "human_damage",
+        "machine_k",
+        "mass_radius_m",
+        "mass_targets",
+        "range_m",
+        "stun_s",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.ghost_attacks/1"
+    },
+    "tonnage": {
+      "additionalProperties": false,
+      "properties": {
+        "armor_k": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "car_crush_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crush_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "press_ahead_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "upgrade_tier": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "armor_k",
+        "car_crush_m",
+        "crush_m",
+        "doc",
+        "press_ahead_m",
+        "upgrade_tier"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "dent",
+    "doc",
+    "kerf",
+    "ohm",
+    "schema",
+    "tonnage"
+  ],
+  "type": "object"
+}

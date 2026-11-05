@@ -1,0 +1,330 @@
+{
+  "dent": {
+    "crush": 0,
+    "dent": {
+      "blasts": 1,
+      "rides": 77,
+      "seizes": 1,
+      "strikes": 5
+    },
+    "dry_kills": 0,
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>1:shot",
+      "0>2:shot",
+      "0>4:shot",
+      "0>5:shot",
+      "0>3:shot"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 95.3333333333335,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 5
+  },
+  "kerf": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 4,
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 8,
+      "slices": 6,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>3:cauterised",
+      "0>1:cauterised",
+      "0>2:cauterised",
+      "0>4:cauterised",
+      "0>5r:cauterised"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 1,
+    "split": 4,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 54.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 0
+  },
+  "ohm": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 4,
+    "ghost_dead": 5,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>5r:electrocuted",
+      "0>1:electrocuted",
+      "0>3:electrocuted",
+      "0>2:electrocuted",
+      "0>4:electrocuted"
+    ],
+    "ohm": {
+      "bolts": 15,
+      "cars_hit": 5,
+      "struck": 12
+    },
+    "robot_ghost": 1,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 100.0,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 0
+  },
+  "planted_dent": {
+    "crush": 0,
+    "dent": {
+      "blasts": 1,
+      "rides": 77,
+      "seizes": 1,
+      "strikes": 5
+    },
+    "dry_kills": 0,
+    "ghost_dead": 4,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>1:shot",
+      "0>2:shot",
+      "0>4:shot",
+      "0>5:shot"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 89.8000000000001,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 4
+  },
+  "planted_kerf": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 0,
+    "ghost_dead": 2,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 8,
+      "slices": 7,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>1:shot",
+      "0>3:shot"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 24.0000000000002,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 2
+  },
+  "planted_ohm": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 0,
+    "ghost_dead": 0,
+    "ghost_victims": 5,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [],
+    "ohm": {
+      "bolts": 15,
+      "cars_hit": 0,
+      "struck": 15
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 0,
+      "ram_hits": 0,
+      "rivet_hp": 68.8000000000003,
+      "slam_hits": 0,
+      "slams": 0,
+      "ticks_on": 0
+    },
+    "wet_kills": 0
+  },
+  "planted_tonnage": {
+    "crush": 0,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 0,
+    "ghost_dead": 10,
+    "ghost_victims": 10,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>1:shot",
+      "0>2:shot",
+      "0>3:shot",
+      "0>4:shot",
+      "0>5:shot",
+      "0>6:shot",
+      "0>7:shot",
+      "0>8:shot",
+      "0>9:shot",
+      "0>10:shot"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 2,
+      "ram_hits": 6,
+      "rivet_hp": 100.0,
+      "slam_hits": 6,
+      "slams": 2,
+      "ticks_on": 479
+    },
+    "wet_kills": 10
+  },
+  "tonnage": {
+    "crush": 5,
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "dry_kills": 0,
+    "ghost_dead": 10,
+    "ghost_victims": 10,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "kinds": [
+      "0>1:shot",
+      "0>2:shot",
+      "0>3:shot",
+      "0>4:shot",
+      "0>5:shot",
+      "0>6:shot",
+      "0>7:shot",
+      "0>8:shot",
+      "0>9:shot",
+      "0>10:shot"
+    ],
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "robot_ghost": 0,
+    "split": 0,
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 2,
+      "ram_hits": 6,
+      "rivet_hp": 100.0,
+      "slam_hits": 6,
+      "slams": 2,
+      "ticks_on": 479
+    },
+    "wet_kills": 10
+  }
+}

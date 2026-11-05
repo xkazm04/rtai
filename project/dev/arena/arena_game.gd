@@ -93,25 +93,39 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "reel":  # the showcase lane's scripted fight (dev/showcase)
 		session.world.loop().set_input(CombatReel.new(session.stage, session.actions))
+	elif args.text("--bot") == "ghosts":  # lane ghost-powers: the ghost attacks' beat
+		session.world.loop().set_input(GhostReelInput.attach(session.stage, session.actions))
+	elif args.text("--bot") == "forms":  # lane ghost-forms: walk, transform, walk, transform back
+		session.world.loop().set_input(FormsTourBot.of(session.stage, session.actions, args))
 	elif args.text("--bot") == "arsenal":  # rivet-arsenal: the pit fight, a switch every 4 s
 		session.world.loop().set_input(ArenaArsenalBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "lob":  # rivet-arsenal: molotovs at the claw cops from 9-14 m
 		session.world.loop().set_input(ArenaLobBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "gunplay":  # lane gunplay: the pit at the --weapon's own reach
-		var w_id: StringName = StringName(args.text("--weapon", "pistol"))
-		var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
-		var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
-		bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
-		bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
-		session.world.loop().set_input(bot)
+		session.world.loop().set_input(_gunplay_bot(args))
 	elif args.text("--bot") == "react_line":  # lane human-reactions: each look from four sides
-		var line: ReactLineBot = ReactLineBot.new(session.stage, session.actions)
-		line.wide_m = args.number("--wide", 0.0)  # aim beside each dummy: near misses
-		session.world.loop().set_input(line)
+		session.world.loop().set_input(_react_line_bot(args))
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
 		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):
 			teleport(a)
+
+
+## lane gunplay: the pit bot at the --weapon's own reach (--lone films the burn death).
+func _gunplay_bot(args: ArenaArgs) -> GunplayBot:
+	var w_id: StringName = StringName(args.text("--weapon", "pistol"))
+	var w: WeaponSpec = WeaponTable.shipped().weapon(w_id)
+	var bot: GunplayBot = GunplayBot.new(session.stage, session.actions, w.range_m)
+	bot.follow_burning = args.has("--lone")  # the lone capture films the burn death
+	bot.reach_m = minf(bot.reach_m, args.number("--reach", bot.reach_m))
+	return bot
+
+
+## lane human-reactions: each look from four sides (--wide aims beside each dummy).
+func _react_line_bot(args: ArenaArgs) -> ReactLineBot:
+	var line: ReactLineBot = ReactLineBot.new(session.stage, session.actions)
+	line.wide_m = args.number("--wide", 0.0)  # aim beside each dummy: near misses
+	return line
 
 
 ## Dev flags that dress the fight before the bot takes it: --crowd, --armored, --riot.

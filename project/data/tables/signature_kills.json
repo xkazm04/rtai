@@ -130,6 +130,36 @@
     {
       "bounce": 0.1,
       "cone_deg": 10,
+      "doc": "Ohm's forked bolt (lane ghost-powers, weapon ohm_bolt): the electro gun's X-ray kill done by the soul: the victim locks in the stiff convulsion while the skeleton strobes inside soul-teal arcs on a teal-white zap star (edge soul; the electro gun's are cream), then drops stiff, scorched, smoke from the collar. No blood. Under --reduced-motion no strobe and no shake.",
+      "edge": "soul",
+      "flash_ticks": 2,
+      "ground_drag": 8,
+      "hitstop_ticks": 3,
+      "id": "ohm_shock",
+      "launch_mps": [
+        0.1,
+        0.2
+      ],
+      "pieces": [
+        "body"
+      ],
+      "scorch_radius_m": 0.35,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 0,
+      "stand_ticks": 42,
+      "style": "shock",
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "ohm_bolt"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 10,
       "cut_deg": 55,
       "doc": "Katana: one clean diagonal slash cuts the body in two along the blade's line (shoulder to hip). Both halves of the real rig slide apart off the cut on red smears, a raw red edge on each, the blood fanning out along the cut in the swing's direction; a cream slash streak marks the blade's path. Under --gore=reduced the victim falls whole.",
       "flash_ticks": 2,
@@ -343,6 +373,162 @@
         0
       ],
       "weapon": "mini_nuke"
+    },
+    {
+      "bounce": 0,
+      "cone_deg": 180,
+      "doc": "Tonnage's press slam (lane ghost-powers, weapon stomp: a kill inside ghost_attacks.json tonnage.crush_m): the victim is flattened where he stood, the whole body pressed wide and dark into the street (KillCrushFx) on a wide red splat, the cap squirting off to one side. No flight, no scorch: the press is cold steel.",
+      "flash_ticks": 0,
+      "ground_drag": 20,
+      "hat_kick_mps": 3.5,
+      "hitstop_ticks": 4,
+      "id": "tonnage_crush",
+      "launch_mps": [
+        0,
+        0
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        0,
+        0
+      ],
+      "spray": 22,
+      "spray_cone_deg": 330,
+      "style": "crush",
+      "up_mps": [
+        0,
+        0
+      ],
+      "weapon": "stomp"
+    },
+    {
+      "bounce": 0.3,
+      "cone_deg": 25,
+      "doc": "Tonnage's ram (lane ghost-powers, weapon ram): the press body hits like a truck: the victim is thrown aside in one piece along the charge, tumbles, lands and slides on a smear, the cap spinning off.",
+      "flash_ticks": 0,
+      "ground_drag": 4.5,
+      "hitstop_ticks": 3,
+      "id": "tonnage_ram",
+      "launch_mps": [
+        6.5,
+        8.5
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        240,
+        720
+      ],
+      "spray": 10,
+      "spray_cone_deg": 40,
+      "style": "blowback",
+      "up_mps": [
+        2.5,
+        3.5
+      ],
+      "weapon": "ram"
+    },
+    {
+      "bounce": 0.35,
+      "cone_deg": 75,
+      "doc": "Dent's overloaded car bomb (lane ghost-powers, weapon dent_blast): the rocket's gib, thrown out of the car's blast: the body blown into its six rig parts with a red spray fan, ink splat and a scorch mark.",
+      "flash_ticks": 3,
+      "ground_drag": 6,
+      "hitstop_ticks": 4,
+      "id": "dent_blast_gib",
+      "launch_mps": [
+        5,
+        10
+      ],
+      "pieces": [
+        "head",
+        "torso",
+        "arm_l",
+        "arm_r",
+        "leg_l",
+        "leg_r"
+      ],
+      "scorch_radius_m": 1.3,
+      "spin_dps": [
+        360,
+        1080
+      ],
+      "spray": 18,
+      "style": "gib",
+      "up_mps": [
+        3,
+        6.5
+      ],
+      "weapon": "dent_blast"
+    },
+    {
+      "bounce": 0.3,
+      "cone_deg": 25,
+      "doc": "Dent's seized car hits a human (lane ghost-powers, weapon dent_car): thrown off the bonnet in one piece along the car's nose, tumbling, landing on a smear, the cap spinning off.",
+      "flash_ticks": 0,
+      "ground_drag": 4.5,
+      "hitstop_ticks": 3,
+      "id": "dent_car_hit",
+      "launch_mps": [
+        6.5,
+        8.5
+      ],
+      "pieces": [
+        "body",
+        "hat"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        240,
+        720
+      ],
+      "spray": 10,
+      "spray_cone_deg": 40,
+      "style": "blowback",
+      "up_mps": [
+        2.5,
+        3.5
+      ],
+      "weapon": "dent_car"
+    },
+    {
+      "bounce": 0.1,
+      "cone_deg": 10,
+      "cut_deg": 55,
+      "doc": "Kerf's blink-slice (lane ghost-powers, weapon kerf_slice): the plasma sword's diagonal cut done by the soul's cutting beam as Kerf passes through: the two halves of the real rig part slowly off the line, the cut edges cauterised teal-white (a soul-teal bloom round a white-hot band, no red), no blood and no smears; the cream slash streak marks the beam. Under --gore=reduced the victim falls whole.",
+      "edge": "soul",
+      "flash_ticks": 2,
+      "ground_drag": 2.6,
+      "hitstop_ticks": 5,
+      "id": "kerf_split",
+      "launch_mps": [
+        1.6,
+        2.2
+      ],
+      "pieces": [
+        "half_a",
+        "half_b"
+      ],
+      "scorch_radius_m": 0,
+      "spin_dps": [
+        10,
+        40
+      ],
+      "spray": 0,
+      "spray_cone_deg": 0,
+      "style": "split",
+      "up_mps": [
+        0.2,
+        0.5
+      ],
+      "weapon": "kerf_slice"
     }
   ],
   "leftover_budget": 12,

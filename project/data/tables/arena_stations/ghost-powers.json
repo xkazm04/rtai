@@ -28,6 +28,7 @@
           ]
         }
       ],
+      "script": "res://features/souls/tonnage_hook.gd",
       "spawns": [
         {
           "at": [

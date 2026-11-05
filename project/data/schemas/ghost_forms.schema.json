@@ -1,0 +1,153 @@
+{
+  "$id": "gtai.ghost_forms/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "forms": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "accel_mps2": {
+            "maximum": 200,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "anchors": {
+            "additionalProperties": {
+              "items": {
+                "maximum": 10,
+                "minimum": -10,
+                "type": "number"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            },
+            "minProperties": 1,
+            "type": "object"
+          },
+          "bar_m": {
+            "maximum": 5,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "body_class": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "enter_s": {
+            "maximum": 0.9,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "exit_s": {
+            "maximum": 0.9,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "gait": {
+            "enum": [
+              "cane",
+              "hover",
+              "stagger",
+              "stamp"
+            ]
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "name_key": {
+            "pattern": "^[a-z][a-z0-9_.]*$",
+            "type": "string"
+          },
+          "power": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
+          "radius_m": {
+            "maximum": 3,
+            "minimum": 0.2,
+            "type": "number"
+          },
+          "size_k": {
+            "maximum": 4,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "top_mps": {
+            "maximum": 30,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "turn_dps": {
+            "maximum": 2000,
+            "minimum": 10,
+            "type": "number"
+          },
+          "upgrade_tier": {
+            "maximum": 5,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "accel_mps2",
+          "anchors",
+          "bar_m",
+          "body_class",
+          "enter_s",
+          "exit_s",
+          "gait",
+          "id",
+          "name_key",
+          "power",
+          "radius_m",
+          "size_k",
+          "top_mps",
+          "turn_dps",
+          "upgrade_tier"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "order": {
+      "items": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.ghost_forms/1"
+    },
+    "story_forms": {
+      "type": "boolean"
+    },
+    "story_lift": {
+      "type": "boolean"
+    },
+    "story_voice": {
+      "type": "boolean"
+    },
+    "switch_s": {
+      "maximum": 0.9,
+      "minimum": 0.1,
+      "type": "number"
+    }
+  },
+  "required": [
+    "doc",
+    "forms",
+    "order",
+    "schema",
+    "switch_s"
+  ],
+  "type": "object"
+}

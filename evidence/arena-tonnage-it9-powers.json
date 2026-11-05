@@ -1,0 +1,114 @@
+{
+  "brutality_pit": {
+    "by_style": {
+      "blowback": 4,
+      "crush": 5
+    },
+    "kill_cut_us": [
+      372,
+      287,
+      292,
+      274,
+      314,
+      331,
+      510,
+      433,
+      358
+    ],
+    "kill_ticks": [
+      144,
+      151,
+      151,
+      151,
+      214,
+      229,
+      371,
+      389,
+      389
+    ],
+    "signature_kills": 9,
+    "view_avg_us": 162,
+    "view_frames": 600,
+    "view_over_2ms": 0,
+    "view_worst_tick": 389,
+    "view_worst_us": 1005
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 4,
+    "wrecked": 2
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 9,
+    "bodies_peak": 10,
+    "died": 10,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 10,
+    "pruned": 1,
+    "stains_now": 10
+  },
+  "damage_taken": 7.9200000000003,
+  "deaths": 0,
+  "dodges": 10,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "hook_8": {
+    "dent": {
+      "blasts": 0,
+      "rides": 0,
+      "seizes": 0,
+      "strikes": 0
+    },
+    "ghost_dead": 10,
+    "ghost_victims": 10,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
+    "tonnage": {
+      "activations": 0,
+      "cars_crushed": 2,
+      "ram_hits": 6,
+      "rivet_hp": 94.2466666666664,
+      "slam_hits": 6,
+      "slams": 2,
+      "ticks_on": 479
+    }
+  },
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0,
+    0,
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 0,
+  "ticks": 581,
+  "top_speed_mps": 4.20005589723587,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.0002249415,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

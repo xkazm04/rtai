@@ -44,6 +44,9 @@ var grind_ticks: int = 0
 ## Extra speed (m/s) for the hat alone, thrown off to one side of the shot (alternating kill by
 ## kill): the ray gun knocks the cap off the dust heap onto the bare street.
 var hat_kick_mps: float = 0.0
+## A split's cut edge: raw (red), hot (cream, cauterised) or soul (teal-white, Kerf's beam);
+## empty = by the row's spray (none = hot).
+var edge: StringName = &""
 
 
 static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
@@ -73,6 +76,7 @@ static func from_dict(t: DataTable, d: Dictionary) -> SignatureKill:
 	k.cut_deg = _num(t, d, "cut_deg", 0.0)
 	k.grind_ticks = roundi(_num(t, d, "grind_ticks", 0.0))
 	k.hat_kick_mps = _num(t, d, "hat_kick_mps", 0.0)
+	k.edge = StringName(str(d.get("edge", "")))
 	return k
 
 

@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+Movie Maker mode enabled, recording movie in 1280×800 @ 60 FPS...
+[INFO] quest1: city cells: 2 chunks in 14 ms
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 85.5 ms
+[INFO] quest1: started: Rivet is the player's (seed 20261102)
+quest1_forms: frame 150 press power_hauler
+quest1_forms: frame 420 press power_hauler
+quest1_forms: frame 520 press power_gearbox
+quest1_forms: frame 560 press power_hauler
+quest1_forms: frame 740 press power_gearbox
+quest1_forms: frame 900 press power_gearbox
+quest1_forms: frame 1060 press power_hauler
+--------------------------------------------------------------------------------
+Done recording movie at path: C:/Users/kazda/kiro/gtai-masters/n6/ghost-forms/scratch/q1before.avi
+1140 frames at 60 FPS (movie length: 00:00:19:00), recorded in 00:00:31 (61% of real-time speed).
+CPU render time: 0.60 seconds (average: 0.52 ms/frame)
+GPU render time: 2.84 seconds (average: 2.49 ms/frame)
+Encoding time: 14.53 seconds (average: 12.75 ms/frame)
+--------------------------------------------------------------------------------
+WARNING: 328 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 84 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

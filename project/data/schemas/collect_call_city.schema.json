@@ -5,6 +5,17 @@
     "doc": {
       "type": "string"
     },
+    "ghost_cars": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "type": "array"
+    },
     "origin": {
       "items": {
         "type": "number"
@@ -28,6 +39,7 @@
   },
   "required": [
     "doc",
+    "ghost_cars",
     "origin",
     "schema",
     "squash"

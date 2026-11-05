@@ -24,8 +24,14 @@ var throw: PlayerThrow = PlayerThrow.new()
 ## Claw hits started (a press that started or chained a hit; the Hauler's stomp is not one).
 var melee_swings: int = 0
 var car_presses: int = 0
-## features/souls: the Hauler for the bound player (Q / LB); the bot never builds a pilot.
-var hauler: HaulerStage = HaulerStage.shipped()
+## features/souls: the four ghost forms for the bound player (GhostPilot: Q / LB transforms, G / RB
+## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage), dent, kerf and ohm
+## are its attack stages (lane ghost-powers), kept here for the views and the tests.
+var ghosts: GhostPilot = GhostPilot.shipped()
+var hauler: HaulerStage = ghosts.hauler
+var dent: DentStage = ghosts.dent
+var kerf: KerfStage = ghosts.kerf
+var ohm: OhmStage = ghosts.ohm
 ## The tick the last input arrived and the tick its first move or claw started (latency probe).
 var last_press_tick: int = -1
 var _previous: int = 0
@@ -58,11 +64,8 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 		stage.intent.interact = true
 	_fire(stage, c)
 	var press: bool = _melee_press(c)
-	if hauler != null:
-		var power: bool = c.was_pressed(actions, &"power_hauler")
-		stage.intent.move_by = hauler.drive(stage, power, press, stage.intent.move_by)
-		if hauler.owns_melee():
-			return
+	if _ghosts(stage, c, press):
+		return
 	var free: bool = motion.phase == PlayerMotion.Phase.FREE
 	var down: bool = c.is_held(actions, &"melee") and rivet.alive()
 	@warning_ignore("return_value_discarded")
@@ -76,6 +79,15 @@ func drive(stage: CollectCallStage, input: TickInput) -> void:
 	if c.was_pressed(actions, &"car"):
 		car_presses += 1
 		Log.info("pilot", "enter/exit car pressed (stub until the vehicles lane's API lands)")
+
+
+## The ghost forms (features/souls GhostPilot); true when a form owns the melee press this tick
+## (the pilot skips the claw).
+func _ghosts(stage: CollectCallStage, c: PlayerCommand, press: bool) -> bool:
+	if ghosts == null:
+		return false
+	stage.intent.move_by = ghosts.drive(stage, c, actions, press)
+	return ghosts.owns_melee()
 
 
 func facing() -> Vector2:
@@ -96,8 +108,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 		carry.write_state(out)
 		throw.write_state(out)
 	out.put_32(_previous)
-	if hauler != null:
-		hauler.write_state(out)
+	if ghosts != null:
+		ghosts.write_state(out)
 
 
 ## The walk, sprint and roll; a claw hit slows the walk (move_mult), so do spinning barrels (the

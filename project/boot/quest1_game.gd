@@ -26,6 +26,8 @@ var _ended: bool = false
 var _audio: StageAudio = null
 ## The city's crowd atlas and near rigs (quest 1 on the city; Rivet is the quest's cast).
 var _characters: CityCharacters = null
+## The ghost forms and voices on the sprite cast (null under --rigs).
+var _story: StoryForms = null
 
 
 func _enter_tree() -> void:
@@ -114,7 +116,7 @@ func _begin(opened: Quest1Session) -> void:
 			_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 			_characters.rivet_on_foot = false
 			_characters.bake()
-		_dev_rigs()
+		_casts()
 		_audio = StageAudio.attach(
 			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
 		)
@@ -226,9 +228,11 @@ func _settings_panel() -> Quest1SettingsPanel:
 
 ## rivet-arsenal (dev, debug builds only): `-- --rigs` draws quest 1's fighters on the cast rigs
 ## with Rivet's held weapon, swings and reloads (the arena's ArenaRigs, loaded at run time: dev/ is
-## not in release exports). Without the flag quest 1 keeps its sprite cast.
+## not in release exports). Without the flag quest 1 keeps its sprite cast, and the ghost forms and
+## voices show through StoryForms (the rig cast brings its own GhostFormView).
 func _dev_rigs() -> void:
 	if not LaunchArgs.has("--rigs") or not OS.is_debug_build():
+		_story = StoryForms.attach(self, view, session.stage, settings.reduced_motion)
 		return
 	var script: GDScript = load("res://dev/arena/arena_rigs.gd") as GDScript
 	if script == null:
@@ -237,3 +241,11 @@ func _dev_rigs() -> void:
 	add_child(cast)
 	var ok: Variant = cast.call("attach", session.stage, view, session.world.context())
 	Log.info("quest1", "cast rigs: %s" % ok)
+
+
+## The cast (_dev_rigs), then the ghosts' attack views over either cast (lane ghost-powers,
+## GhostAttackViews: quest 1 runs every ghost's attack through StagePilot, so it draws them too).
+func _casts() -> void:
+	_dev_rigs()
+	@warning_ignore("return_value_discarded")
+	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)

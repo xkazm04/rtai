@@ -116,6 +116,9 @@ var core_tan: bool = false
 ## n5-cast (r2_c3): how far the D5 close-up print (look_d5_part `warm`) moves this body's steel
 ## ramp from the violet-grey toward the hybrid target's warm tan metal; 0 = the violet-grey steel.
 var d5_warm: float = 0.0
+## ghost-forms: the parts draw as their raw art, without the shared part print (Dent: the print
+## greys his fills at 32 px/m); the hit tint still prints.
+var raw_parts: bool = false
 
 
 func has_collar() -> bool:
