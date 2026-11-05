@@ -664,3 +664,16 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   Judged: ring, wash and crack read over the press body; the quest's dialogue box covers the lower street at 64.
 - 05:29 reel re-cut `M/ghost-attacks-reel-it8-32ppm.mp4` (47 s, + the arena's Tonnage reach/slam segment first);
   it7 reel deleted; frames.json 15 (all present).
+- 05:22 DESIGN Dent in quest 1 (NEXT 2): quest 1 has no vehicle bodies at all (no VehicleService in Quest1Session's
+  world, no parked VehicleBody, the sprite CastView draws no cars), so a real car source is: a quest-side
+  VehicleService seeded with parked cars at layout spots (or the baked chunks' parked cars, which StageCells already
+  treats as solid), plus car drawing in the quest cast; it changes quest 1's sim (replay goldens, decisions line).
+  Too large for this session; feedback first (below).
+- 05:33 MILESTONE Dent's missed reach: a seize that finds no car (quest 1 always; the arena when nothing is on the
+  aim line) lashes the teal tether out along the aim to its reach and frays it (DentStage miss_tick/miss_to/misses,
+  view-only fields; DentView._miss). Dev `--no-dent-miss` = before. quest_ghost_rec now takes `--ghost=dent` (its
+  press is fire, the seize) and reports `dent misses`. Quest 1 real input: 12 misses, 0 kills (correct: no car),
+  0 SCRIPT ERROR both runs. A/B same frames 90-102: `M/frames/quest1-dent-miss-ab-32ppm.png` (before: nothing;
+  after: the lash toward the guards, then dashes), clip `M/quest1-dent-miss-32ppm.mp4` (4.5 s). test_dent_miss 2/2.
+  Gates: lint 13/13, unit 1009/0 (`E/unit-it8b-powers.log`), scenario ghost 1/0 (`E/scenario-ghost-it8-powers.log`).
+  DECISION in decisions.md (feedback, not the fix: the REPORT row stays).
