@@ -58,13 +58,15 @@ static func stands_in(forms: GhostForms) -> bool:
 	return false
 
 
-## How far above Rivet's spot (m) his health bar rides: clear of the body that stands in for him.
+## How far above Rivet's spot (m) his health bar rides: clear of the body that stands in for him
+## (ghost_forms.json bar_m: Kerf's front blades reach past the old 1.2 m, Tonnage's press past
+## its radius).
 static func bar_lift_m(forms: GhostForms) -> float:
 	if not stands_in(forms):
 		return BAR_LIFT_M
 	var id: StringName = forms.to_id if forms.to_id != GhostForms.BASE else forms.from_id
 	var d: GhostFormDef = forms.table.form(id)
-	return maxf(BAR_LIFT_M, d.radius_m * 1.8) if d != null else BAR_LIFT_M
+	return maxf(BAR_LIFT_M, d.bar_m) if d != null else BAR_LIFT_M
 
 
 static func _make(stage: CollectCallStage, view: CollectCallView) -> GhostFormView:

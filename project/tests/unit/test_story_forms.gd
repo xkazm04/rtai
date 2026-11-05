@@ -85,3 +85,11 @@ func test_the_card_folds_to_one_chip_while_a_line_is_up() -> void:
 	s._process(0.0)
 	assert_false(hud.compact, "the line closed")
 	assert_eq(hud.shown_chips().size(), 4, "all four again")
+
+
+func test_each_forms_bar_rides_clear_of_its_drawn_body() -> void:
+	var t: GhostFormTable = GhostFormTable.load_default()
+	assert_gt(t.form(&"kerf").bar_m, 1.6, "Kerf's front blades reach about 1.6 m forward")
+	assert_gt(t.form(&"tonnage").bar_m, t.form(&"tonnage").radius_m * 1.7, "over the press")
+	for id: StringName in t.order:
+		assert_gte(t.form(id).bar_m, StoryForms.BAR_LIFT_M, "never below base Rivet's bar")

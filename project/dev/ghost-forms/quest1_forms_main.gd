@@ -5,6 +5,7 @@ extends SceneTree
 ## shipped path (StoryForms): walk, Q into Tonnage, walk, Q out, G to Dent, Q in, G to Kerf, G to
 ## Ohm, Q out. Needs a window. Usage: godot --path project --screen 0 --resolution 1280x800
 ##   --write-movie <avi> --quit-after 1140 -s res://dev/ghost-forms/quest1_forms_main.gd
+##   [-- --ppm=64] (the close-up: the game's own zoom, px per metre)
 
 const SCENE: String = "res://boot/quest1.tscn"
 ## The presses (one frame down, then up): PRESS_AT[i] presses PRESS[i].
@@ -45,6 +46,9 @@ func _initialize() -> void:
 		quit(1)
 		return
 	_game = packed.instantiate()
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--ppm="):
+			_game.set(&"px_per_m", arg.substr(6).to_float())
 	root.add_child(_game)
 	_game.call_deferred(&"start")
 	@warning_ignore("return_value_discarded")
