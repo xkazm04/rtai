@@ -12,6 +12,7 @@ var _ground: Node2D = Node2D.new()
 var _air: Node2D = Node2D.new()
 var _paint: ServoDraw = ServoDraw.new()
 var _depot: ServoDepotDraw = ServoDepotDraw.new()
+var _cut: ServoCut = ServoCut.new()
 var _frame: int = 0
 ## Seconds the conveyor has run (it starts with rush hour, phase 2); one frame = one tick here.
 var _belt_s: float = 0.0
@@ -20,6 +21,7 @@ var _belt_s: float = 0.0
 func _ready() -> void:
 	_paint.px = Ink.PX_PER_M
 	_depot.px = Ink.PX_PER_M
+	_cut.px = Ink.PX_PER_M
 	_ground.z_index = -1
 	_air.z_index = 2
 	_rig.px = Ink.PX_PER_M
@@ -32,6 +34,8 @@ func _ready() -> void:
 		_ground.draw.connect(_draw_ground),
 		_air.draw.connect(_draw_air),
 	]
+	if arena != null:  # Kerf's cut drones fall in two halves (ServoCut)
+		errs.append(arena.kill_landed.connect(_on_kill))
 	assert(errs.all(func(e: Error) -> bool: return e == OK))
 
 
@@ -64,4 +68,12 @@ func _draw_ground() -> void:
 
 
 func _draw_air() -> void:
+	_cut.draw(_air, _paint.drone_tex, ServoDraw.DRONE_K, _frame)
 	_paint.drones(_air, moves().swarm)
+
+
+func _on_kill(
+	victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, _k: StringName
+) -> void:
+	if weapon == ServoCut.WEAPON and victim.machine and moves().drone_bodies.owns(victim.id):
+		_cut.take(victim.pos if at == Vector2.ZERO else at, dir, _frame)

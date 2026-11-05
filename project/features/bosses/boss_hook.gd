@@ -212,7 +212,7 @@ func telemetry() -> Dictionary:
 
 func attach_view(view: Node) -> void:
 	if fight != null:
-		BossView.attach(view, self)
+		BossView.attach(view, self, _arena)
 
 
 func _connect() -> void:

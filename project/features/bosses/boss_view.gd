@@ -10,9 +10,11 @@ var fight: BossFight = null
 var adds: BossAdds = null
 ## The view's blood: the boss and its adds are robots (they leak oil, never red).
 var blood: CombatBlood = null
+## The fight's arena (a boss's view may listen to its kill_landed: render only, never steps it).
+var arena: CombatArena = null
 
 
-static func attach(view: Node, hook: BossHook) -> void:
+static func attach(view: Node, hook: BossHook, p_arena: CombatArena = null) -> void:
 	var v: CollectCallView = view as CollectCallView
 	if v == null:
 		return
@@ -23,6 +25,7 @@ static func attach(view: Node, hook: BossHook) -> void:
 	body.fight = hook.fight
 	body.adds = hook.adds
 	body.blood = v.blood
+	body.arena = p_arena
 	if v.print_stage != null:  # on the actors' layer like the cast rigs: true colours, no ink snap
 		tell.z_index = RenderLayers.z(&"actors") - 1
 		tell.scale = v.cast_view.scale
