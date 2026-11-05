@@ -75,6 +75,7 @@ static func make(
 	v.teal_forms = OS.get_cmdline_user_args().has("--teal-forms")  # dev: the owner's Call, A/B
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
 	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
+	GhostRim.keyline_on = not OS.get_cmdline_user_args().has("--no-keyline")  # dev A/B
 	v.z_index = (p_rigs.z_index if p_rigs != null else RenderLayers.z(&"actors")) + Z_OVER_RIGS
 	return v
 

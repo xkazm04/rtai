@@ -806,3 +806,18 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
   sprites re-captured from the slim rigs) as b0c7fdf2; JOURNAL/REPORT/it7 logs kept ours. Unit (with import)
   1016/0 (E:unit-it13-merged.log); COMBAT CHECK director reel 16/16 chapters n/n down, 0 SCRIPT ERROR
   (E:director-reel-it13-merged.log).
+- 06:55 CHECK Dent at 32 px/m on the city (`film.sh --arena=city --bot=forms --form=dent`): on asphalt he reads;
+  the square tour never reaches the pale kerb. Added FormsTourBot `--side=<ticks>` (dev; 120 puts legs 2-3 on the
+  south kerb). On the kerb (ticks 240-360): the beige dummy's cream rim melts into the cream slab; the yellow discs
+  and the teal pool carry him, his limbs do not.
+- 07:05 MILESTONE (this commit) Dent's ink keyline: GhostRim.keyline(rig) puts an INK silhouette
+  (ghost_keyline.gdshader) under each RigBuild cream halo of DentBody's cut rig (child of the halo: follows its
+  view scale, hides with it at close-ups; z under every halo); sync_keyline follows part swaps. DECISION. Same-input
+  A/B (`--side=120`, `--no-keyline` for the before), ticks 240/300/360/420 x3:
+  `M:frames/dent-keyline-kerb-ab-32ppm-x3.png`. Judged: after, a die-cut ink line outlines him on the kerb; on
+  asphalt no visible change. 64 px/m (`--ppm=64`): the keyline fades with the halos; the art's own line carries
+  him: `M:frames/dent-keyline-kerb-64ppm.png`. Clip `M:dent-kerb-city-32ppm.mp4`. 0 SCRIPT ERROR all runs
+  (FRICTION: the first take hit a shadowing warning-as-error; run --check-only first). Unit 1018/0 (2 new tests,
+  E:unit-it13-keyline.log); lint 13/13; COMBAT CHECK director reel 16/16, 0 SCRIPT ERROR
+  (E:director-reel-it13-keyline.log). frames.json 15 (the keyline A/B second; the kerf-bar entry folded into
+  kerf-vs-target). Registry rule applied (motion-quality-gating): same input A/B at game zoom, on the live path.

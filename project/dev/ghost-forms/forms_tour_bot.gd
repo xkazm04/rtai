@@ -3,8 +3,9 @@ extends InputSource
 ## `--bot=forms [--form=<id>|all]` (ghost-forms proof clips): Rivet walks a square in base, picks
 ## the form with G, transforms with Q while walking, walks the square in the form, and Q takes him
 ## back to base; `--form=all` goes base -> Tonnage, then G switches through Dent, Kerf and Ohm
-## (the teal flash) before Q back; `--form=voices` only walks (base: for `--apparition`). Input
-## only (the live GhostPilot does the rest).
+## (the teal flash) before Q back; `--form=voices` only walks (base: for `--apparition`).
+## `--side=<ticks>` widens the square (120 on `--arena=city` puts the second and third legs on
+## the pale south kerb). Input only (the live GhostPilot does the rest).
 
 const START_AT: int = 40
 ## Ticks per side of the walked square.
@@ -16,6 +17,7 @@ const SIDES: Array[Vector2] = [Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector
 var stage: ArenaStage
 var actions: PlayerActions
 var form: StringName = &"dent"
+var side: int = SIDE
 ## (tick, action) presses, in order.
 var plan: Array[Array] = []
 
@@ -28,7 +30,10 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions, p_form: StringName) ->
 
 
 static func of(p_stage: ArenaStage, p_actions: PlayerActions, args: ArenaArgs) -> FormsTourBot:
-	return FormsTourBot.new(p_stage, p_actions, StringName(args.text("--form", "dent")))
+	var f: StringName = StringName(args.text("--form", "dent"))
+	var bot: FormsTourBot = FormsTourBot.new(p_stage, p_actions, f)
+	bot.side = maxi(1, int(args.number("--side", SIDE)))
+	return bot
 
 
 func _plan() -> void:
@@ -53,7 +58,7 @@ func _plan() -> void:
 func sample(tick: int) -> TickInput:
 	if tick < START_AT:
 		return _input(Vector2.ZERO, Vector2.RIGHT, &"")
-	var dir: Vector2 = SIDES[((tick - START_AT) / SIDE) % SIDES.size()]
+	var dir: Vector2 = SIDES[((tick - START_AT) / side) % SIDES.size()]
 	var act: StringName = &""
 	for p: Array in plan:
 		if p[0] == tick:
