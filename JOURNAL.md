@@ -455,3 +455,43 @@ was charge + coin fan only and the slam was unmeasured.
   252 dealt. The slam now lands on a stander and is dodged by a reader, as the moveset wants.
 - Gates at e4ee9c55: lint 13/13 (pre-commit); unit 1137/0 (`unit-it3b.log`); scenarios 52 ran /
   0 failed (`scenarios-it3.log`).
+
+### MILESTONE 21:13-21:17: corpse fade, ermine collar, decree buff, Ohm's daze
+- 0965780d: King's downed gang lie 6 s, then ink out and sink over 1.5 s and leave the floor
+  (CorpseFade's look, on the boss's clock). Looked at `evidence/king/shots/fade_smoke_p2_32_t1500.png`:
+  one fresh body left, the rest gone, the oil stays; the hood smoke shows over the stalled car.
+- afd0da8b: the ermine collar (cream fur ring with ink tails, open at the front) and a bigger
+  jewelled crown (0.42 m) over the rig. Looked at the 3-way comparison
+  (`evidence/king/shots/ermine_target_before_after_32ppm.png`, target | before | after): the fur
+  ring + crown is the target panel's strongest read and now shows at 32 px/m.
+- 6809f7ba: the decree does something now. Generic attack field `buff_adds {damage_k, speed_k, s}`
+  (schema), applied by BossAdds.buff on the active window, BossMoves.speed_k; King's decree x1.3 /
+  x1.2 for 6 s. View: vermilion shout rings pulse off King; a vermilion danger ring on each buffed
+  gang bot. Unit test in test_boss_adds. Court at 48 px/m, standing bot (`court_decree_48ppm_contact_it3.png`):
+  decree 2 tries, gang 10/12 landed, the bot died in the court. FRICTION: at 48 px/m the dev
+  arena's noir print turns every robot rig into an ink mass (known since iteration 2).
+- 65651353: `--boss-cam` follows Rivet alone when the boss is over 20 m away (after the standing
+  bot's respawn the camera framed empty off-floor ground).
+- Ohm's daze (next commit; unit 1140/0, `unit-it3d.log`): a new stun on the boss's body (FightAreas fx stun_ticks, rising edge:
+  Ohm's bolt, the electro gun) cancels a tell and dazes for at most `BossFight.DAZE_MAX` 36 ticks
+  (0.6 s): no walk, no new attack; never an active attack, a recovery or a transition. Unit
+  test_boss_fight +2 (incl. "never cancels an active attack"). NOT seen live yet (no bot plays Ohm).
+- Combat no-regress at a02406bb+ (shared print shader, rig_build, body_plan touched):
+  `--bot=reel --reel=director --loadout=pistol` headless, 19/19 chapters fully down, 0 script
+  errors (`evidence/king/director-reel-it3.log`).
+- Unit at 6809f7ba: 1137/1, the 1 = test_noir_shadows (known flake), 2/2 alone
+  (`unit-it3c.log`, `unit-it3c-noir-rerun.log`).
+
+NEXT (iteration 4, in order):
+1. See Ohm's daze live: a `--bot=boss --ghost=ohm` (or the bot pressing Ohm's bolt when King is in
+   a tell) and a 48 px/m clip; check Kerf / Dent / Tonnage on King and the gang in one clip each.
+2. The human-like bot (reads ~70 %, own RNG stream) + an n-seed runner (`--seed=1..5`, servo's
+   flag) -> `evidence/king/boss-numbers.json`: time to kill, damage taken, per-attack hit rates for
+   dodging / human / standing. Then tune (the stander dies once; the dodger takes only 30).
+3. The wreck as cover in phase 3 (a generic BossMoves prop hook -> arena blockers).
+4. 48 px/m clips per attack: the dev arena's noir print inks the robot rigs at 48: try `--look`
+   options or film at 32 with a 2x crop; per phase 32 px/m real-time clips (`--phase=N`).
+5. Gang on the car's sides (target: hanging off the sides in gold chains), plum drapes on the car.
+6. The Windows exe export for the owner by 08:30 (int-day recipe in docs/decisions.md) and REPORT
+   with Calls for the owner: gold swap vs steel (`KingRigs.GOLD_SWAP`), leap_m 6 vs 0 (the
+   on-the-spot slam), decree buff on/off.
