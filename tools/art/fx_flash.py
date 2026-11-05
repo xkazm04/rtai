@@ -53,6 +53,10 @@ def flash(img, rin, spec):
         dr.polygon(_spike(cx, cy, a, burst_r * 0.5, r1, w, ink_px), fill=INK)
     for a, r1, w in spikes:
         dr.polygon(_spike(cx, cy, a, burst_r * 0.5, r1, w), fill=tuple(spec["spike"]) + (255,))
+    if "mid" in spec:  # an orange tier between the yellow burst and the smoke (r2_w4's graded core)
+        mid_r = burst_r * spec.get("mid_k", 1.2)
+        mid = _star(cx, cy, spec["points"], mid_r, mid_r * 0.8, seed + 5.9)
+        dr.polygon(mid, fill=tuple(spec["mid"]) + (255,))
     burst = _star(cx, cy, spec["points"], burst_r, burst_r * 0.78, seed + 1.3, ink_px)
     dr.polygon(burst, fill=INK)
     fill = tuple(spec["burst"]) + (255,)

@@ -171,7 +171,7 @@ def _flash(path, spec):
     """fx_flash.flash over the frame (r2_w4's white-hot core + spikes); colours are hex in the table."""
     img = Image.open(path).convert("RGBA")
     _, inner = _polar(img, img.load(), 180)
-    s = dict(spec, **{k: _hex(spec[k]) for k in ("spike", "burst", "hot")})
+    s = dict(spec, **{k: _hex(spec[k]) for k in ("spike", "burst", "hot", "mid") if k in spec})
     flash(img, sorted(inner)[90], s).save(path, optimize=True)
 
 
