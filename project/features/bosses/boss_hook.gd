@@ -28,6 +28,7 @@ var _rng: RngRegistry = null
 var _hooks_cleared: bool = false
 ## The boss script's extra bodies in the hostiles now (BossMoves.bodies()).
 var _extra: Array[Fighter] = []
+var _stun_seen: int = 0
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -74,6 +75,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 	var r: Fighter = _arena.rivet
 	if not r.alive():
 		return
+	_stun_check()
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
 	_sync_bodies()
 	_keep_in(fight)
@@ -92,6 +94,15 @@ func step(stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## A new stun on the boss's body (FightAreas: Ohm's bolt, the electro gun) dazes the fight.
+func _stun_check() -> void:
+	var fx: FighterFx = _arena.areas.fx.get(fight.body.id) if _arena.areas != null else null
+	var s: int = fx.stun_ticks if fx != null else 0
+	if s > _stun_seen and fight.daze(s):
+		Log.info("bosses", "%s dazed %d ticks" % [fight.spec.id, fight.dazed])
+	_stun_seen = s
 
 
 ## rivet-arsenal's claw cops (real guards that walk at Rivet and respawn) leave the boss floor:
