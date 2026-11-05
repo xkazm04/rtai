@@ -898,3 +898,16 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   the merge commit. JOURNAL/REPORT/it7 logs kept ours. Unit (with import) 1020/0 (E:unit-it14-merged2.log);
   COMBAT CHECK director reel 16/16 chapters n/n down, 0 SCRIPT ERROR (E:director-reel-it14-merged2.log). Quest 1
   (q1lift.sh 520 frames, 0 SCRIPT ERROR): frames 140/480 identical to the 07:49 film (scratch, deleted).
+- 08:05 FINAL GATES on dc9af2e6, still tree (E:evidence-run-it14-final2.log): PASS lint 13/13, unit 1020/0,
+  scenarios 51, parity bit-exact (mutation at 629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
+  REPORT gates updated: dc9af2e6 is the lane's final gated head.
+
+NEXT (the 08:40 report session / the Director's merge):
+1. REPORT is final as of dc9af2e6. If n5-cast or n6-ghost-powers move again, merge (`--no-ff --no-commit`, then
+   `git checkout HEAD -- JOURNAL.md REPORT.md evidence/director-reel-it7.log evidence/evidence-run-it7.log`), and
+   READ the cast_view.gd merge result even when git calls it clean (today it left a duplicate local). Then unit,
+   the director reel and the evidence runner `--no-bench` on a still tree (log to masters scratch, copy in after).
+2. Calls for the owner are unchanged: teal-all-over vs printed machine (`--teal-forms`), and voice apparitions in
+   quest 1 (`story_voice`).
+Session state 08:06: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
+bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
