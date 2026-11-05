@@ -568,13 +568,13 @@
     {
       "anchor_px": [
         182,
-        22
+        32
       ],
-      "art": "res://features/combat/weapons/art/fx/shard.png",
+      "art": "res://features/combat/weapons/art/fx/shard_arrow.png",
       "id": "shard",
       "size_px": [
         190,
-        44
+        64
       ]
     },
     {
