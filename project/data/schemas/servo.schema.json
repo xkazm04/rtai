@@ -217,6 +217,9 @@
         "crates_solid": {
           "type": "boolean"
         },
+        "dash_smash": {
+          "type": "boolean"
+        },
         "fall_s": {
           "maximum": 2,
           "minimum": 0.1,

@@ -28,6 +28,8 @@ class Blast:
 
 var falling: Array[Parcel] = []
 var crates: Array[Parcel] = []
+## Crates the dash smashed (telemetry).
+var smashed_total: int = 0
 ## The bombs that went off on the last step (cleared at the start of each step).
 var blasts: Array[Blast] = []
 var landed_total: int = 0
@@ -105,6 +107,18 @@ func hit_crate(pos: Vector2, damage: int) -> bool:
 			c.hp -= damage
 			return true
 	return false
+
+
+## Every crate a body of `radius_m` at `pos` overlaps is smashed (the rotor dash ploughs its lane
+## clear); returns how many.
+func smash(pos: Vector2, radius_m: float) -> int:
+	var n: int = 0
+	for c: Parcel in crates:
+		if c.hp > 0 and _covers(c, pos, radius_m):
+			c.hp = 0
+			n += 1
+	smashed_total += n
+	return n
 
 
 ## True if a body of `radius_m` at `pos` overlaps a landed crate (crates block paths).

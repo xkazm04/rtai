@@ -15,6 +15,8 @@ const CARPET_STEP_M: float = 1.5
 const HOP_MAX_M: float = 18.0
 ## A player's read of a new drop ring (BossBot.REACT_TICKS: about 0.3 s).
 const SEEN_TICKS: int = 18
+## The rotor dash smashes the crates this many ticks ahead of the body (they never stop it).
+const SMASH_TICKS: int = 2
 
 var swarm: ServoSwarm = ServoSwarm.new()
 ## The live drones as arena bodies (shootable, seizable; BossHook keeps them in the hostiles).
@@ -101,6 +103,11 @@ func tick(f: BossFight, target: Vector2, target_r: float) -> float:
 	swarm.rack.facing = f.body.facing.angle()
 	swarm.aim_at = target
 	swarm.step()
+	var charging: bool = f.attack != null and f.attack.shape == BossAttack.Shape.CHARGE
+	if charging and f.state == BossFight.State.ACTIVE and swarm.tuning.dash_smash:
+		var ahead: Vector2 = f.aim * f.attack.move_mps * SimClock.TICK_DT * SMASH_TICKS
+		@warning_ignore("return_value_discarded")
+		swarm.parcels.smash(f.body.pos + ahead, f.body.radius_m)  # before the walls stop him
 	drone_bodies.sync(swarm)
 	var dealt: float = 0.0
 	for b: ServoParcels.Blast in swarm.parcels.blasts:
@@ -147,6 +154,7 @@ func telemetry() -> Dictionary:
 		"parcel_hits": blast_hits - dive_hits,
 		"dives": dives,
 		"dive_hits": dive_hits,
+		"crates_smashed": swarm.parcels.smashed_total if _armed else 0,
 		"windups": windups,
 	}
 

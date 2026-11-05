@@ -39,6 +39,8 @@ var crate_life_ticks: int = 720
 var crate_m: float = 0.9
 ## Landed crates block bodies and shots (true) or are paint only (false, the owner call).
 var crates_solid: bool = true
+## The rotor dash smashes the crates in its lane (false: a crate stops him like a wall).
+var dash_smash: bool = true
 ## Phase 3's kamikaze dive (servo.json `kamikaze`).
 var dive_standoff_m: float = 5.0
 var dive_track_ticks: int = 36
@@ -116,6 +118,7 @@ static func _read_parcels(t: DataTable, s: ServoTuning) -> void:
 	s.crate_life_ticks = ticks(t.num(p, "crate_life_s"))
 	s.crate_m = t.num(p, "crate_m")
 	s.crates_solid = p.get("crates_solid", true) == true
+	s.dash_smash = p.get("dash_smash", true) == true
 
 
 static func _read_dive(t: DataTable, s: ServoTuning) -> void:

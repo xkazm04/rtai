@@ -41,3 +41,13 @@ func test_a_shot_apart_crate_stops_blocking() -> void:
 	for i: int in m.swarm.tuning.crate_hp:
 		assert_true(m.swarm.parcels.hit_crate(AT, 1))
 	assert_eq(m.solids().size(), 0, "a crate at 0 hp is gone")
+
+
+func test_the_dash_smashes_the_crates_it_crosses() -> void:
+	var m: ServoMoves = _moves(true)
+	m.swarm.parcels.drop(AT + Vector2(5.0, 0.0), ServoParcels.CRATE, 1)
+	m.swarm.parcels.step()
+	assert_eq(m.solids().size(), 2)
+	assert_eq(m.swarm.parcels.smash(AT + Vector2(0.4, 0.0), 0.8), 1, "the crate under the body")
+	assert_eq(m.solids().size(), 1, "the far crate still stands")
+	assert_eq(m.swarm.parcels.smashed_total, 1)
