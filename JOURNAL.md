@@ -697,7 +697,7 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   Unit (with import) and the director reel on 9b0b616c running.
 - 05:47 On the merged head 9b0b616c: unit (with import) 1010/0 (E:unit-it9-merged.log); COMBAT CHECK director reel
   16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it9-merged.log).
-- 05:55 MILESTONE (this commit) Rivet's health bar eases between body heights through a transformation
+- 05:52 MILESTONE b540f1aa Rivet's health bar eases between body heights through a transformation
   (StoryForms.bar_lift_m: lerp from the leaving body's bar_m to the coming one's on smoothstep(0.3, 0.7, k));
   form to form (Kerf 1.9 -> Ohm 1.2) eases the same way. Before, it held at 1.2 m through the burst and jumped to
   2.35 m at the midpoint. A/B same input, lossless frames 164-200 every 4 of quest1_forms_main (Tonnage entry):
@@ -705,3 +705,16 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   step of about 32 px; after, the bar rises with the burst over about 16 ticks. 0 SCRIPT ERROR both runs; new
   test_the_bar_eases_through_a_transformation (rises only, no step above a quarter of the range); unit 1011/0,
   lint 13/13. (Before frames filmed with HEAD's story_forms.gd swapped in temporarily, restored after.)
+- 05:55 COMBAT CHECK director reel on b540f1aa (the bar ease): 16/16 chapters down, 0 SCRIPT ERROR
+  (E:director-reel-it9-ease.log).
+
+NEXT (iteration 10):
+1. Merge n5-cast / n6-ghost-powers if they moved (`--no-ff --no-commit`; JOURNAL/REPORT and our evidence logs keep
+   ours; theirs with clashing names saved as `*-powers.log`), `--import`, unit, director reel.
+2. Final gates on a still tree before the 08:30 freeze: evidence runner `--no-bench` (last all-PASS on 95aa969e;
+   since then two merges and the bar ease, unit 1011/0 and reel 16/16 on them); REPORT for 08:40.
+3. Polish candidate: at 64 px/m quest 1's subtitle box covers the lower part of Tonnage while a line is up (HUD
+   layout; check whether the camera can bias up while a line is up, or leave it).
+Session state 05:56: head = this commit, tree clean after it, no Godot process of mine running, no lock held
+  (image.lock and bench.lock not taken this session); masters scratch holds film.sh, logs and ohm_x3.png;
+  frames.json 15, all present.
