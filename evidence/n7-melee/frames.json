@@ -1,5 +1,14 @@
 [
   {
+    "file": "tonnage_ram_ab_32ppm_48slow.mp4",
+    "title": "Tonnage ram prints on the contact: a cream burst edged in ink and paper chips along the shove",
+    "source": "game-arena",
+    "branch": "n7-melee 0c4161d8",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left; HaulerKick shake/stop runs in both); 32 px/m real time, then 48 px/m at 0.4x",
+    "note": "Pass 1 drew the burst between the press and the body: hidden under the press (measured: about 30 px differed). Pass 2 draws it 0.1 m past the body, 0.7 m: looked at frames 133-147 (x2 crops, after over before), the star holds through the ram stop, then chips fly. Small at 32 px/m; the heap of rammed bodies at the car is unchanged."
+  },
+  {
     "file": "chainsaw_kill_ab_32ppm_48slow.mp4",
     "title": "The chainsaw kill reads: a cream release burst as the halves part, the held body clear of its own spray",
     "source": "game-arena",

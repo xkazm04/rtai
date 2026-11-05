@@ -86,7 +86,13 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
 7. **Dent's blast**: lands at the frame edge at 32 (camera call open: polish only the impact).
    **Impact done 20:21 (`cb3e5caa`)**: dent_blast row (class blast, crash shake), kick outward from the
    car; measured 0.0 px -> 17.9 px first-frame jolt settling in 12 frames. `M/dent_blast_ab_32ppm.mp4`.
+7b. **Tonnage ram** (scored 21:15 from the 48 px/m audit film; 32 px/m read): antic. 2, impact 2,
+   read 2, victim sync 3, sound 1: the press drives cops into a heap against the car; HaulerKick's stop
+   and shake run per hit, but nothing prints on the contact.
+   **Done 21:27 (`0c4161d8`)**: RamMarks: a cream burst edged in ink just past each rammed body (the
+   press hides the near side) and paper chips along the shove. Small at 32 px/m (~20 px); the heap is
+   unchanged. `M/tonnage_ram_ab_32ppm_48slow.mp4`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
-Not yet scored: Tonnage's plates and ram, Dent's blow, Ohm's mass arc, and the 48 px/m look of each
+Not yet scored: Tonnage's plates, Dent's blow, Ohm's mass arc, and the 48 px/m look of each
 (films `audit_*_48` ran; strips next iteration).

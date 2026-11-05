@@ -251,3 +251,26 @@ NEXT (written 20:40, revised 20:56, for iteration 3):
 - LOOK 21:10 (32: frames 140-162 every 2nd, 110x80 crops x3, after over before; 48: frames 136-170 every
   3rd): the burst prints over the cop on frames 144-148 (48: 142), the halves part 6-8 frames later; fewer
   drops over the body during the grind. CLIP `M/chainsaw_kill_ab_32ppm_48slow.mp4` (5.5 s).
+- GATES 21:16 `node tools/evidence/run.mjs --no-bench` on `19c92dd9` (chainsaw in): lint 13/13 over 947
+  files, unit 1156/1156, scenarios 52/52, parity bit-exact (planted caught at step 629), selftest pass
+  (look goldens 11/11, block 5/5). `evidence/n7-melee/gates-19c92dd9.log`. No bench: no performance claim.
+- CHECK 21:16 director reels WITH `--loadout=pistol` on `19c92dd9`: arena 19/19 and city block 19/19,
+  every chapter fully down, 0 SCRIPT ERROR, no "skipped" line
+  (`evidence/n7-melee/director-{arena,city}-loadout-19c92dd9.log`).
+- AUDIT 21:15 Tonnage ram at 48 px/m (audit film frames 180-420 every 10th, 760x460 crops): the press
+  drives cops into a heap against the car; HaulerKick's `kill` stop and `hit` shake run per ram hit,
+  but nothing prints where the press meets a body. Scores (32 px/m read): antic. 2, impact 2, read 2,
+  victim sync 3, sound 1.
+- FINDING 21:22: in the arena the ghost forms' TonnageView draws the Hauler marks (CastView only in
+  quest 1's non-form path); my first ram draw sat in CastView only and never ran (log: 6 ram hits,
+  0 draws). Both now call `RamMarks.draw_all` (the stomp's pattern: TonnageView when `marks`).
+- FINDING 21:24: a burst between the press and the body hid under the press body (cream-pixel diff
+  after vs `--feel=off`: ~30 px). DECISION 21:25: the burst sits 0.1 m past the body, 0.7 m across.
+- MILESTONE 21:27 `0c4161d8` Tonnage ram contact (brief 4, "the ram needs weight"): RamMarks (cream
+  burst edged in ink, 0.15 s, 5 paper chips along the shove); HaulerStage keeps the last 8 ram hits
+  for the view (not in write_state); ghost_attacks.json tonnage ram_flash_s / ram_chips; --feel=off =
+  none. No unit test (draw-only view, as the Ohm tell). LOOK (frames 133-147 every 2nd, 160x120 crops
+  x2, after over before): a cream star by the cop from the contact frame through the ram stop, then
+  chips. Honest limit: at 32 px/m it is a ~20 px star; the heap of bodies at the car is unchanged.
+  CLIP `M/tonnage_ram_ab_32ppm_48slow.mp4` (4.2 s).
+- GATES 21:32 scenarios on `0c4161d8` (the ram): 52 ran, 0 failed, 0 SCRIPT ERROR. Lint 13/13 at the commit hook.
