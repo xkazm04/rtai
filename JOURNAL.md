@@ -301,3 +301,12 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   the two-layer drawn claw pair through Codex under image.lock); the darker off-claw tone (own material, A/B at
   64 px/m); 32 px/m before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip.
   If anything under project/ moves before the Director merges: unit + scenarios + re-export, fix the REPORT sha.
+
+## Iteration 4b (BUILD, 18:15-18:30; fresh session, freeze 18:30)
+- 18:15 Started. Tree clean at 1f4d2f81; the prior session's STOP/NEXT stands. `git diff 1550dfb0 HEAD -- project`
+  is empty, so RTAI.exe (17:59, 1550dfb0) is the head's game. d7-calls since bf7386aa (d58e4ba0): only their
+  JOURNAL/REPORT/evidence logs, no project/ change; their 18:12 FYI REQUEST is already answered (re-export +
+  full evidence on 4a34d9ef). DECISION: no merge of their docs-only commits (it would only conflict on
+  JOURNAL/REPORT and changes no game file); the Director's merge carries them.
+- DECISION (time): nothing started with 15 min to freeze; no gate re-run needed (no project/ change).
+- NEXT: unchanged from the 18:14 entry above (owner verdicts on the 7 REPORT calls; call 7's pick first).
