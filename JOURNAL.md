@@ -742,3 +742,9 @@ task list are other lanes'), no lock held, masters scratch holds only film.sh, r
 - 06:12 arena re-check after the stage move (headless, 600 ticks, telemetry `E/arena-<ghost>-it9-powers.json`):
   Tonnage cars_crushed 2, ram_hits 6, 10 dead; Dent seizes 1, strikes 5, blasts 1, 5 dead; Ohm bolts 15, cars_hit
   5, 5 dead; 0 SCRIPT ERROR each.
+- 06:16 GATES evidence runner `--no-bench` on bc72f553, still tree: PASS lint 13/13, unit 1012/0, scenarios 47,
+  parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.21), no re-bless
+  (`E/evidence-run-it9-powers.log`). Reel re-cut `M/ghost-attacks-reel-it9-32ppm.mp4` (51.2 s, + the quest 1 Dent
+  car segment after the city Dent); it8 reel deleted; frames.json 15 (all present). REPORT iteration-9 rows (Dent
+  in quest 1, gates), the "does not work" row rewritten (fixed cars, not the city's; ghost cars are not solid),
+  Call added (quest cars vs Dent locked in quest 1).
