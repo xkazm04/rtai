@@ -950,3 +950,16 @@ REPORT). Session state 08:27: head = this commit, tree clean, no Godot process o
 NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
 the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls in
 REPORT). Session state 08:33: head = this commit, tree clean, no Godot process of mine running, no lock held.
+
+## Iteration 16 (08:40-08:44, REPORT)
+- 08:40 CHECK REPORT paths: 8 cited `M/` stills/cuts had been deleted in clean-up (dent-blast-ab, kerf-beat,
+  kerf-ohm-city, ohm-electrode-prongs-ab, ohm-robot-rig-ab, quest1-tonnage-telegraph-keys, tonnage-city-crush-keys,
+  ghost-attacks-reel-it5). FRICTION (mine): REPORT kept citing them. Repointed each to its existing successor or
+  dropped it; re-check: every `M/`/`E/` path exists, `M/frames.json` 15/15 present.
+- 08:41 CHECK siblings: n5-cast and n6-ghost-forms have no project diff since our merges; nothing merged.
+- 08:42 REPORT: header to iteration 16, a report-check row, a new "What blocked me" section (no BLOCKED; the
+  FRICTION list; bench never ran, contended). No code change, so no gate re-run.
+
+NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
+the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls in
+REPORT). Session state 08:43: head = this commit, tree clean, no Godot process of mine running, no lock held.
