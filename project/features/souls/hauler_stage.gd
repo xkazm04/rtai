@@ -24,6 +24,8 @@ var activations: int = 0
 var ticks_on: int = 0
 var cars_crushed: int = 0
 var _rammed: Dictionary[int, bool] = {}
+## ghost-forms: GhostPilot owns the shared SoulPowers (activation and its tick).
+var _shared: bool = false
 
 
 func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
@@ -33,6 +35,13 @@ func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	form.bind(powers)
 
 
+## ghost-forms: run on GhostPilot's SoulPowers (GhostForms activates the form and ticks it).
+func share(p_powers: SoulPowers) -> void:
+	powers = p_powers
+	form.bind(powers)
+	_shared = true
+
+
 static func shipped() -> HaulerStage:
 	return HaulerStage.new(PowerTable.load_default())
 
@@ -40,9 +49,10 @@ static func shipped() -> HaulerStage:
 ## One tick. `move_by` is the pilot's walk this tick (m); returns the move to use instead.
 ## `melee` true = the pilot's melee press (the stomp takes it while the tank is on).
 func drive(stage: CollectCallStage, power: bool, melee: bool, move_by: Vector2) -> Vector2:
-	if power and stage.arena.rivet.alive() and powers.try_activate(ID) == &"ok":
-		activations += 1
-	powers.tick()
+	if not _shared:
+		if power and stage.arena.rivet.alive() and powers.try_activate(ID) == &"ok":
+			activations += 1
+		powers.tick()
 	var want: Vector2 = move_by.normalized() if move_by.length() > 0.0001 else Vector2.ZERO
 	form.step(want if form.on else Vector2.ZERO)
 	stage.arena.rivet.damage_k = attacks.num(GHOST, &"armor_k") if form.on else 1.0

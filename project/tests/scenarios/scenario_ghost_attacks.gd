@@ -10,7 +10,7 @@ extends Scenario
 
 const EVIDENCE_FILE: String = "ghost-attacks.json"
 const TICKS: Dictionary[StringName, int] = {
-	&"tonnage": 620, &"dent": 360, &"kerf": 480, &"ohm": 560
+	&"tonnage": 620, &"dent": 360, &"kerf": 520, &"ohm": 600
 }
 const FAULTS: Dictionary[StringName, StringName] = {
 	&"tonnage": &"crush_m", &"dent": &"blast_damage", &"kerf": &"human_damage", &"ohm": &"machine_k"
@@ -66,10 +66,6 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 	var input: GhostReelInput = GhostReelInput.attach(s.stage, s.actions)
 	input.reel.ghost = ghost
 	s.world.loop().set_input(input)
-	if ghost == &"kerf":
-		s.pilot.kerf = KerfStage.shipped()  # the beat keeps a pilot's Kerf (the fault reaches it)
-	if ghost == &"ohm":
-		s.pilot.ohm = OhmStage.shipped()
 	if fault:
 		_attacks(s, ghost).block(ghost)[String(FAULTS[ghost])] = 0.0
 	if record:

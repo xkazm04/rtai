@@ -17,7 +17,6 @@ func before_each() -> void:
 	_stage = CollectCallStage.new(StageLayout.shipped())
 	_stage.setup(World.build_context(_bus, _data, 1))
 	_pilot = StagePilot.new(PlayerActions.shipped())
-	_pilot.kerf = KerfStage.shipped()
 	_stage.pilot = _pilot
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 	_stage.arena.rivet.facing = Vector2.RIGHT
@@ -48,11 +47,22 @@ func _wait(ticks: int) -> void:
 		_press(&"")
 
 
+## GhostPilot: G picks the ghost (order tonnage, dent, kerf, ohm), Q transforms, and the attack
+## waits for the settled form.
+func _take() -> void:
+	while _pilot.ghosts.forms.selected != KerfStage.GHOST:
+		_press(&"power_gearbox")
+		_press(&"")
+	_press(&"power_hauler")
+	for i: int in _pilot.ghosts.forms.table.form(KerfStage.GHOST).enter_ticks + 1:
+		_press(&"")
+
+
 func test_the_blink_cuts_the_target_in_the_cone_and_lands_behind_it() -> void:
 	var target: Fighter = _guard(Vector2(6.0, 0.5))
 	var aside: Fighter = _guard(Vector2(0.0, 5.0))  # 90 degrees off the aim: outside the cone
 	var start: Vector2 = _stage.arena.rivet.pos
-	_press(&"power_hauler")
+	_take()
 	_wait(2)
 	_press(&"melee")
 	assert_false(target.alive(), "the human in the cone is cut down")
@@ -67,7 +77,7 @@ func test_a_robot_takes_robot_damage() -> void:
 	var robot: Fighter = _stage.arena.spawn_boss(_stage.arena.rivet.pos + Vector2(5.0, 0.0))
 	robot.max_hp = 6.0
 	robot.hp = 6.0
-	_press(&"power_hauler")
+	_take()
 	_wait(2)
 	_press(&"melee")
 	var k: float = _pilot.kerf.num(&"robot_damage")
@@ -78,7 +88,7 @@ func test_no_target_is_a_dash_and_the_chain_runs_dry_then_recharges() -> void:
 	var kerf: KerfStage = _pilot.kerf
 	var n: int = int(kerf.num(&"charges"))
 	var gap: int = PowerDef.ticks(kerf.num(&"gap_s"))
-	_press(&"power_hauler")
+	_take()
 	var start: Vector2 = _stage.arena.rivet.pos
 	_press(&"melee")
 	assert_almost_eq(

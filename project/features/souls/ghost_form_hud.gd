@@ -29,6 +29,10 @@ var cost_k: float = 0.0
 var morph_k: float = 1.0
 ## The key hint under the selected chip ("Q"); the caller passes the bound key's label.
 var key_hint: String = "Q"
+## The hint under the chevron in base (Q enters it) and in a form (G switches to it); the caller
+## may replace them with the bound keys' glyphs.
+var enter_hint: String = "Q"
+var next_hint: String = "G"
 
 
 ## Fills the plain values from the state machine (call once per frame).
@@ -36,6 +40,9 @@ func sync(g: GhostForms) -> void:
 	order = g.table.order
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
+	if current != GhostForms.BASE:  # in a form the chevron marks G's switch target
+		selected = g.table.next_after(current)
+	key_hint = next_hint if current != GhostForms.BASE else enter_hint
 	morph_k = g.k()
 	madness_k = g.powers.madness / maxf(1.0, g.powers.table.madness_max)
 	for id: StringName in order:
@@ -51,13 +58,13 @@ func sync(g: GhostForms) -> void:
 func _draw() -> void:
 	var screen: Vector2 = get_viewport_rect().size
 	var w: float = GAP * float(maxi(order.size(), 1)) + 24.0
-	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 150.0), Vector2(w, 150.0))
+	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 158.0), Vector2(w, 158.0))
 	draw_rect(card.grow(4.0), INK)
 	draw_rect(card, PAPER)
 	for i: int in order.size():
-		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 52.0)
+		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 60.0)
 		_chip(order[i], c)
-	_madness(Rect2(card.position + Vector2(16.0, 118.0), Vector2(w - 32.0, 14.0)))
+	_madness(Rect2(card.position + Vector2(16.0, 128.0), Vector2(w - 32.0, 14.0)))
 
 
 func _chip(id: StringName, c: Vector2) -> void:
@@ -74,27 +81,36 @@ func _chip(id: StringName, c: Vector2) -> void:
 	var font: Font = ThemeDB.fallback_font
 	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE).x
 	draw_string(
-		font, c + Vector2(-tw * 0.5, -r - 8.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE, INK
+		font,
+		c + Vector2(-tw * 0.5, -CHIP_R * 1.18 - 6.0),  # one baseline: the grown chip clips none
+		label,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		TEXT_SIZE,
+		INK
 	)
 	_glyph(id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
-		var y: float = c.y + r + 8.0
-		draw_colored_polygon(
-			PackedVector2Array(
-				[c + Vector2(-8, r + 4), c + Vector2(8, r + 4), Vector2(c.x, y + 6.0)]
-			),
-			INK
-		)
-		var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE).x
-		draw_string(
-			font,
-			Vector2(c.x - kw * 0.5, y + 24.0),
-			key_hint,
-			HORIZONTAL_ALIGNMENT_LEFT,
-			-1,
-			TEXT_SIZE,
-			INK
-		)
+		_chevron(c, r, font)
+
+
+## The ink chevron and the key hint under the selected (next) ghost.
+func _chevron(c: Vector2, r: float, font: Font) -> void:
+	var y: float = c.y + r + 8.0
+	draw_colored_polygon(
+		PackedVector2Array([c + Vector2(-8, r + 4), c + Vector2(8, r + 4), Vector2(c.x, y + 6.0)]),
+		INK
+	)
+	var kw: float = font.get_string_size(key_hint, HORIZONTAL_ALIGNMENT_LEFT, -1, TEXT_SIZE).x
+	draw_string(
+		font,
+		Vector2(c.x - kw * 0.5, y + 24.0),
+		key_hint,
+		HORIZONTAL_ALIGNMENT_LEFT,
+		-1,
+		TEXT_SIZE,
+		INK
+	)
 
 
 ## A pie of ink over the chip: `k` of the circle left to cool.

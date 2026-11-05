@@ -59,6 +59,8 @@ func test_the_slam_flattens_inside_crush_m_and_throws_the_ring() -> void:
 	var near: Fighter = _guard(Vector2(1.6, 0.0))  # 0.7 m from the press head (0.9 ahead)
 	var ring: Fighter = _guard(Vector2(-2.4, 0.0))  # 3.3 m behind the press head
 	_press(&"power_hauler")
+	for i: int in _pilot.ghosts.forms.table.form(&"tonnage").enter_ticks:
+		_press(&"")  # ghost-forms: the slam waits for the settled form
 	_press(&"melee")
 	for i: int in 40:
 		_press(&"")

@@ -27,12 +27,20 @@ var trail_cut: PackedVector2Array = PackedVector2Array()
 var trail_tick: PackedInt32Array = PackedInt32Array()
 var _recharge: int = 0
 var _gap: int = 0
+var _shared: bool = false
 
 
 func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	attacks = p_attacks if p_attacks != null else GhostAttacks.shipped()
 	powers = SoulPowers.new(table)
 	charges = int(num(&"charges"))
+
+
+## GhostPilot: the form's one SoulPowers drives the soul (no own activate or tick) and owns the
+## walk (the form row's top_mps), so the blink keeps only its zero-move tick.
+func share(p_powers: SoulPowers) -> void:
+	powers = p_powers
+	_shared = true
 
 
 static func shipped() -> KerfStage:
@@ -53,17 +61,22 @@ func drive(
 	stage: CollectCallStage, power: bool, melee: bool, aim: Vector2, move_by: Vector2
 ) -> Vector2:
 	var rivet: Fighter = stage.arena.rivet
-	if power and not on() and rivet.alive() and powers.try_activate(ID) == &"ok":
-		activations += 1
-		charges = int(num(&"charges"))
-	powers.tick()
+	if not _shared:
+		_take(power and rivet.alive())
 	_refill()
 	if not on():
 		return move_by
 	if melee and charges > 0 and _gap == 0 and rivet.alive():
 		_blink(stage, aim.normalized() if aim.length() > 0.001 else rivet.facing)
 		return Vector2.ZERO
-	return move_by * num(&"speed_k")
+	return move_by if _shared else move_by * num(&"speed_k")
+
+
+func _take(power: bool) -> void:
+	if power and not on() and powers.try_activate(ID) == &"ok":
+		activations += 1
+		charges = int(num(&"charges"))
+	powers.tick()
 
 
 ## True while the soul is on (the pilot skips the jab: melee is the blink).

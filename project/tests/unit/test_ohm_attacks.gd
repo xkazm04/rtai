@@ -16,7 +16,6 @@ func before_each() -> void:
 	_stage = CollectCallStage.new(StageLayout.shipped())
 	_stage.setup(World.build_context(_bus, _data, 1))
 	_pilot = StagePilot.new(PlayerActions.shipped())
-	_pilot.ohm = OhmStage.shipped()
 	_stage.pilot = _pilot
 	_stage.arena.rivet.pos = Vector2(200.0, 200.0)
 	_stage.arena.rivet.facing = Vector2.RIGHT
@@ -37,11 +36,22 @@ func _guard(off: Vector2, hp: float) -> Fighter:
 	return g
 
 
+## GhostPilot: G picks the ghost (order tonnage, dent, kerf, ohm), Q transforms, and the attack
+## waits for the settled form.
+func _take() -> void:
+	while _pilot.ghosts.forms.selected != OhmStage.GHOST:
+		_press(&"power_gearbox")
+		_press(&"")
+	_press(&"power_hauler")
+	for i: int in _pilot.ghosts.forms.table.form(OhmStage.GHOST).enter_ticks + 1:
+		_press(&"")
+
+
 func test_the_bolt_forks_inside_the_radius_and_stuns() -> void:
 	var first: Fighter = _guard(Vector2(6.0, 0.0), 5.0)
 	var fork: Fighter = _guard(Vector2(8.0, 1.0), 5.0)  # 2.2 m from the first
 	var far: Fighter = _guard(Vector2(6.0, -7.0), 5.0)  # outside the cone and the fork radius
-	_press(&"power_hauler")
+	_take()
 	_press(&"melee")
 	var dmg: float = _pilot.ohm.num(&"human_damage")
 	assert_almost_eq(first.hp, 5.0 - dmg, 0.001, "the body in the cone is struck")
@@ -57,7 +67,7 @@ func test_a_robot_takes_the_machine_multiplier_and_bolts_keep_their_gap() -> voi
 	robot.max_hp = 20.0
 	robot.hp = 20.0
 	robot.exposed = true
-	_press(&"power_hauler")
+	_take()
 	_press(&"melee")
 	var k: float = _pilot.ohm.num(&"bolt_damage") * _pilot.ohm.num(&"machine_k")
 	assert_almost_eq(robot.hp, 20.0 - k, 0.001, "bolt_damage x machine_k on a robot")

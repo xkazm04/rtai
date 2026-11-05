@@ -12,8 +12,11 @@ const GROUP: Array[Vector2] = [
 const RIOT: int = 2
 const ROBOT: Vector2 = Vector2(17.5, 1.2)
 const ROBOT_HP: float = 6.0
-const TAKE_AT: int = 40
-const FIRST_BLINK: int = 52
+## ghost-forms (GhostPilot): G presses pick the ghost (order tonnage, dent, kerf, ohm), Q
+## transforms, the attacks wait for the settled form.
+const SELECT_AT: Array[int] = [40, 42]
+const TAKE_AT: int = 44
+const FIRST_BLINK: int = 76
 const CADENCE: int = 20
 
 var victims: Array[Fighter] = []
@@ -29,8 +32,6 @@ func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
 	robot.facing = Vector2.LEFT
 	victims.append(robot)
 	reel.victims.append_array(victims)
-	if stage.pilot != null and stage.pilot.kerf == null:
-		stage.pilot.kerf = KerfStage.shipped()
 
 
 ## (move, aim, buttons-wanted) for `local` ticks into the beat: Q at TAKE_AT, the first press a
@@ -41,6 +42,8 @@ func want(stage: ArenaStage, local: int) -> Array:
 	var aim: Vector2 = (foe.pos - rivet).normalized() if foe != null else Vector2.RIGHT
 	if local == TAKE_AT:
 		return [Vector2.ZERO, aim, &"power_hauler"]
+	if SELECT_AT.has(local):
+		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local < FIRST_BLINK or foe == null:
 		return [Vector2.ZERO, aim, &""]
 	var press: bool = (local - FIRST_BLINK) % CADENCE == 0

@@ -12,8 +12,11 @@ const RIOT: Vector2 = Vector2(9.2, 1.6)
 const ROBOT: Vector2 = Vector2(10.5, -1.6)
 const ROBOT_HP: float = 6.0
 const CAR: Vector2 = Vector2(9.5, 3.4)
-const TAKE_AT: int = 40
-const FIRST_BOLT: int = 52
+## ghost-forms (GhostPilot): G presses pick the ghost (order tonnage, dent, kerf, ohm), Q
+## transforms, the attacks wait for the settled form.
+const SELECT_AT: Array[int] = [40, 42, 44]
+const TAKE_AT: int = 46
+const FIRST_BOLT: int = 90
 const CADENCE: int = 30
 const REACH_M: float = 9.5
 
@@ -35,8 +38,6 @@ func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
 	if stage.vehicles != null:
 		car = stage.vehicles.spawn_parked(&"police_cruiser", anchor + CAR, Vector2.RIGHT)
 	reel.car = car
-	if stage.pilot != null and stage.pilot.ohm == null:
-		stage.pilot.ohm = OhmStage.shipped()
 
 
 ## Sim side, every tick: the arena's only robot is the quest boss's brain (exposed only while
@@ -59,6 +60,8 @@ func want(stage: ArenaStage, local: int) -> Array:
 	var walk: Vector2 = aim * 0.6 if rivet.distance_to(at) > REACH_M else Vector2.ZERO
 	if local == TAKE_AT:
 		return [Vector2.ZERO, aim, &"power_hauler"]
+	if SELECT_AT.has(local):
+		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local < FIRST_BOLT:
 		return [walk, aim, &""]
 	var press: bool = (local - FIRST_BOLT) % CADENCE == 0
