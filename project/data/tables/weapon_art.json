@@ -1,5 +1,5 @@
 {
-  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m). parts = loose extra parts (the flamethrower's tank; mag = the reload magazine the off claw carries, drawn at the held part's scale, feed end +x); part_grip_px = where the claw holds a part. parts.small = the held part re-toned for gameplay scale (tools/art/held_small.py: Rivet's tone budget, an inked silhouette, the same canvas and grip), parts.empty_small the same for the empty tube; drawn in the claw while the view is under held_small_below_ppm px/m (absent = never). fx_colour_dir (n5-look): a folder of the same fx cells re-inked in the round 2 colour sheet (tools/art/fx_colour.py); empty draws the ink-print FX. n5-look 2026-11-04: plasma_sword held = held_long.png, the blade 20 % longer (tools/art/blade_longer.py; owner round 2), length_m 1.3 -> 1.44 with length_px 474 -> 526 so the hilt keeps its size; held.png is the before. pickup_min_span_m (n5-look, r2_w8): a pickup lying in its loot ring (ring 1.1 m across) draws at least this span so the small guns fill the ring as on the pickup sheet; the big ones keep their length_m; 0 = every pickup at its true length_m (before). pickup_outline_px (n5-look, r2_w8): world px of ink round a pickup (the sheet's bold edge); 1 = the weapon-art lane's before, 3 fattens thin pickups into blobs; `--pickup-outline=<px>` overrides it for an A/B.",
+  "doc": "Weapon art by weapon id (weapon-art lane; docs/art/weapons.md). held = top-down part for the cutout rig, pointing +x; grip_px = where the claw closes (attach point), muzzle_px = the bore tip (shots and the muzzle flash spawn here); length_px = tail-to-tip span in the part, drawn length_m long in the world (the rig scale is 320 part px per metre). pickup = side view lying on the floor; icon = HUD silhouette. fx anchor_px = the point placed on the muzzle (flash) or the head (projectile); fx cells draw at fx_draw_scale x the rig part scale (2.0: at 1.0 a pistol flash is a speck at 32 px/m). parts = loose extra parts (the flamethrower's tank; mag = the reload magazine the off claw carries, drawn at the held part's scale, feed end +x); part_grip_px = where the claw holds a part. parts.small = the held part re-toned for gameplay scale (tools/art/held_small.py: Rivet's tone budget, an inked silhouette, the same canvas and grip), parts.empty_small the same for the empty tube; drawn in the claw while the view is under held_small_below_ppm px/m (absent = never). fx_colour_dir (n5-look): a folder of the same fx cells re-inked in the round 2 colour sheet (tools/art/fx_colour.py); empty draws the ink-print FX. n5-look 2026-11-04: plasma_sword held = held_long.png, the blade 20 % longer (tools/art/blade_longer.py; owner round 2), length_m 1.3 -> 1.44 with length_px 474 -> 526 so the hilt keeps its size; held.png is the before. pickup_min_span_m (n5-look, r2_w8): a pickup lying in its loot ring (ring 1.1 m across) draws at least this span so the small guns fill the ring as on the pickup sheet; the big ones keep their length_m; 0 = every pickup at its true length_m (before). pickup_outline_px (n5-look, r2_w8): world px of ink round a pickup (the sheet's bold edge); 1 = the weapon-art lane's before, 3 fattens thin pickups into blobs; `--pickup-outline=<px>` overrides it for an A/B. projectile_fx flame_cone (n5-look iteration 18, r2_w4): the flamethrower's jet draws the ragged cone cells (tools/art/flame_cone.py) in place of the teardrop tongues; flame = the before (the nozzle lick, the rocket exhaust and the bottle wick keep the flame cells).",
   "fx": [
     {
       "anchor_px": [
@@ -128,6 +128,42 @@
       ],
       "art": "res://features/combat/weapons/art/fx/flame_2.png",
       "id": "flame_2",
+      "size_px": [
+        220,
+        120
+      ]
+    },
+    {
+      "anchor_px": [
+        150,
+        60
+      ],
+      "art": "res://features/combat/weapons/art/fx/flame_cone_0.png",
+      "id": "flame_cone_0",
+      "size_px": [
+        220,
+        120
+      ]
+    },
+    {
+      "anchor_px": [
+        150,
+        60
+      ],
+      "art": "res://features/combat/weapons/art/fx/flame_cone_1.png",
+      "id": "flame_cone_1",
+      "size_px": [
+        220,
+        120
+      ]
+    },
+    {
+      "anchor_px": [
+        150,
+        60
+      ],
+      "art": "res://features/combat/weapons/art/fx/flame_cone_2.png",
+      "id": "flame_cone_2",
       "size_px": [
         220,
         120
@@ -846,7 +882,7 @@
         "tank": "res://features/combat/weapons/art/flamethrower/tank.png"
       },
       "pickup": "res://features/combat/weapons/art/flamethrower/pickup.png",
-      "projectile_fx": "flame",
+      "projectile_fx": "flame_cone",
       "size_px": [
         397,
         70

@@ -178,8 +178,11 @@ static func is_fire_burst(b: Vector3, areas: FightAreas) -> bool:
 	return false
 
 
-## The flamethrower stream: tongues along the jet, growing and fading with range.
+## The flamethrower stream: tongues along the jet, growing and fading with range. The cell is the
+## weapon's projectile_fx (flame_cone: r2_w4's ragged cone, n5-look; flame = the teardrops).
 static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+	var fx: StringName = art().projectile_fx(s.spec.id)
+	fx = &"flame" if fx == &"" else fx
 	var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 	var f: int = (tick / 3 + int(went * 4.0)) % 3
 	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * 0.18
@@ -188,8 +191,8 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
 	if went > gap + CLEAR_M:
-		_cell_v(ci, &"flame", f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), grow * 0.85, 1.0)
-	_cell_v(ci, &"flame", f, s.pos, lick, grow, 1.0 - 0.35 * k)
+		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), grow * 0.85, 1.0)
+	_cell_v(ci, fx, f, s.pos, lick, grow, 1.0 - 0.35 * k)
 
 
 static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick: int) -> void:
