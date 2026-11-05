@@ -12,6 +12,9 @@ const ART_PPM: float = 96.0
 const ART: String = "res://features/bosses/servo/art/%s.png"
 const STRIDE_M: float = 2.2
 const FLASH_TICKS: int = 5
+const PARTS: Array[StringName] = [
+	&"head", &"pad", &"pelvis", &"torso", &"rack", &"rack3", &"thigh", &"shin", &"arm"
+]
 
 ## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
 var px: float = 32.0
@@ -30,7 +33,7 @@ var _shift: ServoShift = ServoShift.new()
 
 
 func _ready() -> void:
-	for n: StringName in [&"head", &"pad", &"pelvis", &"torso", &"rack", &"thigh", &"shin", &"arm"]:
+	for n: StringName in PARTS:
 		_tex[n] = load(ART % n) as Texture2D
 
 
@@ -117,14 +120,25 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 		at += ServoShift.shake(fight) if s > 0.0 else Vector2.ZERO
 		var flip: float = -1.0 if s > 0.0 else 1.0
 		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)
-		draw_texture(wing, -wing.get_size() * 0.5, tint)
-		_extra_rows(wing, tint)
+		_wing_art(wing, tint)
 	draw_set_transform(Vector2.ZERO)
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
 			draw_circle(rack.cell_pos(i) * px, 0.3 * px, bay)
+
+
+## Three rows: rack3.png (tools/art/servo_rack3.py, one frame 3 bays deep) with its bottom on
+## the 2-row wing's; other row counts keep the repeated back row (_extra_rows).
+func _wing_art(wing: Texture2D, tint: Color) -> void:
+	var sz: Vector2 = wing.get_size()
+	if rack.rows() == 3:
+		var deep: Texture2D = _tex[&"rack3"]
+		draw_texture(deep, Vector2(-sz.x * 0.5, sz.y * 0.5 - deep.get_height()), tint)
+		return
+	draw_texture(wing, -sz * 0.5, tint)
+	_extra_rows(wing, tint)
 
 
 ## The wing art is two bay rows deep (its +y faces forward); each further rack row repeats its
