@@ -914,3 +914,8 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
 - 08:08 CHECK the shipped quest 1 at 64 px/m on dc9af2e6 (q1lift.sh `--ppm=64`, 620 frames, 0 SCRIPT ERROR): frame
   140 base Rivet keeps the art capture (above flat_below, as n5-cast intends), 300 Tonnage, 600 Dent; no change
   from the merges. Scratch deleted.
+- 08:08 MERGE n6-ghost-powers 8d3b518a (their gate log; carries our cd56e482) and n5-cast 775951e7 (10607e11: the
+  grown Hauler sprite cross-fades sticker -> art) as d5748061. Read the merged cast_view._rivet: our single base pick
+  plus their Hauler cross-fade, no duplicate. Unit 1020/0 (E:unit-it14-merged3.log); COMBAT CHECK director reel
+  16/16 n/n down, 0 SCRIPT ERROR (E:director-reel-it14-merged3.log); quest 1 (q1lift.sh 520 frames, 0 SCRIPT
+  ERROR) frames 140/480 identical to the 07:49 film (scratch, deleted).
