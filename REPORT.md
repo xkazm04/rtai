@@ -5,8 +5,8 @@ the two unbuilt picks. Branch `d7-calls`, cut from main `1028c15d`. Evidence: `M
 `C:\Users\kazda\kiro\gtai-masters\d7\calls\` (`frames.json` lists the stills and clips, newest first).
 Every old default stays one flag or one data value away.
 
-**Status (iteration 5, 17:17): complete.** Every call in the brief is built, gated and filmed; the exe is
-exported. A later session only re-exports and re-gates if the branch moves.
+**Status (iteration 5, 17:45): complete.** Every call in the brief is built, gated and filmed; the exe is
+exported. After that, the weakest item was raised: the Gatling now prints tan steel, not an ink bar (6179bf2d).
 
 ## What works (with evidence)
 
@@ -23,6 +23,7 @@ exported. A later session only re-exports and re-gates if the branch moves.
 | look-18 Gatling true width | 42feb65c | `cross_k` 1.0 | `cross_k` 1.3 | `frames/look-18-gatling-ab-32ppm.png` |
 | ghost-powers-3 Dent steers from afar | e419a047 | `ghost_attacks.json dent.ride` 0, the car drives to the aimed point | `dent.ride` 1 | `frames/ghost-powers-3-dent-ride-ab-32ppm.png`, `dent-standoff-city-32ppm.mp4`, `-64ppm-halfspeed.mp4`, `frames/ghost-powers-3-dent-tether-32ppm.png` |
 | ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-quest1-live.png` + `quest1-dent-locked-live.mp4` (shipped quest 1, real input: G goes Tonnage -> Kerf, Dent's slot a padlock), `frames/ghost-powers-5-hud-lock-ab.png` (vs `--ghosts-free`); scenario `scenario_quest1_dent_lock` (planted `plant_ignore` caught), unit `test_ghost_locks` 6/6 |
+| look-8 x Gatling small art (follow-up) | 6179bf2d | `held_small.py` `EDGE_OF`/`CLOSE_OF` gatling 3/6: barrels print tan steel inside one ink outline | the old art at 2a28d331 (`git show`) | `frames/look-8-gatling-small-ab-48ppm.png`, `-ab-32ppm.png`, `look-8-gatling-edge-steps-32ppm.png`, `look-8-gatling-firing-48ppm-closeup.png`, `look-8-gatling-range-{32,48}ppm.mp4` |
 | look-8 warm tan ink for held guns | 83fe0d5c | `PartKind.GUN`, `print_part gun_tan` 1, `gun_ink_hi` 0.90, `gun_edge` 2.2 px ink outline | `--gun-grey` | `frames/look-8-gun-tan-ab-32ppm.png`, `-ab-48ppm.png`, `look-8-gun-tan-closeup-steps.png`, `look-8-gun-tan-reel-32ppm.mp4` |
 
 Combined clip: `M/today-defaults-city-32ppm.mp4` (28 s, city block, director reel, pistol to flamethrower).
@@ -38,7 +39,10 @@ Fix found late (2a28d331): `--ghosts-free` never reached quest 1 (`LaunchArgs.ha
 `KNOWN_FLAGS`); added it and the cast old-default flags, with a unit case that catches the fault (planted: 1
 failing). Unit 1098/0, lint 13/13, scenarios 52/0 (`evidence/scenarios-it5-flags.log`).
 
-## The exe (exported 17:22 on 2a28d331; re-export if the branch moves)
+Gatling small art (6179bf2d): lint 13/13, unit 1098/0, scenarios 52/0 (`evidence/*-it5-gatling.log`); asset
+only (no code, sim, replay or parity change; the golden scenes hold no Gatling).
+
+## The exe (exported 17:39 on 6179bf2d; re-export if `project/` moves)
 - Arena + city block: `build\export\windows\RTAI.exe` (preset `windows-showcase`; boots into the arena with the
   armory; headless boot tests 0 SCRIPT ERROR: no args, the director reel, the Dent city showcase).
   - Today's defaults in motion: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol` (add `--arena=city`
@@ -47,12 +51,15 @@ failing). Unit 1098/0, lint 13/13, scenarios 52/0 (`evidence/scenarios-it5-flags
   - Pickups on the disc: `RTAI.exe` (armory) vs `RTAI.exe -- --pickup-disc=off`.
   - Alley: `RTAI.exe -- --start=alley --ppm=48` vs `... --alley-print=on`.
   - Dent from afar: `RTAI.exe -- --arena=city --bot=ghosts --ghost=dent` (every ghost free in the arena).
+  - The Gatling's tan print: `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48` (and
+    `--ppm=32`); headless boot 0 SCRIPT ERROR, "Rivet holds the table gatling" (`evidence/exe-boot-it5b-*.log`).
 - Quest 1 (Dent locked, no parked ghost cars): `build\export\windows-quest1\RTAI.exe` (preset `windows-slice`;
   boots to the title, 0 SCRIPT ERROR). Title -> Start, tap G: Dent is skipped and shows a padlock.
   `RTAI.exe -- --ghosts-free` = the old default (every ghost pickable).
 
 ## What does not work / not done
-- The Gatling prints ink, not tan, at game zoom (call 8).
+- The Gatling at 32 px/m shows only a sliver of tan: its bundle is ~6 screen px wide and the 2.2 px gun
+  outline takes most of it (call 8). At 48 px/m it reads tan.
 - Dent's 64 px/m close-up loses the ram and blast off frame by default (call 2; `--cam=car` fixes it, not the
   default).
 - Bench not run (contended machine all day; no perf claim from this lane: every change is view or data only,
@@ -84,14 +91,19 @@ failing). Unit 1098/0, lint 13/13, scenarios 52/0 (`evidence/scenarios-it5-flags
    `RTAI.exe -- --start=alley --ppm=48` vs `... --alley-print=on`.
 7. **look-14 flame tongues** print vermilion + cream (fire is danger, on doctrine); the old colour cone was
    yellow-orange. See `M/look-reel-before-32.mp4` vs `M/look-reel-after-32.mp4` (flamethrower chapter).
-8. **look-8 x the Gatling's small art.** Below 56 px/m a held gun is its pre-inked `parts.small`; the Gatling's
-   is 63 % near-black, so it prints ink, not tan, at game zoom (`M/frames/look-18-gatling-ab-32ppm.png`); the
-   pistol and rocket print tan. A (built): leave it (a heavy gun reads dark). B: re-tone `gatling/held_small.png`
-   lighter (the held lane's `held_small.py`).
+8. **look-8 x the Gatling's small art.** Below 56 px/m a held gun is its re-toned `parts.small`; the Gatling's
+   was 63 % near-black (the tool's 9 px edge inked its barrels and the gaps between them inked the bundle), so it
+   printed as an ink bar. A (built, 6179bf2d): its small art re-made with a 3 px edge and the barrel gaps closed:
+   tan steel inside one ink outline at 48 px/m, a sliver of tan at 32 px/m. B: also thin every gun's outline
+   (`print_part.gdshader gun_edge` 2.2 -> 1.4): the Gatling reads tan at 32 px/m, but the outline breaks on one
+   side and every gun changes. C: the old ink-bar Gatling (`git show 2a28d331:` its `held_small.png`). See
+   `M/frames/look-8-gatling-small-ab-48ppm.png`, `M/frames/look-8-gatling-edge-steps-32ppm.png` (old | A | B),
+   `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48`.
 
 ## Next steps
 - The owner's verdicts on the calls above; each flips with the flag or value named there.
-- If the owner keeps the tan guns: give the dark small held parts (Gatling first) a lighter re-tone so they print
-  tan at game zoom too (held lane's `held_small.py`), or a per-weapon `gun_ink_hi`.
+- If the owner wants the Gatling tan at 32 px/m too (call 8 B): a per-weapon `gun_edge` (a GUN_THIN part kind
+  or a weapon_art.json value) rather than thinning every gun; the held lane's held size for the Gatling is the
+  other lever (a wider bundle keeps more tan inside the outline).
 - When the act quests land, `Quest1Session.acts_done` comes from the save, not a static (ghost-powers-5 re-check).
 - Bench the branch on an idle machine (every change here is view or data, except Dent's steer point).
