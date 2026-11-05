@@ -109,3 +109,5 @@ The last full evidence gate was green on 06fca867 (2026-11-05 07:57, the alley f
 - **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL; the toner speckle's in-gate drift is folded into that re-bless).
 - **Weapon art:** the Gatling's tone waits on the warm-ink Call (its silhouette is done, `cross_k` 1.3). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
 - **Costs:** measure the frame cost under the bench lock.
+- **The alley:** what is left against r2_a6 is hue. The world print keeps value only, so the green bin faces and the blue-grey pools print grey; a per-stage chroma pass through `LookZone` is the likely route (measure it first).
+- **The tell under the colour fire:** stage contractors and a molotov at a gunplay station; draw the tells after the colour canvas only if a frame shows them hidden.
