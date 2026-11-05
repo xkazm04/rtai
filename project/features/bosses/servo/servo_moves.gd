@@ -153,7 +153,8 @@ func telemetry() -> Dictionary:
 
 ## The landed CS crates block Rivet, Servo and shots (a carpet leaves a wall to read round).
 func solids() -> Array[Rect2]:
-	return swarm.parcels.solids() if _armed and swarm.tuning.crates_solid else []
+	var none: Array[Rect2] = []  # typed: a bare [] in the ternary was an untyped Array
+	return swarm.parcels.solids() if _armed and swarm.tuning.crates_solid else none
 
 
 func bodies() -> Array[Fighter]:

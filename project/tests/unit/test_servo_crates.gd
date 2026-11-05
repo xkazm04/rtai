@@ -30,7 +30,10 @@ func test_a_landed_crate_is_a_solid_box() -> void:
 
 
 func test_crates_as_paint_only() -> void:
-	assert_eq(_moves(false).solids().size(), 0, "crates_solid = false: nothing solid")
+	var none: Array = _moves(false).solids()
+	assert_eq(none.size(), 0, "crates_solid = false: nothing solid")
+	# BossHook keeps it in an Array[Rect2]: an untyped [] was a script error every tick.
+	assert_eq(none.get_typed_builtin(), TYPE_RECT2, "still an Array[Rect2]")
 
 
 func test_a_shot_apart_crate_stops_blocking() -> void:
