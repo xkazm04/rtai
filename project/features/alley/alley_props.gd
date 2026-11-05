@@ -120,3 +120,37 @@ static func _blot(ci: CanvasItem, at: Vector2, rad: float, c: Color, s: float) -
 
 static func _h(i: int, s: float) -> float:
 	return fposmod(sin(i * 12.9898 + s * 78.233) * 43758.5453, 1.0)
+
+
+## A dumpster from above (r2_a6): a dark lid of ribs across its length over a green-grey front
+## face (the side toward `toward`, the lane), a lip line, two wheels; a 3 px drop, no cast shadow.
+static func dumpster(ci: CanvasItem, r: Rect2, lid: Color, body: Color, toward: Vector2) -> void:
+	var c: Vector2 = r.get_center()
+	var along_x: bool = r.size.x >= r.size.y
+	var length: float = maxf(r.size.x, r.size.y)
+	var depth: float = minf(r.size.x, r.size.y)
+	var front: float = (toward - c).y if along_x else (toward - c).x
+	var turn: float = -0.5 * PI * signf(front + 0.001)
+	if along_x:
+		turn = 0.0 if front >= 0.0 else PI
+	ci.draw_rect(Rect2(r.position + Vector2(3.0, 3.0), r.size), Color(Ink.INK, 0.4), true)
+	ci.draw_set_transform(c, turn)
+	var l: Rect2 = Rect2(-length * 0.5, -depth * 0.5, length, depth)
+	var face: Rect2 = Rect2(l.position.x, l.end.y - depth * 0.3, length, depth * 0.3)
+	var top: Rect2 = Rect2(l.position, Vector2(length, depth * 0.7))
+	ci.draw_rect(face, body, true)
+	for k: int in 5:  # grime mottles on the face
+		var at: Vector2 = face.position + face.size * Vector2(_h(k, c.x * 0.01), _h(k, c.y * 0.01))
+		ci.draw_circle(at, face.size.y * (0.12 + 0.12 * _h(k, 3.7)), body.darkened(0.3))
+	ci.draw_rect(top, lid, true)
+	var ribs: int = maxi(3, roundi(length / (0.24 * Ink.PX_PER_M)))
+	for i: int in range(1, ribs):
+		var x: float = top.position.x + top.size.x * i / ribs
+		ci.draw_line(Vector2(x, top.position.y + 2.0), Vector2(x, top.end.y - 2.0), Ink.INK, 2.0)
+		var hi: Color = Color(Ink.CREAM, 0.5)  # each rib's lit edge
+		ci.draw_line(Vector2(x + 3.0, top.position.y + 4.0), Vector2(x + 3.0, top.end.y - 4.0), hi)
+	ci.draw_line(Vector2(l.position.x, top.end.y), Vector2(l.end.x, top.end.y), Ink.INK, 3.0)
+	for s: float in [-1.0, 1.0]:
+		ci.draw_circle(Vector2(s * (length * 0.5 - depth * 0.12), l.end.y), depth * 0.07, Ink.INK)
+	ci.draw_rect(l, Ink.INK, false, 2.5)
+	ci.draw_set_transform(Vector2.ZERO)

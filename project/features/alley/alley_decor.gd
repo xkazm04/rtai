@@ -77,7 +77,7 @@ func _draw() -> void:
 	for p: ArenaStation.Prop in _props:
 		var r: Rect2 = Rect2(Ink.px(_base + p.at - p.size * 0.5), p.size * Ink.PX_PER_M)
 		if p.kind == "cover_high":
-			_turned(DUMPSTER, r, tone(_rows, "dumpster", Color.WHITE))
+			_dumpster(r)
 		elif p.kind == "cover_low":
 			_bags(r)
 	for v: Variant in _rows.get("bags", []):
@@ -101,6 +101,17 @@ func _turned(tex: Texture2D, r: Rect2, tint: Color = Color.WHITE) -> void:
 	var l: Rect2 = Rect2(-r.size.y * 0.5, -r.size.x * 0.5, r.size.y, r.size.x)
 	draw_texture_rect(tex, l, false, tint)
 	draw_set_transform(Vector2.ZERO)
+
+
+## A dumpster: drawn ribbed (tones dumpster_lid + dumpster_body, r2_a6) or, with dumpster_lid
+## "", the city's dumpster art tinted `dumpster` (the before).
+func _dumpster(r: Rect2) -> void:
+	var lid: Color = tone(_rows, "dumpster_lid", Color.TRANSPARENT)
+	if lid.a == 0.0:
+		_turned(DUMPSTER, r, tone(_rows, "dumpster", Color.WHITE))
+		return
+	var body: Color = tone(_rows, "dumpster_body", Color("#6E7C6A"))
+	AlleyProps.dumpster(self, r, lid, body, _floor.get_center())
 
 
 ## A trash-bag pile: lumpy bags, dark and pale, each with a tied knot catching a highlight.

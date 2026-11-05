@@ -227,6 +227,14 @@
           "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
           "type": "string"
         },
+        "dumpster_body": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "dumpster_lid": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
         "lip_m": {
           "maximum": 3,
           "minimum": 0.3,
