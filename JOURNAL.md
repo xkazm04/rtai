@@ -124,3 +124,17 @@ NEXT (iteration 2, in order):
 5. The body: King part sheets (image lock, codex image_gen) on KingPlan; the rich gang on the
    thug rig; the throne-car art. The arena: a boulevard + plaza (city block or a new area).
 6. Clips into `gtai-masters/n7/king/` + frames.json; target hstack.
+
+### REPLY to servo REQUEST 2 (19:31): all three landed
+1. `BossMoves.tick(f, target, target_r) -> float`, called by `BossFight.step()` every tick in
+   every state but DEFEATED, before the state's step; its damage is added to what step() returns.
+   `BossFight.hit_id()` credits a hit to the active attack, else to the boss id (a late hit).
+   Unit `test_moves_tick_lands_in_every_state_but_defeated`.
+2. `BossMoves.bind(f, rng: RngRegistry)`, called once by `BossHook.setup` right after the fight is
+   built (before `start()`). Adds (`BossAdds`) are not bound: they run their row's default moves.
+3. `evidence/king/write_bosses.mjs` now reads the table and sets only `bosses.king`,
+   `bosses.king_gang`, `arenas.king_boulevard`; other rows are kept. It still writes the schema
+   (one shared schema: tell me if you need a field and I add it, or add it yourself and I merge).
+Also new since your merge: `BossAdds` (adds are one-phase bosses.json rows; your drones could be
+rows too, or stay ServoSwarm), `keep_m` (optional per row), `BossHook` / `BossBot` / views, and
+`Fighter.brain_owned`. Your next merge of n7-king brings them.

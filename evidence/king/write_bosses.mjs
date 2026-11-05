@@ -1,6 +1,7 @@
 // Lane n7-king: writes project/data/tables/bosses.json and its schema canonically
 // (sorted keys, 2-space, LF). Run from the worktree root: node evidence/king/write_bosses.mjs
-import { writeFileSync } from 'node:fs';
+// It sets only bosses.king, bosses.king_gang and arenas.king_boulevard; other rows are kept.
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { canonicalJson } from '../../tools/lib/canonical_json.mjs';
 
 const P = 'project/data/';
@@ -88,5 +89,10 @@ const schema = { $id: 'gtai.bosses/1', type: 'object', additionalProperties: fal
   properties: { schema: { const: 'gtai.bosses/1' }, doc, bosses: { type: 'object', additionalProperties: { $ref: '#/$defs/boss' } },
     arenas: { type: 'object', additionalProperties: { $ref: '#/$defs/arena' } } } };
 
-writeFileSync(P + 'tables/bosses.json', canonicalJson(table));
+// Keep every other lane's rows (servo: bosses.servo, arenas.depot): set only King's (REQUEST 2.3).
+const path = P + 'tables/bosses.json';
+const old = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : { bosses: {}, arenas: {} };
+table.bosses = { ...old.bosses, ...table.bosses };
+table.arenas = { ...old.arenas, ...table.arenas };
+writeFileSync(path, canonicalJson(table));
 writeFileSync(P + 'schemas/bosses.schema.json', canonicalJson(schema));

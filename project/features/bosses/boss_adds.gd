@@ -62,7 +62,7 @@ func step(arena: CombatArena, tick: int) -> void:
 		if hit > 0.0 and r.exposed:
 			arena.hit_dir = f.aim
 			arena.hit_at = r.pos
-			arena.damage(r, hit, f.body.id, StringName("boss_%s" % f.attack.id))
+			arena.damage(r, hit, f.body.id, StringName("boss_%s" % f.hit_id()))
 			landed += 1
 		_last_hp[f.body.id] = f.body.hp
 

@@ -43,6 +43,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	fight.body.brain_owned = true
 	fight.body.id = 9000
 	_arena.hostiles.append(fight.body)
+	fight.moves.bind(fight, ctx.rng)
 	_connect()
 	fight.start(maxi(int(_arg(args, "--phase", "1")) - 1, 0))
 	_last_hp = fight.body.hp
@@ -63,12 +64,12 @@ func step(_stage: ArenaStage, tick: int) -> void:
 	fight.body.exposed = fight.state != BossFight.State.TRANSITION
 	_last_hp = fight.body.hp
 	if hit > 0.0 and not r.exposed:  # rolled through it (the roll's i-frames)
-		rolled[fight.attack.id] = rolled.get(fight.attack.id, 0) + 1
+		rolled[fight.hit_id()] = rolled.get(fight.hit_id(), 0) + 1
 	elif hit > 0.0:
 		_arena.hit_dir = fight.aim
 		_arena.hit_at = r.pos
-		_arena.damage(r, hit, fight.body.id, StringName("boss_%s" % fight.attack.id))
-		landed[fight.attack.id] = landed.get(fight.attack.id, 0) + 1
+		_arena.damage(r, hit, fight.body.id, StringName("boss_%s" % fight.hit_id()))
+		landed[fight.hit_id()] = landed.get(fight.hit_id(), 0) + 1
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
