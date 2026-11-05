@@ -850,3 +850,4 @@ Session state 07:22: head = this commit, tree clean after it, no Godot process o
 Session state 07:24: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
 holds only film.sh, reel.sh and two it7 logs, frames.json 15. NEXT as above, item 2 now: the robot stand-in, or a
 Kerf quest-1 scenario on the same pattern (planted human_damage 0).
+- 07:27 scenario suite on ed965182: 49 ran, 0 failed (`E/scenarios-it10b-powers.log`; rig_stress passed this time). REPORT row added.
