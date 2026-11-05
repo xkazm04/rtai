@@ -93,8 +93,24 @@
       ]
     },
     {
+      "art": "res://features/quest/art/collect_call/cast_rivet_lod.png",
+      "id": "rivet_lod",
+      "size_m": [
+        2.366667,
+        2.083333
+      ]
+    },
+    {
       "art": "res://features/quest/art/collect_call/cast_rivet_peek.png",
       "id": "rivet_peek",
+      "size_m": [
+        0.966667,
+        0.966667
+      ]
+    },
+    {
+      "art": "res://features/quest/art/collect_call/cast_rivet_peek_lod.png",
+      "id": "rivet_peek_lod",
       "size_m": [
         0.966667,
         0.966667
