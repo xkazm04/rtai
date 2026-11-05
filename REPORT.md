@@ -87,6 +87,10 @@ The owner's order for this lane: "create these characters, animate transformatio
 - Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
   was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
 
+- **Dent on the car ride** (for ghost-powers, REQUEST 7): braced on the roof instead of striding at the car's
+  speed, a buck on each strike, a hop on the blast. Before/after at the same ticks:
+  `M:frames/dent-ride-braced-ab-32ppm-x1.5.png`; clip `M:dent-ride-braced-city-32ppm.mp4`.
+
 ### Gates (iteration 5)
 - On 56dae388 (the voices), the evidence runner `--no-bench` on a still tree (`E:evidence-run-iter5.log`): lint
   13/13, unit 981/0, scenarios 47, parity bit-exact (planted mutation caught at step 629), selftest with look

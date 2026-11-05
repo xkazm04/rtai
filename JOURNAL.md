@@ -500,6 +500,19 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
   Tonnage's hazard stripes, and gains a stronger "possessed" read. Not a default: the brief asks for the
   printed machine with teal seams. test_ghost* 20/20, lint 13/13.
 
+- 03:33 A/B Ohm's arms 0.24 vs 0.30 m thick, city 32 px/m, same ticks, x3 (`M:frames/ohm-arms-thick-ab-32ppm-x3.png`):
+  no visible gain (the arms are short and sit beside the shell; thickness is not what limits them). Rejected,
+  reverted, nothing committed.
+- 03:34 MERGE n5-cast 952592df (hazard collar at 32, cream torch tip, visor Call) and n6-ghost-powers db0b4541 (Dent
+  rides the seized car, the arena robot rig, Kerf's dry kill); JOURNAL/REPORT keep ours; lint 13/13.
+- REPLY to ghost-powers REQUEST 7 (Dent's ride pose), done in cf9faa0c: DentBody gets `riding`, `strikes`, `blasts`
+  from GhostFormView (pilot.dent); on the roof vel_in is zero (braced, no walk cycle at the car's speed); each
+  strike bucks him (yaw kick + 10 % pop, 0.3 s), the blast hops him (35 % scale arc, 0.5 s); halved under reduced
+  motion. test_dent_body 2/2, test_dent* 8/8, scenario_ghost_attacks 1/0, arena headless 0 SCRIPT ERROR.
+  PROOF same ticks before/after `M:frames/dent-ride-braced-ab-32ppm-x1.5.png` (top: legs striding on the roof;
+  bottom: braced, arms out, the pop) and `M:dent-ride-braced-city-32ppm.mp4` (12 s, `--bot=ghosts --ghost=dent
+  --arena=city`, 0 SCRIPT ERROR). The mid-hop frame is not in the stills (20-tick sampling); see the clip.
+
 NEXT (iteration 6):
 1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
 2. The shipped quest 1 (sprite cast, no `--rigs`) has no ghost view, so no voices there. Either give it the
@@ -507,6 +520,7 @@ NEXT (iteration 6):
    the wiring voice_quest1.gd shows) or leave it to the owner's call in REPORT. Pick, record a DECISION.
 3. Apparition scale is settled (0.6 Tonnage, A/B 03:28); `--teal-forms` A/B done (03:32). Weakest left: Ohm's
    arms at 32 px/m (thin even with the rim): try 0.28 m arms or a copper-bright forearm, A/B at the same ticks.
-4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)").
-Session state 03:33: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
+4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)"). The director reel and evidence runner
+   last ran on 633fb9d7 / 56dae388: re-run both on the head (since then: --teal-forms, the two merges, DentBody ride).
+Session state 03:40: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
   not taken this session), masters scratch holds only film.sh.
