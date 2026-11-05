@@ -33,6 +33,7 @@ func sync(swarm: ServoSwarm) -> void:
 			b = Fighter.make(Fighter.Kind.GUARD, FIRST_ID + d.id, d.pos, hp)
 			b.radius_m = radius_m
 			b.brain_owned = true
+			b.machine = true  # a drone is a robot: no human kill, no red
 		b.pos = d.pos
 		b.facing = d.vel.normalized() if d.vel.length() > 0.1 else b.facing
 		next[d.id] = b

@@ -96,6 +96,8 @@ func test_drones_are_bodies_and_a_downed_body_shoots_its_drone() -> void:
 	assert_eq(m.bodies().size(), m.swarm.alive(), "one body per live drone")
 	var body: Fighter = m.bodies()[0]
 	assert_true(body.brain_owned)
+	assert_true(body.machine, "a drone is a machine")
+	assert_false(KillEvent.of_fighter(body, Vector2.RIGHT, &"dent_car").human, "no human kill")
 	assert_eq(body.max_hp, m.swarm.tuning.drone_hp)
 	var before: int = m.swarm.alive()
 	body.hp = 0.0  # the arena's chokepoint downed it
