@@ -394,3 +394,14 @@ NEXT (iteration 4, in order):
   Director reel (b5d8fc43, before the merge; the merge touched no combat code): 19/19 chapters
   down, 0 SCRIPT ERROR; exit 124 is the gate script's 600 s limit after the last chapter (the reel
   idles there). Lint 13/13, unit 1156/0.
+- 21:24 FILMS on the merged tree with n7-king's `--boss-cam` (both in frame), 32 px/m real time,
+  0 SCRIPT ERROR each: `M/servo_p1_depot_bosscam_32ppm_it3.mp4` (seed 3, 40 s) and
+  `M/servo_p2_rush_hour_bosscam_32ppm_it3.mp4` (`--phase=2`, seed 2, 45 s) + keys. **Looked at**
+  the keys: phase 1 = beam lock, ring waves on the mark, dash lanes, crates; phase 2 = carpets of
+  rings in lanes, crates building up, the belt running. Seen again: the framework's dash lane is
+  drawn past the floor's edge (REQUEST 4's note, still open for king). With the phase-3 film,
+  every phase now has a 32 px/m real-time clip; `M/frames.json` 15 entries, superseded files
+  deleted, scratch emptied.
+
+NEXT (iteration 4) stands as written above, minus the phase 1 / phase 2 clips and the music
+(done). Session ends 21:25 with everything committed.
