@@ -1,6 +1,6 @@
 # REPORT: lane n6-ghost-forms (branch `n6-ghost-forms`), night run 2026-11-04 -> 11-05
 
-DRAFT written in iteration 4 (02:30); the report session at 08:40 finishes it. Until this iteration the
+Written through the night (first draft in iteration 4, 02:30); final as of the 08:30 freeze (iteration 14). Until iteration 4 the
 root REPORT.md on this branch was n5-cast's (it came in through a merge); n5-cast's own copy is on its
 branch. `M:` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-forms\`, `E:` = `evidence/` here.
 
@@ -224,6 +224,24 @@ Then merged n6-ghost-powers a30a5ce3 (Tonnage crushes the quest car, Ohm burns c
 (docs): on ebc5ed9d, still tree (E:evidence-run-it13-final.log): all PASS, lint 13/13, unit 1019/0, scenarios 48,
 parity bit-exact; director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it13-final.log).
 
+### 11. Quest 1's base Rivet takes the cast lane's 32 px/m sticker tier on the story-forms path (iteration 14)
+n5-cast 02e4295c (merged through ghost-powers bbc861d0) made quest 1's sprite Rivet print the gameplay sticker
+tier (tan core, visor slot, hazard collar) below about 42 px/m. Our StoryForms branch of `CastView._rivet` is
+on by default on the shipped quest 1, and it still drew the old cream art capture. So after the merge the
+shipped quest 1 silently kept the old Rivet before and after every transformation. It now picks the art through
+`_lod_art` like the rest of CastView. Same-input A/B (the shipped quest 1, real key presses):
+`M:frames/quest1-sticker-rivet-forms-ab-32ppm-x3.png`, frames 100 (base), 170 (mid-morph, unchanged) and 470
+(base after the exit). 64 px/m keeps the art capture, as in n5-cast. Unit 1019/0, lint 13/13.
+
+### Gates (iteration 14, final before the freeze)
+Merged n6-ghost-powers bbc861d0 (scenario_quest1_ohm, carrying n5-cast 02e4295c) as ed6d2d31. Unit 1018/1 there
+was the known `test_noir_shadows` flake; the re-run gave 1019/0. Director reel 16/16 chapters down, 0 SCRIPT
+ERROR (E:director-reel-it14-merged.log). On 5be03adb (the fix), still tree (E:evidence-run-it14-final.log): RESULT
+all PASS: lint 13/13, unit 1019/0, scenarios 49 (ghost-powers' quest1_ohm in), parity bit-exact (mutation caught at
+629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless. The shipped quest 1 clip
+`M:story-forms-quest1-shipped-32ppm.mp4` re-filmed on this head (sticker Rivet at both ends of each
+transformation; keys `M:frames/story-forms-quest1-sticker-keys-32ppm.png`).
+
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
   97f49bf0): our Dent body seizes, rides braced and blows them on the shipped path
@@ -245,7 +263,7 @@ parity bit-exact; director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it13-fina
   off (A/B `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`).
 
 ## Next steps
-- Final gates on a still tree before the 08:30 freeze (the evidence runner, the director reel) after any
-  further merge.
+- The final gates ran on 5be03adb (all PASS, iteration 14). If n5-cast or n6-ghost-powers move again before the
+  morning merge, merge them in and re-run the evidence runner and the director reel.
 - Note for the HUD owner: quest 1's longest subtitle line runs past the bottom of its box (seen in
   `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`, "where you think." on the box's lower edge).
