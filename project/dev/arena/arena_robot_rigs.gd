@@ -67,7 +67,7 @@ func _rig(h: Fighter) -> CutRig:
 		rig.snap_facing(h.facing.angle())
 		_by_id[h.id] = rig
 		if blood != null:
-			blood.robot_ids[h.id] = true
+			blood.victims.robot_ids[h.id] = true
 	return _by_id[h.id]
 
 

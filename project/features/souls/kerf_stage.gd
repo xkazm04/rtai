@@ -14,7 +14,7 @@ const GHOST: StringName = &"kerf"
 const KEEP: int = 4
 
 ## The kill kind the slice reports (actor_killed): a cauterised cut is dry, no red pool, under
-## --gore=reduced too (CombatBlood.DRY_KILLS), where no signature split runs.
+## --gore=reduced too (BloodVictims.DRY_KILLS), where no signature split runs.
 const KILL_KIND: StringName = &"cauterised"
 
 var powers: SoulPowers

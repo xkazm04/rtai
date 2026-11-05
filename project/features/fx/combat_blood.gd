@@ -21,16 +21,13 @@ const MODES: PackedStringArray = ["noir", "ink", "both"]
 const SHADER: String = "res://assets/shaders/fx_blood_print.gdshader"
 const MATCH_M: float = 1.5
 const MAX_STEPS: int = 4
-## Kill kinds (events.json) that leave no red (lane human-reactions): a body burned to death lies
-## charred (HumanReact's char tint), its spray and soak read as a red blob over the char.
-const DRY_KILLS: Array[StringName] = [&"burned", &"cauterised"]
 
 var mode: String = "noir"
 var blood: BloodFx = null
 ## Rivet's own fluid (blood_fx.json `player`: oil, sparks then black).
 var oil: BloodFx = null
-## ghost-powers: actor ids drawn as robots (ArenaRobotRigs): their death leaks oil, never red.
-var robot_ids: Dictionary[int, bool] = {}
+## Whose fluid a kill prints (robot ids leak oil, dry kinds print nothing): BloodVictims.
+var victims: BloodVictims = BloodVictims.new()
 ## Optional Callable(px: Vector2) -> bool: true inside a building or prop (wall splats).
 var solid: Callable = Callable():
 	set = set_solid
@@ -161,7 +158,7 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 
 
 func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
-	if _kind in DRY_KILLS and not robot_ids.has(victim):  # burned or cut dry: no red (a robot leaks)
+	if victims.dry(_kind, victim):
 		return
 	if veto.is_valid():  # the signature kill lands after actor_killed: ask once the step is done
 		_bleed_killed.call_deferred(killer, victim)
@@ -177,14 +174,15 @@ func _bleed_killed(killer: int, victim: int) -> void:
 		return
 	var from: Vector2 = _locate.call(killer)
 	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT
-	if victim == _player:
-		hit_robot(at * SimConst.PX_PER_M)
-	elif robot_ids.has(victim):
-		var fx: BloodFx = oil if oil != null else blood
-		fx.splash(at * SimConst.PX_PER_M, dir.normalized(), "robot_hit")
-	else:
-		kill_human(at * SimConst.PX_PER_M, dir)
-		bled_body.emit(victim, dir.normalized())
+	match victims.route(victim, _player):
+		BloodVictims.Route.PLAYER:
+			hit_robot(at * SimConst.PX_PER_M)
+		BloodVictims.Route.ROBOT:
+			var fx: BloodFx = oil if oil != null else blood
+			fx.splash(at * SimConst.PX_PER_M, dir.normalized(), "robot_hit")
+		_:
+			kill_human(at * SimConst.PX_PER_M, dir)
+			bled_body.emit(victim, dir.normalized())
 
 
 func _on_player_hit(_weapon: StringName) -> void:
