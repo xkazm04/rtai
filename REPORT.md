@@ -1,8 +1,15 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**DRAFT written at 19:00 (iteration 6).** The REPORT phase rewrites this at 08:40; every number below was measured on
-this branch by 09c6c6eb. Masters (clips, stills, `frames.json`, 15 entries) are in
+**DRAFT, current to iteration 21 (07:40, head d63b380c).** The REPORT phase rewrites this at 08:40. Every number below
+was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 02e4295c (the
+last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
+UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
 `C:\Users\kazda\kiro\gtai-masters\n5\cast\`; `M/` below means that folder.
+
+In one line: the cops are on the crowd's footprint (28becde8), Rivet is the lanky + android hybrid at 1.2x the crowd's
+span (516475c9 .. fa395f74), the crowd is plan-view and pale-topped, and the 32 px/m stickers (collar hazard, visor slot,
+tan core) carry the targets' read at game zoom, in the arena, the city and quest 1 (its sprite cast since b68665b1 and
+02e4295c). Combat holds: director reel 16/16 chapters down on every code commit checked.
 
 The owner's ask: "too heavy and thick main characters and cops which should be both closer to crowd in their default
 state." Targets: r2_c3 (Rivet as the lanky + android hybrid), r2_c5 (cops), r1_c6/r1_c7 (one footprint, the size
