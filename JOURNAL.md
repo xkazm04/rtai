@@ -340,6 +340,9 @@ panel; the cape is a small wedge, not the wide fur-trimmed spread behind the thr
 small and grey (no gold plates, chains or jewelled crown in the parts, only the drawn crown); the
 gang read as grey figures with a thin gold arc. The car view and the cape are quick drawn-shape
 wins for iteration 3 next to item 1 (King's wealth parts).
-Gates at f5483c44: lint 13/13 (every commit, pre-commit hook); unit 1128/0 or as logged in
-`evidence/king/unit-it2b.log`; scenarios 52/0 at 1932828b (`scenarios-it2a.log`; later commits are
+Gates at f5483c44: lint 13/13 (every commit, pre-commit hook); unit **1127/1 RED** at f5483c44
+(`evidence/king/unit-it2b.log`: `test_d5_provenance`, the 25 new d5/gang PNGs had no provenance
+line; I wrote the line above before reading the log, corrected here). FIXED in the next commit: 50
+lines (d5/gang + gang, derived from the thug rows, sha256 of the new files) in
+steam/ai-provenance/2026-11.jsonl; unit 1128/0 (`evidence/king/unit-it2c.log`); scenarios 52/0 at 1932828b (`scenarios-it2a.log`; later commits are
 King's view and art only plus BossAdds.separate under --boss); director reel 19/19 at 745ce3cf.
