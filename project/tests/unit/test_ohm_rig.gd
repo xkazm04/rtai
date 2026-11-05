@@ -57,3 +57,14 @@ func test_reduced_motion_halves_the_kick() -> void:
 		rig.bolts = 1
 		rig.advance(SimClock.TICK_DT * 3.0)
 	assert_almost_eq(calm.kick_m(), full.kick_m() * 0.5, 0.0001, "halved")
+
+
+func test_the_shell_carries_the_teal_soul_seams_and_lenses() -> void:
+	var rig: OhmRig = OhmRig.new()
+	add_child_autofree(rig)
+	var seams: Array[Node] = rig.find_children("*", "OhmSeams", true, false)
+	assert_eq(seams.size(), 1, "one seam overlay, on the shell")
+	var s: OhmSeams = seams[0] as OhmSeams
+	assert_true(s.get_parent() is Sprite2D, "a child of the shell: it turns and kicks with it")
+	assert_true(s.visible, "shown without the dev flag --no-seams")
+	assert_eq(s.GOGGLES.size(), 2, "two lenses")
