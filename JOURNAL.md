@@ -159,3 +159,17 @@
 - 17:17 city director reel on 83fe0d5c: 19/19 chapters down, 0 SCRIPT ERROR (`evidence/reel-director-city-it5.log`).
   REPORT status complete (all calls built, gated, filmed; exe exported at ecb8a675, project tree unchanged since
   83fe0d5c: only docs commits after it, so the exe is current).
+- 17:19 FINDING/FIX: proofreading the REPORT's exe lines, `--ghosts-free` turned out dead in the game:
+  quest1_game reads it via `LaunchArgs.has()`, which answers only for KNOWN_FLAGS (boot logs others as unknown).
+  2a28d331 adds it + the cast old-default flags to KNOWN_FLAGS, unit case with a planted fault (removed -> 1
+  failing), unit 1098/0, lint 13/13, CORRECTION line in decisions. Lesson: an exe flag is not proven until it
+  is seen working in the exe (the scenarios set `Quest1Session.ghost_locks` directly, so they never saw it).
+- 17:22 exes re-exported on 2a28d331 (showcase + quest 1 slice); quest 1 boots with `-- --ghosts-free`, no unknown
+  arg, 0 SCRIPT ERROR; showcase boots to the armory.
+- NEXT (any later session, freeze 18:30): (1) if the branch is unchanged, nothing to build: the REPORT is complete
+  and the exes current (2a28d331). (2) If time: the Gatling's dark small art (REPORT call 8) is the weakest
+  look (held lane's held_small.py, or a per-weapon gun_ink_hi via a GUN_DARK kind + a weapon_art.json flag:
+  schema, test, re-film). (3) Re-run the scenario suite if anything under project/ moves; re-export both exes
+  (`--export-release windows-showcase ../build/export/windows/RTAI.exe`, `windows-slice
+  ../build/export/windows-quest1/RTAI.exe`) and boot-test them.
+- 17:25 MEASURE scenarios on 2a28d331: 52 ran, 0 failed (evidence/scenarios-it5-flags.log). Session ends here.

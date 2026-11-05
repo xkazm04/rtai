@@ -34,7 +34,11 @@ small part of the golden frames). Combat: the director reel brings down every
 chapter (19/19 on e419a047 headless; 19/19 on 83fe0d5c in the city block at 32 px/m, 0 SCRIPT ERROR,
 `evidence/reel-director-city-it5.log`).
 
-## The exe (exported 17:07 on ecb8a675; the last session re-exports if the branch moves)
+Fix found late (2a28d331): `--ghosts-free` never reached quest 1 (`LaunchArgs.has()` answers only for
+`KNOWN_FLAGS`); added it and the cast old-default flags, with a unit case that catches the fault (planted: 1
+failing). Unit 1098/0, lint 13/13, scenarios 52/0 (`evidence/scenarios-it5-flags.log`).
+
+## The exe (exported 17:22 on 2a28d331; re-export if the branch moves)
 - Arena + city block: `build\export\windows\RTAI.exe` (preset `windows-showcase`; boots into the arena with the
   armory; headless boot tests 0 SCRIPT ERROR: no args, the director reel, the Dent city showcase).
   - Today's defaults in motion: `RTAI.exe -- --bot=reel --reel=director --loadout=pistol` (add `--arena=city`
@@ -78,12 +82,12 @@ chapter (19/19 on e419a047 headless; 19/19 on 83fe0d5c in the city block at 32 p
    cracks, splats, puddles and the cops read on both (`M/frames/look-5-alley-ab-48ppm.png`); at 32 px/m the step
    is small (`-32ppm.png`). A (built): pale paper. B: `--alley-print=on`. See
    `RTAI.exe -- --start=alley --ppm=48` vs `... --alley-print=on`.
+7. **look-14 flame tongues** print vermilion + cream (fire is danger, on doctrine); the old colour cone was
+   yellow-orange. See `M/look-reel-before-32.mp4` vs `M/look-reel-after-32.mp4` (flamethrower chapter).
 8. **look-8 x the Gatling's small art.** Below 56 px/m a held gun is its pre-inked `parts.small`; the Gatling's
    is 63 % near-black, so it prints ink, not tan, at game zoom (`M/frames/look-18-gatling-ab-32ppm.png`); the
    pistol and rocket print tan. A (built): leave it (a heavy gun reads dark). B: re-tone `gatling/held_small.png`
    lighter (the held lane's `held_small.py`).
-7. **look-14 flame tongues** print vermilion + cream (fire is danger, on doctrine); the old colour cone was
-   yellow-orange.
 
 ## Next steps
 - The owner's verdicts on the calls above; each flips with the flag or value named there.
