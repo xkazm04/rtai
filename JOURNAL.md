@@ -285,3 +285,12 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   CORRECTION: REPORT's slot list was wrong (katana is slot 2 with the long guns, rocket launcher slot 3): fixed from
   `rivet_arsenal.json` classes. DECISION (time): the darker off-claw tone is NOT started at 17:57 (needs its own
   material, A/B, full gate and a re-export in 30 min); left as the first next step.
+- 17:59 MERGE d7-calls bf7386aa (look-8 6179bf2d: Gatling small held art, tan steel; their REQUEST: keep
+  held_small.py EDGE_OF / CLOSE_OF: untouched here) -> 1550dfb0. JOURNAL/REPORT kept ours. Re-imported,
+  RTAI.exe re-exported at 1550dfb0 (exit 0). In the exe at 48 px/m: the Gatling reads as a tan steel bundle
+  braced in both claws, 0 SCRIPT ERROR (`evidence/held-it4-exe-gatling-48ppm.png`).
+- 18:08 MEASURE full evidence on 4a34d9ef: lint 13/13, unit 1110/0, scenarios 52/52, parity exact, goldens 11/11
+  + 5/5 (no re-bless). The first run on 1550dfb0 flagged "tree changed during run": I had copied the Gatling
+  still into evidence/ mid-run (my fault; unit was 1110/0); committed it, re-ran clean.
+  FRICTION/LESSON: never write into the worktree while tools/evidence/run.mjs is running.
+  Director reel on 4a34d9ef: 19/19 down, 0 SCRIPT ERROR.

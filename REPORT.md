@@ -1,8 +1,8 @@
 # REPORT: lane held (d7, 2026-11-05)
 
-Branch `d7-held` (cut from main `1028c15d`; d7-calls merged four times, last `339397ef`).
+Branch `d7-held` (cut from main `1028c15d`; d7-calls merged five times, last `bf7386aa` (the Gatling's tan steel held art)).
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d7\held\` (`frames.json`) and `evidence/held-*.log`.
-Exe: `build/export/windows/RTAI.exe`, exported 17:37 at `acb70e5f` (windows-showcase, boots into the arena).
+Exe: `build/export/windows/RTAI.exe`, exported 18:00 at `1550dfb0` (code identical to the final head) (windows-showcase, boots into the arena).
 Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_rifle`, plain, `--torch-off-arm`,
 `--gun-off-claw`): 0 script errors, no unknown-arg warning, and the frames differ from the default
 (`evidence/held-it4-exe-flags-ab.png`: default | torch | gun off the claw).
@@ -32,12 +32,12 @@ Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_
    `arsenal_cycle_32ppm_sheet.png` (one row per run).
 8. **Combat holds**: director reel (`--rigs --bot=reel --reel=director --loadout=pistol`) 19/19 chapters down,
    0 SCRIPT ERROR on every hold commit and on the final head (`evidence/held-it1..it4-reel-director.log`).
-   Full evidence run on `65c15aa0` (`evidence/held-it4-evidence.log`): lint 13/13, unit 1110/0, scenarios 52/52,
+   Full evidence run on the final merged head `4a34d9ef` (`evidence/held-it4-evidence.log`): lint 13/13, unit 1110/0, scenarios 52/52,
    parity exact (planted caught at 629), look goldens 11/11 + block 5/5 within mean 4 (worst 0.27):
    **no golden moved, no re-bless**. (A scenario run made during filming had `scenario_rig_stress` 1.17 ms over its
    1.0 ms budget. That was contention: it passed alone and in the evidence run.)
 9. **The A/B flags work in the exe** (`--torch-off-arm`, `--gun-off-claw`). They are now known launch flags, with a
-   unit case and a planted fault caught.
+   unit case and a planted fault caught. The merged Gatling in this exe: `evidence/held-it4-exe-gatling-48ppm.png`.
 
 ## What does not work yet (said plainly)
 
