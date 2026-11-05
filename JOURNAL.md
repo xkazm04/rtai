@@ -841,3 +841,12 @@ NEXT (iteration 11, ghost-powers):
    session-state line.
 Session state 07:22: head = this commit, tree clean after it, no Godot process of mine running, no lock held
 (image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh and two it7 logs, frames.json 15.
+- 07:22 MILESTONE NEXT 2 (ohm part, pulled forward): `scenario_quest1_ohm` (quest 1 on the city, a scripted pad: three
+  G taps, Q, melee every 20 ticks, the stick on the nearest guard, else, none within 11 m, the nearest live car).
+  Clean: bolts 9, struck 10, cars_hit 3, wrecks 1, kills 5 (= the filmed rec); the same seed twice gives the same
+  counts and hash (f6ee6923...); the planted machine_k 0 leaves the car standing (wrecks 0, another hash): caught
+  (`E/quest1-ohm.json`). The fault cannot leak into later scenarios: GhostAttacks parses its own table per session.
+  Full scenario count is now 49 (not yet run as a suite: next session's first gate).
+Session state 07:24: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
+holds only film.sh, reel.sh and two it7 logs, frames.json 15. NEXT as above, item 2 now: the robot stand-in, or a
+Kerf quest-1 scenario on the same pattern (planted human_damage 0).

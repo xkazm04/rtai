@@ -1,0 +1,24 @@
+{
+  "again": {
+    "bolts": 9,
+    "cars_hit": 3,
+    "kills": 5,
+    "struck": 10,
+    "wrecks": 1
+  },
+  "clean": {
+    "bolts": 9,
+    "cars_hit": 3,
+    "kills": 5,
+    "struck": 10,
+    "wrecks": 1
+  },
+  "hash": "f6ee6923eb4f496f9c8dbd3f0ed87552205c6b61cb0f16198c57e0b4904581a7",
+  "planted_machine_k_0": {
+    "bolts": 9,
+    "cars_hit": 3,
+    "kills": 5,
+    "struck": 10,
+    "wrecks": 0
+  }
+}
