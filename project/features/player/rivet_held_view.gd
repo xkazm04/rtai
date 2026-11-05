@@ -116,7 +116,7 @@ func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	_sprite = art.make_held(id)
 	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_sprite.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+	_sprite.material = PartMaterials.get_mat(_print_kind(), false, 0)
 	add_child(_sprite)
 	_shown = id
 	_shown_size = size_k
@@ -231,7 +231,7 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		_tank.texture = tex
 		_tank.scale = Vector2.ONE * art.world_scale(id)
 		_tank.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.GUN, false, 0)
 		add_child(_tank)
 	if _tank == null:
 		return
@@ -291,3 +291,9 @@ func _light_rag(rig: CutRig, id: StringName) -> void:
 	if _rag.visible:
 		var at: Vector2 = _sprite.to_global(art.muzzle_px(id) + _sprite.offset)
 		_rag.light(at, k, Engine.get_process_frames())
+
+
+## d7-calls look-8: a gun prints in the tan gun inks, a melee weapon in the plain part print.
+func _print_kind() -> PartMaterials.PartKind:
+	var melee: bool = pilot != null and pilot.wielding()
+	return PartMaterials.PartKind.PART if melee else PartMaterials.PartKind.GUN
