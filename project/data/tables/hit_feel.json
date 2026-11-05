@@ -227,7 +227,7 @@
     },
     {
       "class": "slice",
-      "doc": "n7-melee: one cut of Kerf's blink chain (MeleeFeel via class): a short kick along the blink and the slice stop (a kill takes the kill stop); no shake, so the chain reads cut by cut. The camera's 20-tick stop cooldown is longer than the chain's 18-tick gap: the stop marks every other cut, the kick and KerfView's cut flare mark every cut.",
+      "doc": "n7-melee: one cut of Kerf's blink chain (MeleeFeel via class): a short kick along the blink and the slice stop (a kill takes the kill stop); no shake, so the chain reads cut by cut. With the camera's 16-tick stop cooldown (n7-ranged 0d4089f1; 20 before) every 18-tick cut gets its stop; the kick and KerfView's cut flare mark every cut too.",
       "id": "kerf_slice",
       "kick_px": 2.5,
       "kick_ticks": 6

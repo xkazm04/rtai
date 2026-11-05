@@ -18,6 +18,15 @@
     "note": "Pass 1 drew a cream slash along the cut: it lay on the saw bar and did not show (looked at frames 140-162, before over after). Pass 2: a 1.2 m starburst on the parting tick, drops hidden for their first 0.45 m, judder 0.035 -> 0.06 m. Looked at frames 140-162 at 32 and 136-170 at 48."
   },
   {
+    "file": "plasma_deflect_streak_ab_48ppm_slow.mp4",
+    "title": "Deflect return streak: stays cream and thins instead of greying",
+    "source": "game-arena",
+    "branch": "n7-melee a7ed5d4c",
+    "ppm": 48,
+    "before": "the head before a7ed5d4c (deflect marks on, linear fade), left; 48 px/m at 0.25x",
+    "note": "Looked at frames 125-134 x2 crops, after over before: before turns into a grey smudge on frames 129-131, after keeps a cream line edged in ink that thins out."
+  },
+  {
     "file": "ohm_tell_ab_32ppm_crop.mp4",
     "title": "Ohm's forked bolt gets a tell: the fingertips charge back to a white reach before each bolt",
     "source": "game-arena",

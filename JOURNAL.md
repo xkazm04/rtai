@@ -274,3 +274,18 @@ NEXT (written 20:40, revised 20:56, for iteration 3):
   chips. Honest limit: at 32 px/m it is a ~20 px star; the heap of bodies at the car is unchanged.
   CLIP `M/tonnage_ram_ab_32ppm_48slow.mp4` (4.2 s).
 - GATES 21:32 scenarios on `0c4161d8` (the ram): 52 ran, 0 failed, 0 SCRIPT ERROR. Lint 13/13 at the commit hook.
+- MILESTONE 21:35 `a7ed5d4c` deflect streak (NEXT 4 of it2): alpha 1-t² and the width thinning to 0.4
+  (a linear alpha fade laid half-clear cream on half-clear ink = grey). LOOK (48 px/m director chapter,
+  frames 125-134, 180x60 crops x2, after over the pre-commit head): before greys to a smudge on frames
+  129-131; after stays a cream line edged in ink, thinning. CLIP `M/plasma_deflect_streak_ab_48ppm_slow.mp4`.
+- DOC 21:36: hit_feel.json kerf_slice doc updated for ranged's cooldown 16 (every cut gets its stop now).
+- PLAN quest 1 melee (brief 5; read-only survey 21:15, not started): quest 1's StagePilot has
+  `carry = null` (stage_pilot.gd:19: "quest 1 keeps its own weapons"); the claw is PlayerMelee
+  (stage_pilot.gd:12), `_pick_melee` (:149-156) switches to a MeleeTable weapon only when a carry
+  wields one. Minimal path: in `Quest1Session._bind_pilot` (quest1_session.gd:83-87) build a RivetCarry
+  as ArenaArsenal.arm does (arena_arsenal.gd:17-56, stream `gunplay` from the world's rng), add one
+  blade, leave it on its slot key (do not select: Gloria arrives via `rivet.weapon`, stage_lines.gd:13,
+  and is not in the carry). `pilot.write_state` adds carry state (stage_pilot.gd:107-109) -> quest 1's
+  state hash changes; no test pins a literal quest 1 hash (only same-seed self-compares); precedent
+  docs/decisions.md:555 (Dent ghost cars: a DECISION, no re-bless). Check: the HUD's slot keys in
+  quest 1, PickupsView is arena-only, `--loadout` is not in KNOWN_FLAGS.
