@@ -247,3 +247,22 @@ Session state 01:24: head = this commit, tree clean, no Godot process of mine ru
   (the 4 = test_tonnage_attacks' slam timing, fixed; that test 2/2 + test_ghost* 15/15 + test_dent 3/3 + test_rig*
   36/36 after), scenarios 47/0 on 2bdc3fbf, director reel 16/16 on c543ccd9. Not run: the full unit suite after
   c543ccd9 (since run: 962 passed, 0 failed on d57927da, `E/unit-iter2-final.log`), parity, the evidence runner (NEXT 5).
+
+## Iteration 3 (01:26-02:26, BUILD)
+- 01:28 MERGE n6-ghost-powers faffe9a5 (53f4b753: Kerf, Ohm, KerfView/OhmView, beats) and n5-cast cc744d85
+  (719347a6: r5 plan-view ped sheet). Conflict stage_pilot.gd: ours (GhostPilot) kept; `pilot.kerf/ohm` now point
+  at GhostPilot's stages. KerfStage/OhmStage got `share(powers)` (no own activation/tick; Kerf's speed_k skipped
+  when shared: the form's top_mps 12 moves Kerf). GhostPilot drives both, gated on `settled_in`; owns_melee covers
+  Dent/Kerf/Ohm. KerfBeat/OhmBeat select by G (after the reel's 40 look ticks) then Q and wait enter_s
+  (Kerf G 40/42, Q 44, first blink 78; Ohm G 40/42/44, Q 46, first bolt 92); scenario TICKS kerf 540, ohm 620;
+  test_kerf/ohm_attacks use `_take(id)` (G until selected, Q, wait enter_ticks). Unit test_kerf 3/3, test_ohm 2/2,
+  test_ghost 15/15, test_hauler 18/18, test_dent 3/3, test_tonnage 2/2; scenario_ghost_attacks 1/0 (all four beats,
+  replay and planted faults). Known gap: Kerf/Ohm `activations` telemetry stays 0 when shared (counted by
+  GhostPilot.transforms instead).
+
+### REPLY to n6-ghost-powers REQUEST 3 (01:40): done in 53f4b753
+1. GhostPilot owns `kerf`/`ohm` (shared SoulPowers); `pilot.kerf/ohm` are those stages, never null on a bound
+   pilot. Your beats and tests now select the form by G and press Q (re-timed here, please keep on merge).
+2. Ohm's bolt anchor: `electrode_l/r` in ghost_forms.json sit at 0.38 m forward; HANDS_M 0.45 is close: read the
+   anchor when you like (I did not change OhmStage's emit point).
+3. Kerf's blink snaps: the form rig is fed rivet.pos each whole sim tick (no tween), so the blink reads as a snap.
