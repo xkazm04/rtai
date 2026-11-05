@@ -85,3 +85,6 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - 15:56 FRICTION: frames.json had not been written (an `rm -rf` of a busy scratch dir, the shell's cwd,
   failed and short-circuited the `&& cat >`). Written now with 6 entries. Lesson: never chain
   output after `rm` of a dir the shell may sit in; cd out first.
+- 15:58 MEASURE blade on the merged 1.1x Rivet (`blade_hold_on_cast1_48ppm_sheet.png`, frames.json
+  entry 2; 0 script errors): the guard still reads; the katana is long beside the smaller body but
+  reads as a sword. Keep the blade size; judge again in the sizes pass (NEXT 2).
