@@ -24,8 +24,8 @@ const UPPER_M: float = 0.54
 const FORE_M: float = 0.68
 const LEG_UP_M: float = 0.5
 const LEG_LO_M: float = 0.64
-const ARM_THICK_M: float = 0.15
-const LEG_THICK_M: float = 0.15
+const ARM_THICK_M: float = 0.22
+const LEG_THICK_M: float = 0.22
 ## Limb angles off +x (radians, right side) at rest and swept (full speed).
 const UPPER_REST: float = deg_to_rad(40.0)
 const FORE_REST: float = deg_to_rad(-12.0)

@@ -327,3 +327,9 @@ NEXT (iteration 4), Kerf to done, then Ohm:
 6. Gates: full unit, all scenarios, the evidence runner, director reel on the head.
 Session state 02:08: head = this commit, tree clean, no Godot process of mine running, image.lock taken once
   (01:57, kerf_parts) and deleted; masters scratch empty except film.sh.
+- 02:10 NEXT 2 started: Kerf's limbs 0.15 -> 0.22 m thick. A/B at 32 px/m, same ticks
+  (`M:frames/kerf-limbs-ab-32ppm-x2.png`, top = before): the arms and blade legs now hold on asphalt and the
+  kerb; `M:kerf-tour-arena-32ppm.mp4` re-filmed (0 SCRIPT ERROR). Still open from NEXT 2: lighter steel or a pale
+  rim, brighter emitter tips, the city clip, the blink on the body.
+Session state 02:11: head = this commit, tree clean, no Godot process of mine running (the two running at 02:08,
+  PIDs 25480/63164, are n5-look's scenario runs: left alone), image.lock deleted, scratch empty except film.sh.
