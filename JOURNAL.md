@@ -884,3 +884,10 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   `M:story-forms-quest1-shipped-32ppm.mp4` (19 s) replaced; keys 140 (base, sticker tier) / 450 (exit morph) /
   600 (Dent) / 1120 (base after Ohm's exit): `M:frames/story-forms-quest1-sticker-keys-32ppm.png` (named in the
   story-forms entry, frames.json still 15, all present). REPORT section 11 + iteration 14 gates; DRAFT line final.
+- 07:52 REFACTOR (this commit) CastView._rivet picks the sprite art once (`_lod_art("rivet")`) for both the
+  story-forms branch and the old Hauler branch, so the two can no longer drift apart on a cast-lane art change.
+  Checked: q1lift.sh 520 frames, 0 SCRIPT ERROR; frames 140 and 480 identical to the 07:49 film (scratch, deleted).
+  Lint 13/13, unit 1019/0.
+- NOTICE to n5-cast (no action needed): your 02e4295c sticker tier was bypassed on the shipped quest 1 by our
+  StoryForms branch of CastView._rivet (story_forms on by default) until 5be03adb; fixed here, so it reaches the
+  morning merge through n6-ghost-forms. A/B `M:frames/quest1-sticker-rivet-forms-ab-32ppm-x3.png`.

@@ -85,16 +85,15 @@ func _rivet(r: Fighter) -> void:
 		return
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
+	var art: String = _lod_art("rivet")  # one pick for both paths below (n5-cast's sticker tier)
 	if forms_drawn and stage.pilot != null:
-		if not StoryForms.stands_in(stage.pilot.ghosts.forms):  # n5-cast's sticker tier too
-			var base: String = _lod_art("rivet")
-			_sprite(base, at, _size(StringName(base)), r.facing)
+		if not StoryForms.stands_in(stage.pilot.ghosts.forms):
+			_sprite(art, at, _size(StringName(art)), r.facing)
 		var lift: float = StoryForms.bar_lift_m(stage.pilot.ghosts.forms)
 		_hp_bar(at + Vector2(0.0, -lift), r.hp / r.max_hp)
 		return
 	var h: HaulerForm = stage.pilot.hauler.form if stage.pilot != null else null
 	var k: float = h.morph_k() if h != null else 0.0
-	var art: String = _lod_art("rivet")
 	if k > 0.0:  # features/souls: the Hauler grows and tints Rivet by the morph
 		var grow: float = HaulerLook.sprite_k(k, h.windup_k())
 		var tint: Color = HaulerLook.tint(h.num(&"look_tint_k"), k)
