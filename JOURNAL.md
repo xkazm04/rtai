@@ -945,3 +945,17 @@ Session end 03:30: tree clean after this commit, no Godot process of mine runnin
   head's facing side in every after tile. Still `M/frames/rivet-visor-slot-ab-32ppm.png` (lineup x6 + live crops +
   r2_c7's Rivet). Lint 13/13, unit 948/0 (+ test_head_visor_sticker).
 - MILESTONE 26c1e08a: Rivet's welder visor reads at 32 px/m (Call 8 B built; revert = HEAD_LOD_FILL 2.0).
+- 03:47 EVIDENCE GATE on e7c055be (clean tree): ALL PASS: lint 13/13, unit 948/0, scenarios 46, parity exact (mutation
+  caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), world lock holds. No re-bless (Rivet's head
+  at 32 px/m moved too few pixels to shift a golden mean). (Two earlier starts refused a dirty tree: my scratch dir and
+  REPORT; scratch now lives in `gtai-n5/scratch-cast/i15`, outside the worktree.)
+- 03:48 COMBAT CHECK director reel headless (`--fixed-fps 60 --quit-after 7200 --bot=reel --reel=director
+  --loadout=pistol`): 16/16 chapters down (claw 2/2, pistol 2/2, machine pistol 4/4 .. mini nuke 4/4), 0 SCRIPT ERROR.
+- 03:49 city block on e7c055be (`film.sh cast-visor-city-32 32 900 --bot=reel --arena=city --loadout=pistol,machine_pistol`,
+  0 SCRIPT ERROR): `M/frames/cast-ingame-vs-r2c6.png` re-shot (tick 720, same as before, + a Rivet x4 inset).
+- 03:50 quest 1 Dock 9 (`quest1_clip.gd -- --ppm=32 --rigs --cam=fight --stills=13600,13660,13720`), after and before by
+  flag, 0 SCRIPT ERROR both: `M/frames/visor-slot-quest1-ab-32ppm.png`. The slot sits on the side Rivet faces (the
+  64 px/m art visor is at the same place, `M/frames/rivet-visor-ab-64ppm.png`). All three live paths checked.
+  frames.json 15 (+ rivet-visor-slot-ab and visor-slot-quest1-ab on top; dropped from the list, files kept as REPORT
+  cites them: collar-ticks-lineup-32ppm, crowd-r7-hoodie-ab). REPORT: section 3 bullet, section 4 composite, Call 8
+  (B built), gates line for iteration 15.

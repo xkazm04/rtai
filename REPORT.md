@@ -63,7 +63,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (6/8/14 breaks, the art's own stripes) `M/frames/collar-ticks-lineup-32ppm.png`, `M/frames/collar-trials-city-32ppm.png`.
 - Welder visor at 32 px/m (26c1e08a, iteration 15): the helmet sticker prints an ink visor slot over the head's front,
   so Rivet's head carries r2_c7's dark slot and shows where he faces at game zoom (the 2 px art visor merged into the
-  outline). 64 px/m is pixel-identical. `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`. Call 8.
+  outline). 64 px/m is pixel-identical. `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; quest 1
+  Dock 9, same ticks: `M/frames/visor-slot-quest1-ab-32ppm.png`. Director reel 16/16 down, 0 script errors. Call 8.
 - Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
@@ -75,7 +76,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `M/frames/director-final-ab-32ppm.png` (claw combo, pistol, machine pistol identical tick for tick).
 - City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`; with the navy cops
   `M/cast-navy-director-64.mp4` (still `M/frames/director-navy-64ppm.png`).
-- Target composite: `M/frames/cast-ingame-vs-r2c6.png`.
+- Target composite: `M/frames/cast-ingame-vs-r2c6.png` (re-shot on e7c055be with the visor slot, from
+  `M/cast-visor-city-32.mp4`, tick 720, with a Rivet x4 inset).
 - Every weapon (iteration 8): the full director reel WITH `--loadout=pistol` (the reel's documented args; my
   earlier checks lacked it, n5-look's note), 7200 ticks at 32 px/m: all 16 chapters n/n down, 0 script errors.
   One frame per chapter: `M/frames/director-loadout-16ch-32ppm.png`; clip of rocket .. katana
@@ -144,6 +146,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
+### Gates (iteration 15, `tools/evidence/run.mjs --no-bench` on e7c055be (the visor slot): ALL PASS: lint 13/13, unit 948/0,
+scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), world lock
+holds; no re-bless. Director reel with `--loadout=pistol` 16/16 chapters down, 0 script errors.)
 ### Gates (iteration 14, final on f7cc15b5 (torch tip): ALL PASS: lint 13/13, unit 945/0, scenarios 46, parity exact,
 look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), no re-bless. Before it, on 4f9a2ead (the hazard collar): lint 13/13,
 unit 945/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.21), block 5/5 (worst
