@@ -1014,3 +1014,8 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   cream core had vanished. Deleted the six single tan clips (both sides live in the A/B clips) and the i16/i17 scratch
   renders. frames.json 15 (+3 tan on top; dropped from the list, files kept: crowd-r6-ab, city-r7peds-ab,
   crowd-quest1-vs-r1c6). REPORT: section 3 bullet, Call 9, gates line for iteration 17.
+- 04:36 quest 1 Dock 9 (`quest1_clip.gd -- --ppm=32 --rigs --cam=fight --stills=13600,13660,13720`), after and before
+  (CORE_TAN 0 by a local edit, reverted by git checkout), 0 SCRIPT ERROR both: lossless crops x4
+  `M/frames/rivet-core-tan-quest1-ab-32ppm.png`. The tan core separates the body from the cream limb rims and the
+  outline; the collar still leads. All three live paths checked. frames.json 15 (quest 1 A/B second; lineup ladder
+  dropped from the list, file kept for REPORT). REPORT section 3 and Call 9 cite it.

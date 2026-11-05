@@ -70,7 +70,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   cream core had vanished; on asphalt the change is quiet (warm beige for white). Rivet only (`BodyPlan.core_tan`); King
   keeps cream; 48 px/m and up pixel-identical. `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`,
   `M/frames/rivet-core-tan-director-crops-32ppm.png`, `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
-  Director reel 16/16 down, 0 script errors. Call 9.
+  Quest 1 Dock 9, same ticks, lossless: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`. Director reel 16/16 down, 0
+  script errors. Call 9.
 - Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
@@ -266,6 +267,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    (the lanky read); 48 px/m and up is pixel-identical (the art tier, Call 5 governs it). Same ticks, B | A | C
    beside the targets: `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`; lineup slab and road at 0 / 0.5 / 1.0:
    `M/frames/rivet-core-tan-lineup-32ppm.png`; live A/B: `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
+   Quest 1 Dock 9: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
