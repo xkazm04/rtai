@@ -5,18 +5,19 @@ extends RefCounted
 ## farther on and a police cruiser past it. He takes the soul (Q) and throws a bolt every CADENCE
 ## ticks at the nearest standing body: the cops are stunned and burned down in two bolts, the
 ## robot is struck first and dies to one bolt (machine_k), then the bolts burn the cruiser. He
-## walks in when the target is beyond REACH_M.
+## walks in when the target is beyond REACH_M. `--tier=1` raises Ohm's upgrade_tier for the
+## run: the mass arc (every body within mass_radius_m of the first, one bolt).
 
 const KNOT: Array[Vector2] = [Vector2(7.0, -0.8), Vector2(7.6, 0.6), Vector2(8.4, -0.2)]
 const RIOT: Vector2 = Vector2(9.2, 1.6)
 const ROBOT: Vector2 = Vector2(10.5, -1.6)
 const ROBOT_HP: float = 6.0
 const CAR: Vector2 = Vector2(9.5, 3.4)
-## ghost-forms (GhostPilot): G picks the ghost (order Tonnage, Dent, Kerf, Ohm), Q transforms,
-## the attacks wait for the settled form (enter_s).
+## ghost-forms (GhostPilot): G presses pick the ghost (order tonnage, dent, kerf, ohm), Q
+## transforms, the attacks wait for the settled form.
 const SELECT_AT: Array[int] = [40, 42, 44]
 const TAKE_AT: int = 46
-const FIRST_BOLT: int = 92
+const FIRST_BOLT: int = 90
 const CADENCE: int = 30
 const REACH_M: float = 9.5
 
@@ -38,6 +39,9 @@ func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
 	if stage.vehicles != null:
 		car = stage.vehicles.spawn_parked(&"police_cruiser", anchor + CAR, Vector2.RIGHT)
 	reel.car = car
+	var tier: int = int(ArenaArgs.parse().number("--tier", 0.0))
+	if tier > 0 and stage.pilot != null:  # the act-quest upgrade (data hook): the mass arc
+		stage.pilot.ohm.attacks.block(OhmStage.GHOST)["upgrade_tier"] = float(tier)
 
 
 ## Sim side, every tick: the arena's only robot is the quest boss's brain (exposed only while
@@ -58,10 +62,10 @@ func want(stage: ArenaStage, local: int) -> Array:
 	)
 	var aim: Vector2 = (at - rivet).normalized()
 	var walk: Vector2 = aim * 0.6 if rivet.distance_to(at) > REACH_M else Vector2.ZERO
-	if local in SELECT_AT:
-		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local == TAKE_AT:
 		return [Vector2.ZERO, aim, &"power_hauler"]
+	if SELECT_AT.has(local):
+		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local < FIRST_BOLT:
 		return [walk, aim, &""]
 	var press: bool = (local - FIRST_BOLT) % CADENCE == 0

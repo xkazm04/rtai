@@ -28,17 +28,6 @@ func _press(action: StringName) -> void:
 	_stage.intent.clear()
 
 
-## Lane ghost-forms: G picks the ghost (base), Q transforms, then wait for the settled form.
-func _take(id: StringName) -> void:
-	for i: int in 4:
-		if _pilot.ghosts.forms.selected == id:
-			break
-		_press(&"power_gearbox")
-		_wait(1)
-	_press(&"power_hauler")
-	_wait(_pilot.ghosts.forms.table.form(id).enter_ticks + 1)
-
-
 func _wait(ticks: int) -> void:
 	for i: int in ticks:
 		_press(&"")
@@ -52,11 +41,22 @@ func _guard(off: Vector2, hp: float) -> Fighter:
 	return g
 
 
+## GhostPilot: G picks the ghost (order tonnage, dent, kerf, ohm), Q transforms, and the attack
+## waits for the settled form.
+func _take() -> void:
+	while _pilot.ghosts.forms.selected != OhmStage.GHOST:
+		_press(&"power_gearbox")
+		_press(&"")
+	_press(&"power_hauler")
+	for i: int in _pilot.ghosts.forms.table.form(OhmStage.GHOST).enter_ticks + 1:
+		_press(&"")
+
+
 func test_the_bolt_forks_inside_the_radius_and_stuns() -> void:
 	var first: Fighter = _guard(Vector2(6.0, 0.0), 5.0)
 	var fork: Fighter = _guard(Vector2(8.0, 1.0), 5.0)  # 2.2 m from the first
 	var far: Fighter = _guard(Vector2(6.0, -7.0), 5.0)  # outside the cone and the fork radius
-	_take(&"ohm")
+	_take()
 	_press(&"melee")
 	var dmg: float = _pilot.ohm.num(&"human_damage")
 	assert_almost_eq(first.hp, 5.0 - dmg, 0.001, "the body in the cone is struck")
@@ -72,10 +72,19 @@ func test_a_robot_takes_the_machine_multiplier_and_bolts_keep_their_gap() -> voi
 	robot.max_hp = 20.0
 	robot.hp = 20.0
 	robot.exposed = true
-	_take(&"ohm")
+	_take()
 	_press(&"melee")
 	var k: float = _pilot.ohm.num(&"bolt_damage") * _pilot.ohm.num(&"machine_k")
 	assert_almost_eq(robot.hp, 20.0 - k, 0.001, "bolt_damage x machine_k on a robot")
 	robot.exposed = true
 	_press(&"melee")
 	assert_eq(_pilot.ohm.bolts, 1, "no second bolt inside bolt_gap_s")
+
+
+func test_a_human_killed_by_the_bolt_takes_the_soul_x_ray_kill() -> void:
+	var row: SignatureKill = SignatureKillTable.load_table().for_weapon(OhmStage.WEAPON)
+	assert_not_null(row, "ohm_bolt has a signature kill")
+	assert_eq(row.style, &"shock", "the electro gun's X-ray shock")
+	assert_eq(row.edge, &"soul", "in the souls' teal, not the electro gun's cream")
+	var gun: SignatureKill = SignatureKillTable.load_table().for_weapon(&"electro_gun")
+	assert_eq(gun.edge, &"", "the electro gun keeps its cream arcs")

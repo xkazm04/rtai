@@ -1,12 +1,11 @@
 class_name GhostPilot
 extends RefCounted
-## The four ghost forms for the bound player (StagePilot): one SoulPowers (one form at a time,
-## one Madness meter) behind GhostForms, in front of the attack stages of lane ghost-powers
-## (HaulerStage = Tonnage, DentStage = Dent, KerfStage, OhmStage). Q / LB (power_hauler)
-## transforms into the selected ghost or back to base; G / RB (power_gearbox) selects the next
-## ghost in base, or switches straight to it in a form (JOURNAL DECISION input). The attacks fire
-## only while the form is settled (never mid-transformation); a transformation roots Rivet to
-## morph_move_k of his walk.
+## The four ghost forms for the bound player (StagePilot): one SoulPowers (one form at a time, one
+## Madness meter) behind GhostForms, in front of the attack stages of lane ghost-powers (HaulerStage
+## = Tonnage, DentStage = Dent, KerfStage, OhmStage). Q / LB (power_hauler) transforms into the
+## selected ghost or back to base; G / RB (power_gearbox) selects the next ghost in base, or
+## switches straight to it in a form (JOURNAL DECISION input). The attacks fire only while the form
+## is settled (never mid-transformation); a transformation roots Rivet to morph_move_k of his walk.
 
 ## Rivet's walk while a transformation plays (the body is rebuilding; data-free on purpose: one
 ## value, judged in the clip).
@@ -72,9 +71,9 @@ func drive(
 ## True when a form's attacks own the melee press this tick (the pilot skips the claw): Tonnage,
 ## Dent, Kerf (the blink), Ohm (the bolt), or a transformation (no claw mid-morph).
 func owns_melee() -> bool:
-	if not forms.settled() or hauler.owns_melee():
+	if not forms.settled() or hauler.owns_melee() or settled_in(DentStage.GHOST):
 		return true
-	return forms.current() in [DentStage.GHOST, KerfStage.GHOST, OhmStage.GHOST]
+	return settled_in(KerfStage.GHOST) or settled_in(OhmStage.GHOST)
 
 
 ## The settled light form's speed against Rivet's walk (Tonnage drives its own momentum).

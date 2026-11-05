@@ -10,7 +10,7 @@ extends Scenario
 
 const EVIDENCE_FILE: String = "ghost-attacks.json"
 const TICKS: Dictionary[StringName, int] = {
-	&"tonnage": 620, &"dent": 360, &"kerf": 540, &"ohm": 620
+	&"tonnage": 620, &"dent": 360, &"kerf": 520, &"ohm": 600
 }
 const FAULTS: Dictionary[StringName, StringName] = {
 	&"tonnage": &"crush_m", &"dent": &"blast_damage", &"kerf": &"human_damage", &"ohm": &"machine_k"

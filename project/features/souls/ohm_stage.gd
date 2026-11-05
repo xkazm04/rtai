@@ -25,7 +25,6 @@ var activations: int = 0
 var bolt_tick: int = -1
 var bolt_path: PackedVector2Array = PackedVector2Array()
 var _gap: int = 0
-## GhostPilot owns the SoulPowers (one form at a time): no own activation or tick.
 var _shared: bool = false
 
 
@@ -34,7 +33,7 @@ func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 	powers = SoulPowers.new(table)
 
 
-## Lane ghost-forms: the SoulPowers behind GhostForms.
+## GhostPilot: the form's one SoulPowers drives the soul (no own activate or tick).
 func share(p_powers: SoulPowers) -> void:
 	powers = p_powers
 	_shared = true
@@ -55,9 +54,9 @@ func on() -> bool:
 ## One tick: `power` takes the soul, `melee` throws a bolt, `aim` is Rivet's aim (unit).
 func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> void:
 	var rivet: Fighter = stage.arena.rivet
-	if power and not on() and rivet.alive() and powers.try_activate(ID) == &"ok":
-		activations += 1
 	if not _shared:
+		if power and not on() and rivet.alive() and powers.try_activate(ID) == &"ok":
+			activations += 1
 		powers.tick()
 	_gap = maxi(0, _gap - 1)
 	if on() and melee and _gap == 0 and rivet.alive():

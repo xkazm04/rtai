@@ -25,8 +25,8 @@ var throw: PlayerThrow = PlayerThrow.new()
 var melee_swings: int = 0
 var car_presses: int = 0
 ## features/souls: the four ghost forms for the bound player (GhostPilot: Q / LB transforms, G / RB
-## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage) and dent (Dent) are
-## its attack stages (lane ghost-powers), kept here for the views and the tests.
+## picks or switches the ghost); the bot never builds a pilot. hauler (Tonnage), dent, kerf and ohm
+## are its attack stages (lane ghost-powers), kept here for the views and the tests.
 var ghosts: GhostPilot = GhostPilot.shipped()
 var hauler: HaulerStage = ghosts.hauler
 var dent: DentStage = ghosts.dent

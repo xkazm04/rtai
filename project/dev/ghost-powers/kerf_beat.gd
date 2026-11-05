@@ -12,11 +12,11 @@ const GROUP: Array[Vector2] = [
 const RIOT: int = 2
 const ROBOT: Vector2 = Vector2(17.5, 1.2)
 const ROBOT_HP: float = 6.0
-## ghost-forms (GhostPilot): G picks the ghost (order Tonnage, Dent, Kerf, Ohm), Q transforms,
-## the attacks wait for the settled form (enter_s).
+## ghost-forms (GhostPilot): G presses pick the ghost (order tonnage, dent, kerf, ohm), Q
+## transforms, the attacks wait for the settled form.
 const SELECT_AT: Array[int] = [40, 42]
 const TAKE_AT: int = 44
-const FIRST_BLINK: int = 78
+const FIRST_BLINK: int = 76
 const CADENCE: int = 20
 
 var victims: Array[Fighter] = []
@@ -40,10 +40,10 @@ func want(stage: ArenaStage, local: int) -> Array:
 	var rivet: Vector2 = stage.arena.rivet.pos
 	var foe: Fighter = _nearest(rivet)
 	var aim: Vector2 = (foe.pos - rivet).normalized() if foe != null else Vector2.RIGHT
-	if local in SELECT_AT:
-		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local == TAKE_AT:
 		return [Vector2.ZERO, aim, &"power_hauler"]
+	if SELECT_AT.has(local):
+		return [Vector2.ZERO, aim, &"power_gearbox"]
 	if local < FIRST_BLINK or foe == null:
 		return [Vector2.ZERO, aim, &""]
 	var press: bool = (local - FIRST_BLINK) % CADENCE == 0

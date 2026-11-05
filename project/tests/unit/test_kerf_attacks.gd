@@ -36,17 +36,6 @@ func _press(action: StringName, aim: Vector2 = Vector2.RIGHT) -> void:
 	_stage.intent.clear()
 
 
-## Lane ghost-forms: G picks the ghost (base), Q transforms, then wait for the settled form.
-func _take(id: StringName) -> void:
-	for i: int in 4:
-		if _pilot.ghosts.forms.selected == id:
-			break
-		_press(&"power_gearbox")
-		_wait(1)
-	_press(&"power_hauler")
-	_wait(_pilot.ghosts.forms.table.form(id).enter_ticks + 1)
-
-
 func _guard(off: Vector2) -> Fighter:
 	var g: Fighter = _stage.arena.spawn_guard(_stage.arena.rivet.pos)
 	g.pos = _stage.arena.rivet.pos + off
@@ -58,11 +47,23 @@ func _wait(ticks: int) -> void:
 		_press(&"")
 
 
+## GhostPilot: G picks the ghost (order tonnage, dent, kerf, ohm), Q transforms, and the attack
+## waits for the settled form.
+func _take() -> void:
+	while _pilot.ghosts.forms.selected != KerfStage.GHOST:
+		_press(&"power_gearbox")
+		_press(&"")
+	_press(&"power_hauler")
+	for i: int in _pilot.ghosts.forms.table.form(KerfStage.GHOST).enter_ticks + 1:
+		_press(&"")
+
+
 func test_the_blink_cuts_the_target_in_the_cone_and_lands_behind_it() -> void:
 	var target: Fighter = _guard(Vector2(6.0, 0.5))
 	var aside: Fighter = _guard(Vector2(0.0, 5.0))  # 90 degrees off the aim: outside the cone
 	var start: Vector2 = _stage.arena.rivet.pos
-	_take(&"kerf")
+	_take()
+	_wait(2)
 	_press(&"melee")
 	assert_false(target.alive(), "the human in the cone is cut down")
 	var weapon: StringName = _kills.get(target.id, &"")
@@ -76,7 +77,8 @@ func test_a_robot_takes_robot_damage() -> void:
 	var robot: Fighter = _stage.arena.spawn_boss(_stage.arena.rivet.pos + Vector2(5.0, 0.0))
 	robot.max_hp = 6.0
 	robot.hp = 6.0
-	_take(&"kerf")
+	_take()
+	_wait(2)
 	_press(&"melee")
 	var k: float = _pilot.kerf.num(&"robot_damage")
 	assert_almost_eq(robot.hp, 6.0 - k, 0.001, "a robot takes robot_damage, not the one-shot")
@@ -86,7 +88,7 @@ func test_no_target_is_a_dash_and_the_chain_runs_dry_then_recharges() -> void:
 	var kerf: KerfStage = _pilot.kerf
 	var n: int = int(kerf.num(&"charges"))
 	var gap: int = PowerDef.ticks(kerf.num(&"gap_s"))
-	_take(&"kerf")
+	_take()
 	var start: Vector2 = _stage.arena.rivet.pos
 	_press(&"melee")
 	assert_almost_eq(

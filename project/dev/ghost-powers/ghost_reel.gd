@@ -87,7 +87,8 @@ func telemetry() -> Dictionary:
 		out["dent"] = {"seizes": d.seizes, "strikes": d.strikes, "blasts": d.blasts}
 	var k: KerfStage = _stage.pilot.kerf if _stage != null and _stage.pilot != null else null
 	if k != null:
-		out["kerf"] = {"activations": k.activations, "blinks": k.blinks, "slices": k.slices}
+		var forms: int = _stage.pilot.ghosts.transforms
+		out["kerf"] = {"transforms": forms, "blinks": k.blinks, "slices": k.slices}
 	var o: OhmStage = _stage.pilot.ohm if _stage != null and _stage.pilot != null else null
 	if o != null:
 		out["ohm"] = {"bolts": o.bolts, "struck": o.struck, "cars_hit": o.cars_hit}
@@ -135,6 +136,9 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	var arena: CombatArena = stage.arena
 	arena.rivet.pos = _anchor
 	arena.rivet.facing = Vector2.RIGHT
+	if stage.follow != null:  # the city block: the city's body holds Rivet where it last saw him
+		stage.follow.focus = _anchor
+		stage.follow.target = _anchor
 	if ghost == &"dent":
 		dent_beat = DentBeat.new()
 		dent_beat.begin(self, stage, _anchor)

@@ -35,3 +35,13 @@ Ohm per activation (measured, `--bot=ghosts --ghost=ohm`, arena 32 px/m, windowe
 stand-in to the first bolt, the three-cop knot in two forked bolts, the riot cop in five), then the cruiser burnt
 out in 5 more bolts: 16 bolts, 12 bodies struck, Rivet untouched at 100 hp (the stuns keep the cops from firing;
 `evidence/ghosts-ohm-32.json`, `scenario_ghost_attacks`). Madness 20, cooldown 14 s (powers.json).
+
+Iteration 3 (2026-11-05 02:00, GhostPilot drives all four; the attacks wait for the settled form):
+- Through the real switch (G selects, Q transforms, attack after enter_s): the four arena beats still 5/5 or
+  10/10 (`scenario_ghost_attacks`, `evidence/scenario-ghost-it3.log`). Kerf's walk is now the form row's 12 m/s
+  (was speed_k 1.5 x 6.75 = 10.1); its 6 s duration includes the 0.5 s transformation.
+- City block (`--arena=city`, after the placement fix): Tonnage 10/10 + 2 cars crushed, Rivet 100 hp; Dent 5/5,
+  1 seize, 5 strikes, 1 blast (blown on command in B); Kerf 5/5 (8 blinks); Ohm 5/5 (11 bolts, 3 car bolts).
+- Ohm upgrade_tier 1 (mass arc, `--tier=1`): the three-cop knot down at tick 119 (tier 0: 149), 5/5
+  (`evidence/ghosts-ohm-mass-32.json`): the tier is worth one bolt on a group of five; a quest reward can also
+  raise human_damage if it should feel bigger.
