@@ -1463,3 +1463,14 @@ NEXT (if a REPORT session runs at 08:40):
 1. The REPORT is final as committed. Just confirm `git status` is clean and the header says iteration 24.
 2. Calls 1-9 and the merge note stand. Nothing is open in code.
 Session end 08:19: tree clean after this commit, no Godot process of mine running.
+
+## Iteration 25 (08:19 - freeze 08:30)
+- 08:19 read JOURNAL NEXT and log: tree clean at efa29d38, REPORT final. 11 min to the freeze: too short for a code
+  change plus its full gate (`tools/evidence/run.mjs` alone runs longer) and the director-reel combat check, so no
+  code this session (nothing half-built left behind). No Godot process running, no bench.lock or image.lock present.
+- 08:20 REPORT header now says iterations 24-25 (re-checked 08:20). Last gate stands: ALL PASS on 09570a2e; code
+  unchanged since 2cc15c5f.
+
+NEXT (if a REPORT session runs at 08:40):
+1. REPORT is final as committed; confirm `git status` is clean. Calls 1-9 and the n6 merge note stand.
+Session end 08:21: tree clean after this commit, no Godot process of mine started.
