@@ -389,3 +389,8 @@ NEXT (iteration 4, in order):
   Servo; KingBeats). JOURNAL ours. Unit on the merged tree 1156/0 (`unit-it3c.log`). Servo seed 1
   dodging on the merged tree: down at 134.2 s, Rivet took 80, 0 SCRIPT ERROR: identical to before
   the merge (`bots-it3/merged-dodge-s1.*`). NEXT 1's music half is done.
+- 21:19 GATES on the merged tree (8c14a186): scenarios 52 ran / 0 failed, run alone
+  (`scenarios-it3b.log`): the earlier `scenario_rig_stress` 1.105 ms was contention, as logged.
+  Director reel (b5d8fc43, before the merge; the merge touched no combat code): 19/19 chapters
+  down, 0 SCRIPT ERROR; exit 124 is the gate script's 600 s limit after the last chapter (the reel
+  idles there). Lint 13/13, unit 1156/0.
