@@ -236,3 +236,14 @@ NEXT (iteration 3), Dent to done, then Kerf:
    beam slots), its own rig (hover: TonnageRig-like Node2D or a CutRig plan with legs folded), the anchors
    emitter_l/r + lens already in ghost_forms.json. Then Ohm.
 5. Gates at the end: unit full, scenarios, evidence runner, director reel (this session's started 01:20).
+- 01:22 COMBAT CHECK director reel headless `--quit-after 24000` on c543ccd9 (GhostPilot + GhostFormView in the live
+  path): 16/16 chapters down (claw_combo 2/2 .. mini_nuke 4/4), 0 SCRIPT ERROR, exit 0 (`E/director-reel-iter2.log`).
+- 01:23 Dent shins: the thigh art cropped before its knee disc, 0.76 thinner (Rivet's shin is slimmer than his
+  thigh), parts.json + provenance re-measured; test_dent 3/3. Dent 32 px/m live (900 frames, 5/5, 0 SCRIPT ERROR,
+  `E/ghosts-dent-live-32.json`): `M:dent-live-arena-32ppm.mp4`, `M:frames/dent-live-arena-32ppm-keys.png`. Judged:
+  the disc reads, the raw cracks speckle at 32 px/m (NEXT 2: a pre-shrunk set or mipmaps).
+Session state 01:24: head = this commit, tree clean, no Godot process of mine running, image.lock taken once
+  (01:03, dent_parts) and deleted by this lane. Gates this session: lint 13/13 every commit, unit 955/4 on 94b7c56d
+  (the 4 = test_tonnage_attacks' slam timing, fixed; that test 2/2 + test_ghost* 15/15 + test_dent 3/3 + test_rig*
+  36/36 after), scenarios 47/0 on 2bdc3fbf, director reel 16/16 on c543ccd9. Not run: the full unit suite after
+  c543ccd9, parity, the evidence runner (NEXT 5).

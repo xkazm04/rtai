@@ -13,7 +13,7 @@
    1.0
   ]
  },
- "doc": "Dent (ghost-forms): parts cut from the r2 Codex sheet, resized to Rivet part px (rivet/parts.json) so DentPlan reuses Rivet's lengths; pivots at the joint discs (limb a = joint, b = end). blank = the parts Dent has none of (collar, pelvis, the hand is drawn on the forearm).",
+ "doc": "Dent (ghost-forms): parts cut from the r2 Codex sheet, resized to Rivet part px (rivet/parts.json) so DentPlan reuses Rivet's lengths; pivots at the joint discs (limb a = joint, b = end). shins = the thigh art without its knee disc, slimmer; blank = the parts Dent has none of (collar, pelvis, the hand is drawn on the forearm).",
  "helmet": {
   "size": [
    201,
@@ -66,11 +66,11 @@
   ],
   "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
   "pivot_a": [
-   13.3,
+   31.0,
    31.0
   ],
   "pivot_b": [
-   117.0,
+   108.2,
    31.0
   ]
  },
@@ -141,11 +141,11 @@
   ],
   "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
   "pivot_a": [
-   13.3,
+   31.0,
    31.0
   ],
   "pivot_b": [
-   117.0,
+   108.2,
    31.0
   ]
  },
