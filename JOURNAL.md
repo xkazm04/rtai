@@ -753,3 +753,26 @@ task list are other lanes'), no lock held, masters scratch holds only film.sh, r
   (`E/unit-it9b-powers.log`, + test_a_parked_ghost_car_is_solid_and_the_seized_one_is_not), scenarios 47/0
   (`E/scenarios-it9b-powers.log`), quest 1 Dent rec identical counts, 0 SCRIPT ERROR; after the blast Dent lands
   clear of the wreck's box (looked at frames 204/230/290, not kept). DECISION in decisions.md.
+- 06:30 GATES evidence runner `--no-bench` on 514e6899, still tree: PASS lint 13/13, unit 1013/0, scenarios 47,
+  parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.21), no re-bless
+  (`E/evidence-run-it9b-powers.log`). REPORT rows: solid ghost cars, final gates; "does not work" amended.
+  Other lanes' JOURNALs: no new REQUEST to ghost-powers.
+
+### NOTICE -> n6-ghost-forms (06:31)
+Quest 1 now has cars (291ad11c, 514e6899): three parked ghost cars on the city street (`collect_call_city.json
+ghost_cars`), `vehicles`/`cars()` on CollectCallStage, drawn by StageView. Dent seizes, rides and blows them in quest
+1 (the NOTICE of 05:46 is answered: Dent can stay selectable there). If your StoryForms Dent body has a ride pose
+for the arena, it now applies in quest 1 too (DentStage.riding()).
+
+NEXT (iteration 10, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (`--no-ff --no-commit`, keep JOURNAL/REPORT and our `*-powers`
+   logs, `--import`); director reel combat check as `--headless --quit-after 24000 --path project
+   res://dev/arena/arena.tscn -- --bot=reel --reel=director` (flags before `--`!).
+2. A determinism scenario for Dent in quest 1 (same seed twice -> same seize/strike/blast counts and state hash;
+   planted fault: `ghost_cars` [] must fail it), beside scenario_ghost_attacks.
+3. Tonnage and Ohm on quest 1's cars, filmed: quest_hauler_rec's slam beside a ghost car (crush) and the Ohm rec's
+   car bolt (the code reads stage.vehicles since 291ad11c; not yet seen in quest 1).
+4. Freeze 08:30: final evidence runner on the head, REPORT final (mark DRAFT -> final), session-state line.
+Session state 06:31: head = this commit, tree clean after it, no Godot process of mine running, no lock held
+(image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh, report_it9.py and logs,
+frames.json 15 (all present).
