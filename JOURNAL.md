@@ -237,3 +237,9 @@ Session state 01:26: head = this commit, tree clean, no Godot process of mine ru
   log `stage.vehicles`, `cars().size()` and the car positions at the beat's first tick in the city run, check
   whether the city view draws ArenaCars' cars and whether `_add_city` swaps the stage's walls/cells so the car
   sits inside a solid; then fix and re-film Dent and Tonnage there (the arena path must not move).
+- 01:28 PROBE (a temporary log line in GhostReel._begin, reverted): `--arena=city --bot=ghosts --ghost=dent`
+  headless: "powers pad: 2 cars parked", "vehicles true, 2 cars" at the beat's first tick (+ the beat's cruiser).
+  So the cars ARE in the city sim. Open for iteration 3: (a) the city view does not draw ArenaCars' cars
+  (CityView draws the city sim's traffic only?), (b) why Dent's G seize finds none there (log pick_on_line's
+  distances and `powers.try_activate` result in the city run), (c) Tonnage's car_crush likewise.
+Session state 01:29: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
