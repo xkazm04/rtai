@@ -386,3 +386,11 @@ NEXT (written 22:20, for iteration 5):
    (`--quest-blade=off` / `=electro_baton`; clip `M/quest1_katana_ab_32ppm.mp4`); (b) Tonnage stomp's
    HaulerKick ignores `--feel=off`; (c) no per-attack sound cues exist (needs sound assets); (d) Dent's
    blow feel (`dent_car` row, class ram; delete the row = the before; `M/dent_car_blow_ab_32ppm_04x.mp4`).
+- CHECK 22:18 director reel city block (`--arena=city --bot=reel --reel=director --loadout=pistol
+  --quit-after 7400`) on `806a657e`: 19/19 chapters fully down, 0 SCRIPT ERROR, exit 0
+  (`evidence/n7-melee/director-city-loadout-806a657e.log`).
+- MILESTONE 22:19 `5f80e67c` (NEXT 2 done early) quest 1 blade hand point on the sprite's claw side
+  (HAND_SIDE_M sign). LOOK 48 px/m (quest1_clip ticks 13580-13780, every 7th frame, 320x240 crops):
+  the sprite turns with his facing; the blade now leaves from the wrench-claw side (lower left while
+  he faces west), where before (the 21:56 frames) it started over his far shoulder. No side-by-side
+  (the old frames were cleaned); the 32 px/m A/B is re-rendered with it (22:20, below).
