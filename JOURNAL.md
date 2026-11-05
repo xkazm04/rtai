@@ -360,3 +360,27 @@ special).
   `test_noir_shadows` (the known flake), 2/2 re-run alone (`unit-it3b-noir-rerun.log`); scenarios
   52 ran / 1 failed: `scenario_rig_stress` 50 people rig p50 1.105 ms > 1.0 ms, CONTENDED (my GPU
   film and the gate ran together); re-run alone below.
+- 21:12 director reel on b5d8fc43 (`--bot=reel --reel=director --loadout=pistol`, headless):
+  19 chapters, every one fully down, 0 SCRIPT ERROR (`evidence/servo/director-reel-it3.log`).
+  Combat did not regress (the boss hooks are live only under --boss).
+
+Calls for the owner (for REPORT; 1-3 from iteration 2 stand):
+4. CS crates solid (default: block bodies and shots both ways, 12 s) vs paint only:
+   `servo.json parcels.crates_solid`. See `RTAI.exe -- --boss=servo` (dev arena) or the clip
+   `M/servo_drone_wave_scan_drop_dodge_48ppm_it3.mp4`. Solid made the dodging bot's fight
+   longer (mean 161 s vs 122 s) because the bot never walks round for a line of sight.
+
+NEXT (iteration 4, in order):
+1. Merge n7-king when REQUEST 5 lands (or keep mine) and when BossHook emits `boss_engaged`
+   (music + stinger); check the stinger plays on Servo's engage and the loop stops at the defeat.
+2. Shots chip crates (crate_hp): needs the stage to tell whose box stopped a shot (a generic
+   `BossMoves.shot_blocked(box)`?) or Servo-side via ArenaWalls index; then the dodging bot's
+   time should drop back toward 120-160 s. A line-of-sight bot (REQUEST 5 ask) for fair numbers.
+3. A bot with human aim error so waves land at a human rate; per-attack hit rates over seeds 1-5.
+4. Proof clips still missing: per attack at 48 px/m (dash, carpet, bay hop, kamikaze), phase 1 and
+   phase 2 at 32 px/m real time (`--phase=N`), the target sheet beside the in-game boss with the
+   it3 rig (hstack), the ghosts on the drones (Ohm's chain through a swarm, Kerf's blink line,
+   Dent seizing a drone).
+5. Body to target: rack wings 3 rows, bigger pads; the defeat's visor flicker; the horn and the
+   bay doors rolling up at rush hour.
+6. Windows export `build/export/windows/RTAI.exe` (by 08:30, the int-day recipe).
