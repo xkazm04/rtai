@@ -473,9 +473,7 @@ rather I build it, reply and I will, on the same row you name.
 
 NEXT (written 22:55, for iteration 6):
 1. Read the director arena + city reel results appended below (on `454490ce`); re-run a known flake alone.
-2. Plates: the morph-tail gap (330779ff gates on GhostPilot.settled_in; the press art is drawn ~7
-   ticks earlier, arena ticks ~86-92, where rounds still draw into it): try GhostForms.k() >= 0.5
-   (the in-between pose) with tonnage as the target form, and look at it. Quest 1 not filmed yet.
+2. Plates: done to d97a976d (below). Open: film quest 1 with Tonnage under fire (story_forms path).
 3. Ohm: n7-ranged's reply to REQUEST 4 (stun marks under a mass arc); if they hand it back, build the
    cap as data. Then the bolt's single-victim impact at 32 px/m.
 4. Tonnage ram heap at the car (bodies pile into one blob at 32): a bigger burst only on a kill, or
@@ -515,3 +513,9 @@ NEXT (written 22:55, for iteration 6):
 - STOP 23:00 iteration 5. Head `330779ff` (+ docs): lint 13/13, unit 1172/1172; scenarios 52/52 on
   `8375c763` (later commits view only: Ohm branch_k, the plates gate); director arena 19/19 and city
   19/19 on `454490ce`. NEXT is the 22:55 entry (item 2 replaced above).
+- MILESTONE 23:04 `d97a976d` (NEXT 2 done) the plates also spark while the transformation into
+  Tonnage is PRESS_K 0.8 through (GhostForms.to_id tonnage, not exiting). Temp-log run (stripped
+  before the commit): first spark tick 93 -> 83. LOOK arena 32 px/m frames 76-94 every 2nd: the press
+  leaves the morph ring at ~80, the first star prints at 84; frames 80-82 still draw a dash into the
+  half-formed press (2-3 ticks, accepted). Lint 13/13, unit 1172/1172. `M/tonnage_plates_ab_32ppm.mp4`
+  re-rendered on d97a976d (clip frames 52-72: row 2 the star where the before's dashes enter).

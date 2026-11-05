@@ -12,10 +12,10 @@
     "file": "tonnage_plates_ab_32ppm.mp4",
     "title": "Tonnage's plates stop the rounds: each cop round ends at the plate face with a cream glance spark edged in ink",
     "source": "game-arena",
-    "branch": "n7-melee 330779ff",
+    "branch": "n7-melee d97a976d",
     "ppm": 32,
     "before": "--feel=off on the same head (left): the rounds draw on inside the press body",
-    "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose). Re-rendered on 330779ff (no sparks until Tonnage has settled: the city film had printed them round the teal morph disc). In the last ticks of the morph the press is already drawn and the rounds still draw into it, as before (the conservative gate)."
+    "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose). Re-rendered on d97a976d: no sparks while Rivet is still morphing in (the city film had printed them round the teal morph disc); they start at 0.8 of the way into Tonnage, as the press leaves the morph ring (clip frames 52-72 looked at)."
   },
   {
     "file": "quest1_katana_ab_32ppm.mp4",
