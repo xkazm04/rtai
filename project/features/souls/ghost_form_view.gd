@@ -14,6 +14,9 @@ const BEAT_BIG: StringName = &"crash"
 const BEAT_LIGHT: StringName = &"hit"
 ## The HUD card's canvas layer (above the print and the dev HUD's world layers).
 const HUD_LAYER: int = 5
+## Above every rig part (rigs stack their parts' own z offsets; the held gun uses the same 60), so
+## no human's head or arm draws over a ghost body; still inside the actors band (vehicles at +100).
+const Z_OVER_RIGS: int = 60
 
 var pilot: StagePilot = null
 var arena: CombatArena = null
@@ -52,7 +55,7 @@ static func attach(
 	v.reduced_motion = LaunchArgs.has("--reduced-motion")
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
 	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
-	v.z_index = p_rigs.z_index + 1 if p_rigs != null else RenderLayers.z(&"actors")
+	v.z_index = (p_rigs.z_index if p_rigs != null else RenderLayers.z(&"actors")) + Z_OVER_RIGS
 	layer.add_child(v)
 	return v
 
