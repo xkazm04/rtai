@@ -239,18 +239,18 @@
  },
  "torso_vest": {
   "size": [
-   148,
+   131,
    218
   ],
-  "sheet": "sheets/ped_c.png",
+  "sheet": "n5/cast/gen/r6/out/ped_plan_b.png",
   "cell": 5,
-  "scale": 1.0047,
+  "scale": 1.0,
   "pivot_a": [
-   110.0,
+   97.5,
    108.0
   ],
   "pivot_b": [
-   38.0,
+   33.5,
    108.0
   ]
  },
@@ -273,14 +273,14 @@
  },
  "torso_overalls": {
   "size": [
-   129,
+   130,
    215
   ],
-  "sheet": "night:d4n_ped_d.png",
+  "sheet": "n5/cast/gen/r6/out/ped_plan_b.png",
   "cell": 2,
   "scale": 1.0,
   "pivot_a": [
-   108.0,
+   109.0,
    106.0
   ],
   "pivot_b": [
@@ -290,19 +290,19 @@
  },
  "head_cap": {
   "size": [
-   160,
-   153
+   162,
+   151
   ],
-  "sheet": "night:d4n_ped_d.png",
+  "sheet": "n5/cast/gen/r6/out/ped_plan_b.png",
   "cell": 3,
   "scale": 1.0,
   "pivot_a": [
-   78.0,
-   76.0
+   79.0,
+   75.0
   ],
   "pivot_b": [
-   80.0,
-   76.0
+   81.0,
+   75.0
   ]
  },
  "head_bald": {
@@ -324,19 +324,19 @@
  },
  "head_beanie": {
   "size": [
-   154,
-   154
+   137,
+   128
   ],
-  "sheet": "night:d4n_ped_d.png",
+  "sheet": "n5/cast/gen/r6/out/ped_plan_b.png",
   "cell": 5,
   "scale": 1.0,
   "pivot_a": [
-   77.0,
-   76.0
+   68.5,
+   63.0
   ],
   "pivot_b": [
-   76.0,
-   76.0
+   67.5,
+   63.0
   ]
  },
  "upperarm_dark": {
