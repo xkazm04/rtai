@@ -519,3 +519,9 @@ NEXT (written 22:55, for iteration 6):
   leaves the morph ring at ~80, the first star prints at 84; frames 80-82 still draw a dash into the
   half-formed press (2-3 ticks, accepted). Lint 13/13, unit 1172/1172. `M/tonnage_plates_ab_32ppm.mp4`
   re-rendered on d97a976d (clip frames 52-72: row 2 the star where the before's dashes enter).
+- GATES 23:07 scenarios on `d97a976d`: 52 ran, 0 failed, 0 SCRIPT ERROR; quest 1 final 589fbbf6
+  (unchanged all iteration: every change here is view only). `evidence/n7-melee/scenarios-d97a976d.log`.
+- STOP 23:08 iteration 5 (final). Head: lint 13/13, unit 1172/1172, scenarios 52/52 on `d97a976d`;
+  director arena 19/19 and city 19/19 on `454490ce` (later commits touch only PlateSparks' gate).
+  Scratch cleaned (this iteration's films; the 48 px/m audit AVIs kept). NEXT is the 22:55 entry,
+  item 2 done (`d97a976d`); open on it: quest 1 with Tonnage under fire.

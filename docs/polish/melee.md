@@ -125,7 +125,9 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
    Looked at (48 px/m frames 86-109 every 2nd, 32 px/m x2 crops 90-105): the rounds stop at the
    hazard-striped plate, the stars read on it. Re-scored: impact 3, read 3 (small at 32 px/m, on
    purpose: small arms are a light hit). `M/tonnage_plates_ab_32ppm.mp4`,
-   `M/tonnage_plates_48ppm_04x.mp4`.
+   `M/tonnage_plates_48ppm_04x.mp4`. Fixed 22:57-23:04 (`330779ff`, `d97a976d`): the city film
+   printed the first sparks round the teal morph disc before any press was drawn; the plates now
+   wait until the transformation into Tonnage is 0.8 through (the press leaves the morph ring).
 
 7e. **Ohm mass arc** (scored 22:45 from the 32 px/m film, `--tier=1` (OhmBeat already takes it),
    frames 94-117 every 2nd, and the 48 px/m pair at tick 92): antic. 4 (the tell), impact 3,
