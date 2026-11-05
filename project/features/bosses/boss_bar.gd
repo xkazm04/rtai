@@ -12,7 +12,9 @@ const TOP: float = 34.0
 const TRAIL_PER_FRAME: float = 0.006
 
 var fight: BossFight = null
-var _trail: float = 1.0
+## The pale trail (lost hp); below 0 until the first frame sets it to the fight's hp (a
+## --phase=N start never falls from a full bar).
+var _trail: float = -1.0
 
 
 func _ready() -> void:
@@ -23,7 +25,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if fight == null:
 		return
-	_trail = maxf(fight.hp_frac(), _trail - TRAIL_PER_FRAME)
+	var hp: float = fight.hp_frac()
+	_trail = hp if _trail < 0.0 else maxf(hp, _trail - TRAIL_PER_FRAME)
 	size = get_viewport_rect().size
 	queue_redraw()
 
