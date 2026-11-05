@@ -161,6 +161,20 @@
       "minLength": 1,
       "type": "string"
     },
+    "ghost_wound": {
+      "additionalProperties": {
+        "enum": [
+          "light",
+          "medium",
+          "heavy",
+          "blast",
+          "burn",
+          "shock",
+          "melee"
+        ]
+      },
+      "type": "object"
+    },
     "map": {
       "additionalProperties": false,
       "properties": {

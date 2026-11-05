@@ -34,10 +34,13 @@ func admit(id: int, tick: int) -> bool:
 
 
 ## The pending hit for a non-lethal melee wound on `victim` by `weapon` (empty when it does not
-## play): [id, Rivet -> victim dir, lethal false, &"melee", cover false, weapon].
-func hit(arena: CombatArena, victim: Fighter, weapon: StringName) -> Array:
+## play): [id, Rivet -> victim dir, lethal false, hit class, cover false, weapon]. A ghost attack
+## (the ram, the slam) passes its own class (ReactTable.ghost_wound).
+func hit(
+	arena: CombatArena, victim: Fighter, weapon: StringName, hit_class: StringName = &"melee"
+) -> Array:
 	if victim == arena.rivet or not admit(victim.id, arena.tick):
 		return []
 	var d: Vector2 = victim.pos - arena.rivet.pos
 	d = d.normalized() if d.length() > 0.001 else -victim.facing
-	return [victim.id, d, false, &"melee", false, weapon]
+	return [victim.id, d, false, hit_class, false, weapon]

@@ -60,6 +60,8 @@ var _corpses: Dictionary[int, Array] = {}
 var _kill_kind: Dictionary[int, StringName] = {}
 ## The state family each fighter held last frame (released when its state ends).
 var _held: Dictionary[int, StringName] = {}
+## n7-melee: true while apply() plays a ghost attack's wound (human_reactions.json ghost_wound).
+var _ghost_blow: bool = false
 ## The rigs the last apply() played on (shield_test reads them; render side).
 var _rigs: CharacterRigs = null
 
@@ -112,7 +114,9 @@ func apply(rigs: CharacterRigs) -> void:
 				_corpses[id] = [kind, dir]
 				Log.info("react", "%s on %d, frame %d" % [kind, id, Engine.get_process_frames()])
 		elif _held.get(id, &"") != &"knockdown":
+			_ghost_blow = pipe.table.ghost_wound(weapon) != &""
 			_wound(rig, id, hit_class, dir, cover)
+			_ghost_blow = false
 			_heavy(rig, id, dir, weapon)
 	_pending.clear()
 	near.apply(_arena, rigs, pipe)
@@ -122,8 +126,10 @@ func apply(rigs: CharacterRigs) -> void:
 
 
 ## A wound family on `rig` (fighter `id`); a round stopped on the shield is announced (blocked).
+## Rivet's own blow (melee, or a ghost attack's: _ghost_blow) reaches past the slab.
 func _wound(rig: CutRig, id: int, hit_class: StringName, dir: Vector2, cover: bool) -> void:
-	var slab: bool = shielded(rig) and not (hit_class == &"melee" and MeleeWound.past_slab)
+	var own: bool = hit_class == &"melee" or _ghost_blow
+	var slab: bool = shielded(rig) and not (own and MeleeWound.past_slab)
 	var kind: StringName = pipe.wound(rig, hit_class, dir, slab, cover)
 	wounds += 1
 	if kind == &"shield":
@@ -260,9 +266,12 @@ func _melee_kill(victim: Fighter, weapon: StringName) -> void:
 	_pending.append([victim.id, d, true, &"melee", false, weapon])
 
 
+## n7-melee: a ghost attack's non-lethal hit (the ram, the slam) wounds through here too, with
+## its human_reactions.json ghost_wound class (CombatArena.struck only carries rounds).
 func _on_wounded(victim: Fighter, weapon: StringName) -> void:
-	if weapon in MELEE_IDS and melee_deaths:
-		var h: Array = melee_wound.hit(_arena, victim, weapon)
+	var cls: StringName = &"melee" if weapon in MELEE_IDS else pipe.table.ghost_wound(weapon)
+	if cls != &"" and melee_deaths:
+		var h: Array = melee_wound.hit(_arena, victim, weapon, cls)
 		if not h.is_empty():
 			_pending.append(h)
 
