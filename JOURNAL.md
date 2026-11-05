@@ -457,3 +457,14 @@ NEXT (the morning / iteration 24):
 3. The tell under the colour fire: unchanged (stage contractors + molotov at a gunplay station).
 4. Weapon art: the warm-ink Call stays open.
 Session state 08:23: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
+
+## Iteration 24 (08:20-08:30, BUILD, 10 min to the freeze)
+- 08:20 READ JOURNAL NEXT (iteration 24), git log. Tree clean at 4b796652, no locks, no Godot of mine. Ten minutes cannot hold a code change + the gate (~3 min) + the director reel, so nothing un-gated was committed; refined NEXT 2 by reading the code instead.
+- 08:23 MEASURED (read, no run) the LookZone vec3 route, narrower than iteration 23 thought: `LookParams.world` is already `Dictionary[StringName, Variant]` and `add_tones` (look_params.gd:45) resolves palette refs ("wash") to Colors through PaletteTokens, so only LookZone needs changing. The build: (a) `LookZone.world` -> `Dictionary[StringName, Variant]`; `create()` keeps floats and resolves a string value through `PaletteTokens.shared()` (the same token route as look_profiles' tones, so the alley names a palette token, not raw RGB); (b) `apply_to` lerps a Color with `Color.lerp` and a float with `lerpf`; (c) `alley_decor.json print.world` + its schema accept a token string for `wash_tone`; (d) a new palette token for the alley's green-grey wash (palette.json, documented). alley_hook.gd:84 needs no change. Tests: test_look_zone gains a Color lerp at w 0 / 0.5 / 1 and an unknown-token rejection. Check after: cop blue and blood still separate from the tinted wash at 48 px/m tick 900; A/B with `--alley-print=off`.
+
+NEXT (the morning / iteration 25):
+1. The gate is green on 176c48f4 and the director reel 16/16; nothing since is code or data (docs only).
+2. The alley hue: build the route in 08:23 (a-d), ~4 files, then gate + reel + a tick-900 A/B beside r2_a6.
+3. The tell under the colour fire: unchanged (stage contractors + molotov at a gunplay station).
+4. Weapon art: the warm-ink Call stays open.
+Session state 08:25: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
