@@ -25,6 +25,9 @@ const RIDER_ID: int = 9190
 ## plates, kept at 32 px/m where the part art's own gold is lost to the flat stickers. -1 = the
 ## plain cream-and-steel d5 King (the iteration-2 look).
 const GOLD_SWAP: int = 5
+## The target's flat press plates (tools/art/king_press_parts.py): the left hand cell and the right
+## forearm's end. false = Rivet's claw (left) and the megaphone forearm (right), iterations 1-7.
+const PRESS_PLATES: bool = true
 ## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
 const ATTACK_ARMS: Dictionary[StringName, int] = {
 	&"press_slam": 2, &"charge": BodyPlan.L, &"decree": BodyPlan.R, &"coin_fan": BodyPlan.L
@@ -109,6 +112,11 @@ static func king_plan() -> BodyPlan:
 	var p: BodyPlan = KingPlan.build(KING_SIZE_K)
 	p.torso_swap = GOLD_SWAP
 	p.arm_swap = GOLD_SWAP
+	if PRESS_PLATES:
+		p.hand_open = "press_plate"
+		p.hand_closed = "press_plate"
+		p.hand_pistol = "press_plate"
+		p.fore_part[BodyPlan.R] = "r_forearm_press"
 	return p
 
 
