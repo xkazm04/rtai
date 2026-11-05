@@ -50,6 +50,8 @@ class Row:
 	var muzzle: Vector2 = Vector2.ZERO
 	var length_px: float = 1.0
 	var length_m: float = 0.5
+	## n5-look: the held sprite's scale across the bore over along it (a chunkier body; 1 = as drawn).
+	var cross_k: float = 1.0
 	var muzzle_fx: StringName = &""
 	var projectile_fx: StringName = &""
 	var casing: StringName = &""
@@ -165,6 +167,8 @@ func make_held(id: StringName, part: String = "") -> Sprite2D:
 	if part != "":
 		s.offset = -(r.part_grip[part] if r.part_grip.has(part) else Vector2.ZERO)
 	s.scale = Vector2.ONE * world_scale(id)
+	if part == "" or part == "empty":
+		s.scale.y *= r.cross_k
 	if rim:
 		_add_rim(s)
 	return s
@@ -226,6 +230,7 @@ func _read_weapon(t: DataTable, r: Dictionary) -> Row:
 	w.muzzle = t.vec(r, "muzzle_px")
 	w.length_px = t.num(r, "length_px")
 	w.length_m = t.num(r, "length_m")
+	w.cross_k = t.num(r, "cross_k") if r.has("cross_k") else 1.0
 	w.muzzle_fx = StringName(t.text(r, "muzzle_fx"))
 	w.projectile_fx = StringName(t.text(r, "projectile_fx"))
 	w.casing = StringName(t.text(r, "casing"))

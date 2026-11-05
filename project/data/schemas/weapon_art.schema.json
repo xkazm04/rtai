@@ -45,6 +45,11 @@
           "pattern": "^[a-z0-9_]*$",
           "type": "string"
         },
+        "cross_k": {
+          "maximum": 2,
+          "minimum": 0.5,
+          "type": "number"
+        },
         "grip_class": {
           "enum": [
             "one_hand",

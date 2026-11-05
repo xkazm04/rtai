@@ -1220,6 +1220,7 @@
     },
     {
       "casing": "casing",
+      "cross_k": 1.3,
       "grip_class": "hip_belt",
       "grip_px": [
         134,

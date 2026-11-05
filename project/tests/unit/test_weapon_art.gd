@@ -208,3 +208,14 @@ func test_the_electro_arc_has_a_bold_ink_stroke_under_its_paper() -> void:
 	assert_gt(WeaponFxElectro.ARC_INK_M, 0.0, "the ink outline is thickened round the paper arc")
 	assert_eq(WeaponArt.new().fx_frames(&"arc").size(), 3, "three arc frames to ink")
 	assert_true(WeaponFxRay.ray_ink, "the ray hoops get the same ink (--ray-ink=off is the before)")
+
+
+func test_the_gatling_body_is_chunkier_across_the_bore() -> void:
+	var art: WeaponArt = WeaponArt.new()
+	var gat: Sprite2D = art.make_held(&"gatling")
+	assert_almost_eq(gat.scale.x, art.world_scale(&"gatling"), 0.0001, "length unchanged")
+	assert_gt(gat.scale.y, gat.scale.x * 1.1, "cross_k widens the body (r1_w6)")
+	var pistol: Sprite2D = art.make_held(&"pistol")
+	assert_eq(pistol.scale.x, pistol.scale.y, "rows without cross_k draw as drawn")
+	gat.free()
+	pistol.free()
