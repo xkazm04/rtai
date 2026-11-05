@@ -2,10 +2,9 @@ class_name OhmRig
 extends Node2D
 ## Ohm, the elder spot-welder (TARGETS.md ghost_ohm_mage.jpg, its top-down drawing), as a cutout rig
 ## from straight above: the domed riveted shell with its goggles at the front, the cable beard
-## spilling forward under them, the copper hose loop on its back, two stubby feet under the shell,
-## and two long arms ending in copper electrode fingers. Parts are the Codex sheet cut by
-## tools/art/ghost_parts.py (art/ohm/, raw art like Kerf's). Units: world px at PX_PER_M; +x =
-## facing (set rotation = facing angle).
+## spilling forward, the copper hose loop on its back, two stubby feet, two long arms ending in
+## copper electrode fingers (the Codex sheet cut by tools/art/ghost_parts.py, art/ohm/). Units:
+## world px at PX_PER_M; +x = facing (set rotation = facing angle).
 ## Gait "cane": the right arm is the cane, planted ahead and left behind as the body shuffles past
 ## it, then swung forward again; the feet patter under the shell, the body leans onto the cane. The
 ## left arm holds its electrodes forward (the bolt's hand). unfold (0..1) is the transformation:
@@ -40,16 +39,27 @@ const SWING_K: float = 0.3
 const FOOT_REACH_M: float = 0.1
 const STEPS_PER_CYCLE: float = 2.0
 const LEAN: float = deg_to_rad(6.0)
-## Idle breath (Hz, scale amplitude).
 const BREATH_HZ: float = 0.6
 const BREATH_K: float = 0.025
+## The kick per bolt (ghost-powers REQUEST 8): the guard hand snaps KICK_M out and back over KICK_S,
+## the shell recoils RECOIL_M and twists KICK_TWIST, the cane holds; halved under reduced motion.
+const KICK_M: float = 0.2
+const KICK_S: float = 0.25
+const RECOIL_M: float = 0.1
+const KICK_TWIST: float = deg_to_rad(16.0)
 
 var unfold: float = 1.0
+## OhmStage.bolts, fed by the host: a rise kicks the guard arm (the first sight only arms it).
+var bolts: int = 0
+var reduced_motion: bool = false
 ## Ground speed (m/s), fed by the host each tick.
 var speed_mps: float = 0.0
 ## 0..1 through the cane cycle (advances with ground covered, not time).
 var phase: float = 0.0
 var _t: float = 0.0
+var _seen_bolts: int = -1
+## 1 at the bolt, falling to 0 over KICK_S.
+var _kick: float = 0.0
 var _body: Node2D = Node2D.new()
 var _feet: Array[Sprite2D] = []
 ## [upper_r, fore_r, upper_l, fore_l]
@@ -81,8 +91,23 @@ func _ready() -> void:
 ## One step of `dt` seconds (the host passes SimClock.TICK_DT per sim tick).
 func advance(dt: float) -> void:
 	_t = fmod(_t + dt, 1000.0)
-	phase = fmod(phase + speed_mps * dt / STRIDE_M, 1.0)
+	if _seen_bolts >= 0 and bolts > _seen_bolts:
+		_kick = 1.0
+	_seen_bolts = bolts
+	if _kick <= 0.0:  # the cane stays planted through the kick
+		phase = fmod(phase + speed_mps * dt / STRIDE_M, 1.0)
+	_kick = maxf(0.0, _kick - dt / KICK_S)
 	pose()
+
+
+## The kick's reach now (metres the guard hand is thrown forward): a snap out over the first
+## fifth, an ease back over the rest. The prongs start at the data electrodes, under the hand.
+func kick_m() -> float:
+	if _kick <= 0.0:
+		return 0.0
+	var t: float = 1.0 - _kick
+	var curve: float = t / 0.2 if t < 0.2 else 1.0 - smoothstep(0.2, 1.0, t)
+	return KICK_M * curve * (0.5 if reduced_motion else 1.0)
 
 
 ## The cane tip in the body frame (metres): planted ahead, sliding back while the body passes it,
@@ -103,7 +128,9 @@ func pose() -> void:
 	var u: float = smoothstep(0.0, 1.0, unfold)
 	var breath: float = 1.0 + BREATH_K * sin(TAU * BREATH_HZ * _t)
 	_body.scale = Vector2.ONE * breath * lerpf(0.7, 1.0, u)
-	_body.rotation = LEAN * sin(TAU * phase) * u
+	var kick: float = kick_m() / KICK_M
+	_body.rotation = LEAN * sin(TAU * phase) * u + KICK_TWIST * kick
+	_body.position = Vector2(-RECOIL_M * kick * PX_PER_M, 0.0)
 	for side: int in 2:
 		var m: float = 1.0 if side == 0 else -1.0
 		var step: float = sin(TAU * (phase * STEPS_PER_CYCLE + side * 0.5))
@@ -111,7 +138,8 @@ func pose() -> void:
 	var sh_r: Vector2 = SHOULDER
 	_arm(0, sh_r, sh_r.lerp(cane_tip(phase), u), 1.0)
 	var sh_l: Vector2 = Vector2(SHOULDER.x, -SHOULDER.y)
-	_arm(2, sh_l, sh_l.lerp(GUARD_HAND, u), -1.0)
+	var guard: Vector2 = GUARD_HAND + Vector2(kick_m() + RECOIL_M * kick, 0.0)
+	_arm(2, sh_l, sh_l.lerp(guard, u), -1.0)
 
 
 ## Two-bone arm from `a` to the hand `b` (body frame, metres), the elbow bent outward.

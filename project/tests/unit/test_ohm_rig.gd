@@ -27,3 +27,33 @@ func test_the_gait_advances_with_ground_not_time() -> void:
 	rig.speed_mps = OhmRig.STRIDE_M
 	rig.advance(0.5)
 	assert_almost_eq(rig.phase, 0.5, 0.0001, "half a stride of ground, half a cycle")
+
+
+func test_a_bolt_kicks_the_guard_arm_and_holds_the_cane_then_settles() -> void:
+	var rig: OhmRig = OhmRig.new()
+	add_child_autofree(rig)
+	rig.speed_mps = OhmRig.STRIDE_M
+	rig.advance(SimClock.TICK_DT)  # the first sight arms the counter
+	assert_eq(rig.kick_m(), 0.0, "no kick before a bolt")
+	rig.bolts = 1
+	rig.advance(SimClock.TICK_DT)
+	var held: float = rig.phase
+	rig.advance(SimClock.TICK_DT * 2.0)
+	assert_gt(rig.kick_m(), OhmRig.KICK_M * 0.5, "the hand is thrown out")
+	assert_eq(rig.phase, held, "the cane stays planted through the kick")
+	rig.advance(OhmRig.KICK_S)
+	assert_eq(rig.kick_m(), 0.0, "and settles inside KICK_S")
+	rig.advance(SimClock.TICK_DT)
+	assert_gt(rig.phase, held, "the cane walks on")
+
+
+func test_reduced_motion_halves_the_kick() -> void:
+	var full: OhmRig = OhmRig.new()
+	var calm: OhmRig = OhmRig.new()
+	calm.reduced_motion = true
+	for rig: OhmRig in [full, calm]:
+		add_child_autofree(rig)
+		rig.advance(SimClock.TICK_DT)
+		rig.bolts = 1
+		rig.advance(SimClock.TICK_DT * 3.0)
+	assert_almost_eq(calm.kick_m(), full.kick_m() * 0.5, 0.0001, "halved")

@@ -10,6 +10,8 @@ var forms: Dictionary[StringName, GhostFormDef] = {}
 ## The selection cycle (G / RB steps through it).
 var order: Array[StringName] = []
 var switch_ticks: int = 1
+## story_voice: the shipped story (quest 1's sprite cast) shows the teal apparition on a whisper.
+var story_voice: bool = false
 var _errors: Array[String] = []
 
 
@@ -26,6 +28,7 @@ static func from_table(t: DataTable) -> GhostFormTable:
 	for id: Variant in t.array(t.raw, "order"):
 		g.order.append(StringName(str(id)))
 	g.switch_ticks = maxi(1, PowerDef.ticks(t.num(t.raw, "switch_s")))
+	g.story_voice = t.raw.get("story_voice", false) == true
 	g._errors = t.errors()
 	for id: StringName in g.order:
 		if not g.forms.has(id):
