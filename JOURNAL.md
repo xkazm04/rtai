@@ -644,3 +644,16 @@ Session state 04:56: head = this commit, tree clean after it, no Godot process o
   (no line) shows all four as before. 0 SCRIPT ERROR; test_story_forms 5/5, unit 1002/0, lint 13/13. The shipped
   clip re-filmed on this head (`M:story-forms-quest1-shipped-32ppm.mp4`; the seams-only cut deleted).
   frames.json 15: + the fold A/B third; the reduced-motion A/B named in the ohm-vs-target entry (file kept).
+- 05:04 FINAL GATES on 1f717c6f, still tree (E:evidence-run-it7-final.log): evidence runner `--no-bench` all PASS:
+  lint 13/13, unit 1002/0, scenarios 47, parity bit-exact (mutation caught at 629), selftest look/block goldens in
+  tolerance: no re-bless. Director reel last ran on 457e9551 (16/16); d5e9091a only touches the HUD card and the
+  quest 1 glue (the arena never folds), so the reel is not re-run this session.
+
+NEXT (iteration 8, replaces the list above; item 2 there is done in d5e9091a):
+1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours).
+2. Weakest reads left at 32 on the shipped quest 1: Dent at a standstill and Kerf's hull at idle (x3 crops of
+   quest1_forms_main frames 650 / 820). Same method as Ohm's seams: same-frame A/B, check a lossless PNG frame
+   before judging colour (H.264 rings teal edges into maroon).
+3. Director reel on the head after any change; final gates before the 08:30 freeze; REPORT for 08:40.
+Session state 05:05: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock not
+  taken this session); masters scratch holds film.sh, journal-it7.txt, ohm_x3.png and logs.
