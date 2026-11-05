@@ -2,6 +2,37 @@
   "$id": "gtai.melee_marks/1",
   "additionalProperties": false,
   "properties": {
+    "claw": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "flash_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "gap_m": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "rake_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "doc",
+        "flash_ticks",
+        "gap_m",
+        "rake_m"
+      ],
+      "type": "object"
+    },
     "deflect": {
       "additionalProperties": false,
       "properties": {
@@ -79,6 +110,7 @@
     }
   },
   "required": [
+    "claw",
     "deflect",
     "doc",
     "saw",

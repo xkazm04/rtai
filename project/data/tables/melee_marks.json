@@ -1,4 +1,10 @@
 {
+  "claw": {
+    "doc": "The claw's jab mark (view only; ClawMarks via CombatArena.wounded and kill_landed, weapon claw; FxView). On the hit frame three parallel rakes across the victim, square to Rivet -> victim: rake_m long (the outer two 0.75 of it), gap_m apart along the blow, cream edged in ink, full length on the hit frame (the hit-stop holds it), thinning and fading over flash_ticks. flash_ticks 0 = none; --feel=off hides it too.",
+    "flash_ticks": 10,
+    "gap_m": 0.22,
+    "rake_m": 1
+  },
   "deflect": {
     "burst_m": 0.7,
     "doc": "The plasma sword's deflect mark (view only; DeflectMarks via CombatArena.deflected, FxView). On the bat frame: a cream starburst edged in ink, burst_m across, for flash_ticks; and a cream streak running streak_m along the returned round, fading over streak_ticks, so the round reads as sent back by the swing. flash_ticks 0 = none; --feel=off hides it too.",

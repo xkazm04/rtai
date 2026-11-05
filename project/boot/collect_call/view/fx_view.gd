@@ -22,6 +22,8 @@ var _colour: WeaponFxColour = null
 var _colour_tried: bool = false
 ## n7-melee: the plasma sword's deflect marks (DeflectMarks, melee_marks.json).
 var _deflects: DeflectMarks = null
+## n7-melee: the claw's rake marks (ClawMarks, melee_marks.json `claw`).
+var _claws: ClawMarks = null
 ## n7-melee: Tonnage's plate sparks (PlateSparks, ghost_attacks.json tonnage plate_*).
 var _plates: PlateSparks = null
 ## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
@@ -62,6 +64,9 @@ func _draw() -> void:
 	if _deflects == null or _deflects.arena != arena:
 		_deflects = DeflectMarks.attach(arena)
 	_deflects.draw(self, stage.tick)
+	if _claws == null or _claws.arena != arena:
+		_claws = ClawMarks.attach(arena)
+	_claws.draw(self, stage.tick)
 	if _plates != null:
 		_plates.draw(self, stage.tick)
 	_last()
