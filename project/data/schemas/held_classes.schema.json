@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "hold": {
+      "additionalProperties": false,
+      "properties": {
+        "across": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "claw": {
+          "enum": [
+            "closed",
+            "pistol"
+          ]
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fore_u": {
+          "maximum": 1,
+          "minimum": -1,
+          "type": "number"
+        },
+        "gun_reach": {
+          "maximum": 1,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "hand_z": {
+          "maximum": 200,
+          "minimum": -200,
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "blade",
+            "hip",
+            "one_hand",
+            "shoulder",
+            "thrown",
+            "two_hand_long"
+          ]
+        },
+        "lean_px": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "off_reach": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "stride_k": {
+          "maximum": 1.5,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "weapons": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "wrist_rad": {
+          "maximum": 1.5,
+          "minimum": -1.5,
+          "type": "number"
+        }
+      },
+      "required": [
+        "across",
+        "claw",
+        "doc",
+        "fore_u",
+        "gun_reach",
+        "hand_z",
+        "kind",
+        "lean_px",
+        "off_reach",
+        "stride_k",
+        "weapons",
+        "wrist_rad"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gtai.held-classes/1",
+  "additionalProperties": false,
+  "properties": {
+    "classes": {
+      "additionalProperties": {
+        "$ref": "#/$defs/hold"
+      },
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.held-classes/1"
+    }
+  },
+  "required": [
+    "classes",
+    "doc",
+    "schema"
+  ],
+  "type": "object"
+}

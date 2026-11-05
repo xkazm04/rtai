@@ -1,0 +1,129 @@
+{
+  "classes": {
+    "blade": {
+      "across": 0.55,
+      "claw": "closed",
+      "doc": "katana, plasma sword, electro baton: one closed claw (owner pick combat-notes-1 A), a low guard ahead of the gun-side hip, the blade leaving the claw in line with the forearm and turned wrist_rad in toward the centre line, tip forward; the off arm free. Held the same aimed or not (no rifle carry across the chest).",
+      "fore_u": -1,
+      "gun_reach": 0.62,
+      "hand_z": -40,
+      "kind": "blade",
+      "lean_px": 0,
+      "off_reach": 0,
+      "stride_k": 1,
+      "weapons": [
+        "electro_baton",
+        "katana",
+        "plasma_sword"
+      ],
+      "wrist_rad": 0.45
+    },
+    "chainsaw": {
+      "across": 0.3,
+      "claw": "closed",
+      "doc": "the chainsaw at the hip in both claws, the off claw on the top handle (fore_u along the body)",
+      "fore_u": 0.3,
+      "gun_reach": 0.5,
+      "hand_z": -60,
+      "kind": "hip",
+      "lean_px": 6,
+      "off_reach": 0.85,
+      "stride_k": 0.9,
+      "weapons": [
+        "chainsaw"
+      ],
+      "wrist_rad": 0
+    },
+    "heavy": {
+      "across": 0.3,
+      "claw": "closed",
+      "doc": "the Gatling and the flamer wand braced at the hip in both claws, the off claw forward on the barrel housing; a heavier walk",
+      "fore_u": 0.55,
+      "gun_reach": 0.5,
+      "hand_z": -60,
+      "kind": "hip",
+      "lean_px": 10,
+      "off_reach": 0.85,
+      "stride_k": 0.85,
+      "weapons": [
+        "flamethrower",
+        "gatling"
+      ],
+      "wrist_rad": 0
+    },
+    "long_gun": {
+      "across": 0.42,
+      "claw": "closed",
+      "doc": "rifles, the shard caster, the plasma and electro guns, the ray gun: stock at the gun shoulder, the off claw under the barrel at fore_u; carried across the chest when not aiming",
+      "fore_u": 0.6,
+      "gun_reach": 0.4,
+      "hand_z": -10,
+      "kind": "two_hand_long",
+      "lean_px": 0,
+      "off_reach": 0.8,
+      "stride_k": 0.95,
+      "weapons": [
+        "assault-rifle",
+        "electro_gun",
+        "homing_shard",
+        "plasma_rifle",
+        "ray_gun"
+      ],
+      "wrist_rad": 0
+    },
+    "sidearm": {
+      "across": 1,
+      "claw": "closed",
+      "doc": "pistol, machine pistol, hand cannon, Gloria: one claw, low ready at the hip, aimed with the claw arm only",
+      "fore_u": -1,
+      "gun_reach": 0.97,
+      "hand_z": -10,
+      "kind": "one_hand",
+      "lean_px": 0,
+      "off_reach": 0,
+      "stride_k": 1,
+      "weapons": [
+        "gloria",
+        "hand_cannon",
+        "machine_pistol",
+        "pistol"
+      ],
+      "wrist_rad": 0
+    },
+    "thrown": {
+      "across": 1,
+      "claw": "closed",
+      "doc": "one bottle in the claw; the wind-up and throw are RigGrip's thrown kind",
+      "fore_u": -1,
+      "gun_reach": 0.97,
+      "hand_z": -10,
+      "kind": "thrown",
+      "lean_px": 0,
+      "off_reach": 0,
+      "stride_k": 1,
+      "weapons": [
+        "molotov"
+      ],
+      "wrist_rad": 0
+    },
+    "tube": {
+      "across": 0.42,
+      "claw": "closed",
+      "doc": "the rocket launcher and the mini nuke on the gun shoulder, the claw pulled in, the off claw on the front grip",
+      "fore_u": 0.55,
+      "gun_reach": 0.32,
+      "hand_z": 20,
+      "kind": "shoulder",
+      "lean_px": 0,
+      "off_reach": 0.78,
+      "stride_k": 0.9,
+      "weapons": [
+        "mini_nuke",
+        "rocket_launcher"
+      ],
+      "wrist_rad": 0
+    }
+  },
+  "doc": "d7-held: Rivet's hold per weapon class, the hold built into his body. Per class: the RigGrip kind, its weapons, the gun claw's place (gun_reach = share of the arm's reach along the weapon line, across = where that line starts, as a share of the way out to the gun shoulder, hand_z = part px, below 0 toward the hip), the off claw's (off_reach, 0 = free arm), the claw cell, the anchors (the gun claw closes on weapon_art's grip_px; fore_u = the off claw's place as a share of the weapon's length, -1 = none), wrist_rad (a blade's turn off the forearm, in toward the centre line) and the walk/aim modifiers (stride_k scales the stride, lean_px leans the torso into a heavy weapon; view only). Every rivet_arsenal.json weapon is in exactly one class.",
+  "schema": "gtai.held-classes/1"
+}

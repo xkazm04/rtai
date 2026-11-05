@@ -74,9 +74,10 @@ func _process(_delta: float) -> void:
 	var id: StringName = arsenal.art_id(pilot.hold.held) if pilot != null else &""
 	if rig != null and pilot != null:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
-		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
+		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
+		rig.hold = hold.id if hold != null else &""
+		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
-		rig.two_hand_melee = MeleeSwing.two_handed(pilot.hold.held) and pilot.wielding()
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
@@ -99,12 +100,12 @@ func _process(_delta: float) -> void:
 	var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
 	_sprite.global_rotation = hand.global_rotation
-	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
+	var one: bool = rig.grip == RigGrip.Kind.ONE_HAND or rig.grip == RigGrip.Kind.BLADE
+	if rig.aiming and not one:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
+	_sprite.global_rotation += RigGrip.wrist_turn(rig)  # d7-held: a blade leaves the claw turned in
 	_place_long(rig)
 	_pose_melee(rig)
-	var blade: Vector2 = Vector2.from_angle(_sprite.global_rotation)
-	rig.hilt_dir = rig.torso.global_transform.basis_xform_inv(blade).normalized()
 	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)
