@@ -32,16 +32,13 @@ var _rigs: Dictionary[StringName, Node2D] = {}
 var _dent: DentBody = DentBody.new()
 var _tether: Line2D = Line2D.new()
 var _dev_slot: int = -1
-var _mat: ShaderMaterial = ShaderMaterial.new()
-var _rim_mat: ShaderMaterial = ShaderMaterial.new()
+var _mat: ShaderMaterial = ghost_material(false, 0.2)
+var _rim_mat: ShaderMaterial = ghost_material(true, 0.2)
 
 
 ## Builds the four bodies; `events` (may be null) cues the voices.
 func bind(forms: GhostForms, events: EventBus) -> void:
 	_forms = forms
-	_mat.shader = SHADER
-	_rim_mat.shader = SHADER
-	_rim_mat.set_shader_parameter(&"silhouette", 1.0)
 	visible = false
 	_tether.width = 2.0
 	_tether.default_color = TEAL_HI
@@ -69,16 +66,25 @@ func say(p_id: StringName, hold: int = HOLD) -> void:
 	_hold = hold
 	_age = 0
 	Log.info("souls", "ghost voice: %s beside Rivet" % p_id)
-	_wash(self)
+	wash(self, _mat, _rim_mat)
 
 
-## Every part of the copies draws through the ghost material (parts a rig adds later included:
-## re-run on each voice); the sticker rims through its glow-edge variant.
-func _wash(n: Node) -> void:
+## Every part under `n` draws through `mat` (the ghost material), its sticker rims through
+## `rim_mat` (the glow-edge variant). Parts a rig adds later are not covered: re-run (each voice).
+static func wash(n: Node, mat: ShaderMaterial, rim_mat: ShaderMaterial) -> void:
 	for c: Node in n.get_children():
 		if c is CanvasItem:
-			(c as CanvasItem).material = _rim_mat if c.name == RigBuild.HALO else _mat
-		_wash(c)
+			(c as CanvasItem).material = rim_mat if c.name == RigBuild.HALO else mat
+		wash(c, mat, rim_mat)
+
+
+## The ghost material (`rim` = the glow-edge variant for the sticker rims), `bands` scan-band depth.
+static func ghost_material(rim: bool, bands: float) -> ShaderMaterial:
+	var m: ShaderMaterial = ShaderMaterial.new()
+	m.shader = SHADER
+	m.set_shader_parameter(&"silhouette", 1.0 if rim else 0.0)
+	m.set_shader_parameter(&"band_k", bands)
+	return m
 
 
 func speaking() -> bool:

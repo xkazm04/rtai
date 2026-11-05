@@ -111,9 +111,10 @@ The owner's order for this lane: "create these characters, animate transformatio
   the machine body (gunmetal, rust, Dent's yellow discs) with teal seams, glow and a soul pool, which follows
   the brief's "machine body printed in the game's ink look, with teal soul seams and glow". Compare
   `M:frames/ohm-live-vs-target-64ppm.png`, `M:frames/dent-live-vs-target-64ppm.png` and
-  `M:frames/kerf-live-vs-target-64ppm.png`. The voice apparitions (`M:frames/voices-four-64ppm-keys.png`) show
-  the fully teal look on the same four bodies, so the two can be compared directly. Switching the forms to it
-  would mean giving the form rigs the apparition's material.
+  `M:frames/kerf-live-vs-target-64ppm.png`. **Same-tick A/B: `M:frames/forms-teal-ab-32ppm.png`** (top as
+  built, bottom with the dev flag `--teal-forms`, which gives the form rigs the voice apparitions' material). Fully
+  teal reads strongly at 32 px/m but loses Dent's yellow discs and Tonnage's hazard stripes. Shipping it would
+  mean turning that flag into a default.
 - **Should the voice apparitions show in quest 1?** They are cued by every whisper while Rivet is in base,
   including quest 1's whisper beats, where the player has not yet met the ghosts by name. The alternative is
   to cue them only from the scientist's questline lines; that change is one connect in GhostApparition.bind.
