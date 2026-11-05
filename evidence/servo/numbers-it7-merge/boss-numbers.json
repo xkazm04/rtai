@@ -1,0 +1,184 @@
+{
+  "schema": "gtai.boss-numbers/1",
+  "boss": "servo",
+  "contended": true,
+  "quit_after": 14400,
+  "summary": {
+    "human": {
+      "n": 1,
+      "downed": 1,
+      "ttk_mean_s": 128.9,
+      "ttk_range_s": [
+        128.9,
+        128.9
+      ],
+      "taken_mean": 120,
+      "deaths": 0,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "kamikaze": {
+          "tries": 2,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "package_carpet": {
+          "tries": 3,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash": {
+          "tries": 9,
+          "landed": 4,
+          "rolled": 1,
+          "hit_rate": 0.44
+        },
+        "rotor_dash_hot": {
+          "tries": 2,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "scan_drop": {
+          "tries": 12,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        }
+      }
+    },
+    "dodge": {
+      "n": 1,
+      "downed": 1,
+      "ttk_mean_s": 138.5,
+      "ttk_range_s": [
+        138.5,
+        138.5
+      ],
+      "taken_mean": 104,
+      "deaths": 0,
+      "adds_landed_tries": [
+        0,
+        0
+      ],
+      "per_attack": {
+        "kamikaze": {
+          "tries": 2,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "package_carpet": {
+          "tries": 3,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        },
+        "rotor_dash": {
+          "tries": 9,
+          "landed": 1,
+          "rolled": 2,
+          "hit_rate": 0.11
+        },
+        "rotor_dash_hot": {
+          "tries": 4,
+          "landed": 1,
+          "rolled": 0,
+          "hit_rate": 0.25
+        },
+        "scan_drop": {
+          "tries": 12,
+          "landed": 0,
+          "rolled": 0,
+          "hit_rate": 0
+        }
+      }
+    }
+  },
+  "runs": {
+    "human": [
+      {
+        "seed": 1,
+        "down_s": 128.9,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 120,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 2,
+          "package_carpet": 3,
+          "rotor_dash": 9,
+          "rotor_dash_hot": 2,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 4
+        },
+        "rolled": {
+          "rotor_dash": 1
+        },
+        "moves": {
+          "crates_smashed": 7,
+          "dive_hits": 0,
+          "dives": 4,
+          "drones_launched": 60,
+          "drones_shot": 32,
+          "marks": 17,
+          "parcel_hits": 0,
+          "parcels_landed": 56
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      }
+    ],
+    "dodge": [
+      {
+        "seed": 1,
+        "down_s": 138.5,
+        "hp_left": 0,
+        "phase": 3,
+        "taken": 104,
+        "deaths": 0,
+        "tries": {
+          "kamikaze": 2,
+          "package_carpet": 3,
+          "rotor_dash": 9,
+          "rotor_dash_hot": 4,
+          "scan_drop": 12
+        },
+        "landed": {
+          "rotor_dash": 1,
+          "rotor_dash_hot": 1,
+          "servo": 2
+        },
+        "rolled": {
+          "rotor_dash": 2
+        },
+        "moves": {
+          "crates_smashed": 17,
+          "dive_hits": 0,
+          "dives": 4,
+          "drones_launched": 59,
+          "drones_shot": 40,
+          "marks": 16,
+          "parcel_hits": 2,
+          "parcels_landed": 55
+        },
+        "adds": [
+          0,
+          0
+        ],
+        "ticks": 14399,
+        "script_errors": 0
+      }
+    ]
+  }
+}
