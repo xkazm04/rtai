@@ -88,6 +88,16 @@ func settle() -> void:
 	blasts.clear()
 
 
+## The landed crates as solid boxes (ServoMoves.solids: they block bodies and shots).
+func solids() -> Array[Rect2]:
+	var out: Array[Rect2] = []
+	var half: Vector2 = Vector2.ONE * _tuning.crate_m * 0.5
+	for c: Parcel in crates:
+		if c.hp > 0:
+			out.append(Rect2(c.pos - half, half * 2.0))
+	return out
+
+
 ## A hit on whatever crate covers `pos`; true if one took it.
 func hit_crate(pos: Vector2, damage: int) -> bool:
 	for c: Parcel in crates:

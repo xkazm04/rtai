@@ -144,6 +144,11 @@ func telemetry() -> Dictionary:
 	}
 
 
+## The landed CS crates block Rivet, Servo and shots (a carpet leaves a wall to read round).
+func solids() -> Array[Rect2]:
+	return swarm.parcels.solids() if _armed and swarm.tuning.crates_solid else []
+
+
 func bodies() -> Array[Fighter]:
 	return drone_bodies.list()
 

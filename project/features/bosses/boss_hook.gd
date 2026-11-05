@@ -28,6 +28,8 @@ var _rng: RngRegistry = null
 var _hooks_cleared: bool = false
 ## The boss script's extra bodies in the hostiles now (BossMoves.bodies()).
 var _extra: Array[Fighter] = []
+## The boss script's solid boxes in the stage's walls now (BossMoves.solids()).
+var _solids: Array[Rect2] = []
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -71,6 +73,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
 	_sync_bodies()
+	_sync_solids(stage.walls)
 	_keep_in(fight)
 	adds.separate(fight)
 	for f: BossFight in adds.fights:
@@ -109,6 +112,14 @@ func _sync_bodies() -> void:
 			b.brain_owned = true
 			_arena.hostiles.append(b)
 	_extra = now
+
+
+## The stage's walls hold exactly the boss script's solid boxes (Servo's crates), after its own.
+func _sync_solids(walls: ArenaWalls) -> void:
+	for b: Rect2 in _solids:
+		walls.boxes.erase(b)
+	_solids = fight.moves.solids()
+	walls.boxes.append_array(_solids)
 
 
 ## A body stays on the fight's floor (a ram or a charge stops at its edge).

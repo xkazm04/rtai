@@ -214,6 +214,9 @@
           "minimum": 0.3,
           "type": "number"
         },
+        "crates_solid": {
+          "type": "boolean"
+        },
         "fall_s": {
           "maximum": 2,
           "minimum": 0.1,

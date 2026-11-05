@@ -83,6 +83,13 @@ func phase_entered(_f: BossFight, _phase: int) -> void:
 	pass
 
 
+## Solid boxes the boss script owns this tick (Servo's landed CS crates): BossHook keeps exactly
+## these in the stage's ArenaWalls, so they push Rivet, the adds and the boss out and stop shots
+## both ways, like the arena's own cover. Default: none.
+func solids() -> Array[Rect2]:
+	return []
+
+
 ## The boss script's own numbers for the bot's table (BossHook.telemetry, under `moves`).
 func telemetry() -> Dictionary:
 	return {}
