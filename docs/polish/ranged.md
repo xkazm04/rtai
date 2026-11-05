@@ -113,7 +113,13 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   stream; the puffs themselves never kick (about 20 a second would blur).
 - Measured (phase correlation, floor crop, frames 36-65): one 2.9 px jump at frame 45, eased back
   by frame 52, then still while the stream fires; `--feel=off` 0.0. Clip
-  `flamer_ignite-ab-32ppm.mp4`. Subtle at 32 px/m; not judged by eye in motion yet.
+  (clip since replaced). Subtle at 32 px/m: a camera move, invisible in stills.
+- it6 `5ef1c584`: the lighting round also draws the nozzle lick as a flare (hit_feel.json
+  `ignite_flare_k` 1.1 vs the lick's 0.45, shrinking back over `ignite_flare_ticks` 10;
+  `WeaponFxIgnite`, the same rest rule as the kick). LOOK at 32 px/m (frames 325-333, x2 crops):
+  an ink-edged vermilion and cream fireball about twice the lick on 326-327, smaller on 330, gone
+  by 333; the same on 327-330 at 48 px/m. Verdict: the ignition now READS at 32 px/m. Clip
+  `flamer_ignite_flare-ab-32-48ppm.mp4`.
 
 ### molotov throw follow-through (`41bb90e7` + `7326b53b`)
 - Before (48 px/m, `--reach=7`): no wind-up, no follow-through; the next lit bottle in the claw is

@@ -642,3 +642,24 @@ Read: JOURNAL NEXT, git log, the other lanes' journals (no new REQUEST for range
 - Clip `masters .../molotov_throw_twist-ab-32-48ppm.mp4` replaces the lean clip (frames.json row 2,
   still 15 rows). Decision line written. Registry rule applied: motion-quality-gating (measure the
   candidate values on the live path, judge the grid, keep the channel that reads at 32 px/m).
+
+### GATE 22:57: evidence run on `46db2e81`, clean tree, nothing touched during it
+- lint 13/13 (940 files), unit 1139/0, scenarios 52/52, parity bit-exact over 1200 steps (planted
+  caught at 629), selftest pass (look goldens 11/11, block 5/5). `evidence/ranged/it6-evidence-46db2e81.log`.
+
+### MILESTONE 23:06: `5ef1c584` the flamer flares as it lights (NEXT 3, the flamer part)
+- The 3 px ignition kick was motion only and subtle. Now the lighting round also draws the nozzle
+  lick as a fireball: hit_feel.json flamethrower `ignite_flare_k` 1.1 (lick 0.45) over
+  `ignite_flare_ticks` 10; new `WeaponFxIgnite` (39 lines, static, keyed off the sim's shot tick =
+  tick - age, FeelCam's rest rule), `HitFeel.ignite_flare` (zero under --feel=off), schema fields.
+- FRICTION: `Dictionary[StringName, int].get()` returns Variant; `float(...)` / `Vector2(...)` on
+  it is a warning-as-error (27 unit failures from the parse error); typed locals fix it.
+- Tests `test_weapon_fx_ignite.gd` 2; planted fault (never lit) -> exactly that test fails
+  (1140/1141); unit 1141/1141 with it (GUT direct); lint 13/13 (942 files).
+- LOOK 48 px/m (`ign_grid2.png`, frames 327-330, x3): an ink-edged vermilion and cream fireball
+  about 2x the lick on 327-328, smaller on 330 (the muzzle cell draws 2 of 3 ticks). 32 px/m
+  (`ign_grid32.png`): reads on 326-327, smaller 330, gone by 333. Doctrine kept (fire = vermilion
+  and cream, ink edge). Clip `masters .../flamer_ignite_flare-ab-32-48ppm.mp4` (frames.json row 1,
+  replaces `flamer_ignite-ab-32ppm.mp4`; 15 rows). Decision line written.
+- Registry rule applied: realtime-combat-semantics (the flare keys to the sim's shot tick, view
+  only, the sim untouched); motion-quality-gating (A/B same args, look per frame at 32 and 48).
