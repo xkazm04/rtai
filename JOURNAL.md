@@ -270,3 +270,11 @@
 - DECISION (time): 11 min to freeze; no project/ change started, so no gate re-run or re-export.
 - NEXT (the next lane day): unchanged from iteration 7: owner verdicts on REPORT's calls; call 8 B first if picked
   (per-weapon gun outline, iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.
+
+## Iteration 10 (STABILIZE, 18:30-18:40; report 18:40)
+- 18:30 Started. Tree clean at 7f3f5a4c. `git diff 6179bf2d HEAD -- project` is empty, so both exes
+  (`build/export/windows/RTAI.exe`, `build/export/windows-quest1/RTAI.exe`, 17:39) still build the head's game.
+  REPORT.md is present. The held lane (18:22) sent no REQUEST for calls.
+- DECISION (stabilize): no project/ change, so no bug to fix and no gate re-run. Evidence and REPORT match the build.
+- NEXT (the next lane day): owner verdicts on REPORT's calls; call 8 B first if picked (per-weapon gun outline,
+  iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.
