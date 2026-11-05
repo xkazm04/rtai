@@ -635,3 +635,12 @@ NEXT (iteration 8):
 4. Final gates on a still tree before the 08:30 freeze (evidence runner --no-bench, director reel); REPORT for 08:40.
 Session state 04:56: head = this commit, tree clean after it, no Godot process of mine running, no lock held
   (image.lock not taken this session), masters scratch holds film.sh, journal-it7.txt, ohm_x3.png and logs.
+- 04:57 MILESTONE d5e9091a (NEXT 2 done early) the form card folds beside quest 1's subtitle box (DECISION):
+  GhostFormHud.compact draws the one chip that matters (the current form; in base the selected ghost) with the
+  Madness bar while HudState.speaker is set (StoryForms._process). Rejected: lifting the card (it stands in the
+  playfield, crosses the save-notice band) and hiding it. A/B same frames 240/600/1100:
+  `M:frames/form-card-fold-quest1-ab-32ppm.png`. Judged: before, at frame 600 the chip peeking from under the box
+  is a grey Tonnage while Rivet is Dent; after, a teal Dent chip and his Madness bar beside the box; frame 1100
+  (no line) shows all four as before. 0 SCRIPT ERROR; test_story_forms 5/5, unit 1002/0, lint 13/13. The shipped
+  clip re-filmed on this head (`M:story-forms-quest1-shipped-32ppm.mp4`; the seams-only cut deleted).
+  frames.json 15: + the fold A/B third; the reduced-motion A/B named in the ohm-vs-target entry (file kept).

@@ -140,6 +140,11 @@ The owner's order for this lane: "create these characters, animate transformatio
   `M:frames/ohm-seams-quest1-ab-32ppm-x3.png`. The maroon edge pixels in that still are video-encoder ringing; the
   lossless frame is `M:frames/ohm-seams-lossless-32ppm-x8.png`. In the arena with the bolt:
   `M:frames/ohm-seams-arena-ab.png`. The dev flag `--no-seams` gives the A/B before.
+- **The form card folds beside the story's subtitle box** (DECISION): while a line is up, the card shows the one
+  chip that matters (the current form; in base the selected ghost) with its Madness bar, and it unfolds when the
+  line closes. Before, the box hid the last three chips, and the chip peeking out showed Tonnage while Rivet was
+  Dent. Before/after at the same frames: `M:frames/form-card-fold-quest1-ab-32ppm.png`. The shipped clip
+  `M:story-forms-quest1-shipped-32ppm.mp4` was re-filmed on that head.
 
 ### Gates (iteration 7)
 - On 91b6b866 (the forms on the shipped quest 1), still tree: evidence runner `--no-bench` all PASS. Lint 13/13,
@@ -152,10 +157,6 @@ The owner's order for this lane: "create these characters, animate transformatio
 ## What does not work / is open
 - The ghost forms on the shipped quest 1 have no 64 px/m close-up (quest 1 plays at 32); the arena close-ups
   stand in for it.
-- On the shipped quest 1, the story's dialogue box (the HUD layer, bottom centre) covers the form card's last three
-  chips while a line is up; only the first chip (Tonnage) shows beside it. The card shows
-  in full once the line closes (`M:story-forms-quest1-shipped-32ppm.mp4`, 0-9 s vs 15-19 s). Not changed tonight.
-
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
   the machine body (gunmetal, rust, Dent's yellow discs) with teal seams, glow and a soul pool, which follows
