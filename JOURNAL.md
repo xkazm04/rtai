@@ -545,3 +545,24 @@ scratch holds only film.sh and reel.sh, frames.json 15 (all present).
   because I edited REPORT/ghost-attacks.md during the run ("tree changed during run"; FRICTION, mine:
   `E/evidence-run-it6-dirty.log`). Re-run on a still tree after the merge below.
 - 04:14 REPORT iteration-6 rows; TTK doc: gore per ghost (crush/blast bleed; Kerf/Ohm dry kinds).
+- (iteration 6 ended here without a NEXT line; carried below.)
+
+## Iteration 7 (04:23-05:23, BUILD)
+- 04:23 read JOURNAL, git log, the forms/cast JOURNALs: no new REQUEST to ghost-powers. The forms lane's plan this
+  iteration: the forms, morph fx and HUD on the SHIPPED quest 1 (StoryForms, theirs; uncommitted in their tree).
+- 04:24 MERGE n6-ghost-forms 882f4860 (carries n5-cast 0abfd6c3: the visor slot Rivet-only) with `--no-ff
+  --no-commit`, JOURNAL/REPORT restored to ours before the commit (no fast-forward slip this time): 3d6a095b.
+- 04:30 GATES evidence runner `--no-bench` on 3d6a095b, tree still the whole run: PASS lint 13/13, unit 996/0,
+  scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38),
+  no re-bless (`E/evidence-run-it7.log`). Bench not run (contended machine).
+- 04:34 MILESTONE 3b05cf31 the open "does not work" row closed: the Kerf beat's robot died to `shot` because the
+  stand-in (the quest boss brain) is `exposed` only while its tazer is spent and CombatArena.damage skips an
+  unexposed body, so both Kerf cuts were DROPPED and the claw finished it after the form. KerfBeat.hold() now holds it
+  exposed, as OhmBeat did. Gate: scenario_ghost_attacks needs `robot_ghost >= 1` (the robot falls to the ghost's own
+  kind: Kerf cauterised, Ohm electrocuted); planted no-hold caught ("kerf beat fell short (robot_ghost < 1)",
+  `E/scenario-ghost-it7-planted-no-hold.log`), clean 1/0 (`E/scenario-ghost-it7.log`, `E/ghost-attacks.json`).
+  A/B same seed and ticks (374/404/434/464): `M/frames/kerf-robot-cut-ab-32ppm.png`. Judged: before, the robot keeps
+  firing its tazer line into Rivet after the cut and dies to a white claw flash at 464; after, it powers down in oil
+  at the cut (404) and the line is gone. `M/kerf-arena-32ppm.mp4` re-filmed on the fix (0 SCRIPT ERROR).
+  FRICTION (mine): restoring a planted edit with `git checkout -- file` also wiped the uncommitted fix in that file;
+  re-applied. Plant from a scratch copy and copy it back.
