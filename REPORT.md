@@ -1,4 +1,4 @@
-# n5-look REPORT (draft 2026-11-05 02:20; rewritten at the 08:40 report)
+# n5-look REPORT (draft 2026-11-05 03:30; rewritten at the 08:40 report)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
@@ -11,6 +11,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Iteration 9: uneven riso inking. The halftone's contrast dips in soft world-locked patches (`world_riso.dot_patchy` 0.7; 0 = even), so the alley lane's dot screen stops reading as a mechanical pattern (last row of `alley-it7-ab-48ppm-vs-r2a6.png`).
    - Iteration 10: the paper tone. Measured, the iteration 2 tan had printed the sidewalk paper darker than both today and the target (median 212/193/162 vs today 238/220/197 and r2_a5's sheet 250/218/177). The tone is now data (`world_riso.tan_tone` [1.02, 0.99, 0.94]; the old tone is the shader default): it warms without darkening, median 238/218/187, between today and the target. Evidence: `print-3way-city-32ppm-it10.png` (today | old tan | new tone | r2_a5, 64 px/m crops below).
    - Iteration 11: r2_a5's grime. On the lighter sheet, the sidewalk lacked the target's small sharp grey splats along the tiles. Raising stain_k only deepened the soft clouds, so a new term prints hard-edged grey splats with satellite drops on the paper and light fills (`world_riso.splat_k` 0.8, `splat_cut` 0.79, `splat_scale` 0.07; 0 = before). The asphalt is untouched and blood stays the only deep red. The pan residual is 2.93 % with the splats on and off, so they are world-locked. The goldens stay inside the gate (worst mean 0.76). Evidence: `print-splat-it11-city0-vs-r2a5.png` (before | splat | r2_a5) and `city-fight-splat-ab-32ppm-it11.mp4` (12 s riot, off | on).
+   - Iteration 12: r2_a5's cracked tiles. A new term prints two diagonal families of jagged ink hairlines in short runs on the paper and light fills (`world_riso.crack_k` 0.6, `crack_scale` 0.012, `crack_run` 0.62; 0 = before); the asphalt keeps its baked cracks only. The pan residual is 2.95 % with the cracks vs 2.93 % without, so they are world-locked. The goldens stay inside the gate (worst mean 0.91). Evidence: `print-crack-it12-city0-vs-r2a5.png` (before | cracks | r2_a5 at 64 and 32 px/m) and `city-fight-crack-ab-32ppm-it12.mp4` (12 s riot, off | on).
    - The building cast shadow went from 1.1 m to 0.45 m, so there are no long casts.
    - Blood stays the only deep red: the tan and the stains apply to neutral pixels only.
    - Evidence: `print-3way-city-32ppm-it2.png` (today | ours | target), `print-pan-today-vs-riso-32ppm.mp4` (the shimmer check: the residual after the camera shift matches today's, 1.29 %), `arena-reel-today-vs-riso-it2-32ppm.mp4` (the fight is identical tick for tick).
@@ -24,6 +25,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - No blood red and no teal in any of them. In the live fight the cells draw on their own canvas under `look_d5_fx`; `fx_colour_dir ""` switches back to ink.
    - Iteration 10: the blast's smoke ring carries 9 ragged fire pockets with hot yellow cores toward the centre, as in r2_w4, instead of a continuous orange band (`tools/art/fx_colour.json` blast_smoke `pockets`; drop it = the band). Evidence: last row of `fx-colour-arena-64ppm-vs-r2w4.png`.
    - Iteration 11: the pockets' edges are lumpy (`pockets.wobble` 0.2, r_px 30-52; 0 = round), so they read as r2_w4's ragged fire tongues instead of discs; a white-hot tier inside each yellow core grades them orange -> yellow -> white toward the blast centre (`pockets.hot`). Evidence: the last two rows of `fx-colour-arena-64ppm-vs-r2w4.png`.
+   - Iteration 12: the smoke-ring frame keeps r2_w4's white-hot core and yellow radial spikes through the smoke, where it printed a hollow grey ring (`fx_colour.json` blast_smoke `flash`, painted by `tools/art/fx_flash.py`; drop it = the hollow ring). Evidence: `fx-flash-it12-64ppm-vs-r2w4.png` (before | after at ticks 1216 and 1220 | r2_w4).
    - Blast debris: concrete slabs 0.35-1.3 m and ink specks fly out over 30 ticks (`blast_debris.json`).
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
@@ -43,14 +45,14 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 986da3b6 (the grime splats, the lumpy and graded pockets), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on b59dfb73 (the hairline cracks and the blast flash), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 + block 5/5 (worst mean 1.29 of 4), world lock 0.00 %.
+The last full evidence gate was green on c0ad9fd7 (2026-11-05 03:25, the cracks and the blast flash): lint 13/13, unit 957/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst mean 0.91 of 4) + block 5/5 (worst 1.07), world lock 0.00 %.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
@@ -58,7 +60,7 @@ The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13
 - **The Gatling:**
   - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the white-hot tier of the smoke frame's pockets prints mostly as cream slivers (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
+- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the white-hot tier prints cream through the FX print's paper snap (the smoke frame's flash, b59dfb73, carries the white-hot core now) (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
@@ -72,6 +74,7 @@ The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13
 - **A warm item ink:** held weapons print grey because the part print has no tan ink. Adding one would warm every held gun toward r1_w1-w6, not just the Gatling (`gatling-128ppm-vs-r1w6.png`). Not built.
 - **Grain:** `world_riso.speck_k` 0.4 vs 0 (before) or higher toward r2_a5 (`print-speck-it9-2x-vs-r2a5.png`).
 - **Grime splats:** `world_riso.splat_k` 0.8 vs 0 (before); `splat_cut` is the density dial (0.76 = twice as many, 0.82 = sparser). See `print-splat-it11-city0-vs-r2a5.png`. In the arena, the paper margin round the floor takes them at full density (no tile joints): `arena-reel-splat-ab-32ppm-it11.mp4` (20 s, off | on).
+- **Hairline cracks:** `world_riso.crack_k` 0.6 vs 0 (before); `crack_run` is the density dial (0.55 = more and longer runs, 0.7 = sparse). See `print-crack-it12-city0-vs-r2a5.png`.
 - **The Gatling's bulk:** `cross_k` 1.3 vs 1.0 (bottom row of `gatling-128ppm-vs-r1w6.png`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
