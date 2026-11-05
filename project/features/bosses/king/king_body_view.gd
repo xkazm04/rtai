@@ -12,7 +12,6 @@ const GOLD_DARK: Color = Color("#8A6418")
 const CAR_BLACK: Color = Color("#231F22")
 const STEEL: Color = Color("#8E8B86")
 const FUR: Color = Color("#EFE6D2")
-const PLUM: Color = Color("#5A2335")
 const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
@@ -112,8 +111,8 @@ func _car(with_king: bool = true) -> void:
 			draw_circle(Vector2(l * cx * 0.94, w * cy * 0.86), 4.0, GOLD)
 	draw_rect(Rect2(l * 0.5 - 10.0, -w * 0.42, 10.0, w * 0.84), GOLD)  # the grille
 	draw_rect(Rect2(-l * 0.5, -w * 0.45, 8.0, w * 0.9), GOLD_DARK)  # rear bumper
+	KingCarTrim.draw(self, l, w, p)  # plum roof panels between gold bars, the side swags
 	_cannon(Vector2(l * 0.2, 0.0), l, _cannon_rot if with_king else 0.0)
-	draw_rect(Rect2(-l * 0.28, -w * 0.5, l * 0.18, w), PLUM)  # the rear cabin's plush
 	if _rigs == null:  # first pass: the gang at the four corners, King on the throne
 		for sx: float in [-0.36, 0.3]:
 			for sy: float in [-1.0, 1.0]:
