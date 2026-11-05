@@ -43,6 +43,10 @@ static func puddle(ci: CanvasItem, r: Rect2, fill: Color) -> void:
 		pts[k] = c + Vector2(cos(a) * r.size.x, sin(a) * r.size.y) * 0.5 * wob
 	pts[24] = pts[0]
 	ci.draw_colored_polygon(pts.slice(0, 24), fill)
+	var rim: PackedVector2Array = PackedVector2Array(pts)  # the wet pale rim inside the edge
+	for k: int in 25:
+		rim[k] = c + (pts[k] - c) * 0.9
+	ci.draw_polyline(rim, Color(Ink.CREAM, 0.55), 2.0)
 	ci.draw_polyline(pts, Color(Ink.INK, 0.45), 1.5)
 	var g: Vector2 = Vector2(r.size.x, r.size.y) * 0.18
 	ci.draw_line(c - g, c - g + Vector2(g.x * 0.9, -g.y * 0.5), Color(Ink.CREAM, 0.9), 2.0)
