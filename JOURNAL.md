@@ -223,3 +223,11 @@ NEXT (iteration 3, ghost-powers):
 6. Call for the owner stills: Tonnage crush vs pile side-by-side.
 Session state 01:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty,
 image.lock never taken, bench never run.
+- 01:25 CITY Tonnage (`--arena=city --bot=ghosts --ghost=tonnage`, 960 ticks): 10/10 down, 2 slams, crush 2 /
+  blowback 5, Rivet 100 hp, 0 SCRIPT ERROR (`E/ghosts-tonnage-city-32.json`, clip `M/tonnage-city-32ppm.mp4`):
+  telegraph, slam, crack and the flattened cops read on the asphalt. BUT 0 cars crushed: the beat's cruiser never
+  appears in the city block. Dent in the city: 0 seizes (no car beside Rivet; `E/ghosts-dent-city-32.json`).
+  Lead: `VehicleService.spawn_parked` always returns a car, so the city ArenaStage probably has `vehicles == null`
+  and the beats skip the spawn. NEXT item 2 becomes: give the city stage's beats a car (the city's own parked or
+  traffic car via soul_hijack_traffic for Dent), then re-film Dent and Tonnage there.
+Session state 01:26: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
