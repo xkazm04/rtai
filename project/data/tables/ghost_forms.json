@@ -59,12 +59,12 @@
       "accel_mps2": 12,
       "anchors": {
         "electrode_l": [
-          0.38,
-          -0.1
+          0.52,
+          -0.17
         ],
         "electrode_r": [
-          0.38,
-          0.1
+          0.52,
+          -0.07
         ]
       },
       "body_class": "rivet_base",

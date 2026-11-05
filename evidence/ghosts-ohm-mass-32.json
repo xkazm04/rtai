@@ -4,10 +4,10 @@
       "shock": 4
     },
     "kill_cut_us": [
-      1104,
-      909,
-      1015,
-      1075
+      1215,
+      881,
+      931,
+      976
     ],
     "kill_ticks": [
       119,
@@ -16,11 +16,11 @@
       209
     ],
     "signature_kills": 4,
-    "view_avg_us": 186,
+    "view_avg_us": 206,
     "view_frames": 400,
     "view_over_2ms": 1,
     "view_worst_tick": 119,
-    "view_worst_us": 3106
+    "view_worst_us": 3100
   },
   "cars": {
     "damaged": 0,

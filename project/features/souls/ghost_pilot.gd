@@ -31,6 +31,9 @@ func _init(table: PowerTable, form_table: GhostFormTable) -> void:
 	kerf.share(powers)
 	ohm = OhmStage.new(table)
 	ohm.share(powers)
+	var ohm_form: GhostFormDef = form_table.forms.get(OhmStage.GHOST)
+	if ohm_form != null:
+		ohm.set_electrodes(ohm_form.anchor(&"electrode_l"), ohm_form.anchor(&"electrode_r"))
 
 
 static func shipped() -> GhostPilot:

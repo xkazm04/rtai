@@ -2,38 +2,44 @@
   "brutality_pit": {
     "by_style": {
       "blowback": 5,
-      "crush": 2
+      "crush": 5
     },
     "kill_cut_us": [
+      483,
+      535,
       499,
-      581,
-      572,
-      592,
-      584,
-      1082,
-      794
+      515,
+      563,
+      540,
+      626,
+      603,
+      651,
+      495
     ],
     "kill_ticks": [
-      294,
-      301,
-      312,
-      389,
-      399,
-      401,
-      493
+      144,
+      151,
+      151,
+      151,
+      214,
+      229,
+      370,
+      380,
+      381,
+      381
     ],
-    "signature_kills": 7,
-    "view_avg_us": 349,
-    "view_frames": 1000,
-    "view_over_2ms": 4,
-    "view_worst_tick": 406,
-    "view_worst_us": 3087
+    "signature_kills": 10,
+    "view_avg_us": 467,
+    "view_frames": 900,
+    "view_over_2ms": 3,
+    "view_worst_tick": 152,
+    "view_worst_us": 7379
   },
   "cars": {
     "damaged": 0,
     "hijacked": 0,
     "total": 4,
-    "wrecked": 0
+    "wrecked": 2
   },
   "corpse_decay": {
     "bodies_cap": 16,
@@ -47,9 +53,9 @@
     "pruned": 10,
     "stains_now": 10
   },
-  "damage_taken": 6.66000000000025,
+  "damage_taken": 7.74000000000029,
   "deaths": 0,
-  "dodges": 6,
+  "dodges": 10,
   "hit_rate": 0.0,
   "hits": 0,
   "hook_8": {
@@ -60,10 +66,20 @@
     },
     "ghost_dead": 10,
     "ghost_victims": 10,
+    "kerf": {
+      "blinks": 0,
+      "slices": 0,
+      "transforms": 1
+    },
+    "ohm": {
+      "bolts": 0,
+      "cars_hit": 0,
+      "struck": 0
+    },
     "tonnage": {
       "activations": 0,
-      "cars_crushed": 0,
-      "ram_hits": 6,
+      "cars_crushed": 2,
+      "ram_hits": 7,
       "rivet_hp": 100.0,
       "slam_hits": 5,
       "slams": 2,
@@ -89,10 +105,10 @@
   },
   "schema": "gtai.arena-telemetry/1",
   "shots": 0,
-  "ticks": 973,
-  "top_speed_mps": 2043.52638244629,
+  "ticks": 881,
+  "top_speed_mps": 4.20079842209816,
   "ttk_s": {},
-  "turn_rate_peak_dps": 720.0002249415,
+  "turn_rate_peak_dps": 720.000327394338,
   "weapon_art_rack": {
     "rack": true
   }
