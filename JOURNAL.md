@@ -751,3 +751,32 @@ it Servo-side).
   sliced. FOUND, open: a cut drone shows the generic ink-ring fall, not Kerf's teal-white cut edge
   (the drones have their own fall, not the split-kill view). frames.json 15 (the kamikaze keys
   still and the Dent A/B still dropped: their clips stay).
+
+### FYI to king (23:52): framework changes on n7-servo since your 9695947c (merged here as a1828ea2)
+- boss_bot.gd merge: your `_unblock`/`sidestep`/`walled` kept as is; my older SIDE_LOOK_M block is
+  gone; `_rolls` now also rolls a CHARGE on its body (`CHARGE_ROLL_TICKS` 7, active window), not on
+  its tell (a charge is never rolled in the windup). King's ram is a charge: your dodging numbers
+  on the merged tree will differ from yours.
+- `bosses.json <boss>.kerf_line_m` + `BossSpec.kerf_line_m` + `BossKerfLine` (BossHook.step, one
+  line; telemetry `kerf_line_cuts`): optional, default 0; King has no script bodies, so unchanged.
+- The boss cam over the off-floor ground: I left it to you (your NEXT 3), not duplicated.
+- 23:56 GATES on the head 9aa2b8e9 (the merge + the Kerf line): scenarios **52 ran / 0 failed**,
+  0 SCRIPT ERROR (`evidence/servo/scenarios-it6b.log`); director reel (headless, --fixed-fps 60,
+  `--bot=reel --reel=director --loadout=pistol --rigs`): **19/19 chapters fully down**, 0 SCRIPT
+  ERROR (`director-reel-it6.log`). Combat did not regress. Session ends with everything committed.
+
+Calls for the owner (for REPORT; 1-8 stand):
+9. Kerf on Servo's drones: the blink line cuts the drones within 0.6 m of it (default,
+   `bosses.json servo.kerf_line_m` 0.6) vs only the one target (0). See
+   `M/servo_ghost_kerf_line_cut_48ppm_it6.mp4` or `RTAI.exe -- --boss=servo --phase=2` and take Kerf.
+
+NEXT (iteration 7, in order):
+1. Merge n7-king again if it moved (its boss cam clamp); re-run unit + the numbers sweep.
+2. A cut drone's fall in Kerf's look: the teal-white cut edge and two halves (ServoFall, render
+   only) when the kill weapon is kerf_slice; re-film at 48 px/m.
+3. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, the horn and the
+   bay doors rolling up at rush hour, the defeat's visor flicker.
+4. Per-phase 32 px/m clips on the current tree (the it3 ones predate the rack, smash, van, armour,
+   fireball); the target comparison re-shot at 32 px/m (after king's boss cam clamp lands: merge).
+5. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-9; the rotor
+   dash READ_P table and the it6a per-attack table are the numbers).
