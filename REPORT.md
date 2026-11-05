@@ -247,6 +247,10 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 1d9c3c53 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
    r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
    32 px/m and only the cops' blue pads tell them apart.
+   The cost of A, seen in the live city (iteration 18): on the cream slab a standing pale-topped ped is a faint
+   cream shape held only by its ink outline, where r2_a5/r2_c6 keep the peds' dark trousers and hair visible
+   (`M/frames/ped-pale-on-slab-city-32ppm.png`). On asphalt A reads well. A middle value or dark legs showing under the
+   coat would be the next trial if you keep A.
 
 7. Rivet's collar at 32 px/m: A, vermilion with 6 ink hazard breaks (built, `PartMaterials.COLLAR_LOD_FILL` 3,
    `print_part.gdshader` `collar_stripes` 6 / `collar_ink` 0.3), or B, the flat vermilion ring (`COLLAR_LOD_FILL`
