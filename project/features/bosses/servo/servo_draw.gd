@@ -22,7 +22,7 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 	var verm: Color = pal.color(&"vermilion")
 	for d: ServoDrone in s.drones:
 		if d.carrying() and (s.tuning.ring_from_launch or d.state == ServoDrone.State.HOVER):
-			_dashed_ring(c, d.goal, s.tuning.ring_m, Color(verm, 0.7), 2.0)
+			_dashed_ring(c, d.goal, s.tuning.ring_m, Color(verm, 0.8), 3.0)
 	for d: ServoDrone in s.drones:
 		if d.dive and (d.state == ServoDrone.State.HOVER or d.state == ServoDrone.State.DIVE):
 			_dive_tell(c, s, d)
@@ -54,7 +54,8 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 func _dive_tell(c: CanvasItem, s: ServoSwarm, d: ServoDrone) -> void:
 	var verm: Color = pal.color(&"vermilion")
 	var lock: bool = ServoDive.locked(s, d)
-	c.draw_line(d.pos * px, d.strike * px, Color(verm, 0.95 if lock else 0.5), 4.0 if lock else 1.5)
+	var w: float = (4.0 if lock else 1.5) * _line_k()
+	c.draw_line(d.pos * px, d.strike * px, Color(verm, 0.95 if lock else 0.5), w)
 	if lock:
 		c.draw_circle(d.strike * px, s.tuning.dive_blast_m * px, Color(verm, 0.18))
 		_dashed_ring(c, d.strike, s.tuning.dive_blast_m, verm, 3.0)
@@ -69,7 +70,7 @@ func tells(c: CanvasItem, f: BossFight, m: ServoMoves) -> void:
 	var w: float = 5.0 if f.locked else 1.5
 	match f.attack.id:
 		&"scan_drop", &"kamikaze", &"package_carpet":
-			c.draw_line(f.body.pos * px, m.mark * px, Color(verm, 0.9), w)
+			c.draw_line(f.body.pos * px, m.mark * px, Color(verm, 0.9), w * _line_k())
 			if f.locked:
 				_dashed_ring(c, m.mark, 1.0, verm, 4.0)
 			if f.attack.id == &"package_carpet":
@@ -117,7 +118,14 @@ func _sprite(c: CanvasItem, t: Texture2D, at_px: Vector2, rot: float, k: float) 
 
 
 func _dashed_ring(c: CanvasItem, at: Vector2, r_m: float, col: Color, w: float) -> void:
+	w *= _line_k()
 	var n: int = 16
 	for k: int in n:
 		var a0: float = TAU * k / n
 		c.draw_arc(at * px, r_m * px, a0, a0 + TAU / n * 0.55, 6, col, w)
+
+
+## Line widths are screen pixels at 32 px/m: a canvas drawn at more px/m and scaled down (the
+## arena's 48) widens them by as much, so a ring weighs the same on screen in every view.
+func _line_k() -> float:
+	return px / 32.0
