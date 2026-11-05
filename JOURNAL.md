@@ -498,3 +498,22 @@ NEXT (iteration 5):
 - LEFT: `GunFxArt`'s fallback muzzle (`gun_fx_art.gd:114`, guns WITHOUT weapon art) and `GunFx`'s
   claw bits (`gun_fx.gd:129/135/153`) still use `r.facing`; same flip is possible there. The 32 px/m
   quest clip `quest1_table_gloria-ab-32ppm.mp4` predates the fix: retake it (fight cam, 32 px/m).
+
+NEXT (iteration 5), replaces the 21:49 list:
+1. The same muzzle flip for guns WITHOUT weapon art: `GunFx.muzzle(r, ahead)` (gun_fx.gd:129,
+   used by the fallback flash, smoke and shells) and `GunFxArt._muzzle` (gun_fx_art.gd:114) use
+   `r.facing`. GunFx.muzzle also serves the hostiles' stars, so use `arena.gun.last_aim` only when
+   `r.kind == Fighter.Kind.RIVET` (store it in `GunFx.step`). gun_fx.gd is 212 lines: keep it short.
+   Which table guns lack weapon art: `WeaponFxArt.art().has(id)` per weapons.json id.
+2. Retake `quest1_table_gloria-ab-32ppm.mp4` on head (32 px/m, `--cam=fight`, Dock 9 13580-13860;
+   the current one predates the muzzle fix), replace its frames.json row.
+3. Full city reel with the loadout on head (19/19) + `node tools/evidence/run.mjs --no-bench`.
+4. Judge by eye at 48 px/m, every frame (the per-frame diff trick finds the shot frames): Gatling
+   spin-up rumble, flamer ignition (3 px; maybe 4-5), electro snap. Tune by data only if timid.
+5. City combined clip retake with `--cam=fight`, `--quit-after 6200` (whole nuke blast).
+6. Audit gaps: quest 1's assault rifle read, molotov throw anticipation.
+7. REPORT: calls so far = the shard pop (36 vs `--shard-pop=12`). Befores to list: `--feel=off`,
+   `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`. Exe by 08:30.
+STOP 21:57 iteration 4. Head after this commit; code gates last on `1ce1b11e`: lint 13/13, unit
+1135/0; scenarios 52 (flake re-run green) and pit reel 19/19 on `48679f03`/`43622ec7` (the muzzle fix
+is view only and changes no sim path).
