@@ -24,6 +24,10 @@ mistaken for a cop (no blue), a car (legs and pads move) or the crowd.
   (top) < drones docked in the rack cells (the rack is its own animated layer: each of the 18
   cells, 3 rows of 6 like the sheet's wings since iteration 4, shows a docked drone, empty after
   launch, refilled during the dock window; `servo.json rack.rows` 2 / `cells` 12 = the it3 rack).
+  Each 3-row wing is one frame (`rack3.png`, composed by `tools/art/servo_rack3.py` from the cut
+  2-row wing). Since iteration 8 a **central spine** (`ServoSpine`, render only) splits the wings
+  from their back edge to the belly, its back capped by a panel box whose copper hose loops break
+  the rack's back edge: the sheet's wing | spine | wing read.
 - The drone: a small quad-rotor with a CS parcel slung below; ~0.7 m across (22 px at 32 px/m),
   four rotor discs read as a + shape; its **shadow on the ground** is the read of where it is,
   offset by its height.
@@ -73,8 +77,9 @@ pieces of debris and a ring, and the socket smokes until the end. The defeat: a 
 spark burst, the pads spin down and sag in, the body slumps forward with one settling bounce and
 greys out over 1.5 s, the head droops, the docked drones spill off the rack, the flying ones crash
 onto their shadows (a carried crate lands, a bomb is a dud: nothing hurts Rivet after the defeat)
-and the rack smoulders for good. Not yet: the horn and the bay doors rolling up; the stinger and
-the boss loop come with the framework's music (n7-king's iteration-3 item).
+and the rack smoulders for good, the visor stuttering out in cream. Rush hour opens with the depot's
+shift horn (`ServoHorn`, `audio_cues.json servo_horn`) as the bay doors roll up (1.6 s) and the belt
+starts; the stinger and the boss loop are the framework's (`BossMusic`).
 
 ## 5. Ghosts and Rivet's weapons in the fight
 
