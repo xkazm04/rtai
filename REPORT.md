@@ -287,7 +287,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    target's own ground is a mid value, about (133,117,103), which our asphalt and slab are not).
    Why C now: no owner pick by iteration 18, and C is the closer colour. In motion in the live city, A and C differ only
    slightly (C warmer) and neither muddies: `M/cast-tan-city-ac-32.mp4` (A | C, same ticks),
-   `M/frames/rivet-core-tan-city-ac-vs-r2c3-32ppm.png`. Back to A = `CORE_TAN` 0.6, to B = 0.0.
+   `M/frames/rivet-core-tan-city-ac-vs-r2c3-32ppm.png`; lossless (Godot PNG-sequence capture) on the director reel's
+   claw combo: `M/frames/rivet-core-tan-director-ac-lossless-32ppm.png`, clip x4 `M/cast-tan-director-ac-lossless-x4-32.mkv`.
+   Back to A = `CORE_TAN` 0.6, to B = 0.0.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

@@ -1111,3 +1111,9 @@ Session end 05:02: tree clean after this commit, no Godot process of mine runnin
   `M/cast-tan-city-ac-32.mp4` t=12 s, tick 720, x1.78 | Rivet x4; mp4 frame, not lossless). frames.json entry
   updated. Quest 1 at 1.0 is covered by the 04:51 lossless three-way (C column); the hit flash and the Hauler take
   the same sticker path as at 0.6 (04:40, 04:44), only the mix weight changed.
+- 05:23 lossless motion check of C (iteration 17's note: AVI is MJPEG): Godot PNG-sequence capture (`--write-movie
+  f.png`), director reel claw combo 0-420 at 32 px/m, `--clean --loadout=pistol`, at 1.0 and at 0.6 (local edit,
+  reverted by git checkout; status clean after), 0 SCRIPT ERROR both. `M/cast-tan-director-ac-lossless-x4-32.mkv`
+  (libx264rgb qp 0, x4 crop) and still `M/frames/rivet-core-tan-director-ac-lossless-32ppm.png` (ticks 60/200/330
+  beside r2_c3). C's core is a distinct tan plate inside the collar, it holds beside the cop's blood, and the kills match frame for frame.
+  PNG sequences (1.1 GB) deleted. frames.json 15 (new still second; the 0.6-era B|A|C still dropped from the list, file kept, REPORT cites it).
