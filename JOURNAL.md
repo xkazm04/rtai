@@ -1326,3 +1326,6 @@ NEXT (iteration 21), replaces the 06:59 list:
 3. Before 08:30: `tools/evidence/run.mjs --no-bench` on the final head (last: 84ed1bd1 ALL PASS; docs only since).
 Session end 07:04: tree clean after this commit, no Godot process of mine running (the ones listed are other lanes'),
   locks never taken, scratch i20 holds logs and the capture PNGs only.
+- 07:05 brief item 5 in a live quest path: quest 1 `--rigs --cam=fight` stills 13420-13780 (0 SCRIPT ERROR), tick
+  13720 cropped x2.86 beside r2_c6: `M/frames/cast-quest1-vs-r2c6-32ppm.png` (no dummy rings; the patrol sprite now
+  matches the rig cops). frames.json 15 (second; the Call 9 3-way dropped from the list, file kept). REPORT section 4.
