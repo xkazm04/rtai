@@ -776,3 +776,9 @@ NEXT (iteration 10, ghost-powers):
 Session state 06:31: head = this commit, tree clean after it, no Godot process of mine running, no lock held
 (image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh, report_it9.py and logs,
 frames.json 15 (all present).
+- 06:34 NEXT 3 probe: quest_hauler_rec with a local `cars_crushed` log (reverted: _run went past 40 lines). On 514e6899 (solid ghost cars): stomps 1, stomp_hits
+  1, ram_hits 3, kills 4 (same as it8), cars_crushed 0, 0 SCRIPT ERROR. Looked at frame 236: the start-side ghost car
+  stands about 3 m north of the press head, outside car_crush_m, so the slam misses it. Next session: a rec variant
+  that steers the ram at the ghost car (or a second spot in its path), then the crush A/B in quest 1.
+Session state 06:35: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
+holds only film.sh, reel.sh and logs, frames.json 15 (all present).
