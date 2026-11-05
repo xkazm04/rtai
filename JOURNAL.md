@@ -757,14 +757,14 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals.
   the fix sized against what competes in the same frame, the cop's flash, not in isolation);
   realtime-combat-semantics (the shooter's own action must read before its consequence).
 
-### FYI -> n7-melee (00:02): a new feel-layer commit to merge
+### FYI -> n7-melee (23:57): a new feel-layer commit to merge
 - `d79c5278` (hit_feel.json `weapons` row `pistol` with the new optional field `muzzle_k`, the
   schema field, `HitFeel.muzzle_k`, `WeaponFxIgnite.muzzle_k`, one line in `WeaponFxArt.muzzle`,
   `test_muzzle_k.gd`). In hit_feel.json the pistol row sorts after mini_nuke, away from your rows
   (chainsaw ... electro_baton). Any melee weapon that draws a muzzle cell can take a `muzzle_k`.
 - Your `7ce7b33d` (stun_crowd) closes your REQUEST 4; I build nothing on those views.
 
-### GATE 00:10: both director reels with `--loadout=pistol` on `d79c5278`
+### GATE 23:59: both director reels with `--loadout=pistol` on `d79c5278`
 - Pit and city block (`--arena=city`): 19/19 chapters each, every one fully down (14x 1/1, 2x 2/2,
   3x 4/4), 0 SCRIPT ERROR (`evidence/ranged/it7-reel-{director,city}-d79c5278.log`; headless,
   run in parallel by `scratch/ranged/reels.sh`, my own PIDs stopped after electro_chain's line).
@@ -772,7 +772,7 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals.
 NEXT (iteration 8):
 1. Gates on head with docs committed first and nothing touched during the run:
    `GODOT_BIN=... node tools/evidence/run.mjs --no-bench` (lint, unit, scenarios, parity, selftest).
-2. Gloria's flash: it draws the same `flash_pistol` cell (weapon_art.json gloria muzzle_fx), so it
+2. DONE 00:05 (`50c0883b`); left: Gloria in quest 1 Dock 9 at 32 px/m. Was: Gloria's flash: it draws the same `flash_pistol` cell (weapon_art.json gloria muzzle_fx), so it
    is the same 15 px speck, and Gloria is quest 1's sidearm. Film `--weapon=gloria` lone at 32
    (`--reach=6`), then try `muzzle_k` 1.6 (maybe 1.8: the heavier sidearm) with the same A/B; then
    look at quest 1 Dock 9 at 32 px/m (StageGuns uses Gloria's row, so the change reaches quest 1).
@@ -787,7 +787,20 @@ NEXT (iteration 8):
 7. Reels: `scratch/ranged/reels.sh <tag>` runs pit + city director reels headless in parallel and
    stops each after electro_chain's line (about 8 min contended).
 
-STOP 00:11 iteration 7. Code commit: `d79c5278` (pistol muzzle_k 1.6, reads at 32 px/m). Gates on
+STOP 00:01 iteration 7 (continuing on NEXT 2 until 00:23). Code commit: `d79c5278` (pistol muzzle_k 1.6, reads at 32 px/m). Gates on
 it: unit 1145/1145, lint 13/13, pit + city reels 19/19 fully down. Closed without code: NEXT 1 (the
 ray kill is the approved dissolve), REQUEST 4 (melee's `7ce7b33d`). Scenarios/parity not re-run
 this iteration (NEXT 1 of it8); the change is view only (WeaponFxArt draw scale, no sim read).
+
+### MILESTONE 00:05: `50c0883b` Gloria's flash reads at 32 px/m (NEXT 2 of it8, done now)
+- LOOK (head, `--weapon=gloria`, same args as the pistol, kill tick 303): Gloria draws the pistol's
+  `flash_pistol` cell, the same 15 px speck on 298-299, the cop's star (295-296) bigger.
+  hit_feel.json gloria `muzzle_k` 1.8 (one notch over the pistol: the heavier sidearm). A/B x3
+  crops 296-300: a cream star with a vermilion core about Rivet's torso wide on 298-299; it does
+  not cover him. Unit 1145/1145 (the pistol test also asserts gloria > pistol; not separately
+  planted: a gloria muzzle_k of 1 fails that assert by construction), lint 13/13 (hook).
+- Clip `masters .../gloria_muzzle-ab-32ppm.mp4` (frames.json row 1; dropped `gatling-ab-32ppm.mp4`,
+  the Gatling keeps `gatling_spinup-ab-32ppm.mp4`; REPORT row repointed). Not yet seen in quest 1
+  (StageGuns arms Gloria's row there, so it applies): it8 films Dock 9 at 32 px/m.
+- Not re-run on `50c0883b`: the reels (a data value on a view-only draw scale; `d79c5278`, the
+  code, has both reels 19/19). NEXT 1 of it8 runs the full evidence on head.
