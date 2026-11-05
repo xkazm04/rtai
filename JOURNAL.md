@@ -478,18 +478,23 @@ short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` ris
   scenario --filter=ghost 1/0.
 - 03:43 COMBAT CHECK director reel on the merged head 1469cabd: 16/16 chapters down, 0 SCRIPT ERROR
   (`E/director-reel-it5-merged.log`).
-- 03:45 Dent's ride re-filmed at 64 px/m on the merged head: braced on the roof, the buck into the strike, the jump
+- 03:44 Dent's ride re-filmed at 64 px/m on the merged head: braced on the roof, the buck into the strike, the jump
   clear of the blast (`M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`). Judged: reads as the
   concept's ride. frames.json 15, all present. REQUEST 7 closed.
 
 NEXT (iteration 6, ghost-powers):
 1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` before filming).
-2. Re-cut the reel's Dent segment from a city clip on the merged head (the reel still has the pre-buck ride).
+2. (done 03:48) the reel's Dent segment re-cut from the city clip on the merged head.
 3. Ohm: a cane-step recoil or arm kick per bolt (REQUEST to ghost-forms for an OhmRig hook: `bolts` rising, like
    Dent's strikes), then re-film Ohm at 64.
 4. combat_blood.gd is at 299 lines: any further change there splits it first (e.g. the robot/dry-kill routing into
    a small helper).
 5. Weakest left: Tonnage at 64 px/m on the latest head (not re-filmed since iteration 3 merges); the robot victim in
    the city block (does the city ghost beat spawn one? if not, add it to the Kerf/Ohm city beats).
-Session state 03:46: head = this commit, tree clean after it, no Godot process of mine running, no lock held,
+Session state 03:44: head = 94c9f8d8, no Godot process of mine running, no lock held,
 masters scratch holds only film.sh and reel.sh.
+- 03:48 NEXT 2 done: Dent in the city block re-filmed on the merged head 1469cabd (`M/dent-city-32ppm.mp4`, ride with
+  the brace, hop clear of the ambulance, 0 SCRIPT ERROR); reel `M/ghost-attacks-reel-it5-32ppm.mp4` re-cut (33 s),
+  Dent segment judged on 4 stills.
+Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
+bench.lock never taken), masters scratch holds only film.sh and reel.sh, frames.json 15 (all present).
