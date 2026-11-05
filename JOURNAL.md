@@ -1037,3 +1037,11 @@ NEXT (iteration 18), replaces the 04:06 list:
 3. If nothing in 2 is buildable without the owner: re-run the gate on the final tree before the 08:30 freeze.
 Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` keeps logs only (renders deleted).
+- 04:52 NEXT 2(b) TRIAL, reverted on purpose (git checkout of print_part.gdshader, nothing committed): a thinner
+  collar band at 32 px/m. Trial uniforms in the COLLAR branch: below UV radius `collar_r0` (ring spans 0.30-0.49) the
+  collar either drops out (discard) or prints ink. cast_lineup slab and road 32 px/m, off | r0 .38 drop | .38 ink |
+  .41 drop: dropping shows the torso's ink outline under the collar, not the tan core, and the vermilion thins to
+  1-2 px that specks at 1x (.41 worst); ink makes a heavier dark ring. None reads more like r2_c6's upright figure,
+  and the specks fail `motion-quality-gating` (1 px marks shimmer in motion). Not built. Still
+  `M/frames/collar-thin-trial-32ppm.png` (not in frames.json; REPORT Call 7 may cite it). NEXT 2(b) closed: the ring
+  read is the collar's size vs a ~20 px body, a proportion question tied to Call 1, not a print fix.
