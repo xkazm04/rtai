@@ -1,9 +1,11 @@
-# REPORT: lane held (d7, 2026-11-05) — DRAFT at 17:15, to finish by 18:40
+# REPORT: lane held (d7, 2026-11-05)
 
-Branch `d7-held` (cut from main `1028c15d`; d7-calls merged three times, last `ecb8a675`).
-Evidence: `C:\Users\kazda\kiro\gtai-masters\d7\held\` (`frames.json`, 15 entries) and `evidence/held-*.log`.
-Exe: `build/export/windows/RTAI.exe`, exported 17:25 at `5bbc95b5` (windows-showcase, boots into the arena;
-smoke `RTAI.exe -- --arena=city --rigs --loadout=katana`: 6 s, 0 script errors). **Re-export at the freeze if HEAD moves.**
+Branch `d7-held` (cut from main `1028c15d`; d7-calls merged four times, last `339397ef`).
+Evidence: `C:\Users\kazda\kiro\gtai-masters\d7\held\` (`frames.json`) and `evidence/held-*.log`.
+Exe: `build/export/windows/RTAI.exe`, exported 17:37 at `acb70e5f` (windows-showcase, boots into the arena).
+Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_rifle`, plain, `--torch-off-arm`,
+`--gun-off-claw`): 0 script errors, no unknown-arg warning, and the frames differ from the default
+(`evidence/held-it4-exe-flags-ab.png`: default | torch | gun off the claw).
 
 ## What works (with evidence)
 
@@ -44,8 +46,10 @@ smoke `RTAI.exe -- --arena=city --rigs --loadout=katana`: 6 s, 0 script errors).
   as aiming while a weapon is out, so the chainsaw was already in both claws (`chainsaw_two_claw_ab_64ppm.png`).
   The same fact means the not-aiming carry (RivetCarryAngle) never shows in `--arena` / `--arena=city`.
 - **Heavy walk**: the 10 px lean barely shows.
-- **Not done**: an arena-pit segment in the whole-arsenal clip, per-class 64 px/m clips for sidearm and chainsaw, the registry reads
-  (`realtime-combat-semantics`, `depth-ordered-layered-art`).
+- **The off claw cannot read as gripping yet**: it is one sprite drawn over the weapon. The registry rule
+  (`depth-ordered-layered-art`, "wrapping is the common cause") says a claw closed around a grip must be two layers,
+  the back jaw under the weapon and the front jaw over it. The drawn grip art should come as that pair.
+- **Not done**: an arena-pit segment in the whole-arsenal clip, per-class 64 px/m clips for sidearm and chainsaw.
 
 ## Calls for the owner
 

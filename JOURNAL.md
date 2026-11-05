@@ -242,3 +242,19 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   the weapon's silhouette and angle, not by the claws.
 - 17:32 STOP iteration 3. Head = this commit. Exe at 5bbc95b5 (code identical to HEAD: only docs and
   evidence logs since). NEXT is the 17:24 list (exe already exported: re-export only if code moves).
+
+## Iteration 4 (17:33-18:30, BUILD -> freeze)
+
+- 17:33 START. git status clean (head f622ab20). d7-calls had 6 new commits (339397ef), one code change:
+  2a28d331 `--ghosts-free` + cast old-default flags in LaunchArgs KNOWN_FLAGS. Their lesson: an exe flag is
+  not proven until seen working in the exe.
+- 17:35 MERGE d7-calls 339397ef -> 9bcfced1 (JOURNAL/REPORT kept ours). 
+- 17:36 FIX acb70e5f `--torch-off-arm` / `--gun-off-claw` in KNOWN_FLAGS (they were always read from the OS
+  args, so they worked, but boot warned about them as unknown). Unit case + planted fault (1 failing,
+  `evidence/held-it4-launchargs-planted.log`). Full unit 1110/0, lint 13/13.
+- 17:37 EXPORT RTAI.exe at acb70e5f (windows-showcase, exit 0, 14 s). PROOF in the exe: three runs
+  `RTAI.exe --fixed-fps 60 --write-movie ... -- --arena=city --rigs --loadout=plasma_rifle [--torch-off-arm |
+  --gun-off-claw]`: 0 SCRIPT ERROR, 0 unknown-arg lines; frames differ from the default at t=1 s and 3 s
+  (PSNR 46.2 / 40.4 dB, not identical); `evidence/held-it4-exe-flags-ab.png` (default | torch | off-claw).
+  The off-claw run faces differently by t=5.5 s: no bot was driving, so Rivet's facing follows the real
+  mouse in the window (cops identical in all three), not a sim divergence.
