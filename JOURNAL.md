@@ -677,3 +677,16 @@ NEXT (iteration 6) as above, with: 0. re-run the it5b sweep on the attribution f
 bots) for the REPORT's per-attack table; 3 is done except the target comparison at 32 px/m; add
 3b. clamp the boss cam to the arena area bounds (`--boss-cam`, a framework view: ask king or do
 it Servo-side).
+- 23:08 MEASURED on the head (8c6dabd2, attribution fixed), seeds 1-5 x 3 bots, --fixed-fps 60,
+  240 s cap, 0 SCRIPT ERROR (`evidence/servo/numbers-it5c/boss-numbers.json`; CONTENDED wall
+  time only, the cap is game time):
+
+  | bot | downed | time to kill | took (mean) | deaths | rotor dash | hot dash | bay hop | dives | parcels |
+  |---|---|---|---|---|---|---|---|---|---|
+  | dodge | 5/5 | 113-156 s (127) | 70 | 0 | 1/32 | 3/17 | 2/9 | 8/32 | 2 |
+  | human | 5/5 | 116-147 s (134) | 160 | 0 | 16/37 (43 %) | 6/18 | 2/11 | 3/28 | 2 |
+  | stand | 1/5 | 204 s | 1388 | 25 | 86/95 | 3/3 | 14/14 | 3/8 | 179 |
+
+  The envelope holds for the human bot (60-150 s, 0 deaths, every stander loses); one dodge seed
+  runs 156 s. The rotor dash on the human (43 %) is the open fairness question (NEXT 2).
+  Session ends with everything committed. NEXT for iteration 6 stands as written above.
