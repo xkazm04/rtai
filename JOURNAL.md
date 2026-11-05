@@ -278,3 +278,33 @@ NEXT (iteration 3, in order):
   leaves 16 % with 2 deaths; seed 3 stays in phase 1 at 78 % with 6 deaths (rotor dash 23 of 25
   landed: the standing bot holds its band right in the dash lane; a stander should lose, but look
   at why seed 3 never gets the phase-1 punish damage in: iteration 3).
+
+## Iteration 3 (20:38-21:38), BUILD
+- 20:40 MERGE n7-king d86e36fe as 6c347500 (king took REQUEST 4 verbatim; GangPlan, KingAccents,
+  throne-car trim; no framework file moved beyond REQUEST 4). JOURNAL: ours (committed first).
+  Lint 13/13 on the merge. Music: `boss_engaged` -> AudioHooks already plays boss_stinger +
+  boss_loop, but BossHook does not emit it yet; king's iteration-3 item 3 owns it (framework), so
+  I leave it to them.
+- 20:50 MILESTONE 454099d4 **the defeat beat**. Sim: the fight stops ticking the moves once the
+  boss is DEFEATED, so live drones froze in the air and stayed hittable bodies (a defect, found
+  reading `BossFight.step`). ServoMoves now connects `defeated` in bind and grounds the swarm at
+  once (`ServoSwarm.ground`: flying drones crash, a carried crate lands, bombs are duds, falling
+  bombs are duds; the bodies leave the hostiles on the next sync). Render (`ServoFall`): flash +
+  spark burst, pads spin down and sag, slump with a settling bounce, grey over 1.5 s, head droops,
+  docked drones spill, crashed drones fall onto their shadows with a dust ring, the rack smokes.
+  Unit `test_servo_fall` 2/2; unit 1144/0 (`evidence/servo/unit-it3.log`).
+- 20:47 FOUND in the first defeat film: **the rig hid the wrong wing in phase 3.** ServoRack uses
+  side = (-fwd.y, fwd.x), the rig fwd.orthogonal() = (fwd.y, -fwd.x): break_wing's cells
+  (across < 0) are the rig's side +1, but the rig dropped side -1, so phase 3 showed the sim's
+  broken wing and the dark "drone out" bays fell on the missing side. Fixed in 454099d4; the
+  re-film shows the bays and spills on the wing that is drawn. Looked at
+  `M/servo_defeat_beat_keys_32ppm_it3.png` (38.4-47 s of `servo_p3_overtime_defeat_32ppm_it3.mp4`,
+  `--phase=3 --seed=2`, Servo down at tick 2299 both before and after the render fix: the render
+  does not touch the sim). Weak: the bay marks + smoke + wrecks clump into one dark blob left of
+  him; the slump is subtle at 32 px/m.
+- FRICTION 20:55: `run_unit.mjs` without `GODOT_BIN` reports "1138 passed" from a stale result
+  file while every step exits -1. Always export GODOT_BIN; read the step exits, not the summary.
+- 20:58 the transition beats (`ServoShift`, render only): rush hour = rise 8 % on revving pads +
+  the rack reloads in a ripple; overtime = the failing wing shakes and sparks through the 2 s,
+  blows off in six debris pieces + a ring on the phase's first tick, the socket smokes after.
+  docs/bosses/servo.md section 4 "As built" paragraph.

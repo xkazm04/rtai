@@ -64,6 +64,17 @@ Phase 3 changes `rotor_dash`: cooldown halves; **two dashes in a row overheat hi
 | 3 **overtime** | 30-0% | `kamikaze`, `rotor_dash` (overheat), `scan_lock` -> short waves | Transition (2 s): half the rack blows off (sparks; the silhouette loses one wing's cells); drones fly kamikaze; Servo dashes often, overheating. |
 | defeat | 0 | - | Servo sinks to his pads, the rack's last drones drop dead around him, the visor goes dark; parcels spill; stinger. |
 
+**As built (iteration 3, render beats in `servo_shift.gd` / `servo_fall.gd`, the sim's in
+`ServoSwarm.ground`):** into rush hour he rises 8 % on revving pads while the rack reloads in a
+ripple, bay by bay (the conveyor starts at the phase's first tick). Into overtime the failing wing
+shakes harder and spits sparks through the 2 s; at the phase's first tick it blows off in six
+pieces of debris and a ring, and the socket smokes until the end. The defeat: a white flash and a
+spark burst, the pads spin down and sag in, the body slumps forward with one settling bounce and
+greys out over 1.5 s, the head droops, the docked drones spill off the rack, the flying ones crash
+onto their shadows (a carried crate lands, a bomb is a dud: nothing hurts Rivet after the defeat)
+and the rack smoulders for good. Not yet: the horn and the bay doors rolling up; the stinger and
+the boss loop come with the framework's music (n7-king's iteration-3 item).
+
 ## 5. Ghosts and Rivet's weapons in the fight
 
 - **Dent** (seize a vehicle): a drone is a vehicle. G seizes the drone nearest the aim line (teal
