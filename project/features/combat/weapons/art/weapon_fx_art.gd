@@ -32,6 +32,9 @@ const BOTTLE_SHADOW_K: float = 0.8
 const BOTTLE_SHADOW_INK: float = 0.6
 ## The flamethrower's nozzle lick: the jet's tongue cell at this scale (1.0 read as a balloon).
 const NOZZLE_K: float = 0.45
+## The cone slices' lick swing (rad) about the aim (the teardrops keep 0.18: at 0.18 the long
+## cone slices lay parallel and banded like planks at 48 px/m).
+const CONE_LICK: float = 0.24
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -185,9 +188,13 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 	fx = &"flame" if fx == &"" else fx
 	var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 	var f: int = (tick / 3 + int(went * 4.0)) % 3
-	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * 0.18
+	var cone: bool = fx != &"flame"
+	var swing: float = CONE_LICK if cone else 0.18
+	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * swing
 	# long and thin at the nozzle, fanning out with distance (round puffs near it read as drops)
 	var grow: Vector2 = Vector2(1.15 + 0.6 * k, 0.32 + 1.5 * k)
+	if cone and int(went * 4.0) % 2 == 1:
+		grow.y = -grow.y  # every other cone slice mirrored: their jags never line up as planks
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
 	if went > gap + CLEAR_M:
