@@ -159,3 +159,18 @@ NEXT (iteration 2, in order):
    crate landing damage.
 5. Then the arena (depot: bays, conveyor, CS crates) through king's arena loading + `--boss=servo`,
    the HUD bar, music; then the bot (`--bot=boss --boss=servo`) with Rivet's reaction delay.
+- 19:37 MERGE n7-king e92b3d8b into n7-servo as 6f7572cf: REQUEST 2 answered by king (BossMoves.tick
+  every state, BossMoves.bind, plus BossAdds/BossHook). Conflicts: JOURNAL (ours), bosses.json (took
+  king's, re-applied Servo's row with `evidence/servo/write_servo_row.mjs`, schema-valid).
+  ServoMoves.bind takes `servo_swarm`; the manual tick() calls removed from tests and the dev view.
+  Same numbers after (standing 178 / sidestep 60 in 30 s). Unit 1134/0
+  (`evidence/servo/unit-it1-merge2.log`), lint 13/13.
+- 19:43 `--bot=boss --boss=servo` through king's BossHook in the dev arena (headless, 30 s):
+  "servo engaged in depot, phase 1", 0 SCRIPT ERROR (`evidence/servo/boss-servo-bot-it1.log`).
+  NOT YET: the arena draws neither ServoRig nor the drones/rings (only the dev view does). That is
+  NEXT item 0: a Servo view attacher in `features/bosses/servo/` that BossHook's view calls for a
+  boss with a rig (ask king for the generic hook if there is none: REQUEST 3).
+
+NEXT (revised, iteration 2): 0. draw ServoRig + the swarm/rings/crates in the arena path
+(`--boss=servo`), filmed at 32 px/m with the real Rivet; then items 1-5 above (item 1, the
+REQUEST 2 merge, is done).
