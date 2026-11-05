@@ -7,7 +7,8 @@ extends InputSource
 ## and, if so, sprints out sideways of the aim, and rolls if it is still in the zone ROLL_LEFT
 ## ticks before the active window. `--bot-stand`
 ## is the standing bot: the same band, but it never strafes or dodges (the other end of each
-## attack's hit rate).
+## attack's hit rate). With cover between it and the boss (BossMoves.solids, the arena's props) the
+## dodging bot walks round it sideways for a line of sight, as a player would.
 
 const HOLD_M: float = 8.0
 const FIRE_M: float = 16.0
@@ -67,6 +68,8 @@ func sample(_tick: int) -> TickInput:
 	if away != Vector2.ZERO:  # the boss script's own late hazards (Servo's drop rings)
 		return _input(away, aim, fire, true, false)
 	var move: Vector2 = aim * clampf(band, -1.0, 1.0) + aim.orthogonal() * _side * 0.35
+	if stage.walls.blocks(me, f.body.pos):  # cover in the line (a wreck, crates): walk round it
+		move = to_boss.normalized().orthogonal() * _side + to_boss.normalized() * 0.25
 	if off_floor:  # drifting off the floor: head back in
 		move = home
 	return _input(move, aim, fire, false, false)
