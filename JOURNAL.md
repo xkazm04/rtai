@@ -275,3 +275,27 @@ NEXT (iteration 3, in order):
 5. The human-like bot (reads ~70 %, own RNG stream) + an n-seed runner -> boss-numbers.json.
 6. Clips into gtai-masters/n7/king/ (per attack 48 px/m, per phase 32 px/m, a full bot fight,
    the procession entering, the target hstack) + frames.json refresh.
+
+### CORRECTION 20:22: clock stamps
+The "MILESTONE 20:05" above was at about 19:58 and the "MILESTONE 20:30" (rigs, 409fddea) at about
+20:06 wall clock: I stamped estimates, not `date`. From here every stamp is read from `date`.
+
+### 20:10: combat no-regress on the branch
+`--bot=reel --reel=director --loadout=pistol` (headless, on 745ce3cf): 19/19 chapters fully down,
+0 SCRIPT ERROR (`evidence/king/director-reel-it2.log`; the run is cut by a 500 s timeout after the
+last chapter, the reel loops).
+
+### MILESTONE 20:21: the gang in the rich dress (c451665d)
+- `tools/art/gang_parts.py` (no generation, like thug_parts): from the thug parts, a black visor
+  with a gold frame across the helmet's front, two gold chains round the chest plate, gold knuckle
+  rings; `GangPlan` (ThugPlan with art_dir `gang`). Looked at it: `shots/gang_p2_32_t330.png`
+  (32 px/m) and `gang_p2_48_t330.png`.
+- **FRICTION / not solved:** at 32 px/m the rig prints flat stickers (PartMaterials LOD below
+  0.13 screen px per part px): the black visor reads (a black head), the gold chains do not (the
+  torso sticker is one flat grey). At 48 px/m the dev arena's noir print makes every robot body
+  an ink mass inside the cream rim (the same for the plain thug; Rivet keeps his light), so the
+  gold does not show there either. Gold on the rigs at game zoom needs either a gold fill in the
+  sticker LOD for the boss parts (a per-plan sticker colour, like Rivet's `core_tan`) or drawn gold
+  accents over the rig (like the car and cape). Next iteration decides; the King's wealth has the
+  same problem.
+- DECISION lines for pacing/bodies, the boulevard and the rigs are in docs/decisions.md.
