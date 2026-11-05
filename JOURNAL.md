@@ -220,3 +220,15 @@
   owner's call 8 B: a per-weapon gun outline (new appended PartKind + a weapon_art.json value, set from HeldLod or
   WeaponArt.make_held, NOT rivet_held_view.gd: it is at 299 lines and the held lane's file). (4) Old weapon PNGs:
   `git show <sha>:<png> | git lfs smudge`.
+
+## Iteration 6 (BUILD, 17:59-18:30; freeze 18:30)
+- 17:59 Started. Tree clean at 18b94432; NEXT says nothing owed. Held lane: no new REQUEST for calls.
+- GAP the combined defaults clip (17:04, director reel) has no Gatling chapter, so the 6179bf2d Gatling art was
+  filmed only in the arena (range) and as city stills. Filled it with a city-block clip, no project/ change.
+- 18:01 MILESTONE `M/look-8-gatling-city-32ppm.mp4` (25 s, `res://dev/arena/arena.tscn -- --arena=city
+  --loadout=gatling --weapon=gatling --bot=gunplay --ppm=32`, --fixed-fps 60 --quit-after 1500, 0 SCRIPT ERROR,
+  5 kills). Looked at a 4-tile grid + a 3x crop at ticks ~810-870 (`M/frames/look-8-gatling-city-firing-32ppm-x3.png`):
+  the Gatling reads as a long tan-and-ink rod with casings flying; blood red, cops blue. The vermilion streak there
+  is an incoming enemy round (non-Rivet tracers have a VERMILION core, gun_fx_art.gd:92): danger colour, per verdict.
+  frames.json: + the clip (index 2), - look-8-gun-tan-closeup-steps.png (file kept: REPORT cites it). 15 entries.
+- NEXT (any later session): nothing owed; exes current on 6179bf2d (branch head docs-only since). See iteration 5b NEXT.
