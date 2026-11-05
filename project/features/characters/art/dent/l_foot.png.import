@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfsteiqwc017k"
-path="res://.godot/imported/l_foot.png-0cddec3eb2c251a1e5ce9eefa0cc85f0.ctex"
+path="res://.godot/imported/l_foot.png-9d77d12305ed094f2814b54de374fe66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://features/souls/art/dent/l_foot.png"
-dest_files=["res://.godot/imported/l_foot.png-0cddec3eb2c251a1e5ce9eefa0cc85f0.ctex"]
+source_file="res://features/characters/art/dent/l_foot.png"
+dest_files=["res://.godot/imported/l_foot.png-9d77d12305ed094f2814b54de374fe66.ctex"]
 
 [params]
 

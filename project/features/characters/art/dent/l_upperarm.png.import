@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4irgtm5i48vr"
-path="res://.godot/imported/l_upperarm.png-7480b79ecc20e84f68f46350016b778a.ctex"
+path="res://.godot/imported/l_upperarm.png-428b7f9a5ac681acf5ca58fc1a5cf5b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://features/souls/art/dent/l_upperarm.png"
-dest_files=["res://.godot/imported/l_upperarm.png-7480b79ecc20e84f68f46350016b778a.ctex"]
+source_file="res://features/characters/art/dent/l_upperarm.png"
+dest_files=["res://.godot/imported/l_upperarm.png-428b7f9a5ac681acf5ca58fc1a5cf5b6.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c2tff31ylyv50"
-path="res://.godot/imported/l_thigh.png-9b12c61fc1884b822a137ee1eb79e96c.ctex"
+path="res://.godot/imported/l_thigh.png-818fb3fc24c8c534f5654614acd94c82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://features/souls/art/dent/l_thigh.png"
-dest_files=["res://.godot/imported/l_thigh.png-9b12c61fc1884b822a137ee1eb79e96c.ctex"]
+source_file="res://features/characters/art/dent/l_thigh.png"
+dest_files=["res://.godot/imported/l_thigh.png-818fb3fc24c8c534f5654614acd94c82.ctex"]
 
 [params]
 

@@ -1,0 +1,197 @@
+{
+ "blank": {
+  "size": [
+   2,
+   2
+  ],
+  "pivot_a": [
+   1.0,
+   1.0
+  ],
+  "pivot_b": [
+   1.0,
+   1.0
+  ]
+ },
+ "doc": "Dent (ghost-forms): parts cut from the r2 Codex sheet, resized to Rivet part px (rivet/parts.json) so DentPlan reuses Rivet's lengths; pivots at the joint discs (limb a = joint, b = end). blank = the parts Dent has none of (collar, pelvis, the hand is drawn on the forearm).",
+ "helmet": {
+  "size": [
+   201,
+   165
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   58.3,
+   82.5
+  ],
+  "pivot_b": [
+   144.7,
+   82.5
+  ]
+ },
+ "l_foot": {
+  "size": [
+   186,
+   95
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   40.9,
+   47.5
+  ],
+  "pivot_b": [
+   154.4,
+   47.5
+  ]
+ },
+ "l_forearm": {
+  "size": [
+   187,
+   92
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   18.7,
+   46.0
+  ],
+  "pivot_b": [
+   175.8,
+   46.0
+  ]
+ },
+ "l_shin": {
+  "size": [
+   133,
+   62
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   13.3,
+   31.0
+  ],
+  "pivot_b": [
+   117.0,
+   31.0
+  ]
+ },
+ "l_thigh": {
+  "size": [
+   175,
+   82
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   17.5,
+   41.0
+  ],
+  "pivot_b": [
+   154.0,
+   41.0
+  ]
+ },
+ "l_upperarm": {
+  "size": [
+   213,
+   90
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   34.1,
+   45.0
+  ],
+  "pivot_b": [
+   191.7,
+   45.0
+  ]
+ },
+ "r_foot": {
+  "size": [
+   186,
+   95
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   40.9,
+   47.5
+  ],
+  "pivot_b": [
+   154.4,
+   47.5
+  ]
+ },
+ "r_forearm": {
+  "size": [
+   187,
+   92
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   18.7,
+   46.0
+  ],
+  "pivot_b": [
+   175.8,
+   46.0
+  ]
+ },
+ "r_shin": {
+  "size": [
+   133,
+   62
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   13.3,
+   31.0
+  ],
+  "pivot_b": [
+   117.0,
+   31.0
+  ]
+ },
+ "r_thigh": {
+  "size": [
+   175,
+   82
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   17.5,
+   41.0
+  ],
+  "pivot_b": [
+   154.0,
+   41.0
+  ]
+ },
+ "r_upperarm": {
+  "size": [
+   213,
+   90
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   34.1,
+   45.0
+  ],
+  "pivot_b": [
+   191.7,
+   45.0
+  ]
+ },
+ "torso": {
+  "size": [
+   222,
+   346
+  ],
+  "sheet": "n6/ghost-forms/gen/r2/out/dent_parts.png",
+  "pivot_a": [
+   204.2,
+   173.0
+  ],
+  "pivot_b": [
+   37.7,
+   173.0
+  ]
+ }
+}
