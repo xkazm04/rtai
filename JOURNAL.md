@@ -897,3 +897,14 @@ NEXT (iteration 7, in order):
    calls: gold swap, leap_m, decree buff, A (ghost_k, + Tonnage's shove and Dent's car on a boss),
    B (wreck solid), C (band), D (gang steel). Command lines run through `RTAI.exe -- --boss=king ...`
    (the showcase preset boots the arena, so the boss flags reach BossHook).
+- 23:59 NEXT 1 done: director reel `--rigs --bot=reel --reel=director --loadout=pistol` headless on
+  3f95d031 (with the parked cars and the arena_game change): **19/19 chapters fully down, 0 SCRIPT
+  ERROR** (`evidence/king/director-reel-it6.log`), the same as it2/it3. Combat holds.
+- 23:58 NEXT 2 half done: `king_procession_enter_32ppm_it6.mp4` (63 s) cut from the it6 full fight,
+  0 s to King stepping down beside the wreck (~62 s; the bar's phase-3 flash at 58 s); the it3 cut
+  deleted. Looked at 40-72 s (one frame every 2 s) to place the step-down. Still open: the target
+  comparison re-shot at 32 px/m on the it6 head.
+- Evidence: `evidence/king/numbers-it6/` (Dent phase 3 seed 2, the human seed 2 with the cars, the
+  film's telemetry). Scratch AVIs deleted. frames.json 15.
+- Session ends here, everything committed. NEXT for iteration 7 is the list above minus items 1-2
+  (item 2 keeps the target comparison).
