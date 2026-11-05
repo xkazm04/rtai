@@ -841,3 +841,18 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
 - 07:28 FINAL GATES on ebc5ed9d, still tree (E:evidence-run-it13-final.log): PASS lint 13/13, unit 1019/0,
   scenarios 48, parity bit-exact, look/block goldens PASS; director reel 16/16, 0 SCRIPT ERROR
   (E:director-reel-it13-final.log).
+- 07:31 CHECK Tonnage on the pale kerb (`--form=tonnage --side=120`, 480 frames, 0 SCRIPT ERROR): the gunmetal press
+  with its ink plates and hazard stripes reads strongly on the cream slab. No change; scratch deleted. All four
+  forms are now judged on both floors (Dent needed the keyline; Kerf it11, Ohm and Tonnage above did not).
+
+NEXT (iteration 14, the last before the 08:30 freeze):
+1. Merge n5-cast / n6-ghost-powers if they moved (`--no-ff --no-commit`; then ALWAYS `git checkout HEAD --
+   JOURNAL.md REPORT.md evidence/director-reel-it7.log evidence/evidence-run-it7.log`), `--import`, unit,
+   director reel (`--headless --quit-after 24000 --path project res://dev/arena/arena.tscn -- --bot=reel
+   --reel=director`).
+2. Final evidence runner `--no-bench` on a still tree (log to masters scratch, copy in after) before 08:30;
+   last all-PASS on ebc5ed9d. Then REPORT: turn the DRAFT line into final and add the session-state line.
+3. Polish candidate if time: re-film the all-four city cycle with the keyline (forms-cycle-all-city-32ppm.mp4 is
+   from 06:24, before it) only if Dent's frames in it change visibly; otherwise leave it.
+Session state 07:32: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
+bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
