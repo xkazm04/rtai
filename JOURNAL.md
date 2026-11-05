@@ -173,3 +173,24 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
 3. One SoulPowers for every ghost: `StagePilot.ghosts` (GhostPilot); `pilot.hauler` / `pilot.dent` still point at
    the stages. Kerf/Ohm: add `KerfStage`/`OhmStage` with `share(powers)` and drive them from GhostPilot.drive
    (gate on `settled_in(&"kerf")`); `owns_melee()` then needs your stage's flag (one line each).
+
+### Dent (item 2 of the order), started 01:03
+- 01:03 Dent part sheet job (`M:gen/r2/jobs.json` `dent_parts`, refs: the Dent concept + r1's style ref), image.lock
+  created noclobber by this lane and deleted after (one job, ~3 min; lock absent before and after). Back clean:
+  head with the quartered target disc, harnessed torso with shoulder discs, upper arm, forearm + open hand, thigh
+  with the knee disc, boot; pale grey-beige dummy plastic, gunmetal joints, teal only in the cracks.
+  `M:frames/dent-sheet-vs-target.png`. Cut by tools/art/ghost_parts.py into `features/souls/art/dent/`: helmet,
+  torso, r_foot rotated 90 deg (sheet front = down the page; the rig faces +x), l_ limbs mirrored from r_, shin =
+  a copy of the thigh (no shin cell). 12 provenance lines in `steam/ai-provenance/2026-11.jsonl`.
+- Registry rules applied: `generated-asset-world-scale` (the parts get sized in metres against Rivet's footprint
+  in the plan, never by sheet px: Dent's row says size_k 1.05, radius 0.45 m), `sprite-and-atlas-production`
+  (judge at 32 px/m on the rig before calling the art done).
+- Not done: DentPlan. The humanoid CutRig reads parts.json per art dir (size, scale, pivot_a/pivot_b per part,
+  Rivet's in `features/characters/art/rivet/parts.json`, measured by the d5 slicer) and PartLibrary resolves
+  art dirs under `features/characters/art/`. Next: measure Dent's parts.json (limb pivots at the joint discs:
+  upper arm shoulder disc left / elbow cap right; forearm elbow left / wrist right with the hand drawn on, so
+  hand parts = "" or a 1 px blank; thigh hip left / knee disc right), DentPlan = RivetPlan.build(base) with
+  art_dir pointing at the dent parts, no collar/hose/claws, size_k 1.05 x 0.97; GhostFormView swaps Rivet's
+  rig for a Dent CutRig (CharacterRigs can't take a second plan for one actor: a standalone CutRig on the view,
+  fed from Rivet's pose like TonnageRig) and the stagger gait.
+- 01:07 SCENARIOS on 2bdc3fbf: 47 ran, 0 failed, 0 SCRIPT ERROR (`E/scenarios-iter2.log`).
