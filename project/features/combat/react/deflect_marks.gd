@@ -78,5 +78,7 @@ func _burst(ci: CanvasItem, at: Vector2, turn: float, t: float) -> void:
 func _streak(ci: CanvasItem, at: Vector2, back: Vector2, t: float) -> void:
 	var head: Vector2 = at + back * streak_m * minf(1.0, t * 3.0)
 	var tail: Vector2 = at + back * streak_m * t
-	ci.draw_line(Ink.px(tail), Ink.px(head), Color(Ink.INK, 1.0 - t), 7.0, true)
-	ci.draw_line(Ink.px(tail), Ink.px(head), Color(Ink.CREAM, 1.0 - t), 3.0, true)
+	var a: float = 1.0 - t * t  # stays opaque and thins out (a linear fade greyed the cream on ink)
+	var w: float = 1.0 - 0.6 * t
+	ci.draw_line(Ink.px(tail), Ink.px(head), Color(Ink.INK, a), 7.0 * w, true)
+	ci.draw_line(Ink.px(tail), Ink.px(head), Color(Ink.CREAM, a), 3.0 * w, true)
