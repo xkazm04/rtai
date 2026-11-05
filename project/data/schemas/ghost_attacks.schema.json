@@ -191,6 +191,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "branch_k": {
+          "maximum": 1,
+          "minimum": 0.1,
+          "type": "number"
+        },
         "car_damage": {
           "maximum": 999,
           "minimum": 0,

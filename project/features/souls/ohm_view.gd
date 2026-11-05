@@ -12,6 +12,10 @@ extends Node2D
 ## ink reaching from each tip toward the aim, 0.25 -> 0.9 m) to a white "ready" glint, and the fire
 ## frame flashes white at the tips: the next bolt is seen coming. ghost_attacks.json ohm
 ## tell_glow_m (0 = the old steady sparks); --feel=off = the old sparks too.
+## n7-melee: the branches. A hop from a struck body (the fork chain's next link, the mass arc's
+## fan out of the first body) draws at ghost_attacks.json ohm branch_k of the bolt's strokes and
+## flash, so the strike reads as one bolt that spreads and a crowd under the mass arc is not
+## buried under equal ropes (the 32 px/m film, 2026-11-05). 1 or --feel=off = the old look.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -33,6 +37,9 @@ var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
 var tell: bool = HitFeel.feel_flag() != "off"
+var branch_k: float = (
+	GhostAttacks.shipped().num(&"ohm", &"branch_k") if HitFeel.feel_flag() != "off" else 1.0
+)
 
 
 func _process(_delta: float) -> void:
@@ -67,9 +74,10 @@ func _draw() -> void:
 			_stroke(_jag(prongs[0] * ppm, join, beat + i), fade, PRONG_K)
 			_stroke(_jag(prongs[1] * ppm, join, beat + i + 7), fade, PRONG_K)
 			_stroke(_jag(join, b, beat + i + 3), fade, 1.0)
+			draw_circle(b, 0.3 * ppm * fade, Color(WHITE, 0.8 * fade))
 		else:
-			_stroke(_jag(o.bolt_path[src] * ppm, b, beat + i), fade, 1.0)
-		draw_circle(b, 0.3 * ppm * fade, Color(WHITE, 0.8 * fade))
+			_stroke(_jag(o.bolt_path[src] * ppm, b, beat + i), fade, branch_k)
+			draw_circle(b, 0.3 * ppm * fade * branch_k, Color(WHITE, 0.8 * fade))
 
 
 func _stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
