@@ -118,7 +118,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   size_k 1.2 Rivet with a teal torch tip (off doctrine). Now captures of the shipped rigs (`rivet_sprite.gd`): the slim
   D cop 1.45 x 2.83 m, the hybrid Rivet 2.37 x 2.07 m, the hide-spot peek 0.97 m (`collect_call_art.json`, true
   scale). Same sim, before | after: `M/frames/quest1-sprites-ab-32ppm.png`, `M/cast-quest1-sprites-ab-32.mp4` (10 s,
-  Dock 9); 64 px/m `M/frames/quest1-sprites-ab-64ppm.png`, `M/cast-quest1-sprites-ab-64.mp4`; under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. Gap: a 120 px/m capture lacks the rig's
+  Dock 9); 64 px/m `M/frames/quest1-sprites-ab-64ppm.png`, `M/cast-quest1-sprites-ab-64.mp4`; under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. The opening scene (tick 350, Rivet hidden in the dumpster
+  while the patrol passes): the peek is the hybrid helmet in the collar: `M/frames/quest1-opening-peek-cop-ab.png`. Gap: a 120 px/m capture lacks the rig's
   32 px/m stickers (tan core, visor slot), so the sprite Rivet prints paler than the rig Rivet; hosting the rigs in
   the default quest view is rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
 
@@ -260,8 +261,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   every ped torso and the hat, hair, hood, beanie and cap heads are plan-view redraws since iteration 12; the
   bald head and the shoes were judged plan-view already (a skull disc with ears and a nose nub; a capsule shoe); every ped head and torso has D5 hatching since 093f4b73 / f5733b83.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
-- Quest 1's sprite cast (b68665b1): the re-captured hide-spot peek (0.97 m, was 1.03 m) was not seen in a game frame
-  (no recorded tick with Rivet hidden was found this session); the sprite Rivet lacks the rig's 32 px/m tan core and
+- Quest 1's sprite cast (b68665b1): the sprite Rivet lacks the rig's 32 px/m tan core and
   visor slot (a 120 px/m capture), so default quest 1 shows a paler Rivet than `--rigs`.
 
 ## Calls for the owner

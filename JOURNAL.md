@@ -1302,3 +1302,8 @@ NEXT (iteration 21, the last BUILD before the 08:30 freeze):
    lost on asphalt; a 32 px/m-only sprite would need a second row (`rivet_lod`) in collect_call_art.json and a pick by
    ppm in `CastView._rivet`; otherwise leave (hosting the rigs is rivet-arsenal Call 1).
 4. Before 08:30: `tools/evidence/run.mjs --no-bench` on the final head; never edit tracked files while it runs.
+- 07:00 NEXT 2 done early: the quest bot hides in the dumpster in the opening (HUD "Stay hidden", ticks ~200-650).
+  Tick 350 at 32 and 64 px/m, before (7005b5c8 files, restored, tree clean) | after, 0 SCRIPT ERROR all:
+  `M/frames/quest1-opening-peek-cop-ab.png`: the peek is the hybrid's welder helmet in the hazard collar on the
+  dumpster, the patrol the slim D cop. frames.json 15 (it on top; ped-hat-crown dropped from the list, file kept).
+  REPORT open item narrowed to the sprite Rivet's missing 32 px/m stickers. Scratch stills deleted.
