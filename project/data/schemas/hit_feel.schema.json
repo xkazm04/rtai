@@ -143,6 +143,10 @@
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
           },
+          "ignite_kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
           "kick_px": {
             "minimum": 0,
             "type": "number"

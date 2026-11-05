@@ -8,6 +8,9 @@ extends RefCounted
 ## Other attacks (melee, ghost powers, a boss slam) call hit() with their own weapon id and class.
 ## View only: made by the view, never in a headless replay; nothing here is read by the sim.
 
+## A trigger rested this long lights up again with the weapon's ignite_kick_px (the flamer).
+const IGNITE_IDLE_TICKS: int = 20
+
 var feel: HitFeel
 var budget: FeelBudget
 var clock: SimClock = null
@@ -23,6 +26,8 @@ var _rig: CameraRig = CameraRig.new()
 var _kicks: Array[Vector4] = []
 ## Rivet's rounds already seen in flight (the fire kick fires once per new round).
 var _seen: Dictionary[Shot, bool] = {}
+## The tick each weapon last fired (the ignition kick waits for a rest of IGNITE_IDLE_TICKS).
+var _last_fire: Dictionary[StringName, int] = {}
 
 
 static func attach(arena: CombatArena, p_clock: SimClock, p_feel: HitFeel = null) -> FeelCam:
@@ -123,6 +128,10 @@ func fire(weapon: StringName, aim: Vector2, tick: int) -> bool:
 	if not feel.enabled or reduced_motion:
 		return false
 	var row: Vector2 = feel.fire_row(weapon)
+	var last: int = _last_fire.get(weapon, -IGNITE_IDLE_TICKS - 1)
+	_last_fire[weapon] = tick
+	if tick - last > IGNITE_IDLE_TICKS:
+		row.x = maxf(row.x, feel.ignite_px(weapon))
 	if row.x <= 0.0 or aim == Vector2.ZERO or not budget.take_kick(tick):
 		return false
 	var v: Vector2 = -aim.normalized() * row.x

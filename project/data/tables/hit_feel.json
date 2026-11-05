@@ -159,6 +159,12 @@
   "schema": "gtai.hit_feel/1",
   "weapons": [
     {
+      "doc": "The flamer lighting up (brief item 5, the ignition read): its puffs do not kick (about 20 a second would blur), but the first puff after the trigger has rested (FeelCam.IGNITE_IDLE_TICKS) kicks the camera back against the stream, a whump as it lights.",
+      "fire_kick_ticks": 9,
+      "id": "flamethrower",
+      "ignite_kick_px": 3
+    },
+    {
       "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 1.8 px kick against the aim per round (4 ticks; 0.7 measured +0.07 px rms, unreadable), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur. Spin-up: a tremor growing to 1.5 px while the barrels come up to speed (0.5 s), the anticipation before the first round; it fades the same way on the wind-down.",
       "fire_kick_px": 1.8,
       "fire_kick_ticks": 4,
