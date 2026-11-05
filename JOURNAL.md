@@ -430,3 +430,22 @@ film.sh and reel.sh, frames.json 15 (all files present), image.lock never taken,
   (`E/director-reel-it4-final.log`).
 Session state 03:03: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
 film.sh and reel.sh, frames.json 15 (all present).
+
+## Iteration 5 (03:04-04:04, BUILD)
+- 03:04 read JOURNAL, git log, the forms/cast JOURNALs: no new REQUEST to ghost-powers (forms lane merged ours at
+  d3ca8581). MERGE n6-ghost-forms b2ea5f1f (394c58a4: n5-cast b16becfb D5 ped heads/bald head/cap size, the ghost
+  body's Z_OVER_RIGS +60; JOURNAL/REPORT keep ours) + one `--import`.
+- 03:09 MILESTONE 51ae297c the robot victim (NEXT 4, weakest item): ArenaRobotRigs puts the arena's BOSS brain on the
+  robot thug's rig (ThugPlan: gunmetal frame, claws, one optic), poses it on CharacterRigs' tick count, shoves it on
+  hits, plays DeathPipe.kill_robot on death; CombatBlood.robot_ids makes its death leak oil, not red. A/B
+  `M/frames/ohm-robot-rig-ab-32ppm.png` (same seed, ~1/2/3 s): before a blue cop dying to Ohm's machine_k bolt in a red
+  splat, after a gunmetal robot powering down in black oil. Kerf's robot kill re-filmed on the rig
+  (`M/kerf-arena-32ppm.mp4`), Ohm's arena clip replaced (`M/ohm-arena-32ppm.mp4`). 0 SCRIPT ERROR. Unit 976/0
+  (`scratch/unit-it5.log`). FRICTION combat_blood.gd is now 299 lines (hard stop 300): the next change there must
+  split it first.
+- 03:16 MILESTONE c30d488f Kerf under `--gore=reduced` (NEXT 5): the slice's kill kind is `cauterised` (a DRY_KILLS
+  entry, robot ids excepted): no red pool when the signature split is off. A/B
+  `M/frames/kerf-reduced-gore-ab-32ppm.png` (3/5/7/9 s): before red pools and stains, after the cops drop whole, the
+  cut line hangs. scenario --filter=ghost 1/0 (`evidence/scenario-ghost-it5.log`). DECISIONs in decisions.md.
+- Rules applied: `motion-quality-gating` (A/B pairs at the same tick and zoom from deterministic runs, judged in
+  motion at 32 px/m); `depth-ordered-layered-art` (the robot rig on the rigs' own z, under the ghost body's +60).
