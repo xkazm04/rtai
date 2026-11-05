@@ -35,6 +35,13 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   the target: `M/frames/cops-navy-vs-r2c5-64ppm.png`; lineup `M/frames/cop-navy-ab.png`; city on dark asphalt
   `M/frames/city-navy-ab-32ppm.png`; director reel unchanged in sim `M/frames/director-navy-ab-32ppm.png`
   (`M/cast-navy-director-32.mp4`, `M/cast-navy-city-32.mp4`).
+- Bright crowns over navy sleeves (2329c483, iteration 19, Call 4 D built): the patrol cap and riot helmet crowns
+  print `cop_blue_hi` (re-derived from the pre-navy art, `cop_crown_hi.py`), the upper-arm sleeves go navy
+  (`cop_sleeve_navy.py`), D4 and D5: r2_c6's bright head over a navy body. On the cream slab, where r2_c6 stands its
+  cops, the old bright sleeves read as a backpack behind a navy head; now each cop is one figure with one bright head.
+  Lineup slab / road / 64 px/m beside r2_c6: `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png`; live city A | D:
+  `M/cast-call4-city-ad-32.mp4`, `M/frames/cop-call4-city-ad-32ppm.png`. Director reel 16/16 down, react board at
+  64 px/m (flinch, knockdown, corpses, burn, electro) reads, 0 script errors.
 
 ### 3. Rivet as the hybrid (brief item 3), 516475c9 .. fa395f74
 - Rig: size_k 0.97, lanky legs (leg_k 1.15, gait_k 1.15), arms 0.85 long; `FORM_STOCKY` keeps the old base for A/B
@@ -86,8 +93,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `M/frames/director-final-ab-32ppm.png` (claw combo, pistol, machine pistol identical tick for tick).
 - City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`; with the navy cops
   `M/cast-navy-director-64.mp4` (still `M/frames/director-navy-64ppm.png`).
-- Target composite: `M/frames/cast-ingame-vs-r2c6.png` (re-shot on 550b000d with the full tan core, Call 9 C, from
-  `M/cast-tan-city-ac-32.mp4`, tick 720, with a Rivet x4 inset).
+- Target composite: `M/frames/cast-ingame-vs-r2c6.png` (re-shot on 2329c483 with the Call 4 D cops and the full tan
+  core, from `M/cast-call4d-city-32.mp4`, tick 720, with a Rivet x4 inset).
 - Every weapon (iteration 8): the full director reel WITH `--loadout=pistol` (the reel's documented args; my
   earlier checks lacked it, n5-look's note), 7200 ticks at 32 px/m: all 16 chapters n/n down, 0 script errors.
   One frame per chapter: `M/frames/director-loadout-16ch-32ppm.png`; clip of rocket .. katana
@@ -154,7 +161,11 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   The hoodie's flat cap at the beanie head size (621c0d3f): more pale hoodie shows round a smaller dark head at 32 px/m
   (`M/frames/crowd-cap-size-ab.png`).
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
-  the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
+  the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
+
+### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on 2329c483 (Call 4 D, the bright cop crowns): ALL PASS:
+lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.32), block 5/5
+(worst 1.52), no re-bless. Bench skipped (other Godot processes and Python jobs running: CONTENDED, unmeasured).
 
 ### Gates (iteration 18 final, `tools/evidence/run.mjs --no-bench` on 551ed9c6 (the dark hood): ALL PASS: lint 13/13,
 unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.21), no re-bless.
@@ -239,7 +250,12 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 3. Held guns: n5-look answered my REQUEST (n5-look 01cd19f2, `rivet_arsenal.json held_size_ref` 1.2): after the
    merge the held gun follows `plan.size_k`, so this 0.97 Rivet carries 0.81x guns (their still
    `gtai-masters/n5/look/held-size-ab-cast-merge.png`; before: `M/cast-hybrid-director-64.mp4`). Off = 0.
-4. The patrol cap and riot helmet crowns: navy as in r2_c5 (built, e1f848a5 and the helmet commit after it), or
+4. The cops' blue. **D is built since iteration 19 (2329c483)**: bright police-blue crowns over navy sleeves, r2_c6's
+   read; on the cream slab (r2_c6's ground) it is the closer match, on dark asphalt the cops are quieter (one bright
+   head dot instead of two bright pads): `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png`, `M/cast-call4-city-ad-32.mp4`.
+   Back to A = the 8 PNGs (`art/cop` and `art/d5/cop`: `head_cap`, `head_helmet`, `upperarm`, `upperarm_endon`)
+   from 6812dcdd, or `git revert 2329c483`.
+   A, built before it: the patrol cap and riot helmet crowns navy as in r2_c5 (e1f848a5 and the helmet commit after it), or
    d5-cast's cream "T1" crowns, a stronger head mark at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right;
    `M/frames/riot-helmet-navy-ab.png`). Revert = `git revert e1f848a5` (limbs too) or
    restore only `art/cop/head_cap.png` and `art/d5/cop/head_cap.png` from 29a853be.
@@ -248,7 +264,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    bright upper-arm sleeves into one blue cluster, so the head stops being a distinct mark
    (`M/frames/cop-crown-trial-32ppm.png`). r2_c6's read (bright helmet over a navy body) would need navy sleeves too,
    and the targets disagree there (r2_c5 navy all over, r2_a5 bright shirts): your pick.
-   Option D, also tried and not built: bright crowns AND navy upper-arm sleeves (the r2_c6 hierarchy, a bright head
+   Option D (iteration 10 trial on asphalt; built in iteration 19, see above): bright crowns AND navy upper-arm sleeves (the r2_c6 hierarchy, a bright head
    over a navy body): `M/frames/cop-crown-sleeve-trial-32ppm.png` (A | D, same ticks, beside r2_c6). D reads like
    r2_c6 but the cops get quieter on asphalt. Build = `cop_crown_hi.py` on the pre-navy crowns + the sleeve rule in
    JOURNAL 23:33 (D4 and D5 `upperarm`, `upperarm_endon`), then the react board and a golden check.

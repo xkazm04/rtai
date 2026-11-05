@@ -1188,3 +1188,24 @@ Session end 05:50: tree clean after this commit, no Godot process of mine runnin
 - 05:56 GATE on 52065472 (`--no-bench`): lint 13/13, scenarios 46, parity exact (mutation at 629), look goldens 11/11
   (worst 1.21), block goldens 5/5; unit 954 passed 0 failed but flagged FAIL by the tree-change check: my own JOURNAL
   append at 05:53 landed during the run (FRICTION: never edit tracked files while the gate runs). Re-gate at the end.
+- 05:57-06:00 Call 4 D trial on the slab: `cast_lineup` (slab, `--road`; 32 and 64 px/m) on HEAD (A) and with the 8
+  D PNGs installed (re-import, render, `git checkout HEAD --` the two cop art dirs, re-import, tree clean), 0 SCRIPT
+  ERROR all four. Lossless x4: on the cream slab A's two bright sleeve blobs read as a backpack behind a navy head; D
+  is r2_c6's cop, one bright head over a navy body. On the road D is quieter but the cream rim and the head dot hold.
+- 06:00 DECISION: build D (the iteration 10 hold was judged on asphalt only; r2_c6 stands its cops on the slab, and
+  r2_a5 too has bright helmets). Revert = the 8 PNGs from 6812dcdd. Registry `motion-quality-gating`: judged in motion
+  in the live city before building (`film.sh cast-call4d-city-32 32 900 --bot=reel --arena=city
+  --loadout=pistol,machine_pistol --clean`, 0 SCRIPT ERROR; A side = the after half of `cast-hat-city-ab-32.mp4`, the same
+  sim, its cops unchanged since): `M/cast-call4-city-ad-32.mp4`, crops `M/frames/cop-call4-city-ad-32ppm.png`. Each cop
+  counts as one figure with one bright head; A's clusters show two to three bright dots per cop.
+- 06:00 COMBAT CHECK on D: director reel headless (`--bot=reel --reel=director --clean --rigs --loadout=pistol`, 7200
+  frames) 16/16 chapters n/n down, 0 SCRIPT ERROR. React board 64 px/m (`react_board_run.gd -- --zoom=2 --every=4`,
+  481 frames, 0 SCRIPT ERROR): flinch, knockdown, the corpse poses, burn (charred) and electro read; the cop corpses
+  keep the bright head dot (sheet looked at, frames deleted).
+- MILESTONE 2329c483: Call 4 D built (bright crowns `cop_crown_hi.py`, navy sleeves `cop_sleeve_navy.py`, D4 + D5).
+  Decisions line. Still `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png` (slab, road x4, 64 px/m x2, beside r2_c6).
+- 06:06 EVIDENCE GATE on 2329c483: ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact, look goldens 11/11
+  (worst 1.32), block 5/5 (worst 1.52), no re-bless. Bench skipped (contended).
+- 06:08 brief item 5 composite re-shot on 2329c483 (`M/frames/cast-ingame-vs-r2c6.png`, from the D city clip t=12 s).
+  REPORT section 2, section 4, Call 4 (D built, A = revert) and the gates line. frames.json 15 (the two Call 4 stills on
+  top; torch-cream and visor-slot-quest1 dropped from the list, files kept, REPORT cites them).
