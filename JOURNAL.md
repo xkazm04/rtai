@@ -672,3 +672,46 @@ NEXT (iteration 5, in order):
 - 22:10 unit on a9ec2ba8: 1146/0 (`evidence/king/unit-it4b.log`). The session ends with everything
   committed. NEXT for iteration 5 stands as written above (22:10 block). Item 2 is partly done:
   the ghost bot closes in for Tonnage. Still open: Dent's cars, and a Kerf clip.
+
+## Iteration 5 (22:12-23:12): BUILD
+
+Read: JOURNAL (NEXT of it4), git log, servo's JOURNAL (no new REQUEST to king since REQUEST 5; its
+NEXT item 2 asks for a generic roll when BossBot's sidestep is blocked: open, see NEXT).
+Registry rules applied: encounter-balance-simulation (attribution: no one attack over ~0.3-0.35 of
+the damage taken; change one lever at a time, the same seeds before and after; n and CONTENDED
+named), combat-pacing-and-dramatic-arc (the fight's length set by the phases, not one attack).
+
+### 22:24 tuning lever 1 measured and REJECTED: coin fan cooldown 2.5 -> 4 s
+- Same 15 (seeds 1-5 x dodge/human/stand, CONTENDED), `evidence/king/numbers-it5a/`, 0 script errors.
+- Coin fan tries barely move (human 44 -> 42, stand 37 -> 36): its own cycle (windup 1.1 + active 0.6
+  + recovery 0.9 + gap 1.2-1.4 = 3.8 s) is already longer than 2.5 s, so the cooldown never binds.
+  The human's coin-fan landings fell 14 -> 10 (share 0.47 -> 0.38), but with the same tries that is
+  the bot's read draws, not the lever. Reverted (cooldown stays 2.5).
+- Lever 2, running: the hail's damage 14 -> 10 per hit (a spray of coins: many light hits).
+
+### 22:15 FILM ghosts on King, phase 3, 48 px/m (NEXT item 2)
+- `gtai-masters/n7/king/king_kerf_p3_48ppm_it5.mp4` (10 s, --ghost=kerf, boss cam, 0 script errors):
+  King down at tick 488. **Looked at** the contact sheet (`king_kerf_p3_frames_48ppm_it5.png`): the
+  teal Kerf form blinks through King three times (ticks 219-379), takes one charge in its locked
+  lane (tick 179), King down with his crown off. It reads.
+- `king_tonnage_p3_48ppm_it5.mp4` (20 s, --ghost=tonnage): the hauler closes in and stomps beside
+  King (teal ring, ground cracks, ticks 328-495), then the soul ends; King down at tick 1066. It reads
+  as a shove: the stomp's 3 damage (it4 note) shows.
+
+### 22:22 MILESTONE owner call A is one data value: `ghost_k` (f468f112)
+- Generic optional boss field `ghost_k` (schema 0-4, default 1 = as built): while Rivet is settled
+  in a ghost form, the hp the boss loses goes through BossFight.hurt() times ghost_k
+  (`BossHook._ghost_k`, `BossAdds.route(f, last_hp, k)`). King has none (1.0). Unit test_boss_adds
+  +1 (k 0.5 halves a hit; King's default is 1). Unit 1147/0.
+
+### 22:27 MILESTONE the throne-car's plush and drapes (ede518b5)
+- `KingCarTrim`: plum-quilted roof panels between gold cross-bars (the 90-degree panel) and five
+  plum swags per side with gold hems and tassels, bellying 0.22 m past the body (the 3/4 view's
+  drapes). First pass at 0.12 m was 4 px at 32 px/m and hid under the riders: widened.
+- **Looked at** `evidence/king/shots/drapes_p1_48ppm_t240.png` and the target side by side
+  (`gtai-masters/n7/king/king_target_vs_game_car_drapes_48ppm_it5.png`): the swags scallop out of
+  the car's side and the roof reads in plum and gold panels as on the sheet.
+- **FOUND** in the same still: the gang print as **solid black** silhouettes at 32-48 px/m
+  (only the gold visor arcs survive), steel only from 56 px/m where the D5 overlay prints. Not the
+  car's shadow: on foot in phase 2, far from the car, they are black too (`p2` still). The cause is
+  the thug's dark D4 steel (median luminance 74). The target's gang is steel grey with gold chains.

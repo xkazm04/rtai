@@ -12,7 +12,7 @@ ERROR: Condition "!actions.custom_samplers.has(function->arguments[j].tex_builti
        [2] attach_view (res://features/combat/kills/brutality_hook.gd:115)
        [3] _add_view (res://dev/arena/arena_game.gd:168)
        [4] _ready (res://dev/arena/arena_game.gd:52)
-[INFO] characters: prewarmed 33 rigs in 168.7 ms
+[INFO] characters: prewarmed 33 rigs in 110.8 ms
 [INFO] arena: cast rigs: true
 [INFO] bosses: king phase 2 (court)
 [INFO] bosses: king: 4 king_gang
