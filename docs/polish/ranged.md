@@ -31,13 +31,13 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 3 | gatling | ? | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; spin-up not judged yet |
 | 4 | plasma_rifle | 2 | 2 | 2 | 1 | 0 | impact star and a cream glow at the cop, but the struck/killed body barely answers (owner item 1) |
 | 5 | electro_gun | 2 | 2 | 2 | 2 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads, the struck human is thin (owner item 1) |
-| 6 | homing_shard | ? | ? | ? | 2 | 0 | jolt on the hit frame (main `9abe4bc7`), the pop waits 39 ticks (owner item 4, JOURNAL) |
+| 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
 | 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
 | 8 | ray_gun | 2 | 2 | 2 | 2 | 0 | ink bolt and star on the hit frame, a pale ring at the body; the kill reads as a faint flash, the body barely answers at 32 px/m |
 | 9 | flamethrower | ? | 2 | 2 | 3 | 0 | burn death: star and a charred black body on the kill frame, scorch marks stay; the stream itself was not in the sampled frames |
 | 10 | molotov | ? | 3 | 3 | 3 | 0 | the fire patch reads at a glance (vermilion and cream flame cluster), the burning cop dies charred with a star; the throw not judged |
 | 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
-| 12 | machine_pistol | ? | ? | ? | ? | 0 | filmed, not scored |
+| 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
 | 13 | gloria | ? | ? | ? | ? | 0 | filmed, not scored |
 | - | assault-rifle | ? | ? | ? | ? | ? | in rivet_arsenal.json, not in weapons.json (`--weapon` cannot arm it); film via `--loadout` |
 
