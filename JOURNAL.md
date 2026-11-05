@@ -1337,3 +1337,39 @@ Session end 07:09: tree clean after this commit, no Godot process of mine runnin
   hides in the harbor skip: the new peek reads as the collar ring round the pale helmet on the skip (after only,
   `M/frames/quest1-skip-peek-32ppm-x4.png`). REPORT section 2. Scratch stills deleted.
 Session end 07:13: tree clean after this commit, no Godot process of mine running, locks never taken.
+
+## Iteration 21 (BUILD, 07:12-)
+- 07:12 read JOURNAL (NEXT of 07:04/07:13), git log, REPORT open items, n5-look JOURNAL (no new REQUEST to cast).
+  Other lanes' Godot processes running: bench skipped all session. Weakest item picked: default quest 1's sprite Rivet
+  (the only Rivet of the default quest) prints a cream figure in a striped ring at 32 px/m, while the rig Rivet
+  (--rigs, arena, city) prints the Calls' tan core (9 C), visor slot (8 B) and collar breaks (7 A) there.
+- 07:15 FRICTION: a first try forced `PartMaterials.set_flat_below(INF)` in the capture: no change, because
+  print_part also gates the sticker on `px_scale` (`small = 1 - smoothstep(0.12, 0.30, px_scale)`), 0.375 at
+  120 px/m. Fix: the capture tells the rigs `zoom` 1.0 (materials + detail tier + anim rate only, checked in
+  character_rigs.gd) while the actors layer still draws at 120 px/m = a supersampled 32 px/m print
+  (`rivet_sprite.gd --tier=sticker`).
+- 07:17 captured (0 SCRIPT ERROR), matted with `masters:n5/cast/tools/matte_centred.py` (2.367 x 2.083 m, the rig
+  root at the centre as for the art capture), rim `masters:night/d4-production/tools/sprite_rim.py 5`, peek
+  `rivet_peek.py 50` (both tools re-checked: they reproduce the committed cast_rivet / cast_rivet_peek bit-exact).
+- CastView `_lod_art(id)`: `<id>_lod` when `CutRig.SC * ppm / 32 < PartMaterials.flat_below` (about 42 px/m; ppm from
+  `get_global_transform_with_canvas()` x Ink.PX_PER_M), for Rivet, the Hauler grow (same size rule) and the peek.
+  `LOD_SPRITES` false = the old behaviour. Rows `rivet_lod`, `rivet_peek_lod` in collect_call_art.json (true scale);
+  test_quest_art checks both load at true scale. Lint 13/13, unit 954/0.
+- DECISION (docs/decisions.md 2026-11-05 quest1 art): the sprite Rivet and peek draw the sticker-tier capture below
+  ~42 px/m. Rejected: a sticker capture at every zoom (it would replace the close-up art); hosting the rigs (Call 1).
+  Registry `sprite-and-atlas-production`: "a sprite is a set" (both variants share the anchor, the rig root at the
+  centre, so the swap does not jump) and "treating resolution as quality" (the 120 px/m capture is not the 32 px/m
+  read); `generated-asset-world-scale`: true scale, size_m = px / 120, no draw_k.
+- MILESTONE 02e4295c. Evidence (default quest 1, same sim; before = HEAD~ files / the flag off, restored, tree clean,
+  0 SCRIPT ERROR every run): `M/frames/quest1-rivet-lod-ab-32ppm.png` (ticks 900, 13660 x3: before | after | the rig
+  Rivet under --rigs; the peek at 350 dumpster and 17400 harbor skip x4), `M/cast-quest1-rivet-lod-ab-32.mp4`
+  (10 s, Dock 9 13560-14160, before | after). 64 px/m: 0 px differ at ticks 900 and 13660 (the art capture kept).
+  Judged: the sprite Rivet now reads as the rig Rivet (tan core in the dark hazard collar, grey limb rods); the peek is
+  a tan helmet with the visor slot in the collar, a hard r 50 disc (the collar's ink edge is cut round), its breaks
+  keep it from the plain-ring reticle read. frames.json 15 (it on top; rivet-warm-ab-vs-r2c3-64ppm dropped from the
+  list, file kept, REPORT Call 5 still cites it).
+- 07:35 EVIDENCE GATE on 02e4295c (`--no-bench`, tree untouched during the run): ALL PASS: lint 13/13, unit 954/0,
+  scenarios 46, parity exact (629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless needed.
+- 07:38 COMBAT CHECK on 02e4295c: director reel headless (`--fixed-fps 60 --quit-after 7200 --bot=reel
+  --reel=director --clean --rigs --loadout=pistol`): 16/16 chapters n/n down (claw_combo 2/2 .. mini_nuke 4/4),
+  0 SCRIPT ERROR (the arena does not draw the quest sprites). REPORT sections 4, open items and gates updated.
