@@ -116,7 +116,7 @@ func _begin(opened: Quest1Session) -> void:
 			_characters = CityCharacters.new(session.city, view.city_view, session.world.context())
 			_characters.rivet_on_foot = false
 			_characters.bake()
-		_dev_rigs()
+		_casts()
 		_audio = StageAudio.attach(
 			self, session.stage, session.system, Events, Quest1Session.MASTER_SEED
 		)
@@ -241,3 +241,11 @@ func _dev_rigs() -> void:
 	add_child(cast)
 	var ok: Variant = cast.call("attach", session.stage, view, session.world.context())
 	Log.info("quest1", "cast rigs: %s" % ok)
+
+
+## The cast (_dev_rigs), then the ghosts' attack views over either cast (lane ghost-powers,
+## GhostAttackViews: quest 1 runs every ghost's attack through StagePilot, so it draws them too).
+func _casts() -> void:
+	_dev_rigs()
+	@warning_ignore("return_value_discarded")
+	GhostAttackViews.attach_quest(view, session.stage, settings.reduced_motion)

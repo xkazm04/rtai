@@ -1,4 +1,4 @@
-# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 6)
+# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 7)
 
 `M` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-powers`. `E` = `evidence/` in this worktree.
 (This file replaces n5-cast's REPORT that arrived with the n5-cast fast-forward; take n5-cast's on merge.)
@@ -41,6 +41,9 @@
 | Kerf re-filmed at 64 px/m on the iteration-6 head (forms + cast merged): 4 split cops at ticks 95/115/135/195, 5 ghost kills | `M/kerf-64ppm-halfspeed.mp4`; `E/ghosts-kerf-64-it6.json` |
 | combat_blood.gd split below the 300-line stop: kill routing in `BloodVictims` (unit `test_blood_victims` 2/2) | unit 991/0 `E/unit-it6.log` |
 | Combat no-regress (iteration 6, after the Ohm dry kill): director reel 16/16 chapters down, 0 script errors, the same chapter counts as iteration 5 | `E/director-reel-it6.log` |
+| **The attacks draw in quest 1** (iteration 7): Kerf's blink lines, cut and afterimages, Ohm's forked bolts and Tonnage's die-plate telegraph now draw in the SHIPPED quest 1 (before: run in the sim, drawn nowhere); one attacher (`GhostAttackViews`) for the arena and quest 1; real bound input, 5/5 kills each for Kerf and Ohm | `M/frames/quest1-kerf-views-ab-32ppm.png` (before/after, same frames), `M/quest1-kerf-32ppm.mp4`, `M/quest1-ohm-32ppm.mp4`, `M/frames/quest1-ohm-bolt-keys-32ppm-x2.png`, `M/frames/quest1-tonnage-telegraph-keys-32ppm.png`; unit 996/0 `E/unit-it7.log` |
+| **Kerf's cut kills the robot** (iteration 7): the beat's stand-in robot was not held exposed, so both cuts were dropped and the claw finished it; now it falls to Kerf's cut (cauterised), and the scenario needs each robot to fall to its ghost's own kind | `M/frames/kerf-robot-cut-ab-32ppm.png` (before/after, ticks 374-464), `M/kerf-arena-32ppm.mp4`; `E/scenario-ghost-it7.log`, `E/scenario-ghost-it7-planted-no-hold.log` |
+| Gates (iteration 7, 3d6a095b, the forms + cast merge): evidence runner PASS on a still tree: lint 13/13, unit 996/0, scenarios 47, parity bit-exact + mutation caught, look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it7.log` |
 
 ## What does not work yet
 - The robot is a dev stand-in: CombatArena has no robot fighter kind, so the quest boss's brain plays it (Ohm's beat holds it exposed). The look (iteration 5) and the numbers are real; the brain is not a robot thug's.
