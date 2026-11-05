@@ -72,6 +72,8 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    **Tried 20:38, not landed**: a fingertip charge glow over bolt_gap_s does not separate from the form's
    own teal aura at 32 px/m (the form is ~20 px). Next: a tell outside the aura (an ink/cream spark arc
    reaching toward the aim) or a bigger white ready glint.
+   **Done 20:53 (`0555878c`)**, pass 2: white sparks edged in ink reach from the tips toward the aim as
+   the charge refills; gone on the fire frame. `M/ohm_tell_ab_32ppm_crop.mp4`.
 5. **Chainsaw**: the kill is a red blob under Rivet at 32.
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
    **Correction 20:30**: measured, the slam does shake and stop (HaulerKick: `crash` + `boss_hit`, outside

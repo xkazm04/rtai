@@ -1,5 +1,14 @@
 [
   {
+    "file": "ohm_tell_ab_32ppm_crop.mp4",
+    "title": "Ohm's forked bolt gets a tell: the fingertips charge back to a white reach before each bolt",
+    "source": "game-arena",
+    "branch": "n7-melee 0555878c",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left); 32 px/m real time, then a 3x crop at 0.4x",
+    "note": "Pass 1 (a fingertip glow) sank into the form's teal aura at 32 px/m: not landed. Pass 2 adds white sparks edged in ink reaching 0.25 -> 0.9 m toward the aim as the charge fills. Looked at frames 140-180 every 4th: prongs out while ready, gone on the fire frame, growing back."
+  },
+  {
     "file": "tonnage_slam_ab_32ppm_48slow.mp4",
     "title": "Tonnage's press slam lands with debris: a landing flash, paper chips, dust",
     "source": "game-arena",

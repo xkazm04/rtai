@@ -199,12 +199,23 @@ NEXT (written 20:03, for iteration 2):
   own teal aura; the glow does not separate from it. No visible change = not done. Patch kept in
   `gtai-n7p/scratch/melee/ohm_tell_pass1.patch`; `tell_glow_m` stays in the data (inert: nothing reads it).
 
-NEXT (written 20:40, for iteration 3):
+- GATES 20:44 `node tools/evidence/run.mjs --no-bench` on `f6dc5330` (tree untouched during the run):
+  lint 13/13 over 942 files, unit 1143/1143, scenarios 52/52, parity bit-exact (planted caught at
+  step 629), selftest pass (look goldens 11/11, block 5/5). `evidence/n7-melee/gates-f6dc5330.log`.
+  No bench: no performance claim.
+- CHECK 20:49 director reel on `f6dc5330` (deflect + debris in): arena 19/19 and city block 19/19, every chapter fully down, 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-f6dc5330.log`). Kerf, deflect, Dent blast and Tonnage debris stand as done.
+- MILESTONE 20:53 `0555878c` Ohm's bolt tell (rank 4), pass 2: pass 1's fingertip glow plus, outside the
+  form's aura, a white spark edged in ink reaching from each tip toward the aim (0.25 -> 0.9 m) as the
+  charge refills over bolt_gap_s; crackles when ready; the fire frame flashes the tips. LOOK 20:52
+  (frames 140-180 every 4th, 240x160 crops x1.5, before over after): prongs out while ready, gone on the
+  fire frame, growing back; the before has only the aura. CLIP `M/ohm_tell_ab_32ppm_crop.mp4` (6.9 s).
+  No unit test (draw-only view); the ghosts reel ran with 0 SCRIPT ERROR. frames.json 7 entries.
+
+NEXT (written 20:40, revised 20:56, for iteration 3):
 1. Read the gate result appended below (evidence run on the head after this commit); if a known flake
    fails, re-run it alone.
-2. Ohm bolt tell (rank 4), pass 2: pass 1 (scratch `ohm_tell_pass1.patch`) did not read at 32. Try a
-   tell outside the form's teal aura: a short cream/ink spark arc reaching from the tips toward the aim
-   as the charge fills, or a bigger white ready glint; judge at 32 before committing.
+2. Ohm: the tell landed (`0555878c`); judge it at 48 px/m and in the city block; the bolt's victim
+   impact (white disc) and the mass arc at --tier=1 are next for Ohm.
 3. Chainsaw kill read at 32 (rank 5): the kill is a red blob under Rivet; the grind gets no stop per
    bite by design; look at a spray direction / a kill-frame mark.
 4. Deflect streak greys as its ink fades: try cream over a thinner ink, re-look at 48.
@@ -216,8 +227,5 @@ NEXT (written 20:40, for iteration 3):
    `hitstop_cooldown_ticks` 20 > kerf `gap_s` 18 ticks); options: as built / cooldown 18 (shared with
    guns, n7-ranged's call) / gap_s 0.34 (sim). The Tonnage stomp's HaulerKick ignores `--feel=off`.
 8. City-block combined clip of the polished set (30-90 s) before freeze; exe by 08:30.
-- GATES 20:44 `node tools/evidence/run.mjs --no-bench` on `f6dc5330` (tree untouched during the run):
-  lint 13/13 over 942 files, unit 1143/1143, scenarios 52/52, parity bit-exact (planted caught at
-  step 629), selftest pass (look goldens 11/11, block 5/5). `evidence/n7-melee/gates-f6dc5330.log`.
-  No bench: no performance claim.
-- CHECK 20:49 director reel on `f6dc5330` (deflect + debris in): arena 19/19 and city block 19/19, every chapter fully down, 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-f6dc5330.log`). Kerf, deflect, Dent blast and Tonnage debris stand as done.
+- GATES 20:58 scenarios on `0555878c` (the Ohm tell): exit 0, 0 SCRIPT ERROR. Lint 13/13 at the commit hook. Unit last full run 1143/1143 on `f6dc5330` (the Ohm commit touches only ohm_view.gd).
+- STOP 20:59 iteration 2. NEXT is the 20:40/20:56 entry above.
