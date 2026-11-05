@@ -18,6 +18,11 @@ const REACT_TICKS: int = 18
 const CLEAR_M: float = 1.2
 ## Still in the zone this close to the active window: roll (its i-frames cover the hit).
 const ROLL_LEFT: int = 8
+## A charge is rolled on its body, not its tell: pressed when the body is this many ticks away,
+## so it meets the roll's i-frames (rivet_motion.json roll iframe_from 2 .. iframe_to 14).
+const CHARGE_ROLL_TICKS: int = 7
+## The sidestep looks this far for a solid box (crates, a wreck) and takes the other side if hit.
+const SIDE_LOOK_M: float = 1.8
 ## Closer than this to the fight floor's edge, the bot heads back toward its middle.
 const EDGE_M: float = 3.0
 ## An add (or a boss script's body: a drone) this close is shot before the boss.
@@ -68,9 +73,7 @@ func sample(tick: int) -> TickInput:
 			continue
 		var dodge: Vector2 = _dodge(threat, me)
 		if dodge != Vector2.ZERO:
-			var roll: bool = (
-				threat.state == BossFight.State.WINDUP and threat.tell_left() <= ROLL_LEFT
-			)
+			var roll: bool = _roll_now(threat, me)
 			return _input(dodge, aim, fire and not roll, true, roll)
 	var away: Vector2 = f.moves.threat_away(me, stage.arena.rivet.radius_m + CLEAR_M)
 	if away != Vector2.ZERO:  # the boss script's own late hazards (Servo's drop rings)
@@ -128,7 +131,22 @@ func _dodge(f: BossFight, me: Vector2) -> Vector2:
 		return (me - f.origin).normalized()  # out of the ring
 	var across: float = (me - f.origin).dot(f.aim.orthogonal())
 	_side = 1.0 if across >= 0.0 else -1.0
+	var side: Vector2 = f.aim.orthogonal() * _side
+	if stage.walls.blocks(me, me + side * SIDE_LOOK_M):  # boxed in: the other side if it is open
+		if not stage.walls.blocks(me, me - side * SIDE_LOOK_M):
+			_side = -_side
 	return f.aim.orthogonal() * _side
+
+
+## Roll now? Still in the zone ROLL_LEFT ticks before the active window; a charge when its body
+## is CHARGE_ROLL_TICKS away along the lane (a dash crosses 14 m: the tell's end is too early).
+func _roll_now(f: BossFight, me: Vector2) -> bool:
+	if f.attack.shape != BossAttack.Shape.CHARGE:
+		return f.state == BossFight.State.WINDUP and f.tell_left() <= ROLL_LEFT
+	if f.state != BossFight.State.ACTIVE:
+		return false
+	var gap: float = (me - f.body.pos).dot(f.aim) - f.body.radius_m
+	return gap >= -0.5 and gap <= f.attack.move_mps / 60.0 * float(CHARGE_ROLL_TICKS)
 
 
 func _input(move: Vector2, aim: Vector2, fire: bool, hurry: bool, roll: bool) -> TickInput:

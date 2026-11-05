@@ -1,0 +1,161 @@
+{
+ "dodge": {
+  "n": 3,
+  "downed": 3,
+  "ttk_mean_s": 118.1,
+  "ttk_range_s": [
+   112,
+   121.7
+  ],
+  "taken_mean": 6.7,
+  "deaths": 0,
+  "adds_landed_tries": [
+   0,
+   0
+  ],
+  "per_attack": {
+   "bay_hop": {
+    "tries": 5,
+    "landed": 1,
+    "rolled": 0,
+    "hit_rate": 0.2
+   },
+   "kamikaze": {
+    "tries": 7,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "package_carpet": {
+    "tries": 7,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "rotor_dash": {
+    "tries": 19,
+    "landed": 0,
+    "rolled": 5,
+    "hit_rate": 0
+   },
+   "rotor_dash_hot": {
+    "tries": 7,
+    "landed": 0,
+    "rolled": 3,
+    "hit_rate": 0
+   },
+   "scan_drop": {
+    "tries": 33,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   }
+  }
+ },
+ "human": {
+  "n": 3,
+  "downed": 3,
+  "ttk_mean_s": 125.9,
+  "ttk_range_s": [
+   114.7,
+   132.8
+  ],
+  "taken_mean": 174,
+  "deaths": 0,
+  "adds_landed_tries": [
+   0,
+   0
+  ],
+  "per_attack": {
+   "kamikaze": {
+    "tries": 7,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "package_carpet": {
+    "tries": 9,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "rotor_dash": {
+    "tries": 23,
+    "landed": 13,
+    "rolled": 2,
+    "hit_rate": 0.57
+   },
+   "rotor_dash_hot": {
+    "tries": 11,
+    "landed": 3,
+    "rolled": 3,
+    "hit_rate": 0.27
+   },
+   "scan_drop": {
+    "tries": 29,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "bay_hop": {
+    "tries": 5,
+    "landed": 1,
+    "rolled": 0,
+    "hit_rate": 0.2
+   }
+  }
+ },
+ "stand": {
+  "n": 3,
+  "downed": 1,
+  "ttk_mean_s": 201.6,
+  "ttk_range_s": [
+   201.6,
+   201.6
+  ],
+  "taken_mean": 1329.3,
+  "deaths": 14,
+  "adds_landed_tries": [
+   0,
+   0
+  ],
+  "per_attack": {
+   "bay_hop": {
+    "tries": 9,
+    "landed": 9,
+    "rolled": 0,
+    "hit_rate": 1
+   },
+   "kamikaze": {
+    "tries": 3,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "package_carpet": {
+    "tries": 17,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   },
+   "rotor_dash": {
+    "tries": 51,
+    "landed": 44,
+    "rolled": 0,
+    "hit_rate": 0.86
+   },
+   "rotor_dash_hot": {
+    "tries": 3,
+    "landed": 3,
+    "rolled": 0,
+    "hit_rate": 1
+   },
+   "scan_drop": {
+    "tries": 64,
+    "landed": 0,
+    "rolled": 0,
+    "hit_rate": 0
+   }
+  }
+ }
+}
