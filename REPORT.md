@@ -48,7 +48,8 @@ chapter on every commit (19/19 on e419a047; 0 SCRIPT ERROR).
 
 ## What does not work / not done
 - The Gatling prints ink, not tan, at game zoom (call 8).
-- Dent's 64 px/m close-up loses the ram and blast off frame (call 2; view only, not built).
+- Dent's 64 px/m close-up loses the ram and blast off frame by default (call 2; `--cam=car` fixes it, not the
+  default).
 - The quest 1 padlock was shot from the HUD alone (a scratch scene), not from a live quest 1 frame.
 - Bench not run (contended machine all day; no perf claim from this lane: every change is view or data only,
   except Dent's steer point, which is sim and covered by the quest 1 and ghost scenarios).
@@ -59,8 +60,12 @@ chapter on every commit (19/19 on e419a047; 0 SCRIPT ERROR).
    `M/frames/look-8-gun-tan-closeup-steps.png` middle column). See: `RTAI.exe -- --bot=reel --reel=director
    --loadout=pistol` vs the same `-- ... --gun-grey`.
 2. **Dent's camera.** Steering from afar, the camera stays on Dent; at 64 px/m the seized car's ram and blast
-   leave the frame (riding kept them in). A: as built (camera on Dent). B: a camera lead toward the seized car
-   while Dent steers (view only, not built). See `M/dent-standoff-city-64ppm-halfspeed.mp4`.
+   leave the frame (riding kept them in); at 32 px/m they stay in frame. A: as built (camera on Dent). B: the
+   car camera that already exists as the dev flag `--cam=car` (frames Rivet and the seized car, holds 1 s on the
+   blast; view only): tether, ram and blast stay in frame at 64 px/m. Making B the default for Dent is one line
+   in `TonnageHook` (and quest 1 would need the same wiring). See `M/dent-standoff-city-64ppm-halfspeed.mp4` vs
+   `M/dent-carcam-city-64ppm.mp4` (still `M/frames/ghost-powers-3-dent-carcam-64ppm.png`);
+   `RTAI.exe -- --arena=city --bot=ghosts --ghost=dent --ppm=64` vs the same with `--cam=car`.
 3. **Dent's steer point.** With `ride 0` and the old fixed 14 m point the car overshot its targets, so the car now
    drives to the point the cursor aims at (pad: 14 m). A: cursor reach (built). B: fixed 14 m (one line in
    `DentStage.drive`). See `RTAI.exe -- --arena=city --bot=ghosts --ghost=dent`.

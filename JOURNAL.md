@@ -146,3 +146,8 @@
   only 3 chapters down (headless frame pacing; the windowed dev reel downs all 19).
 - 17:09 look-5 at 48 px/m (`M/frames/look-5-alley-ab-48ppm.png`, `--start=alley`): the pale paper is a clear
   value step at the alley's own zoom (at 32 px/m it was small). REPORT call 6 filled in.
+- 17:11 FINDING Dent camera: the lead the 16:28 finding asked for already exists as the dev flag `--cam=car`
+  (DentView.follow_cam via TonnageHook: midpoint of Rivet and the seized car, 1 s hold on the blast). At 64 px/m
+  with it the tether, the ram into the cops and the blast stay in frame (`M/dent-carcam-city-64ppm.mp4`,
+  `M/frames/ghost-powers-3-dent-carcam-64ppm.png`). Not made the default (not an owner pick; at 32 px/m the
+  default framing already holds the blast): REPORT call 2 option B with the flag.
