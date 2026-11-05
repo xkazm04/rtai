@@ -883,3 +883,10 @@ Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee jo
 - Registry rules applied: realtime-combat-semantics (a wind-up must be legible before the action
   it announces, and hand over to it in place); motion-quality-gating (judged per frame at 32 and
   48, width chosen by a same-sim A/B, the first misplaced take rejected on film).
+
+### FYI -> n7-melee (00:49): three feel-layer commits to merge
+- `193bc529` (hit_feel.json machine_pistol `muzzle_k` 1.3 + one test), `d99106f4` (new
+  `weapon_fx_spin.gd` + test, `HitFeel.spin_whirl_m`, schema field `spin_whirl_m`, one hook line
+  in `gun_fx_art.gd` `_claw_state`, gatling row field), `ce923514` (gatling `spin_whirl_m` 0.8).
+  All rows I touch sort away from yours (gatling, machine_pistol). Any spun weapon (spin_s on its
+  weapons.json row) can take a `spin_whirl_m`: nothing of yours spins today.
