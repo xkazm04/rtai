@@ -121,8 +121,7 @@
     },
     {
       "files": [
-        "ray_ring_",
-        "ray_beam_"
+        "ray_ring_"
       ],
       "id": "ray",
       "note": "acid green (iteration 5: ink_2 and wash brightened; the rings printed a dull olive at 32 px/m)",
@@ -130,6 +129,20 @@
         "ink_2": "#7BD92B",
         "paper": "#E2FF8A",
         "paper_2": "#C8F65A",
+        "steel": "#B4F04A",
+        "wash": "#9AEC3C"
+      }
+    },
+    {
+      "files": [
+        "ray_beam_"
+      ],
+      "id": "ray_beam",
+      "note": "r2_w4's beam: the ray family's acid green with a white-hot core (n5-look iteration 16; drop this family and add ray_beam_ back to ray = the pale green core)",
+      "tokens": {
+        "ink_2": "#7BD92B",
+        "paper": "#FAFFE8",
+        "paper_2": "#D9FF6E",
         "steel": "#B4F04A",
         "wash": "#9AEC3C"
       }
