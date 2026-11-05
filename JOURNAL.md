@@ -139,3 +139,10 @@
   pistol 38 %, rocket 33 %: tan). Not fixed (late, and the small parts are the held lane's re-tone): a call.
 - MILESTONE combined clip `M/today-defaults-city-32ppm.mp4` (28 s, city block, director reel: pistol, machine
   pistol, rocket, flamethrower; every chapter of the 6900-tick run down, 0 SCRIPT ERROR). frames.json 14 entries.
+- 17:07 MILESTONE exe: `build/export/windows/RTAI.exe` (windows-showcase; boots: no args = armory 16 weapons,
+  `-- --bot=reel --reel=director --loadout=pistol`, `-- --arena=city --bot=ghosts --ghost=dent`, all 0 SCRIPT
+  ERROR) and `build/export/windows-quest1/RTAI.exe` (windows-slice, quest 1: boots to the title, 0 SCRIPT ERROR).
+  Logs evidence/export-it5*.log, exe-boot-it5-*.log. FINDING: headless exe reel with --quit-after 3000 logged
+  only 3 chapters down (headless frame pacing; the windowed dev reel downs all 19).
+- 17:09 look-5 at 48 px/m (`M/frames/look-5-alley-ab-48ppm.png`, `--start=alley`): the pale paper is a clear
+  value step at the alley's own zoom (at 32 px/m it was small). REPORT call 6 filled in.
