@@ -99,12 +99,13 @@ def inner_band(path, colour, px, sectors=180):
     img.save(path, optimize=True)
 
 
-def pockets(path, colour, n, r_px, seed=1.0, core=None, core_k=0.45, core_in=0.0, wobble=0.0):
+def pockets(path, colour, n, r_px, seed=1.0, core=None, core_k=0.45, core_in=0.0, wobble=0.0, hot=None):
     """r2_w4's fire pockets inside the smoke: `n` round orange pockets centred on the ring's
     inner edge at hashed angles (radius r_px[0]..r_px[1]), clipped to the non-ink ring pixels,
     each with a hot `core` disc (core_k x its radius, moved core_in x its radius toward the
     blast centre) when given. wobble > 0 makes each pocket's edge lumpy (a hashed 3- and
-    5-lobe radial wobble of that share of its radius; 0 = round discs). Hash-placed from
+    5-lobe radial wobble of that share of its radius; 0 = round discs). hot = (colour, k): a
+    hotter disc at k x the core's radius inside it (graded fire; None = off). Hash-placed from
     `seed`: deterministic."""
     img = Image.open(path).convert("RGBA")
     pix = img.load()
@@ -154,8 +155,9 @@ def pockets(path, colour, n, r_px, seed=1.0, core=None, core_k=0.45, core_in=0.0
             if q >= er * er:
                 continue
             kr = edge(x, y, (kx, ky) + disc[2:]) * core_k
-            if core is not None and (x - kx) ** 2 + (y - ky) ** 2 < kr * kr:
-                hit = core
+            kq = (x - kx) ** 2 + (y - ky) ** 2
+            if core is not None and kq < kr * kr:
+                hit = hot[0] if hot is not None and kq < (kr * hot[1]) ** 2 else core
                 break
             hit = colour
         if hit is not None:
@@ -185,6 +187,7 @@ def main(src_dir, out_dir):
                         core_k=pk.get("core_k", 0.45),
                         core_in=pk.get("core_in", 0.0),
                         wobble=pk.get("wobble", 0.0),
+                        hot=(_hex(pk["hot"]), pk["hot_k"]) if "hot" in pk else None,
                     )
                 elif "inner" in fam:
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
