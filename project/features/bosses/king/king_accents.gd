@@ -40,11 +40,28 @@ func _draw() -> void:
 		_down_at = f.now() if _down_at < 0 else _down_at
 		var fall: Vector3 = KingBeats.crown_fall(f, _down_at)
 		_crown(at + Vector2(fall.x, fall.y), CROWN_M * Ink.PX_PER_M, fall.z)
+	_shout(f, at)
+	var buffed: bool = view.adds != null and view.adds.buffed(f.now())
 	for g: BossFight in view.standing_adds():
 		var c: Vector2 = Ink.px(g.body.pos)
+		if buffed:  # the decree's buff: a danger ring on every gang bot until it ends
+			draw_arc(c, 0.52 * Ink.PX_PER_M, 0.0, TAU, 20, Ink.VERMILION, 2.5)
 		var a: float = g.body.facing.angle()
 		draw_arc(c, 0.3 * Ink.PX_PER_M, a - 1.0, a + 1.0, 10, Ink.INK, 5.0)
 		draw_arc(c, 0.3 * Ink.PX_PER_M, a - 0.95, a + 0.95, 10, GOLD, 3.0)
+
+
+## The decree's shout: vermilion rings pulse off King through the tell and the shout.
+func _shout(f: BossFight, at: Vector2) -> void:
+	if f.attack == null or f.attack.buff_ticks <= 0:
+		return
+	if f.state != BossFight.State.WINDUP and f.state != BossFight.State.ACTIVE:
+		return
+	var loud: float = 1.0 if f.state == BossFight.State.ACTIVE else 0.5
+	for i: int in 3:
+		var k: float = fposmod(float(f.now()) / 30.0 + float(i) / 3.0, 1.0)
+		var r: float = (0.7 + 2.6 * k * loud) * Ink.PX_PER_M
+		draw_arc(at, r, 0.0, TAU, 32, Color(Ink.VERMILION, (1.0 - k) * loud), 3.0)
 
 
 ## The ermine collar: a cream fur ring open at the front, with ink tail spots.

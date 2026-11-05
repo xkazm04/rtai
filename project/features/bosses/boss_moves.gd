@@ -13,6 +13,8 @@ const DETOUR_TICKS: int = 45
 
 ## The distance the default walk stops at.
 var keep_m: float = 4.0
+## The walk's speed factor (an add under its boss's buff; 1 = the row's move_mps).
+var speed_k: float = 1.0
 var _from: Vector2 = Vector2.ZERO
 var _want: float = 0.0
 var _t: int = -2
@@ -34,7 +36,7 @@ func idle_step(f: BossFight, target: Vector2) -> void:
 		if _detour > 0:
 			_detour -= 1
 			dir = (dir * 0.3 + dir.orthogonal() * _side).normalized()
-		_want = f.spec.move_mps * SimClock.TICK_DT
+		_want = f.spec.move_mps * speed_k * SimClock.TICK_DT
 		f.body.pos += dir * _want
 	if d.length() > 0.01:
 		f.body.facing = d.normalized()

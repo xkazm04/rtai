@@ -74,6 +74,11 @@
         "decree": {
           "active_s": 0.5,
           "aim_lock_s": 0,
+          "buff_adds": {
+            "damage_k": 1.3,
+            "s": 6,
+            "speed_k": 1.2
+          },
           "cooldown_s": 9,
           "damage": 0,
           "doc": "King raises the megaphone and shouts a decree: the gang hits harder and faster for a while. Long recovery: the best punish window.",

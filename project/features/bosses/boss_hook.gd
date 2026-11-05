@@ -162,6 +162,7 @@ func attach_view(view: Node) -> void:
 func _connect() -> void:
 	var errs: Array[Error] = [
 		fight.attack_windup.connect(_on_windup),
+		fight.attack_active.connect(_on_active),
 		fight.adds_wanted.connect(_on_adds),
 		fight.phase_changed.connect(_on_phase),
 		fight.defeated.connect(_on_defeated),
@@ -172,6 +173,12 @@ func _connect() -> void:
 func _on_windup(attack: StringName) -> void:
 	tries[attack] = tries.get(attack, 0) + 1
 	_arena.announce_tell(attack)
+
+
+## An attack with `buff_adds` (King's decree) buffs the standing adds from its active window.
+func _on_active(_attack: StringName) -> void:
+	if fight.attack != null and fight.attack.buff_ticks > 0:
+		adds.buff(fight.attack, fight.now())
 
 
 func _on_phase(index: int, id: StringName) -> void:

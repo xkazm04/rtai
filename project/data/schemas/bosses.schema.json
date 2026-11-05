@@ -98,6 +98,32 @@
           "minimum": 5,
           "type": "number"
         },
+        "buff_adds": {
+          "additionalProperties": false,
+          "properties": {
+            "damage_k": {
+              "maximum": 3,
+              "minimum": 1,
+              "type": "number"
+            },
+            "s": {
+              "maximum": 30,
+              "minimum": 0.5,
+              "type": "number"
+            },
+            "speed_k": {
+              "maximum": 3,
+              "minimum": 1,
+              "type": "number"
+            }
+          },
+          "required": [
+            "damage_k",
+            "speed_k",
+            "s"
+          ],
+          "type": "object"
+        },
         "cooldown_s": {
           "maximum": 60,
           "minimum": 0,
