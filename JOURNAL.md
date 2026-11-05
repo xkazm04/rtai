@@ -90,3 +90,37 @@ combat-pacing-and-dramatic-arc (next iteration, before any number changes).
   | standing | not in 120 s (11 %) | ram 1/3, coin_fan 13/14, charge 2/10 | 64.8 (+ boss 260 dealt) | 2 |
   The dodging bot's death is the **adds**: phase 2's gang spawns as the pit's contractor guards
   (assault rifles, GuardBrain). They must be the melee gang. n=1: no rate here is a verdict yet.
+
+### MILESTONE 19:25 (wall clock; the "19:28" above was a mis-stamp, it was 19:17): adds as rows
+- DECISION adds: an add is a one-phase `bosses.json` row (`king_gang`) run by its own `BossFight`
+  (`BossAdds`), so it follows the same tell rules (0.8 s windup, 0.2 s lock, 3 m lunge = enemy-ai's
+  thug claw) and its tell is drawn by the same view. Rejected: the pit's contractor guards (rifles,
+  GuardBrain: they killed the dodging bot) and EnemyPit's agents (a separate world, not arena
+  hostiles). Servo's drones can be rows the same way. A row with no `bosses.json` entry still
+  falls back to contractor guards.
+- The boss and its adds leak oil, not red (robot ids told to the view's `CombatBlood`). King rules
+  from the stalled car in phase 2 and steps down for phase 3.
+- Numbers (CONTENDED, seed fixed, n=1, 120 s cap; `evidence/king/bot-{dodge,stand}-it1c.json`):
+  | bot | King down | King landed/tries | gang landed/tries | deaths |
+  |---|---|---|---|---|
+  | dodging (perfect reader, 0.3 s reaction) | 77.4 s | 0 / 20 (+1 rolled) | 0 / 16 | 0 |
+  | standing (holds 8 m, never dodges) | 81.8 s | 11 / 17 (coin 8/9, charge 2/2, ram 1/3) | 15 / 18 | 1 |
+  Both ends bracket a fight that is readable (every attack 0 % on the reader) and threatens a
+  non-reader. The middle is unmeasured: a human-like bot that reads ~70 % of tells (enemy-ai's
+  salted share) is the next instrument, n >= 10 seeds, before any tuning call.
+- Gates at 0dd8d7b2: lint 13/13; unit 1120/0 (`evidence/king/unit-it1b.log`); scenarios 52/0 at
+  a3e5d11e (`evidence/king/scenarios-it1.log`); `test_boss_adds.gd` 3/3 (new).
+
+NEXT (iteration 2, in order):
+1. Check servo's JOURNAL for a reply to REQUEST 1; merge nothing from them (they merge us).
+2. Combat no-regress: `--bot=reel --reel=director` on this branch (not run yet this iteration;
+   scenarios include `scenario_showcase_director` 52/0).
+3. Human-like bot (`--bot-read=0.7`, its own named RNG stream) + an n-seed runner writing
+   `evidence/king/boss-numbers.json` (TTK spread, Rivet dmg, per-attack hit rate and damage
+   share). Then tune against the envelope in docs/bosses/king.md.
+4. Ohm's stun on a boss (cancel a tell, 0.6 s daze), the decree's gang buff, the phase
+   transition beats (car stall, step-down), the defeat beat (crown falls, power-down), boss
+   music (boss_loop_01 / boss_stinger_01).
+5. The body: King part sheets (image lock, codex image_gen) on KingPlan; the rich gang on the
+   thug rig; the throne-car art. The arena: a boulevard + plaza (city block or a new area).
+6. Clips into `gtai-masters/n7/king/` + frames.json; target hstack.
