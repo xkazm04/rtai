@@ -232,3 +232,6 @@ NEXT (iteration 3):
 4. Audit gaps: gloria, assault-rifle (`--loadout`), flamer ignition, molotov throw.
 5. Sound on the frame (cue log vs struck tick); shard `grind_ticks` call; quest 1 table guns;
    city-block combined clip; exe by 08:30.
+- GATE 20:57: director reel (pit) on `eb1d4f1c`: 19/19 chapters fully down, 0 SCRIPT ERROR
+  (`evidence/ranged/it2-reel-director.log`). NEXT item 1 reduces to: city reel + full unit +
+  scenarios on head.
