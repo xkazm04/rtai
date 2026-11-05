@@ -7,6 +7,8 @@ config_version=5
 
 config/name="RTAI: Uprising"
 config/description="Robot Theft A.I."
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 config/features=PackedStringArray("4.7")
 config/use_custom_user_dir=true
 config/custom_user_dir_name="RTAI Uprising"
