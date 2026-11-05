@@ -247,9 +247,10 @@
       "kick_ticks": 6
     },
     {
-      "doc": "Rate of fire: a smaller kick than the pistol.",
+      "doc": "Rate of fire: a smaller kick than the pistol. Muzzle (n7-ranged it9): at 14 rounds a second its flash_smg cell is up 3 ticks of every 4, a 6-8 px flicker at 32 px/m that hardly reads; muzzle_k 1.3 (under the pistol's 1.6: a burst is a steady flicker, a bigger cell every round would be noise; 1 or --feel=off = before).",
       "id": "machine_pistol",
-      "kick_px": 0.6
+      "kick_px": 0.6,
+      "muzzle_k": 1.3
     },
     {
       "doc": "The biggest hit in the arsenal: the long stop, the full kick and its own deeper, longer shake (camera.json nuke).",
