@@ -481,3 +481,20 @@ NEXT (iteration 5):
    `--quest-guns=off` as the before of quest 1's table guns (not a call: gunplay's next step).
    Exe by 08:30 (int-day recipe in docs/decisions.md).
 7. n7-melee: told in JOURNAL (21:25 NOTE) that quest 1's hash moved and which lines I touched.
+
+### MILESTONE 21:55: `1ce1b11e` the muzzle flash stays on the shot's aim (found by filming quest 1)
+- NEXT item 1 done early: quest 1 Dock 9 re-filmed at 48 px/m, no fight cam, off vs on; a diff of
+  Rivet's 400 px box per frame spikes every 12 frames (= Gloria's 24-tick shots: frames 35, 47, 59..).
+- BUG seen on frame 35: the nail flew left while Gloria's ink-and-cream star drew on Rivet's RIGHT.
+  Cause: `WeaponFxArt.muzzle` anchored on `rivet.facing`, which the pilot resets to the walk
+  heading on the ticks between shots (the driver aims only on fire ticks), and the flash lives a
+  few ticks after the shot. Fix: `GunHand.last_aim` (set in `pull`, view only, in no state hash);
+  the muzzle uses it, `r.facing` only before the first shot. Applies in the arena too.
+- AFTER (look): frame 35 the star sits on the nail line in front of Rivet; frame 47 (other heading)
+  too, cream with its vermilion fire core. Still `masters .../quest1_gloria_muzzle_side-48ppm.png`
+  (3 panels: evening path / bug / fix); clip `quest1_table_gloria_dock9-ab-48ppm.mp4` (off vs fix)
+  replaces the Mertz close-up (deleted: it showed no shot). frames.json 15 rows.
+- Unit 1135/0 on the change (`evidence/ranged/it4-unit-muzzle.log`); lint 13/13.
+- LEFT: `GunFxArt`'s fallback muzzle (`gun_fx_art.gd:114`, guns WITHOUT weapon art) and `GunFx`'s
+  claw bits (`gun_fx.gd:129/135/153`) still use `r.facing`; same flip is possible there. The 32 px/m
+  quest clip `quest1_table_gloria-ab-32ppm.mp4` predates the fix: retake it (fight cam, 32 px/m).
