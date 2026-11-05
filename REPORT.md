@@ -247,8 +247,13 @@ Then merged n6-ghost-powers 2ca168ff (Kerf path_cut_m, quest 1 kerf/tonnage scen
 5be03adb). The clean auto-merge of `cast_view.gd` left a duplicate `var art`, which was removed in the merge. On
 dc9af2e6, still tree (E:evidence-run-it14-final2.log): **all PASS**, lint 13/13, unit 1020/0, scenarios 51,
 parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
-Director reel 16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it14-merged2.log). This is the lane's final
-gated head.
+Director reel 16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it14-merged2.log).
+Last, merged n6-ghost-powers 8d3b518a (their gate log) and n5-cast 775951e7 (the grown Hauler sprite cross-fades
+sticker -> art; the merged `_rivet` keeps our single base pick and their cross-fade). On 0b738cbc, still tree
+(E:evidence-run-it14-final3.log): **all PASS**, lint 13/13, unit 1020/0, scenarios 51, parity bit-exact, look
+goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless. Director reel 16/16, 0 SCRIPT ERROR
+(E:director-reel-it14-merged3.log). Quest 1 at 32 px/m is unchanged from the re-filmed clip. **0b738cbc is
+the lane's final gated head.**
 
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
@@ -271,7 +276,7 @@ gated head.
   off (A/B `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`).
 
 ## Next steps
-- The final gates ran on dc9af2e6 (all PASS, iteration 14). If n5-cast or n6-ghost-powers move again before the
+- The final gates ran on 0b738cbc (all PASS, iteration 14). If n5-cast or n6-ghost-powers move again before the
   morning merge, merge them in and re-run the evidence runner and the director reel.
 - Note for the HUD owner: quest 1's longest subtitle line runs past the bottom of its box (seen in
   `M:frames/tonnage-subtitle-lift-quest1-ab-64ppm.png`, "where you think." on the box's lower edge).

@@ -919,3 +919,8 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   plus their Hauler cross-fade, no duplicate. Unit 1020/0 (E:unit-it14-merged3.log); COMBAT CHECK director reel
   16/16 n/n down, 0 SCRIPT ERROR (E:director-reel-it14-merged3.log); quest 1 (q1lift.sh 520 frames, 0 SCRIPT
   ERROR) frames 140/480 identical to the 07:49 film (scratch, deleted).
+- 08:18 FINAL GATES on 0b738cbc, still tree (E:evidence-run-it14-final3.log): PASS lint 13/13, unit 1020/0,
+  scenarios 51, parity bit-exact (mutation at 629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
+  REPORT: 0b738cbc is the lane's final gated head (supersedes the dc9af2e6 line in the NEXT above).
+FREEZE 08:19: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
+bench.lock not taken this session); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
