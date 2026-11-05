@@ -48,3 +48,31 @@
   check; (4) look-8 tan ink; (5) 20-30 s city clips per group, combined clip, exe by 19:30, REPORT.
 - 16:04 MEASURE selftest on 42feb65c (look group): look goldens 11/11 worst 0.27, block 5/5 worst 0.22, same as the
   cast commit: no golden moved, no re-bless (evidence/selftest-it2-look.log). Scenarios and parity still to run on it.
+
+## Iteration 4 (BUILD, 16:06-17:06)
+- 16:06 Started. Iteration 3 left no journal lines; picked up NEXT (3) Dent. Registry rule applied
+  (realtime-combat-semantics): a locked action answers (Q refused, HUD padlock), never silently.
+- 16:10 FRICTION: ran the full scenario suite in the background on 42feb65c while editing the tree; Godot
+  loads scenario scripts lazily, so the run mixed my mid-edit Dent files (3 quest1 fails were mine). Deleted
+  that log; never edit the tree under a running gate.
+- DECISION ghost-powers-3 steering: ride 0 with the old fixed 14 m reticle made the car overshoot the guards
+  (quest 1 Dent scenario 0 strikes). Standing, the car now drives to the aimed point at the cursor reach
+  (`PlayerCommand.aim_m`; pad = 14 m as before); the seize keeps the 14 m line. One data value back: ride 1.
+- DECISION ghost-powers-5: `unlock` per ghost in ghost_forms.json (dent `act_dent`), GhostLocks behind
+  GhostForms, on only in Quest1Session (`ghost_locks`, `acts_done`); `--ghosts-free` = old default; quest 1
+  ghost_cars [] (fit kept as Quest1GhostStreet.CARS for the quest 1 scenarios that need cars).
+- 16:50 MEASURE: lint 13/13, unit 1097/0, scenarios quest1_* 7/7 (incl. new quest1_dent_lock with planted
+  fault caught), ghost_attacks 1/1 (Dent blast_gap_m >= 5). Evidence evidence/*-it4-*.log.
+- 16:53 MILESTONE e419a047 Dent (ghost-powers-3 + ghost-powers-5), gated as above. Not yet filmed.
+- FINDING: n6's `M/frames/dent-ride-ab-32ppm.png` (masters n6/ghost-powers) shows ride 0's stand-off with the
+  old fixed point; the reach steer is new and needs its own clip.
+- NEXT (iteration 5): (1) Dent evidence: `--arena=city --bot=ghosts --ghost=dent` before (`../d7-held-before`
+  or `-- ` with dent.ride 1 restored in a scratch copy) vs after at 32 px/m (tether visible? car responsive?
+  Rivet clear?), a 64 px/m close-up of the tether; quest 1 HUD still with the padlock chip (game window,
+  title -> Start, G taps) vs `--ghosts-free`; 20-30 s clip in M/. If the tether is thin at 32 px/m, widen it
+  in DentView (view only). (2) Full scenario suite + parity on e419a047 (only quest1_* and ghost_attacks ran
+  here) via `node tools/evidence/run.mjs --allow-dirty --no-bench`, and the director reel 19/19
+  (`--quit-after 7000`). (3) look evidence still owed (shard in flight, Gatling held, pickup disc, alley at
+  48 px/m). (4) look-8 tan ink (print_part.gdshader / part_materials.gd; held lane owns poses and sizes).
+  (5) frames.json, combined clip, exe by 19:30, REPORT by 19:40 (calls: Dent reach steer vs fixed point;
+  quest 1 without ghost cars; look picks that read worse).
