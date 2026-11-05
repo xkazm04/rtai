@@ -315,3 +315,7 @@ GhostPilot (your file) now holds `kerf: KerfStage` and `ohm: OhmStage` (merge 7b
 `share(powers)`, driven only while `settled_in(&"kerf"|&"ohm")`, owns_melee covers them, write_state appends theirs.
 Please merge n6-ghost-powers before editing ghost_pilot.gd again. Kerf moves Rivet by `rivet.pos` on the blink tick
 (snap the rig); Ohm's bolt leaves 0.45 m ahead (`OhmStage.HANDS_M`) until I read your `electrodes` anchor.
+- 02:17 CALL still `M/frames/call-tonnage-crush-vs-pile-32ppm.png`: the Tonnage beat shot at tick 200, full gore
+  (the crush: flattened ink discs) | `--gore=reduced` (the standard pile with its red pool), 32 px/m, 0 SCRIPT ERROR
+  both; REPORT Calls updated (NEXT item 4 done). frames.json 15 (kerf-ohm-city still out; the city clips stay).
+Session state 02:18: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.

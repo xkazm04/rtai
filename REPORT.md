@@ -34,4 +34,4 @@
 ## Calls for the owner
 - Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).
 - Kerf's slice: only the target is cut (assassin) vs every body on the blink path (crowd tool): built as target-only.
-- (to come: the Tonnage crush vs the standard pile at 32 px/m, with a side-by-side)
+- Tonnage's slam kill: the flattened crush (built, signature style `crush`) vs the standard pile: `M/frames/call-tonnage-crush-vs-pile-32ppm.png` (tick 200, 32 px/m; the right half is the same run under `--gore=reduced`). One row in signature_kills.json.
