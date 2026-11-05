@@ -159,9 +159,11 @@
   "schema": "gtai.hit_feel/1",
   "weapons": [
     {
-      "doc": "The flamer lighting up (brief item 5, the ignition read): its puffs do not kick (about 20 a second would blur), but the first puff after the trigger has rested (FeelCam.IGNITE_IDLE_TICKS) kicks the camera back against the stream, a whump as it lights.",
+      "doc": "The flamer lighting up (brief item 5, the ignition read): its puffs do not kick (about 20 a second would blur), but the first puff after the trigger has rested (FeelCam.IGNITE_IDLE_TICKS) kicks the camera back against the stream, a whump as it lights; the same round draws the nozzle lick as a flare (ignite_flare_k, the stream's lick is 0.45) shrinking back over ignite_flare_ticks (WeaponFxIgnite).",
       "fire_kick_ticks": 9,
       "id": "flamethrower",
+      "ignite_flare_k": 1.1,
+      "ignite_flare_ticks": 10,
       "ignite_kick_px": 3
     },
     {
