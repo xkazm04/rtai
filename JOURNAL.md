@@ -484,7 +484,7 @@ short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` ris
 
 NEXT (iteration 6, ghost-powers):
 1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` before filming).
-2. (done 03:48) the reel's Dent segment re-cut from the city clip on the merged head.
+2. (done 03:45) the reel's Dent segment re-cut from the city clip on the merged head.
 3. Ohm: a cane-step recoil or arm kick per bolt (REQUEST to ghost-forms for an OhmRig hook: `bolts` rising, like
    Dent's strikes), then re-film Ohm at 64.
 4. combat_blood.gd is at 299 lines: any further change there splits it first (e.g. the robot/dry-kill routing into
@@ -493,8 +493,8 @@ NEXT (iteration 6, ghost-powers):
    the city block (does the city ghost beat spawn one? if not, add it to the Kerf/Ohm city beats).
 Session state 03:44: head = 94c9f8d8, no Godot process of mine running, no lock held,
 masters scratch holds only film.sh and reel.sh.
-- 03:48 NEXT 2 done: Dent in the city block re-filmed on the merged head 1469cabd (`M/dent-city-32ppm.mp4`, ride with
+- 03:45 NEXT 2 done: Dent in the city block re-filmed on the merged head 1469cabd (`M/dent-city-32ppm.mp4`, ride with
   the brace, hop clear of the ambulance, 0 SCRIPT ERROR); reel `M/ghost-attacks-reel-it5-32ppm.mp4` re-cut (33 s),
   Dent segment judged on 4 stills.
-Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
+Session state 03:46: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
 bench.lock never taken), masters scratch holds only film.sh and reel.sh, frames.json 15 (all present).
