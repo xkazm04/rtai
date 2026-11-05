@@ -47,6 +47,9 @@ var line_hooks: Dictionary[String, String] = {}
 var origin: Vector2 = Vector2.ZERO
 var squash: Vector2 = Vector2.ONE
 var on_city: bool = false
+## Parked cars for the ghost powers on the city (collect_call_city.json ghost_cars, world metres;
+## empty on the invented arena): Dent seizes them, so his form has a car in quest 1.
+var ghost_cars: PackedVector2Array = PackedVector2Array()
 var _errors: Array[String] = []
 
 
@@ -60,6 +63,9 @@ static func shipped(city: bool = false) -> StageLayout:
 		s.origin = c.vec(c.raw, "origin")
 		s.squash = c.vec(c.raw, "squash")
 		s._map_places()
+		for at: Variant in c.array(c.raw, "ghost_cars"):
+			@warning_ignore("return_value_discarded")
+			s.ghost_cars.push_back(c.vec({"at": at}, "at"))
 	var t: DataTable = DataTable.open(TABLE, SCHEMA)
 	s._read(t, t.raw)
 	s._errors = t.errors() + s.places.errors() + c.errors()

@@ -30,6 +30,23 @@ static func attach(world: World, stage: ArenaStage) -> ArenaCars:
 	return cars
 
 
+## Quest 1's ghost cars (collect_call_city.json ghost_cars): the same parked service at `spots`
+## (world metres, nose east), added after the stage; returns the cars' world.
+static func attach_at(
+	world: World, stage: CollectCallStage, spots: PackedVector2Array
+) -> ArenaCars:
+	var cars: ArenaCars = ArenaCars.new()
+	var svc: VehicleService = VehicleService.new()
+	svc.world = cars
+	cars.service = svc
+	world.add_system(svc)
+	stage.vehicles = svc
+	for i: int in spots.size():
+		@warning_ignore("return_value_discarded")
+		svc.spawn_parked(KIND, spots[i], Vector2.RIGHT, i % ART_IDS)
+	return cars
+
+
 ## Parks one car per "car" spawn (nose east, +x) under `base`; returns how many were parked.
 func park(stations: ArenaStations, base: Vector2) -> int:
 	var n: int = 0

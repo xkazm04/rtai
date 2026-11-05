@@ -8,6 +8,19 @@ extends Node2D
 const KERB_ROWS: float = 338.0
 ## Places at least this big (m) get their name stencilled on the city street.
 const STENCIL_MIN_R: float = 5.0
+## The ghost powers' cars (the arena's powers pad, quest 1's ghost_cars) in the city's traffic
+## print: one atlas per VehicleBody.State (intact, d1, d2, the soul-hijacked teal plate, the burnt
+## wreck), cell = the car's art id, nose to +x
+## (CrowdLayers TRAFFIC_CELL_PX on a 3 x 3 grid), the car-shaped ink shadow under it.
+const CAR_ATLAS: Array[Texture2D] = [
+	preload("res://features/city/art/vehicles/traffic_atlas.png"),
+	preload("res://features/city/art/vehicles/traffic_atlas_d1.png"),
+	preload("res://features/city/art/vehicles/traffic_atlas_d2.png"),
+	preload("res://features/city/art/vehicles/traffic_atlas_hijack.png"),
+	preload("res://features/vehicles/art/traffic_atlas_wreck.png"),
+]
+const CAR_CELL_PX: Vector2 = Vector2(512.0, 256.0)
+const CAR_COLS: int = 3
 
 var stage: CollectCallStage
 ## The invented arena's floors and labels (off on the city, whose ground is the world).
@@ -30,6 +43,9 @@ func _draw() -> void:
 	for phone: String in stage.layout.phones:
 		_phone(phone, stage.layout.phones[phone])
 	_crates()
+	for b: VehicleBody in stage.cars():
+		_car(b)
+	draw_set_transform(Vector2.ZERO)
 
 
 func _zones() -> void:
@@ -168,3 +184,18 @@ func _bolt_robot(c: Vector2) -> void:
 		bolt.append(Ink.px(c + v))
 	draw_polyline(PackedVector2Array(bolt), Ink.VERMILION, 3.0, true)
 	Ink.label(self, c + Vector2(-0.95, 0.0), "TUCK-IN", 11, Ink.INK)
+
+
+## One car: its shadow offset down-right, then its body cell, both turned to its heading.
+func _car(b: VehicleBody) -> void:
+	var size: Vector2 = Vector2(VehicleView.CAR_L, VehicleView.CAR_W) / SimConst.PX_PER_M
+	var r: Rect2 = Rect2(-size * 0.5 * Ink.PX_PER_M, size * Ink.PX_PER_M)
+	var shadow: Vector2 = VehicleView.SHADOW_OFF / SimConst.PX_PER_M
+	var cell: Rect2 = Rect2(
+		Vector2(b.art % CAR_COLS, floorf(float(b.art) / CAR_COLS)) * CAR_CELL_PX, CAR_CELL_PX
+	)
+	var tex: Texture2D = CAR_ATLAS[clampi(b.state, 0, CAR_ATLAS.size() - 1)]
+	draw_set_transform(Ink.px(b.pos + shadow), b.head.angle())
+	draw_texture_rect_region(tex, r, cell, VehicleView.SHADOW)
+	draw_set_transform(Ink.px(b.pos), b.head.angle())
+	draw_texture_rect_region(tex, r, cell)

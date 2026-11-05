@@ -42,6 +42,9 @@ var last_line: String = ""
 ## on the invented arena).
 var cells: StageCells = null
 var follow: CitySystem = null
+## The ghost powers' cars (ArenaCars: the arena's powers pad, quest 1's parked ghost_cars), or
+## null when the stage has none (the invented quest arena).
+var vehicles: VehicleService = null
 ## The world's clock (read only: a view's hit-stop holds it, features/souls/hauler_kick.gd).
 var clock: SimClock = null
 var _quest: QuestSystem = null
@@ -248,3 +251,8 @@ func _respawn() -> void:
 	arena.rivet.pos = layout.marker("The Toner Room").at
 	hidden_in = ""
 	Log.info("stage", "Rivet destroyed: respawn at the Toner Room (tape bill %d)" % deaths)
+
+
+## Every car a ghost power may seize, ram or bolt (parked, driven, wrecked); empty without cars.
+func cars() -> Array[VehicleBody]:
+	return vehicles.cars if vehicles != null else ([] as Array[VehicleBody])

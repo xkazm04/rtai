@@ -154,12 +154,11 @@ func _strike(arena: CombatArena, f: Fighter, src: int) -> void:
 ## Machines burn out: with no body in the cone, the live car nearest the aim (inside the cone and
 ## range) takes car_damage through the vehicles lane's damage rules.
 func _burn_car(stage: CollectCallStage, aim: Vector2) -> void:
-	var arena_stage: ArenaStage = stage as ArenaStage
-	if arena_stage == null or arena_stage.vehicles == null:
+	if stage.vehicles == null:
 		return
 	var best: VehicleBody = null
 	var best_a: float = deg_to_rad(num(&"cone_deg"))
-	for b: VehicleBody in arena_stage.cars():
+	for b: VehicleBody in stage.cars():
 		var to: Vector2 = b.pos - stage.arena.rivet.pos
 		var a: float = absf(aim.angle_to(to))
 		if b.state != VehicleBody.State.WRECK and to.length() <= num(&"range_m") and a < best_a:
@@ -167,7 +166,7 @@ func _burn_car(stage: CollectCallStage, aim: Vector2) -> void:
 			best_a = a
 	if best == null:
 		return
-	var rules: VehicleDamage = arena_stage.vehicles.rules
+	var rules: VehicleDamage = stage.vehicles.rules
 	best.hp_lost = minf(rules.hp, best.hp_lost + num(&"car_damage"))
 	best.state = rules.state_for(best.hp_lost, best.soul_hijacked)
 	@warning_ignore("return_value_discarded")
