@@ -738,3 +738,21 @@ Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals.
   about 15 min. Also: `run_unit.mjs` needs `GODOT_BIN` exported (`spawnSync godot ENOENT` = exit -1).
 - To keep the merge clean I do not touch `shock_arcs_view.gd`, `shock_jolt.gd`,
   `weapon_fx_electro.gd`, `fight_areas_art.gd`, `react_table.gd` tonight (melee's 7ce7b33d files).
+
+### MILESTONE 23:56: Rivet's pistol flash reads at 32 px/m (audit row 11, anticipation 1)
+- LOOK first (head, `--weapon=pistol --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=6`,
+  kill tick 302, 0 SCRIPT ERROR; x4 crops frames 296-301): Rivet's flash is a 15 px speck on
+  frames 298-299, while the cop's own flash (f295-297) is a bigger cream star: the hero's shot read
+  second. hit_feel.json `weapons` pistol `muzzle_k` 1.6 (new optional field; `HitFeel.muzzle_k`,
+  1 for any weapon without it and under --feel=off; `WeaponFxIgnite.muzzle_k` feeds
+  `WeaponFxArt.muzzle`, one line there, the file stays 290).
+- A/B (same args, identical sim, kill 302 on both): after = an ink-edged cream star with a
+  vermilion core about one body wide on 298-299; at 48 px/m it reads without swamping Rivet.
+  Doctrine: fire is vermilion and cream, in ink (look-3).
+- Tests `test_muzzle_k.gd` 4; planted fault (the off switch ignored) -> exactly the two off tests
+  fail (1143/1145); unit 1145/1145 (`run_unit.mjs`), lint 13/13 (943 files).
+- Clip `masters .../pistol_muzzle-ab-32-48ppm.mp4` (frames.json row 0; dropped
+  `hand_cannon-ab-32ppm.mp4`, covered by `heavy_feel-ab-48ppm.mp4`; still 15 rows).
+- Registry rule applied: motion-quality-gating (judge per frame on the live path at 32 and 48;
+  the fix sized against what competes in the same frame, the cop's flash, not in isolation);
+  realtime-combat-semantics (the shooter's own action must read before its consequence).

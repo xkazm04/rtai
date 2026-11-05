@@ -33,10 +33,10 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 5 | electro_gun | 2 | 2 | 2 | 3 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads; it3 `9c140ffb`: the struck (stunned) body is thrown 0.3 m along the bolt on the hit frame, then convulses |
 | 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
 | 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
-| 8 | ray_gun | 2 | 2 | 2 | 2 | 0 | ink bolt and star on the hit frame, a pale ring at the body; the kill reads as a faint flash, the body barely answers at 32 px/m |
+| 8 | ray_gun | 2 | 3 | 2 | 3 | 0 | ink bolt and star on the hit frame, a pale ring at the body; it7 at 48 px/m: the kill is the approved brutality `ray_gun_dissolve` (star + stop, glow, the body locks and falls stiff, gold rings eat it from tick +40 to a dust heap); every beat reads at 48, the star, disc and gold ring at 32 |
 | 9 | flamethrower | 2 | 3 | 3 | 3 | 0 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
 | 10 | molotov | 1 | 3 | 3 | 3 | 0 | it5 at 48 px/m, `--reach=7`: no wind-up on Rivet (the only cue is the next lit bottle in his claw); the bottle flies as a thin dark stick with a vermilion wick, readable at 48 px/m, thin at 32; the burst (ink, cream and vermilion star) and the burning cop read at a glance |
-| 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
+| 11 | pistol | 1 -> 2 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads; it7 `d79c5278` muzzle_k 1.6: his flash now reads before the cop's |
 | 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
 | 13 | gloria | 1 | 2 | 3 | 3 | 0 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
 | - | assault-rifle | ? | ? | ? | ? | ? | in rivet_arsenal.json, not in weapons.json (`--weapon` cannot arm it); film via `--loadout` |
@@ -135,3 +135,17 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   decaying with the recoil in 0.27 s). At 32 px/m the shoulder line visibly turns for about 15 frames
   (diff 500-800 px per frame, frames 301-315). Verdict: MODEST, a real follow-through now; still no
   anticipation. Clip `molotov_throw_twist-ab-32-48ppm.mp4` (32 px/m, then 48 px/m).
+
+### pistol muzzle (`d79c5278`)
+- Before (head, 32 px/m, `--reach=6`, kill tick 302): Rivet's flash a 15 px speck on frames
+  298-299; the cop's own flash star (295-297) read bigger than the hero's.
+- After: hit_feel.json `weapons` pistol `muzzle_k` 1.6 (WeaponFxArt.muzzle's cell scale; 1 and
+  `--feel=off` = before): an ink-edged cream star with a vermilion core about one body wide on
+  298-299. At 48 px/m it does not swamp Rivet. Clip `pistol_muzzle-ab-32-48ppm.mp4`.
+- Not done: the machine pistol (row 12, the same "muzzle hardly reads") stays at 1: at about 10
+  rounds a second a bigger cell every round is noise, not weight; judge it on film first.
+
+### ray_gun kill (it7): no change
+- The it6 note ("the body does not answer the beam") was a misread: the kill is the approved
+  brutality signature `ray_gun_dissolve` and its lock-up is the design (48 px/m sheet, JOURNAL
+  FINDING 23:27). A per-weapon standard death would only change `--gore=reduced`.
