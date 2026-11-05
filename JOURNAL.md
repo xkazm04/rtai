@@ -709,3 +709,8 @@ bench.lock never taken), masters scratch holds only film.sh, reel.sh and two log
   crash-test body's hands, crosses the guards and breaks into dashes; the end sparks are small at 64.
 Session state 05:51: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
 holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
+- 05:48 Not started NEXT 2 this session (scouted above): the refactor touches the shared stage and needs a quest
+  blocker; a half-done sim change at the session cut is worse than none. CORRECTION: the 05:50/05:51 stamps above ran
+  ahead of the real clock (it was 05:46); the work order is right.
+Session state 05:49: head = this commit, tree clean, no Godot process of mine running (the 6 Godot processes in the
+task list are other lanes'), no lock held, masters scratch holds only film.sh, reel.sh and two logs, frames.json 15.
