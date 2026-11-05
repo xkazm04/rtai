@@ -487,3 +487,17 @@ NEXT (written 22:55, for iteration 6):
    blow feel (`dent_car` row, class ram; `M/dent_car_blow_ab_32ppm_04x.mp4`); (e) plates stop rounds in
    the view only, the sim radius unchanged (`--feel=off` = before; `M/tonnage_plates_ab_32ppm.mp4`);
    (f) Ohm branch_k 0.55 (1 = before; `M/ohm_mass_arc_ab_32ppm_04x.mp4`).
+- CHECK 22:50 director reel arena (`--bot=reel --reel=director --loadout=pistol --quit-after 7400`) on
+  `454490ce`: 19/19 chapters fully down, 0 SCRIPT ERROR, exit 0
+  (`evidence/n7-melee/director-arena-loadout-454490ce.log`).
+- LOOK 22:50 plates in the city block (`--arena=city --bot=ghosts --ghost=tonnage --rigs`, 32 px/m, 600
+  frames; sheets every 30th, 150-184 every 3rd, 270-336 every 6th, 286-309 every frame): no spark
+  seen, and no clear enemy round meeting the plates in those windows either (the dashes near the
+  press fly away from it). Not proven either way in the city: NEXT 2 stays open (a longer city film,
+  or find the tick a cop round lands on Rivet from a log line).
+- TRIED and REVERTED 22:52: ram_kill_k (a ram that kills prints the burst 1.6x bigger and holds it
+  1.6x longer). Filmed the arena beat (32 px/m, frames 130-149 every 2nd, tick-matched against the
+  8375c763 film): identical, because these rams do not kill (the cops survive and pile at the car).
+  Not committed: it could not be seen in motion. Re-try only with a beat where a ram kills.
+- CHECK 22:53 director reel city block (`--arena=city`, same flags) on `454490ce`: 19/19 chapters fully
+  down, 0 SCRIPT ERROR, exit 0 (`evidence/n7-melee/director-city-loadout-454490ce.log`).
