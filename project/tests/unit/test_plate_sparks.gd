@@ -7,6 +7,8 @@ extends GutTest
 func _plates(on: bool) -> PlateSparks:
 	var h: HaulerStage = HaulerStage.shipped()
 	h.form.on = on
+	for i: int in 120:  # grown in (morph_k 1)
+		h.form.step(Vector2.ZERO)
 	var p: PlateSparks = PlateSparks.make(h)
 	p.enabled = true  # the run's --feel flag is not under test
 	return p
@@ -74,3 +76,14 @@ func test_the_per_tick_cap_holds_a_burst() -> void:
 	@warning_ignore("return_value_discarded")
 	p.edge(_round(-0.5, -0.3), Vector2.ZERO, 1.2, 21)
 	assert_eq(p.marks.size(), p.per_tick + 1, "the next tick sparks again")
+
+
+func test_planted_morphing_in_draws_through() -> void:
+	var h: HaulerStage = HaulerStage.shipped()
+	h.form.on = true
+	h.form.step(Vector2.ZERO)  # one tick into the grow: no press drawn yet
+	var p: PlateSparks = PlateSparks.make(h)
+	p.enabled = true
+	assert_lt(h.form.morph_k(), PlateSparks.MORPH_MIN)
+	assert_eq(p.edge(_round(-0.5), Vector2.ZERO, 1.2, 10), Vector2.INF)
+	assert_eq(p.marks.size(), 0)

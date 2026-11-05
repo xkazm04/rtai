@@ -9,6 +9,8 @@ extends RefCounted
 ## FxView asks `edge()` per round and draws `draw()` on the print layer. Data: ghost_attacks.json
 ## tonnage plate_r_m, plate_spark_ticks (0 = none), plate_sparks_per_tick; --feel=off = none (the
 ## rounds draw through as before). View only: never read by the sim, no RNG (turns from the tick).
+## Only once the press is drawn (GhostPilot.settled_in tonnage, and the tank grown in: morph_k >=
+## MORPH_MIN): in the city film the first sparks printed round the teal morph disc before it was.
 
 const INK: Color = SlamDebris.INK
 const CREAM: Color = SlamDebris.CREAM
@@ -21,8 +23,12 @@ const TRACER_PX: float = 9.0
 const CORE_PX: float = 4.0
 ## FxView's plain enemy dash (no table gun): its tail behind the head.
 const DASH_M: float = 0.25
+## The tank's grow (HaulerForm.morph_k) from which the plates stop rounds: the press is drawn.
+const MORPH_MIN: float = 0.95
 
 var hauler: HaulerStage
+## The ghost forms' pilot (null: the morph gate alone): no plates until Tonnage has settled in.
+var pilot: GhostPilot = null
 var enabled: bool = true
 var r_m: float = 1.2
 var spark_ticks: int = 6
@@ -51,6 +57,8 @@ static func make(p_hauler: HaulerStage, attacks: GhostAttacks = null) -> PlateSp
 func edge(s: Shot, c: Vector2, tail_m: float, tick: int) -> Vector2:
 	if not enabled or s.from_rivet or hauler == null or not hauler.form.on:
 		return Vector2.INF
+	if not _stopped.has(s) and not _plated():
+		return Vector2.INF  # still morphing in: no press drawn yet, so no plates to stop it
 	var dir: Vector2 = s.vel.normalized()
 	var tail: Vector2 = s.pos - dir * tail_m
 	var t: float = PlateSparks.enter(tail, dir, c, r_m)
@@ -62,6 +70,12 @@ func edge(s: Shot, c: Vector2, tail_m: float, tick: int) -> Vector2:
 	_stopped[s] = true
 	_spark(at, dir, c, tick)
 	return at
+
+
+func _plated() -> bool:
+	if pilot != null and not pilot.settled_in(&"tonnage"):
+		return false
+	return hauler.form.morph_k() >= MORPH_MIN
 
 
 ## The distance along `dir` from `p` to where it enters the circle (`c`, `r`); 0 when `p` is

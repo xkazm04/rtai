@@ -233,6 +233,8 @@ func _plates_begin(arena: CombatArena) -> void:
 	var h: HaulerStage = stage.pilot.hauler if stage.pilot != null else null
 	if _plates == null or _plates.hauler != h:
 		_plates = PlateSparks.make(h) if h != null else null
+		if _plates != null:
+			_plates.pilot = stage.pilot.ghosts
 	if _plates != null:
 		_plates.prune(arena.shots)
 
