@@ -643,3 +643,36 @@ NEXT (written 23:55, for iteration 7):
   close-up at 0.4x looked at (both kills). CLIPs `M/claw_rake_ab_32ppm.mp4` (3.9 s),
   `M/claw_rake_48ppm_04x.mp4`; frames.json top (dropped the older melee_feel_claw clip, superseded).
 - Audit: claw row re-scored impact 2 -> 3, read 3 -> 4 (ranked item 3).
+- CHECK 00:34 director reels on `f45ad8e6` (`evidence/n7-melee/reels.sh`): arena 19/19 and city
+  19/19 fully down, 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-loadout-f45ad8e6.log`).
+- READ 00:31 n7-ranged JOURNAL to its end: two new feel commits, `50c0883b` (Gloria muzzle_k 1.8)
+  and `193bc529` (machine pistol muzzle_k 1.3); no REQUEST to melee. Merge after the scenarios run.
+- FINDING (NEXT 3, by code, not filmed): quest 1 draws through CollectCallView -> FxView, the same
+  view that owns PlateSparks and ClawMarks, so the plates and the claw rakes are on the shipped
+  quest path. Not filmed: the quest bot never takes Tonnage, so it stays "unseen in quest 1".
+- TRIED and REVERTED 00:36 (NEXT 2, the ram heap): ink speed lines bridging each rammed body's
+  shove (`ram_smear_s` 0.12; the sim moves a body stomp_knock_m 2.2 m in one tick). Filmed the
+  arena Tonnage reel at 32 px/m, after vs `ram_smear_s` 0, 2x crops of frames 133-140 (contact at
+  tick 135): on screen the cop does not jump 2.2 m (the car stops it and the press follows right
+  behind), so the lines lie under the press body; a few grey ticks peek out at 135-137. Not
+  visible in motion: not committed (files restored, test moved to scratch). The heap is the
+  sim's shove into the car; a view-only fix has to draw *on* the bodies, not behind them.
+- FINDING 00:38 (victim sync, the ram heap): the arena Tonnage film logs `react: 0 wounds`. A ghost hit
+  lands through CombatArena.damage; `struck` carries rounds only and ReactLink heard `wounded` for the
+  five melee ids, so a rammed or slam-thrown body that lives played no rig reaction at all.
+- MILESTONE 00:48 `91700e01` human_reactions.json `ghost_wound` (ram, stomp, stomp_wave -> blast =
+  knockdown) via ReactLink._on_wounded and MeleeWound's gate; a ghost blow passes a riot slab like
+  melee (`_ghost_blow` set by apply(); `_wound`'s 5-arg shape kept so the other lanes' tests do not
+  move: FRICTION, the first try changed it and load_all failed on test_melee_wound's old calls).
+  test_ghost_wound 5/5; planted fault (ReactLink back to melee only) -> exactly the ram test fails.
+  Lint 13/13, unit 1196/1196 (`evidence/n7-melee/{lint,unit}-it8b.log`).
+- LOOK 00:46 arena Tonnage reel: 1 wound (first pass: 1 on a shield, the riot cop's block sparks;
+  after the slab fix 0 on a shield), not visible: the slam kills him ~20 frames later. City reel
+  (`--arena=city --bot=ghosts --ghost=tonnage --rigs`, 600 ticks, before = ghost_wound {}): react 2
+  wounds vs 0; difference frames from 142 (the ram contact) at the press's right; 2.5x crops of
+  145/155/165/175: before the riot cop stands braced behind his shield arc, after he is laid out along
+  the shove; the slam kills him at ~175 in both. Read at real 32 px/m in the clip's frame. CLIP
+  `M/ghost_wound_ram_ab_32ppm.mp4`; frames.json top (dropped ohm_tell's crop clip to keep 15).
+- DECISION 00:49 (docs/decisions.md): ghost_wound is data; Dent's car and Ohm's bolt are left out (the
+  car's direction is not Rivet -> victim; the bolt stuns through FightAreas). Alternative = add a row.
+- Audit: ram victim sync 3 -> 4; read stays 2 (the heap is the sim's shove).

@@ -103,6 +103,13 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    **Done 21:27 (`0c4161d8`)**: RamMarks: a cream burst edged in ink just past each rammed body (the
    press hides the near side) and paper chips along the shove. Small at 32 px/m (~20 px); the heap is
    unchanged. `M/tonnage_ram_ab_32ppm_48slow.mp4`.
+   **Victim sync 00:48 (`91700e01`)**: a ghost hit that does not kill played no rig reaction at all
+   (CombatArena.struck carries rounds only; ReactLink heard `wounded` for the five melee ids). Now
+   human_reactions.json ghost_wound maps ram, stomp and stomp_wave to blast (knockdown), and Rivet's
+   ghost blow reaches past a riot slab like his melee. City reel at 32 px/m: react 2 wounds vs 0; the
+   rammed riot cop is thrown down from the contact (142) where he stood braced. Victim sync 3 -> 4;
+   read stays 2 (the heap is still the sim's shove into the car). Tried and reverted 00:36: ink speed
+   lines bridging the shove (they lie under the press). `M/ghost_wound_ram_ab_32ppm.mp4`.
 8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
 
 ## Quest 1 shows melee (brief item 5)
