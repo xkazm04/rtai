@@ -1,6 +1,7 @@
-# n5-look REPORT (2026-11-05 08:20, iteration 22)
+# n5-look REPORT (2026-11-05 08:33, iteration 25, final)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
+Final build state: the last code or data change is `176c48f4`; everything after it is docs. On `176c48f4` the evidence gate is green (lint 13/13, unit 964/0, scenarios 46, parity bit-exact, look goldens 11/11) and the director reel shows 16/16 chapters with 0 script errors. At 08:31 all 15 `frames.json` files existed, and no lock or Godot process of this lane was left running.
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
 
 ## What works (with its evidence)

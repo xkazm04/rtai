@@ -468,3 +468,15 @@ NEXT (the morning / iteration 25):
 3. The tell under the colour fire: unchanged (stage contractors + molotov at a gunplay station).
 4. Weapon art: the warm-ink Call stays open.
 Session state 08:25: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
+
+## Iteration 25 (08:30-08:35, STABILIZE, past the freeze)
+- 08:30 READ JOURNAL NEXT, git log. Tree clean at 8b1f1d8c. Past the freeze, so no new features (the alley hue route waits for the morning).
+- 08:31 CHECKED: since 176c48f4 only JOURNAL.md and REPORT.md changed (`git diff --stat`), so the gate (green) and the reel (16/16) from 176c48f4 still describe the build; did not re-run them, to keep the machine load low. frames.json: 15 entries, 0 missing. No gtai-n5 locks, no Godot process running.
+- 08:33 REPORT.md: header set to final, plus the build-state line.
+
+NEXT (the morning):
+1. The build is 176c48f4 (gate green, reel 16/16). After the n5-cast merge, re-bless the look goldens once.
+2. The alley hue: the LookZone Variant/Color route (iteration 24, 08:23, a-d), then gate + reel + a tick-900 A/B beside r2_a6.
+3. The tell under the colour fire: stage contractors + molotov at a gunplay station.
+4. Weapon art: the warm-ink Call stays open.
+Session state 08:34: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
