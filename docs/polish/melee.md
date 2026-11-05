@@ -116,6 +116,15 @@ shake, a kick along the car's nose). Measured at 32 px/m (arena ghost reel, tick
 jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
 `M/dent_car_blow_ab_32ppm_04x.mp4`.
 
-Not yet scored: Tonnage's plates (small arms sparking off the press; the audit sheet sampled every
-20th frame shows no spark mark at 48 px/m, not measured frame by frame), Ohm's mass arc (upgrade_tier
-1 is not in the ghosts reel's beat).
+7d. **Tonnage plates** (scored 22:27 frame by frame at 48 px/m, frames 84-113): antic. n/a,
+   impact 1, read 1, victim sync n/a, sound 1. The cops' rounds drew on inside the press body with
+   no mark: the armour read as rounds passing through him. **Done 22:50 (`8375c763`)**: PlateSparks
+   (view only, FxView): an enemy round's tracer ends at the plate face (plate_r_m 1.35 from Rivet's
+   spot) and its first contact prints a cream star edged in ink with a short bounce streak for
+   plate_spark_ticks 6; at most plate_sparks_per_tick 2 new a tick (a capped round still stops).
+   Looked at (48 px/m frames 86-109 every 2nd, 32 px/m x2 crops 90-105): the rounds stop at the
+   hazard-striped plate, the stars read on it. Re-scored: impact 3, read 3 (small at 32 px/m, on
+   purpose: small arms are a light hit). `M/tonnage_plates_ab_32ppm.mp4`,
+   `M/tonnage_plates_48ppm_04x.mp4`.
+
+Not yet scored: Ohm's mass arc (upgrade_tier 1 is not in the ghosts reel's beat).

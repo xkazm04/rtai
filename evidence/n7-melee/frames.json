@@ -1,5 +1,50 @@
 [
   {
+    "file": "tonnage_plates_ab_32ppm.mp4",
+    "title": "Tonnage's plates stop the rounds: each cop round ends at the plate face with a cream glance spark edged in ink",
+    "source": "game-arena",
+    "branch": "n7-melee 8375c763",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left): the rounds draw on inside the press body",
+    "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose)."
+  },
+  {
+    "file": "tonnage_plates_48ppm_04x.mp4",
+    "title": "Tonnage's plate sparks close up (48 px/m, 0.4x)",
+    "source": "game-arena",
+    "branch": "n7-melee 8375c763",
+    "ppm": 48,
+    "before": "see tonnage_plates_ab_32ppm.mp4 (left half)",
+    "note": "Frames 60-200 of the 48 px/m arena film at 0.4x: the cops fire into the press; every round stops at the plate face."
+  },
+  {
+    "file": "quest1_katana_ab_32ppm.mp4",
+    "title": "Quest 1 shows melee: Rivet's katana on key 2 at Dock 9 (shipped sprite cast)",
+    "source": "game-quest",
+    "branch": "n7-melee",
+    "ppm": 32,
+    "before": "--quest-blade=off (no blade; Rivet shoots from range)",
+    "note": "fbc5a982 + 8237d411 + becfeb7f + 5f80e67c (re-rendered 22:21). The dev pad (quest1_clip --blade=13570-13880) draws the blade, walks in on the bot's target and holds fire: the blade leaves from the sprite's claw side, lifts, cuts down with a cream smear edged in ink, settles; contractors split on the cut."
+  },
+  {
+    "file": "quest1_katana_smear_ab_48ppm_half.mp4",
+    "title": "Quest 1 blade smear: steel (first build) vs cream edged in ink, 48 px/m at half speed",
+    "source": "game-quest",
+    "branch": "n7-melee",
+    "ppm": 48,
+    "before": "the first CastBladeView build (steel smear at 0.4 alpha)",
+    "note": "becfeb7f. Smear shows only on the cut ticks (frames 3, 26, 83 of the window differ); on asphalt the steel smear was a faint grey, the cream wedge with its ink edge reads."
+  },
+  {
+    "file": "dent_car_blow_ab_32ppm_04x.mp4",
+    "title": "Dent's seized car striking a cop: felt on the strike (dent_car row, class ram), 32 px/m at 0.4x",
+    "source": "game-arena",
+    "branch": "n7-melee",
+    "ppm": 32,
+    "before": "no dent_car row (the strike frame matched --feel=off, 0 px)",
+    "note": "4a522dfe. Measured: a 13 px jolt held through a 7-frame stop at the strike, the crash shake settling in ~7 frames; the car, the thrown cop and blood in frame."
+  },
+  {
     "file": "tonnage_ram_ab_32ppm_48slow.mp4",
     "title": "Tonnage ram prints on the contact: a cream burst edged in ink and paper chips along the shove",
     "source": "game-arena",

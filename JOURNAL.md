@@ -418,3 +418,29 @@ NEXT (written 22:20, for iteration 5):
   only, data row in ghost_attacks.json tonnage with an off value), gated with a per-tick cap (a
   Gatling cop must not blur the press).
 - STOP 22:28 iteration 4 (final). NEXT is the 22:20 entry, with item 3 updated by this finding.
+
+## Iteration 5 (22:27-23:27), phase BUILD
+- MERGE 22:28 none: n7-ranged's new commits since 48679f03 (1ce1b11e muzzle flash aim, ed60713e
+  gun_fx aim, 41bb90e7 molotov rig_kick, docs/REPORT) touch no hit_feel module or table; not merged
+  (their REPORT.md would land in this branch). Re-check before freeze.
+- REGISTRY 22:30 applied: realtime-combat-semantics (the impact mark keyed to the contact, scaled by
+  the hit: small arms = a small spark; a per-tick cap so a burst never stacks); depth-ordered-layered-
+  art (the spark draws on the print layer over the press, the round clipped at the plate face so it
+  never draws over the body).
+- MILESTONE 22:50 `8375c763` Tonnage's plates stop the rounds (NEXT 3): PlateSparks (features/souls,
+  view only, FxView `_shots`): an enemy round's tracer ends at plate_r_m 1.35 from Rivet's spot, its
+  first contact prints a cream star edged in ink with a short bounce streak (plate_spark_ticks 6),
+  at most plate_sparks_per_tick 2 new a tick; a stopped round stays hidden past the plates. The
+  clipped tracer copies FxView's style in use (the plain vermilion dash in the arena, the ink tracer
+  under a table gun). Data ghost_attacks.json tonnage + schema; `--feel=off` = the before.
+  test_plate_sparks 6/6 (incl. a planted Rivet round and form-off: no spark; the cap); unit
+  1171/1171; lint 13/13.
+- LOOK 22:45 (arena `--bot=ghosts --ghost=tonnage --rigs`, 330 frames): 48 px/m frames 86-109 every
+  2nd, after vs `--feel=off`: before, vermilion dashes draw inside the press; after, they stop at the
+  plate and stars print. Pass 1 (plate_r_m 1.2) set the stars inside the hazard stripe (the plates
+  are square); 1.35 puts them on it. Pass 1 also drew the clipped round as the 1.2 m ink tracer
+  while the arena draws a 0.25 m vermilion dash: fixed to the branch in use before the commit.
+  32 px/m x2 crops 90-105: the stars read on the stripe, small. CLIPS `M/tonnage_plates_ab_32ppm.mp4`
+  (before | after), `M/tonnage_plates_48ppm_04x.mp4`. frames.json 15 entries.
+- DECISION 22:50 plates are a view clip (docs/decisions.md): the sim lands the round at Rivet's radius
+  as before; growing the sim hit radius was rejected (moves the hash for a read).
