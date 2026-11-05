@@ -45,6 +45,18 @@ because I edited docs during the run). City-block director reel with `--loadout=
    approved brutality freeze on the shards, pop at hit + 39 ticks) or `--shard-pop=12` (pop at
    hit + 15). Built default: 36. See `homing_shard_pop-call-32ppm.mp4`, or
    `RTAI.exe -- --weapon=homing_shard` vs `RTAI.exe -- --weapon=homing_shard --shard-pop=12`.
+2. **Rivet's muzzle flash sizes.** Options: the weapon-art cell size (1, the before) or the scales
+   built tonight (pistol 1.6, Gloria 1.8, machine pistol 1.3; one `muzzle_k` per hit_feel.json
+   `weapons` row). Built default: the scales. See `pistol_muzzle-ab-32-48ppm.mp4`,
+   `gloria_muzzle-ab-32ppm.mp4`, `machine_pistol_muzzle-ab-32-48ppm.mp4`, or
+   `RTAI.exe -- --weapon=pistol` vs `RTAI.exe -- --weapon=pistol --feel=off` (off also drops the
+   camera feel).
+3. **The Gatling's spin-up whirl.** Options: the whirl at 0.8 m (built), 0.6 m (quieter, faint at
+   32 px/m), or none (`spin_whirl_m` 0: the camera tremor alone). Built default: 0.8. See
+   `gatling_whirl-ab-32-48ppm.mp4`, or `RTAI.exe -- --weapon=gatling` vs
+   `RTAI.exe -- --weapon=gatling --feel=off`. Note: the whirl and every muzzle flash print on the
+   flash spot measured for the one-hand hold (a claw width to the aim side); on the Gatling and the
+   machine pistol that is beside the drawn barrel. It moves with your heavy-hold verdict.
 
 (More calls may be added by later iterations.)
 

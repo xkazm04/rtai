@@ -890,3 +890,13 @@ Read: JOURNAL NEXT (it7 list; it8 closed Gloria in Dock 9), git log, n7-melee jo
   in `gun_fx_art.gd` `_claw_state`, gatling row field), `ce923514` (gatling `spin_whirl_m` 0.8).
   All rows I touch sort away from yours (gatling, machine_pistol). Any spun weapon (spin_s on its
   weapons.json row) can take a `spin_whirl_m`: nothing of yours spins today.
+
+### GATE 00:55: evidence run on `42f74955` (= `ce923514` code), nothing tracked touched during it
+- lint 13/13 (945 files), unit 1150/1150, scenarios 52/52, parity bit-exact over 1200 steps
+  (planted caught at 629), selftest pass (look goldens 11/11, block 5/5)
+  (`evidence/ranged/it9-evidence-42f74955.log`). The whirl and the muzzle scale are view only:
+  parity unmoved.
+- Reels on `ce923514` (00:47): pit and city director reels with `--loadout=pistol` 19/19 chapters
+  each, every one fully down, 0 SCRIPT ERROR (`evidence/ranged/it9-reel-{director,city}-ce923514.log`).
+- REPORT: Calls for the owner 2 (muzzle sizes) and 3 (the Gatling whirl, and the flash spot beside
+  the heavy holds' drawn barrel) added with their clips and exe lines.
