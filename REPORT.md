@@ -273,6 +273,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `M/frames/rivet-core-tan-lineup-32ppm.png`; live A/B: `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
    Quest 1 Dock 9: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`; B | A | C lossless beside r2_c3:
    `M/frames/rivet-core-tan-call9-3way-32ppm.png` (C is one constant: `PartMaterials.CORE_TAN` 1.0).
+   On the director reel's grey concrete A and C differ only slightly (C a touch warmer):
+   `M/frames/rivet-core-tan-director-a-vs-c-32ppm.png`.
    Measured: r2_c3's lit shoulder plates sample about RGB (189,156,128), saturation 0.32; A prints (219,200,172), 0.21;
    C prints (204,178,144), 0.29. C is the closer colour; A is lighter so the body holds on the dark asphalt (the
    target's own ground is a mid value, about (133,117,103), which our asphalt and slab are not).
