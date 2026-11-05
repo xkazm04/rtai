@@ -62,3 +62,21 @@ func test_planted_feel_off_keeps_the_camera_still() -> void:
 	arena.damage(_guard(arena, Vector2(1.0, 0.0), 1.0), 9.0, arena.rivet.id, &"claw")
 	assert_eq(m.cam.kicks, 0, "--feel=off: no kick")
 	assert_eq(m.cam.offset_px(arena.tick, 1.0), Vector2.ZERO)
+
+
+func test_a_kerf_cut_rides_its_weapons_row_class() -> void:
+	var arena: CombatArena = _arena()
+	var m: MeleeFeel = _feel(arena)
+	assert_eq(m.class_of(&"kerf_slice"), &"slice", "hit_feel.json kerf_slice row: class slice")
+	arena.damage(_guard(arena, Vector2(0.0, 2.0), 1.0), 99.0, arena.rivet.id, &"kerf_slice")
+	assert_eq(m.hits, 1)
+	assert_eq(m.cam.kicks, 1, "the cut kicks")
+	assert_gt(m.cam.offset_px(arena.tick, 1.0).y, 0.0, "along Rivet -> victim")
+
+
+func test_planted_a_ghost_weapon_without_a_class_row_is_not_felt() -> void:
+	var arena: CombatArena = _arena()
+	var m: MeleeFeel = _feel(arena)
+	assert_eq(m.class_of(&"no_such_ghost_hit"), &"")
+	arena.damage(_guard(arena, Vector2(1.0, 0.0), 1.0), 9.0, arena.rivet.id, &"no_such_ghost_hit")
+	assert_eq(m.hits, 0)

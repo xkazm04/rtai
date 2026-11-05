@@ -101,6 +101,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "cut_flare_s": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
         "cut_hang_s": {
           "maximum": 5,
           "minimum": 0,

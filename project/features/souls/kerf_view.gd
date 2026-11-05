@@ -7,6 +7,10 @@ extends Node2D
 ## afterimages of the Kerf body along it (KerfRig copies, limbs swept, teal-washed, older = fainter;
 ## pooled), and on a cut the hanging cut line across the target, white-hot in a
 ## teal glow, at the kill row's diagonal. Reduced motion: no afterimages, no flicker.
+## n7-melee: on each cut frame, for cut_flare_s, a cut flare across the target (a long cream slash
+## edged in ink, snapping out to full length, and ink sparks thrown along the blink), so a chain of
+## three reads as three marks at 32 px/m. A world impact prints in ink and paper (teal stays the
+## soul's own marks). --feel=off or cut_flare_s 0 = none (the before clips).
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -19,10 +23,14 @@ const GHOSTS: int = 3
 const ECHO_POOL: int = 9
 const ECHO_WASH: Color = Color(0.55, 1.75, 1.6)
 const ECHO_ALPHA: Vector2 = Vector2(0.2, 0.6)
+const CREAM: Color = Color(0.98, 0.94, 0.82)
+const FLARE_HALF_M: float = 1.3
+const SPARKS: int = 4
 
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+var flare: bool = HitFeel.feel_flag() != "off"
 var _echo: Array[KerfRig] = []
 
 
@@ -49,6 +57,7 @@ func _draw() -> void:
 		if k.trail_cut[i] != Vector2.INF:
 			var dir: Vector2 = (k.trail_to[i] - k.trail_from[i]).normalized()
 			_cut(k.trail_cut[i] * ppm, dir.rotated(deg_to_rad(CUT_DEG)), fade, i)
+			_flare(k, k.trail_cut[i] * ppm, dir, age)
 	if k.on():
 		_aura(k)
 
@@ -106,6 +115,25 @@ func _cut(c: Vector2, along: Vector2, fade: float, salt: int) -> void:
 	draw_line(a, b, Color(TEAL, 0.45 * fade * flick), 7.0, true)
 	draw_line(a, b, Color(WHITE, fade), 2.0, true)
 	draw_circle(c, 2.5, Color(WHITE, fade))
+
+
+## The cut flare: full length within 2 ticks, then thinning out over cut_flare_s.
+func _flare(k: KerfStage, c: Vector2, dir: Vector2, age: float) -> void:
+	var span: float = k.num(&"cut_flare_s")
+	if not flare or span <= 0.0 or age > span:
+		return
+	var t: float = age / span
+	var grow: float = minf(1.0, (age + SimClock.TICK_DT) / (2.0 * SimClock.TICK_DT))
+	var along: Vector2 = dir.rotated(deg_to_rad(CUT_DEG))
+	var half: float = FLARE_HALF_M * ppm * grow
+	var w: float = lerpf(5.0, 1.5, t)
+	draw_line(c - along * half, c + along * half, Color(INK, 1.0 - t), w + 4.0, true)
+	draw_line(c - along * half, c + along * half, Color(CREAM, 1.0 - t * t), w, true)
+	for s: int in SPARKS:  # thrown forward along the blink, fanned across the cut
+		var off: float = (s - (SPARKS - 1) * 0.5) * 0.35
+		var from: Vector2 = c + along * off * ppm
+		var to: Vector2 = from + dir.rotated(off * 0.6) * (0.35 + 0.5 * t) * ppm
+		draw_line(from + (to - from) * t * 0.6, to, Color(INK, 1.0 - t), 2.0, true)
 
 
 func _aura(k: KerfStage) -> void:

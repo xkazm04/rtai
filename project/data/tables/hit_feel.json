@@ -175,6 +175,12 @@
       "shake": ""
     },
     {
+      "class": "blast",
+      "doc": "n7-melee: Dent's seized-car blast on each body in its radius (MeleeFeel via class): the blast row (long stop, explosion shake, a hard kick outward from the car); the cap keeps a crowd in the radius to one kick a tick and one stop.",
+      "id": "dent_blast",
+      "shake": "crash"
+    },
+    {
       "doc": "n7-melee: the tap: the 4-tick hold (the shock star marks the frame), a small kick, no shake.",
       "hitstop": "melee_hit",
       "id": "electro_baton",
@@ -211,6 +217,13 @@
       "kick_px": 3,
       "kick_ticks": 8,
       "shake": ""
+    },
+    {
+      "class": "slice",
+      "doc": "n7-melee: one cut of Kerf's blink chain (MeleeFeel via class): a short kick along the blink and the slice stop (a kill takes the kill stop); no shake, so the chain reads cut by cut. The camera's 20-tick stop cooldown is longer than the chain's 18-tick gap: the stop marks every other cut, the kick and KerfView's cut flare mark every cut.",
+      "id": "kerf_slice",
+      "kick_px": 2.5,
+      "kick_ticks": 6
     },
     {
       "doc": "Rate of fire: a smaller kick than the pistol.",
