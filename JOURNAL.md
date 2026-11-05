@@ -1311,3 +1311,5 @@ NEXT (iteration 21, the last BUILD before the 08:30 freeze):
   default quest. Main: 2.6 / 1.2 on the 1.2 capture. This branch since the hybrid (516475c9..): 2.6 / 0.97 on the
   still-1.2 capture = the Hauler sprite 24 % oversize. b68665b1's 0.97 capture makes them agree again (FINDING, fixed
   by the re-capture; not filmed: the quest bot does not seize the Hauler in its run). REPORT section 2 bullet.
+- 07:03 (07:02 entry, checked: `dev/bots/collect_call_bot.gd` has no Hauler / power input, so no recorded quest run
+  shows the grown sprite; the 24 % is arithmetic from `sprite_k` and the two captures, not a filmed frame.)
