@@ -1495,3 +1495,13 @@ Session end 08:26: tree clean after this commit.
 NEXT (if a REPORT session runs at 08:40):
 1. REPORT is final as committed; confirm `git status` is clean. Calls 1-9 and the n6 merge note stand.
 Session end 08:31: tree clean after this commit.
+
+## Iteration 29 (08:40 - REPORT phase)
+- 08:40 read JOURNAL NEXT and log: tree clean at ee1c972d. Checked REPORT.md: every backticked evidence path
+  (repo and `M/`) exists, every cited commit hash resolves, and `git diff 2cc15c5f HEAD -- project native tools` is
+  empty. No bench.lock or image.lock present; no Godot process started.
+- 08:41 added the "What blocked the lane, and for how long" section the REPORT brief asks for: the 19:12-21:42 stop,
+  the bench never run (contention), the first worktree import. Header now says iterations 24-29.
+
+NEXT: none for this run. REPORT is final; the Director merges in the morning (n6 merge note at the end of REPORT).
+Session end 08:42: tree clean after this commit.

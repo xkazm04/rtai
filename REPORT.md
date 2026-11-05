@@ -1,6 +1,6 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**Final for the run, iterations 24-27 (08:18, re-checked 08:20, 08:26 and 08:31; the freeze is 08:30; no code changed after 2cc15c5f).** Every number below
+**Final for the run, iterations 24-29 (08:18, re-checked 08:20, 08:26, 08:31 and 08:41; the freeze is 08:30; no code changed after 2cc15c5f).** Every number below
 was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 09570a2e (code as of
 2cc15c5f, the last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
 UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
@@ -295,6 +295,16 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Fixed (02e4295c): quest 1's sprite Rivet lacked the rig's 32 px/m tan core and visor slot (a 120 px/m capture);
   it now draws the sticker-tier capture below ~42 px/m (section 4). Left: the sprite is one idle pose, so default
   quest 1's Rivet does not walk or swing (the rigs do, under `--rigs`; hosting them is rivet-arsenal Call 1).
+
+## What blocked the lane, and for how long
+- The run stop: 19:12 to 21:42, about 2 h 30 min (the owner needed the machine). Four rig files were left mid-change
+  and failed gdlint on one 101-char line; finished and committed at 21:46 (JOURNAL iteration 7).
+- The bench: never run, all night (about 14 h). Other lanes' Godot and Python jobs kept the machine busy, so the
+  bench was skipped every time. Frame cost is CONTENDED/UNMEASURED, not zero (Next steps).
+- The fresh worktree's first import: about 5 min at the start of the run (the first headless run timed out at 300 s; a plain `--import`
+  took about 4 min). A one-off.
+- Nothing else blocked the lane. The other frictions in JOURNAL (re-imports, missing launch args, editing tracked files
+  while a gate ran) each cost minutes, not hours.
 
 ## Calls for the owner
 1. Rivet's size: A, as built, 1.20x the crowd's span (1.11x a cop's), his core clearly larger than a cop's as
