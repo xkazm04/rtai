@@ -819,3 +819,25 @@ holds only film.sh, reel.sh and logs, frames.json 15 (all present).
   quest1-tonnage-reach-keys-64ppm, both superseded; files kept). Registry rule (motion-quality-gating): judged on
   the shipped quest path in motion, 32 and 64.
 - 07:05 GATES: evidence runner `--no-bench` on the head started (`E/evidence-run-it10-powers.log`).
+- 07:10 GATES on b251cc0a: unit 1017/0 but marked FAIL "tree changed during run" (I edited REPORT.md while it ran:
+  FRICTION, my error). Committed REPORT (a30a5ce3) and re-ran on a still tree: PASS lint 13/13, unit 1017/0,
+  parity bit-exact (mutation caught at 629), selftest goldens 11/11 + block 5/5 in tolerance (no re-bless); scenarios
+  47/48: `scenario_rig_stress` failed in the full run, passed alone (rig median 0.40/0.42 ms of 1 ms) and passed in
+  the 48/48 run on defdd14b; a wall-clock budget under contention, no rig code touched (`E/evidence-run-it10-powers.log`,
+  `E/rig-stress-alone-it10-powers.log`). Reel re-cut `M/ghost-attacks-reel-it10-32ppm.mp4` (57.7 s, + the quest 1
+  Tonnage crush and Ohm car segments), it9 reel deleted, frames.json 15 (all present).
+- 07:20 COMBAT CHECK director reel on a30a5ce3: 16/16, chapter lines identical to 06:45, 0 SCRIPT ERROR
+  (`E/director-reel-it10b-powers.log`). Other lanes' JOURNALs: no new REQUEST to ghost-powers.
+
+NEXT (iteration 11, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (`--no-ff --no-commit`, keep JOURNAL/REPORT and our `*-powers`
+   logs, `--import`); director reel combat check (flags before `--`). Never edit the tree while the evidence runner
+   runs (write its log to /tmp, copy in afterwards).
+2. Kerf in quest 1 against the robot or a car? Kerf has no car interaction (by design: assassin). Weakest item now:
+   the robot victim is a dev stand-in brain (REPORT "does not work"); or a quest-1 determinism scenario for Ohm's car
+   bolt (planted machine_k 0 must leave the car intact), beside scenario_quest1_dent (same Press input, melee instead
+   of fire, the car fallback aim).
+3. Freeze 08:30: final evidence runner on the head (still tree), REPORT final (DRAFT -> final, Next steps section),
+   session-state line.
+Session state 07:22: head = this commit, tree clean after it, no Godot process of mine running, no lock held
+(image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh and two it7 logs, frames.json 15.
