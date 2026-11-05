@@ -67,6 +67,23 @@
    38.0
   ]
  },
+ "head_bald": {
+  "size": [
+   127,
+   148
+  ],
+  "sheet": "night:d4n_ped_d.png",
+  "cell": 4,
+  "scale": 1.0,
+  "pivot_a": [
+   74.0,
+   73.0
+  ],
+  "pivot_b": [
+   50.0,
+   73.0
+  ]
+ },
  "head_beanie": {
   "size": [
    137,
