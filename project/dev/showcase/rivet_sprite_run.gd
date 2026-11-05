@@ -15,6 +15,9 @@ const COP_LOOK: int = 5
 
 var out_dir: String = ""
 var kind: String = "rivet"
+## n5-cast: the rigs think they are at 32 px/m (materials, detail tier) while the layer still
+## draws at 120 px/m: a supersampled gameplay-scale print (tan core, visor slot, hazard collar).
+var sticker: bool = false
 var _ground: CanvasLayer = CanvasLayer.new()
 var _actors: CanvasLayer = CanvasLayer.new()
 var _flat: ColorRect = ColorRect.new()
@@ -53,7 +56,7 @@ func shoot() -> int:
 	var z: float = PPM / PX
 	var view: Vector2 = get_viewport().get_visible_rect().size
 	_actors.transform = Transform2D(0.0, Vector2(z, z), 0.0, view * 0.5)
-	_rigs.zoom = z
+	_rigs.zoom = 1.0 if sticker else z
 	for bg: String in ["black", "white"]:
 		_flat.color = Color.BLACK if bg == "black" else Color.WHITE
 		for t: int in SETTLE_TICKS:
