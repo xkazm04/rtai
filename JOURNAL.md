@@ -395,3 +395,27 @@ Session state 02:11: head = this commit, tree clean, no Godot process of mine ru
   tolerance: no re-bless needed). unit-tests marked FAIL only because I appended to JOURNAL.md during the run ("tree
   changed during run"); the suite itself was 974 passed / 0 failed. Lesson: touch nothing in the tree while the
   runner runs (its first try also refused: the log file was inside the tree).
+- MILESTONE d4996f44 the ghost bodies draw above every rig part (GhostFormView at rigs z + 60, like the held gun;
+  still in the actors band, under vehicles at +100). Before/after at the same ticks in the city:
+  `M:frames/tonnage-city-z-ab-32ppm-x2.png` (cops over the press -> the press over the cops);
+  `M:tonnage-tour-city-32ppm.mp4` re-filmed after the fix. scenario --filter=ghost 1/0 after the change.
+- 02:53 Ohm's arena and city tours re-filmed on d4996f44 (rim + z fix, 0 SCRIPT ERROR each). Judged at 32 px/m in
+  the city: the cream-edged arms now show beside the shell on asphalt.
+- frames.json (15): cycle clip, Ohm target/morph/city/arena, the two rim A/Bs, Tonnage slow morph + city + the z A/B,
+  Kerf target/morph, Dent gait A/B and target, Tonnage before/after/target. Dropped and deleted the cycle keys still.
+
+NEXT (iteration 5):
+1. Merge n5-cast and n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; on the attack files theirs wins).
+   Tell ghost-powers (REQUEST/notice in this JOURNAL is enough): their reel can film Kerf and Ohm on the real bodies
+   now; Ohm's guard hand sits at OhmStage.HANDS_M (0.5, -0.12 in OhmRig.GUARD_HAND).
+2. Re-run the evidence runner with NOTHING touched in the tree while it runs (iteration 4's unit FAIL was only the
+   "tree changed" flag from my JOURNAL edit; 974/0). Log it outside the tree, copy it in after.
+3. Quality, weakest first: (a) Dent's 32 px/m read beside the rimmed Kerf/Ohm (Dent rides Rivet's CutRig: does he get
+   the CutRig halo? check, A/B); (b) form-to-form switch clip at 64 px/m slow (the teal flash, no base pass: is it
+   readable? the cycle clip shows it only at 32); (c) the reduced-motion transformation clip (`--reduced-motion`) for
+   one form, as evidence the beat and burst scale down.
+4. The ghost apparitions for the voice moments (a teal apparition beside Rivet) if 1-3 are evidenced: the form's rig
+   at 0.6 alpha in teal modulate beside Rivet, fading in and out, driven by a dev flag first.
+5. REPORT.md is a draft for this lane: keep it current (gates, Calls for the owner with the composites).
+Session state 02:54: head = this commit, tree clean, no Godot process of mine running, image.lock taken once (02:12,
+  ohm_parts) and deleted; masters scratch empty except film.sh.
