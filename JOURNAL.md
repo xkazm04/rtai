@@ -666,7 +666,7 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
 - 05:12 MERGE n6-ghost-powers 9b5ae95f (quest 1 attack views, quest_ghost_rec, carries n5-cast d7bf12ce) as f7134f89:
   their it7 logs that share our names saved as `*-powers.log`, their copies of ours (`*-forms.log`) dropped;
   JOURNAL/REPORT keep ours. MERGE n5-cast 31e665fa (CORE_TAN 1.0, Call 9 docs) as ac0f15e5. `--import` next.
-- 05:30 FOUND on the merged head, lossless PNG frames of quest1_forms_main (x3 crops at 650/700 Dent at a standstill,
+- 05:22 FOUND on the merged head, lossless PNG frames of quest1_forms_main (x3 crops at 650/700 Dent at a standstill,
   780/820/860 Kerf idle): Dent at a standstill reads (yellow-black disc, glow); Kerf's front blades (about 1.6 m
   forward) cross Rivet's health bar at 1.2 m. MILESTONE (this commit) ghost_forms.json `bar_m` per form (view only:
   kerf 1.9, tonnage 2.35 = the old radius x 1.8, dent and ohm 1.2); StoryForms.bar_lift_m reads it. DECISION.
@@ -680,7 +680,7 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
 - 05:28 COMBAT CHECK director reel on d5e2f3e5 (merged ghost-powers + cast, the bar fix): 16/16 chapters down,
   0 SCRIPT ERROR (E:director-reel-it9.log). The bar over the forms reads as a black slab at full HP: by design
   (CastView._hp_bar fills ink by the health fraction on cream), not changed.
-- 05:40 MILESTONE the 64 px/m close-up on the shipped quest 1 (closes REPORT's open item): quest1_forms_main takes
+- 05:35 MILESTONE the 64 px/m close-up on the shipped quest 1 (closes REPORT's open item): quest1_forms_main takes
   `-- --ppm=64` (Quest1Game.px_per_m, set before the game enters the tree). Lossless PNG run, 1140 frames, 0 SCRIPT
   ERROR. Judged: entry reads in two stages (Rivet -> teal lattice burst -> in-between disc with the press's legs ->
   the press), exit the reverse back to Rivet's sprite; Dent, Kerf, Ohm settled read at native 64; Kerf's bar clears
