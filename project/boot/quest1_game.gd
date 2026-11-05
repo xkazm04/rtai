@@ -44,6 +44,7 @@ func boot() -> void:
 	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
 	Quest1Session.ghost_locks = not LaunchArgs.has("--ghosts-free")  # ghost-powers-5's old default
 	Quest1Session.table_guns = LaunchArgs.value("--quest-guns") != "off"  # n7-ranged's before
+	Quest1Session.blade = Quest1Game.blade_of(LaunchArgs.value("--quest-blade"))  # n7-melee
 	add_child(card)
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)
@@ -257,3 +258,10 @@ func _bind_live() -> void:
 	session.live.viewport = get_viewport()
 	session.live.origin_px = func() -> Vector2: return get_viewport().get_visible_rect().size / 2.0
 	session.live.px_per_m = func() -> float: return view.px_per_m
+
+
+## n7-melee: `--quest-blade` -> the carried blade (absent: the katana; off: none; else the id).
+static func blade_of(flag: String) -> StringName:
+	if flag == "":
+		return &"katana"
+	return &"" if flag == "off" else StringName(flag)

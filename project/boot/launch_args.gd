@@ -32,6 +32,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--end-cue",
 	# n7-ranged: --quest-guns=off keeps quest 1's evening gun path (the before of the table guns)
 	"--quest-guns",
+	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
+	"--quest-blade",
 ]
 
 var _values: Dictionary[String, String] = {}
