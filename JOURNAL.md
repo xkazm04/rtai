@@ -330,3 +330,15 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - NEXT: unchanged from the 18:14 entry (owner verdicts on the 7 REPORT calls; call 7's pick first: centre-line long
   gun + the two-layer drawn claw pair through Codex under image.lock; the darker off-claw tone; 32 px/m
   before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip).
+
+## Iteration 7 (STABILIZE, 18:30-18:40; fresh session, past freeze)
+- 18:30 Started. Tree clean at 2408a97d. d7-calls head still 7f3f5a4c; `git diff bf7386aa d7-calls -- project` empty
+  (nothing to merge, no new REQUEST for held). `git diff 1550dfb0 HEAD -- project` empty, so RTAI.exe (17:59,
+  1550dfb0) is still the head's game; the last full evidence (4a34d9ef: lint 13/13, unit 1110/0, scenarios 52/52,
+  parity exact, goldens unchanged, director reel 19/19) covers the same project tree. frames.json: 15 entries,
+  all present. REPORT.md (18:14) stands.
+- DECISION (stabilize): no gate re-run and no re-export (no project/ change since the gated head; a mid-session
+  run would only repeat the same tree). No new feature started.
+- NEXT: unchanged from the 18:14 entry (owner verdicts on the 7 REPORT calls; call 7's pick first: centre-line long
+  gun + the two-layer drawn claw pair through Codex under image.lock; the darker off-claw tone; 32 px/m
+  before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip).
