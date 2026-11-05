@@ -809,3 +809,20 @@ same seed, same ticks).
   along the blink through the three drones, the halves part with teal edges, then the smoke. At
   48 px/m over the rack it reads as Kerf's slashes; the half-drone silhouettes are small (a drone
   is ~1 m). The it6 clip and keys deleted (superseded).
+- 00:18-00:23 (written up at it8 start: the it7 session ended before its journal) three more
+  commits, each looked at in a 32 px/m boss-cam clip on the it7 tree:
+  - 5206ae56 **boss cam clears the boss bar** (framework view fix, BossCam floor clamp lets the
+    screen rise HUD_PX above the floor): Servo at the loading bays stood under the bar at every
+    bay hop; now below it.
+  - e6a57d49 **rush hour rolls the bay doors up** (ROLL_S 1.6 s, eased; render only).
+  - 5013c1c1 **the defeat's visor flicker** (cream, never vermilion; dark by 80 ticks).
+  - FILMS `M/servo_p1_depot_bosscam_32ppm_it7.mp4`, `servo_p2_rush_hour_bosscam_32ppm_it7.mp4`,
+    `servo_p3_overtime_defeat_32ppm_it7.mp4` (human bot, seed 2, `phase32.sh`); **looked at**
+    `scratch/servo/it7/p2_sheet.png` (15 keys): the doors open, the lanes and drop rings read,
+    the bar clear of Servo. frames.json not yet updated for these (done in it8).
+
+## Iteration 8 (2026-11-06 00:24-01:24, BUILD)
+Read: JOURNAL, git log, n7-king's JOURNAL it7 (target comparison at 32, plain thug FYI, Dent
+numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to servo open.
+- 00:30 MERGE n7-king ad428713 (f448dbce car_goal takes BossHook.bounds; gang helmets; king
+  evidence). JOURNAL conflict, ours; boss_bot.gd auto-merged.

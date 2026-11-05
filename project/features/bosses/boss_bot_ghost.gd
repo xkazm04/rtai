@@ -75,13 +75,15 @@ func _wants(hook: BossHook, me: Vector2) -> bool:
 ## Dent: the nearest live car to walk to and fire on (the fire press seizes the car nearest the
 ## aim line), until one is seized; then Vector2.INF (the seized car steers by the aim at the
 ## boss, and the melee press in reach blows it). The soul is taken only once a car is within
-## SEIZE_M, so the form's time is spent on the car, not the walk. INF for the other ghosts.
-func car_goal(cars: Array[VehicleBody], me: Vector2) -> Vector2:
+## SEIZE_M, so the form's time is spent on the car, not the walk. Only cars on the fight's floor
+## (`area`, BossHook.bounds) count: a car on another pad drew the bot off the floor (it7: 0 seized
+## in 5 full fights). INF for the other ghosts.
+func car_goal(cars: Array[VehicleBody], me: Vector2, area: Rect2) -> Vector2:
 	if ghost != &"dent" or _seized:
 		return Vector2.INF
 	var best: Vector2 = Vector2.INF
 	for b: VehicleBody in cars:
-		if b.state == VehicleBody.State.WRECK:
+		if b.state == VehicleBody.State.WRECK or not area.has_point(b.pos):
 			continue
 		if b.soul_hijacked:
 			_seized = true
