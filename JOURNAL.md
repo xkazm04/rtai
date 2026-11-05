@@ -279,3 +279,38 @@ quest 1). FILM: director `homing_shard` 32 px/m, 36 vs 12: frames identical unti
 pop), clip `masters n7/ranged/homing_shard_pop-call-32ppm.mp4` (in frames.json as an OWNER CALL).
 LOOK: 12 pops while the next shards are still in flight, so the burst reads as the shot's
 answer; 36 holds the frozen body with shards in it for about 0.6 s, then pops.
+
+- GATE 20:37: scenarios on `015517e2`: 52 ran, 0 failed, 0 SCRIPT ERROR (`evidence/ranged/it3-scenarios-head.log`).
+
+### MILESTONE 20:43: `da508e6b` the rocket and the mini-nuke boom on the blast frame (sound)
+- Found: every round ended on `projectile_end` (concrete click) or `hit_flesh`; the two biggest
+  hits had no sound of their own. Built: optional `end_cue` on weapons rows (schema +
+  `WeaponSpec.end_cue`), StageAudio plays it where the round ends; new cue row `blast` = the
+  shipped `car_wreck` explosion at pitch 0.85 with its crackle layer. `--end-cue=off` = before.
+- MEASURE (1/60 s RMS windows of the movie audio, director chapters, off vs on): rocket blast drawn
+  on video frame 64, boom from window 65, +4..10 dB through 77; nuke blast frame 111, boom from
+  112. One frame after the flash, under the hit-stop. Video identical on and off.
+- Clip `masters n7/ranged/rocket_blast_sound-ab-32ppm.mp4` (back to back WITH SOUND); frames.json
+  now 8 rows. Not listened to (no audio judgement possible here): the asset is the approved one.
+- FRICTION: lint gd-size counts the next function's `##` doc toward the previous function's
+  length: a helper placed right after `from_row` made it "43 > 40". Put helpers at the file end.
+
+### REPLY -> n7-melee (20:46): your call 7 (Kerf's every-other-cut stop) is decided, `0d4089f1`
+`camera.json` `hitstop_cooldown_ticks` 20 -> 16 (decision line). Each 18-tick cut now gets its
+stop; FeelBudget's 12 hit-stop ticks per 60 stays the cap for guns and ghosts alike. Merge
+`n7-ranged` for it; drop the call from your REPORT (or keep it as "decided by ranged").
+Also on the branch for you to know: `end_cue` on weapons rows (gun rounds only; ghost attacks do
+not go through `CombatArena.shots`, so it does not reach Dent's blast: that needs a cue from your
+side if you want one).
+
+- GATE 20:47: unit full suite on `0d4089f1`: 1129 passed, 0 failed (`evidence/ranged/it3-unit-head2.log`).
+- GATE 20:45: pit director reel on `da508e6b`: 19/19 down, 0 SCRIPT ERROR
+  (`evidence/ranged/it3-reel-director.log`).
+
+### FINDING 20:46: the director reel without `--loadout` does not fire Rivet's arsenal
+The log says "director: no carry (run with --loadout=pistol); pistol skipped": every gun chapter
+falls back to the default gun. Every reel gate so far (it1, it2, and n7-melee's) ran without it,
+so "19/19" proved the reactions and kills, not the arsenal's own paths. Re-running with
+`--loadout=pistol` (below). From now on the reel gate runs both ways.
+- FRICTION 20:47: `--arena=city --chapter=<id>` alone fires the rocket short onto the road (0/1
+  down in 380 frames); single-chapter city films are not the city reel. Deleted them.
