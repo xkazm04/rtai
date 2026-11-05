@@ -45,6 +45,8 @@ var city: CitySystem = null
 var hauler_kick: HaulerKick = HaulerKick.new()
 ## The camera side of the shared hit feel (features/combat/hit_feel/feel_cam.gd, lane n7-ranged).
 var feel_cam: FeelCam = null
+## n7-melee: Rivet's melee hits on the same FeelCam (they land with no `struck`).
+var melee_feel: MeleeFeel = null
 var _feel_px: Vector2 = Vector2.ZERO
 var _camera: Camera2D = null
 var _stage: CollectCallStage
@@ -216,6 +218,7 @@ func _feel_kick() -> void:
 	var clock: SimClock = city_view.clock if city_view != null and city_view.clock != null else null
 	if feel_cam == null:
 		feel_cam = FeelCam.attach(_stage.arena, clock if clock != null else _stage.clock)
+		melee_feel = MeleeFeel.attach(feel_cam, _stage.arena)
 	feel_cam.reduced_motion = fx_view.reduced_motion
 	var zoom: float = city_view.zoom if city_view != null else print_stage.zoom
 	var now: Vector2 = feel_cam.offset_px(_stage.tick, zoom)

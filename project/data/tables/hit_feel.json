@@ -128,6 +128,46 @@
       "kick_px": 10,
       "kick_ticks": 18,
       "shake": "nuke"
+    },
+    {
+      "doc": "n7-melee: the claw jab (class melee via MeleeFeel): a 3-tick hold and a small kick along the blow, no shake (a combo lands 3-4 jabs a second). A kill takes the kill stop and 1.5x the kick.",
+      "hitstop": "rivet_hit",
+      "id": "claw",
+      "kick_px": 2,
+      "kick_ticks": 6,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: the cut: the 4-tick melee hold and a firmer kick, no shake. A kill (the split) takes the kill stop.",
+      "hitstop": "melee_hit",
+      "id": "katana",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: as the katana (a blade's cut).",
+      "hitstop": "melee_hit",
+      "id": "plasma_sword",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: the tap: the 4-tick hold (the shock star marks the frame), a small kick, no shake.",
+      "hitstop": "melee_hit",
+      "id": "electro_baton",
+      "kick_px": 2.5,
+      "kick_ticks": 7,
+      "shake": ""
+    },
+    {
+      "doc": "n7-melee: the grind lands every tick: no stop per bite (it would stutter), only a 1 px judder kick once per strike (MeleeWound's gap). The kill takes the kill stop.",
+      "hitstop": "",
+      "id": "chainsaw",
+      "kick_px": 1,
+      "kick_ticks": 4,
+      "shake": ""
     }
   ]
 }
