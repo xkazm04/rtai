@@ -85,19 +85,20 @@ func _rivet(r: Fighter) -> void:
 		return
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
+	var art: String = _lod_art("rivet")  # one pick for both paths below (n5-cast's sticker tier)
 	if forms_drawn and stage.pilot != null:
 		if not StoryForms.stands_in(stage.pilot.ghosts.forms):
-			_sprite("rivet", at, _size(&"rivet"), r.facing)
+			_sprite(art, at, _size(StringName(art)), r.facing)
 		var lift: float = StoryForms.bar_lift_m(stage.pilot.ghosts.forms)
 		_hp_bar(at + Vector2(0.0, -lift), r.hp / r.max_hp)
 		return
 	var h: HaulerForm = stage.pilot.hauler.form if stage.pilot != null else null
 	var k: float = h.morph_k() if h != null else 0.0
-	var art: String = _lod_art("rivet")
 	if k > 0.0:  # features/souls: the Hauler grows and tints Rivet by the morph
 		var grow: float = HaulerLook.sprite_k(k, h.windup_k())
 		var tint: Color = HaulerLook.tint(h.num(&"look_tint_k"), k)
-		_sprite(art, at, _size(StringName(art)) * grow, r.facing, tint)
+		var big: String = _lod_art("rivet", grow)
+		_sprite(big, at, _size(StringName(big)) * grow, r.facing, tint)
 	else:
 		_sprite(art, at, _size(StringName(art)), r.facing)
 	_hp_bar(at + Vector2(0.0, -1.2), r.hp / r.max_hp)
@@ -106,8 +107,10 @@ func _rivet(r: Fighter) -> void:
 ## n5-cast: below the rigs' flat-sticker threshold (PartMaterials.flat_below, about 42 px/m) the
 ## rig Rivet prints his gameplay stickers (tan core, visor slot, hazard collar), so the sprite
 ## Rivet and his peek draw from the capture of that tier (`<id>_lod`), the art capture above it.
-func _lod_art(id: String) -> String:
-	var ppm: float = get_global_transform_with_canvas().get_scale().x * Ink.PX_PER_M
+## `grow` (the Hauler's sprite_k) scales the drawn px per part px too: the grown Hauler sprite is
+## past the threshold and keeps the art's plates (a grown sticker is a flat mass with a black slab).
+func _lod_art(id: String, grow: float = 1.0) -> String:
+	var ppm: float = get_global_transform_with_canvas().get_scale().x * Ink.PX_PER_M * grow
 	var px: float = CutRig.SC * ppm / SimConst.PX_PER_M
 	return id + "_lod" if LOD_SPRITES and px < PartMaterials.flat_below else id
 
