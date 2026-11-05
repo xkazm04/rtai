@@ -38,6 +38,20 @@ func test_route_sends_arena_damage_through_hurt() -> void:
 	assert_almost_eq(f.body.hp, before - 2.0, 0.0001)
 
 
+## Owner call A: a ghost_k boss takes that share of a ghost form's damage (planted: k ignored).
+func test_route_scales_by_ghost_k() -> void:
+	var gang: BossSpec = BossSpec.shipped(&"king_gang")
+	var f: BossFight = BossFight.new(gang, RngRegistry.new(3).stream(gang.rng), Vector2.ZERO)
+	f.start()
+	var before: float = f.body.hp
+	f.body.hp -= 2.0
+	BossAdds.route(f, before, 0.5)
+	assert_almost_eq(f.body.hp, before - 1.0, 0.0001)
+	assert_eq(
+		BossSpec.shipped(&"king").ghost_k, 1.0, "King takes the ghosts' full damage (default)"
+	)
+
+
 func test_adds_swipe_hits_a_standing_rivet_and_misses_after_a_sidestep() -> void:
 	for sidestep: bool in [false, true]:
 		var arena: CombatArena = _arena()

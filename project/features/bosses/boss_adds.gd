@@ -120,11 +120,12 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 ## The hp the arena's chokepoint took from `f`'s body since `last_hp` goes back through
-## BossFight.hurt() (punish window, phase floors, the invulnerable transition).
-static func route(f: BossFight, last_hp: float) -> void:
+## BossFight.hurt() (punish window, phase floors, the invulnerable transition), times `k` (the
+## boss's ghost_k while Rivet is in a ghost form).
+static func route(f: BossFight, last_hp: float, k: float = 1.0) -> void:
 	var lost: float = last_hp - f.body.hp
 	if lost <= 0.0:
 		return
 	f.body.hp = last_hp
 	@warning_ignore("return_value_discarded")
-	f.hurt(lost)
+	f.hurt(lost * k)

@@ -690,3 +690,14 @@ it Servo-side).
   The envelope holds for the human bot (60-150 s, 0 deaths, every stander loses); one dodge seed
   runs 156 s. The rotor dash on the human (43 %) is the open fairness question (NEXT 2).
   Session ends with everything committed. NEXT for iteration 6 stands as written above.
+
+## Iteration 6 (23:09 - 00:09)
+- 23:12 Read: JOURNAL, git log, king's JOURNAL (FYI 22:56: `ghost_k`, BossBot cover 5ef33a80).
+- 23:14 MERGE n7-king 9695947c (ghost_k f468f112, BossBot cover 5ef33a80, KingCarTrim, gang steel,
+  coin fan 10). Conflicts: JOURNAL (ours); boss_hook.gd (both: my `_park` on the first step + king's
+  `route(fight, _last_hp, _ghost_k(stage))`); boss_bot.gd: both lanes flipped the sidestep away from
+  a box. Kept king's generic `_unblock`/`sidestep`/`walled` (BLOCK_M 1.5) and dropped my
+  SIDE_LOOK_M 1.8 block in `_dodge`; folded my charge-on-the-body roll (CHARGE_ROLL_TICKS 7) into
+  king's `_rolls` (windup: not for a charge; active: the charge's body gap, else walled).
+  The dodging/human numbers move with this: re-measured below.
+- Boss cam clamp (my NEXT 3b) is king's NEXT 3 (BossCam, framework): left to king, not duplicated.

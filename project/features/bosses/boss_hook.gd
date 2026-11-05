@@ -80,7 +80,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		_hooks_cleared = true
 		_clear_claw_cops(stage)
 		_park(stage, fight.spec.arena)  # the car service is attached after the stage's setup
-	BossAdds.route(fight, _last_hp)
+	BossAdds.route(fight, _last_hp, _ghost_k(stage))
 	_last_hp = fight.body.hp
 	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
@@ -107,6 +107,12 @@ func step(stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## The boss's ghost_k while Rivet is settled in a ghost form (the hp lost then is the ghost's).
+func _ghost_k(stage: ArenaStage) -> float:
+	var g: GhostPilot = stage.pilot.ghosts if stage.pilot != null else null
+	return fight.spec.ghost_k if g != null and g.forms.current() != GhostForms.BASE else 1.0
 
 
 ## A new stun on the boss's body (FightAreas: Ohm's bolt, the electro gun) dazes the fight.

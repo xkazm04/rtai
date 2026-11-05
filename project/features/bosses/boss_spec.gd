@@ -52,6 +52,9 @@ var move_mps: float = 0.0
 ## The distance the default walk stops at (optional `keep_m`; BossMoves' own default without it).
 var keep_m: float = -1.0
 var radius_m: float = 1.0
+## The share of the hp the boss takes while Rivet is settled in a ghost form (optional `ghost_k`,
+## default 1: the ghosts' full machine damage). Owner call A (n7-king): e.g. 0.5 for a tougher boss.
+var ghost_k: float = 1.0
 ## The bodies.json class Rivet meets the body as (optional `body_class`, default `boss`).
 var body_class: StringName = &"boss"
 var rng: StringName = &""
@@ -86,6 +89,7 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.move_mps = t.num(row, "move_mps")
 	s.keep_m = BossAttack.opt(row, "keep_m", -1.0)
 	s.radius_m = t.num(row, "radius_m")
+	s.ghost_k = BossAttack.opt(row, "ghost_k", 1.0)
 	s.body_class = StringName(str(row.get("body_class", "boss")))
 	s.rng = StringName(t.text(row, "rng"))
 	s.script_path = str(row.get("script", ""))
