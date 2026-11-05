@@ -194,7 +194,11 @@ Ohm was the weakest read there: a small rust shell with almost no glow. His soul
 marks him as possessed, like Dent and Kerf. Unit 1013/0; director reel 16/16, 0 SCRIPT ERROR.
 
 ### Gates (iteration 11)
-On 9d610364, still tree (E:evidence-run-it11.log): evidence runner `--no-bench` all PASS: lint 13/13, unit
+On the merged head 8b692f82 (ghost-powers 97f49bf0 quest 1 cars, n5-cast 7005b5c8 riot crown): unit (with import)
+1016/0 (E:unit-it11-merged2.log), director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it11-merged2.log). On
+e865146d (Ohm's glow), still tree (E:evidence-run-it11-final.log): evidence runner `--no-bench` all PASS, unit
+1013/0, scenarios 47, parity bit-exact, look goldens 11/11 (worst 1.32), block 5/5 (worst 1.52). Earlier, on
+9d610364, still tree (E:evidence-run-it11.log): evidence runner `--no-bench` all PASS: lint 13/13, unit
 1013/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.32), block goldens
 5/5 (worst 1.52): no re-bless. Director reel 16/16 chapters down, 0 SCRIPT ERROR on the merged head
 (E:director-reel-it11-merged.log). The all-four cycle `M:forms-cycle-all-32ppm.mp4` re-filmed on this head
@@ -202,8 +206,9 @@ On 9d610364, still tree (E:evidence-run-it11.log): evidence runner `--no-bench` 
 `M:frames/forms-cycle-all-ab-32ppm-x3.png`.
 
 ## What does not work / is open
-- Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
-  the ghost-powers REPORT.
+- Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
+  97f49bf0): our Dent body seizes, rides braced and blows them on the shipped path
+  (`M:frames/dent-ride-quest1-32ppm-x2.png`), so Dent stays selectable there (their NOTICE of 05:46 answered).
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print

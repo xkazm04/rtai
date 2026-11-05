@@ -766,3 +766,27 @@ Session state 05:56: head = this commit, tree clean after it, no Godot process o
   `--arena=city --bot=forms --form=voices --apparition`, 1020 frames, 0 SCRIPT ERROR; frames 690-930 every 30, x1.5
   crops. Judged: the teal Ohm figure beside Rivet reads as before; the washed glow stays faint and does not spill
   over Rivet. No change needed; scratch deleted.
+- 06:36 FINAL GATES evidence runner `--no-bench` on e865146d, still tree (E:evidence-run-it11-final.log): PASS lint
+  13/13, unit 1013/0, scenarios 47, parity bit-exact, look 11/11 (worst 1.32), block 5/5 (worst 1.52).
+  Ohm on the shipped quest 1 (quest1_forms_main, frames 940/980/1020, x3): `M:frames/ohm-glow-quest1-32ppm-x3.png`;
+  judged: a clear teal pool, the bar clear above him.
+- 06:39 MERGE n6-ghost-powers 97f49bf0 (Dent in quest 1: three parked ghost cars, solid for Rivet and the guards;
+  NOTICE 06:31 answers theirs of 05:46) as 48404aba. Their merge of ours had kept their JOURNAL/REPORT, so the
+  auto-merge took their text: restored ours from HEAD before committing (watch for this on every merge back).
+  MERGE n5-cast 7005b5c8 (riot helmet plain crown) as 8b692f82. Unit (with import) 1016/0
+  (E:unit-it11-merged2.log); COMBAT CHECK director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it11-merged2.log).
+- 06:44 CHECK Dent in quest 1 with the cars (ghost-powers' quest_ghost_rec `--ghost=dent`, 300 PNG ticks, 0 SCRIPT
+  ERROR; seizes 1, strikes 4, kills 4, blasts 1, misses 5): our Dent body rides braced on the seized car on the
+  shipped path; wreck after the blast; the reach frays when no car is left. `M:frames/dent-ride-quest1-32ppm-x2.png`
+  (named in the dent-vs-target frames.json entry). Dent stays selectable in quest 1; no data change.
+
+NEXT (iteration 12):
+1. Merge n5-cast / n6-ghost-powers if they moved (`--no-ff --no-commit`; then ALWAYS `git checkout HEAD --
+   JOURNAL.md REPORT.md evidence/director-reel-it7.log evidence/evidence-run-it7.log` even when the merge says
+   clean), `--import`, unit, director reel (`res://dev/arena/arena.tscn -- --bot=reel --reel=director`).
+2. Final evidence runner `--no-bench` on a still tree after the last merge, before the 08:30 freeze (last all-PASS
+   on e865146d; the merged head 8b692f82 has unit 1016/0 and reel 16/16 only). REPORT for 08:40.
+3. Polish candidates: Ohm's 64 px/m close-up with the wider glow (ohm-live-vs-target-64ppm predates it); the
+   Kerf city tour clip (only the all-four city cycle shows Kerf on the street).
+Session state 06:47: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
+  bench.lock not taken this session); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
