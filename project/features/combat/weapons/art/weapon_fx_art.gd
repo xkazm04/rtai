@@ -117,7 +117,7 @@ static func muzzle(ci: CanvasItem, r: Fighter, gun: GunHand, tick: int) -> bool:
 	var fx: StringName = art().muzzle_fx(spec.id)
 	if fx == &"":  # a throw (the molotov) has no flash: the wick already burns on the bottle
 		return true
-	var aim: Vector2 = r.facing.normalized()
+	var aim: Vector2 = (gun.last_aim if gun.last_aim != Vector2.ZERO else r.facing).normalized()
 	var reach: float = r.radius_m + FLASH_AHEAD_M + art().muzzle_m(spec.id).x * 0.5
 	var at: Vector2 = r.pos + aim * reach + aim.orthogonal() * GUN_SIDE_M
 	# the flame cell is the jet's full tongue: at the nozzle only a small lick
