@@ -28,6 +28,10 @@ func _process(_delta: float) -> void:
 	if _rigs == null and not OS.get_cmdline_user_args().has("--boss-shapes"):
 		_rigs = KingRigs.new()
 		add_child(_rigs)
+		var accents: KingAccents = KingAccents.new()
+		accents.view = self
+		accents.z_index = KingAccents.OVER_RIG_Z  # the rig's parts carry their own z
+		add_child(accents)
 	if _rigs != null:
 		_rigs.pose(fight, adds, _windup_px())
 
@@ -48,6 +52,11 @@ func _draw() -> void:
 		draw_set_transform(Ink.px(g.body.pos), g.body.facing.angle(), Vector2.ONE * 1.3)
 		_gangster(Vector2.ZERO)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+## The tell offset KingRigs and KingAccents share.
+func windup_px() -> Vector2:
+	return _windup_px()
 
 
 ## A charge's anticipation: through the tell the body rocks back (up to WINDUP_BACK_M against the
