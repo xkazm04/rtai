@@ -923,3 +923,9 @@ Session state 08:09: head = this commit, tree clean after it, no Godot process o
 NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
 the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls).
 Session state 08:21: head = this commit, tree clean, no Godot process of mine running, no lock held.
+- 08:20 MERGE n5-cast efa29d38 (2cc15c5f: `CastView._lod_art(id, grow = 1.0)`, the default keeps every call as
+  built; the rest is docs) as 3a1ec6b8, JOURNAL/REPORT kept ours. n6-ghost-forms 853b0a90 is docs only (not
+  merged; nothing to take). `--import` 0 SCRIPT ERROR, unit 1020/0 (`E/unit-it13b-powers.log`), director reel 16/16
+  identical to it13, 0 SCRIPT ERROR (`E/director-reel-it13b-powers.log`). Scenarios and parity were not re-run after
+  this merge (it changes no sim code; both passed on 1d2c9491).
+- 08:25 FREEZE. Session state: head = this commit, tree clean, no Godot process of mine running, no lock held.
