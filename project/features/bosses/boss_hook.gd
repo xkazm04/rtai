@@ -20,6 +20,7 @@ var defeated_tick: int = -1
 ## Hit counts for the bot's numbers: attacks begun / that landed, per attack id.
 var tries: Dictionary[StringName, int] = {}
 var landed: Dictionary[StringName, int] = {}
+var rolled: Dictionary[StringName, int] = {}
 var dealt: float = 0.0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
@@ -35,6 +36,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if spec == null:
 		return
 	_arena = stage.arena
+	_clear_floor(stage)
 	var area: ArenaPlan.Area = stage.plan.area(String(spec.arena.area))
 	origin = area.rect.get_center() if area != null else stage.arena.rivet.pos
 	stage.arena.rivet.pos = origin + spec.arena.rivet_at
@@ -59,7 +61,9 @@ func step(_stage: ArenaStage, tick: int) -> void:
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
 	fight.body.exposed = fight.state != BossFight.State.TRANSITION
 	_last_hp = fight.body.hp
-	if hit > 0.0:
+	if hit > 0.0 and not r.exposed:  # rolled through it (the roll's i-frames)
+		rolled[fight.attack.id] = rolled.get(fight.attack.id, 0) + 1
+	elif hit > 0.0:
 		_arena.hit_dir = fight.aim
 		_arena.hit_at = r.pos
 		_arena.damage(r, hit, fight.body.id, StringName("boss_%s" % fight.attack.id))
@@ -67,6 +71,13 @@ func step(_stage: ArenaStage, tick: int) -> void:
 		dealt += hit
 	if fight.state == BossFight.State.DEFEATED and defeated_tick < 0:
 		defeated_tick = tick
+
+
+## The boss owns the floor: the stations' dummies leave and the pit's own waves never start.
+func _clear_floor(stage: ArenaStage) -> void:
+	for t: ArenaTargets.Target in stage.targets.targets:
+		_arena.hostiles.erase(t.fighter)
+	stage.pit.zone = Rect2()
 
 
 ## The hp the arena's hits took from the body this tick go back through BossFight.hurt().
@@ -96,6 +107,7 @@ func telemetry() -> Dictionary:
 		"defeated_tick": defeated_tick,
 		"tries": tries.duplicate(),
 		"landed": landed.duplicate(),
+		"rolled": rolled.duplicate(),
 		"dealt": dealt,
 	}
 

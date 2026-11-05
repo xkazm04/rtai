@@ -66,3 +66,27 @@ the lock is safe: 0 dmg; with the lock planted off the same dodge is hit: 10 dmg
 Rules applied: enemy-ai REPORT telegraph rule (aim tracks then locks; the tell draws the real
 zone); registry subjects still to read before tuning: encounter-balance-simulation,
 combat-pacing-and-dramatic-arc (next iteration, before any number changes).
+
+### MILESTONE 19:28: moveset doc, clean boss floor, roll-aware bot, first readable numbers
+- `docs/bosses/king.md`: the moveset (3 phases, 5 attacks with tell / active / recovery /
+  counterplay / punish, ghosts and weapons, defeat beat, the fight's envelope, DECISION throne-car =
+  boss-owned vehicle).
+- Registry rules applied (encounter-balance-simulation, combat-pacing-and-dramatic-arc): the bot
+  fights in the real arena path (one kernel: CombatArena.damage, Rivet's real roll i-frames); a
+  reference hit for every survivability figure (Rivet 100 hp, no hit over 30 %); duration is a
+  two-sided envelope (a boss: 60-120 s for a reader); per-attack attribution; n stated.
+- `BossHook` clears the floor under `--boss` (station dummies out, the pit's waves off); a hit
+  rolled through (Rivet not exposed) counts as `rolled`, not `landed`.
+- `BossBot` rolls when still in the zone 8 ticks before the active window; `--bot-stand` holds the
+  same 8 m band but never strafes or dodges.
+- DECISION coin fan 50 deg / 14 m / lock 0.3 s -> 36 deg / 13 m / lock 0.5 s, windup 1.1 s: by
+  the dodge rule lock >= reaction 0.25 s + (half-width at 8 m + Rivet r) / walk 6.75 m/s it was not
+  dodgeable (7/8 hits on the dodging bot). Alternative (coins as travelling projectiles, dodged
+  by their flight time) is the better read; it is a later item.
+- Numbers (CONTENDED, seed fixed, n=1 each, 120 s cap; `evidence/king/bot-{dodge,stand}-it1b.json`):
+  | bot | King down | King's hits on Rivet (landed/tries) | Rivet dmg (all sources) | deaths |
+  |---|---|---|---|---|
+  | dodging | 71.2 s (tick 4274) | ram 0/2, coin_fan 0/9 (+1 rolled), charge 1/3, press_slam 0/1 | 121.8 | 1 |
+  | standing | not in 120 s (11 %) | ram 1/3, coin_fan 13/14, charge 2/10 | 64.8 (+ boss 260 dealt) | 2 |
+  The dodging bot's death is the **adds**: phase 2's gang spawns as the pit's contractor guards
+  (assault rifles, GuardBrain). They must be the melee gang. n=1: no rate here is a verdict yet.

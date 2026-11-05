@@ -55,8 +55,8 @@
         },
         "coin_fan": {
           "active_s": 0.6,
-          "aim_lock_s": 0.3,
-          "arc_deg": 50,
+          "aim_lock_s": 0.5,
+          "arc_deg": 36,
           "cooldown_s": 2.5,
           "damage": 14,
           "doc": "The hood cannon swings to Rivet and glows; the cone locks and a hail of coins sprays the fan.",
@@ -64,11 +64,11 @@
           "min_m": 0,
           "punish_k": 1.25,
           "punish_s": 0.6,
-          "range_m": 14,
+          "range_m": 13,
           "recovery_s": 0.9,
           "shape": "cone",
           "weight": 2,
-          "windup_s": 1
+          "windup_s": 1.1
         },
         "decree": {
           "active_s": 0.5,

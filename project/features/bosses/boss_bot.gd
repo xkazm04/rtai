@@ -4,8 +4,10 @@ extends InputSource
 ## only the sim). It holds a band of HOLD_M from the boss and fires at it once the boss is in
 ## FIRE_M. The dodging bot reads the tell like a player: REACT_TICKS after a windup begins it
 ## checks whether it stands in the attack's zone (BossZone, the same numbers that land the hit)
-## and, if so, rolls / sprints out sideways of the aim until the attack is over. `--bot-stand`
-## is the standing bot: it never moves (the other end of each attack's hit rate).
+## and, if so, sprints out sideways of the aim, and rolls if it is still in the zone ROLL_LEFT
+## ticks before the active window. `--bot-stand`
+## is the standing bot: the same band, but it never strafes or dodges (the other end of each
+## attack's hit rate).
 
 const HOLD_M: float = 8.0
 const FIRE_M: float = 16.0
@@ -13,6 +15,8 @@ const FIRE_M: float = 16.0
 const REACT_TICKS: int = 18
 ## Extra clearance the dodge aims for past the zone's edge.
 const CLEAR_M: float = 1.2
+## Still in the zone this close to the active window: roll (its i-frames cover the hit).
+const ROLL_LEFT: int = 8
 
 var stage: ArenaStage
 var actions: PlayerActions
@@ -39,14 +43,15 @@ func sample(_tick: int) -> TickInput:
 	var to_boss: Vector2 = f.body.pos - me
 	var aim: Vector2 = to_boss.normalized() if to_boss.length() > 0.01 else Vector2.RIGHT
 	var fire: bool = to_boss.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
-	if standing:
-		return _input(Vector2.ZERO, aim, fire, false)
+	var band: float = to_boss.length() - HOLD_M
+	if standing:  # holds the same band, never strafes, never dodges
+		return _input(aim * clampf(band, -1.0, 1.0), aim, fire, false, false)
 	var dodge: Vector2 = _dodge(f, me)
 	if dodge != Vector2.ZERO:
-		return _input(dodge, aim, fire, true)
-	var band: float = to_boss.length() - HOLD_M
+		var roll: bool = f.state == BossFight.State.WINDUP and f.tell_left() <= ROLL_LEFT
+		return _input(dodge, aim, fire and not roll, true, roll)
 	var move: Vector2 = aim * clampf(band, -1.0, 1.0) + aim.orthogonal() * _side * 0.35
-	return _input(move, aim, fire, false)
+	return _input(move, aim, fire, false, false)
 
 
 ## The way out of the coming attack's zone, or zero when it is safe (or not yet read).
@@ -68,11 +73,13 @@ func _dodge(f: BossFight, me: Vector2) -> Vector2:
 	return f.aim.orthogonal() * _side
 
 
-func _input(move: Vector2, aim: Vector2, fire: bool, hurry: bool) -> TickInput:
+func _input(move: Vector2, aim: Vector2, fire: bool, hurry: bool, roll: bool) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
 	var buttons: int = PlayerCommand.pack_aim(aim, actions)
 	if fire:
 		buttons |= 1 << actions.bit(&"fire")
 	if hurry:
 		buttons |= 1 << actions.bit(&"sprint")
+	if roll:
+		buttons |= 1 << actions.bit(&"roll")
 	return TickInput.new(buttons, roundi(m.x), roundi(m.y))
