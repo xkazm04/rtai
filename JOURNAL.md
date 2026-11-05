@@ -659,3 +659,21 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   taken this session); masters scratch holds film.sh, journal-it7.txt, ohm_x3.png and logs.
 - 05:08 COMBAT CHECK director reel on 5019d2f8 (the head with the folding card): 16/16 chapters down, 0 SCRIPT ERROR
   (E:director-reel-it7-final.log). Session ends: tree clean after this commit, no Godot process of mine running.
+
+## Iteration 9 (BUILD, 05:09 - 06:09)
+- 05:09 read JOURNAL, git log, the ghost-powers and cast JOURNALs: no new REQUEST to ghost-forms. Two Godot processes
+  running at start (57852, 63108) are not mine: left alone.
+- 05:12 MERGE n6-ghost-powers 9b5ae95f (quest 1 attack views, quest_ghost_rec, carries n5-cast d7bf12ce) as f7134f89:
+  their it7 logs that share our names saved as `*-powers.log`, their copies of ours (`*-forms.log`) dropped;
+  JOURNAL/REPORT keep ours. MERGE n5-cast 31e665fa (CORE_TAN 1.0, Call 9 docs) as ac0f15e5. `--import` next.
+- 05:30 FOUND on the merged head, lossless PNG frames of quest1_forms_main (x3 crops at 650/700 Dent at a standstill,
+  780/820/860 Kerf idle): Dent at a standstill reads (yellow-black disc, glow); Kerf's front blades (about 1.6 m
+  forward) cross Rivet's health bar at 1.2 m. MILESTONE (this commit) ghost_forms.json `bar_m` per form (view only:
+  kerf 1.9, tonnage 2.35 = the old radius x 1.8, dent and ohm 1.2); StoryForms.bar_lift_m reads it. DECISION.
+  A/B same input, same frames: `M:frames/kerf-bar-quest1-ab-32ppm-x3.png`. Judged: before, the bar is a black slab
+  through the blades; after, it rides just clear above the tips. 0 SCRIPT ERROR; unit 1008/0 (new
+  test_each_forms_bar_rides_clear_of_its_drawn_body), lint 13/13. Shipped clip re-cut on this head
+  (`M:story-forms-quest1-shipped-32ppm.mp4`, 19 s). frames.json 15: + the bar A/B second; ohm-bolt-kick A/B named in
+  the seams entry (file kept).
+  Registry rule applied (motion-quality-gating): judge on the shipped path at game zoom, same-frame A/B, lossless
+  frames before judging edges.

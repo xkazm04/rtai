@@ -29,6 +29,11 @@
             "minProperties": 1,
             "type": "object"
           },
+          "bar_m": {
+            "maximum": 5,
+            "minimum": 0.5,
+            "type": "number"
+          },
           "body_class": {
             "pattern": "^[a-z][a-z0-9_]*$",
             "type": "string"
@@ -92,6 +97,7 @@
         "required": [
           "accel_mps2",
           "anchors",
+          "bar_m",
           "body_class",
           "enter_s",
           "exit_s",
