@@ -319,3 +319,7 @@ Please merge n6-ghost-powers before editing ghost_pilot.gd again. Kerf moves Riv
   (the crush: flattened ink discs) | `--gore=reduced` (the standard pile with its red pool), 32 px/m, 0 SCRIPT ERROR
   both; REPORT Calls updated (NEXT item 4 done). frames.json 15 (kerf-ohm-city still out; the city clips stay).
 Session state 02:18: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+- 02:21 REEL re-cut (NEXT 3, partly): `M/ghost-attacks-reel-it3-32ppm.mp4` (37 s, labelled): Tonnage + Dent city
+  (iteration 3, their bodies), Kerf + Ohm arena (iteration 2 clips: base Rivet, Ohm's kill still cream there),
+  Ohm's mass fan. frames.json points at it. Still to do: re-film Kerf/Ohm arena on the iteration-3 head.
+Session state 02:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
