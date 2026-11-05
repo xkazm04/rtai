@@ -701,3 +701,33 @@ it Servo-side).
   king's `_rolls` (windup: not for a charge; active: the charge's body gap, else walled).
   The dodging/human numbers move with this: re-measured below.
 - Boss cam clamp (my NEXT 3b) is king's NEXT 3 (BossCam, framework): left to king, not duplicated.
+- 23:22 MILESTONE a1828ea2 merge committed; unit **1171/0** (`evidence/servo/unit-it6.log`), lint 13/13.
+- 23:25 MEASURED on the merged tree (king's cover sidestep in the bot), seeds 1-5 x 3 bots,
+  --fixed-fps 60, 240 s cap, 0 SCRIPT ERROR (`evidence/servo/numbers-it6a/`; wall time CONTENDED):
+
+  | bot | downed | time to kill | took | deaths | rotor dash | hot dash | bay hop | carpet | scan drop | kamikaze |
+  |---|---|---|---|---|---|---|---|---|---|---|
+  | dodge | 5/5 | 114-140 s (127) | 62 | 0 | 2/35 | 1/17 | 5/8 | 0/13 | 0/55 | 0/12 |
+  | human | 5/5 | 121-138 s (129) | 128 | 0 | 15/38 (39 %) | 5/15 | 0/8 | 0/12 | 0/57 | 0/15 |
+  | stand | 1/5 | 204 s | 1388 | 25 | 86/95 | 3/3 | 14/14 | 0/23 | 0/113 | 0/4 |
+
+  (carpet / scan drop / kamikaze are 0 as *attacks*: their damage is the parcels and dives, the
+  boss script's late hits, credited to the boss id since 8c6dabd2; see `moves` per run.)
+- 23:33 MEASURED NEXT 2, the rotor dash's fairness (encounter-balance-simulation: separate the
+  player model from the attack). The human bot ignores 30 % of tells by design (READ_P 0.7), and
+  an ignored dash lands. Local experiment (not committed): READ_P 1.0, every tell read but 18-32
+  ticks late, human bot, seeds 1-5:
+
+  | rotor_dash aim_lock_s | READ_P | rotor dash landed | hot dash | took |
+  |---|---|---|---|---|
+  | 0.35 (built) | 0.7 | 15/38 (39 %) | 5/15 | 128 |
+  | 0.5 | 0.7 | 12/37 (32 %) | 9/16 | 173 |
+  | 0.35 (built) | 1.0 | **2/40 (5 %)** | 2/16 | 63 |
+  | 0.5 | 1.0 | 3/39 (8 %) | 3/15 | 91 |
+
+  A late but reading player dodges the 0.9 s windup 95 % of the time; the 39 % is the unread
+  tells (30 % x the share of dashes aimed while Rivet stands in the lane). The lock at 0.5 s does
+  not help the reader (8 %, within noise). DECISION: the dash windup 0.9 s / lock 0.35 s stays;
+  no tuning. Evidence `numbers-it6-lock05/`, `numbers-it6-read1-lock035/`, `numbers-it6-read1-lock05/`.
+  Rule applied (encounter-balance-simulation): judge an attack against a reading model, the
+  standing floor and the dodging ceiling separately, never one blended rate.
