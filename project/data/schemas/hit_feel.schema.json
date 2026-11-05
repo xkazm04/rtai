@@ -173,6 +173,10 @@
           "spin_rumble_px": {
             "minimum": 0,
             "type": "number"
+          },
+          "spin_whirl_m": {
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": [
