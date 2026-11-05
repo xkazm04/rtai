@@ -1282,3 +1282,10 @@ Session end 06:31: tree clean after this commit, no Godot process of mine runnin
 - 06:46 COMBAT CHECK on b68665b1: director reel headless (`--bot=reel --reel=director --clean --rigs
   --loadout=pistol`, 7200 frames): 16/16 chapters n/n down, 0 SCRIPT ERROR (the arena does not draw these sprites).
   frames.json 15 (the two quest stills on top; crowd-d5-hatch and rivet-visor-64 dropped from the list, files kept).
+- 06:50 64 px/m close-up, same sim (before = 7005b5c8 files, restored, tree clean, 0 SCRIPT ERROR both):
+  `M/cast-quest1-sprites-ab-64.mp4` (10 s), still `M/frames/quest1-sprites-ab-64ppm.png` (frames.json 15:
+  riot-crown-director dropped from the list, file kept). The hybrid reads with the helmet in the collar; no teal.
+  Checked the dock guards (`dock_guard`, 0.9 m x GUARD_DRAW 1.7): drawn silhouette 1.06 x 1.52 m = the cop rig's
+  1.01 x 1.45 m bbox, already on the footprint: no change.
+- 06:56 EVIDENCE GATE on 84ed1bd1 (`--no-bench`): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact,
+  look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53), no re-bless.

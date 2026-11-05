@@ -118,7 +118,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   size_k 1.2 Rivet with a teal torch tip (off doctrine). Now captures of the shipped rigs (`rivet_sprite.gd`): the slim
   D cop 1.45 x 2.83 m, the hybrid Rivet 2.37 x 2.07 m, the hide-spot peek 0.97 m (`collect_call_art.json`, true
   scale). Same sim, before | after: `M/frames/quest1-sprites-ab-32ppm.png`, `M/cast-quest1-sprites-ab-32.mp4` (10 s,
-  Dock 9); under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. Gap: a 120 px/m capture lacks the rig's
+  Dock 9); 64 px/m `M/frames/quest1-sprites-ab-64ppm.png`, `M/cast-quest1-sprites-ab-64.mp4`; under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. Gap: a 120 px/m capture lacks the rig's
   32 px/m stickers (tan core, visor slot), so the sprite Rivet prints paler than the rig Rivet; hosting the rigs in
   the default quest view is rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
 
@@ -180,7 +180,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
-### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On b68665b1 (quest sprites): lint 13/13, unit 954/0; the full gate re-runs before the freeze.
+### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On 84ed1bd1 (b68665b1, the quest sprites, + docs): ALL PASS, the same numbers (look 11/11 worst 1.33, block 5/5 worst 1.53).
 ### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on f4381f32 (the plain riot crown): ALL PASS: lint 13/13,
 unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53),
 no re-bless.
