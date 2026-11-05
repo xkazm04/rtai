@@ -167,14 +167,15 @@
       "ignite_kick_px": 3
     },
     {
-      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 1.8 px kick against the aim per round (4 ticks; 0.7 measured +0.07 px rms, unreadable), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur. Spin-up: a tremor growing to 1.5 px while the barrels come up to speed (0.5 s), the anticipation before the first round; it fades the same way on the wind-down.",
+      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 1.8 px kick against the aim per round (4 ticks; 0.7 measured +0.07 px rms, unreadable), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur. Spin-up: a tremor growing to 1.5 px while the barrels come up to speed (0.5 s), the anticipation before the first round; it fades the same way on the wind-down. Whirl (n7-ranged it9): the 0.5 s spin-up showed nothing on the gun, so spin_whirl_m draws three ink-and-cream arcs turning about the barrel at the muzzle, growing with the spin, gone when the first round's flash takes over (WeaponFxSpin; 0 or --feel=off = before).",
       "fire_kick_px": 1.8,
       "fire_kick_ticks": 4,
       "hitstop": "",
       "id": "gatling",
       "kick_px": 0.8,
       "shake": "",
-      "spin_rumble_px": 1.5
+      "spin_rumble_px": 1.5,
+      "spin_whirl_m": 0.6
     },
     {
       "doc": "Gloria, the heavy sidearm (audit: anticipation 1, nothing of its own before the tracer): a 1.5 px recoil kick against the aim per round, between the pistol's none and the hand cannon's 2 px. Muzzle (n7-ranged it7): its flash draws the pistol's cell, a 15 px speck at 32 px/m smaller than a cop's flash star; muzzle_k 1.8 (one notch over the pistol's 1.6, the heavier sidearm; 1 or --feel=off = before).",

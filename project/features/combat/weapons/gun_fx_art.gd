@@ -220,6 +220,8 @@ static func _claw_state(ci: CanvasItem, fx: GunFx, arena: CombatArena, tick: int
 	var gun: GunHand = arena.gun
 	if gun.trigger.charge > 0:
 		FightChargeArt.crackle(ci, fx.muzzle(arena.rivet, 0.45), gun.trigger.charge_frac(), tick)
+	if gun.trigger.spin > 0:  # the barrels winding up: a whirl at the muzzle (WeaponFxSpin)
+		WeaponFxSpin.draw(ci, arena.rivet, gun, tick)
 	if gun.trigger.reloading():
 		var k: float = (
 			1.0 - float(gun.trigger.reload_left) / maxf(gun.trigger.spec.reload_ticks, 1.0)

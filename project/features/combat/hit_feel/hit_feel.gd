@@ -184,6 +184,13 @@ func spin_row(weapon: StringName) -> float:
 	return over.get("spin_rumble_px", 0.0)
 
 
+## The spin-up whirl's width of `weapon` (hit_feel.json `weapons` spin_whirl_m; WeaponFxSpin).
+## Zero = none, and none under --feel=off.
+func spin_whirl_m(weapon: StringName) -> float:
+	var over: Dictionary = _weapons.get(weapon, {})
+	return over.get("spin_whirl_m", 0.0) if enabled else 0.0
+
+
 ## The muzzle flash scale of `weapon` (hit_feel.json `weapons` muzzle_k, over the weapon-art cell
 ## size; WeaponFxArt.muzzle). 1 = the art's size, and 1 under --feel=off.
 func muzzle_k(weapon: StringName) -> float:
