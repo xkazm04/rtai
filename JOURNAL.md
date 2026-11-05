@@ -653,3 +653,40 @@ NEXT (iteration 12):
   Two Godot processes running at 00:54 (PIDs 10744, 40076) belong to the n6 ghost-forms lane: left alone.
 Session end 01:05: head = this commit, tree clean, image.lock and bench.lock never taken, no Godot process of mine
   running, scratch deleted (masters keeps only frames.json files and files REPORT cites). NEXT is the 00:53 list.
+
+## Iteration 12 (session 01:03 - 02:03), BUILD
+Read: JOURNAL NEXT (00:53 list), git log, REPORT, frames.json; looked at cast-ingame-vs-r2c6, city-navy-64ppm,
+crowd-planview-ab-vs-r2a5, react-board-planview-ab-64ppm, cops-navy-vs-r2c5-64ppm. Item: NEXT 1, the plan-view ped
+part sheet (the open item of the crowd). Two Godot processes running at 01:03 (PIDs 27076, 51308) are not mine: left alone.
+- 01:05 FINDING (not cast): the dark rings round every cop in `--arena=city` frames are the arena's dummy range rings
+  (`arena_floor_view.gd` `_ring`, dev range instrumentation); absent in the city and quest paths. Not touched.
+- 01:06 RE-TRIAL of the iteration 10 r4 sheet (`gen/r4`, ped_pale_a: front-facing lapels, a dark hat) on top of the
+  iteration 11 plan-view values (head_k 0.75 for its 0.82x heads), `cast_lineup -- --crowd [--road|--walk]` before
+  (HEAD) and after: at 32 px/m the dark r4 hat and charcoal jacket read DARKER than the built pale crowd; 64 px/m only a
+  little richer. NO-GO, reverted (git checkout, re-import, tree clean). `M/frames/crowd-r4-sheet-retrial-ab.png`.
+- 01:07 Codex job `ped_plan_a` (58 s, under image.lock, released; `masters:n5/cast/gen/r5/jobs.json`): an edit of
+  d4 `ped_a.png` with r2_a5 crop + r1_c6 as refs, asking for a PURE plan view: the coat and the jacket as shoulder
+  ovals with a collar ring round the neck hole (no lapels, buttons or shirt front), a pale felt hat seen as two
+  circles, a dark hair crown, a pale hood; heads ~0.8 of the old art. Came back clean, anchor cell kept.
+  Cut by `cut_ped_sheet.py` (factor 1.024), the enclosed neck holes filled with a dark neck tone (else the ground
+  shows through under the smaller head), the torsos rescaled to the shipped 213 px width.
+  DECISION: keep the ped footprint (the cast's size authority, 0.83 m) rather than take the cut's 229 px (7.5 %
+  wider, which would shift the whole ladder: cops 1.08x -> ~1.0x, Rivet 1.20x -> ~1.12x). `rig_footprint.gd` after:
+  ped shoulder 0.83 m, torso depth 0.50 m (was 0.52).
+  DECISION: D4 only. The five parts' D5 overlays are removed (RigDetail.has_part skips a part with no D5 mirror, the
+  d4-production route), so at 64 px/m these five parts show the new flat-fill art in the D4 print; a D5 hatched
+  restyle of the r5 sheet (slice_d5 alpha lock) is the follow-up if the close-up wants the hatching back.
+  `PED_HEAD_K` 0.62 -> 0.75 keeps the rendered head size on the 0.8x art.
+- 01:10 lineups before/after (`cast_lineup -- --crowd`, slab / road / walk, 32 and 64 px/m, 0 SCRIPT ERROR): the
+  coat+hat ped is now a pale figure with a pale hat ring at both zooms (was a dark disc with a cream rim), the jacket
+  a mid grey at 64 px/m (dark at 32), the hood ped pale; hoodie, vest and overalls unchanged (not on this sheet).
+  Unit 942/0, lint 13/13.
+- 01:14 react board (`react_board_run.gd -- --zoom=2 --every=4`, 481 frames) and street board (`--board=street`,
+  241 frames), 0 SCRIPT ERROR both; before = the right half of iteration 11's A/B clips (HEAD's ped art, same
+  ticks): `M/cast-react-board-r5peds-ab-64ppm.mp4`, `M/cast-street-board-r5peds-ab-64ppm.mp4`, stills
+  `M/frames/react-board-r5peds-ab-64ppm.png`, `M/frames/street-board-r5peds-ab-64ppm.png`. Cops identical; every
+  ped reaction, death and corpse reads; the coat ped's corpse now shows the pale coat and hat. Flee and the kill
+  read as before. Gib cuts copy each sprite's texture and transform, so they carry the new parts.
+- MILESTONE f4910eca: plan-view ped sheet r5 built (5 parts D4, D5 entries dropped, PED_HEAD_K 0.75, 5 provenance
+  lines). Registry `sprite-and-atlas-production` applied: judged at the minified size (32 px/m) first; the art's
+  scale is held to the footprint, not to the generated size.
