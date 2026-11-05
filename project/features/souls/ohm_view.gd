@@ -19,6 +19,10 @@ const STEP_M: float = 0.55
 const INK_W: float = 10.0
 const TEAL_W: float = 6.0
 const CORE_W: float = 2.5
+## The fingertip prongs are thinner (x PRONG_K) so the electrode arm stays visible under them;
+## they join PRONG_M ahead of the fingertips, where the full bolt goes on to the first body.
+const PRONG_K: float = 0.5
+const PRONG_M: float = 0.9
 
 var stage: CollectCallStage = null
 var ppm: float = 32.0
@@ -51,17 +55,21 @@ func _draw() -> void:
 		var src: int = o.bolt_from[i + 1] if o.bolt_from.size() > i + 1 else i
 		var b: Vector2 = o.bolt_path[i + 1] * ppm
 		if src <= 0:  # the fingertips: one prong from each electrode into the first body
-			_stroke(_jag(prongs[0] * ppm, b, beat + i), fade)
-			_stroke(_jag(prongs[1] * ppm, b, beat + i + 7), fade)
+			var mid: Vector2 = (prongs[0] + prongs[1]) * 0.5
+			var reach: float = minf(PRONG_M, mid.distance_to(o.bolt_path[i + 1]) * 0.5)
+			var join: Vector2 = (mid + o.bolt_aim * reach) * ppm
+			_stroke(_jag(prongs[0] * ppm, join, beat + i), fade, PRONG_K)
+			_stroke(_jag(prongs[1] * ppm, join, beat + i + 7), fade, PRONG_K)
+			_stroke(_jag(join, b, beat + i + 3), fade, 1.0)
 		else:
-			_stroke(_jag(o.bolt_path[src] * ppm, b, beat + i), fade)
+			_stroke(_jag(o.bolt_path[src] * ppm, b, beat + i), fade, 1.0)
 		draw_circle(b, 0.3 * ppm * fade, Color(WHITE, 0.8 * fade))
 
 
-func _stroke(pts: PackedVector2Array, fade: float) -> void:
-	draw_polyline(pts, Color(INK, 0.75 * fade), INK_W, true)
-	draw_polyline(pts, Color(TEAL, fade), TEAL_W, true)
-	draw_polyline(pts, Color(WHITE, fade), CORE_W, true)
+func _stroke(pts: PackedVector2Array, fade: float, k: float) -> void:
+	draw_polyline(pts, Color(INK, 0.75 * fade), INK_W * k, true)
+	draw_polyline(pts, Color(TEAL, fade), TEAL_W * k, true)
+	draw_polyline(pts, Color(WHITE, fade), CORE_W * k, true)
 
 
 ## A jagged line a -> b: kinks every STEP_M, offset across the line by a hash of (seed, kink).
