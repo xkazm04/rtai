@@ -1,7 +1,17 @@
-# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 10)
+# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (final, iteration 11, 2026-11-05 08:30)
 
 `M` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-powers`. `E` = `evidence/` in this worktree.
 (This file replaces n5-cast's REPORT that arrived with the n5-cast fast-forward; take n5-cast's on merge.)
+
+## In short
+All four attack sets are built, tuned (`docs/ghosts/ghost-attacks.md`), drawn in teal and filmed on the forms
+lane's bodies in the arena, the city block and the shipped quest 1: **Tonnage** (0.3 plates, a telegraphed
+press slam that flattens cars and humans, the ram), **Dent** (seize, ride and steer a car, overload blast),
+**Kerf** (blink-and-slice chain, cauterised split, dash), **Ohm** (forked bolt, stun, machine_k on robots and
+cars; the mass arc as upgrade_tier 1). Each ghost has an arena determinism beat and a quest-1 scenario, both with
+a planted fault. The director reel is unchanged (16/16) on every merge. The reel of all four:
+`M/ghost-attacks-reel-it10-32ppm.mp4`. Open: the robot victim is a stand-in brain, quest 1 has three data ghost
+cars instead of the city's own.
 
 ## What works (with evidence)
 | Claim | Evidence |
@@ -58,6 +68,10 @@
 | Combat no-regress (iteration 10, on the forms + cast merge 23bc7c07): director reel 16/16, chapter lines identical to iteration 9 | `E/director-reel-it10-powers.log` |
 | Gates (iteration 10, a30a5ce3): evidence runner on a still tree: lint 13/13, unit 1017/0, parity bit-exact + mutation caught at 629, look goldens 11/11 and block 5/5 in tolerance (no re-bless); scenarios 47/48 with `scenario_rig_stress` over its wall-clock median under contention: alone it passes (rig work median 0.40/0.42 ms of the 1 ms limit), and the previous full run on defdd14b passed 48/48; no rig code changed. Director reel on the head 16/16, identical. Bench not run (contended machine) | `E/evidence-run-it10-powers.log`, `E/rig-stress-alone-it10-powers.log`, `E/scenarios-it10-powers.log`, `E/director-reel-it10b-powers.log` |
 | **Ohm in quest 1 is a determinism scenario** (iteration 10, ed965182): `scenario_quest1_ohm` (scripted pad: Ohm picked and taken, melee every 20 ticks, the stick on the guards, then on the street car): bolts 9, cars_hit 3, 1 wreck, 5 kills; same seed twice = same counts and hash; planted machine_k 0 leaves the car standing: caught. Suite 49/49 on ed965182 | `E/quest1-ohm.json`, `E/scenario-quest1-ohm-it10-powers.log`, `E/scenarios-it10b-powers.log` |
+| Combat no-regress (iteration 11, on the forms + cast merge bbc861d0: Dent's keyline shader, quest 1 sprite Rivet sticker tier): director reel 16/16, chapter lines identical to iteration 10 | `E/director-reel-it11-powers.log` |
+| **All four ghosts have a quest-1 determinism scenario** (iteration 11, 81d6bdfe): `scenario_quest1_kerf` (6 blinks, 5 slices, 5 kills; planted human_damage 0 = 0 kills) and `scenario_quest1_tonnage` (the slam flattens the start-side car, 4 kills; planted car_crush_m 0 = the car stands) beside the Dent and Ohm ones; each runs the shipped quest session on one seed twice (same counts, same world state hash) and catches its planted fault. Table in `docs/ghosts/ghost-attacks.md` | `E/quest1-{tonnage,dent,kerf,ohm}.json`, `E/scenario-quest1-kerf-it11-powers.log`, `E/scenario-quest1-tonnage-it11-powers.log` |
+| **Kerf's crowd-tool alternative is one value** (iteration 11, a3beb449): `ghost_attacks.json kerf.path_cut_m` (0 = built, the pick only; 0.6 = every body within 0.6 m of the blink line is sliced in the same pass); dev `--kerf-line --kerf-path=<m>` stages the A/B: built 1 kill at tick 75, 0.6 three | `M/frames/call-kerf-target-vs-path-32ppm.png`, `M/call-kerf-target-vs-path-32ppm.mp4` (7 s, top built / bottom 0.6); unit `test_kerf_attacks` 4/4 |
+| Gates (iteration 11, 2486357c, after the forms + cast merges and the two quest-1 scenarios): evidence runner PASS on a still tree: lint 13/13, unit 1019/0, scenarios 51/51, parity bit-exact + mutation caught at 629, look goldens 11/11 (worst 1.33) and block 5/5 in tolerance, no re-bless; bench not run (contended machine) | `E/evidence-run-it11-powers.log`; director reel on a3beb449 16/16 identical `E/director-reel-it11b-powers.log` |
 
 ## What does not work yet
 - **Dent in quest 1 has three fixed cars, not the city's.** The city's parked cars are baked chunk cells, not bodies, so Dent cannot seize them; the three ghost cars are data spots on quest 1's street (two at Dock 9, one by the start). The city's pedestrians walk through the ghost cars (Rivet and the guards collide with them since 514e6899; the arena's powers-pad cars stay walk-through), and a seized car can mount the pavement (kerbs are walkable cells). A city checkpoint saved before 291ad11c re-simulates to another hash and is refused (no shipped saves).
@@ -65,7 +79,13 @@
 
 ## Calls for the owner
 - Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).
-- Kerf's slice: only the target is cut (assassin) vs every body on the blink path (crowd tool): built as target-only.
+- Kerf's slice: only the target is cut (assassin, built) vs every body on the blink line (crowd tool, `ghost_attacks.json kerf.path_cut_m` 0.6): `M/frames/call-kerf-target-vs-path-32ppm.png`, `M/call-kerf-target-vs-path-32ppm.mp4`.
 - Dent riding the car (built, `ghost_attacks.json dent.ride 1`) vs steering it from a distance down the tether (`ride 0`): `M/frames/dent-ride-ab-32ppm.png`. Riding is the concept vignette and keeps the car in Rivet's frame; the stand-off keeps Rivet out of the blast and shows the tether.
 - Tonnage's slam kill: the flattened crush (built, signature style `crush`) vs the standard pile: `M/frames/call-tonnage-crush-vs-pile-32ppm.png` (tick 200, 32 px/m; the right half is the same run under `--gore=reduced`). One row in signature_kills.json.
 - Dent in quest 1: three parked ghost cars on the street (built, `collect_call_city.json ghost_cars`; `[]` = only the frayed miss) vs Dent unselectable in quest 1 until its act quest (the forms lane's `ghost_forms.json`): `M/frames/quest1-dent-car-abc-32ppm.png`.
+
+## Next steps
+1. **A real robot fighter in CombatArena.** The arena beats' robot is the quest boss's brain held exposed (dev scaffolding in `dev/ghost-powers/{kerf,ohm}_beat.gd`); the enemy-ai pit (`features/combat/ai`, EnemyAgent) has real robot_thug and robot_gunner brains but lives in its own sim. Bridge one EnemyAgent onto a CombatArena Fighter (a `ROBOT` kind), then let Ohm's machine_k and Kerf's robot_damage key on it instead of the beat's flag. Moves the replay hash of any scene that spawns it: re-bless with a decision line.
+2. **Quest 1's street: the city's own parked cars.** Dent, Tonnage's crush and Ohm's car bolt meet only the three data ghost cars; the baked chunk cars are cells, not bodies. Promote the nearest baked parked cars to VehicleBody on approach (the city-chunk lane's call), and let the crowd sim avoid the ghost cars (native; parity re-bless).
+3. **Per-act quest upgrades.** Every block in `ghost_attacks.json` carries `upgrade_tier`; only Ohm's tier 1 (mass arc) reads it. Tonnage (wider crush), Dent (two cars), Kerf (longer chain) need their tier-1 rows when the act quests land.
+4. **The owner's calls above** each flip with one data value or constant.

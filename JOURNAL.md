@@ -866,3 +866,22 @@ Kerf quest-1 scenario on the same pattern (planted human_damage 0).
   reach; a stateless pad): stomps 1, stomp_hits 3, cars_crushed 1, car WRECK, kills 4 (= the filmed quest_crush_rec);
   same seed twice = same (5a9f46da...); planted car_crush_m 0: car stands (wrecks 0): caught. All four ghosts now
   have a quest-1 scenario with a planted fault (`E/quest1-{tonnage,dent,kerf,ohm}.json`). Suite count 51.
+- 07:36 docs: ghost-attacks.md quest-1 table (the four scenario_quest1 outcomes and faults).
+- 07:41 GATES on 2486357c (still tree, log to /tmp, copied in after): evidence runner PASS: lint 13/13, unit
+  1019/0, scenarios 51/51 (rig_stress passed this time), parity bit-exact + mutation caught at 629, look goldens
+  11/11 (worst 1.33), block 5/5, no re-bless (`E/evidence-run-it11-powers.log`). Bench not run (contended).
+- 07:46 MILESTONE a3beb449 (owner call "Kerf: target only vs every body on the path", was without a still):
+  `ghost_attacks.json kerf.path_cut_m` (schema 0..3; 0 = built). KerfStage._cut_path slices every other live
+  hostile within path_cut_m + radius of the blink segment; 0 returns before any work, so no golden moves. Dev
+  `--kerf-line` (the riot cop 8.5 m out behind two cops on the line, aim at the farthest in reach) and
+  `--kerf-path=<m>` in KerfBeat. Unit `test_path_cut_spares_the_body_on_the_line_unless_set` (1020/0). Filmed
+  arena 32 px/m, 420 ticks each: built kill_ticks [75,195,255,315] (one per blink), 0.6 [75,75,75,195] (the pick
+  and both cops on its line in one pass), 0 SCRIPT ERROR. Judged: built shows one teal-white star at the far end,
+  0.6 three stars along the line, and by frame 82 both near cops split. `M/frames/call-kerf-target-vs-path-32ppm.png`
+  (frames 70/76/82/100, top built / bottom 0.6), `M/call-kerf-target-vs-path-32ppm.mp4` (7 s). frames.json 15
+  (added at the head, dropped dent-vs-target, file kept). DECISION target-only stays (assassin role; the path cut
+  turns the blink into an area attack and takes Tonnage's group role). Registry rule (motion-quality-gating):
+  the A/B judged in motion at game zoom on the real rigs.
+- 07:48 scenario_ghost_attacks alone on a3beb449: 1/0 (the arena beats unchanged at path_cut_m 0).
+- 07:50 REPORT final: header, "In short", iteration 11 rows, the Kerf call with its still, Next steps.
+- 07:50 COMBAT CHECK director reel on a3beb449: 16/16, identical, 0 SCRIPT ERROR (`E/director-reel-it11b-powers.log`).
