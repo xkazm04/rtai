@@ -1,0 +1,18 @@
+{
+  "again": {
+    "blinks": 6,
+    "kills": 5,
+    "slices": 5
+  },
+  "clean": {
+    "blinks": 6,
+    "kills": 5,
+    "slices": 5
+  },
+  "hash": "dcdda41a441d7323a1ce736bb3c0ed3c190c81a5542742846d543820d6ad4b31",
+  "planted_human_damage_0": {
+    "blinks": 6,
+    "kills": 0,
+    "slices": 6
+  }
+}
