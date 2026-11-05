@@ -635,3 +635,10 @@ masters scratch holds only film.sh, reel.sh and two logs, frames.json 15 (all pr
   Judged: the telegraph is mostly hidden under the body (NEXT 4).
 Session state 05:09: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
 holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
+- 05:13 TRIED (reverted, not committed) NEXT 4: TonnageView's telegraph on a child node lifted to actors+2. The quest 1
+  film (frames 226-292) came out identical to the unlifted one. So either the forms' press body draws above actors+2,
+  or quest_hauler_rec's slam (melee at its tick 40 lands during the morph; the one stomp is at tick 230) never shows a
+  wind-up through TonnageView. Next session: read `hauler.form.windup_k()` per frame in the rec (log it) and the
+  GhostFormView body's z, then lift (or move the plate ahead of the body) with a measured A/B.
+Session state 05:14: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
+holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
