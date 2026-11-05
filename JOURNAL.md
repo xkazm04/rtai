@@ -57,3 +57,34 @@ Rivet's rounds on a boss already go through `CombatArena.struck` -> `FeelCam` (g
 target-kind case). A boss slam's camera hit: `view.feel_cam.hit(&"<slam id>", &"blast",
 dir * strength, false, tick)` and, if it should differ from `blast`, a `hit_feel.json` `weapons`
 row with its id. Rivet being hit is skipped by FeelCam (the `player_hit` cue owns that).
+
+### MILESTONE 19:37: feel layer committed `779cdd3d`
+Gates on the commit: lint 13/13, unit 1118/0, scenarios 52 ran 0 failed 0 SCRIPT ERROR
+(`evidence/ranged/scenarios-it1.log`; the earlier lane's `evidence/scenarios-it1.log` was
+overwritten by my first run and restored with `git checkout --`, FRICTION: name lane evidence
+`evidence/ranged/`).
+
+### FINDING 19:38: homing shard late reaction (backlog item 4), traced with numbers
+(explorer trace, file:line checked against HEAD where cited)
+- Not a burst: one shard per shot, 8 Hz; the first shard kills (100 x hp_scale 0.01 = 1 hp).
+- ReactLink adds 0 ticks (struck queued and applied the same frame); HumanReact never runs for a
+  shard kill: the signature burst kill takes the death (`brutality_hook.gd` `_takes_death`).
+- Main already has the view fix `9abe4bc7` (`KillShardJolt`, decisions.md "shard flinch"): the cut
+  body jolts on the hit frame (snap 2/3 x 0.2 m at age 1) and on each drawn shard after.
+- What still reads late: the pop at T+39 ticks (0.65 s) = `signature_kills.json`
+  `homing_shard_burst` `hitstop_ticks` 3 + `grind_ticks` 36 (gib wait). That is the approved
+  brutality look; shortening it is an owner call (REPORT), not mine to decide.
+- One-tick slip: `kill_burst_fx.gd:184` `born = kills.tick` while hooks step after the arena, so
+  the first drawn frame is age 1 (fine: it reads on the hit frame).
+- New with FeelCam: a shard kill now takes the 6-tick kill stop (the `homing_shard` override
+  removes only the per-shard non-lethal stop). The frozen first frame shows the jolt pose.
+- Plan: film chapter 14 before/after; offer `grind_ticks` 36 vs 12 as a call with a flag.
+
+### Registry rules applied (read 19:35)
+- `realtime-combat-semantics`: "everything resolves in parallel, every quantity more than one
+  writer touches needs one named owner" -> one feel module, one FeelBudget shared by every
+  attack; "every repeatable interaction needs an identity so it can be counted once" -> the cap
+  refuses extra kicks in a tick instead of summing them; durations quoted in real time -> the
+  budget window is 60 ticks = 1 s.
+- `motion-quality-gating`: the audit's five dimensions are scored separately (never averaged),
+  absolute, defined by visible contrasts (docs/polish/ranged.md rubric), unfilmed = `?`.

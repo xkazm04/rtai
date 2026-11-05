@@ -19,6 +19,8 @@ extends Node
 ## --armored[=k]: the pit's humans take gunplay's armored hp (2.5 hits, or k), so the limp plays;
 ## Rivet's hp scales by as much (the fight lasts longer, its balance holds).
 ## Lane showcase: --riot makes each pit wave's first guard (from wave 2) a riot cop with a shield.
+## n7-ranged: the arena has quest 1's sound (StageAudio: each gun's shot, the hit, the bed);
+## --silent keeps the old silent arena.
 
 const TUNE_TICK: int = 300
 
@@ -63,6 +65,9 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
+	if not args.has("--silent"):  # n7-ranged: the arena voices its guns like quest 1 (StageAudio)
+		@warning_ignore("return_value_discarded")
+		StageAudio.attach(self, session.stage, null, Events, ArenaSession.MASTER_SEED)
 	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
