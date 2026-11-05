@@ -1019,3 +1019,6 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   `M/frames/rivet-core-tan-quest1-ab-32ppm.png`. The tan core separates the body from the cream limb rims and the
   outline; the collar still leads. All three live paths checked. frames.json 15 (quest 1 A/B second; lineup ladder
   dropped from the list, file kept for REPORT). REPORT section 3 and Call 9 cite it.
+- 04:41 brief item 5's still re-shot on d2b91a42: `M/frames/cast-ingame-vs-r2c6.png` (city `--arena=city
+  --loadout=pistol,machine_pistol`, tick 720, lossless from the AVI, same crop x1.78 + Rivet x4; 0 SCRIPT ERROR).
+  Rivet's tan core and visor slot are in the in-game panel now. frames.json entry updated.
