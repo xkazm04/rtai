@@ -581,3 +581,57 @@ Session state 03:49: head = this commit, tree clean, no Godot process of mine ru
 - 04:23 PLAN the weakest item = REPORT's only open point: the SHIPPED quest 1 (sprite cast) runs GhostPilot
   (StagePilot.ghosts), so Q / LB transforms Rivet in the sim, but nothing draws the form or the HUD there: the
   player gets an invisible transformation. Give the sprite cast the form bodies, the fx and the HUD.
+- 04:24 MILESTONE 299a5772 the ghost forms on the SHIPPED quest 1 (DECISION in decisions.md). StoryForms
+  (boot/collect_call/view) attaches one GhostFormView with no rigs in the printed actors' layer (city's, else the
+  print stage's) on that view's CameraRig: the bodies, the teal morph, the camera beat and the HUD card are the
+  arena's code. CastView (forms_drawn) leaves Rivet's sprite out while a body stands in (StoryForms.stands_in: from
+  the in-between pose to the exit midpoint) and lifts his health bar over Tonnage (bar_lift_m: radius x 1.8). The
+  view's own apparition is now the story voice (the SELECTED ghost, silent in a form); StoryVoice is the no-pilot
+  fallback. Alternative = one data value: ghost_forms.json story_forms false (the old path: the Hauler grows and
+  tints Rivet's sprite, Dent/Kerf/Ohm draw plain Rivet). GhostFormView.make split from attach (the view's fields
+  set before _ready). test_story_forms 4/4; unit 1000/0; lint 13/13.
+  FRICTION: a SceneTree `-s` dev script with untyped Array constants fails the strict warnings (Variant into
+  typed args, even through float()/StringName()): typed const arrays per column instead.
+  PROOF quest1.tscn as shipped, real stick + Q/G key events (dev/ghost-forms/quest1_forms_main.gd, 1140 frames):
+  walk, Q Tonnage, Q out, G Dent, Q in, G Kerf, G Ohm, Q out; 0 SCRIPT ERROR (E:story-forms-quest1-shipped-it7.log),
+  and the same input with story_forms false (E:story-forms-quest1-before-it7.log). `M:story-forms-quest1-shipped-32ppm.mp4`
+  (19 s), A/B at frames 300/650/820/1000 `M:frames/story-forms-quest1-shipped-ab-32ppm.png`. Judged: before, Tonnage
+  is a grown teal-tinted Rivet sprite and the other three are plain Rivet; after, each ghost's own body (the press on
+  its four legs, Dent's discs, Kerf's blade legs, Ohm's dome) with the HUD card at the bottom left. First cut had
+  the health bar across Tonnage's crown: lifted, re-filmed. Ohm idle on asphalt reads as an olive blob at 32 (x3
+  crop): the shell's hairline teal seams are lost at 26 px. Next item.
+- 04:33 COMBAT CHECK director reel on 299a5772: 16/16 chapters down, 0 SCRIPT ERROR (E:director-reel-it7.log).
+- frames.json 15: + the shipped A/B first (the clip named in its note); ghost-voices-city named in the four-voices
+  entry (file kept).
+- 04:40 GATES evidence runner `--no-bench` on 91b6b866, still tree (E:evidence-run-it7.log): PASS lint 13/13, unit
+  1000/0, scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.22), block
+  5/5 (worst 1.38): no re-bless. (The first try refused: the reel log was uncommitted; committed, re-run.) This
+  closes iteration 6's open unit re-run.
+- 04:49 MILESTONE 457e9551 Ohm's teal soul seams (OhmSeams, DECISION): a child of the shell sprite drawn in its texture
+  pixels (two row seams, the spine, 22 tex px = about 1.5 screen px at 32; two teal lenses with a pale core), so it
+  turns, kicks and morphs with the shell. Registry rule applied (motion-quality-gating / generated-asset-world-scale):
+  judge at the game zoom on the real path, the same frames before/after. A/B on the shipped quest 1, same input,
+  frames 960/1000/1030: `M:frames/ohm-seams-quest1-ab-32ppm-x3.png`. FRICTION: the mp4 crop showed maroon pixels at
+  the seam edges (red is blood only); a lossless PNG of frame 1000 (write-movie PNG, deleted after) has none: H.264
+  chroma ringing on teal-vs-rust edges. `M:frames/ohm-seams-lossless-32ppm-x8.png`. Arena with the bolt:
+  `M:frames/ohm-seams-arena-ab.png` (top --no-seams), `M:ohm-seams-arena.mp4`; 0 SCRIPT ERROR each. Judged: the dome
+  now reads as possessed at 32 (a teal lattice with two eyes), and it matches its teal bolt.
+  test_ohm_rig 6/6, unit 1001/0, lint 13/13. First run hit a strict-warning parse error (PackedVector2Array.append
+  return value discarded); fixed before any frame was judged.
+- frames.json 15: + the seams A/B second; ohm-tour-city named in the ohm-vs-target entry (file kept). Scratch
+  cleaned.
+- 04:55 COMBAT CHECK director reel on 457e9551 (Ohm's seams): 16/16 chapters down, 0 SCRIPT ERROR
+  (E:director-reel-it7-seams.log).
+- FOUND (open, REPORT): on the shipped quest 1 the dialogue box (HUD layer, bottom centre) covers the form card's last
+  three chips while a line is up (contact sheet of the shipped clip). Not changed: the fixes (lift the card while a
+  line shows, or hide it) need the dialogue's state; next session.
+
+NEXT (iteration 8):
+1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours).
+2. The form card under quest 1's dialogue box: read the dialogue view's open state (boot/collect_call view) and lift
+   the card above the box while a line shows (or slide it right); A/B at the same frames of quest1_forms_main.
+3. Ohm's seams are in (457e9551). Next weakest read at 32 on the shipped path: Kerf (blade legs read; check the
+   hull at idle) and Dent at a standstill; x3 crops of the shipped clip, frames 650 / 820.
+4. Final gates on a still tree before the 08:30 freeze (evidence runner --no-bench, director reel); REPORT for 08:40.
+Session state 04:56: head = this commit, tree clean after it, no Godot process of mine running, no lock held
+  (image.lock not taken this session), masters scratch holds film.sh, journal-it7.txt, ohm_x3.png and logs.

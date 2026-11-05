@@ -123,9 +123,38 @@ The owner's order for this lane: "create these characters, animate transformatio
   while it ran); the suite itself was 974/0. Re-run it on a still tree.
 - On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
 
+### 7. The forms on the shipped quest 1 (iteration 7, DECISION)
+- The shipped quest 1 (the sprite cast, no `--rigs`) already ran the ghost forms in the sim: Q / LB transformed
+  Rivet. On screen, though, only the old Hauler sprite growth showed, and Dent, Kerf and Ohm drew plain Rivet.
+  **StoryForms** (`boot/collect_call/view/story_forms.gd`) now draws them there with the same GhostFormView as the
+  arena: the bodies, the teal transformation, the camera beat and the HUD card. Rivet's sprite steps out while a
+  body stands in, and his health bar rides above Tonnage. The ghost voice there is now the selected ghost, and it
+  stays silent while Rivet is in a form. The alternative is one data value: `ghost_forms.json` `story_forms` false.
+- Proof: `quest1.tscn` as shipped, played through real stick and Q / G key events
+  (`dev/ghost-forms/quest1_forms_main.gd`), 0 SCRIPT ERROR. `M:story-forms-quest1-shipped-32ppm.mp4` (19 s: walk,
+  Tonnage, out, Dent, Kerf, Ohm, out), and before/after at the same frames
+  `M:frames/story-forms-quest1-shipped-ab-32ppm.png`.
+- **Ohm's teal soul seams** (DECISION): at 32 px/m on that asphalt Ohm's dome read as an olive blob, because the
+  art's hairline seams are lost at 26 px. OhmSeams draws two row seams, the spine and two teal goggle lenses on the
+  shell. It turns and kicks with the shell. Before/after at the same frames:
+  `M:frames/ohm-seams-quest1-ab-32ppm-x3.png`. The maroon edge pixels in that still are video-encoder ringing; the
+  lossless frame is `M:frames/ohm-seams-lossless-32ppm-x8.png`. In the arena with the bolt:
+  `M:frames/ohm-seams-arena-ab.png`. The dev flag `--no-seams` gives the A/B before.
+
+### Gates (iteration 7)
+- On 91b6b866 (the forms on the shipped quest 1), still tree: evidence runner `--no-bench` all PASS. Lint 13/13,
+  unit 1000/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block
+  5/5 (worst 1.38), no re-bless (`E:evidence-run-it7.log`). Director reel on 299a5772: 16/16 chapters down, 0
+  SCRIPT ERROR (`E:director-reel-it7.log`).
+- On 457e9551 (Ohm's seams): lint 13/13, unit 1001/0; director reel 16/16 chapters down, 0 SCRIPT ERROR
+  (`E:director-reel-it7-seams.log`).
+
 ## What does not work / is open
-- The shipped quest 1 (the sprite cast) still has no ghost FORMS: transformations draw only under `-- --rigs`.
-  The voices do show there now (StoryVoice, iteration 6).
+- The ghost forms on the shipped quest 1 have no 64 px/m close-up (quest 1 plays at 32); the arena close-ups
+  stand in for it.
+- On the shipped quest 1, the story's dialogue box (the HUD layer, bottom centre) covers the form card's last three
+  chips while a line is up; only the first chip (Tonnage) shows beside it. The card shows
+  in full once the line closes (`M:story-forms-quest1-shipped-32ppm.mp4`, 0-9 s vs 15-19 s). Not changed tonight.
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
