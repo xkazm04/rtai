@@ -5,7 +5,8 @@ extends RefCounted
 ## farther on and a police cruiser past it. He takes the soul (Q) and throws a bolt every CADENCE
 ## ticks at the nearest standing body: the cops are stunned and burned down in two bolts, the
 ## robot is struck first and dies to one bolt (machine_k), then the bolts burn the cruiser. He
-## walks in when the target is beyond REACH_M.
+## walks in when the target is beyond REACH_M. `--tier=1` raises Ohm's upgrade_tier for the
+## run: the mass arc (every body within mass_radius_m of the first, one bolt).
 
 const KNOT: Array[Vector2] = [Vector2(7.0, -0.8), Vector2(7.6, 0.6), Vector2(8.4, -0.2)]
 const RIOT: Vector2 = Vector2(9.2, 1.6)
@@ -38,6 +39,9 @@ func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
 	if stage.vehicles != null:
 		car = stage.vehicles.spawn_parked(&"police_cruiser", anchor + CAR, Vector2.RIGHT)
 	reel.car = car
+	var tier: int = int(ArenaArgs.parse().number("--tier", 0.0))
+	if tier > 0 and stage.pilot != null:  # the act-quest upgrade (data hook): the mass arc
+		stage.pilot.ohm.attacks.block(OhmStage.GHOST)["upgrade_tier"] = float(tier)
 
 
 ## Sim side, every tick: the arena's only robot is the quest boss's brain (exposed only while
