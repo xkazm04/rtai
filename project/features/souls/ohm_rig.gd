@@ -71,8 +71,10 @@ func _ready() -> void:
 		for n: String in ["upper", "fore"]:
 			var s: Sprite2D = _limb(n)
 			s.flip_v = side == 1
+			GhostRim.limb(s)
 			_arms.append(s)
-	_part("shell", SHELL_M).name = "Shell"  # added last: over the arms' roots
+	var shell: Sprite2D = _part("shell", SHELL_M)  # added last: over the arms' roots
+	GhostRim.body(shell)
 	pose()
 
 

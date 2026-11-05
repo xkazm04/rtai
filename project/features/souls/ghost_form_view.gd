@@ -51,6 +51,7 @@ static func attach(
 	v.camera = p_camera
 	v.reduced_motion = LaunchArgs.has("--reduced-motion")
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
+	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
 	v.z_index = p_rigs.z_index + 1 if p_rigs != null else RenderLayers.z(&"actors")
 	layer.add_child(v)
 	return v
