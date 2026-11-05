@@ -76,3 +76,19 @@
   48 px/m). (4) look-8 tan ink (print_part.gdshader / part_materials.gd; held lane owns poses and sizes).
   (5) frames.json, combined clip, exe by 19:30, REPORT by 19:40 (calls: Dent reach steer vs fixed point;
   quest 1 without ghost cars; look picks that read worse).
+- 16:27 MEASURE full evidence on e419a047 (+ journal 41079a05): lint 13/13, scenarios 52/52, parity exact
+  (planted caught at 629), look goldens 11/11 worst 0.27 + block 5/5 worst 0.22 (no golden moved: no re-bless),
+  unit 1096/1 = `test_noir_shadows` (known flake; 2/2 twice alone). Director reel headless 19/19 chapters down,
+  0 SCRIPT ERROR. Evidence evidence/evidence-it4-e419.log, unit-it4-noir-shadows-alone.log, reel-director-it4-dent.log.
+- 16:28 MILESTONE Dent evidenced (M = gtai-masters/d7/calls): `frames/ghost-powers-3-dent-ride-ab-32ppm.png`
+  (n6 ride clip vs ours, `--arena=city --bot=ghosts --ghost=dent`), `dent-standoff-city-32ppm.mp4` (15 s),
+  `frames/ghost-powers-3-dent-tether-32ppm.png`, `dent-standoff-city-64ppm-halfspeed.mp4`,
+  `frames/ghost-powers-5-hud-lock-ab.png` (GhostFormHud alone via a scratch -s script in build/patch).
+  Looked at each: the tether reads at 32 px/m as a teal line Dent -> car; the car rams the cop group by the
+  ambulance and blows about 13 m from Rivet; padlock chip reads at once.
+- FINDING: at 64 px/m the camera stays on Dent, so the ram and the blast leave the frame (riding kept the car in
+  frame: the owner's trade-off in the call text). Call candidate: camera lead toward the seized car while Dent
+  steers (view only).
+- FINDING: quest 1's opening voice lines fold the ghost card to one chip for the first ~25 s, so the padlock is
+  first seen when the card unfolds (after the lines) - not a bug, the compact rule.
+- FRICTION: quest1_shipped_main.gd takes no user args through `-s`; the HUD still came from a scratch scene.
