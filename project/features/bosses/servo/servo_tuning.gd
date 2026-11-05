@@ -48,6 +48,8 @@ var dive_lock_ticks: int = 27
 var dive_mps: float = 18.0
 var dive_blast_m: float = 2.2
 var dive_damage: float = 18.0
+## A kamikaze drone's hit points (armoured: one round never stops a dive; 1 = a parcel drone's).
+var dive_hp: float = 1.0
 ## The depot's dressing round the arena centre (servo.json `depot`).
 var bays: Array[Vector2] = []
 var bay_w_m: float = 4.5
@@ -129,6 +131,7 @@ static func _read_dive(t: DataTable, s: ServoTuning) -> void:
 	s.dive_mps = t.num(k, "dive_mps")
 	s.dive_blast_m = t.num(k, "blast_m")
 	s.dive_damage = t.num(k, "damage")
+	s.dive_hp = t.num(k, "hp")
 
 
 static func _read_depot(t: DataTable, s: ServoTuning) -> void:

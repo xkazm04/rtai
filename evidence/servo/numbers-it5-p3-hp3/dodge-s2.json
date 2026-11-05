@@ -1,0 +1,114 @@
+{
+  "alley": {
+    "alley_kills": 0,
+    "alley_waves": 0
+  },
+  "boss_fight": {
+    "adds_landed": 0,
+    "adds_spawned": 0,
+    "adds_tries": 0,
+    "boss": "servo",
+    "dazes": 0,
+    "dealt": 72.0,
+    "defeated_tick": -1,
+    "hp_frac": 0.0579545454545455,
+    "landed": {
+      "servo": 4
+    },
+    "moves": {
+      "crates_smashed": 0,
+      "dive_hits": 4,
+      "dives": 12,
+      "drones_launched": 22,
+      "drones_shot": 14,
+      "marks": 11,
+      "parcel_hits": 0,
+      "parcels_landed": 8,
+      "windups": [
+        "35:rotor_dash_hot",
+        "314:kamikaze",
+        "482:scan_drop",
+        "788:kamikaze",
+        "956:rotor_dash_hot",
+        "1235:kamikaze",
+        "1403:scan_drop",
+        "1709:rotor_dash_hot",
+        "1988:kamikaze",
+        "2156:scan_drop",
+        "2462:kamikaze",
+        "2630:rotor_dash_hot",
+        "2909:scan_drop",
+        "3215:kamikaze",
+        "3383:scan_drop"
+      ]
+    },
+    "phase": 3,
+    "rolled": {
+      "rotor_dash_hot": 1
+    },
+    "stuns": 0,
+    "tries": {
+      "kamikaze": 6,
+      "rotor_dash_hot": 4,
+      "scan_drop": 5
+    }
+  },
+  "brutality_pit": {
+    "by_style": {},
+    "kill_cut_us": [],
+    "kill_ticks": [],
+    "signature_kills": 0,
+    "view_avg_us": 64,
+    "view_frames": 3600,
+    "view_over_2ms": 0,
+    "view_worst_tick": 1429,
+    "view_worst_us": 364
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 3,
+    "wrecked": 0
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 0,
+    "bodies_peak": 0,
+    "died": 0,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 0,
+    "pruned": 0,
+    "stains_now": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 149,
+  "ticks": 3599,
+  "top_speed_mps": 17.057871222496,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 9840.00000061538,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

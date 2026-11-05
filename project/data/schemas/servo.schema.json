@@ -160,6 +160,11 @@
           "minimum": 2,
           "type": "number"
         },
+        "hp": {
+          "maximum": 20,
+          "minimum": 1,
+          "type": "number"
+        },
         "lock_s": {
           "maximum": 2,
           "minimum": 0.1,
@@ -180,6 +185,7 @@
         "blast_m",
         "damage",
         "dive_mps",
+        "hp",
         "lock_s",
         "standoff_m",
         "track_s"

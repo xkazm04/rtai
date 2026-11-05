@@ -1,13 +1,14 @@
 // The Servo fight's numbers (copied from evidence/king/boss_numbers.mjs; --tag names the run dir) (encounter-balance-simulation): full fights, seeds x bots, headless,
 // three at a time. Writes evidence/king/numbers/<bot>-s<seed>.json and evidence/king/boss-numbers.json.
-// node evidence/king/boss_numbers.mjs [--seeds=1,2,3,4,5] [--bots=dodge,human,stand] [--quit=18000]
+// node evidence/servo/boss_numbers.mjs [--seeds=1,2,3] [--bots=dodge,human,stand] [--quit=14400] [--tag=it5] [--extra=--phase=3]
 import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
-const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `=${d}`).split('=')[1];
+const arg = (k, d) => { const a = process.argv.find(x => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
 const seeds = arg('seeds', '1,2,3,4,5').split(',');
 const bots = arg('bots', 'dodge,human,stand').split(',');
 const quit = arg('quit', '14400');
 const tag = arg('tag', 'it5');
+const extra = arg('extra', '').split(',').filter(Boolean); // e.g. --extra=--phase=3
 const G = process.env.GODOT_BIN || 'C:/Users/kazda/kiro/gtai-spike/tools/godot/Godot_v4.7.2-stable_win64_console.exe';
 const out = `evidence/servo/numbers-${tag}`;
 mkdirSync(out, { recursive: true });
@@ -17,7 +18,7 @@ for (const s of seeds) for (const b of bots) jobs.push({ s, b });
 const run = ({ s, b }) => new Promise(res => {
   const tel = `${process.cwd()}/${out}/${b}-s${s}.json`.replaceAll(String.fromCharCode(92), '/');
   const a = ['--headless', '--path', 'project', 'res://dev/arena/arena.tscn', '--fixed-fps', '60', '--quit-after', quit, '--',
-    '--rigs', '--boss=servo', '--bot=boss', `--seed=${s}`, `--telemetry=${tel}`, ...flags[b]];
+    '--rigs', '--boss=servo', '--bot=boss', `--seed=${s}`, `--telemetry=${tel}`, ...flags[b], ...extra];
   const p = spawn(G, a, { stdio: ['ignore', 'pipe', 'pipe'] });
   let log = '';
   p.stdout.on('data', d => (log += d)); p.stderr.on('data', d => (log += d));

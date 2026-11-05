@@ -10,6 +10,8 @@ extends RefCounted
 const FIRST_ID: int = 9500
 
 var hp: float = 1.0
+## A kamikaze (dive) drone's hit points (servo.json kamikaze.hp).
+var dive_hp: float = 1.0
 var radius_m: float = 0.45
 var shot: int = 0
 var _by_drone: Dictionary[int, Fighter] = {}
@@ -30,7 +32,7 @@ func sync(swarm: ServoSwarm) -> void:
 			continue
 		var b: Fighter = _by_drone.get(d.id)
 		if b == null:
-			b = Fighter.make(Fighter.Kind.GUARD, FIRST_ID + d.id, d.pos, hp)
+			b = Fighter.make(Fighter.Kind.GUARD, FIRST_ID + d.id, d.pos, dive_hp if d.dive else hp)
 			b.radius_m = radius_m
 			b.brain_owned = true
 			b.machine = true  # a drone is a robot: no human kill, no red

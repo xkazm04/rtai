@@ -59,3 +59,15 @@ func test_dive_drones_are_spent() -> void:
 	assert_eq(s.alive(), 0)
 	assert_eq(s.parcels.landed_total, 0, "kamikazes carry no parcel")
 	assert_gt(n, 0)
+
+
+func test_dive_drones_are_armoured() -> void:
+	var s: ServoSwarm = _swarm()
+	var bodies: ServoDroneBodies = ServoDroneBodies.new()
+	bodies.hp = s.tuning.drone_hp
+	bodies.dive_hp = s.tuning.dive_hp
+	assert_gt(s.tuning.dive_hp, s.tuning.drone_hp, "one round never stops a dive")
+	assert_gt(s.launch_dives(MARK), 0)
+	bodies.sync(s)
+	for b: Fighter in bodies.list():
+		assert_eq(b.max_hp, s.tuning.dive_hp, "a dive drone's body has the dive hp")

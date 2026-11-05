@@ -1,0 +1,106 @@
+{
+  "alley": {
+    "alley_kills": 0,
+    "alley_waves": 0
+  },
+  "boss_fight": {
+    "adds_landed": 0,
+    "adds_spawned": 0,
+    "adds_tries": 0,
+    "boss": "servo",
+    "dazes": 0,
+    "dealt": 60.0,
+    "defeated_tick": 2210,
+    "hp_frac": 0.0,
+    "landed": {
+      "rotor_dash_hot": 2
+    },
+    "moves": {
+      "crates_smashed": 3,
+      "dive_hits": 0,
+      "dives": 6,
+      "drones_launched": 12,
+      "drones_shot": 6,
+      "marks": 6,
+      "parcel_hits": 0,
+      "parcels_landed": 6,
+      "windups": [
+        "35:kamikaze",
+        "203:scan_drop",
+        "509:rotor_dash_hot",
+        "788:kamikaze",
+        "956:scan_drop",
+        "1262:rotor_dash_hot",
+        "1541:scan_drop",
+        "1847:rotor_dash_hot",
+        "2126:kamikaze"
+      ]
+    },
+    "phase": 3,
+    "rolled": {},
+    "stuns": 0,
+    "tries": {
+      "kamikaze": 3,
+      "rotor_dash_hot": 3,
+      "scan_drop": 3
+    }
+  },
+  "brutality_pit": {
+    "by_style": {},
+    "kill_cut_us": [],
+    "kill_ticks": [],
+    "signature_kills": 0,
+    "view_avg_us": 64,
+    "view_frames": 3600,
+    "view_over_2ms": 0,
+    "view_worst_tick": 3151,
+    "view_worst_us": 1885
+  },
+  "cars": {
+    "damaged": 0,
+    "hijacked": 0,
+    "total": 3,
+    "wrecked": 0
+  },
+  "corpse_decay": {
+    "bodies_cap": 16,
+    "bodies_now": 0,
+    "bodies_peak": 1,
+    "died": 1,
+    "early_fades": 0,
+    "forced": 0,
+    "forced_alpha": 0.0,
+    "peak_dead_listed": 1,
+    "pruned": 0,
+    "stains_now": 0
+  },
+  "damage_taken": 0.0,
+  "deaths": 0,
+  "dodges": 0,
+  "hit_rate": 0.0,
+  "hits": 0,
+  "input_latency_mean_ticks": 0.0,
+  "input_latency_ticks": [
+    0
+  ],
+  "knockdowns": 0,
+  "pit_kills": 0,
+  "pit_waves": 0,
+  "rivet_claw_cops": {
+    "claw_hits": 0,
+    "claw_kills": 0,
+    "claw_swings": 0,
+    "claw_whiffs": 0,
+    "shock_discharges": 0,
+    "shock_landed": 0
+  },
+  "schema": "gtai.arena-telemetry/1",
+  "shots": 92,
+  "ticks": 3599,
+  "top_speed_mps": 19.7567242383957,
+  "ttk_s": {},
+  "turn_rate_peak_dps": 720.000276167919,
+  "weapon_art_rack": {
+    "rack": true
+  }
+}

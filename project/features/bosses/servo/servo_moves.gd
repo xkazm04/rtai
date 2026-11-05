@@ -86,6 +86,7 @@ func _on_defeated(f: BossFight) -> void:
 func setup_swarm(rng: RandomNumberGenerator, tuning: ServoTuning = null) -> void:
 	swarm.setup(tuning if tuning != null else ServoTuning.shipped(), rng)
 	drone_bodies.hp = swarm.tuning.drone_hp
+	drone_bodies.dive_hp = swarm.tuning.dive_hp
 	drone_bodies.radius_m = swarm.tuning.radius_m
 	_armed = true
 
