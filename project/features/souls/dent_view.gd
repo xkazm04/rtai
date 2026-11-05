@@ -16,15 +16,39 @@ const SEGMENTS: int = 14
 const BLAST_S: float = 0.45
 const FIRE: Color = Color("#E9A23B")
 const BURST_POINTS: int = 9
+## The dev car camera's hold on the blast (s) and its ease per frame.
+const CAM_HOLD_S: float = 1.0
+const CAM_EASE: float = 0.15
 
 var dent: DentStage = null
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+## The dev `--cam=car` (TonnageHook sets it): the view's camera frames Rivet and the seized car
+## (their midpoint, eased), then holds on the blast for CAM_HOLD_S. View only: the sim's focus is
+## untouched (on the city block it leans the view by city_lean_m, like `--cam=fight`).
+var follow_cam: CollectCallView = null
+var _cam_at: Vector2 = Vector2.INF
 
 
 func _process(_delta: float) -> void:
+	if follow_cam != null and dent != null and stage != null:
+		_follow()
 	queue_redraw()
+
+
+func _follow() -> void:
+	var rivet: Vector2 = stage.arena.rivet.pos
+	var want: Vector2 = rivet
+	if dent.car != null:
+		want = rivet.lerp(dent.car.pos, 0.5)
+	elif dent.blast_tick >= 0 and (stage.tick - dent.blast_tick) * SimClock.TICK_DT < CAM_HOLD_S:
+		want = rivet.lerp(dent.blast_at, 0.5)
+	_cam_at = want if _cam_at == Vector2.INF else _cam_at.lerp(want, CAM_EASE)
+	if follow_cam.city != null:
+		follow_cam.city_lean_m = _cam_at - rivet
+	else:
+		follow_cam.focus = _cam_at
 
 
 func _draw() -> void:

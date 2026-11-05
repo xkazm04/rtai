@@ -44,6 +44,8 @@ func attach_view(p_view: Node) -> void:
 		dent_view.reduced_motion = view.reduced_motion
 		dent_view.dent = _stage.pilot.dent
 		dent_view.stage = _stage
+		if "--cam=car" in OS.get_cmdline_user_args():
+			dent_view.follow_cam = cc
 		layer.add_child(dent_view)
 	kerf_view = KerfView.new()
 	kerf_view.z_index = RenderLayers.z(&"actors") + 1
