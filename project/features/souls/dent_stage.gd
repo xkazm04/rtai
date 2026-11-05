@@ -27,6 +27,11 @@ var blasts: int = 0
 var seizes: int = 0
 ## Ticks Dent spent riding a seized car's roof (ghost_attacks.json dent.ride).
 var rides: int = 0
+## The last seize that found no car (tick, -1 = none) and the aim point it reached for: the view
+## lashes the tether out and lets it fray. Not sim state (never read back by the sim).
+var miss_tick: int = -1
+var miss_to: Vector2 = Vector2.ZERO
+var misses: int = 0
 var _struck: Dictionary[int, bool] = {}
 ## ghost-forms: GhostPilot owns the shared SoulPowers; the Dent form is the running gearbox power,
 ## so a seize needs it running and a let-go never ends it (the form keeps its own clock).
@@ -58,10 +63,13 @@ func num(key: StringName) -> float:
 ## One tick: `power` = the G press, `melee` = the overload command, `aim` = Rivet's aim (unit).
 func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> void:
 	var arena_stage: ArenaStage = stage as ArenaStage
-	if arena_stage == null or arena_stage.vehicles == null:
-		return
 	var rivet: Fighter = stage.arena.rivet
 	var reticle: Vector2 = rivet.pos + aim.normalized() * num(&"aim_m")
+	if arena_stage == null or arena_stage.vehicles == null:
+		# no car service here (quest 1): the form still answers the press with a reach that misses
+		if power and _shared and rivet.alive() and powers.is_active(ID):
+			_miss(stage, reticle)
+		return
 	if power and car == null and rivet.alive() and _may_seize():
 		_seize(arena_stage, reticle)
 	if not _shared:
@@ -112,6 +120,7 @@ func _seize(stage: ArenaStage, reticle: Vector2) -> void:
 	var i: int = pick_on_line(stage.arena.rivet.pos, reticle, spots)
 	var linked: bool = i >= 0 and link.link(i, spots[i], live[i].head.angle())
 	if not linked:
+		_miss(stage, reticle)
 		if not _shared:
 			@warning_ignore("return_value_discarded")
 			powers.interrupt(&"car")  # nothing in reach: the soul lets go at once
@@ -121,6 +130,12 @@ func _seize(stage: ArenaStage, reticle: Vector2) -> void:
 	heat = 0.0
 	seizes += 1
 	_struck.clear()
+
+
+func _miss(stage: CollectCallStage, reticle: Vector2) -> void:
+	miss_tick = stage.tick
+	miss_to = reticle
+	misses += 1
 
 
 ## The soft lock along the aim: the car nearest the line from Rivet to the aim point (within

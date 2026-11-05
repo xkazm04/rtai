@@ -4,7 +4,10 @@ extends Node2D
 ## soul-teal tether from Rivet's hands (HANDS_M ahead) to the car, sagging and trembling, and a
 ## heat halo round the car that climbs from a dull amber to white-hot with DentStage.heat (the
 ## pulse quickens once the overload is armed). On the blast: an ink shock ring and an amber
-## fireball with a hot core over BLAST_S (reduced motion: the ring only). Reads DentStage only.
+## fireball with a hot core over BLAST_S (reduced motion: the ring only). A seize that finds no car
+## (none in range, or no car service: quest 1) lashes the tether out along the aim to its reach,
+## then it frays into dashes and three teal sparks over MISS_S (reduced motion: it fades whole).
+## Reads DentStage only.
 
 const TEAL: Color = HaulerLook.TEAL
 const INK: Color = Color(0.09, 0.08, 0.07)
@@ -16,6 +19,8 @@ const SEGMENTS: int = 14
 const BLAST_S: float = 0.45
 const FIRE: Color = Color("#E9A23B")
 const BURST_POINTS: int = 9
+const MISS_S: float = 0.4
+const MISS_DASHES: int = 10
 ## The dev car camera's hold on the blast (s) and its ease per frame.
 const CAM_HOLD_S: float = 1.0
 const CAM_EASE: float = 0.15
@@ -28,6 +33,8 @@ var reduced_motion: bool = false
 ## (their midpoint, eased), then holds on the blast for CAM_HOLD_S. View only: the sim's focus is
 ## untouched (on the city block it leans the view by city_lean_m, like `--cam=fight`).
 var follow_cam: CollectCallView = null
+## False hides the missed reach (dev `--no-dent-miss`: the A/B before, iteration 8).
+var miss_on: bool = not OS.get_cmdline_user_args().has("--no-dent-miss")
 var _cam_at: Vector2 = Vector2.INF
 
 
@@ -59,6 +66,10 @@ func _draw() -> void:
 		var hands: Vector2 = (rivet.pos + rivet.facing.normalized() * HANDS_M) * ppm
 		_halo(dent.car.pos * ppm, dent.heat)
 		_tether(hands, dent.car.pos * ppm)
+	if miss_on and dent.miss_tick >= 0 and dent.car == null:
+		var miss_age: float = (stage.tick - dent.miss_tick) * SimClock.TICK_DT
+		if miss_age <= MISS_S:
+			_miss(miss_age / MISS_S)
 	if dent.blast_tick >= 0:
 		var age: float = (stage.tick - dent.blast_tick) * SimClock.TICK_DT
 		if age <= BLAST_S:
@@ -111,3 +122,27 @@ func _fireball(c: Vector2, r: float, k: float) -> void:
 	pts.append(pts[0])
 	draw_polyline(pts, Color(INK, fade), 3.0)
 	draw_circle(c, r * 0.45 * (1.0 - 0.5 * k), Color(HOT, fade))
+
+
+## The reach that found no car, `k` 0..1: out to range_m along the aim, then frayed and gone.
+func _miss(k: float) -> void:
+	var rivet: Fighter = stage.arena.rivet
+	var from: Vector2 = rivet.pos + rivet.facing.normalized() * HANDS_M
+	var reach: float = minf(from.distance_to(dent.miss_to), dent.link.num(&"range_m"))
+	var tip: Vector2 = from + (dent.miss_to - from).normalized() * reach
+	var a: Vector2 = from * ppm
+	var b: Vector2 = a.lerp(tip * ppm, 1.0 if reduced_motion else minf(1.0, k / 0.35))
+	var fade: float = 1.0 - k
+	if reduced_motion or k < 0.35:
+		draw_line(a, b, Color(INK, 0.6 * fade), 5.0)
+		draw_line(a, b, Color(TEAL, fade), 2.0)
+		return
+	var fray: float = (k - 0.35) / 0.65
+	for i: int in MISS_DASHES:
+		var t0: float = float(i) / MISS_DASHES
+		var t1: float = t0 + (1.0 - fray) / MISS_DASHES
+		draw_line(a.lerp(b, t0), a.lerp(b, t1), Color(TEAL, fade), 2.0)
+	var side: Vector2 = (b - a).orthogonal().normalized()
+	for s: int in 3:
+		var off: Vector2 = side * (s - 1) * 6.0 * (1.0 + fray) + (b - a).normalized() * fray * 8.0
+		draw_circle(b + off, 2.5 * fade + 1.0, Color(TEAL, fade))

@@ -3,9 +3,10 @@ extends "res://dev/ghost-powers/quest_hauler_rec.gd"
 ## `--rigs`), through bound input only: Start, a spread group of dock guards east of Rivet, then
 ## G taps (power_gearbox) to pick the ghost (order tonnage, dent, kerf, ohm), Q (power_hauler)
 ## to take it, the right stick on the nearest standing guard and a melee press every CADENCE
-## ticks (Kerf's blink-slice, Ohm's bolt). One tick per frame, a PNG every tick. Dev-only:
+## ticks (Kerf's blink-slice, Ohm's bolt; Dent's press is fire, the seize: in quest 1 a reach
+## that finds no car). One tick per frame, a PNG every tick. Dev-only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/quest_ghost_rec.tscn
-##     -- --out=<abs dir> --ghost=<kerf|ohm> [--ppm=<32|48|64>] [--rigs]
+##     -- --out=<abs dir> --ghost=<dent|kerf|ohm> [--ppm=<32|48|64>] [--rigs]
 
 const ORDER: Array[StringName] = [&"tonnage", &"dent", &"kerf", &"ohm"]
 const GROUP: Array[Vector2] = [
@@ -34,7 +35,8 @@ func _run() -> void:
 	for t: int in TICKS:
 		_tap(&"power_gearbox", t >= 10 and t < 10 + 4 * picks and (t - 10) % 4 == 0)
 		_tap(&"power_hauler", t == TAKE_AT)
-		_tap(&"melee", t >= FIRST_PRESS and (t - FIRST_PRESS) % CADENCE == 0)
+		var beat: bool = t >= FIRST_PRESS and (t - FIRST_PRESS) % CADENCE == 0
+		_tap(&"fire" if ghost == &"dent" else &"melee", beat)
 		_aim_at(stage)
 		Input.flush_buffered_events()
 		s.step()
@@ -45,7 +47,8 @@ func _run() -> void:
 
 func _report(ghost: StringName, stage: CollectCallStage) -> void:
 	var p: StagePilot = stage.pilot
-	var line: String = "%s: transforms %d kills %d kerf blinks %d slices %d ohm bolts %d struck %d"
+	var line: String = "%s: transforms %d kills %d kerf blinks %d slices %d"
+	line += " ohm bolts %d struck %d dent misses %d"
 	(
 		Log
 		. info(
@@ -60,6 +63,7 @@ func _report(ghost: StringName, stage: CollectCallStage) -> void:
 					p.kerf.slices,
 					p.ohm.bolts,
 					p.ohm.struck,
+					p.dent.misses,
 				]
 			)
 		)
