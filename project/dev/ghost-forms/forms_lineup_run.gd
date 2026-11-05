@@ -20,6 +20,8 @@ var print_parts: bool = false
 var full: bool = false
 ## --dent: Dent's CutRig (DentPlan) stands where Tonnage would (the form beside base Rivet).
 var dent: bool = false
+## --raw (with --dent): Dent's parts unprinted (the raw art), the A/B for the print question.
+var raw: bool = false
 ## The sequence zoom (1 = 32 px/m, 2 = 64 px/m) for --frames runs.
 var _zoom_base: float = 1.0
 var _world: CanvasLayer = CanvasLayer.new()
@@ -111,6 +113,9 @@ func _add_dent() -> void:
 	_dent.setup(DentPlan.build(), RigVariant.rivet())
 	_dent.position = Vector2(TONNAGE_X_M * 0.5 - 1.0, 0.0) * PX
 	_dent.reset_state(-PI * 0.5)
+	if raw:
+		for spr: Sprite2D in _dent.sprites:
+			spr.material = null
 
 
 func _frame(z: float) -> void:

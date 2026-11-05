@@ -202,8 +202,13 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   for the new paths. DECISION (small): Dent's rig parts live under characters/art/ like rivet/cop/ped, because
   PartLibrary resolves art dirs there; TonnageRig's own parts stay under souls/art/tonnage (not a CutRig).
 - 01:12 `forms_lineup --dent`: Dent's standalone CutRig beside base Rivet, 0 SCRIPT ERROR.
-  `M:frames/dent-rig-first-64ppm-zoom.png`, `M:frames/dent-rig-first-32-64ppm.png`. Judged: the silhouette (round
+  `M:frames/dent-rig-first-32-64ppm.png`. Judged: the silhouette (round
   target head, broad harnessed shoulders, open hands in the guard) reads and Dent stands about Rivet's height,
   broader; BUT the shared part print greys every fill (the discs lose their yellow, the beige goes grey), the same
   failure as Tonnage's print A/B. Fix next: the raw-art route for Dent (a plan flag the rig's part materials
   honour, or Dent's own fills lifted to survive the print), judged at 32 px/m against the sheet.
+- 01:20 Dent print A/B (`forms_lineup --dent [--raw]`, dev flag strips PartMaterials from Dent's sprites): raw keeps
+  the yellow discs and the beige at 32 and 64 px/m, the print greys him to noise at 32
+  (`M:frames/dent-print-ab-32-64ppm.png`). DECISION raw (decisions.md); the live route needs a BodyPlan flag that
+  RigBuild._part honours (material null), next session. Raw at 32 px/m is busy (fine cracks alias): judge in
+  motion; a softer downscale (mip or a 0.5x pre-shrunk set) may be needed.
