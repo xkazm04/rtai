@@ -205,6 +205,12 @@
       "spin_rumble_px": 1.5
     },
     {
+      "doc": "Gloria, the heavy sidearm (audit: anticipation 1, nothing of its own before the tracer): a 1.5 px recoil kick against the aim per round, between the pistol's none and the hand cannon's 2 px.",
+      "fire_kick_px": 1.5,
+      "fire_kick_ticks": 6,
+      "id": "gloria"
+    },
+    {
       "doc": "The heavy single shot: a bigger kick than its class. Fire: a 2 px recoil kick.",
       "fire_kick_px": 2,
       "fire_kick_ticks": 7,

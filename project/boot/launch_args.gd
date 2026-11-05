@@ -30,6 +30,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--shard-pop",
 	# n7-ranged: --end-cue=off drops the weapons rows' end_cue (the rocket and nuke blast sound)
 	"--end-cue",
+	# n7-ranged: --quest-guns=off keeps quest 1's evening gun path (the before of the table guns)
+	"--quest-guns",
 ]
 
 var _values: Dictionary[String, String] = {}
