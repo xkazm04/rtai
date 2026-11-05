@@ -118,3 +118,22 @@ func test_the_bolt_leaves_from_the_form_rows_electrode_anchors() -> void:
 	var at: Vector2 = _pilot.ohm.bolt_path[0] - _stage.arena.rivet.pos
 	assert_almost_eq(at.length(), mid.length(), 0.001, "the bolt starts between the fingertips")
 	assert_lt(target.hp, 5.0, "and strikes the body")
+
+
+func test_a_car_is_a_machine_three_bolts_wreck_it() -> void:
+	var svc: VehicleService = autofree(VehicleService.new())
+	svc.setup(World.build_context(_bus, _data, 1))
+	_stage.vehicles = svc
+	var car: VehicleBody = svc.spawn_parked(
+		&"sedan", _stage.arena.rivet.pos + Vector2(6.0, 0.0), Vector2.RIGHT
+	)
+	_take()
+	var per: float = _pilot.ohm.num(&"car_damage") * _pilot.ohm.num(&"machine_k")
+	_press(&"melee")
+	assert_almost_eq(car.hp_lost, per, 0.001, "car_damage x machine_k: a car is a machine")
+	assert_eq(car.state, VehicleBody.State.D1, "the first bolt dents it")
+	for i: int in 2:
+		_wait(roundi(_pilot.ohm.num(&"bolt_gap_s") * SimClock.TICK_RATE))
+		_press(&"melee")
+	assert_eq(_pilot.ohm.cars_hit, 3)
+	assert_eq(car.state, VehicleBody.State.WRECK, "the third bolt burns it out")

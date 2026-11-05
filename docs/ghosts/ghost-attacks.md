@@ -15,7 +15,7 @@ Base Rivet for comparison: pistol / claw, one human per hit, robots in 4-6 hits.
 | **Kerf** | the assassin: pick one target out of a group, fast | blink-slice (melee with a target in a 35 deg cone, 9 m, clear line) | 99 human / 4 robot | blink to 0.9 m past the target along a straight teal line | chain of 3, one charge back per 1 s, 0.3 s apart | one-shot (split, teal-white cauterised edge) | thug in 2 | no |
 | | | dash (melee with nothing in the cone) | 0 | 4 m blink | spends a charge | | | |
 | | | speed | walk x1.5 | | while on (6 s) | | | |
-| **Ohm** | the machine killer: stuns a group, burns robots and cars | forked bolt (melee, every 0.5 s) | 0.5 human (+ 1.2 s stun) / 2 x machine_k 3 = 6 robot | 30 deg cone, 11 m, forks to 2 more within 3 m | 0.5 s | a patrol cop in 2 bolts, stunned (cannot shoot) between; electro X-ray kill | thug in 1 | 20 of 100 per bolt (car nearest the aim when no body is in the cone) |
+| **Ohm** | the machine killer: stuns a group, burns robots and cars | forked bolt (melee, every 0.5 s) | 0.5 human (+ 1.2 s stun) / 2 x machine_k 3 = 6 robot | 30 deg cone, 11 m, forks to 2 more within 3 m | 0.5 s | a patrol cop in 2 bolts, stunned (cannot shoot) between; electro X-ray kill | thug in 1 | 12 x machine_k 3 = 36 of 100 per bolt: dented, smashed, wrecked on the 3rd bolt (1 s; car nearest the aim when no body is in the cone; was 20 flat, 2026-11-05 it10) |
 | | | mass (upgrade_tier 1, data hook only) | as single | arcs to up to 6 bodies within 8 m | | | | |
 
 Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):

@@ -7,7 +7,8 @@ extends RefCounted
 ## more within fork_radius_m (MeleeShock.chain_path, the claw shock's walk). Each body is stunned
 ## (the electro gun's FightAreas stun) and takes human_damage, or bolt_damage x machine_k on a
 ## robot (weapon ohm_bolt: a human's kill is the electro X-ray shock). Nothing in the cone: the
-## car nearest the aim burns (car_damage). upgrade_tier >= 1: the mass arc (mass_targets, radius).
+## car nearest the aim burns (car_damage x machine_k). upgrade_tier >= 1: the mass arc
+## (mass_targets, radius).
 
 const ID: StringName = &"ohm"
 const GHOST: StringName = &"ohm"
@@ -152,7 +153,8 @@ func _strike(arena: CombatArena, f: Fighter, src: int) -> void:
 
 
 ## Machines burn out: with no body in the cone, the live car nearest the aim (inside the cone and
-## range) takes car_damage through the vehicles lane's damage rules.
+## range) takes car_damage x machine_k (a car is a machine) through the vehicles lane's damage
+## rules.
 func _burn_car(stage: CollectCallStage, aim: Vector2) -> void:
 	if stage.vehicles == null:
 		return
@@ -167,7 +169,7 @@ func _burn_car(stage: CollectCallStage, aim: Vector2) -> void:
 	if best == null:
 		return
 	var rules: VehicleDamage = stage.vehicles.rules
-	best.hp_lost = minf(rules.hp, best.hp_lost + num(&"car_damage"))
+	best.hp_lost = minf(rules.hp, best.hp_lost + num(&"car_damage") * num(&"machine_k"))
 	best.state = rules.state_for(best.hp_lost, best.soul_hijacked)
 	@warning_ignore("return_value_discarded")
 	bolt_path.append(best.pos)

@@ -4,7 +4,8 @@ extends "res://dev/ghost-powers/quest_hauler_rec.gd"
 ## G taps (power_gearbox) to pick the ghost (order tonnage, dent, kerf, ohm), Q (power_hauler)
 ## to take it, the right stick on the nearest standing guard and a melee press every CADENCE
 ## ticks (Kerf's blink-slice, Ohm's bolt; Dent's press is fire, the seize: in quest 1 the street's
-## ghost car on the aim, else a reach that misses). One tick per frame, a PNG every tick. Dev-only:
+## ghost car on the aim, else a reach that misses; Ohm, once no guard stands, aims at the nearest
+## live street car: the car bolt). One tick per frame, a PNG every tick. Dev-only:
 ##   godot --rendering-driver d3d12 --path project res://dev/ghost-powers/quest_ghost_rec.tscn
 ##     -- --out=<abs dir> --ghost=<dent|kerf|ohm> [--ppm=<32|48|64>] [--rigs]
 
@@ -13,18 +14,25 @@ const GROUP: Array[Vector2] = [
 	Vector2(4.5, -1.2), Vector2(6.0, 1.4), Vector2(7.5, -0.4), Vector2(6.5, 3.0), Vector2(8.5, 1.0)
 ]
 const TICKS: int = 300
+## Ohm runs longer: the last guards fall, then he turns his bolt on the street car.
+const OHM_TICKS: int = 450
 const TAKE_AT: int = 30
 const FIRST_PRESS: int = 70
 const CADENCE: int = 20
 ## Dent: the melee press (the overload command) blows the seized car here.
 const DENT_BLOW_AT: int = 200
 
+## Ohm turns to the nearest live car once no guard stands this close (his bolt's range_m 11).
+const CAR_AIM_M: float = 11.0
+
+var _ghost: StringName = &"kerf"
+
 
 func _run() -> void:
-	var ghost: StringName = &"kerf"
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--ghost="):
-			ghost = StringName(arg.substr(8))
+			_ghost = StringName(arg.substr(8))
+	var ghost: StringName = _ghost
 	var s: Quest1Session = _game.session
 	for i: int in WARM:
 		s.step()
@@ -34,7 +42,7 @@ func _run() -> void:
 		var g: Fighter = stage.arena.spawn_guard(at + off)
 		g.pos = at + off
 	var picks: int = ORDER.find(ghost)
-	for t: int in TICKS:
+	for t: int in OHM_TICKS if ghost == &"ohm" else TICKS:
 		_tap(&"power_gearbox", t >= 10 and t < 10 + 4 * picks and (t - 10) % 4 == 0)
 		_tap(&"power_hauler", t == TAKE_AT)
 		var beat: bool = t >= FIRST_PRESS and (t - FIRST_PRESS) % CADENCE == 0
@@ -52,7 +60,7 @@ func _run() -> void:
 func _report(ghost: StringName, stage: CollectCallStage) -> void:
 	var p: StagePilot = stage.pilot
 	var line: String = "%s: transforms %d kills %d kerf blinks %d slices %d"
-	line += " ohm bolts %d struck %d dent misses %d seizes %d strikes %d blasts %d"
+	line += " ohm bolts %d struck %d cars_hit %d dent misses %d seizes %d strikes %d blasts %d"
 	(
 		Log
 		. info(
@@ -67,6 +75,7 @@ func _report(ghost: StringName, stage: CollectCallStage) -> void:
 					p.kerf.slices,
 					p.ohm.bolts,
 					p.ohm.struck,
+					p.ohm.cars_hit,
 					p.dent.misses,
 					p.dent.seizes,
 					p.dent.strikes,
@@ -86,6 +95,11 @@ func _aim_at(stage: CollectCallStage) -> void:
 		if h.alive() and rivet.distance_to(h.pos) < near:
 			near = rivet.distance_to(h.pos)
 			best = (h.pos - rivet).normalized()
+	if near > CAR_AIM_M and _ghost == &"ohm":  # no guard in the bolt's reach: the car bolt
+		for b: VehicleBody in stage.cars():
+			if b.state != VehicleBody.State.WRECK and rivet.distance_to(b.pos) < near:
+				near = rivet.distance_to(b.pos)
+				best = (b.pos - rivet).normalized()
 	for axis: JoyAxis in [JOY_AXIS_RIGHT_X, JOY_AXIS_RIGHT_Y]:
 		var ev: InputEventJoypadMotion = InputEventJoypadMotion.new()
 		ev.axis = axis
