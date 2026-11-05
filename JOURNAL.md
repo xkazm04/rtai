@@ -451,3 +451,33 @@ for REPORT: the shard pop (36 default vs `--shard-pop=12`, clip in masters).
   (`evidence/ranged/it4-reel-director-loadout.log`). City reel on the same head: 16/16 down to
   riot_cop in the movie take above (the nuke chapter was cut by the frame cap, not failed); the
   full city reel with the loadout was last 19/19 at `9928c09a`.
+
+- Registry rules applied this iteration: `motion-quality-gating` (the quest change judged against a
+  same-build before film on the shipped path; "small visible change" stated, not dressed up);
+  `realtime-combat-semantics` (hits stay generic: StageGuns arms the table row by weapon id, no
+  target special case; the one-hit doctrine kept by refusing the machine-pistol mapping).
+- FINDING 21:48: quest 1's Gloria muzzle: FxView draws WeaponFxArt's muzzle when the row has art,
+  else GunFxArt's star; a flash lasts a few ticks per 24-tick shot, so my 10-15 sampled stills per
+  film probably missed it. Unverified by eye, not claimed.
+
+STOP 21:49 iteration 4. Head `e1250b91`. Gates on `48679f03` (the only code change): lint 13/13,
+unit 1135/0, scenarios 52 (city_chase flake re-run green), pit reel 19/19 with the loadout on
+`43622ec7`.
+
+NEXT (iteration 5):
+1. Quest 1 Gloria muzzle by eye: re-film Dock 9 at 48 px/m every tick (`quest1_clip_rec` `every`
+   1, a 120-tick window where the HUD shows GLORIA and Rivet fires) on vs `--quest-guns=off`; find a
+   shot frame (diff Rivet's box), make a still pair. If the table read is not visibly better, say so
+   in REPORT (the change still unifies quest 1 with the arena: feel, cue, casings, slide).
+2. Full city reel with the loadout on head (`res://dev/arena/arena.tscn -- --arena=city --bot=reel
+   --reel=director --loadout=pistol`), 19/19; then `node tools/evidence/run.mjs --no-bench` on head.
+3. Judge by eye in motion (48 px/m, every frame): Gatling spin-up rumble, flamer ignition (3 px,
+   maybe 4-5), electro snap. Tune by data only if timid; re-measure.
+4. Optional retake of the city combined clip with `--cam=fight` and `--quit-after 6200` (keeps the
+   whole nuke blast, frames the fight); replace row 1 of frames.json if better.
+5. Audit gaps: assault rifle (quest 1's own, not a table gun: score its read in quest 1), molotov
+   throw anticipation.
+6. REPORT calls so far: shard pop (36 default vs `--shard-pop=12`, clip in masters). Mention
+   `--quest-guns=off` as the before of quest 1's table guns (not a call: gunplay's next step).
+   Exe by 08:30 (int-day recipe in docs/decisions.md).
+7. n7-melee: told in JOURNAL (21:25 NOTE) that quest 1's hash moved and which lines I touched.
