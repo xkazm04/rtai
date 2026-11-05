@@ -7,9 +7,9 @@
     "car_damage": 2,
     "car_knock_m": 2.5,
     "car_reach_m": 2.2,
-    "doc": "Dent (the crash-test ghost; the old gearbox soul): power_gearbox seizes the car nearest the aim point aim_m ahead of Rivet (powers.json gearbox: lock radius, range, drive speed, turn rate) and drives it where he aims. A fighter within car_reach_m of the car's centre is struck once per seize: car_damage, thrown car_knock_m along the nose (weapon dent_car: the blowback kill). The car heats over overload_s; past arm_k it blows on the next impact, on a melee press or at full heat: every fighter within blast_radius_m takes blast_damage (weapon dent_blast: the gib kill) and the car is wrecked. ride 1: Dent rides the seized car's roof (the bucking-bull vignette: Rivet's place is the car's, steered by his facing) and hops off ride_hop_m behind it as it blows; 0 keeps him standing where he seized it.",
+    "doc": "Dent (the crash-test ghost; the old gearbox soul): power_gearbox seizes the car nearest the aim point aim_m ahead of Rivet (powers.json gearbox: lock radius, range, drive speed, turn rate) and drives it where he aims. A fighter within car_reach_m of the car's centre is struck once per seize: car_damage, thrown car_knock_m along the nose (weapon dent_car: the blowback kill). The car heats over overload_s; past arm_k it blows on the next impact, on a melee press or at full heat: every fighter within blast_radius_m takes blast_damage (weapon dent_blast: the gib kill) and the car is wrecked. ride 1: Dent rides the seized car's roof (the bucking-bull vignette: Rivet's place is the car's, steered by his facing) and hops off ride_hop_m behind it as it blows; 0 keeps him standing where he seized it. Default 0 since d7-calls ghost-powers-3 (owner pick 2026-11-05: Dent steers the seized car from afar on the teal tether, Rivet clear of the blast); 1 = the old ride.",
     "overload_s": 4,
-    "ride": 1,
+    "ride": 0,
     "ride_hop_m": 4,
     "upgrade_tier": 0
   },

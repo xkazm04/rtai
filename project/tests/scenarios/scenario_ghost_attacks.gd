@@ -1,7 +1,8 @@
 extends Scenario
 ## Lane ghost-powers: the ghosts' attack beats (GhostReel, `--bot=ghosts`) in the arena's real
 ## fight, one fresh ArenaSession per run. Tonnage must slam twice, crush both cars and flatten
-## (signature style crush); Dent must seize the cruiser, strike with it and blow it up; Kerf must
+## (signature style crush); Dent must seize the cruiser, strike with it and blow it up with Rivet
+## at least 5 m clear (d7-calls ghost-powers-3: he steers from afar, ride 0); Kerf must
 ## blink-slice the whole group (four humans split, the robot in two cuts); Ohm's forked bolts must
 ## stun and burn down the group, kill the robot and burn the cruiser (both robots must fall to the
 ## ghost's own kill kind, `robot_ghost`, not the claw after the form). Each beat
@@ -22,7 +23,12 @@ const FAULTS: Dictionary[StringName, StringName] = {
 const NEEDS: Dictionary[StringName, Array] = {
 	&"tonnage": [["tonnage", "slams", 2], ["tonnage", "cars_crushed", 2], ["", "crush", 3]],
 	&"dent":
-	[["dent", "seizes", 1], ["dent", "strikes", 1], ["dent", "blasts", 1], ["dent", "rides", 30]],
+	[
+		["dent", "seizes", 1],
+		["dent", "strikes", 1],
+		["dent", "blasts", 1],
+		["dent", "blast_gap_m", 5]
+	],
 	&"kerf":
 	[["kerf", "slices", 6], ["", "split", 4], ["", "ghost_dead", 5], ["", "robot_ghost", 1]],
 	&"ohm":

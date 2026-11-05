@@ -62,7 +62,7 @@ func drive(
 	move_by = hauler.drive(stage, false, press and tonnage, move_by)
 	var in_dent: bool = settled_in(DentStage.GHOST)
 	var seize: bool = in_dent and c.was_pressed(actions, &"fire")
-	dent.drive(stage, seize, press and in_dent, stage.arena.rivet.facing)
+	dent.drive(stage, seize, press and in_dent, stage.arena.rivet.facing, c.aim_m)
 	if in_dent:
 		stage.intent.fire_at = Vector2.INF  # Dent's hands are on the car, not on the gun
 	if dent.riding():

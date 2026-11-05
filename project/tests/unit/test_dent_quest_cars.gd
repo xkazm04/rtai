@@ -1,7 +1,8 @@
 extends GutTest
 ## Quest 1's ghost cars (collect_call_city.json ghost_cars, ArenaCars.attach_at): the city layout
-## parks them, and on quest 1's stage (CollectCallStage, no ArenaStage) Dent's fire press seizes
-## the car on his aim, drives it and heats it, where before it could only miss.
+## parks none since d7-calls ghost-powers-5, and on quest 1's stage (CollectCallStage, no
+## ArenaStage) Dent's fire press seizes the car on his aim, drives it and heats it, where before it
+## could only miss.
 
 var _bus: EventBus
 var _data: DataStore
@@ -43,8 +44,10 @@ func _into_dent() -> void:
 	assert_true(_pilot.ghosts.settled_in(&"dent"))
 
 
-func test_city_layout_parks_the_ghost_cars() -> void:
-	assert_eq(StageLayout.shipped(true).ghost_cars.size(), 3, "three cars on quest 1's street")
+func test_city_layout_parks_no_ghost_cars() -> void:
+	# d7-calls ghost-powers-5: Dent is locked in quest 1, so its street parks none (was three;
+	# Quest1GhostStreet.CARS keeps the fit for the scenarios)
+	assert_eq(StageLayout.shipped(true).ghost_cars.size(), 0, "none on quest 1's street")
 	assert_eq(StageLayout.shipped(false).ghost_cars.size(), 0, "none on the invented arena")
 
 

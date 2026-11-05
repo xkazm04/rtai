@@ -1,6 +1,7 @@
 extends Scenario
 ## Lane ghost-powers: Tonnage on quest 1's street car (the generated city, collect_call_city.json
-## `ghost_cars`, the start-side one). After the warm-up dock guards stand round the car; scripted
+## `ghost_cars`, the start-side one; [] since d7-calls ghost-powers-5, so Quest1GhostStreet parks
+## the fitted three). After the warm-up dock guards stand round the car; scripted
 ## input takes Tonnage (Q), the left stick walks the press toward the car until its centre is
 ## STOP_M off, then melee every CADENCE ticks: the slam flattens the car and the guards round it.
 ## The same seed twice must give the same counts and world state hash (SIM-05).
@@ -49,8 +50,7 @@ func run(_tree: SceneTree) -> String:
 func _run(fault: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
-	Quest1Session.on_city = true
-	var s: Quest1Session = Quest1Session.open(bus, data)
+	var s: Quest1Session = Quest1GhostStreet.open(bus, data, [])  # the street's cars back
 	var counts: Dictionary = {}
 	var hash: String = ""
 	if s != null:

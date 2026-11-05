@@ -42,6 +42,7 @@ func boot() -> void:
 	if settings_path != "":
 		settings = PlayerSettings.load_or_default(settings_path)
 	settings.reduced_motion = settings.reduced_motion or LaunchArgs.has("--reduced-motion")
+	Quest1Session.ghost_locks = not LaunchArgs.has("--ghosts-free")  # ghost-powers-5's old default
 	add_child(card)
 	@warning_ignore("return_value_discarded")
 	card.start_pressed.connect(start)

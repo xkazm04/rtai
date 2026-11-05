@@ -1,6 +1,7 @@
 extends Scenario
-## Lane ghost-powers: Dent in quest 1 (the generated city, the street's ghost cars,
-## collect_call_city.json `ghost_cars`). After the warm-up a spread group of dock guards stands
+## Lane ghost-powers: Dent in quest 1 (the generated city, the street's ghost cars; since
+## d7-calls ghost-powers-5 quest 1 locks Dent and parks none, so Quest1GhostStreet unlocks him
+## and parks the fitted three). After the warm-up a spread group of dock guards stands
 ## east of Rivet; scripted input takes Tonnage, switches to Dent, aims at the nearest guard and
 ## presses fire every CADENCE ticks (the seize, then the strikes), then melee once (the overload
 ## command). Dent must seize a street car, strike guards with it and blow it up; the same seed
@@ -46,8 +47,8 @@ func run(_tree: SceneTree) -> String:
 func _run(fault: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
-	Quest1Session.on_city = true
-	var s: Quest1Session = Quest1Session.open(bus, data)
+	# Dent's act done and the street's cars back (quest 1 itself locks him and parks none)
+	var s: Quest1Session = Quest1GhostStreet.open(bus, data, [Quest1GhostStreet.ACT_DENT])
 	var counts: Dictionary = {}
 	var hash: String = ""
 	if s != null:
@@ -100,7 +101,8 @@ class Press:
 
 	func sample(tick: int) -> TickInput:
 		var t: int = tick - start
-		var buttons: int = PlayerCommand.pack_aim(_aim(), actions)
+		var to: Vector2 = _aim()  # the cursor on the nearest guard (direction and reach)
+		var buttons: int = PlayerCommand.pack_aim(to.normalized(), actions, to.length())
 		buttons |= _bit(&"power_gearbox", t == SWITCH_AT)
 		buttons |= _bit(&"power_hauler", t == TAKE_AT)
 		buttons |= _bit(&"fire", t >= FIRST_PRESS and (t - FIRST_PRESS) % CADENCE == 0)
@@ -117,5 +119,5 @@ class Press:
 		for h: Fighter in stage.arena.hostiles:
 			if h.alive() and rivet.distance_to(h.pos) < near:
 				near = rivet.distance_to(h.pos)
-				best = (h.pos - rivet).normalized()
+				best = h.pos - rivet
 		return best

@@ -6,7 +6,8 @@ extends RefCounted
 ## cost, duration, cooldown); when that power ends (expired, interrupted) the form exits by itself.
 ## Input: press_transform() (Q / LB) enters the selected form or exits to base; press_next()
 ## (G / RB) selects the next ghost in base, or switches straight to it in a form. A request
-## during a transformation is refused (BUSY): every transformation plays whole.
+## during a transformation is refused (BUSY): every transformation plays whole. A ghost still
+## locked (GhostLocks, d7-calls ghost-powers-5) is skipped by G and refused by Q (LOCKED).
 
 signal form_entering(from: StringName, to: StringName, ticks: int)
 signal form_entered(id: StringName)
@@ -29,6 +30,8 @@ var from_id: StringName = BASE
 var to_id: StringName = BASE
 var phase: StringName = SETTLED
 var selected: StringName = &""
+## Which ghosts the story has unlocked (off = every ghost free: the showcase paths).
+var locks: GhostLocks = GhostLocks.new()
 ## Fault injection for the tests (never set in game): accept a request mid-transformation.
 var plant_mid_switch: bool = false
 ## Every transformation as [kind, from, to, start_tick, end_tick] (evidence and check()).
@@ -76,6 +79,14 @@ func def() -> GhostFormDef:
 	return table.form(current())
 
 
+## Turns the story's lock on with the quests it has completed; a locked selection moves on.
+func apply_locks(done: Array[StringName]) -> void:
+	locks.on = true
+	locks.done = done
+	if not locks.allows(table, selected):
+		selected = locks.first(table)
+
+
 ## Q / LB: base -> the selected form, a form -> base. Returns SoulPowers' answer or BUSY.
 func press_transform() -> StringName:
 	if not _free():
@@ -90,9 +101,9 @@ func press_next() -> StringName:
 	if not _free():
 		return BUSY
 	if from_id == BASE:
-		selected = table.next_after(selected)
+		selected = locks.next_after(table, selected)
 		return SoulPowers.OK
-	return switch_to(table.next_after(from_id))
+	return switch_to(locks.next_after(table, from_id))
 
 
 ## Form to form through the teal flash; refused in base, mid-transformation, or by SoulPowers.
@@ -104,6 +115,8 @@ func switch_to(id: StringName) -> StringName:
 	var f: GhostFormDef = table.form(id)
 	if f == null:
 		return SoulPowers.UNKNOWN
+	if not locks.allows(table, id):
+		return GhostLocks.LOCKED
 	_releasing = true
 	@warning_ignore("return_value_discarded")
 	powers.release()
@@ -166,6 +179,8 @@ func _enter(id: StringName) -> StringName:
 	var f: GhostFormDef = table.form(id)
 	if f == null:
 		return SoulPowers.UNKNOWN
+	if not locks.allows(table, id):
+		return GhostLocks.LOCKED
 	var r: StringName = powers.try_activate(f.power)
 	if r == SoulPowers.OK:
 		_begin(ENTERING, id, f.enter_ticks)
