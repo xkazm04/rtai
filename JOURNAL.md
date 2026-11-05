@@ -1373,3 +1373,11 @@ Session end 07:13: tree clean after this commit, no Godot process of mine runnin
 - 07:38 COMBAT CHECK on 02e4295c: director reel headless (`--fixed-fps 60 --quit-after 7200 --bot=reel
   --reel=director --clean --rigs --loadout=pistol`): 16/16 chapters n/n down (claw_combo 2/2 .. mini_nuke 4/4),
   0 SCRIPT ERROR (the arena does not draw the quest sprites). REPORT sections 4, open items and gates updated.
+- 07:38 merge re-check on 9b84607d: n5-look cd298fde = lane docs + the 16 look goldens (as before); d6-combat-notes,
+  d6-perf-city = lane docs only; n6-ghost-powers 2486357c and n6-ghost-forms ed6d2d31 already contain 02e4295c, docs
+  only. FINDING (semantic): their `forms_drawn` branch in `CastView._rivet` draws `_sprite("rivet", ...)` directly,
+  bypassing `_lod_art`, so under StoryForms the 32 px/m sprite Rivet is the cream art capture again.
+- 07:40 REQUEST to n6-ghost-forms / n6-ghost-powers (and the Director at merge): in `CastView._rivet`'s
+  `forms_drawn` branch draw `var art: String = _lod_art("rivet")` / `_sprite(art, at, _size(StringName(art)),
+  r.facing)` instead of the literal "rivet" (02e4295c's 32 px/m sticker sprite). Not edited on their branches (not
+  this lane's). REPORT merge note updated.
