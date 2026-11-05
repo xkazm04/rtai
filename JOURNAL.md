@@ -680,3 +680,11 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
 - 05:28 COMBAT CHECK director reel on d5e2f3e5 (merged ghost-powers + cast, the bar fix): 16/16 chapters down,
   0 SCRIPT ERROR (E:director-reel-it9.log). The bar over the forms reads as a black slab at full HP: by design
   (CastView._hp_bar fills ink by the health fraction on cream), not changed.
+- 05:40 MILESTONE the 64 px/m close-up on the shipped quest 1 (closes REPORT's open item): quest1_forms_main takes
+  `-- --ppm=64` (Quest1Game.px_per_m, set before the game enters the tree). Lossless PNG run, 1140 frames, 0 SCRIPT
+  ERROR. Judged: entry reads in two stages (Rivet -> teal lattice burst -> in-between disc with the press's legs ->
+  the press), exit the reverse back to Rivet's sprite; Dent, Kerf, Ohm settled read at native 64; Kerf's bar clears
+  the blades. Note: at 64 the subtitle box covers the lower part of Tonnage while a line is up (the HUD's layout,
+  not changed). `M:frames/story-forms-quest1-keys-64ppm.png`, `M:story-forms-quest1-shipped-64ppm.mp4` (19 s),
+  `M:story-forms-quest1-tonnage-64ppm-slow3x.mp4` (18 s, 3x slow, 640x400 crop). frames.json 15: + the keys second;
+  voices-four keys named in the story-voice entry (file kept). PNG scratch deleted.

@@ -146,6 +146,14 @@ The owner's order for this lane: "create these characters, animate transformatio
   Dent. Before/after at the same frames: `M:frames/form-card-fold-quest1-ab-32ppm.png`. The shipped clip
   `M:story-forms-quest1-shipped-32ppm.mp4` was re-filmed on that head.
 
+- **Rivet's health bar clears each body** (iteration 9, DECISION): Kerf's front blades reach about 1.6 m forward
+  and crossed the bar at 1.2 m. The bar height is now one data value per form, `ghost_forms.json` `bar_m` (Kerf
+  1.9, Tonnage 2.35, Dent and Ohm 1.2). Before/after at the same frames: `M:frames/kerf-bar-quest1-ab-32ppm-x3.png`.
+- **The 64 px/m close-up on the shipped path** (iteration 9): the same driver with `-- --ppm=64` (the game's own
+  zoom). `M:frames/story-forms-quest1-keys-64ppm.png` (Rivet, the teal burst, the press settled; Dent, Kerf and Ohm
+  settled), `M:story-forms-quest1-shipped-64ppm.mp4` (19 s) and `M:story-forms-quest1-tonnage-64ppm-slow3x.mp4`
+  (Tonnage in and out, 3x slow). 0 SCRIPT ERROR.
+
 ### Gates (iteration 7)
 - On 91b6b866 (the forms on the shipped quest 1), still tree: evidence runner `--no-bench` all PASS. Lint 13/13,
   unit 1000/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block
@@ -159,8 +167,8 @@ The owner's order for this lane: "create these characters, animate transformatio
   (`E:director-reel-it7-seams.log`).
 
 ## What does not work / is open
-- The ghost forms on the shipped quest 1 have no 64 px/m close-up (quest 1 plays at 32); the arena close-ups
-  stand in for it.
+- Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
+  the ghost-powers REPORT.
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
