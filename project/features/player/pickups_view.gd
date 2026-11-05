@@ -4,7 +4,8 @@ extends Node2D
 ## side view on a paper disc with an ink ring, slowly turning so it reads as loot, not decor.
 ## Render only: reads the sim each frame, writes nothing back.
 ## n5-look (r2_w8): the loot ring is a dashed paper ring over a faint paper wash, the gun on the
-## ground inside it, instead of an opaque paper disc; `--pickup-disc=on` = the disc (before).
+## ground inside it, instead of an opaque paper disc. d7-calls look-7 (owner, 2026-11-05): the
+## opaque paper disc is the default again; `--pickup-disc=off` = the dashed ring.
 
 const DISC_M: float = 0.55
 const RING_PX: float = 2.0
@@ -14,7 +15,7 @@ const DASHES: int = 14
 const DASH_K: float = 0.6
 const WASH_A: float = 0.2
 
-static var disc: bool = OS.get_cmdline_user_args().has("--pickup-disc=on")
+static var disc: bool = not OS.get_cmdline_user_args().has("--pickup-disc=off")
 
 var carry: RivetCarry = null
 var art: WeaponArt = WeaponArt.new()

@@ -74,10 +74,11 @@ func attach_view(view: Node) -> void:
 	_add_print_zone(v.print_stage)
 
 
-## The alley's own floor level in the print (alley_decor.json `print`); --alley-print=off = before.
+## The alley's own floor level in the print (alley_decor.json `print`). d7-calls look-5 (owner,
+## 2026-11-05): off by default, the lane is the pale paper; --alley-print=on = r2_a6's mid concrete.
 func _add_print_zone(ps: PrintStage) -> void:
 	var row: Dictionary = decor.get("print", {})
-	if row.is_empty() or OS.get_cmdline_user_args().has("--alley-print=off"):
+	if row.is_empty() or not OS.get_cmdline_user_args().has("--alley-print=on"):
 		return
 	var fade: float = row["fade_m"]
 	var world: Dictionary = row["world"]
