@@ -919,3 +919,10 @@ Session end 03:26: tree clean after this commit, image.lock and bench.lock never
   stand.
 Session end 03:28: tree clean after this commit, no Godot process of mine running (the two running at 03:24 are
   n5-look's scenarios), locks never taken.
+- 03:27 quest 1 live path for the collar (`quest1_clip.gd -- --ppm=32 --rigs --cam=fight --stills=13600,13660,13720`,
+  after and before by flag, 0 SCRIPT ERROR both): the objective marker is itself a flat vermilion ring, so the old
+  collar was the same mark as an objective; the hazard breaks set Rivet apart and the vermilion still reads.
+  `M/frames/collar-vs-objective-quest1-32ppm.png` (frames.json 15, second; dropped from the list, file kept:
+  rivet-visor-ab-64ppm cited by REPORT). REPORT Call 7 cites it. This supports the 4f9a2ead decision.
+Session end 03:30: tree clean after this commit, no Godot process of mine running, locks never taken, scratch-cast/i14
+  renders deleted (visor_patch.py kept).

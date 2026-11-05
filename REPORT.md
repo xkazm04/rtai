@@ -224,6 +224,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `print_part.gdshader` `collar_stripes` 6 / `collar_ink` 0.3), or B, the flat vermilion ring (`COLLAR_LOD_FILL`
    1), the stronger single mark at a glance but read as a target reticle. Same ticks, before | after:
    `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`, `M/cast-collar-director-ab-32.mp4`.
+   In quest 1 the objective marker is itself a flat vermilion ring, so B is the same mark as an objective:
+   `M/frames/collar-vs-objective-quest1-32ppm.png` (Dock 9, ticks 13600-13720).
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
