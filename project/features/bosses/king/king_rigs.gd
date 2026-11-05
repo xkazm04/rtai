@@ -18,6 +18,16 @@ const RIDERS: Array[Vector2] = [
 ## Where King sits on the car (the throne), metres back from its centre.
 const THRONE_M: float = -0.55
 const RIDER_ID: int = 9190
+## King's gold leaf (print_part swap 5) on his chest and press arms: the target's gold-leafed
+## plates, kept at 32 px/m where the part art's own gold is lost to the flat stickers. -1 = the
+## plain cream-and-steel d5 King (the iteration-2 look).
+const GOLD_SWAP: int = 5
+## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
+const ATTACK_ARMS: Dictionary[StringName, int] = {
+	&"press_slam": 2, &"charge": BodyPlan.L, &"decree": BodyPlan.R, &"coin_fan": BodyPlan.L
+}
+## Attacks whose tell lifts both arms over the head (the press plates up before the slam).
+const RAISE_IN_TELL: Array[StringName] = [&"press_slam"]
 ## Pose steps caught up in one frame at most (a hitch never fast-forwards a long clip).
 const MAX_STEPS: int = 4
 
@@ -59,13 +69,22 @@ func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 	if not _rigs.has(id):
 		var rig: CutRig = CutRig.new()
 		add_child(rig)
-		rig.setup(KingPlan.build(KING_SIZE_K) if is_king else GangPlan.build(), RigVariant.rivet())
+		rig.setup(king_plan() if is_king else GangPlan.build(), RigVariant.rivet())
 		rig.actor_id = id
 		rig.position = at
 		rig.snap_facing(facing.angle())
 		_rigs[id] = rig
 		_last[id] = at
 	return _rigs[id]
+
+
+## King's boss plan: KingPlan at boss size with the gold leaf (KingPlan itself stays the plain
+## robot the enemy-ai thug is built from).
+static func king_plan() -> BodyPlan:
+	var p: BodyPlan = KingPlan.build(KING_SIZE_K)
+	p.torso_swap = GOLD_SWAP
+	p.arm_swap = GOLD_SWAP
+	return p
 
 
 ## `vel` INF = the stride from the frame's own motion; a given vel overrides it (seated: zero).
@@ -83,13 +102,22 @@ func _place(rig: CutRig, id: int, at: Vector2, facing: Vector2, vel: Vector2) ->
 	RigDetail.sync(rig)
 
 
-## A new hurt tick shoves the frame; the active window's first frame strikes; death powers down.
+## A new hurt tick shoves the frame (never cancels the attack); each attack plays on the rig from
+## its windup: the arm twists back through the tell, strikes on the active window and eases back
+## over the recovery (RigClips.strike on the attack's own timing); the slam raises both press
+## plates over the head through its tell; death powers down.
 func _react(rig: CutRig, body: Fighter, f: BossFight) -> void:
 	if body.hurt_tick > _hurt_seen.get(body.id, body.hurt_tick) and body.alive():
 		rig.hit(-body.facing, HIT_SHOVE)
 	_hurt_seen[body.id] = body.hurt_tick
-	if f.state == BossFight.State.ACTIVE and _was.get(body.id, -1) != BossFight.State.ACTIVE:
-		rig.clips.punch(body.id % 2)
+	if f.state == BossFight.State.WINDUP and _was.get(body.id, -1) != BossFight.State.WINDUP:
+		var a: BossAttack = f.attack
+		var dt: float = SimClock.TICK_DT
+		var arm: int = ATTACK_ARMS.get(a.id, body.id % 2)
+		rig.clips.strike(rig, a.windup * dt, a.active * dt, a.recovery * dt, arm)
+	rig.clips.fleeing = (
+		f.state == BossFight.State.WINDUP and f.attack != null and RAISE_IN_TELL.has(f.attack.id)
+	)
 	_was[body.id] = f.state
 	if f.state == BossFight.State.DEFEATED and not rig.clips.down:
 		rig.clips.down = true

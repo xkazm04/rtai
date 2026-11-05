@@ -23,6 +23,8 @@ var head_part: String = "head"
 var head_pos: Vector2 = Vector2.ZERO
 var head_z: int = 12
 var head_swap: int = -1
+## The forearms' and hand's print swap (n7-king: 5 = King's gold-leafed press arms; -1 = none).
+var arm_swap: int = -1
 var pelvis_part: String = "pelvis"
 var pelvis_pos: Vector2 = Vector2.ZERO
 var pelvis_z: int = 4
