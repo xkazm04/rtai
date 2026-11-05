@@ -16,6 +16,8 @@ const STEP_DOWN_M: float = 2.4
 ## Where the stalled car rests from phase 3 on (KingBodyView draws the wreck there).
 var car_at: Vector2 = Vector2.INF
 var car_facing: Vector2 = Vector2.RIGHT
+## The way the car points once it stalls (the court): it no longer turns, only its cannon does.
+var stall_facing: Vector2 = Vector2.INF
 
 
 func _init() -> void:
@@ -25,10 +27,12 @@ func _init() -> void:
 func phase_entered(f: BossFight, phase: int) -> void:
 	keep_m = [CAR_KEEP_M, STALLED_KEEP_M, FOOT_KEEP_M][mini(phase, 2)]
 	f.body.radius_m = CAR_RADIUS_M if phase <= 1 else f.spec.radius_m
+	if phase == 1 and stall_facing == Vector2.INF:
+		stall_facing = f.body.facing
 	if phase >= 2 and car_at == Vector2.INF:
 		car_at = f.body.pos
-		car_facing = f.body.facing
-		f.body.pos += step_down(f.body.facing)
+		car_facing = stall_facing if stall_facing != Vector2.INF else f.body.facing
+		f.body.pos += step_down(car_facing)
 
 
 ## The step-down offset from the car's centre (the throne's right-hand side).

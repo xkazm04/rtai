@@ -21,6 +21,8 @@ const COINS: int = 30
 const CAPE_ON_CAR_K: float = 1.3
 
 var _rigs: KingRigs = null
+## The hood cannon's swivel off the car's heading (the stalled car aims only its cannon).
+var _cannon_rot: float = 0.0
 
 
 func _process(_delta: float) -> void:
@@ -41,9 +43,9 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if fight == null:
 		return
-	draw_set_transform(
-		Ink.px(fight.body.pos) + _windup_px(), fight.body.facing.angle(), Vector2.ONE
-	)
+	var heading: Vector2 = KingBeats.car_dir(fight) if fight.phase <= 1 else fight.body.facing
+	_cannon_rot = heading.angle_to(fight.aim)
+	draw_set_transform(Ink.px(fight.body.pos) + _windup_px(), heading.angle(), Vector2.ONE)
 	var stepping: bool = KingBeats.step_k(fight) > 0.0
 	if fight.phase <= 1:  # the procession, then the court on the stalled car
 		_car(not stepping)
@@ -110,8 +112,7 @@ func _car(with_king: bool = true) -> void:
 			draw_circle(Vector2(l * cx * 0.94, w * cy * 0.86), 4.0, GOLD)
 	draw_rect(Rect2(l * 0.5 - 10.0, -w * 0.42, 10.0, w * 0.84), GOLD)  # the grille
 	draw_rect(Rect2(-l * 0.5, -w * 0.45, 8.0, w * 0.9), GOLD_DARK)  # rear bumper
-	draw_rect(Rect2(l * 0.12, -10.0, l * 0.3, 20.0), GOLD)  # the hood cannon
-	draw_circle(Vector2(l * 0.42, 0.0), 13.0, GOLD_DARK)
+	_cannon(Vector2(l * 0.2, 0.0), l, _cannon_rot if with_king else 0.0)
 	draw_rect(Rect2(-l * 0.28, -w * 0.5, l * 0.18, w), PLUM)  # the rear cabin's plush
 	if _rigs == null:  # first pass: the gang at the four corners, King on the throne
 		for sx: float in [-0.36, 0.3]:
@@ -135,6 +136,16 @@ func _wreck() -> void:
 	var hood: Vector2 = Ink.px(at + dir * CAR_LEN_M * 0.36)
 	var drift: Vector2 = (-dir + dir.orthogonal() * 0.35).normalized()
 	KingBeats.smoke(self, hood, drift, fight.now(), KingBeats.smoke_amount(fight))
+
+
+## The hood cannon about its mount `p` (car px), swivelled `rot` off the car's nose.
+func _cannon(p: Vector2, l: float, rot: float) -> void:
+	var a: Vector2 = Vector2.from_angle(rot)
+	var n: Vector2 = a.orthogonal() * 10.0
+	var tail: Vector2 = p - a * l * 0.08
+	var tip: Vector2 = p + a * l * 0.22
+	draw_colored_polygon(PackedVector2Array([tail - n, tip - n, tip + n, tail + n]), GOLD)
+	draw_circle(tip, 13.0, GOLD_DARK)
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.
