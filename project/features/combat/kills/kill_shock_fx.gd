@@ -9,6 +9,10 @@ extends Node2D
 
 const XRAY_TEX: Texture2D = preload("res://features/combat/weapons/art/gore/xray.png")
 const ARC: Color = Color("#F4E3B5")
+## Row edge `soul` (Ohm's bolt, lane ghost-powers): the arcs in the souls' teal, the zap star a
+## teal-white so the cream bones still pop.
+const SOUL_ARC: Color = HaulerLook.TEAL
+const SOUL_STAR: Color = Color(0.8, 0.97, 0.93)
 const SMOKE: Color = Color(0.09, 0.075, 0.105, 0.5)
 ## The skeleton's height on the street (metres, a comic oversize), the held first flash right
 ## after the hit-stop (ticks: cream bones on ink, the beat that reads) and the strobe after it.
@@ -154,7 +158,7 @@ func _arcs(s: Shock, p: Vector2, age: int) -> void:
 			@warning_ignore("return_value_discarded")
 			pts.append(p + Vector2.from_angle(a0 + jag + k * 0.18) * r)
 		draw_polyline(pts, Ink.INK, 3.2)
-		draw_polyline(pts, ARC, 1.4)
+		draw_polyline(pts, SOUL_ARC if s.row.edge == &"soul" else ARC, 1.4)
 
 
 ## The zap panel behind the held flash: a jagged cream star in an ink rim, so the bones pop.
@@ -164,7 +168,7 @@ func _burst(s: Shock, p: Vector2, r: float) -> void:
 		var rr: float = r * (1.0 if k % 2 == 0 else 0.62 + 0.18 * _h(s.serial, k + 40))
 		@warning_ignore("return_value_discarded")
 		pts.append(p + Vector2.from_angle(TAU * k / 18.0) * rr)
-	KillPoly.fill(self, pts, ARC)
+	KillPoly.fill(self, pts, SOUL_STAR if s.row.edge == &"soul" else ARC)
 	@warning_ignore("return_value_discarded")
 	pts.append(pts[0])
 	draw_polyline(pts, Ink.INK, 3.0, true)

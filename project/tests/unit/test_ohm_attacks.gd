@@ -74,3 +74,12 @@ func test_a_robot_takes_the_machine_multiplier_and_bolts_keep_their_gap() -> voi
 	robot.exposed = true
 	_press(&"melee")
 	assert_eq(_pilot.ohm.bolts, 1, "no second bolt inside bolt_gap_s")
+
+
+func test_a_human_killed_by_the_bolt_takes_the_soul_x_ray_kill() -> void:
+	var row: SignatureKill = SignatureKillTable.load_table().for_weapon(OhmStage.WEAPON)
+	assert_not_null(row, "ohm_bolt has a signature kill")
+	assert_eq(row.style, &"shock", "the electro gun's X-ray shock")
+	assert_eq(row.edge, &"soul", "in the souls' teal, not the electro gun's cream")
+	var gun: SignatureKill = SignatureKillTable.load_table().for_weapon(&"electro_gun")
+	assert_eq(gun.edge, &"", "the electro gun keeps its cream arcs")
