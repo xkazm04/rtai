@@ -79,7 +79,8 @@ func _ready() -> void:
 ## The session (the dev arena, or the city proving block with --arena=city) and the bot.
 func _open(args: ArenaArgs) -> void:
 	var on_city: bool = args.text("--arena") == "city"
-	session = ArenaSession.open(Events, Data, ArenaSession.MASTER_SEED, null, on_city)
+	var seed_v: int = int(args.number("--seed", ArenaSession.MASTER_SEED))  # a bot's seed sweep
+	session = ArenaSession.open(Events, Data, seed_v, null, on_city)
 	_dev_fight(args, on_city)
 	if args.text("--bot") == "range":
 		session.world.loop().set_input(ArenaRangeBot.new(session.stage, session.actions))
