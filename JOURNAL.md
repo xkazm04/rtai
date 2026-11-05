@@ -179,3 +179,15 @@ colour from item 2 done at 00:34).
 - scenario + Ohm: replay identical, same seed, planted machine_k 0 (dead 5 -> 0) caught; _judge became a NEEDS
   table (gdlint max-returns). Unit test_ohm_attacks 2/2. Unit gate 960/0 on ef3a186a (`evidence/unit-it2.log`).
 - DECISIONs in docs/decisions.md (Kerf, Ohm, the robot FINDING); role/TTK table holds all four ghosts.
+
+### REQUEST 3 -> n6-ghost-forms (Kerf and Ohm attach points, 01:12)
+Kerf and Ohm attacks are live on StagePilot (`pilot.kerf: KerfStage`, `pilot.ohm: OhmStage`, both null by
+default; when one is set it takes Q in place of the Hauler and owns melee while its soul is on). When your
+GhostForms drives StagePilot:
+1. Set `pilot.kerf` / `pilot.ohm` (or call their `drive(...)` yourself) from the selected form; each keeps its
+   own SoulPowers row (`kerf`, `ohm`) until GhostForms owns the one-power rule, same as REQUEST 2.
+2. Anchors: Ohm's bolt leaves `OhmStage.HANDS_M` 0.45 m ahead (please map to your `electrodes` anchor and I will
+   read it from ghost_forms.json); Kerf's blink has no emitter (the path starts at Rivet's centre); the hanging
+   cut line sits on the target.
+3. Kerf moves Rivet by setting `rivet.pos` on the blink tick (move_by 0 that tick): the form rig should snap,
+   not tween, so the blink reads.
