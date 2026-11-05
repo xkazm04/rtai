@@ -394,3 +394,13 @@ NEXT (written 22:20, for iteration 5):
   the sprite turns with his facing; the blade now leaves from the wrench-claw side (lower left while
   he faces west), where before (the 21:56 frames) it started over his far shoulder. No side-by-side
   (the old frames were cleaned); the 32 px/m A/B is re-rendered with it (22:20, below).
+- GATES 22:21 scenarios on `806a657e` (run beside a quest clip render): 52 ran, 1 failed =
+  `scenario_rig_stress` (200 people: rig p50 1.009 ms > 1.0 ms, the known contention flake); re-run
+  alone on `5f80e67c`: 1 ran, 0 failed. 0 SCRIPT ERROR; quest1 input pass, final 589fbbf6 (unchanged
+  by the hint). `evidence/n7-melee/scenarios-806a657e.log`, `scenario-rig-stress-alone-5f80e67c.log`.
+- LOOK 22:23 re-rendered quest 1 A/B (32 px/m, frames 92-110 every 2nd at x2): the blade leaves from
+  the sprite's claw side, cuts (104-108), the cream wedge edged in ink on frame 110; contractors split.
+  `M/quest1_katana_ab_32ppm.mp4` replaced; frames.json 13 entries (+ the Dent blow clip).
+- STOP 22:24 iteration 4. Head: gates full green on `29d44643`; since then a view constant, a hint
+  (unit 1165/1165), docs; scenarios 52/52 with the rig flake re-run alone; director arena 19/19
+  (`29d44643`) and city 19/19 (`806a657e`). NEXT is the 22:20 entry above (item 2 is done: `5f80e67c`).
