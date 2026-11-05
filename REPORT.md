@@ -127,10 +127,13 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   death and corpse identical in place: `M/frames/react-street-d5peds-ab-64ppm.png`,
   `M/cast-react-board-d5peds-ab-64ppm.mp4`, `M/cast-street-board-d5peds-ab-64ppm.mp4`.
   The bald head too (f5733b83, `M/frames/crowd-bald-d5-ab-64ppm.png`): every ped head and torso now has its D5 overlay.
+  The hoodie's flat cap at the beanie head size (621c0d3f): more pale hoodie shows round a smaller dark head at 32 px/m
+  (`M/frames/crowd-cap-size-ab.png`).
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
-### Gates (iteration 13, `tools/evidence/run.mjs --no-bench` on d6d89921 (hoodie sleeves + r8 D5 ped parts): lint 13/13, unit
+### Gates (iteration 13, final `tools/evidence/run.mjs --no-bench` on 621c0d3f (hoodie sleeves, r8/r8b D5 ped parts, cap size): all
+PASS: lint 13/13, unit 942/0, scenarios 46, parity exact, look goldens 11/11 (worst 1.21), block goldens 5/5 within mean 4 (worst 1.38). Earlier on d6d89921: lint 13/13, unit
 942/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.20) and block 5/5 (worst 1.36),
 world lock holds, no re-bless. An earlier run on 5faaf0aa lost the look goldens to a transient exit after the first frame
 (11/11 when re-run alone). Director reel with `--loadout=pistol`: 16/16 chapters down, 0 script errors.)

@@ -842,3 +842,8 @@ NEXT (iteration 14), replaces the 01:49 list:
   scaled). Lineups slab/road/walk at 32 and 64 px/m (built vs trial, 0 SCRIPT ERROR): `M/frames/crowd-cap-size-ab.png`.
   At 32 px/m the hoodie ped shows more pale hoodie round a smaller dark head (slab and road); at 64 px/m it matches the
   other heads. GO. Unit 942/0, look goldens alone 11/11 (worst 1.21). Provenance hashes of the two cap files updated.
+- 02:44 EVIDENCE GATE on 621c0d3f (clean tree): ALL PASS: lint 13/13, unit 942/0, scenarios 46, parity exact, look
+  goldens 11/11 (worst 1.21), block goldens 5/5 within mean 4 (worst 1.38). No re-bless this iteration. REPORT gates line updated.
+  NEXT 1(b) of the 02:35 list is DONE (621c0d3f). The 02:35 NEXT list otherwise stands; next is item 2, Rivet vs r2_c3 at 32 px/m.
+Session end 02:46: tree clean after this commit, image.lock released (2 jobs this session: r8, r8b), bench.lock never
+  taken, no Godot process of mine running, scratch-cast/i13 deleted.
