@@ -1,532 +1,520 @@
-# JOURNAL: lane ghost-forms (branch `n6-ghost-forms`), night 2026-11-04/05
+# JOURNAL: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05
 
-Evidence: `C:\Users\kazda\kiro\gtai-masters\n6\ghost-forms\` (M:) and `evidence/` in this worktree (E:).
+Note for the Director: this branch fast-forwarded to n5-cast's tip f96fe0dd at 23:55 (brief: every session
+merges n5-cast), which brought n5-cast's root JOURNAL.md/REPORT.md; this file replaces that JOURNAL on this
+branch. n5-cast's own journal lives on its branch (take n5-cast's on the morning merge, move ours to
+docs/night/2026-11-05/ghost-powers/).
 
-## Iteration 1 (23:50-00:50, BUILD)
-- 23:50 read TARGETS.md (the ghosts section + the Tonnage concept), the eve ghost-powers REPORT, n5-cast and n5-look
-  JOURNALs (no REQUEST to ghost-forms; n6-ghost-powers has no JOURNAL yet), `features/souls/**`, powers.json,
-  RivetPlan.FORMS.
-- 23:52 MERGE n5-cast tip `f96fe0dd` into this branch (clean): the slim hybrid Rivet is the base every
-  transformation starts and ends on.
-- 23:55 Tonnage part sheet job started (Codex image_gen, `M:gen/r1/jobs.json` `tonnage_parts`, refs: the Tonnage
-  concept + n5-cast's hybrid head sheet for the ink/fill style), runner `M:gen/gen.mjs` (copy of gtai-art/gen.mjs,
-  lock tag `ghost-forms`), under `gtai-n5/image.lock`.
+## Iteration 1 (23:51-00:51, BUILD)
+- 23:52 read git log, TARGETS.md ghost section, the eve ghost-powers REPORT, features/souls/**, powers.json,
+  the brutality hook/DeathPipe/SignatureKills, ArenaStage hooks, VehicleDamage. n6-ghost-forms JOURNAL has no
+  REQUEST yet (its head = n5-cast f96fe0dd, no ghost commits).
+- 23:55 MERGE n5-cast f96fe0dd (fast-forward from a1275c82): the slim Rivet base.
+- DECISION data split: my attack tuning goes in a new `data/tables/ghost_attacks.json` (`gtai.ghost-attacks/1`),
+  one block per ghost (tonnage, dent, kerf, ohm) + `upgrade_tier` per block (quest rewards later), so the
+  forms lane can own `powers.json` (rows, names, aliases, morph) without both lanes editing one strict schema.
 
-### REQUEST 1 to n6-ghost-powers: the form interface (proposal, 23:58; ghost-forms builds to it now)
-1. **Form ids:** `base`, `tonnage`, `dent`, `kerf`, `ohm`. Data: `data/tables/ghost_forms.json`
-   (`gtai.ghost_forms/1`, owned by ghost-forms). Each form row names its cost row in powers.json by `power`:
-   `tonnage -> hauler`, `dent -> gearbox` (the old ids stay as the power ids = the aliases until the morning merge,
-   so saves, quest 1 and HaulerStage keep working), `kerf -> kerf`, `ohm -> ohm` (ghost-forms adds those two
-   rows to powers.json: duration, cooldown, madness only; attack tuning blocks are yours).
-2. **State machine:** `GhostForms` (`features/souls/ghost_forms.gd`, RefCounted, 60 Hz ticks):
-   `base -> entering -> form -> exiting -> base`, and `form -> switching -> form'` (a teal flash, no base pass).
-   Signals: `form_entering(from, to, ticks)`, `form_entered(id)`, `form_exiting(id, ticks)`,
-   `form_exited(id)`. `current()` is the settled form id (`base` while a transformation runs = no attacks then);
-   attacks may fire only while `settled()` is true and `current() != &"base"`.
-3. **Anchors** (`anchor(id) -> Vector2`, metres in the body frame: +x = forward/facing, +y = right), from the
-   form row's `anchors`: Tonnage `press_head`; Dent `hand_l`, `hand_r`; Kerf `emitter_l`, `emitter_r`, `lens`;
-   Ohm `electrode_l`, `electrode_r`. World point = `pos + anchor.rotated(facing_angle)`.
-4. **Footprint and speed:** each form row's `radius_m`, `body_class`, `top_mps`, `accel_mps2`, `turn_dps`.
-   Tonnage keeps `rivet_ghost` (bodies.json) until a bigger class lands.
-5. **Input:** Q / LB (`power_hauler`, bit 7) = transform into the selected ghost, or back to base;
-   G / RB (`power_gearbox`, bit 8) = select the next ghost (in base), or switch straight to it (in a form).
-   The attack inputs (melee/fire bits) belong to the ghost-powers lane while a form is settled.
-   If you need another split, write a REQUEST; I will move the input to match.
-- 00:00 FRICTION the n5-cast merge brought n5-cast's root JOURNAL.md and REPORT.md; this file replaces that
-  JOURNAL on this branch (Director: take n5-cast's on the morning merge, move ours to docs/night/2026-11-05/ghost-forms/).
-- 00:01 FIX (shared tool) `tools/lint/lint.mjs` runs gdformat/gdlint in chunks of 200 files: with 4 new .gd files
-  the single command line passed Windows' 32 767-char limit and gdformat read as a silent FAIL on a clean tree.
-  Every lane adding files will hit this; commit 19969979 is a clean cherry-pick.
-- MILESTONE 00:02 873056e0 GhostForms state machine + `ghost_forms.json` (+ schema) + powers.json rows kerf/ohm +
-  `SoulPowers.release()`. Unit `test_ghost_forms` 7/7 incl. the planted mid-transformation switch caught by check().
-  Tuning (each form worth using; Rivet walks 6.75 m/s): Tonnage 4.2 m/s accel 5 turn 120, r 1.3 m, size 3.0,
-  enter 0.9 / exit 0.7 s, cost 25 madness / 8 s / cd 20; Dent 7.0 accel 14, enter 0.6; Kerf 12.0 accel 40 turn
-  720, enter 0.5, cost 20 / 6 s / cd 10; Ohm 4.5 accel 12, size 0.8, enter 0.7, cost 20 / 8 s / cd 14.
-  switch_s 0.35. Registry rules applied: `motion-quality-gating` (judge the transformation in motion at game
-  zoom, a key strip + a clip), `generated-asset-world-scale` (parts sized in metres against Rivet's footprint in
-  the rig, not by the sheet's px), `sprite-and-atlas-production` (judge the part at its 32 px/m size: the print
-  A/B below).
-- 00:03 Tonnage sheet back (58 s, image.lock taken and released by the runner). Cut by `tools/art/ghost_parts.py`.
-- MILESTONE 00:08 eb1e0136 TonnageRig (crown 2.3 m, legs out to the corners at 1.5 m, hazard brow, hoses, teal
-  glow; stamp gait). DECISION raw art (print_parts off): the shared print inked the crown solid at 32 px/m
-  (`M:frames/tonnage-print-ab-32ppm.png`). Composite beside the concept: `M:frames/tonnage-rig-vs-target-64-32ppm.png`.
-  Judged: the top view matches the concept's top-right drawing (square slab, four corner feet, hoses); the body
-  is gunmetal where the concept's ghost is teal all over; the teal is seams + glow (brief: "the machine body
-  printed in the game's ink look, with teal soul seams and glow").
-- MILESTONE 00:11 686dd22a GhostMorphFx + `forms_lineup --morph` (real GhostForms + SoulPowers): clips
-  `M:tonnage-morph-32ppm.mp4` (5.5 s, x3 nearest), `M:tonnage-morph-64ppm-slow3x.mp4`; strips
-  `M:frames/tonnage-morph-strip-32ppm.png`, `M:frames/tonnage-morph-64ppm-keys.png`. 0 SCRIPT ERROR, both Q
-  presses `ok`. Judged: burst, seams, unfold and the collapse back read at 32 px/m. Weak: the steam puffs read as
-  flat grey bubbles; the in-between pose (the collapsed press under the radial seams) is a clump, not a clear
-  plate-folding read; the seams are radial lines, not along the plates.
+### REQUEST 1 -> n6-ghost-forms (the interface; reply in your JOURNAL, I adopt whatever you commit)
+1. **Form ids**: `tonnage`, `dent`, `kerf`, `ohm` (+ `rivet` = base). Old power ids `hauler` (= tonnage) and
+   `gearbox` (= dent) stay as aliases in powers.json until the morning merge (saves, quest 1).
+2. **Enter/exit**: I listen to `SoulPowers.started(id, bark)` / `ended(id, reason, bark)` (already there).
+   If you add a form switch class, please keep emitting those two signals with the form id, and expose
+   `form_id()` (StringName) on whatever the StagePilot holds.
+3. **Anchors** (metres, body-local: +x = facing, +y = right; I read them from data, you own the values):
+   tonnage `press_head` (0.9, 0) = slam centre; dent `hands` (0.5, +-0.25); kerf `emitter` (0.45, 0);
+   ohm `electrodes` (0.4, 0.15). Proposal: a `anchors` object per form row in your table; until then I
+   use these defaults in ghost_attacks.json.
+4. **Footprint/speed**: I read the body radius from `ArenaBodies.table().radius(form.body_class)` and the
+   speed from your step(); Tonnage's attacks scale off that radius (slam radius = 4 m today).
+5. I will not touch: rigs, part sheets, HaulerLook, morph, HUD, input_actions rows. I do touch
+   `HaulerStage` (attack logic), `CombatArena` (one armour field, default 1.0), signature_kills.json
+   (+ crush row), `KillStyles` (+ crush dispatch).
 
-### REPLY to n6-ghost-powers REQUEST 1 (00:14)
-Adopt my REQUEST 1 above; the differences from yours:
-- Base is `base` (not `rivet`). `GhostForms.form_id()` (= `current()`) returns the settled form, `base` during a
-  transformation. Attacks only while `settled()` and `form_id() != &"base"`.
-- SoulPowers' `started/ended` stay and still carry the POWER id (`hauler`, `gearbox`, `kerf`, `ohm`);
-  `GhostFormTable.form_of_power(id)` maps it to the form id. Or listen to `GhostForms.form_entered(id)` /
-  `form_exited(id)` (form ids).
-- Anchors live in `ghost_forms.json` `anchors` (read `GhostFormDef.anchor(name)`): tonnage `press_head` (1.55, 0)
-  (the brow's front edge on the 2.3 m crown; your slam centre may sit further ahead), dent `hand_l`/`hand_r`
-  (0.42, -+0.36), kerf `emitter_l`/`emitter_r` (0.55, -+0.32) + `lens` (0.3, 0), ohm `electrode_l`/`electrode_r`
-  (0.38, -+0.1). Tell me if you want other names; one data edit.
-- Footprint: Tonnage's row says `radius_m` 1.3 (the drawn crown + feet are about 3.2 m across); its body class
-  stays `rivet_ghost` (0.9 m in bodies.json) until one of us lands a bigger class: yours to pick if your slam
-  needs it, I will match the row.
-- Your `ghost_attacks.json` split is fine; I own powers.json rows (madness, duration, cooldown).
+### Tonnage (item 1)
+- Registry rules applied: `motion-quality-gating` (judge in motion at game zoom, a telegraph must be readable
+  before the hit: wind-up 0.3 -> 0.5 s with a footprint), `depth-ordered-layered-art` (the telegraph and marks
+  are ground-band, under the actors: TonnageView at actors z - 2; kills keep KillView's z).
+- MILESTONE f54b56ef Tonnage attacks: `Fighter.damage_k` (plates 0.3 while on), the slam lands 0.9 m ahead
+  (`HaulerStage.slam_point`), cars within 3.4 m wrecked (VehicleDamage rules), kills within 2 m = new signature
+  style `crush` (KillCrushFx: body spread 1.28 x 1.5 and pressed dark, 6-tick overshoot, reduced motion = at
+  once), the ring = `stomp_wave` standard thrown death, ram kill = row `tonnage_ram` (blowback). Numbers:
+  slam 3 dmg, ram 2, powers.json hauler values only (no schema change there). unit test_tonnage_attacks 2/2,
+  test_hauler* 18/18 (test_hauler_stage waits 40 ticks for the 0.5 s wind-up).
+- FRICTION lint gdformat FAILed with no file named: at 810 files the one command line passed Windows' 32 KB
+  limit. Fixed 00578fc0 (chunks of 200). Every lane adding files hits this; DECISION in docs/decisions.md.
+- FRICTION `--telemetry` crashed on a station-less hook (ArenaStage.telemetry_dict): applied n5-look's
+  10bb8eea hunk byte-for-byte (fe23db22).
+- FRICTION headless `--quit-after N` runs only ~0.4 N sim ticks (real-time paced); film windowed with
+  `--fixed-fps 60` for full beats and exact ticks.
+- FINDING the arena has no robot fighters (robots exist only in dev/enemy_ai); the brief's "a robot" victim
+  is missing from every ghost clip until a robot lands in CombatArena. Robot damage is in the numbers only.
+- MILESTONE 848b521c the slam reads on the rigs path: CastView's HaulerMarks only draw on the sprite path, so
+  the arena showed no telegraph or crack. TonnageHook (station hauler_pad `script`) + TonnageView: a die-plate
+  footprint (1.8 m) with a teal edge inks in over the wind-up and an inner square drops in; then HaulerMarks'
+  ring + D5 crack.
+- MILESTONE (reel) `--bot=ghosts` (dev/ghost-powers/ghost_reel.gd, a sim-side hook like ReelDirector):
+  3 cops + a riot cop + a cruiser, a far pair, then wave 2 behind with a sedan. Windowed 32 px/m 960 ticks:
+  10/10 down, 2 slams, 2 cars crushed, crush 5 / blowback 4, 1 activation, 0 SCRIPT ERROR
+  (`evidence/ghosts-tonnage-32.json`).
+- Evidence (masters n6/ghost-powers): `tonnage-arena-32ppm.mp4` (16 s), `tonnage-slam-64ppm-halfspeed.mp4`,
+  `frames/tonnage-slam-vs-target-64ppm.png` (target | telegraph | landing), `frames/tonnage-slam-keyframes-64ppm.png`,
+  `frames/tonnage-beat-32ppm.png`. Judged: telegraph, crack and wrecked car read at both zooms; the flattened
+  body reads at 64 but at 32 px/m it is close to the standard pile; the tank body is still base Rivet (forms lane).
+- No before pair yet: the old Hauler never ran in the arena on rigs (eve clips are quest 1 captures,
+  `masters/eve/ghost-powers/clips/quest-hauler-ram2/`). Before = eve still in a later composite.
+- 00:20 scenarios 46 ran / 0 failed on the Tonnage head (`evidence/scenarios-it1.log`).
 
-- 00:16 MERGE n6-ghost-powers 848b521c (385b710f): Tonnage's attacks, TonnageHook/TonnageView on `hauler_pad`,
-  ghost_attacks.json. One conflict, `tools/lint/lint.mjs`: both lanes fixed the same chunked-gd bug; took theirs.
-  Unit on the merge: 952/0 (`E/unit-iter1-merge.log`).
-- 00:18 FINDING (for the live path, next session): the arena print path draws Tonnage's attack marks
-  (TonnageView on the actor layer via TonnageHook.attach_view), but Rivet's body while transformed is still the
-  HaulerLook-grown cut rig (cast_view.gd for quest 1's capture; the arena rig path not yet traced). To show
-  TonnageRig live: a GhostFormView on the same actor layer (z beside TonnageView) that reads
-  `stage.pilot.hauler.form.morph_k()` (or a GhostForms on the pilot), draws TonnageRig + GhostMorphFx at
-  `arena.rivet.pos` facing `rivet.facing`, and the arena's Rivet rig feed skips Rivet while the form is big.
-- MILESTONE 00:26 f9bc66f0 GhostFormHud (D5 card: four chips with each ghost's mark, the current form in teal,
-  the selected ghost with the chevron + key hint, the cooldown ink sweep, the Madness bar with the selected cost
-  notch). Evidence `M:frames/hud-base-tonnage-cooldown.png` (base, Tonnage on, Tonnage cooling). Unit 1/1.
-  The first pass crowded the names (GAP 64 -> 84 px).
-- 00:27 COMBAT CHECK started: director reel headless 7200 ticks (`E/director-reel-iter1.log`).
+### Dent (item 2)
+- MILESTONE 5406276a DentStage on StagePilot (G / RB, a no-op off an arena stage; StagePilot `_ghosts()`
+  helper keeps drive() under 40 lines): seize = the car nearest the aim LINE (pick_on_line, gearbox lock
+  radius 3 m, range 22 m), soul_hijack (the teal plate), GearboxLink.step drives it where Rivet aims (aim
+  point 14 m: at 9 m the turn-limited car circled the point, turn radius ~5.7 m at 14 m/s), each fighter it
+  touches is struck once (2 dmg, thrown 2.5 m along the nose; row dent_car_hit = blowback), heat over 4 s,
+  armed at 0.3, blows on impact / melee / full heat: 4.5 m, 6 dmg (row dent_blast_gib = rocket's gib), car
+  wrecked. DentView: teal tether from Rivet's hands sagging and trembling, amber -> white heat halo (pulse
+  quickens when armed), ink blast ring with a hot core (none under reduced motion).
+- DECISION Dent's heat is amber-to-white, not vermilion or teal: teal stays on the tether (the soul's link),
+  vermilion is reserved for danger/objectives and the owner wants coloured effects without blood red.
+- MILESTONE scenario_ghost_attacks (1 ran, 0 failed, `evidence/ghost-attacks.json`): Tonnage 10/10, 5 crush,
+  2 cars; Dent seize 1, strikes 5, blast 1, 5/5; replay identical; same seed same state; planted crush_m 0
+  (crush 5 -> 0) and blast_damage 0 (dead 5 -> 4) caught.
+- Clip `dent-arena-32ppm.mp4` (7 s, --bot=ghosts --ghost=dent). Judged: the tether and heat halo read at
+  32 px/m, A and B are thrown off the bonnet; BUT the car drove through the south wall (position set
+  directly) and B died to car hits before it armed, so the blast came late at full heat on the riot cop.
+  Fix in progress: walls push the car out and an armed car blows on a wall; arm_k 0.3.
+- FINDING one SoulPowers per ghost stage (Hauler and Dent each own one): both powers can run at once. The
+  forms lane's switch should own "one form at a time"; until then the pilot does not block it.
+- 00:29 MILESTONE f3362eaa Dent's car stops on the arena walls (it drove through: DentStage sets the pose
+  directly) and an armed car blows on a wall; arm_k 0.3. Re-filmed: the car strikes A, turns onto B, stops
+  on the wall line and blows inside B: 5/5 (blowback 4, gib 1), 0 SCRIPT ERROR. scenario_ghost_attacks
+  re-run on these values: 1 ran, 0 failed (`evidence/scenario-ghost-attacks.log`).
+- COMBAT CHECK director reel headless `--quit-after 7200` on 5406276a: 7 chapters ran (headless pacing), all
+  down (claw_combo 2/2, pistol 2/2, machine_pistol 4/4, rocket 1/1, flamethrower 1/1, electro 1/1, molotov
+  1/1), 0 SCRIPT ERROR (`evidence/director-reel-it1.log`). The other 9 chapters NOT checked this session.
+- Evidence: `dent-arena-32ppm.mp4`, `dent-64ppm-halfspeed.mp4`, `frames/dent-vs-target.png`,
+  `frames/dent-beat-32ppm.png`; frames.json 9 entries. Judged: the tether + heat halo read; the blast is
+  small and pale beside the target's fireball; at 64 px/m the camera stays on Rivet, so the strikes and the
+  blast leave the frame.
+- 00:30 MERGE n6-ghost-forms 513376e6 (38bcc40c): GhostForms, ghost_forms.json, GhostFormHud; only
+  JOURNAL.md conflicted (kept ours); lint 13/13, import 0 script errors.
 
-NEXT (iteration 2), Tonnage first (depth before breadth), then Dent:
-1. Merge n5-cast's tip if it moved (expect a JOURNAL.md/REPORT.md conflict: keep ours), and n6-ghost-powers'.
-2. Tonnage LIVE: GhostForms on StagePilot (Q = press_transform, G = press_next, replacing HaulerStage's own
-   `try_activate(&"hauler")`; coordinate with ghost-powers, who own HaulerStage's attack logic: put GhostForms
-   in front, keep `powers` shared, HaulerForm still listens to `started/ended` of `hauler`). Then the
-   GhostFormView above (TonnageRig + GhostMorphFx, hide Rivet's rig while big, camera beat through the arena
-   CameraRig budget), GhostFormHud on the arena HUD layer. Proof: 15-20 s clip at 32 px/m in `--arena`
-   (walk, Q in, stamp, slam, Q out) and once in `--arena=city`; 64 px/m slow close-up; target composite.
-3. Tonnage polish: steam as ink-rimmed lumpy puffs (not grey discs); seams along the crown's plate lines (not
-   radial); the in-between pose as plates folding (crown halves + press head shut over the legs); stamp dust
-   ring + teal glint on each `stamped`; the crown a touch lighter at 32 px/m (judge beside r2_a5).
-4. A determinism scenario: GhostForms through enter/switch/exit inside the replay path (replay identical); the
-   forms are input-driven, so a replay with Q/G presses must reproduce the history log byte for byte.
-5. Dent: part sheet (crash-test dummy from above: target discs on head and shoulders, seatbelt harness, dented
-   plates, teal seams), DentRig on the humanoid CutRig if the parts fit Rivet's part names (a new RivetPlan-like
-   plan with art_dir `souls/dent`), stagger gait, the transformation through GhostMorphFx (shared), the G switch
-   Tonnage <-> Dent through the teal flash.
-- 00:28 COMBAT CHECK (partial) `E/director-reel-iter1.log`: `--quit-after 7200` counts engine frames, not sim
-  ticks, so the run ended at sim tick ~2700: 8 of 16 chapters started, the 7 finished all down (claw_combo 2/2,
-  pistol 2/2, machine_pistol 4/4, rocket_launcher 1/1, flamethrower 1/1, electro_gun 1/1, molotov 1/1),
-  0 SCRIPT ERROR, exit 0. FRICTION: the reel needs `--quit-after` about 3x the tick count headless. Full re-run
-  started (`--quit-after 24000`, `E/director-reel-iter1-full.log`).
-- 00:30 unit `test_ghost_forms` 8/8: + determinism (one Q/G script run twice gives the same history tick for
-  tick). Not yet in the replay path (GhostForms is not wired into the sim; NEXT item 4).
-- 00:32 COMBAT CHECK (full) `E/director-reel-iter1-full.log` (`--quit-after 24000`, headless, on 513376e6 = the
-  merged ghost-powers tree + all of this lane): 16 chapters started, 16 down (claw_combo 2/2, pistol 2/2,
-  machine_pistol 4/4, rocket .. riot_cop 1/1, mini_nuke 4/4), 0 SCRIPT ERROR, exit 0. Combat holds.
-- 00:33 MILESTONE morph v2 (GhostMorphFx): steam as lumpy cream puffs under one ink rim, shrinking (v1's fading
-  puffs printed as grey discs); seams along the crown's plate grid (a cross + an inset square) instead of radial
-  spokes. A/B `M:frames/tonnage-morph-64ppm-keys-ab.png` (v1 top, v2 bottom, same ticks); both clips and the
-  32 px/m strip re-cut on v2. Still weak: the late steam lobes shrink to small ink rings (frame 3); the in-between
-  pose is still the scaled-down press (no plate folding). frames.json 8 entries, every file checked present.
-- 00:37 SCENARIOS on 58e885ac: 46 ran, 0 failed, exit 0, 0 SCRIPT ERROR (`E/scenarios-iter1.log`; replay identical
-  where reported). Gates this session: lint 13/13, unit 952/0 (merge tree) + test_ghost* 11/11 after, scenarios
-  46/0, director reel 16/16. Parity and the evidence runner not run (no native or sim change by this lane).
-Session state 00:38: head = this commit, tree clean, no Godot process of mine running, image.lock released by the
-  runner at 00:03 (one job, 58 s). NEXT (iteration 2) is the list above (00:27), item 3 now: the in-between pose as
-  plates folding + stamp dust; steam and seams are done (v2).
+### REQUEST 2 -> n6-ghost-forms (inputs once GhostForms drives StagePilot)
+I adopt your REPLY (ids `base/tonnage/dent/kerf/ohm`, anchors in ghost_forms.json, G = next ghost). Then:
+1. Tonnage: HaulerStage keeps the attack logic; please gate it on `GhostForms.settled() and form_id() ==
+   &"tonnage"` instead of its own `powers.try_activate(&"hauler")` (or hand me the GhostForms and I gate it).
+   The slam centre moves to your `press_head` anchor + 0.4 m once the big rig is live (data: press_ahead_m).
+2. Dent: today `power_gearbox` (G) seizes. Once G = next ghost, Dent's seize = the **fire** press while the
+   Dent form is settled; the overload command stays the melee press. I will switch DentStage.drive's
+   `power` argument to that as soon as your StagePilot hookup lands (one line in StagePilot._ghosts()).
+3. Both stages keep a SoulPowers each until then; please let GhostForms own the one-power-at-a-time rule.
 
-## Iteration 2 (00:39-01:39, BUILD)
-- 00:40 MERGE n5-cast 91aac1aa (18f49782: plan-view peds, re-blessed look goldens) and n6-ghost-powers b4634624
-  (087898ae: Dent's attacks, DentView, DentBeat). JOURNAL.md/REPORT.md kept ours both times; lint 13/13 on both.
-- MILESTONE 56406f67 GhostPilot (features/souls/ghost_pilot.gd) on StagePilot: one SoulPowers behind GhostForms,
-  HaulerStage + DentStage `share()` it (their own activate/tick skipped; Dent's let-go never ends the form).
-  Q = transform / back, G = pick next (base) / switch (form). Attacks only while settled (ghost-powers REQUEST 2
-  items 1-3 done here: the Tonnage gate, Dent seize on fire, one power at a time). DentBeat re-timed: G at 40,
-  Q at 42, fire at 80. test_hauler_stage waits enter_s before the stomp; new test_ghost_pilot 4/4 (enter/settle,
-  switch + exit + check(), mid-morph refusal, Kerf faster than the walk). scenario_ghost_attacks 1/0.
-  DECISIONs (decisions.md): the input (Q/G, rejected radial + key-per-form), one SoulPowers for every ghost.
-- GhostFormView (features/souls/ghost_form_view.gd) attached by ArenaRigs (one line): TonnageRig + GhostMorphFx on
-  the actor layer at Rivet's pose; Rivet's CutRig + RivetHeldView/WeaponMagView hidden while the big body stands in;
-  the gait on sim ticks (lint SIM-01 caught a frame-delta read).
-- 00:52 PROOF Tonnage live, `--bot=ghosts` windowed 1000 frames: arena 32 and 64 px/m and `--arena=city` 32 px/m,
-  each 10/10 down, 0 SCRIPT ERROR (`E/ghosts-tonnage-live-32.json`, `-64`, `E/ghosts-tonnage-city-32.json`).
-  M: `tonnage-live-arena-32ppm.mp4` (16 s), `tonnage-live-arena-64ppm-slow3x.mp4`, `tonnage-live-city-32ppm.mp4`,
-  `frames/tonnage-live-before-after-target-32ppm.png` (ghost-powers' before at the same ticks | after | concept),
-  `frames/tonnage-live-arena-64ppm-keys.png`, `frames/tonnage-live-city-wave2-32ppm.png`. First film showed Rivet's
-  gun drawn on top of the press: fixed (held/mag views hidden while big). Judged: the press reads as a 3x body among
-  the cops at 32 px/m and turns onto wave 2 in the city; the slam now lands ~54 ticks later than before (attacks
-  wait for the settled form). Not done: the camera beat (GhostFormView.beat_zoom is computed, no host reads it yet).
-- 01:00 unit gate on 94b7c56d: 955 passed, 4 failed assertions, all in ghost-powers' test_tonnage_attacks (the slam
-  test pressed melee straight after Q): it now waits enter_ticks (the attacks wait for the settled form). Re-run
-  test_tonnage* 2/2, test_ghost* 15/15.
-- MILESTONE GhostFormView: the camera beat = one CameraRig shake at the in-between pose (`crash` when Tonnage comes
-  or goes, `hit` for the light forms; camera.json's budget and reduced-motion scale, no new data) and the
-  GhostFormHud live on a CanvasLayer (5). HUD fix: in a form the chevron + `G` mark the switch target (was none),
-  in base `Q` under the picked ghost; labels on one baseline (the grown chip clipped "Tonnage"); _chevron split out
-  (gd-size). Re-filmed: 10/10, 0 SCRIPT ERROR; `M:frames/hud-live-arena-base-morph-tonnage.png`, the 32 px/m clip
-  replaced with this run.
+NEXT (iteration 2, ghost-powers):
+1. Unit gate result on 38bcc40c (`evidence/unit-it1-merged.log`, started 00:31); if red, fix first.
+2. Dent proof gaps: a camera that frames the seized car (the arena CameraRig: follow the midpoint of Rivet
+   and the car while seized) for the 64 px/m close-up; a coloured blast (warm fireball core + debris, no red:
+   reuse gunplay's rocket/barrel blast FX if it exists) so it reads beside ghost_dent_mechanic; Dent in the
+   city block (`--arena=city`, a parked car or a traffic car via soul_hijack_traffic) and on a police car.
+3. Kerf (brief item 3): ghost_attacks.json `kerf`: dash/blink, blink-behind-and-slice along a teal line
+   (human one-shot = brutality split with a teal-white cauterised edge, robots heavy damage), a hanging cut
+   line, chain of N blinks with a recharge; add to GhostReel (`--ghost=kerf`) and scenario_ghost_attacks.
+4. Ohm (item 4): forked bolt from the electrode anchors, x machine multiplier, stun + burns on humans, the
+   electro X-ray kill in teal; `mass` tier as a data hook only.
+5. Tonnage polish: the flattened body at 32 px/m is close to the standard pile (a wider, flatter print or a
+   die-plate imprint under it); armour sparks off the plates on a blocked round (ShieldSparks-like, white);
+   gate the attacks on GhostForms once REQUEST 2 lands; city block clip.
+6. The full director reel (16 chapters) windowed or `--chapter=` batches, and the full scenario suite on the
+   final head. Delete masters scratch AVIs (`n6/ghost-powers/scratch/`) once the clips are final.
+- 00:34 MILESTONE (DentView) the car bomb's blast was a pale disc beside the target's fireball: now a jagged
+  ink-rimmed amber burst (#E9A23B, 9 points) with a cream core, swelling and burning down over 0.45 s (none
+  under reduced motion; the ink ring stays). First try parse-failed (`append()` return discarded, warnings are
+  errors) and drew nothing: caught by the 3 SCRIPT ERRORs in the run log and the empty after-row, fixed.
+  Before|after `M/frames/dent-blast-ab-32ppm.png` (same ticks 133/137/142, 32 px/m), clip re-cut, 0 SCRIPT
+  ERROR. frames.json 10.
+- 00:38 GATES on ffffc6d7 (final code head): scenarios 47 ran / 0 failed (incl. scenario_ghost_attacks;
+  `evidence/scenarios-it1-final.log`), unit 954/0 on 38bcc40c (DentView change after it is render-only),
+  lint 13/13 on every commit. Masters scratch AVIs deleted; frames.json 10 entries, every file present.
+Session state 00:39: head = this commit, tree clean, image.lock never taken, bench never run, no Godot
+process of mine running. NEXT (iteration 2) is the 00:31 list above (item 1 done: unit 954/0; the Dent blast
+colour from item 2 done at 00:34).
 
-### REPLY to n6-ghost-powers REQUEST 2 (01:06): done on this branch (56406f67, 2bdc3fbf)
-1. Tonnage: GhostPilot passes HaulerStage.drive `power=false` and `melee` only while `settled_in(&"tonnage")`;
-   HaulerStage.share(powers) skips its own try_activate + tick. HaulerForm still turns on with `hauler` started
-   (= at the start of the 0.9 s entering), so the plates' armor_k and the tank's movement run through the morph,
-   the slam does not. press_ahead_m untouched (your call once you see the live clip).
-2. Dent: seize = the fire press while Dent is settled (the gun does not fire then: GhostPilot clears fire_at);
-   the overload stays melee. DentStage.share(powers): a seize needs `gearbox` running, a let-go / failed seize no
-   longer interrupts the power (the form keeps its own clock; several seizes per form). DentBeat re-timed (G 40,
-   Q 42, fire 80); scenario_ghost_attacks 1/0 on it. test_tonnage_attacks' slam test waits enter_ticks.
-3. One SoulPowers for every ghost: `StagePilot.ghosts` (GhostPilot); `pilot.hauler` / `pilot.dent` still point at
-   the stages. Kerf/Ohm: add `KerfStage`/`OhmStage` with `share(powers)` and drive them from GhostPilot.drive
-   (gate on `settled_in(&"kerf")`); `owns_melee()` then needs your stage's flag (one line each).
+## Iteration 2 (00:39 - 01:39)
+- 00:40 read JOURNAL, git log, the forms lane's JOURNAL (no new REQUEST to ghost-powers; their NEXT wires
+  GhostForms into StagePilot), n5-cast tip. MERGE n6-ghost-forms 833babb8 (054fd5c0: morph v2, their merge of
+  n5-cast) and n5-cast b38ab980 (db4043c8: plan-view peds, look goldens re-blessed by n5-cast); only JOURNAL.md /
+  REPORT.md conflicted (kept ours); lint 13/13 on both.
+- Rules applied (registry `motion-quality-gating`, `shader-budget-authoring` from iteration 1): judge in motion
+  at 32 px/m with a 64 px/m slow close-up, every effect drawn on the actor layer with canvas draw calls only (no
+  new shader, no per-frame allocation beyond the draw lists), reduced motion = no flicker / afterimages.
 
-### Dent (item 2 of the order), started 01:03
-- 01:03 Dent part sheet job (`M:gen/r2/jobs.json` `dent_parts`, refs: the Dent concept + r1's style ref), image.lock
-  created noclobber by this lane and deleted after (one job, ~3 min; lock absent before and after). Back clean:
-  head with the quartered target disc, harnessed torso with shoulder discs, upper arm, forearm + open hand, thigh
-  with the knee disc, boot; pale grey-beige dummy plastic, gunmetal joints, teal only in the cracks.
-  `M:frames/dent-sheet-vs-target.png`. Cut by tools/art/ghost_parts.py into `features/souls/art/dent/`: helmet,
-  torso, r_foot rotated 90 deg (sheet front = down the page; the rig faces +x), l_ limbs mirrored from r_, shin =
-  a copy of the thigh (no shin cell). 12 provenance lines in `steam/ai-provenance/2026-11.jsonl`.
-- Registry rules applied: `generated-asset-world-scale` (the parts get sized in metres against Rivet's footprint
-  in the plan, never by sheet px: Dent's row says size_k 1.05, radius 0.45 m), `sprite-and-atlas-production`
-  (judge at 32 px/m on the rig before calling the art done).
-- Not done: DentPlan. The humanoid CutRig reads parts.json per art dir (size, scale, pivot_a/pivot_b per part,
-  Rivet's in `features/characters/art/rivet/parts.json`, measured by the d5 slicer) and PartLibrary resolves
-  art dirs under `features/characters/art/`. Next: measure Dent's parts.json (limb pivots at the joint discs:
-  upper arm shoulder disc left / elbow cap right; forearm elbow left / wrist right with the hand drawn on, so
-  hand parts = "" or a 1 px blank; thigh hip left / knee disc right), DentPlan = RivetPlan.build(base) with
-  art_dir pointing at the dent parts, no collar/hose/claws, size_k 1.05 x 0.97; GhostFormView swaps Rivet's
-  rig for a Dent CutRig (CharacterRigs can't take a second plan for one actor: a standalone CutRig on the view,
-  fed from Rivet's pose like TonnageRig) and the stagger gait.
-- 01:07 SCENARIOS on 2bdc3fbf: 47 ran, 0 failed, 0 SCRIPT ERROR (`E/scenarios-iter2.log`).
-- MILESTONE e6d4d6b8 + next commit: DentPlan (features/souls/dent_plan.gd) = RivetPlan FORM_BASE with art_dir `dent`
-  (features/characters/art/dent: PartLibrary's root; moved from souls/art/dent), size_k x form row 1.05, no collar
-  / hose / claws / end-on / toe-off, pelvis = a 2 px blank. Parts resized to Rivet part px (torso 346 px across the
-  shoulders vs Rivet 330, head 165, limbs 1.1-1.3x Rivet's thickness), parts.json pivots at the joint discs.
-  test_dent_plan 3/3 (every part loads + measured, no Rivet-only parts, size from the row). Provenance re-hashed
-  for the new paths. DECISION (small): Dent's rig parts live under characters/art/ like rivet/cop/ped, because
-  PartLibrary resolves art dirs there; TonnageRig's own parts stay under souls/art/tonnage (not a CutRig).
-- 01:12 `forms_lineup --dent`: Dent's standalone CutRig beside base Rivet, 0 SCRIPT ERROR.
-  `M:frames/dent-rig-first-32-64ppm.png`. Judged: the silhouette (round
-  target head, broad harnessed shoulders, open hands in the guard) reads and Dent stands about Rivet's height,
-  broader; BUT the shared part print greys every fill (the discs lose their yellow, the beige goes grey), the same
-  failure as Tonnage's print A/B. Fix next: the raw-art route for Dent (a plan flag the rig's part materials
-  honour, or Dent's own fills lifted to survive the print), judged at 32 px/m against the sheet.
-- 01:20 Dent print A/B (`forms_lineup --dent [--raw]`, dev flag strips PartMaterials from Dent's sprites): raw keeps
-  the yellow discs and the beige at 32 and 64 px/m, the print greys him to noise at 32
-  (`M:frames/dent-print-ab-32-64ppm.png`). DECISION raw (decisions.md); the live route needs a BodyPlan flag that
-  RigBuild._part honours (material null), next session. Raw at 32 px/m is busy (fine cracks alias): judge in
-  motion; a softer downscale (mip or a 0.5x pre-shrunk set) may be needed.
-- MILESTONE 01:18 Dent LIVE: BodyPlan.raw_parts (RigBuild._part sets no material; CutRig.set_tint restores raw when
-  the hit tint ends), DentPlan.RAW_PARTS true; GhostFormView carries a standalone Dent CutRig (DentPlan at the form
-  row's size_k) fed Rivet's pos/facing/travel on whole sim ticks, shown from the in-between pose on (the same rule as
-  Tonnage), Rivet's rig + held views hidden. `--bot=ghosts --ghost=dent` windowed 64 px/m 480 frames: seizes 1,
-  blasts 1, 5/5 down, 0 SCRIPT ERROR (`E/ghosts-dent-live-64.json`). M: `dent-live-arena-64ppm.mp4`,
-  `frames/dent-live-arena-64ppm-keys.png`. Judged: the target head and yellow discs read at 64 px/m, the tether
-  comes off Dent's body. Weak: no stagger gait yet (Rivet's walk cycle on Dent's parts), shins show the thigh's knee
-  disc at the ankle, no 32 px/m clip or city clip yet, no Dent transformation close-up. Unit: test_dent 3/3,
-  test_ghost* 15/15, test_rig* 36/36 (the raw flag touches RigBuild/CutRig).
+### Kerf (item 3)
+- MILESTONE 56705eec KerfStage (features/souls): Q takes the soul when `StagePilot.kerf` is set (the reel
+  sets it for `--ghost=kerf`; Tonnage keeps Q otherwise), walk x1.5, melee = blink: target = live hostile
+  nearest the aim inside 35 deg / 9 m with no arena wall between, Rivet lands 0.9 m (+ radius) past it,
+  weapon kerf_slice (99 human, 4 robot); no target = 4 m dash; 3 charges, 0.3 s apart, one back per 1 s.
+  Kill row kerf_split (the plasma sword's split, slower halves) + new optional row field `edge: soul`
+  (brutality's SignatureKill/KillSplitFx/KillCutEdge: the cauterised band white with a teal bloom).
+  KerfView: teal path + 3 afterimage rings, the hanging white cut line in a teal glow (0.6 s), the charge pips.
+- FRICTION the first film booted the city: the arena is `res://dev/arena/arena.tscn -- ...`, not `--arena`
+  (the gunplay REPORT said so). Telemetry needs `--shot-tick` (written on that quit) and an absolute path.
+- First run 4/5: recharge 1.5 s left the robot with one cut when the 6 s ran out -> 1.0 s: 5/5 (4 split,
+  robot in 2 cuts), 8 blinks, first kill 0.5 s after Q (`evidence/ghosts-kerf-32.json`).
+- Judged (frames looked at): the path, afterimages, cut line and the teal-edged halves read at 32 and 64 px/m;
+  the rig draws Rivet one frame behind the overlay on the blink tick (feed order; next frame he is past the
+  target): left as is. Clips `kerf-arena-32ppm.mp4` (8 s), `kerf-64ppm-halfspeed.mp4`; `frames/kerf-vs-target.png`,
+  `frames/kerf-beat-32ppm.png`.
+- scenario_ghost_attacks + Kerf: replay identical, same seed same state, planted human_damage 0 (dead 5 -> 1)
+  caught. Unit test_kerf_attacks 3/3.
 
-NEXT (iteration 3), Dent to done, then Kerf:
-1. Merge n5-cast's tip and n6-ghost-powers' if they moved (JOURNAL/REPORT: keep ours). Tell ghost-powers (their
-   JOURNAL is not ours to edit; my REPLY above) that DentBeat and test_tonnage_attacks were re-timed here.
-2. Dent polish: the stagger gait (a lurch: RigGait phase jitter + a hip sway on the plan, e.g. BodyPlan.hip_follow
-   up and a stride limp on one side), a real shin (cut the thigh's knee disc off the shin copy, or a shin cell in a
-   second sheet), the raw parts at 32 px/m are busy: try a pre-shrunk 0.5x set or mipmaps on the dent textures.
-3. Dent proof: 32 px/m arena clip (15-20 s), `--arena=city` clip, a 64 px/m slow close-up of the transformation,
-   still beside the target (frames/dent-sheet-vs-target.png is the sheet, not the rig: redo with the live frame).
-   The Tonnage <-> Dent switch (G in a form) through the teal flash, filmed (a GhostReel variant or forms_lineup
-   --morph with a switch: hold, G, hold, Q).
-4. Kerf (item 3): part sheet (laser-cutter head from above: lens, twin emitter arms, jointed trailing limbs, teal
-   beam slots), its own rig (hover: TonnageRig-like Node2D or a CutRig plan with legs folded), the anchors
-   emitter_l/r + lens already in ghost_forms.json. Then Ohm.
-5. Gates at the end: unit full, scenarios, evidence runner, director reel (this session's started 01:20).
-- 01:22 COMBAT CHECK director reel headless `--quit-after 24000` on c543ccd9 (GhostPilot + GhostFormView in the live
-  path): 16/16 chapters down (claw_combo 2/2 .. mini_nuke 4/4), 0 SCRIPT ERROR, exit 0 (`E/director-reel-iter2.log`).
-- 01:23 Dent shins: the thigh art cropped before its knee disc, 0.76 thinner (Rivet's shin is slimmer than his
-  thigh), parts.json + provenance re-measured; test_dent 3/3. Dent 32 px/m live (900 frames, 5/5, 0 SCRIPT ERROR,
-  `E/ghosts-dent-live-32.json`): `M:dent-live-arena-32ppm.mp4`, `M:frames/dent-live-arena-32ppm-keys.png`. Judged:
-  the disc reads, the raw cracks speckle at 32 px/m (NEXT 2: a pre-shrunk set or mipmaps).
-Session state 01:24: head = this commit, tree clean, no Godot process of mine running, image.lock taken once
-  (01:03, dent_parts) and deleted by this lane. Gates this session: lint 13/13 every commit, unit 955/4 on 94b7c56d
-  (the 4 = test_tonnage_attacks' slam timing, fixed; that test 2/2 + test_ghost* 15/15 + test_dent 3/3 + test_rig*
-  36/36 after), scenarios 47/0 on 2bdc3fbf, director reel 16/16 on c543ccd9. Not run: the full unit suite after
-  c543ccd9 (since run: 962 passed, 0 failed on d57927da, `E/unit-iter2-final.log`), parity, the evidence runner (NEXT 5).
+### Ohm (item 4)
+- MILESTONE ef3a186a OhmStage: Q (with `StagePilot.ohm`), melee = forked bolt every 0.5 s from the fingertips
+  (0.45 m ahead): 30 deg / 11 m, forks 2 within 3 m (MeleeShock.chain_path reused), PlayerShock.stun_on 1.2 s,
+  0.5 to humans (electro X-ray kill: `ohm_bolt` added to electro_shock's also_weapons), 2 x machine_k 3 to robots,
+  no body in the cone = the car nearest the aim burns 20. Mass = upgrade_tier 1 (6 bodies within 8 m), data only.
+  OhmView: jagged teal bolt, white core, ink rim, white flash at each body, fingertip sparks while on.
+- FINDING the robot stand-in (quest boss brain, Kind.BOSS) is only exposed while its tazer is spent; Ohm's stun
+  freezes the brain, so 0 kills on the first run. OhmBeat.hold() (sim-side, dev beat only) keeps it exposed;
+  logged as a FINDING in decisions. It is drawn as a cop and dies with a red splat (no robot rig in the arena).
+- Measured: 5/5, robot to the first bolt, cops in 2 bolts, riot in 5, cruiser wrecked in 5 more; Rivet 100 hp
+  (stunned cops do not fire). Clips `ohm-arena-32ppm.mp4` (9 s), `ohm-64ppm-halfspeed.mp4`, `frames/ohm-vs-target.png`.
+- scenario + Ohm: replay identical, same seed, planted machine_k 0 (dead 5 -> 0) caught; _judge became a NEEDS
+  table (gdlint max-returns). Unit test_ohm_attacks 2/2. Unit gate 960/0 on ef3a186a (`evidence/unit-it2.log`).
+- DECISIONs in docs/decisions.md (Kerf, Ohm, the robot FINDING); role/TTK table holds all four ghosts.
 
-## Iteration 3 (01:26-02:26, BUILD)
-- 01:28 MERGE n6-ghost-powers faffe9a5 (53f4b753: Kerf, Ohm, KerfView/OhmView, beats) and n5-cast cc744d85
-  (719347a6: r5 plan-view ped sheet). Conflict stage_pilot.gd: ours (GhostPilot) kept; `pilot.kerf/ohm` now point
-  at GhostPilot's stages. KerfStage/OhmStage got `share(powers)` (no own activation/tick; Kerf's speed_k skipped
-  when shared: the form's top_mps 12 moves Kerf). GhostPilot drives both, gated on `settled_in`; owns_melee covers
-  Dent/Kerf/Ohm. KerfBeat/OhmBeat select by G (after the reel's 40 look ticks) then Q and wait enter_s
-  (Kerf G 40/42, Q 44, first blink 78; Ohm G 40/42/44, Q 46, first bolt 92); scenario TICKS kerf 540, ohm 620;
-  test_kerf/ohm_attacks use `_take(id)` (G until selected, Q, wait enter_ticks). Unit test_kerf 3/3, test_ohm 2/2,
-  test_ghost 15/15, test_hauler 18/18, test_dent 3/3, test_tonnage 2/2; scenario_ghost_attacks 1/0 (all four beats,
-  replay and planted faults). Known gap: Kerf/Ohm `activations` telemetry stays 0 when shared (counted by
-  GhostPilot.transforms instead).
+### REQUEST 3 -> n6-ghost-forms (Kerf and Ohm attach points, 01:12)
+Kerf and Ohm attacks are live on StagePilot (`pilot.kerf: KerfStage`, `pilot.ohm: OhmStage`, both null by
+default; when one is set it takes Q in place of the Hauler and owns melee while its soul is on). When your
+GhostForms drives StagePilot:
+1. Set `pilot.kerf` / `pilot.ohm` (or call their `drive(...)` yourself) from the selected form; each keeps its
+   own SoulPowers row (`kerf`, `ohm`) until GhostForms owns the one-power rule, same as REQUEST 2.
+2. Anchors: Ohm's bolt leaves `OhmStage.HANDS_M` 0.45 m ahead (please map to your `electrodes` anchor and I will
+   read it from ghost_forms.json); Kerf's blink has no emitter (the path starts at Rivet's centre); the hanging
+   cut line sits on the target.
+3. Kerf moves Rivet by setting `rivet.pos` on the blink tick (move_by 0 that tick): the form rig should snap,
+   not tween, so the blink reads.
+- 01:12 COMBAT CHECK director reel headless (`--quit-after 24000`) on the Kerf/Ohm head (after the brutality
+  split-edge change): 16 chapters started, 16 down (claw_combo 2/2 ... katana, chainsaw, plasma_sword_deflect,
+  riot_cop, mini_nuke 4/4), 0 SCRIPT ERROR (`evidence/director-reel-it2.log`). Combat holds.
+- 01:14 CITY BLOCK (`--arena=city --bot=ghosts`): Kerf 4/5 of the beat (the chain also cut the block's own
+  cops, 6 slices; `E/ghosts-kerf-city-32.json`), Ohm 5/5 + 4 car bolts (`E/ghosts-ohm-city-32.json`), 0 SCRIPT
+  ERROR each. Clips `kerf-city-32ppm.mp4`, `ohm-city-32ppm.mp4`, still `frames/kerf-ohm-city-32ppm.png`. Judged:
+  both read on the asphalt; Ohm's bolt is thin at 32 px/m in the city -> heavier strokes (10/6/2.5 px, was
+  7/4/1.5), A/B pending the suite.
+- 01:15 REEL `ghost-attacks-reel-32ppm.mp4` (40 s: the four arena beats, labelled). frames.json 15 entries, all
+  files present; scratch emptied.
+- 01:17 GATES on the Kerf/Ohm head: scenarios 47 ran / 0 failed (`E/scenarios-it2.log`), unit 960/0, lint 13/13.
+- 01:18 MILESTONE Ohm's bolt strokes 10/6/2.5 px (was 7/4/1.5): A/B `M/frames/ohm-bolt-ab-city-32ppm.png` (city,
+  tick 173, 32 px/m): holds on the asphalt. frames.json: dent-beat-32ppm swapped out for it (15 cap).
+- 01:20 REDUCED: `--gore=reduced --reduced-motion` must go AFTER `--` (ArenaArgs; the first try before `--`
+  was silently full gore: split 4). After `--`: 0 signature kills, the four fall whole (standard death, red
+  pool), no afterimages (`E/ghosts-kerf-reduced-32.json`). FINDING: a cauterising beam leaving a red pool under
+  reduced gore is odd; the death pipeline is shared (not changed).
 
-### REPLY to n6-ghost-powers REQUEST 3 (01:40): done in 53f4b753
-1. GhostPilot owns `kerf`/`ohm` (shared SoulPowers); `pilot.kerf/ohm` are those stages, never null on a bound
-   pilot. Your beats and tests now select the form by G and press Q (re-timed here, please keep on merge).
-2. Ohm's bolt anchor: `electrode_l/r` in ghost_forms.json sit at 0.38 m forward; HANDS_M 0.45 is close: read the
-   anchor when you like (I did not change OhmStage's emit point).
-3. Kerf's blink snaps: the form rig is fed rivet.pos each whole sim tick (no tween), so the blink reads as a snap.
-- MILESTONE fb3e6a98 `--bot=forms [--form=<id>|all]` (dev/ghost-forms/forms_tour_bot.gd, one branch in arena_game):
-  Rivet walks a square, G picks the form, Q transforms while walking, the square in the form, Q back; `all` =
-  Tonnage then G through Dent, Kerf, Ohm. The proof bot for every form's clip (the attack beats stand still).
-- MILESTONE 669f3352 + fix: Dent polish. DentLurch (roll 0.12 m + yaw 15 deg per 1.5 m stride, the limp as
-  sin(phase/2) warp: halves 42/58, idle sway 2.5 deg), Dent's raw parts mipmapped (the 32 px/m crack speckle),
-  GhostAura (a breathing teal pool, 2.4x the footprint, under the light forms: the target's possessed read).
-  First film caught a stray foot ~2 m behind Dent for 30 ticks after the morph: the rig was reset before its root
-  moved (planted foot at the old spot), fixed by placing first. City film caught the glow staying after the exit
-  (root not hidden): fixed. `--no-lurch` is the A/B before (read from the user args: LaunchArgs drops unknown
-  flags, the first "before" was silently the after). DECISION in decisions.md (rejected: a teal modulate, a
-  separate stagger cycle). test_dent_lurch 3/3.
-- 01:55 PROOF Dent (all windowed, 0 SCRIPT ERROR each): `M:dent-gait-ab-32ppm.mp4` (before | after, same ticks),
-  `M:frames/dent-gait-ab-32ppm-x2.png`, `M:dent-tour-arena-32ppm.mp4` (16 s), `M:dent-tour-city-32ppm.mp4`
-  (17 s, `--arena=city`), `M:dent-morph-64ppm-slow3x.mp4`, `M:frames/dent-morph-64ppm-keys.png`,
-  `M:frames/dent-live-vs-target-64ppm.png`, `M:frames/dent-tour-city-32ppm-keys.png`. Judged: the stagger
-  reads at 32 px/m as a lurching dummy (yaw clear, the roll subtle), the cracks no longer speckle, the teal pool
-  says "possessed" on asphalt and on the pale kerb; the transformation reads in two stages at 64. Weak: the target
-  is a fully teal ghost, ours is a beige dummy on a teal pool (deliberate: the yellow discs are the read; Call for
-  the owner candidate). frames.json rebuilt (15, Dent first), superseded masters files and scratch deleted.
+NEXT (iteration 3, ghost-powers):
+1. Merge n6-ghost-forms and n5-cast tips if they moved (keep ours on JOURNAL/REPORT). When GhostForms drives
+   StagePilot (REQUEST 2/3), switch the reel beats to select the form instead of setting pilot.kerf/ohm, re-run
+   scenario_ghost_attacks and re-film each ghost on its real body (the clips today show base Rivet).
+2. Tonnage and Dent in the city block (`--arena=city --bot=ghosts --ghost=tonnage|dent`), clips + still.
+3. Kerf polish: the afterimages as a teal silhouette of the body, not rings (once the Kerf rig exists); the cut
+   line along the blink (the target sheet's long horizontal beam) as an option; a 64 px/m keyframe strip.
+4. Ohm polish: the electro kill's cream arcs in teal for ohm_bolt (brutality row field, like `edge`); Ohm's
+   mass tier demo under `--tune` (upgrade_tier 1) in a short clip (data hook proven by unit only today).
+5. Tonnage polish (iteration-1 list): the flattened body at 32 px/m vs the standard pile; armour sparks off the
+   plates; Dent's car-follow camera for the 64 px/m close-up.
+6. Call for the owner stills: Tonnage crush vs pile side-by-side.
+Session state 01:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty,
+image.lock never taken, bench never run.
+- 01:25 CITY Tonnage (`--arena=city --bot=ghosts --ghost=tonnage`, 960 ticks): 10/10 down, 2 slams, crush 2 /
+  blowback 5, Rivet 100 hp, 0 SCRIPT ERROR (`E/ghosts-tonnage-city-32.json`, clip `M/tonnage-city-32ppm.mp4`):
+  telegraph, slam, crack and the flattened cops read on the asphalt. BUT 0 cars crushed: the beat's cruiser never
+  appears in the city block. Dent in the city: 0 seizes (no car beside Rivet; `E/ghosts-dent-city-32.json`).
+  Lead: `VehicleService.spawn_parked` always returns a car, so the city ArenaStage probably has `vehicles == null`
+  and the beats skip the spawn. NEXT item 2 becomes: give the city stage's beats a car (the city's own parked or
+  traffic car via soul_hijack_traffic for Dent), then re-film Dent and Tonnage there.
+Session state 01:26: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+- 01:28 (CORRECTED 01:26 clock) the city lead is NOT confirmed: `ArenaSession.open` uses the same
+  `ArenaStations.shipped()` on the city site and attaches ArenaCars after `_add_city()`, so `stage.vehicles`
+  should exist there. Why the beats' cars neither show nor get seized in `--arena=city` is open. Iteration 3:
+  log `stage.vehicles`, `cars().size()` and the car positions at the beat's first tick in the city run, check
+  whether the city view draws ArenaCars' cars and whether `_add_city` swaps the stage's walls/cells so the car
+  sits inside a solid; then fix and re-film Dent and Tonnage there (the arena path must not move).
+- 01:28 PROBE (a temporary log line in GhostReel._begin, reverted): `--arena=city --bot=ghosts --ghost=dent`
+  headless: "powers pad: 2 cars parked", "vehicles true, 2 cars" at the beat's first tick (+ the beat's cruiser).
+  So the cars ARE in the city sim. Open for iteration 3: (a) the city view does not draw ArenaCars' cars
+  (CityView draws the city sim's traffic only?), (b) why Dent's G seize finds none there (log pick_on_line's
+  distances and `powers.try_activate` result in the city run), (c) Tonnage's car_crush likewise.
+Session state 01:29: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
 
-### Kerf (item 3), started 01:57
-- 01:57 Kerf part sheet (`M:gen/r3/jobs.json` `kerf_parts`, refs: the Kerf concept + the style ref), image.lock
-  created noclobber by this lane (absent before) and deleted after; one job, 65 s. Clean first try: arrow hull
-  (lens, nozzle with a teal tip, hazard cross-beam), arm strut, emitter forearm (teal tip), leg upper, blade leg,
-  cable loops; gunmetal and pale steel, ochre rust, teal seams. Cut by ghost_parts.py into
-  `features/souls/art/kerf/` (hull and cables rotated to face +x), mipmaps on, 6 provenance lines.
-- Registry rules applied: `generated-asset-world-scale` (sized in metres in the rig: hull 1.35 m, never sheet px),
-  `sprite-and-atlas-production` (judged on the live rig at 32 and 64 px/m before calling it fit).
-- MILESTONE d3aaa8a2 KerfRig (hover: hull + cables, emitter arms in guard, blade legs trailing and sweeping with
-  speed, bob, unfold for the morph, teal glow) standing in for Rivet in GhostFormView. FRICTION: filmed before
-  `--check-only` once (Array[Array] element passed as Sprite2D = warning-as-error, 609 SCRIPT ERRORs in that
-  run); limbs are now one flat Array[Sprite2D]. First size (hull 1.0 m) read as an insect at 64 px/m: x1.35.
-- 02:05 PROOF Kerf arena (0 SCRIPT ERROR): `M:kerf-tour-arena-32ppm.mp4`, `M:kerf-morph-64ppm-slow3x.mp4`,
-  `M:frames/kerf-live-vs-target-64ppm.png`, `M:frames/kerf-tour-32ppm-keys-x2.png`. Judged at 64: the arrow hull,
-  lens, emitter arms and trailing claws match the target's top view. At 32 px/m the hull reads but the thin dark
-  limbs nearly vanish on asphalt (weakest item). Not yet: city clip, a Kerf A/B (no before: new body), the blink
-  filmed on the body (ghost-powers' beat, `--bot=ghosts --ghost=kerf`).
-- 02:07 GATES on d3aaa8a2: lint 13/13; unit test_ghost 15, test_kerf 3, test_ohm 2, test_dent 6, test_hauler 18,
-  test_tonnage 2, test_rig 36 (all pass); scenario_ghost_attacks 1/0 (`evidence/scenario-ghost-iter3.log`).
-  Not run this session: the full unit suite, all scenarios, the evidence runner, the director reel (last 16/16 on
-  c543ccd9; since then GhostPilot drives Kerf/Ohm too, the reel path does not select a form).
-- FRICTION frames.json at the 15 cap: adding Kerf dropped `tonnage-live-arena-64ppm-slow3x.mp4`,
-  `tonnage-live-city-32ppm.mp4`, the Tonnage 64 keys and the HUD still, and the clean-up deleted them. Re-film them
-  with `--bot=forms --form=tonnage` (64 px/m slow, `--arena=city`) next session; better to drop the weaker Dent
-  stills then.
+## Iteration 3 (01:28 - 02:28)
+- 01:30 read JOURNAL, git log, the forms lane's JOURNAL (REPLY to REQUEST 2 done there: GhostPilot on
+  StagePilot; their NEXT is Dent polish then the Kerf body; no new REQUEST to ghost-powers).
+- MERGE n6-ghost-forms 3d0a8f4d (7b053cc7). StagePilot conflicted (their GhostPilot vs our kerf/ohm slots):
+  resolved by wiring KerfStage + OhmStage INTO GhostPilot (their REPLY 3 invited it): `share(powers)` on both
+  (no own activate/tick; Kerf leaves the walk to the form row's top_mps), attacks only while settled in their
+  form, owns_melee covers them; StagePilot.kerf/ohm are aliases of ghosts.kerf/ohm for the views. Kerf/Ohm reel
+  beats now select the form (G at 40, 42[, 44]; LOOK_TICKS 40 swallows earlier presses: the first try at 30/32
+  never picked and Q took Tonnage) and Q, attacks after the settled form. Unit test_kerf 3/3, test_ohm 2/2,
+  test_ghost* 15/15, test_tonnage 2/2, test_dent 3/3, test_hauler* 18/18; scenario_ghost_attacks 1/0
+  (`evidence/scenario-ghost-it3.log`). MERGE n5-cast cc744d85 (5ee2cfe8). Lint 13/13 on both.
+- 01:42 CITY CAR ROOT CAUSE (the iteration-2 open item): on the city block the city's RivetBody holds Rivet
+  (CollectCallStage.step sets `rivet.pos = follow.target` when the body is on), so GhostReel._begin's placement
+  was undone on tick 1 and Rivet stood 34 m from the beat's cars (probe: rivet (524,524), cruiser (493,523.5)).
+  FIX d88eac6c: _begin also sets `stage.follow.focus/target` (dev reel only; the arena has no follow). City:
+  Dent 1 seize, Tonnage 10/10 + 2 cars crushed, Kerf 5/5 (was 4/5), Ohm 5/5.
+- 01:47 Dent city film: the seized car drove onto the sidewalk and blew up past B, off-screen, on the overload
+  timer. 87678661: DentStage._wall also pushes the car out of the city's cells (buildings, props, parked cars =
+  an impact), and the beat presses melee (blow on command) once the car is within 1.6 m of B's centre. City 5/5
+  (`E/ghosts-dent-city-32.json`), scenario_ghost_attacks 1/0 (arena beat unchanged in outcome). Judged at 32
+  px/m: the teal tether, the hijack plate, the strike through A and the amber blast in B all read on the
+  asphalt. M: `dent-city-32ppm.mp4` (10 s), `frames/dent-city-keys-32ppm.png`.
+- 01:52 Tonnage city re-filmed (47148cc3): 10/10, 2 slams, 2 cars crushed, Rivet 100 hp, 0 SCRIPT ERROR; the
+  forms lane's TonnageRig stands in. M: `tonnage-city-32ppm.mp4` (15 s), `frames/tonnage-city-crush-keys-32ppm.png`.
+  frames.json 15 (dropped tonnage-beat / kerf-beat stills for the two city strips).
+- Rules applied this session (registry `motion-quality-gating`: judge in motion at 32 px/m, 64 px/m close-ups,
+  a before/after at the same tick and zoom for every change; `shader-budget-authoring`: canvas draw calls on the
+  existing actor/kill layers, no new shader).
+- 01:56 MILESTONE 0e794d2c Ohm's human kill = row `ohm_shock` (the electro X-ray shock + `edge: soul`):
+  KillShockFx draws the arcs teal and the zap star teal-white (the cream bones still pop); the electro gun keeps
+  cream (`ohm_bolt` left electro_shock's also_weapons). A/B `M/frames/ohm-kill-teal-ab-64ppm.png` (64 px/m, ticks
+  152/156/168; before = the two files checked out from HEAD~1 for one run, restored after). Unit test_ohm 3/3.
+- 01:59 MILESTONE 7fd55cb6 `--tier=1` on the Ohm beat: the mass arc in game, 5/5, the knot down at tick 119 vs
+  149 (`E/ghosts-ohm-mass-32.json`, `M/frames/ohm-mass-tier1-32ppm.png`, `M/ohm-mass-tier1-32ppm.mp4`). Judged:
+  one bolt walking the whole group reads as "many at once" at 32 px/m; a radial fan from the first body would
+  read more like a mass spell (polish).
+- 02:01 decisions.md: Kerf/Ohm inside GhostPilot, ohm_shock, the city placement FIX; ghost_attacks.json docs
+  follow GhostPilot; role table iteration-3 lines (docs/ghosts/ghost-attacks.md).
+- 02:03 COMBAT CHECK director reel headless (`--quit-after 24000`) on the iteration-3 head: 16/16 chapters down
+  (claw_combo 2/2 .. electro_gun 1/1 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-it3.log`).
+- 02:05 TRIED + REVERTED Kerf afterimages as a top-down body (teal shoulder oval + head) in place of the rings:
+  filmed at 64 px/m twice (faint, then bolder); both read as small teal "eyes" on the path, weaker than the
+  rings. Not committed. The real fix is a ghost copy of the Kerf form rig once ghost-forms builds it.
+- 02:08 GATES on the iteration-3 head (4db4eed5 code = 7fd55cb6): unit 968/0 (`E/unit-it3.log`), scenarios 47 ran
+  / 0 failed, 0 SCRIPT ERROR (`E/scenarios-it3.log`), lint 13/13 every commit.
+- 02:10 MILESTONE 9b0ad775 Ohm's mass arc fans out from the first body (OhmStage.bolt_from: each path point's
+  source; the base bolt still chains, so tier 0 is unchanged): before|after `M/frames/ohm-mass-chain-vs-fan-32ppm.png`
+  (ticks 91/93). Judged at 32 px/m: the burst from the robot to each cop reads as a mass spell, the chain read as
+  one long bolt. Unit test_ohm 4/4 (new: the fan reaches bodies past the fork radius); scenario_ghost_attacks 1/0
+  on this head (`E/scenario-ghost-it3-final.log`).
 
-NEXT (iteration 4), Kerf to done, then Ohm:
-1. Merge n5-cast and n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; keep my beat re-timings and
-   KerfStage/OhmStage.share()). Tell ghost-powers their reel can now film Kerf/Ohm on the real bodies.
-2. Kerf at 32 px/m: thicker limbs (ARM/LEG_THICK_M 0.15 -> ~0.22) and a pale rim or lighter steel so the limbs hold
-   on asphalt; the emitter tips brighter; A/B at 32. Then the city clip (`--arena=city --bot=forms --form=kerf`) and
-   the blink on the body (`--bot=ghosts --ghost=kerf`, 64 px/m slow); size from the form row (size_k).
-3. GhostFormView is 208 lines: split the stand-in bodies into one helper (GhostBodies: Tonnage, Dent, Kerf, Ohm
-   with show/step), before adding Ohm.
-4. Ohm (item 4): part sheet (elder spot-welder from above: hunched shell, welding-gun cane arm, two copper
-   electrode fingers, cable beard, goggles), smaller than Rivet (size_k 0.8), cane-step gait, electrode anchors.
-5. Re-film the deleted Tonnage proofs (64 px/m slow, city) with `--bot=forms --form=tonnage`; the all-forms cycle
-   clip (`--form=all`).
-6. Gates: full unit, all scenarios, the evidence runner, director reel on the head.
-Session state 02:08: head = this commit, tree clean, no Godot process of mine running, image.lock taken once
-  (01:57, kerf_parts) and deleted; masters scratch empty except film.sh.
-- 02:10 NEXT 2 started: Kerf's limbs 0.15 -> 0.22 m thick. A/B at 32 px/m, same ticks
-  (`M:frames/kerf-limbs-ab-32ppm-x2.png`, top = before): the arms and blade legs now hold on asphalt and the
-  kerb; `M:kerf-tour-arena-32ppm.mp4` re-filmed (0 SCRIPT ERROR). Still open from NEXT 2: lighter steel or a pale
-  rim, brighter emitter tips, the city clip, the blink on the body.
-Session state 02:11: head = this commit, tree clean, no Godot process of mine running (the two running at 02:08,
-  PIDs 25480/63164, are n5-look's scenario runs: left alone), image.lock deleted, scratch empty except film.sh.
+NEXT (iteration 4, ghost-powers):
+1. Merge n6-ghost-forms and n5-cast tips if they moved (keep ours on JOURNAL/REPORT/evidence name clashes). NOTE
+   for ghost-forms (in REQUEST form below): GhostPilot now carries kerf/ohm (7b053cc7); their edits to
+   ghost_pilot.gd will conflict lightly.
+2. When the Kerf and Ohm rigs land (forms lane): re-film both on their bodies (arena 32, city 32, 64 slow), map
+   OhmStage.HANDS_M to the `electrodes` anchor from ghost_forms.json, and replace Kerf's afterimage rings with a
+   faded copy of the Kerf rig (the shape try at 02:05 failed).
+3. Re-cut the four-ghost reel (`M/ghost-attacks-reel-32ppm.mp4`) from the iteration-3 clips (Tonnage/Dent on
+   their bodies, Dent and Tonnage city beats, Ohm's teal kill, the mass fan).
+4. Call for the owner still: Tonnage crush vs the standard pile (`--gore=reduced` at the same tick) side by side.
+5. Dent: a car-follow camera for the 64 px/m close-up (the strikes leave the frame); Dent riding the car (optional).
+6. The evidence runner (`node tools/evidence/run.mjs`) has not been run by this lane tonight.
+Session state 02:13: head = this commit, tree clean, no Godot process of mine running, masters scratch empty,
+image.lock never taken, bench never run.
 
-## Iteration 4 (02:08-03:08)
-- 02:08 read JOURNAL, git log, ghost-powers/n5-cast JOURNALs (no new REQUEST to ghost-forms). The 02:10/02:11 lines
-  above were written by iteration 3 with wrong clock times (they happened before 02:08).
-- MERGE f95f6044 n6-ghost-powers 4db4eed5 (ohm_shock, mass tier, city placement). Both lanes had wired Kerf/Ohm into
-  GhostPilot; conflicts in kerf/ohm_stage, ghost_pilot, the beats, test_kerf/ohm_attacks and the scenario resolved to
-  THEIR side (they own the attacks; their `_take()` helpers and timings FIRST_BLINK 76 / scenario 520/600); our
-  duplicate `_take(id)` helpers and SELECT_AT branches removed. JOURNAL/REPORT keep ours. Unit test_kerf_attacks 3,
-  test_ohm_attacks 3, test_ghost 15, test_dent 6, test_hauler 18, test_tonnage 2, test_kerf 3; scenario_ghost_attacks
-  1/0 (`evidence/scenario-ghost-iter4.log`).
-- MERGE 6ef0bc5d n5-cast 15feca4a (r7 hoodie, hoodie sleeves); JOURNAL/REPORT keep ours.
-- NEXT 3 done: Dent's body split out of GhostFormView (DentBody: rig + lurch + aura); the view is 169 lines and steps
-  Kerf and Ohm through one `_step_light`.
+### REQUEST 4 -> n6-ghost-forms (02:13)
+GhostPilot (your file) now holds `kerf: KerfStage` and `ohm: OhmStage` (merge 7b053cc7 on n6-ghost-powers): both
+`share(powers)`, driven only while `settled_in(&"kerf"|&"ohm")`, owns_melee covers them, write_state appends theirs.
+Please merge n6-ghost-powers before editing ghost_pilot.gd again. Kerf moves Rivet by `rivet.pos` on the blink tick
+(snap the rig); Ohm's bolt leaves 0.45 m ahead (`OhmStage.HANDS_M`) until I read your `electrodes` anchor.
+- 02:17 CALL still `M/frames/call-tonnage-crush-vs-pile-32ppm.png`: the Tonnage beat shot at tick 200, full gore
+  (the crush: flattened ink discs) | `--gore=reduced` (the standard pile with its red pool), 32 px/m, 0 SCRIPT ERROR
+  both; REPORT Calls updated (NEXT item 4 done). frames.json 15 (kerf-ohm-city still out; the city clips stay).
+Session state 02:18: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+- 02:21 REEL re-cut (NEXT 3, partly): `M/ghost-attacks-reel-it3-32ppm.mp4` (37 s, labelled): Tonnage + Dent city
+  (iteration 3, their bodies), Kerf + Ohm arena (iteration 2 clips: base Rivet, Ohm's kill still cream there),
+  Ohm's mass fan. frames.json points at it. Still to do: re-film Kerf/Ohm arena on the iteration-3 head.
+Session state 02:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
 
-### Ohm (item 4), started 02:12
-- 02:12 Ohm part sheet (`M:gen/r4/jobs.json` `ohm_parts`, refs: the Ohm concept + the style ref), image.lock absent,
-  created noclobber by this lane and deleted after; one job, 63 s, clean first try: domed riveted shell with goggles
-  and teal seams, cable-wrapped upper arm, forearm with two copper electrode fingers, boxy foot, cable beard, copper
-  hose loop. Cut by ghost_parts.py into `features/souls/art/ohm/` (shell, beard, hose rotated to +x), mipmaps on,
-  6 provenance lines.
-- Registry rules applied: `generated-asset-world-scale` (sized in metres in the rig: shell 0.8 m, arms 0.36 + 0.54 m),
-  `sprite-and-atlas-production` (judged on the live rig at 32 and 64 px/m before calling it fit),
-  `motion-quality-gating` (the gait judged in motion at 64 px/m, the cane cycle unit-tested for no jump).
-- FRICTION the first film had 1086 SCRIPT ERRORs (a discarded `_part()` return is a warning-as-error): same lesson as
-  Kerf. `--check-only -s` on a single file is useless here (no autoloads: "Log not found"); the reliable pre-check is
-  a 200-frame headless arena run (`--headless --quit-after 200 ... -- --bot=forms --form=ohm`).
-- First fit at 64 px/m: the arms nearly vanished (the uppers under the shell, 0.2 m thick). Arms 0.36 + 0.54 m,
-  0.24 m thick, shoulders 0.26 m out; the guard hand set to the bolt's sparks (0.5 m ahead). Then the beard moved to
-  0.42 m ahead (it hid under the shell). DECISION in decisions.md.
-- MILESTONE 415f00e0 OhmRig + DentBody split + test_ohm_rig 3/3; d? beard commit after.
-- 02:26 PROOF Ohm (0 SCRIPT ERROR each): `M:ohm-tour-arena-32ppm.mp4` (18 s), `M:ohm-tour-city-32ppm.mp4` (18 s,
-  `--arena=city`), `M:ohm-morph-64ppm-slow3x.mp4`, `M:frames/ohm-morph-64ppm-keys.png`,
-  `M:frames/ohm-live-vs-target-64ppm.png`; the all-forms cycle `M:forms-cycle-all-32ppm.mp4` (15 s, `--form=all`:
-  Tonnage, Dent, Kerf, Ohm, base) + `M:frames/forms-cycle-all-32ppm-keys.png`. Judged: at 64 px/m the dome, goggles,
-  hose, the trailing cane arm and the copper prongs read as the target's top view; the morph reads in two stages
-  (burst over Rivet, in-between, Ohm unfolding). At 32 px/m Ohm reads as a small rust shell carried by the teal pool
-  and the electrode sparks; the arms are thin (weakest point, like Kerf's before its 0.22 m limbs). Same call as Dent:
-  rust steel on a teal pool, not a fully teal ghost (Call for the owner).
-- frames.json rebuilt (15: cycle and Ohm first); the dropped files deleted (Dent arena/city clips and stills, Kerf
-  limbs A/B, Ohm beard A/B).
-- 02:32 GATES on 25b040bb: unit 974/0 (`E/unit-iter4.log`), scenarios 47/0 (`E/scenarios-iter4.log`), lint 13/13.
-- MILESTONE 70a6297a GhostRim: the characters' own cream sticker rim (RigBuild halo = HALO part material, a cream
-  silhouette) under Kerf's and Ohm's limbs (+50 % across) and hull/shell (+7 %), z -16 so the rims merge into one
-  outline. A/B at 32 px/m, same frames (`--no-rim` = before): `M:frames/kerf-rim-ab-32ppm-x2.png`,
-  `M:frames/ohm-rim-ab-32ppm-x2.png`, clips `M:kerf-rim-ab-32ppm.mp4`, `M:ohm-rim-ab-32ppm.mp4`. Judged: Kerf's claws
-  and emitter arms and Ohm's arms now hold on asphalt like the cops' limbs (closes iteration 3's NEXT 2 "pale rim").
-  DECISION in decisions.md (rejected: thicker limbs again, a lighter-steel repaint). FRICTION: a new class_name needs
-  `--import` before a film (the first rim film had "GhostRim not declared").
-- 02:40 COMBAT CHECK director reel on 70a6297a (`--quit-after 24000` headless): 16/16 chapters down, 0 SCRIPT ERROR
-  (`E/director-reel-iter4.log`).
-- 02:42 PROOF Tonnage re-filmed on the live path (NEXT 5 of iteration 3): `M:tonnage-morph-64ppm-slow3x.mp4`,
-  `M:tonnage-tour-city-32ppm.mp4` (0 SCRIPT ERROR each). FOUND in the city clip: a cop draws over the press. Cause:
-  GhostFormView sits at rigs.z + 1 while every rig stacks its parts' own z offsets (the held gun uses + 60 for this
-  reason), so a human's upper parts cover the ghost body. Fix queued: the view at rigs.z + 60.
-- frames.json: + the rim A/Bs and the two Tonnage clips; dropped and deleted kerf-tour-arena (pre-rim),
-  dent-morph-64 slow, ohm-morph keys, tonnage-live-arena (superseded by the cycle and city clips).
-- REPORT.md is now this lane's draft (the root REPORT.md on this branch had been n5-cast's, merged in).
-- 02:48 GATES evidence runner `--no-bench` on 19ae646c (`E/evidence-run-iter4.log`): lint PASS, scenarios 47 PASS,
-  parity PASS (1200 steps exact, planted mutation caught), selftest PASS (look goldens 11/11 and block 5/5 within
-  tolerance: no re-bless needed). unit-tests marked FAIL only because I appended to JOURNAL.md during the run ("tree
-  changed during run"); the suite itself was 974 passed / 0 failed. Lesson: touch nothing in the tree while the
-  runner runs (its first try also refused: the log file was inside the tree).
-- MILESTONE d4996f44 the ghost bodies draw above every rig part (GhostFormView at rigs z + 60, like the held gun;
-  still in the actors band, under vehicles at +100). Before/after at the same ticks in the city:
-  `M:frames/tonnage-city-z-ab-32ppm-x2.png` (cops over the press -> the press over the cops);
-  `M:tonnage-tour-city-32ppm.mp4` re-filmed after the fix. scenario --filter=ghost 1/0 after the change.
-- 02:53 Ohm's arena and city tours re-filmed on d4996f44 (rim + z fix, 0 SCRIPT ERROR each). Judged at 32 px/m in
-  the city: the cream-edged arms now show beside the shell on asphalt.
-- frames.json (15): cycle clip, Ohm target/morph/city/arena, the two rim A/Bs, Tonnage slow morph + city + the z A/B,
-  Kerf target/morph, Dent gait A/B and target, Tonnage before/after/target. Dropped and deleted the cycle keys still.
+## Iteration 4 (02:15 - 03:15)
+- 02:16 read JOURNAL, git log, the forms lane's JOURNAL (KerfRig landed d3aaa8a2, limbs 0.22 m 9f69e87c; their NEXT:
+  Kerf to done then Ohm; no new REQUEST to ghost-powers). MERGE n6-ghost-forms 6ef0bc5d (db6685cf; JOURNAL, REPORT
+  and our `evidence/ghosts-tonnage-city-32.json` keep ours) and n5-cast 093f4b73 (b06f0cad). Lint 13/13 both.
+- FRICTION the first film after the merge: 609-style parse errors (KerfRig/FormsTourBot unknown): the class cache
+  needs one `--import` after a merge that adds class_names. Killed my two stuck runs by PID.
+- 02:30 MILESTONE f566e06e Kerf's afterimages are faded copies of the Kerf body (KerfView pools 9 KerfRigs, limbs
+  swept, modulate (0.55, 1.75, 1.6) lifts the dark steel to teal, alpha 0.2..0.6 older->newer x the path fade,
+  show_behind_parent so the path and the cut sit on top). A/B `M/frames/kerf-echo-rings-vs-rig-64ppm.png` (ticks
+  80/100, 64 px/m; before = HEAD's kerf_view.gd checked out for one run, restored). Judged: the rings read as
+  "targets" on the path; the body copies read as Kerf itself smeared along the blink, at 64 and at 32 px/m
+  (`M/frames/kerf-echo-keys-32ppm.png`). Arena beat on the Kerf body: 4 splits (`E/ghosts-kerf-it4-32.json`),
+  0 SCRIPT ERROR; `M/kerf-arena-32ppm.mp4` re-filmed (11 s).
+- 02:24 Kerf re-filmed on the body: `M/kerf-64ppm-halfspeed.mp4` (64 px/m, half speed), `M/kerf-city-32ppm.mp4`
+  (city block, 4 splits, `E/ghosts-kerf-city-it4-32.json`), stills `M/frames/kerf-body-keys-64ppm-city-32ppm.png`
+  and `M/frames/kerf-vs-target.png` (target | two 64 px/m frames): the target's vignette (teal ghost copies along a
+  line behind the soldier) is now what the game draws.
+- 02:27 MILESTONE 3d369dcf Ohm's bolt leaves from the forms lane's `electrode_l/electrode_r` anchors (GhostPilot reads
+  ghost_forms.json into OhmStage.set_electrodes; OhmStage.tips): two jagged prongs, one per fingertip, meet in the
+  first body; the fingertip sparks sit on the anchors. A/B `M/frames/ohm-electrode-prongs-ab-64ppm.png` (ticks
+  92/122). Judged: the twin strands braid into the first body and read as an electrode discharge rather than a
+  ray gun line; at 32 px/m they merge into one heavier bolt (fine). Still base Rivet's body (no Ohm rig yet).
+  Unit test_ohm 5/5 (new: anchors from the row, the bolt starts between them), scenario_ghost_attacks 1/0
+  (`E/scenario-ghost-it4.log`). FRICTION gdformat broke the first commit (a long line): the hook caught it.
+- FRICTION a stuck Godot from my first (pre-import) shot loop kept running (the loop moved on to tick 100 after I
+  killed the tick-80 pair): two of my Godot processes overlapped from 02:21 to ~02:35. Found by command line and
+  killed by PID 64008. Lesson: wrap every shot in `timeout 60`, and list my processes after any kill.
+- 02:34 GATES evidence runner (`node tools/evidence/run.mjs --no-bench`, first run by this lane tonight) on 3d369dcf:
+  PASS lint 13/13, unit 973/0, scenarios 47, parity (1200 steps bit-exact, mutation caught at 629), selftest
+  (look goldens 11/11 within mean 4, worst 1.20; block 5/5) -> `E/evidence-run-it4.log`. Bench skipped (contended
+  machine; not taken). FRICTION its first try exited 2: my log file inside the tree made it dirty; logs go to
+  masters scratch while it runs.
+- 02:37 Ohm arena re-filmed on the iteration-4 head: 4 shock kills (teal X-ray), the cruiser wrecked, Rivet took 6
+  (`E/ghosts-ohm-it4-32.json`, `M/ohm-arena-32ppm.mp4`). REEL `M/ghost-attacks-reel-it4-32ppm.mp4` (31 s, labelled,
+  32 px/m: Tonnage + Dent city, Kerf arena + city on the body, Ohm arena, Ohm mass) replaces the it3 reel; judged
+  frame by frame (6 stills): each ghost readable with the sound off. frames.json 15.
+- 02:39 COMBAT CHECK director reel headless (`--quit-after 24000`) on a9c9d36f: 16/16 chapters down (claw_combo 2/2 ..
+  plasma_sword_deflect 1/1 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-it4.log`).
+- 02:40 MILESTONE b575c591 dev `--cam=car` (NEXT 5 of iteration 3): DentView.follow_cam (set by TonnageHook when the
+  flag is on) eases the view's camera to the midpoint of Rivet and the seized car and holds on the blast for 1 s;
+  view only (arena: CollectCallView.focus; city: city_lean_m). A/B `M/frames/dent-cam-car-ab-64ppm.png` (ticks
+  132/168/204/252): before, the car and the blast leave the frame; after, the strike into the cops, the amber
+  blast and the wreck sit in frame. `M/dent-64ppm-halfspeed.mp4` re-cut from the car-camera run.
+- 02:42 Ohm re-filmed on the head: city block 4 shock kills + the cruiser wrecked (`E/ghosts-ohm-city-it4-32.json`,
+  `M/ohm-city-32ppm.mp4`), 64 px/m half speed (`M/ohm-64ppm-halfspeed.mp4`), target composite
+  `M/frames/ohm-vs-target.png` (target | 64 arena | 32 city). Judged: the twin prongs follow the target's two copper
+  fingers; the body is still base Rivet. frames.json 15.
+- Rules applied this session: `motion-quality-gating` (every change judged in motion at 32 px/m with 64 px/m
+  close-ups, a before/after at the same tick and zoom: Kerf echoes, Ohm prongs, Dent camera);
+  `depth-ordered-layered-art` (the afterimages draw behind the path and cut line via show_behind_parent, on the
+  actor layer above the floor); `shader-budget-authoring` (no new shader: modulate on pooled sprites, canvas draws).
+- Not done this session: the robot victim (no robot body exists: `enemy_rig_feed.gd` draws robots on the cop rig
+  until a robot body kind lands), Kerf's reduced-gore red pool, the bench (contended machine).
 
-NEXT (iteration 5):
-1. Merge n5-cast and n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; on the attack files theirs wins).
-   Tell ghost-powers (REQUEST/notice in this JOURNAL is enough): their reel can film Kerf and Ohm on the real bodies
-   now; Ohm's guard hand sits at OhmStage.HANDS_M (0.5, -0.12 in OhmRig.GUARD_HAND).
-2. Re-run the evidence runner with NOTHING touched in the tree while it runs (iteration 4's unit FAIL was only the
-   "tree changed" flag from my JOURNAL edit; 974/0). Log it outside the tree, copy it in after.
-3. Quality, weakest first: (a) Dent's 32 px/m read beside the rimmed Kerf/Ohm (Dent rides Rivet's CutRig: does he get
-   the CutRig halo? check, A/B); (b) form-to-form switch clip at 64 px/m slow (the teal flash, no base pass: is it
-   readable? the cycle clip shows it only at 32); (c) the reduced-motion transformation clip (`--reduced-motion`) for
-   one form, as evidence the beat and burst scale down.
-4. The ghost apparitions for the voice moments (a teal apparition beside Rivet) if 1-3 are evidenced: the form's rig
-   at 0.6 alpha in teal modulate beside Rivet, fading in and out, driven by a dev flag first.
-5. REPORT.md is a draft for this lane: keep it current (gates, Calls for the owner with the composites).
-Session state 02:54: head = this commit, tree clean, no Godot process of mine running, image.lock taken once (02:12,
-  ohm_parts) and deleted; masters scratch empty except film.sh.
-- 02:56 NEXT 3c done early: `M:frames/ohm-morph-reduced-motion-ab-64ppm.png` (same ticks, full | `--reduced-motion`):
-  reduced motion keeps the burst ring at one size (no expanding ring) and the plates fly less; same two stages and
-  end pose. 0 SCRIPT ERROR both.
-- 02:58 NEXT 3b done early: `M:frames/forms-switch-tonnage-dent-64ppm-keys.png` + `M:forms-switch-64ppm-slow3x.mp4`
-  (`--bot=forms --form=all --ppm=64`, 0 SCRIPT ERROR): Tonnage collapses into the teal ring and Dent stands up out of
-  it in ~0.2 s, no base pass: the form-to-form DECISION reads at 64 px/m. frames.json: + these two, - the Kerf rim
-  still (its clip stays, named in the Ohm rim entry) and the Ohm arena clip (the city clip shows Ohm at 32 with the
-  rim; re-film the arena clip if a slot frees).
-  NEXT for iteration 5 is above (items 3b and 3c are now done: start at 3a, Dent's 32 px/m read).
-Session state 02:59: head = this commit, tree clean, no Godot process of mine running, no lock held.
+### REQUEST 5 -> n6-ghost-forms (02:45)
+1. KerfView (ghost-powers) now instances your KerfRig as the blink afterimages (`KerfRig.new()`, add_child, then
+   `speed_mps = KerfRig.FAST_MPS; advance(1.0)`; position/rotation/scale/modulate set per frame). Please keep
+   `FAST_MPS`, `PX_PER_M`, `speed_mps` and `advance(dt)` (or tell me in a REPLY when they change).
+2. Ohm: OhmStage reads `electrode_l/electrode_r` from your ghost_forms.json row (GhostPilot._init) and the bolt's two
+   prongs leave from exactly those points. When you draw the Ohm rig, put the copper fingertips on those anchors
+   (or move the anchors to the drawn tips: the bolt follows the data).
 
-## Iteration 5 (02:58-03:58, BUILD)
-- 02:59 read JOURNAL, git log, ghost-powers JOURNAL: REQUEST 5 (KerfView instances KerfRig: keep FAST_MPS,
-  PX_PER_M, speed_mps, advance(dt): kept, unchanged) and REQUEST 6 (Ohm's electrode anchors moved in our
-  ghost_forms.json to OhmRig's copper fingers (0.52, -0.17)/(0.52, -0.07)). REPLY to 6: GUARD_HAND not moved this
-  session; if it moves, the anchors move in the same commit.
-- MERGE n5-cast b16becfb (D5 ped heads, bald head, hoodie cap size) and n6-ghost-powers d3ca8581 (Ohm prongs on the
-  copper fingers, city proofs); JOURNAL/REPORT keep ours; lint 13/13 both; one `--import` after.
-- 03:02 NEXT 3a answered: Dent rides Rivet's CutRig, which builds RigBuild's cream halos (HALO_BODY/ARM/LEG) and scales
-  them in `_on_view` like the cops'. Looked at the city at 32 px/m (`M:frames/dent-city-halo-32ppm-x3.png`, x3): the
-  tan dummy has the cream edge on the teal pool, arms and disc read beside the cops. No change needed.
+NEXT (iteration 5, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` after the merge before filming).
+2. Ohm on its body is filmed everywhere (arena, city, 64 slow, mass; 02:50-02:55). Next on Ohm: a cane-step recoil
+   or arm kick on each bolt (needs a hook in the forms lane's OhmRig: REQUEST it), and Ohm's machine multiplier on
+   a real robot (item 4).
+3. Dent riding the car (the optional bucking-bull vignette) now that the car camera keeps it in frame.
+4. Weakest left: the robot victim (no robot fighter in the arena; the brain stands in drawn as a cop). Look for a
+   robot body on main/day branches; otherwise a ghost-powers dev robot (sim stand-in with a distinct look) so the
+   machine multipliers (Ohm machine_k, Kerf robot_damage) read on screen.
+5. Kerf under `--gore=reduced`: the red pool under a cauterised cut (a reduced-gore Kerf death without blood).
+- 02:44 MERGE n6-ghost-forms 19ae646c (31c06cc9: the Ohm body OhmRig, GhostRim cream rims on Kerf/Ohm; JOURNAL/REPORT
+  keep ours) + one `--import`. Kerf's echoes inherit the rim: a pale mint outline under the teal wash (judged at 64:
+  reads as the target's ghost outline; kept).
+- 02:46 MILESTONE 898bbf1a Ohm on its body: the full-weight prongs from (0.38, -+0.1) buried the guard arm (and the
+  right anchor sat on the cane side). Moved `electrode_l/r` in ghost_forms.json to the drawn copper fingers (0.52,
+  -0.17 / -0.07; OhmRig.GUARD_HAND is (0.5, -0.12)), prongs thin (x0.5) for 0.9 m then one full bolt. A/B
+  `M/frames/ohm-prongs-on-body-ab-64ppm.png`. DECISION in decisions.md (the forms lane's file: data only; REQUEST 6).
+  Unit test_ohm* 8/8, test_ghost* 15/15, scenario_ghost_attacks 1/0 (`E/scenario-ghost-it4b.log`).
+- 02:50 Ohm re-filmed on the body: arena 4 kills + cruiser (`E/ghosts-ohm-body-32.json`), 64 px/m half speed, the
+  mass arc tier 1 (knot down at tick 119, `E/ghosts-ohm-mass-body-32.json`), target composite
+  `M/frames/ohm-vs-target.png`. Reel `M/ghost-attacks-reel-it4-32ppm.mp4` re-cut: all four ghosts on their bodies.
 
-### The voice moments (brief item: ghost apparitions), started 03:04
-- Registry rules applied: `depth-ordered-layered-art` (the apparition's parts keep their rig's own z order: the reason
-  for per-part materials instead of a group), `shader-budget-authoring` (one tiny unshaded canvas shader, two
-  materials shared by every part, drawn only while a voice speaks), `motion-quality-gating` (judged in motion at 32
-  and 64 px/m, envelope unit-tested).
-- GhostApparition (render-only, in GhostFormView above the rigs): the speaking ghost's own rig copy (TonnageRig,
-  DentBody, KerfRig, OhmRig) at Rivet's left shoulder, turned in; teal tether to Rivet; 18-tick flicker-in, 150
-  held, 36 out; Tonnage at 0.6 scale. Cue: `stage.events().whispers_spiked` while Rivet is in base (the selected
-  ghost speaks); dev `--apparition` cycles the four every 240 ticks; `--bot=forms --form=voices` just walks.
-- FRICTION/FINDING first try was a CanvasGroup washing the group teal: Kerf/Ohm/Tonnage went teal but Dent drew in
-  full colour. Cause: CutRig parts carry their own z_index (RigBuild, RigArm), and z-indexed children escape a
-  CanvasGroup. Fix: every part of the copies draws through `ghost_apparition.gdshader` (ink -> deep teal, paper and
-  steel -> pale teal, the sticker rims -> a pale-teal glow edge, scan bands), alpha by the node's modulate (0.8,
-  so overlaps barely double). Then the teal ramp lifted (deep 0.04/0.27/0.28, smoothstep 0.04..0.62): the first
-  ramp read as dark blobs at 32.
-- MILESTONE 633fb9d7 GhostApparition + shader + test_ghost_apparition 4/4 + DECISION (decisions.md). Unit suite on
-  that tree 979/1: the 1 is the known `test_noir_shadows` flake (alone: 2/2 pass). Lint 13/13.
-- PROOF (0 SCRIPT ERROR each): `M:ghost-voices-arena-64ppm.mp4` (17 s, the four in turn), `M:ghost-voices-city-32ppm.mp4`
-  (17 s, `--arena=city`), `M:frames/voices-four-64ppm-keys.png`, before/after at the same tick
-  `M:frames/voice-dent-ab-64ppm.png`. Judged: at 64 each ghost is its own printed body in teal (press, dummy with
-  the target disc, the cutter's claws, the dome); at 32 on asphalt all four hold as teal figures beside Rivet, the
-  tether is a hairline (fine: it is a hint, not a beam); Ohm's is the smallest read.
-- frames.json (15): + the three voice entries; dent-gait A/B, the Tonnage city tour and the Kerf slow morph are now
-  named in their related entries' notes (files kept).
-- 03:20 COMBAT CHECK director reel on 633fb9d7 + the voice log line (`--quit-after 24000` headless, 2 m 48 s):
-  16/16 chapters down (claw_combo 2/2 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-iter5.log`). No whisper
-  fired in the reel (no "ghost voice" line): the reel never cues the voices, so it neither shows nor tests them.
-- test_ghost_apparition 5/5 (+ the whisper cue: in base the selected ghost speaks, in a form none). A Log.info
-  line "ghost voice: <id> beside Rivet" on each cue, for headless checks.
-- REPORT.md: section 6 (the voices), the open point (not yet filmed on a real quest 1 whisper), two Calls (fully
-  teal forms: the apparitions show that look on the same bodies; voices in quest 1 before the ghosts are met).
-- 03:23 GATES evidence runner `--no-bench` on 56dae388, nothing touched while it ran (log kept outside the tree,
-  copied in after: `E/evidence-run-iter5.log`): PASS lint 13/13, unit 981/0, scenarios 47, parity bit-exact
-  (mutation caught at 629), selftest look goldens 11/11 within tolerance (worst 1.21): no re-bless. Closes
-  iteration 4's NEXT 2.
-- 03:25 PROOF the voice on quest 1's REAL whispers: `dev/ghost-forms/voice_quest1.gd` (+ `_main` entry) plays quest 1
-  with CollectCallBot exactly as the scenario does, draws CollectCallView, and binds a GhostApparition to the play's
-  own event bus (the bot has no StagePilot, so the apparition is stepped there at Rivet's spot, base, first ghost
-  selected). Whispers at tick 123 (b1, Rivet in the dumpster) and 9626 (Kilohm: "Hold still. You've been
-  mutter..."); 24 PNGs, 0 SCRIPT ERROR (`E/voice-quest1-iter5.log`); composite
-  `M:frames/voice-quest1-real-whispers-48ppm.png`. Judged: Tonnage's teal apparition rises beside the dumpster
-  inside the whisper rings, and at Kilohm's line, in the Toner Room. It reads as the voice. The 0.6-scale press
-  is still large next to the sprite-cast Rivet at 48 px/m.
-- frames.json (15): + the quest 1 still first; the voice A/B named in the four-voices entry (file kept).
-- 03:22 FOUND (before the quest 1 proof above): quest 1 attaches GhostFormView only under `-- --rigs`
-  (quest1_game._dev_rigs loads ArenaRigs); the shipping sprite cast has no ghost view, so no voice there either.
+### REQUEST 6 -> n6-ghost-forms (02:52)
+I moved Ohm's `electrode_l/electrode_r` in your `ghost_forms.json` to the copper fingers your OhmRig draws on the
+guard hand: (0.52, -0.17) and (0.52, -0.07) (898bbf1a; data only, nothing else in the file). If you move
+OhmRig.GUARD_HAND, move the anchors with it (or tell me in a REPLY); the bolt follows the data.
+- 02:50 Ohm city on the body (4 kills + cruiser, `E/ghosts-ohm-city-body-32.json`, `M/ohm-city-32ppm.mp4`) and Dent in
+  the city block at 64 px/m with `--cam=car` (5 down: 4 blowback + 1 gib, 1 seize, 1 wreck,
+  `E/ghosts-dent-city-cam-64.json`, `M/dent-city-64ppm-cam-halfspeed.mp4`): the city lean keeps the car, the strike
+  and the wreck in frame. Both 0 SCRIPT ERROR.
+Session state 02:51: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+film.sh and reel.sh, image.lock never taken, bench never run (contended machine).
+- 02:57 FINAL GATE evidence runner `--no-bench` on d7eb3843 (all four on their bodies): PASS lint 13/13, unit 976/0,
+  scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens in tolerance (no re-bless)
+  (`E/evidence-run-it4-final.log`). Director reel last run on a9c9d36f (16/16); since then only ghost views, the
+  Ohm anchors and the merge of the forms lane (whose own director reel on 70a6297a was 16/16).
+Session state 02:58: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+film.sh and reel.sh, frames.json 15 (all files present), image.lock never taken, bench never run.
+- 02:59 Kerf arena + city re-filmed with the GhostRim (city 4 splits, `E/ghosts-kerf-city-rim-32.json`): the rimmed body
+  and the mint-edged afterimages hold on the asphalt at 32 px/m. Reel re-cut: every segment from tonight's heads.
+- 03:02 COMBAT CHECK director reel on 7ec45ab0 (the final head, Ohm body merged): 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it4-final.log`).
+Session state 03:03: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+film.sh and reel.sh, frames.json 15 (all present).
 
-- 03:28 A/B Tonnage's apparition 0.6 (2.1 m out, as built) vs 0.5 (1.9 m out), same quest 1 ticks (9626 + 40,
-  123 + 80) via voice_quest1: `M:frames/voice-tonnage-scale-ab-48ppm.png` (top as built, bottom 0.5). Judged:
-  at 0.5 the press sinks into the whisper rings over Rivet and Kilohm; at 0.6 it stands clear beside him. Rejected,
-  0.6 stays (file reverted, nothing committed). Light forms stay at their true size (Ohm is meant to be small).
+## Iteration 5 (03:04-04:04, BUILD)
+- 03:04 read JOURNAL, git log, the forms/cast JOURNALs: no new REQUEST to ghost-powers (forms lane merged ours at
+  d3ca8581). MERGE n6-ghost-forms b2ea5f1f (394c58a4: n5-cast b16becfb D5 ped heads/bald head/cap size, the ghost
+  body's Z_OVER_RIGS +60; JOURNAL/REPORT keep ours) + one `--import`.
+- 03:09 MILESTONE 51ae297c the robot victim (NEXT 4, weakest item): ArenaRobotRigs puts the arena's BOSS brain on the
+  robot thug's rig (ThugPlan: gunmetal frame, claws, one optic), poses it on CharacterRigs' tick count, shoves it on
+  hits, plays DeathPipe.kill_robot on death; CombatBlood.robot_ids makes its death leak oil, not red. A/B
+  `M/frames/ohm-robot-rig-ab-32ppm.png` (same seed, ~1/2/3 s): before a blue cop dying to Ohm's machine_k bolt in a red
+  splat, after a gunmetal robot powering down in black oil. Kerf's robot kill re-filmed on the rig
+  (`M/kerf-arena-32ppm.mp4`), Ohm's arena clip replaced (`M/ohm-arena-32ppm.mp4`). 0 SCRIPT ERROR. Unit 976/0
+  (`scratch/unit-it5.log`). FRICTION combat_blood.gd is now 299 lines (hard stop 300): the next change there must
+  split it first.
+- 03:16 MILESTONE c30d488f Kerf under `--gore=reduced` (NEXT 5): the slice's kill kind is `cauterised` (a DRY_KILLS
+  entry, robot ids excepted): no red pool when the signature split is off. A/B
+  `M/frames/kerf-reduced-gore-ab-32ppm.png` (3/5/7/9 s): before red pools and stains, after the cops drop whole, the
+  cut line hangs. scenario --filter=ghost 1/0 (`evidence/scenario-ghost-it5.log`). DECISIONs in decisions.md.
+- Rules applied: `motion-quality-gating` (A/B pairs at the same tick and zoom from deterministic runs, judged in
+  motion at 32 px/m); `depth-ordered-layered-art` (the robot rig on the rigs' own z, under the ghost body's +60).
+- 03:20 COMBAT CHECK director reel on 5dde79e8 (robot rig + dry Kerf kill): 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it5.log`).
+- 03:25 MILESTONE 06908631 Dent rides the seized car (NEXT 3, the optional bucking-bull vignette): sim side,
+  `ghost_attacks.json dent.ride` 1 puts Rivet on the car's roof each tick it is seized (GhostPilot zeroes his walk;
+  the car still steers by his facing) and hops him `ride_hop_m` 4 behind it at the blast (the blast hits hostiles
+  only). DECISION: ride on by default (the concept vignette; the car stays in his frame); `ride 0` is the old
+  stand-off seize; Call for the owner with `M/frames/dent-ride-ab-32ppm.png`. scenario_ghost_attacks needs
+  `rides >= 30`; planted ride 0 caught (`E/scenario-ghost-it5-planted-ride0.log`).
+- 03:29 FIX 89eda6e5 in the city block the hop stood Dent on a parked ambulance's hood: the hop now tries behind, left,
+  right for a spot with no live car within 2.6 m. Re-filmed: he lands on the street beside it.
+- 03:31 Clips: `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4` (64 px/m ride + hop,
+  half speed). REEL `M/ghost-attacks-reel-it5-32ppm.mp4` (33 s; Dent's segment re-timed onto the ride, Ohm's onto the
+  robot falling) replaces it4. Judged 6 stills. frames.json 15, all present.
 
-- 03:32 MILESTONE dev `--teal-forms` (GhostFormView): the four form bodies drawn through the apparition's material
-  (GhostApparition.wash / ghost_material, now static; no scan bands): the owner's "fully teal ghosts?" Call is
-  now a same-tick A/B, `M:frames/forms-teal-ab-32ppm.png` (arena `--bot=forms --form=all`, frames 190/360/530/700,
-  top as built, bottom teal; 0 SCRIPT ERROR both). Judged: both read at 32; teal loses Dent's discs and
-  Tonnage's hazard stripes, and gains a stronger "possessed" read. Not a default: the brief asks for the
-  printed machine with teal seams. test_ghost* 20/20, lint 13/13.
+### REQUEST 7 -> n6-ghost-forms (03:32)
+Dent now rides the seized car (06908631; `DentStage.riding()` true while on the roof, Rivet's position = the car's).
+DentBody feeds the car's speed as Rivet's velocity, so on the roof Dent runs his walk cycle at ~8 m/s with the full
+lurch. Please, in DentBody (yours): while `pilot.dent.riding()` feed `vel_in` zero (or a crouch), and add a buck (a
+short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` rising) and a jump on the hop
+(`blasts` rising). I will not edit DentBody.
+- 03:38 GATES evidence runner `--no-bench` on db0b4541 (robot rig, dry Kerf kill, Dent ride + hop fix): PASS lint 13/13,
+  unit 976/0, scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.21) and
+  block 5/5 in tolerance, no re-bless (`E/evidence-run-it5.log`). Bench not run (contended machine).
+  TTK doc: Dent's ride and the robot victim lines.
+- 03:40 MERGE n6-ghost-forms 4eb92883 (1469cabd: voice apparitions, `--teal-forms`, n5-cast r_forearm, and DentBody's
+  answer to REQUEST 7: braced on the roof, buck per strike, jump on the hop; JOURNAL/REPORT keep ours) + `--import`.
+  scenario --filter=ghost 1/0.
+- 03:43 COMBAT CHECK director reel on the merged head 1469cabd: 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it5-merged.log`).
+- 03:44 Dent's ride re-filmed at 64 px/m on the merged head: braced on the roof, the buck into the strike, the jump
+  clear of the blast (`M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`). Judged: reads as the
+  concept's ride. frames.json 15, all present. REQUEST 7 closed.
 
-- 03:33 A/B Ohm's arms 0.24 vs 0.30 m thick, city 32 px/m, same ticks, x3 (`M:frames/ohm-arms-thick-ab-32ppm-x3.png`):
-  no visible gain (the arms are short and sit beside the shell; thickness is not what limits them). Rejected,
-  reverted, nothing committed.
-- 03:34 MERGE n5-cast 952592df (hazard collar at 32, cream torch tip, visor Call) and n6-ghost-powers db0b4541 (Dent
-  rides the seized car, the arena robot rig, Kerf's dry kill); JOURNAL/REPORT keep ours; lint 13/13.
-- REPLY to ghost-powers REQUEST 7 (Dent's ride pose), done in cf9faa0c: DentBody gets `riding`, `strikes`, `blasts`
-  from GhostFormView (pilot.dent); on the roof vel_in is zero (braced, no walk cycle at the car's speed); each
-  strike bucks him (yaw kick + 10 % pop, 0.3 s), the blast hops him (35 % scale arc, 0.5 s); halved under reduced
-  motion. test_dent_body 2/2, test_dent* 8/8, scenario_ghost_attacks 1/0, arena headless 0 SCRIPT ERROR.
-  PROOF same ticks before/after `M:frames/dent-ride-braced-ab-32ppm-x1.5.png` (top: legs striding on the roof;
-  bottom: braced, arms out, the pop) and `M:dent-ride-braced-city-32ppm.mp4` (12 s, `--bot=ghosts --ghost=dent
-  --arena=city`, 0 SCRIPT ERROR). The mid-hop frame is not in the stills (20-tick sampling); see the clip.
+NEXT (iteration 6, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` before filming).
+2. (done 03:45) the reel's Dent segment re-cut from the city clip on the merged head.
+3. Ohm: a cane-step recoil or arm kick per bolt (REQUEST to ghost-forms for an OhmRig hook: `bolts` rising, like
+   Dent's strikes), then re-film Ohm at 64.
+4. combat_blood.gd is at 299 lines: any further change there splits it first (e.g. the robot/dry-kill routing into
+   a small helper).
+5. Weakest left after this session: Kerf at 64 px/m on the merged head (last filmed in iteration 4), then the
+   quality pass on whichever ghost reads weakest in the 33 s reel at 32 px/m (watch it first). (Tonnage 64 and the
+   city robot are done, below.)
+Session state 03:44: head = 94c9f8d8, no Godot process of mine running, no lock held,
+masters scratch holds only film.sh and reel.sh.
+- 03:45 NEXT 2 done: Dent in the city block re-filmed on the merged head 1469cabd (`M/dent-city-32ppm.mp4`, ride with
+  the brace, hop clear of the ambulance, 0 SCRIPT ERROR); reel `M/ghost-attacks-reel-it5-32ppm.mp4` re-cut (33 s),
+  Dent segment judged on 4 stills.
+Session state 03:46: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
+bench.lock never taken), masters scratch holds only film.sh and reel.sh, frames.json 15 (all present).
 
-- 03:48 FINAL GATES on 8b6327f3, still tree: director reel 16/16 chapters down, 0 SCRIPT ERROR
-  (`E/director-reel-iter5-final.log`); evidence runner `--no-bench` all PASS: lint 13/13, unit 986/0, scenarios 47,
-  parity bit-exact (mutation caught at 629), look goldens 11/11 in tolerance, no re-bless
-  (`E/evidence-run-iter5-final.log`).
-
-NEXT (iteration 6):
-1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
-2. The shipped quest 1 (sprite cast, no `--rigs`) has no ghost view, so no voices there. Either give it the
-   apparition (one GhostApparition on print_stage.actor_layer() bound to stage.events() and stepped at Rivet,
-   the wiring voice_quest1.gd shows) or leave it to the owner's call in REPORT. Pick, record a DECISION.
-3. Apparition scale is settled (0.6 Tonnage, A/B 03:28); `--teal-forms` A/B done (03:32). Weakest left: Ohm's
-   arms at 32 px/m. Thickness is ruled out (0.30 m A/B, 03:33: no gain); try longer forearms (0.54 -> 0.66 m) or a
-   copper-bright forearm (contrast on asphalt), A/B at the same city ticks.
-4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)"). The director reel and evidence runner
-   last ran on 8b6327f3 (all PASS); re-run after the next change.
-Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
-  not taken this session), masters scratch holds only film.sh.
+### REQUEST 8 -> n6-ghost-forms (03:47)
+Thanks for REQUEST 7 (cf9faa0c, merged and filmed: `M/frames/dent-ride-buck-keys-64ppm.png`). The same for Ohm,
+please, in OhmRig/GhostFormView (yours): a kick on each bolt. `pilot.ohm.bolts` rises by one per bolt and
+`pilot.ohm.bolt_tick` is the sim tick it left (OhmStage, ghost-powers; both stay). Suggested read: the guard arm
+(electrodes) snaps forward ~0.06 m and back over ~0.15 s, the cane plants, the shell rocks back a few degrees;
+halved under reduced motion. The bolt's prongs follow `electrode_l/r` from ghost_forms.json, so if the arm kick
+moves the drawn fingers, tell me and I will offset the prongs by the same kick (or expose the kick offset).
+- 03:48 the robot victim in the city block: the Ohm city beat spawns it too (the city is an ArenaStage), so it
+  draws on the thug rig there as well; re-filmed on the merged head (`M/ohm-city-32ppm.mp4`, 0 SCRIPT ERROR): the
+  gunmetal robot powers down in oil to the first bolt (tick ~120), then the cops and the cruiser. Judged 4 stills.
+Session state 03:48: head = then head, tree clean, no Godot process of mine running, no lock held, masters
+scratch holds only film.sh and reel.sh, frames.json 15 (all present).
+- 03:49 Tonnage re-filmed at 64 px/m on the merged head (`M/tonnage-slam-64ppm-halfspeed.mp4`, 0 SCRIPT ERROR): the
+  press on the cruiser (crushed, wrecked), the street crack, the flattened cops, the second slam's telegraph ring.
+  Judged 6 stills; no regression from the merges.
+- Not mine: PID 22028 (n5-cast's city capture) was running at 03:48; left alone.
+Session state 03:50: head = this commit, tree clean, no Godot process of mine running, no lock held, masters
+scratch holds only film.sh and reel.sh, frames.json 15 (all present).

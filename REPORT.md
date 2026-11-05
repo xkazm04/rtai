@@ -1,133 +1,47 @@
-# REPORT: lane n6-ghost-forms (branch `n6-ghost-forms`), night run 2026-11-04 -> 11-05
+# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 5)
 
-DRAFT written in iteration 4 (02:30); the report session at 08:40 finishes it. Until this iteration the
-root REPORT.md on this branch was n5-cast's (it came in through a merge); n5-cast's own copy is on its
-branch. `M:` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-forms\`, `E:` = `evidence/` here.
+`M` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-powers`. `E` = `evidence/` in this worktree.
+(This file replaces n5-cast's REPORT that arrived with the n5-cast fast-forward; take n5-cast's on merge.)
 
-The owner's order for this lane: "create these characters, animate transformation between characters".
+## What works (with evidence)
+| Claim | Evidence |
+|---|---|
+| **Tonnage** (from Hauler): plates take 0.3 of every hit; the press slam after a 0.5 s telegraph (a teal-edged die-plate footprint) lands 0.9 m ahead, flattens humans within 2 m (new signature style `crush`), throws the 4 m ring, wrecks every car within 3.4 m, cracks the street; the ram throws its kill aside | `M/tonnage-arena-32ppm.mp4` (16 s: 10/10 down, 2 slams, 2 cars), `M/tonnage-slam-64ppm-halfspeed.mp4`, `M/frames/tonnage-slam-vs-target-64ppm.png`; `E/ghosts-tonnage-32.json`; unit `test_tonnage_attacks` |
+| Dent's car bomb: amber ink-rimmed fireball (before: a pale disc) | `M/frames/dent-blast-ab-32ppm.png` |
+| **Dent** (from Gearbox): G seizes the car nearest the aim line (teal tether, soul plate), the car drives where Rivet aims and throws whoever it hits, heats amber to white, blows on impact once armed (car-bomb gib); walls stop it | `M/dent-arena-32ppm.mp4` (5/5 down), `M/frames/dent-vs-target.png`; `E/ghosts-dent-32.json` |
+| **Kerf** (new): Q takes the soul (walk x1.5); melee blinks along a straight teal line to behind the target in a 35 deg cone (9 m, clear line) and slices it: humans one-shot (split with a teal-white cauterised edge, new row field `edge: soul`), robots 4; no target = a 4 m dash; chain of 3, one charge back per 1 s; the cut line hangs 0.6 s | `M/kerf-arena-32ppm.mp4` (5/5: 4 split, robot in 2 cuts), `M/kerf-64ppm-halfspeed.mp4`, `M/frames/kerf-vs-target.png`, `M/frames/kerf-beat-32ppm.png`; `E/ghosts-kerf-32.json`; unit `test_kerf_attacks` 3/3 |
+| **Ohm** (new): Q takes the soul; melee throws a forked teal bolt from the fingertips every 0.5 s (30 deg, 11 m, 2 forks within 3 m), each body stunned 1.2 s, humans 0.5 (electro X-ray kill), robots 6 (machine_k 3), cars burn 20 per bolt; mass arc = upgrade_tier 1 data hook | `M/ohm-arena-32ppm.mp4` (5/5 + cruiser wrecked, Rivet untouched), `M/ohm-64ppm-halfspeed.mp4`, `M/frames/ohm-vs-target.png`; `E/ghosts-ohm-32.json`; unit `test_ohm_attacks` 2/2 |
+| Determinism: all four beats replay identically and give one state per seed; planted faults (Tonnage crush_m 0, Dent blast_damage 0, Kerf human_damage 0, Ohm machine_k 0) are caught | `scenario_ghost_attacks` -> `E/ghost-attacks.json`, `E/scenario-ghost-attacks.log` |
+| Roles and TTK table | `docs/ghosts/ghost-attacks.md` |
+| Gates (iteration 2 head): lint 13/13 on every commit; unit 960/0 (ef3a186a); scenarios 47 ran / 0 failed (incl. scenario_ghost_attacks, four ghosts); director reel 16/16 chapters down, 0 script errors (after the split-edge change) | `E/unit-it2.log`, `E/scenarios-it2.log`, `E/director-reel-it2.log` |
+| City block: Kerf (4/5 of its beat; the chain also cuts the block's own cops) and Ohm (5/5 + car bolts) in `--arena=city` | `M/kerf-city-32ppm.mp4`, `M/ohm-city-32ppm.mp4`, `M/frames/kerf-ohm-city-32ppm.png`; `E/ghosts-kerf-city-32.json`, `E/ghosts-ohm-city-32.json` |
+| **Through the real switch** (iteration 3): GhostPilot (ghost-forms) drives all four; Kerf and Ohm share its one SoulPowers, G selects the ghost, Q transforms, the attacks fire once the form is settled; every beat still clears | `scenario_ghost_attacks` 1/0 (`E/scenario-ghost-it3.log`); decisions.md 2026-11-05 "Kerf and Ohm run inside GhostPilot" |
+| **City block, all four** (iteration 3, after the placement fix): Tonnage 10/10 + 2 cars crushed; Dent 5/5 (1 seize, 5 strikes, blown on command in group B; the car keeps out of buildings); Kerf 5/5; Ohm 5/5 | `M/dent-city-32ppm.mp4`, `M/frames/dent-city-keys-32ppm.png`, `M/tonnage-city-32ppm.mp4`, `M/frames/tonnage-city-crush-keys-32ppm.png`; `E/ghosts-dent-city-32.json`, `E/ghosts-tonnage-city-32.json` |
+| **Ohm's kill in soul teal**: row `ohm_shock` (X-ray shock, `edge: soul`): teal arcs, teal-white zap star; the electro gun keeps cream | `M/frames/ohm-kill-teal-ab-64ppm.png` (before/after, same ticks); unit `test_ohm_attacks` 3/3 |
+| **Ohm's mass arc** (upgrade_tier 1, `--tier=1`): the arc bursts out from the first body to every body within 8 m (was a chain walk); the knot down one bolt sooner | `M/frames/ohm-mass-chain-vs-fan-32ppm.png` (before/after), `M/ohm-mass-tier1-32ppm.mp4`, `E/ghosts-ohm-mass-32.json` |
+| Gates (iteration 3 head): lint 13/13 every commit; unit 968/0 (+1 since: test_ohm 4/4); scenarios 47 ran / 0 failed (`E/scenarios-it3.log`), scenario_ghost_attacks 1/0 on the final head; director reel 16/16 chapters down, 0 script errors | `E/unit-it3.log`, `E/director-reel-it3.log` |
+| `--gore=reduced`: Kerf's victims fall whole (0 signature kills); `--reduced-motion`: no afterimages, no flicker | `E/ghosts-kerf-reduced-32.json`, `E/kerf-reduced-run.log` |
 
-## What works
+| **Kerf on its body** (iteration 4): the blink afterimages are faded copies of the Kerf body along the line (was three rings), the target's vignette; arena and city 4 splits each | `M/frames/kerf-echo-rings-vs-rig-64ppm.png` (before/after, same ticks), `M/frames/kerf-vs-target.png`, `M/frames/kerf-body-keys-64ppm-city-32ppm.png`, `M/kerf-arena-32ppm.mp4`, `M/kerf-city-32ppm.mp4`, `M/kerf-64ppm-halfspeed.mp4`; `E/ghosts-kerf-it4-32.json`, `E/ghosts-kerf-city-it4-32.json` |
+| **Ohm's two prongs** from the forms lane's electrode anchors (ghost_forms.json) meeting in the first body | `M/frames/ohm-electrode-prongs-ab-64ppm.png` (before/after); unit `test_ohm_attacks` 5/5; `M/ohm-arena-32ppm.mp4` (4 kills + cruiser), `E/ghosts-ohm-it4-32.json` |
+| **The reel of all four attack sets** (iteration 4, 31 s, labelled, 32 px/m) | `M/ghost-attacks-reel-it5-32ppm.mp4` (re-cut in iteration 5) |
+| Gates (iteration 4, 3d369dcf, then d7eb3843 with unit 976/0 in `E/evidence-run-it4-final.log`): evidence runner PASS: lint 13/13, unit 973/0, scenarios 47, parity bit-exact + mutation caught, selftest look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it4.log`, `E/scenario-ghost-it4.log` |
+| **Dent close-up camera** (dev `--cam=car`, view only): frames Rivet and the seized car, holds on the blast | `M/frames/dent-cam-car-ab-64ppm.png` (before/after), `M/dent-64ppm-halfspeed.mp4` |
+| Combat no-regress (iteration 4): director reel 16/16 chapters down, 0 script errors, on a9c9d36f and on the final head 7ec45ab0 | `E/director-reel-it4.log`, `E/director-reel-it4-final.log` |
+| Ohm re-filmed on the iteration-4 head: city 4 kills + cruiser wrecked; target composite | `M/ohm-city-32ppm.mp4`, `M/ohm-64ppm-halfspeed.mp4`, `M/frames/ohm-vs-target.png`; `E/ghosts-ohm-city-it4-32.json` |
+| **All four on their bodies** (iteration 4, after the forms lane's OhmRig): Ohm's electrode anchors moved to the drawn copper fingers, thin prongs then the full bolt; Ohm arena, city, 64 slow and the mass arc re-filmed on the body; Dent in the city at 64 px/m with the car camera; the reel re-cut on all four bodies | `M/frames/ohm-prongs-on-body-ab-64ppm.png` (before/after), `M/frames/ohm-vs-target.png`, `M/ohm-arena-32ppm.mp4`, `M/ohm-city-32ppm.mp4`, `M/ohm-64ppm-halfspeed.mp4`, `M/ohm-mass-tier1-32ppm.mp4`, `M/dent-city-64ppm-cam-halfspeed.mp4`, `M/ghost-attacks-reel-it5-32ppm.mp4` (re-cut in iteration 5); `E/ghosts-ohm-body-32.json`, `E/ghosts-ohm-city-body-32.json`, `E/ghosts-ohm-mass-body-32.json`, `E/ghosts-dent-city-cam-64.json` |
+| **The robot victim reads as a machine** (iteration 5): the arena's robot (the BOSS brain the Kerf/Ohm beats spawn) is drawn on the robot thug's own rig (gunmetal frame, claws, one optic), powers down on death (`death_robot`) and leaks black oil instead of red; Ohm's machine_k bolt and Kerf's robot cut land on it | `M/frames/ohm-robot-rig-ab-32ppm.png` (before/after, same seed), `M/ohm-arena-32ppm.mp4`, `M/kerf-arena-32ppm.mp4`; unit 976/0 (masters `scratch` log, copied into JOURNAL) |
+| **Kerf under `--gore=reduced`** (iteration 5): the slice is a dry `cauterised` kill, no red pool | `M/frames/kerf-reduced-gore-ab-32ppm.png` (before/after), `M/kerf-arena-gore-reduced-32ppm.mp4`; `E/scenario-ghost-it5.log` |
+| **Dent rides the seized car** (iteration 5, the concept's bucking-bull vignette): Rivet sits on the car's roof while it is seized and steers it by his facing, then jumps clear (4 m behind, else to a side with no parked car) as it blows; `dent.ride 0` restores the stand-off seize; the scenario now needs >= 30 riding ticks (planted ride 0 caught) | `M/frames/dent-ride-ab-32ppm.png` (before/after), `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4`; `E/scenario-ghost-it5b.log`, `E/scenario-ghost-it5-planted-ride0.log` |
+| Combat no-regress (iteration 5, after the robot rig and the dry Kerf kill): director reel 16/16 chapters down, 0 script errors | `E/director-reel-it5.log` |
+| **Dent's ride pose** (the forms lane answered REQUEST 7, merged 1469cabd): braced on the roof (no walk cycle), a buck on each strike, a jump on the hop; director reel on the merged head 16/16, 0 script errors | `M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`; `E/director-reel-it5-merged.log` |
+| Gates (iteration 5, db0b4541): evidence runner PASS: lint 13/13, unit 976/0, scenarios 47, parity bit-exact + mutation caught, look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it5.log` |
 
-### 0. The frame
-- **GhostForms** (`features/souls/ghost_forms.gd`), a state machine over `data/tables/ghost_forms.json`:
-  base, entering, settled, switching, exiting. Enter 0.5-0.9 s and exit 0.5-0.7 s, each in two stages around
-  one in-between pose; form to form goes through a 0.35 s teal flash with no pass through base (DECISION).
-  A switch taken mid-transformation is refused, and a planted one is caught by `check()` (unit).
-- **One SoulPowers** behind every ghost: one form at a time, one Madness meter, the existing cooldowns as the
-  cost model (rows in `powers.json`; `tonnage -> hauler` and `dent -> gearbox` keep the old ids as aliases).
-  Each row has `upgrade_tier` 0, the slot for the per-act quest upgrades.
-- **Input** (DECISION): Q / LB (`power_hauler`) transforms into the selected ghost or back to base; G / RB
-  (`power_gearbox`) picks the next ghost in base, or switches straight to it in a form. The bits are looked up
-  by action name. Rejected: a radial menu, one key per form.
-- **GhostPilot** on StagePilot drives the live game paths (`--arena`, `--arena=city`, quest 1). The attacks
-  (lane ghost-powers) fire only while the form is settled. A transformation roots Rivet to a fraction of his walk.
-- **GhostFormHud**, a D5 card: four chips with each ghost's mark, the current form in teal, the next pick with
-  the key hint, the cooldown sweep, the Madness bar with the selected cost notch.
-- **GhostMorphFx**: a teal burst, seams opening, cream steam puffs under one ink rim, sparks. **Camera beat**:
-  one CameraRig shake at the in-between pose (`crash` for Tonnage, `hit` for the light forms), inside
-  camera.json's budget and scaled down under reduced motion.
-- **Data**: every form row holds footprint radius, body class, top speed, acceleration, turn rate, size,
-  enter/exit time, gait, the attack anchors for ghost-powers, and the name key.
-
-### 1. Tonnage (the big form, "Rivet's transformed form" DECISION)
-- TonnageRig from a Codex part sheet: a 2.3 m crown with the hazard brow and hoses, four piston legs at the
-  corners, the stamp gait, momentum (4.2 m/s, accel 5), radius 1.3 m on the big body class.
-- Proof: `M:frames/tonnage-live-before-after-target-32ppm.png`, `M:tonnage-morph-64ppm-slow3x.mp4`,
-  `M:tonnage-tour-city-32ppm.mp4` (both re-filmed in iteration 4).
-
-### 2. Dent (the lurching brawler)
-- DentPlan on base Rivet's CutRig with its own raw parts (yellow crash-test discs). DentLurch is the stagger:
-  roll and yaw per stride, a limp. GhostAura is the breathing teal pool under the light forms.
-- Proof: `M:dent-gait-ab-32ppm.mp4` (before | after), `M:dent-morph-64ppm-slow3x.mp4`,
-  `M:frames/dent-live-vs-target-64ppm.png`.
-
-### 3. Kerf (the fast one)
-- KerfRig from a Codex part sheet: an arrow hull, emitter arms held in guard, blade legs trailing and sweeping
-  back with speed, a hover bob, 12 m/s. The rig snaps with the blink (no tween).
-- Proof: `M:kerf-morph-64ppm-slow3x.mp4`, `M:frames/kerf-live-vs-target-64ppm.png`, `M:kerf-rim-ab-32ppm.mp4`.
-
-### 4. Ohm (the mage), iteration 4
-- OhmRig from a Codex part sheet (r4 `ohm_parts`): a domed riveted shell with goggles, a cable beard, a copper
-  hose, stubby feet, and two long arms with copper electrode fingers. Shell 0.8 m, so Ohm is smaller than Rivet.
-- The cane gait: the right arm plants ahead and is left a stride behind, then swings; the gait advances with
-  ground covered. The left arm holds its electrodes at the bolt's hands.
-- Proof: `M:ohm-tour-city-32ppm.mp4` (with the rim), `M:ohm-morph-64ppm-slow3x.mp4`,
-  `M:frames/ohm-live-vs-target-64ppm.png`. The arena clip was filmed (0 SCRIPT ERROR) but dropped at the
-  frames.json cap.
-
-### 5. All four
-- `M:forms-cycle-all-32ppm.mp4` (15 s, `--bot=forms --form=all`): base, Tonnage, Dent, Kerf, Ohm, base.
-- Form to form at 64 px/m: `M:frames/forms-switch-tonnage-dent-64ppm-keys.png`, `M:forms-switch-64ppm-slow3x.mp4`.
-  Tonnage collapses into the teal ring and Dent stands up out of it in about 0.2 s, with no pass through base.
-- Reduced motion: `M:frames/ohm-morph-reduced-motion-ab-64ppm.png` (same ticks). The burst ring keeps one size,
-  the plates fly less, and the stages and end pose stay the same.
-- **The cream sticker rim** (GhostRim, DECISION): the characters' own rim under Kerf's and Ohm's limbs and body,
-  so their thin limbs hold on asphalt at 32 px/m. Proof: `M:frames/ohm-rim-ab-32ppm-x2.png`, `M:ohm-rim-ab-32ppm.mp4`,
-  `M:kerf-rim-ab-32ppm.mp4`. The A/B flag is `--no-rim`.
-- **Draw order**: the ghost bodies now draw above every rig part. Before the fix, cops' heads and arms covered
-  Tonnage in the city: `M:frames/tonnage-city-z-ab-32ppm-x2.png`.
-- Tonnage re-filmed on the live path: `M:tonnage-morph-64ppm-slow3x.mp4`, `M:tonnage-tour-city-32ppm.mp4`.
-
-### 6. The voice moments (iteration 5): a teal apparition beside Rivet
-- **GhostApparition** (`features/souls/ghost_apparition.gd`, DECISION): when a ghost speaks, its own body (a copy
-  of its form rig) appears at Rivet's left shoulder, turned in to him and tethered by a teal hairline. Every part
-  draws through `ghost_apparition.gdshader`: ink becomes deep teal, paper and steel pale teal, the sticker rims
-  a teal glow edge, with faint scan bands. It flickers in (0.3 s), holds 2.5 s and fades (0.6 s). Tonnage's is
-  drawn at 0.6 scale, as a voice rather than the 3x body.
-- The cue is the stage's `whispers_spiked` (quest 1's whisper beats, Kilohm's line, the tazer hit, the fire)
-  while Rivet is in base; the selected ghost speaks. In a form the ghost is Rivet, so nothing shows. The dev
-  flag `--apparition` cycles the four every 4 s.
-- Proof: `M:frames/voices-four-64ppm-keys.png` and `M:ghost-voices-arena-64ppm.mp4` (all four in turn),
-  `M:ghost-voices-city-32ppm.mp4` (they hold on asphalt at 32), and the before/after at the same tick,
-  `M:frames/voice-dent-ab-64ppm.png`. Unit test_ghost_apparition (envelope, one body, the whisper cue).
-- On quest 1's real whispers: `M:frames/voice-quest1-real-whispers-48ppm.png`
-  (`dev/ghost-forms/voice_quest1.gd`). Quest 1 is played by CollectCallBot as the scenario does, and the
-  apparition is bound to the play's own event bus. The b1 dumpster whisper (tick 123) and Kilohm's line ("Hold
-  still. You've been mutter...", tick 9626) both bring Tonnage's apparition up inside the whisper rings.
-- Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
-  was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
-
-- **Dent on the car ride** (for ghost-powers, REQUEST 7): braced on the roof instead of striding at the car's
-  speed, a buck on each strike, a hop on the blast. Before/after at the same ticks:
-  `M:frames/dent-ride-braced-ab-32ppm-x1.5.png`; clip `M:dent-ride-braced-city-32ppm.mp4`.
-
-### Gates (iteration 5)
-- Final, on 8b6327f3 (the voices, `--teal-forms`, Dent's ride, both merges), still tree: evidence runner
-  `--no-bench` all PASS: lint 13/13, unit 986/0, scenarios 47, parity bit-exact (mutation caught at 629), look
-  goldens 11/11 in tolerance, no re-bless (`E:evidence-run-iter5-final.log`). Director reel 16/16 chapters down,
-  0 SCRIPT ERROR (`E:director-reel-iter5-final.log`).
-- On 56dae388 (the voices), the evidence runner `--no-bench` on a still tree (`E:evidence-run-iter5.log`): lint
-  13/13, unit 981/0, scenarios 47, parity bit-exact (planted mutation caught at step 629), selftest with look
-  goldens 11/11 in tolerance (worst 1.21), so no re-bless.
-- On 633fb9d7: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter5.log`).
-
-### Gates (iteration 4)
-- On 25b040bb: lint 13/13; unit 974/0 (`E:unit-iter4.log`); scenarios 47/0 (`E:scenarios-iter4.log`).
-- On 70a6297a: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter4.log`).
-- On 19ae646c, the evidence runner `--no-bench` (`E:evidence-run-iter4.log`): lint, scenarios 47, parity (exact,
-  planted mutation caught) and selftest all pass; look goldens 11/11 and block goldens 5/5 are within tolerance,
-  so no re-bless. The unit step reads FAIL only because the tree changed during the run (I edited JOURNAL.md
-  while it ran); the suite itself was 974/0. Re-run it on a still tree.
-- On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
-
-## What does not work / is open
-- In the shipped quest 1 path (the sprite cast) GhostFormView is not attached, so the voices show there only
-  under `-- --rigs` or in the dev grabber below. Attaching the ghost view to the sprite cast is not done.
+## What does not work yet
+- The robot is a dev stand-in: CombatArena has no robot fighter kind, so the quest boss's brain plays it (Ohm's beat holds it exposed). The look (iteration 5) and the numbers are real; the brain is not a robot thug's.
 
 ## Calls for the owner
-- **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
-  the machine body (gunmetal, rust, Dent's yellow discs) with teal seams, glow and a soul pool, which follows
-  the brief's "machine body printed in the game's ink look, with teal soul seams and glow". Compare
-  `M:frames/ohm-live-vs-target-64ppm.png`, `M:frames/dent-live-vs-target-64ppm.png` and
-  `M:frames/kerf-live-vs-target-64ppm.png`. **Same-tick A/B: `M:frames/forms-teal-ab-32ppm.png`** (top as
-  built, bottom with the dev flag `--teal-forms`, which gives the form rigs the voice apparitions' material). Fully
-  teal reads strongly at 32 px/m but loses Dent's yellow discs and Tonnage's hazard stripes. Shipping it would
-  mean turning that flag into a default.
-- **Should the voice apparitions show in quest 1?** They are cued by every whisper while Rivet is in base,
-  including quest 1's whisper beats, where the player has not yet met the ghosts by name. The alternative is
-  to cue them only from the scientist's questline lines; that change is one connect in GhostApparition.bind.
-
-## Next steps
-- Give the shipped sprite-cast quest 1 a ghost view (or at least the apparition), if the owner wants the
-  voices there.
-- Final gates on a still tree (the evidence runner).
+- Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).
+- Kerf's slice: only the target is cut (assassin) vs every body on the blink path (crowd tool): built as target-only.
+- Dent riding the car (built, `ghost_attacks.json dent.ride 1`) vs steering it from a distance down the tether (`ride 0`): `M/frames/dent-ride-ab-32ppm.png`. Riding is the concept vignette and keeps the car in Rivet's frame; the stand-off keeps Rivet out of the blast and shows the tether.
+- Tonnage's slam kill: the flattened crush (built, signature style `crush`) vs the standard pile: `M/frames/call-tonnage-crush-vs-pile-32ppm.png` (tick 200, 32 px/m; the right half is the same run under `--gore=reduced`). One row in signature_kills.json.
