@@ -40,7 +40,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (`cop_sleeve_navy.py`), D4 and D5: r2_c6's bright head over a navy body. On the cream slab, where r2_c6 stands its
   cops, the old bright sleeves read as a backpack behind a navy head; now each cop is one figure with one bright head.
   Lineup slab / road / 64 px/m beside r2_c6: `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png`; live city A | D:
-  `M/cast-call4-city-ad-32.mp4`, `M/frames/cop-call4-city-ad-32ppm.png`. Director reel 16/16 down, react board at
+  `M/cast-call4-city-ad-32.mp4`, `M/frames/cop-call4-city-ad-32ppm.png`; 64 px/m close-up A | D (the A side is the
+  cc4cb843-era clip, same sim, older Rivet): `M/cast-call4-city-ad-64.mp4`, `M/frames/cop-call4-city-ad-64ppm.png`. Director reel 16/16 down, react board at
   64 px/m (flinch, knockdown, corpses, burn, electro) reads, 0 script errors.
 - The riot helmet's crown is plain bright at 32/48 px/m (f4381f32): the D4 band across the ~5 px head printed two 1 px
   slivers; it is now one bright dot like the patrol cap (r2_c6's plain helmets; the shield carries the riot read; D5

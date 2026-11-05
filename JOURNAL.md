@@ -1246,3 +1246,9 @@ Session state 06:27: tree clean after this commit, no Godot process of mine runn
   plain crown shows in the standing and unarmed poses (lineup, crowd cops). NEXT 2's open question is answered by
   this read; a lossless capture would confirm it.
 Session end 06:29: tree clean after this commit, no Godot process of mine running, locks never taken.
+- 06:30 the 64 px/m live close-up of D (`film.sh cast-call4d-city-64 64 900 --bot=reel --arena=city
+  --loadout=pistol,machine_pistol --clean`, 0 SCRIPT ERROR) beside the A-era `cast-navy-city-64.mp4` (same sim, older
+  Rivet): `M/cast-call4-city-ad-64.mp4`, still `M/frames/cop-call4-city-ad-64ppm.png`. Navy bodies under bright
+  hatched heads; the riot heads keep their band at 64 (D5), as built. Single clip deleted. REPORT section 2 cites it.
+Session end 06:31: tree clean after this commit, no Godot process of mine running (the two running since 06:26/06:28
+  are not mine), locks never taken.
