@@ -262,3 +262,11 @@
   --fixed-fps 60 --quit-after 600: exit 0, 0 SCRIPT ERROR, 0 unknown arg (evidence/exe-quest1-it8.log).
 - DECISION (time): nothing started at 18:12 with 18 min to freeze; no project/ change, so no gate re-run or re-export.
 - NEXT (the next lane day): unchanged from iteration 7: owner verdicts on REPORT's calls; call 8 B first if picked.
+
+## Iteration 9 (BUILD, 18:17-18:30; freeze 18:30)
+- 18:17 Started. Tree clean at d58e4ba0; NEXT says nothing owed. Held lane (iteration 5, 18:16): no REQUEST for calls.
+- 18:19 CHECK `git diff 6179bf2d HEAD -- project` empty; both exes (`build/export/windows/RTAI.exe`,
+  `build/export/windows-quest1/RTAI.exe`, 17:39) are on the head's game. REPORT.md present.
+- DECISION (time): 11 min to freeze; no project/ change started, so no gate re-run or re-export.
+- NEXT (the next lane day): unchanged from iteration 7: owner verdicts on REPORT's calls; call 8 B first if picked
+  (per-weapon gun outline, iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.
