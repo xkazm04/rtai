@@ -1,4 +1,4 @@
-# n5-look REPORT (draft 2026-11-04 23:05; rewritten at the 08:40 report)
+# n5-look REPORT (draft 2026-11-05 01:10; rewritten at the 08:40 report)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
@@ -7,9 +7,10 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 
 1. **The print, toward the riso middle ground** (r2_a5 + r1_a1). It's a riso layer inside `look_d5`, set by one dial (`world_riso.riso`); `--look=today` gives the old print for A/B.
    - What's in the layer: world-locked fine halftone, small per-plate misregistration, paper fibre, the tan stained sheet (`tan_k`, `stain_k`), and grain toned down (0.5 -> 0.3, not removed).
+   - Iteration 9: r2_a5's grain is back, toned down: sparse world-locked 1 px toner specks on the paper and light fills (`world_riso.speck_k` 0.4, `speck_density` 0.07; 0 = before). The it2 sheet had gone smooth. The pan residual on light ground is 3.39 % with the specks off vs 3.47 % on, so they are world-locked. The goldens stay inside the gate (worst mean 0.59), so they were not re-blessed. Evidence: `print-speck-it9-2x-vs-r2a5.png` (today | it2 | it9 | target, 2x crops) and `arena-speck-ab-32ppm-it9.mp4` (20 s, off | on).
    - The building cast shadow went from 1.1 m to 0.45 m, so there are no long casts.
    - Blood stays the only deep red: the tan and the stains apply to neutral pixels only.
-   - Evidence: `print-3way-city-{32,64}ppm-it2.png` (today | ours | target), `print-pan-today-vs-riso-32ppm.mp4` (the shimmer check: the residual after the camera shift matches today's, 1.29 %), `arena-reel-today-vs-riso-it2-32ppm.mp4` (the fight is identical tick for tick).
+   - Evidence: `print-3way-city-32ppm-it2.png` (today | ours | target), `print-pan-today-vs-riso-32ppm.mp4` (the shimmer check: the residual after the camera shift matches today's, 1.29 %), `arena-reel-today-vs-riso-it2-32ppm.mp4` (the fight is identical tick for tick).
    - The look goldens were re-blessed once, with a decisions line.
    - Frame cost was CONTENDED, so the riso delta is unresolved below the ~0.1 ms noise. Statically it adds 2 screen fetches plus about 5 lattice fetches, with no new full-screen pass.
 2. **The alley stage** (`--arena=alley`, 48 px/m). It's an east-west lane north of the range: asphalt, puddles, dumpsters, bag piles, fire escapes from above, roofs with a brick lip, and a chain-link fence. Cop waves come in from both ends (AlleyHook).
@@ -34,7 +35,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 2b9f6b38 after the alley change.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 58f6cb8d (the toner speckle), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
@@ -47,7 +48,7 @@ The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
 - **Held parts:** in design they are close to r1_w1-w3 (the hand cannon's cylinder, the SMG's feed box, the pistol's slide); only the tone differs, rust-tan against gunmetal.
 - **The Gatling:**
-  - its housing prints grey and slimmer than the target's chunky tan body;
+  - its housing prints grey and slimmer than the target's chunky tan body. The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
 - **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the smoke frame is a fire band inside dark smoke but not yet r2_w4's ragged orange pockets. (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
@@ -59,10 +60,12 @@ The last full evidence gate was green on b03368a5 (2026-11-05 00:04).
 - **Held size:** `held_size_ref` 1.2 vs off (`held-size-ab-cast-merge.png`).
 - **Alley value structure:** the light lane between dark mass (iteration 7) vs the dark lane between pale roofs (iteration 3); every fill is `alley_decor.json tones`, the old values in `tones.doc` (`alley-it7-ab-48ppm-vs-r2a6.png`).
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
+- **A warm item ink:** held weapons print grey because the part print has no tan ink. Adding one would warm every held gun toward r1_w1-w6, not just the Gatling (`gatling-128ppm-vs-r1w6.png`). Not built.
+- **Grain:** `world_riso.speck_k` 0.4 vs 0 (before) or higher toward r2_a5 (`print-speck-it9-2x-vs-r2a5.png`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
 ## Next steps
-- **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL).
-- **Weapon art:** a chunkier tan Gatling housing (judge after the n5-cast merge: their warm-tan steel may carry it). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
+- **Merge:** after the n5-cast + n5-look merge, re-bless the look goldens once (the branches conflict only in the goldens and JOURNAL; the toner speckle's in-gate drift is folded into that re-bless).
+- **Weapon art:** a chunkier Gatling housing (silhouette, not tone: the tone waits on the warm-ink Call). In design the held parts are already close to r1_w1-w3 (only the tone differs), so redraw them only if the owner asks.
 - **FX:** the blast's smoke ring from a clean band toward r2_w4's ragged orange pockets.
 - **Costs:** measure the frame cost under the bench lock.
