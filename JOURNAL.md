@@ -1307,3 +1307,7 @@ NEXT (iteration 21, the last BUILD before the 08:30 freeze):
   `M/frames/quest1-opening-peek-cop-ab.png`: the peek is the hybrid's welder helmet in the hazard collar on the
   dumpster, the patrol the slim D cop. frames.json 15 (it on top; ped-hat-crown dropped from the list, file kept).
   REPORT open item narrowed to the sprite Rivet's missing 32 px/m stickers. Scratch stills deleted.
+- 07:02 side effect checked: `HaulerLook.sprite_k` = FORMS[hauler].x / FORMS[base].x scales `_size(&"rivet")` in the
+  default quest. Main: 2.6 / 1.2 on the 1.2 capture. This branch since the hybrid (516475c9..): 2.6 / 0.97 on the
+  still-1.2 capture = the Hauler sprite 24 % oversize. b68665b1's 0.97 capture makes them agree again (FINDING, fixed
+  by the re-capture; not filmed: the quest bot does not seize the Hauler in its run). REPORT section 2 bullet.

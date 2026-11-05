@@ -119,7 +119,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   D cop 1.45 x 2.83 m, the hybrid Rivet 2.37 x 2.07 m, the hide-spot peek 0.97 m (`collect_call_art.json`, true
   scale). Same sim, before | after: `M/frames/quest1-sprites-ab-32ppm.png`, `M/cast-quest1-sprites-ab-32.mp4` (10 s,
   Dock 9); 64 px/m `M/frames/quest1-sprites-ab-64ppm.png`, `M/cast-quest1-sprites-ab-64.mp4`; under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. The opening scene (tick 350, Rivet hidden in the dumpster
-  while the patrol passes): the peek is the hybrid helmet in the collar: `M/frames/quest1-opening-peek-cop-ab.png`. Gap: a 120 px/m capture lacks the rig's
+  while the patrol passes): the peek is the hybrid helmet in the collar: `M/frames/quest1-opening-peek-cop-ab.png`. It also fixes a latent Hauler oversize in default quest 1: `HaulerLook.sprite_k` scales the sprite by
+  FORMS hauler / base = 2.6 / 0.97 since the hybrid base, but the sprite was still the 1.2 capture, so the grown
+  Hauler drew 24 % too large; capture and ratio agree again (2.6 size units, as on main). Gap: a 120 px/m capture lacks the rig's
   32 px/m stickers (tan core, visor slot), so the sprite Rivet prints paler than the rig Rivet; hosting the rigs in
   the default quest view is rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
 
