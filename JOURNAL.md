@@ -532,3 +532,12 @@ NEXT (iteration 5, in order; replaces the list above):
 5. Human-aim bot and per-attack rates over seeds 1-5.
 6. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, horn + bay doors.
 7. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-6).
+- 22:12 MILESTONE a431aa8d NEXT 1 done: a smashed crate bursts into six cardboard shards over a
+  dust puff for 0.5 s (ServoParcels.debris, render only, not in write_state). **Looked at**
+  `evidence/servo/shots/dash_smash_debris_keys_48ppm_it4.png` (p2 seed 2, ticks ~1725-1755): the
+  CS crate in the lane becomes a pale puff with shards beside the pad; it reads, small at 48 px/m.
+  test_servo 21/21, 0 SCRIPT ERROR in the film.
+
+NEXT (iteration 5): items 2-7 of the 22:08 list (item 1 is done). Start with 2 (BossBot rolls
+when its sidestep is blocked; re-measure the dodging dash and the fight length), and re-run
+scenarios + the director reel on the head first.
