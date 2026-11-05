@@ -30,6 +30,13 @@ static func lick_k(weapon: StringName, shot_tick: int, tick: int, base_k: float)
 	return lerpf(flare.x, base_k, since / flare.y)
 
 
+## The muzzle cell scale of `weapon` (HitFeel.muzzle_k: Rivet's pistol flash reads at 32 px/m).
+static func muzzle_k(weapon: StringName) -> float:
+	if _feel == null:
+		_feel = HitFeel.shipped()
+	return _feel.muzzle_k(weapon)
+
+
 ## Forget the streams (a test); `feel` replaces the shipped table (null = load it on next use).
 static func reset(feel: HitFeel = null) -> void:
 	_last.clear()
