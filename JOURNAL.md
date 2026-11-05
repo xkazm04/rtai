@@ -485,17 +485,17 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
   inside the whisper rings, and at Kilohm's line, in the Toner Room. It reads as the voice. The 0.6-scale press
   is still large next to the sprite-cast Rivet at 48 px/m.
 - frames.json (15): + the quest 1 still first; the voice A/B named in the four-voices entry (file kept).
-- 03:12 FOUND quest 1 shows the apparitions only under `-- --rigs` (quest1_game._dev_rigs loads ArenaRigs, which
-  attaches GhostFormView); the shipping sprite cast has no ghost view at all, so no voice either. There is no
-  recorded quest 1 replay in tests/; CollectCallBot (the scenario's player) hides in the b1 dumpster, so the b1
-  whisper is reachable by a bot run (dev/frames/frame_grabber.gd plays it, but draws CollectCallView without rigs).
+- 03:22 FOUND (before the quest 1 proof above): quest 1 attaches GhostFormView only under `-- --rigs`
+  (quest1_game._dev_rigs loads ArenaRigs); the shipping sprite cast has no ghost view, so no voice there either.
 
 NEXT (iteration 6):
 1. Merge n5-cast / n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; attack files theirs).
-2. Film the apparition on a REAL whisper: quest 1 with `--rigs` driven by CollectCallBot (or `--record` a bot run
-   and `--replay` it windowed with `--rigs`), the b1 dumpster whisper; a "ghost voice" log line proves the cue.
-   If quest 1 cannot run the bot windowed, film the arena's tazer whisper instead (combat_arena tazer_hit_now).
-3. Weakest item after that: Ohm's apparition is the smallest read at 32 px/m (0.8 m shell): try 1.15 scale for
-   the light forms' apparitions (a constant), A/B at 32 in the city.
-4. Keep REPORT.md current (gates of this iteration are in section "Gates").
-Session state 03:26: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock not taken this session), masters scratch holds only film.sh.
+2. The shipped quest 1 (sprite cast, no `--rigs`) has no ghost view, so no voices there. Either give it the
+   apparition (one GhostApparition on print_stage.actor_layer() bound to stage.events() and stepped at Rivet,
+   the wiring voice_quest1.gd shows) or leave it to the owner's call in REPORT. Pick, record a DECISION.
+3. Weakest after that: the apparitions' scale. Tonnage at 0.6 is still large beside the sprite-cast Rivet at
+   48 px/m; Ohm's is the smallest read at 32 px/m. Try Tonnage 0.5 and light forms 1.1 (constants), A/B at the
+   same ticks (arena 32 city and voice_quest1 48).
+4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)").
+Session state 03:28: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
+  not taken this session), masters scratch holds only film.sh.
