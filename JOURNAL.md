@@ -512,9 +512,9 @@ moves the drawn fingers, tell me and I will offset the prongs by the same kick (
   gunmetal robot powers down in oil to the first bolt (tick ~120), then the cops and the cruiser. Judged 4 stills.
 Session state 03:48: head = then head, tree clean, no Godot process of mine running, no lock held, masters
 scratch holds only film.sh and reel.sh, frames.json 15 (all present).
-- 03:51 Tonnage re-filmed at 64 px/m on the merged head (`M/tonnage-slam-64ppm-halfspeed.mp4`, 0 SCRIPT ERROR): the
+- 03:49 Tonnage re-filmed at 64 px/m on the merged head (`M/tonnage-slam-64ppm-halfspeed.mp4`, 0 SCRIPT ERROR): the
   press on the cruiser (crushed, wrecked), the street crack, the flattened cops, the second slam's telegraph ring.
   Judged 6 stills; no regression from the merges.
 - Not mine: PID 22028 (n5-cast's city capture) was running at 03:48; left alone.
-Session state 03:52: head = this commit, tree clean, no Godot process of mine running, no lock held, masters
+Session state 03:50: head = this commit, tree clean, no Godot process of mine running, no lock held, masters
 scratch holds only film.sh and reel.sh, frames.json 15 (all present).
