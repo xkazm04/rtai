@@ -12,3 +12,8 @@
 - `after-it2/`: the same city_frame shots with `tan_k` 1.0 + `stain_k` 0.35 (`world_riso`). Paper (crop 100,40-500,170 of city-0): 32 px/m 231.0/214.2/191.1 -> 207.7/188.5/157.9, 64 px/m 225.1/202.3/174.7 -> 199.4/180.4/150.9; target r2_a5 149/131/109.
 - CORRECTION: iteration 1's arena A/B was invalid. The dev arena ignored `--look=` (only boot/world.gd read it), so both halves were the riso print. Fixed in 4c42f589 (arena_game sets the print stage's look id); the A/B was re-filmed: `gtai-masters/n5/look/arena-reel-today-vs-riso-it2-32ppm.mp4` (40 s, 76 % of pixels differ, the fight identical). The city pan check (city_frame honours --look) stands.
 - `cost/`: the riso layer's frame cost (CONTENDED, unresolved under the noise; static fetch count). See cost/README.md.
+
+## Iteration 10 (2026-11-05 02:00-02:10)
+- `after-it10/`: the same city_frame shots (`--zooms=1,2 --foci=0,4`) on 9a448a83 (speck + patchy, the iteration 2 tan). `after-it10-tone/`: with `world_riso.tan_tone` [1.02, 0.99, 0.94].
+- Paper measured (PIL, crop 100,20-1200,150 of city-0-32, mean / median): today 222/205/183 / 238/220/197; it10 197/178/150 / 212/193/162; it10-tone 219/201/173 / 238/218/187. Target r2_a5 tiled sidewalk (crop 900,250-1600,650 of the 1672x942 image): 216/192/159 / 250/218/177. The iteration 2 sample (149/131/109) was not the sheet: the tan had darkened the paper below both ends. The new tone sits between today and the target. Asphalt unchanged (86/76/75 -> 88/78/77 mean).
+- Composite: `gtai-masters/n5/look/print-3way-city-32ppm-it10.png` (today | it10 old tan | it10 tone | r2_a5 at 32 px/m; below, 64 px/m crops today | old tan | tone).

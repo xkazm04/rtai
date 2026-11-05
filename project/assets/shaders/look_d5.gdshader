@@ -43,7 +43,7 @@ uniform float fibre_scale = 0.09;  // fibre lattice frequency per screen px
 uniform float stain_k = 0.0;       // low-frequency grey-brown stains on the paper (the target's mottled sheet)
 uniform float stain_scale = 0.011; // stain lattice frequency per screen px
 uniform float tan_k = 0.0;         // the ground's light neutral print toned toward the target's tan sheet (actors untouched)
-const vec3 TAN = vec3(0.92, 0.875, 0.8);
+uniform vec3 tan_tone = vec3(0.92, 0.875, 0.8); // the sheet tone tan_k multiplies the light ground by
 uniform float speck_k = 0.0;       // riso toner speckle: sparse 1 px ink specks on the paper and light fills (0 = off)
 uniform float speck_density = 0.05; // the share of light pixels that take a speck where the cluster noise peaks
 
@@ -112,7 +112,7 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 	}
 	// tan sheet: only the light neutral ground (the cream actors draw above this layer and pop more)
 	float neu = 1.0 - smoothstep(0.12, 0.22, chroma(o));
-	o = mix(o, o * TAN, tan_k * riso * neu * (1.0 - smoothstep(0.3, 0.7, d)));
+	o = mix(o, clamp(o * tan_tone, 0.0, 1.0), tan_k * riso * neu * (1.0 - smoothstep(0.3, 0.7, d)));
 	// stains: soft blotches with a darker tide line, on the paper and light fills only (never a red: a neutral dirt)
 	if (stain_k > 0.0 && d < 0.5) {
 		float sn = vnoise(w * stain_scale + 11.3) * 0.65 + vnoise(w * stain_scale * 3.7 + 6.1) * 0.35;
