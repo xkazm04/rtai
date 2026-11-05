@@ -782,3 +782,16 @@ frames.json 15 (all present).
   that steers the ram at the ghost car (or a second spot in its path), then the crush A/B in quest 1.
 Session state 06:35: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
 holds only film.sh, reel.sh and logs, frames.json 15 (all present).
+
+## Iteration 10 (06:36-07:36, BUILD)
+- 06:37 read JOURNAL, git log. MERGE n6-ghost-forms e865146d (Ohm's 2.6 m soul glow, story-form lift, n5-cast cop
+  art) as 97f49bf0 and n5-cast 7005b5c8 (plain riot crown) as 23bc7c07, `--no-ff --no-commit`, JOURNAL/REPORT and
+  our it7 logs kept ours; `--import` 0 SCRIPT ERROR. No new REQUEST to ghost-powers in the other lanes' JOURNALs.
+- 06:45 COMBAT CHECK director reel on 23bc7c07 (`E/director-reel-it10-powers.log`): 16/16 chapters, chapter lines
+  identical to it9 (diff empty), 0 SCRIPT ERROR.
+- 06:55 MILESTONE NEXT 2, a9b4a90f: `scenario_quest1_dent` (quest 1 on the city, a scripted pad: G, Q, the stick
+  on the nearest guard, fire every 20 ticks, melee at 200). Clean: seizes 1, strikes 4, kills 4, blasts 1, misses
+  5, rides 131 (= the filmed rec's counts); the same seed twice gives the same counts and state hash
+  (5718fac2...); the planted fault (the street's ghost cars cleared before tick 0) gives 0 seizes, 12 misses, a
+  different hash: caught (`E/quest1-dent.json`). No replay verify in it: the group is spawned outside the input
+  stream (as in the rec), so a replay log alone cannot rebuild it; the hash check is the determinism proof.
