@@ -90,9 +90,37 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (slab, asphalt, walking) and 64 px/m beside r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. Reactions, deaths
   and corpses before/after on the react board at 64 px/m: `M/frames/react-board-planview-ab-64ppm.png`,
   `M/cast-react-board-planview-ab-64ppm.mp4` (0 script errors, cops unchanged). Render only, no sim change.
+  The crowd's kill scene (`react_board_run.gd -- --board=street`, 64 px/m) before/after:
+  `M/frames/street-board-planview-ab-64ppm.png`, `M/cast-street-board-planview-ab-64ppm.mp4` (flee, the kill and
+  the corpse read as before). Live paths: the city block at 32 px/m (`M/frames/city-peds-ab-32ppm.png`,
+  `M/cast-peds-city-ab-32.mp4`, same sim) and quest 1 `--rigs` at 48 px/m under r1_c6
+  (`M/frames/quest1-peds-ab-48ppm-vs-r1c6.png`); director reel 16/16 chapters down; goldens re-blessed once
+  (decisions, diff mask `M/frames/golden-diff-planview-peds.png`). Quest stills with moving peds show stray shoes:
+  a capture artefact of stills mode, absent in a per-tick clip (`M/frames/quest1-ped-stills-artefact-48ppm.png`).
   The iteration 10 diagnosis and trials that led here: `M/frames/crowd-value-vs-r2a5.png`,
   `M/frames/crowd-part-markers-32ppm.png` (and `-b`, `-c`), `M/frames/crowd-package-trial-32ppm.png`.
 
+- Built (iteration 12, f4910eca): a plan-view ped part sheet (Codex `ped_plan_a`, r2_a5 + r1_c6 refs): the coat and the
+  jacket are drawn as shoulder ovals with a collar ring (no lapels or shirt front, nothing that faces a camera that is
+  not there), a pale felt hat seen as two circles, a dark hair crown, a pale hood. Installed in D4 at the shipped
+  torso width (the 0.83 m footprint kept); the five parts' D5 overlays dropped, so the close-up shows the new art too.
+  The coat+hat ped is now a pale figure with a pale hat ring at 32 and 64 px/m; the jacket reads mid grey at 64 px/m.
+  Lineups `M/frames/crowd-r5-ab-vs-r2a5.png`; react board `M/frames/react-board-r5peds-ab-64ppm.png`
+  (`M/cast-react-board-r5peds-ab-64ppm.mp4`); street board `M/frames/street-board-r5peds-ab-64ppm.png`
+  (`M/cast-street-board-r5peds-ab-64ppm.mp4`). An earlier front-facing redraw (r4) re-tried on the plan-view values
+  read darker at 32 px/m and was not built (`M/frames/crowd-r4-sheet-retrial-ab.png`).
+  Live city block at 32 px/m, same sim (`M/cast-r5peds-city-ab-32.mp4`, `M/frames/city-r5peds-ab-32ppm.png`); the
+  director reel 16/16 chapters down, 0 script errors; look goldens within tolerance (no re-bless).
+  Then (cc744d85, 0bcd2ce9) a second sheet r6 for the vest and overalls torsos and the beanie and cap heads (the
+  vest ped now reads pale with a dark hair crown), every ped head kept at one scale; its charcoal hoodie was not built
+  (it printed as a dark slab and lost the head mark). Three-way board: `M/frames/crowd-r6-ab-32-64ppm.png`; the react
+  board clip and still above show the final parts.
+
+### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on b722cb84: lint 13/13, unit 942/0, scenarios 46, parity
+exact (mutation caught at 629), look goldens 11/11 (worst 0.83) and block 5/5 (worst 0.86) with no re-bless, world lock holds.)
+### Gates (iteration 11, `tools/evidence/run.mjs --no-bench` on 1d4abaa6: lint 13/13, unit 941/1 where the 1 is the
+known flake `test_noir_shadows` (2/2 alone, twice), scenarios 46, parity exact (mutation caught at 629), selftest
+look goldens 11/11 and block 5/5 (worst mean 0.00, after the one re-bless for the plan-view peds), world lock holds.)
 ### Gates (iteration 9, `tools/evidence/run.mjs --no-bench` on 2f833a0b: lint 13/13, unit 940/1 where the 1 is the
 known flake `test_noir_shadows` (2/2 alone, twice; the standalone suite on the same tree was 941/0), scenarios 46,
 parity exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.06), block 5/5, no re-bless.)
@@ -113,7 +141,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
-  art is still 3/4-view art scaled for the plan view (a plan-view ped sheet would sharpen the 64 px/m close-up).
+  coat, jacket, vest and overalls torsos and the hat, hair, hood, beanie and cap heads are plan-view redraws since
+  iteration 12; the hoodie torso, the bald head, the limbs and the shoes are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
@@ -149,7 +178,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 
 6. The crowd's value at game zoom: A, pale-topped standing peds (built in iteration 11, plan-view values and a
    +42 L fill lift; four looks pale, jacket and hoodie dark), or B, the earlier dark crowd (the five
-   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24). Before/after beside
+   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
    r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
    32 px/m and only the cops' blue pads tell them apart.
 

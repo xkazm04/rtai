@@ -1,89 +1,4 @@
 {
- "torso": {
-  "size": [
-   133,
-   213
-  ],
-  "sheet": "sheets/ped_a.png",
-  "cell": 1,
-  "scale": 0.9966,
-  "pivot_a": [
-   107.0,
-   106.0
-  ],
-  "pivot_b": [
-   26.0,
-   106.5
-  ]
- },
- "torso_jacket": {
-  "size": [
-   133,
-   211
-  ],
-  "sheet": "sheets/ped_a.png",
-  "cell": 2,
-  "scale": 0.9966,
-  "pivot_a": [
-   106.0,
-   104.5
-  ],
-  "pivot_b": [
-   26.0,
-   104.5
-  ]
- },
- "head_hat": {
-  "size": [
-   156,
-   161
-  ],
-  "sheet": "sheets/ped_a.png",
-  "cell": 3,
-  "scale": 0.9966,
-  "pivot_a": [
-   80.0,
-   79.5
-  ],
-  "pivot_b": [
-   75.0,
-   79.5
-  ]
- },
- "head_hair": {
-  "size": [
-   124,
-   125
-  ],
-  "sheet": "sheets/ped_a.png",
-  "cell": 4,
-  "scale": 0.9966,
-  "pivot_a": [
-   63.0,
-   61.5
-  ],
-  "pivot_b": [
-   61.0,
-   61.5
-  ]
- },
- "head_hood": {
-  "size": [
-   137,
-   122
-  ],
-  "sheet": "sheets/ped_a.png",
-  "cell": 5,
-  "scale": 0.9966,
-  "pivot_a": [
-   62.0,
-   60.5
-  ],
-  "pivot_b": [
-   76.0,
-   60.5
-  ]
- },
  "upperarm": {
   "size": [
    155,
@@ -235,23 +150,6 @@
   "pivot_b": [
    8.0,
    88.0
-  ]
- },
- "torso_vest": {
-  "size": [
-   148,
-   218
-  ],
-  "sheet": "sheets/ped_c.png",
-  "cell": 5,
-  "scale": 1.0047,
-  "pivot_a": [
-   110.0,
-   108.0
-  ],
-  "pivot_b": [
-   38.0,
-   108.0
   ]
  }
 }
