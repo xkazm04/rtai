@@ -908,3 +908,40 @@ NEXT (iteration 7, in order):
   film's telemetry). Scratch AVIs deleted. frames.json 15.
 - Session ends here, everything committed. NEXT for iteration 7 is the list above minus items 1-2
   (item 2 keeps the target comparison).
+
+## Iteration 7 (00:03-01:03): BUILD
+
+Read: JOURNAL (NEXT of it6), git log, servo's JOURNAL (FYI 23:52: its merge of 9695947c; its
+`_rolls` also rolls a charge on its body; no REQUEST to king open). Registry rules applied:
+encounter-balance-simulation (n seeds per condition, per-attack hit rates, never "balanced" without
+numbers), motion-quality-gating (judge the still/clip at game zoom, looked at).
+
+### 00:12 FILM the target comparison re-shot at 32 px/m on the it6 head (NEXT 2, rest)
+- `gtai-masters/n7/king/king_target_vs_game_32ppm_it7.png`: the sheet | two 2x crops of the it6
+  full fight (phase 1 procession at 10 s; phase 3 charge lane with Rivet at 66 s). **Looked at.**
+  Matches: the long plum-and-black car with a gold rim and gold hood cannon, the scalloped plum
+  drapes, the vermilion cape with the ermine ring and the gold crown, four gang on the car's sides;
+  King on foot is ~1.5x Rivet with a gold press arm and the crown. Gaps, honestly: the gang read
+  as thin grey limbs with **black disc heads** (target: bulky steel bots with shades); King on foot
+  is crown + collar + gold arm, his grey body barely reads; the cannon aims as a diagonal gold bar.
+
+### 00:20 CHECK the plain robot thug at 48 px/m (NEXT 3, FYI for REPORT, not King's)
+- `--rigs --bot=ghosts --ghost=kerf --ppm=48 --clean`, tick 330
+  (`evidence/king/shots/it7/plain_thug_48ppm_ink_x2.png`): **confirmed**, the plain thug prints as
+  a solid ink mass with one white optic, the same D4 print the gang had before it5's lift. The
+  fix that worked for the gang (gang_parts.py's grey lift x1.55) would apply to `art/thug/` too;
+  not done here (the thug is the enemy-ai lane's, and a lift moves its look in every arena run).
+
+### 00:15 Dent in the full fight (NEXT 4): numbers, and a wrong finding corrected
+- Human bot, `--ghost=dent`, seeds 1-5, full fights (CONTENDED, 0 SCRIPT ERROR,
+  `evidence/king/numbers-it7-dent/`): King down **90.8 s** (86.8-97.9), took 78.8, 0 deaths; hit
+  rates ram 4/15, coin fan 11/45, slam 5/12, charge 1/9. Without a ghost (it5d): 83.9 s, took 78.
+  So Dent makes the fight ~7 s **longer** for this bot: the car is a set piece, not a damage source.
+- I first read `cars.hijacked 0` (5/5) as "the bot never seizes", blamed the gearbox pad's car (off
+  the boss floor) and committed f448dbce (`car_goal(cars, me, area)`: only cars inside
+  `BossHook.bounds`; unit +1 planted, 1157/0). The re-run was **identical**, so I logged the bot
+  (seed 2, temporary, not committed): it walks to the north plaza sedan, takes the soul, seizes it
+  at **tick 225**, drives it west at King and the car wrecks at tick 390 by (99, -19). The seize
+  works. `cars.hijacked` is `ArenaStage.car_counts()`, a **snapshot at quit**: the wreck is cleared
+  long before the fight ends (total 3 of 4). The f448dbce guard stays (harmless; it keeps the bot
+  on the floor if a start position ever puts the pad's cars nearer) but its message's cause is wrong.
