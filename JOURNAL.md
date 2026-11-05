@@ -469,3 +469,7 @@ DentBody feeds the car's speed as Rivet's velocity, so on the roof Dent runs his
 lurch. Please, in DentBody (yours): while `pilot.dent.riding()` feed `vel_in` zero (or a crouch), and add a buck (a
 short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` rising) and a jump on the hop
 (`blasts` rising). I will not edit DentBody.
+- 03:38 GATES evidence runner `--no-bench` on db0b4541 (robot rig, dry Kerf kill, Dent ride + hop fix): PASS lint 13/13,
+  unit 976/0, scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.21) and
+  block 5/5 in tolerance, no re-bless (`E/evidence-run-it5.log`). Bench not run (contended machine).
+  TTK doc: Dent's ride and the robot victim lines.
