@@ -544,37 +544,37 @@
     {
       "anchor_px": [
         12,
-        40
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/ray_beam_0.png",
       "id": "ray_beam_0",
       "size_px": [
         320,
-        80
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        40
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/ray_beam_1.png",
       "id": "ray_beam_1",
       "size_px": [
         320,
-        80
+        120
       ]
     },
     {
       "anchor_px": [
         12,
-        40
+        60
       ],
       "art": "res://features/combat/weapons/art/fx/ray_beam_2.png",
       "id": "ray_beam_2",
       "size_px": [
         320,
-        80
+        120
       ]
     },
     {

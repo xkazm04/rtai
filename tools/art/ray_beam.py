@@ -3,10 +3,13 @@
 The weapon-art lane's ray round is a train of hoops (`ray_ring_0..2`, WeaponFxRay): at 64 px/m four
 green rings strung back from the head. r2_w4's ray is one straight acid-green beam with a pale core
 and fine green tendrils crackling along both edges. Three frames (the tendrils re-crackle per tick)
-on a 320x80 canvas whose tail anchor (12,40) and 296 px span to the round head mirror the electro
+on a 320x120 canvas whose tail anchor (12,60) and 296 px span to the round head mirror the electro
 arc cells, so WeaponFxRay stretches the beam back from the head like the arc. Palette tokens only:
 fx_colour.json's ray family inks them (wash -> acid green, paper_2 / paper -> the pale core, ink_2
 -> the tendrils' green).
+n5-look iteration 18: the tendrils were short green specks beside r2_w4's halo; now inked veins
+(EDGE px of ink each side) that trail back along the beam at a shallow angle, each with a fork,
+reaching up to about three body half-heights (the canvas grew 80 -> 120 px for them).
 
     python tools/art/ray_beam.py [fx_dir]   then  python tools/art/fx_colour.py <fx_dir> <fx_dir>/colour
 """
@@ -17,15 +20,17 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from weapon_fx import INK_2, PAPER, PAPER_2, SS, WASH, _canvas, _compose, _poly, _save
+from weapon_fx import INK, INK_2, PAPER, PAPER_2, SS, WASH, _canvas, _compose, _poly, _save
 
-W, H = 320, 80
+W, H = 320, 120
 CY = H / 2
 TAIL, HEAD = 12, 308
 ## Band half-heights: the green body, the pale inner band, the core; the tail tapers over TAPER px.
 BODY, INNER, CORE, TAPER = 13.0, 9.0, 4.5, 70
 ## Tendrils per edge, their reach off the band (part px), kinks each, stroke width (part px).
-TENDRILS, REACH, KINKS, STROKE = 12, (12, 25), 3, 6
+TENDRILS, REACH, KINKS, STROKE = 11, (20, 38), 4, 5
+ROOT = 40  # the veins root this far past the taper: they trail back up to ~100 part px
+EDGE = 2  # ink each side of a tendril stroke (r2_w4's tendrils are inked)
 OUTLINE_PX = 9
 
 
@@ -38,20 +43,32 @@ def _band(half):
     return m
 
 
+def _tendril(rng, x, y, side, reach):
+    pts = [(x, y)]
+    for k in range(KINKS):
+        x += rng.uniform(-24, -12)  # the veins trail back along the beam at a shallow angle (r2_w4)
+        y = CY + side * (BODY + reach * (k + 1) / KINKS) + rng.uniform(-3, 3)
+        pts.append((x, y))
+    return pts
+
+
 def _tendrils(img, frame):
     rng = random.Random(53 + frame)
-    d = ImageDraw.Draw(img)
+    lines = []
     for side in (-1, 1):
         for i in range(TENDRILS):
-            x = TAIL + TAPER + (HEAD - TAIL - TAPER - 20) * (i + rng.random()) / TENDRILS
-            y = CY + side * (BODY - 1)
-            pts = [(x, y)]
+            x = TAIL + TAPER + ROOT + (HEAD - TAIL - TAPER - ROOT - 12) * (i + rng.random()) / TENDRILS
             reach = rng.uniform(*REACH)
-            for k in range(KINKS):
-                x += rng.uniform(-9, 5)  # the tendrils trail back from the head a little
-                y = CY + side * (BODY + reach * (k + 1) / KINKS) + rng.uniform(-2, 2)
-                pts.append((x, y))
-            d.line(pts, fill=INK_2 + (255,), width=STROKE, joint="curve")
+            main = _tendril(rng, x, CY + side * (BODY - 1), side, reach)
+            lines.append((main, STROKE))
+            bx, by = main[1]  # a fork off the first kink, shorter and thinner
+            fork = [(bx, by)] + [(bx - rng.uniform(10, 18) * (k + 1), by + side * rng.uniform(3, 7) * (k + 1)) for k in range(2)]
+            lines.append((fork, STROKE - 2))
+    d = ImageDraw.Draw(img)
+    for pts, w in lines:
+        d.line(pts, fill=INK + (255,), width=w + 2 * EDGE, joint="curve")
+    for pts, w in lines:
+        d.line(pts, fill=INK_2 + (255,), width=w, joint="curve")
     return img
 
 
