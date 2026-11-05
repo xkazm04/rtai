@@ -232,3 +232,6 @@
   is an incoming enemy round (non-Rivet tracers have a VERMILION core, gun_fx_art.gd:92): danger colour, per verdict.
   frames.json: + the clip (index 2), - look-8-gun-tan-closeup-steps.png (file kept: REPORT cites it). 15 entries.
 - NEXT (any later session): nothing owed; exes current on 6179bf2d (branch head docs-only since). See iteration 5b NEXT.
+- 18:04 MEASURE arena director reel on fcaec312 (project/ = 6179bf2d; `res://dev/arena/arena.tscn -- --bot=reel
+  --reel=director --loadout=pistol`, headless --fixed-fps 60 --quit-after 7000): 19/19 chapters, every one fully
+  down, 0 SCRIPT ERROR, 0 unknown arg (evidence/reel-director-arena-it6.log). Combat holds in both the arena and the city.
