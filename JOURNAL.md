@@ -1173,5 +1173,5 @@ Session state 05:47: tree clean after this commit, no Godot process of mine runn
   coat-hat look) at both ticks: before an all-pale outline on the slab, after a dark-headed figure. Lossless x5:
   `M/frames/ped-heads-quest1-ab-32ppm.png`. frames.json 15 (on top; quest1-peds-ab-48ppm-vs-r1c6 dropped from the
   list, file kept, REPORT cites it). NEXT amendment's quest 1 item done.
-Session end 05:52: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
+Session end 05:50: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
   logs only. NEXT (iteration 19): the 05:27 list as amended at 05:46; REPORT current to 551ed9c6.
