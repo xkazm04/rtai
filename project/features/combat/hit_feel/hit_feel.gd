@@ -14,6 +14,14 @@ var kill_hitstop: StringName = &"kill"
 ## A scripted kill beat holds the kill longer (d5-combat REQUEST 3: 6 -> 8 ticks).
 var beat_kill_hitstop: StringName = &"boss_hit"
 var beat_mode: bool = false
+## `--feel=off` (before clips): no camera effect at all from a hit (no shake, kick or hit-stop);
+## the victim's flash, reaction and knockback stay (they are the approved baseline, not feel).
+var enabled: bool = true
+## Lane n7-ranged: a lethal hit kicks the camera this much harder than its class.
+var kill_kick_scale: float = 1.5
+## The restraint (hit_feel.json `cap`): kicks per tick, shakes and hit-stop ticks per second.
+var cap: Dictionary = {}
+var _weapons: Dictionary[StringName, Dictionary] = {}
 var _rows: Dictionary[StringName, Dictionary] = {}
 var _flash_until: Dictionary[int, int] = {}
 var _flash_len: Dictionary[int, int] = {}
@@ -36,11 +44,27 @@ static func shipped(rig: CameraRig = null, path: String = TABLE) -> HitFeel:
 			"flash": t.integer(r, "flash_ticks"),
 			"reaction": StringName(t.text(r, "reaction")),
 			"stagger": t.integer(r, "stagger_ticks"),
+			"kick_px": t.num(r, "kick_px"),
+			"kick_ticks": t.integer(r, "kick_ticks"),
 		}
+	hf.kill_kick_scale = t.num(t.raw, "kill_kick_scale")
+	hf.cap = t.object(t.raw, "cap")
+	for row: Variant in t.array(t.raw, "weapons"):
+		var w: Dictionary = row if row is Dictionary else {}
+		hf._weapons[StringName(t.text(w, "id"))] = w
+	hf.enabled = feel_flag() != "off"
 	hf._errors = t.errors()
 	if not hf.ok():
 		Log.error("hit_feel", str(hf._errors))
 	return hf
+
+
+## The `--feel=<on|off>` launch value (OS args: the dev arena reads them raw too); "on" if absent.
+static func feel_flag() -> String:
+	for arg: String in OS.get_cmdline_user_args():
+		if arg.begins_with("--feel="):
+			return arg.substr(7)
+	return "on"
 
 
 func ok() -> bool:
@@ -64,7 +88,7 @@ func land(target_id: int, hit_class: StringName, dir: Vector2, lethal: bool, tic
 	var stagger: int = row["stagger"]
 	if kind != &"none" and not lethal:
 		reaction.emit(target_id, kind, dir, stagger)
-	if _rig == null:
+	if _rig == null or not enabled:
 		return 0
 	var shake: StringName = row["shake"]
 	if shake != &"":
@@ -86,3 +110,33 @@ func flash(target_id: int, tick: int) -> float:
 	if tick >= until:
 		return 0.0
 	return float(until - tick) / float(_flash_len[target_id])
+
+
+## The camera side of one hit (lane n7-ranged): the class row with the weapon's override on top
+## (hit_feel.json `weapons`): hitstop and shake ids, kick_px (screen px along the hit) and
+## kick_ticks. A lethal hit adds kill_hitstop (beat_kill_hitstop in a beat; the caller holds the
+## longer of the two, so a rocket kill keeps its blast stop) and a harder kick.
+func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dictionary:
+	var row: Dictionary = _rows.get(hit_class, _rows.get(&"light", {}))
+	var out: Dictionary = {
+		"hitstop": row.get("hitstop", &""),
+		"shake": row.get("shake", &""),
+		"kick_px": row.get("kick_px", 0.0),
+		"kick_ticks": row.get("kick_ticks", 1),
+	}
+	var over: Dictionary = _weapons.get(weapon, {})
+	for key: String in ["hitstop", "shake"]:
+		if over.has(key):
+			out[key] = StringName(str(over[key]))
+	if over.has("kick_px"):
+		var px: float = over["kick_px"]
+		out["kick_px"] = px
+	if over.has("kick_ticks"):
+		var ticks: float = over["kick_ticks"]
+		out["kick_ticks"] = roundi(ticks)
+	out["kill_hitstop"] = &""
+	if lethal:
+		var kpx: float = out["kick_px"]
+		out["kill_hitstop"] = beat_kill_hitstop if beat_mode else kill_hitstop
+		out["kick_px"] = kpx * kill_kick_scale
+	return out

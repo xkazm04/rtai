@@ -1,11 +1,20 @@
 {
   "beat_kill_hitstop": "boss_hit",
+  "cap": {
+    "doc": "The restraint (FeelBudget, lane n7-ranged): however many hits land, at most kicks_per_tick directional kicks start in one sim tick, shakes_per_second shakes and hitstop_ticks_per_second hit-stop ticks in any 60-tick window; the summed kick never passes kick_px_max screen px.",
+    "hitstop_ticks_per_second": 12,
+    "kick_px_max": 8,
+    "kicks_per_tick": 1,
+    "shakes_per_second": 3
+  },
   "classes": [
     {
       "doc": "Pistol, machine pistol, nails: a flash and a flinch, no stop (rate of fire would stutter).",
       "flash_ticks": 4,
       "hitstop": "",
       "id": "light",
+      "kick_px": 1,
+      "kick_ticks": 5,
       "knockback_scale": 1,
       "reaction": "flinch",
       "shake": "",
@@ -16,6 +25,8 @@
       "flash_ticks": 6,
       "hitstop": "rivet_hit",
       "id": "medium",
+      "kick_px": 2,
+      "kick_ticks": 6,
       "knockback_scale": 1,
       "reaction": "flinch",
       "shake": "gunfire",
@@ -26,6 +37,8 @@
       "flash_ticks": 8,
       "hitstop": "melee_hit",
       "id": "heavy",
+      "kick_px": 4,
+      "kick_ticks": 9,
       "knockback_scale": 1.2,
       "reaction": "stagger",
       "shake": "hit",
@@ -36,6 +49,8 @@
       "flash_ticks": 10,
       "hitstop": "boss_hit",
       "id": "blast",
+      "kick_px": 7,
+      "kick_ticks": 14,
       "knockback_scale": 1.5,
       "reaction": "knockdown",
       "shake": "explosion",
@@ -46,6 +61,8 @@
       "flash_ticks": 3,
       "hitstop": "",
       "id": "burn",
+      "kick_px": 0,
+      "kick_ticks": 1,
       "knockback_scale": 0,
       "reaction": "none",
       "shake": "",
@@ -56,6 +73,8 @@
       "flash_ticks": 8,
       "hitstop": "melee_hit",
       "id": "shock",
+      "kick_px": 3,
+      "kick_ticks": 8,
       "knockback_scale": 0.5,
       "reaction": "stagger",
       "shake": "hit",
@@ -66,13 +85,49 @@
       "flash_ticks": 6,
       "hitstop": "melee_hit",
       "id": "melee",
+      "kick_px": 2.5,
+      "kick_ticks": 7,
       "knockback_scale": 1,
       "reaction": "flinch",
       "shake": "hit",
       "stagger_ticks": 12
     }
   ],
-  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6).",
+  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6). Lane n7-ranged: kick_px / kick_ticks are a directional camera kick along the hit (screen px at any zoom, easing back over the ticks; FeelCam), kill_kick_scale makes a kill kick harder, `weapons` overrides a class's hitstop / shake / kick per weapon id, and `cap` is the restraint (FeelBudget). --feel=off turns every camera effect of a hit off (before clips).",
   "kill_hitstop": "kill",
-  "schema": "gtai.hit_feel/1"
+  "kill_kick_scale": 1.5,
+  "schema": "gtai.hit_feel/1",
+  "weapons": [
+    {
+      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap.",
+      "hitstop": "",
+      "id": "gatling",
+      "kick_px": 0.8,
+      "shake": ""
+    },
+    {
+      "doc": "Rate of fire: a smaller kick than the pistol.",
+      "id": "machine_pistol",
+      "kick_px": 0.6
+    },
+    {
+      "doc": "Several shards land together: no per-shard stop (the kill still stops).",
+      "hitstop": "",
+      "id": "homing_shard"
+    },
+    {
+      "doc": "The heavy single shot: a bigger kick than its class.",
+      "id": "hand_cannon",
+      "kick_px": 5,
+      "kick_ticks": 10
+    },
+    {
+      "doc": "The biggest hit in the arsenal: the long stop, the full kick and its own deeper, longer shake (camera.json nuke).",
+      "hitstop": "boss_hit",
+      "id": "mini_nuke",
+      "kick_px": 10,
+      "kick_ticks": 18,
+      "shake": "nuke"
+    }
+  ]
 }
