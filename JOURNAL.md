@@ -912,3 +912,10 @@ NEXT (iteration 15), replaces the 02:35 list:
 3. Scratch kept: `scratch-cast/i14/visor_patch.py` (the reverted visor trial).
 Session end 03:26: tree clean after this commit, image.lock and bench.lock never taken, no Godot process of mine
   running, scratch-cast/i14 renders deleted (visor_patch.py kept).
+- 03:27 NEXT 1(b) judged, NO CHANGE: director reel claw combo at 64 px/m (360 ticks, live D5 tier, 0 SCRIPT ERROR), 4 frames
+  at t=1-4 s: the claws print pale with no visible vermilion specks; the only vermilion on Rivet is the collar band.
+  The rust that measured 3.9-4.4 % in the D5 claw art does not survive the live print at game zoom. Board:
+  `M/frames/claw-rust-check-64ppm.png` (clip deleted). NEXT 1(b) is closed; NEXT 1(a) (visor, a design call) and 2-3
+  stand.
+Session end 03:28: tree clean after this commit, no Godot process of mine running (the two running at 03:24 are
+  n5-look's scenarios), locks never taken.
