@@ -18,14 +18,14 @@ var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
 var _pal: PaletteTokens = PaletteTokens.shared()
 
 
-## The body's scale: slumps to 0.88 with one settling bounce.
+## The body's scale: slumps to 0.84 with one settling bounce.
 static func scale_k(dt: int) -> float:
-	return 0.88 + 0.12 * exp(-dt / 14.0) * cos(dt * 0.22)
+	return 0.84 + 0.16 * exp(-dt / 14.0) * cos(dt * 0.22)
 
 
 ## Forward slump of the body (metres along the facing): he folds over his legs.
 static func slump_m(dt: int) -> float:
-	return 0.45 * (1.0 - exp(-dt / 16.0))
+	return 0.6 * (1.0 - exp(-dt / 16.0))
 
 
 ## How far the pads sag in toward the body (metres) and their scale (dropping to the floor).
@@ -62,7 +62,7 @@ func spill(c: CanvasItem, rack: ServoRack, dt: int) -> void:
 		var cell: Vector2 = rack.cell_pos(i)
 		var out: Vector2 = (cell - rack.origin).normalized()
 		var at: Vector2 = cell + out * 1.8 * ease_out
-		c.draw_circle(cell * px, 0.3 * px, Color(_pal.color(&"ink"), 0.85))  # the bay is empty
+		c.draw_circle(cell * px, 0.26 * px, Color(_pal.color(&"ink_2"), 0.6))  # the bay is empty
 		var hop: float = sin(u * PI) * 0.5  # up off the rack, then down
 		var spin_r: float = (1.0 if i % 2 == 0 else -1.0) * u * 4.0
 		_wreck(c, at, hop, spin_r, u >= 1.0)
@@ -91,11 +91,11 @@ func smoke(c: CanvasItem, rack: ServoRack, dt: int) -> void:
 				(o + dir * r0) * px, (o + dir * (r0 + 0.5)) * px, Color(1.0, 0.93, 0.7, a), 3.0
 			)
 	var ramp: float = minf(float(dt) / 40.0, 1.0)
-	for j: int in 6:
-		var ph: float = fmod(dt * 0.012 + j / 6.0, 1.0)
-		var src: Vector2 = rack.cell_pos(0 if j % 2 == 0 else rack.state.size() - 1)
+	for j: int in 4:  # one plume, off the wing still on his back (thin: the wrecks must read)
+		var ph: float = fmod(dt * 0.012 + j / 4.0, 1.0)
+		var src: Vector2 = rack.cell_pos(rack.state.size() - 1)
 		var at: Vector2 = src + WIND * ph * 2.6
-		var col: Color = Color(_pal.color(&"ink"), 0.62 * (1.0 - ph) * ramp)
+		var col: Color = Color(_pal.color(&"ink"), 0.45 * (1.0 - ph) * ramp)
 		c.draw_circle(at * px, (0.3 + 0.8 * ph) * px, col)
 
 

@@ -45,7 +45,7 @@ func test_defeat_grounds_the_swarm() -> void:
 
 func test_fall_curves_settle() -> void:
 	assert_almost_eq(ServoFall.scale_k(0), 1.0, 0.001, "starts at full size")
-	assert_almost_eq(ServoFall.scale_k(240), 0.88, 0.01, "slumps to 0.88")
+	assert_almost_eq(ServoFall.scale_k(240), 0.84, 0.01, "slumps to 0.84")
 	assert_almost_eq(ServoFall.spin(300), 0.0, 0.001, "the pads spin down")
 	assert_eq(ServoFall.tint(0), Color(2.0, 2.0, 2.0), "the flash")
 	assert_eq(ServoFall.tint(400), ServoFall.GREY, "greyed out")
