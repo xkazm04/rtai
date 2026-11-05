@@ -32,6 +32,8 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 		_dashed_ring(c, p.pos, s.tuning.ring_m, verm, 3.0)
 	for b: ServoParcels.Blast in s.parcels.blasts:
 		c.draw_circle(b.pos * px, b.radius_m * px, Color(pal.color(&"ink"), 0.55))
+	for d: ServoParcels.Parcel in s.parcels.debris:
+		_debris(c, d.pos, 1.0 - float(d.life_left) / ServoParcels.DEBRIS_TICKS, s.tuning.crate_m)
 	for cr: ServoParcels.Parcel in s.parcels.crates:
 		var half: float = s.tuning.crate_m * 0.5 * px
 		var box: Rect2 = Rect2(cr.pos * px - Vector2(half, half), Vector2(half, half) * 2.0)
@@ -47,6 +49,20 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 			font_px,
 			pal.color(&"ink")
 		)
+
+
+## A crate the rotor dash smashed: six cardboard shards fly out over a dust puff, k 0..1.
+func _debris(c: CanvasItem, at: Vector2, k: float, crate_m: float) -> void:
+	var fade: float = 1.0 - k
+	c.draw_circle(at * px, crate_m * (0.6 + 0.8 * k) * px, Color(pal.color(&"paper_2"), 0.5 * fade))
+	var shard: Vector2 = Vector2(0.22, 0.12) * px
+	for i: int in 6:
+		var dir: Vector2 = Vector2.from_angle(TAU * i / 6.0 + at.x)
+		var p: Vector2 = (at + dir * crate_m * (0.3 + 1.4 * k)) * px
+		c.draw_set_transform(p, dir.angle() + k * 6.0 + i, Vector2.ONE)
+		c.draw_rect(Rect2(-shard * 0.5, shard), Color(pal.color(&"paper"), fade))
+		c.draw_rect(Rect2(-shard * 0.5, shard), Color(pal.color(&"ink"), fade), false, 1.5)
+	c.draw_set_transform(Vector2.ZERO)
 
 
 ## A kamikaze's dive line: thin while its strike point tracks Rivet, thick with the blast ring

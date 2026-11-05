@@ -26,10 +26,16 @@ class Blast:
 	var damage: float = 0.0
 
 
+## How long a smashed crate's cardboard burst shows.
+const DEBRIS_TICKS: int = 30
+
 var falling: Array[Parcel] = []
 var crates: Array[Parcel] = []
 ## Crates the dash smashed (telemetry).
 var smashed_total: int = 0
+## Where crates were smashed, life_left counting down DEBRIS_TICKS (render only: the view's
+## cardboard burst; not in write_state).
+var debris: Array[Parcel] = []
 ## The bombs that went off on the last step (cleared at the start of each step).
 var blasts: Array[Blast] = []
 var landed_total: int = 0
@@ -65,6 +71,9 @@ func step() -> void:
 		if c.life_left > 0 and c.hp > 0:
 			kept.append(c)
 	crates = kept
+	debris = debris.filter(func(d: Parcel) -> bool: return d.life_left > 0)
+	for d: Parcel in debris:
+		d.life_left -= 1
 
 
 func _land(p: Parcel) -> void:
@@ -117,6 +126,10 @@ func smash(pos: Vector2, radius_m: float) -> int:
 		if c.hp > 0 and _covers(c, pos, radius_m):
 			c.hp = 0
 			n += 1
+			var d: Parcel = Parcel.new()
+			d.pos = c.pos
+			d.life_left = DEBRIS_TICKS
+			debris.append(d)
 	smashed_total += n
 	return n
 
