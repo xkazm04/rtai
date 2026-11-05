@@ -419,3 +419,13 @@ NEXT (iteration 5):
 5. REPORT.md is a draft for this lane: keep it current (gates, Calls for the owner with the composites).
 Session state 02:54: head = this commit, tree clean, no Godot process of mine running, image.lock taken once (02:12,
   ohm_parts) and deleted; masters scratch empty except film.sh.
+- 02:56 NEXT 3c done early: `M:frames/ohm-morph-reduced-motion-ab-64ppm.png` (same ticks, full | `--reduced-motion`):
+  reduced motion keeps the burst ring at one size (no expanding ring) and the plates fly less; same two stages and
+  end pose. 0 SCRIPT ERROR both.
+- 02:58 NEXT 3b done early: `M:frames/forms-switch-tonnage-dent-64ppm-keys.png` + `M:forms-switch-64ppm-slow3x.mp4`
+  (`--bot=forms --form=all --ppm=64`, 0 SCRIPT ERROR): Tonnage collapses into the teal ring and Dent stands up out of
+  it in ~0.2 s, no base pass: the form-to-form DECISION reads at 64 px/m. frames.json: + these two, - the Kerf rim
+  still (its clip stays, named in the Ohm rim entry) and the Ohm arena clip (the city clip shows Ohm at 32 with the
+  rim; re-film the arena clip if a slot frees).
+  NEXT for iteration 5 is above (items 3b and 3c are now done: start at 3a, Dent's 32 px/m read).
+Session state 02:59: head = this commit, tree clean, no Godot process of mine running, no lock held.
