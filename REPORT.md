@@ -1,7 +1,8 @@
-# n5-look REPORT (2026-11-05 08:33, iteration 25, final)
+# n5-look REPORT (2026-11-05 08:47, iteration 27, final)
 
 Branch `n5-look`, cut from main `a1275c82`. Evidence: `C:\Users\kazda\kiro\gtai-masters\n5\look\` (`frames.json`, 15 entries).
-Final build state: the last code or data change is `176c48f4`; everything after it is docs. On `176c48f4` the evidence gate is green (lint 13/13, unit 964/0, scenarios 46, parity bit-exact, look goldens 11/11) and the director reel shows 16/16 chapters with 0 script errors. At 08:31 all 15 `frames.json` files existed, and no lock or Godot process of this lane was left running.
+Final build state: the last code or data change is `176c48f4`; everything after it is docs. On `176c48f4` the evidence gate is green (lint 13/13, unit 964/0, scenarios 46, parity bit-exact, look goldens 11/11) and the director reel shows 16/16 chapters with 0 script errors. At 08:45 (iteration 27) every evidence file this report cites was re-checked and exists in that folder (all 15 `frames.json` entries too), every commit it names resolves, and no lock or Godot process of this lane is running. (The lane's evidence lives in `gtai-masters
+5\look\` per the brief; the repo's `evidence/` folder holds only the shared gate JSON.)
 Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (lines tagged n5-look).
 
 ## What works (with its evidence)
@@ -45,7 +46,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Iteration 18: the flamethrower's jet is r2_w4's ragged flame cone (orange flame-licked edges, hot yellow body, a pale axis streak) instead of a chain of teardrop bubbles; the slices overlap into one widening fan from the nozzle, and never reach back over the gun (`tools/art/flame_cone.py`, `WeaponFxArt._jet_x`; `weapon_art.json` flamethrower `projectile_fx` "flame_cone", back = "flame"). Evidence: `fx-flame-cone-it18-64ppm-vs-r2w4.png`, `fx-flame-cone-it18-32ppm-2x.png`, in motion `fx-flame-cone-range-48ppm-it18.mp4`.
    - Iteration 20: the jet sheds loose embers, short inked orange streaks off the cone's sides that blink in 6-tick steps (`WeaponFxEmber`, `data/tables/flame_embers.json`; count 0 or `--flame-embers=off` = the before): `fx-flame-embers-it20-vs-r2w4.png` (48 and 32 px/m), in motion `fx-flame-embers-it20-48ppm-ab.mp4`.
    - Iteration 20: the burning ground (flamethrower and molotov patches, burning humans) prints r2_w4's flame colours on the FX colour canvas: orange tongues grading hot yellow toward an open heart where the scorch shows, in place of quest 1's vermilion-and-cream loop under the item print (`tools/art/ground_fire.py` + `.json` -> `fx/colour/ground_fire.png`; `--ground-fire=ink` = the before): `fx-ground-fire-it20-vs-r2w4.png` (molotov at 64 px/m, the range at 48), in motion `fx-ground-fire-it20-48ppm-ab.mp4`.
-   - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
+   - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`. (The 19:16 dev-lineup still was dropped at 23:15, superseded by the live arena FX frames.)
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
    - Evidence: `held-size-ab-cast-merge.png`.
 5. **The plasma sword blade is 20 % longer.** The hilt keeps its size and the reach data is unchanged (tip ~2.07 m against reach 2.0-2.2 m).
@@ -63,7 +64,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 06fca867 (the alley floor and props, iteration 21), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 176c48f4 (the bigger dumpsters, iteration 22, the final code/data build), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
@@ -86,6 +87,12 @@ The last full evidence gate was green on 06fca867 (2026-11-05 07:57, the alley f
 - **Not checked frame by frame:** since the colour ground fire (ac480ed4) draws on the FX colour canvas after its host, a contractor's vermilion aim line (GuardTell) that crosses a burning patch now draws under the fire tongues (the knocked-out core still shows it). No staged frame yet: the director reel's molotov chapter has no aim lines, and a `--weapon=molotov --bot=gunplay` pit run showed none either (iteration 21). The fix, if it shows, is to draw the tells after the colour canvas.
 - **Exit warning (not this lane's code):** every dev-arena run ends with `1 RID of type "CanvasItem" was leaked` next to ~500 leaked ObjectDB instances. The arena quits without freeing its tree, so the RID frees on PREDELETE never run. It happens on exit only.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
+
+## What blocked, and for how long
+- **The machine stop:** 19:12 -> 21:45 (2 h 33 min) the owner needed the machine; nothing ran. After it, one Godot process at a time and short captures (about 14 GB free).
+- **Image moderation:** gun edits are blocked ("violence"); the Gatling was generated from text plus a non-gun style reference instead. No time lost beyond one rejected try.
+- **Contention:** no bench lock was taken all night (the machine was shared), so the frame cost stays CONTENDED/unmeasured.
+- **Short end sessions:** iterations 23-25 had 5-11 min each before the freeze, too short for a change + the gate + the reel, so the alley-hue route was read and written down instead of built.
 
 ## Calls for the owner
 - **Riso dial:** `world_riso.riso` at its default or lower (`print-3way-city-32ppm-it2.png`).

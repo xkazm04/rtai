@@ -480,3 +480,15 @@ NEXT (the morning):
 3. The tell under the colour fire: stage contractors + molotov at a gunplay station.
 4. Weapon art: the warm-ink Call stays open.
 Session state 08:34: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
+
+## Iteration 27 (08:40-08:50, REPORT)
+- 08:41 READ JOURNAL NEXT, git log. Tree clean at 5d401439; no locks, no Godot process.
+- 08:45 CHECKED every evidence path in REPORT.md against gtai-masters/n5/look: all exist except `fx-colour-lineup-64ppm-vs-r2w4.png`, deleted on purpose at 23:15 (superseded); the citation is removed. Every named commit resolves; every cited tools/data path exists; frames.json 15, 0 missing.
+- 08:47 REPORT.md: header iteration 27, the combat line points at the final build 176c48f4, a "What blocked" section (the 19:12-21:45 stop, image moderation, contention, the short end sessions).
+
+NEXT (the morning):
+1. The build is 176c48f4 (gate green, reel 16/16). After the n5-cast merge, re-bless the look goldens once.
+2. The alley hue: the LookZone Variant/Color route (iteration 24, 08:23, a-d), then gate + reel + a tick-900 A/B beside r2_a6.
+3. The tell under the colour fire: stage contractors + molotov at a gunplay station.
+4. Weapon art: the warm-ink Call stays open.
+Session state 08:48: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
