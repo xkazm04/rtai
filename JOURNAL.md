@@ -681,3 +681,26 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), no re-bless
   (`E/evidence-run-it8-powers.log`). REPORT iteration-8 rows (reach telegraph, Dent miss, reel it8, gates).
   frames.json 15 (all present; + quest1-dent-miss-ab, - kerf-body-keys, still in REPORT).
+- 05:45 COMBAT CHECK (Dent, arena) after the miss change: `--bot=ghosts --ghost=dent` 480 ticks windowed, 0 SCRIPT
+  ERROR: seize, ride, overload blast, the group down, no stray lash (the seize found its car). `M/dent-arena-32ppm.mp4`
+  re-filmed. (Telemetry's "top speed 234.5 m/s" is the ride's roof placement counted as Rivet's walk: pre-existing,
+  panel only.)
+
+### NOTICE -> n6-ghost-forms (05:46)
+Dent in quest 1 still has no car to seize (quest 1 has no VehicleService and the sprite cast draws no cars). Since
+cefbcf8b the fire press in Dent shows a missed reach (a teal tether that frays), so the form is not mute. If the
+Director prefers Dent unselectable in quest 1 until its act quest, that is your selection data (ghost_forms.json);
+I have not touched it.
+
+NEXT (iteration 9, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (`--no-ff --no-commit`, restore JOURNAL/REPORT and our `*-powers`
+   logs, `--import`). Then the director reel combat check (headless, `--quit-after 24000`).
+2. Dent in quest 1, the real fix (design in the 05:22 line): a quest-side VehicleService on Quest1Session's world
+   with 2-3 parked cars at StageLayout spots near the dock (data, not code), DentStage taking `stage.vehicles` from
+   a small interface both stages expose (not `as ArenaStage`), and car drawing in the quest cast (CastView reads the
+   service's cars). Changes quest 1's sim: replay goldens + a dated decisions line; prove with quest_ghost_rec
+   `--ghost=dent` (seizes >= 1, blasts >= 1, kills) and an A/B against the miss.
+3. Freeze 08:30: final evidence runner on the head, REPORT final (Calls: add the Tonnage reach ring vs plate-only A/B
+   if the Director wants it judged), session-state line.
+Session state 05:47: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
+bench.lock never taken), masters scratch holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
