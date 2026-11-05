@@ -989,3 +989,16 @@ Session end 04:06: tree clean after this commit, no Godot process of mine runnin
   (`motion-quality-gating`: judge at game zoom in motion; a 1 px mark fails). Not built. Still
   `M/frames/visor-glint-trial-32ppm.png` (top x7, bottom x1). NEXT 3 closed; NEXT 1-2 stand.
 Session end 04:09: tree clean after this commit, no Godot process of mine running, locks never taken.
+
+## Iteration 17 (session 04:19 - 05:19), BUILD
+- 04:19 read JOURNAL, log; tree dirty: iteration 16 had built NEXT 2(a) (Rivet's tan core sticker, `core_tan` in
+  print_part + `PartMaterials.CORE_TAN` 0.6 + test_core_tan_sticker) and filmed it (cast-tan*-city/director mp4,
+  `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`, `rivet-core-tan-lineup-32ppm.png`) but never journalled or
+  committed it. Judged the stills: 0.6 separates Rivet's core from the cream slab, keeps the vermilion collar the lead,
+  1.0 goes muddy on asphalt. KEEP, finish and commit (not revert).
+- 04:22 FINDING: as left, the tan sat on `PartKind.CORE`, which King (collar core) shares: his cream core would turn
+  tan too, against `d5_warm = 0` on KingPlan ("Rivet's own read"). FIX: `PartKind.TAN_CORE` (appended), gated by
+  `BodyPlan.core_tan` (Rivet true; King, thug false), `PartMaterials.is_core()` helper. Rivet's lineup after the scope
+  fix matches the 0.6 trial (scratch i17/check.png, 0 / 0.5 / built / 1.0, slab and road). Lint 13/13, unit 954/0.
+  Registry rule (`shader-budget-authoring`): one mix in the existing sticker branch, no fetch, no pass.
+- MILESTONE 3ceb3e30: Rivet's core sticker prints tan at 32 px/m (revert = CORE_TAN 0.0). Decisions line.
