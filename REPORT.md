@@ -34,11 +34,11 @@
 | **Kerf under `--gore=reduced`** (iteration 5): the slice is a dry `cauterised` kill, no red pool | `M/frames/kerf-reduced-gore-ab-32ppm.png` (before/after), `M/kerf-arena-gore-reduced-32ppm.mp4`; `E/scenario-ghost-it5.log` |
 | **Dent rides the seized car** (iteration 5, the concept's bucking-bull vignette): Rivet sits on the car's roof while it is seized and steers it by his facing, then jumps clear (4 m behind, else to a side with no parked car) as it blows; `dent.ride 0` restores the stand-off seize; the scenario now needs >= 30 riding ticks (planted ride 0 caught) | `M/frames/dent-ride-ab-32ppm.png` (before/after), `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4`; `E/scenario-ghost-it5b.log`, `E/scenario-ghost-it5-planted-ride0.log` |
 | Combat no-regress (iteration 5, after the robot rig and the dry Kerf kill): director reel 16/16 chapters down, 0 script errors | `E/director-reel-it5.log` |
+| **Dent's ride pose** (the forms lane answered REQUEST 7, merged 1469cabd): braced on the roof (no walk cycle), a buck on each strike, a jump on the hop; director reel on the merged head 16/16, 0 script errors | `M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`; `E/director-reel-it5-merged.log` |
 | Gates (iteration 5, db0b4541): evidence runner PASS: lint 13/13, unit 976/0, scenarios 47, parity bit-exact + mutation caught, look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it5.log` |
 
 ## What does not work yet
 - The robot is a dev stand-in: CombatArena has no robot fighter kind, so the quest boss's brain plays it (Ohm's beat holds it exposed). The look (iteration 5) and the numbers are real; the brain is not a robot thug's.
-- Dent's ride has no buck yet: on the roof his body runs its walk cycle at the car's speed. The pose (a crouch on the roof, a buck on each strike) belongs to the forms lane's DentBody (REQUEST 7).
 
 ## Calls for the owner
 - Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).

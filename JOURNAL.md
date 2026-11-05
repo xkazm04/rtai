@@ -473,3 +473,23 @@ short yaw/roll kick or a scale pop) on each car strike (`pilot.dent.strikes` ris
   unit 976/0, scenarios 47, parity bit-exact (mutation caught at 629), selftest look goldens 11/11 (worst 1.21) and
   block 5/5 in tolerance, no re-bless (`E/evidence-run-it5.log`). Bench not run (contended machine).
   TTK doc: Dent's ride and the robot victim lines.
+- 03:40 MERGE n6-ghost-forms 4eb92883 (1469cabd: voice apparitions, `--teal-forms`, n5-cast r_forearm, and DentBody's
+  answer to REQUEST 7: braced on the roof, buck per strike, jump on the hop; JOURNAL/REPORT keep ours) + `--import`.
+  scenario --filter=ghost 1/0.
+- 03:43 COMBAT CHECK director reel on the merged head 1469cabd: 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it5-merged.log`).
+- 03:45 Dent's ride re-filmed at 64 px/m on the merged head: braced on the roof, the buck into the strike, the jump
+  clear of the blast (`M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`). Judged: reads as the
+  concept's ride. frames.json 15, all present. REQUEST 7 closed.
+
+NEXT (iteration 6, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` before filming).
+2. Re-cut the reel's Dent segment from a city clip on the merged head (the reel still has the pre-buck ride).
+3. Ohm: a cane-step recoil or arm kick per bolt (REQUEST to ghost-forms for an OhmRig hook: `bolts` rising, like
+   Dent's strikes), then re-film Ohm at 64.
+4. combat_blood.gd is at 299 lines: any further change there splits it first (e.g. the robot/dry-kill routing into
+   a small helper).
+5. Weakest left: Tonnage at 64 px/m on the latest head (not re-filmed since iteration 3 merges); the robot victim in
+   the city block (does the city ghost beat spawn one? if not, add it to the Kerf/Ohm city beats).
+Session state 03:46: head = this commit, tree clean after it, no Godot process of mine running, no lock held,
+masters scratch holds only film.sh and reel.sh.
