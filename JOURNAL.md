@@ -535,3 +535,8 @@ scratch holds only film.sh and reel.sh, frames.json 15 (all present).
 - 04:03 MILESTONE Ohm's bolt reports kill kind `electrocuted` (a BloodVictims.DRY_KILLS entry): under reduced gore
   the cops drop whole and dry. A/B `M/frames/ohm-reduced-gore-ab-32ppm.png` (ticks 130/200/300/410), clip
   `M/ohm-arena-gore-reduced-32ppm.mp4`. DECISION in decisions.md. Unit 991/0, scenario ghost 1/0, lint 13/13.
+- 04:06 scenario_ghost_attacks guards the dry kills: every human kill Rivet makes in the Kerf and Ohm beats must report a
+  BloodVictims.DRY_KILLS kind (wet 0, dry >= 4; robots excepted, they leak oil). FINDING on the way: the Kerf beat's
+  robot dies to `shot` (Rivet's claw after the form ends; Kerf's slice does robot_damage, "heavy damage" by design),
+  so robots are excluded. Planted `OhmStage.KILL_KIND = &"shot"` caught ("ohm: a kill bled",
+  `E/scenario-ghost-it6-planted-ohm-shot.log`), reverted; clean 1/0 (`E/scenario-ghost-it6.log`).

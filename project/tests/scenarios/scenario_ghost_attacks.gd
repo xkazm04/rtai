@@ -6,7 +6,8 @@ extends Scenario
 ## stun and burn down the group, kill the robot and burn the cruiser. Each beat
 ## replays identically on a fresh world (SIM-05) and gives the same state on the same seed.
 ## TST-05: a planted fault per ghost (Tonnage's crush_m 0, Dent's blast_damage 0, Kerf's
-## human_damage 0, Ohm's machine_k 0) must change the outcome.
+## human_damage 0, Ohm's machine_k 0) must change the outcome. Kerf's and Ohm's kills must all
+## report a dry kind (BloodVictims.DRY_KILLS: no red pool under --gore=reduced).
 
 const EVIDENCE_FILE: String = "ghost-attacks.json"
 const TICKS: Dictionary[StringName, int] = {
@@ -24,6 +25,8 @@ const NEEDS: Dictionary[StringName, Array] = {
 	&"kerf": [["kerf", "slices", 6], ["", "split", 4], ["", "ghost_dead", 5]],
 	&"ohm": [["ohm", "struck", 8], ["ohm", "cars_hit", 1], ["", "ghost_dead", 5]],
 }
+## The ghosts whose every kill must be dry (cauterised, electrocuted).
+const DRY_GHOSTS: Array[StringName] = [&"kerf", &"ohm"]
 
 
 func run(_tree: SceneTree) -> String:
@@ -44,6 +47,8 @@ func run(_tree: SceneTree) -> String:
 		out["planted_" + String(ghost)] = faulty["telemetry"]
 		if faulty["state"] == clean["state"]:
 			return "%s: the planted %s = 0 went unseen" % [ghost, FAULTS[ghost]]
+		if ghost in DRY_GHOSTS and (tele["wet_kills"] > 0 or tele["dry_kills"] < 4):
+			return "%s: a kill bled: %s" % [ghost, tele["kinds"]]
 	@warning_ignore("return_value_discarded")
 	write_evidence(EVIDENCE_FILE, out)
 	return ""
@@ -69,6 +74,7 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 	s.world.loop().set_input(input)
 	if fault:
 		_attacks(s, ghost).block(ghost)[String(FAULTS[ghost])] = 0.0
+	var kinds: Dictionary = _watch_kills(bus, s.stage.arena)
 	if record:
 		s.world.loop().start_recording()
 	while s.tick() < TICKS[ghost]:
@@ -82,6 +88,7 @@ func _run(ghost: StringName, fault: bool, record: bool) -> Dictionary:
 	var t: Dictionary = input.reel.telemetry()
 	t["crush"] = _style(s, &"crush")
 	t["split"] = _style(s, &"split")
+	t.merge(kinds)
 	var replay: String = ""
 	if record:
 		replay = _replay(ghost, s.world.loop().finish_recording())
@@ -97,6 +104,30 @@ func _attacks(s: ArenaSession, ghost: StringName) -> GhostAttacks:
 	if ghost == &"ohm":
 		return s.pilot.ohm.attacks
 	return s.pilot.kerf.attacks if ghost == &"kerf" else s.pilot.dent.attacks
+
+
+## Counts Rivet's human kills by dry / wet kind (robots leak oil, never counted); `kinds` lists all.
+func _watch_kills(bus: EventBus, arena: CombatArena) -> Dictionary:
+	var seen: Array[String] = []
+	var kinds: Dictionary = {"wet_kills": 0, "dry_kills": 0, "kinds": seen}
+	var rivet: int = arena.rivet.id
+	@warning_ignore("return_value_discarded")
+	bus.actor_killed.connect(
+		func(by: int, victim: int, kind: StringName) -> void:
+			var dry: bool = kind in BloodVictims.DRY_KILLS
+			var robot: bool = _is_robot(arena, victim)
+			seen.append("%d>%d%s:%s" % [by, victim, "r" if robot else "", kind])
+			if by == rivet and not robot:
+				kinds["dry_kills" if dry else "wet_kills"] += 1
+	)
+	return kinds
+
+
+func _is_robot(arena: CombatArena, id: int) -> bool:
+	for f: Fighter in arena.hostiles:
+		if f.id == id:
+			return f.kind == Fighter.Kind.BOSS
+	return false
 
 
 func _style(s: ArenaSession, style: StringName) -> int:
