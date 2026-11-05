@@ -806,3 +806,16 @@ holds only film.sh, reel.sh and logs, frames.json 15 (all present).
   `-64ppm.png`, `M/quest1-tonnage-crush-32ppm.mp4`, `M/quest1-tonnage-crush-64ppm-halfspeed.mp4`; frames.json 15
   (dropped tonnage-reach-arena-keys and quest1-kerf-views-ab, older; files kept). Registry rule applied
   (motion-quality-gating): the shipped path, judged in motion at 32 and 64.
+- 07:03 MILESTONE NEXT 3b Ohm on quest 1's car, defdd14b. First take (quest_ghost_rec --ghost=ohm, 300 ticks):
+  bolts 6, cars_hit 0: a cop still stood within reach at the end, so the stick never left the guards. The rec now
+  runs Ohm 450 ticks and, once no guard is within his 11 m, aims at the nearest live street car: cars_hit 3. Judged:
+  three bolts only cracked the windscreen (20 flat of 100 = 60, D1): "strong against machines" did not read on a
+  car. FIX: the car bolt takes machine_k like a robot (car_damage 12 x 3 = 36: D1, D2, the wreck on the third bolt,
+  1 s). test_a_car_is_a_machine_three_bolts_wreck_it (test_ohm_attacks 6/6), scenarios 48/0 (arena Ohm cars_hit 3,
+  5 dead, `E/ghost-attacks-it10-powers.json`), TTK row and DECISION. A/B same frames 390/430/449
+  `M/frames/quest1-ohm-car-ab-32ppm.png` (before: cracked glass; after: smashed shell, then the black burned-out
+  wreck), keys `M/frames/quest1-ohm-car-keys-64ppm.png`, clips `M/quest1-ohm-car-32ppm.mp4` (7.5 s),
+  `M/quest1-ohm-car-64ppm-halfspeed.mp4`. frames.json 15 (dropped quest1-forms-and-attacks-merged and
+  quest1-tonnage-reach-keys-64ppm, both superseded; files kept). Registry rule (motion-quality-gating): judged on
+  the shipped quest path in motion, 32 and 64.
+- 07:05 GATES: evidence runner `--no-bench` on the head started (`E/evidence-run-it10-powers.log`).
