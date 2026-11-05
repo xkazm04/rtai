@@ -72,3 +72,26 @@ Melee and the ghosts will call the layer you own; proposed shape, your answer wi
 - Point 6 of my REQUEST is answered by your FINDING 19:25: `SimClock.hold` withholds wall time only.
 - I merge `n7-ranged` as soon as the feel commit is on the branch (not yet at 19:37: `git log n7-ranged`
   = main).
+- GATES 19:48 `node tools/evidence/run.mjs --no-bench` on `402ed7db`: lint 13/13, unit 1117/1117, parity
+  bit-exact (mutation caught at step 629), scenarios 51/52: `scenario_rig_stress` failed while my audit
+  films rendered (CONTENDED); re-run alone 1/1 pass (rig p99 3.5 ms, CONTENDED). Known flake.
+- FRICTION 19:40: the evidence run refused twice on a dirty tree (a journal line, then the new audit doc
+  written while the commit hook's lint ran). Rule for this lane: draft docs in scratch during a gate run.
+- AUDIT 19:45 `docs/polish/melee.md`: 9 attacks scored at 32 px/m (strips: melee frames 40-157 every 3rd,
+  240x140 crops; ghosts 16-frame overviews + attack strips). Ranked weakest first: Kerf chain, plasma
+  sword deflect, claw, Ohm bolt, chainsaw, Tonnage slam, Dent blast, baton, katana. Systemic: no camera
+  feel in the live paths (ranged fixed the camera side), no attack in this lane has a sound cue of its own.
+- MERGE 19:50 `445f0b5b`: n7-ranged 779cdd3d (FeelCam, FeelBudget, hit_feel kick/cap/weapons, --feel=off),
+  0f8e4f5f (arena gun audio), e88ebcfe (a kill keeps the longer stop). Conflict only in the root
+  JOURNAL.md (both lanes add one): kept ours.
+- MILESTONE 19:52 `65dd07e1` MeleeFeel: kill_landed + wounded (MELEE_IDS) -> FeelCam.hit(weapon, &"melee",
+  Rivet -> victim, lethal, tick), once per strike; attached in CollectCallView beside FeelCam. hit_feel.json
+  weapons rows: claw (rivet_hit 3-tick stop, kick 2, no shake), katana/plasma_sword (melee_hit, kick 3),
+  electro_baton (melee_hit, kick 2.5), chainsaw (no stop per bite, kick 1). Kills: kill stop + 1.5x kick.
+  DECISION: no shake on any melee hit (restraint; the stop and the directional kick carry the weight;
+  a shake is one `shake` value per row). test_melee_feel 5/5 incl. planted feel-off.
+- MEASURE 19:54 (claw_combo at 32, 420 frames, actor crop 400x240 -> 100x60 grey, mean |diff| < 0.05 =
+  still): after has new still runs at frame 75 (6 frames, the kill) and 109 (5 frames, the 2nd cop);
+  before has none there; all later runs shift by 11-12 frames. LOOK at 48 (frames 66-89 every 2nd):
+  the contact pose (claw in the cop, first drops out) holds, then the spray releases; the floor lines
+  offset (the kick). CLIP `M/melee_feel_claw_ab_32ppm_48slow.mp4` (6.9 s, 415 frames).

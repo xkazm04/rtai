@@ -45,8 +45,26 @@ ghost-powers beats, telemetry overlay on).
 | Claw combo | 3 | 2 | 3 | 4 | 1 | the jab is small at 32 (the arm over the cop); no hold on the hit frame; the kill reads through a large blood spray and the fold (combat-notes) |
 | Electro baton | 3 | 4 | 4 | 4 | 1 | the shock star and arcs mark the hit frame; the victim is thrown with a smear |
 | Katana | 4 | 4 | 5 | 5 | 1 | the blade lifts, the cut bisects, halves fly apart on the cut frame: the best-reading melee |
+| Kerf blink-slice chain | 2 | 2 | 3 | 4 | 1 | each target splits into two halves on its cut frame (sync holds), teal afterimages trace the blink; but three cops in a column split inside ~12 frames with no hold or mark between cuts, so at 32 the chain reads as one event; the camera jumps with each blink |
+| Ohm forked bolt | 2 | 3 | 3 | 4 | 1 | no tell: the bolt is instant; a thin teal line at 32; the victim flashes to an ink x-ray with sparks on the hit frame, the struck car goes dark (wreck); the mass arc (upgrade_tier 1) is not in the beat |
 | Tonnage press slam | 5 | 3 | 4 | 4 | 1 | a dashed teal ring grows for ~40 ticks, then the press disc fills (a clear, dodgeable tell); the impact prints ink cracks and blood and flattens the car, but no hold, shake or debris marks the frame |
-| Dent seize + blast | 4 | 3 | 3 | | 1 | the tether and the seized car read; the blast (cream starburst, dark ring) lands at the right edge of the 32 px/m frame (camera on Dent, the owner's open call) |
+| Dent seize + blast | 4 | 3 | 3 | 4 | 1 | the tether and the seized car read; the blast (cream starburst, dark ring) lands at the right edge of the 32 px/m frame (camera on Dent, the owner's open call) |
 
 ## Ranked, weakest first (the work order)
-Pending the Kerf, Ohm, Tonnage ram/plates and 48 px/m strips (this iteration).
+By the craft columns (impact and read at 32 weigh most: they are what the owner judges), weakest first:
+1. **Kerf's chain**: one blur at 32 (the brief's own warning). View-only fix candidates: a cut mark held
+   on each victim from its cut frame, and a short hold per cut through FeelCam (`slice` row, no shake).
+2. **Plasma sword deflect**: the deflect spark is tiny and the return is not tied to the swing; the
+   placeholder blade (asset only after every item, backlog 3).
+3. **Claw combo**: no hold on the hit frame (systemic 1), small jab at 32; melee weight (brief item 3).
+   **Done 19:55 (`65dd07e1`)**: every melee hit now reaches FeelCam (MeleeFeel); measured holds on the
+   claw's hit frames (6 frames at the kill, 5 at the second cop; none in the `--feel=off` before);
+   `M/melee_feel_claw_ab_32ppm_48slow.mp4`.
+4. **Ohm's bolt**: no tell; thin at 32.
+5. **Chainsaw**: the kill is a red blob under Rivet at 32.
+6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
+7. **Dent's blast**: lands at the frame edge at 32 (camera call open: polish only the impact).
+8. **Electro baton**, 9. **Katana**: read well; they get the shared hit-stop with item 3 only.
+
+Not yet scored: Tonnage's plates and ram, Dent's blow, Ohm's mass arc, and the 48 px/m look of each
+(films `audit_*_48` ran; strips next iteration).
