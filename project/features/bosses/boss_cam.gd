@@ -4,12 +4,16 @@ extends Node
 ## FRAME_K of the way from Rivet to the boss, so a filmed attack keeps both on screen. View
 ## only (SIM-03): it sets CollectCallView.focus, never the sim; without the flag the camera
 ## follows Rivet. The centre is clamped so the screen stays on the fight's floor
-## (BossHook.bounds, the arena record's area): no off-area ground at the boulevard's edge.
+## (BossHook.bounds, the arena record's area): no off-area ground at the boulevard's edge. The
+## floor's top edge clears the boss bar: the clamp lets the screen rise HUD_PX (the bar's band,
+## in screen pixels) above the floor, so a boss at the top edge (Servo's bays) is never under it.
 
 const FLAG: String = "--boss-cam"
 const FRAME_K: float = 0.45
 ## Farther apart than this (a respawn, the procession's far end) it follows Rivet alone.
 const FAR_M: float = 20.0
+## The boss bar's band at the top of the screen (BossBar.TOP + BAR_H + its title), screen px.
+const HUD_PX: float = BossBar.TOP + BossBar.BAR_H + 10.0
 
 var view: CollectCallView = null
 var hook: BossHook = null
@@ -38,7 +42,9 @@ func _process(_delta: float) -> void:
 	var r: Vector2 = hook.rivet_pos()
 	var b: Vector2 = hook.fight.body.pos
 	var at: Vector2 = r if r.distance_to(b) > FAR_M else r.lerp(b, FRAME_K)
-	view.focus = clamp_focus(at, _half_m(), hook.bounds)
+	var half: Vector2 = _half_m()
+	var hud_m: float = HUD_PX * half.y / maxf(view.get_viewport_rect().size.y * 0.5, 1.0)
+	view.focus = clamp_focus(at, half, hook.bounds.grow_side(SIDE_TOP, hud_m))
 
 
 ## Half the screen in metres at the view's zoom now.
