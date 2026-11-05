@@ -269,3 +269,21 @@ Session state 01:29: head = this commit, tree clean, no Godot process of mine ru
 - 01:52 Tonnage city re-filmed (47148cc3): 10/10, 2 slams, 2 cars crushed, Rivet 100 hp, 0 SCRIPT ERROR; the
   forms lane's TonnageRig stands in. M: `tonnage-city-32ppm.mp4` (15 s), `frames/tonnage-city-crush-keys-32ppm.png`.
   frames.json 15 (dropped tonnage-beat / kerf-beat stills for the two city strips).
+- Rules applied this session (registry `motion-quality-gating`: judge in motion at 32 px/m, 64 px/m close-ups,
+  a before/after at the same tick and zoom for every change; `shader-budget-authoring`: canvas draw calls on the
+  existing actor/kill layers, no new shader).
+- 01:56 MILESTONE 0e794d2c Ohm's human kill = row `ohm_shock` (the electro X-ray shock + `edge: soul`):
+  KillShockFx draws the arcs teal and the zap star teal-white (the cream bones still pop); the electro gun keeps
+  cream (`ohm_bolt` left electro_shock's also_weapons). A/B `M/frames/ohm-kill-teal-ab-64ppm.png` (64 px/m, ticks
+  152/156/168; before = the two files checked out from HEAD~1 for one run, restored after). Unit test_ohm 3/3.
+- 01:59 MILESTONE 7fd55cb6 `--tier=1` on the Ohm beat: the mass arc in game, 5/5, the knot down at tick 119 vs
+  149 (`E/ghosts-ohm-mass-32.json`, `M/frames/ohm-mass-tier1-32ppm.png`, `M/ohm-mass-tier1-32ppm.mp4`). Judged:
+  one bolt walking the whole group reads as "many at once" at 32 px/m; a radial fan from the first body would
+  read more like a mass spell (polish).
+- 02:01 decisions.md: Kerf/Ohm inside GhostPilot, ohm_shock, the city placement FIX; ghost_attacks.json docs
+  follow GhostPilot; role table iteration-3 lines (docs/ghosts/ghost-attacks.md).
+- 02:03 COMBAT CHECK director reel headless (`--quit-after 24000`) on the iteration-3 head: 16/16 chapters down
+  (claw_combo 2/2 .. electro_gun 1/1 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-it3.log`).
+- 02:05 TRIED + REVERTED Kerf afterimages as a top-down body (teal shoulder oval + head) in place of the rings:
+  filmed at 64 px/m twice (faint, then bolder); both read as small teal "eyes" on the path, weaker than the
+  rings. Not committed. The real fix is a ghost copy of the Kerf form rig once ghost-forms builds it.
