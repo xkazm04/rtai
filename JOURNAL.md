@@ -838,3 +838,7 @@ NEXT (iteration 14), replaces the 01:49 list:
    ring; Calls 1, 2 and 5 hold the forks). And the cops' dark rings in `M/frames/cast-ingame-vs-r2c6.png` are a
    gameplay overlay, not rig art (not my lane).
 3. Calls 1-6 stand; REPORT section 5 and the gates line are current to f5733b83. REPORT rewrite at 08:40. frames.json 15.
+- 02:37 NEXT 1(b) of the 02:35 list taken: hoodie cap at the beanie size (D4 + D5 PNGs x0.846, parts.json size/pivots
+  scaled). Lineups slab/road/walk at 32 and 64 px/m (built vs trial, 0 SCRIPT ERROR): `M/frames/crowd-cap-size-ab.png`.
+  At 32 px/m the hoodie ped shows more pale hoodie round a smaller dark head (slab and road); at 64 px/m it matches the
+  other heads. GO. Unit 942/0, look goldens alone 11/11 (worst 1.21). Provenance hashes of the two cap files updated.
