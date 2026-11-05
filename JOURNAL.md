@@ -412,9 +412,9 @@ NEXT (iteration 5, ghost-powers):
 I moved Ohm's `electrode_l/electrode_r` in your `ghost_forms.json` to the copper fingers your OhmRig draws on the
 guard hand: (0.52, -0.17) and (0.52, -0.07) (898bbf1a; data only, nothing else in the file). If you move
 OhmRig.GUARD_HAND, move the anchors with it (or tell me in a REPLY); the bolt follows the data.
-- 02:55 Ohm city on the body (4 kills + cruiser, `E/ghosts-ohm-city-body-32.json`, `M/ohm-city-32ppm.mp4`) and Dent in
+- 02:50 Ohm city on the body (4 kills + cruiser, `E/ghosts-ohm-city-body-32.json`, `M/ohm-city-32ppm.mp4`) and Dent in
   the city block at 64 px/m with `--cam=car` (5 down: 4 blowback + 1 gib, 1 seize, 1 wreck,
   `E/ghosts-dent-city-cam-64.json`, `M/dent-city-64ppm-cam-halfspeed.mp4`): the city lean keeps the car, the strike
   and the wreck in frame. Both 0 SCRIPT ERROR.
-Session state 02:56: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+Session state 02:51: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
 film.sh and reel.sh, image.lock never taken, bench never run (contended machine).
