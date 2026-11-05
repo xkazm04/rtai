@@ -30,11 +30,13 @@ var _flash: int = 0
 var _pal: PaletteTokens = PaletteTokens.shared()
 var _fall: ServoFall = ServoFall.new()
 var _shift: ServoShift = ServoShift.new()
+var _spine: ServoSpine = ServoSpine.new()
 
 
 func _ready() -> void:
 	for n: StringName in PARTS:
 		_tex[n] = load(ART % n) as Texture2D
+	_spine.cap = _tex[&"head"]
 
 
 ## Called once per sim tick by the view: advances the gait and the pad spin, then redraws.
@@ -42,6 +44,7 @@ func pose(p_tick: int) -> void:
 	tick = p_tick
 	_fall.px = px
 	_shift.px = px
+	_spine.px = px
 	_shift.observe(fight)
 	var moved: float = fight.body.pos.distance_to(_last_pos)
 	_last_pos = fight.body.pos
@@ -86,6 +89,7 @@ func _draw() -> void:
 			_steam(pad)
 	_part(&"pelvis", o + fwd * 0.5, fwd.angle() - PI / 2, k, tint)
 	_wings(o, fwd, side, k, tint)
+	_spine.draw(self, o, fwd, k, tint)
 	_shift.draw(self, fight, rack)
 	if dt >= 0:
 		_fall.spill(self, rack, dt)
