@@ -883,3 +883,12 @@ Session end 02:46: tree clean after this commit, image.lock released (2 jobs thi
   `scratch-cast/i14/visor_patch.py` if wanted.
 - 03:16 REPORT: section 3 bullet (hazard collar), Call 7 (collar A hazard breaks / B flat ring), gates line for
   iteration 14.
+- 03:13 FINDING: every 32/64 px/m lineup shows a teal pixel cluster at Rivet's torch tip. Source: `rivet/r_forearm.png`
+  (D4 = D5 file) carries a cyan flame tip (414 px over the shader's teal gate). It predates this lane (F-09 D4 art,
+  95f55fb2, 745 px) and survived my piston-arm redraw. rivet-motion flagged it on 11-03 ("teal is for souls only");
+  n-visual had called it allowed. DECISION: follow the owner's standing verdict and r2_c3 (a pale tip): recolour to a
+  cream ramp (`masters:n5/cast/tools/torch_cream.py`, 1483 px over two passes, sat cut 0.25 then 0.08 for the pale cyan
+  highlights). Lineups slab/road 32 and 64 px/m: the tip prints the limb grey at 32 and cream at 64, no teal:
+  `M/frames/rivet-torch-cream-ab.png`; director reel 0-1140 at 32 px/m, same sim: `M/frames/rivet-torch-cream-director-32ppm.png`
+  (clip `M/cast-torch-director-32.mp4`). Lint 13/13, unit 945/0. Provenance lines 1050/1058 updated (sha + note).
+  Not touched: the 1 px teal in the helmet art (25,51) and in the D5 claw (171,56), both below a printed pixel.

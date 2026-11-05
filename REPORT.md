@@ -61,6 +61,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Director reel and city at 32 px/m, same ticks, before | after: `M/cast-collar-director-ab-32.mp4`,
   `M/cast-collar-city-ab-32.mp4`; still with the targets `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`; trials
   (6/8/14 breaks, the art's own stripes) `M/frames/collar-ticks-lineup-32ppm.png`, `M/frames/collar-trials-city-32ppm.png`.
+- Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
+  cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
+  `M/frames/rivet-torch-cream-director-32ppm.png`.
 - The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
   script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
 
