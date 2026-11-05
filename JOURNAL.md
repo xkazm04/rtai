@@ -804,3 +804,14 @@ this iteration (NEXT 1 of it8); the change is view only (WeaponFxArt draw scale,
   (StageGuns arms Gloria's row there, so it applies): it8 films Dock 9 at 32 px/m.
 - Not re-run on `50c0883b`: the reels (a data value on a view-only draw scale; `d79c5278`, the
   code, has both reels 19/19). NEXT 1 of it8 runs the full evidence on head.
+
+### GATE 00:14: evidence run on `1eb069c8` (= `50c0883b` code), nothing touched during it
+- lint 13/13 (943 files), scenarios 52/52, parity bit-exact over 1200 steps (planted caught at
+  629), selftest pass (look goldens 11/11, block 5/5). Unit 1144/1145: the one red is
+  `test_hitch_recorder` canary timing (25.143 ms against a 25.0 ms bound, a wall-clock test under
+  4-lane contention, not a test of mine); re-run alone (`-gselect=test_hitch_recorder`): 3/3 pass.
+  New contention flake for the list. Logs `evidence/ranged/it7-{evidence-1eb069c8,unit-hitch-alone}.log`.
+- So every gate is green on head's code; the muzzle change is view only (parity unmoved).
+
+STOP 00:16 iteration 7. Code commits: `d79c5278` (pistol muzzle_k 1.6), `50c0883b` (Gloria 1.8).
+NEXT for iteration 8 is the list above (item 2 done except Gloria in quest 1 Dock 9).
