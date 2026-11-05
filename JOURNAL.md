@@ -702,5 +702,8 @@ NEXT (iteration 7):
 STOP 23:17 iteration 6. Code commits: `9b351ab4` (throw shoulder twist, modest, visible at 32),
 `5ef1c584` (flamer ignition flare, reads at 32). Gates: evidence run on `46db2e81` all green (unit
 1139); on `5ef1c584` unit 1141/1141, lint 13/13 (942 files), pit + city reels 19/19 fully down.
-Scenarios and parity were not re-run after `5ef1c584`: it adds view-only drawing (WeaponFxIgnite)
-and a hit_feel.json field no sim path reads; re-run in the it7 evidence run.
+- GATE 23:19 on `81176d04` (= `5ef1c584` code): scenarios 52 ran, 1 failed = `scenario_city_chase`
+  2 ms nav budget (max 3871 us, the known contention flake); re-run alone (`--filter=city_chase`):
+  1 ran, 0 failed. 0 SCRIPT ERROR. Parity bit-exact over 1200 steps, planted mutation caught at 629.
+  Logs `evidence/ranged/it6-{scenarios,scenario-city-chase-alone,parity}-81176d04.log`.
+  So every gate is green on head's code.
