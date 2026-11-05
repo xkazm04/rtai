@@ -130,3 +130,17 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - 16:16 DECISION sidearm size: one_hand held_scale 1.5 -> 1.2 (docs/decisions.md; owner call).
   `sidearm_size_ab_48ppm_sheet.png`: at 1.5 the pistol was as long as the forearm; at 1.2 it reads
   as a pistol in a claw. test_held*/test_rivet_* pass.
+- 16:19 PROBE + REJECT long-gun line forward toward r2_w5 (across 0.2, gun_reach 0.6, off_reach 0.95):
+  the probe still looked closer to the target, but filmed at 64 px/m it hung the gun detached below
+  the body and off the aim in two of four frames (`long_gun_line_forward_rejected_64ppm.png`).
+  Data restored. The centre-line hold needs the carry (RivetCarryAngle) and the beside-the-helmet
+  shift reworked with it, not just three numbers. FRICTION: the first probe after a data edit
+  printed 11 SCRIPT ERRORs once (not reproducible on rerun; likely a cache reload).
+- 16:24 MILESTONE f9810099 the class walk: `RigGrip.walk` feeds held_classes.json stride_k into
+  RigGait's stride and lean_px into RigPose's body lean (back, against the weight) while the weapon
+  is out. Test in test_rig_grip (planted: stowed = plain walk). Evidence `heavy_walk_ab_64ppm.mp4`:
+  SUBTLE (cadence only; the 10 px lean barely shows). Stronger is a data value per row.
+- 16:26 frames.json 13 entries, all files present. d7-calls has 6 new commits (look group incl. "the
+  Gatling at true width", Dent ghost powers): merge after the head gates finish.
+- 16:33 MEASURE gates on f9810099: lint 13/13; unit 1100/0 (`evidence/held-it2-unit-head.log`);
+  scenarios exit 0 (`evidence/held-it2-scenarios.log`).
