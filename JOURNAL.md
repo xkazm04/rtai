@@ -122,3 +122,40 @@ names above, so they move into `bosses.json` with a copy.
      To build as one flag next iteration (`servo.json drone.ring_from_launch`); see
      `M/servo-graybox-wave-48ppm.mp4`.
   2. Should a CS crate landing on Rivet hurt (today only bombs do; crates block and cover)?
+- 19:22 Codex `servo_core_a` came back in 72 s (lock released): visor head + hoses, octagonal hover
+  pad with landing circle, walker pelvis, cargo-glass torso with parcels, a 2x3 drone-rack wing;
+  the template's reference cell kept. Saturated orange on visor, hoses, stripes (fixed in the cut).
+  19:24 `servo_limbs_b` (sheet 2, same template): drone, plain cardboard crate, thigh, lower leg
+  with foot, arm with pad fork. Sheet sha256 core 3d3351d5...; both in `M/gen/r1/out/`.
+- 19:30 MILESTONE 0c6b9832: **ServoRig**, the cutout body (`features/bosses/servo/servo_rig.gd`,
+  parts in `features/bosses/servo/art/` at 96 px/m from `tools/art/servo_parts.py`). Procedural
+  motion: gait + bob from distance walked, lean back through every tell (anticipation) and lunge
+  in the active window (follow-through), head turns to the aim with a vermilion visor slit only in
+  a tell (thick once locked), pads spin up for the dash, steam in the punish window, rack bays go
+  dark while their drone is out, phase 3 hides a wing, a hit flashes (never touches the state).
+  Dev view draws it (`--graybox` keeps the stand-in as the before). FIX: the legs first hid under
+  the rack; the target's top view shows them stepping out in front: moved the feet forward.
+  Looked at `M/frames/servo-rig-vs-target-64ppm.png`: same family; gaps listed in NEXT.
+  Provenance x10 in `steam/ai-provenance/2026-11.jsonl`.
+- FRICTION: my gate logs overwrote tracked `evidence/unit-it1.log` etc. from an earlier lane;
+  restored them and keep this lane's logs in `evidence/servo/` (rule for every later run).
+- Gates on 0c6b9832's tree: lint 13/13; unit 1130/0 and scenarios 52 ran / 0 failed (run on
+  c60ac868, the rig is dev-view only plus data rack spacing); director reel (`--bot=reel
+  --reel=director --loadout=pistol`, headless) 19/19 chapters fully down, 0 SCRIPT ERROR:
+  `evidence/servo/*-it1.log`. Combat untouched (no shared code changed).
+
+NEXT (iteration 2, in order):
+1. Merge n7-king again (`git -C ../n7-king log`), read its JOURNAL for answers to REQUEST 2
+   (per-tick `BossMoves.tick`, rng bind, write_bosses keeping rows). If `tick` landed, delete the
+   manual `moves.tick()` calls in the dev view / tests and let BossFight sum it.
+2. Body to target: rack wings 3 rows deep (regenerate the wing cell as 2x3 -> 3x3 or stack two),
+   the body set BETWEEN the wings (not in front), pads bigger and lower; rack data cells to match
+   (18 cells?) or keep 12 and draw 3 rows; the drone sprite on its own little rig (rotor blur
+   discs spinning, parcel slung below, tilt toward velocity). Check silhouette at 32 px/m against
+   Rivet's REAL rig and cops (put CutRig Rivet in the view instead of the disc).
+3. Kamikaze dive (phase 3) in ServoSwarm: dive line tell (thin tracking 0.6 s, lock 0.3 s), 2.2 m
+   blast; then the carpet lanes' painted stripes (1.4 s) in the view.
+4. Calls to build as flags: rings from launch vs at hover (`servo.json drone.ring_from_launch`);
+   crate landing damage.
+5. Then the arena (depot: bays, conveyor, CS crates) through king's arena loading + `--boss=servo`,
+   the HUD bar, music; then the bot (`--bot=boss --boss=servo`) with Rivet's reaction delay.
