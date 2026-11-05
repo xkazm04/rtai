@@ -373,3 +373,19 @@ NEXT (iteration 4):
   re-bless (`scenario_quest1_*`, the 60 s replay), never a silent one.
 - Risk: the gun table's hp scale is 1/human_hp (1 in quest 1) = the same one-hit doctrine; check
   the tazer boss fight (`player_hit_robo_tazer`) is untouched.
+
+### MILESTONE 21:04: `078e83ab` Gloria's recoil kick (audit gap closed)
+- Audit row 13 scored from `sheets/gloria-off-k2.png` (`5b6ca7e6`): 1/2/3/3/0, anticipation weakest.
+- hit_feel.json gloria `fire_kick_px` 1.5 / 6 ticks. MEASURE (gunplay bot, lone cop, 32 px/m,
+  frames 200-290, 9-frame high-pass): jitter rms 0.19 -> 0.34 px, max 0.36 -> 1.53 px; lone kill
+  1 at tick 274 on and off. Clip `gloria_kick-ab-32ppm.mp4` (frames.json now 11 rows: trim to 15
+  max, newest first). Feel tests 7+10+2+2 pass with the row. Plays in quest 1's Gloria fight too
+  (FeelCam reads `Shot.weapon`). Not judged by eye in motion.
+- There is no director chapter for Gloria (`--chapter=gloria` runs nothing): film it with
+  `--weapon=gloria --bot=gunplay --lone --cam=fight`.
+
+STOP 21:05 iteration 3. Head `078e83ab`; gates last full at `9928c09a` (evidence run green, both
+reels 19/19 with the loadout); since then only data rows (gloria kick) + docs, feel tests green.
+NEXT is the 20:52 list above, with: item 1 re-run the evidence run + reels on the new head
+first; item 6 adds assault-rifle and molotov-throw scoring only (Gloria done). Owner calls so far
+for REPORT: the shard pop (36 default vs `--shard-pop=12`, clip in masters).
