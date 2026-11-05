@@ -924,3 +924,17 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   REPORT: 0b738cbc is the lane's final gated head (supersedes the dc9af2e6 line in the NEXT above).
 FREEZE 08:19: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
 bench.lock not taken this session); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
+
+## Iteration 15 (08:19-08:30, BUILD after freeze line)
+- 08:21 MERGE n5-cast efa29d38 (code: 2cc15c5f `CastView._lod_art(id, grow = 1.0)`, a default param so our
+  calls compile unchanged; rest docs) as 52ce7f31. Read the merged `_rivet`: our single base pick plus their
+  Hauler cross-fade, no duplicate local. JOURNAL/REPORT keep ours. Lint 13/13, unit 1020/0
+  (E:unit-it15-merged.log). n6-ghost-powers 1c6a0c58 is docs/logs only: not merged (nothing to carry).
+- 08:24 COMBAT CHECK on 52ce7f31: director reel 16/16 chapters n/n down, 0 SCRIPT ERROR
+  (E:director-reel-it15-merged.log). Full evidence runner not re-run (no time before 08:30); the last full gated
+  head stays 0b738cbc, and 52ce7f31 differs from it only by the default parameter above.
+
+NEXT (report session / Director): REPORT's final gated head is 0b738cbc; 52ce7f31 adds the n5-cast compat merge
+(lint + unit + reel green). Run `node tools/evidence/run.mjs --no-bench` on 52ce7f31 if a full gate on the tip is
+wanted. Calls for the owner unchanged (`--teal-forms`, `story_voice`).
+FREEZE 08:26: no Godot process of mine running, no lock held; frames.json 15, all present.

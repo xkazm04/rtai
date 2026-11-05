@@ -253,7 +253,9 @@ sticker -> art; the merged `_rivet` keeps our single base pick and their cross-f
 (E:evidence-run-it14-final3.log): **all PASS**, lint 13/13, unit 1020/0, scenarios 51, parity bit-exact, look
 goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless. Director reel 16/16, 0 SCRIPT ERROR
 (E:director-reel-it14-merged3.log). Quest 1 at 32 px/m is unchanged from the re-filmed clip. **0b738cbc is
-the lane's final gated head.**
+the lane's final gated head.** Iteration 15 then merged n5-cast efa29d38 (2cc15c5f: `_lod_art(id, grow = 1.0)`,
+a compatible default parameter) as 52ce7f31: lint 13/13, unit 1020/0 (E:unit-it15-merged.log), director reel
+16/16, 0 SCRIPT ERROR (E:director-reel-it15-merged.log); the full evidence runner was not re-run on 52ce7f31.
 
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
