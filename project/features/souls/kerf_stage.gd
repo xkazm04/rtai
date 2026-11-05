@@ -13,6 +13,10 @@ const GHOST: StringName = &"kerf"
 ## The hanging cut lines kept for the view (the chain's last blinks).
 const KEEP: int = 4
 
+## The kill kind the slice reports (actor_killed): a cauterised cut is dry, no red pool, under
+## --gore=reduced too (CombatBlood.DRY_KILLS), where no signature split runs.
+const KILL_KIND: StringName = &"cauterised"
+
 var powers: SoulPowers
 var attacks: GhostAttacks
 var charges: int = 0
@@ -144,7 +148,7 @@ func _slice(stage: CollectCallStage, target: Fighter, dir: Vector2) -> void:
 	stage.arena.hit_dir = dir
 	stage.arena.hit_at = target.pos
 	var dmg: float = num(&"robot_damage") if robot else num(&"human_damage")
-	stage.arena.damage(target, dmg, stage.arena.rivet.id, &"kerf_slice")
+	stage.arena.damage(target, dmg, stage.arena.rivet.id, &"kerf_slice", KILL_KIND)
 	slices += 1
 
 

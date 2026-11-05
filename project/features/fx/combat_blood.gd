@@ -23,7 +23,7 @@ const MATCH_M: float = 1.5
 const MAX_STEPS: int = 4
 ## Kill kinds (events.json) that leave no red (lane human-reactions): a body burned to death lies
 ## charred (HumanReact's char tint), its spray and soak read as a red blob over the char.
-const DRY_KILLS: Array[StringName] = [&"burned"]
+const DRY_KILLS: Array[StringName] = [&"burned", &"cauterised"]
 
 var mode: String = "noir"
 var blood: BloodFx = null
@@ -161,7 +161,7 @@ func _on_cue(id: StringName, pos_px: Vector2, angle: float, tick: int) -> void:
 
 
 func _on_killed(killer: int, victim: int, _kind: StringName) -> void:
-	if _kind in DRY_KILLS:  # a burned kill leaves no red (human-reactions)
+	if _kind in DRY_KILLS and not robot_ids.has(victim):  # burned or cut dry: no red (a robot leaks)
 		return
 	if veto.is_valid():  # the signature kill lands after actor_killed: ask once the step is done
 		_bleed_killed.call_deferred(killer, victim)
