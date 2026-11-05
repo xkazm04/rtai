@@ -1,0 +1,114 @@
+class_name ServoParcels
+extends RefCounted
+## The parcels Servo's drones drop: each falls fall_ticks onto its drop ring, then a bomb blasts
+## (one Blast this tick, the caller applies it to Rivet and the crowd) or a CS crate lands and
+## stays as an obstacle and cover until shot apart (crate_hp hits) or crate_life_ticks pass.
+
+const BOMB: StringName = &"bomb"
+const CRATE: StringName = &"crate"
+
+
+class Parcel:
+	extends RefCounted
+	var kind: StringName = BOMB
+	var pos: Vector2 = Vector2.ZERO
+	## Ticks until it lands (> 0 = falling; the ring is drawn while falling).
+	var fall_left: int = 0
+	var fall_total: int = 1
+	var hp: int = 0
+	var life_left: int = 0
+
+
+class Blast:
+	extends RefCounted
+	var pos: Vector2 = Vector2.ZERO
+	var radius_m: float = 0.0
+	var damage: float = 0.0
+
+
+var falling: Array[Parcel] = []
+var crates: Array[Parcel] = []
+## The bombs that went off on the last step (cleared at the start of each step).
+var blasts: Array[Blast] = []
+var landed_total: int = 0
+var _tuning: ServoTuning = null
+
+
+func setup(tuning: ServoTuning) -> void:
+	_tuning = tuning
+
+
+func drop(pos: Vector2, kind: StringName, fall_ticks: int) -> void:
+	var p: Parcel = Parcel.new()
+	p.kind = kind
+	p.pos = pos
+	p.fall_left = maxi(fall_ticks, 1)
+	p.fall_total = p.fall_left
+	falling.append(p)
+
+
+func step() -> void:
+	blasts.clear()
+	var still: Array[Parcel] = []
+	for p: Parcel in falling:
+		p.fall_left -= 1
+		if p.fall_left > 0:
+			still.append(p)
+		else:
+			_land(p)
+	falling = still
+	var kept: Array[Parcel] = []
+	for c: Parcel in crates:
+		c.life_left -= 1
+		if c.life_left > 0 and c.hp > 0:
+			kept.append(c)
+	crates = kept
+
+
+func _land(p: Parcel) -> void:
+	landed_total += 1
+	if p.kind == BOMB:
+		var b: Blast = Blast.new()
+		b.pos = p.pos
+		b.radius_m = _tuning.ring_m
+		b.damage = _tuning.bomb_damage
+		blasts.append(b)
+		return
+	p.hp = _tuning.crate_hp
+	p.life_left = _tuning.crate_life_ticks
+	crates.append(p)
+
+
+## A hit on whatever crate covers `pos`; true if one took it.
+func hit_crate(pos: Vector2, damage: int) -> bool:
+	for c: Parcel in crates:
+		if c.hp > 0 and _covers(c, pos, 0.0):
+			c.hp -= damage
+			return true
+	return false
+
+
+## True if a body of `radius_m` at `pos` overlaps a landed crate (crates block paths).
+func blocked(pos: Vector2, radius_m: float) -> bool:
+	for c: Parcel in crates:
+		if c.hp > 0 and _covers(c, pos, radius_m):
+			return true
+	return false
+
+
+func _covers(c: Parcel, pos: Vector2, radius_m: float) -> bool:
+	var half: float = _tuning.crate_m * 0.5 + radius_m
+	return absf(pos.x - c.pos.x) <= half and absf(pos.y - c.pos.y) <= half
+
+
+func write_state(out: StreamPeerBuffer) -> void:
+	out.put_32(falling.size())
+	for p: Parcel in falling:
+		out.put_float(p.pos.x)
+		out.put_float(p.pos.y)
+		out.put_32(p.fall_left)
+	out.put_32(crates.size())
+	for c: Parcel in crates:
+		out.put_float(c.pos.x)
+		out.put_float(c.pos.y)
+		out.put_32(c.hp)

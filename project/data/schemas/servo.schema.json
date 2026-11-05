@@ -1,0 +1,197 @@
+{
+  "$id": "gtai.servo/1",
+  "additionalProperties": false,
+  "properties": {
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "drone": {
+      "additionalProperties": false,
+      "properties": {
+        "accel_mps2": {
+          "maximum": 200,
+          "minimum": 1,
+          "type": "number"
+        },
+        "arrive_m": {
+          "maximum": 2,
+          "minimum": 0.05,
+          "type": "number"
+        },
+        "cruise_mps": {
+          "maximum": 40,
+          "minimum": 1,
+          "type": "number"
+        },
+        "fly_h_m": {
+          "maximum": 10,
+          "minimum": 0.5,
+          "type": "number"
+        },
+        "hover_s": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "launch_s": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        },
+        "life_s": {
+          "maximum": 60,
+          "minimum": 2,
+          "type": "number"
+        },
+        "radius_m": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "refill_s": {
+          "maximum": 30,
+          "minimum": 0,
+          "type": "number"
+        },
+        "sep_m": {
+          "maximum": 5,
+          "minimum": 0.2,
+          "type": "number"
+        }
+      },
+      "required": [
+        "accel_mps2",
+        "arrive_m",
+        "cruise_mps",
+        "fly_h_m",
+        "hover_s",
+        "launch_s",
+        "life_s",
+        "radius_m",
+        "refill_s",
+        "sep_m"
+      ],
+      "type": "object"
+    },
+    "parcels": {
+      "additionalProperties": false,
+      "properties": {
+        "bomb_damage": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        "bomb_share": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crate_hp": {
+          "maximum": 20,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "crate_life_s": {
+          "maximum": 120,
+          "minimum": 0,
+          "type": "number"
+        },
+        "crate_m": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "fall_s": {
+          "maximum": 2,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "ring_m": {
+          "maximum": 5,
+          "minimum": 0.3,
+          "type": "number"
+        }
+      },
+      "required": [
+        "bomb_damage",
+        "bomb_share",
+        "crate_hp",
+        "crate_life_s",
+        "crate_m",
+        "fall_s",
+        "ring_m"
+      ],
+      "type": "object"
+    },
+    "phases": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "max_alive": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "spread_m": {
+            "maximum": 6,
+            "minimum": 0.5,
+            "type": "number"
+          },
+          "wave": {
+            "maximum": 8,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "max_alive",
+          "spread_m",
+          "wave"
+        ],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "rack": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_dx_m": {
+          "maximum": 3,
+          "minimum": 0.2,
+          "type": "number"
+        },
+        "cells": {
+          "maximum": 24,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "row_dy_m": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "cell_dx_m",
+        "cells",
+        "row_dy_m"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "gtai.servo/1"
+    }
+  },
+  "required": [
+    "doc",
+    "drone",
+    "parcels",
+    "phases",
+    "rack",
+    "schema"
+  ],
+  "type": "object"
+}
