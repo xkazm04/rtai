@@ -154,7 +154,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
-### Gates (iteration 17, final `tools/evidence/run.mjs --no-bench` on 08b1f7bc (the tan core, 3ceb3e30): ALL PASS:
+### Gates (iteration 17, final `tools/evidence/run.mjs --no-bench` on 1474c61c (head; same code as 08b1f7bc, the tan core 3ceb3e30): ALL PASS:
 lint 13/13, unit 954/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22); no re-bless.
 Director reel headless `--loadout=pistol` 16/16 chapters down, 0 script errors. Bench not run (other lanes' Godot
 running: frame cost CONTENDED/unmeasured).

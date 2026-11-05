@@ -1087,3 +1087,6 @@ Session state 04:53: tree clean after this commit, no Godot process of mine runn
   (masters evidence, not scratch); the 08:40 REPORT phase may cite or drop them.
 Session end 04:57: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` logs only. NEXT (iteration 18): the 04:40 list + the Call 9 C addition (04:51).
+- 05:01 EVIDENCE GATE on 1474c61c (head, clean tree): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact
+  (mutation caught at 629), look goldens 11/11 (worst 1.22). REPORT gates line now names the head.
+Session end 05:02: tree clean after this commit, no Godot process of mine running, locks never taken.
