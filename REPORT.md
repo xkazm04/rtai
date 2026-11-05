@@ -13,13 +13,17 @@
 | **Ohm** (new): Q takes the soul; melee throws a forked teal bolt from the fingertips every 0.5 s (30 deg, 11 m, 2 forks within 3 m), each body stunned 1.2 s, humans 0.5 (electro X-ray kill), robots 6 (machine_k 3), cars burn 20 per bolt; mass arc = upgrade_tier 1 data hook | `M/ohm-arena-32ppm.mp4` (5/5 + cruiser wrecked, Rivet untouched), `M/ohm-64ppm-halfspeed.mp4`, `M/frames/ohm-vs-target.png`; `E/ghosts-ohm-32.json`; unit `test_ohm_attacks` 2/2 |
 | Determinism: all four beats replay identically and give one state per seed; planted faults (Tonnage crush_m 0, Dent blast_damage 0, Kerf human_damage 0, Ohm machine_k 0) are caught | `scenario_ghost_attacks` -> `E/ghost-attacks.json`, `E/scenario-ghost-attacks.log` |
 | Roles and TTK table | `docs/ghosts/ghost-attacks.md` |
-| Gates: lint 13/13; unit 954/0 on the merged head (38bcc40c); scenarios 46/0 (Tonnage head), final head see JOURNAL; director reel 7/7 chapters run headless all down | `E/unit-it1-merged.log`, `E/scenarios-it1.log`, `E/scenarios-it1-final.log`, `E/director-reel-it1.log` |
+| Gates (iteration 2 head): lint 13/13 on every commit; unit 960/0 (ef3a186a); scenarios 47 ran / 0 failed (incl. scenario_ghost_attacks, four ghosts); director reel 16/16 chapters down, 0 script errors (after the split-edge change) | `E/unit-it2.log`, `E/scenarios-it2.log`, `E/director-reel-it2.log` |
+| City block: Kerf (4/5 of its beat; the chain also cuts the block's own cops) and Ohm (5/5 + car bolts) in `--arena=city` | `M/kerf-city-32ppm.mp4`, `M/ohm-city-32ppm.mp4`, `M/frames/kerf-ohm-city-32ppm.png`; `E/ghosts-kerf-city-32.json`, `E/ghosts-ohm-city-32.json` |
+| The reel of all four attack sets (40 s, labelled) | `M/ghost-attacks-reel-32ppm.mp4` |
+| Ohm's bolt heavier for game zoom (before / after, same tick) | `M/frames/ohm-bolt-ab-city-32ppm.png` |
+| `--gore=reduced`: Kerf's victims fall whole (0 signature kills); `--reduced-motion`: no afterimages, no flicker | `E/ghosts-kerf-reduced-32.json`, `E/kerf-reduced-run.log` |
 
 ## What does not work yet
 - The ghosts still use base Rivet's body in my clips (the forms lane's bodies merge in; their StagePilot hookup is REQUEST 2).
 - No robot fighter exists in the arena: Kerf and Ohm hit the quest boss's brain as a stand-in (drawn as a cop, dies with the standard red splat; Ohm's beat holds it exposed). The robot numbers are real, the robot look is not.
 - Dent's 64 px/m camera does not follow the car (the strikes and blast leave the close-up frame).
-- No city-block clips yet for any ghost. No reel of all four yet. Kerf and Ohm take Q only when the reel sets them (the forms lane's switch selects them later, REQUEST 3).
+- Tonnage and Dent have no city-block clip yet. Under `--gore=reduced` Kerf's victims take the standard death, which leaves a red pool (odd for a cauterising beam; the death pipeline is shared and approved). Kerf and Ohm take Q only when the reel sets them (the forms lane's switch selects them later, REQUEST 3).
 
 ## Calls for the owner
 - Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).

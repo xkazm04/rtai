@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] characters: prewarmed 33 rigs in 98.9 ms
+[INFO] arena: cast rigs: true
+[INFO] ghosts: ghost reel: kerf beat at tick 0
+[INFO] arena: frame C:/Users/kazda/kiro/gtai-masters/n6/ghost-powers/scratch/kerf_reduced.png at tick 201 (OK)
+[INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 510 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 78 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

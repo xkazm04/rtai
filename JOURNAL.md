@@ -201,3 +201,25 @@ GhostForms drives StagePilot:
   7/4/1.5), A/B pending the suite.
 - 01:15 REEL `ghost-attacks-reel-32ppm.mp4` (40 s: the four arena beats, labelled). frames.json 15 entries, all
   files present; scratch emptied.
+- 01:17 GATES on the Kerf/Ohm head: scenarios 47 ran / 0 failed (`E/scenarios-it2.log`), unit 960/0, lint 13/13.
+- 01:18 MILESTONE Ohm's bolt strokes 10/6/2.5 px (was 7/4/1.5): A/B `M/frames/ohm-bolt-ab-city-32ppm.png` (city,
+  tick 173, 32 px/m): holds on the asphalt. frames.json: dent-beat-32ppm swapped out for it (15 cap).
+- 01:20 REDUCED: `--gore=reduced --reduced-motion` must go AFTER `--` (ArenaArgs; the first try before `--`
+  was silently full gore: split 4). After `--`: 0 signature kills, the four fall whole (standard death, red
+  pool), no afterimages (`E/ghosts-kerf-reduced-32.json`). FINDING: a cauterising beam leaving a red pool under
+  reduced gore is odd; the death pipeline is shared (not changed).
+
+NEXT (iteration 3, ghost-powers):
+1. Merge n6-ghost-forms and n5-cast tips if they moved (keep ours on JOURNAL/REPORT). When GhostForms drives
+   StagePilot (REQUEST 2/3), switch the reel beats to select the form instead of setting pilot.kerf/ohm, re-run
+   scenario_ghost_attacks and re-film each ghost on its real body (the clips today show base Rivet).
+2. Tonnage and Dent in the city block (`--arena=city --bot=ghosts --ghost=tonnage|dent`), clips + still.
+3. Kerf polish: the afterimages as a teal silhouette of the body, not rings (once the Kerf rig exists); the cut
+   line along the blink (the target sheet's long horizontal beam) as an option; a 64 px/m keyframe strip.
+4. Ohm polish: the electro kill's cream arcs in teal for ohm_bolt (brutality row field, like `edge`); Ohm's
+   mass tier demo under `--tune` (upgrade_tier 1) in a short clip (data hook proven by unit only today).
+5. Tonnage polish (iteration-1 list): the flattened body at 32 px/m vs the standard pile; armour sparks off the
+   plates; Dent's car-follow camera for the 64 px/m close-up.
+6. Call for the owner stills: Tonnage crush vs pile side-by-side.
+Session state 01:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty,
+image.lock never taken, bench never run.
