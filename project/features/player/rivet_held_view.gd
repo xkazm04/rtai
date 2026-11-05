@@ -99,11 +99,7 @@ func _process(_delta: float) -> void:
 	var tex: Vector2 = hand.texture.get_size()
 	var local: Vector2 = Vector2(tex.x * GRIP_U, tex.y * 0.5) + hand.offset
 	_sprite.global_position = hand.global_transform * local
-	_sprite.global_rotation = hand.global_rotation
-	var one: bool = rig.grip == RigGrip.Kind.ONE_HAND or rig.grip == RigGrip.Kind.BLADE
-	if rig.aiming and not one:  # the barrel on the aim line
-		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
-	_sprite.global_rotation += RigGrip.wrist_turn(rig)  # d7-held: a blade leaves the claw turned in
+	_sprite.global_rotation = _held_angle(rig, hand)
 	_place_long(rig)
 	_pose_melee(rig)
 	_feed_smear(rig)
@@ -121,6 +117,16 @@ func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	add_child(_sprite)
 	_shown = id
 	_shown_size = size_k
+
+
+## The held weapon's angle: along the claw; a two-claw weapon's barrel on the aim line; a blade
+## on the guard's line, turned in at the wrist (d7-held).
+func _held_angle(rig: CutRig, hand: Sprite2D) -> float:
+	if rig.grip == RigGrip.Kind.BLADE:
+		return RigGrip.blade_angle(rig)
+	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:
+		return (rig.aim_at - _sprite.global_position).angle()
+	return hand.global_rotation
 
 
 ## A long gun or a tube: carried across the front of the body, and always beside the helmet.

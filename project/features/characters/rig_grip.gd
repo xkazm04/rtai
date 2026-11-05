@@ -76,8 +76,8 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 	return Vector3(h.x, h.y, hold.hand_z)
 
 
-## d7-held: the blade's turn off the forearm (rad, global): in toward Rivet's centre line by the
-## class's wrist_rad, straightening as the strike reaches (the cut leaves in line with the arm).
+## d7-held: the blade's turn off the facing or the aim (rad, global): in toward Rivet's centre
+## line by the class's wrist_rad, straightening as the strike reaches.
 static func wrist_turn(rig: CutRig) -> float:
 	if rig.grip != Kind.BLADE or rig.plan.gun_arm < 0:
 		return 0.0
@@ -85,6 +85,17 @@ static func wrist_turn(rig: CutRig) -> float:
 	var gun_side: float = signf(rig.plan.shoulder[rig.plan.gun_arm].y)
 	var flip: float = signf(rig.torso.global_transform.determinant())
 	return -gun_side * flip * hold.wrist_rad * (1.0 - rig.c_reach) if hold != null else 0.0
+
+
+## d7-held: a held blade's global angle: the aim line (or the facing) turned in at the wrist. The
+## claw's own rotation follows the arm's IK, which at the low guard runs nearly across the body,
+## so the blade takes the line MeleeSwing's arc is measured from instead.
+static func blade_angle(rig: CutRig) -> float:
+	var at: Vector2 = rig.torso.global_position
+	var line: float = rig.torso.global_transform.x.angle()
+	if rig.aiming and rig.aim_at.distance_to(at) > 1.0:
+		line = (rig.aim_at - at).angle()
+	return line + wrist_turn(rig)
 
 
 ## The blade's guard: the gun claw low and ahead of the gun-side hip, along the aim when aiming,
