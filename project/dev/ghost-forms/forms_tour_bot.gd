@@ -3,7 +3,8 @@ extends InputSource
 ## `--bot=forms [--form=<id>|all]` (ghost-forms proof clips): Rivet walks a square in base, picks
 ## the form with G, transforms with Q while walking, walks the square in the form, and Q takes him
 ## back to base; `--form=all` goes base -> Tonnage, then G switches through Dent, Kerf and Ohm
-## (the teal flash) before Q back. Input only (the live GhostPilot does the rest).
+## (the teal flash) before Q back; `--form=voices` only walks (base: for `--apparition`). Input
+## only (the live GhostPilot does the rest).
 
 const START_AT: int = 40
 ## Ticks per side of the walked square.
@@ -33,6 +34,8 @@ static func of(p_stage: ArenaStage, p_actions: PlayerActions, args: ArenaArgs) -
 func _plan() -> void:
 	var t: int = START_AT + 60
 	var order: Array[StringName] = stage.pilot.ghosts.forms.table.order if stage.pilot else []
+	if form == &"voices":
+		return
 	if form == &"all":
 		plan.append([t, &"power_hauler"])  # the first in the order (Tonnage)
 		for i: int in order.size() - 1:

@@ -25,6 +25,9 @@ var reduced_motion: bool = false
 ## The view's camera (the print stage's or the city view's CameraRig; null = no beat).
 var camera: CameraRig = null
 var hud: GhostFormHud = GhostFormHud.new()
+## The voice moments: a ghost's teal apparition beside Rivet (cued by `events`' whispers).
+var appear: GhostApparition = GhostApparition.new()
+var events: EventBus = null
 var beats: int = 0
 ## false (dev `--no-lurch`): Dent as iteration 2 built him (Rivet's plain cycle, linear filter, no
 ## soul glow): the A/B before.
@@ -53,6 +56,9 @@ static func attach(
 	v.rigs = p_rigs
 	v.camera = p_camera
 	v.reduced_motion = LaunchArgs.has("--reduced-motion")
+	v.events = stage.events()
+	if OS.get_cmdline_user_args().has("--apparition"):  # dev: a ghost speaks every 4 s
+		v.appear.dev_every = 240
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
 	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
 	v.z_index = (p_rigs.z_index if p_rigs != null else RenderLayers.z(&"actors")) + Z_OVER_RIGS
@@ -72,6 +78,9 @@ func _ready() -> void:
 	_dent.lurch_on = lurch_on
 	_dent.reduced_motion = reduced_motion
 	add_child(_dent)
+	appear.reduced_motion = reduced_motion
+	add_child(appear)
+	appear.bind(pilot.ghosts.forms if pilot else null, events)
 	_dent.setup(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = HUD_LAYER
@@ -131,6 +140,7 @@ func _process(_delta: float) -> void:
 	_dent.step(is_dent, at, r.facing.angle(), steps, arena.tick)
 	var is_kerf: bool = _step_light(_kerf, KerfStage.GHOST, at, r.facing.angle(), steps)
 	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
+	appear.step(at, r.facing.angle(), steps, arena.tick)
 	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
 
 
