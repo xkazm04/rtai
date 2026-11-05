@@ -346,3 +346,30 @@ NEXT (iteration 4):
 5. FightCam framing at 64 px/m (Rivet half off frame; blasts half off at 32 on wave 2): capture only.
 6. Audit gaps: gloria, assault-rifle (`--loadout`), molotov throw anticipation.
 7. REPORT calls so far: shard pop (36 vs `--shard-pop=12`, clip in masters). Exe by 08:30.
+
+### GATES 21:00 on head `9928c09a` (tree untouched during the runs)
+- `node tools/evidence/run.mjs --no-bench`: lint 13/13 over 937 files, unit 1131/0, scenarios 52/0,
+  parity bit-exact over 1200 steps (planted mutation caught at 629), selftest pass (look goldens
+  11/11, block 5/5) (`evidence/ranged/it3-evidence-9928c09a.log`, `build/evidence/*.json`).
+  No bench: no performance claim.
+- City-block director reel with `--loadout=pistol`: 19/19 fully down, 0 SCRIPT ERROR, nothing
+  skipped (`evidence/ranged/it3-reel-city-loadout.log`). Pit with loadout: 19/19 at `0d4089f1`.
+- Registry rules applied this iteration: `motion-quality-gating` (scores per dimension; a change
+  is judged against a before film on the same path; "measured, not looked at" stays labelled);
+  `realtime-combat-semantics` (the victim's reaction on the hit frame: the electro snap starts in
+  2 ticks; sound on the frame: the blast cue within 1 frame); restraint (per-second budget, not
+  per-hit effects: the flamer kicks once per ignition, never per puff).
+### PLAN 20:56: brief item 6, quest 1 fires the table guns (read only, nothing built)
+- Quest 1 has no `GunHand`: `CombatArena.gun` stays null, so Rivet fires the evening path
+  (combat.json assault rifle, then Gloria from the Toner Room line hook). gunplay REPORT next step 4.
+- Where: `Quest1Session.open` builds `CollectCallStage` (owns `arena`) and `LiveInput`; the arena
+  path does it in `GunplayHook.setup` (`GunHand.make(table, weapon, ctx.rng.stream(&"gunplay"))`,
+  `rivet.weapon`, `GuardTell`, `HitLink.make`). Quest 1's view already has a `CastView.hit_link`.
+- Steps: (1) in the stage (headless too, so the replay sees it) make the GunHand for the
+  quest's current gun from `weapons.json` (the assault-rifle row via its `shot_cue`, `gloria`
+  after the Toner Room hook, swap in `stage_lines.gd`); (2) `session.live.px_per_m =
+  func() -> float: return view.px_per_m` in `quest1_game.gd`; (3) film quest 1 before/after at
+  32 px/m; (4) the quest 1 replay and scenario goldens will move: decision line + deliberate
+  re-bless (`scenario_quest1_*`, the 60 s replay), never a silent one.
+- Risk: the gun table's hp scale is 1/human_hp (1 in quest 1) = the same one-hit doctrine; check
+  the tazer boss fight (`player_hit_robo_tazer`) is untouched.
