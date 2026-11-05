@@ -39,6 +39,11 @@ static func attach(view: Node, hook: BossHook) -> void:
 	var bar: BossBar = BossBar.new()
 	bar.fight = hook.fight
 	layer.add_child(bar)
+	if BossCam.wanted():
+		var cam: BossCam = BossCam.new()
+		cam.view = v
+		cam.hook = hook
+		v.add_child(cam)
 
 
 ## The boss's own body view, or the base disc.

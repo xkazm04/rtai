@@ -112,6 +112,11 @@
           "minLength": 1,
           "type": "string"
         },
+        "leap_m": {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
         "max_m": {
           "maximum": 100,
           "minimum": 0,

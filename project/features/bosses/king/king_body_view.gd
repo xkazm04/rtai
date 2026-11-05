@@ -50,6 +50,7 @@ func _draw() -> void:
 		_on_foot()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	_coins()
+	KingShock.draw(self, fight)
 	for g: BossFight in standing_adds() if _rigs == null else []:  # first pass: drawn gang
 		draw_set_transform(Ink.px(g.body.pos), g.body.facing.angle(), Vector2.ONE * 1.3)
 		_gangster(Vector2.ZERO)

@@ -33,8 +33,8 @@ const king = {
       cooldown_s: 9, damage: 0, range_m: 0, min_m: 0, max_m: 99, weight: 1,
       doc: 'King raises the megaphone and shouts a decree: the gang hits harder and faster for a while. Long recovery: the best punish window.' },
     press_slam: { shape: 'circle', windup_s: 1.1, aim_lock_s: 0.35, active_s: 0.25, recovery_s: 1.3, punish_s: 1.0, punish_k: 1.5,
-      cooldown_s: 2.0, damage: 28, range_m: 2.5, radius_m: 3.2, min_m: 0, max_m: 6, weight: 3,
-      doc: 'Both press plates rise over the head (ring drawn on the floor), then slam: a shockwave ring that showers coins.' },
+      cooldown_s: 2.0, damage: 28, range_m: 2.5, radius_m: 3.2, leap_m: 6, min_m: 0, max_m: 10, weight: 3,
+      doc: 'Both press plates rise over the head while the ring tracks Rivet up to 6 m out; at the lock he hops onto the ring and slams: a shockwave ring that showers coins.' },
     charge: { shape: 'charge', windup_s: 1.0, aim_lock_s: 0.35, active_s: 0.9, recovery_s: 1.4, punish_s: 1.0, punish_k: 1.5,
       cooldown_s: 4.0, damage: 24, range_m: 10, width_m: 2.0, move_mps: 11, min_m: 4, max_m: 18, weight: 2,
       doc: 'He drops his shoulder, cape flares, then barrels along the locked line.' },
@@ -74,7 +74,7 @@ const attack = { type: 'object', additionalProperties: false,
   properties: { shape: { enum: ['charge', 'circle', 'cone', 'line', 'none'] }, windup_s: num(0.4, 5), aim_lock_s: num(0, 2),
     active_s: num(0.05, 10), recovery_s: num(0.2, 10), punish_s: num(0, 10), punish_k: num(1, 4), cooldown_s: num(0, 60),
     damage: num(0, 100), range_m: num(0, 60), width_m: num(0.2, 10), arc_deg: num(5, 360), radius_m: num(0.5, 20),
-    move_mps: num(0, 40), min_m: num(0, 100), max_m: num(0, 100), weight: num(0, 10), adds, doc } };
+    move_mps: num(0, 40), leap_m: num(0, 20), min_m: num(0, 100), max_m: num(0, 100), weight: num(0, 10), adds, doc } };
 const phase = { type: 'object', additionalProperties: false, required: ['id', 'hp_below', 'attacks', 'gap_s', 'transition_s', 'doc'],
   properties: { id, hp_below: num(0, 1), attacks: { type: 'array', minItems: 1, items: id }, gap_s: num(0, 10),
     transition_s: num(0, 10), adds, doc } };

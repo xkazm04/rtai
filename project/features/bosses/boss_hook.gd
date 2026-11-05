@@ -57,6 +57,11 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	Log.info("bosses", "%s engaged in %s, phase %d" % [boss_id, spec.arena.id, fight.phase + 1])
 
 
+## Rivet's position now (view helpers: BossCam).
+func rivet_pos() -> Vector2:
+	return _arena.rivet.pos if _arena != null else origin
+
+
 func step(stage: ArenaStage, tick: int) -> void:
 	if fight == null:
 		return
