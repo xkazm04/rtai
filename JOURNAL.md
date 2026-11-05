@@ -166,3 +166,11 @@ NEXT (iteration 2, from 20:20):
 - Unit full suite on head `2691917e`: 1120 passed, 0 failed (`evidence/ranged/it1-unit-head.log`).
 - Audit: ray gun, flamethrower, molotov scored (`7adb597a`); still `?`: machine_pistol, gloria,
   homing_shard detail, assault-rifle.
+
+### MILESTONE 20:02: `016966b2` Gatling recoil kick 1.8 px (jitter 0.48 rms / 1.59 max vs main 0.27 / 0.52)
+Clip `masters n7/ranged/gatling-ab-32ppm.mp4` + frames.json row (4 pairs now). Not judged in
+motion yet.
+
+NEXT (supersedes item 1 of the 20:00 NEXT): judge the Gatling clip in motion (32 and 64 px/m) and
+the spin-up (none built: the fire kick starts at the first round); if it reads as noise, step back
+to 1.2 px. Then the rest of the 20:00 NEXT list, items 2-6.
