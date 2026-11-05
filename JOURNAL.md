@@ -255,3 +255,17 @@ Session state 01:29: head = this commit, tree clean, no Godot process of mine ru
   never picked and Q took Tonnage) and Q, attacks after the settled form. Unit test_kerf 3/3, test_ohm 2/2,
   test_ghost* 15/15, test_tonnage 2/2, test_dent 3/3, test_hauler* 18/18; scenario_ghost_attacks 1/0
   (`evidence/scenario-ghost-it3.log`). MERGE n5-cast cc744d85 (5ee2cfe8). Lint 13/13 on both.
+- 01:42 CITY CAR ROOT CAUSE (the iteration-2 open item): on the city block the city's RivetBody holds Rivet
+  (CollectCallStage.step sets `rivet.pos = follow.target` when the body is on), so GhostReel._begin's placement
+  was undone on tick 1 and Rivet stood 34 m from the beat's cars (probe: rivet (524,524), cruiser (493,523.5)).
+  FIX d88eac6c: _begin also sets `stage.follow.focus/target` (dev reel only; the arena has no follow). City:
+  Dent 1 seize, Tonnage 10/10 + 2 cars crushed, Kerf 5/5 (was 4/5), Ohm 5/5.
+- 01:47 Dent city film: the seized car drove onto the sidewalk and blew up past B, off-screen, on the overload
+  timer. 87678661: DentStage._wall also pushes the car out of the city's cells (buildings, props, parked cars =
+  an impact), and the beat presses melee (blow on command) once the car is within 1.6 m of B's centre. City 5/5
+  (`E/ghosts-dent-city-32.json`), scenario_ghost_attacks 1/0 (arena beat unchanged in outcome). Judged at 32
+  px/m: the teal tether, the hijack plate, the strike through A and the amber blast in B all read on the
+  asphalt. M: `dent-city-32ppm.mp4` (10 s), `frames/dent-city-keys-32ppm.png`.
+- 01:52 Tonnage city re-filmed (47148cc3): 10/10, 2 slams, 2 cars crushed, Rivet 100 hp, 0 SCRIPT ERROR; the
+  forms lane's TonnageRig stands in. M: `tonnage-city-32ppm.mp4` (15 s), `frames/tonnage-city-crush-keys-32ppm.png`.
+  frames.json 15 (dropped tonnage-beat / kerf-beat stills for the two city strips).
