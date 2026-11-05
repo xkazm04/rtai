@@ -1329,3 +1329,7 @@ Session end 07:04: tree clean after this commit, no Godot process of mine runnin
 - 07:05 brief item 5 in a live quest path: quest 1 `--rigs --cam=fight` stills 13420-13780 (0 SCRIPT ERROR), tick
   13720 cropped x2.86 beside r2_c6: `M/frames/cast-quest1-vs-r2c6-32ppm.png` (no dummy rings; the patrol sprite now
   matches the rig cops). frames.json 15 (second; the Call 9 3-way dropped from the list, file kept). REPORT section 4.
+- 07:09 EVIDENCE GATE on b88d329b (`--no-bench`, tree untouched during the run): ALL PASS: lint 13/13, unit 954/0,
+  scenarios 46, parity exact, look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). Bench skipped (contended).
+Session end 07:09: tree clean after this commit, no Godot process of mine running, locks never taken. NEXT as of 07:04
+  stands (item 3's gate is done on b88d329b; re-run only if anything but docs lands).

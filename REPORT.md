@@ -186,7 +186,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
-### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On 84ed1bd1 (b68665b1, the quest sprites, + docs): ALL PASS, the same numbers (look 11/11 worst 1.33, block 5/5 worst 1.53).
+### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On 84ed1bd1 (b68665b1, the quest sprites, + docs): ALL PASS, the same numbers (look 11/11 worst 1.33, block 5/5 worst 1.53). Final of iteration 20 on b88d329b: ALL PASS, same numbers.
 ### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on f4381f32 (the plain riot crown): ALL PASS: lint 13/13,
 unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53),
 no re-bless.
