@@ -13,6 +13,11 @@ const WHITE: Color = Color(0.92, 1.0, 0.97)
 const HANG_S: float = 0.22
 const JAG_M: float = 0.32
 const STEP_M: float = 0.55
+## The bolt's strokes in px (ink rim, teal body, white core): heavy enough to read at 32 px/m on
+## the city's asphalt (was 7 / 4 / 1.5).
+const INK_W: float = 10.0
+const TEAL_W: float = 6.0
+const CORE_W: float = 2.5
 
 var stage: CollectCallStage = null
 var ppm: float = 32.0
@@ -42,9 +47,9 @@ func _draw() -> void:
 	var beat: int = 0 if reduced_motion else (stage.tick / 2)
 	for i: int in o.bolt_path.size() - 1:
 		var pts: PackedVector2Array = _jag(o.bolt_path[i] * ppm, o.bolt_path[i + 1] * ppm, beat + i)
-		draw_polyline(pts, Color(INK, 0.7 * fade), 7.0, true)
-		draw_polyline(pts, Color(TEAL, fade), 4.0, true)
-		draw_polyline(pts, Color(WHITE, fade), 1.5, true)
+		draw_polyline(pts, Color(INK, 0.75 * fade), INK_W, true)
+		draw_polyline(pts, Color(TEAL, fade), TEAL_W, true)
+		draw_polyline(pts, Color(WHITE, fade), CORE_W, true)
 		draw_circle(o.bolt_path[i + 1] * ppm, 0.3 * ppm * fade, Color(WHITE, 0.8 * fade))
 
 
