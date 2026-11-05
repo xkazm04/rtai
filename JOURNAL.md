@@ -1432,3 +1432,7 @@ Session end 07:54: tree clean after this commit, no Godot process of mine runnin
   res://dev/arena/arena.tscn -- --bot=reel --reel=director --clean --rigs --loadout=pistol`): 16/16 chapters n/n down,
   0 SCRIPT ERROR. (FRICTION: the scene path is required; `--arena` as a boot arg is "unknown launch arg".)
   Scratch PNG sequences in `gtai-n5/scratch-cast/i23` deleted (logs kept).
+- 08:10 merge re-check: n6-ghost-forms 8ac64d97 and n6-ghost-powers 467830fc carry cf64342e and the 07:40 REQUEST's
+  fix (one `_lod_art("rivet")` pick for both paths). 10607e11 touches the same Hauler lines, so a textual conflict is
+  expected there. 2cc15c5f keeps `_lod_art(id, grow = 1.0)` (pure refactor, lint 13/13, unit 954/0) so their call
+  compiles; REPORT merge note gives the resolution (their structure + cast's four `_art_w` lines).
