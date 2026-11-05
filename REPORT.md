@@ -186,6 +186,13 @@ about 0.8 m for Tonnage at 64 px/m. A/B same input: `M:frames/tonnage-subtitle-l
 (before, the press's lower legs sit under the box's tape; after, the whole press reads). `ghost_forms.json`
 `story_lift` false = before. Unit 1013/0; director reel 16/16 on the merged head.
 
+### 9. Ohm's glow, and all four in the city block (iteration 11, DECISION)
+`M:forms-cycle-all-city-32ppm.mp4` (16 s, `--arena=city --bot=forms --form=all`): base -> Tonnage -> Dent ->
+Kerf -> Ohm -> base on the city block at 32 px/m; settled keys `M:frames/forms-cycle-city-keys-32ppm-x2.25.png`.
+Ohm was the weakest read there: a small rust shell with almost no glow. His soul glow is now 2.6 m wide at alpha
+0.5 (was 1.9 m at 0.4). Same-input A/B: `M:frames/ohm-glow-city-ab-32ppm-x3.png`. After the change, a teal pool
+marks him as possessed, like Dent and Kerf. Unit 1013/0; director reel 16/16, 0 SCRIPT ERROR.
+
 ### Gates (iteration 11)
 On 9d610364, still tree (E:evidence-run-it11.log): evidence runner `--no-bench` all PASS: lint 13/13, unit
 1013/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.32), block goldens

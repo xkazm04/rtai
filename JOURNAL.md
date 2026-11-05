@@ -750,3 +750,15 @@ Session state 05:56: head = this commit, tree clean after it, no Godot process o
   450 Dent, 525 Kerf, 675 Ohm, 825 base): `M:frames/forms-cycle-all-ab-32ppm-x3.png`. Judged: Tonnage and Dent
   unchanged; Kerf's limbs now read as limbs (were hairlines); Ohm reads as a teal-seamed shell with arms (was a
   brown blob); base Rivet the merged slim body. frames.json 15 (the cycle entry names the A/B).
+- 06:24 PROOF all four in the city block (`film.sh` `--arena=city --bot=forms --form=all`, 960 frames, 0 SCRIPT
+  ERROR): `M:forms-cycle-all-city-32ppm.mp4`, keys `M:frames/forms-cycle-city-keys-32ppm-x2.25.png` (settled frames
+  160/308/530/700/868; 468/628 were mid-morph, re-cut). Judged: Tonnage, Dent, Kerf read; Ohm the weakest, a small
+  rust shell with almost no glow on asphalt (Dent and Kerf sit in clear pools).
+- 06:27 MILESTONE (this commit) OhmRig GLOW_M 1.9 -> 2.6 m, GLOW_A 0.4 -> 0.5 (DECISION). Same-input A/B frames
+  680/700/760 x3: `M:frames/ohm-glow-city-ab-32ppm-x3.png`. Judged: after, a teal pool marks him as possessed,
+  his size unchanged. Unit 1013/0 (E:unit-it11-ohm-glow.log); COMBAT CHECK director reel 16/16, 0 SCRIPT ERROR
+  (E:director-reel-it11-ohm-glow.log). The city clip kept is the after take.
+  FRICTION: frames.json trimming dropped the Dent and Tonnage target-comparison entries; the masters folder has
+  no git, so those two entries were rebuilt from this JOURNAL (files intact). Fold entries into notes, never trim
+  the tail blindly. frames.json 15: the city cycle first (names the glow A/B); ohm-morph clip named in the
+  ohm-vs-target entry (file kept).
