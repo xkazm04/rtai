@@ -97,12 +97,23 @@ every attack's hit rate against the dodging bot under 35 % and against the stand
 (it must be readable and still threaten). Next: n >= 10 seeds per bot, per-attack damage share
 (over 30 % from one attack is a finding), then tune.
 
+Iteration 2 (King's boulevard, the walk and adds fixes, the rigs; seed fixed, n=1 per bot,
+CONTENDED; `evidence/king/bot-{dodge,stand}-it2d.json`): the dodging bot kills King in 81.9 s and
+takes 30 from King and the gang (King 1 of 17 attacks landed: one ram; gang 5 of 16), no death;
+the standing bot kills him in 88.5 s, King lands 13 of 17 (coin fan 9/9, ram 2/2, two late body
+hits), the gang 11 of 20, one death. Both inside the 60-120 s envelope; the middle (a bot that
+reads about 70 % of tells) is still unmeasured, so this is not called balanced.
+
 ## Build order and state
 1. Framework + this moveset: done (iteration 1).
 2. Body: a KingPlan cutout rig from new part sheets (gold plates, jewelled crown, fur cape, chains),
-   the throne-car as a boss-owned vehicle (DECISION below), the rich gang variant. FIRST PASS now:
-   drawn shapes in `features/bosses/king/king_body_view.gd`.
-3. Phase 1, 2, 3 as above; the arena (a boulevard + plaza); the bot's numbers; clips.
+   the throne-car as a boss-owned vehicle (DECISION below), the rich gang variant. NOW (iteration
+   2): King on `KingPlan(1.55)` and the gang on `GangPlan` (the thug in gold chains and a black
+   visor, `tools/art/gang_parts.py`) through `KingRigs`; the car, the cape, the coins and the gold
+   accents at game zoom (`KingAccents`) are drawn; `--boss-shapes` is the drawn first pass.
+   Still to do: King's own wealth parts (gold plates and chest, jewelled crown, fur cape).
+3. Phase 1, 2, 3 as above; the arena: King's boulevard (dev-arena area `boulevard`, 80 x 30 m:
+   planters, centre line, plaza plinths; iteration 2); the bot's numbers; clips.
 
 DECISION (iteration 1): the throne-car is a **boss-owned vehicle** drawn and driven by King's own
 moves, not a city-sim car. The sim's cars are a fixed set driven by traffic and Dent's seize; a
