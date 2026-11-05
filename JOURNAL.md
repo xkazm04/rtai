@@ -130,3 +130,27 @@ overwritten by my first run and restored with `git checkout --`, FRICTION: name 
 - Parity exact, planted caught at 629 (`evidence/ranged/it1-parity.log`).
 - Director reel (pit) 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/ranged/it1-reel-director.log`,
   at `e88ebcfe`).
+
+### MILESTONE 20:00: `2691917e` the fire side (recoil kick per round Rivet fires)
+- `fire_kick_px/ticks` on weapons rows: gatling 0.7/4, rocket_launcher 3/10, hand_cannon 2/7.
+  FeelCam watches new Rivet rounds in `CombatArena.shots` (as StageAudio) and kicks against the aim.
+- Director reel on the city block 19/19 fully down, 0 SCRIPT ERROR (at `5535aad2`).
+- NOT LOOKED AT YET: the Gatling rumble in motion. A 16-frame strip at 1:1 could not show a
+  sub-pixel shift (`scratch/ranged/audit/sheets/gat-ab-fire.png`); needs a measured camera
+  offset (log FeelCam.offset_px per frame) or a 64 px/m close-up. Not claimed as a visible change.
+
+NEXT (iteration 2, from 20:20):
+1. Measure the Gatling rumble: add a dev frame log of FeelCam's offset (or diff a static strip at
+   64 px/m), judge "steady, not a blur" on the clip; tune gatling fire/hit kick by data.
+2. Finish the audit: score flamethrower, molotov, ray_gun, machine_pistol, gloria, homing_shard
+   from the films already in `scratch/ranged/audit/` (`sheet2.sh <w>-off 2`), assault-rifle via
+   `--loadout`. Rank again.
+3. FightCam framing of blasts (rocket/nuke half off frame at 32 px/m, capture only), then the
+   48/64 px/m close-ups and the city-block clip (`--arena=city`) for nuke, rocket, hand cannon.
+4. Sound on the frame: measure with a cue log (StageAudio cue tick vs struck tick) since the bed
+   masks peaks; consider an impact cue per hit class.
+5. Owner item 1 (electro gun / plasma rifle struck + killed human), then item 4 call (shard
+   `grind_ticks` 36 vs 12 as a flag, film chapter 14 both ways).
+6. Re-run unit full + scenarios on head (last full: `779cdd3d`); evidence run before freeze;
+   exe by 08:30. Scratch avis in `gtai-n7p/scratch/ranged/audit` are audit inputs: delete the
+   ones not referenced once scored.
