@@ -44,6 +44,9 @@ const BY_CLASS: Dictionary[StringName, int] = {
 	&"hip_belt": Kind.HIP,
 	&"thrown": Kind.THROWN,
 }
+## d7-held: false (`--gun-off-claw`): the claws ignore the weapon's shift beside the helmet, so the
+## drawn gun floats a claw-width off them (the A/B's before).
+static var follow_shift: bool = not OS.get_cmdline_user_args().has("--gun-off-claw")
 
 
 static func kind_of(grip_class: StringName) -> int:
@@ -73,6 +76,7 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 	var dv: Vector2 = _aim_dir(rig, g2) if rig.aiming else Vector2.RIGHT  # not aimed: the facing
 	var h: Vector2 = g2 + dv * reach * (hold.gun_reach if aim_arm else hold.off_reach)
 	h -= dv * RECOIL_PX * rig.c_recoil * (1.0 if aim_arm else OFF_RECOIL)
+	h += rig.held_shift if follow_shift else Vector2.ZERO
 	return Vector3(h.x, h.y, hold.hand_z)
 
 

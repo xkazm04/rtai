@@ -102,3 +102,19 @@ func test_heavy_class_walks_shorter_and_leans_back_only_while_out() -> void:
 	assert_lt(RigGrip.walk(rig).x, 1.0, "the heavy class takes shorter steps")
 	rig.gun_out = false
 	assert_eq(RigGrip.walk(rig), Vector2(1.0, 0.0), "planted: stowed, the plain walk")
+
+
+## d7-held: the drawn long gun is shifted beside the helmet (RivetHeldView, rig.held_shift); both
+## claws' aim targets take the same shift so they stay on the gun. Planted: with follow_shift off
+## (`--gun-off-claw`) the claws ignore it and the gun floats the shift's length off them.
+func test_claws_follow_the_guns_shift_beside_the_helmet() -> void:
+	var rig: CutRig = _aimed(RigGrip.Kind.TWO_HAND_LONG)
+	var shift: Vector2 = Vector2(0.0, 40.0)
+	var plain: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	rig.held_shift = shift
+	var moved: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	assert_almost_eq(moved.y - plain.y, shift.y, 0.01, "the gun claw takes the gun's shift")
+	RigGrip.follow_shift = false
+	var off: Vector3 = RigGrip.target(rig, Vector3.ZERO, true, 180.0)
+	RigGrip.follow_shift = true
+	assert_almost_eq(off.y, plain.y, 0.01, "planted: --gun-off-claw leaves the claw behind")

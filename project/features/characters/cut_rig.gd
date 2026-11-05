@@ -42,6 +42,9 @@ var hold: StringName = &""
 ## rivet-arsenal: the reload pantomime (RigGrip): -1 none, else phase + fraction (0 magazine out,
 ## 1 magazine in, 2 the cock or charge).
 var reload_k: float = -1.0
+## d7-held: the drawn weapon's shift beside the helmet (RivetHeldView, torso-local px); the two
+## claws' aim targets take it too, so the claws stay on the gun instead of a claw-width off it.
+var held_shift: Vector2 = Vector2.ZERO
 var dead: bool = false
 
 var c_tuck: float = 0.0

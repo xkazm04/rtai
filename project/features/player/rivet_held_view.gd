@@ -83,6 +83,8 @@ func _process(_delta: float) -> void:
 		var now: int = arena.tick if arena != null else 0
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
 		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
+	if rig != null and not rig.gun_out:
+		rig.held_shift = Vector2.ZERO
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
@@ -137,8 +139,16 @@ func _place_long(rig: CutRig) -> void:
 	_sprite.global_rotation += _carry.step(
 		across, fwd, g, rig.torso.global_position, _sprite.global_rotation
 	)
-	if RivetCarryAngle.applies(rig.grip) and not pilot.wielding():
-		_sprite.global_position += _beside(rig)
+	if not RivetCarryAngle.applies(rig.grip) or pilot.wielding():
+		rig.held_shift = Vector2.ZERO
+		return
+	# the claws already took last frame's shift (RigGrip.target): measure from the unshifted point
+	_sprite.global_position -= rig.torso.global_transform.basis_xform(rig.held_shift)
+	var shift: Vector2 = _beside(rig)
+	_sprite.global_position += shift
+	var follow: bool = rig.aiming and rig.reload_k < 0.0 and RigGrip.follow_shift
+	var to_local: Transform2D = rig.torso.global_transform.affine_inverse()
+	rig.held_shift = to_local.basis_xform(shift) if follow else Vector2.ZERO
 
 
 ## The shift that puts a long gun or a tube beside Rivet's helmet (RivetCarryAngle.beside_head).
