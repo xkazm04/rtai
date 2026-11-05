@@ -118,7 +118,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Then (1d9c3c53) a mid-grey hoodie with a cream hood ring (r7): the hoodie ped reads as pale shoulders with a dark
   head instead of a dark slab (`M/frames/crowd-r7-hoodie-ab.png`). Every ped torso is now plan-view art.
 
-### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on eec9e750 (all plan-view parts): lint 13/13, unit 942/0,
+### Gates (iteration 12, final on 5cf7cafe (r7 hoodie): lint 13/13, unit 942/0, parity exact, look goldens 11/11
+(worst 1.00) and block 5/5 (worst 1.08), no re-bless; scenarios 45/46 in the gate (`scenario_corpse_horde`, its
+wall-clock early-vs-late step-cost check, CONTENDED: another lane's Godot was running), then 46/0 re-run alone.
+Earlier `tools/evidence/run.mjs --no-bench` on eec9e750 (r5 + r6): lint 13/13, unit 942/0,
 scenarios, parity exact, look goldens 11/11 (worst 0.92) and block 5/5 (worst 0.96) with no re-bless; on b722cb84 (r5
 only) the same with worst 0.83 / 0.86. Director reel 16/16 chapters down on both.)
 ### Gates (iteration 11, `tools/evidence/run.mjs --no-bench` on 1d4abaa6: lint 13/13, unit 941/1 where the 1 is the

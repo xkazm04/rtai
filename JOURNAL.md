@@ -754,3 +754,19 @@ Session end ~01:40: tree clean after this commit, image.lock and bench.lock rele
   frames, 0 SCRIPT ERROR): flee, the kill and the corpse read; mixed values.
   Now every ped torso (coat, jacket, hoodie, vest, overalls) and the hat, hair, hood, beanie and cap heads are
   plan-view art; the bald head, limbs and shoes are the 3/4-view art. NEXT 1(a) closed; 1(b) D5 hatching stands.
+- 01:49 EVIDENCE GATE on 5cf7cafe (r7 hoodie): lint 13/13, unit 942/0, parity PASS, look goldens 11/11 (worst 1.00),
+  block 5/5 (worst 1.08), no re-bless; scenarios FAIL 1/46 = `scenario_corpse_horde`. That scenario times the headless
+  sim step (early vs late windows, Time.get_ticks_usec) and the r7 change is one PNG + parts.json (render only); another
+  lane's Godot (PID 55216, ~500 MB, not mine) was running. Re-run of the scenario suite alone at 01:53: 46 ran, 0
+  failed. FRICTION: corpse_horde's step-cost check is contention-sensitive like the city_chase nav budget; treat a
+  lone failure under load as CONTENDED and re-run it alone. REPORT gates line updated.
+
+NEXT (iteration 13), replaces the 01:35 list:
+1. The crowd: every ped torso and five heads are plan-view art (f4910eca, cc744d85, 0bcd2ce9, 1d9c3c53). Open:
+   (b) D5 hatching for the new parts (Codex restyle of r5/r6/r7 cells in the d5 hatched style, sliced with the D4
+   alpha lock like slice_d5.py; judge at 64 px/m beside the hatched limbs); (c) quest 1 `--rigs` at 48 px/m and the
+   city block at 32 px/m re-shot on the final parts (render only; lineups, react and street boards are done);
+   (d) the bald head and the shoes are still 3/4-view art.
+2. Calls 1-6 stand; REPORT section 5 is current to 5cf7cafe. REPORT rewrite at 08:40. frames.json 15, all exist.
+Session end 01:54: tree clean after this commit, image.lock released (3 jobs tonight: r5, r6, r7), bench.lock never
+  taken, no Godot process of mine running, scratch i12/i12b/i12c deleted.
