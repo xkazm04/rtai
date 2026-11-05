@@ -819,3 +819,22 @@ Session end 01:54: tree clean after this commit, image.lock released (3 jobs ton
   frames.json 15 (+ cast-ingame-vs-r2c6 re-shot, crowd-d5-hatch, quest1-hoodie-sleeve, react-street-d5peds,
   city-r7peds at the top; dropped from the list, files kept as REPORT cites them: city-r5peds, cop-crown-sleeve-trial,
   quest1-dock9-32, crowd-r5, react-board-r5peds).
+- 02:31 NEXT 1(d) judged: the bald head is already plan-view art (a grey skull disc, two ears, a nose nub) and so is the
+  shoe (a dark capsule with a cream toe); no redraw. The bald head was the last ped head without a D5 overlay: Codex
+  job `ped_bald_d5` (45 s, under image.lock, released; `masters:n5/cast/gen/r8b`), the same r8 pipeline (x3 single-part
+  sheet, install_d5.py with the value/chroma lock). Lineup at 64 px/m: hatched lower-left, paler like every D5 part,
+  0 vermilion px: `M/frames/crowd-bald-d5-ab-64ppm.png`.
+- MILESTONE f5733b83: D5 bald head (provenance line). Lint 13/13, unit 942/0, street board 241 frames 0 SCRIPT ERROR
+  (`M/cast-street-board-d5peds-ab-64ppm.mp4` re-cut on it), look goldens alone 11/11 (worst 1.20).
+  Now every ped torso and head is plan-view art with a D5 overlay; the limbs and shoes keep the d5-cast art.
+
+NEXT (iteration 14), replaces the 01:49 list:
+1. The crowd item is complete at both tiers (plan-view D4 + D5 for the five torsos and six heads; the hoodie on grey
+   sleeves). What's left is judgement, not missing parts: (a) the jacket's `_dark` sleeves keep it the one dark look
+   (`RigVariant.crowd` index 1); if the owner wants a paler crowd, `_grey` there is one value (Call 6 note);
+   (b) the hoodie's dark flat cap is the largest head (162x151, head_k 0.62) and reads as a black disc at 32 px/m; a
+   beanie-size cap (resize the D4 + D5 parts and parts.json) is a cheap trial if the walking hoodie ped still reads heavy.
+2. Weakest item now, from tonight's composites: Rivet vs r2_c3 at 32 px/m (the cream figure with the vermilion collar
+   ring; Calls 1, 2 and 5 hold the forks). And the cops' dark rings in `M/frames/cast-ingame-vs-r2c6.png` are a
+   gameplay overlay, not rig art (not my lane).
+3. Calls 1-6 stand; REPORT section 5 and the gates line are current to f5733b83. REPORT rewrite at 08:40. frames.json 15.

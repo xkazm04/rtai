@@ -126,6 +126,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   32 px/m is unchanged (`M/frames/crowd-d5-hatch-ab-64ppm.png`). React and street boards before/after, every reaction,
   death and corpse identical in place: `M/frames/react-street-d5peds-ab-64ppm.png`,
   `M/cast-react-board-d5peds-ab-64ppm.mp4`, `M/cast-street-board-d5peds-ab-64ppm.mp4`.
+  The bald head too (f5733b83, `M/frames/crowd-bald-d5-ab-64ppm.png`): every ped head and torso now has its D5 overlay.
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
@@ -163,7 +164,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
   every ped torso and the hat, hair, hood, beanie and cap heads are plan-view redraws since iteration 12; the
-  bald head, the limbs and the shoes are still the 3/4-view art (the plan-view parts have D5 hatching since 093f4b73).
+  bald head and the shoes were judged plan-view already (a skull disc with ears and a nose nub; a capsule shoe); every ped head and torso has D5 hatching since 093f4b73 / f5733b83.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
