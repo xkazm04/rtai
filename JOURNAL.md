@@ -33,3 +33,22 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - Registry rules applied: `realtime-combat-semantics` not consulted yet (no time this iteration);
   the swing keeps anticipation/smear/follow-through (MeleeSwing untouched apart from the grip).
 - DEBT: `rivet_held_view.gd` at 300 lines (hard stop). Split the placement into a helper next.
+- 15:38 MEASURE gates on 4d184d95 code: lint 13/13; unit 1093/0 (`evidence/held-it1-unit.log`, incl.
+  test_held_classes 7 tests with 3 planted faults); director reel `--rigs --bot=reel --reel=director
+  --loadout=pistol` 7200 ticks: 19/19 chapters down incl. plasma_sword_deflect and electro_baton,
+  0 SCRIPT ERROR (`evidence/held-it1-reel-director.log`).
+- 15:41 MILESTONE blade evidence in gtai-masters/d7/held: `blade_hold_ab_48ppm_target.png` (target
+  r2_w7 beside before/after, ticks 510 + 600), `blade_hold_ab_32ppm_city.mp4` (21 s real time),
+  `blade_hold_ab_64ppm_slow.mp4`, `blade_hold_probe_rig_idle_aim.png`; frames.json written. Looked
+  at each: at tick 600 the before is a stick out of the chest; the after is a guard with the blade
+  crossing forward, like the target's second panel. Weak: at 32 px/m the claw-on-hilt is 3-4 px; the
+  hold reads by the blade's angle and place, not by a visible grip (new claw art would help).
+- 15:43 READ d7-calls JOURNAL: REQUEST held, cast-1 landed at 16272697 (+ 66bf4fbe cast-8/9). Their
+  FINDING: with cast-1 the pistol looks long at 32 px/m. On this branch look-4 already ships
+  held_size_ref 0, so guns draw at class held_scale (larger than main's 0.81x). Class sizes vs the
+  1.1x Rivet = brief item 3: judge per class after the merge.
+- 15:44 SURVEY long gun (next): target r2_w5 holds every gun on the centre line ahead of the chest,
+  both claws on it, barrel straight up the aim. Ours: the line starts 0.42 out toward the gun
+  shoulder (RigGrip's helmet clearance), the stock beside the helmet. Plan: long_gun `across` toward
+  0 with `gun_reach` far enough out that the stock clears the helmet ahead (test_rivet_aim_clear
+  measures the gap; it must become "ahead of" rather than "beside").
