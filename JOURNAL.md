@@ -1436,3 +1436,17 @@ Session end 07:54: tree clean after this commit, no Godot process of mine runnin
   fix (one `_lod_art("rivet")` pick for both paths). 10607e11 touches the same Hauler lines, so a textual conflict is
   expected there. 2cc15c5f keeps `_lod_art(id, grow = 1.0)` (pure refactor, lint 13/13, unit 954/0) so their call
   compiles; REPORT merge note gives the resolution (their structure + cast's four `_art_w` lines).
+- 08:15 EVIDENCE GATE on 09570a2e (code = 2cc15c5f; tree untouched during the run): ALL PASS: lint 13/13, unit 954/0,
+  scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53). The director reel at 08:06
+  (16/16) stands: 2cc15c5f is a signature-only refactor in CastView, which the arena does not draw. Bench skipped all
+  session (four other Godot processes running: CONTENDED, unmeasured). REPORT header and gates current.
+
+NEXT (the report at 08:40):
+1. REPORT is current to 09570a2e (header, section 4, gates, merge note). At 08:40 rewrite the summary and name
+   02e4295c + cf64342e + 10607e11 (quest 1's sprite Rivet and peek in the 32 px/m sticker tier; the grown Hauler keeps
+   the art and now cross-fades into it) beside b68665b1.
+2. Merge note for the Director: an expected textual conflict in `CastView._rivet`'s Hauler block against both n6
+   lanes; the resolution is in REPORT (their structure + cast's four `_art_w` lines; `_lod_art(id, grow)` unchanged).
+3. Calls 1-9 stand. No code is open. Last gate ALL PASS on 09570a2e; docs only since.
+Session end 08:16: tree clean after this commit, no Godot process of mine running, image.lock and bench.lock never
+  taken. Scratch `gtai-n5/scratch-cast/i23` holds logs only (PNG sequences deleted).

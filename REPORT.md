@@ -1,8 +1,8 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**DRAFT, current to iteration 21 (07:55).** The REPORT phase rewrites this at 08:40. Every number below
-was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 10607e11 (the
-last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
+**DRAFT, current to iteration 23 (08:15).** The REPORT phase rewrites this at 08:40. Every number below
+was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 09570a2e (code as of
+2cc15c5f, the last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
 UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
 `C:\Users\kazda\kiro\gtai-masters\n5\cast\`; `M/` below means that folder.
 
@@ -204,7 +204,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
-### Gates (iteration 23, `tools/evidence/run.mjs --no-bench` on 10607e11 (the Hauler cross-fade): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); director reel 16/16 down, 0 SCRIPT ERROR.)
+### Gates (iteration 23, `tools/evidence/run.mjs --no-bench` on 10607e11 (the Hauler cross-fade) and again on 09570a2e (2cc15c5f's refactor): ALL PASS both: lint 13/13, unit 954/0, scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); director reel 16/16 down, 0 SCRIPT ERROR.)
 
 ### Gates (iteration 21, `tools/evidence/run.mjs --no-bench` on cf64342e (the grown Hauler keeps the art): ALL PASS, the same numbers: lint 13/13, unit 954/0, scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53).
 ### Gates (iteration 21, `tools/evidence/run.mjs --no-bench` on 02e4295c (the quest sprite Rivet's sticker tier): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless (the quest sprites are in no golden). Director reel 16/16 chapters down, 0 SCRIPT ERROR.
