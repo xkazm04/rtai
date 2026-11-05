@@ -21,6 +21,8 @@ var _table: WeaponTable = null
 var _rig: CameraRig = CameraRig.new()
 ## Live kicks: (x px, y px, start tick, length ticks).
 var _kicks: Array[Vector4] = []
+## Rivet's rounds already seen in flight (the fire kick fires once per new round).
+var _seen: Dictionary[Shot, bool] = {}
 
 
 static func attach(arena: CombatArena, p_clock: SimClock, p_feel: HitFeel = null) -> FeelCam:
@@ -71,6 +73,7 @@ func hit(weapon: StringName, hit_class: StringName, dir: Vector2, lethal: bool, 
 ## plus the live kicks, capped at the table's kick_px_max screen px, so it reads the same at 32,
 ## 48 or 64 px/m. Zero when nothing runs (bit-identical framing).
 func offset_px(tick: int, zoom: float) -> Vector2:
+	_watch_fire(tick)
 	_rig.step(tick, Vector2.ZERO)
 	var sum: Vector2 = Vector2.ZERO
 	for i: int in range(_kicks.size() - 1, -1, -1):
@@ -96,3 +99,29 @@ func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 		hit_class = HitLink.CHARGED_CLASS
 	@warning_ignore("return_value_discarded")
 	hit(weapon, hit_class, dir.normalized(), lethal, _arena.tick)
+
+
+## One round of `weapon` fired along `aim` at `tick`: the weapon's fire kick (recoil) against the
+## aim, inside the same per-tick kick cap as the hits. Returns true when it kicked.
+func fire(weapon: StringName, aim: Vector2, tick: int) -> bool:
+	if not feel.enabled or reduced_motion:
+		return false
+	var row: Vector2 = feel.fire_row(weapon)
+	if row.x <= 0.0 or aim == Vector2.ZERO or not budget.take_kick(tick):
+		return false
+	var v: Vector2 = -aim.normalized() * row.x
+	_kicks.append(Vector4(v.x, v.y, tick, maxf(row.y, 1.0)))
+	kicks += 1
+	return true
+
+
+func _watch_fire(tick: int) -> void:
+	if _arena == null:
+		return
+	var live: Dictionary[Shot, bool] = {}
+	for s: Shot in _arena.shots:
+		live[s] = true
+		if s.from_rivet and not _seen.has(s):
+			@warning_ignore("return_value_discarded")
+			fire(s.weapon, s.vel, tick)
+	_seen = live

@@ -120,9 +120,21 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "class": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
+          },
+          "fire_kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "fire_kick_ticks": {
+            "minimum": 1,
+            "type": "number"
           },
           "hitstop": {
             "type": "string"

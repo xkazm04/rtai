@@ -108,3 +108,13 @@ func test_a_blast_kill_keeps_the_longer_blast_stop() -> void:
 	assert_eq(blast, rig.hitstop_ticks(&"boss_hit"), "not the shorter kill stop")
 	var light: int = cam.hit(&"pistol", &"light", Vector2.RIGHT, true, 1000)
 	assert_eq(light, rig.hitstop_ticks(&"kill"), "a light kill takes the kill stop")
+
+
+func test_a_gatling_round_kicks_back_against_the_aim_and_a_pistol_does_not() -> void:
+	var cam: FeelCam = _cam()
+	assert_true(cam.fire(&"gatling", Vector2.RIGHT, 10))
+	assert_lt(cam.offset_px(10, 1.0).x, 0.0, "against the aim")
+	assert_false(cam.fire(&"gatling", Vector2.RIGHT, 10), "one kick per tick")
+	assert_false(cam.fire(&"pistol", Vector2.RIGHT, 11), "no fire row, no kick")
+	cam.feel.enabled = false
+	assert_false(cam.fire(&"rocket_launcher", Vector2.RIGHT, 20), "off means no effect")
