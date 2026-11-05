@@ -21,6 +21,28 @@
     },
     {
       "files": [
+        "flash_pistol_",
+        "flash_smg_",
+        "flash_tube_",
+        "flash_nuke_"
+      ],
+      "id": "muzzle_core",
+      "note": "n5-look iteration 14 (r2_w4 top left: the muzzle flashes grade white-hot at the bore -> hot yellow -> orange tips at the outline; ours printed a pale cream star with a darker orange heart, the gradient inverted, as blast_0 was): applied after muzzle, which it overrides for the gun flashes (spark_ keeps muzzle): the heart (vermilion) goes white-hot, the body hot yellow, and rim paints an orange band rim.px part px inside the ink outline (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the muzzle family's flash; drop rim = the white core in a yellow body.",
+      "rim": {
+        "colour": "#F08A24",
+        "px": 3
+      },
+      "tokens": {
+        "ink_2": "#D8641C",
+        "paper": "#FFCB3A",
+        "paper_2": "#FFB62E",
+        "steel": "#F08A24",
+        "vermilion": "#FFF6D6",
+        "wash": "#E8701E"
+      }
+    },
+    {
+      "files": [
         "tracer"
       ],
       "id": "tracer",

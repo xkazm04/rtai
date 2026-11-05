@@ -21,6 +21,7 @@ from pathlib import Path
 from PIL import Image
 
 from fx_flash import flash
+from fx_rim import rim
 
 TOKENS = {
     "ink": (27, 21, 23),
@@ -201,6 +202,9 @@ def main(src_dir, out_dir):
                     )
                 elif "inner" in fam:
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
+                if "rim" in fam:
+                    paper = mapping.get("paper", TOKENS["paper"])
+                    rim(out / src.name, _hex(fam["rim"]["colour"]), fam["rim"]["px"], paper)
                 if "flash" in fam:
                     _flash(out / src.name, fam["flash"])
                 done += 1
