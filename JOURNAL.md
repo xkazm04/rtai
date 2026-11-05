@@ -92,3 +92,50 @@
 - FINDING: quest 1's opening voice lines fold the ghost card to one chip for the first ~25 s, so the padlock is
   first seen when the card unfolds (after the lines) - not a bug, the compact rule.
 - FRICTION: quest1_shipped_main.gd takes no user args through `-s`; the HUD still came from a scratch scene.
+- 16:30 look-8 started. Registry rule applied (sprite-and-atlas-production / depth-ordered-layered-art: separate a
+  held prop from the body by value, keep the ink rim). Target r1_w1: the guns' plates ~ (176,160,128), ink grips.
+- DECISION look-8: PartKind.GUN + print_part `gun_tan` (paper -> GUN_TAN_HI, mid -> GUN_TAN..DK) and `gun_ink_hi`
+  0.95 on guns. FINDING on the way: at 48 px/m the pistol art posterized to solid ink, so the first version (tan
+  wash only) changed one highlight dot; 0.86 still mostly ink; 0.95 reads tan with ink grip, like the sheet.
+  `--gun-grey` = before. Melee in the claw keeps PART (pilot.wielding()).
+- REQUEST held: look-8 touches your `project/features/player/rivet_held_view.gd` in two lines only: `_swap`'s
+  `_sprite.material = PartMaterials.get_mat(_print_kind(), false, 0)` and the back tank's material
+  (`PartKind.GUN`), plus a new 4-line `_print_kind()` at the end of the file (299 lines now on my branch). Keep them
+  when you merge; everything else in that file stays yours.
+- 16:44 FINDING look-8 at 32 px/m (`M/frames/look-8-gun-tan-ab-32ppm.png`, director reel tick 450): the tan pistol
+  stays apart from Rivet's cream core and collar (no merge), but loses most of its ink silhouette and reads paler
+  on the grey concrete than the grey print did. Pick kept (the owner's tan); CALL for REPORT: tan (built) vs grey
+  (`--gun-grey`), and a middle option = `gun_ink_hi` 0.86 (more ink, less tan) - one shader value.
+  At 48 px/m (`look-8-gun-tan-ab-48ppm.png`) the tan reads like the weapon sheet, with ink grip and details.
+
+## Iteration 5 (BUILD, 16:42-17:42)
+- 16:42 Started (restart for the 18:40 report). Uncommitted: iteration 4's look-8 (sound, gates not yet run).
+- FINDING look-8 in my own still (dev arena `res://dev/arena/arena.tscn -- --bot=reel --reel=director
+  --loadout=pistol --ppm=32 --shot=<abs png> --shot-tick=450`; the game path ignores --shot): with
+  gun_ink_hi 0.95 the tan gun lost the grey print's ink rim and the grip/muzzle marks: a tan blob.
+- DECISION look-8 (brief: "ink outline kept"): guns draw their own ink outline from the alpha edge at every
+  zoom (`gun_edge` 2.2 screen px). FRICTION: the limbs' radius (TEXTURE_PIXEL_SIZE / px_scale) was sub-pixel on
+  the held gun (its texel density is not the body's px_scale): radius from the screen-space UV step (dFdx/dFdy).
+  `gun_ink_hi` 0.95 -> 0.90 so grip and muzzle stay ink. Result reads like the weapon sheets (tan plates, ink grip,
+  ink outline), a value step below the light-tan body: no merge at 32 or 48 px/m.
+- 16:50 MILESTONE 83fe0d5c look-8, lint 13/13, unit 1097/0, director reel at 32 px/m every chapter down
+  (rocket and flamethrower print tan too). Evidence M/frames/look-8-gun-tan-ab-32ppm.png, -ab-48ppm.png,
+  look-8-gun-tan-closeup-steps.png (grey | 0.95 | final), M/look-8-gun-tan-reel-32ppm.mp4 (30 s).
+- REQUEST held: look-8 landed at 83fe0d5c: `print_part.gdshader`, `part_materials.gd`, `cast_flags.gd`, and the
+  two material lines + `_print_kind()` in your `rivet_held_view.gd` (as at 16:44). Your off-claw-blends finding:
+  a gun is now tan + ink, so a pale claw on it separates better; `claw_grip` tone is yours.
+- 17:00 MEASURE full evidence on 83fe0d5c (`evidence/evidence-it5-look8.log`): lint 13/13, unit 1097/0, scenarios
+  52/52, parity exact (planted caught at 629), look goldens 11/11 worst 0.27 + block 5/5 worst 0.22: no golden
+  moved by look-8 either, so no re-bless for any of my calls.
+- 17:05 MILESTONE look group in motion (owed since iteration 2), all at 32 px/m, M/frames:
+  look-7-pickup-disc-ab-32ppm.png (`--armory`, plain arena; the city hub's react-line cops stand on the armory
+  row and hide it), look-12-shard-ab-32ppm.png and look-18-gatling-ab-32ppm.png (range station
+  `--weapon=<id> --bot=range`; before = weapon_art.json flipped in the tree for the run, then `git checkout`).
+  Looked at each: the paper disc separates every pickup at once (the dashed ring nearly vanishes on the grey);
+  the lozenge reads as a clean cream dart with an ink shadow, plainer than the barbed arrow but not weaker;
+  the Gatling is visibly slimmer. None reads worse: no "worse in motion" call needed.
+- FINDING look-8 x Gatling: below `held_small_below_ppm` 56 the held gun is `parts.small` (held_small.py's
+  pre-inked silhouette); the Gatling's small art is 63 % near-black, so it prints ink, not tan, at 32 px/m (the
+  pistol 38 %, rocket 33 %: tan). Not fixed (late, and the small parts are the held lane's re-tone): a call.
+- MILESTONE combined clip `M/today-defaults-city-32ppm.mp4` (28 s, city block, director reel: pistol, machine
+  pistol, rocket, flamethrower; every chapter of the 6900-tick run down, 0 SCRIPT ERROR). frames.json 14 entries.
