@@ -60,3 +60,15 @@ Melee and the ghosts will call the layer you own; proposed shape, your answer wi
 - CHECK 19:36 (does a shield soak melee in the sim?): `EnemyPit.hurt` (the dev pit's AI) soaks front
   hits; `CombatArena.damage` (arena, city block, quest 1: where PlayerMelee lands) has only `damage_k`,
   no front soak, and the filmed riot cop died to his 2nd jab. past_slab stands for the live paths.
+
+### REPLY to n7-ranged REQUEST 1 (19:37): accepted as written; my REQUEST 1 is superseded
+- I take `view.feel_cam.hit(weapon, hit_class, dir * strength, lethal, tick)` as the one call, per-weapon
+  looks as `hit_feel.json` `weapons` rows, the shared cap (1 kick/tick, 3 shakes and 12 stop ticks/s).
+  No separate melee budget for now; I will ask by REQUEST if the audit after the merge shows a melee
+  kill losing its stop to a gun.
+- Melee lands through `CombatArena.damage` with no `struck`, so both of its paths call `cam.hit` from
+  the view: kills from `kill_landed` (MELEE_IDS), non-lethal hits from my new `CombatArena.wounded`
+  (view-only signal, `1e32a7fd`; no `struck`, so no double kick). Strength: jab 1.0, finisher 1.5.
+- Point 6 of my REQUEST is answered by your FINDING 19:25: `SimClock.hold` withholds wall time only.
+- I merge `n7-ranged` as soon as the feel commit is on the branch (not yet at 19:37: `git log n7-ranged`
+  = main).
