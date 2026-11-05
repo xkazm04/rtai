@@ -23,7 +23,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - The colours: muzzle yellow-orange; blast orange-yellow with a white core; arc violet-white; plasma white-hot with gold; ray acid green; shards pale crystal with a cyan-white glint. The tracer is its own hot-yellow family.
    - No blood red and no teal in any of them. In the live fight the cells draw on their own canvas under `look_d5_fx`; `fx_colour_dir ""` switches back to ink.
    - Iteration 10: the blast's smoke ring carries 9 ragged fire pockets with hot yellow cores toward the centre, as in r2_w4, instead of a continuous orange band (`tools/art/fx_colour.json` blast_smoke `pockets`; drop it = the band). Evidence: last row of `fx-colour-arena-64ppm-vs-r2w4.png`.
-   - Iteration 11: the pockets' edges are lumpy (`pockets.wobble` 0.2, r_px 30-52; 0 = round), so they read as r2_w4's ragged fire tongues instead of discs. Evidence: last row of `fx-colour-arena-64ppm-vs-r2w4.png` (before | after | r2_w4).
+   - Iteration 11: the pockets' edges are lumpy (`pockets.wobble` 0.2, r_px 30-52; 0 = round), so they read as r2_w4's ragged fire tongues instead of discs; a white-hot tier inside each yellow core grades them orange -> yellow -> white toward the blast centre (`pockets.hot`). Evidence: the last two rows of `fx-colour-arena-64ppm-vs-r2w4.png`.
    - Blast debris: concrete slabs 0.35-1.3 m and ink specks fly out over 30 ticks (`blast_debris.json`).
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
@@ -43,7 +43,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on cd654482 (the grime splats and the lumpy pockets), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 986da3b6 (the grime splats, the lumpy and graded pockets), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
@@ -58,7 +58,7 @@ The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13
 - **The Gatling:**
   - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
-- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the smoke frame's pockets are flat orange with one yellow core, where r2_w4's fire is graded (the lumpy edge landed cd654482). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
+- **FX gap to r2_w4:** the blast's slabs are smaller than the sheet's biggest chunks, and the white-hot tier of the smoke frame's pockets prints mostly as cream slivers (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
