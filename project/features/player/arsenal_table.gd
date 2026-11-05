@@ -101,6 +101,19 @@ func held_k(weapon_id: StringName, size_k: float) -> float:
 	return k * size_k / held_size_ref if held_size_ref > 0.0 else k
 
 
+## `gun`'s reload as the rig's phase + fraction (out_k, in_k, cock_k), or -1 (none, not reloading).
+func reload_phase(gun: GunHand) -> float:
+	if gun == null or not gun.trigger.reloading() or gun.trigger.spec.reload_ticks <= 0:
+		return -1.0
+	var t: float = 1.0 - float(gun.trigger.reload_left) / float(gun.trigger.spec.reload_ticks)
+	if t < out_k:
+		return t / out_k
+	t -= out_k
+	if t < in_k:
+		return 1.0 + t / in_k
+	return 2.0 + minf((t - in_k) / maxf(cock_k, 0.001), 0.999)
+
+
 func ok() -> bool:
 	return errors.is_empty()
 

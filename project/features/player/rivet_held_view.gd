@@ -77,7 +77,7 @@ func _process(_delta: float) -> void:
 		var hold: HeldTable.Hold = HeldTable.shipped().hold_of(pilot.hold.held)
 		rig.hold = hold.id if hold != null else &""
 		rig.grip = hold.kind if hold != null else RigGrip.Kind.ONE_HAND
-		rig.reload_k = _reload_k()
+		rig.reload_k = arsenal.reload_phase(arena.gun if arena != null else null)
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
@@ -149,20 +149,6 @@ func _beside(rig: CutRig) -> Vector2:
 	var at: Vector2 = _sprite.global_position
 	var rot: float = _sprite.global_rotation
 	return RivetCarryAngle.beside_head(at, rot, head.global_position, head_half, gun_half)
-
-
-## The gun's reload as the rig's phase + fraction (rivet_arsenal.json out/in/cock), or -1.
-func _reload_k() -> float:
-	var gun: GunHand = arena.gun if arena != null else null
-	if gun == null or not gun.trigger.reloading() or gun.trigger.spec.reload_ticks <= 0:
-		return -1.0
-	var t: float = 1.0 - float(gun.trigger.reload_left) / float(gun.trigger.spec.reload_ticks)
-	if t < arsenal.out_k:
-		return t / arsenal.out_k
-	t -= arsenal.out_k
-	if t < arsenal.in_k:
-		return 1.0 + t / arsenal.in_k
-	return 2.0 + minf((t - arsenal.in_k) / maxf(arsenal.cock_k, 0.001), 0.999)
 
 
 ## The blade's angle off the aim line during a strike (MeleeSwing: anticipation, the cut,

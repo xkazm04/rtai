@@ -56,3 +56,22 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   conflict: both lanes keep a root JOURNAL.md (add/add); kept ours (the calls journal stays on
   d7-calls; the Director should move each lane's journal under docs/ at merge). decisions.md merged
   clean.
+- 15:49 MEASURE merged tree 83fea366: unit 1095/0. Sizes on the 1.1x Rivet with look-4 class sizes
+  (`sizes_after_cast1_48ppm_sheet.png`, frames.json entry 2): the Gatling reads heavy at the hip,
+  the katana reads, the pistol reads large and pale in the claw (one_hand held_scale 1.5): a size call.
+- 15:50 DEBT paid: `RivetHeldView._reload_k` moved to `ArsenalTable.reload_phase` (held view 300 -> 286
+  lines). Unit 1094/1: `test_noir_shadows` (known flake) failed twice then passed 2/2 twice alone; 2/2
+  on main.
+- NEXT (iteration 2, in order):
+  1. Long gun hold toward r2_w5: the line on the centre ahead of the chest, both claws on it
+     (long_gun `across` -> ~0, `gun_reach` so the stock sits ahead of the helmet); rework
+     test_rivet_aim_clear from "beside" to "clear of" the helmet. Probe first
+     (`dev/held/hold_probe.gd -- --holds=long_gun --aim --weapon=plasma_rifle`), then city A/B with
+     `../d7-held-before` (detached at 1028c15d, native bin copied, imported) as the before.
+  2. Wire `stride_k` / `lean_px` from held_classes.json into the walk (they are data only so far) for
+     the heavy class; then heavy, sidearm (size: one_hand held_scale 1.5 looks large at 1.1x), chainsaw.
+  3. Off-claw art: at 32 px/m the claw-on-hilt is 3-4 px; Codex claw-sheet under image.lock if a
+     closed claw around a grip is needed (arms/claws only, never guns).
+  4. Read registry `realtime-combat-semantics` + `depth-ordered-layered-art` before the heavy class.
+  5. REPORT calls so far: (a) blade wrist_rad 0.45 (alt 0 = straight ahead), (b) look-4 over cast-3,
+     (c) pistol class size on the 1.1x Rivet.
