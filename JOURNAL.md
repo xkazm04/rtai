@@ -205,3 +205,24 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   r2_w5 (gun beside the gun shoulder, not ahead on the centre line). frames.json 15 entries (dropped
   the two rejected probes, the dev-scene idle probe and the 48 px/m chainsaw still).
 - Registry rules applied: none newly read (time). Combat check = director reel 19/19.
+- 17:09 MERGE d7-calls ecb8a675 (look-8 83fe0d5c, their REQUEST: keep `_print_kind` + 2 material lines in
+  rivet_held_view.gd: kept) -> 18982ce9. JOURNAL kept ours; their root REPORT.md left on d7-calls.
+  rivet_held_view.gd hit 302 lines: the helmet shift moved to `RivetCarryAngle.place_beside` (286).
+  Merged tree: lint 13/13, unit 1108/0 (`evidence/held-it3-unit-merged.log`), scenarios exit 0
+  (`evidence/held-it3-scenarios.log`).
+- 17:11 REPORT.md drafted (works / does not / 7 calls / next); commit 3c880110.
+- 17:24 EVIDENCE `arsenal_cycle_32ppm_city.mp4` (120 s) + `_sheet.png`: 14 of 18 weapons.
+  FRICTION: RivetCarry keeps ONE weapon per slot, so `--loadout=a,b,c,d` of one class carries only the
+  last (my first 4 runs showed 6 weapons, not 16; corrected before claiming). Same applies to the
+  claw-follow A/B loadout (plasma_rifle,assault-rifle -> assault-rifle only): notes corrected.
+- NEXT (iteration 4 = the freeze session; freeze 18:30, report 18:40):
+  1. Export the exe at HEAD: `"$GODOT_BIN" --headless --path project --export-release windows-showcase
+     ../build/export/windows/RTAI.exe` (preset per docs/decisions.md 2026-11-04 showcase export; no
+     baked chunks in this worktree: run `just bake` / `-s res://dev/bake_city.gd` first if the export
+     or `--arena=city` in the exe needs them). Smoke it: `RTAI.exe -- --arena=city --rigs --loadout=katana`.
+     Fill the sha + exe line in REPORT.md.
+  2. Merge any new d7-calls commits (check their JOURNAL for REQUEST held), gate (lint, unit with
+     GODOT_BIN exported, scenarios, `node tools/evidence/run.mjs`), director reel.
+  3. Finish REPORT.md (drop "DRAFT", the final sha, the evidence run result).
+  4. Only if time: off-claw tone (modulate `claw_grip` darker, A/B at 64 px/m), or the 4 weapons
+     missing from the arsenal clip (gloria, homing_shard, assault-rifle, electro_gun).

@@ -13,10 +13,10 @@ Exe: `build/export/windows/RTAI.exe` (**TODO at the freeze: export, then fill in
 2. **Blade** (owner pick combat-notes-1 A, one claw): a low guard, the blade in line with the forearm, turned in
    0.45 rad at the wrist; the swing arc is measured from that line, so anticipation, smear and follow-through stay.
    **`--two-hand-grip` and all its code are deleted.** `blade_hold_ab_48ppm_target.png` (r2_w7 beside before/after),
-   `blade_hold_ab_32ppm_city.mp4`, `blade_hold_ab_64ppm_slow.mp4`, `blade_hold_on_cast1_48ppm_sheet.png`.
+   `blade_hold_ab_32ppm_city.mp4`, `blade_hold_ab_64ppm_slow.mp4`.
 3. **The off claw on two-claw weapons** (owner note on cast-3): Rivet's off forearm is a welding torch whose art ran
    past the barrel. While a long gun, tube, Gatling or flamer is aimed, it swaps to a plain forearm and a closed claw
-   clamps the barrel. `long_gun_offclaw_ab_64ppm_target.png`, `_32ppm_city.mp4`, `_64ppm_slow.mp4`.
+   clamps the barrel. `long_gun_offclaw_ab_64ppm_target.png`, `long_gun_offclaw_ab_32ppm_city.mp4`.
 4. **The claws stay on the long gun** (iteration 3): the beside-the-helmet shift had moved every aimed rifle or tube
    15-18 px (128 px/m) off the gun claw; the claws now take the same shift. Gap 0-2 px on most frames.
    `long_gun_claw_follow_ab_64ppm_target.png`, `_32ppm_city.mp4`, `_64ppm_slow.mp4`.
@@ -24,7 +24,10 @@ Exe: `build/export/windows/RTAI.exe` (**TODO at the freeze: export, then fill in
    `held_scale` 1.5 -> 1.2. `sizes_after_cast1_48ppm_sheet.png`, `sidearm_size_ab_48ppm_sheet.png`.
 6. **The class walk**: heavy 0.85 strides and leans back 10 part px, chainsaw 0.9 / 6, long gun 0.95.
    `heavy_walk_ab_64ppm.mp4` (subtle). Heavy at the hip with the off claw: `gatling_hold_merged_48ppm_strip.png`.
-7. **Combat holds**: director reel (`--rigs --bot=reel --reel=director --loadout=pistol`) 19/19 chapters down,
+7. **The arsenal in motion** on the merged tree (look-8 tan guns): `arsenal_cycle_32ppm_city.mp4` (120 s, 32 px/m,
+   six bot runs on the city block, 14 of the 18 weapons; not shown: gloria, homing shard, assault rifle, electro gun)
+   and `arsenal_cycle_32ppm_sheet.png`.
+8. **Combat holds**: director reel (`--rigs --bot=reel --reel=director --loadout=pistol`) 19/19 chapters down,
    0 SCRIPT ERROR on every hold commit (`evidence/held-it1/it2/it3-reel-director.log`). Unit 1108/0, lint 13/13.
 
 ## What does not work yet (said plainly)
@@ -38,29 +41,30 @@ Exe: `build/export/windows/RTAI.exe` (**TODO at the freeze: export, then fill in
   as aiming while a weapon is out, so the chainsaw was already in both claws (`chainsaw_two_claw_ab_64ppm.png`).
   The same fact means the not-aiming carry (RivetCarryAngle) never shows in `--arena` / `--arena=city`.
 - **Heavy walk**: the 10 px lean barely shows.
-- **Not done**: the whole-arsenal clip (TODO), per-class 64 px/m clips for sidearm and chainsaw, the registry reads
+- **Not done**: an arena-pit segment in the whole-arsenal clip, per-class 64 px/m clips for sidearm and chainsaw, the registry reads
   (`realtime-combat-semantics`, `depth-ordered-layered-art`).
 
 ## Calls for the owner
 
 Each: options, the default built, how to see it. Exe lines assume `build/export/windows/RTAI.exe` (showcase preset,
-boots into the arena; args after `--`).
+boots into the arena; args after `--`). Rivet carries one weapon per slot (sidearm, long, heavy/melee,
+thrown/tube), so a loadout keeps the last of each slot; every other weapon lies on the arena hub floor (ArenaArmory).
 
 1. **Blade wrist angle.** A: 0.45 rad in toward the centre line (built). B: 0 (straight ahead along the forearm).
    One value: `held_classes.json blade.wrist_rad`. See `blade_hold_ab_48ppm_target.png`;
-   `RTAI.exe -- --arena=city --rigs --loadout=katana,plasma_sword,electro_baton`.
+   `RTAI.exe -- --arena=city --rigs --loadout=katana`.
 2. **look-4 over cast-3** (your 11:43 and 11:46 picks conflict). Built: look-4, guns keep class size
    (`held_size_ref` 0). Alternative: guns scale with Rivet (`held_size_ref` 1.2). `sizes_after_cast1_48ppm_sheet.png`.
 3. **Sidearm size on the 1.1x Rivet.** A: `held_scale` 1.2 (built). B: 1.5 (the old one; as long as the forearm).
-   `sidearm_size_ab_48ppm_sheet.png`; `RTAI.exe -- --arena=city --rigs --loadout=pistol,machine_pistol,hand_cannon`.
+   `sidearm_size_ab_48ppm_sheet.png`; `RTAI.exe -- --arena=city --rigs --loadout=pistol`.
 4. **The off claw on two-claw weapons.** A: plain forearm + closed claw on the barrel while aiming (built). B: the
    welding torch stays (`--torch-off-arm`). `long_gun_offclaw_ab_*`;
-   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,assault-rifle,gatling,flamethrower` vs the same `--torch-off-arm`.
+   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,gatling` vs the same `--torch-off-arm`.
 5. **The claws follow the long gun beside the helmet.** A: follow (built). B: the gun floats a claw-width off
    (`--gun-off-claw`). `long_gun_claw_follow_ab_*`;
-   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,assault-rifle,rocket_launcher` vs the same `--gun-off-claw`.
+   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,rocket_launcher` vs the same `--gun-off-claw`.
 6. **Heavy walk strength.** Built: lean 10 part px, stride 0.85 (subtle). Stronger is one value (`heavy.lean_px` 25?).
-   `heavy_walk_ab_64ppm.mp4`; `RTAI.exe -- --arena=city --rigs --loadout=gatling,flamethrower`.
+   `heavy_walk_ab_64ppm.mp4`; `RTAI.exe -- --arena=city --rigs --loadout=gatling`.
 7. **Next step for the long gun**: a drawn "claw closed around a grip" and a centre-line hold toward r2_w5 (new art
    through Codex + a carry rework), or keep the shoulder-side hold. Your pick sets tomorrow's first item.
 
