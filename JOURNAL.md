@@ -663,3 +663,44 @@ Read: JOURNAL NEXT, git log, the other lanes' journals (no new REQUEST for range
   replaces `flamer_ignite-ab-32ppm.mp4`; 15 rows). Decision line written.
 - Registry rule applied: realtime-combat-semantics (the flare keys to the sim's shot tick, view
   only, the sim untouched); motion-quality-gating (A/B same args, look per frame at 32 and 48).
+
+### GATE 23:09-23:12: both director reels with `--loadout=pistol` on `5ef1c584`
+- Pit: 19/19 chapters, every one fully down (14x 1/1, 2x 2/2, 3x 4/4), 0 SCRIPT ERROR
+  (`evidence/ranged/it6-reel-director-5ef1c584.log`). City block (`--arena=city`): 19/19 fully
+  down, 0 SCRIPT ERROR (`evidence/ranged/it6-reel-city-5ef1c584.log`). Both stopped by my watcher
+  after the electro_chain line (my own PIDs 34727, 36865).
+
+### FINDING 23:15: the ray gun kill at 32 px/m (audit row 8, the next item)
+- Film `--weapon=ray_gun --bot=gunplay --lone --cam=fight --ppm=32 --clean --reach=6` (kill tick
+  300, 0 SCRIPT ERROR; scratch `ray/ray32r.avi`; without `--reach` the victim was off the fight
+  framing). LOOK (sheet `ray/ray_sheet2.png`): f300 the cream beam; f302-304 a big ink/cream star
+  on the cop, the kill stop holds 304-307; f308-310 a cream disc on the body; from f313 the body
+  lies ON THE SPOT with a pale ring. The hit frame reads (star + stop); the body does not answer
+  the beam: the ray's class is `shock`, so it dies `death_shock` (convulse + plank, travel 0.4 m),
+  the electro gun's signature.
+- Plan (it7): a `weapon_death` map in human_reactions.json beside `weapon_wound`
+  (`ReactTable.weapon_death`, `DeathPipe.kill` tries it before `death_for(hit_class)`), ray_gun ->
+  `death_bullet` (falls back along the hit, 0.7 m) or a stronger family; A/B at 32 px/m with the
+  row removed as the before; owner call (the ray's death changes an approved reaction). Generic:
+  keyed by weapon id, so it works on any human victim; robots keep `death_robot`.
+
+NEXT (iteration 7):
+1. The ray gun death (FINDING 23:15): `weapon_death` map, ray_gun first; unit test with a planted
+   fault; A/B 32 px/m (`--reach=6`) + 48 close-up; both reels; REPORT call (options: death_shock
+   as main / death_bullet / a heavier throw; how to see: remove the row).
+2. Electro snap: the chain-arc art covers the victim on the first 3-4 hit frames (`electro_snap`
+   note): look at 48 px/m whether the arc can draw under/after the body, or the snap waits 1 tick.
+3. Gatling spin-up at 48 px/m: judge by eye in the clip (measured only so far).
+4. City combined clip retake with `--cam=fight`, `--quit-after 6200` (add the flamer flare and the
+   throw twist to the set).
+5. Quest 1's assault rifle read (score it).
+6. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
+   `build/export/windows/RTAI.exe`; REPORT command lines + befores (`--feel=off`,
+   `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--silent`, `--shard-pop=12`).
+7. Commit docs BEFORE `run.mjs`, touch nothing while it runs (it6 run clean that way).
+
+STOP 23:17 iteration 6. Code commits: `9b351ab4` (throw shoulder twist, modest, visible at 32),
+`5ef1c584` (flamer ignition flare, reads at 32). Gates: evidence run on `46db2e81` all green (unit
+1139); on `5ef1c584` unit 1141/1141, lint 13/13 (942 files), pit + city reels 19/19 fully down.
+Scenarios and parity were not re-run after `5ef1c584`: it adds view-only drawing (WeaponFxIgnite)
+and a hit_feel.json field no sim path reads; re-run in the it7 evidence run.
