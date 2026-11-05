@@ -391,3 +391,42 @@ first; item 6 adds assault-rifle and molotov-throw scoring only (Gloria done). O
 for REPORT: the shard pop (36 default vs `--shard-pop=12`, clip in masters).
 - GATE 21:08: pit director reel with `--loadout=pistol` on head `b5f5c7c5`: 19/19 fully down,
   0 SCRIPT ERROR, nothing skipped (`evidence/ranged/it3-reel-director-loadout-b5f5.log`).
+
+## Iteration 4 (21:09-22:09), BUILD
+
+### MILESTONE 21:25: `48679f03` quest 1 fires the table guns (brief item 6)
+- `StageGuns` (boot/collect_call/stage_guns.gd), set by `Quest1Session.open` when `table_guns`
+  (default true; `--quest-guns=off` = the before, in LaunchArgs and the quest1_clip recorder):
+  each tick before the pilot fires, `CombatArena.gun` follows `rivet.weapon`. A weapon with a
+  weapons.json row (Gloria, from Brass's line) gets a `GunHand` (rng stream `quest_guns`, `tap`
+  true: a held fire re-fires her as the evening path did every 0.4 s); a weapon without one (the
+  contractors' assault rifle he picks up) sets `gun` null, so combat.json's rifle (30 rounds, then
+  Gloria) is untouched. `LiveInput.px_per_m` wired in `quest1_game.gd` (`_bind_live`).
+- DECISION (docs/decisions.md): the rifle stays on combat.json; mapping it onto `machine_pistol`
+  (50 dmg = two hits per human) was rejected (breaks the one-hit doctrine). Re-check when the rifle
+  gets a weapons.json row.
+- SIM: quest 1's state hash moves (scenario_quest1_input final 5fce2662.. -> 4aab804f..); beats,
+  49 kills, 65 shots, 0 deaths, 316.6 s identical. No quest golden hash is committed (the 60 s
+  replay is the dummy sim), so no re-bless was needed; b3+ checkpoints from older builds will be
+  refused (stale-save rule). Quest scenarios 9/9 (`evidence/ranged/it4-scen-quest.log`).
+- Unit `test_stage_guns` 4/4, 0 orphans; planted fault (`tap` false) -> 1 failing.
+- FILM: quest 1 Dock 9, ticks 13580-13860, 32 px/m, `--cam=fight`, off vs on:
+  `masters n7/ranged/quest1_table_gloria-ab-32ppm.mp4` (hstack). LOOK (stills 20-120 + a per-frame
+  diff): the change is SMALL at 32 px/m in this window: the table floor (a scuff/casing dot by
+  Rivet), the dropped rifle drawn as art instead of an ink dash; I saw no Gloria muzzle cell in the
+  sampled stills (Rivet fires little in this window). Not a strong visual win yet: the quest's
+  Gloria fight (b5 Mertz, from tick ~15181) is the better window to film next.
+- FRICTION: gdformat on Windows writes CRLF; strip with `sed -i 's/\r$//'` after it.
+- NOTE -> n7-melee: your NEXT item 6 (a carried blade in quest 1) will move the same quest 1 hash;
+  there is no committed golden, so the two changes do not conflict in a golden file, only in
+  `collect_call_stage.gd`/`quest1_session.gd` if you touch them (my edits: a `guns` var + 2 lines
+  in `step()`, a `table_guns` static + 2 lines in `open()`).
+- GATES 21:25 on `48679f03`: lint 13/13 over 939 files; unit 1135/0 (`evidence/ranged/it4-unit.log`);
+  scenarios 52 ran, 1 failed = `scenario_city_chase` nav budget (3274 us > 2 ms, the known flake
+  under contention), re-run alone: 1/0 (`it4-scen.log`, `it4-scen-city-chase.log`); 0 SCRIPT ERROR.
+- FILM 21:28: quest 1 Mertz fight (b5), ticks 15180-15600, 48 px/m, `--cam=fight`, off vs on:
+  `masters n7/ranged/quest1_table_gloria_mertz-ab-48ppm.mp4`. LOOK (tile of every 15th frame +
+  the most-different pair, frame 178): mostly under Mertz's dialogue; the fine sim state diverges
+  (Mertz stands a little elsewhere in frame 178, as expected once the hash moved), beats the same.
+  Again a small visible change; I could not find a frame with a Gloria muzzle cell in the samples.
+  frames.json now 13 rows. Scratch frames deleted.
