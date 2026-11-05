@@ -216,3 +216,8 @@ NEXT (written 20:40, for iteration 3):
    `hitstop_cooldown_ticks` 20 > kerf `gap_s` 18 ticks); options: as built / cooldown 18 (shared with
    guns, n7-ranged's call) / gap_s 0.34 (sim). The Tonnage stomp's HaulerKick ignores `--feel=off`.
 8. City-block combined clip of the polished set (30-90 s) before freeze; exe by 08:30.
+- GATES 20:44 `node tools/evidence/run.mjs --no-bench` on `f6dc5330` (tree untouched during the run):
+  lint 13/13 over 942 files, unit 1143/1143, scenarios 52/52, parity bit-exact (planted caught at
+  step 629), selftest pass (look goldens 11/11, block 5/5). `evidence/n7-melee/gates-f6dc5330.log`.
+  No bench: no performance claim.
+- CHECK 20:49 director reel on `f6dc5330` (deflect + debris in): arena 19/19 and city block 19/19, every chapter fully down, 0 SCRIPT ERROR (`evidence/n7-melee/director-{arena,city}-f6dc5330.log`). Kerf, deflect, Dent blast and Tonnage debris stand as done.
