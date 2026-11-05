@@ -17,6 +17,8 @@ const REACT_TICKS: int = 18
 const CLEAR_M: float = 1.2
 ## Still in the zone this close to the active window: roll (its i-frames cover the hit).
 const ROLL_LEFT: int = 8
+## An add this close is shot before King.
+const ADD_M: float = 7.0
 
 var stage: ArenaStage
 var actions: PlayerActions
@@ -41,17 +43,35 @@ func sample(_tick: int) -> TickInput:
 	var f: BossFight = hook.fight
 	var me: Vector2 = stage.arena.rivet.pos
 	var to_boss: Vector2 = f.body.pos - me
-	var aim: Vector2 = to_boss.normalized() if to_boss.length() > 0.01 else Vector2.RIGHT
-	var fire: bool = to_boss.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
+	var foe: Vector2 = _target(me, f.body.pos) - me  # the nearest add inside ADD_M, else King
+	var aim: Vector2 = foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT
+	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
 	var band: float = to_boss.length() - HOLD_M
 	if standing:  # holds the same band, never strafes, never dodges
 		return _input(aim * clampf(band, -1.0, 1.0), aim, fire, false, false)
-	var dodge: Vector2 = _dodge(f, me)
-	if dodge != Vector2.ZERO:
-		var roll: bool = f.state == BossFight.State.WINDUP and f.tell_left() <= ROLL_LEFT
-		return _input(dodge, aim, fire and not roll, true, roll)
+	for threat: BossFight in [f] + hook.adds.fights:
+		if threat.state == BossFight.State.DEFEATED:
+			continue
+		var dodge: Vector2 = _dodge(threat, me)
+		if dodge != Vector2.ZERO:
+			var roll: bool = (
+				threat.state == BossFight.State.WINDUP and threat.tell_left() <= ROLL_LEFT
+			)
+			return _input(dodge, aim, fire and not roll, true, roll)
 	var move: Vector2 = aim * clampf(band, -1.0, 1.0) + aim.orthogonal() * _side * 0.35
 	return _input(move, aim, fire, false, false)
+
+
+## The nearest standing add within ADD_M of Rivet (the gang closes in: shoot it first), else King.
+func _target(me: Vector2, boss_at: Vector2) -> Vector2:
+	var best: Vector2 = boss_at
+	var best_d: float = ADD_M
+	for a: BossFight in hook.adds.fights:
+		var d: float = me.distance_to(a.body.pos)
+		if a.state != BossFight.State.DEFEATED and d < best_d:
+			best = a.body.pos
+			best_d = d
+	return best
 
 
 ## The way out of the coming attack's zone, or zero when it is safe (or not yet read).

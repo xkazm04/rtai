@@ -25,6 +25,10 @@ func _draw() -> void:
 	else:
 		_on_foot()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	for g: BossFight in standing_adds():  # the gang off the car (phase 2's adds)
+		draw_set_transform(Ink.px(g.body.pos), g.body.facing.angle(), Vector2.ONE * 1.3)
+		_gangster(Vector2.ZERO)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## The throne-car along +x (its nose), centred on the body.

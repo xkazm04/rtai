@@ -10,11 +10,9 @@ extends ArenaHook
 ## (announce_boss, announce_tell): features/combat is their declared emitter. Without --boss
 ## this hook does nothing, so no other station and no golden moves.
 
-## Adds alive at most (whatever the boss asks for).
-const ADDS_CAP: int = 6
-
 var fight: BossFight = null
-var adds: Array[Fighter] = []
+## The adds the boss called in (each a one-phase bosses.json row on its own BossFight).
+var adds: BossAdds = BossAdds.new()
 var origin: Vector2 = Vector2.ZERO
 var defeated_tick: int = -1
 ## Hit counts for the bot's numbers: attacks begun / that landed, per attack id.
@@ -24,7 +22,7 @@ var rolled: Dictionary[StringName, int] = {}
 var dealt: float = 0.0
 var _arena: CombatArena = null
 var _last_hp: float = 0.0
-var _spawn_i: int = 0
+var _rng: RngRegistry = null
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -36,6 +34,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	if spec == null:
 		return
 	_arena = stage.arena
+	_rng = ctx.rng
 	_clear_floor(stage)
 	var area: ArenaPlan.Area = stage.plan.area(String(spec.arena.area))
 	origin = area.rect.get_center() if area != null else stage.arena.rivet.pos
@@ -54,7 +53,9 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 func step(_stage: ArenaStage, tick: int) -> void:
 	if fight == null:
 		return
-	_route_damage()
+	BossAdds.route(fight, _last_hp)
+	_last_hp = fight.body.hp
+	adds.step(_arena, tick)
 	var r: Fighter = _arena.rivet
 	if not r.alive():
 		return
@@ -80,21 +81,10 @@ func _clear_floor(stage: ArenaStage) -> void:
 	stage.pit.zone = Rect2()
 
 
-## The hp the arena's hits took from the body this tick go back through BossFight.hurt().
-func _route_damage() -> void:
-	var lost: float = _last_hp - fight.body.hp
-	if lost <= 0.0:
-		return
-	fight.body.hp = _last_hp
-	@warning_ignore("return_value_discarded")
-	fight.hurt(lost)
-	_last_hp = fight.body.hp
-
-
 func write_state(out: StreamPeerBuffer) -> void:
 	if fight != null:
 		fight.write_state(out)
-		out.put_32(adds.size())
+		adds.write_state(out)
 
 
 func telemetry() -> Dictionary:
@@ -109,6 +99,9 @@ func telemetry() -> Dictionary:
 		"landed": landed.duplicate(),
 		"rolled": rolled.duplicate(),
 		"dealt": dealt,
+		"adds_spawned": adds.fights.size(),
+		"adds_tries": adds.tries,
+		"adds_landed": adds.landed,
 	}
 
 
@@ -140,16 +133,22 @@ func _on_defeated() -> void:
 	Log.info("bosses", "%s defeated" % fight.spec.id)
 
 
-## Spawns up to `count` adds at the arena's add spawns, never past ADDS_CAP alive.
-func _on_adds(_archetype: StringName, count: int) -> void:
-	var spawns: Array[Vector2] = fight.spec.arena.add_spawns
-	if spawns.is_empty():
+## The adds the boss asks for: its bosses.json row when there is one (King's gang), else the
+## arena's contractor guards (a boss whose add row has not landed yet).
+func _on_adds(archetype: StringName, count: int) -> void:
+	var points: Array[Vector2] = []
+	for p: Vector2 in fight.spec.arena.add_spawns:
+		points.append(origin + p)
+	if points.is_empty():
 		return
-	adds = adds.filter(func(f: Fighter) -> bool: return f.alive())
-	for i: int in mini(count, ADDS_CAP - adds.size()):
-		var at: Vector2 = origin + spawns[_spawn_i % spawns.size()]
-		_spawn_i += 1
-		adds.append(_arena.spawn_guard(at))
+	var row: BossSpec = BossSpec.shipped(archetype)
+	if row == null:
+		for i: int in mini(count, adds.cap - _arena.hostiles_alive() + 1):
+			@warning_ignore("return_value_discarded")
+			_arena.spawn_guard(points[i % points.size()])
+		return
+	var n: int = adds.spawn(_arena, row, _rng.stream(row.rng), points, count)
+	Log.info("bosses", "%s: %d %s" % [fight.spec.id, n, archetype])
 
 
 static func _arg(args: PackedStringArray, flag: String, fallback: String = "") -> String:

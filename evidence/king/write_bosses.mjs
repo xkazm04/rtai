@@ -16,7 +16,7 @@ const king = {
     { id: 'procession', hp_below: 1.0, attacks: ['ram', 'coin_fan'], gap_s: 1.2, transition_s: 0,
       doc: 'The throne-car rams down the boulevard; the hood cannon sprays coins; the gang rides along.' },
     { id: 'court', hp_below: 0.66, attacks: ['coin_fan', 'decree'], gap_s: 1.4, transition_s: 2.5,
-      adds: { archetype: 'robot_thug', count: 4, every_s: 14 },
+      adds: { archetype: 'king_gang', count: 4, every_s: 14 },
       doc: 'The car is wrecked; the gang leaps off to brawl; King shouts decrees that buff the gang.' },
     { id: 'on_foot', hp_below: 0.33, attacks: ['press_slam', 'charge', 'coin_fan'], gap_s: 0.9, transition_s: 2.5,
       doc: 'King steps down: press-plate slams that shower coins, and a charge.' },
@@ -39,10 +39,22 @@ const king = {
       doc: 'He drops his shoulder, cape flares, then barrels along the locked line.' },
   },
 };
+// King's gang: an add is a one-phase boss row run by the same BossFight (a lunge with a tell).
+const king_gang = {
+  arena: 'king_boulevard',
+  doc: "King's bodyguard bots (the rich robot thug: gold chains, visor shades). Phase 2's adds. The swipe is enemy-ai's thug claw: a 0.8 s windup, the aim locks 0.2 s before, a 3 m lunge along the locked aim.",
+  hp: 6, keep_m: 1.6, move_mps: 3.2, radius_m: 0.5, rng: 'boss_king_gang',
+  phases: [{ id: 'brawl', hp_below: 1.0, attacks: ['swipe'], gap_s: 0.5, transition_s: 0, doc: 'Walk at Rivet, swipe.' }],
+  attacks: {
+    swipe: { shape: 'charge', windup_s: 0.8, aim_lock_s: 0.2, active_s: 0.35, recovery_s: 0.8, punish_s: 0.8, punish_k: 1.0,
+      cooldown_s: 1.2, damage: 8, range_m: 3, width_m: 0.9, move_mps: 9, min_m: 0, max_m: 3.4, weight: 1,
+      doc: 'The claw rears back (windup), the aim locks, a 3 m lunge along it; sidestep after the lock.' },
+  },
+};
 const table = {
   schema: 'gtai.bosses/1',
   doc: "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here.",
-  bosses: { king },
+  bosses: { king, king_gang },
   arenas: {
     king_boulevard: { area: 'pit', boss_at: [10, 0], rivet_at: [-8, 0], add_spawns: [[12, -8], [12, 8], [-12, -8], [-12, 8]],
       doc: "King's district: a long boulevard for the procession, its plaza for phases 2-3 (first pass: the arena pit)." },
@@ -64,7 +76,7 @@ const phase = { type: 'object', additionalProperties: false, required: ['id', 'h
   properties: { id, hp_below: num(0, 1), attacks: { type: 'array', minItems: 1, items: id }, gap_s: num(0, 10),
     transition_s: num(0, 10), adds, doc } };
 const boss = { type: 'object', additionalProperties: false, required: ['arena', 'hp', 'move_mps', 'radius_m', 'rng', 'phases', 'attacks', 'doc'],
-  properties: { arena: id, hp: num(1, 100000), move_mps: num(0, 20), radius_m: num(0.3, 6), rng: id,
+  properties: { arena: id, hp: num(1, 100000), keep_m: num(0, 40), move_mps: num(0, 20), radius_m: num(0.3, 6), rng: id,
     script: { type: 'string', pattern: '^res://features/bosses/[a-z0-9_]+/[a-z0-9_]+\\.gd$' },
     phases: { type: 'array', minItems: 1, items: { $ref: '#/$defs/phase' } },
     attacks: { type: 'object', additionalProperties: { $ref: '#/$defs/attack' } }, doc } };

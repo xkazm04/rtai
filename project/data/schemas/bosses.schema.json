@@ -206,6 +206,11 @@
           "minimum": 1,
           "type": "number"
         },
+        "keep_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
         "move_mps": {
           "maximum": 20,
           "minimum": 0,

@@ -7,6 +7,7 @@ extends Node2D
 ## the bar on the HUD layer. Render only (SIM-03): every view reads the fight each frame.
 
 var fight: BossFight = null
+var adds: BossAdds = null
 
 
 static func attach(view: Node, hook: BossHook) -> void:
@@ -15,8 +16,10 @@ static func attach(view: Node, hook: BossHook) -> void:
 		return
 	var tell: BossTellView = BossTellView.new()
 	tell.fight = hook.fight
+	tell.adds = hook.adds
 	var body: BossView = make(hook.fight.spec.id)
 	body.fight = hook.fight
+	body.adds = hook.adds
 	if v.print_stage != null:  # on the actors' layer like the cast rigs: true colours, no ink snap
 		tell.z_index = RenderLayers.z(&"actors") - 1
 		tell.scale = v.cast_view.scale
@@ -58,3 +61,15 @@ func _draw() -> void:
 	var r: float = fight.body.radius_m * Ink.PX_PER_M
 	draw_circle(at, r, Ink.INK)
 	draw_line(at, at + fight.body.facing * r * 1.3, Ink.CREAM, 4.0)
+	for f: BossFight in standing_adds():
+		draw_circle(Ink.px(f.body.pos), f.body.radius_m * Ink.PX_PER_M, Ink.INK)
+
+
+## The adds still up (a downed add leaves the floor in this first pass).
+func standing_adds() -> Array[BossFight]:
+	var out: Array[BossFight] = []
+	if adds != null:
+		for f: BossFight in adds.fights:
+			if f.state != BossFight.State.DEFEATED:
+				out.append(f)
+	return out

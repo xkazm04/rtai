@@ -46,6 +46,8 @@ func _init(p_spec: BossSpec, rng: RandomNumberGenerator, at: Vector2) -> void:
 	body = Fighter.make(Fighter.Kind.BOSS, 900, at, spec.hp)
 	body.radius_m = spec.radius_m
 	moves = BossMoves.make(spec.script_path)
+	if spec.keep_m >= 0.0:
+		moves.keep_m = spec.keep_m
 
 
 ## Starts the fight in phase `index` (0-based; --phase=N is N-1) at that phase's hp.

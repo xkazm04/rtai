@@ -12,6 +12,8 @@ const FILL_LOCK: float = 0.22
 const FILL_ACTIVE: float = 0.45
 
 var fight: BossFight = null
+## The boss's adds: their tells draw by the same rules.
+var adds: BossAdds = null
 
 
 func _process(_delta: float) -> void:
@@ -19,20 +21,28 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
-	if fight == null or fight.attack == null:
+	if fight != null:
+		_draw_fight(fight)
+	if adds != null:
+		for f: BossFight in adds.fights:
+			_draw_fight(f)
+
+
+func _draw_fight(f: BossFight) -> void:
+	if f.attack == null:
 		return
-	var s: BossFight.State = fight.state
+	var s: BossFight.State = f.state
 	if s != BossFight.State.WINDUP and s != BossFight.State.ACTIVE:
 		return
-	var a: BossAttack = fight.attack
-	var k: float = 1.0 - float(fight.tell_left()) / float(maxi(a.windup, 1))
+	var a: BossAttack = f.attack
+	var k: float = 1.0 - float(f.tell_left()) / float(maxi(a.windup, 1))
 	var col: Color = Ink.VERMILION
 	var fill: float = (
-		FILL_ACTIVE if s == BossFight.State.ACTIVE else (FILL_LOCK if fight.locked else 0.0)
+		FILL_ACTIVE if s == BossFight.State.ACTIVE else (FILL_LOCK if f.locked else 0.0)
 	)
-	var width: float = LINE_LOCK if fight.locked or s == BossFight.State.ACTIVE else LINE_THIN
+	var width: float = LINE_LOCK if f.locked or s == BossFight.State.ACTIVE else LINE_THIN
 	col.a = 0.35 + 0.65 * k if s == BossFight.State.WINDUP else 1.0
-	var pts: PackedVector2Array = outline(a, fight.origin, fight.aim)
+	var pts: PackedVector2Array = outline(a, f.origin, f.aim)
 	if pts.size() < 3:
 		return
 	if fill > 0.0:
