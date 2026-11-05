@@ -177,3 +177,31 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   judder. Full unit gate on 1eab6a14: 1107/0 (`evidence/held-it2-unit-final.log`).
 - 16:45 STOP iteration 2. Head 1eab6a14 + this journal. NEXT is the list above (16:34), item 3 as
   amended at 16:41. Scratch cleaned (2.9 GB of avi); frames.json 15 entries, all present.
+
+## Iteration 3 (16:45-17:43, BUILD; restarted for the 18:40 report)
+
+- 16:45 START. git status: the stopped session's journal + unit log staged and sound: committed
+  2bc069fa. Times now: freeze 18:30, report 18:40.
+- 16:50 FINDING chainsaw re-check at 64 px/m (before = two_claw_out 0, same ticks):
+  pixel-identical (`chainsaw_two_claw_ab_64ppm.png`). Cause: `ArenaRigs._put` feeds Rivet
+  GUN_OUT|AIMING whenever a weapon is out, so in `--arena`/`--arena=city` every two-claw weapon was
+  already in both claws. two_claw_out kept as data; no visible change claimed (docs/decisions.md).
+  Side effect of the same fact: RivetCarryAngle's carry (not aiming) never shows in the arena paths.
+- 16:53 FINDING the floating long gun (128 px/m, `--loadout=plasma_rifle`): neither claw on the gun;
+  a temp log showed RivetHeldView's beside-the-helmet shift moves the drawn gun 15.5-16 px off the
+  gun claw on every frame (always aimed). Probe: long_gun across 0.42 -> 0.7 -> 1.0 leaves 15.6 ->
+  12.3 -> 8.0 px (rejected alone).
+- 16:58 MILESTONE e505c086 the claws follow the shift: `CutRig.held_shift` (torso-local), added to
+  both claws' aim targets in RigGrip.target; the held view measures the next shift from the
+  unshifted point (no feedback). Gap now 0-2 px on most frames (a few px for a frame on fast turns)
+  vs 15-18 px. `--gun-off-claw` = before. test_rig_grip planted fault. Unit 1108/0
+  (`evidence/held-it3-unit.log`), lint 13/13, director reel 19/19, 0 SCRIPT ERROR
+  (`evidence/held-it3-reel-director.log`).
+  FRICTION: run_unit.mjs without GODOT_BIN exported "passes" a stale JUnit count with exit -1 lines;
+  always export GODOT_BIN.
+- 17:05 EVIDENCE gtai-masters/d7/held: `long_gun_claw_follow_ab_64ppm_target.png` (r2_w5 beside
+  before/after), `_32ppm_city.mp4` (25 s), `_64ppm_slow.mp4`; chainsaw 64 px/m A/B. Looked: after,
+  a claw sits on the gun body in 3 of 5 frames where before it was a claw-width off; still short of
+  r2_w5 (gun beside the gun shoulder, not ahead on the centre line). frames.json 15 entries (dropped
+  the two rejected probes, the dev-scene idle probe and the 48 px/m chainsaw still).
+- Registry rules applied: none newly read (time). Combat check = director reel 19/19.
