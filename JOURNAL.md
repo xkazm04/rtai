@@ -310,3 +310,13 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   JOURNAL/REPORT and changes no game file); the Director's merge carries them.
 - DECISION (time): nothing started with 15 min to freeze; no gate re-run needed (no project/ change).
 - NEXT: unchanged from the 18:14 entry above (owner verdicts on the 7 REPORT calls; call 7's pick first).
+
+## Iteration 5 (BUILD, 18:16-18:30; fresh session, freeze 18:30)
+- 18:16 Started. Tree clean at a48513b4. d7-calls head still d58e4ba0; `git diff bf7386aa d7-calls -- project` empty
+  (nothing to merge). `git diff 1550dfb0 HEAD -- project` empty, so RTAI.exe (17:59, 1550dfb0) is still the head's
+  game. frames.json: 15 entries, every file present, no unreferenced scratch in the masters folder.
+- DECISION (time): 14 min to freeze; nothing under project/ started (any change would need unit + scenarios + a
+  re-export that does not fit). No gate re-run needed.
+- NEXT: unchanged from the 18:14 entry (owner verdicts on the 7 REPORT calls; call 7's pick first: centre-line long
+  gun + the two-layer drawn claw pair through Codex under image.lock; the darker off-claw tone; 32 px/m
+  before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip).
