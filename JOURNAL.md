@@ -751,3 +751,43 @@ named), combat-pacing-and-dramatic-arc (the fight's length set by the phases, no
   court brawl under the coin-fan cones, King on foot (cone, charge lane, slam ring), the defeat.
   The boss cam still drifts over the cream off-floor ground (known, open). frames.json 15 (the it3
   dodge fight deleted, superseded).
+
+### 22:55 MILESTONE the dodging bot and cover (5ef33a80; servo's NEXT item 2, generic)
+- BossBot: a sidestep into cover within BLOCK_M 1.5 m turns to the open side
+  (`BossBot.sidestep`, static); walled on both sides in an ACTIVE attack it rolls
+  (`BossBot.walled`; before, a roll only came in the windup's last ROLL_LEFT ticks). Unit
+  test_boss_bot_cover 2/2 (a crate on one side flips the step; both sides walled keeps it and reads
+  walled; no walls never walled). Unit **1149/0**.
+- King, dodging bot, seeds 1-5 (CONTENDED, 0 script errors, `evidence/king/numbers-it5c/`):
+  taken 4.8 -> **0**, no hit landed, King down 75.9 -> **80.1 s** (71.8-85.8). The human bot uses
+  the same dodge (gated by its reads): **not re-measured** after this change.
+  The lint split (`_rolls`) was checked as identical on seed 3 (72.2 s, 0 taken).
+
+### FYI to servo (22:56): framework changes since 7bbeeba6 (your next merge brings them)
+- `ghost_k` (f468f112): an optional boss row field (0-4, default 1). The hp a boss loses while
+  Rivet is settled in a ghost form is scaled by it (BossHook._ghost_k -> BossAdds.route(f, hp, k)).
+  Set it in servo's row if you want Servo to resist the ghosts. Schema updated.
+- BossBot cover (5ef33a80): your ask. The dodging bot flips its sidestep away from a crate and
+  rolls when walled in on an active attack (your dash). Re-measure your dodging dash with it.
+- King-only since: KingCarTrim (drapes), the gang's D4 steel lift (tools/art/gang_parts.py), coin
+  fan 10 per hit. No other framework file moved.
+
+Calls for the owner (adds to A-C; for REPORT):
+- A is now one value: `bosses.json king.ghost_k` (built 1.0; e.g. 0.5 halves Ohm's 14 % off the
+  fight). See: `RTAI.exe -- --boss=king --bot=boss --bot-human --ghost=ohm`.
+- D. The gang's steel (built: D4 lift x1.55 + front-band visor) vs the old dark print (inked solid
+  black at 48 px/m): `gtai-masters/n7/king/king_gang_steel_before_after_48ppm_it5.png`;
+  `tools/art/gang_parts.py` LIFT_K 1.0 / VISOR_FROM 0.30 is the old look.
+
+NEXT (iteration 6, in order):
+1. Re-run the human + standing bots on seeds 1-5 after 5ef33a80 (the human's dodge changed); write
+   the per-attack table into JOURNAL; then call C (band) stands on those numbers.
+2. Per-phase 32 px/m real-time clips on the it5 head (`--phase=1|2|3 --bot-human --boss-cam`);
+   the procession-entering clip re-shot with the steel gang and the drapes (the it3 one predates both).
+3. The boss cam's drift over the cream off-floor ground: clamp the camera's centre to the arena
+   area's rect (BossCam, render only).
+4. Dent on King: a generic arena record field `cars` (two parked cars on the boulevard's edges) so
+   Dent can seize one; a 48 px/m Dent clip. Owner call on Tonnage's stomp throwing a boss (folded into A).
+5. Check the plain robot thug at 48 px/m for the same inked-black print (FYI for REPORT, not King's).
+6. Exe export by 08:30 (int-day recipe in docs/decisions.md) + REPORT with calls: gold swap, leap_m,
+   decree buff, A (ghost_k), B (wreck solid), C (band), D (gang steel).
