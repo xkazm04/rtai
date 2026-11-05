@@ -235,3 +235,47 @@ NEXT (iteration 3):
 - GATE 20:57: director reel (pit) on `eb1d4f1c`: 19/19 chapters fully down, 0 SCRIPT ERROR
   (`evidence/ranged/it2-reel-director.log`). NEXT item 1 reduces to: city reel + full unit +
   scenarios on head.
+
+## Iteration 3 (20:20-21:20 wall clock), phase BUILD
+
+FRICTION: the iteration 2 entries carry times 20:30-20:57, but its commits are 20:08-20:19 by
+`git log` (the session guessed times). From here on, times are `date` output.
+
+### GATE 20:22: city-block director reel on head `204c61d1` (code = `eb1d4f1c`)
+19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/ranged/it3-reel-city.log`). With it2's pit
+reel, both reels are green on the iteration 2 head.
+
+### MILESTONE 20:24: `9c140ffb` the electro stun's hit snap (owner item 1, struck)
+- `snap_m` (optional) on `human_reactions.json` reaction rows; stun 0.3 m. `ReactPose._hit_snap`:
+  body + head (half) + 0.5 rad twist along `r.dir`, in 0.034 s, eased out by 0.3 s, over the
+  ShockJolt convulsion. Render only. `--react-snap=off` = the before (KNOWN_FLAGS).
+- Unit `test_react_snap` 4/4; planted faults (snap reversed; SNAP_OUT_S 1.5) -> 1 failing each.
+- FRICTION 20:25-20:29 (my error): the first two films showed no stun. `--bot=gunplay --lone`
+  holds the trigger (charged bolts kill), and `--bot=reel --chapter=electro_chain` without
+  `--loadout=pistol` skips the electro gun ("director: no carry") and kills with the pistol. Use
+  `--bot=reel --reel=director --loadout=pistol --chapter=<id>` for any director chapter film.
+- FILM (director `electro_chain`, 48 px/m, off vs on): 7 wounds, 0 deaths, 4/4 down on both; the
+  frame diff is non-zero only from frame 61 (the first stun) on. Clip
+  `masters n7/ranged/electro_snap-ab-48ppm.mp4`. LOOK: the after victim sits about 15 px further
+  along the bolt on the hit frames; the bolt's chain-arc art covers the body on the first 3-4
+  hit frames, so the throw reads mostly as it eases back. Modest, not dramatic.
+- Pit humans have 1 hp: only taps and chain hops stun; a charged bolt kills (electro_shock
+  signature, unchanged, it reads).
+
+### FINDING 20:31: plasma kill (owner item 1, killed): no change, with numbers
+48 px/m director `plasma_rifle`: a 3-frame burst, the hole, the body thrown about 1.7 m (where
+the gun drops to where the body lies), smoke. The it1 audit's "barely answers" was a misread
+(the body sat at the frame edge). Tried `plasma_hole.launch_mps` 2.2-2.8: +0.2 m at rest (10 px
+at 48 px/m), and GibSim is hashed sim state. Reverted, the clip deleted, audit row corrected
+(victim sync 1 -> 3). Decision line `6ea2ed49`.
+
+- GATE 20:31: unit full suite on `015517e2`: 1128 passed, 0 failed (`evidence/ranged/it3-unit-head.log`).
+
+### MILESTONE 20:35: `de10668f` `--shard-pop=<ticks>` (owner item 4 call)
+`BrutalityHook.shard_pop`: sets the homing shard burst row's `grind_ticks` (default 36 = the
+approved look, unchanged). Unit `test_shard_pop_sets_only_the_shard_freeze` (signature kills
+13/13). The grind is GibSim state: another value moves the arena replay hash (no shard gun in
+quest 1). FILM: director `homing_shard` 32 px/m, 36 vs 12: frames identical until 84 (the 12
+pop), clip `masters n7/ranged/homing_shard_pop-call-32ppm.mp4` (in frames.json as an OWNER CALL).
+LOOK: 12 pops while the next shards are still in flight, so the burst reads as the shot's
+answer; 36 holds the frozen body with shards in it for about 0.6 s, then pops.
