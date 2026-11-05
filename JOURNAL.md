@@ -1020,7 +1020,7 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   outline; the collar still leads. All three live paths checked. frames.json 15 (quest 1 A/B second; lineup ladder
   dropped from the list, file kept for REPORT). REPORT section 3 and Call 9 cite it.
 - 04:39 brief item 5's still re-shot on d2b91a42: `M/frames/cast-ingame-vs-r2c6.png` (city `--arena=city
-  --loadout=pistol,machine_pistol`, tick 720, lossless from the AVI, same crop x1.78 + Rivet x4; 0 SCRIPT ERROR).
+  --loadout=pistol,machine_pistol`, tick 720, frame from the MJPEG AVI (not lossless; correction 04:55), same crop x1.78 + Rivet x4; 0 SCRIPT ERROR).
   Rivet's tan core and visor slot are in the in-game panel now. frames.json entry updated.
 - 04:40 checks on the tan: the hit flash (`tint`, print_part line 128) still forces cream over the tan core after the
   sticker branch, so the flash still reads; D-Noir (dev-only) replaces the colour wholesale, unaffected.
@@ -1065,7 +1065,7 @@ Session end 04:40 (premature, see 04:45): tree clean after this commit, no Godot
   closer colour, A (0.6) the lighter sticker for our dark asphalt / cream slab. Kept A (judged in motion on both
   grounds), numbers added to REPORT Call 9 for the owner.
 - 04:49 timestamps in this iteration corrected to the real clock (several were written ahead of it).
-- 04:58 Call 9 three-way, lossless (quest 1 Dock 9 ticks 13600/13660, CORE_TAN 0 / 0.6 / 1.0 by local edits, each
+- 04:51 Call 9 three-way, lossless (quest 1 Dock 9 ticks 13600/13660, CORE_TAN 0 / 0.6 / 1.0 by local edits, each
   reverted by git checkout, 0 SCRIPT ERROR all three) beside r2_c3: `M/frames/rivet-core-tan-call9-3way-32ppm.png`.
   CORRECTION: the iteration 16 note "1.0 goes muddy on asphalt" came from compressed mp4 crops; lossless, 1.0 reads
   cleanly and is the closest colour to r2_c3. Kept 0.6 built (no late flip of a gated value with 20 min left), put C
@@ -1073,3 +1073,11 @@ Session end 04:40 (premature, see 04:45): tree clean after this commit, no Godot
   replacing the 2-way quest 1 still, file kept as REPORT cites it).
 NEXT (iteration 18) addition: if the owner has not answered Call 9 by the next BUILD session, consider building C
   (CORE_TAN 1.0): judge in motion on the director reel and the city at 32 px/m, lossless frames, then gate.
+- 04:55 director reel 32 px/m, CORE_TAN 0.6 vs 1.0 (local edits, reverted by git checkout, 0 SCRIPT ERROR both), AVI
+  frames t=4/10/16 s: `M/frames/rivet-core-tan-director-a-vs-c-32ppm.png` (not in frames.json). On the grey concrete
+  the two differ only slightly (1.0 a touch warmer); neither is muddy. CORRECTION: Godot's .avi movie writer is MJPEG,
+  so AVI frames are not lossless (green fringes on the collar); only the quest1_clip PNG stills are. The r2_c6
+  composite's "lossless" note fixed in JOURNAL and frames.json. For the next session's Call 9 C check, judge on
+  quest1_clip PNG stills or a PNG-sequence capture, not AVI/mp4.
+Session state 04:56: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i17
+  holds logs only.
