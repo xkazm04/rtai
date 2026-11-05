@@ -3,7 +3,7 @@ extends RefCounted
 ## The part print materials, SHARED by every rig (per-rig materials would break 2D batching):
 ## one per (part kind, hit tint, palette swap). set_view() adapts them all to the screen scale.
 
-enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD, TAN_CORE }
+enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD, TAN_CORE, GUN }
 
 const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
@@ -21,6 +21,10 @@ const HEAD_VISOR_FILL: float = 4.0
 ## cream (0) to r2_c3's tan work plates (1). King's CORE stays cream. d7-calls cast-9 (owner,
 ## 2026-11-05): the light tan 0.6 (n5-cast Call 9 A); the full tan was 1.0.
 const CORE_TAN: float = 0.6
+## d7-calls look-8 (owner, 2026-11-05): a held gun prints in the warm tan inks of the weapon
+## sheets (print_part gun_tan: paper -> light gun tan, mid wash -> gun tan, ink kept), darker than
+## Rivet's light-tan body (cast-9) so the two never merge. 0 = the old grey print (--gun-grey).
+const GUN_TAN: float = 1.0
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
@@ -28,6 +32,7 @@ const NOIR_KEEP_CORE: float = 0.80
 ## The live head fill and core tan (CastFlags: --rivet-visor, --rivet-tan bring the old defaults).
 static var head_lod_fill: float = HEAD_LOD_FILL
 static var core_tan: float = CORE_TAN
+static var gun_tan: float = GUN_TAN
 static var view_px: float = 0.1
 ## D-Noir (lane noir): 1 prints every body part as an ink mass inside the cream halo rim.
 static var noir: float = 0.0
@@ -51,6 +56,7 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 		m.set_shader_parameter("lod_fill", _lod_fill(kind))
 		var tan: bool = kind == PartKind.TAN_CORE or kind == PartKind.HEAD
 		m.set_shader_parameter("core_tan", core_tan if tan else 0.0)
+		m.set_shader_parameter("gun_tan", gun_tan if kind == PartKind.GUN else 0.0)
 		m.set_shader_parameter("limb_fill", LIMB_FILL)
 		m.set_shader_parameter("is_limb", 1.0 if kind == PartKind.LIMB else 0.0)
 		m.set_shader_parameter("tint", 1.0 if tint else 0.0)

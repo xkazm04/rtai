@@ -115,7 +115,7 @@ func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	_sprite = art.make_held(id)
 	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_sprite.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+	_sprite.material = PartMaterials.get_mat(_print_kind(), false, 0)
 	add_child(_sprite)
 	_shown = id
 	_shown_size = size_k
@@ -142,23 +142,7 @@ func _place_long(rig: CutRig) -> void:
 	if not RivetCarryAngle.applies(rig.grip) or pilot.wielding():
 		rig.held_shift = Vector2.ZERO
 		return
-	# the claws already took last frame's shift (RigGrip.target): measure from the unshifted point
-	_sprite.global_position -= rig.torso.global_transform.basis_xform(rig.held_shift)
-	var shift: Vector2 = _beside(rig)
-	_sprite.global_position += shift
-	var follow: bool = rig.aiming and rig.reload_k < 0.0 and RigGrip.follow_shift
-	var to_local: Transform2D = rig.torso.global_transform.affine_inverse()
-	rig.held_shift = to_local.basis_xform(shift) if follow else Vector2.ZERO
-
-
-## The shift that puts a long gun or a tube beside Rivet's helmet (RivetCarryAngle.beside_head).
-func _beside(rig: CutRig) -> Vector2:
-	var head: Sprite2D = rig.head_spr
-	var head_half: float = head.texture.get_width() * absf(head.global_scale.x) * 0.5
-	var gun_half: float = _sprite.texture.get_height() * absf(_sprite.global_scale.y) * 0.5
-	var at: Vector2 = _sprite.global_position
-	var rot: float = _sprite.global_rotation
-	return RivetCarryAngle.beside_head(at, rot, head.global_position, head_half, gun_half)
+	RivetCarryAngle.place_beside(rig, _sprite)
 
 
 ## The blade's angle off the aim line during a strike (MeleeSwing: anticipation, the cut,
@@ -234,7 +218,7 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 		_tank.texture = tex
 		_tank.scale = Vector2.ONE * art.world_scale(id)
 		_tank.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
+		_tank.material = PartMaterials.get_mat(PartMaterials.PartKind.GUN, false, 0)
 		add_child(_tank)
 	if _tank == null:
 		return
@@ -294,3 +278,9 @@ func _light_rag(rig: CutRig, id: StringName) -> void:
 	if _rag.visible:
 		var at: Vector2 = _sprite.to_global(art.muzzle_px(id) + _sprite.offset)
 		_rag.light(at, k, Engine.get_process_frames())
+
+
+## d7-calls look-8: a gun prints in the tan gun inks, a melee weapon in the plain part print.
+func _print_kind() -> PartMaterials.PartKind:
+	var melee: bool = pilot != null and pilot.wielding()
+	return PartMaterials.PartKind.PART if melee else PartMaterials.PartKind.GUN

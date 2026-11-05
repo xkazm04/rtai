@@ -51,3 +51,19 @@ static func beside_head(
 		return Vector2.ZERO
 	var side: float = signf(dist) if dist != 0.0 else 1.0
 	return n * (side * clear - dist)
+
+
+## Moves the held `gun` beside Rivet's helmet; d7-held: the claws take the same shift one frame
+## later (CutRig.held_shift into RigGrip.target), so it is measured from the unshifted point.
+static func place_beside(rig: CutRig, gun: Sprite2D) -> void:
+	gun.global_position -= rig.torso.global_transform.basis_xform(rig.held_shift)
+	var head: Sprite2D = rig.head_spr
+	var head_half: float = head.texture.get_width() * absf(head.global_scale.x) * 0.5
+	var gun_half: float = gun.texture.get_height() * absf(gun.global_scale.y) * 0.5
+	var at: Vector2 = gun.global_position
+	var rot: float = gun.global_rotation
+	var shift: Vector2 = beside_head(at, rot, head.global_position, head_half, gun_half)
+	gun.global_position += shift
+	var follow: bool = rig.aiming and rig.reload_k < 0.0 and RigGrip.follow_shift
+	var to_local: Transform2D = rig.torso.global_transform.affine_inverse()
+	rig.held_shift = to_local.basis_xform(shift) if follow else Vector2.ZERO
