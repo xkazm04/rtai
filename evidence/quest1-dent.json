@@ -1,0 +1,30 @@
+{
+  "again": {
+    "blasts": 1,
+    "kills": 4,
+    "misses": 5,
+    "rides": 131,
+    "seizes": 1,
+    "strikes": 4,
+    "transforms": 1
+  },
+  "clean": {
+    "blasts": 1,
+    "kills": 4,
+    "misses": 5,
+    "rides": 131,
+    "seizes": 1,
+    "strikes": 4,
+    "transforms": 1
+  },
+  "hash": "5718fac2920336248de95ba8dda300f31a8db3b0b9584a2433cae879c1d6d794",
+  "planted_no_ghost_cars": {
+    "blasts": 0,
+    "kills": 0,
+    "misses": 12,
+    "rides": 0,
+    "seizes": 0,
+    "strikes": 0,
+    "transforms": 1
+  }
+}
