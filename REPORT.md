@@ -205,6 +205,22 @@ e865146d (Ohm's glow), still tree (E:evidence-run-it11-final.log): evidence runn
 (it dated from 02:27, before Ohm's and Kerf's limb fixes, the seams and the cast merges); same-frame A/B
 `M:frames/forms-cycle-all-ab-32ppm-x3.png`.
 
+### 10. Dent holds on the pale kerb (iteration 13, DECISION)
+On the cream kerb at 32 px/m the beige crash-test dummy's cream sticker rim melted into the slab; only his
+yellow discs and the teal pool carried him. He now has an ink keyline (GhostRim.keyline: an INK silhouette
+under each cream halo of his cut rig), the die-cut line the cops get from their dark bodies. On asphalt it
+makes no visible change, and it fades with the halos at close-up zooms. His teal voice apparition hides it.
+Same-input A/B (`--bot=forms --form=dent --side=120`, `--no-keyline` = before):
+`M:frames/dent-keyline-kerb-ab-32ppm-x3.png`; at 64 px/m `M:frames/dent-keyline-kerb-64ppm.png`; on the shipped
+quest 1 `M:frames/dent-keyline-quest1-32ppm-x3.png`; clip `M:dent-kerb-city-32ppm.mp4`. Unit 1018/0 (2 new
+tests); director reel 16/16, 0 SCRIPT ERROR (E:director-reel-it13-keyline.log).
+
+### Gates (iteration 13)
+Merged n6-ghost-powers d439f520 (scenario_quest1_dent) and n5-cast 84ed1bd1 (quest 1's cast sprites from the
+slim rigs): unit 1016/0, director reel 16/16 (E:director-reel-it13-merged.log). On 45c69934 (the keyline),
+still tree (E:evidence-run-it13.log): evidence runner `--no-bench` all PASS: lint 13/13, unit 1018/0,
+scenarios 48, parity bit-exact, look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
+
 ## What does not work / is open
 - Nothing open in this lane's list. Dent in quest 1 now has ghost-powers' three parked ghost cars (merged
   97f49bf0): our Dent body seizes, rides braced and blows them on the shipped path

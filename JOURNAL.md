@@ -829,3 +829,6 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
   `--arena=city --bot=forms --form=voices --apparition`, 1020 frames, 0 SCRIPT ERROR; Dent's voice (frames 280/330)
   a teal ghost with its glow edge, no ink: `M:frames/dent-voice-no-keyline-city-32ppm-x1.5.png` (named in the
   keyline entry). Unit 1018/0 (E:unit-it13-apparition.log).
+- 07:22 CHECK the keyline on the shipped quest 1 (q1lift.sh, 1060 frames, 0 SCRIPT ERROR): Dent on asphalt reads
+  as before, the keyline a thin dark edge on the teal pool: `M:frames/dent-keyline-quest1-32ppm-x3.png` (named in
+  the keyline entry). Scratch renders deleted. REPORT section 10 + iteration 13 gates.
