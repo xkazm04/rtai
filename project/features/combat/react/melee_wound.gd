@@ -11,6 +11,11 @@ extends RefCounted
 ## wound at most every 12 ticks, 5 a second, instead of 60).
 const GAP_TICKS: int = 12
 
+## DECISION n7-melee 2026-11-05: a melee hit that lands damage plays a body wound even on a riot
+## cop's front (the claw reaches past the slab). The shield family with its sparks said "blocked"
+## while the sim took his hp (he dies on the next jab). False = the slab takes it (the first cut).
+static var past_slab: bool = true
+
 var played: int = 0
 var gated: int = 0
 ## Fighter id -> the tick its last wound was queued.

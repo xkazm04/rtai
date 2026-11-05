@@ -18,6 +18,7 @@ func _riot(arena: CombatArena, at: Vector2) -> Fighter:
 
 func after_each() -> void:
 	ReactLink.melee_deaths = true
+	MeleeWound.past_slab = true
 
 
 func test_a_claw_jab_on_a_riot_cop_queues_a_wound_on_the_hit_tick() -> void:
@@ -69,3 +70,25 @@ func test_planted_night_path_plays_no_wound() -> void:
 	var link: ReactLink = ReactLink.make(arena)
 	arena.damage(_riot(arena, Vector2(1.0, 0.0)), 1.0, arena.rivet.id, &"claw")
 	assert_eq(link._pending.size(), 0, "the night's: the riot cop shrugs the jab off")
+
+
+func test_a_claw_on_a_riot_shield_front_wounds_the_body_without_block_sparks() -> void:
+	var link: ReactLink = ReactLink.make(_arena())
+	var rig: CutRig = CutRig.new()
+	rig.variant = RigVariant.crowd(6)
+	watch_signals(link)
+	link._wound(rig, 9, &"melee", Vector2.LEFT, false)
+	assert_signal_not_emitted(link, "blocked", "the claw drew blood: no 'blocked' sparks")
+	assert_ne(HumanReact.on(rig).kind, &"shield")
+	rig.free()
+
+
+func test_planted_slab_takes_the_claw() -> void:
+	MeleeWound.past_slab = false
+	var link: ReactLink = ReactLink.make(_arena())
+	var rig: CutRig = CutRig.new()
+	rig.variant = RigVariant.crowd(6)
+	watch_signals(link)
+	link._wound(rig, 9, &"melee", Vector2.LEFT, false)
+	assert_signal_emitted(link, "blocked", "the first pass: the shield family and its sparks")
+	rig.free()

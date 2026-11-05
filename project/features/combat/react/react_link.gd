@@ -123,7 +123,8 @@ func apply(rigs: CharacterRigs) -> void:
 
 ## A wound family on `rig` (fighter `id`); a round stopped on the shield is announced (blocked).
 func _wound(rig: CutRig, id: int, hit_class: StringName, dir: Vector2, cover: bool) -> void:
-	var kind: StringName = pipe.wound(rig, hit_class, dir, shielded(rig), cover)
+	var slab: bool = shielded(rig) and not (hit_class == &"melee" and MeleeWound.past_slab)
+	var kind: StringName = pipe.wound(rig, hit_class, dir, slab, cover)
 	wounds += 1
 	if kind == &"shield":
 		blocks += 1
