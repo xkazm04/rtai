@@ -738,7 +738,9 @@ NEXT (iteration 13):
    not charcoal; the r6 cut is `masters:n5/cast/gen/r6/cut/torso_hoodie.png`); (b) the D5 tier: the new parts have no
    D5 hatching, so at 64 px/m they are flat fill beside hatched limbs; a D5 restyle (Codex edit of r5/r6 in the d5
    hatched style, sliced with the D4 alpha lock like slice_d5.py) would match; (c) the street board and quest 1 at
-   48 px/m are not re-shot on the r6 parts (render only; the react board and lineups are).
+   48 px/m: the street board IS re-shot on the final parts (01:37, below); quest 1 at 48 px/m is not.
 2. Calls 1-6 stand; REPORT section 5 current to eec9e750. REPORT rewrite at 08:40.
 Session end ~01:40: tree clean after this commit, image.lock and bench.lock released / never taken, no Godot process
   of mine running, scratch-cast/i12 deleted.
+- 01:37 street board re-shot on the final parts (`--board=street`, 241 frames, 0 SCRIPT ERROR): `M/cast-street-board-r5peds-ab-64ppm.mp4` and its still now show r5 + r6; flee, the kill and the corpse read as
+  before. Scratch `i12b` deleted. Session end 01:38: tree clean, no lock held, no Godot process of mine running.
