@@ -5,15 +5,15 @@
       "crush": 5
     },
     "kill_cut_us": [
-      471,
-      492,
-      486,
-      351,
-      633,
-      545,
-      561,
-      661,
-      556
+      604,
+      603,
+      516,
+      463,
+      574,
+      555,
+      576,
+      555,
+      506
     ],
     "kill_ticks": [
       144,
@@ -27,11 +27,11 @@
       389
     ],
     "signature_kills": 9,
-    "view_avg_us": 457,
+    "view_avg_us": 446,
     "view_frames": 1000,
-    "view_over_2ms": 2,
-    "view_worst_tick": 152,
-    "view_worst_us": 3578
+    "view_over_2ms": 3,
+    "view_worst_tick": 391,
+    "view_worst_us": 5491
   },
   "cars": {
     "damaged": 0,

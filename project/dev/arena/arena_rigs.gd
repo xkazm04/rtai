@@ -103,7 +103,8 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
-	ghost_view = GhostFormView.attach(layer, p_stage, rigs)  # ghost-forms: the ghost bodies
+	var cam: CameraRig = _print.rig if _print != null else _city.rig
+	ghost_view = GhostFormView.attach(layer, p_stage, rigs, cam)  # ghost-forms: the ghost bodies
 
 
 func _process(_delta: float) -> void:

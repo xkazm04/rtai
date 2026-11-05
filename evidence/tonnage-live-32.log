@@ -4,17 +4,17 @@ D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
 Movie Maker mode enabled, recording movie in 1280×800 @ 60 FPS...
 [INFO] arena: powers pad: 2 cars parked
 [INFO] arena: arena open: 17 stations
-[INFO] characters: prewarmed 33 rigs in 114.2 ms
+[INFO] characters: prewarmed 33 rigs in 83.1 ms
 [INFO] arena: cast rigs: true
 [INFO] ghosts: ghost reel: tonnage beat at tick 0
 [INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
 [INFO] arena: react: 0 wounds (0 on a shield), 0 deaths, 0 ducks
 --------------------------------------------------------------------------------
-Done recording movie at path: C:/Users/kazda/kiro/gtai-masters/n6/ghost-forms/scratch/tonnage-live-32.avi
-1000 frames at 60 FPS (movie length: 00:00:16:40), recorded in 00:00:31 (51% of real-time speed).
+Done recording movie at path: C:/Users/kazda/kiro/gtai-masters/n6/ghost-forms/scratch/t3.avi
+1000 frames at 60 FPS (movie length: 00:00:16:40), recorded in 00:00:29 (55% of real-time speed).
 CPU render time: 0.88 seconds (average: 0.88 ms/frame)
-GPU render time: 2.18 seconds (average: 2.18 ms/frame)
-Encoding time: 12.37 seconds (average: 12.37 ms/frame)
+GPU render time: 0.97 seconds (average: 0.97 ms/frame)
+Encoding time: 12.31 seconds (average: 12.31 ms/frame)
 --------------------------------------------------------------------------------
 WARNING: 1 RID of type "CanvasItem" was leaked.
    at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)

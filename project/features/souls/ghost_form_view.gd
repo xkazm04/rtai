@@ -8,24 +8,31 @@ extends Node2D
 ## transformation (base <-> form, and the form-to-form teal flash). Kerf, Dent and Ohm show base
 ## Rivet under the effects until their rigs land.
 
-## The camera beat's share of the print zoom (GhostMorphFx.beat() is 1 + up to BEAT_ZOOM).
-const BEAT_ON: bool = true
+## The camera beat at the in-between pose: camera.json shakes (their budget and reduced-motion
+## scale), the heavy one when the big body comes or goes.
+const BEAT_BIG: StringName = &"crash"
+const BEAT_LIGHT: StringName = &"hit"
+## The HUD card's canvas layer (above the print and the dev HUD's world layers).
+const HUD_LAYER: int = 5
 
 var pilot: StagePilot = null
 var arena: CombatArena = null
 var rigs: CharacterRigs = null
 var reduced_motion: bool = false
-## Set when the host lets the beat move its zoom (1.0 = no beat this frame).
-var beat_zoom: float = 1.0
+## The view's camera (the print stage's or the city view's CameraRig; null = no beat).
+var camera: CameraRig = null
+var hud: GhostFormHud = GhostFormHud.new()
+var beats: int = 0
 var _tonnage: TonnageRig = TonnageRig.new()
 var _fx: GhostMorphFx = GhostMorphFx.new()
 var _hidden_rig: CutRig = null
 var _last_tick: int = -1
+var _last_stage: int = 0
 
 
 ## Adds the view to `layer` for `stage`'s pilot (no pilot = the bot: nothing to show).
 static func attach(
-	layer: CanvasLayer, stage: CollectCallStage, p_rigs: CharacterRigs
+	layer: CanvasLayer, stage: CollectCallStage, p_rigs: CharacterRigs, p_camera: CameraRig
 ) -> GhostFormView:
 	if stage.pilot == null or stage.pilot.ghosts == null:
 		return null
@@ -33,6 +40,7 @@ static func attach(
 	v.pilot = stage.pilot
 	v.arena = stage.arena
 	v.rigs = p_rigs
+	v.camera = p_camera
 	v.reduced_motion = LaunchArgs.has("--reduced-motion")
 	v.z_index = p_rigs.z_index + 1 if p_rigs != null else RenderLayers.z(&"actors")
 	layer.add_child(v)
@@ -45,6 +53,17 @@ func _ready() -> void:
 	add_child(_tonnage)
 	_fx.reduced_motion = reduced_motion
 	add_child(_fx)
+	var layer: CanvasLayer = CanvasLayer.new()
+	layer.layer = HUD_LAYER
+	add_child(layer)
+	hud.set_anchors_preset(Control.PRESET_FULL_RECT)
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(hud)
+	var table: GhostFormTable = pilot.ghosts.forms.table if pilot != null else null
+	for id: StringName in table.order if table != null else []:
+		var key: String = table.form(id).name_key
+		var word: String = tr(key)
+		hud.names[id] = word if word != key else String(id).capitalize()
 
 
 ## True while the big body (Tonnage) stands in for Rivet.
@@ -86,8 +105,17 @@ func _process(_delta: float) -> void:
 	_fx.reach_m = 2.4 if with_big else 1.4
 	var busy: bool = not forms.settled()
 	_fx.show_progress(busy, forms.k(), forms.stage(), forms.phase == GhostForms.SWITCHING)
-	beat_zoom = _fx.beat() if BEAT_ON and not reduced_motion else 1.0
+	_beat(forms.stage() if busy else 0, with_big)
+	hud.sync(forms)
 	_hide_rivet(is_big, r.id)
+
+
+## One camera shake as the transformation passes its in-between pose.
+func _beat(stage: int, with_big: bool) -> void:
+	if stage == 1 and _last_stage == 0 and camera != null:
+		camera.kick(BEAT_BIG if with_big else BEAT_LIGHT, arena.tick)
+		beats += 1
+	_last_stage = stage
 
 
 ## Rivet's own rig (and the weapon views riding on it) is hidden while the big body stands in.

@@ -151,3 +151,12 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   gun drawn on top of the press: fixed (held/mag views hidden while big). Judged: the press reads as a 3x body among
   the cops at 32 px/m and turns onto wave 2 in the city; the slam now lands ~54 ticks later than before (attacks
   wait for the settled form). Not done: the camera beat (GhostFormView.beat_zoom is computed, no host reads it yet).
+- 01:08 unit gate on 94b7c56d: 955 passed, 4 failed assertions, all in ghost-powers' test_tonnage_attacks (the slam
+  test pressed melee straight after Q): it now waits enter_ticks (the attacks wait for the settled form). Re-run
+  test_tonnage* 2/2, test_ghost* 15/15.
+- MILESTONE GhostFormView: the camera beat = one CameraRig shake at the in-between pose (`crash` when Tonnage comes
+  or goes, `hit` for the light forms; camera.json's budget and reduced-motion scale, no new data) and the
+  GhostFormHud live on a CanvasLayer (5). HUD fix: in a form the chevron + `G` mark the switch target (was none),
+  in base `Q` under the picked ghost; labels on one baseline (the grown chip clipped "Tonnage"); _chevron split out
+  (gd-size). Re-filmed: 10/10, 0 SCRIPT ERROR; `M:frames/hud-live-arena-base-morph-tonnage.png`, the 32 px/m clip
+  replaced with this run.
