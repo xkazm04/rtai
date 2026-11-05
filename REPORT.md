@@ -1,7 +1,7 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**DRAFT, current to iteration 21 (07:40, head d63b380c).** The REPORT phase rewrites this at 08:40. Every number below
-was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 02e4295c (the
+**DRAFT, current to iteration 21 (07:55).** The REPORT phase rewrites this at 08:40. Every number below
+was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on cf64342e (the
 last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
 UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in
 `C:\Users\kazda\kiro\gtai-masters\n5\cast\`; `M/` below means that folder.
@@ -138,7 +138,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `rivet_peek_lod`, captures of the sticker tier (`rivet_sprite.gd --tier=sticker`: the tan core, the visor slot, the
   collar's ink breaks), the art captures above it (64 px/m pixel-identical). Before | after | the rig Rivet, and the
   peek at both hide spots: `M/frames/quest1-rivet-lod-ab-32ppm.png`; 10 s Dock 9 before | after:
-  `M/cast-quest1-rivet-lod-ab-32.mp4`. Revert = `CastView.LOD_SPRITES` false. Hosting the rigs in the default quest
+  `M/cast-quest1-rivet-lod-ab-32.mp4`. Revert = `CastView.LOD_SPRITES` false. The grown Hauler keeps the art capture (cf64342e: the pick
+  judges the drawn scale, `grow` x ppm; the sticker tier grown 2.7x was a flat mass with a black slab,
+  `M/frames/quest1-hauler-lod-trial-32ppm.png`; a one-frame swap early in the morph,
+  `M/frames/quest1-hauler-switch-32ppm.png`, `M/cast-quest1-hauler-lod-ab-32.mp4`). Hosting the rigs in the default quest
   view stays rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
 
 ### 5. The crowd (brief item 4)
@@ -199,6 +202,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
+### Gates (iteration 21, `tools/evidence/run.mjs --no-bench` on cf64342e (the grown Hauler keeps the art): ALL PASS, the same numbers: lint 13/13, unit 954/0, scenarios 46, parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53).
 ### Gates (iteration 21, `tools/evidence/run.mjs --no-bench` on 02e4295c (the quest sprite Rivet's sticker tier): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless (the quest sprites are in no golden). Director reel 16/16 chapters down, 0 SCRIPT ERROR.
 ### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On 84ed1bd1 (b68665b1, the quest sprites, + docs): ALL PASS, the same numbers (look 11/11 worst 1.33, block 5/5 worst 1.53). Final of iteration 20 on b88d329b: ALL PASS, same numbers.
 ### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on f4381f32 (the plain riot crown): ALL PASS: lint 13/13,

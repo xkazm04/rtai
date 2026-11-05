@@ -1381,3 +1381,30 @@ Session end 07:13: tree clean after this commit, no Godot process of mine runnin
   `forms_drawn` branch draw `var art: String = _lod_art("rivet")` / `_sprite(art, at, _size(StringName(art)),
   r.facing)` instead of the literal "rivet" (02e4295c's 32 px/m sticker sprite). Not edited on their branches (not
   this lane's). REPORT merge note updated.
+- 07:40 checked 02e4295c's unseen path: the Hauler grow in default quest 1 scales the sprite by `sprite_k` (about
+  2.7 at full morph). Filmed with `dev/ghost-powers/quest_hauler_rec.tscn -- --ppm=32` (it needs its --out dir to
+  exist), same sim both (activations 1, stomps 2, kills 6), before = `LOD_SPRITES` false, restored, 0 SCRIPT ERROR.
+  FINDING: the grown rivet_lod is a flat mass with a black visor slab and thick ink; the grown art keeps its plates
+  (`M/frames/quest1-hauler-lod-trial-32ppm.png`).
+- 07:45 fix cf64342e: `_lod_art(id, grow)` multiplies the drawn scale by the grow, so the LOD threshold is judged on
+  the px the sprite is drawn at; base Rivet keeps rivet_lod, the grown Hauler draws the art: only frames 0-15 of the
+  recorder differ from the all-art run, 0 px from frame 16 (60, 200 checked). Cost: a one-frame swap at 15 -> 16,
+  early in the morph, inside the grow and tint (`M/frames/quest1-hauler-switch-32ppm.png`); clip before | after
+  `M/cast-quest1-hauler-lod-ab-32.mp4` (6 s, the recorder's whole run). DECISION in docs/decisions.md. Lint 13/13,
+  unit 954/0. Registry `motion-quality-gating`: judged in motion (the morph frames), not one still.
+- 07:52 EVIDENCE GATE on cf64342e (`--no-bench`, tree untouched): ALL PASS: lint 13/13, unit 954/0, scenarios 46,
+  parity exact (629), look 11/11 (worst 1.33), block 5/5 (worst 1.53). The arena draws no quest sprite, so the 07:38
+  director reel (16/16) stands for cf64342e (the change is inside `CastView._rivet` only). Bench skipped all session
+  (two other Godot processes and three 670-850 MB Python jobs running: CONTENDED, unmeasured).
+
+NEXT (the freeze at 08:30, the report at 08:40):
+1. REPORT is current to this commit (header, section 4, open items, gates, merge note). At 08:40 rewrite the summary
+   and name 02e4295c + cf64342e (quest 1's sprite Rivet and peek in the 32 px/m sticker tier; the grown Hauler keeps
+   the art) beside b68665b1.
+2. Merge note for the Director: the n6 lanes' `forms_drawn` branch in `CastView._rivet` bypasses `_lod_art` (REQUEST
+   07:40, one-line fix).
+3. Calls 1-9 stand. No code is open. If time: a cross-fade for the Hauler's one-frame sprite swap (frame 15 -> 16)
+   only if a reviewer sees it as a pop in `M/cast-quest1-hauler-lod-ab-32.mp4`; otherwise leave.
+4. The last gate is on cf64342e (ALL PASS); docs only since, so no re-run is needed unless code lands.
+Session end 07:54: tree clean after this commit, no Godot process of mine running, image.lock and bench.lock never
+  taken. Scratch `gtai-n5/scratch-cast/i21` holds logs and stills only (PNG sequences deleted below).
