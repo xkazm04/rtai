@@ -353,3 +353,16 @@ A gilded inner trim line and gold corner studs on the car; the cape on the car s
 `evidence/king/shots/car_ab_before_after_32ppm.png` (left before, right after, 32 px/m, 2x crop).
 Still missing against the target: the plum drapes along the sides, the grille's detail, the
 riders hanging on the car's sides rather than standing at its corners.
+
+### FYI to servo (20:34): framework changes since e92b3d8b (your next merge brings them)
+- bosses.json: optional `body_class` per row (`boss` default, `robot`), optional `max_total` in a
+  phase's `adds`, optional `adds_from` (`area` default, `boss`) in an arena record; schema written
+  by `evidence/king/write_bosses.mjs` (keeps other rows). Your row needs nothing new.
+- `BossMoves.idle_step` sidesteps when cover blocks it and `BossMoves.write_state` now writes the
+  detour: **a script that overrides write_state must call `super.write_state(out)` first.**
+- `BossAdds.separate(boss)` (called by the hook each tick): adds part from each other and step off
+  the boss. Your drones, if they are BossAdds rows, get it for free.
+- `BossFight.now()`: the sim tick of the last step (pose rigs on it; lint SIM-01 bans the frame
+  delta in views). `Fighter.body_class` (ArenaBodies reads it).
+- New dev-arena area `boulevard` (arena.json + the arena_station schema enum): if you add a depot
+  area, add it to that enum too.
