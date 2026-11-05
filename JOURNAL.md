@@ -52,3 +52,7 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   shoulder (RigGrip's helmet clearance), the stock beside the helmet. Plan: long_gun `across` toward
   0 with `gun_reach` far enough out that the stock clears the helmet ahead (test_rivet_aim_clear
   measures the gap; it must become "ahead of" rather than "beside").
+- 15:47 MERGE d7-calls cdaaec62 (cast-1 16272697 Rivet 1.1x, cast-8/9 66bf4fbe) into d7-held. One
+  conflict: both lanes keep a root JOURNAL.md (add/add); kept ours (the calls journal stays on
+  d7-calls; the Director should move each lane's journal under docs/ at merge). decisions.md merged
+  clean.

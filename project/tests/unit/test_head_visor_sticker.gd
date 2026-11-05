@@ -1,13 +1,16 @@
 extends GutTest
-## n5-cast: Rivet's helmet sticker at gameplay scale prints a welder-visor ink slot at the front
-## (lod_fill 4, r2_c7 at game scale); humans keep the plain part print on their heads.
+## n5-cast: Rivet's helmet sticker at gameplay scale could print a welder-visor ink slot (front)
+## (lod_fill 4, r2_c7 at game scale); d7-calls cast-8: the owner picked the plain head (lod_fill 2).
+## Humans keep the plain part print on their heads.
 
 
-func test_head_material_uses_the_visor_fill() -> void:
+func test_head_material_uses_the_head_fill() -> void:
 	var m: ShaderMaterial = PartMaterials.get_mat(PartMaterials.PartKind.HEAD, false, 0)
 	var fill: float = m.get_shader_parameter("lod_fill")
 	assert_eq(fill, PartMaterials.HEAD_LOD_FILL)
-	assert_true(PartMaterials.HEAD_LOD_FILL > 3.5, "4 = visor slot; 2 = the plain core sticker")
+	assert_almost_eq(
+		PartMaterials.HEAD_LOD_FILL, 2.0, 0.01, "cast-8: plain head; 4 = the visor slot"
+	)
 
 
 func test_head_keeps_the_core_noir_light() -> void:
