@@ -1152,3 +1152,18 @@ Session state 05:28: tree clean after this commit, no Godot process of mine runn
   re-bless; unit 953/1 = the known flake test_noir_shadows ("Parameter t is null"); re-run twice (the `-gtest`
   filter ran the full suite): 954/0 both. REPORT section 5 bullet, Call 6, gates line; frames.json 15 (hat still on
   top; react-street-d5peds dropped from the list, file kept, REPORT cites it). Scratch renders deleted.
+- 05:39 coat-hood, the palest look left: D4 and D5 `head_hood.png` fills above L 90 toward x0.5 (ramp 90-120; ink,
+  face opening, alpha kept), mean L 140 -> 75. Lineup lossless slab/asphalt 32 px/m and 64 px/m (0 SCRIPT ERROR):
+  a dark head mark like the hair looks, a hatched grey hood at 64. Every look now has a dark (bald: grey) head, as
+  r1_c6. The live city clip (`film.sh cast-hood-city-32`) differed from its before by 0 px at t=2/6/10/14 (no
+  coat-hood ped on screen): deleted, not evidence. Still `M/frames/ped-hood-dark-ab-vs-r1c6.png` (before rows from
+  the hat-crown still, same lineup and crop).
+- MILESTONE 551ed9c6: the coat-hood's dark hood (revert = both PNGs from 0f6ce11a). Decisions line.
+- 05:46 EVIDENCE GATE on 551ed9c6: ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact, look goldens 11/11
+  (worst 1.21), no re-bless. REPORT section 5 bullet, Call 6, gates line. frames.json 15 (hood still second;
+  quest1-hoodie-sleeve dropped from the list, file kept, REPORT cites it). Scratch renders deleted.
+NEXT (iteration 19) amendment: 2(b) is done for the standing peds (hat crown 0f6ce11a, hood 551ed9c6). Next options
+  there: film the crowd in quest 1 at 32 px/m (`quest1_clip.gd -- --ppm=32 --rigs --stills=900,1500`, the 00:40
+  path) to see the dark heads in a real crowd, before | after 550b000d. REPORT current to 551ed9c6.
+Session state 05:47: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
+  holds logs only.
