@@ -5,8 +5,8 @@ the two unbuilt picks. Branch `d7-calls`, cut from main `1028c15d`. Evidence: `M
 `C:\Users\kazda\kiro\gtai-masters\d7\calls\` (`frames.json` lists the stills and clips, newest first).
 Every old default stays one flag or one data value away.
 
-**DRAFT (iteration 5, 16:55).** The exe, the final gate line and the combined clip are filled in by the last
-session before 18:40.
+**Status (iteration 5, 17:17): complete.** Every call in the brief is built, gated and filmed; the exe is
+exported. A later session only re-exports and re-gates if the branch moves.
 
 ## What works (with evidence)
 
@@ -31,7 +31,8 @@ Gates on 83fe0d5c (`node tools/evidence/run.mjs --no-bench`, `evidence/evidence-
 unit 1097/0, scenarios 52/52, parity exact (planted caught at 629), look goldens 11/11 worst 0.27 + block 5/5
 worst 0.22. No golden moved on any commit, so no re-bless was needed for any call (Rivet, held guns and FX are a
 small part of the golden frames). Combat: the director reel brings down every
-chapter on every commit (19/19 on e419a047; 0 SCRIPT ERROR).
+chapter (19/19 on e419a047 headless; 19/19 on 83fe0d5c in the city block at 32 px/m, 0 SCRIPT ERROR,
+`evidence/reel-director-city-it5.log`).
 
 ## The exe (exported 17:07 on ecb8a675; the last session re-exports if the branch moves)
 - Arena + city block: `build\export\windows\RTAI.exe` (preset `windows-showcase`; boots into the arena with the
@@ -85,4 +86,8 @@ chapter on every commit (19/19 on e419a047; 0 SCRIPT ERROR).
    yellow-orange.
 
 ## Next steps
-- (fill in)
+- The owner's verdicts on the calls above; each flips with the flag or value named there.
+- If the owner keeps the tan guns: give the dark small held parts (Gatling first) a lighter re-tone so they print
+  tan at game zoom too (held lane's `held_small.py`), or a per-weapon `gun_ink_hi`.
+- When the act quests land, `Quest1Session.acts_done` comes from the save, not a static (ghost-powers-5 re-check).
+- Bench the branch on an idle machine (every change here is view or data, except Dent's steer point).

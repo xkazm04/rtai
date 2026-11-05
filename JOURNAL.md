@@ -156,3 +156,6 @@
   (Dent skipped), and the unfolded card (frame 920) shows Dent's slot as the dimmed padlock.
   `M/frames/ghost-powers-5-quest1-live.png`, `M/quest1-dent-locked-live.mp4` (12 s). Replaces the scratch-scene
   HUD still as the lead evidence. frames.json 15 entries, all present.
+- 17:17 city director reel on 83fe0d5c: 19/19 chapters down, 0 SCRIPT ERROR (`evidence/reel-director-city-it5.log`).
+  REPORT status complete (all calls built, gated, filmed; exe exported at ecb8a675, project tree unchanged since
+  83fe0d5c: only docs commits after it, so the exe is current).
