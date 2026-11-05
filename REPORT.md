@@ -146,7 +146,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
-### Gates (iteration 15, `tools/evidence/run.mjs --no-bench` on e7c055be (the visor slot): ALL PASS: lint 13/13, unit 948/0,
+### Gates (iteration 15, final `tools/evidence/run.mjs --no-bench` on c3a9ebf2 (the visor slot scoped to Rivet, 18b74bd8):
+ALL PASS: lint 13/13, unit 949/0, scenarios 46, parity exact, look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38).
+Before it, on e7c055be (the visor slot): ALL PASS: lint 13/13, unit 948/0,
 scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38), world lock
 holds; no re-bless. Director reel with `--loadout=pistol` 16/16 chapters down, 0 script errors.)
 ### Gates (iteration 14, final on f7cc15b5 (torch tip): ALL PASS: lint 13/13, unit 945/0, scenarios 46, parity exact,
@@ -242,6 +244,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    larger head, tied to Call 1's size. Same ticks, before | after, lineup and live reel beside r2_c7:
    `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; the iteration 14 print-only trial
    that changed nothing: `M/frames/visor-sticker-trial-32ppm.png`.
+   Rivet only (`BodyPlan.head_visor`): King's symmetric star crown, built on Rivet's plan, keeps the plain head.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

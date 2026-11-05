@@ -965,3 +965,21 @@ Session end 03:30: tree clean after this commit, no Godot process of mine runnin
   only when set; unit 949/0 (+ only-Rivet test); Rivet's lineup pixel-identical to 26c1e08a. Decisions line.
   - FRICTION: one unit run without GODOT_BIN exported printed "exit -1 ... (948 passed)" from the cached evidence; the
     count in that line is stale when the exits are -1. Always export GODOT_BIN in the same command.
+- 04:05 EVIDENCE GATE on c3a9ebf2 (clean tree, nothing touched during the run): ALL PASS: lint 13/13, unit 949/0,
+  scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst 1.38). No
+  re-bless. (The 18b74bd8 run had all green results but the unit step was flagged "tree changed during run" because I
+  appended to JOURNAL mid-gate; re-run clean.) REPORT gates line and Call 8 updated.
+
+NEXT (iteration 16), replaces the 03:26 list:
+1. Calls 1-8 stand; Call 8 is now B built (visor slot at 32 px/m, `PartMaterials.HEAD_LOD_FILL` 4, Rivet only via
+   `BodyPlan.head_visor`; revert = 2.0). REPORT sections 3/4, Calls and the gates line are current to c3a9ebf2.
+   REPORT rewrite at 08:40. frames.json 15 (every file exists).
+2. Weakest left vs the targets, all judgement or owner calls, no missing parts: (a) Rivet at 32 px/m is a cream figure
+   while r2_c6/r2_c7 draw him tan-grey with dark limbs (his 56+ px/m tone is Call 5; a 32 px/m warm sticker would be
+   new: try `lod_fill` 2's CREAM -> a pale tan for Rivet's core only, judged on slab and asphalt, only if the
+   vermilion collar still leads); (b) the cops read as bright-blue pad clusters at 32 px/m vs r2_c6's navy bodies
+   (Call 4 options C/D, owner's pick).
+3. Cheap polish if time: a 1 px cream eye glint inside the visor slot at 32 px/m (r2_c3's two slits) was not tried;
+   it likely mottles at ~16 px heads. Judge at x1 before building.
+Session end 04:06: tree clean after this commit, no Godot process of mine running, locks never taken, scratch renders
+  deleted (`gtai-n5/scratch-cast/i15` keeps logs only).
