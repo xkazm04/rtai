@@ -171,3 +171,20 @@ NEXT (iteration 2), replacing the list above:
 4. Body: part sheets on KingPlan (image lock), the rich gang on the thug rig, the throne-car art.
 5. The arena (boulevard + plaza), per-attack 48 px/m clips, the target hstack, the procession clip.
 6. Re-film `--bot=reel --reel=director` on the branch before calling any item done.
+
+### CORRECTION 19:44: the "blue gang corpses" are not the gang
+`BossFight` makes every body `Fighter.Kind.BOSS` (adds included), and `KillEvent.human` is
+`kind != BOSS`, so a gang bot never takes a signature kill. The blue figures in the film are the
+**rivet-arsenal claw cops** (`features/player/arena_claw_cops.gd`): real arena guards that walk at
+Rivet (GuardBrain, never fire) and respawn every 150 ticks; `BossHook._clear_floor` removes the
+station dummies and the pit's waves but not them. They wander into the fight and die there, and
+through `ArenaBodies.resolve` they shove Rivet (a likely cause of the standing-bot stall too).
+Also seen in the code: `ArenaBodies.resolve` treats every live hostile as a PERSON body, so Rivet
+can shove King's 6.6 m car like a person (`class_of(h)`): bosses need their own body class.
+NEXT 1 becomes: under `--boss`, keep the claw cops off the floor (an ArenaClawCops off switch, or
+the boss arena moved to an area they never reach), give boss bodies a heavy body class, then
+re-run both bots and re-film.
+
+NEXT (iteration 2): as above (1. claw cops + boss body class; 2. human-like bot + n-seed numbers;
+3. Ohm stun / decree / transitions / defeat / music; 4. part sheets + rig; 5. arena + clips;
+6. re-film the director reel before calling an item done).
