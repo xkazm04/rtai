@@ -447,3 +447,58 @@ NEXT (iteration 4) stands as written above, minus the phase 1 / phase 2 clips an
   numbers: next).
 - 21:48 `M/frames.json` 15 entries (the it4 attack and ghost clips, the arena comparison first);
   removed the 64 px/m dev-scene rig film and the it2 phase-3 still.
+- 21:50 GATES on the merged tree (135528a5, before the rack): scenarios 52 ran / 0 failed
+  (`evidence/servo/scenarios-it4.log`); director reel `--bot=reel --reel=director
+  --loadout=pistol`: 19/19 chapters fully down, 0 SCRIPT ERROR (`director-reel-it4.log`; exit 124
+  = the 600 s limit after the last chapter, as before). Combat did not regress with king's daze.
+- 21:51 MILESTONE b3e12695 **the rack is 3 rows deep** like the target's wings (`servo.json
+  rack.rows` 3, `cells` 18; ServoRack.rows()/cols(); ServoRig._extra_rows repeats the wing art's
+  back row one row further back: the art is 2 rows = 141 px at 96 px/m = 2 x 0.73 m = row_dy_m,
+  so the bays sit on the sim's cells). Phase 3 breaks 9 cells (half of every row). **Looked at**
+  `M/frames/servo_target_vs_arena_rack3_ab_48ppm_it4.png` (sheet | 2 rows | 3 rows): the rack now
+  carries the sheet's mass over the hub; a faint seam where the back row repeats. test_servo 20/20.
+  DECISION in docs/decisions.md; rows 2 / cells 12 = the it3 rack.
+- 21:52 MEASURED (b3e12695, seeds 1-3, 240 s cap, `evidence/servo/bots-it4/`):
+
+  | bot | seed | result | Rivet took | deaths | rotor dash landed/tried |
+  |---|---|---|---|---|---|
+  | dodge | 1 | down 176.7 s | 238 | 0 | 4/10 (hot 2/5) |
+  | dodge | 2 | down 119.8 s | 150 | 0 | 4/8 (hot 1/3) |
+  | dodge | 3 | down 143.2 s | 230 | 0 | 7/10 (hot 0/3) |
+  | stand | 1 | alive 28 % | 1084 | 3 | 8/14 |
+  | stand | 2 | alive 43 % | 1234 | 6 | 9/17 |
+  | stand | 3 | alive 72 % | 1282 | 5 | 20/25 |
+
+  Every stander now loses (seed 1 used to win: the envelope wants that). But the dodging bot's
+  rotor dash landed 15/28 (54 %; it3 33 %; target <= 25 %). Paint-only crates (same tree,
+  `paint-dodge-s*`): dash 9/25 (36 %), down at 148 / 123 / 111 s, Rivet took 120 / 90 / 200. So
+  the solid crates pin the bot's sidestep (it never rolls over or walks round a crate). Not fair
+  yet for a crate-blind dodger; a player rolls. Open: the dash lock vs crates (NEXT 1).
+- 21:55 FOUND + FIXED 1e266efb: `crates_solid = false` (owner call 4's alternative) was a SCRIPT
+  ERROR every tick: `ServoMoves.solids()` returned an untyped `[]` from a ternary into BossHook's
+  `Array[Rect2]`. Typed now; test_servo_crates checks the array type (fails on the old code,
+  passes on the fix). The first paint-only sweep ran with the error and was re-run clean (same
+  numbers, 0 SCRIPT ERROR).
+- 21:57 `M/frames.json` entry 1 = the rack before/after beside the sheet; unreferenced 64 px/m
+  dev renders and the scratch films deleted.
+
+Calls for the owner (for REPORT; 1-4 stand):
+5. Rack depth: 3 rows / 18 cells (default, the sheet's mass) vs 2 rows / 12 (it3):
+   `servo.json rack.rows` + `cells`. See `M/frames/servo_target_vs_arena_rack3_ab_48ppm_it4.png`
+   or `RTAI.exe -- --boss=servo --phase=2`.
+4 (update): paint-only crates now work; with the 3-row rack they halve the dodging bot's dash hits
+   (36 % vs 54 %).
+
+NEXT (iteration 5, in order):
+1. Fairness of the rotor dash with solid crates: the bot (and a player) gets boxed in. Options:
+   the dash smashes crates in its lane (servo.md already says so: build it: ServoParcels clears
+   crates the dash body crosses), and/or BossBot rolls when its sidestep is blocked
+   (`stage.walls.push_out`). Re-measure dodging dash <= 25-35 %.
+2. Kamikaze dive on film: a seed/phase where a dive locks before the bot shoots it (or film with
+   `--ghost=ohm` holding fire), 48 px/m.
+3. Kerf's blink cutting a line of drones on film (aim the blink along a carpet line); Dent seizing
+   a drone is NOT built (drones are Fighters, not vehicles): build or drop it from servo.md.
+4. Human-aim bot (aim error) so waves land at a human rate; per-attack rates over seeds 1-5.
+5. The rack seam (a 3-row wing part sheet under the image lock), bigger pads; horn + bay doors
+   rolling up at rush hour; the defeat's visor flicker.
+6. Windows export `build/export/windows/RTAI.exe` (by 08:30) and REPORT.md.
