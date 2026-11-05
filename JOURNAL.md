@@ -856,3 +856,7 @@ NEXT (iteration 14, the last before the 08:30 freeze):
    from 06:24, before it) only if Dent's frames in it change visibly; otherwise leave it.
 Session state 07:32: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
 bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
+- 07:31 NEXT 3 done: the all-four city cycle re-filmed on ebc5ed9d (`film.sh --arena=city --bot=forms --form=all`,
+  960 frames, 0 SCRIPT ERROR); Dent at frame 308 old | new: a thin ink edge on his pool, otherwise identical.
+  `M:forms-cycle-all-city-32ppm.mp4` replaced (frames.json note dated). Iteration 14's NEXT is now 1 and 2 only.
+  Session ends 07:33: tree clean after this commit, no Godot process of mine running, no lock held.
