@@ -174,3 +174,4 @@ motion yet.
 NEXT (supersedes item 1 of the 20:00 NEXT): judge the Gatling clip in motion (32 and 64 px/m) and
 the spin-up (none built: the fire kick starts at the first round); if it reads as noise, step back
 to 1.2 px. Then the rest of the 20:00 NEXT list, items 2-6.
+- GATES 20:03 head `2691917e`: scenarios 52 ran 0 failed, 0 SCRIPT ERROR (`evidence/ranged/it1-scenarios-head.log`); unit 1120/0; lint 13/13; reels pit + city 19/19 (at `e88ebcfe` / `5535aad2`); parity exact.
