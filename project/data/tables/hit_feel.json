@@ -209,6 +209,11 @@
       "shake": "nuke"
     },
     {
+      "doc": "Rivet's sidearm (audit: anticipation 1, his muzzle a 15 px speck at 32 px/m, smaller than a cop's flash star): muzzle_k scales his flash cell (WeaponFxArt.muzzle; 1 = the weapon-art size, the before) so his shot reads first. View only; --feel=off = 1.",
+      "id": "pistol",
+      "muzzle_k": 1.6
+    },
+    {
       "doc": "Fire: the launch shoves the camera 3 px back along the tube (10 ticks); the hit keeps its blast class.",
       "fire_kick_px": 3,
       "fire_kick_ticks": 10,

@@ -163,6 +163,10 @@
             "minimum": 1,
             "type": "number"
           },
+          "muzzle_k": {
+            "minimum": 0,
+            "type": "number"
+          },
           "shake": {
             "type": "string"
           },
