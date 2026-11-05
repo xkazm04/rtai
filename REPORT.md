@@ -32,8 +32,8 @@ The owner's order for this lane: "create these characters, animate transformatio
 ### 1. Tonnage (the big form, "Rivet's transformed form" DECISION)
 - TonnageRig from a Codex part sheet: a 2.3 m crown with the hazard brow and hoses, four piston legs at the
   corners, the stamp gait, momentum (4.2 m/s, accel 5), radius 1.3 m on the big body class.
-- Proof: `M:tonnage-live-arena-32ppm.mp4`, `M:frames/tonnage-live-before-after-target-32ppm.png`. The 64 px/m
-  slow clip and the city clip were deleted at the frames.json cap in iteration 3; they need re-filming.
+- Proof: `M:frames/tonnage-live-before-after-target-32ppm.png`, `M:tonnage-morph-64ppm-slow3x.mp4`,
+  `M:tonnage-tour-city-32ppm.mp4` (both re-filmed in iteration 4).
 
 ### 2. Dent (the lurching brawler)
 - DentPlan on base Rivet's CutRig with its own raw parts (yellow crash-test discs). DentLurch is the stagger:
@@ -44,27 +44,42 @@ The owner's order for this lane: "create these characters, animate transformatio
 ### 3. Kerf (the fast one)
 - KerfRig from a Codex part sheet: an arrow hull, emitter arms held in guard, blade legs trailing and sweeping
   back with speed, a hover bob, 12 m/s. The rig snaps with the blink (no tween).
-- Proof: `M:kerf-tour-arena-32ppm.mp4`, `M:kerf-morph-64ppm-slow3x.mp4`, `M:frames/kerf-live-vs-target-64ppm.png`.
+- Proof: `M:kerf-morph-64ppm-slow3x.mp4`, `M:frames/kerf-live-vs-target-64ppm.png`, `M:kerf-rim-ab-32ppm.mp4`.
 
 ### 4. Ohm (the mage), iteration 4
 - OhmRig from a Codex part sheet (r4 `ohm_parts`): a domed riveted shell with goggles, a cable beard, a copper
   hose, stubby feet, and two long arms with copper electrode fingers. Shell 0.8 m, so Ohm is smaller than Rivet.
 - The cane gait: the right arm plants ahead and is left a stride behind, then swings; the gait advances with
   ground covered. The left arm holds its electrodes at the bolt's hands.
-- Proof: `M:ohm-tour-arena-32ppm.mp4`, `M:ohm-tour-city-32ppm.mp4`, `M:ohm-morph-64ppm-slow3x.mp4`,
-  `M:frames/ohm-morph-64ppm-keys.png`, `M:frames/ohm-live-vs-target-64ppm.png`.
+- Proof: `M:ohm-tour-city-32ppm.mp4` (with the rim), `M:ohm-morph-64ppm-slow3x.mp4`,
+  `M:frames/ohm-live-vs-target-64ppm.png`. The arena clip was filmed (0 SCRIPT ERROR) but dropped at the
+  frames.json cap.
 
 ### 5. All four
-- `M:forms-cycle-all-32ppm.mp4` (15 s, `--bot=forms --form=all`): base, Tonnage, Dent, Kerf, Ohm, base, plus
-  `M:frames/forms-cycle-all-32ppm-keys.png`.
+- `M:forms-cycle-all-32ppm.mp4` (15 s, `--bot=forms --form=all`): base, Tonnage, Dent, Kerf, Ohm, base.
+- Form to form at 64 px/m: `M:frames/forms-switch-tonnage-dent-64ppm-keys.png`, `M:forms-switch-64ppm-slow3x.mp4`.
+  Tonnage collapses into the teal ring and Dent stands up out of it in about 0.2 s, with no pass through base.
+- Reduced motion: `M:frames/ohm-morph-reduced-motion-ab-64ppm.png` (same ticks). The burst ring keeps one size,
+  the plates fly less, and the stages and end pose stay the same.
+- **The cream sticker rim** (GhostRim, DECISION): the characters' own rim under Kerf's and Ohm's limbs and body,
+  so their thin limbs hold on asphalt at 32 px/m. Proof: `M:frames/ohm-rim-ab-32ppm-x2.png`, `M:ohm-rim-ab-32ppm.mp4`,
+  `M:kerf-rim-ab-32ppm.mp4`. The A/B flag is `--no-rim`.
+- **Draw order**: the ghost bodies now draw above every rig part. Before the fix, cops' heads and arms covered
+  Tonnage in the city: `M:frames/tonnage-city-z-ab-32ppm-x2.png`.
+- Tonnage re-filmed on the live path: `M:tonnage-morph-64ppm-slow3x.mp4`, `M:tonnage-tour-city-32ppm.mp4`.
 
-### Gates (iteration 4, on 25b040bb)
-- lint 13/13; unit 974/0 (`E:unit-iter4.log`); scenarios 47/0 (`E:scenarios-iter4.log`).
-- Not yet run on this head: the evidence runner and the director reel.
+### Gates (iteration 4)
+- On 25b040bb: lint 13/13; unit 974/0 (`E:unit-iter4.log`); scenarios 47/0 (`E:scenarios-iter4.log`).
+- On 70a6297a: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter4.log`).
+- On 19ae646c, the evidence runner `--no-bench` (`E:evidence-run-iter4.log`): lint, scenarios 47, parity (exact,
+  planted mutation caught) and selftest all pass; look goldens 11/11 and block goldens 5/5 are within tolerance,
+  so no re-bless. The unit step reads FAIL only because the tree changed during the run (I edited JOURNAL.md
+  while it ran); the suite itself was 974/0. Re-run it on a still tree.
+- On d4996f44 (the draw-order fix): scenario_ghost_attacks 1/0.
 
 ## What does not work / is open
-- At 32 px/m Ohm's arms and Kerf's limbs are thin; the bodies read mainly through the teal pool and the marks.
-- The Tonnage 64 px/m slow clip and city clip need re-filming (see section 1).
+- Dent at 32 px/m has not yet been judged beside the rimmed Kerf and Ohm. He rides Rivet's CutRig, which has its
+  own halo; check it.
 - Ghost apparitions for the voice moments are not started.
 
 ## Calls for the owner
@@ -75,6 +90,5 @@ The owner's order for this lane: "create these characters, animate transformatio
   `M:frames/kerf-live-vs-target-64ppm.png`. The alternative is one modulate per rig.
 
 ## Next steps
-- Thicker silhouettes at 32 px/m (Ohm's arms; a pale rim on Kerf and Ohm), then A/B.
-- Re-film Tonnage's 64 px/m slow and city clips.
+- Dent's 32 px/m read beside the rimmed light forms.
 - Final gates (evidence runner, director reel), then the apparitions if time allows.
