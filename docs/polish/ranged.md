@@ -28,7 +28,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 |---|---|---|---|---|---|---|---|
 | 1 | mini_nuke | 1 | 2 | 2 | 3 | 0 | the biggest hit in the game and the frame does not move: a huge ink burst, no stop, kick or shake; half off frame |
 | 2 | rocket_launcher | 2 | 2 | 3 | 3 | 0 | strong ink blast, debris, smoke, crater; the camera ignores it (no weight) |
-| 3 | gatling | ? | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; spin-up not judged yet |
+| 3 | gatling | 1 | 2 | 2 | 2 | 0 | casing/spark spray and blood read; sustained fire has no weight at all; the 0.5 s spin-up shows nothing (no barrel turn, no cue) |
 | 4 | plasma_rifle | 2 | 2 | 2 | 1 | 0 | impact star and a cream glow at the cop, but the struck/killed body barely answers (owner item 1) |
 | 5 | electro_gun | 2 | 2 | 2 | 2 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads, the struck human is thin (owner item 1) |
 | 6 | homing_shard | 2 | 2 | 2 | 2 | 0 | the lozenge shards read in flight, a star on the hit frame and a small jolt/turn; the pop and the blood come at about T+40 (owner item 4: 3 + 36 grind ticks, JOURNAL) |
@@ -64,3 +64,11 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   `hand_cannon-on.frames.json`), the ink star stays up through the stop, the camera kicks 7.5 px
   along the shot (5 x kill 1.5) and eases back over 10 ticks. Sheet `sheets/hc-ab-k2.png`.
   Not yet looked at at 48 px/m; not yet a kept clip.
+
+### gatling (feel layer)
+- Before: the spin-up is invisible (anticipation 1: the muzzle only); sustained fire 0.27 px rms
+  jitter (no weight).
+- After `016966b2` + `b2af1801`/`eb1d4f1c`: a spin-up tremor growing with the barrels (0.3 -> 2-3
+  px/frame at 64 px/m, ~10/15 Hz), then a 1.8 px recoil kick per round (0.48 px rms, max 1.59).
+  Measured, not yet judged by eye in motion. Clips `gatling-ab-32ppm.mp4`,
+  `gatling_spinup-ab-32ppm.mp4`.
