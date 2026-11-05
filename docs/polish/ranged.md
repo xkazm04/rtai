@@ -38,7 +38,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 10 | molotov | ? | 3 | 3 | 3 | 0 | the fire patch reads at a glance (vermilion and cream flame cluster), the burning cop dies charred with a star; the throw not judged |
 | 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
 | 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
-| 13 | gloria | ? | ? | ? | ? | 0 | filmed, not scored |
+| 13 | gloria | 1 | 2 | 3 | 3 | 0 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
 | - | assault-rifle | ? | ? | ? | ? | ? | in rivet_arsenal.json, not in weapons.json (`--weapon` cannot arm it); film via `--loadout` |
 
 Films and 3x3 timing sheets (frames T-3, T, +1, +2, +4, +7, +12, +20, +40 around a kill) in the
