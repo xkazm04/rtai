@@ -576,14 +576,32 @@ Read: JOURNAL, git log, the other lanes' journals (no new REQUEST for ranged; me
   under it; re-run on `41bb90e7` at 22:21 (`evidence/ranged/it5-evidence-41bb90e7.log`).
 - REPORT.md draft committed (`f4a3da61`): what works with evidence, the shard-pop call, befores.
 
+### GATE 22:29: evidence run on `41bb90e7` (`evidence/ranged/it5-evidence-41bb90e7.log`)
+- lint 13/13, scenarios 52/52, parity bit-exact over 1200 steps (planted mutation caught at 629),
+  selftest pass (look goldens 11/11, block 5/5). Unit 1138/0 but FAIL by the tree-change guard:
+  I committed docs (JOURNAL, REPORT, audit) during the run. My error; tests themselves green.
+  Lesson: touch nothing in the worktree, docs included, while `run.mjs` or `run_unit.mjs` runs.
+
+### MILESTONE 22:35: `7326b53b` the throw leans the torso into the release
+- `RigClips.THROW_LEAN` 0.5: `c_lean = max(0.6 * c_reach, -THROW_LEAN * recoil)`; guns unchanged.
+- A/B at 48 px/m, `--reach=7`, same args as the before (`molo/molotov-r6.avi`): kill tick 458 on
+  both; pixel diff around Rivet from frame 289 (the release), peak 1763 px at frame 301, fading by
+  about 315. LOOK (pair at frames 286/292/296/301/306): the torso sits a few px toward the cop on
+  292-301, then settles. SUBTLE, not a strong read; anticipation stays 1 (no wind-up).
+- Unit 1138/0 (`it5-unit-lean.log`, the test asserts c_lean > 0.7 on `shoot(-1.6)`), lint 13/13.
+- Clip `masters .../molotov_throw_lean-ab-48ppm.mp4` (frames.json row 2; the 48 px/m muzzle-side
+  still dropped, the Dock 9 48 px/m clip shows the same fix in motion). Decision line written.
+- Registry rules applied: `motion-quality-gating` (A/B on the live arena path with identical args
+  and sim, a pixel diff to find the frames, then a look; a change with no visible effect,
+  `41bb90e7`, recorded as such, not dressed up); `realtime-combat-semantics` (the release stays on
+  the sim's frame; the wind-up that would move it is deferred as a gameplay change).
+
 NEXT (iteration 6):
-1. Read `evidence/ranged/it5-evidence-41bb90e7.log` (+ `build/evidence/*.json`); record gates.
-2. The molotov follow-through through the torso: in `RigClips.sample` replace
-   `rig.c_lean = 0.6 * rig.c_reach` with `maxf(0.6 * rig.c_reach, -THROW_LEAN * recoil)`,
-   `THROW_LEAN` 0.5 (guns unchanged: their recoil is positive). Unit: c_lean > 0 on `shoot(-1.6)`.
-   Film with `scratch/ranged/molo/lean_ab.sh` (diffs vs the before take `molo/molotov-r6.avi`,
-   frames in `molo/fb/`); keep only if pixels move around Rivet on the release; else revert the
-   molotov row of `41bb90e7` and say so.
+1. Read `evidence/ranged/it5-reel-director-7326b53b.log` (pit reel with the loadout on
+   `7326b53b`, `--quit-after 8000`): 19/19 down, 0 SCRIPT ERROR? If it did not finish, re-run.
+   Then a clean `node tools/evidence/run.mjs --no-bench` on head, touching NOTHING during it.
+2. Judge the throw lean at 32 px/m (probably invisible there); try THROW_LEAN 0.8 if timid, by
+   the same A/B script (`scratch/ranged/molo/lean_ab.sh`, before frames in `molo/fb/`).
 3. Judge at 48 px/m every frame: Gatling spin-up rumble, flamer ignition (3 px; maybe 4-5), electro
    snap. Tune by data only if timid.
 4. City combined clip retake with `--cam=fight`, `--quit-after 6200` (whole nuke blast).
@@ -591,3 +609,4 @@ NEXT (iteration 6):
 6. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
    `build/export/windows/RTAI.exe`; REPORT command lines + befores (`--feel=off`,
    `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--silent`, `--shard-pop=12`).
+7. Headless reels do not quit by themselves: always pass `--quit-after 8000`.

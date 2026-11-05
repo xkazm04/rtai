@@ -18,17 +18,19 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 | Hit-stop cooldown 20 -> 16 ticks (every Kerf cut gets its stop; n7-melee call 7) | `0d4089f1` | - | n7-melee's clips |
 | Quest 1 fires the table guns (Gloria as her weapons.json row; the rifle stays on combat.json) | `48679f03` | `--quest-guns=off` | `quest1_table_gloria-ab-32ppm.mp4`, `quest1_table_gloria_dock9-ab-48ppm.mp4` |
 | Muzzle flash, smoke and shells leave along the shot's aim, not a facing the walk turned between shots (found by filming quest 1) | `1ce1b11e`, `ed60713e` | - (bug fix) | `quest1_gloria_muzzle_side-48ppm.png` |
+| Molotov throw follow-through: the torso leans into the release (subtle: a few px at 48 px/m); the arm-only version `41bb90e7` moved no pixel | `41bb90e7`, `7326b53b` | - (THROW_LEAN 0 in `rig_clips.gd` or drop the molotov `rig_kick` row) | `molotov_throw_lean-ab-48ppm.mp4` |
 | Combined clip of the polished set in the city block, 32 px/m, with sound | - | - | `city_block_polished_set-32ppm.mp4` |
 
-Gates on `ed60713e`/`03df7e8c` (iteration 5): lint 13/13 over 940 files; unit 1137/0; city-block
-director reel with `--loadout=pistol` 19/19 down, 0 SCRIPT ERROR
-(`evidence/ranged/it5-reel-city-loadout.log`); evidence run: see JOURNAL iteration 5.
+Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
+(planted mutation caught at 629), selftest pass; unit 1138/0 (flagged by the tree-change guard
+because I edited docs during the run). City-block director reel with `--loadout=pistol` on
+`ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13; pit reel: see JOURNAL.
 
 ## What does not work / not done
-- Molotov throw: scored 1/3/3/3/0 (no wind-up on Rivet; the bottle and the burst read). `41bb90e7`
-  (a negative `rig_kick`: the arm forward on the release) has NO visible effect (pixel diff zero:
-  the aimed arm is already at 0.97 of its reach); a real wind-up needs the release to wait in the
-  sim (a gameplay timing change), not done.
+- Molotov throw: scored 1/3/3/3/0 (no wind-up on Rivet; the bottle and the burst read). The arm-only
+  follow-through `41bb90e7` moved no pixel (the aimed arm is already at 0.97 of its reach); the
+  torso lean `7326b53b` shows, but only subtly. A real wind-up needs the release to wait in the sim
+  (a gameplay timing change): not done.
 - Quest 1's assault rifle (combat.json, not a table gun): not scored.
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).

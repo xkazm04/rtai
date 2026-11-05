@@ -114,3 +114,12 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
 - Measured (phase correlation, floor crop, frames 36-65): one 2.9 px jump at frame 45, eased back
   by frame 52, then still while the stream fires; `--feel=off` 0.0. Clip
   `flamer_ignite-ab-32ppm.mp4`. Subtle at 32 px/m; not judged by eye in motion yet.
+
+### molotov throw follow-through (`41bb90e7` + `7326b53b`)
+- Before (48 px/m, `--reach=7`): no wind-up, no follow-through; the next lit bottle in the claw is
+  the only cue. Audit 1/3/3/3/0.
+- `41bb90e7` (a negative rig_kick: the arm forward on the release): zero pixels changed (the aimed
+  arm is already at its reach). `7326b53b`: the torso leans into the release (THROW_LEAN 0.5): the
+  diff peaks at 1763 px at frame 301, a few px of body shift toward the target over about 15 frames.
+- Verdict: SUBTLE, an honest small gain; anticipation stays 1 (still no wind-up). Clip
+  `molotov_throw_lean-ab-48ppm.mp4`.
