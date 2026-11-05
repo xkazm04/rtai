@@ -907,3 +907,19 @@ NEXT (ghost-powers, after the morning merge):
 Session state 08:09: head = this commit, tree clean after it, no Godot process of mine running, no lock held
 (image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh and two it7 logs, frames.json
 15 (all present).
+
+## Iteration 13 (08:09-08:30)
+- 08:10 MERGE n6-ghost-forms d5748061 (carries n5-cast 56b81adc: 10607e11, the grown Hauler sprite cross-fades
+  sticker -> art across the LOD threshold; code change only in `boot/collect_call/view/cast_view.gd`) as 1d2c9491,
+  `--no-ff --no-commit`, JOURNAL/REPORT and our it7 logs kept ours. n5-cast's tip is an ancestor. `--import` 0
+  SCRIPT ERROR.
+- 08:16 GATES on 1d2c9491 (still tree): evidence runner PASS: lint 13/13, unit 1020/0, scenarios 51/51, parity
+  bit-exact + mutation caught at 629, look goldens 11/11 (worst 1.33), block 5/5, no re-bless
+  (`E/evidence-run-it13-powers.log`). Bench not run (contended, no bench.lock).
+- 08:19 COMBAT CHECK director reel on 1d2c9491: 16/16 chapters down, chapter lines identical to it11c, 0 SCRIPT
+  ERROR (`E/director-reel-it13-powers.log`).
+- 08:20 REPORT: header iteration 13, the gates row.
+
+NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
+the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls).
+Session state 08:21: head = this commit, tree clean, no Godot process of mine running, no lock held.
