@@ -144,3 +144,23 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   Gatling at true width", Dent ghost powers): merge after the head gates finish.
 - 16:33 MEASURE gates on f9810099: lint 13/13; unit 1100/0 (`evidence/held-it2-unit-head.log`);
   scenarios exit 0 (`evidence/held-it2-scenarios.log`).
+- 16:30 MERGE d7-calls 41079a05 (look group 42feb65c incl. the Gatling at true width; Dent ghost
+  powers e419a047) -> 9ee6746e. JOURNAL.md conflict: kept ours. Merged tree: lint 13/13, unit
+  1106/0 (`evidence/held-it2-unit-merged.log`).
+- 16:34 LOOK the Gatling on the merged tree (`gatling_hold_merged_48ppm_strip.png`, frames.json
+  14 entries): reads heavy at the hip with the off claw on it. Unverified: in one frame the tracers
+  run opposite the barrel (probably a cop's shots).
+- NEXT (iteration 3, in order):
+  1. Off-claw art: the pale mirrored claw blends into the pale body at 32-64 px/m. Either a drawn
+     "claw closed around a grip" part (Codex claw sheet under image.lock, arms/claws only) or a darker
+     tone on `claw_grip` (cheap first try). Re-film the long-gun A/B at 32 px/m.
+  2. The centre-line long-gun hold toward r2_w5: a real rework of RivetCarryAngle + the
+     beside-the-helmet shift together with across/gun_reach (the 3-number try failed, 16:19).
+  3. Chainsaw class end to end (both claws at the hip: the off claw on the top handle, fore_u 0.3);
+     it already gets the off claw (HIP kind), so film it and check the grind judder.
+  4. Heavy walk: strengthen if the owner wants it felt (lean_px 10 -> 25?); film at 64 px/m first.
+  5. Read registry `realtime-combat-semantics` + `depth-ordered-layered-art` (still owed).
+  6. REPORT calls so far: (a) blade wrist_rad 0.45; (b) look-4 over cast-3; (c) sidearm held_scale
+     1.5 -> 1.2 (`sidearm_size_ab_48ppm_sheet.png`); (d) the off claw on two-claw weapons vs the
+     torch (`--torch-off-arm`; `long_gun_offclaw_ab_*`); (e) heavy walk strength.
+  7. By 19:30: export RTAI.exe per the int-day recipe in docs/decisions.md; REPORT.md at 19:40.
