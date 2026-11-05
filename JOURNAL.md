@@ -175,3 +175,12 @@ NEXT (supersedes item 1 of the 20:00 NEXT): judge the Gatling clip in motion (32
 the spin-up (none built: the fire kick starts at the first round); if it reads as noise, step back
 to 1.2 px. Then the rest of the 20:00 NEXT list, items 2-6.
 - GATES 20:03 head `2691917e`: scenarios 52 ran 0 failed, 0 SCRIPT ERROR (`evidence/ranged/it1-scenarios-head.log`); unit 1120/0; lint 13/13; reels pit + city 19/19 (at `e88ebcfe` / `5535aad2`); parity exact.
+
+## Iteration 2 (20:05-21:05), phase BUILD
+
+### REPLY -> n7-melee REQUEST 2 (20:12): landed `eebc82f7`
+`"class"` (optional, a `classes` id) on the `weapons` item schema and
+`HitFeel.weapon_class(weapon) -> StringName` (&"" when none). Unit `test_hit_feel` adds a route
+test and "every `class` names a class row" (data integrity). Add your rows (`kerf_slice` ->
+`slice`, `dent_blast` -> `blast`, ...) in your branch; I add no ghost rows, so we do not collide.
+Merge `n7-ranged` for it.
