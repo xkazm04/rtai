@@ -24,6 +24,14 @@ GOLD = (217, 169, 51, 255)
 GOLD_HI = (246, 214, 120, 255)
 SHADE = (18, 16, 20, 255)
 GLINT = (233, 220, 195, 255)
+## The D4 steel lift (n7-king it5): the thug's dark steel (median luminance 74) prints as solid ink
+## at 32-48 px/m under the D4 look, where the target's gang is steel grey. Grey pixels brighter than
+## LIFT_FROM are scaled by LIFT_K on the D4 set only (the D5 set prints its own grime from 56 px/m);
+## ink lines and gold keep their values. LIFT_K 1.0 is the old dark gang.
+LIFT_FROM = 40
+LIFT_K = 1.55
+## Where the visor band starts across the helmet (0.30 = the old full visor).
+VISOR_FROM = 0.60
 HEAD = '[remap]\n\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]'
 
 
@@ -39,10 +47,11 @@ def helmet(img):
     w, h = img.size
     d = ImageDraw.Draw(img)
     lw = max(3, w // 30)
-    box = (w * 0.30, h * 0.16, w * 0.92, h * 0.84)
-    d.rounded_rectangle(box, radius=w * 0.14, fill=SHADE, outline=INK, width=lw)
+    # it5: a front band (the helmet's steel dome reads from above; it was 0.30-0.92, a black disc)
+    box = (w * VISOR_FROM, h * 0.18, w * 0.94, h * 0.82)
+    d.rounded_rectangle(box, radius=w * 0.10, fill=SHADE, outline=INK, width=lw)
     d.arc((w * 0.20, h * 0.10, w * 0.95, h * 0.90), -62, 62, fill=GOLD, width=lw + 1)
-    d.ellipse((w * 0.66, h * 0.26, w * 0.78, h * 0.36), fill=GLINT)
+    d.ellipse((w * 0.76, h * 0.26, w * 0.86, h * 0.36), fill=GLINT)
     return img
 
 
@@ -76,6 +85,18 @@ def claw(img):
     return img
 
 
+def lift(img):
+    """Brighten the grey steel (low saturation, above LIFT_FROM), never the ink or the gold."""
+    a = np.array(img).astype(np.float32)
+    rgb = a[..., :3]
+    lum = rgb.mean(axis=2)
+    sat = rgb.max(axis=2) - rgb.min(axis=2)
+    m = (lum > LIFT_FROM) & (sat < 40)
+    rgb[m] = np.clip(rgb[m] * LIFT_K, 0, 255)
+    a[..., :3] = rgb
+    return Image.fromarray(a.astype(np.uint8), "RGBA")
+
+
 EXTRA = {"helmet": helmet, "torso": torso, "claw_open": claw, "claw_closed": claw}
 
 
@@ -86,12 +107,15 @@ def main():
         (d / "parts.json").write_bytes((s / "parts.json").read_bytes())
         for png in sorted(s.glob("*.png")):
             src = Image.open(png).convert("RGBA")
-            img = src.copy()
+            img = lift(src.copy()) if dst_dir == "gang" else src.copy()
             if png.stem in EXTRA:
                 img = clip_to(EXTRA[png.stem](img), src)
             img.save(d / png.name)
+            imp = d / f"{png.name}.import"
+            if imp.exists():  # keep Godot's uid and path (a rewrite drops them)
+                continue
             params = (s / f"{png.name}.import").read_text().split("[params]", 1)[1]
-            (d / f"{png.name}.import").write_bytes((HEAD + params).encode())
+            imp.write_bytes((HEAD + params).encode())
 
 
 if __name__ == "__main__":
