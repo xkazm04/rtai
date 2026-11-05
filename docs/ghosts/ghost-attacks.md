@@ -29,6 +29,9 @@ Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):
   nothing but the tether's reach: he takes the fire aimed at the car's path instead of standing back.
 - The robot victim (iteration 5) is drawn on the robot thug's rig and dies the power-down death in oil: Ohm's
   machine_k bolt (1 bolt) and Kerf's robot cut (2 cuts) now land on a visible machine.
+- Gore per ghost (iteration 6): Tonnage's crush and Dent's blast bleed (red is blood); Kerf's cut (`cauterised`)
+  and Ohm's bolt (`electrocuted`) are dry kill kinds, so under `--gore=reduced` (no signature kill) their humans
+  drop whole with no red pool. scenario_ghost_attacks holds every Kerf/Ohm human kill to a dry kind.
 
 Madness cost and cooldowns are unchanged from powers.json tonight (Tonnage 25 / 20 s, Dent 15 / 12 s).
 

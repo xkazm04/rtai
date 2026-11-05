@@ -12,6 +12,9 @@ extends RefCounted
 const ID: StringName = &"ohm"
 const GHOST: StringName = &"ohm"
 const WEAPON: StringName = &"ohm_bolt"
+## The kill kind the bolt reports (actor_killed): an electrocuted body drops scorched, dry (no red
+## pool) under --gore=reduced too (BloodVictims.DRY_KILLS), where no X-ray signature runs.
+const KILL_KIND: StringName = &"electrocuted"
 ## The electrode fingertips: this far ahead of Rivet's centre (metres), until the form row's
 ## electrode_l / electrode_r anchors are set (GhostPilot: ghost_forms.json).
 const HANDS_M: float = 0.45
@@ -143,7 +146,7 @@ func _strike(arena: CombatArena, f: Fighter, src: int) -> void:
 	arena.hit_at = f.pos - dir * f.radius_m
 	var robot: bool = f.kind == Fighter.Kind.BOSS
 	var dmg: float = num(&"bolt_damage") * num(&"machine_k") if robot else num(&"human_damage")
-	arena.damage(f, dmg, arena.rivet.id, WEAPON)
+	arena.damage(f, dmg, arena.rivet.id, WEAPON, KILL_KIND)
 	arena.struck.emit(f, dir, not f.alive(), WEAPON)
 	struck += 1
 
