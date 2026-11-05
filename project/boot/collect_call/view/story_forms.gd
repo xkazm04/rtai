@@ -14,6 +14,7 @@ const BAR_LIFT_M: float = 1.2
 
 var form_view: GhostFormView = null
 var voice: StoryVoice = null
+var _hud: HudView = null
 
 
 ## Adds the forms (or, with story_forms off or no pilot, the voice alone) to `host` for `view`.
@@ -35,8 +36,16 @@ static func attach(
 		layer.add_child(v)
 		view.cast_view.forms_drawn = true
 		s.form_view = v
+		s._hud = view.hud_view
 	host.add_child(s)
 	return s
+
+
+## The form card folds to one chip while the story's subtitle box is up (it takes the bottom
+## centre).
+func _process(_delta: float) -> void:
+	if form_view != null and _hud != null:
+		form_view.hud.compact = _hud.state.speaker != ""
 
 
 ## True while any ghost body stands in for Rivet (settled in a form, or past its in-between pose).

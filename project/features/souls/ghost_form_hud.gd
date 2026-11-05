@@ -33,6 +33,9 @@ var key_hint: String = "Q"
 ## may replace them with the bound keys' glyphs.
 var enter_hint: String = "Q"
 var next_hint: String = "G"
+## true while a story line is up (StoryForms: quest 1's subtitle box takes the bottom centre): the
+## card folds to the one chip that matters, the current form (in base the selected ghost).
+var compact: bool = false
 
 
 ## Fills the plain values from the state machine (call once per frame).
@@ -57,14 +60,24 @@ func sync(g: GhostForms) -> void:
 
 func _draw() -> void:
 	var screen: Vector2 = get_viewport_rect().size
-	var w: float = GAP * float(maxi(order.size(), 1)) + 24.0
+	var shown: Array[StringName] = shown_chips()
+	var w: float = GAP * float(maxi(shown.size(), 1)) + 24.0
 	var card: Rect2 = Rect2(Vector2(MARGIN, screen.y - MARGIN - 158.0), Vector2(w, 158.0))
 	draw_rect(card.grow(4.0), INK)
 	draw_rect(card, PAPER)
-	for i: int in order.size():
+	for i: int in shown.size():
 		var c: Vector2 = card.position + Vector2(12.0 + GAP * (float(i) + 0.5), 60.0)
-		_chip(order[i], c)
+		_chip(shown[i], c)
 	_madness(Rect2(card.position + Vector2(16.0, 128.0), Vector2(w - 32.0, 14.0)))
+
+
+## The chips the card draws: every ghost, or folded (compact) the current form or the selected one.
+func shown_chips() -> Array[StringName]:
+	if not compact or order.is_empty():
+		return order
+	if current != GhostForms.BASE:
+		return [current]
+	return [selected if order.has(selected) else order[0]]
 
 
 func _chip(id: StringName, c: Vector2) -> void:
