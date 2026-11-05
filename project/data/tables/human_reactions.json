@@ -8,7 +8,7 @@
     "melee": "death_melee",
     "shock": "death_shock"
   },
-  "doc": "Human reactions (lane human-reactions): the cutout rig's reaction and death families. len_s is the length of the animation (a death holds its last pose as the corpse), travel_m how far the body is drawn along the hit at the peak. View only: never sim state, never hashed.",
+  "doc": "Human reactions (lane human-reactions): the cutout rig's reaction and death families. len_s is the length of the animation (a death holds its last pose as the corpse), travel_m how far the body is drawn along the hit at the peak. View only: never sim state, never hashed. weapon_wound: a weapon whose wounding hit plays its own family over its hit class's (the plasma bolt's heavy stagger, owner note 2026-11-04 'hot and heavy'); a shield still stops the bolt, the bearer staggers behind it.",
   "map": {
     "blast": "knockdown",
     "burn": "burn",
@@ -92,10 +92,10 @@
       "travel_m": 0.7
     },
     {
-      "doc": "Melee kill: folds over, then topples along the blow.",
+      "doc": "Melee kill: folds over, then topples along the blow. combat-notes 2026-11-04: 0.9 m (was 0.5): the claw kill throws the body clear of Rivet; at 0.5 the cop who walked into him lay under his feet.",
       "id": "death_melee",
       "len_s": 0.7,
-      "travel_m": 0.5
+      "travel_m": 0.9
     },
     {
       "doc": "Blast kill: thrown along the blast, tumbling.",
@@ -122,5 +122,8 @@
       "travel_m": 0.2
     }
   ],
-  "schema": "gtai.human_reactions/1"
+  "schema": "gtai.human_reactions/1",
+  "weapon_wound": {
+    "plasma_rifle": "stagger"
+  }
 }

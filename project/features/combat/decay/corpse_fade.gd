@@ -56,6 +56,7 @@ func _wire() -> void:
 			if ch is ArenaRigs:
 				_rigs = ch as ArenaRigs
 				_rigs.gone = hook.gone
+				_rigs.decay = hook.decay  # combat-notes: a dropped pistol inks out with its body
 	if _kills == null:
 		for h: ArenaHook in stage.hooks:
 			if h is BrutalityHook and (h as BrutalityHook).view != null:

@@ -40,6 +40,7 @@ var _tank: Sprite2D = null
 var _hose: Array[Line2D] = []
 var _rag: RagLight = null
 var _carry: RivetCarryAngle = RivetCarryAngle.new()
+var _smear: MeleeSmearView = null
 
 
 func _ready() -> void:
@@ -69,6 +70,7 @@ func _process(_delta: float) -> void:
 		var grip: ArsenalTable.Grip = arsenal.grip_of(pilot.hold.held)
 		rig.grip = RigGrip.kind_of(grip.id) if grip != null else RigGrip.Kind.ONE_HAND
 		rig.reload_k = _reload_k()
+		rig.two_hand_melee = MeleeSwing.two_handed(pilot.hold.held) and pilot.wielding()
 		var mag: bool = grip != null and not NO_MAG.has(grip.id)  # a bottle or a tank: no magazine
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
@@ -94,11 +96,10 @@ func _process(_delta: float) -> void:
 	if rig.aiming and rig.grip != RigGrip.Kind.ONE_HAND:  # the barrel on the aim line
 		_sprite.global_rotation = (rig.aim_at - _sprite.global_position).angle()
 	_place_long(rig)
-	if pilot.wielding() and pilot.melee.combo.ground > 0:
-		_grind(rig)
-	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
-		_sweep_arc = _arc()
-		_sprite.global_rotation += _sweep(rig.clips)
+	_pose_melee(rig)
+	var blade: Vector2 = Vector2.from_angle(_sprite.global_rotation)
+	rig.hilt_dir = rig.torso.global_transform.basis_xform_inv(blade).normalized()
+	_feed_smear(rig)
 	_sprite.visible = rig.grip != RigGrip.Kind.THROWN or rig.reload_k < 0.0 or rig.reload_k >= 1.0
 	_light_rag(rig, id)
 
@@ -151,20 +152,38 @@ func _reload_k() -> float:
 	return 2.0 + minf((t - arsenal.in_k) / maxf(arsenal.cock_k, 0.001), 0.999)
 
 
-## The blade's angle off the aim line during a strike: wound back to one side over the windup,
-## across to the other through the active ticks, easing back over the recovery.
+## The blade's angle off the aim line during a strike (MeleeSwing: anticipation, the cut,
+## the follow-through; combat-notes); the combo's hits alternate the side.
 func _sweep(clips: RigClips) -> float:
-	var ph: Vector3 = clips.strike_ph
-	var t: float = clips.strike_t
 	var side: float = 1.0 if pilot.melee.combo.last_index % 2 == 1 else -1.0
-	var arc: float = _sweep_arc
-	if t < ph.x:
-		return side * arc * smoothstep(0.0, 1.0, t / maxf(ph.x, 0.001))
-	if t < ph.x + ph.y:
-		var k: float = (t - ph.x) / maxf(ph.y, 0.001)
-		return side * arc * (1.0 - 2.0 * k)
-	var r: float = (t - ph.x - ph.y) / maxf(ph.z, 0.001)
-	return -side * arc * (1.0 - smoothstep(0.0, 1.0, r))
+	return MeleeSwing.angle(clips.strike_t, clips.strike_ph, side, _sweep_arc)
+
+
+## A melee weapon's pose this frame: the chainsaw's bite, a strike's swing, the idle judder.
+func _pose_melee(rig: CutRig) -> void:
+	if pilot.wielding() and pilot.melee.combo.ground > 0:
+		_grind(rig)
+	elif pilot.wielding() and rig.clips.strike_t >= 0.0:
+		_sweep_arc = _arc()
+		_sprite.global_rotation += _sweep(rig.clips)
+	elif pilot.hold.held == &"chainsaw" and arena != null:  # combat-notes: the engine runs
+		var j: Vector2 = MeleeSwing.idle_judder(arena.tick)
+		_sprite.global_rotation += j.x
+		_sprite.global_position += Vector2.from_angle(_sprite.global_rotation + PI * 0.5) * j.y
+
+
+## combat-notes: the cut's smear under the blade (MeleeSmearView), fed every shown frame.
+func _feed_smear(rig: CutRig) -> void:
+	if _smear == null:
+		_smear = MeleeSmearView.new()
+		add_child(_smear)
+	move_child(_smear, 0)  # under the held weapon
+	var t: float = rig.clips.strike_t
+	var on: bool = pilot.wielding() and pilot.melee.combo.ground == 0 and t >= 0.0
+	on = on and MeleeSwing.cutting(t, rig.clips.strike_ph)
+	_smear.tint = MeleeSmearView.tint_of(pilot.hold.held)
+	var len_px: float = _sprite.get_rect().end.x * absf(_sprite.global_scale.x)
+	_smear.feed(_sprite.global_position, _sprite.global_rotation, len_px, on)
 
 
 ## The current (or just ended) hit's sweep half-angle from its cone.

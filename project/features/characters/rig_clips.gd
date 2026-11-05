@@ -24,6 +24,12 @@ const DOWN_FALL_S: float = 0.22
 const DOWN_RISE_S: float = 0.45
 ## The faller stays upright this long while the knock slide opens a gap, then sprawls.
 const DOWN_DELAY_S: float = 0.12
+## combat-notes: the sim lands a strike on its first active tick, where the night's curve left the
+## claw cocked under the hit-stop; the jab starts JAB_TICKS before the windup ends and is out at
+## full reach on the hit tick, then holds through the active frames.
+const JAB_TICKS: float = 2.0
+## False (`--soft-swing`): the night's curve (the A/B's before).
+static var jab_early: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 
 var punch_t: float = 0.0
 var punch_len: float = PUNCH_S
@@ -147,11 +153,18 @@ func sample(rig: CutRig, dt: float) -> void:
 
 
 ## The strike's reach: -0.35 at the end of the windup (the torso twists back), 1 by the end of
-## the active frames (ease-out), back to 0 over the recovery (smoothstep).
+## the active frames (ease-out), back to 0 over the recovery (smoothstep); jab_early: see JAB_TICKS.
 func _strike_reach() -> float:
 	var w: float = maxf(strike_ph.x, 0.001)
 	var a: float = maxf(strike_ph.y, 0.001)
 	var r: float = maxf(strike_ph.z, 0.001)
+	if jab_early:
+		var c0: float = w - minf(JAB_TICKS * SimClock.TICK_DT, w * 0.5)
+		if strike_t < c0:
+			return -0.35 * smoothstep(0.0, 1.0, strike_t / c0)
+		if strike_t < w + a:
+			return lerpf(-0.35, 1.0, minf((strike_t - c0) / (w - c0), 1.0))
+		return 1.0 - smoothstep(0.0, 1.0, (strike_t - w - a) / r)
 	if strike_t < w:
 		return -0.35 * smoothstep(0.0, 1.0, strike_t / w)
 	if strike_t < w + a:

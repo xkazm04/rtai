@@ -33,6 +33,11 @@ var aim_at: Vector2 = Vector2.ZERO
 var gun_out: bool = false
 ## rivet-arsenal: how both arms hold the weapon while aiming (RigGrip.Kind; 0 = one hand).
 var grip: int = 0
+## combat-notes: a two-handed melee weapon is held: the off claw rides the hilt (RigGrip).
+var two_hand_melee: bool = false
+## The held blade's direction in the torso frame (RivetHeldView writes it after the pose, so the
+## off claw follows it one frame late).
+var hilt_dir: Vector2 = Vector2.RIGHT
 ## rivet-arsenal: the reload pantomime (RigGrip): -1 none, else phase + fraction (0 magazine out,
 ## 1 magazine in, 2 the cock or charge).
 var reload_k: float = -1.0
@@ -121,6 +126,8 @@ func reset_state(at_facing: float) -> void:
 	gun_out = false
 	aiming = false
 	grip = 0
+	two_hand_melee = false
+	hilt_dir = Vector2.RIGHT
 	reload_k = -1.0
 	vel_in = Vector2.ZERO
 	clips.reset()

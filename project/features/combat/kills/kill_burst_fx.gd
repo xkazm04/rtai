@@ -5,6 +5,9 @@ extends Node2D
 ## its far side (driven through, clear of Rivet's claws) and tremble harder toward the pop; at
 ## the pop a red mist puff swells and thins over the parts flying off. Ticks against the sim
 ## tick, shapes from a hash of the serial, no dice, so a replay shows the same frames.
+## The shards land one by one on KillShardJolt.HITS (the first on the kill tick), each snapping
+## the held body back (KillView places the parts with jolt()), so the victim reacts on the frame
+## a shard lands instead of standing frozen (owner note 2026-11-04, reel chapter 14).
 
 const SHARD: Color = Color("#F4E3B5")
 const MIST: Color = Color(0.72, 0.06, 0.08, 0.55)
@@ -26,7 +29,10 @@ class Burst:
 var kills: SignatureKills = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+## False (`--no-shard-flinch`): the old frozen hold, every shard drawn from the kill tick.
+var flinch: bool = true
 var _bursts: Array[Burst] = []
+var _by_serial: Dictionary[int, Burst] = {}
 
 
 func bind(p_kills: SignatureKills, p_ppm: float, p_reduced_motion: bool) -> void:
@@ -48,6 +54,25 @@ func _on_killed(_victim: int, serial: int, row: SignatureKill, at: Vector2, dir:
 	b.hold = row.hitstop_ticks + row.grind_ticks
 	@warning_ignore("return_value_discarded")
 	_bursts.append(b)
+	_by_serial[serial] = b
+
+
+## The flinch of part `piece` (PIECE_IDS 0-5) of burst kill `serial` this tick while its body is
+## held: Vector3(px x, px y, lean rad). Zero for any other kill and after the pop. Half under
+## reduced motion, without the tremble.
+func jolt(serial: int, piece: int) -> Vector3:
+	var b: Burst = _by_serial.get(serial, null)
+	if b == null or kills == null or not flinch:
+		return Vector3.ZERO
+	var age: int = kills.tick - b.born
+	if age < 0 or age >= b.hold:
+		return Vector3.ZERO
+	var j: Vector3 = KillShardJolt.at(age, piece, serial)
+	var k: float = 0.5 if reduced_motion else 1.0
+	var o: Vector2 = (b.dir * j.x - b.dir.orthogonal() * j.y) * k
+	if not reduced_motion:
+		o += KillShardJolt.tremble(age, b.hold, piece, serial)
+	return Vector3(o.x * ppm, o.y * ppm, j.z * k)
 
 
 func _process(_delta: float) -> void:
@@ -56,6 +81,10 @@ func _process(_delta: float) -> void:
 	_bursts = _bursts.filter(
 		func(b: Burst) -> bool: return kills.tick - b.born <= b.hold + MIST_TICKS
 	)
+	for serial: int in _by_serial.keys():
+		if not _bursts.has(_by_serial[serial]):
+			@warning_ignore("return_value_discarded")
+			_by_serial.erase(serial)
 	queue_redraw()
 
 
@@ -71,9 +100,12 @@ func _draw() -> void:
 ## Shards driven through the body, fanned out of its far side along the shot, their butts
 ## standing out of the near side.
 func _shards(b: Burst, age: int) -> void:
-	var c: Vector2 = b.at * ppm
+	var tj: Vector3 = jolt(b.serial, 1)  # the shards ride the torso's flinch
+	var c: Vector2 = b.at * ppm + Vector2(tj.x, tj.y)
 	var k: float = float(age) / maxf(1.0, float(b.hold))
 	for n: int in SHARDS:
+		if age < _lands(n):
+			continue
 		var side: float = (float(n) + 0.3 * _h(b.serial, n)) / float(SHARDS) - 0.55  # spread, not bunched
 		var depth: float = 0.12 + 0.1 * _h(b.serial, n + 20)
 		var base: Vector2 = c + (b.dir.orthogonal() * side * 0.5 + b.dir * depth) * ppm
@@ -83,6 +115,8 @@ func _shards(b: Burst, age: int) -> void:
 		)
 		_spike(base, out, 0.1)
 	for n: int in BUTTS:  # the entry side: short butts standing out back along the shot
+		if age < _lands(n):
+			continue
 		var side: float = (float(n) + 0.5) / float(BUTTS) - 0.5
 		var base: Vector2 = c + (b.dir.orthogonal() * side * 0.3 - b.dir * 0.16) * ppm
 		var jit: float = 0.0 if reduced_motion else (_h(b.serial, n * 5 + age) - 0.5) * 0.4 * k
@@ -111,6 +145,13 @@ func _mist(b: Burst, t: float) -> void:
 		var o: Vector2 = Vector2.from_angle(TAU * _h(b.serial, n + 60)) * r * 0.4
 		draw_circle(c + o, r * (0.55 + 0.3 * _h(b.serial, n + 80)), Color(MIST, a * 0.5))
 	draw_circle(c, r * 0.7, Color(MIST, a))
+
+
+## The tick (after the kill tick) drawn shard `n` lands on: KillShardJolt.HITS, the last one
+## carrying any extra shards.
+func _lands(n: int) -> int:
+	var hits: PackedInt32Array = KillShardJolt.HITS
+	return hits[mini(n, hits.size() - 1)] if flinch and not hits.is_empty() else 0
 
 
 static func _h(a: int, b: int) -> float:

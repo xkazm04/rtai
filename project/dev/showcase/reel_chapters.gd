@@ -4,7 +4,8 @@ extends RefCounted
 ## its victims spawned singly in front of Rivet (metres from his chapter mark, +x is ahead), so a
 ## signature kill plays alone in the 48 px/m frame. Modes: gun (hold fire), claw (the bare claw
 ## combo with a gun drawn: melee presses), blade (a carried melee weapon: held fire swings),
-## deflect (the plasma sword; the victim shoots, the batted round kills him).
+## deflect (the plasma sword; the victim shoots, the batted round kills him), tap (one shot per
+## ReelDirector.TAP_EVERY ticks).
 
 
 class Chapter:
@@ -17,6 +18,8 @@ class Chapter:
 	var shoots: bool = false
 	## The victim is a riot cop: armored hp and the shield look.
 	var riot: bool = false
+	## The victim wears armor under a patrol look: armored hp, no shield (combat-notes).
+	var armored: bool = false
 
 	func _init(
 		p_id: StringName, p_weapon: StringName, p_mode: StringName, p_ticks: int, p_victims: Array
@@ -52,6 +55,9 @@ static func all() -> Array[Chapter]:
 		Chapter.new(&"homing_shard", &"homing_shard", &"gun", 330, [Vector2(6.0, 1.5)]),
 		_riot(),
 		Chapter.new(&"mini_nuke", &"mini_nuke", &"gun", 480, _group(15.0)),
+		_armored(),
+		Chapter.new(&"electro_baton", &"electro_baton", &"blade", 330, [Vector2(2.4, 0.0)]),
+		Chapter.new(&"electro_chain", &"electro_gun", &"tap", 300, _group(5.0)),
 	]
 	return out
 
@@ -78,4 +84,12 @@ static func _deflect() -> Chapter:
 static func _riot() -> Chapter:
 	var c: Chapter = Chapter.new(&"riot_cop", &"machine_pistol", &"gun", 420, [Vector2(5.0, 0.0)])
 	c.riot = true
+	return c
+
+
+## combat-notes (owner note 2026-11-04): an armored cop takes a plasma bolt and lives, staggers
+## with the burn smoking on his chest, and the next bolt holes him (after the cut's numbering).
+static func _armored() -> Chapter:
+	var c: Chapter = Chapter.new(&"plasma_armored", &"plasma_rifle", &"tap", 300, [Vector2(6.0, 0)])
+	c.armored = true
 	return c

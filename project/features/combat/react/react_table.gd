@@ -11,6 +11,8 @@ var _len: Dictionary[StringName, float] = {}
 var _travel: Dictionary[StringName, float] = {}
 var _map: Dictionary[StringName, StringName] = {}
 var _death: Dictionary[StringName, StringName] = {}
+## weapon_wound: a weapon id whose wounding hit plays its own family (the plasma bolt's stagger).
+var _weapon: Dictionary[StringName, StringName] = {}
 var _errors: Array[String] = []
 
 
@@ -28,6 +30,9 @@ static func shipped(path: String = TABLE) -> ReactTable:
 	var d: Dictionary = t.object(t.raw, "death_map")
 	for k: Variant in d:
 		rt._death[StringName(str(k))] = StringName(str(d[k]))
+	var w: Dictionary = t.object(t.raw, "weapon_wound") if t.raw.has("weapon_wound") else {}
+	for k: Variant in w:
+		rt._weapon[StringName(str(k))] = StringName(str(w[k]))
 	rt._errors = t.errors()
 	if not rt.ok():
 		Log.error("human_reactions", str(rt._errors))
@@ -60,6 +65,11 @@ func reaction_for(
 	if kind == &"spin" and absf(local_dir.y) < absf(local_dir.x):
 		return &"fold"
 	return kind
+
+
+## The family `weapon`'s wounding hit plays over its hit class's (&"" when the class decides).
+func weapon_wound(weapon: StringName) -> StringName:
+	return _weapon.get(weapon, &"")
 
 
 func death_for(hit_class: StringName) -> StringName:

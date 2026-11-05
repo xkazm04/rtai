@@ -78,3 +78,21 @@ func test_knockdown_stays_upright_then_sprawls_and_rises() -> void:
 func _tick(seconds: float) -> void:
 	for _k: int in roundi(seconds / SimClock.TICK_DT):
 		_rig.drive(SimClock.TICK_DT)
+
+
+## combat-notes: the claw is out at full reach on the hit tick (the first active tick), and the
+## night's curve (planted: jab_early off) leaves it cocked back there.
+func test_the_claw_is_out_on_the_hit_tick() -> void:
+	var w: float = 6.0 * SimClock.TICK_DT
+	assert_almost_eq(_reach_at_hit(w), 1.0, 0.001, "full reach on the hit tick")
+	RigClips.jab_early = false
+	var night: float = _reach_at_hit(w)
+	RigClips.jab_early = true
+	assert_lt(night, 0.0, "planted: the night's curve is still pulled back on the hit tick")
+
+
+func _reach_at_hit(w: float) -> float:
+	var clips: RigClips = RigClips.new()
+	clips.strike_ph = Vector3(w, 4.0 * SimClock.TICK_DT, 10.0 * SimClock.TICK_DT)
+	clips.strike_t = w
+	return clips.call("_strike_reach")

@@ -20,6 +20,8 @@ const RUN_M: float = 1.8
 const CLAW_M: float = 1.3
 const CLAW_EVERY: int = 14
 const BLADE_M: float = 1.6
+## The tap chapter: a shot every this many ticks (the plasma stagger, 0.55 s, plays out).
+const TAP_EVERY: int = 50
 
 var actions: PlayerActions
 var chapters: Array[ReelChapters.Chapter] = ReelChapters.all()
@@ -124,7 +126,8 @@ func sample(stage: ArenaStage, tick: int) -> TickInput:
 		&"blade":
 			var close: Vector2 = aim if gap.length() > BLADE_M else Vector2.ZERO
 			return _input(close, aim, _bit(&"fire", gap.length() <= BLADE_M + 0.3))
-	return _input(Vector2.ZERO, aim, _bit(&"fire", true))  # gun, deflect: held fire
+	# gun, deflect: held fire; tap: one shot per TAP_EVERY ticks (each reaction plays out)
+	return _input(Vector2.ZERO, aim, _bit(&"fire", c.mode != &"tap" or local % TAP_EVERY < 2))
 
 
 func _begin(stage: ArenaStage, tick: int) -> void:
@@ -152,17 +155,20 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	victims.clear()
 	spots.clear()
 	for off: Vector2 in c.victims:
-		victims.append(_spawn(stage, mark + off, c.riot))
+		victims.append(_spawn(stage, mark + off, c))
 		@warning_ignore("return_value_discarded")
 		spots.append(mark + off)
 	Log.info("showcase", "director chapter %s (%s) at tick %d" % [c.id, c.weapon, tick])
 
 
-func _spawn(stage: ArenaStage, at: Vector2, riot: bool) -> Fighter:
+func _spawn(stage: ArenaStage, at: Vector2, c: ReelChapters.Chapter) -> Fighter:
 	var g: Fighter = stage.arena.spawn_guard(at)
 	g.pos = at
 	g.facing = Vector2.LEFT
-	if riot and stage.pit != null:  # the riot cop: armored hp, ArenaRigs dresses the shield
+	if c.armored:
+		g.max_hp *= ArenaPit.armored_hp()
+		g.hp = g.max_hp
+	if c.riot and stage.pit != null:  # the riot cop: armored hp, ArenaRigs dresses the shield
 		if stage.pit.riot_hp <= 0.0:
 			stage.pit.riot_hp = ArenaPit.armored_hp()
 		g.max_hp *= stage.pit.riot_hp

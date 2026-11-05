@@ -1,6 +1,7 @@
 extends GutTest
-## The plasma kill's fall (showcase REQUEST 21): the holed body stands while it looks at the hole,
-## then lies laid out along the shot, and the pose never compounds frame over frame.
+## The plasma kill's fall (showcase REQUEST 21): the holed body is kicked back along the shot on
+## the hit tick (combat-notes) and holds there while it looks at the hole, then lies laid out along
+## the shot, and the pose never compounds frame over frame.
 
 
 func _topple(dir: Vector2) -> KillHoleFx.Topple:
@@ -16,11 +17,22 @@ func _topple(dir: Vector2) -> KillHoleFx.Topple:
 	return h
 
 
-func test_the_body_stands_while_it_looks_at_the_hole() -> void:
+func test_the_body_is_kicked_on_the_hit_tick_and_holds_while_it_looks() -> void:
 	var h: KillHoleFx.Topple = _topple(Vector2.RIGHT)
-	h.pose(3 + KillHoleFx.LOOK_TICKS, 64.0)
 	var lay: Node2D = h.body.get_child(0) as Node2D
-	assert_eq(lay.transform, Transform2D.IDENTITY)
+	h.pose(0, 64.0)
+	assert_almost_eq(lay.position.x, KillHoleFx.KICK_M * 64.0, 0.01, "kicked on the hit tick")
+	h.pose(3 + KillHoleFx.LOOK_TICKS, 64.0)
+	assert_almost_eq(lay.position.x, KillHoleFx.KICK_M * 64.0, 0.01, "held while it looks")
+
+
+func test_planted_no_heat_stands_still_on_the_hit_tick() -> void:
+	KillHoleFx.heat = false
+	var h: KillHoleFx.Topple = _topple(Vector2.RIGHT)
+	h.pose(0, 64.0)
+	KillHoleFx.heat = true
+	var lay: Node2D = h.body.get_child(0) as Node2D
+	assert_eq(lay.transform, Transform2D.IDENTITY, "the night's throw: no kick (the before)")
 
 
 func test_the_fallen_body_lies_along_the_shot() -> void:

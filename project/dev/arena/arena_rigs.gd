@@ -32,6 +32,8 @@ var react: ReactLink = null
 var hidden: Dictionary[int, bool] = {}
 ## Fixtures whose body decayed (CorpseDecayHook.gone): undrawn until they stand up again.
 var gone: Dictionary[int, bool] = {}
+## The fight's corpse decay (CorpseFade wires it; null without one): the dropped pistols ink out.
+var decay: CorpseDecay = null
 ## human-reactions: the city crowd's reactions (--arena=city), told where the fight's dead lie.
 var crowd: CrowdReact = null
 var _last: Dictionary[int, Vector2] = {}
@@ -101,6 +103,18 @@ func _add_hand_views(layer: CanvasLayer, p_stage: CollectCallStage) -> void:
 	mag.rivet_id = held.rivet_id
 	mag.z_index = held.z_index
 	layer.add_child(mag)
+	var arcs: ShockArcsView = ShockArcsView.new()  # combat-notes: arcs over a stunned body
+	arcs.arena = p_stage.arena
+	arcs.rigs = rigs
+	arcs.host = self
+	arcs.z_index = held.z_index
+	layer.add_child(arcs)
+	var scorch: PlasmaScorchView = PlasmaScorchView.new()  # combat-notes: a plasma wound's burn
+	scorch.arena = p_stage.arena
+	scorch.rigs = rigs
+	scorch.host = self
+	scorch.z_index = held.z_index
+	layer.add_child(scorch)
 
 
 func _process(_delta: float) -> void:

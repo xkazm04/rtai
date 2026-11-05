@@ -11,6 +11,11 @@ const TRAIL_PX: float = 7.0
 ## Stuck shards stay drawn on a corpse. Off: brutality's burst kill pops the body and flies its
 ## own shards out (KillBurstFx), so ours must not hang in the red mist (REQUEST 30, brutality).
 const STUCK_ON_CORPSE: bool = false
+## The pop: ticks drawn and cream splinters flung (POP_TICKS 0 draws none).
+const POP_TICKS: int = 9
+const SPLINTERS: int = 7
+## False (`--no-shard-flinch`, the A/B's before): the pop draws as the rocket's burst again.
+static var own_pop: bool = true
 
 
 static func shard(ci: CanvasItem, s: Shot, tick: int) -> void:
@@ -64,3 +69,31 @@ static func stuck(ci: CanvasItem, fx: GunFx, arena: CombatArena) -> void:
 ## Whether the view draws the shards stuck in `h` (GunFx keeps them for brutality either way).
 static func shows_stuck(h: Fighter) -> bool:
 	return STUCK_ON_CORPSE or h.alive()
+
+
+## The shard's 1.2 m pop (FightAreasArt for a blast under FightScorch.MIN_BLAST_M): splinters of
+## cream crystal flung out of the hit point and a thin ink ring, POP_TICKS long, nothing filled
+## over the body. The rocket's burst and smoke used to bury the victim for 0.6 s from the
+## landing, so his reaction read late (owner note 2026-11-04, reel chapter 14). View only.
+static func pop(ci: CanvasItem, b: Vector3, age: int) -> void:
+	if age < 0 or age >= POP_TICKS:
+		return
+	var c: Vector2 = Vector2(b.x, b.y)
+	var k: float = float(age) / float(POP_TICKS)
+	ci.draw_arc(
+		Ink.px(c),
+		b.z * (0.3 + 0.7 * k) * Ink.PX_PER_M,
+		0.0,
+		TAU,
+		32,
+		Ink.INK,
+		4.0 * (1.0 - k) + 1.0
+	)
+	for i: int in SPLINTERS:
+		var dir: Vector2 = Vector2.from_angle(
+			TAU * float(i) / float(SPLINTERS) + float(i % 3) * 0.4
+		)
+		var near: Vector2 = c + dir * b.z * (0.2 + 0.6 * k)
+		var far: Vector2 = near + dir * 0.18 * (1.0 - k * 0.5)
+		ci.draw_line(Ink.px(near), Ink.px(far), Ink.INK, 6.0)
+		ci.draw_line(Ink.px(near), Ink.px(far), Ink.CREAM, 3.0)

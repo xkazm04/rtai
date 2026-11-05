@@ -87,6 +87,10 @@ func _process(_delta: float) -> void:
 		node.position = g.pos[i] * ppm
 		node.rotation = g.ang[i] - _ang0[i]
 		node.scale = Vector2.ONE * (1.0 + g.z[i] * LIFT_SCALE) * body_sink(g.kill_of[i])
+		if g.wait[i] > 0:  # a held body flinches as each homing shard lands (KillShardJolt)
+			var j: Vector3 = styles.burst_fx.jolt(g.kill_of[i], g.piece[i])
+			node.position += Vector2(j.x, j.y)
+			node.rotation += j.z
 		_grow_trail(i, node.position, g.z[i] <= 0.0)
 	styles.pose()
 	_fade()

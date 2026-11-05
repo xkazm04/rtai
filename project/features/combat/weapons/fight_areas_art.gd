@@ -46,7 +46,9 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id):
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
-		if not WeaponFxArt.blast(ci, a.blasts[i], tick - a.blast_ticks[i], a):
+		if FightShardArt.own_pop and a.blasts[i].z < FightScorch.MIN_BLAST_M:  # the shard's pop
+			FightShardArt.pop(ci, a.blasts[i], tick - a.blast_ticks[i])
+		elif not WeaponFxArt.blast(ci, a.blasts[i], tick - a.blast_ticks[i], a):
 			_blast(ci, a.blasts[i], tick - a.blast_ticks[i])
 	for i: int in a.chain_arcs.size():
 		if tick - a.arc_ticks[i] < ARC_TICKS:

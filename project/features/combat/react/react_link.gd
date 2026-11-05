@@ -33,6 +33,8 @@ const HOLD: Dictionary[StringName, Vector3] = {
 	&"knockdown": Vector3(0.3, 0.6, 0.78),
 }
 
+## False (`--soft-swing`): a melee kill plays no death here (the night's; the A/B's before).
+static var melee_deaths: bool = not OS.get_cmdline_user_args().has("--soft-swing")
 var pipe: DeathPipe
 ## Rounds that fly past a human make it duck (render only).
 var near: NearMiss = NearMiss.new()
@@ -40,6 +42,9 @@ var wounds: int = 0
 var blocks: int = 0
 var deaths: int = 0
 var signatures: int = 0
+## combat-notes: the scorch marks of the non-lethal weapon_wound hits, by fighter id
+## (PlasmaScorchView draws and keeps them).
+var scorched: Dictionary[int, Array] = {}
 var _arena: CombatArena
 var _weapons: WeaponTable
 ## Hits since the last apply(): [victim id, dir, lethal, hit class, in cover, weapon]. Cover is
@@ -103,6 +108,7 @@ func apply(rigs: CharacterRigs) -> void:
 				Log.info("react", "%s on %d, frame %d" % [kind, id, Engine.get_process_frames()])
 		elif _held.get(id, &"") != &"knockdown":
 			_wound(rig, id, hit_class, dir, cover)
+			_heavy(rig, id, dir, weapon)
 	_pending.clear()
 	near.apply(_arena, rigs, pipe)
 	_relay(rigs)
@@ -117,6 +123,19 @@ func _wound(rig: CutRig, id: int, hit_class: StringName, dir: Vector2, cover: bo
 	if kind == &"shield":
 		blocks += 1
 		blocked.emit(id, dir)
+
+
+## combat-notes (owner note 2026-11-04, plasma "hot and heavy"): a weapon with a weapon_wound
+## family plays it over the class's (behind a shield too: the slab takes the bolt, the bearer
+## staggers); a body hit leaves a scorch (PlasmaScorchView). KillHoleFx.heat off = the night's.
+func _heavy(rig: CutRig, id: int, dir: Vector2, weapon: StringName) -> void:
+	var fam: StringName = pipe.table.weapon_wound(weapon)
+	if fam == &"" or not KillHoleFx.heat or HumanReact.on(rig).kind == &"cover":
+		return
+	var blocked_by_slab: bool = HumanReact.on(rig).kind == &"shield"
+	HumanReact.on(rig).play(rig, fam, dir, pipe.table)
+	if not blocked_by_slab:
+		PlasmaScorchView.mark(scorched, id, dir.rotated(-rig.facing), _arena.tick)
 
 
 ## gunplay's GunFx.shield_test (render side; wire `gun_fx.shield_test = link.shield_test`): true
@@ -218,9 +237,21 @@ func _relay(rigs: CharacterRigs) -> void:
 
 
 func _on_kill(
-	victim: Fighter, _weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName
+	victim: Fighter, weapon: StringName, _dir: Vector2, _at: Vector2, kind: StringName
 ) -> void:
+	if weapon in MELEE_IDS and melee_deaths:
+		_melee_kill(victim, weapon)
+		return
 	_kill_kind[victim.id] = kind
+
+
+## combat-notes: Rivet's melee (PlayerMelee) kills through CombatArena.damage, which emits
+## kill_landed but no struck (struck drives HitLink's sim knockback), so a claw kill played no
+## death: the body lay where it stood, under Rivet. The death plays here along Rivet -> victim.
+func _melee_kill(victim: Fighter, weapon: StringName) -> void:
+	var d: Vector2 = victim.pos - _arena.rivet.pos
+	d = d.normalized() if d.length() > 0.001 else -victim.facing
+	_pending.append([victim.id, d, true, &"melee", false, weapon])
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
