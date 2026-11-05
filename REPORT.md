@@ -100,7 +100,7 @@ ERROR (`evidence/reel-director-city-it5b.log`).
    printed as an ink bar. A (built, 6179bf2d): its small art re-made with a 3 px edge and the barrel gaps closed:
    tan steel inside one ink outline at 48 px/m, a sliver of tan at 32 px/m. B: also thin every gun's outline
    (`print_part.gdshader gun_edge` 2.2 -> 1.4): the Gatling reads tan at 32 px/m, but the outline breaks on one
-   side and every gun changes. C: the old ink-bar Gatling (`git show 2a28d331:` its `held_small.png`). See
+   side and every gun changes. C: the old ink-bar Gatling (`git show 2a28d331:<its held_small.png> | git lfs smudge`, the PNGs are in LFS; or re-run `held_small.py gatling` without the two dict rows). See
    `M/frames/look-8-gatling-city-ab-48ppm.png` and `-city-ab-32ppm.png` (city block: at 32 px/m A is a clean ink
    rod with a tan sliver where the old one broke into ink/cream dashes), `M/frames/look-8-gatling-edge-steps-32ppm.png` (old | A | B),
    `RTAI.exe -- --loadout=gatling --weapon=gatling --bot=range --ppm=48`.
