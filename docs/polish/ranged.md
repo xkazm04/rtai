@@ -33,9 +33,9 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 5 | electro_gun | 2 | 2 | 2 | 2 | 0 | zigzag bolt, star, skeleton flicker, yellow burst; the kill reads, the struck human is thin (owner item 1) |
 | 6 | homing_shard | ? | ? | ? | 2 | 0 | jolt on the hit frame (main `9abe4bc7`), the pop waits 39 ticks (owner item 4, JOURNAL) |
 | 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
-| 8 | flamethrower | ? | ? | ? | ? | 0 | filmed (1 kill), not scored |
-| 9 | molotov | ? | ? | ? | ? | 0 | filmed (1 kill), not scored |
-| 10 | ray_gun | ? | ? | ? | ? | 0 | filmed, not scored |
+| 8 | ray_gun | 2 | 2 | 2 | 2 | 0 | ink bolt and star on the hit frame, a pale ring at the body; the kill reads as a faint flash, the body barely answers at 32 px/m |
+| 9 | flamethrower | ? | 2 | 2 | 3 | 0 | burn death: star and a charred black body on the kill frame, scorch marks stay; the stream itself was not in the sampled frames |
+| 10 | molotov | ? | 3 | 3 | 3 | 0 | the fire patch reads at a glance (vermilion and cream flame cluster), the burning cop dies charred with a star; the throw not judged |
 | 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
 | 12 | machine_pistol | ? | ? | ? | ? | 0 | filmed, not scored |
 | 13 | gloria | ? | ? | ? | ? | 0 | filmed, not scored |
