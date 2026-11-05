@@ -744,3 +744,13 @@ Session end ~01:40: tree clean after this commit, image.lock and bench.lock rele
   of mine running, scratch-cast/i12 deleted.
 - 01:37 street board re-shot on the final parts (`--board=street`, 241 frames, 0 SCRIPT ERROR): `M/cast-street-board-r5peds-ab-64ppm.mp4` and its still now show r5 + r6; flee, the kill and the corpse read as
   before. Scratch `i12b` deleted. Session end 01:38: tree clean, no lock held, no Godot process of mine running.
+- 01:39 NEXT 1(a) taken now: Codex job `ped_plan_c` (51 s, under image.lock, released; `masters:n5/cast/gen/r7`), an
+  edit of r6 changing only the hoodie cell: a mid warm-grey hoodie with a wide cream hood ring. Lineup trial (built vs
+  r7, slab, asphalt, 64 px/m; `M/frames/crowd-r7-hoodie-ab.png`): the hoodie ped reads as pale shoulders with a dark
+  head at 32 px/m on slab and asphalt, like r2_a5's crowd, where the built one was a dark slab with a cream crescent.
+  The jacket keeps the crowd mixed. GO.
+- MILESTONE 1d9c3c53: r7 hoodie built (D4; the hoodie had no D5 overlay; provenance line). Unit: one run 941/1 = the
+  known flake `test_noir_shadows` ("Parameter t is null"), then the suite 942/942 twice. Street board on r7 (241
+  frames, 0 SCRIPT ERROR): flee, the kill and the corpse read; mixed values.
+  Now every ped torso (coat, jacket, hoodie, vest, overalls) and the hat, hair, hood, beanie and cap heads are
+  plan-view art; the bald head, limbs and shoes are the 3/4-view art. NEXT 1(a) closed; 1(b) D5 hatching stands.

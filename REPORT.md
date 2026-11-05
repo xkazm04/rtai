@@ -115,6 +115,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   vest ped now reads pale with a dark hair crown), every ped head kept at one scale; its charcoal hoodie was not built
   (it printed as a dark slab and lost the head mark). Three-way board: `M/frames/crowd-r6-ab-32-64ppm.png`; the react
   board clip and still above show the final parts.
+  Then (1d9c3c53) a mid-grey hoodie with a cream hood ring (r7): the hoodie ped reads as pale shoulders with a dark
+  head instead of a dark slab (`M/frames/crowd-r7-hoodie-ab.png`). Every ped torso is now plan-view art.
 
 ### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on eec9e750 (all plan-view parts): lint 13/13, unit 942/0,
 scenarios, parity exact, look goldens 11/11 (worst 0.92) and block 5/5 (worst 0.96) with no re-bless; on b722cb84 (r5
@@ -142,8 +144,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
-  coat, jacket, vest and overalls torsos and the hat, hair, hood, beanie and cap heads are plan-view redraws since
-  iteration 12; the hoodie torso, the bald head, the limbs and the shoes are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
+  every ped torso and the hat, hair, hood, beanie and cap heads are plan-view redraws since iteration 12; the
+  bald head, the limbs and the shoes are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
@@ -179,7 +181,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 
 6. The crowd's value at game zoom: A, pale-topped standing peds (built in iteration 11, plan-view values and a
    +42 L fill lift; four looks pale, jacket and hoodie dark), or B, the earlier dark crowd (the five
-   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
+   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 1d9c3c53 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
    r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
    32 px/m and only the cops' blue pads tell them apart.
 
