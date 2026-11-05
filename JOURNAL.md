@@ -588,3 +588,36 @@ NEXT (written 23:55, for iteration 7):
    per call); gates on the final head.
 - STOP 23:56 iteration 6. Head: lint 13/13, unit 1178/1178, scenarios 52/52 and director arena + city
   19/19 on `7ce7b33d` (later commits are docs only).
+
+## Iteration 7 (23:58-00:58), phase BUILD
+- READ 23:59 JOURNAL NEXT, git log, n7-ranged JOURNAL to its end: they closed REQUEST 4 on my
+  `7ce7b33d` (theirs discarded) and keep off my stun files; one new feel commit `d79c5278`.
+- MERGE 00:00 cherry-picked n7-ranged `d79c5278` (-x) as `648e6523` (pistol muzzle_k). One conflict in
+  hit_feel.json `weapons`: their `pistol` row placed before my `plasma_deflect`/`plasma_sword` (id
+  order). Lint 13/13, unit 1182/1182 after the merge.
+- FINDING 00:01 (NEXT 4, sound): StageAudio is the arena's and quest 1's sound, and it hears only
+  shots (a round appears / ends). A melee or ghost hit lands through CombatArena.damage, so a
+  non-lethal claw jab, a cut, a stomp or a bolt played nothing; a kill only the generic kill punch.
+  The shipped bank has impact_metal, impact_flesh, shock_crackle and crash (2 takes each): enough to
+  give each attack family its own hit sound with no new asset.
+- MILESTONE 00:07 `f593aac4` audio_cues.json `hits` (weapon id -> cue) + six cue rows built from the
+  shipped sounds by pitch and gain: melee_claw (metal 0.85), melee_cut (flesh 1.3: katana, plasma
+  sword, kerf_slice), melee_grind (metal 0.6, chainsaw), melee_zap (crackle 1.15: baton, claw_shock),
+  ghost_slam (crash 0.75: stomp, stomp_wave, ram, dent_car), ghost_bolt (crackle 0.8: ohm_bolt);
+  dent_blast -> the existing `blast`. HitCues listens to CombatArena.wounded + kill_landed and plays
+  at the victim on the hit tick; the chainsaw grind once per MeleeWound gap. `--hit-cues=off` = the
+  before (LaunchArgs). test_hit_cues 5/5; planted fault (the gap gate removed) -> exactly the
+  chainsaw test fails (1186/1187); restored 1187/1187. Lint 13/13.
+- DECISION 00:07 sound: hit cues reuse the shipped sounds pitched per family rather than wait for
+  new assets (a call stays open for real recorded swings/cuts); a kill plays the weapon cue too,
+  under the kill punch (the weapon is heard on the kill frame). Alternative = drop a `hits` row.
+- LOOK/LISTEN 00:10 A/B films on `f593aac4` (claw_combo director chapter, Tonnage ghost reel, 32 px/m,
+  `--hit-cues=off` = before), audio RMS per 1/60 s window, after minus before: the claw film gains
+  energy at frames 76-84 and 109-112; sheets put the kills' first blood at 75 and 108 (sound within 1
+  frame). Tonnage: onsets at 136, 200, 224, 232, 255, 288, 321, 395; the ram contact star prints at
+  135 (sound at 136). The other onsets were not tied frame by frame (the stomp frame is buried in the
+  press; not claimed). 0 SCRIPT ERROR in all four films.
+- CLIP `M/hit_cues_ab_32ppm.mp4` (6.8 s, back to back off/on, game audio + cream waveform strip);
+  frames.json top. Kept the melee wound clip (brief item 2) in frames.json, dropped the quest 1 katana
+  smear close-up (quest 1 is covered by its 32 px/m A/B) to stay at 15.
+- Audit: systemic finding 2 marked partly done; sound re-scored 1 -> 3 for every attack.

@@ -33,6 +33,12 @@ ghost-powers beats, telemetry overlay on).
    swing, a cut, a grind, a jab, a slam, a blink, a bolt or a seize. Melee kills get `rivet_kill`/
    `death`/`body_fall`; a non-lethal melee hit gets nothing. New cues need sound assets (no generator in
    this lane's tools): a call, not a build tonight.
+   **Partly done 00:07 (`f593aac4`)**: each family now has a hit sound of its own from the shipped bank,
+   pitched per family (audio_cues.json `hits`: claw knock, blade cut, chainsaw bite, baton zap, ghost
+   slam, Ohm bolt; Dent's blast -> `blast`), on the hit tick (measured: within 1 frame of the visual hit
+   on the claw kills and the ram contact). Re-scored sound 1 -> 3 for every attack: on the frame and
+   distinct per family, but reused recordings, and no swing whoosh or telegraph sound (still a call:
+   real recordings). `M/hit_cues_ab_32ppm.mp4` (`--hit-cues=off` = the before).
 3. **A non-lethal melee hit showed nothing** (riot cop, SWAT): fixed in `1e32a7fd` + `a1716c1d`
    (`M/melee_wound_riot_ab_48ppm_64slow.mp4`).
 
