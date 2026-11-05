@@ -3,10 +3,10 @@ extends Node2D
 ## King and his gang on the cutout rigs (render only, SIM-03: posed from the fights every frame).
 ## King is KingPlan (Rivet's skeleton, King's parts, art/d5/king) at boss size: enthroned on the
 ## car in phases 1-2 (seated: no stride, facing the car's nose), on foot in phase 3. The gang is the
-## robot thug's rig (ThugPlan): four push the throne-car from its corners in phase 1 (they stride
-## with the car), then the adds fight on foot. A hit shoves the frame (never cancels an attack);
-## the active window plays the strike; a downed add powers down on its rig. Child of KingBodyView,
-## so it draws over the car (the parent's own _draw).
+## robot thug's rig in the rich dress (GangPlan): four push the throne-car from its corners in
+## phase 1 (they stride with the car), then the adds fight on foot. A hit shoves the frame (never
+## cancels an attack); the active window plays the strike; a downed add powers down on its rig.
+## Child of KingBodyView, so it draws over the car (the parent's own _draw).
 
 ## King's boss scale over Rivet's skeleton (target: about 1.6x Rivet's bulk; KingPlan.SIZE_K 1.3).
 const KING_SIZE_K: float = 1.55
@@ -59,7 +59,7 @@ func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 	if not _rigs.has(id):
 		var rig: CutRig = CutRig.new()
 		add_child(rig)
-		rig.setup(KingPlan.build(KING_SIZE_K) if is_king else ThugPlan.build(), RigVariant.rivet())
+		rig.setup(KingPlan.build(KING_SIZE_K) if is_king else GangPlan.build(), RigVariant.rivet())
 		rig.actor_id = id
 		rig.position = at
 		rig.snap_facing(facing.angle())
