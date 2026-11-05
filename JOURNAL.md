@@ -333,3 +333,43 @@ Session state 02:08: head = this commit, tree clean, no Godot process of mine ru
   rim, brighter emitter tips, the city clip, the blink on the body.
 Session state 02:11: head = this commit, tree clean, no Godot process of mine running (the two running at 02:08,
   PIDs 25480/63164, are n5-look's scenario runs: left alone), image.lock deleted, scratch empty except film.sh.
+
+## Iteration 4 (02:08-03:08)
+- 02:08 read JOURNAL, git log, ghost-powers/n5-cast JOURNALs (no new REQUEST to ghost-forms). The 02:10/02:11 lines
+  above were written by iteration 3 with wrong clock times (they happened before 02:08).
+- MERGE f95f6044 n6-ghost-powers 4db4eed5 (ohm_shock, mass tier, city placement). Both lanes had wired Kerf/Ohm into
+  GhostPilot; conflicts in kerf/ohm_stage, ghost_pilot, the beats, test_kerf/ohm_attacks and the scenario resolved to
+  THEIR side (they own the attacks; their `_take()` helpers and timings FIRST_BLINK 76 / scenario 520/600); our
+  duplicate `_take(id)` helpers and SELECT_AT branches removed. JOURNAL/REPORT keep ours. Unit test_kerf_attacks 3,
+  test_ohm_attacks 3, test_ghost 15, test_dent 6, test_hauler 18, test_tonnage 2, test_kerf 3; scenario_ghost_attacks
+  1/0 (`evidence/scenario-ghost-iter4.log`).
+- MERGE 6ef0bc5d n5-cast 15feca4a (r7 hoodie, hoodie sleeves); JOURNAL/REPORT keep ours.
+- NEXT 3 done: Dent's body split out of GhostFormView (DentBody: rig + lurch + aura); the view is 169 lines and steps
+  Kerf and Ohm through one `_step_light`.
+
+### Ohm (item 4), started 02:12
+- 02:12 Ohm part sheet (`M:gen/r4/jobs.json` `ohm_parts`, refs: the Ohm concept + the style ref), image.lock absent,
+  created noclobber by this lane and deleted after; one job, 63 s, clean first try: domed riveted shell with goggles
+  and teal seams, cable-wrapped upper arm, forearm with two copper electrode fingers, boxy foot, cable beard, copper
+  hose loop. Cut by ghost_parts.py into `features/souls/art/ohm/` (shell, beard, hose rotated to +x), mipmaps on,
+  6 provenance lines.
+- Registry rules applied: `generated-asset-world-scale` (sized in metres in the rig: shell 0.8 m, arms 0.36 + 0.54 m),
+  `sprite-and-atlas-production` (judged on the live rig at 32 and 64 px/m before calling it fit),
+  `motion-quality-gating` (the gait judged in motion at 64 px/m, the cane cycle unit-tested for no jump).
+- FRICTION the first film had 1086 SCRIPT ERRORs (a discarded `_part()` return is a warning-as-error): same lesson as
+  Kerf. `--check-only -s` on a single file is useless here (no autoloads: "Log not found"); the reliable pre-check is
+  a 200-frame headless arena run (`--headless --quit-after 200 ... -- --bot=forms --form=ohm`).
+- First fit at 64 px/m: the arms nearly vanished (the uppers under the shell, 0.2 m thick). Arms 0.36 + 0.54 m,
+  0.24 m thick, shoulders 0.26 m out; the guard hand set to the bolt's sparks (0.5 m ahead). Then the beard moved to
+  0.42 m ahead (it hid under the shell). DECISION in decisions.md.
+- MILESTONE 415f00e0 OhmRig + DentBody split + test_ohm_rig 3/3; d? beard commit after.
+- 02:26 PROOF Ohm (0 SCRIPT ERROR each): `M:ohm-tour-arena-32ppm.mp4` (18 s), `M:ohm-tour-city-32ppm.mp4` (18 s,
+  `--arena=city`), `M:ohm-morph-64ppm-slow3x.mp4`, `M:frames/ohm-morph-64ppm-keys.png`,
+  `M:frames/ohm-live-vs-target-64ppm.png`; the all-forms cycle `M:forms-cycle-all-32ppm.mp4` (15 s, `--form=all`:
+  Tonnage, Dent, Kerf, Ohm, base) + `M:frames/forms-cycle-all-32ppm-keys.png`. Judged: at 64 px/m the dome, goggles,
+  hose, the trailing cane arm and the copper prongs read as the target's top view; the morph reads in two stages
+  (burst over Rivet, in-between, Ohm unfolding). At 32 px/m Ohm reads as a small rust shell carried by the teal pool
+  and the electrode sparks; the arms are thin (weakest point, like Kerf's before its 0.22 m limbs). Same call as Dent:
+  rust steel on a teal pool, not a fully teal ghost (Call for the owner).
+- frames.json rebuilt (15: cycle and Ohm first); the dropped files deleted (Dent arena/city clips and stills, Kerf
+  limbs A/B, Ohm beard A/B).
