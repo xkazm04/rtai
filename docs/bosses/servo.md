@@ -78,9 +78,11 @@ the boss loop come with the framework's music (n7-king's iteration-3 item).
 
 ## 5. Ghosts and Rivet's weapons in the fight
 
-- **Dent** (seize a vehicle): a drone is a vehicle. G seizes the drone nearest the aim line (teal
-  tether): Rivet steers it into Servo (blast 60, spends one poise) or into a swarm. In phase 2
-  the depot's **delivery van** at bay 3 is seizable: ride it and ram Servo (stagger).
+- **Dent** (seize a vehicle): the depot's **delivery van** is parked at bay 3 from the start
+  (`bosses.json arenas.depot.parked`). Dent's fire seizes it (teal tether), steers it through
+  Servo and the drones (car strike on each, once per seize) and blows it (blast). Built and
+  filmed in iteration 5 (`--bot=boss --servo-ghost=dent`). Not built: seizing a drone (drones are
+  arena bodies, not vehicles); the van is Dent's answer to the swarm.
 - **Ohm** (forked bolt, forks within 3 m): drones fly in formation 1.2-1.6 m apart, so a bolt
   **chains through a swarm** (each drone 1 hp, robot); the tier-1 mass arc clears a wave. On
   Servo: machine_k damage and a stun scaled by the boss stun_k (0.33); a bolt during the
