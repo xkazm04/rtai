@@ -57,3 +57,42 @@ Proposed; if you built it differently, your shape wins and I adapt; write the an
 Until the framework lands, Servo's swarm and attacks run standalone in `features/bosses/servo/`
 with their own data table `servo.json` (`gtai.servo/1`); the attack rows there use the field
 names above, so they move into `bosses.json` with a copy.
+
+- 19:00 MILESTONE 110e8708: the drone swarm standalone (`features/bosses/servo/`: ServoTuning,
+  ServoRack, ServoDrone, ServoParcels, ServoSwarm; `data/tables/servo.json` + schema). Unit
+  `test_servo_swarm` 6/6. FRICTION: GUT silently skips a test file that fails to parse (a
+  discarded return value is a warning-as-error): the full-suite "1110 passed" did not include my
+  file. Always run the new file alone with `-gselect=<name>` and look for its test names.
+- 19:04 MERGE n7-king 243f216b (framework core: bosses.json, BossFight, BossZone, BossMoves,
+  BossSpec) into n7-servo as cc4446ba. Conflict only in JOURNAL.md (each lane keeps its own: ours).
+  King's interface (their JOURNAL REQUEST 1) differs from my proposal; **theirs wins**, I adapted:
+  phases `hp_below`, attack `shape`, per-boss `script` extending `BossMoves`, `arenas.<id>`.
+- 19:11 MILESTONE 49bff207: Servo's row in bosses.json (written by
+  `evidence/servo/write_servo_row.mjs`, which only sets `bosses.servo` and `arenas.depot`) and
+  `ServoMoves`. Unit `test_servo_moves` 4/4.
+  - Measured a dead zone and fixed it: the rotor dash (14 m) ended on top of Rivet, inside every
+    attack's `min_m`, and the default walk only closes in, so Servo stood idle for 25 s of a 30 s
+    run (2 attacks). ServoMoves.idle_step holds a band (9 +- 2 m, backs off): now 7 attacks / 30 s.
+  - First rough phase-1 numbers (30 s, seed 7, the unit test's crude bot, NOT the bot): standing
+    took 178 (would die: Rivet has 100), a 6 m sidestep at each lock took 60. To be measured by the
+    real bot.
+- DECISION servo-mark: every drone attack drops on the MARK = where Rivet stood when the tell
+  locked (the scanner beam does no damage itself). Moving after the lock dodges, as the enemy-ai
+  rule. Rejected: re-aiming drones in flight (homing drops are undodgeable at 32 px/m).
+- DECISION servo-wave-shape: a wave is one drone on the mark plus a ring spread_m (1.9 m) out;
+  the union of the rings + blast (1.6 m) is about 4 m round the mark, so a dodge is a real step
+  (~0.6 s of Rivet's walk), not a shuffle. One data value (`phases[].spread_m`) to tighten.
+
+### REQUEST 2 to n7-king (19:12): three small generic hooks Servo needs
+1. **A per-tick hook every state:** in `BossFight.step()`, before the state match (not when
+   DEFEATED), `var extra: float = moves.tick(self, target, target_r)` and add `extra` to the
+   returned damage. Default `BossMoves.tick()` returns 0. Why: Servo's parcels and kamikaze drones
+   land after the attack's active window (King's coin hail landing late would use it too).
+   `ServoMoves.tick(f, target, target_r) -> float` already exists with that signature.
+2. **Seeding the boss's own sub-systems:** `BossMoves.bind(f: BossFight, rng: RngRegistry)`,
+   called once by whoever builds the fight (the hook), so a boss script can take its own named
+   stream (Servo: `ServoSwarm.STREAM` = `servo_swarm`). Until then I call
+   `ServoMoves.setup_swarm(reg.stream(ServoSwarm.STREAM))` myself.
+3. **Your `write_bosses.mjs` keeps other rows:** read the existing table and set only
+   `bosses.king` / `arenas.king_boulevard`, or regenerating drops Servo's row. Mine
+   (`evidence/servo/write_servo_row.mjs`) already does that for `servo` / `depot`.
