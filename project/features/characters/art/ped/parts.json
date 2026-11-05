@@ -35,53 +35,53 @@
  },
  "head_hat": {
   "size": [
-   128,
-   128
+   155,
+   155
   ],
   "sheet": "n5/cast/gen/r5/out/ped_plan_a.png",
   "cell": 3,
   "scale": 1.0,
   "pivot_a": [
-   65.5,
-   63.0
+   79.5,
+   76.5
   ],
   "pivot_b": [
-   61.5,
-   63.0
+   74.5,
+   76.5
   ]
  },
  "head_hair": {
   "size": [
-   105,
-   100
+   128,
+   121
   ],
   "sheet": "n5/cast/gen/r5/out/ped_plan_a.png",
   "cell": 4,
   "scale": 1.0,
   "pivot_a": [
-   53.5,
-   49.0
+   65.0,
+   59.5
   ],
   "pivot_b": [
-   51.5,
-   49.0
+   63.0,
+   59.5
   ]
  },
  "head_hood": {
   "size": [
-   116,
-   111
+   140,
+   134
   ],
   "sheet": "n5/cast/gen/r5/out/ped_plan_a.png",
   "cell": 5,
   "scale": 1.0,
   "pivot_a": [
-   52.5,
-   55.0
+   63.5,
+   66.5
   ],
   "pivot_b": [
-   64.5,
-   55.0
+   78.0,
+   66.5
   ]
  },
  "upperarm": {
