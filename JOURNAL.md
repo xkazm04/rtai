@@ -426,5 +426,7 @@ Session state 02:58: head = this commit, tree clean, no Godot process of mine ru
 film.sh and reel.sh, frames.json 15 (all files present), image.lock never taken, bench never run.
 - 02:59 Kerf arena + city re-filmed with the GhostRim (city 4 splits, `E/ghosts-kerf-city-rim-32.json`): the rimmed body
   and the mint-edged afterimages hold on the asphalt at 32 px/m. Reel re-cut: every segment from tonight's heads.
-Session state 03:00: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+- 03:08 COMBAT CHECK director reel on 7ec45ab0 (the final head, Ohm body merged): 16/16 chapters down, 0 SCRIPT ERROR
+  (`E/director-reel-it4-final.log`).
+Session state 03:09: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
 film.sh and reel.sh, frames.json 15 (all present).
