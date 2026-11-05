@@ -17,6 +17,10 @@ const TEAL: Color = Color(0.18, 0.77, 0.71)
 ## y right).
 const SHELL_M: float = 0.8
 const BEARD_M: float = 0.5
+## The soul glow under him: across (m) and its centre alpha. The smallest body needs the widest
+## pool against its size to read as possessed at 32 px/m (was 1.9 m at 0.4, under Kerf's 2.4).
+const GLOW_M: float = 2.6
+const GLOW_A: float = 0.5
 const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
 const HOSE_M: float = 0.34
 const HOSE_AT: Vector2 = Vector2(-0.36, 0.0)
@@ -196,10 +200,10 @@ func _soft_glow() -> Sprite2D:
 	g.fill_from = Vector2(0.5, 0.5)
 	g.fill_to = Vector2(1.0, 0.5)
 	var grad: Gradient = Gradient.new()
-	grad.set_color(0, Color(TEAL, 0.4))
+	grad.set_color(0, Color(TEAL, GLOW_A))
 	grad.set_color(1, Color(TEAL, 0.0))
 	g.gradient = grad
 	var s: Sprite2D = Sprite2D.new()
 	s.texture = g
-	s.scale = Vector2.ONE * 1.9 * PX_PER_M / 64.0
+	s.scale = Vector2.ONE * GLOW_M * PX_PER_M / 64.0
 	return s

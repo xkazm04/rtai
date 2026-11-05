@@ -93,3 +93,35 @@ func test_each_forms_bar_rides_clear_of_its_drawn_body() -> void:
 	assert_gt(t.form(&"tonnage").bar_m, t.form(&"tonnage").radius_m * 1.7, "over the press")
 	for id: StringName in t.order:
 		assert_gte(t.form(id).bar_m, StoryForms.BAR_LIFT_M, "never below base Rivet's bar")
+
+
+func test_the_bar_eases_through_a_transformation() -> void:
+	var g: GhostForms = GhostForms.new(
+		GhostFormTable.load_default(), SoulPowers.new(PowerTable.load_default())
+	)
+	var f: GhostFormDef = g.table.form(g.table.order[0])
+	assert_eq(g.press_transform(), SoulPowers.OK)
+	var last: float = StoryForms.bar_lift_m(g)
+	var top_step: float = 0.0
+	for i: int in f.enter_ticks:
+		_run(g, 1)
+		var now: float = StoryForms.bar_lift_m(g)
+		assert_gte(now, last, "rises only")
+		top_step = maxf(top_step, now - last)
+		last = now
+	assert_almost_eq(last, f.bar_m, 0.001, "settled at the form's height")
+	assert_lt(top_step, (f.bar_m - StoryForms.BAR_LIFT_M) * 0.25, "no snap at the midpoint")
+
+
+func test_the_subtitle_lift_is_zero_at_32_ppm_and_clears_tonnage_at_64() -> void:
+	var tonnage: float = 2.35
+	assert_eq(StoryForms.lift_goal_m(tonnage, 32.0, 800.0), 0.0, "shipped zoom: untouched")
+	assert_eq(StoryForms.lift_goal_m(StoryForms.BAR_LIFT_M, 64.0, 800.0), 0.0, "base Rivet")
+	var lift: float = StoryForms.lift_goal_m(tonnage, 64.0, 800.0)
+	assert_gt(lift, 0.0)
+	var room: float = HudView.subtitle_top(800.0) - 400.0 - StoryForms.LIFT_PAD_PX
+	assert_almost_eq((tonnage - lift) * 64.0, room, 0.01, "the reach ends on the box's edge")
+
+
+func test_the_shipped_table_turns_the_subtitle_lift_on() -> void:
+	assert_true(GhostFormTable.load_default().story_lift)
