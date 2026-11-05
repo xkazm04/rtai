@@ -229,3 +229,25 @@ NEXT (written 20:40, revised 20:56, for iteration 3):
 8. City-block combined clip of the polished set (30-90 s) before freeze; exe by 08:30.
 - GATES 20:58 scenarios on `0555878c` (the Ohm tell): exit 0, 0 SCRIPT ERROR. Lint 13/13 at the commit hook. Unit last full run 1143/1143 on `f6dc5330` (the Ohm commit touches only ohm_view.gd).
 - STOP 20:59 iteration 2. NEXT is the 20:40/20:56 entry above.
+
+## Iteration 3 (21:00-22:00), phase BUILD
+- MERGE 21:01 `20f2263d`: n7-ranged 0d4089f1 (camera.json hitstop_cooldown 20 -> 16: every Kerf cut now
+  gets its stop; my call 7 is decided by ranged), e32720c4 (flamer ignition kick), da508e6b (blast cue),
+  9c140ffb (react snap), spin-up tremor, docs. Conflicts: JOURNAL.md (kept ours), hit_feel.json weapons
+  (both sides' rows, sorted by id: checked).
+- NOTE from ranged's FINDING 20:46: the director reel without `--loadout=pistol` skips Rivet's own guns.
+  My reel gates so far ran without it; from now on both reels run with `--loadout=pistol`.
+- LOOK 21:03 chainsaw before (director `--chapter=chainsaw` 32 px/m, frames 80-195 every 4th, 200x120
+  crops x2; close-ups of 82/100/130/160 x4): through the ~1 s grind the cop is buried under the saw bar,
+  his own ink-rimmed drops and the floor splat; the halves parting (from ~frame 152) reads clearly.
+- FINDING 21:07 pass 1: a cream slash along the cut on the parting tick did not show: the cut runs along
+  the saw's push, so the slash lay on the saw bar (cream edged in ink too). Measured: after vs before
+  identical from frame 160 on (mean |diff| 0.0).
+- DECISION 21:08: the parting mark is a starburst (cream, ink rim, 1.2 m across, 12 ticks), not a slash.
+  Alternative: `melee_marks.json saw.release_m` 0 (none).
+- MILESTONE 21:12 `49cc45d1` chainsaw kill read (rank 5): SawMarks (`melee_marks.json saw`: clear_m 0.45
+  drops hidden until clear of the held body, shake_m 0.06 judder (0.035 before), release_m 1.2 burst on
+  the tick the halves part); `--feel=off` = the before values. test_saw_marks 4/4 incl. planted.
+- LOOK 21:10 (32: frames 140-162 every 2nd, 110x80 crops x3, after over before; 48: frames 136-170 every
+  3rd): the burst prints over the cop on frames 144-148 (48: 142), the halves part 6-8 frames later; fewer
+  drops over the body during the grind. CLIP `M/chainsaw_kill_ab_32ppm_48slow.mp4` (5.5 s).

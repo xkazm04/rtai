@@ -75,6 +75,9 @@ By the craft columns (impact and read at 32 weigh most: they are what the owner 
    **Done 20:53 (`0555878c`)**, pass 2: white sparks edged in ink reach from the tips toward the aim as
    the charge refills; gone on the fire frame. `M/ohm_tell_ab_32ppm_crop.mp4`.
 5. **Chainsaw**: the kill is a red blob under Rivet at 32.
+   **Done 21:12 (`49cc45d1`)**: SawMarks (`melee_marks.json saw`): a cream starburst edged in ink on the
+   tick the halves part (a slash along the cut hid on the saw bar), the grind's drops hidden until
+   0.45 m clear of the held body, a firmer judder (0.06 m). `M/chainsaw_kill_ab_32ppm_48slow.mp4`.
 6. **Tonnage slam**: a clear tell, but the impact frame has no hold, shake or debris.
    **Correction 20:30**: measured, the slam does shake and stop (HaulerKick: `crash` + `boss_hit`, outside
    FeelCam, so `--feel=off` films are identical); what is missing is debris on the landing.

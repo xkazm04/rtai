@@ -1,5 +1,14 @@
 [
   {
+    "file": "chainsaw_kill_ab_32ppm_48slow.mp4",
+    "title": "The chainsaw kill reads: a cream release burst as the halves part, the held body clear of its own spray",
+    "source": "game-arena",
+    "branch": "n7-melee 49cc45d1",
+    "ppm": 32,
+    "before": "--feel=off on the same head (left; it also drops the kill stop, so the after runs a few frames behind); 32 px/m real time, then 48 px/m at 0.4x",
+    "note": "Pass 1 drew a cream slash along the cut: it lay on the saw bar and did not show (looked at frames 140-162, before over after). Pass 2: a 1.2 m starburst on the parting tick, drops hidden for their first 0.45 m, judder 0.035 -> 0.06 m. Looked at frames 140-162 at 32 and 136-170 at 48."
+  },
+  {
     "file": "ohm_tell_ab_32ppm_crop.mp4",
     "title": "Ohm's forked bolt gets a tell: the fingertips charge back to a white reach before each bolt",
     "source": "game-arena",
