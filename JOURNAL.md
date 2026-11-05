@@ -388,14 +388,14 @@ Session state 02:22: head = this commit, tree clean, no Godot process of mine ru
 
 NEXT (iteration 5, ghost-powers):
 1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` after the merge before filming).
-2. Ohm on its body: city 32 not re-filmed on the body yet (arena, 64, mass done 02:50); then the drawn
-   fingertips, a target composite, and re-cut the reel's Ohm segments.
-3. Dent `--cam=car` in the city block (64 px/m close-up there; arena done b575c591).
+2. Ohm on its body is filmed everywhere (arena, city, 64 slow, mass; 02:50-02:55). Next on Ohm: a cane-step recoil
+   or arm kick on each bolt (needs a hook in the forms lane's OhmRig: REQUEST it), and Ohm's machine multiplier on
+   a real robot (item 4).
+3. Dent riding the car (the optional bucking-bull vignette) now that the car camera keeps it in frame.
 4. Weakest left: the robot victim (no robot fighter in the arena; the brain stands in drawn as a cop). Look for a
    robot body on main/day branches; otherwise a ghost-powers dev robot (sim stand-in with a distinct look) so the
    machine multipliers (Ohm machine_k, Kerf robot_damage) read on screen.
 5. Kerf under `--gore=reduced`: the red pool under a cauterised cut (a reduced-gore Kerf death without blood).
-Session state 02:44: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only film.sh and reel.sh, image.lock never taken, bench never run.
 - 02:44 MERGE n6-ghost-forms 19ae646c (31c06cc9: the Ohm body OhmRig, GhostRim cream rims on Kerf/Ohm; JOURNAL/REPORT
   keep ours) + one `--import`. Kerf's echoes inherit the rim: a pale mint outline under the teal wash (judged at 64:
   reads as the target's ghost outline; kept).
@@ -412,3 +412,9 @@ Session state 02:44: head = this commit, tree clean, no Godot process of mine ru
 I moved Ohm's `electrode_l/electrode_r` in your `ghost_forms.json` to the copper fingers your OhmRig draws on the
 guard hand: (0.52, -0.17) and (0.52, -0.07) (898bbf1a; data only, nothing else in the file). If you move
 OhmRig.GUARD_HAND, move the anchors with it (or tell me in a REPLY); the bolt follows the data.
+- 02:55 Ohm city on the body (4 kills + cruiser, `E/ghosts-ohm-city-body-32.json`, `M/ohm-city-32ppm.mp4`) and Dent in
+  the city block at 64 px/m with `--cam=car` (5 down: 4 blowback + 1 gib, 1 seize, 1 wreck,
+  `E/ghosts-dent-city-cam-64.json`, `M/dent-city-64ppm-cam-halfspeed.mp4`): the city lean keeps the car, the strike
+  and the wreck in frame. Both 0 SCRIPT ERROR.
+Session state 02:56: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only
+film.sh and reel.sh, image.lock never taken, bench never run (contended machine).
