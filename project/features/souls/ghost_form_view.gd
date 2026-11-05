@@ -145,6 +145,9 @@ func _process(_delta: float) -> void:
 	_beat(forms.stage() if busy else 0, with_big)
 	hud.sync(forms)
 	var is_dent: bool = big(forms, DentStage.GHOST)
+	_dent.riding = pilot.dent.riding()
+	_dent.strikes = pilot.dent.strikes
+	_dent.blasts = pilot.dent.blasts
 	_dent.step(is_dent, at, r.facing.angle(), steps, arena.tick)
 	var is_kerf: bool = _step_light(_kerf, KerfStage.GHOST, at, r.facing.angle(), steps)
 	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
