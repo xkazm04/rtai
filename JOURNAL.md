@@ -272,3 +272,9 @@ NEXT (iteration 3, in order):
    real time (`--phase=N`), the full drone wave at 48 px/m, target sheet beside in-game (hstack).
 5. Body to target (iteration-1 NEXT 2): rack wings 3 rows, body between the wings, bigger pads.
 6. Bay hop to the nearest loading bay (the depot's bays), not the mark.
+- 20:37 MEASURED on the merged tree (c37ea648 + logs), seeds 1-3, 240 s cap: dodging bot downs
+  Servo at 136.9 / 109.9 / 119.3 s, Rivet took 60 / 110 / 120, 0 deaths (seed 3 moved: 140.6 ->
+  119.3 s, king's idle detour). Standing bot: seed 1 downs him at 158.6 s with 3 deaths; seed 2
+  leaves 16 % with 2 deaths; seed 3 stays in phase 1 at 78 % with 6 deaths (rotor dash 23 of 25
+  landed: the standing bot holds its band right in the dash lane; a stander should lose, but look
+  at why seed 3 never gets the phase-1 punish damage in: iteration 3).
