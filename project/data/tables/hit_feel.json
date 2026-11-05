@@ -177,10 +177,11 @@
       "spin_rumble_px": 1.5
     },
     {
-      "doc": "Gloria, the heavy sidearm (audit: anticipation 1, nothing of its own before the tracer): a 1.5 px recoil kick against the aim per round, between the pistol's none and the hand cannon's 2 px.",
+      "doc": "Gloria, the heavy sidearm (audit: anticipation 1, nothing of its own before the tracer): a 1.5 px recoil kick against the aim per round, between the pistol's none and the hand cannon's 2 px. Muzzle (n7-ranged it7): its flash draws the pistol's cell, a 15 px speck at 32 px/m smaller than a cop's flash star; muzzle_k 1.8 (one notch over the pistol's 1.6, the heavier sidearm; 1 or --feel=off = before).",
       "fire_kick_px": 1.5,
       "fire_kick_ticks": 6,
-      "id": "gloria"
+      "id": "gloria",
+      "muzzle_k": 1.8
     },
     {
       "doc": "The heavy single shot: a bigger kick than its class. Fire: a 2 px recoil kick.",

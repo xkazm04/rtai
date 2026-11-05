@@ -10,6 +10,7 @@ func after_each() -> void:
 func test_the_pistol_flash_is_bigger() -> void:
 	var hf: HitFeel = HitFeel.shipped()
 	assert_almost_eq(hf.muzzle_k(&"pistol"), 1.6, 0.001)
+	assert_gt(hf.muzzle_k(&"gloria"), hf.muzzle_k(&"pistol"), "the heavier sidearm flashes bigger")
 
 
 func test_a_weapon_without_a_row_keeps_the_art_size() -> void:
