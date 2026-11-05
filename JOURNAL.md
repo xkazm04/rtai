@@ -212,3 +212,12 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   (`M:frames/dent-print-ab-32-64ppm.png`). DECISION raw (decisions.md); the live route needs a BodyPlan flag that
   RigBuild._part honours (material null), next session. Raw at 32 px/m is busy (fine cracks alias): judge in
   motion; a softer downscale (mip or a 0.5x pre-shrunk set) may be needed.
+- MILESTONE 01:18 Dent LIVE: BodyPlan.raw_parts (RigBuild._part sets no material; CutRig.set_tint restores raw when
+  the hit tint ends), DentPlan.RAW_PARTS true; GhostFormView carries a standalone Dent CutRig (DentPlan at the form
+  row's size_k) fed Rivet's pos/facing/travel on whole sim ticks, shown from the in-between pose on (the same rule as
+  Tonnage), Rivet's rig + held views hidden. `--bot=ghosts --ghost=dent` windowed 64 px/m 480 frames: seizes 1,
+  blasts 1, 5/5 down, 0 SCRIPT ERROR (`E/ghosts-dent-live-64.json`). M: `dent-live-arena-64ppm.mp4`,
+  `frames/dent-live-arena-64ppm-keys.png`. Judged: the target head and yellow discs read at 64 px/m, the tether
+  comes off Dent's body. Weak: no stagger gait yet (Rivet's walk cycle on Dent's parts), shins show the thigh's knee
+  disc at the ankle, no 32 px/m clip or city clip yet, no Dent transformation close-up. Unit: test_dent 3/3,
+  test_ghost* 15/15, test_rig* 36/36 (the raw flag touches RigBuild/CutRig).

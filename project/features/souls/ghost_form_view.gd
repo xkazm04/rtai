@@ -25,6 +25,10 @@ var hud: GhostFormHud = GhostFormHud.new()
 var beats: int = 0
 var _tonnage: TonnageRig = TonnageRig.new()
 var _fx: GhostMorphFx = GhostMorphFx.new()
+## Dent's body: a standalone CutRig on DentPlan, fed Rivet's pose (CharacterRigs holds one plan
+## per actor kind).
+var _dent: CutRig = CutRig.new()
+var _last_pos: Vector2 = Vector2.ZERO
 var _hidden_rig: CutRig = null
 var _last_tick: int = -1
 var _last_stage: int = 0
@@ -53,6 +57,11 @@ func _ready() -> void:
 	add_child(_tonnage)
 	_fx.reduced_motion = reduced_motion
 	add_child(_fx)
+	_dent.visible = false
+	add_child(_dent)
+	var dent_row: GhostFormDef = pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null
+	_dent.setup(DentPlan.build(dent_row.size_k if dent_row else 1.05), RigVariant.rivet())
+	_dent.reset_state(0.0)
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = HUD_LAYER
 	add_child(layer)
@@ -66,7 +75,7 @@ func _ready() -> void:
 		hud.names[id] = word if word != key else String(id).capitalize()
 
 
-## True while the big body (Tonnage) stands in for Rivet.
+## True while form `big_id`'s body stands in for Rivet (settled, or past the in-between pose).
 static func big(forms: GhostForms, big_id: StringName) -> bool:
 	if forms.settled():
 		return forms.current() == big_id
@@ -107,7 +116,25 @@ func _process(_delta: float) -> void:
 	_fx.show_progress(busy, forms.k(), forms.stage(), forms.phase == GhostForms.SWITCHING)
 	_beat(forms.stage() if busy else 0, with_big)
 	hud.sync(forms)
-	_hide_rivet(is_big, r.id)
+	var is_dent: bool = big(forms, DentStage.GHOST)
+	_step_dent(is_dent, at, r.facing.angle(), steps)
+	_hide_rivet(is_big or is_dent, r.id)
+
+
+## Dent's rig at Rivet's pose, posed on whole sim ticks (its gait from Rivet's own travel).
+func _step_dent(show: bool, at: Vector2, facing: float, steps: int) -> void:
+	if show and not _dent.visible:
+		_dent.reset_state(facing)
+		_last_pos = at
+	_dent.visible = show
+	if not show:
+		return
+	_dent.position = at
+	_dent.face_to = facing
+	_dent.vel_in = (at - _last_pos) / (maxf(1.0, float(steps)) * SimClock.TICK_DT)
+	_last_pos = at
+	for i: int in steps:
+		_dent.drive(SimClock.TICK_DT)
 
 
 ## One camera shake as the transformation passes its in-between pose.

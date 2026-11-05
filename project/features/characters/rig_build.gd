@@ -119,7 +119,7 @@ static func _part(
 		pv = PartLibrary.of(rig.plan.art_dir).pivot(part, spr.texture)
 	spr.offset = -pv
 	var sw: int = maxi(swap, 0)
-	spr.material = PartMaterials.get_mat(kind, false, sw)
+	spr.material = null if rig.plan.raw_parts else PartMaterials.get_mat(kind, false, sw)
 	rig.sprites.append(spr)
 	@warning_ignore_start("return_value_discarded")
 	rig.sprite_kinds.append(int(kind))

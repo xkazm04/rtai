@@ -9,6 +9,8 @@ extends RefCounted
 
 const ART_DIR: String = "dent"
 const BLANK: String = "blank"
+## Raw art, no part print (decisions.md 2026-11-05: the print greys the yellow discs at 32 px/m).
+const RAW_PARTS: bool = true
 
 
 static func build(form_size_k: float = 1.05) -> BodyPlan:
@@ -25,6 +27,7 @@ static func build(form_size_k: float = 1.05) -> BodyPlan:
 	p.endon_upper = PackedStringArray()
 	p.endon_fore = PackedStringArray()
 	p.foot_toeoff = PackedStringArray()
+	p.raw_parts = RAW_PARTS
 	return p
 
 
