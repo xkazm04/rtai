@@ -1226,7 +1226,7 @@ Session end 05:50: tree clean after this commit, no Godot process of mine runnin
   `head_helmet`). The gain is in the standing poses (the lossless lineup). Combat unchanged: the cop blocks, falls and
   gibs as before. `M/cast-riot-director-ab-32.mp4` (82-91.5 s), still `M/frames/riot-crown-director-32ppm.png`;
   the single before clip deleted.
-- 06:29 REPORT section 2 (D and the riot crown bullets), Call 4 (revert names both commits), gates line. frames.json
+- 06:26 REPORT section 2 (D and the riot crown bullets), Call 4 (revert names both commits), gates line. frames.json
   15: Call 4 lineup, the r2_c6 composite, Call 4 city, the riot lineup on top; every file exists.
 
 NEXT (iteration 20), replaces the 05:27 list as amended:
@@ -1238,5 +1238,11 @@ NEXT (iteration 20), replaces the 05:27 list as amended:
    that actor uses (`rig_variant.gd` index, LOD) before claiming the live gain.
 3. Before the 08:30 freeze: re-run `tools/evidence/run.mjs --no-bench` on the final head; never edit tracked files
    while it runs (05:56 FRICTION).
-Session state 06:30: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i19
+Session state 06:27: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i19
   holds logs, lineup renders and the D part PNGs (no PNG sequences).
+- 06:28 the riot chapter's 4 px diff, likely cause: x10 crops of the head at t=84.1 s show the same dark stripe across
+  the bright dome before and after, along the aim line: in the aiming pose the held gun arm lies over the head's
+  centreline, where the band ran (the band runs along the facing axis), so the band was hidden there anyway. The
+  plain crown shows in the standing and unarmed poses (lineup, crowd cops). NEXT 2's open question is answered by
+  this read; a lossless capture would confirm it.
+Session end 06:29: tree clean after this commit, no Godot process of mine running, locks never taken.

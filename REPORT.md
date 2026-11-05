@@ -45,7 +45,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
 - The riot helmet's crown is plain bright at 32/48 px/m (f4381f32): the D4 band across the ~5 px head printed two 1 px
   slivers; it is now one bright dot like the patrol cap (r2_c6's plain helmets; the shield carries the riot read; D5
   keeps the band at 56+ px/m): `M/frames/riot-crown-plain-ab-32ppm.png` (lossless lineup). In the live director reel's
-  riot_cop chapter before | after differ by 4 px (the head already printed as a bright dot there; cause not isolated):
+  riot_cop chapter before | after differ by 4 px: in the aiming pose the held gun arm lies over the head's centreline,
+  where the band ran, so it was hidden there anyway (x10 crops, JOURNAL 06:28):
   `M/frames/riot-crown-director-32ppm.png`, `M/cast-riot-director-ab-32.mp4`; the cop blocks, falls and gibs as before.
 
 ### 3. Rivet as the hybrid (brief item 3), 516475c9 .. fa395f74
