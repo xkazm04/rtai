@@ -1,6 +1,6 @@
 # REPORT: lane n5-cast (branch `n5-cast`), night run 2026-11-04 -> 11-05
 
-**Final for the run, iterations 24-26 (08:18, re-checked 08:20 and 08:26; the freeze is 08:30; no code changed after 2cc15c5f).** Every number below
+**Final for the run, iterations 24-27 (08:18, re-checked 08:20, 08:26 and 08:31; the freeze is 08:30; no code changed after 2cc15c5f).** Every number below
 was measured on this branch; the last full gate (`tools/evidence/run.mjs --no-bench`) is ALL PASS on 09570a2e (code as of
 2cc15c5f, the last code commit). Bench: never run tonight (other lanes' Godot processes held the machine all night), so frame cost is
 UNMEASURED, not zero. Masters (clips, stills, `frames.json`, 15 entries) are in

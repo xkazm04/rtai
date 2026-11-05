@@ -1484,3 +1484,14 @@ Session end 08:21: tree clean after this commit, no Godot process of mine starte
 NEXT (if a REPORT session runs at 08:40):
 1. REPORT is final as committed; confirm `git status` is clean. Calls 1-9 and the n6 merge note stand.
 Session end 08:26: tree clean after this commit.
+
+## Iteration 27 (08:30 - STABILIZE, past freeze)
+- 08:30 read JOURNAL NEXT and log: tree clean at 8d83f472, REPORT final. Past the freeze: no new work; no code
+  changed since 2cc15c5f (`git diff 2cc15c5f HEAD -- project native tools` is empty), so the last gate (ALL PASS on
+  09570a2e) and the evidence in M/ still match the build. No re-run: it would only repeat that result and load the
+  shared machine. No bench.lock or image.lock present; no Godot process started by me.
+- 08:31 REPORT header now says iterations 24-27.
+
+NEXT (if a REPORT session runs at 08:40):
+1. REPORT is final as committed; confirm `git status` is clean. Calls 1-9 and the n6 merge note stand.
+Session end 08:31: tree clean after this commit.
