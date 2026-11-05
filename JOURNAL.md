@@ -847,3 +847,25 @@ NEXT (iteration 14), replaces the 01:49 list:
   NEXT 1(b) of the 02:35 list is DONE (621c0d3f). The 02:35 NEXT list otherwise stands; next is item 2, Rivet vs r2_c3 at 32 px/m.
 Session end 02:46: tree clean after this commit, image.lock released (2 jobs this session: r8, r8b), bench.lock never
   taken, no Godot process of mine running, scratch-cast/i13 deleted.
+
+## Iteration 14 (session 02:45 - 03:45), BUILD
+- 02:46 read JOURNAL, log, REPORT Calls, n5-look JOURNAL (no new REQUEST to cast). No locks present. Start at NEXT 2
+  (Rivet vs r2_c3 at 32 px/m).
+- 02:48 FINDING at 32 px/m: Rivet's collar is the D1 sticker (`lod_fill` 1) = one flat vermilion ring that reads like
+  a UI reticle; r2_c3's collar is a vermilion/black hazard band, and r2_c6/r2_c7 at game scale draw it as an orange
+  band with a few dark gaps. The collar art already has 14 slanted stripes (prints at 48 px/m and up).
+  Trials (cast_lineup slab/road 32 px/m, lossless, and the live city `--bot=reel --arena=city` A/B at t=4/8/12 s):
+  (a) the art's stripes (`vr > gate`, gate 62 and 30): mipmapped they mottle into a dark ring with red specks in the
+  live print: REJECTED; (b) procedural UV-angle breaks: 14/0.4 muddy, 8/0.35 a dashed ring (vermilion halved),
+  6/0.3 stays a vermilion ring at 1x with a hazard rhythm up close. DECISION: 6 breaks at ink 0.3
+  (`PartMaterials.COLLAR_LOD_FILL` 3; 1 = the old flat ring), decisions line. 48 px/m checked: already the art tier,
+  identical before/after.
+- 03:00 checks: director reel headless 16/16 down, 0 SCRIPT ERROR; director first chapters (0-1140) and city 900
+  ticks at 32 px/m filmed after and before (flag flipped, same ticks): `M/cast-collar-director-ab-32.mp4`,
+  `M/cast-collar-city-ab-32.mp4`, still `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png` (with r2_c7 + r2_c6 crops),
+  trials `M/frames/collar-ticks-lineup-32ppm.png`, `M/frames/collar-trials-city-32ppm.png`. Lint 13/13, unit 945/0
+  (+ test_collar_sticker: the material's fill, core/limb unchanged, ink share < 0.5, 4-8 breaks). Look goldens alone:
+  junction 11/11 (worst 1.21), block 5/5 (worst 1.38), no re-bless. frames.json 15 (2 new on top; dropped from the
+  list, files kept for REPORT: city-navy-64ppm, rivet-size-call-64ppm).
+  Registry rules (`shader-budget-authoring`): one atan per collar pixel, only inside the existing sticker branch, no
+  new pass or fetch. print_part.gdshader is the part print (n5-look has not touched it on its branch: no conflict).

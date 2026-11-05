@@ -9,6 +9,9 @@ const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
 const LOD_BELOW: float = 0.13
 const LIMB_FILL: float = 0.40
+## The collar's sticker fill at gameplay scale: 3 = vermilion with coarse ink hazard breaks
+## (r2_c3; print_part collar_stripes, collar_ink), 1 = the old flat vermilion ring.
+const COLLAR_LOD_FILL: float = 3.0
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
@@ -93,7 +96,7 @@ static func _apply_view(m: ShaderMaterial, kind: PartKind) -> void:
 
 static func _lod_fill(kind: PartKind) -> float:
 	if kind == PartKind.COLLAR:
-		return 1.0
+		return COLLAR_LOD_FILL
 	if kind == PartKind.CORE:
 		return 2.0
 	return 0.0
