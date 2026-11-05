@@ -82,3 +82,6 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   restored, nothing shipped. So NEXT item 1 starts with the off arm: an off claw part (Codex claw
   sheet, arms/claws only, under image.lock) shown while a two-claw weapon is held, or the torch tip
   hidden and the forearm end-capped as a stopgap; then the centre line toward r2_w5.
+- 15:56 FRICTION: frames.json had not been written (an `rm -rf` of a busy scratch dir, the shell's cwd,
+  failed and short-circuited the `&& cat >`). Written now with 6 entries. Lesson: never chain
+  output after `rm` of a dir the shell may sit in; cd out first.
