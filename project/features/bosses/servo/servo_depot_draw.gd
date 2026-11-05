@@ -3,25 +3,45 @@ extends RefCounted
 ## The CS courier depot's dressing on the fight floor (servo.json `depot`, first pass, render
 ## only): roller-door loading bays on one edge (dock bumpers, slats, the bay number painted on the
 ## apron) and the conveyor on the other (side rails, rollers, chevrons and CS cartons that ride it
-## once rush hour starts the belt). Ink, paper and steel only: no danger colour on scenery.
+## once rush hour starts the belt). Rush hour also rolls the bay doors up over ROLL_S: the slats
+## gather into the drum at the wall and the bay's dark mouth opens onto the apron (Servo's bays).
+## Ink, paper and steel only: no danger colour on scenery.
+
+## Seconds the doors take to roll up once rush hour starts.
+const ROLL_S: float = 1.6
 
 var px: float = 32.0
 var pal: PaletteTokens = PaletteTokens.shared()
 
 
 func draw(c: CanvasItem, t: ServoTuning, origin: Vector2, running_s: float) -> void:
+	var u: float = clampf(running_s / ROLL_S, 0.0, 1.0)
+	var open: float = u * u * (3.0 - 2.0 * u)  # eased: the drum starts and stops slow
 	for i: int in t.bays.size():
-		_bay(c, origin + t.bays[i], t.bay_w_m, i + 1)
+		_bay(c, origin + t.bays[i], t.bay_w_m, i + 1, open)
 	_belt(c, t, origin, running_s)
 
 
-## A roller door seen from above: the door strip, slats, two bumpers and the apron number.
-func _bay(c: CanvasItem, at: Vector2, w: float, n: int) -> void:
+## A roller door seen from above: the door strip, slats, two bumpers and the apron number; `open`
+## 0..1 rolls the slats up into the drum at the wall side (-y) and shows the dark bay behind.
+func _bay(c: CanvasItem, at: Vector2, w: float, n: int, open: float) -> void:
 	var door: Rect2 = Rect2((at - Vector2(w * 0.5, 0.45)) * px, Vector2(w, 0.9) * px)
 	c.draw_rect(door.grow(3.0), pal.color(&"ink"))
-	c.draw_rect(door, pal.color(&"steel"))
-	for k: int in 6:
-		var y: float = door.position.y + door.size.y * (k + 0.5) / 6.0
+	var slats: Rect2 = door
+	slats.size.y = door.size.y * lerpf(1.0, 0.22, open)
+	if open > 0.0:  # the bay's mouth: dark inside, a pale strip of the depot's lights deep in
+		var mouth: Rect2 = Rect2(
+			door.position.x, slats.end.y, door.size.x, door.end.y - slats.end.y
+		)
+		c.draw_rect(mouth, pal.color(&"ink"))
+		var lamp: Rect2 = Rect2(
+			mouth.position + Vector2(4.0, 3.0), Vector2(mouth.size.x - 8.0, 2.0)
+		)
+		c.draw_rect(lamp, Color(pal.color(&"paper"), 0.35 * open))
+	c.draw_rect(slats, pal.color(&"steel"))
+	var rows: int = maxi(2, roundi(6.0 * (1.0 - open * 0.67)))
+	for k: int in rows:
+		var y: float = slats.position.y + slats.size.y * (k + 0.5) / rows
 		c.draw_line(Vector2(door.position.x, y), Vector2(door.end.x, y), pal.color(&"ink_2"), 1.0)
 	for s: float in [-1.0, 1.0]:
 		var bump: Vector2 = (at + Vector2(s * (w * 0.5 + 0.25), 0.6)) * px
