@@ -3,7 +3,7 @@ extends RefCounted
 ## The part print materials, SHARED by every rig (per-rig materials would break 2D batching):
 ## one per (part kind, hit tint, palette swap). set_view() adapts them all to the screen scale.
 
-enum PartKind { PART, LIMB, COLLAR, CORE, HALO }
+enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD }
 
 const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
@@ -12,6 +12,10 @@ const LIMB_FILL: float = 0.40
 ## The collar's sticker fill at gameplay scale: 3 = vermilion with coarse ink hazard breaks
 ## (r2_c3; print_part collar_stripes, collar_ink), 1 = the old flat vermilion ring.
 const COLLAR_LOD_FILL: float = 3.0
+## Rivet's helmet sticker at gameplay scale: 4 = the cream core with a welder-visor ink slot at
+## the front (print_part visor_x0, visor_hy; r2_c7), 2 = the plain core sticker (the art's 2 px
+## visor merges into the outline and is lost).
+const HEAD_LOD_FILL: float = 4.0
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
@@ -42,7 +46,10 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 		m.set_shader_parameter("swap", swap)
 		m.set_shader_parameter("noir", noir)
 		# D-Noir: Rivet's core (visor and chest plate) keeps its light art as paper: his hero read.
-		m.set_shader_parameter("noir_keep", NOIR_KEEP_CORE if kind == PartKind.CORE else NOIR_KEEP)
+		m.set_shader_parameter(
+			"noir_keep",
+			NOIR_KEEP_CORE if kind == PartKind.CORE or kind == PartKind.HEAD else NOIR_KEEP
+		)
 		_apply_view(m, kind)
 		m.set_shader_parameter("world_px", world_px)
 		_mats[key] = m
@@ -90,7 +97,12 @@ static func set_world_px(px: Vector2) -> void:
 
 static func _apply_view(m: ShaderMaterial, kind: PartKind) -> void:
 	m.set_shader_parameter("px_scale", view_px)
-	var lod_kind: bool = kind == PartKind.LIMB or kind == PartKind.COLLAR or kind == PartKind.CORE
+	var lod_kind: bool = (
+		kind == PartKind.LIMB
+		or kind == PartKind.COLLAR
+		or kind == PartKind.CORE
+		or kind == PartKind.HEAD
+	)
 	m.set_shader_parameter("limb_lod", 1.0 if lod_kind and view_px < flat_below else 0.0)
 
 
@@ -99,4 +111,6 @@ static func _lod_fill(kind: PartKind) -> float:
 		return COLLAR_LOD_FILL
 	if kind == PartKind.CORE:
 		return 2.0
+	if kind == PartKind.HEAD:
+		return HEAD_LOD_FILL
 	return 0.0
