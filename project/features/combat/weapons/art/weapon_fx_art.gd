@@ -82,8 +82,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_rocket(ci, at, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			_jet(ci, s, dir, went, tick)
-		WeaponSpec.Kind.BOLT when art().projectile_fx(s.spec.id) == &"ray_ring":
-			WeaponFxRay.draw_round(ci, at, dir, went, tick)
+		WeaponSpec.Kind.BOLT when WeaponFxRay.FX.has(art().projectile_fx(s.spec.id)):
+			WeaponFxRay.draw(ci, art().projectile_fx(s.spec.id), at, dir, went, tick)
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())

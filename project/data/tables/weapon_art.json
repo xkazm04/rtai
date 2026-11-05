@@ -507,6 +507,42 @@
     },
     {
       "anchor_px": [
+        12,
+        40
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_beam_0.png",
+      "id": "ray_beam_0",
+      "size_px": [
+        320,
+        80
+      ]
+    },
+    {
+      "anchor_px": [
+        12,
+        40
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_beam_1.png",
+      "id": "ray_beam_1",
+      "size_px": [
+        320,
+        80
+      ]
+    },
+    {
+      "anchor_px": [
+        12,
+        40
+      ],
+      "art": "res://features/combat/weapons/art/fx/ray_beam_2.png",
+      "id": "ray_beam_2",
+      "size_px": [
+        320,
+        80
+      ]
+    },
+    {
+      "anchor_px": [
         35,
         35
       ],
@@ -1135,7 +1171,7 @@
         "small": "res://features/combat/weapons/art/ray_gun/held_small.png"
       },
       "pickup": "res://features/combat/weapons/art/ray_gun/pickup.png",
-      "projectile_fx": "ray_ring",
+      "projectile_fx": "ray_beam",
       "size_px": [
         391,
         233

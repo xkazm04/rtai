@@ -121,7 +121,8 @@
     },
     {
       "files": [
-        "ray_ring_"
+        "ray_ring_",
+        "ray_beam_"
       ],
       "id": "ray",
       "note": "acid green (iteration 5: ink_2 and wash brightened; the rings printed a dull olive at 32 px/m)",
