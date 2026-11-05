@@ -89,3 +89,18 @@ scratch audit folder: `<w>-off.avi`, `sheets/<w>-off-k2.png`.
   body launched about 1.7 m (from where the gun drops to where the body lies), smoke. It reads.
 - Tried `plasma_hole.launch_mps` 1.4-2.2 -> 2.2-2.8: only about +0.2 m at rest (10 px at 48
   px/m), and the gib flight is hashed sim state (GibSim). Reverted: not worth a sim change.
+
+### rocket_launcher and mini_nuke: sound on the blast frame (`da508e6b`)
+- Before: a round ending played `projectile_end` (a concrete click, -9 dB) or `hit_flesh`; the two
+  biggest hits in the arsenal had no sound of their own (sound column 0 -> the arena's generic).
+- After: `end_cue` (optional) on weapons rows; rocket and nuke -> cue `blast` (the existing
+  `car_wreck` explosion, pitch 0.85, `fire_crackle` layer, cooldown 6 ticks, 2 voices).
+  `--end-cue=off` = the before.
+- Measured (1/60 s RMS windows of the movie audio, off vs on): rocket blast drawn on video frame
+  64, the boom from window 65 (+4..10 dB through 77); nuke blast frame 111, boom from 112. One
+  frame (17 ms) after the flash, inside the hit-stop that holds the frame. Clip
+  `rocket_blast_sound-ab-32ppm.mp4` (back to back, with sound). Not listened to: no audio
+  device judgement possible here; the asset is the approved car wreck explosion.
+- How sync works for every gun (read, not measured per weapon): StageAudio cues the shot on the
+  frame a round appears in `CombatArena.shots` and the impact on the frame it leaves, in the same
+  `_process` as the view; so impact sound is on the hit frame by construction (+0..1 frame).
