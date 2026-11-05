@@ -1313,3 +1313,16 @@ NEXT (iteration 21, the last BUILD before the 08:30 freeze):
   by the re-capture; not filmed: the quest bot does not seize the Hauler in its run). REPORT section 2 bullet.
 - 07:03 (07:02 entry, checked: `dev/bots/collect_call_bot.gd` has no Hauler / power input, so no recorded quest run
   shows the grown sprite; the 24 % is arithmetic from `sprite_k` and the two captures, not a filmed frame.)
+- 07:04 other rig captures checked: the crowd atlas is baked at load from the live rigs (`crowd_baker.gd`), so it
+  follows the slim cast by itself; the quest 1 `cast_*` sprites were the only committed rig captures in the cast's
+  paths. NEXT 3 judged on the 13660 x3 crop (after): the sprite Rivet on asphalt reads as a cream hybrid round a
+  vermilion collar ring, not lost: no 32 px/m sprite row built.
+
+NEXT (iteration 21), replaces the 06:59 list:
+1. Calls 1-9 stand (Call 4 D, Call 9 C built). REPORT current to this commit; rewrite at 08:40 and name b68665b1
+   (quest 1's sprite cast: the patrol cop, Rivet, the peek; the Hauler oversize ended) in the summary.
+2. Weakest left: the default quest's sprite Rivet has no 32 px/m stickers (paler than the rig Rivet). Leave unless a
+   frame shows it lost (it did not at 13660); hosting the rigs in the default quest is rivet-arsenal Call 1.
+3. Before 08:30: `tools/evidence/run.mjs --no-bench` on the final head (last: 84ed1bd1 ALL PASS; docs only since).
+Session end 07:04: tree clean after this commit, no Godot process of mine running (the ones listed are other lanes'),
+  locks never taken, scratch i20 holds logs and the capture PNGs only.
