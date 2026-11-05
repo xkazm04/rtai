@@ -51,3 +51,20 @@ func test_beat_mode_holds_the_kill_longer() -> void:
 	var beat: int = feel.land(2, &"light", Vector2.RIGHT, true, 5000)
 	assert_eq(plain, 6)
 	assert_eq(beat, 8)
+
+
+func test_a_weapons_row_can_route_to_a_class() -> void:
+	var feel: HitFeel = HitFeel.shipped()
+	assert_eq(feel.weapon_class(&"gatling"), &"", "no class key, no route")
+	assert_eq(feel.weapon_class(&"no_such_weapon"), &"")
+	feel._weapons[&"kerf_test"] = {"id": "kerf_test", "class": "slice"}
+	assert_eq(feel.weapon_class(&"kerf_test"), &"slice")
+
+
+func test_every_weapons_class_names_a_class_row() -> void:
+	var feel: HitFeel = HitFeel.shipped()
+	assert_true(feel.ok(), "the shipped table loads")
+	for weapon: StringName in feel._weapons.keys():
+		var cls: StringName = feel.weapon_class(weapon)
+		if cls != &"":
+			assert_true(feel.has_class(cls), "%s routes to unknown %s" % [weapon, cls])

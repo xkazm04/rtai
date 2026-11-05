@@ -142,6 +142,13 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 	return out
 
 
+## The class a `weapons` row routes its hits to (n7-melee REQUEST 2: ghost attacks that land
+## through CombatArena.damage, with no `struck`); &"" when the row has none.
+func weapon_class(weapon: StringName) -> StringName:
+	var over: Dictionary = _weapons.get(weapon, {})
+	return StringName(str(over.get("class", "")))
+
+
 ## The fire side of `weapon` (hit_feel.json `weapons` fire_kick_px / fire_kick_ticks): a camera
 ## kick against the aim on each round Rivet fires (recoil, a Gatling's steady rumble). Zero = none.
 func fire_row(weapon: StringName) -> Vector2:

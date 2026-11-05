@@ -120,6 +120,10 @@
       "items": {
         "additionalProperties": false,
         "properties": {
+          "class": {
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "type": "string"
+          },
           "doc": {
             "minLength": 1,
             "type": "string"
