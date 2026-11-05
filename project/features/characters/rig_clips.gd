@@ -88,8 +88,10 @@ func die(blown: bool) -> void:
 		death_amount = 1.25 if blown else 1.0
 
 
+## A shot's recoil, 0.4-1.6. A negative kick (n7-ranged: a throw, arena.json rig_kick) swings the
+## arm FORWARD by that much instead, the release's follow-through, and settles back the same way.
 func shoot(kick: float) -> void:
-	recoil = clampf(kick, 0.4, 1.6)
+	recoil = clampf(kick, 0.4, 1.6) if kick >= 0.0 else clampf(kick, -1.6, -0.4)
 
 
 func hit(rig: CutRig, from_dir: Vector2) -> void:
@@ -110,7 +112,7 @@ func active() -> Clip:
 		return Clip.PUNCH
 	if hit_t > 0.0:
 		return Clip.HIT
-	if recoil > 0.0:
+	if recoil != 0.0:
 		return Clip.SHOOT
 	return Clip.NONE
 
@@ -119,7 +121,7 @@ func active() -> Clip:
 func sample(rig: CutRig, dt: float) -> void:
 	punch_t = maxf(0.0, punch_t - dt)
 	roll_t = maxf(0.0, roll_t - dt)
-	recoil = maxf(0.0, recoil - dt * RECOIL_DECAY)
+	recoil = move_toward(recoil, 0.0, dt * RECOIL_DECAY)
 	hit_t = maxf(0.0, hit_t - dt)
 	rig.c_reach = sin((1.0 - punch_t / punch_len) * PI) if punch_t > 0.0 else 0.0
 	if strike_t >= 0.0:

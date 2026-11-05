@@ -53,6 +53,15 @@ func test_shoot_recoil_decays() -> void:
 	assert_eq(_rig.c_recoil, 0.0)
 
 
+func test_a_throw_swings_the_arm_forward_and_settles() -> void:
+	_rig.clips.shoot(-1.6)  # arena.json rig_kick molotov: the release's follow-through
+	_tick(SimClock.TICK_DT)
+	assert_lt(_rig.c_recoil, -1.4, "a negative kick swings forward, not back")
+	assert_eq(_rig.clips.active(), RigClips.Clip.SHOOT)
+	_tick(0.3)
+	assert_eq(_rig.c_recoil, 0.0, "and settles back to the aim")
+
+
 func test_hit_shoves_and_flashes() -> void:
 	_rig.clips.hit(_rig, Vector2.LEFT)
 	_tick(SimClock.TICK_DT * 2)
