@@ -13,6 +13,9 @@ const HOMING_FAN_RAD: float = 0.35
 
 var trigger: Trigger
 var shots_fired: int = 0
+## The aim the last shot left along (view only: the muzzle flash stays on it while the walk turns
+## Rivet's facing between shots; not in any state hash).
+var last_aim: Vector2 = Vector2.ZERO
 ## A bot's held fire button: a semi gun re-taps as soon as it is ready (dev scenes and bots
 ## only; a player's semi gun needs a new press).
 var tap: bool = false
@@ -63,6 +66,7 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 		out.append(s)
 	trigger.add_bloom()
 	shots_fired += 1
+	last_aim = aim
 	shooter.facing = aim
 	return out
 
