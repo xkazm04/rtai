@@ -299,3 +299,47 @@ last chapter, the reel loops).
   accents over the rig (like the car and cape). Next iteration decides; the King's wealth has the
   same problem.
 - DECISION lines for pacing/bodies, the boulevard and the rigs are in docs/decisions.md.
+
+### MILESTONE 20:27: the fight filmed on the rigs, gold at game zoom (f5483c44)
+- Film `gtai-masters/n7/king/king_fight_bot_dodge_32ppm_it2.mp4` (85.8 s, 32 px/m, dodging bot,
+  on c451665d, 0 script errors) + contact sheet; two new stills; `frames.json` now 8 entries
+  (newest first, each `before` names the iteration-1 frame it replaces).
+- **Looked at the film.** Reads: the procession (black-and-gold car, vermilion cape, King on the
+  throne, four grey riders), the cream invulnerable bar through each transition, the coin fan's
+  cone + gold hail, the gang closing in, King on foot with the cape, the defeat.
+  Found, NOT fixed: (1) the car vanishes when King steps down (the moveset says it stays as cover:
+  needs a solid box added to the arena walls at phase 3, a generic `BossHook` arena-prop hook);
+  (2) the 8 dead gang lie on the street for good (corpse fade); (3) the HUD bar's cream
+  transition state is the only phase-change beat: no car stall smoke, no step-down yet.
+- `KingAccents` (z over the rig parts): King's gold star crown with an ink jewel over his head, a
+  gold chain arc on each gang bot's chest, drawn over the rigs because the flat stickers at
+  32 px/m lose the part art's gold (`shots/accents_p2_32_t330.png`: both read).
+
+NEXT (iteration 3, in order; replaces the list above):
+1. King's own wealth parts: part sheet(s) under the image lock (codex image_gen; copy
+   gtai-art/gen.mjs to scratch; refs: the d5 King parts composite + boss_king.jpg): gold-leafed press
+   plates and chest, jewelled crown over the tin one, fur-lined cape; cut onto KingPlan's layout
+   (the layout-template technique KingPlan's header describes). Provenance lines.
+2. Phase-3 beats on the rig: slam (plates up through the tell, down on active, stuck in recovery),
+   charge shoulder dip, decree (megaphone up + shout ring), transitions (car stall smoke; the
+   step-down), the defeat (crown falls and spins, sag, power-down), the car left as cover in
+   phase 3 (a solid box: generic BossHook arena-prop hook), dead gang fade.
+3. Boss music: boss_loop_01.ogg on engage, boss_stinger_01.wav on defeat (Events -> audio).
+4. Ohm's stun on a boss (cancel a tell, 0.6 s daze); the decree's gang buff.
+5. Human-like bot (reads ~70 %, own RNG stream) + n-seed runner -> boss-numbers.json; tune.
+6. Clips: per attack at 48 px/m (note: the dev arena's noir print turns robot rigs into ink masses
+   at 48: check `--look` options or film at 64 with the look the owner approved), per phase at
+   32, the procession entering, the target hstack (boss_king.jpg beside the in-game boss).
+7. Re-run `--bot=reel --reel=director` before calling any item done (19/19 at 745ce3cf).
+
+### 20:29: target comparison looked at
+`gtai-masters/n7/king/king_target_vs_game_32ppm_it2.png` (sheet | game, court phase, 32 px/m).
+Matches: the long black car with a gold rim and the gold hood cannon, King mid-car, the vermilion
+cape. Gaps, honestly: the car lacks the ornate gold trim, plum drapes and grille detail of the 90°
+panel; the cape is a small wedge, not the wide fur-trimmed spread behind the throne; King is
+small and grey (no gold plates, chains or jewelled crown in the parts, only the drawn crown); the
+gang read as grey figures with a thin gold arc. The car view and the cape are quick drawn-shape
+wins for iteration 3 next to item 1 (King's wealth parts).
+Gates at f5483c44: lint 13/13 (every commit, pre-commit hook); unit 1128/0 or as logged in
+`evidence/king/unit-it2b.log`; scenarios 52/0 at 1932828b (`scenarios-it2a.log`; later commits are
+King's view and art only plus BossAdds.separate under --boss); director reel 19/19 at 745ce3cf.
