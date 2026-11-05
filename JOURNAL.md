@@ -786,7 +786,11 @@ NEXT (iteration 12):
    clean), `--import`, unit, director reel (`res://dev/arena/arena.tscn -- --bot=reel --reel=director`).
 2. Final evidence runner `--no-bench` on a still tree after the last merge, before the 08:30 freeze (last all-PASS
    on e865146d; the merged head 8b692f82 has unit 1016/0 and reel 16/16 only). REPORT for 08:40.
-3. Polish candidates: Ohm's 64 px/m close-up with the wider glow (ohm-live-vs-target-64ppm predates it); the
-   Kerf city tour clip (only the all-four city cycle shows Kerf on the street).
+3. Polish candidate: the Kerf city tour clip (only the all-four city cycle shows Kerf on the street). (Ohm's
+   64 px/m look with the wider glow is done: 06:46 below.)
 Session state 06:47: tree clean after this commit, no Godot process of mine running, no lock held (image.lock and
   bench.lock not taken this session); masters scratch holds film.sh, q1lift.sh and logs; frames.json 15, all present.
+- 06:46 CHECK Ohm's wider glow at 64 px/m on the shipped quest 1 (q1lift.sh `--ppm=64`, 1060 frames, 0 SCRIPT
+  ERROR, frames 940/1000): `M:frames/ohm-glow-quest1-64ppm.png` (named in the ohm-vs-target entry). Judged: a soft
+  pool at the close-up zoom; the shell, seams and prongs are not swamped. No change. Session ends: tree clean after
+  this commit, no Godot process of mine running, no lock held.
