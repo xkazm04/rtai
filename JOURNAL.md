@@ -241,3 +241,13 @@
 - NEXT (any later session): nothing owed. Branch head docs-only since 6179bf2d; exes current; arena + city reels
   19/19; full evidence green on f41346c2. Owner verdicts on REPORT's calls drive the next lane day (call 8 B first
   if picked: per-weapon gun outline, see iteration 5b NEXT (3)).
+
+## Iteration 7 (BUILD, 18:08-18:30; freeze 18:30)
+- 18:08 Started. Tree clean at 705784fa; NEXT says nothing owed. Exes (17:39) are on 6179bf2d = the last project/ commit: current.
+- 18:10 CHECK evidence folder: frames.json 15 entries, every file present; the 20 files outside frames.json are all
+  cited in REPORT, JOURNAL or decisions.md (kept).
+- 18:13 CHECK merge readiness: d7-held merged d7-calls bf7386aa (1550dfb0, after 6179bf2d), so it holds every
+  project/ change here. `git merge-tree --write-tree d7-calls d7-held` (4a34d9ef): conflicts only JOURNAL.md and
+  REPORT.md (root, each lane keeps its own). Noted in REPORT for the Director.
+- NEXT (the next lane day): nothing owed today. Owner verdicts on REPORT's calls; call 8 B first if picked (per-weapon
+  gun outline, iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.

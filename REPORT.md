@@ -8,6 +8,11 @@ Every old default stays one flag or one data value away.
 **Status (iteration 6, 18:08): complete.** Every call in the brief is built, gated and filmed; the exe is
 exported. After that, the weakest item was raised: the Gatling now prints tan steel, not an ink bar (6179bf2d).
 
+**For the merge (18:14):** `d7-held` already holds every `project/` change of this branch (its merge 1550dfb0
+took d7-calls bf7386aa, which is after 6179bf2d, the last `project/` commit here). A trial
+`git merge-tree d7-calls d7-held` (head 4a34d9ef) conflicts only in the root `JOURNAL.md` and `REPORT.md`
+(each lane keeps its own); no code conflicts.
+
 ## What works (with evidence)
 
 | Call | Commit | New default | Old default back with | Evidence (M/) |
