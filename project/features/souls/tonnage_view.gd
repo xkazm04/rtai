@@ -13,6 +13,8 @@ var hauler: HaulerStage = null
 var stage: CollectCallStage = null
 var ppm: float = 32.0
 var reduced_motion: bool = false
+## False leaves the landing ring and crack to the caller (quest 1's CastView draws them already).
+var marks: bool = true
 
 
 func _process(_delta: float) -> void:
@@ -25,7 +27,7 @@ func _draw() -> void:
 	var form: HaulerForm = hauler.form
 	if form.on and form.windup_k() > 0.0:
 		_telegraph(hauler.slam_point(stage) * ppm, form.windup_k())
-	if hauler.stomp_tick >= 0:
+	if marks and hauler.stomp_tick >= 0:
 		var age: float = (stage.tick - hauler.stomp_tick) * SimClock.TICK_DT
 		var radius: float = form.num(&"stomp_radius_m")
 		HaulerMarks.draw(self, hauler.stomp_at * ppm, age, radius, ppm, hauler.stomp_tick)

@@ -1,0 +1,42 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: tonnage beat at tick 0
+[INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: tonnage beat at tick 0
+[INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: tonnage beat at tick 0
+[INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: tonnage beat at tick 0
+[INFO] ghosts: ghost reel: tonnage wave 2 at tick 230
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: dent beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: dent beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: dent beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: dent beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: kerf beat at tick 0
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 17 stations
+[INFO] ghosts: ghost reel: kerf beat at tick 0
+FAIL scenario_ghost_attacks.gd: kerf beat fell short (robot_ghost < 1): {"crush":0,"dent":{"blasts":0,"rides":0,"seizes":0,"strikes":0},"dry_kills":4,"ghost_dead":5,"ghost_victims":5,"kerf":{"blinks":8,"slices":6,"transforms":1},"kinds":["0>3:cauterised","0>1:cauterised","0>2:cauterised","0>4:cauterised","0>5r:shot"],"ohm":{"bolts":0,"cars_hit":0,"struck":0},"robot_ghost":0,"split":4,"tonnage":{"activations":0,"cars_crushed":0,"ram_hits":0,"rivet_hp":54.0,"slam_hits":0,"slams":0,"ticks_on":0},"wet_kills":0}
+run_scenarios: 1 ran, 1 failed
+WARNING: 4286 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 83 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

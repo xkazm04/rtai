@@ -38,7 +38,11 @@ Madness cost and cooldowns are unchanged from powers.json tonight (Tonnage 25 / 
 Kerf per activation (measured, `--bot=ghosts --ghost=kerf`, arena 32 px/m, windowed, 60 Hz): 5 of 5 down
 (3 patrol + riot cop split, the robot thug in 2 cuts), 1 dash + 7 slices = 8 blinks, first kill 0.5 s after the
 soul goes on, the last human 2.2 s after it, Rivet at 54 hp (the cops and the robot's tazer shot at him: Kerf has
-no armour; `evidence/ghosts-kerf-32.json`, `scenario_ghost_attacks`). Madness 20, cooldown 10 s (powers.json).
+no armour; `evidence/ghosts-kerf-32.json`, `scenario_ghost_attacks`). Iteration 7: until then the robot's two cuts
+were dropped (the stand-in boss brain is only `exposed` while its tazer is spent, and CombatArena.damage skips an
+unexposed body), so the claw finished it after the form ended; the Kerf beat now holds it exposed like Ohm's, and
+the scenario needs the robot to fall to a ghost's own kill kind (`robot_ghost`: Kerf `cauterised`, Ohm
+`electrocuted`). Madness 20, cooldown 10 s (powers.json).
 
 Ohm per activation (measured, `--bot=ghosts --ghost=ohm`, arena 32 px/m, windowed, 60 Hz): 5 of 5 down (the robot
 stand-in to the first bolt, the three-cop knot in two forked bolts, the riot cop in five), then the cruiser burnt

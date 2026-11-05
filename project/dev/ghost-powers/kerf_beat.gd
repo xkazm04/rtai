@@ -34,6 +34,15 @@ func begin(reel: GhostReel, stage: ArenaStage, anchor: Vector2) -> void:
 	reel.victims.append_array(victims)
 
 
+## Sim side, every tick: the arena's only robot is the quest boss's brain (exposed only while its
+## tazer is spent, and CombatArena.damage drops every hit while it is not), so the beat holds the
+## stand-in exposed as a robot thug would be (as OhmBeat does). Dev scaffolding until a robot thug
+## lands in CombatArena.
+func hold() -> void:
+	if robot != null and robot.alive():
+		robot.exposed = true
+
+
 ## (move, aim, buttons-wanted) for `local` ticks into the beat: Q at TAKE_AT, the first press a
 ## plain dash toward the group, then a blink press every CADENCE ticks at the nearest standing.
 func want(stage: ArenaStage, local: int) -> Array:
