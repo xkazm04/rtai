@@ -420,3 +420,38 @@ was charge + coin fan only and the slam was unmeasured.
   `king_phase3_dodge_48ppm_it3.mp4` (15 s, all three phase-3 attacks dodged).
 - Note: I amended 376d3875's message once (two staged changes went into one commit after a lint
   fail); lint re-run on the tree after: 13/13.
+
+### MILESTONE 21:02: music and phase beats (4e2df035, e4ee9c55)
+- `BossMusic` (features/bosses, generic): the dev arena attaches no StageAudio, so the boss cues
+  never played there. Now the stinger + `boss_loop` start with the engage; the defeat stops the
+  loop and hits the stinger again (unit test_boss_music). Answers servo's "check whether king
+  wired the boss music": yes, in BossView.attach, every boss gets it.
+- `KingBeats`: smoke builds from the hood through the stall into the court and keeps steaming;
+  at the court's end King steps down off the car's right side with his cape (from 45 % into the
+  2.5 s transition; `KingMoves.step_down` moves the sim body at the phase change) and the car stays
+  where it stalled, smoking (render only, NOT cover yet: DECISION line); the crown falls off and
+  rolls 1.4 m with 1.5 turns on the defeat. Unit test_king_beats 2/2; unit 1137/0
+  (`evidence/king/unit-it3b.log`).
+- Full fight before the beats (dodging bot, 32 px/m, boss cam, n=1, CONTENDED): King down at tick
+  4639 (77.3 s); Rivet took 30 (one ram); tries ram 3, coin 8, decree 3, slam 2, charge 1; landed
+  ram 1; gang 5/16. The dodging bot now meets the slam twice per fight (it never did before).
+
+### 21:10: the fight filmed with the beats and music, looked at
+- `gtai-masters/n7/king/king_fight_bot_dodge_32ppm_it3_music.mp4` (80 s, 32 px/m, --boss-cam, on
+  e4ee9c55, 0 script errors, audio track = stinger + boss loop). Looked at the contact sheet and
+  two strips: the step-down off the car's side, the car staying as a smoking wreck, the leaping
+  slam from beside it with its coin shockwave, and the defeat (King sprawls, the crown rolls off).
+  Found, NOT fixed: the smoke is faint at 32 px/m; the 8 dead gang lie in a heap for good (corpse
+  fade); the boss cam drifts over the cream off-floor ground near the boulevard's ends.
+- `king_procession_enter_32ppm_it3.mp4` (first 22 s), `king_stepdown_wreck_slam_32ppm_it3.mp4`,
+  `king_target_vs_game_car_it3.png` (target 90-degree panel | game car, 32 px/m 2x). Target gaps,
+  honestly: the round fur collar and the big jewelled crown over King, plum drapes along the
+  sides, the gang hanging off the car's sides in gold chains (ours stand at the corners, grey).
+- frames.json: 12 entries, newest first; masters folder cleaned of unreferenced renders.
+- Numbers, full fight, seed fixed, n=1, CONTENDED (`evidence/king/bot-{dodge,stand}-it3.json`):
+  dodging bot: King down at 77.3 s (tick 4637, the same tick headless and windowed); Rivet took
+  30, 0 deaths; King landed ram 1/3, coin 0/8 (1 rolled), slam 0/2, decree 3, charge 0/1; gang 5/16.
+  Standing bot: King down at 88.5 s; 1 death; King landed coin 8/8, slam 2/2, ram 2/2; gang 11/20;
+  252 dealt. The slam now lands on a stander and is dodged by a reader, as the moveset wants.
+- Gates at e4ee9c55: lint 13/13 (pre-commit); unit 1137/0 (`unit-it3b.log`); scenarios 52 ran /
+  0 failed (`scenarios-it3.log`).
