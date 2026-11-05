@@ -23,9 +23,7 @@ static func build(rig: CutRig) -> void:
 	rig.pelvis = _node(rig.body, p.pelvis_pos)
 	rig.torso = _node(rig.body, p.torso_pos)
 	rig.head = _node(rig.torso, p.head_pos - p.torso_pos)
-	var core: PartMaterials.PartKind = (
-		PartMaterials.PartKind.CORE if p.has_collar() else PartMaterials.PartKind.PART
-	)
+	var core: PartMaterials.PartKind = _core_kind(p)
 	rig.pelvis_spr = _part(rig, p.pelvis_part, core, true, -1)
 	_attach(rig.pelvis, rig.pelvis_spr, p.pelvis_z)
 	rig.torso_spr = _part(rig, p.torso_part, core, true, p.torso_swap)
@@ -70,9 +68,16 @@ static func set_tex(rig: CutRig, spr: Sprite2D, part: String) -> void:
 			h.offset = spr.offset
 
 
+## n5-cast: a collar robot's torso and pelvis print the core sticker; Rivet's is tan (core_tan).
+static func _core_kind(p: BodyPlan) -> PartMaterials.PartKind:
+	if not p.has_collar():
+		return PartMaterials.PartKind.PART
+	return PartMaterials.PartKind.TAN_CORE if p.core_tan else PartMaterials.PartKind.CORE
+
+
 ## n5-cast: Rivet's helmet prints the welder-visor sticker at gameplay scale (BodyPlan.head_visor).
 static func _head_kind(p: BodyPlan, core: PartMaterials.PartKind) -> PartMaterials.PartKind:
-	if p.head_visor and core == PartMaterials.PartKind.CORE:
+	if p.head_visor and core != PartMaterials.PartKind.PART:
 		return PartMaterials.PartKind.HEAD
 	return core
 

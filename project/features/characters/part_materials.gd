@@ -3,7 +3,7 @@ extends RefCounted
 ## The part print materials, SHARED by every rig (per-rig materials would break 2D batching):
 ## one per (part kind, hit tint, palette swap). set_view() adapts them all to the screen scale.
 
-enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD }
+enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD, TAN_CORE }
 
 const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
@@ -16,6 +16,9 @@ const COLLAR_LOD_FILL: float = 3.0
 ## the front (print_part visor_x0, visor_hy; r2_c7), 2 = the plain core sticker (the art's 2 px
 ## visor merges into the outline and is lost).
 const HEAD_LOD_FILL: float = 4.0
+## n5-cast: Rivet's core sticker below the LOD threshold (TAN_CORE and HEAD, BodyPlan.core_tan),
+## cream (0) to r2_c3's tan work plates (1). King's CORE stays cream.
+const CORE_TAN: float = 0.6
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
@@ -40,16 +43,15 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 		m.shader = _shader
 		m.set_shader_parameter("silhouette", 1.0 if kind == PartKind.HALO else 0.0)
 		m.set_shader_parameter("lod_fill", _lod_fill(kind))
+		var tan: bool = kind == PartKind.TAN_CORE or kind == PartKind.HEAD
+		m.set_shader_parameter("core_tan", CORE_TAN if tan else 0.0)
 		m.set_shader_parameter("limb_fill", LIMB_FILL)
 		m.set_shader_parameter("is_limb", 1.0 if kind == PartKind.LIMB else 0.0)
 		m.set_shader_parameter("tint", 1.0 if tint else 0.0)
 		m.set_shader_parameter("swap", swap)
 		m.set_shader_parameter("noir", noir)
 		# D-Noir: Rivet's core (visor and chest plate) keeps its light art as paper: his hero read.
-		m.set_shader_parameter(
-			"noir_keep",
-			NOIR_KEEP_CORE if kind == PartKind.CORE or kind == PartKind.HEAD else NOIR_KEEP
-		)
+		m.set_shader_parameter("noir_keep", NOIR_KEEP_CORE if is_core(kind) else NOIR_KEEP)
 		_apply_view(m, kind)
 		m.set_shader_parameter("world_px", world_px)
 		_mats[key] = m
@@ -97,20 +99,20 @@ static func set_world_px(px: Vector2) -> void:
 
 static func _apply_view(m: ShaderMaterial, kind: PartKind) -> void:
 	m.set_shader_parameter("px_scale", view_px)
-	var lod_kind: bool = (
-		kind == PartKind.LIMB
-		or kind == PartKind.COLLAR
-		or kind == PartKind.CORE
-		or kind == PartKind.HEAD
-	)
+	var lod_kind: bool = kind == PartKind.LIMB or kind == PartKind.COLLAR or is_core(kind)
 	m.set_shader_parameter("limb_lod", 1.0 if lod_kind and view_px < flat_below else 0.0)
 
 
 static func _lod_fill(kind: PartKind) -> float:
 	if kind == PartKind.COLLAR:
 		return COLLAR_LOD_FILL
-	if kind == PartKind.CORE:
+	if kind == PartKind.CORE or kind == PartKind.TAN_CORE:
 		return 2.0
 	if kind == PartKind.HEAD:
 		return HEAD_LOD_FILL
 	return 0.0
+
+
+## The collar robot's body stickers: the cream core, Rivet's tan core and his visor head.
+static func is_core(kind: PartKind) -> bool:
+	return kind == PartKind.CORE or kind == PartKind.TAN_CORE or kind == PartKind.HEAD
