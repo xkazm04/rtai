@@ -140,3 +140,12 @@ func camera_row(weapon: StringName, hit_class: StringName, lethal: bool) -> Dict
 		out["kill_hitstop"] = beat_kill_hitstop if beat_mode else kill_hitstop
 		out["kick_px"] = kpx * kill_kick_scale
 	return out
+
+
+## The fire side of `weapon` (hit_feel.json `weapons` fire_kick_px / fire_kick_ticks): a camera
+## kick against the aim on each round Rivet fires (recoil, a Gatling's steady rumble). Zero = none.
+func fire_row(weapon: StringName) -> Vector2:
+	var over: Dictionary = _weapons.get(weapon, {})
+	var px: float = over.get("fire_kick_px", 0.0)
+	var ticks: float = over.get("fire_kick_ticks", 1.0)
+	return Vector2(px, ticks)

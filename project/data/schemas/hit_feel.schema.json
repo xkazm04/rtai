@@ -124,6 +124,14 @@
             "minLength": 1,
             "type": "string"
           },
+          "fire_kick_px": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "fire_kick_ticks": {
+            "minimum": 1,
+            "type": "number"
+          },
           "hitstop": {
             "type": "string"
           },

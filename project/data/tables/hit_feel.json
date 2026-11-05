@@ -153,22 +153,27 @@
       "stagger_ticks": 0
     }
   ],
-  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6). Lane n7-ranged: kick_px / kick_ticks are a directional camera kick along the hit (screen px at any zoom, easing back over the ticks; FeelCam), kill_kick_scale makes a kill kick harder, `weapons` overrides a class's hitstop / shake / kick per weapon id, and `cap` is the restraint (FeelBudget). --feel=off turns every camera effect of a hit off (before clips).",
+  "doc": "Shared hit feel (lane gunplay): one row per damage class, used by guns, melee and ghost powers alike. hitstop and shake name camera.json ids (the rig scales both to 0 under reduced motion and enforces the hit-stop cooldown); a lethal hit uses kill_hitstop instead. reaction is the hook enemy-ai plays. Under a beat mode (a scripted kill beat, d5-combat REQUEST 3) a lethal hit uses beat_kill_hitstop (boss_hit, 8 ticks) instead of kill (6). Lane n7-ranged: kick_px / kick_ticks are a directional camera kick along the hit (screen px at any zoom, easing back over the ticks; FeelCam), kill_kick_scale makes a kill kick harder, `weapons` overrides a class's hitstop / shake / kick per weapon id, and `cap` is the restraint (FeelBudget). --feel=off turns every camera effect of a hit off (before clips). fire_kick_px / fire_kick_ticks (weapons rows) kick the camera against the aim on each round Rivet fires.",
   "kill_hitstop": "kill",
   "kill_kick_scale": 1.5,
   "schema": "gtai.hit_feel/1",
   "weapons": [
     {
-      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap.",
+      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 0.7 px kick against the aim per round (4 ticks), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur.",
+      "fire_kick_px": 0.7,
+      "fire_kick_ticks": 4,
       "hitstop": "",
       "id": "gatling",
       "kick_px": 0.8,
       "shake": ""
     },
     {
-      "doc": "Rate of fire: a smaller kick than the pistol.",
-      "id": "machine_pistol",
-      "kick_px": 0.6
+      "doc": "The heavy single shot: a bigger kick than its class. Fire: a 2 px recoil kick.",
+      "fire_kick_px": 2,
+      "fire_kick_ticks": 7,
+      "id": "hand_cannon",
+      "kick_px": 5,
+      "kick_ticks": 10
     },
     {
       "doc": "Several shards land together: no per-shard stop (the kill still stops).",
@@ -176,10 +181,9 @@
       "id": "homing_shard"
     },
     {
-      "doc": "The heavy single shot: a bigger kick than its class.",
-      "id": "hand_cannon",
-      "kick_px": 5,
-      "kick_ticks": 10
+      "doc": "Rate of fire: a smaller kick than the pistol.",
+      "id": "machine_pistol",
+      "kick_px": 0.6
     },
     {
       "doc": "The biggest hit in the arsenal: the long stop, the full kick and its own deeper, longer shake (camera.json nuke).",
@@ -188,6 +192,12 @@
       "kick_px": 10,
       "kick_ticks": 18,
       "shake": "nuke"
+    },
+    {
+      "doc": "Fire: the launch shoves the camera 3 px back along the tube (10 ticks); the hit keeps its blast class.",
+      "fire_kick_px": 3,
+      "fire_kick_ticks": 10,
+      "id": "rocket_launcher"
     }
   ]
 }
