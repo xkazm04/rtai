@@ -110,6 +110,9 @@ var leg_rim: bool = false
 ## n5-cast (r2_c7): the head prints the welder-visor slot at gameplay scale (PartMaterials HEAD;
 ## the helmet art must face +x). Rivet only; King's crown has no visor.
 var head_visor: bool = false
+## n5-cast (r2_c3): the core sticker at gameplay scale prints the tan work plates
+## (PartMaterials TAN_CORE, CORE_TAN). Rivet only; King's core stays cream.
+var core_tan: bool = false
 ## n5-cast (r2_c3): how far the D5 close-up print (look_d5_part `warm`) moves this body's steel
 ## ramp from the violet-grey toward the hybrid target's warm tan metal; 0 = the violet-grey steel.
 var d5_warm: float = 0.0
