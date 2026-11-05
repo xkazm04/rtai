@@ -524,7 +524,8 @@ NEXT (iteration 6):
    apparition (one GhostApparition on print_stage.actor_layer() bound to stage.events() and stepped at Rivet,
    the wiring voice_quest1.gd shows) or leave it to the owner's call in REPORT. Pick, record a DECISION.
 3. Apparition scale is settled (0.6 Tonnage, A/B 03:28); `--teal-forms` A/B done (03:32). Weakest left: Ohm's
-   arms at 32 px/m (thin even with the rim): try 0.28 m arms or a copper-bright forearm, A/B at the same ticks.
+   arms at 32 px/m. Thickness is ruled out (0.30 m A/B, 03:33: no gain); try longer forearms (0.54 -> 0.66 m) or a
+   copper-bright forearm (contrast on asphalt), A/B at the same city ticks.
 4. Keep REPORT.md current (iteration 5 gates are in "Gates (iteration 5)"). The director reel and evidence runner
    last ran on 8b6327f3 (all PASS); re-run after the next change.
 Session state 03:49: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock
