@@ -32,6 +32,12 @@ LIFT_FROM = 40
 LIFT_K = 1.55
 ## Where the visor band starts across the helmet (0.30 = the old full visor).
 VISOR_FROM = 0.60
+## n7-king it7: a steel dome painted over the thug's round optic (the white ring and black pupil
+## printed as a black disc at 32 px/m: the target's gang have steel helmets with shades at the
+## front). DOME False = the it5 helmet (optic kept beside the visor band).
+DOME = True
+STEEL = (158, 154, 146, 255)
+STEEL_HI = (206, 202, 192, 255)
 HEAD = '[remap]\n\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]'
 
 
@@ -47,6 +53,10 @@ def helmet(img):
     w, h = img.size
     d = ImageDraw.Draw(img)
     lw = max(3, w // 30)
+    if DOME:
+        d.ellipse((w * 0.12, h * 0.14, w * 0.84, h * 0.86), fill=STEEL, outline=INK, width=lw)
+        d.arc((w * 0.22, h * 0.24, w * 0.74, h * 0.76), 150, 250, fill=STEEL_HI, width=lw + 2)
+        d.line((w * 0.20, h * 0.50, w * 0.60, h * 0.50), fill=INK, width=max(2, lw // 2))
     # it5: a front band (the helmet's steel dome reads from above; it was 0.30-0.92, a black disc)
     box = (w * VISOR_FROM, h * 0.18, w * 0.94, h * 0.82)
     d.rounded_rectangle(box, radius=w * 0.10, fill=SHADE, outline=INK, width=lw)
