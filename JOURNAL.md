@@ -731,3 +731,23 @@ it Servo-side).
   no tuning. Evidence `numbers-it6-lock05/`, `numbers-it6-read1-lock035/`, `numbers-it6-read1-lock05/`.
   Rule applied (encounter-balance-simulation): judge an attack against a reading model, the
   standing floor and the dodging ceiling separately, never one blended rate.
+- 23:30 GATES on a1828ea2 (the merge): scenarios 52 ran / 1 failed: `scenario_city_chase` 2 ms nav
+  budget (max 3113 us) while my numbers sweeps ran beside it (CONTENDED; the known flake). Re-run
+  alone: **1 ran, 0 failed** (`evidence/servo/scenarios-it6.log`, `scenarios-it6-citychase-rerun.log`).
+- 23:40 FOUND: servo.md promises "Kerf's blink cuts a line of drones", but Kerf cuts only its one
+  target (`ghost_attacks.json kerf.path_cut_m` 0 is the owner's crowd-wide call, ghost-powers lane).
+  MILESTONE 544c2cec **`bosses.json kerf_line_m`** (generic, optional, default 0): every Kerf blink
+  since the last step also cuts each live body of the boss script (`BossMoves.bodies()`) within
+  that width of the line (`BossKerfLine`, called from BossHook.step; telemetry `kerf_line_cuts`;
+  reads the sim's blink trail, so it replays). Servo 0.6 m. path_cut_m untouched (humans and cops
+  are not affected). DECISION: a boss-row value, not path_cut_m (that one changes Kerf in every
+  fight). Alternative: `kerf_line_m` 0. Unit `test_boss_kerf_line` 2/2; unit **1173/0**
+  (`unit-it6b.log`). p2, `--servo-ghost=kerf`, seeds 2-3: 3 extra drones cut per run, 0 SCRIPT ERROR.
+- 23:44 Tried aiming the Kerf bot along the densest line of drones (instead of the thickest knot):
+  same blinks and the same 3 cuts on seeds 2-3: no gain, reverted (not committed).
+- 23:47 FILM `M/servo_ghost_kerf_line_cut_48ppm_it6.mp4` (p2, seed 2, 48 px/m, boss cam, 8 s,
+  0 SCRIPT ERROR). **Looked at** 10 fps keys (`M/frames/servo_kerf_line_cut_keys_48ppm_it6.png`):
+  the teal blink line crosses the rack's edge, three drones on it drop as ink rings, Servo is
+  sliced. FOUND, open: a cut drone shows the generic ink-ring fall, not Kerf's teal-white cut edge
+  (the drones have their own fall, not the split-kill view). frames.json 15 (the kamikaze keys
+  still and the Dent A/B still dropped: their clips stay).

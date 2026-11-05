@@ -89,6 +89,8 @@ the boss loop come with the framework's music (n7-king's iteration-3 item).
   `rotor_dash` windup spends poise.
 - **Kerf** (blink-and-slice line): the blink line **cuts every drone it crosses** (a line of a
   `package_carpet` formation); blinking through the dash lane puts Rivet behind Servo in the vent.
+  Built: `bosses.json servo.kerf_line_m` 0.6 (BossKerfLine): drones within 0.6 m of a blink line
+  are cut with the target (Kerf's `path_cut_m` stays 0: humans are cut one at a time).
 - **Tonnage** (plates 0.3, press slam): plates make packages survivable; the slam breaks crates
   and hits Servo on a `bay_hop` landing; it cannot hit drones in the air.
 - **Rivet's weapons:** any gun kills a drone in one hit (they are the light targets); the
