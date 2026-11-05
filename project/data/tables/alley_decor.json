@@ -137,7 +137,7 @@
       2
     ]
   ],
-  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). roofs = the buildings either side seen from straight above (AlleyRoofs: tar roof, brick lip and coping on the alley face, AC boxes, vents); cracks/stains/drains/puddles = the asphalt; cans = trash cans; fences = the chain-link mesh drawn over the station's thin wall; escapes = fire escapes over the cast. waves = the alley's ArenaPit rule (both ends: spawns north and south). bags = decor-only bag piles (no collision); litter = flat cardboard and paper [x, y, w, h, degrees]; tones = fills (see tones.doc).",
+  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). roofs = the buildings either side seen from straight above (AlleyRoofs: tar roof, brick lip and coping on the alley face, AC boxes, vents); cracks/stains/drains/puddles = the asphalt; cans = trash cans; fences = the chain-link mesh drawn over the station's thin wall; escapes = fire escapes over the cast. waves = the alley's ArenaPit rule (both ends: spawns north and south). bags = decor-only bag piles (no collision); litter = flat cardboard and paper [x, y, w, h, degrees]; tones = fills (see tones.doc). grime = lane grime (iteration 10, r2_a6): count soft dark blotches hash-placed over the lane rect [x, y, w, h] (default the alley area; the visible lane between the roofs) (size_m diameter range, tone with alpha, seed) and a dirt band edge_m wide at alpha edge_a along both wall feet (0: the print bands the soft band into a hard grey strip that reads as a cast shadow, which the owner banned), wall_bias (1 = blotches uniform across the lane, < 1 crowds them toward the wall feet); count 0 + edge_m 0 = before.",
   "drains": [
     [
       20.2,
@@ -186,6 +186,24 @@
       5
     ]
   ],
+  "grime": {
+    "count": 100,
+    "edge_a": 0.5,
+    "edge_m": 0,
+    "lane": [
+      -3,
+      -40,
+      55,
+      5
+    ],
+    "seed": 1,
+    "size_m": [
+      0.2,
+      0.9
+    ],
+    "tone": "#3A342E59",
+    "wall_bias": 0.6
+  },
   "litter": [
     [
       5.2,

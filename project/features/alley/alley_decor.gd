@@ -58,6 +58,9 @@ func _draw() -> void:
 			_turned(ESCAPE, rect_px(e, _base))
 		return
 	draw_rect(_floor, tone(_rows, "asphalt", Color("#6F6964")), true)
+	var grime: Dictionary = _rows.get("grime", {})
+	var lane: Rect2 = rect_px(grime["lane"], _base) if grime.has("lane") else _floor
+	AlleyProps.grime(self, lane, grime)
 	var tones: Dictionary = _rows.get("tones", {})
 	var stain_a: float = tones.get("stain_a", 0.8)
 	_decals("stains", OIL, Color(1, 1, 1, stain_a))

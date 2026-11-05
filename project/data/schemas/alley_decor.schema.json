@@ -72,6 +72,57 @@
       },
       "type": "array"
     },
+    "grime": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "maximum": 400,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "edge_a": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "edge_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lane": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "seed": {
+          "type": "number"
+        },
+        "size_m": {
+          "items": {
+            "maximum": 3,
+            "minimum": 0.05,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "tone": {
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
+          "type": "string"
+        },
+        "wall_bias": {
+          "maximum": 1,
+          "minimum": 0.2,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "litter": {
       "items": {
         "items": {

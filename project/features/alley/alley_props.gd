@@ -66,3 +66,57 @@ static func litter(ci: CanvasItem, v: Variant, base: Vector2) -> void:
 		ci.draw_line(Vector2(0.0, l.position.y), Vector2(0.0, l.end.y), Color(Ink.INK, 0.5), 1.0)
 	ci.draw_rect(l, Ink.INK, false, 1.5)
 	ci.draw_set_transform(Vector2.ZERO)
+
+
+## Lane grime (r2_a6): `count` soft dark blotches hashed over the lane, each a lumpy core with
+## two satellites (wall_bias < 1 crowds them toward the wall feet), plus a dirt band along both
+## wall feet. Hash-placed from the index and `seed` (view only: no RNG stream, so replay and
+## parity are untouched). count 0 + edge_m 0 = none.
+static func grime(ci: CanvasItem, lane: Rect2, spec: Dictionary) -> void:
+	var tone: Color = Color(str(spec.get("tone", "#3A342E59")))
+	var edge_m: float = spec.get("edge_m", 0.0)
+	var edge: float = edge_m * Ink.PX_PER_M
+	if edge > 0.0:
+		var edge_a: float = spec.get("edge_a", 0.3)
+		var ea: Color = Color(tone, edge_a)
+		_band(ci, lane.position, Vector2(lane.size.x, edge), ea)
+		_band(ci, Vector2(lane.position.x, lane.end.y), Vector2(lane.size.x, -edge), ea)
+	var raw: Array = spec.get("size_m", [0.3, 1.0])
+	var sz: PackedFloat32Array = PackedFloat32Array(raw)
+	var seed: float = spec.get("seed", 1.0)
+	var count: int = spec.get("count", 0)
+	var bias: float = spec.get("wall_bias", 1.0)
+	for i: int in count:
+		var v: float = _h(i, seed + 7.1) * 2.0 - 1.0  # across the lane, pushed to the wall feet
+		v = 0.5 + 0.5 * signf(v) * pow(absf(v), bias)
+		var at: Vector2 = lane.position + lane.size * Vector2(_h(i, seed), v)
+		var t: float = _h(i, seed + 3.3)
+		var rad: float = lerpf(sz[0], sz[1], t * t) * Ink.PX_PER_M * 0.5
+		_blot(ci, at, rad, tone, i + seed)
+		for k: int in 2:
+			var dir: Vector2 = Vector2.from_angle(TAU * _h(i * 2 + k, seed + 5.9))
+			_blot(ci, at + dir * rad * 1.25, rad * 0.35, tone, i + k + seed * 2.0)
+
+
+## A band from `p` across `size` (its height may be negative): `c` at the wall, clear inward.
+static func _band(ci: CanvasItem, p: Vector2, size: Vector2, c: Color) -> void:
+	var clear: Color = Color(c, 0.0)
+	var pts: PackedVector2Array = PackedVector2Array(
+		[p, p + Vector2(size.x, 0.0), p + size, p + Vector2(0.0, size.y)]
+	)
+	ci.draw_polygon(pts, PackedColorArray([c, c, clear, clear]))
+
+
+static func _blot(ci: CanvasItem, at: Vector2, rad: float, c: Color, s: float) -> void:
+	var pts: PackedVector2Array = PackedVector2Array()
+	var grown: int = pts.resize(12)
+	assert(grown == OK)
+	for k: int in 12:
+		var a: float = TAU * k / 12.0
+		var lump: float = 0.75 + 0.5 * _h(k, s)
+		pts[k] = at + Vector2(cos(a), sin(a) * 0.8) * rad * lump
+	ci.draw_colored_polygon(pts, c)
+
+
+static func _h(i: int, s: float) -> float:
+	return fposmod(sin(i * 12.9898 + s * 78.233) * 43758.5453, 1.0)
