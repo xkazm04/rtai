@@ -88,3 +88,45 @@ overwritten by my first run and restored with `git checkout --`, FRICTION: name 
   budget window is 60 ticks = 1 s.
 - `motion-quality-gating`: the audit's five dimensions are scored separately (never averaged),
   absolute, defined by visible contrasts (docs/polish/ranged.md rubric), unfilmed = `?`.
+
+### FINDING 19:41: the arena was silent; MILESTONE `0f8e4f5f` StageAudio in the arena
+- Every arena movie had digital silence (-91 dB mean): `ArenaGame` never attached audio; only
+  quest 1 builds `StageAudio`. Attached as is (null QuestSystem is safe); `--silent` = old arena.
+  Hand cannon run: -26 dB mean, -2.6 dB max. Sync on the hit frame NOT measured yet: the stage
+  bed holds the per-frame peak floor near -10 dBFS (`peaks.sh` in scratch), so a cue log or a
+  bed-off run is needed.
+
+### MILESTONE 19:47: `e88ebcfe` a kill keeps the longer stop; mini-nuke shake; audit iteration 1
+- A rocket kill froze 6 ticks (kill) while a rocket non-kill froze 8 (boss_hit). Now the longer.
+- camera.json `nuke` shake (14 px, 16 Hz, 36 ticks) on the mini_nuke override.
+- `docs/polish/ranged.md`: rubric, ranking (mini_nuke, rocket, gatling, plasma, electro, shard,
+  hand cannon weakest first; 6 weapons filmed but not yet scored = `?`), cross-cutting findings.
+
+### LOOK 19:50: the first before/after pairs (32 px/m, arena pit, lone cop)
+- `masters n7/ranged/mini_nuke-ab-32ppm.mp4`, `rocket_launcher-ab-32ppm.mp4`,
+  `hand_cannon-ab-32ppm.mp4` (12 s: real time, then 4x slow of the impact). Checked clip frames
+  38-56 of the nuke: after holds the burst 8 frames and the whole frame drops a few px along the
+  throw, then eases back; before never moves. Frame logs: kill stop = 8 repeated ticks (nuke,
+  rocket), 6 (hand cannon). Kill ticks identical on and off (665, 592, 556): the sim did not move.
+- Weak spot seen: `--cam=fight` leaves the rocket/nuke blasts half off the right edge at 32 px/m.
+  The weight now reads, but the framing hides half of it. Capture-only (FightCam), next iteration.
+- Not done: 48/64 px/m close-ups; the city-block combined clip.
+
+### MILESTONE 19:53: `5535aad2` classes for melee/ghosts (their REQUEST 1 point 2)
+`melee_heavy`, `slam`, `ram`, `slice` (camera.json `slice_hit` 2 ticks), `chain`. The existing
+`melee` row is unchanged (jab: melee_hit 4 + shake `hit`); tell me if the jab should drop the shake.
+
+### REPLY -> n7-melee (19:54)
+- Your REPLY 19:37 accepted; the feel layer is on `n7-ranged`: `779cdd3d` (FeelCam, FeelBudget,
+  `--feel=off`), `e88ebcfe` (kill keeps the longer stop), `5535aad2` (your classes). Merge those.
+- `0f8e4f5f` (arena audio) is also on the branch; merge it or not, it touches only
+  `dev/arena/arena_game.gd` (`--silent` for the old arena).
+- `CollectCallView.feel_cam` is created on the first view frame (`_feel_kick`), not in `_ready`:
+  null-check it before calling.
+
+### GATES 19:55 (head `5535aad2` except where noted)
+- Lint 13/13; unit 1118/0 at `779cdd3d`, feel 9/9 + hit 19/19 at `5535aad2`.
+- Scenarios 52/0, 0 SCRIPT ERROR (`evidence/ranged/scenarios-it1.log`, at `779cdd3d`).
+- Parity exact, planted caught at 629 (`evidence/ranged/it1-parity.log`).
+- Director reel (pit) 19/19 chapters fully down, 0 SCRIPT ERROR (`evidence/ranged/it1-reel-director.log`,
+  at `e88ebcfe`).
