@@ -12,8 +12,14 @@ extends RefCounted
 const ID: StringName = &"ohm"
 const GHOST: StringName = &"ohm"
 const WEAPON: StringName = &"ohm_bolt"
-## The electrode fingertips: this far ahead of Rivet's centre (metres).
+## The electrode fingertips: this far ahead of Rivet's centre (metres), until the form row's
+## electrode_l / electrode_r anchors are set (GhostPilot: ghost_forms.json).
 const HANDS_M: float = 0.45
+
+## The two electrode fingertips in the body frame (+x forward, +y right, metres).
+var electrodes: PackedVector2Array = PackedVector2Array(
+	[Vector2(HANDS_M, -0.18), Vector2(HANDS_M, 0.18)]
+)
 
 var powers: SoulPowers
 var attacks: GhostAttacks
@@ -24,6 +30,8 @@ var activations: int = 0
 ## The last bolt: its tick (-1 = none) and the path, fingertips first (metres).
 var bolt_tick: int = -1
 var bolt_path: PackedVector2Array = PackedVector2Array()
+## The last bolt's aim (unit): the view turns the electrodes by it (two prongs into the first body).
+var bolt_aim: Vector2 = Vector2.RIGHT
 ## Each path point's source point (its index in bolt_path; -1 for the fingertips): the chain's
 ## previous body, or on the mass arc the first body (the arc fans out from it).
 var bolt_from: PackedInt32Array = PackedInt32Array()
@@ -37,6 +45,18 @@ func _init(table: PowerTable, p_attacks: GhostAttacks = null) -> void:
 
 
 ## GhostPilot: the form's one SoulPowers drives the soul (no own activate or tick).
+## The fingertips from the form row (zero anchors keep the default).
+func set_electrodes(left: Vector2, right: Vector2) -> void:
+	if left != Vector2.ZERO and right != Vector2.ZERO:
+		electrodes = PackedVector2Array([left, right])
+
+
+## The fingertips in the world (metres) for a body at `pos` facing `aim`.
+func tips(pos: Vector2, aim: Vector2) -> PackedVector2Array:
+	var a: float = aim.angle()
+	return PackedVector2Array([pos + electrodes[0].rotated(a), pos + electrodes[1].rotated(a)])
+
+
 func share(p_powers: SoulPowers) -> void:
 	powers = p_powers
 	_shared = true
@@ -73,7 +93,9 @@ func owns_melee() -> bool:
 
 func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 	var arena: CombatArena = stage.arena
-	var hands: Vector2 = arena.rivet.pos + aim * HANDS_M
+	var hands: Vector2 = (
+		arena.rivet.pos + ((electrodes[0] + electrodes[1]) * 0.5).rotated(aim.angle())
+	)
 	var bodies: Array[Fighter] = []
 	var pos: PackedVector2Array = PackedVector2Array()
 	var first: int = -1
@@ -91,6 +113,7 @@ func _bolt(stage: CollectCallStage, aim: Vector2) -> void:
 	_gap = PowerDef.ticks(num(&"bolt_gap_s"))
 	bolts += 1
 	bolt_tick = stage.tick
+	bolt_aim = aim
 	bolt_path = PackedVector2Array([hands])
 	bolt_from = PackedInt32Array([-1])
 	if first < 0:
