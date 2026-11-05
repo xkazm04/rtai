@@ -105,7 +105,8 @@
     {
       "files": [
         "flash_energy_",
-        "plasma_bolt"
+        "plasma_bolt",
+        "plasma_comet"
       ],
       "id": "plasma",
       "note": "white-hot, gold rim",

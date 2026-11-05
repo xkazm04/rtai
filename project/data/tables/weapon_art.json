@@ -498,7 +498,7 @@
         252,
         32
       ],
-      "art": "res://features/combat/weapons/art/fx/plasma_bolt.png",
+      "art": "res://features/combat/weapons/art/fx/plasma_comet.png",
       "id": "plasma_bolt",
       "size_px": [
         260,
