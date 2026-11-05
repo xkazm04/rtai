@@ -762,3 +762,7 @@ Session state 05:56: head = this commit, tree clean after it, no Godot process o
   no git, so those two entries were rebuilt from this JOURNAL (files intact). Fold entries into notes, never trim
   the tail blindly. frames.json 15: the city cycle first (names the glow A/B); ohm-morph clip named in the
   ohm-vs-target entry (file kept).
+- 06:31 CHECK the wider Ohm glow under his voice apparition (OhmRig is shared with GhostApparition):
+  `--arena=city --bot=forms --form=voices --apparition`, 1020 frames, 0 SCRIPT ERROR; frames 690-930 every 30, x1.5
+  crops. Judged: the teal Ohm figure beside Rivet reads as before; the washed glow stays faint and does not spill
+  over Rivet. No change needed; scratch deleted.
