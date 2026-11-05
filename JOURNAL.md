@@ -929,3 +929,13 @@ Session state 08:21: head = this commit, tree clean, no Godot process of mine ru
   identical to it13, 0 SCRIPT ERROR (`E/director-reel-it13b-powers.log`). Scenarios and parity were not re-run after
   this merge (it changes no sim code; both passed on 1d2c9491).
 - 08:25 FREEZE. Session state: head = this commit, tree clean, no Godot process of mine running, no lock held.
+
+## Iteration 14 (08:25-08:30, BUILD slot inside the freeze window)
+- 08:26 CHECK: n5-cast f28d8b9b and n6-ghost-forms 065e564f moved docs only since 3a1ec6b8; `git diff HEAD
+  n6-ghost-forms -- project` is empty (their 52ce7f31 resolves the same n5-cast merge to the same code as ours).
+  Nothing merged; no gate re-run needed (no code change since it13b's unit 1020/0 and reel 16/16).
+- No new build work started: 5 min to freeze, too short to finish any item end to end (depth before breadth).
+
+NEXT (ghost-powers, after the morning merge): unchanged from iteration 11's list (robot fighter in CombatArena;
+the city's own parked cars as VehicleBody in quest 1; tier-1 rows for Tonnage/Dent/Kerf; the owner's calls in
+REPORT). Session state 08:27: head = this commit, tree clean, no Godot process of mine running, no lock held.
