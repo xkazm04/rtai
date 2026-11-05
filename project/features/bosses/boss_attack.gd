@@ -30,6 +30,9 @@ var width_m: float = 1.0
 var arc_deg: float = 45.0
 var radius_m: float = 2.0
 var move_mps: float = 0.0
+## A circle that leaps: its ring tracks Rivet up to this far out, and the boss hops onto it
+## through the lock (0 = the ring stays on the boss).
+var leap_m: float = 0.0
 var min_m: float = 0.0
 var max_m: float = 100.0
 var weight: float = 1.0
@@ -57,6 +60,7 @@ static func from_row(t: DataTable, p_id: String, row: Dictionary) -> BossAttack:
 	a.arc_deg = opt(row, "arc_deg", a.arc_deg)
 	a.radius_m = opt(row, "radius_m", a.radius_m)
 	a.move_mps = opt(row, "move_mps", a.move_mps)
+	a.leap_m = opt(row, "leap_m", a.leap_m)
 	var adds: Dictionary = opt_object(row, "adds")
 	a.adds_archetype = StringName(str(adds.get("archetype", "")))
 	a.adds_count = roundi(opt(adds, "count", 0.0))

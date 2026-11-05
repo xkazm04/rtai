@@ -18,6 +18,20 @@ const RIDERS: Array[Vector2] = [
 ## Where King sits on the car (the throne), metres back from its centre.
 const THRONE_M: float = -0.55
 const RIDER_ID: int = 9190
+## King's gold leaf (print_part swap 5) on his chest and press arms: the target's gold-leafed
+## plates, kept at 32 px/m where the part art's own gold is lost to the flat stickers. -1 = the
+## plain cream-and-steel d5 King (the iteration-2 look).
+const GOLD_SWAP: int = 5
+## Which arm strikes per attack (BodyPlan.L / R, 2 = both press plates); others: by body id.
+const ATTACK_ARMS: Dictionary[StringName, int] = {
+	&"press_slam": 2, &"charge": BodyPlan.L, &"decree": BodyPlan.R, &"coin_fan": BodyPlan.L
+}
+## Attacks whose tell lifts both arms over the head (the press plates up before the slam).
+const RAISE_IN_TELL: Array[StringName] = [&"press_slam"]
+## A downed add lies this long, then inks out and sinks into its oil over ADD_FADE_S (the
+## arena's CorpseFade look: never alpha, the part print discards it), then leaves the floor.
+const ADD_LINGER_S: float = 6.0
+const ADD_FADE_S: float = 1.5
 ## Pose steps caught up in one frame at most (a hitch never fast-forwards a long clip).
 const MAX_STEPS: int = 4
 
@@ -25,6 +39,7 @@ var _rigs: Dictionary[int, CutRig] = {}
 var _last: Dictionary[int, Vector2] = {}
 var _hurt_seen: Dictionary[int, int] = {}
 var _was: Dictionary[int, int] = {}
+var _down_at: Dictionary[int, int] = {}
 var _tick: int = -1
 var _steps: int = 0
 
@@ -35,10 +50,8 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 	_steps = 0 if _tick < 0 else clampi(fight.now() - _tick, 0, MAX_STEPS)
 	_tick = fight.now()
 	var b: Fighter = fight.body
-	var on_car: bool = fight.phase <= 1
-	var at: Vector2 = Ink.px(b.pos) + windup_px
-	if on_car:
-		at += b.facing * THRONE_M * Ink.PX_PER_M
+	var on_car: bool = fight.phase <= 1 and KingBeats.step_k(fight) <= 0.0
+	var at: Vector2 = KingBeats.king_px(fight, windup_px)  # the throne, the step-down, on foot
 	var king: CutRig = _rig(b.id, true, at, b.facing)
 	_place(king, b.id, at, b.facing, Vector2.ZERO if on_car else Vector2.INF)
 	_react(king, b, fight)
@@ -53,19 +66,45 @@ func pose(fight: BossFight, adds: BossAdds, windup_px: Vector2) -> void:
 		var g: CutRig = _rig(f.body.id, false, Ink.px(f.body.pos), f.body.facing)
 		_place(g, f.body.id, Ink.px(f.body.pos), f.body.facing, Vector2.INF)
 		_react(g, f.body, f)
+		_fade_down(g, f, fight.now())  # a downed add is no longer stepped: the boss's clock
 
 
 func _rig(id: int, is_king: bool, at: Vector2, facing: Vector2) -> CutRig:
 	if not _rigs.has(id):
 		var rig: CutRig = CutRig.new()
 		add_child(rig)
-		rig.setup(KingPlan.build(KING_SIZE_K) if is_king else GangPlan.build(), RigVariant.rivet())
+		rig.setup(king_plan() if is_king else GangPlan.build(), RigVariant.rivet())
 		rig.actor_id = id
 		rig.position = at
 		rig.snap_facing(facing.angle())
 		_rigs[id] = rig
 		_last[id] = at
 	return _rigs[id]
+
+
+## A downed add inks out and sinks after ADD_LINGER_S, then hides.
+func _fade_down(rig: CutRig, f: BossFight, now: int) -> void:
+	if f.state != BossFight.State.DEFEATED:
+		return
+	var at: int = _down_at.get(f.body.id, -1)
+	if at < 0:
+		_down_at[f.body.id] = now
+		return
+	var k: float = (float(now - at) * SimClock.TICK_DT - ADD_LINGER_S) / ADD_FADE_S
+	if k <= 0.0:
+		return
+	rig.visible = k < 1.0
+	rig.modulate = Color.WHITE.lerp(Ink.INK, clampf(k, 0.0, 1.0))
+	rig.scale = Vector2.ONE * CutRig.SC * rig.plan.size_k * lerpf(1.0, 0.45, clampf(k, 0.0, 1.0))
+
+
+## King's boss plan: KingPlan at boss size with the gold leaf (KingPlan itself stays the plain
+## robot the enemy-ai thug is built from).
+static func king_plan() -> BodyPlan:
+	var p: BodyPlan = KingPlan.build(KING_SIZE_K)
+	p.torso_swap = GOLD_SWAP
+	p.arm_swap = GOLD_SWAP
+	return p
 
 
 ## `vel` INF = the stride from the frame's own motion; a given vel overrides it (seated: zero).
@@ -83,13 +122,22 @@ func _place(rig: CutRig, id: int, at: Vector2, facing: Vector2, vel: Vector2) ->
 	RigDetail.sync(rig)
 
 
-## A new hurt tick shoves the frame; the active window's first frame strikes; death powers down.
+## A new hurt tick shoves the frame (never cancels the attack); each attack plays on the rig from
+## its windup: the arm twists back through the tell, strikes on the active window and eases back
+## over the recovery (RigClips.strike on the attack's own timing); the slam raises both press
+## plates over the head through its tell; death powers down.
 func _react(rig: CutRig, body: Fighter, f: BossFight) -> void:
 	if body.hurt_tick > _hurt_seen.get(body.id, body.hurt_tick) and body.alive():
 		rig.hit(-body.facing, HIT_SHOVE)
 	_hurt_seen[body.id] = body.hurt_tick
-	if f.state == BossFight.State.ACTIVE and _was.get(body.id, -1) != BossFight.State.ACTIVE:
-		rig.clips.punch(body.id % 2)
+	if f.state == BossFight.State.WINDUP and _was.get(body.id, -1) != BossFight.State.WINDUP:
+		var a: BossAttack = f.attack
+		var dt: float = SimClock.TICK_DT
+		var arm: int = ATTACK_ARMS.get(a.id, body.id % 2)
+		rig.clips.strike(rig, a.windup * dt, a.active * dt, a.recovery * dt, arm)
+	rig.clips.fleeing = (
+		f.state == BossFight.State.WINDUP and f.attack != null and RAISE_IN_TELL.has(f.attack.id)
+	)
 	_was[body.id] = f.state
 	if f.state == BossFight.State.DEFEATED and not rig.clips.down:
 		rig.clips.down = true

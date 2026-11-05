@@ -175,6 +175,8 @@ func _step_windup(target: Vector2) -> void:
 	if not locked:
 		_track(target)
 		locked = t >= attack.windup - attack.lock and not plant_no_lock
+	elif attack.leap_m > 0.0:  # the hop onto the locked ring, landing as the windup ends
+		body.pos += (origin - body.pos) / float(maxi(attack.windup - t, 1))
 	if t >= attack.windup:
 		if plant_no_lock:
 			_track(target)
@@ -202,6 +204,8 @@ func _track(target: Vector2) -> void:
 		aim = d.normalized()
 		body.facing = aim
 	origin = body.pos
+	if attack != null and attack.leap_m > 0.0:
+		origin += aim * minf(d.length(), attack.leap_m)
 
 
 func _after_attack() -> void:

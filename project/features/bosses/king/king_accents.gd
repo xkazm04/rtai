@@ -13,6 +13,7 @@ const HEAD_FWD_M: float = 0.12
 const OVER_RIG_Z: int = 40
 
 var view: KingBodyView = null
+var _down_at: int = -1
 
 
 func _process(_delta: float) -> void:
@@ -23,11 +24,15 @@ func _draw() -> void:
 	if view == null or view.fight == null:
 		return
 	var f: BossFight = view.fight
+	var at: Vector2 = KingBeats.king_px(f, view.windup_px())
+	at += f.body.facing * HEAD_FWD_M * Ink.PX_PER_M
 	if f.state != BossFight.State.DEFEATED:
-		var at: Vector2 = Ink.px(f.body.pos) + view.windup_px()
-		if f.phase <= 1:
-			at += f.body.facing * KingRigs.THRONE_M * Ink.PX_PER_M
-		_crown(at + f.body.facing * HEAD_FWD_M * Ink.PX_PER_M, 0.36 * Ink.PX_PER_M)
+		_down_at = -1
+		_crown(at, 0.36 * Ink.PX_PER_M, 0.0)
+	else:  # the defeat beat: the crown falls off his head and rolls away
+		_down_at = f.now() if _down_at < 0 else _down_at
+		var fall: Vector3 = KingBeats.crown_fall(f, _down_at)
+		_crown(at + Vector2(fall.x, fall.y), 0.36 * Ink.PX_PER_M, fall.z)
 	for g: BossFight in view.standing_adds():
 		var c: Vector2 = Ink.px(g.body.pos)
 		var a: float = g.body.facing.angle()
@@ -36,11 +41,11 @@ func _draw() -> void:
 
 
 ## A gold star crown with an ink edge and a dark jewel (vermilion stays the cape's alone).
-func _crown(at: Vector2, r: float) -> void:
+func _crown(at: Vector2, r: float, spin: float) -> void:
 	var pts: Array[Vector2] = []
 	for i: int in 10:
 		var rr: float = r if i % 2 == 0 else r * 0.6
-		pts.append(at + Vector2.from_angle(TAU * float(i) / 10.0) * rr)
+		pts.append(at + Vector2.from_angle(TAU * float(i) / 10.0 + spin) * rr)
 	var poly: PackedVector2Array = PackedVector2Array(pts)
 	draw_colored_polygon(poly, GOLD)
 	draw_polyline(poly + PackedVector2Array([pts[0]]), Ink.INK, 2.0)

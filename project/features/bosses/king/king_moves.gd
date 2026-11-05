@@ -10,6 +10,12 @@ const FOOT_KEEP_M: float = 3.5
 const STALLED_KEEP_M: float = 1000.0
 ## The throne-car's hit radius (its 6.6 x 2.5 m body, round enough for a first pass).
 const CAR_RADIUS_M: float = 2.0
+## Phase 3: King steps down off the car's right side this far; the car stays where it stalled.
+const STEP_DOWN_M: float = 2.4
+
+## Where the stalled car rests from phase 3 on (KingBodyView draws the wreck there).
+var car_at: Vector2 = Vector2.INF
+var car_facing: Vector2 = Vector2.RIGHT
 
 
 func _init() -> void:
@@ -19,3 +25,12 @@ func _init() -> void:
 func phase_entered(f: BossFight, phase: int) -> void:
 	keep_m = [CAR_KEEP_M, STALLED_KEEP_M, FOOT_KEEP_M][mini(phase, 2)]
 	f.body.radius_m = CAR_RADIUS_M if phase <= 1 else f.spec.radius_m
+	if phase >= 2 and car_at == Vector2.INF:
+		car_at = f.body.pos
+		car_facing = f.body.facing
+		f.body.pos += step_down(f.body.facing)
+
+
+## The step-down offset from the car's centre (the throne's right-hand side).
+static func step_down(facing: Vector2) -> Vector2:
+	return facing.orthogonal() * STEP_DOWN_M + facing * KingRigs.THRONE_M
