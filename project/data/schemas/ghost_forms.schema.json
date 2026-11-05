@@ -88,6 +88,10 @@
             "minimum": 10,
             "type": "number"
           },
+          "unlock": {
+            "pattern": "^([a-z][a-z0-9_]*)?$",
+            "type": "string"
+          },
           "upgrade_tier": {
             "maximum": 5,
             "minimum": 0,
@@ -109,6 +113,7 @@
           "size_k",
           "top_mps",
           "turn_dps",
+          "unlock",
           "upgrade_tier"
         ],
         "type": "object"

@@ -3,7 +3,7 @@ extends RefCounted
 ## The part print materials, SHARED by every rig (per-rig materials would break 2D batching):
 ## one per (part kind, hit tint, palette swap). set_view() adapts them all to the screen scale.
 
-enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD, TAN_CORE }
+enum PartKind { PART, LIMB, COLLAR, CORE, HALO, HEAD, TAN_CORE, GUN }
 
 const SHADER_PATH: String = "res://features/characters/print_part.gdshader"
 ## Below this many screen px per part px, Rivet's limbs, collar and core print as flat stickers.
@@ -14,15 +14,25 @@ const LIMB_FILL: float = 0.40
 const COLLAR_LOD_FILL: float = 3.0
 ## Rivet's helmet sticker at gameplay scale: 4 = the cream core with a welder-visor ink slot at
 ## the front (print_part visor_x0, visor_hy; r2_c7), 2 = the plain core sticker (the art's 2 px
-## visor merges into the outline and is lost).
-const HEAD_LOD_FILL: float = 4.0
+## visor merges into the outline and is lost). d7-calls cast-8 (owner, 2026-11-05): the plain head.
+const HEAD_LOD_FILL: float = 2.0
+const HEAD_VISOR_FILL: float = 4.0
 ## n5-cast: Rivet's core sticker below the LOD threshold (TAN_CORE and HEAD, BodyPlan.core_tan),
-## cream (0) to r2_c3's tan work plates (1). King's CORE stays cream.
-const CORE_TAN: float = 1.0
+## cream (0) to r2_c3's tan work plates (1). King's CORE stays cream. d7-calls cast-9 (owner,
+## 2026-11-05): the light tan 0.6 (n5-cast Call 9 A); the full tan was 1.0.
+const CORE_TAN: float = 0.6
+## d7-calls look-8 (owner, 2026-11-05): a held gun prints in the warm tan inks of the weapon
+## sheets (print_part gun_tan: paper -> light gun tan, mid wash -> gun tan, ink kept), darker than
+## Rivet's light-tan body (cast-9) so the two never merge. 0 = the old grey print (--gun-grey).
+const GUN_TAN: float = 1.0
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
 
+## The live head fill and core tan (CastFlags: --rivet-visor, --rivet-tan bring the old defaults).
+static var head_lod_fill: float = HEAD_LOD_FILL
+static var core_tan: float = CORE_TAN
+static var gun_tan: float = GUN_TAN
 static var view_px: float = 0.1
 ## D-Noir (lane noir): 1 prints every body part as an ink mass inside the cream halo rim.
 static var noir: float = 0.0
@@ -38,13 +48,15 @@ static func get_mat(kind: PartKind, tint: bool, swap: int) -> ShaderMaterial:
 	var key: int = int(kind) * 100 + (10 if tint else 0) + swap
 	if not _mats.has(key):
 		if _shader == null:
+			CastFlags.apply()
 			_shader = load(SHADER_PATH) as Shader
 		var m: ShaderMaterial = ShaderMaterial.new()
 		m.shader = _shader
 		m.set_shader_parameter("silhouette", 1.0 if kind == PartKind.HALO else 0.0)
 		m.set_shader_parameter("lod_fill", _lod_fill(kind))
 		var tan: bool = kind == PartKind.TAN_CORE or kind == PartKind.HEAD
-		m.set_shader_parameter("core_tan", CORE_TAN if tan else 0.0)
+		m.set_shader_parameter("core_tan", core_tan if tan else 0.0)
+		m.set_shader_parameter("gun_tan", gun_tan if kind == PartKind.GUN else 0.0)
 		m.set_shader_parameter("limb_fill", LIMB_FILL)
 		m.set_shader_parameter("is_limb", 1.0 if kind == PartKind.LIMB else 0.0)
 		m.set_shader_parameter("tint", 1.0 if tint else 0.0)
@@ -109,7 +121,7 @@ static func _lod_fill(kind: PartKind) -> float:
 	if kind == PartKind.CORE or kind == PartKind.TAN_CORE:
 		return 2.0
 	if kind == PartKind.HEAD:
-		return HEAD_LOD_FILL
+		return head_lod_fill
 	return 0.0
 
 

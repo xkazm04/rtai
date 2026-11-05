@@ -12,7 +12,13 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--blood",
 	"--kill-beat",
 	"--gore",
-	"--rigs"
+	"--rigs",
+	# d7-calls: the old defaults of the owner's 2026-11-05 picks on the main-scene paths (quest 1)
+	"--ghosts-free",
+	"--rivet-form",
+	"--rivet-visor",
+	"--rivet-tan",
+	"--gun-grey",
 ]
 
 var _values: Dictionary[String, String] = {}

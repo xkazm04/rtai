@@ -17,6 +17,8 @@ var turn_dps: float = 0.0
 var enter_ticks: int = 1
 var exit_ticks: int = 1
 var upgrade_tier: int = 0
+## The quest whose completion unlocks this ghost (&"" = free from the start; GhostLocks).
+var unlock: StringName = &""
 ## View only: Rivet's health bar height (m) above the spot while this body stands in.
 var bar_m: float = 1.2
 ## Attack emit points, metres in the body frame (+x forward, +y right).
@@ -38,6 +40,7 @@ static func from_row(t: DataTable, r: Dictionary) -> GhostFormDef:
 	f.enter_ticks = maxi(1, PowerDef.ticks(t.num(r, "enter_s")))
 	f.exit_ticks = maxi(1, PowerDef.ticks(t.num(r, "exit_s")))
 	f.upgrade_tier = t.integer(r, "upgrade_tier")
+	f.unlock = StringName(t.text(r, "unlock"))
 	f.bar_m = t.num(r, "bar_m")
 	var a: Dictionary = t.object(r, "anchors")
 	for key: Variant in a.keys():

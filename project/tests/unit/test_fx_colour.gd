@@ -22,6 +22,7 @@ func test_colour_canvas_takes_the_cells() -> void:
 	assert_false(c.rid.is_valid())
 
 
-func test_shipped_art_names_the_colour_folder() -> void:
-	assert_ne(WeaponFxArt.art().fx_colour_dir, "")
+func test_shipped_art_draws_the_ink_fx() -> void:
+	assert_eq(WeaponFxArt.art().fx_colour_dir, "", "d7-calls look-3: ink (--fx-colour=on = colour)")
+	assert_true(DirAccess.dir_exists_absolute(WeaponFxCells.COLOUR_DIR), "the colour cells stay")
 	assert_null(WeaponFxArt.colour, "lent only during FxView's draw")

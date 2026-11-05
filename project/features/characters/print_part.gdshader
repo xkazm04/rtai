@@ -25,6 +25,9 @@ uniform float collar_ink = 0.3;      // D1 collar: the ink share of each stripe 
 uniform float visor_x0 = 0.66;   // D1 head (lod_fill 4): the welder visor slot starts here (helmet UV.x; the art faces +x)
 uniform float visor_hy = 0.25;   // D1 head: the slot's half height in UV.y about the centre line
 uniform float core_tan = 0.0;   // D1 core/head sticker (lod_fill 2, 4): 0 = cream, 1 = TAN (r2_c3's lit work plates)
+uniform float gun_tan = 0.0;    // d7-calls look-8: 1 on held guns: paper prints GUN_TAN_HI, the mid wash GUN_TAN..GUN_TAN_DK (ink kept)
+uniform float gun_ink_hi = 0.90; // look-8: a gun's solid-ink threshold (the tan carries the mid tones, the darkest marks stay ink)
+uniform float gun_edge = 2.2;    // look-8: a held gun's ink outline, screen px (from its own alpha edge, at every zoom)
 uniform float alpha_cut = 0.45;
 uniform vec2 world_px = vec2(0.0);  // camera world offset in screen px (PartMaterials.set_world_px): tooth + dots world-locked
 uniform float tint = 0.0;         // 1 = hit flash: everything but the ink prints cream (red is blood only; human-reactions 2026-11-04)
@@ -47,6 +50,10 @@ const vec3 CREAM = vec3(0.949, 0.910, 0.835);
 const vec3 VERM  = vec3(0.910, 0.314, 0.165);
 const vec3 TAN   = vec3(0.800, 0.700, 0.565);
 const vec3 TEAL  = vec3(0.122, 0.710, 0.659);
+// look-8: the weapon sheets' warm tan (r1_w1/w2/w3/w6 ~ #B0A080), a value step below Rivet's light-tan body
+const vec3 GUN_TAN_HI = vec3(0.780, 0.700, 0.560);
+const vec3 GUN_TAN    = vec3(0.660, 0.580, 0.450);
+const vec3 GUN_TAN_DK = vec3(0.470, 0.400, 0.300);
 const vec3 INK   = vec3(0.090, 0.075, 0.106);
 // d5-cast (2026-11-03): the police inks (palette.json cop_blue #3A4766, cop_blue_hi #4F86E0) replace vermilion
 // on cops. A pixel is cop blue where blue leads (b - max(r, g) >= blue_gate) and g >= r (navy, not the violet
@@ -85,6 +92,17 @@ void fragment() {
 		float small = 1.0 - smoothstep(0.12, 0.30, px_scale);
 		float lo = mix(ink_lo, 0.36, small);
 		float hi = mix(ink_hi, 0.40, small);
+		hi = mix(hi, gun_ink_hi, gun_tan);  // look-8: a gun's mid plates print tan, only its darkest marks ink
+		float e = 0.0;  // the part's own alpha edge (the sticker outline): limbs below the threshold, guns too (look-8)
+		// a held gun's texel density is not the body's px_scale: its radius comes from the screen-space UV step
+		vec2 uv_px = vec2(max(length(dFdx(UV)), length(dFdy(UV))));
+		if ((small > 0.5 && limb_lod > 0.5) || gun_tan > 0.0) {
+			vec2 r = gun_tan > 0.0 ? uv_px * gun_edge : TEXTURE_PIXEL_SIZE * (sticker_edge / max(px_scale, 0.02));
+			for (int k = 0; k < 8; k++) {
+				float an = float(k) * 0.785398;
+				e = max(e, step(texture(TEXTURE, UV + vec2(cos(an), sin(an)) * r).a, alpha_cut));
+			}
+		}
 		vec3 o;
 		if (teal) {
 			o = TEAL;
@@ -92,12 +110,6 @@ void fragment() {
 			// D1 sticker print (was: solid ink, which made Rivet a black spider at 32 px/m): one flat value per part
 			// and an ink outline from the part's own alpha edge, so the limb reads as one clean shape, not as
 			// posterized fragments of its plates and bolts. The cream halo under it is the sticker rim.
-			vec2 r = TEXTURE_PIXEL_SIZE * (sticker_edge / max(px_scale, 0.02));
-			float e = 0.0;
-			for (int k = 0; k < 8; k++) {
-				float an = float(k) * 0.785398;
-				e = max(e, step(texture(TEXTURE, UV + vec2(cos(an), sin(an)) * r).a, alpha_cut));
-			}
 			if (e > 0.5) o = INK;
 			else if (lod_fill > 3.5) o = (d >= hi || (UV.x > visor_x0 && abs(UV.y - 0.5) < visor_hy)) ? INK : mix(CREAM, TAN, core_tan);
 			else if (lod_fill > 2.5) o = (fract(atan(UV.y - 0.5, UV.x - 0.5) * collar_stripes / 6.28318) < collar_ink) ? INK : VERM;
@@ -120,6 +132,11 @@ void fragment() {
 		} else {
 			float cov = (d - lo) / (hi - lo);
 			o = dots(px, cov, 0.785) > 0.5 ? INK : CREAM;
+		}
+		if (gun_tan > 0.0 && !teal && o != INK && o != VERM && o != COP_BLUE && o != COP_BLUE_HI) {
+			float gk = clamp((d - lo) / (hi - lo), 0.0, 1.0);
+			o = mix(o, d <= lo ? GUN_TAN_HI : mix(GUN_TAN, GUN_TAN_DK, gk), gun_tan);
+			if (e > 0.5) o = INK;  // the gun keeps its gun_edge ink outline at every zoom, so the tan never loses its shape
 		}
 		if (swap == 1 && o == VERM) o = INK;
 		else if (swap == 2 && o == VERM) o = CREAM;

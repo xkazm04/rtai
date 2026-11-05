@@ -15,6 +15,12 @@ const CITY_PEDS: int = 300
 ## Quest 1 plays on the generated city (collect_call_city.json; false = the invented arena the
 ## bot scenario and its goldens were taken on). Every open/resume/replay of a run uses the same.
 static var on_city: bool = true
+## d7-calls ghost-powers-5 (owner, 2026-11-05): the story locks each ghost until its act
+## (ghost_forms.json `unlock`; quest 1 completes none, so Dent stays locked). false = every
+## ghost free (the old default; the game's `--ghosts-free`).
+static var ghost_locks: bool = true
+## The act quests the story has completed (none before quest 1's own act lands).
+static var acts_done: Array[StringName] = []
 
 var world: World = World.new()
 var stage: CollectCallStage
@@ -43,8 +49,7 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.world.name = "Quest1World"
 	s.world.start(events, data, seed)
 	s.stage = CollectCallStage.new(StageLayout.shipped(on_city))
-	s.pilot = StagePilot.new(s.actions)
-	s.stage.pilot = s.pilot
+	s._bind_pilot()
 	s.port = CollectCallWorld.new(s.stage)
 	s.system = QuestSystem.new(s.port)
 	s.stage.watch(s.system)
@@ -72,6 +77,14 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.cash_before = s.stage.wallet.cash
 	s._last_beat = s.beat_id()
 	return s
+
+
+## The player's pilot on the stage, with the story's ghost locks (ghost_locks, acts_done).
+func _bind_pilot() -> void:
+	pilot = StagePilot.new(actions)
+	stage.pilot = pilot
+	if ghost_locks:
+		pilot.ghosts.forms.apply_locks(acts_done.duplicate())
 
 
 ## The city after the stage and the quest: its bubble follows Rivet (the stage sets the focus

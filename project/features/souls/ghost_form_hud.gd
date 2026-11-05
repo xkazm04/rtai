@@ -5,7 +5,9 @@ extends Control
 ## teal and larger; the selected (next) ghost carries an ink chevron and the key hint; a ghost
 ## on cooldown is swept over in ink (a pie that shrinks as it cools). Under the chips the Madness
 ## bar, with the selected ghost's cost marked as a notch (a refused activation reads before Q).
-## Plain values only (sync() fills them from GhostForms); words come translated by the caller.
+## A ghost still locked (GhostLocks: before its act) shows a padlock in a dimmed chip and no
+## name; G passes it by. Plain values only (sync() fills them from GhostForms); words come
+## translated by the caller.
 
 const PAPER: Color = Color("e9dcc3")
 const INK: Color = Color("17131b")
@@ -22,6 +24,8 @@ var current: StringName = &"base"
 var selected: StringName = &""
 ## 0..1 cooldown left per form (1 = just started cooling).
 var cooling: Dictionary[StringName, float] = {}
+## The ghosts the story has not unlocked yet (true = locked).
+var locked: Dictionary[StringName, bool] = {}
 var madness_k: float = 0.0
 ## The selected ghost's Madness cost as a fraction of the meter.
 var cost_k: float = 0.0
@@ -44,7 +48,7 @@ func sync(g: GhostForms) -> void:
 	current = g.current() if g.settled() else g.to_id
 	selected = g.selected
 	if current != GhostForms.BASE:  # in a form the chevron marks G's switch target
-		selected = g.table.next_after(current)
+		selected = g.locks.next_after(g.table, current)
 	key_hint = next_hint if current != GhostForms.BASE else enter_hint
 	morph_k = g.k()
 	madness_k = g.powers.madness / maxf(1.0, g.powers.table.madness_max)
@@ -52,6 +56,7 @@ func sync(g: GhostForms) -> void:
 		var p: PowerDef = g.powers.table.row(g.table.form(id).power)
 		var total: float = float(maxi(1, p.cooldown_ticks)) if p != null else 1.0
 		cooling[id] = float(g.powers.cooldown_left(g.table.form(id).power)) / total
+		locked[id] = not g.locks.allows(g.table, id)
 	var sel: GhostFormDef = g.table.form(selected)
 	var row: PowerDef = g.powers.table.row(sel.power) if sel != null else null
 	cost_k = row.madness_cost / g.powers.table.madness_max if row != null else 0.0
@@ -81,6 +86,9 @@ func shown_chips() -> Array[StringName]:
 
 
 func _chip(id: StringName, c: Vector2) -> void:
+	if locked.get(id, false):
+		_locked_chip(c)
+		return
 	var on: bool = id == current
 	var r: float = CHIP_R * (1.18 if on else 1.0)
 	if on and morph_k < 1.0:
@@ -105,6 +113,16 @@ func _chip(id: StringName, c: Vector2) -> void:
 	_glyph(id, c, r * 0.55, PAPER if on else INK)
 	if id == selected and not on:
 		_chevron(c, r, font)
+
+
+## A locked ghost: a dimmed chip with an ink padlock (shackle arc over a body), no name.
+func _locked_chip(c: Vector2) -> void:
+	draw_circle(c, CHIP_R + 3.0, Color(INK, 0.45))
+	draw_circle(c, CHIP_R, PAPER.darkened(0.18))
+	var s: float = CHIP_R * 0.42
+	draw_arc(c + Vector2(0.0, -s * 0.2), s * 0.62, PI, TAU, 12, INK, 3.0)
+	draw_rect(Rect2(c + Vector2(-s, -s * 0.2), Vector2(s * 2.0, s * 1.5)), INK)
+	draw_circle(c + Vector2(0.0, s * 0.45), s * 0.22, PAPER)
 
 
 ## The ink chevron and the key hint under the selected (next) ghost.

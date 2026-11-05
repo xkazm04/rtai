@@ -4,6 +4,10 @@ extends RefCounted
 ## WeaponArt. Frames of an fx id `flash_pistol` are `flash_pistol_0..n`, or the id itself.
 ## n5-look: with `fx_colour_dir` set, a cell of the same file name in that folder replaces the
 ## ink cell (the round 2 colour sheet, tools/art/fx_colour.py); "" = the ink FX.
+## d7-calls look-3 (owner, 2026-11-05): the ink FX are the default (fx_colour_dir ""); the colour
+## folder stays, and `--fx-colour=on` loads it for an A/B.
+
+const COLOUR_DIR: String = "res://features/combat/weapons/art/fx/colour"
 
 var colour_dir: String = ""
 
@@ -13,6 +17,8 @@ var _anchor: Dictionary[StringName, Vector2] = {}
 
 func read(t: DataTable) -> void:
 	colour_dir = t.text(t.raw, "fx_colour_dir") if t.raw.has("fx_colour_dir") else ""
+	if colour_dir == "" and OS.get_cmdline_user_args().has("--fx-colour=on"):
+		colour_dir = COLOUR_DIR
 	for row: Variant in t.array(t.raw, "fx"):
 		var r: Dictionary = row if row is Dictionary else {}
 		var id: StringName = StringName(t.text(r, "id"))

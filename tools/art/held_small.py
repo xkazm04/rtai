@@ -27,6 +27,14 @@ TARGET_MID = 186.0  # where the body's median luminance lands (Rivet's D4 claw: 
 SOFT = 34.0  # luminance band over which the lift fades in above KEEP_INK
 FLAT = 0.45  # the body's tone spread around TARGET_MID (1 = as drawn): flatter reads cleaner small
 EDGE = 9  # part px of ink inked along the silhouette (about 1 screen px at 48 px/m)
+# d7-calls (2026-11-05, look-8 follow-up): the Gatling's barrels are ~14 part px thick, so a 9 px
+# silhouette edge inked them solid (63 % of the small art near-black: it printed ink, not the tan of
+# look-8). A thinner edge keeps them as lifted steel; the print's own gun_edge outline stays the ink.
+EDGE_OF = {"gatling": 3}
+# ...and the 4 px transparent gaps between its barrels made the print's gun_edge outline test (no mips:
+# a 2.2 screen px probe lands in a gap) ink the whole bundle at 32 px/m. Small art closes gaps this many
+# part px wide with the body's own median steel, so the bundle is one shape with one outer ink edge.
+CLOSE_OF = {"gatling": 6}
 LW = np.array([0.299, 0.587, 0.114])
 # Already light at 48 px/m (print sim, iteration 12): the molotov's bottle and the plasma sword's
 # blade. The flamethrower's thin wand prints DARKER re-toned (the ink edge swallows it).
@@ -46,7 +54,7 @@ def body_mid(rgba):
     return float(np.median(lum[(a[..., 3] > 128) & (lum > KEEP_INK)]))
 
 
-def retone(rgba, mid=None):
+def retone(rgba, mid=None, edge=EDGE):
     """mid: the body median to lift from (default this part's own; the empty tube uses its held's)."""
     a = rgba.astype(float)
     rgb, alpha = a[..., :3], a[..., 3]
@@ -55,9 +63,28 @@ def retone(rgba, mid=None):
     want = TARGET_MID + (lum - mid) * FLAT
     w = np.clip((lum - KEEP_INK) / SOFT, 0.0, 1.0)
     out = rgb + ((want - lum) * w)[..., None]
-    out = np.where(_edge(alpha)[..., None], np.array([27.0, 21.0, 23.0]), out)
+    out = np.where(_edge(alpha, edge)[..., None], np.array([27.0, 21.0, 23.0]), out)
     out = np.clip(out, 0, 255)
     return np.dstack([out, alpha]).astype(np.uint8), TARGET_MID - mid
+
+
+def close_gaps(rgba, r):
+    """Fills transparent gaps up to 2r px wide (a morphological closing) with the body's median colour."""
+    solid = rgba[..., 3] > 128
+    offs = [(dy, dx) for dy in range(-r, r + 1) for dx in range(-r, r + 1) if dx * dx + dy * dy <= r * r]
+    grown = solid.copy()
+    for dy, dx in offs:
+        grown |= np.roll(np.roll(solid, dy, 0), dx, 1)
+    closed = grown.copy()
+    for dy, dx in offs:
+        closed &= np.roll(np.roll(grown, dy, 0), dx, 1)
+    fill = closed & ~solid
+    lum = rgba[..., :3].astype(float) @ LW
+    body = solid & (lum > KEEP_INK)
+    out = rgba.copy()
+    out[fill, :3] = np.median(rgba[body][:, :3], axis=0).astype(np.uint8)
+    out[fill, 3] = 255
+    return out
 
 
 def two_tone(rgba):
@@ -69,13 +96,13 @@ def two_tone(rgba):
     return np.dstack([out, a[..., 3]]).astype(np.uint8)
 
 
-def _edge(alpha):
-    """Opaque pixels within EDGE px of the silhouette (a square erosion, done by shifts)."""
+def _edge(alpha, edge=EDGE):
+    """Opaque pixels within `edge` px of the silhouette (a square erosion, done by shifts)."""
     solid = alpha > 128
     inner = solid.copy()
-    for dy in range(-EDGE, EDGE + 1, 3):
-        for dx in range(-EDGE, EDGE + 1, 3):
-            if dx * dx + dy * dy <= EDGE * EDGE:
+    for dy in range(-edge, edge + 1, 3):
+        for dx in range(-edge, edge + 1, 3):
+            if dx * dx + dy * dy <= edge * edge:
                 inner &= np.roll(np.roll(solid, dy, 0), dx, 1)
     return solid & ~inner
 
@@ -123,7 +150,9 @@ def main(argv):
     for wid in ids:
         src = root / wid / "held.png"
         rgba = np.asarray(Image.open(src).convert("RGBA"))
-        small, lift = (two_tone(rgba), 0.0) if wid in TWO_TONE else retone(rgba)
+        if wid in CLOSE_OF:
+            rgba = close_gaps(rgba, CLOSE_OF[wid])
+        small, lift = (two_tone(rgba), 0.0) if wid in TWO_TONE else retone(rgba, None, EDGE_OF.get(wid, EDGE))
         if sim is None:
             Image.fromarray(small).save(root / wid / "held_small.png", optimize=True)
             empty = root / wid / "held_empty.png"
