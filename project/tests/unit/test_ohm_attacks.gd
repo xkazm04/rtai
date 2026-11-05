@@ -28,6 +28,11 @@ func _press(action: StringName) -> void:
 	_stage.intent.clear()
 
 
+func _wait(ticks: int) -> void:
+	for i: int in ticks:
+		_press(&"")
+
+
 func _guard(off: Vector2, hp: float) -> Fighter:
 	var g: Fighter = _stage.arena.spawn_guard(_stage.arena.rivet.pos)
 	g.pos = _stage.arena.rivet.pos + off
