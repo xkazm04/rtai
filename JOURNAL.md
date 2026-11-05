@@ -430,3 +430,24 @@ for REPORT: the shard pop (36 default vs `--shard-pop=12`, clip in masters).
   (Mertz stands a little elsewhere in frame 178, as expected once the hash moved), beats the same.
   Again a small visible change; I could not find a frame with a Gloria muzzle cell in the samples.
   frames.json now 13 rows. Scratch frames deleted.
+
+### MILESTONE 21:42: the city-block combined clip of the polished set (deliverable)
+- One continuous director reel in the city block with the loadout, 32 px/m, fixed 60 fps, Movie
+  Maker (`res://dev/arena/arena.tscn -- --arena=city --bot=reel --reel=director --loadout=pistol
+  --ppm=32`, `--quit-after 5800`): 16 chapters down (claw_combo .. riot_cop), 0 SCRIPT ERROR
+  (`evidence/ranged/it4-city-reel-movie.log`). Cut: frames 1150-2280 (rocket, flamer, electro),
+  3850-5080 (hand cannon, plasma rifle, ray gun, homing shard, riot cop), 5470-5800 (the nuke chapter
+  to its first blast frame) -> `masters n7/ranged/city_block_polished_set-32ppm.mp4`, 44.8 s, with
+  sound; frames.json row 1 (14 rows now). LOOK (stills 3/12/24/44 s): Rivet with each gun, red blood,
+  ink scorch, cops' cars blue-lit; the dev telemetry panel and the ghost bar are in frame (arena
+  HUD); the fight sits at the right of a fixed camera (no `--cam=fight` in this take).
+- FRICTION 21:35: `--arena=city ...` on `--path project` alone boots the MAIN scene (title card;
+  every arena flag "unknown, ignored"): 7 min of Movie Maker wasted. The arena is
+  `res://dev/arena/arena.tscn` as the scene argument. Frames run about 25-40 ticks ahead of the sim
+  tick by mid-reel (hit-stops hold frames), so 5800 frames stopped on the nuke's first blast frame;
+  next time `--quit-after 6200` to keep the nuke's whole blast.
+- GATE 21:46: pit director reel with `--loadout=pistol` on head `43622ec7` (quest 1 table guns
+  in): 19/19 chapters fully down, 0 SCRIPT ERROR, nothing skipped
+  (`evidence/ranged/it4-reel-director-loadout.log`). City reel on the same head: 16/16 down to
+  riot_cop in the movie take above (the nuke chapter was cut by the frame cap, not failed); the
+  full city reel with the loadout was last 19/19 at `9928c09a`.
