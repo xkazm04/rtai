@@ -714,3 +714,6 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   ahead of the real clock (it was 05:46); the work order is right.
 Session state 05:49: head = this commit, tree clean, no Godot process of mine running (the 6 Godot processes in the
 task list are other lanes'), no lock held, masters scratch holds only film.sh, reel.sh and two logs, frames.json 15.
+
+## Iteration 9 (05:47-06:47, BUILD)
+- 05:48 read JOURNAL, git log; n6-ghost-forms at 6e0532a2 and n5-cast at 030eb775 not merged yet.
