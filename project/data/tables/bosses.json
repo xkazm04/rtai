@@ -1,5 +1,18 @@
 {
   "arenas": {
+    "depot": {
+      "add_spawns": [],
+      "area": "pit",
+      "boss_at": [
+        9,
+        0
+      ],
+      "doc": "The CS courier depot: loading bays, a conveyor and stacked CS crates, room for the drones (first pass: the arena pit).",
+      "rivet_at": [
+        -8,
+        0
+      ]
+    },
     "king_boulevard": {
       "add_spawns": [
         [
@@ -169,6 +182,156 @@
       "radius_m": 1.1,
       "rng": "boss_king",
       "script": "res://features/bosses/king/king_moves.gd"
+    },
+    "servo": {
+      "arena": "depot",
+      "attacks": {
+        "bay_hop": {
+          "active_s": 0.2,
+          "aim_lock_s": 0.4,
+          "cooldown_s": 6,
+          "damage": 20,
+          "doc": "Rotors lift Servo to the loading bay nearest Rivet; the 3 m landing ring fills during the tell; the landing hurts inside it.",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 1,
+          "range_m": 3,
+          "recovery_s": 1,
+          "shape": "none",
+          "weight": 1,
+          "windup_s": 1.2
+        },
+        "kamikaze": {
+          "active_s": 0.2,
+          "aim_lock_s": 0.3,
+          "cooldown_s": 3,
+          "damage": 0,
+          "doc": "The broken rack spits sparking drones that each draw a dive line at Rivet, lock and dive (their blasts are the damage).",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.25,
+          "punish_s": 0.8,
+          "range_m": 20,
+          "recovery_s": 1.2,
+          "shape": "none",
+          "weight": 3,
+          "windup_s": 0.8
+        },
+        "package_carpet": {
+          "active_s": 0.3,
+          "aim_lock_s": 0.4,
+          "cooldown_s": 5,
+          "damage": 0,
+          "doc": "Drones form a line and fly a lane across the yard dropping a carpet of parcels; the lane is painted first; the gap is safe.",
+          "max_m": 30,
+          "min_m": 0,
+          "punish_k": 1.5,
+          "punish_s": 2,
+          "range_m": 20,
+          "recovery_s": 2.6,
+          "shape": "none",
+          "weight": 2,
+          "windup_s": 1.4
+        },
+        "rotor_dash": {
+          "active_s": 0.75,
+          "aim_lock_s": 0.35,
+          "cooldown_s": 3,
+          "damage": 30,
+          "doc": "The pads spin up (dust ring, the lane arrow tracks Rivet, locks), then a 14 m dash at 22 m/s; a skid and vent after.",
+          "max_m": 18,
+          "min_m": 4,
+          "move_mps": 22,
+          "punish_k": 1.5,
+          "punish_s": 1,
+          "range_m": 14,
+          "recovery_s": 1.2,
+          "shape": "charge",
+          "weight": 2,
+          "width_m": 2.4,
+          "windup_s": 0.9
+        },
+        "rotor_dash_hot": {
+          "active_s": 0.75,
+          "aim_lock_s": 0.3,
+          "cooldown_s": 1.2,
+          "damage": 30,
+          "doc": "Overtime: the dash comes often but overheats Servo into a 2.5 s vent (steam, glowing pads): the fight's biggest punish.",
+          "max_m": 18,
+          "min_m": 3,
+          "move_mps": 22,
+          "punish_k": 2,
+          "punish_s": 2.2,
+          "range_m": 14,
+          "recovery_s": 2.5,
+          "shape": "charge",
+          "weight": 3,
+          "width_m": 2.4,
+          "windup_s": 0.8
+        },
+        "scan_drop": {
+          "active_s": 0.3,
+          "aim_lock_s": 0.4,
+          "cooldown_s": 1.5,
+          "damage": 0,
+          "doc": "The visor beam sweeps, tracks Rivet (thin), locks (thick) and stamps a vermilion mark on his spot; the beam itself does not hurt. The wave launches on the stamp and drops on the mark during the recovery: the dock window is the punish.",
+          "max_m": 24,
+          "min_m": 3,
+          "punish_k": 1.5,
+          "punish_s": 2,
+          "range_m": 24,
+          "recovery_s": 2.6,
+          "shape": "line",
+          "weight": 3,
+          "width_m": 0.6,
+          "windup_s": 1.6
+        }
+      },
+      "doc": "Act 2: Servo, the courier-hub robot whose back is a launch rack of delivery drones (targets-2026-11-05-bosses/img/boss_servo.jpg). Moveset: docs/bosses/servo.md. The drones, parcels and rack are his own (features/bosses/servo/, data/tables/servo.json).",
+      "hp": 4200,
+      "move_mps": 2,
+      "phases": [
+        {
+          "attacks": [
+            "scan_drop",
+            "rotor_dash"
+          ],
+          "doc": "Teaches the loop: the scanner marks Rivet, a drone wave drops on the mark, the rack docks (punish), the rotor dash.",
+          "gap_s": 1,
+          "hp_below": 1,
+          "id": "depot",
+          "transition_s": 0
+        },
+        {
+          "attacks": [
+            "scan_drop",
+            "package_carpet",
+            "bay_hop",
+            "rotor_dash"
+          ],
+          "doc": "The conveyor starts and the bay doors roll up; bigger waves, package carpets in lanes, Servo hops between loading bays.",
+          "gap_s": 0.8,
+          "hp_below": 0.65,
+          "id": "rush_hour",
+          "transition_s": 2
+        },
+        {
+          "attacks": [
+            "kamikaze",
+            "rotor_dash_hot",
+            "scan_drop"
+          ],
+          "doc": "Half the rack blows off; drones kamikaze; Servo dashes often and overheats (long vent: the biggest punish).",
+          "gap_s": 0.6,
+          "hp_below": 0.3,
+          "id": "overtime",
+          "transition_s": 2
+        }
+      ],
+      "radius_m": 1.6,
+      "rng": "boss_servo",
+      "script": "res://features/bosses/servo/servo_moves.gd"
     }
   },
   "doc": "Act bosses as data (lane n7-king framework). A boss: hp, phases (entered by hp fraction), attacks with a tell (windup_s, aim_lock_s), an active window, a recovery whose first punish_s takes punish_k damage. Interface: n7-king JOURNAL REQUEST 1. One boss's special case lives in its script (features/bosses/<id>/), never here.",
