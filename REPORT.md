@@ -22,7 +22,7 @@ session before 18:40.
 | look-14 flame tongues | 42feb65c | `projectile_fx flame` | `flame_cone` | `look-reel-after-32.mp4` |
 | look-18 Gatling true width | 42feb65c | `cross_k` 1.0 | `cross_k` 1.3 | `frames/look-18-gatling-ab-32ppm.png` |
 | ghost-powers-3 Dent steers from afar | e419a047 | `ghost_attacks.json dent.ride` 0, the car drives to the aimed point | `dent.ride` 1 | `frames/ghost-powers-3-dent-ride-ab-32ppm.png`, `dent-standoff-city-32ppm.mp4`, `-64ppm-halfspeed.mp4`, `frames/ghost-powers-3-dent-tether-32ppm.png` |
-| ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-hud-lock-ab.png`; scenario `scenario_quest1_dent_lock` (planted `plant_ignore` caught), unit `test_ghost_locks` 6/6 |
+| ghost-powers-5 Dent locked until his act | e419a047 | `ghost_forms.json` `unlock` per ghost (dent `act_dent`); lock on only in quest 1; quest 1 `ghost_cars` [] | `--ghosts-free`; the old car list is `Quest1GhostStreet.CARS` | `frames/ghost-powers-5-quest1-live.png` + `quest1-dent-locked-live.mp4` (shipped quest 1, real input: G goes Tonnage -> Kerf, Dent's slot a padlock), `frames/ghost-powers-5-hud-lock-ab.png` (vs `--ghosts-free`); scenario `scenario_quest1_dent_lock` (planted `plant_ignore` caught), unit `test_ghost_locks` 6/6 |
 | look-8 warm tan ink for held guns | 83fe0d5c | `PartKind.GUN`, `print_part gun_tan` 1, `gun_ink_hi` 0.90, `gun_edge` 2.2 px ink outline | `--gun-grey` | `frames/look-8-gun-tan-ab-32ppm.png`, `-ab-48ppm.png`, `look-8-gun-tan-closeup-steps.png`, `look-8-gun-tan-reel-32ppm.mp4` |
 
 Combined clip: `M/today-defaults-city-32ppm.mp4` (28 s, city block, director reel, pistol to flamethrower).
@@ -50,7 +50,6 @@ chapter on every commit (19/19 on e419a047; 0 SCRIPT ERROR).
 - The Gatling prints ink, not tan, at game zoom (call 8).
 - Dent's 64 px/m close-up loses the ram and blast off frame by default (call 2; `--cam=car` fixes it, not the
   default).
-- The quest 1 padlock was shot from the HUD alone (a scratch scene), not from a live quest 1 frame.
 - Bench not run (contended machine all day; no perf claim from this lane: every change is view or data only,
   except Dent's steer point, which is sim and covered by the quest 1 and ghost scenarios).
 

@@ -151,3 +151,8 @@
   with it the tether, the ram into the cops and the blast stay in frame (`M/dent-carcam-city-64ppm.mp4`,
   `M/frames/ghost-powers-3-dent-carcam-64ppm.png`). Not made the default (not an owner pick; at 32 px/m the
   default framing already holds the blast): REPORT call 2 option B with the flag.
+- 17:16 MILESTONE ghost-powers-5 live: `dev/ghost-forms/quest1_forms_main.gd` (real input events on the shipped
+  boot/quest1.tscn; `Quest1Session.ghost_locks` defaults true) recorded: G at frame 520 goes Tonnage -> Kerf
+  (Dent skipped), and the unfolded card (frame 920) shows Dent's slot as the dimmed padlock.
+  `M/frames/ghost-powers-5-quest1-live.png`, `M/quest1-dent-locked-live.mp4` (12 s). Replaces the scratch-scene
+  HUD still as the lead evidence. frames.json 15 entries, all present.
