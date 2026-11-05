@@ -571,3 +571,13 @@ Session state 03:49: head = this commit, tree clean, no Godot process of mine ru
   parity bit-exact (mutation caught at 629), selftest (look goldens 11/11 worst 1.22, block 5/5 worst 1.38: no
   re-bless). Unit 993 passed / 0 failed but marked FAIL: "tree changed during run (M JOURNAL.md)": my own
   JOURNAL append at 04:12 (same slip as iteration 4). Re-running the unit suite alone on a still tree next.
+- 04:24 (iteration 6, cont.) the unit re-run on a still tree did not happen before that session ended: carried to
+  iteration 7's gates.
+
+## Iteration 7 (04:18 - 05:18)
+- 04:19 READ JOURNAL, git log, REPORT, the other lanes' JOURNALs: no new REQUEST to ghost-forms (REQUEST 8 closed).
+- 04:22 MERGE n5-cast 0abfd6c3 (the visor slot Rivet-only, BodyPlan.head_visor) and n6-ghost-powers f8d1d747 (Ohm's
+  dry kill, the dry-kill gate, Kerf at 64, TTK gore per ghost); JOURNAL/REPORT keep ours; lint 13/13 at each (hook).
+- 04:23 PLAN the weakest item = REPORT's only open point: the SHIPPED quest 1 (sprite cast) runs GhostPilot
+  (StagePilot.ghosts), so Q / LB transforms Rivet in the sim, but nothing draws the form or the HUD there: the
+  player gets an invisible transformation. Give the sprite cast the form bodies, the fx and the HUD.

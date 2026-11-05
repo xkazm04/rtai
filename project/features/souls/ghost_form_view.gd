@@ -51,6 +51,16 @@ var _last_stage: int = 0
 static func attach(
 	layer: CanvasLayer, stage: CollectCallStage, p_rigs: CharacterRigs, p_camera: CameraRig
 ) -> GhostFormView:
+	var v: GhostFormView = make(stage, p_rigs, p_camera)
+	if v != null:
+		layer.add_child(v)
+	return v
+
+
+## The view for `stage`'s pilot, not yet in the tree (null = no pilot); set its fields, then add it.
+static func make(
+	stage: CollectCallStage, p_rigs: CharacterRigs, p_camera: CameraRig
+) -> GhostFormView:
 	if stage.pilot == null or stage.pilot.ghosts == null:
 		return null
 	var v: GhostFormView = GhostFormView.new()
@@ -66,7 +76,6 @@ static func attach(
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
 	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
 	v.z_index = (p_rigs.z_index if p_rigs != null else RenderLayers.z(&"actors")) + Z_OVER_RIGS
-	layer.add_child(v)
 	return v
 
 

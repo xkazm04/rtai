@@ -38,6 +38,9 @@ var hit_link: HitLink = null
 ## rivet-arsenal (dev --rigs in quest 1): the cast rigs draw Rivet and the fighters, so this view
 ## keeps only the allies, the patrol, the boss (no boss rig yet) and the Hauler's marks.
 var fighters_on_rigs: bool = false
+## ghost-forms (StoryForms): a GhostFormView draws the ghost bodies, so Rivet's sprite steps out
+## while one stands in (and the Hauler no longer grows the sprite).
+var forms_drawn: bool = false
 
 
 func _process(_delta: float) -> void:
@@ -78,6 +81,12 @@ func _rivet(r: Fighter) -> void:
 		return
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
+	if forms_drawn and stage.pilot != null:
+		if not StoryForms.stands_in(stage.pilot.ghosts.forms):
+			_sprite("rivet", at, _size(&"rivet"), r.facing)
+		var lift: float = StoryForms.bar_lift_m(stage.pilot.ghosts.forms)
+		_hp_bar(at + Vector2(0.0, -lift), r.hp / r.max_hp)
+		return
 	var h: HaulerForm = stage.pilot.hauler.form if stage.pilot != null else null
 	var k: float = h.morph_k() if h != null else 0.0
 	if k > 0.0:  # features/souls: the Hauler grows and tints Rivet by the morph
