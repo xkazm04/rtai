@@ -69,11 +69,9 @@ def recolour(src, dst, mapping):
     img.save(dst, optimize=True)
 
 
-def inner_band(path, colour, px, sectors=180):
-    """r2_w4's fire inside the smoke: non-ink pixels within `px` of the ring's inner edge (per
-    angle sector round the cell's centre, the nearest opaque pixel) take the flat `colour`."""
-    img = Image.open(path).convert("RGBA")
-    pix = img.load()
+def _polar(img, pix, sectors):
+    """Every opaque pixel's (distance, angle sector) round the cell's centre, and the ring's
+    inner radius per sector (the nearest opaque pixel)."""
     cx, cy = img.width / 2, img.height / 2
     inner = [1e9] * sectors
     polar = {}
@@ -84,11 +82,74 @@ def inner_band(path, colour, px, sectors=180):
                 k = int((math.atan2(y - cy, x - cx) + math.pi) / (2 * math.pi) * sectors) % sectors
                 polar[(x, y)] = (d, k)
                 inner[k] = min(inner[k], d)
+    return polar, inner
+
+
+def inner_band(path, colour, px, sectors=180):
+    """r2_w4's fire inside the smoke: non-ink pixels within `px` of the ring's inner edge (per
+    angle sector round the cell's centre, the nearest opaque pixel) take the flat `colour`."""
+    img = Image.open(path).convert("RGBA")
+    pix = img.load()
+    polar, inner = _polar(img, pix, sectors)
     ink = TOKENS["ink"]
     for (x, y), (d, k) in polar.items():
         r, g, b, a = pix[x, y]
         if d - inner[k] < px and sum(abs(c - t) for c, t in zip((r, g, b), ink)) >= 60:
             pix[x, y] = tuple(colour) + (a,)
+    img.save(path, optimize=True)
+
+
+def pockets(path, colour, n, r_px, seed=1.0, band_px=0, core=None, core_k=0.45, core_in=0.0):
+    """r2_w4's fire pockets inside the smoke: `n` round orange pockets centred on the ring's
+    inner edge at hashed angles (radius r_px[0]..r_px[1]), clipped to the non-ink ring pixels,
+    each with a hot `core` disc (core_k x its radius, moved core_in x its radius toward the
+    blast centre) when given; band_px > 0 also keeps a thin continuous band along the inner
+    edge. Hash-placed from `seed`: deterministic."""
+    img = Image.open(path).convert("RGBA")
+    pix = img.load()
+    cx, cy = img.width / 2, img.height / 2
+    sectors = 180
+    polar, inner = _polar(img, pix, sectors)
+    rin = sorted(inner)[sectors // 2]
+
+    def h(i, s):
+        v = math.sin(i * 12.9898 + s * 78.233) * 43758.5453
+        return v - math.floor(v)
+
+    discs = []
+    for i in range(n):
+        a = (i + 0.5 + (h(i, seed) - 0.5) * 0.6) / n * 2 * math.pi
+        r = r_px[0] + (r_px[1] - r_px[0]) * h(i, seed + 3.3)
+        c = rin + r * 0.3
+        cc = c - r * core_in  # the hot core sits toward the blast centre
+        discs.append(
+            (
+                cx + math.cos(a) * c,
+                cy + math.sin(a) * c,
+                r,
+                cx + math.cos(a) * cc,
+                cy + math.sin(a) * cc,
+            )
+        )
+    ink = TOKENS["ink"]
+    for (x, y), (d, k) in polar.items():
+        r_, g, b, a = pix[x, y]
+        if sum(abs(c - t) for c, t in zip((r_, g, b), ink)) < 60:
+            continue
+        hit = colour if d - inner[k] < band_px else None
+        for dx, dy, dr, kx, ky in discs:
+            q = (x - dx) ** 2 + (y - dy) ** 2
+            if (
+                core is not None
+                and (x - kx) ** 2 + (y - ky) ** 2 < (dr * core_k) ** 2
+                and q < dr * dr
+            ):
+                hit = core
+                break
+            if q < dr * dr:
+                hit = colour
+        if hit is not None:
+            pix[x, y] = tuple(hit) + (a,)
     img.save(path, optimize=True)
 
 
@@ -102,7 +163,19 @@ def main(src_dir, out_dir):
         for prefix in fam["files"]:
             for src in sorted(Path(src_dir).glob(prefix + "*.png")):
                 recolour(src, out / src.name, mapping)
-                if "inner" in fam:
+                if "pockets" in fam:
+                    pk = fam["pockets"]
+                    pockets(
+                        out / src.name,
+                        _hex(pk["colour"]),
+                        pk["n"],
+                        pk["r_px"],
+                        seed=pk.get("seed", 1.0),
+                        core=_hex(pk["core"]) if "core" in pk else None,
+                        core_k=pk.get("core_k", 0.45),
+                        core_in=pk.get("core_in", 0.0),
+                    )
+                elif "inner" in fam:
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
                 done += 1
     print(f"fx_colour: {done} PNGs -> {out}")
