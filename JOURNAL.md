@@ -235,3 +235,43 @@ Not re-filmed: the film in masters is the 0dd8d7b2 cut (claw cops visible in it)
   | dodging | 78.4 s (tick 4704) | ram 1/3, coin 0/9, charge 0/2, decree 3 | 3 / 17 | 0 |
   | standing | 89.0 s (tick 5338) | ram 2/2, coin 9/9, charge 0/2 (+2 late body hits) | 11 / 16 | 1 |
   Both kill King inside the 60-120 s envelope now; the stander dies once (King dealt 234).
+  Evidence of the add wall before max_total: `bot-{stand,dodge}-it2a.json` (dodging: 31 gang
+  spawned in 120 s, King held at 36 %).
+- Gates at 1932828b: lint 13/13; unit 1124/0 (`unit-it2a.log`, before test_boss_walk); boss
+  unit files 3 + 11 + 4 green; scenarios 52/0 (`scenarios-it2a.log`, arena.json's new area moved
+  no golden).
+
+### MILESTONE 20:30: King and the gang on the cutout rigs (409fddea)
+- `KingRigs` (king folder, a child of KingBodyView so it draws over the car and the drawn cape):
+  King on `KingPlan(1.55)` (Rivet's skeleton, the d5 King parts: grey press body, star crown),
+  seated on the throne in phases 1-2 (no stride), on foot in phase 3; four `ThugPlan` riders at
+  the car's corners stride with it in phase 1 (pushing the procession), the adds fight on the same
+  rig. Posed once per sim tick from `BossFight.now()` (lint SIM-01: no frame delta), hit shove,
+  strike clip on each active window, power-down on defeat. `--boss-shapes` = the drawn first pass.
+- Looked at it at 32 px/m (`shots/rig_p1_32_t420.png`, `rig_p2_32_t330.png`): the car + cape +
+  enthroned King + four grey riders read as a procession; the coin fan's thin tracking cone reads.
+  **Defect found and fixed:** the gang stacked on one spot on Rivet (all walk at him):
+  `BossAdds.separate` parts each pair and steps adds off the boss (unit test in test_boss_walk).
+- **Not yet like the target:** the rigs are the plain d5 King and thug parts (no gold plates, no
+  jewelled crown over the tin one, no fur cape on the rig, no gold chains or visor shades on the
+  gang). That is the part-sheet job (image lock): next.
+- Numbers after separation (CONTENDED, seed fixed, n=1; `bot-{dodge,stand}-it2d.json`, 0 script
+  errors): dodging bot King down at 81.9 s, King 1/17 landed (ram), gang 5/16, 30 dmg, 0 deaths;
+  standing bot King down at 88.5 s, King 13/17 (coin 9/9, ram 2/2, 2 late body hits), gang 11/20,
+  234 dmg, 1 death. Every attack 0-33 % on the reader; the stander takes 2.3x his hp. n=1.
+
+NEXT (iteration 3, in order):
+1. Combat no-regress: re-film `--bot=reel --reel=director` on this branch (shared edits since
+   main: Fighter.body_class/brain_owned, ArenaBodies.class_of, CombatArena skips brain_owned).
+2. The wealth: part sheets under the image lock (codex image_gen, gtai-art/gen.mjs copied to
+   scratch, the d5 King parts + boss_king.jpg as references): gold-leafed press plates and chest,
+   a jewelled crown over the tin one, gold chains; the gang thug parts with gold chains and black
+   visor shades. Cut with the n5-cast pipeline (look at servo's `tools/art/servo_parts.py`).
+   Provenance lines in steam/ai-provenance/2026-11.jsonl.
+3. Phase-3 attack poses on the rig (slam: plates up through the tell, down on active, stuck in
+   recovery; charge: shoulder dip), decree pose (megaphone up), the phase transitions (car stall
+   smoke, the step-down), the defeat beat (crown falls, sag), boss music (boss_loop_01 / stinger).
+4. Ohm's stun on a boss (cancel a tell, 0.6 s daze); the decree's gang buff.
+5. The human-like bot (reads ~70 %, own RNG stream) + an n-seed runner -> boss-numbers.json.
+6. Clips into gtai-masters/n7/king/ (per attack 48 px/m, per phase 32 px/m, a full bot fight,
+   the procession entering, the target hstack) + frames.json refresh.
