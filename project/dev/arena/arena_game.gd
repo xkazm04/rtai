@@ -63,7 +63,10 @@ func _ready() -> void:
 	if args.has("--horde"):  # corpse decay: the bodies on the floor against the cap
 		HordeOverlay.attach(layer, session.stage)
 	FightFrames.attach(self, args, session.world)  # perf-city: --frames=<json> frame log
-	hud.visible = not args.has("--clean")  # a clip of the game only (the owner's sample)
+	# --clean: a clip of the game only (the owner's sample); a boss fight hides it too (it covers
+	# the boss bar), unless --hud
+	var boss: bool = args.text("--boss") != "" and not args.has("--hud")
+	hud.visible = not args.has("--clean") and not boss
 	tuning = ArenaTuning.new(session.actions, session.stage.arena.tuning)
 	tuning.hooks = session.stage.hooks
 	panel.tick_now = session.tick

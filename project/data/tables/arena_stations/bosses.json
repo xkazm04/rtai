@@ -5,7 +5,7 @@
   "stations": [
     {
       "area": "boulevard",
-      "doc": "A boss fight on the arena floor: --boss=king jumps straight in (the boss and Rivet stand at the boss arena record). King's boulevard: planters along both kerbs, a painted centre line, two plinths in the plaza at the east end.",
+      "doc": "A boss fight on the arena floor: --boss=king jumps straight in (the boss and Rivet stand at the boss arena record). King's boulevard: planters along both kerbs, a painted centre line, two plinths in the plaza at the east end. Two sedans parked at the plaza's kerbs (spawns kind car, ArenaCars.park): Dent's cars to seize and drive into King and his gang.",
       "id": "boss_fight",
       "name": "Boss fight",
       "props": [
@@ -285,7 +285,31 @@
           ]
         }
       ],
-      "script": "res://features/bosses/boss_hook.gd"
+      "script": "res://features/bosses/boss_hook.gd",
+      "spawns": [
+        {
+          "at": [
+            124,
+            -25
+          ],
+          "id": "boss_car_north",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        },
+        {
+          "at": [
+            124,
+            -5
+          ],
+          "id": "boss_car_south",
+          "kind": "car",
+          "motion": "static",
+          "span_m": 0,
+          "speed_mps": 0
+        }
+      ]
     }
   ]
 }

@@ -13,6 +13,8 @@ const SELECT_AT: int = 40
 const TAKE_AT: int = 46
 const FIRST_AT: int = 100
 const CADENCE: int = 30
+## Dent: the bot fires on a car from this close (inside the soft lock's reach).
+const SEIZE_M: float = 7.0
 
 var ghost: StringName
 ## `--ghost-tells`: the power is saved for the boss's tells (a reader interrupts with Ohm's bolt);
@@ -21,6 +23,10 @@ var save_for_tells: bool = OS.get_cmdline_user_args().has("--ghost-tells")
 var presses: int = 0
 var _start: int = -1
 var _last: int = -1000
+## Dent: a live car within SEIZE_M (car_goal sets it).
+var _near: bool = false
+## Dent: a car was seized (one per soul: afterwards the bot fights the boss again).
+var _seized: bool = false
 
 
 func _init(p_ghost: StringName) -> void:
@@ -37,6 +43,8 @@ func hold_m(f: BossFight, band_m: float) -> float:
 ## The ghost's buttons this tick (a bit mask over PlayerActions).
 func buttons(tick: int, hook: BossHook, me: Vector2, actions: PlayerActions) -> int:
 	if _start < 0:
+		if ghost == &"dent" and not _near:  # Dent: walk to a car first, then take the soul
+			return 0
 		_start = tick
 	var local: int = tick - _start
 	var picks: int = ORDER.find(ghost)
@@ -62,3 +70,28 @@ func _wants(hook: BossHook, me: Vector2) -> bool:
 		if a.state != BossFight.State.DEFEATED and me.distance_to(a.body.pos) <= reach:
 			return true
 	return not save_for_tells and f.state != BossFight.State.TRANSITION
+
+
+## Dent: the nearest live car to walk to and fire on (the fire press seizes the car nearest the
+## aim line), until one is seized; then Vector2.INF (the seized car steers by the aim at the
+## boss, and the melee press in reach blows it). The soul is taken only once a car is within
+## SEIZE_M, so the form's time is spent on the car, not the walk. INF for the other ghosts.
+func car_goal(cars: Array[VehicleBody], me: Vector2) -> Vector2:
+	if ghost != &"dent" or _seized:
+		return Vector2.INF
+	var best: Vector2 = Vector2.INF
+	for b: VehicleBody in cars:
+		if b.state == VehicleBody.State.WRECK:
+			continue
+		if b.soul_hijacked:
+			_seized = true
+			return Vector2.INF
+		if me.distance_to(b.pos) < me.distance_to(best):
+			best = b.pos
+	_near = best != Vector2.INF and me.distance_to(best) <= SEIZE_M
+	return best
+
+
+## True once the form is taken and settled (the attack presses wait for it).
+func settled(tick: int) -> bool:
+	return _start >= 0 and tick - _start >= FIRST_AT

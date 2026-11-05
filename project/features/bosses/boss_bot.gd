@@ -56,19 +56,18 @@ func sample(tick: int) -> TickInput:
 	var me: Vector2 = stage.arena.rivet.pos
 	var to_boss: Vector2 = f.body.pos - me
 	var foe: Vector2 = _target(me, f.body.pos) - me  # the nearest add inside ADD_M, else King
-	var aim: Vector2 = foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT
-	if _human != null:
-		aim = BossBotRead.sway(aim, tick)
-		for threat: BossFight in [f] + hook.adds.fights:
-			_human.see(threat)
+	var aim: Vector2 = _read(f, foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT, tick)
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
+	var car: Vector2 = _ghost.car_goal(stage.cars(), me) if _ghost != null else Vector2.INF
 	_bits = _ghost.buttons(tick, hook, me, actions) if _ghost != null else 0
 	var band: float = to_boss.length() - (_ghost.hold_m(f, HOLD_M) if _ghost != null else HOLD_M)
+	if car != Vector2.INF:  # Dent: walk to a car, take the soul, aim and fire to seize it
+		aim = (car - me).normalized()
+		band = me.distance_to(car) - BossBotGhost.SEIZE_M * 0.7
+		fire = _ghost.settled(tick) and band <= BossBotGhost.SEIZE_M * 0.3
 	var off_floor: bool = not hook.bounds.grow(-EDGE_M).has_point(me)
-	var home: Vector2 = (hook.bounds.get_center() - me).normalized()
 	if standing:  # holds the same band, never strafes, never dodges
-		var hold: Vector2 = home if off_floor else aim * clampf(band, -1.0, 1.0)
-		return _input(hold, aim, fire, false, false)
+		return _input(_hold(me, aim, band, off_floor), aim, fire, false, false)
 	for threat: BossFight in [f] + hook.adds.fights:
 		if threat.state == BossFight.State.DEFEATED:
 			continue
@@ -83,8 +82,28 @@ func sample(tick: int) -> TickInput:
 	if stage.walls.blocks(me, f.body.pos):  # cover in the line (a wreck, crates): walk round it
 		move = to_boss.normalized().orthogonal() * _side + to_boss.normalized() * 0.25
 	if off_floor:  # drifting off the floor: head back in
-		move = home
+		move = _home(me)
 	return _input(move, aim, fire, false, false)
+
+
+## The standing bot's move: hold the band along the aim, or head back in off the floor.
+func _hold(me: Vector2, aim: Vector2, band: float, off_floor: bool) -> Vector2:
+	return _home(me) if off_floor else aim * clampf(band, -1.0, 1.0)
+
+
+## Back towards the floor's centre (drifting off the floor).
+func _home(me: Vector2) -> Vector2:
+	return (hook.bounds.get_center() - me).normalized()
+
+
+## `--bot-human`: the aim sways and the reader sees the boss's and the adds' tells.
+func _read(f: BossFight, aim: Vector2, tick: int) -> Vector2:
+	if _human == null:
+		return aim
+	var swayed: Vector2 = BossBotRead.sway(aim, tick)
+	for threat: BossFight in [f] + hook.adds.fights:
+		_human.see(threat)
+	return swayed
 
 
 func _find_hook() -> void:
