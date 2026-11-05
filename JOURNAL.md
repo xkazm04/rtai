@@ -549,3 +549,45 @@ Read: JOURNAL, git log, the other lanes' journals (no new REQUEST for ranged; me
   bottle in flight in 2- and 4-frame samples. Throw anticipation stays "?" in the audit.
 - Next time: log the Shot's tick (or film `--reach=6` so the throw and the patch share the frame)
   before judging the throw.
+
+### FINDING 22:16: the molotov throw resolved with `--reach=7` (48 px/m), audit row 10 scored 1/3/3/3/0
+- The long vermilion line through Rivet in the 22:20 take is the COP's aim telegraph: it ends at
+  the cop, who then fires (white stars at frames 300 and 320 of `molo/molotov-r6.avi`). The bottle
+  flies from Rivet to the cop as a thin dark stick with a vermilion wick; the burst at about
+  frame 328 (big ink, cream and vermilion star, glass) and the burning cop read at a glance.
+  Rivet shows NO throw wind-up: anticipation 1.
+- A real wind-up (arm back BEFORE the release) needs the release to wait in the sim (a gameplay
+  timing change, a re-bless): not tonight. Follow-through on the release is view only.
+
+### MILESTONE-NOT 22:24: `41bb90e7` (molotov rig_kick -1.6, the arm forward on release): NO visible effect
+- Before/after at 48 px/m, same args (`--weapon=molotov --bot=gunplay --lone --cam=fight --reach=7`),
+  kill tick 458 both (sim identical). Pixel diff of frames 250-340: ZERO pixels differ (> 40).
+- Cause: `rig_arm.gd:41-42` clamps the hand to upper+fore length; the aimed pose already sits at
+  0.97 of it (`rig_arm.gd:85`), so a forward kick gains at most 3 %. A pull-back shows; a push
+  forward cannot. Kept (harmless, generic: a negative kick is legal now), but claimed as nothing.
+- Next: the follow-through through the torso (`c_lean`, 40 part-px per unit in `rig_pose.gd:35`,
+  the punch's lean): `c_lean = max(0.6 * c_reach, -k * recoil)` in `RigClips.sample`.
+
+- GATE 22:05: city-block director reel with `--loadout=pistol` on `ed60713e`: 19/19 fully down,
+  0 SCRIPT ERROR (`evidence/ranged/it5-reel-city-loadout.log`). The reel does not quit after its
+  last chapter in headless (earlier takes ended on `--quit-after`): I killed my own process (PID
+  49384) after the 19th chapter line. Next time add `--quit-after 7400`.
+- 22:18 I killed my own first evidence run (started 22:11 on `ed60713e`) because I edited the tree
+  under it; re-run on `41bb90e7` at 22:21 (`evidence/ranged/it5-evidence-41bb90e7.log`).
+- REPORT.md draft committed (`f4a3da61`): what works with evidence, the shard-pop call, befores.
+
+NEXT (iteration 6):
+1. Read `evidence/ranged/it5-evidence-41bb90e7.log` (+ `build/evidence/*.json`); record gates.
+2. The molotov follow-through through the torso: in `RigClips.sample` replace
+   `rig.c_lean = 0.6 * rig.c_reach` with `maxf(0.6 * rig.c_reach, -THROW_LEAN * recoil)`,
+   `THROW_LEAN` 0.5 (guns unchanged: their recoil is positive). Unit: c_lean > 0 on `shoot(-1.6)`.
+   Film with `scratch/ranged/molo/lean_ab.sh` (diffs vs the before take `molo/molotov-r6.avi`,
+   frames in `molo/fb/`); keep only if pixels move around Rivet on the release; else revert the
+   molotov row of `41bb90e7` and say so.
+3. Judge at 48 px/m every frame: Gatling spin-up rumble, flamer ignition (3 px; maybe 4-5), electro
+   snap. Tune by data only if timid.
+4. City combined clip retake with `--cam=fight`, `--quit-after 6200` (whole nuke blast).
+5. Quest 1's assault rifle read (score it).
+6. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
+   `build/export/windows/RTAI.exe`; REPORT command lines + befores (`--feel=off`,
+   `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--silent`, `--shard-pop=12`).

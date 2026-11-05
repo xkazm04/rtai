@@ -25,8 +25,10 @@ director reel with `--loadout=pistol` 19/19 down, 0 SCRIPT ERROR
 (`evidence/ranged/it5-reel-city-loadout.log`); evidence run: see JOURNAL iteration 5.
 
 ## What does not work / not done
-- Molotov throw anticipation: not scored. In the 48 px/m take I could not pick the spinning bottle
-  out in flight (JOURNAL FINDING 22:20).
+- Molotov throw: scored 1/3/3/3/0 (no wind-up on Rivet; the bottle and the burst read). `41bb90e7`
+  (a negative `rig_kick`: the arm forward on the release) has NO visible effect (pixel diff zero:
+  the aimed arm is already at 0.97 of its reach); a real wind-up needs the release to wait in the
+  sim (a gameplay timing change), not done.
 - Quest 1's assault rifle (combat.json, not a table gun): not scored.
 - Quest 1's table-gun change is small at 32 px/m in the windows filmed so far (Rivet fires few
   nails in Dock 9).

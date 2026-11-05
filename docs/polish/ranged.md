@@ -35,7 +35,7 @@ Anticipation / Impact / Read 32 / Victim sync / Sound (arena). `?` = not looked 
 | 7 | hand_cannon | 2 | 2 | 3 | 3 | 0 | ring at the muzzle, ink star + blood on the hit frame, body thrown; no camera answer for the heaviest single shot |
 | 8 | ray_gun | 2 | 2 | 2 | 2 | 0 | ink bolt and star on the hit frame, a pale ring at the body; the kill reads as a faint flash, the body barely answers at 32 px/m |
 | 9 | flamethrower | 2 | 3 | 3 | 3 | 0 | it3 48 px/m: the vermilion/cream tongues grow from the nozzle over about 12 frames and light the cop on contact, patches stay; the ignition had no beat -> `e32720c4` a 3 px kick on the first puff |
-| 10 | molotov | ? | 3 | 3 | 3 | 0 | the fire patch reads at a glance (vermilion and cream flame cluster), the burning cop dies charred with a star; the throw not judged |
+| 10 | molotov | 1 | 3 | 3 | 3 | 0 | it5 at 48 px/m, `--reach=7`: no wind-up on Rivet (the only cue is the next lit bottle in his claw); the bottle flies as a thin dark stick with a vermilion wick, readable at 48 px/m, thin at 32; the burst (ink, cream and vermilion star) and the burning cop read at a glance |
 | 11 | pistol | 1 | 2 | 2 | 3 | 0 | Rivet's round is a 1-2 frame streak (the muzzle hardly reads at 32 px/m); blood spurt on T+1, the fall reads |
 | 12 | machine_pistol | 1 | 2 | 2 | 3 | 0 | each round sprays sparks and the body bleeds on the hit frames; the burst reads, Rivet's muzzle hardly does |
 | 13 | gloria | 1 | 2 | 3 | 3 | 0 | it3 (sheet `sheets/gloria-off-k2.png`, kill 2 at tick 562): a long dashed vermilion/ink tracer from the claw reads at a glance; blood on T+1, the body folds along the shot by T+12; no muzzle or kick of its own beyond the tracer; the victim at the frame edge (capture framing) |
