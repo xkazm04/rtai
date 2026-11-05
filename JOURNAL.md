@@ -96,3 +96,29 @@ names above, so they move into `bosses.json` with a copy.
 3. **Your `write_bosses.mjs` keeps other rows:** read the existing table and set only
    `bosses.king` / `arenas.king_boulevard`, or regenerating drops Servo's row. Mine
    (`evidence/servo/write_servo_row.mjs`) already does that for `servo` / `depot`.
+- 19:18 MILESTONE c60ac868: dev graybox of the fight (`dev/servo/servo_fight_run.gd`, windowed
+  d3d12; stand-in shapes, NOT the rig). Looked at the 48 px/m keys
+  (`M/frames/servo-graybox-wave-keys-48ppm.png`): the thin tracking beam, the lock ring, the three
+  dashed drop rings (they overlap into one pill-shaped zone), drone rotor crosses over ink shadows,
+  rack cells going dark at the wing tips as drones launch: all read. Weak: the rings show from
+  launch, ~3 s before the drop at 9 m/s cruise; raised cruise to 12 m/s (data).
+  - MEASURED (graybox, seed 7, 30 s phase 1, a perfect-reader stand-in that steps 5 m off the
+    mark at the lock; not the real bot, Rivet's real reaction is later): standing 178 damage (4
+    blast hits of 9 drones, 3 dashes of 3); dodging 0 (0 of 9 drones, 0 of 3 dashes). Too easy for
+    a perfect reader by design; the real bot must react with Rivet's reaction delay.
+  - Clips: `M/servo-graybox-p1-dodge-32ppm.mp4`, `M/servo-graybox-p1-stand-32ppm.mp4`,
+    `M/servo-graybox-wave-48ppm.mp4`; `M/frames.json` (4 entries).
+- 19:20 gates: lint 13/13 every commit; unit 1130 passed / 0 failed (`E/unit-it1.log`, includes
+  test_servo_swarm 6, test_servo_moves 4, king's test_boss_fight 10).
+- 19:21 image job `servo_core_a` started under `gtai-n5/image.lock` (runner copied to
+  `gtai-n7/scratch/servo/tools/gen.mjs`; round `M/gen/r1/`): an edit of the n5-cast 3x2 layout
+  template (`gen/r1/refs/sheet.png`, the d4 core sheet) with the Servo target: TL kept as the
+  scale reference, TM visor head, TR hover pad, BL walker pelvis, BM cargo-belly torso, BR one
+  drone-rack wing (2x3 bays with docked drones). Neutral visor (the game tints it vermilion only
+  during a tell).
+- Calls for the owner (collect for REPORT):
+  1. **When the drop rings appear.** Default built: from the drone's launch (~2-3 s of warning).
+     Option: only over the hover (hover 0.7 + fall 0.35 = 1.05 s), the mark ring alone before.
+     To build as one flag next iteration (`servo.json drone.ring_from_launch`); see
+     `M/servo-graybox-wave-48ppm.mp4`.
+  2. Should a CS crate landing on Rivet hurt (today only bombs do; crates block and cover)?
