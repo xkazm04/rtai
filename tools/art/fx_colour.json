@@ -128,7 +128,7 @@
         "colour": "#F08A24",
         "px": 45
       },
-      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before. Iteration 10: pockets (r2_w4: ragged fire pockets, not a ring): 9 round orange pockets with a hot yellow core moved toward the blast centre (core_in; centred, it read as a target), hash-placed on the ring's inner edge, clipped to the smoke (fx_colour.py pockets); when present they replace the inner band. Drop pockets = the iteration 8 band.",
+      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before. Iteration 10: pockets (r2_w4: ragged fire pockets, not a ring): 9 round orange pockets with a hot yellow core moved toward the blast centre (core_in; centred, it read as a target), hash-placed on the ring's inner edge, clipped to the smoke (fx_colour.py pockets); when present they replace the inner band. Drop pockets = the iteration 8 band. Iteration 11: wobble 0.2 (a hashed 3- and 5-lobe radial wobble of each pocket edge, r2_w4's ragged fire tongues; 0 = the round iteration 10 pockets) with r_px 30-52 (was 25-45: the lumpy edge eats fire area).",
       "pockets": {
         "colour": "#F08A24",
         "core": "#FFC23A",
@@ -136,10 +136,11 @@
         "core_k": 0.5,
         "n": 9,
         "r_px": [
-          25,
-          45
+          30,
+          52
         ],
-        "seed": 1
+        "seed": 1,
+        "wobble": 0.2
       },
       "tokens": {
         "ink_2": "#5A4A44",

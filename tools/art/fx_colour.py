@@ -99,12 +99,13 @@ def inner_band(path, colour, px, sectors=180):
     img.save(path, optimize=True)
 
 
-def pockets(path, colour, n, r_px, seed=1.0, band_px=0, core=None, core_k=0.45, core_in=0.0):
+def pockets(path, colour, n, r_px, seed=1.0, core=None, core_k=0.45, core_in=0.0, wobble=0.0):
     """r2_w4's fire pockets inside the smoke: `n` round orange pockets centred on the ring's
     inner edge at hashed angles (radius r_px[0]..r_px[1]), clipped to the non-ink ring pixels,
     each with a hot `core` disc (core_k x its radius, moved core_in x its radius toward the
-    blast centre) when given; band_px > 0 also keeps a thin continuous band along the inner
-    edge. Hash-placed from `seed`: deterministic."""
+    blast centre) when given. wobble > 0 makes each pocket's edge lumpy (a hashed 3- and
+    5-lobe radial wobble of that share of its radius; 0 = round discs). Hash-placed from
+    `seed`: deterministic."""
     img = Image.open(path).convert("RGBA")
     pix = img.load()
     cx, cy = img.width / 2, img.height / 2
@@ -129,25 +130,34 @@ def pockets(path, colour, n, r_px, seed=1.0, band_px=0, core=None, core_k=0.45, 
                 r,
                 cx + math.cos(a) * cc,
                 cy + math.sin(a) * cc,
+                h(i, seed + 5.1) * 6.283,
+                h(i, seed + 7.7) * 6.283,
             )
         )
+
+    def edge(px, py, d):
+        if wobble <= 0.0:
+            return d[2]
+        t = math.atan2(py - d[1], px - d[0])
+        return d[2] * (1.0 + wobble * (0.6 * math.sin(3 * t + d[5]) + 0.4 * math.sin(5 * t + d[6])))
+
     ink = TOKENS["ink"]
     for (x, y), (d, k) in polar.items():
         r_, g, b, a = pix[x, y]
         if sum(abs(c - t) for c, t in zip((r_, g, b), ink)) < 60:
             continue
-        hit = colour if d - inner[k] < band_px else None
-        for dx, dy, dr, kx, ky in discs:
+        hit = None
+        for disc in discs:
+            dx, dy, _, kx, ky = disc[:5]
+            er = edge(x, y, disc)
             q = (x - dx) ** 2 + (y - dy) ** 2
-            if (
-                core is not None
-                and (x - kx) ** 2 + (y - ky) ** 2 < (dr * core_k) ** 2
-                and q < dr * dr
-            ):
+            if q >= er * er:
+                continue
+            kr = edge(x, y, (kx, ky) + disc[2:]) * core_k
+            if core is not None and (x - kx) ** 2 + (y - ky) ** 2 < kr * kr:
                 hit = core
                 break
-            if q < dr * dr:
-                hit = colour
+            hit = colour
         if hit is not None:
             pix[x, y] = tuple(hit) + (a,)
     img.save(path, optimize=True)
@@ -174,6 +184,7 @@ def main(src_dir, out_dir):
                         core=_hex(pk["core"]) if "core" in pk else None,
                         core_k=pk.get("core_k", 0.45),
                         core_in=pk.get("core_in", 0.0),
+                        wobble=pk.get("wobble", 0.0),
                     )
                 elif "inner" in fam:
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
