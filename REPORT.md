@@ -63,7 +63,7 @@ Each: options, the default built, how to see it. Exe lines assume `build/export/
 boots into the arena; args after `--`). Rivet carries one weapon per slot (`rivet_arsenal.json` classes: 1 sidearm,
 2 two-hand long, 3 heavy/shoulder/hip, 4 thrown; the katana goes in slot 2 and the rocket launcher in slot 3).
 A loadout keeps the last weapon of each slot, and every other weapon lies on the arena hub floor (ArenaArmory).
-Every line below was run in this exe at 17:58 (headless, 240 ticks): 0 script errors, no unknown-arg warning, and
+Every line below (with and without its A/B flag) was run in this exe at 18:13 (headless, 240 ticks; `evidence/held-it4-exe-call-lines.log`): 0 script errors, no unknown-arg warning, and
 Rivet carried the named weapons.
 
 1. **Blade wrist angle.** A: 0.45 rad in toward the centre line (built). B: 0 (straight ahead along the forearm).

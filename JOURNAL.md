@@ -294,3 +294,10 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   still into evidence/ mid-run (my fault; unit was 1110/0); committed it, re-ran clean.
   FRICTION/LESSON: never write into the worktree while tools/evidence/run.mjs is running.
   Director reel on 4a34d9ef: 19/19 down, 0 SCRIPT ERROR.
+- 18:13 PROOF the REPORT call lines re-run on the final exe (1550dfb0), with and without each A/B flag: 7 runs,
+  exit 0, 0 SCRIPT ERROR, 0 unknown, the named weapons carried (`evidence/held-it4-exe-call-lines.log`).
+- 18:14 STOP iteration 4 (freeze 18:30). Head = this commit; exe at 1550dfb0 (only docs/evidence after it).
+  NEXT (next lane day): the owner's verdicts on the 7 REPORT calls; call 7's pick first (centre-line long gun +
+  the two-layer drawn claw pair through Codex under image.lock); the darker off-claw tone (own material, A/B at
+  64 px/m); 32 px/m before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip.
+  If anything under project/ moves before the Director merges: unit + scenarios + re-export, fix the REPORT sha.

@@ -1,0 +1,7 @@
+--loadout=katana -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"katana", &"", &""]
+--loadout=pistol -> exit 0 errs 0 unknown 0 | Rivet carries [&"pistol", &"", &"", &""]
+--loadout=plasma_rifle,gatling -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"plasma_rifle", &"gatling", &""]
+--loadout=plasma_rifle,gatling --torch-off-arm -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"plasma_rifle", &"gatling", &""]
+--loadout=plasma_rifle,rocket_launcher -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"plasma_rifle", &"rocket_launcher", &""]
+--loadout=plasma_rifle,rocket_launcher --gun-off-claw -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"plasma_rifle", &"rocket_launcher", &""]
+--loadout=gatling -> exit 0 errs 0 unknown 0 | Rivet carries [&"", &"", &"gatling", &""]
