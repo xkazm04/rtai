@@ -26,6 +26,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--feel",
 	# n7-ranged: --react-snap=off drops the hit snap of a reaction family (the electro bolt's before)
 	"--react-snap",
+	# n7-ranged: --shard-pop=<ticks> the homing shard victim's freeze before the pop (owner call)
+	"--shard-pop",
 ]
 
 var _values: Dictionary[String, String] = {}

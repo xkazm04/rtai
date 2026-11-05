@@ -22,6 +22,7 @@ func setup(stage: ArenaStage, ctx: WorldContext) -> void:
 	_stage = stage
 	var table: SignatureKillTable = SignatureKillTable.load_table()
 	table.gore_full = SignatureKillTable.gore_from_args(ArenaArgs.parse().text("--gore", "full"))
+	shard_pop(table, ArenaArgs.parse().text("--shard-pop"))
 	kills = SignatureKills.new(table, ctx.rng.stream(&"brutality"))
 	kills.push_out = _push_out
 	@warning_ignore("return_value_discarded")
@@ -113,6 +114,15 @@ func attach_view(p_view: Node) -> void:
 	view.styles.burst_fx.flinch = not ArenaArgs.parse().has("--no-shard-flinch")  # the A/B's before
 	FightShardArt.own_pop = view.styles.burst_fx.flinch
 	layer.add_child(view)
+
+
+## Owner call (combat note item 4, n7-ranged): `--shard-pop=<ticks>` sets how long a homing
+## shard victim freezes on the shards before the pop (row grind_ticks; 36 = the approved look).
+## The grind is GibSim state: another value moves the arena's replay hash, as any table edit.
+static func shard_pop(table: SignatureKillTable, value: String) -> void:
+	var row: SignatureKill = table.for_weapon(&"homing_shard")
+	if row != null and value.is_valid_int():
+		row.grind_ticks = maxi(0, value.to_int())
 
 
 ## The printed path's actor layer, or the CityView's on the city block (--arena=city), where the
