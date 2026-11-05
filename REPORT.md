@@ -249,8 +249,10 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    32 px/m and only the cops' blue pads tell them apart.
    The cost of A, seen in the live city (iteration 18): on the cream slab a standing pale-topped ped is a faint
    cream shape held only by its ink outline, where r2_a5/r2_c6 keep the peds' dark trousers and hair visible
-   (`M/frames/ped-pale-on-slab-city-32ppm.png`). On asphalt A reads well. A middle value or dark legs showing under the
-   coat would be the next trial if you keep A.
+   (`M/frames/ped-pale-on-slab-city-32ppm.png`). On asphalt A reads well. There is no middle value at
+   32 px/m: the print is two-tone there (a fill below lum ~0.58 prints ink, `ped_pale.py`'s note), so the choice is
+   pale or a dark blob. Walking peds already show dark legs (the walking row of `M/frames/crowd-planview-ab-vs-r2a5.png`);
+   a standing ped is all coat from above. If you keep A, the next trial is a dark hair or head mark that reads on the slab.
 
 7. Rivet's collar at 32 px/m: A, vermilion with 6 ink hazard breaks (built, `PartMaterials.COLLAR_LOD_FILL` 3,
    `print_part.gdshader` `collar_stripes` 6 / `collar_ink` 0.3), or B, the flat vermilion ring (`COLLAR_LOD_FILL`

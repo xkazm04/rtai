@@ -1117,8 +1117,9 @@ Session end 05:02: tree clean after this commit, no Godot process of mine runnin
   (libx264rgb qp 0, x4 crop) and still `M/frames/rivet-core-tan-director-ac-lossless-32ppm.png` (ticks 60/200/330
   beside r2_c3). C's core is a distinct tan plate inside the collar, it holds beside the cop's blood, and the kills match frame for frame.
   PNG sequences (1.1 GB) deleted. frames.json 15 (new still second; the 0.6-era B|A|C still dropped from the list, file kept, REPORT cites it).
-- 05:27 FINDING (Call 6, not built): in the live city at 32 px/m a standing pale-topped ped on the cream slab is a
+- 05:25 FINDING (Call 6, not built): in the live city at 32 px/m a standing pale-topped ped on the cream slab is a
   faint cream shape held only by its ink outline (`M/frames/ped-pale-on-slab-city-32ppm.png`, mp4 frame x2); r2_a5 keeps
   dark trousers and hair. The iteration 11 lineup judged it on slab with the outline; in the live city it reads weaker.
-  Not reopened at 05:27 (a judged Call, ~30 min left); added to REPORT Call 6 as the cost of A, with the next trial
-  named (a middle fill value or dark legs under the coat).
+  Not reopened at 05:25 (a judged Call, ~30 min left); added to REPORT Call 6 as the cost of A, with the next trial
+  named. CORRECTION 05:27: no middle value exists at 32 px/m (the print is two-tone, ink below lum ~0.58); REPORT
+  now names a dark head mark on the slab as the next trial; walking peds already show dark legs.
