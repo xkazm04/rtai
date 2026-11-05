@@ -289,3 +289,26 @@ NEXT (written 20:40, revised 20:56, for iteration 3):
   state hash changes; no test pins a literal quest 1 hash (only same-seed self-compares); precedent
   docs/decisions.md:555 (Dent ghost cars: a DECISION, no re-bless). Check: the HUD's slot keys in
   quest 1, PickupsView is arena-only, `--loadout` is not in KNOWN_FLAGS.
+- CHECK 21:39 city block ghost reel (`--arena=city --bot=ghosts --ghost=tonnage --rigs`, 32 px/m, 600
+  frames) on `a7ed5d4c`: 0 SCRIPT ERROR; LOOK (frames 126-250 every 4th, 480x300 crops): the ram's
+  cream star prints by the cop at the parked car on frames 134-138, the slam's flash and debris on 158-166.
+- Scratch cleaned (kept: the 48 px/m audit AVIs for the unscored attacks).
+
+NEXT (written 21:40, for iteration 4):
+1. Quest 1 melee (brief 5), per the PLAN entry above: a RivetCarry with one blade in
+   `Quest1Session._bind_pilot`, on its slot key, Gloria untouched; DECISION line (quest 1 state hash
+   changes, no literal pinned, precedent decisions.md:555); scenarios (quest1_*), a quest 1 film with
+   the blade drawn on its path (`res://boot/quest1.tscn`, find the dev flags quest 1 films use).
+2. Score Tonnage's plates, Dent's blow and Ohm's mass arc (`--tier=1`) from the 48 px/m audit AVIs
+   in scratch; add to `docs/polish/melee.md`; work the weakest.
+3. Tonnage ram: the heap of rammed bodies at the car still reads as one blob at 32 (the burst is
+   ~20 px); options: a bigger burst only on a kill, or the ram kill's throw (signature row
+   tonnage_ram) launching bodies clear instead of piling.
+4. Ohm: the bolt's victim impact and the mass arc through a crowd (brief: "without drowning the screen").
+5. Merge n7-ranged feel commits as they land (record each).
+6. Before freeze: the combined city-block clip of the polished set (30-90 s), the exe (int-day recipe
+   in docs/decisions.md), REPORT with calls for the owner: Tonnage stomp's HaulerKick ignores
+   `--feel=off`; no per-attack sound cues exist (needs sound assets); Kerf's stop cadence decided by
+   ranged (cooldown 16).
+- STOP 21:40 iteration 3. Gates on `19c92dd9` full green; scenarios on `0c4161d8` 52/52; later commits
+  are view-only (deflect streak alpha, a data doc line): lint 13/13 at each commit hook.
