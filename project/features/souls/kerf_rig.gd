@@ -62,10 +62,12 @@ func _ready() -> void:
 		var fore: Sprite2D = _limb("fore")
 		for s: Sprite2D in [leg_up, leg_lo, upper, fore]:
 			s.flip_v = side == 1  # the left side mirrors (the claw curves outward)
+			GhostRim.limb(s)
 		_limbs.append_array([upper, fore, leg_up, leg_lo])
 	_cables = _part("cables", CABLES_M)
 	_cables.position = CABLES_AT * PX_PER_M
 	_hull = _part("hull", HULL_M)
+	GhostRim.body(_hull)
 	pose()
 
 

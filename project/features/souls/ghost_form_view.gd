@@ -5,8 +5,8 @@ extends Node2D
 ## Tonnage's body (TonnageRig) stands in for Rivet's rig while the form is big (Rivet's CutRig is
 ## hidden, the held gun with it), unfolding from the in-between pose over the transformation's
 ## second stage; GhostMorphFx draws the teal burst, seams, steam and sparks over every
-## transformation (base <-> form, and the form-to-form teal flash). Kerf, Dent and Ohm show base
-## Rivet under the effects until their rigs land.
+## transformation (base <-> form, and the form-to-form teal flash). Dent (DentBody) and Kerf
+## (KerfRig) and Ohm (OhmRig) stand in the same way.
 
 ## The camera beat at the in-between pose: camera.json shakes (their budget and reduced-motion
 ## scale), the heavy one when the big body comes or goes.
@@ -28,16 +28,11 @@ var beats: int = 0
 var lurch_on: bool = true
 var _tonnage: TonnageRig = TonnageRig.new()
 var _kerf: KerfRig = KerfRig.new()
-var _kerf_last: Vector2 = Vector2.ZERO
+var _ohm: OhmRig = OhmRig.new()
+## The hover/cane rigs' last spot (px), for their ground speed.
+var _light_last: Dictionary[StringName, Vector2] = {}
 var _fx: GhostMorphFx = GhostMorphFx.new()
-## Dent's body: a standalone CutRig on DentPlan, fed Rivet's pose (CharacterRigs holds one plan
-## per actor kind).
-var _dent: CutRig = CutRig.new()
-## Dent's stagger: the rig rides a root that rolls and yaws per stride (DentLurch).
-var _dent_root: Node2D = Node2D.new()
-var _lurch: DentLurch = DentLurch.new()
-var _aura: GhostAura = GhostAura.new()
-var _last_pos: Vector2 = Vector2.ZERO
+var _dent: DentBody = DentBody.new()
 var _hidden_rig: CutRig = null
 var _last_tick: int = -1
 var _last_stage: int = 0
@@ -56,6 +51,7 @@ static func attach(
 	v.camera = p_camera
 	v.reduced_motion = LaunchArgs.has("--reduced-motion")
 	v.lurch_on = not OS.get_cmdline_user_args().has("--no-lurch")  # dev A/B (not a LaunchArgs flag)
+	GhostRim.enabled = not OS.get_cmdline_user_args().has("--no-rim")  # dev A/B
 	v.z_index = p_rigs.z_index + 1 if p_rigs != null else RenderLayers.z(&"actors")
 	layer.add_child(v)
 	return v
@@ -65,22 +61,15 @@ func _ready() -> void:
 	process_priority = 20  # after CharacterRigs poses and RivetHeldView feeds the rig
 	_tonnage.visible = false
 	add_child(_tonnage)
-	_kerf.visible = false
-	add_child(_kerf)
+	for light: Node2D in [_kerf, _ohm]:
+		light.visible = false
+		add_child(light)
 	_fx.reduced_motion = reduced_motion
 	add_child(_fx)
-	_dent.visible = false
-	if lurch_on:
-		_dent.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS  # raw art at 32 px/m
-	add_child(_dent_root)
-	_aura.reduced_motion = reduced_motion
-	_aura.visible = lurch_on
-	_dent_root.add_child(_aura)  # under the body
-	_dent_root.add_child(_dent)
-	var dent_row: GhostFormDef = pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null
-	_dent.setup(DentPlan.build(dent_row.size_k if dent_row else 1.05), RigVariant.rivet())
-	_aura.radius_px = (dent_row.radius_m if dent_row else 0.45) * SimConst.PX_PER_M
-	_dent.reset_state(0.0)
+	_dent.lurch_on = lurch_on
+	_dent.reduced_motion = reduced_motion
+	add_child(_dent)
+	_dent.setup(pilot.ghosts.forms.table.form(DentStage.GHOST) if pilot else null)
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = HUD_LAYER
 	add_child(layer)
@@ -136,55 +125,28 @@ func _process(_delta: float) -> void:
 	_beat(forms.stage() if busy else 0, with_big)
 	hud.sync(forms)
 	var is_dent: bool = big(forms, DentStage.GHOST)
-	_step_dent(is_dent, at, r.facing.angle(), steps)
-	var is_kerf: bool = big(forms, KerfStage.GHOST)
-	_step_kerf(is_kerf, at, r.facing.angle(), steps)
-	_hide_rivet(is_big or is_dent or is_kerf, r.id)
+	_dent.step(is_dent, at, r.facing.angle(), steps, arena.tick)
+	var is_kerf: bool = _step_light(_kerf, KerfStage.GHOST, at, r.facing.angle(), steps)
+	var is_ohm: bool = _step_light(_ohm, OhmStage.GHOST, at, r.facing.angle(), steps)
+	_hide_rivet(is_big or is_dent or is_kerf or is_ohm, r.id)
 
 
-## Kerf's hover rig at Rivet's pose (snaps with the blink: no tween), unfolding with the morph.
-func _step_kerf(show: bool, at: Vector2, facing: float, steps: int) -> void:
-	_kerf.visible = show
+## Kerf's hover rig or Ohm's cane rig at Rivet's pose (snaps with Kerf's blink: no tween),
+## unfolding with the morph; `rig` has unfold, speed_mps and advance(dt). True while it shows.
+func _step_light(rig: Node2D, id: StringName, at: Vector2, facing: float, steps: int) -> bool:
+	var show: bool = big(pilot.ghosts.forms, id)
+	rig.visible = show
+	var last: Vector2 = _light_last.get(id, at)
+	_light_last[id] = at
 	if not show:
-		_kerf_last = at
-		return
-	_kerf.position = at
-	_kerf.rotation = facing
-	_kerf.unfold = unfold_k(pilot.ghosts.forms, KerfStage.GHOST)
+		return false
+	rig.position = at
+	rig.rotation = facing
+	rig.set(&"unfold", unfold_k(pilot.ghosts.forms, id))
 	var dt: float = maxf(1.0, float(steps)) * SimClock.TICK_DT
-	_kerf.speed_mps = minf(20.0, at.distance_to(_kerf_last) / SimConst.PX_PER_M / dt)
-	_kerf_last = at
-	_kerf.advance(steps * SimClock.TICK_DT)
-
-
-## Dent's rig at Rivet's pose, posed on whole sim ticks (its gait from Rivet's own travel).
-func _step_dent(show: bool, at: Vector2, facing: float, steps: int) -> void:
-	if show and not _dent.visible:
-		_lurch.reset()
-		_place_dent(at, facing)  # before the reset: the rig plants its feet where it stands
-		_dent.reset_state(facing)
-		_last_pos = at
-	_dent.visible = show
-	_dent_root.visible = show  # the soul glow goes with the body
-	if not show:
-		return
-	_dent.face_to = facing
-	_dent.vel_in = (at - _last_pos) / (maxf(1.0, float(steps)) * SimClock.TICK_DT)
-	_last_pos = at
-	for i: int in steps if lurch_on else 0:
-		_lurch.step(_dent.vel_in.length() / SimConst.PX_PER_M, SimClock.TICK_DT)
-	_place_dent(at, facing)
-	for i: int in steps:
-		_dent.drive(SimClock.TICK_DT)
-	_aura.sync(arena.tick, clampf(_dent.vel_in.length() / SimConst.PX_PER_M / 7.0, 0.0, 1.0))
-
-
-## Dent's root at Rivet's spot, rolled sideways and yawed by the lurch (the rig sits at its origin).
-func _place_dent(at: Vector2, facing: float) -> void:
-	var side: Vector2 = Vector2.from_angle(facing).orthogonal()
-	_dent_root.position = at + side * _lurch.sway_m() * SimConst.PX_PER_M
-	_dent_root.rotation = _lurch.yaw()
-	_dent.position = Vector2.ZERO
+	rig.set(&"speed_mps", minf(20.0, at.distance_to(last) / SimConst.PX_PER_M / dt))
+	rig.call(&"advance", steps * SimClock.TICK_DT)
+	return true
 
 
 ## One camera shake as the transformation passes its in-between pose.
