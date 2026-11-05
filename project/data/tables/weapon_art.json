@@ -654,7 +654,7 @@
         310,
         32
       ],
-      "art": "res://features/combat/weapons/art/fx/tracer.png",
+      "art": "res://features/combat/weapons/art/fx/tracer_comet.png",
       "id": "tracer",
       "size_px": [
         320,
