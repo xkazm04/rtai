@@ -1408,3 +1408,21 @@ NEXT (the freeze at 08:30, the report at 08:40):
 4. The last gate is on cf64342e (ALL PASS); docs only since, so no re-run is needed unless code lands.
 Session end 07:54: tree clean after this commit, no Godot process of mine running, image.lock and bench.lock never
   taken. Scratch `gtai-n5/scratch-cast/i21` holds logs and stills only (PNG sequences deleted below).
+
+## Iteration 23 (07:54 - 08:30, BUILD)
+- 07:54 read JOURNAL, log, REPORT open items, n5-look JOURNAL (no new REQUEST to n5-cast). No locks. Four Godot
+  processes running, none mine: bench skipped (CONTENDED). Work list done; start at NEXT 3 (the Hauler's one-frame swap).
+- 07:56 judged `M/frames/quest1-hauler-switch-32ppm.png` myself: frame 15 -> 16 flips tan core + dark collar to pale
+  core + striped collar in one frame, so it reads as a pop in the morph. Took the cross-fade.
+- 07:57 10607e11: `CastView._art_w(grow)` = smoothstep over flat_below x (1 +- LOD_FADE 0.12) on the drawn px; the
+  Hauler branch draws rivet_lod under rivet at that weight; `_lod_art(id)` (base Rivet, peek) unchanged result, the px
+  maths moved to `_view_px`. `LOD_FADE` 0 = the hard swap (the before). Lint 13/13, unit 954/0.
+- Evidence (quest_hauler_rec --ppm=32, same sim both: activations 1, stomps 2, kills 6; before = LOD_FADE 0, restored;
+  0 SCRIPT ERROR): only frames 14-17 of 355 differ. `M/frames/quest1-hauler-fade-ab-32ppm.png` (frames 13-18 x3),
+  `M/cast-quest1-hauler-fade-ab-32.mp4` (before | after). Judged: frames 15-17 blend the two sprites; one frame (17)
+  shows the sticker's wider cream halo under the art. frames.json 15 (it on top; quest1-patrol-sprite-ab dropped from
+  the list, file kept, REPORT cites it). DECISION in docs/decisions.md.
+- Registry `motion-quality-gating`: judged in motion (the morph frames), not a single still; `sprite-and-atlas-production`
+  "a sprite is a set": both captures share the rig-root anchor, so the blend does not ghost-shift.
+- FRICTION: the first unit run went without GODOT_BIN set: exit -1 on every step, with a stale "954 passed" summary.
+  Re-run with GODOT_BIN: 954/0.
