@@ -35,6 +35,8 @@ var shots_fired: int = 0
 var press_left: bool = false
 ## The player (bound input) when set; null for the bot, which writes intent itself.
 var pilot: StagePilot = null
+## n7-ranged: Rivet's weapon fires as its weapons.json row (quest 1); null = the evening path.
+var guns: StageGuns = null
 var tick: int = 0
 ## The last quest line StageLines acted on.
 var last_line: String = ""
@@ -89,6 +91,8 @@ func step(p_tick: int, tick_input: TickInput) -> void:
 	if follow != null and follow.body != null and follow.body.on:
 		arena.rivet.pos = follow.target  # features/bodies: where the city's people left him
 	var from: Vector2 = arena.rivet.pos
+	if guns != null:
+		guns.sync(arena)
 	if pilot != null:
 		pilot.drive(self, tick_input)
 	_move()

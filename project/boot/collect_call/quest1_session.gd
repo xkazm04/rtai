@@ -19,6 +19,9 @@ static var on_city: bool = true
 ## (ghost_forms.json `unlock`; quest 1 completes none, so Dent stays locked). false = every
 ## ghost free (the old default; the game's `--ghosts-free`).
 static var ghost_locks: bool = true
+## n7-ranged: Rivet's weapon fires as its weapons.json row (StageGuns: Gloria with the table's
+## muzzle, casings, cue and feel). false = the evening path (the game's `--quest-guns=off`).
+static var table_guns: bool = true
 ## The act quests the story has completed (none before quest 1's own act lands).
 static var acts_done: Array[StringName] = []
 
@@ -49,6 +52,8 @@ static func open(events: EventBus, data: DataStore, seed: int = MASTER_SEED) -> 
 	s.world.name = "Quest1World"
 	s.world.start(events, data, seed)
 	s.stage = CollectCallStage.new(StageLayout.shipped(on_city))
+	if table_guns:
+		s.stage.guns = StageGuns.make(s.world.context().rng.stream(&"quest_guns"))
 	s._bind_pilot()
 	s.port = CollectCallWorld.new(s.stage)
 	s.system = QuestSystem.new(s.port)
