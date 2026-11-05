@@ -657,3 +657,10 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   `M/frames/tonnage-reach-arena-keys-32ppm.png`: ring + wash, then the slam crushes the cruiser. DECISION in
   decisions.md. Registry rule applied (motion-quality-gating): a telegraph must read at game zoom on the shipped path,
   judged on stills at 32 px/m. Lint 13/13, unit 1007/0 (`E/unit-it8-powers.log`).
+- 05:24 COMBAT CHECK director reel headless on ed6567b9: 16/16 chapters, the same per-chapter counts as iteration 7,
+  0 SCRIPT ERROR (`E/director-reel-it8-powers.log`).
+- 05:26 Tonnage's reach in quest 1 at 64 px/m (quest_hauler_rec --ppm=64, 4 kills, 0 SCRIPT ERROR):
+  `M/frames/quest1-tonnage-reach-keys-64ppm.png`, `M/quest1-tonnage-reach-64ppm-halfspeed.mp4` (frames 200-320).
+  Judged: ring, wash and crack read over the press body; the quest's dialogue box covers the lower street at 64.
+- 05:29 reel re-cut `M/ghost-attacks-reel-it8-32ppm.mp4` (47 s, + the arena's Tonnage reach/slam segment first);
+  it7 reel deleted; frames.json 15 (all present).
