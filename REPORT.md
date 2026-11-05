@@ -166,6 +166,13 @@ The owner's order for this lane: "create these characters, animate transformatio
 - On 457e9551 (Ohm's seams): lint 13/13, unit 1001/0; director reel 16/16 chapters down, 0 SCRIPT ERROR
   (`E:director-reel-it7-seams.log`).
 
+### Gates (iteration 9)
+- On 95aa969e (merged n6-ghost-powers 9b5ae95f and n5-cast 31e665fa, Kerf's bar, the 64 px/m driver), still
+  tree: evidence runner `--no-bench` all PASS: lint 13/13, unit 1008/0, scenarios 47, parity bit-exact (mutation
+  caught at 629), look goldens 11/11 (worst 1.22), block goldens 5/5 (worst 1.38), no re-bless
+  (`E:evidence-run-it9.log`). Director reel on d5e2f3e5: 16/16 chapters down, 0 SCRIPT ERROR
+  (`E:director-reel-it9.log`).
+
 ## What does not work / is open
 - Nothing open in this lane's list. Dent's attack in quest 1 is a no-op (no vehicles there); that row belongs to
   the ghost-powers REPORT.
@@ -186,4 +193,8 @@ The owner's order for this lane: "create these characters, animate transformatio
   off (A/B `M:frames/story-voice-quest1-shipped-ab-32ppm-x2.png`).
 
 ## Next steps
-- Final gates on a still tree (the evidence runner).
+- Final gates on a still tree before the 08:30 freeze (the evidence runner, the director reel) after any
+  further merge.
+- Polish candidates: ease Rivet's health bar between heights across the morph (it snaps at the midpoint, hidden
+  by the burst so far); Tonnage at 64 px/m sits partly under quest 1's subtitle box while a line is up (HUD
+  layout).

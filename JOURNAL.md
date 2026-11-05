@@ -688,3 +688,6 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   not changed). `M:frames/story-forms-quest1-keys-64ppm.png`, `M:story-forms-quest1-shipped-64ppm.mp4` (19 s),
   `M:story-forms-quest1-tonnage-64ppm-slow3x.mp4` (18 s, 3x slow, 640x400 crop). frames.json 15: + the keys second;
   voices-four keys named in the story-voice entry (file kept). PNG scratch deleted.
+- 05:41 GATES evidence runner `--no-bench` on 95aa969e, still tree (E:evidence-run-it9.log): PASS lint 13/13, unit
+  1008/0, scenarios 47, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 1.22), block 5/5 (worst
+  1.38): no re-bless.
