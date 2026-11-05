@@ -860,3 +860,21 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   960 frames, 0 SCRIPT ERROR); Dent at frame 308 old | new: a thin ink edge on his pool, otherwise identical.
   `M:forms-cycle-all-city-32ppm.mp4` replaced (frames.json note dated). Iteration 14's NEXT is now 1 and 2 only.
   Session ends 07:33: tree clean after this commit, no Godot process of mine running, no lock held.
+
+## Iteration 14 (BUILD, 07:32 - 08:30)
+- 07:33 read JOURNAL, git log; both lanes moved (n6-ghost-powers bbc861d0 carries n5-cast 02e4295c). No new
+  REQUEST to us.
+- 07:34 MERGE n6-ghost-powers bbc861d0 (scenario_quest1_ohm; n5-cast's quest 1 sprite Rivet sticker tier) as
+  ed6d2d31; JOURNAL/REPORT/it7 logs kept ours. Unit (with import) 1018/1: the known test_noir_shadows flake
+  ("Parameter t is null"); the re-run gave 1019/0. COMBAT CHECK director reel 16/16 chapters n/n down, 0 SCRIPT
+  ERROR (E:director-reel-it14-merged.log).
+- 07:39 FIX (this commit) a merge-integration bug: n5-cast 02e4295c made CastView draw base Rivet from the 32 px/m
+  sticker capture (`_lod_art`), but our StoryForms branch of CastView._rivet (forms_drawn, on by default on the
+  shipped quest 1) still drew the old `rivet` art capture, so the shipped quest 1 silently kept the cream sprite
+  Rivet before and after every transformation. That branch now takes `_lod_art("rivet")` too. Same-input A/B
+  (q1lift.sh, 1140 frames, 0 SCRIPT ERROR; before = the 07:22 film of the same script):
+  `M:frames/quest1-sticker-rivet-forms-ab-32ppm-x3.png`, frames 100 (base) / 170 (mid-morph: the form stands
+  in, unchanged) / 470 (base after the exit). Judged: after, base Rivet prints the tan core and hazard collar the
+  cast lane shipped, at both ends of the transformation. 64 px/m keeps the art capture (above flat_below), same
+  as n5-cast. Lint 13/13, unit 1019/0 (E:unit-it14-lod.log). The killed first evidence run (tree edited
+  mid-run) is not counted.

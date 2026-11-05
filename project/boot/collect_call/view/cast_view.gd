@@ -86,8 +86,9 @@ func _rivet(r: Fighter) -> void:
 	_impact(r, Ink.VERMILION)  # Rivet struck is danger: the star's rim goes vermilion
 	_hauler_marks()
 	if forms_drawn and stage.pilot != null:
-		if not StoryForms.stands_in(stage.pilot.ghosts.forms):
-			_sprite("rivet", at, _size(&"rivet"), r.facing)
+		if not StoryForms.stands_in(stage.pilot.ghosts.forms):  # n5-cast's sticker tier too
+			var base: String = _lod_art("rivet")
+			_sprite(base, at, _size(StringName(base)), r.facing)
 		var lift: float = StoryForms.bar_lift_m(stage.pilot.ghosts.forms)
 		_hp_bar(at + Vector2(0.0, -lift), r.hp / r.max_hp)
 		return
