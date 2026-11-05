@@ -885,3 +885,25 @@ Kerf quest-1 scenario on the same pattern (planted human_damage 0).
 - 07:48 scenario_ghost_attacks alone on a3beb449: 1/0 (the arena beats unchanged at path_cut_m 0).
 - 07:50 REPORT final: header, "In short", iteration 11 rows, the Kerf call with its still, Next steps.
 - 07:50 COMBAT CHECK director reel on a3beb449: 16/16, identical, 0 SCRIPT ERROR (`E/director-reel-it11b-powers.log`).
+- 07:56 GATES on 2ca168ff (still tree): evidence runner PASS: lint 13/13, unit 1020/0, scenarios 51/51, parity
+  bit-exact + mutation caught at 629, look goldens in tolerance (`E/evidence-run-it11b-powers.log`).
+- 07:58 MERGE n6-ghost-forms cd56e482 (5be03adb: quest 1's story-forms path draws n5-cast's 32 px/m sticker Rivet,
+  their answer to n5-cast's 07:40 REQUEST, which was addressed to us too: met there, nothing for ghost-powers to
+  edit; it carries n5-cast c7549272) as 467830fc, `--no-ff --no-commit`, JOURNAL/REPORT and our it7 logs kept ours.
+  n5-cast's tip is now an ancestor. `--import` 0 SCRIPT ERROR.
+- 08:08 FINAL GATES on 467830fc (the merged head, still tree): evidence runner PASS: lint 13/13, unit 1020/0,
+  scenarios 51/51, parity bit-exact + mutation caught at 629, look goldens in tolerance, no re-bless
+  (`E/evidence-run-it11c-powers.log`); director reel 16/16, identical to it10b, 0 SCRIPT ERROR
+  (`E/director-reel-it11c-powers.log`). Bench not run (contended machine, no bench.lock taken).
+
+NEXT (ghost-powers, after the morning merge):
+1. A real robot fighter in CombatArena: bridge one enemy-ai EnemyAgent (robot_thug) onto a Fighter (`ROBOT`
+   kind) and retire the Kerf/Ohm beats' exposed boss stand-in (replay re-bless with a decision line).
+2. Quest 1 street: promote the nearest baked parked cars to VehicleBody so Dent/Tonnage/Ohm meet the city's own
+   cars; the crowd avoiding ghost cars is native (parity re-bless).
+3. Tier-1 rows for Tonnage, Dent, Kerf when the act quests land (only Ohm's mass arc reads upgrade_tier now).
+4. The owner's calls in REPORT (Ohm colour, Kerf path_cut_m, Dent ride, Tonnage crush, Dent quest cars): each one
+   data value.
+Session state 08:09: head = this commit, tree clean after it, no Godot process of mine running, no lock held
+(image.lock and bench.lock never taken), masters scratch holds only film.sh, reel.sh and two it7 logs, frames.json
+15 (all present).
