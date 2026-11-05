@@ -983,3 +983,9 @@ NEXT (iteration 16), replaces the 03:26 list:
    it likely mottles at ~16 px heads. Judge at x1 before building.
 Session end 04:06: tree clean after this commit, no Godot process of mine running, locks never taken, scratch renders
   deleted (`gtai-n5/scratch-cast/i15` keeps logs only).
+- 04:07 NEXT 3 TRIAL, reverted on purpose (git checkout of print_part.gdshader, nothing committed): two cream eye glints
+  in the visor slot (UV.x 0.76-0.86, |UV.y-0.5| = 0.12 +- 0.05). Lineup slab/road 32 px/m: one cream pixel each; at x7
+  they read as r2_c3's slits, at 1x they speckle the slot and break its shape, and 1 px features shimmer as Rivet turns
+  (`motion-quality-gating`: judge at game zoom in motion; a 1 px mark fails). Not built. Still
+  `M/frames/visor-glint-trial-32ppm.png` (top x7, bottom x1). NEXT 3 closed; NEXT 1-2 stand.
+Session end 04:09: tree clean after this commit, no Godot process of mine running, locks never taken.

@@ -245,6 +245,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; the iteration 14 print-only trial
    that changed nothing: `M/frames/visor-sticker-trial-32ppm.png`.
    Rivet only (`BodyPlan.head_visor`): King's symmetric star crown, built on Rivet's plan, keeps the plain head.
+   Tried and not built: two 1 px cream eye glints in the slot (r2_c3's slits): eyes at x7, speckle at 1x
+   (`M/frames/visor-glint-trial-32ppm.png`).
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
