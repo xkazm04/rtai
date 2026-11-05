@@ -8,12 +8,13 @@ extends Node2D
 ## the pads spin up for a dash and vent steam in the punish window; rack bays go dark while their
 ## drone is out; phase 3 loses a wing; a hit flashes the body and never touches the fight's state.
 
-const PX: float = 32.0
 const ART_PPM: float = 96.0
 const ART: String = "res://features/bosses/servo/art/%s.png"
 const STRIDE_M: float = 2.2
 const FLASH_TICKS: int = 5
 
+## Pixels per metre of the canvas (32 in the dev view, Ink.PX_PER_M in the arena).
+var px: float = 32.0
 var fight: BossFight = null
 var rack: ServoRack = null
 var tick: int = 0
@@ -21,6 +22,8 @@ var _tex: Dictionary[StringName, Texture2D] = {}
 var _walk: float = 0.0
 var _last_pos: Vector2 = Vector2.ZERO
 var _spin: float = 0.0
+var _seen_hurt: int = -1000000
+var _flash: int = 0
 var _pal: PaletteTokens = PaletteTokens.shared()
 
 
@@ -35,6 +38,10 @@ func pose(p_tick: int) -> void:
 	var moved: float = fight.body.pos.distance_to(_last_pos)
 	_last_pos = fight.body.pos
 	_walk = fmod(_walk + moved / STRIDE_M * TAU, TAU)
+	if fight.body.hurt_tick != _seen_hurt:
+		_seen_hurt = fight.body.hurt_tick
+		_flash = FLASH_TICKS
+	_flash = maxi(_flash - 1, 0)
 	_spin += 0.9 if _stage(&"windup", true) or _stage(&"active", true) else 0.15
 	queue_redraw()
 
@@ -81,19 +88,19 @@ func _wings(o: Vector2, fwd: Vector2, side: Vector2, k: float, tint: Color) -> v
 			continue  # phase 3: this wing blew off
 		var at: Vector2 = o + side * s * 1.305 - fwd * 0.765
 		var flip: float = -1.0 if s > 0.0 else 1.0
-		draw_set_transform(at * PX, rot, Vector2(flip, 1.0) * k * PX / ART_PPM)
+		draw_set_transform(at * px, rot, Vector2(flip, 1.0) * k * px / ART_PPM)
 		draw_texture(wing, -wing.get_size() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
 	var bay: Color = Color(_pal.color(&"ink"), 0.85)
 	for i: int in rack.state.size():
 		var st: int = rack.state[i]
 		if st == ServoRack.Cell.OUT or st == ServoRack.Cell.REFILL:
-			draw_circle(rack.cell_pos(i) * PX, 0.3 * PX, bay)
+			draw_circle(rack.cell_pos(i) * px, 0.3 * px, bay)
 
 
 func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> void:
 	var t: Texture2D = _tex[n]
-	draw_set_transform(at * PX, rot, Vector2(k, k) * PX / ART_PPM)
+	draw_set_transform(at * px, rot, Vector2(k, k) * px / ART_PPM)
 	draw_texture(t, -t.get_size() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
 
@@ -101,10 +108,10 @@ func _part(n: StringName, at: Vector2, rot: float, k: float, tint: Color) -> voi
 ## A strut part (art long axis down the page) stretched from a to b.
 func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color) -> void:
 	var t: Texture2D = _tex[n]
-	var len_px: float = a.distance_to(b) * PX
-	var w: float = PX / ART_PPM
+	var len_px: float = a.distance_to(b) * px
+	var w: float = px / ART_PPM
 	draw_set_transform(
-		(a + b) * 0.5 * PX, (b - a).angle() - PI / 2, Vector2(w, len_px / t.get_height())
+		(a + b) * 0.5 * px, (b - a).angle() - PI / 2, Vector2(w, len_px / t.get_height())
 	)
 	draw_texture(t, -t.get_size() * 0.5, tint)
 	draw_set_transform(Vector2.ZERO)
@@ -115,8 +122,8 @@ func _visor(at: Vector2, rot: float) -> void:
 		return
 	var w: float = 6.0 if fight.locked else 3.0
 	var dir: Vector2 = Vector2.from_angle(rot + PI / 2)
-	var c: Vector2 = (at + dir * 0.32) * PX
-	var half: Vector2 = dir.orthogonal() * 0.25 * PX
+	var c: Vector2 = (at + dir * 0.32) * px
+	var half: Vector2 = dir.orthogonal() * 0.25 * px
 	draw_line(c - half, c + half, _pal.color(&"vermilion"), w)
 
 
@@ -124,7 +131,7 @@ func _steam(at: Vector2) -> void:
 	var a: float = 0.35 + 0.15 * sin(tick * 0.4)
 	for j: int in 3:
 		var off: Vector2 = Vector2.from_angle(tick * 0.05 + j * TAU / 3.0) * 0.5
-		draw_circle((at + off) * PX, (0.3 + 0.08 * j) * PX, Color(_pal.color(&"paper"), a))
+		draw_circle((at + off) * px, (0.3 + 0.08 * j) * px, Color(_pal.color(&"paper"), a))
 
 
 ## Anticipation and follow-through along the facing, metres.
@@ -144,7 +151,7 @@ func _lean() -> float:
 func _tint() -> Color:
 	if fight.state == BossFight.State.DEFEATED:
 		return Color(0.7, 0.7, 0.7)
-	if fight.body.hurt_tick > 0 and tick - fight.body.hurt_tick < FLASH_TICKS:
+	if _flash > 0:
 		return Color(1.6, 1.5, 1.4)
 	return Color.WHITE
 

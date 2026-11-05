@@ -22,6 +22,7 @@ func test_table_reads_clean() -> void:
 	assert_eq(t.errors, [] as Array[String])
 	assert_eq(t.phases.size(), 3)
 	assert_eq(t.cells, 12)
+	assert_true(t.ring_from_launch, "the shipped default: rings from the launch (owner call)")
 
 
 func test_wave_drops_on_its_rings_then_docks() -> void:

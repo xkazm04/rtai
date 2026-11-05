@@ -34,6 +34,10 @@ var _over: Node2D = Node2D.new()
 
 
 func _ready() -> void:
+	var tell: BossTellView = BossTellView.new()  # the framework's dash lane and beam line
+	tell.fight = fight
+	tell.scale = Vector2.ONE * PX / Ink.PX_PER_M
+	add_child(tell)
 	if not graybox:
 		_rig = ServoRig.new()
 		_rig.fight = fight

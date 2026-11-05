@@ -54,6 +54,9 @@
           "minimum": 0,
           "type": "number"
         },
+        "ring_from_launch": {
+          "type": "boolean"
+        },
         "sep_m": {
           "maximum": 5,
           "minimum": 0.2,
@@ -70,6 +73,7 @@
         "life_s",
         "radius_m",
         "refill_s",
+        "ring_from_launch",
         "sep_m"
       ],
       "type": "object"

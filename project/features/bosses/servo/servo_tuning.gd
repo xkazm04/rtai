@@ -22,6 +22,8 @@ var sep_m: float = 1.3
 var fly_h_m: float = 3.0
 var arrive_m: float = 0.35
 var radius_m: float = 0.35
+## The drop ring from the drone's launch (true) or only over its hover (the owner call).
+var ring_from_launch: bool = true
 var launch_ticks: int = 30
 var hover_ticks: int = 42
 var life_ticks: int = 840
@@ -59,6 +61,7 @@ static func from_table(t: DataTable) -> ServoTuning:
 	s.fly_h_m = t.num(d, "fly_h_m")
 	s.arrive_m = t.num(d, "arrive_m")
 	s.radius_m = t.num(d, "radius_m")
+	s.ring_from_launch = d.get("ring_from_launch", true) == true
 	s.launch_ticks = ticks(t.num(d, "launch_s"))
 	s.hover_ticks = ticks(t.num(d, "hover_s"))
 	s.life_ticks = ticks(t.num(d, "life_s"))

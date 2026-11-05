@@ -1,5 +1,5 @@
 {
-  "doc": "Servo (Act 2 boss) only: the delivery-drone swarm and its parcels, metres and seconds (the sim converts to 60 Hz ticks); docs/bosses/servo.md is the design. drone: flight (cruise_mps, accel_mps2, sep_m keeps drones apart, fly_h_m the hover height, launch_s the climb out of the rack, hover_s over the drop ring before release, arrive_m), life_s a fail-safe despawn, refill_s before an emptied rack cell holds a new drone. parcels: fall_s from release to the ground, bomb_share the chance (servo_swarm stream) a parcel is a bomb, else a CS crate that stays crate_life_s as an obstacle (crate_hp hits), ring_m the drop marker radius = the bomb blast radius. rack: the 12 cells (2 rows of 6 across the back, cell_dx_m apart, row_dy_m deep). phases: per phase the alive cap and the wave size and spread (spread_m between drop rings).",
+  "doc": "Servo (Act 2 boss) only: the delivery-drone swarm and its parcels, metres and seconds (the sim converts to 60 Hz ticks); docs/bosses/servo.md is the design. drone: flight (cruise_mps, accel_mps2, sep_m keeps drones apart, fly_h_m the hover height, launch_s the climb out of the rack, hover_s over the drop ring before release, arrive_m), ring_from_launch shows each drop ring from the drone's launch (true) or only over its hover (false, the owner call), life_s a fail-safe despawn, refill_s before an emptied rack cell holds a new drone. parcels: fall_s from release to the ground, bomb_share the chance (servo_swarm stream) a parcel is a bomb, else a CS crate that stays crate_life_s as an obstacle (crate_hp hits), ring_m the drop marker radius = the bomb blast radius. rack: the 12 cells (2 rows of 6 across the back, cell_dx_m apart, row_dy_m deep). phases: per phase the alive cap and the wave size and spread (spread_m between drop rings).",
   "drone": {
     "accel_mps2": 28,
     "arrive_m": 0.35,
@@ -10,6 +10,7 @@
     "life_s": 14,
     "radius_m": 0.35,
     "refill_s": 3,
+    "ring_from_launch": true,
     "sep_m": 1.3
   },
   "parcels": {
