@@ -1,0 +1,11 @@
+{
+  "doc": "n5-look iteration 20 (r2_w4 top right: the flame is a hot yellow core under an orange body): the burning ground's fire loop (features/fx/art/fx_fire.png, quest 1's three-ink art: a vermilion body round a cream core) re-inked token by token by tools/art/ground_fire.py into the flame family's colours, written to the weapon FX colour folder as ground_fire.png. FightAreasArt draws it on the FX colour canvas while that canvas is attached; `--ground-fire=ink` = the before (the vermilion and cream loop under the item print). The ink outline and hatching stay ink. No blood red, no teal.",
+  "dst": "project/features/combat/weapons/art/fx/colour/ground_fire.png",
+  "schema": "gtai.ground-fire-art/1",
+  "src": "project/features/fx/art/fx_fire.png",
+  "tokens": {
+    "paper": "#FFD23A",
+    "paper_2": "#FFC23A",
+    "vermilion": "#EE6A1C"
+  }
+}

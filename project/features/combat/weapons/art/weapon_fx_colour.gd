@@ -11,6 +11,13 @@ const SHADER: String = "res://assets/shaders/look_d5_fx.gdshader"
 const PARAMS: String = "res://assets/shaders/look_d5.params.json"
 const PARAMS_KEY: String = "fx"
 
+## n5-look iteration 20: the burning ground's fire loop re-inked toward r2_w4's flame
+## (tools/art/ground_fire.py) in the colour folder; `--ground-fire=ink` = the before.
+const GROUND_FIRE: String = "ground_fire.png"
+
+static var _ground_fire: Texture2D = null
+static var _ground_fire_tried: bool = false
+
 var rid: RID = RID()
 var mat: ShaderMaterial = ShaderMaterial.new()
 
@@ -51,6 +58,24 @@ func cell(tex: Texture2D, xf: Transform2D, anchor: Vector2, a: float) -> void:
 func line(from: Vector2, to: Vector2, c: Color, w: float) -> void:
 	RenderingServer.canvas_item_add_set_transform(rid, Transform2D.IDENTITY)
 	RenderingServer.canvas_item_add_line(rid, from, to, c, w, true)
+
+
+## The colour ground fire loop, or null (no colour folder, the file missing, or the ink flag).
+static func ground_fire() -> Texture2D:
+	if not _ground_fire_tried:
+		_ground_fire_tried = true
+		var dir: String = WeaponFxArt.art().fx_colour_dir
+		var path: String = dir.path_join(GROUND_FIRE)
+		var ink: bool = OS.get_cmdline_user_args().has("--ground-fire=ink")
+		if dir != "" and not ink and ResourceLoader.exists(path):
+			_ground_fire = load(path) as Texture2D
+	return _ground_fire
+
+
+## The `src` region of `tex` over `rect` (view px), modulated by `m`.
+func region(tex: Texture2D, rect: Rect2, src: Rect2, m: Color) -> void:
+	RenderingServer.canvas_item_add_set_transform(rid, Transform2D.IDENTITY)
+	RenderingServer.canvas_item_add_texture_rect_region(rid, rect, tex.get_rid(), src, m)
 
 
 func release() -> void:
