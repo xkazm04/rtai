@@ -36,7 +36,7 @@
     "bolt_gap_s": 0.5,
     "car_damage": 12,
     "cone_deg": 30,
-    "doc": "Ohm (the elder spot-welder, the mage): power row ohm (GhostPilot: G selects Ohm, Q transforms). While the form is settled, the melee press (every bolt_gap_s) throws a forked bolt from the electrode fingertips: the live hostile nearest the aim inside cone_deg (half-angle) and range_m is struck, then the bolt forks to up to forks more within fork_radius_m of the last one (MeleeShock.chain_path, the claw shock's walk). Each body struck is stunned stun_s (the electro gun's FightAreas stun) and takes human_damage (a human: stun and burns; the kill is the electro gun's X-ray shock in soul teal, row ohm_shock, weapon ohm_bolt) or bolt_damage x machine_k (a robot). Nothing in the cone: the car nearest the aim in the cone takes car_damage x machine_k (a car is a machine: 36 of 100, so D1, D2, then the wreck on the third bolt). upgrade_tier 1 (the act quest; data hook, the reel's --tier=1 shows it): the mass arc, up to mass_targets bodies within mass_radius_m of the first.",
+    "doc": "Ohm (the elder spot-welder, the mage): power row ohm (GhostPilot: G selects Ohm, Q transforms). While the form is settled, the melee press (every bolt_gap_s) throws a forked bolt from the electrode fingertips: the live hostile nearest the aim inside cone_deg (half-angle) and range_m is struck, then the bolt forks to up to forks more within fork_radius_m of the last one (MeleeShock.chain_path, the claw shock's walk). Each body struck is stunned stun_s (the electro gun's FightAreas stun) and takes human_damage (a human: stun and burns; the kill is the electro gun's X-ray shock in soul teal, row ohm_shock, weapon ohm_bolt) or bolt_damage x machine_k (a robot). Nothing in the cone: the car nearest the aim in the cone takes car_damage x machine_k (a car is a machine: 36 of 100, so D1, D2, then the wreck on the third bolt). upgrade_tier 1 (the act quest; data hook, the reel's --tier=1 shows it): the mass arc, up to mass_targets bodies within mass_radius_m of the first. tell_glow_m (view only, n7-melee OhmView): the fingertip charge glow's radius; after a bolt it grows back over bolt_gap_s to a white ready glint, and the fire frame flashes the tips (0 or --feel=off = the old steady sparks).",
     "fork_radius_m": 3,
     "forks": 2,
     "human_damage": 0.5,
@@ -45,6 +45,7 @@
     "mass_targets": 6,
     "range_m": 11,
     "stun_s": 1.2,
+    "tell_glow_m": 0.22,
     "upgrade_tier": 0
   },
   "schema": "gtai.ghost_attacks/1",
@@ -52,8 +53,11 @@
     "armor_k": 0.3,
     "car_crush_m": 3.4,
     "crush_m": 2,
-    "doc": "Tonnage (the walking stamping press; the old hauler soul): while the form is on Rivet takes armor_k of every hit (small arms spark off the plates). The press slam (melee press, wind-up = powers.json hauler.stomp_windup_s) lands press_ahead_m ahead of the facing: every car whose centre is within car_crush_m is flattened (wrecked outright), every live fighter within hauler.stomp_radius_m takes hauler.stomp_damage and is thrown. A human it kills within crush_m of the press head is flattened (signature_kills.json row tonnage_crush, weapon stomp); one killed farther out by the shockwave dies the standard thrown death (weapon stomp_wave); a ram kill throws the body aside (row tonnage_ram, weapon ram).",
+    "doc": "Tonnage (the walking stamping press; the old hauler soul): while the form is on Rivet takes armor_k of every hit (small arms spark off the plates). The press slam (melee press, wind-up = powers.json hauler.stomp_windup_s) lands press_ahead_m ahead of the facing: every car whose centre is within car_crush_m is flattened (wrecked outright), every live fighter within hauler.stomp_radius_m takes hauler.stomp_damage and is thrown. A human it kills within crush_m of the press head is flattened (signature_kills.json row tonnage_crush, weapon stomp); one killed farther out by the shockwave dies the standard thrown death (weapon stomp_wave); a ram kill throws the body aside (row tonnage_ram, weapon ram). slam_debris / slam_debris_s / slam_flash_s (view only, n7-melee SlamDebris): on the landing, that many ink road chips thrown out in low arcs over slam_debris_s with paper-dust puffs, and a cream flash under the head for slam_flash_s (slam_debris 0 or --feel=off = none).",
     "press_ahead_m": 0.9,
+    "slam_debris": 16,
+    "slam_debris_s": 0.55,
+    "slam_flash_s": 0.08,
     "upgrade_tier": 0
   }
 }
