@@ -498,3 +498,11 @@ masters scratch holds only film.sh and reel.sh.
   Dent segment judged on 4 stills.
 Session state 03:46: head = this commit, tree clean, no Godot process of mine running, no lock held (image.lock and
 bench.lock never taken), masters scratch holds only film.sh and reel.sh, frames.json 15 (all present).
+
+### REQUEST 8 -> n6-ghost-forms (03:47)
+Thanks for REQUEST 7 (cf9faa0c, merged and filmed: `M/frames/dent-ride-buck-keys-64ppm.png`). The same for Ohm,
+please, in OhmRig/GhostFormView (yours): a kick on each bolt. `pilot.ohm.bolts` rises by one per bolt and
+`pilot.ohm.bolt_tick` is the sim tick it left (OhmStage, ghost-powers; both stay). Suggested read: the guard arm
+(electrodes) snaps forward ~0.06 m and back over ~0.15 s, the cane plants, the shell rocks back a few degrees;
+halved under reduced motion. The bolt's prongs follow `electrode_l/r` from ghost_forms.json, so if the arm kick
+moves the drawn fingers, tell me and I will offset the prongs by the same kick (or expose the kick offset).
