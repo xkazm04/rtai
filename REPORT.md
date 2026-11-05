@@ -47,13 +47,15 @@ Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_
 - **The off claw is pale on a pale body**: at 32 px/m it is a few pixels. look-8's tan guns help a little. No new
   claw art was drawn (no Codex round this day; the mirrored existing claw stands in).
 - **Chainsaw `two_claw_out`**: built and tested, but **no visible change** in the arena: the arena always feeds Rivet
-  as aiming while a weapon is out, so the chainsaw was already in both claws (`chainsaw_two_claw_ab_64ppm.png`).
+  as aiming while a weapon is out, so the chainsaw was already in both claws (the 64 px/m A/B was pixel-identical; the hold as it is:
+  `sidearm_chainsaw_hold_64ppm_slow.mp4`, right half).
   The same fact means the not-aiming carry (RivetCarryAngle) never shows in `--arena` / `--arena=city`.
 - **Heavy walk**: the 10 px lean barely shows.
 - **The off claw cannot read as gripping yet**: it is one sprite drawn over the weapon. The registry rule
   (`depth-ordered-layered-art`, "wrapping is the common cause") says a claw closed around a grip must be two layers,
   the back jaw under the weapon and the front jaw over it. The drawn grip art should come as that pair.
-- **Not done**: an arena-pit segment in the whole-arsenal clip, per-class 64 px/m clips for sidearm and chainsaw.
+- **Not done**: an arena-pit segment in the whole-arsenal clip. Sidearm and chainsaw have 64 px/m after-clips
+  (`sidearm_chainsaw_hold_64ppm_slow.mp4`), but no 32 px/m before/after clip.
 
 ## Calls for the owner
 
@@ -84,5 +86,5 @@ thrown/tube), so a loadout keeps the last of each slot; every other weapon lies 
 - The centre-line long-gun hold (RivetCarryAngle + helmet clearance + `across`/`gun_reach` together).
 - Drawn claw-around-grip part art (Codex, arms/claws only, under image.lock) as a back jaw (under the weapon) and
   front jaw (over it) pair, so the claw wraps the grip (registry `depth-ordered-layered-art`); a darker off-claw tone.
-- Per-class 64 px/m slow clips for sidearm and chainsaw, and an arena-pit segment in the whole-arsenal clip.
+- 32 px/m before/after clips for sidearm and chainsaw, and an arena-pit segment in the whole-arsenal clip.
 - A not-aiming carry in the arena feed (walk with the gun lowered), which would also make `two_claw_out` visible.

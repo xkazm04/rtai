@@ -276,3 +276,7 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   arena-pit segment for the arsenal clip. If any project/ file moves before 18:30: re-run unit + scenarios and
   re-export the exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
   ../build/export/windows/RTAI.exe`), then fix the sha in REPORT.
+- 17:56 EVIDENCE `sidearm_chainsaw_hold_64ppm_slow.mp4` (26 s, 0.5x, `--bot=arsenal --ppm=64`, pistol | chainsaw,
+  0 SCRIPT ERROR). Looked at six tiles each: the pistol reads as a short tan gun in the gun claw; the chainsaw
+  sits in both claws ahead of the hips, blade forward, through walk and grind. Replaced the pixel-identical
+  `chainsaw_two_claw_ab_64ppm.png` in frames.json (15 entries) and in REPORT.
