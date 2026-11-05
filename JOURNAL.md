@@ -346,3 +346,10 @@ line; I wrote the line above before reading the log, corrected here). FIXED in t
 lines (d5/gang + gang, derived from the thug rows, sha256 of the new files) in
 steam/ai-provenance/2026-11.jsonl; unit 1128/0 (`evidence/king/unit-it2c.log`); scenarios 52/0 at 1932828b (`scenarios-it2a.log`; later commits are
 King's view and art only plus BossAdds.separate under --boss); director reel 19/19 at 745ce3cf.
+
+### 20:33: the throne-car closer to the 90° panel
+A gilded inner trim line and gold corner studs on the car; the cape on the car spreads at 1.3x
+(`CAPE_ON_CAR_K`, near the car's width, the target's fur-trimmed fan). Looked at it:
+`evidence/king/shots/car_ab_before_after_32ppm.png` (left before, right after, 32 px/m, 2x crop).
+Still missing against the target: the plum drapes along the sides, the grille's detail, the
+riders hanging on the car's sides rather than standing at its corners.

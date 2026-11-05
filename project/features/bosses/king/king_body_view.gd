@@ -17,6 +17,8 @@ const CAR_LEN_M: float = 6.6
 const CAR_W_M: float = 2.5
 const WINDUP_BACK_M: float = 0.6
 const COINS: int = 30
+## The cape on the throne-car spreads near the car's width (the target's fur-trimmed fan).
+const CAPE_ON_CAR_K: float = 1.3
 
 var _rigs: KingRigs = null
 
@@ -95,6 +97,10 @@ func _car() -> void:
 	draw_rect(body.grow(4.0), Ink.INK)
 	draw_rect(body, CAR_BLACK)
 	draw_rect(body.grow(-6.0), GOLD_DARK, false, 3.0)
+	draw_rect(body.grow(-11.0), GOLD, false, 2.0)  # the gilded inner trim (target 90-degree panel)
+	for cx: float in [-0.5, 0.5]:  # gold corner studs
+		for cy: float in [-0.5, 0.5]:
+			draw_circle(Vector2(l * cx * 0.94, w * cy * 0.86), 4.0, GOLD)
 	draw_rect(Rect2(l * 0.5 - 10.0, -w * 0.42, 10.0, w * 0.84), GOLD)  # the grille
 	draw_rect(Rect2(-l * 0.5, -w * 0.45, 8.0, w * 0.9), GOLD_DARK)  # rear bumper
 	draw_rect(Rect2(l * 0.12, -10.0, l * 0.3, 20.0), GOLD)  # the hood cannon
@@ -104,7 +110,7 @@ func _car() -> void:
 		for sx: float in [-0.36, 0.3]:
 			for sy: float in [-1.0, 1.0]:
 				_gangster(Vector2(l * sx, sy * (w * 0.5 + 0.3 * p)))
-	_king(Vector2(-l * 0.08, 0.0), 1.0)
+	_king(Vector2(-l * 0.08, 0.0), CAPE_ON_CAR_K)  # the cape spreads wide over the car's back
 
 
 ## King on foot: the squat press body, plates out to the sides, cape behind.
