@@ -39,3 +39,30 @@ under `features/bosses/` (framework) and `features/bosses/<id>/` (one boss each)
   `rivet_at`, `add_spawns` [[x,y]..] (metres from the area's centre), `doc`.
 - **Flags:** `--boss=<id>` (`--phase=N`, 1-based) jumps into the fight in the dev arena;
   `--bot=boss --boss=<id>` plays it (dodging bot; `--bot-stand` the standing one).
+
+### MILESTONE 19:00: framework core committed (243f216b)
+`bosses.json` + schema, `BossAttack` / `BossSpec` / `BossFight` / `BossZone` / `BossMoves`,
+`KingMoves`; `tests/unit/test_boss_fight.gd` 10/10 incl. the planted no-lock fault (a dodge after
+the lock is safe: 0 dmg; with the lock planted off the same dodge is hit: 10 dmg).
+
+### MILESTONE 19:15: a King fight runs in the arena end to end
+- `BossHook` (station `arena_stations/bosses.json`, live only under `--boss`), `BossBot`
+  (`--bot=boss`, `--bot-stand`), `BossTellView` (vermilion zone from BossZone's own numbers: thin
+  while tracking, filled at the lock), `BossBar` (name, phase ticks, trail, "1 / 3"), `BossView` +
+  `KingBodyView` (FIRST PASS drawn shapes: throne-car top-down with the gold trim, cannon, cape,
+  four gang; King on foot). Shots: `evidence/king/shots/first_t100.png`, `first_t330.png` (32 px/m).
+- Shared edits (small): `Fighter.brain_owned`; CombatArena skips it, `_drop` no longer assumes a
+  tazer for any BOSS (crashed on King's kill), `announce_boss` / `announce_tell` (Events emitter
+  rule: features/combat); ArenaRigs / ArenaRobotRigs skip brain-owned bodies.
+- FRICTION: the D4 item material has no gold ink (gold printed vermilion): body on the actor layer
+  without it (DECISION in docs/decisions.md).
+- First numbers (CONTENDED, n=1, seed fixed, `evidence/king/bot-{dodge,stand}-it1.json`, 90 s cap):
+  dodging bot: King down at tick 4109 (68.5 s), boss dealt 128 to Rivet; tries/landed ram 2/1,
+  coin_fan 8/7, charge 4/0, decree 1. Standing bot: not down in 90 s (hp 7 %), dealt 254; coin_fan
+  14/14, ram 2/1, press_slam 2/1. **Not balanced:** the coin fan (50 deg, 14 m, 0.3 s lock) is
+  not dodgeable sideways from 8 m (it needs ~3.7 m in 0.7 s). Also Rivet strayed into the pit's own
+  guard waves (deaths 2): the boss floor must be clean.
+
+Rules applied: enemy-ai REPORT telegraph rule (aim tracks then locks; the tell draws the real
+zone); registry subjects still to read before tuning: encounter-balance-simulation,
+combat-pacing-and-dramatic-arc (next iteration, before any number changes).

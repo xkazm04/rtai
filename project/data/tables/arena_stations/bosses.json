@@ -1,0 +1,14 @@
+{
+  "doc": "Lane n7-king: the act bosses (features/bosses, data/tables/bosses.json). The hook is live only under --boss=<id> (--phase=N, --bot=boss); without it nothing spawns and no golden moves.",
+  "lane": "bosses",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "range",
+      "doc": "A boss fight on the arena floor: --boss=king jumps straight in (the boss and Rivet stand at the boss arena record).",
+      "id": "boss_fight",
+      "name": "Boss fight",
+      "script": "res://features/bosses/boss_hook.gd"
+    }
+  ]
+}

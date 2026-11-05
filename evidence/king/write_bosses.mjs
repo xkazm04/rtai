@@ -7,7 +7,7 @@ const P = 'project/data/';
 const king = {
   arena: 'king_boulevard',
   doc: 'Act 1: REG-1 the press king on his gilded throne-car (targets-2026-11-05-bosses/img/boss_king.jpg). Moveset: docs/bosses/king.md.',
-  hp: 4000,
+  hp: 120,
   move_mps: 2.2,
   radius_m: 1.1,
   rng: 'boss_king',

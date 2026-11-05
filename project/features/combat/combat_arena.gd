@@ -75,6 +75,16 @@ func spawn_guard(at: Vector2) -> Fighter:
 	return g
 
 
+## Lane n7-king: an act boss (features/bosses) stepped in, or began a tell (`attack` is its
+## bosses.json attack id). The fight's beats go out as Events from here, their declared emitter.
+func announce_boss(boss_id: StringName) -> void:
+	_events.boss_engaged.emit(boss_id)
+
+
+func announce_tell(attack: StringName) -> void:
+	_events.attack_telegraphed.emit(attack)
+
+
 ## The next wave of the encounter at `encounter` began (Events.wave_started, wave from 1).
 func announce_wave(encounter: StringName, wave: int) -> void:
 	_events.wave_started.emit(encounter, wave)
@@ -192,6 +202,8 @@ func write_state(out: StreamPeerBuffer) -> void:
 
 
 func _step_hostile(h: Fighter) -> void:
+	if h.brain_owned:  # a boss: BossHook steps it (features/bosses)
+		return
 	if areas != null and areas.holds(self, h):
 		return
 	if h.kind == Fighter.Kind.BOSS:
@@ -269,7 +281,8 @@ func _step_balls() -> void:
 ## Dead guards drop their rifles; the quartermaster's Robo-tazer shorts out and is never dropped.
 func _drop(victim: Fighter) -> void:
 	if victim.kind == Fighter.Kind.BOSS:
-		tazer.short_out()
+		if tazer != null:  # an act boss (features/bosses) has no tazer and drops nothing
+			tazer.short_out()
 		balls.clear()
 	else:
 		rifle_drops.append(victim.pos)

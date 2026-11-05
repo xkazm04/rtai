@@ -6,11 +6,14 @@ extends BossMoves
 
 const CAR_KEEP_M: float = 12.0
 const FOOT_KEEP_M: float = 3.5
+## The throne-car's hit radius (its 6.6 x 2.5 m body, round enough for a first pass).
+const CAR_RADIUS_M: float = 2.0
 
 
 func _init() -> void:
 	keep_m = CAR_KEEP_M
 
 
-func phase_entered(_f: BossFight, phase: int) -> void:
+func phase_entered(f: BossFight, phase: int) -> void:
 	keep_m = CAR_KEEP_M if phase == 0 else FOOT_KEEP_M
+	f.body.radius_m = CAR_RADIUS_M if phase == 0 else f.spec.radius_m
