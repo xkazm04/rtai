@@ -13,6 +13,12 @@
           },
           "type": "array"
         },
+        "adds_from": {
+          "enum": [
+            "area",
+            "boss"
+          ]
+        },
         "area": {
           "pattern": "^[a-z][a-z0-9_]*$",
           "type": "string"
@@ -69,6 +75,11 @@
               "maximum": 120,
               "minimum": 0,
               "type": "number"
+            },
+            "max_total": {
+              "maximum": 60,
+              "minimum": 0,
+              "type": "integer"
             }
           },
           "required": [
@@ -197,6 +208,12 @@
           },
           "type": "object"
         },
+        "body_class": {
+          "enum": [
+            "boss",
+            "robot"
+          ]
+        },
         "doc": {
           "minLength": 1,
           "type": "string"
@@ -268,6 +285,11 @@
               "maximum": 120,
               "minimum": 0,
               "type": "number"
+            },
+            "max_total": {
+              "maximum": 60,
+              "minimum": 0,
+              "type": "integer"
             }
           },
           "required": [

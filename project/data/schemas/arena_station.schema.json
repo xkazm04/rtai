@@ -25,7 +25,8 @@
               "course",
               "pad",
               "alley",
-              "hub"
+              "hub",
+              "boulevard"
             ],
             "type": "string"
           },

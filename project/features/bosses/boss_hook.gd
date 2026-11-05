@@ -163,8 +163,9 @@ func _on_defeated() -> void:
 ## arena's contractor guards (a boss whose add row has not landed yet).
 func _on_adds(archetype: StringName, count: int) -> void:
 	var points: Array[Vector2] = []
+	var base: Vector2 = fight.body.pos if fight.spec.arena.adds_from_boss else origin
 	for p: Vector2 in fight.spec.arena.add_spawns:
-		points.append(origin + p)
+		points.append(base + p)
 	if points.is_empty():
 		return
 	var row: BossSpec = BossSpec.shipped(archetype)

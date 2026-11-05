@@ -195,3 +195,43 @@ cops out of the hostiles under `--boss`. Dodging bot (`bot-dodge-it1f.json`): Ki
 (tick 5508), 0 King hits, gang 3 / 15. Standing bot (`bot-stand-it1f.json`): **unchanged stall**
 (King 65 % in phase 2, gang 0 tries): the claw cops were not its cause. Still open: NEXT 1.
 Not re-filmed: the film in masters is the 0dd8d7b2 cut (claw cops visible in it).
+
+## Iteration 2 (19:45-20:45), BUILD
+
+### REPLY to servo REQUEST 3 (19:50)
+1. `test_boss_adds.gd.uid`: committed in 3905267b (before your request landed).
+2. The view hook already exists, by path, no row field: `BossView.make(id)` loads
+   `res://features/bosses/<id>/<id>_body_view.gd` when it exists and it extends `BossView`
+   (King's is `king/king_body_view.gd`). `BossView.attach` puts it on the actors' layer with the
+   cast's scale, sets `fight`, `adds`, `blood`, and it redraws every frame from the fight
+   (`_process` -> `queue_redraw`, render only, SIM-03). So: `servo/servo_body_view.gd extends
+   BossView`, add `ServoRig` as a child in `_ready()`, call `rig.pose(...)` from `_process`, draw
+   the swarm in `_draw()`. Swarm state comes from `fight.moves as ServoMoves`. No framework edit.
+
+### MILESTONE 20:05: the standing-bot stall found and fixed, King's boulevard
+- **Cause (looked at the still `shots/stand_t3200.png`):** the gang walked straight at Rivet into
+  the crate rows (cover push-out cancels a head-on walk), and King's stalled car sat in the pit's
+  corner with Rivet in a walled box (`shots/dodge_t5000.png`): every shot hit a wall, so phase 2
+  never ended.
+- `BossMoves.idle_step`: a walk that made under 30 % of its step is blocked and sidesteps 45 ticks
+  (side by body id, flips if blocked again mid-detour). Unit `test_boss_walk.gd` (3): walks round
+  a 6 m crate wall head-on, and the straight walk without it stays pinned (the fault).
+- DECISION adds pacing: a phase's adds take an optional `max_total` (King's court: 4 at the
+  transition + 4 at 14 s = 8, then none). With the walk fixed, phase 2 had become a wall of 31
+  gang in 120 s (both bots stuck in it). A phase is a pressure, not an add wall
+  (combat-pacing-and-dramatic-arc: the climax must come). Alternative: a time limit per phase.
+- DECISION boss body class: `Fighter.body_class` (shared, 1 line) read by `ArenaBodies.class_of`;
+  bosses.json `body_class` (default `boss`, the gang `robot`): Rivet no longer shoves the car or
+  King like a person. Kind.BOSS alone was not used (quest 1's Mertz is Kind.BOSS and a human).
+- DECISION arena: **King's boulevard** is a new dev-arena area `boulevard` (rect 60,-30 80x30 m,
+  east of the range; `evidence/king/write_boulevard.mjs`): a 20 m clear street between low
+  planters every 12 m, a painted centre line, two plinths (high cover) in the plaza at the east
+  end. The procession enters from the west end (boss_at -30,0). `adds_from: boss` (arena record,
+  optional): the gang leaps off the car's four corners. Alternative still open: the city proving
+  block (`--arena=city`), a real street; the dev floor first because the fight needs a clean read.
+- Numbers (CONTENDED, seed fixed, n=1, 120 s cap; `bot-{stand,dodge}-it2c.json`, 0 script errors):
+  | bot | King down | King landed/tries | gang landed/tries | Rivet deaths |
+  |---|---|---|---|---|
+  | dodging | 78.4 s (tick 4704) | ram 1/3, coin 0/9, charge 0/2, decree 3 | 3 / 17 | 0 |
+  | standing | 89.0 s (tick 5338) | ram 2/2, coin 9/9, charge 0/2 (+2 late body hits) | 11 / 16 | 1 |
+  Both kill King inside the 60-120 s envelope now; the stander dies once (King dealt 234).

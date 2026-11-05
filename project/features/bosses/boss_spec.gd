@@ -19,6 +19,8 @@ class Phase:
 	var adds_archetype: StringName = &""
 	var adds_count: int = 0
 	var adds_every: int = 0
+	## The most adds this phase ever asks for (optional `max_total`; 0 = no limit).
+	var adds_max: int = 0
 
 
 class Arena:
@@ -28,6 +30,9 @@ class Arena:
 	var boss_at: Vector2 = Vector2.ZERO
 	var rivet_at: Vector2 = Vector2.ZERO
 	var add_spawns: Array[Vector2] = []
+	## Optional `adds_from`: `boss` puts add_spawns round the boss (King's gang leaps off the car),
+	## `area` (default) round the area's centre.
+	var adds_from_boss: bool = false
 
 
 var id: StringName = &""
@@ -36,6 +41,8 @@ var move_mps: float = 0.0
 ## The distance the default walk stops at (optional `keep_m`; BossMoves' own default without it).
 var keep_m: float = -1.0
 var radius_m: float = 1.0
+## The bodies.json class Rivet meets the body as (optional `body_class`, default `boss`).
+var body_class: StringName = &"boss"
 var rng: StringName = &""
 var script_path: String = ""
 var phases: Array[Phase] = []
@@ -68,6 +75,7 @@ static func from_table(t: DataTable, boss_id: StringName) -> BossSpec:
 	s.move_mps = t.num(row, "move_mps")
 	s.keep_m = BossAttack.opt(row, "keep_m", -1.0)
 	s.radius_m = t.num(row, "radius_m")
+	s.body_class = StringName(str(row.get("body_class", "boss")))
 	s.rng = StringName(t.text(row, "rng"))
 	s.script_path = str(row.get("script", ""))
 	var atk: Dictionary = t.object(row, "attacks")
@@ -96,6 +104,7 @@ static func _phase(t: DataTable, row: Dictionary) -> Phase:
 	p.adds_archetype = StringName(str(adds.get("archetype", "")))
 	p.adds_count = roundi(BossAttack.opt(adds, "count", 0.0))
 	p.adds_every = BossAttack.ticks(BossAttack.opt(adds, "every_s", 0.0))
+	p.adds_max = roundi(BossAttack.opt(adds, "max_total", 0.0))
 	return p
 
 
@@ -109,6 +118,7 @@ static func _arena(t: DataTable, p_id: String, row: Dictionary) -> Arena:
 	a.rivet_at = t.vec(row, "rivet_at")
 	for v: Variant in t.array(row, "add_spawns"):
 		a.add_spawns.append(t.vec({"v": v}, "v"))
+	a.adds_from_boss = str(row.get("adds_from", "area")) == "boss"
 	return a
 
 
