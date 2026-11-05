@@ -88,10 +88,15 @@
         "arc_"
       ],
       "id": "arc",
-      "note": "pale violet-white",
+      "note": "pale violet-white. n5-look iteration 14 (r2_w4: the arc is a white-hot core inside a violet edge; ours printed one lavender fill): paper #E4D6FF -> #FBF8FF and a violet rim #9A7CF0 4 part px inside the ink (fx_rim.py, core_min 256 = every fill pixel). Drop rim and paper back to #E4D6FF = before.",
+      "rim": {
+        "colour": "#9A7CF0",
+        "core_min": 256,
+        "px": 4
+      },
       "tokens": {
         "ink_2": "#6A4FD0",
-        "paper": "#E4D6FF",
+        "paper": "#FBF8FF",
         "paper_2": "#CBB6FF",
         "steel": "#B9A6FF",
         "wash": "#8C72E6"

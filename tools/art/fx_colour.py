@@ -204,7 +204,8 @@ def main(src_dir, out_dir):
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
                 if "rim" in fam:
                     paper = mapping.get("paper", TOKENS["paper"])
-                    rim(out / src.name, _hex(fam["rim"]["colour"]), fam["rim"]["px"], paper)
+                    rk = fam["rim"]
+                    rim(out / src.name, _hex(rk["colour"]), rk["px"], paper, core_min=rk.get("core_min", 150))
                 if "flash" in fam:
                     _flash(out / src.name, fam["flash"])
                 done += 1

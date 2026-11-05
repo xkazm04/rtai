@@ -1,7 +1,8 @@
 """An orange rim inside a flash cell's ink outline (look lane, n5 iteration 14): r2_w4's muzzle
 flashes grade white-hot core -> hot yellow -> orange tips at the outline. rim() moves every
 non-ink fill pixel within `px` of the ink or the cell edge to `colour`, keeping its grain offset
-from the fill colour `base`; the white-hot core (every channel above core_min) is left as it is.
+from the fill colour `base`; the white-hot core (every channel above core_min) is left as it is
+(core_min 256 = rim every fill pixel: the arc, a white core inside a violet edge).
 Deterministic (no randomness)."""
 
 from PIL import Image, ImageFilter
