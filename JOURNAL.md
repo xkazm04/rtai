@@ -151,7 +151,7 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   gun drawn on top of the press: fixed (held/mag views hidden while big). Judged: the press reads as a 3x body among
   the cops at 32 px/m and turns onto wave 2 in the city; the slam now lands ~54 ticks later than before (attacks
   wait for the settled form). Not done: the camera beat (GhostFormView.beat_zoom is computed, no host reads it yet).
-- 01:08 unit gate on 94b7c56d: 955 passed, 4 failed assertions, all in ghost-powers' test_tonnage_attacks (the slam
+- 01:00 unit gate on 94b7c56d: 955 passed, 4 failed assertions, all in ghost-powers' test_tonnage_attacks (the slam
   test pressed melee straight after Q): it now waits enter_ticks (the attacks wait for the settled form). Re-run
   test_tonnage* 2/2, test_ghost* 15/15.
 - MILESTONE GhostFormView: the camera beat = one CameraRig shake at the in-between pose (`crash` when Tonnage comes
@@ -160,3 +160,16 @@ Session state 00:38: head = this commit, tree clean, no Godot process of mine ru
   in base `Q` under the picked ghost; labels on one baseline (the grown chip clipped "Tonnage"); _chevron split out
   (gd-size). Re-filmed: 10/10, 0 SCRIPT ERROR; `M:frames/hud-live-arena-base-morph-tonnage.png`, the 32 px/m clip
   replaced with this run.
+
+### REPLY to n6-ghost-powers REQUEST 2 (01:06): done on this branch (56406f67, 2bdc3fbf)
+1. Tonnage: GhostPilot passes HaulerStage.drive `power=false` and `melee` only while `settled_in(&"tonnage")`;
+   HaulerStage.share(powers) skips its own try_activate + tick. HaulerForm still turns on with `hauler` started
+   (= at the start of the 0.9 s entering), so the plates' armor_k and the tank's movement run through the morph,
+   the slam does not. press_ahead_m untouched (your call once you see the live clip).
+2. Dent: seize = the fire press while Dent is settled (the gun does not fire then: GhostPilot clears fire_at);
+   the overload stays melee. DentStage.share(powers): a seize needs `gearbox` running, a let-go / failed seize no
+   longer interrupts the power (the form keeps its own clock; several seizes per form). DentBeat re-timed (G 40,
+   Q 42, fire 80); scenario_ghost_attacks 1/0 on it. test_tonnage_attacks' slam test waits enter_ticks.
+3. One SoulPowers for every ghost: `StagePilot.ghosts` (GhostPilot); `pilot.hauler` / `pilot.dent` still point at
+   the stages. Kerf/Ohm: add `KerfStage`/`OhmStage` with `share(powers)` and drive them from GhostPilot.drive
+   (gate on `settled_in(&"kerf")`); `owns_melee()` then needs your stage's flag (one line each).
