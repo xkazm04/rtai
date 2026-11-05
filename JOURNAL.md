@@ -878,3 +878,9 @@ bench.lock not taken); masters scratch holds film.sh, q1lift.sh and logs; frames
   cast lane shipped, at both ends of the transformation. 64 px/m keeps the art capture (above flat_below), same
   as n5-cast. Lint 13/13, unit 1019/0 (E:unit-it14-lod.log). The killed first evidence run (tree edited
   mid-run) is not counted.
+- 07:48 FINAL GATES on 5be03adb, still tree (E:evidence-run-it14-final.log): PASS lint 13/13, unit 1019/0,
+  scenarios 49, parity bit-exact (mutation at 629), look 11/11 (worst 1.33), block 5/5 (worst 1.53); no re-bless.
+- 07:49 PROOF the shipped quest 1 forms clip re-filmed on 5be03adb (q1lift.sh, 1140 frames, 0 SCRIPT ERROR):
+  `M:story-forms-quest1-shipped-32ppm.mp4` (19 s) replaced; keys 140 (base, sticker tier) / 450 (exit morph) /
+  600 (Dent) / 1120 (base after Ohm's exit): `M:frames/story-forms-quest1-sticker-keys-32ppm.png` (named in the
+  story-forms entry, frames.json still 15, all present). REPORT section 11 + iteration 14 gates; DRAFT line final.
