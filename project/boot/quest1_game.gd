@@ -26,8 +26,8 @@ var _ended: bool = false
 var _audio: StageAudio = null
 ## The city's crowd atlas and near rigs (quest 1 on the city; Rivet is the quest's cast).
 var _characters: CityCharacters = null
-## The voices on the sprite cast (null under --rigs or when ghost_forms.json story_voice is off).
-var _voice: StoryVoice = null
+## The ghost forms and voices on the sprite cast (null under --rigs).
+var _story: StoryForms = null
 
 
 func _enter_tree() -> void:
@@ -228,11 +228,11 @@ func _settings_panel() -> Quest1SettingsPanel:
 
 ## rivet-arsenal (dev, debug builds only): `-- --rigs` draws quest 1's fighters on the cast rigs
 ## with Rivet's held weapon, swings and reloads (the arena's ArenaRigs, loaded at run time: dev/ is
-## not in release exports). Without the flag quest 1 keeps its sprite cast, and the voices show
-## through StoryVoice (the rig cast brings its own, GhostFormView's apparition).
+## not in release exports). Without the flag quest 1 keeps its sprite cast, and the ghost forms and
+## voices show through StoryForms (the rig cast brings its own GhostFormView).
 func _dev_rigs() -> void:
 	if not LaunchArgs.has("--rigs") or not OS.is_debug_build():
-		_voice = StoryVoice.attach(self, view, session.stage, settings.reduced_motion)
+		_story = StoryForms.attach(self, view, session.stage, settings.reduced_motion)
 		return
 	var script: GDScript = load("res://dev/arena/arena_rigs.gd") as GDScript
 	if script == null:

@@ -85,6 +85,7 @@ func _ready() -> void:
 			_arms.append(s)
 	var shell: Sprite2D = _part("shell", SHELL_M)  # added last: over the arms' roots
 	GhostRim.body(shell)
+	shell.add_child(OhmSeams.new())  # the soul seams and lenses, bold enough for 32 px/m
 	pose()
 
 
