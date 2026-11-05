@@ -26,6 +26,8 @@ var _arena: CombatArena = null
 var _last_hp: float = 0.0
 var _rng: RngRegistry = null
 var _hooks_cleared: bool = false
+## The boss script's extra bodies in the hostiles now (BossMoves.bodies()).
+var _extra: Array[Fighter] = []
 
 
 func setup(stage: ArenaStage, ctx: WorldContext) -> void:
@@ -68,6 +70,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 	if not r.alive():
 		return
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
+	_sync_bodies()
 	_keep_in(fight)
 	adds.separate(fight)
 	for f: BossFight in adds.fights:
@@ -93,6 +96,19 @@ func _clear_claw_cops(stage: ArenaStage) -> void:
 		if h is ArenaClawCops:
 			for f: Fighter in (h as ArenaClawCops).cops:
 				_arena.hostiles.erase(f)
+
+
+## The arena's hostiles hold exactly the boss script's extra bodies (Servo's drones).
+func _sync_bodies() -> void:
+	var now: Array[Fighter] = fight.moves.bodies()
+	for b: Fighter in _extra:
+		if not now.has(b):
+			_arena.hostiles.erase(b)
+	for b: Fighter in now:
+		if not _extra.has(b):
+			b.brain_owned = true
+			_arena.hostiles.append(b)
+	_extra = now
 
 
 ## A body stays on the fight's floor (a ram or a charge stops at its edge).
@@ -129,6 +145,7 @@ func telemetry() -> Dictionary:
 		"adds_spawned": adds.fights.size(),
 		"adds_tries": adds.tries,
 		"adds_landed": adds.landed,
+		"moves": fight.moves.telemetry(),
 	}
 
 

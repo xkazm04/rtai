@@ -64,9 +64,28 @@ func tick(_f: BossFight, _target: Vector2, _target_r: float) -> float:
 	return 0.0
 
 
+## Extra hittable bodies the boss owns this tick (Servo's drones): BossHook keeps exactly these in
+## the arena's hostiles (added when new, removed when gone), so every weapon and ghost hits them;
+## the boss script reads their hp back itself. Default: none.
+func bodies() -> Array[Fighter]:
+	return []
+
+
+## The way out of the boss script's own hazards that land outside the attack zone (Servo's drop
+## rings, a late hail) for a body at `at` with clearance `r`, or zero when none threatens it. Only
+## what a player can see by now: the bot reads it (BossBot). Default: none.
+func threat_away(_at: Vector2, _r: float) -> Vector2:
+	return Vector2.ZERO
+
+
 ## The phase changed (after its transition): a boss swaps its body or arena here.
 func phase_entered(_f: BossFight, _phase: int) -> void:
 	pass
+
+
+## The boss script's own numbers for the bot's table (BossHook.telemetry, under `moves`).
+func telemetry() -> Dictionary:
+	return {}
 
 
 ## Extra state for the replay hash (a boss script that overrides it calls super first).

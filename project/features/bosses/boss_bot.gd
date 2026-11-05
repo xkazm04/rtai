@@ -19,7 +19,7 @@ const CLEAR_M: float = 1.2
 const ROLL_LEFT: int = 8
 ## Closer than this to the fight floor's edge, the bot heads back toward its middle.
 const EDGE_M: float = 3.0
-## An add this close is shot before King.
+## An add (or a boss script's body: a drone) this close is shot before the boss.
 const ADD_M: float = 7.0
 
 var stage: ArenaStage
@@ -63,6 +63,9 @@ func sample(_tick: int) -> TickInput:
 				threat.state == BossFight.State.WINDUP and threat.tell_left() <= ROLL_LEFT
 			)
 			return _input(dodge, aim, fire and not roll, true, roll)
+	var away: Vector2 = f.moves.threat_away(me, stage.arena.rivet.radius_m + CLEAR_M)
+	if away != Vector2.ZERO:  # the boss script's own late hazards (Servo's drop rings)
+		return _input(away, aim, fire, true, false)
 	var move: Vector2 = aim * clampf(band, -1.0, 1.0) + aim.orthogonal() * _side * 0.35
 	if off_floor:  # drifting off the floor: head back in
 		move = home
@@ -77,6 +80,11 @@ func _target(me: Vector2, boss_at: Vector2) -> Vector2:
 		var d: float = me.distance_to(a.body.pos)
 		if a.state != BossFight.State.DEFEATED and d < best_d:
 			best = a.body.pos
+			best_d = d
+	for b: Fighter in hook.fight.moves.bodies():  # the boss script's own bodies (drones)
+		var d: float = me.distance_to(b.pos)
+		if b.alive() and d < best_d:
+			best = b.pos
 			best_d = d
 	return best
 
