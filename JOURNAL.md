@@ -717,3 +717,28 @@ task list are other lanes'), no lock held, masters scratch holds only film.sh, r
 
 ## Iteration 9 (05:47-06:47, BUILD)
 - 05:48 read JOURNAL, git log; n6-ghost-forms at 6e0532a2 and n5-cast at 030eb775 not merged yet.
+- 05:50 MERGE n6-ghost-forms 6e0532a2 (per-form health bar_m, view only; carries n5-cast 551ed9c6 dark ped heads) as
+  4b9c0b52 and n5-cast 030eb775 (docs) as e1283d9c, `--no-ff --no-commit`, JOURNAL/REPORT/our it7 logs kept ours;
+  `--import` 0 SCRIPT ERROR. FRICTION: my first combat-check launch put `--quit-after` and the scene after `--`
+  (ignored args, idle arena): killed my PID, relaunched as `--headless --quit-after 24000 --path project
+  res://dev/arena/arena.tscn -- --bot=reel --reel=director`.
+- 05:58 COMBAT CHECK director reel on the merged head + the quest-car change: 16/16 chapters, the same per-chapter
+  lines as it8 (diff empty), 0 SCRIPT ERROR (`E/director-reel-it9-powers.log`).
+- 06:00 MILESTONE Dent in quest 1 (NEXT 2), 291ad11c: `vehicles`/`cars()` moved from ArenaStage to CollectCallStage;
+  quest 1 on the city parks three ghost cars (collect_call_city.json `ghost_cars`, fit clear of buildings, props,
+  kerbs and baked parked cars by dev/ghost-powers/ghost_cars_fit.gd) on ArenaCars.attach_at; DentStage reads the
+  stage's cars and pushes the car out of the arena's walls, else the city's StageCells; Tonnage's car crush and
+  Ohm's car bolt read stage.vehicles too; StageView draws the cars (ArenaFloorView's car print moved up to it).
+  Gates: lint 13/13, unit 1012/0 (+test_dent_quest_cars 2/2), scenarios 47/0 (no golden moved, no re-bless).
+  DECISION in decisions.md (cost: a pre-change city checkpoint re-simulates to another hash and is refused).
+  Registry rule applied (motion-quality-gating): judged on the shipped quest 1 path at 32 and 64 px/m.
+- 06:08 quest 1 real input (quest_ghost_rec --ghost=dent, now also a melee press at tick 200 = the overload command):
+  seizes 1, strikes 4, kills 4, blasts 1, then 5 misses (no car left in reach), 0 SCRIPT ERROR; identical counts at
+  64 px/m. A/B/C same frames 90-102 `M/frames/quest1-dent-car-abc-32ppm.png` (before: nothing; it8: frayed miss;
+  now: the teal-plated car with Dent on its roof), keys `M/frames/quest1-dent-car-keys-32ppm.png` and
+  `-64ppm.png`, clips `M/quest1-dent-car-32ppm.mp4` (5 s), `M/quest1-dent-car-64ppm-halfspeed.mp4`. Judged: the
+  parked white car reads as a target, the hijack plate turns it teal, the blood trail and blast read; the car
+  mounts the pavement (cells are walkable there; kerbs are not solid), acceptable. frames.json 15 (all present).
+- 06:12 arena re-check after the stage move (headless, 600 ticks, telemetry `E/arena-<ghost>-it9-powers.json`):
+  Tonnage cars_crushed 2, ram_hits 6, 10 dead; Dent seizes 1, strikes 5, blasts 1, 5 dead; Ohm bolts 15, cars_hit
+  5, 5 dead; 0 SCRIPT ERROR each.
