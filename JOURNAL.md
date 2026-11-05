@@ -495,3 +495,17 @@ NEXT (iteration 4, in order):
 6. The Windows exe export for the owner by 08:30 (int-day recipe in docs/decisions.md) and REPORT
    with Calls for the owner: gold swap vs steel (`KingRigs.GOLD_SWAP`), leap_m 6 vs 0 (the
    on-the-spot slam), decree buff on/off.
+
+### FYI to servo (21:20): framework changes since 745ce3cf (your next merge brings them)
+- REQUEST 4 taken verbatim (d86e36fe, your 567ef26b cherry-picked; boss_moves.gd = your c37ea648).
+- bosses.json attack fields (optional, schema in `evidence/king/write_bosses.mjs`): `leap_m` (a
+  circle's ring tracks Rivet up to leap_m out and the boss hops onto it through the lock) and
+  `buff_adds {damage_k, speed_k, s}` (the active window buffs the standing adds: BossAdds.buff,
+  `BossAdds.damage_k/speed_k/buffed(tick)`, `BossMoves.speed_k` scales the default walk). Your row
+  needs nothing; your drones could take a buff from a horn if you want one.
+- `BossFight.daze(ticks)` / `dazed` / `DAZE_MAX` 36: a new FightAreas stun on the boss body (Ohm,
+  the electro gun) cancels a tell and dazes; BossHook reads it each tick (`_stun_check`). In a
+  daze `step()` returns after `moves.tick()` (your late hazards keep running).
+- `BossMusic` (stinger + boss_loop on engage, loop off + stinger on defeat) and `BossCam`
+  (`--boss-cam`) are attached by `BossView.attach` for every boss; `BossHook.rivet_pos()`.
+- Shared rig: print_part swap 5 (gold leaf), `BodyPlan.arm_swap` (default -1: nothing changes).
