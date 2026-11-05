@@ -157,6 +157,7 @@ The owner's order for this lane: "create these characters, animate transformatio
 ## What does not work / is open
 - The ghost forms on the shipped quest 1 have no 64 px/m close-up (quest 1 plays at 32); the arena close-ups
   stand in for it.
+
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
   the machine body (gunmetal, rust, Dent's yellow discs) with teal seams, glow and a soul pool, which follows
