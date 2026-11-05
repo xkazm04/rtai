@@ -23,7 +23,7 @@
 - The ghosts still use base Rivet's body in my clips (the forms lane's bodies merge in; their StagePilot hookup is REQUEST 2).
 - No robot fighter exists in the arena: Kerf and Ohm hit the quest boss's brain as a stand-in (drawn as a cop, dies with the standard red splat; Ohm's beat holds it exposed). The robot numbers are real, the robot look is not.
 - Dent's 64 px/m camera does not follow the car (the strikes and blast leave the close-up frame).
-- Tonnage and Dent have no city-block clip yet. Under `--gore=reduced` Kerf's victims take the standard death, which leaves a red pool (odd for a cauterising beam; the death pipeline is shared and approved). Kerf and Ohm take Q only when the reel sets them (the forms lane's switch selects them later, REQUEST 3).
+- City block: Tonnage reads (10/10, `M/tonnage-city-32ppm.mp4`) but the beats' parked cars never appear there, so no car is crushed and Dent seizes nothing (cause open; see JOURNAL 01:28). Under `--gore=reduced` Kerf's victims take the standard death, which leaves a red pool (odd for a cauterising beam; the death pipeline is shared and approved). Kerf and Ohm take Q only when the reel sets them (the forms lane's switch selects them later, REQUEST 3).
 
 ## Calls for the owner
 - Ohm's bolt colour: teal (the souls rule, built) vs the target sheet's cream-yellow bolts: `M/frames/ohm-vs-target.png`. One constant (`OhmView.TEAL`).
