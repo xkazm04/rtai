@@ -38,7 +38,8 @@ static func holds(rig: CutRig, s: int) -> bool:
 		return false
 	if rig.reload_k >= 0.0:
 		return true
-	return rig.aiming and rig.grip in HeldTable.TWO_CLAW
+	var hold: HeldTable.Hold = RigGrip.hold_of(rig)
+	return hold != null and RigGrip.both_claws(rig, hold)
 
 
 ## The off forearm's cell for arm `s` (the plain forearm while the claw holds), else `cell`.
@@ -93,8 +94,12 @@ static func jaw_point(rig: CutRig, s: int) -> Vector2:
 	return g.position + Vector2.from_angle(g.rotation) * JAW_PX * rig.plan.hand_k
 
 
-## The drawn weapon's direction (torso frame): from the grip point toward the aim.
+## The drawn weapon's direction (torso frame): from the grip point toward the aim; not aimed (a
+## chainsaw, two_claw_out) along the gun claw, as RivetHeldView draws it.
 static func _line(rig: CutRig, grip: Vector2) -> Vector2:
+	var hand: Sprite2D = rig.sides[rig.plan.gun_arm].hand
+	if not rig.aiming and hand != null:
+		return Vector2.from_angle((hand.get_parent() as Node2D).rotation + hand.rotation)
 	var tl: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	return (tl - grip).normalized() if tl.distance_to(grip) > 1.0 else Vector2.RIGHT
 

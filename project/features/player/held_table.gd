@@ -33,6 +33,8 @@ class Hold:
 	var wrist_rad: float = 0.0
 	var stride_k: float = 1.0
 	var lean_px: float = 0.0
+	## d7-held: both claws hold it whenever it is out (the chainsaw), not only while aiming.
+	var two_claw_out: bool = false
 
 
 static var _shipped: HeldTable = null
@@ -66,6 +68,7 @@ static func from_table(t: DataTable) -> HeldTable:
 		c.wrist_rad = t.num(row, "wrist_rad")
 		c.stride_k = t.num(row, "stride_k")
 		c.lean_px = t.num(row, "lean_px")
+		c.two_claw_out = t.integer(row, "two_claw_out") == 1
 		for w: Variant in t.array(row, "weapons"):
 			c.weapons.append(StringName(str(w)))
 		h.holds[c.id] = c

@@ -58,6 +58,11 @@
           "minimum": 0.5,
           "type": "number"
         },
+        "two_claw_out": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        },
         "weapons": {
           "items": {
             "pattern": "^[a-z][a-z0-9_-]*$",
@@ -83,6 +88,7 @@
         "lean_px",
         "off_reach",
         "stride_k",
+        "two_claw_out",
         "weapons",
         "wrist_rad"
       ],

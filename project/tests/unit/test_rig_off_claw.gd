@@ -71,3 +71,27 @@ func _rig(hold: StringName, aiming: bool) -> CutRig:
 		rig.face_to = -PI * 0.5
 		rig.drive(SimClock.TICK_DT)
 	return rig
+
+
+## d7-held: the chainsaw (two_claw_out) is held in both claws whenever it is out, not only aimed;
+## the long gun is not. Planted: the chainsaw row with two_claw_out off rides one claw.
+func test_chainsaw_holds_both_claws_while_out() -> void:
+	var saw: CutRig = _rig(&"chainsaw", false)
+	var off: RigLimbs = saw.sides[1 - saw.plan.gun_arm]
+	assert_true(off.grip.visible, "the chainsaw: the off claw on it, not aiming")
+	gut.p("chainsaw: jaws %.1f px off the saw's line" % _jaw_gap_carried(saw))
+	assert_lt(_jaw_gap_carried(saw), ON_BARREL_PX, "the off claw clamps the saw")
+	assert_false(RigOffClaw.holds(_rig(&"long_gun", false), 1), "a carried long gun: torch arm")
+	var hold: HeldTable.Hold = HeldTable.shipped().holds[&"chainsaw"]
+	hold.two_claw_out = false
+	var one: bool = RigOffClaw.holds(saw, 1 - saw.plan.gun_arm)
+	hold.two_claw_out = true
+	assert_false(one, "planted: two_claw_out off, the chainsaw rides one claw")
+
+
+## The off claw's jaws off the line the gun claw draws a carried weapon on (torso part px).
+func _jaw_gap_carried(rig: CutRig) -> float:
+	var hand: Sprite2D = rig.sides[rig.plan.gun_arm].hand
+	var dir: Vector2 = Vector2.from_angle((hand.get_parent() as Node2D).rotation + hand.rotation)
+	var grip: Vector2 = RigOffClaw.grip_point(rig)
+	return absf((RigOffClaw.jaw_point(rig, 1 - rig.plan.gun_arm) - grip).cross(dir))

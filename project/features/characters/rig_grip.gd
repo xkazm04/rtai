@@ -67,10 +67,10 @@ static func target(rig: CutRig, tgt: Vector3, aim_arm: bool, reach: float) -> Ve
 		return tgt
 	if rig.grip == Kind.BLADE:
 		return _guard(rig, hold, tgt, aim_arm, reach)
-	if not rig.aiming or rig.grip not in HeldTable.TWO_CLAW:
+	if not RigGrip.both_claws(rig, hold):
 		return tgt
 	var g2: Vector2 = _line_start(rig, hold)
-	var dv: Vector2 = _aim_dir(rig, g2)
+	var dv: Vector2 = _aim_dir(rig, g2) if rig.aiming else Vector2.RIGHT  # not aimed: the facing
 	var h: Vector2 = g2 + dv * reach * (hold.gun_reach if aim_arm else hold.off_reach)
 	h -= dv * RECOIL_PX * rig.c_recoil * (1.0 if aim_arm else OFF_RECOIL)
 	return Vector3(h.x, h.y, hold.hand_z)
@@ -122,6 +122,13 @@ static func _aim_dir(rig: CutRig, g2: Vector2) -> Vector2:
 	var tl: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	var dv: Vector2 = (tl - g2).normalized()
 	return Vector2.from_angle(clampf(dv.angle(), -MAX_SWING_RAD, MAX_SWING_RAD))
+
+
+## d7-held: both claws on the weapon: a two-claw kind while aiming, or always (two_claw_out).
+static func both_claws(rig: CutRig, hold: HeldTable.Hold) -> bool:
+	if rig.grip not in HeldTable.TWO_CLAW:
+		return false
+	return rig.aiming or hold.two_claw_out
 
 
 ## d7-held: the held class's walk: x = the stride's scale (heavy: shorter steps, a trudge), y = how
