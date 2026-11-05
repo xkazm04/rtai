@@ -24,6 +24,7 @@ var rivet_id: int = 0
 var art: WeaponArt = WeaponArt.new()
 var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
+var _shown_size: float = 0.0
 var _mag: Sprite2D = null
 var _last_k: float = -1.0
 var _floor: Node2D = Node2D.new()
@@ -49,8 +50,9 @@ func _process(_delta: float) -> void:
 	var weapon: StringName = pilot.hold.held if pilot != null else &""
 	var id: StringName = arsenal.art_id(weapon)
 	var k: float = rig.reload_k if rig != null and rig.plan.gun_arm >= 0 else -1.0
-	if id != _shown:
-		_swap(id, weapon)
+	var size_k: float = rig.plan.size_k if rig != null else arsenal.held_size_ref
+	if id != _shown or size_k != _shown_size:
+		_swap(id, weapon, size_k)
 	if _mag == null or k < 0.0 or k >= 2.0:
 		if _mag != null:
 			_mag.visible = false
@@ -81,15 +83,15 @@ func _drop() -> void:
 		old.queue_free()
 
 
-func _swap(id: StringName, weapon: StringName) -> void:
+func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	if _mag != null:
 		_mag.queue_free()
 	_mag = art.make_held(id, "mag") if art.has(id) else null
 	_shown = id
+	_shown_size = size_k
 	if _mag == null:
 		return
-	var grip: ArsenalTable.Grip = arsenal.grip_of(weapon)
-	_mag.scale *= grip.held_scale if grip != null else 1.0
+	_mag.scale *= arsenal.held_k(weapon, size_k)
 	_mag.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_mag.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 	_mag.visible = false

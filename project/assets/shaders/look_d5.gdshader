@@ -30,6 +30,30 @@ uniform float verm_ghost = 0.65;   // strength of the off-register vermilion pas
 uniform float age = 0.0;           // aged paper: warms the neutral print toward the mock's sepia (0 = off)
 uniform float age_floor = 0.0;     // aged paper below the D5 zoom (32 px/m too): a proposal for the D4 profile, 0 = off
 uniform float grain_floor = 0.0;   // the world-locked paper tooth below the D5 zoom (the mock's mottle): a proposal, 0 = off
+// n5-look riso (targets 2026-11-04 r2_a5): the middle-ground dial. 0 = the d5 print bit-identical; it scales the
+// halftone, the colour-plate offset and the paper fibre at every zoom (not by `amount`: they live at 32 px/m)
+uniform float riso = 0.0;
+uniform float dot_k = 0.3;         // halftone contrast in the mid-tone fills (the mean tone is kept)
+uniform float dot_period = 4.0;    // screen px between dot centres along the 45-degree screen
+uniform float dot_patchy = 0.0;    // uneven riso inking: the dot contrast dips in soft world-locked patches (0 = even)
+uniform float plate_k = 0.5;       // colour-plate misregistration: ghost + paper sliver strength
+uniform vec2 plate_mis = vec2(1.0, -1.0); // the colour plate's offset in screen px
+uniform float fibre_k = 0.5;       // paper fibre strength (dark and light strands)
+uniform float fibre_scale = 0.09;  // fibre lattice frequency per screen px
+uniform float stain_k = 0.0;       // low-frequency grey-brown stains on the paper (the target's mottled sheet)
+uniform float stain_scale = 0.011; // stain lattice frequency per screen px
+uniform float tan_k = 0.0;         // the ground's light neutral print toned toward the target's tan sheet (actors untouched)
+uniform vec3 tan_tone = vec3(0.92, 0.875, 0.8); // the sheet tone tan_k multiplies the light ground by
+uniform float speck_k = 0.0;       // riso toner speckle: sparse 1 px ink specks on the paper and light fills (0 = off)
+uniform float speck_density = 0.05; // the share of light pixels that take a speck where the cluster noise peaks
+uniform float splat_k = 0.0;        // small sharp grime splats with satellite drops on the paper and light fills (r2_a5; 0 = off)
+uniform float splat_scale = 0.05;  // splat lattice frequency per screen px (a splat is about 0.5 / splat_scale px across)
+uniform float splat_cut = 0.8;     // the splat field threshold: higher = fewer, smaller splats
+uniform vec3 splat_tone = vec3(0.62, 0.58, 0.54); // the splat multiply (a neutral grey-brown dirt, never a red)
+uniform float crack_k = 0.0;       // hairline ink cracks on the paper and light fills (r2_a5's cracked tiles; 0 = off)
+uniform float crack_scale = 0.012; // crack family frequency per screen px (lines of one family ~1 / crack_scale px apart)
+uniform float crack_run = 0.55;    // the run mask threshold: higher = fewer, shorter cracks
+uniform float crack_w = 1.0;       // line width in screen px
 
 // the print inks from palette.json (visual-engine's LookOverlay sets them, like look_d4's tones)
 uniform vec3 paper_tone = vec3(0.949, 0.910, 0.835);
@@ -50,6 +74,85 @@ float dens(vec3 c) { return clamp((0.93 - dot(c, vec3(0.299, 0.587, 0.114))) * 1
 
 float vden(vec3 c) { return clamp((c.r - max(c.g, c.b) - 0.25) * 3.0, 0.0, 1.0); }
 
+float chroma(vec3 c) { return max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b)); }
+
+// world-locked 45-degree dot screen: 1 inside a dot whose area is `cov` of the cell
+float halftone(vec2 w, float cov) {
+	vec2 r = vec2(w.x + w.y, w.x - w.y) * (0.70710678 / dot_period);
+	float dist = length(fract(r) - 0.5);
+	float rad = sqrt(cov * 0.3183);
+	return 1.0 - smoothstep(rad - 0.1, rad + 0.1, dist);
+}
+
+// ridged value noise: thin wandering strands where the lattice crosses its mid value
+float strand(vec2 p) {
+	return smoothstep(0.92, 0.985, 1.0 - abs(vnoise(p) * 2.0 - 1.0));
+}
+
+// one crack family: the half-integer isolines of a warped linear coordinate across `dir` (straight-ish,
+// jagged), each line kept only where its own run mask is up (floor(x) is constant along a line)
+float crack(vec2 w, vec2 dir, float seed) {
+	vec2 q = w * crack_scale;
+	float x = dot(q, dir) + 0.3 * vnoise(q * 0.6 + seed) + 0.07 * vnoise(q * 13.0 + seed * 1.7);
+	float ln = 1.0 - smoothstep(0.5, 1.0, abs(fract(x) - 0.5) / max(fwidth(x) * crack_w, 1e-4));
+	return ln * smoothstep(crack_run, crack_run + 0.08, vnoise(q * 1.1 + seed * 3.1 + floor(x) * 7.3));
+}
+
+// the riso layer: halftone in the mid-tone fills, the colour plate off register, paper fibre
+vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
+	float tone = smoothstep(0.08, 0.2, d) * (1.0 - smoothstep(0.88, 0.97, d));
+	if (tone > 0.0 && vden(c) < 0.3) {
+		float cov = clamp(d, 0.05, 0.95);
+		float ink = 1.0 - dot_patchy * smoothstep(0.35, 0.7, vnoise(w * 0.035 + 21.7));
+		o = clamp(o * (1.0 + (cov - halftone(w, cov)) * dot_k * riso * tone * ink), 0.0, 1.0);
+	}
+	// the colour plate printed plate_mis px off: its ghost on the neutral print, a paper sliver opposite
+	vec3 cg = texture(screen_tex, uv - plate_mis * tx).rgb;
+	vec3 cs = texture(screen_tex, uv + plate_mis * tx).rgb;
+	float ch = chroma(c);
+	float gh = max(chroma(cg) - ch - 0.1, 0.0) * step(vden(cg), 0.3);
+	o = mix(o, o * (cg / max(max(cg.r, max(cg.g, cg.b)), 0.05)), clamp(gh * 3.0, 0.0, 1.0) * plate_k * riso);
+	float sl = max(ch - chroma(cs) - 0.1, 0.0) * step(vden(c), 0.3);
+	o = mix(o, mix(o, paper_tone, 0.55), clamp(sl * 3.0, 0.0, 1.0) * plate_k * riso);
+	// paper fibre: two strand families at different scales, dark on paper, light in the ink
+	// (each family broken into short fragments by a coarse mask: unbroken, the strands read as a contour map)
+	float f1 = strand(w * fibre_scale + 5.3) * smoothstep(0.58, 0.8, vnoise(w * 0.045 + 1.7));
+	float f2 = strand(w.yx * fibre_scale * 1.6 + 9.1) * smoothstep(0.55, 0.8, vnoise(w * 0.05 + 4.2));
+	o = mix(o, ink_tone, f1 * fibre_k * riso * 0.2 * (1.0 - d));
+	o = mix(o, paper_tone, f2 * fibre_k * riso * 0.18 * (0.35 + d));
+	// toner speckle (r2_a5's grain, toned down): a per-pixel lattice hash, thinned by a cluster mottle
+	if (speck_k > 0.0 && d < 0.45) {
+		vec2 p = floor(w);
+		float h = fract(texture(grime_tex, (p + 0.5) / 128.0).r * 7.31 + texture(grime_tex, (floor(p / 3.0) + 37.5) / 128.0).r * 13.7);
+		float cl = smoothstep(0.3, 0.75, vnoise(w * 0.06 + 8.3));
+		o = mix(o, ink_tone, step(1.0 - speck_density * cl, h) * speck_k * riso * (1.0 - d / 0.45));
+	}
+	// tan sheet: only the light neutral ground (the cream actors draw above this layer and pop more)
+	float neu = 1.0 - smoothstep(0.12, 0.22, chroma(o));
+	o = mix(o, clamp(o * tan_tone, 0.0, 1.0), tan_k * riso * neu * (1.0 - smoothstep(0.3, 0.7, d)));
+	// stains: soft blotches with a darker tide line, on the paper and light fills only (never a red: a neutral dirt)
+	if (stain_k > 0.0 && d < 0.5) {
+		float sn = vnoise(w * stain_scale + 11.3) * 0.65 + vnoise(w * stain_scale * 3.7 + 6.1) * 0.35;
+		float st = smoothstep(0.6, 0.68, sn) * (0.5 + 0.5 * vnoise(w * 0.11 + 2.9));
+		st += smoothstep(0.02, 0.0, abs(sn - 0.6)) * 0.7;
+		o = mix(o, o * vec3(0.84, 0.81, 0.78), clamp(st, 0.0, 1.0) * stain_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
+	// grime splats: a high threshold on a ragged value field = small hard-edged blots, satellite drops round them
+	if (splat_k > 0.0 && d < 0.5) {
+		float m = vnoise(w * splat_scale + 31.7) * (0.74 + 0.26 * vnoise(w * splat_scale * 4.3 + 3.3));
+		float blot = smoothstep(splat_cut, splat_cut + 0.012, m);
+		float near = smoothstep(splat_cut - 0.16, splat_cut - 0.04, m);
+		blot = max(blot, smoothstep(0.8, 0.82, vnoise(w * splat_scale * 7.0 + 17.1)) * near);
+		o = mix(o, o * splat_tone, blot * splat_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
+	// hairline cracks: two diagonal families of wandering, jagged lines, each line broken into its own runs
+	if (crack_k > 0.0 && d < 0.5) {
+		float cr = max(crack(w, vec2(0.8, 0.6), 1.3), crack(w, vec2(-0.5, 0.866), 7.9));
+		o = mix(o, ink_tone, cr * crack_k * riso * (1.0 - smoothstep(0.3, 0.5, d)));
+	}
+	return o;
+}
+
 float strokes(vec2 w, float ang, float cov) {
 	vec2 dir = vec2(cos(ang), sin(ang));
 	float along = dot(w, vec2(-dir.y, dir.x));
@@ -65,7 +168,7 @@ void fragment() {
 	vec2 tx = SCREEN_PIXEL_SIZE;
 	vec2 w = FRAGCOORD.xy + world_px;
 	vec3 c = texture(screen_tex, uv).rgb;
-	if (amount < 0.004 && age_floor < 0.004 && grain_floor < 0.004) {
+	if (amount < 0.004 && age_floor < 0.004 && grain_floor < 0.004 && riso < 0.004) {
 		COLOR = vec4(c, 1.0);
 	} else {
 		float d = dens(c);
@@ -104,6 +207,9 @@ void fragment() {
 		float tooth = (fib - 0.25) * max(grain * amount, grain_floor);
 		o = mix(o, paper_tone, clamp(tooth * d * 0.35, 0.0, 1.0));
 		o = mix(o, ink_tone, clamp(-tooth * (1.0 - d) * 0.25, 0.0, 1.0));
+		if (riso > 0.0) {
+			o = riso_print(o, c, d, w, uv, tx);
+		}
 		// aged paper: only the neutral print warms (vermilion, teal and every pickup colour keep their hue)
 		float chroma = max(o.r, max(o.g, o.b)) - min(o.r, min(o.g, o.b));
 		float neutral = 1.0 - smoothstep(0.12, 0.22, chroma);

@@ -239,16 +239,19 @@ static func _stun(ci: CanvasItem, at: Vector2, tick: int) -> void:
 		Ink.zigzag(ci, a, b, 3, tick + i + 2, Ink.CREAM)
 
 
-## One frame of quest 1's fire loop (features/fx/art/fx_fire.png, 4 cells of 2.5 m), `scale` x.
+## One frame of quest 1's fire loop (features/fx/art/fx_fire.png, 4 cells of 2.5 m), `scale` x;
+## in colour (WeaponFxColour.ground_fire) while the FX colour canvas is attached.
 static func _fire(ci: CanvasItem, at: Vector2, scale: float, tick: int, alpha: float) -> void:
-	var tex: Texture2D = QuestArt.shared().texture(&"fx_fire")
-	if tex == null:
-		return
 	var size: Vector2 = Vector2.ONE * 2.5 * scale * Ink.PX_PER_M
+	var rect: Rect2 = Rect2(Ink.px(at) - size * 0.5, size)
 	var src: Rect2 = Rect2(Vector2(float((tick / 5) % 4), 0.0) * 256.0, Vector2(256.0, 256.0))
-	ci.draw_texture_rect_region(
-		tex, Rect2(Ink.px(at) - size * 0.5, size), src, Color(1, 1, 1, alpha)
-	)
+	var hue: Texture2D = WeaponFxColour.ground_fire() if WeaponFxArt.colour != null else null
+	if hue != null:  # n5-look: r2_w4's flame colours on the FX colour canvas
+		WeaponFxArt.colour.region(hue, rect, src, Color(1, 1, 1, alpha))
+		return
+	var tex: Texture2D = QuestArt.shared().texture(&"fx_fire")
+	if tex != null:
+		ci.draw_texture_rect_region(tex, rect, src, Color(1, 1, 1, alpha))
 
 
 ## An electric zigzag of `width` px (kinks every ~0.27 m alternating sides, re-jagged every tick

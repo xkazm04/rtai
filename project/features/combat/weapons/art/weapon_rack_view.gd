@@ -23,6 +23,7 @@ const ORDER: Array[StringName] = [
 	&"ray_gun",
 	&"homing_shard",
 	&"mini_nuke",
+	&"gatling",
 ]
 const GAP_M: float = 1.0
 const BOARD_H_M: float = 1.8

@@ -24,6 +24,7 @@ const ORDER: Array[StringName] = [
 	&"ray_gun",
 	&"homing_shard",
 	&"mini_nuke",
+	&"gatling",
 	&"gloria",
 	&"electro_baton",
 ]

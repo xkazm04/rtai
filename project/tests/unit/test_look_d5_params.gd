@@ -6,6 +6,7 @@ extends GutTest
 const PARAMS: String = "res://assets/shaders/look_d5.params.json"
 const SHADERS: Dictionary[String, String] = {
 	"world": "res://assets/shaders/look_d5.gdshader",
+	"world_riso": "res://assets/shaders/look_d5.gdshader",
 	"part": "res://assets/shaders/look_d5_part.gdshader",
 	"shadow": "res://assets/shaders/look_d5_shadow.gdshader",
 	"print": "res://assets/shaders/look_d5_print.gdshader",

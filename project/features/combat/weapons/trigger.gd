@@ -12,6 +12,8 @@ var reload_left: int = 0
 var charge: int = 0
 ## The shot pull() let go this tick was a full charge.
 var charged: bool = false
+## Ticks the barrels have spun (spec.spin_ticks = up to speed): up while held, down when released.
+var spin: int = 0
 var _was_held: bool = false
 
 
@@ -48,7 +50,9 @@ func pull(held: bool) -> bool:
 	charged = false
 	if not held:
 		charge = 0
-	if not held or cooldown > 0 or reloading():
+	if spec.spin_ticks > 0:
+		spin = clampi(spin + (1 if held else -1), 0, spec.spin_ticks)
+	if not held or cooldown > 0 or reloading() or spin < spec.spin_ticks:
 		return false
 	if not spec.auto and not edge and not _charged_up():
 		return false
@@ -61,6 +65,11 @@ func pull(held: bool) -> bool:
 		if ammo == 0:
 			start_reload()
 	return true
+
+
+## The barrels turn (spinning up, firing or winding down): the walk slows (fire_move_mult).
+func spinning() -> bool:
+	return spin > 0
 
 
 ## The charge as a fraction of full (views: the claw's crackle).

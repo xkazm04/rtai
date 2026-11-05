@@ -49,6 +49,16 @@
         18,
         10
       ]
+    },
+    {
+      "id": "alley",
+      "name": "ALLEY",
+      "rect": [
+        -3,
+        -42,
+        55,
+        9
+      ]
     }
   ],
   "city": {
@@ -68,6 +78,7 @@
   },
   "rig_kick": {
     "assault-rifle": 1.4,
+    "gatling": 1.3,
     "gloria": 0.8,
     "hand_cannon": 1.6,
     "robo-tazer": 1.1

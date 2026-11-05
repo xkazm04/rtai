@@ -24,6 +24,7 @@
               "pit",
               "course",
               "pad",
+              "alley",
               "hub"
             ],
             "type": "string"

@@ -35,7 +35,8 @@ func pull(shooter: Fighter, at: Vector2) -> Array[Shot]:
 	_pulled = true
 	var out: Array[Shot] = []
 	var aim: Vector2 = (at - shooter.pos).normalized()
-	if tap and trigger.spec.charge_ticks == 0 and trigger.cooldown == 0 and not trigger.reloading():
+	var semi: bool = not trigger.spec.auto and trigger.spec.charge_ticks == 0
+	if tap and semi and trigger.cooldown == 0 and not trigger.reloading():
 		@warning_ignore("return_value_discarded")
 		trigger.pull(false)
 	if aim == Vector2.ZERO or not trigger.pull(true):

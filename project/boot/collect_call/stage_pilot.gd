@@ -100,11 +100,15 @@ func write_state(out: StreamPeerBuffer) -> void:
 		hauler.write_state(out)
 
 
-## The walk, sprint and roll; a claw hit slows the walk (move_mult) and the roll's i-frames close
+## The walk, sprint and roll; a claw hit slows the walk (move_mult), so do spinning barrels (the
+## gatling's fire_move_mult), and the roll's i-frames close
 ## Rivet to damage (CombatArena.damage skips a fighter that is not exposed).
 func _move(stage: CollectCallStage, c: PlayerCommand) -> void:
 	var rivet: Fighter = stage.arena.rivet
 	var walk: float = stage.arena.tuning.rivet["walk_mps"] * melee.move_scale()
+	var gun: GunHand = stage.arena.gun
+	if gun != null and gun.trigger.spinning():
+		walk *= gun.trigger.spec.fire_move_mult  # the gatling's barrels turn: a heavy slow walk
 	var aim: Vector2 = c.aim
 	if melee.busy() and aim == Vector2.ZERO:
 		c.aim = motion.facing()  # a swing holds the heading it started on

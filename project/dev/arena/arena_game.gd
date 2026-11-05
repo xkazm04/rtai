@@ -43,7 +43,7 @@ var _characters: CityCharacters = null
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Ink.CREAM)
 	var args: ArenaArgs = ArenaArgs.parse()
-	px_per_m = args.number("--ppm", px_per_m)
+	px_per_m = args.number("--ppm", 48.0 if args.text("--arena") == "alley" else px_per_m)
 	_shot = args.text("--shot")
 	_shot_tick = int(args.number("--shot-tick", 600.0))
 	_telemetry = args.text("--telemetry")
@@ -87,6 +87,8 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(ArenaCourseBot.new(session.stage))
 	elif args.text("--bot") == "pit":
 		session.world.loop().set_input(ArenaPitBot.new(session.stage, session.actions))
+	elif args.text("--bot") == "alley":  # lane look: the alley's close-up fight (features/alley)
+		session.world.loop().set_input(AlleyBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "rivet":  # rivet-arsenal: walk, strafe, sprint, roll, claw combo
 		session.world.loop().set_input(ArenaRivetBot.new(session.stage, session.actions))
 	elif args.text("--bot") == "reel":  # the showcase lane's scripted fight (dev/showcase)
@@ -108,7 +110,7 @@ func _open(args: ArenaArgs) -> void:
 		session.world.loop().set_input(line)
 	add_child(session.world)
 	for a: ArenaPlan.Area in session.plan.areas:
-		if a.id == args.text("--start"):
+		if a.id == args.text("--start") or (a.id == "alley" and args.text("--arena") == "alley"):
 			teleport(a)
 
 
@@ -143,6 +145,8 @@ func _add_view() -> void:
 		view.city_view.clock = session.world.context().clock
 	view.bind(session.stage, CollectCallWorld.new(session.stage), null)
 	add_child(view)
+	if view.print_stage != null and ArenaArgs.parse().has("--look"):  # n5-look: A/B of the print
+		view.print_stage.look_id = StringName(ArenaArgs.parse().text("--look"))
 	for hook: ArenaHook in session.stage.hooks:
 		hook.attach_view(view)
 	if not ArenaArgs.parse().has("--sprites"):  # the cast rigs (--rigs), not quest 1's sprites

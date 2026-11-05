@@ -1,0 +1,328 @@
+{
+  "$id": "gtai.alley-decor/1",
+  "additionalProperties": false,
+  "properties": {
+    "bags": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "cans": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "cracks": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "drains": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "escapes": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "fences": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "grime": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "maximum": 400,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "edge_a": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "edge_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "lane": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "seed": {
+          "type": "number"
+        },
+        "size_m": {
+          "items": {
+            "maximum": 3,
+            "minimum": 0.05,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "tone": {
+          "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
+          "type": "string"
+        },
+        "wall_bias": {
+          "maximum": 1,
+          "minimum": 0.2,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "litter": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 5,
+        "minItems": 5,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "print": {
+      "additionalProperties": false,
+      "properties": {
+        "doc": {
+          "type": "string"
+        },
+        "fade_m": {
+          "maximum": 40,
+          "minimum": 0,
+          "type": "number"
+        },
+        "world": {
+          "additionalProperties": {
+            "maximum": 4,
+            "minimum": -4,
+            "type": "number"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "fade_m",
+        "world"
+      ],
+      "type": "object"
+    },
+    "puddles": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "roofs": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "gtai.alley-decor/1",
+      "type": "string"
+    },
+    "spawns": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      },
+      "minItems": 2,
+      "type": "array"
+    },
+    "stains": {
+      "items": {
+        "items": {
+          "type": "number"
+        },
+        "maxItems": 4,
+        "minItems": 4,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "tones": {
+      "additionalProperties": false,
+      "properties": {
+        "asphalt": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "bag_dark": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "bag_pale": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "bag_pale_every": {
+          "maximum": 9,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "brick": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "dumpster": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "dumpster_body": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "dumpster_lid": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "lip_m": {
+          "maximum": 3,
+          "minimum": 0.3,
+          "type": "number"
+        },
+        "mortar": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "puddle": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        },
+        "stain_a": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "tar": {
+          "pattern": "^(#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?)?$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "asphalt",
+        "tar",
+        "brick",
+        "mortar",
+        "lip_m",
+        "puddle"
+      ],
+      "type": "object"
+    },
+    "waves": {
+      "additionalProperties": false,
+      "properties": {
+        "first_wave": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "gap_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "grow": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "max_wave": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "trigger_inset_m": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "first_wave",
+        "gap_s",
+        "grow",
+        "max_wave",
+        "trigger_inset_m"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "doc",
+    "spawns",
+    "waves",
+    "escapes",
+    "fences",
+    "puddles"
+  ],
+  "type": "object"
+}

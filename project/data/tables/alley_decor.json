@@ -1,0 +1,470 @@
+{
+  "bags": [
+    [
+      3.4,
+      -39.8,
+      1.6,
+      1.1
+    ],
+    [
+      7.4,
+      -36.1,
+      1.2,
+      1
+    ],
+    [
+      24,
+      -36,
+      1.4,
+      1
+    ],
+    [
+      28.4,
+      -39.7,
+      1.2,
+      1
+    ],
+    [
+      36.4,
+      -39.8,
+      1.6,
+      1.1
+    ],
+    [
+      40.8,
+      -36.1,
+      1.4,
+      1
+    ],
+    [
+      46.4,
+      -39.8,
+      1.1,
+      1
+    ],
+    [
+      12.4,
+      -36,
+      1,
+      0.9
+    ]
+  ],
+  "cans": [
+    [
+      10.6,
+      -39.6,
+      0.7,
+      0.7
+    ],
+    [
+      32.2,
+      -35.8,
+      0.7,
+      0.7
+    ]
+  ],
+  "cracks": [
+    [
+      -1,
+      -39.7,
+      2.6,
+      2.6
+    ],
+    [
+      3.6,
+      -37,
+      2,
+      2
+    ],
+    [
+      8.2,
+      -39.7,
+      2,
+      2
+    ],
+    [
+      12.8,
+      -37,
+      2.6,
+      2.6
+    ],
+    [
+      17.4,
+      -39.7,
+      2,
+      2
+    ],
+    [
+      22,
+      -37,
+      2,
+      2
+    ],
+    [
+      26.6,
+      -39.7,
+      2.6,
+      2.6
+    ],
+    [
+      31.2,
+      -37,
+      2,
+      2
+    ],
+    [
+      35.8,
+      -39.7,
+      2,
+      2
+    ],
+    [
+      40.4,
+      -37,
+      2.6,
+      2.6
+    ],
+    [
+      45,
+      -39.7,
+      2,
+      2
+    ],
+    [
+      49.6,
+      -37,
+      2,
+      2
+    ]
+  ],
+  "doc": "n5-look alley set dressing and waves (features/alley): rects are [x, y, w, h] in metres from the arena hub (the rect's top-left). roofs = the buildings either side seen from straight above (AlleyRoofs: tar roof, brick lip and coping on the alley face, AC boxes, vents); cracks/stains/drains/puddles = the asphalt; cans = trash cans; fences = the chain-link mesh drawn over the station's thin wall; escapes = fire escapes over the cast. waves = the alley's ArenaPit rule (both ends: spawns north and south). bags = decor-only bag piles (no collision); litter = flat cardboard and paper [x, y, w, h, degrees]; tones = fills (see tones.doc). grime = lane grime (iteration 10, r2_a6): count soft dark blotches hash-placed over the lane rect [x, y, w, h] (default the alley area; the visible lane between the roofs) (size_m diameter range, tone with alpha, seed) and a dirt band edge_m wide at alpha edge_a along both wall feet (0: the print bands the soft band into a hard grey strip that reads as a cast shadow, which the owner banned), wall_bias (1 = blotches uniform across the lane, < 1 crowds them toward the wall feet); count 0 + edge_m 0 = before.",
+  "drains": [
+    [
+      20.2,
+      -37.9,
+      0.5,
+      0.8
+    ],
+    [
+      44,
+      -37.9,
+      0.5,
+      0.8
+    ]
+  ],
+  "escapes": [
+    [
+      1,
+      -40.9,
+      3.2,
+      1.4
+    ],
+    [
+      18,
+      -35.5,
+      3.6,
+      1.4
+    ],
+    [
+      33,
+      -40.9,
+      3,
+      1.4
+    ],
+    [
+      44,
+      -35.5,
+      3.2,
+      1.4
+    ]
+  ],
+  "fences": [
+    [
+      -2.9,
+      -40,
+      0.6,
+      5
+    ]
+  ],
+  "grime": {
+    "count": 100,
+    "edge_a": 0.5,
+    "edge_m": 0,
+    "lane": [
+      -3,
+      -40,
+      55,
+      5
+    ],
+    "seed": 1,
+    "size_m": [
+      0.2,
+      0.9
+    ],
+    "tone": "#3A342E59",
+    "wall_bias": 0.6
+  },
+  "litter": [
+    [
+      5.2,
+      -38.3,
+      0.9,
+      0.7,
+      18
+    ],
+    [
+      9.6,
+      -37.9,
+      0.7,
+      0.6,
+      -25
+    ],
+    [
+      14.6,
+      -38.9,
+      0.8,
+      0.6,
+      40
+    ],
+    [
+      23.8,
+      -36.9,
+      0.9,
+      0.7,
+      -12
+    ],
+    [
+      27.6,
+      -37.6,
+      0.6,
+      0.5,
+      30
+    ],
+    [
+      35.4,
+      -36.9,
+      0.8,
+      0.7,
+      -35
+    ],
+    [
+      40.2,
+      -38.4,
+      0.9,
+      0.6,
+      10
+    ],
+    [
+      45.2,
+      -36.9,
+      0.7,
+      0.6,
+      -20
+    ],
+    [
+      19.2,
+      -38.8,
+      0.4,
+      0.3,
+      15
+    ],
+    [
+      31.4,
+      -38.9,
+      0.35,
+      0.28,
+      -40
+    ],
+    [
+      43.4,
+      -37.4,
+      0.4,
+      0.3,
+      60
+    ],
+    [
+      2.6,
+      -36.6,
+      0.4,
+      0.3,
+      -10
+    ]
+  ],
+  "print": {
+    "doc": "n5-look iteration 21 (toward r2_a6's mid concrete): look_d4 world uniforms the alley sets for its own floor (core/render/look_zone.gd), weight 1 while the camera's focus is on the alley floor, fading out over fade_m metres outside it. wash_lo 0.30 -> 0.6: the light-wash fill (the alley floor) prints a mid warm grey, under look_d5's grime gate so the cracks and splats stay. Empty world or --alley-print=off = the before (pale paper floor); the city and the other stations never see it.",
+    "fade_m": 6,
+    "world": {
+      "wash_lo": 0.6
+    }
+  },
+  "puddles": [
+    [
+      11.5,
+      -38.8,
+      2.4,
+      1.3
+    ],
+    [
+      31,
+      -38.2,
+      2.8,
+      1.5
+    ],
+    [
+      45.5,
+      -39.3,
+      1.8,
+      1.1
+    ],
+    [
+      2.2,
+      -37.4,
+      1.6,
+      1
+    ],
+    [
+      20.6,
+      -36.7,
+      1.7,
+      0.9
+    ]
+  ],
+  "roofs": [
+    [
+      -11,
+      -52,
+      71,
+      12
+    ],
+    [
+      -11,
+      -35,
+      71,
+      12
+    ]
+  ],
+  "schema": "gtai.alley-decor/1",
+  "spawns": [
+    [
+      0,
+      -38.5
+    ],
+    [
+      0.5,
+      -37.5
+    ],
+    [
+      0,
+      -36.5
+    ],
+    [
+      50.5,
+      -38.5
+    ],
+    [
+      50,
+      -37.5
+    ],
+    [
+      50.5,
+      -36.5
+    ]
+  ],
+  "stains": [
+    [
+      1.4,
+      -36.4,
+      0.8,
+      0.8
+    ],
+    [
+      6,
+      -38.6,
+      1.1,
+      1.1
+    ],
+    [
+      10.6,
+      -36.4,
+      1.4,
+      1.4
+    ],
+    [
+      15.2,
+      -38.6,
+      0.8,
+      0.8
+    ],
+    [
+      19.8,
+      -36.4,
+      1.1,
+      1.1
+    ],
+    [
+      24.4,
+      -38.6,
+      1.4,
+      1.4
+    ],
+    [
+      29,
+      -36.4,
+      0.8,
+      0.8
+    ],
+    [
+      33.6,
+      -38.6,
+      1.1,
+      1.1
+    ],
+    [
+      38.2,
+      -36.4,
+      1.4,
+      1.4
+    ],
+    [
+      42.8,
+      -38.6,
+      0.8,
+      0.8
+    ],
+    [
+      47.4,
+      -36.4,
+      1.1,
+      1.1
+    ],
+    [
+      52,
+      -38.6,
+      1.4,
+      1.4
+    ]
+  ],
+  "tones": {
+    "asphalt": "#A39C91",
+    "bag_dark": "#55505A",
+    "bag_pale": "#C9BCA4",
+    "bag_pale_every": 2,
+    "brick": "#6A3A2A",
+    "doc": "n5-look iteration 7 (toward r2_a6: a light concrete lane between dark brick): ground and roof fills, the brick lip width in m, the puddle fill (\"\" = the city puddle decal), the oil-stain alpha and the dumpster tint. Before (iteration 3): asphalt #6F6964, tar #C9AB8A, brick #A4664A, mortar #17131B8C, lip_m 0.95, puddle \"\", stain_a 0.8, dumpster #FFFFFF. Iteration 21: dumpster_lid + dumpster_body draw r2_a6's ribbed lidded bin (AlleyProps.dumpster: a dark ribbed lid over a green-grey front face toward the lane); dumpster_lid \"\" = the tinted city art before. bag_dark / bag_pale / bag_pale_every: the sack fills (every Nth sack of a pile pale); before #2E2833 / #C9BCA4 / 3 (the dark sacks printed as solid ink blobs).",
+    "dumpster": "#7E8E86",
+    "dumpster_body": "#80907A",
+    "dumpster_lid": "#34332F",
+    "lip_m": 1.4,
+    "mortar": "#C9B8A0C0",
+    "puddle": "#7D8A93",
+    "stain_a": 0.45,
+    "tar": "#7D6656"
+  },
+  "waves": {
+    "first_wave": 2,
+    "gap_s": 2,
+    "grow": 1,
+    "max_wave": 6,
+    "trigger_inset_m": 3
+  }
+}

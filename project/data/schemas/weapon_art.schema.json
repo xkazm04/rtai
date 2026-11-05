@@ -45,6 +45,11 @@
           "pattern": "^[a-z0-9_]*$",
           "type": "string"
         },
+        "cross_k": {
+          "maximum": 2,
+          "minimum": 0.5,
+          "type": "number"
+        },
         "grip_class": {
           "enum": [
             "one_hand",
@@ -53,6 +58,7 @@
             "backpack_hose",
             "thrown",
             "heavy_two_hand",
+            "hip_belt",
             "melee_one_hand",
             "melee_two_hand"
           ],
@@ -147,12 +153,25 @@
       "minItems": 1,
       "type": "array"
     },
+    "fx_colour_dir": {
+      "type": "string"
+    },
     "fx_draw_scale": {
       "maximum": 8,
       "minimum": 0.1,
       "type": "number"
     },
     "held_small_below_ppm": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "pickup_min_span_m": {
+      "maximum": 3,
+      "minimum": 0,
+      "type": "number"
+    },
+    "pickup_outline_px": {
+      "maximum": 4,
       "minimum": 0,
       "type": "number"
     },

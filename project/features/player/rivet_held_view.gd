@@ -16,11 +16,15 @@ const GRIND_JUDDER: float = 0.07
 ## Where the claw closes along the claw cell (weapon-art's lineup measured it).
 const GRIP_U: float = 0.62
 ## Grip classes whose reload is not a magazine (the molotov's next bottle, the flamer's tank).
-const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose"]
+const NO_MAG: Array[StringName] = [&"thrown", &"backpack_hose", &"hip_belt"]
+## Grip classes with a part on Rivet's back (weapon-art's `tank`): the flamer's tank, the
+## gatling's belt box (n5-look); the line from it to the weapon is the hose or the belt.
+const ON_BACK: Array[StringName] = [&"backpack_hose", &"hip_belt"]
 ## The flamethrower's tank rides this far behind the torso's centre (m), across the shoulders.
 const TANK_BACK_M: float = 0.22
-## The flamer's reload is a tank swap: the spent tank slides this far back off him and fades
-## a little (reload phase 0), the fresh one slides in (phase 1); the hose follows the tank.
+## The flamer's reload is a tank swap (the gatling's box too): the spent tank slides this far
+## back off him and fades a little (reload phase 0), the fresh one slides in (phase 1); the hose
+## follows the tank.
 const TANK_SWAP_M: float = 0.45
 const HOSE_POINTS: int = 8
 
@@ -32,12 +36,14 @@ var rivet_id: int = 0
 var art: WeaponArt = WeaponArt.new()
 var arsenal: ArsenalTable = ArsenalTable.shipped()
 var _shown: StringName = &""
+var _shown_size: float = 0.0
 var _sprite: Sprite2D = null
 var _sweep_arc: float = 1.2
 var _mag: RivetMagView = null
 var _tank: Sprite2D = null
 ## The tank's hose to the wand: an ink line with a cream core.
 var _hose: Array[Line2D] = []
+var _hose_belt: bool = false
 var _rag: RagLight = null
 var _carry: RivetCarryAngle = RivetCarryAngle.new()
 var _smear: MeleeSmearView = null
@@ -75,15 +81,15 @@ func _process(_delta: float) -> void:
 		mag = mag and not (art.has(id) and art.part_texture(id, "mag") != null)  # weapon-art's own
 		var now: int = arena.tick if arena != null else 0
 		_mag_view().feed(rig, rig.reload_k if mag else -1.0, now, id)
-		_back_tank(rig, grip != null and grip.id == &"backpack_hose")
+		_back_tank(rig, grip != null and ON_BACK.has(grip.id))
 	if rig == null or not rig.gun_out or not art.has(id):
 		if _sprite != null:
 			_sprite.visible = false
 		if _rag != null:
 			_rag.visible = false
 		return
-	if id != _shown:
-		_swap(id, pilot.hold.held)
+	if id != _shown or rig.plan.size_k != _shown_size:
+		_swap(id, pilot.hold.held, rig.plan.size_k)
 	if arena != null and arena.gun != null and arena.gun.trigger.spec.id == pilot.hold.held:
 		var t: Trigger = arena.gun.trigger
 		HeldTube.apply(_sprite, art, id, HeldTube.is_empty(t.ammo, t.spec.magazine, rig.reload_k))
@@ -104,16 +110,16 @@ func _process(_delta: float) -> void:
 	_light_rag(rig, id)
 
 
-func _swap(id: StringName, weapon: StringName) -> void:
+func _swap(id: StringName, weapon: StringName, size_k: float) -> void:
 	if _sprite != null:
 		_sprite.queue_free()
 	_sprite = art.make_held(id)
-	var grip: ArsenalTable.Grip = arsenal.grip_of(weapon)
-	_sprite.scale *= grip.held_scale if grip != null else 1.0
+	_sprite.scale *= arsenal.held_k(weapon, size_k)
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_sprite.material = PartMaterials.get_mat(PartMaterials.PartKind.PART, false, 0)
 	add_child(_sprite)
 	_shown = id
+	_shown_size = size_k
 
 
 ## A long gun or a tube: carried across the front of the body, and always beside the helmet.
@@ -246,15 +252,12 @@ func _back_tank(rig: CutRig, on: bool) -> void:
 
 ## The hose leaves the tank's end nearest the wand, curves out past the body and meets the grip.
 func _route_hose(fwd: Vector2) -> void:
-	if _hose.is_empty():
-		for spec: Vector2 in [Vector2(3.2, 0.0), Vector2(1.4, 1.0)]:  # width, ink (0) or cream (1)
-			var line: Line2D = Line2D.new()
-			line.width = spec.x
-			line.default_color = RivetMagView.SHINE if spec.y > 0.5 else RivetMagView.INK
-			line.joint_mode = Line2D.LINE_JOINT_ROUND
-			line.z_index = 1
-			add_child(line)
-			_hose.append(line)
+	var belt: bool = arsenal.grip_of(pilot.hold.held).id == &"hip_belt"
+	if _hose.is_empty() or belt != _hose_belt:
+		for line: Line2D in _hose:
+			line.queue_free()
+		_hose = HeldFeedLine.make(self, belt)  # the flamer's hose or the gatling's belt
+		_hose_belt = belt
 	var side: Vector2 = fwd.orthogonal() * _tank.texture.get_width() * _tank.scale.x * 0.45
 	var to: Vector2 = _sprite.global_position
 	var from: Vector2 = _tank.global_position + side

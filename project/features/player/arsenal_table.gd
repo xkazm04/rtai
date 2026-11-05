@@ -37,6 +37,10 @@ var art_stand_in: Dictionary[StringName, StringName] = {}
 var out_k: float = 0.3
 var in_k: float = 0.45
 var cock_k: float = 0.25
+## n5-look: the held part follows Rivet's body size: held_scale x size_k / held_size_ref (the
+## approved combat night's size_k 1.2), so the slimmer default Rivet carries proportionate guns
+## and a grown form larger ones; 0 = the class's held_scale alone.
+var held_size_ref: float = 0.0
 var errors: Array[String] = []
 
 
@@ -72,6 +76,8 @@ static func from_table(t: DataTable) -> ArsenalTable:
 		var st: Dictionary = t.object(t.raw, "art_stand_in")
 		for key: String in st:
 			a.art_stand_in[StringName(key)] = StringName(t.text(st, key))
+	if t.raw.has("held_size_ref"):
+		a.held_size_ref = t.num(t.raw, "held_size_ref")
 	a.errors = t.errors()
 	a._check()
 	return a
@@ -86,6 +92,13 @@ func art_id(weapon_id: StringName) -> StringName:
 func grip_of(weapon_id: StringName) -> Grip:
 	var g: StringName = weapon_grip.get(weapon_id, &"")
 	return grips.get(g, null)
+
+
+## The held part's scale for `weapon_id` in the claw of a body of `size_k` (1.0: unknown weapon).
+func held_k(weapon_id: StringName, size_k: float) -> float:
+	var g: Grip = grip_of(weapon_id)
+	var k: float = g.held_scale if g != null else 1.0
+	return k * size_k / held_size_ref if held_size_ref > 0.0 else k
 
 
 func ok() -> bool:

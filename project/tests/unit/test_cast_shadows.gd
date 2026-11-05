@@ -22,7 +22,7 @@ func test_buildings_cast_further_than_props() -> void:
 	var classes: Array[String] = ["ground", "building", "prop"]
 	var px: PackedVector2Array = _casts.extra_px(classes, 32.0)
 	assert_eq(px[0], Vector2.ZERO)
-	assert_almost_eq(px[1].x, (1.1 - 0.25) * 32.0, 0.001)
+	assert_almost_eq(px[1].x, (0.45 - 0.25) * 32.0, 0.001)
 	assert_eq(px[1].x, px[1].y)
 	assert_eq(px[2], Vector2.ZERO)
 
@@ -47,7 +47,7 @@ func test_a_named_prop_casts_its_hero_scene_length() -> void:
 
 
 func test_the_parapet_core_sits_inside_the_hatched_shadow() -> void:
-	# the ink core (0.22 m) must stay shorter than the building's baked + view cast (1.1 m)
+	# the ink core (0.22 m) must stay shorter than the building cast (0.45 m, n5-look; was 1.1)
 	assert_gt(_casts.parapet_core_m, 0.0)
-	assert_lt(_casts.parapet_core_m, 1.1)
+	assert_lt(_casts.parapet_core_m, 0.45)
 	assert_almost_eq(_casts.baked_m(&"building"), 0.25, 0.0001)

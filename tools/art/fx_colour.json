@@ -1,0 +1,236 @@
+{
+  "doc": "fx_colour.py families: files = PNG name prefixes in the weapon FX folder; tokens = palette token -> the sheet's colour (r2_w4_fx_colour.jpg). Tokens not listed keep their colour (the ink outline always stays ink).",
+  "families": [
+    {
+      "files": [
+        "flash_pistol_",
+        "flash_smg_",
+        "flash_tube_",
+        "flash_nuke_",
+        "spark_"
+      ],
+      "id": "muzzle",
+      "note": "hot yellow-orange",
+      "tokens": {
+        "ink_2": "#E5822A",
+        "paper": "#FFE27A",
+        "paper_2": "#FFD45A",
+        "vermilion": "#FF9A2A",
+        "wash": "#E07A22"
+      }
+    },
+    {
+      "files": [
+        "flash_pistol_",
+        "flash_smg_",
+        "flash_tube_",
+        "flash_nuke_"
+      ],
+      "id": "muzzle_core",
+      "note": "n5-look iteration 14 (r2_w4 top left: the muzzle flashes grade white-hot at the bore -> hot yellow -> orange tips at the outline; ours printed a pale cream star with a darker orange heart, the gradient inverted, as blast_0 was): applied after muzzle, which it overrides for the gun flashes (spark_ keeps muzzle): the heart (vermilion) goes white-hot, the body hot yellow, and rim paints an orange band rim.px part px inside the ink outline (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the muzzle family's flash; drop rim = the white core in a yellow body.",
+      "rim": {
+        "colour": "#F08A24",
+        "px": 3
+      },
+      "tokens": {
+        "ink_2": "#D8641C",
+        "paper": "#FFCB3A",
+        "paper_2": "#FFB62E",
+        "steel": "#F08A24",
+        "vermilion": "#FFF6D6",
+        "wash": "#E8701E"
+      }
+    },
+    {
+      "files": [
+        "tracer"
+      ],
+      "id": "tracer",
+      "note": "a thin hot-yellow streak, light orange tail (the sheet's SMG rounds)",
+      "tokens": {
+        "ink_2": "#FFB43C",
+        "paper": "#FFF4B0",
+        "paper_2": "#FFE680",
+        "wash": "#F5A030"
+      }
+    },
+    {
+      "files": [
+        "blast_",
+        "flame_"
+      ],
+      "id": "explosion",
+      "note": "orange-yellow, white core",
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFF9E8",
+        "paper_2": "#FFE58A",
+        "vermilion": "#FFA21C",
+        "wash": "#E8781E"
+      }
+    },
+    {
+      "files": [
+        "flame_"
+      ],
+      "id": "flame",
+      "note": "n5-look iteration 16 (r2_w4 top right: the flame is a yellow core under a ragged orange rim; ours printed one amber tone): applied after explosion, which it overrides for the flame cells; the body hot yellow and rim paints an orange band rim.px part px inside the ink (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the explosion family's amber flame. n5-look iteration 18: rim.flat true paints the rim colour flat (with the grain offset from the paper base the orange rim printed blood red #EE2800 on flame_0..2; drop flat = that defect). The prefix also inks flame_cone_ (tools/art/flame_cone.py, the jet's cone).",
+      "rim": {
+        "colour": "#EE6A1C",
+        "flat": true,
+        "px": 6
+      },
+      "tokens": {
+        "ink_2": "#C8561A",
+        "paper": "#FFF4C8",
+        "paper_2": "#FFD23A",
+        "vermilion": "#FFB21C",
+        "wash": "#F58A22"
+      }
+    },
+    {
+      "files": [
+        "blast_0"
+      ],
+      "id": "blast_burst",
+      "note": "the first blast frame: its burst was paper with a vermilion core, so the explosion family printed a white star round an orange heart; r2_w4 wants the white-hot core inside the orange-yellow, so this frame swaps them (applied after explosion, which it overrides)",
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFB52E",
+        "paper_2": "#FFC94A",
+        "vermilion": "#FFF9E8",
+        "wash": "#E8781E"
+      }
+    },
+    {
+      "files": [
+        "arc_"
+      ],
+      "id": "arc",
+      "note": "pale violet-white. n5-look iteration 14 (r2_w4: the arc is a white-hot core inside a violet edge; ours printed one lavender fill): paper #E4D6FF -> #FBF8FF and a violet rim #9A7CF0 4 part px inside the ink (fx_rim.py, core_min 256 = every fill pixel). Drop rim and paper back to #E4D6FF = before.",
+      "rim": {
+        "colour": "#9A7CF0",
+        "core_min": 256,
+        "px": 4
+      },
+      "tokens": {
+        "ink_2": "#6A4FD0",
+        "paper": "#FBF8FF",
+        "paper_2": "#CBB6FF",
+        "steel": "#B9A6FF",
+        "wash": "#8C72E6"
+      }
+    },
+    {
+      "files": [
+        "flash_energy_",
+        "plasma_bolt",
+        "plasma_comet"
+      ],
+      "id": "plasma",
+      "note": "white-hot, gold rim",
+      "tokens": {
+        "ink_2": "#D79A1E",
+        "paper": "#FFFDF4",
+        "paper_2": "#FFF2C2",
+        "steel": "#F2C14A",
+        "vermilion": "#F2B632",
+        "wash": "#E6A82A"
+      }
+    },
+    {
+      "files": [
+        "ray_ring_"
+      ],
+      "id": "ray",
+      "note": "acid green (iteration 5: ink_2 and wash brightened; the rings printed a dull olive at 32 px/m)",
+      "tokens": {
+        "ink_2": "#7BD92B",
+        "paper": "#E2FF8A",
+        "paper_2": "#C8F65A",
+        "steel": "#B4F04A",
+        "wash": "#9AEC3C"
+      }
+    },
+    {
+      "files": [
+        "ray_beam_"
+      ],
+      "id": "ray_beam",
+      "note": "r2_w4's beam: the ray family's acid green with a white-hot core (n5-look iteration 16; drop this family and add ray_beam_ back to ray = the pale green core)",
+      "tokens": {
+        "ink_2": "#7BD92B",
+        "paper": "#FAFFE8",
+        "paper_2": "#D9FF6E",
+        "steel": "#B4F04A",
+        "wash": "#9AEC3C"
+      }
+    },
+    {
+      "files": [
+        "shard"
+      ],
+      "id": "shard",
+      "note": "pale crystal, cyan-white glint (teal is souls only)",
+      "tokens": {
+        "ink_2": "#7FA3B8",
+        "paper": "#F0FBFF",
+        "paper_2": "#D6EEF8",
+        "steel": "#B8D4E2",
+        "wash": "#9DBBCC"
+      }
+    },
+    {
+      "files": [
+        "blast_2"
+      ],
+      "flash": {
+        "burst": "#FFC23A",
+        "burst_k": 0.8,
+        "half_w": 6,
+        "hot": "#FFF2C0",
+        "hot_k": 0.55,
+        "ink_px": 3.5,
+        "mid": "#F08A24",
+        "mid_k": 1.2,
+        "n": 22,
+        "points": 20,
+        "r_out": [
+          0.7,
+          0.98
+        ],
+        "seed": 1,
+        "spike": "#FFC23A"
+      },
+      "id": "blast_smoke",
+      "inner": {
+        "colour": "#F08A24",
+        "px": 45
+      },
+      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before. Iteration 10: pockets (r2_w4: ragged fire pockets, not a ring): 9 round orange pockets with a hot yellow core moved toward the blast centre (core_in; centred, it read as a target), hash-placed on the ring's inner edge, clipped to the smoke (fx_colour.py pockets); when present they replace the inner band. Drop pockets = the iteration 8 band. Iteration 11: wobble 0.2 (a hashed 3- and 5-lobe radial wobble of each pocket edge, r2_w4's ragged fire tongues; 0 = the round iteration 10 pockets) with r_px 30-52 (was 25-45: the lumpy edge eats fire area). Also iteration 11: graded fire, hot #FFF2C0 at hot_k 0.5 of the core (core_k 0.5 -> 0.62): orange edge -> yellow -> white-hot toward the blast centre (r2_w4); drop hot = the single yellow core. Iteration 12: flash (r2_w4: the blast keeps a white-hot core and yellow radial spikes through the smoke; ours printed a hollow grey ring): tools/art/fx_flash.py paints n 22 ink-outlined yellow spikes from the centre to r_out x the half cell, a ragged 20-point yellow burst filling the ring's hollow (burst_k x its inner radius) and a white-hot star inside (hot_k x the burst). Drop flash = the iteration 11 frame. Iteration 12b: flash.mid #F08A24 at mid_k 1.2 x the burst (an orange tier between the yellow burst and the smoke, r2_w4's graded core; drop mid = the yellow star alone).",
+      "pockets": {
+        "colour": "#F08A24",
+        "core": "#FFC23A",
+        "core_in": 0.35,
+        "core_k": 0.62,
+        "hot": "#FFF2C0",
+        "hot_k": 0.5,
+        "n": 9,
+        "r_px": [
+          30,
+          52
+        ],
+        "seed": 1,
+        "wobble": 0.2
+      },
+      "tokens": {
+        "ink_2": "#5A4A44",
+        "paper": "#FFF9E8",
+        "paper_2": "#FFE58A",
+        "vermilion": "#FFA21C",
+        "wash": "#5E524C"
+      }
+    }
+  ],
+  "schema": "gtai.fx-colour/1"
+}

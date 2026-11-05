@@ -17,6 +17,9 @@ var _ball_tex: Texture2D = null
 var _arc_seen: int = 0
 ## Lane gunplay: shells, smoke, impacts and per-weapon muzzles of a table bullet gun.
 var _gun_fx: GunFx = null
+## n5-look: Rivet's weapon FX cells in colour (null: fx_colour_dir is "", the ink cells).
+var _colour: WeaponFxColour = null
+var _colour_tried: bool = false
 ## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
 var _ground: FxGround = null
 
@@ -35,6 +38,7 @@ func _draw() -> void:
 	if stage == null:
 		return
 	var arena: CombatArena = stage.arena
+	_colour_begin()
 	if _ground == null:
 		for d: Vector2 in arena.rifle_drops:
 			draw_line(Ink.px(d + Vector2(-0.4, 0.1)), Ink.px(d + Vector2(0.4, -0.1)), Ink.INK, 5.0)
@@ -59,9 +63,7 @@ func _draw() -> void:
 	_arcs(arena)
 	if arena.areas != null:
 		FightAreasArt.draw(self, arena, stage.tick)
-	_whispers()
-	if stage.crates_burning:
-		_fire()
+	_last()
 
 
 ## The table gun's floor (shells, scuffs, scorch) under everything else; the retained ground
@@ -167,6 +169,31 @@ func _fire_cell(cell: Vector2i, w: int, at: Vector2, scale: float) -> void:
 	var size: Vector2 = Vector2(2.5 * w, 2.5) * scale * Ink.PX_PER_M
 	var src: Rect2 = Rect2(Vector2(cell) * 256.0, Vector2(256.0 * w, 256.0))
 	draw_texture_rect_region(_fire_tex, Rect2(Ink.px(at) - size * 0.5, size), src)
+
+
+## n5-look: the colour canvas made on the first draw, cleared each frame, and lent to WeaponFxArt
+## for this draw only (another canvas drawing cells is never redirected).
+func _colour_begin() -> void:
+	if not _colour_tried:
+		_colour_tried = true
+		_colour = WeaponFxColour.attach(self, WeaponFxArt.art().fx_colour_dir)
+	if _colour != null:
+		_colour.begin(material as ShaderMaterial)
+	WeaponFxArt.colour = _colour
+
+
+## The whisper rings and the crate fire (ink), then the colour canvas goes back.
+func _last() -> void:
+	_whispers()
+	if stage.crates_burning:
+		_fire()
+	WeaponFxArt.colour = null
+
+
+func _exit_tree() -> void:
+	if _colour != null:
+		_colour.release()
+	_colour = null
 
 
 ## Showcase merge r4: weapon-art's cells own Rivet's muzzle flash and brass for a gun they have

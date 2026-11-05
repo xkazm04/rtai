@@ -1,0 +1,175 @@
+{
+  "doc": "n5-look: the alley stage (targets r2_a6 'direction for close-up stages/battles'): a 5 m back alley between two building edges (wall_high, doorway gaps), dumpsters (cover_high) and trash-bag piles (cover_low), cops in waves from both ends (AlleyHook, data/tables/alley_decor.json), puddles, a chain-link fence and fire escapes drawn by AlleyDecor in the print. Dev: --arena=alley (= --start=alley --ppm=48).",
+  "lane": "look",
+  "schema": "gtai.arena-station/1",
+  "stations": [
+    {
+      "area": "alley",
+      "id": "alley",
+      "measures": [
+        "alley_kills",
+        "alley_waves"
+      ],
+      "name": "Alley",
+      "props": [
+        {
+          "at": [
+            4,
+            -46
+          ],
+          "kind": "wall_high",
+          "size": [
+            14,
+            12
+          ]
+        },
+        {
+          "at": [
+            21.2,
+            -46
+          ],
+          "kind": "wall_high",
+          "size": [
+            17.6,
+            12
+          ]
+        },
+        {
+          "at": [
+            45.7,
+            -46
+          ],
+          "kind": "wall_high",
+          "size": [
+            28,
+            12
+          ]
+        },
+        {
+          "at": [
+            10.2,
+            -29
+          ],
+          "kind": "wall_high",
+          "size": [
+            26.4,
+            12
+          ]
+        },
+        {
+          "at": [
+            41.7,
+            -29
+          ],
+          "kind": "wall_high",
+          "size": [
+            36.6,
+            12
+          ]
+        },
+        {
+          "at": [
+            6,
+            -39.2
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.4,
+            1.4
+          ]
+        },
+        {
+          "at": [
+            26.5,
+            -35.8
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.4,
+            1.4
+          ]
+        },
+        {
+          "at": [
+            39,
+            -39.2
+          ],
+          "kind": "cover_high",
+          "size": [
+            2.4,
+            1.4
+          ]
+        },
+        {
+          "at": [
+            8.4,
+            -39
+          ],
+          "kind": "cover_low",
+          "size": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "at": [
+            29,
+            -35.9
+          ],
+          "kind": "cover_low",
+          "size": [
+            1.6,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            42,
+            -39.4
+          ],
+          "kind": "cover_low",
+          "size": [
+            0.8,
+            0.8
+          ]
+        },
+        {
+          "at": [
+            16,
+            -36.2
+          ],
+          "kind": "cover_low",
+          "size": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "at": [
+            -2.6,
+            -37.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            0.3,
+            5
+          ]
+        },
+        {
+          "at": [
+            -7,
+            -37.5
+          ],
+          "kind": "wall_high",
+          "size": [
+            8,
+            29
+          ]
+        }
+      ],
+      "script": "res://features/alley/alley_hook.gd",
+      "spawns": [],
+      "tuning": []
+    }
+  ]
+}

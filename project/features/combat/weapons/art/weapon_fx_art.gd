@@ -32,6 +32,9 @@ const BOTTLE_SHADOW_K: float = 0.8
 const BOTTLE_SHADOW_INK: float = 0.6
 ## The flamethrower's nozzle lick: the jet's tongue cell at this scale (1.0 read as a balloon).
 const NOZZLE_K: float = 0.45
+## The cone slices' lick swing (rad) about the aim (the teardrops keep 0.18: at 0.18 the long
+## cone slices lay parallel and banded like planks at 48 px/m).
+const CONE_LICK: float = 0.24
 ## A round leaves the sim at the body centre; its art shows once it is this far out (past the
 ## claw), so a rocket never draws over Rivet's chest. Smoke starts behind that point too.
 const CLEAR_M: float = 1.1
@@ -44,6 +47,8 @@ static var fire_burst: bool = not OS.get_cmdline_user_args().has("--fire-burst=o
 ## The blast's last frame (a ring of cream discs) read as debug beads; by default the smoke ring
 ## (frame 2) holds through it, growing and thinning. `--blast-beads=on` = the before.
 static var blast_beads: bool = OS.get_cmdline_user_args().has("--blast-beads=on")
+## n5-look: while set (FxView's draw), every cell prints in colour on this canvas (WeaponFxColour).
+static var colour: WeaponFxColour = null
 static var _art: WeaponArt = null
 static var _frames: Dictionary[StringName, Array] = {}
 
@@ -80,8 +85,8 @@ static func shot(ci: CanvasItem, s: Shot, tick: int) -> bool:
 			_rocket(ci, at, dir, went, tick)
 		WeaponSpec.Kind.CONE:
 			_jet(ci, s, dir, went, tick)
-		WeaponSpec.Kind.BOLT when art().projectile_fx(s.spec.id) == &"ray_ring":
-			WeaponFxRay.draw_round(ci, at, dir, went, tick)
+		WeaponSpec.Kind.BOLT when WeaponFxRay.FX.has(art().projectile_fx(s.spec.id)):
+			WeaponFxRay.draw(ci, art().projectile_fx(s.spec.id), at, dir, went, tick)
 		WeaponSpec.Kind.BOLT:
 			var len_m: float = maxf(s.spec.tracer_len_m, ARC_MIN_M)
 			var span: float = len_m * Ink.PX_PER_M / (ARC_SPAN_PX * cell_scale())
@@ -134,6 +139,14 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 			_cell(ci, &"blast", 0, Vector2(b.x, b.y), b.y * 0.9, k, fade)
 		WeaponFxShell.glass(ci, b, age)
 		return true
+	_blast_cells(ci, b, age)
+	if b.z < FightNukeArt.NUKE_M:
+		WeaponFxDebris.draw(ci, b, age)  # n5-look (r2_w4): slabs flung over the fireball
+	return true
+
+
+## The rocket blast's cells over its scorch decal (the burst, fireball, smoke ring).
+static func _blast_cells(ci: CanvasItem, b: Vector3, age: int) -> void:
 	var at: Vector2 = Vector2(b.x, b.y)
 	# the scorch decal stays under it for the whole VFX life, fading out
 	var keep: float = float(FightAreas.VFX_KEEP_TICKS)
@@ -143,9 +156,9 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 	while f > 0 and age < BLAST_FRAMES[f]:
 		f -= 1
 	if not blast_beads and WeaponFxShell.wisps(ci, b, age):
-		return true
+		return
 	if age >= BLAST_FRAMES[-1]:
-		return true
+		return
 	var into: float = float(age - BLAST_FRAMES[f]) / float(BLAST_FRAMES[f + 1] - BLAST_FRAMES[f])
 	var fade: float = 1.0 - into * 0.6 if f == 3 else 1.0
 	# frame sizes grow 300 -> 480 part px; the last frame spans the splash diameter
@@ -156,7 +169,6 @@ static func blast(ci: CanvasItem, b: Vector3, age: int, areas: FightAreas = null
 		grow = 1.08 + 0.22 * into
 		fade = 1.0 - into * 0.85
 	_cell(ci, &"blast", f, at, b.y * 0.9, size_k * grow, fade)
-	return true
 
 
 ## A splash whose own fire patch lies under it (same radius, within it): a burst bottle.
@@ -169,18 +181,37 @@ static func is_fire_burst(b: Vector3, areas: FightAreas) -> bool:
 	return false
 
 
-## The flamethrower stream: tongues along the jet, growing and fading with range.
+## The flamethrower stream: tongues along the jet, growing and fading with range. The cell is the
+## weapon's projectile_fx (flame_cone: r2_w4's ragged cone, n5-look; flame = the teardrops).
 static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) -> void:
+	var fx: StringName = art().projectile_fx(s.spec.id)
+	fx = &"flame" if fx == &"" else fx
 	var k: float = clampf(went / maxf(s.spec.range_m, 0.1), 0.0, 1.0)
 	var f: int = (tick / 3 + int(went * 4.0)) % 3
-	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * 0.18
+	var cone: bool = fx != &"flame"
+	var swing: float = CONE_LICK if cone else 0.18
+	var lick: float = dir.angle() + sin(float(tick) * 0.7 + went * 3.0) * swing
 	# long and thin at the nozzle, fanning out with distance (round puffs near it read as drops)
 	var grow: Vector2 = Vector2(1.15 + 0.6 * k, 0.32 + 1.5 * k)
+	if cone and int(went * 4.0) % 2 == 1:
+		grow.y = -grow.y  # every other cone slice mirrored: their jags never line up as planks
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
 	if went > gap + CLEAR_M:
-		_cell_v(ci, &"flame", f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), grow * 0.85, 1.0)
-	_cell_v(ci, &"flame", f, s.pos, lick, grow, 1.0 - 0.35 * k)
+		var back: Vector2 = Vector2(_jet_x(fx, went - gap, grow.x * 0.85), grow.y * 0.85)
+		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), back, 1.0)
+	grow.x = _jet_x(fx, went, grow.x)
+	_cell_v(ci, fx, f, s.pos, lick, grow, 1.0 - 0.35 * k)
+	WeaponFxEmber.draw(ci, s, dir, went, tick)
+
+
+## The long cone cells' x scale, capped so the tail `went` m out never reaches back over the gun
+## (the flame teardrops keep theirs: the before).
+static func _jet_x(fx: StringName, went: float, x: float) -> float:
+	if fx == &"flame":
+		return x
+	var tail_m: float = art().fx_anchor(StringName("%s_0" % fx)).x * cell_scale() / Ink.PX_PER_M
+	return minf(x, maxf(went, 0.2) / maxf(tail_m, 0.01))
 
 
 static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick: int) -> void:
@@ -247,7 +278,11 @@ static func _cell_v(
 	if frames.is_empty():
 		return
 	var key: StringName = StringName("%s_%d" % [id, frame]) if frames.size() > 1 else id
-	ci.draw_set_transform(Ink.px(at), angle, scale * cell_scale())
 	var tex: Texture2D = frames[frame % frames.size()]
+	if colour != null:
+		var xf: Transform2D = Transform2D(angle, scale * cell_scale(), 0.0, Ink.px(at))
+		colour.cell(tex, xf, art().fx_anchor(key), a)
+		return
+	ci.draw_set_transform(Ink.px(at), angle, scale * cell_scale())
 	ci.draw_texture(tex, -art().fx_anchor(key), Color(1, 1, 1, a))
 	ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

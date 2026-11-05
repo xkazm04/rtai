@@ -63,15 +63,23 @@ func test_the_overlay_node_sits_on_its_band_and_hides_at_zero() -> void:
 	assert_eq(o.amount, 1.0)
 
 
-func test_the_shipped_row_points_at_the_d5_close_files() -> void:
+func test_the_shipped_rows_point_at_the_d5_close_files() -> void:
+	# n5-look: two rows on the same shader, d5_riso (auto, d5) and d5_world (today, d5_today)
 	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(LookProfiles.TABLE))
 	var rows: Array = d["overlays"]
-	assert_eq(rows.size(), 1)
-	var row: Dictionary = rows[0]
-	var shader: String = row["shader"]
-	var base: String = row["base"]
-	assert_eq(shader, "res://assets/shaders/look_d5.gdshader")
-	assert_eq(base, "d4")
+	assert_eq(rows.size(), 2)
+	var claimed: Array[String] = []
+	for row: Dictionary in rows:
+		var shader: String = row["shader"]
+		var base: String = row["base"]
+		assert_eq(shader, "res://assets/shaders/look_d5.gdshader")
+		assert_eq(base, "d4")
+		var looks: Array = row["zoom_looks"] + row["full_looks"]
+		for id: String in looks:
+			assert_false(claimed.has(id), "look %s is claimed by one overlay only" % id)
+			claimed.append(id)
+	assert_has(claimed, "auto")
+	assert_has(claimed, "today")
 
 
 func test_the_overlay_gets_the_palette_print_inks() -> void:

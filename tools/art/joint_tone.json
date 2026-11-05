@@ -1,0 +1,40 @@
+{
+  "files": [
+    "curb12_corner_tone",
+    "curb12_straight_tone",
+    "curb12_straight_tone_b",
+    "curb12_straight_tone_c",
+    "curb_corner_tone",
+    "curb_straight_tone",
+    "curb_straight_tone_b",
+    "curb_straight_tone_c",
+    "sidewalk_tone"
+  ],
+  "map": [
+    {
+      "from": [
+        64,
+        60,
+        58
+      ],
+      "to": [
+        150,
+        136,
+        120
+      ]
+    },
+    {
+      "from": [
+        128,
+        121,
+        117
+      ],
+      "to": [
+        150,
+        136,
+        120
+      ]
+    }
+  ],
+  "suffix": "_jt"
+}
