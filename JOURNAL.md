@@ -852,3 +852,20 @@ numbers; f448dbce car_goal on the floor, ad428713 gang helmets). No REQUEST to s
 - frames.json 15: the it8 target still and spine A/B in, the it7 phase clips replace the it3 ones
   (it3 clips, the it3 keys still and the it4 target stills deleted: superseded, the it4 A/B is
   inside the it8 still).
+- 00:47 GATES on 41075551 (rack3, horn, spine): scenarios **52 ran / 0 failed**, 0 SCRIPT ERROR
+  (`evidence/servo/scenarios-it8.log`, beside a film: CONTENDED, the nav flake did not trip).
+- 00:47 FILM the full fight at 32 px/m on 41075551 (human bot, seed 2, boss cam): Servo down at
+  tick 8264 (137.7 s), took 0 (6 rotor dashes + 1 hot dash landed on the bot... `landed` counts
+  attacks; damage_taken 0.0 in the arena block: to check), 57 drones launched, 31 shot, 14 crates
+  smashed. **Looked at** 15 keys (1 per 10 s): FOUND Servo half off the bottom of the screen at
+  ticks 3000 and 6000 (pushed onto the conveyor at the floor's bottom edge; the floor clamp holds
+  the screen on the floor and cuts him).
+- 00:51 MILESTONE 85401d4c **BossCam.keep_in** (framework, generic, view only): after the floor
+  clamp the view shifts the least so the boss +- 3 m stays on screen below the bar. Unit +1
+  (**1183/0**, `unit-it8c.log`). DECISION in docs/decisions.md. Re-filming the full fight.
+
+### FYI to king (00:52): framework change on n7-servo since your ad428713 (merged as 97492d77)
+- `BossCam.keep_in(focus, half_m, p, margin_m, top_m)` + `BOSS_MARGIN_M` 3.0: `_process` now
+  clamps to the floor, then keeps the boss's centre +- 3 m on screen below the bar. King on the
+  plaza's edges is held on screen too; `BOSS_MARGIN_M` 0 = your clamp alone. Unit test_boss_cam
+  `test_keep_in_holds_the_boss_on_screen`.
