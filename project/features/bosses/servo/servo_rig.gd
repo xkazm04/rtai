@@ -157,6 +157,9 @@ func _strut(n: StringName, a: Vector2, b: Vector2, tint: Color) -> void:
 
 
 func _visor(at: Vector2, rot: float) -> void:
+	if _down() >= 0:  # the defeat: the visor stutters and dies (ServoFall.visor)
+		_fall.visor(self, at, rot, _down())
+		return
 	if not _stage(&"windup", false):
 		return
 	var w: float = 6.0 if fight.locked else 3.0

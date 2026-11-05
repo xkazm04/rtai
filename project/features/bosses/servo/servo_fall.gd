@@ -12,6 +12,8 @@ const CRASH_TICKS: int = 30
 const SPARK_TICKS: int = 24
 const GREY: Color = Color(0.6, 0.6, 0.63)
 const WIND: Vector2 = Vector2(0.55, -0.85)
+## The visor's dying stutter after the flash: cream (no danger now), out for good by VISOR_TICKS.
+const VISOR_TICKS: int = 80
 
 var px: float = 32.0
 var drone_tex: Texture2D = load(ServoRig.ART % "drone") as Texture2D
@@ -107,3 +109,18 @@ func _wreck(c: CanvasItem, at: Vector2, h: float, rot: float, down: bool) -> voi
 	c.draw_set_transform(at * px, rot, Vector2.ONE * k * px / ServoRig.ART_PPM)
 	c.draw_texture(drone_tex, -drone_tex.get_size() * 0.5, GREY if down else Color.WHITE)
 	c.draw_set_transform(Vector2.ZERO)
+
+
+## The visor after the defeat: a cream bar that stutters on and off (a fixed beat, slower and
+## dimmer as it dies) and is dark by VISOR_TICKS. Never vermilion: the danger is over.
+func visor(c: CanvasItem, at: Vector2, rot: float, dt: int) -> void:
+	if dt < FLASH_TICKS or dt >= VISOR_TICKS:
+		return
+	var u: float = float(dt - FLASH_TICKS) / (VISOR_TICKS - FLASH_TICKS)
+	var beat: int = 3 + int(u * 9.0)  # the flicker slows as it dies
+	if floori(float(dt) / beat) % 2 == 1:
+		return
+	var dir: Vector2 = Vector2.from_angle(rot + PI / 2)
+	var mid: Vector2 = (at + dir * 0.32) * px
+	var half: Vector2 = dir.orthogonal() * 0.25 * px * (1.0 - 0.5 * u)
+	c.draw_line(mid - half, mid + half, Color(_pal.color(&"paper"), 1.0 - 0.7 * u), 4.0)
