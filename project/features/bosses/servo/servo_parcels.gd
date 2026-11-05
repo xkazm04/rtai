@@ -24,10 +24,14 @@ class Blast:
 	var pos: Vector2 = Vector2.ZERO
 	var radius_m: float = 0.0
 	var damage: float = 0.0
+	## Render only (booms): ticks of its fireball left.
+	var life_left: int = 0
 
 
 ## How long a smashed crate's cardboard burst shows.
 const DEBRIS_TICKS: int = 30
+## How long a bomb's or a dive's fireball shows (0.45 s, as Dent's car bomb).
+const BOOM_TICKS: int = 27
 
 var falling: Array[Parcel] = []
 var crates: Array[Parcel] = []
@@ -36,6 +40,9 @@ var smashed_total: int = 0
 ## Where crates were smashed, life_left counting down DEBRIS_TICKS (render only: the view's
 ## cardboard burst; not in write_state).
 var debris: Array[Parcel] = []
+## The blasts of the last BOOM_TICKS, life_left counting down (render only: the view's fireball;
+## not in write_state). A blast lives one step in `blasts`; this keeps it on screen.
+var booms: Array[Blast] = []
 ## The bombs that went off on the last step (cleared at the start of each step).
 var blasts: Array[Blast] = []
 var landed_total: int = 0
@@ -56,6 +63,12 @@ func drop(pos: Vector2, kind: StringName, fall_ticks: int) -> void:
 
 
 func step() -> void:
+	for b: Blast in blasts:
+		b.life_left = BOOM_TICKS
+		booms.append(b)
+	booms = booms.filter(func(b: Blast) -> bool: return b.life_left > 1)
+	for b: Blast in booms:
+		b.life_left -= 1
 	blasts.clear()
 	var still: Array[Parcel] = []
 	for p: Parcel in falling:

@@ -30,8 +30,8 @@ func parcels(c: CanvasItem, s: ServoSwarm) -> void:
 		var k: float = 1.0 - float(p.fall_left) / p.fall_total
 		c.draw_circle(p.pos * px, s.tuning.ring_m * px * k, Color(verm, 0.28))
 		_dashed_ring(c, p.pos, s.tuning.ring_m, verm, 3.0)
-	for b: ServoParcels.Blast in s.parcels.blasts:
-		c.draw_circle(b.pos * px, b.radius_m * px, Color(pal.color(&"ink"), 0.55))
+	for b: ServoParcels.Blast in s.parcels.booms:
+		_boom(c, b.pos * px, b.radius_m * px, 1.0 - float(b.life_left) / ServoParcels.BOOM_TICKS)
 	for d: ServoParcels.Parcel in s.parcels.debris:
 		_debris(c, d.pos, 1.0 - float(d.life_left) / ServoParcels.DEBRIS_TICKS, s.tuning.crate_m)
 	for cr: ServoParcels.Parcel in s.parcels.crates:
@@ -63,6 +63,27 @@ func _debris(c: CanvasItem, at: Vector2, k: float, crate_m: float) -> void:
 		c.draw_rect(Rect2(-shard * 0.5, shard), Color(pal.color(&"paper"), fade))
 		c.draw_rect(Rect2(-shard * 0.5, shard), Color(pal.color(&"ink"), fade), false, 1.5)
 	c.draw_set_transform(Vector2.ZERO)
+
+
+## A bomb's or a dive's blast, k 0..1: an ink scorch, a shock ring out to the blast radius and
+## Dent's car-bomb fireball (amber, cream-hot core, ink rim; no red: red is blood only).
+func _boom(c: CanvasItem, at: Vector2, r: float, k: float) -> void:
+	var fade: float = 1.0 - k
+	var grow: float = 1.0 - pow(1.0 - k, 3.0)
+	c.draw_circle(at, r * 0.6, Color(pal.color(&"ink"), 0.35 * fade))
+	c.draw_arc(
+		at, r * grow, 0.0, TAU, 40, Color(DentView.INK, fade), lerpf(8.0, 2.0, k) * _line_k()
+	)
+	var pts: PackedVector2Array = PackedVector2Array()
+	for i: int in 18:
+		var reach: float = r * 0.7 * grow * (1.0 if i % 2 == 0 else 0.62)
+		@warning_ignore("return_value_discarded")
+		pts.push_back(at + Vector2.from_angle(TAU * i / 18.0 + 0.2 * sin(i * 2.3)) * reach)
+	c.draw_colored_polygon(pts, Color(DentView.FIRE, 0.9 * fade))
+	@warning_ignore("return_value_discarded")
+	pts.append(pts[0])
+	c.draw_polyline(pts, Color(DentView.INK, fade), 2.5 * _line_k())
+	c.draw_circle(at, r * 0.3 * grow * (1.0 - 0.5 * k), Color(DentView.HOT, fade))
 
 
 ## A kamikaze's dive line: thin while its strike point tracks Rivet, thick with the blast ring
