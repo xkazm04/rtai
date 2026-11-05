@@ -1217,3 +1217,26 @@ Session end 05:50: tree clean after this commit, no Godot process of mine runnin
   `M/frames/riot-crown-plain-ab-32ppm.png`. DECISION build (revert = D4 head_helmet.png from 2329c483).
 - MILESTONE f4381f32: the riot crown plain bright at 32/48 px/m. Decisions line. Filming the director reel to the
   riot_cop chapter (tick 5040) at 32 px/m for the live path.
+- 06:20 EVIDENCE GATE on f4381f32: ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact, look goldens 11/11
+  (worst 1.33), block 5/5 (worst 1.53), no re-bless.
+- 06:15-06:27 live path for the riot crown: director reel filmed to tick 5460 at 32 px/m on f4381f32 and with the
+  2329c483 helmet checked out (re-import, film, `git checkout HEAD --`, re-import; tree clean), 0 SCRIPT ERROR both.
+  HONEST READ: in the riot_cop chapter before | after differ by only 4 px (>40) around the cop: the head printed as a
+  bright dot in both there (cause not isolated; the variant is picked per actor in `rig_variant.gd`, 6 = riot with
+  `head_helmet`). The gain is in the standing poses (the lossless lineup). Combat unchanged: the cop blocks, falls and
+  gibs as before. `M/cast-riot-director-ab-32.mp4` (82-91.5 s), still `M/frames/riot-crown-director-32ppm.png`;
+  the single before clip deleted.
+- 06:29 REPORT section 2 (D and the riot crown bullets), Call 4 (revert names both commits), gates line. frames.json
+  15: Call 4 lineup, the r2_c6 composite, Call 4 city, the riot lineup on top; every file exists.
+
+NEXT (iteration 20), replaces the 05:27 list as amended:
+1. Calls 1-9 stand; Call 4 is now D built (2329c483 + f4381f32; A = the 8 PNGs from 6812dcdd). Call 9 C built.
+   REPORT current to f4381f32. REPORT rewrite at 08:40 (say Call 4 D in the summary).
+2. Weakest left vs the targets: the D cops are quieter on dark asphalt (one bright head dot). If the owner's frames show
+   them lost, the next trial is a lighter navy torso fill at 32 px/m only (the body must stay darker than the crown).
+   Also open: why the director reel's riot head printed bright before f4381f32 (4 px diff); check which variant/tier
+   that actor uses (`rig_variant.gd` index, LOD) before claiming the live gain.
+3. Before the 08:30 freeze: re-run `tools/evidence/run.mjs --no-bench` on the final head; never edit tracked files
+   while it runs (05:56 FRICTION).
+Session state 06:30: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i19
+  holds logs, lineup renders and the D part PNGs (no PNG sequences).

@@ -42,6 +42,11 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Lineup slab / road / 64 px/m beside r2_c6: `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png`; live city A | D:
   `M/cast-call4-city-ad-32.mp4`, `M/frames/cop-call4-city-ad-32ppm.png`. Director reel 16/16 down, react board at
   64 px/m (flinch, knockdown, corpses, burn, electro) reads, 0 script errors.
+- The riot helmet's crown is plain bright at 32/48 px/m (f4381f32): the D4 band across the ~5 px head printed two 1 px
+  slivers; it is now one bright dot like the patrol cap (r2_c6's plain helmets; the shield carries the riot read; D5
+  keeps the band at 56+ px/m): `M/frames/riot-crown-plain-ab-32ppm.png` (lossless lineup). In the live director reel's
+  riot_cop chapter before | after differ by 4 px (the head already printed as a bright dot there; cause not isolated):
+  `M/frames/riot-crown-director-32ppm.png`, `M/cast-riot-director-ab-32.mp4`; the cop blocks, falls and gibs as before.
 
 ### 3. Rivet as the hybrid (brief item 3), 516475c9 .. fa395f74
 - Rig: size_k 0.97, lanky legs (leg_k 1.15, gait_k 1.15), arms 0.85 long; `FORM_STOCKY` keeps the old base for A/B
@@ -163,6 +168,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
+### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on f4381f32 (the plain riot crown): ALL PASS: lint 13/13,
+unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53),
+no re-bless.
+
 ### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on 2329c483 (Call 4 D, the bright cop crowns): ALL PASS:
 lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.32), block 5/5
 (worst 1.52), no re-bless. Bench skipped (other Godot processes and Python jobs running: CONTENDED, unmeasured).
@@ -254,7 +263,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    read; on the cream slab (r2_c6's ground) it is the closer match, on dark asphalt the cops are quieter (one bright
    head dot instead of two bright pads): `M/frames/cop-call4-d-lineup-vs-r2c6-32ppm.png`, `M/cast-call4-city-ad-32.mp4`.
    Back to A = the 8 PNGs (`art/cop` and `art/d5/cop`: `head_cap`, `head_helmet`, `upperarm`, `upperarm_endon`)
-   from 6812dcdd, or `git revert 2329c483`.
+   from 6812dcdd, or `git revert f4381f32 2329c483`. The plain riot crown at 32 px/m (f4381f32) is part of D.
    A, built before it: the patrol cap and riot helmet crowns navy as in r2_c5 (e1f848a5 and the helmet commit after it), or
    d5-cast's cream "T1" crowns, a stronger head mark at 32 px/m (`M/frames/city-navy-ab-32ppm.png`, left vs right;
    `M/frames/riot-helmet-navy-ab.png`). Revert = `git revert e1f848a5` (limbs too) or
