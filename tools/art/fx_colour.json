@@ -71,6 +71,24 @@
     },
     {
       "files": [
+        "flame_"
+      ],
+      "id": "flame",
+      "note": "n5-look iteration 16 (r2_w4 top right: the flame is a yellow core under a ragged orange rim; ours printed one amber tone): applied after explosion, which it overrides for the flame cells; the body hot yellow and rim paints an orange band rim.px part px inside the ink (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the explosion family's amber flame.",
+      "rim": {
+        "colour": "#EE6A1C",
+        "px": 6
+      },
+      "tokens": {
+        "ink_2": "#C8561A",
+        "paper": "#FFF4C8",
+        "paper_2": "#FFD23A",
+        "vermilion": "#FFB21C",
+        "wash": "#F58A22"
+      }
+    },
+    {
+      "files": [
         "blast_0"
       ],
       "id": "blast_burst",
