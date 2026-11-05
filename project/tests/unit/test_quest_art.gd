@@ -4,7 +4,9 @@ extends GutTest
 
 const IDS: Array[StringName] = [
 	&"rivet",
+	&"rivet_lod",
 	&"rivet_peek",
+	&"rivet_peek_lod",
 	&"cop",
 	&"mertz",
 	&"juno",
@@ -27,7 +29,7 @@ func test_every_id_the_views_name_loads() -> void:
 
 func test_rivet_draws_at_the_base_form() -> void:
 	var art: ArtIds = QuestArt.shared()
-	for id: StringName in [&"rivet", &"rivet_peek", &"cop"]:
+	for id: StringName in [&"rivet", &"rivet_lod", &"rivet_peek", &"rivet_peek_lod", &"cop"]:
 		var px: Vector2 = Vector2(art.texture(id).get_size())
 		assert_almost_eq(art.size_m(id).x, px.x / 120.0, 0.01, "%s at true scale" % id)
 		assert_almost_eq(art.size_m(id).y, px.y / 120.0, 0.01, "%s at true scale" % id)
