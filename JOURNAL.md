@@ -642,3 +642,18 @@ holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
   GhostFormView body's z, then lift (or move the plate ahead of the body) with a measured A/B.
 Session state 05:14: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
 holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
+
+## Iteration 8 (05:13-06:13, BUILD)
+- 05:13 read JOURNAL, git log, the forms/cast JOURNALs: no new REQUEST to ghost-powers.
+- 05:15 MERGE n6-ghost-forms ac0f15e5 (folding-card HUD, StoryForms; carries n5-cast 550b000d CORE_TAN 1.0) as
+  64e9365d, `--no-ff --no-commit`; JOURNAL/REPORT and our it7 logs restored to ours; `--import` 0 SCRIPT ERROR.
+- 05:25 MEASURED NEXT 4's cause: the forms' GhostFormView draws at rigs.z + 60 (ghost_form_view.gd:78), so the lift to
+  actors+2 stayed under it; and the 1.8 m plate lies wholly inside the press body's footprint (top-down).
+- 05:35 MILESTONE Tonnage's telegraph reads again: TonnageView draws the stomp's reach (dashed teal ring at
+  stomp_radius_m, an ink wash filling from the plate outward over the wind-up) on its ground layer; dev
+  `--no-tele-ring` = before. Quest 1 A/B same ticks (236-286, real input, 4 kills both, 0 SCRIPT ERROR):
+  `M/frames/quest1-tonnage-reach-ab-32ppm.png` (before: no visible wind-up; after: the ring from tick 246, the wash
+  filling to 266, then the crack). Arena re-filmed `M/tonnage-arena-32ppm.mp4` (0 SCRIPT ERROR), keys
+  `M/frames/tonnage-reach-arena-keys-32ppm.png`: ring + wash, then the slam crushes the cruiser. DECISION in
+  decisions.md. Registry rule applied (motion-quality-gating): a telegraph must read at game zoom on the shipped path,
+  judged on stills at 32 px/m. Lint 13/13, unit 1007/0 (`E/unit-it8-powers.log`).
