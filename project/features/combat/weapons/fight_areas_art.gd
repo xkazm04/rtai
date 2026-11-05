@@ -38,12 +38,14 @@ static func draw(ci: CanvasItem, arena: CombatArena, tick: int) -> void:
 	var dead: Array[Vector3] = corpses(arena.hostiles, tick)
 	for i: int in a.patches.size():
 		_patch(ci, a.patches[i], a.patch_ticks[i], tick, dead)
+	var light: Dictionary[int, bool] = StunCrowd.light_of(arena)  # n7-melee: the crowd cap
 	for h: Fighter in arena.hostiles:
 		var e: FighterFx = a.effect(h)
 		if e != null and h.alive():
 			if e.burn_ticks > 0:
 				_burning(ci, burn_flames(h.pos, e.flee), tick + h.id * 3)
-			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id):
+			var n: int = StunCrowd.cap().w if light.has(h.id) else 2
+			if e.stun_ticks > 0 and not WeaponFxElectro.stun(ci, h.pos, tick + h.id, n):
 				_stun(ci, h.pos, tick + h.id)
 	for i: int in a.blasts.size():
 		if FightShardArt.own_pop and a.blasts[i].z < FightScorch.MIN_BLAST_M:  # the shard's pop

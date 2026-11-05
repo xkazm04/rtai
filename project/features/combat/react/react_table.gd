@@ -60,6 +60,21 @@ func snap(kind: StringName) -> float:
 	return _snap.get(kind, 0.0)
 
 
+## stun_crowd (n7-melee, StunCrowd): (full, arcs, spits, sparks): past the `full` newest stunned
+## bodies the rest draw lighter marks. full 0 (no cap) with no row or under --feel=off.
+static func stun_crowd(path: String = TABLE) -> Vector4i:
+	var t: DataTable = DataTable.open(path, SCHEMA)
+	if not t.raw.has("stun_crowd") or HitFeel.feel_flag() == "off":
+		return Vector4i.ZERO
+	var c: Dictionary = t.object(t.raw, "stun_crowd")
+	return Vector4i(
+		int(t.num(c, "full")),
+		int(t.num(c, "arcs")),
+		int(t.num(c, "spits")),
+		int(t.num(c, "sparks"))
+	)
+
+
 static func snap_on() -> bool:
 	return not OS.get_cmdline_user_args().has("--react-snap=off")
 

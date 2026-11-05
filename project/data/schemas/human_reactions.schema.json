@@ -372,6 +372,43 @@
     "schema": {
       "const": "gtai.human_reactions/1"
     },
+    "stun_crowd": {
+      "additionalProperties": false,
+      "properties": {
+        "arcs": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "full": {
+          "maximum": 64,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "sparks": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "spits": {
+          "maximum": 3,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "arcs",
+        "doc",
+        "full",
+        "sparks",
+        "spits"
+      ],
+      "type": "object"
+    },
     "weapon_wound": {
       "additionalProperties": {
         "enum": [

@@ -124,6 +124,13 @@
     }
   ],
   "schema": "gtai.human_reactions/1",
+  "stun_crowd": {
+    "arcs": 0,
+    "doc": "n7-melee (Ohm's mass arc stuns up to 6 bodies on one tick): only the `full` newest stunned bodies draw the full marks (ShockJolt's ARCS + SPITS crawl, WeaponFxElectro's 2 head sparks); the rest draw `arcs` crawling arcs, `spits` spits and `sparks` head sparks (StunCrowd), so a crowd under a mass arc reads as stunned without a cream blob. full 0 or --feel=off = every body draws the full crawl (the before). View only.",
+    "full": 2,
+    "sparks": 1,
+    "spits": 1
+  },
   "weapon_wound": {
     "plasma_rifle": "stagger"
   }
