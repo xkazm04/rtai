@@ -527,3 +527,84 @@ hood cannon to `fight.aim`; the throne and the step-down follow the car's headin
 `evidence/king/shots/court_car_holds_cannon_swivels_32ppm.png` (court, t900 | t1500: same heading,
 cannon turned to the cone). test_king* 5/5, test_boss* 25/25; scenarios 52 ran / 0 failed at
 fbe2d97f (`scenarios-it3b.log`). NEXT item 0 is done; NEXT starts at item 1.
+
+## Iteration 4 (21:26-22:26), BUILD
+
+Read: JOURNAL NEXT, git log, servo's JOURNAL (REQUEST 5 was still open for me), the registry
+subject `encounter-balance-simulation` (applied: state n and the spread next to every number; the
+reference for "damage taken" is Rivet's hp 100 (combat.json); attribution: an attack holding more than
+~0.3 of the damage taken is a finding; floors (one-shot) apart from bands (survival rate)).
+
+### MILESTONE 21:31: REQUEST 5 taken, the wreck is cover (5c314e55, e6457815)
+- REQUEST 5 from n7-servo taken verbatim: `BossMoves.solids() -> Array[Rect2]`,
+  `BossHook._sync_solids(stage.walls)` (one conflict with my `_stun_seen` line, resolved by keeping both).
+  Servo's ask also done: BossBot walks round sideways when `stage.walls.blocks(me, boss)`.
+- `KingMoves.solids()`: from phase 3 on, the stalled wreck is three 2.3 m boxes along the car
+  (`WRECK_SOLID` false = paint only, an owner call). It pushes bodies out and stops shots both ways.
+  Unit test_king_beats +1 (no boxes in the court; a shot across the wreck stops; King's side is open);
+  unit 1141/0. Phase 3 with the wreck (n=1): dodger King down at tick 994, 0 hits taken; stander
+  charge/coin/slam all landed (`evidence/king/p3-{dodge,stand}-it4.json`). The fight still plays.
+
+### MILESTONE 21:40: the human-like bot + the seed sweep (6f26aae5)
+- `--bot-human` (BossBotRead): reads 70 % of tells (a roll per windup on its own RNG stream
+  `boss_bot`, so the fight replays), 18-32 ticks late; aim sways 9 degrees on a slow sine. Unit
+  test_boss_bot_read 3/3 (about 7 in 10 read over 400; same seed = same reads; never before 18 ticks).
+- `evidence/king/boss_numbers.mjs`: seeds x {dodge, human, stand}, full fights, headless, 3 at once
+  -> `evidence/king/numbers/*.json|log`, `evidence/king/boss-numbers.json`.
+- **Numbers, n=5 per bot (seeds 1-5), full fight, CONTENDED, 0 script errors in all 15 runs:**
+
+  | bot | King down (mean, range) | taken from King's attacks (of 100 hp) | deaths | gang landed |
+  |---|---|---|---|---|
+  | dodging | 75.9 s (73.7-79.9) | 4.8 | 0/5 | 5/79 |
+  | human | 81.2 s (76.5-87.0) | 84 (56-110) | 0/5 | 22/92 |
+  | standing | 86.1 s (85.7-86.6) | 222 | 5 (one per fight) | 55/90 |
+
+  Hit rates per attack, human (standing): ram 4/10 = 0.40 (10/10), coin fan 14/44 = 0.32 (35/37),
+  charge 2/8 = 0.25 (3/8), press slam 2/12 = 0.17 (8/8); decree has no hit (a buff).
+  Damage share for the human: coin fan 0.47, ram 0.29, slam 0.13, charge 0.11.
+- Reading, by the registry's rules:
+  - **Floor:** no one-shot. The biggest hit is the ram's 30 of 100.
+  - **Band:** the human survives 5/5, so the fight is **easy**. That may suit Act 1's first boss,
+    but it is the owner's call.
+  - **Attribution finding:** the coin fan does 0.47 of the human's damage, above the ~0.3 line.
+    This is a coin-fan fight in a procession's costume. Tuning lever: fewer coin fans in phase 1, or
+    a wider gap between pellets.
+  - **Skill barely moves the time to kill** (76 / 81 / 86 s). The fight's length comes from the
+    phase floors and the transitions, not from how well the player dodges. That is right for a
+    cinematic Act 1, but the punish windows add little.
+  - The gang's damage is NOT in "taken" (`dealt` counts the boss's own attacks). Gang hits 8 each:
+    the human takes about 35 more per fight from the gang.
+  Not tuned tonight: the numbers come first, the tuning is NEXT, with a re-run of the same 15.
+
+### MILESTONE 21:50: ghosts on the fight; Ohm's daze seen live (a88ca9c4, 4f07bb87)
+- `--bot=boss --ghost=<tonnage|dent|kerf|ohm>` (BossBotGhost): G picks, Q transforms (the ghost
+  beats' timing), melee every 30 ticks with the boss in reach. `--ghost-tells` saves the power for
+  the boss's tells. Unit test_boss_bot_ghost 2/2. Boss telemetry now counts `stuns` / `dazes`.
+- Ohm, phase 3, on cooldown: 5 stuns, 0 dazes. Every bolt fell in an active window or a recovery,
+  so the rule held: a daze never cancels an active attack. King went down at tick 421 (7 s). With
+  `--ghost-tells`: **2 stuns, 2 dazes** (36 ticks each), King down at tick 839.
+- Full fight, human + Ohm, seed 1 (n=1): King down at 67.0 s against 83.9 s without Ohm (-20 %); took 86.
+  **Finding: Ohm's bolt does bolt_damage 2 x machine_k 3 = 6 per bolt every 0.5 s to a boss.**
+  Five bolts empty phase 3. Owner call (below): should bosses resist the ghosts' machine damage?
+  It would be a generic boss field (`ghost_k`), not built tonight.
+- Filmed `gtai-masters/n7/king/king_ohm_daze_tells_48ppm_it4.mp4` (15 s, 48 px/m, boss cam, 0
+  script errors; the same two dazes as headless). **Looked at** the 6 fps strip
+  (`king_ohm_daze_frames_48ppm_it4.png`): the teal bolt from Ohm to King, white stun sparks on his
+  head, his raised arm drops: the tell is cancelled. It reads.
+
+### MILESTONE 21:47: the gang rides the car's sides (42e56a38)
+- Procession: two gang push from the back corners and stride with the car; two ride the running
+  boards mid-car, standing still and facing out to the street (the target's gang hanging off the sides).
+  **Looked at** `evidence/king/shots/riders_p1_{32,64}ppm_t360.png`: at 32 px/m the four read as a
+  procession, with the riders sticking out of the car's outline on both sides.
+  Still open from the target: plum drapes along the car's sides. At 64 px/m the noir print inks the
+  car's interior black.
+- frames.json: 15 entries (it4's Ohm clip, strip and riders still on top; the it2 fight clip was
+  deleted, superseded by it3's).
+
+Calls for the owner (for REPORT; adds to the earlier ones):
+- A. Bosses take the ghosts' full machine damage (default, built) vs a boss `ghost_k` (e.g. 0.5).
+  See it with `RTAI.exe -- --boss=king --bot=boss --bot-human --ghost=ohm`: Ohm takes 20 % off the fight.
+- B. The wreck is cover in phase 3 (default, `KingMoves.WRECK_SOLID` true) vs paint only (false).
+- C. Difficulty band: easy (as built: a human-like bot survives 5/5, taking 84 of 100 hp) vs fair (tune
+  the coin fan down and the slam's punish up until about 7 in 10 survive).
