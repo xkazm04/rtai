@@ -600,3 +600,58 @@ dodge is judged on the i-frame window meeting the hit, not the tell).
   for Dent in King's boulevard if you want Dent's cars (your NEXT 2).
 - `Fighter.machine` + `KillEvent.human` (combat): a non-boss robot gets no human kill.
 - `boss_numbers.mjs`: add `--fixed-fps 60` before `--quit-after`, or a contended run is cut short.
+- 22:40 GATES on ae0fefe2 (the bot's charge read, the van, Fighter.machine): scenarios 52 ran /
+  0 failed, 0 SCRIPT ERROR (`evidence/servo/scenarios-it5.log`); director reel `--bot=reel
+  --reel=director --loadout=pistol --rigs`: 19/19 chapters fully down, 0 SCRIPT ERROR
+  (`director-reel-it5.log`, exit 124 = the 600 s cap after the last chapter). Combat did not
+  regress with `KillEvent.human` changed.
+- 22:42 MILESTONE (6fd… the Dent bot commit after 692e6ba5) the Dent bot puts the cursor on Servo
+  (`pack_aim` reach), so the van parks on him and blows there: seed 1 strikes 4, blast at tick
+  193 on Servo (was 337 off the yard). **Looked at** (48 px/m keys): dash lane, tether, the van
+  into the rack, the amber fireball on Servo, the charred wreck beside him; no red.
+  `M/servo_ghost_dent_van_48ppm_it5.mp4` re-cut.
+- 22:44 FOUND: the phase-3 kamikaze never lands: `dives` counts launches and every bot shoots the
+  two dive drones before a lock. Also FOUND + FIXED: my runner's `arg()` split on every '=', so
+  `--extra=--phase=3` became `--phase` (phase 1 ran); now it slices after the first '='.
+- 22:47 MILESTONE e564346b kamikaze drones are armoured (`servo.json kamikaze.hp` 3; 1 = before).
+  MEASURED `--phase=3`, 60 s, seeds 1-3 (`numbers-it5-p3-hp1/`, `numbers-it5-p3-hp3/`):
+
+  | dive hp | dodge dives landed | human | stand | human phase-3 kill |
+  |---|---|---|---|---|
+  | 1 | not run | 0/20 | 1/22 | 31-34 s |
+  | 3 | 4/30 | 1/20 | 12/22 | 33-37 s |
+
+  Full fights at hp 3 (`numbers-it5b/`, seeds 1-3, 0 SCRIPT ERROR): dodge down 113-122 s (118),
+  took 36, dives 2/14; human down 116-131 s (126), took 186, dives 2/14; stand 1/3 downed, 14
+  deaths, dives 3/8. The attack now bites a stander and stays dodgeable. DECISION: hp 3 is the
+  default; `kamikaze.hp` 1 is the alternative (call 7). Unit 1168/0 (`unit-it5c.log`, +1 test:
+  a dive drone's body has the dive hp).
+- 22:52 **Looked at** the kamikaze at 48 px/m (p3, seed 1, the standing bot): the dive line
+  tracks and locks (thick line + dashed ring on Rivet), the drone dives... and the blast was an
+  ink disc for one frame (blasts live one step). FIXED d8e8213e: `ServoParcels.booms` keeps each
+  blast 0.45 s, drawn as Dent's car-bomb fireball (amber, cream core, ink rim and shock ring) over
+  an ink scorch; render only. Parcel bombs get it too. **Looked at** again: lock, dive, fireball
+  read at 48 px/m. `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4` (replaces the it4 clip where
+  the bot shot the drones), `M/frames/servo_kamikaze_dive_boom_keys_48ppm_it5.png`. frames.json 15
+  (the it4 kamikaze clip, the Kerf clip that did not show a cut, the it3 transition and defeat
+  stills dropped; the phase-3 defeat clip stays).
+
+Calls for the owner (for REPORT; 1-6 stand):
+7. Kamikaze armour: dive drones take 3 rounds (default; the attack lands on a stander 55 %, on the
+   human bot 5 %) vs 1 (shot before every dive: the attack never lands): `servo.json kamikaze.hp`.
+   See `M/servo_attack_kamikaze_dive_lands_48ppm_it5.mp4` or `RTAI.exe -- --boss=servo --phase=3`.
+8. Dent's van: parked from the start (default) vs none (`bosses.json arenas.depot.parked: []`).
+   See `M/servo_ghost_dent_van_48ppm_it5.mp4`.
+
+NEXT (iteration 6, in order):
+1. Re-run scenarios + the director reel on the head (everything since ae0fefe2 is Servo-only,
+   live only under --boss, but check).
+2. The human bot's rotor dash rate (13/23, 57 %): judge the 0.9 s windup against the
+   human's 18-32 tick lateness; try windup 1.0 s or a wider lane tell; 5 seeds x 3 bots.
+3. One full bot fight at 32 px/m on the current tree (the it3 one predates the rack, the smash,
+   the van, the armour and the fireball), 60-120 s, with the boss cam; the target comparison
+   re-shot at 32 px/m.
+4. Kerf's blink cutting a line of drones on film (aim the blink along a carpet line).
+5. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, the horn and the
+   bay doors rolling up at rush hour, the defeat's visor flicker.
+6. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-8).
