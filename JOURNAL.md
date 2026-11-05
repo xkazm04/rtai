@@ -183,3 +183,92 @@ REQUEST 2 merge, is done).
    swarm overlay. Proposal: an optional `view` script path in the boss row (like `script`), a Node2D
    the hook adds to the arena and calls `pose(tick)` on each sim tick. Servo-only drawing stays in
    his folder.
+
+## Iteration 2 (19:45-20:45), BUILD
+(FRICTION 20:31: these entries were lost once, when I ran `git checkout --ours JOURNAL.md` after a
+merge that had refused to start because JOURNAL had uncommitted edits; re-written from the session.
+Rule from now on: commit JOURNAL before any merge.)
+- 19:47 MERGE n7-king 48c80e83 into n7-servo as 7fe50de9 (king committed test_boss_adds.gd.uid:
+  REQUEST 3.1 answered; fight clamped to the floor; claw cops off the boss floor). JOURNAL: ours.
+  REQUEST 3.2 needs nothing from king: `BossView.make` already loads
+  `features/bosses/<id>/<id>_body_view.gd` (my miss).
+- 19:52 MILESTONE 119e98db: **Servo in the live arena path** (`--boss=servo`, the dev arena with
+  `--rigs`). `ServoBodyView` lays three layers on the actors' layer: ground (drop rings, blasts,
+  CS crates, Servo's own tells), ServoRig, air (drones over shadows). The swarm drawing moved from
+  dev/ to `features/bosses/servo/servo_draw.gd` (dev is excluded from exports). Looked at two
+  32 px/m stills with the real Rivet rig and the HUD bar ("SERVO", 1/3): Servo reads as the biggest
+  thing on the floor; the dashed rings read; drones too small (22 px): drawn 1.4x.
+  `servo.json drone.ring_from_launch` (owner call 1) is now one data value (default true).
+- 20:05 drones as arena bodies: `ServoDroneBodies` (one brain-owned Fighter per live drone on its
+  shadow; a body knocked to 0 hp calls `ServoSwarm.kill`, the carried parcel falls where it is).
+  Every weapon, the claw and the four ghosts hit drones through the arena's own code.
+- 20:02 FRICTION: the dev arena ignored `--seed` (always MASTER_SEED): `arena_game.gd` now reads it.
+- 20:03 MEASURED, a unit error FOUND: Servo's hp 4200 was in weapons.json's scale; the arena's
+  rounds do 1 damage (combat.json: humans 1 hp, King 120; Rivet 100 hp, repairs 10/s after 3 s).
+  Set hp 220; drone hp 1 (100 first: the bot shot 0 drones in 240 s).
+- Registry rules applied (`combat-pacing-and-dramatic-arc`, `encounter-balance-simulation`): a
+  distribution over seeds, never one run; unmeasured is not zero (late hits were credited to the
+  running attack, so Servo counts his own: `boss_fight.moves`); a boss wants a long build and a
+  late climax (~2-3 min; Act 2 longer than King's 92 s).
+- 567ef26b generic hooks (REQUEST 4 below); 69c16b07 drones as bodies + kamikaze dive (ServoDive,
+  unit `test_servo_dive` 3/3) + Servo's hazards for the bot + telemetry + hp 220 + bay-hop lock
+  0.75 s. DECISIONS servo-drone-hp / servo-kamikaze / servo-bay-hop-lock: `docs/decisions.md`.
+- 20:10 MEASURED (tree 69c16b07, `--bot=boss --boss=servo --rigs`, dev arena pit, 240 s cap):
+
+  | bot | seed | Servo down at | Rivet took | deaths | drones up / shot | parcel hits | dives / hits |
+  |---|---|---|---|---|---|---|---|
+  | dodge | 1 | 136.9 s | 60 | 0 | 65 / 57 | 0 | 6 / 0 |
+  | dodge | 2 | 109.8 s | 110 | 0 | 45 / 33 | 0 | 4 / 0 |
+  | dodge | 3 | 140.6 s | 180 | 0 | 51 / 35 | 0 | 4 / 0 |
+  | stand | 1 | alive 25 % | 970 | 1 | 91 / 86 | 17 | 24 / 2 |
+  | stand | 2 | alive 30 % | 1574 | 7 | 145 / 118 | 48 | 4 / 1 |
+  | stand | 3 | alive 78 % | 1372 | 6 | 78 / 76 | 31 | 0 / 0 |
+
+  Dodging bot: rotor dash 8 of 26 landed (31 %), hot dash 3 of 9, bay hop 1 of 6. Standing: dash
+  42 of 45, hot dash 13 of 14, bay hop 5 of 5. The fight separates a reader from a stander (0 vs
+  1-7 deaths). Weak: the bot's perfect aim downs 70-88 % of drones, so waves rarely land; a human
+  will not aim like that. NOT measured yet: a bot with human aim error; the depot arena itself.
+- 20:13 MILESTONE 6eceae5f: the CS depot dressing (first pass, render only): four roller-door bays
+  on the north edge, the conveyor on the south edge (belt and CS cartons move from phase 2).
+- 20:16 FILM `M/servo_fight_bot_dodge_32ppm_it2.mp4` (113 s, 32 px/m, seed 2, tree 69c16b07) +
+  contact sheet + stills; `M/frames.json` 15 entries. **Looked at it**: all three phases and the
+  defeat play in the live arena; a carpet leaves a readable lane of CS crates; Servo vents from both
+  pads in the punish window; phase 3 has one wing; the bot steps out of the hot dash. FOUND: drop
+  rings too thin at 32 px/m -> FIXED 49ec99f2 (widths x px/32), looked at
+  `M/servo_ring_weight_conveyor_32ppm_it2.png`. NOT fixed: king's dash-lane tell runs past the wall
+  where the body is clamped; the defeat is only a grey body; crates do not block Rivet; drones small.
+- 20:30 GATES on 49ec99f2: lint 13/13; unit exit 0 (`evidence/servo/unit-it2.log`); scenarios 52
+  ran / 0 failed (`scenarios-it2.log`); director reel `--bot=reel --reel=director --loadout=pistol`
+  headless: 19 chapters, every one fully down, 0 SCRIPT ERROR (`director-reel-it2.log`; the reel
+  idles after the last chapter and my gate script's 10-min limit stopped it there).
+- 20:33 MERGE n7-king 745ce3cf as c37ea648 (KingRigs, idle_step detour, boulevard, body classes).
+  Conflict: boss_moves.gd (kept both), JOURNAL (ours). ServoMoves.write_state now calls super.
+  test_boss_* 18/18, test_servo_* 14/14, lint 13/13.
+
+### REQUEST 4 to n7-king (20:10): three generic BossMoves hooks I added on my branch (567ef26b)
+Please take them verbatim at your next merge of n7-servo, or tell me your shape:
+1. `bodies() -> Array[Fighter]` (default `[]`): extra hittable bodies the script owns;
+   `BossHook._sync_bodies()` (right after `fight.step`) keeps exactly these in `_arena.hostiles`.
+2. `threat_away(at, r) -> Vector2` (default zero): the way out of the script's own late hazards
+   (only what a player can see by now); `BossBot.sample` checks it after the adds' dodge, and
+   `BossBot._target` shoots a `bodies()` body inside ADD_M before the boss.
+3. `telemetry() -> Dictionary` (default `{}`), under `boss_fight.moves` in BossHook.telemetry.
+Also seen in the film: BossTellView draws a CHARGE lane its full range_m past the floor's edge,
+where `_keep_in` stops the body; clip the lane to `bounds`?
+
+Calls for the owner (for REPORT): 1. drop rings from launch (default) vs only at hover
+(`servo.json drone.ring_from_launch`); 2. should a CS crate landing on Rivet hurt (today no);
+3. drones at 1 hp (one round, default) vs tougher drones so waves land more often.
+
+NEXT (iteration 3, in order):
+1. Defeat beat: the rack spills its drones, pads spin down, Servo kneels/collapses with steam and
+   the stinger (`boss_stinger_01.wav`); phase transitions with a beat (horn + belt start; wing
+   blow-off sparks). Boss music `boss_loop_01.ogg` under --boss (check whether king wired it).
+2. Crates block Rivet and shots (ServoParcels.blocked into the arena's movement/shot blocking,
+   through a generic hook if needed); the conveyor carries crates and Rivet in phase 2 (sim).
+3. A bot with human aim error (spread) so waves land at a human rate; per-attack hit rates again
+   over seeds 1-5; Kerf / Ohm / Dent / Tonnage on the drones checked in a clip.
+4. Proof clips: per attack 48 px/m (scan wave, dash, carpet, bay hop, kamikaze), per phase 32 px/m
+   real time (`--phase=N`), the full drone wave at 48 px/m, target sheet beside in-game (hstack).
+5. Body to target (iteration-1 NEXT 2): rack wings 3 rows, body between the wings, bigger pads.
+6. Bay hop to the nearest loading bay (the depot's bays), not the mark.
