@@ -10,6 +10,9 @@ const CROWD_COUNT: int = 8
 ## baked atlas has CROWD_COUNT rows, so atlas_look() prints these as their nearest crowd look.
 const SWAT: int = 8
 const LOOK_COUNT: int = 9
+## n5-cast r7: the hoodie's sleeves follow its mid warm-grey body (was "_dark": black ink arms
+## made the walking hoodie ped a dark blob at 32-48 px/m). "_dark" = the iteration 12 look.
+const HOODIE_SLEEVE: String = "_grey"
 
 var tag: String = ""
 var kind: BodyPlan.Kind = BodyPlan.Kind.PED
@@ -51,7 +54,8 @@ static func crowd(index: int) -> RigVariant:
 			return make(BodyPlan.Kind.PED, "coat-hood", "head_hood", "torso", false)
 		3:
 			return _sleeved(
-				make(BodyPlan.Kind.PED, "hoodie-cap", "head_cap", "torso_hoodie", false), "_dark"
+				make(BodyPlan.Kind.PED, "hoodie-cap", "head_cap", "torso_hoodie", false),
+				HOODIE_SLEEVE
 			)
 		4:
 			return make(BodyPlan.Kind.PED, "vest-hair", "head_hair", "torso_vest", false)
