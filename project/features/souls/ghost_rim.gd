@@ -17,6 +17,7 @@ const KEY_ACROSS: float = 0.35
 const KEY_ALONG: float = 0.03
 const KEY_BODY: float = 0.09
 const KEY_Z: int = -17
+const KEYLINE: StringName = &"keyline"
 const KEY_SHADER: String = "res://features/souls/ghost_keyline.gdshader"
 
 ## false (dev `--no-rim`): the rigs draw no rim (the A/B before).
@@ -63,6 +64,7 @@ static func keyline(rig: CutRig) -> void:
 	for i: int in rig.halos.size():
 		var h: Sprite2D = rig.halos[i]
 		var k: Sprite2D = Sprite2D.new()
+		k.name = KEYLINE
 		k.texture = h.texture
 		k.centered = h.centered
 		k.offset = h.offset

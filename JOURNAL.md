@@ -821,3 +821,11 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
   E:unit-it13-keyline.log); lint 13/13; COMBAT CHECK director reel 16/16, 0 SCRIPT ERROR
   (E:director-reel-it13-keyline.log). frames.json 15 (the keyline A/B second; the kerf-bar entry folded into
   kerf-vs-target). Registry rule applied (motion-quality-gating): same input A/B at game zoom, on the live path.
+- 07:13 GATES evidence runner `--no-bench` on 45c69934, still tree (E:evidence-run-it13.log): PASS lint 13/13, unit
+  1018/0, scenarios 48 (ghost-powers' quest1_dent in), parity bit-exact, look 11/11 (worst 1.33), block 5/5 (worst
+  1.53); no re-bless.
+- 07:15 FIX (this commit) DentBody is shared with Dent's voice apparition, whose wash() would have drawn the keyline
+  through the ghost material (a wider teal edge). Keylines are named `keyline` and wash hides them. Checked:
+  `--arena=city --bot=forms --form=voices --apparition`, 1020 frames, 0 SCRIPT ERROR; Dent's voice (frames 280/330)
+  a teal ghost with its glow edge, no ink: `M:frames/dent-voice-no-keyline-city-32ppm-x1.5.png` (named in the
+  keyline entry). Unit 1018/0 (E:unit-it13-apparition.log).
