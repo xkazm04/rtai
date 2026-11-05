@@ -938,3 +938,13 @@ NEXT (report session / Director): REPORT's final gated head is 0b738cbc; 52ce7f3
 (lint + unit + reel green). Run `node tools/evidence/run.mjs --no-bench` on 52ce7f31 if a full gate on the tip is
 wanted. Calls for the owner unchanged (`--teal-forms`, `story_voice`).
 FREEZE 08:26: no Godot process of mine running, no lock held; frames.json 15, all present.
+
+## Iteration 16 (08:25-08:30, BUILD at freeze)
+- 08:27 CHECK upstream: n5-cast efa29d38..8d83f472 is JOURNAL/REPORT only (iterations 25-26 re-checks); n6-ghost-powers
+  3a1ec6b8/d00c20e6 is the same n5-cast efa29d38 merge we took as 52ce7f31 plus their docs/logs. Nothing to merge
+  (merging would only conflict on the other lanes' JOURNAL/REPORT). No Godot run started: 3 min to freeze.
+
+NEXT (report session / Director): unchanged from iteration 15. The lane's tip carries 52ce7f31 (lint + unit + reel
+green); last full gated head is 0b738cbc. Run `node tools/evidence/run.mjs --no-bench` on the tip if a full gate is
+wanted. Calls for the owner unchanged (`--teal-forms`, `story_voice`).
+FREEZE 08:28: tree clean after this commit, no Godot process of mine running, no lock held; frames.json 15, all present.
