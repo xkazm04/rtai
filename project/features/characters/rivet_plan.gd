@@ -89,6 +89,7 @@ static var form: StringName = FORM_BASE
 
 
 static func build(p_form: StringName = &"") -> BodyPlan:
+	CastFlags.apply()
 	var key: StringName = form if p_form == &"" else p_form
 	var f: Vector3 = FORMS.get(key, FORMS[FORM_BASE])
 	var arms: Vector3 = ARMS.get(key, Vector3.ONE)
