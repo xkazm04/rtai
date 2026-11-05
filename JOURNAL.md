@@ -75,3 +75,10 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   4. Read registry `realtime-combat-semantics` + `depth-ordered-layered-art` before the heavy class.
   5. REPORT calls so far: (a) blade wrist_rad 0.45 (alt 0 = straight ahead), (b) look-4 over cast-3,
      (c) pistol class size on the 1.1x Rivet.
+- 15:55 FINDING (long gun probe, `long_gun_probe_offarm_now_vs_centre.png`): in every two-claw hold
+  (long_gun, tube, heavy) Rivet's off arm ends in the torch tool, which sticks out diagonally past
+  the weapon instead of closing on the foregrip; that, more than the line's place, is what reads as
+  "not natural" (the owner's cast-3 note). A centre-line variant (across 0) barely changes it; data
+  restored, nothing shipped. So NEXT item 1 starts with the off arm: an off claw part (Codex claw
+  sheet, arms/claws only, under image.lock) shown while a two-claw weapon is held, or the torch tip
+  hidden and the forearm end-capped as a stopgap; then the centre line toward r2_w5.
