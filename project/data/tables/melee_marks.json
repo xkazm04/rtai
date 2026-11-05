@@ -1,0 +1,11 @@
+{
+  "deflect": {
+    "burst_m": 0.7,
+    "doc": "The plasma sword's deflect mark (view only; DeflectMarks via CombatArena.deflected, FxView). On the bat frame: a cream starburst edged in ink, burst_m across, for flash_ticks; and a cream streak running streak_m along the returned round, fading over streak_ticks, so the round reads as sent back by the swing. flash_ticks 0 = none; --feel=off hides it too.",
+    "flash_ticks": 8,
+    "streak_m": 2.5,
+    "streak_ticks": 10
+  },
+  "doc": "Lane n7-melee: view-only marks of Rivet's melee that are not a camera effect (those are hit_feel.json rows). Metres and 60 Hz ticks.",
+  "schema": "gtai.melee_marks/1"
+}

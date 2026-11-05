@@ -20,6 +20,8 @@ var _gun_fx: GunFx = null
 ## n5-look: Rivet's weapon FX cells in colour (null: fx_colour_dir is "", the ink cells).
 var _colour: WeaponFxColour = null
 var _colour_tried: bool = false
+## n7-melee: the plasma sword's deflect marks (DeflectMarks, melee_marks.json).
+var _deflects: DeflectMarks = null
 ## perf-city: the retained ground marks (FxGround.enabled; null = drawn here every frame).
 var _ground: FxGround = null
 
@@ -63,6 +65,9 @@ func _draw() -> void:
 	_arcs(arena)
 	if arena.areas != null:
 		FightAreasArt.draw(self, arena, stage.tick)
+	if _deflects == null or _deflects.arena != arena:
+		_deflects = DeflectMarks.attach(arena)
+	_deflects.draw(self, stage.tick)
 	_last()
 
 

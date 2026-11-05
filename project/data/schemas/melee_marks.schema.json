@@ -1,0 +1,56 @@
+{
+  "$id": "gtai.melee_marks/1",
+  "additionalProperties": false,
+  "properties": {
+    "deflect": {
+      "additionalProperties": false,
+      "properties": {
+        "burst_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "flash_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "streak_m": {
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "streak_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "burst_m",
+        "doc",
+        "flash_ticks",
+        "streak_m",
+        "streak_ticks"
+      ],
+      "type": "object"
+    },
+    "doc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.melee_marks/1"
+    }
+  },
+  "required": [
+    "deflect",
+    "doc",
+    "schema"
+  ],
+  "type": "object"
+}

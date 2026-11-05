@@ -239,6 +239,15 @@
       "shake": "nuke"
     },
     {
+      "class": "melee_heavy",
+      "doc": "n7-melee: the plasma sword batting a round back (CombatArena.deflected via MeleeFeel): a parry beat, the 4-tick melee stop and a firm kick toward the shooter, no shake. melee_marks.json draws the bat.",
+      "hitstop": "melee_hit",
+      "id": "plasma_deflect",
+      "kick_px": 3,
+      "kick_ticks": 8,
+      "shake": ""
+    },
+    {
       "doc": "n7-melee: as the katana (a blade's cut).",
       "hitstop": "melee_hit",
       "id": "plasma_sword",

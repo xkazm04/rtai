@@ -1,0 +1,109 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4090
+
+[INFO] arena: city block: spawn at (529.0, 509.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 545.0) is in a building, dropped
+[INFO] arena: city block: spawn at (506.0, 551.0) is in a building, dropped
+[INFO] arena: city block: spawn at (488.0, 553.0) is in a building, dropped
+[INFO] arena: city block: spawn at (498.0, 553.0) is in a building, dropped
+[INFO] arena: powers pad: 2 cars parked
+[INFO] arena: arena open: 18 stations
+[INFO] quest1: street filled in 16 chunk passes
+[INFO] characters: prewarmed 33 rigs in 107.6 ms
+[INFO] arena: cast rigs: true
+[INFO] characters: prewarmed 33 rigs in 7.5 ms
+[WARN] showcase: director: no carry (run with --loadout=pistol); pistol skipped
+[INFO] showcase: director chapter claw_combo (pistol) at tick 0
+[INFO] react: death_melee on 2, frame 313
+[INFO] react: death_melee on 1, frame 346
+[INFO] showcase: director chapter claw_combo: 2/2 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); pistol skipped
+[INFO] showcase: director chapter pistol (pistol) at tick 360
+[INFO] react: death_bullet on 3, frame 418
+[INFO] react: death_bullet on 4, frame 450
+[INFO] showcase: director chapter pistol: 2/2 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); machine_pistol skipped
+[INFO] showcase: director chapter machine_pistol (machine_pistol) at tick 720
+[INFO] react: death_bullet on 7, frame 792
+[INFO] react: death_bullet on 5, frame 822
+[INFO] react: death_bullet on 6, frame 853
+[INFO] react: death_bullet on 8, frame 880
+[INFO] showcase: director chapter machine_pistol: 4/4 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); rocket_launcher skipped
+[INFO] showcase: director chapter rocket_launcher (rocket_launcher) at tick 1140
+[INFO] react: death_bullet on 9, frame 1229
+[INFO] showcase: director chapter rocket_launcher: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); flamethrower skipped
+[INFO] showcase: director chapter flamethrower (flamethrower) at tick 1500
+[INFO] react: death_bullet on 10, frame 1594
+[INFO] showcase: director chapter flamethrower: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); electro_gun skipped
+[INFO] showcase: director chapter electro_gun (electro_gun) at tick 1920
+[INFO] react: death_bullet on 11, frame 2020
+[INFO] showcase: director chapter electro_gun: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); molotov skipped
+[INFO] showcase: director chapter molotov (molotov) at tick 2250
+[INFO] react: death_bullet on 12, frame 2357
+[INFO] showcase: director chapter molotov: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); katana skipped
+[INFO] showcase: director chapter katana (katana) at tick 2670
+[INFO] react: death_bullet on 13, frame 2785
+[INFO] showcase: director chapter katana: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); chainsaw skipped
+[INFO] showcase: director chapter chainsaw (chainsaw) at tick 3000
+[INFO] react: death_bullet on 14, frame 3127
+[INFO] showcase: director chapter chainsaw: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); plasma_sword skipped
+[INFO] showcase: director chapter plasma_sword_deflect (plasma_sword) at tick 3390
+[INFO] react: death_bullet on 15, frame 3516
+[INFO] showcase: director chapter plasma_sword_deflect: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); hand_cannon skipped
+[INFO] showcase: director chapter hand_cannon (hand_cannon) at tick 3810
+[INFO] react: death_bullet on 16, frame 3941
+[INFO] showcase: director chapter hand_cannon: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); plasma_rifle skipped
+[INFO] showcase: director chapter plasma_rifle (plasma_rifle) at tick 4110
+[INFO] react: death_bullet on 17, frame 4247
+[INFO] showcase: director chapter plasma_rifle: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); ray_gun skipped
+[INFO] showcase: director chapter ray_gun (ray_gun) at tick 4410
+[INFO] react: death_bullet on 18, frame 4553
+[INFO] showcase: director chapter ray_gun: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); homing_shard skipped
+[INFO] showcase: director chapter homing_shard (homing_shard) at tick 4710
+[INFO] react: death_bullet on 19, frame 4860
+[INFO] showcase: director chapter homing_shard: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); machine_pistol skipped
+[INFO] showcase: director chapter riot_cop (machine_pistol) at tick 5040
+[INFO] react: death_bullet on 20, frame 5242
+[INFO] showcase: director chapter riot_cop: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); mini_nuke skipped
+[INFO] showcase: director chapter mini_nuke (mini_nuke) at tick 5460
+[INFO] react: death_bullet on 21, frame 5633
+[INFO] react: death_bullet on 23, frame 5664
+[INFO] react: death_bullet on 22, frame 5694
+[INFO] react: death_bullet on 24, frame 5718
+[INFO] showcase: director chapter mini_nuke: 4/4 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); plasma_rifle skipped
+[INFO] showcase: director chapter plasma_armored (plasma_rifle) at tick 5940
+[INFO] react: death_bullet on 25, frame 6224
+[INFO] showcase: director chapter plasma_armored: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); electro_baton skipped
+[INFO] showcase: director chapter electro_baton (electro_baton) at tick 6240
+[INFO] react: death_bullet on 26, frame 6424
+[INFO] showcase: director chapter electro_baton: 1/1 down
+[WARN] showcase: director: no carry (run with --loadout=pistol); electro_gun skipped
+[INFO] showcase: director chapter electro_chain (electro_gun) at tick 6570
+[INFO] react: death_bullet on 29, frame 6766
+[INFO] react: death_bullet on 27, frame 6822
+[INFO] react: death_bullet on 28, frame 6879
+[INFO] react: death_bullet on 30, frame 6937
+[INFO] showcase: director chapter electro_chain: 4/4 down
+[INFO] arena: react: 4 wounds (2 on a shield), 30 deaths, 0 ducks
+[INFO] arena: crowd: 3 cowers (0 at a death), 0 trips, 0 deaths
+WARNING: 1 RID of type "CanvasItem" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 620 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 99 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

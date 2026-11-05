@@ -11,6 +11,8 @@ extends RefCounted
 ## path when their hit_feel.json `weapons` row names a `class` (HitFeel.weapon_class): each cut of
 ## Kerf's chain is its own short beat. No row class = not felt here (guns are left to `struck`).
 
+const DEFLECT: StringName = &"plasma_deflect"
+
 var cam: FeelCam
 var hits: int = 0
 var _arena: CombatArena
@@ -25,6 +27,8 @@ static func attach(p_cam: FeelCam, arena: CombatArena) -> MeleeFeel:
 	arena.kill_landed.connect(m._on_kill)
 	@warning_ignore("return_value_discarded")
 	arena.wounded.connect(m._on_wounded)
+	@warning_ignore("return_value_discarded")
+	arena.deflected.connect(m._on_deflected)
 	return m
 
 
@@ -40,6 +44,15 @@ func _on_wounded(victim: Fighter, weapon: StringName) -> void:
 	var cls: StringName = class_of(weapon)
 	if cls != &"" and _gate.admit(victim.id, _arena.tick):
 		_land(victim, weapon, cls, false)
+
+
+## The plasma sword's bat: a parry beat (weapons row `plasma_deflect`), kicked toward the shooter.
+func _on_deflected(_at: Vector2, back: Vector2) -> void:
+	var cls: StringName = cam.feel.weapon_class(DEFLECT)
+	if cls != &"":
+		hits += 1
+		@warning_ignore("return_value_discarded")
+		cam.hit(DEFLECT, cls, back.normalized(), false, _arena.tick)
 
 
 ## The feel class of a hit by `weapon`: `melee` for Rivet's melee weapons, else the weapons row's

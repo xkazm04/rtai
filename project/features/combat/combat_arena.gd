@@ -14,6 +14,8 @@ signal struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName)
 signal kill_landed(victim: Fighter, weapon: StringName, dir: Vector2, at: Vector2, kind: StringName)
 ## A non-lethal hit on a non-Rivet fighter, from the chokepoint (view only: MeleeWound, n7-melee).
 signal wounded(victim: Fighter, weapon: StringName)
+## A hostile round batted back by the plasma sword at `at`, now flying along `back` (view only).
+signal deflected(at: Vector2, back: Vector2)
 
 const SPAWN_SPREAD_M: float = 2.5
 
