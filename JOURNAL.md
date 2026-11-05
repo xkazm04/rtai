@@ -605,7 +605,7 @@ dodge is judged on the i-frame window meeting the hit, not the tell).
   --reel=director --loadout=pistol --rigs`: 19/19 chapters fully down, 0 SCRIPT ERROR
   (`director-reel-it5.log`, exit 124 = the 600 s cap after the last chapter). Combat did not
   regress with `KillEvent.human` changed.
-- 22:42 MILESTONE (6fd… the Dent bot commit after 692e6ba5) the Dent bot puts the cursor on Servo
+- 22:42 MILESTONE 63b158f4 the Dent bot puts the cursor on Servo
   (`pack_aim` reach), so the van parks on him and blows there: seed 1 strikes 4, blast at tick
   193 on Servo (was 337 off the yard). **Looked at** (48 px/m keys): dash lane, tether, the van
   into the rack, the amber fireball on Servo, the charred wreck beside him; no red.
@@ -655,3 +655,4 @@ NEXT (iteration 6, in order):
 5. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, the horn and the
    bay doors rolling up at rush hour, the defeat's visor flicker.
 6. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-8).
+- 23:00 decisions.md: kamikaze armour line added. Session continues on NEXT 1.
