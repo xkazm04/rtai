@@ -30,6 +30,9 @@ var standing: bool = false
 var _side: float = 1.0
 ## `--bot-human`: reads ~70 % of tells, late by a human's spread, aim sways (BossBotRead).
 var _human: BossBotRead = null
+## `--ghost=<id>`: the bot takes that ghost's soul and uses its melee on the fight (BossBotGhost).
+var _ghost: BossBotGhost = null
+var _bits: int = 0
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
@@ -53,6 +56,7 @@ func sample(tick: int) -> TickInput:
 		for threat: BossFight in [f] + hook.adds.fights:
 			_human.see(threat)
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
+	_bits = _ghost.buttons(tick, hook, me, actions) if _ghost != null else 0
 	var band: float = to_boss.length() - HOLD_M
 	var off_floor: bool = not hook.bounds.grow(-EDGE_M).has_point(me)
 	var home: Vector2 = (hook.bounds.get_center() - me).normalized()
@@ -85,6 +89,8 @@ func _find_hook() -> void:
 			hook = h
 			if OS.get_cmdline_user_args().has("--bot-human"):
 				_human = BossBotRead.new(hook.stream(&"boss_bot"))
+			var g: String = BossHook._arg(OS.get_cmdline_user_args(), "--ghost")
+			_ghost = BossBotGhost.new(StringName(g)) if g != "" else null
 
 
 ## The nearest standing add within ADD_M of Rivet (the gang closes in: shoot it first), else King.
@@ -127,7 +133,7 @@ func _dodge(f: BossFight, me: Vector2) -> Vector2:
 
 func _input(move: Vector2, aim: Vector2, fire: bool, hurry: bool, roll: bool) -> TickInput:
 	var m: Vector2 = move.limit_length(1.0) * TickInput.AXIS_MAX
-	var buttons: int = PlayerCommand.pack_aim(aim, actions)
+	var buttons: int = PlayerCommand.pack_aim(aim, actions) | _bits
 	if fire:
 		buttons |= 1 << actions.bit(&"fire")
 	if hurry:
