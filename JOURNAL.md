@@ -405,3 +405,45 @@ NEXT (iteration 4, in order):
 
 NEXT (iteration 4) stands as written above, minus the phase 1 / phase 2 clips and the music
 (done). Session ends 21:25 with everything committed.
+
+## Iteration 4 (21:25-22:25), BUILD
+
+- 21:27 MERGE n7-king 7bbeeba6 as 2d472754 (Ohm's daze on bosses, decree buff_adds, ermine
+  collar, boss-cam range, the stalled car holds). Conflict: boss_hook.gd (kept my `_solids`
+  beside king's `_stun_seen`), JOURNAL (ours). REQUEST 5 (solids) is still not on n7-king: my
+  copy stays. Unit on the merged tree 1159/0 (`evidence/servo/unit-it4a.log`).
+- 21:28 ServoMoves telemetry now lists every windup as "tick:attack" (`moves.windups`, telemetry
+  only, no state, no golden), so the per-attack films are cut on real ticks.
+- 21:29 FILMS 48 px/m, boss cam, seed 2, phases 1-3 (2400 ticks each, 0 SCRIPT ERROR;
+  `evidence/servo/films-it4/`). Cut per attack into `M/servo_attack_<id>_48ppm_it4.mp4` + keys.
+  **Looked at** every key sheet:
+  - rotor dash (p1 t620): thin tracking line, vermilion lane locks, bot steps out, Servo crosses
+    to the lane's tip and skids. (I first read the lane as flipping after the dash; it is the boss
+    cam moving: he stands at the lane's tip, and the lane stays frozen at the lock.)
+  - package carpet (p2 t1181): a lane of rings through the mark, the bot steps out, bombs/crates.
+  - bay hop (p2 t671): the landing ring locks on Rivet; crates from the last carpet box him in and
+    it lands on him (a hit, not a dodge).
+  - hot dash (p3 t956): lane, clean dodge, dash to the bay wall on one wing.
+  - kamikaze (p3 t314): beam lock, two dive drones launch; the bot downs both before a strike
+    locks, so no dive ring is in this clip. FOUND, not fixed: the perfect-aim bot hides the dive.
+- 21:35 MILESTONE 135528a5 dev `--bot=boss --ghost=<dent|kerf|ohm>` (`dev/servo/servo_ghost_bot.gd`):
+  BossBot picks the ghost (G presses), takes it (Q), then aims the ghost attack at the thickest
+  knot (>= 2) of the boss's extra bodies within 10 m, holding the gun while a knot is in reach;
+  once the form runs out (about 6 s in the fight) it is the plain boss bot. FRICTION: a new
+  class_name needs `--import` before a windowed run (the first ghost films were script errors and
+  were thrown away).
+- 21:43 FILMS the ghosts on the drones (48 px/m, p2, seed 2). **Looked at** dense keys:
+  - Ohm: the bolt chains through a knot of four drones (a strike burst on each), a second chain on
+    the next knot, then bolts into Servo. 12 of 15 drones down in 25 s. `M/servo_ghost_ohm_chain_drones_48ppm_it4.mp4`.
+  - Kerf: blinks through Servo and cuts him; the knots the bot chose sat beside the hub, so a line
+    of drones being cut is NOT shown. `M/servo_ghost_kerf_blink_drones_48ppm_it4.mp4`.
+  - Dent seizing a drone: NOT built (drones are arena Fighters, not vehicles); servo.md promised
+    it. Open.
+- 21:45 TARGET comparison in the live arena (`M/frames/servo_target_vs_arena_48_32ppm_it4.png`,
+  p2 tick 359, turned 180 degrees like the sheet; 48 and 32 px/m). **Looked at**: same family
+  (two drone-bay wings, hub, striped octagon pads, cream-and-rust print). Gap: the sheet's wings are
+  3 rows deep and dominate the silhouette; ours are 2 rows (the wing is one cut texture of 2x3 bays,
+  and `rack.cells` 12 sets the launch capacity, so 3 rows is a sim + art change that moves the bot
+  numbers: next).
+- 21:48 `M/frames.json` 15 entries (the it4 attack and ghost clips, the arena comparison first);
+  removed the 64 px/m dev-scene rig film and the it2 phase-3 still.
