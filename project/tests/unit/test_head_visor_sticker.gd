@@ -29,3 +29,9 @@ func _default(code: String, uniform: String) -> float:
 	var hit: RegExMatch = re.search(code)
 	assert_not_null(hit, uniform)
 	return hit.get_string(1).to_float() if hit != null else -1.0
+
+
+func test_only_rivet_wears_the_visor_slot() -> void:
+	assert_true(RivetPlan.build().head_visor, "Rivet's helmet faces +x and carries the visor")
+	assert_false(KingPlan.build().head_visor, "King's star crown has no visor")
+	assert_false(ThugPlan.build().head_visor, "thugs have no collar core")
