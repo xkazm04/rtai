@@ -770,3 +770,38 @@ NEXT (iteration 13), replaces the 01:35 list:
 2. Calls 1-6 stand; REPORT section 5 is current to 5cf7cafe. REPORT rewrite at 08:40. frames.json 15, all exist.
 Session end 01:54: tree clean after this commit, image.lock released (3 jobs tonight: r5, r6, r7), bench.lock never
   taken, no Godot process of mine running, scratch i12/i12b/i12c deleted.
+
+## Iteration 13 (session 01:54 - 02:54), BUILD
+- 01:55 read JOURNAL, log, REPORT, n5-look JOURNAL (no new REQUEST to cast). No locks present. Plan: NEXT 1(c) first
+  (the live city block at 32 px/m and the r2_c6 still composite re-shot on the final ped parts r5+r6+r7; the r2_c6
+  composite is the brief's item 5 still and dates from 23:16, before the plan-view peds), then 1(b) D5 hatching.
+- 01:56 NEXT 1(c): live city block on the final parts (`film.sh cast-r7-city-32 32 900 --bot=reel --arena=city
+  --loadout=pistol,machine_pistol`, 0 SCRIPT ERROR). A/B against e1f848a5's `cast-navy-city-32.mp4` (same sim, pre
+  plan-view peds) at t=3/8/12 s: `M/frames/city-r7peds-ab-32ppm.png`; the bottom-right sidewalk ped is pale, the cops
+  are identical. `M/frames/cast-ingame-vs-r2c6.png` re-shot on 1d9c3c53 (brief item 5's still; the 23:16 one predated
+  the plan-view peds), cropped clear of the HUD.
+- 02:00 quest 1 `--rigs --ppm=48 --ticks=900-1800` (451 frames, exit 0, 0 SCRIPT ERROR). FINDING: walking peds on the
+  pale slab print as dark blobs. Cause: the jacket and hoodie looks wear the `_dark` sleeves (fill L 48, near-ink),
+  and walking arms swing out as the widest shapes. The r7 hoodie body is mid warm grey (L 164) but its sleeves stayed
+  black. DECISION: the hoodie wears the existing `_grey` sleeves (`RigVariant.HOODIE_SLEEVE`); the jacket keeps `_dark`
+  as the crowd's one dark look (the mixed-crowd decision, r1_c6's dark suit). Lineups A/B (slab, road, walk, 32 and 64
+  px/m): `M/frames/crowd-hoodie-sleeve-ab.png`. Quest 1 A/B (same ticks): `M/frames/quest1-hoodie-sleeve-ab-48ppm.png`,
+  `M/cast-quest1-hoodie-sleeve-ab-48.mp4`: the walking hoodie ped is pale arms round a dark head (the dark flat cap at
+  head_k 0.62 covers most of the narrow torso: kept, a dark head on pale shoulders as in r2_a5).
+- MILESTONE 15feca4a: hoodie sleeves. Lint 13/13, unit 942/0.
+- 02:09 NEXT 1(b): Codex job `ped_plan_d5` (61 s, under image.lock, released; `masters:n5/cast/gen/r8`): a restyle edit
+  of a sheet I composed from the ten installed D4 plan-view parts (`make_sheet.py`, x1.8, `layout.json`), with the
+  shipped D5 cop torso, cap, ped thigh and upperarm as the style ref. The parts came back registered, hatched lower-left,
+  and grainy, but warmer. First install: the hair heads printed VERMILION specks at 64 px/m (warm chroma; red is blood
+  only) and the cap went mid grey. Fix at the art (`install_d5.py`): per part, Y mean/std and mean chroma matched to the
+  D4 part, the D4 alpha and size. Re-check: 0 vermilion px in all three 64 px/m lineups. Board:
+  `M/frames/crowd-d5-hatch-ab-64ppm.png`.
+- MILESTONE 093f4b73: D5 hatching for the ten plan-view ped parts (10 provenance lines). Lint 13/13, unit 942/0.
+  React board (481 frames) and street board (241), 64 px/m, 0 SCRIPT ERROR, A/B against the iteration 12 clips:
+  `M/cast-react-board-d5peds-ab-64ppm.mp4`, `M/cast-street-board-d5peds-ab-64ppm.mp4`, still
+  `M/frames/react-street-d5peds-ab-64ppm.png`. Every reaction, death, corpse, burn and blood frame is identical in place.
+  The hoodie ped reads pale where it was black.
+  Registry rules applied (`sprite-and-atlas-production`): restyle tiers keep the base tier's silhouette (alpha lock)
+  and its value (the generator's colour drift is corrected at the art, not in the shader, which is the look lane's).
+  Judged at the tier's own zoom (64 px/m) and checked that 32 px/m is unchanged (D4 untouched).
+- 02:31 EVIDENCE GATE started on 093f4b73 (`tools/evidence/run.mjs --no-bench`).
