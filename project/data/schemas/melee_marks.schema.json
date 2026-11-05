@@ -43,6 +43,37 @@
       "minLength": 1,
       "type": "string"
     },
+    "saw": {
+      "additionalProperties": false,
+      "properties": {
+        "clear_m": {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        "doc": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "release_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "shake_m": {
+          "maximum": 0.5,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "clear_m",
+        "doc",
+        "release_m",
+        "shake_m"
+      ],
+      "type": "object"
+    },
     "schema": {
       "const": "gtai.melee_marks/1"
     }
@@ -50,6 +81,7 @@
   "required": [
     "deflect",
     "doc",
+    "saw",
     "schema"
   ],
   "type": "object"

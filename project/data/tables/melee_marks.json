@@ -7,5 +7,11 @@
     "streak_ticks": 10
   },
   "doc": "Lane n7-melee: view-only marks of Rivet's melee that are not a camera effect (those are hit_feel.json rows). Metres and 60 Hz ticks.",
+  "saw": {
+    "clear_m": 0.45,
+    "doc": "The chainsaw kill made to read at 32 px/m (the audit rank 5: the held cop was a red blob under the saw). KillSplitFx, view only. clear_m: the grind's blood drops are hidden until they have flown this far from the bite, so the held body stays readable and the spray reads as leaving it (0 = the drops print over the body, the before). shake_m: the held body's judder (0.035 = the before, about 1 px at 32 px/m). release_m: on the frame the halves part, a cream starburst edged in ink this wide (the kill frame; a slash along the cut hid on the saw bar), shrinking over 12 ticks (0 = none). --feel=off = the before values.",
+    "release_m": 1.2,
+    "shake_m": 0.06
+  },
   "schema": "gtai.melee_marks/1"
 }
