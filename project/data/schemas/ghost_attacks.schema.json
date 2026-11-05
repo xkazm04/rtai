@@ -299,6 +299,21 @@
           "minLength": 1,
           "type": "string"
         },
+        "plate_r_m": {
+          "maximum": 5,
+          "minimum": 0,
+          "type": "number"
+        },
+        "plate_spark_ticks": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "plate_sparks_per_tick": {
+          "maximum": 16,
+          "minimum": 0,
+          "type": "integer"
+        },
         "press_ahead_m": {
           "maximum": 5,
           "minimum": 0,
