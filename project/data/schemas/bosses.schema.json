@@ -249,6 +249,11 @@
           "minLength": 1,
           "type": "string"
         },
+        "ghost_k": {
+          "maximum": 4,
+          "minimum": 0,
+          "type": "number"
+        },
         "hp": {
           "maximum": 100000,
           "minimum": 1,
