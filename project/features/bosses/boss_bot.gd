@@ -5,9 +5,9 @@ extends InputSource
 ## FIRE_M. The dodging bot reads the tell like a player: REACT_TICKS after a windup begins it
 ## checks whether it stands in the attack's zone (BossZone, the same numbers that land the hit)
 ## and, if so, sprints out sideways of the aim, and rolls if it is still in the zone ROLL_LEFT
-## ticks before the active window. `--bot-stand`
-## is the standing bot: the same band, but it never strafes or dodges (the other end of each
-## attack's hit rate). With cover between it and the boss (BossMoves.solids, the arena's props) the
+## ticks before the active window. `--bot-stand` is the standing bot: the same band, but it never
+## strafes or dodges (the other end of each attack's hit rate). `--bot-human` is the middle
+## (BossBotRead). With cover between it and the boss (BossMoves.solids, the arena's props) the
 ## dodging bot walks round it sideways for a line of sight, as a player would.
 
 const HOLD_M: float = 8.0
@@ -28,6 +28,8 @@ var actions: PlayerActions
 var hook: BossHook = null
 var standing: bool = false
 var _side: float = 1.0
+## `--bot-human`: reads ~70 % of tells, late by a human's spread, aim sways (BossBotRead).
+var _human: BossBotRead = null
 
 
 func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
@@ -36,11 +38,9 @@ func _init(p_stage: ArenaStage, p_actions: PlayerActions) -> void:
 	standing = OS.get_cmdline_user_args().has("--bot-stand")
 
 
-func sample(_tick: int) -> TickInput:
+func sample(tick: int) -> TickInput:
 	if hook == null:
-		for h: ArenaHook in stage.hooks:  # the stage's hooks exist once it is set up
-			if h is BossHook:
-				hook = h
+		_find_hook()
 	if hook == null or hook.fight == null:
 		return TickInput.new()
 	var f: BossFight = hook.fight
@@ -48,6 +48,10 @@ func sample(_tick: int) -> TickInput:
 	var to_boss: Vector2 = f.body.pos - me
 	var foe: Vector2 = _target(me, f.body.pos) - me  # the nearest add inside ADD_M, else King
 	var aim: Vector2 = foe.normalized() if foe.length() > 0.01 else Vector2.RIGHT
+	if _human != null:
+		aim = BossBotRead.sway(aim, tick)
+		for threat: BossFight in [f] + hook.adds.fights:
+			_human.see(threat)
 	var fire: bool = foe.length() <= FIRE_M and f.state != BossFight.State.DEFEATED
 	var band: float = to_boss.length() - HOLD_M
 	var off_floor: bool = not hook.bounds.grow(-EDGE_M).has_point(me)
@@ -75,6 +79,14 @@ func sample(_tick: int) -> TickInput:
 	return _input(move, aim, fire, false, false)
 
 
+func _find_hook() -> void:
+	for h: ArenaHook in stage.hooks:  # the stage's hooks exist once it is set up
+		if h is BossHook:
+			hook = h
+			if OS.get_cmdline_user_args().has("--bot-human"):
+				_human = BossBotRead.new(hook.stream(&"boss_bot"))
+
+
 ## The nearest standing add within ADD_M of Rivet (the gang closes in: shoot it first), else King.
 func _target(me: Vector2, boss_at: Vector2) -> Vector2:
 	var best: Vector2 = boss_at
@@ -96,6 +108,8 @@ func _target(me: Vector2, boss_at: Vector2) -> Vector2:
 func _dodge(f: BossFight, me: Vector2) -> Vector2:
 	var reading: bool = f.state == BossFight.State.WINDUP and f.t >= REACT_TICKS
 	if not reading and f.state != BossFight.State.ACTIVE:
+		return Vector2.ZERO
+	if _human != null and not _human.reacts(f):
 		return Vector2.ZERO
 	var a: BossAttack = f.attack
 	var r: float = stage.arena.rivet.radius_m + CLEAR_M
