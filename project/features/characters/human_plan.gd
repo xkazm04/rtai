@@ -19,7 +19,8 @@ const COP_LIMB_K: float = PED_SIZE_K / COP_SIZE_K
 ## is about 0.4 of the shoulder span from above (the art's 0.75 hid the coat), the standing feet
 ## sit under the coat and the legs stand straight, so the pale shoulders are the widest shape.
 ## Back to the shipped ped: PED_HEAD_K 1.0, PED_HEAD_DX 0.22, PED_FOOT_K 1.0, PED_FOOT_FWD 10,
-## PED_HIP_Z 0.86.
+## PED_HIP_Z 0.86. Iteration 12: the plan-view r5 heads are cut at the old heads' size, so one
+## PED_HEAD_K serves every ped head.
 const PED_HEAD_K: float = 0.62
 const PED_HEAD_DX: float = 0.12
 const PED_FOOT_K: float = 0.7
