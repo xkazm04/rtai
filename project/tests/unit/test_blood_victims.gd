@@ -6,6 +6,7 @@ func test_dry_kinds_print_nothing_on_humans_but_robots_leak() -> void:
 	v.robot_ids[7] = true
 	assert_true(v.dry(&"cauterised", 3))
 	assert_true(v.dry(&"burned", 3))
+	assert_true(v.dry(OhmStage.KILL_KIND, 3), "Ohm's bolt kills dry")
 	assert_false(v.dry(&"cauterised", 7), "a robot always leaks oil")
 	assert_false(v.dry(&"kill", 3))
 

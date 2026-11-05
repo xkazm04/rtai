@@ -518,3 +518,20 @@ scratch holds only film.sh and reel.sh, frames.json 15 (all present).
 - Not mine: PID 22028 (n5-cast's city capture) was running at 03:48; left alone.
 Session state 03:50: head = this commit, tree clean, no Godot process of mine running, no lock held, masters
 scratch holds only film.sh and reel.sh, frames.json 15 (all present).
+
+## Iteration 6 (03:51-04:51, BUILD)
+- 03:51 read JOURNAL, git log, the forms/cast JOURNALs: no new REQUEST to ghost-powers; REQUEST 8 (Ohm's arm kick)
+  not answered yet. MERGE n6-ghost-forms 483aaeca: it fast-forwarded to the forms lane's 601bc1c2 (which had
+  merged ours) and so replaced our JOURNAL/REPORT with theirs; FRICTION, restored ours in 13d6c778. MERGE n5-cast
+  70ceb3bf (docs only; JOURNAL/REPORT keep ours) in 6d70e4ea. New on the head: n5-cast's visor slot at 32 px/m.
+- 03:58 MILESTONE 686f1a8a NEXT 4: CombatBlood's kill routing (robot ids, dry kinds) split into BloodVictims
+  (combat_blood.gd 299 -> 297 lines); test_blood_victims, unit 991/0, scenario --filter=ghost 1/0.
+- 03:59 NEXT 5 Kerf re-filmed at 64 px/m on the merged head (`M/kerf-64ppm-halfspeed.mp4`): three blinks, four split
+  cops (teal-white cauterised halves), robot down; 5 ghost kills at ticks 95/115/135/195 (`E/ghosts-kerf-64-it6.json`).
+  FRICTION: the arena log's `react: ... 0 deaths` line prints at open, not at the end; the kill count is in the
+  telemetry (`hook_8.ghost_dead`), and `--telemetry=` needs an absolute path.
+- 04:00 Watched the it5 reel at 32 px/m (12 stills): Ohm reads weakest (small body, long range). Checked Ohm under
+  `--gore=reduced`: its kills bled full red pools (the X-ray signature is off there; the standard death bleeds).
+- 04:03 MILESTONE Ohm's bolt reports kill kind `electrocuted` (a BloodVictims.DRY_KILLS entry): under reduced gore
+  the cops drop whole and dry. A/B `M/frames/ohm-reduced-gore-ab-32ppm.png` (ticks 130/200/300/410), clip
+  `M/ohm-arena-gore-reduced-32ppm.mp4`. DECISION in decisions.md. Unit 991/0, scenario ghost 1/0, lint 13/13.

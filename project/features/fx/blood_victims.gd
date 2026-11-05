@@ -7,8 +7,9 @@ extends RefCounted
 enum Route { NONE, PLAYER, ROBOT, HUMAN }
 
 ## Kill kinds (events.json) that leave no red (lane human-reactions): a body burned to death lies
-## charred (HumanReact's char tint); Kerf's slice (ghost-powers) cauterises the cut.
-const DRY_KILLS: Array[StringName] = [&"burned", &"cauterised"]
+## charred (HumanReact's char tint); Kerf's slice (ghost-powers) cauterises the cut; Ohm's bolt
+## (ghost-powers) electrocutes: stun and burns, no blood.
+const DRY_KILLS: Array[StringName] = [&"burned", &"cauterised", &"electrocuted"]
 
 ## Actor ids drawn as robots: their death leaks oil, never red.
 var robot_ids: Dictionary[int, bool] = {}
