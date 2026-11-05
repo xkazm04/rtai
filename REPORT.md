@@ -27,13 +27,17 @@ Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_
    `held_scale` 1.5 -> 1.2. `sizes_after_cast1_48ppm_sheet.png`, `sidearm_size_ab_48ppm_sheet.png`.
 6. **The class walk**: heavy 0.85 strides and leans back 10 part px, chainsaw 0.9 / 6, long gun 0.95.
    `heavy_walk_ab_64ppm.mp4` (subtle). Heavy at the hip with the off claw: `gatling_hold_merged_48ppm_strip.png`.
-7. **The arsenal in motion** on the merged tree (look-8 tan guns): `arsenal_cycle_32ppm_city.mp4` (120 s, 32 px/m,
-   six bot runs on the city block, 14 of the 18 weapons; not shown: gloria, homing shard, assault rifle, electro gun)
-   and `arsenal_cycle_32ppm_sheet.png`.
+7. **The whole arsenal in motion**, all 18 weapons, on the merged tree (look-8 tan guns):
+   `arsenal_cycle_32ppm_city.mp4` (180 s, 32 px/m, nine `--bot=arsenal` runs on the city block, 0 script errors) and
+   `arsenal_cycle_32ppm_sheet.png` (one row per run).
 8. **Combat holds**: director reel (`--rigs --bot=reel --reel=director --loadout=pistol`) 19/19 chapters down,
-   0 SCRIPT ERROR on every hold commit (`evidence/held-it1/it2/it3-reel-director.log`). Full evidence run on `4ee85f09`
-   (`evidence/held-it3-evidence.log`): lint 13/13, unit 1108/0, scenarios 52/52, parity exact (planted caught at 629),
-   look goldens 11/11 + block 5/5 within mean 4 (worst 0.27): **no golden moved, no re-bless**.
+   0 SCRIPT ERROR on every hold commit and on the final head (`evidence/held-it1..it4-reel-director.log`).
+   Full evidence run on `65c15aa0` (`evidence/held-it4-evidence.log`): lint 13/13, unit 1110/0, scenarios 52/52,
+   parity exact (planted caught at 629), look goldens 11/11 + block 5/5 within mean 4 (worst 0.27):
+   **no golden moved, no re-bless**. (A scenario run made during filming had `scenario_rig_stress` 1.17 ms over its
+   1.0 ms budget. That was contention: it passed alone and in the evidence run.)
+9. **The A/B flags work in the exe** (`--torch-off-arm`, `--gun-off-claw`). They are now known launch flags, with a
+   unit case and a planted fault caught.
 
 ## What does not work yet (said plainly)
 
@@ -78,5 +82,7 @@ thrown/tube), so a loadout keeps the last of each slot; every other weapon lies 
 ## Next steps
 
 - The centre-line long-gun hold (RivetCarryAngle + helmet clearance + `across`/`gun_reach` together).
-- Drawn claw-around-grip part art (Codex, arms/claws only, under image.lock) and a darker off-claw tone.
+- Drawn claw-around-grip part art (Codex, arms/claws only, under image.lock) as a back jaw (under the weapon) and
+  front jaw (over it) pair, so the claw wraps the grip (registry `depth-ordered-layered-art`); a darker off-claw tone.
+- Per-class 64 px/m slow clips for sidearm and chainsaw, and an arena-pit segment in the whole-arsenal clip.
 - A not-aiming carry in the arena feed (walk with the gun lowered), which would also make `two_claw_out` visible.

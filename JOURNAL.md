@@ -263,5 +263,16 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   Re-run alone: 1 ran, 0 failed. `evidence/held-it4-scenarios.log`, `evidence/held-it4-rigstress-rerun.log`.
 - 17:43 EVIDENCE the whole-arsenal clip now has all 18 weapons: three more `--bot=arsenal --ppm=32` city runs
   (gloria + assault-rifle, electro_gun, homing_shard; 0 SCRIPT ERROR each) spliced onto
-  `arsenal_cycle_32ppm_city.mp4` (180 s); the sheet has 9 rows. Looked: the electro gun is shouldered with the
-  off claw on it; the homing shard is held in the long-gun hold; gloria is in one claw. frames.json notes updated.
+  `arsenal_cycle_32ppm_city.mp4` (180 s); the sheet has 9 rows. Looked (32 px/m contact rows): the electro gun and the homing shard ride
+  in the long-gun hold beside the gun shoulder; the off claw is not readable at that size (known). frames.json notes updated.
+- 17:47 MEASURE full evidence on 65c15aa0 (`--no-bench`): lint 13/13, unit 1110/0, scenarios 52/52, parity exact
+  (planted 629), look goldens 11/11 + block 5/5 (worst 0.27): nothing moved, no re-bless.
+  `evidence/held-it4-evidence.log`. Director reel on the same head (headless, 7200 ticks): 19/19 chapters
+  down, 0 SCRIPT ERROR (`evidence/held-it4-reel-director.log`).
+- 17:50 REPORT.md final (header, works 7-9, does-not-work two-layer claw rule, next steps). Exe stays at acb70e5f:
+  every commit after it is docs/evidence only (no project/ change).
+- NEXT (the next lane day): the owner's verdicts on the 7 calls in REPORT; then call 7's pick (centre-line long
+  gun + the two-layer drawn claw pair through Codex), per-class 64 px/m clips for sidearm and chainsaw, an
+  arena-pit segment for the arsenal clip. If any project/ file moves before 18:30: re-run unit + scenarios and
+  re-export the exe (`"$GODOT_BIN" --headless --path project --export-release windows-showcase
+  ../build/export/windows/RTAI.exe`), then fix the sha in REPORT.
