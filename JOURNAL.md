@@ -287,3 +287,31 @@ Session state 01:29: head = this commit, tree clean, no Godot process of mine ru
 - 02:05 TRIED + REVERTED Kerf afterimages as a top-down body (teal shoulder oval + head) in place of the rings:
   filmed at 64 px/m twice (faint, then bolder); both read as small teal "eyes" on the path, weaker than the
   rings. Not committed. The real fix is a ghost copy of the Kerf form rig once ghost-forms builds it.
+- 02:08 GATES on the iteration-3 head (4db4eed5 code = 7fd55cb6): unit 968/0 (`E/unit-it3.log`), scenarios 47 ran
+  / 0 failed, 0 SCRIPT ERROR (`E/scenarios-it3.log`), lint 13/13 every commit.
+- 02:10 MILESTONE 9b0ad775 Ohm's mass arc fans out from the first body (OhmStage.bolt_from: each path point's
+  source; the base bolt still chains, so tier 0 is unchanged): before|after `M/frames/ohm-mass-chain-vs-fan-32ppm.png`
+  (ticks 91/93). Judged at 32 px/m: the burst from the robot to each cop reads as a mass spell, the chain read as
+  one long bolt. Unit test_ohm 4/4 (new: the fan reaches bodies past the fork radius); scenario_ghost_attacks 1/0
+  on this head (`E/scenario-ghost-it3-final.log`).
+
+NEXT (iteration 4, ghost-powers):
+1. Merge n6-ghost-forms and n5-cast tips if they moved (keep ours on JOURNAL/REPORT/evidence name clashes). NOTE
+   for ghost-forms (in REQUEST form below): GhostPilot now carries kerf/ohm (7b053cc7); their edits to
+   ghost_pilot.gd will conflict lightly.
+2. When the Kerf and Ohm rigs land (forms lane): re-film both on their bodies (arena 32, city 32, 64 slow), map
+   OhmStage.HANDS_M to the `electrodes` anchor from ghost_forms.json, and replace Kerf's afterimage rings with a
+   faded copy of the Kerf rig (the shape try at 02:05 failed).
+3. Re-cut the four-ghost reel (`M/ghost-attacks-reel-32ppm.mp4`) from the iteration-3 clips (Tonnage/Dent on
+   their bodies, Dent and Tonnage city beats, Ohm's teal kill, the mass fan).
+4. Call for the owner still: Tonnage crush vs the standard pile (`--gore=reduced` at the same tick) side by side.
+5. Dent: a car-follow camera for the 64 px/m close-up (the strikes leave the frame); Dent riding the car (optional).
+6. The evidence runner (`node tools/evidence/run.mjs`) has not been run by this lane tonight.
+Session state 02:13: head = this commit, tree clean, no Godot process of mine running, masters scratch empty,
+image.lock never taken, bench never run.
+
+### REQUEST 4 -> n6-ghost-forms (02:13)
+GhostPilot (your file) now holds `kerf: KerfStage` and `ohm: OhmStage` (merge 7b053cc7 on n6-ghost-powers): both
+`share(powers)`, driven only while `settled_in(&"kerf"|&"ohm")`, owns_melee covers them, write_state appends theirs.
+Please merge n6-ghost-powers before editing ghost_pilot.gd again. Kerf moves Rivet by `rivet.pos` on the blink tick
+(snap the rig); Ohm's bolt leaves 0.45 m ahead (`OhmStage.HANDS_M`) until I read your `electrodes` anchor.

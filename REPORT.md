@@ -20,8 +20,8 @@
 | **Through the real switch** (iteration 3): GhostPilot (ghost-forms) drives all four; Kerf and Ohm share its one SoulPowers, G selects the ghost, Q transforms, the attacks fire once the form is settled; every beat still clears | `scenario_ghost_attacks` 1/0 (`E/scenario-ghost-it3.log`); decisions.md 2026-11-05 "Kerf and Ohm run inside GhostPilot" |
 | **City block, all four** (iteration 3, after the placement fix): Tonnage 10/10 + 2 cars crushed; Dent 5/5 (1 seize, 5 strikes, blown on command in group B; the car keeps out of buildings); Kerf 5/5; Ohm 5/5 | `M/dent-city-32ppm.mp4`, `M/frames/dent-city-keys-32ppm.png`, `M/tonnage-city-32ppm.mp4`, `M/frames/tonnage-city-crush-keys-32ppm.png`; `E/ghosts-dent-city-32.json`, `E/ghosts-tonnage-city-32.json` |
 | **Ohm's kill in soul teal**: row `ohm_shock` (X-ray shock, `edge: soul`): teal arcs, teal-white zap star; the electro gun keeps cream | `M/frames/ohm-kill-teal-ab-64ppm.png` (before/after, same ticks); unit `test_ohm_attacks` 3/3 |
-| **Ohm's mass arc** (upgrade_tier 1, `--tier=1`): one bolt walks the whole group; the knot down one bolt sooner | `M/frames/ohm-mass-tier1-32ppm.png`, `M/ohm-mass-tier1-32ppm.mp4`, `E/ghosts-ohm-mass-32.json` |
-| Gates (iteration 3 head): lint 13/13 every commit; unit 968/0; director reel 16/16 chapters down, 0 script errors | `E/unit-it3.log`, `E/director-reel-it3.log` |
+| **Ohm's mass arc** (upgrade_tier 1, `--tier=1`): the arc bursts out from the first body to every body within 8 m (was a chain walk); the knot down one bolt sooner | `M/frames/ohm-mass-chain-vs-fan-32ppm.png` (before/after), `M/ohm-mass-tier1-32ppm.mp4`, `E/ghosts-ohm-mass-32.json` |
+| Gates (iteration 3 head): lint 13/13 every commit; unit 968/0 (+1 since: test_ohm 4/4); scenarios 47 ran / 0 failed (`E/scenarios-it3.log`), scenario_ghost_attacks 1/0 on the final head; director reel 16/16 chapters down, 0 script errors | `E/unit-it3.log`, `E/director-reel-it3.log` |
 | `--gore=reduced`: Kerf's victims fall whole (0 signature kills); `--reduced-motion`: no afterimages, no flicker | `E/ghosts-kerf-reduced-32.json`, `E/kerf-reduced-run.log` |
 
 ## What does not work yet
