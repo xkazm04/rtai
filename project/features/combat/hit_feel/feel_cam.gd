@@ -101,7 +101,7 @@ func spin_tremor(tick: int) -> Vector2:
 	if px <= 0.0 or full <= 0 or trig.spin <= 0 or trig.spin >= full:
 		return Vector2.ZERO
 	var amp: float = px * float(trig.spin) / float(full)
-	return Vector2(sin(tick * 2.3), cos(tick * 3.1)) * amp
+	return Vector2(sin(tick * 1.1), cos(tick * 1.6)) * amp  # about 10 and 15 Hz: a rumble, not a blur
 
 
 func _on_struck(victim: Fighter, dir: Vector2, lethal: bool, weapon: StringName) -> void:
