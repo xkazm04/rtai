@@ -174,4 +174,6 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   lint 13/13. In game at 48 px/m the A/B (`chainsaw_two_claw_ab_48ppm.png`) shows no clear change:
   either the arsenal bot already aims with the chainsaw (the before had both claws too) or it is a
   few px. NEXT item 3 becomes: verify at 64 px/m (log rig.aiming with the chainsaw), then the grind
-  judder. Full unit gate not rerun on this commit (time); run it first next iteration.
+  judder. Full unit gate on 1eab6a14: 1107/0 (`evidence/held-it2-unit-final.log`).
+- 16:45 STOP iteration 2. Head 1eab6a14 + this journal. NEXT is the list above (16:34), item 3 as
+  amended at 16:41. Scratch cleaned (2.9 GB of avi); frames.json 15 entries, all present.
