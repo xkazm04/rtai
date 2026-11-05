@@ -1045,3 +1045,10 @@ Session end 04:44: tree clean after this commit, no Godot process of mine runnin
   and the specks fail `motion-quality-gating` (1 px marks shimmer in motion). Not built. Still
   `M/frames/collar-thin-trial-32ppm.png` (not in frames.json; REPORT Call 7 may cite it). NEXT 2(b) closed: the ring
   read is the collar's size vs a ~20 px body, a proportion question tied to Call 1, not a print fix.
+- 04:44 the power forms and the tan: the Hauler is Rivet's own rig scaled (hauler_look), so it carries the tan core by
+  design (Rivet's read, like the collar). `dev/ghost-powers/powers_clip.tscn -- --cops --every=4` (real city,
+  32 px/m, 0 SCRIPT ERROR): transform, drive-through and stomp play; the tank's plate prints tan inside the hazard
+  collar, the teal soul glow stays distinct. `M/frames/hauler-tan-core-32ppm.png` (ticks 250, 440, x3). No change
+  needed. The 48 px/m claim holds: the sticker threshold is parts_flat_below 0.13 screen px per part px (~42 px/m).
+Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+  `gtai-n5/scratch-cast/i17` keeps logs only. NEXT (iteration 18) as written above; 2(b) is closed (see 04:42).
