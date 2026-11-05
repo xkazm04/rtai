@@ -56,9 +56,10 @@
       "travel_m": 0.2
     },
     {
-      "doc": "Electro: convulses in place, the hat jolting.",
+      "doc": "Electro: thrown along the bolt on the hit frame (snap_m), then convulses in place, the hat jolting.",
       "id": "stun",
       "len_s": 1.2,
+      "snap_m": 0.3,
       "travel_m": 0.08
     },
     {

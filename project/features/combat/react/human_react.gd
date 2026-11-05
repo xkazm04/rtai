@@ -14,6 +14,8 @@ var kind: StringName = &""
 var t: float = 0.0
 var length: float = 0.3
 var travel: float = 0.0
+## The hit snap (part px): thrown this far along `dir` on the hit frame, eased back (ReactPose).
+var snap_px: float = 0.0
 ## The hit direction in rig space (+x = the way the body faced when hit), unit length.
 var dir: Vector2 = Vector2.LEFT
 var side: float = 1.0
@@ -57,6 +59,7 @@ func play(rig: CutRig, p_kind: StringName, world_dir: Vector2, table: ReactTable
 	t = 0.0
 	length = maxf(table.length(p_kind), 0.05)
 	travel = table.travel(p_kind) * PX_M
+	snap_px = table.snap(p_kind) * PX_M
 	var d: Vector2 = world_dir.normalized().rotated(-rig.facing)
 	dir = d if d != Vector2.ZERO else Vector2.LEFT
 	side = 1.0 if dir.y >= 0.0 else -1.0
