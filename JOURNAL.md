@@ -620,7 +620,18 @@ NEXT (iteration 8, ghost-powers):
    first: a quest-side car source over the city's parked cars, or keep Dent out of quest 1's selection (one data
    value) until its act quest. Either changes quest 1's sim or selection: replay goldens, decisions line.
 3. Combat check again after any merge (`--bot=reel --reel=director` headless, `--quit-after 24000`).
-4. Quality: the quest 1 Tonnage film on the merged head (StoryForms now silences the voice in a form: the
-   telegraph should be clear of the apparition), then a 64 px/m Tonnage telegraph still in quest 1.
+4. (done 05:08, below) quest 1 Tonnage on the merged head. NEW quality item: Tonnage's die-plate telegraph
+   (TonnageView, z actors-2) sits mostly UNDER the forms lane's 3x press body at 32 px/m (it lands 0.9 m ahead,
+   inside the body's footprint), so the wind-up warning barely reads, in the arena too. Fix to try: draw the
+   telegraph's teal edge and dropping square on a second node above the actors (the crack stays under), or push
+   the plate's draw out past the body's front; A/B at 32 and 64 px/m in quest 1 and the arena.
 Session state 05:05: no Godot process of mine running, no lock held (image.lock and bench.lock never taken),
 masters scratch holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
+- 05:08 COMBAT CHECK director reel on the merged head 9b5ae95f: 16/16 chapters down, the same counts as iteration 6,
+  0 SCRIPT ERROR (`E/director-reel-it7-merged-powers.log`, `-powers` suffix per NEXT 1).
+- 05:08 quest 1 Tonnage on the merged head (dev quest_hauler_rec): the forms lane's press body stands in for Rivet,
+  the voice apparition is gone in the form (their StoryForms), one slam: 1 stomp hit, 3 ram hits, 4 kills, one crack
+  and ring (CastView), 0 SCRIPT ERROR. `M/frames/quest1-tonnage-telegraph-keys-32ppm.png` re-shot (frames 226-292).
+  Judged: the telegraph is mostly hidden under the body (NEXT 4).
+Session state 05:09: head = this commit, tree clean, no Godot process of mine running, no lock held, masters scratch
+holds only film.sh, reel.sh and two logs, frames.json 15 (all present).
