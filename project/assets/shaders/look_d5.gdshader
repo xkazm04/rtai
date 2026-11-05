@@ -35,6 +35,7 @@ uniform float grain_floor = 0.0;   // the world-locked paper tooth below the D5 
 uniform float riso = 0.0;
 uniform float dot_k = 0.3;         // halftone contrast in the mid-tone fills (the mean tone is kept)
 uniform float dot_period = 4.0;    // screen px between dot centres along the 45-degree screen
+uniform float dot_patchy = 0.0;    // uneven riso inking: the dot contrast dips in soft world-locked patches (0 = even)
 uniform float plate_k = 0.5;       // colour-plate misregistration: ghost + paper sliver strength
 uniform vec2 plate_mis = vec2(1.0, -1.0); // the colour plate's offset in screen px
 uniform float fibre_k = 0.5;       // paper fibre strength (dark and light strands)
@@ -85,7 +86,8 @@ vec3 riso_print(vec3 o, vec3 c, float d, vec2 w, vec2 uv, vec2 tx) {
 	float tone = smoothstep(0.08, 0.2, d) * (1.0 - smoothstep(0.88, 0.97, d));
 	if (tone > 0.0 && vden(c) < 0.3) {
 		float cov = clamp(d, 0.05, 0.95);
-		o = clamp(o * (1.0 + (cov - halftone(w, cov)) * dot_k * riso * tone), 0.0, 1.0);
+		float ink = 1.0 - dot_patchy * smoothstep(0.35, 0.7, vnoise(w * 0.035 + 21.7));
+		o = clamp(o * (1.0 + (cov - halftone(w, cov)) * dot_k * riso * tone * ink), 0.0, 1.0);
 	}
 	// the colour plate printed plate_mis px off: its ghost on the neutral print, a paper sliver opposite
 	vec3 cg = texture(screen_tex, uv - plate_mis * tx).rgb;
