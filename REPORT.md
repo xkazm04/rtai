@@ -2,7 +2,8 @@
 
 Branch `d7-held` (cut from main `1028c15d`; d7-calls merged three times, last `ecb8a675`).
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d7\held\` (`frames.json`, 15 entries) and `evidence/held-*.log`.
-Exe: `build/export/windows/RTAI.exe` (**TODO at the freeze: export, then fill in the sha**).
+Exe: `build/export/windows/RTAI.exe`, exported 17:25 at `5bbc95b5` (windows-showcase, boots into the arena;
+smoke `RTAI.exe -- --arena=city --rigs --loadout=katana`: 6 s, 0 script errors). **Re-export at the freeze if HEAD moves.**
 
 ## What works (with evidence)
 
@@ -59,7 +60,7 @@ thrown/tube), so a loadout keeps the last of each slot; every other weapon lies 
    `sidearm_size_ab_48ppm_sheet.png`; `RTAI.exe -- --arena=city --rigs --loadout=pistol`.
 4. **The off claw on two-claw weapons.** A: plain forearm + closed claw on the barrel while aiming (built). B: the
    welding torch stays (`--torch-off-arm`). `long_gun_offclaw_ab_*`;
-   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,gatling` vs the same `--torch-off-arm`.
+   `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,gatling` (long slot + heavy slot) vs the same `--torch-off-arm`.
 5. **The claws follow the long gun beside the helmet.** A: follow (built). B: the gun floats a claw-width off
    (`--gun-off-claw`). `long_gun_claw_follow_ab_*`;
    `RTAI.exe -- --arena=city --rigs --loadout=plasma_rifle,rocket_launcher` vs the same `--gun-off-claw`.

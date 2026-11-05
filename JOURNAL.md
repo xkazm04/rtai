@@ -226,3 +226,7 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   3. Finish REPORT.md (drop "DRAFT", the final sha, the evidence run result).
   4. Only if time: off-claw tone (modulate `claw_grip` darker, A/B at 64 px/m), or the 4 weapons
      missing from the arsenal clip (gloria, homing_shard, assault-rifle, electro_gun).
+- 17:27 EXPORT `build/export/windows/RTAI.exe` at 5bbc95b5 (`--export-release windows-showcase`, exit 0,
+  no baked chunks needed for the export). Smoke `RTAI.exe --quit-after 360 -- --arena=city --rigs
+  --loadout=plasma_rifle,katana`: 0 SCRIPT ERROR (katana and plasma rifle share slot 1: katana kept).
+  NEXT item 1 is now: re-export only if HEAD moves after 5bbc95b5.
