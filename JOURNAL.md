@@ -193,3 +193,13 @@
 - REQUEST held: 6179bf2d regenerates `gatling/held_small.png` via `tools/art/held_small.py` (new per-weapon
   EDGE_OF / CLOSE_OF; Gatling only, every other small art unchanged). Neither file is in your diff; if you
   re-run held_small.py for any weapon, keep those two dicts.
+- 17:37 MEASURE scenarios on 6179bf2d: 52 ran, 0 failed, 0 SCRIPT ERROR (evidence/scenarios-it5-gatling.log).
+- 17:38 MILESTONE Gatling in motion: `--loadout=gatling --weapon=gatling --bot=range` 18 s at 32 and 48 px/m
+  (M/look-8-gatling-range-{32,48}ppm.mp4, 0 SCRIPT ERROR); firing close-up M/frames/look-8-gatling-firing-48ppm-
+  closeup.png: tan steel bundle, ink outline, casings. frames.json: + the 48 A/B and the 48 clip; dropped the
+  cast quest 1 sprite still and the Dent 64 half-speed clip from the list (files kept: REPORT cites them). 15 entries.
+- 17:39 exes re-exported on 6179bf2d (showcase + quest 1 slice, exit 0); headless boots 0 SCRIPT ERROR, 0 unknown
+  arg; showcase logs "Rivet holds the table gatling". REPORT: row, gates, exe line, "does not work", call 8 (A built,
+  B gun_edge 1.4, C old art), next steps. f41346c2.
+- READ held JOURNAL 17:41: they merged d7-calls up to 339397ef (exe acb70e5f); my 6179bf2d REQUEST is new for them.
+- 17:42 full evidence run (--no-bench) on f41346c2 started (last one was on 83fe0d5c).
