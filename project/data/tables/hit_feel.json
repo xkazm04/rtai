@@ -159,8 +159,8 @@
   "schema": "gtai.hit_feel/1",
   "weapons": [
     {
-      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 0.7 px kick against the aim per round (4 ticks), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur.",
-      "fire_kick_px": 0.7,
+      "doc": "About 15 rounds a second: no stop and no shake per round (the class's 3-tick stop would stutter at the cooldown); a small kick each, held steady by the cap. Fire: a 1.8 px kick against the aim per round (4 ticks; 0.7 measured +0.07 px rms, unreadable), so sustained fire is a steady rumble under the 1-kick-per-tick cap, never a blur.",
+      "fire_kick_px": 1.8,
       "fire_kick_ticks": 4,
       "hitstop": "",
       "id": "gatling",
