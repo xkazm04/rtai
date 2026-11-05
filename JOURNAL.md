@@ -246,4 +246,4 @@ Session state 01:24: head = this commit, tree clean, no Godot process of mine ru
   (01:03, dent_parts) and deleted by this lane. Gates this session: lint 13/13 every commit, unit 955/4 on 94b7c56d
   (the 4 = test_tonnage_attacks' slam timing, fixed; that test 2/2 + test_ghost* 15/15 + test_dent 3/3 + test_rig*
   36/36 after), scenarios 47/0 on 2bdc3fbf, director reel 16/16 on c543ccd9. Not run: the full unit suite after
-  c543ccd9, parity, the evidence runner (NEXT 5).
+  c543ccd9 (since run: 962 passed, 0 failed on d57927da, `E/unit-iter2-final.log`), parity, the evidence runner (NEXT 5).
