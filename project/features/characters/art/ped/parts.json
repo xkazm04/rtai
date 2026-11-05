@@ -256,18 +256,18 @@
  },
  "torso_hoodie": {
   "size": [
-   166,
+   131,
    214
   ],
-  "sheet": "night:d4n_ped_d.png",
+  "sheet": "n5/cast/gen/r7/out/ped_plan_c.png",
   "cell": 1,
   "scale": 1.0,
   "pivot_a": [
-   99.0,
+   78.0,
    107.0
   ],
   "pivot_b": [
-   56.0,
+   44.0,
    106.5
   ]
  },
