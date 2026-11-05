@@ -30,6 +30,8 @@ func _ready() -> void:
 	add_child(_ground)
 	add_child(_rig)
 	add_child(_air)
+	@warning_ignore("return_value_discarded")
+	ServoHorn.attach(self, fight)  # rush hour's shift horn (render side)
 	var errs: Array[Error] = [
 		_ground.draw.connect(_draw_ground),
 		_air.draw.connect(_draw_air),

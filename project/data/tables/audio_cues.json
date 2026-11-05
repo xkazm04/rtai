@@ -512,6 +512,21 @@
       "priority": 2,
       "sound": "body_fall",
       "takes": 3
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 120,
+      "doc": "Servo's depot shift horn: rush hour opens (features/bosses/servo/servo_horn.gd); the vehicles lane's horn pitched down",
+      "gain_db": -4,
+      "id": "servo_horn",
+      "loop": false,
+      "max_m": 0,
+      "max_voices": 1,
+      "pitch": 0.62,
+      "pitch_jitter": 0,
+      "priority": 5,
+      "sound": "horn",
+      "takes": 1
     }
   ],
   "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest).",
