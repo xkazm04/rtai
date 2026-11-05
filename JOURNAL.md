@@ -541,3 +541,4 @@ NEXT (iteration 5, in order; replaces the list above):
 NEXT (iteration 5): items 2-7 of the 22:08 list (item 1 is done). Start with 2 (BossBot rolls
 when its sidestep is blocked; re-measure the dodging dash and the fight length), and re-run
 scenarios + the director reel on the head first.
+- 22:14 GATES: scenarios 52 ran / 0 failed, 0 SCRIPT ERROR (`evidence/servo/scenarios-it4b.log`), started on 15346f87 (the dash smash; the render-only debris landed while it ran). Lint 13/13 and unit 1161/0 on 15346f87. Session ends with everything committed.
