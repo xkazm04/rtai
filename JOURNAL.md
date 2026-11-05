@@ -24,3 +24,25 @@
 - FINDING: with cast-1 the pistol in Rivet's claw looks long against his smaller body at 32 px/m (held guns follow
   size_k: 0.74x). The held lane owns held sizes; noted for them.
 - FRICTION: `node tools/evidence/run.mjs` refuses a dirty tree (untracked JOURNAL) -> `--allow-dirty`.
+- 15:45 MILESTONE cast group gated on 66bf4fbe: evidence run (no bench) lint 13/13, unit 1091/0, scenarios 51,
+  parity exact, look goldens 11/11 worst 0.27 + block 5/5 worst 0.22 (no re-bless needed: Rivet is a small part of
+  the golden frames); director reel headless 19/19 chapters down, 0 SCRIPT ERROR (evidence/).
+- FRICTION: `--write-movie build/x.avi` (relative) fails silently (ERR_CANT_OPEN, resolves against project/);
+  use an absolute path. The headless reel never quits by itself: pass `--quit-after 7000`.
+- 16:00 MILESTONE look group 42feb65c (+ decision 18137e62): look-3 ink FX (`--fx-colour=on` = colour), look-5 alley
+  print off (`--alley-print=on` = before), look-7 paper disc (`--pickup-disc=off` = ring), look-12 shard.png,
+  look-14 flame tongues, look-18 cross_k 1.0. Unit 1091/0, lint 13/13, after-reel 0 SCRIPT ERROR. Evidence
+  `M/frames/look-3-12-14-reel-ab-32ppm.png`, `M/look-reel-{before,after}-32.mp4`, `M/frames/look-5-alley-ab-32ppm.png`.
+- FINDING look-14: the ink flame tongues print vermilion + cream (danger ink: fire is danger, on doctrine); the
+  colour cone was yellow-orange. Reads as a strong burst in motion.
+- FINDING look-5: at 32 px/m, tick 600, the alley A/B barely differs. Not yet understood: check at 48 px/m (the
+  alley's default zoom) and whether the print zone needs Rivet inside its fade.
+- NEXT (iteration 3): (1) full gates on 42feb65c (look goldens may move with ink FX? they have no FX, expected
+  stable) + reel 19/19; (2) look evidence still owed: the shard in flight (homing_shard chapter, tick 4710-4790,
+  pick a frame with the round mid-air), the Gatling held (`--loadout=gatling` or the pit), a pickup on the floor
+  (disc vs `--pickup-disc=off`), alley at 48 px/m; check each against the reel and raise a call if one reads worse;
+  (3) item 3 Dent: draft `build/patch/ghost_locks.gd` is ready (GhostLocks: on/done/plant_ignore, allows,
+  next_after, first); wire into GhostForms (press_next/press_transform/switch_to -> LOCKED), `unlock` field in
+  GhostFormDef + ghost_forms.json (dent "dent_act") + schema, Quest1Session sets `pilot.ghosts.forms.locks.on`,
+  HUD locked chip, scenario with planted fault, `collect_call_city.json ghost_cars []`, `dent.ride 0` + tether
+  check; (4) look-8 tan ink; (5) 20-30 s city clips per group, combined clip, exe by 19:30, REPORT.
