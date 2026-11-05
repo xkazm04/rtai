@@ -281,3 +281,7 @@ every code, data and art path merges clean. The conflicts are the lane docs (`JO
 92e8c3fb, 618d6eb8, 91aac1aa; look: its own re-bless lines in `docs/decisions.md`). Take either side's PNGs, then run
 `tools/evidence/run.mjs --no-bench` on the merged tree and re-bless once, with one dated decisions line naming both
 lanes' changes (cast: slim cops, hybrid Rivet, plan-view peds, the 32 px/m collar, visor and tan core stickers).
+Against d6-combat-notes (17414367), d6-perf-city (e723c25e), n6-ghost-powers (708d5672) and n6-ghost-forms
+(91b6b866) only the lane docs conflict. Semantic check: n6's `DentPlan` builds from `RivetPlan.build()` but sets
+`collar_part = ""` and `raw_parts`, so it cannot pick up cast's collar-core stickers (visor slot, tan core: both need the
+collar core); n6's `cut_rig.set_tint` edit keeps `PartMaterials.get_mat(kind, ...)`, which takes the new `TAN_CORE`.

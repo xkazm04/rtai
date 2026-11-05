@@ -1056,3 +1056,7 @@ Session end 04:44: tree clean after this commit, no Godot process of mine runnin
   --write-tree --name-only HEAD n5-look` (cb34af73): code, data and art merge clean; conflicts only in JOURNAL.md,
   REPORT.md (add/add) and 16 look goldens both lanes re-blessed. REPORT "Merge note for the Director": take either
   side's goldens, gate the merged tree, re-bless once with one decisions line. No n5-look REQUEST to cast.
+- 04:52 merge check widened: d6-combat-notes, d6-perf-city, n6-ghost-powers, n6-ghost-forms conflict with n5-cast only
+  in JOURNAL/REPORT. Semantic: n6's DentPlan is built on RivetPlan.build() but has no collar and raw parts, so it gets
+  neither the visor slot nor the tan (both gated on the collar core); n6's set_tint edit still calls get_mat(kind)
+  and takes TAN_CORE. REPORT merge note extended.
