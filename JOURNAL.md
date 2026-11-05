@@ -1007,7 +1007,7 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   COMBAT CHECK director reel headless (`res://dev/arena/arena.tscn -- --bot=reel --reel=director --clean --rigs
   --loadout=pistol`, 7200 frames): 16/16 chapters down, 0 SCRIPT ERROR. (FRICTION: without the scene path the args
   are ignored by boot and nothing runs; always pass `res://dev/arena/arena.tscn`.)
-- 04:40 clean live A/B: re-filmed the before clip at CORE_TAN 0 by a local edit, reverted with git checkout (never
+- 04:33 clean live A/B: re-filmed the before clip at CORE_TAN 0 by a local edit, reverted with git checkout (never
   committed); the iteration 16 before clip carried the telemetry HUD. `M/cast-tan-director-ab-32.mp4` (19 s),
   `M/cast-tan-city-ab-32.mp4` (15 s), crops `M/frames/rivet-core-tan-director-crops-32ppm.png`. Honest read: on the
   grey concrete and asphalt the change is quiet (warm beige for white); it matters most on the cream slab, where the
@@ -1019,10 +1019,10 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
   `M/frames/rivet-core-tan-quest1-ab-32ppm.png`. The tan core separates the body from the cream limb rims and the
   outline; the collar still leads. All three live paths checked. frames.json 15 (quest 1 A/B second; lineup ladder
   dropped from the list, file kept for REPORT). REPORT section 3 and Call 9 cite it.
-- 04:41 brief item 5's still re-shot on d2b91a42: `M/frames/cast-ingame-vs-r2c6.png` (city `--arena=city
+- 04:39 brief item 5's still re-shot on d2b91a42: `M/frames/cast-ingame-vs-r2c6.png` (city `--arena=city
   --loadout=pistol,machine_pistol`, tick 720, lossless from the AVI, same crop x1.78 + Rivet x4; 0 SCRIPT ERROR).
   Rivet's tan core and visor slot are in the in-game panel now. frames.json entry updated.
-- 04:43 checks on the tan: the hit flash (`tint`, print_part line 128) still forces cream over the tan core after the
+- 04:40 checks on the tan: the hit flash (`tint`, print_part line 128) still forces cream over the tan core after the
   sticker branch, so the flash still reads; D-Noir (dev-only) replaces the colour wholesale, unaffected.
 
 NEXT (iteration 18), replaces the 04:06 list:
@@ -1035,7 +1035,7 @@ NEXT (iteration 18), replaces the 04:06 list:
    collar band at 32 px/m is untried: `print_part` COLLAR branch could ink the ring's inner half, judged on the
    director reel and the slab lineup, only if the vermilion still leads).
 3. If nothing in 2 is buildable without the owner: re-run the gate on the final tree before the 08:30 freeze.
-Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+Session end 04:40 (premature, see 04:45): tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` keeps logs only (renders deleted).
 - 04:42 NEXT 2(b) TRIAL, reverted on purpose (git checkout of print_part.gdshader, nothing committed): a thinner
   collar band at 32 px/m. Trial uniforms in the COLLAR branch: below UV radius `collar_r0` (ring spans 0.30-0.49) the
@@ -1050,17 +1050,18 @@ Session end 04:44: tree clean after this commit, no Godot process of mine runnin
   32 px/m, 0 SCRIPT ERROR): transform, drive-through and stomp play; the tank's plate prints tan inside the hazard
   collar, the teal soul glow stays distinct. `M/frames/hauler-tan-core-32ppm.png` (ticks 250, 440, x3). No change
   needed. The 48 px/m claim holds: the sticker threshold is parts_flat_below 0.13 screen px per part px (~42 px/m).
-Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+Session end 04:40 (premature, see 04:45): tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` keeps logs only. NEXT (iteration 18) as written above; 2(b) is closed (see 04:42).
-- 04:50 (session continues; the 04:44 "session end" line was early) MERGE CHECK for the Director: `git merge-tree
+- 04:45 (session continues; the "session end" lines above were early) MERGE CHECK for the Director: `git merge-tree
   --write-tree --name-only HEAD n5-look` (cb34af73): code, data and art merge clean; conflicts only in JOURNAL.md,
   REPORT.md (add/add) and 16 look goldens both lanes re-blessed. REPORT "Merge note for the Director": take either
   side's goldens, gate the merged tree, re-bless once with one decisions line. No n5-look REQUEST to cast.
-- 04:52 merge check widened: d6-combat-notes, d6-perf-city, n6-ghost-powers, n6-ghost-forms conflict with n5-cast only
+- 04:47 merge check widened: d6-combat-notes, d6-perf-city, n6-ghost-powers, n6-ghost-forms conflict with n5-cast only
   in JOURNAL/REPORT. Semantic: n6's DentPlan is built on RivetPlan.build() but has no collar and raw parts, so it gets
   neither the visor slot nor the tan (both gated on the collar core); n6's set_tint edit still calls get_mat(kind)
   and takes TAN_CORE. REPORT merge note extended.
-- 04:55 measured the tan against r2_c3 (pixels, lit 60-95 % of each box): fig 2 shoulder plates (189,156,128) sat 0.32;
+- 04:48 measured the tan against r2_c3 (pixels, lit 60-95 % of each box): fig 2 shoulder plates (189,156,128) sat 0.32;
   built 0.6 = (219,200,172) sat 0.21; 1.0 = (204,178,144) sat 0.29; r2_c3's ground (133,117,103). C (1.0) is the
   closer colour, A (0.6) the lighter sticker for our dark asphalt / cream slab. Kept A (judged in motion on both
   grounds), numbers added to REPORT Call 9 for the owner.
+- 04:49 timestamps in this iteration corrected to the real clock (several were written ahead of it).
