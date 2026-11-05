@@ -799,3 +799,10 @@ Session state 06:47: tree clean after this commit, no Godot process of mine runn
   kerf-vs-target entry). Judged: jointed limbs trailing and a teal glow on asphalt and on the pale kerb; the exit
   burst back to the slim Rivet. Session ends 06:48: tree clean after this commit, no Godot process of mine running,
   no lock held.
+
+## Iteration 13 (BUILD, 06:48 - 07:48)
+- 06:48 read JOURNAL, git log, the ghost-powers and cast JOURNALs (no new REQUEST to us). Both moved.
+- 06:50 MERGE n6-ghost-powers d439f520 (scenario_quest1_dent) as 08db533d; MERGE n5-cast 84ed1bd1 (quest 1's cast
+  sprites re-captured from the slim rigs) as b0c7fdf2; JOURNAL/REPORT/it7 logs kept ours. Unit (with import)
+  1016/0 (E:unit-it13-merged.log); COMBAT CHECK director reel 16/16 chapters n/n down, 0 SCRIPT ERROR
+  (E:director-reel-it13-merged.log).
