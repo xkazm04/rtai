@@ -3,7 +3,7 @@
   "drone": {
     "accel_mps2": 28,
     "arrive_m": 0.35,
-    "cruise_mps": 9,
+    "cruise_mps": 12,
     "fly_h_m": 3,
     "hover_s": 0.7,
     "launch_s": 0.5,
