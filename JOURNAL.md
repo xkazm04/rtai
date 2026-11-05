@@ -798,3 +798,102 @@ NEXT (iteration 6, in order):
   ram 0.31**, charge 0. No one attack carries the fight now (it4: coin fan 0.47). The slam's hits went
   up as the bot now steps off the wreck's side into the ring: worth a look on film (NEXT 2).
   Band: still easy (the human survives 5/5). The session ends here, everything committed.
+
+## Iteration 6 (23:07-00:07): BUILD
+
+Read: JOURNAL (NEXT of it5), git log. Servo's JOURNAL: no new REQUEST to king since REQUEST 5.
+Registry rules applied: motion-quality-gating (judge in motion at game zoom on the live path; a
+contact sheet per clip, looked at), depth-ordered-layered-art (the HUD layer must not hide the
+boss bar: one owner per screen band).
+
+### 23:16 MILESTONE the boss cam stays on the floor (46c6e6ed; NEXT 3)
+- `BossCam.clamp_focus(focus, half_m, area)`: the centre is clamped so the screen (half of the
+  viewport over the print stage's ppm) stays inside `BossHook.bounds` (the arena record's area);
+  an axis where the view is wider than the area sits on its centre. Render only (SIM-03).
+- Unit test_boss_cam 4/4 (inside unchanged; planted: the west end and past the north edge pull in;
+  a view taller than the area centres; an empty rect keeps the focus). Unit **1153/0**.
+- **Looked at** phase 1 at 32 px/m: 12 frames, all on the boulevard's asphalt (it4/it5 showed the
+  cream off-floor ground at the edge). Fixed.
+
+### 23:19 FIX the boss bar was half hidden in every arena clip (1d594e51)
+- Found on the phase-3 film: the dev arena's telemetry panel (top left, 470 px) covers the boss
+  bar's left third, i.e. **all of phase 3's band** (hp_below 0.33): the bar looked empty from tick
+  374 while King fought on to tick ~1200. Not a sim bug: the bar was right, the panel sat on it.
+  Every earlier clip in masters has it (it3-it5).
+- The panel is now hidden under `--boss` unless `--hud` (the boss bar is the HUD there; `--clean`
+  as before). So the owner's `RTAI.exe -- --boss=king` shows the bar whole. View only.
+- BossBar's pale lost-hp trail started at 1.0, so a `--phase=N` start showed a fall from a full bar:
+  it now starts at the fight's hp on the first frame.
+- **Looked at** phase 3 again: "KING", the 33 % band, its drain to empty at the defeat, the marks.
+
+### 23:25 FILM per-phase clips at 32 px/m, real time, music (NEXT 2)
+`--rigs --boss=king --phase=N --bot=boss --bot-human --seed=2 --boss-cam` on 1d594e51, 0 SCRIPT
+ERROR each, every contact sheet looked at:
+- `king_phase1_procession_32ppm_it6.mp4` (30 s): ram lanes, coin-fan cones, the car turning with
+  pushers and riders, the court at about 19 s.
+- `king_phase2_court_32ppm_it6.mp4` (30 s): car stopped, steel gang off and brawling, decree rings,
+  the gang shattering. The bar moves slowly here (66 -> ~55 % in 30 s): the human bot spends phase 2
+  on the gang. A pacing note, not a fault (the full fight's phase 2 is ~35 s).
+- `king_phase3_on_foot_32ppm_it6.mp4` (25 s): steps off the wreck, slam cone, charge lane, defeat.
+- frames.json 15: the it4 phase-1, it3 phase-2 clips and the Kerf contact sheet deleted (superseded).
+- The exe route checked: `windows-showcase` boots the arena (decisions 2026-11-04), so
+  `RTAI.exe -- --boss=king ...` reaches BossHook; the plain main boot only warns "unknown arg".
+
+### 23:30 FILM the full fight on the new head (NEXT 2)
+- `--rigs --boss=king --bot=boss --bot-human --seed=2 --boss-cam` on 1d594e51, 90 s, music, 0 SCRIPT
+  ERROR: King down at tick **4933** (82.2 s), the same tick as the it5d sweep's human-s2 (a
+  deterministic film); 5 hits landed (coin fan 3, ram 1, slam 1). The bar whole, the camera on
+  the floor throughout.
+
+### 23:35 Dent on King: the parked cars and the bot's seize (NEXT 4, partial)
+- DECISION arena: two sedans parked at the **plaza's kerbs** (x 124, y -25 / -5; the boss station's
+  `spawns` of kind `car`, parked by the existing ArenaCars.park: data only, no framework field
+  needed: the station record already is the generic way). Rejected: along the boulevard's edges,
+  where the procession's ram lanes would plough through them in phase 1. Alternative = move the two
+  spawn points (one data value each).
+- BossBotGhost.car_goal (Dent only): before a car is seized the bot walks to the nearest live car,
+  aims at it and fires; once seized it aims at King again (the car steers by the aim, the melee in
+  reach blows it). BossBot.sample's human sway/see moved to `_read` (same order, the 40-line cap).
+- Headless phase 3, Dent, seed 2: `cars.hijacked 1`, 0 SCRIPT ERROR, King down at tick 1488.
+- FILM 48 px/m (`king_dent_p3_48ppm_it6.mp4`, 26 s). **Looked at** the sheet: the teal tether lashes
+  to the plaza sedan and the soul ring shows on it (it reads), but the seized car only turns and
+  creeps ~3 m: **Dent's soul ends about 1.5 s after the seize** and the car never reaches King, no
+  strike, no blast. Not found yet (candidates: powers.json gearbox `interrupt_on: hit` while the
+  bot stands in King's lanes; the bot's G press order vs the form's settle). NOT done.
+- 23:37 FIXED (the cause): the bot took Dent's soul at once, then walked ~20 m to the plaza car, so
+  the form had nearly run out at the seize and let the car go. Now (BossBotGhost) the bot walks to
+  the nearest live car in base form, takes the soul only once a car is within SEIZE_M 7 m, fires
+  only once the form has settled (Rivet's gun never shoots the car), and seizes once per soul
+  (`_seized`: afterwards it fights the boss again; it went after the second car before).
+- Phase 3, Dent, seed 2 (headless, `--fixed-fps 60`): hijacked 1, wrecked 1, **King down at tick
+  1482, Rivet took 0**, 0 SCRIPT ERROR. FILM `king_dent_p3_48ppm_it6.mp4` (26 s, 48 px/m, boss cam):
+  **looked at**: walk to the north sedan, soul, teal tether, the car driven west into King, it wrecks
+  black beside him during his charge windup, the fight on to the defeat. It reads.
+- Numbers note (not tuned): the car costs King only ~2-3 % of his bar (a 1-seed headless run before
+  the `_seized` fix: hp 0.33 -> 0.305 over 30 s with the car the only damage). Dent is a set piece on
+  King, not a damage source, like Tonnage's shove. Folded into call A (ghost_k / ghosts on bosses).
+- Gates: unit **1156/0** (`evidence/king/unit-it6.log`, +3 test_boss_bot_ghost: planted no car in
+  reach -> no G/Q; seize once then INF; other ghosts no goal). Scenarios **52 ran, 0 failed**, 0
+  SCRIPT ERROR (`evidence/king/scenarios-it6.log`, run with the cars parked). The human bot's seed 2
+  is identical after the bot change and the cars (King down 4933, same tries and landings).
+- 23:47 committed 2efaadcd (cars) and 0573888b (Dent bot); the unit run was on the pre-trim code,
+  the trim is a pure refactor: Dent phase 3 seed 2 re-run after it, King down at 1482 again.
+- FRICTION: the pre-commit lint lints the working tree, so an unstaged over-cap function blocked
+  the data-only commit; BossBot.sample trimmed to 40 (`_home`, aim + `_read` on one line).
+- frames.json 15: + the it6 full fight (the it5 one deleted) and the Dent clip; the it3 phase-3 dodge
+  clip deleted (superseded by the it6 per-phase clip).
+
+NEXT (iteration 7, in order):
+1. Director reel on the branch (`--bot=reel --reel=director`, headless): combat no-regress after
+   it6's arena_game change (the dev panel under --boss only) and the parked cars (the powers pad's
+   count is now 4 in every arena run: check that no chapter or beat drives into them).
+2. The procession-entering clip re-cut from `king_fight_bot_human_32ppm_it6.mp4` (0 s to the step-down,
+   ~55 s) with the steel gang and drapes; then delete the it3 one. And the target comparison
+   (sheet | game) re-shot at 32 px/m on the it6 head.
+3. Plain robot thug at 48 px/m: the inked-black D4 print check (FYI for REPORT).
+4. Dent numbers: seeds 1-5 with `--ghost=dent` for the full fight (does the bot still reach a car in
+   phase 1 while the procession rams?); record the car's share of King's hp.
+5. Exe export by 08:30 (`windows-showcase` preset, int-day recipe in docs/decisions.md) + REPORT with
+   calls: gold swap, leap_m, decree buff, A (ghost_k, + Tonnage's shove and Dent's car on a boss),
+   B (wreck solid), C (band), D (gang steel). Command lines run through `RTAI.exe -- --boss=king ...`
+   (the showcase preset boots the arena, so the boss flags reach BossHook).
