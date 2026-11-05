@@ -90,3 +90,15 @@ func _aimed(kind: int, reload_k: float = -1.0) -> CutRig:
 		rig.face_to = -PI * 0.5
 		rig.drive(SimClock.TICK_DT)
 	return rig
+
+
+## d7-held: a held class's walk (RigGrip.walk) comes from its held_classes.json row while the
+## weapon is out; nothing out walks as before. Planted: the heavy row read with the gun stowed.
+func test_heavy_class_walks_shorter_and_leans_back_only_while_out() -> void:
+	var rig: CutRig = _aimed(RigGrip.Kind.HIP)
+	rig.hold = &"heavy"
+	var heavy: HeldTable.Hold = HeldTable.shipped().holds[&"heavy"]
+	assert_eq(RigGrip.walk(rig), Vector2(heavy.stride_k, heavy.lean_px), "the heavy row's walk")
+	assert_lt(RigGrip.walk(rig).x, 1.0, "the heavy class takes shorter steps")
+	rig.gun_out = false
+	assert_eq(RigGrip.walk(rig), Vector2(1.0, 0.0), "planted: stowed, the plain walk")

@@ -27,7 +27,7 @@ static func step(rig: CutRig, dt: float) -> void:
 	var stride: float = lerpf(CutRig.STRIDE_WALK, CutRig.STRIDE_RUN, rig.run_blend) * p.gait_scale
 	if p.sprint_stride > 0.0:
 		stride *= 1.0 + p.sprint_stride * smoothstep(CutRig.RUN_SPEED * k, SPRINT_SPEED * k, spd)
-	stride *= backpedal_scale(rig)
+	stride *= backpedal_scale(rig) * RigGrip.walk(rig).x  # d7-held: the held class's stride
 	var moving: bool = spd > 6.0 and not rig.dead and rig.c_tuck < 0.3
 	if moving:
 		rig.phase += spd * dt / stride

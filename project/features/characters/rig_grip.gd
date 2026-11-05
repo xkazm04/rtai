@@ -124,6 +124,15 @@ static func _aim_dir(rig: CutRig, g2: Vector2) -> Vector2:
 	return Vector2.from_angle(clampf(dv.angle(), -MAX_SWING_RAD, MAX_SWING_RAD))
 
 
+## d7-held: the held class's walk: x = the stride's scale (heavy: shorter steps, a trudge), y = how
+## far (part px) the body leans back against the weapon's weight. (1, 0) with nothing held.
+static func walk(rig: CutRig) -> Vector2:
+	if not rig.gun_out or rig.plan.gun_arm < 0 or rig.hold == &"":
+		return Vector2(1.0, 0.0)
+	var hold: HeldTable.Hold = hold_of(rig)
+	return Vector2(hold.stride_k, hold.lean_px) if hold != null else Vector2(1.0, 0.0)
+
+
 ## The helmet's lean across (part px) while aiming a long gun or a tube: away from the gun side.
 static func head_lean(rig: CutRig) -> float:
 	if not rig.aiming or rig.grip not in LEANS or rig.plan.gun_arm < 0:
