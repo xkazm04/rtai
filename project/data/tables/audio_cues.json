@@ -528,8 +528,152 @@
       "priority": 6,
       "sound": "car_wreck",
       "takes": 3
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 3,
+      "doc": "n7-melee: Rivet's claw jab lands (hits row claw): the metal knock a tone low, on the hit tick",
+      "gain_db": -4,
+      "id": "melee_claw",
+      "loop": false,
+      "max_m": 45,
+      "max_voices": 3,
+      "pitch": 0.85,
+      "pitch_jitter": 0.08,
+      "priority": 3,
+      "sound": "impact_metal",
+      "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 3,
+      "doc": "n7-melee: a blade's cut lands (katana, plasma sword, each cut of Kerf's chain): the flesh hit pitched up short and sharp",
+      "gain_db": -4,
+      "id": "melee_cut",
+      "loop": false,
+      "max_m": 45,
+      "max_voices": 3,
+      "pitch": 1.3,
+      "pitch_jitter": 0.08,
+      "priority": 3,
+      "sound": "impact_flesh",
+      "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 6,
+      "doc": "n7-melee: the chainsaw bites (once per MeleeWound gap, not every grind tick): the metal knock pitched down",
+      "gain_db": -6,
+      "id": "melee_grind",
+      "loop": false,
+      "max_m": 45,
+      "max_voices": 2,
+      "pitch": 0.6,
+      "pitch_jitter": 0.1,
+      "priority": 2,
+      "sound": "impact_metal",
+      "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 4,
+      "doc": "n7-melee: the electro baton or the claw's shock lands: the crackle a little high",
+      "gain_db": -5,
+      "id": "melee_zap",
+      "loop": false,
+      "max_m": 45,
+      "max_voices": 2,
+      "pitch": 1.15,
+      "pitch_jitter": 0.06,
+      "priority": 3,
+      "sound": "shock_crackle",
+      "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 6,
+      "doc": "n7-melee: Tonnage's stomp or ram, Dent's seized car striking a body: the crash pitched down and heavy",
+      "gain_db": -2,
+      "id": "ghost_slam",
+      "loop": false,
+      "max_m": 70,
+      "max_voices": 2,
+      "pitch": 0.75,
+      "pitch_jitter": 0.05,
+      "priority": 5,
+      "sound": "crash",
+      "takes": 2
+    },
+    {
+      "bus": "sfx",
+      "cooldown_ticks": 4,
+      "doc": "n7-melee: Ohm's bolt strikes a body (each fork of the mass arc rides the cooldown): the crackle low and loud",
+      "gain_db": -3,
+      "id": "ghost_bolt",
+      "loop": false,
+      "max_m": 60,
+      "max_voices": 3,
+      "pitch": 0.8,
+      "pitch_jitter": 0.05,
+      "priority": 4,
+      "sound": "shock_crackle",
+      "takes": 2
     }
   ],
-  "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest).",
+  "doc": "Sound cues as data (features/audio/README.md). A cue id is an FX trigger id (data/tables/fx_triggers.json: shot, projectile_end, death, player_hit, ...), an F-04 Events signal, or an id a lane fires itself (hit_flesh, horn, crash, tyre_screech). sound/takes: res://assets/audio/sfx/<sound>_<01..takes>.wav (.ogg when longer than 3 s). gain_db trims the cue before the bus. pitch is the base pitch scale, pitch_jitter the +/- fraction drawn per play from the audio dice (seeded from the RNG registry's master seed, never a registry stream: render-side draws must not enter the replay hash). max_m: hearing distance in metres, 0 = not positional. cooldown_ticks: min sim ticks between two plays of the cue. max_voices: simultaneous players for the cue. priority: who may steal a pool voice when it is full (0 lowest). hits: n7-melee, a hit by weapon `id` (CombatArena.wounded or kill_landed: Rivet's melee and the ghost attacks) plays `cue` where the victim stands, on the hit tick (HitCues; `--hit-cues=off` = none, the before). A weapon without a row plays nothing of its own.",
+  "hits": [
+    {
+      "cue": "melee_grind",
+      "id": "chainsaw"
+    },
+    {
+      "cue": "melee_claw",
+      "id": "claw"
+    },
+    {
+      "cue": "melee_zap",
+      "id": "claw_shock"
+    },
+    {
+      "cue": "blast",
+      "id": "dent_blast"
+    },
+    {
+      "cue": "ghost_slam",
+      "id": "dent_car"
+    },
+    {
+      "cue": "melee_zap",
+      "id": "electro_baton"
+    },
+    {
+      "cue": "melee_cut",
+      "id": "katana"
+    },
+    {
+      "cue": "melee_cut",
+      "id": "kerf_slice"
+    },
+    {
+      "cue": "ghost_bolt",
+      "id": "ohm_bolt"
+    },
+    {
+      "cue": "melee_cut",
+      "id": "plasma_sword"
+    },
+    {
+      "cue": "ghost_slam",
+      "id": "ram"
+    },
+    {
+      "cue": "ghost_slam",
+      "id": "stomp"
+    },
+    {
+      "cue": "ghost_slam",
+      "id": "stomp_wave"
+    }
+  ],
   "schema": "gtai.audio-cues/1"
 }

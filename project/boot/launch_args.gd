@@ -34,6 +34,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--quest-guns",
 	# n7-melee: --quest-blade=off gives quest 1 no carried blade (the before); =<id> another one
 	"--quest-blade",
+	# n7-melee: --hit-cues=off gives melee and ghost hits no sound of their own (the before)
+	"--hit-cues",
 ]
 
 var _values: Dictionary[String, String] = {}

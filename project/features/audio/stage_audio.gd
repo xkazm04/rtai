@@ -11,6 +11,8 @@ const STAGE_BED_TRIM_DB: float = -3.0
 var service: AudioService
 var hooks: AudioHooks = AudioHooks.new()
 var voice: QuestVoice = QuestVoice.new()
+## n7-melee: the melee and ghost hits' own sounds (null under `--hit-cues=off`).
+var hit_cues: HitCues = null
 ## n7-ranged: a weapons row's end_cue plays where its round ends (`--end-cue=off` = the before).
 var end_cues: bool = not OS.get_cmdline_user_args().has("--end-cue=off")
 var _stage: CollectCallStage
@@ -32,6 +34,8 @@ static func attach(
 	a.hooks.rivet_id = stage.arena.rivet.id
 	a.hooks.attach(a.service, bus, func() -> int: return stage.tick, rivet_m)
 	a.service.loops.set_on(&"city_ambience", true, STAGE_BED_TRIM_DB)
+	if HitCues.enabled():
+		a.hit_cues = HitCues.attach(stage.arena, a.service.tables.hits, a.service.cue)
 	var radio: CarRadio = CarRadio.new()
 	a.add_child(radio)
 	radio.listen(bus)
