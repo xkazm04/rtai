@@ -945,3 +945,49 @@ numbers), motion-quality-gating (judge the still/clip at game zoom, looked at).
   works. `cars.hijacked` is `ArenaStage.car_counts()`, a **snapshot at quit**: the wreck is cleared
   long before the fight ends (total 3 of 4). The f448dbce guard stays (harmless; it keeps the bot
   on the floor if a start position ever puts the pad's cars nearer) but its message's cause is wrong.
+- 00:23 committed ad428713 (gang steel dome, it7) and 8536375d (it7 journal + evidence).
+
+## Iteration 8 (00:23-01:23): BUILD
+
+Read: JOURNAL (it7), git log, servo's JOURNAL (it7: merged 3f95d031, Kerf cut halves; no REQUEST
+to king). Rules applied: motion-quality-gating (judge at game zoom in the live arena path, before/
+after on the same seed and tick, look at every frame), encounter-balance-simulation (a render
+change must not move a number: same seeds, same ticks), depth-ordered-layered-art (the horn's z
+over the arm chain, under the drawn crown/ermine).
+
+### 00:38 MILESTONE 72cce2fc King's press plates (the weakest item in the it7 comparison)
+- The it7 target comparison named King on foot as the weakest read: KingPlan inherited Rivet's
+  claw hand (left) and a megaphone forearm (right), so he read "claw + horn", where the target
+  (and REG-1) is "two piston arms ending in flat press plates" with a shoulder megaphone.
+- `tools/art/king_press_parts.py` (no generation, the King parts' own steel; the gold swap gilds
+  them in game): `press_plate` hand cell, `r_forearm_press` (the left piston mirrored + the same
+  plate), `megaphone` (the horn cut from r_forearm.png); parts.json entries with pivots.
+- DECISION: the plate is a near-square block (150 x 186 cell px), not the thin bar of its edge:
+  from straight above a press plate shows its broad striking face (it presses down). The first
+  cut (58 x 196) read as a T-bar at 48 px/m (looked at, rejected). Alternative =
+  `KingRigs.PRESS_PLATES = false` (one value). decisions.md line.
+- Unit +2 in test_king_gold (the boss plan's cells; the parts' pivots; planted `claw_closed` caught).
+
+### 00:50 MILESTONE 7ba16c6f the shoulder megaphone
+- `KingRigs._horn`: the horn as a rig part on the torso (registered in rig.sprites so a hit flash
+  tints it), gold-swapped, z over the arms, at the right shoulder pointing forward and out.
+- FOUND on the way: at z 12 / scale 0.85 it hid under the ermine ring and the right arm (a dark
+  blob, looked at); located with a 2.5x debug scale, shipped at 1.6x, z 40, (10, 215) rig px.
+- **Looked at** `M/king_press_plates_before_after_48ppm_it8.png` (3x crops, phase 3, seed 2, ticks
+  300 guard and 420 slam tell, PRESS_PLATES false | true): before = a claw and a horn arm; after =
+  two gold block fists, the horn on the shoulder (still showing while both plates are raised in
+  the slam tell). Enthroned at 32 px/m (`shots/it8/horn_p1_32_t360.png`, `horn_p2_32_t360.png`):
+  the plates sit forward like the target's fists on the armrests; the horn is a small gold cone
+  there (reads less at 32 than at 48, no clutter).
+- FILM `M/king_slam_plates_48ppm_it8.mp4` (9.5 s, music): the standing bot's hit, then the dodging
+  bot rolling out. **Looked at** the 3 fps sheet: guard plates -> plates up while the ring grows ->
+  both plates down in front with the shockwave and coin ring -> recovery. The it3 slam clip,
+  the it3 target comparison, the it3 step-down clip and the it5 gang before/after deleted
+  (superseded); frames.json 15 (+ the it7 comparison and gang dome entries it7 had not added).
+- Gates: lint 13/13; unit **1159/0** (`evidence/king/unit-it8.log`); scenarios 52 ran, 1 failed =
+  `scenario_rig_stress` 50 people p50 1.007 ms > 1.0 (CONTENDED, my film runs before it), **green
+  alone** (p50 0.638 ms, `--filter=rig_stress`), 0 SCRIPT ERROR (`evidence/king/scenarios-it8.log`).
+- Render-only proven: seed 2 human King down at tick **4933**, standing **5315**, the same ticks,
+  damage and landings as it5d/it6 (`evidence/king/numbers-it8/`). The director reel is not re-run:
+  the change is KingRigs.king_plan() only (KingPlan, the enemy-ai thug's base, keeps the claw;
+  unit-tested).
