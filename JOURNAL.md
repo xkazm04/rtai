@@ -591,3 +591,12 @@ printed actors' layer as your body (Tonnage's telegraph at actors-2, Dent/Kerf a
 the film: (1) in the Tonnage quest film the voice apparition (StoryVoice) stands over Rivet while he is in the form
 and hides the telegraph; your StoryForms "silent in a form" should fix it. (2) Ohm's prongs come from your
 electrode anchors whatever body draws, so on the sprite cast they start beside the Rivet sprite's hand.
+- 04:53 Ohm's mass arc re-filmed on the current head (`M/ohm-mass-tier1-32ppm.mp4`; the it4 clip showed a red spot,
+  the current one drops the cops dry, then the cruiser burns); reel re-cut (42.7 s).
+- 04:55 FINDING Dent is a no-op in quest 1: DentStage.drive returns unless the stage is an ArenaStage with a
+  VehicleService; quest 1 has none (city-sim traffic). REPORT "does not work" row. Not started this session: too
+  large for the time left (a quest-side VehicleService over the city's parked cars).
+- 04:57 quest 1 at 64 px/m half speed, Kerf and Ohm (`M/quest1-kerf-64ppm-halfspeed.mp4`,
+  `M/quest1-ohm-64ppm-halfspeed.mp4`, keys `M/frames/quest1-kerf-ohm-keys-64ppm.png`), 0 SCRIPT ERROR, 5/5 kills each.
+  Judged: Kerf's teal-white cut lines and afterimages read over the sprite cast; Ohm's bolt leaves the sprite's hand
+  and forks to the zap star on each cop.
