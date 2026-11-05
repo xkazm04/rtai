@@ -21,6 +21,8 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
 2. **The alley stage** (`--arena=alley`, 48 px/m). It's an east-west lane north of the range: asphalt, puddles, dumpsters, bag piles, fire escapes from above, roofs with a brick lip, and a chain-link fence. Cop waves come in from both ends (AlleyHook).
    - Evidence: `alley-it7-ab-48ppm-vs-r2a6.png` (iteration 3 | iteration 7 | target) and `alley-fight-vs-r2a6-48ppm-it7.mp4` (20 s beside r2_a6). Iteration 7 flipped the value structure toward the target: a light concrete lane between dark roofs and a dark brick lip, dark dumpsters, grey pools, bags and litter; every fill is `alley_decor.json tones`; bags are tied sacks, and the south side passage is closed (hub cops had queued in it).
    - Iteration 10: lane grime. 100 soft dark blotches, crowded toward the wall feet, so the middle of the lane reads worn clean as in r2_a6 (`alley_decor.json grime`; count 0 = before). A dirt band along the wall feet was tried and set to 0: the print banded it into a hard strip that read as a cast shadow. Evidence: last row of `alley-it7-ab-48ppm-vs-r2a6.png`.
+   - Iteration 21: the floor prints r2_a6's mid concrete. The print had no level between paper and wash for the alley fill (a darker tone snapped to a flat wash and lost the cracks), so the alley now sets its own print level: a stage-local override (`LookZone`, `alley_decor.json print`: look_d4 `wash_lo` 0.30 -> 0.6 while the camera is on the alley, fading over 6 m). Floor 204/183/157 -> 140/125/113 (r2_a6 about 127/111/95); cracks, splats and puddles stay; the city and its goldens do not see it (`--alley-print=off` = before). Evidence: `alley-floor-it21-vs-r2a6.png`, `alley-floor-it21-48ppm-ab.mp4` (20 s fight, before | after).
+   - Iteration 21: the props. The dumpsters are drawn as r2_a6's ribbed lidded bins (a dark ribbed lid over a pale front face toward the lane, lip, wheels; `tones.dumpster_lid` "" = the old slab); the sacks print grey with their crease and knot instead of black blobs (`bag_dark`, every second sack pale); the puddles carry a pale wet rim. Evidence: `alley-it21-vs-r2a6.png` (iteration 20 | iteration 21 | r2_a6), `alley-fight-it21-48ppm-vs-r2a6.mp4` (20 s beside r2_a6).
 3. **Weapon FX in the sheet's colours** (r2_w4).
    - The colours: muzzle yellow-orange; blast orange-yellow with a white core; arc violet-white; plasma white-hot with gold; ray acid green; shards pale crystal with a cyan-white glint. The tracer is its own hot-yellow family.
    - No blood red and no teal in any of them. In the live fight the cells draw on their own canvas under `look_d5_fx`; `fx_colour_dir ""` switches back to ink.
@@ -57,14 +59,14 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 0fa61942 (the muzzle flash, the comet tracer, the violet arc and the plasma comet), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 06fca867 (the alley floor and props, iteration 21), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
 - unit 949/950 (the one failure is the known `test_noir_shadows` flake; it passes 2/2 alone);
 - scenarios 46/0.
 
-The last full evidence gate was green on 9cc56a51 (2026-11-05 05:10, the muzzle flash, the comet tracer, the violet arc and the plasma comet; `scenario_rig_stress` failed its 1 ms timing budget once under contention and passed 2/2 alone): lint 13/13, unit 958/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst 0.00, re-blessed at ef4dda00 for the joints) + block 5/5, world lock 0.00 %.
+The last full evidence gate was green on 06fca867 (2026-11-05 07:57, the alley floor and props; `--no-bench`): lint 13/13, unit 964/0, scenarios 46, parity bit-exact (mutation caught at 629), look goldens 11/11 worst 0.00, block 5/5, world lock holds; no golden moved. Before that, green on 9cc56a51 (2026-11-05 05:10, the muzzle flash, the comet tracer, the violet arc and the plasma comet; `scenario_rig_stress` failed its 1 ms timing budget once under contention and passed 2/2 alone): lint 13/13, unit 958/0, scenarios 46, parity bit-exact, look goldens 11/11 (worst 0.00, re-blessed at ef4dda00 for the joints) + block 5/5, world lock 0.00 %.
 
 ## What doesn't (yet)
 - **Pickups:** the ring and the fill now follow r2_w8 (see item 7 above); the side views themselves (gunmetal tone) do not yet.
@@ -76,6 +78,7 @@ The last full evidence gate was green on 9cc56a51 (2026-11-05 05:10, the muzzle 
 - **The flame's shape:** since iteration 18 a widening ragged fan; since 73ce1bf9 its slices cross at varied angles (they banded like parallel planks); the sheet's curled licks are not there (loose embers since iteration 20).
 - **FX gaps left to r2_w4 (iteration 14):** the arc's many small side twigs (tried: at game scale they turn the bolt into a scribble; the ink ring cannot carry hairlines at 0.2 cell scale); the sheet's ink speed dashes behind the bullet rounds (under 1 px at 32 px/m; the shard carries its own since iteration 16); the ray's veins are fewer and paler than the sheet's dense halo (iteration 18 drew them; at 32 px/m they are a soft fringe); the plasma comet lacks the sheet's loose ember flecks (sub-pixel at 32 px/m).
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
+- **The alley vs r2_a6 (iteration 21):** the hues of the dumpster's green face and the pools' blue-grey do not survive the world print (it carries value only, as with the brick); the dumpsters stay 2 x 1.2 m (a collision prop: a bigger footprint is a cover change, not a look change), smaller than the sheet's bins; the sacks are lighter than r2_a6's near-black bags on purpose (black swallowed the crease and knot at 48 px/m).
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
 ## Calls for the owner
@@ -83,6 +86,7 @@ The last full evidence gate was green on 9cc56a51 (2026-11-05 05:10, the muzzle 
 - **Paper tone:** the new light warm cream (`world_riso.tan_tone` [1.02, 0.99, 0.94], measured between today and r2_a5) vs iteration 2's darker tan (`[0.92, 0.875, 0.8]`); side by side in `print-3way-city-32ppm-it10.png`.
 - **FX colour vs ink:** `fx_colour_dir` (`fx-colour-reel-ab-32ppm.mp4`).
 - **Held size:** `held_size_ref` 1.2 vs off (`held-size-ab-cast-merge.png`).
+- **Alley floor level:** r2_a6's mid concrete (`print.world.wash_lo` 0.6, iteration 21) vs the pale paper lane (`--alley-print=off`); between them is one value (`alley-floor-it21-48ppm-ab.mp4`).
 - **Alley value structure:** the light lane between dark mass (iteration 7) vs the dark lane between pale roofs (iteration 3); every fill is `alley_decor.json tones`, the old values in `tones.doc` (`alley-it7-ab-48ppm-vs-r2a6.png`).
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
 - **A warm item ink:** held weapons print grey because the part print has no tan ink. Adding one would warm every held gun toward r1_w1-w6, not just the Gatling (`gatling-128ppm-vs-r1w6.png`). Not built.
