@@ -49,6 +49,9 @@ var stuck: Dictionary[int, Array] = {}
 ## instead of the body's ink burst. Unset = every body hit is a body hit.
 var shield_test: Callable = Callable()
 var fired_count: int = 0
+## The aim of Rivet's last shot (GunHand.last_aim): the flash, smoke and shells leave along it, not
+## along a facing the walk turned between shots. ZERO = no shot yet (facing is used).
+var aim: Vector2 = Vector2.ZERO
 ## The burnt ground fire patches leave when they go out.
 var scorch: FightScorch = FightScorch.new()
 ## Rounds seen last tick (GunFxRounds): Shot -> [pos, step, from_rivet].
@@ -101,6 +104,7 @@ func step(arena: CombatArena, tick: int) -> void:
 	var n: int = clampi(tick - _last_tick, 1, 10)
 	_last_tick = tick
 	var gun: GunHand = arena.gun
+	aim = gun.last_aim
 	var row: Dictionary = look(gun.trigger.spec.id)
 	if gun.shots_fired > _seen_fired:
 		fired_tick = tick
@@ -126,13 +130,17 @@ func _claw(r: Fighter) -> Vector2:
 ## A point `ahead_m` past Rivet's body along the aim, on his gun claw's side (claw_side_m: the
 ## rig holds the gun right of the centre line, so the flash, smoke and shells leave the claw).
 func muzzle(r: Fighter, ahead_m: float) -> Vector2:
-	var f: Vector2 = r.facing.normalized()
+	var f: Vector2 = aim_of(r)
 	var side: float = p.get("claw_side_m", 0.0)
 	return r.pos + f * (r.radius_m + ahead_m) - f.orthogonal() * side
 
 
+func aim_of(r: Fighter) -> Vector2:
+	return (aim if aim != Vector2.ZERO else r.facing).normalized()
+
+
 func _eject(r: Fighter, row: Dictionary, tick: int, count: int) -> void:
-	var f: Vector2 = r.facing.normalized()
+	var f: Vector2 = aim_of(r)
 	var h: float = NoirPack.hash01(count * 7919 + 13)
 	var at: Vector2 = muzzle(r, 0.55)
 	var puff: float = row.get("smoke", 0.6)
@@ -150,13 +158,13 @@ func _eject(r: Fighter, row: Dictionary, tick: int, count: int) -> void:
 ## spent shells all at once (dump = how many; they fan out under the claw).
 func _reload_drop(r: Fighter, row: Dictionary, weapon: StringName) -> void:
 	if row.get("mag_drop", true) and not art_mags.has(weapon):
-		add_bit(_claw(r), r.facing.rotated(2.2) * 1.2 * SimClock.TICK_DT, 240, -0.22)
+		add_bit(_claw(r), aim_of(r).rotated(2.2) * 1.2 * SimClock.TICK_DT, 240, -0.22)
 	var dump: int = row.get("dump", 0)
 	var size: float = row.get("casing_m", 0.0)
 	var lie_s: float = row.get("casing_s", 3.0)
 	for k: int in dump:
 		var a: float = 1.6 + 1.4 * float(k) / maxf(float(dump - 1), 1.0)
-		var v: Vector2 = r.facing.rotated(a) * (0.8 + 0.25 * float(k % 3)) * SimClock.TICK_DT
+		var v: Vector2 = aim_of(r).rotated(a) * (0.8 + 0.25 * float(k % 3)) * SimClock.TICK_DT
 		add_bit(_claw(r), v, roundi(lie_s * 60.0), size)
 
 

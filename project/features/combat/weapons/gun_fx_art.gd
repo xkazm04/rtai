@@ -111,7 +111,7 @@ static func tracer(ci: CanvasItem, fx: GunFx, s: Shot, enemy_tail_m: float) -> v
 ## A heavy single shot (spikes 3): a long forward flare, two side jets, a short back lip. An
 ## automatic (spikes 4+): a star whose points turn half a step every shot, so a burst strobes.
 static func _muzzle(ci: CanvasItem, fx: GunFx, r: Fighter, row: Dictionary, age: int) -> void:
-	var f: Vector2 = r.facing.normalized()
+	var f: Vector2 = fx.aim_of(r)
 	var at: Vector2 = fx.muzzle(r, 0.45)
 	var shrink: float = 1.0 - 0.25 * float(age)
 	var fwd: float = row.get("muzzle_m", 0.7)
