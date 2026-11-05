@@ -707,3 +707,34 @@ STOP 23:17 iteration 6. Code commits: `9b351ab4` (throw shoulder twist, modest, 
   1 ran, 0 failed. 0 SCRIPT ERROR. Parity bit-exact over 1200 steps, planted mutation caught at 629.
   Logs `evidence/ranged/it6-{scenarios,scenario-city-chase-alone,parity}-81176d04.log`.
   So every gate is green on head's code.
+
+## Iteration 7 (BUILD, 23:23-00:23)
+Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals.
+
+### FINDING 23:27: the ray gun kill is the approved dissolve; my it6 diagnosis was wrong (NEXT 1 closed, no change)
+- Film 48 px/m (`--weapon=ray_gun --bot=gunplay --lone --cam=fight --ppm=48 --clean --reach=6`,
+  kill tick 300, 0 SCRIPT ERROR; scratch `ray/ray48.avi`, sheet `ray/sheet48.png`, frames
+  298-349 every 3rd, cropped on the victim). The arena's 18 stations include `brutality_pit`, so
+  the ray kill IS the brutality signature `ray_gun_dissolve` (signature_kills.json, an approved
+  baseline): f301-304 the ink/cream star + kill stop; f307 the cream glow on the head; f310-313 the
+  hot ring wraps the body; f316-337 the body locks and falls stiff inside a pale disc (the shock
+  plank under the dissolve: "the victim locks up glowing"); from f340 (stand_ticks 30) gold echo
+  rings eat it down to the dust heap. Every beat reads at 48 px/m; at 32 px/m (it6 sheet) the star,
+  the disc and the gold ring read.
+- So the "body does not answer the beam" note was the signature's lock-up working as designed. A
+  `weapon_death` map would only change the `--gore=reduced` path. NOT built: it would rewrite an
+  approved signature beat without a reason the film shows. Registry rule applied:
+  motion-quality-gating (look at the film per frame before building; a diagnosis the frames refute
+  is recorded, not built on).
+
+### FRICTION 23:40: REQUEST 4 (n7-melee, stun marks under a mass arc) was already built by melee
+- I built a `cap.stun_arcs_full` row in hit_feel.json + ShockArcsView ranking (unit 1145/1145, a
+  planted `<=` caught by exactly its test, lint 13/13) before reading melee's journal past 22:55:
+  melee had built it at 23:25 as `7ce7b33d` (human_reactions.json `stun_crowd`, StunCrowd, which
+  also caps WeaponFxElectro's head sparks, the larger share of the cream). Mine was a second layer
+  over the same views: DISCARDED (files restored, test deleted). REQUEST 4 is CLOSED by melee's
+  7ce7b33d; the electro gun's chain shares it when the Director merges both lanes.
+- Rule for me: read the other lanes' journals to their END before building on a REQUEST. Cost
+  about 15 min. Also: `run_unit.mjs` needs `GODOT_BIN` exported (`spawnSync godot ENOENT` = exit -1).
+- To keep the merge clean I do not touch `shock_arcs_view.gd`, `shock_jolt.gd`,
+  `weapon_fx_electro.gd`, `fight_areas_art.gd`, `react_table.gd` tonight (melee's 7ce7b33d files).
