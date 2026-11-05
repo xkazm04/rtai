@@ -46,3 +46,5 @@
   GhostFormDef + ghost_forms.json (dent "dent_act") + schema, Quest1Session sets `pilot.ghosts.forms.locks.on`,
   HUD locked chip, scenario with planted fault, `collect_call_city.json ghost_cars []`, `dent.ride 0` + tether
   check; (4) look-8 tan ink; (5) 20-30 s city clips per group, combined clip, exe by 19:30, REPORT.
+- 16:04 MEASURE selftest on 42feb65c (look group): look goldens 11/11 worst 0.27, block 5/5 worst 0.22, same as the
+  cast commit: no golden moved, no re-bless (evidence/selftest-it2-look.log). Scenarios and parity still to run on it.
