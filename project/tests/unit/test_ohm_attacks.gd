@@ -83,3 +83,18 @@ func test_a_human_killed_by_the_bolt_takes_the_soul_x_ray_kill() -> void:
 	assert_eq(row.edge, &"soul", "in the souls' teal, not the electro gun's cream")
 	var gun: SignatureKill = SignatureKillTable.load_table().for_weapon(&"electro_gun")
 	assert_eq(gun.edge, &"", "the electro gun keeps its cream arcs")
+
+
+func test_the_mass_tier_fans_out_from_the_first_body_past_the_fork_radius() -> void:
+	_pilot.ohm.attacks.block(OhmStage.GHOST)["upgrade_tier"] = 1.0
+	var first: Fighter = _guard(Vector2(6.0, 0.0), 5.0)
+	var up: Fighter = _guard(Vector2(9.0, -3.0), 5.0)  # 4.2 m from the first: past fork_radius_m
+	var down: Fighter = _guard(Vector2(9.0, 3.0), 5.0)
+	_take()
+	_press(&"melee")
+	var dmg: float = _pilot.ohm.num(&"human_damage")
+	for f: Fighter in [first, up, down]:
+		assert_almost_eq(f.hp, 5.0 - dmg, 0.001, "every body in mass_radius_m is struck")
+	assert_eq(_pilot.ohm.bolt_from[1], 0, "the first body from the fingertips")
+	assert_eq(_pilot.ohm.bolt_from[2], 1, "the rest fan out from the first body")
+	assert_eq(_pilot.ohm.bolt_from[3], 1, "(not a chain)")

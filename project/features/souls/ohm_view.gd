@@ -46,7 +46,9 @@ func _draw() -> void:
 	var fade: float = 1.0 - age / HANG_S
 	var beat: int = 0 if reduced_motion else (stage.tick / 2)
 	for i: int in o.bolt_path.size() - 1:
-		var pts: PackedVector2Array = _jag(o.bolt_path[i] * ppm, o.bolt_path[i + 1] * ppm, beat + i)
+		var src: int = o.bolt_from[i + 1] if o.bolt_from.size() > i + 1 else i
+		var a: Vector2 = o.bolt_path[src] * ppm
+		var pts: PackedVector2Array = _jag(a, o.bolt_path[i + 1] * ppm, beat + i)
 		draw_polyline(pts, Color(INK, 0.75 * fade), INK_W, true)
 		draw_polyline(pts, Color(TEAL, fade), TEAL_W, true)
 		draw_polyline(pts, Color(WHITE, fade), CORE_W, true)
