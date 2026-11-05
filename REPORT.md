@@ -247,6 +247,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`, `M/cast-collar-director-ab-32.mp4`.
    In quest 1 the objective marker is itself a flat vermilion ring, so B is the same mark as an objective:
    `M/frames/collar-vs-objective-quest1-32ppm.png` (Dock 9, ticks 13600-13720).
+   Tried and not built: a thinner band (the ring's inner part dropped or inked): the vermilion thins to 1-2 px and
+   specks at 1x, and the drop shows the torso's outline, not the body (`M/frames/collar-thin-trial-32ppm.png`).
 
 8. Rivet's welder visor at 32 px/m: B built (26c1e08a, iteration 15): below the sticker threshold the helmet prints
    an ink visor slot over its front (`PartMaterials.HEAD_LOD_FILL` 4, print_part `visor_x0` 0.66 / `visor_hy` 0.25),

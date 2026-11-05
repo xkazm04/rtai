@@ -1037,7 +1037,7 @@ NEXT (iteration 18), replaces the 04:06 list:
 3. If nothing in 2 is buildable without the owner: re-run the gate on the final tree before the 08:30 freeze.
 Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
   `gtai-n5/scratch-cast/i17` keeps logs only (renders deleted).
-- 04:52 NEXT 2(b) TRIAL, reverted on purpose (git checkout of print_part.gdshader, nothing committed): a thinner
+- 04:42 NEXT 2(b) TRIAL, reverted on purpose (git checkout of print_part.gdshader, nothing committed): a thinner
   collar band at 32 px/m. Trial uniforms in the COLLAR branch: below UV radius `collar_r0` (ring spans 0.30-0.49) the
   collar either drops out (discard) or prints ink. cast_lineup slab and road 32 px/m, off | r0 .38 drop | .38 ink |
   .41 drop: dropping shows the torso's ink outline under the collar, not the tan core, and the vermilion thins to
