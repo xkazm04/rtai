@@ -74,9 +74,10 @@
         "flame_"
       ],
       "id": "flame",
-      "note": "n5-look iteration 16 (r2_w4 top right: the flame is a yellow core under a ragged orange rim; ours printed one amber tone): applied after explosion, which it overrides for the flame cells; the body hot yellow and rim paints an orange band rim.px part px inside the ink (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the explosion family's amber flame.",
+      "note": "n5-look iteration 16 (r2_w4 top right: the flame is a yellow core under a ragged orange rim; ours printed one amber tone): applied after explosion, which it overrides for the flame cells; the body hot yellow and rim paints an orange band rim.px part px inside the ink (tools/art/fx_rim.py; the white-hot core is left alone). Drop this family = the explosion family's amber flame. n5-look iteration 18: rim.flat true paints the rim colour flat (with the grain offset from the paper base the orange rim printed blood red #EE2800 on flame_0..2; drop flat = that defect). The prefix also inks flame_cone_ (tools/art/flame_cone.py, the jet's cone).",
       "rim": {
         "colour": "#EE6A1C",
+        "flat": true,
         "px": 6
       },
       "tokens": {

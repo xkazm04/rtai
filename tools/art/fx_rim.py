@@ -2,7 +2,9 @@
 flashes grade white-hot core -> hot yellow -> orange tips at the outline. rim() moves every
 non-ink fill pixel within `px` of the ink or the cell edge to `colour`, keeping its grain offset
 from the fill colour `base`; the white-hot core (every channel above core_min) is left as it is
-(core_min 256 = rim every fill pixel: the arc, a white core inside a violet edge).
+(core_min 256 = rim every fill pixel: the arc, a white core inside a violet edge). base None paints
+the flat `colour` (n5-look iteration 18: an orange rim over a yellow fill, offset from the paper
+base, came out blood red #EE2800 on the flame cells).
 Deterministic (no randomness)."""
 
 from PIL import Image, ImageFilter
@@ -26,6 +28,9 @@ def rim(path, colour, px, base, ink_max=60, core_min=150):
             if fp[x, y] and not cp[x, y]:
                 r, g, b, a = pix[x, y]
                 if min(r, g, b) > core_min:
+                    continue
+                if base is None:
+                    pix[x, y] = tuple(colour) + (a,)
                     continue
                 pix[x, y] = tuple(
                     max(0, min(255, c + (k - t))) for c, k, t in zip(colour, (r, g, b), base)
