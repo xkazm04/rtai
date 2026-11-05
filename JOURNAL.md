@@ -203,3 +203,4 @@
   B gun_edge 1.4, C old art), next steps. f41346c2.
 - READ held JOURNAL 17:41: they merged d7-calls up to 339397ef (exe acb70e5f); my 6179bf2d REQUEST is new for them.
 - 17:42 full evidence run (--no-bench) on f41346c2 started (last one was on 83fe0d5c).
+- 17:47 MEASURE full evidence run on f41346c2 green (evidence/evidence-it5b-head.log): lint 13/13, unit 1098/0, scenarios 52, parity exact (planted 629), goldens 11/11 worst 0.27 + block 5/5 worst 0.22. No re-bless.

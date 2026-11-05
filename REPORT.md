@@ -41,6 +41,9 @@ failing). Unit 1098/0, lint 13/13, scenarios 52/0 (`evidence/scenarios-it5-flags
 
 Gatling small art (6179bf2d): lint 13/13, unit 1098/0, scenarios 52/0 (`evidence/*-it5-gatling.log`); asset
 only (no code, sim, replay or parity change; the golden scenes hold no Gatling).
+Full evidence run on f41346c2 (`node tools/evidence/run.mjs --no-bench`, `evidence/evidence-it5b-head.log`):
+lint 13/13, unit 1098/0, scenarios 52, parity exact (planted caught at 629), look goldens 11/11 worst 0.27 +
+block 5/5 worst 0.22: still no golden moved, no re-bless.
 
 ## The exe (exported 17:39 on 6179bf2d; re-export if `project/` moves)
 - Arena + city block: `build\export\windows\RTAI.exe` (preset `windows-showcase`; boots into the arena with the
