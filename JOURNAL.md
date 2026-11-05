@@ -1252,3 +1252,33 @@ Session end 06:29: tree clean after this commit, no Godot process of mine runnin
   hatched heads; the riot heads keep their band at 64 (D5), as built. Single clip deleted. REPORT section 2 cites it.
 Session end 06:31: tree clean after this commit, no Godot process of mine running (the two running since 06:26/06:28
   are not mine), locks never taken.
+
+## Iteration 20 (06:31-07:30, BUILD)
+- 06:31 read JOURNAL, log, n5-look JOURNAL (no REQUEST to n5-cast). No locks present. NEXT 2 judged on the D city
+  frames (`M/frames/cop-call4-city-ad-32ppm.png`): the D cops still read as blue figures with one bright head on
+  asphalt, so the lighter-navy trial is not needed (no build). The black rings round the cops in the `--arena=city`
+  frames are the arena's dummy target rings (`arena_floor_view.gd:71`, dev scene), not cast art; quest 1 has none.
+- 06:35 merge-tree re-check: n5-look e3883935 = lane docs + the 16 look goldens (as at 04:50); d6-combat-notes,
+  d6-perf-city, n6-ghost-powers bf7b1107, n6-ghost-forms e865146d = lane docs only (both n6 lanes merge n5-cast in).
+- 06:37 EVIDENCE GATE on 7005b5c8 (`--no-bench`, tree untouched during the run): ALL PASS: lint 13/13, unit 954/0,
+  scenarios 46, parity exact (629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). Bench skipped (other
+  lanes' Godot processes running).
+- 06:37 FINDING (quest 1 Dock 9 stills, `--rigs --cam=fight`, 32 px/m): the heat patrol (`cast_view.gd:52`,
+  `_sprite("cop")` even under `--rigs`) is the pre-slim cop sprite, 1.85 x 3.23 m with black sleeves: twice the rig
+  cops' width in the same frame. Default quest 1 also draws Rivet from `cast_rivet.png` = d5-cast's size_k 1.2 form
+  with a teal torch tip (off doctrine). Both are captures the art README says to redo when the parts change.
+- 06:38-06:42 re-captured both with `dev/showcase/rivet_sprite.gd` (`--kind=cop`, `--kind=rivet`, 0 SCRIPT ERROR),
+  matted with a crop symmetric about the rig root (new `masters:n5/cast/tools/matte_centred.py`, the body stays at the
+  sprite centre as `_sprite` assumes), cream rim r 5; peek cut r 50 (`rivet_peek.py`). Sizes: cop 1.45 x 2.83 m,
+  Rivet 2.37 x 2.07 m, peek 0.97 m. `test_quest_art` pinned the cop at 1.85 x 3.23 and asserted Rivet's frame is
+  shorter than the cop's (true again after both re-captures); now checks the cop at true scale. Lint 13/13, unit 954/0.
+- DECISION (docs/decisions.md): re-capture, not host the rigs in the default quest view (rivet-arsenal Call 1).
+  Registry `generated-asset-world-scale`: the sprites draw at true scale (size_m = px / 120), no draw_k.
+- MILESTONE b68665b1: quest 1's cast sprites from the slim rigs. Evidence (same sim, before = 7005b5c8 files checked
+  out, re-import, render, `git checkout HEAD --`, re-import, tree clean): `M/frames/quest1-sprites-ab-32ppm.png`
+  (default quest, tick 13660 + x3 crop, tick 900), `M/frames/quest1-patrol-sprite-ab-32ppm.png` (`--rigs`, x4),
+  `M/cast-quest1-sprites-ab-32.mp4` (10 s, Dock 9 ticks 13560-14160, 0 SCRIPT ERROR both). Honest gap: the
+  120 px/m capture has no 32 px/m stickers, so the sprite Rivet is paler than the rig Rivet (no tan core, no slot).
+- 06:46 COMBAT CHECK on b68665b1: director reel headless (`--bot=reel --reel=director --clean --rigs
+  --loadout=pistol`, 7200 frames): 16/16 chapters n/n down, 0 SCRIPT ERROR (the arena does not draw these sprites).
+  frames.json 15 (the two quest stills on top; crowd-d5-hatch and rivet-visor-64 dropped from the list, files kept).

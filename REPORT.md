@@ -112,6 +112,16 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   At 64 px/m with the warm close-up Rivet and the visor (iteration 9): `M/cast-quest1-dock9-64.mp4`,
   `M/frames/quest1-dock9-64ppm.png`, 0 script errors.
 
+- Quest 1's sprite cast re-captured from the slim rigs (b68665b1, iteration 20): quest 1 draws its heat patrol from
+  `cast_cop.png` even under `--rigs`, and default quest 1 (no `--rigs`) draws Rivet from `cast_rivet.png`. Both were
+  pre-slim captures: the 1.85 x 3.23 m cop with black sleeves, twice the rig cops' width beside them, and d5-cast's
+  size_k 1.2 Rivet with a teal torch tip (off doctrine). Now captures of the shipped rigs (`rivet_sprite.gd`): the slim
+  D cop 1.45 x 2.83 m, the hybrid Rivet 2.37 x 2.07 m, the hide-spot peek 0.97 m (`collect_call_art.json`, true
+  scale). Same sim, before | after: `M/frames/quest1-sprites-ab-32ppm.png`, `M/cast-quest1-sprites-ab-32.mp4` (10 s,
+  Dock 9); under `--rigs`: `M/frames/quest1-patrol-sprite-ab-32ppm.png`. Gap: a 120 px/m capture lacks the rig's
+  32 px/m stickers (tan core, visor slot), so the sprite Rivet prints paler than the rig Rivet; hosting the rigs in
+  the default quest view is rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
+
 ### 5. The crowd (brief item 4)
 - Footprint: the six pedestrian looks share one rig (`HumanPlan.ped`, size_k 1.25, span 0.83 m) and are the
   footprint's authority; cops sit at 0.90 m, Rivet at 1.00 m. No ped rig scale change was needed. In the live game
@@ -170,6 +180,7 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them (and again on 2329c483, the bright cop crowns).
 
+### Gates (iteration 20, `tools/evidence/run.mjs --no-bench` on 7005b5c8 (docs over f4381f32): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53). On b68665b1 (quest sprites): lint 13/13, unit 954/0; the full gate re-runs before the freeze.
 ### Gates (iteration 19, `tools/evidence/run.mjs --no-bench` on f4381f32 (the plain riot crown): ALL PASS: lint 13/13,
 unit 954/0, scenarios 46, parity exact (mutation at 629), look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53),
 no re-bless.
@@ -346,13 +357,14 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
 
-Merge note for the Director (trial `git merge-tree` of n5-cast 02a1d172+ with n5-look cb34af73, 2026-11-05 04:50):
+Merge note for the Director (trial `git merge-tree` of n5-cast with n5-look, re-checked 06:35 on 7005b5c8 x e3883935, same result as 04:50):
 every code, data and art path merges clean. The conflicts are the lane docs (`JOURNAL.md`, `REPORT.md`, add/add) and
 16 look goldens under `project/tests/golden/look/`, which both lanes re-blessed for their own changes (cast:
 92e8c3fb, 618d6eb8, 91aac1aa; look: its own re-bless lines in `docs/decisions.md`). Take either side's PNGs, then run
 `tools/evidence/run.mjs --no-bench` on the merged tree and re-bless once, with one dated decisions line naming both
 lanes' changes (cast: slim cops, hybrid Rivet, plan-view peds, the 32 px/m collar, visor and tan core stickers).
-Against d6-combat-notes (17414367), d6-perf-city (e723c25e), n6-ghost-powers (708d5672) and n6-ghost-forms
-(91b6b866) only the lane docs conflict. Semantic check: n6's `DentPlan` builds from `RivetPlan.build()` but sets
+Against d6-combat-notes (17414367), d6-perf-city (e723c25e), n6-ghost-powers (bf7b1107) and n6-ghost-forms
+(e865146d) only the lane docs conflict (06:35; both n6 lanes merge n5-cast in themselves: ghost-forms carries 2329c483,
+ghost-powers 030eb775). Semantic check: n6's `DentPlan` builds from `RivetPlan.build()` but sets
 `collar_part = ""` and `raw_parts`, so it cannot pick up cast's collar-core stickers (visor slot, tan core: both need the
 collar core); n6's `cut_rig.set_tint` edit keeps `PartMaterials.get_mat(kind, ...)`, which takes the new `TAN_CORE`.
