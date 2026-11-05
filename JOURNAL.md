@@ -869,3 +869,17 @@ Session end 02:46: tree clean after this commit, image.lock released (2 jobs thi
   list, files kept for REPORT: city-navy-64ppm, rivet-size-call-64ppm).
   Registry rules (`shader-budget-authoring`): one atan per collar pixel, only inside the existing sticker branch, no
   new pass or fetch. print_part.gdshader is the part print (n5-look has not touched it on its branch: no conflict).
+- MILESTONE 4f9a2ead: the hazard collar at 32 px/m (above).
+- 03:10 EVIDENCE GATE on 4f9a2ead (clean tree): ALL PASS: lint 13/13, unit 945/0, scenarios 46, parity exact (mutation
+  caught at 629), look goldens 11/11 (worst 1.21), block 5/5 (worst 1.38), world lock holds. No re-bless.
+- 03:12 TRIAL, reverted on purpose (git checkout of the three files, nothing committed): the welder visor at 32 px/m.
+  r2_c7 reads a dark visor slot on Rivet's head at game scale; ours is a cream head. Measured (helmet 207x150 BOX-
+  minified to the ~16 px it covers at 32 px/m, the shader's d): the visor column already prints ink (d 0.61-0.75 over
+  the sticker hi 0.40), but it is 2 px and sits against the 1.3 px sticker outline, so it merges into one thicker front
+  edge; the back plates and hose (d 0.74-0.95) print ink too. Patch tried: `PartKind.HEAD` (lod_fill 4: cream helmet,
+  ink only in the visor UV band 0.74-0.90). Lineup slab/road/walk at 32 px/m: no visible change, because the edge
+  pass inks the back rim anyway: `M/frames/visor-sticker-trial-32ppm.png`. Not built. A visor that reads at 32 px/m
+  needs a bigger head or a visor drawn wider than the art (a design call, not a print fix). The patch is
+  `scratch-cast/i14/visor_patch.py` if wanted.
+- 03:16 REPORT: section 3 bullet (hazard collar), Call 7 (collar A hazard breaks / B flat ring), gates line for
+  iteration 14.

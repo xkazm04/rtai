@@ -55,6 +55,12 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `M/frames/rivet-visor-ab-64ppm.png`. It reads at 64 px/m and does not show at 32 px/m (the head is ~8 px).
 - The D5 hit flash printed vermilion at 56+ px/m (missed when human-reactions moved print_part's flash to cream);
   now cream. React board at 64 px/m re-shot: 0 vermilion px over 481 frames, every family reads.
+- Hazard collar at 32 px/m (4f9a2ead, iteration 14): the collar's gameplay sticker was one flat vermilion ring
+  (it read like a UI reticle); it now prints vermilion with 6 ink breaks round the ring, as r2_c6/r2_c7 draw the
+  collar at game scale (an orange band with a few dark gaps). 48 px/m and up already print the art's 14 stripes.
+  Director reel and city at 32 px/m, same ticks, before | after: `M/cast-collar-director-ab-32.mp4`,
+  `M/cast-collar-city-ab-32.mp4`; still with the targets `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`; trials
+  (6/8/14 breaks, the art's own stripes) `M/frames/collar-ticks-lineup-32ppm.png`, `M/frames/collar-trials-city-32ppm.png`.
 - The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
   script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
 
@@ -132,6 +138,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
+### Gates (iteration 14, `tools/evidence/run.mjs --no-bench` on 4f9a2ead (the hazard collar): ALL PASS: lint 13/13,
+unit 945/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.21), block 5/5 (worst
+1.38), world lock holds; no re-bless. Director reel 16/16 down, 0 script errors.)
 ### Gates (iteration 13, final `tools/evidence/run.mjs --no-bench` on 621c0d3f (hoodie sleeves, r8/r8b D5 ped parts, cap size): all
 PASS: lint 13/13, unit 942/0, scenarios 46, parity exact, look goldens 11/11 (worst 1.21), block goldens 5/5 within mean 4 (worst 1.38). Earlier on d6d89921: lint 13/13, unit
 942/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.20) and block 5/5 (worst 1.36),
@@ -206,6 +215,11 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 1d9c3c53 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
    r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
    32 px/m and only the cops' blue pads tell them apart.
+
+7. Rivet's collar at 32 px/m: A, vermilion with 6 ink hazard breaks (built, `PartMaterials.COLLAR_LOD_FILL` 3,
+   `print_part.gdshader` `collar_stripes` 6 / `collar_ink` 0.3), or B, the flat vermilion ring (`COLLAR_LOD_FILL`
+   1), the stronger single mark at a glance but read as a target reticle. Same ticks, before | after:
+   `M/frames/collar-hazard-ab-vs-r2c7-32ppm.png`, `M/cast-collar-director-ab-32.mp4`.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.
