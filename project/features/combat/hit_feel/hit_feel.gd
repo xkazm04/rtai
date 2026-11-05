@@ -165,6 +165,18 @@ func ignite_px(weapon: StringName) -> float:
 	return over.get("ignite_kick_px", 0.0)
 
 
+## The ignition flare of `weapon` (hit_feel.json `weapons` ignite_flare_k / ignite_flare_ticks):
+## the muzzle cell's scale on the round that lights the stream, easing back (WeaponFxIgnite).
+## Zero = none, and none under --feel=off.
+func ignite_flare(weapon: StringName) -> Vector2:
+	var over: Dictionary = _weapons.get(weapon, {})
+	if not enabled:
+		return Vector2.ZERO
+	var k: float = over.get("ignite_flare_k", 0.0)
+	var ticks: float = over.get("ignite_flare_ticks", 1.0)
+	return Vector2(k, ticks)
+
+
 ## The spin-up tremor of `weapon` (hit_feel.json `weapons` spin_rumble_px, screen px at full spin
 ## below firing speed; FeelCam.spin_tremor). Zero = none.
 func spin_row(weapon: StringName) -> float:
