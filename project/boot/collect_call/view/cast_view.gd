@@ -103,10 +103,10 @@ func _rivet(r: Fighter) -> void:
 ## n5-cast: below the rigs' flat-sticker threshold (PartMaterials.flat_below, about 42 px/m) the
 ## rig Rivet prints his gameplay stickers (tan core, visor slot, hazard collar), so the sprite
 ## Rivet and his peek draw from the capture of that tier (`<id>_lod`), the art capture above it.
-## The grown Hauler (sprite_k) is judged on its drawn px in `_art_w`: past the threshold it keeps
-## the art's plates (a grown sticker is a flat mass with a black slab).
-func _lod_art(id: String) -> String:
-	return id + "_lod" if LOD_SPRITES and _view_px(1.0) < PartMaterials.flat_below else id
+## `grow` (the Hauler's sprite_k) scales the drawn px too (`_art_w` fades across it): the grown
+## Hauler keeps the art's plates past the threshold (a grown sticker is a flat mass, a black slab).
+func _lod_art(id: String, grow: float = 1.0) -> String:
+	return id + "_lod" if LOD_SPRITES and _view_px(grow) < PartMaterials.flat_below else id
 
 
 ## The art capture's weight at `grow`: a smooth band across the threshold, so the morph does not
