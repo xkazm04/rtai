@@ -209,6 +209,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Built (iteration 18, 551ed9c6): the coat-hood ped's hood prints dark too (D4 and D5 `head_hood.png`, mean L 140 -> 75),
   so every ped look now carries a dark (or, bald, grey) head from above, as in r1_c6. Lossless lineup before | after
   beside r1_c6: `M/frames/ped-hood-dark-ab-vs-r1c6.png` (no coat-hood ped was on screen in the city clip).
+  Quest 1 live path (`quest1_clip.gd -- --ppm=32 --rigs --stills=900,1500`), lossless, before 550b000d | after:
+  the coat-hat ped goes from an all-pale outline on the slab to a dark-headed figure: `M/frames/ped-heads-quest1-ab-32ppm.png`.
 
 ## What does not work / is open
 - Fixed (85b912e5): Rivet's thin pale legs were faint on dark asphalt at 32 px/m (`M/frames/rivet-legs-motion-32ppm.png`).

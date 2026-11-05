@@ -1167,3 +1167,11 @@ NEXT (iteration 19) amendment: 2(b) is done for the standing peds (hat crown 0f6
   path) to see the dark heads in a real crowd, before | after 550b000d. REPORT current to 551ed9c6.
 Session state 05:47: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
   holds logs only.
+- 05:48 quest 1 live path for the dark heads (`res://dev/frames/quest1_clip.gd -- --ppm=32 --rigs --stills=900,1500`):
+  after on HEAD, before with the four hat/hood PNGs checked out from 550b000d (re-imported, rendered, restored with
+  `git checkout HEAD --`, re-imported; tree clean), 0 SCRIPT ERROR both. Pixel diff located the one changed ped (the
+  coat-hat look) at both ticks: before an all-pale outline on the slab, after a dark-headed figure. Lossless x5:
+  `M/frames/ped-heads-quest1-ab-32ppm.png`. frames.json 15 (on top; quest1-peds-ab-48ppm-vs-r1c6 dropped from the
+  list, file kept, REPORT cites it). NEXT amendment's quest 1 item done.
+Session end 05:52: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
+  logs only. NEXT (iteration 19): the 05:27 list as amended at 05:46; REPORT current to 551ed9c6.
