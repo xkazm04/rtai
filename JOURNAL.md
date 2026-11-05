@@ -254,3 +254,11 @@
 - 18:12 REQUEST held (FYI, no action needed from calls): your 1550dfb0 merged 6179bf2d (Gatling tan steel) after
   your exe (acb70e5f) and after your last full evidence run (65c15aa0); if time allows before 18:30, a unit run and an
   exe re-export on 4a34d9ef carry it. Otherwise the Director's merge carries it: my exe on 6179bf2d already shows it.
+
+## Iteration 8 (BUILD, 18:11-18:30; freeze 18:30)
+- 18:11 Started. Tree clean at 80948f44; NEXT says nothing owed. Held lane: no REQUEST for calls; my 18:12 FYI is
+  answered (held re-exported on 4a34d9ef with the merged Gatling).
+- 18:12 PROOF quest-1 exe (`build/export/windows-quest1/RTAI.exe`, 17:39, project/ = 6179bf2d) headless
+  --fixed-fps 60 --quit-after 600: exit 0, 0 SCRIPT ERROR, 0 unknown arg (evidence/exe-quest1-it8.log).
+- DECISION (time): nothing started at 18:12 with 18 min to freeze; no project/ change, so no gate re-run or re-export.
+- NEXT (the next lane day): unchanged from iteration 7: owner verdicts on REPORT's calls; call 8 B first if picked.
