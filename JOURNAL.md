@@ -88,3 +88,45 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - 15:58 MEASURE blade on the merged 1.1x Rivet (`blade_hold_on_cast1_48ppm_sheet.png`, frames.json
   entry 2; 0 script errors): the guard still reads; the katana is long beside the smaller body but
   reads as a sword. Keep the blade size; judge again in the sizes pass (NEXT 2).
+
+## Iteration 2 (15:56-16:56, BUILD)
+
+- 15:56 START. Read JOURNAL, git log. Item: the long-gun off arm (iteration 1's FINDING).
+- 15:58 SURVEY. Only the gun side (L) has a hand part; the off side (R) is `r_forearm`, the torch
+  tool: its art spans 350 px against an IK forearm of 182*arm_k, so RigGait.place draws it about
+  twice the arm's length past the hand point. That is why the torch overshoots the barrel.
+- 16:00 DECISION off claw from existing art, no Codex round: `r_forearm_grip` / `claw_grip` are
+  `l_forearm` / `claw_closed` mirrored across their length (PIL, parts.json pivots mirrored, a
+  `derived` note in each entry; also in `art/d5/rivet` because test_rig_plans checks every plan
+  part in each Rivet art folder). Why: the jaw art already exists and the image lock + moderation
+  cost an iteration; a drawn claw-around-a-grip can still replace `claw_grip` later as one file.
+- 16:01 FRICTION first try: claw on the IK hand point, turned along the line: it floated an open
+  pincer a gun-width above the barrel. Two causes: the drawn weapon hangs off the gun claw's
+  GRIP_U point, about 120 px off RigGrip's IK line; and a pincer along the barrel grips nothing.
+- 16:03 MILESTONE `RigOffClaw` (features/characters/rig_off_claw.gd): the off hand's IK target
+  is the wrist beside the drawn barrel (through the grip point toward the aim), the claw turned
+  ACROSS_RAD 1.25 so its jaws straddle the barrel, z over the weapon. Probe: reads as a claw
+  clamping the foregrip from the off side, the plain forearm running back to the off shoulder.
+  `--torch-off-arm` is the A/B's before. DECISION in docs/decisions.md.
+- 16:05 FRICTION unit run: 14 failing, script errors: ghost/King/d5 forms build on RivetPlan with
+  their own art folders (no claw_grip). Fix: `RigOffClaw.has_art` gates the part; `holds` keys on
+  the side's grip sprite. test_rig_grip's off-claw test re-measured on the drawn line (the jaws,
+  0 px off it); new test_rig_off_claw (planted: the IK-line hand misses the barrel by 212 px).
+  `-gselect=test_rig_` 0 failing.
+- Registry rules applied: none read this iteration (time); the motion stays RigArm's IK, the fire
+  recoil still pulls both hands back along the line (OFF_RECOIL), so kick reads in both claws.
+- 16:08 MILESTONE commit 2f4d3f1d (off claw). Unit 1097/2: test_d5_provenance (the d5 copies had no
+  provenance line; 4 lines added, passes alone) and test_noir_shadows (known flake, passes alone).
+  FRICTION: python text-mode writes on Windows left CRLF in edited .gd/.json (git normalises on
+  commit); write with newline='\n'.
+- 16:12 EVIDENCE gtai-masters/d7/held: `long_gun_offclaw_ab_64ppm_target.png` (r2_w5 beside
+  before/after at 3 s and 18 s), `long_gun_offclaw_ab_32ppm_city.mp4` (25 s, 0 script errors both),
+  `long_gun_offclaw_ab_64ppm_slow.mp4`; frames.json now 10 entries. Looked: at 64 px/m the aimed
+  frames now show the off arm going to the gun with a claw on it (before: the torch hung free or
+  jutted past). At 32 px/m it is a few pixels. Still short of r2_w5: the gun sits beside the gun
+  shoulder, not ahead on the centre line, and the pale claw blends into the pale body.
+- 16:14 MEASURE director reel on 2f4d3f1d (`--rigs --bot=reel --reel=director --loadout=pistol`,
+  7200 ticks, headless): 19/19 chapters down, 0 SCRIPT ERROR (`evidence/held-it2-reel-director.log`).
+- 16:16 DECISION sidearm size: one_hand held_scale 1.5 -> 1.2 (docs/decisions.md; owner call).
+  `sidearm_size_ab_48ppm_sheet.png`: at 1.5 the pistol was as long as the forearm; at 1.2 it reads
+  as a pistol in a claw. test_held*/test_rivet_* pass.

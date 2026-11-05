@@ -35,7 +35,7 @@
     "one_hand": {
       "doc": "pistol grip in the claw, low ready at the hip; aims with the claw arm only",
       "draw_ticks": 12,
-      "held_scale": 1.5,
+      "held_scale": 1.2,
       "kick": 0.8,
       "move_mult": 1,
       "slot": 1,
