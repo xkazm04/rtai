@@ -690,3 +690,16 @@ part sheet (the open item of the crowd). Two Godot processes running at 01:03 (P
 - MILESTONE f4910eca: plan-view ped sheet r5 built (5 parts D4, D5 entries dropped, PED_HEAD_K 0.75, 5 provenance
   lines). Registry `sprite-and-atlas-production` applied: judged at the minified size (32 px/m) first; the art's
   scale is held to the footprint, not to the generated size.
+- 01:19 EVIDENCE GATE on b722cb84 (`node tools/evidence/run.mjs --no-bench`, no edits during it): lint 13/13, unit
+  942/0, scenarios 46, parity bit-exact (mutation caught at 629), look goldens 11/11 (worst 0.83) and block 5/5 (worst
+  0.86), world lock holds. The goldens did not move past tolerance: NO re-bless (none needed).
+- 01:20 final lineups (torsos at 213 px) beside r2_a5: `M/frames/crowd-r5-ab-vs-r2a5.png`. Live city block
+  `film.sh cast-r5peds-city-32 32 900 --bot=reel --arena=city --loadout=pistol,machine_pistol` (0 SCRIPT ERROR), A/B
+  against iteration 11's `cast-peds-city-32.mp4` (same sim, tick for tick): `M/cast-r5peds-city-ab-32.mp4`,
+  `M/frames/city-r5peds-ab-32ppm.png`: the crosswalk ped is paler with a small head (the arena block has one ped).
+- 01:21 COMBAT CHECK director reel headless (`--fixed-fps 60 --quit-after 7200 ... --bot=reel --reel=director
+  --loadout=pistol`): 16 chapters started, 16 down (claw 2/2, pistol 2/2, machine pistol 4/4 .. mini nuke 4/4), 0
+  SCRIPT ERROR.
+- 01:22 decisions line, REPORT section 5 (+ gates line, open item, Call 6 back-out), frames.json 15 (+ crowd-r5,
+  city-r5peds, react-board-r5peds at the top; dropped from the list, files kept as REPORT cites them:
+  crowd-planview-ab-vs-r2a5, city-peds-ab-32ppm, react-board-planview-ab-64ppm).
