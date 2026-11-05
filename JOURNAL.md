@@ -851,3 +851,18 @@ Session state 07:24: head = this commit, tree clean, no Godot process of mine ru
 holds only film.sh, reel.sh and two it7 logs, frames.json 15. NEXT as above, item 2 now: the robot stand-in, or a
 Kerf quest-1 scenario on the same pattern (planted human_damage 0).
 - 07:27 scenario suite on ed965182: 49 ran, 0 failed (`E/scenarios-it10b-powers.log`; rig_stress passed this time). REPORT row added.
+
+## Iteration 11 (07:27-08:27, BUILD)
+- 07:28 read JOURNAL, git log, REPORT. MERGE n6-ghost-forms ebc5ed9d (Dent's keyline shader, apparition; carries
+  n5-cast 473a405e) as the first merge commit and n5-cast 02e4295c (quest 1 sprite Rivet sticker tier) as bbc861d0,
+  `--no-ff --no-commit`; JOURNAL/REPORT and our it7 logs kept ours. `--import` 0 SCRIPT ERROR. No new REQUEST to
+  ghost-powers in the other lanes' JOURNALs.
+- 07:31 COMBAT CHECK director reel on bbc861d0 (`E/director-reel-it11-powers.log`): 16/16, chapter lines identical
+  to it10b, 0 SCRIPT ERROR.
+- 07:33 MILESTONE 81d6bdfe: the last two quest-1 determinism scenarios, on the ohm/dent pattern.
+  `scenario_quest1_kerf` (two G taps, Q, melee every 20, stick on the nearest guard): blinks 6, slices 5, kills 5;
+  same seed twice = same counts and hash (dcdda41a...); planted human_damage 0: kills 0 (slices 6): caught.
+  `scenario_quest1_tonnage` (Q, the stick walks the press to the start-side car until 3.4 m, melee every 20 in
+  reach; a stateless pad): stomps 1, stomp_hits 3, cars_crushed 1, car WRECK, kills 4 (= the filmed quest_crush_rec);
+  same seed twice = same (5a9f46da...); planted car_crush_m 0: car stands (wrecks 0): caught. All four ghosts now
+  have a quest-1 scenario with a planted fault (`E/quest1-{tonnage,dent,kerf,ohm}.json`). Suite count 51.
