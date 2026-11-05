@@ -459,11 +459,11 @@ film.sh and reel.sh, frames.json 15 (all present).
   `rides >= 30`; planted ride 0 caught (`E/scenario-ghost-it5-planted-ride0.log`).
 - 03:29 FIX 89eda6e5 in the city block the hop stood Dent on a parked ambulance's hood: the hop now tries behind, left,
   right for a spot with no live car within 2.6 m. Re-filmed: he lands on the street beside it.
-- 03:36 Clips: `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4` (64 px/m ride + hop,
+- 03:31 Clips: `M/dent-arena-32ppm.mp4`, `M/dent-city-32ppm.mp4`, `M/dent-64ppm-halfspeed.mp4` (64 px/m ride + hop,
   half speed). REEL `M/ghost-attacks-reel-it5-32ppm.mp4` (33 s; Dent's segment re-timed onto the ride, Ohm's onto the
   robot falling) replaces it4. Judged 6 stills. frames.json 15, all present.
 
-### REQUEST 7 -> n6-ghost-forms (03:37)
+### REQUEST 7 -> n6-ghost-forms (03:32)
 Dent now rides the seized car (06908631; `DentStage.riding()` true while on the roof, Rivet's position = the car's).
 DentBody feeds the car's speed as Rivet's velocity, so on the roof Dent runs his walk cycle at ~8 m/s with the full
 lurch. Please, in DentBody (yours): while `pilot.dent.riding()` feed `vel_in` zero (or a crouch), and add a buck (a
