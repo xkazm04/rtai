@@ -795,3 +795,14 @@ holds only film.sh, reel.sh and logs, frames.json 15 (all present).
   (5718fac2...); the planted fault (the street's ghost cars cleared before tick 0) gives 0 seizes, 12 misses, a
   different hash: caught (`E/quest1-dent.json`). No replay verify in it: the group is spawned outside the input
   stream (as in the rec), so a replay log alone cannot rebuild it; the hash check is the determinism proof.
+- 06:50 MILESTONE NEXT 3a Tonnage on quest 1's car, filmed: `dev/ghost-powers/quest_crush_rec` (bound input only:
+  Start, five guards round the start-side ghost car, Q, the left stick walks the press to the car until its centre
+  is 3.4 m off, melee). First take: STOP_M 2.2 never reached (the solid car holds the press about 2.5 m off since
+  514e6899), the slam only came at the fallback press; set STOP_M 3.4 (the head lands 0.9 m ahead, car_crush_m 3.4,
+  so a car centre within 4.3 m is in reach). Now: slam tick 121, cars_crushed 1, stomp_hits 3, kills 4, car WRECK,
+  0 SCRIPT ERROR, identical at 64 px/m. The second press at 220 falls in the stomp cooldown (stomps 1). Judged at 32
+  and 64: the reach ring and the press shadow grow over the white sedan, the drop turns it into the black flattened
+  wreck with the street crack, the guards thrown and flattened. `M/frames/quest1-tonnage-crush-keys-32ppm.png`,
+  `-64ppm.png`, `M/quest1-tonnage-crush-32ppm.mp4`, `M/quest1-tonnage-crush-64ppm-halfspeed.mp4`; frames.json 15
+  (dropped tonnage-reach-arena-keys and quest1-kerf-views-ab, older; files kept). Registry rule applied
+  (motion-quality-gating): the shipped path, judged in motion at 32 and 64.
