@@ -11,6 +11,8 @@ const STAGE_BED_TRIM_DB: float = -3.0
 var service: AudioService
 var hooks: AudioHooks = AudioHooks.new()
 var voice: QuestVoice = QuestVoice.new()
+## n7-ranged: a weapons row's end_cue plays where its round ends (`--end-cue=off` = the before).
+var end_cues: bool = not OS.get_cmdline_user_args().has("--end-cue=off")
 var _stage: CollectCallStage
 var _shots: Dictionary[Shot, Vector2] = {}
 
@@ -57,6 +59,9 @@ func _process(_delta: float) -> void:
 			var id: StringName = &"hit_flesh" if hooks.kill_pending else &"projectile_end"
 			@warning_ignore("return_value_discarded")
 			service.cue(id, _shots[s], _stage.tick)
+			if end_cues and s.spec != null and s.spec.end_cue != &"":
+				@warning_ignore("return_value_discarded")
+				service.cue(s.spec.end_cue, _shots[s], _stage.tick)
 	_shots = live
 
 

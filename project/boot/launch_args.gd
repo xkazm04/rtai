@@ -28,6 +28,8 @@ const KNOWN_FLAGS: PackedStringArray = [
 	"--react-snap",
 	# n7-ranged: --shard-pop=<ticks> the homing shard victim's freeze before the pop (owner call)
 	"--shard-pop",
+	# n7-ranged: --end-cue=off drops the weapons rows' end_cue (the rocket and nuke blast sound)
+	"--end-cue",
 ]
 
 var _values: Dictionary[String, String] = {}
