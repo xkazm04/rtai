@@ -655,4 +655,25 @@ NEXT (iteration 6, in order):
 5. The rack seam (a 3-row wing part sheet under the image lock), bigger pads, the horn and the
    bay doors rolling up at rush hour, the defeat's visor flicker.
 6. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-8).
-- 23:00 decisions.md: kamikaze armour line added. Session continues on NEXT 1.
+- 23:00 decisions.md: kamikaze armour line added.
+- 23:02 GATES on the head (63b158f4): scenarios 52 ran / 0 failed, 0 SCRIPT ERROR
+  (`evidence/servo/scenarios-it5b.log`). The director reel last ran on ae0fefe2 (19/19); everything
+  since is Servo-only or boss telemetry.
+- 23:02 FOUND + FIXED 8c6dabd2 (framework, telemetry only): a late hit of the boss script
+  (Servo's parcels and dives, King's coins) inside an attack's active window was counted as that
+  attack landing (the stander's hot dash read 5 of 3). `BossFight.late_hit`; BossHook credits a
+  hit that is only late damage to the boss id. Same damage on phase 3 stand seeds 1-3; seed 3 hot
+  dash 3/3 (was 4/3). The it5 rotor dash rates above may hold a few parcel hits (human
+  parcel_hits 0-1 per fight, so small); re-run in iteration 6. FYI king: this is in
+  boss_fight.gd / boss_hook.gd.
+- 23:03 FILM `M/servo_fight_bot_human_32ppm_it5.mp4` (`--bot-human --seed=3 --boss-cam`, 32 px/m,
+  116 s, 0 SCRIPT ERROR; down at tick 6930, took 112, 0 deaths, identical to the numbers run).
+  **Looked at** the contact sheet (one frame per 6 s): beam lock, waves, crates, the van at bay 3
+  reads at 32 px/m, the phase-3 rack, the slump. FOUND: the boss cam often frames the cream
+  off-floor ground beside the pit (up to half the frame): clamp the cam to the arena area (next).
+  Replaces the it3 dodge full-fight clip in frames.json (15).
+
+NEXT (iteration 6) as above, with: 0. re-run the it5b sweep on the attribution fix (5 seeds x 3
+bots) for the REPORT's per-attack table; 3 is done except the target comparison at 32 px/m; add
+3b. clamp the boss cam to the arena area bounds (`--boss-cam`, a framework view: ask king or do
+it Servo-side).
