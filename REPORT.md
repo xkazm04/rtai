@@ -30,6 +30,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Blast debris: concrete slabs and ink specks fly out over 30 ticks (`blast_debris.json`). Iteration 12: three big chunks (up to 1.5 m), a third of the ring apart, among six small slabs, as in r2_w4 (`chunk_big` 3; 0 = the uniform 0.35-1.3 m slabs). Evidence: `fx-debris-it12-64ppm-vs-r2w4.png`.
    - Iteration 14: the gun muzzle flashes (pistol, Gloria, machine pistol, Gatling, rocket, hand cannon, mini-nuke) grade white-hot -> yellow -> an orange rim, as r2_w4's pistol flash does; they were pale cream stars that washed into the paper (`fx_colour.json` `muzzle_core`, rim 3 px via `tools/art/fx_rim.py`; drop = before). Evidence: `fx-muzzle-it14-64ppm-vs-r2w4.png`.
    - Iteration 14: Rivet's bullet tracer is r2_w4's comet (a round white-hot head, a tapering orange tail) instead of a spear head that printed as a gold blade as long as Rivet at 64 px/m; length and weight kept, so it still reads at 32 px/m (`tools/art/tracer_comet.py`; `weapon_art.json` tracer `art`, back = `tracer.png`). Evidence: `fx-tracer-comet-it14-vs-r2w4.png` (64 and 32 px/m).
+   - Iteration 14: the plasma round is r2_w4's comet too (a round white-hot head and gold tongues) instead of a smooth gold teardrop (`plasma_comet.png`; `weapon_art.json` plasma_bolt `art`, back = `plasma_bolt.png`). Evidence: `fx-plasma-comet-it14-vs-r2w4.png`.
    - Iteration 14: the electro arc prints a white-hot core inside a violet edge, as r2_w4's bolt does, instead of one lavender fill; it reads stronger on cream at 32 px/m too (`fx_colour.json` arc rim 4 px). Evidence: `fx-arc-it14-vs-r2w4.png`.
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
@@ -49,7 +50,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 3ddcf3c2 (the muzzle flash, the comet tracer and the violet arc), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on 0fa61942 (the muzzle flash, the comet tracer, the violet arc and the plasma comet), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
@@ -65,7 +66,7 @@ The last full evidence gate was green on 4677e177 (2026-11-05 04:58, the muzzle 
   - its housing prints grey (the 1.3x `cross_k` fixed the slim silhouette). The grey is by design: the held parts print through `print_part`, whose only inks are paper, ink, vermilion and cop blue. The cast lane's warm ramp is Rivet's D5 close-up only, so the merge will not change it (see Calls);
   - there is no director-reel chapter for it (left out on purpose, so the approved reel keeps its timings).
 - **FX gap to r2_w4:** the white-hot tier prints cream through the FX print's paper snap (the smoke frame's flash, b59dfb73, carries the white-hot core now) (the lumpy edge landed cd654482, the grade 986da3b6). (Debris landed f0987078, the smoke ring c53cbbfa; the white-hot first frame c1a6cdaa; the ray rings' olive tail e7bccb95.)
-- **FX gaps left to r2_w4 (iteration 14):** the arc's many small side twigs (tried: at game scale they turn the bolt into a scribble; the ink ring cannot carry hairlines at 0.2 cell scale); the sheet's ink speed dashes behind the rounds (under 1 px at 32 px/m); the plasma bolt is still a smooth gold teardrop, not the sheet's flame-tongued comet.
+- **FX gaps left to r2_w4 (iteration 14):** the arc's many small side twigs (tried: at game scale they turn the bolt into a scribble; the ink ring cannot carry hairlines at 0.2 cell scale); the sheet's ink speed dashes behind the rounds (under 1 px at 32 px/m); the plasma comet lacks the sheet's loose ember flecks (sub-pixel at 32 px/m).
 - **Fixed in shared code:** `--telemetry` together with `--reel=director` crashed at quit. The ReelDirector hook has no station and `ArenaStage.telemetry_dict` read `hook.station.id`. Main has the bug too. A hook without a station is now keyed `hook_<n>`.
 - **Unmeasured:** the frame cost of the riso layer and of `look_d5_fx` with nothing else running. No bench lock was taken; the machine is shared.
 
@@ -80,7 +81,7 @@ The last full evidence gate was green on 4677e177 (2026-11-05 04:58, the muzzle 
 - **Grain:** `world_riso.speck_k` 0.4 vs 0 (before) or higher toward r2_a5 (`print-speck-it9-2x-vs-r2a5.png`).
 - **Grime splats:** `world_riso.splat_k` 0.8 vs 0 (before); `splat_cut` is the density dial (0.76 = twice as many, 0.82 = sparser). See `print-splat-it11-city0-vs-r2a5.png`. In the arena, the paper margin round the floor takes them at full density (no tile joints): `arena-reel-splat-ab-32ppm-it11.mp4` (20 s, off | on).
 - **Hairline cracks:** `world_riso.crack_k` 0.6 vs 0 (before); `crack_run` is the density dial (0.55 = more and longer runs, 0.7 = sparse). See `print-crack-it12-city0-vs-r2a5.png`.
-- **Bullet tracer shape:** the comet (`tracer_comet.png`) vs the weapon-art lane's spear head (`tracer.png`), one value in `weapon_art.json` (`fx-tracer-comet-it14-vs-r2w4.png`).
+- **Bullet tracer shape:** the comet (`tracer_comet.png`) vs the weapon-art lane's spear head (`tracer.png`), one value in `weapon_art.json` (`fx-tracer-comet-it14-vs-r2w4.png`); the same for the plasma round (`plasma_comet.png` vs `plasma_bolt.png`, `fx-plasma-comet-it14-vs-r2w4.png`).
 - **The Gatling's bulk:** `cross_k` 1.3 vs 1.0 (bottom row of `gatling-128ppm-vs-r1w6.png`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
