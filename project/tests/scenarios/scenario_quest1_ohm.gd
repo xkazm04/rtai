@@ -1,16 +1,17 @@
 extends Scenario
 ## Lane ghost-powers: Ohm on quest 1's street car (the generated city, collect_call_city.json
-## `ghost_cars`). After the warm-up a spread group of dock guards stands east of Rivet; scripted
-## input picks Ohm (three G taps), takes him (Q) and presses melee every CADENCE ticks with the
-## stick on the nearest guard, or, once none stands within the bolt's range, on the nearest live
-## car: the guards fall, then the car bolt burns the car out (car_damage x machine_k). The same
-## seed twice must give the same counts and world state hash (SIM-05).
+## `ghost_cars`; [] since d7-calls ghost-powers-5, so Quest1GhostStreet parks the fitted three).
+## After the warm-up a spread group of dock guards stands east of Rivet; scripted input picks Ohm
+## (two G taps: Dent is locked in quest 1, G skips him), takes him (Q) and presses melee every
+## CADENCE ticks with the stick on the nearest guard, or, once none stands within the bolt's range,
+## on the nearest live car: the guards fall, then the car bolt burns the car out (car_damage x
+## machine_k). The same seed twice must give the same counts and world state hash (SIM-05).
 ## TST-05: the planted fault (Ohm's machine_k 0) must change the outcome: the car survives.
 
 const EVIDENCE_FILE: String = "quest1-ohm.json"
 const WARM: int = 420
 const TICKS: int = 450
-const PICKS: Array[int] = [10, 14, 18]
+const PICKS: Array[int] = [10, 14]
 const TAKE_AT: int = 30
 const FIRST_PRESS: int = 70
 const CADENCE: int = 20
@@ -45,8 +46,7 @@ func run(_tree: SceneTree) -> String:
 func _run(fault: bool) -> Dictionary:
 	var bus: EventBus = EventBus.new()
 	var data: DataStore = DataStore.new()
-	Quest1Session.on_city = true
-	var s: Quest1Session = Quest1Session.open(bus, data)
+	var s: Quest1Session = Quest1GhostStreet.open(bus, data, [])  # Dent locked, the cars back
 	var counts: Dictionary = {}
 	var hash: String = ""
 	if s != null:

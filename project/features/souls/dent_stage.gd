@@ -27,6 +27,8 @@ var blasts: int = 0
 var seizes: int = 0
 ## Ticks Dent spent riding a seized car's roof (ghost_attacks.json dent.ride).
 var rides: int = 0
+## Rivet's distance from the last blast (m, -1 = none; ride 0 keeps him clear). Telemetry only.
+var blast_gap_m: float = -1.0
 ## The last seize that found no car (tick, -1 = none) and the aim point it reached for: the view
 ## lashes the tether out and lets it fray. Not sim state (never read back by the sim).
 var miss_tick: int = -1
@@ -60,10 +62,14 @@ func num(key: StringName) -> float:
 	return attacks.num(GHOST, key)
 
 
-## One tick: `power` = the G press, `melee` = the overload command, `aim` = Rivet's aim (unit).
-func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> void:
+## One tick: `power` = the G press, `melee` = the overload command, `aim` = Rivet's aim (unit),
+## `reach_m` = the cursor's distance (0 = none: the pad). Standing (ride 0) the car drives to the
+## point he aims at, the cursor's reach when there is one (d7-calls ghost-powers-3).
+func drive(
+	stage: CollectCallStage, power: bool, melee: bool, aim: Vector2, reach_m: float = 0.0
+) -> void:
 	var rivet: Fighter = stage.arena.rivet
-	var reticle: Vector2 = rivet.pos + aim.normalized() * num(&"aim_m")
+	var reticle: Vector2 = rivet.pos + aim.normalized() * num(&"aim_m")  # the seize's aim line
 	if stage.vehicles == null:
 		# no car service here (the invented quest arena): the press still lashes out and misses
 		if power and _shared and rivet.alive() and powers.is_active(ID):
@@ -78,7 +84,8 @@ func drive(stage: CollectCallStage, power: bool, melee: bool, aim: Vector2) -> v
 	if not link.linked() or car.state == VehicleBody.State.WRECK:
 		_let_go()
 		return
-	link.step(reticle)
+	var steer: float = reach_m if reach_m > 0.0 and num(&"ride") <= 0.0 else num(&"aim_m")
+	link.step(rivet.pos + aim.normalized() * steer)
 	var wall: bool = _wall(stage)
 	car.pos = link.pos
 	car.head = Vector2.from_angle(link.heading)
@@ -199,6 +206,7 @@ func _blast(stage: CollectCallStage) -> void:
 	car.vel = Vector2.ZERO
 	if riding():  # he jumps clear behind it as it goes up
 		stage.arena.rivet.pos = _hop_spot(stage)
+	blast_gap_m = stage.arena.rivet.pos.distance_to(blast_at)
 	link.crashed = true
 	_let_go()
 

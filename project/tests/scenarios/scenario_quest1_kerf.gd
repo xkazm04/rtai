@@ -1,15 +1,15 @@
 extends Scenario
-## Lane ghost-powers: Kerf on quest 1 (the generated city). After the warm-up a spread group of
-## dock guards stands east of Rivet; scripted input picks Kerf (two G taps), takes him (Q) and
-## presses melee every CADENCE ticks with the stick on the nearest standing guard: each press
-## blinks Rivet behind a guard and the beam slices it (the one-shot cauterised split). The same
-## seed twice must give the same counts and world state hash (SIM-05).
+## Lane ghost-powers: Kerf on quest 1 (the generated city). After the warm-up a spread group of dock
+## guards stands east of Rivet; scripted input picks Kerf (one G tap: Dent is locked in quest 1, G
+## skips him), takes him (Q) and presses melee every CADENCE ticks with the stick on the nearest
+## standing guard: each press blinks Rivet behind a guard and the beam slices it (the one-shot
+## cauterised split). The same seed twice must give the same counts and world state hash (SIM-05).
 ## TST-05: the planted fault (Kerf's human_damage 0) must change the outcome: no guard falls.
 
 const EVIDENCE_FILE: String = "quest1-kerf.json"
 const WARM: int = 420
 const TICKS: int = 300
-const PICKS: Array[int] = [10, 14]
+const PICKS: Array[int] = [10]
 const TAKE_AT: int = 30
 const FIRST_PRESS: int = 70
 const CADENCE: int = 20
