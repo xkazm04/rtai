@@ -446,3 +446,14 @@ NEXT (iteration 23 / the morning):
 3. The alley's remaining gap to r2_a6 is hue (the world print keeps value only): the green dumpster face and the blue-grey pools. A per-stage chroma pass through LookZone is the likely route; measure it before building.
 4. Weapon art: the warm-ink Call stays open.
 Session state 08:20: head = this commit, tree clean, no Godot or Node process of mine running, locks never taken, scratch (gtai-n5/look-scratch-it22) holds only logs and pngs (no AVIs), frames.json 15 (every file exists).
+
+## Iteration 23 (08:19-08:30, BUILD, 11 min to the freeze)
+- 08:19 READ JOURNAL NEXT (iteration 23), git log. Tree clean at 685ed52d, no locks, no Godot of mine. Too short for a build + gate + reel, so did NEXT 3's "measure before building" step as a read.
+- 08:22 MEASURED (read, no run) the alley hue route: look_d4.gdshader prints ink density through three vec3 tones (`paper_tone`, `wash_tone`, `ink_tone`) plus the protected plates (verm, teal, cop_blue, blood); everything else prints value only, so the green bin face and blue-grey pools cannot survive. `LookZone.world` is `Dictionary[StringName, float]` (floats only). Route: let LookZone (and `alley_decor.json print.world` + its schema) carry vec3 uniforms (an array of 3 -> Vector3/Color, lerped per channel), then set a cooler green-grey `wash_tone` for the alley. One data value, no shader change, no extra pass (`shader-budget-authoring`). Risk to check: the cop-blue plate must still separate from a tinted wash. REPORT Next steps bullet updated.
+
+NEXT (the morning / iteration 24):
+1. The gate is green on 176c48f4 and the director reel 16/16; nothing since is code or data (docs only).
+2. The alley hue: build the vec3 LookZone route above (+ test_look_zone cases for a vec3 lerp), try wash_tone toward r2_a6's green-grey at 48 px/m tick 900 (`res://dev/arena/arena.tscn -- --arena=alley --bot=alley --clean`), A/B with `--alley-print=off`, check cop blue and blood, gate, reel.
+3. The tell under the colour fire: unchanged (stage contractors + molotov at a gunplay station).
+4. Weapon art: the warm-ink Call stays open.
+Session state 08:23: tree = this commit, no Godot or Node process of mine running, locks never taken, frames.json 15.
