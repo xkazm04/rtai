@@ -111,6 +111,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   read darker at 32 px/m and was not built (`M/frames/crowd-r4-sheet-retrial-ab.png`).
   Live city block at 32 px/m, same sim (`M/cast-r5peds-city-ab-32.mp4`, `M/frames/city-r5peds-ab-32ppm.png`); the
   director reel 16/16 chapters down, 0 script errors; look goldens within tolerance (no re-bless).
+  Then (cc744d85, 0bcd2ce9) a second sheet r6 for the vest and overalls torsos and the beanie and cap heads (the
+  vest ped now reads pale with a dark hair crown), every ped head kept at one scale; its charcoal hoodie was not built
+  (it printed as a dark slab and lost the head mark). Three-way board: `M/frames/crowd-r6-ab-32-64ppm.png`; the react
+  board clip and still above show the final parts.
 
 ### Gates (iteration 12, `tools/evidence/run.mjs --no-bench` on b722cb84: lint 13/13, unit 942/0, scenarios 46, parity
 exact (mutation caught at 629), look goldens 11/11 (worst 0.83) and block 5/5 (worst 0.86) with no re-bless, world lock holds.)
@@ -137,8 +141,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 - Gearbox was not filmed on the hybrid base. It has no body plan of its own (`powers.json`: a remote car hijack;
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
-  coat, jacket and head art is a plan-view redraw since iteration 12; the hoodie, vest and overalls torsos and the
-  bald, beanie and cap heads are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
+  coat, jacket, vest and overalls torsos and the hat, hair, hood, beanie and cap heads are plan-view redraws since
+  iteration 12; the hoodie torso, the bald head, the limbs and the shoes are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
@@ -174,7 +178,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
 
 6. The crowd's value at game zoom: A, pale-topped standing peds (built in iteration 11, plan-view values and a
    +42 L fill lift; four looks pale, jacket and hoodie dark), or B, the earlier dark crowd (the five
-   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert f4910eca` first for the r5 plan-view parts). Before/after beside
+   `HumanPlan.PED_*` constants back, see the decisions line, and the ped art from 9f2aac24; `git revert 0bcd2ce9 cc744d85 f4910eca` first for the plan-view parts). Before/after beside
    r2_a5: `M/frames/crowd-planview-ab-vs-r2a5.png`. With B, the navy cops and the peds share one dark value at
    32 px/m and only the cops' blue pads tell them apart.
 

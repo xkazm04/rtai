@@ -703,3 +703,24 @@ part sheet (the open item of the crowd). Two Godot processes running at 01:03 (P
 - 01:22 decisions line, REPORT section 5 (+ gates line, open item, Call 6 back-out), frames.json 15 (+ crowd-r5,
   city-r5peds, react-board-r5peds at the top; dropped from the list, files kept as REPORT cites them:
   crowd-planview-ab-vs-r2a5, city-peds-ab-32ppm, react-board-planview-ab-64ppm).
+- 01:24 FINDING + fix cc744d85: `PED_HEAD_K` is plan-wide, so f4910eca's 0.62 -> 0.75 (to keep the r5 heads' size)
+  also grew the old bald, beanie and cap heads 21 %. Fixed at the art: the r5 heads re-cut from the sheet at factor
+  1.2385 (= 1.024 x 1.21, the old heads' sizes: hat 155, hair 128x121, hood 140x134) and PED_HEAD_K back to 0.62.
+  New masters tool `cut_ped_sheet2.py` (explicit factor, cell:role[:width], neck holes filled). Lineup check
+  (before / f4910eca / cc744d85): the old-art heads back to the iteration 11 size, the r5 heads unchanged. Unit
+  942/0; provenance hashes of the three heads updated.
+- 01:24 Codex job `ped_plan_b` (59 s, under image.lock, released; `masters:n5/cast/gen/r6`): an edit of the r5
+  sheet for the other looks: a charcoal hoodie (hood lying flat on the back), a cream striped knit vest, warm-grey
+  overalls with dark straps, a pale knit beanie, a dark flat cap (no blue, no red). Cut at 1.024 (torsos fitted to
+  the shipped widths 214/218/215) and 1.2385 (heads).
+- 01:26 TRIAL all five: the vest ped reads pale with a dark hair crown (gain), beanie and cap fine; the charcoal
+  hoodie prints as a solid dark slab at 32 and 64 px/m and loses the pale crescent that marked its head. DECISION:
+  keep the iteration 11 hoodie torso (one file back; the r6 cut stays in `gen/r6/cut/torso_hoodie.png` if wanted),
+  build vest, overalls, beanie and cap. Three-way board (before / trial with hoodie / built):
+  `M/frames/crowd-r6-ab-32-64ppm.png`.
+- MILESTONE 0bcd2ce9: r6 parts built (vest, overalls, beanie, cap; the vest's D5 overlay dropped; 4 provenance
+  lines). Unit 942/0, lint 13/13. React board re-shot on the final parts (481 frames, 0 SCRIPT ERROR):
+  `M/cast-react-board-r5peds-ab-64ppm.mp4` and its still now show r5 + head fix + r6 (the board's peds are the coat
+  and jacket looks); every reaction, death and corpse reads, cops identical.
+  Now from straight above: coat, jacket, vest, overalls, felt hat, hair, hood, beanie and cap are plan-view art;
+  the hoodie torso, the bald head, the limbs and the shoes are still the 3/4-view art.
