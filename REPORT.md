@@ -141,7 +141,9 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `M/cast-quest1-rivet-lod-ab-32.mp4`. Revert = `CastView.LOD_SPRITES` false. The grown Hauler keeps the art capture (cf64342e: the pick
   judges the drawn scale, `grow` x ppm; the sticker tier grown 2.7x was a flat mass with a black slab,
   `M/frames/quest1-hauler-lod-trial-32ppm.png`; a one-frame swap early in the morph,
-  `M/frames/quest1-hauler-switch-32ppm.png`, `M/cast-quest1-hauler-lod-ab-32.mp4`). Hosting the rigs in the default quest
+  `M/frames/quest1-hauler-switch-32ppm.png`, `M/cast-quest1-hauler-lod-ab-32.mp4`; since 10607e11 that swap cross-fades
+  over frames 14-17 (`LOD_FADE` 0.12, 0 = the hard swap): `M/frames/quest1-hauler-fade-ab-32ppm.png`,
+  `M/cast-quest1-hauler-fade-ab-32.mp4`). Hosting the rigs in the default quest
   view stays rivet-arsenal's Call 1. Director reel 16/16 down, 0 script errors.
 
 ### 5. The crowd (brief item 4)
