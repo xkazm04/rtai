@@ -2,7 +2,7 @@
 
 Branch `d7-held` (cut from main `1028c15d`; d7-calls merged five times, last `bf7386aa` (the Gatling's tan steel held art)).
 Evidence: `C:\Users\kazda\kiro\gtai-masters\d7\held\` (`frames.json`) and `evidence/held-*.log`.
-Exe: `build/export/windows/RTAI.exe`, exported 18:00 at `1550dfb0` (code identical to the final head) (windows-showcase, boots into the arena).
+Exe: `build/export/windows/RTAI.exe`, exported 18:00 at `1550dfb0` (code identical to the final head: `git diff 1550dfb0 HEAD -- project` is empty at 18:41) (windows-showcase, boots into the arena).
 Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_rifle`, plain, `--torch-off-arm`,
 `--gun-off-claw`): 0 script errors, no unknown-arg warning, and the frames differ from the default
 (`evidence/held-it4-exe-flags-ab.png`: default | torch | gun off the claw).
@@ -56,6 +56,22 @@ Every A/B flag below was run in this exe (`--arena=city --rigs --loadout=plasma_
   the back jaw under the weapon and the front jaw over it. The drawn grip art should come as that pair.
 - **Not done**: an arena-pit segment in the whole-arsenal clip. Sidearm and chainsaw have 64 px/m after-clips
   (`sidearm_chainsaw_hold_64ppm_slow.mp4`), but no 32 px/m before/after clip.
+
+## What blocked or slowed the lane (and for how long)
+
+No hard block. The friction, from JOURNAL:
+- **Waiting for cast-1, about 30 min (15:13 to 15:43).** The blade hold and the hold table were built on main's
+  1.2x Rivet until d7-calls posted `cast-1 landed at 16272697`. Then I merged it and re-checked the blade on the
+  1.1x Rivet (no rework needed).
+- **No Codex round, by choice (16:00).** With the image lock taken and the moderation risk, an iteration would have
+  gone into one art round. The off claw reuses the existing `claw_grip` / `r_forearm_grip` art instead. That is
+  why the drawn claw-around-grip art is still a next step.
+- **The main checkout's stale class cache, about 10 min (15:35).** It gave 214 parse errors, so I made a detached
+  `../d7-held-before` worktree at `1028c15d` for every "before" render.
+- **The 16:45 restart:** the stopped session's work was sound and got committed. About 5 min were lost.
+- **Smaller costs, each a few minutes:** RivetCarry keeps one weapon per slot, so I re-filmed the arsenal clip
+  (14 of 18 weapons, then 18 of 18). A run of `run_unit.mjs` without `GODOT_BIN` reported a stale count. Writing
+  into the worktree during `tools/evidence/run.mjs` forced one re-run (18:08).
 
 ## Calls for the owner
 

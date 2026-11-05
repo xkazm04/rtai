@@ -342,3 +342,14 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
 - NEXT: unchanged from the 18:14 entry (owner verdicts on the 7 REPORT calls; call 7's pick first: centre-line long
   gun + the two-layer drawn claw pair through Codex under image.lock; the darker off-claw tone; 32 px/m
   before/after clips for sidearm and chainsaw; an arena-pit segment for the arsenal clip).
+
+## Iteration 8 (REPORT, 18:40-18:58)
+- 18:40 Started. Tree clean at af3c3b31. `git diff 1550dfb0 HEAD -- project` empty: RTAI.exe (17:59) is the head's game.
+  d7-calls head 3c6d4dbb (journal only, nothing to merge). Checked every evidence path REPORT cites: all 15 masters
+  files + frames.json, the 4 reel logs, it4 evidence/exe logs and stills, held_classes table + schema + test, the exe.
+- 18:42 REPORT.md: added the missing "What blocked or slowed the lane" section (cast-1 wait about 30 min, no Codex
+  round by choice, stale main cache, the restart, smaller costs) and the head check on the exe line. Nothing built.
+- NEXT (next lane day): the owner's verdicts on the 7 REPORT calls. Call 7's pick goes first (centre-line long gun +
+  the two-layer drawn claw pair through Codex under image.lock). Then the darker off-claw tone (A/B at 64 px/m),
+  32 px/m before/after clips for sidearm and chainsaw, an arena-pit segment in the arsenal clip, and a not-aiming
+  carry in the arena feed.
