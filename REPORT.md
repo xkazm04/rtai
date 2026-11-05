@@ -29,7 +29,9 @@ smoke `RTAI.exe -- --arena=city --rigs --loadout=katana`: 6 s, 0 script errors).
    six bot runs on the city block, 14 of the 18 weapons; not shown: gloria, homing shard, assault rifle, electro gun)
    and `arsenal_cycle_32ppm_sheet.png`.
 8. **Combat holds**: director reel (`--rigs --bot=reel --reel=director --loadout=pistol`) 19/19 chapters down,
-   0 SCRIPT ERROR on every hold commit (`evidence/held-it1/it2/it3-reel-director.log`). Unit 1108/0, lint 13/13.
+   0 SCRIPT ERROR on every hold commit (`evidence/held-it1/it2/it3-reel-director.log`). Full evidence run on `4ee85f09`
+   (`evidence/held-it3-evidence.log`): lint 13/13, unit 1108/0, scenarios 52/52, parity exact (planted caught at 629),
+   look goldens 11/11 + block 5/5 within mean 4 (worst 0.27): **no golden moved, no re-bless**.
 
 ## What does not work yet (said plainly)
 

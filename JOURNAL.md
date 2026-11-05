@@ -230,3 +230,15 @@ Branch `d7-held`, cut from main `1028c15d`. Evidence: `evidence/` + `C:\Users\ka
   no baked chunks needed for the export). Smoke `RTAI.exe --quit-after 360 -- --arena=city --rigs
   --loadout=plasma_rifle,katana`: 0 SCRIPT ERROR (katana and plasma rifle share slot 1: katana kept).
   NEXT item 1 is now: re-export only if HEAD moves after 5bbc95b5.
+- 17:31 MEASURE full evidence on 4ee85f09 (`node tools/evidence/run.mjs --no-bench`, log written outside
+  the tree then copied: the run refuses a dirty tree): lint 13/13, unit 1108/0, scenarios 52/52, parity
+  exact (planted 629), look goldens 11/11 + block 5/5 (worst 0.27): nothing moved, no re-bless.
+  `evidence/held-it3-evidence.log`.
+- Registry rules applied (read 17:27): `depth-ordered-layered-art` "wrapping is the common cause": a
+  claw closed around a grip wraps it, so it must be two layers (back jaw under the weapon, front jaw
+  over); RigOffClaw's single claw at z 61 over the gun cannot read as gripping. The drawn grip art
+  (NEXT) should come as a back/front jaw pair. `realtime-combat-semantics` "state that changes outcomes
+  must be readable inside the reaction budget": the held class is judged at 32 px/m, where it reads by
+  the weapon's silhouette and angle, not by the claws.
+- 17:32 STOP iteration 3. Head = this commit. Exe at 5bbc95b5 (code identical to HEAD: only docs and
+  evidence logs since). NEXT is the 17:24 list (exe already exported: re-export only if code moves).
