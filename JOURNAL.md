@@ -1022,3 +1022,18 @@ Session end 04:09: tree clean after this commit, no Godot process of mine runnin
 - 04:41 brief item 5's still re-shot on d2b91a42: `M/frames/cast-ingame-vs-r2c6.png` (city `--arena=city
   --loadout=pistol,machine_pistol`, tick 720, lossless from the AVI, same crop x1.78 + Rivet x4; 0 SCRIPT ERROR).
   Rivet's tan core and visor slot are in the in-game panel now. frames.json entry updated.
+- 04:43 checks on the tan: the hit flash (`tint`, print_part line 128) still forces cream over the tan core after the
+  sticker branch, so the flash still reads; D-Noir (dev-only) replaces the colour wholesale, unaffected.
+
+NEXT (iteration 18), replaces the 04:06 list:
+1. Calls 1-9 stand. Call 9 is new (Rivet's tan core at 32 px/m, built A = CORE_TAN 0.6, 3ceb3e30; B cream = 0.0,
+   C full tan = 1.0). REPORT sections 3/4, Calls and the gates line are current to 08b1f7bc (+ docs commits after it).
+   frames.json 15, every file exists. REPORT rewrite at 08:40.
+2. Weakest left vs the targets (judgement or owner calls; no missing parts): (a) the cops read as bright-blue pad
+   clusters at 32 px/m vs r2_c6's navy bodies (Call 4 C/D, filmed, the owner's pick); (b) at 32 px/m Rivet reads as a
+   collar ring with cream rods, where r2_c6 draws a lanky upright figure (Call 7's flat-vs-hazard collar; a thinner
+   collar band at 32 px/m is untried: `print_part` COLLAR branch could ink the ring's inner half, judged on the
+   director reel and the slab lineup, only if the vermilion still leads).
+3. If nothing in 2 is buildable without the owner: re-run the gate on the final tree before the 08:30 freeze.
+Session end 04:44: tree clean after this commit, no Godot process of mine running, locks never taken, scratch
+  `gtai-n5/scratch-cast/i17` keeps logs only (renders deleted).
