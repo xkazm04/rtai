@@ -251,3 +251,6 @@
   REPORT.md (root, each lane keeps its own). Noted in REPORT for the Director.
 - NEXT (the next lane day): nothing owed today. Owner verdicts on REPORT's calls; call 8 B first if picked (per-weapon
   gun outline, iteration 5b NEXT (3)). If project/ moves: gates, re-export both exes, update the REPORT sha.
+- 18:12 REQUEST held (FYI, no action needed from calls): your 1550dfb0 merged 6179bf2d (Gatling tan steel) after
+  your exe (acb70e5f) and after your last full evidence run (65c15aa0); if time allows before 18:30, a unit run and an
+  exe re-export on 4a34d9ef carry it. Otherwise the Director's merge carries it: my exe on 6179bf2d already shows it.
