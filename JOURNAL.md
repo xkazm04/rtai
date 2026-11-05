@@ -1175,3 +1175,16 @@ Session state 05:47: tree clean after this commit, no Godot process of mine runn
   list, file kept, REPORT cites it). NEXT amendment's quest 1 item done.
 Session end 05:50: tree clean after this commit, no Godot process of mine running, locks never taken, scratch i18
   logs only. NEXT (iteration 19): the 05:27 list as amended at 05:46; REPORT current to 551ed9c6.
+
+## Iteration 19 (05:50-06:50, BUILD)
+- 05:51 read JOURNAL, log, n5-look JOURNAL (no REQUEST to n5-cast). No locks present; other Godot processes (not
+  mine) and three 650-830 MB Python jobs running: bench skipped. Gate `tools/evidence/run.mjs --no-bench` on HEAD
+  started (scratch `gtai-n5/scratch-cast/i19/gate-head.log`).
+- 05:53 Plan: Call 4 is the weakest read left vs r2_c6 (bright-blue pads where r2_c6 has navy bodies). Option D
+  (bright crowns + navy sleeves) was only filmed on asphalt (23:33); r2_c6's cops stand on the cream slab. Built the D
+  parts in scratch (`i19/d`: crowns from the pre-navy originals 29a853be / cc4cb843~1 via `cop_crown_hi.py`, sleeves
+  via the 23:33 rule now saved as `masters:n5/cast/tools/cop_sleeve_navy.py`) for a lossless lineup A | D on slab and
+  road after the gate.
+- 05:56 GATE on 52065472 (`--no-bench`): lint 13/13, scenarios 46, parity exact (mutation at 629), look goldens 11/11
+  (worst 1.21), block goldens 5/5; unit 954 passed 0 failed but flagged FAIL by the tree-change check: my own JOURNAL
+  append at 05:53 landed during the run (FRICTION: never edit tracked files while the gate runs). Re-gate at the end.
