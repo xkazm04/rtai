@@ -191,8 +191,19 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 	# a second tongue halfway back to the previous puff closes the gap: one gushing jet
 	var gap: float = s.spec.speed_mps * float(s.spec.interval_ticks) / 120.0
 	if went > gap + CLEAR_M:
-		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), grow * 0.85, 1.0)
+		var back: Vector2 = Vector2(_jet_x(fx, went - gap, grow.x * 0.85), grow.y * 0.85)
+		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), back, 1.0)
+	grow.x = _jet_x(fx, went, grow.x)
 	_cell_v(ci, fx, f, s.pos, lick, grow, 1.0 - 0.35 * k)
+
+
+## The long cone cells' x scale, capped so the tail `went` m out never reaches back over the gun
+## (the flame teardrops keep theirs: the before).
+static func _jet_x(fx: StringName, went: float, x: float) -> float:
+	if fx == &"flame":
+		return x
+	var tail_m: float = art().fx_anchor(StringName("%s_0" % fx)).x * cell_scale() / Ink.PX_PER_M
+	return minf(x, maxf(went, 0.2) / maxf(tail_m, 0.01))
 
 
 static func _rocket(ci: CanvasItem, at: Vector2, dir: Vector2, went: float, tick: int) -> void:

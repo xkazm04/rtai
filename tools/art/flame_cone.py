@@ -4,7 +4,8 @@ The weapon-art lane's jet cell (`flame_0..2`, tools/art/weapon_fx_jet.py) is a r
 teardrop with a paper heart: strung along the stream it reads as a chain of bubbles at 64 px/m.
 r2_w4's flame is one widening cone with ragged flame-licked edges: an orange outer band, a hot
 yellow body, a pale streak down its axis. This cell is a slice of that cone pointing +x on the
-teardrop's canvas and anchor (220x120, head centre 150,60), so WeaponFxArt._jet's overlapping
+teardrop's height (300x120, head centre 230,60; 80 px longer behind the head than the teardrop,
+so each slice's tail reaches into the previous round's: n5-look iteration 18 take 3), so WeaponFxArt._jet's overlapping
 cells (grown and fanned with range) close into one ragged cone. Palette tokens only:
 fx_colour.json's explosion + flame families ink them (wash -> orange, paper_2 -> yellow,
 paper -> the pale core; the flame rim paints the orange-red band inside the ink).
@@ -18,14 +19,14 @@ from pathlib import Path
 
 from weapon_fx import PAPER, PAPER_2, WASH, _canvas, _compose, _poly, _save
 
-W, H = 220, 120
+W, H = 300, 120
 CY = H / 2
-ANCHOR = (150, 60)
+ANCHOR = (230, 60)
 ## (tail x, front x, front half-height, tongues per edge, tongue reach, front tongues) per layer.
-OUTER = (6, 196, 40, 5, 12, 3)
-INNER = (30, 184, 28, 4, 8, 3)
+OUTER = (6, 276, 40, 7, 12, 3)
+INNER = (40, 264, 28, 6, 8, 3)
 ## The pale axis streak: tail x, front x, half-height at the front.
-CORE = (56, 178, 11)
+CORE = (90, 258, 11)
 OUTLINE_PX = 8
 ## The wedge's half-height at its tail as a share of the front's (0.12 read as a thin arrow in game).
 TAIL_K = 0.45

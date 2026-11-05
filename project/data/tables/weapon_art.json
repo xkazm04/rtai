@@ -135,37 +135,37 @@
     },
     {
       "anchor_px": [
-        150,
+        230,
         60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_cone_0.png",
       "id": "flame_cone_0",
       "size_px": [
-        220,
+        300,
         120
       ]
     },
     {
       "anchor_px": [
-        150,
+        230,
         60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_cone_1.png",
       "id": "flame_cone_1",
       "size_px": [
-        220,
+        300,
         120
       ]
     },
     {
       "anchor_px": [
-        150,
+        230,
         60
       ],
       "art": "res://features/combat/weapons/art/fx/flame_cone_2.png",
       "id": "flame_cone_2",
       "size_px": [
-        220,
+        300,
         120
       ]
     },
