@@ -1,4 +1,4 @@
-# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 5)
+# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 6)
 
 `M` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-powers`. `E` = `evidence/` in this worktree.
 (This file replaces n5-cast's REPORT that arrived with the n5-cast fast-forward; take n5-cast's on merge.)
@@ -36,8 +36,14 @@
 | Combat no-regress (iteration 5, after the robot rig and the dry Kerf kill): director reel 16/16 chapters down, 0 script errors | `E/director-reel-it5.log` |
 | **Dent's ride pose** (the forms lane answered REQUEST 7, merged 1469cabd): braced on the roof (no walk cycle), a buck on each strike, a jump on the hop; director reel on the merged head 16/16, 0 script errors | `M/frames/dent-ride-buck-keys-64ppm.png`, `M/dent-64ppm-halfspeed.mp4`; `E/director-reel-it5-merged.log` |
 | Gates (iteration 5, db0b4541): evidence runner PASS: lint 13/13, unit 976/0, scenarios 47, parity bit-exact + mutation caught, look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it5.log` |
+| **Ohm under `--gore=reduced`** (iteration 6): the bolt's kill is a dry `electrocuted` kind (BloodVictims.DRY_KILLS), so the cops drop whole and stunned with no red pool (before: full red pools, since the X-ray signature is off there) | `M/frames/ohm-reduced-gore-ab-32ppm.png` (before/after, ticks 130/200/300/410), `M/ohm-arena-gore-reduced-32ppm.mp4`; decisions.md 2026-11-05 |
+| The dry-kill rule is gated (iteration 6): scenario_ghost_attacks needs every human kill Rivet makes in the Kerf and Ohm beats to be a dry kind; a planted `OhmStage.KILL_KIND = &"shot"` is caught | `E/scenario-ghost-it6.log`, `E/scenario-ghost-it6-planted-ohm-shot.log` |
+| Kerf re-filmed at 64 px/m on the iteration-6 head (forms + cast merged): 4 split cops at ticks 95/115/135/195, 5 ghost kills | `M/kerf-64ppm-halfspeed.mp4`; `E/ghosts-kerf-64-it6.json` |
+| combat_blood.gd split below the 300-line stop: kill routing in `BloodVictims` (unit `test_blood_victims` 2/2) | unit 991/0 `E/unit-it6.log` |
+| Combat no-regress (iteration 6, after the Ohm dry kill): director reel 16/16 chapters down, 0 script errors, the same chapter counts as iteration 5 | `E/director-reel-it6.log` |
 
 ## What does not work yet
+- In the Kerf beat the robot takes Kerf's two cuts (robot_damage 4 each) but its death reports kind `shot` from Rivet (the scenario's kill log), so its finisher is probably the base claw after the form ends. Robots leak oil whatever the kind, so nothing reads wrong; the attribution is unexplained.
 - The robot is a dev stand-in: CombatArena has no robot fighter kind, so the quest boss's brain plays it (Ohm's beat holds it exposed). The look (iteration 5) and the numbers are real; the brain is not a robot thug's.
 
 ## Calls for the owner

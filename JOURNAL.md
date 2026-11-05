@@ -540,3 +540,8 @@ scratch holds only film.sh and reel.sh, frames.json 15 (all present).
   robot dies to `shot` (Rivet's claw after the form ends; Kerf's slice does robot_damage, "heavy damage" by design),
   so robots are excluded. Planted `OhmStage.KILL_KIND = &"shot"` caught ("ohm: a kill bled",
   `E/scenario-ghost-it6-planted-ohm-shot.log`), reverted; clean 1/0 (`E/scenario-ghost-it6.log`).
+- 04:12 GATES evidence runner `--no-bench` on d93fb106: lint 13/13, unit 991/0, scenarios 47, parity bit-exact
+  (mutation caught at 629), look goldens 11/11 (worst 1.22) and block 5/5 in tolerance, no re-bless. Flagged FAIL only
+  because I edited REPORT/ghost-attacks.md during the run ("tree changed during run"; FRICTION, mine:
+  `E/evidence-run-it6-dirty.log`). Re-run on a still tree after the merge below.
+- 04:14 REPORT iteration-6 rows; TTK doc: gore per ghost (crush/blast bleed; Kerf/Ohm dry kinds).
