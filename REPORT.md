@@ -227,5 +227,11 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    In quest 1 the objective marker is itself a flat vermilion ring, so B is the same mark as an objective:
    `M/frames/collar-vs-objective-quest1-32ppm.png` (Dock 9, ticks 13600-13720).
 
+8. Rivet's welder visor at 32 px/m (not built): r2_c7 reads a dark visor slot on his head at game scale; ours is a
+   cream head whose 2 px visor merges into the front outline (a print-only trial changed nothing visible:
+   `M/frames/visor-sticker-trial-32ppm.png`, JOURNAL 03:12). Options: A, as built (the visor reads from 48 px/m up,
+   `M/frames/rivet-visor-ab-64ppm.png`); B, a sticker-tier visor drawn wider than the art (about 3-4 px, a facing
+   mark); C, a larger head, tied to Call 1's size. My pick for a next run: B.
+
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

@@ -926,3 +926,5 @@ Session end 03:28: tree clean after this commit, no Godot process of mine runnin
   quest1-dock9-64ppm cited by REPORT). REPORT Call 7 cites it. This supports the 4f9a2ead decision.
 Session end 03:30: tree clean after this commit, no Godot process of mine running, locks never taken, scratch-cast/i14
   renders deleted (visor_patch.py kept).
+- 03:30 REPORT Call 8 (the visor at 32 px/m: A as built, B a wider sticker-tier visor, C a larger head) with the
+  trial still. NEXT 1(a) is now Call 8 and waits for the owner. Session end.
