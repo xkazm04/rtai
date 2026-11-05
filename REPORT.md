@@ -76,7 +76,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
 - The Hauler keeps its own body plan and size and plays on the hybrid base (transform, drive-through, stomp; 0
-  script errors): `M/frames/hauler-on-hybrid-32ppm.png`.
+  script errors): `M/frames/hauler-on-hybrid-32ppm.png`. It carries the tan core too (Rivet's own rig, scaled):
+  `M/frames/hauler-tan-core-32ppm.png`.
 
 ### 4. The proof (brief item 5)
 - Director reel, 32 px/m, main | n5-cast side by side: `M/cast-director-ab-32.mp4`, still
