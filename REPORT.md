@@ -266,11 +266,13 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    his torso, pelvis and helmet print `mix(CREAM, TAN, PartMaterials.CORE_TAN)` with CORE_TAN 0.6 (`PartKind.TAN_CORE`,
    Rivet only via `BodyPlan.core_tan`; King keeps cream), toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7; or B, the
    cream core (`CORE_TAN` 0.0), which vanishes on the cream slab and reads as a white dot on asphalt; or C, the full
-   tan (`CORE_TAN` 1.0), closer to r2_c7's brown but muddy against the collar on asphalt. The limbs stay cream rods
+   tan (`CORE_TAN` 1.0), the closest colour to r2_c3/r2_c7 (the iteration 16 note that it goes muddy on asphalt came
+   from compressed mp4 crops; lossless quest 1 frames do not show it, C reads cleanly: a real contender). The limbs stay cream rods
    (the lanky read); 48 px/m and up is pixel-identical (the art tier, Call 5 governs it). Same ticks, B | A | C
    beside the targets: `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`; lineup slab and road at 0 / 0.5 / 1.0:
    `M/frames/rivet-core-tan-lineup-32ppm.png`; live A/B: `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
-   Quest 1 Dock 9: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`.
+   Quest 1 Dock 9: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`; B | A | C lossless beside r2_c3:
+   `M/frames/rivet-core-tan-call9-3way-32ppm.png` (C is one constant: `PartMaterials.CORE_TAN` 1.0).
    Measured: r2_c3's lit shoulder plates sample about RGB (189,156,128), saturation 0.32; A prints (219,200,172), 0.21;
    C prints (204,178,144), 0.29. C is the closer colour; A is lighter so the body holds on the dark asphalt (the
    target's own ground is a mid value, about (133,117,103), which our asphalt and slab are not).

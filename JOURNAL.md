@@ -1065,3 +1065,11 @@ Session end 04:40 (premature, see 04:45): tree clean after this commit, no Godot
   closer colour, A (0.6) the lighter sticker for our dark asphalt / cream slab. Kept A (judged in motion on both
   grounds), numbers added to REPORT Call 9 for the owner.
 - 04:49 timestamps in this iteration corrected to the real clock (several were written ahead of it).
+- 04:58 Call 9 three-way, lossless (quest 1 Dock 9 ticks 13600/13660, CORE_TAN 0 / 0.6 / 1.0 by local edits, each
+  reverted by git checkout, 0 SCRIPT ERROR all three) beside r2_c3: `M/frames/rivet-core-tan-call9-3way-32ppm.png`.
+  CORRECTION: the iteration 16 note "1.0 goes muddy on asphalt" came from compressed mp4 crops; lossless, 1.0 reads
+  cleanly and is the closest colour to r2_c3. Kept 0.6 built (no late flip of a gated value with 20 min left), put C
+  to the owner as a real option; decisions correction line, REPORT Call 9 updated. frames.json 15 (3-way on top,
+  replacing the 2-way quest 1 still, file kept as REPORT cites it).
+NEXT (iteration 18) addition: if the owner has not answered Call 9 by the next BUILD session, consider building C
+  (CORE_TAN 1.0): judge in motion on the director reel and the city at 32 px/m, lossless frames, then gate.
