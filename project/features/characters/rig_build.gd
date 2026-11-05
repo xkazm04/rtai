@@ -34,7 +34,7 @@ static func build(rig: CutRig) -> void:
 		rig.collar_spr = _part(rig, p.collar_part, PartMaterials.PartKind.COLLAR, true, -1)
 		rig.collar_spr.position = p.collar_pos - p.torso_pos
 		_attach(rig.torso, rig.collar_spr, p.collar_z)
-	rig.head_spr = _part(rig, p.head_part, _head_kind(core), true, p.head_swap)
+	rig.head_spr = _part(rig, p.head_part, _head_kind(p, core), true, p.head_swap)
 	_attach(rig.head, rig.head_spr, p.head_z)
 	_arms(rig, p)
 	if p.has_hose():
@@ -70,9 +70,9 @@ static func set_tex(rig: CutRig, spr: Sprite2D, part: String) -> void:
 			h.offset = spr.offset
 
 
-## n5-cast: Rivet's helmet (the core rig) prints the welder-visor sticker at gameplay scale.
-static func _head_kind(core: PartMaterials.PartKind) -> PartMaterials.PartKind:
-	if core == PartMaterials.PartKind.CORE:
+## n5-cast: Rivet's helmet prints the welder-visor sticker at gameplay scale (BodyPlan.head_visor).
+static func _head_kind(p: BodyPlan, core: PartMaterials.PartKind) -> PartMaterials.PartKind:
+	if p.head_visor and core == PartMaterials.PartKind.CORE:
 		return PartMaterials.PartKind.HEAD
 	return core
 
