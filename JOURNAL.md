@@ -285,3 +285,45 @@ Session state 01:24: head = this commit, tree clean, no Godot process of mine ru
   says "possessed" on asphalt and on the pale kerb; the transformation reads in two stages at 64. Weak: the target
   is a fully teal ghost, ours is a beige dummy on a teal pool (deliberate: the yellow discs are the read; Call for
   the owner candidate). frames.json rebuilt (15, Dent first), superseded masters files and scratch deleted.
+
+### Kerf (item 3), started 01:57
+- 01:57 Kerf part sheet (`M:gen/r3/jobs.json` `kerf_parts`, refs: the Kerf concept + the style ref), image.lock
+  created noclobber by this lane (absent before) and deleted after; one job, 65 s. Clean first try: arrow hull
+  (lens, nozzle with a teal tip, hazard cross-beam), arm strut, emitter forearm (teal tip), leg upper, blade leg,
+  cable loops; gunmetal and pale steel, ochre rust, teal seams. Cut by ghost_parts.py into
+  `features/souls/art/kerf/` (hull and cables rotated to face +x), mipmaps on, 6 provenance lines.
+- Registry rules applied: `generated-asset-world-scale` (sized in metres in the rig: hull 1.35 m, never sheet px),
+  `sprite-and-atlas-production` (judged on the live rig at 32 and 64 px/m before calling it fit).
+- MILESTONE d3aaa8a2 KerfRig (hover: hull + cables, emitter arms in guard, blade legs trailing and sweeping with
+  speed, bob, unfold for the morph, teal glow) standing in for Rivet in GhostFormView. FRICTION: filmed before
+  `--check-only` once (Array[Array] element passed as Sprite2D = warning-as-error, 609 SCRIPT ERRORs in that
+  run); limbs are now one flat Array[Sprite2D]. First size (hull 1.0 m) read as an insect at 64 px/m: x1.35.
+- 02:05 PROOF Kerf arena (0 SCRIPT ERROR): `M:kerf-tour-arena-32ppm.mp4`, `M:kerf-morph-64ppm-slow3x.mp4`,
+  `M:frames/kerf-live-vs-target-64ppm.png`, `M:frames/kerf-tour-32ppm-keys-x2.png`. Judged at 64: the arrow hull,
+  lens, emitter arms and trailing claws match the target's top view. At 32 px/m the hull reads but the thin dark
+  limbs nearly vanish on asphalt (weakest item). Not yet: city clip, a Kerf A/B (no before: new body), the blink
+  filmed on the body (ghost-powers' beat, `--bot=ghosts --ghost=kerf`).
+- 02:07 GATES on d3aaa8a2: lint 13/13; unit test_ghost 15, test_kerf 3, test_ohm 2, test_dent 6, test_hauler 18,
+  test_tonnage 2, test_rig 36 (all pass); scenario_ghost_attacks 1/0 (`evidence/scenario-ghost-iter3.log`).
+  Not run this session: the full unit suite, all scenarios, the evidence runner, the director reel (last 16/16 on
+  c543ccd9; since then GhostPilot drives Kerf/Ohm too, the reel path does not select a form).
+- FRICTION frames.json at the 15 cap: adding Kerf dropped `tonnage-live-arena-64ppm-slow3x.mp4`,
+  `tonnage-live-city-32ppm.mp4`, the Tonnage 64 keys and the HUD still, and the clean-up deleted them. Re-film them
+  with `--bot=forms --form=tonnage` (64 px/m slow, `--arena=city`) next session; better to drop the weaker Dent
+  stills then.
+
+NEXT (iteration 4), Kerf to done, then Ohm:
+1. Merge n5-cast and n6-ghost-powers if they moved (JOURNAL/REPORT keep ours; keep my beat re-timings and
+   KerfStage/OhmStage.share()). Tell ghost-powers their reel can now film Kerf/Ohm on the real bodies.
+2. Kerf at 32 px/m: thicker limbs (ARM/LEG_THICK_M 0.15 -> ~0.22) and a pale rim or lighter steel so the limbs hold
+   on asphalt; the emitter tips brighter; A/B at 32. Then the city clip (`--arena=city --bot=forms --form=kerf`) and
+   the blink on the body (`--bot=ghosts --ghost=kerf`, 64 px/m slow); size from the form row (size_k).
+3. GhostFormView is 208 lines: split the stand-in bodies into one helper (GhostBodies: Tonnage, Dent, Kerf, Ohm
+   with show/step), before adding Ohm.
+4. Ohm (item 4): part sheet (elder spot-welder from above: hunched shell, welding-gun cane arm, two copper
+   electrode fingers, cable beard, goggles), smaller than Rivet (size_k 0.8), cane-step gait, electrode anchors.
+5. Re-film the deleted Tonnage proofs (64 px/m slow, city) with `--bot=forms --form=tonnage`; the all-forms cycle
+   clip (`--form=all`).
+6. Gates: full unit, all scenarios, the evidence runner, director reel on the head.
+Session state 02:08: head = this commit, tree clean, no Godot process of mine running, image.lock taken once
+  (01:57, kerf_parts) and deleted; masters scratch empty except film.sh.
