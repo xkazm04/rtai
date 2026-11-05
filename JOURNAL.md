@@ -596,10 +596,13 @@ Read: JOURNAL, git log, the other lanes' journals (no new REQUEST for ranged; me
   `41bb90e7`, recorded as such, not dressed up); `realtime-combat-semantics` (the release stays on
   the sim's frame; the wind-up that would move it is deferred as a gameplay change).
 
+- GATE 22:36: pit director reel with `--loadout=pistol` on `7326b53b`: 19/19 fully down, 0 SCRIPT
+  ERROR (`evidence/ranged/it5-reel-director-7326b53b.log`; stopped by my watch after the last
+  chapter). With the city reel 19/19 on `ed60713e`, both reels are green this iteration.
+
 NEXT (iteration 6):
-1. Read `evidence/ranged/it5-reel-director-7326b53b.log` (pit reel with the loadout on
-   `7326b53b`, `--quit-after 8000`): 19/19 down, 0 SCRIPT ERROR? If it did not finish, re-run.
-   Then a clean `node tools/evidence/run.mjs --no-bench` on head, touching NOTHING during it.
+1. A clean `node tools/evidence/run.mjs --no-bench` on head, touching NOTHING during it (the
+   it5 run on `41bb90e7` was flagged by the tree guard for my docs commits).
 2. Judge the throw lean at 32 px/m (probably invisible there); try THROW_LEAN 0.8 if timid, by
    the same A/B script (`scratch/ranged/molo/lean_ab.sh`, before frames in `molo/fb/`).
 3. Judge at 48 px/m every frame: Gatling spin-up rumble, flamer ignition (3 px; maybe 4-5), electro
@@ -609,4 +612,10 @@ NEXT (iteration 6):
 6. Exe by 08:30: `windows-showcase` preset (decisions.md 2026-11-04 showcase export) ->
    `build/export/windows/RTAI.exe`; REPORT command lines + befores (`--feel=off`,
    `--react-snap=off`, `--end-cue=off`, `--quest-guns=off`, `--silent`, `--shard-pop=12`).
-7. Headless reels do not quit by themselves: always pass `--quit-after 8000`.
+7. Headless reels do not quit by themselves, and `--quit-after` counts frames, not ticks (8000
+   frames reached only tick 3390): watch the log for `director chapter electro_chain: ` and stop
+   my own process then (the it5 22:36 run did exactly this).
+
+STOP 22:37 iteration 5. Head after this commit. Code commits: `ed60713e` (gun_fx aim), `41bb90e7`
+(negative rig_kick, no visible effect alone), `7326b53b` (throw lean, subtle). Gates on `7326b53b`:
+unit 1138/0, lint 13/13, pit reel 19/19; evidence run (scenarios, parity, selftest) on `41bb90e7`.

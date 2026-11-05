@@ -24,7 +24,7 @@ cut from main `763f8fba`. Clips and stills: `C:\Users\kazda\kiro\gtai-masters\n7
 Gates (iteration 5): evidence run on `41bb90e7`: lint 13/13, scenarios 52/52, parity bit-exact
 (planted mutation caught at 629), selftest pass; unit 1138/0 (flagged by the tree-change guard
 because I edited docs during the run). City-block director reel with `--loadout=pistol` on
-`ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13; pit reel: see JOURNAL.
+`ed60713e` 19/19, 0 SCRIPT ERROR. On `7326b53b`: unit 1138/0, lint 13/13, pit director reel with the loadout 19/19, 0 SCRIPT ERROR.
 
 ## What does not work / not done
 - Molotov throw: scored 1/3/3/3/0 (no wind-up on Rivet; the bottle and the burst read). The arm-only
