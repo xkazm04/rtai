@@ -65,13 +65,15 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   so Rivet's head carries r2_c7's dark slot and shows where he faces at game zoom (the 2 px art visor merged into the
   outline). 64 px/m is pixel-identical. `M/frames/rivet-visor-slot-ab-32ppm.png`, `M/cast-visor-director-ab-32.mp4`; quest 1
   Dock 9, same ticks: `M/frames/visor-slot-quest1-ab-32ppm.png`. Director reel 16/16 down, 0 script errors. Call 8.
-- Tan work plates at 32 px/m (3ceb3e30, iteration 16-17): Rivet's torso, pelvis and helmet stickers print a pale tan
-  (`PartMaterials.CORE_TAN` 0.6) instead of cream, toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7. On the cream slab the
+- Tan work plates at 32 px/m (3ceb3e30, iteration 16-17; full tan 550b000d, iteration 18): Rivet's torso, pelvis and
+  helmet stickers print r2_c3's tan (`PartMaterials.CORE_TAN` 1.0; 0.6 until iteration 18) instead of cream, toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7. On the cream slab the
   cream core had vanished; on asphalt the change is quiet (warm beige for white). Rivet only (`BodyPlan.core_tan`); King
   keeps cream; 48 px/m and up pixel-identical. `M/frames/rivet-core-tan-ab-vs-targets-32ppm.png`,
   `M/frames/rivet-core-tan-director-crops-32ppm.png`, `M/cast-tan-director-ab-32.mp4`, `M/cast-tan-city-ab-32.mp4`.
   Quest 1 Dock 9, same ticks, lossless: `M/frames/rivet-core-tan-quest1-ab-32ppm.png`. Director reel 16/16 down, 0
-  script errors. Call 9.
+  script errors. Iteration 18 moved 0.6 to 1.0 (Call 9 C, the measured closest colour): live city A | C, same ticks,
+  `M/cast-tan-city-ac-32.mp4`, crops beside r2_c3 `M/frames/rivet-core-tan-city-ac-vs-r2c3-32ppm.png`; director reel
+  16/16 down, 0 script errors. Call 9.
 - Torch tip cream (iteration 14): Rivet's torch tip printed teal (teal is for souls only; r2_c3's tip is pale); now a
   cream ramp at its own value, D4 and D5: `M/frames/rivet-torch-cream-ab.png` (32/64 px/m, slab and road),
   `M/frames/rivet-torch-cream-director-32ppm.png`.
@@ -153,6 +155,10 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   (`M/frames/crowd-cap-size-ab.png`).
   Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
   the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
+
+### Gates (iteration 18, final `tools/evidence/run.mjs --no-bench` on 550b000d (Call 9 C, CORE_TAN 1.0): ALL PASS:
+lint 13/13, unit 954/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22), no
+re-bless. Bench skipped (shared machine, other lanes' Godot running). Director reel headless 16/16 down, 0 script errors.
 
 ### Gates (iteration 17, final `tools/evidence/run.mjs --no-bench` on 1474c61c (head; same code as 08b1f7bc, the tan core 3ceb3e30): ALL PASS:
 lint 13/13, unit 954/0, scenarios 46, parity exact (mutation caught at 629), look goldens 11/11 (worst 1.22); no re-bless.
@@ -262,7 +268,8 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    Tried and not built: two 1 px cream eye glints in the slot (r2_c3's slits): eyes at x7, speckle at 1x
    (`M/frames/visor-glint-trial-32ppm.png`).
 
-9. Rivet's body tone at 32 px/m: A, tan work plates (built, 3ceb3e30, iteration 16-17): below the sticker threshold
+9. Rivet's body tone at 32 px/m. **C is built since iteration 18 (550b000d, `CORE_TAN` 1.0)**; A was built before it.
+   A, tan work plates (3ceb3e30, iteration 16-17): below the sticker threshold
    his torso, pelvis and helmet print `mix(CREAM, TAN, PartMaterials.CORE_TAN)` with CORE_TAN 0.6 (`PartKind.TAN_CORE`,
    Rivet only via `BodyPlan.core_tan`; King keeps cream), toward the tan-grey Rivet of r2_c3/r2_c6/r2_c7; or B, the
    cream core (`CORE_TAN` 0.0), which vanishes on the cream slab and reads as a white dot on asphalt; or C, the full
@@ -278,6 +285,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
    Measured: r2_c3's lit shoulder plates sample about RGB (189,156,128), saturation 0.32; A prints (219,200,172), 0.21;
    C prints (204,178,144), 0.29. C is the closer colour; A is lighter so the body holds on the dark asphalt (the
    target's own ground is a mid value, about (133,117,103), which our asphalt and slab are not).
+   Why C now: no owner pick by iteration 18, and C is the closer colour. In motion in the live city, A and C differ only
+   slightly (C warmer) and neither muddies: `M/cast-tan-city-ac-32.mp4` (A | C, same ticks),
+   `M/frames/rivet-core-tan-city-ac-vs-r2c3-32ppm.png`. Back to A = `CORE_TAN` 0.6, to B = 0.0.
 
 ## Next steps
 See the last `NEXT` entry in `JOURNAL.md`.

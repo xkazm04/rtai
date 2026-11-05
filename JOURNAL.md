@@ -1090,3 +1090,20 @@ Session end 04:57: tree clean after this commit, no Godot process of mine runnin
 - 05:01 EVIDENCE GATE on 1474c61c (head, clean tree): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact
   (mutation caught at 629), look goldens 11/11 (worst 1.22). REPORT gates line now names the head.
 Session end 05:02: tree clean after this commit, no Godot process of mine running, locks never taken.
+
+## Iteration 18 (session 05:02 - 06:02), BUILD
+- 05:02 read JOURNAL, log, REPORT; tree clean, no Godot of mine running. NEXT 2(a) (cop navy vs bright pads) is the
+  owner's pick (Call 4 C/D, both filmed); 2(b) closed. Took the NEXT addition: build Call 9 C.
+- 05:04 live city A | C (`film.sh ... --bot=reel --arena=city --loadout=pistol,machine_pistol --clean`, 900 frames,
+  CORE_TAN 0.6 / 1.0 by local edit, 0 SCRIPT ERROR both; the first pair lacked `--clean` and carried the telemetry
+  HUD, re-filmed). `M/cast-tan-city-ac-32.mp4` (single clips deleted, both sides live in it); crops x4 t=4/8/12 beside
+  r2_c3 `M/frames/rivet-core-tan-city-ac-vs-r2c3-32ppm.png`. In motion: C a touch warmer, no muddying, the collar
+  still leads. With the lossless quest 1 three-way (04:51) C is closer to the target and reads cleanly. DECISION:
+  build C. Registry `motion-quality-gating`: judged at game zoom in motion, not from one still.
+- 05:09 COMBAT CHECK director reel headless at 1.0 (`res://dev/arena/arena.tscn -- --bot=reel --reel=director --clean
+  --rigs --loadout=pistol`, 7200 frames): 16/16 chapters n/n down, 0 SCRIPT ERROR. Lint 13/13.
+- MILESTONE 550b000d: CORE_TAN 0.6 -> 1.0 (Call 9 C built; revert = 0.6). Decisions line.
+- 05:13 EVIDENCE GATE on 550b000d: ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact (mutation at 629),
+  look goldens 11/11 (worst 1.22), no re-bless. Bench skipped (other Godot processes running).
+- 05:15 REPORT section 3 bullet, Call 9 (C built, A/B one constant), gates line for iteration 18. frames.json 15 (new
+  city A | C still on top; director-crops still dropped from the list, file kept, REPORT cites it).
