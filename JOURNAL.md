@@ -472,3 +472,7 @@ Session state 02:59: head = this commit, tree clean, no Godot process of mine ru
   line "ghost voice: <id> beside Rivet" on each cue, for headless checks.
 - REPORT.md: section 6 (the voices), the open point (not yet filmed on a real quest 1 whisper), two Calls (fully
   teal forms: the apparitions show that look on the same bodies; voices in quest 1 before the ghosts are met).
+- 03:23 GATES evidence runner `--no-bench` on 56dae388, nothing touched while it ran (log kept outside the tree,
+  copied in after: `E/evidence-run-iter5.log`): PASS lint 13/13, unit 981/0, scenarios 47, parity bit-exact
+  (mutation caught at 629), selftest look goldens 11/11 within tolerance (worst 1.21): no re-bless. Closes
+  iteration 4's NEXT 2.

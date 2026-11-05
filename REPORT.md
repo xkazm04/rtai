@@ -83,6 +83,12 @@ The owner's order for this lane: "create these characters, animate transformatio
 - Dent at 32 px/m (iteration 4's open point): he already carries CutRig's cream halo like the cops, so no change
   was needed (`M:frames/dent-city-halo-32ppm-x3.png`).
 
+### Gates (iteration 5)
+- On 56dae388 (the voices), the evidence runner `--no-bench` on a still tree (`E:evidence-run-iter5.log`): lint
+  13/13, unit 981/0, scenarios 47, parity bit-exact (planted mutation caught at step 629), selftest with look
+  goldens 11/11 in tolerance (worst 1.21), so no re-bless.
+- On 633fb9d7: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter5.log`).
+
 ### Gates (iteration 4)
 - On 25b040bb: lint 13/13; unit 974/0 (`E:unit-iter4.log`); scenarios 47/0 (`E:scenarios-iter4.log`).
 - On 70a6297a: director reel 16/16 chapters down, 0 SCRIPT ERROR (`E:director-reel-iter4.log`).
@@ -94,7 +100,7 @@ The owner's order for this lane: "create these characters, animate transformatio
 
 ## What does not work / is open
 - The apparition has not been filmed on a real whisper in quest 1 (only the dev cue). The live cue is wired and
-  unit-tested.
+  unit-tested. Quest 1 shows it only under `-- --rigs`: the shipping sprite cast has no ghost view.
 
 ## Calls for the owner
 - **Rust steel on a teal pool, or fully teal ghosts?** The targets draw the ghosts teal all over. Ours print
