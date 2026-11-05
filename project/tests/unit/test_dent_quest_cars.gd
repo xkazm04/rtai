@@ -64,3 +64,14 @@ func test_fire_in_dent_seizes_the_quest_car_on_the_aim() -> void:
 	_ticks(30)
 	assert_gt(dent.heat, 0.0, "the seized car heats")
 	assert_ne(car.pos, at, "Dent drives it")
+
+
+func test_a_parked_ghost_car_is_solid_and_the_seized_one_is_not() -> void:
+	var car: VehicleBody = _stage.vehicles.spawn_parked(&"sedan", Vector2(10.0, 10.0), Vector2.UP)
+	var cars: Array[VehicleBody] = _stage.cars()
+	var out: Vector2 = ArenaCars.push_out(cars, Vector2(10.3, 10.2), 0.4)
+	var half_w: float = VehicleView.CAR_W * 0.5 / SimConst.PX_PER_M
+	assert_almost_eq(out.x, 10.0 + half_w + 0.4, 0.001, "out the near side of the turned box")
+	assert_eq(ArenaCars.push_out(cars, Vector2(14.0, 10.0), 0.4), Vector2(14.0, 10.0), "clear")
+	car.soul_hijacked = true
+	assert_eq(ArenaCars.push_out(cars, Vector2(10.3, 10.2), 0.4), Vector2(10.3, 10.2), "ridden")

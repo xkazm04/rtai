@@ -60,6 +60,32 @@ func park(stations: ArenaStations, base: Vector2) -> int:
 	return n
 
 
+## `p` (a circle of radius r) pushed out of every parked or wrecked car's drawn box (VehicleView
+## CAR_L x CAR_W, turned to its heading); a seized car (soul-hijacked, not yet a wreck) is not
+## solid: Dent rides its roof. Quest 1 keeps Rivet and the guards out of its ghost cars.
+static func push_out(cars: Array[VehicleBody], p: Vector2, r: float) -> Vector2:
+	var half: Vector2 = Vector2(VehicleView.CAR_L, VehicleView.CAR_W) * 0.5 / SimConst.PX_PER_M
+	var out: Vector2 = p
+	for b: VehicleBody in cars:
+		if b.soul_hijacked and b.state != VehicleBody.State.WRECK:
+			continue
+		var x: Vector2 = b.head.normalized()
+		var d: Vector2 = out - b.pos
+		var local: Vector2 = Vector2(d.dot(x), d.dot(x.orthogonal()))
+		var near: Vector2 = local.clamp(-half, half)
+		var gap: Vector2 = local - near
+		if gap.length() >= r:
+			continue
+		if gap.length() > 1e-6:
+			local = near + gap.normalized() * r
+		elif half.x - absf(local.x) < half.y - absf(local.y):
+			local.x = signf(local.x if local.x != 0.0 else 1.0) * (half.x + r)
+		else:
+			local.y = signf(local.y if local.y != 0.0 else 1.0) * (half.y + r)
+		out = b.pos + x * local.x + x.orthogonal() * local.y
+	return out
+
+
 func player_pos() -> Vector2:
 	return NOWHERE
 

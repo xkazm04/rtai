@@ -748,3 +748,8 @@ task list are other lanes'), no lock held, masters scratch holds only film.sh, r
   car segment after the city Dent); it8 reel deleted; frames.json 15 (all present). REPORT iteration-9 rows (Dent
   in quest 1, gates), the "does not work" row rewritten (fixed cars, not the city's; ghost cars are not solid),
   Call added (quest cars vs Dent locked in quest 1).
+- 06:25 MILESTONE quest 1's ghost cars are solid for Rivet and the guards (ArenaCars.push_out, an oriented box per
+  parked/wrecked car; the seized car is not solid so the ride holds; the arena unchanged). Unit 1013/0
+  (`E/unit-it9b-powers.log`, + test_a_parked_ghost_car_is_solid_and_the_seized_one_is_not), scenarios 47/0
+  (`E/scenarios-it9b-powers.log`), quest 1 Dent rec identical counts, 0 SCRIPT ERROR; after the blast Dent lands
+  clear of the wreck's box (looked at frames 204/230/290, not kept). DECISION in decisions.md.

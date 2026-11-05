@@ -168,16 +168,20 @@ func _move() -> void:
 	arena.rivet.pos = _collide(arena.rivet.pos.move_toward(intent.move_to, speed))
 
 
+## Rivet keeps out of the city's cells and the parked ghost cars (not the one he rides).
 func _collide(p: Vector2) -> Vector2:
-	return cells.push_out(p, arena.tuning.rivet["radius_m"]) if cells != null else p
+	var r: float = arena.tuning.rivet["radius_m"]
+	var out: Vector2 = ArenaCars.push_out(cars(), p, r) if vehicles != null else p
+	return cells.push_out(out, r) if cells != null else out
 
 
-## On the city the guards and Mertz keep out of buildings, props and parked cars too.
+## On the city the guards and Mertz keep out of buildings, props, parked cars and ghost cars too.
 func _collide_hostiles() -> void:
 	if cells == null:
 		return
 	for h: Fighter in arena.hostiles:
 		if h.alive():
+			h.pos = ArenaCars.push_out(cars(), h.pos, h.radius_m) if vehicles != null else h.pos
 			h.pos = cells.push_out(h.pos, h.radius_m)
 
 
