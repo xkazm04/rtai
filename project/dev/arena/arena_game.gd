@@ -114,10 +114,13 @@ func _open(args: ArenaArgs) -> void:
 			teleport(a)
 
 
-## `--bot=boss` (n7-king); with `--ghost=<id>` (n7-servo, dev) a ghost's attack at the drones.
+## `--bot=boss` (n7-king; its `--ghost=<id>` is BossBotGhost inside BossBot); with
+## `--servo-ghost=<id>` (n7-servo, dev) the ghost's attack aimed at the knots of drones instead.
 func _boss_bot(args: ArenaArgs) -> InputSource:
 	var bot: BossBot = BossBot.new(session.stage, session.actions)
-	var ghost: String = args.text("--ghost")
+	var ghost: String = args.text("--servo-ghost")
+	if ghost == "dent":  # Dent seizes the depot's van and drives it into Servo
+		return ServoDentBot.wrap(bot)
 	return ServoGhostBot.wrap(bot, ghost) if ghost != "" else bot
 
 

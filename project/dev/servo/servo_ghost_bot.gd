@@ -1,6 +1,6 @@
 class_name ServoGhostBot
 extends InputSource
-## `--bot=boss --ghost=<dent|kerf|ohm>` (dev, the ghost-on-the-drones clips): BossBot moves,
+## `--bot=boss --servo-ghost=<dent|kerf|ohm>` (dev, the ghost-on-the-drones clips): BossBot moves,
 ## dodges and shoots as ever; from START it picks the ghost (G presses, order tonnage, dent,
 ## kerf, ohm), takes it (Q), then at most every CADENCE ticks aims the ghost attack (melee) at
 ## the thickest knot (KNOT_MIN or more) of the boss's extra bodies (Servo's drones) within
