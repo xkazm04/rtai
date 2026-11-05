@@ -86,8 +86,8 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   `M/frames/director-final-ab-32ppm.png` (claw combo, pistol, machine pistol identical tick for tick).
 - City block 15 s: `M/cast-city-ab-32.mp4`. 64 px/m close-up: `M/cast-hybrid-director-64.mp4`; with the navy cops
   `M/cast-navy-director-64.mp4` (still `M/frames/director-navy-64ppm.png`).
-- Target composite: `M/frames/cast-ingame-vs-r2c6.png` (re-shot on e7c055be with the visor slot, from
-  `M/cast-visor-city-32.mp4`, tick 720, with a Rivet x4 inset).
+- Target composite: `M/frames/cast-ingame-vs-r2c6.png` (re-shot on 550b000d with the full tan core, Call 9 C, from
+  `M/cast-tan-city-ac-32.mp4`, tick 720, with a Rivet x4 inset).
 - Every weapon (iteration 8): the full director reel WITH `--loadout=pistol` (the reel's documented args; my
   earlier checks lacked it, n5-look's note), 7200 ticks at 32 px/m: all 16 chapters n/n down, 0 script errors.
   One frame per chapter: `M/frames/director-loadout-16ch-32ppm.png`; clip of rocket .. katana

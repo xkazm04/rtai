@@ -1107,3 +1107,7 @@ Session end 05:02: tree clean after this commit, no Godot process of mine runnin
   look goldens 11/11 (worst 1.22), no re-bless. Bench skipped (other Godot processes running).
 - 05:15 REPORT section 3 bullet, Call 9 (C built, A/B one constant), gates line for iteration 18. frames.json 15 (new
   city A | C still on top; director-crops still dropped from the list, file kept, REPORT cites it).
+- 05:16 brief item 5's still re-shot on 550b000d: `M/frames/cast-ingame-vs-r2c6.png` (target r2_c6 | city C side of
+  `M/cast-tan-city-ac-32.mp4` t=12 s, tick 720, x1.78 | Rivet x4; mp4 frame, not lossless). frames.json entry
+  updated. Quest 1 at 1.0 is covered by the 04:51 lossless three-way (C column); the hit flash and the Hauler take
+  the same sticker path as at 0.6 (04:40, 04:44), only the mix weight changed.
