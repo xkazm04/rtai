@@ -68,3 +68,18 @@ func test_no_max_total_keeps_asking() -> void:
 		@warning_ignore("return_value_discarded")
 		f.step(i, Vector2(30.0, 0.0), 0.4)
 	assert_gt(_asked, 30, "every 0.5 s for 10 s")
+
+
+func test_adds_part_and_step_off_the_boss() -> void:
+	var boss: BossFight = _fight(0)
+	var adds: BossAdds = BossAdds.new()
+	for i: int in 3:
+		var f: BossFight = _fight(0)
+		f.body.pos = Vector2(4.0, 0.0)  # three adds stacked on one spot
+		adds.fights.append(f)
+	adds.fights[2].body.pos = Vector2(0.3, 0.0)  # one inside the boss
+	adds.separate(boss)
+	var a: Vector2 = adds.fights[0].body.pos
+	var b: Vector2 = adds.fights[1].body.pos
+	assert_gte(a.distance_to(b), 0.99, "the stacked pair parted to their radii (0.5 + 0.5)")
+	assert_gte(adds.fights[2].body.pos.length(), 0.99, "the add stepped off the boss")

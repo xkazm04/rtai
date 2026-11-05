@@ -4,23 +4,25 @@
     "alley_waves": 0
   },
   "boss_fight": {
-    "adds_landed": 12,
-    "adds_spawned": 18,
-    "adds_tries": 38,
+    "adds_landed": 11,
+    "adds_spawned": 8,
+    "adds_tries": 20,
     "boss": "king",
-    "dealt": 186.0,
-    "defeated_tick": -1,
-    "hp_frac": 0.437083333333333,
+    "dealt": 234.0,
+    "defeated_tick": 5308,
+    "hp_frac": 0.0,
     "landed": {
       "coin_fan": 9,
+      "king": 2,
       "ram": 2
     },
-    "phase": 2,
+    "phase": 3,
     "rolled": {},
     "tries": {
-      "coin_fan": 10,
-      "decree": 5,
-      "ram": 6
+      "charge": 2,
+      "coin_fan": 9,
+      "decree": 4,
+      "ram": 2
     }
   },
   "brutality_pit": {
@@ -28,11 +30,11 @@
     "kill_cut_us": [],
     "kill_ticks": [],
     "signature_kills": 0,
-    "view_avg_us": 77,
+    "view_avg_us": 65,
     "view_frames": 7300,
-    "view_over_2ms": 3,
-    "view_worst_tick": 5463,
-    "view_worst_us": 6967
+    "view_over_2ms": 0,
+    "view_worst_tick": 2685,
+    "view_worst_us": 217
   },
   "cars": {
     "damaged": 0,
@@ -42,15 +44,15 @@
   },
   "corpse_decay": {
     "bodies_cap": 16,
-    "bodies_now": 3,
+    "bodies_now": 0,
     "bodies_peak": 4,
-    "died": 14,
+    "died": 9,
     "early_fades": 0,
     "forced": 0,
     "forced_alpha": 0.0,
     "peak_dead_listed": 4,
-    "pruned": 11,
-    "stains_now": 4
+    "pruned": 8,
+    "stains_now": 0
   },
   "damage_taken": 0.0,
   "deaths": 1,
@@ -59,18 +61,6 @@
   "hits": 0,
   "input_latency_mean_ticks": 0.0,
   "input_latency_ticks": [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
     0,
     0,
     0,
@@ -92,11 +82,11 @@
     "shock_landed": 0
   },
   "schema": "gtai.arena-telemetry/1",
-  "shots": 286,
+  "shots": 181,
   "ticks": 7299,
-  "top_speed_mps": 1854.43405151367,
+  "top_speed_mps": 7418.42697143555,
   "ttk_s": {},
-  "turn_rate_peak_dps": 720.000327394338,
+  "turn_rate_peak_dps": 720.0002249415,
   "weapon_art_rack": {
     "rack": true
   }

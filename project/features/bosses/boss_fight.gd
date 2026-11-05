@@ -115,6 +115,11 @@ func hit_id() -> StringName:
 	return attack.id if attack != null and state == State.ACTIVE else spec.id
 
 
+## The sim tick of the last step (views pose rigs on it, never on the frame delta).
+func now() -> int:
+	return _tick
+
+
 func hp_frac() -> float:
 	return body.hp / spec.hp
 

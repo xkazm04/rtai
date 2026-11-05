@@ -69,6 +69,7 @@ func step(stage: ArenaStage, tick: int) -> void:
 		return
 	var hit: float = fight.step(tick, r.pos, r.radius_m)
 	_keep_in(fight)
+	adds.separate(fight)
 	for f: BossFight in adds.fights:
 		_keep_in(f)
 	fight.body.exposed = fight.state != BossFight.State.TRANSITION
