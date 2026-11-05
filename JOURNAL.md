@@ -608,3 +608,37 @@ Calls for the owner (for REPORT; adds to the earlier ones):
 - B. The wreck is cover in phase 3 (default, `KingMoves.WRECK_SOLID` true) vs paint only (false).
 - C. Difficulty band: easy (as built: a human-like bot survives 5/5, taking 84 of 100 hp) vs fair (tune
   the coin fan down and the slam's punish up until about 7 in 10 survive).
+
+### 22:10: gates, Ohm n=3, the other ghosts on phase 3
+- Gates at fac992b3+ (only docs since): lint 13/13; unit **1146/0** (`evidence/king/unit-it4.log`);
+  scenarios **52 ran / 0 failed** (`scenarios-it4.log`). I did not re-run the director reel: no file
+  outside `features/bosses/` and its tests changed this iteration (BossHook and BossBot only act
+  under `--boss`). It was 19/19 at it3.
+- Human + Ohm, seeds 1-3, full fight (CONTENDED): 67.0 / 71.5 / 67.5 s (mean 68.7) against the
+  human alone on the same seeds: 83.9 / 76.5 / 79.5 (mean 80.0). **Ohm takes about 14 % off the
+  fight** (my n=1 figure of -20 % was high). Only 5 stuns on King per fight: most bolts take the
+  nearest gang bot in the cone. Took 58-110, 0 deaths. Used on cooldown, it dazes nothing; with
+  `--ghost-tells` it dazes (see above).
+- The other ghosts, phase 3 only, dodging bot, n=1 (the baseline with no ghost: King down at tick 994):
+  Kerf 488 (half the time; took one charge, 24), Tonnage 1071, Dent 1284. **Bot limits:** the bot
+  holds its 8 m band, so Tonnage's 3.2 m slam never reaches. Dent seizes cars and the boulevard has
+  none in reach. Those two numbers say nothing about the ghosts yet (`numbers/p3-{tonnage,dent,kerf}.*`).
+- `evidence/king/shots/wreck_cover_p3_32ppm_t240.png`: the wreck in phase 3 with King's charge
+  lane beside it. It does not prove blocking (no bot seeks cover); the unit test does.
+
+NEXT (iteration 5, in order):
+1. Tuning against the numbers (re-run the same 15 with `boss_numbers.mjs`, and Ohm seeds 1-3):
+   the coin fan's share of the damage (0.47 -> under 0.35: fewer coin fans in phase 1, or a wider
+   pellet gap). Keep the human's survival at 5/5 (easy band: the default) unless the owner picks fair.
+   Write the before/after in JOURNAL and a decisions line.
+2. Ghost bot per ghost: Tonnage closes to its reach to slam; Dent needs a car (spawn 2 parked
+   cars on the boulevard's edges? a generic arena record field `cars`), and Kerf's blink. One 48 px/m clip each
+   (Kerf, Tonnage) on King.
+3. Owner call A (a boss `ghost_k`): build the generic field (default 1.0 = what is built), so the
+   call is one value.
+4. Per-phase 32 px/m real-time clips on the it4 head (`--phase=1|2|3`, --boss-cam), plus a
+   new full-fight clip with the side riders and the wreck; the target comparison re-shot.
+5. Plum drapes along the car's sides (the still shows one plum band at the throne; the target has
+   them along both sides); the 64 px/m car interior inks black under the noir print.
+6. Exe export by 08:30 (int-day recipe in docs/decisions.md) + REPORT with the calls: gold swap,
+   leap_m, decree buff, A (ghost_k), B (wreck solid), C (band).
