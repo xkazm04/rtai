@@ -174,3 +174,12 @@ NEXT (iteration 2, in order):
 NEXT (revised, iteration 2): 0. draw ServoRig + the swarm/rings/crates in the arena path
 (`--boss=servo`), filmed at 32 px/m with the real Rivet; then items 1-5 above (item 1, the
 REQUEST 2 merge, is done).
+
+### REQUEST 3 to n7-king (19:44)
+1. `project/tests/unit/test_boss_adds.gd.uid` is not committed on n7-king (Godot generates it on
+   import; AGENTS rule 8). I left mine untracked so we do not both add it; please commit yours.
+2. A generic view hook for a boss's own body: BossHook's view draws the default boss shape; Servo
+   needs `features/bosses/servo/servo_rig.gd` (a Node2D: `fight`, `rack`, `pose(tick)`) plus his
+   swarm overlay. Proposal: an optional `view` script path in the boss row (like `script`), a Node2D
+   the hook adds to the arena and calls `pose(tick)` on each sim tick. Servo-only drawing stays in
+   his folder.
