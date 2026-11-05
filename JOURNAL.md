@@ -154,3 +154,15 @@ NEXT (iteration 2, from 20:20):
 6. Re-run unit full + scenarios on head (last full: `779cdd3d`); evidence run before freeze;
    exe by 08:30. Scratch avis in `gtai-n7p/scratch/ranged/audit` are audit inputs: delete the
    ones not referenced once scored.
+
+### MEASURE 20:03: the Gatling rumble is too timid (data, not looked at yet)
+- Tool: `gtai-n7p/scratch/ranged/shift.py <avi> <first> <n> x y w h` (phase correlation of
+  consecutive frames on a 640x400 crop; "jitter" = shift minus its 9-frame mean, which removes
+  FightCam's ~1 px/frame pan).
+- Gatling sustained fire before kill 2 (64 frames): jitter rms 0.267 px / max 0.52 (`--feel=off`)
+  -> 0.337 px / max 0.80 (feel on, `2691917e`). +0.07 px rms: steady and not a blur, but it barely
+  reads at all. Iteration 2: raise `gatling.fire_kick_px` (try 1.5-2.0), re-measure, then judge it
+  in motion at 32 px/m and 64 px/m before calling it.
+- Unit full suite on head `2691917e`: 1120 passed, 0 failed (`evidence/ranged/it1-unit-head.log`).
+- Audit: ray gun, flamethrower, molotov scored (`7adb597a`); still `?`: machine_pistol, gloria,
+  homing_shard detail, assault-rifle.
