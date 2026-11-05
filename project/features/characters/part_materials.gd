@@ -18,7 +18,7 @@ const COLLAR_LOD_FILL: float = 3.0
 const HEAD_LOD_FILL: float = 4.0
 ## n5-cast: Rivet's core sticker below the LOD threshold (TAN_CORE and HEAD, BodyPlan.core_tan),
 ## cream (0) to r2_c3's tan work plates (1). King's CORE stays cream.
-const CORE_TAN: float = 0.6
+const CORE_TAN: float = 1.0
 ## D-Noir: source luminance above which a body pixel stays paper (Rivet's core keeps more light).
 const NOIR_KEEP: float = 0.97
 const NOIR_KEEP_CORE: float = 0.80
