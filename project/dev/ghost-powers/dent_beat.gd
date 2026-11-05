@@ -15,6 +15,8 @@ const RIOT_B: int = 0
 const SELECT_AT: int = 40
 const ENTER_AT: int = 42
 const SEIZE_AT: int = 80
+## The overload on command fires when the seized car is this close to group B's centre (metres).
+const B_BLOW_M: float = 1.6
 
 var group_a: Array[Fighter] = []
 var group_b: Array[Fighter] = []
@@ -49,7 +51,16 @@ func want(stage: ArenaStage, local: int) -> Array:
 		act = &"power_hauler"
 	elif local == SEIZE_AT:
 		act = &"fire"
+	elif _among_b(dent) and local % 2 == 0:
+		act = &"melee"  # blow it up on command once it is in B (else the overload timer may blow it past)
 	return [Vector2.ZERO, aim, act]
+
+
+## True while the seized car, past its strike on A, is inside group B.
+func _among_b(dent: DentStage) -> bool:
+	if dent == null or dent.car == null or dent.strikes == 0:
+		return false
+	return dent.car.pos.distance_to(_centre(group_b, dent.car.pos)) < B_BLOW_M
 
 
 static func _centre(group: Array[Fighter], fallback: Vector2) -> Vector2:
