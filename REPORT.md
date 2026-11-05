@@ -71,7 +71,7 @@ The last full evidence gate was green on f55af327 (2026-11-05 01:35): lint 13/13
 - **Pickup look:** the dashed ring vs the paper disc (`pickup-ring-ab-48ppm-vs-r2w8.png`, `--pickup-disc=on`).
 - **A warm item ink:** held weapons print grey because the part print has no tan ink. Adding one would warm every held gun toward r1_w1-w6, not just the Gatling (`gatling-128ppm-vs-r1w6.png`). Not built.
 - **Grain:** `world_riso.speck_k` 0.4 vs 0 (before) or higher toward r2_a5 (`print-speck-it9-2x-vs-r2a5.png`).
-- **Grime splats:** `world_riso.splat_k` 0.8 vs 0 (before); `splat_cut` is the density dial (0.76 = twice as many, 0.82 = sparser). See `print-splat-it11-city0-vs-r2a5.png`.
+- **Grime splats:** `world_riso.splat_k` 0.8 vs 0 (before); `splat_cut` is the density dial (0.76 = twice as many, 0.82 = sparser). See `print-splat-it11-city0-vs-r2a5.png`. In the arena, the paper margin round the floor takes them at full density (no tile joints): `arena-reel-splat-ab-32ppm-it11.mp4` (20 s, off | on).
 - **The Gatling's bulk:** `cross_k` 1.3 vs 1.0 (bottom row of `gatling-128ppm-vs-r1w6.png`).
 - **The Gatling's feel:** `spin_s` 0.5 and `fire_move_mult` 0.45 (`gatling-pit-32ppm.mp4`). Setting them to 0 and 1 makes it a plain auto gun.
 
