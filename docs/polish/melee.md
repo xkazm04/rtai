@@ -118,7 +118,7 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
 
 7d. **Tonnage plates** (scored 22:27 frame by frame at 48 px/m, frames 84-113): antic. n/a,
    impact 1, read 1, victim sync n/a, sound 1. The cops' rounds drew on inside the press body with
-   no mark: the armour read as rounds passing through him. **Done 22:50 (`8375c763`)**: PlateSparks
+   no mark: the armour read as rounds passing through him. **Done 22:39 (`8375c763`)**: PlateSparks
    (view only, FxView): an enemy round's tracer ends at the plate face (plate_r_m 1.35 from Rivet's
    spot) and its first contact prints a cream star edged in ink with a short bounce streak for
    plate_spark_ticks 6; at most plate_sparks_per_tick 2 new a tick (a capped round still stops).
@@ -127,4 +127,12 @@ jolt held through a 7-frame stop, the shake settling by frame 130; before 0 px.
    purpose: small arms are a light hit). `M/tonnage_plates_ab_32ppm.mp4`,
    `M/tonnage_plates_48ppm_04x.mp4`.
 
-Not yet scored: Ohm's mass arc (upgrade_tier 1 is not in the ghosts reel's beat).
+7e. **Ohm mass arc** (scored 22:45 from the 32 px/m film, `--tier=1` (OhmBeat already takes it),
+   frames 94-117 every 2nd, and the 48 px/m pair at tick 92): antic. 4 (the tell), impact 3,
+   read 2, victim sync 4 (every body stuns on the bolt tick), sound 1. The fan out of the first body
+   drew five ropes as wide as the bolt over a six-body cluster, and each body wears cream stun
+   squiggles: the cluster drowns. **Done 22:44 (`454490ce`)**: ghost_attacks.json ohm branch_k
+   0.55 (view only): a hop from a struck body draws at 0.55 of the bolt with a smaller flash; 1 or
+   `--feel=off` = the old look. Looked at: the bolt keeps its weight, the branches thin, the cops'
+   blue shows through. Read 2 -> 3. Still open: the stun squiggles (the reaction view, not the arc)
+   are most of the clutter. `M/ohm_mass_arc_ab_32ppm_04x.mp4`, `M/ohm_mass_arc_48ppm_04x.mp4`.

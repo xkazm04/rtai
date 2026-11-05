@@ -1,5 +1,14 @@
 [
   {
+    "file": "ohm_mass_arc_ab_32ppm_04x.mp4",
+    "title": "Ohm's mass arc: one bolt that spreads, the fan's branches at 0.55 of the bolt",
+    "source": "game-arena",
+    "branch": "n7-melee 454490ce",
+    "ppm": 32,
+    "before": "the head before 454490ce, feel on (left: the same hit-stop timing, tick-matched), branches drawn as wide as the bolt",
+    "note": "--bot=ghosts --ghost=ohm --tier=1 --rigs, frames 60-140 at 0.4x. Looked at the 48 px/m pair at tick 92 and this clip's frame 40: the bolt keeps full weight, the five branches thin, the cops' blue shows through. The cream stun squiggles on each body (the reaction view) still dominate the cluster: not changed."
+  },
+  {
     "file": "tonnage_plates_ab_32ppm.mp4",
     "title": "Tonnage's plates stop the rounds: each cop round ends at the plate face with a cream glance spark edged in ink",
     "source": "game-arena",
@@ -7,15 +16,6 @@
     "ppm": 32,
     "before": "--feel=off on the same head (left): the rounds draw on inside the press body",
     "note": "Arena ghost reel (--bot=ghosts --ghost=tonnage --rigs). Looked at frames 86-109 every 2nd at 48 px/m (after and before) and 90-105 at 32 px/m x2 crops: the vermilion dashes stop at the hazard-striped plate, a star and a short bounce streak print, at most 2 new a tick. Pass 1 (plate_r_m 1.2) put the sparks inside the stripe; 1.35 puts them on it. Small at 32 px/m (a light hit, kept small on purpose)."
-  },
-  {
-    "file": "tonnage_plates_48ppm_04x.mp4",
-    "title": "Tonnage's plate sparks close up (48 px/m, 0.4x)",
-    "source": "game-arena",
-    "branch": "n7-melee 8375c763",
-    "ppm": 48,
-    "before": "see tonnage_plates_ab_32ppm.mp4 (left half)",
-    "note": "Frames 60-200 of the 48 px/m arena film at 0.4x: the cops fire into the press; every round stops at the plate face."
   },
   {
     "file": "quest1_katana_ab_32ppm.mp4",
