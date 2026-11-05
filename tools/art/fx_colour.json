@@ -123,12 +123,28 @@
       "files": [
         "blast_2"
       ],
+      "flash": {
+        "burst": "#FFC23A",
+        "burst_k": 0.8,
+        "half_w": 6,
+        "hot": "#FFF2C0",
+        "hot_k": 0.55,
+        "ink_px": 3.5,
+        "n": 22,
+        "points": 20,
+        "r_out": [
+          0.7,
+          0.98
+        ],
+        "seed": 1,
+        "spike": "#FFC23A"
+      },
       "id": "blast_smoke",
       "inner": {
         "colour": "#F08A24",
         "px": 45
       },
-      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before. Iteration 10: pockets (r2_w4: ragged fire pockets, not a ring): 9 round orange pockets with a hot yellow core moved toward the blast centre (core_in; centred, it read as a target), hash-placed on the ring's inner edge, clipped to the smoke (fx_colour.py pockets); when present they replace the inner band. Drop pockets = the iteration 8 band. Iteration 11: wobble 0.2 (a hashed 3- and 5-lobe radial wobble of each pocket edge, r2_w4's ragged fire tongues; 0 = the round iteration 10 pockets) with r_px 30-52 (was 25-45: the lumpy edge eats fire area). Also iteration 11: graded fire, hot #FFF2C0 at hot_k 0.5 of the core (core_k 0.5 -> 0.62): orange edge -> yellow -> white-hot toward the blast centre (r2_w4); drop hot = the single yellow core.",
+      "note": "n5-look iteration 8 (r2_w4): the smoke ring was painted orange whole (wash -> orange); the sheet has dark smoke with the fire inside it, so this frame takes dark smoke and an orange band along the ring's inner edge (inner.px part px; tools/art/fx_colour.py inner_band). Drop this family = before. Iteration 10: pockets (r2_w4: ragged fire pockets, not a ring): 9 round orange pockets with a hot yellow core moved toward the blast centre (core_in; centred, it read as a target), hash-placed on the ring's inner edge, clipped to the smoke (fx_colour.py pockets); when present they replace the inner band. Drop pockets = the iteration 8 band. Iteration 11: wobble 0.2 (a hashed 3- and 5-lobe radial wobble of each pocket edge, r2_w4's ragged fire tongues; 0 = the round iteration 10 pockets) with r_px 30-52 (was 25-45: the lumpy edge eats fire area). Also iteration 11: graded fire, hot #FFF2C0 at hot_k 0.5 of the core (core_k 0.5 -> 0.62): orange edge -> yellow -> white-hot toward the blast centre (r2_w4); drop hot = the single yellow core. Iteration 12: flash (r2_w4: the blast keeps a white-hot core and yellow radial spikes through the smoke; ours printed a hollow grey ring): tools/art/fx_flash.py paints n 22 ink-outlined yellow spikes from the centre to r_out x the half cell, a ragged 20-point yellow burst filling the ring's hollow (burst_k x its inner radius) and a white-hot star inside (hot_k x the burst). Drop flash = the iteration 11 frame.",
       "pockets": {
         "colour": "#F08A24",
         "core": "#FFC23A",

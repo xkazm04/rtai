@@ -20,6 +20,8 @@ from pathlib import Path
 
 from PIL import Image
 
+from fx_flash import flash
+
 TOKENS = {
     "ink": (27, 21, 23),
     "paper": (242, 232, 213),
@@ -165,6 +167,14 @@ def pockets(path, colour, n, r_px, seed=1.0, core=None, core_k=0.45, core_in=0.0
     img.save(path, optimize=True)
 
 
+def _flash(path, spec):
+    """fx_flash.flash over the frame (r2_w4's white-hot core + spikes); colours are hex in the table."""
+    img = Image.open(path).convert("RGBA")
+    _, inner = _polar(img, img.load(), 180)
+    s = dict(spec, **{k: _hex(spec[k]) for k in ("spike", "burst", "hot")})
+    flash(img, sorted(inner)[90], s).save(path, optimize=True)
+
+
 def main(src_dir, out_dir):
     table = json.loads((Path(__file__).parent / "fx_colour.json").read_text("utf8"))
     out = Path(out_dir)
@@ -191,6 +201,8 @@ def main(src_dir, out_dir):
                     )
                 elif "inner" in fam:
                     inner_band(out / src.name, _hex(fam["inner"]["colour"]), fam["inner"]["px"])
+                if "flash" in fam:
+                    _flash(out / src.name, fam["flash"])
                 done += 1
     print(f"fx_colour: {done} PNGs -> {out}")
 
