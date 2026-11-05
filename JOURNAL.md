@@ -1289,3 +1289,16 @@ Session end 06:31: tree clean after this commit, no Godot process of mine runnin
   1.01 x 1.45 m bbox, already on the footprint: no change.
 - 06:56 EVIDENCE GATE on 84ed1bd1 (`--no-bench`): ALL PASS: lint 13/13, unit 954/0, scenarios 46, parity exact,
   look goldens 11/11 (worst 1.33), block 5/5 (worst 1.53), no re-bless.
+- 06:59 scratch i20 PNG sequences deleted (the mp4s in masters keep them). Open: the new peek was not seen in a game
+  frame (no hide tick known in the quest recorder's run; the night d4 lane filmed it via a patched view, not
+  reproduced); its size moved only 1.03 -> 0.97 m. REPORT "does not work" updated.
+
+NEXT (iteration 21, the last BUILD before the 08:30 freeze):
+1. Calls 1-9 stand (Call 4 D, Call 9 C built). REPORT current to 7b0cff81 + this entry; rewrite at 08:40 and name
+   b68665b1 (quest 1's sprite cast) in the summary.
+2. Optional, small: see the hide-spot peek in a game frame (find a tick with `stage.hidden_in != ""` in the quest
+   recorder's run, e.g. log it from `stage_actions.gd` in a scratch copy, then `quest1_clip --stills`), 32 and 64 px/m.
+3. Optional: the sprite Rivet's 32 px/m read (paler than the rig: no tan core / visor slot). Only if a frame shows it
+   lost on asphalt; a 32 px/m-only sprite would need a second row (`rivet_lod`) in collect_call_art.json and a pick by
+   ppm in `CastView._rivet`; otherwise leave (hosting the rigs is rivet-arsenal Call 1).
+4. Before 08:30: `tools/evidence/run.mjs --no-bench` on the final head; never edit tracked files while it runs.

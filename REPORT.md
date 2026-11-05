@@ -260,6 +260,9 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   every ped torso and the hat, hair, hood, beanie and cap heads are plan-view redraws since iteration 12; the
   bald head and the shoes were judged plan-view already (a skull disc with ears and a nose nub; a capsule shoe); every ped head and torso has D5 hatching since 093f4b73 / f5733b83.
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
+- Quest 1's sprite cast (b68665b1): the re-captured hide-spot peek (0.97 m, was 1.03 m) was not seen in a game frame
+  (no recorded tick with Rivet hidden was found this session); the sprite Rivet lacks the rig's 32 px/m tan core and
+  visor slot (a 120 px/m capture), so default quest 1 shows a paler Rivet than `--rigs`.
 
 ## Calls for the owner
 1. Rivet's size: A, as built, 1.20x the crowd's span (1.11x a cop's), his core clearly larger than a cop's as
