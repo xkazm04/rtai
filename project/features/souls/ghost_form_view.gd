@@ -27,6 +27,8 @@ var beats: int = 0
 ## soul glow): the A/B before.
 var lurch_on: bool = true
 var _tonnage: TonnageRig = TonnageRig.new()
+var _kerf: KerfRig = KerfRig.new()
+var _kerf_last: Vector2 = Vector2.ZERO
 var _fx: GhostMorphFx = GhostMorphFx.new()
 ## Dent's body: a standalone CutRig on DentPlan, fed Rivet's pose (CharacterRigs holds one plan
 ## per actor kind).
@@ -63,6 +65,8 @@ func _ready() -> void:
 	process_priority = 20  # after CharacterRigs poses and RivetHeldView feeds the rig
 	_tonnage.visible = false
 	add_child(_tonnage)
+	_kerf.visible = false
+	add_child(_kerf)
 	_fx.reduced_motion = reduced_motion
 	add_child(_fx)
 	_dent.visible = false
@@ -133,7 +137,24 @@ func _process(_delta: float) -> void:
 	hud.sync(forms)
 	var is_dent: bool = big(forms, DentStage.GHOST)
 	_step_dent(is_dent, at, r.facing.angle(), steps)
-	_hide_rivet(is_big or is_dent, r.id)
+	var is_kerf: bool = big(forms, KerfStage.GHOST)
+	_step_kerf(is_kerf, at, r.facing.angle(), steps)
+	_hide_rivet(is_big or is_dent or is_kerf, r.id)
+
+
+## Kerf's hover rig at Rivet's pose (snaps with the blink: no tween), unfolding with the morph.
+func _step_kerf(show: bool, at: Vector2, facing: float, steps: int) -> void:
+	_kerf.visible = show
+	if not show:
+		_kerf_last = at
+		return
+	_kerf.position = at
+	_kerf.rotation = facing
+	_kerf.unfold = unfold_k(pilot.ghosts.forms, KerfStage.GHOST)
+	var dt: float = maxf(1.0, float(steps)) * SimClock.TICK_DT
+	_kerf.speed_mps = minf(20.0, at.distance_to(_kerf_last) / SimConst.PX_PER_M / dt)
+	_kerf_last = at
+	_kerf.advance(steps * SimClock.TICK_DT)
 
 
 ## Dent's rig at Rivet's pose, posed on whole sim ticks (its gait from Rivet's own travel).
