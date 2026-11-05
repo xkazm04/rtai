@@ -25,7 +25,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - No blood red and no teal in any of them. In the live fight the cells draw on their own canvas under `look_d5_fx`; `fx_colour_dir ""` switches back to ink.
    - Iteration 10: the blast's smoke ring carries 9 ragged fire pockets with hot yellow cores toward the centre, as in r2_w4, instead of a continuous orange band (`tools/art/fx_colour.json` blast_smoke `pockets`; drop it = the band). Evidence: last row of `fx-colour-arena-64ppm-vs-r2w4.png`.
    - Iteration 11: the pockets' edges are lumpy (`pockets.wobble` 0.2, r_px 30-52; 0 = round), so they read as r2_w4's ragged fire tongues instead of discs; a white-hot tier inside each yellow core grades them orange -> yellow -> white toward the blast centre (`pockets.hot`). Evidence: the last two rows of `fx-colour-arena-64ppm-vs-r2w4.png`.
-   - Iteration 12: the smoke-ring frame keeps r2_w4's white-hot core and yellow radial spikes through the smoke, where it printed a hollow grey ring (`fx_colour.json` blast_smoke `flash`, painted by `tools/art/fx_flash.py`; drop it = the hollow ring). Evidence: `fx-flash-it12-64ppm-vs-r2w4.png` (before | after at ticks 1216 and 1220 | r2_w4).
+   - Iteration 12: the smoke-ring frame keeps r2_w4's white-hot core and yellow radial spikes through the smoke, where it printed a hollow grey ring (`fx_colour.json` blast_smoke `flash`, painted by `tools/art/fx_flash.py`; drop it = the hollow ring). Evidence: `fx-flash-it12-64ppm-vs-r2w4.png` (before | after at ticks 1216 and 1220 | r2_w4). The flash grades white -> yellow -> orange into the smoke (`flash.mid`; `fx-flash-mid-it12-64ppm-vs-r2w4.png`).
    - Blast debris: concrete slabs and ink specks fly out over 30 ticks (`blast_debris.json`). Iteration 12: three big chunks (up to 1.5 m), a third of the ring apart, among six small slabs, as in r2_w4 (`chunk_big` 3; 0 = the uniform 0.35-1.3 m slabs). Evidence: `fx-debris-it12-64ppm-vs-r2w4.png`.
    - Evidence: `fx-colour-reel-ab-32ppm.mp4`, `fx-colour-arena-64ppm-vs-r2w4.png`, `fx-colour-energy-ab-32ppm-2x.png`, `fx-colour-lineup-64ppm-vs-r2w4.png`.
 4. **The held gun follows Rivet's size** (answers n5-cast REQUEST 19:08). `rivet_arsenal.json held_size_ref` is 1.2; the cast lane's 0.97 Rivet carries 0.81x guns.
@@ -45,7 +45,7 @@ Detail and every measurement: `JOURNAL.md`. Decisions: `docs/decisions.md` (line
    - Evidence: `pickup-ring-ab-48ppm-vs-r2w8.png` (second row: the span before and after; third row: the edge 1 over 2 beside r2_w8).
 8. **Tooling:** lint now runs gdformat/gdlint in batches of 200. Before, past ~810 files the file list overran the Windows command line and both tools failed with no output.
 
-**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on c7f2b352 (the hairline cracks, the blast flash and the big chunks), 0 script errors.
+**Combat did not regress.** The director reel (`--bot=reel --reel=director --loadout=pistol`, 7200 ticks) brings down every one of its 16 chapters, last checked on ec52e780 (the hairline cracks, the graded blast flash and the big chunks), 0 script errors.
 
 **Gates on 192b7e8c:**
 - lint 13/13;
