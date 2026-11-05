@@ -28,15 +28,20 @@ const FORM_HAULER: StringName = &"hauler"
 ## n5-cast (2026-11-04): the pre-hybrid base (size 1.2, the d5 arms), kept for the A/B frames.
 const FORM_STOCKY: StringName = &"stocky"
 ## n5-cast: the hybrid at 1.1x the crowd span (0.91 m), the owner call vs the built 1.00 m.
+## d7-calls cast-1 (owner, 2026-11-05): this size is now FORM_BASE's; the row stays for A/B frames.
 const FORM_TRIM: StringName = &"trim"
+## d7-calls cast-1: n5-cast's built hybrid at 1.2x the crowd span (1.00 m), the old default.
+## Back to it = FORMS[FORM_BASE].x 0.89 -> 0.97.
+const FORM_WIDE: StringName = &"wide"
 ## n5-cast: the built hybrid with heavier limbs (arm_w 1.0, leg_w 1.2): the limb-weight owner call.
 const FORM_HEAVY: StringName = &"heavy"
 ## The size_k at which the art matched the rivet_base body radius (d5); the Hauler tank's absolute
 ## size hangs off this, not off FORM_BASE, so slimming the base does not shrink the tank.
 const BODY_SIZE_K: float = 1.2
-## n5-cast: the lanky + android hybrid (r2_c3) is about 1.1x the crowd's 0.83 m shoulder span.
+## n5-cast: the lanky + android hybrid (r2_c3); d7-calls cast-1: 1.1x the crowd's 0.83 m span.
 const FORMS: Dictionary[StringName, Vector3] = {
-	FORM_BASE: Vector3(0.97, 0.7, -250.0),
+	FORM_BASE: Vector3(0.89, 0.7, -250.0),
+	FORM_WIDE: Vector3(0.97, 0.7, -250.0),
 	FORM_STOCKY: Vector3(1.2, 0.7, -250.0),
 	FORM_TRIM: Vector3(0.89, 0.7, -250.0),
 	FORM_HEAVY: Vector3(0.97, 0.7, -250.0),
@@ -52,6 +57,7 @@ const ARMS: Dictionary[StringName, Vector3] = {
 	FORM_STOCKY: Vector3(0.72, 0.78, 0.8),
 	FORM_MILD: Vector3(0.85, 0.9, 0.9),
 	FORM_TRIM: Vector3(0.85, 0.9, 0.9),
+	FORM_WIDE: Vector3(0.85, 0.9, 0.9),
 	FORM_HEAVY: Vector3(0.85, 0.9, 1.0),
 	## The tank is base Rivet grown (HaulerLook bulks the arms further from these).
 	FORM_HAULER: Vector3(0.72, 0.78, 0.8),
@@ -62,6 +68,7 @@ const ARMS: Dictionary[StringName, Vector3] = {
 const LEGS: Dictionary[StringName, Vector3] = {
 	FORM_BASE: Vector3(1.15, 1.0, 1.15),
 	FORM_TRIM: Vector3(1.15, 1.0, 1.15),
+	FORM_WIDE: Vector3(1.15, 1.0, 1.15),
 	FORM_HEAVY: Vector3(1.15, 1.2, 1.15),
 }
 ## Stride (ASK rivet-motion-2, default B, 21:21): gait_scale 1.3 lets the feet reach past the
