@@ -51,11 +51,18 @@ func _reload_gap(k: float) -> float:
 ## (distance of the off claw from the barrel line through the gun claw, how far ahead of the
 ## gun claw along it), part px
 ## in the torso's frame (RigLimbs joints).
+## d7-held: where the off claw holds, off the line it holds: with the off claw shown (RigOffClaw)
+## its jaws' middle off the drawn barrel (through the gun claw's grip point), else the off hand
+## point off the line from the gun shoulder.
 func _off_hand(kind: int) -> Vector2:
 	var rig: CutRig = _aimed(kind)
 	var gun: Vector2 = rig.sides[rig.plan.gun_arm].j_hand
-	var off: Vector2 = rig.sides[1 - rig.plan.gun_arm].j_hand
 	var sh: Vector2 = rig.sides[rig.plan.gun_arm].j_shoulder
+	var off: Vector2 = rig.sides[1 - rig.plan.gun_arm].j_hand
+	if rig.sides[1 - rig.plan.gun_arm].grip.visible:  # the drawn barrel, through the grip point
+		gun = RigOffClaw.grip_point(rig)
+		sh = gun
+		off = RigOffClaw.jaw_point(rig, 1 - rig.plan.gun_arm)
 	var aim: Vector2 = rig.torso.global_transform.affine_inverse() * rig.aim_at
 	var dir: Vector2 = (aim - sh).normalized()
 	var across: float = absf((off - gun).cross(dir))

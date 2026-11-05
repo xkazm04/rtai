@@ -48,6 +48,7 @@ static func solve(rig: CutRig, s: int, ph: float, walk01: float) -> void:
 		side.upper.scale.y = p.arm_w
 		side.fore.scale.y = p.arm_w
 	_hand(rig, side, fore_draw)
+	RigOffClaw.place(rig, s)
 	var behind: bool = h2.x < sh.x - 40.0
 	var lift: int = STRIKE_Z if strike_over and striking(rig, s) and rig.c_reach > 0.0 else 0
 	side.upper.z_index = (p.arm_below if behind else p.arm_above) + lift
@@ -84,6 +85,7 @@ static func _target(rig: CutRig, s: int, ph: float, walk01: float, aim_arm: bool
 		tgt = Vector3(sh.x + dv.x * reach * 0.97, sh.y + dv.y * reach * 0.97, -10.0)
 		tgt.x -= 60.0 * rig.c_recoil
 	tgt = RigGrip.target(rig, tgt, aim_arm, reach)  # rivet-arsenal: two-hand, shoulder, hip
+	tgt = RigOffClaw.target(rig, s, tgt)  # d7-held: the off claw clamps the drawn barrel
 	if (striking(rig, s) or (rig.strike_arm < 0 and s == p.melee_arm)) and rig.c_reach > 0.0:
 		tgt = tgt.lerp(Vector3(sh.x + reach * 0.99, sh.y * 0.2, 0.0), rig.c_reach)
 	if rig.c_hands_up > 0.0:
@@ -106,6 +108,7 @@ static func _place(rig: CutRig, s: int, aim_arm: bool) -> float:
 	var e2: Vector2 = side.j_elbow
 	var h2: Vector2 = side.j_hand
 	var fore_cell: String = p.gun_cell if aim_arm and p.gun_cell != "" else p.fore_part[s]
+	fore_cell = RigOffClaw.fore_cell(rig, s, fore_cell)  # d7-held: the off claw's plain forearm
 	var d2: float = p.fore_draw[s]
 	if not p.has_endon():
 		_cell(rig, side.fore, fore_cell, 1, side)

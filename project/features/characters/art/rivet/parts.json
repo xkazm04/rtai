@@ -423,5 +423,41 @@
    388.0,
    28.5
   ]
+ },
+ "r_forearm_grip": {
+  "size": [
+   255,
+   74
+  ],
+  "sheet": "n5/cast/gen/r2/out/rivet_hybrid_arms.png",
+  "cell": 2,
+  "scale": 0.93,
+  "pivot_a": [
+   37.2,
+   37.7
+  ],
+  "pivot_b": [
+   223.2,
+   37.3
+  ],
+  "derived": "l_forearm mirrored across its length (d7-held: the off claw on a two-claw weapon)"
+ },
+ "claw_grip": {
+  "size": [
+   220,
+   133
+  ],
+  "sheet": "parts-v2/rivet_hands.png",
+  "cell": 2,
+  "scale": 0.9966,
+  "pivot_a": [
+   46.0,
+   68.0
+  ],
+  "pivot_b": [
+   166.0,
+   67.3
+  ],
+  "derived": "claw_closed mirrored across its length (d7-held: the off claw on a two-claw weapon)"
  }
 }

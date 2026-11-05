@@ -91,6 +91,11 @@ static func _arms(rig: CutRig, p: BodyPlan) -> void:
 		var left: RigLimbs = rig.sides[BodyPlan.L]
 		left.hand = _part(rig, p.hand_open, _limb_kind(p), false, -1)
 		left.fore.add_child(left.hand)
+	if RigOffClaw.has_art(p):  # d7-held: the off claw on a two-claw weapon
+		var off: RigLimbs = rig.sides[1 - p.gun_arm]
+		off.grip = _part(rig, p.off_grip_hand, _limb_kind(p), false, -1)
+		off.grip.visible = false
+		_attach(rig.torso, off.grip, RigOffClaw.Z)
 	if p.shield_part != "":
 		var sp: Sprite2D = _part(rig, p.shield_part, PartMaterials.PartKind.PART, true, -1)
 		sp.position = p.shield_pos

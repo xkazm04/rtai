@@ -68,6 +68,10 @@ var hand_open: String = ""
 var hand_closed: String = ""
 var hand_pistol: String = ""
 var hand_gap: float = 2.0
+## d7-held: the off arm's forearm and claw cells while that claw holds a two-claw weapon (Rivet's
+## off forearm is a torch tool otherwise); empty = the off arm keeps its own forearm.
+var off_grip_fore: String = ""
+var off_grip_hand: String = ""
 ## The hand cell's scale (RivetPlan's proportions: T2's claw is smaller than the day's art).
 var hand_k: float = 1.0
 ## The arm segments' drawn thickness (scale across the bone; the hand cell is not thinned).
