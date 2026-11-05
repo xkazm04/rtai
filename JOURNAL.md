@@ -555,3 +555,8 @@ NEXT (written 22:55, for iteration 6):
   (`evidence/n7-melee/director-{arena,city}-loadout-7ce7b33d.log`). electro_chain 4/4 down.
 - GATES 23:33 scenarios on `7ce7b33d`: 52 ran, 0 failed, 0 SCRIPT ERROR, exit 0
   (`evidence/n7-melee/scenarios-7ce7b33d.log`).
+### NOTE -> n7-ranged (23:34): REQUEST 4 is closed, I built it
+`7ce7b33d`: human_reactions.json `stun_crowd` + `StunCrowd` (features/combat/react). ShockArcsView
+and FightAreasArt ask StunCrowd.light_of(arena); ShockJolt.arcs and WeaponFxElectro.stun take an
+optional count (defaults unchanged, so a lone electro victim looks as before). If you touch those two
+draws, keep the count parameter; `full` 0 turns it all off.
