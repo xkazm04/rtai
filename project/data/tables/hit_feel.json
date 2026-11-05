@@ -181,6 +181,11 @@
       "shake": "crash"
     },
     {
+      "class": "ram",
+      "doc": "n7-melee: Dent's seized car striking a body (the blow, weapon dent_car): the ram row (the melee stop, the crash shake, a 5 px kick along the car's nose). With the camera on Dent (the owner's open call) the blow often lands at or past the frame edge; the kick toward it is what reads on screen. No row = not felt (the before).",
+      "id": "dent_car"
+    },
+    {
       "doc": "n7-melee: the tap: the 4-tick hold (the shock star marks the frame), a small kick, no shake.",
       "hitstop": "melee_hit",
       "id": "electro_baton",
