@@ -243,3 +243,15 @@ Session state 01:26: head = this commit, tree clean, no Godot process of mine ru
   (CityView draws the city sim's traffic only?), (b) why Dent's G seize finds none there (log pick_on_line's
   distances and `powers.try_activate` result in the city run), (c) Tonnage's car_crush likewise.
 Session state 01:29: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+
+## Iteration 3 (01:28 - 02:28)
+- 01:30 read JOURNAL, git log, the forms lane's JOURNAL (REPLY to REQUEST 2 done there: GhostPilot on
+  StagePilot; their NEXT is Dent polish then the Kerf body; no new REQUEST to ghost-powers).
+- MERGE n6-ghost-forms 3d0a8f4d (7b053cc7). StagePilot conflicted (their GhostPilot vs our kerf/ohm slots):
+  resolved by wiring KerfStage + OhmStage INTO GhostPilot (their REPLY 3 invited it): `share(powers)` on both
+  (no own activate/tick; Kerf leaves the walk to the form row's top_mps), attacks only while settled in their
+  form, owns_melee covers them; StagePilot.kerf/ohm are aliases of ghosts.kerf/ohm for the views. Kerf/Ohm reel
+  beats now select the form (G at 40, 42[, 44]; LOOK_TICKS 40 swallows earlier presses: the first try at 30/32
+  never picked and Q took Tonnage) and Q, attacks after the settled form. Unit test_kerf 3/3, test_ohm 2/2,
+  test_ghost* 15/15, test_tonnage 2/2, test_dent 3/3, test_hauler* 18/18; scenario_ghost_attacks 1/0
+  (`evidence/scenario-ghost-it3.log`). MERGE n5-cast cc744d85 (5ee2cfe8). Lint 13/13 on both.
