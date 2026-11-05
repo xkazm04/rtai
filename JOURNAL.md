@@ -780,3 +780,32 @@ NEXT (iteration 7, in order):
    fireball); the target comparison re-shot at 32 px/m (after king's boss cam clamp lands: merge).
 5. Windows export `build/export/windows/RTAI.exe` by 08:30 and REPORT.md (calls 1-9; the rotor
    dash READ_P table and the it6a per-attack table are the numbers).
+
+## Iteration 7 (2026-11-06 00:00-00:59, BUILD)
+Read: JOURNAL (it6 NEXT), git log, n7-king's JOURNAL it6 (boss cam clamp, whole bar, parked
+sedans, Dent bot car_goal). Rules applied: motion-quality-gating (judge the cut at 48 px/m in the
+live arena path, frame by frame), encounter-balance-simulation (a merge must not move the numbers:
+same seed, same ticks).
+- 00:00 MILESTONE d9d13e63 merge n7-king 3f95d031: no code conflicts (JOURNAL ours). The parked
+  sedans are in the boulevard (x 124), far off the pit; BossBotGhost.car_goal is `--ghost=dent`
+  only (my `--servo-ghost=dent` is untouched).
+- FRICTION: the first unit run had no GODOT_BIN in the shell: "1171 passed" was a stale count with
+  exit -1 everywhere. Re-run with GODOT_BIN: **unit 1180/0** (`evidence/servo/unit-it7.log`).
+  Always export GODOT_BIN with APPDATA.
+- 00:03 MEASURED the merge does not move the fight: seed 1, human + dodge (`numbers-it7-merge/`):
+  Servo down at tick 7733 / 8308, took 120 / 104, the same landings as it6a. 0 SCRIPT ERROR.
+- 00:20 MILESTONE 6dae00ee NEXT 2: **a drone Kerf cuts falls in two halves** (`ServoCut`, render
+  only): CombatArena.kill_landed with weapon kerf_slice on a drone body -> an 8-frame white-hot
+  slice in a teal bloom across the drone (2.4 x its width), then the drone sprite's two halves
+  (texture region halves along the blink) part 0.6 m, turn 0.35 rad and shrink as they drop, the
+  cauterised soul edge cooling, lying dark and fading by 90 frames. The machine smoke follows.
+  Framework: `BossView.arena` (generic, set by `BossView.attach(view, hook, arena)` from
+  BossHook.attach_view) so a boss view can listen to kills; it never steps the arena.
+- FOUND on the way: the halves were drawn but at PART_M 0.32 / a thin edge they vanished into the
+  rack's detail (the cuts happen as drones launch off the rack). Debug log: 5 cuts in 240 ticks,
+  dir = the blink's. Fixed by the part 0.6 m, edge 0.1 x the art height, and the slice flash.
+- FILM `M/servo_ghost_kerf_cut_halves_48ppm_it7.mp4` (p2, seed 2, 8 s, 0 SCRIPT ERROR). **Looked
+  at** `M/frames/servo_kerf_cut_halves_keys_48ppm_it7.png` (10 fps): the slice flashes white-teal
+  along the blink through the three drones, the halves part with teal edges, then the smoke. At
+  48 px/m over the rack it reads as Kerf's slashes; the half-drone silhouettes are small (a drone
+  is ~1 m). The it6 clip and keys deleted (superseded).
