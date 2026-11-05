@@ -360,3 +360,39 @@ Session state 02:22: head = this commit, tree clean, no Godot process of mine ru
   (`E/ghosts-ohm-it4-32.json`, `M/ohm-arena-32ppm.mp4`). REEL `M/ghost-attacks-reel-it4-32ppm.mp4` (31 s, labelled,
   32 px/m: Tonnage + Dent city, Kerf arena + city on the body, Ohm arena, Ohm mass) replaces the it3 reel; judged
   frame by frame (6 stills): each ghost readable with the sound off. frames.json 15.
+- 02:39 COMBAT CHECK director reel headless (`--quit-after 24000`) on a9c9d36f: 16/16 chapters down (claw_combo 2/2 ..
+  plasma_sword_deflect 1/1 .. mini_nuke 4/4), 0 SCRIPT ERROR (`E/director-reel-it4.log`).
+- 02:40 MILESTONE b575c591 dev `--cam=car` (NEXT 5 of iteration 3): DentView.follow_cam (set by TonnageHook when the
+  flag is on) eases the view's camera to the midpoint of Rivet and the seized car and holds on the blast for 1 s;
+  view only (arena: CollectCallView.focus; city: city_lean_m). A/B `M/frames/dent-cam-car-ab-64ppm.png` (ticks
+  132/168/204/252): before, the car and the blast leave the frame; after, the strike into the cops, the amber
+  blast and the wreck sit in frame. `M/dent-64ppm-halfspeed.mp4` re-cut from the car-camera run.
+- 02:42 Ohm re-filmed on the head: city block 4 shock kills + the cruiser wrecked (`E/ghosts-ohm-city-it4-32.json`,
+  `M/ohm-city-32ppm.mp4`), 64 px/m half speed (`M/ohm-64ppm-halfspeed.mp4`), target composite
+  `M/frames/ohm-vs-target.png` (target | 64 arena | 32 city). Judged: the twin prongs follow the target's two copper
+  fingers; the body is still base Rivet. frames.json 15.
+- Rules applied this session: `motion-quality-gating` (every change judged in motion at 32 px/m with 64 px/m
+  close-ups, a before/after at the same tick and zoom: Kerf echoes, Ohm prongs, Dent camera);
+  `depth-ordered-layered-art` (the afterimages draw behind the path and cut line via show_behind_parent, on the
+  actor layer above the floor); `shader-budget-authoring` (no new shader: modulate on pooled sprites, canvas draws).
+- Not done this session: the robot victim (no robot body exists: `enemy_rig_feed.gd` draws robots on the cop rig
+  until a robot body kind lands), Kerf's reduced-gore red pool, the bench (contended machine).
+
+### REQUEST 5 -> n6-ghost-forms (02:45)
+1. KerfView (ghost-powers) now instances your KerfRig as the blink afterimages (`KerfRig.new()`, add_child, then
+   `speed_mps = KerfRig.FAST_MPS; advance(1.0)`; position/rotation/scale/modulate set per frame). Please keep
+   `FAST_MPS`, `PX_PER_M`, `speed_mps` and `advance(dt)` (or tell me in a REPLY when they change).
+2. Ohm: OhmStage reads `electrode_l/electrode_r` from your ghost_forms.json row (GhostPilot._init) and the bolt's two
+   prongs leave from exactly those points. When you draw the Ohm rig, put the copper fingertips on those anchors
+   (or move the anchors to the drawn tips: the bolt follows the data).
+
+NEXT (iteration 5, ghost-powers):
+1. Merge n6-ghost-forms / n5-cast if they moved (one `--import` after the merge before filming).
+2. When the Ohm rig lands: re-film Ohm on it (arena 32, city 32, 64 slow), check the prongs leave the drawn
+   fingertips, a target composite, and re-cut the reel's Ohm segments.
+3. Dent `--cam=car` in the city block (64 px/m close-up there; arena done b575c591).
+4. Weakest left: the robot victim (no robot fighter in the arena; the brain stands in drawn as a cop). Look for a
+   robot body on main/day branches; otherwise a ghost-powers dev robot (sim stand-in with a distinct look) so the
+   machine multipliers (Ohm machine_k, Kerf robot_damage) read on screen.
+5. Kerf under `--gore=reduced`: the red pool under a cauterised cut (a reduced-gore Kerf death without blood).
+Session state 02:44: head = this commit, tree clean, no Godot process of mine running, masters scratch holds only film.sh and reel.sh, image.lock never taken, bench never run.

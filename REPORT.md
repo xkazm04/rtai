@@ -26,11 +26,13 @@
 | **Ohm's two prongs** from the forms lane's electrode anchors (ghost_forms.json) meeting in the first body | `M/frames/ohm-electrode-prongs-ab-64ppm.png` (before/after); unit `test_ohm_attacks` 5/5; `M/ohm-arena-32ppm.mp4` (4 kills + cruiser), `E/ghosts-ohm-it4-32.json` |
 | **The reel of all four attack sets** (iteration 4, 31 s, labelled, 32 px/m) | `M/ghost-attacks-reel-it4-32ppm.mp4` |
 | Gates (iteration 4, 3d369dcf): evidence runner PASS: lint 13/13, unit 973/0, scenarios 47, parity bit-exact + mutation caught, selftest look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it4.log`, `E/scenario-ghost-it4.log` |
+| **Dent close-up camera** (dev `--cam=car`, view only): frames Rivet and the seized car, holds on the blast | `M/frames/dent-cam-car-ab-64ppm.png` (before/after), `M/dent-64ppm-halfspeed.mp4` |
+| Combat no-regress (iteration 4): director reel 16/16 chapters down, 0 script errors | `E/director-reel-it4.log` |
+| Ohm re-filmed on the iteration-4 head: city 4 kills + cruiser wrecked; target composite | `M/ohm-city-32ppm.mp4`, `M/ohm-64ppm-halfspeed.mp4`, `M/frames/ohm-vs-target.png`; `E/ghosts-ohm-city-it4-32.json` |
 
 ## What does not work yet
 - Tonnage, Dent and Kerf play on the forms lane's bodies; Ohm still shows base Rivet (its rig is the forms lane's next item).
 - No robot fighter exists in the arena: Kerf and Ohm hit the quest boss's brain as a stand-in (drawn as a cop, dies with the standard red splat; Ohm's beat holds it exposed). The robot numbers are real, the robot look is not.
-- Dent's 64 px/m camera does not follow the car (the strikes and blast leave the close-up frame).
 - Under `--gore=reduced` Kerf's victims take the standard death, which leaves a red pool (odd for a cauterising beam; the death pipeline is shared and approved).
 
 ## Calls for the owner
