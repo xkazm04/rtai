@@ -928,3 +928,20 @@ Session end 03:30: tree clean after this commit, no Godot process of mine runnin
   renders deleted (visor_patch.py kept).
 - 03:30 REPORT Call 8 (the visor at 32 px/m: A as built, B a wider sticker-tier visor, C a larger head) with the
   trial still. NEXT 1(a) is now Call 8 and waits for the owner. Session end.
+
+## Iteration 15 (session 03:29 - 04:29), BUILD
+- 03:29 read JOURNAL, log, REPORT; n5-look JOURNAL has no new REQUEST to cast; no locks. The brief's list is done;
+  the weakest open item vs the targets is Rivet's head at game zoom (Call 8, the visor that does not read at 32 px/m).
+  Per "decide, never block": build my pick (B, a sticker-tier visor wider than the art) behind a flag.
+  `scratch-cast/i14/visor_patch.py` was gone (scratch cleaned), so rebuilt from the shader.
+- 03:31 BUILD: `PartMaterials.PartKind.HEAD` (appended, enum keys stable) for Rivet's helmet (the core rig only;
+  humans keep PART heads), `HEAD_LOD_FILL` 4 = print_part's new lod_fill 4: the cream core sticker + an ink slot over
+  the helmet front (UV.x > `visor_x0` 0.66, |UV.y - 0.5| < `visor_hy` 0.25; the art faces +x). 2 = as built.
+  Trials on cast_lineup 32 px/m slab/road/walk: full slot to the front edge (built) vs an inset slot with a cream gap
+  (x 0.60-0.82): the inset's gap is under a pixel and reads weaker. 64 px/m lineups: pixel-identical (the art tier).
+  Registry rule (`shader-budget-authoring`): one compare per pixel inside the existing sticker branch, no fetch, no pass.
+- 03:35 live director reel 0-1140 at 32 px/m (`--bot=reel --reel=director --loadout=pistol`, film.sh, 0 SCRIPT ERROR
+  both), after and before by flag: `M/cast-visor-director-ab-32.mp4`; crops at t=4..18 s show the dark slot on the
+  head's facing side in every after tile. Still `M/frames/rivet-visor-slot-ab-32ppm.png` (lineup x6 + live crops +
+  r2_c7's Rivet). Lint 13/13, unit 948/0 (+ test_head_visor_sticker).
+- MILESTONE 26c1e08a: Rivet's welder visor reads at 32 px/m (Call 8 B built; revert = HEAD_LOD_FILL 2.0).
