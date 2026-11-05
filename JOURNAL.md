@@ -805,3 +805,9 @@ Session end 01:54: tree clean after this commit, image.lock released (3 jobs ton
   and its value (the generator's colour drift is corrected at the art, not in the shader, which is the look lane's).
   Judged at the tier's own zoom (64 px/m) and checked that 32 px/m is unchanged (D4 untouched).
 - 02:31 EVIDENCE GATE started on 093f4b73 (`tools/evidence/run.mjs --no-bench`).
+- 02:21 GATE on 5faaf0aa: lint 13/13, scenarios 46, parity exact (mutation caught at 629), block goldens 5/5 (worst
+  1.36), world lock holds; unit 942/0 but flagged FAIL because I edited REPORT.md during the run (my error); selftest
+  FAIL = "look goldens: no result (exit 1)": the look golden scene wrote look-d1-32ppm.png and stopped. Re-run alone
+  (`look_golden.tscn -- --out=res://../build/evidence`, 22 s, exit 0): 11/11 within tolerance (worst mean 1.20, d1
+  48 px/m; d5-64 0.68), no re-bless needed. FRICTION: a transient look-golden exit under load; re-run the whole gate
+  on a clean tree (below).

@@ -117,6 +117,17 @@ parts, the riot cop) are identical in sim and read: `M/frames/brutal-ab-64ppm.pn
   board clip and still above show the final parts.
   Then (1d9c3c53) a mid-grey hoodie with a cream hood ring (r7): the hoodie ped reads as pale shoulders with a dark
   head instead of a dark slab (`M/frames/crowd-r7-hoodie-ab.png`). Every ped torso is now plan-view art.
+  Then (15feca4a, iteration 13) the hoodie wears the grey sleeves: its arms were near-ink, so the walking hoodie ped
+  printed as one black mass in quest 1 at 48 px/m; now pale arms round a dark cap (`M/frames/quest1-hoodie-sleeve-ab-48ppm.png`,
+  `M/cast-quest1-hoodie-sleeve-ab-48.mp4`, lineups `M/frames/crowd-hoodie-sleeve-ab.png`). The jacket stays the one dark look.
+  Then (093f4b73) D5 close-up hatching for the ten plan-view parts: a Codex restyle of the installed D4 parts, cut back
+  with the D4 alpha, value and chroma (a first cut kept Codex's warm fills and the hair printed vermilion; fixed, 0
+  vermilion px). At 64 px/m the torsos and heads carry the limbs' lower-left hatching and grain instead of flat fill;
+  32 px/m is unchanged (`M/frames/crowd-d5-hatch-ab-64ppm.png`). React and street boards before/after, every reaction,
+  death and corpse identical in place: `M/frames/react-street-d5peds-ab-64ppm.png`,
+  `M/cast-react-board-d5peds-ab-64ppm.mp4`, `M/cast-street-board-d5peds-ab-64ppm.mp4`.
+  Live city block on the final parts, same sim as e1f848a5: `M/frames/city-r7peds-ab-32ppm.png` (`M/cast-r7-city-32.mp4`);
+  the target composite `M/frames/cast-ingame-vs-r2c6.png` is re-shot on them.
 
 ### Gates (iteration 12, final on 5cf7cafe (r7 hoodie): lint 13/13, unit 942/0, parity exact, look goldens 11/11
 (worst 1.00) and block 5/5 (worst 1.08), no re-bless; scenarios 45/46 in the gate (`scenario_corpse_horde`, its
@@ -148,7 +159,7 @@ and block 5/5 (blocks re-blessed once at 618d6eb8 after a bisect against main; d
   Rivet stays on foot as the base plan, his move scaled by `rivet_move_k`), so it cannot break the rig.
 - The crowd: standing peds read pale since iteration 11 (section 5); jacket and hoodie looks stay dark, and the ped
   every ped torso and the hat, hair, hood, beanie and cap heads are plan-view redraws since iteration 12; the
-  bald head, the limbs and the shoes are still the 3/4-view art, and the r5 parts have no D5 hatching (flat fill at 64 px/m).
+  bald head, the limbs and the shoes are still the 3/4-view art (the plan-view parts have D5 hatching since 093f4b73).
 - The camera gap to r2_c6/r2_c7: the targets are 3/4 views with legs; the game is plan view.
 
 ## Calls for the owner
