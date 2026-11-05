@@ -677,3 +677,6 @@ Session state 05:05: head = this commit, tree clean, no Godot process of mine ru
   the seams entry (file kept).
   Registry rule applied (motion-quality-gating): judge on the shipped path at game zoom, same-frame A/B, lossless
   frames before judging edges.
+- 05:28 COMBAT CHECK director reel on d5e2f3e5 (merged ghost-powers + cast, the bar fix): 16/16 chapters down,
+  0 SCRIPT ERROR (E:director-reel-it9.log). The bar over the forms reads as a black slab at full HP: by design
+  (CastView._hp_bar fills ink by the health fraction on cream), not changed.
