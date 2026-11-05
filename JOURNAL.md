@@ -323,3 +323,17 @@ Session state 02:18: head = this commit, tree clean, no Godot process of mine ru
   (iteration 3, their bodies), Kerf + Ohm arena (iteration 2 clips: base Rivet, Ohm's kill still cream there),
   Ohm's mass fan. frames.json points at it. Still to do: re-film Kerf/Ohm arena on the iteration-3 head.
 Session state 02:22: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+
+## Iteration 4 (02:15 - 03:15)
+- 02:16 read JOURNAL, git log, the forms lane's JOURNAL (KerfRig landed d3aaa8a2, limbs 0.22 m 9f69e87c; their NEXT:
+  Kerf to done then Ohm; no new REQUEST to ghost-powers). MERGE n6-ghost-forms 6ef0bc5d (db6685cf; JOURNAL, REPORT
+  and our `evidence/ghosts-tonnage-city-32.json` keep ours) and n5-cast 093f4b73 (b06f0cad). Lint 13/13 both.
+- FRICTION the first film after the merge: 609-style parse errors (KerfRig/FormsTourBot unknown): the class cache
+  needs one `--import` after a merge that adds class_names. Killed my two stuck runs by PID.
+- 02:30 MILESTONE f566e06e Kerf's afterimages are faded copies of the Kerf body (KerfView pools 9 KerfRigs, limbs
+  swept, modulate (0.55, 1.75, 1.6) lifts the dark steel to teal, alpha 0.2..0.6 older->newer x the path fade,
+  show_behind_parent so the path and the cut sit on top). A/B `M/frames/kerf-echo-rings-vs-rig-64ppm.png` (ticks
+  80/100, 64 px/m; before = HEAD's kerf_view.gd checked out for one run, restored). Judged: the rings read as
+  "targets" on the path; the body copies read as Kerf itself smeared along the blink, at 64 and at 32 px/m
+  (`M/frames/kerf-echo-keys-32ppm.png`). Arena beat on the Kerf body: 4 splits (`E/ghosts-kerf-it4-32.json`),
+  0 SCRIPT ERROR; `M/kerf-arena-32ppm.mp4` re-filmed (11 s).
