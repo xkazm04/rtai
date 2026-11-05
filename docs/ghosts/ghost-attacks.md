@@ -12,6 +12,9 @@ Base Rivet for comparison: pistol / claw, one human per hit, robots in 4-6 hits.
 | | | plates | takes 0.3 of every hit | | while on (8 s) | | | |
 | **Dent** | the bomber: turn the street's cars into missiles | seize + steer (G) | car hit 2 | lock 3 m round the aim point (9 m ahead), range 22 m | 6 s link, 12 s cooldown | 1 per hit (thrown off the bonnet) | | |
 | | | overload blast | 6 | 4.5 m | armed after 0.9 s (arm_k 0.3 x 3 s); on impact / melee / full heat | all in radius (gib) | thug in 1 | the seized car wrecked |
+| **Kerf** | the assassin: pick one target out of a group, fast | blink-slice (melee with a target in a 35 deg cone, 9 m, clear line) | 99 human / 4 robot | blink to 0.9 m past the target along a straight teal line | chain of 3, one charge back per 1 s, 0.3 s apart | one-shot (split, teal-white cauterised edge) | thug in 2 | no |
+| | | dash (melee with nothing in the cone) | 0 | 4 m blink | spends a charge | | | |
+| | | speed | walk x1.5 | | while on (6 s) | | | |
 
 Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):
 - Tonnage: 10 of 10 down (3 + riot + car, far pair, wave 2 of 3 + riot + car), 2 slams, 2 cars crushed,
@@ -21,11 +24,14 @@ Per activation (measured, `--bot=ghosts`, arena 32 px/m, windowed, 60 Hz):
 
 Madness cost and cooldowns are unchanged from powers.json tonight (Tonnage 25 / 20 s, Dent 15 / 12 s).
 
-## Planned (not built yet): Kerf and Ohm
+Kerf per activation (measured, `--bot=ghosts --ghost=kerf`, arena 32 px/m, windowed, 60 Hz): 5 of 5 down
+(3 patrol + riot cop split, the robot thug in 2 cuts), 1 dash + 7 slices = 8 blinks, first kill 0.5 s after the
+soul goes on, the last human 2.2 s after it, Rivet at 54 hp (the cops and the robot's tazer shot at him: Kerf has
+no armour; `evidence/ghosts-kerf-32.json`, `scenario_ghost_attacks`). Madness 20, cooldown 10 s (powers.json).
+
+## Planned (not built yet): Ohm
 
 | Ghost | Role | Attack | Damage | Reach | Cadence | Humans | Robots | Cars |
 |---|---|---|---|---|---|---|---|---|
-| **Kerf** | the assassin: pick one target out of a group | dash (fire while moving) | 0 | 4 m blink | 0.6 s | | | |
-| | | blink-slice (melee on a target in a 9 m cone) | 99 human / 4 robot | blink to 0.8 m behind the target along a straight teal line | chain of 3, one charge back per 1.5 s | one-shot (brutality split, teal-white cauterised edge) | thug in 2 | no |
 | **Ohm** | the machine killer | forked bolt (fire) | 1 human (+ 1.2 s stun) / 2 x machine_k 3 = 6 robot or car | 11 m, forks to 2 more within 3 m | 0.5 s | stun, burns, then the electro X-ray kill in teal | thug in 1 | 6 of 100 per bolt |
 | | | mass (upgrade_tier 1, data hook only) | as single | arcs to up to 6 machines within 8 m | | | | |
