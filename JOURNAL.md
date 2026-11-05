@@ -815,3 +815,18 @@ this iteration (NEXT 1 of it8); the change is view only (WeaponFxArt draw scale,
 
 STOP 00:16 iteration 7. Code commits: `d79c5278` (pistol muzzle_k 1.6), `50c0883b` (Gloria 1.8).
 NEXT for iteration 8 is the list above (item 2 done except Gloria in quest 1 Dock 9).
+
+## Iteration 8 (BUILD, 00:17-01:17)
+Read: JOURNAL NEXT, git log, n7-melee / n7-king / n7-servo journals (melee cherry-picked
+`d79c5278` as `648e6523` at 00:00; no new REQUEST to ranged).
+
+### FILM 00:30: Gloria's flash in quest 1 Dock 9 at 32 px/m (it7 NEXT 2, closed)
+- `quest1_clip.gd --ppm=32 --cam=fight --ticks=13580-13860` on head (exit 0, 0 SCRIPT ERROR,
+  141 frames; scratch `q8/`). Frame 47, same tick and camera as the it5 take: at muzzle_k 1 the
+  shot was a speck by Rivet; at 1.8 an ink-edged cream star with a vermilion core about his body
+  wide on the aim side, the nail streak behind it. It does not cover Rivet or the ghost tether.
+- Clip replaced in place as a 3-panel (evening | table guns muzzle_k 1 | muzzle_k 1.8), frames
+  40-56 at 1/8 after the real-time pass: `masters .../quest1_table_gloria-ab-32ppm.mp4`, row
+  updated (still 15 rows).
+- FRICTION: the fight cam pans every frame, so frame diffs cannot find the shot; a per-frame count
+  of vermilion pixels (scratch `findstar.py`) found the spike at 47 in seconds.
