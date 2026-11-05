@@ -17,8 +17,8 @@ const TEAL: Color = Color(0.18, 0.77, 0.71)
 ## Part lengths (metres, the art's long side) and their spots in the body frame (x forward,
 ## y right).
 const SHELL_M: float = 0.8
-const BEARD_M: float = 0.44
-const BEARD_AT: Vector2 = Vector2(0.3, 0.0)
+const BEARD_M: float = 0.5
+const BEARD_AT: Vector2 = Vector2(0.42, 0.0)
 const HOSE_M: float = 0.34
 const HOSE_AT: Vector2 = Vector2(-0.36, 0.0)
 const FOOT_M: float = 0.3
