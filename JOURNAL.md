@@ -337,3 +337,26 @@ Session state 02:22: head = this commit, tree clean, no Godot process of mine ru
   "targets" on the path; the body copies read as Kerf itself smeared along the blink, at 64 and at 32 px/m
   (`M/frames/kerf-echo-keys-32ppm.png`). Arena beat on the Kerf body: 4 splits (`E/ghosts-kerf-it4-32.json`),
   0 SCRIPT ERROR; `M/kerf-arena-32ppm.mp4` re-filmed (11 s).
+- 02:24 Kerf re-filmed on the body: `M/kerf-64ppm-halfspeed.mp4` (64 px/m, half speed), `M/kerf-city-32ppm.mp4`
+  (city block, 4 splits, `E/ghosts-kerf-city-it4-32.json`), stills `M/frames/kerf-body-keys-64ppm-city-32ppm.png`
+  and `M/frames/kerf-vs-target.png` (target | two 64 px/m frames): the target's vignette (teal ghost copies along a
+  line behind the soldier) is now what the game draws.
+- 02:27 MILESTONE 3d369dcf Ohm's bolt leaves from the forms lane's `electrode_l/electrode_r` anchors (GhostPilot reads
+  ghost_forms.json into OhmStage.set_electrodes; OhmStage.tips): two jagged prongs, one per fingertip, meet in the
+  first body; the fingertip sparks sit on the anchors. A/B `M/frames/ohm-electrode-prongs-ab-64ppm.png` (ticks
+  92/122). Judged: the twin strands braid into the first body and read as an electrode discharge rather than a
+  ray gun line; at 32 px/m they merge into one heavier bolt (fine). Still base Rivet's body (no Ohm rig yet).
+  Unit test_ohm 5/5 (new: anchors from the row, the bolt starts between them), scenario_ghost_attacks 1/0
+  (`E/scenario-ghost-it4.log`). FRICTION gdformat broke the first commit (a long line): the hook caught it.
+- FRICTION a stuck Godot from my first (pre-import) shot loop kept running (the loop moved on to tick 100 after I
+  killed the tick-80 pair): two of my Godot processes overlapped from 02:21 to ~02:35. Found by command line and
+  killed by PID 64008. Lesson: wrap every shot in `timeout 60`, and list my processes after any kill.
+- 02:34 GATES evidence runner (`node tools/evidence/run.mjs --no-bench`, first run by this lane tonight) on 3d369dcf:
+  PASS lint 13/13, unit 973/0, scenarios 47, parity (1200 steps bit-exact, mutation caught at 629), selftest
+  (look goldens 11/11 within mean 4, worst 1.20; block 5/5) -> `E/evidence-run-it4.log`. Bench skipped (contended
+  machine; not taken). FRICTION its first try exited 2: my log file inside the tree made it dirty; logs go to
+  masters scratch while it runs.
+- 02:37 Ohm arena re-filmed on the iteration-4 head: 4 shock kills (teal X-ray), the cruiser wrecked, Rivet took 6
+  (`E/ghosts-ohm-it4-32.json`, `M/ohm-arena-32ppm.mp4`). REEL `M/ghost-attacks-reel-it4-32ppm.mp4` (31 s, labelled,
+  32 px/m: Tonnage + Dent city, Kerf arena + city on the body, Ohm arena, Ohm mass) replaces the it3 reel; judged
+  frame by frame (6 stills): each ghost readable with the sound off. frames.json 15.

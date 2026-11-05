@@ -1,4 +1,4 @@
-# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 3)
+# REPORT: ghost-powers lane (branch `n6-ghost-powers`), night 2026-11-04/05 (DRAFT, iteration 4)
 
 `M` = `C:\Users\kazda\kiro\gtai-masters\n6\ghost-powers`. `E` = `evidence/` in this worktree.
 (This file replaces n5-cast's REPORT that arrived with the n5-cast fast-forward; take n5-cast's on merge.)
@@ -15,8 +15,6 @@
 | Roles and TTK table | `docs/ghosts/ghost-attacks.md` |
 | Gates (iteration 2 head): lint 13/13 on every commit; unit 960/0 (ef3a186a); scenarios 47 ran / 0 failed (incl. scenario_ghost_attacks, four ghosts); director reel 16/16 chapters down, 0 script errors (after the split-edge change) | `E/unit-it2.log`, `E/scenarios-it2.log`, `E/director-reel-it2.log` |
 | City block: Kerf (4/5 of its beat; the chain also cuts the block's own cops) and Ohm (5/5 + car bolts) in `--arena=city` | `M/kerf-city-32ppm.mp4`, `M/ohm-city-32ppm.mp4`, `M/frames/kerf-ohm-city-32ppm.png`; `E/ghosts-kerf-city-32.json`, `E/ghosts-ohm-city-32.json` |
-| The reel of all four attack sets (40 s, labelled) | `M/ghost-attacks-reel-32ppm.mp4` |
-| Ohm's bolt heavier for game zoom (before / after, same tick) | `M/frames/ohm-bolt-ab-city-32ppm.png` |
 | **Through the real switch** (iteration 3): GhostPilot (ghost-forms) drives all four; Kerf and Ohm share its one SoulPowers, G selects the ghost, Q transforms, the attacks fire once the form is settled; every beat still clears | `scenario_ghost_attacks` 1/0 (`E/scenario-ghost-it3.log`); decisions.md 2026-11-05 "Kerf and Ohm run inside GhostPilot" |
 | **City block, all four** (iteration 3, after the placement fix): Tonnage 10/10 + 2 cars crushed; Dent 5/5 (1 seize, 5 strikes, blown on command in group B; the car keeps out of buildings); Kerf 5/5; Ohm 5/5 | `M/dent-city-32ppm.mp4`, `M/frames/dent-city-keys-32ppm.png`, `M/tonnage-city-32ppm.mp4`, `M/frames/tonnage-city-crush-keys-32ppm.png`; `E/ghosts-dent-city-32.json`, `E/ghosts-tonnage-city-32.json` |
 | **Ohm's kill in soul teal**: row `ohm_shock` (X-ray shock, `edge: soul`): teal arcs, teal-white zap star; the electro gun keeps cream | `M/frames/ohm-kill-teal-ab-64ppm.png` (before/after, same ticks); unit `test_ohm_attacks` 3/3 |
@@ -24,11 +22,15 @@
 | Gates (iteration 3 head): lint 13/13 every commit; unit 968/0 (+1 since: test_ohm 4/4); scenarios 47 ran / 0 failed (`E/scenarios-it3.log`), scenario_ghost_attacks 1/0 on the final head; director reel 16/16 chapters down, 0 script errors | `E/unit-it3.log`, `E/director-reel-it3.log` |
 | `--gore=reduced`: Kerf's victims fall whole (0 signature kills); `--reduced-motion`: no afterimages, no flicker | `E/ghosts-kerf-reduced-32.json`, `E/kerf-reduced-run.log` |
 
+| **Kerf on its body** (iteration 4): the blink afterimages are faded copies of the Kerf body along the line (was three rings), the target's vignette; arena and city 4 splits each | `M/frames/kerf-echo-rings-vs-rig-64ppm.png` (before/after, same ticks), `M/frames/kerf-vs-target.png`, `M/frames/kerf-body-keys-64ppm-city-32ppm.png`, `M/kerf-arena-32ppm.mp4`, `M/kerf-city-32ppm.mp4`, `M/kerf-64ppm-halfspeed.mp4`; `E/ghosts-kerf-it4-32.json`, `E/ghosts-kerf-city-it4-32.json` |
+| **Ohm's two prongs** from the forms lane's electrode anchors (ghost_forms.json) meeting in the first body | `M/frames/ohm-electrode-prongs-ab-64ppm.png` (before/after); unit `test_ohm_attacks` 5/5; `M/ohm-arena-32ppm.mp4` (4 kills + cruiser), `E/ghosts-ohm-it4-32.json` |
+| **The reel of all four attack sets** (iteration 4, 31 s, labelled, 32 px/m) | `M/ghost-attacks-reel-it4-32ppm.mp4` |
+| Gates (iteration 4, 3d369dcf): evidence runner PASS: lint 13/13, unit 973/0, scenarios 47, parity bit-exact + mutation caught, selftest look goldens 11/11 and block 5/5 in tolerance (no re-bless); bench not run (contended machine) | `E/evidence-run-it4.log`, `E/scenario-ghost-it4.log` |
+
 ## What does not work yet
-- Tonnage and Dent now play on the forms lane's bodies; Kerf and Ohm still show base Rivet (their rigs are the forms lane's next items).
+- Tonnage, Dent and Kerf play on the forms lane's bodies; Ohm still shows base Rivet (its rig is the forms lane's next item).
 - No robot fighter exists in the arena: Kerf and Ohm hit the quest boss's brain as a stand-in (drawn as a cop, dies with the standard red splat; Ohm's beat holds it exposed). The robot numbers are real, the robot look is not.
 - Dent's 64 px/m camera does not follow the car (the strikes and blast leave the close-up frame).
-- Kerf's afterimages are rings; a body-silhouette try read worse and was reverted (needs the Kerf rig).
 - Under `--gore=reduced` Kerf's victims take the standard death, which leaves a red pool (odd for a cauterising beam; the death pipeline is shared and approved).
 
 ## Calls for the owner
