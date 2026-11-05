@@ -202,6 +202,7 @@ static func _jet(ci: CanvasItem, s: Shot, dir: Vector2, went: float, tick: int) 
 		_cell_v(ci, fx, f + 1, s.pos - dir * gap, -lick + 2.0 * dir.angle(), back, 1.0)
 	grow.x = _jet_x(fx, went, grow.x)
 	_cell_v(ci, fx, f, s.pos, lick, grow, 1.0 - 0.35 * k)
+	WeaponFxEmber.draw(ci, s, dir, went, tick)
 
 
 ## The long cone cells' x scale, capped so the tail `went` m out never reaches back over the gun

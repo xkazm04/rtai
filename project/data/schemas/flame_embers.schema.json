@@ -1,0 +1,84 @@
+{
+  "$id": "gtai.flame-embers/1",
+  "additionalProperties": false,
+  "properties": {
+    "blink": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "count": {
+      "maximum": 16,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "doc": {
+      "type": "string"
+    },
+    "edge_px": {
+      "maximum": 8,
+      "minimum": 0,
+      "type": "number"
+    },
+    "hot": {
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "type": "string"
+    },
+    "lag_m": {
+      "items": {
+        "maximum": 4,
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "rim": {
+      "pattern": "^#[0-9A-Fa-f]{6}$",
+      "type": "string"
+    },
+    "schema": {
+      "const": "gtai.flame-embers/1",
+      "type": "string"
+    },
+    "size_px": {
+      "items": {
+        "maximum": 32,
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "spread_m": {
+      "items": {
+        "maximum": 4,
+        "minimum": 0,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "width_px": {
+      "maximum": 12,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "count",
+    "size_px",
+    "edge_px",
+    "spread_m",
+    "lag_m",
+    "blink",
+    "hot",
+    "rim",
+    "width_px"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,22 @@
+{
+  "blink": 0.3,
+  "count": 6,
+  "doc": "n5-look (r2_w4): loose embers shed from the flamethrower's jet, small hot streaks in an ink edge trailing off the cone's sides (WeaponFxEmber, render only, seeded by the round's origin). count = flecks per round (0 = the before); size_px = the fleck's streak length range along the jet (world px, 48 per m); width_px = its width; edge_px = its ink edge (drawn on the item print under the colour); spread_m = how far off the jet's axis a fleck sits, scaled by 0.4 + the round's share of its range; lag_m = how far behind the round's head; blink = the share of 6-tick steps a fleck is hidden (the crackle); hot / rim = the fleck's core and outer fill (never blood red, never teal). `--flame-embers=off` = the before for an A/B. Iteration 20 take 2: round dots (3-5.5 px radius) read as beads, so the flecks are short streaks. Take 3: thin 2.5 px streaks in a 1.5 px edge read as grey-brown dashes, so 6 flecks 3.5 px wide in a 1.2 px edge, each turned up to 0.45 rad off the heading (WeaponFxEmber.TILT; parallel streaks read as rain).",
+  "edge_px": 1.2,
+  "hot": "#FFD23A",
+  "lag_m": [
+    0,
+    0.9
+  ],
+  "rim": "#EE6A1C",
+  "schema": "gtai.flame-embers/1",
+  "size_px": [
+    6,
+    12
+  ],
+  "spread_m": [
+    0.35,
+    1.1
+  ],
+  "width_px": 3.5
+}

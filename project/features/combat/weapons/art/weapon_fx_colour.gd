@@ -47,6 +47,12 @@ func cell(tex: Texture2D, xf: Transform2D, anchor: Vector2, a: float) -> void:
 	RenderingServer.canvas_item_add_texture_rect(rid, rect, tex.get_rid(), false, Color(1, 1, 1, a))
 
 
+## One flat line `w` view px wide from `from` to `to` (view px) in `c` (WeaponFxEmber's flecks).
+func line(from: Vector2, to: Vector2, c: Color, w: float) -> void:
+	RenderingServer.canvas_item_add_set_transform(rid, Transform2D.IDENTITY)
+	RenderingServer.canvas_item_add_line(rid, from, to, c, w, true)
+
+
 func release() -> void:
 	if rid.is_valid():
 		RenderingServer.free_rid(rid)
