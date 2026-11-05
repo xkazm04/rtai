@@ -191,3 +191,13 @@ GhostForms drives StagePilot:
    cut line sits on the target.
 3. Kerf moves Rivet by setting `rivet.pos` on the blink tick (move_by 0 that tick): the form rig should snap,
    not tween, so the blink reads.
+- 01:12 COMBAT CHECK director reel headless (`--quit-after 24000`) on the Kerf/Ohm head (after the brutality
+  split-edge change): 16 chapters started, 16 down (claw_combo 2/2 ... katana, chainsaw, plasma_sword_deflect,
+  riot_cop, mini_nuke 4/4), 0 SCRIPT ERROR (`evidence/director-reel-it2.log`). Combat holds.
+- 01:14 CITY BLOCK (`--arena=city --bot=ghosts`): Kerf 4/5 of the beat (the chain also cut the block's own
+  cops, 6 slices; `E/ghosts-kerf-city-32.json`), Ohm 5/5 + 4 car bolts (`E/ghosts-ohm-city-32.json`), 0 SCRIPT
+  ERROR each. Clips `kerf-city-32ppm.mp4`, `ohm-city-32ppm.mp4`, still `frames/kerf-ohm-city-32ppm.png`. Judged:
+  both read on the asphalt; Ohm's bolt is thin at 32 px/m in the city -> heavier strokes (10/6/2.5 px, was
+  7/4/1.5), A/B pending the suite.
+- 01:15 REEL `ghost-attacks-reel-32ppm.mp4` (40 s: the four arena beats, labelled). frames.json 15 entries, all
+  files present; scratch emptied.
