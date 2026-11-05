@@ -29,6 +29,8 @@ var mode: String = "noir"
 var blood: BloodFx = null
 ## Rivet's own fluid (blood_fx.json `player`: oil, sparks then black).
 var oil: BloodFx = null
+## ghost-powers: actor ids drawn as robots (ArenaRobotRigs): their death leaks oil, never red.
+var robot_ids: Dictionary[int, bool] = {}
 ## Optional Callable(px: Vector2) -> bool: true inside a building or prop (wall splats).
 var solid: Callable = Callable():
 	set = set_solid
@@ -177,6 +179,9 @@ func _bleed_killed(killer: int, victim: int) -> void:
 	var dir: Vector2 = at - from if from != Vector2.INF else Vector2.RIGHT
 	if victim == _player:
 		hit_robot(at * SimConst.PX_PER_M)
+	elif robot_ids.has(victim):
+		var fx: BloodFx = oil if oil != null else blood
+		fx.splash(at * SimConst.PX_PER_M, dir.normalized(), "robot_hit")
 	else:
 		kill_human(at * SimConst.PX_PER_M, dir)
 		bled_body.emit(victim, dir.normalized())
