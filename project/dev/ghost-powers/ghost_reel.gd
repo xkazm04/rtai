@@ -136,6 +136,9 @@ func _begin(stage: ArenaStage, tick: int) -> void:
 	var arena: CombatArena = stage.arena
 	arena.rivet.pos = _anchor
 	arena.rivet.facing = Vector2.RIGHT
+	if stage.follow != null:  # the city block: the city's body holds Rivet where it last saw him
+		stage.follow.focus = _anchor
+		stage.follow.target = _anchor
 	if ghost == &"dent":
 		dent_beat = DentBeat.new()
 		dent_beat.begin(self, stage, _anchor)
