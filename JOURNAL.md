@@ -791,3 +791,10 @@ NEXT (iteration 6, in order):
 5. Check the plain robot thug at 48 px/m for the same inked-black print (FYI for REPORT, not King's).
 6. Exe export by 08:30 (int-day recipe in docs/decisions.md) + REPORT with calls: gold swap, leap_m,
    decree buff, A (ghost_k), B (wreck solid), C (band), D (gang steel).
+- 23:06 NEXT 1 done: human + standing, seeds 1-5, on 5ef33a80 (CONTENDED, 0 script errors,
+  `evidence/king/numbers-it5d/`). Standing: identical to f045e4cf (it never dodges: the check holds).
+  **Human: 83.9 s (77.9-90.6), took 78 (48-116), 0 deaths.** Hit rates: ram 4/10 = 0.40, coin fan
+  13/48 = 0.27, slam 5/12 = 0.42 (2 rolled), charge 0/6. Damage share: **slam 0.36, coin fan 0.33,
+  ram 0.31**, charge 0. No one attack carries the fight now (it4: coin fan 0.47). The slam's hits went
+  up as the bot now steps off the wreck's side into the ring: worth a look on film (NEXT 2).
+  Band: still easy (the human survives 5/5). The session ends here, everything committed.
