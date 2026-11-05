@@ -231,3 +231,8 @@ image.lock never taken, bench never run.
   and the beats skip the spawn. NEXT item 2 becomes: give the city stage's beats a car (the city's own parked or
   traffic car via soul_hijack_traffic for Dent), then re-film Dent and Tonnage there.
 Session state 01:26: head = this commit, tree clean, no Godot process of mine running, masters scratch empty.
+- 01:28 CONFIRMED the city lead: `ArenaSession.open` attaches ArenaCars only when `ArenaCars.wanted(stations)`
+  (a station "car" spawn: the powers pad's), and the city site's stations bring none, so `stage.vehicles` is null
+  there and every ghost beat skips its car. Fix for iteration 3 (not started: no time to test it this session):
+  attach ArenaCars when `--bot=ghosts` runs (or have the ghost-powers station list a car spawn in the city site),
+  then re-run the four city beats and scenario_ghost_attacks (the arena path must not move).
