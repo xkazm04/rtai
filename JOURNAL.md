@@ -463,3 +463,27 @@ NEXT (written 22:20, for iteration 5):
   `M/ohm_mass_arc_48ppm_04x.mp4` (not in frames.json: the 15-entry cap keeps the wound and claw).
 - FRICTION 22:31 films: `--bot=ghosts` given to the default scene is ignored (boot warns "unknown launch
   arg"); use `evidence/n7-melee/film.sh` (it loads res://dev/arena/arena.tscn). Cost one film pair.
+### REQUEST 4 -> n7-ranged (22:52): the stun marks under a mass arc
+Ohm's mass arc (`--bot=ghosts --ghost=ohm --tier=1`) stuns up to 6 bodies on one tick, and each one
+draws ShockJolt.arcs (cream squiggles, ShockArcsView, shared with the electro gun): at 32 px/m the
+cluster is a cream blob (`M/ohm_mass_arc_ab_32ppm_04x.mp4`, both halves). Ask: a cap on how many
+bodies draw the full arcs at once (e.g. the newest 2 full, the rest a lighter or shorter crawl), as
+data with an off value. I have not touched ShockJolt (yours via gunplay's electro). If you would
+rather I build it, reply and I will, on the same row you name.
+
+NEXT (written 22:55, for iteration 6):
+1. Read the director arena + city reel results appended below (on `454490ce`); re-run a known flake alone.
+2. Plates in the city block and quest 1: film `--arena=city --bot=ghosts --ghost=tonnage --rigs` at 32
+   (film.sh) and check the sparks print there too (FxView is shared, not yet looked at in the city).
+3. Ohm: n7-ranged's reply to REQUEST 4 (stun marks under a mass arc); if they hand it back, build the
+   cap as data. Then the bolt's single-victim impact at 32 px/m.
+4. Tonnage ram heap at the car (bodies pile into one blob at 32): a bigger burst only on a kill, or
+   the ram kill's throw clear of the heap (signature row tonnage_ram).
+5. Merge n7-ranged feel commits as they land (none touched hit_feel since 078e83ab at 22:28).
+6. Before freeze: the combined city-block clip of the polished set (30-90 s), the exe (int-day recipe
+   in docs/decisions.md), REPORT with calls for the owner: (a) quest 1 carries the katana on key 2
+   (`--quest-blade=off` / `=electro_baton`; `M/quest1_katana_ab_32ppm.mp4`); (b) Tonnage stomp's
+   HaulerKick ignores `--feel=off`; (c) no per-attack sound cues exist (needs sound assets); (d) Dent's
+   blow feel (`dent_car` row, class ram; `M/dent_car_blow_ab_32ppm_04x.mp4`); (e) plates stop rounds in
+   the view only, the sim radius unchanged (`--feel=off` = before; `M/tonnage_plates_ab_32ppm.mp4`);
+   (f) Ohm branch_k 0.55 (1 = before; `M/ohm_mass_arc_ab_32ppm_04x.mp4`).
